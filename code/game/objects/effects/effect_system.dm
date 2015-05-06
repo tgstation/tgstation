@@ -734,7 +734,7 @@ steam.start() -- spawns the effect
 	if(reagents.has_reagent("water"))
 		var/turf/simulated/T = get_turf(src)
 		if(istype(T))
-			var/datum/gas_mixture/lowertemp = T.remove_air( T:air:total_moles() )
+			var/datum/gas_mixture/lowertemp = T.remove_air( T:air:total_moles )
 			lowertemp.temperature = max( min(lowertemp.temperature-500,lowertemp.temperature / 2) ,0)
 			lowertemp.react()
 			T.assume_air(lowertemp)

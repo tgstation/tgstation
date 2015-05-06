@@ -158,7 +158,7 @@
 		adjustToxLoss(rand(10,20))
 		return
 
-	//var/environment_heat_capacity = environment.heat_capacity()
+	//var/environment_heat_capacity = environment.heat_capacity
 	var/loc_temp = T0C
 	if(istype(get_turf(src), /turf/space))
 		//environment_heat_capacity = loc:heat_capacity

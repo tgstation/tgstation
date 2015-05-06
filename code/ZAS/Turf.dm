@@ -207,8 +207,7 @@
 	if(!air)
 		make_air()
 
-	air.temperature = temperature
-	air.update_values()
+	air.set_temperature(temperature)
 
 	return air
 

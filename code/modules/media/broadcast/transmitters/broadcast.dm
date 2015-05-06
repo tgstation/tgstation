@@ -175,7 +175,7 @@
 			var/datum/gas_mixture/env = L.return_air()
 			if(env.temperature != MAX_TEMP + T0C)
 
-				var/transfer_moles = 0.25 * env.total_moles()
+				var/transfer_moles = 0.25 * env.total_moles
 
 				var/datum/gas_mixture/removed = env.remove(transfer_moles)
 
@@ -183,7 +183,7 @@
 
 				if(removed)
 
-					var/heat_capacity = removed.heat_capacity()
+					var/heat_capacity = removed.heat_capacity
 					//world << "heating ([heat_capacity])"
 					if(heat_capacity) // Added check to avoid divide by zero (oshi-) runtime errors -- TLE
 						if(removed.temperature < MAX_TEMP + T0C)

@@ -76,8 +76,8 @@
 			temperature += heat_added/XENOARCH_HEAT_CAPACITY
 
 		var/temperature_difference = abs(environmental_temp-temperature)
-		var/datum/gas_mixture/removed = env.remove(env.total_moles()*0.25)
-		var/heat_capacity = removed.heat_capacity()
+		var/datum/gas_mixture/removed = env.remove(env.total_moles*0.25)
+		var/heat_capacity = removed.heat_capacity
 
 		heat_added = max(temperature_difference*heat_capacity, XENOARCH_MAX_ENERGY_TRANSFER)
 

@@ -124,6 +124,6 @@ var/image/contamination_overlay = image('icons/effects/contamination.dmi')
 	if(istype(I) && zas_settings.Get(/datum/ZAS_Setting/CLOTH_CONTAMINATION))
 		var/datum/gas_mixture/environment = return_air()
 
-		if(environment.get_moles_by_id(PLASMA) > MOLES_PLASMA_VISIBLE + 1)
+		if(environment.gases[PLASMA] > MOLES_PLASMA_VISIBLE + 1)
 			if(I.can_contaminate())
 				I.contaminate()

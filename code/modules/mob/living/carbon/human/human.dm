@@ -165,7 +165,7 @@
 				del(internal)
 			else
 				stat("Internal Atmosphere Info", internal.name)
-				stat("Tank Pressure", internal.air_contents.return_pressure())
+				stat("Tank Pressure", internal.air_contents.pressure)
 				stat("Distribution Pressure", internal.distribute_pressure)
 		if(mind)
 			if(mind.changeling)

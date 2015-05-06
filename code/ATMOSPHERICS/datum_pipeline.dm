@@ -29,7 +29,7 @@
 /datum/pipeline/proc/process()//This use to be called called from the pipe networks
 	if((world.timeofday - last_pressure_check) / 10 >= PRESSURE_CHECK_DELAY)
 		//Check to see if pressure is within acceptable limits
-		var/pressure = air.return_pressure()
+		var/pressure = air.pressure
 		if(pressure > alert_pressure)
 			for(var/obj/machinery/atmospherics/pipe/member in members)
 				if(!member.check_pressure(pressure))
@@ -46,13 +46,11 @@
 
 	for(var/obj/machinery/atmospherics/pipe/member in members)
 		member.air_temporary = new
-		member.air_temporary.volume = member.volume
+		member.air_temporary.set_volume(member.volume)
 
 		member.air_temporary.copy_from(air)
 		member.air_temporary.multiply(member.volume/air.volume)
-		member.air_temporary.temperature = air.temperature
 
-		member.air_temporary.update_values()
 
 /datum/pipeline/proc/build_pipeline(obj/machinery/atmospherics/pipe/base)
 	var/list/possible_expansions = list(base)
@@ -68,6 +66,8 @@
 		base.air_temporary = null
 	else
 		air = new
+
+	air.set_volume(volume)
 
 	while(possible_expansions.len>0)
 		for(var/obj/machinery/atmospherics/pipe/borderline in possible_expansions)
@@ -95,9 +95,6 @@
 				edges += borderline
 
 			possible_expansions -= borderline
-
-	air.volume = volume
-	air.update_values()
 
 /datum/pipeline/proc/network_expand(datum/pipe_network/new_network, obj/machinery/atmospherics/pipe/reference)
 
@@ -160,7 +157,7 @@
 		network.update = 1
 
 /datum/pipeline/proc/temperature_interact(turf/target, share_volume, thermal_conductivity)
-	var/total_heat_capacity = air.heat_capacity()
+	var/total_heat_capacity = air.heat_capacity
 	var/partial_heat_capacity = total_heat_capacity*(share_volume/air.volume)
 
 	if(istype(target, /turf/simulated))
@@ -183,10 +180,10 @@
 
 			if(modeled_location.zone)
 				delta_temperature = (air.temperature - modeled_location.zone.air.temperature)
-				sharer_heat_capacity = modeled_location.zone.air.heat_capacity()
+				sharer_heat_capacity = modeled_location.zone.air.heat_capacity
 			else
 				delta_temperature = (air.temperature - modeled_location.air.temperature)
-				sharer_heat_capacity = modeled_location.air.heat_capacity()
+				sharer_heat_capacity = modeled_location.air.heat_capacity
 
 			var/self_temperature_delta = 0
 			var/sharer_temperature_delta = 0

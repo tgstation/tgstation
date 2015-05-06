@@ -25,10 +25,9 @@
 /obj/machinery/atmospherics/miner/New()
 	..()
 	air_contents = new
-	air_contents.volume=1000
-	air_contents.temperature = T20C
+	air_contents.set_volume(1000)
+	air_contents.set_temperature(T20C)
 	AddAir()
-	air_contents.update_values()
 	update_icon()
 
 /obj/machinery/atmospherics/miner/wrenchAnchor(mob/user)
@@ -100,7 +99,7 @@
 		return
 
 	var/datum/gas_mixture/environment = loc.return_air()
-	var/environment_pressure = environment.return_pressure()
+	var/environment_pressure = environment.pressure
 
 	pumping.copy_from(air_contents)
 

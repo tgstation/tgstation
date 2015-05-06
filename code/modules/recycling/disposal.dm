@@ -216,7 +216,7 @@
 /obj/machinery/disposal/ui_interact(mob/user, ui_key = "main", var/datum/nanoui/ui = null, var/force_open = 1)
 	var/list/data[0]
 
-	data["pressure"] = round(100 * air_contents.return_pressure() / (SEND_PRESSURE))
+	data["pressure"] = round(100 * air_contents.pressure / (SEND_PRESSURE))
 	data["flush"] = flush
 	data["mode"] = mode
 	data["isAI"] = isAI(user)
@@ -325,7 +325,7 @@
 
 	src.updateDialog()
 
-	if(flush && air_contents.return_pressure() >= SEND_PRESSURE )	// flush can happen even without power
+	if(flush && air_contents.pressure >= SEND_PRESSURE )	// flush can happen even without power
 		spawn(0)
 			flush()
 
@@ -343,7 +343,7 @@
 	var/atom/L = loc						// recharging from loc turf
 
 	var/datum/gas_mixture/env = L.return_air()
-	var/pressure_delta = (SEND_PRESSURE*1.01) - air_contents.return_pressure()
+	var/pressure_delta = (SEND_PRESSURE*1.01) - air_contents.pressure
 
 	if(env.temperature > 0)
 		var/transfer_moles = 0.1 * pressure_delta*air_contents.volume/(env.temperature * R_IDEAL_GAS_EQUATION)
@@ -354,7 +354,7 @@
 
 
 	// if full enough, switch to ready mode
-	if(air_contents.return_pressure() >= SEND_PRESSURE)
+	if(air_contents.pressure >= SEND_PRESSURE)
 		mode = 2
 		update_icon()
 	return

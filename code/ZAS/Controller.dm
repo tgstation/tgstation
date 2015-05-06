@@ -316,7 +316,7 @@ Total Unsimulated Turfs: [world.maxx*world.maxy*world.maxz - simulated_turf_coun
 	var/datum/gas_mixture/B_mix = B.return_air()
 
 	for(var/gasid in A_mix.gases)
-		if(A_mix.get_moles_by_id(gasid) != B_mix.get_moles_by_id(gasid))
+		if(A_mix.gases[gasid] != B_mix.gases[gasid])
 			return 0
 
 	return 1

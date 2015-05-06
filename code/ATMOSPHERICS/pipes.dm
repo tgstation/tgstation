@@ -198,7 +198,7 @@
 	// So, a pipe rated at 8,000 kPa in a 104kPa environment will explode at 8,104kPa.
 	var/datum/gas_mixture/environment = loc.return_air()
 
-	var/pressure_difference = pressure - environment.return_pressure()
+	var/pressure_difference = pressure - environment.pressure
 
 	// Burst check first.
 	if(pressure_difference > maximum_pressure && prob(1))

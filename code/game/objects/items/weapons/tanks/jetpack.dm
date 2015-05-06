@@ -39,13 +39,13 @@
 /obj/item/weapon/tank/jetpack/proc/allow_thrust(num, mob/living/user as mob)
 	if(!(src.on))
 		return 0
-	if((num < 0.005 || src.air_contents.total_moles() < num))
+	if((num < 0.005 || src.air_contents.total_moles < num))
 		src.toggle()
 		return 0
 
 	var/datum/gas_mixture/G = src.air_contents.remove(num)
 
-	if(G.total_moles() >= 0.005)
+	if(G.total_moles >= 0.005)
 		return 1
 
 	G = null //let the GC get it

@@ -73,22 +73,22 @@
 
 		if(output&1)
 			// Fucking why do we need num2text
-			//signal.data["pressure"] = num2text(round(air_sample.return_pressure(),0.1),)
-			signal.data["pressure"] =round(air_sample.return_pressure(),0.1)
+			//signal.data["pressure"] = num2text(round(air_sample.pressure,0.1),)
+			signal.data["pressure"] =round(air_sample.pressure,0.1)
 		if(output&2)
 			signal.data["temperature"] = round(air_sample.temperature,0.1)
 
 		if(output>4)
-			var/total_moles = air_sample.total_moles()
+			var/total_moles = air_sample.total_moles
 			if(total_moles > 0)
 				if(output&4)
-					signal.data[OXYGEN] = round(100*air_sample.get_moles_by_id(OXYGEN)/total_moles,0.1)
+					signal.data[OXYGEN] = round(100*air_sample.gases[OXYGEN]/total_moles,0.1)
 				if(output&8)
-					signal.data[PLASMA] = round(100*air_sample.get_moles_by_id(PLASMA)/total_moles,0.1)
+					signal.data[PLASMA] = round(100*air_sample.gases[PLASMA]/total_moles,0.1)
 				if(output&16)
-					signal.data[NITROGEN] = round(100*air_sample.get_moles_by_id(NITROGEN)/total_moles,0.1)
+					signal.data[NITROGEN] = round(100*air_sample.gases[NITROGEN]/total_moles,0.1)
 				if(output&32)
-					signal.data[CARBON_DIOXIDE] = round(100*air_sample.get_moles_by_id(CARBON_DIOXIDE)/total_moles,0.1)
+					signal.data[CARBON_DIOXIDE] = round(100*air_sample.gases[CARBON_DIOXIDE]/total_moles,0.1)
 			else
 				signal.data[OXYGEN] = 0
 				signal.data[PLASMA] = 0

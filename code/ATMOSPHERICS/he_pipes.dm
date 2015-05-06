@@ -56,12 +56,12 @@
 
 	// Get gas from pipenet
 	var/datum/gas_mixture/internal = return_air()
-	var/internal_transfer_moles = 0.25 * internal.total_moles()
+	var/internal_transfer_moles = 0.25 * internal.total_moles
 	var/datum/gas_mixture/internal_removed = internal.remove(internal_transfer_moles)
 
 	//Get processable air sample and thermal info from environment
 	var/datum/gas_mixture/environment = loc.return_air()
-	var/transfer_moles = 0.25 * environment.total_moles()
+	var/transfer_moles = 0.25 * environment.total_moles
 	var/datum/gas_mixture/external_removed = environment.remove(transfer_moles)
 
 	// No environmental gas?  We radiate it, then.
@@ -71,7 +71,7 @@
 		return radiate()
 
 	// Not enough gas in the air around us to care about.  Radiate.
-	if (external_removed.total_moles() < 10)
+	if (external_removed.total_moles < 10)
 		if(internal_removed)
 			internal.merge(internal_removed)
 		environment.merge(external_removed)
@@ -83,8 +83,8 @@
 		return
 
 	//Get same info from connected gas
-	var/combined_heat_capacity = internal_removed.heat_capacity() + external_removed.heat_capacity()
-	var/combined_energy = internal_removed.temperature * internal_removed.heat_capacity() + external_removed.heat_capacity() * external_removed.temperature
+	var/combined_heat_capacity = internal_removed.heat_capacity + external_removed.heat_capacity
+	var/combined_energy = internal_removed.temperature * internal_removed.heat_capacity + external_removed.heat_capacity * external_removed.temperature
 
 	if(!combined_heat_capacity)
 		combined_heat_capacity = 1
@@ -103,14 +103,14 @@
 
 /obj/machinery/atmospherics/pipe/simple/heat_exchanging/proc/radiate()
 	var/datum/gas_mixture/internal = return_air()
-	var/internal_transfer_moles = 0.25 * internal.total_moles()
+	var/internal_transfer_moles = 0.25 * internal.total_moles
 	var/datum/gas_mixture/internal_removed = internal.remove(internal_transfer_moles)
 
 	if (!internal_removed)
 		return
 
-	var/combined_heat_capacity = internal_removed.heat_capacity() + RADIATION_CAPACITY
-	var/combined_energy = internal_removed.temperature * internal_removed.heat_capacity() + (RADIATION_CAPACITY * ENERGY_MULT)
+	var/combined_heat_capacity = internal_removed.heat_capacity + RADIATION_CAPACITY
+	var/combined_energy = internal_removed.temperature * internal_removed.heat_capacity + (RADIATION_CAPACITY * ENERGY_MULT)
 
 	var/final_temperature = combined_energy / combined_heat_capacity
 

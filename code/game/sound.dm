@@ -41,7 +41,7 @@ var/list/mommicomment_sound = list('sound/voice/mommi_comment1.ogg', 'sound/voic
 		var/atmosphere = 0
 		var/datum/gas_mixture/current_air = turf_source.return_air()
 		if(current_air)
-			atmosphere = current_air.return_pressure()
+			atmosphere = current_air.pressure
 		else
 			atmosphere = 0 //no air
 
@@ -82,7 +82,7 @@ var/const/SURROUND_CAP = 7
 		var/datum/gas_mixture/environment = current_turf.return_air()
 		var/atmosphere = 0
 		if(environment)
-			atmosphere = environment.return_pressure()
+			atmosphere = environment.pressure
 
 		/// Local sound modifications ///
 		if(atmosphere < MIN_SOUND_PRESSURE) //no sound reception in space, boyos
