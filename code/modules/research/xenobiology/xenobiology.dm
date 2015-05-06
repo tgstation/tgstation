@@ -297,7 +297,7 @@
 	if(M.stat)
 		user << "<span class='warning'> The slime is dead!</span>"
 		return..()
-	if(M.mutator_used == 1)
+	if(M.mutator_used)
 		user << "<span class='warning'> This slime has already consumed a mutator, any more would be far too unstable!</span>"
 		return..()
 	if(M.mutation_chance == 100)
@@ -306,7 +306,7 @@
 
 	user <<"<span class='notice'>You feed the slime the mutator. It is now more likely to mutate.</span>"
 	M.mutation_chance = Clamp(M.mutation_chance+12,0,100)
-	M.mutator_used = 1
+	M.mutator_used = TRUE
 	qdel(src)
 
 
