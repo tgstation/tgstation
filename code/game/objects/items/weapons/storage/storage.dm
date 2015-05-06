@@ -26,7 +26,7 @@
 
 
 /obj/item/weapon/storage/MouseDrop(obj/over_object)
-	if(iscarbon(usr) || isdrone(usr)) //all the check for item manipulation are in other places, you can safely open any storages as anything and its not buggy, i checked
+	if(iscarbon(usr) || isdrone(usr) || ismommi(usr)) //all the check for item manipulation are in other places, you can safely open any storages as anything and its not buggy, i checked
 		var/mob/M = usr
 
 		if (istype(usr.loc,/obj/mecha)) // stops inventory actions in a mech
@@ -269,6 +269,7 @@
 	if(usr)
 		if(!usr.unEquip(W))
 			return 0
+
 	W.loc = src
 	W.on_enter_storage(src)
 	if(usr)
@@ -305,6 +306,15 @@
 	for(var/mob/M in can_see_contents())
 		if(M.client)
 			M.client.screen -= W
+//spaghetti start
+	if(ismommi(new_location))
+		var/mob/living/silicon/robot/mommi/R = new_location
+		if(R.put_in_active_hand(src))
+			W.on_exit_storage(src)
+			return 1
+		else return 0
+
+
 
 	if(ismob(loc))
 		W.dropped(usr)
