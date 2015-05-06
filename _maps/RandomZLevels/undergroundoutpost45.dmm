@@ -418,7 +418,7 @@
 "ib" = (/obj/machinery/gateway{dir = 6},/turf/simulated/floor/plasteel{dir = 1; heat_capacity = 1e+006; icon_state = "vault"},/area/awaycontent/a6{has_gravity = 1; name = "UO45 Gateway"})
 "ic" = (/obj/structure/stool/bed/chair{tag = "icon-chair (WEST)"; icon_state = "chair"; dir = 8},/turf/simulated/floor/plasteel{heat_capacity = 1e+006; icon_state = "dark"},/area/awaycontent/a6{has_gravity = 1; name = "UO45 Gateway"})
 "id" = (/obj/machinery/alarm{dir = 8; frequency = 1439; locked = 0; pixel_x = 23; pixel_y = 0; req_access = null},/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,/obj/structure/stool/bed/chair{tag = "icon-chair (WEST)"; icon_state = "chair"; dir = 8},/turf/simulated/floor/plasteel{heat_capacity = 1e+006; icon_state = "dark"},/area/awaycontent/a6{has_gravity = 1; name = "UO45 Gateway"})
-"ie" = (/obj/machinery/portable_atmospherics/scrubber,/turf/simulated/floor/plating{heat_capacity = 1e+006},/area/awaycontent/a6{has_gravity = 1; name = "UO45 Gateway"})
+"ie" = (/obj/machinery/mommi_spawner,/turf/simulated/floor/plating{heat_capacity = 1e+006},/area/awaycontent/a6{has_gravity = 1; name = "UO45 Gateway"})
 "if" = (/turf/simulated/floor/plating{heat_capacity = 1e+006},/area/awaycontent/a6{has_gravity = 1; name = "UO45 Gateway"})
 "ig" = (/obj/structure/closet/emcloset,/obj/item/clothing/mask/breath,/turf/simulated/floor/plating{heat_capacity = 1e+006},/area/awaycontent/a6{has_gravity = 1; name = "UO45 Gateway"})
 "ih" = (/obj/machinery/computer/rdconsole/core{id = 3; req_access = null},/turf/simulated/floor/plasteel{heat_capacity = 1e+006},/area/awaycontent/a5{has_gravity = 1; name = "UO45 Research"})
