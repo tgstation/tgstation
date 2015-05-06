@@ -111,7 +111,10 @@
 	return put_in_hands(W)
 
 /mob/living/silicon/robot/mommi/put_in_inactive_hand(var/obj/item/W)
-	drop_item(W)
+	W.loc = get_turf(src)
+	W.layer = initial(W.layer)
+	W.dropped()
+	return 0
 /*
 /mob/living/silicon/robot/mommi/get_multitool(var/active_only=0)
 	if(istype(get_active_hand(),/obj/item/device/multitool))
