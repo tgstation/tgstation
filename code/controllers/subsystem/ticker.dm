@@ -154,11 +154,8 @@ var/datum/subsystem/ticker/ticker
 
 	//Configure mode and assign player to special mode stuff
 	var/can_continue = 0
-	if(mode.pre_setup_before_jobs)
-		can_continue = src.mode.pre_setup()
+	can_continue = src.mode.pre_setup()		//Choose antagonists
 	SSjob.DivideOccupations() 				//Distribute jobs
-	if(!mode.pre_setup_before_jobs)
-		can_continue = src.mode.pre_setup()
 
 	if(!Debug2)
 		if(!can_continue)

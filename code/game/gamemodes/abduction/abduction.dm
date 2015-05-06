@@ -5,7 +5,6 @@
 	name = "Abduction"
 	config_tag = "abduction"
 	antag_flag = BE_ABDUCTOR
-	pre_setup_before_jobs = 1
 	recommended_enemies = 2
 	required_players = 15
 	var/max_teams = 4
