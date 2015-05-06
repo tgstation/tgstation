@@ -70,6 +70,7 @@ h1.alert, h2.alert		{color: #000000;}
 .red					{color: #FF0000;}
 .grey					{color: #585858; font-family: Dotum, sans-serif;}
 .skeleton				{color: #585858; font-weight: bold; font-style: italic;}
+.gutter					{color: #61380B; font-style: italic;}
 /* /vg/ */
 .good					{color: green;}
 .average				{color: #FF8000;}
