@@ -487,7 +487,21 @@
 			SA.health -= 20
 	..()
 
-
+/obj/item/weapon/batteringram
+	name = "battering ram"
+	desc = "A hydraulic compression/spreader-type mechanism which, when applied to a door, will charge before rapidly expanding and dislodging frames."
+	flags = TWOHANDABLE | MUSTTWOHAND | FPRINT
+	icon = 'icons/obj/weapons.dmi'
+	icon_state = "ram"
+	siemens_coefficient = 0
+	throwforce = 15
+	w_class = 3
+	w_type = RECYK_METAL
+	origin_tech = "combat=5"
+	attack_verb = list("rammed", "bludgeoned")
+	force = 15
+	throw_speed = 1
+	throw_range = 3
 
 /obj/item/weapon/caution
 	desc = "Caution! Wet Floor!"
