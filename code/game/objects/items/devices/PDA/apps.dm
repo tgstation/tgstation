@@ -263,7 +263,7 @@ var/global/list/pda_app_menus = list(
 
 	var/game_state = 0	//0 = First Startup; 1 = Egg Chosen; 2 = Egg Hatched (normal status); 3 = Pet Dead
 	var/petname = "Ianitchi"
-	var/petID = 000000
+	var/petID = "000000"
 	var/level = 0
 	var/exp = 0
 	var/race = "Corgegg"//Race set here for sanity purposes, the player chooses the race himself
@@ -299,7 +299,7 @@ var/global/list/pda_app_menus = list(
 
 /datum/pda_app/spesspets/onInstall(var/obj/item/device/pda/device)
 	..()
-	petID = rand(000000,999999)
+	petID = num2text(rand(000000,999999))
 	reconnect_database()
 
 /datum/pda_app/spesspets/proc/reconnect_database()

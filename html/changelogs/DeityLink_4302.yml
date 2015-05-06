@@ -1,0 +1,4 @@
+author: Deity Link
+delete-after: true
+changes:
+  - bugfix: Fixed a runtime that broke Spess Pets when they tried to fight, don't forget to heal your pets when they lose fights.
