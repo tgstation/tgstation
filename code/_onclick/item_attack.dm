@@ -13,6 +13,10 @@
 		visible_message("<span class='danger'>[user] has hit [src] with [W].</span>")
 
 /mob/living/attackby(obj/item/I, mob/user, params)
+	if(ismommi(user) && user:keeper)	//REMOVE SHITTER REMOVE SHITTER
+		if(!ismommi(src) ||(ismommi(src) && !src:keeper)) //They can interfere with keeper mommis
+			user << "<span class ='warning'>No.</span>"
+			return
 	user.changeNext_move(CLICK_CD_MELEE)
 	I.attack(src, user)
 
