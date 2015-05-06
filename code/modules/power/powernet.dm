@@ -17,6 +17,14 @@
 	SSpower.powernets += src
 
 /datum/powernet/Destroy()
+	//Go away references, you suck!
+	for(var/obj/structure/cable/C in cables)
+		cables -= C
+		C.powernet = null
+	for(var/obj/machinery/power/M in nodes)
+		nodes -= M
+		M.powernet = null
+
 	SSpower.powernets -= src
 
 /datum/powernet/proc/is_empty()
