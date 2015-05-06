@@ -78,7 +78,10 @@
 		Weaken(5)
 
 	if(health <= 0 && src.stat != 2) //die only once
-		gib()
+		if(generated)
+			dust()
+		else
+			gib()
 
 	if (src.stat != 2) //Alive.
 		if (src.paralysis || src.stunned || src.weakened) //Stunned etc.

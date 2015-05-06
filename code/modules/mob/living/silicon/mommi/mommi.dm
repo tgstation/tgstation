@@ -28,6 +28,7 @@ They can only use one tool at a time, they can't choose modules, and they have 1
 	var/killswitch = 0 //Used to stop mommis from escape their z-level
 	var/allowed_z = 1
 	var/finalized = 0 //Track if the mommi finished spawning
+	var/generated = 0 //If a mommi spawner spawned it, set this
 
 //one tool and one sightmod can be activated at any one time.
 	var/tool_state = null
