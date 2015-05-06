@@ -94,7 +94,7 @@
 
 	name = "Hulk"
 	quality = POSITIVE
-	get_chance = 5
+	get_chance = 15
 	lowest_value = 256 * 14
 	text_gain_indication = "<span class='notice'>Your muscles hurt!</span>"
 
@@ -136,7 +136,7 @@
 
 	name = "Telekinesis"
 	quality = POSITIVE
-	get_chance = 10
+	get_chance = 20
 	lowest_value = 256 * 14
 	text_gain_indication = "<span class='notice'>You feel smarter!</span>"
 
@@ -151,7 +151,7 @@
 
 	name = "Cold Resistance"
 	quality = POSITIVE
-	get_chance = 10
+	get_chance = 25
 	lowest_value = 256 * 12
 	text_gain_indication = "<span class='notice'>Your body feels warm!</span>"
 
@@ -168,7 +168,7 @@
 
 	name = "X Ray Vision"
 	quality = POSITIVE
-	get_chance = 10
+	get_chance = 30
 	lowest_value = 256 * 15
 	text_gain_indication = "<span class='notice'>The walls suddenly disappear!</span>"
 
@@ -348,7 +348,7 @@
 /datum/mutation/human/stealth
 	name = "Cloak Of Darkness"
 	quality = POSITIVE
-	get_chance = 10
+	get_chance = 20
 	lowest_value = 256 * 14
 	text_gain_indication = "<span class='notice'>You begin to fade into the shadows.</span>"
 	text_lose_indication = "<span class='notice'>You become fully visible.</span>"
@@ -371,7 +371,7 @@
 /datum/mutation/human/chameleon
 	name = "Chameleon"
 	quality = POSITIVE
-	get_chance = 10
+	get_chance = 20
 	lowest_value = 256 * 14
 	text_gain_indication = "<span class='notice'>You feel one with your surroundings.</span>"
 	text_lose_indication = "<span class='notice'>You feel oddly exposed.</span>"
