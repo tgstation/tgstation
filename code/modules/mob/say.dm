@@ -98,9 +98,14 @@
 /mob/proc/parse_language(var/message)
 	if(length(message) >= 2)
 		var/language_prefix = lowertext(copytext(message, 1 ,3))
-		var/datum/language/L = language_keys[language_prefix]
-		if (can_speak_lang(L))
-			return L
+		if(language_prefix in language_keys)
+			var/datum/language/L = language_keys[language_prefix]
+			if (can_speak_lang(L))
+				return L
+			else
+				if(istype(L))
+					say_testing(src, "Tried to speak [L.name] but don't know it, prefix length is [length(language_prefix)] before [message] after [copytext(message, 1+length(language_prefix))]")
+					return (length(language_prefix))
 
 	return null
 

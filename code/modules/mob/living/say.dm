@@ -158,12 +158,17 @@ var/list/department_radio_keys = list(
 	var/datum/language/speaking
 	if(!speaking)
 		speaking = parse_language(message)
-		say_testing(src, "Getting speaking language, [speaking ? "got [speaking.name]" : "got null"]")
-	if(speaking)
+		say_testing(src, "Getting speaking language, [istype(speaking) ? "got [speaking.name]" : "got null"]")
+	if(istype(speaking))
 		var/oldmsg = message
 		message = copytext(message,2+length(speaking.key))
 		say_testing(src, "Have a language, oldmsg = [oldmsg], newmsg = [message]")
 	else
+		if(isnum(speaking))
+			var/oldmsg = message
+			message = copytext(message,1+length(speaking))
+			say_testing(src, "We tried to speak a language we don't have like a stupid, oldmsg = [oldmsg] parsed message = [message]")
+			speaking = null
 		speaking = get_default_language()
 		say_testing(src, "Didnt have a language, get_default_language() gave us [speaking ? speaking.name : "null"]")
 	message = trim_left(message)
