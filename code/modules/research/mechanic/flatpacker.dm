@@ -69,6 +69,7 @@
 		being_built.loc = FP
 		FP.name += " ([being_built.name])"
 		FP.machine = being_built
+		FP.update_icon()
 		FP.loc = get_turf(output)
 		src.visible_message("\icon [src] \The [src] beeps: \"Succesfully completed \the [being_built.name].\"")
 		src.being_built = null
