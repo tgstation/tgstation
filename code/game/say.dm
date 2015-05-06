@@ -92,8 +92,8 @@ var/global/image/ghostimg = image("icon"='icons/mob/mob.dmi',"icon_state"="ghost
 			return speaking.format_message(raw_message)
 		else
 			if(overRadio)
-				return speaking.format_message_radio(speaking.say_misunderstood(src, raw_message))
-			return speaking.format_message(speaking.say_misunderstood(src, raw_message))
+				return speaking.format_message_radio(speaking.scramble(raw_message))
+			return speaking.format_message(speaking.scramble(raw_message))
 
 	else
 		var/atom/movable/AM = speaker.GetSource()

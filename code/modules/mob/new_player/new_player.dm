@@ -376,7 +376,7 @@
 			rank = character.mind.role_alt_title
 		//say("[character.real_name],[rank ? " [rank]," : " visitor," ] has arrived on the station.", "Arrivals Announcement Computer")
 		//Broadcast_Message(speaker, vmask, radio, message, name, job, realname, data, compression, zlevels, frequency)
-		Broadcast_Message(announcement_intercom, null, announcement_intercom, "[character.real_name],[rank ? " [rank]," : " visitor," ] has arrived on the station.", "Arrivals Announcement Computer", "Automated Announcement", "Arrivals Announcement Computer", 0, 0, list(0,1), 1459)
+		Broadcast_Message(announcement_intercom, all_languages[LANGUAGE_SOL_COMMON], null, announcement_intercom, "[character.real_name],[rank ? " [rank]," : " visitor," ] has arrived on the station.", "Arrivals Announcement Computer", "Automated Announcement", "Arrivals Announcement Computer", 0, 0, list(0,1), 1459)
 		//del(a)
 
 /mob/new_player/proc/LateChoices()

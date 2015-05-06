@@ -352,6 +352,8 @@ Pressure: [env.return_pressure()]"}
 			if(M.mind)
 				M.mind.special_role = "Cultist"
 				ticker.mode.cult += M.mind
+				M << "<span class='sinister'>You can now speak and understand the forgotten tongue of the occult.</span>"
+				M.add_language("Cult")
 			src << "Made [M] a cultist."
 */
 
