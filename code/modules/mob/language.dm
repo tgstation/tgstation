@@ -85,7 +85,7 @@
 	desc = "Ook ook ook."
 	speech_verb = "chimpers"
 	key = "6"
-	syllables = list("ook","eek", "ack", "ookie", "eekie", "AHAH", "ree")
+	syllables = list("ook","eek", "ack", "ookie", "eekie", "AHAH", "ree", "mudik", "bix", "nood", "mof", "ugga")
 
 // Galactic common languages (systemwide accepted standards).
 /datum/language/trader
