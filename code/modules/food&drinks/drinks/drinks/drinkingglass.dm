@@ -450,7 +450,7 @@
 			if("vanillapudding")
 				icon_state = "vanillapudding"
 				name = "Vanilla Pudding"
-				desc = "Whoah, this thing is on FIRE!"
+				desc = "Tasty."
 			if("cherryshake")
 				icon_state = "cherryshake"
 				name = "Cherry Shake"
@@ -470,7 +470,7 @@
 			if("gibbfloats")
 				icon_state = "gibbfloats"
 				name = "Gibbfloat"
-				desc = "Dr. Gibb with icecream on top."
+				desc = "Dr. Gibb with ice cream on top."
 			else
 				icon_state ="glass_brown"
 				var/image/I = image(icon, "glassoverlay")
