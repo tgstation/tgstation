@@ -54,16 +54,10 @@
 		return 0
 	if(tool_state)
 		//var/obj/item/found = locate(tool_state) in src.module.modules
-		var/obj/item/TS = tool_state
-		if(!is_in_modules(tool_state))
-			drop_item()
-			if(TS && TS.loc)
-				TS.loc = src.loc
-		else
-			TS.loc = src.module
-		contents -= tool_state
-		if (client)
-			client.screen -= tool_state
+		W.loc = get_turf(src)
+		W.layer = initial(W.layer)
+		W.dropped()
+		return 0
 	tool_state = W
 	W.layer = 20
 	contents += W
@@ -87,16 +81,22 @@
 	return 1
 
 /mob/living/silicon/robot/mommi/proc/u_equip(W as obj)
-	if (W == tool_state)
-		if(module_active==tool_state)
-			module_active=null
-		unequip_tool()
-	else if (W == sight_state)
-		if(module_active==sight_state)
-			module_active=null
-		unequip_sight()
-	else if (W == head_state)
-		unequip_head()
+	unEquip(W, 0)
+
+/mob/living/silicon/robot/mommi/unEquip(W as obj, force)
+	if(..(W,force))
+		if (W == tool_state)
+			if(module_active==tool_state)
+				module_active=null
+			unequip_tool()
+		else if (W == sight_state)
+			if(module_active==sight_state)
+				module_active=null
+			unequip_sight()
+		else if (W == head_state)
+			unequip_head()
+		return 1
+	return 0
 
 // Override the default /mob version since we only have one hand slot.
 /mob/living/silicon/robot/mommi/put_in_active_hand(var/obj/item/W)
@@ -109,6 +109,12 @@
 		src << "\red Picking up something that's built-in to you seems a bit silly."
 		return 0
 	return put_in_hands(W)
+
+/mob/living/silicon/robot/mommi/put_in_inactive_hand(var/obj/item/W)
+	W.loc = get_turf(src)
+	W.layer = initial(W.layer)
+	W.dropped()
+	return 0
 /*
 /mob/living/silicon/robot/mommi/get_multitool(var/active_only=0)
 	if(istype(get_active_hand(),/obj/item/device/multitool))
