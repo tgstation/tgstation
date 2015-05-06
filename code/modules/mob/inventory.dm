@@ -116,7 +116,7 @@
 /mob/proc/drop_from_inventory(var/obj/item/W)
 	if(W)
 		if(client)	client.screen -= W
-		u_equip(W)
+		u_equip(W,1)
 		if(!W) return 1 // self destroying objects (tk, grabs)
 		W.layer = initial(W.layer)
 		W.loc = loc
@@ -125,7 +125,7 @@
 		if(isturf(T))
 			T.Entered(W)
 
-		W.dropped(src)
+		//W.dropped(src)
 		//update_icons() // Redundant as u_equip will handle updating the specific overlay
 		return 1
 	return 0
@@ -159,30 +159,46 @@
 /mob/proc/before_take_item(var/obj/item/W)	//TODO: what is this?
 	W.loc = null
 	W.layer = initial(W.layer)
-	u_equip(W)
+	u_equip(W,0)
 	update_icons()
 	return
 
 
-/mob/proc/u_equip(W as obj)
+/mob/proc/u_equip(var/obj/item/W as obj, dropped = 1)
+	if(!W) return 0
+	var/success = 0
 	if (W == r_hand)
 		r_hand = null
+		success = 1
 		update_inv_r_hand()
 	else if (W == l_hand)
 		l_hand = null
+		success = 1
 		update_inv_l_hand()
 	else if (W == back)
 		back = null
+		success = 1
 		update_inv_back()
 	else if (W == wear_mask)
 		wear_mask = null
+		success = 1
 		update_inv_wear_mask()
-	return
+	else
+		return 0
+
+	if(success)
+		if(client)
+			client.screen -= W
+		W.loc = loc
+		if(dropped) W.dropped(src)
+		if(W)
+			W.layer = initial(W.layer)
+	return 1
 
 
 //Attemps to remove an object on a mob.  Will not move it to another area or such, just removes from the mob.
 /mob/proc/remove_from_mob(var/obj/O)
-	src.u_equip(O)
+	src.u_equip(O,1)
 	if (src.client)
 		src.client.screen -= O
 	O.layer = initial(O.layer)

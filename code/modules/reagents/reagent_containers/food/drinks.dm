@@ -1208,7 +1208,7 @@
 
 
 /obj/item/weapon/reagent_containers/food/drinks/dropped(mob/user)
-	if(src && lit && molotov)
+	if(src && lit && molotov && !luminosity)
 		user.SetLuminosity(user.luminosity - brightness_lit)
 		SetLuminosity(brightness_lit)
 

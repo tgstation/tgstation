@@ -58,6 +58,6 @@
 		user.SetLuminosity(user.luminosity + CANDLE_LUM)
 
 /obj/item/candle/dropped(mob/user)
-	if(lit)
+	if(lit && !luminosity)
 		user.SetLuminosity(user.luminosity - CANDLE_LUM)
 		SetLuminosity(CANDLE_LUM)

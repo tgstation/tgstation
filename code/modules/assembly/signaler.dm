@@ -31,8 +31,8 @@
 		if(R.amount >= 1)
 			R.use(1)
 			new /obj/machinery/conveyor_switch(get_turf(src.loc))
-			user.u_equip(src)
-			src.loc = null // garbage collect
+			user.u_equip(src,0)
+			qdel(src)
 
 /obj/item/device/assembly/signaler/activate()
 	if(cooldown > 0)	return 0

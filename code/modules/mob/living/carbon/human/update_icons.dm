@@ -569,13 +569,13 @@ var/global/list/damage_icon_parts = list()
 		// Automatically drop anything in store / id / belt if you're not wearing a uniform.	//CHECK IF NECESARRY
 		for( var/obj/item/thing in list(r_store, l_store, wear_id, belt) )						//
 			if(thing)																			//
-				u_equip(thing)																	//
+				u_equip(thing,1)																//
 				if (client)																		//
 					client.screen -= thing														//
 																								//
 				if (thing)																		//
 					thing.loc = loc																//
-					thing.dropped(src)															//
+					//thing.dropped(src)														//
 					thing.layer = initial(thing.layer)
 	if(update_icons)   update_icons()
 

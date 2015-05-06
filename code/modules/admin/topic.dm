@@ -1209,11 +1209,11 @@
 
 		//strip their stuff and stick it in the crate
 		for(var/obj/item/I in M)
-			M.u_equip(I)
+			M.u_equip(I,1)
 			if(I)
 				I.loc = locker
 				I.layer = initial(I.layer)
-				I.dropped(M)
+				//I.dropped(M)
 
 		M.update_icons()
 		*/
@@ -1287,11 +1287,11 @@
 				var/obj/item/clothing/glasses/G = I
 				if(G.prescription)
 					continue
-			M.u_equip(I)
+			M.u_equip(I,1)
 			if(I)
 				I.loc = M.loc
 				I.layer = initial(I.layer)
-				I.dropped(M)
+				//I.dropped(M)
 				I.loc = pack
 
 		var/obj/item/weapon/card/id/thunderdome/ident = null
@@ -1421,11 +1421,11 @@
 			return
 
 		for(var/obj/item/I in M)
-			M.u_equip(I)
+			M.u_equip(I,1)
 			if(I)
 				I.loc = M.loc
 				I.layer = initial(I.layer)
-				I.dropped(M)
+				//I.dropped(M)
 
 		if(istype(M, /mob/living/carbon/human))
 			var/mob/living/carbon/human/observer = M
@@ -2775,14 +2775,14 @@
 					for(var/mob/living/carbon/human/M in player_list)
 						if(M.wear_suit)
 							var/obj/item/O = M.wear_suit
-							M.u_equip(O)
+							M.u_equip(O,1)
 							O.loc = M.loc
-							O.dropped(M)
+							//O.dropped(M)
 						if(M.head)
 							var/obj/item/O = M.head
-							M.u_equip(O)
+							M.u_equip(O,1)
 							O.loc = M.loc
-							O.dropped(M)
+							//O.dropped(M)
 						M.equip_to_slot_or_del(new /obj/item/clothing/head/helmet/space/bomberman(M), slot_head)
 						M.equip_to_slot_or_del(new /obj/item/clothing/suit/space/bomberman(M), slot_wear_suit)
 						M.equip_to_slot_or_del(new /obj/item/weapon/bomberman/(M), slot_s_store)

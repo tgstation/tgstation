@@ -1365,25 +1365,25 @@ client/proc/delete_all_bomberman()
 	for(var/obj/item/weapon/bomberman/O in world)
 		if(istype(O.loc, /mob/living/carbon/))
 			var/mob/living/carbon/C = O.loc
-			C.u_equip(O)
+			C.u_equip(O,1)
 			O.loc = C.loc
-			O.dropped(C)
+			//O.dropped(C)
 		qdel(O)
 
 	for(var/obj/item/clothing/suit/space/bomberman/O in world)
 		if(istype(O.loc, /mob/living/carbon/))
 			var/mob/living/carbon/C = O.loc
-			C.u_equip(O)
+			C.u_equip(O,1)
 			O.loc = C.loc
-			O.dropped(C)
+			//O.dropped(C)
 		qdel(O)
 
 	for(var/obj/item/clothing/head/helmet/space/bomberman/O in world)
 		if(istype(O.loc, /mob/living/carbon/))
 			var/mob/living/carbon/C = O.loc
-			C.u_equip(O)
+			C.u_equip(O,1)
 			O.loc = C.loc
-			O.dropped(C)
+			//O.dropped(C)
 		qdel(O)
 
 	for(var/obj/structure/softwall/O in world)

@@ -496,8 +496,8 @@ var/global/list/whitelisted_species = list("Human")
 
 	equip(var/mob/living/carbon/human/H)
 		// Unequip existing suits and hats.
-		H.u_equip(H.wear_suit)
-		H.u_equip(H.head)
+		H.u_equip(H.wear_suit,1)
+		H.u_equip(H.head,1)
 
 /datum/species/skrell
 	name = "Skrell"
@@ -553,10 +553,10 @@ var/global/list/whitelisted_species = list("Human")
 	equip(var/mob/living/carbon/human/H)
 		// Unequip existing suits and hats.
 		if(H.mind.assigned_role != "MODE")
-			H.u_equip(H.wear_suit)
-			H.u_equip(H.head)
+			H.u_equip(H.wear_suit,1)
+			H.u_equip(H.head,1)
 		if(H.mind.assigned_role!="Clown")
-			H.u_equip(H.wear_mask)
+			H.u_equip(H.wear_mask,1)
 
 		H.equip_or_collect(new /obj/item/clothing/mask/breath/vox(H), slot_wear_mask)
 		var/suit=/obj/item/clothing/suit/space/vox/civ

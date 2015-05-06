@@ -90,7 +90,7 @@
 
 /obj/item/weapon/winter_gift/attack_self(mob/M as mob)
 	M << "<span class='notice'>The gift was empty!</span>"
-	M.u_equip(src)
+	M.u_equip(src,0)
 	qdel(src)
 	return
 
@@ -149,7 +149,7 @@
 		)
 
 	var/obj/item/I = new gift_type(M)
-	M.u_equip(src)
+	M.u_equip(src,0)
 	M.put_in_hands(I)
 	I.add_fingerprint(M)
 	M << "<span class='notice'>You unwrapped \a [I]!</span>"
@@ -165,7 +165,7 @@
 		)
 
 	var/obj/item/I = new gift_type(M)
-	M.u_equip(src)
+	M.u_equip(src,0)
 	M.put_in_hands(I)
 	I.add_fingerprint(M)
 	M << "<span class='notice'>You unwrapped \a [I]! Tasty!</span>"
@@ -187,7 +187,7 @@
 		)
 
 	var/obj/item/I = new gift_type(M)
-	M.u_equip(src)
+	M.u_equip(src,0)
 	M.put_in_hands(I)
 	I.add_fingerprint(M)
 	M << "<span class='notice'>You unwrapped \a [I]! Looks comfy!</span>"
@@ -237,7 +237,7 @@
 		)
 
 	var/obj/item/I = new gift_type(M)
-	M.u_equip(src)
+	M.u_equip(src,0)
 	M.put_in_hands(I)
 	I.add_fingerprint(M)
 

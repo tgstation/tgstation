@@ -126,11 +126,11 @@ client/proc/antag_madness(var/mob/M in mob_list)
 			pack.name = "[M.real_name]'s belongings"
 
 			for(var/obj/item/I in M)
-				M.u_equip(I)
+				M.u_equip(I,1)
 				if(I)
 					I.loc = M.loc
 					I.layer = initial(I.layer)
-					I.dropped(M)
+					//I.dropped(M)
 					I.loc = pack
 
 			M.equip_to_slot_or_del(new/obj/item/device/radio/headset, slot_ears)
@@ -184,11 +184,11 @@ client/proc/antag_madness(var/mob/M in mob_list)
 			pack.name = "[M.real_name]'s belongings"
 
 			for(var/obj/item/I in M)
-				M.u_equip(I)
+				M.u_equip(I,1)
 				if(I)
 					I.loc = M.loc
 					I.layer = initial(I.layer)
-					I.dropped(M)
+					//I.dropped(M)
 					I.loc = pack
 
 			M.equip_to_slot_or_del(new/obj/item/device/radio/headset, slot_ears)
@@ -240,11 +240,11 @@ client/proc/antag_madness(var/mob/M in mob_list)
 			pack.name = "[M.real_name]'s belongings"
 
 			for(var/obj/item/I in M)
-				M.u_equip(I)
+				M.u_equip(I,1)
 				if(I)
 					I.loc = M.loc
 					I.layer = initial(I.layer)
-					I.dropped(M)
+					//I.dropped(M)
 					I.loc = pack
 
 			var/obj/item/weapon/tome/T = new/obj/item/weapon/tome(M)
@@ -319,11 +319,11 @@ client/proc/antag_madness(var/mob/M in mob_list)
 			pack.name = "[M.real_name]'s belongings"
 
 			for(var/obj/item/I in M)
-				M.u_equip(I)
+				M.u_equip(I,1)
 				if(I)
 					I.loc = M.loc
 					I.layer = initial(I.layer)
-					I.dropped(M)
+					//I.dropped(M)
 					I.loc = pack
 
 			M.equip_to_slot_or_del(new/obj/item/device/radio/headset/syndicate, slot_ears)
@@ -366,11 +366,11 @@ client/proc/antag_madness(var/mob/M in mob_list)
 			pack.name = "[M.real_name]'s belongings"
 
 			for(var/obj/item/I in M)
-				M.u_equip(I)
+				M.u_equip(I,1)
 				if(I)
 					I.loc = M.loc
 					I.layer = initial(I.layer)
-					I.dropped(M)
+					//I.dropped(M)
 					I.loc = pack
 
 			ticker.mode.equip_syndicate(M)
@@ -422,11 +422,11 @@ client/proc/antag_madness(var/mob/M in mob_list)
 			pack.name = "[M.real_name]'s belongings"
 
 			for(var/obj/item/I in M)
-				M.u_equip(I)
+				M.u_equip(I,1)
 				if(I)
 					I.loc = M.loc
 					I.layer = initial(I.layer)
-					I.dropped(M)
+					//I.dropped(M)
 					I.loc = pack
 
 			M.equip_to_slot_or_del(new/obj/item/device/radio/headset/syndicate, slot_ears)
@@ -470,11 +470,11 @@ client/proc/antag_madness(var/mob/M in mob_list)
 			pack.name = "[M.real_name]'s belongings"
 
 			for(var/obj/item/I in M)
-				M.u_equip(I)
+				M.u_equip(I,1)
 				if(I)
 					I.loc = M.loc
 					I.layer = initial(I.layer)
-					I.dropped(M)
+					//I.dropped(M)
 					I.loc = pack
 
 			if(M.gender == "male")

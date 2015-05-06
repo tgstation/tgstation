@@ -727,11 +727,11 @@
 
 				if(do_mob(usr, src, HUMAN_STRIP_DELAY))
 					if(id_item)
-						u_equip(id_item)
+						u_equip(id_item,0)
 						if(pickpocket) usr.put_in_hands(id_item)
 					else
 						if(place_item)
-							usr.u_equip(place_item)
+							usr.u_equip(place_item,1)
 							equip_to_slot_if_possible(place_item, slot_wear_id, 0, 1)
 					// Update strip window
 					if(in_range(src, usr))
@@ -765,11 +765,11 @@
 
 		if(do_mob(usr, src, HUMAN_STRIP_DELAY))
 			if(pocket_item)
-				u_equip(pocket_item)
+				u_equip(pocket_item,1)
 				if(pickpocket) usr.put_in_hands(pocket_item)
 			else
 				if(place_item)
-					usr.u_equip(place_item)
+					usr.u_equip(place_item,1)
 					equip_to_slot_if_possible(place_item, pocket_id, 0, 1)
 			// Update strip window
 			if(in_range(src, usr))
@@ -1711,7 +1711,7 @@
 	if(current_size >= STAGE_THREE)
 		var/list/handlist = list(l_hand, r_hand)
 		for(var/obj/item/hand in handlist)
-			if(prob(current_size*5) && hand.w_class >= ((11-current_size)/2) && u_equip(hand))
+			if(prob(current_size*5) && hand.w_class >= ((11-current_size)/2) && u_equip(hand,1))
 				step_towards(hand, src)
 				src << "<span class = 'warning'>The [S] pulls \the [hand] from your grip!</span>"
 	apply_effect(current_size * 3, IRRADIATE)

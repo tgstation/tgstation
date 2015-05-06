@@ -213,26 +213,26 @@
 		if(slot_in_backpack)
 			return 1
 
-/mob/living/carbon/human/u_equip(obj/item/W as obj)
+/mob/living/carbon/human/u_equip(obj/item/W as obj, dropped = 1)
 	if(!W)	return 0
 
 	var/success
 
 	if (W == wear_suit)
 		if(s_store)
-			u_equip(s_store)
+			u_equip(s_store, 1)
 		success = 1
 		wear_suit = null
 		update_inv_wear_suit()
 	else if (W == w_uniform)
 		if (r_store)
-			u_equip(r_store)
+			u_equip(r_store, 1)
 		if (l_store)
-			u_equip(l_store)
+			u_equip(l_store, 1)
 		if (wear_id)
-			u_equip(wear_id)
+			u_equip(wear_id, 1)
 		if (belt)
-			u_equip(belt)
+			u_equip(belt, 1)
 		w_uniform = null
 		success = 1
 		update_inv_w_uniform()
@@ -315,6 +315,7 @@
 			if (client)
 				client.screen -= W
 			W.loc = loc
+			if(dropped) W.dropped(src)
 			if(W)
 				W.layer = initial(W.layer)
 	update_action_buttons()
@@ -398,7 +399,7 @@
 			update_inv_s_store(redraw_mob)
 		if(slot_in_backpack)
 			if(src.get_active_hand() == W)
-				src.u_equip(W)
+				src.u_equip(W,0)
 			W.loc = src.back
 			return
 		else
@@ -884,23 +885,23 @@ It can still be worn/put on as normal.
 		if(strip_item) //Stripping an item from the mob
 
 			var/obj/item/W = strip_item
-			target.u_equip(W)
+			target.u_equip(W,1)
 			if (target.client)
 				target.client.screen -= W
 			if (W)
 				W.loc = target.loc
 				W.layer = initial(W.layer)
-				W.dropped(target)
+				//W.dropped(target)
 			W.add_fingerprint(source)
 			if(slot_to_process == slot_l_store) //pockets! Needs to process the other one too. Snowflake code, wooo! It's not like anyone will rewrite this anytime soon. If I'm wrong then... CONGRATULATIONS! ;)
 				if(target.r_store)
-					target.u_equip(target.r_store) //At this stage l_store is already processed by the code above, we only need to process r_store.
+					target.u_equip(target.r_store,0) //At this stage l_store is already processed by the code above, we only need to process r_store.
 		else
 			if(item && target.has_organ_for_slot(slot_to_process)) //Placing an item on the mob
 				if(item.mob_can_equip(target, slot_to_process, 0))
-					source.u_equip(item)
-					if(item)
-						item.dropped(source)
+					source.u_equip(item,1)
+					//if(item)
+						//item.dropped(source)
 					target.equip_to_slot_if_possible(item, slot_to_process, 0, 1, 1)
 					source.update_icons()
 					target.update_icons()

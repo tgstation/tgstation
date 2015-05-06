@@ -267,7 +267,7 @@
 		if (target != user && target.getarmor(target_zone, "melee") > 5 && prob(50))
 			for(var/mob/O in viewers(world.view, user))
 				O.show_message(text("<span class='danger'>[user] tries to stab [target] in \the [hit_area] with [src.name], but the attack is deflected by armor!</span>"), 1)
-			user.u_equip(src)
+			user.u_equip(src,1)
 			del(src)
 			return
 

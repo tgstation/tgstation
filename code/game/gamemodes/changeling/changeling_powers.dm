@@ -40,7 +40,7 @@
 	var/mob/living/carbon/human/H=src
 
 	for(var/obj/item/slot in H.get_all_slots())
-		u_equip(slot)
+		u_equip(slot, 1)
 
 	monkeyizing = 1
 	canmove = 0
@@ -363,7 +363,7 @@
 	del(animation)
 
 	for(var/obj/item/W in src)
-		C.u_equip(W)
+		C.u_equip(W, 1)
 		if (C.client)
 			C.client.screen -= W
 		if (W)

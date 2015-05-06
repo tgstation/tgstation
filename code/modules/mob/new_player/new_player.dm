@@ -342,14 +342,14 @@
 		character.client << sound('sound/bomberman/start.ogg')
 		if(character.wear_suit)
 			var/obj/item/O = character.wear_suit
-			character.u_equip(O)
+			character.u_equip(O,1)
 			O.loc = character.loc
-			O.dropped(character)
+			//O.dropped(character)
 		if(character.head)
 			var/obj/item/O = character.head
-			character.u_equip(O)
+			character.u_equip(O,1)
 			O.loc = character.loc
-			O.dropped(character)
+			//O.dropped(character)
 		character.equip_to_slot_or_del(new /obj/item/clothing/head/helmet/space/bomberman(character), slot_head)
 		character.equip_to_slot_or_del(new /obj/item/clothing/suit/space/bomberman(character), slot_wear_suit)
 		character.equip_to_slot_or_del(new /obj/item/weapon/bomberman/(character), slot_s_store)

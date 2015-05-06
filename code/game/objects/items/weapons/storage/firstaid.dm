@@ -136,10 +136,10 @@
 		if ((!( M.restrained() ) && !( M.stat ) /*&& M.pocket == src*/))
 			switch(over_object.name)
 				if("r_hand")
-					M.u_equip(src)
+					M.u_equip(src,0)
 					M.put_in_r_hand(src)
 				if("l_hand")
-					M.u_equip(src)
+					M.u_equip(src,0)
 					M.put_in_l_hand(src)
 			src.add_fingerprint(usr)
 			return

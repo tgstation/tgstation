@@ -100,7 +100,7 @@
 
 
 /obj/item/device/flashlight/dropped(mob/user)
-	if(on)
+	if(on && !luminosity)
 		user.SetLuminosity(user.luminosity - brightness_on)
 		SetLuminosity(brightness_on)
 
@@ -284,9 +284,10 @@
 
 /obj/item/device/flashlight/lamp/slime/dropped(mob/user)
 	user.l_color = initial(user.l_color)
-	if(on)
+	if(on && !luminosity)
 		user.SetLuminosity(user.luminosity - brightness_max)
 		SetLuminosity(brightness_max)
 	else
-		user.SetLuminosity(user.luminosity - brightness_min)
-		SetLuminosity(brightness_min)
+		if(!luminosity)
+			user.SetLuminosity(user.luminosity - brightness_min)
+			SetLuminosity(brightness_min)

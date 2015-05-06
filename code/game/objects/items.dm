@@ -162,7 +162,7 @@
 		if(!src.canremove)
 			return
 		else
-			user.u_equip(src)
+			user.u_equip(src,0)
 	else
 		if(isliving(src.loc))
 			return
@@ -197,7 +197,7 @@
 		if(istype(src, /obj/item/clothing) && !src:canremove)
 			return
 		else
-			user.u_equip(src)
+			user.u_equip(src,0)
 	else
 		if(istype(src.loc, /mob/living))
 			return
@@ -641,7 +641,7 @@
 	if(flags & MUSTTWOHAND && src in user)
 		user.drop_from_inventory(src)
 	if(istype(wielded))
-		user.u_equip(wielded)
+		user.u_equip(wielded,1)
 		wielded.wielding = null
 		returnToPool(wielded)
 		wielded = null

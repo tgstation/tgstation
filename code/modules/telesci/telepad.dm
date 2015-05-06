@@ -29,7 +29,7 @@
 			return
 		playsound(src, 'sound/weapons/Genhit.ogg', 50, 1)
 		user << "<span class = 'caution'> You jam \the [W] into \the [src]'s booster coil.</span>"
-		user.u_equip(W)
+		user.u_equip(W,1)
 		W.loc=src
 		amplifier=W
 		return

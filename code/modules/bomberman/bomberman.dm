@@ -292,9 +292,9 @@
 
 	for(var/mob/living/carbon/C in T)
 		for(var/obj/item/weapon/bomberman/dispenser in C.contents)
-			C.u_equip(dispenser)
+			C.u_equip(dispenser,1)
 			dispenser.loc = C.loc
-			dispenser.dropped(C)
+			//dispenser.dropped(C)
 			dispenser.lost()
 			T.turf_animation('icons/obj/bomberman.dmi',"dispenser_break",0,0,MOB_LAYER-0.1,'sound/bomberman/bombed.ogg')
 

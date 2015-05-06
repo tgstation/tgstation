@@ -995,7 +995,7 @@
 			cultist.legcuffed = null
 			cultist.update_inv_legcuffed()
 		if (istype(cultist.wear_mask, /obj/item/clothing/mask/muzzle))
-			cultist.u_equip(cultist.wear_mask)
+			cultist.u_equip(cultist.wear_mask, 1)
 		if(istype(cultist.loc, /obj/structure/closet)&&cultist.loc:welded)
 			cultist.loc:welded = 0
 		if(istype(cultist.loc, /obj/structure/closet/secure_closet)&&cultist.loc:locked)

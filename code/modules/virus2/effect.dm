@@ -535,7 +535,7 @@
 	var/mob/living/carbon/human/H = mob
 	var/obj/item/clothing/glasses/virussunglasses = new /obj/item/clothing/glasses/virussunglasses
 	if(H.glasses && !istype(H.glasses, /obj/item/clothing/glasses/virussunglasses))
-		mob.u_equip(H.glasses)
+		mob.u_equip(H.glasses,1)
 		mob.equip_to_slot(virussunglasses, slot_glasses)
 	if(!slot_glasses)
 		mob.equip_to_slot(virussunglasses, slot_glasses)
@@ -561,7 +561,7 @@
 	if(ishuman(mob))
 		if(mob:glasses && istype(mob:glasses, /obj/item/clothing/glasses/virussunglasses))
 			mob:glasses.canremove = 1
-			mob.u_equip(mob:glasses)
+			mob.u_equip(mob:glasses,1)
 
 /obj/item/clothing/glasses/virussunglasses
 
@@ -588,7 +588,7 @@
 	//
 	var/obj/item/clothing/mask/gas/virusclown_hat = new /obj/item/clothing/mask/gas/virusclown_hat
 	if(mob.wear_mask && !istype(mob.wear_mask, /obj/item/clothing/mask/gas/virusclown_hat))
-		mob.u_equip(mob.wear_mask)
+		mob.u_equip(mob.wear_mask,1)
 		mob.equip_to_slot(virusclown_hat, slot_wear_mask)
 	if(!mob.wear_mask)
 		mob.equip_to_slot(virusclown_hat, slot_wear_mask)
@@ -626,7 +626,7 @@ var/list/compatible_mobs = list(/mob/living/carbon/human, /mob/living/carbon/mon
 
 	var/obj/item/clothing/mask/horsehead/magic/magichead = new /obj/item/clothing/mask/horsehead/magic
 	if(mob.wear_mask && !istype(mob.wear_mask, /obj/item/clothing/mask/horsehead/magic))
-		mob.u_equip(mob.wear_mask)
+		mob.u_equip(mob.wear_mask,1)
 		mob.equip_to_slot(magichead, slot_wear_mask)
 	if(!mob.wear_mask)
 		mob.equip_to_slot(magichead, slot_wear_mask)
