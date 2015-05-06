@@ -26,7 +26,7 @@ obj/machinery/atmospherics/unary/oxygen_generator/update_icon()
 obj/machinery/atmospherics/unary/oxygen_generator/New()
 	..()
 
-	air_contents.volume = 50
+	air_contents.set_volume(50)
 
 obj/machinery/atmospherics/unary/oxygen_generator/process()
 	. = ..()
@@ -40,7 +40,7 @@ obj/machinery/atmospherics/unary/oxygen_generator/process()
 
 		var/added_oxygen = oxygen_content - total_moles
 
-		air_contents.temperature = (current_heat_capacity*air_contents.temperature + 20*added_oxygen*T0C)/(current_heat_capacity+20*added_oxygen)
+		air_contents.set_temperature((current_heat_capacity*air_contents.temperature + 20*added_oxygen*T0C)/(current_heat_capacity+20*added_oxygen))
 		air_contents.adjust_gas(OXYGEN, added_oxygen, 0)
 
 		if(network)

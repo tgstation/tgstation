@@ -118,14 +118,14 @@
 	if(air_transient_volume > 0)
 
 		if(total_heat_capacity > 0)
-			air_transient.temperature = total_thermal_energy/total_heat_capacity
+			air_transient.set_temperature(total_thermal_energy/total_heat_capacity)
 
 			//Allow air mixture to react
 			if(air_transient.react())
 				update = 1
 
 		else
-			air_transient.temperature = 0
+			air_transient.set_temperature(0)
 
 		//Update individual gas_mixtures by volume ratio
 		for(var/datum/gas_mixture/gas in gases)

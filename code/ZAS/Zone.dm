@@ -50,9 +50,9 @@ Class Procs:
 
 /zone/New()
 	air_master.add_zone(src)
-	air.temperature = TCMB
+	air.set_temperature(TCMB)
 	air.group_multiplier = 1
-	air.volume = CELL_VOLUME
+	air.set_volume(CELL_VOLUME)
 
 /zone/proc/add(turf/simulated/T)
 #ifdef ZASDBG

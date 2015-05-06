@@ -58,7 +58,7 @@
 
 /obj/machinery/atmospherics/unary/vent_pump/high_volume/New()
 	..()
-	air_contents.volume = 1000
+	air_contents.set_volume(1000)
 
 /obj/machinery/atmospherics/unary/vent_pump/update_icon()
 	if(welded)

@@ -103,7 +103,7 @@
 
 				if(combined_heat_capacity > 0)
 					var/combined_energy = set_temperature*cooling_power + air_heat_capacity*removed.temperature
-					removed.temperature = combined_energy/combined_heat_capacity
+					removed.set_temperature(combined_energy/combined_heat_capacity)
 				env.merge(removed)
 				return 1
 			env.merge(removed)

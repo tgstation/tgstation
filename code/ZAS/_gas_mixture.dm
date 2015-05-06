@@ -99,7 +99,7 @@ What are the archived variables for?
 //if use_group is 0, the group_multiplier isn't considered
 //supports negative values
 /datum/gas_mixture/proc/adjust_gas(gasid, moles, use_group = 1)
-	if(moles == 0 || !(gasid in gases))
+	if(moles == 0)
 		return
 
 	if(group_multiplier != 1 && use_group)
@@ -111,7 +111,9 @@ What are the archived variables for?
 //Note: this should be the only way in which gas numbers should ever be edited
 //The gas system must be airtight - never bypass this
 /datum/gas_mixture/proc/set_gas(gasid, moles)
-	if(!(gasid in gases) || moles < 0)
+	ASSERT(gasid in gases)
+
+	if(moles < 0)
 		return
 
 	var/old_moles = gases[gasid]
@@ -339,7 +341,7 @@ What are the archived variables for?
 		var/giver_heat_capacity = giver.heat_capacity*giver.group_multiplier
 		var/combined_heat_capacity = giver_heat_capacity + self_heat_capacity
 		if(combined_heat_capacity != 0)
-			temperature = (giver.temperature*giver_heat_capacity + temperature*self_heat_capacity)/combined_heat_capacity
+			set_temperature((giver.temperature*giver_heat_capacity + temperature*self_heat_capacity)/combined_heat_capacity)
 
 	if(giver.group_multiplier>1)
 		for(var/gasid in gases)
@@ -512,10 +514,10 @@ What are the archived variables for?
 		var/new_sharer_heat_capacity = old_sharer_heat_capacity + heat_capacity_self_to_sharer - heat_capacity_sharer_to_self
 
 		if(new_self_heat_capacity > MINIMUM_HEAT_CAPACITY)
-			temperature = (old_self_heat_capacity*temperature - heat_capacity_self_to_sharer*temperature_archived + heat_capacity_sharer_to_self*sharer.temperature_archived)/new_self_heat_capacity
+			set_temperature((old_self_heat_capacity*temperature - heat_capacity_self_to_sharer*temperature_archived + heat_capacity_sharer_to_self*sharer.temperature_archived)/new_self_heat_capacity)
 
 		if(new_sharer_heat_capacity > MINIMUM_HEAT_CAPACITY)
-			sharer.temperature = (old_sharer_heat_capacity*sharer.temperature-heat_capacity_sharer_to_self*sharer.temperature_archived + heat_capacity_self_to_sharer*temperature_archived)/new_sharer_heat_capacity
+			sharer.set_temperature((old_sharer_heat_capacity*sharer.temperature-heat_capacity_sharer_to_self*sharer.temperature_archived + heat_capacity_self_to_sharer*temperature_archived)/new_sharer_heat_capacity)
 
 			if(abs(old_sharer_heat_capacity) > MINIMUM_HEAT_CAPACITY)
 				if(abs(new_sharer_heat_capacity/old_sharer_heat_capacity - 1) < 0.10) // <10% change in sharer heat capacity

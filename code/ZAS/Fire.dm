@@ -325,7 +325,7 @@ datum/gas_mixture/proc/zburn(var/turf/T, force_burn)
 					A.burnFireFuel(used_fuel_ratio, used_reactants_ratio)
 
 		//calculate the energy produced by the reaction and then set the new temperature of the mix
-		temperature = (starting_energy + zas_settings.Get(/datum/ZAS_Setting/fire_fuel_energy_release) * total_fuel) / heat_capacity
+		set_temperature((starting_energy + zas_settings.Get(/datum/ZAS_Setting/fire_fuel_energy_release) * total_fuel) / heat_capacity)
 
 		value = total_reactants * used_reactants_ratio
 	return value

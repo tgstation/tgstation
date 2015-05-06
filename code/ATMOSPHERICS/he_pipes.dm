@@ -90,10 +90,10 @@
 		combined_heat_capacity = 1
 	var/final_temperature = combined_energy / combined_heat_capacity
 
-	external_removed.temperature = final_temperature
+	external_removed.set_temperature(final_temperature)
 	environment.merge(external_removed)
 
-	internal_removed.temperature = final_temperature
+	internal_removed.set_temperature(final_temperature)
 	internal.merge(internal_removed)
 
 
@@ -114,7 +114,7 @@
 
 	var/final_temperature = combined_energy / combined_heat_capacity
 
-	internal_removed.temperature = final_temperature
+	internal_removed.set_temperature(final_temperature)
 	internal.merge(internal_removed)
 
 	if(parent && parent.network)

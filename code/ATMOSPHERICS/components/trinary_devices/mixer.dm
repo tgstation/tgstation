@@ -33,7 +33,7 @@ obj/machinery/atmospherics/trinary/mixer/power_change()
 
 obj/machinery/atmospherics/trinary/mixer/New()
 	..()
-	air3.volume = 300
+	air3.set_volume(300)
 
 obj/machinery/atmospherics/trinary/mixer/process()
 	. = ..()

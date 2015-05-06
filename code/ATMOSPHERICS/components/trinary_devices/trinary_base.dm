@@ -24,9 +24,9 @@ obj/machinery/atmospherics/trinary/New()
 	air2 = new
 	air3 = new
 
-	air1.volume = starting_volume
-	air2.volume = starting_volume
-	air3.volume = starting_volume
+	air1.set_volume(starting_volume)
+	air2.set_volume(starting_volume)
+	air3.set_volume(starting_volume)
 
 /obj/machinery/atmospherics/trinary/proc/initialize_directions()
 	switch(dir)

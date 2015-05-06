@@ -12,8 +12,8 @@
 	initialize_directions = dir
 	air_contents = new
 
-	air_contents.temperature = T0C
-	air_contents.volume = starting_volume
+	air_contents.set_temperature(T0C)
+	air_contents.set_volume(starting_volume)
 
 /obj/machinery/atmospherics/unary/buildFrom(var/mob/usr,var/obj/item/pipe/pipe)
 	dir = pipe.dir

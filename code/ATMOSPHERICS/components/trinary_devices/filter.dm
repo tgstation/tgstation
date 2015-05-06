@@ -80,7 +80,7 @@ obj/machinery/atmospherics/trinary/filter/process()
 		if(!removed)
 			return
 		var/datum/gas_mixture/filtered_out = new
-		filtered_out.temperature = removed.temperature
+		filtered_out.set_temperature(removed.temperature)
 
 		var/list/gases_to_remove
 
