@@ -16,12 +16,13 @@
 	var/locked = 1
 
 /obj/item/weapon/airlock_electronics/attack_self(mob/user as mob)
-	if (!ishuman(user))
+	if (!ishuman(user) && !ismommi(user))
 		return ..(user)
 
-	var/mob/living/carbon/human/H = user
-	if(H.getBrainLoss() >= 60)
-		return
+	if(ishuman(user))
+		var/mob/living/carbon/human/H = user
+		if(H.getBrainLoss() >= 60)
+			return
 
 	var/t1 = text("")
 
@@ -70,7 +71,7 @@
 
 /obj/item/weapon/airlock_electronics/Topic(href, href_list)
 	..()
-	if (usr.stat || usr.restrained() || !ishuman(usr))
+	if (usr.stat || usr.restrained() || (!ishuman(usr) && !ismommi(usr)))
 		return
 	if (href_list["close"])
 		usr << browse(null, "window=airlock")
@@ -84,6 +85,9 @@
 		if (I && src.check_access(I))
 			src.locked = 0
 			src.last_configurator = I:registered_name
+		if (ismommi(usr))
+			src.locked = 0
+			src.last_configurator = usr.name
 
 	if (locked)
 		return
