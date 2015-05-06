@@ -11,25 +11,26 @@ Sorry Giacom. Please don't be mad :(
 
 /mob/living/New()
 	. = ..()
-	generateStaticOverlay()
-	if(staticOverlays.len)
-		for(var/mob/living/simple_animal/drone/D in player_list)
-			if(D && D.seeStatic)
-				if(D.staticChoice in staticOverlays)
-					D.staticOverlays |= staticOverlays[D.staticChoice]
-					D.client.images |= staticOverlays[D.staticChoice]
-				else //no choice? force static
-					D.staticOverlays |= staticOverlays["static"]
-					D.client.images |= staticOverlays["static"]
+	if (!ismommi(src))
+		generateStaticOverlay()
+		if(staticOverlays.len)
+			for(var/mob/living/silicon/robot/mommi/M in player_list)
+				if(M && M.keeper)
+					if(M.staticChoice in staticOverlays)
+						M.staticOverlays |= staticOverlays[M.staticChoice]
+						M.client.images |= staticOverlays[M.staticChoice]
+					else //no choice? force static
+						M.staticOverlays |= staticOverlays["static"]
+						M.client.images |= staticOverlays["static"]
 
 
 /mob/living/Destroy()
 	. = ..()
 
-	for(var/mob/living/simple_animal/drone/D in player_list)
+	for(var/mob/living/silicon/robot/mommi/M in player_list)
 		for(var/image/I in staticOverlays)
-			D.staticOverlays.Remove(I)
-			D.client.images.Remove(I)
+			M.staticOverlays.Remove(I)
+			M.client.images.Remove(I)
 			del(I)
 	staticOverlays.len = 0
 

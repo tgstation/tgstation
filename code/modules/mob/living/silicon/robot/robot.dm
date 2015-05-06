@@ -396,6 +396,11 @@
 
 
 /mob/living/silicon/robot/attackby(obj/item/weapon/W as obj, mob/user as mob, params)
+	if (ismommi(user) && user:keeper)
+		if (!ismommi(src) || (ismommi(src) && !src:keeper))
+			user << "<span class ='warning'>No.</span>"
+			return
+
 	if (istype(W, /obj/item/weapon/restraints/handcuffs)) // fuck i don't even know why isrobot() in handcuff code isn't working so this will have to do
 		return
 
