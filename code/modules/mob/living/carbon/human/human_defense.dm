@@ -89,20 +89,20 @@ emp_act
 	if(l_hand && istype(l_hand, /obj/item/weapon))//Current base is the prob(50-d/3)
 		var/obj/item/weapon/I = l_hand
 		if(I.IsShield() && (prob(50 - round(damage / 3))))
-			visible_message("<span class='danger'>[src] blocks [attack_text] with [l_hand]!</span>", \
-							"<span class='userdanger'>[src] blocks [attack_text] with [l_hand]!</span>")
+			src.visible_message("<span class='danger'>[src] blocks [attack_text] with [l_hand]!</span>", \
+							"<span class='userdanger'>You block [attack_text] with [l_hand]!</span>")
 			return 1
 	if(r_hand && istype(r_hand, /obj/item/weapon))
 		var/obj/item/weapon/I = r_hand
 		if(I.IsShield() && (prob(50 - round(damage / 3))))
-			visible_message("<span class='danger'>[src] blocks [attack_text] with [r_hand]!</span>", \
-							"<span class='userdanger'>[src] blocks [attack_text] with [r_hand]!</span>")
+			src.visible_message("<span class='danger'>[src] blocks [attack_text] with [r_hand]!</span>", \
+							"<span class='userdanger'>You block [attack_text] with [r_hand]!</span>")
 			return 1
 	if(wear_suit && istype(wear_suit, /obj/item/))
 		var/obj/item/I = wear_suit
 		if(I.IsShield() && (prob(50)))
-			visible_message("<span class='danger'>The reactive teleport system flings [src] clear of [attack_text]!</span>", \
-							"<span class='userdanger'>The reactive teleport system flings [src] clear of [attack_text]!</span>")
+			src.visible_message("<span class='danger'>The reactive teleport system flings [src] clear of [attack_text]!</span>", \
+							"<span class='userdanger'>The reactive teleport system flings you clear of [attack_text]!</span>")
 			var/list/turfs = new/list()
 			for(var/turf/T in orange(6, src))
 				if(istype(T,/turf/space)) continue
@@ -138,11 +138,15 @@ emp_act
 				return 0
 
 		if(I.attack_verb && I.attack_verb.len)
-			visible_message("<span class='danger'>[user] has [pick(I.attack_verb)] [src] in the [hit_area] with [I]!</span>", \
-							"<span class='userdanger'>[user] has [pick(I.attack_verb)] [src] in the [hit_area] with [I]!</span>")
+			src.visible_message("<span class='danger'>[user] [pick(I.attack_verb)] [src] in the [hit_area] with [I]!</span>", \
+								"<span class='userdanger'>[user] [pick(I.attack_verb)] you in the [hit_area] with [I]!</span>", \
+								"<span class='italics'>You hear a hit!</span>", \
+								user, "<span class='userdanger'>You [pick(I.attack_verb)] [src] in the [hit_area] with [I]!</span>")
 		else if(I.force)
-			visible_message("<span class='danger'>[user] has attacked [src] in the [hit_area] with [I]!</span>", \
-							"<span class='userdanger'>[user] has attacked [src] in the [hit_area] with [I]!</span>")
+			src.visible_message("<span class='danger'>[user] attack [src] in the [hit_area] with [I]!</span>", \
+								"<span class='userdanger'>[user] attacks you in the [hit_area] with [I]!</span>", \
+								"<span class='italics'>You hear a hit!</span>", \
+								user, "<span class='userdanger'>You attack [src] in the [hit_area] with [I]!</span>")
 		else
 			return 0
 
@@ -181,8 +185,8 @@ emp_act
 				if("head")	//Harder to score a stun but if you do it lasts a bit longer
 					if(stat == CONSCIOUS)
 						if(prob(I.force))
-							visible_message("<span class='danger'>[src] has been knocked unconscious!</span>", \
-											"<span class='userdanger'>[src] has been knocked unconscious!</span>")
+							src.visible_message("<span class='danger'>[src] has been knocked unconscious!</span>", \
+											"<span class='userdanger'>You've been knocked unconscious!</span>")
 							apply_effect(20, PARALYZE, armor)
 						if(prob(I.force + ((100 - src.health)/2)) && src != user && I.damtype == BRUTE)
 							ticker.mode.remove_revolutionary(mind)
@@ -200,8 +204,8 @@ emp_act
 
 				if("chest")	//Easier to score a stun but lasts less time
 					if(stat == CONSCIOUS && I.force && prob(I.force + 10))
-						visible_message("<span class='danger'>[src] has been knocked down!</span>", \
-										"<span class='userdanger'>[src] has been knocked down!</span>")
+						src.visible_message("<span class='danger'>[src] has been knocked down!</span>", \
+										"<span class='userdanger'>You've been knocked down!</span>")
 						apply_effect(5, WEAKEN, armor)
 
 					if(bloody)
@@ -438,8 +442,10 @@ emp_act
 				update_damage_overlays(0)
 			updatehealth()
 
-		visible_message("<span class='danger'>[M.name] has hit [src]!</span>", \
-								"<span class='userdanger'>[M.name] has hit [src]!</span>")
+		src.visible_message("<span class='danger'>[M.name] hits [src]!</span>", \
+							"<span class='userdanger'>[M.name] hits you!</span>", \
+							"<span class='italics'>You hear a hit!</span>", \
+							M, "<span class='userdanger'>You hit [src]!</span>")
 		add_logs(M.occupant, src, "attacked", object=M, addition="(INTENT: [uppertext(M.occupant.a_intent)]) (DAMTYPE: [uppertext(M.damtype)])")
 
 	else

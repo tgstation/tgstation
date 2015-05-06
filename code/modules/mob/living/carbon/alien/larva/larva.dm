@@ -58,8 +58,10 @@
 		if (prob(90))
 			playsound(loc, "punch", 25, 1, -1)
 			add_logs(M, src, "attacked", admin=0)
-			visible_message("<span class='danger'>[M] has kicked [src]!</span>", \
-					"<span class='userdanger'>[M] has kicked [src]!</span>")
+			src.visible_message("<span class='danger'>[M] kick [src]!</span>", \
+							"<span class='userdanger'>[M] kicks you!</span>", \
+							"<span class='italics'>You hear a slap!</span>", \
+							M, "<span class='userdanger'>You kick [src]!</span>")
 			if ((stat != DEAD) && (damage > 4.9))
 				Paralyse(rand(5,10))
 
@@ -67,8 +69,9 @@
 			updatehealth()
 		else
 			playsound(loc, 'sound/weapons/punchmiss.ogg', 25, 1, -1)
-			visible_message("<span class='danger'>[M] has attempted to kick [src]!</span>", \
-					"<span class='userdanger'>[M] has attempted to kick [src]!</span>")
+			src.visible_message("<span class='danger'>[M] attempts to kick [src], but misses!</span>", \
+							"<span class='userdanger'>[M] attempts to kick you, but misses!</span>", null, \
+							M, "<span class='userdanger'>Your kick misses [src]!</span>")
 
 	return
 
