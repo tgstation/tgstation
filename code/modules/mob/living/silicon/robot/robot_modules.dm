@@ -128,6 +128,7 @@
 	modules += new /obj/item/weapon/pipe_dispenser(src) //What could possibly go wrong?
 	modules += new /obj/item/weapon/extinguisher(src)
 	modules += new /obj/item/weapon/weldingtool/largetank/cyborg(src)
+	modules += new /obj/item/device/lightreplacer/cyborg(src)
 	modules += new /obj/item/weapon/screwdriver(src)
 	modules += new /obj/item/weapon/wrench(src)
 	modules += new /obj/item/weapon/crowbar(src)
