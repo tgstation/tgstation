@@ -61,6 +61,7 @@
 	var/list/speech_buffer = list() // Last phrase said near it and person who said it
 
 	var/mood = "" // To show its face
+	var/mutator_used = FALSE //So you can't shove a dozen mutators into a single slime
 
 	///////////TIME FOR SUBSPECIES
 
@@ -80,7 +81,6 @@
 		icon_dead = "[icon_state] dead"
 		real_name = name
 		slime_mutation = mutation_table(colour)
-		mutation_chance = rand(25, 35)
 		var/sanitizedcolour = replacetext(colour, " ", "")
 		coretype = text2path("/obj/item/slime_extract/[sanitizedcolour]")
 	..()
