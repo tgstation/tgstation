@@ -125,6 +125,7 @@
 	var/mob/living/silicon/robot/mommi/M = new /mob/living/silicon/robot/mommi(get_turf(loc))
 	if(!M)	return
 
+	M.generated = 1
 	M.invisibility = 0
 	//M.custom_name = created_name
 
