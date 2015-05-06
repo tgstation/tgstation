@@ -25,8 +25,9 @@ They can only use one tool at a time, they can't choose modules, and they have 1
 	var/list/staticChoices = list("static", "blank", "letter")
 	//var/obj/screen/inv_sight = null
 
-	var/killswitch = 0 //Used to stop derelict mommis from escape their z-level
-	var/allowed_z = list()
+	var/killswitch = 0 //Used to stop mommis from escape their z-level
+	var/allowed_z = 1
+	var/finalized = 0 //Track if the mommi finished spawning
 
 //one tool and one sightmod can be activated at any one time.
 	var/tool_state = null
@@ -68,6 +69,10 @@ They can only use one tool at a time, they can't choose modules, and they have 1
 		connected_ai = null // Enforce no AI parent
 		scrambledcodes = 1 // Hide from console because people are fucking idiots
 
+
+	initialize_killswitch() //make the explode if they leave their z-level
+
+
 	if(connected_ai)
 		connected_ai.connected_robots += src
 		lawsync()
@@ -97,6 +102,9 @@ They can only use one tool at a time, they can't choose modules, and they have 1
 	mmi.brainmob.container = mmi
 	mmi.contents += mmi.brainmob
 
+	spawn (10)
+		updateSeeStaticMobs()
+
 //	wires = new /datum/wires/robot/mommi
 
 	// Sanity check
@@ -107,6 +115,8 @@ They can only use one tool at a time, they can't choose modules, and they have 1
 		verbs += /mob/living/silicon/robot/mommi/proc/choose_icon
 	spawn (10)
 		src.updateicon()
+	spawn (30)
+		src.finalized = 1
 	..()
 
 
@@ -465,6 +475,33 @@ They can only use one tool at a time, they can't choose modules, and they have 1
 	onclose(src,"robotmod") // Register on-close shit, which unsets machinery.
 
 */
+/mob/living/silicon/robot/mommi/proc/initialize_killswitch()
+	allowed_z = src.z
+	var/station_name
+	switch (allowed_z)
+		if(1)
+			station_name = "Space Station 13"
+		if(2)
+			station_name = "Central Command"
+		if(3)
+			station_name = "The Communication Satelite"
+		if(4)
+			station_name = "The Derelict"
+		if(5)
+			station_name = "The Mining Asteroid"
+		if(6)
+			station_name = "Deep Space"
+		if(7)
+			station_name = "Deep Space"
+		if(8)
+			station_name = "The Clown Planet"
+		if(9) //away mission
+			station_name = "The Away Mission"
+	add_ion_law("[station_name] is your station.  Do not leave [station_name].")
+	spawn (10)
+		killswitch = 1
+
+
 
 /mob/living/silicon/robot/mommi/installed_modules()
 	if(!module)
@@ -601,12 +638,15 @@ They can only use one tool at a time, they can't choose modules, and they have 1
 
 /mob/living/silicon/robot/mommi/sensor_mode()
 	set name = "Set Sensor Augmentation"
-	var/sensor_type = input("Please select sensor type.", "Sensor Integration", null) in list("Mesons" ,"Disable")
+	var/sensor_type = input("Please select sensor type.", "Sensor Integration", null) in list("Mesons", "Night Vision" ,"Disable")
 	sight_mode = 0
 	switch(sensor_type)
 		if ("Mesons")
 			sight_mode |= BORGMESON
 			src << "<span class='notice'>Meson overlay enabled.</span>"
+		if ("Night Vision")
+			sight_mode |= BORGNV
+			src << "<span class='notice'>Night Vision enabled.</span>"
 		if ("Disable")
 			src << "Sensor augmentations disabled."
 
@@ -627,3 +667,17 @@ They can only use one tool at a time, they can't choose modules, and they have 1
 
 	updateSeeStaticMobs()
 
+
+/mob/living/silicon/robot/mommi/examinate(atom/A as mob|obj|turf in view()) //It used to be oview(12), but I can't really say why
+	set name = "Examine"
+	set category = "IC"
+
+	if(is_blind(src))
+		src << "<span class='notice'>Something is there but you can't see it.</span>"
+		return
+	if(istype(A, /mob) && !ismommi(A) && src.keeper)
+		src << "<span class='notice'>Something is there, but you can't see it.</span>"
+		return
+
+	face_atom(A)
+	A.examine(src)

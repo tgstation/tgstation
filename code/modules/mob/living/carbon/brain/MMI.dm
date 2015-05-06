@@ -27,6 +27,8 @@
 
 
 /obj/item/device/mmi/proc/try_handling_mommi_construction(var/obj/item/O as obj, var/mob/user as mob)
+	if (ismommi(user))
+		return //no
 	if(istype(O,/obj/item/weapon/screwdriver))
 		for(var/t in mommi_assembly_parts)
 			var/cc=contents_count(t)

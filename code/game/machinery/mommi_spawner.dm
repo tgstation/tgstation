@@ -66,12 +66,14 @@
 		user << "\red \The [src] doesn't have enough metal to complete this task."
 		return 1
 
-	if(alert(src, "Do you wish to be turned into a MoMMI at this position?", "Confirm", "Yes", "No") != "Yes") return
-
-	building=1
-	update_icon()
-	spawn(50)
-		makeMoMMI(user)
+	var response = alert(user, "Do you wish to be turned into a MoMMI at this position?", "Confirm", "Yes", "No")
+	if (response != "Yes")
+		return
+	else
+		building=1
+		update_icon()
+		spawn(50)
+			makeMoMMI(user)
 
 /obj/machinery/mommi_spawner/attackby(var/obj/item/O as obj, var/mob/user as mob)
 	if(istype(O,/obj/item/device/mmi))
@@ -138,12 +140,12 @@
 		M.key = user.key
 
 	M.job = "MoMMI"
-
+/* Now generic
 	if(M.z==4) // Derelict Z-level?
 		M.add_ion_law("The Derelict is your station.  Do not leave the Derelict.")
 		M.killswitch = 1
-		M.allowed_z += 4
-
+		M.allowed_z = 4
+*/
 	//M.cell = locate(/obj/item/weapon/cell) in contents
 	//M.cell.loc = M
 	user.loc = M//Should fix cybros run time erroring when blown up. It got deleted before, along with the frame.

@@ -14,8 +14,11 @@
 	update_gravity(mob_has_gravity())
 	handle_fire()
 	updateicon()
-	if(killswitch)
+	if(prob(10) && keeper)
+		updateSeeStaticMobs()
+	if(killswitch && finalized)
 		process_killswitch()
+
 //	handle_beams()
 
 
@@ -156,6 +159,12 @@
 			src.sight |= SEE_TURFS
 			src.sight |= SEE_MOBS
 			src.see_invisible = SEE_INVISIBLE_MINIMUM
+		else if (src.sight_mode & BORGNV)
+			src.sight &= ~SEE_MOBS
+			src.sight &= ~SEE_TURFS
+			src.sight &= ~SEE_OBJS
+			src.see_invisible = SEE_INVISIBLE_MINIMUM
+			src.see_in_dark = 8
 		else if (src.sight_mode & BORGMESON)
 			src.sight |= SEE_TURFS
 			src.see_invisible = SEE_INVISIBLE_MINIMUM
@@ -282,7 +291,7 @@
 /mob/living/silicon/robot/mommi/proc/process_killswitch() //this proc is here to stop derelict mommis from getting on the station and shitting things up
 	if(killswitch) //sanity
 		if(src.z)  //If a mommi somehow escapes inside a locker, it'll get wrecked next tick life() processes
-			if(!(src.z in allowed_z))
+			if(!(src.z == allowed_z))
 				src.killswitch()
 				return
 			return
