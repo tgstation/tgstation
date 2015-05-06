@@ -23,7 +23,8 @@
 
 obj/screen/robot/mommi/hat
 	name = "hat"
-	icon_state = "inv2"
+	icon = 'icons/mob/screen_plasmafire.dmi'
+	icon_state = "head"
 
 /obj/screen/robot/mommi/hat/Click()
 	var/mob/living/silicon/robot/mommi/M = usr
