@@ -1162,6 +1162,7 @@ var/global/list/g_fancy_list_of_types = null
 			M.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack/captain(M), slot_back)
 			M.equip_to_slot_or_del(new /obj/item/weapon/storage/box/engineer(M), slot_in_backpack)
 			M.equip_to_slot_or_del(new /obj/item/weapon/storage/belt/security/full(M), slot_belt)
+			M.equip_to_slot_or_del(new /obj/item/weapon/melee/baton/loaded(M), slot_in_backpack)
 
 			R.keyslot = new /obj/item/device/encryptionkey/heads/captain
 
@@ -1186,6 +1187,7 @@ var/global/list/g_fancy_list_of_types = null
 			M.equip_to_slot_or_del(new /obj/item/weapon/storage/box/engineer(M), slot_in_backpack)
 			M.equip_to_slot_or_del(new /obj/item/weapon/storage/box/handcuffs(M), slot_in_backpack)
 			M.equip_to_slot_or_del(new /obj/item/weapon/storage/belt/security/full(M), slot_belt)
+			M.equip_to_slot_or_del(new /obj/item/weapon/melee/baton/loaded(M), slot_in_backpack)
 
 			R.keyslot = new /obj/item/device/encryptionkey/heads/hos
 
@@ -1209,6 +1211,7 @@ var/global/list/g_fancy_list_of_types = null
 			M.equip_to_slot_or_del(new /obj/item/weapon/storage/box/engineer(M), slot_in_backpack)
 			M.equip_to_slot_or_del(new /obj/item/weapon/storage/belt/medical(M), slot_belt)
 			M.equip_to_slot_or_del(new /obj/item/weapon/storage/firstaid/regular(M), slot_r_hand)
+			M.equip_to_slot_or_del(new /obj/item/weapon/melee/baton/loaded(M), slot_in_backpack)
 
 			R.keyslot = new /obj/item/device/encryptionkey/heads/cmo
 
@@ -1233,6 +1236,7 @@ var/global/list/g_fancy_list_of_types = null
 			M.equip_to_slot_or_del(new /obj/item/weapon/storage/box/engineer(M), slot_in_backpack)
 			M.equip_to_slot_or_del(new /obj/item/weapon/storage/belt/utility/full(M), slot_belt)
 			M.equip_to_slot_or_del(new /obj/item/weapon/rcd_ammo/large(M), slot_l_store)
+			M.equip_to_slot_or_del(new /obj/item/weapon/melee/baton/loaded(M), slot_in_backpack)
 
 			R.keyslot = new /obj/item/device/encryptionkey/heads/ce
 
