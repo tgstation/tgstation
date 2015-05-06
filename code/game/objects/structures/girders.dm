@@ -89,6 +89,12 @@
 		if (!istype(src.loc, /turf/simulated/floor))
 			usr << "<span class='warning'>A floor must be present to build a false wall!</span>"
 			return
+		if (locate(/turf/simulated/wall) in src.loc)
+			usr << "<span class='warning'>There is already a wall present!</span>"
+			return
+		if (locate(/obj/structure/falsewall) in src.loc)
+			usr << "<span class='warning'>There is already a false wall present!</span>"
+			return
 
 		var/obj/item/stack/sheet/S = W
 		switch(S.type)
