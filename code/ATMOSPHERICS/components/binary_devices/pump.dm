@@ -51,17 +51,15 @@ Thus, the two variables affect pump operation are set in New():
 	return
 
 /obj/machinery/atmospherics/binary/pump/process()
-//		..()
-	if(stat & (NOPOWER|BROKEN))
+	. = ..()
+	if((stat & (NOPOWER|BROKEN)) || !on)
 		return
-	if(!on)
-		return 0
 
 	var/output_starting_pressure = air2.return_pressure()
 
 	if( (target_pressure - output_starting_pressure) < 0.01)
 		//No need to pump gas if target is already reached!
-		return 1
+		return
 
 	//Calculate necessary moles to transfer using PV=nRT
 	if((air1.total_moles() > 0) && (air1.temperature>0))

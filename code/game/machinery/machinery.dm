@@ -156,7 +156,7 @@ Class Procs:
 	..()
 
 /obj/machinery/New()
-	machines += src
+	machines |= src
 	return ..()
 
 /obj/machinery/examine(mob/user)
@@ -166,9 +166,11 @@ Class Procs:
 
 /obj/machinery/Destroy()
 	if(src in machines)
-		machines -= src
+		machines.Remove(src)
 	if(src in power_machines)
-		power_machines -= src
+		power_machines.Remove(src)
+	if(src in atmos_machines)
+		atmos_machines.Remove(src)
 /*
 	if(component_parts)
 		for(var/atom/movable/AM in component_parts)

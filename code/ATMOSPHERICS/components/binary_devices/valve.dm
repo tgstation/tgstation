@@ -148,10 +148,6 @@
 	</ul>
 	"}
 
-/obj/machinery/atmospherics/binary/valve/digital/process()
-	..()
-	return 0
-
 /obj/machinery/atmospherics/binary/valve/digital/Topic(href, href_list)
 	if(..())
 		return

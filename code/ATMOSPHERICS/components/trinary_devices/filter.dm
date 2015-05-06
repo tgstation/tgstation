@@ -54,15 +54,15 @@ obj/machinery/atmospherics/trinary/filter/power_change()
 		update_icon()
 
 obj/machinery/atmospherics/trinary/filter/process()
-	..()
+	. = ..()
 	if(!on)
-		return 0
+		return
 
 	var/output_starting_pressure = air3.return_pressure()
 
 	if(output_starting_pressure >= target_pressure || air2.return_pressure() >= target_pressure )
 		//No need to mix if target is already full!
-		return 1
+		return
 
 	//Calculate necessary moles to transfer using PV=nRT
 

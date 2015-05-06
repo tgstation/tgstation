@@ -105,17 +105,17 @@
 		set_frequency(frequency)
 
 /obj/machinery/atmospherics/unary/vent_scrubber/process()
-	..()
+	. = ..()
 	CHECK_DISABLED(scrubbers)
 	if(stat & (NOPOWER|BROKEN))
 		return
 	if (!node)
-		return 0 // Let's not shut it off, for now.
+		return // Let's not shut it off, for now.
 	if(welded)
-		return 0
+		return
 	//broadcast_status()
 	if(!on)
-		return 0
+		return
 	// New GC does this sometimes
 	if(!loc) return
 

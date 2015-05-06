@@ -20,7 +20,7 @@
 	icon_state = "[prefix]off"
 
 /obj/machinery/atmospherics/unary/thermal_plate/process()
-	..()
+	. = ..()
 
 	var/datum/gas_mixture/environment = loc.return_air()
 
@@ -42,7 +42,7 @@
 
 	if (!internal_removed)
 		environment.merge(external_removed)
-		return 1
+		return
 
 	var/combined_heat_capacity = internal_removed.heat_capacity() + external_removed.heat_capacity()
 	var/combined_energy = internal_removed.temperature * internal_removed.heat_capacity() + external_removed.heat_capacity() * external_removed.temperature
@@ -71,13 +71,13 @@
 /obj/machinery/atmospherics/unary/thermal_plate/proc/radiate()
 	if(network && network.radiate) //Since each member of a network has the same gases each tick
 		air_contents.copy_from(network.radiate) //We can cut down on processing time by only calculating radiate() once and then applying the result
-		return 1
+		return
 
 	var/internal_transfer_moles = 0.25 * air_contents.total_moles()
 	var/datum/gas_mixture/internal_removed = air_contents.remove(internal_transfer_moles)
 
 	if (!internal_removed)
-		return 1
+		return
 
 	var/combined_heat_capacity = internal_removed.heat_capacity() + RADIATION_CAPACITY
 	var/combined_energy = internal_removed.temperature * internal_removed.heat_capacity() + (RADIATION_CAPACITY * 6.4)
