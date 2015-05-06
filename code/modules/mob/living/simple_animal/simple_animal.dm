@@ -27,8 +27,11 @@
 
 	//Interaction
 	var/response_help   = "pokes"
+	var/response_help1   = "poke"
 	var/response_disarm = "shoves"
+	var/response_disarm1 = "shove"
 	var/response_harm   = "hits"
+	var/response_harm1   = "hit"
 	var/harm_intent_damage = 3
 	var/force_threshold = 0 //Minimum force required to deal any damage
 
@@ -266,7 +269,7 @@
 			if (health > 0)
 				src.visible_message("<span class='notice'>[M] [response_help] [src].</span>", \
 									"<span class='notice'>[M] [response_help] you.</span>", null, \
-									M, "<span class='notice'>You [response_help] [src].</span>")
+									M, "<span class='notice'>You [response_help1] [src].</span>")
 				playsound(loc, 'sound/weapons/thudswoosh.ogg', 50, 1, -1)
 
 		if("grab")
@@ -277,7 +280,7 @@
 			src.visible_message("<span class='danger'>[M] [response_harm] [src]!</span>", \
 								"<span class='danger'>[M] [response_harm] you!</span>", \
 								"<span class='italics'>You hear a slap!</span>", \
-								M, "<span class='danger'>You [response_harm] [src]!</span>")
+								M, "<span class='danger'>You [response_harm1] [src]!</span>")
 			playsound(loc, "punch", 25, 1, -1)
 			attack_threshold_check(harm_intent_damage)
 			add_logs(M, src, "attacked", admin=0)
@@ -294,7 +297,7 @@
 		if (health > 0)
 			src.visible_message("<span class='notice'>[M.name] [response_help] [src].</span>", \
 							"<span class='notice'>[M.name] [response_help] you.</span>", null, \
-							M, "<span class='notice'>You [response_help] [src].</span>")
+							M, "<span class='notice'>You [response_help1] [src].</span>")
 			playsound(loc, 'sound/weapons/thudswoosh.ogg', 50, 1, -1)
 
 	return
@@ -306,7 +309,7 @@
 			src.visible_message("<span class='danger'>[M] [response_disarm] [name]!</span>", \
 								"<span class='userdanger'>[M] [response_disarm] you!</span>", \
 								"<span class='italics'>You hear a slap!</span>", \
-								M, "<span class='userdanger'>You [response_disarm] [name]!</span>")
+								M, "<span class='userdanger'>You [response_disarm1] [name]!</span>")
 			add_logs(M, src, "disarmed", admin=0)
 		else
 			var/damage = rand(15, 30)

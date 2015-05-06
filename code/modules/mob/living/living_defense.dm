@@ -183,7 +183,7 @@ proc/vol_by_throwforce_and_or_w_class(var/obj/item/I)
 	if(!supress_message)
 		src.visible_message("<span class='warning'>[user] grabs [src] passively!</span>", \
 							"<span class='danger'>[user] grabs you passively!</span>", null, \
-							user, "<span class='danger'>You grab [src] passively!</span>")
+							user, "<span class='notice'>You grab [src] passively!</span>")
 
 
 /mob/living/attack_slime(mob/living/simple_animal/slime/M as mob)

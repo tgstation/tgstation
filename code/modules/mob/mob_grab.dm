@@ -134,16 +134,20 @@
 	if(state < GRAB_AGGRESSIVE)
 		if(!allow_upgrade)
 			return
-		assailant.visible_message("<span class='warning'>[assailant] has grabbed [affecting] aggressively (now hands)!</span>")
+		affecting.visible_message("<span class='warning'>[assailant] reinforces \his grip on [affecting]!</span>", \
+								"<span class='warning'>[assailant] reinforces \his grip on you!</span>", null, \
+								assailant, "<span class='notice'>You reinforce your grip on [affecting]!</span>")
 		state = GRAB_AGGRESSIVE
 		icon_state = "grabbed1"
 	else
 		if(state < GRAB_NECK)
 			if(isslime(affecting))
-				assailant << "<span class='notice'>You squeeze [affecting], but nothing interesting happens.</span>"
+				assailant << "<span class='warning'>You squeeze [affecting], but nothing interesting happens!</span>"
 				return
 
-			assailant.visible_message("<span class='warning'>[assailant] has reinforced \his grip on [affecting] (now neck)!</span>")
+			affecting.visible_message("<span class='warning'>[assailant] moves \his grip to [affecting]'s neck!</span>", \
+										"<span class='warning'>[assailant] moves \his grip to your neck!</span>", null, \
+										assailant, "<span class='notice'>You move your grip to [affecting]'s neck!</span>")
 			state = GRAB_NECK
 			icon_state = "grabbed+1"
 			if(!affecting.buckled)
@@ -153,7 +157,9 @@
 			hud.name = "disarm/kill"
 		else
 			if(state < GRAB_UPGRADING)
-				assailant.visible_message("<span class='danger'>[assailant] starts to tighten \his grip on [affecting]'s neck!</span>")
+				affecting.visible_message("<span class='danger'>[assailant] starts to tighten \his grip on [affecting]'s neck!</span>", \
+										"<span class='danger'>[assailant] starts to tighten \his grip on your neck!</span>", null, \
+										assailant, "<span class='danger'>You start to tighten your grip on [affecting]'s neck...</span>")
 				hud.icon_state = "disarm/kill1"
 				state = GRAB_UPGRADING
 				if(do_after(assailant, UPGRADE_KILL_TIMER))
@@ -166,14 +172,18 @@
 						qdel(src)
 						return
 					state = GRAB_KILL
-					assailant.visible_message("<span class='danger'>[assailant] has tightened \his grip on [affecting]'s neck!</span>")
+					affecting.visible_message("<span class='danger'>[assailant] tightens \his grip on [affecting]'s neck!</span>", \
+											"<span class='userdanger'>[assailant] tightens \his grip on your neck!</span>", null, \
+											assailant, "<span class='userdanger'>You tighten your grip on [affecting]'s neck!</span>")
 					add_logs(assailant, affecting, "strangled")
 
 					assailant.changeNext_move(CLICK_CD_TKSTRANGLE)
 					affecting.losebreath += 1
 				else
 					if(assailant)
-						assailant.visible_message("<span class='warning'>[assailant] was unable to tighten \his grip on [affecting]'s neck!</span>")
+						affecting.visible_message("<span class='warning'>[assailant] is unable to tighten \his grip on [affecting]'s neck!</span>", \
+												"<span class='warning'>[assailant] is unable to tighten \his grip on your neck!</span>", null, \
+												assailant, "<span class='warning'>You're unable to tighten your grip on [affecting]'s neck!</span>")
 						hud.icon_state = "disarm/kill"
 						state = GRAB_NECK
 
@@ -203,12 +213,16 @@
 	if(M == assailant && state >= GRAB_AGGRESSIVE)
 		if( (ishuman(user) && (user.disabilities & FAT) && ismonkey(affecting) ) || ( isalien(user) && iscarbon(affecting) ) )
 			var/mob/living/carbon/attacker = user
-			user.visible_message("<span class='danger'>[user] is attempting to devour [affecting]!</span>")
+			affecting.visible_message("<span class='danger'>[user] is attempting to devour [affecting]!</span>", \
+								"<span class='userdanger'>[user] is attempting to devour you!</span>", null, \
+								affecting, "<span class='danger'>You're attempting to devour [affecting]...</span>")
 			if(istype(user, /mob/living/carbon/alien/humanoid/hunter))
 				if(!do_mob(user, affecting)||!do_after(user, 30)) return
 			else
 				if(!do_mob(user, affecting)||!do_after(user, 100)) return
-			user.visible_message("<span class='danger'>[user] devours [affecting]!</span>")
+			affecting.visible_message("<span class='danger'>[user] devours [affecting]!</span>", \
+								"<span class='userdanger'>[user] devours you!</span>", null, \
+								user, "<span class='userdanger'>You devour [affecting]!</span>")
 			affecting.loc = user
 			attacker.stomach_contents.Add(affecting)
 			qdel(src)

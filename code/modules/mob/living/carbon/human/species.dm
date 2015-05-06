@@ -706,9 +706,9 @@
 		return
 	if((M != H) && H.check_shields(0, M.name))
 		add_logs(M, H, "attempted to touch")
-		H.visible_message("<span class='warning'>[M] attempted to touch [H]!</span>", \
-						"<span class='danger'>[M] attempted to touch you!</span>", null, \
-						M, "<span class='warning'>You attempted to touch [H]!</span>")
+		H.visible_message("<span class='warning'>[M] attempts to touch [H]!</span>", \
+						"<span class='danger'>[M] attempts to touch you!</span>", null, \
+						M, "<span class='warning'>You attempt to touch [H]!</span>")
 		return 0
 
 	var/datum/martial_art/attacker_style = M.martial_art
@@ -738,8 +738,10 @@
 				M.do_attack_animation(H)
 
 				var/atk_verb = "punch"
+				var/atk_verb1 = "punches"
 				if(H.lying)
 					atk_verb = "kick"
+					atk_verb1 = "kicks"
 				else if(M.dna)
 					atk_verb = M.dna.species.attack_verb
 
@@ -753,9 +755,9 @@
 					else
 						playsound(H.loc, 'sound/weapons/punchmiss.ogg', 25, 1, -1)
 
-					H.visible_message("<span class='warning'>[M] attempted to [atk_verb] [H]!</span>", \
-									"<span class='danger'>[M] attempted to [atk_verb] you!</span>", null, \
-									M, "<span class='danger'>You attempted to [atk_verb] [H]!</span>")
+					H.visible_message("<span class='warning'>[M] attempts to [atk_verb] [H], but misses!</span>", \
+									"<span class='danger'>[M] attempts to [atk_verb] you, but misses!</span>", null, \
+									M, "<span class='danger'>Your [atk_verb] misses [H]!</span>")
 					return 0
 
 
@@ -768,16 +770,16 @@
 					playsound(H.loc, 'sound/weapons/punch1.ogg', 25, 1, -1)
 
 
-				H.visible_message("<span class='danger'>[M] [atk_verb]ed [H]!</span>", \
-								"<span class='userdanger'>[M] [atk_verb]ed you!</span>", \
+				H.visible_message("<span class='danger'>[M] [atk_verb1] [H]!</span>", \
+								"<span class='userdanger'>[M] [atk_verb1] you!</span>", \
 								"<span class='italics'>You hear a slap!</span>", \
-								M, "<span class='userdanger'>You [atk_verb]ed [H]!</span>")
+								M, "<span class='userdanger'>You [atk_verb] [H]!</span>")
 
 				H.apply_damage(damage, BRUTE, affecting, armor_block)
 				if((H.stat != DEAD) && damage >= 9)
-					H.visible_message("<span class='danger'>[M] weakened [H]!</span>", \
-									"<span class='userdanger'>[M] weakened you!</span>", null, \
-									M, "<span class='userdanger'>You weakened [H]!</span>")
+					H.visible_message("<span class='danger'>[M] weakens [H]!</span>", \
+									"<span class='userdanger'>[M] weakens you!</span>", null, \
+									M, "<span class='userdanger'>You weaken [H]!</span>")
 					H.apply_effect(4, WEAKEN, armor_block)
 					H.forcesay(hit_appends)
 				else if(H.lying)
@@ -795,10 +797,10 @@
 				var/randn = rand(1, 100)
 				if(randn <= 25)
 					playsound(H, 'sound/weapons/thudswoosh.ogg', 50, 1, -1)
-					H.visible_message("<span class='danger'>[M] pushed [H]!</span>", \
-									"<span class='userdanger'>[M] pushed you!</span>", \
+					H.visible_message("<span class='danger'>[M] pushes [H]!</span>", \
+									"<span class='userdanger'>[M] pushes you!</span>", \
 									"<span class='italics'>You hear a slap!</span>", \
-									M, "<span class='userdanger'>You pushed [H]!</span>")
+									M, "<span class='userdanger'>You push [H]!</span>")
 					H.apply_effect(2, WEAKEN, H.run_armor_check(affecting, "melee", "<span class='notice'>Your armor prevents your fall!</span>", "<span class='notice'>Your armor softens your fall!</span>"))
 					H.forcesay(hit_appends)
 					return
@@ -808,10 +810,10 @@
 				if(randn <= 60)
 					//BubbleWrap: Disarming breaks a pull
 					if(H.pulling)
-						H.visible_message("<span class='warning'>[M] broke [H]'s grip on [H.pulling]!</span>", \
-										"<span class='danger'>[M] broke your grip on [H.pulling]!</span>", \
+						H.visible_message("<span class='warning'>[M] breaks [H]'s grip on [H.pulling]!</span>", \
+										"<span class='danger'>[M] breaks your grip on [H.pulling]!</span>", \
 										"<span class='italics'>You hear a slap!</span>", \
-										M, "<span class='danger'>You broke [H]'s grip on [H.pulling]!</span>")
+										M, "<span class='danger'>You break [H]'s grip on [H.pulling]!</span>")
 						talked = 1
 						H.stop_pulling()
 
@@ -819,20 +821,20 @@
 					if(istype(H.l_hand, /obj/item/weapon/grab))
 						var/obj/item/weapon/grab/lgrab = H.l_hand
 						if(lgrab.affecting)
-							H.visible_message("<span class='warning'>[M] broke [H]'s grip on [lgrab.affecting]!</span>", \
-											"<span class='danger'>[M] broke your grip on [lgrab.affecting]!</span>", \
+							H.visible_message("<span class='warning'>[M] breaks [H]'s grip on [lgrab.affecting]!</span>", \
+											"<span class='danger'>[M] breaks your grip on [lgrab.affecting]!</span>", \
 											"<span class='italics'>You hear a slap!</span>", \
-											M, "<span class='danger'>You broke [H]'s grip on [lgrab.affecting]!</span>")
+											M, "<span class='danger'>You break [H]'s grip on [lgrab.affecting]!</span>")
 							talked = 1
 						spawn(1)
 							qdel(lgrab)
 					if(istype(H.r_hand, /obj/item/weapon/grab))
 						var/obj/item/weapon/grab/rgrab = H.r_hand
 						if(rgrab.affecting)
-							H.visible_message("<span class='warning'>[M] broke [H]'s grip on [rgrab.affecting]!</span>", \
-											"<span class='danger'>[M] broke your grip on [rgrab.affecting]!</span>", \
+							H.visible_message("<span class='warning'>[M] breaks [H]'s grip on [rgrab.affecting]!</span>", \
+											"<span class='danger'>[M] breaks your grip on [rgrab.affecting]!</span>", \
 											"<span class='italics'>You hear a slap!</span>", \
-											M, "<span class='danger'>You broke [H]'s grip on [rgrab.affecting]!</span>")
+											M, "<span class='danger'>You break [H]'s grip on [rgrab.affecting]!</span>")
 							talked = 1
 						spawn(1)
 							qdel(rgrab)
@@ -840,18 +842,18 @@
 
 					if(!talked)	//BubbleWrap
 						if(H.drop_item())
-							H.visible_message("<span class='danger'>[M] disarmed [H]!</span>", \
-											"<span class='userdanger'>[M] disarmed you!</span>", \
+							H.visible_message("<span class='danger'>[M] disarms [H]!</span>", \
+											"<span class='danger'>[M] disarms you!</span>", \
 											"<span class='italics'>You hear a slap!</span>", \
-											M, "<span class='danger'>You disarmed [H]!</span>")
+											M, "<span class='danger'>You disarm [H]!</span>")
 					playsound(H, 'sound/weapons/thudswoosh.ogg', 50, 1, -1)
 					return
 
 
 				playsound(H, 'sound/weapons/punchmiss.ogg', 25, 1, -1)
-				H.visible_message("<span class='danger'>[M] attempted to disarm [H]!</span>", \
-								"<span class='danger'>[M] attempted to disarm you!</span>", null, \
-								M, "<span class='danger'>You attempted to disarm [H]!</span>")
+				H.visible_message("<span class='warning'>[M] attempts to disarm [H], but fails!</span>", \
+								"<span class='danger'>[M] attempts to disarm you, but fails!</span>", null, \
+								M, "<span class='danger'>You fail to disarm [H]!</span>")
 	return
 
 /datum/species/proc/spec_attacked_by(var/obj/item/I, var/mob/living/user, var/def_zone, var/obj/item/organ/limb/affecting, var/hit_area, var/intent, var/obj/item/organ/limb/target_limb, target_area, var/mob/living/carbon/human/H)
@@ -905,8 +907,8 @@
 			if("head")	//Harder to score a stun but if you do it lasts a bit longer
 				if(H.stat == CONSCIOUS && armor < 50)
 					if(prob(I.force))
-						H.visible_message("<span class='danger'>[H] has been knocked unconscious!</span>", \
-										"<span class='userdanger'>You've been knocked unconscious!</span>")
+						H.visible_message("<span class='danger'>[H] is knocked unconscious!</span>", \
+										"<span class='userdanger'>You're knocked unconscious!</span>")
 						H.apply_effect(20, PARALYZE, armor)
 					if(prob(I.force + ((100 - H.health)/2)) && H != user && I.damtype == BRUTE)
 						ticker.mode.remove_revolutionary(H.mind)
@@ -925,8 +927,8 @@
 
 			if("chest")	//Easier to score a stun but lasts less time
 				if(H.stat == CONSCIOUS && I.force && prob(I.force + 10))
-					H.visible_message("<span class='danger'>[H] has been knocked down!</span>", \
-									"<span class='userdanger'>You are knocked down!</span>")
+					H.visible_message("<span class='danger'>[H] is knocked down!</span>", \
+									"<span class='userdanger'>You're knocked down!</span>")
 					H.apply_effect(5, WEAKEN, armor)
 
 				if(bloody)
@@ -955,11 +957,11 @@
 	else if(I.force)
 		message_verb = "attacked"
 
-	var/attack_message = "[H] has been [message_verb] with [I]."
+	var/attack_message = "[H] is [message_verb] with [I]."
 	if(user)
 		user.do_attack_animation(src)
 		if(user in viewers(src, null))
-			attack_message = "[user] has [message_verb] [H] with [I]!"
+			attack_message = "[user] [message_verb] [H] with [I]!"
 	if(message_verb)
 		H.visible_message("<span class='danger'>[attack_message]</span>",
 		"<span class='userdanger'>[attack_message]</span>")

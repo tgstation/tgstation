@@ -74,10 +74,10 @@
 		if("harm")
 			M.do_attack_animation(src)
 			if (prob(75))
-				src.visible_message("<span class='danger'>[M] punched [name]!</span>", \
-									"<span class='userdanger'>[M] punched you!</span>", \
+				src.visible_message("<span class='danger'>[M] punches [name]!</span>", \
+									"<span class='userdanger'>[M] punches you!</span>", \
 									"<span class='italics'>You hear a slap!</span>", \
-									M, "<span class='userdanger'>You punched [name]!</span>")
+									M, "<span class='userdanger'>You punch [name]!</span>")
 
 				playsound(loc, "punch", 25, 1, -1)
 				var/damage = rand(5, 10)
@@ -86,10 +86,10 @@
 					if ( (paralysis < 5)  && (health > 0) )
 						Paralyse(rand(10, 15))
 						spawn( 0 )
-							src.visible_message("<span class='danger'>[M] has knocked out [name]!</span>", \
-											"<span class='userdanger'>You're knocked out by [M]!</span>", \
+							src.visible_message("<span class='danger'>[M] knocks out [name]!</span>", \
+											"<span class='userdanger'>[M] knocks you out!</span>", \
 											"<span class='italics'>You hear a thud!</span>", \
-											M, "<span class='userdanger'>You knocked out [name]!</span>")
+											M, "<span class='userdanger'>You knock out [name]!</span>")
 							return
 				adjustBruteLoss(damage)
 				add_logs(M, src, "attacked", admin=0)
@@ -129,32 +129,37 @@
 					damage = rand(20, 40)
 					if (paralysis < 15)
 						Paralyse(rand(10, 15))
-					src.visible_message("<span class='danger'>[M] wounded [name]!</span>", \
-										"<span class='userdanger'>[M] wounded you!</span>", null, \
-										M, "<span class='userdanger'>You wounded [name]!</span>")
+					src.visible_message("<span class='danger'>[M] wounds [name]!</span>", \
+										"<span class='userdanger'>[M] wounds you!</span>", null, \
+										M, "<span class='userdanger'>You wound [name]!</span>")
 				else
-					src.visible_message("<span class='danger'>[M] slashed [name]!</span>", \
-									"<span class='userdanger'>[M] slashed [name]!</span>", null, \
-									M, "<span class='userdanger'>You slashed [name]!</span>")
+					src.visible_message("<span class='danger'>[M] slashes [name]!</span>", \
+									"<span class='userdanger'>[M] slashes [name]!</span>", null, \
+									M, "<span class='userdanger'>You slash [name]!</span>")
 				add_logs(M, src, "attacked", admin=0)
 				if (stat != DEAD)
 					adjustBruteLoss(damage)
 					updatehealth()
 			else
 				playsound(loc, 'sound/weapons/slashmiss.ogg', 25, 1, -1)
-				visible_message("<span class='danger'>[M] has attempted to lunge at [name]!</span>", \
-						"<span class='userdanger'>[M] has attempted to lunge at [name]!</span>")
+				src.visible_message("<span class='danger'>[M] attempts to lunge at [name], but misses!</span>", \
+								"<span class='danger'>[M] attempts to lunge at [name], but misses!</span>", null, \
+								M, "<span class='danger'>Your slash misses [name]!</span>")
 
 		if (M.a_intent == "disarm")
 			playsound(loc, 'sound/weapons/pierce.ogg', 25, 1, -1)
 			if(prob(95))
 				Weaken(10)
-				visible_message("<span class='danger'>[M] has tackled down [name]!</span>", \
-						"<span class='userdanger'>[M] has tackled down [name]!</span>")
+				src.visible_message("<span class='danger'>[M] tackles down [name]!</span>", \
+									"<span class='userdanger'>[M] tackles you down!</span>", \
+									"<span class='italics'>You hear a thud!</span>", \
+									M, "<span class='userdanger'>You tackle [name] down!</span>")
 			else
 				if(drop_item())
-					visible_message("<span class='danger'>[M] has disarmed [name]!</span>", \
-							"<span class='userdanger'>[M] has disarmed [name]!</span>")
+					src.visible_message("<span class='danger'>[M] disarms [name]!</span>", \
+										"<span class='userdanger'>[M] disarms you!</span>", \
+										"<span class='italics'>You hear a slap!</span>", \
+										M, "<span class='userdanger'>You disarm [name]!</span>")
 			add_logs(M, src, "disarmed", admin=0)
 			updatehealth()
 	return
