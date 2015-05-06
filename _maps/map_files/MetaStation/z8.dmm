@@ -41,277 +41,276 @@
 "aO" = (/obj/effect/decal/remains/human,/turf/unsimulated/floor/dust,/area/planet/clown/motherlode)
 "aP" = (/obj/item/weapon/pickaxe,/turf/unsimulated/floor/dust,/area/planet/clown/motherlode)
 "aQ" = (/turf/unsimulated/floor/sand,/area/planet/clown/oasis)
-"aR" = (/obj/item/clothing/glasses/sunglasses/blindfold,/turf/unsimulated/floor/sand,/area/planet/clown/oasis)
-"aS" = (/mob/living/simple_animal/hostile/retaliate/clown,/turf/unsimulated/floor/sand,/area/planet/clown/oasis)
-"aT" = (/obj/structure/table/reinforced,/obj/item/toy/cards/deck/syndicate,/turf/unsimulated/shuttle/floor{icon_state = "floor4"},/area/planet/clown)
-"aU" = (/obj/structure/closet/bombcloset,/turf/unsimulated/shuttle/floor{icon_state = "floor4"},/area/planet/clown)
-"aV" = (/obj/effect/overlay/palmtree_r,/turf/unsimulated/floor/sand,/area/planet/clown/oasis)
-"aW" = (/obj/machinery/door/airlock/clown,/turf/unsimulated/floor/sand,/area/planet/clown/oasis)
-"aX" = (/obj/machinery/door/airlock/external,/turf/unsimulated/floor/dust,/area/planet/clown/oasis)
-"aY" = (/obj/structure/sign/vacuum,/turf/unsimulated/wall{icon_state = "bananium0"; name = "bananium wall"},/area/planet/clown/oasis)
-"aZ" = (/obj/machinery/door/airlock/glass,/obj/machinery/deployable/barrier{anchored = 1},/turf/unsimulated/shuttle/floor{icon_state = "floor4"},/area/planet/clown)
-"ba" = (/mob/living/simple_animal/hostile/syndicate/ranged/space,/turf/unsimulated/floor/dust{nitrogen = 0; oxygen = 0; temperature = 2.7},/area/planet/clown)
-"bb" = (/obj/item/weapon/spacecash,/turf/unsimulated/floor/sand,/area/planet/clown/oasis)
-"bc" = (/turf/unsimulated/shuttle/floor{icon_state = "floor4"; nitrogen = 0; oxygen = 0; temperature = 2.7},/area/planet/clown)
-"bd" = (/turf/unsimulated/floor/sand{nitrogen = 0; oxygen = 0; temperature = 2.7},/area/planet/clown)
-"be" = (/obj/structure/grille,/obj/structure/window/reinforced/fulltile,/turf/unsimulated/shuttle/floor{icon_state = "floor4"; nitrogen = 0; oxygen = 0; temperature = 2.7},/area/planet/clown)
-"bf" = (/mob/living/simple_animal/crab,/turf/unsimulated/floor/sand,/area/planet/clown/oasis)
-"bg" = (/obj/item/weapon/gun/projectile/automatic/pistol,/turf/unsimulated/floor/dust{nitrogen = 0; oxygen = 0; temperature = 2.7},/area/planet/clown)
-"bh" = (/obj/item/stack/rods,/turf/unsimulated/floor/dust{nitrogen = 0; oxygen = 0; temperature = 2.7},/area/planet/clown)
-"bi" = (/obj/item/weapon/shard,/turf/unsimulated/shuttle/floor{icon_state = "floor4"; nitrogen = 0; oxygen = 0; temperature = 2.7},/area/planet/clown)
-"bj" = (/obj/machinery/computer/teleporter,/turf/unsimulated/floor/sand,/area/planet/clown/oasis)
-"bk" = (/obj/machinery/teleport/station,/turf/unsimulated/floor/sand,/area/planet/clown/oasis)
-"bl" = (/obj/machinery/teleport/hub,/turf/unsimulated/floor/sand,/area/planet/clown/oasis)
-"bm" = (/obj/item/weapon/shard,/turf/unsimulated/floor/dust{nitrogen = 0; oxygen = 0; temperature = 2.7},/area/planet/clown)
-"bn" = (/obj/effect/landmark/mobcorpse/syndicatesoldier,/turf/unsimulated/shuttle/floor{icon_state = "floor4"; nitrogen = 0; oxygen = 0; temperature = 2.7},/area/planet/clown)
-"bo" = (/obj/item/weapon/wirecutters,/turf/unsimulated/floor/sand,/area/planet/clown/oasis)
-"bp" = (/mob/living/simple_animal/cat/Proc,/turf/unsimulated/floor/sand,/area/planet/clown/oasis)
-"bq" = (/obj/machinery/door/airlock/external,/turf/unsimulated/floor/sand,/area/planet/clown/oasis)
-"br" = (/obj/effect/overlay/palmtree_l,/turf/unsimulated/floor/sand,/area/planet/clown/oasis)
-"bs" = (/obj/item/weapon/screwdriver,/turf/unsimulated/floor/sand,/area/planet/clown/oasis)
-"bt" = (/obj/effect/overlay/coconut,/turf/unsimulated/floor/sand,/area/planet/clown/oasis)
-"bu" = (/obj/machinery/door/airlock/centcom,/turf/unsimulated/shuttle/floor{icon_state = "floor4"; nitrogen = 0; oxygen = 0; temperature = 2.7},/area/planet/clown)
-"bv" = (/turf/unsimulated/wall{icon_state = "bananium0"; name = "bananium wall"},/area/planet/clown/motherlode)
-"bw" = (/obj/machinery/door/airlock/external,/turf/unsimulated/floor/dust,/area/planet/clown/motherlode)
-"bx" = (/obj/structure/sign/vacuum,/turf/unsimulated/wall{icon_state = "bananium0"; name = "bananium wall"},/area/planet/clown/motherlode)
-"by" = (/turf/simulated/floor/beach/water,/area/planet/clown/oasis)
-"bz" = (/obj/structure/closet/athletic_mixed,/obj/item/clothing/head/bandana,/turf/unsimulated/floor/dust,/area/planet/clown/oasis)
-"bA" = (/obj/item/weapon/gun/projectile/automatic/pistol,/turf/unsimulated/shuttle/floor{icon_state = "floor4"; nitrogen = 0; oxygen = 0; temperature = 2.7},/area/planet/clown)
-"bB" = (/obj/structure/stool/bed/chair,/turf/unsimulated/shuttle/floor{icon_state = "floor4"; nitrogen = 0; oxygen = 0; temperature = 2.7},/area/planet/clown)
-"bC" = (/turf/space,/area/planet/clown)
-"bD" = (/obj/machinery/computer/crew,/turf/unsimulated/shuttle/floor{icon_state = "floor4"; nitrogen = 0; oxygen = 0; temperature = 2.7},/area/planet/clown)
-"bE" = (/obj/structure/computerframe,/turf/unsimulated/shuttle/floor{icon_state = "floor4"; nitrogen = 0; oxygen = 0; temperature = 2.7},/area/planet/clown)
-"bF" = (/obj/structure/window/reinforced/fulltile,/obj/structure/grille,/turf/unsimulated/shuttle/floor{icon_state = "floor4"; nitrogen = 0; oxygen = 0; temperature = 2.7},/area/planet/clown)
-"bG" = (/obj/structure/window/reinforced/fulltile,/turf/unsimulated/shuttle/floor{icon_state = "floor4"; nitrogen = 0; oxygen = 0; temperature = 2.7},/area/planet/clown)
-"bH" = (/obj/machinery/firealarm/partyalarm,/turf/unsimulated/wall{icon_state = "bananium0"; name = "bananium wall"},/area/planet/clown/oasis)
-"bI" = (/mob/living/simple_animal/crab/Coffee,/turf/unsimulated/floor/sand,/area/planet/clown/oasis)
-"bJ" = (/obj/item/weapon/beach_ball,/turf/unsimulated/floor/sand,/area/planet/clown/oasis)
-"bK" = (/obj/item/clothing/glasses/sunglasses/big,/turf/unsimulated/floor/sand,/area/planet/clown/oasis)
-"bL" = (/obj/effect/landmark/mobcorpse/pirate,/obj/effect/decal/cleanable/blood/old,/turf/unsimulated/floor/dust,/area/planet/clown/motherlode)
-"bM" = (/obj/item/weapon/reagent_containers/food/drinks/golden_cup,/obj/structure/table/wood,/obj/item/weapon/paper{info = "Y'argh, congratulations for finding me booty. I hope you'll have as much fun with it as I did."},/turf/unsimulated/floor/dust,/area/planet/clown/motherlode)
-"bN" = (/mob/living/simple_animal/hostile/retaliate/clown,/turf/unsimulated/floor/dust,/area/planet/clown/motherlode)
-"bO" = (/obj/effect/decal/cleanable/blood/old,/turf/unsimulated/floor/dust,/area/planet/clown/motherlode)
-"bP" = (/mob/living/simple_animal/hostile/carp/megacarp,/turf/space,/area/space)
-"bQ" = (/turf/unsimulated/wall{icon_state = "rock_nochance"; name = "rock"},/area/planet/clown/desert)
-"bR" = (/turf/unsimulated/floor/dust{nitrogen = 0; oxygen = 0; temperature = 2.7},/area/planet/clown/desert)
-"bS" = (/obj/structure/table/wood,/obj/item/weapon/paper{info = "I always deliver."},/turf/unsimulated/floor/dust{nitrogen = 0; oxygen = 0; temperature = 2.7},/area/planet/clown/desert)
-"bT" = (/obj/item/pizzabox/meat,/obj/structure/table/wood,/turf/unsimulated/floor/dust{nitrogen = 0; oxygen = 0; temperature = 2.7},/area/planet/clown/desert)
-"bU" = (/turf/unsimulated/wall{icon_state = "sandstone0"; name = "sandstone wall"},/area/planet/clown/desert)
-"bV" = (/turf/unsimulated/floor/dust,/area/planet/clown/desert)
-"bW" = (/turf/unsimulated/floor/plating,/area/planet/clown/desert)
-"bX" = (/obj/effect/forcefield,/turf/unsimulated/floor/dust,/area/planet/clown/desert)
-"bY" = (/obj/machinery/door/airlock/sandstone,/turf/unsimulated/floor/sand,/area/planet/clown/desert)
-"bZ" = (/turf/unsimulated/floor/sand,/area/planet/clown/desert)
-"ca" = (/obj/machinery/syndicate_beacon,/turf/unsimulated/floor/sand,/area/planet/clown/desert)
-"cb" = (/mob/living/simple_animal/hostile/syndicate,/turf/unsimulated/floor/sand,/area/planet/clown/desert)
-"cc" = (/mob/living/simple_animal/hostile/syndicate,/turf/unsimulated/floor/plating,/area/planet/clown/desert)
-"cd" = (/mob/living/simple_animal/hostile/blob/blobspore,/turf/simulated/floor/plating/maze,/area/planet/clown/desert)
-"ce" = (/turf/simulated/floor/plating/maze,/area/planet/clown/desert)
-"cf" = (/mob/living/simple_animal/hostile/blob/blobbernaut{color = "FF0000"; name = "desert blobbernaut"},/turf/simulated/floor/plating/maze,/area/planet/clown/desert)
-"cg" = (/obj/effect/landmark/corpse/clown{mobname = "Shoe Snatchin' Willy"; name = "Shoe Snatchin' Willy"},/turf/unsimulated/floor/dust{nitrogen = 0; oxygen = 0; temperature = 2.7},/area/planet/clown)
-"ch" = (/obj/structure/table/reinforced,/obj/item/clothing/shoes/clown_shoes/banana_shoes,/turf/unsimulated/floor/dust{nitrogen = 0; oxygen = 0; temperature = 2.7},/area/planet/clown)
-"ci" = (/obj/structure/closet/crate,/turf/unsimulated/floor/plating,/area/planet/clown/desert)
-"cj" = (/mob/living/simple_animal/hostile/syndicate/ranged,/turf/unsimulated/floor/plating,/area/planet/clown/desert)
-"ck" = (/obj/structure/closet/crate,/obj/effect/spawner/lootdrop/armory_contraband,/obj/effect/spawner/lootdrop/armory_contraband,/turf/unsimulated/floor/plating,/area/planet/clown/desert)
-"cl" = (/obj/machinery/vending/dinnerware,/turf/unsimulated/floor/dust,/area/planet/clown/desert)
-"cm" = (/obj/machinery/vending/snack,/turf/unsimulated/floor/dust,/area/planet/clown/desert)
-"cn" = (/obj/structure/closet/secure_closet/freezer/fridge,/turf/unsimulated/floor/dust,/area/planet/clown/desert)
-"co" = (/obj/structure/closet/secure_closet/freezer/meat,/turf/unsimulated/floor/dust,/area/planet/clown/desert)
-"cp" = (/obj/structure/table/reinforced,/obj/machinery/microwave,/turf/unsimulated/floor/dust,/area/planet/clown/desert)
-"cq" = (/obj/structure/table/wood,/obj/structure/reagent_dispensers/beerkeg,/turf/unsimulated/floor/dust,/area/planet/clown/desert)
-"cr" = (/obj/structure/table/wood,/obj/machinery/chem_dispenser/drinks,/turf/unsimulated/floor/dust,/area/planet/clown/desert)
-"cs" = (/obj/structure/table/wood,/obj/item/weapon/storage/box/drinkingglasses,/turf/unsimulated/floor/dust,/area/planet/clown/desert)
-"ct" = (/obj/machinery/vending/boozeomat,/turf/unsimulated/floor/dust,/area/planet/clown/desert)
-"cu" = (/mob/living/simple_animal/hostile/asteroid/hivelord,/turf/unsimulated/floor/dust,/area/planet/clown/desert)
-"cv" = (/obj/machinery/food_cart,/turf/unsimulated/floor/dust,/area/planet/clown/desert)
-"cw" = (/obj/machinery/door/airlock/sandstone,/turf/unsimulated/floor/dust,/area/planet/clown/desert)
-"cx" = (/obj/structure/table/reinforced,/obj/item/weapon/storage/fancy/donut_box,/turf/unsimulated/floor/dust,/area/planet/clown/desert)
-"cy" = (/obj/structure/table/reinforced,/obj/item/weapon/reagent_containers/food/snacks/tendies,/turf/unsimulated/floor/dust,/area/planet/clown/desert)
-"cz" = (/obj/structure/table/reinforced,/obj/item/weapon/storage/box/donkpockets,/turf/unsimulated/floor/dust,/area/planet/clown/desert)
-"cA" = (/obj/structure/table/reinforced,/obj/machinery/smartfridge/drinks,/turf/unsimulated/floor/dust,/area/planet/clown/desert)
-"cB" = (/obj/structure/table/reinforced,/obj/item/weapon/reagent_containers/food/drinks/bottle/rum,/turf/unsimulated/floor/dust,/area/planet/clown/desert)
-"cC" = (/obj/structure/table/reinforced,/turf/unsimulated/floor/dust,/area/planet/clown/desert)
-"cD" = (/obj/structure/table/reinforced,/obj/item/weapon/reagent_containers/food/drinks/ice,/turf/unsimulated/floor/dust,/area/planet/clown/desert)
-"cE" = (/obj/structure/stool,/turf/unsimulated/floor/dust,/area/planet/clown/desert)
-"cF" = (/obj/structure/reagent_dispensers/beerkeg,/turf/unsimulated/floor/dust,/area/planet/clown/desert)
-"cG" = (/obj/structure/stool/bed/alien,/turf/unsimulated/floor/dust,/area/planet/clown/desert)
-"cH" = (/mob/living/simple_animal/hostile/asteroid/goliath,/turf/unsimulated/floor/dust,/area/planet/clown/desert)
-"cI" = (/obj/structure/table/wood,/turf/unsimulated/floor/dust,/area/planet/clown/desert)
-"cJ" = (/obj/structure/closet/secure_closet/bar,/turf/unsimulated/floor/dust,/area/planet/clown/desert)
-"cK" = (/mob/living/simple_animal/hostile/asteroid/basilisk,/turf/unsimulated/floor/dust,/area/planet/clown/desert)
-"cL" = (/obj/machinery/icecream_vat,/turf/unsimulated/floor/dust,/area/planet/clown/desert)
-"cM" = (/obj/machinery/door/airlock,/turf/unsimulated/floor/dust,/area/planet/clown/desert)
-"cN" = (/obj/machinery/gibber,/turf/unsimulated/floor/dust,/area/planet/clown/desert)
-"cO" = (/obj/structure/barricade/wooden,/turf/unsimulated/floor/sand,/area/planet/clown/desert)
-"cP" = (/obj/machinery/vending/coffee,/turf/unsimulated/floor/dust,/area/planet/clown/desert)
-"cQ" = (/obj/machinery/vending/cola,/turf/unsimulated/floor/dust,/area/planet/clown/desert)
-"cR" = (/obj/structure/table/wood,/obj/item/weapon/gun/projectile/shotgun/combat,/turf/unsimulated/floor/dust,/area/planet/clown/desert)
-"cS" = (/obj/structure/kitchenspike,/turf/unsimulated/floor/dust,/area/planet/clown/desert)
-"cT" = (/obj/structure/barricade/wooden,/turf/unsimulated/floor/plating,/area/planet/clown/desert)
-"cU" = (/obj/structure/sign/barsign,/turf/unsimulated/wall{icon_state = "sandstone0"; name = "sandstone wall"},/area/planet/clown/desert)
-"cV" = (/obj/machinery/door/airlock,/turf/unsimulated/floor/plating,/area/planet/clown/desert)
-"cW" = (/obj/structure/barricade/wooden,/turf/unsimulated/floor/dust,/area/planet/clown/desert)
-"cX" = (/obj/machinery/computer/libraryconsole/bookmanagement,/obj/structure/table/wood,/turf/unsimulated/floor/dust,/area/planet/clown/desert)
-"cY" = (/obj/machinery/bookbinder,/turf/unsimulated/floor/dust,/area/planet/clown/desert)
-"cZ" = (/obj/structure/bookcase,/turf/unsimulated/floor/dust,/area/planet/clown/desert)
-"da" = (/obj/structure/sink,/turf/unsimulated/wall{icon_state = "sandstone0"; name = "sandstone wall"},/area/planet/clown/desert)
-"db" = (/mob/living/simple_animal/hostile/asteroid/basilisk{desc = "A territorial beast, covered in a thick shell that absorbs energy. Its stare causes victims to freeze from the inside. This one seems larger than the others!"; health = 400; maxHealth = 400; melee_damage_lower = 30; melee_damage_upper = 30; name = "big basilisk"},/turf/unsimulated/floor/dust,/area/planet/clown/desert)
-"dc" = (/obj/structure/toilet{dir = 4},/turf/unsimulated/floor/dust,/area/planet/clown/desert)
-"dd" = (/obj/structure/table,/obj/item/weapon/storage/firstaid/toxin,/turf/unsimulated/floor/dust,/area/planet/clown/desert)
-"de" = (/obj/machinery/vending/sustenance,/turf/unsimulated/floor/dust,/area/planet/clown/desert)
-"df" = (/obj/structure/table/wood,/obj/item/weapon/storage/firstaid/regular,/turf/unsimulated/floor/dust,/area/planet/clown/desert)
-"dg" = (/obj/machinery/vending/medical,/turf/unsimulated/floor/dust,/area/planet/clown/desert)
-"dh" = (/obj/structure/statue/sandstone/assistant,/turf/unsimulated/floor/sand,/area/planet/clown/desert)
-"di" = (/obj/structure/rack,/obj/item/clothing/head/helmet/space/eva,/obj/item/clothing/suit/space/eva,/turf/unsimulated/floor/dust,/area/planet/clown/desert)
-"dj" = (/obj/structure/sign/nosmoking_1,/turf/unsimulated/wall{icon_state = "sandstone0"; name = "sandstone wall"},/area/planet/clown/desert)
-"dk" = (/obj/structure/table/wood,/obj/item/weapon/storage/firstaid/o2,/turf/unsimulated/floor/dust,/area/planet/clown/desert)
-"dl" = (/obj/machinery/vending/sovietsoda,/turf/unsimulated/floor/dust,/area/planet/clown/desert)
-"dm" = (/turf/simulated/floor/plating/snow,/area/planet/clown/desert)
-"dn" = (/mob/living/simple_animal/hostile/carp,/turf/unsimulated/floor/dust{nitrogen = 0; oxygen = 0; temperature = 2.7},/area/planet/clown/desert)
-"do" = (/obj/item/weapon/gun/projectile/automatic/gyropistol,/turf/unsimulated/floor/dust{nitrogen = 0; oxygen = 0; temperature = 2.7},/area/planet/clown/desert)
-"dp" = (/obj/effect/decal/remains/human{name = "riesens remains"},/obj/item/clothing/head/rabbitears,/turf/unsimulated/floor/dust{nitrogen = 0; oxygen = 0; temperature = 2.7},/area/planet/clown/desert)
-"dq" = (/obj/effect/decal/remains/xeno,/turf/unsimulated/floor/dust{nitrogen = 0; oxygen = 0; temperature = 2.7},/area/planet/clown/desert)
-"dr" = (/turf/unsimulated/wall{icon_state = "bananium0"; name = "bananium wall"},/area/planet/clown/village)
-"ds" = (/turf/unsimulated/wall{icon_state = "wood0"; name = "wooden wall"},/area/planet/clown/town)
-"dt" = (/obj/machinery/door/airlock/freezer{name = "white airlock"},/turf/simulated/floor/plating/snow,/area/planet/clown/town)
-"du" = (/obj/structure/sign/xeno_warning_mining,/turf/unsimulated/wall{icon_state = "wood0"; name = "wooden wall"},/area/planet/clown/town)
-"dv" = (/turf/unsimulated/wall{icon_state = "rock_nochance"; name = "rock"},/area/planet/clown/village)
-"dw" = (/turf/unsimulated/wall{icon_state = "rock_nochance"; name = "rock"},/area/planet/clown/town)
-"dx" = (/turf/simulated/floor/plating/snow,/area/planet/clown/town)
-"dy" = (/obj/effect/landmark/corpse/syndicatecommando,/turf/simulated/floor/plating/snow,/area/planet/clown/town)
-"dz" = (/turf/unsimulated/floor/grass,/area/planet/clown/village)
-"dA" = (/obj/effect/landmark/corpse/clown,/obj/effect/decal/cleanable/blood,/turf/unsimulated/floor/grass,/area/planet/clown/village)
-"dB" = (/obj/item/weapon/pickaxe/drill/diamonddrill,/obj/effect/landmark/corpse/clown,/obj/effect/decal/cleanable/blood,/turf/unsimulated/floor/grass,/area/planet/clown/village)
-"dC" = (/obj/structure/ore_box,/turf/simulated/floor{dir = 8; icon_state = "barber"},/area/planet/clown/village)
-"dD" = (/obj/item/seeds/bananaseed,/turf/simulated/floor{dir = 8; icon_state = "barber"},/area/planet/clown/village)
-"dE" = (/obj/item/weapon/pickaxe,/turf/simulated/floor/plating,/area/planet/clown/village)
-"dF" = (/turf/simulated/floor/plating,/area/planet/clown/village)
-"dG" = (/obj/effect/decal/remains/human,/turf/simulated/floor/plating,/area/planet/clown/village)
-"dH" = (/obj/structure/barricade/wooden,/turf/simulated/floor/plating/snow,/area/planet/clown/town)
-"dI" = (/obj/effect/decal/remains/human,/obj/item/clothing/suit/space/hardsuit/mining,/obj/effect/decal/cleanable/blood,/turf/unsimulated/floor/grass,/area/planet/clown/village)
-"dJ" = (/obj/item/weapon/paper/crumpled/bloody{info = "I was told getting the bananium would be easy...fuck...they lied... If there was any bananium to be mined left, it's gone now. Send word to my family in the Alpha Minorious Sector if you find this."},/turf/unsimulated/floor/grass,/area/planet/clown/village)
-"dK" = (/obj/structure/barricade/wooden,/turf/unsimulated/floor/grass,/area/planet/clown/village)
-"dL" = (/obj/item/seeds/bananaseed,/mob/living/simple_animal/hostile/asteroid/goldgrub,/turf/simulated/floor{dir = 8; icon_state = "barber"},/area/planet/clown/village)
-"dM" = (/obj/item/seeds/bananaseed,/obj/effect/landmark/corpse/clown,/obj/effect/decal/cleanable/blood,/turf/simulated/floor{dir = 8; icon_state = "barber"},/area/planet/clown/village)
-"dN" = (/obj/item/seeds/bananaseed,/obj/effect/decal/cleanable/blood,/turf/simulated/floor{dir = 8; icon_state = "barber"},/area/planet/clown/village)
-"dO" = (/obj/effect/landmark/corpse/clown,/obj/effect/decal/cleanable/blood,/turf/simulated/floor{dir = 8; icon_state = "barber"},/area/planet/clown/village)
-"dP" = (/turf/simulated/floor{dir = 8; icon_state = "barber"},/area/planet/clown/village)
-"dQ" = (/obj/effect/decal/cleanable/blood,/turf/simulated/floor{dir = 8; icon_state = "barber"},/area/planet/clown/village)
-"dR" = (/mob/living/simple_animal/hostile/asteroid/goliath,/turf/simulated/floor{dir = 8; icon_state = "barber"},/area/planet/clown/village)
-"dS" = (/mob/living/simple_animal/hostile/faithless,/turf/simulated/floor/plating/snow,/area/planet/clown/town)
-"dT" = (/turf/unsimulated/floor/dust,/area/planet/clown/village)
-"dU" = (/obj/machinery/door/airlock/clown,/turf/unsimulated/floor/grass,/area/planet/clown/village)
-"dV" = (/obj/machinery/mineral/input,/obj/effect/decal/cleanable/blood,/turf/simulated/floor{dir = 8; icon_state = "barber"},/area/planet/clown/village)
-"dW" = (/obj/machinery/mineral/mint,/turf/simulated/floor{dir = 8; icon_state = "barber"},/area/planet/clown/village)
-"dX" = (/obj/machinery/mineral/output,/turf/simulated/floor{dir = 8; icon_state = "barber"},/area/planet/clown/village)
-"dY" = (/obj/item/weapon/storage/bag/ore,/turf/simulated/floor{dir = 8; icon_state = "barber"},/area/planet/clown/village)
-"dZ" = (/obj/effect/decal/remains/human,/turf/simulated/floor{dir = 8; icon_state = "barber"},/area/planet/clown/village)
-"ea" = (/obj/effect/mine/stun,/turf/unsimulated/floor/dust{nitrogen = 0; oxygen = 0; temperature = 2.7},/area/planet/clown)
-"eb" = (/obj/item/weapon/restraints/legcuffs/beartrap{armed = 1},/turf/unsimulated/floor/dust{nitrogen = 0; oxygen = 0; temperature = 2.7},/area/planet/clown)
-"ec" = (/obj/item/device/assembly/mousetrap/armed,/turf/unsimulated/floor/dust{nitrogen = 0; oxygen = 0; temperature = 2.7},/area/planet/clown)
-"ed" = (/obj/item/weapon/grown/bananapeel,/turf/unsimulated/floor/dust{nitrogen = 0; oxygen = 0; temperature = 2.7},/area/planet/clown)
-"ee" = (/obj/effect/decal/cleanable/blood/splatter,/turf/simulated/floor/plating/snow,/area/planet/clown/town)
-"ef" = (/obj/item/weapon/grown/log,/turf/simulated/floor/plating/snow,/area/planet/clown/town)
-"eg" = (/obj/structure/flora/tree/pine,/turf/simulated/floor/plating/snow,/area/planet/clown/town)
-"eh" = (/obj/item/clothing/mask/gas/mime,/obj/effect/decal/remains/human,/turf/simulated/floor/plating/snow,/area/planet/clown/town)
-"ei" = (/obj/item/weapon/pickaxe,/turf/unsimulated/floor/grass,/area/planet/clown/village)
-"ej" = (/turf/simulated/wall/mineral/wood,/area/planet/clown/town)
-"ek" = (/turf/simulated/floor/fancy/carpet,/area/planet/clown/town)
-"el" = (/obj/structure/stool/bed,/obj/item/weapon/bedsheet,/turf/simulated/floor/fancy/carpet,/area/planet/clown/town)
-"em" = (/obj/item/toy/crayon/mime,/turf/simulated/floor/fancy/carpet,/area/planet/clown/town)
-"en" = (/obj/structure/stool/bed,/obj/item/clothing/mask/gas/mime,/obj/item/weapon/bedsheet,/obj/effect/decal/remains/human,/turf/simulated/floor/fancy/carpet,/area/planet/clown/town)
-"eo" = (/mob/living/simple_animal/hostile/faithless,/turf/simulated/floor/fancy/carpet,/area/planet/clown/town)
-"ep" = (/obj/effect/decal/cleanable/blood/old,/turf/unsimulated/floor/dust{nitrogen = 0; oxygen = 0; temperature = 2.7},/area/planet/clown)
-"eq" = (/turf/simulated/floor/plating/snow{nitrogen = 0; oxygen = 0; temperature = 2.7},/area/planet/clown)
-"er" = (/obj/structure/stool/bed,/obj/item/clothing/mask/gas/mime,/obj/item/weapon/bedsheet,/obj/effect/decal/remains/human,/turf/simulated/floor/plating/snow,/area/planet/clown/town)
-"es" = (/turf/simulated/floor/engine/cult,/area/planet/clown/town)
-"et" = (/obj/effect/landmark/corpse/clown,/obj/effect/decal/cleanable/blood/old,/turf/unsimulated/floor/dust{nitrogen = 0; oxygen = 0; temperature = 2.7},/area/planet/clown)
-"eu" = (/obj/structure/signpost{desc = "The sign says: This town has gone 0 days without an accident."; name = "Now entering Mime Town"},/turf/simulated/floor/plating/snow{nitrogen = 0; oxygen = 0; temperature = 2.7},/area/planet/clown)
-"ev" = (/obj/structure/mineral_door/wood,/turf/simulated/floor/plating/snow,/area/planet/clown/town)
-"ew" = (/obj/structure/flora/ausbushes/brflowers,/turf/unsimulated/floor/grass,/area/planet/clown/village)
-"ex" = (/obj/item/weapon/twohanded/fireaxe,/turf/unsimulated/floor/dust{nitrogen = 0; oxygen = 0; temperature = 2.7},/area/planet/clown)
-"ey" = (/obj/effect/decal/cleanable/blood/splatter,/turf/unsimulated/wall{icon_state = "wood0"; name = "wooden wall"},/area/planet/clown/town)
-"ez" = (/obj/structure/flora/ausbushes/ppflowers,/mob/living/simple_animal/hostile/retaliate/clown,/turf/unsimulated/floor/grass,/area/planet/clown/village)
-"eA" = (/obj/structure/flora/ausbushes/ppflowers,/turf/unsimulated/floor/grass,/area/planet/clown/village)
-"eB" = (/obj/structure/flora/ausbushes/brflowers,/obj/structure/flora/ausbushes/ppflowers,/turf/unsimulated/floor/grass,/area/planet/clown/village)
-"eC" = (/obj/structure/flora/ausbushes/ppflowers,/obj/structure/flora/ausbushes/lavendergrass,/turf/unsimulated/floor/grass,/area/planet/clown/village)
-"eD" = (/obj/structure/flora/ausbushes/lavendergrass,/mob/living/simple_animal/hostile/retaliate/clown,/turf/unsimulated/floor/grass,/area/planet/clown/village)
-"eE" = (/obj/structure/flora/ausbushes/lavendergrass,/turf/unsimulated/floor/grass,/area/planet/clown/village)
-"eF" = (/obj/effect/mine/stun,/turf/simulated/floor/plating/snow{nitrogen = 0; oxygen = 0; temperature = 2.7},/area/planet/clown)
-"eG" = (/obj/effect/landmark/corpse/clown,/turf/simulated/floor/plating/snow{nitrogen = 0; oxygen = 0; temperature = 2.7},/area/planet/clown)
-"eH" = (/obj/item/weapon/restraints/legcuffs/beartrap{armed = 0},/obj/effect/landmark/corpse/clown,/obj/effect/decal/cleanable/blood/old,/turf/unsimulated/floor/dust{nitrogen = 0; oxygen = 0; temperature = 2.7},/area/planet/clown)
-"eI" = (/mob/living/simple_animal/hostile/creature,/turf/simulated/floor/engine/cult,/area/planet/clown/town)
-"eJ" = (/obj/structure/flora/ausbushes/brflowers,/obj/structure/flora/ausbushes/ppflowers,/mob/living/simple_animal/hostile/retaliate/clown,/turf/unsimulated/floor/grass,/area/planet/clown/village)
-"eK" = (/obj/structure/flora/ausbushes/ppflowers,/obj/structure/flora/ausbushes/brflowers,/obj/structure/flora/ausbushes/lavendergrass,/turf/unsimulated/floor/grass,/area/planet/clown/village)
-"eL" = (/obj/structure/flora/ausbushes/brflowers,/obj/structure/flora/ausbushes/lavendergrass,/turf/unsimulated/floor/grass,/area/planet/clown/village)
-"eM" = (/obj/structure/signpost{desc = "The sign says: Be careful!"; name = "Now leaving Clown Village"},/turf/unsimulated/floor/grass,/area/planet/clown/village)
-"eN" = (/obj/effect/decal/cleanable/blood/splatter,/obj/structure/toilet,/turf/simulated/floor/wood,/area/planet/clown/town)
-"eO" = (/obj/structure/table/wood,/obj/item/weapon/paper/crumpled/bloody{color = ""; info = "WHAT HAVE I DONE"},/turf/simulated/floor/engine/cult,/area/planet/clown/town)
-"eP" = (/obj/structure/table/wood,/turf/simulated/floor/engine/cult,/area/planet/clown/town)
-"eQ" = (/obj/structure/flora/ausbushes/brflowers,/obj/structure/flora/ausbushes/ppflowers,/obj/structure/flora/ausbushes/lavendergrass,/turf/unsimulated/floor/grass,/area/planet/clown/village)
-"eR" = (/obj/structure/flora/ausbushes/brflowers,/mob/living/simple_animal/hostile/retaliate/clown,/turf/unsimulated/floor/grass,/area/planet/clown/village)
-"eS" = (/turf/simulated/floor/wood,/area/planet/clown/town)
-"eT" = (/obj/effect/decal/remains/human,/obj/effect/rune,/obj/item/clothing/mask/gas/mime,/obj/effect/decal/cleanable/blood/splatter,/obj/effect/decal/cleanable/blood/gibs/core,/turf/simulated/floor/engine/cult,/area/planet/clown/town)
-"eU" = (/obj/structure/flora/ausbushes/lavendergrass,/obj/structure/flora/ausbushes/ppflowers,/turf/unsimulated/floor/grass,/area/planet/clown/village)
-"eV" = (/obj/structure/table/wood,/obj/item/clothing/mask/gas/clown_hat,/obj/item/clothing/gloves/color/rainbow/clown,/obj/item/clothing/shoes/clown_shoes{desc = "These shoes appear to be enchanted!"; name = "uhangi's shoes"; slowdown = -1},/obj/item/clothing/under/rank/clown,/obj/item/device/pda/clown,/obj/item/weapon/storage/backpack/clown,/turf/unsimulated/floor/grass,/area/planet/clown/village)
-"eW" = (/obj/structure/table/wood,/obj/item/seeds/cashseed,/obj/item/seeds/cashseed,/obj/item/weapon/cartridge/clown,/turf/unsimulated/floor/grass,/area/planet/clown/village)
-"eX" = (/obj/structure/table/wood,/obj/item/seeds/cashseed,/obj/item/seeds/cashseed,/obj/item/weapon/bikehorn,/turf/unsimulated/floor/grass,/area/planet/clown/village)
-"eY" = (/obj/structure/table/wood,/obj/item/seeds/cashseed,/obj/item/seeds/cashseed,/turf/unsimulated/floor/grass,/area/planet/clown/village)
-"eZ" = (/obj/structure/sign/vacuum,/turf/unsimulated/wall{icon_state = "bananium0"; name = "bananium wall"},/area/planet/clown/village)
-"fa" = (/obj/structure/window/reinforced/fulltile,/obj/structure/grille,/turf/unsimulated/floor/dust,/area/planet/clown/village)
-"fb" = (/obj/structure/mineral_door/wood,/turf/simulated/floor/wood,/area/planet/clown/town)
-"fc" = (/obj/item/trash/candle,/turf/simulated/floor/engine/cult,/area/planet/clown/town)
-"fd" = (/obj/effect/decal/cleanable/blood/splatter,/turf/unsimulated/floor/dust,/area/planet/clown/village)
-"fe" = (/obj/machinery/door/airlock/clown,/turf/unsimulated/floor/dust,/area/planet/clown/village)
-"ff" = (/obj/effect/decal/cleanable/blood/tracks{dir = 4},/turf/unsimulated/floor/dust,/area/planet/clown/village)
-"fg" = (/obj/machinery/door/airlock/external,/obj/effect/decal/cleanable/blood/tracks{dir = 4},/turf/unsimulated/floor/dust,/area/planet/clown/village)
-"fh" = (/obj/effect/decal/cleanable/blood/tracks{dir = 4},/turf/unsimulated/floor/dust{nitrogen = 0; oxygen = 0; temperature = 2.7},/area/planet/clown)
-"fi" = (/obj/effect/decal/cleanable/blood/splatter,/turf/unsimulated/floor/dust{nitrogen = 0; oxygen = 0; temperature = 2.7},/area/planet/clown)
-"fj" = (/obj/effect/landmark/corpse/clown,/turf/unsimulated/floor/dust{nitrogen = 0; oxygen = 0; temperature = 2.7},/area/planet/clown)
-"fk" = (/obj/structure/flora/ausbushes/lavendergrass,/obj/structure/flora/ausbushes/ppflowers,/mob/living/simple_animal/hostile/retaliate/clown,/turf/unsimulated/floor/grass,/area/planet/clown/village)
-"fl" = (/obj/effect/decal/cleanable/blood/splatter,/turf/simulated/floor/engine/cult,/area/planet/clown/town)
-"fm" = (/obj/structure/flora/ausbushes/ppflowers,/obj/structure/flora/ausbushes/brflowers,/obj/structure/flora/ausbushes/lavendergrass,/obj/structure/signpost{desc = "The sign says: Please don't mine the Bananium!"; name = "Welcome to Clown Planet"},/turf/unsimulated/floor/grass,/area/planet/clown/village)
-"fn" = (/obj/structure/flora/ausbushes/brflowers,/obj/structure/flora/ausbushes/ppflowers,/obj/structure/flora/ausbushes/brflowers,/obj/structure/flora/ausbushes/lavendergrass,/turf/unsimulated/floor/grass,/area/planet/clown/village)
-"fo" = (/obj/structure/flora/ausbushes/brflowers,/obj/structure/flora/ausbushes/brflowers,/obj/structure/flora/ausbushes/lavendergrass,/turf/unsimulated/floor/grass,/area/planet/clown/village)
-"fp" = (/obj/structure/mineral_door/wood,/turf/simulated/floor/engine/cult,/area/planet/clown/town)
-"fq" = (/obj/structure/flora/ausbushes/lavendergrass,/obj/structure/flora/ausbushes/ppflowers,/obj/structure/flora/ausbushes/ppflowers,/turf/unsimulated/floor/grass,/area/planet/clown/village)
-"fr" = (/mob/living/simple_animal/hostile/retaliate/clown,/turf/unsimulated/floor/grass,/area/planet/clown/village)
-"fs" = (/obj/machinery/hydroponics/soil,/turf/unsimulated/floor/grass,/area/planet/clown/village)
-"ft" = (/obj/structure/flora/ausbushes/lavendergrass,/obj/structure/flora/ausbushes/ppflowers,/obj/structure/flora/ausbushes/brflowers,/turf/unsimulated/floor/grass,/area/planet/clown/village)
-"fu" = (/obj/structure/flora/ausbushes/brflowers,/obj/structure/flora/ausbushes/lavendergrass,/mob/living/simple_animal/hostile/retaliate/clown,/turf/unsimulated/floor/grass,/area/planet/clown/village)
-"fv" = (/mob/living/simple_animal/hostile/carp,/turf/unsimulated/floor/dust{nitrogen = 0; oxygen = 0; temperature = 2.7},/area/planet/clown)
-"fw" = (/obj/structure/flora/ausbushes/palebush,/turf/unsimulated/floor/grass,/area/planet/clown/village)
-"fx" = (/obj/structure/flora/ausbushes/sunnybush,/turf/unsimulated/floor/grass,/area/planet/clown/village)
-"fy" = (/obj/structure/flora/ausbushes/brflowers,/obj/structure/flora/ausbushes/sunnybush,/turf/unsimulated/floor/grass,/area/planet/clown/village)
-"fz" = (/obj/item/weapon/reagent_containers/food/drinks/bottle/bottleofnothing,/turf/simulated/floor/wood,/area/planet/clown/town)
-"fA" = (/obj/item/clothing/mask/gas/mime,/obj/effect/decal/remains/human,/turf/simulated/floor/wood,/area/planet/clown/town)
-"fB" = (/obj/structure/mineral_door/gold,/turf/simulated/floor{dir = 8; icon_state = "barber"},/area/planet/clown/village)
-"fC" = (/obj/structure/stool/bed,/obj/item/weapon/bedsheet,/turf/simulated/floor/wood,/area/planet/clown/town)
-"fD" = (/turf/simulated/floor/plasteel,/area/planet/clown/town)
-"fE" = (/obj/machinery/constructable_frame,/turf/simulated/floor/plasteel,/area/planet/clown/town)
-"fF" = (/obj/effect/decal/cleanable/oil/streak,/turf/simulated/floor/plasteel,/area/planet/clown/town)
-"fG" = (/obj/structure/stool/bed/chair/comfy/lime,/mob/living/simple_animal/hostile/retaliate/clown,/turf/simulated/floor{dir = 8; icon_state = "barber"},/area/planet/clown/village)
+"aR" = (/mob/living/simple_animal/hostile/retaliate/clown,/turf/unsimulated/floor/sand,/area/planet/clown/oasis)
+"aS" = (/obj/structure/table/reinforced,/obj/item/toy/cards/deck/syndicate,/turf/unsimulated/shuttle/floor{icon_state = "floor4"},/area/planet/clown)
+"aT" = (/obj/structure/closet/bombcloset,/turf/unsimulated/shuttle/floor{icon_state = "floor4"},/area/planet/clown)
+"aU" = (/obj/effect/overlay/palmtree_r,/turf/unsimulated/floor/sand,/area/planet/clown/oasis)
+"aV" = (/obj/machinery/door/airlock/clown,/turf/unsimulated/floor/sand,/area/planet/clown/oasis)
+"aW" = (/obj/machinery/door/airlock/external,/turf/unsimulated/floor/dust,/area/planet/clown/oasis)
+"aX" = (/obj/structure/sign/vacuum,/turf/unsimulated/wall{icon_state = "bananium0"; name = "bananium wall"},/area/planet/clown/oasis)
+"aY" = (/obj/machinery/door/airlock/glass,/obj/machinery/deployable/barrier{anchored = 1},/turf/unsimulated/shuttle/floor{icon_state = "floor4"},/area/planet/clown)
+"aZ" = (/mob/living/simple_animal/hostile/syndicate/ranged/space,/turf/unsimulated/floor/dust{nitrogen = 0; oxygen = 0; temperature = 2.7},/area/planet/clown)
+"ba" = (/obj/item/weapon/spacecash,/turf/unsimulated/floor/sand,/area/planet/clown/oasis)
+"bb" = (/turf/unsimulated/shuttle/floor{icon_state = "floor4"; nitrogen = 0; oxygen = 0; temperature = 2.7},/area/planet/clown)
+"bc" = (/turf/unsimulated/floor/sand{nitrogen = 0; oxygen = 0; temperature = 2.7},/area/planet/clown)
+"bd" = (/obj/structure/grille,/obj/structure/window/reinforced/fulltile,/turf/unsimulated/shuttle/floor{icon_state = "floor4"; nitrogen = 0; oxygen = 0; temperature = 2.7},/area/planet/clown)
+"be" = (/mob/living/simple_animal/crab,/turf/unsimulated/floor/sand,/area/planet/clown/oasis)
+"bf" = (/obj/item/weapon/gun/projectile/automatic/pistol,/turf/unsimulated/floor/dust{nitrogen = 0; oxygen = 0; temperature = 2.7},/area/planet/clown)
+"bg" = (/obj/item/stack/rods,/turf/unsimulated/floor/dust{nitrogen = 0; oxygen = 0; temperature = 2.7},/area/planet/clown)
+"bh" = (/obj/item/weapon/shard,/turf/unsimulated/shuttle/floor{icon_state = "floor4"; nitrogen = 0; oxygen = 0; temperature = 2.7},/area/planet/clown)
+"bi" = (/obj/machinery/computer/teleporter,/turf/unsimulated/floor/sand,/area/planet/clown/oasis)
+"bj" = (/obj/machinery/teleport/station,/turf/unsimulated/floor/sand,/area/planet/clown/oasis)
+"bk" = (/obj/machinery/teleport/hub,/turf/unsimulated/floor/sand,/area/planet/clown/oasis)
+"bl" = (/obj/item/weapon/shard,/turf/unsimulated/floor/dust{nitrogen = 0; oxygen = 0; temperature = 2.7},/area/planet/clown)
+"bm" = (/obj/effect/landmark/mobcorpse/syndicatesoldier,/turf/unsimulated/shuttle/floor{icon_state = "floor4"; nitrogen = 0; oxygen = 0; temperature = 2.7},/area/planet/clown)
+"bn" = (/obj/item/weapon/wirecutters,/turf/unsimulated/floor/sand,/area/planet/clown/oasis)
+"bo" = (/mob/living/simple_animal/cat/Proc,/turf/unsimulated/floor/sand,/area/planet/clown/oasis)
+"bp" = (/obj/machinery/door/airlock/external,/turf/unsimulated/floor/sand,/area/planet/clown/oasis)
+"bq" = (/obj/effect/overlay/palmtree_l,/turf/unsimulated/floor/sand,/area/planet/clown/oasis)
+"br" = (/obj/item/weapon/screwdriver,/turf/unsimulated/floor/sand,/area/planet/clown/oasis)
+"bs" = (/obj/effect/overlay/coconut,/turf/unsimulated/floor/sand,/area/planet/clown/oasis)
+"bt" = (/obj/machinery/door/airlock/centcom,/turf/unsimulated/shuttle/floor{icon_state = "floor4"; nitrogen = 0; oxygen = 0; temperature = 2.7},/area/planet/clown)
+"bu" = (/turf/unsimulated/wall{icon_state = "bananium0"; name = "bananium wall"},/area/planet/clown/motherlode)
+"bv" = (/obj/machinery/door/airlock/external,/turf/unsimulated/floor/dust,/area/planet/clown/motherlode)
+"bw" = (/obj/structure/sign/vacuum,/turf/unsimulated/wall{icon_state = "bananium0"; name = "bananium wall"},/area/planet/clown/motherlode)
+"bx" = (/turf/simulated/floor/beach/water,/area/planet/clown/oasis)
+"by" = (/obj/structure/closet/athletic_mixed,/obj/item/clothing/head/bandana,/turf/unsimulated/floor/dust,/area/planet/clown/oasis)
+"bz" = (/obj/item/weapon/gun/projectile/automatic/pistol,/turf/unsimulated/shuttle/floor{icon_state = "floor4"; nitrogen = 0; oxygen = 0; temperature = 2.7},/area/planet/clown)
+"bA" = (/obj/structure/stool/bed/chair,/turf/unsimulated/shuttle/floor{icon_state = "floor4"; nitrogen = 0; oxygen = 0; temperature = 2.7},/area/planet/clown)
+"bB" = (/turf/space,/area/planet/clown)
+"bC" = (/obj/machinery/computer/crew,/turf/unsimulated/shuttle/floor{icon_state = "floor4"; nitrogen = 0; oxygen = 0; temperature = 2.7},/area/planet/clown)
+"bD" = (/obj/structure/computerframe,/turf/unsimulated/shuttle/floor{icon_state = "floor4"; nitrogen = 0; oxygen = 0; temperature = 2.7},/area/planet/clown)
+"bE" = (/obj/structure/window/reinforced/fulltile,/obj/structure/grille,/turf/unsimulated/shuttle/floor{icon_state = "floor4"; nitrogen = 0; oxygen = 0; temperature = 2.7},/area/planet/clown)
+"bF" = (/obj/structure/window/reinforced/fulltile,/turf/unsimulated/shuttle/floor{icon_state = "floor4"; nitrogen = 0; oxygen = 0; temperature = 2.7},/area/planet/clown)
+"bG" = (/obj/machinery/firealarm/partyalarm,/turf/unsimulated/wall{icon_state = "bananium0"; name = "bananium wall"},/area/planet/clown/oasis)
+"bH" = (/mob/living/simple_animal/crab/Coffee,/turf/unsimulated/floor/sand,/area/planet/clown/oasis)
+"bI" = (/obj/item/weapon/beach_ball,/turf/unsimulated/floor/sand,/area/planet/clown/oasis)
+"bJ" = (/obj/item/clothing/glasses/sunglasses/big,/turf/unsimulated/floor/sand,/area/planet/clown/oasis)
+"bK" = (/obj/effect/landmark/mobcorpse/pirate,/obj/effect/decal/cleanable/blood/old,/turf/unsimulated/floor/dust,/area/planet/clown/motherlode)
+"bL" = (/obj/item/weapon/reagent_containers/food/drinks/golden_cup,/obj/structure/table/wood,/obj/item/weapon/paper{info = "Y'argh, congratulations for finding me booty. I hope you'll have as much fun with it as I did."},/turf/unsimulated/floor/dust,/area/planet/clown/motherlode)
+"bM" = (/mob/living/simple_animal/hostile/retaliate/clown,/turf/unsimulated/floor/dust,/area/planet/clown/motherlode)
+"bN" = (/obj/effect/decal/cleanable/blood/old,/turf/unsimulated/floor/dust,/area/planet/clown/motherlode)
+"bO" = (/mob/living/simple_animal/hostile/carp/megacarp{desc = "Just by looking at this one you can tell that it's the saltiest fish in the sea."; name = "Paprika"},/turf/space,/area/space)
+"bP" = (/turf/unsimulated/wall{icon_state = "rock_nochance"; name = "rock"},/area/planet/clown/desert)
+"bQ" = (/turf/unsimulated/floor/dust{nitrogen = 0; oxygen = 0; temperature = 2.7},/area/planet/clown/desert)
+"bR" = (/obj/structure/table/wood,/obj/item/weapon/paper{info = "I always deliver."},/turf/unsimulated/floor/dust{nitrogen = 0; oxygen = 0; temperature = 2.7},/area/planet/clown/desert)
+"bS" = (/obj/item/pizzabox/meat,/obj/structure/table/wood,/turf/unsimulated/floor/dust{nitrogen = 0; oxygen = 0; temperature = 2.7},/area/planet/clown/desert)
+"bT" = (/turf/unsimulated/wall{icon_state = "sandstone0"; name = "sandstone wall"},/area/planet/clown/desert)
+"bU" = (/turf/unsimulated/floor/dust,/area/planet/clown/desert)
+"bV" = (/turf/unsimulated/floor/plating,/area/planet/clown/desert)
+"bW" = (/obj/effect/forcefield,/turf/unsimulated/floor/dust,/area/planet/clown/desert)
+"bX" = (/obj/machinery/door/airlock/sandstone,/turf/unsimulated/floor/sand,/area/planet/clown/desert)
+"bY" = (/turf/unsimulated/floor/sand,/area/planet/clown/desert)
+"bZ" = (/obj/machinery/syndicate_beacon,/turf/unsimulated/floor/sand,/area/planet/clown/desert)
+"ca" = (/mob/living/simple_animal/hostile/syndicate,/turf/unsimulated/floor/sand,/area/planet/clown/desert)
+"cb" = (/mob/living/simple_animal/hostile/syndicate,/turf/unsimulated/floor/plating,/area/planet/clown/desert)
+"cc" = (/mob/living/simple_animal/hostile/blob/blobspore,/turf/simulated/floor/plating/maze,/area/planet/clown/desert)
+"cd" = (/turf/simulated/floor/plating/maze,/area/planet/clown/desert)
+"ce" = (/mob/living/simple_animal/hostile/blob/blobbernaut{color = "FF0000"; name = "desert blobbernaut"},/turf/simulated/floor/plating/maze,/area/planet/clown/desert)
+"cf" = (/obj/effect/landmark/corpse/clown{mobname = "Shoe Snatchin' Willy"; name = "Shoe Snatchin' Willy"},/turf/unsimulated/floor/dust{nitrogen = 0; oxygen = 0; temperature = 2.7},/area/planet/clown)
+"cg" = (/obj/structure/table/reinforced,/obj/item/clothing/shoes/clown_shoes/banana_shoes,/turf/unsimulated/floor/dust{nitrogen = 0; oxygen = 0; temperature = 2.7},/area/planet/clown)
+"ch" = (/obj/structure/closet/crate,/turf/unsimulated/floor/plating,/area/planet/clown/desert)
+"ci" = (/mob/living/simple_animal/hostile/syndicate/ranged,/turf/unsimulated/floor/plating,/area/planet/clown/desert)
+"cj" = (/obj/structure/closet/crate,/obj/effect/spawner/lootdrop/armory_contraband,/obj/effect/spawner/lootdrop/armory_contraband,/turf/unsimulated/floor/plating,/area/planet/clown/desert)
+"ck" = (/obj/machinery/vending/dinnerware,/turf/unsimulated/floor/dust,/area/planet/clown/desert)
+"cl" = (/obj/machinery/vending/snack,/turf/unsimulated/floor/dust,/area/planet/clown/desert)
+"cm" = (/obj/structure/closet/secure_closet/freezer/fridge,/turf/unsimulated/floor/dust,/area/planet/clown/desert)
+"cn" = (/obj/structure/closet/secure_closet/freezer/meat,/turf/unsimulated/floor/dust,/area/planet/clown/desert)
+"co" = (/obj/structure/table/reinforced,/obj/machinery/microwave,/turf/unsimulated/floor/dust,/area/planet/clown/desert)
+"cp" = (/obj/structure/table/wood,/obj/structure/reagent_dispensers/beerkeg,/turf/unsimulated/floor/dust,/area/planet/clown/desert)
+"cq" = (/obj/structure/table/wood,/obj/machinery/chem_dispenser/drinks,/turf/unsimulated/floor/dust,/area/planet/clown/desert)
+"cr" = (/obj/structure/table/wood,/obj/item/weapon/storage/box/drinkingglasses,/turf/unsimulated/floor/dust,/area/planet/clown/desert)
+"cs" = (/obj/machinery/vending/boozeomat,/turf/unsimulated/floor/dust,/area/planet/clown/desert)
+"ct" = (/mob/living/simple_animal/hostile/asteroid/hivelord,/turf/unsimulated/floor/dust,/area/planet/clown/desert)
+"cu" = (/obj/machinery/food_cart,/turf/unsimulated/floor/dust,/area/planet/clown/desert)
+"cv" = (/obj/machinery/door/airlock/sandstone,/turf/unsimulated/floor/dust,/area/planet/clown/desert)
+"cw" = (/obj/structure/table/reinforced,/obj/item/weapon/storage/fancy/donut_box,/turf/unsimulated/floor/dust,/area/planet/clown/desert)
+"cx" = (/obj/structure/table/reinforced,/obj/item/weapon/reagent_containers/food/snacks/tendies,/turf/unsimulated/floor/dust,/area/planet/clown/desert)
+"cy" = (/obj/structure/table/reinforced,/obj/item/weapon/storage/box/donkpockets,/turf/unsimulated/floor/dust,/area/planet/clown/desert)
+"cz" = (/obj/structure/table/reinforced,/obj/machinery/smartfridge/drinks,/turf/unsimulated/floor/dust,/area/planet/clown/desert)
+"cA" = (/obj/structure/table/reinforced,/obj/item/weapon/reagent_containers/food/drinks/bottle/rum,/turf/unsimulated/floor/dust,/area/planet/clown/desert)
+"cB" = (/obj/structure/table/reinforced,/turf/unsimulated/floor/dust,/area/planet/clown/desert)
+"cC" = (/obj/structure/table/reinforced,/obj/item/weapon/reagent_containers/food/drinks/ice,/turf/unsimulated/floor/dust,/area/planet/clown/desert)
+"cD" = (/obj/structure/stool,/turf/unsimulated/floor/dust,/area/planet/clown/desert)
+"cE" = (/obj/structure/reagent_dispensers/beerkeg,/turf/unsimulated/floor/dust,/area/planet/clown/desert)
+"cF" = (/obj/structure/stool/bed/alien,/turf/unsimulated/floor/dust,/area/planet/clown/desert)
+"cG" = (/mob/living/simple_animal/hostile/asteroid/goliath,/turf/unsimulated/floor/dust,/area/planet/clown/desert)
+"cH" = (/obj/structure/table/wood,/turf/unsimulated/floor/dust,/area/planet/clown/desert)
+"cI" = (/obj/structure/closet/secure_closet/bar,/turf/unsimulated/floor/dust,/area/planet/clown/desert)
+"cJ" = (/mob/living/simple_animal/hostile/asteroid/basilisk,/turf/unsimulated/floor/dust,/area/planet/clown/desert)
+"cK" = (/obj/machinery/icecream_vat,/turf/unsimulated/floor/dust,/area/planet/clown/desert)
+"cL" = (/obj/machinery/door/airlock,/turf/unsimulated/floor/dust,/area/planet/clown/desert)
+"cM" = (/obj/machinery/gibber,/turf/unsimulated/floor/dust,/area/planet/clown/desert)
+"cN" = (/obj/structure/barricade/wooden,/turf/unsimulated/floor/sand,/area/planet/clown/desert)
+"cO" = (/obj/machinery/vending/coffee,/turf/unsimulated/floor/dust,/area/planet/clown/desert)
+"cP" = (/obj/machinery/vending/cola,/turf/unsimulated/floor/dust,/area/planet/clown/desert)
+"cQ" = (/obj/structure/table/wood,/obj/item/weapon/gun/projectile/shotgun/combat,/turf/unsimulated/floor/dust,/area/planet/clown/desert)
+"cR" = (/obj/structure/kitchenspike,/turf/unsimulated/floor/dust,/area/planet/clown/desert)
+"cS" = (/obj/structure/barricade/wooden,/turf/unsimulated/floor/plating,/area/planet/clown/desert)
+"cT" = (/obj/structure/sign/barsign,/turf/unsimulated/wall{icon_state = "sandstone0"; name = "sandstone wall"},/area/planet/clown/desert)
+"cU" = (/obj/machinery/door/airlock,/turf/unsimulated/floor/plating,/area/planet/clown/desert)
+"cV" = (/obj/structure/barricade/wooden,/turf/unsimulated/floor/dust,/area/planet/clown/desert)
+"cW" = (/obj/machinery/computer/libraryconsole/bookmanagement,/obj/structure/table/wood,/turf/unsimulated/floor/dust,/area/planet/clown/desert)
+"cX" = (/obj/machinery/bookbinder,/turf/unsimulated/floor/dust,/area/planet/clown/desert)
+"cY" = (/obj/structure/bookcase,/turf/unsimulated/floor/dust,/area/planet/clown/desert)
+"cZ" = (/obj/structure/sink,/turf/unsimulated/wall{icon_state = "sandstone0"; name = "sandstone wall"},/area/planet/clown/desert)
+"da" = (/mob/living/simple_animal/hostile/asteroid/basilisk{desc = "A territorial beast, covered in a thick shell that absorbs energy. Its stare causes victims to freeze from the inside. This one seems larger than the others!"; health = 400; maxHealth = 400; melee_damage_lower = 30; melee_damage_upper = 30; name = "big basilisk"},/turf/unsimulated/floor/dust,/area/planet/clown/desert)
+"db" = (/obj/structure/toilet{dir = 4},/turf/unsimulated/floor/dust,/area/planet/clown/desert)
+"dc" = (/obj/structure/table,/obj/item/weapon/storage/firstaid/toxin,/turf/unsimulated/floor/dust,/area/planet/clown/desert)
+"dd" = (/obj/machinery/vending/sustenance,/turf/unsimulated/floor/dust,/area/planet/clown/desert)
+"de" = (/obj/structure/table/wood,/obj/item/weapon/storage/firstaid/regular,/turf/unsimulated/floor/dust,/area/planet/clown/desert)
+"df" = (/obj/machinery/vending/medical,/turf/unsimulated/floor/dust,/area/planet/clown/desert)
+"dg" = (/obj/structure/statue/sandstone/assistant,/turf/unsimulated/floor/sand,/area/planet/clown/desert)
+"dh" = (/obj/structure/rack,/obj/item/clothing/head/helmet/space/eva,/obj/item/clothing/suit/space/eva,/turf/unsimulated/floor/dust,/area/planet/clown/desert)
+"di" = (/obj/structure/sign/nosmoking_1,/turf/unsimulated/wall{icon_state = "sandstone0"; name = "sandstone wall"},/area/planet/clown/desert)
+"dj" = (/obj/structure/table/wood,/obj/item/weapon/storage/firstaid/o2,/turf/unsimulated/floor/dust,/area/planet/clown/desert)
+"dk" = (/obj/machinery/vending/sovietsoda,/turf/unsimulated/floor/dust,/area/planet/clown/desert)
+"dl" = (/turf/simulated/floor/plating/snow,/area/planet/clown/desert)
+"dm" = (/mob/living/simple_animal/hostile/carp,/turf/unsimulated/floor/dust{nitrogen = 0; oxygen = 0; temperature = 2.7},/area/planet/clown/desert)
+"dn" = (/obj/item/weapon/gun/projectile/automatic/gyropistol,/turf/unsimulated/floor/dust{nitrogen = 0; oxygen = 0; temperature = 2.7},/area/planet/clown/desert)
+"do" = (/obj/effect/decal/remains/human{name = "riesens remains"},/obj/item/clothing/head/rabbitears,/turf/unsimulated/floor/dust{nitrogen = 0; oxygen = 0; temperature = 2.7},/area/planet/clown/desert)
+"dp" = (/obj/effect/decal/remains/xeno,/turf/unsimulated/floor/dust{nitrogen = 0; oxygen = 0; temperature = 2.7},/area/planet/clown/desert)
+"dq" = (/turf/unsimulated/wall{icon_state = "bananium0"; name = "bananium wall"},/area/planet/clown/village)
+"dr" = (/turf/unsimulated/wall{icon_state = "wood0"; name = "wooden wall"},/area/planet/clown/town)
+"ds" = (/obj/machinery/door/airlock/freezer{name = "white airlock"},/turf/simulated/floor/plating/snow,/area/planet/clown/town)
+"dt" = (/obj/structure/sign/xeno_warning_mining,/turf/unsimulated/wall{icon_state = "wood0"; name = "wooden wall"},/area/planet/clown/town)
+"du" = (/turf/unsimulated/wall{icon_state = "rock_nochance"; name = "rock"},/area/planet/clown/village)
+"dv" = (/turf/unsimulated/wall{icon_state = "rock_nochance"; name = "rock"},/area/planet/clown/town)
+"dw" = (/turf/simulated/floor/plating/snow,/area/planet/clown/town)
+"dx" = (/obj/effect/landmark/corpse/syndicatecommando,/turf/simulated/floor/plating/snow,/area/planet/clown/town)
+"dy" = (/turf/unsimulated/floor/grass,/area/planet/clown/village)
+"dz" = (/obj/effect/landmark/corpse/clown,/obj/effect/decal/cleanable/blood,/turf/unsimulated/floor/grass,/area/planet/clown/village)
+"dA" = (/obj/item/weapon/pickaxe/drill/diamonddrill,/obj/effect/landmark/corpse/clown,/obj/effect/decal/cleanable/blood,/turf/unsimulated/floor/grass,/area/planet/clown/village)
+"dB" = (/obj/structure/ore_box,/turf/simulated/floor{dir = 8; icon_state = "barber"},/area/planet/clown/village)
+"dC" = (/obj/item/seeds/bananaseed,/turf/simulated/floor{dir = 8; icon_state = "barber"},/area/planet/clown/village)
+"dD" = (/obj/item/weapon/pickaxe,/turf/simulated/floor/plating,/area/planet/clown/village)
+"dE" = (/turf/simulated/floor/plating,/area/planet/clown/village)
+"dF" = (/obj/effect/decal/remains/human,/turf/simulated/floor/plating,/area/planet/clown/village)
+"dG" = (/obj/structure/barricade/wooden,/turf/simulated/floor/plating/snow,/area/planet/clown/town)
+"dH" = (/obj/effect/decal/remains/human,/obj/item/clothing/suit/space/hardsuit/mining,/obj/effect/decal/cleanable/blood,/turf/unsimulated/floor/grass,/area/planet/clown/village)
+"dI" = (/obj/item/weapon/paper/crumpled/bloody{info = "I was told getting the bananium would be easy...fuck...they lied... If there was any bananium to be mined left, it's gone now. Send word to my family in the Alpha Minorious Sector if you find this."},/turf/unsimulated/floor/grass,/area/planet/clown/village)
+"dJ" = (/obj/structure/barricade/wooden,/turf/unsimulated/floor/grass,/area/planet/clown/village)
+"dK" = (/obj/item/seeds/bananaseed,/mob/living/simple_animal/hostile/asteroid/goldgrub,/turf/simulated/floor{dir = 8; icon_state = "barber"},/area/planet/clown/village)
+"dL" = (/obj/item/seeds/bananaseed,/obj/effect/landmark/corpse/clown,/obj/effect/decal/cleanable/blood,/turf/simulated/floor{dir = 8; icon_state = "barber"},/area/planet/clown/village)
+"dM" = (/obj/item/seeds/bananaseed,/obj/effect/decal/cleanable/blood,/turf/simulated/floor{dir = 8; icon_state = "barber"},/area/planet/clown/village)
+"dN" = (/obj/effect/landmark/corpse/clown,/obj/effect/decal/cleanable/blood,/turf/simulated/floor{dir = 8; icon_state = "barber"},/area/planet/clown/village)
+"dO" = (/turf/simulated/floor{dir = 8; icon_state = "barber"},/area/planet/clown/village)
+"dP" = (/obj/effect/decal/cleanable/blood,/turf/simulated/floor{dir = 8; icon_state = "barber"},/area/planet/clown/village)
+"dQ" = (/mob/living/simple_animal/hostile/asteroid/goliath,/turf/simulated/floor{dir = 8; icon_state = "barber"},/area/planet/clown/village)
+"dR" = (/mob/living/simple_animal/hostile/faithless,/turf/simulated/floor/plating/snow,/area/planet/clown/town)
+"dS" = (/turf/unsimulated/floor/dust,/area/planet/clown/village)
+"dT" = (/obj/machinery/door/airlock/clown,/turf/unsimulated/floor/grass,/area/planet/clown/village)
+"dU" = (/obj/machinery/mineral/input,/obj/effect/decal/cleanable/blood,/turf/simulated/floor{dir = 8; icon_state = "barber"},/area/planet/clown/village)
+"dV" = (/obj/machinery/mineral/mint,/turf/simulated/floor{dir = 8; icon_state = "barber"},/area/planet/clown/village)
+"dW" = (/obj/machinery/mineral/output,/turf/simulated/floor{dir = 8; icon_state = "barber"},/area/planet/clown/village)
+"dX" = (/obj/item/weapon/storage/bag/ore,/turf/simulated/floor{dir = 8; icon_state = "barber"},/area/planet/clown/village)
+"dY" = (/obj/effect/decal/remains/human,/turf/simulated/floor{dir = 8; icon_state = "barber"},/area/planet/clown/village)
+"dZ" = (/obj/effect/mine/stun,/turf/unsimulated/floor/dust{nitrogen = 0; oxygen = 0; temperature = 2.7},/area/planet/clown)
+"ea" = (/obj/item/weapon/restraints/legcuffs/beartrap{armed = 1},/turf/unsimulated/floor/dust{nitrogen = 0; oxygen = 0; temperature = 2.7},/area/planet/clown)
+"eb" = (/obj/item/device/assembly/mousetrap/armed,/turf/unsimulated/floor/dust{nitrogen = 0; oxygen = 0; temperature = 2.7},/area/planet/clown)
+"ec" = (/obj/item/weapon/grown/bananapeel,/turf/unsimulated/floor/dust{nitrogen = 0; oxygen = 0; temperature = 2.7},/area/planet/clown)
+"ed" = (/obj/effect/decal/cleanable/blood/splatter,/turf/simulated/floor/plating/snow,/area/planet/clown/town)
+"ee" = (/obj/item/weapon/grown/log,/turf/simulated/floor/plating/snow,/area/planet/clown/town)
+"ef" = (/obj/structure/flora/tree/pine,/turf/simulated/floor/plating/snow,/area/planet/clown/town)
+"eg" = (/obj/item/clothing/mask/gas/mime,/obj/effect/decal/remains/human,/turf/simulated/floor/plating/snow,/area/planet/clown/town)
+"eh" = (/obj/item/weapon/pickaxe,/turf/unsimulated/floor/grass,/area/planet/clown/village)
+"ei" = (/turf/simulated/wall/mineral/wood,/area/planet/clown/town)
+"ej" = (/turf/simulated/floor/fancy/carpet,/area/planet/clown/town)
+"ek" = (/obj/structure/stool/bed,/obj/item/weapon/bedsheet,/turf/simulated/floor/fancy/carpet,/area/planet/clown/town)
+"el" = (/obj/item/toy/crayon/mime,/turf/simulated/floor/fancy/carpet,/area/planet/clown/town)
+"em" = (/obj/structure/stool/bed,/obj/item/clothing/mask/gas/mime,/obj/item/weapon/bedsheet,/obj/effect/decal/remains/human,/turf/simulated/floor/fancy/carpet,/area/planet/clown/town)
+"en" = (/mob/living/simple_animal/hostile/faithless,/turf/simulated/floor/fancy/carpet,/area/planet/clown/town)
+"eo" = (/obj/effect/decal/cleanable/blood/old,/turf/unsimulated/floor/dust{nitrogen = 0; oxygen = 0; temperature = 2.7},/area/planet/clown)
+"ep" = (/turf/simulated/floor/plating/snow{nitrogen = 0; oxygen = 0; temperature = 2.7},/area/planet/clown)
+"eq" = (/obj/structure/stool/bed,/obj/item/clothing/mask/gas/mime,/obj/item/weapon/bedsheet,/obj/effect/decal/remains/human,/turf/simulated/floor/plating/snow,/area/planet/clown/town)
+"er" = (/turf/simulated/floor/engine/cult,/area/planet/clown/town)
+"es" = (/obj/effect/landmark/corpse/clown,/obj/effect/decal/cleanable/blood/old,/turf/unsimulated/floor/dust{nitrogen = 0; oxygen = 0; temperature = 2.7},/area/planet/clown)
+"et" = (/obj/structure/signpost{desc = "The sign says: This town has gone 0 days without an accident."; name = "Now entering Mime Town"},/turf/simulated/floor/plating/snow{nitrogen = 0; oxygen = 0; temperature = 2.7},/area/planet/clown)
+"eu" = (/obj/structure/mineral_door/wood,/turf/simulated/floor/plating/snow,/area/planet/clown/town)
+"ev" = (/obj/structure/flora/ausbushes/brflowers,/turf/unsimulated/floor/grass,/area/planet/clown/village)
+"ew" = (/obj/item/weapon/twohanded/fireaxe,/turf/unsimulated/floor/dust{nitrogen = 0; oxygen = 0; temperature = 2.7},/area/planet/clown)
+"ex" = (/obj/effect/decal/cleanable/blood/splatter,/turf/unsimulated/wall{icon_state = "wood0"; name = "wooden wall"},/area/planet/clown/town)
+"ey" = (/obj/structure/flora/ausbushes/ppflowers,/mob/living/simple_animal/hostile/retaliate/clown,/turf/unsimulated/floor/grass,/area/planet/clown/village)
+"ez" = (/obj/structure/flora/ausbushes/ppflowers,/turf/unsimulated/floor/grass,/area/planet/clown/village)
+"eA" = (/obj/structure/flora/ausbushes/brflowers,/obj/structure/flora/ausbushes/ppflowers,/turf/unsimulated/floor/grass,/area/planet/clown/village)
+"eB" = (/obj/structure/flora/ausbushes/ppflowers,/obj/structure/flora/ausbushes/lavendergrass,/turf/unsimulated/floor/grass,/area/planet/clown/village)
+"eC" = (/obj/structure/flora/ausbushes/lavendergrass,/mob/living/simple_animal/hostile/retaliate/clown,/turf/unsimulated/floor/grass,/area/planet/clown/village)
+"eD" = (/obj/structure/flora/ausbushes/lavendergrass,/turf/unsimulated/floor/grass,/area/planet/clown/village)
+"eE" = (/obj/effect/mine/stun,/turf/simulated/floor/plating/snow{nitrogen = 0; oxygen = 0; temperature = 2.7},/area/planet/clown)
+"eF" = (/obj/effect/landmark/corpse/clown,/turf/simulated/floor/plating/snow{nitrogen = 0; oxygen = 0; temperature = 2.7},/area/planet/clown)
+"eG" = (/obj/item/weapon/restraints/legcuffs/beartrap{armed = 0},/obj/effect/landmark/corpse/clown,/obj/effect/decal/cleanable/blood/old,/turf/unsimulated/floor/dust{nitrogen = 0; oxygen = 0; temperature = 2.7},/area/planet/clown)
+"eH" = (/mob/living/simple_animal/hostile/creature,/turf/simulated/floor/engine/cult,/area/planet/clown/town)
+"eI" = (/obj/structure/flora/ausbushes/brflowers,/obj/structure/flora/ausbushes/ppflowers,/mob/living/simple_animal/hostile/retaliate/clown,/turf/unsimulated/floor/grass,/area/planet/clown/village)
+"eJ" = (/obj/structure/flora/ausbushes/ppflowers,/obj/structure/flora/ausbushes/brflowers,/obj/structure/flora/ausbushes/lavendergrass,/turf/unsimulated/floor/grass,/area/planet/clown/village)
+"eK" = (/obj/structure/flora/ausbushes/brflowers,/obj/structure/flora/ausbushes/lavendergrass,/turf/unsimulated/floor/grass,/area/planet/clown/village)
+"eL" = (/obj/structure/signpost{desc = "The sign says: Be careful!"; name = "Now leaving Clown Village"},/turf/unsimulated/floor/grass,/area/planet/clown/village)
+"eM" = (/obj/effect/decal/cleanable/blood/splatter,/obj/structure/toilet,/turf/simulated/floor/wood,/area/planet/clown/town)
+"eN" = (/obj/structure/table/wood,/obj/item/weapon/paper/crumpled/bloody{color = ""; info = "WHAT HAVE I DONE"},/turf/simulated/floor/engine/cult,/area/planet/clown/town)
+"eO" = (/obj/structure/table/wood,/turf/simulated/floor/engine/cult,/area/planet/clown/town)
+"eP" = (/obj/structure/flora/ausbushes/brflowers,/obj/structure/flora/ausbushes/ppflowers,/obj/structure/flora/ausbushes/lavendergrass,/turf/unsimulated/floor/grass,/area/planet/clown/village)
+"eQ" = (/obj/structure/flora/ausbushes/brflowers,/mob/living/simple_animal/hostile/retaliate/clown,/turf/unsimulated/floor/grass,/area/planet/clown/village)
+"eR" = (/turf/simulated/floor/wood,/area/planet/clown/town)
+"eS" = (/obj/effect/decal/remains/human,/obj/effect/rune,/obj/item/clothing/mask/gas/mime,/obj/effect/decal/cleanable/blood/splatter,/obj/effect/decal/cleanable/blood/gibs/core,/turf/simulated/floor/engine/cult,/area/planet/clown/town)
+"eT" = (/obj/structure/flora/ausbushes/lavendergrass,/obj/structure/flora/ausbushes/ppflowers,/turf/unsimulated/floor/grass,/area/planet/clown/village)
+"eU" = (/obj/structure/table/wood,/obj/item/clothing/mask/gas/clown_hat,/obj/item/clothing/gloves/color/rainbow/clown,/obj/item/clothing/shoes/clown_shoes{desc = "These shoes appear to be enchanted!"; name = "uhangi's shoes"; slowdown = -1},/obj/item/clothing/under/rank/clown,/obj/item/device/pda/clown,/obj/item/weapon/storage/backpack/clown,/turf/unsimulated/floor/grass,/area/planet/clown/village)
+"eV" = (/obj/structure/table/wood,/obj/item/seeds/cashseed,/obj/item/seeds/cashseed,/obj/item/weapon/cartridge/clown,/turf/unsimulated/floor/grass,/area/planet/clown/village)
+"eW" = (/obj/structure/table/wood,/obj/item/seeds/cashseed,/obj/item/seeds/cashseed,/obj/item/weapon/bikehorn,/turf/unsimulated/floor/grass,/area/planet/clown/village)
+"eX" = (/obj/structure/table/wood,/obj/item/seeds/cashseed,/obj/item/seeds/cashseed,/turf/unsimulated/floor/grass,/area/planet/clown/village)
+"eY" = (/obj/structure/sign/vacuum,/turf/unsimulated/wall{icon_state = "bananium0"; name = "bananium wall"},/area/planet/clown/village)
+"eZ" = (/obj/structure/window/reinforced/fulltile,/obj/structure/grille,/turf/unsimulated/floor/dust,/area/planet/clown/village)
+"fa" = (/obj/structure/mineral_door/wood,/turf/simulated/floor/wood,/area/planet/clown/town)
+"fb" = (/obj/item/trash/candle,/turf/simulated/floor/engine/cult,/area/planet/clown/town)
+"fc" = (/obj/effect/decal/cleanable/blood/splatter,/turf/unsimulated/floor/dust,/area/planet/clown/village)
+"fd" = (/obj/machinery/door/airlock/clown,/turf/unsimulated/floor/dust,/area/planet/clown/village)
+"fe" = (/obj/effect/decal/cleanable/blood/tracks{dir = 4},/turf/unsimulated/floor/dust,/area/planet/clown/village)
+"ff" = (/obj/machinery/door/airlock/external,/obj/effect/decal/cleanable/blood/tracks{dir = 4},/turf/unsimulated/floor/dust,/area/planet/clown/village)
+"fg" = (/obj/effect/decal/cleanable/blood/tracks{dir = 4},/turf/unsimulated/floor/dust{nitrogen = 0; oxygen = 0; temperature = 2.7},/area/planet/clown)
+"fh" = (/obj/effect/decal/cleanable/blood/splatter,/turf/unsimulated/floor/dust{nitrogen = 0; oxygen = 0; temperature = 2.7},/area/planet/clown)
+"fi" = (/obj/effect/landmark/corpse/clown,/turf/unsimulated/floor/dust{nitrogen = 0; oxygen = 0; temperature = 2.7},/area/planet/clown)
+"fj" = (/obj/structure/flora/ausbushes/lavendergrass,/obj/structure/flora/ausbushes/ppflowers,/mob/living/simple_animal/hostile/retaliate/clown,/turf/unsimulated/floor/grass,/area/planet/clown/village)
+"fk" = (/obj/effect/decal/cleanable/blood/splatter,/turf/simulated/floor/engine/cult,/area/planet/clown/town)
+"fl" = (/obj/structure/flora/ausbushes/ppflowers,/obj/structure/flora/ausbushes/brflowers,/obj/structure/flora/ausbushes/lavendergrass,/obj/structure/signpost{desc = "The sign says: Please don't mine the Bananium!"; name = "Welcome to Clown Planet"},/turf/unsimulated/floor/grass,/area/planet/clown/village)
+"fm" = (/obj/structure/flora/ausbushes/brflowers,/obj/structure/flora/ausbushes/ppflowers,/obj/structure/flora/ausbushes/brflowers,/obj/structure/flora/ausbushes/lavendergrass,/turf/unsimulated/floor/grass,/area/planet/clown/village)
+"fn" = (/obj/structure/flora/ausbushes/brflowers,/obj/structure/flora/ausbushes/brflowers,/obj/structure/flora/ausbushes/lavendergrass,/turf/unsimulated/floor/grass,/area/planet/clown/village)
+"fo" = (/obj/structure/mineral_door/wood,/turf/simulated/floor/engine/cult,/area/planet/clown/town)
+"fp" = (/obj/structure/flora/ausbushes/lavendergrass,/obj/structure/flora/ausbushes/ppflowers,/obj/structure/flora/ausbushes/ppflowers,/turf/unsimulated/floor/grass,/area/planet/clown/village)
+"fq" = (/mob/living/simple_animal/hostile/retaliate/clown,/turf/unsimulated/floor/grass,/area/planet/clown/village)
+"fr" = (/obj/machinery/hydroponics/soil,/turf/unsimulated/floor/grass,/area/planet/clown/village)
+"fs" = (/obj/structure/flora/ausbushes/lavendergrass,/obj/structure/flora/ausbushes/ppflowers,/obj/structure/flora/ausbushes/brflowers,/turf/unsimulated/floor/grass,/area/planet/clown/village)
+"ft" = (/obj/structure/flora/ausbushes/brflowers,/obj/structure/flora/ausbushes/lavendergrass,/mob/living/simple_animal/hostile/retaliate/clown,/turf/unsimulated/floor/grass,/area/planet/clown/village)
+"fu" = (/mob/living/simple_animal/hostile/carp,/turf/unsimulated/floor/dust{nitrogen = 0; oxygen = 0; temperature = 2.7},/area/planet/clown)
+"fv" = (/obj/structure/flora/ausbushes/palebush,/turf/unsimulated/floor/grass,/area/planet/clown/village)
+"fw" = (/obj/structure/flora/ausbushes/sunnybush,/turf/unsimulated/floor/grass,/area/planet/clown/village)
+"fx" = (/obj/structure/flora/ausbushes/brflowers,/obj/structure/flora/ausbushes/sunnybush,/turf/unsimulated/floor/grass,/area/planet/clown/village)
+"fy" = (/obj/item/weapon/reagent_containers/food/drinks/bottle/bottleofnothing,/turf/simulated/floor/wood,/area/planet/clown/town)
+"fz" = (/obj/item/clothing/mask/gas/mime,/obj/effect/decal/remains/human,/turf/simulated/floor/wood,/area/planet/clown/town)
+"fA" = (/obj/structure/mineral_door/gold,/turf/simulated/floor{dir = 8; icon_state = "barber"},/area/planet/clown/village)
+"fB" = (/obj/structure/stool/bed,/obj/item/weapon/bedsheet,/turf/simulated/floor/wood,/area/planet/clown/town)
+"fC" = (/turf/simulated/floor/plasteel,/area/planet/clown/town)
+"fD" = (/obj/machinery/constructable_frame,/turf/simulated/floor/plasteel,/area/planet/clown/town)
+"fE" = (/obj/effect/decal/cleanable/oil/streak,/turf/simulated/floor/plasteel,/area/planet/clown/town)
+"fF" = (/obj/structure/filingcabinet,/turf/simulated/floor{dir = 8; icon_state = "barber"},/area/planet/clown/village)
+"fG" = (/obj/structure/stool/bed/chair/office/light{dir = 4},/mob/living/simple_animal/hostile/retaliate/clown{name = "Chief of Admissions"},/turf/simulated/floor{dir = 8; icon_state = "barber"},/area/planet/clown/village)
 "fH" = (/obj/structure/table/reinforced,/obj/item/clothing/gloves/color/rainbow/clown,/turf/simulated/floor{dir = 8; icon_state = "barber"},/area/planet/clown/village)
-"fI" = (/obj/structure/stool/bed/chair/office/light{dir = 8},/mob/living/simple_animal/hostile/retaliate/clown{name = "Chief of Admissions"},/turf/simulated/floor{dir = 8; icon_state = "barber"},/area/planet/clown/village)
-"fJ" = (/obj/structure/filingcabinet,/turf/simulated/floor{dir = 8; icon_state = "barber"},/area/planet/clown/village)
-"fK" = (/obj/item/clothing/mask/gas/mime,/obj/effect/decal/remains/human,/turf/simulated/floor/plasteel,/area/planet/clown/town)
-"fL" = (/obj/effect/decal/cleanable/oil,/turf/simulated/floor/plasteel,/area/planet/clown/town)
-"fM" = (/mob/living/simple_animal/hostile/hivebot/strong,/turf/simulated/floor/plasteel,/area/planet/clown/town)
-"fN" = (/obj/effect/decal/cleanable/robot_debris/gib,/turf/simulated/floor/plasteel,/area/planet/clown/town)
-"fO" = (/obj/machinery/door/window/westleft,/turf/simulated/floor{dir = 8; icon_state = "barber"},/area/planet/clown/village)
-"fP" = (/obj/effect/decal/cleanable/robot_debris/limb,/turf/simulated/floor/plasteel,/area/planet/clown/town)
-"fQ" = (/obj/machinery/mecha_part_fabricator,/turf/simulated/floor/plasteel,/area/planet/clown/town)
-"fR" = (/mob/living/simple_animal/hostile/hivebot/range,/turf/simulated/floor/plasteel,/area/planet/clown/town)
-"fS" = (/obj/effect/decal/cleanable/robot_debris,/turf/simulated/floor/plasteel,/area/planet/clown/town)
-"fT" = (/obj/effect/decal/cleanable/robot_debris/old,/turf/simulated/floor/plasteel,/area/planet/clown/town)
+"fI" = (/obj/structure/stool/bed/chair/comfy/lime,/mob/living/simple_animal/hostile/retaliate/clown,/turf/simulated/floor{dir = 8; icon_state = "barber"},/area/planet/clown/village)
+"fJ" = (/obj/item/clothing/mask/gas/mime,/obj/effect/decal/remains/human,/turf/simulated/floor/plasteel,/area/planet/clown/town)
+"fK" = (/obj/effect/decal/cleanable/oil,/turf/simulated/floor/plasteel,/area/planet/clown/town)
+"fL" = (/mob/living/simple_animal/hostile/hivebot/strong,/turf/simulated/floor/plasteel,/area/planet/clown/town)
+"fM" = (/obj/effect/decal/cleanable/robot_debris/gib,/turf/simulated/floor/plasteel,/area/planet/clown/town)
+"fN" = (/obj/machinery/door/window/eastleft,/turf/simulated/floor{dir = 8; icon_state = "barber"},/area/planet/clown/village)
+"fO" = (/obj/effect/decal/cleanable/robot_debris/limb,/turf/simulated/floor/plasteel,/area/planet/clown/town)
+"fP" = (/obj/machinery/mecha_part_fabricator,/turf/simulated/floor/plasteel,/area/planet/clown/town)
+"fQ" = (/mob/living/simple_animal/hostile/hivebot/range,/turf/simulated/floor/plasteel,/area/planet/clown/town)
+"fR" = (/obj/effect/decal/cleanable/robot_debris,/turf/simulated/floor/plasteel,/area/planet/clown/town)
+"fS" = (/obj/effect/decal/cleanable/robot_debris/old,/turf/simulated/floor/plasteel,/area/planet/clown/town)
+"fT" = (/obj/machinery/gun_turret,/turf/simulated/floor{dir = 1; icon_state = "warning"},/area/planet/clown/village)
 "fU" = (/turf/simulated/floor{dir = 1; icon_state = "warning"},/area/planet/clown/village)
-"fV" = (/obj/machinery/gun_turret,/turf/simulated/floor{dir = 1; icon_state = "warning"},/area/planet/clown/village)
-"fW" = (/mob/living/simple_animal/hostile/hivebot/rapid,/turf/simulated/floor/plasteel,/area/planet/clown/town)
-"fX" = (/mob/living/simple_animal/butterfly{name = "diskus"},/turf/unsimulated/floor/dust,/area/planet/clown/village)
-"fY" = (/turf/simulated/floor,/area/planet/clown/village)
-"fZ" = (/obj/effect/landmark/clown{name = "Clown Land"},/turf/simulated/floor,/area/planet/clown/village)
-"ga" = (/mob/living/simple_animal/hostile/creature,/turf/simulated/floor/plating/snow,/area/planet/clown/town)
-"gb" = (/obj/structure/table/reinforced,/obj/item/weapon/spellbook/oneuse/forcewall,/turf/simulated/floor/plating/snow,/area/planet/clown/town)
+"fV" = (/mob/living/simple_animal/hostile/hivebot/rapid,/turf/simulated/floor/plasteel,/area/planet/clown/town)
+"fW" = (/mob/living/simple_animal/butterfly{name = "diskus"},/turf/unsimulated/floor/dust,/area/planet/clown/village)
+"fX" = (/turf/simulated/floor,/area/planet/clown/village)
+"fY" = (/obj/effect/landmark/clown{name = "Clown Land"},/turf/unsimulated/wall{icon_state = "rock_nochance"; name = "rock"},/area/planet/clown/village)
+"fZ" = (/mob/living/simple_animal/hostile/creature,/turf/simulated/floor/plating/snow,/area/planet/clown/town)
+"ga" = (/obj/structure/table/reinforced,/obj/item/weapon/spellbook/oneuse/forcewall,/turf/simulated/floor/plating/snow,/area/planet/clown/town)
 
 (1,1,1) = {"
 aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaabacacacacacacacacacacacacacacacacabaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
@@ -325,113 +324,113 @@ aaadadadadadadadadayadadadadadadafafafafafafafafafafafafafafafafafafafafafafafaf
 aaadadadadadayadadadadadadadadafafafafafafafaEaEaFaFaFaFaFaFaFaFaFaFaFaFaFaFaFaFavaDadadadadadaDaGawagasagaxagagasagagaxagagagagagaCadadaDaDadadaDaDaDadaDaDavalalauauauauatalalaladadadadadadadadadadadadadadadadadadadadadadadadadadadadadadaa
 aaadadadadadadadadayadadadafafafafafafaEaEaEaEaEaFaHaIaEaEaJaKaLaLaFaMaNaMaNaMaFaDaDadadaDaDadaDabawagasagabagagasagagabagasasagagabadadaDaDaDadaDaDaDaDaDaDavalalauauaOauauatalalaladadadadadadadadadadadadadadadadadadadadadadadadadadadadadaa
 aaadadadadadadadadadadafafafafafafafaEaEaEaEaEaEaFaFaFaEaEaEaEaEaEaFaEaEaEaEaEaFaDadadaDaDaDadaDaDabagagagabagagasagagabagagagagabaDadaDaDaDaDadaDaDaDaDaDaDavalalauauauaPauaualalalaladadadadadadadadadadadadadadadadadadadadadadadadadadadadaa
-aaadadadadafafafafafafafafafafaEaEaEaEaEaEaEaEaEaEaQaFaQaRaSaEaEaEaIaEaEaEaEaEaFaDadaDaDaDaDadadaDaDabagagabagagagagagabagagagababaDaDaDaDaDadadaDaDaDaDaDaDavalalatalalauauauaualalaladadadadadadadadadadadadadadadadadadadadadadadadadadadadaa
-aaadadafafafafafafafafafaEaEaEaEaEaEaEaEaEaEaEaQaQaQaFaQaSaQaQaSaQaFaEaEaEaEaEaFaDaDaDaDabaDaDaDaDaDababagabagagagagagabagagabaDaDaDaDaDaDaDaDaDaDaDaDaDaDaDavalalaualalalauauaualalalaladadadadadadadadadadadadadadadadadadadadadadadadadadadaa
-aaadafafafafafaEaEaEaEaEaEaEaEaEaEaEaQaQaQaQaQaQaQaQaFaQaQaQaQaQaQaFaQaEaEaEaEaFaDaDaDaDaDaDaDaDaDaDaDabaTabagagagagagabaUaUabaDaDaDaDaDaDaDaDaDaDaDaDaDaDaDavalauaualaualauauataualalaladadadadadadadadadadadadadadadadadadadadadadadadadadadaa
-afafafafafaEaEaEaEaEaEaQaQaQaQaSaQaQaQaQaQaVaQaQaQaQaFaWaFaFaFaFaFaFaFaFaFaXaYaFaDaDaDaDaDaDaDaDaDaDaDabababababaZaZababababaDaDaDaDaDbaaDaDaDaDaDaDbaaDaDaDaDalauaualatalalalauauaualalaladadadadadadadadadadadadadadadadadadadadadadadadadadaa
-afafafafaEaEaEaEaEaEaEaQbbaQbbaQbbbbbbaQbbaQaQbbaQbbaQbbaQaQaQaQaQaQaQaQaFaEaEaFaDaDaDaDaDaDaDaDaDaDaDaDaDaDabbcbcbcbcabaDaDaDaDaDaDaDaDaDabaDaDaDaDaDaDaDaDaDalauaualauauaualalauaualalalaladadadadadadadadadadadadadadadadadadadadadadadadadaa
-afafafaEaEaQaQaQaQaQaQaQbbaQbbaQbbaQbbaQbbbbaQbbaQbbbbaQaQaQaQaQaQaQaQaQaFaQaQaFaDaDaDbdaDaDaDaDaDaDaDaDaDaDbebcbcbcbcbeaDaDaDaDaDababaDaDaDaDaDaDaDaDaDaDaDavalalaualalauauaualauaualalalalaladadadadadadadadadadadadadadadadadadadadadadadadaa
-afafaEaEaEaQaQaQaQaQaQaQbbbbbbaQbbbfbbaQbbaQbbbbaQbbbbaQaQaQaQaQaQaQaQaQaFaQaQaFaDbdaDaDaDaDaDbgaDaDaDaDbhaDbibcbcbcbcbeaDaDaDaDaDaDaDaDaDaDaDaDaDaDaDaDaDaDavalalauauauatalalalauauatalalalalalaladadadadadadadadadadadadadadadadadadadadadadaa
-afaEaEaEaEaQbjbkblaQaQaQbbaQbbaQbbaQbbaQbbaQaQbbaQbbbbaQaQbfaQaQaQaQaQaQaFaQaQaFbdbdaDaDaDbdaDaDaDaDaDaDaDbmbibcbnbcbcbeaDaDaDaDaDaDaDaDaDaDaDbaaDaDaDaDaDaDaDalalauauaualalauauauaualalalalalalaladadadadadadadadadadadadadadadadadadadadadadaa
-afaEaEaEaQboaQaQaQaQbpaQbbaQbbaQbbbbbbaQbbaSaQbbaQbbaQbbaQaQaQaQaQaQaQaVaFaQaQbqbdbdbdaDaDaDaDaDaDaDaDaDaDaDabbcbcbcbcabaDaDaDaDaDaDaDaDaDaDaDaDaDaDaDaDaDaDaDalalataualalauauaualalalauauaualalalalaladadadadadadadadadadadadadadadadadadadadaa
-afaEaEaEbraQaQaQbsaQaQaQaQaQaQaQaQaQaQaQaQaQaQaQaQaQbrbtaQaQaQaQaQaQaQaQaFaQaQaFbdbdaDbdbdaDaDaDaDaDababababababbubuababababababaDaDaDaDaDaDaDaDaDaDaDaDaDaDaDbvbvbwbxalauauaualalauauauauaualalalalalaladadadadadadadadadadadadadadadadadadadaa
-afaEaEaQaQaQaQaQaQaQaQaSaQaQaQaQbybybybybybybybyaQaQaQaQaQaQaQaQaQaQaQaQaFaQaQaFbdaDaDaDaDaDaDaDaDaDabbcbcbcbnbcbcbcbcbcbcbcbcabaDaDaDaDaDaDaDaDaDaDaDaDaDaDaDbwauaubvalauataualauauauauauauatalalalalaladadadadadadadadadadadadadadadadadadadaa
-afaEaEaQaQaQaQaQaQaQaQaQaQaQbybybybybybybybybybybybybyaQaQaQaQaQaSaQaQaQaFaLbzaFaDaDaDaDbdaDaDaDaDaDaDaDbcbcbcbAbBbBbcbcbcbcababaDaDaDaDaDaDaDaDaDaDaDaDaDaDaDbvbvbvbvalauaualalauauatatauaualalalalalaladadadadadadadadadadadadadadadadadadadaa
-afaEaQaQaQbfaQaQaQaQaQaQaQaQbybybybybybybybybybybybybybyaQaQaQaQaQaQaQaQaFaFaFaFavaDaDaDaDaDaDbCbCaDaDaDaDbcbcbcbDbEbcbcbnaDabaDaDaDaDaDbCaDaDaDaDaDaDaDaDaDaDalalalalalaualalauauauauauauauauauaualalalaladadadadadadadadadadadadadadadadadadaa
-afaEaQaQaQaQaQaQaQaQaQaQaQbybybybybybybybybybybybybybybyaQaQaQaQaQaQaQaQaEaEafafavaDaDaDaDbCbCbCbCaDaDaDaDabbFbcbcbcbcbGaDaDaDaDaDaDaDbCbCaDaDaDbgaDaDaDaDaDaDalalalalataualauauauauauaualauauauaualalalalaladadadadadadadadadadadadadadadadadaa
-afaEaQaQaQaQaQaQaVaQaQaQaQbybybybybyaQaQaQaQaQaQbybybybybyaQaQaQaQaQaQaEaEafafafavaDaDaDaDbCbCaDaDaDaDaDaDaDaDaDaDaDaDaDaDaDaDaDaDaDaDbCbCbCaDaDaDaDaDaDaDaDaDalalalauaualalauauauauaualalauauaualalalalalalaladadadadadadadadadadadadadadadadaa
-afbHaEaQaQaQaQaQbtaQaQaQaQbybybybybybyaQbIbrbJbKbybybybybyaQaQbfaQaQaQaEafafafafavavaDaDaDaDaDaDaDaDaDaDaDaDaDaDbmaDbhaDaDaDaDaDaDaDbCbCbCbCaDaDaDaDaDaDaDaDaDalalalauaualauauauauauaualauauauaualauaualalalaladadadadadadadadadadadadadadadadaa
-afaEaQaQaQaQaQaQaQaQaSaQaQaQbybybybybybyaQaQaQbybybybybybyaQaQaQaQaQaQaEafafafafavavaDaDababababaDaDaDaDaDaDaDaDaDbhbmaDaDaDaDaDaDaDbCbCbCaDaDaDaDaDaDaDaDaDaDalalauauaualauauatauaualalauauauaualauauaualalalaladadadadadadadadadadadadadadadaa
-afaEaQaQaQaQaQaQaQaQaQaQaQaQbybybybybybybybybybybybybybybyaQaQaQaQaQaQaEafafafafavaDaDaDaDaDaDaDaDbaaDaDaDabaDbmaDaDaDaDaDabaDaDaDaDaDbCbCaDaDaDaDaDaDaDaDaDaDalalauauaualauauauauaualauauauaualalauauauauaualalaladadadadadadadadadadadadadadaa
-afaEaQaQaQaQaQaQbfaQaQaQaQaQaQaQbybybybybybybybybybybybybyaQaQaQaQaQaQaEaEafafafavaDaDaDaDaDaDaDaDaDaDaDaDaDaDaDaDaDaDaDaDaDaDaDaDaDaDaDbCaDaDaDaDaDaDaDaDaDaDalalauataualauauauauaualauauauaualauauatauataualalalaladadadadadadadadadadadadadaa
-afaEaQaQaQaQaQaQaQaQaQaQaQaQaQaQaQbybybybybybybybybybybyaQaQaQaQaQaQaQaEaEafafafavaDaDaDaDaDaDaDaDaDaDaDaDaDaDaDaDaDaDaDaDaDaDaDbaaDaDaDaDaDaDbaaDaDaDaDaDaDaDalalauauauaualauauauaualauauataualauaubLbMbNauaualalaladadadadadadadadadadadadadaa
-afaEaEaQaQaQaQaQaQaSaQaQaQaQaQaQaQaQbybybybybybybybybybyaQaQaQaSaQaQaQaEaEafafafavaDaDaDaDaDaDaDaDaDaDaDaDaDaDaDaDaDaDaDaDaDaDaDaDaDaDaDaDaDaDaDaDaDaDaDaDaDavalalauauauaualauauataualauauauaualauataubOauataualalaladadadadadadadadadadadadadaa
-afaEaEaQaQaQaQaQaQaQaQaQaQaSaQaQaQaQaQaQaQaQaQaQaQaQaQaQaQaQaQaQaQaQaQaEafafafafavaDaDaDaDaDaDaDaDaDaDaDabaDaDaDaDaDaDaDaDaDaDaDaDaDaDaDaDaDaDaDaDaDaDaDaDaDavalalauatauaualauauauaualauauauaualauauatatatauaualalalaladadadadadadadadadadadadaa
-afaEaEaQaQbrbtaQaQaQaQaQaQaQaQaVaQaQaQaQaQaQaQaQaQaQaQaQaQaQaQaQaQaQaEaEafafafafavaDaDaDaDaDaDbaaDaDaDaDaDaDaDaDaDaDaDaDaDaDabaDaDaDaDaDaDaDaDaDaDaDaDaDaDaDavalalauauauaualauauauaualauatauaualalauauauauauauaualalalaladadadadadadadadadadadaa
-afaEaEaQaQaQaQaQaQaQaQaQaQbfaQaQaQaQaQaQaQaQaSaQaQaQbfaQaQbtbraQaQaQaQaEaEafafafavaDaDaDaDaDaDaDaDaDaDaDaDaDaDbCbCaDaDaDaDaDaDaDaDaDaDaDbaaDaDaDaDaDaDaDaDaDavalalauauauaualalauauaualauauauauaualauauauauauauauaualalaladadadadadadadadadadadaa
-afaEaEaQaQaQaQaQaQaQaQaQaQaQaQaQaQaQaQaQaQaQaQaQaQaQaQaQaQaQaQaQaQaQaQaQaEaEaEafavavaDaDaDaDaDaDaDaDaDaDaDaDaDaDbCbCbCaDaDaDaDaDaDaDaDaDaDaDaDaDaDaDaDaDaDaDavalalauauauataualauauaualauauatauaualalauauauatauauauaualalaladadadayadadadadadadaa
-afaEaEaEaQaQaQaQaQaQaQaQaQaQaQaQaQaQaQaQaQaQaQaQaQaQaQaQaQaQaQaQaQaQaQaQaQaEaEafavavaDaDaDaDaDaDaDaDaDbaaDaDaDaDaDaDbCbCaDaDaDaDaDaDaDaDaDaDaDaDaDaDaDaDaDavavalalalauauauaualauataualauauauauauaualalauauauauauauaualalalaladadadadadadadadadaa
+aaadadadadafafafafafafafafafafaEaEaEaEaEaEaEaEaEaEaQaFaQaQaRaEaEaEaIaEaEaEaEaEaFaDadaDaDaDaDadadaDaDabagagabagagagagagabagagagababaDaDaDaDaDadadaDaDaDaDaDaDavalalatalalauauauaualalaladadadadadadadadadadadadadadadadadadadadadadadadadadadadaa
+aaadadafafafafafafafafafaEaEaEaEaEaEaEaEaEaEaEaQaQaQaFaQaRaQaQaRaQaFaEaEaEaEaEaFaDaDaDaDabaDaDaDaDaDababagabagagagagagabagagabaDaDaDaDaDaDaDaDaDaDaDaDaDaDaDavalalaualalalauauaualalalaladadadadadadadadadadadadadadadadadadadadadadadadadadadaa
+aaadafafafafafaEaEaEaEaEaEaEaEaEaEaEaQaQaQaQaQaQaQaQaFaQaQaQaQaQaQaFaQaEaEaEaEaFaDaDaDaDaDaDaDaDaDaDaDabaSabagagagagagabaTaTabaDaDaDaDaDaDaDaDaDaDaDaDaDaDaDavalauaualaualauauataualalaladadadadadadadadadadadadadadadadadadadadadadadadadadadaa
+afafafafafaEaEaEaEaEaEaQaQaQaQaRaQaQaQaQaQaUaQaQaQaQaFaVaFaFaFaFaFaFaFaFaFaWaXaFaDaDaDaDaDaDaDaDaDaDaDabababababaYaYababababaDaDaDaDaDaZaDaDaDaDaDaDaZaDaDaDaDalauaualatalalalauauaualalaladadadadadadadadadadadadadadadadadadadadadadadadadadaa
+afafafafaEaEaEaEaEaEaEaQbaaQbaaQbababaaQbaaQaQbaaQbaaQbaaQaQaQaQaQaQaQaQaFaEaEaFaDaDaDaDaDaDaDaDaDaDaDaDaDaDabbbbbbbbbabaDaDaDaDaDaDaDaDaDabaDaDaDaDaDaDaDaDaDalauaualauauaualalauaualalalaladadadadadadadadadadadadadadadadadadadadadadadadadaa
+afafafaEaEaQaQaQaQaQaQaQbaaQbaaQbaaQbaaQbabaaQbaaQbabaaQaQaQaQaQaQaQaQaQaFaQaQaFaDaDaDbcaDaDaDaDaDaDaDaDaDaDbdbbbbbbbbbdaDaDaDaDaDababaDaDaDaDaDaDaDaDaDaDaDavalalaualalauauaualauaualalalalaladadadadadadadadadadadadadadadadadadadadadadadadaa
+afafaEaEaEaQaQaQaQaQaQaQbababaaQbabebaaQbaaQbabaaQbabaaQaQaQaQaQaQaQaQaQaFaQaQaFaDbcaDaDaDaDaDbfaDaDaDaDbgaDbhbbbbbbbbbdaDaDaDaDaDaDaDaDaDaDaDaDaDaDaDaDaDaDavalalauauauatalalalauauatalalalalalaladadadadadadadadadadadadadadadadadadadadadadaa
+afaEaEaEaEaQbibjbkaQaQaQbaaQbaaQbaaQbaaQbaaQaQbaaQbabaaQaQbeaQaQaQaQaQaQaFaQaQaFbcbcaDaDaDbcaDaDaDaDaDaDaDblbhbbbmbbbbbdaDaDaDaDaDaDaDaDaDaDaDaZaDaDaDaDaDaDaDalalauauaualalauauauaualalalalalalaladadadadadadadadadadadadadadadadadadadadadadaa
+afaEaEaEaQbnaQaQaQaQboaQbaaQbaaQbababaaQbaaRaQbaaQbaaQbaaQaQaQaQaQaQaQaUaFaQaQbpbcbcbcaDaDaDaDaDaDaDaDaDaDaDabbbbbbbbbabaDaDaDaDaDaDaDaDaDaDaDaDaDaDaDaDaDaDaDalalataualalauauaualalalauauaualalalalaladadadadadadadadadadadadadadadadadadadadaa
+afaEaEaEbqaQaQaQbraQaQaQaQaQaQaQaQaQaQaQaQaQaQaQaQaQbqbsaQaQaQaQaQaQaQaQaFaQaQaFbcbcaDbcbcaDaDaDaDaDababababababbtbtababababababaDaDaDaDaDaDaDaDaDaDaDaDaDaDaDbububvbwalauauaualalauauauauaualalalalalaladadadadadadadadadadadadadadadadadadadaa
+afaEaEaQaQaQaQaQaQaQaQaRaQaQaQaQbxbxbxbxbxbxbxbxaQaQaQaQaQaQaQaQaQaQaQaQaFaQaQaFbcaDaDaDaDaDaDaDaDaDabbbbbbbbmbbbbbbbbbbbbbbbbabaDaDaDaDaDaDaDaDaDaDaDaDaDaDaDbvauaubualauataualauauauauauauatalalalalaladadadadadadadadadadadadadadadadadadadaa
+afaEaEaQaQaQaQaQaQaQaQaQaQaQbxbxbxbxbxbxbxbxbxbxbxbxbxaQaQaQaQaQaRaQaQaQaFaLbyaFaDaDaDaDbcaDaDaDaDaDaDaDbbbbbbbzbAbAbbbbbbbbababaDaDaDaDaDaDaDaDaDaDaDaDaDaDaDbubububualauaualalauauatatauaualalalalalaladadadadadadadadadadadadadadadadadadadaa
+afaEaQaQaQbeaQaQaQaQaQaQaQaQbxbxbxbxbxbxbxbxbxbxbxbxbxbxaQaQaQaQaQaQaQaQaFaFaFaFavaDaDaDaDaDaDbBbBaDaDaDaDbbbbbbbCbDbbbbbmaDabaDaDaDaDaDbBaDaDaDaDaDaDaDaDaDaDalalalalalaualalauauauauauauauauauaualalalaladadadadadadadadadadadadadadadadadadaa
+afaEaQaQaQaQaQaQaQaQaQaQaQbxbxbxbxbxbxbxbxbxbxbxbxbxbxbxaQaQaQaQaQaQaQaQaEaEafafavaDaDaDaDbBbBbBbBaDaDaDaDabbEbbbbbbbbbFaDaDaDaDaDaDaDbBbBaDaDaDbfaDaDaDaDaDaDalalalalataualauauauauauaualauauauaualalalalaladadadadadadadadadadadadadadadadadaa
+afaEaQaQaQaQaQaQaUaQaQaQaQbxbxbxbxbxaQaQaQaQaQaQbxbxbxbxbxaQaQaQaQaQaQaEaEafafafavaDaDaDaDbBbBaDaDaDaDaDaDaDaDaDaDaDaDaDaDaDaDaDaDaDaDbBbBbBaDaDaDaDaDaDaDaDaDalalalauaualalauauauauaualalauauaualalalalalalaladadadadadadadadadadadadadadadadaa
+afbGaEaQaQaQaQaQbsaQaQaQaQbxbxbxbxbxbxaQbHbqbIbJbxbxbxbxbxaQaQbeaQaQaQaEafafafafavavaDaDaDaDaDaDaDaDaDaDaDaDaDaDblaDbgaDaDaDaDaDaDaDbBbBbBbBaDaDaDaDaDaDaDaDaDalalalauaualauauauauauaualauauauaualauaualalalaladadadadadadadadadadadadadadadadaa
+afaEaQaQaQaQaQaQaQaQaRaQaQaQbxbxbxbxbxbxaQaQaQbxbxbxbxbxbxaQaQaQaQaQaQaEafafafafavavaDaDababababaDaDaDaDaDaDaDaDaDbgblaDaDaDaDaDaDaDbBbBbBaDaDaDaDaDaDaDaDaDaDalalauauaualauauatauaualalauauauaualauauaualalalaladadadadadadadadadadadadadadadaa
+afaEaQaQaQaQaQaQaQaQaQaQaQaQbxbxbxbxbxbxbxbxbxbxbxbxbxbxbxaQaQaQaQaQaQaEafafafafavaDaDaDaDaDaDaDaDaZaDaDaDabaDblaDaDaDaDaDabaDaDaDaDaDbBbBaDaDaDaDaDaDaDaDaDaDalalauauaualauauauauaualauauauaualalauauauauaualalaladadadadadadadadadadadadadadaa
+afaEaQaQaQaQaQaQbeaQaQaQaQaQaQaQbxbxbxbxbxbxbxbxbxbxbxbxbxaQaQaQaQaQaQaEaEafafafavaDaDaDaDaDaDaDaDaDaDaDaDaDaDaDaDaDaDaDaDaDaDaDaDaDaDaDbBaDaDaDaDaDaDaDaDaDaDalalauataualauauauauaualauauauaualauauatauataualalalaladadadadadadadadadadadadadaa
+afaEaQaQaQaQaQaQaQaQaQaQaQaQaQaQaQbxbxbxbxbxbxbxbxbxbxbxaQaQaQaQaQaQaQaEaEafafafavaDaDaDaDaDaDaDaDaDaDaDaDaDaDaDaDaDaDaDaDaDaDaDaZaDaDaDaDaDaDaZaDaDaDaDaDaDaDalalauauauaualauauauaualauauataualauaubKbLbMauaualalaladadadadadadadadadadadadadaa
+afaEaEaQaQaQaQaQaQaRaQaQaQaQaQaQaQaQbxbxbxbxbxbxbxbxbxbxaQaQaQaRaQaQaQaEaEafafafavaDaDaDaDaDaDaDaDaDaDaDaDaDaDaDaDaDaDaDaDaDaDaDaDaDaDaDaDaDaDaDaDaDaDaDaDaDavalalauauauaualauauataualauauauaualauataubNauataualalaladadadadadadadadadadadadadaa
+afaEaEaQaQaQaQaQaQaQaQaQaQaRaQaQaQaQaQaQaQaQaQaQaQaQaQaQaQaQaQaQaQaQaQaEafafafafavaDaDaDaDaDaDaDaDaDaDaDabaDaDaDaDaDaDaDaDaDaDaDaDaDaDaDaDaDaDaDaDaDaDaDaDaDavalalauatauaualauauauaualauauauaualauauatatatauaualalalaladadadadadadadadadadadadaa
+afaEaEaQaQbqbsaQaQaQaQaQaQaQaQaUaQaQaQaQaQaQaQaQaQaQaQaQaQaQaQaQaQaQaEaEafafafafavaDaDaDaDaDaDaZaDaDaDaDaDaDaDaDaDaDaDaDaDaDabaDaDaDaDaDaDaDaDaDaDaDaDaDaDaDavalalauauauaualauauauaualauatauaualalauauauauauauaualalalaladadadadadadadadadadadaa
+afaEaEaQaQaQaQaQaQaQaQaQaQbeaQaQaQaQaQaQaQaQaRaQaQaQbeaQaQbsbqaQaQaQaQaEaEafafafavaDaDaDaDaDaDaDaDaDaDaDaDaDaDbBbBaDaDaDaDaDaDaDaDaDaDaDaZaDaDaDaDaDaDaDaDaDavalalauauauaualalauauaualauauauauaualauauauauauauauaualalaladadadadadadadadadadadaa
+afaEaEaQaQaQaQaQaQaQaQaQaQaQaQaQaQaQaQaQaQaQaQaQaQaQaQaQaQaQaQaQaQaQaQaQaEaEaEafavavaDaDaDaDaDaDaDaDaDaDaDaDaDaDbBbBbBaDaDaDaDaDaDaDaDaDaDaDaDaDaDaDaDaDaDaDavalalauauauataualauauaualauauatauaualalauauauatauauauaualalaladadadayadadadadadadaa
+afaEaEaEaQaQaQaQaQaQaQaQaQaQaQaQaQaQaQaQaQaQaQaQaQaQaQaQaQaQaQaQaQaQaQaQaQaEaEafavavaDaDaDaDaDaDaDaDaDaZaDaDaDaDaDaDbBbBaDaDaDaDaDaDaDaDaDaDaDaDaDaDaDaDaDavavalalalauauauaualauataualauauauauauaualalauauauauauauaualalalaladadadadadadadadadaa
 afafaEaEaEaEaQaQaQaQaQaQaQaQaQaQaEaEaEaEaQaQaEaEaEaEaEaEaEaEaEaQaEaEaEaQaQaEaEafavavaDaDaDaDaDaDaDaDaDaDaDaDaDaDaDaDaDaDaDaDaDaDaDaDaDaDaDaDaDavavavavavavavavalalalauauauauauauauaualauauauauatauauauauauauauauaualalalalaladadadadadadadadadaa
 afafafaEaEaEaEaEaEaEaEaEaEaEaEaEaEafaEaEaEaEaEaEaEaEafafafafaEaEaEaEaEaEaQaEaEafavavaDaDaDavavaDaDaDaDaDaDaDaDaDaDaDaDaDaDaDaDaDaDaDaDavavavavavavavavavavavavalalalalauauauauauaualalauauauauauauauauauauauaualalalalalalalaladadadadadadadadaa
-afafafafafafafafafafafafaFaFaIaFaFafafafafafafafafafafafafafafafafafafafafafafafavavavavavavavavavavavavavavavavavavavavavavavavaDaDavavavavavavavavavavavavavalalalalalalalalalalalalalalalalalalalalalalalalalalalalalalalaladadbPadadadadadaa
-bQbQbQbRbRbRbRbRbRbRbSbTbUbVbVbVbUbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbaaDaDaDaDaDaDaDaDaDaDaDavavavaDaDaDaDaDaDaDaDaDaDaDaDaDaDavavbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQadadadadadadadadaa
-bQbQbRbRbQbVbVbVbVbVbVbVbUbVbVbVbUbQbQbQbQbQbQbQbQbVbVbVbVbVbVbVbVbVbVbQbQaDaDaDaDavavavavavavaDaDaDaDaDbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbWbWbWbVbVbVbVbVbVbVbVbVbWbWbWbWbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQadadadadadadadadaa
-bQbQbRbRbQbXbXbUbUbUbUbUbUbUbYbUbUbUbUbUbUbUbUbUbUbUbUbUbUbUbUbUbUbUbVbVbQaDaDaDaDavaDaDaDavavavavavavavbQbVbVbVbVbVbVbVbVbVbVbQbQbQbQbQbQbQbWbWbVbVbZbZbZcabZcbbZbVbVbVbVbWbWccbWbQbQbVbVbQbQbQbVbVbVbVbVbVbVbVbVbQbQbQbQbQbQadadadadayadadadaa
-bQbRbRbRbQbVbVbUcdbUcececececfbUcdcecececececebUcebUcececebUcececebUbVbVbQbQbQbQaDaDaDavaDaDcgchavavavbQbQbVbVbVbVbVbVbVbVbVbVbVbQbQbQbQbQbWbWbVbVbZbZbVbVbVbVbVbZbZbZbZbVbVbVbWbWbQbQbVbVbVbVbVbVbVbVbVbVbVbVbVbVbVbVbQbQbQbQadadadadadadadadaa
-bQbRbRbQbQbVbVbUcebUcebUbUbUbUbUbUbUbUbUbUbUcebUcececebUcececebUcdbUbVbVbVbVbVbQbQbQbQbQbQbQbQbQbQbQbQbQbVbVbZbVbVbVbVbVbVbVbVbVbVbQbQbQbQcibWbVbZbZbVbVbWbWbWbVbVbVbVbZbZbZbVcjbWbQbQbVbVbVbVbVbUbVbVbVbUbVbVbVbVbVbVbVbQbQbQadadadadadadadadaa
-bQbRbRbQbVbVbVbUcecececececececebUcdcececebUcebUcebUbUbUbUbUbUbUbUbUbVbVbVbVbVbZbZbVbVbVbVbVbVbVbVbVbVbVbVbVbZbVbVbVbVbVbVbVbVbVbVbVbVbQckcibWbVbZbVbVbWccbWbWbWbWbWbVbVbVbVbVbWbWbQbQbVbVbVbVbVbVbVbVbVbVbVbVbVbVbVbVbVbVbQbQbQadadadadadadadaa
-bQbRbRbQbVbVbVbUbUbUbUbUbUbUcebUbUbUbUbUcebUcebUcececececececececebUbZbVbVbVbVbZbZbZbVbVbVbVbVbZbVbVbVbVbVbVbZbZbVbVbVbVbVbVbVbVbVbVbVbQbQcibWbVbVbVbWbWbWbWbWbWbWbWbWbWbWbWbWbWbWbQbQbVbVbVbVbVbVbVbVbVbVbVbVbVbVbVbVbVbVbQbQbQadadadadadadadaa
-bQbRbRbQbVbVbVbUcececececececececececececebUcebUbUbUbUbUbUbUbUbUcebUbZbVbUbUbUbUbUbUbUbUbUbUbUbUbUbUbUbUbVbVbZbZbVbVbVbVbZbZbVbVbVbVbVbVbQbWbWbWbWbWbWbWbWbWbQbQbQbQbWbWcjbWbWccbWbWbQbQbZbZbZbZbZbZbVbVbVbVbVbVbVbVbVbVbVbQbQbQadadadadadadadaa
-bQbRbRbQbZbZbZbUcebUbUbUbUbUbUbUbUbUbUbUbUbUcebUcececececececececebUbVbUbUclcmcncocpbUcqcrcsctbVbVbVbVbUbUbVbZbZbVbVbVbVbZbZbZbZbVbVbVbVbQbQbQbQbQbQbQbWbWbWbQbQbQbQcibWbWbWbWbWbWbWbWbQbVbVbVbVbUbZbZbZbUbVbVcubVbVbVbVbVbVbQbQbQadadadadadadaa
-bQbRbQbQbVbVbVbUcececececececececececececebUcebUcebUbUbUbUbUbUbUbUbUbVbUcvbVbVbVbVbVcwbVbVbVbVbVbVbVbVbVbUbVbZbUbUbUbUbUbUbUbUbUbUbVbVbVbVbVbZbZbQbQbQbWbWbWbQbQbQbQcibWbWbWbWbWbWbWbWbQbQbVbVbVbVbVbVbZbZbZbVbVbVbVbVbVbVbVbQbQbQbQadadadadadaa
-bQbRbQbVbVbVbVbUbUbUbUbUbUbUbUbUbUbUbUbUcebUcebUcebUcececececececebUbVbUbUcwcxcycyczbUcAcBcCcDcwbUbUcwbUbUbVbUbUbVbVbVbVbVbVbVbVbUbUbVbVbVbZbZbZbVbVbQbWbWbWbQbQbQbQbQbWbWbWbWbWbWbWbWbWbQbQbVbVbVbVbVbVbVbZbZbZbVbVbVbVbVbVbVbQbQbQadadadadadaa
-bQbRbQbVbVbVbVbUcececececececececececebUcebUcebUcebUcebUbUbUbUbUcebUbVbUbVbVbVbVbVbVbVbVcEcEcEbVbUbVbVcFbUbVbUbVbVcGbVbVbVcGbVbVbVbUbVbVbVbZbZbZbVbQbQcjbWbWbQbQbQbQbQbQbWbWcicicibWbWbWbWbQbVbVbVbVbVbVbVbVcHbZbZbZbVbVbVbVbVbQbQbQbQadadadadaa
-bQbRbQbVbVbVbVbUcebUbUbUbUbUbUbUbUbUcececececececececececececebUcdbUbVbUbVcEcIcEbVcEcIcEbVbVbVbVbUbVbVcJbUbVbUbVbVcKbVbVbVcKbVbVcGbUbVbVbVbZbZbZbVbQbQbWbWbWbQbQbQbQcubQbQbQbQbQbQbQbWbWbWbQbVbVbUbVbVbVbUbVbVbVbVbZbZbVbVbVbVbVbQbQbQbQadadadaa
-bQbRbQbVbVbVbVbUcececececebUcececebUbUbUbUbUcebUcebUbUbUbUbUbUbUbUbUbVbUbVcEcIcEbVcEcIcEbVbVbVbVbUbVbVcLbUbVbUbVbVcGbVbVbVcGbVbVbVbUbVbVbVbVbZbZbVbQbQbWbWcjbQbQbQbQbVbVbVbVbVbVbVbQbQcMbQbQbVbVbVbVbVbVbVbVbVbVbVbVbZbZbZbVbVbVbQbQbQbQadadadaa
-bQbRbQbVbVbVbZbUbUbUbUbUcebUcdbUcececececececebUcecececdbUcecececdbUbZbUbVbVbVbVbVbVbVbVbVcKbVbVbUbVbVcNbUbVbUbUbVbVbVbVbVbVbVbVbUbUbVbVbVbVbZbZbVbQbQbWbWbQbQbQbQbQbVbVbVbVbVbVbZbZbQcObQbZbZbZbZbZbZbVbVbVbVbVbVbVbVbVbZbZbVbVbQbQbQbQadadadaa
-bQbRbQbVbVbZbZbUcececebUcebUbUbUbUbUbUbUbUbUbUbUbUbUbUbUbUbUcebUbUbUbZbUbUbVbVbVbVcPbUcQbVbVbVbVbUcRcSbUbUbVbZbUbUbUbUbUbUbUcwbUbUbVbVbVbVbVbZbZbZbQbQcTcTbQbQbQbQbQbVbVbVbVbVbVbZbVbQcMbQbVbVbVbVbVbZbZbZbVbVbVbVbVbVbVbVbZbZbVbVbQbQbQbQadadaa
-bQbRbQbVbVbVbVbUcdbUcebUcebUcdcececececececebUcecececececececebUcdbUbZbVbUcUbUcwbUbUbUbUbUbUbUbUbUbUbUbUbVbVbZbVbVbVbVbVbVbZbZbZbVbVbVbVbVbVbZbZbZbQbQcVbQbQbQbQbQbQbQbVbVbVbVbVbVbVcWcWcWbVbVbVbVbVbVbVbVbZbZbVbVbVbVbVbVbVbZbZbVbQbQbQbQadadaa
-bQbRbQbQbVbVbVbUbUbUcebUcebUbUbUbUbUbUbUbUcebUbUcebUbUbUbUcebUbUcebUbZbVbVbVbVbVbZbZbVbVbVbVbVbVbZbVbVbVbVbZbZbVbVbVbVbVbVbZbZbZbVbVbVbVbVbVbZbZbZcMcWcWbQbQbQbQbQbQbQbVbVbVbVbVbVbZbZbZbZbVbVbVbVbVbVbVbVbVbZbZbZbVbVbVbVbVbVbZbVbVbQbQbQadadaa
-bQbRbRbQbVbVbVbUcececececececececececececececececececececececebUcebUbZbVbVbVbVbVbZbZbVbVbVbVbVbZbZbVbVbVbVbZbZbVbVbVbVbVbVbVbZbZbVbVbVbVbVbVbVbZbZbQbQbQbQbQbQbQbQbQbVbVbVbVbUbUbVbUbVbVbUbZbZbZbUbVbVbVbUbVbUbVbUbUbVbVbVbVbVbZbVbVbQbQbQadadaa
-bQbRbRbQbQbVbVbUbUbUbUbUbUbUbUbUbUbUbUbUbUbUcebUbUbUbUbUbUbUbUbUcebUbZbVbVbVcHbVbZbZbVbVbVbVbVbZbVbVbVbVbZbZbZbVbVbVbVbVbVbVbZbZbVbVbVbVbVbVbVbZbVbVbVbVbVbQbQbQbQbVbVbVbVbVbVbVbVbVbVbVbVbVbVbZbZbZbZbVbVbVbVbVcubUbZbZbVbVbVbZbVbVbQbQbQbQadaa
-bQbRbRbQbQbVbVbUcecececececececececececebUcecececececececececebUcebUbZbVbVbVbVbVbZbZbVbVbVbVbVbZbVbVbVbZbZbVbVbVbVbVbVcHbVbVbZbZbVbVbVbVbVbVbZbZbVbVbVbVbVbVbQbQbQbVbVbVbVbVbVcHbVbVbVbVbVbVbVbVbVbVbZbZbZbVbVbUbVbVbVbZbUbVbVbZbZbVbQbQbQbQadaa
-bQbRbRbQbQbVbVbUbUbUcebUbUbUbUbUbUbUbUcebUbUbUbUbUbUbUbUbUcebUbUcebUbZbZbVbVbVbVbZbZbVbVbVbVbZbVbVbVbZbZbVbVbVbVbVbVbVbVbVbVbZbZbVbVbVbVbVbVbZbZbZbVbVbVbVbVbQbQbQbVbVbVbVbUbZbZbVbVbVbVbVbUbVcHbVbVbVbVbVbZbZbVbVbVbVbVbZbZbUbVbVbVbQbQbQbQadaa
-bQbRbRbQbQbVbVbUcecececececececececebUcdbUcecececececececececebUcebUbZbVbVbVbVbVbZbVbVbVbVbVbZbVbVbVbZbVbVbVbVbVbVbVbVbVbVbVbZbZbVbUcwbUbVbVbVbVbZbVcHbVbVbQbQbQbQbVbVbVbVbVbVbZbZbZbZbZbVbUbVbVbVbVbVbVbVbVbZbZbVbVbVbUbVbZbUbVbVbVbQbQbQbQadaa
-bQbRbQbQbQbVbVbUbUcebUbUbUbUbUbUbUcebUbUbUbUbUcebUbUbUbUbUbUbUbUcebUbZbVbVbVbUbUcwcwbUbUbVbVbZbVbVbZbZbVbVbVbVbVbVbVbVbVbVbZbZbZbVbUbVbUbVbVbVbVbZbVbVbVbVbVbQbQbQbVbVbVbVbVbVbUbVbVbVbUbZbZbVbVbUbVbVbVbUbVbVbZbZbVbVbUbVbVbUbZbVbVbQbQbQbQadaa
-bQbRbQbQbQbVbVbUcecececececececececececececdbUcecececececececebUcebUbVbVbVbUbUbVbVbVbVbUbUbVbZbVbVbZbVbVbVbVbVbVbVbVbVbVbVbZbZbZbVbUbVbUbVbVbVbVbZbZbVbVbVbVbQbQbQbQbVbVbVbVbVbUbVbVbVbVbVbVbZbZbVbVbVbVbVbVbVbVbZbZbVbUbVbVbUbZbVbVbQbQbQbQadaa
-bQbRbQbQbQbVbVbUbUbUcebUbUbUbUbUbUbUbUbUbUbUbUbUbUbUbUbUbUcebUbUcebUbVbVbVbUbVbVbVbVbVbVbUbZbVbVbVbZbVbVbVbVbVbVbVbUbUbUbUbVbVbUbUbUcwbUbVbVbVbVbVbZbVbVbVbQbQbQbQbQbVbVbVbVbVbVbVbVcubVbVbVbVbZbZbZbVbVbVbVbVbVbVbZbVcHbVbVbUbZbZbVbQbQbQbQadaa
-bQbRbQbQbQbVbVbUcececececececececececececececebUcececececececebUcebUbVbVbVbUbVbVbVbVbVbVbUbZbVbVbVbZbVbVbVbVbVbVbUbUcXcIbUbUbUbUcYbVbVbUbVbVbVbVbVbZbVbVbVbQbQbQbQbQbVbVbVbVbVbVbVbVbVbVbVbVbVbVbVbZbZbVbVbVbVbVbVbZbZbVbUbVbVbVbZbVbQbQbQbQadaa
-bQbRbRbQbQbVbVbUcebUbUbUbUbUcebUcebUbUbUbUbUcebUbUbUbUbUbUbUcebUcebUbVbVbVbUbVbVbVbVcKbVbUbZbVbVbVbZbVbVbVbVbVbVbUcZbVbVbVbVcIbVbVbVcZbUbVbVbVbVbVbZbVbVbVbQbQbQbQbVbVbVbVbVbVbVbVbVbVbUbVbVbVbVbUbVbVbZbUbVbVbVbVbVbZbVbVbVbVbVbZbVbQbQbQbQadaa
-bQbRbRbQbQbQbVbUcececececebUcebUcebUcececebUcecebUcecececececececebUbVbVbVbUbVbVbVbVbVbVbUbZbVbVbVbZbVbVbVbVbVbVbUbUcIcIbVbVcwbVbVcKcZbUbVbVbVbVbZbZbVbVbVbVbQbQbQbVbVbZbZbZbZbZbVbVbVbVbVbVbVbVbVbVbVbVbVbZbZbVbVbVbZbVbVbVbVbZbZbVbQbQbQbQadaa
-bQbRbRbQbQbQbVbUbUbUbUbUcebUcebUcebUcebUcebUbUcebUbUbUcebUbUbUbUbUbUdabUbUbUbUbUcwcwbUbUbUbUbUbVbVbZbVbVbVbVbVbVbVbUbUbUbUbUbUbUcIcIbUbUbVbVbVbZbZbVbVbVbVbVbQbQbQbVbVbVbVbVbVbUbZbZbVbVbVbVbVbVbVcHbVbVbVbVbZbVbVbVbUbUbUbVbVbZbZbVbQbQbQbQadaa
-bQbRbQbQbQbQbVbUcececececebUcebUcebUcebUcebUcecececebUcebUcecececebUdbcWcwcWbVbVbVbVbVbVbVbVbUbUbVbZbVcHbVbVbZbVbVbVbVbVbVbVbVbUbUbUbUbVbVbVbZbZbVbVbVbVbVbVbQbQbQbVbVbVbVbVbVbVbVbZbZbZbVbVbVbVbVbVbVbVbVbVbZbZbUbVbVbVbVbVbUbVbZbVbQbQbQbQadaa
-bQbRbQbVbVbVbVbUcebUbUbUbUbUcebUcebUcebUcebUbUbUbUcebUcebUcebUbUcebUdcddbUcWbVcEcEcEcEbVbVbVdebUbVbZbVbVbVbZbZbVbVbVbVbVbVbZbVbVbVbVbVbVbVbZbZbVbVbVbVbVbVbQbQbQbQbVbVbVbVbVbVbVbVbVbVbZbZbVbVbVbUbVbVbVbUbVbVbZbUbVbVcubVbVbUbVbZbVbQbQbQbQadaa
-bQbRbQbVbVbVbZbUcececececececebUcebUcebUcecececececebUcebUcecdbUcebUbUbUbUbVbVcIdfcIcIbVbVbVdgbUbZbZbVbVbZbZbVbVbVbVbVbVbZbZbVbVbVbVbVbVbZbZbVbVbVbVbVbVbVbQbQbQbQbVbVbVbVbVbVbVbVbVbVbVbVbZbZbVbVbVbVbVbVbVbVbVbZbZbVbVbVbUbVbVbZbVbQbQbQadadaa
-bQbRbQbVbVbZbZbUcebUbUbUbUbUbUbUcebUcebUbUbUbUbUbUbUbUcebUbUbUbUcebUdhdidjbVbVcIcIcIdkbVbVbVdlbUbZbVbVbZbZbVbVbVbVbVbVbZbZbVbVbVbVbVbVbVbZbVbVbVbVbVbVbVbQbQbQbQbQbVbVbVbVbVbVbVbVbVcHbVbVbVbZbZbZbVbVbVbVbVbVbVbVbZbUbUbVbVbVbVbZbVbQbQbQadadaa
-bQbRbQbQbVbVbZbUcececececececdbUcececececececececececececececececebYbZbZcwbVbVcEcEcEcEbVbVbVbUbUbZbVbZbZbVbVbVbVbVbVbZbZbVbVbVbVbVbVbVbZbZbVcHbVbVbVbVbVbQbQbQbQbQbVbVbVbVbQbQbQbVbVbVbVbVbVbVbZbZbZbZbVbVbVbVbVbVbZbVbVbVbVbVbZbVbVbQbQbQadadaa
-bQbRbRbQbVbVbVbUbUbUbUbUbUbUbUbUbUbUbUbUbUbUbUbUbUbUbUbUbUbUbUbUbUbUbUbUbUbUbUbUbUbUbUbUbUbUbUbVbVbVbVbVbVbVbVbVbVbZbZbVbVbVbVbVbVbVbZbZbVbVbVbVbVbVbQbQbQbQbQbQbQbQdmbVdmbVbQbQbQbVbVbVbVbVbVbVbVbVbZbVbVbVbVbVbVbVbVcHbVbVbVbVbVbVbQbQbQadadaa
-bQbRbRbQbVbVbVbVbVbVbVbVbVbVbVbVbVbVbVbVbVbVbVbVbVbVbVbVbVbVbVbVbVbVbVbVbVbVbVbVbVbVbVbVbVbVbVbVbVbVbVbVbVbVbVbZbZbZbVbVbVbVbVbVbVbVbVbVbVbVbVbVbVbVbQbQbQbQbQbQbQbQbVbVbVbVbVbQbQbQbVbVbVbVbVbVbVbVbVbVbVbVbVbVbVbVbVbVbVbVbVbVbVbVbQbQbRadadaa
-bQbRbRbQbQbVbVbVbQbQbQbQbQbQbQbQbQbVbVbVbVbVbVbVbVbVbVbVbVbVbQbQbQbQbQbQbVbVbVbQbQbQbVbVbVbVbVbVbVbVbVbVbZbZbZbZbVbVbVbVbQbQbVbVbVbVbVbVbVbQbQbQbVbQbQbQbQbQbQbQbQbQbVdmbVdmbVbQbQbQbQbVbVbVbVbVbQbQbQbQbVbVbVbVbVbVbVbVbVbVbVbVbVbQbQbQbRbRadaa
-bQbRbRbRbQbQbQbQbQbRdnbRbRbRdnbRbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbRbRbRbRbQbQbQbQbQdnbQbQbQbVbVbVbVbVbVbVbZbZbVbVbVbVbVbVbVbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQdmdmdmbVbVbQbQbQbQbQbQbQbQbQbQdodpbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbRbRdqbQaa
-bQbRbRbRbRbRbRbRbRbRbRbRbRbRbRbRbRbRbRbRbRbRbRbRbRbRbRbRbRbRbRbRbRbRbRbRbRbRbRbRbRbRbQbQbQbQbVbVbVbVbVbVbVbVbVbVbVbVbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQdmdmdmbVbVbQbQbQbQbQbQbQbQbQbQbRbRbRbRbRbRbRbRdqbRbRbRbRbRbRbRbRbRbRbQbQbQaa
-drdrdrdrdrdrdrdrdrdrdrdrdrdrdrdrdrdrdrdrdrdrdrdrdrdrdrdrdrdrdrdrdrdrdrdrdrdrdrdravaDavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavdsdsdsdsdtdudsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsds
-drdvdvdvdvdvdvdvdvdvdvdvdvdvdvdvdvdvdvdvdvdvdvdvdvdvdvdvdvdvdvdvdvdvdvdvdvdvdvdravaDavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavdsdwdwdxdxdxdwdwdwdwdwdwdwdwdwdwdwdwdwdwdwdwdwdwdwdwdwdwdwdwdwdwdwdwdwdwdwdwdwdwds
-drdvdvdvdvdvdvdvdvdvdvdvdvdvdvdvdvdvdvdvdvdvdvdvdvdvdvdvdvdvdvdvdvdvdvdvdvdvdvdravaDaDaDaDaDaDaDaDaDaDaDaDaDaDaDaDaDaDaDaDaDaDaDaDaDaDaDaDaDaDaDaDaDaDaDaDaDavdsdwdxdxdxdxdxdxdxdxdxdxdxdydxdxdxdxdxdxdxdxdwdwdwdwdwdwdwdwdwdwdwdwdwdwdwdwdwdwds
-drdvdvdvdvdvdvdvdvdvdvdvdvdvdzdvdvdvdvdvdvdvdvdvdvdvdrdvdvdvdvdvdvdrdvdvdvdvdvdravavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavaDavdsdxdxdxdwdwdwdwdwdwdwdwdwdwdwdwdwdwdwdwdwdxdwdwdwdwdwdwdwdwdwdwdwdwdwdwdwdwdwdwds
-drdvdvdvdvdvdvdvdvdvdvdAdzdzdzdBdvdvdvdvdvdvdvdvdvdvdzdzdvdvdCdCdDdEdFdGdvdvdvdravavavavavavavaDaDaDaDaDaDaDaDaDaDaDaDaDaDaDaDaDaDaDaDaDaDaDaDaDaDaDavavavaDavdsdxdxdwdwdwdwdwdwdwdwdwdwdwdwdxdxdHdxdxdxdxdwdwdwdwdwdwdwdwdwdwdwdwdwdwdwdwdwdwds
-drdvdvdvdvdvdvdvdvdvdvdvdvdzdIdJdzdvdvdvdvdvdvdvdvdvdKdzdrdDdLdMdNdOdFdFdvdvdvdravavavavaDaDaDaDavavavavavavavavavavavavavavavavavavavavavavavavavaDaDaDavaDavdsdwdwdwdwdxdxdxdxdwdwdxdxdxdxdxdwdwdwdwdwdwdwdxdwdwdwdwdxdxdxdxdxdxdxdwdwdwdwdwds
-drdvdvdvdvdvdvdvdvdvdvdzdzdAdzdvdzdvdvdvdvdvdvdvdvdvdzdzdKdPdQdPdPdRdPdFdvdvdvdravavavavaDavavavavaDavavavaDaDaDaDaDaDaDaDaDaDaDaDaDaDaDaDavavavavavavaDavaDavdsdwdwdwdxdxdxdxdxdxdxdxdxdxdxdxdxdxdxdwdwdxdxdxdxdxdxdxdxdxdxdxdSdxdxdxdwdwdwdwds
-drdvdvdTdvdTdvdvdvdvdvdvdvdzdvdvdvdvdvdvdvdvdvdvdvdvdvdzdUdPdVdWdXdPdYdZdvdvdvdravavavavaDavavaDaDaDavavaDaDaDaDaDaDaDaDeaaDaDaDaDebaDaDaDaDaDaDaDavavaDavaDavdsdwdwdxdxdxdxdxdxdxdxdxdxdxdxdxdxdxdxdxdxdxdxdxdxdxdxdxdxdxdxdxdxdxdxdxdxdwdwdwds
-drdvdvdzdTdzdzdvdvdvdvdvdzdzdvdvdvdvdvdvdTdzdTdvdvdvdvdzdrdzdKdrdrdKdrdrdrdvdvdravavavavaDavavaDavavavaDaDaDecaDedaDaDaDaDebaDaDaDaDaDaDaDaDaDaDaDaDavaDavaDavdsdwdwdxdxdSdxeedxefdxdxdxdxdxdxdxdxdxdxdxdxdxdxdxdxdxdxegdxefdxdxdxdxdxdxdxdwdwds
-drdvdvdTdvdTdzdvdvdvdvdvdvdzdvdvdvdvdvdvdvdzdvdvdvdvdzdzdzdzdzdzdzdzdzdzdzdvdvdravavavavaDavavaDavaDaDaDaDaDaDaDaDebaDaDaDaDaDaDaDaDaDaDeaaDaDaDaDaDavaDavaDavdsdwdwdxdxdxdxdxdxdxdxdxdxdxdxdxdxdxdxdxdxehdxdxdxdxdxdxdxdxdxdxdxdxdxdxdxdxdwdwds
-drdvdvdvdvdvdzdvdvdvdvdvdvdzdvdvdvdvdvdvdvdzdvdvdvdvdvdzdzdKdzdvdzdvdzdzeidvdvdravavavavaDavavaDaDaDaDaDaDaDaDaDaDaDaDaDaDaDaDaDaDaDaDaDaDaDaDaDebaDavaDaDaDavdsdwdwdxdxdxdxdxejejejejejejejejejdxdxegdxdxdxejejejejejdHdxdHdHdHejejdxdxdxdwdwds
-drdvdvdvdvdvdzdvdvdvdvdvdvdzdvdvdvdvdvdTdvdzdvdTdvdvdvdvdzdzdzdvdzdvdvdvdzdvdvdravavavavaDavaDaDaDaDaDaDaDedaDaDaDaDaDaDaDaDaDeaaDaDaDaDaDaDaDaDaDaDavavavavavdsdwdwdxdxdxdxdxejekelemenekelekdxdxdxdxdxdxdxejdxdxdxdxdxdxdxdxehdxejdxdxdxdwdwds
-drdvdvdvdvdvdzdvdvdvdvdvdvdzdvdvdvdvdvdTdTdTdTdTdvdvdvdvdvdvdvdvdzdvdvdvdvdvdvdravavavavaDaDaDaDaDedaDaDaDaDaDaDaDaDaDaDaDebaDaDbCbCaDebaDaDaDaDaDaDaDavavavavdsdwdwdxdxdxdxdxejeoekekekekekeodxdxdxdxdxdxdxdHdxdxdxdxdSdxdxdxdxdxdHdxdxdxdwdwds
-drdvdvdvdvdvdzdvdvdvdvdvdvdzdvdvdvdvdvdvdzdvdvdvdvdvdvdvdvdvdvdvdzdvdvdvdvdvdvdravavaDaDaDaDaDaDaDaDepaDedaDaDecaDaDedaDaDbCbCbCbCbCaDaDaDaDaDaDaDeqaDavavavavdsdwdxdxdxegdxdxejekelekekdxerdxdxdxdxesdxdxdxdxdxdxdxdxdxdxdxdxdxdxejdxdxdwdwdwds
-drdvdvdvdvdvdzdzdvdvdvdvdvdzdzdvdvdvdvdvdzdvdvdvdvdvdvdvdvdvdvdKdKdvdvdvdvdvdvdravavaDavavaDaDaDaDaDaDaDaDetaDaDaDaDaDaDaDbCbCbCbCbCaDaDaDaDaDaDaDaDeqeuavavavdsdwdxdxdxdxdxdxejejdxdxdxdxdxdxdxdxesdxesefdxdxdxdxdxdxdxevejdHdHejejdxdxdwdwdwds
-drdvdvdvdvdvdzdzdzdzewewewdzdzdzdvdvdvdzdzdvdvdvdvdvdvdvdvdvdvdUdvdvdvdvdvdvdvdravavaDavavaDbCbCaDedaDaDaDexaDaDaDaDaDaDaDbCbCaDaDaDaDaDaDaDaDaDaDeqeqeqeqdsdseydxdxdxdxehdxdxdxdxdxesdxesesesdxesdxesdxesdxesesesdxesdxdxdxdxdxdxdxdxdxdwdwdwds
-drdvdvdvdvdvdzezeAeAeBeBeBeAeAeAeAeCeDeEdzdzdvdvdvdvdvdvdvdvdvdKdvdvdvdvdzdvdvdravavaDavaDaDaDbCbCaDaDecaDaDaDecaDaDaDebaDaDaDeaaDaDaDaDeaaDaDeqaDaDeFeqeGdtdxdtdxdxdxdxdxdxdxdxdxdxdxesdxdxdxesdxdxdxdxdxesdxdxdxesdxdxdxejejejejejejdxdwdwdwds
-drdvdvdvdvdzdzeAeAeAeBeBeBeAeAeAeAeCeEeEdzdzdvdvdvdzdvdvdvdzdzdzdvdvdzdzdzdvdvdravavaDavaDaDaDaDbCbCbCaDaDaDaDaDaDaDaDaDaDaDaDaDaDaDeHaDaDaDaDaDaDaDeqeqeqdsdsdudxdxdxdxdxdxdxdxeedxdxdxesdxesdxdxejejejdxdxesdxesdSdxdxdxejeseIeIesejdxdxdwdwds
-drdvdvdvdvdvdveAeAeAeBeJeBeweweweweKeLeLeEeEeEdzdzdzdzdzdzdzdzdzdzdzdzdzdzeMdvdravavavavaDaDaDedaDaDbCaDaDaDaDedaDaDaDaDaDaDaDaDaDaDaDaDaDaDaDaDaDaDaDavavavavdsdwdxdxdxdxdxdxdxdxdxdxdxdxesdxdxdxejeNejdxdxdxesdxdxdxdxdxejeseOePesejdxdxdwdwds
-drdvdvdvdvdveweweweweBeBeQeQeQeReReReReReweweEeEeEeEeEeEeEeEeEeEeEeEdzdzdzdzdTdrdrdrdraDaDaDaDaDaDaDaDaDaDaDaDaDaDaDaDaDaDaDaDaDaDaDaDaDaDaDaDaDeqaDaDavavavavdsdwdwdxdHdHevevejejdxdxdxdxesdxdxdxejeSejdxdxdxesdxdxdxdxdxejeseTesesejdxdxdwdwds
-drdvdvdvdvdzeweweweweUeUeQeQeQeVeWeXeYeYewewewewewewewewewewewewewdzdzdTdzdTdTeZdTdTfaaDaDaDaDaDaDaDedaDaDaDaDaDaDaDecaDaDaDebaDaDeaaDbCaDaDaDaDaDaDaDavavavavdsdwdwdxdHdSdxdxdxdxdxdxdxesdxesdxdxejfbejdxdxesdxesdxegdxdxejfceseIfcejdxdxdwdwds
-drdvdvdvdvdveweweweJeUeUeQeQeQeReReReReRewewewewewewewewewewewewewewdzdzdTdTfdfefdfffgfhfhfiaDaDfjepaDaDaDaDaDaDedaDaDaDaDaDaDbCbCaDbCbCaDebaDaDaDaDaDaDaDavavdsdwdwdxejdxdxdxdxdxdxdxesdxdxefesdxdxdxdxdxesdxdxdxesdxdxdxejesesesesejdxdxdwdwds
-drdvdvdvdvdzeweweweweEeEfkeQeKeKeKeKeKeLeEeweweEeEeEeEeEeEeEeEeEeEdzdTdzdTdTdTdrfddTfaaDaDaDaDaDaDaDaDaDaDecaDaDaDaDaDaDaDaDbCbCbCbCbCaDaDaDaDeaaDaDaDaDaDaDavdsdwdwdxejejejdHejejdxesdxesesesdxesdxesdxesdxesesfldxesdxdxejejesesejejdxdxdwdwds
-drdvdvdvdvdzeweweweweEeEeUeQeKfmeKfnfnfoeLewewdzdzdvdvdzdzdzdvdvdvdvdzdzdzdTdTdrdrdrdraDaDaDaDecaDaDaDaDaDaDaDaDaDaDaDaDaDeaaDbCbCaDaDaDaDaDaDaDaDaDavavavaDavdsdwdwdxdxdxdxdxdxdxdxefdxdxdxdSdxdxesdxesdxdxdxdxdxdxdxdxdxdxejfpfpejdxdxdxdwdwds
-drdvdvdvdvdveweweweweUeUfqeQeKeKeKfnfnfoeLewewfrfsdvdvdvdzdvdvdvdvdvdvdzdvdvdvdravavavaDaDedaDaDaDaDaDaDaDaDaDaDaDaDebaDaDaDaDebaDaDaDaDaDaDaDaDaDaDavavavaDavdsdwdwdxdxdxdxdxdxdxdxdxdxdxdxdxdxdxdxesdxdxdxdxdxdxdxdxdxdxdxdHdHdHdHdxdxdxdwdwds
-drdvdvdvdvdvdvdvdzeweUeUfteQeLeLeLfueLeLeLewewdzfsdvdvdvdzdvdvdvdvdvdvdvdvdvdvdravfvavaDaDaDaDaDaDaDaDedbCbCaDaDaDaDaDaDaDaDaDaDaDaDeaaDaDeaaDaDaDaDavavavaDavdsdwdwdxdxdxdxdxdxdxdxdxdxdxdxdxdxdxdxdxdxdxdxdxegdxdxdxefdxdxdxdxdxdxdxdxdxdwdwds
-drdvdvdvdvdvdvdzdzeweweweRewewewewewewewewewfwfwfwdvdvdvdzdvdvdvdvdvdvdvdvdvdvdravaDavavaDaDaDaDaDaDaDaDbCbCbCaDedaDaDaDaDaDaDaDaDaDaDaDaDaDaDaDaDaDavavavaDavdsdwdwdxejejevdxdxdxdxdxdxdxdxdxdxdxdHdHdHdHdxdxdxdxdxdxdxdxdxdxdxdxdxdxdxdxdwdwds
-drdvdvdvdvfsdzdzdzfxfxfxfyewewewfyfyfyfyewewdvdvdvdvdvdvdzdvdvdvdvdvdvdvdvdvdvdravaDavavaDaDaDaDepaDaDaDaDbCbCaDaDaDaDaDaDaDaDaDaDaDaDaDaDaDaDaDaDaDavavavaDavdsdwdwdxejfzeSfAdSdxdxdxdxdxdxdxdxejejevevejejejejejejejejejejejejejejejdxdxdwdwds
-drdvdvdvdvfsdzdzfsdrdrdrdrdrfBdrdrdrdrdrdzdvdvdvdvdvdvdvdzdvdvdvdvdvdvdvdvdvdvdravaDavavavaDaDaDaDedaDecaDaDaDetaDaDaDaDaDaDeaaDaDaDebaDaDaDebaDaDaDavavavaDavdsdwdwdxdxeSfCeSeSejdxdxdxeedxdxdxejfDfDfDfDfDfDfDfDfDfDfEfDfEfDfDfFfDejdxdxdxdwds
-drdvdvdvdvdvdzdvfsdrdPdPfGfGdPdPfHfIfJdrdvdvdvdvdvdvdvdvdzdvdvdvdvdvdvdvdvdvdvdravaDaDaDaDaDaDaDaDaDaDaDaDaDaDaDecaDaDaDaDaDaDaDaDaDaDaDaDaDaDaDavaDavavavaDavdsdwdwdxdxdxejejejejdxdxdxdxdxdxdxejfDfDfDfKfDfLfDfDfDfDfMfDfDfKfNfMfDejdxdxdxdwds
-drdvdvdvdvdvdzdvdvdrdrdPdPdPdPdPfOdPfJdrdvdvdvdvdvdvdvdvdTdvdTdTdTdvdvdvdvdvdvdravavavavavaDaDaDaDaDaDaDaDaDaDaDaDaDaDaDaDaDaDaDaDaDaDaDaDaDaDavavaDavavavaDavdsdwdwdxdxdxdxdxdxdxdxdxdxdxdxegdxejfDfDfDfDfPfQfRfDfSfDfDfDfDfMfQfDfDejdxdxdxdwds
-drdvdvdvdvdvdzdvdvdvdrdrdrfBdrdrdrdrdrdrdvdvdvdvdvdvdvdvdTdvdTdvdvdvdvdvdvdvdvdravaDaDaDavaDavavaDaDaDaDaDaDaDedaDaDaDaDecaDaDaDaDaDeaaDaDaDavavavaDavavavaDavdsdwdwdwdxdxdxdxdxdxdxdxdxdxdxdxdxejfDfDfFfDfDfTfDfDfDfDfDfDfDfLfDfDfDejdxegdxdwds
-drdvdvdTdvdvdzdvdvdvdvdvdrfUfUfUfVdrdvdvdvdvdvdvdvdvdvdvdTdTdTdTdTdvdvdvdvdvdvdravaDavaDavaDavaDaDaDaDaDaDaDaDaDaDaDaDaDaDaDaDaDaDaDaDaDavavavavavaDavavavaDavdsdwdwdwdxdxdxdxdxdxdxdxdxdxefdxdxejfDfDfDfDfDfRfDfRfDfKfDfWfDfDfWfDfDejdxdxdxdwds
-drdvdTfXdTdzdzdvdvdvdvdvdrfYfYfYfYdrdvdvdvdvdvdvdvdvdvdvdvdvdTdvdTdvdvdvdvdvdvdravaDavaDavaDavaDavavavavavavaDaDaDaDaDaDedaDaDebaDaDaDavavavavavavaDavavavaDavdsdwdwdwdxdxdxegdxdxdxdxdxdxdxdxdxejejejejejejejejejejejejejejejejejejejdxdxdxdwds
-drdvdvdTdvdvdvdvdvdvdvdvdrfYfYfYfYdrdvdvdvdvdvdvdvdvdvdvdTdTdTdvdTdvdvdvdvdvdvdravaDavaDavaDavaDaDaDaDaDaDavavavavaDaDaDaDaDaDaDaDavavavaDaDaDavavaDavavavaDavdsdwdwdxdxdxdxdxdxdxdxdxdxdxdxdxdxdxdxdxdxdxdxdxdxdxdxdxdxdxdxdxdxdxdxdxdxdwdwdwds
-drdvdvdvdvdvdvdvdvdvdvdvdrfYfYfYfYdrdvdvdvdvdvdvdvdvdvdvdvdvdvdvdvdvdvdvdvdvdvdravaDavaDavaDavavavavavavaDavavavavavavavavavavavavavfvavaDavaDavavaDavfvaDaDavdsdwdwdxdxdxdwdwdxdxdwdwdwdwdwdxdwdwdxdxdxdxdxdxdxdxdxdxdxdxdxdSdxdxdxdxdwdwdwdwds
-drdvdvdvdvdvdvdvdvdvdvdvdrfYfYfYfZdrdvdvdvdvdvdvdvdvdvdvdvdvdvdvdvdvdvdvdvdvdvdravaDavaDavaDavaDaDaDaDaDaDavaDaDaDaDaDaDaDaDaDaDaDaDaDavaDavaDavavaDavaDaDaDavdsdwdwdwdwdwdwdwdwdxdxeedxdxdwdwdwdwdwdwdwdwdwdxdxdxdxdwdwdwdwdwdwdwdwdwdwgadxdxds
-drdvdvdvdvdvdvdvdvdvdvdvdrdrdrdrdrdrdvdvdvdvdvdvdvdvdvdvdvdvdvdvdvdvdvdvdvdvdvdravfvavaDavaDavaDavavavavavavaDavavavavavavavavavavavavavaDavaDavavaDavavavavavdsdwdwdwdwdwdwdwdwdwdwdwdwdxdxdxdxdxdxdxdxdxdwdwdwdwdwdwdwdwdwdwdxdxevdxdxdxdxgbds
-drdvdvdvdvdvdvdvdvdvdvdvdvdvdvdvdvdvdvdvdvdvdvdvdvdvdvdvdvdvdvdvdvdvdvdvdvdvdvdravavavaDaDaDavaDaDaDaDaDfvavaDaDaDaDaDaDaDaDaDaDaDaDaDaDaDavaDaDaDaDavavavavavdsdwdwdwdwdwdwdwdwdwdwdwdwdwdwdwdwdwdwdwdwdxdxdxdxdxdxdxdxdxdxdxdxdwdwdwdwgadxdxds
-drdrdrdrdrdrdrdrdrdrdrdrdrdrdrdrdrdrdrdrdrdrdrdrdrdrdrdrdrdrdrdrdrdrdrdrdrdrdrdravavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsds
+afafafafafafafafafafafafaFaFaIaFaFafafafafafafafafafafafafafafafafafafafafafafafavavavavavavavavavavavavavavavavavavavavavavavavaDaDavavavavavavavavavavavavavalalalalalalalalalalalalalalalalalalalalalalalalalalalalalalalaladadbOadadadadadaa
+bPbPbPbQbQbQbQbQbQbQbRbSbTbUbUbUbTbPbPbPbPbPbPbPbPbPbPbPbPbPbPbPbPbPbPbPaZaDaDaDaDaDaDaDaDaDaDaDavavavaDaDaDaDaDaDaDaDaDaDaDaDaDaDavavbPbPbPbPbPbPbPbPbPbPbPbPbPbPbPbPbPbPbPbPbPbPbPbPbPbPbPbPbPbPbPbPbPbPbPbPbPbPbPbPbPbPbPbPadadadadadadadadaa
+bPbPbQbQbPbUbUbUbUbUbUbUbTbUbUbUbTbPbPbPbPbPbPbPbPbUbUbUbUbUbUbUbUbUbUbPbPaDaDaDaDavavavavavavaDaDaDaDaDbPbPbPbPbPbPbPbPbPbPbPbPbPbPbPbPbPbPbVbVbVbUbUbUbUbUbUbUbUbUbVbVbVbVbPbPbPbPbPbPbPbPbPbPbPbPbPbPbPbPbPbPbPbPbPbPbPbPbPadadadadadadadadaa
+bPbPbQbQbPbWbWbTbTbTbTbTbTbTbXbTbTbTbTbTbTbTbTbTbTbTbTbTbTbTbTbTbTbTbUbUbPaDaDaDaDavaDaDaDavavavavavavavbPbUbUbUbUbUbUbUbUbUbUbPbPbPbPbPbPbPbVbVbUbUbYbYbYbZbYcabYbUbUbUbUbVbVcbbVbPbPbUbUbPbPbPbUbUbUbUbUbUbUbUbUbPbPbPbPbPbPadadadadayadadadaa
+bPbQbQbQbPbUbUbTccbTcdcdcdcdcebTcccdcdcdcdcdcdbTcdbTcdcdcdbTcdcdcdbTbUbUbPbPbPbPaDaDaDavaDaDcfcgavavavbPbPbUbUbUbUbUbUbUbUbUbUbUbPbPbPbPbPbVbVbUbUbYbYbUbUbUbUbUbYbYbYbYbUbUbUbVbVbPbPbUbUbUbUbUbUbUbUbUbUbUbUbUbUbUbUbPbPbPbPadadadadadadadadaa
+bPbQbQbPbPbUbUbTcdbTcdbTbTbTbTbTbTbTbTbTbTbTcdbTcdcdcdbTcdcdcdbTccbTbUbUbUbUbUbPbPbPbPbPbPbPbPbPbPbPbPbPbUbUbYbUbUbUbUbUbUbUbUbUbUbPbPbPbPchbVbUbYbYbUbUbVbVbVbUbUbUbUbYbYbYbUcibVbPbPbUbUbUbUbUbTbUbUbUbTbUbUbUbUbUbUbUbPbPbPadadadadadadadadaa
+bPbQbQbPbUbUbUbTcdcdcdcdcdcdcdcdbTcccdcdcdbTcdbTcdbTbTbTbTbTbTbTbTbTbUbUbUbUbUbYbYbUbUbUbUbUbUbUbUbUbUbUbUbUbYbUbUbUbUbUbUbUbUbUbUbUbUbPcjchbVbUbYbUbUbVcbbVbVbVbVbVbUbUbUbUbUbVbVbPbPbUbUbUbUbUbUbUbUbUbUbUbUbUbUbUbUbUbUbPbPbPadadadadadadadaa
+bPbQbQbPbUbUbUbTbTbTbTbTbTbTcdbTbTbTbTbTcdbTcdbTcdcdcdcdcdcdcdcdcdbTbYbUbUbUbUbYbYbYbUbUbUbUbUbYbUbUbUbUbUbUbYbYbUbUbUbUbUbUbUbUbUbUbUbPbPchbVbUbUbUbVbVbVbVbVbVbVbVbVbVbVbVbVbVbVbPbPbUbUbUbUbUbUbUbUbUbUbUbUbUbUbUbUbUbUbPbPbPadadadadadadadaa
+bPbQbQbPbUbUbUbTcdcdcdcdcdcdcdcdcdcdcdcdcdbTcdbTbTbTbTbTbTbTbTbTcdbTbYbUbTbTbTbTbTbTbTbTbTbTbTbTbTbTbTbTbUbUbYbYbUbUbUbUbYbYbUbUbUbUbUbUbPbVbVbVbVbVbVbVbVbVbPbPbPbPbVbVcibVbVcbbVbVbPbPbYbYbYbYbYbYbUbUbUbUbUbUbUbUbUbUbUbPbPbPadadadadadadadaa
+bPbQbQbPbYbYbYbTcdbTbTbTbTbTbTbTbTbTbTbTbTbTcdbTcdcdcdcdcdcdcdcdcdbTbUbTbTckclcmcncobTcpcqcrcsbUbUbUbUbTbTbUbYbYbUbUbUbUbYbYbYbYbUbUbUbUbPbPbPbPbPbPbPbVbVbVbPbPbPbPchbVbVbVbVbVbVbVbVbPbUbUbUbUbTbYbYbYbTbUbUctbUbUbUbUbUbUbPbPbPadadadadadadaa
+bPbQbPbPbUbUbUbTcdcdcdcdcdcdcdcdcdcdcdcdcdbTcdbTcdbTbTbTbTbTbTbTbTbTbUbTcubUbUbUbUbUcvbUbUbUbUbUbUbUbUbUbTbUbYbTbTbTbTbTbTbTbTbTbTbUbUbUbUbUbYbYbPbPbPbVbVbVbPbPbPbPchbVbVbVbVbVbVbVbVbPbPbUbUbUbUbUbUbYbYbYbUbUbUbUbUbUbUbUbPbPbPbPadadadadadaa
+bPbQbPbUbUbUbUbTbTbTbTbTbTbTbTbTbTbTbTbTcdbTcdbTcdbTcdcdcdcdcdcdcdbTbUbTbTcvcwcxcxcybTczcAcBcCcvbTbTcvbTbTbUbTbTbUbUbUbUbUbUbUbUbTbTbUbUbUbYbYbYbUbUbPbVbVbVbPbPbPbPbPbVbVbVbVbVbVbVbVbVbPbPbUbUbUbUbUbUbUbYbYbYbUbUbUbUbUbUbUbPbPbPadadadadadaa
+bPbQbPbUbUbUbUbTcdcdcdcdcdcdcdcdcdcdcdbTcdbTcdbTcdbTcdbTbTbTbTbTcdbTbUbTbUbUbUbUbUbUbUbUcDcDcDbUbTbUbUcEbTbUbTbUbUcFbUbUbUcFbUbUbUbTbUbUbUbYbYbYbUbPbPcibVbVbPbPbPbPbPbPbVbVchchchbVbVbVbVbPbUbUbUbUbUbUbUbUcGbYbYbYbUbUbUbUbUbPbPbPbPadadadadaa
+bPbQbPbUbUbUbUbTcdbTbTbTbTbTbTbTbTbTcdcdcdcdcdcdcdcdcdcdcdcdcdbTccbTbUbTbUcDcHcDbUcDcHcDbUbUbUbUbTbUbUcIbTbUbTbUbUcJbUbUbUcJbUbUcFbTbUbUbUbYbYbYbUbPbPbVbVbVbPbPbPbPctbPbPbPbPbPbPbPbVbVbVbPbUbUbTbUbUbUbTbUbUbUbUbYbYbUbUbUbUbUbPbPbPbPadadadaa
+bPbQbPbUbUbUbUbTcdcdcdcdcdbTcdcdcdbTbTbTbTbTcdbTcdbTbTbTbTbTbTbTbTbTbUbTbUcDcHcDbUcDcHcDbUbUbUbUbTbUbUcKbTbUbTbUbUcFbUbUbUcFbUbUbUbTbUbUbUbUbYbYbUbPbPbVbVcibPbPbPbPbUbUbUbUbUbUbUbPbPcLbPbPbUbUbUbUbUbUbUbUbUbUbUbUbYbYbYbUbUbUbPbPbPbPadadadaa
+bPbQbPbUbUbUbYbTbTbTbTbTcdbTccbTcdcdcdcdcdcdcdbTcdcdcdccbTcdcdcdccbTbYbTbUbUbUbUbUbUbUbUbUcJbUbUbTbUbUcMbTbUbTbTbUbUbUbUbUbUbUbUbTbTbUbUbUbUbYbYbUbPbPbVbVbPbPbPbPbPbUbUbUbUbUbUbYbYbPcNbPbYbYbYbYbYbYbUbUbUbUbUbUbUbUbUbYbYbUbUbPbPbPbPadadadaa
+bPbQbPbUbUbYbYbTcdcdcdbTcdbTbTbTbTbTbTbTbTbTbTbTbTbTbTbTbTbTcdbTbTbTbYbTbTbUbUbUbUcObTcPbUbUbUbUbTcQcRbTbTbUbYbTbTbTbTbTbTbTcvbTbTbUbUbUbUbUbYbYbYbPbPcScSbPbPbPbPbPbUbUbUbUbUbUbYbUbPcLbPbUbUbUbUbUbYbYbYbUbUbUbUbUbUbUbUbYbYbUbUbPbPbPbPadadaa
+bPbQbPbUbUbUbUbTccbTcdbTcdbTcccdcdcdcdcdcdcdbTcdcdcdcdcdcdcdcdbTccbTbYbUbTcTbTcvbTbTbTbTbTbTbTbTbTbTbTbTbUbUbYbUbUbUbUbUbUbYbYbYbUbUbUbUbUbUbYbYbYbPbPcUbPbPbPbPbPbPbPbUbUbUbUbUbUbUcVcVcVbUbUbUbUbUbUbUbUbYbYbUbUbUbUbUbUbUbYbYbUbPbPbPbPadadaa
+bPbQbPbPbUbUbUbTbTbTcdbTcdbTbTbTbTbTbTbTbTcdbTbTcdbTbTbTbTcdbTbTcdbTbYbUbUbUbUbUbYbYbUbUbUbUbUbUbYbUbUbUbUbYbYbUbUbUbUbUbUbYbYbYbUbUbUbUbUbUbYbYbYcLcVcVbPbPbPbPbPbPbPbUbUbUbUbUbUbYbYbYbYbUbUbUbUbUbUbUbUbUbYbYbYbUbUbUbUbUbUbYbUbUbPbPbPadadaa
+bPbQbQbPbUbUbUbTcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdbTcdbTbYbUbUbUbUbUbYbYbUbUbUbUbUbYbYbUbUbUbUbYbYbUbUbUbUbUbUbUbYbYbUbUbUbUbUbUbUbYbYbPbPbPbPbPbPbPbPbPbUbUbUbUbTbTbUbTbUbUbTbYbYbYbTbUbUbUbTbUbTbUbTbTbUbUbUbUbUbYbUbUbPbPbPadadaa
+bPbQbQbPbPbUbUbTbTbTbTbTbTbTbTbTbTbTbTbTbTbTcdbTbTbTbTbTbTbTbTbTcdbTbYbUbUbUcGbUbYbYbUbUbUbUbUbYbUbUbUbUbYbYbYbUbUbUbUbUbUbUbYbYbUbUbUbUbUbUbUbYbUbUbUbUbUbPbPbPbPbUbUbUbUbUbUbUbUbUbUbUbUbUbUbYbYbYbYbUbUbUbUbUctbTbYbYbUbUbUbYbUbUbPbPbPbPadaa
+bPbQbQbPbPbUbUbTcdcdcdcdcdcdcdcdcdcdcdcdbTcdcdcdcdcdcdcdcdcdcdbTcdbTbYbUbUbUbUbUbYbYbUbUbUbUbUbYbUbUbUbYbYbUbUbUbUbUbUcGbUbUbYbYbUbUbUbUbUbUbYbYbUbUbUbUbUbUbPbPbPbUbUbUbUbUbUcGbUbUbUbUbUbUbUbUbUbUbYbYbYbUbUbTbUbUbUbYbTbUbUbYbYbUbPbPbPbPadaa
+bPbQbQbPbPbUbUbTbTbTcdbTbTbTbTbTbTbTbTcdbTbTbTbTbTbTbTbTbTcdbTbTcdbTbYbYbUbUbUbUbYbYbUbUbUbUbYbUbUbUbYbYbUbUbUbUbUbUbUbUbUbUbYbYbUbUbUbUbUbUbYbYbYbUbUbUbUbUbPbPbPbUbUbUbUbTbYbYbUbUbUbUbUbTbUcGbUbUbUbUbUbYbYbUbUbUbUbUbYbYbTbUbUbUbPbPbPbPadaa
+bPbQbQbPbPbUbUbTcdcdcdcdcdcdcdcdcdcdbTccbTcdcdcdcdcdcdcdcdcdcdbTcdbTbYbUbUbUbUbUbYbUbUbUbUbUbYbUbUbUbYbUbUbUbUbUbUbUbUbUbUbUbYbYbUbTcvbTbUbUbUbUbYbUcGbUbUbPbPbPbPbUbUbUbUbUbUbYbYbYbYbYbUbTbUbUbUbUbUbUbUbUbYbYbUbUbUbTbUbYbTbUbUbUbPbPbPbPadaa
+bPbQbPbPbPbUbUbTbTcdbTbTbTbTbTbTbTcdbTbTbTbTbTcdbTbTbTbTbTbTbTbTcdbTbYbUbUbUbTbTcvcvbTbTbUbUbYbUbUbYbYbUbUbUbUbUbUbUbUbUbUbYbYbYbUbTbUbTbUbUbUbUbYbUbUbUbUbUbPbPbPbUbUbUbUbUbUbTbUbUbUbTbYbYbUbUbTbUbUbUbTbUbUbYbYbUbUbTbUbUbTbYbUbUbPbPbPbPadaa
+bPbQbPbPbPbUbUbTcdcdcdcdcdcdcdcdcdcdcdcdcdccbTcdcdcdcdcdcdcdcdbTcdbTbUbUbUbTbTbUbUbUbUbTbTbUbYbUbUbYbUbUbUbUbUbUbUbUbUbUbUbYbYbYbUbTbUbTbUbUbUbUbYbYbUbUbUbUbPbPbPbPbUbUbUbUbUbTbUbUbUbUbUbUbYbYbUbUbUbUbUbUbUbUbYbYbUbTbUbUbTbYbUbUbPbPbPbPadaa
+bPbQbPbPbPbUbUbTbTbTcdbTbTbTbTbTbTbTbTbTbTbTbTbTbTbTbTbTbTcdbTbTcdbTbUbUbUbTbUbUbUbUbUbUbTbYbUbUbUbYbUbUbUbUbUbUbUbTbTbTbTbUbUbTbTbTcvbTbUbUbUbUbUbYbUbUbUbPbPbPbPbPbUbUbUbUbUbUbUbUctbUbUbUbUbYbYbYbUbUbUbUbUbUbUbYbUcGbUbUbTbYbYbUbPbPbPbPadaa
+bPbQbPbPbPbUbUbTcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdbTcdcdcdcdcdcdcdbTcdbTbUbUbUbTbUbUbUbUbUbUbTbYbUbUbUbYbUbUbUbUbUbUbTbTcWcHbTbTbTbTcXbUbUbTbUbUbUbUbUbYbUbUbUbPbPbPbPbPbUbUbUbUbUbUbUbUbUbUbUbUbUbUbUbYbYbUbUbUbUbUbUbYbYbUbTbUbUbUbYbUbPbPbPbPadaa
+bPbQbQbPbPbUbUbTcdbTbTbTbTbTcdbTcdbTbTbTbTbTcdbTbTbTbTbTbTbTcdbTcdbTbUbUbUbTbUbUbUbUcJbUbTbYbUbUbUbYbUbUbUbUbUbUbTcYbUbUbUbUcHbUbUbUcYbTbUbUbUbUbUbYbUbUbUbPbPbPbPbUbUbUbUbUbUbUbUbUbUbTbUbUbUbUbTbUbUbYbTbUbUbUbUbUbYbUbUbUbUbUbYbUbPbPbPbPadaa
+bPbQbQbPbPbPbUbTcdcdcdcdcdbTcdbTcdbTcdcdcdbTcdcdbTcdcdcdcdcdcdcdcdbTbUbUbUbTbUbUbUbUbUbUbTbYbUbUbUbYbUbUbUbUbUbUbTbTcHcHbUbUcvbUbUcJcYbTbUbUbUbUbYbYbUbUbUbUbPbPbPbUbUbYbYbYbYbYbUbUbUbUbUbUbUbUbUbUbUbUbUbYbYbUbUbUbYbUbUbUbUbYbYbUbPbPbPbPadaa
+bPbQbQbPbPbPbUbTbTbTbTbTcdbTcdbTcdbTcdbTcdbTbTcdbTbTbTcdbTbTbTbTbTbTcZbTbTbTbTbTcvcvbTbTbTbTbTbUbUbYbUbUbUbUbUbUbUbTbTbTbTbTbTbTcHcHbTbTbUbUbUbYbYbUbUbUbUbUbPbPbPbUbUbUbUbUbUbTbYbYbUbUbUbUbUbUbUcGbUbUbUbUbYbUbUbUbTbTbTbUbUbYbYbUbPbPbPbPadaa
+bPbQbPbPbPbPbUbTcdcdcdcdcdbTcdbTcdbTcdbTcdbTcdcdcdcdbTcdbTcdcdcdcdbTdacVcvcVbUbUbUbUbUbUbUbUbTbTbUbYbUcGbUbUbYbUbUbUbUbUbUbUbUbTbTbTbTbUbUbUbYbYbUbUbUbUbUbUbPbPbPbUbUbUbUbUbUbUbUbYbYbYbUbUbUbUbUbUbUbUbUbUbYbYbTbUbUbUbUbUbTbUbYbUbPbPbPbPadaa
+bPbQbPbUbUbUbUbTcdbTbTbTbTbTcdbTcdbTcdbTcdbTbTbTbTcdbTcdbTcdbTbTcdbTdbdcbTcVbUcDcDcDcDbUbUbUddbTbUbYbUbUbUbYbYbUbUbUbUbUbUbYbUbUbUbUbUbUbUbYbYbUbUbUbUbUbUbPbPbPbPbUbUbUbUbUbUbUbUbUbUbYbYbUbUbUbTbUbUbUbTbUbUbYbTbUbUctbUbUbTbUbYbUbPbPbPbPadaa
+bPbQbPbUbUbUbYbTcdcdcdcdcdcdcdbTcdbTcdbTcdcdcdcdcdcdbTcdbTcdccbTcdbTbTbTbTbUbUcHdecHcHbUbUbUdfbTbYbYbUbUbYbYbUbUbUbUbUbUbYbYbUbUbUbUbUbUbYbYbUbUbUbUbUbUbUbPbPbPbPbUbUbUbUbUbUbUbUbUbUbUbUbYbYbUbUbUbUbUbUbUbUbUbYbYbUbUbUbTbUbUbYbUbPbPbPadadaa
+bPbQbPbUbUbYbYbTcdbTbTbTbTbTbTbTcdbTcdbTbTbTbTbTbTbTbTcdbTbTbTbTcdbTdgdhdibUbUcHcHcHdjbUbUbUdkbTbYbUbUbYbYbUbUbUbUbUbUbYbYbUbUbUbUbUbUbUbYbUbUbUbUbUbUbUbPbPbPbPbPbUbUbUbUbUbUbUbUbUcGbUbUbUbYbYbYbUbUbUbUbUbUbUbUbYbTbTbUbUbUbUbYbUbPbPbPadadaa
+bPbQbPbPbUbUbYbTcdcdcdcdcdcdccbTcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdbXbYbYcvbUbUcDcDcDcDbUbUbUbTbTbYbUbYbYbUbUbUbUbUbUbYbYbUbUbUbUbUbUbUbYbYbUcGbUbUbUbUbUbPbPbPbPbPbUbUbUbUbPbPbPbUbUbUbUbUbUbUbYbYbYbYbUbUbUbUbUbUbYbUbUbUbUbUbYbUbUbPbPbPadadaa
+bPbQbQbPbUbUbUbTbTbTbTbTbTbTbTbTbTbTbTbTbTbTbTbTbTbTbTbTbTbTbTbTbTbTbTbTbTbTbTbTbTbTbTbTbTbTbTbUbUbUbUbUbUbUbUbUbUbYbYbUbUbUbUbUbUbUbYbYbUbUbUbUbUbUbPbPbPbPbPbPbPbPdlbUdlbUbPbPbPbUbUbUbUbUbUbUbUbUbYbUbUbUbUbUbUbUbUcGbUbUbUbUbUbUbPbPbPadadaa
+bPbQbQbPbUbUbUbUbUbUbUbUbUbUbUbUbUbUbUbUbUbUbUbUbUbUbUbUbUbUbUbUbUbUbUbUbUbUbUbUbUbUbUbUbUbUbUbUbUbUbUbUbUbUbUbYbYbYbUbUbUbUbUbUbUbUbUbUbUbUbUbUbUbUbPbPbPbPbPbPbPbPbUbUbUbUbUbPbPbPbUbUbUbUbUbUbUbUbUbUbUbUbUbUbUbUbUbUbUbUbUbUbUbUbPbPbQadadaa
+bPbQbQbPbPbUbUbUbPbPbPbPbPbPbPbPbPbUbUbUbUbUbUbUbUbUbUbUbUbUbPbPbPbPbPbPbUbUbUbPbPbPbUbUbUbUbUbUbUbUbUbUbYbYbYbYbUbUbUbUbPbPbUbUbUbUbUbUbUbPbPbPbUbPbPbPbPbPbPbPbPbPbUdlbUdlbUbPbPbPbPbUbUbUbUbUbPbPbPbPbUbUbUbUbUbUbUbUbUbUbUbUbUbPbPbPbQbQadaa
+bPbQbQbQbPbPbPbPbPbQdmbQbQbQdmbQbPbPbPbPbPbPbPbPbPbPbPbPbPbPbPbQbQbQbQbPbPbPbPbPdmbPbPbPbUbUbUbUbUbUbUbYbYbUbUbUbUbUbUbUbPbPbPbPbPbPbPbPbPbPbPbPbPbPbPbPbPbPbPbPbPbPdldldlbUbUbPbPbPbPbPbPbPbPbPbPdndobPbPbPbPbPbPbPbPbPbPbPbPbPbPbPbPbQbQdpbPaa
+bPbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbQbPbPbPbPbUbUbUbUbUbUbUbUbUbUbUbUbPbPbPbPbPbPbPbPbPbPbPbPbPbPbPbPbPbPbPbPbPbPbPbPdldldlbUbUbPbPbPbPbPbPbPbPbPbPbQbQbQbQbQbQbQbQdpbQbQbQbQbQbQbQbQbQbQbPbPbPaa
+dqdqdqdqdqdqdqdqdqdqdqdqdqdqdqdqdqdqdqdqdqdqdqdqdqdqdqdqdqdqdqdqdqdqdqdqdqdqdqdqavaDavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavdrdrdrdrdsdtdrdrdrdrdrdrdrdrdrdrdrdrdrdrdrdrdrdrdrdrdrdrdrdrdrdrdrdrdrdrdrdrdrdrdr
+dqdududududududududududududududududududududududududududududududududududududududqavaDavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavdrdvdvdwdwdwdvdvdvdvdvdvdvdvdvdvdvdvdvdvdvdvdvdvdvdvdvdvdvdvdvdvdvdvdvdvdvdvdvdvdr
+dqdududududududududududududududududududududududududududududududududududududududqavaDaDaDaDaDaDaDaDaDaDaDaDaDaDaDaDaDaDaDaDaDaDaDaDaDaDaDaDaDaDaDaDaDaDaDaDaDavdrdvdwdwdwdwdwdwdwdwdwdwdwdxdwdwdwdwdwdwdwdwdvdvdvdvdvdvdvdvdvdvdvdvdvdvdvdvdvdvdr
+dqdudududududududududududududydudududududududududududqdududududududqdudududududqavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavaDavdrdwdwdwdvdvdvdvdvdvdvdvdvdvdvdvdvdvdvdvdvdwdvdvdvdvdvdvdvdvdvdvdvdvdvdvdvdvdvdvdr
+dqdududududududududududzdydydydAdududududududududududydydududBdBdCdDdEdFdudududqavavavavavavavaDaDaDaDaDaDaDaDaDaDaDaDaDaDaDaDaDaDaDaDaDaDaDaDaDaDaDavavavaDavdrdwdwdvdvdvdvdvdvdvdvdvdvdvdvdwdwdGdwdwdwdwdvdvdvdvdvdvdvdvdvdvdvdvdvdvdvdvdvdvdr
+dqdududududududududududududydHdIdydudududududududududJdydqdCdKdLdMdNdEdEdudududqavavavavaDaDaDaDavavavavavavavavavavavavavavavavavavavavavavavavavaDaDaDavaDavdrdvdvdvdvdwdwdwdwdvdvdwdwdwdwdwdvdvdvdvdvdvdvdwdvdvdvdvdwdwdwdwdwdwdwdvdvdvdvdvdr
+dqdududududududududududydydzdydudydudududududududududydydJdOdPdOdOdQdOdEdudududqavavavavaDavavavavaDavavavaDaDaDaDaDaDaDaDaDaDaDaDaDaDaDaDavavavavavavaDavaDavdrdvdvdvdwdwdwdwdwdwdwdwdwdwdwdwdwdwdwdvdvdwdwdwdwdwdwdwdwdwdwdwdRdwdwdwdvdvdvdvdr
+dqdududSdudSdudududududududydudududududududududududududydTdOdUdVdWdOdXdYdudududqavavavavaDavavaDaDaDavavaDaDaDaDaDaDaDaDdZaDaDaDaDeaaDaDaDaDaDaDaDavavaDavaDavdrdvdvdwdwdwdwdwdwdwdwdwdwdwdwdwdwdwdwdwdwdwdwdwdwdwdwdwdwdwdwdwdwdwdwdwdwdvdvdvdr
+dqdududydSdydydudududududydydududududududSdydSdududududydqdydJdqdqdJdqdqdqdududqavavavavaDavavaDavavavaDaDaDebaDecaDaDaDaDeaaDaDaDaDaDaDaDaDaDaDaDaDavaDavaDavdrdvdvdwdwdRdweddweedwdwdwdwdwdwdwdwdwdwdwdwdwdwdwdwdwdwefdweedwdwdwdwdwdwdwdvdvdr
+dqdududSdudSdydududududududydudududududududydududududydydydydydydydydydydydududqavavavavaDavavaDavaDaDaDaDaDaDaDaDeaaDaDaDaDaDaDaDaDaDaDdZaDaDaDaDaDavaDavaDavdrdvdvdwdwdwdwdwdwdwdwdwdwdwdwdwdwdwdwdwdwegdwdwdwdwdwdwdwdwdwdwdwdwdwdwdwdwdvdvdr
+dqdudududududydududududududydudududududududydudududududydydJdydudydudydyehdududqavavavavaDavavaDaDaDaDaDaDaDaDaDaDaDaDaDaDaDaDaDaDaDaDaDaDaDaDaDeaaDavaDaDaDavdrdvdvdwdwdwdwdweieieieieieieieieidwdwefdwdwdweieieieieidGdwdGdGdGeieidwdwdwdvdvdr
+dqdudududududydududududududydudududududSdudydudSdududududydydydudydudududydududqavavavavaDavaDaDaDaDaDaDaDecaDaDaDaDaDaDaDaDaDdZaDaDaDaDaDaDaDaDaDaDavavavavavdrdvdvdwdwdwdwdweiejekelemejekejdwdwdwdwdwdwdweidwdwdwdwdwdwdwdwegdweidwdwdwdvdvdr
+dqdudududududydududududududydudududududSdSdSdSdSdududududududududydududududududqavavavavaDaDaDaDaDecaDaDaDaDaDaDaDaDaDaDaDeaaDaDbBbBaDeaaDaDaDaDaDaDaDavavavavdrdvdvdwdwdwdwdweienejejejejejendwdwdwdwdwdwdwdGdwdwdwdwdRdwdwdwdwdwdGdwdwdwdvdvdr
+dqdudududududydududududududydududududududydudududududududududududydududududududqavavaDaDaDaDaDaDaDaDeoaDecaDaDebaDaDecaDaDbBbBbBbBbBaDaDaDaDaDaDaDepaDavavavavdrdvdwdwdwefdwdweiejekejejdweqdwdwdwdwerdwdwdwdwdwdwdwdwdwdwdwdwdwdweidwdwdvdvdvdr
+dqdudududududydydudududududydydudududududydududududududududududJdJdududududududqavavaDavavaDaDaDaDaDaDaDaDesaDaDaDaDaDaDaDbBbBbBbBbBaDaDaDaDaDaDaDaDepetavavavdrdvdwdwdwdwdwdweieidwdwdwdwdwdwdwdwerdwereedwdwdwdwdwdwdweueidGdGeieidwdwdvdvdvdr
+dqdudududududydydydyevevevdydydydudududydydududududududududududTdudududududududqavavaDavavaDbBbBaDecaDaDaDewaDaDaDaDaDaDaDbBbBaDaDaDaDaDaDaDaDaDaDepepepepdrdrexdwdwdwdwegdwdwdwdwdwerdwerererdwerdwerdwerdwerererdwerdwdwdwdwdwdwdwdwdwdvdvdvdr
+dqdudududududyeyezezeAeAeAezezezezeBeCeDdydydudududududududududJdududududydududqavavaDavaDaDaDbBbBaDaDebaDaDaDebaDaDaDeaaDaDaDdZaDaDaDaDdZaDaDepaDaDeEepeFdsdwdsdwdwdwdwdwdwdwdwdwdwdwerdwdwdwerdwdwdwdwdwerdwdwdwerdwdwdweieieieieieidwdvdvdvdr
+dqdududududydyezezezeAeAeAezezezezeBeDeDdydydudududydudududydydydududydydydududqavavaDavaDaDaDaDbBbBbBaDaDaDaDaDaDaDaDaDaDaDaDaDaDaDeGaDaDaDaDaDaDaDepepepdrdrdtdwdwdwdwdwdwdwdweddwdwdwerdwerdwdweieieidwdwerdwerdRdwdwdweiereHeHereidwdwdvdvdr
+dqdudududududuezezezeAeIeAeveveveveJeKeKeDeDeDdydydydydydydydydydydydydydyeLdudqavavavavaDaDaDecaDaDbBaDaDaDaDecaDaDaDaDaDaDaDaDaDaDaDaDaDaDaDaDaDaDaDavavavavdrdvdwdwdwdwdwdwdwdwdwdwdwdwerdwdwdweieMeidwdwdwerdwdwdwdwdweiereNeOereidwdwdvdvdr
+dqdududududueveveveveAeAePePePeQeQeQeQeQeveveDeDeDeDeDeDeDeDeDeDeDeDdydydydydSdqdqdqdqaDaDaDaDaDaDaDaDaDaDaDaDaDaDaDaDaDaDaDaDaDaDaDaDaDaDaDaDaDepaDaDavavavavdrdvdvdwdGdGeueueieidwdwdwdwerdwdwdweieReidwdwdwerdwdwdwdwdweiereSerereidwdwdvdvdr
+dqdududududyeveveveveTeTePePePeUeVeWeXeXevevevevevevevevevevevevevdydydSdydSdSeYdSdSeZaDaDaDaDaDaDaDecaDaDaDaDaDaDaDebaDaDaDeaaDaDdZaDbBaDaDaDaDaDaDaDavavavavdrdvdvdwdGdRdwdwdwdwdwdwdwerdwerdwdweifaeidwdwerdwerdwefdwdweifbereHfbeidwdwdvdvdr
+dqdududududueveveveIeTeTePePePeQeQeQeQeQevevevevevevevevevevevevevevdydydSdSfcfdfcfefffgfgfhaDaDfieoaDaDaDaDaDaDecaDaDaDaDaDaDbBbBaDbBbBaDeaaDaDaDaDaDaDaDavavdrdvdvdweidwdwdwdwdwdwdwerdwdweeerdwdwdwdwdwerdwdwdwerdwdwdweierererereidwdwdvdvdr
+dqdududududyeveveveveDeDfjePeJeJeJeJeJeKeDeveveDeDeDeDeDeDeDeDeDeDdydSdydSdSdSdqfcdSeZaDaDaDaDaDaDaDaDaDaDebaDaDaDaDaDaDaDaDbBbBbBbBbBaDaDaDaDdZaDaDaDaDaDaDavdrdvdvdweieieidGeieidwerdwerererdwerdwerdwerdwererfkdwerdwdweieierereieidwdwdvdvdr
+dqdududududyeveveveveDeDeTePeJfleJfmfmfneKevevdydydududydydydududududydydydSdSdqdqdqdqaDaDaDaDebaDaDaDaDaDaDaDaDaDaDaDaDaDdZaDbBbBaDaDaDaDaDaDaDaDaDavavavaDavdrdvdvdwdwdwdwdwdwdwdweedwdwdwdRdwdwerdwerdwdwdwdwdwdwdwdwdwdweifofoeidwdwdwdvdvdr
+dqdududududueveveveveTeTfpePeJeJeJfmfmfneKevevfqfrdudududydududududududydudududqavavavaDaDecaDaDaDaDaDaDaDaDaDaDaDaDeaaDaDaDaDeaaDaDaDaDaDaDaDaDaDaDavavavaDavdrdvdvdwdwdwdwdwdwdwdwdwdwdwdwdwdwdwdwerdwdwdwdwdwdwdwdwdwdwdwdGdGdGdGdwdwdwdvdvdr
+dqdudududududududyeveTeTfsePeKeKeKfteKeKeKevevdyfrdudududydududududududududududqavfuavaDaDaDaDaDaDaDaDecbBbBaDaDaDaDaDaDaDaDaDaDaDaDdZaDaDdZaDaDaDaDavavavaDavdrdvdvdwdwdwdwdwdwdwdwdwdwdwdwdwdwdwdwdwdwdwdwdwefdwdwdweedwdwdwdwdwdwdwdwdwdvdvdr
+dqdududududududydyeveveveQevevevevevevevevevfvfvfvdudududydududududududududududqavaDavavaDaDaDaDaDaDaDaDbBbBbBaDecaDaDaDaDaDaDaDaDaDaDaDaDaDaDaDaDaDavavavaDavdrdvdvdweieieudwdwdwdwdwdwdwdwdwdwdwdGdGdGdGdwdwdwdwdwdwdwdwdwdwdwdwdwdwdwdwdvdvdr
+dqdudududufrdydydyfwfwfwfxevevevfxfxfxfxevevdududududududydududududududududududqavaDavavaDaDaDaDeoaDaDaDaDbBbBaDaDaDaDaDaDaDaDaDaDaDaDaDaDaDaDaDaDaDavavavaDavdrdvdvdweifyeRfzdRdwdwdwdwdwdwdwdweieieueueieieieieieieieieieieieieieieidwdwdvdvdr
+dqdudududufrdydyfrdqdqdqdqdqfAdqdqdqdqdqdydudududududududydududududududududududqavaDavavavaDaDaDaDecaDebaDaDaDesaDaDaDaDaDaDdZaDaDaDeaaDaDaDeaaDaDaDavavavaDavdrdvdvdwdweRfBeReReidwdwdweddwdwdweifCfCfCfCfCfCfCfCfCfCfDfCfDfCfCfEfCeidwdwdwdvdr
+dqdudududududydufrdqfFfGfHdOdOfIfIdOdOdqdududududududududydududududududududududqavaDaDaDaDaDaDaDaDaDaDaDaDaDaDaDebaDaDaDaDaDaDaDaDaDaDaDaDaDaDaDavaDavavavaDavdrdvdvdwdwdweieieieidwdwdwdwdwdwdweifCfCfCfJfCfKfCfCfCfCfLfCfCfJfMfLfCeidwdwdwdvdr
+dqdudududududydududqfFdOfNdOdOdOdOdOdOdqdududududududududSdudSdSdSdududududududqavavavavavaDaDaDaDaDaDaDaDaDaDaDaDaDaDaDaDaDaDaDaDaDaDaDaDaDaDavavaDavavavaDavdrdvdvdwdwdwdwdwdwdwdwdwdwdwdwefdweifCfCfCfCfOfPfQfCfRfCfCfCfCfLfPfCfCeidwdwdwdvdr
+dqdudududududydududqdqdqdqdqdqdqfAdqdqdqdududududududududSdudSdududududududududqavaDaDaDavaDavavaDaDaDaDaDaDaDecaDaDaDaDebaDaDaDaDaDdZaDaDaDavavavaDavavavaDavdrdvdvdvdwdwdwdwdwdwdwdwdwdwdwdwdweifCfCfEfCfCfSfCfCfCfCfCfCfCfKfCfCfCeidwefdwdvdr
+dqdududSdududydudududududqfTfUfUfUdqdududududududududududSdSdSdSdSdududududududqavaDavaDavaDavaDaDaDaDaDaDaDaDaDaDaDaDaDaDaDaDaDaDaDaDaDavavavavavaDavavavaDavdrdvdvdvdwdwdwdwdwdwdwdwdwdweedwdweifCfCfCfCfCfQfCfQfCfJfCfVfCfCfVfCfCeidwdwdwdvdr
+dqdudSfWdSdydydudududududqfXfXfXfXdqdududududududududududududSdudSdududududududqavaDavaDavaDavaDavavavavavavaDaDaDaDaDaDecaDaDeaaDaDaDavavavavavavaDavavavaDavdrdvdvdvdwdwdwefdwdwdwdwdwdwdwdwdweieieieieieieieieieieieieieieieieieieidwdwdwdvdr
+dqdududSdududududududududqfXfXfXfXdqdududududududududududSdSdSdudSdududududududqavaDavaDavaDavaDaDaDaDaDaDavavavavaDaDaDaDaDaDaDaDavavavaDaDaDavavaDavavavaDavdrdvdvdwdwdwdwdwdwdwdwdwdwdwdwdwdwdwdwdwdwdwdwdwdwdwdwdwdwdwdwdwdwdwdwdwdwdvdvdvdr
+dqdudududududududududududqfXfXfXfXdqdudududududududududududududududududududududqavaDavaDavaDavavavavavavaDavavavavavavavavavavavavavfuavaDavaDavavaDavfuaDaDavdrdvdvdwdwdwdvdvdwdwdvdvdvdvdvdwdvdvdwdwdwdwdwdwdwdwdwdwdwdwdwdRdwdwdwdwdvdvdvdvdr
+dqdudududududududududududqfXfXfXfXdqdufYdudududududududududududududududududududqavaDavaDavaDavaDaDaDaDaDaDavaDaDaDaDaDaDaDaDaDaDaDaDaDavaDavaDavavaDavaDaDaDavdrdvdvdvdvdvdvdvdvdwdweddwdwdvdvdvdvdvdvdvdvdvdwdwdwdwdvdvdvdvdvdvdvdvdvdvfZdwdwdr
+dqdudududududududududududqdqdqdqdqdqdudududududududududududududududududududududqavfuavaDavaDavaDavavavavavavaDavavavavavavavavavavavavavaDavaDavavaDavavavavavdrdvdvdvdvdvdvdvdvdvdvdvdvdwdwdwdwdwdwdwdwdwdvdvdvdvdvdvdvdvdvdvdwdweudwdwdwdwgadr
+dqdududududududududududududududududududududududududududududududududududududududqavavavaDaDaDavaDaDaDaDaDfuavaDaDaDaDaDaDaDaDaDaDaDaDaDaDaDavaDaDaDaDavavavavavdrdvdvdvdvdvdvdvdvdvdvdvdvdvdvdvdvdvdvdvdvdwdwdwdwdwdwdwdwdwdwdwdwdvdvdvdvfZdwdwdr
+dqdqdqdqdqdqdqdqdqdqdqdqdqdqdqdqdqdqdqdqdqdqdqdqdqdqdqdqdqdqdqdqdqdqdqdqdqdqdqdqavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavavdrdrdrdrdrdrdrdrdrdrdrdrdrdrdrdrdrdrdrdrdrdrdrdrdrdrdrdrdrdrdrdrdrdrdrdrdrdrdrdrdr
 "}

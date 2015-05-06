@@ -68,7 +68,7 @@
 			qdel(src)
 			return
 		if("Clown Land")
-			clownland +=loc
+			clownland += loc
 			qdel(src)
 			return
 
