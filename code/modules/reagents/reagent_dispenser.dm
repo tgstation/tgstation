@@ -96,12 +96,17 @@
 		reagents.add_reagent("fuel",1000)
 
 
-/obj/structure/reagent_dispensers/fueltank/examine(mob/user)
+/obj/structure/reagent_dispensers/fueltank/examine()
+	set src in oview()
+	var/msg
+	msg += desc
 	if(modded)
-		user << "<cpan class ='danger> The fuel faucet is wrenched open, leaking the fuel! </span>"
+		msg += "<cpan class ='danger> The fuel faucet is wrenched open, leaking the fuel! </span>"
 	if(rig)
-		user << "<span class='notice'>There is some kind of device rigged to the tank. </span>"
-	..(user)
+		msg += "<span class='notice'>There is some kind of device rigged to the tank. </span>"
+	usr << msg
+	return
+
 
 
 
@@ -114,6 +119,10 @@
 			rig = null
 			overlays = new/list()
 
+/obj/structure/reagent_dispensers/fueltank/HasProximity(atom/movable/AM as mob|obj)
+	if(rig)
+		rig.HasProximity(AM)
+	return
 
 
 
@@ -122,7 +131,7 @@
 		user.visible_message("[user] wrenches [src]'s faucet [modded ? "closed" : "open"].", \
 		"You wrench [src]'s faucet [modded ? "closed" : "open"]")
 		modded = modded ? 0 : 1
-	if (istype(W,/obj/item/device/assembly_holder))
+	if (istype(W,/obj/item/device/assembly_holder) && modded)
 		if (rig)
 			user << "\red There is another device in the way."
 			return ..()
