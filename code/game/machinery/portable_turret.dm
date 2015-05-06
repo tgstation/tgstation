@@ -834,8 +834,9 @@
 	if(.)
 		return
 	var/dat
-	if(!(Parent_Turret.lasercolor))
-		dat += text({"
+	if(Parent_Turret)
+		if(!(Parent_Turret.lasercolor))
+			dat += text({"
 <TT><B>Automatic Portable Turret Installation</B></TT><BR><BR>
 Status: []<BR>
 Behaviour controls are [Parent_Turret.locked ? "locked" : "unlocked"]"},
@@ -843,7 +844,7 @@ Behaviour controls are [Parent_Turret.locked ? "locked" : "unlocked"]"},
 "<A href='?src=\ref[src];power=1'>[Parent_Turret.on ? "On" : "Off"]</A>" )
 
 
-		dat += text({"<BR>
+			dat += text({"<BR>
 Check for Weapon Authorization: []<BR>
 Check Security Records: []<BR>
 Neutralize Identified Criminals: []<BR>
@@ -855,61 +856,63 @@ Neutralize All Unidentified Life Signs: []<BR>"},
 "<A href='?src=\ref[src];operation=shootcrooks'>[Parent_Turret.criminals ? "Yes" : "No"]</A>",
 "<A href='?src=\ref[src];operation=shootall'>[Parent_Turret.stun_all ? "Yes" : "No"]</A>" ,
 "<A href='?src=\ref[src];operation=checkxenos'>[Parent_Turret.check_anomalies ? "Yes" : "No"]</A>" )
-	else
-		dat += text({"
+		else
+			dat += text({"
 <TT><B>Automatic Portable Turret Installation</B></TT><BR><BR>
 Status: []<BR>"},
 
 "<A href='?src=\ref[src];power=1'>[Parent_Turret.on ? "On" : "Off"]</A>" )
 
-	user << browse("<HEAD><TITLE>Automatic Portable Turret Installation</TITLE></HEAD>[dat]", "window=autosec")
-	onclose(user, "autosec")
+		user << browse("<HEAD><TITLE>Automatic Portable Turret Installation</TITLE></HEAD>[dat]", "window=autosec")
+		onclose(user, "autosec")
+	return
 
 
 /obj/machinery/porta_turret_cover/attack_hand(mob/user)
-	if(ismommi(user))
-		src.attack_ai(user)
-		return
+
 	. = ..()
 	if(.)
 		return
 	var/dat
-	if(!Parent_Turret.lasercolor)
-		dat += text({"
+	if(Parent_Turret)
+		if(!Parent_Turret.lasercolor)
+			dat += text({"
 					<TT><B>Automatic Portable Turret Installation</B></TT><BR><BR>
 					Status: []<BR>
 					Behaviour controls are [Parent_Turret.locked ? "locked" : "unlocked"]"},
 
 					"<A href='?src=\ref[src];power=1'>[Parent_Turret.on ? "On" : "Off"]</A>" )
 
-		if(!Parent_Turret.locked)
-			dat += text({"<BR>
-						Check for Weapon Authorization: []<BR>
-						Check Security Records: []<BR>
-						Neutralize Identified Criminals: []<BR>
-						Neutralize All Non-Security and Non-Command Personnel: []<BR>
-						Neutralize All Unidentified Life Signs: []<BR>"},
+			if(!Parent_Turret.locked)
+				dat += text({"<BR>
+							Check for Weapon Authorization: []<BR>
+							Check Security Records: []<BR>
+							Neutralize Identified Criminals: []<BR>
+							Neutralize All Non-Security and Non-Command Personnel: []<BR>
+							Neutralize All Unidentified Life Signs: []<BR>"},
 
-						"<A href='?src=\ref[src];operation=authweapon'>[Parent_Turret.auth_weapons ? "Yes" : "No"]</A>",
-						"<A href='?src=\ref[src];operation=checkrecords'>[Parent_Turret.check_records ? "Yes" : "No"]</A>",
-						"<A href='?src=\ref[src];operation=shootcrooks'>[Parent_Turret.criminals ? "Yes" : "No"]</A>",
-						"<A href='?src=\ref[src];operation=shootall'>[Parent_Turret.stun_all ? "Yes" : "No"]</A>" ,
-						"<A href='?src=\ref[src];operation=checkxenos'>[Parent_Turret.check_anomalies ? "Yes" : "No"]</A>" )
-	else
-		if(istype(user,/mob/living/carbon/human))
-			var/mob/living/carbon/human/H = user
-			if(Parent_Turret.lasercolor == "b" && istype(H.wear_suit, /obj/item/clothing/suit/redtag))
-				return
-			if(Parent_Turret.lasercolor == "r" && istype(H.wear_suit, /obj/item/clothing/suit/bluetag))
-				return
-		dat += text({"
-					<TT><B>Automatic Portable Turret Installation</B></TT><BR><BR>
-					Status: []<BR>"},
+							"<A href='?src=\ref[src];operation=authweapon'>[Parent_Turret.auth_weapons ? "Yes" : "No"]</A>",
+							"<A href='?src=\ref[src];operation=checkrecords'>[Parent_Turret.check_records ? "Yes" : "No"]</A>",
+							"<A href='?src=\ref[src];operation=shootcrooks'>[Parent_Turret.criminals ? "Yes" : "No"]</A>",
+							"<A href='?src=\ref[src];operation=shootall'>[Parent_Turret.stun_all ? "Yes" : "No"]</A>" ,
+							"<A href='?src=\ref[src];operation=checkxenos'>[Parent_Turret.check_anomalies ? "Yes" : "No"]</A>" )
+		else
+			if(istype(user,/mob/living/carbon/human))
+				var/mob/living/carbon/human/H = user
+				if(Parent_Turret.lasercolor == "b" && istype(H.wear_suit, /obj/item/clothing/suit/redtag))
+					return
+				if(Parent_Turret.lasercolor == "r" && istype(H.wear_suit, /obj/item/clothing/suit/bluetag))
+					return
+			dat += text({"
+						<TT><B>Automatic Portable Turret Installation</B></TT><BR><BR>
+						Status: []<BR>"},
 
-					"<A href='?src=\ref[src];power=1'>[Parent_Turret.on ? "On" : "Off"]</A>" )
+						"<A href='?src=\ref[src];power=1'>[Parent_Turret.on ? "On" : "Off"]</A>" )
 
-	user << browse("<HEAD><TITLE>Automatic Portable Turret Installation</TITLE></HEAD>[dat]", "window=autosec")
-	onclose(user, "autosec")
+		user << browse("<HEAD><TITLE>Automatic Portable Turret Installation</TITLE></HEAD>[dat]", "window=autosec")
+		onclose(user, "autosec")
+	return
+
 
 
 /obj/machinery/porta_turret_cover/Topic(href, href_list)
