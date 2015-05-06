@@ -249,7 +249,7 @@
 
 /obj/machinery/door/window/emag_act(mob/user as mob)
 	if(density && !emagged)
-		operating = -1
+		operating = 0
 		flick("[src.base_state]spark", src)
 		sleep(6)
 		desc += "<BR><span class='warning'>Its access panel is smoking slightly.</span>"
