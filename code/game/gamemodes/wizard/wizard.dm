@@ -173,9 +173,7 @@
 /datum/game_mode/wizard/check_finished()
 
 	for(var/datum/mind/wizard in wizards)
-		if(!wizard.current)
-			continue
-		if(wizard.current.stat != DEAD)
+		if(isliving(wizard.current) && wizard.current.stat!=DEAD)
 			return ..()
 
 	if(SSevent.wizardmode) //If summon events was active, turn it off
