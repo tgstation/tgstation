@@ -165,6 +165,9 @@
 	if (R.one_per_turf && (locate(R.result_type) in usr.loc))
 		usr << "<span class='warning'>There is another [R.title] here!</span>"
 		return 0
+	if (R.not_on_shuttle && istype(usr.loc, /turf/simulated/shuttle))
+		usr << "<span class='warning'>\The [R.title] cannot be constructed on a shuttle!</span>"
+		return 0
 	if (R.on_floor && !istype(usr.loc, /turf/simulated/floor))
 		if(istype(usr.loc, /turf/simulated/shuttle))
 			if(istype(usr.loc, /turf/simulated/shuttle/wall))
@@ -284,7 +287,8 @@
 	var/time = 0
 	var/one_per_turf = 0
 	var/on_floor = 0
-	New(title, result_type, req_amount = 1, res_amount = 1, max_res_amount = 1, time = 0, one_per_turf = 0, on_floor = 0)
+	var/not_on_shuttle = 0
+	New(title, result_type, req_amount = 1, res_amount = 1, max_res_amount = 1, time = 0, one_per_turf = 0, on_floor = 0, not_on_shuttle = 0)
 		src.title = title
 		src.result_type = result_type
 		src.req_amount = req_amount
@@ -293,3 +297,4 @@
 		src.time = time
 		src.one_per_turf = one_per_turf
 		src.on_floor = on_floor
+		src.not_on_shuttle = not_on_shuttle
