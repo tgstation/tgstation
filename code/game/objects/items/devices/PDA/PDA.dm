@@ -1398,14 +1398,14 @@ var/global/list/obj/item/device/pda/PDAs = list()
 				switch(href_list["mMark"])
 					if("x")
 						var/new_x = input("Please input desired X coordinate.", "Station Map App", app.markx) as num
-						var/x_validate=new_x+WORLD_X_OFFSET
+						var/x_validate=new_x+WORLD_X_OFFSET[map.zMainStation]
 						if(x_validate < 1 || x_validate > 255)
 							usr << "<span class='caution'>Error: Invalid X coordinate.</span>"
 						else
 							app.markx = new_x
 					if("y")
 						var/new_y = input("Please input desired Y coordinate.", "Station Map App", app.marky) as num
-						var/y_validate=new_y+WORLD_Y_OFFSET
+						var/y_validate=new_y+WORLD_Y_OFFSET[map.zMainStation]
 						if(y_validate < 1 || y_validate > 255)
 							usr << "<span class='caution'>Error: Invalid Y coordinate.</span>"
 						else
