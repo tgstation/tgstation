@@ -105,7 +105,7 @@
 			else
 				if(istype(L))
 					say_testing(src, "Tried to speak [L.name] but don't know it, prefix length is [length(language_prefix)] before [message] after [copytext(message, 1+length(language_prefix))]")
-					return (length(language_prefix))
+					return language_prefix
 
 	return null
 

@@ -164,10 +164,11 @@ var/list/department_radio_keys = list(
 		message = copytext(message,2+length(speaking.key))
 		say_testing(src, "Have a language, oldmsg = [oldmsg], newmsg = [message]")
 	else
-		if(isnum(speaking))
+		if(!isnull(speaking))
 			var/oldmsg = message
-			message = copytext(message,1+length(speaking))
-			say_testing(src, "We tried to speak a language we don't have like a stupid, oldmsg = [oldmsg] parsed message = [message]")
+			var/n = speaking
+			message = copytext(message,1+length(n))
+			say_testing(src, "We tried to speak a language we don't have; length = [length(n)], oldmsg = [oldmsg] parsed message = [message]")
 			speaking = null
 		speaking = get_default_language()
 		say_testing(src, "Didnt have a language, get_default_language() gave us [speaking ? speaking.name : "null"]")
