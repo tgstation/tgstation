@@ -1,4 +1,0 @@
-author: Deity Link
-delete-after: true
-changes:
-  - bugfix: Fixed a Round End Information bug that caused dead vampires/thralls' icon to appear upside down instead of sideways.
