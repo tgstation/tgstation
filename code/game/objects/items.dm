@@ -442,3 +442,10 @@
 	//Reset regardless of if we hit a human.
 	throw_speed = initial(throw_speed) //explosions change this.
 	..()
+
+/obj/item/proc/OnMobDeath(var/mob/holder)
+	world << "[src] reports that [holder] has died." //Debugging
+	return
+
+/obj/item/proc/OnMobLife(var/mob/holder)
+	return
