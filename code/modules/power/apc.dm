@@ -597,7 +597,7 @@
 	if(!user)
 		return
 	src.add_fingerprint(user)
-	if(usr == user && opened && (!issilicon(user)))
+	if(usr == user && opened && (!issilicon(user) || ismommi(user)))
 		if(cell)
 			user.put_in_hands(cell)
 			cell.add_fingerprint(user)
