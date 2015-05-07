@@ -164,7 +164,7 @@
 /obj/item/device/gangtool/proc/ping_gang(var/mob/user)
 	if(!user)
 		return
-	var/message = input("Discreetly send a gang-wide message.","Send Message") as null|text
+	var/message = stripped_input(user,"Discreetly send a gang-wide message.","Send Message") as null|text
 	if(!message || (message == "") || !can_use(user))
 		return
 	if(user.z > 2)
@@ -183,6 +183,7 @@
 		for(var/datum/mind/ganger in members)
 			if(ganger.current.z <= 2)
 				ganger.current << "<span class='danger'><b>BOSS:</b> [message]</span>"
+		message_admins("[key_name_admin(user)] sent a global message to the [gang_name(gang)] Gang ([gang]): [message].")
 		log_game("[key_name(user)] sent a global message to the [gang_name(gang)] Gang ([gang]): [message].")
 
 
