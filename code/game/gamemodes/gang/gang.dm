@@ -376,21 +376,21 @@
 
 	//Calculate and report influence growth
 	ticker.mode.message_gangtools(ticker.mode.A_tools,"<b>[gang_name("A")] Gang Status Report:</b>")
-	var/A_new = min(200,A + 15 + ticker.mode.A_territory.len)
+	var/A_new = min(999,A + 15 + ticker.mode.A_territory.len)
 	var/A_message = ""
 	if(A_new != A)
 		A_message += "Your gang has gained <b>[A_new - A] Influence</b> for holding on to [ticker.mode.A_territory.len] territories."
-	if(A_new == 200)
+	if(A_new == 999)
 		A_message += " You cannot gain any more influence without spending some with this device."
 	A = A_new
 	ticker.mode.message_gangtools(ticker.mode.A_tools,A_message,0)
 
 	ticker.mode.message_gangtools(ticker.mode.B_tools,"<b>[gang_name("B")] Gang Status Report:</b>")
-	var/B_new = min(200,B + 15 + ticker.mode.B_territory.len)
+	var/B_new = min(999,B + 15 + ticker.mode.B_territory.len)
 	var/B_message = ""
 	if(B_new != B)
 		B_message += "Your gang has gained <b>[B_new - B] Influence</b> for holding on to [ticker.mode.B_territory.len] territories."
-	if(B_new == 200)
+	if(B_new == 999)
 		B_message += " You cannot gain any more influence without spending some with this device."
 	B = B_new
 	ticker.mode.message_gangtools(ticker.mode.B_tools,B_message,0)
