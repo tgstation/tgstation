@@ -39,7 +39,6 @@
 		update_icon()
 		updateinfolinks()
 		return
-	verbs -= /obj/item/weapon/paper/verb/wipe_color
 
 /obj/item/weapon/paper/update_icon()
 	icon_state=initial(icon_state)
@@ -377,15 +376,6 @@ var/global/list/paper_folding_results = list ( \
 		user << "<span class='notice'>You'll need [src] in your hands to do that.</span>"
 		return 0
 	return 1
-
-/obj/item/weapon/paper/verb/wipe_color() //since we don't have erasers or anything
-	set name = "Wipe coloring"
-	set category = "Object"
-	set src in usr
-	if(src.color)
-		usr << "<span class='notice'>You wipe the color off the [src.name].</span>"
-		src.color = null
-		src.verbs -= /obj/item/weapon/paper/verb/wipe_color
 
 /*
  * Premade paper

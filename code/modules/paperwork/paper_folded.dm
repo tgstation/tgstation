@@ -33,7 +33,6 @@
 		var/obj/item/toy/crayon/C = I
 		src.color = C.colour //doesn't work with paper hats but I haven't found a way to fix it, who will even notice anyways
 		src.unfolded.color = C.colour
-		src.unfolded.verbs += /obj/item/weapon/paper/verb/wipe_color
 	else if(I.is_hot())
 		src.burn_paper(user)
 		return
