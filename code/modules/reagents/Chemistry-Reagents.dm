@@ -2543,6 +2543,13 @@
 		M.visible_message("<span class='warning'>[M] [pick("dry heaves!","coughs!","splutters!")]</span>")
 	return
 
+/datum/reagent/blackcolor
+	name = "Black Food Coloring"
+	id = "blackcolor"
+	description = "A black coloring used to dye food and drinks."
+	reagent_state = LIQUID
+	color = "#000000"
+
 /datum/reagent/frostoil
 	name = "Frost Oil"
 	id = "frostoil"

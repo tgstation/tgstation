@@ -17,8 +17,8 @@
 //removed smashing - now uses smashing proc from drinks.dm - Hinaichigo
 //also now produces a broken glass when smashed instead of just a shard
 
-
 	on_reagent_change()
+		..()
 		/*if(reagents.reagent_list.len > 1 )
 			icon_state = "glass_brown"
 			name = "Glass of Hooch"
@@ -465,6 +465,10 @@
 					icon_state ="glass_brown"
 					name = "glass of ..what?"
 					desc = "You can't really tell what this is."
+			if(reagents.has_reagent("blackcolor"))
+				icon_state ="blackglass"
+				name = "international drink of mystery"
+				desc = "The identity of this drink has been concealed for its protection."
 		else
 			icon_state = "glass_empty"
 			name = "drinking glass"
