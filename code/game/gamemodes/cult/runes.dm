@@ -142,7 +142,7 @@ var/list/sacrificed = list()
 
 
 /obj/effect/rune/proc/tearreality()
-	var/list/mob/living/carbon/human/cultist_count = list()
+	var/list/mob/living/cultist_count = list()
 	var/mob/living/user = usr
 	user.say("Tok-lyr rqa'nap g[pick("'","`")]lt-ulotf!")
 	for(var/mob/M in range(1,src))
