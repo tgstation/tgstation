@@ -202,6 +202,15 @@
 			return 0
 	return 1
 
+/datum/game_mode/nuclear/check_finished() //to be called by ticker
+	if(replacementmode && round_converted == 2)
+		return replacementmode.check_finished()
+	if(SSshuttle.emergency.mode >= SHUTTLE_ENDGAME || station_was_nuked)
+		return 1
+	if(are_operatives_dead())
+		if(bomb_set) //snaaaaaaaaaake! It's not over yet!
+			return 0
+	..()
 
 /datum/game_mode/nuclear/declare_completion()
 	var/disk_rescued = 1
