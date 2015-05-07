@@ -53,7 +53,7 @@
 		switch(randomize)
 			if("monkey")
 				new_mob = new /mob/living/carbon/monkey(M.loc)
-				new_mob.languages |= HUMAN
+				new_mob.languages |= M.languages
 			if("robot")
 				new_mob = new /mob/living/silicon/robot(M.loc)
 				new_mob.setGender(M.gender)
@@ -62,7 +62,7 @@
 				var/mob/living/silicon/robot/Robot = new_mob
 				Robot.mmi = new /obj/item/device/mmi(new_mob)
 				Robot.mmi.transfer_identity(M)	//Does not transfer key/client.
-				new_mob.languages |= HUMAN
+				new_mob.languages |= M.languages
 			if("mommi")
 				new_mob = new /mob/living/silicon/robot/mommi(M.loc)
 				new_mob.setGender(M.gender)
@@ -100,7 +100,7 @@
 
 				slimey = text2path("/mob/living/carbon/slime[slimey]")
 				new_mob = new slimey(M.loc)
-				new_mob.languages |= HUMAN
+				new_mob.languages |= M.languages
 			if("xeno")
 				var/alien_caste = pick("Hunter","Sentinel","Drone","Larva")
 				switch(alien_caste)
@@ -108,7 +108,7 @@
 					if("Sentinel")	new_mob = new /mob/living/carbon/alien/humanoid/sentinel(M.loc)
 					if("Drone")		new_mob = new /mob/living/carbon/alien/humanoid/drone(M.loc)
 					else			new_mob = new /mob/living/carbon/alien/larva(M.loc)
-				new_mob.languages |= HUMAN
+				new_mob.languages |= M.languages
 			if("human")
 				new_mob = new /mob/living/carbon/human(M.loc, delay_ready_dna=1)
 

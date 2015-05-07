@@ -13,6 +13,8 @@
 	var/recharge_tick = 0
 	var/recharge_time = 10 // when to recharge a consumable, only used for engi borgs atm
 	var/list/sensor_augs
+	var/languages
+	var/list/added_languages
 
 /obj/item/weapon/robot_module/proc/recharge_consumable()
 	return
@@ -31,8 +33,12 @@
 	..()
 	return
 
-/obj/item/weapon/robot_module/New()
+/obj/item/weapon/robot_module/New(var/mob/living/silicon/robot/R)
 	..()
+
+	languages = list(LANGUAGE_SOL_COMMON = 1, LANGUAGE_TRADEBAND = 1, LANGUAGE_VOX = 0, LANGUAGE_ROOTSPEAK = 0, LANGUAGE_GREY = 0, LANGUAGE_CLATTER = 0, LANGUAGE_MONKEY = 0, LANGUAGE_UNATHI = 0, LANGUAGE_SIIK_TAJR = 0, LANGUAGE_SKRELLIAN = 0, LANGUAGE_GUTTER = 0)
+	added_languages = list()
+	if(!isMoMMI(R)) add_languages(R)
 	AddToProfiler()
 	src.modules += new /obj/item/device/flashlight(src)
 	src.modules += new /obj/item/device/flash(src)
@@ -287,6 +293,15 @@
 
 
 /obj/item/weapon/robot_module/butler/New()
+	languages = list(
+					LANGUAGE_SOL_COMMON	= 1,
+					LANGUAGE_UNATHI		= 1,
+					LANGUAGE_SIIK_TAJR	= 1,
+					LANGUAGE_SKRELLIAN	= 1,
+					LANGUAGE_ROOTSPEAK	= 1,
+					LANGUAGE_TRADEBAND	= 1,
+					LANGUAGE_GUTTER		= 1
+					)
 	..()
 	src.modules += new /obj/item/weapon/reagent_containers/food/drinks/beer(src)
 	src.modules += new /obj/item/weapon/reagent_containers/food/condiment/enzyme(src)
@@ -381,3 +396,13 @@
 	sensor_augs = list("Security", "Medical", "Mesons", "Thermal", "Light Amplification", "Disable")
 
 	return
+
+/obj/item/weapon/robot_module/proc/add_languages(var/mob/living/silicon/robot/R)
+	for(var/language in languages)
+		if(R.add_language(language, languages[language]))
+			added_languages |= language
+
+/obj/item/weapon/robot_module/proc/remove_languages(var/mob/living/silicon/robot/R)
+	for(var/language in added_languages)
+		R.remove_language(language)
+	added_languages.len = 0

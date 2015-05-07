@@ -1,7 +1,6 @@
 /mob/living/silicon
 	gender = NEUTER
 	voice_name = "synthesized voice"
-	languages = ROBOT | HUMAN | MONKEY | ALIEN
 	var/syndicate = 0
 	var/datum/ai_laws/laws = null//Now... THEY ALL CAN ALL HAVE LAWS
 	var/list/alarms_to_show = list()
@@ -10,7 +9,7 @@
 	immune_to_ssd = 1
 
 	var/obj/item/device/radio/borg/radio = null //AIs dont use this but this is at the silicon level to advoid copypasta in say()
-
+	var/list/speech_synthesizer_langs = list()	//which languages can be vocalized by the speech synthesizer
 	var/sensor_mode = 0 //Determines the current HUD.
 	#define SEC_HUD 1 //Security HUD mode
 	#define MED_HUD 2 //Medical HUD mode
@@ -250,3 +249,41 @@
 
 /mob/living/silicon/put_in_hand_check(var/obj/item/W)
 	return 0
+
+/mob/living/silicon/can_speak_lang(datum/language/speaking)
+	return universal_speak || (speaking in src.speech_synthesizer_langs)	//need speech synthesizer support to vocalize a language
+
+/mob/living/silicon/add_language(var/language, var/can_speak=1)
+	if (..(language) && can_speak)
+		speech_synthesizer_langs.Add(all_languages[language])
+		return 1
+
+/mob/living/silicon/remove_language(var/rem_language)
+	..(rem_language)
+
+	for (var/datum/language/L in speech_synthesizer_langs)
+		if (L.name == rem_language)
+			speech_synthesizer_langs -= L
+
+/mob/living/silicon/check_languages()
+	set name = "Check Known Languages"
+	set category = "IC"
+	set src = usr
+
+	var/dat = "<b><font size = 5>Known Languages</font></b><br/><br/>"
+
+	if(default_language)
+		dat += "Current default language: [default_language] - <a href='byond://?src=\ref[src];default_lang=reset'>reset</a><br/><br/>"
+
+	for(var/datum/language/L in languages)
+		var/default_str
+		if(L == default_language)
+			default_str = " - default - <a href='byond://?src=\ref[src];default_lang=reset'>reset</a>"
+		else
+			default_str = " - <a href='byond://?src=\ref[src];default_lang=[L]'>set default</a>"
+
+		var/synth = (L in speech_synthesizer_langs)
+		dat += "<b>[L.name] (:[L.key])</b>[synth ? default_str : null]<br/>Speech Synthesizer: <i>[synth ? "YES" : "NOT SUPPORTED"]</i><br/>[L.desc]<br/><br/>"
+
+	src << browse(dat, "window=checklanguage")
+	return

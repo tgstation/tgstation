@@ -6,7 +6,6 @@
 
 	layer = 3
 	var/last_move = null
-	var/languages = ALL
 	var/anchored = 0
 	var/move_speed = 10
 	var/l_move_time = 1
@@ -319,4 +318,7 @@
 // SINGULOTH PULL REFACTOR
 /////////////////////////////
 /atom/movable/proc/canSingulothPull(var/obj/machinery/singularity/singulo)
+	return 1
+
+/atom/movable/proc/say_understands(var/mob/other)
 	return 1

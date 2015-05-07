@@ -42,7 +42,7 @@ Here it is: Buttbot.
 	return
 
 
-/obj/machinery/bot/buttbot/Hear(message, atom/movable/speaker, message_langs, raw_message, radio_freq)
+/obj/machinery/bot/buttbot/Hear(message, atom/movable/speaker, var/datum/language/speaking, raw_message, radio_freq)
 	if(prob(buttchance))
 		message = strip_html_properly(html_decode(raw_message))
 
@@ -60,7 +60,7 @@ Here it is: Buttbot.
 
 			split_phrase[index] = "butt"
 
-		say(sanitize(list2text(split_phrase," ")))
+		say(sanitize(list2text(split_phrase," ")), speaking)
 	return
 
 

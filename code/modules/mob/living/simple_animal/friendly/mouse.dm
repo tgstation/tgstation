@@ -26,7 +26,7 @@
 	min_oxy = 16 //Require atleast 16kPA oxygen
 	minbodytemp = 223		//Below -50 Degrees Celcius
 	maxbodytemp = 323	//Above 50 Degrees Celcius
-	languages = SIMPLE_ANIMAL
+	universal_speak = 0
 
 /mob/living/simple_animal/mouse/Life()
 	..()
@@ -50,6 +50,8 @@
 
 /mob/living/simple_animal/mouse/New()
 	..()
+	if(config && config.uneducated_mice)
+		universal_understand = 0
 	// Mice IDs
 	if(name == initial(name))
 		name = "[name] ([rand(1, 1000)])"

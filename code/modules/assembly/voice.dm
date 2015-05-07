@@ -10,7 +10,7 @@
 	var/listening = 0
 	var/recorded = "" //the activation message
 
-/obj/item/device/assembly/voice/Hear(message, atom/movable/speaker, message_langs, raw_message, radio_freq)
+/obj/item/device/assembly/voice/Hear(message, atom/movable/speaker, var/datum/language/speaking, raw_message, radio_freq)
 	if(speaker == src)
 		return
 	if(listening && !radio_freq)

@@ -217,6 +217,8 @@ client/proc/antag_madness(var/mob/M in mob_list)
 			M.mind.special_role = "Cultist"
 			M << "<span class='sinister'>You remember the Realm of Nar-Sie, The Geometer of Blood. You now see how flimsy the world is, you see that it should be open to the knowledge of Nar-Sie.</span>"
 			M << "<span class='sinister'>Assist your new compatriots in their dark dealings. Their goal is yours, and yours is theirs. You serve the Dark One above all else. Bring It back.</span>"
+			M << "<span class='sinister'>You can now speak and understand the forgotten tongue of the occult.</span>"
+			M.add_language("Cult")
 			var/datum/game_mode/cult/cult = ticker.mode
 			if (istype(cult))
 				cult.memoize_cult_objectives(M.mind)

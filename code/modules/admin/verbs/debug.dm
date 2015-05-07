@@ -347,6 +347,8 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 			if(M.mind)
 				M.mind.special_role = "Cultist"
 				ticker.mode.cult += M.mind
+				M << "<span class='sinister'>You can now speak and understand the forgotten tongue of the occult.</span>"
+				M.add_language("Cult")
 			src << "Made [M] a cultist."
 */
 

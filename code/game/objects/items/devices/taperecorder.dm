@@ -22,7 +22,7 @@
 	throw_speed = 4
 	throw_range = 20
 
-/obj/item/device/taperecorder/Hear(message, atom/movable/speaker, message_langs, raw_message, radio_freq)
+/obj/item/device/taperecorder/Hear(message, atom/movable/speaker, var/datum/language/speaking, raw_message, radio_freq)
 	if(recording)
 		timestamp += timerecorded
 		storedinfo += "\[[time2text(timerecorded*10,"mm:ss")]\] [strip_html_properly(html_decode(raw_message))]"

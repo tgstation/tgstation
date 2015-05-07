@@ -55,7 +55,7 @@ var/message_delay = 0 // To make sure restarting the recentmessages list is kept
 		if(signal.data["type"] == 0)
 
 			/* ###### Broadcast a message using signal.data ###### */
-			Broadcast_Message(signal.data["mob"],
+			Broadcast_Message(signal.data["mob"], signal.data["language"],
 							  signal.data["vmask"], signal.data["radio"],
 							  signal.data["message"], signal.data["name"], signal.data["job"], signal.data["realname"],
 							  0, signal.data["compression"], signal.data["level"], signal.frequency)
@@ -79,7 +79,7 @@ var/message_delay = 0 // To make sure restarting the recentmessages list is kept
 			/* ###### Broadcast a message using signal.data ###### */
 				// Parameter "data" as 4: AI can't track this person/mob
 
-			Broadcast_Message(signal.data["mob"],
+			Broadcast_Message(signal.data["mob"], signal.data["language"],
 							  signal.data["vmask"],
 							  signal.data["radio"], signal.data["message"],
 							  signal.data["name"], signal.data["job"],
@@ -121,6 +121,10 @@ var/message_delay = 0 // To make sure restarting the recentmessages list is kept
 	var/intercept = 0 // if nonzero, broadcasts all messages to syndicate channel
 
 /obj/machinery/telecomms/allinone/receive_signal(datum/signal/signal)
+	var/mob/mob = signal.data["mob"]
+	var/datum/language/language = signal.data["language"]
+	var/langname = (language ? language.name : "No language")
+	say_testing(mob, "[src] received radio signal from us, language [langname]")
 
 	if(!on) // has to be on to receive messages
 		return
@@ -142,12 +146,13 @@ var/message_delay = 0 // To make sure restarting the recentmessages list is kept
 
 
 		if(signal.frequency == SYND_FREQ) // if syndicate broadcast, just
-			Broadcast_Message(signal.data["mob"],
+			Broadcast_Message(signal.data["mob"], signal.data["language"],
 							  signal.data["vmask"],
 							  signal.data["radio"], signal.data["message"],
 							  signal.data["name"], signal.data["job"],
 							  signal.data["realname"],, signal.data["compression"], list(0, z), signal.frequency)
-
+	else
+		say_testing(mob, "[src] is not listening")
 /**
 
 	Here is the big, bad function that broadcasts a message given the appropriate
@@ -202,11 +207,11 @@ var/message_delay = 0 // To make sure restarting the recentmessages list is kept
 
 **/
 
-/proc/Broadcast_Message(var/atom/movable/AM,
+/proc/Broadcast_Message(var/atom/movable/AM, var/datum/language/speaking,
 						var/vmask, var/obj/item/device/radio/radio,
 						var/message, var/name, var/job, var/realname,
 						var/data, var/compression, var/list/level, var/freq)
-
+	say_testing(AM, "broadcast_message start")
 	// Cut down on the message sizes.
 	message = copytext(message, 1, MAX_BROADCAST_LEN)
 
@@ -218,7 +223,7 @@ var/message_delay = 0 // To make sure restarting the recentmessages list is kept
 	var/atom/movable/virtualspeaker/virt = getFromPool(/atom/movable/virtualspeaker, null)
 	virt.name = name
 	virt.job = job
-	virt.languages = AM.languages
+	//virt.languages = AM.languages
 	virt.source = AM
 	virt.faketrack = data == 4 ? 1 : 0
 	virt.radio = radio
@@ -258,11 +263,12 @@ var/message_delay = 0 // To make sure restarting the recentmessages list is kept
 
 	radios = null
 
-	var/rendered = virt.compose_message(virt, virt.languages, message, freq) // always call this on the virtualspeaker to advoid issues
-
+	var/rendered = virt.compose_message(virt, speaking, message, freq) // always call this on the virtualspeaker to advoid issues
+	var/listeners_sent = 0
 	for (var/atom/movable/listener in listeners)
 		if (listener)
-			listener.Hear(rendered, virt, AM.languages, message, freq)
+			listeners_sent++
+			listener.Hear(rendered, virt, speaking, message, freq)
 
 	if (length(listeners))
 		listeners = null
@@ -295,6 +301,7 @@ var/message_delay = 0 // To make sure restarting the recentmessages list is kept
 					blackbox.msg_cargo += blackbox_msg
 				else
 					blackbox.messages += blackbox_msg
+	say_testing(AM, "Broadcast_Message finished with [listeners_sent] listener\s getting our message, [message] lang = [speaking ? speaking.name : "none"]")
 	spawn(50)
 		returnToPool(virt)
 
@@ -379,7 +386,7 @@ var/message_delay = 0 // To make sure restarting the recentmessages list is kept
 
 		// --- Can understand the speech ---
 
-		if (R.languages & M.languages)
+		if (R.say_understands(M))
 
 			heard_normal += R
 

@@ -3191,6 +3191,24 @@
 			if(href_list["vsc"] == "default")
 				zas_settings.SetDefault(usr)
 
+	else if(href_list["toglang"])
+		if(check_rights(R_SPAWN))
+			var/mob/M = locate(href_list["toglang"])
+			if(!istype(M))
+				usr << "[M] is illegal type, must be /mob!"
+				return
+			var/lang2toggle = href_list["lang"]
+			var/datum/language/L = all_languages[lang2toggle]
+
+			if(L in M.languages)
+				if(!M.remove_language(lang2toggle))
+					usr << "Failed to remove language '[lang2toggle]' from \the [M]!"
+			else
+				if(!M.add_language(lang2toggle))
+					usr << "Failed to add language '[lang2toggle]' from \the [M]!"
+
+			show_player_panel(M)
+
 	// player info stuff
 
 	if(href_list["add_player_info"])

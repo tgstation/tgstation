@@ -170,7 +170,7 @@
 			else
 				warning = "[short_name] hyperstructure returning to safe operating levels. Instability: [stability]%"
 			//radio.say(warning, "Supermatter [short_name] Monitor")
-			Broadcast_Message(radio, null, radio, warning, "Supermatter [short_name] Monitor", "Automated Announcement", "Supermatter [short_name] Monitor", 0, 0, list(0,1), 1459)
+			Broadcast_Message(radio, all_languages[LANGUAGE_SOL_COMMON], null, radio, warning, "Supermatter [short_name] Monitor", "Automated Announcement", "Supermatter [short_name] Monitor", 0, 0, list(0,1), 1459)
 
 			lastwarning = world.timeofday - offset
 

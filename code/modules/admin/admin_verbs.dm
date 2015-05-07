@@ -640,10 +640,15 @@ var/list/admin_verbs_mod = list(
 		var/message = input("What do you want the message to be?", "Make Sound") as text|null
 		if(!message)
 			return
-		var/templanguages = O.languages
-		O.languages |= ALL
+		var/mob/living/M
+		var/olduniv
+		if(ismob(O))
+			M = O
+			olduniv = M.universal_speak
+			M.universal_speak = 1
 		O.say(message)
-		O.languages = templanguages
+		if(M)
+			M.universal_speak = olduniv
 		log_admin("[key_name(usr)] made [O] at [O.x], [O.y], [O.z]. make a sound")
 		message_admins("<span class='notice'>[key_name_admin(usr)] made [O] at [O.x], [O.y], [O.z]. make a sound</span>", 1)
 		feedback_add_details("admin_verb","MS") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
@@ -663,10 +668,15 @@ var/list/admin_verbs_mod = list(
 	var/message = input(usr, "What do you want the message to be?", "Make Sound") as text | null
 	if(!message)
 		return
-	var/templanguages = O.languages
-	O.languages |= ALL
+	var/mob/living/M
+	var/olduniv
+	if(ismob(O))
+		M = O
+		olduniv = M.universal_speak
+		M.universal_speak = 1
 	O.say(message)
-	O.languages = templanguages
+	if(M)
+		M.universal_speak = olduniv
 	log_admin("[key_name(usr)] made [O] at [O.x], [O.y], [O.z] say \"[message]\"")
 	message_admins("<span class='adminnotice'>[key_name_admin(usr)] made [O] at [O.x], [O.y], [O.z]. say \"[message]\"</span>", 1)
 	feedback_add_details("admin_verb","OT") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!

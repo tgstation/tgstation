@@ -1496,7 +1496,15 @@
 	if(src.species)
 		//if(src.species.language)	src.remove_language(species.language)
 		if(src.species.abilities)	src.verbs -= species.abilities
+		if(species.language)
+			remove_language(species.language)
+
 	src.species = all_species[new_species_name]
+
+	if(species.language)
+		add_language(species.language)
+	if(species.default_language)
+		add_language(species.default_language)
 	if(src.species.abilities)
 		//if(src.species.language)	src.add_language(species.language)
 		if(src.species.abilities)	src.verbs |= species.abilities
@@ -1718,3 +1726,11 @@
 	if(shoes)
 		if(shoes.flags & NOSLIP) return 0
 	..()
+
+/mob/living/carbon/human/get_default_language()
+	. = ..()
+	if(.)
+		return .
+	if(!species)
+		return null
+	return species.default_language ? all_languages[species.default_language] : null
