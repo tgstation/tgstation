@@ -49,7 +49,7 @@ What are the archived variables for?
 
 	var/pressure=0
 
-	var/heat_capacity = 0
+	var/heat_capacity = MINIMUM_HEAT_CAPACITY
 
 	var/list/gases //stores all the gas numbers for this mixture
 	var/list/archived_gases //archiving!
@@ -121,7 +121,7 @@ What are the archived variables for?
 	gases[gasid] = max(0, moles)
 
 	pressure += ((moles - old_moles) * R_IDEAL_GAS_EQUATION * temperature) / volume //add the maths of the new gas
-	heat_capacity += (moles - old_moles) * gas_specific_heat[gasid]
+	heat_capacity = max(MINIMUM_HEAT_CAPACITY, heat_capacity + (moles - old_moles) * gas_specific_heat[gasid])
 	total_moles += (moles - old_moles)
 
 /datum/gas_mixture/proc/thermal_energy()
