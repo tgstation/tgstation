@@ -106,7 +106,6 @@ var/list/SPS_list = list()
 	overlays += "working"
 
 /obj/item/device/gps/secure/OnMobDeath(mob/holder)
-	world << "[holder] died with a SPS" //debug
 	var/obj/item/device/gps/secure/S
 	for(S in SPS_list)
 		S.announce(holder, src, "died")

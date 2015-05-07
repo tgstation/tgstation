@@ -43,11 +43,6 @@
 	if(!gibbed)
 		dead_mob_list += src
 
-//debug
-/mob/living/proc/DumpContents()
-	for(var/obj/item/I in src)
-		world << "[I]"
-
 
 /mob/living/proc/setup_animation(var/animation, var/prev_lying)
 	var/atom/movable/overlay/animate = null
