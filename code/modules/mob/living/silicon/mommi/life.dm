@@ -14,8 +14,6 @@
 	update_gravity(mob_has_gravity())
 	handle_fire()
 	updateicon()
-	if(prob(10) && keeper)
-		updateSeeStaticMobs()
 	if(killswitch && finalized)
 		process_killswitch()
 
