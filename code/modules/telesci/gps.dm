@@ -1,4 +1,7 @@
 var/list/GPS_list = list()
+var/list/SPS_list = list()
+
+
 /obj/item/device/gps
 	name = "global positioning system"
 	desc = "Helping lost spacemen find their way through the planets since 2016."
@@ -18,7 +21,10 @@ var/list/GPS_list = list()
 	overlays += "working"
 
 /obj/item/device/gps/Destroy()
-	GPS_list.Remove(src)
+	if(istype(src,/obj/item/device/gps/secure))
+		SPS_list.Remove(src)
+	else
+		GPS_list.Remove(src)
 	..()
 
 /obj/item/device/gps/emp_act(severity)
@@ -33,7 +39,12 @@ var/list/GPS_list = list()
 /obj/item/device/gps/attack_self(mob/user as mob)
 
 	var/obj/item/device/gps/t = ""
-	var/gps_window_height = 110 + GPS_list.len * 20 // Variable window height, depending on how many GPS units there are to show
+	var/list/locallist = null
+	if(istype(src,/obj/item/device/gps/secure))
+		locallist = SPS_list.Copy()
+	else
+		locallist = GPS_list.Copy()
+	var/gps_window_height = 110 + locallist.len * 20 // Variable window height, depending on how many GPS units there are to show
 	if(emped)
 		t += "ERROR"
 	else
@@ -43,7 +54,7 @@ var/list/GPS_list = list()
 			t += "<BR>Bluespace coordinates saved: [locked_location.loc]"
 			gps_window_height += 20
 
-		for(var/obj/item/device/gps/G in GPS_list)
+		for(var/obj/item/device/gps/G in locallist)
 			var/turf/pos = get_turf(G)
 			var/area/gps_area = get_area(G)
 			var/tracked_gpstag = G.gpstag
@@ -79,3 +90,38 @@ var/list/GPS_list = list()
 	icon_state = "gps-m"
 	gpstag = "MINE0"
 	desc = "A positioning system helpful for rescuing trapped or injured miners, keeping one on you at all times while mining might just save your life."
+
+
+
+/obj/item/device/gps/secure
+	name = "secure positioning system"
+	desc = "A secure channel SPS with several features designed to keep its wearer safe."
+	icon_state = "sps"
+	gpstag = "SEC0"
+
+/obj/item/device/gps/secure/New()
+	SPS_list.Add(src)
+	gpstag = "SEC0"
+	name = "secure positioning system ([gpstag])"
+	overlays += "working"
+
+/obj/item/device/gps/secure/OnMobDeath(mob/holder)
+	var/obj/item/device/gps/secure/S
+	for(S in SPS_list)
+		S.announce(holder, src, "died")
+	..(holder)
+
+/obj/item/device/gps/secure/dropped(mob/wearer as mob)
+	..()
+	spawn (1) //Race conditions
+		if(istype(src.loc, /turf))
+			for(var/obj/item/device/gps/secure/S in SPS_list)
+				S.announce(wearer, src, "lost [wearer.gender == FEMALE ? "her" : "his"] SPS")
+		else
+			return
+
+/obj/item/device/gps/secure/proc/announce(var/mob/wearer, var/obj/item/SPS, var/reason)
+	var/mob/holder = src.loc
+	if(holder)
+		holder << "Your SPS beeps: <span class='warning'>Warning! [wearer] has [reason] at [get_area(SPS)].</span>"
+

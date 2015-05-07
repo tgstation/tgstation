@@ -37,6 +37,8 @@
 /mob/living/death(gibbed)
 	timeofdeath = world.time
 
+	for(var/obj/item/I in src)
+		I.OnMobDeath(src)
 	living_mob_list -= src
 	if(!gibbed)
 		dead_mob_list += src

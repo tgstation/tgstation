@@ -286,6 +286,8 @@
 	..()
 	if(dna)
 		dna.species.handle_chemicals_in_body(src)
+	for(var/obj/item/I in src)
+		I.OnMobLife(src)
 
 	return //TODO: DEFERRED
 

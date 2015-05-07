@@ -120,6 +120,7 @@
 /atom/proc/emp_act(var/severity)
 	return
 
+
 /atom/proc/bullet_act(obj/item/projectile/P, def_zone)
 	P.on_hit(src, 0, def_zone)
 	. = 0
