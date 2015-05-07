@@ -49,7 +49,7 @@ obj/item/weapon/mop/proc/clean(turf/simulated/A)
 
 		if(do_after(user, mopspeed))
 			clean(turf)
-			user << "<span class='notice'>You finish mopping./span>"
+			user << "<span class='notice'>You finish mopping.</span>"
 
 
 /obj/effect/attackby(obj/item/I, mob/user, params)
