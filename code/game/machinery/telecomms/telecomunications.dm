@@ -245,7 +245,7 @@ var/global/list/obj/machinery/telecomms/telecomms_list = list()
 					var/heat_capacity = removed.heat_capacity
 					if(heat_capacity == 0 || heat_capacity == null)
 						heat_capacity = 1
-					removed.temperature = min((removed.temperature*heat_capacity + heating_power)/heat_capacity, 1000)
+					removed.set_temperature(min((removed.temperature*heat_capacity + heating_power)/heat_capacity, 1000))
 
 				env.merge(removed)
 /*

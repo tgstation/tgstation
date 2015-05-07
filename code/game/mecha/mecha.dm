@@ -1750,9 +1750,9 @@
 					mecha.setInternalDamage(MECHA_INT_TANK_BREACH)
 				var/datum/gas_mixture/int_tank_air = mecha.internal_tank.return_air()
 				if(int_tank_air && int_tank_air.volume>0) //heat the air_contents
-					int_tank_air.temperature = min(6000+T0C, int_tank_air.temperature+rand(10,15))
+					int_tank_air.set_temperature(min(6000+T0C, int_tank_air.temperature+rand(10,15)))
 			if(mecha.cabin_air && mecha.cabin_air.volume>0)
-				mecha.cabin_air.temperature = min(6000+T0C, mecha.cabin_air.temperature+rand(10,15))
+				mecha.cabin_air.set_temperature(min(6000+T0C, mecha.cabin_air.temperature+rand(10,15)))
 				if(mecha.cabin_air.temperature>mecha.max_temperature/2)
 					mecha.take_damage(4/round(mecha.max_temperature/mecha.cabin_air.temperature,0.1),"fire")
 		if(mecha.hasInternalDamage(MECHA_INT_TEMP_CONTROL)) //stop the mecha_preserve_temp loop datum

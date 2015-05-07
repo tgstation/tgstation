@@ -97,12 +97,11 @@
 		var/datum/gas_mixture/removed = env.remove(transfer_moles)
 		if(removed)
 			if(removed.temperature > (set_temperature + T0C))
-				var/air_heat_capacity = removed.heat_capacity
-				var/combined_heat_capacity = cooling_power + air_heat_capacity
+				var/combined_heat_capacity = cooling_power + removed.heat_capacity
 				//var/old_temperature = removed.temperature
 
 				if(combined_heat_capacity > 0)
-					var/combined_energy = set_temperature*cooling_power + air_heat_capacity*removed.temperature
+					var/combined_energy = set_temperature*cooling_power + removed.thermal_energy()
 					removed.set_temperature(combined_energy/combined_heat_capacity)
 				env.merge(removed)
 				return 1

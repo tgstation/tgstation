@@ -45,7 +45,7 @@
 		return
 
 	var/combined_heat_capacity = internal_removed.heat_capacity + external_removed.heat_capacity
-	var/combined_energy = internal_removed.temperature * internal_removed.heat_capacity + external_removed.heat_capacity * external_removed.temperature
+	var/combined_energy = internal_removed.thermal_energy() + external_removed.thermal_energy()
 
 	if(!combined_heat_capacity) combined_heat_capacity = 1
 	var/final_temperature = combined_energy / combined_heat_capacity
@@ -80,7 +80,7 @@
 		return
 
 	var/combined_heat_capacity = internal_removed.heat_capacity + RADIATION_CAPACITY
-	var/combined_energy = internal_removed.temperature * internal_removed.heat_capacity + (RADIATION_CAPACITY * 6.4)
+	var/combined_energy = internal_removed.thermal_energy() + (RADIATION_CAPACITY * 6.4)
 
 	var/final_temperature = combined_energy / combined_heat_capacity
 
