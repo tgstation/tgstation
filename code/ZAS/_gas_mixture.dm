@@ -67,7 +67,7 @@ What are the archived variables for?
 		for(var/newgas in (typesof(/datum/gas) - /datum/gas))
 			var/datum/gas/new_datum_gas = new newgas()
 			gas_datum_list += list(new_datum_gas.gas_id = new_datum_gas) //associates the gas with its id
-			gas_specific_heat = list(new_datum_gas.gas_id = new_datum_gas.specific_heat)
+			gas_specific_heat += list(new_datum_gas.gas_id = new_datum_gas.specific_heat)
 
 	for(var/gasid in gas_datum_list) //initialise the gases themselves
 		gases += list("[gasid]" = 0)
