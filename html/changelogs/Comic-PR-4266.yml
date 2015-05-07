@@ -1,8 +1,0 @@
-# Your name.  
-author: Comic
-
-# Optional: Remove this file after generating master changelog.  Useful for PR changelogs that won't get used again.
-delete-after: True
-
-changes: 
-  - rscadd: Added flatpack stacking. You can now drag flatpacks onto other flatpacks to stack them. You can split stacks by clicking them with an empty hand. Where you click decides where the stack splits.
