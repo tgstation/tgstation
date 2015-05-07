@@ -98,7 +98,7 @@
 			var/traitorwin = 1
 
 			if(vampire.current)
-				var/icon/flat = getFlatIcon(vampire.current)
+				var/icon/flat = getFlatIcon(vampire.current, SOUTH, 1, 1)
 				end_icons += flat
 				tempstate = end_icons.len
 				text += {"<br><img src="logo_[tempstate].png"> [vampire.key] was [vampire.name] ("}
@@ -161,7 +161,7 @@
 		text += {"<FONT size = 2><img src="logo_[tempstate].png"> <B>The Enthralled were:</B> <img src="logo_[tempstate].png"></FONT>"}
 		for(var/datum/mind/Mind in enthralled)
 			if(Mind.current)
-				var/icon/flat = getFlatIcon(Mind.current)
+				var/icon/flat = getFlatIcon(Mind.current, SOUTH, 1, 1)
 				end_icons += flat
 				tempstate = end_icons.len
 				text += {"<br><img src="logo_[tempstate].png"> [Mind.key] was [Mind.name] ("}
