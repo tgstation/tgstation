@@ -104,7 +104,6 @@
 /obj/machinery/bot/New()
 	..()
 	SSbot.processing += src //Global bot list
-	SSbp.insertBot(src)
 	botcard = new /obj/item/weapon/card/id(src)
 //This access is so bots can be immediately set to patrol and leave Robotics, instead of having to be let out first.
 	botcard.access += access_robotics
