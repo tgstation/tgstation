@@ -26,7 +26,7 @@
 
 /obj/item/weapon/p_folded/attackby(obj/item/I, mob/user)
 	if(istype(I,/obj/item/weapon/pen))
-		var/N = copytext(sanitize(input(usr, "What would you like to name [src.name]?", "Paper Labelling", null)  as text), 1, MAX_NAME_LEN)
+		var/N = copytext(sanitize(input(user, "What would you like to name [src.name]?", "Paper Labelling", null)  as text), 1, MAX_NAME_LEN)
 		if(N && Adjacent(user) && !user.stat)
 			src.name = N
 	else if(istype(I, /obj/item/toy/crayon))
