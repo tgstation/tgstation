@@ -241,7 +241,7 @@
 	retreat_distance = 3
 	minimum_distance = 3
 	pass_flags = PASSTABLE
-        var/recentlyspawned = 0
+	var/recentlyspawned = 0
 
 /mob/living/simple_animal/hostile/asteroid/hivelord/OpenFire(var/the_target)
         var/mob/living/simple_animal/hostile/asteroid/hivelordbrood/A = new /mob/living/simple_animal/hostile/asteroid/hivelordbrood(src.loc)
