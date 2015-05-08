@@ -423,6 +423,9 @@
 
 	if (istype(O, /obj/item/weapon/reagent_containers))
 		var/obj/item/weapon/reagent_containers/RG = O
+		if(RG.reagents.total_volume >= RG.reagents.maximum_volume)
+			user << "<span class='warning'>[RG] is full.</span>"
+			return
 		RG.reagents.add_reagent("water", min(RG.volume - RG.reagents.total_volume, RG.amount_per_transfer_from_this))
 		user.visible_message("<span class='notice'>[user] fills the [RG] using \the [src].</span>","<span class='notice'>You fill the [RG] using \the [src].</span>")
 		return
@@ -440,8 +443,8 @@
 			else
 				B.deductcharge(1)
 			user.visible_message( \
-				"[user] was stunned by his wet [O].", \
-				"<span class='warning'>You have wet \the [O], it shocks you!</span>")
+				"<span class='warning'>[user] was stunned by \his wet [O.name]!</span>", \
+				"<span class='warning'>You have wet \the [O.name], it shocks you!</span>")
 			return
 
 	if (!isturf(user.loc))
