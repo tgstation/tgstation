@@ -11,7 +11,7 @@ They can only use one tool at a time, they can't choose modules, and they have 1
 	icon_state = "mommi"
 	maxHealth = 45
 	health = 45
-	pass_flags = PASSTABLE
+	pass_flags = PASSTABLE | PASSMOB
 	var/keeper=0 // 0 = No, 1 = Yes (Disables speech and common radio.)
 	var/picked = 0
 	var/subtype="keeper"
@@ -682,3 +682,24 @@ They can only use one tool at a time, they can't choose modules, and they have 1
 
 	face_atom(A)
 	A.examine(src)
+
+
+/mob/living/silicon/robot/mommi/stripPanelUnequip(obj/item/what, mob/who, where)
+	if(src.keeper)
+		src << "Your laws prevent you from doing this"
+		return
+	else ..()
+
+/mob/living/silicon/robot/mommi/stripPanelEquip(obj/item/what, mob/who, where)
+	if(src.keeper)
+		src << "Your laws prevent you from doing this"
+		return
+	else ..()
+
+
+/mob/living/silicon/robot/mommi/start_pulling(var/atom/movable/AM)
+	if(istype(AM,/mob) && !ismommi(AM))
+		if(src.keeper)
+			src << "Your laws prevent you from doing this"
+			return
+	..(AM)
