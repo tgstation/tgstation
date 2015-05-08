@@ -55,7 +55,6 @@
 		return
 
 	B.color = blob_reagent_datum.color
-	B.update_desc(blob_reagent_datum.name)
 	B.change_to(/obj/effect/blob/shield)
 
 	return
@@ -94,7 +93,6 @@
 	B.change_to(/obj/effect/blob/resource)
 	var/obj/effect/blob/resource/R = locate() in T
 	if(R)
-		R.update_desc(blob_reagent_datum.name)
 		R.overmind = src
 
 	return
@@ -130,7 +128,6 @@
 	B.change_to(/obj/effect/blob/node)
 	var/obj/effect/blob/node/R = locate() in T
 	if(R)
-		R.update_desc(blob_reagent_datum.name)
 		R.adjustcolors(blob_reagent_datum.color)
 		R.overmind = src
 	return
@@ -167,7 +164,6 @@
 	B.color = blob_reagent_datum.color
 	var/obj/effect/blob/factory/R = locate() in T
 	if(R)
-		R.update_desc(blob_reagent_datum.name)
 		R.overmind = src
 	return
 
@@ -383,7 +379,6 @@
 	B.change_to(/obj/effect/blob/storage)
 	var/obj/effect/blob/storage/R = locate() in T
 	if(R)
-		R.update_desc(blob_reagent_datum.name)
 		R.overmind = src
 		R.update_max_blob_points(50)
 
