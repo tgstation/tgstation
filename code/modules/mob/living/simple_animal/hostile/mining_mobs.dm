@@ -252,8 +252,8 @@
 /mob/living/simple_animal/hostile/asteroid/hivelord/AttackingTarget()
         var/i = 0
         if(i = 3)
-        	OpenFire()
-        	i = 0
+          OpenFire()
+          i = 0
         else(i++)
 
 /mob/living/simple_animal/hostile/asteroid/hivelord/death(gibbed)
