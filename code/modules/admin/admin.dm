@@ -784,7 +784,9 @@ var/global/floorIsLava = 0
 			<BR>
 			<B>Server</B><BR>
 			<BR>
-			<A href='?src=\ref[src];secretsfun=togglebombcap'>Toggle bomb cap</A><BR>"}
+			<A href='?src=\ref[src];secretsfun=togglebombcap'>Toggle bomb cap</A><BR>
+			<A href='?src=\ref[src];secretsfun=togglebombmethod'>Toggle explosion method</A><BR>
+			"}
 
 	dat += "<BR>"
 

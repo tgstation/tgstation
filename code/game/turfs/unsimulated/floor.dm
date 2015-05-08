@@ -3,6 +3,19 @@
 	icon = 'icons/turf/floors.dmi'
 	icon_state = "Floor3"
 
+/turf/unsimulated/floor/ex_act(severity)
+	switch(severity)
+		if(1.0)
+			new/obj/effect/decal/cleanable/soot(src)
+		if(2.0)
+			if(prob(65))
+				new/obj/effect/decal/cleanable/soot(src)
+		if(3.0)
+			if(prob(20))
+				new/obj/effect/decal/cleanable/soot(src)
+			return
+	return
+
 /turf/unsimulated/floor/attack_paw(user as mob)
 	return src.attack_hand(user)
 

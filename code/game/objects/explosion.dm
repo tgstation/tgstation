@@ -95,6 +95,27 @@
 		for (var/turf/T in trange(max_range, epicenter))
 			var/dist = cheap_pythag(T.x - x0, T.y - y0)
 
+			if(explosion_newmethod)	//realistic explosions that take obstacles into account
+				var/turf/Trajectory = T
+				while(Trajectory != epicenter)
+					Trajectory = get_step_towards(Trajectory,epicenter)
+					if(istype(Trajectory,/turf/simulated/wall) || istype(Trajectory,/turf/simulated/shuttle/wall))
+						dist++
+					if(istype(Trajectory,/turf/simulated/wall/r_wall))//reinforced walls are twice as effective
+						dist++
+
+					var/obj/machinery/door/poddoor/PD = locate() in Trajectory
+					if(PD && PD.density)
+						dist += 2
+
+					var/obj/machinery/door/airlock/AL = locate() in Trajectory
+					if(AL && AL.density)
+						dist++
+
+					var/obj/machinery/door/unpowered/shuttle/SD = locate() in Trajectory
+					if(SD && SD.density)
+						dist++
+
 			if (dist < devastation_range)
 				dist = 1
 			else if (dist < heavy_impact_range)

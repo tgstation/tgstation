@@ -1559,6 +1559,83 @@ client/proc/mob_list()
 		usr << "Found [foundnull] null entries in the mob list, running null clearer."
 		listclearnulls(mob_list)
 
+client/proc/check_bomb()
+	set name = "Check Bomb Impact"
+	set category = "Debug"
+
+	var/newmode = alert("Use the new method?","Check Bomb Impact", "Yes","No")
+
+
+	var/turf/epicenter = get_turf(usr)
+	var/devastation_range = 0
+	var/heavy_impact_range = 0
+	var/light_impact_range = 0
+	var/list/choices = list("Small Bomb", "Medium Bomb", "Big Bomb", "Custom Bomb")
+	var/choice = input("What size explosion would you like to produce?") in choices
+	switch(choice)
+		if(null)
+			return 0
+		if("Small Bomb")
+			devastation_range = 1
+			heavy_impact_range = 2
+			light_impact_range = 3
+		if("Medium Bomb")
+			devastation_range = 2
+			heavy_impact_range = 3
+			light_impact_range = 4
+		if("Big Bomb")
+			devastation_range = 3
+			heavy_impact_range = 5
+			light_impact_range = 7
+		if("Custom Bomb")
+			devastation_range = input("Devastation range (in tiles):") as num
+			heavy_impact_range = input("Heavy impact range (in tiles):") as num
+			light_impact_range = input("Light impact range (in tiles):") as num
+
+	var/max_range = max(devastation_range, heavy_impact_range, light_impact_range)
+
+	var/x0 = epicenter.x
+	var/y0 = epicenter.y
+
+	var/list/wipe_colors = list()
+	for (var/turf/T in trange(max_range, epicenter))
+		wipe_colors += T
+		var/dist = cheap_pythag(T.x - x0, T.y - y0)
+
+		if(newmode == "Yes")
+			var/turf/Trajectory = T
+			while(Trajectory != epicenter)
+				Trajectory = get_step_towards(Trajectory,epicenter)
+				if(istype(Trajectory,/turf/simulated/wall) || istype(Trajectory,/turf/simulated/shuttle/wall))
+					dist++
+				if(istype(Trajectory,/turf/simulated/wall/r_wall))//reinforced walls are twice as effective
+					dist++
+
+				var/obj/machinery/door/poddoor/PD = locate() in Trajectory
+				if(PD && PD.density)
+					dist += 2
+
+				var/obj/machinery/door/airlock/AL = locate() in Trajectory
+				if(AL && AL.density)
+					dist++
+
+				var/obj/machinery/door/unpowered/shuttle/SD = locate() in Trajectory
+				if(SD && SD.density)
+					dist++
+
+		if (dist < devastation_range)
+			T.color = "red"
+		else if (dist < heavy_impact_range)
+			T.color = "yellow"
+		else if (dist < light_impact_range)
+			T.color = "blue"
+		else
+			continue
+
+	sleep(100)
+	for (var/turf/T in wipe_colors)
+		T.color = null
+
 client/proc/cure_disease()
 	set name = "Cure Disease"
 	set category = "Debug"
