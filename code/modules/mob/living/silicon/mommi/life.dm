@@ -292,7 +292,7 @@
 /mob/living/silicon/robot/mommi/proc/process_killswitch() //this proc is here to stop derelict mommis from getting on the station and shitting things up
 	if(killswitch) //sanity
 		if(src.z)  //If a mommi somehow escapes inside a locker, it'll get wrecked next tick life() processes
-			if(!(src.z == allowed_z))
+			if(!(src.z in allowed_z))
 				src.killswitch()
 				return
 			return
@@ -303,6 +303,6 @@
 
 /mob/living/silicon/robot/mommi/proc/killswitch()
  	src << "<span class= 'danger'> You have left the bounds of your operational area and your killswitch has been activated </span>"
- 	src.dust()
+ 	src.gib()
  	return
 

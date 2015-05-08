@@ -30,6 +30,15 @@
 	if(prob(50))
 		qdel(src)
 
+/obj/structure/reagent_dispensers/examine(mob/user)
+	..()
+	user << "<span class='info'>It contains:</span>"
+	if(reagents && reagents.reagent_list.len)
+		for(var/datum/reagent/R in reagents.reagent_list)
+			user << "<span class='info'>[R.volume] units of [R.name]</span>"
+	else
+		user << "<span class='info'>Nothing.</span>"
+
 /obj/structure/reagent_dispensers/attackby(obj/item/weapon/W as obj, mob/user as mob, params)
 	return
 
@@ -96,17 +105,12 @@
 		reagents.add_reagent("fuel",1000)
 
 
-/obj/structure/reagent_dispensers/fueltank/examine()
-	set src in oview()
-	var/msg
-	msg += desc
-	if(modded)
-		msg += "<cpan class ='danger> The fuel faucet is wrenched open, leaking the fuel! </span>"
+/obj/structure/reagent_dispensers/fueltank/examine(mob/user)
+	..()
+	if (modded)
+		user << "<span class='warning'>The fuel faucet is wrenched open, leaking the fuel!</span>"
 	if(rig)
-		msg += "<span class='notice'>There is some kind of device rigged to the tank. </span>"
-	usr << msg
-	return
-
+		user << "<span class='notice'>There is some kind of device rigged to the tank.</span>"
 
 
 
@@ -131,7 +135,7 @@
 		user.visible_message("[user] wrenches [src]'s faucet [modded ? "closed" : "open"].", \
 		"You wrench [src]'s faucet [modded ? "closed" : "open"]")
 		modded = modded ? 0 : 1
-	if (istype(W,/obj/item/device/assembly_holder) && modded)
+	if (istype(W,/obj/item/device/assembly_holder))
 		if (ismommi(user))
 			var/mob/living/silicon/robot/mommi/M = user
 			if(M.keeper)
