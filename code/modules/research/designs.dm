@@ -147,6 +147,16 @@ datum/design/proc/CalcReliability(var/list/temp_techs)
 	build_path = /obj/item/weapon/pickaxe/plasmacutter
 	category = list("Mining Designs")
 
+/datum/design/jackhammer
+	name = "Sonic Jackhammer"
+	desc = "Essentially a handheld planet-cracker. Can drill through basic walls with as well"
+	id = "jackhammer"
+	req_tech = list("materials" = 3, "powerstorage" = 2, "engineering" = 3, "magnets" = 2)
+	build_type = PROTOLATHE
+	materials = list("$metal" = 8000, "$glass" = 1500, "$silver" = 2000)
+	build_path = /obj/item/weapon/pickaxe/drill/jackhammer
+	category = list("Mining Designs")
+
 /datum/design/drill_diamond
 	name = "Diamond-Tipped Mining Drill"
 	desc = "Yours is the drill that will pierce the heavens!"
@@ -158,15 +168,7 @@ datum/design/proc/CalcReliability(var/list/temp_techs)
 	build_path = /obj/item/weapon/pickaxe/drill/diamonddrill
 	category = list("Mining Designs")
 
-/datum/design/jackhammer
-	name = "Sonic Jackhammer"
-	desc = "Essentially a handheld planet-cracker. Can drill through walls with ease as well, but has high power cost for doing so."
-	id = "jackhammer"
-	req_tech = list("materials" = 6, "powerstorage" = 6, "engineering" = 5, "magnets" = 6)
-	build_type = PROTOLATHE
-	materials = list("$metal" = 8000, "$glass" = 1500, "$silver" = 2000, "$diamond" = 6000)
-	build_path = /obj/item/weapon/pickaxe/drill/jackhammer
-	category = list("Mining Designs")
+
 
 /////////////////////////////////////////
 //////////////Blue Space/////////////////

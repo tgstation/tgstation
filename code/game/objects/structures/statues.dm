@@ -54,12 +54,8 @@
 								 "<span class='notice'>You slice apart the [name]!</span>")
 			Dismantle(1)
 
-	else if(istype(W, /obj/item/weapon/pickaxe/drill/jackhammer))
-		var/obj/item/weapon/pickaxe/drill/jackhammer/D = W
-		if(!D.bcell.use(D.drillcost))
-			user << "<span class='notice'>Your [D.name] doesn't have enough power to break through the [name].</span>"
-			return
-		D.update_icon()
+	else if(istype(W, /obj/item/weapon/pickaxe/drill/diamonddrill))
+		var/obj/item/weapon/pickaxe/drill/D = W
 		if(!src.loc)
 			return
 		user.visible_message("<span class='notice'>[user] destroys the [name]!</span>", \

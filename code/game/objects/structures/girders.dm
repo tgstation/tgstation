@@ -42,12 +42,8 @@
 			new /obj/item/stack/sheet/metal(get_turf(src))
 			qdel(src)
 
-	else if(istype(W, /obj/item/weapon/pickaxe/drill/jackhammer))
-		var/obj/item/weapon/pickaxe/drill/jackhammer/D = W
-		if(!D.bcell.use(D.drillcost))
-			user << "<span class='notice'>Your [D.name] doesn't have enough power to break through the [name].</span>"
-			return
-		D.update_icon()
+	else if(istype(W, /obj/item/weapon/pickaxe/drill/jackhammer) || istype(W, /obj/item/weapon/pickaxe/drill/diamonddrill))
+		var/obj/item/weapon/pickaxe/drill/D = W
 		user << "<span class='notice'>You smash through the girder!</span>"
 		new /obj/item/stack/sheet/metal(get_turf(src))
 		D.playDigSound()
@@ -289,12 +285,9 @@
 			qdel(src)
 
 
-	else if(istype(W, /obj/item/weapon/pickaxe/drill/jackhammer))
-		var/obj/item/weapon/pickaxe/drill/jackhammer/D = W
-		if(!D.bcell.use(D.drillcost))
-			return
-		D.update_icon()
-		user << "<span class='notice'>Your jackhammer smashes through the girder!</span>"
+	else if(istype(W, /obj/item/weapon/pickaxe/drill/jackhammer) || istype(W, /obj/item/weapon/pickaxe/drill/diamonddrill))
+		var/obj/item/weapon/pickaxe/drill/D = W
+		user << "<span class='notice'>Your drill smashes through the girder!</span>"
 		var/obj/effect/decal/remains/human/R = new (get_turf(src))
 		transfer_fingerprints_to(R)
 		D.playDigSound()
