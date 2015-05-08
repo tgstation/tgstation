@@ -4,7 +4,10 @@ var/list/poddoors = list()
 	desc = "Why it no open!!!"
 	icon = 'icons/obj/doors/rapid_pdoor.dmi'
 	icon_state = "pdoor1"
-	explosion_resistance = 25
+
+	explosion_resistance = 25//used by the old deprecated explosion_recursive.dm
+
+	explosion_block = 3
 
 	var/id_tag = 1.0
 
@@ -87,6 +90,29 @@ var/list/poddoors = list()
 
 	sleep(10)
 	src.operating = 0
+	return
+
+/obj/machinery/door/poddoor/ex_act(severity)//Wouldn't it make sense for "Blast Doors" to actually handle explosions better than other doors?
+	switch(severity)
+		if(1.0)
+			if(prob(80))
+				qdel(src)
+			else
+				var/datum/effect/effect/system/spark_spread/s = new /datum/effect/effect/system/spark_spread
+				s.set_up(2, 1, src)
+				s.start()
+		if(2.0)
+			if(prob(20))
+				qdel(src)
+			else
+				var/datum/effect/effect/system/spark_spread/s = new /datum/effect/effect/system/spark_spread
+				s.set_up(2, 1, src)
+				s.start()
+		if(3.0)
+			if(prob(80))
+				var/datum/effect/effect/system/spark_spread/s = new /datum/effect/effect/system/spark_spread
+				s.set_up(2, 1, src)
+				s.start()
 	return
 
 /*

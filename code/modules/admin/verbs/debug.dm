@@ -1606,22 +1606,12 @@ client/proc/check_bomb()
 			var/turf/Trajectory = T
 			while(Trajectory != epicenter)
 				Trajectory = get_step_towards(Trajectory,epicenter)
-				if(istype(Trajectory,/turf/simulated/wall) || istype(Trajectory,/turf/simulated/shuttle/wall))
-					dist++
-				if(istype(Trajectory,/turf/simulated/wall/r_wall))//reinforced walls are twice as effective
-					dist++
+				if(Trajectory.density && Trajectory.explosion_block)
+					dist += Trajectory.explosion_block
 
-				var/obj/machinery/door/poddoor/PD = locate() in Trajectory
-				if(PD && PD.density)
-					dist += 2
-
-				var/obj/machinery/door/airlock/AL = locate() in Trajectory
-				if(AL && AL.density)
-					dist++
-
-				var/obj/machinery/door/unpowered/shuttle/SD = locate() in Trajectory
-				if(SD && SD.density)
-					dist++
+				for (var/obj/machinery/door/D in Trajectory.contents)
+					if(D.density && D.explosion_block)
+						dist += D.explosion_block
 
 		if (dist < devastation_range)
 			T.color = "red"

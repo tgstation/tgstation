@@ -20,6 +20,8 @@
 
 	soot_type = null
 
+	explosion_block = 1
+
 /turf/simulated/wall/examine(mob/user)
 	..()
 	if(rotting)
