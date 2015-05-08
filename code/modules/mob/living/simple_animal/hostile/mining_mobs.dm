@@ -241,21 +241,21 @@
 	retreat_distance = 3
 	minimum_distance = 3
 	pass_flags = PASSTABLE
+        var/recentlyspawned = 0
 
 /mob/living/simple_animal/hostile/asteroid/hivelord/OpenFire(var/the_target)
-	var/mob/living/simple_animal/hostile/asteroid/hivelordbrood/A = new /mob/living/simple_animal/hostile/asteroid/hivelordbrood(src.loc)
-	A.GiveTarget(target)
-	A.friends = friends
-	A.faction = faction
-	return
+        var/mob/living/simple_animal/hostile/asteroid/hivelordbrood/A = new /mob/living/simple_animal/hostile/asteroid/hivelordbrood(src.loc)
+        A.GiveTarget(target)
+        A.friends = friends
+        A.faction = faction
+        return
 
 /mob/living/simple_animal/hostile/asteroid/hivelord/AttackingTarget()
-	var/i = 0
-	if(i = 3)
-		OpenFire()
-		i = 0
-	else()
-		i++	
+    if(!recentlyspawned)
+        OpenFire()
+        recentlyspawned = 1
+        spawn(30)
+            recentlyspawned = 0
 
 /mob/living/simple_animal/hostile/asteroid/hivelord/death(gibbed)
 	new /obj/item/asteroid/hivelord_core(src.loc)
