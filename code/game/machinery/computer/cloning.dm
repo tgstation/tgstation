@@ -159,7 +159,7 @@
 			if(pod1)
 				dat += "<h3>Cloning Pod:</h3>"
 				if(pod1.occupant)
-					dat += "<a href='byond://?src=\ref[src];eject_pod=1'>Eject Clone</a><br>"
+					dat += "<a href='byond://?src=\ref[src];eject_clone=1'>Eject Clone</a><br>"
 				else
 					dat += "<span class='linkOff'>Eject Clone</span><br>"
 
