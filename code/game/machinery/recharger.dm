@@ -90,17 +90,6 @@
 					icon_state = "recharger2"
 			else
 				icon_state = "recharger3"
-		if(istype(charging, /obj/item/weapon/pickaxe/drill))
-			var/obj/item/weapon/pickaxe/drill/D = charging
-			if(D.bcell)
-				if(D.bcell.give(D.bcell.chargerate))
-					icon_state = "recharger1"
-					use_power(200)
-				else
-					icon_state = "recharger2"
-			else
-				icon_state = "recharger3"
-
 
 /obj/machinery/recharger/emp_act(severity)
 	if(stat & (NOPOWER|BROKEN) || !anchored)

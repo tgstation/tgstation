@@ -31,15 +31,11 @@
 /turf/simulated/wall/r_wall/try_destroy(obj/item/weapon/W as obj, mob/user as mob, turf/T as turf)
 	if(istype(W, /obj/item/weapon/pickaxe/drill/jackhammer))
 		var/obj/item/weapon/pickaxe/drill/jackhammer/D = W
-		if(!D.bcell.use(800))
-			user << "<span class='notice'>Your [D.name] doesn't have enough power to break through the [name].</span>"
-			return 1
 		user << "<span class='notice'>You begin to smash though the [name]...</span>"
 		if(do_after(user, 50))
 			if( !istype(src, /turf/simulated/wall/r_wall) || !user || !W || !T )
 				return 1
 			if( user.loc == T && user.get_active_hand() == W )
-				D.update_icon()
 				D.playDigSound()
 				visible_message("<span class='warning'>[user] smashes through the [name] with the [D.name]!</span>", "<span class='italics'>You hear the grinding of metal.</span>")
 				dismantle_wall()
