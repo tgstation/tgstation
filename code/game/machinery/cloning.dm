@@ -196,9 +196,14 @@
 /obj/machinery/clonepod/process()
 
 	if(!is_operational()) //Autoeject if power is lost
+		var/hasOccupant = FALSE
+		if(occupant)
+			hasOccupant = TRUE
 		malfunction() //always gib when we lose power
-		go_out()
 		src.locked = 0
+		go_out()
+		if(hasOccupant && !occupant)
+			log_admin("A cloning pod has failed due to low power, potentially gibbing somebody")
 		return
 
 	if((src.occupant) && (src.occupant.loc == src))
