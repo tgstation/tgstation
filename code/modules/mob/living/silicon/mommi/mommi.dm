@@ -26,7 +26,7 @@ They can only use one tool at a time, they can't choose modules, and they have 1
 	//var/obj/screen/inv_sight = null
 
 	var/killswitch = 0 //Used to stop mommis from escape their z-level
-	var/allowed_z = 1
+	var/allowed_z = list()
 	var/finalized = 0 //Track if the mommi finished spawning
 	var/generated = 0 //If a mommi spawner spawned it, set this
 
@@ -477,11 +477,15 @@ They can only use one tool at a time, they can't choose modules, and they have 1
 
 */
 /mob/living/silicon/robot/mommi/proc/initialize_killswitch()
-	allowed_z = src.z
+	allowed_z = list()
+	var/spawn_z = src.z
 	var/station_name
-	switch (allowed_z)
+	switch (spawn_z)
 		if(1)
 			station_name = "Space Station 13"
+			allowed_z += 5
+			allowed_z += 2 //For the mining shuttle
+			add_ion_law("The mining asteroid is considered part of the station")
 		if(2)
 			station_name = "Central Command"
 		if(3)
@@ -493,11 +497,13 @@ They can only use one tool at a time, they can't choose modules, and they have 1
 		if(6)
 			station_name = "Deep Space"
 		if(7)
-			station_name = "Deep Space"
+			station_name = "Deeper Space"
 		if(8)
 			station_name = "The Clown Planet"
 		if(9) //away mission
+		//would be nice to have an away_mission_name var to properly name it
 			station_name = "The Away Mission"
+	allowed_z += spawn_z
 	add_ion_law("[station_name] is your station.  Do not leave [station_name].")
 	spawn (10)
 		killswitch = 1
