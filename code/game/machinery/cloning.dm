@@ -196,9 +196,9 @@
 /obj/machinery/clonepod/process()
 
 	if(!is_operational()) //Autoeject if power is lost
-		if (src.occupant)
-			src.locked = 0
-			src.go_out()
+		malfunction() //always gib when we lose power
+		go_out()
+		src.locked = 0
 		return
 
 	if((src.occupant) && (src.occupant.loc == src))
@@ -302,23 +302,22 @@
 	if (src.locked)
 		return
 
-	if (src.mess) //Clean that mess and dump those gibs!
+	var/turf/src_turf = get_turf(src)
+
+	if (src.mess) //Clean that mess!
 		src.mess = 0
-		gibs(src.loc)
 		src.icon_state = "pod_0"
 
-		/*
+		//dump those gibs!
 		for(var/obj/O in src)
-			O.loc = src.loc
-		*/
+			O.loc = src_turf
 		return
 
 	if (!(src.occupant))
 		return
-	/*
+
 	for(var/obj/O in src)
-		O.loc = src.loc
-	*/
+		O.loc = src_turf
 
 	if (src.occupant.client)
 		src.occupant.client.eye = src.occupant.client.mob
@@ -336,9 +335,15 @@
 		src.connected_message("Critical Error!")
 		src.mess = 1
 		src.icon_state = "pod_g"
-		src.occupant.ghostize()
-		spawn(5)
-			qdel(src.occupant)
+		if(iscarbon(occupant))
+			var/mob/living/carbon/C = occupant
+			var/obj/item/organ/brain/B = C.getorgan(/obj/item/organ/brain)
+			B.transfer_identity(C)
+			C.internal_organs -= B
+			B.loc = src
+			for(var/obj/item/organ/O in C.internal_organs)
+				O.loc = src
+		occupant.gib()
 	return
 
 /obj/machinery/clonepod/relaymove(mob/user as mob)
