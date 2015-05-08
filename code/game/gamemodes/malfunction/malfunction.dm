@@ -8,7 +8,6 @@
 	required_players = 25
 	required_enemies = 1
 	recommended_enemies = 1
-	pre_setup_before_jobs = 1
 	enemy_minimum_age = 30 //Same as AI minimum age
 	round_ends_with_antag_death = 1
 

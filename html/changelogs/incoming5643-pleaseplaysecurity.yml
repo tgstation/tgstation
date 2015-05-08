@@ -1,0 +1,8 @@
+author: incoming5643
+
+delete-after: True
+
+changes:
+- bugfix: "All modes now select their antagonists before job selection, this means that a player who prefers roles normally immune to being certain antagonists (implanted roles/silicons) can still have a fair shot at every antagonist roll they opt into. If they're selected they simply will not end up with an incompatible job."
+- bugfix: "As an example if someone loved to play Head of Security (humor me here) and had it set to high, and the only other jobs he had set were security officer at medium and botanist at low but he was selected to be a traitor, he would spawn as a botanist even if there ended up being no Head of Security."
+- experiment: "Please give playing security another chance if you'd written it off because it affected your antag chances."
