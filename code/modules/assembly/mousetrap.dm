@@ -44,6 +44,12 @@
 		var/mob/living/carbon/human/H = target
 		switch(type)
 			if("feet")
+				if(HARDFEET in H.dna.species.specflags)
+					playsound(src.loc, 'sound/effects/snap.ogg', 50, 1)
+					armed = 0
+					update_icon()
+					pulse(0)
+					return 0
 				if(!H.shoes)
 					affecting = H.get_organ(pick("l_leg", "r_leg"))
 					H.Weaken(3)

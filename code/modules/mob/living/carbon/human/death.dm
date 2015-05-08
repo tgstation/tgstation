@@ -48,7 +48,7 @@
 /mob/living/carbon/human/proc/makeSkeleton()
 	if(!check_dna_integrity(src))	return
 	status_flags |= DISFIGURED
-	dna.species = new /datum/species/skeleton(src)
+	hardset_dna(src, null, null, null, null, /datum/species/skeleton)
 	return 1
 
 /mob/living/carbon/proc/ChangeToHusk()

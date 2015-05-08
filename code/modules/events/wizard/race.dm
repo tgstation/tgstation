@@ -16,7 +16,7 @@
 
 	for(var/mob/living/carbon/human/H in mob_list) //yes, even the dead
 		if(H.dna)
-			H.dna.species = new new_species
+			hardset_dna(H, null, null, null, null, new_species)
 			H.regenerate_icons()
 			H << "<span class='notice'>You feel somehow... different?</span>"
 		if(!all_the_same)
