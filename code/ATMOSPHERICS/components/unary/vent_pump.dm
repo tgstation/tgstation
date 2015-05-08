@@ -74,7 +74,7 @@
 	return
 
 /obj/machinery/atmospherics/unary/vent_pump/process()
-	..()
+	. = ..()
 	CHECK_DISABLED(vents)
 	if (!node)
 		return // Turning off the vent is a PITA. - N3X
@@ -84,10 +84,10 @@
 
 	//broadcast_status() // from now air alarm/control computer should request update purposely --rastaf0
 	if(!on)
-		return 0
+		return
 
 	if(welded)
-		return 0
+		return
 
 	// New GC does this sometimes
 	if(!loc) return

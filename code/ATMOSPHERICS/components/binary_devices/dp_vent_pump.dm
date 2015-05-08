@@ -67,10 +67,10 @@
 	"}
 
 /obj/machinery/atmospherics/binary/dp_vent_pump/process()
-	..()
+	. = ..()
 
 	if(!on)
-		return 0
+		return
 
 	var/datum/gas_mixture/environment = loc.return_air()
 	var/environment_pressure = environment.return_pressure()

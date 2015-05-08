@@ -11,9 +11,8 @@
 
 /obj/machinery/atmospherics/unary/tank/process()
 	if(!network)
-		..()
-	else
-		. = PROCESS_KILL
+		. = ..()
+	atmos_machines.Remove(src)
 	/*			if(!node1)
 		parent.mingle_with_turf(loc, 200)
 		if(!nodealert)

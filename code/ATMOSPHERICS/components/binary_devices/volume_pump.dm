@@ -45,11 +45,9 @@ Thus, the two variables affect pump operation are set in New():
 	return
 
 /obj/machinery/atmospherics/binary/volume_pump/process()
-//		..()
-	if(stat & (NOPOWER|BROKEN))
+	. = ..()
+	if((stat & (NOPOWER|BROKEN)) || !on || transfer_rate < 1)
 		return
-	if(!on || transfer_rate < 1)
-		return 0
 
 // Pump mechanism just won't do anything if the pressure is too high/too low
 
@@ -57,7 +55,7 @@ Thus, the two variables affect pump operation are set in New():
 	var/output_starting_pressure = air2.return_pressure()
 
 	if((input_starting_pressure < 0.01) || (output_starting_pressure > 9000))
-		return 1
+		return
 
 	var/transfer_ratio = max(1, transfer_rate/air1.volume)
 
