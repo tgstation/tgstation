@@ -313,12 +313,10 @@ Sorry Giacom. Please don't be mad :(
 /mob/living/proc/adjustStaminaLoss(var/amount)
 	if(status_flags & GODMODE)	return 0
 	staminaloss = min(max(staminaloss + amount, 0),(maxHealth*2))
-	handle_regular_status_updates() //we update our health right away.
 
 /mob/living/proc/setStaminaLoss(var/amount)
 	if(status_flags & GODMODE)	return 0
 	staminaloss = amount
-	handle_regular_status_updates() //we update our health right away.
 
 /mob/living/proc/getMaxHealth()
 	return maxHealth
@@ -659,19 +657,6 @@ Sorry Giacom. Please don't be mad :(
 
 /mob/living/proc/get_visible_name()
 	return name
-
-/mob/living/proc/CheckStamina()
-	if(staminaloss)
-		var/total_health = (health - staminaloss)
-		if(total_health <= config.health_threshold_crit && !stat)
-			Exhaust()
-			setStaminaLoss(health - 2)
-			return
-		setStaminaLoss(max((staminaloss - 2), 0))
-
-/mob/living/proc/Exhaust()
-	src << "<span class='notice'>You're too exhausted to keep going...</span>"
-	Weaken(5)
 
 /mob/living/update_gravity(has_gravity)
 	if(!ticker)
