@@ -28,13 +28,13 @@
 	return stars(message)
 
 /datum/language/proc/format_message(mob/M, message)
-	return "[get_spoken_verb(msg,issilicon(M))], <span class='message'><span class='[colour]'>\"[capitalize(message)]\"</span></span>"
+	return "[get_spoken_verb(message,issilicon(M))], <span class='message'><span class='[colour]'>\"[capitalize(message)]\"</span></span>"
 
 /datum/language/proc/format_message_plain(mob/M, message)
-	return "[get_spoken_verb(msg,issilicon(M))], \"[capitalize(message)]\""
+	return "[get_spoken_verb(message,issilicon(M))], \"[capitalize(message)]\""
 
 /datum/language/proc/format_message_radio(mob/M, message)
-	return "[get_spoken_verb(msg,issilicon(M))], <span class='[colour]'>\"[capitalize(message)]\"</span>"
+	return "[get_spoken_verb(message,issilicon(M))], <span class='[colour]'>\"[capitalize(message)]\"</span>"
 
 /datum/language/unathi
 	name = "Sinta'unathi"
