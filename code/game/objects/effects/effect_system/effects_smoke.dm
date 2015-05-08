@@ -203,7 +203,6 @@
 	for(var/mob/living/A in view(1, src))
 		if(reagents.total_volume >= 1)
 			reagents.reaction(A, TOUCH)
-			reagents.trans_to(A.reagents, 10)
 	return
 
 
@@ -211,7 +210,6 @@
 	..()
 	if(reagents.total_volume >= 1)
 		reagents.reaction(M, TOUCH)
-		reagents.trans_to(M.reagents, 10)
 
 /datum/effect/effect/system/chem_smoke_spread
 	var/total_smoke = 0 // To stop it being spammed and lagging!

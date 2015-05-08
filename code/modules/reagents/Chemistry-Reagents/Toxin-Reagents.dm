@@ -639,3 +639,49 @@ datum/reagent/toxin/acid/fluacid
 	toxpwr = 2
 	acidpwr = 20
 
+datum/reagent/toxin/mustard_gas
+	name = "Mustard Gas"
+	id = "mustard_gas"
+	description = "An extremely deadly neurotoxin."
+	color = "#B31008" // rgb: 179, 16, 8
+	metabolization_rate = 0.1 * REAGENTS_METABOLISM
+
+datum/reagent/toxin/mustard_gas/on_mob_life(var/mob/living/M as mob)
+	M.adjustFireLoss(1)
+	if(prob(20))
+		M.emote(pick("twitch","drool"))
+	if(prob(10))
+		M.emote("scream")
+		M.visible_message("<span class='danger'>[M] screeches in horror!</span>")
+		M.say("[pick(";","")][pick("OH GOD OH GOD OH GOD IT BURNS IT BURNS IT BURNS SO BAD!!!","PLEASE GOD MAKE IT STOP BURNING OH GOD PLEASE NO!!!","AAAAUGH, MY HANDS, MY HANDS BURN SO BAD!!!","PLEASE END IT, END IT NOW!!!")]")
+		M.drop_l_hand()
+		M.drop_r_hand()
+	if(prob(5))
+		M.dizziness = max(M.dizziness, 3)
+	if(prob(15))
+		M.visible_message("<span class='danger'>[M] vomits on the floor!</span>", \
+		"<span class='userdanger'>You throw up on the floor!</span>")
+		var/turf/pos = get_turf(M)
+		pos.add_vomit_floor(M)
+		playsound(pos, 'sound/effects/splat.ogg', 50, 1)
+	if(prob(2))
+		M.visible_message("<span class='danger'>[M] starts having a seizure!</span>", "<span class='danger'>You have a seizure!</span>")
+		M.Paralyse(5)
+		M.jitteriness = 1000
+	if(current_cycle >= 5)
+		M.jitteriness += 10
+	if(current_cycle >= 20)
+		if(prob(5))
+			M.emote("collapse")
+	switch(current_cycle)
+		if(0 to 60)
+			M.adjustBrainLoss(1)
+			M.adjustFireLoss(1)
+		if(61 to INFINITY)
+			M.adjustBrainLoss(2)
+			M.adjustFireLoss(2)
+			M.Paralyse(5)
+			M.losebreath += 5
+	..()
+
+
