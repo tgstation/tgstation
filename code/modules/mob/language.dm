@@ -6,6 +6,8 @@
 	var/name = "an unknown language" // Fluff name of language if any.
 	var/desc = "A language."         // Short description for 'Check Languages'.
 	var/speech_verb = "says"         // 'says', 'hisses', 'farts'.
+	var/ask_verb = "asks"            // Used when sentence ends in a ?
+	var/exclaim_verb = "exclaims"    // Used when sentence ends in a !
 	var/colour = "body"         // CSS style to use for strings in this language.
 	var/key = "x"                    // Character used to speak in language eg. :o for Unathi.
 	var/flags = 0                    // Various language flags.
@@ -13,22 +15,33 @@
 	var/list/syllables
 	var/list/space_chance = 55       // Likelihood of getting a space in the random scramble string.
 
+/datum/language/proc/get_spoken_verb(var/msg, var/silicon)
+	var/msg_end = copytext(msg,length(msg))
+	switch(msg_end)
+		if("!")
+			return (silicon ? "declares" : exclaim_verb)
+		if("?")
+			return (silicon ? "queries" : ask_verb)
+	return (silicon ? "states" : speech_verb)
+
 /datum/language/proc/say_misunderstood(mob/M, message)
 	return stars(message)
 
-/datum/language/proc/format_message(message)
-	return "[speech_verb], <span class='message'><span class='[colour]'>\"[capitalize(message)]\"</span></span>"
+/datum/language/proc/format_message(mob/M, message)
+	return "[get_spoken_verb(msg,issilicon(M))], <span class='message'><span class='[colour]'>\"[capitalize(message)]\"</span></span>"
 
-/datum/language/proc/format_message_plain(message)
-	return "[speech_verb], \"[capitalize(message)]\""
+/datum/language/proc/format_message_plain(mob/M, message)
+	return "[get_spoken_verb(msg,issilicon(M))], \"[capitalize(message)]\""
 
-/datum/language/proc/format_message_radio(message)
-	return "[speech_verb], <span class='[colour]'>\"[capitalize(message)]\"</span>"
+/datum/language/proc/format_message_radio(mob/M, message)
+	return "[get_spoken_verb(msg,issilicon(M))], <span class='[colour]'>\"[capitalize(message)]\"</span>"
 
 /datum/language/unathi
 	name = "Sinta'unathi"
 	desc = "The common language of Moghes, composed of sibilant hisses and rattles. Spoken natively by Unathi."
 	speech_verb = "hisses"
+	ask_verb = "hisses"
+	exclaim_verb = "roars"
 	colour = "soghun"
 	key = "o"
 	flags = RESTRICTED
@@ -38,6 +51,8 @@
 	name = "Siik'tajr"
 	desc = "An expressive language that combines yowls and chirps with posture, tail and ears. Native to the Tajaran."
 	speech_verb = "mrowls"
+	ask_verb = "mrowls"
+	exclaim_verb = "yowls"
 	colour = "tajaran"
 	key = "j"
 	flags = RESTRICTED
@@ -50,6 +65,8 @@
 	name = "Skrellian"
 	desc = "A melodic and complex language spoken by the Skrell of Qerrbalak. Some of the notes are inaudible to humans."
 	speech_verb = "warbles"
+	ask_verb = "warbles"
+	exclaim_verb = "warbles"
 	colour = "skrell"
 	key = "k"
 	flags = RESTRICTED
@@ -58,7 +75,9 @@
 /datum/language/vox
 	name = "Vox-pidgin"
 	desc = "The common tongue of the various Vox ships making up the Shoal. It sounds like chaotic shrieking to everyone else."
-	speech_verb = "shrieks"
+	speech_verb = "caws"
+	ask_verb = "creels"
+	exclaim_verb = "shrieks"
 	colour = "vox"
 	key = "v"
 	flags = RESTRICTED
@@ -69,6 +88,8 @@
 	name = "Rootspeak"
 	desc = "A creaking, subvocal language spoken instinctively by the Dionaea. Due to the unique makeup of the average Diona, a phrase of Rootspeak can be a combination of anywhere from one to twelve individual voices and notes."
 	speech_verb = "creaks and rustles"
+	ask_verb = "creaks"
+	exclaim_verb = "rustles"
 	colour = "soghun"
 	key = "q"
 	flags = RESTRICTED
@@ -84,6 +105,8 @@
 	name = "Chimpanzee"
 	desc = "Ook ook ook."
 	speech_verb = "chimpers"
+	ask_verb = "chimpers"
+	exclaim_verb = "screeches"
 	key = "6"
 	syllables = list("ook","eek", "ack", "ookie", "eekie", "AHAH", "ree", "mudik", "bix", "nood", "mof", "ugga")
 
@@ -124,6 +147,8 @@
 	desc = "Sounds more like quacking than anything else."
 	key = "k"
 	speech_verb = "quacks"
+	ask_verb = "acks"
+	exclaim_verb = "quacks loudly"
 	colour = "grey"
 	native=1
 	flags = RESTRICTED
@@ -143,6 +168,8 @@
 	desc = "Click clack go the bones."
 	key = "z"
 	speech_verb = "chatters"
+	ask_verb = "clatters"
+	exclaim_verb = "chatters loudly"
 	colour = "sinister"
 	native=1
 	flags = RESTRICTED
@@ -162,6 +189,8 @@
 	colour = "alien"
 	desc = "The common tongue of the xenomorphs."
 	speech_verb = "hisses"
+	ask_verb = "hisses"
+	exclaim_verb = "hisses"
 	key = "4"
 	flags = RESTRICTED
 	syllables = list("sss","sSs","SSS")
@@ -172,7 +201,9 @@
 /datum/language/cultcommon
 	name = "Cult"
 	desc = "The chants of the occult, the incomprehensible."
-	speech_verb = "chants"
+	speech_verb = "intones"
+	ask_verb = "intones"
+	exclaim_verb = "chants"
 	colour = "cult"
 	key = "5"
 	flags = RESTRICTED

@@ -1179,8 +1179,8 @@ var/list/RESTRICTED_CAMERA_NETWORKS = list( //Those networks can only be accesse
 
 //#define SAY_DEBUG 0
 #ifdef SAY_DEBUG
-# warning SOME ASSHOLE FORGOT TO COMMENT SAY_DEBUG BEFORE COMMITTING
-# define say_testing(a,x) a << ("([__FILE__]L[__LINE__] SAYDEBUG) [x]")
+	#warning SOME ASSHOLE FORGOT TO COMMENT SAY_DEBUG BEFORE COMMITTING
+	#define say_testing(a,x) a << ("([__FILE__]L[__LINE__] SAYDEBUG) [x]")
 #else
-# define say_testing(a,x)
+	#define say_testing(a,x)
 #endif

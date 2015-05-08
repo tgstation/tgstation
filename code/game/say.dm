@@ -88,12 +88,12 @@ var/global/image/ghostimg = image("icon"='icons/mob/mob.dmi',"icon_state"="ghost
 		var/overRadio = (istype(speaker, /obj/item/device/radio) || istype(speaker.GetSource(), /obj/item/device/radio))
 		if(say_understands(speaker,speaking))
 			if(overRadio)
-				return speaking.format_message_radio(raw_message)
-			return speaking.format_message(raw_message)
+				return speaking.format_message_radio(speaker, raw_message)
+			return speaking.format_message(speaker, raw_message)
 		else
 			if(overRadio)
-				return speaking.format_message_radio(speaking.scramble(raw_message))
-			return speaking.format_message(speaking.scramble(raw_message))
+				return speaking.format_message_radio(speaker, speaking.scramble(raw_message))
+			return speaking.format_message(speaker, speaking.scramble(raw_message))
 
 	else
 		var/atom/movable/AM = speaker.GetSource()
