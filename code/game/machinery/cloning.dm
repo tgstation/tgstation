@@ -252,20 +252,7 @@
 
 	default_deconstruction_crowbar(W)
 
-	if (istype(W, /obj/item/weapon/card/id)||istype(W, /obj/item/device/pda))
-		if (!src.check_access(W))
-			user << "<span class='danger'>Access Denied.</span>"
-			return
-		if ((!src.locked) || (isnull(src.occupant)))
-			return
-		if ((src.occupant.health < -20) && (src.occupant.stat != 2))
-			user << "<span class='danger'>Access Refused.</span>"
-			return
-		else
-			src.locked = 0
-			user << "System unlocked."
-	else
-		..()
+	..()
 
 /obj/machinery/clonepod/emag_act(user as mob)
 	if (isnull(src.occupant))
@@ -285,24 +272,15 @@
 	src.connected.updateUsrDialog()
 	return 1
 
-/obj/machinery/clonepod/verb/eject()
-	set name = "Eject Cloner"
-	set category = "Object"
-	set src in oview(1)
-
-	if(!usr)
-		return
-	if(usr.stat || !usr.canmove || usr.restrained())
-		return
-	src.go_out()
-	add_fingerprint(usr)
-	return
-
 /obj/machinery/clonepod/proc/go_out()
 	if (src.locked)
 		return
 
 	var/turf/src_turf = get_turf(src)
+
+	if(occupant)
+		if(round((100 * ((src.occupant.health + 100) / (src.heal_level + 100)))) < 50) //not finished!
+			malfunction()
 
 	if (src.mess) //Clean that mess!
 		src.mess = 0

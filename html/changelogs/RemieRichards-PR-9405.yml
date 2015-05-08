@@ -1,0 +1,7 @@
+author: RemieRichards
+delete-after: True
+
+changes: 
+  - tweak: "Cloning pod malfunctions now drop the clone's brain"
+  - add: "Cloning pods now malfunction when they lose power, gibbing any clones inside"
+  - add: "Eject button added to the console instead of a shitty verb, gibs if the clone is not 50% or more complete"
