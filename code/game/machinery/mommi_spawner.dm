@@ -154,8 +154,8 @@
 	M.mmi = new /obj/item/device/mmi(M)
 	M.mmi.transfer_identity(user)//Does not transfer key/client.
 
-
-	del(user)
+	spawn(50) //delay to hopefully prevent mind getting deleted while it still hasn't transfered
+		qdel(user)
 
 	metal=0
 	building=0
