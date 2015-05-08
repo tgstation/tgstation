@@ -1800,6 +1800,9 @@
 				if(delete_mobs == "Cancel")
 					return
 
+				log_admin("[key_name(usr)] reset the thunderdome to default with delete_mobs==[delete_mobs].", 1)
+				message_admins("<span class='adminnotice'>[key_name_admin(usr)] reset the thunderdome to default with delete_mobs==[delete_mobs].</span>")
+
 				var/area/thunderdome = locate(/area/tdome/arena)
 				if(delete_mobs == "Yes")
 					for(var/mob/living/mob in thunderdome)
@@ -1810,9 +1813,6 @@
 
 				var/area/template = locate(/area/tdome/arena_source)
 				template.copy_contents_to(thunderdome)
-
-				log_admin("[key_name(usr)] reset the thunderdome to default with delete_mobs==[delete_mobs].", 1)
-				message_admins("<span class='adminnotice'>[key_name_admin(usr)] reset the thunderdome to default with delete_mobs==[delete_mobs].</span>")
 
 			if("monkey")
 				feedback_inc("admin_secrets_fun_used",1)
