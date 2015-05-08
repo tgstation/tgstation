@@ -256,6 +256,7 @@
 		i = 0
 	else()
 		i++	
+
 /mob/living/simple_animal/hostile/asteroid/hivelord/death(gibbed)
 	new /obj/item/asteroid/hivelord_core(src.loc)
 	mouse_opacity = 1
