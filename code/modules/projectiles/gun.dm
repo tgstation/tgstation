@@ -32,6 +32,7 @@
 	var/fire_delay = 0					//rate of fire for burst firing and semi auto
 	var/semicd = 0						//cooldown handler
 	var/heavy_weapon = 0
+	var/tmp/mouthshoot = 0 ///To stop people from suiciding twice
 
 	var/unique_rename = 0 //allows renaming with a pen
 	var/unique_reskin = 0 //allows one-time reskinning
@@ -168,9 +169,9 @@
 
 /obj/item/weapon/gun/proc/process_fire(atom/target as mob|obj|turf, mob/living/user as mob|obj, var/message = 1, params)
 	add_fingerprint(user)
-
+	var/fired = 0
 	if(semicd)
-		return
+		return fired
 
 	if(heavy_weapon)
 		if(user.get_inactive_hand())
@@ -190,27 +191,35 @@
 				else
 					if(get_dist(user, target) <= 1) //Making sure whether the target is in vicinity for the pointblank shot
 						shoot_live_shot(user, 1, target, message)
+						fired = 1
 					else
 						shoot_live_shot(user, 0, target, message)
+						fired = 1
 			else
 				shoot_with_empty_chamber(user)
 				break
 			process_chamber()
 			update_icon()
 			sleep(fire_delay)
+
 	else
+		if(istype(src, /obj/item/weapon/gun/energy))
+			var/obj/item/weapon/gun/energy/G = src
+			G.newshot()
 		if(chambered)
 			if(!chambered.fire(target, user, params, , suppressed))
 				shoot_with_empty_chamber(user)
-				return
+				return fired
 			else
 				if(get_dist(user, target) <= 1) //Making sure whether the target is in vicinity for the pointblank shot
 					shoot_live_shot(user, 1, target, message)
+					fired = 1
 				else
 					shoot_live_shot(user, 0, target, message)
+					fired = 1
 		else
 			shoot_with_empty_chamber(user)
-			return
+			return fired
 		process_chamber()
 		update_icon()
 		semicd = 1
@@ -221,9 +230,33 @@
 		user.update_inv_l_hand(0)
 	else
 		user.update_inv_r_hand(0)
+	return fired
 
 
 /obj/item/weapon/gun/attack(mob/M as mob, mob/user)
+	if (M == user && user.zone_sel.selecting == "mouth" && !mouthshoot && ishuman(user)) //Handle gun suicide
+	/*	if(istype(M.wear_mask, /obj/item/clothing/mask/happy)) No happy mask in tg (yet)
+			M << "<span class='sinister'>BUT WHY? I'M SO HAPPY!</span>"
+			return */
+		if(src.can_trigger_gun(M)) //fug firing pins
+			mouthshoot = 1
+			M.visible_message("<span class='warning'>[user] sticks their gun in their mouth, ready to pull the trigger...</span>")
+			if(!do_after(user, 40))
+				M.visible_message("<span class='notice'>[user] decided life was worth living</span>")
+				mouthshoot = 0
+				return
+			if (process_fire(M, M, 0))
+				user.visible_message("<span class = 'warning'>[user] pulls the trigger.</span>")
+				user.stat=2 // Just to be sure
+				user.death()
+				user.suiciding = 1
+				//del(in_chamber)
+				mouthshoot = 0
+				return
+			else
+				mouthshoot = 0
+				return
+
 	if(user.a_intent == "harm") //Flogging
 		..()
 	else

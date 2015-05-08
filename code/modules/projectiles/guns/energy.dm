@@ -43,6 +43,8 @@
 	return power_supply.charge >= shot.e_cost
 
 /obj/item/weapon/gun/energy/proc/newshot()
+	if (chambered)
+		return
 	if (!ammo_type || !power_supply)
 		return
 	var/obj/item/ammo_casing/energy/shot = ammo_type[select]
