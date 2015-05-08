@@ -141,6 +141,7 @@ var/list/blob_nodes = list()
 					core.overmind.mind.name = blob.name
 					infected_crew -= blob
 					infected_crew += core.overmind.mind
+					core.overmind.mind.special_role = "Blob Overmind"
 
 /datum/game_mode/blob/post_setup()
 
