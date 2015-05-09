@@ -54,17 +54,13 @@ var/list/possible_changeling_IDs = list("Alpha","Beta","Gamma","Delta","Epsilon"
 	else
 		num_changelings = max(1, min(num_players(), changeling_amount))
 
-	for(var/datum/mind/player in antag_candidates)
-		for(var/job in restricted_jobs)//Removing robots from the list
-			if(player.assigned_role == job)
-				antag_candidates -= player
-
 	if(antag_candidates.len>0)
 		for(var/i = 0, i < num_changelings, i++)
 			if(!antag_candidates.len) break
 			var/datum/mind/changeling = pick(antag_candidates)
 			antag_candidates -= changeling
 			changelings += changeling
+			changeling.restricted_roles = restricted_jobs
 			modePlayer += changelings
 		return 1
 	else

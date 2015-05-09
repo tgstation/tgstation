@@ -10,7 +10,9 @@
 		return
 
 	for(var/obj/item/W in M)
-		M.unEquip(W)
+		if(!M.unEquip(W))
+			qdel(W)
+			M.regenerate_icons()
 
 	log_admin("[key_name(usr)] made [key_name(M)] drop everything!")
 	message_admins("[key_name_admin(usr)] made [key_name_admin(M)] drop everything!")

@@ -1,5 +1,5 @@
 // Navigation beacon for AI robots
-// Functions as a transponder: looks for incoming signal matching
+// No longer exists on the radio controller, it is managed by a global list.
 
 /obj/machinery/navbeacon
 
@@ -18,7 +18,7 @@
 	var/list/codes		// assoc. list of transponder codes
 	var/codes_txt = ""	// codes as set on map: "tag1;tag2" or "tag1=value;tag2=value"
 
-	req_access = list(access_engine)
+	req_access = list(access_engine, access_robotics)
 
 /obj/machinery/navbeacon/New()
 	..()
@@ -27,14 +27,15 @@
 
 	var/turf/T = loc
 	hide(T.intact)
-
-	spawn(5)	// must wait for map loading to finish
-		if(radio_controller)
-			radio_controller.add_object(src, freq, RADIO_NAVBEACONS)
+	if(codes["patrol"])
+		navbeacons += src //Register with the patrol list!
+	if(codes["delivery"])
+		deliverybeacons += src
+		deliverybeacontags += location
 
 /obj/machinery/navbeacon/Destroy()
-	if(radio_controller)
-		radio_controller.remove_object(src, freq)
+	navbeacons &= src //Remove from beacon list, if in one.
+	deliverybeacons &= src
 	..()
 
 // set the transponder codes assoc list from codes_txt
@@ -71,38 +72,6 @@
 									// in case revealed by T-scanner
 	else
 		icon_state = "[state]"
-
-
-// look for a signal of the form "findbeacon=X"
-// where X is any
-// or the location
-// or one of the set transponder keys
-// if found, return a signal
-/obj/machinery/navbeacon/receive_signal(datum/signal/signal)
-
-	var/request = signal.data["findbeacon"]
-	if(request && ((request in codes) || request == "any" || request == location))
-		spawn(1)
-			post_signal()
-
-// return a signal giving location and transponder codes
-
-/obj/machinery/navbeacon/proc/post_signal()
-
-	var/datum/radio_frequency/frequency = radio_controller.return_frequency(freq)
-
-	if(!frequency) return
-
-	var/datum/signal/signal = new()
-	signal.source = src
-	signal.transmission_method = 1
-	signal.data["beacon"] = location
-
-	for(var/key in codes)
-		signal.data[key] = codes[key]
-
-	frequency.post_signal(src, signal, filter = RADIO_NAVBEACONS)
-
 
 /obj/machinery/navbeacon/attackby(var/obj/item/I, var/mob/user, params)
 	var/turf/T = loc
@@ -152,7 +121,6 @@
 	if(locked && !ai)
 		t = {"<TT><B>Navigation Beacon</B><HR><BR>
 <i>(swipe card to unlock controls)</i><BR>
-Frequency: [format_frequency(freq)]<BR><HR>
 Location: [location ? location : "(none)"]</A><BR>
 Transponder Codes:<UL>"}
 
@@ -164,25 +132,21 @@ Transponder Codes:<UL>"}
 
 		t = {"<TT><B>Navigation Beacon</B><HR><BR>
 <i>(swipe card to lock controls)</i><BR>
-Frequency:
-<A href='byond://?src=\ref[src];freq=-10'>-</A>
-<A href='byond://?src=\ref[src];freq=-2'>-</A>
-[format_frequency(freq)]
-<A href='byond://?src=\ref[src];freq=2'>+</A>
-<A href='byond://?src=\ref[src];freq=10'>+</A><BR>
+
 <HR>
-Location: <A href='byond://?src=\ref[src];locedit=1'>[location ? location : "(none)"]</A><BR>
+Location: <A href='byond://?src=\ref[src];locedit=1'>[location ? location : "None"]</A><BR>
 Transponder Codes:<UL>"}
 
 		for(var/key in codes)
 			t += "<LI>[key] ... [codes[key]]"
-			t += " <small><A href='byond://?src=\ref[src];edit=1;code=[key]'>(edit)</A>"
-			t += " <A href='byond://?src=\ref[src];delete=1;code=[key]'>(delete)</A></small><BR>"
-		t += "<small><A href='byond://?src=\ref[src];add=1;'>(add new)</A></small><BR>"
+			t += "	<A href='byond://?src=\ref[src];edit=1;code=[key]'>Edit</A>"
+			t += "	<A href='byond://?src=\ref[src];delete=1;code=[key]'>Delete</A><BR>"
+		t += "	<A href='byond://?src=\ref[src];add=1;'> Add New</A><BR>"
 		t+= "<UL></TT>"
 
-	user << browse(t, "window=navbeacon")
-	onclose(user, "navbeacon")
+	var/datum/browser/popup = new(user, "navbeacon", "Navigation Beacon", 300, 400)
+	popup.set_content(t)
+	popup.open()
 	return
 
 /obj/machinery/navbeacon/Topic(href, href_list)
@@ -191,11 +155,7 @@ Transponder Codes:<UL>"}
 	if(open && !locked)
 		usr.set_machine(src)
 
-		if (href_list["freq"])
-			freq = sanitize_frequency(freq + text2num(href_list["freq"]))
-			updateDialog()
-
-		else if(href_list["locedit"])
+		if(href_list["locedit"])
 			var/newloc = copytext(sanitize(input("Enter New Location", "Navigation Beacon", location) as text|null),1,MAX_MESSAGE_LEN)
 			if(newloc)
 				location = newloc
@@ -241,7 +201,3 @@ Transponder Codes:<UL>"}
 			codes[newkey] = newval
 
 			updateDialog()
-
-
-
-

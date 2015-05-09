@@ -85,6 +85,11 @@
 	desc = "An integrated electric mining drill."
 	flags = NODROP
 
+/obj/item/weapon/pickaxe/drill/cyborg/diamond
+	name = "diamond-tipped cyborg mining drill"
+	icon_state = "diamonddrill"
+	digspeed = 10
+
 /obj/item/weapon/pickaxe/drill/diamonddrill
 	name = "diamond-tipped mining drill"
 	icon_state = "diamonddrill"

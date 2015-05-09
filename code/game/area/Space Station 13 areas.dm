@@ -47,6 +47,7 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 	var/static_environ
 
 	var/has_gravity = 0
+	var/safe = 0 				//Is the area teleport-safe: no space / radiation / aggresive mobs / other dangers
 
 	var/no_air = null
 	var/area/master				// master area used for power calcluations
@@ -502,6 +503,7 @@ proc/process_ghost_teleport_locs()
 /area/crew_quarters
 	name = "\improper Dormitories"
 	icon_state = "Sleep"
+	safe = 1
 
 /area/crew_quarters/toilet
 	name = "\improper Dormitory Toilets"

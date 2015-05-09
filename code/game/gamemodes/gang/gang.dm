@@ -46,11 +46,6 @@
 	if(config.protect_assistant_from_antagonist)
 		restricted_jobs += "Assistant"
 
-	for(var/datum/mind/player in antag_candidates)
-		for(var/job in restricted_jobs)//Removing heads and such from the list
-			if(player.assigned_role == job)
-				antag_candidates -= player
-
 	if(antag_candidates.len >= 2)
 		assign_bosses()
 
@@ -83,12 +78,14 @@
 	A_bosses += boss
 	antag_candidates -= boss
 	boss.special_role = "[gang_name("A")] Gang (A) Boss"
+	boss.restricted_roles = restricted_jobs
 	log_game("[boss.key] has been selected as the boss for the [gang_name("A")] Gang (A)")
 
 	boss = pick(antag_candidates)
 	B_bosses += boss
 	antag_candidates -= boss
 	boss.special_role = "[gang_name("B")] Gang (B) Boss"
+	boss.restricted_roles = restricted_jobs
 	log_game("[boss.key] has been selected as the boss for the [gang_name("B")] Gang (B)")
 
 /datum/game_mode/proc/forge_gang_objectives(var/datum/mind/boss_mind)
@@ -376,22 +373,22 @@
 
 	//Calculate and report influence growth
 	ticker.mode.message_gangtools(ticker.mode.A_tools,"<b>[gang_name("A")] Gang Status Report:</b>")
-	var/A_new = min(100,A + 15 + ticker.mode.A_territory.len)
+	var/A_new = min(999,A + 15 + ticker.mode.A_territory.len)
 	var/A_message = ""
 	if(A_new != A)
 		A_message += "Your gang has gained <b>[A_new - A] Influence</b> for holding on to [ticker.mode.A_territory.len] territories."
-	if(A_new == 100)
-		A_message += "Maximum influence reached."
+	if(A_new == 999)
+		A_message += " You cannot gain any more influence without spending some with this device."
 	A = A_new
 	ticker.mode.message_gangtools(ticker.mode.A_tools,A_message,0)
 
 	ticker.mode.message_gangtools(ticker.mode.B_tools,"<b>[gang_name("B")] Gang Status Report:</b>")
-	var/B_new = min(100,B + 15 + ticker.mode.B_territory.len)
+	var/B_new = min(999,B + 15 + ticker.mode.B_territory.len)
 	var/B_message = ""
 	if(B_new != B)
 		B_message += "Your gang has gained <b>[B_new - B] Influence</b> for holding on to [ticker.mode.B_territory.len] territories."
-	if(B_new == 100)
-		B_message += "Maximum influence reached."
+	if(B_new == 999)
+		B_message += " You cannot gain any more influence without spending some with this device."
 	B = B_new
 	ticker.mode.message_gangtools(ticker.mode.B_tools,B_message,0)
 

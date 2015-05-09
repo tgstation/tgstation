@@ -143,7 +143,7 @@
 	if(!GlandTest)
 		say("Experimental dissection not detected!")
 		return "<span class='bad'>No glands detected!</span>"
-	if(H.mind != null || H.ckey != null)
+	if(H.mind != null && H.ckey != null)
 		history += H
 		say("Processing Specimen...")
 		sleep(5)
@@ -190,9 +190,11 @@
 	var/area/A
 	if(console && console.pad && console.pad.teleport_target)
 		A = console.pad.teleport_target
-	else
-		A = teleportlocs[pick(teleportlocs)]
-	TeleportToArea(H,A)
+		if(A.safe) // right now crew areas are safe - being locked behind closed doors is not fun
+			TeleportToArea(H,A)
+	//Area not chosen / It's not safe area - teleport to arrivals
+	H.forceMove(pick(latejoin))
+	
 
 /obj/machinery/abductor/experiment/update_icon()
 	if(state_open)

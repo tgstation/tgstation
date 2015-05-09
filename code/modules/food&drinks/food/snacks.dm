@@ -1,6 +1,6 @@
 /obj/item/weapon/reagent_containers/food/snacks
 	name = "snack"
-	desc = "yummy"
+	desc = "Yummy."
 	icon = 'icons/obj/food/food.dmi'
 	icon_state = null
 	var/bitesize = 2

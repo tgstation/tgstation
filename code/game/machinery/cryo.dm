@@ -104,6 +104,9 @@
 		open_machine()
 		add_fingerprint(usr)
 	else
+		if(!istype(usr, /mob/living) || usr.stat)
+			usr << "<span class='warning'>You can't do that!</span>"
+			return
 		open_machine()
 
 /obj/machinery/atmospherics/unary/cryo_cell/examine(mob/user)

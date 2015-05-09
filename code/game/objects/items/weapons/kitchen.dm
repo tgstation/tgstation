@@ -28,17 +28,17 @@
 	if(!istype(M))
 		return ..()
 
-	if(user.zone_sel.selecting == "mouth")
-		if(forkload)
-			if(M == user)
-				M.visible_message("<span class='notice'>[user] eats a delicious forkful of omelette!</span>")
-				M.reagents.add_reagent(forkload.id, 1)
-			else
-				M.visible_message("<span class='notice'>[user] feeds [M] a delicious forkful of omelette!</span>")
-				M.reagents.add_reagent(forkload.id, 1)
-			icon_state = "fork"
-			forkload = null
-			return
+	if(forkload)
+		if(M == user)
+			M.visible_message("<span class='notice'>[user] eats a delicious forkful of omelette!</span>")
+			M.reagents.add_reagent(forkload.id, 1)
+		else
+			M.visible_message("<span class='notice'>[user] feeds [M] a delicious forkful of omelette!</span>")
+			M.reagents.add_reagent(forkload.id, 1)
+		icon_state = "fork"
+		forkload = null
+		return
+
 	else if(user.zone_sel.selecting == "eyes")
 		if(user.disabilities & CLUMSY && prob(50))
 			M = user

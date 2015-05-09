@@ -86,10 +86,6 @@
 	if(config.protect_assistant_from_antagonist)
 		restricted_jobs += "Assistant"
 
-	for(var/datum/mind/player in antag_candidates)
-		for(var/job in restricted_jobs)//Removing heads and such from the list
-			if(player.assigned_role == job)
-				antag_candidates -= player
 
 	for(var/cultists_number = 1 to recommended_enemies)
 		if(!antag_candidates.len)
@@ -98,6 +94,7 @@
 		antag_candidates -= cultist
 		cult += cultist
 		cultist.special_role = "Cultist"
+		cultist.restricted_roles = restricted_jobs
 		log_game("[cultist.key] (ckey) has been selected as a cultist")
 
 	return (cult.len>=required_enemies)
@@ -177,6 +174,10 @@
 	else
 		mob << "You have a talisman in your [where], one that will help you start the cult on this station. Use it well and remember - there are others."
 		mob.update_icons()
+		if(where == "backpack")
+			var/obj/item/weapon/storage/B = mob.back
+			B.orient2hud(mob)
+			B.show_to(mob)
 		return 1
 
 
