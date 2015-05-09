@@ -157,6 +157,8 @@ var/global/list/datum/stack_recipe/plasteel_recipes = list ( \
 	new/datum/stack_recipe("Mass Driver frame", /obj/machinery/mass_driver_frame, 3, time = 50, one_per_turf = 1), \
 	new/datum/stack_recipe("Tank dispenser", /obj/structure/dispenser/empty, 2, time = 10, one_per_turf = 1), \
 	new/datum/stack_recipe("Fireaxe cabinet", /obj/structure/closet/fireaxecabinet/, 2, time = 50, one_per_turf = 1), \
+	null, \
+	new/datum/stack_recipe("Vault Door assembly", /obj/structure/door_assembly/door_assembly_vault, 8, time = 50, one_per_turf = 1, on_floor = 1), \
 	)
 
 /obj/item/stack/sheet/plasteel

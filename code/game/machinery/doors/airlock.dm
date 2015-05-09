@@ -115,7 +115,9 @@
 	icon = 'icons/obj/doors/vault.dmi'
 	opacity = 1
 	emag_cost = 2 // in MJ
-	assembly_type = /obj/structure/door_assembly/door_assembly_highsecurity //Until somebody makes better sprites.
+	assembly_type = /obj/structure/door_assembly/door_assembly_vault
+
+	explosion_block = 3//that's some high quality plasteel door
 
 	explosion_block = 2
 
