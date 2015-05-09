@@ -2838,6 +2838,16 @@
 							B.destroy_environnement = 0
 				message_admins("[key_name_admin(usr)] disabled the environnement damage of the Bomberman Bomb Dispensers currently in the world.")
 				log_admin("[key_name_admin(usr)] disabled the environnement damage of the Bomberman Bomb Dispensers currently in the world.")
+			if("togglebombmethod")
+				feedback_inc("admin_secrets_fun_used",1)
+				feedback_add_details("admin_secrets_fun_used","BM")
+				var/choice = input("Do you wish for explosions to take walls and obstacles into account?") in list("Yes, let's have realistic explosions", "No, let's have perfectly circular explosions")
+				if(choice == "Yes, let's have realistic explosions")
+					message_admins("[key_name_admin(usr)] has set explosions to take walls and obstacles into account.")
+					explosion_newmethod = 1
+				if(choice == "No, let's have perfectly circular explosions")
+					message_admins("[key_name_admin(usr)] has set explosions to completely pass through walls and obstacles.")
+					explosion_newmethod = 0
 		if(usr)
 			log_admin("[key_name(usr)] used secret [href_list["secretsfun"]]")
 			if(ok)

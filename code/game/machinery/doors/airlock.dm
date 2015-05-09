@@ -53,6 +53,8 @@
 	soundeffect = 'sound/machines/airlock.ogg'
 	var/pitch = 30
 
+	explosion_block = 1
+
 	emag_cost = 1 // in MJ
 
 /obj/machinery/door/airlock/Destroy()
@@ -114,6 +116,8 @@
 	opacity = 1
 	emag_cost = 2 // in MJ
 	assembly_type = /obj/structure/door_assembly/door_assembly_highsecurity //Until somebody makes better sprites.
+
+	explosion_block = 2
 
 /obj/machinery/door/airlock/freezer
 	name = "Freezer Airlock"
