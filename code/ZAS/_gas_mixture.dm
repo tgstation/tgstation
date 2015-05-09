@@ -92,7 +92,7 @@ What are the archived variables for?
 	//Outputs: null
 
 	for(var/a_gas in adjusts)
-		adjust_gas(a_gas, adjusts[a_gas])
+		adjust_gas(a_gas, adjusts[a_gas], 0)
 	return
 
 //Takes a gas string, and the amount of moles to adjust by.

@@ -315,7 +315,7 @@ datum/gas_mixture/proc/zburn(var/turf/T, force_burn)
 			if(current_gas.isFuel())
 				adjust_gas(current_gas.gas_id, -gases[gasid] * used_fuel_ratio * used_reactants_ratio * current_gas.fuel_multiplier, 0) //take the cost of fuel
 
-		adjust_gas(CARBON_DIOXIDE, max(2 * total_fuel, 0))
+		adjust_gas(CARBON_DIOXIDE, max(2 * total_fuel, 0), 0)
 
 		if(can_use_turf)
 			if(T.getFireFuel()>0)
