@@ -13,6 +13,7 @@
 	var/list/datum/mind/agents = list()
 	var/list/datum/objective/team_objectives = list()
 	var/list/team_names = list()
+	var/finished = 0
 
 /datum/game_mode/abduction/announce()
 	world << "<B>The current game mode is - Abduction!</B>"
@@ -258,11 +259,14 @@
 
 
 /datum/game_mode/abduction/check_finished()
-	for(var/team_number=1,team_number<=teams,team_number++)
-		var/obj/machinery/abductor/console/con = get_team_console(team_number)
-		var/datum/objective/objective = team_objectives[team_number]
-		if (con.experiment.points > objective.target_amount)
-			return 1
+	if(!finished)
+		for(var/team_number=1,team_number<=teams,team_number++)
+			var/obj/machinery/abductor/console/con = get_team_console(team_number)
+			var/datum/objective/objective = team_objectives[team_number]
+			if (con.experiment.points > objective.target_amount)
+				SSshuttle.emergency.request(null, 0.5)
+				finished = 1
+				return ..()
 	return ..()
 
 /datum/game_mode/abduction/declare_completion()
@@ -297,7 +301,7 @@
 		world << printobjectives(abductee.mind)
 
 /datum/game_mode/proc/auto_declare_completion_abduction()
-	if(abductors.len)
+	if(abductors.len && ticker.mode.config_tag != "abduction") // no repeating for the gamemode
 		world << "<br><font size=3><b>The Abductors were:</b></font>"
 		for(var/datum/mind/M in abductors)
 			world << "<font size = 2><b>Abductor [M.current ? M.current.name : "Abductor"]([M.key])</b></font>"
