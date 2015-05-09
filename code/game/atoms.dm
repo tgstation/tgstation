@@ -21,6 +21,10 @@
 	// replaced by OPENCONTAINER flags and atom/proc/is_open_container()
 	///Chemistry.
 	var/allow_spin = 1
+
+	//Value used to increment ex_act() if reactionary_explosions is on
+	var/explosion_block = 0
+
 /atom/proc/onCentcom()
 	var/turf/T = get_turf(src)
 	if(!T)

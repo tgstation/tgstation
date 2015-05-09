@@ -5,6 +5,7 @@
 	opacity = 1
 	density = 1
 	blocks_air = 1
+	explosion_block = 2
 
 /turf/unsimulated/wall/normal
 	icon_state = "wall"
