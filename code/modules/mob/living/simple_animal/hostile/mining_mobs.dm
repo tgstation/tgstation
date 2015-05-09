@@ -252,7 +252,7 @@
 	recentlyspawned = 1
 	spawn(30)
 		recentlyspawned = 0
-        return
+		return
 
 /mob/living/simple_animal/hostile/asteroid/hivelord/AttackingTarget()
     
