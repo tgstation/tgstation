@@ -92,7 +92,7 @@
 		if (istype(src.loc, /turf/simulated/wall))
 			usr << "<span class='warning'>There is already a wall present!</span>"
 			return
-		if (locate(/obj/structure/falsewall) in src.contents)
+		if (locate(/obj/structure/falsewall) in src.loc.contents)
 			usr << "<span class='warning'>There is already a false wall present!</span>"
 			return
 
