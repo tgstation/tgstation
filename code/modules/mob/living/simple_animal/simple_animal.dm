@@ -594,3 +594,8 @@
 		return
 	gib()
 	return
+
+/mob/living/simple_animal/say_understands(var/mob/other,var/datum/language/speaking = null)
+	if(issilicon(other))
+		return 1
+	return ..()
