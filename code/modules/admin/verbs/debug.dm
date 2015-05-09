@@ -640,6 +640,7 @@ var/global/list/g_fancy_list_of_types = null
 		"red wizard",
 		"marisa wizard",
 		"plasmaman"
+		"operative"
 		)
 	var/dresscode = input("Select dress for [M]", "Robust quick dress shop") as null|anything in dresspacks
 	if (isnull(dresscode))
@@ -1000,8 +1001,16 @@ var/global/list/g_fancy_list_of_types = null
 			M.equip_to_slot_or_del(new /obj/item/clothing/suit/space/eva/plasmaman(M),slot_wear_suit)
 			M.equip_to_slot_or_del(new /obj/item/weapon/tank/internals/plasmaman/full(M),slot_back)
 			M.equip_to_slot_or_del(new /obj/item/clothing/mask/breath(M),slot_wear_mask)
-
-
+			
+		if("operative")
+			M.equip_to_slot_or_del(new /obj/item/clothing/under/syndicate(M), slot_w_uniform)
+			M.equip_to_slot_or_del(new /obj/item/clothing/shoes/jackboots(M), slot_shoes)
+			M.equip_to_slot_or_del(new /obj/item/clothing/gloves/combat(M), slot_gloves)
+			M.equip_to_slot_or_del(new /obj/item/weapon/storage/belt/military(M), slot_belt)
+			M.equip_to_slot_or_del(new /obj/item/device/radio/headset/syndicate/alt(M), slot_ears)
+			M.equip_to_slot_or_del(new /obj/item/clothing/glasses/night(M), slot_glasses)
+			
+			
 	M.regenerate_icons()
 
 	log_admin("[key_name(usr)] changed the equipment of [key_name(M)] to [dresscode].")
