@@ -312,7 +312,7 @@
 		else if(H.gloves)
 			var/obj/item/clothing/gloves/G = H.gloves
 			if(G.max_heat_protection_temperature)
-				prot = (G.max_heat_protection_temperature > AUTOIGNITION_PAPER)
+				prot = (G.max_heat_protection_temperature > src.autoignition_temperature)
 		if(!prot && (M_CLUMSY in H.mutations) && prob(50)) //only fail if human
 			H.apply_damage(10,BURN,(pick("l_hand", "r_hand")))
 			user.drop_hands()
