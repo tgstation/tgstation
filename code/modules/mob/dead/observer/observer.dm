@@ -755,6 +755,20 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 	//	host.ckey = src.ckey
 	//	//host << "<span class='info'>You are now a mouse. Try to avoid interaction with players, and do not give hints away that you are more than a simple rodent.</span>"
 
+/mob/dead/observer/verb/find_arena()
+	set category = "Ghost"
+	set name = "Search For Arenas"
+	set desc = "Try to find an Arena to polish your robust bomb placement skills.."
+
+	if(!arenas.len)
+		usr << "There are no arenas in the world! Ask the admins to spawn one."
+		return
+
+	var/datum/bomberman_arena/arena_target = input("Which arena do you wish to reach?", "Arena Search Panel") in arenas
+	usr << "Reached [arena_target]"
+
+	usr.loc = arena_target.center
+
 //BEGIN TELEPORT HREF CODE
 /mob/dead/observer/Topic(href, href_list)
 	if(usr != src)
@@ -803,6 +817,17 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 						return
 					loc = T
 				following = null
+
+	if(href_list["jumptoarenacood"])
+		world << "gotcha"
+
+		var/x = text2num(href_list["X"])
+		var/y = text2num(href_list["Y"])
+		var/z = text2num(href_list["Z"])
+
+		var/client/C = usr.client
+		sleep(2)
+		C.jumptocoord(x,y,z)
 	..()
 //END TELEPORT HREF CODE
 
