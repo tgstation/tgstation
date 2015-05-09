@@ -155,7 +155,13 @@
 			if (src.diskette)
 				dat += "<a href='byond://?src=\ref[src];disk=eject'>Eject Disk</a><br>"
 
-
+			//Pod
+			if(pod1)
+				dat += "<h3>Cloning Pod:</h3>"
+				if(pod1.occupant)
+					dat += "<a href='byond://?src=\ref[src];eject_clone=1'>Eject Clone</a><br>"
+				else
+					dat += "<span class='linkOff'>Eject Clone</span><br>"
 
 		if(2)
 			dat += "<h3>Current records</h3>"
@@ -315,6 +321,25 @@
 
 	else if (href_list["refresh"])
 		src.updateUsrDialog()
+
+	else if (href_list["eject_clone"])
+		if(pod1)
+			//badmin info collection
+			var/hasOccupant = FALSE
+			if(pod1.occupant)
+				hasOccupant = TRUE
+
+			//kick them out
+			pod1.locked = 0
+			pod1.go_out()
+			temp = "Cloning pod contents: Ejected"
+
+			//badmin info dump
+			if(hasOccupant && !(pod1.occupant))
+				log_admin("[key_name(usr)] early-ejected a cloning pod, possibly GIBBING the occupant!")
+
+		else
+			temp = "<font class='bad'>No Clonepod detected.</font>"
 
 	else if (href_list["clone"])
 		var/datum/data/record/C = find_record("id", href_list["clone"], records)

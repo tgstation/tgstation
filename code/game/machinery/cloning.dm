@@ -196,9 +196,14 @@
 /obj/machinery/clonepod/process()
 
 	if(!is_operational()) //Autoeject if power is lost
-		if (src.occupant)
-			src.locked = 0
-			src.go_out()
+		var/hasOccupant = FALSE
+		if(occupant)
+			hasOccupant = TRUE
+		malfunction() //always gib when we lose power
+		src.locked = 0
+		go_out()
+		if(hasOccupant && !occupant)
+			log_admin("A cloning pod has failed due to low power, potentially gibbing somebody")
 		return
 
 	if((src.occupant) && (src.occupant.loc == src))
@@ -252,20 +257,7 @@
 
 	default_deconstruction_crowbar(W)
 
-	if (istype(W, /obj/item/weapon/card/id)||istype(W, /obj/item/device/pda))
-		if (!src.check_access(W))
-			user << "<span class='danger'>Access Denied.</span>"
-			return
-		if ((!src.locked) || (isnull(src.occupant)))
-			return
-		if ((src.occupant.health < -20) && (src.occupant.stat != 2))
-			user << "<span class='danger'>Access Refused.</span>"
-			return
-		else
-			src.locked = 0
-			user << "System unlocked."
-	else
-		..()
+	..()
 
 /obj/machinery/clonepod/emag_act(user as mob)
 	if (isnull(src.occupant))
@@ -285,40 +277,30 @@
 	src.connected.updateUsrDialog()
 	return 1
 
-/obj/machinery/clonepod/verb/eject()
-	set name = "Eject Cloner"
-	set category = "Object"
-	set src in oview(1)
-
-	if(!usr)
-		return
-	if(usr.stat || !usr.canmove || usr.restrained())
-		return
-	src.go_out()
-	add_fingerprint(usr)
-	return
-
 /obj/machinery/clonepod/proc/go_out()
 	if (src.locked)
 		return
 
-	if (src.mess) //Clean that mess and dump those gibs!
+	var/turf/src_turf = get_turf(src)
+
+	if(occupant)
+		if(round((100 * ((src.occupant.health + 100) / (src.heal_level + 100)))) < 50) //not finished!
+			malfunction()
+
+	if (src.mess) //Clean that mess!
 		src.mess = 0
-		gibs(src.loc)
 		src.icon_state = "pod_0"
 
-		/*
+		//dump those gibs!
 		for(var/obj/O in src)
-			O.loc = src.loc
-		*/
+			O.loc = src_turf
 		return
 
 	if (!(src.occupant))
 		return
-	/*
+
 	for(var/obj/O in src)
-		O.loc = src.loc
-	*/
+		O.loc = src_turf
 
 	if (src.occupant.client)
 		src.occupant.client.eye = src.occupant.client.mob
@@ -336,9 +318,15 @@
 		src.connected_message("Critical Error!")
 		src.mess = 1
 		src.icon_state = "pod_g"
-		src.occupant.ghostize()
-		spawn(5)
-			qdel(src.occupant)
+		if(iscarbon(occupant))
+			var/mob/living/carbon/C = occupant
+			var/obj/item/organ/brain/B = C.getorgan(/obj/item/organ/brain)
+			B.transfer_identity(C)
+			C.internal_organs -= B
+			B.loc = src
+			for(var/obj/item/organ/O in C.internal_organs)
+				O.loc = src
+		occupant.gib()
 	return
 
 /obj/machinery/clonepod/relaymove(mob/user as mob)
