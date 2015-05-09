@@ -85,10 +85,10 @@
 	stored.loc = T
 	updateOverlays()
 	..()
-
+/*
 /obj/structure/lattice/singularity_pull(S, current_size)
 	if(current_size >= STAGE_FOUR)
-		Deconstruct()
+		Deconstruct()*/
 
 /obj/structure/lattice/catwalk
 	name = "catwalk"

@@ -173,10 +173,10 @@ Pipelines + Other Objects -> Pipe network
 		A.initialize()
 		A.addMember(src)
 	build_network()
-
+/*
 /obj/machinery/atmospherics/singularity_pull(S, current_size)
 	if(current_size >= STAGE_FIVE)
-		Deconstruct()
+		Deconstruct()*/
 
 
 //Find a connecting /obj/machinery/atmospherics in specified direction

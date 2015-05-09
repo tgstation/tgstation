@@ -126,8 +126,8 @@
 			if(prob(30))
 				builtin_tile.loc = src
 				make_plating()
-		else if(prob(30))
-			ReplaceWithLattice()
+//		else if(prob(30))
+//			ReplaceWithLattice()
 
 /turf/simulated/floor/engine/vacuum
 	name = "vacuum floor"

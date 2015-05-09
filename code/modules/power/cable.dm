@@ -184,10 +184,10 @@ By design, d1 is the smallest direction and d2 is the highest
 			if(3)
 				if(prob(25))
 					Deconstruct()
-
+/*
 /obj/structure/cable/singularity_pull(S, current_size)
 	if(current_size >= STAGE_FIVE)
-		Deconstruct()
+		Deconstruct()*/
 
 /obj/structure/cable/proc/cableColor(var/colorC = "red")
 	cable_color = colorC
