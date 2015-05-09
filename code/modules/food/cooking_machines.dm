@@ -321,7 +321,13 @@ var/global/ingredientLimit = 10
 	cks_max_volume = 400
 	cooks_in_reagents = 1
 
-/obj/machinery/cooking/deepfryer/New()
+/*/obj/machinery/cooking/deepfryer/New()
+	..()
+	if(!reagents)
+		create_reagents(500)
+	reagents.add_reagent("cornoil", 300)*/
+
+/obj/machinery/cooking/deepfryer/initialize()
 	..()
 	if(!reagents)
 		create_reagents(500)
