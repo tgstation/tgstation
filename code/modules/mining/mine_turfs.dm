@@ -414,16 +414,6 @@
 		if (!( istype(T, /turf) ))
 			return
 
-		if(istype(P, /obj/item/weapon/pickaxe/drill))
-			var/obj/item/weapon/pickaxe/drill/D = P
-			if(isrobot(user))
-				var/obj/item/weapon/pickaxe/drill/cyborg/RD = D
-				if(!RD.use_robot_power(user))
-					return
-			else if(!D.bcell.use(D.drillcost))
-				user << "<span class='warning'>Your [D.name] doesn't have enough charge!</span>"
-				return
-
 		if(last_act+P.digspeed > world.time)//prevents message spam
 			return
 		last_act = world.time

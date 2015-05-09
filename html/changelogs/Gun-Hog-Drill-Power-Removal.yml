@@ -1,0 +1,8 @@
+
+author: Gun Hog
+
+delete-after: True
+
+changes: 
+  - rscdel: "The power mechanic for mining drills and the jackhammer has been removed. They no longer require cells or recharging."
+  - bugfix: "The diamond drill upgrade for mining cyborgs has been fixed."

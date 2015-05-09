@@ -157,14 +157,6 @@
 						F.broken = 0
 						F.times_used = 0
 						F.icon_state = "flash"
-				// Mining
-				if(istype(O, /obj/item/weapon/pickaxe/drill/cyborg))
-					var/obj/item/weapon/pickaxe/drill/cyborg/D = O
-					if(D.bcell.charge < D.bcell.maxcharge)
-						D.bcell.charge = min(D.bcell.charge + recharge_speed, D.bcell.maxcharge)
-						D.update_icon()
-						if(D.warned)
-							D.warned = 0
 				// Security
 				if(istype(O,/obj/item/weapon/gun/energy/gun/advtaser/cyborg))
 					var/obj/item/weapon/gun/energy/gun/advtaser/cyborg/T = O
