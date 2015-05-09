@@ -16,5 +16,6 @@ var/global/list/obj/machinery/atmospherics/atmos_machines = list()
 		if(!pipeNetwork.disposed)
 			pipeNetwork.process()
 			scheck()
+			continue
 
 		pipe_networks.Remove(pipeNetwork)
