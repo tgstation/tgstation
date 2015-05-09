@@ -242,18 +242,18 @@
 	minimum_distance = 3
 	pass_flags = PASSTABLE
 	var/recentlyspawned = 0
-
+// This code denotes how often the hivelord can spawn a brood, modify the below spawn(30) timer to change spawn time. currently set to every 3 seconds. Current spawn rate gives max of 3 broodlings per actively attacking hivelord - EchoFade
 /mob/living/simple_animal/hostile/asteroid/hivelord/OpenFire(var/the_target)
 	if(!recentlyspawned)
-	var/mob/living/simple_animal/hostile/asteroid/hivelordbrood/A = new /mob/living/simple_animal/hostile/asteroid/hivelordbrood(src.loc)
-	A.GiveTarget(target)
-	A.friends = friends
-	A.faction = faction
-	recentlyspawned = 1
-	spawn(30)
-		recentlyspawned = 0
+		var/mob/living/simple_animal/hostile/asteroid/hivelordbrood/A = new /mob/living/simple_animal/hostile/asteroid/hivelordbrood(src.loc)
+		A.GiveTarget(target)
+		A.friends = friends
+		A.faction = faction
+		recentlyspawned = 1
+		spawn(30)
+			recentlyspawned = 0
+	
 	return
-
 /mob/living/simple_animal/hostile/asteroid/hivelord/AttackingTarget()
     
         OpenFire()
@@ -265,7 +265,7 @@
 
 /obj/item/asteroid/hivelord_core
 	name = "hivelord remains"
-	desc = "All that remains of a hivelord, it seems to be what allows it to break pieces of itself off without being hurt... its healing properties will soon become inert if not used quickly. Try not to think about what you're eating."
+	desc = "All that remains of a hivelord, it seems to be what allows it to break pieces of itself off without being hurt... its healing properties will soon become inert if not used quickly. Try not to think about what you're doing."
 	icon = 'icons/obj/food/food.dmi'
 	icon_state = "boiledrorocore"
 	var/inert = 0
@@ -286,10 +286,10 @@
 				user << "<span class='notice'>[src] are useless on the dead.</span>"
 				return
 			if(H != user)
-				H.visible_message("[user] forces [H] to eat [src]... they quickly regenerate all injuries!")
+				H.visible_message("[user] forces [H] to apply [src]... they quickly regenerate all injuries!")
 			else
-				user << "<span class='notice'>You chomp into [src], barely managing to hold it down, but feel amazingly refreshed in mere moments.</span>"
-			playsound(src.loc,'sound/items/eatfood.ogg', rand(10,50), 1)
+				user << "<span class='notice'>You start to smear [src] on yourself. It feels and smells disgusting as it seeps into your suit, but you feel amazingly refreshed in mere moments.</span>"
+			//playsound(src.loc,'sound/items/eatfood.ogg', rand(10,50), 1)
 			H.revive()
 			qdel(src)
 	..()
