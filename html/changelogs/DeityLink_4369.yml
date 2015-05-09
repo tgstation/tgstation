@@ -1,0 +1,5 @@
+author: Deity Link
+delete-after: true
+changes:
+  - tweak: All silicons (AI, Borgs, MoMMIs) can now purchase free items from all vending machines.
+  - tweak: Service borgs and MoMMI can purchase items that cost money as well (as they were supposed to originally it seems, but couldn't, because they couldn't swipe their fucking non-existent ID on the machine)
