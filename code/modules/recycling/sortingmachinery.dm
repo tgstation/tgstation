@@ -353,3 +353,13 @@
 
 /obj/machinery/disposal/deliveryChute/process()
 	return PROCESS_KILL
+
+/obj/item/weapon/c_tube
+	name = "cardboard tube"
+	desc = "A tube... of cardboard."
+	icon = 'icons/obj/items.dmi'
+	icon_state = "c_tube"
+	throwforce = 0
+	w_class = 1.0
+	throw_speed = 3
+	throw_range = 5

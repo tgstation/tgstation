@@ -105,7 +105,7 @@
 "ca" = (/obj/structure/table,/obj/item/weapon/paper_bin,/obj/item/weapon/pen/blue,/obj/machinery/light/small{dir = 1},/turf/simulated/floor/plasteel/airless,/area/tcommsat/chamber)
 "cb" = (/obj/structure/computerframe,/turf/simulated/floor/plasteel/airless,/area/tcommsat/chamber)
 "cc" = (/obj/structure/table,/turf/simulated/floor/plasteel/airless,/area/tcommsat/chamber)
-"cd" = (/obj/item/weapon/syntiflesh{name = "Cuban Pete-Meat"},/turf/simulated/floor/engine,/area/tcommsat/chamber)
+"cd" = (/obj/item/weapon/reagent_containers/food/snacks/meat/slab/synthmeat{name = "Cuban Pete-Meat"},/turf/simulated/floor/engine,/area/tcommsat/chamber)
 "ce" = (/obj/structure/grille,/turf/simulated/floor/plasteel/airless,/area/tcommsat/chamber)
 "cf" = (/obj/structure/grille{density = 0; icon_state = "brokengrille"},/turf/simulated/floor/plasteel/airless,/area/tcommsat/chamber)
 "cg" = (/obj/structure/window/reinforced,/obj/structure/window/reinforced{dir = 8},/turf/simulated/floor/plating/airless,/area/tcommsat/chamber)

@@ -1,3 +1,11 @@
+/obj/item/weapon/pai_cable
+	desc = "A flexible coated cable with a universal jack on one end."
+	name = "data cable"
+	icon = 'icons/obj/power.dmi'
+	icon_state = "wire1"
+
+	var/obj/machinery/machine
+
 /obj/item/weapon/pai_cable/proc/plugin(obj/machinery/M as obj, mob/user as mob)
 	if(istype(M, /obj/machinery/door) || istype(M, /obj/machinery/camera))
 		user.visible_message("[user] inserts [src] into a data port on [M].", "<span class='notice'>You insert [src] into a data port on [M].</span>", "<span class='italics'>You hear the satisfying click of a wire jack fastening into place.</span>")
