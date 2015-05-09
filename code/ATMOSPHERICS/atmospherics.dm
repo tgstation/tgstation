@@ -41,12 +41,18 @@ Pipelines + Other Objects -> Pipe network
 
 	var/image/pipe_image
 
+/obj/machinery/atmospherics/New()
+	..()
+	machines.Remove(src)
+	atmos_machines |= src
+
 /obj/machinery/atmospherics/Destroy()
 	for(var/mob/living/M in src) //ventcrawling is serious business
 		M.remove_ventcrawl()
 		M.forceMove(src.loc)
 	if(pipe_image)
 		del(pipe_image) //we have to del it, or it might keep a ref somewhere else
+	atmos_machines -= src
 	..()
 
 // Find a connecting /obj/machinery/atmospherics in specified direction.
