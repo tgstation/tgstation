@@ -488,4 +488,17 @@
 		canmove = 0
 	else
 		canmove = 1
+	update_transform()
 	return canmove
+
+/mob/living/simple_animal/update_transform()
+	var/matrix/ntransform = matrix(transform) //aka transform.Copy()
+	var/changed = 0
+	
+	if(resize != RESIZE_DEFAULT_SIZE)
+		changed++
+		ntransform.Scale(resize)
+		resize = RESIZE_DEFAULT_SIZE
+	
+	if(changed)
+		animate(src, transform = ntransform, time = 2, easing = EASE_IN|EASE_OUT)
