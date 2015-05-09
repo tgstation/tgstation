@@ -56,7 +56,7 @@
 		M << "<span class='warning'>[deactivation_message]</span>"
 	else
 		testing("[name] has no deactivation message.")
-	..()
+	return ..()
 
 /datum/dna/gene/disability/hallucinate
 	name="Hallucinate"

@@ -138,7 +138,7 @@
 				M.requests += O
 				if (buf.types & DNA2_BUF_SE)
 					if(block)// Isolated injector
-						testing("Isolated block [block] injector with contents: [GetValue()]")
+						//testing("Isolated block [block] injector with contents: [GetValue()]")
 						if (GetState() && block == MONKEYBLOCK && istype(M, /mob/living/carbon/human)  )
 							message_admins("[key_name_admin(user)] injected [key_name_admin(M)] with the Isolated [name] <span class='warning'>(MONKEY)</span>")
 							log_attack("[key_name(user)] injected [key_name(M)] with the Isolated [name] (MONKEY)")
@@ -146,7 +146,7 @@
 						else
 							log_attack("[key_name(user)] injected [key_name(M)] with the Isolated [name]")
 					else
-						testing("DNA injector with contents: [english_list(buf.dna.SE)]")
+						//testing("DNA injector with contents: [english_list(buf.dna.SE)]")
 						if (GetState(MONKEYBLOCK) && istype(M, /mob/living/carbon/human) )
 							message_admins("[key_name_admin(user)] injected [key_name_admin(M)] with the [name] <span class='warning'>(MONKEY)</span>")
 							log_attack("[key_name(user)] injected [key_name(M)] with the [name] (MONKEY)")
@@ -173,7 +173,7 @@
 
 				if (buf.types & DNA2_BUF_SE)
 					if(block)// Isolated injector
-						testing("Isolated block [block] injector with contents: [GetValue()]")
+						//testing("Isolated block [block] injector with contents: [GetValue()]")
 						if (GetState() && block == MONKEYBLOCK && istype(M, /mob/living/carbon/human)  )
 							message_admins("[key_name_admin(user)] injected [key_name_admin(M)] with the Isolated [name] <span class='warning'>(MONKEY)</span>")
 							log_attack("[key_name(user)] injected [key_name(M)] with the Isolated [name] (MONKEY)")
@@ -181,7 +181,7 @@
 						else
 							log_attack("[key_name(user)] injected [key_name(M)] with the Isolated [name]")
 					else
-						testing("DNA injector with contents: [english_list(buf.dna.SE)]")
+						//testing("DNA injector with contents: [english_list(buf.dna.SE)]")
 						if (GetState(MONKEYBLOCK) && istype(M, /mob/living/carbon/human))
 							message_admins("[key_name_admin(user)] injected [key_name_admin(M)] with the [name] <span class='warning'>(MONKEY)</span>")
 							log_game("[key_name(user)] injected [key_name(M)] with the [name] (MONKEY)")
