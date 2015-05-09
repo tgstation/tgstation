@@ -36,7 +36,10 @@
 /obj/item/weapon/robot_module/New(var/mob/living/silicon/robot/R)
 	..()
 
-	languages = list(LANGUAGE_SOL_COMMON = 1, LANGUAGE_TRADEBAND = 1, LANGUAGE_VOX = 0, LANGUAGE_ROOTSPEAK = 0, LANGUAGE_GREY = 0, LANGUAGE_CLATTER = 0, LANGUAGE_MONKEY = 0, LANGUAGE_UNATHI = 0, LANGUAGE_SIIK_TAJR = 0, LANGUAGE_SKRELLIAN = 0, LANGUAGE_GUTTER = 0)
+	languages = list(	LANGUAGE_SOL_COMMON = 1, LANGUAGE_TRADEBAND = 1, LANGUAGE_VOX = 0,
+						LANGUAGE_ROOTSPEAK = 0, LANGUAGE_GREY = 0, LANGUAGE_CLATTER = 0,
+						LANGUAGE_MONKEY = 0, LANGUAGE_UNATHI = 0, LANGUAGE_SIIK_TAJR = 0,
+						LANGUAGE_SKRELLIAN = 0, LANGUAGE_GUTTER = 0, LANGUAGE_MONKEY = 0)
 	added_languages = list()
 	if(!isMoMMI(R)) add_languages(R)
 	AddToProfiler()
@@ -300,7 +303,8 @@
 					LANGUAGE_SKRELLIAN	= 1,
 					LANGUAGE_ROOTSPEAK	= 1,
 					LANGUAGE_TRADEBAND	= 1,
-					LANGUAGE_GUTTER		= 1
+					LANGUAGE_GUTTER		= 1,
+					LANGUAGE_MONKEY		= 1,
 					)
 	..()
 	src.modules += new /obj/item/weapon/reagent_containers/food/drinks/beer(src)
