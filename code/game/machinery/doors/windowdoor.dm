@@ -360,6 +360,13 @@
 
 	return
 
+/obj/machinery/door/window/attack_hulk(mob/user)
+	..(user, 1)
+	user.visible_message("<span class='danger'>[user] smashes through the windoor!</span>", \
+						"<span class='danger'>You tear through the windoor!</span>")
+	user.say(pick(";RAAAAAAAARGH!", ";HNNNNNNNNNGGGGGGH!", ";GWAAAAAAAARRRHHH!", "NNNNNNNNGGGGGGGGHH!", ";AAAAAAARRRGH!" ))
+	playsound(loc, 'sound/effects/Glasshit.ogg', 100, 1)
+	take_damage(health)
 
 
 /obj/machinery/door/window/brigdoor
