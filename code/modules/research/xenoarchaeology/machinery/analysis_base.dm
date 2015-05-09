@@ -84,7 +84,7 @@
 		if(temperature > environmental_temp)
 			//cool down to match the air
 			temperature = max(TCMB, temperature - heat_added/XENOARCH_HEAT_CAPACITY)
-			removed.temperature = max(TCMB, removed.temperature + heat_added/heat_capacity)
+			removed.set_temperature(max(TCMB, removed.temperature + heat_added/heat_capacity))
 
 			if(temperature_difference > 10 && prob(5))
 				src.visible_message("<span class='notice'>\icon[src] hisses softly.</span>", 2)
@@ -92,7 +92,7 @@
 		else
 			//heat up to match the air
 			temperature = max(TCMB, temperature + heat_added/XENOARCH_HEAT_CAPACITY)
-			removed.temperature = max(TCMB, removed.temperature - heat_added/heat_capacity)
+			removed.set_temperature(max(TCMB, removed.temperature - heat_added/heat_capacity))
 
 			if(temperature_difference > 10 && prob(5))
 				src.visible_message("<span class='notice'>\icon[src] plinks quietly.</span>", 2)

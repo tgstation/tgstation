@@ -228,9 +228,9 @@ var/global/list/whitelisted_species = list("Human")
 		oxygen_used = breath.gases[OXYGEN]/6
 		H.oxygen_alert = 0
 
-	breath.adjust_gas(OXYGEN, -oxygen_used, 0)
-	breath.adjust_gas(NITROGEN, -nitrogen_used, 0)
-	breath.adjust_gas(CARBON_DIOXIDE, oxygen_used, 0)
+	breath.adjust_gas(OXYGEN, -oxygen_used)
+	breath.adjust_gas(NITROGEN, -nitrogen_used)
+	breath.adjust_gas(CARBON_DIOXIDE, oxygen_used)
 
 	//CO2 does not affect failed_last_breath. So if there was enough oxygen in the air but too much co2, this will hurt you, but only once per 4 ticks, instead of once per tick.
 	if(CO2_pp > safe_co2_max)

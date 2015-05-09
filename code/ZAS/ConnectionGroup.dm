@@ -362,5 +362,5 @@ proc/ShareHeat(datum/gas_mixture/A, datum/gas_mixture/B, connecting_tiles)
 			maximum_energy_delta *= -1
 		energy_delta = maximum_energy_delta
 
-	A.temperature -= energy_delta / (A.heat_capacity * A.group_multiplier)
-	B.temperature += energy_delta / (B.heat_capacity * B.group_multiplier)
+	A.set_temperature(A.temperature - energy_delta / (A.heat_capacity * A.group_multiplier))
+	B.set_temperature(B.temperature + energy_delta / (B.heat_capacity * B.group_multiplier))

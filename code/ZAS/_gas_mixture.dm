@@ -92,7 +92,7 @@ What are the archived variables for?
 	//Outputs: null
 
 	for(var/a_gas in adjusts)
-		adjust_gas(a_gas, adjusts[a_gas], 0)
+		adjust_gas(a_gas, adjusts[a_gas])
 	return
 
 //Takes a gas string, and the amount of moles to adjust by.
@@ -607,8 +607,8 @@ What are the archived variables for?
 		&& (abs(sharer_temperature_delta) > MINIMUM_TEMPERATURE_RATIO_TO_SUSPEND*sharer.temperature_archived))
 		return -1
 
-	temperature += self_temperature_delta
-	sharer.temperature += sharer_temperature_delta
+	set_temperature(temperature + self_temperature_delta)
+	sharer.set_temperature(sharer.temperature + sharer_temperature_delta)
 
 	return 1
 	//Logic integrated from: temperature_share(sharer, conduction_coefficient) for efficiency
@@ -635,8 +635,8 @@ What are the archived variables for?
 		&& (abs(self_temperature_delta) > MINIMUM_TEMPERATURE_RATIO_TO_SUSPEND*temperature_archived))
 		return 0
 
-	temperature += self_temperature_delta
-	sharer.temperature += sharer_temperature_delta
+	set_temperature(temperature + self_temperature_delta)
+	sharer.set_temperature(sharer.temperature + sharer_temperature_delta)
 
 	return 1
 	//Logic integrated from: temperature_share(sharer, conduction_coefficient) for efficiency
@@ -663,7 +663,7 @@ What are the archived variables for?
 		&& (abs(self_temperature_delta) > MINIMUM_TEMPERATURE_RATIO_TO_SUSPEND*temperature_archived))
 		return 0
 
-	temperature += self_temperature_delta
+	set_temperature(temperature + self_temperature_delta)
 	sharer.temperature += sharer_temperature_delta
 
 	return 1
@@ -704,8 +704,8 @@ What are the archived variables for?
 			var/heat = conduction_coefficient*delta_temperature* \
 				(self_heat_capacity*sharer_heat_capacity/(self_heat_capacity+sharer_heat_capacity))
 
-			temperature -= heat/(self_heat_capacity*group_multiplier)
-			sharer.temperature += heat/(sharer_heat_capacity*sharer.group_multiplier)
+			set_temperature(temperature - heat/(self_heat_capacity*group_multiplier))
+			sharer.set_temperature( sharer.temperature + heat/(sharer_heat_capacity*sharer.group_multiplier))
 
 /datum/gas_mixture/proc/temperature_mimic(turf/model, conduction_coefficient, border_multiplier)
 	var/delta_temperature = (temperature - model.temperature)
@@ -720,9 +720,9 @@ What are the archived variables for?
 				(self_heat_capacity*model.heat_capacity/(self_heat_capacity+model.heat_capacity))
 
 			if(border_multiplier)
-				temperature -= heat*border_multiplier/(self_heat_capacity*group_multiplier)
+				set_temperature(temperature - heat*border_multiplier/(self_heat_capacity*group_multiplier))
 			else
-				temperature -= heat/(self_heat_capacity*group_multiplier)
+				set_temperature(temperature - heat/(self_heat_capacity*group_multiplier))
 
 /datum/gas_mixture/proc/temperature_turf_share(turf/simulated/sharer, conduction_coefficient)
 	var/delta_temperature = (temperature_archived - sharer.temperature)
@@ -730,10 +730,9 @@ What are the archived variables for?
 		var/self_heat_capacity = heat_capacity
 
 		if((sharer.heat_capacity > MINIMUM_HEAT_CAPACITY) && (self_heat_capacity > MINIMUM_HEAT_CAPACITY))
-			var/heat = conduction_coefficient*delta_temperature* \
-				(self_heat_capacity*sharer.heat_capacity/(self_heat_capacity+sharer.heat_capacity))
+			var/heat = conduction_coefficient*delta_temperature * (self_heat_capacity*sharer.heat_capacity/(self_heat_capacity+sharer.heat_capacity))
 
-			temperature -= heat/(self_heat_capacity*group_multiplier)
+			set_temperature(temperature - heat/(self_heat_capacity*group_multiplier))
 			sharer.temperature += heat/sharer.heat_capacity
 
 /datum/gas_mixture/proc/compare(datum/gas_mixture/sample)
@@ -762,7 +761,7 @@ What are the archived variables for?
 		return 0
 
 	for(var/gasid in right_side.gases)
-		adjust_gas(gasid, right_side.gases[gasid], 0, 0)
+		adjust_gas(gasid, right_side.gases[gasid], 0)
 
 	return 1
 
@@ -773,14 +772,14 @@ What are the archived variables for?
 	//Outputs: 1
 
 	for(var/gasid in right_side.gases)
-		adjust_gas(gasid, -right_side.gases[gasid], 0, 0)
+		adjust_gas(gasid, -right_side.gases[gasid], 0)
 
 	return 1
 
 /datum/gas_mixture/proc/multiply(factor)
 
 	for(var/gasid in gases)
-		adjust_gas(gasid, (factor - 1) * gases[gasid], 0, 0)
+		adjust_gas(gasid, (factor - 1) * gases[gasid], 0)
 
 	return 1
 

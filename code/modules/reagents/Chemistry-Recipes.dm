@@ -1415,8 +1415,8 @@ datum
 
 					var/datum/gas_mixture/napalm = new
 
-					napalm.set_gas("plasma", 25, 0)
-					napalm.temperature = 1400
+					napalm.set_gas(PLASMA, 25)
+					napalm.set_temperature(1400)
 
 					target_tile.assume_air(napalm)
 					spawn (0) target_tile.hotspot_expose(700, 400,surfaces=1)

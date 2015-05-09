@@ -941,12 +941,12 @@
 			return
 		var/datum/gas_mixture/GM = T.return_air()
 		if(prob(10))
-			GM.adjust_gas(PLASMA, 100, 0, 0)
+			GM.adjust_gas(PLASMA, 100, 0)
 			GM.set_temperature(1500+T0C) //should be enough to start a fire
 			T.visible_message("The [src] suddenly disgorges a cloud of heated plasma.")
 			destroy()
 		else
-			GM.adjust_gas(PLASMA, 5, 0, 0)
+			GM.adjust_gas(PLASMA, 5, 0)
 			GM.set_temperature(istype(T) ? T.air.temperature : T20C)
 			T.visible_message("The [src] suddenly disgorges a cloud of plasma.")
 		return

@@ -86,11 +86,11 @@
 			lastgen = energy_transfer*efficiency*0.05
 
 			if(air2.temperature > air1.temperature)
-				air2.temperature = air2.temperature - energy_transfer/air2_heat_capacity
-				air1.temperature = air1.temperature + heat/air1_heat_capacity
+				air2.set_temperature(air2.temperature - energy_transfer/air2_heat_capacity)
+				air1.set_temperature(air1.temperature + heat/air1_heat_capacity)
 			else
-				air2.temperature = air2.temperature + heat/air2_heat_capacity
-				air1.temperature = air1.temperature - energy_transfer/air1_heat_capacity
+				air2.set_temperature(air2.temperature + heat/air2_heat_capacity)
+				air1.set_temperature(air1.temperature - energy_transfer/air1_heat_capacity)
 
 			//Transfer the air
 			circ1.air2.merge(air1)

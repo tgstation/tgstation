@@ -173,7 +173,7 @@ Deuterium-tritium fusion: 4.5 x 10^7 K
 	if(mega_energy > 0 && held_plasma_moles)
 		var/heat_capacity = held_plasma.heat_capacity//200 * number of plasma moles
 		if(heat_capacity > 0.0003)	//formerly MINIMUM_HEAT_CAPACITY
-			held_plasma.temperature = (heat_capacity + mega_energy * 35000)/heat_capacity
+			held_plasma.set_temperature((heat_capacity + mega_energy * 35000)/heat_capacity)
 
 	//if there is too much plasma in the field, lose some
 	/*if( held_plasma.toxins > (MOLES_CELLSTANDARD * 7) * (50 / field_strength) )
@@ -184,11 +184,11 @@ Deuterium-tritium fusion: 4.5 x 10^7 K
 		//world << "lost [loss_ratio*100]% of held plasma"
 		//
 		var/datum/gas_mixture/plasma_lost = new
-		plasma_lost.temperature = held_plasma.temperature
+		plasma_lost.set_temperature(held_plasma.temperature)
 		//
-		plasma_lost.set_gas(PLASMA, held_plasma_moles * loss_ratio, 0)
+		plasma_lost.set_gas(PLASMA, held_plasma_moles * loss_ratio)
 		//plasma_lost.update_values()
-		held_plasma.adjust_gas(PLASMA, -held_plasma_moles * loss_ratio, 0)
+		held_plasma.adjust_gas(PLASMA, -held_plasma_moles * loss_ratio)
 		//held_plasma.update_values()
 		//
 		environment.merge(plasma_lost)

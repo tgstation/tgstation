@@ -104,8 +104,8 @@ obj/machinery/atmospherics/trinary/filter/process()
 				filtered_out = null
 
 		for(var/gasid in gases_to_remove)
-			filtered_out.adjust_gas(gasid, removed.gases[gasid], 0)
-			removed.set_gas(gasid, 0, 0)
+			filtered_out.adjust_gas(gasid, removed.gases[gasid])
+			removed.set_gas(gasid, 0)
 
 		air2.merge(filtered_out)
 		air3.merge(removed)

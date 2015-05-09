@@ -151,9 +151,9 @@
 		plasma_used = breath.gases[PLASMA]/6
 		H.oxygen_alert = 0
 
-	breath.adjust_gas(PLASMA, -plasma_used, 0)
-	breath.adjust_gas(NITROGEN, -nitrogen_used, 0)
-	breath.adjust_gas(CARBON_DIOXIDE, plasma_used, 0)
+	breath.adjust_gas(PLASMA, -plasma_used)
+	breath.adjust_gas(NITROGEN, -nitrogen_used)
+	breath.adjust_gas(CARBON_DIOXIDE, plasma_used)
 
 	//CO2 does not affect failed_last_breath. So if there was enough oxygen in the air but too much co2, this will hurt you, but only once per 4 ticks, instead of once per tick.
 	if(CO2_pp > safe_co2_max)

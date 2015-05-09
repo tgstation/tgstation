@@ -307,15 +307,15 @@ datum/gas_mixture/proc/zburn(var/turf/T, force_burn)
 		for(var/gasid in gases)
 			var/datum/gas/current_gas = get_gas_by_id(gasid)
 			if(current_gas.isOxidiser())
-				adjust_gas(current_gas.gas_id, -gases[gasid] * used_reactants_ratio * current_gas.fuel_multiplier, 0, 0) //take the cost of oxidiser
+				adjust_gas(current_gas.gas_id, -gases[gasid] * used_reactants_ratio * current_gas.fuel_multiplier, 0) //take the cost of oxidiser
 
 		//fuels
 		for(var/gasid in gases)
 			var/datum/gas/current_gas = get_gas_by_id(gasid)
 			if(current_gas.isFuel())
-				adjust_gas(current_gas.gas_id, -gases[gasid] * used_fuel_ratio * used_reactants_ratio * current_gas.fuel_multiplier, 0, 0) //take the cost of fuel
+				adjust_gas(current_gas.gas_id, -gases[gasid] * used_fuel_ratio * used_reactants_ratio * current_gas.fuel_multiplier, 0) //take the cost of fuel
 
-		adjust_gas(CARBON_DIOXIDE, max(2 * total_fuel, 0), 0)
+		adjust_gas(CARBON_DIOXIDE, max(2 * total_fuel, 0))
 
 		if(can_use_turf)
 			if(T.getFireFuel()>0)

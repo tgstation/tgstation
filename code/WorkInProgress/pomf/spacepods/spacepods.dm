@@ -230,8 +230,8 @@
 
 /obj/spacepod/proc/add_cabin()
 	cabin_air = new
-	cabin_air.temperature = T20C
-	cabin_air.volume = 200
+	cabin_air.set_temperature(T20C)
+	cabin_air.set_volume(200)
 	cabin_air.adjust_gas(OXYGEN, O2STANDARD*cabin_air.volume/(R_IDEAL_GAS_EQUATION*cabin_air.temperature))
 	cabin_air.adjust_gas(NITROGEN, N2STANDARD*cabin_air.volume/(R_IDEAL_GAS_EQUATION*cabin_air.temperature))
 	return cabin_air
@@ -368,7 +368,7 @@
 	process(var/obj/spacepod/spacepod)
 		if(spacepod.cabin_air && spacepod.cabin_air.volume > 0)
 			var/delta = spacepod.cabin_air.temperature - T20C
-			spacepod.cabin_air.temperature -= max(-10, min(10, round(delta/4,0.1)))
+			spacepod.cabin_air.set_temperature( spacepod.cabin_air.temperature - max(-10, min(10, round(delta/4,0.1))))
 		return
 
 /datum/global_iterator/pod_tank_give_air
