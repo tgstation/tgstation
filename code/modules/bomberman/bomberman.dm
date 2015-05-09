@@ -845,6 +845,11 @@ var/global/list/arenas = list()
 			sleep(2)	//giving the game some time to process to avoid unbearable lag spikes when we create a large arena, plus it looks cool.
 			pencil.y++
 
+		pencil.x = x
+		pencil.y = y+h
+		T = pencil.loc
+		T.maptext = name
+
 		qdel(pencil)	//RIP sweet prince
 
 		for (var/datum/bomberman_spawn/S in spawns)	//removing the soft walls near the spawns
@@ -1120,6 +1125,7 @@ var/global/list/arenas = list()
 			T.ChangeTurf(/turf/space)
 		else
 			T.ChangeTurf(/turf/simulated/floor/plating)
+		T.maptext = null
 	turfs = list()
 	arenas -= src
 	return

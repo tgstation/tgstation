@@ -819,8 +819,6 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 				following = null
 
 	if(href_list["jumptoarenacood"])
-		world << "gotcha"
-
 		var/x = text2num(href_list["X"])
 		var/y = text2num(href_list["Y"])
 		var/z = text2num(href_list["Z"])
