@@ -1,6 +1,0 @@
-author: Paprka
-
-delete-after: True
-
-changes: 
-  - tweak: "Cargo packages are now delivered with their manifests taped to the outside. Click on them with an open hand to remove them."
