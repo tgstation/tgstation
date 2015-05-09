@@ -6,8 +6,10 @@ var/global/list/obj/machinery/atmospherics/atmos_machines = list()
 	schedule_interval = 20 // every 2 seconds
 
 /datum/controller/process/pipenet/doWork()
-	for(var/obj/machinery/atmospherics/atmosmachinery in atmos_machines)
-		ASSERT(istype(atmosmachinery))
+	//world << atmos_machines.len
+	for(var/obj/machinery/atmosmachinery in atmos_machines)
+		//world << "processing [atmosmachinery]"
+		ASSERT(istype(atmosmachinery) || istype(atmosmachinery, /obj/machinery/portable_atmospherics))
 		if(!atmosmachinery.disposed)
 			if(atmosmachinery.process())
 				scheck()

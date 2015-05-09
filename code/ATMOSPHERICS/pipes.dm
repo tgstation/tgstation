@@ -12,6 +12,9 @@
 // Insulated pipes
 #define IPIPE_COLOR_RED   PIPE_COLOR_RED
 #define IPIPE_COLOR_BLUE  "#4285F4"
+/obj/machinery/atmospherics/pipe/process()
+	. = ..()
+	atmos_machines.Remove(src)
 
 /obj/machinery/atmospherics/pipe
 	var/datum/gas_mixture/air_temporary //used when reconstructing a pipeline that broke
@@ -153,7 +156,9 @@
 /obj/machinery/atmospherics/pipe/simple/process()
 	if(!parent) //This should cut back on the overhead calling build_network thousands of times per cycle
 		. = ..()
+	var/dicks = (src in atmos_machines)
 	atmos_machines.Remove(src)
+	if(dicks) warning("Removing [src.type] from atmos machines")
 
 	/*if(!node1)
 		parent.mingle_with_turf(loc, volume)
@@ -491,7 +496,9 @@
 /obj/machinery/atmospherics/pipe/manifold/process()
 	if(!parent)
 		. = ..()
+	var/dicks = (src in atmos_machines)
 	atmos_machines.Remove(src)
+	if(dicks) warning("Removing [src.type] from atmos machines")
 	/*
 	if(!node1)
 		parent.mingle_with_turf(loc, 70)
@@ -725,7 +732,9 @@
 /obj/machinery/atmospherics/pipe/manifold4w/process()
 	if(!parent)
 		. = ..()
+	var/dicks = (src in atmos_machines)
 	atmos_machines.Remove(src)
+	if(dicks) warning("Removing [src.type] from atmos machines")
 	/*
 	if(!node1)
 		parent.mingle_with_turf(loc, 70)
