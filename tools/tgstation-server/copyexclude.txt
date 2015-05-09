@@ -1,4 +1,4 @@
-//This is a with a list of files to exclude from copying. See xcopy's documentation for /exclude for more info.
+//This is a list of files to exclude from copying. See xcopy's documentation for /exclude for more info.
 //
 
 gitrepo\config\

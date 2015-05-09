@@ -47,7 +47,7 @@ Usage:
 	To run the server, just run start server.bat
 		It will automatically redirect the runtimes to data/logs/runtimes/runtime-YYYY-MM-DD.log.
 			(Note: It will not automatically roll them over, but every time it crashes or stops it will have a new log file.)
-		When it starts dreamdaemon, it instructs byond to close down dreamdaemon if the world stops for any reason, this includes hitting the stop button, dreamdaemon shutting the world down because of too many runtimes/infinate loops.
+		When it starts dreamdaemon, it instructs byond to close down dreamdaemon if the world stops for any reason, this includes hitting the stop button, dreamdaemon shutting the world down because of too many runtimes/infinite loops.
 		If dreamdaemon ever stops while the start server script is running, the script will restart it automatically.
 			(Note: The script can not detect hangs or lockups)
 	

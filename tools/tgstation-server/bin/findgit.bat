@@ -1,13 +1,13 @@
 @echo off
-rem check if git is already in path
+REM check if git is already in path
 git --version >nul 2>nul && goto :eof
 
-rem now lets try our override.
+REM now lets try our override.
 set PATH=%PATH%;%GIT_LOCATION_PATH%
 @git --version >nul 2>nul && goto :eof
 
-rem credit to sschuberth@http://stackoverflow.com/questions/8507368/finding-the-path-where-git-is-installed-on-a-windows-system
-rem Read the Git for Windows installation path from the Registry.
+REM credit to sschuberth@http://stackoverflow.com/questions/8507368/finding-the-path-where-git-is-installed-on-a-windows-system
+REM Read the Git for Windows installation path from the Registry.
 
 :REG_QUERY
 for /f "skip=2 delims=: tokens=1*" %%a in ('reg query "HKLM\SOFTWARE%WOW%\Microsoft\Windows\CurrentVersion\Uninstall\Git_is1" /v InstallLocation 2^> nul') do (

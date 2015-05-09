@@ -54,7 +54,17 @@ mklink /d gamecode\b\cfg ..\..\gamedata\cfg
 
 mklink /d gamefolder gamecode\a
 
-echo done. You may now run the updater to build the code, than watchdog to launch the server.
+echo Compiling for the first time.
+
+echo Compiling change log.
+cd gamecode\a
+call python tools\ss13_genchangelog.py html/changelog.html html/changelogs
+cd ..\..
+echo Compiling game.
+call bin\build.bat
+if %DM_EXIT% neq 0 echo DM compile failed.
+
+echo Done. You may start the server using the start server program or change the game config in gamedata\config 
 pause
 
 :ABORT
