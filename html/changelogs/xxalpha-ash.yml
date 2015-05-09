@@ -1,7 +1,0 @@
-author: xxalpha
-
-delete-after: True
-
-changes:
-  - bugfix: "Fixed smoking pipe messages. Fixed emptying a smoking pipe with nothing in it."
-
