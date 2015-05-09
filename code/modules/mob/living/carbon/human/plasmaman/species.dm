@@ -17,6 +17,8 @@
 	heat_level_2 = 400  // Heat damage level 2 above this point.
 	heat_level_3 = 500  // Heat damage level 3 above this point.
 
+	species_toxic_to_breathe = list()
+
 /datum/species/plasmaman/handle_speech(message, mob/living/carbon/human/H)
 	return ..(replacetext(message, "s", stutter("ss")), H)
 
