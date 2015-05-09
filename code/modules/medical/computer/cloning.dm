@@ -1,11 +1,14 @@
+#define CLONEPODRANGE 7
 /obj/machinery/computer/cloning
 	name = "Cloning console"
 	icon = 'icons/obj/computer.dmi'
 	icon_state = "dna"
 	circuit = "/obj/item/weapon/circuitboard/cloning"
+	var/list/links = list() //list of machines connected to this cloning console.
 	req_access = list(access_heads) //Only used for record deletion right now.
 	var/obj/machinery/dna_scannernew/scanner = null //Linked scanner. For scanning.
-	var/obj/machinery/clonepod/pod1 = null //Linked cloning pod.
+	//var/obj/machinery/species_modifier/species_mod = null //linked Species Modifier. For handling species.
+	var/obj/machinery/cloning/clonepod/pod1 = null //Linked cloning pod.
 	var/temp = ""
 	var/scantemp = "Scanner unoccupied"
 	var/menu = 1 //Which menu screen to display
@@ -22,11 +25,33 @@
 		updatemodules()
 		return
 	return
+	
+/obj/machinery/computer/cloning/initialize()
+	src.pod1 = findcloner()
+	
+/obj/machinery/computer/cloning/multitool_menu(var/mob/user, var/obj/item/device/multitool/P)
+	return ""
+		
+/obj/machinery/computer/cloning/canLink(var/obj/O)
+	return (istype(O,/obj/machinery/cloning) && get_dist(src,O) < CLONEPODRANGE)
+	
+/obj/machinery/computer/cloning/isLinkedWith(var/obj/O)
+	return O != null && O in links
 
+/obj/machinery/computer/cloning/getLink(var/idx)
+	return (idx >= 1 && idx <= links.len) ? links[idx] : null
+
+/obj/machinery/computer/cloning/linkWith(var/mob/user, var/obj/O, var/link/context)
+	if(istype(O, /obj/machinery/cloning/clonepod))
+		pod1 = O
+		return 1
+/*	if(istype(O, /obj/machinery/cloning/species_modifier))
+		species_mod = O
+		return 1
+*/
+		
 /obj/machinery/computer/cloning/proc/updatemodules()
 	src.scanner = findscanner()
-	src.pod1 = findcloner()
-
 	if (!isnull(src.pod1))
 		src.pod1.connected = src // Some variable the pod needs
 
@@ -47,16 +72,14 @@
 	return scannerf
 
 /obj/machinery/computer/cloning/proc/findcloner()
-	var/obj/machinery/clonepod/podf = null
+	var/obj/machinery/cloning/clonepod/pod_found = null
+	for (pod_found in orange(src, CLONEPODRANGE))
+		if(pod_found.connected)
+			continue
+		pod_found.connected = src
+		return pod_found
 
-	for(dir in cardinal)
-
-		podf = locate(/obj/machinery/clonepod, get_step(src, dir))
-
-		if (!isnull(podf))
-			break
-
-	return podf
+#undef CLONEPODRANGE
 
 /obj/machinery/computer/cloning/attackby(obj/item/W as obj, mob/user as mob)
 	if (istype(W, /obj/item/weapon/disk/data)) //INSERT SOME DISKETTES
@@ -66,6 +89,8 @@
 			user << "You insert [W]."
 			src.updateUsrDialog()
 			return
+	if(ismultitool(W))
+		update_multitool_menu(user)
 	else
 		..()
 	return
