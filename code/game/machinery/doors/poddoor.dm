@@ -6,6 +6,7 @@
 	var/id = 1
 	var/auto_close = 0 // Time in seconds to automatically close when opened, 0 if it doesn't.
 	sub_door = 1
+	explosion_block = 3
 
 /obj/machinery/door/poddoor/preopen
 	icon_state = "open"
@@ -81,6 +82,29 @@
 	sleep(5)
 
 	operating = 0
+
+/obj/machinery/door/poddoor/ex_act(severity, target)
+	switch(severity)
+		if(1.0)
+			if(prob(80))
+				qdel(src)
+			else
+				var/datum/effect/effect/system/spark_spread/s = new /datum/effect/effect/system/spark_spread
+				s.set_up(2, 1, src)
+				s.start()
+		if(2.0)
+			if(prob(20))
+				qdel(src)
+			else
+				var/datum/effect/effect/system/spark_spread/s = new /datum/effect/effect/system/spark_spread
+				s.set_up(2, 1, src)
+				s.start()
+
+		if(3.0)
+			if(prob(80))
+				var/datum/effect/effect/system/spark_spread/s = new /datum/effect/effect/system/spark_spread
+				s.set_up(2, 1, src)
+				s.start()
 
 
 
