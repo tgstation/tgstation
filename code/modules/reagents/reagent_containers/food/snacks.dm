@@ -159,9 +159,11 @@
 			return
 		else
 			return fork.load_food(src, user)
+
 	if((slices_num <= 0 || !slices_num) || !slice_path)
 		return 0
-	if(W.w_class <= 2 && istype(src, /obj/item/weapon/reagent_containers/food/snacks/sliceable) && W.is_sharp() < 0.8) //Make sure the item is valid to attempt slipping shit into it
+
+	if(W.w_class <= 2 && W.is_sharp() < 0.8) //Make sure the item is valid to attempt slipping shit into it
 		if(!iscarbon(user))
 			return 0
 		user << "<span class='notice'>You slip [W] inside [src].</span>"
@@ -188,8 +190,14 @@
 	var/reagents_per_slice = reagents.total_volume/slices_num //Figure out how much reagents each slice inherits (losing slices loses reagents)
 	for(var/i = 1 to (slices_num - slices_lost)) //Transfer those reagents
 		var/obj/slice = new slice_path(src.loc)
+		if(istype(src, /obj/item/weapon/reagent_containers/food/snacks/customizable)) //custom sliceable foods have overlays we need to apply
+			var/obj/item/weapon/reagent_containers/food/snacks/customizable/C = src
+			var/obj/item/weapon/reagent_containers/food/snacks/customizable/S = slice
+			S.name = "[C.name][S.name]"
+			S.filling.color = C.filling.color
+			S.overlays += S.filling
 		reagents.trans_to(slice, reagents_per_slice)
-	del(src) //So long and thanks for all the fish
+	qdel(src) //So long and thanks for all the fish
 	return 1
 
 /obj/item/weapon/reagent_containers/food/snacks/Destroy()
@@ -2340,6 +2348,7 @@
 	name = "cheese wheel"
 	desc = "A big wheel of delicious Cheddar."
 	icon_state = "cheesewheel"
+	filling_color = "#FFCC33"
 	slice_path = /obj/item/weapon/reagent_containers/food/snacks/cheesewedge
 	slices_num = 5
 	New()
@@ -2351,6 +2360,7 @@
 	name = "cheese wedge"
 	desc = "A wedge of delicious Cheddar. The cheese wheel it was cut from can't have gone far."
 	icon_state = "cheesewedge"
+	filling_color = "#FFCC33"
 	bitesize = 2
 
 /obj/item/weapon/reagent_containers/food/snacks/sliceable/birthdaycake

@@ -213,6 +213,16 @@
 /obj/item/weapon/reagent_containers/food/snacks/customizable/cook/bread
 	name = "bread"
 	icon_state = "breadcustom"
+	slice_path = /obj/item/weapon/reagent_containers/food/snacks/customizable/slices/breadslice
+	slices_num = 5
+
+/obj/item/weapon/reagent_containers/food/snacks/customizable/slices/breadslice
+	name = "slice"
+	desc = "Moist and oozing with flavor, just like how bread should be."
+	icon_state = "breadslicecustom"
+	trash = /obj/item/trash/plate
+	bitesize = 2
+	ingMax = 0
 
 /obj/item/weapon/reagent_containers/food/snacks/customizable/cook/pie
 	name = "pie"
@@ -222,6 +232,16 @@
 	name = "cake"
 	desc = "A popular band."
 	icon_state = "cakecustom"
+	slice_path = /obj/item/weapon/reagent_containers/food/snacks/customizable/slices/cakeslicecustom
+	slices_num = 5
+
+/obj/item/weapon/reagent_containers/food/snacks/customizable/slices/cakeslicecustom
+	name = "slice"
+	desc = "Delicious and moist."
+	icon_state = "cakeslicecustom"
+	trash = /obj/item/trash/plate
+	bitesize = 2
+	ingMax = 0
 
 /obj/item/weapon/reagent_containers/food/snacks/customizable/cook/jelly
 	name = "jelly"
