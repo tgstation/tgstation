@@ -244,18 +244,19 @@
 	var/recentlyspawned = 0
 
 /mob/living/simple_animal/hostile/asteroid/hivelord/OpenFire(var/the_target)
-        var/mob/living/simple_animal/hostile/asteroid/hivelordbrood/A = new /mob/living/simple_animal/hostile/asteroid/hivelordbrood(src.loc)
-        A.GiveTarget(target)
-        A.friends = friends
-        A.faction = faction
+	if(!recentlyspawned)
+	var/mob/living/simple_animal/hostile/asteroid/hivelordbrood/A = new /mob/living/simple_animal/hostile/asteroid/hivelordbrood(src.loc)
+	A.GiveTarget(target)
+	A.friends = friends
+	A.faction = faction
+	recentlyspawned = 1
+	spawn(30)
+		recentlyspawned = 0
         return
 
 /mob/living/simple_animal/hostile/asteroid/hivelord/AttackingTarget()
-    if(!recentlyspawned)
+    
         OpenFire()
-        recentlyspawned = 1
-        spawn(30)
-            recentlyspawned = 0
 
 /mob/living/simple_animal/hostile/asteroid/hivelord/death(gibbed)
 	new /obj/item/asteroid/hivelord_core(src.loc)
