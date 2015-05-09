@@ -11,6 +11,7 @@
 	use_power = 1
 	idle_power_usage = 2
 	active_power_usage = 4
+	machine_flags = MULTITOOL_MENU
 
 /obj/machinery/meter/New()
 	..()
@@ -130,10 +131,6 @@
 	</ul>"}
 
 /obj/machinery/meter/attackby(var/obj/item/weapon/W as obj, var/mob/user as mob)
-	if(istype(W, /obj/item/device/multitool))
-		update_multitool_menu(user)
-		return 1
-
 	if (!istype(W, /obj/item/weapon/wrench))
 		return ..()
 

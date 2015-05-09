@@ -26,6 +26,8 @@
 	var/area_uid
 	var/radio_filter_out
 	var/radio_filter_in
+	
+	machine_flags = MULTITOOL_MENU
 
 /obj/machinery/atmospherics/unary/vent_scrubber/New()
 	..()
@@ -282,9 +284,6 @@
 	return !welded
 
 /obj/machinery/atmospherics/unary/vent_scrubber/attackby(var/obj/item/weapon/W as obj, var/mob/user as mob)
-	if(istype(W, /obj/item/device/multitool))
-		update_multitool_menu(user)
-		return 1
 	if(istype(W, /obj/item/weapon/weldingtool))
 		var/obj/item/weapon/weldingtool/WT = W
 		if (WT.remove_fuel(0,user))

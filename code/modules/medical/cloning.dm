@@ -26,10 +26,10 @@
 	var/resource_efficiency = 1
 	var/id_tag = "clone_pod"
 
-	machine_flags = EMAGGABLE | SCREWTOGGLE | CROWDESTROY
+	machine_flags = EMAGGABLE | SCREWTOGGLE | CROWDESTROY | MULTITOOL_MENU
 
 	l_color = "#7BF9FF"
-	
+
 /obj/machinery/cloning/clonepod/multitool_menu(var/mob/user, var/obj/item/device/multitool/P)
 	return ""
 
@@ -343,6 +343,9 @@
 
 //Let's unlock this early I guess.  Might be too early, needs tweaking.
 /obj/machinery/cloning/clonepod/attackby(obj/item/weapon/W as obj, mob/user as mob)
+	. = ..()
+	if(.)
+		return .
 	if (istype(W, /obj/item/weapon/card/id)||istype(W, /obj/item/device/pda))
 		if (!src.check_access(W))
 			user << "<span class='warning'>Access Denied.</span>"
@@ -358,10 +361,6 @@
 		user.drop_item(W)
 		qdel(W)
 		return
-	if(ismultitool(W))
-		update_multitool_menu(user)
-	else
-		..()
 
 //Put messages in the connected computer's temp var for display.
 /obj/machinery/cloning/clonepod/proc/connected_message(var/message)

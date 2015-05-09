@@ -29,18 +29,20 @@
 
 	var/radio_filter_out
 	var/radio_filter_in
+	
+	machine_flags = MULTITOOL_MENU
 
-	on
-		on = 1
-		icon_state = "out"
+/obj/machinery/atmospherics/unary/vent_pump/on
+	on = 1
+	icon_state = "out"
 
-	siphon
-		pump_direction = 0
-		icon_state = "off"
+/obj/machinery/atmospherics/unary/vent_pump/siphon
+	pump_direction = 0
+	icon_state = "off"
 
-		on
-			on = 1
-			icon_state = "in"
+/obj/machinery/atmospherics/unary/vent_pump/siphon/on
+	on = 1
+	icon_state = "in"
 
 /obj/machinery/atmospherics/unary/vent_pump/New()
 	..()
@@ -337,9 +339,6 @@
 		else
 			user << "<span class='notice'>You need more welding fuel to complete this task.</span>"
 			return 1
-	if(istype(W, /obj/item/device/multitool))
-		update_multitool_menu(user)
-		return 1
 	if (!istype(W, /obj/item/weapon/wrench))
 		return ..()
 	if (!(stat & NOPOWER) && on)

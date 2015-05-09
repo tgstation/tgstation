@@ -33,7 +33,7 @@
 	ghost_read=0
 	ghost_write=0
 
-	machine_flags = EMAGGABLE
+	machine_flags = EMAGGABLE | MULTITOOL_MENU
 
 /obj/machinery/door_control/attack_ai(mob/user as mob)
 	src.add_hiddenprint(user)
@@ -134,13 +134,12 @@
 	return src.attack_hand(user)
 
 /obj/machinery/driver_button/attackby(obj/item/weapon/W, mob/user as mob)
+	. = ..()
+	if(.)
+		return .
 
 	if(istype(W, /obj/item/device/detective_scanner))
 		return
-
-	if(istype(W, /obj/item/device/multitool))
-		update_multitool_menu(user)
-		return 1
 
 	if(istype(W, /obj/item/weapon/wrench))
 		playsound(get_turf(src), 'sound/items/Ratchet.ogg', 50, 1)

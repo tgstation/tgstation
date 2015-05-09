@@ -184,7 +184,7 @@ var/global/loopModeNames=list(
 
 	var/state_base = "jukebox2"
 
-	machine_flags = WRENCHMOVE | FIXED2WORK | EMAGGABLE
+	machine_flags = WRENCHMOVE | FIXED2WORK | EMAGGABLE | MULTITOOL_MENU
 	mech_flags = MECH_SCAN_FAIL
 	emag_cost = 0 // because fun/unlimited uses.
 
@@ -353,10 +353,9 @@ var/global/loopModeNames=list(
 
 
 /obj/machinery/media/jukebox/attackby(obj/item/W, mob/user)
-	if(istype(W, /obj/item/device/multitool))
-		update_multitool_menu(user)
-		return 1
-	..()
+	. = ..()
+	if(.)
+		return .
 	if(istype(W,/obj/item/weapon/card/id))
 		if(!selected_song || screen!=JUKEBOX_SCREEN_PAYMENT)
 			visible_message("<span class='notice'>The machine buzzes.</span>","<span class='warning'>You hear a buzz.</span>")

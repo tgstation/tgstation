@@ -580,6 +580,10 @@ Class Procs:
 			else
 				return -1
 
+	if(ismultitool(O) && machine_flags & MULTITOOL_MENU)
+		update_multitool_menu(user)
+		return 1
+
 	if(!anchored && machine_flags & FIXED2WORK)
 		return user << "<span class='warning'>\The [src] must be anchored first!</span>"
 
