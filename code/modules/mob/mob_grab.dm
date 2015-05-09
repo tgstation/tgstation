@@ -191,6 +191,9 @@
 
 	return 1
 
+/obj/item/weapon/grab/attack_self(mob/user)
+	s_click(hud)
+
 
 /obj/item/weapon/grab/attack(mob/M, mob/user)
 	if(!affecting)
