@@ -623,6 +623,52 @@
 	desc = "Used for sweeping, and flying into the night while cackling. Black cat not included."
 	icon = 'icons/obj/wizard.dmi'
 	icon_state = "broom"
+	item_state = "broom0"
+	flags = FPRINT | TWOHANDABLE
+
+/obj/item/weapon/staff/broom/update_wield(mob/user)
+	..()
+	item_state = "broom[wielded ? 1 : 0]"
+	force = wielded ? 5 : 3
+	attack_verb = wielded ? list("rammed into", "charged at") : list("bludgeoned", "whacked", "cleaned")
+	if(user)
+		user.update_inv_l_hand()
+		user.update_inv_r_hand()
+		if(user.mind in ticker.mode.wizards)
+			user.flying = wielded ? 1 : 0
+			if(wielded)
+				user << "<span class='notice'>You hold \the [src] between your legs.</span>"
+				user.say("QUID 'ITCH")
+				animate(user, pixel_y = pixel_y + 10 , time = 10, loop = 1, easing = SINE_EASING)
+			else
+				animate(user, pixel_y = pixel_y + 10 , time = 1, loop = 1)
+				animate(user, pixel_y = pixel_y, time = 10, loop = 1, easing = SINE_EASING)
+				animate(user)
+		else
+			if(wielded)
+				user << "<span class='notice'>You hold \the [src] between your legs.</span>"
+
+/obj/item/weapon/staff/broom/attackby(var/obj/O, mob/user)
+	if(istype(O, /obj/item/clothing/mask/horsehead))
+		new/obj/item/weapon/staff/broom/horsebroom(get_turf(src))
+		user.u_equip(O)
+		qdel(O)
+		qdel(src)
+		return
+	..()
+
+/obj/item/weapon/staff/broom/horsebroom
+	name = "broomstick horse"
+	desc = "Saddle up!"
+	icon = 'icons/obj/wizard.dmi'
+	icon_state = "horsebroom"
+	item_state = "horsebroom0"
+
+/obj/item/weapon/staff/broom/horsebroom/update_wield(mob/user)
+	..()
+	item_state = "horsebroom[wielded ? 1 : 0]"
+
+
 
 /obj/item/weapon/staff/stick
 	name = "stick"

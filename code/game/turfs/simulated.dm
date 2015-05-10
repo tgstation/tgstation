@@ -73,6 +73,8 @@
 						H.Stun(4)
 						H.Weaken(5)
 
+		if(M.flying)	return ..()
+
 		switch (src.wet)
 			if(1)
 				if(istype(M, /mob/living/carbon/human)) // Added check since monkeys don't have shoes

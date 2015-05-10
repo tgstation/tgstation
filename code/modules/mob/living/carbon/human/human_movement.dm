@@ -8,6 +8,9 @@
 
 	//(VG EDIT disabling for now) handle_embedded_objects() //Moving with objects stuck in you can cause bad times.
 
+	if(flying)
+		return -1
+
 	if(reagents.has_reagent("hyperzine"))
 		if(dna.mutantrace == "slime")
 			tally *= 2
@@ -67,11 +70,19 @@
 		skate_bonus = max(skate_bonus, dispenser.speed_bonus)//if the player is carrying multiple BBD for some reason, he'll benefit from the speed bonus of the most upgraded one
 	tally = tally - skate_bonus + (6 * disease_slow)
 
+	if(flying)
+		return -1
+
 	return (tally+config.human_delay)
 
 /mob/living/carbon/human/Process_Spacemove(var/check_drift = 0)
 	//Can we act
 	if(restrained())	return 0
+
+	//Are we flying?
+	if(flying)
+		inertia_dir = 0
+		return 1
 
 	//Do we have a working jetpack
 	if(istype(back, /obj/item/weapon/tank/jetpack))

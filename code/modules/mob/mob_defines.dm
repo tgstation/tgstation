@@ -124,6 +124,7 @@
 	var/drowsyness = 0.0//Carbon
 	var/dizziness = 0//Carbon
 	var/jitteriness = 0//Carbon
+	var/flying = 0//Carbon
 	var/charges = 0.0
 	var/nutrition = 400.0//Carbon
 
