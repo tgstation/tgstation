@@ -159,7 +159,7 @@ datum/reagent/blob/morphine/reaction_mob(var/mob/living/M as mob, var/method=TOU
 		if(show_message)
 			M << "<span class = 'userdanger'>The blob squirts something at you, and you feel numb!</span>"
 		if(M.reagents)
-			M.reagents.add_reagent("morphine", 16)
+			M.reagents.add_reagent("morphine", 5)
 
 datum/reagent/blob/spacedrugs
 	name = "Hallucinogenic"
