@@ -305,15 +305,15 @@
 										contents.Add(t.air_contents.total_moles)	//Someone messed with the tank and put unknown gasses
 										continue					//in it, so we're going to believe the tank is what it says it is
 
-									if(t.air_contents.get_moles_by_id(breathes))
+									if(t.air_contents.gases[breathes])
 										var/toxic_found
 										for(var/toxicid in C.toxic_to_breathe)
-											if(t.air_contents.get_moles_by_id(toxicid))
+											if(t.air_contents.gases[toxicid])
 												tank_contents.Add(0)
 												toxic_found = 1
 												break
 										if(!toxic_found)
-											tank_contents.Add(t.air_contents.get_moles_by_id(breathes))
+											tank_contents.Add(t.air_contents.gases[breathes])
 
 								else
 									//no tank so we set contents to 0

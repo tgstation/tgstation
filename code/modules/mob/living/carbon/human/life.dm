@@ -550,12 +550,12 @@ var/global/list/organ_damage_overlays = list(
 				breath = location_as_object.handle_internal_lifeform(src, BREATH_MOLES)
 			else if(isturf(loc))
 				var/breath_moles = 0
-				/*if(environment.return_pressure() > ONE_ATMOSPHERE)
+				/*if(environment.pressure > ONE_ATMOSPHERE)
 					// Loads of air around (pressure effect will be handled elsewhere), so lets just take a enough to fill our lungs at normal atmos pressure (using n = Pv/RT)
 					breath_moles = (ONE_ATMOSPHERE*BREATH_VOLUME/R_IDEAL_GAS_EQUATION*environment.temperature)
 				else*/
 					// Not enough air around, take a percentage of what's there to model this properly
-				breath_moles = environment.total_moles()*BREATH_PERCENTAGE
+				breath_moles = environment.total_moles*BREATH_PERCENTAGE
 
 				breath = loc.remove_air(breath_moles)
 
@@ -600,9 +600,9 @@ var/global/list/organ_damage_overlays = list(
 			//testing("Plasmaman [src] leakin'.  coverflags=[cover_flags]")
 			// OH FUCK HE LEAKIN'.
 			// This was OP.
-			//environment.adjust(tx = environment.total_moles()*BREATH_PERCENTAGE) // About one breath's worth. (I know we aren't breathing it out, but this should be about the right amount)
+			//environment.adjust(tx = environment.total_moles*BREATH_PERCENTAGE) // About one breath's worth. (I know we aren't breathing it out, but this should be about the right amount)
 			if(environment)
-				if(environment.total_moles() && (environment.get_moles_by_id(OXYGEN) / environment.total_moles()) >= OXYCONCEN_PLASMEN_IGNITION) //how's the concentration doing?
+				if(environment.total_moles && (environment.gases[OXYGEN] / environment.total_moles) >= OXYCONCEN_PLASMEN_IGNITION) //how's the concentration doing?
 					if(!on_fire)
 						src << "<span class='warning'>Your body reacts with the atmosphere and bursts into flame!</span>"
 					adjust_fire_stacks(0.5)
@@ -640,7 +640,7 @@ var/global/list/organ_damage_overlays = list(
 	if((status_flags & GODMODE) || (flags & INVULNERABLE))
 		return 0
 
-	if(!breath || (breath.total_moles() == 0) || suiciding)
+	if(!breath || (breath.total_moles == 0) || suiciding)
 		if(reagents.has_reagent("inaprovaline"))
 			return 0
 		if(suiciding)
@@ -738,7 +738,7 @@ var/global/list/organ_damage_overlays = list(
 	// Account for massive pressure differences.  Done by Polymorph
 	// Made it possible to actually have something that can protect against high pressure... Done by Errorage. Polymorph now has an axe sticking from his head for his previous hardcoded nonsense!
 
-	var/pressure = environment.return_pressure()
+	var/pressure = environment.pressure
 	var/adjusted_pressure = calculate_affecting_pressure(pressure) //Returns how much pressure actually affects the mob.
 	if(status_flags & GODMODE)	return 1	//godmode
 
@@ -759,7 +759,7 @@ var/global/list/organ_damage_overlays = list(
 		else
 			pressure_alert = -1
 
-	if(environment.get_moles_by_id(PLASMA) > MOLES_PLASMA_VISIBLE)
+	if(environment.gases[PLASMA] > MOLES_PLASMA_VISIBLE)
 		pl_effects()
 	return
 

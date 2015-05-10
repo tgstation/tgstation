@@ -253,7 +253,7 @@
 				var/obj/location_as_object = loc
 				breath = location_as_object.handle_internal_lifeform(src, BREATH_VOLUME)
 			else if(istype(loc, /turf/))
-				var/breath_moles = environment.total_moles()*BREATH_PERCENTAGE
+				var/breath_moles = environment.total_moles*BREATH_PERCENTAGE
 				breath = loc.remove_air(breath_moles)
 
 				// Handle chem smoke effect  -- Doohl
@@ -317,16 +317,16 @@
 	var/N2O_sleep_min = 5
 	var/N2O_emote_min = 0.01
 	var/oxygen_used = 0
-	var/breath_pressure = (breath.total_moles()*R_IDEAL_GAS_EQUATION*breath.temperature)/BREATH_VOLUME
+	var/breath_pressure = (breath.total_moles*R_IDEAL_GAS_EQUATION*breath.temperature)/BREATH_VOLUME
 
 	//Partial pressure of the O2 in our breath
-	var/O2_pp = (breath.get_moles_by_id(OXYGEN)/breath.total_moles())*breath_pressure
+	var/O2_pp = (breath.gases[OXYGEN]/breath.total_moles)*breath_pressure
 	// Same, but for the toxins
-	var/Plasma_pp = (breath.get_moles_by_id(PLASMA)/breath.total_moles())*breath_pressure
+	var/Plasma_pp = (breath.gases[PLASMA]/breath.total_moles)*breath_pressure
 	// And CO2, lets say a PP of more than 10 will be bad (It's a little less really, but eh, being passed out all round aint no fun)
-	var/CO2_pp = (breath.get_moles_by_id(CARBON_DIOXIDE)/breath.total_moles())*breath_pressure
+	var/CO2_pp = (breath.gases[CARBON_DIOXIDE]/breath.total_moles)*breath_pressure
 
-	var/N2O_pp = (breath.get_moles_by_id(NITROUS_OXIDE)/breath.total_moles())*breath_pressure
+	var/N2O_pp = (breath.gases[NITROUS_OXIDE]/breath.total_moles)*breath_pressure
 
 	if(O2_pp < safe_oxygen_min) 			// Too little oxygen
 		if(prob(20))
@@ -335,7 +335,7 @@
 			O2_pp = 0.01
 		var/ratio = safe_oxygen_min/O2_pp
 		adjustOxyLoss(min(5*ratio, 7)) // Don't fuck them up too fast (space only does 7 after all!)
-		oxygen_used = breath.get_moles_by_id(OXYGEN)*ratio/6
+		oxygen_used = breath.gases[OXYGEN]*ratio/6
 		oxygen_alert = max(oxygen_alert, 1)
 	/*else if (O2_pp > safe_oxygen_max) 		// Too much oxygen (commented this out for now, I'll deal with pressure damage elsewhere I suppose)
 		spawn(0) emote("cough")
@@ -345,7 +345,7 @@
 		oxygen_alert = max(oxygen_alert, 1)*/
 	else 									// We're in safe limits
 		adjustOxyLoss(-5)
-		oxygen_used = breath.get_moles_by_id(OXYGEN)/6
+		oxygen_used = breath.gases[OXYGEN]/6
 		oxygen_alert = 0
 
 	breath.adjust_gas(OXYGEN, -oxygen_used)
@@ -366,7 +366,7 @@
 		co2overloadtime = 0
 
 	if(Plasma_pp > safe_toxins_max) // Too much toxins
-		var/plasma_level = breath.get_moles_by_id(PLASMA)
+		var/plasma_level = breath.gases[PLASMA]
 		var/ratio = (plasma_level/safe_toxins_max) * 10
 		//adjustToxLoss(Clamp(ratio, MIN_PLASMA_DAMAGE, MAX_PLASMA_DAMAGE))	//Limit amount of damage toxin exposure can do per second
 		if(wear_mask)
@@ -409,7 +409,7 @@
 	if(hat && istype(hat, /obj/item/clothing/head/helmet/space) && uniform && istype(uniform, /obj/item/clothing/monkeyclothes/space))
 		spaceproof = 1	//quick and dirt cheap. no need for the Life() of monkeys to become as complicated as the Life() of humans. man that's deep.
 
-	var/environment_heat_capacity = environment.heat_capacity()
+	var/environment_heat_capacity = environment.heat_capacity
 	if(istype(get_turf(src), /turf/space))
 		var/turf/heat_turf = get_turf(src)
 		environment_heat_capacity = heat_turf.heat_capacity
@@ -424,7 +424,7 @@
 
 	//Account for massive pressure differences
 
-	var/pressure = environment.return_pressure()
+	var/pressure = environment.pressure
 	var/adjusted_pressure = calculate_affecting_pressure(pressure) //Returns how much pressure actually affects the mob.
 	switch(adjusted_pressure)
 		if(HAZARD_HIGH_PRESSURE to INFINITY)

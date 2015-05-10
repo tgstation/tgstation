@@ -195,7 +195,7 @@ obj/item/projectile/kinetic/New()
 	if(!istype(proj_turf, /turf))
 		return
 	var/datum/gas_mixture/environment = proj_turf.return_air()
-	var/pressure = environment.return_pressure()
+	var/pressure = environment.pressure
 	if(pressure < 50)
 		name = "full strength kinetic force"
 		damage = 30

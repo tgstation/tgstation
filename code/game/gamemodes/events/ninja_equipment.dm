@@ -313,15 +313,15 @@ ________________________________________________________________________________
 			else
 				var/datum/gas_mixture/environment = T.return_air()
 
-				var/pressure = environment.return_pressure()
-				var/total_moles = environment.total_moles()
+				var/pressure = environment.pressure
+				var/total_moles = environment.total_moles
 
 				dat += "Air Pressure: [round(pressure,0.1)] kPa"
 
 				dat += "<ul>"
 				for(var/gasid in environment.gases)
 					var/datum/gas/gas = environment.get_gas_by_id(gasid)
-					dat += "<li>[gas.display_name]: [round(environment.get_moles_by_id(gasid)/total_moles)]%</li>"
+					dat += "<li>[gas.display_name]: [round(environment.gases[gasid]/total_moles)]%</li>"
 
 				dat += "Temperature: [round(environment.temperature-T0C)]&deg;C"
 		if(2)

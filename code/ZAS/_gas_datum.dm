@@ -1,4 +1,5 @@
 var/global/list/gas_datum_list
+var/global/list/gas_specific_heat
 
 /datum/gas
 	var/display_name = ""

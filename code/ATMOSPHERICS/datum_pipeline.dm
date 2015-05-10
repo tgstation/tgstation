@@ -29,7 +29,7 @@
 /datum/pipeline/proc/process()//This use to be called called from the pipe networks
 	if((world.timeofday - last_pressure_check) / 10 >= PRESSURE_CHECK_DELAY)
 		//Check to see if pressure is within acceptable limits
-		var/pressure = air.return_pressure()
+		var/pressure = air.pressure
 		if(pressure > alert_pressure)
 			for(var/obj/machinery/atmospherics/pipe/member in members)
 				if(!member.check_pressure(pressure))
@@ -46,13 +46,11 @@
 
 	for(var/obj/machinery/atmospherics/pipe/member in members)
 		member.air_temporary = new
-		member.air_temporary.volume = member.volume
+		member.air_temporary.set_volume(member.volume)
 
 		member.air_temporary.copy_from(air)
 		member.air_temporary.multiply(member.volume/air.volume)
-		member.air_temporary.temperature = air.temperature
 
-		member.air_temporary.update_values()
 
 /datum/pipeline/proc/build_pipeline(obj/machinery/atmospherics/pipe/base)
 	var/list/possible_expansions = list(base)
@@ -68,6 +66,8 @@
 		base.air_temporary = null
 	else
 		air = new
+
+	air.set_volume(volume)
 
 	while(possible_expansions.len>0)
 		for(var/obj/machinery/atmospherics/pipe/borderline in possible_expansions)
@@ -95,9 +95,6 @@
 				edges += borderline
 
 			possible_expansions -= borderline
-
-	air.volume = volume
-	air.update_values()
 
 /datum/pipeline/proc/network_expand(datum/pipe_network/new_network, obj/machinery/atmospherics/pipe/reference)
 
@@ -127,14 +124,14 @@
 
 /datum/pipeline/proc/mingle_with_turf(turf/simulated/target, mingle_volume)
 	var/datum/gas_mixture/air_sample = air.remove_ratio(mingle_volume/air.volume)
-	air_sample.volume = mingle_volume
+	air_sample.set_volume(mingle_volume)
 
 	if(istype(target) && target.zone)
 		//Have to consider preservation of group statuses
 		var/datum/gas_mixture/turf_copy = new
 
 		turf_copy.copy_from(target.zone.air)
-		turf_copy.volume = target.zone.air.volume //Copy a good representation of the turf from parent group
+		turf_copy.set_volume(target.zone.air.volume) //Copy a good representation of the turf from parent group
 
 		equalize_gases(list(air_sample, turf_copy))
 		air.merge(air_sample)
@@ -160,7 +157,7 @@
 		network.update = 1
 
 /datum/pipeline/proc/temperature_interact(turf/target, share_volume, thermal_conductivity)
-	var/total_heat_capacity = air.heat_capacity()
+	var/total_heat_capacity = air.heat_capacity
 	var/partial_heat_capacity = total_heat_capacity*(share_volume/air.volume)
 
 	if(istype(target, /turf/simulated))
@@ -174,7 +171,7 @@
 				var/heat = thermal_conductivity*delta_temperature* \
 					(partial_heat_capacity*modeled_location.heat_capacity/(partial_heat_capacity+modeled_location.heat_capacity))
 
-				air.temperature -= heat/total_heat_capacity
+				air.set_temperature(air.temperature - heat/total_heat_capacity)
 				modeled_location.temperature += heat/modeled_location.heat_capacity
 
 		else
@@ -183,10 +180,10 @@
 
 			if(modeled_location.zone)
 				delta_temperature = (air.temperature - modeled_location.zone.air.temperature)
-				sharer_heat_capacity = modeled_location.zone.air.heat_capacity()
+				sharer_heat_capacity = modeled_location.zone.air.heat_capacity
 			else
 				delta_temperature = (air.temperature - modeled_location.air.temperature)
-				sharer_heat_capacity = modeled_location.air.heat_capacity()
+				sharer_heat_capacity = modeled_location.air.heat_capacity
 
 			var/self_temperature_delta = 0
 			var/sharer_temperature_delta = 0
@@ -200,12 +197,12 @@
 			else
 				return 1
 
-			air.temperature += self_temperature_delta
+			air.set_temperature(air.temperature + self_temperature_delta)
 
 			if(modeled_location.zone)
-				modeled_location.zone.air.temperature += sharer_temperature_delta/modeled_location.zone.air.group_multiplier
+				modeled_location.zone.air.set_temperature(modeled_location.zone.air.temperature + sharer_temperature_delta/modeled_location.zone.air.group_multiplier)
 			else
-				modeled_location.air.temperature += sharer_temperature_delta
+				modeled_location.air.set_temperature(modeled_location.air.temperature + sharer_temperature_delta)
 
 
 	else
@@ -215,6 +212,6 @@
 			var/heat = thermal_conductivity*delta_temperature* \
 				(partial_heat_capacity*target.heat_capacity/(partial_heat_capacity+target.heat_capacity))
 
-			air.temperature -= heat/total_heat_capacity
+			air.set_temperature( air.temperature - heat/total_heat_capacity)
 	if(network)
 		network.update = 1

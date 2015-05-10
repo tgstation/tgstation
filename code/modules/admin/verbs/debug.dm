@@ -145,7 +145,7 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 
 	for(var/gasid in env.gases)
 		var/datum/gas/gas = env.get_gas_by_id(gasid)
-		t += "[gas.display_name] : [env.get_moles_by_id(gasid)]<br>"
+		t += "[gas.display_name] : [env.gases[gasid]]<br>"
 	usr.show_message(t, 1)
 	feedback_add_details("admin_verb","ASL") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 

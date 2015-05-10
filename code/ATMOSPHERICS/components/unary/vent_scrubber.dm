@@ -126,7 +126,7 @@
 
 	if(scrubbing)
 		if(scrubbing_gases.len)
-			var/transfer_moles = min(1, volume_rate/environment.volume)*environment.total_moles()
+			var/transfer_moles = min(1, volume_rate/environment.volume)*environment.total_moles
 
 			//Take a gas sample
 			var/datum/gas_mixture/removed = loc.remove_air(transfer_moles)
@@ -139,15 +139,13 @@
 				if(!(gasid in scrubbing_gases))
 					continue
 
-				filtered_out.adjust_gas(gasid, removed.get_moles_by_id(gasid), 0) //move to filtered
-				removed.set_gas(gasid, 0, 0) //set to 0
+				filtered_out.adjust_gas(gasid, removed.gases[gasid]) //move to filtered
+				removed.set_gas(gasid, 0) //set to 0
 
 			//Filter it
 
-			filtered_out.temperature = removed.temperature
+			filtered_out.set_temperature(removed.temperature)
 
-			filtered_out.update_values()
-			removed.update_values()
 
 			//Remix the resulting gases
 			air_contents.merge(filtered_out)
@@ -158,10 +156,10 @@
 				network.update = 1
 
 	else //Just siphoning all air
-		if (air_contents.return_pressure()>=50*ONE_ATMOSPHERE)
+		if (air_contents.pressure>=50*ONE_ATMOSPHERE)
 			return
 
-		var/transfer_moles = environment.total_moles()*(volume_rate/environment.volume)
+		var/transfer_moles = environment.total_moles*(volume_rate/environment.volume)
 
 		var/datum/gas_mixture/removed = loc.remove_air(transfer_moles)
 

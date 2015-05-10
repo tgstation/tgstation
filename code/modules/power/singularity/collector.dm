@@ -30,9 +30,9 @@ var/global/list/rad_collectors = list()
 
 /obj/machinery/power/rad_collector/process()
 	if (P)
-		if (P.air_contents.get_moles_by_id(PLASMA) <= 0)
+		if (P.air_contents.gases[PLASMA] <= 0)
 			investigation_log(I_SINGULO,"<font color='red'>out of fuel</font>.")
-			P.air_contents.adjust_gas(PLASMA, -P.air_contents.get_moles_by_id(PLASMA)) //set it to 0
+			P.air_contents.adjust_gas(PLASMA, -P.air_contents.gases[PLASMA]) //set it to 0
 			eject()
 		else if(!active)
 			return
@@ -45,7 +45,7 @@ var/global/list/rad_collectors = list()
 			toggle_power()
 			user.visible_message("<span class='notice'>[user] turns the [src] [active? "on":"off"].</span>", \
 			"<span class='notice'>You turn the [src] [active? "on":"off"].</span>")
-			investigation_log(I_SINGULO,"turned [active?"<font color='green'>on</font>":"<font color='red'>off</font>"] by [user.key]. [P?"Fuel: [round(P.air_contents.get_moles_by_id(PLASMA)/0.29)]%":"<font color='red'>It is empty</font>"].")
+			investigation_log(I_SINGULO,"turned [active?"<font color='green'>on</font>":"<font color='red'>off</font>"] by [user.key]. [P?"Fuel: [round(P.air_contents.gases[PLASMA]/0.29)]%":"<font color='red'>It is empty</font>"].")
 			return
 		else
 			user << "<span class='warning'>The controls are locked!</span>"
@@ -127,7 +127,7 @@ var/global/list/rad_collectors = list()
 
 /obj/machinery/power/rad_collector/proc/receive_pulse(const/pulse_strength)
 	if (P && active)
-		var/power_produced = P.air_contents.get_moles_by_id(PLASMA) * pulse_strength * 3.5 // original was 20, nerfed to 2 now 3.5 should get you about 500kw
+		var/power_produced = P.air_contents.gases[PLASMA] * pulse_strength * 3.5 // original was 20, nerfed to 2 now 3.5 should get you about 500kw
 		add_avail(power_produced)
 		last_power = power_produced
 

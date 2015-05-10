@@ -107,25 +107,25 @@
 
 	for(var/datum/gas_mixture/gas in gases)
 		air_transient_volume += gas.volume
-		var/temp_heatcap = gas.heat_capacity()
+		var/temp_heatcap = gas.heat_capacity
 		total_thermal_energy += gas.temperature*temp_heatcap
 		total_heat_capacity += temp_heatcap
 
 		air_transient.add(gas)
 
-	air_transient.volume = air_transient_volume
+	air_transient.set_volume(air_transient_volume)
 
 	if(air_transient_volume > 0)
 
 		if(total_heat_capacity > 0)
-			air_transient.temperature = total_thermal_energy/total_heat_capacity
+			air_transient.set_temperature(total_thermal_energy/total_heat_capacity)
 
 			//Allow air mixture to react
 			if(air_transient.react())
 				update = 1
 
 		else
-			air_transient.temperature = 0
+			air_transient.set_temperature(0)
 
 		//Update individual gas_mixtures by volume ratio
 		for(var/datum/gas_mixture/gas in gases)
@@ -134,9 +134,6 @@
 			gas.copy_from(air_transient)
 			gas.multiply(volume_ratio)
 
-			gas.update_values()
-
-	air_transient.update_values()
 	return 1
 
 proc/equalize_gases(list/datum/gas_mixture/gases)
@@ -148,7 +145,7 @@ proc/equalize_gases(list/datum/gas_mixture/gases)
 
 	for(var/datum/gas_mixture/gas in gases)
 		total_volume += gas.volume
-		total_thermal_energy += gas.temperature*gas.heat_capacity()
+		total_thermal_energy += gas.temperature*gas.heat_capacity
 
 		total.add(gas)
 
@@ -158,17 +155,16 @@ proc/equalize_gases(list/datum/gas_mixture/gases)
 		//Calculate temperature
 		var/temperature = 0
 
-		if(total.heat_capacity() > 0)
-			temperature = total_thermal_energy/total.heat_capacity()
+		if(total.heat_capacity > 0)
+			temperature = total_thermal_energy/total.heat_capacity
 
 		//Update individual gas_mixtures by volume ratio
 		for(var/gasid in total.gases) //for each gas in the gas mix in our list of gas mixes
-			var/total_gas = total.get_moles_by_id(gasid)
+			var/total_gas = total.gases[gasid]
 			for(var/datum/gas_mixture/gas_mix in gases)
-				gas_mix.set_gas(gasid, total_gas * gas_mix.volume / total_volume, 0)
+				gas_mix.set_gas(gasid, total_gas * gas_mix.volume / total_volume)
 
 		for(var/datum/gas_mixture/gas_mix in gases) //cheaper to set here
-			gas_mix.temperature = temperature
-			gas_mix.update_values()
+			gas_mix.set_temperature(temperature)
 
 	return 1

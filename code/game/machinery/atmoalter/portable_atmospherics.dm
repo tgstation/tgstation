@@ -15,8 +15,9 @@
 	..()
 	machines.Remove(src)
 	atmos_machines |= src
-	air_contents.volume = volume
-	air_contents.temperature = T20C
+
+	air_contents.set_volume(volume)
+	air_contents.set_temperature(T20C)
 
 	return 1
 
@@ -107,7 +108,7 @@
 					var/list/contents_l=list()
 					for(var/gasid in src.air_contents.gases)
 						var/datum/gas/gas = air_contents.get_gas_by_id(gasid)
-						if(gas.gas_flags & AUTO_LOGGING && air_contents.get_moles_by_id(gasid) > 0)
+						if(gas.gas_flags & AUTO_LOGGING && air_contents.gases[gasid] > 0)
 							contents_l += "<span class='danger'>[gas.display_name]</span>"
 					var/contents_str = english_list(contents_l)
 					if(contents_l.len>0)

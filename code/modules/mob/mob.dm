@@ -69,7 +69,7 @@
 	t += {"<span class='warning'> Temperature: [environment.temperature] \n</span>"}
 	for(var/gasid in environment.gases)
 		var/datum/gas/gas = environment.get_gas_by_id(gasid)
-		t += {"<span class='notice'> [gas.display_name]: [environment.get_moles_by_id(gasid)] \n</span>"}
+		t += {"<span class='notice'> [gas.display_name]: [environment.gases[gasid]] \n</span>"}
 	// END AUTOFIX
 	usr.show_message(t, 1)
 

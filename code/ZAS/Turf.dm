@@ -207,8 +207,7 @@
 	if(!air)
 		make_air()
 
-	air.temperature = temperature
-	air.update_values()
+	air.set_temperature(temperature)
 
 	return air
 
@@ -237,9 +236,9 @@
 
 /turf/proc/make_air()
 	air = new/datum/gas_mixture
-	air.temperature = temperature
+	air.set_temperature(temperature)
 	air.group_multiplier = 1
-	air.volume = CELL_VOLUME
+	air.set_volume(CELL_VOLUME)
 	if(starting_gases)
 		air.adjust(starting_gases)
 

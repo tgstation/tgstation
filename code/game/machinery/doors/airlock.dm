@@ -257,7 +257,7 @@
 		var/datum/gas_mixture/napalm = new
 		var/toxinsToDeduce = 35
 		napalm.adjust_gas(PLASMA, toxinsToDeduce)
-		napalm.temperature = 400+T0C
+		napalm.set_temperature(400+T0C)
 		target_tile.assume_air(napalm)
 		spawn (0)
 			target_tile.hotspot_expose(temperature, 400, surfaces=1)

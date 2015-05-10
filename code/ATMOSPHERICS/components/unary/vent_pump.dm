@@ -60,7 +60,7 @@
 
 /obj/machinery/atmospherics/unary/vent_pump/high_volume/New()
 	..()
-	air_contents.volume = 1000
+	air_contents.set_volume(1000)
 
 /obj/machinery/atmospherics/unary/vent_pump/update_icon()
 	if(welded)
@@ -95,7 +95,7 @@
 	if(!loc) return
 
 	var/datum/gas_mixture/environment = loc.return_air()
-	var/environment_pressure = environment.return_pressure()
+	var/environment_pressure = environment.pressure
 
 	if(pump_direction) //internal -> external
 		var/pressure_delta = 10000
@@ -103,7 +103,7 @@
 		if(pressure_checks&1)
 			pressure_delta = min(pressure_delta, (external_pressure_bound - environment_pressure))
 		if(pressure_checks&2)
-			pressure_delta = min(pressure_delta, (air_contents.return_pressure() - internal_pressure_bound))
+			pressure_delta = min(pressure_delta, (air_contents.pressure - internal_pressure_bound))
 
 		if(pressure_delta > 0.1)
 			if(air_contents.temperature > 0)
@@ -121,7 +121,7 @@
 		if(pressure_checks&1)
 			pressure_delta = min(pressure_delta, (environment_pressure - external_pressure_bound))
 		if(pressure_checks&2)
-			pressure_delta = min(pressure_delta, (internal_pressure_bound - air_contents.return_pressure()))
+			pressure_delta = min(pressure_delta, (internal_pressure_bound - air_contents.pressure))
 
 		if(pressure_delta > 0.1)
 			if(environment.temperature > 0)

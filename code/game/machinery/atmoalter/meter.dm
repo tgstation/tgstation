@@ -44,7 +44,7 @@
 		spawn(0) qdel(src)
 		return PROCESS_KILL
 
-	var/env_pressure = environment.return_pressure()
+	var/env_pressure = environment.pressure
 	if(env_pressure <= 0.15*ONE_ATMOSPHERE)
 		icon_state = "meter0"
 	else if(env_pressure <= 1.8*ONE_ATMOSPHERE)
@@ -75,10 +75,10 @@
 			"sigtype" = "status"
 		)
 
-		var/total_moles = environment.total_moles()
+		var/total_moles = environment.total_moles
 		if(total_moles > 0)
 			for(var/gasid in environment.gases)
-				signal.data[gasid] = round(100 * environment.get_moles_by_id(gasid) / total_moles, 0.1)
+				signal.data[gasid] = round(100 * environment.gases[gasid] / total_moles, 0.1)
 		else
 			for(var/gasid in environment.gases)
 				signal.data[gasid] = 0
@@ -90,7 +90,7 @@
 	if (src.target)
 		var/datum/gas_mixture/environment = target.return_air()
 		if(environment)
-			t += "The pressure gauge reads [round(environment.return_pressure(), 0.01)] kPa; [round(environment.temperature,0.01)]K ([round(environment.temperature-T0C,0.01)]&deg;C)"
+			t += "The pressure gauge reads [round(environment.pressure, 0.01)] kPa; [round(environment.temperature,0.01)]K ([round(environment.temperature-T0C,0.01)]&deg;C)"
 		else
 			t += "The sensor error light is blinking."
 	else

@@ -50,9 +50,9 @@ Class Procs:
 
 /zone/New()
 	air_master.add_zone(src)
-	air.temperature = TCMB
+	air.set_temperature(TCMB)
 	air.group_multiplier = 1
-	air.volume = CELL_VOLUME
+	air.set_volume(CELL_VOLUME)
 
 /zone/proc/add(turf/simulated/T)
 #ifdef ZASDBG
@@ -131,10 +131,10 @@ Class Procs:
 	var/gas_message = ""
 	for(var/gasid in air.gases)
 		var/datum/gas/gas = air.get_gas_by_id(gasid)
-		gas_message += "[gas.display_short]: [air.get_moles_by_id(gasid)]"
+		gas_message += "[gas.display_short]: [air.gases[gasid]]"
 	M << gas_message
-	M << "P: [air.return_pressure()] kPa V: [air.volume]L T: [air.temperature]°K ([air.temperature - T0C]°C)"
-	M << "O2 per N2: [(air.get_moles_by_id(NITROGEN) ? air.get_moles_by_id(OXYGEN)/air.get_moles_by_id(NITROGEN) : "N/A")] Moles: [air.total_moles]"
+	M << "P: [air.pressure] kPa V: [air.volume]L T: [air.temperature]°K ([air.temperature - T0C]°C)"
+	M << "O2 per N2: [(air.gases[NITROGEN] ? air.gases[OXYGEN]/air.gases[NITROGEN] : "N/A")] Moles: [air.total_moles]"
 	M << "Simulated: [contents.len] ([air.group_multiplier])"
 	//M << "Unsimulated: [unsimulated_contents.len]"
 	//M << "Edges: [edges.len]"
@@ -147,7 +147,7 @@ Class Procs:
 		else
 			space_edges++
 			space_coefficient += E.coefficient
-			M << "[E:air:return_pressure()]kPa"
+			M << "[E:air:pressure]kPa"
 
 	M << "Zone Edges: [zone_edges]"
 	M << "Space Edges: [space_edges] ([space_coefficient] connections)"

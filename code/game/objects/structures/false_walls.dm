@@ -18,7 +18,7 @@
 		var/cp=0
 		if(T && istype(T) && T.zone)
 			var/datum/gas_mixture/environment = T.return_air()
-			cp = environment.return_pressure()
+			cp = environment.pressure
 		else
 			if(istype(T,/turf/simulated))
 				continue
@@ -32,13 +32,13 @@
 	if(!istype(lT) || !lT.zone)
 		return 0
 	var/datum/gas_mixture/myenv=lT.return_air()
-	var/pressure=myenv.return_pressure()
+	var/pressure=myenv.pressure
 
 	for(var/dir in cardinal)
 		var/turf/simulated/T=get_turf(get_step(loc,dir))
 		if(T && istype(T) && T.zone)
 			var/datum/gas_mixture/environment = T.return_air()
-			var/pdiff = abs(pressure - environment.return_pressure())
+			var/pdiff = abs(pressure - environment.pressure)
 			if(pdiff > FALSEDOOR_MAX_PRESSURE_DIFF)
 				return pdiff
 	return 0

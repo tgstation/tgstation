@@ -58,9 +58,9 @@ obj/machinery/atmospherics/trinary/filter/process()
 	if(!on)
 		return
 
-	var/output_starting_pressure = air3.return_pressure()
+	var/output_starting_pressure = air3.pressure
 
-	if(output_starting_pressure >= target_pressure || air2.return_pressure() >= target_pressure )
+	if(output_starting_pressure >= target_pressure || air2.pressure >= target_pressure )
 		//No need to mix if target is already full!
 		return
 
@@ -80,7 +80,7 @@ obj/machinery/atmospherics/trinary/filter/process()
 		if(!removed)
 			return
 		var/datum/gas_mixture/filtered_out = new
-		filtered_out.temperature = removed.temperature
+		filtered_out.set_temperature(removed.temperature)
 
 		var/list/gases_to_remove
 
@@ -104,8 +104,8 @@ obj/machinery/atmospherics/trinary/filter/process()
 				filtered_out = null
 
 		for(var/gasid in gases_to_remove)
-			filtered_out.adjust_gas(gasid, removed.get_moles_by_id(gasid), 0)
-			removed.set_gas(gasid, 0, 0)
+			filtered_out.adjust_gas(gasid, removed.gases[gasid])
+			removed.set_gas(gasid, 0)
 
 		air2.merge(filtered_out)
 		air3.merge(removed)
