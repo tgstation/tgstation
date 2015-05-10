@@ -76,7 +76,7 @@ proc/explosion(turf/epicenter, devastation_range, heavy_impact_range, light_impa
 		//postpone processing for a bit
 		var/postponeCycles = max(round(devastation_range/8),1)
 		SSlighting.postpone(postponeCycles)
-		SSpower.postpone(postponeCycles)
+		SSmachine.postpone(postponeCycles)
 
 		if(heavy_impact_range > 1)
 			var/datum/effect/system/explosion/E = new/datum/effect/system/explosion()
