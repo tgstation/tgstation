@@ -30,7 +30,7 @@
 
 	else if(istype(W, /obj/item/weapon/wrench) && state == GIRDER_DISPLACED)
 		if (!istype(src.loc, /turf/simulated/floor))
-			usr << "<span class='warning'>A floor must be present to secure the girder!</span>"
+			user << "<span class='warning'>A floor must be present to secure the girder!</span>"
 			return
 		playsound(src.loc, 'sound/items/Ratchet.ogg', 100, 1)
 		user << "<span class='notice'>You start securing the girder...</span>"
@@ -86,14 +86,14 @@
 			qdel(src)
 
 	else if(istype(W, /obj/item/stack/sheet))
-		if (!istype(src.loc, /turf/simulated/floor))
-			usr << "<span class='warning'>A floor must be present to build a false wall!</span>"
-			return
 		if (istype(src.loc, /turf/simulated/wall))
-			usr << "<span class='warning'>There is already a wall present!</span>"
+			user << "<span class='warning'>There is already a wall present!</span>"
+			return
+		if (!istype(src.loc, /turf/simulated/floor))
+			user << "<span class='warning'>A floor must be present to build a false wall!</span>"
 			return
 		if (locate(/obj/structure/falsewall) in src.loc.contents)
-			usr << "<span class='warning'>There is already a false wall present!</span>"
+			user << "<span class='warning'>There is already a false wall present!</span>"
 			return
 
 		var/obj/item/stack/sheet/S = W
@@ -200,7 +200,7 @@
 					qdel(src)
 				return
 
-		add_hiddenprint(usr)
+		add_hiddenprint(user)
 
 	else if(istype(W, /obj/item/pipe))
 		var/obj/item/pipe/P = W
