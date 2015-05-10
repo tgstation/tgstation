@@ -298,12 +298,12 @@
 		user.drop_item(P, src)
 		user << "<span class='notice'>You attach the photo to the piece of paper.</span>"
 	else if(P.is_hot())
-		src.burn_paper(user)
+		src.ashify_item(user)
 		return //no fingerprints, paper is gone
 	add_fingerprint(user)
 	return ..()
 
-/obj/item/proc/burn_paper(mob/user)
+/obj/item/proc/ashify_item(mob/user)
 	var/prot = 0
 	if(ishuman(user))
 		var/mob/living/carbon/human/H = user
@@ -319,7 +319,7 @@
 			user.visible_message( \
 				"<span class='notice'>[user] tries to burn the [src.name], but burns \his hand trying!</span>", \
 				"<span class='warning'>You try to burn the [src.name], but burn your hand trying!</span>")
-			return //you fail before even managing to burn the paper!
+			return //you fail before even managing to burn it!
 	if(prot) //user is human and is protected from fire, let's make them a badass
 		user.visible_message( \
 			"<span class='warning'>[user] holds up the [src.name] and sets it on fire, holding it in \his hand as it burns down to ashes. Damn, \he's cold.</span>", \

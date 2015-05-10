@@ -34,7 +34,7 @@
 		src.color = C.colour //doesn't work with paper hats but I haven't found a way to fix it, who will even notice anyways
 		src.unfolded.color = C.colour
 	else if(I.is_hot())
-		src.burn_paper(user)
+		src.ashify_item(user)
 		return
 	return ..()
 
