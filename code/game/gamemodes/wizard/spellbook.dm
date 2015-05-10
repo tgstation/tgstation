@@ -100,7 +100,7 @@
 		dat += "<A href='byond://?src=\ref[src];spell_choice=knock'>Knock</A> (10)<BR>"
 		dat += "<I>This spell opens nearby doors and does not require wizard garb.</I><BR>"
 
-		dat += "<A href='byond://?src=\ref[src];spell_choice=barnyard'>Curse of the Barnyward</A> (15)<BR>"
+		dat += "<A href='byond://?src=\ref[src];spell_choice=barnyard'>Curse of the Barnyard</A> (15)<BR>"
 		dat += "<I> This Spell dooms any unlucky soul to the life of a barnyard animal. Well not exactly but you still get to laugh at them when they MOO!. It does not require a wizard garb.</I><BR>"
 
 		dat += "<A href='byond://?src=\ref[src];spell_choice=fleshtostone'>Flesh to Stone</A> (60)<BR>"
