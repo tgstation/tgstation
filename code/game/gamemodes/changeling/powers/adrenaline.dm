@@ -17,7 +17,7 @@
 	user.lying = 0
 	user.update_canmove()
 	user.reagents.add_reagent("changelingAdrenaline", 10)
-	user.reagents.add_reagent("changelingAdrenaline2", 3) //For a really quick burst of speed
+	user.reagents.add_reagent("changelingAdrenaline2", 2) //For a really quick burst of speed
 	user.adjustStaminaLoss(-75)
 	feedback_add_details("changeling_powers","UNS")
 	return 1
@@ -25,7 +25,7 @@
 datum/reagent/medicine/changelingAdrenaline
 	name = "Adrenaline"
 	id = "changelingAdrenaline"
-	description = "Reduces stun times. Also deals toxin damage in high amounts."
+	description = "Reduces stun times. Also deals toxin damage at high amounts."
 	color = "#C8A5DC"
 	overdose_threshold = 30
 
