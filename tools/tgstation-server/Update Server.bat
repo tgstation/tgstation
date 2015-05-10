@@ -1,17 +1,17 @@
 @echo off
+@title Server Updater
 call config.bat
 call bin\getcurdate.bat
 call bin\findgit.bat
-
-REM the live update system works by swapping a symlink (gamefolder) between two folders (gamedata\a and gamedata\b). Because file locks and file handles in windows apply to the target of a symbolic link, and not the actual link, byond never stops seeing the old version of the code, until world reboot when it closes the link and reopens it. So we can just update, compile, and switch link location by deleting the old link and making the new one.
-
-
-REM if the first arg to nudge.py is not a channel, it is treated as the "source"
+echo This will handle downloading git, compiling the server, and applying the update.
+echo ready?
+timeout 120
+rem if the first arg to nudge.py is not a channel, it is treated as the "source"
 if not defined UPDATE_LOG_CHANNEL set UPDATE_LOG_CHANNEL="UPDATER"
 
-
-python bot\nudge.py %UPDATE_LOG_CHANNEL% "Update job started" >nul 2>nul
-
+cd bot
+python nudge.py %UPDATE_LOG_CHANNEL% "Update job started" >nul 2>nul
+cd ..
 echo Updating repo
 cd gitrepo
 git branch backup-%CUR_DATE% >nul 2>nul
@@ -19,11 +19,10 @@ git reset --hard
 git pull --force
 if %ERRORLEVEL% neq 0 (
 	echo git pull failed. Aborting update
-	python bot\nudge.py %UPDATE_LOG_CHANNEL% "Git pull failed. Aborting update"
+	python nudge.py %UPDATE_LOG_CHANNEL% "Git pull failed. Aborting update"
 	pause
 	exit /b 1
 )
-@for /f "usebackq" %i in (`git log "--format=%h" "--abbrev-commit" -1`) do set COMMITHASH=%~ni
 cd ..
 @del gamecode\a\updater.temp >nul 2>nul
 @del gamecode\b\updater.temp >nul 2>nul
@@ -55,7 +54,7 @@ if exist gamecode\a\updater.temp (
 echo Copying to the %AB% folder
 
 echo Removing old files
-REM delete the symlinks manually to ensure their targets don't get recursively deleted
+rem delete the symlinks manually to ensure their targets don't get recursively deleted
 rmdir /q gamecode\%AB%\data >nul 2>nul
 rmdir /q gamecode\%AB%\config >nul 2>nul
 rmdir /q gamecode\%AB%\cfg >nul 2>nul
@@ -83,7 +82,7 @@ echo building script.
 call bin\build.bat
 if %DM_EXIT% neq 0 (
 	echo DM compile failed. Aborting.
-	python bot\nudge.py %UPDATE_LOG_CHANNEL% "DM compile failed. Aborting update." >nul 2>nul
+	python nudge.py %UPDATE_LOG_CHANNEL% "DM compile failed Aborting update." >nul 2>nul
 	pause
 	exit /b 1
 )
@@ -94,11 +93,9 @@ if not defined NOWAITUPDATES (
 	echo Ready?
 	pause
 )
-echo Applying the update.
 
 rmdir /q gamefolder
 mklink /d gamefolder gamecode\%AB% >nul
 
-echo done.
-python bot\nudge.py %UPDATE_LOG_CHANNEL% "Update %COMMITHASH% applied and will take effect next round" >nul 2>nul
-pause
+echo Done. The update will automatically take place at round restart.
+timeout 300

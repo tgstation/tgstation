@@ -1,4 +1,5 @@
 @echo off
+@title Server Tools Installer.
 call config.bat
 
 echo This will download the game code from git and install the all the files and folders and symbolic links needed to use the server tools in to the current directory.

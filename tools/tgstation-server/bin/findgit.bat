@@ -28,5 +28,5 @@ set PATH=%GIT%bin;%PATH%
 @git --version >nul 2>nul && goto :eof
 
 echo Git not found. Aborting. If git is installed, set the GIT_LOCATION variable inside config.bat
-pause
+timeout 60
 exit 10

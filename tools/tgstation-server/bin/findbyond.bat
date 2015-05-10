@@ -23,5 +23,5 @@ IF %ERRORLEVEL% NEQ 9009 (
 )
 
 echo byond not found. Aborting. If byond is installed, set the GIT_LOCATION variable inside config.bat
-pause
+timeout 60
 exit 11
