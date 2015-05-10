@@ -91,13 +91,13 @@
 					message_admins("[key_name(usr)] tried to start a gang war. Unfortunately, there were not enough candidates available.")
 					log_admin("[key_name(usr)] failed to start a gang war.")
 			if("13")
-				message_admins("[key_name(usr)] is creating an emergency response team...")
+				message_admins("[key_name(usr)] is creating a Centcom response team...")
 				if(src.makeEmergencyresponseteam())
-					message_admins("[key_name(usr)] created an emergency response team.")
-					log_admin("[key_name(usr)] created an emergency response team.")
+					message_admins("[key_name(usr)] created a Centcom response team.")
+					log_admin("[key_name(usr)] created a Centcom response team.")
 				else
-					message_admins("[key_name_admin(usr)] tried to create an emergency response team. Unfortunately, there were not enough candidates available.")
-					log_admin("[key_name(usr)] failed to create an emergency response team.")
+					message_admins("[key_name_admin(usr)] tried to create a Centcom response team. Unfortunately, there were not enough candidates available.")
+					log_admin("[key_name(usr)] failed to create a Centcom response team.")
 			if("14")
 				message_admins("[key_name(usr)] is creating an abductor team...")
 				if(src.makeAbductorTeam())
@@ -1800,6 +1800,9 @@
 				if(delete_mobs == "Cancel")
 					return
 
+				log_admin("[key_name(usr)] reset the thunderdome to default with delete_mobs==[delete_mobs].", 1)
+				message_admins("<span class='adminnotice'>[key_name_admin(usr)] reset the thunderdome to default with delete_mobs==[delete_mobs].</span>")
+
 				var/area/thunderdome = locate(/area/tdome/arena)
 				if(delete_mobs == "Yes")
 					for(var/mob/living/mob in thunderdome)
@@ -1810,9 +1813,6 @@
 
 				var/area/template = locate(/area/tdome/arena_source)
 				template.copy_contents_to(thunderdome)
-
-				log_admin("[key_name(usr)] reset the thunderdome to default with delete_mobs==[delete_mobs].", 1)
-				message_admins("<span class='adminnotice'>[key_name_admin(usr)] reset the thunderdome to default with delete_mobs==[delete_mobs].</span>")
 
 			if("monkey")
 				feedback_inc("admin_secrets_fun_used",1)

@@ -344,13 +344,10 @@
 	..()
 
 /obj/machinery/mineral/equipment_vendor/proc/RedeemVoucher(obj/item/weapon/mining_voucher/voucher, mob/redeemer)
-	var/selection = input(redeemer, "Pick your equipment", "Mining Voucher Redemption") as null|anything in list("Mining Drill", "Kinetic Accelerator", "Resonator", "Mining Drone", "Advanced Scanner")
+	var/selection = input(redeemer, "Pick your equipment", "Mining Voucher Redemption") as null|anything in list("Kinetic Accelerator", "Resonator", "Mining Drone", "Advanced Scanner")
 	if(!selection || !Adjacent(redeemer) || voucher.gc_destroyed || voucher.loc != redeemer)
 		return
 	switch(selection)
-		if("Mining Drill")
-			new /obj/item/weapon/pickaxe/drill(src.loc)
-			new /obj/item/weapon/stock_parts/cell/high(src.loc)
 		if("Kinetic Accelerator")
 			new /obj/item/weapon/gun/energy/kinetic_accelerator(src.loc)
 		if("Resonator")

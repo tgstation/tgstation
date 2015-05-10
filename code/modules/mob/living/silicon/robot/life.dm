@@ -8,6 +8,9 @@
 	clamp_values()
 	..()
 
+	if(!stat)
+		use_power()
+
 /mob/living/silicon/robot/proc/clamp_values()
 
 	SetStunned(min(stunned, 30))
@@ -70,8 +73,6 @@
 
 		if (paralysis || stunned || weakened) //Stunned etc.
 			stat = UNCONSCIOUS
-
-		use_power()
 
 		return 1
 

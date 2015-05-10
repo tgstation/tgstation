@@ -85,11 +85,6 @@ Made by Xhuis
 	if(config.protect_assistant_from_antagonist)
 		restricted_jobs += "Assistant"
 
-	for(var/datum/mind/player in antag_candidates)
-		for(var/job in restricted_jobs)
-			if(player.assigned_role == job)
-				antag_candidates -= player
-
 	var/shadowlings = 2 //How many shadowlings there are; hardcoded to 2
 
 	while(shadowlings)
@@ -98,6 +93,7 @@ Made by Xhuis
 		antag_candidates -= shadow
 		modePlayer += shadow
 		shadow.special_role = "Shadowling"
+		shadow.restricted_roles = restricted_jobs
 		shadowlings--
 	return 1
 

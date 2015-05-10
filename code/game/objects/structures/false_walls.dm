@@ -123,10 +123,6 @@
 
 	if(istype(W, /obj/item/weapon/pickaxe/drill/jackhammer))
 		var/obj/item/weapon/pickaxe/drill/jackhammer/D = W
-		if(!D.bcell.use(300))
-			user << "<span class='notice'>Your [D.name] doesn't have enough power to break through the [name].</span>"
-			return
-		D.update_icon()
 		D.playDigSound()
 		dismantle(user)
 

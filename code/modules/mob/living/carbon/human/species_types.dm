@@ -232,7 +232,7 @@
 	// Animated beings of stone. They have increased defenses, and do not need to breathe. They're also slow as fuuuck.
 	name = "Golem"
 	id = "golem"
-	specflags = list(NOBREATH,HEATRES,COLDRES,NOGUNS,NOBLOOD,RADIMMUNE,VIRUSIMMUNE)
+	specflags = list(NOBREATH,HEATRES,COLDRES,NOGUNS,NOBLOOD,RADIMMUNE,VIRUSIMMUNE,HARDFEET)
 	speedmod = 3
 	armor = 55
 	punchmod = 5
@@ -281,7 +281,7 @@
 	say_mod = "rattles"
 	sexes = 0
 	meat = /obj/item/weapon/reagent_containers/food/snacks/meat/slab/human/mutant/skeleton
-	specflags = list(NOBREATH,HEATRES,COLDRES,NOBLOOD,RADIMMUNE,VIRUSIMMUNE)
+	specflags = list(NOBREATH,HEATRES,COLDRES,NOBLOOD,RADIMMUNE,VIRUSIMMUNE,HARDFEET)
 /*
  ZOMBIES
 */

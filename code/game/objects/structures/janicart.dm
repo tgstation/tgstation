@@ -185,7 +185,7 @@
 				F.dirt = 0
 			for(var/A in tile)
 				if(istype(A, /obj/effect))
-					if(istype(A, /obj/effect/rune) || istype(A, /obj/effect/decal/cleanable) || istype(A, /obj/effect/overlay))
+					if(is_cleanable(A))
 						qdel(A)
 
 /obj/structure/stool/bed/chair/janicart/examine(mob/user)

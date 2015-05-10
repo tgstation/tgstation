@@ -236,6 +236,13 @@
 	M.cores = 3
 	qdel(src)
 
+
+/obj/item/weapon/slimesteroid3
+	name = "slime steroid"
+	desc = "A potent chemical mix that will cause a slime to generate more extract."
+	icon = 'icons/obj/chemical.dmi'
+	icon_state = "bottle16"
+
 /obj/item/weapon/slimesteroid2
 	name = "extract enhancer"
 	desc = "A potent chemical mix that will give a slime extract three uses."
@@ -254,6 +261,54 @@
 			target.Uses = 3
 			target.enahnced = 1
 			qdel(src)*/
+
+
+/obj/item/weapon/slimestabilizer
+	name = "slime stabilizer"
+	desc = "A potent chemical mix that will reduce the chance of a slime mutating."
+	icon = 'icons/obj/chemical.dmi'
+	icon_state = "bottle15"
+
+/obj/item/weapon/slimestabilizer/attack(mob/living/simple_animal/slime/M as mob, mob/user as mob)
+	if(!isslime(M))
+		user << "<span class='warning'> The stabilizer only works on slimes!</span>"
+		return ..()
+	if(M.stat)
+		user << "<span class='warning'> The slime is dead!</span>"
+		return..()
+	if(M.mutation_chance == 0)
+		user <<"<span class='warning'> The slime already has no chance of mutating!</span>"
+		return..()
+
+	user <<"<span class='notice'>You feed the slime the stabilizer. It is now less likely to mutate.</span>"
+	M.mutation_chance = Clamp(M.mutation_chance-15,0,100)
+	qdel(src)
+
+/obj/item/weapon/slimemutator
+	name = "slime mutator"
+	desc = "A potent chemical mix that will increase the chance of a slime mutating."
+	icon = 'icons/obj/chemical.dmi'
+	icon_state = "bottle3"
+
+/obj/item/weapon/slimemutator/attack(mob/living/simple_animal/slime/M as mob, mob/user as mob)
+	if(!isslime(M))
+		user << "<span class='warning'> The mutator only works on slimes!</span>"
+		return ..()
+	if(M.stat)
+		user << "<span class='warning'> The slime is dead!</span>"
+		return..()
+	if(M.mutator_used)
+		user << "<span class='warning'> This slime has already consumed a mutator, any more would be far too unstable!</span>"
+		return..()
+	if(M.mutation_chance == 100)
+		user <<"<span class='warning'> The slime is already guaranteed to mutate!</span>"
+		return..()
+
+	user <<"<span class='notice'>You feed the slime the mutator. It is now more likely to mutate.</span>"
+	M.mutation_chance = Clamp(M.mutation_chance+12,0,100)
+	M.mutator_used = TRUE
+	qdel(src)
+
 
 
 ////////Adamantine Golem stuff I dunno where else to put it

@@ -50,6 +50,7 @@
 	var/targetdirection
 	radio_frequency = ENG_FREQ //Engineering channel
 	bot_type = FLOOR_BOT
+	model = "Floorbot"
 	var/process_type //Determines what to do when process_scan() recieves a target. See process_scan() for details.
 	#define HULL_BREACH		1
 	#define BRIDGE_MODE		2
@@ -62,7 +63,7 @@
 	..()
 	updateicon()
 	var/datum/job/engineer/J = new/datum/job/engineer
-	botcard.access = J.get_access()
+	botcard.access += J.get_access()
 	prev_access = botcard.access
 
 /obj/machinery/bot/floorbot/turn_on()

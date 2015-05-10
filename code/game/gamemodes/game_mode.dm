@@ -27,7 +27,6 @@
 	var/required_players = 0
 	var/required_enemies = 0
 	var/recommended_enemies = 0
-	var/pre_setup_before_jobs = 0
 	var/antag_flag = null //preferences flag such as BE_WIZARD that need to be turned on for players to be antag
 	var/datum/mind/sacrifice_target = null
 	var/mob/living/living_antag_player = null
@@ -262,7 +261,7 @@
 	intercepttext += "<B> Centcom has recently been contacted by the following syndicate affiliated organisations in your area, please investigate any information you may have:</B>"
 
 	var/list/possible_modes = list()
-	possible_modes.Add("revolution", "wizard", "nuke", "traitor", "malf", "changeling", "cult")
+	possible_modes.Add("revolution", "wizard", "nuke", "traitor", "malf", "changeling", "cult", "gang")
 	possible_modes -= "[ticker.mode]" //remove current gamemode to prevent it from being randomly deleted, it will be readded later
 
 	var/number = pick(1, 2)

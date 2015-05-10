@@ -430,7 +430,7 @@ client/proc/one_click_antag()
 
 		//Assign antag status and the mission
 		ticker.mode.traitors += newmob.mind
-		newmob.mind.special_role = "centcom"
+		newmob.mind.special_role = "official"
 		var/datum/objective/missionobj = new
 		missionobj.owner = newmob.mind
 		missionobj.explanation_text = mission
@@ -442,7 +442,7 @@ client/proc/one_click_antag()
 		newmob << "<BR>Central Command is sending you to [station_name()] with the task: [mission]"
 
 		//Logging and cleanup
-		message_admins("A [key_name_admin(newmob)] has spawned with the task: [mission]")
+		message_admins("Centcom Official [key_name_admin(newmob)] has spawned with the task: [mission]")
 		log_game("[key_name(newmob)] has been selected as a Centcom Official")
 
 		return 1
@@ -456,8 +456,7 @@ client/proc/one_click_antag()
 		return
 	switch(alert)
 		if("Delta: Deathsquad")
-			makeDeathsquad()
-			return
+			return makeDeathsquad()
 		if("Red: Elite ERT")
 			alert = "Red"
 		if("Amber: Full ERT")
@@ -465,8 +464,7 @@ client/proc/one_click_antag()
 		if("Blue: Light ERT")
 			alert = "Blue"
 		if("Green: Centcom Official")
-			makeOfficial()
-			return
+			return makeOfficial()
 	var/teamsize = min(7,input("Maximum size of team? (7 max)", "Select Team Size",4) as null|num)
 	var/mission = input("Assign a mission to the Emergency Response Team", "Assign Mission", "Assist the station.")
 	var/list/mob/dead/observer/candidates = getCandidates("Do you wish to be considered for a Code [alert] Nanotrasen Emergency Response Team?", "deathsquad", null)
@@ -528,7 +526,7 @@ client/proc/one_click_antag()
 
 			//Assign antag status and the mission
 			ticker.mode.traitors += ERTOperative.mind
-			ERTOperative.mind.special_role = "ert"
+			ERTOperative.mind.special_role = "ERT"
 			var/datum/objective/missionobj = new
 			missionobj.owner = ERTOperative.mind
 			missionobj.explanation_text = mission
@@ -566,7 +564,7 @@ client/proc/one_click_antag()
 	if(candidates.len >= 2)
 		//Oh god why we can't have static functions
 		var/teams_finished = 0
-		if(ticker.mode.config_tag == "abductor")
+		if(ticker.mode.config_tag == "abduction")
 			var/datum/game_mode/abduction/A = ticker.mode
 			teams_finished = A.teams
 		else
@@ -574,7 +572,7 @@ client/proc/one_click_antag()
 		var/number =  teams_finished + 1
 
 		var/datum/game_mode/abduction/temp
-		if(ticker.mode.config_tag == "abductor")
+		if(ticker.mode.config_tag == "abduction")
 			temp = ticker.mode
 		else
 			temp = new
@@ -599,7 +597,7 @@ client/proc/one_click_antag()
 		temp.abductors |= list(agent_mind,scientist_mind)
 		temp.make_abductor_team(number,preset_scientist=scientist_mind,preset_agent=agent_mind)
 		temp.post_setup_team(number)
-		if(ticker.mode.config_tag == "abductor")
+		if(ticker.mode.config_tag == "abduction")
 			var/datum/game_mode/abduction/A = ticker.mode
 			A.teams += 1
 		else

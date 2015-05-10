@@ -40,6 +40,7 @@
 	var/treat_virus = 1 //If on, the bot will attempt to treat viral infections, curing them if possible.
 	var/shut_up = 0 //self explanatory :)
 	bot_type = MED_BOT
+	model = "Medibot"
 
 /obj/machinery/bot/medbot/mysterious
 	name = "\improper Mysterious Medibot"
@@ -97,12 +98,10 @@
 		if(skin)
 			overlays += image('icons/obj/aibots.dmi', "medskin_[skin]")
 
-		if(isnull(botcard_access) || (botcard_access.len < 1))
-			var/datum/job/doctor/J = new/datum/job/doctor
-			botcard.access = J.get_access()
-		else
-			botcard.access = botcard_access
+		var/datum/job/doctor/J = new/datum/job/doctor
+		botcard.access += J.get_access()
 		prev_access = botcard.access
+
 
 /obj/machinery/bot/medbot/turn_on()
 	. = ..()

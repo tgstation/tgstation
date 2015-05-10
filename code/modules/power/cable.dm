@@ -453,7 +453,7 @@ obj/structure/cable/proc/avail()
 // Definitions
 ////////////////////////////////
 
-#define MAXCOIL 30
+
 
 /obj/item/stack/cable_coil
 	name = "cable coil"
@@ -480,6 +480,11 @@ obj/structure/cable/proc/avail()
 	m_amt = 0
 	g_amt = 0
 	cost = 1
+
+/obj/item/stack/cable_coil/cyborg/attack_self(mob/user)
+	var/cable_color = input(user,"Pick a cable color.","Cable Color") in list("red","yellow","green","blue","pink","orange","cyan","white")
+	item_color = cable_color
+	update_icon()
 
 /obj/item/stack/cable_coil/suicide_act(mob/user)
 	if(locate(/obj/structure/stool) in user.loc)

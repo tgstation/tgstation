@@ -39,6 +39,7 @@
 
 	var/assigned_role
 	var/special_role
+	var/list/restricted_roles = list()
 
 	var/datum/job/assigned_job
 
@@ -918,6 +919,10 @@
 						usr << "<span class='danger'>Spawning tome failed!</span>"
 					else
 						H << "A tome, a message from your new master, appears in your [where]."
+						if(where == "backpack")
+							var/obj/item/weapon/storage/B = H.back
+							B.orient2hud(H)
+							B.show_to(H)
 
 			if("amulet")
 				if (!ticker.mode.equip_cultist(current))

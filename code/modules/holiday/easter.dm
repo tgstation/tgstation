@@ -16,6 +16,7 @@
 
 /datum/round_event_control/rabbitrelease
 	name = "Release the Rabbits!"
+	holidayID = EASTER
 	typepath = /datum/round_event/rabbitrelease
 	weight = 5
 	max_occurrences = 10

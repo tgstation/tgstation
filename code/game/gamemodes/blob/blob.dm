@@ -34,17 +34,13 @@ var/list/blob_nodes = list()
 
 	blobwincount = initial(blobwincount) * cores_to_spawn
 
-	for(var/datum/mind/player in antag_candidates)
-		for(var/job in restricted_jobs)//Removing robots from the list
-			if(player.assigned_role == job)
-				antag_candidates -= player
-
 	for(var/j = 0, j < cores_to_spawn, j++)
 		if (!antag_candidates.len)
 			break
 		var/datum/mind/blob = pick(antag_candidates)
 		infected_crew += blob
 		blob.special_role = "Blob"
+		blob.restricted_roles = restricted_jobs
 		log_game("[blob.key] (ckey) has been selected as a Blob")
 		antag_candidates -= blob
 

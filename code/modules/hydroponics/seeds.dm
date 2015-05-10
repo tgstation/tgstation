@@ -3,7 +3,7 @@
 // ********************************************************
 
 /obj/item/seeds
-	name = "pack of seeds"
+	name = "A pack of seeds."
 	icon = 'icons/obj/hydroponics/seeds.dmi'
 	icon_state = "seed"				//Unknown plant seed - these shouldn't exist in-game.
 	w_class = 1						//Pocketable.

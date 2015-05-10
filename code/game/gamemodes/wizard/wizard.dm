@@ -8,7 +8,6 @@
 	required_players = 20
 	required_enemies = 1
 	recommended_enemies = 1
-	pre_setup_before_jobs = 1
 	enemy_minimum_age = 14
 	round_ends_with_antag_death = 1
 	var/use_huds = 0
@@ -173,9 +172,7 @@
 /datum/game_mode/wizard/check_finished()
 
 	for(var/datum/mind/wizard in wizards)
-		if(!wizard.current)
-			continue
-		if(wizard.current.stat != DEAD)
+		if(isliving(wizard.current) && wizard.current.stat!=DEAD)
 			return ..()
 
 	if(SSevent.wizardmode) //If summon events was active, turn it off
