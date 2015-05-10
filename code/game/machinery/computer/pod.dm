@@ -370,5 +370,5 @@
 		AM.x = world.maxx - TRANSITIONEDGE - 2
 		AM.dir = 8
 		var/atom/target = get_edge_target_turf(AM, AM.dir)
-		AM.throw_at(target, 50, 1)
+		AM.throw_at(target, 50, AM.throw_speed)
 	return

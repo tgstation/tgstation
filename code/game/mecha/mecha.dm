@@ -69,6 +69,8 @@
 	var/max_equip = 3
 	var/datum/events/events
 
+	var/turf/crashing = null
+
 /obj/mecha/New()
 	..()
 	events = new
@@ -323,8 +325,63 @@
 
 /obj/mecha/Bump(var/atom/obstacle)
 //	src.inertia_dir = null
-	if(src.throwing)
-		src.throwing = 0//so mechas don't get stuck when landing after being sent by a Mass Driver
+	if(src.throwing)//high velocity mechas in your face!
+		var/breakthrough = 0
+		if(istype(obstacle, /obj/structure/window/))
+			obstacle.Destroy(brokenup = 1)
+			breakthrough = 1
+
+		else if(istype(obstacle, /obj/structure/grille/))
+			var/obj/structure/grille/G = obstacle
+			G.health = (0.25*initial(G.health))
+			G.broken = 1
+			G.icon_state = "[initial(G.icon_state)]-b"
+			G.density = 0
+			getFromPool(/obj/item/stack/rods, get_turf(G.loc))
+			breakthrough = 1
+
+		else if(istype(obstacle, /obj/structure/table))
+			var/obj/structure/table/T = obstacle
+			T.destroy()
+			breakthrough = 1
+
+		else if(istype(obstacle, /obj/structure/rack))
+			new /obj/item/weapon/rack_parts(obstacle.loc)
+			qdel(obstacle)
+			breakthrough = 1
+
+		else if(istype(obstacle, /obj/structure/reagent_dispensers/fueltank))
+			obstacle.ex_act(1)
+
+		else if(istype(obstacle, /mob/living))
+			var/mob/living/L = obstacle
+			var/hit_sound = list('sound/weapons/genhit1.ogg','sound/weapons/genhit2.ogg','sound/weapons/genhit3.ogg')
+			if(L.flags & INVULNERABLE)
+				return
+			L.take_overall_damage(5,0)
+			if(L.buckled)
+				L.buckled = 0
+			L.Stun(5)
+			L.Weaken(5)
+			L.apply_effect(STUTTER, 5)
+			playsound(src, pick(hit_sound), 50, 0, 0)
+			breakthrough = 1
+
+		else
+			src.throwing = 0//so mechas don't get stuck when landing after being sent by a Mass Driver
+			src.crashing = null
+
+		if(breakthrough)
+			if(crashing)
+				spawn(1)
+					src.throw_at(crashing, 50, src.throw_speed)
+			else
+				spawn(1)
+					crashing = get_step(loc,dir)//is there a better way to get a turf 3 tiles away in a given direction?)
+					crashing = get_step(crashing,dir)
+					crashing = get_step(crashing,dir)
+					src.throw_at(crashing, 50, src.throw_speed)
+
 	if(istype(obstacle, /obj))
 		var/obj/O = obstacle
 		if(istype(O, /obj/effect/portal)) //derpfix
