@@ -377,9 +377,7 @@
 					src.throw_at(crashing, 50, src.throw_speed)
 			else
 				spawn(1)
-					crashing = get_step(loc,dir)//is there a better way to get a turf 3 tiles away in a given direction?)
-					crashing = get_step(crashing,dir)
-					crashing = get_step(crashing,dir)
+					crashing = get_distant_turf(get_turf(src), dir, 3)//don't use get_dir(src, obstacle) or the mech will stop if he bumps into a one-direction window on his tile.
 					src.throw_at(crashing, 50, src.throw_speed)
 
 	if(istype(obstacle, /obj))
