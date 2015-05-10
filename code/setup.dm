@@ -1175,7 +1175,7 @@ var/list/RESTRICTED_CAMERA_NETWORKS = list( //Those networks can only be accesse
 #define LANGUAGE_GREY "Grey"
 #define LANGUAGE_XENO "Xenomorph"
 #define LANGUAGE_CLATTER "Clatter"
-#define LANGUAGE_MONKEY "Chimpanzee"
+#define LANGUAGE_MONKEY "Monkey"
 #define LANGUAGE_VOX "Vox-pidgin"
 #define LANGUAGE_CULT "Cult"
 

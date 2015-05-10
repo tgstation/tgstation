@@ -102,7 +102,7 @@
 	flags = RESTRICTED
 
 /datum/language/human/monkey
-	name = "Chimpanzee"
+	name = "Monkey"
 	desc = "Ook ook ook."
 	speech_verb = "chimpers"
 	ask_verb = "chimpers"
