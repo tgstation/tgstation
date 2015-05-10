@@ -1,5 +1,0 @@
-author: Deity Link
-delete-after: true
-changes:
-  - rscadd: Ghosts now get notified when an Arena is created, or an Arena round starts. They can click the hypertext link on the notification to teleport to said Arena.
-  - rscadd: Ghosts now have a "Search For Arenas" button under their Ghost tab. Gives them the list of existing Arenas and lets them teleport to any of them.

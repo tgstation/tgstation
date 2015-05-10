@@ -1,8 +1,0 @@
-author: Deity Link
-delete-after: true
-changes:
-  - bugfix: Fixed the Adminbus' layer being to low.
-  - bugfix: Fixed the Adminbus' jukebox not spawning facing the correct direction.
-  - bugfix: Vampires names and ckey on the Round End Information are now in bold, just like for every other roles.
-  - bugfix: Fixed the sprite of unpowered/broken Mass Driver computers
-  - bugfix: Fixed the old Mass Driver computers that were using the new Pod Computer sprites instead of their regular old computer sprites (such as the one in the Derelict chapel/on the Syndicate ship)
