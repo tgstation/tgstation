@@ -410,7 +410,7 @@ obj/item/weapon/circuitboard/rdserver
 	
 /obj/item/weapon/circuitboard/chem_dispenser/booze_dispenser
 	name = "Circuit Board (Booze Dispenser)"
-	build_path = " /obj/machinery/chem_dispenser/booze_dispenser"
+	build_path = "/obj/machinery/chem_dispenser/booze_dispenser"
 
 /obj/item/weapon/circuitboard/chemmaster3000
 	name = "Circuit Board (ChemMaster 3000)"
@@ -508,7 +508,7 @@ obj/item/weapon/circuitboard/rdserver
 
 /obj/item/weapon/circuitboard/clonepod
 	name = "Circuit board (Clone Pod)"
-	build_path = "/obj/machinery/clonepod"
+	build_path = "/obj/machinery/cloning/clonepod"
 	board_type = "machine"
 	origin_tech = "programming=3;biotech=3"
 	frame_desc = "Requires 2 Manipulator, 2 Scanning Module, and 1 Console Screen."

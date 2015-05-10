@@ -9,6 +9,19 @@
 	if(stat == DEAD)
 		return
 
+	var/datum/language/speaking
+	if(!speaking)
+		speaking = parse_language(message)
+	if(istype(speaking))
+		message = copytext(message,2+length(speaking.key))
+	else
+		if(!isnull(speaking))
+			var/oldmsg = message
+			var/n = speaking
+			message = copytext(message,1+length(n))
+			say_testing(src, "We tried to speak a language we don't have length = [length(n)], oldmsg = [oldmsg] parsed message = [message]")
+			speaking = null
+		speaking = get_default_language()
 
 	message = trim(strip_html_properly(message))
 	if(!can_speak(message))
@@ -53,7 +66,7 @@
 
 	for (var/atom/movable/listener in listeners)
 		if (listener)
-			listener.Hear(rendered, src, languages, message)
+			listener.Hear(rendered, src, speaking, message)
 
 	listeners = null
 
@@ -63,7 +76,7 @@
 
 	for (var/atom/movable/eavesdropper in eavesdroppers)
 		if (eavesdropper)
-			eavesdropper.Hear(rendered, src, languages, message)
+			eavesdropper.Hear(rendered, src, speaking, message)
 
 	eavesdroppers = null
 

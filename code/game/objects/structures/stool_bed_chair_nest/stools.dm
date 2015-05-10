@@ -90,14 +90,14 @@
 	..()
 	if(origin)
 		origin.loc = get_turf(src)
-	user.u_equip(src)
+	user.u_equip(src,0)
 	user.visible_message("<span class='notice'>[user] puts [src] down.</span>", "<span class='notice'>You put [src] down.</span>")
 	del src
 
 /obj/item/weapon/stool/attack(mob/M as mob, mob/user as mob)
 	if (prob(5) && istype(M,/mob/living))
 		user.visible_message("<span class='warning'>[user] breaks [src] over [M]'s back!.</span>")
-		user.u_equip(src)
+		user.u_equip(src,0)
 		if(!istype(origin,/obj/structure/stool/hologram))
 			var/obj/item/stack/sheet/metal/MM = getFromPool(/obj/item/stack/sheet/metal, get_turf(src))
 			MM.amount = 1

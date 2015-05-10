@@ -29,25 +29,27 @@ var/list/freqtoname = list(
 	"1447" = "AI Private"
 )
 
-/atom/movable/proc/say(message)
+/atom/movable/proc/say(message, var/datum/language/speaking) //so we can force nonmobs to speak a certain language
 	if(!can_speak())
 		return
 	if(message == "" || !message)
 		return
-	send_speech(message)
+	send_speech(message, speaking)
 
-/atom/movable/proc/Hear(message, atom/movable/speaker, message_langs, raw_message, radio_freq)
+/atom/movable/proc/Hear(message, atom/movable/speaker, var/datum/language/speaking, raw_message, radio_freq)
 	return
 
 /atom/movable/proc/can_speak()
 	return 1
 
-/atom/movable/proc/send_speech(message, range)
-	var/rendered = compose_message(src, languages, message)
+/atom/movable/proc/send_speech(message, range, var/datum/language/speaking)
+	say_testing(src, "send speech start, msg = [message]; message_range = [range]; language = [speaking ? speaking.name : "None"];")
+	if(isnull(range)) range = 7
+	var/rendered = compose_message(src, speaking, message)
 	for(var/atom/movable/AM in get_hearers_in_view(range, src))
-		AM.Hear(rendered, src, languages, message)
+		AM.Hear(rendered, src, speaking, message)
 
-/atom/movable/proc/compose_message(atom/movable/speaker, message_langs, raw_message, radio_freq)
+/atom/movable/proc/compose_message(atom/movable/speaker, var/datum/language/speaking, raw_message, radio_freq)
 	//This proc uses text() because it is faster than appending strings. Thanks BYOND.
 	//Basic span
 	var/spanpart1 = "<span class='[radio_freq ? get_radio_span(radio_freq) : "game say"]'>"
@@ -60,14 +62,14 @@ var/list/freqtoname = list(
 	//End name span.
 	var/endspanpart = "</span>"
 	//Message
-	var/messagepart = "<span class='message'>[lang_treat(speaker, message_langs, raw_message)]</span></span>"
-	var/trackingpart = compose_track_href(speaker, message_langs, raw_message, radio_freq)
-	return "[spanpart1][spanpart2][trackingpart][namepart][trackingpart ? "</a>" : ""]\icon[speaker.GetRadio()][freqpart][compose_job(speaker, message_langs, raw_message, radio_freq)][endspanpart][messagepart]"
+	var/messagepart = "<span class='message'>[lang_treat(speaker, speaking, raw_message)]</span></span>"
+	var/trackingpart = compose_track_href(speaker, speaking, raw_message, radio_freq)
+	return "[spanpart1][spanpart2][trackingpart][namepart][trackingpart ? "</a>" : ""]\icon[speaker.GetRadio()][freqpart][compose_job(speaker, speaking, raw_message, radio_freq)][endspanpart][messagepart]"
 
-/atom/movable/proc/compose_track_href(atom/movable/speaker, message_langs, raw_message, radio_freq)
+/atom/movable/proc/compose_track_href(atom/movable/speaker, var/datum/language/speaking, raw_message, radio_freq)
 	return ""
 
-/atom/movable/proc/compose_job(atom/movable/speaker, message_langs, raw_message, radio_freq)
+/atom/movable/proc/compose_job(atom/movable/speaker, var/datum/language/speaking, raw_message, radio_freq)
 	return ""
 
 /atom/movable/proc/say_quote(var/text)
@@ -81,24 +83,28 @@ var/list/freqtoname = list(
 
 	return "says, \"[text]\""
 var/global/image/ghostimg = image("icon"='icons/mob/mob.dmi',"icon_state"="ghost")
-/atom/movable/proc/lang_treat(atom/movable/speaker, message_langs, raw_message)
-	if(languages & message_langs)
-		var/atom/movable/AM = speaker.GetSource()
-		if(AM)
-			return AM.say_quote(raw_message)
+/atom/movable/proc/lang_treat(atom/movable/speaker, var/datum/language/speaking, raw_message)
+	if(speaking)
+		var/overRadio = (istype(speaker, /obj/item/device/radio) || istype(speaker.GetSource(), /obj/item/device/radio))
+		if(say_understands(speaker,speaking))
+			if(overRadio)
+				return speaking.format_message_radio(speaker, raw_message)
+			return speaking.format_message(speaker, raw_message)
 		else
-			return speaker.say_quote(raw_message)
-	else if(message_langs & HUMAN)
+			if(overRadio)
+				return speaking.format_message_radio(speaker, speaking.scramble(raw_message))
+			return speaking.format_message(speaker, speaking.scramble(raw_message))
+
+	else
 		var/atom/movable/AM = speaker.GetSource()
+		var/rendered = raw_message
+		if(!say_understands(speaker))
+			rendered = stars(rendered)
 		if(AM)
-			if(languages & SIMPLE_ANIMAL)
-				return AM.say_quote(raw_message)
-			return AM.say_quote(stars(raw_message))
+			return AM.say_quote(rendered)
 		else
-			if(languages & SIMPLE_ANIMAL)
-				return speaker.say_quote(raw_message)
-			return speaker.say_quote(stars(raw_message))
-	else if(message_langs & SPOOKY)
+			return speaker.say_quote(rendered)
+	/*else if(message_langs & SPOOKY)
 		return "\icon[ghostimg] <span class='sinister'>Too spooky...</span> \icon[ghostimg]"
 	else if(message_langs & MONKEY)
 		return "chimpers."
@@ -115,7 +121,7 @@ var/global/image/ghostimg = image("icon"='icons/mob/mob.dmi',"icon_state"="ghost
 		else
 			return "makes a strange sound."
 	else
-		return "makes a strange sound."
+		return "makes a strange sound."*/
 
 /proc/get_radio_span(freq)
 	var/returntext = freqtospan["[freq]"]

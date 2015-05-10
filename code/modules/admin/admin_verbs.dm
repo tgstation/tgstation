@@ -174,6 +174,7 @@ var/list/admin_verbs_debug = list(
 	/client/proc/cmd_admin_dump_delprofile,
 	/client/proc/mob_list,
 	/client/proc/cure_disease,
+	/client/proc/check_bomb,
 	/client/proc/cmd_admin_find_bad_blood_tracks,
 #ifdef PROFILE_MACHINES
 	/client/proc/cmd_admin_dump_macprofile,
@@ -640,10 +641,15 @@ var/list/admin_verbs_mod = list(
 		var/message = input("What do you want the message to be?", "Make Sound") as text|null
 		if(!message)
 			return
-		var/templanguages = O.languages
-		O.languages |= ALL
+		var/mob/living/M
+		var/olduniv
+		if(ismob(O))
+			M = O
+			olduniv = M.universal_speak
+			M.universal_speak = 1
 		O.say(message)
-		O.languages = templanguages
+		if(M)
+			M.universal_speak = olduniv
 		log_admin("[key_name(usr)] made [O] at [O.x], [O.y], [O.z]. make a sound")
 		message_admins("<span class='notice'>[key_name_admin(usr)] made [O] at [O.x], [O.y], [O.z]. make a sound</span>", 1)
 		feedback_add_details("admin_verb","MS") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
@@ -663,10 +669,15 @@ var/list/admin_verbs_mod = list(
 	var/message = input(usr, "What do you want the message to be?", "Make Sound") as text | null
 	if(!message)
 		return
-	var/templanguages = O.languages
-	O.languages |= ALL
+	var/mob/living/M
+	var/olduniv
+	if(ismob(O))
+		M = O
+		olduniv = M.universal_speak
+		M.universal_speak = 1
 	O.say(message)
-	O.languages = templanguages
+	if(M)
+		M.universal_speak = olduniv
 	log_admin("[key_name(usr)] made [O] at [O.x], [O.y], [O.z] say \"[message]\"")
 	message_admins("<span class='adminnotice'>[key_name_admin(usr)] made [O] at [O.x], [O.y], [O.z]. say \"[message]\"</span>", 1)
 	feedback_add_details("admin_verb","OT") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
@@ -880,32 +891,25 @@ var/list/admin_verbs_mod = list(
 			src << "You are already an admin."
 			verbs -= /client/proc/readmin
 			return
-		var/sql_ckey = sanitizeSQL(ckey)
+		var/sql_ckey = sanitizeSQL(ckey(ckey))
 		var/DBQuery/query = dbcon.NewQuery("SELECT ckey, rank, level, flags FROM erro_admin WHERE ckey = [sql_ckey]")
 		query.Execute()
-		usr << "Query executed"
 		while(query.NextRow())
-			var/ckey = query.item[1]
-			usr << "[ckey]"
+			var/dckey = query.item[1]
 			var/rank = query.item[2]
-			usr << "[rank]"
 			if(rank == "Removed")	continue	//This person was de-adminned. They are only in the admin list for archive purposes.
 
 			var/rights = query.item[4]
-			usr << "[rights]"
 			if(istext(rights))	rights = text2num(rights)
-			D = new /datum/admins(rank, rights, ckey)
-			usr << "[D.rank],[D.rights]"
+			D = new /datum/admins(rank, rights, dckey)
 
 			//find the client for a ckey if they are connected and associate them with the new admin datum
 			D.associate(src)
-			usr << "[D.owner]"
 			message_admins("[src] re-adminned themselves.")
 			log_admin("[src] re-adminned themselves.")
 			feedback_add_details("admin_verb","RAS")
 			verbs -= /client/proc/readmin
 			return
-		usr << "query.nextrow() failed"
 
 /client/proc/achievement()
 	set name = "Give Achievement"

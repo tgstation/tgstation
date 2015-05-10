@@ -25,8 +25,8 @@
 	..()
 
 	src.air_contents = new /datum/gas_mixture()
-	src.air_contents.volume = volume //liters
-	src.air_contents.temperature = T20C
+	src.air_contents.set_volume(volume) //liters
+	src.air_contents.set_temperature(T20C)
 
 	processing_objects.Add(src)
 	return
@@ -117,7 +117,7 @@
 
 	// this is the data which will be sent to the ui
 	var/data[0]
-	data["tankPressure"] = round(air_contents.return_pressure() ? air_contents.return_pressure() : 0)
+	data["tankPressure"] = round(air_contents.pressure ? air_contents.pressure : 0)
 	data["releasePressure"] = round(distribute_pressure ? distribute_pressure : 0)
 	data["defaultReleasePressure"] = round(TANK_DEFAULT_RELEASE_PRESSURE)
 	data["maxReleasePressure"] = round(TANK_MAX_RELEASE_PRESSURE)
@@ -199,7 +199,7 @@
 	if(!air_contents)
 		return null
 
-	var/tank_pressure = air_contents.return_pressure()
+	var/tank_pressure = air_contents.pressure
 	if(tank_pressure < distribute_pressure)
 		distribute_pressure = tank_pressure
 
@@ -221,7 +221,7 @@
 	if(!air_contents)
 		return 0
 
-	var/pressure = air_contents.return_pressure()
+	var/pressure = air_contents.pressure
 	if(pressure > TANK_FRAGMENT_PRESSURE)
 		if(!istype(src.loc,/obj/item/device/transfer_valve))
 			message_admins("Explosive tank rupture! last key to touch the tank was [src.fingerprintslast].")
@@ -231,7 +231,7 @@
 		air_contents.react()
 		air_contents.react()
 		air_contents.react()
-		pressure = air_contents.return_pressure()
+		pressure = air_contents.pressure
 		var/range = (pressure-TANK_FRAGMENT_PRESSURE)/TANK_FRAGMENT_SCALE
 		if(range > MAX_EXPLOSION_RANGE)
 			cap = 1

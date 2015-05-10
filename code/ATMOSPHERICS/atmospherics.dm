@@ -41,12 +41,18 @@ Pipelines + Other Objects -> Pipe network
 
 	var/image/pipe_image
 
+/obj/machinery/atmospherics/New()
+	..()
+	machines.Remove(src)
+	atmos_machines |= src
+
 /obj/machinery/atmospherics/Destroy()
 	for(var/mob/living/M in src) //ventcrawling is serious business
 		M.remove_ventcrawl()
 		M.forceMove(src.loc)
 	if(pipe_image)
 		del(pipe_image) //we have to del it, or it might keep a ref somewhere else
+	atmos_machines -= src
 	..()
 
 // Find a connecting /obj/machinery/atmospherics in specified direction.
@@ -93,7 +99,7 @@ Pipelines + Other Objects -> Pipe network
 // I asked /tg/ and bay and they have no idea why this is here, so into the trash it goes. - N3X
 // Re-enabled for debugging.
 /obj/machinery/atmospherics/process()
-	build_network()
+	. = build_network()
 	//testing("[src] called parent process to build_network()")
 
 /obj/machinery/atmospherics/proc/network_expand(datum/pipe_network/new_network, obj/machinery/atmospherics/pipe/reference)
@@ -149,7 +155,7 @@ Pipelines + Other Objects -> Pipe network
 	var/datum/gas_mixture/int_air = return_air()
 	var/datum/gas_mixture/env_air = loc.return_air()
 	add_fingerprint(user)
-	if ((int_air.return_pressure()-env_air.return_pressure()) > 2*ONE_ATMOSPHERE)
+	if ((int_air.pressure-env_air.pressure) > 2*ONE_ATMOSPHERE)
 		if(istype(W, /obj/item/weapon/wrench/socket) && istype(src, /obj/machinery/atmospherics/pipe))
 			user << "<span class='warning'>You begin to open the pressure release valve on the pipe...</span>"
 			if(do_after(user, 50))

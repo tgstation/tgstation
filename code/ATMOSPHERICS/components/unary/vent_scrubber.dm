@@ -26,6 +26,8 @@
 	var/area_uid
 	var/radio_filter_out
 	var/radio_filter_in
+	
+	machine_flags = MULTITOOL_MENU
 
 /obj/machinery/atmospherics/unary/vent_scrubber/New()
 	..()
@@ -105,17 +107,17 @@
 		set_frequency(frequency)
 
 /obj/machinery/atmospherics/unary/vent_scrubber/process()
-	..()
+	. = ..()
 	CHECK_DISABLED(scrubbers)
 	if(stat & (NOPOWER|BROKEN))
 		return
 	if (!node)
-		return 0 // Let's not shut it off, for now.
+		return // Let's not shut it off, for now.
 	if(welded)
-		return 0
+		return
 	//broadcast_status()
 	if(!on)
-		return 0
+		return
 	// New GC does this sometimes
 	if(!loc) return
 
@@ -124,7 +126,7 @@
 
 	if(scrubbing)
 		if(scrubbing_gases.len)
-			var/transfer_moles = min(1, volume_rate/environment.volume)*environment.total_moles()
+			var/transfer_moles = min(1, volume_rate/environment.volume)*environment.total_moles
 
 			//Take a gas sample
 			var/datum/gas_mixture/removed = loc.remove_air(transfer_moles)
@@ -137,15 +139,13 @@
 				if(!(gasid in scrubbing_gases))
 					continue
 
-				filtered_out.adjust_gas(gasid, removed.get_moles_by_id(gasid), 0) //move to filtered
-				removed.set_gas(gasid, 0, 0) //set to 0
+				filtered_out.adjust_gas(gasid, removed.gases[gasid]) //move to filtered
+				removed.set_gas(gasid, 0) //set to 0
 
 			//Filter it
 
-			filtered_out.temperature = removed.temperature
+			filtered_out.set_temperature(removed.temperature)
 
-			filtered_out.update_values()
-			removed.update_values()
 
 			//Remix the resulting gases
 			air_contents.merge(filtered_out)
@@ -156,10 +156,10 @@
 				network.update = 1
 
 	else //Just siphoning all air
-		if (air_contents.return_pressure()>=50*ONE_ATMOSPHERE)
+		if (air_contents.pressure>=50*ONE_ATMOSPHERE)
 			return
 
-		var/transfer_moles = environment.total_moles()*(volume_rate/environment.volume)
+		var/transfer_moles = environment.total_moles*(volume_rate/environment.volume)
 
 		var/datum/gas_mixture/removed = loc.remove_air(transfer_moles)
 
@@ -282,9 +282,6 @@
 	return !welded
 
 /obj/machinery/atmospherics/unary/vent_scrubber/attackby(var/obj/item/weapon/W as obj, var/mob/user as mob)
-	if(istype(W, /obj/item/device/multitool))
-		update_multitool_menu(user)
-		return 1
 	if(istype(W, /obj/item/weapon/weldingtool))
 		var/obj/item/weapon/weldingtool/WT = W
 		if (WT.remove_fuel(0,user))

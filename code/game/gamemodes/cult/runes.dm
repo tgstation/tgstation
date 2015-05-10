@@ -192,6 +192,8 @@
 			M.mind.special_role = "Cultist"
 			M << "<span class='sinister'>Your blood pulses. Your head throbs. The world goes red. All at once you are aware of a horrible, horrible truth. The veil of reality has been ripped away and in the festering wound left behind something sinister takes root.</span>"
 			M << "<span class='sinister'>Assist your new compatriots in their dark dealings. Their goal is yours, and yours is theirs. You serve the Dark One above all else. Bring It back.</span>"
+			M << "<span class='sinister'>You can now speak and understand the forgotten tongue of the occult.</span>"
+			M.add_language("Cult")
 			log_admin("[usr]([ckey(usr.key)]) has converted [M] ([ckey(M.key)]) to the cult at [M.loc.x], [M.loc.y], [M.loc.z]")
 			return 1
 		else
@@ -592,6 +594,7 @@
 		ticker.mode:add_cultist(D.mind)
 	else
 		ticker.mode.cult+=D.mind
+
 	ticker.mode.update_cult_icons_added(D.mind)
 	D.canmove = 1
 	animation.master = null
@@ -600,6 +603,9 @@
 	D.mind.special_role = "Cultist"
 	D << "<span class='sinister'>Your blood pulses. Your head throbs. The world goes red. All at once you are aware of a horrible, horrible truth. The veil of reality has been ripped away and in the festering wound left behind something sinister takes root.</span>"
 	D << "<span class='sinister'>Assist your new compatriots in their dark dealings. Their goal is yours, and yours is theirs. You serve the Dark One above all else. Bring It back.</span>"
+	D << "<span class='sinister'>You can now speak and understand the forgotten tongue of the occult.</span>"
+
+	D.add_language("Cult")
 
 
 	var/mob/living/user = usr
@@ -995,7 +1001,7 @@
 			cultist.legcuffed = null
 			cultist.update_inv_legcuffed()
 		if (istype(cultist.wear_mask, /obj/item/clothing/mask/muzzle))
-			cultist.u_equip(cultist.wear_mask)
+			cultist.u_equip(cultist.wear_mask, 1)
 		if(istype(cultist.loc, /obj/structure/closet)&&cultist.loc:welded)
 			cultist.loc:welded = 0
 		if(istype(cultist.loc, /obj/structure/closet/secure_closet)&&cultist.loc:locked)

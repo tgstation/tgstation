@@ -8,7 +8,7 @@
 	active_power_usage = 300
 	var/obj/item/weapon/circuitboard/circuit = null //if circuit==null, computer can't disassembly
 	var/processing = 0
-	machine_flags = EMAGGABLE | SCREWTOGGLE | WRENCHMOVE | FIXED2WORK
+	machine_flags = EMAGGABLE | SCREWTOGGLE | WRENCHMOVE | FIXED2WORK | MULTITOOL_MENU
 
 /obj/machinery/computer/cultify()
 	new /obj/structure/cult/tome(loc)

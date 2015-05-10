@@ -138,6 +138,8 @@ obj/machinery/airlock_sensor
 
 	ghost_read = 0 // Deactivate ghost touching.
 	ghost_write = 0
+	
+	machine_flags = MULTITOOL_MENU
 
 
 obj/machinery/airlock_sensor/update_icon()
@@ -169,7 +171,7 @@ obj/machinery/airlock_sensor/process()
 
 		var/datum/gas_mixture/air_sample = return_air()
 
-		var/pressure = round(air_sample.return_pressure(),0.1)
+		var/pressure = round(air_sample.pressure,0.1)
 		alert = (pressure < ONE_ATMOSPHERE*0.8)
 
 		signal.data["pressure"] = pressure
@@ -248,8 +250,9 @@ obj/machinery/airlock_sensor/Topic(href,href_list)
 
 
 obj/machinery/airlock_sensor/attackby(var/obj/item/W, var/mob/user)
-	if(istype(W,/obj/item/device/multitool))
-		update_multitool_menu(user)
+	. = ..()
+	if(.)
+		return .
 	if(istype(W,/obj/item/weapon/screwdriver))
 		user << "You begin to pry \the [src] off the wall..."
 		if(do_after(user, 50))
@@ -275,6 +278,7 @@ obj/machinery/access_button
 
 	ghost_read = 0 // Deactivate ghost touching.
 	ghost_write = 0
+	machine_flags = MULTITOOL_MENU
 
 /obj/machinery/access_button/New(turf/loc, var/ndir, var/building=0)
 	..()
@@ -318,8 +322,9 @@ obj/machinery/access_button/attack_hand(mob/user)
 
 
 obj/machinery/access_button/attackby(var/obj/item/W, var/mob/user)
-	if (istype(W, /obj/item/device/multitool))
-		update_multitool_menu()
+	. = ..()
+	if(.)
+		return .
 	if(istype(W,/obj/item/weapon/screwdriver))
 		user << "You begin to pry \the [src] off the wall..."
 		if(do_after(user, 50))

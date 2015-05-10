@@ -258,14 +258,14 @@
 		for(var/gas in seed.consume_gasses)
 			if(environment)
 				if(gas == OXYGEN)
-					if(environment.get_moles_by_id(OXYGEN) <= seed.consume_gasses[OXYGEN])
+					if(environment.gases[OXYGEN] <= seed.consume_gasses[OXYGEN])
 						missing_gas++
 						continue
 				else
-					if(environment.get_moles_by_id(gas) >= seed.consume_gasses[gas])
+					if(environment.gases[gas] >= seed.consume_gasses[gas])
 						missing_gas++
 						continue
-				environment.adjust_gas(gas,-seed.consume_gasses[gas],1)
+				environment.adjust_gas(gas,-seed.consume_gasses[gas])
 			else
 				missing_gas++
 
@@ -273,7 +273,7 @@
 			health -= missing_gas * HYDRO_SPEED_MULTIPLIER
 
 	// Process it.
-	var/pressure = environment.return_pressure()
+	var/pressure = environment.pressure
 	if(pressure < seed.lowkpa_tolerance || pressure > seed.highkpa_tolerance)
 		health -= healthmod
 

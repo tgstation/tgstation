@@ -1,4 +1,6 @@
 var/list/GPS_list = list()
+var/list/SPS_list = list()
+
 /obj/item/device/gps
 	name = "global positioning system"
 	desc = "Helping lost spacemen find their way through the planets since 2016."
@@ -18,7 +20,10 @@ var/list/GPS_list = list()
 	overlays += "working"
 
 /obj/item/device/gps/Destroy()
-	GPS_list.Remove(src)
+	if(istype(src,/obj/item/device/gps/secure))
+		SPS_list.Remove(src)
+	else
+		GPS_list.Remove(src)
 	..()
 
 /obj/item/device/gps/emp_act(severity)
@@ -32,13 +37,18 @@ var/list/GPS_list = list()
 
 /obj/item/device/gps/attack_self(mob/user as mob)
 	var/obj/item/device/gps/t = ""
+	var/list/locallist = null
+	if(istype(src,/obj/item/device/gps/secure))
+		locallist = SPS_list.Copy()
+	else
+		locallist = GPS_list.Copy()
 	if(emped)
 		t += "ERROR"
 	else
 		t += "<BR><A href='?src=\ref[src];tag=1'>Set Tag</A> "
 		t += "<BR>Tag: [gpstag]"
 
-		for(var/obj/item/device/gps/G in GPS_list)
+		for(var/obj/item/device/gps/G in locallist)
 			var/turf/pos = get_turf(G)
 			var/area/gps_area = get_area(G)
 			var/tracked_gpstag = G.gpstag
@@ -101,3 +111,31 @@ var/list/GPS_list = list()
 	desc = "A more rugged looking GPS device. Useful for finding miners. Or their corpses."
 	icon_state = "gps-m"
 	gpstag = "MIN0"
+
+/obj/item/device/gps/secure
+	name = "secure positioning system"
+	desc = "A secure channel SPS with several features designed to keep its wearer safe."
+	icon_state = "sps"
+	gpstag = "SEC0"
+
+/obj/item/device/gps/secure/New()
+	SPS_list.Add(src)
+	gpstag = "SEC0"
+	name = "secure positioning system ([gpstag])"
+	overlays += "working"
+
+/obj/item/device/gps/secure/OnMobDeath(mob/wearer as mob)
+	..()
+	for(var/obj/item/device/gps/secure/S in SPS_list)
+		S.announce(wearer, src, "died")
+
+/obj/item/device/gps/secure/dropped(mob/wearer as mob)
+	..()
+	if(!istype(src.loc, /turf))
+		return
+	for(var/obj/item/device/gps/secure/S in SPS_list)
+		S.announce(wearer, src, "lost [wearer.gender == FEMALE ? "her" : "his"] SPS")
+
+/obj/item/device/gps/secure/proc/announce(var/mob/living/carbon/human/wearer, var/obj/item/device/gps/secure/SPS, var/reason)
+	src.visible_message("Your SPS beeps: <span class='warning'>Warning! [wearer] has [reason] at [get_area(SPS)].</span>")
+

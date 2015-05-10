@@ -12,6 +12,9 @@
 // Insulated pipes
 #define IPIPE_COLOR_RED   PIPE_COLOR_RED
 #define IPIPE_COLOR_BLUE  "#4285F4"
+/obj/machinery/atmospherics/pipe/process()
+	. = ..()
+	atmos_machines.Remove(src)
 
 /obj/machinery/atmospherics/pipe
 	var/datum/gas_mixture/air_temporary //used when reconstructing a pipeline that broke
@@ -152,9 +155,8 @@
 
 /obj/machinery/atmospherics/pipe/simple/process()
 	if(!parent) //This should cut back on the overhead calling build_network thousands of times per cycle
-		build_network()
-	else
-		. = PROCESS_KILL
+		. = ..()
+	atmos_machines.Remove(src)
 
 	/*if(!node1)
 		parent.mingle_with_turf(loc, volume)
@@ -199,7 +201,7 @@
 	// So, a pipe rated at 8,000 kPa in a 104kPa environment will explode at 8,104kPa.
 	var/datum/gas_mixture/environment = loc.return_air()
 
-	var/pressure_difference = pressure - environment.return_pressure()
+	var/pressure_difference = pressure - environment.pressure
 
 	// Burst check first.
 	if(pressure_difference > maximum_pressure && prob(1))
@@ -491,9 +493,8 @@
 
 /obj/machinery/atmospherics/pipe/manifold/process()
 	if(!parent)
-		..()
-	else
-		. = PROCESS_KILL
+		. = ..()
+	atmos_machines.Remove(src)
 	/*
 	if(!node1)
 		parent.mingle_with_turf(loc, 70)
@@ -726,9 +727,8 @@
 
 /obj/machinery/atmospherics/pipe/manifold4w/process()
 	if(!parent)
-		..()
-	else
-		. = PROCESS_KILL
+		. = ..()
+	atmos_machines.Remove(src)
 	/*
 	if(!node1)
 		parent.mingle_with_turf(loc, 70)

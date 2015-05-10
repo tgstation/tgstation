@@ -33,7 +33,7 @@
 		icon_state = "exposed"
 
 /obj/machinery/atmospherics/unary/portables_connector/process()
-	..()
+	. = ..()
 	if(!on)
 		return
 	if(!connected_device)

@@ -40,7 +40,10 @@ var/global/list/obj/machinery/telecomms/telecomms_list = list()
 
 /obj/machinery/telecomms/proc/relay_information(datum/signal/signal, filter, copysig, amount = 20)
 	// relay signal to all linked machinery that are of type [filter]. If signal has been sent [amount] times, stop sending
-
+	var/mob/mob = signal.data["mob"]
+	var/datum/language/language = signal.data["language"]
+	var/langname = (language ? language.name : "No language")
+	say_testing(mob, "[src] relay_information start, language [langname]")
 	if(!on)
 		return
 	var/send_count = 0
@@ -73,6 +76,7 @@ var/global/list/obj/machinery/telecomms/telecomms_list = list()
 			copy.data = list(
 
 			"mob" = signal.data["mob"],
+			"language" = signal.data["language"],
 			"mobtype" = signal.data["mobtype"],
 			"realname" = signal.data["realname"],
 			"name" = signal.data["name"],
@@ -232,16 +236,16 @@ var/global/list/obj/machinery/telecomms/telecomms_list = list()
 			var/datum/gas_mixture/env = L.return_air()
 			if(env.temperature < (heat_amt+T0C))
 
-				var/transfer_moles = 0.25 * env.total_moles()
+				var/transfer_moles = 0.25 * env.total_moles
 
 				var/datum/gas_mixture/removed = env.remove(transfer_moles)
 
 				if(removed)
 
-					var/heat_capacity = removed.heat_capacity()
+					var/heat_capacity = removed.heat_capacity
 					if(heat_capacity == 0 || heat_capacity == null)
 						heat_capacity = 1
-					removed.temperature = min((removed.temperature*heat_capacity + heating_power)/heat_capacity, 1000)
+					removed.set_temperature(min((removed.temperature*heat_capacity + heating_power)/heat_capacity, 1000))
 
 				env.merge(removed)
 /*
@@ -266,14 +270,17 @@ var/global/list/obj/machinery/telecomms/telecomms_list = list()
 	circuitboard = "/obj/item/weapon/circuitboard/telecomms/receiver"
 
 /obj/machinery/telecomms/receiver/receive_signal(datum/signal/signal)
-
+	var/mob/mob = signal.data["mob"]
+	var/datum/language/language = signal.data["language"]
+	var/langname = (language ? language.name : "No language")
+	say_testing(mob, "[src] received radio signal from us, language [langname]")
 	if(!on) // has to be on to receive messages
 		return
 	if(!signal)
 		return
 	if(!check_receive_level(signal))
 		return
-
+	say_testing(mob, "[src] is on, has signal, and receive is good")
 	if(signal.transmission_method == 2)
 
 		if(is_freq_listening(signal)) // detect subspace signals
@@ -284,6 +291,10 @@ var/global/list/obj/machinery/telecomms/telecomms_list = list()
 			var/can_send = relay_information(signal, "/obj/machinery/telecomms/hub") // ideally relay the copied information to relays
 			if(!can_send)
 				relay_information(signal, "/obj/machinery/telecomms/bus") // Send it to a bus instead, if it's linked to one
+		else
+			say_testing(mob, "[src] is not listening")
+	else
+		say_testing(mob, "bad transmission method")
 
 /obj/machinery/telecomms/receiver/proc/check_receive_level(datum/signal/signal)
 
@@ -548,7 +559,7 @@ var/global/list/obj/machinery/telecomms/telecomms_list = list()
 				update_logs()
 
 				var/datum/comm_log_entry/log = new
-
+				var/mob/M = signal.data["mob"]
 				// Copy the signal.data entries we want
 				log.parameters["mobtype"] = signal.data["mobtype"]
 				log.parameters["job"] = signal.data["job"]
@@ -557,7 +568,11 @@ var/global/list/obj/machinery/telecomms/telecomms_list = list()
 				log.parameters["name"] = signal.data["name"]
 				log.parameters["realname"] = signal.data["realname"]
 
-				log.parameters["uspeech"] = signal.data["languages"] & HUMAN //good enough
+				if(!istype(M, /mob/new_player) && M)
+					log.parameters["uspeech"] = M.universal_speak
+				else
+					log.parameters["uspeech"] = 0
+
 
 
 				// If the signal is still compressed, make the log entry gibberish

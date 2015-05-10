@@ -342,14 +342,14 @@
 		character.client << sound('sound/bomberman/start.ogg')
 		if(character.wear_suit)
 			var/obj/item/O = character.wear_suit
-			character.u_equip(O)
+			character.u_equip(O,1)
 			O.loc = character.loc
-			O.dropped(character)
+			//O.dropped(character)
 		if(character.head)
 			var/obj/item/O = character.head
-			character.u_equip(O)
+			character.u_equip(O,1)
 			O.loc = character.loc
-			O.dropped(character)
+			//O.dropped(character)
 		character.equip_to_slot_or_del(new /obj/item/clothing/head/helmet/space/bomberman(character), slot_head)
 		character.equip_to_slot_or_del(new /obj/item/clothing/suit/space/bomberman(character), slot_wear_suit)
 		character.equip_to_slot_or_del(new /obj/item/weapon/bomberman/(character), slot_s_store)
@@ -376,7 +376,7 @@
 			rank = character.mind.role_alt_title
 		//say("[character.real_name],[rank ? " [rank]," : " visitor," ] has arrived on the station.", "Arrivals Announcement Computer")
 		//Broadcast_Message(speaker, vmask, radio, message, name, job, realname, data, compression, zlevels, frequency)
-		Broadcast_Message(announcement_intercom, null, announcement_intercom, "[character.real_name],[rank ? " [rank]," : " visitor," ] has arrived on the station.", "Arrivals Announcement Computer", "Automated Announcement", "Arrivals Announcement Computer", 0, 0, list(0,1), 1459)
+		Broadcast_Message(announcement_intercom, all_languages[LANGUAGE_SOL_COMMON], null, announcement_intercom, "[character.real_name],[rank ? " [rank]," : " visitor," ] has arrived on the station.", "Arrivals Announcement Computer", "Automated Announcement", "Arrivals Announcement Computer", 0, 0, list(0,1), 1459)
 		//del(a)
 
 /mob/new_player/proc/LateChoices()
@@ -427,12 +427,12 @@ Round Duration: [round(hours)]h [round(mins)]m<br>"}
 			//if(chosen_species.language)
 				//new_character.add_language(chosen_species.language)
 
-	//var/datum/language/chosen_language
-/*	if(client.prefs.language)
-		chosen_language = all_languages[client.prefs.language]
+	var/datum/language/chosen_language
+	if(client.prefs.language)
+		chosen_language = all_languages["[client.prefs.language]"]
 	if(chosen_language)
-		if(is_alien_whitelisted(src, client.prefs.language) || !config.usealienwhitelist || !(chosen_language.flags & WHITELISTED))
-			new_character.add_language(client.prefs.language)*/
+		if(is_alien_whitelisted(src, client.prefs.language) || !config.usealienwhitelist || !(chosen_language.flags & WHITELISTED) )
+			new_character.add_language("[client.prefs.language]")
 	if(ticker.random_players || appearance_isbanned(src)) //disabling ident bans for now
 		new_character.setGender(pick(MALE, FEMALE))
 		client.prefs.real_name = random_name(new_character.gender)

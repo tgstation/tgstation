@@ -23,17 +23,16 @@
 	return
 
 /obj/machinery/atmospherics/unary/cold_sink/process()
-	..()
+	. = ..()
 	if(!on || !network)
-		return 0
-	var/air_heat_capacity = air_contents.heat_capacity()
-	var/combined_heat_capacity = current_heat_capacity + air_heat_capacity
+		return
+	var/combined_heat_capacity = current_heat_capacity + air_contents.heat_capacity
 	var/old_temperature = air_contents.temperature
 
 	if(combined_heat_capacity > 0)
-		var/combined_energy = current_temperature*current_heat_capacity + air_heat_capacity*air_contents.temperature
+		var/combined_energy = current_temperature*current_heat_capacity + air_contents.thermal_energy()
 		if(air_contents.temperature > current_temperature) //if it's hotter than we can cool it, cool it
-			air_contents.temperature = combined_energy/combined_heat_capacity
+			air_contents.set_temperature(combined_energy/combined_heat_capacity)
 
 	//todo: have current temperature affected. require power to bring down current temperature again
 

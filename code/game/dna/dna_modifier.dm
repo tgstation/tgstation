@@ -16,6 +16,7 @@
 	var/implant=null
 	var/ckey=null
 	var/mind=null
+	var/list/languages = list()
 
 /datum/dna2/record/proc/GetData()
 	var/list/ser=list("data" = null, "owner" = null, "label" = null, "type" = null, "ue" = 0)

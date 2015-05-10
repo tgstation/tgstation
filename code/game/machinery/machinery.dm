@@ -143,8 +143,6 @@ Class Procs:
 
 	var/inMachineList = 1 // For debugging.
 
-	languages = ALL
-
 /obj/machinery/cultify()
 	var/list/random_structure = list(
 		/obj/structure/cult/talisman,
@@ -156,7 +154,7 @@ Class Procs:
 	..()
 
 /obj/machinery/New()
-	machines += src
+	machines |= src
 	return ..()
 
 /obj/machinery/examine(mob/user)
@@ -166,9 +164,11 @@ Class Procs:
 
 /obj/machinery/Destroy()
 	if(src in machines)
-		machines -= src
+		machines.Remove(src)
 	if(src in power_machines)
-		power_machines -= src
+		power_machines.Remove(src)
+	if(src in atmos_machines)
+		atmos_machines.Remove(src)
 /*
 	if(component_parts)
 		for(var/atom/movable/AM in component_parts)
@@ -579,6 +579,10 @@ Class Procs:
 				return 1
 			else
 				return -1
+
+	if(ismultitool(O) && machine_flags & MULTITOOL_MENU)
+		update_multitool_menu(user)
+		return 1
 
 	if(!anchored && machine_flags & FIXED2WORK)
 		return user << "<span class='warning'>\The [src] must be anchored first!</span>"

@@ -182,7 +182,7 @@ Class Procs:
 	air_master.mark_zone_update(B)
 	//world << "equalized."
 
-	var/differential = A.air.return_pressure() - B.air.return_pressure()
+	var/differential = A.air.pressure - B.air.pressure
 	if(abs(differential) < zas_settings.Get(/datum/ZAS_Setting/airflow_lightest_pressure)) return
 
 	var/list/attracted
@@ -241,7 +241,7 @@ Class Procs:
 	ShareSpace(A.air,air,dbg_out)
 	air_master.mark_zone_update(A)
 
-	var/differential = A.air.return_pressure() - air.return_pressure()
+	var/differential = A.air.pressure - air.pressure
 	if(abs(differential) < zas_settings.Get(/datum/ZAS_Setting/airflow_lightest_pressure)) return
 
 	var/list/attracted = A.movables()
@@ -256,9 +256,9 @@ proc/ShareRatio(datum/gas_mixture/A, datum/gas_mixture/B, connecting_tiles)
 	var/ratio = sharing_lookup_table[6]
 		//WOOT WOOT TOUCH THIS AND YOU ARE A RETARD
 
-	var/A_full_heat_capacity = A.heat_capacity() * A.group_multiplier
+	var/A_full_heat_capacity = A.heat_capacity * A.group_multiplier
 
-	var/B_full_heat_capacity = B.heat_capacity() * B.group_multiplier
+	var/B_full_heat_capacity = B.heat_capacity * B.group_multiplier
 
 	var/temp_avg = (A.temperature * A_full_heat_capacity + B.temperature * B_full_heat_capacity) / (A_full_heat_capacity + B_full_heat_capacity)
 
@@ -267,21 +267,17 @@ proc/ShareRatio(datum/gas_mixture/A, datum/gas_mixture/B, connecting_tiles)
 		ratio = sharing_lookup_table[connecting_tiles]
 	//WOOT WOOT TOUCH THIS AND YOU ARE A RETARD
 
+	A.set_temperature((A.temperature - temp_avg) * (1-ratio) + temp_avg)
+
+	B.set_temperature((B.temperature - temp_avg) * (1-ratio) + temp_avg)
+
 	for(var/gasid in A.gases)
-		var/A_moles = A.get_moles_by_id(gasid)
-		var/B_moles = B.get_moles_by_id(gasid)
+		var/A_moles = A.gases[gasid]
+		var/B_moles = B.gases[gasid]
 		var/avg_gas = (A_moles * A.group_multiplier + B_moles * B.group_multiplier) / (A.group_multiplier + B.group_multiplier)
 
-		A.set_gas(gasid, avg_gas + ((A_moles - avg_gas) * (1 - ratio)), 0) //we don't use adjust_gas because it interferes with the group multiplier
-		B.set_gas(gasid, avg_gas + ((B_moles - avg_gas) * (1 - ratio)), 0)
-
-
-	A.temperature = max(0, (A.temperature - temp_avg) * (1-ratio) + temp_avg )
-
-	B.temperature = max(0, (B.temperature - temp_avg) * (1-ratio) + temp_avg )
-
-	A.update_values()
-	B.update_values()
+		A.set_gas(gasid, avg_gas + ((A_moles - avg_gas) * (1 - ratio))) //we don't use adjust_gas because it interferes with the group multiplier
+		B.set_gas(gasid, avg_gas + ((B_moles - avg_gas) * (1 - ratio)))
 
 	return A.compare(B)
 
@@ -303,7 +299,7 @@ proc/ShareSpace(datum/gas_mixture/A, list/unsimulated_tiles, dbg_output)
 		tileslen = avg_unsim.group_multiplier
 
 		if(dbg_output)
-			world << "O2: [unsim_mix.get_moles_by_id(OXYGEN)] N2: [unsim_mix.get_moles_by_id(NITROGEN)] Size: [share_size] Tiles: [tileslen]"
+			world << "O2: [unsim_mix.gases[OXYGEN]] N2: [unsim_mix.gases[NITROGEN]] Size: [share_size] Tiles: [tileslen]"
 
 	else if(istype(unsimulated_tiles, /list))
 		if(!unsimulated_tiles.len)
@@ -329,14 +325,14 @@ proc/ShareSpace(datum/gas_mixture/A, list/unsimulated_tiles, dbg_output)
 
 	var/ratio = sharing_lookup_table[6]
 
-	var/old_pressure = A.return_pressure()
+	var/old_pressure = A.pressure
 
-	var/full_heat_capacity = A.heat_capacity() * A.group_multiplier
+	var/full_heat_capacity = A.heat_capacity * A.group_multiplier
 
 	var/temp_avg = 0
 
-	if((full_heat_capacity + unsim_mix.heat_capacity()) > 0)
-		temp_avg = (A.temperature * full_heat_capacity + unsim_mix.temperature * unsim_mix.heat_capacity()) / (full_heat_capacity + unsim_mix.heat_capacity())
+	if((full_heat_capacity + unsim_mix.heat_capacity) > 0)
+		temp_avg = (A.temperature * full_heat_capacity + unsim_mix.temperature * unsim_mix.heat_capacity) / (full_heat_capacity + unsim_mix.heat_capacity)
 
 	if(sharing_lookup_table.len >= tileslen) //6 or more interconnecting tiles will max at 42% of air moved per tick.
 		ratio = sharing_lookup_table[tileslen]
@@ -345,28 +341,26 @@ proc/ShareSpace(datum/gas_mixture/A, list/unsimulated_tiles, dbg_output)
 		world << "Ratio: [ratio]"
 		//world << "Avg O2: [oxy_avg] N2: [nit_avg]"
 
+	A.set_temperature(max(TCMB, (A.temperature - temp_avg) * (1 - ratio) + temp_avg ))
+
 	for(var/gasid in A.gases)
-		var/gas_moles = A.get_moles_by_id(gasid)
-		var/avg_gas = (gas_moles + unsim_mix.get_moles_by_id(gasid)*share_size) / (size + share_size)
+		var/gas_moles = A.gases[gasid]
+		var/avg_gas = (gas_moles + unsim_mix.gases[gasid]*share_size) / (size + share_size)
 		A.set_gas(gasid, (gas_moles - avg_gas) * (1 - ratio) + avg_gas, 0 )
 
-	A.temperature = max(TCMB, (A.temperature - temp_avg) * (1 - ratio) + temp_avg )
+	if(dbg_output) world << "Result: [abs(old_pressure - A.pressure)] kPa"
 
-	A.update_values()
-
-	if(dbg_output) world << "Result: [abs(old_pressure - A.return_pressure())] kPa"
-
-	return abs(old_pressure - A.return_pressure())
+	return abs(old_pressure - A.pressure)
 
 
 proc/ShareHeat(datum/gas_mixture/A, datum/gas_mixture/B, connecting_tiles)
 	//This implements a simplistic version of the Stefan-Boltzmann law.
 	var/energy_delta = ((A.temperature - B.temperature) ** 4) * 5.6704e-8 * connecting_tiles * 2.5
-	var/maximum_energy_delta = max(0, min(A.temperature * A.heat_capacity() * A.group_multiplier, B.temperature * B.heat_capacity() * B.group_multiplier))
+	var/maximum_energy_delta = max(0, min(A.temperature * A.heat_capacity * A.group_multiplier, B.temperature * B.heat_capacity * B.group_multiplier))
 	if(maximum_energy_delta > abs(energy_delta))
 		if(energy_delta < 0)
 			maximum_energy_delta *= -1
 		energy_delta = maximum_energy_delta
 
-	A.temperature -= energy_delta / (A.heat_capacity() * A.group_multiplier)
-	B.temperature += energy_delta / (B.heat_capacity() * B.group_multiplier)
+	A.set_temperature(A.temperature - energy_delta / (A.heat_capacity * A.group_multiplier))
+	B.set_temperature(B.temperature + energy_delta / (B.heat_capacity * B.group_multiplier))

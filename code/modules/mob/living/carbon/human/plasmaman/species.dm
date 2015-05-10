@@ -17,6 +17,8 @@
 	heat_level_2 = 400  // Heat damage level 2 above this point.
 	heat_level_3 = 500  // Heat damage level 3 above this point.
 
+	species_toxic_to_breathe = list()
+
 /datum/species/plasmaman/handle_speech(message, mob/living/carbon/human/H)
 	return ..(replacetext(message, "s", stutter("ss")), H)
 
@@ -24,10 +26,10 @@
 	H.fire_sprite = "Plasmaman"
 
 	// Unequip existing suits and hats.
-	H.u_equip(H.wear_suit)
-	H.u_equip(H.head)
+	H.u_equip(H.wear_suit,1)
+	H.u_equip(H.head,1)
 	if(H.mind.assigned_role!="Clown")
-		H.u_equip(H.wear_mask)
+		H.u_equip(H.wear_mask,1)
 
 	H.equip_or_collect(new /obj/item/clothing/mask/breath(H), slot_wear_mask)
 	var/suit=/obj/item/clothing/suit/space/plasmaman
@@ -120,14 +122,14 @@
 	var/N2O_emote_min = 0.15
 	var/plasma_used = 0
 	var/nitrogen_used = 0
-	var/breath_pressure = (breath.total_moles()*R_IDEAL_GAS_EQUATION*breath.temperature)/BREATH_VOLUME
+	var/breath_pressure = (breath.total_moles*R_IDEAL_GAS_EQUATION*breath.temperature)/BREATH_VOLUME
 
 	// Partial pressure of plasma
-	var/Plasma_pp = (breath.get_moles_by_id(PLASMA)/breath.total_moles())*breath_pressure
+	var/Plasma_pp = (breath.gases[PLASMA]/breath.total_moles)*breath_pressure
 	// And CO2, lets say a PP of more than 10 will be bad (It's a little less really, but eh, being passed out all round aint no fun)
-	var/CO2_pp = (breath.get_moles_by_id(CARBON_DIOXIDE)/breath.total_moles())*breath_pressure // Tweaking to fit the hacky bullshit I've done with atmo -- TLE
+	var/CO2_pp = (breath.gases[CARBON_DIOXIDE]/breath.total_moles)*breath_pressure // Tweaking to fit the hacky bullshit I've done with atmo -- TLE
 
-	var/N2O_pp = (breath.get_moles_by_id(NITROUS_OXIDE)/breath.total_moles())*breath_pressure
+	var/N2O_pp = (breath.gases[NITROUS_OXIDE]/breath.total_moles)*breath_pressure
 
 	if(Plasma_pp < safe_plasma_min)
 		if(prob(20))
@@ -137,7 +139,7 @@
 			var/ratio = safe_plasma_min/Plasma_pp
 			H.adjustOxyLoss(min(5*ratio, HUMAN_MAX_OXYLOSS)) // Don't fuck them up too fast (space only does HUMAN_MAX_OXYLOSS after all!)
 			H.failed_last_breath = 1
-			plasma_used = breath.get_moles_by_id(PLASMA)*ratio/6
+			plasma_used = breath.gases[PLASMA]*ratio/6
 		else
 			H.adjustOxyLoss(HUMAN_MAX_OXYLOSS)
 			H.failed_last_breath = 1
@@ -146,12 +148,12 @@
 	else								// We're in safe limits
 		H.failed_last_breath = 0
 		H.adjustOxyLoss(-5)
-		plasma_used = breath.get_moles_by_id(PLASMA)/6
+		plasma_used = breath.gases[PLASMA]/6
 		H.oxygen_alert = 0
 
-	breath.adjust_gas(PLASMA, -plasma_used, 0)
-	breath.adjust_gas(NITROGEN, -nitrogen_used, 0)
-	breath.adjust_gas(CARBON_DIOXIDE, plasma_used, 0)
+	breath.adjust_gas(PLASMA, -plasma_used)
+	breath.adjust_gas(NITROGEN, -nitrogen_used)
+	breath.adjust_gas(CARBON_DIOXIDE, plasma_used)
 
 	//CO2 does not affect failed_last_breath. So if there was enough oxygen in the air but too much co2, this will hurt you, but only once per 4 ticks, instead of once per tick.
 	if(CO2_pp > safe_co2_max)
@@ -177,7 +179,7 @@
 			if(prob(20))
 				spawn(0)
 					H.emote(pick("giggle", "laugh"))
-	breath.adjust_gas(NITROUS_OXIDE, -breath.get_moles_by_id(NITROUS_OXIDE))
+	breath.adjust_gas(NITROUS_OXIDE, -breath.gases[NITROUS_OXIDE])
 
 	if( (abs(310.15 - breath.temperature) > 50) && !(M_RESIST_HEAT in H.mutations)) // Hot air hurts :(
 		if(H.status_flags & GODMODE)

@@ -128,7 +128,11 @@ var/list/forbidden_varedit_object_types = list(
 /client/proc/mod_list(var/list/L)
 	if(!check_rights(R_VAREDIT))	return
 
-	if(!istype(L,/list)) src << "Not a List."
+	if(!istype(L,/list))
+		if(alert("Make a new list?", "Not a List.", "Yes", "No") == "No")
+			return
+		else
+			L = list()
 
 	var/list/locked = list("vars", "key", "ckey", "client", "firemut", "ishulk", "telekinesis", "xray", "virus", "viruses", "cuffed", "ka", "last_eaten", "urine", "poo", "icon", "icon_state")
 	var/list/names = sortList(L)
@@ -241,28 +245,76 @@ var/list/forbidden_varedit_object_types = list(
 			return
 
 		if("text")
-			L[L.Find(variable)] = input("Enter new text:","Text") as message
+			var/thing = L["[variable]"]
+			var/newText = input("Enter new text:","Text") as null|message
+			if(!newText)
+				return
+			if(!isnull(thing))
+				L["[variable]"] = newText
+			else
+				L[L.Find(variable)] = newText
 
 		if("num")
-			L[L.Find(variable)] = input("Enter new number:","Num") as num
+			var/thing = L["[variable]"]
+			var/newNum = input("Enter new number:","Num") as null|num
+			if(!newNum)
+				return
+			if(!isnull(thing))
+				L["[variable]"] = newNum
+			else
+				L[L.Find(variable)] = newNum
 
 		if("type")
-			L[L.Find(variable)] = input("Enter type:","Type") in typesof(/obj,/mob,/area,/turf)
+			var/thing = L["[variable]"]
+			var/newType = input("Enter type:","Type") in typesof(/obj,/mob,/area,/turf)
+			if(!isnull(thing))
+				L["[variable]"] = newType
+			else
+				L[L.Find(variable)] = newType
 
 		if("reference")
-			L[L.Find(variable)] = input("Select reference:","Reference") as mob|obj|turf|area in world
+			var/thing = L["[variable]"]
+			var/newRef = input("Select reference:","Reference") as null|mob|obj|turf|area in world
+			if(!newRef)
+				return
+			if(!isnull(thing))
+				L["[variable]"] = newRef
+			else
+				L[L.Find(variable)] = newRef
 
 		if("mob reference")
-			L[L.Find(variable)] = input("Select reference:","Reference") as mob in world
+			var/thing = L["[variable]"]
+			var/newMob = input("Select reference:","Reference") as null|mob in world
+			if(!newMob)
+				return
+			if(!isnull(thing))
+				L["[variable]"] = newMob
+			else
+				L[L.Find(variable)] = newMob
 
 		if("file")
-			L[L.Find(variable)] = input("Pick file:","File") as file
+			var/thing = L["[variable]"]
+			var/newFile = input("Pick file:","File") as file
+			if(!isnull(thing))
+				L["[variable]"] = newFile
+			else
+				L[L.Find(variable)] = newFile
 
 		if("icon")
-			L[L.Find(variable)] = input("Pick icon:","Icon") as icon
+			var/thing = L["[variable]"]
+			var/newIcon = input("Pick icon:","Icon") as icon
+			if(!isnull(thing))
+				L["[variable]"] = newIcon
+			else
+				L[L.Find(variable)] = newIcon
 
 		if("marked datum")
-			L[L.Find(variable)] = holder.marked_datum
+			var/thing = L["[variable]"]
+			var/newThing = holder.marked_datum
+			if(!isnull(thing))
+				L["[variable]"] = newThing
+			else
+				L[L.Find(variable)] = newThing
 
 
 /client/proc/modify_variables(var/atom/O, var/param_var_name = null, var/autodetect_class = 0)

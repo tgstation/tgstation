@@ -29,18 +29,20 @@
 
 	var/radio_filter_out
 	var/radio_filter_in
+	
+	machine_flags = MULTITOOL_MENU
 
-	on
-		on = 1
-		icon_state = "out"
+/obj/machinery/atmospherics/unary/vent_pump/on
+	on = 1
+	icon_state = "out"
 
-	siphon
-		pump_direction = 0
-		icon_state = "off"
+/obj/machinery/atmospherics/unary/vent_pump/siphon
+	pump_direction = 0
+	icon_state = "off"
 
-		on
-			on = 1
-			icon_state = "in"
+/obj/machinery/atmospherics/unary/vent_pump/siphon/on
+	on = 1
+	icon_state = "in"
 
 /obj/machinery/atmospherics/unary/vent_pump/New()
 	..()
@@ -58,7 +60,7 @@
 
 /obj/machinery/atmospherics/unary/vent_pump/high_volume/New()
 	..()
-	air_contents.volume = 1000
+	air_contents.set_volume(1000)
 
 /obj/machinery/atmospherics/unary/vent_pump/update_icon()
 	if(welded)
@@ -74,7 +76,7 @@
 	return
 
 /obj/machinery/atmospherics/unary/vent_pump/process()
-	..()
+	. = ..()
 	CHECK_DISABLED(vents)
 	if (!node)
 		return // Turning off the vent is a PITA. - N3X
@@ -84,16 +86,16 @@
 
 	//broadcast_status() // from now air alarm/control computer should request update purposely --rastaf0
 	if(!on)
-		return 0
+		return
 
 	if(welded)
-		return 0
+		return
 
 	// New GC does this sometimes
 	if(!loc) return
 
 	var/datum/gas_mixture/environment = loc.return_air()
-	var/environment_pressure = environment.return_pressure()
+	var/environment_pressure = environment.pressure
 
 	if(pump_direction) //internal -> external
 		var/pressure_delta = 10000
@@ -101,7 +103,7 @@
 		if(pressure_checks&1)
 			pressure_delta = min(pressure_delta, (external_pressure_bound - environment_pressure))
 		if(pressure_checks&2)
-			pressure_delta = min(pressure_delta, (air_contents.return_pressure() - internal_pressure_bound))
+			pressure_delta = min(pressure_delta, (air_contents.pressure - internal_pressure_bound))
 
 		if(pressure_delta > 0.1)
 			if(air_contents.temperature > 0)
@@ -119,7 +121,7 @@
 		if(pressure_checks&1)
 			pressure_delta = min(pressure_delta, (environment_pressure - external_pressure_bound))
 		if(pressure_checks&2)
-			pressure_delta = min(pressure_delta, (internal_pressure_bound - air_contents.return_pressure()))
+			pressure_delta = min(pressure_delta, (internal_pressure_bound - air_contents.pressure))
 
 		if(pressure_delta > 0.1)
 			if(environment.temperature > 0)
@@ -337,9 +339,6 @@
 		else
 			user << "<span class='notice'>You need more welding fuel to complete this task.</span>"
 			return 1
-	if(istype(W, /obj/item/device/multitool))
-		update_multitool_menu(user)
-		return 1
 	if (!istype(W, /obj/item/weapon/wrench))
 		return ..()
 	if (!(stat & NOPOWER) && on)

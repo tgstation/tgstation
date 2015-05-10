@@ -384,6 +384,8 @@ var/arena_top_score = 0
 
 var/endgame_info_logged = 0
 
+var/explosion_newmethod = 1	// 1 = explosions take walls and obstacles into account; 0 = explosions pass through walls and obstacles without any impediments;
+
 //PDA games vars
 //Snake II leaderboard
 var/global/list/snake_station_highscores = list()

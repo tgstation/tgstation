@@ -74,7 +74,8 @@
 	var/supernatural = 0
 	var/purge = 0
 
-	languages = ALL
+	universal_speak = 1
+	universal_understand = 1
 
 /mob/living/simple_animal/apply_beam_damage(var/obj/effect/beam/B)
 	var/lastcheck=last_beamchecks["\ref[B]"]
@@ -204,41 +205,41 @@
 				bodytemperature += ((Environment.temperature - bodytemperature) / 5)
 
 			if(min_oxy)
-				if(Environment.get_moles_by_id(OXYGEN) < min_oxy)
+				if(Environment.gases[OXYGEN] < min_oxy)
 					atmos_suitable = 0
 					oxygen_alert = 1
 				else
 					oxygen_alert = 0
 
 			if(max_oxy)
-				if(Environment.get_moles_by_id(OXYGEN) > max_oxy)
+				if(Environment.gases[OXYGEN] > max_oxy)
 					atmos_suitable = 0
 
 			if(min_tox)
-				if(Environment.get_moles_by_id(PLASMA) < min_tox)
+				if(Environment.gases[PLASMA] < min_tox)
 					atmos_suitable = 0
 
 			if(max_tox)
-				if(Environment.get_moles_by_id(PLASMA) > max_tox)
+				if(Environment.gases[PLASMA] > max_tox)
 					atmos_suitable = 0
 					toxins_alert = 1
 				else
 					toxins_alert = 0
 
 			if(min_n2)
-				if(Environment.get_moles_by_id(NITROGEN) < min_n2)
+				if(Environment.gases[NITROGEN] < min_n2)
 					atmos_suitable = 0
 
 			if(max_n2)
-				if(Environment.get_moles_by_id(NITROGEN) > max_n2)
+				if(Environment.gases[NITROGEN] > max_n2)
 					atmos_suitable = 0
 
 			if(min_co2)
-				if(Environment.get_moles_by_id(CARBON_DIOXIDE) < min_co2)
+				if(Environment.gases[CARBON_DIOXIDE] < min_co2)
 					atmos_suitable = 0
 
 			if(max_co2)
-				if(Environment.get_moles_by_id(CARBON_DIOXIDE) > max_co2)
+				if(Environment.gases[CARBON_DIOXIDE] > max_co2)
 					atmos_suitable = 0
 
 	//Atmos effect
@@ -593,3 +594,8 @@
 		return
 	gib()
 	return
+
+/mob/living/simple_animal/say_understands(var/mob/other,var/datum/language/speaking = null)
+	if(issilicon(other))
+		return 1
+	return ..()

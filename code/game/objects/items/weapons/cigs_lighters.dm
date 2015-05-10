@@ -121,7 +121,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 
 /obj/item/clothing/mask/cigarette/dropped(mob/user)
 	if(lit)
-		if(user && loc == user)
+		if(user && loc == user && !luminosity)
 			user.SetLuminosity(user.luminosity - lit_brightness)
 		else if(isturf(loc))
 			SetLuminosity(0)
@@ -253,7 +253,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 		processing_objects.Remove(src)
 		if(ismob(loc))
 			M << "<span class='notice'>Your [name] goes out.</span>"
-			M.u_equip(src)	//un-equip it so the overlays can update
+			M.u_equip(src,0)	//un-equip it so the overlays can update
 			M.update_inv_wear_mask(0)
 		del(src)
 		return
@@ -601,7 +601,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 
 
 /obj/item/weapon/lighter/dropped(mob/user)
-	if(lit)
+	if(lit && !luminosity)
 		user.SetLuminosity(user.luminosity-2)
 		SetLuminosity(2)
 	return

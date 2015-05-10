@@ -16,6 +16,11 @@ var/global/list/autolathe_recipes = list( \
 		new /obj/item/weapon/solder(),\
 		new /obj/item/clothing/head/welding(), \
 		new /obj/item/weapon/stock_parts/console_screen(), \
+		new /obj/item/weapon/stock_parts/capacitor(), \
+		new /obj/item/weapon/stock_parts/scanning_module(), \
+		new /obj/item/weapon/stock_parts/manipulator(), \
+		new /obj/item/weapon/stock_parts/micro_laser(), \
+		new /obj/item/weapon/stock_parts/matter_bin(), \
 		getFromPool(/obj/item/stack/sheet/metal,null), \
 		new /obj/item/stack/sheet/glass/glass(), \
 		new /obj/item/stack/sheet/glass/rglass(), \

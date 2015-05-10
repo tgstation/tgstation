@@ -2,6 +2,7 @@
 	name = "mineral wall"
 	desc = "This shouldn't exist"
 	icon_state = ""
+	explosion_block = 1
 	var/last_event = 0
 	var/active = null
 
@@ -29,6 +30,7 @@
 	icon_state = "diamond0"
 	walltype = "diamond"
 	mineral = "diamond"
+	explosion_block = 3
 
 /turf/simulated/wall/mineral/clown
 	name = "bananium wall"
@@ -43,6 +45,7 @@
 	icon_state = "sandstone0"
 	walltype = "sandstone"
 	mineral = "sandstone"
+	explosion_block = 0
 
 /turf/simulated/wall/mineral/uranium
 	name = "uranium wall"
@@ -50,6 +53,7 @@
 	icon_state = "uranium0"
 	walltype = "uranium"
 	mineral = "uranium"
+	explosion_block = 2
 
 /turf/simulated/wall/mineral/uranium/proc/radiate()
 	if(!active)
@@ -102,7 +106,7 @@
 		var/datum/gas_mixture/napalm = new
 		var/toxinsToDeduce = 20
 		napalm.adjust_gas(PLASMA, toxinsToDeduce)
-		napalm.temperature = 400+T0C
+		napalm.set_temperature(400+T0C)
 		target_tile.assume_air(napalm)
 		spawn (0) target_tile.hotspot_expose(temperature, 400,surfaces=1)
 	for(var/obj/structure/falsewall/plasma/F in range(3,src))//Hackish as fuck, but until fire_act works, there is nothing I can do -Sieve

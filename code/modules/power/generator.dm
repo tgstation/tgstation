@@ -75,8 +75,8 @@
 	lastgen = 0
 
 	if(air1 && air2)
-		var/air1_heat_capacity = air1.heat_capacity()
-		var/air2_heat_capacity = air2.heat_capacity()
+		var/air1_heat_capacity = air1.heat_capacity
+		var/air2_heat_capacity = air2.heat_capacity
 		var/delta_temperature = abs(air2.temperature - air1.temperature)
 
 		if(delta_temperature > 0 && air1_heat_capacity > 0 && air2_heat_capacity > 0)
@@ -86,11 +86,11 @@
 			lastgen = energy_transfer*efficiency*0.05
 
 			if(air2.temperature > air1.temperature)
-				air2.temperature = air2.temperature - energy_transfer/air2_heat_capacity
-				air1.temperature = air1.temperature + heat/air1_heat_capacity
+				air2.set_temperature(air2.temperature - energy_transfer/air2_heat_capacity)
+				air1.set_temperature(air1.temperature + heat/air1_heat_capacity)
 			else
-				air2.temperature = air2.temperature + heat/air2_heat_capacity
-				air1.temperature = air1.temperature - energy_transfer/air1_heat_capacity
+				air2.set_temperature(air2.temperature + heat/air2_heat_capacity)
+				air1.set_temperature(air1.temperature - energy_transfer/air1_heat_capacity)
 
 			//Transfer the air
 			circ1.air2.merge(air1)
@@ -152,14 +152,14 @@
 		// C:\Users\Rob\Documents\Projects\vgstation13\code\modules\power\generator.dm:142: t += "Output : [round(lastgen)] W<BR><BR>"
 		t += {"Output : [round(lastgen)] W<BR>
 <B>Primary Circulator (top or right)</B>
-Inlet Pressure: [round(circ1.air1.return_pressure(), 0.1)] kPa
+Inlet Pressure: [round(circ1.air1.pressure, 0.1)] kPa
 Inlet Temperature: [round(circ1.air1.temperature, 0.1)] K
-Outlet Pressure: [round(circ1.air2.return_pressure(), 0.1)] kPa
+Outlet Pressure: [round(circ1.air2.pressure, 0.1)] kPa
 Outlet Temperature: [round(circ1.air2.temperature, 0.1)] K<BR>
 <B>Secondary Circulator (bottom or left)</B><BR>
-Inlet Pressure: [round(circ2.air1.return_pressure(), 0.1)] kPa
+Inlet Pressure: [round(circ2.air1.pressure, 0.1)] kPa
 Inlet Temperature: [round(circ2.air1.temperature, 0.1)] K
-Outlet Pressure: [round(circ2.air2.return_pressure(), 0.1)] kPa
+Outlet Pressure: [round(circ2.air2.pressure, 0.1)] kPa
 Outlet Temperature: [round(circ2.air2.temperature, 0.1)] K<BR>"}
 		// END AUTOFIX
 	else

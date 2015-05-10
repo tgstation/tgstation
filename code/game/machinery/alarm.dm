@@ -209,14 +209,14 @@
 
 		var/datum/gas_mixture/gas = location.remove_air(0.25 * environment.total_moles)
 		if(gas)
-			var/heat_capacity = gas.heat_capacity()
+			var/heat_capacity = gas.heat_capacity
 			var/energy_used = min(abs(heat_capacity * (gas.temperature - target_temperature)), MAX_ENERGY_CHANGE)
 
 			// We need to cool ourselves.
 			if (environment.temperature > target_temperature)
-				gas.temperature -= energy_used / heat_capacity
+				gas.set_temperature(gas.temperature - energy_used / heat_capacity)
 			else
-				gas.temperature += energy_used / heat_capacity
+				gas.set_temperature(gas.temperature + energy_used / heat_capacity)
 
 			environment.merge(gas)
 
@@ -241,7 +241,7 @@
 		danger_averted_confidence = 0 // Reset counter.
 		use_power = 2
 
-	if (mode==AALARM_MODE_CYCLE && environment.return_pressure()<ONE_ATMOSPHERE*0.05)
+	if (mode==AALARM_MODE_CYCLE && environment.pressure<ONE_ATMOSPHERE*0.05)
 		mode=AALARM_MODE_FILL
 		apply_mode()
 
@@ -267,7 +267,7 @@
 		return 0
 
 	var/partial_pressure = R_IDEAL_GAS_EQUATION*environment.temperature/environment.volume
-	var/environment_pressure = environment.return_pressure()
+	var/environment_pressure = environment.pressure
 
 	var/pressure_dangerlevel = get_danger_level(environment_pressure, TLV["pressure"])
 	var/temperature_dangerlevel = get_danger_level(environment.temperature, TLV["temperature"])
@@ -277,7 +277,7 @@
 		var/tempid = gasid
 		if(!(tempid in list(OXYGEN, NITROGEN, CARBON_DIOXIDE, PLASMA)))
 			tempid = "other"
-		gas_danger_levels += get_danger_level(environment.get_moles_by_id(gasid) * partial_pressure, TLV[tempid])
+		gas_danger_levels += get_danger_level(environment.gases[gasid] * partial_pressure, TLV[tempid])
 
 	return max(
 		pressure_dangerlevel,
@@ -481,37 +481,37 @@
 /obj/machinery/alarm/proc/ui_air_status()
 	var/turf/location = get_turf(src)
 	var/datum/gas_mixture/environment = location.return_air()
-	var/total = environment.total_moles()
+	var/total = environment.total_moles
 	if(total==0)
 		return null
 
 	var/partial_pressure = R_IDEAL_GAS_EQUATION*environment.temperature/environment.volume
 
 	var/list/current_settings = TLV["pressure"]
-	var/environment_pressure = environment.return_pressure()
+	var/environment_pressure = environment.pressure
 	var/pressure_dangerlevel = get_danger_level(environment_pressure, current_settings)
 
 	current_settings = TLV[OXYGEN]
-	var/oxygen_dangerlevel = get_danger_level(environment.get_moles_by_id(OXYGEN)*partial_pressure, current_settings)
-	var/oxygen_percent = round(environment.get_moles_by_id(OXYGEN) / total * 100, 2)
+	var/oxygen_dangerlevel = get_danger_level(environment.gases[OXYGEN]*partial_pressure, current_settings)
+	var/oxygen_percent = round(environment.gases[OXYGEN] / total * 100, 2)
 
 	current_settings = TLV[NITROGEN]
-	var/nitrogen_dangerlevel = get_danger_level(environment.get_moles_by_id(NITROGEN)*partial_pressure, current_settings)
-	var/nitrogen_percent = round(environment.get_moles_by_id(NITROGEN) / total * 100, 2)
+	var/nitrogen_dangerlevel = get_danger_level(environment.gases[NITROGEN]*partial_pressure, current_settings)
+	var/nitrogen_percent = round(environment.gases[NITROGEN] / total * 100, 2)
 
 	current_settings = TLV[CARBON_DIOXIDE]
-	var/co2_dangerlevel = get_danger_level(environment.get_moles_by_id(CARBON_DIOXIDE)*partial_pressure, current_settings)
-	var/co2_percent = round(environment.get_moles_by_id(CARBON_DIOXIDE) / total * 100, 2)
+	var/co2_dangerlevel = get_danger_level(environment.gases[CARBON_DIOXIDE]*partial_pressure, current_settings)
+	var/co2_percent = round(environment.gases[CARBON_DIOXIDE] / total * 100, 2)
 
 	current_settings = TLV[PLASMA]
-	var/plasma_dangerlevel = get_danger_level(environment.get_moles_by_id(PLASMA)*partial_pressure, current_settings)
-	var/plasma_percent = round(environment.get_moles_by_id(PLASMA) / total * 100, 2)
+	var/plasma_dangerlevel = get_danger_level(environment.gases[PLASMA]*partial_pressure, current_settings)
+	var/plasma_percent = round(environment.gases[PLASMA] / total * 100, 2)
 
 	current_settings = TLV["other"]
 	var/other_moles = 0.0
 	for(var/gasid in environment.gases)
 		if(!(gasid in list(OXYGEN, NITROGEN, CARBON_DIOXIDE, PLASMA)))
-			other_moles += environment.get_moles_by_id(gasid)
+			other_moles += environment.gases[gasid]
 	var/other_dangerlevel = get_danger_level(other_moles*partial_pressure, current_settings)
 
 	current_settings = TLV["temperature"]

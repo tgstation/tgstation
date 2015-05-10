@@ -406,7 +406,7 @@
 	if(!item) return //Grab processing has a chance of returning null
 
 	//item.layer = initial(item.layer)
-	u_equip(item)
+	u_equip(item,1)
 	update_icons()
 
 //	if (istype(usr, /mob/living/carbon/monkey)) //Check if a monkey is throwing. Modify/remove this line as required.
@@ -415,8 +415,8 @@
 		item.loc = T
 		if(src.client)
 			src.client.screen -= item
-		if(istype(item, /obj/item))
-			item:dropped(src) // let it know it's been dropped
+		//if(istype(item, /obj/item))
+			//item:dropped(src) // let it know it's been dropped
 
 	//actually throw it!
 	if (item)
@@ -466,18 +466,28 @@
 		return 1
 	return
 
-/mob/living/carbon/u_equip(obj/item/W as obj)
+/mob/living/carbon/u_equip(obj/item/W as obj, dropped = 1)
+	var/success = 0
 	if(!W)	return 0
-
 	else if (W == handcuffed)
 		handcuffed = null
+		success = 1
 		update_inv_handcuffed()
 
 	else if (W == legcuffed)
 		legcuffed = null
+		success = 1
 		update_inv_legcuffed()
 	else
-	 ..()
+		..()
+	if(success)
+		if (W)
+			if (client)
+				client.screen -= W
+			W.loc = loc
+			if(dropped) W.dropped(src)
+			if(W)
+				W.layer = initial(W.layer)
 
 	return
 /*
@@ -665,3 +675,9 @@
 /mob/living/carbon/proc/isInCrit()
 	// Health is in deep shit and we're not already dead
 	return (health < config.health_threshold_crit) && stat != 2
+
+/mob/living/carbon/get_default_language()
+	if(default_language)
+		return default_language
+
+	return null

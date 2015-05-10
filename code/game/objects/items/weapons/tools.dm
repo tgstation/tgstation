@@ -251,12 +251,12 @@
 		if (user.client)
 			user.client.screen -= src
 		if (user.r_hand == src)
-			user.u_equip(src)
+			user.u_equip(src,0)
 		else
-			user.u_equip(src)
+			user.u_equip(src,0)
 		src.master = F
 		src.layer = initial(src.layer)
-		user.u_equip(src)
+		user.u_equip(src,0)
 		if (user.client)
 			user.client.screen -= src
 		src.loc = F

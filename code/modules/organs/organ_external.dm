@@ -584,7 +584,7 @@ Note that amputating the affected organ does in fact remove the infection from t
 
 		if(slots_to_drop && slots_to_drop.len)
 			for(var/slot_id in slots_to_drop)
-				owner.u_equip(owner.get_item_by_slot(slot_id))
+				owner.u_equip(owner.get_item_by_slot(slot_id),1)
 
 		destspawn = 1
 		//Robotic limbs explode if sabotaged.
@@ -806,7 +806,7 @@ Note that amputating the affected organ does in fact remove the infection from t
 		var/emote_scream = pick("screams in pain and", "lets out a sharp cry and", "cries out and")
 		owner.emote("me", 1, "[(owner.species && owner.species.flags & NO_PAIN) ? "" : emote_scream ] drops what they were holding in their [hand_name]!")
 	if(is_malfunctioning())
-		owner.u_equip(c_hand)
+		owner.u_equip(c_hand,1)
 		owner.emote("me", 1, "drops what they were holding, their [hand_name] malfunctioning!")
 		var/datum/effect/effect/system/spark_spread/spark_system = new /datum/effect/effect/system/spark_spread()
 		spark_system.set_up(5, 0, owner)
@@ -814,6 +814,8 @@ Note that amputating the affected organ does in fact remove the infection from t
 		spark_system.start()
 		spawn(10)
 			del(spark_system)
+		if(!isturf(c_hand.loc) || !istype(c_hand.loc, /obj/structure/closet))
+			c_hand.loc = get_turf(c_hand)
 
 /datum/organ/external/proc/embed(var/obj/item/weapon/W, var/silent = 0)
 	if(!silent)

@@ -116,6 +116,8 @@
 	var/frequency = 0
 	var/id_tag = null
 	var/datum/radio_frequency/radio_connection
+	
+	machine_flags = MULTITOOL_MENU
 
 /obj/machinery/atmospherics/binary/valve/digital/attack_ai(mob/user as mob)
 	src.add_hiddenprint(user)
@@ -147,10 +149,6 @@
 		<li>[format_tag("ID Tag","id_tag","set_id")]</a></li>
 	</ul>
 	"}
-
-/obj/machinery/atmospherics/binary/valve/digital/process()
-	..()
-	return 0
 
 /obj/machinery/atmospherics/binary/valve/digital/Topic(href, href_list)
 	if(..())
@@ -218,9 +216,6 @@
 
 // Just for digital valves.
 /obj/machinery/atmospherics/binary/valve/digital/attackby(var/obj/item/W as obj, var/mob/user as mob)
-	if(istype(W, /obj/item/device/multitool))
-		update_multitool_menu(user)
-		return 1
 	if(src.frequency && istype(W, /obj/item/weapon/wrench))
 		user << "<span class='warning'>You cannot unwrench this [src], it's digitally connected to another device.</span>"
 		return 1

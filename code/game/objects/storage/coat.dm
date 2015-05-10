@@ -142,13 +142,13 @@
 			user << "<span class='warning'>The [src] cannot hold \the [W] as it's a storage item of the same size.</span>"
 			return //To prevent the stacking of the same sized items.
 
-	user.u_equip(W)
+	user.u_equip(W,1)
 	playsound(get_turf(src), "rustle", 50, 1, -5)
 	W.loc = src
 	if ((user.client && user.s_active != src))
 		user.client.screen -= W
 	src.orient2hud(user)
-	W.dropped(user)
+	//W.dropped(user)
 	add_fingerprint(user)
 	show_to(user)
 
@@ -160,13 +160,13 @@
 		playsound(get_turf(src), "rustle", 50, 1, -5)
 		if ((!( M.restrained() ) && !( M.stat ) && M.wear_suit == src))
 			if (over_object.name == "r_hand")
-				M.u_equip(src)
+				M.u_equip(src,0)
 				M.put_in_r_hand(src)
 			//	if (!( M.r_hand ))
 			//		M.u_equip(src)
 			//		M.r_hand = src
 			else if (over_object.name == "l_hand")
-				M.u_equip(src)
+				M.u_equip(src,0)
 				M.put_in_l_hand(src)
 				//	if (!( M.l_hand ))
 				//		M.u_equip(src)

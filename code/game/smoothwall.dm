@@ -108,3 +108,17 @@
 // DE-HACK
 /turf/simulated/wall/vault/relativewall()
 	return
+
+var/list/smoothable_unsims = list(
+	"riveted",
+	)
+
+/turf/unsimulated/wall/New()
+	..()
+	if(icon_state in smoothable_unsims)
+		relativewall()
+		relativewall_neighbours()
+
+/turf/unsimulated/wall/relativewall()
+	var/junction=findSmoothingNeighbors()
+	icon_state = "[walltype][junction]"

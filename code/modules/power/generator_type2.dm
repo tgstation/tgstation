@@ -41,8 +41,8 @@
 			hot_air = air2
 			cold_air = air1
 
-		var/hot_air_heat_capacity = hot_air.heat_capacity()
-		var/cold_air_heat_capacity = cold_air.heat_capacity()
+		var/hot_air_heat_capacity = hot_air.heat_capacity
+		var/cold_air_heat_capacity = cold_air.heat_capacity
 
 		var/delta_temperature = hot_air.temperature - cold_air.temperature
 
@@ -54,8 +54,8 @@
 			var/heat = energy_transfer*(1-efficiency)
 			lastgen = energy_transfer*efficiency
 
-			hot_air.temperature = hot_air.temperature - energy_transfer/hot_air_heat_capacity
-			cold_air.temperature = cold_air.temperature + heat/cold_air_heat_capacity
+			hot_air.set_temperature(hot_air.temperature - energy_transfer/hot_air_heat_capacity)
+			cold_air.set_temperature(cold_air.temperature + heat/cold_air_heat_capacity)
 
 			//world << "POWER: [lastgen] W generated at [efficiency*100]% efficiency and sinks sizes [cold_air_heat_capacity], [hot_air_heat_capacity]"
 
@@ -93,7 +93,7 @@
 		return {"<B>Cold Loop</B> ([dir2text(loop_dir)])
 <ul>
 	<li><b>Temperature:</b> [round(loop.air_contents.temperature, 0.1)] K</li>
-	<li><b>Pressure:</b> [round(loop.air_contents.return_pressure(), 0.1)] kPa</li>
+	<li><b>Pressure:</b> [round(loop.air_contents.pressure, 0.1)] kPa</li>
 </ul>"}
 
 /obj/machinery/power/generator/type2/interact(mob/user)

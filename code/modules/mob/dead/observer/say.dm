@@ -4,7 +4,8 @@
 	if (!message)
 		return
 
-	log_say("Ghost/[src.key] (@[src.x],[src.y],[src.z]): [message]")
+	var/turf/T = get_turf(src)
+	log_say("[key_name(src)] (@[T.x],[T.y],[T.z]) Ghost: [message]")
 
 	if (src.client)
 		if(src.client.prefs.muted & MUTE_DEADCHAT)
@@ -26,7 +27,7 @@
 
 	return "[pick("whines", "cries", "spooks", "complains", "drones", "mutters")], \"[text]\"";
 
-/mob/dead/observer/Hear(message, atom/movable/speaker, message_langs, raw_message, radio_freq)
+/mob/dead/observer/Hear(message, atom/movable/speaker, var/datum/language/speaking, raw_message, radio_freq)
 	if (isnull(client))
 		return
 

@@ -1209,11 +1209,11 @@
 
 		//strip their stuff and stick it in the crate
 		for(var/obj/item/I in M)
-			M.u_equip(I)
+			M.u_equip(I,1)
 			if(I)
 				I.loc = locker
 				I.layer = initial(I.layer)
-				I.dropped(M)
+				//I.dropped(M)
 
 		M.update_icons()
 		*/
@@ -1287,11 +1287,11 @@
 				var/obj/item/clothing/glasses/G = I
 				if(G.prescription)
 					continue
-			M.u_equip(I)
+			M.u_equip(I,1)
 			if(I)
 				I.loc = M.loc
 				I.layer = initial(I.layer)
-				I.dropped(M)
+				//I.dropped(M)
 				I.loc = pack
 
 		var/obj/item/weapon/card/id/thunderdome/ident = null
@@ -1421,11 +1421,11 @@
 			return
 
 		for(var/obj/item/I in M)
-			M.u_equip(I)
+			M.u_equip(I,1)
 			if(I)
 				I.loc = M.loc
 				I.layer = initial(I.layer)
-				I.dropped(M)
+				//I.dropped(M)
 
 		if(istype(M, /mob/living/carbon/human))
 			var/mob/living/carbon/human/observer = M
@@ -2775,14 +2775,14 @@
 					for(var/mob/living/carbon/human/M in player_list)
 						if(M.wear_suit)
 							var/obj/item/O = M.wear_suit
-							M.u_equip(O)
+							M.u_equip(O,1)
 							O.loc = M.loc
-							O.dropped(M)
+							//O.dropped(M)
 						if(M.head)
 							var/obj/item/O = M.head
-							M.u_equip(O)
+							M.u_equip(O,1)
 							O.loc = M.loc
-							O.dropped(M)
+							//O.dropped(M)
 						M.equip_to_slot_or_del(new /obj/item/clothing/head/helmet/space/bomberman(M), slot_head)
 						M.equip_to_slot_or_del(new /obj/item/clothing/suit/space/bomberman(M), slot_wear_suit)
 						M.equip_to_slot_or_del(new /obj/item/weapon/bomberman/(M), slot_s_store)
@@ -2838,6 +2838,16 @@
 							B.destroy_environnement = 0
 				message_admins("[key_name_admin(usr)] disabled the environnement damage of the Bomberman Bomb Dispensers currently in the world.")
 				log_admin("[key_name_admin(usr)] disabled the environnement damage of the Bomberman Bomb Dispensers currently in the world.")
+			if("togglebombmethod")
+				feedback_inc("admin_secrets_fun_used",1)
+				feedback_add_details("admin_secrets_fun_used","BM")
+				var/choice = input("Do you wish for explosions to take walls and obstacles into account?") in list("Yes, let's have realistic explosions", "No, let's have perfectly circular explosions")
+				if(choice == "Yes, let's have realistic explosions")
+					message_admins("[key_name_admin(usr)] has set explosions to take walls and obstacles into account.")
+					explosion_newmethod = 1
+				if(choice == "No, let's have perfectly circular explosions")
+					message_admins("[key_name_admin(usr)] has set explosions to completely pass through walls and obstacles.")
+					explosion_newmethod = 0
 		if(usr)
 			log_admin("[key_name(usr)] used secret [href_list["secretsfun"]]")
 			if(ok)
@@ -3190,6 +3200,24 @@
 				zas_settings.ChangeSettingsDialog(usr,zas_settings.settings)
 			if(href_list["vsc"] == "default")
 				zas_settings.SetDefault(usr)
+
+	else if(href_list["toglang"])
+		if(check_rights(R_SPAWN))
+			var/mob/M = locate(href_list["toglang"])
+			if(!istype(M))
+				usr << "[M] is illegal type, must be /mob!"
+				return
+			var/lang2toggle = href_list["lang"]
+			var/datum/language/L = all_languages[lang2toggle]
+
+			if(L in M.languages)
+				if(!M.remove_language(lang2toggle))
+					usr << "Failed to remove language '[lang2toggle]' from \the [M]!"
+			else
+				if(!M.add_language(lang2toggle))
+					usr << "Failed to add language '[lang2toggle]' from \the [M]!"
+
+			show_player_panel(M)
 
 	// player info stuff
 

@@ -135,25 +135,24 @@ Deuterium-tritium fusion: 4.5 x 10^7 K
 
 	//add plasma from the surrounding environment
 	var/datum/gas_mixture/environment = loc.return_air()
-	var/held_plasma_moles = held_plasma.get_moles_by_id(PLASMA)
+	var/held_plasma_moles = held_plasma.gases[PLASMA]
 
 	//hack in some stuff to remove plasma from the air because SCIENCE
 	//the amount of plasma pulled in each update is relative to the field strength, with 50T (max field strength) = 100% of area covered by the field
 	//at minimum strength, 0.25% of the field volume is pulled in per update (?)
 	//have a max of 1000 moles suspended
 	if(held_plasma_moles < transfer_ratio * 1000)
-		var/moles_covered = environment.return_pressure()*volume_covered/(environment.temperature * R_IDEAL_GAS_EQUATION)
+		var/moles_covered = environment.pressure*volume_covered/(environment.temperature * R_IDEAL_GAS_EQUATION)
 		//world << "<span class='notice'>moles_covered: [moles_covered]</span>"
 		//
 		var/datum/gas_mixture/gas_covered = environment.remove(moles_covered)
 		var/datum/gas_mixture/plasma_captured = new /datum/gas_mixture()
 		//
-		plasma_captured.set_gas(PLASMA, round(gas_covered.get_moles_by_id(PLASMA) * transfer_ratio), 0)
+		plasma_captured.set_gas(PLASMA, round(gas_covered.gases[PLASMA] * transfer_ratio))
 		//world << "<span class='warning'>[plasma_captured.toxins] moles of plasma captured</span>"
-		plasma_captured.temperature = gas_covered.temperature
-		plasma_captured.update_values()
+		plasma_captured.set_temperature(gas_covered.temperature)
 		//
-		gas_covered.adjust_gas(PLASMA, -plasma_captured.get_moles_by_id(PLASMA))
+		gas_covered.adjust_gas(PLASMA, -plasma_captured.gases[PLASMA])
 		//
 		held_plasma.merge(plasma_captured)
 		//
@@ -172,9 +171,9 @@ Deuterium-tritium fusion: 4.5 x 10^7 K
 	//change held plasma temp according to energy levels
 	//SPECIFIC_HEAT_TOXIN
 	if(mega_energy > 0 && held_plasma_moles)
-		var/heat_capacity = held_plasma.heat_capacity()//200 * number of plasma moles
+		var/heat_capacity = held_plasma.heat_capacity//200 * number of plasma moles
 		if(heat_capacity > 0.0003)	//formerly MINIMUM_HEAT_CAPACITY
-			held_plasma.temperature = (heat_capacity + mega_energy * 35000)/heat_capacity
+			held_plasma.set_temperature((heat_capacity + mega_energy * 35000)/heat_capacity)
 
 	//if there is too much plasma in the field, lose some
 	/*if( held_plasma.toxins > (MOLES_CELLSTANDARD * 7) * (50 / field_strength) )
@@ -185,11 +184,11 @@ Deuterium-tritium fusion: 4.5 x 10^7 K
 		//world << "lost [loss_ratio*100]% of held plasma"
 		//
 		var/datum/gas_mixture/plasma_lost = new
-		plasma_lost.temperature = held_plasma.temperature
+		plasma_lost.set_temperature(held_plasma.temperature)
 		//
-		plasma_lost.set_gas(PLASMA, held_plasma_moles * loss_ratio, 0)
+		plasma_lost.set_gas(PLASMA, held_plasma_moles * loss_ratio)
 		//plasma_lost.update_values()
-		held_plasma.adjust_gas(PLASMA, -held_plasma_moles * loss_ratio, 0)
+		held_plasma.adjust_gas(PLASMA, -held_plasma_moles * loss_ratio)
 		//held_plasma.update_values()
 		//
 		environment.merge(plasma_lost)

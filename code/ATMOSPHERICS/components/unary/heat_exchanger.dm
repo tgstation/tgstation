@@ -31,29 +31,24 @@
 	..()
 
 /obj/machinery/atmospherics/unary/heat_exchanger/process()
-	..()
-	if(!partner)
-		return 0
+	. = ..()
+	if(!partner || !air_master || air_master.current_cycle <= update_cycle)
+		return
 
-	if(!air_master || air_master.current_cycle <= update_cycle)
-		return 0
+	var/old_temperature = partner.air_contents.temperature
+	var/other_old_temperature = air_contents.temperature
 
 	update_cycle = air_master.current_cycle
 	partner.update_cycle = air_master.current_cycle
 
-	var/air_heat_capacity = air_contents.heat_capacity()
-	var/other_air_heat_capacity = partner.air_contents.heat_capacity()
-	var/combined_heat_capacity = other_air_heat_capacity + air_heat_capacity
-
-	var/old_temperature = air_contents.temperature
-	var/other_old_temperature = partner.air_contents.temperature
+	var/combined_heat_capacity = partner.air_contents.heat_capacity + air_contents.heat_capacity
 
 	if(combined_heat_capacity > 0)
-		var/combined_energy = partner.air_contents.temperature*other_air_heat_capacity + air_heat_capacity*air_contents.temperature
+		var/combined_energy = partner.air_contents.thermal_energy() + air_contents.thermal_energy()
 
 		var/new_temperature = combined_energy/combined_heat_capacity
-		air_contents.temperature = new_temperature
-		partner.air_contents.temperature = new_temperature
+		air_contents.set_temperature(new_temperature)
+		partner.air_contents.set_temperature(new_temperature)
 
 	if(network)
 		if(abs(old_temperature-air_contents.temperature) > 1)

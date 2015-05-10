@@ -30,6 +30,7 @@
 	new /obj/item/clothing/shoes/black(src)
 	new /obj/item/clothing/monkeyclothes(src)
 	new /obj/item/clothing/monkeyclothes(src)
+	new /obj/item/weapon/reagent_containers/food/drinks/coloring(src)
 
 /*
  * Janitor
@@ -56,6 +57,8 @@
 	new /obj/item/device/lightreplacer(src)
 	new /obj/item/clothing/gloves/black(src)
 	new /obj/item/clothing/head/soft/purple(src)
+	new /obj/item/weapon/storage/box/lights/he(src)
+	new /obj/item/weapon/storage/box/lights/he(src)
 
 /*
  * Lawyer

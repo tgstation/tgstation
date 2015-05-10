@@ -160,7 +160,7 @@ Attach to transfer valve and open. BOOM.
 
 	//since the air is processed in fractions, we need to make sure not to have any minuscle residue or
 	//the amount of moles might get to low for some functions to catch them and thus result in wonky behaviour
-	air_contents.update_values(FIRE_GAS_ROUNDING) //the define is the level we clean to
+	air_contents.round_values(FIRE_GAS_ROUNDING) //the define is the level we clean to
 
 	// Check if there is something to combust.
 	if (!air_contents.check_recombustability(S))
@@ -183,14 +183,14 @@ Attach to transfer valve and open. BOOM.
 
 	//im not sure how to implement a version that works for every creature so for now monkeys are firesafe
 	for(var/mob/living/carbon/human/M in loc)
-		M.FireBurn(firelevel, air_contents.temperature, air_contents.return_pressure() ) //Burn the humans!
+		M.FireBurn(firelevel, air_contents.temperature, air_contents.pressure ) //Burn the humans!
 
 	/*for(var/atom/A in loc)
-		A.fire_act(air_contents, air_contents.temperature, air_contents.return_volume())
+		A.fire_act(air_contents, air_contents.temperature, air_contents.volume)
 	*/
 
 	// Burn the turf, too.
-	S.fire_act(air_contents, air_contents.temperature, air_contents.return_volume())
+	S.fire_act(air_contents, air_contents.temperature, air_contents.volume)
 
 	//spread
 	for(var/direction in cardinal)
@@ -250,11 +250,19 @@ turf/simulated/apply_fire_protection()
 	fire_protection = world.time
 
 /datum/gas_mixture/proc/get_gas_fuel()
-	update_values()
+	var/total_fuel = 0
+	for(var/gasid in gases)
+		var/datum/gas/gas = get_gas_by_id(gasid)
+		if(gas.isFuel())
+			total_fuel += gases[gasid]
 	return total_fuel
 
 /datum/gas_mixture/proc/get_gas_oxidiser()
-	update_values()
+	var/total_oxidiser = 0
+	for(var/gasid in gases)
+		var/datum/gas/gas = get_gas_by_id(gasid)
+		if(gas.isOxidiser())
+			total_oxidiser += gases[gasid]
 	return total_oxidiser
 
 datum/gas_mixture/proc/zburn(var/turf/T, force_burn)
@@ -281,7 +289,7 @@ datum/gas_mixture/proc/zburn(var/turf/T, force_burn)
 
 		//get the current inner energy of the gas mix
 		//this must be taken here to prevent the addition or deletion of energy by a changing heat capacity
-		var/starting_energy = temperature * heat_capacity()
+		var/starting_energy = temperature * heat_capacity
 
 		//determine the amount of oxygen used
 		total_oxidiser = min(total_oxidiser, 2 * total_fuel)
@@ -299,15 +307,15 @@ datum/gas_mixture/proc/zburn(var/turf/T, force_burn)
 		for(var/gasid in gases)
 			var/datum/gas/current_gas = get_gas_by_id(gasid)
 			if(current_gas.isOxidiser())
-				adjust_gas(current_gas.gas_id, -get_moles_by_id(gasid) * used_reactants_ratio * current_gas.fuel_multiplier, 0, 0) //take the cost of oxidiser
+				adjust_gas(current_gas.gas_id, -gases[gasid] * used_reactants_ratio * current_gas.fuel_multiplier, 0) //take the cost of oxidiser
 
 		//fuels
 		for(var/gasid in gases)
 			var/datum/gas/current_gas = get_gas_by_id(gasid)
 			if(current_gas.isFuel())
-				adjust_gas(current_gas.gas_id, -get_moles_by_id(gasid) * used_fuel_ratio * used_reactants_ratio * current_gas.fuel_multiplier, 0, 0) //take the cost of fuel
+				adjust_gas(current_gas.gas_id, -gases[gasid] * used_fuel_ratio * used_reactants_ratio * current_gas.fuel_multiplier, 0) //take the cost of fuel
 
-		adjust_gas(CARBON_DIOXIDE, max(2 * total_fuel, 0), 0, 0)
+		adjust_gas(CARBON_DIOXIDE, max(2 * total_fuel, 0), 0)
 
 		if(can_use_turf)
 			if(T.getFireFuel()>0)
@@ -317,9 +325,8 @@ datum/gas_mixture/proc/zburn(var/turf/T, force_burn)
 					A.burnFireFuel(used_fuel_ratio, used_reactants_ratio)
 
 		//calculate the energy produced by the reaction and then set the new temperature of the mix
-		temperature = (starting_energy + zas_settings.Get(/datum/ZAS_Setting/fire_fuel_energy_release) * total_fuel) / heat_capacity()
+		set_temperature((starting_energy + zas_settings.Get(/datum/ZAS_Setting/fire_fuel_energy_release) * total_fuel) / heat_capacity)
 
-		update_values()
 		value = total_reactants * used_reactants_ratio
 	return value
 
@@ -398,7 +405,7 @@ datum/gas_mixture/proc/calculate_firelevel(var/turf/T)
 		if(total_fuel > 0 && total_oxidiser > 0)
 
 			//slows down the burning when the concentration of the reactants is low
-			var/dampening_multiplier = total_combustables / (total_moles())
+			var/dampening_multiplier = total_combustables / (total_moles)
 			//calculates how close the mixture of the reactants is to the optimum
 			var/mix_multiplier = 1 / (1 + (5 * ((total_oxidiser / total_combustables) ** 2))) // Thanks, Mloc
 			//toss everything together

@@ -56,7 +56,7 @@
 
 //Attemps to remove an object on a mob.  Will not move it to another area or such, just removes from the mob.
 /mob/living/silicon/robot/mommi/remove_from_mob(var/obj/O)
-	src.u_equip(O)
+	src.u_equip(O,0)
 	if (src.client)
 		src.client.screen -= O
 	O.layer = initial(O.layer)

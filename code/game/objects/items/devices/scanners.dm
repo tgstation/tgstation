@@ -278,9 +278,8 @@ proc/healthanalyze(mob/living/M as mob, mob/living/user as mob, var/mode = 0)
 /obj/item/device/analyzer/proc/output_gas_scan(var/datum/gas_mixture/scanned, var/atom/container, human_standard = 0)
 	if(!scanned)
 		return "<span class='warning'>No gas mixture found.</span>"
-	scanned.update_values()
-	var/pressure = scanned.return_pressure()
-	var/total_moles = scanned.total_moles()
+	var/pressure = scanned.pressure
+	var/total_moles = scanned.total_moles
 	var/message = ""
 	if(!container || istype(container, /turf))
 		message += "<span class='notice'><B>Results:</B><br></span>"
@@ -290,7 +289,7 @@ proc/healthanalyze(mob/living/M as mob, mob/living/user as mob, var/mode = 0)
 		message += "[human_standard && abs(pressure - ONE_ATMOSPHERE) > 10 ? "<span class='bad'>" : "<span class='notice'>"] Pressure: [round(pressure,0.1)] kPa</span><br>"
 
 		for(var/gasid in scanned.gases)
-			var/gas_moles = scanned.get_moles_by_id(gasid)
+			var/gas_moles = scanned.gases[gasid]
 			var/datum/gas/gas = scanned.get_gas_by_id(gasid)
 			if(!gas_moles && !(gas.gas_flags & ALWAYS_SHOW)) //no gas, and we aren't configured to show a 0 number
 				continue //skip it
@@ -303,7 +302,7 @@ proc/healthanalyze(mob/living/M as mob, mob/living/user as mob, var/mode = 0)
 					if(gas_moles >= human_standards["[gas.gas_id]_max"])
 						danger = 1
 
-			message += "[danger ? "<span class='bad'>" : "<span class='notice'>"] [gas.display_short]: [round(gas_moles, 0.1)] mol, [round((gas_moles / scanned.total_moles())*100)]%</span><br>"
+			message += "[danger ? "<span class='bad'>" : "<span class='notice'>"] [gas.display_short]: [round(gas_moles, 0.1)] mol, [round((gas_moles / scanned.total_moles)*100)]%</span><br>"
 
 		message += "[human_standard && !(abs(scanned.temperature-T0C - 20) < 20) ? "<span class='bad'>" : "<span class='notice'>"] Temperature: [round(scanned.temperature-T0C)]&deg;C</span>"
 	else

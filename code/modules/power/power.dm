@@ -21,7 +21,7 @@
 /obj/machinery/power/New()
 	. = ..()
 	machines -= src
-	power_machines += src
+	power_machines |= src
 	return .
 
 /obj/machinery/power/Destroy()
@@ -60,9 +60,10 @@
 
 /obj/machinery/power/check_rebuild()
 	if(!build_status)
-		return
+		return 0
 	for(var/obj/structure/cable/C in src.loc)
-		C.check_rebuild()
+		if(C.check_rebuild())
+			return 1
 
 /obj/machinery/power/proc/getPowernetNodes()
 	if(!get_powernet())

@@ -43,6 +43,8 @@
 				new_xeno = new /mob/living/carbon/alien/humanoid/sentinel(loc)
 			if("Drone")
 				new_xeno = new /mob/living/carbon/alien/humanoid/drone(loc)
+		for(var/datum/language/L in languages)
+			new_xeno.add_language(L.name)
 		if(mind)	mind.transfer_to(new_xeno)
 		del(src)
 		playsound(get_turf(src), 'sound/effects/evolve.ogg', 40, 1)

@@ -161,7 +161,7 @@ function SetMusic(url, time, volume) {
 
 	// Tell the player to play something via JS.
 	proc/send_update()
-		if(!(!owner.prefs))
+		if(!(owner.prefs))
 			return
 		if(!(owner.prefs.toggles & SOUND_STREAMING) && url != "")
 			return // Nope.

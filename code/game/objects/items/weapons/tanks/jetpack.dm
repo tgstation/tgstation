@@ -39,13 +39,13 @@
 /obj/item/weapon/tank/jetpack/proc/allow_thrust(num, mob/living/user as mob)
 	if(!(src.on))
 		return 0
-	if((num < 0.005 || src.air_contents.total_moles() < num))
+	if((num < 0.005 || src.air_contents.total_moles < num))
 		src.toggle()
 		return 0
 
 	var/datum/gas_mixture/G = src.air_contents.remove(num)
 
-	if(G.total_moles() >= 0.005)
+	if(G.total_moles >= 0.005)
 		return 1
 
 	G = null //let the GC get it
@@ -67,7 +67,7 @@
 
 /obj/item/weapon/tank/jetpack/void/New()
 	. = ..()
-	air_contents.adjust((6 * ONE_ATMOSPHERE) * volume / (R_IDEAL_GAS_EQUATION * T20C))
+	air_contents.adjust_gas(OXYGEN, (6 * ONE_ATMOSPHERE) * volume / (R_IDEAL_GAS_EQUATION * T20C))
 
 /obj/item/weapon/tank/jetpack/oxygen
 	name = "Jetpack (Oxygen)"
@@ -77,7 +77,7 @@
 
 /obj/item/weapon/tank/jetpack/oxygen/New()
 	. = ..()
-	air_contents.adjust((6 * ONE_ATMOSPHERE) * volume / (R_IDEAL_GAS_EQUATION * T20C))
+	air_contents.adjust_gas(OXYGEN, (6 * ONE_ATMOSPHERE) * volume / (R_IDEAL_GAS_EQUATION * T20C))
 
 /obj/item/weapon/tank/jetpack/nitrogen
 	name = "Jetpack (Nitrogen)"
@@ -87,7 +87,7 @@
 
 /obj/item/weapon/tank/jetpack/nitrogen/New()
 	. = ..()
-	air_contents.adjust(, , (6 * ONE_ATMOSPHERE) * volume / (R_IDEAL_GAS_EQUATION * T20C))
+	air_contents.adjust_gas(NITROGEN, (6 * ONE_ATMOSPHERE) * volume / (R_IDEAL_GAS_EQUATION * T20C))
 
 /obj/item/weapon/tank/jetpack/carbondioxide
 	name = "Jetpack (Carbon Dioxide)"
@@ -98,4 +98,4 @@
 
 /obj/item/weapon/tank/jetpack/carbondioxide/New()
 	. = ..()
-	air_contents.adjust(, (6 * ONE_ATMOSPHERE) * volume / (R_IDEAL_GAS_EQUATION * T20C))
+	air_contents.adjust_gas(CARBON_DIOXIDE, (6 * ONE_ATMOSPHERE) * volume / (R_IDEAL_GAS_EQUATION * T20C))

@@ -413,3 +413,5 @@ var/global/list/facial_hair_styles_female_list	= list()
 
 	unique_enzymes = md5(character.real_name)
 	reg_dna[unique_enzymes] = character.real_name
+	if(character.species)
+		species = character.species.name

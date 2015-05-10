@@ -126,11 +126,11 @@ client/proc/antag_madness(var/mob/M in mob_list)
 			pack.name = "[M.real_name]'s belongings"
 
 			for(var/obj/item/I in M)
-				M.u_equip(I)
+				M.u_equip(I,1)
 				if(I)
 					I.loc = M.loc
 					I.layer = initial(I.layer)
-					I.dropped(M)
+					//I.dropped(M)
 					I.loc = pack
 
 			M.equip_to_slot_or_del(new/obj/item/device/radio/headset, slot_ears)
@@ -184,11 +184,11 @@ client/proc/antag_madness(var/mob/M in mob_list)
 			pack.name = "[M.real_name]'s belongings"
 
 			for(var/obj/item/I in M)
-				M.u_equip(I)
+				M.u_equip(I,1)
 				if(I)
 					I.loc = M.loc
 					I.layer = initial(I.layer)
-					I.dropped(M)
+					//I.dropped(M)
 					I.loc = pack
 
 			M.equip_to_slot_or_del(new/obj/item/device/radio/headset, slot_ears)
@@ -217,6 +217,8 @@ client/proc/antag_madness(var/mob/M in mob_list)
 			M.mind.special_role = "Cultist"
 			M << "<span class='sinister'>You remember the Realm of Nar-Sie, The Geometer of Blood. You now see how flimsy the world is, you see that it should be open to the knowledge of Nar-Sie.</span>"
 			M << "<span class='sinister'>Assist your new compatriots in their dark dealings. Their goal is yours, and yours is theirs. You serve the Dark One above all else. Bring It back.</span>"
+			M << "<span class='sinister'>You can now speak and understand the forgotten tongue of the occult.</span>"
+			M.add_language("Cult")
 			var/datum/game_mode/cult/cult = ticker.mode
 			if (istype(cult))
 				cult.memoize_cult_objectives(M.mind)
@@ -240,11 +242,11 @@ client/proc/antag_madness(var/mob/M in mob_list)
 			pack.name = "[M.real_name]'s belongings"
 
 			for(var/obj/item/I in M)
-				M.u_equip(I)
+				M.u_equip(I,1)
 				if(I)
 					I.loc = M.loc
 					I.layer = initial(I.layer)
-					I.dropped(M)
+					//I.dropped(M)
 					I.loc = pack
 
 			var/obj/item/weapon/tome/T = new/obj/item/weapon/tome(M)
@@ -319,11 +321,11 @@ client/proc/antag_madness(var/mob/M in mob_list)
 			pack.name = "[M.real_name]'s belongings"
 
 			for(var/obj/item/I in M)
-				M.u_equip(I)
+				M.u_equip(I,1)
 				if(I)
 					I.loc = M.loc
 					I.layer = initial(I.layer)
-					I.dropped(M)
+					//I.dropped(M)
 					I.loc = pack
 
 			M.equip_to_slot_or_del(new/obj/item/device/radio/headset/syndicate, slot_ears)
@@ -366,11 +368,11 @@ client/proc/antag_madness(var/mob/M in mob_list)
 			pack.name = "[M.real_name]'s belongings"
 
 			for(var/obj/item/I in M)
-				M.u_equip(I)
+				M.u_equip(I,1)
 				if(I)
 					I.loc = M.loc
 					I.layer = initial(I.layer)
-					I.dropped(M)
+					//I.dropped(M)
 					I.loc = pack
 
 			ticker.mode.equip_syndicate(M)
@@ -422,11 +424,11 @@ client/proc/antag_madness(var/mob/M in mob_list)
 			pack.name = "[M.real_name]'s belongings"
 
 			for(var/obj/item/I in M)
-				M.u_equip(I)
+				M.u_equip(I,1)
 				if(I)
 					I.loc = M.loc
 					I.layer = initial(I.layer)
-					I.dropped(M)
+					//I.dropped(M)
 					I.loc = pack
 
 			M.equip_to_slot_or_del(new/obj/item/device/radio/headset/syndicate, slot_ears)
@@ -470,11 +472,11 @@ client/proc/antag_madness(var/mob/M in mob_list)
 			pack.name = "[M.real_name]'s belongings"
 
 			for(var/obj/item/I in M)
-				M.u_equip(I)
+				M.u_equip(I,1)
 				if(I)
 					I.loc = M.loc
 					I.layer = initial(I.layer)
-					I.dropped(M)
+					//I.dropped(M)
 					I.loc = pack
 
 			if(M.gender == "male")

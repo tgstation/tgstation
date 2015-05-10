@@ -16,7 +16,8 @@
 		src << "You whisper silently, \"[message]\""
 		B.host << "The captive mind of [src] whispers, \"[message]\""
 
-		log_say("THOUGHTSPEECH: [key_name(src)](@[src.x],[src.y],[src.z]) -> [key_name(B)](@[B.x],[B.y],[B.z]): [message]")
+		var/turf/T = get_turf(src)
+		log_say("[key_name(src)] (@[T.x],[T.y],[T.z]) -> [key_name(B)] Host->Borer Speech: [message]")
 
 		for(var/mob/M in player_list)
 			if(istype(M, /mob/new_player))
@@ -87,7 +88,6 @@ var/global/borer_chem_types = typesof(/datum/borer_chem) - /datum/borer_chem
 	friendly = "prods"
 	wander = 0
 	pass_flags = PASSTABLE
-	languages = ALL
 
 
 	var/chemicals = 10                      // Chemicals used for reproduction and spitting neurotoxin.
@@ -218,8 +218,8 @@ var/global/borer_chem_types = typesof(/datum/borer_chem) - /datum/borer_chem
 
 	src << "You drop words into [host]'s mind: \"[message]\""
 	host << "Your own thoughts speak: \"[message]\""
-
-	log_say("THOUGHTSPEECH: [truename] ([key_name(src)])(@[src.x],[src.y],[src.z]) -> [host] ([key_name(host)])(@[host.x],[host.y],[host.z]): [message]")
+	var/turf/T = get_turf(src)
+	log_say("[truename] [key_name(src)] (@[T.x],[T.y],[T.z]) -> [host]([key_name(host)]) Borer->Host Speech: [message]")
 
 	for(var/mob/M in player_list)
 		if(istype(M, /mob/new_player))
@@ -255,14 +255,15 @@ var/global/borer_chem_types = typesof(/datum/borer_chem) - /datum/borer_chem
 		return
 
 	message = copytext(message,2)
-	log_say("CORTICAL: [key_name(src)](@[src.x],[src.y],[src.z]): [message]")
+
+	var/turf/T = get_turf(src)
+	log_say("[truename] [key_name(src)] (@[T.x],[T.y],[T.z]) Borer Cortical Hivemind: [message]")
 
 	for(var/mob/M in mob_list)
 		if(istype(M, /mob/new_player))
 			continue
 
-		if( (istype(M,/mob/dead/observer) && M.client && M.client.prefs.toggles & CHAT_GHOSTEARS) \
-			|| isborer(M))
+		if( isborer(M) || (istype(M,/mob/dead/observer) && M.client && M.client.prefs.toggles & CHAT_GHOSTEARS))
 			var/controls = ""
 			if(isobserver(M))
 				controls = " (<a href='byond://?src=\ref[M];follow2=\ref[M];follow=\ref[src]'>Follow</a>"

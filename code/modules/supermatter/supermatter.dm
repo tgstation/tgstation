@@ -66,6 +66,7 @@
 
 	//Add types to this list so it doesn't make a message or get desroyed by the Supermatter on touch.
 	var/list/message_exclusions = list(/obj/effect/effect/sparks)
+	machine_flags = MULTITOOL_MENU
 
 /obj/machinery/power/supermatter/shard //Small subtype, less efficient and more sensitive, but less boom.
 	name = "Supermatter Shard"
@@ -170,7 +171,7 @@
 			else
 				warning = "[short_name] hyperstructure returning to safe operating levels. Instability: [stability]%"
 			//radio.say(warning, "Supermatter [short_name] Monitor")
-			Broadcast_Message(radio, null, radio, warning, "Supermatter [short_name] Monitor", "Automated Announcement", "Supermatter [short_name] Monitor", 0, 0, list(0,1), 1459)
+			Broadcast_Message(radio, all_languages[LANGUAGE_SOL_COMMON], null, radio, warning, "Supermatter [short_name] Monitor", "Automated Announcement", "Supermatter [short_name] Monitor", 0, 0, list(0,1), 1459)
 
 			lastwarning = world.timeofday - offset
 
@@ -227,7 +228,7 @@
 	damage = max( damage + ( (removed.temperature - 800) / 150 ) , 0 )
 	//Ok, 100% oxygen atmosphere = best reaction
 	//Maxes out at 100% oxygen pressure
-	oxygen = Clamp((removed.get_moles_by_id(OXYGEN) - (removed.get_moles_by_id(NITROGEN) * NITROGEN_RETARDATION_FACTOR)) / MOLES_CELLSTANDARD, 0, 1)
+	oxygen = Clamp((removed.gases[OXYGEN] - (removed.gases[NITROGEN] * NITROGEN_RETARDATION_FACTOR)) / MOLES_CELLSTANDARD, 0, 1)
 
 	var/temp_factor = 100
 
@@ -253,16 +254,14 @@
 
 	//Also keep in mind we are only adding this temperature to (efficiency)% of the one tile the rock
 	//is on. An increase of 4*C @ 25% efficiency here results in an increase of 1*C / (#tilesincore) overall.
-	removed.temperature += (device_energy / THERMAL_RELEASE_MODIFIER)
+	removed.set_temperature(removed.temperature + (device_energy / THERMAL_RELEASE_MODIFIER))
 
-	removed.temperature = max(0, min(removed.temperature, 2500))
+	removed.set_temperature(Clamp(removed.temperature, 0, 2500))
 
 	//Calculate how much gas to release
-	removed.adjust_gas(PLASMA, max(device_energy / PLASMA_RELEASE_MODIFIER, 0), 0) //last 0 means don't update yet
+	removed.adjust_gas(PLASMA, max(device_energy / PLASMA_RELEASE_MODIFIER, 0))
 
-	removed.adjust_gas(OXYGEN, max((device_energy + removed.temperature - T0C) / OXYGEN_RELEASE_MODIFIER, 0), 0)
-
-	removed.update_values()
+	removed.adjust_gas(OXYGEN, max((device_energy + removed.temperature - T0C) / OXYGEN_RELEASE_MODIFIER, 0))
 
 	env.merge(removed)
 
@@ -339,9 +338,9 @@
 	return
 
 /obj/machinery/power/supermatter/attackby(obj/item/weapon/W as obj, mob/living/user as mob)
-	if(istype(W, /obj/item/device/multitool))
-		update_multitool_menu(user)
-		return 1
+	. = ..()
+	if(.)
+		return .
 
 	user.visible_message("<span class=\"warning\">\The [user] touches \a [W] to \the [src] as a silence fills the room...</span>",\
 		"<span class=\"danger\">You touch \the [W] to \the [src] when everything suddenly goes silent.\"</span>\n<span class=\"notice\">\The [W] flashes into dust as you flinch away from \the [src].</span>",\

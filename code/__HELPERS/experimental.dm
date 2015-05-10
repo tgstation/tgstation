@@ -70,7 +70,7 @@ var/list/exclude = list("inhand_states", "loc", "locs", "parent_type", "vars", "
 /proc/returnToPool(const/atom/movable/AM)
 	if(istype(AM.loc,/mob/living))
 		var/mob/living/L = AM.loc
-		L.u_equip(AM)
+		L.u_equip(AM,1)
 	if(length(masterPool["[AM.type]"]) > MAINTAINING_OBJECT_POOL_COUNT)
 		#ifdef DEBUG_OBJECT_POOL
 		world << text("DEBUG_OBJECT_POOL: returnToPool([]) exceeds [] discarding...", AM.type, MAINTAINING_OBJECT_POOL_COUNT)

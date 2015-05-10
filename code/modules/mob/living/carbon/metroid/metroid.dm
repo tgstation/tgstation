@@ -4,7 +4,6 @@
 	icon_state = "grey baby slime"
 	pass_flags = PASSTABLE
 	speak_emote = list("hums")
-	languages = SLIME | HUMAN
 
 	layer = 5
 
@@ -53,6 +52,8 @@
 	var/list/slime_mutation[4]
 
 	var/core_removal_stage = 0 //For removing cores
+	universal_speak = 1
+	universal_understand = 1
 
 /mob/living/carbon/slime/adult
 	name = "adult slime"

@@ -5,10 +5,10 @@
 	..(message)
 
 
-/mob/living/silicon/ai/compose_track_href(atom/movable/speaker, message_langs, raw_message, radio_freq)
+/mob/living/silicon/ai/compose_track_href(atom/movable/speaker, var/datum/language/speaking, raw_message, radio_freq)
 	//this proc assumes that the message originated from a radio. if the speaker is not a virtual speaker this will probably fuck up hard.
 	var/mob/M = speaker.GetSource()
-	
+
 	var/atom/movable/virt_speaker = speaker.GetRadio()
 	if(!virt_speaker || !istype(virt_speaker, /obj/item/device/radio))
 		virt_speaker = src
@@ -21,7 +21,7 @@
 			return "<a href='byond://?src=\ref[virt_speaker];open2=\ref[src];open=\ref[M]'>\[OPEN\]</a> <a href='[faketrack]'>"
 	return ""
 
-/mob/living/silicon/ai/compose_job(atom/movable/speaker, message_langs, raw_message, radio_freq)
+/mob/living/silicon/ai/compose_job(atom/movable/speaker, var/datum/language/speaking, raw_message, radio_freq)
 	//Also includes the </a> for AI hrefs, for convenience.
 	return " [radio_freq ? "(" + speaker.GetJob() + ")" : ""]" + "[speaker.GetSource() ? "</a>" : ""]"
 
@@ -44,18 +44,19 @@
 	else
 		return ..()
 
-/mob/living/silicon/ai/handle_inherent_channels(message, message_mode)
+/mob/living/silicon/ai/handle_inherent_channels(message, message_mode, var/datum/language/speaking)
 	. = ..()
 	if(.)
 		return .
 
 	if(message_mode == MODE_HOLOPAD)
-		holopad_talk(message)
+		holopad_talk(message,speaking)
 		return 1
 
 //For holopads only. Usable by AI.
-/mob/living/silicon/ai/proc/holopad_talk(var/message)
-	log_say("[key_name(src)] : [message]")
+/mob/living/silicon/ai/proc/holopad_talk(var/message,var/datum/language/speaking)
+	var/turf/turf = get_turf(src)
+	log_say("[key_name(src)] (@[turf.x],[turf.y],[turf.z]) Holopad: [message]")
 
 	message = trim(message)
 
@@ -64,13 +65,15 @@
 
 	var/obj/machinery/hologram/holopad/T = current
 	if(istype(T) && T.hologram && T.master == src)//If there is a hologram and its master is the user.
-		send_speech(message, 7, T, "R")
+		send_speech(message, 7, speaking, T, "R")
 		src << "<i><span class='game say'>Holopad transmitted, <span class='name'>[real_name]</span> <span class='message'>\"[message]\"</span></span></i>"//The AI can "hear" its own message.
 	else
 		src << "No holopad connected."
 	return
 
-/mob/living/silicon/ai/send_speech(message, message_range = 7, obj/source = src, bubble_type)
+/mob/living/silicon/ai/send_speech(message, message_range, var/datum/language/speaking, obj/source = src, bubble_type)
+	say_testing(src, "send speech start, msg = [message]; message_range = [message_range]; language = [speaking ? speaking.name : "None"]; source = [source];")
+	if(isnull(message_range)) message_range = 7
 	if(source != current)
 		return ..()
 
@@ -81,11 +84,11 @@
 
 	listeners.Add(observers)
 
-	var/rendered = compose_message(src, languages, message)
+	var/rendered = compose_message(src, speaking, message)
 
 	for (var/atom/movable/listener in listeners)
 		if (listener)
-			listener.Hear(rendered, src, languages, message)
+			listener.Hear(rendered, src, speaking, message)
 
 	send_speech_bubble(message, bubble_type, listeners)
 

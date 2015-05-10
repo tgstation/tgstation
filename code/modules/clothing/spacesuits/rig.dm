@@ -35,7 +35,7 @@
 		SetLuminosity(0)
 
 /obj/item/clothing/head/helmet/space/rig/dropped(mob/user)
-	if(on)
+	if(on && !luminosity)
 		user.SetLuminosity(user.luminosity - brightness_on)
 		SetLuminosity(brightness_on)
 

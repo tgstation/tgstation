@@ -35,6 +35,8 @@
 	// For building on the asteroid.
 	var/under_turf = /turf/space
 
+	var/explosion_block = 0
+
 /turf/New()
 	..()
 	if(luminosity)

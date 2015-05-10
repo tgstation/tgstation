@@ -101,7 +101,7 @@
 			environment = holding.air_contents
 		else
 			environment = loc.return_air()
-		var/transfer_moles = min(1, volume_rate/environment.volume)*environment.total_moles()
+		var/transfer_moles = min(1, volume_rate/environment.volume)*environment.total_moles
 
 		//Take a gas sample
 		var/datum/gas_mixture/removed
@@ -114,14 +114,13 @@
 		if (removed)
 			var/datum/gas_mixture/filtered_out = new
 
-			filtered_out.temperature = removed.temperature
+			filtered_out.set_temperature(removed.temperature)
 
 			for(var/gasid in removed.gases)
 				var/datum/gas/gas_to_remove = removed.get_gas_by_id(gasid)
 				if(gas_to_remove.gas_flags & AUTO_FILTERED)
-					filtered_out.adjust_gas(gasid, removed.get_moles_by_id(gasid), 0)
-					removed.set_gas(gasid, 0, 0)
-			removed.update_values()
+					filtered_out.adjust_gas(gasid, removed.gases[gasid])
+					removed.set_gas(gasid, 0)
 
 		//Remix the resulting gases
 			air_contents.merge(filtered_out)
@@ -151,7 +150,7 @@
 /obj/machinery/portable_atmospherics/scrubber/ui_interact(mob/user, ui_key = "main", var/datum/nanoui/ui = null)
 	var/list/data[0]
 	data["portConnected"] = connected_port ? 1 : 0
-	data["tankPressure"] = round(air_contents.return_pressure() > 0 ? air_contents.return_pressure() : 0)
+	data["tankPressure"] = round(air_contents.pressure > 0 ? air_contents.pressure : 0)
 	data["rate"] = round(volume_rate)
 	data["minrate"] = round(minrate)
 	data["maxrate"] = round(maxrate)
@@ -159,7 +158,7 @@
 
 	data["hasHoldingTank"] = holding ? 1 : 0
 	if (holding)
-		data["holdingTank"] = list("name" = holding.name, "tankPressure" = round(holding.air_contents.return_pressure() > 0 ? holding.air_contents.return_pressure() : 0))
+		data["holdingTank"] = list("name" = holding.name, "tankPressure" = round(holding.air_contents.pressure > 0 ? holding.air_contents.pressure : 0))
 
 	// update the ui if it exists, returns null if no ui is passed/found
 	ui = nanomanager.try_update_ui(user, src, ui_key, ui, data)

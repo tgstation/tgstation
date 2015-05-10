@@ -25,8 +25,8 @@
 /obj/machinery/atmospherics/binary/circulator/proc/return_transfer_air()
 	var/datum/gas_mixture/removed
 	if(anchored && !(stat&BROKEN) )
-		var/input_starting_pressure = air1.return_pressure()
-		var/output_starting_pressure = air2.return_pressure()
+		var/input_starting_pressure = air1.pressure
+		var/output_starting_pressure = air2.pressure
 		last_pressure_delta = max(input_starting_pressure - output_starting_pressure + 10, 0)
 
 		//only circulate air if there is a pressure difference (plus 10 kPa to represent friction in the machine)
@@ -38,7 +38,7 @@
 			//Actually transfer the gas
 			removed = air1.remove(recent_moles_transferred)
 			if(removed)
-				last_heat_capacity = removed.heat_capacity()
+				last_heat_capacity = removed.heat_capacity
 				last_temperature = removed.temperature
 
 				//Update the gas networks.
@@ -53,7 +53,7 @@
 		return removed
 
 /obj/machinery/atmospherics/binary/circulator/process()
-	..()
+	. = ..()
 
 	if(last_worldtime_transfer < world.time - 50)
 		recent_moles_transferred = 0

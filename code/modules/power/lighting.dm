@@ -137,6 +137,7 @@
 	idle_power_usage = 2
 	active_power_usage = 20
 	power_channel = LIGHT //Lights are calc'd via area so they dont need to be in the machine list
+	var/cost = 8
 	var/on = 0					// 1 if on, 0 if off
 	var/on_gs = 0
 	var/static_power_used = 0
@@ -167,6 +168,7 @@
 	base_state = "bulb"
 	fitting = "bulb"
 	brightness = 4
+	cost = 4
 	desc = "A small lighting fixture."
 	light_type = /obj/item/weapon/light/bulb
 
@@ -176,6 +178,7 @@
 	fitting = "large tube"
 	light_type = /obj/item/weapon/light/tube/large
 	brightness = 8
+	cost = 8
 
 /obj/machinery/light/built/New()
 	status = LIGHT_EMPTY
@@ -210,15 +213,15 @@
 
 	switch(status)		// set icon_states
 		if(LIGHT_OK)
-			icon_state = "[base_state][on]"
+			icon_state = "l[base_state][on]"
 		if(LIGHT_EMPTY)
-			icon_state = "[base_state]-empty"
+			icon_state = "l[base_state]-empty"
 			on = 0
 		if(LIGHT_BURNED)
-			icon_state = "[base_state]-burned"
+			icon_state = "l[base_state]-burned"
 			on = 0
 		if(LIGHT_BROKEN)
-			icon_state = "[base_state]-broken"
+			icon_state = "l[base_state]-broken"
 			on = 0
 	return
 
@@ -239,7 +242,7 @@
 			else if( prob( min(60, switchcount*switchcount*0.01) ) )
 				if(status == LIGHT_OK && trigger)
 					status = LIGHT_BURNED
-					icon_state = "[base_state]-burned"
+					icon_state = "l[base_state]-burned"
 					on = 0
 					SetLuminosity(0)
 			else
@@ -249,11 +252,11 @@
 		use_power = 1
 		SetLuminosity(0)
 
-	active_power_usage = (luminosity * 10)
+	active_power_usage = (cost * 10)
 	if(on != on_gs)
 		on_gs = on
 		if(on)
-			static_power_used = luminosity * 20 //20W per unit luminosity
+			static_power_used = cost * 20 //20W per unit luminosity
 			addStaticPower(static_power_used, STATIC_LIGHT)
 		else
 			removeStaticPower(static_power_used, STATIC_LIGHT)
@@ -307,6 +310,9 @@
 				switchcount = L.switchcount
 				rigged = L.rigged
 				brightness = L.brightness
+				cost = L.cost
+				base_state = L.base_state
+				light_type = L.type
 				on = has_power()
 				update()
 
@@ -578,31 +584,47 @@
 	m_amt = 60
 	var/rigged = 0		// true if rigged to explode
 	var/brightness = 2 //how much light it gives off
+	var/cost = 2 //How much power does it consume in an idle state?
 
 /obj/item/weapon/light/tube
 	name = "light tube"
 	desc = "A replacement light tube."
-	icon_state = "ltube"
-	base_state = "ltube"
+	icon_state = "tube"
+	base_state = "tube"
 	item_state = "c_tube"
 	g_amt = 100
 	w_type = RECYK_GLASS
 	brightness = 8
+	cost = 8
+
+/obj/item/weapon/light/tube/he
+	name = "high efficiency light tube"
+	desc = "An efficient light used to reduce strain on the station's power grid."
+	base_state = "hetube"
+	cost = 2
 
 /obj/item/weapon/light/tube/large
 	w_class = 2
 	name = "large light tube"
 	brightness = 15
+	cost = 15
 
 /obj/item/weapon/light/bulb
 	name = "light bulb"
 	desc = "A replacement light bulb."
-	icon_state = "lbulb"
-	base_state = "lbulb"
+	icon_state = "bulb"
+	base_state = "bulb"
 	item_state = "contvapour"
 	g_amt = 100
 	brightness = 5
+	cost = 5
 	w_type = RECYK_GLASS
+
+/obj/item/weapon/light/bulb/he
+	name = "high efficiency light bulb"
+	desc = "An efficient light used to reduce strain on the station's power grid."
+	base_state = "hebulb"
+	cost = 1
 
 /obj/item/weapon/light/throw_impact(atom/hit_atom)
 	..()
