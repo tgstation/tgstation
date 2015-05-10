@@ -1,6 +1,7 @@
 /obj/effect/proc_holder/spell/targeted/barnyardcurse
 	name = "Curse of the Barnyard"
 	desc = "This spell dooms the fate of any unlucky soul to the speech and facial attributes of a barnyard animal"
+	playCastSound = 1
 	school = "transmutation"
 	charge_type = "recharge"
 	charge_max	= 150

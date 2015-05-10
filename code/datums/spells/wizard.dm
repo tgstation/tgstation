@@ -1,6 +1,7 @@
 /obj/effect/proc_holder/spell/targeted/projectile/magic_missile
 	name = "Magic Missile"
 	desc = "This spell fires several, slow moving, magic projectiles at nearby targets."
+	playCastSound = 1
 
 	school = "evocation"
 	charge_max = 150
@@ -33,6 +34,7 @@
 /obj/effect/proc_holder/spell/targeted/genetic/mutate
 	name = "Mutate"
 	desc = "This spell causes you to turn into a hulk and gain laser vision for a short while."
+	playCastSound = 1
 
 	school = "transmutation"
 	charge_max = 400
@@ -53,6 +55,7 @@
 /obj/effect/proc_holder/spell/targeted/inflict_handler/disintegrate
 	name = "Disintegrate"
 	desc = "This spell instantly kills somebody adjacent to you with the vilest of magick."
+	playCastSound = 1
 
 	school = "evocation"
 	charge_max = 600
@@ -72,6 +75,7 @@
 /obj/effect/proc_holder/spell/targeted/smoke
 	name = "Smoke"
 	desc = "This spell spawns a cloud of choking smoke at your location and does not require wizard garb."
+	playCastSound = 1
 
 	school = "conjuration"
 	charge_max = 120
@@ -90,6 +94,7 @@
 /obj/effect/proc_holder/spell/targeted/emplosion/disable_tech
 	name = "Disable Tech"
 	desc = "This spell disables all weapons, cameras and most other technology in range."
+	playCastSound = 1
 	charge_max = 400
 	clothes_req = 1
 	invocation = "NEC CANTIO"
@@ -104,6 +109,7 @@
 /obj/effect/proc_holder/spell/targeted/turf_teleport/blink
 	name = "Blink"
 	desc = "This spell randomly teleports you a short distance."
+	playCastSound = 1
 
 	school = "abjuration"
 	charge_max = 20
@@ -128,6 +134,7 @@
 /obj/effect/proc_holder/spell/targeted/area_teleport/teleport
 	name = "Teleport"
 	desc = "This spell teleports you to a type of area of your selection."
+	playCastSound = 1
 
 	school = "abjuration"
 	charge_max = 600
@@ -144,6 +151,7 @@
 /obj/effect/proc_holder/spell/aoe_turf/conjure/forcewall
 	name = "Forcewall"
 	desc = "This spell creates an unbreakable wall that lasts for 30 seconds and does not need wizard garb."
+	playCastSound = 1
 
 	school = "transmutation"
 	charge_max = 100
@@ -176,6 +184,7 @@
 /obj/effect/proc_holder/spell/aoe_turf/conjure/construct
 	name = "Artificer"
 	desc = "This spell conjures a construct which may be controlled by Shades"
+	playCastSound = 1
 
 	school = "conjuration"
 	charge_max = 600
@@ -206,6 +215,7 @@
 /obj/effect/proc_holder/spell/targeted/trigger/blind
 	name = "Blind"
 	desc = "This spell temporarily blinds a single person and does not require wizard garb."
+	playCastSound = 1
 
 	school = "transmutation"
 	charge_max = 300
@@ -230,6 +240,7 @@
 /obj/effect/proc_holder/spell/targeted/inflict_handler/flesh_to_stone
 	name = "Flesh to Stone"
 	desc = "This spell turns a single person into an inert statue for a long period of time."
+	playCastSound = 1
 
 	school = "transmutation"
 	charge_max = 600
@@ -247,6 +258,7 @@
 /obj/effect/proc_holder/spell/dumbfire/fireball
 	name = "Fireball"
 	desc = "This spell fires a fireball at a target and does not require wizard garb."
+	playCastSound = 1
 
 	school = "evocation"
 	charge_max = 60
@@ -282,6 +294,7 @@
 /obj/effect/proc_holder/spell/aoe_turf/repulse
 	name = "Repulse"
 	desc = "This spell throws everything around the user away."
+	playCastSound = 1
 	charge_max = 400
 	clothes_req = 1
 	invocation = "GITTAH WEIGH"

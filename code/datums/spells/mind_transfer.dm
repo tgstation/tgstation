@@ -1,6 +1,7 @@
 /obj/effect/proc_holder/spell/targeted/mind_transfer
 	name = "Mind Transfer"
 	desc = "This spell allows the user to switch bodies with a target."
+	playCastSound = 1
 
 	school = "transmutation"
 	charge_max = 600

@@ -40,6 +40,9 @@ var/list/spells = typesof(/obj/effect/proc_holder/spell) //needed for the badmin
 	var/level_max = 4 //The max possible level_max is 4
 	var/cooldown_min = 0 //This defines what spell quickened four timeshas as a cooldown. Make sure to set this for every spell
 
+	var/playCastSound = 0 //Whether or not the spell has a sound
+	var/castSound = 'sound/items/bikehorn.ogg' //The sound itself
+
 	var/overlay = 0
 	var/overlay_icon = 'icons/obj/wizard.dmi'
 	var/overlay_icon_state = "spell"
@@ -135,6 +138,8 @@ var/list/spells = typesof(/obj/effect/proc_holder/spell) //needed for the badmin
 				user.whisper(replacetext(invocation," ","`"))
 		if("emote")
 			user.visible_message(invocation, invocation_emote_self) //same style as in mob/living/emote.dm
+	if(playCastSound)
+		playsound(get_turf(user), castSound, 50, 1)
 
 /obj/effect/proc_holder/spell/New()
 	..()

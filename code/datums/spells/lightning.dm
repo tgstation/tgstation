@@ -1,6 +1,7 @@
 /obj/effect/proc_holder/spell/targeted/lightning
 	name = "Lightning Bolt"
 	desc = "Throws a lightning bolt at the nearby enemy. Classic."
+	playCastSound = 1
 	charge_type = "recharge"
 	charge_max	= 300
 	clothes_req = 1
