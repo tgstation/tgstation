@@ -1,0 +1,8 @@
+author: Deity Link
+delete-after: true
+changes:
+  - rscadd: Players can now dual-hand a broom to place it between their legs
+  - rscadd: If a Wizard does it, he will start floating, allowing him to fly above tables, wet floors and peels, and move at hyperzine speed. Also lets him move around in space.
+  - rscadd: Stuns will affect a flying Wizard as per usual, making him drop the broom and stop flying.
+  - rscadd: If the Wizard ever stops dual-handing the broom, the effect stops.
+  - rscadd: Broom + Horse mask = Broomstick Horse. Same properties as regular broom, but much more classy.
