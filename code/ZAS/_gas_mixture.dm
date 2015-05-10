@@ -158,10 +158,11 @@ What are the archived variables for?
 
 	volume = new_volume
 
-	if(old_volume) //can't divide by 0
+	if(old_volume && new_volume && pressure) //can't divide by 0 NO SHIT COMIC
 		pressure /= new_volume/old_volume //since PV is a constant, the ratio change in V is inverse for P
 	else
-		pressure = (total_moles * R_IDEAL_GAS_EQUATION * temperature) / volume //recalc
+		if(volume)
+			pressure = (total_moles * R_IDEAL_GAS_EQUATION * temperature) / volume //recalc
 
 /datum/gas_mixture/proc/heat_capacity_calc(var/list/hc_gases = gases)
 	//Purpose: Returning the heat capacity of a gas mix
