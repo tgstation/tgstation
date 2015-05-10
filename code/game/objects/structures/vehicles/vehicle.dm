@@ -317,3 +317,9 @@
 	visible_message("<span class='warning'>\The [nick] explodes!</span>")
 	explosion(src.loc,-1,0,2,7,10)
 	icon_state = "pussywagon_destroyed"
+
+/obj/structure/stool/bed/chair/vehicle/Bump(var/atom/movable/obstacle)
+	if(istype(obstacle, /obj/structure))// || istype(obstacle, /mob/living)
+		if(!obstacle.anchored)
+			obstacle.Move(get_step(obstacle,src.dir))
+	..()
