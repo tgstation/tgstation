@@ -1,0 +1,6 @@
+author: Deity Link
+delete-after: true
+changes:
+  - tweak: When the Firebird drives into an airlock, it'll go through without having to wait for the airlock to fully open (the airlock will still open, and the firebird won't go through at all if the driver doesn't have access)
+  - tweak: Vehicles can now push un-anchored structures (closets, crates, etc)
+  - tweak: Firebird can drive into tables/racks and break them.
