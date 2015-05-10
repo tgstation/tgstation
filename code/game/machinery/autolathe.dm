@@ -126,11 +126,8 @@
 	if (!O.m_amt && !O.g_amt)
 		user << "<span class='warning'>This object does not contain sufficient amounts of metal or glass to be accepted by the autolathe.</span>"
 		return 1
-	if(istype(user, /mob/living/silicon))
-		user << "<span class='warning'>You can't detach one of your modules!</span>"
-		return 1
-	if(O.flags & NODROP)
-		user << "<span class='warning'>\The [O] is stuck to your hand - you can't put it into the autolathe.</span>"
+	if(!user.unEquip(O))
+		user << "<span class='warning'>\The [O] is stuck to you and cannot be placed into the autolathe.</span>"
 		return 1
 
 	var/amount = 1
