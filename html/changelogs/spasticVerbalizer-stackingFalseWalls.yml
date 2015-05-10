@@ -1,6 +1,0 @@
-author: spasticVerbalizer
-       
-delete-after: True
-              
-changes: 
-  - bugfix: "False walls no longer stackable."
