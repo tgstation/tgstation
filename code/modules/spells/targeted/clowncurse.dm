@@ -37,9 +37,8 @@
 		target.equip_to_slot(magicclownmask, slot_wear_mask)
 		target.equip_to_slot(magicclownunder, slot_w_uniform)
 		target.equip_to_slot(magicclownshoes, slot_shoes)
-		del(old_mask)
-		del(old_uniform)
-		del(old_shoes)
+		qdel(old_mask)
+		qdel(old_uniform)
+		qdel(old_shoes)
 		flick("e_flash", target.flash)
-		mutations = list(M_CLUMSY)
-		duration = 0
+		target.mutations.Add(M_CLUMSY)

@@ -70,7 +70,9 @@
 			<A href='byond://?src=\ref[src];spell_choice=horseman'>Curse of the Horseman</A> (15)<BR>
 			<I>This spell will curse a person to wear an unremovable horse mask (it has glue on the inside) and speak like a horse. It does not require wizard garb.</I><BR>
 			<A href='byond://?src=\ref[src];spell_choice=frenchcurse'>The French Curse</A> (30)<BR>
-			<I>This spell silences sombody adjacent to you, and curses them with an unremovable Mime costume.</I><BR>
+			<I>This spell silences sombody adjacent to you, and curses them with an unremovable Mime costume. It does not require robes to cast.</I><BR>
+			<A href='byond://?src=\ref[src];spell_choice=clowncurse'>The Clown Curse</A> (30)<BR>
+			<I>This spell turns an adjacent target into a miserable clown. This spell does not require robes to cast.</I><BR>
 			<A href='byond://?src=\ref[src];spell_choice=shoesnatch'>Shoe Snatching Charm</A> (15)<BR>
 			<I>This spell will remove your victim's shoes and materialize them in your hands. This spell does not require robes to cast.</I><BR>
 			<A href='byond://?src=\ref[src];spell_choice=fleshtostone'>Flesh to Stone</A> (60)<BR>
@@ -243,6 +245,10 @@
 							temp = "You have learned curse of the horseman."
 						if("frenchcurse")
 							feedback_add_details("wizard_spell_learned","FC") //please do not change the abbreviation to keep data processing consistent. Add a unique id to any new spells
+							add_spell(new/spell/targeted/genetic/clowncurse,H)
+							temp = "You have learned the clown curse."
+						if("clowncurse")
+							feedback_add_details("wizard_spell_learned","CC") //please do not change the abbreviation to keep data processing consistent. Add a unique id to any new spells
 							add_spell(new/spell/targeted/frenchcurse,H)
 							temp = "You have learned the french curse."
 						if("shoesnatch")
