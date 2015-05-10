@@ -59,7 +59,7 @@
 			if(istype(idcard))
 				return idcard.registered_name
 			else
-				return real_name
+				return "Unknown"
 		else
 			return real_name
 	if(mind && mind.changeling && mind.changeling.mimicing)
