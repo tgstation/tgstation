@@ -606,6 +606,20 @@
 		for (var/i; i < storage_slots; i++)
 			new /obj/item/weapon/reagent_containers/hypospray/autoinjector(src)
 
+/obj/item/weapon/storage/box/mugs
+	name = "box of mugs"
+	desc = "It's a box of mugs."
+	icon_state = "box"
+
+	New()
+		..()
+		new /obj/item/weapon/reagent_containers/food/drinks/mug(src)
+		new /obj/item/weapon/reagent_containers/food/drinks/mug(src)
+		new /obj/item/weapon/reagent_containers/food/drinks/mug(src)
+		new /obj/item/weapon/reagent_containers/food/drinks/mug(src)
+		new /obj/item/weapon/reagent_containers/food/drinks/mug(src)
+		new /obj/item/weapon/reagent_containers/food/drinks/mug(src)
+
 // TODO Change this to a box/large. - N3X
 /obj/item/weapon/storage/box/lights
 	name = "replacement bulbs"
