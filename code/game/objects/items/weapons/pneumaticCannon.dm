@@ -108,9 +108,7 @@
 				 /obj/item/weapon/wrench)
 	reqs = list(/obj/item/stack/sheet/metal = 4,
 				/obj/item/stack/packageWrap = 8,
-				/obj/item/pipe = 2,
-				/obj/machinery/atmospherics/binary/valve = 1,
-				/obj/machinery/atmospherics/pipe/manifold = 1,)
+				/obj/item/pipe = 2,)
 	time = 300
 
 /obj/item/weapon/pneumatic_cannon/proc/updateTank(var/obj/item/weapon/tank/internals/thetank, var/removing = 0, var/mob/living/carbon/human/user)
