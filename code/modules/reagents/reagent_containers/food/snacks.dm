@@ -160,7 +160,7 @@
 		else
 			return fork.load_food(src, user)
 
-	if((slices_num <= 0 || !slices_num) || !slice_path)
+	if((slices_num <= 0 || !slices_num) || !slice_path) //If the food item isn't sliceable, we have no more business to do here, return
 		return 0
 
 	if(W.w_class <= 2 && W.is_sharp() < 0.8) //Make sure the item is valid to attempt slipping shit into it
