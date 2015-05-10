@@ -87,15 +87,35 @@
 	name = "Alert"
 	desc = "Something seems to have gone wrong with this alert, so report this bug please"
 
+
+//Gas alerts
 /obj/screen/alert/oxy
-	name = "Choking"
+	name = "Choking (No O2)"
 	desc = "You're not getting enough oxygen. Find some good air before you pass out! \
 The box in your backpack has an oxygen tank and gas mask in it."
 
+/obj/screen/alert/too_much_oxy
+	name = "Choking (O2)"
+	desc = "There's too much oxygen in the air, and you're breathing it in! Find some good air before you pass out!"
+
+/obj/screen/alert/not_enough_co2
+	name = "Choking (No CO2)"
+	desc = "You're not getting enough carbon dioxide. Find some good air before you pass out!"
+
+/obj/screen/alert/too_much_co2
+	name = "Chocking (CO2)"
+	desc = "There's too much carbon dioxide in the air, and you're breathing it in! Find some good air before you pass out!"
+
+/obj/screen/alert/not_enough_tox
+	name = "Choking (No Plasma)"
+	desc = "You're not getting enough plasma. Find some good air before you pass out!"
+
 /obj/screen/alert/tox_in_air
-	name = "Toxic Gas"
+	name = "Choking (Plasma)"
 	desc = "There's highly flammable, toxic plasma in the air and you're breathing it in. Find some fresh air. \
 The box in your backpack has an oxygen tank and gas mask in it."
+//End gas alerts
+
 
 /obj/screen/alert/fat
 	name = "Fat"
@@ -200,5 +220,4 @@ Reharging stations are available in robotics, the dormitory's bathrooms. and the
 		return usr.client.Click(master, location, control, params)
 
 /obj/screen/alert/Destroy()
-	PlaceInPool(src)
-	return 1 // Don't destroy me, I have a family!
+	return QDEL_HINT_PUTINPOOL //Don't destroy me, I have a family!

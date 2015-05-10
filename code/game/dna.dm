@@ -35,7 +35,7 @@
 		destination.dna.unique_enzymes = unique_enzymes
 		destination.dna.uni_identity = uni_identity
 		destination.dna.blood_type = blood_type
-		destination.dna.species = species
+		hardset_dna(destination, null, null, null, null, species)
 		destination.dna.mutant_color = mutant_color
 		destination.dna.real_name = real_name
 		destination.dna.mutations = mutations
@@ -78,7 +78,7 @@
 		if(istype(character, /mob/living/carbon/human))
 			var/mob/living/carbon/human/H = character
 			if(!H.dna.species)
-				H.dna.species = new /datum/species/human()
+				hardset_dna(H, null, null, null, null, /datum/species/human)
 			if(!hair_styles_list.len)
 				init_sprite_accessory_subtypes(/datum/sprite_accessory/hair, hair_styles_list, hair_styles_male_list, hair_styles_female_list)
 			L[DNA_HAIR_STYLE_BLOCK] = construct_block(hair_styles_list.Find(H.hair_style), hair_styles_list.len)
@@ -132,12 +132,15 @@
 	return spans
 
 /proc/hardset_dna(mob/living/carbon/owner, ui, se, real_name, blood_type, datum/species/mrace, mcolor)
-	if(!istype(owner, /mob/living/carbon/monkey) && !istype(owner, /mob/living/carbon/human))
+	if(!ismonkey(owner) && !ishuman(owner))
 		return
 	if(!owner.dna)
 		create_dna(owner, mrace)
 
-	if(mrace)
+	if(mrace && !ismonkey(owner))
+		if(owner.dna.species.exotic_blood)
+			var/datum/reagent/exotic_blood = new owner.dna.species.exotic_blood
+			owner.reagents.del_reagent(exotic_blood.id)
 		owner.dna.species = new mrace()
 
 	if(mcolor)

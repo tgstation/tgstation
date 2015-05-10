@@ -31,15 +31,16 @@
 		if(user.mind in (ticker.mode.A_bosses | ticker.mode.B_bosses))
 			dat += "Give this device to another member of your organization to use.<br>"
 		else
-			dat += "<a href='?src=\ref[src];choice=register'>Register Device</a><br>"
+			dat += "<a href='?src=\ref[src];register=1'>Register Device</a><br>"
 	else
 		var/gang_size = ((gang == "A")? (ticker.mode.A_gang.len + ticker.mode.A_bosses.len) : (ticker.mode.B_gang.len + ticker.mode.B_bosses.len))
 		var/gang_territory = ((gang == "A")? ticker.mode.A_territory.len : ticker.mode.B_territory.len)
 		var/points = ((gang == "A") ? ticker.mode.gang_points.A : ticker.mode.gang_points.B)
 
-		dat += "Registration: <B>[(gang == "A")? gang_name("A") : gang_name("B")] Gang [boss ? "Administrator" : "Member"]</B><br>"
+		dat += "Registration: <B>[(gang == "A")? gang_name("A") : gang_name("B")] Gang [boss ? "Administrator" : "Lieutenant"]</B><br>"
 		dat += "Organization Size: <B>[gang_size]</B><br>"
 		dat += "Station Control: <B>[round((gang_territory/start_state.num_territories)*100, 1)]%</B><br>"
+		dat += "<a href='?src=\ref[src];choice=ping'>Rally Your Gang</a><br>"
 		dat += "<a href='?src=\ref[src];choice=recall'>Recall Emergency Shuttle</a><br>"
 		dat += "<br>"
 		dat += "Influence: <B>[points]</B><br>"
@@ -70,8 +71,8 @@
 		else
 			dat += "10mm Ammo<br>"
 
-		dat += "(50 Influence) "
-		if(points >= 50)
+		dat += "(40 Influence) "
+		if(points >= 40)
 			dat += "<a href='?src=\ref[src];purchase=pen'>Recruitment Pen</a><br>"
 		else
 			dat += "Recruitment Pen<br>"
@@ -99,6 +100,12 @@
 
 	add_fingerprint(usr)
 
+	if(href_list["register"])
+		register_device(usr)
+
+	else if(!gang) //Gangtool must be registered before you can use the functions below
+		return
+
 	if(href_list["purchase"])
 		var/points = ((gang == "A") ? ticker.mode.gang_points.A : ticker.mode.gang_points.B)
 		var/item_type
@@ -120,9 +127,9 @@
 					item_type = /obj/item/ammo_box/magazine/m10mm
 					points = 10
 			if("pen")
-				if(points >= 50)
+				if(points >= 40)
 					item_type = /obj/item/weapon/pen/gang
-					points = 50
+					points = 40
 			if("gangtool")
 				if((promotions < 3) && (points >= (promotions*20)+10))
 					item_type = /obj/item/device/gangtool/lt
@@ -144,12 +151,34 @@
 		switch(href_list["choice"])
 			if("recall")
 				recall(usr)
-			if("register")
-				register_device(usr)
-
+			if("ping")
+				ping_gang(usr)
 	attack_self(usr)
 
+
+/obj/item/device/gangtool/proc/ping_gang(var/mob/user)
+	if(!user)
+		return
+	var/area/location = get_area(user)
+	if(location && location.z != 1)
+		user << "<span class='info'>\icon[src]Error: Signal out of range of station.</span>"
+		return
+	var/list/members = list()
+	if(gang == "A")
+		members += ticker.mode.A_bosses | ticker.mode.A_gang
+	else if(gang == "B")
+		members += ticker.mode.B_bosses | ticker.mode.B_gang
+	if(members.len)
+		for(var/datum/mind/ganger in members)
+			ganger.current << "<span class='danger'>A powerful thought invades your mind... The gang is rallying at <b>[location]</b>!</span>"
+		log_game("[key_name(user)] summoned the [gang_name(gang)] Gang ([gang]) to [location].")
+
+
 /obj/item/device/gangtool/proc/register_device(var/mob/user)
+	if(jobban_isbanned(user, "gangster") || jobban_isbanned(user, "Syndicate"))
+		user << "<span class='warning'>\icon[src] ACCESS DENIED: Blacklisted user.</span>"
+		return 0
+
 	var/promoted
 	if(user.mind in (ticker.mode.A_gang | ticker.mode.A_bosses))
 		ticker.mode.A_tools += src
@@ -185,26 +214,39 @@
 	if(recalling || !can_use(user))
 		return
 
-	var/turf/userturf = get_turf(user)
-	if(userturf.z != 1)
-		user << "<span class='info'>\icon[src]Error: Device out of range of station communication arrays.</span>"
-		return
+	recalling = 1
+	loc << "<span class='info'>\icon[src]Generating shuttle recall order with codes retrieved from last call signal...</span>"
 
-	if(SSshuttle.emergency.mode == SHUTTLE_CALL)
-		recalling = 1
-		loc << "<span class='info'>\icon[src]Generating shuttle recall order with codes retrieved from last call signal...</span>"
-		sleep(rand(10,30))
-		loc << "<span class='info'>\icon[src]Shuttle recall order generated. Accessing station long-range communication arrays...</span>"
-		sleep(rand(10,30))
-		loc << "<span class='info'>\icon[src]Comm arrays accessed. Broadcasting recall signal...</span>"
-		sleep(rand(10,30))
+	sleep(rand(10,30))
+
+	if(SSshuttle.emergency.mode != SHUTTLE_CALL) //Shuttle can only be recalled when it's moving to the station
+		user << "<span class='info'>\icon[src]Emergency shuttle cannot be recalled at this time.</span>"
 		recalling = 0
-		log_game("[key_name(user)] has recalled the shuttle with a gangtool.")
-		message_admins("[key_name_admin(user)] has recalled the shuttle with a gangtool.", 1)
-		if(!SSshuttle.cancelEvac(user))
-			loc << "<span class='info'>\icon[src]No response recieved. Emergency shuttle cannot be recalled at this time.</span>"
 		return
-	user << "<span class='info'>\icon[src]Emergency shuttle cannot be recalled at this time.</span>"
+	loc << "<span class='info'>\icon[src]Shuttle recall order generated. Accessing station long-range communication arrays...</span>"
+
+	sleep(rand(10,30))
+
+	var/turf/userturf = get_turf(user)
+	if(userturf.z != 1) //Shuttle can only be recalled while on station
+		user << "<span class='info'>\icon[src]Error: Device out of range of station communication arrays.</span>"
+		recalling = 0
+		return
+	var/datum/station_state/end_state = new /datum/station_state()
+	end_state.count()
+	if((100 *  start_state.score(end_state)) < 70) //Shuttle cannot be recalled if the station is too damaged
+		user << "<span class='info'>\icon[src]Error: Station communication systems compromised. Unable to establish connection.</span>"
+		recalling = 0
+		return
+	loc << "<span class='info'>\icon[src]Comm arrays accessed. Broadcasting recall signal...</span>"
+
+	sleep(rand(10,30))
+
+	recalling = 0
+	log_game("[key_name(user)] has tried to recall the shuttle with a gangtool.")
+	message_admins("[key_name_admin(user)] has tried to recall the shuttle with a gangtool.", 1)
+	if(!SSshuttle.cancelEvac(user))
+		loc << "<span class='info'>\icon[src]No response recieved. Emergency shuttle cannot be recalled at this time.</span>"
 
 /obj/item/device/gangtool/proc/can_use(mob/living/carbon/human/user)
 	if(!istype(user))

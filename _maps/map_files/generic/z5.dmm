@@ -228,7 +228,7 @@
 "eu" = (/turf/simulated/floor/plasteel/airless{icon_state = "asteroidwarning"; dir = 2},/area/mine/abandoned)
 "ev" = (/obj/item/weapon/shard{icon_state = "medium"},/turf/simulated/floor/plasteel/airless{icon_state = "asteroidwarning"; dir = 2},/area/mine/abandoned)
 "ew" = (/obj/structure/disposalpipe/segment,/turf/simulated/floor/plating/airless{icon_state = "asteroidplating"},/area/mine/explored)
-"ex" = (/obj/structure/table,/obj/item/trash/plate,/obj/item/weapon/kitchen/utensil/fork,/turf/simulated/floor/plasteel{icon_state = "floorgrime"; temperature = 273.15},/area/mine/laborcamp)
+"ex" = (/obj/structure/table,/obj/item/trash/plate,/obj/item/weapon/kitchen/fork,/turf/simulated/floor/plasteel{icon_state = "floorgrime"; temperature = 273.15},/area/mine/laborcamp)
 "ey" = (/obj/effect/decal/cleanable/cobweb2,/obj/structure/stool/bed/chair{dir = 8},/turf/simulated/floor/plasteel{icon_state = "floorgrime"; temperature = 273.15},/area/mine/laborcamp)
 "ez" = (/obj/machinery/atmospherics/pipe/simple,/turf/simulated/floor/plasteel{icon_state = "floorgrime"; temperature = 273.15},/area/mine/laborcamp)
 "eA" = (/obj/machinery/status_display{density = 0; layer = 4; pixel_x = 0; pixel_y = 32},/turf/simulated/floor/plasteel{icon_state = "floorgrime"; temperature = 273.15},/area/mine/laborcamp)

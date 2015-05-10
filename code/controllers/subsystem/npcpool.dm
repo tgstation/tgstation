@@ -15,15 +15,12 @@ var/datum/subsystem/npcpool/SSbp
 /datum/subsystem/npcpool/proc/insertBot(var/toInsert)
 	if(istype(toInsert,/mob/living/carbon/human/interactive))
 		botPool_l |= toInsert
-	else if(istype(toInsert,/obj/machinery/bot))
-		botPool_l_non |= toInsert
 
 /datum/subsystem/npcpool/New()
 	NEW_SS_GLOBAL(SSbp)
 
-
 /datum/subsystem/npcpool/stat_entry()
-	stat(name, "[round(cost,0.001)]ds (CPU:[round(cpu,1)]%) (T:[botPool_l.len + botPool_l_non.len] | D: [needsDelegate.len] | A: [needsAssistant.len + needsHelp_non.len] | U: [canBeUsed.len + canBeUsed_non.len])")
+	..("T:[botPool_l.len + botPool_l_non.len]|D:[needsDelegate.len]|A:[needsAssistant.len + needsHelp_non.len]|U:[canBeUsed.len + canBeUsed_non.len]")
 
 
 /datum/subsystem/npcpool/fire()
@@ -36,26 +33,12 @@ var/datum/subsystem/npcpool/SSbp
 	// 5. Do all assignments: goes through the delegated/coordianted bots and assigns the right variables/tasks to them.
 	var/npcCount = 1
 
-	//bot handling
-	for(var/obj/machinery/bot/check in botPool_l_non)
-		if(!check)
-			botPool_l_non.Cut(npcCount,npcCount+1)
-
-		if(check.hacked)
-			needsHelp_non |= check
-		else if(check.frustration > 5) //average for most bots
-			needsHelp_non |= check
-		else if(check.mode == 0)
-			canBeUsed_non |= check
-		npcCount++
-
-	npcCount = 1 //reset the count
-
 	//SNPC handling
 	for(var/mob/living/carbon/human/interactive/check in botPool_l)
-		var/checkInRange = view(MAX_RANGE_FIND,check)
 		if(!check)
 			botPool_l.Cut(npcCount,npcCount+1)
+			continue
+		var/checkInRange = view(MAX_RANGE_FIND,check)
 		if(!(locate(check.TARGET) in checkInRange))
 			needsDelegate |= check
 
@@ -70,7 +53,11 @@ var/datum/subsystem/npcpool/SSbp
 		npcCount++
 
 	if(needsDelegate.len)
+		npcCount = 1 //reset the count
 		for(var/mob/living/carbon/human/interactive/check in needsDelegate)
+			if(!check)
+				needsDelegate.Cut(npcCount,npcCount+1)
+				continue
 			if(canBeUsed.len)
 				var/mob/living/carbon/human/interactive/candidate = pick(canBeUsed)
 				var/facCount = 0
@@ -87,9 +74,14 @@ var/datum/subsystem/npcpool/SSbp
 						needsDelegate -= check
 						canBeUsed -= candidate
 						candidate.eye_color = "red"
+			npcCount++
 
 	if(needsAssistant.len)
+		npcCount = 1 //reset the count
 		for(var/mob/living/carbon/human/interactive/check in needsAssistant)
+			if(!check)
+				needsAssistant.Cut(npcCount,npcCount+1)
+				continue
 			if(canBeUsed.len)
 				var/mob/living/carbon/human/interactive/candidate = pick(canBeUsed)
 				var/facCount = 0
@@ -106,11 +98,4 @@ var/datum/subsystem/npcpool/SSbp
 						needsAssistant -= check
 						canBeUsed -= candidate
 						candidate.eye_color = "yellow"
-
-	if(needsHelp_non.len)
-		for(var/obj/machinery/bot/B in needsHelp_non)
-			if(canBeUsed_non.len)
-				var/obj/machinery/bot/candidate = pick(canBeUsed_non)
-				candidate.call_bot(B,get_turf(B),FALSE)
-				canBeUsed_non -= B
-				needsHelp_non -= candidate
+			npcCount++

@@ -20,9 +20,7 @@ Pipelines + Other Objects -> Pipe network
 	var/initialize_directions = 0
 	var/pipe_color
 	var/obj/item/pipe/stored
-
 	var/welded = 0 //Used on pumps and scrubbers
-
 	var/global/list/iconsetids = list()
 	var/global/list/pipeimages = list()
 
@@ -36,16 +34,32 @@ Pipelines + Other Objects -> Pipe network
 
 /obj/machinery/atmospherics/New()
 	..()
-
+	SSair.atmos_machinery += src
 	SetInitDirections()
 	if(can_unwrench)
 		stored = new(src, make_from=src)
+
+/obj/machinery/atmospherics/Destroy()
+	SSair.atmos_machinery -= src
+	if (stored)
+		qdel(stored)
+	stored = null
+	..()
+
+//this is called just after the air controller sets up turfs
+/obj/machinery/atmospherics/proc/atmosinit()
+	return
+
+//object initializion. done well after air is setup (build_network needs all pipes to be init'ed with atmosinit before hand)
+/obj/machinery/atmospherics/initialize()
+	..()
+	build_network() //make sure to build our pipe nets
 
 /obj/machinery/atmospherics/proc/SetInitDirections()
 	return
 
 /obj/machinery/atmospherics/proc/safe_input(var/title, var/text, var/default_set)
-	var/new_value = input(usr,"Enter new output pressure (0-4500kPa)","Pressure control",default_set) as num
+	var/new_value = input(usr,text,title,default_set) as num
 	if(usr.canUseTopic(src))
 		return new_value
 	return default_set
@@ -151,9 +165,11 @@ Pipelines + Other Objects -> Pipe network
 		stored.color = obj_color
 	var/turf/T = loc
 	level = T.intact ? 2 : 1
+	atmosinit()
 	initialize()
 	var/list/nodes = pipeline_expansion()
 	for(var/obj/machinery/atmospherics/A in nodes)
+		A.atmosinit()
 		A.initialize()
 		A.addMember(src)
 	build_network()

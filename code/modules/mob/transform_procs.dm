@@ -147,9 +147,9 @@
 			domutcheck(O)
 
 	if(!dna.species)
-		O.dna.species = new /datum/species/human()
+		hardset_dna(O, null, null, null, null, /datum/species/human)
 	else
-		O.dna.species = new dna.species.type()
+		hardset_dna(O, null, null, null, null, dna.species.type)
 
 	dna = null
 	if(newname) //if there's a name as an argument, always take that one over the current name

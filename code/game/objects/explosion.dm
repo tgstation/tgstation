@@ -73,8 +73,10 @@ proc/explosion(turf/epicenter, devastation_range, heavy_impact_range, light_impa
 							far_volume += (dist <= far_dist * 0.5 ? 50 : 0) // add 50 volume if the mob is pretty close to the explosion
 							M.playsound_local(epicenter, 'sound/effects/explosionfar.ogg', far_volume, 1, frequency, falloff = 5)
 
-		//postpone light processing for a bit
-		SSlighting.postpone()
+		//postpone processing for a bit
+		var/postponeCycles = max(round(devastation_range/8),1)
+		SSlighting.postpone(postponeCycles)
+		SSmachine.postpone(postponeCycles)
 
 		if(heavy_impact_range > 1)
 			var/datum/effect/system/explosion/E = new/datum/effect/system/explosion()
@@ -103,7 +105,7 @@ proc/explosion(turf/epicenter, devastation_range, heavy_impact_range, light_impa
 
 			if(T)
 				if(flame_dist && prob(40) && !istype(T, /turf/space) && !T.density)
-					new/obj/effect/hotspot(T) //Mostly for ambience!
+					PoolOrNew(/obj/effect/hotspot, T) //Mostly for ambience!
 				if(dist > 0)
 					T.ex_act(dist)
 
@@ -112,10 +114,11 @@ proc/explosion(turf/epicenter, devastation_range, heavy_impact_range, light_impa
 			var/throw_dir = get_dir(epicenter,T)
 			for(var/obj/item/I in T)
 				spawn(0) //Simultaneously not one at a time
-					var/throw_range = rand(throw_dist, max_range)
-					var/turf/throw_at = get_ranged_target_turf(I, throw_dir, throw_range)
-					I.throw_speed = 4 //Temporarily change their throw_speed for embedding purposes (Reset when it finishes throwing, regardless of hitting anything)
-					I.throw_at(throw_at, throw_range, 2)//Throw it at 2 speed, this is purely visual anyway.
+					if(I)
+						var/throw_range = rand(throw_dist, max_range)
+						var/turf/throw_at = get_ranged_target_turf(I, throw_dir, throw_range)
+						I.throw_speed = 4 //Temporarily change their throw_speed for embedding purposes (Reset when it finishes throwing, regardless of hitting anything)
+						I.throw_at(throw_at, throw_range, 2)//Throw it at 2 speed, this is purely visual anyway.
 
 
 		var/took = (world.timeofday-start)/10

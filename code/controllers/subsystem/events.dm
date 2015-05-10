@@ -19,7 +19,9 @@ var/datum/subsystem/events/SSevent
 	NEW_SS_GLOBAL(SSevent)
 
 
-/datum/subsystem/events/Initialize()
+/datum/subsystem/events/Initialize(time, zlevel)
+	if (zlevel)
+		return ..()
 	for(var/type in typesof(/datum/round_event_control))
 		var/datum/round_event_control/E = new type()
 		if(!E.typepath)

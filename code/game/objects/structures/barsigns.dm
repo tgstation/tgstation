@@ -273,6 +273,11 @@
 	icon = "alohasnackbar"
 	desc = "A tasteful, inoffensive tiki bar sign."
 
+/datum/barsign/thenet
+	name = "The Net"
+	icon = "thenet"
+	desc = "The sea of drinkformation." //you couldn't come up with something better?
+
 
 /datum/barsign/hiddensigns
 	hidden = 1
@@ -300,3 +305,4 @@
 	name = "Bar Sign"
 	icon = "empty"
 	desc = "This sign doesn't seem to be on."
+

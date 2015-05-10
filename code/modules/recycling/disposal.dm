@@ -75,13 +75,6 @@
 	if(stat & BROKEN || !I || !user)
 		return
 
-	if(isrobot(user))
-		if(!istype(I, /obj/item/weapon/storage/bag/trash))
-			return
-	else
-		if(I.flags & NODROP)
-			return
-
 	src.add_fingerprint(user)
 	if(mode<=0) // It's off
 		if(istype(I, /obj/item/weapon/screwdriver))
@@ -130,7 +123,7 @@
 			stuff_mob_in(G.affecting, user)
 		return
 
-	if(!I)	return
+	if(!I || I.flags & NODROP)	return
 
 	user.drop_item()
 	I.loc = src

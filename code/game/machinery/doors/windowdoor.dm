@@ -22,7 +22,9 @@
 	density = 0
 	if(health == 0)
 		playsound(src, "shatter", 70, 1)
+	electronics = null
 	..()
+
 
 
 /obj/machinery/door/window/proc/open_and_close()
@@ -247,7 +249,7 @@
 
 /obj/machinery/door/window/emag_act(mob/user as mob)
 	if(density && !emagged)
-		operating = -1
+		operating = 0
 		flick("[src.base_state]spark", src)
 		sleep(6)
 		desc += "<BR><span class='warning'>Its access panel is smoking slightly.</span>"
@@ -358,6 +360,13 @@
 
 	return
 
+/obj/machinery/door/window/attack_hulk(mob/user)
+	..(user, 1)
+	user.visible_message("<span class='danger'>[user] smashes through the windoor!</span>", \
+						"<span class='danger'>You tear through the windoor!</span>")
+	user.say(pick(";RAAAAAAAARGH!", ";HNNNNNNNNNGGGGGGH!", ";GWAAAAAAAARRRHHH!", "NNNNNNNNGGGGGGGGHH!", ";AAAAAAARRRGH!" ))
+	playsound(loc, 'sound/effects/Glasshit.ogg', 100, 1)
+	take_damage(health)
 
 
 /obj/machinery/door/window/brigdoor

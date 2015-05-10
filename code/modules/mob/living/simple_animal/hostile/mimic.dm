@@ -114,10 +114,12 @@
 /mob/living/simple_animal/hostile/mimic/crate/AttackingTarget()
 	. =..()
 	var/mob/living/L = .
-	if(istype(L))
+	if(iscarbon(L))
+		var/mob/living/carbon/C = L
 		if(prob(15))
-			L.Weaken(2)
-			L.visible_message("<span class='danger'>\the [src] knocks down \the [L]!</span>")
+			C.Weaken(2)
+			C.visible_message("<span class='danger'>\The [src] knocks down \the [C]!</span>", \
+					"<span class='userdanger'>\The [src] knocks you down!</span>")
 
 //
 // Copy Mimic
@@ -206,11 +208,12 @@ var/global/list/protected_objects = list(/obj/structure/table, /obj/structure/ca
 /mob/living/simple_animal/hostile/mimic/copy/AttackingTarget()
 	..()
 	if(knockdown_people)
-		if(isliving(target))
-			var/mob/living/L = target
+		if(iscarbon(target))
+			var/mob/living/carbon/C = target
 			if(prob(15))
-				L.Weaken(1)
-				L.visible_message("<span class='danger'>\The [src] knocks down \the [L]!</span>")
+				C.Weaken(2)
+				C.visible_message("<span class='danger'>\The [src] knocks down \the [C]!</span>", \
+						"<span class='userdanger'>\The [src] knocks you down!</span>")
 
 //
 // Machine Mimics (Made by Malf AI)

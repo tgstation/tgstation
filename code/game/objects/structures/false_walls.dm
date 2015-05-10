@@ -123,10 +123,6 @@
 
 	if(istype(W, /obj/item/weapon/pickaxe/drill/jackhammer))
 		var/obj/item/weapon/pickaxe/drill/jackhammer/D = W
-		if(!D.bcell.use(300))
-			user << "<span class='notice'>Your [D.name] doesn't have enough power to break through the [name].</span>"
-			return
-		D.update_icon()
 		D.playDigSound()
 		dismantle(user)
 
@@ -221,8 +217,8 @@
 		if(world.time > last_event+15)
 			active = 1
 			for(var/mob/living/L in range(3,src))
-				L.irradiate(12)
-			for(var/turf/simulated/wall/mineral/uranium/T in range(3,src))
+				L.irradiate(4)
+			for(var/turf/simulated/wall/mineral/uranium/T in orange(1,src))
 				T.radiate()
 			last_event = world.time
 			active = null

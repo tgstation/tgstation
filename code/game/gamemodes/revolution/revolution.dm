@@ -50,17 +50,13 @@
 			head_check = 1
 			break
 
-	for(var/datum/mind/player in antag_candidates)
-		for(var/job in restricted_jobs)//Removing heads and such from the list
-			if(player.assigned_role == job)
-				antag_candidates -= player
-
 	for (var/i=1 to max_headrevs)
 		if (antag_candidates.len==0)
 			break
 		var/datum/mind/lenin = pick(antag_candidates)
 		antag_candidates -= lenin
 		head_revolutionaries += lenin
+		lenin.restricted_roles = restricted_jobs
 
 	if((head_revolutionaries.len < required_enemies)||(!head_check))
 		return 0

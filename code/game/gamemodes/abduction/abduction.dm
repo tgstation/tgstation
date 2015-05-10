@@ -5,7 +5,6 @@
 	name = "Abduction"
 	config_tag = "abduction"
 	antag_flag = BE_ABDUCTOR
-	pre_setup_before_jobs = 1
 	recommended_enemies = 2
 	required_players = 15
 	var/max_teams = 4
@@ -14,6 +13,7 @@
 	var/list/datum/mind/agents = list()
 	var/list/datum/objective/team_objectives = list()
 	var/list/team_names = list()
+	var/finished = 0
 
 /datum/game_mode/abduction/announce()
 	world << "<B>The current game mode is - Abduction!</B>"
@@ -102,7 +102,7 @@
 		H = agent.current
 		L = agent_landmarks[team_number]
 		H.loc = L.loc
-		H.dna.species = new /datum/species/abductor()
+		hardset_dna(H, null, null, null, null, /datum/species/abductor)
 		S = H.dna.species
 		S.agent = 1
 		S.team = team_number
@@ -116,7 +116,7 @@
 		H = scientist.current
 		L = scientist_landmarks[team_number]
 		H.loc = L.loc
-		H.dna.species = new /datum/species/abductor()
+		hardset_dna(H, null, null, null, null, /datum/species/abductor)
 		S = H.dna.species
 		S.scientist = 1
 		S.team = team_number
@@ -151,7 +151,7 @@
 	H = agent.current
 	L = agent_landmarks[team_number]
 	H.loc = L.loc
-	H.dna.species = new /datum/species/abductor()
+	hardset_dna(H, null, null, null, null, /datum/species/abductor)
 	S = H.dna.species
 	S.agent = 1
 	S.team = team_number
@@ -165,7 +165,7 @@
 	H = scientist.current
 	L = scientist_landmarks[team_number]
 	H.loc = L.loc
-	H.dna.species = new /datum/species/abductor()
+	hardset_dna(H, null, null, null, null, /datum/species/abductor)
 	S = H.dna.species
 	S.scientist = 1
 	S.team = team_number
@@ -223,6 +223,10 @@
 	return console
 
 /datum/game_mode/abduction/proc/equip_agent(var/mob/living/carbon/human/agent,var/team_number)
+	if(!team_number)
+		var/datum/species/abductor/S = agent.dna.species
+		team_number = S.team
+
 	var/obj/machinery/abductor/console/console = get_team_console(team_number)
 	var/obj/item/clothing/suit/armor/abductor/vest/V = new /obj/item/clothing/suit/armor/abductor/vest(agent)
 	if(console!=null)
@@ -236,6 +240,10 @@
 
 
 /datum/game_mode/abduction/proc/equip_scientist(var/mob/living/carbon/human/scientist,var/team_number)
+	if(!team_number)
+		var/datum/species/abductor/S = scientist.dna.species
+		team_number = S.team
+
 	var/obj/machinery/abductor/console/console = get_team_console(team_number)
 	var/obj/item/device/abductor/gizmo/G = new /obj/item/device/abductor/gizmo(scientist)
 	if(console!=null)
@@ -251,14 +259,18 @@
 
 
 /datum/game_mode/abduction/check_finished()
-	for(var/team_number=1,team_number<=teams,team_number++)
-		var/obj/machinery/abductor/console/con = get_team_console(team_number)
-		var/datum/objective/objective = team_objectives[team_number]
-		if (con.experiment.points > objective.target_amount)
-			return 1
+	if(!finished)
+		for(var/team_number=1,team_number<=teams,team_number++)
+			var/obj/machinery/abductor/console/con = get_team_console(team_number)
+			var/datum/objective/objective = team_objectives[team_number]
+			if (con.experiment.points > objective.target_amount)
+				SSshuttle.emergency.request(null, 0.5)
+				finished = 1
+				return ..()
 	return ..()
 
 /datum/game_mode/abduction/declare_completion()
+	world << "<br><font size=3><b>The Abductors were:</b></font>"
 	for(var/team_number=1,team_number<=teams,team_number++)
 		var/obj/machinery/abductor/console/console = get_team_console(team_number)
 		var/datum/objective/objective = team_objectives[team_number]
@@ -274,7 +286,7 @@
 			world << "<font size = 3 color='red'><b>[team_name] team failed its mission! </b></font>"
 			world << "<b>Team Members</b>: [agent.name]([agent.ckey])<br>[scientist.name]([scientist.ckey])"
 
-		world << "<b>Abductees:</b>"
+		world <<  "<br><font size=2><b>The Abductees were:</b></font>"
 		display_abductees(console)
 
 	..()
@@ -285,20 +297,24 @@
 	for(var/mob/living/abductee in abductees)
 		if(!abductee.mind)
 			continue
-		world << "[abductee.name]([abductee.ckey]))"
-		var/count = 1
-		for(var/datum/objective/objective in abductee.mind.objectives)
-			if(objective.check_completion())
-				world << "<br><b>Objective #[count]</b>: [objective.explanation_text] <font color='green'><b>Success!</b></font>"
-			else
-				world << "<br><b>Objective #[count]</b>: [objective.explanation_text] <span class='danger'>Fail.</span>"
-			count++
+		world << printplayer(abductee.mind)
+		world << printobjectives(abductee.mind)
 
 /datum/game_mode/proc/auto_declare_completion_abduction()
-	if(abductors.len)
-		world << "Abductors:"
+	if(abductors.len && ticker.mode.config_tag != "abduction") // no repeating for the gamemode
+		world << "<br><font size=3><b>The Abductors were:</b></font>"
 		for(var/datum/mind/M in abductors)
 			world << "<font size = 2><b>Abductor [M.current ? M.current.name : "Abductor"]([M.key])</b></font>"
+			world << printobjectives(M)
+		world << "<br><font size=3><b>The Abductees were:</b></font>"
+		var/list/full_history = list()
+		for(var/obj/machinery/abductor/console/C in machines)
+			full_history |= C.experiment.history
+		for(var/mob/living/abductee in full_history)
+			if(!abductee.mind)
+				continue
+			world << printplayer(abductee.mind)
+			world << printobjectives(abductee.mind)
 	return
 
 //Landmarks
@@ -329,6 +345,19 @@ datum/objective/experiment/New()
 	explanation_text = "Experiment on [target_amount] humans"
 
 datum/objective/experiment/check_completion()
+	if(!owner.current || !ishuman(owner.current))
+		return 0
+	var/mob/living/carbon/human/H = owner.current
+	if(!H.dna || !H.dna.species || !(H.dna.species.id == "abductor"))
+		return 0
+	var/datum/species/abductor/S = H.dna.species
+	var/ab_team = S.team
+	for(var/obj/machinery/abductor/experiment/E in machines)
+		if(E.team == ab_team)
+			if(E.points >= target_amount)
+				return 1
+			else
+				return 0
 	return 0
 
 datum/objective/abductee

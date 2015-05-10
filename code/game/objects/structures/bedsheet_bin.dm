@@ -215,6 +215,8 @@ LINEN BINS
 
 
 /obj/structure/bedsheetbin/attack_hand(mob/user as mob)
+	if(user.lying)
+		return
 	if(amount >= 1)
 		amount--
 

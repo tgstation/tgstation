@@ -55,10 +55,6 @@
 			secequipment += loc
 			qdel(src)
 			return
-		if("Deathsquad")
-			deathsquadspawn += loc
-			qdel(src)
-			return
 		if("Emergencyresponseteam")
 			emergencyresponseteamspawn += loc
 			qdel(src)
@@ -87,6 +83,9 @@
 	start_landmarks_list += src
 
 	return 1
+/obj/effect/landmark/start/Destroy()
+	..()
+	start_landmarks_list -= src
 
 //Costume spawner landmarks
 

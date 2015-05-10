@@ -11,7 +11,7 @@ var/global/list/special_roles = list( //keep synced with the defines BE_* in set
 	"malf AI" = /datum/game_mode/malfunction,		//4
 	"revolutionary" = /datum/game_mode/revolution,	//5
 	"alien",										//6
-	"pAI",											//7
+	"pAI/posibrain",								//7
 	"cultist" = /datum/game_mode/cult,				//8
 	"blob" = /datum/game_mode/blob,					//9
 	"ninja",										//10
@@ -795,14 +795,14 @@ datum/preferences
 							user << "<font color='red'>Invalid name. Your name should be at least 2 and at most [MAX_NAME_LEN] characters long. It may only contain the characters A-Z, a-z, 0-9, -, ' and .</font>"
 
 					if("religion_name")
-						var/new_religion_name = reject_bad_name( input(user, "Choose your character's mime name:", "Character Preference")  as text|null )
+						var/new_religion_name = reject_bad_name( input(user, "Choose your character's religion:", "Character Preference")  as text|null )
 						if(new_religion_name)
 							custom_names["religion"] = new_religion_name
 						else
 							user << "<font color='red'>Invalid name. Your name should be at least 2 and at most [MAX_NAME_LEN] characters long. It may only contain the characters A-Z, a-z, -, ' and .</font>"
 
 					if("deity_name")
-						var/new_deity_name = reject_bad_name( input(user, "Choose your character's mime name:", "Character Preference")  as text|null )
+						var/new_deity_name = reject_bad_name( input(user, "Choose your character's deity:", "Character Preference")  as text|null )
 						if(new_deity_name)
 							custom_names["deity"] = new_deity_name
 						else
@@ -920,9 +920,9 @@ datum/preferences
 		if(character.dna)
 			character.dna.real_name = character.real_name
 			if(pref_species != /datum/species/human && config.mutant_races)
-				character.dna.species = new pref_species.type()
+				hardset_dna(character, null, null, null, null, pref_species.type)
 			else
-				character.dna.species = new /datum/species/human()
+				hardset_dna(character, null, null, null, null, /datum/species/human)
 			character.dna.mutant_color = mutant_color
 			character.update_mutcolor()
 

@@ -37,3 +37,12 @@
 			healths.icon_state = "health7"
 
 
+/mob/living/carbon/alien/larva/handle_regular_status_updates()
+
+	if(..()) //alive
+
+		if(health <= -maxHealth)
+			death()
+			return
+
+		return 1
