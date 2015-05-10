@@ -57,7 +57,8 @@
 	..()
 	name = text("[initial(name)] ([rand(1, 1000)])")
 	real_name = name
-	add_language("Cult")
+	add_language(LANGUAGE_CULT)
+	default_language = all_languages[LANGUAGE_CULT]
 	for(var/spell in construct_spells)
 		src.add_spell(new spell, "const_spell_ready")
 	updateicon()
