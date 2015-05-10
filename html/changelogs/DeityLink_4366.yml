@@ -1,0 +1,7 @@
+author: Deity Link
+delete-after: true
+changes:
+  - rscadd: Added Vault Door assembly, built from 8 sheets of plasteel.
+  - tweak: Vault Doors now have the same bomb protection as Blast Doors.
+  - tweak: Deconstructing a Vault Door now produces a Vault Door assembly (duh, previously produced an highsec airlock assembly)
+  - imageadd: The riveted walls of Centcom now smooth with each others. Still looks as ugly.
