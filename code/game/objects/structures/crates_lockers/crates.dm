@@ -11,11 +11,11 @@
 	var/sound_effect_open = 'sound/machines/click.ogg'
 	var/sound_effect_close = 'sound/machines/click.ogg'
 	var/obj/item/weapon/paper/manifest/manifest
-	
+
 /obj/structure/closet/crate/New()
 	..()
 	update_icon()
-	
+
 
 /obj/structure/closet/crate/update_icon()
 	overlays.Cut()
@@ -111,7 +111,7 @@
 	..()
 	new /obj/item/weapon/reagent_containers/spray/plantbgone(src)
 	new /obj/item/weapon/reagent_containers/spray/plantbgone(src)
-	new /obj/item/weapon/minihoe(src)
+	new /obj/item/weapon/cultivator(src)
 
 /obj/structure/closet/crate/secure
 	desc = "A secure crate."
@@ -148,7 +148,7 @@
 	name = "secure hydroponics crate"
 	icon_crate = "hydrosecurecrate"
 	icon_state = "hydrosecurecrate"
-	
+
 /obj/structure/closet/crate/secure/update_icon()
 	..()
 	if(locked)
@@ -202,7 +202,7 @@
 		user.put_in_hands(manifest)
 	manifest = null
 	overlays-="manifest"
-	
+
 /obj/structure/closet/crate/attack_hand(mob/user as mob)
 	if(manifest)
 		tear_manifest(user)

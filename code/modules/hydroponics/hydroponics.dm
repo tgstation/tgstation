@@ -692,7 +692,7 @@ obj/machinery/hydroponics/attackby(var/obj/item/O as obj, var/mob/user as mob, p
 		user << "-Nutrition level: <span class='notice'> [nutrilevel] / [maxnutri]</span>"
 		user << ""
 
-	else if(istype(O, /obj/item/weapon/minihoe))
+	else if(istype(O, /obj/item/weapon/cultivator))
 		if(weedlevel > 0)
 			user.visible_message("[user] uproots the weeds.", "<span class='notice'>You remove the weeds from [src].</span>")
 			weedlevel = 0

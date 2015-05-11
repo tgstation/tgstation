@@ -1065,7 +1065,7 @@
 "uy" = (/obj/structure/table/reinforced,/obj/item/weapon/storage/fancy/donut_box,/turf/simulated/floor/fancy/carpet,/area/crew_quarters/bar)
 "uz" = (/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,/turf/simulated/floor/plasteel{icon_state = "vault"; dir = 5},/area/crew_quarters/bar)
 "uA" = (/obj/machinery/requests_console{department = "Bar"; departmentType = 2; pixel_x = 30; pixel_y = 0},/mob/living/carbon/monkey{name = "Pun Pun"},/turf/simulated/floor/plasteel{icon_state = "vault"; dir = 5},/area/crew_quarters/bar)
-"uB" = (/obj/machinery/hydroponics/soil,/obj/item/weapon/minihoe,/turf/simulated/floor/plasteel{icon_state = "green"; dir = 1},/area/hallway/primary/central)
+"uB" = (/obj/machinery/hydroponics/soil,/obj/item/weapon/cultivator,/turf/simulated/floor/plasteel{icon_state = "green"; dir = 1},/area/hallway/primary/central)
 "uC" = (/obj/machinery/hydroponics/soil,/obj/item/weapon/hatchet,/turf/simulated/floor/plasteel{icon_state = "green"; dir = 1},/area/hallway/primary/central)
 "uD" = (/obj/machinery/hydroponics/soil,/turf/simulated/floor/plasteel{icon_state = "green"; dir = 1},/area/hallway/primary/central)
 "uE" = (/obj/structure/extinguisher_cabinet{pixel_x = -27; pixel_y = 0},/turf/simulated/floor/plasteel{icon_state = "white"},/area/medical/medbay)
