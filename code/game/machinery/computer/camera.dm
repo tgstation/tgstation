@@ -47,7 +47,11 @@
 	var/list/D = list()
 	D["Cancel"] = "Cancel"
 	for(var/obj/machinery/camera/C in L)
-		var/list/tempnetwork = C.network&network
+		if(!istype(C.network, /list))
+			var/turf/T = get_turf(C)
+			WARNING("[C] - Camera at ([T.x],[T.y],[T.z]) has a non list for network, [C.network]")
+			C.network = list(C.network)
+		var/list/tempnetwork = C.network & network
 		if(tempnetwork.len)
 			D[text("[][]", C.c_tag, (C.status ? null : " (Deactivated)"))] = C
 
