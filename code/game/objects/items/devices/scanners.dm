@@ -56,7 +56,7 @@ REAGENT SCANNER
 				spawn(10)
 					if(O)
 						var/turf/U = O.loc
-						if(U.intact)
+						if(U && U.intact)
 							O.invisibility = 101
 		for(var/mob/living/M in T.contents)
 			var/oldalpha = M.alpha

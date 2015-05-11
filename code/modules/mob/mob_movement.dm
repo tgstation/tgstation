@@ -443,7 +443,7 @@
 			continue
 
 		var/mob/living/carbon/human/H = src
-		if(istype(turf,/turf/simulated/floor) && (src.areaMaster.has_gravity == 0) && !(istype(H) && istype(H.shoes, /obj/item/clothing/shoes/magboots) && (H.shoes.flags & NOSLIP)))
+		if(istype(turf,/turf/simulated/floor) && (src.areaMaster && src.areaMaster.has_gravity == 0) && !(istype(H) && istype(H.shoes, /obj/item/clothing/shoes/magboots) && (H.shoes.flags & NOSLIP)))
 			continue
 
 		dense_object++

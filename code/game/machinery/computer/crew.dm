@@ -74,6 +74,7 @@
 
 	for(var/mob/living/carbon/brain/B in mob_list)
 		var/turf/pos = get_turf(B)
+		if(!pos) continue
 		var/obj/item/device/mmi/M = B.loc
 		if(istype(M) && M.brainmob == B)
 			if(isrobot(M.loc))
