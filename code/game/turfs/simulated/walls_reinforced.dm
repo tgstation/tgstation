@@ -65,7 +65,6 @@
 				playsound(src, 'sound/items/Wirecutter.ogg', 100, 1)
 				src.d_state = 1
 				src.icon_state = "r_wall-1"
-				new /obj/item/stack/rods( src )
 				user << "<span class='notice'>You cut the outer grille.</span>"
 				return 1
 
@@ -85,15 +84,15 @@
 				return 1
 
 			//REPAIRING (replacing the outer grille for cosmetic damage)
-			else if(istype(W, /obj/item/stack/rods))
-				var/obj/item/stack/rods/O = W
+			else if(istype(W, /obj/item/stack/sheet/metal))
+				var/obj/item/stack/sheet/metal/O = W
 				if (O.use(1))
 					src.d_state = 0
 					src.icon_state = "r_wall"
 					relativewall_neighbours()	//call smoothwall stuff
 					user << "<span class='notice'>You replace the outer grille.</span>"
 				else
-					user << "<span class='warning'>You need one rod to repair the wall!</span>"
+					user << "<span class='warning'>Report this to a coder: metal stack had less than one sheet in it when trying to repair wall</span>"
 					return 1
 				return 1
 
@@ -177,8 +176,7 @@
 						if( d_state == 5 && user.loc == T && user.get_active_hand() == WT )
 							src.d_state = 6
 							src.icon_state = "r_wall-6"
-							new /obj/item/stack/rods( src )
-							user << "<span class='notice'>The support rods drop out as you cut them loose from the frame.</span>"
+							user << "<span class='notice'>You slice through the support rods.</span>"
 				return 1
 
 			if( istype(W, /obj/item/weapon/gun/energy/plasmacutter) )
@@ -193,8 +191,7 @@
 					if( d_state == 5 && user.loc == T && user.get_active_hand() == W )
 						src.d_state = 6
 						src.icon_state = "r_wall-6"
-						new /obj/item/stack/rods( src )
-						user << "<span class='notice'>The support rods drop out as you cut them loose from the frame.</span>"
+						user << "<span class='notice'>You slice through the support rods.</span>"
 				return 1
 
 		if(6)
