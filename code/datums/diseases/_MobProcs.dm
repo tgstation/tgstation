@@ -127,3 +127,8 @@
 	if(!CanContractDisease(D))
 		return 0
 	AddDisease(D)
+
+/mob/living/carbon/human/CanContractDisease(var/datum/disease/D)
+	if(dna && VIRUSIMMUNE in dna.species.specflags)
+		return 0
+	return ..()
