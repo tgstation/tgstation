@@ -15,34 +15,17 @@
 
 
 /obj/item/device/mmi/posibrain/attack_self(mob/user as mob)
-	if(brainmob && !brainmob.key && searching == 0)
-		//Start the process of searching for a new user.
-		user << "<span class='notice'>You carefully locate the manual activation switch and start the positronic brain's boot process.</span>"
-		searching = 1
-		update_icon()
-		request_player()
-		spawn(600)
-			reset_search()
+	return //Code for deleting personalities recommended here.
 
-/obj/item/device/mmi/posibrain/proc/request_player()
-	for(var/mob/dead/observer/O in player_list)
-		if(jobban_isbanned(O, "posibrain"))
-			continue
-		if(O.client)
-			if(O.client.prefs.be_special & BE_PAI)
-				question(O.client)
 
-/obj/item/device/mmi/posibrain/proc/question(var/client/C)
-	spawn(0)
-		if(!C)	return
-		var/response = alert(C, "Someone is requesting a personality for a positronic brain. Would you like to play as one?", "Positronic brain request", "Yes", "No", "Never for this round")
-		if(!C || brainmob.key || 0 == searching)
-			return		//handle logouts that happen whilst the alert is waiting for a response, and responses issued after a brain has been located.
-		if(response == "Yes")
-			transfer_personality(C.mob)
-		else if (response == "Never for this round")
-			C.prefs.be_special ^= BE_PAI
+/obj/item/device/mmi/posibrain/attack_ghost(mob/user)
+	if((brainmob && brainmob.key) || jobban_isbanned(user,"posibrain"))
+		return
 
+	var/posi_ask = alert("Become a positronic brain? (Warning, You can no longer be cloned, and all past lives will be forgotten!)","Are you positive?","Yes","No")
+	if(posi_ask == "No" || gc_destroyed)
+		return
+	transfer_personality(user)
 
 /obj/item/device/mmi/posibrain/transfer_identity(var/mob/living/carbon/H)
 	name = "positronic brain ([H])"
@@ -85,14 +68,6 @@
 	visible_message("<span class='notice'>The positronic brain chimes quietly.</span>")
 	update_icon()
 
-/obj/item/device/mmi/posibrain/proc/reset_search() //We give the players sixty seconds to decide, then reset the timer.
-
-	if(brainmob && brainmob.key) return
-
-	searching = 0
-	update_icon()
-
-	visible_message("<span class='notice'>The positronic brain buzzes quietly, and the golden lights fade away. Perhaps you could try again?</span>")
 
 /obj/item/device/mmi/posibrain/examine()
 
@@ -128,6 +103,7 @@
 	brainmob.stat = 0
 	brainmob.silent = 0
 	dead_mob_list -= brainmob
+	notify_ghosts("Positronic Brain created in [get_area(src)].")
 
 	..()
 
@@ -137,9 +113,6 @@
 
 
 /obj/item/device/mmi/posibrain/update_icon()
-	if(searching)
-		icon_state = "posibrain-searching"
-		return
 	if(brainmob && brainmob.key)
 		icon_state = "posibrain-occupied"
 	else
