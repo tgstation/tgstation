@@ -4,6 +4,7 @@
 	icon_state = "r_wall"
 	opacity = 1
 	density = 1
+	explosion_block = 2
 
 	walltype = "rwall"
 

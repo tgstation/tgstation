@@ -147,6 +147,7 @@
 
 	var/silent_ai = 0
 	var/silent_borg = 0
+	var/reactionary_explosions = 0 //If we use reactionary explosions, explosions that react to walls and doors
 
 	var/sandbox_autoclose = 0 // close the sandbox panel after spawning an item, potentially reducing griff
 
@@ -338,6 +339,8 @@
 					config.irc_first_connection_alert = 1
 				if("aggressive_changelog")
 					config.aggressive_changelog = 1
+				if("reactionary_explosions")
+					config.reactionary_explosions	= 1
 				else
 					diary << "Unknown setting in configuration: '[name]'"
 

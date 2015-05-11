@@ -8,6 +8,7 @@
 	var/list/blood_DNA
 	var/last_bumped = 0
 	var/throwpass = 0
+	var/explosion_block = 0
 
 	///Chemistry.
 	var/datum/reagents/reagents = null
