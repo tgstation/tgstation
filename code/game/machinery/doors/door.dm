@@ -274,8 +274,10 @@
 /obj/machinery/door/proc/hasPower()
 	return !(stat & NOPOWER)
 
-/obj/machinery/door/BlockSuperconductivity()
-	return heat_proof
+/obj/machinery/door/BlockSuperconductivity() // All non-glass airlocks block heat, this is intended.
+	if(opacity || heat_proof)
+		return 1
+	return 0
 
 /obj/machinery/door/morgue
 	icon = 'icons/obj/doors/doormorgue.dmi'
