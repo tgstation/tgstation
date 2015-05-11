@@ -246,11 +246,11 @@
 						if("frenchcurse")
 							feedback_add_details("wizard_spell_learned","FC") //please do not change the abbreviation to keep data processing consistent. Add a unique id to any new spells
 							add_spell(new/spell/targeted/frenchcurse,H)
-							temp = "You have learned the clown curse."
+							temp = "You have learned the french curse."
 						if("clowncurse")
 							feedback_add_details("wizard_spell_learned","CC") //please do not change the abbreviation to keep data processing consistent. Add a unique id to any new spells
 							add_spell(new/spell/targeted/genetic/clowncurse,H)
-							temp = "You have learned the french curse."
+							temp = "You have learned the clown curse."
 						if("shoesnatch")
 							feedback_add_details("wizard_spell_learned","SS") //please do not change the abbreviation to keep data processing consistent. Add a unique id to any new spells
 							add_spell(new/spell/targeted/shoesnatch,H)
