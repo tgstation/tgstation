@@ -147,7 +147,7 @@
 
 	var/silent_ai = 0
 	var/silent_borg = 0
-	var/reactionary_explosions = 0 //If we use reactionary explosions, explosions that react to walls and doors
+	var/reactionary_explosions = 1 //If we use reactionary explosions, explosions that react to walls and doors
 
 	var/sandbox_autoclose = 0 // close the sandbox panel after spawning an item, potentially reducing griff
 
