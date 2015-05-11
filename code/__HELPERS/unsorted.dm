@@ -723,7 +723,7 @@ proc/anim(turf/location as turf,target as mob|obj,a_icon,a_icon_state as text,fl
 //Returns sortedAreas list if populated
 //else populates the list first before returning it
 /proc/SortAreas()
-	for(var/area/A in world)
+	for(var/area/A in areas)
 		if(A.lighting_subarea)
 			continue
 		sortedAreas.Add(A)
@@ -745,10 +745,10 @@ proc/anim(turf/location as turf,target as mob|obj,a_icon,a_icon_state as text,fl
 		var/area/areatemp = areatype
 		areatype = areatemp.type
 
-	var/list/areas = new/list()
-	for(var/area/N in world)
-		if(istype(N, areatype)) areas += N
-	return areas
+	var/list/theareas = new/list()
+	for(var/area/N in areas)
+		if(istype(N, areatype)) theareas += N
+	return theareas
 
 //Takes: Area type as text string or as typepath OR an instance of the area.
 //Returns: A list of all turfs in areas of that type of that type in the world.
@@ -760,7 +760,7 @@ proc/anim(turf/location as turf,target as mob|obj,a_icon,a_icon_state as text,fl
 		areatype = areatemp.type
 
 	var/list/turfs = new/list()
-	for(var/area/N in world)
+	for(var/area/N in areas)
 		if(istype(N, areatype))
 			for(var/turf/T in N) turfs += T
 	return turfs
@@ -775,7 +775,7 @@ proc/anim(turf/location as turf,target as mob|obj,a_icon,a_icon_state as text,fl
 		areatype = areatemp.type
 
 	var/list/atoms = new/list()
-	for(var/area/N in world)
+	for(var/area/N in areas)
 		if(istype(N, areatype))
 			for(var/atom/A in N)
 				atoms += A

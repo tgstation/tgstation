@@ -10,7 +10,7 @@
 /obj/machinery/computer/lasercon
 	New()
 		spawn(1)
-			for(var/obj/machinery/zero_point_emitter/las in world)
+			for(var/obj/machinery/zero_point_emitter/las in machines)
 				if(las.id == src.id)
 					lasers += las
 

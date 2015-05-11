@@ -109,7 +109,7 @@
 						<br><b>Medical Robots:</b>"}
 					// END AUTOFIX
 					var/bdat = null
-					for(var/obj/machinery/bot/medbot/M in world)
+					for(var/obj/machinery/bot/medbot/M in machines)
 
 						if(M.z != src.z)	continue	//only find medibots on the same z-level as the computer
 						var/turf/bl = get_turf(M)

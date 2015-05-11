@@ -1220,7 +1220,7 @@ About the new airlock wires panel:
 	wires = new(src)
 	if(src.closeOtherId != null)
 		spawn (5)
-			for (var/obj/machinery/door/airlock/A in world)
+			for (var/obj/machinery/door/airlock/A in machines)
 				if(A.closeOtherId == src.closeOtherId && A != src)
 					src.closeOther = A
 					break

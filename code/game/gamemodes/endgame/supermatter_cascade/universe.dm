@@ -96,7 +96,7 @@ AUTOMATED ALERT: Link to [command_name()] lost."}
 		return
 
 /datum/universal_state/supermatter_cascade/proc/AreaSet()
-	for(var/area/ca in world)
+	for(var/area/ca in areas)
 		var/area/A=get_area_master(ca)
 		if(!istype(A,/area) || A.name=="Space" || istype(A,/area/beach))
 			continue
@@ -127,7 +127,7 @@ AUTOMATED ALERT: Link to [command_name()] lost."}
 		A.updateicon()
 
 /datum/universal_state/supermatter_cascade/OverlayAndAmbientSet()
-	for(var/turf/T in world)
+	for(var/turf/T in turfs)
 		if(istype(T, /turf/space))
 			T.overlays += "end01"
 		else
@@ -136,12 +136,12 @@ AUTOMATED ALERT: Link to [command_name()] lost."}
 				T.update_lumcount(1, 160, 255, 0, 0)
 
 /datum/universal_state/supermatter_cascade/proc/MiscSet()
-	for (var/obj/machinery/firealarm/alm in world)
+	for (var/obj/machinery/firealarm/alm in machines)
 		if (!(alm.stat & BROKEN))
 			alm.ex_act(2)
 
 /datum/universal_state/supermatter_cascade/proc/APCSet()
-	for (var/obj/machinery/power/apc/APC in world)
+	for (var/obj/machinery/power/apc/APC in machines)
 		if (!(APC.stat & BROKEN) && !APC.is_critical)
 			APC.chargemode = 0
 			if(APC.cell)

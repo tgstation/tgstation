@@ -99,7 +99,7 @@
 
 /obj/machinery/rail_switch/attack_hand(user as mob)
 	user << "You switch the rail track's direction"
-	for (var/obj/machinery/rail_track/T in world)
+	for (var/obj/machinery/rail_track/T in machines)
 		if (T.id == src.id)
 			var/obj/machinery/rail_car/C = locate(/obj/machinery/rail_car, T.loc)
 			if (C)
