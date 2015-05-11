@@ -136,21 +136,10 @@
 	hardset_dna(M, null, null, null, null, /datum/species/skeleton)
 	M.revive()
 	spooky_scaries |= M
-	M << "<span class='notice'>You have been revived by </span><B>[user.real_name]!</B>"
-	M << "<span class='notice'>They are your master now, assist them even if it costs you your new life!</span>"
+	M << "<span class='userdanger'>You have been revived by </span><B>[user.real_name]!</B>"
+	M << "<span class='userdanger'>They are your master now, assist them even if it costs you your new life!</span>"
 
-	if(prob(33))
-		equip_roman_skeleton(M)
-
-	var/mob/living/carbon/human/master = user
-
-	var/datum/objective/protect/protect_master = new /datum/objective/protect
-	protect_master.owner = M.mind
-	protect_master.target = master.mind
-	protect_master.explanation_text = "Protect [master.real_name], your master."
-	M.mind.objectives += protect_master
-	ticker.mode.traitors += M.mind
-	M.mind.special_role = "skeleton-thrall"
+	equip_roman_skeleton(M)
 
 	desc = "A shard capable of resurrecting humans as skeleton thralls[unlimited ? "." : ", [spooky_scaries.len]/3 active thralls."]"
 
