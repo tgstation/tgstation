@@ -15,7 +15,7 @@
 	var/operating = 0
 	var/glass = 0
 	var/normalspeed = 1
-	var/heat_proof = 0 // For glass airlocks/opacity firedoors
+	var/heat_proof = 0 // For plasteel-plated airlocks and firedoors
 	var/emergency = 0 // Emergency access override
 	var/sub_door = 0 // 1 if it's meant to go under another door.
 
@@ -275,9 +275,7 @@
 	return !(stat & NOPOWER)
 
 /obj/machinery/door/BlockSuperconductivity()
-	if(opacity || heat_proof)
-		return 1
-	return 0
+	return heat_proof
 
 /obj/machinery/door/morgue
 	icon = 'icons/obj/doors/doormorgue.dmi'

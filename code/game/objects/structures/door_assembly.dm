@@ -15,6 +15,7 @@ obj/structure/door_assembly
 	var/airlock_type = /obj/machinery/door/airlock //the type path of the airlock once completed
 	var/glass_type = /obj/machinery/door/airlock/glass
 	var/created_name = null
+	var/heat_proof_finished = 0 //will the airlock be heat proof when finished
 
 obj/structure/door_assembly/New()
 	base_icon_state = copytext(icon_state,1,lentext(icon_state))
@@ -493,6 +494,29 @@ obj/structure/door_assembly/New()
 			user << "<span class='notice'> You unsecure the airlock assembly.</span>"
 			src.name = "airlock assembly"
 			src.anchored = 0
+	else if(istype(W, /obj/item/stack/sheet/plasteel) && state == 1) 
+		var/obj/item/stack/sheet/plasteel/P = W
+		if (!heat_proof_finished)
+			if (P.get_amount() < 1)
+				user << "<span class='warning'>You need one sheet of plasteel to heat-proof the airlock assembly!</span>"
+				return
+			user.visible_message("[user] adds heat-proof plating to the airlock assembly.",
+								"<span class='notice'>You start adding heat-proof plating to the airlock assembly...</span>")
+			if(do_after(user, 40)) //TODO: does this need a sound?
+				if(P.get_amount() < 1) return
+				P.use(1)
+				src.heat_proof_finished = 1
+				user << "<span class='notice'>You add heat-proof plating to the airlock assembly.</span>"
+				src.name = "heat-proofed wired airlock assembly " 
+		else
+			user << "<span class='warning'>The airlock assembly already has heat-proof plating!</span>"
+	else if(istype(W, /obj/item/weapon/crowbar) && state == 1 && heat_proof_finished)
+		playsound(src.loc, 'sound/items/Crowbar.ogg', 100, 1)
+		user << "<span class='notice'>You remove the heat-proof plating from the airlock assembly.</span>"
+		src.heat_proof_finished = 0
+		new/obj/item/stack/sheet/plasteel(get_turf(user), 1)
+		src.name = "wired airlock assembly"
+		
 
 	else if(istype(W, /obj/item/stack/cable_coil) && state == 0 && anchored )
 		var/obj/item/stack/cable_coil/C = W
@@ -507,6 +531,8 @@ obj/structure/door_assembly/New()
 			src.state = 1
 			user << "<span class='notice'>You wire the airlock assembly.</span>"
 			src.name = "wired airlock assembly"
+			if(src.heat_proof_finished)
+				src.name = "heat-proofed [src.name]"
 
 	else if(istype(W, /obj/item/weapon/wirecutters) && state == 1 )
 		playsound(src.loc, 'sound/items/Wirecutter.ogg', 100, 1)
@@ -520,6 +546,8 @@ obj/structure/door_assembly/New()
 			new/obj/item/stack/cable_coil(get_turf(user), 1)
 			src.state = 0
 			src.name = "secured airlock assembly"
+			if(src.heat_proof_finished)
+				src.name = "heat-proofed [src.name]"
 
 	else if(istype(W, /obj/item/weapon/airlock_electronics) && state == 1 )
 		playsound(src.loc, 'sound/items/Screwdriver.ogg', 100, 1)
@@ -536,6 +564,8 @@ obj/structure/door_assembly/New()
 			user << "<span class='notice'> You install the airlock electronics.</span>"
 			src.state = 2
 			src.name = "near finished airlock assembly"
+			if(src.heat_proof_finished)
+				src.name = "heat-proofed [src.name]"
 			src.electronics = W
 
 
@@ -550,6 +580,8 @@ obj/structure/door_assembly/New()
 			user << "<span class='notice'> You remove the airlock electronics.</span>"
 			src.state = 1
 			src.name = "wired airlock assembly"
+			if(src.heat_proof_finished)
+				src.name = "heat-proofed [src.name]"
 			var/obj/item/weapon/airlock_electronics/ae
 			if (!electronics)
 				ae = new/obj/item/weapon/airlock_electronics( src.loc )
@@ -595,6 +627,8 @@ obj/structure/door_assembly/New()
 							G.use(2)
 							mineral = "[M]"
 							name = "near finished [M] airlock assembly"
+							if(heat_proof_finished)
+								name = "heat-proofed [name]"
 							airlock_type = text2path ("/obj/machinery/door/airlock/[M]")
 							base_icon_state = "door_as_[M]"
 							glass_base_icon_state = "door_as_g"
@@ -615,6 +649,7 @@ obj/structure/door_assembly/New()
 					door = new src.airlock_type( src.loc )
 				//door.req_access = src.req_access
 				door.electronics = src.electronics
+				door.heat_proof = src.heat_proof_finished
 				if(src.electronics.use_one_access)
 					door.req_one_access = src.electronics.conf_access
 				else
