@@ -13,8 +13,6 @@
 
 /obj/machinery/portable_atmospherics/New()
 	..()
-	machines.Remove(src)
-	atmos_machines |= src
 	air_contents.volume = volume
 	air_contents.temperature = T20C
 
