@@ -115,9 +115,7 @@
 	icon = 'icons/obj/doors/vault.dmi'
 	opacity = 1
 	emag_cost = 2 // in MJ
-	assembly_type = /obj/structure/door_assembly/door_assembly_vault
-
-	explosion_block = 3//that's some high quality plasteel door
+	assembly_type = /obj/structure/door_assembly/door_assembly_highsecurity //Until somebody makes better sprites.
 
 	explosion_block = 2
 
@@ -256,8 +254,8 @@
 //			target_tile.parent.suspend_group_processing()
 		var/datum/gas_mixture/napalm = new
 		var/toxinsToDeduce = 35
-		napalm.adjust_gas(PLASMA, toxinsToDeduce)
-		napalm.set_temperature(400+T0C)
+		napalm.toxins = toxinsToDeduce
+		napalm.temperature = 400+T0C
 		target_tile.assume_air(napalm)
 		spawn (0)
 			target_tile.hotspot_expose(temperature, 400, surfaces=1)

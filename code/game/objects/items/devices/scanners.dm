@@ -248,14 +248,6 @@ proc/healthanalyze(mob/living/M as mob, mob/living/user as mob, var/mode = 0)
 	melt_temperature = MELTPOINT_PLASTIC
 	origin_tech = "magnets=1;engineering=1"
 
-	var/list/human_standards = list("oxygen_min" = 16,
-									"oxygen_max" = 20,
-									"nitrogen_min" = 60,
-									"nitrogen_max" = 100,
-									"plasma_max" = 0.01,
-									"carbon_dioxide_max" = 0.01,
-									"nitrous_oxide_max" = 0.01)
-
 /obj/item/device/analyzer/attack_self(mob/user as mob)
 
 	if (user.stat)
@@ -278,8 +270,9 @@ proc/healthanalyze(mob/living/M as mob, mob/living/user as mob, var/mode = 0)
 /obj/item/device/analyzer/proc/output_gas_scan(var/datum/gas_mixture/scanned, var/atom/container, human_standard = 0)
 	if(!scanned)
 		return "<span class='warning'>No gas mixture found.</span>"
-	var/pressure = scanned.pressure
-	var/total_moles = scanned.total_moles
+	scanned.update_values()
+	var/pressure = scanned.return_pressure()
+	var/total_moles = scanned.total_moles()
 	var/message = ""
 	if(!container || istype(container, /turf))
 		message += "<span class='notice'><B>Results:</B><br></span>"
@@ -287,24 +280,25 @@ proc/healthanalyze(mob/living/M as mob, mob/living/user as mob, var/mode = 0)
 		message += "<span class='notice'><B>\icon [container] Results of [container] scan:</B><br></span>"
 	if(total_moles)
 		message += "[human_standard && abs(pressure - ONE_ATMOSPHERE) > 10 ? "<span class='bad'>" : "<span class='notice'>"] Pressure: [round(pressure,0.1)] kPa</span><br>"
+		var/o2_concentration = scanned.oxygen/total_moles
+		var/n2_concentration = scanned.nitrogen/total_moles
+		var/co2_concentration = scanned.carbon_dioxide/total_moles
+		var/plasma_concentration = scanned.toxins/total_moles
 
-		for(var/gasid in scanned.gases)
-			var/gas_moles = scanned.gases[gasid]
-			var/datum/gas/gas = scanned.get_gas_by_id(gasid)
-			if(!gas_moles && !(gas.gas_flags & ALWAYS_SHOW)) //no gas, and we aren't configured to show a 0 number
-				continue //skip it
-			var/danger = 0
-			if(human_standard)
-				if("[gas.gas_id]_min" in human_standards)
-					if(gas_moles <= human_standards["[gas.gas_id]_min"])
-						danger = 1
-				else if (!danger && ("[gas.gas_id]_max" in human_standards))
-					if(gas_moles >= human_standards["[gas.gas_id]_max"])
-						danger = 1
+		var/unknown_concentration =  1-(o2_concentration+n2_concentration+co2_concentration+plasma_concentration)
 
-			message += "[danger ? "<span class='bad'>" : "<span class='notice'>"] [gas.display_short]: [round(gas_moles, 0.1)] mol, [round((gas_moles / scanned.total_moles)*100)]%</span><br>"
+		if(n2_concentration > 0.01)
+			message += "[human_standard && abs(n2_concentration - N2STANDARD) > 20 ? "<span class='bad'>" : "<span class='notice'>"] Nitrogen: [round(scanned.nitrogen, 0.1)] mol, [round(n2_concentration*100)]%</span><br>"
+		if(o2_concentration > 0.01)
+			message += "[human_standard && abs(o2_concentration - O2STANDARD) > 2 ? "<span class='bad'>" : "<span class='notice'>"] Oxygen: [round(scanned.oxygen, 0.1)] mol, [round(o2_concentration*100)]%</span><br>"
+		if(co2_concentration > 0.01)
+			message += "[human_standard ? "<span class='bad'>" : "<span class='notice'>"] CO2: [round(scanned.carbon_dioxide, 0.1)] mol, [round(co2_concentration*100)]%</span><br>"
+		if(plasma_concentration > 0.01)
+			message += "[human_standard ? "<span class='bad'>" : "<span class='notice'>"] Plasma: [round(scanned.toxins, 0.1)] mol, [round(plasma_concentration*100)]%</span><br>"
+		if(unknown_concentration > 0.01)
+			message += "<span class='notice'>Unknown: [round(unknown_concentration*100)]%<br></span>"
 
-		message += "[human_standard && !(abs(scanned.temperature-T0C - 20) < 20) ? "<span class='bad'>" : "<span class='notice'>"] Temperature: [round(scanned.temperature-T0C)]&deg;C</span>"
+		message += "[human_standard && !(scanned.temperature-T0C in range(0, 40)) ? "<span class='bad'>" : "<span class='notice'>"] Temperature: [round(scanned.temperature-T0C)]&deg;C"
 	else
 		message += "<span class='warning'>No gasses detected[container && !istype(container, /turf) ? " in \the [container]." : ""]!</span>"
 	return message

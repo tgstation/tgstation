@@ -21,5 +21,3 @@
 	var/pulse = PULSE_NORM	//current pulse level
 
 	var/hasmouth = 1 // Used for food, etc.
-
-	var/list/toxic_to_breathe = list(PLASMA) //the list of gases ignored when we try to find an internals tank - this does not actually impact breathing code

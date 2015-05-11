@@ -391,12 +391,12 @@
 		return
 	var/datum/gas_mixture/GM = new
 	if(prob(10))
-		GM.adjust_gas(PLASMA, 100, 0)
+		GM.toxins += 100
 		//GM.temperature = 1500+T0C //should be enough to start a fire
 		mob << "<span class='warning'>You exhale a large plume of toxic gas!</span>"
 	else
-		GM.adjust_gas(PLASMA, 10, 0)
-		GM.set_temperature(istype(T) ? T.air.temperature : T20C)
+		GM.toxins += 10
+		GM.temperature = istype(T) ? T.air.temperature : T20C
 		mob << "<span class = 'warning'> A toxic gas emanates from your pores!</span>"
 	T.assume_air(GM)
 	return

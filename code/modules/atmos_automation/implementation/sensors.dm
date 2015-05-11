@@ -34,10 +34,10 @@
 			field = input("Select a sensor output:", "Sensor Data", field) as null|anything in list(
 				"temperature",
 				"pressure",
-				OXYGEN,
-				PLASMA,
-				NITROGEN,
-				CARBON_DIOXIDE
+				"oxygen",
+				"toxins",
+				"nitrogen",
+				"carbon_dioxide"
 			)
 			parent.updateUsrDialog()
 			return 1

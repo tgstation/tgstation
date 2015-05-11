@@ -28,7 +28,7 @@
 /obj/machinery/atmospherics/unary/tank/carbon_dioxide/New()
 	..()
 
-	air_contents.set_gas(CARBON_DIOXIDE, (25*ONE_ATMOSPHERE)*(starting_volume)/(R_IDEAL_GAS_EQUATION*air_contents.temperature), 0)
+	air_contents.carbon_dioxide = (25*ONE_ATMOSPHERE)*(starting_volume)/(R_IDEAL_GAS_EQUATION*air_contents.temperature)
 
 
 /obj/machinery/atmospherics/unary/tank/toxins
@@ -38,9 +38,8 @@
 /obj/machinery/atmospherics/unary/tank/toxins/New()
 	..()
 
-	air_contents.set_gas(PLASMA, (25*ONE_ATMOSPHERE)*(starting_volume)/(R_IDEAL_GAS_EQUATION*air_contents.temperature), 0)
+	air_contents.toxins = (25*ONE_ATMOSPHERE)*(starting_volume)/(R_IDEAL_GAS_EQUATION*air_contents.temperature)
 
-/*
 
 /obj/machinery/atmospherics/unary/tank/oxygen_agent_b
 	icon = 'icons/obj/atmospherics/red_orange_pipe_tank.dmi'
@@ -49,8 +48,11 @@
 /obj/machinery/atmospherics/unary/tank/oxygen_agent_b/New()
 	..()
 
-	air_contents.set_gas(OXYGEN_AGENT_B, (25*ONE_ATMOSPHERE)*(starting_volume)/(R_IDEAL_GAS_EQUATION*air_contents.temperature), 0)
-*/
+	var/datum/gas/oxygen_agent_b/trace_gas = new
+	trace_gas.moles = (25*ONE_ATMOSPHERE)*(starting_volume)/(R_IDEAL_GAS_EQUATION*air_contents.temperature)
+
+	air_contents.trace_gases += trace_gas
+
 
 /obj/machinery/atmospherics/unary/tank/oxygen
 	icon = 'icons/obj/atmospherics/blue_pipe_tank.dmi'
@@ -59,7 +61,7 @@
 /obj/machinery/atmospherics/unary/tank/oxygen/New()
 	..()
 
-	air_contents.set_gas(OXYGEN, (25*ONE_ATMOSPHERE)*(starting_volume)/(R_IDEAL_GAS_EQUATION*air_contents.temperature), 0)
+	air_contents.oxygen = (25*ONE_ATMOSPHERE)*(starting_volume)/(R_IDEAL_GAS_EQUATION*air_contents.temperature)
 
 /obj/machinery/atmospherics/unary/tank/nitrogen
 	icon = 'icons/obj/atmospherics/red_pipe_tank.dmi'
@@ -68,7 +70,7 @@
 /obj/machinery/atmospherics/unary/tank/nitrogen/New()
 	..()
 
-	air_contents.set_gas(NITROGEN, (25*ONE_ATMOSPHERE)*(starting_volume)/(R_IDEAL_GAS_EQUATION*air_contents.temperature), 0)
+	air_contents.nitrogen = (25*ONE_ATMOSPHERE)*(starting_volume)/(R_IDEAL_GAS_EQUATION*air_contents.temperature)
 
 /obj/machinery/atmospherics/unary/tank/air
 	icon = 'icons/obj/atmospherics/red_pipe_tank.dmi'
@@ -77,8 +79,8 @@
 /obj/machinery/atmospherics/unary/tank/air/New()
 	..()
 
-	air_contents.set_gas(OXYGEN, (25*ONE_ATMOSPHERE*O2STANDARD)*(starting_volume)/(R_IDEAL_GAS_EQUATION*air_contents.temperature), 0)
-	air_contents.set_gas(NITROGEN, (25*ONE_ATMOSPHERE*N2STANDARD)*(starting_volume)/(R_IDEAL_GAS_EQUATION*air_contents.temperature), 0)
+	air_contents.oxygen = (25*ONE_ATMOSPHERE*O2STANDARD)*(starting_volume)/(R_IDEAL_GAS_EQUATION*air_contents.temperature)
+	air_contents.nitrogen = (25*ONE_ATMOSPHERE*N2STANDARD)*(starting_volume)/(R_IDEAL_GAS_EQUATION*air_contents.temperature)
 
 /obj/machinery/atmospherics/unary/tank/update_icon()
 	if(node)

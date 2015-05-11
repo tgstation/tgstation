@@ -168,7 +168,7 @@
 	if(istype(T))
 		var/datum/gas_mixture/G = loc.return_air() // Check if we're standing in an oxygenless environment
 		if(G)
-			oxy=G.gases[OXYGEN]
+			oxy=G.oxygen
 	if(oxy < 1 || fire_stacks <= 0)
 		ExtinguishMob() //If there's no oxygen in the tile we're on, put out the fire
 		return 1

@@ -25,7 +25,7 @@
 
 	var/log="" // Bad boys, bad boys.
 
-/obj/machinery/portable_atmospherics/canister/nitrous_oxide
+/obj/machinery/portable_atmospherics/canister/sleeping_agent
 	name = "Canister: \[N2O\]"
 	icon_state = "redws"
 	canister_color = "redws"
@@ -76,7 +76,7 @@
 		if (connected_port)
 			overlays.Add("can-connector")
 
-		var/tank_pressure = air_contents.pressure
+		var/tank_pressure = air_contents.return_pressure()
 
 		if (tank_pressure < 10)
 			overlays.Add("can-o0")
@@ -132,8 +132,8 @@
 		else
 			environment = loc.return_air()
 
-		var/env_pressure = environment.pressure
-		var/pressure_delta = min(release_pressure - env_pressure, (air_contents.pressure - env_pressure)/2)
+		var/env_pressure = environment.return_pressure()
+		var/pressure_delta = min(release_pressure - env_pressure, (air_contents.return_pressure() - env_pressure)/2)
 		//Can not have a pressure delta that would cause environment pressure > tank pressure
 
 		var/transfer_moles = 0
@@ -149,7 +149,7 @@
 				loc.assume_air(removed)
 			src.update_icon()
 
-	if(air_contents.pressure < 1)
+	if(air_contents.return_pressure() < 1)
 		can_label = 1
 	else
 		can_label = 0
@@ -170,7 +170,7 @@
 /obj/machinery/portable_atmospherics/canister/proc/return_pressure()
 	var/datum/gas_mixture/GM = src.return_air()
 	if(GM && GM.volume>0)
-		return GM.pressure
+		return GM.return_pressure()
 	return 0
 
 /obj/machinery/portable_atmospherics/canister/blob_act()
@@ -207,8 +207,8 @@
 
 	if(istype(user, /mob/living/silicon/robot) && istype(W, /obj/item/weapon/tank/jetpack))
 		var/datum/gas_mixture/thejetpack = W:air_contents
-		var/env_pressure = thejetpack.pressure
-		var/pressure_delta = min(10*ONE_ATMOSPHERE - env_pressure, (air_contents.pressure - env_pressure)/2)
+		var/env_pressure = thejetpack.return_pressure()
+		var/pressure_delta = min(10*ONE_ATMOSPHERE - env_pressure, (air_contents.return_pressure() - env_pressure)/2)
 		//Can not have a pressure delta that would cause environment pressure > tank pressure
 		var/transfer_moles = 0
 		if((air_contents.temperature > 0) && (pressure_delta > 0))
@@ -246,7 +246,7 @@
 	data["name"] = name
 	data["canLabel"] = can_label ? 1 : 0
 	data["portConnected"] = connected_port ? 1 : 0
-	data["tankPressure"] = round(air_contents.pressure > 0 ? air_contents.pressure : 0)//This used to be redundant, made it into a fix for -1 kPA showing up in the UI
+	data["tankPressure"] = round(air_contents.return_pressure() > 0 ? air_contents.return_pressure() : 0)//This used to be redundant, made it into a fix for -1 kPA showing up in the UI
 	data["releasePressure"] = round(release_pressure)
 	data["minReleasePressure"] = round(ONE_ATMOSPHERE/10)
 	data["maxReleasePressure"] = round(10*ONE_ATMOSPHERE)
@@ -254,7 +254,7 @@
 
 	data["hasHoldingTank"] = holding ? 1 : 0
 	if (holding)
-		data["holdingTank"] = list("name" = holding.name, "tankPressure" = round(holding.air_contents.pressure > 0 ? holding.air_contents.pressure : 0))
+		data["holdingTank"] = list("name" = holding.name, "tankPressure" = round(holding.air_contents.return_pressure() > 0 ? holding.air_contents.return_pressure() : 0))
 
 	// update the ui if it exists, returns null if no ui is passed/found
 	ui = nanomanager.try_update_ui(user, src, ui_key, ui, data)
@@ -275,6 +275,7 @@
 		return .
 
 	if(href_list["toggle"])
+		var/datum/gas/sleeping_agent/S = locate() in src.air_contents.trace_gases
 
 		if (valve_open)
 			if (holding)
@@ -286,30 +287,27 @@
 				investigation_log(I_ATMOS, "had its valve <b>OPENED</b> by [key_name(usr)], starting transfer into \the [holding]")
 			else
 				var/list/contents_l=list()
-				for(var/gasid in src.air_contents.gases)
-					var/datum/gas/gas = air_contents.get_gas_by_id(gasid)
-					if(gas.gas_flags & AUTO_LOGGING && air_contents.gases[gasid] > 0)
-						contents_l += "<b><font color='red'>[gas.display_name]</font></b>"
+				if(src.air_contents.toxins > 0)
+					contents_l += "<b><font color='red'>Plasma</font></b>"
+				if(src.air_contents.carbon_dioxide > 0)
+					contents_l += "<b><font color='red'>CO<sub>2</sub></font></b>"
+				if(istype(S))
+					contents_l += "N<sub>2</sub>O</font>"
 				var/contents_str = english_list(contents_l)
 				investigation_log(I_ATMOS, "had its valve <b>OPENED</b> by [key_name(usr)], starting transfer into the <font color='red'><b>air</b></font> ([contents_str])")
 				if(contents_l.len>0)
 					message_admins("[usr.real_name] ([formatPlayerPanel(usr,usr.ckey)]) opened a canister that contains [contents_str] at [formatJumpTo(loc)]!")
-					log_admin("[usr]([ckey(usr.key)]) opened a canister that contains [contents_str] at [loc.x], [loc.y], [loc.z]")
+					log_admin("[usr]([ckey(usr.key)]) opened a canister that contains [contents] at [loc.x], [loc.y], [loc.z]")
 
 		valve_open = !valve_open
 
 	if (href_list["remove_tank"])
+		var/datum/gas/sleeping_agent/S = locate() in src.air_contents.trace_gases
 		if(holding)
 			if(valve_open)
-				var/list/contents_l=list()
-				for(var/gasid in src.air_contents.gases)
-					var/datum/gas/gas = air_contents.get_gas_by_id(gasid)
-					if(gas.gas_flags & AUTO_LOGGING && air_contents.gases[gasid] > 0)
-						contents_l += "<b><font color='red'>[gas.display_name]</font></b>"
-				var/contents_str = english_list(contents_l)
-				if(contents_l.len>0)
-					message_admins("[usr.real_name] ([formatPlayerPanel(usr,usr.ckey)]) opened a canister that contains [contents_str] at [formatJumpTo(loc)]!")
-					log_admin("[usr]([ckey(usr.key)]) opened a canister that contains [contents_str] at [loc.x], [loc.y], [loc.z]")
+				if(src.air_contents.toxins > 0 || (istype(S)))
+					message_admins("[usr.real_name] ([formatPlayerPanel(usr,usr.ckey)]) opened a canister that contains \[[src.air_contents.toxins > 0 ? "Toxins" : ""] [istype(S) ? " N2O" : ""]\] at [formatJumpTo(loc)]!")
+					log_admin("[usr]([ckey(usr.key)]) opened a canister that contains \[[src.air_contents.toxins > 0 ? "Toxins" : ""] [istype(S) ? " N2O" : ""]\] at [loc.x], [loc.y], [loc.z]")
 
 			if(istype(holding, /obj/item/weapon/tank))
 				holding.manipulated_by = usr.real_name
@@ -348,17 +346,19 @@
 
 /obj/machinery/portable_atmospherics/canister/plasma/New(loc)
 	..(loc)
-	air_contents.adjust_gas(PLASMA, (maximum_pressure * filled) * air_contents.volume / (R_IDEAL_GAS_EQUATION * air_contents.temperature))
+	air_contents.adjust(tx = (maximum_pressure * filled) * air_contents.volume / (R_IDEAL_GAS_EQUATION * air_contents.temperature))
 	update_icon()
 
 /obj/machinery/portable_atmospherics/canister/oxygen/New(loc)
 	..(loc)
-	air_contents.adjust_gas(OXYGEN, (maximum_pressure * filled) * air_contents.volume / (R_IDEAL_GAS_EQUATION * air_contents.temperature))
+	src.air_contents.adjust((maximum_pressure * filled) * air_contents.volume / (R_IDEAL_GAS_EQUATION * air_contents.temperature))
 	update_icon()
 
-/obj/machinery/portable_atmospherics/canister/nitrous_oxide/New(loc)
+/obj/machinery/portable_atmospherics/canister/sleeping_agent/New(loc)
 	..(loc)
-	air_contents.adjust_gas(NITROUS_OXIDE, (maximum_pressure * filled) * air_contents.volume / (R_IDEAL_GAS_EQUATION * air_contents.temperature))
+	var/datum/gas/sleeping_agent/sleeping_agent = new
+	sleeping_agent.moles = (maximum_pressure * filled) * air_contents.volume / (R_IDEAL_GAS_EQUATION * air_contents.temperature)
+	air_contents.adjust(traces = list(sleeping_agent))
 	update_icon()
 
 /*
@@ -379,19 +379,22 @@
 
 /obj/machinery/portable_atmospherics/canister/nitrogen/New(loc)
 	..(loc)
-	air_contents.adjust_gas(NITROGEN, (maximum_pressure * filled) * air_contents.volume / (R_IDEAL_GAS_EQUATION * air_contents.temperature))
+	air_contents.adjust(n2 = (maximum_pressure * filled) * air_contents.volume / (R_IDEAL_GAS_EQUATION * air_contents.temperature))
 	update_icon()
 
 /obj/machinery/portable_atmospherics/canister/carbon_dioxide/New(loc)
 	..(loc)
-	air_contents.adjust_gas(CARBON_DIOXIDE, (maximum_pressure * filled) * air_contents.volume / (R_IDEAL_GAS_EQUATION * air_contents.temperature))
+	air_contents.adjust(co2 = (maximum_pressure * filled) * air_contents.volume / (R_IDEAL_GAS_EQUATION * air_contents.temperature))
 	update_icon()
 
 /obj/machinery/portable_atmospherics/canister/air/New(loc)
 	..(loc)
 
-	air_contents.adjust_gas(OXYGEN, (O2STANDARD * maximum_pressure * filled) * air_contents.volume / (R_IDEAL_GAS_EQUATION * air_contents.temperature))
-	air_contents.adjust_gas(NITROGEN, (N2STANDARD * maximum_pressure * filled) * air_contents.volume / (R_IDEAL_GAS_EQUATION * air_contents.temperature))
+	air_contents.adjust(\
+		(O2STANDARD * maximum_pressure * filled) * air_contents.volume / (R_IDEAL_GAS_EQUATION * air_contents.temperature),\
+		n2 = (N2STANDARD * maximum_pressure * filled) * air_contents.volume / (R_IDEAL_GAS_EQUATION * air_contents.temperature)\
+	)
+
 	update_icon()
 
 /obj/machinery/portable_atmospherics/canister/proc/weld(var/obj/item/weapon/weldingtool/WT, var/mob/user)

@@ -50,8 +50,6 @@
 
 	var/obj/item/radio/integrated/signal/sradio // AI's signaller
 
-	var/obj/item/device/analyzer/analyzer = new //scanner for air
-
 
 /mob/living/silicon/pai/New(var/obj/item/device/paicard)
 	canmove = 0

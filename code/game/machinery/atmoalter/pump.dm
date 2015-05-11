@@ -55,7 +55,7 @@
 		else
 			environment = loc.return_air()
 		if(direction_out)
-			var/pressure_delta = target_pressure - environment.pressure
+			var/pressure_delta = target_pressure - environment.return_pressure()
 			//Can not have a pressure delta that would cause environment pressure > tank pressure
 
 			var/transfer_moles = 0
@@ -70,7 +70,7 @@
 				else
 					loc.assume_air(removed)
 		else
-			var/pressure_delta = target_pressure - air_contents.pressure
+			var/pressure_delta = target_pressure - air_contents.return_pressure()
 			//Can not have a pressure delta that would cause environment pressure > tank pressure
 
 			var/transfer_moles = 0
@@ -106,7 +106,7 @@
 /obj/machinery/portable_atmospherics/pump/ui_interact(mob/user, ui_key = "main", var/datum/nanoui/ui = null)
 	var/list/data[0]
 	data["portConnected"] = connected_port ? 1 : 0
-	data["tankPressure"] = round(air_contents.pressure > 0 ? air_contents.pressure : 0)
+	data["tankPressure"] = round(air_contents.return_pressure() > 0 ? air_contents.return_pressure() : 0)
 	data["targetpressure"] = round(target_pressure)
 	data["pump_dir"] = direction_out
 	data["minpressure"] = round(pressuremin)
@@ -115,7 +115,7 @@
 
 	data["hasHoldingTank"] = holding ? 1 : 0
 	if (holding)
-		data["holdingTank"] = list("name" = holding.name, "tankPressure" = round(holding.air_contents.pressure > 0 ? holding.air_contents.pressure : 0))
+		data["holdingTank"] = list("name" = holding.name, "tankPressure" = round(holding.air_contents.return_pressure() > 0 ? holding.air_contents.return_pressure() : 0))
 
 	// update the ui if it exists, returns null if no ui is passed/found
 	ui = nanomanager.try_update_ui(user, src, ui_key, ui, data)

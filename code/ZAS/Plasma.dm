@@ -53,7 +53,7 @@ var/image/contamination_overlay = image('icons/effects/contamination.dmi')
 	if(stat >= 2)
 		return
 
-	if(species.breath_type != PLASMA)
+	if(species.breath_type != "plasma")
 
 		//Burn skin if exposed.
 		if(zas_settings.Get(/datum/ZAS_Setting/SKIN_BURNS))
@@ -124,6 +124,6 @@ var/image/contamination_overlay = image('icons/effects/contamination.dmi')
 	if(istype(I) && zas_settings.Get(/datum/ZAS_Setting/CLOTH_CONTAMINATION))
 		var/datum/gas_mixture/environment = return_air()
 
-		if(environment.gases[PLASMA] > MOLES_PLASMA_VISIBLE + 1)
+		if(environment.toxins > MOLES_PLASMA_VISIBLE + 1)
 			if(I.can_contaminate())
 				I.contaminate()

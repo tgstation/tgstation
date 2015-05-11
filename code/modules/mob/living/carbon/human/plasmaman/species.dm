@@ -11,13 +11,11 @@
 
 	//default_mutations=list(SKELETON) // This screws things up
 
-	breath_type = PLASMA
+	breath_type = "plasma"
 
 	heat_level_1 = 350  // Heat damage level 1 above this point.
 	heat_level_2 = 400  // Heat damage level 2 above this point.
 	heat_level_3 = 500  // Heat damage level 3 above this point.
-
-	species_toxic_to_breathe = list()
 
 /datum/species/plasmaman/handle_speech(message, mob/living/carbon/human/H)
 	return ..(replacetext(message, "s", stutter("ss")), H)
@@ -117,29 +115,26 @@
 	var/safe_plasma_min = 16 // Minimum safe partial pressure of PLASMA, in kPa
 	//var/safe_oxygen_max = 140 // Maximum safe partial pressure of PLASMA, in kPa (Not used for now)
 	var/safe_co2_max = 10 // Yes it's an arbitrary value who cares?
-	var/N2O_para_min = 1
-	var/N2O_sleep_min = 5
-	var/N2O_emote_min = 0.15
+	var/SA_para_min = 1
+	var/SA_sleep_min = 5
 	var/plasma_used = 0
 	var/nitrogen_used = 0
-	var/breath_pressure = (breath.total_moles*R_IDEAL_GAS_EQUATION*breath.temperature)/BREATH_VOLUME
+	var/breath_pressure = (breath.total_moles()*R_IDEAL_GAS_EQUATION*breath.temperature)/BREATH_VOLUME
 
 	// Partial pressure of plasma
-	var/Plasma_pp = (breath.gases[PLASMA]/breath.total_moles)*breath_pressure
+	var/Toxins_pp = (breath.toxins/breath.total_moles())*breath_pressure
 	// And CO2, lets say a PP of more than 10 will be bad (It's a little less really, but eh, being passed out all round aint no fun)
-	var/CO2_pp = (breath.gases[CARBON_DIOXIDE]/breath.total_moles)*breath_pressure // Tweaking to fit the hacky bullshit I've done with atmo -- TLE
+	var/CO2_pp = (breath.carbon_dioxide/breath.total_moles())*breath_pressure // Tweaking to fit the hacky bullshit I've done with atmo -- TLE
 
-	var/N2O_pp = (breath.gases[NITROUS_OXIDE]/breath.total_moles)*breath_pressure
-
-	if(Plasma_pp < safe_plasma_min)
+	if(Toxins_pp < safe_plasma_min)
 		if(prob(20))
 			spawn(0)
 				H.emote("gasp")
-		if(Plasma_pp > 0)
-			var/ratio = safe_plasma_min/Plasma_pp
+		if(Toxins_pp > 0)
+			var/ratio = safe_plasma_min/Toxins_pp
 			H.adjustOxyLoss(min(5*ratio, HUMAN_MAX_OXYLOSS)) // Don't fuck them up too fast (space only does HUMAN_MAX_OXYLOSS after all!)
 			H.failed_last_breath = 1
-			plasma_used = breath.gases[PLASMA]*ratio/6
+			plasma_used = breath.toxins*ratio/6
 		else
 			H.adjustOxyLoss(HUMAN_MAX_OXYLOSS)
 			H.failed_last_breath = 1
@@ -148,12 +143,12 @@
 	else								// We're in safe limits
 		H.failed_last_breath = 0
 		H.adjustOxyLoss(-5)
-		plasma_used = breath.gases[PLASMA]/6
+		plasma_used = breath.toxins/6
 		H.oxygen_alert = 0
 
-	breath.adjust_gas(PLASMA, -plasma_used)
-	breath.adjust_gas(NITROGEN, -nitrogen_used)
-	breath.adjust_gas(CARBON_DIOXIDE, plasma_used)
+	breath.toxins -= plasma_used
+	breath.nitrogen -= nitrogen_used
+	breath.carbon_dioxide += plasma_used
 
 	//CO2 does not affect failed_last_breath. So if there was enough oxygen in the air but too much co2, this will hurt you, but only once per 4 ticks, instead of once per tick.
 	if(CO2_pp > safe_co2_max)
@@ -171,15 +166,18 @@
 	else
 		H.co2overloadtime = 0
 
-	if(N2O_pp > N2O_para_min) // Enough to make us paralysed for a bit
-		H.Paralyse(3) // 3 gives them one second to wake up and run away a bit!
-		if(N2O_pp > N2O_sleep_min) // Enough to make us sleep as well
-			H.sleeping = min(H.sleeping+2, 10)
-		else if(N2O_pp > N2O_emote_min)	// There is sleeping gas in their lungs, but only a little, so give them a bit of a warning
-			if(prob(20))
-				spawn(0)
-					H.emote(pick("giggle", "laugh"))
-	breath.adjust_gas(NITROUS_OXIDE, -breath.gases[NITROUS_OXIDE])
+	if(breath.trace_gases.len)	// If there's some other shit in the air lets deal with it here.
+		for(var/datum/gas/sleeping_agent/SA in breath.trace_gases)
+			var/SA_pp = (SA.moles/breath.total_moles())*breath_pressure
+			if(SA_pp > SA_para_min) // Enough to make us paralysed for a bit
+				H.Paralyse(3) // 3 gives them one second to wake up and run away a bit!
+				if(SA_pp > SA_sleep_min) // Enough to make us sleep as well
+					H.sleeping = min(H.sleeping+2, 10)
+			else if(SA_pp > 0.15)	// There is sleeping gas in their lungs, but only a little, so give them a bit of a warning
+				if(prob(20))
+					spawn(0)
+						H.emote(pick("giggle", "laugh"))
+			SA.moles = 0
 
 	if( (abs(310.15 - breath.temperature) > 50) && !(M_RESIST_HEAT in H.mutations)) // Hot air hurts :(
 		if(H.status_flags & GODMODE)

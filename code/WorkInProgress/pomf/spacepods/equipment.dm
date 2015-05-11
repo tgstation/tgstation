@@ -9,9 +9,7 @@
 		usr << "<span class='warning'>Missing equipment or weapons.</span>"
 		my_atom.verbs -= /obj/item/device/spacepod_equipment/weaponry/proc/fire_weapon_system
 		return
-	if(!my_atom.battery.use(shot_cost))
-		usr << "<span class='warning'>\The [my_atom]'s cell is too low on charge!</span>"
-		return
+	my_atom.battery.use(shot_cost)
 	var/olddir
 	dir = my_atom.dir
 	for(var/i = 0; i < shots_per; i++)
@@ -92,9 +90,8 @@
 	name = "\improper burst taser system"
 	desc = "A weak taser system for space pods, this one fires 3 at a time."
 	icon_state = "pod_b_taser"
-	shot_cost = 35
+	shot_cost = 20
 	shots_per = 3
-	fire_delay = 20
 	verb_name = "Fire Burst Taser System"
 	verb_desc = "Fire ze tasers!"
 
@@ -103,9 +100,9 @@
 	desc = "A weak laser system for space pods, fires concentrated bursts of energy"
 	icon_state = "pod_w_laser"
 	projectile_type = /obj/item/projectile/beam
-	shot_cost = 150
+	shot_cost = 15
 	fire_sound = 'sound/weapons/Laser.ogg'
-	fire_delay = 15
+	fire_delay = 25
 	verb_name = "Fire Laser System"
 	verb_desc = "Fire ze lasers!"
 

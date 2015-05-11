@@ -219,7 +219,7 @@
 	max=28
 
 /datum/theft_objective/number/traitor/plasma_gas/getAmountStolen(var/obj/item/I)
-	return I:air_contents:gases[PLASMA]
+	return I:air_contents:toxins
 
 /datum/theft_objective/number/traitor/coins
 	name = "credits of coins (in bag)"

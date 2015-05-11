@@ -5,7 +5,11 @@
 	//for floors, use is_plating(), is_plasteel_floor() and is_light_floor()
 	var/intact = 1
 
-	var/list/starting_gases = list()
+	//Properties for open tiles (/floor)
+	var/oxygen = 0
+	var/carbon_dioxide = 0
+	var/nitrogen = 0
+	var/toxins = 0
 
 	//Properties for airtight tiles (/wall)
 	var/thermal_conductivity = 0.05
@@ -39,14 +43,6 @@
 
 /turf/New()
 	..()
-	if(luminosity)
-		if(light)	WARNING("[type] - Don't set lights up manually during New(), We do it automatically.")
-		trueLuminosity = luminosity * luminosity
-		light = new(src)
-
-	if(starting_gases && starting_gases.len)
-		return_air() //generates the air required
-
 	for(var/atom/movable/AM as mob|obj in src)
 		spawn( 0 )
 			src.Entered(AM)

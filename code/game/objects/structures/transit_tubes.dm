@@ -75,9 +75,10 @@ obj/structure/ex_act(severity)
 
 /obj/structure/transit_tube_pod/New()
 	. = ..()
-	air_contents.set_temperature(T20C)
-	air_contents.adjust_gas(OXYGEN, MOLES_O2STANDARD * 2)
-	air_contents.adjust_gas(NITROGEN, MOLES_N2STANDARD)
+	air_contents.oxygen = MOLES_O2STANDARD * 2
+	air_contents.nitrogen = MOLES_N2STANDARD
+	air_contents.temperature = T20C
+
 	// Give auto tubes time to align before trying to start moving
 	spawn (5)
 		follow_tube()
@@ -363,7 +364,11 @@ obj/structure/ex_act(severity)
 //  datum, there might be problems if I don't...
 /obj/structure/transit_tube_pod/return_air()
 	var/datum/gas_mixture/GM = new()
-	GM.copy_from(air_contents)
+	GM.oxygen			= air_contents.oxygen
+	GM.carbon_dioxide	= air_contents.carbon_dioxide
+	GM.nitrogen			= air_contents.nitrogen
+	GM.toxins			= air_contents.toxins
+	GM.temperature		= air_contents.temperature
 	return GM
 
 // For now, copying what I found in an unused FEA file (and almost identical in a
@@ -382,8 +387,8 @@ obj/structure/ex_act(severity)
 //  currently on.
 /obj/structure/transit_tube_pod/proc/mix_air()
 	var/datum/gas_mixture/environment = loc.return_air()
-	var/env_pressure = environment.pressure
-	var/int_pressure = air_contents.pressure
+	var/env_pressure = environment.return_pressure()
+	var/int_pressure = air_contents.return_pressure()
 	var/total_pressure = env_pressure + int_pressure
 
 	if(total_pressure == 0)
@@ -398,8 +403,8 @@ obj/structure/ex_act(severity)
 	var/transfer_in = max(0.1, 0.5 * (env_pressure - int_pressure) / total_pressure)
 	var/transfer_out = max(0.1, 0.3 * (int_pressure - env_pressure) / total_pressure)
 
-	var/datum/gas_mixture/from_env = loc.remove_air(environment.total_moles * transfer_in)
-	var/datum/gas_mixture/from_int = air_contents.remove(air_contents.total_moles * transfer_out)
+	var/datum/gas_mixture/from_env = loc.remove_air(environment.total_moles() * transfer_in)
+	var/datum/gas_mixture/from_int = air_contents.remove(air_contents.total_moles() * transfer_out)
 
 	loc.assume_air(from_int)
 	air_contents.merge(from_env)

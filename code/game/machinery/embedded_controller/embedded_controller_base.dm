@@ -11,7 +11,6 @@
 	var/build=2        // Build state
 	var/boardtype=null // /obj/item/weapon/circuitboard/ecb
 	var/obj/item/weapon/circuitboard/_circuitboard
-	machine_flags = MULTITOOL_MENU
 /obj/machinery/embedded_controller/New(turf/loc, var/ndir, var/building=0)
 	..()
 
@@ -31,9 +30,6 @@
 		src.update_icon()
 
 /obj/machinery/embedded_controller/attackby(var/obj/item/W as obj, var/mob/user as mob)
-	. = ..()
-	if(.)
-		return .
 	if(type==/obj/machinery/embedded_controller)
 		switch(build)
 			if(0) // Empty hull
@@ -116,6 +112,11 @@
 					return 1
 	if(build<2)
 		return ..()
+
+	if(istype(W,/obj/item/device/multitool))
+		update_multitool_menu(user)
+	else
+		..()
 
 /obj/machinery/embedded_controller/proc/post_signal(datum/signal/signal, comm_line)
 	return 0

@@ -316,8 +316,8 @@
 
 	var/hotspot = (locate(/obj/fire) in T)
 	if(hotspot && !istype(T, /turf/space))
-		var/datum/gas_mixture/lowertemp = T.remove_air( T:air:total_moles )
-		lowertemp.set_temperature( Clamp(lowertemp.temperature-2000, 0, lowertemp.temperature / 2) )
+		var/datum/gas_mixture/lowertemp = T.remove_air( T:air:total_moles() )
+		lowertemp.temperature = max( min(lowertemp.temperature-2000,lowertemp.temperature / 2) ,0)
 		lowertemp.react()
 		T.assume_air(lowertemp)
 		qdel(hotspot)
@@ -328,8 +328,8 @@
 	var/turf/T = get_turf(O)
 	var/hotspot = (locate(/obj/fire) in T)
 	if(hotspot && !istype(T, /turf/space))
-		var/datum/gas_mixture/lowertemp = T.remove_air( T:air:total_moles )
-		lowertemp.set_temperature( Clamp(lowertemp.temperature-2000, 0, lowertemp.temperature / 2) )
+		var/datum/gas_mixture/lowertemp = T.remove_air( T:air:total_moles() )
+		lowertemp.temperature = max( min(lowertemp.temperature-2000,lowertemp.temperature / 2) ,0)
 		lowertemp.react()
 		T.assume_air(lowertemp)
 		qdel(hotspot)
@@ -1616,13 +1616,17 @@
 	var/turf/the_turf = get_turf(O)
 	if(!the_turf) return 0
 	var/datum/gas_mixture/napalm = new
-	napalm.set_gas(VOLATILE_FUEL, 5, 0)
+	var/datum/gas/volatile_fuel/fuel = new
+	fuel.moles = 5
+	napalm.trace_gases += fuel
 	the_turf.assume_air(napalm)
 
 /datum/reagent/plasma/reaction_turf(var/turf/T, var/volume)
 	src = null
 	var/datum/gas_mixture/napalm = new
-	napalm.set_gas(VOLATILE_FUEL, 5, 0)
+	var/datum/gas/volatile_fuel/fuel = new
+	fuel.moles = 5
+	napalm.trace_gases += fuel
 	T.assume_air(napalm)
 	return
 
@@ -2889,8 +2893,8 @@
 		T.wet(800)
 	var/hotspot = (locate(/obj/fire) in T)
 	if(hotspot)
-		var/datum/gas_mixture/lowertemp = T.remove_air( T:air:total_moles )
-		lowertemp.set_temperature( Clamp(lowertemp.temperature-2000, 0, lowertemp.temperature / 2) )
+		var/datum/gas_mixture/lowertemp = T.remove_air( T:air:total_moles() )
+		lowertemp.temperature = max( min(lowertemp.temperature-2000,lowertemp.temperature / 2) ,0)
 		lowertemp.react()
 		T.assume_air(lowertemp)
 		del(hotspot)

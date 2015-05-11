@@ -25,29 +25,6 @@ var/global/disable_vents     = 0
 #define CELL_VOLUME 2500	//liters in a cell
 #define MOLES_CELLSTANDARD (ONE_ATMOSPHERE*CELL_VOLUME/(T20C*R_IDEAL_GAS_EQUATION))	//moles in a 2.5 m^3 cell at 101.325 Pa and 20 degC
 
-/////GAS FLAGS & DEFINES//////
-
-#define SPECIFIC_HEAT_AIR		20
-#define SPECIFIC_HEAT_CDO		30
-#define SPECIFIC_HEAT_PLASMA	200
-#define SPECIFIC_HEAT_NIO		40
-
-#define IS_FUEL			1 //if it burns in a fire
-#define IS_OXIDISER		2 //if it acts like oxygen for a fire
-#define ALWAYS_SHOW		4 //if the scanner will record its level even if it isn't there - oxygen and nitrogen do this
-#define AUTO_FILTERED	8 //if portable scrubbers and whatnot filter it by default
-#define AUTO_LOGGING	16 //if we monitor its transfer. This is used for canisters
-
-#define OXYGEN			"oxygen"
-#define NITROGEN		"nitrogen"
-#define CARBON_DIOXIDE	"carbon_dioxide"
-#define PLASMA			"plasma"
-#define NITROUS_OXIDE	"nitrous_oxide"
-#define VOLATILE_FUEL	"volatile_fuel"
-//#define OXYGEN_AGENT_B	"oxygen_agent_b"
-
-///////END GASES/////////
-
 #define O2STANDARD 0.21
 #define N2STANDARD 0.79
 
@@ -55,7 +32,6 @@ var/global/disable_vents     = 0
 #define MOLES_N2STANDARD MOLES_CELLSTANDARD*N2STANDARD	// N2 standard value (79%)
 
 #define MOLES_PLASMA_VISIBLE	0.7 //Moles in a standard cell after which plasma is visible
-#define MOLES_N2O_VISIBLE	1
 #define MIN_PLASMA_DAMAGE 1
 #define MAX_PLASMA_DAMAGE 10
 
@@ -986,7 +962,6 @@ var/list/RESTRICTED_CAMERA_NETWORKS = list( //Those networks can only be accesse
 #define FIXED2WORK		16 //does it need to be anchored to work? Try to use this with WRENCHMOVE - hooks into power code
 #define EJECTNOTDEL		32 //when we destroy the machine, does it remove all its items or destroy them?
 #define WELD_FIXED		64 //if it is attacked by a welder and is anchored, it'll toggle between welded and unwelded to the floor
-#define MULTITOOL_MENU	128 //if it has multitool menu functionality inherently
 
 #define MAX_N_OF_ITEMS 999 // Used for certain storage machinery, BYOND infinite loop detector doesn't look things over 1000.
 
@@ -1177,12 +1152,11 @@ var/list/RESTRICTED_CAMERA_NETWORKS = list( //Those networks can only be accesse
 #define LANGUAGE_CLATTER "Clatter"
 #define LANGUAGE_MONKEY "Monkey"
 #define LANGUAGE_VOX "Vox-pidgin"
-#define LANGUAGE_CULT "Cult"
 
 //#define SAY_DEBUG 0
 #ifdef SAY_DEBUG
 	#warning SOME ASSHOLE FORGOT TO COMMENT SAY_DEBUG BEFORE COMMITTING
 	#define say_testing(a,x) a << ("([__FILE__]L[__LINE__] SAYDEBUG) [x]")
 #else
-	#define say_testing(a,x) null << "[x][a]"
+	#define say_testing(a,x)
 #endif

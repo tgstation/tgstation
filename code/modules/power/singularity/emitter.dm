@@ -20,7 +20,7 @@
 	var/shot_number = 0
 	var/locked = 0
 
-	machine_flags = EMAGGABLE | WRENCHMOVE | FIXED2WORK | WELD_FIXED | MULTITOOL_MENU
+	machine_flags = EMAGGABLE | WRENCHMOVE | FIXED2WORK | WELD_FIXED
 
 	var/frequency = 0
 	var/id_tag = null
@@ -249,9 +249,11 @@
 	return -1
 
 /obj/machinery/power/emitter/attackby(obj/item/W, mob/user)
-	. = ..()
-	if(.)
-		return .
+	if(..())
+		return 1
+
+	if(istype(W, /obj/item/device/multitool))
+		update_multitool_menu(user)
 
 	if(istype(W, /obj/item/weapon/card/id) || istype(W, /obj/item/device/pda))
 		if(emagged)

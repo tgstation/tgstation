@@ -17,7 +17,6 @@
 
 	var/const/RADS_PER_TICK=150
 	var/const/MAX_TEMP=70 // Celsius
-	machine_flags = MULTITOOL_MENU
 
 /obj/machinery/media/transmitter/broadcast/initialize()
 	testing("[type]/initialize() called!")
@@ -50,18 +49,16 @@
 	broadcast() // Bzzt
 
 /obj/machinery/media/transmitter/broadcast/attackby(var/obj/item/W, mob/user)
-	. = ..()
-	if(.)
-		return .
+	if(istype(W, /obj/item/device/multitool))
+		update_multitool_menu(user)
+		return 1
 
 /obj/machinery/media/transmitter/broadcast/attack_ai(var/mob/user as mob)
 	src.add_hiddenprint(user)
 	attack_hand(user)
 
 /obj/machinery/media/transmitter/broadcast/attack_hand(var/mob/user as mob)
-	. = ..()
-	if(.)
-		return .
+	update_multitool_menu(user)
 
 /obj/machinery/media/transmitter/broadcast/multitool_menu(var/mob/user,var/obj/item/device/multitool/P)
 	// You need a multitool to use this, or be silicon
@@ -178,7 +175,7 @@
 			var/datum/gas_mixture/env = L.return_air()
 			if(env.temperature != MAX_TEMP + T0C)
 
-				var/transfer_moles = 0.25 * env.total_moles
+				var/transfer_moles = 0.25 * env.total_moles()
 
 				var/datum/gas_mixture/removed = env.remove(transfer_moles)
 
@@ -186,13 +183,13 @@
 
 				if(removed)
 
-					var/heat_capacity = removed.heat_capacity
+					var/heat_capacity = removed.heat_capacity()
 					//world << "heating ([heat_capacity])"
 					if(heat_capacity) // Added check to avoid divide by zero (oshi-) runtime errors -- TLE
 						if(removed.temperature < MAX_TEMP + T0C)
-							removed.set_temperature(min(removed.temperature + heating_power/heat_capacity, 1000)) // Added min() check to try and avoid wacky superheating issues in low gas scenarios -- TLE
+							removed.temperature = min(removed.temperature + heating_power/heat_capacity, 1000) // Added min() check to try and avoid wacky superheating issues in low gas scenarios -- TLE
 						else
-							removed.set_temperature(max(removed.temperature - heating_power/heat_capacity, TCMB))
+							removed.temperature = max(removed.temperature - heating_power/heat_capacity, TCMB)
 
 					//world << "now at [removed.temperature]"
 

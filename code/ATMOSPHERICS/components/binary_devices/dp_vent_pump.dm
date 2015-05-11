@@ -25,8 +25,6 @@
 	var/frequency = 0
 	var/id_tag = null
 	var/datum/radio_frequency/radio_connection
-	
-	machine_flags = MULTITOOL_MENU
 
 /obj/machinery/atmospherics/binary/dp_vent_pump/high_volume
 	name = "Large Dual Port Air Vent"
@@ -34,8 +32,8 @@
 /obj/machinery/atmospherics/binary/dp_vent_pump/high_volume/New()
 	..()
 
-	air1.set_volume(1000)
-	air2.set_volume(1000)
+	air1.volume = 1000
+	air2.volume = 1000
 
 /obj/machinery/atmospherics/binary/dp_vent_pump/update_icon()
 	if(on)
@@ -75,7 +73,7 @@
 		return
 
 	var/datum/gas_mixture/environment = loc.return_air()
-	var/environment_pressure = environment.pressure
+	var/environment_pressure = environment.return_pressure()
 
 	if(pump_direction) //input -> external
 		var/pressure_delta = 10000
@@ -83,7 +81,7 @@
 		if(pressure_checks&1)
 			pressure_delta = min(pressure_delta, (external_pressure_bound - environment_pressure))
 		if(pressure_checks&2)
-			pressure_delta = min(pressure_delta, (air1.pressure - input_pressure_min))
+			pressure_delta = min(pressure_delta, (air1.return_pressure() - input_pressure_min))
 
 		if(pressure_delta > 0)
 			if(air1.temperature > 0)
@@ -102,7 +100,7 @@
 		if(pressure_checks&1)
 			pressure_delta = min(pressure_delta, (environment_pressure - external_pressure_bound))
 		if(pressure_checks&4)
-			pressure_delta = min(pressure_delta, (output_pressure_max - air2.pressure))
+			pressure_delta = min(pressure_delta, (output_pressure_max - air2.return_pressure()))
 
 		if(pressure_delta > 0)
 			if(environment.temperature > 0)
@@ -220,6 +218,9 @@
 	update_icon()
 
 /obj/machinery/atmospherics/binary/dp_vent_pump/attackby(var/obj/item/W as obj, var/mob/user as mob)
+	if(istype(W, /obj/item/device/multitool))
+		interact(user)
+		return 1
 	return ..()
 
 /obj/machinery/atmospherics/binary/dp_vent_pump/interact(var/mob/user)

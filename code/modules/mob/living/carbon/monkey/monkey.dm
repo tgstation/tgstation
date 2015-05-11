@@ -89,8 +89,7 @@
 		update_muts=1
 
 	if(!istype(src, /mob/living/carbon/monkey/diona))
-		add_language(LANGUAGE_MONKEY)
-		default_language = all_languages[LANGUAGE_MONKEY]
+		add_language("Chimpanzee")
 
 	..()
 	update_icons()

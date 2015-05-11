@@ -18,7 +18,7 @@
 		var/cp=0
 		if(T && istype(T) && T.zone)
 			var/datum/gas_mixture/environment = T.return_air()
-			cp = environment.pressure
+			cp = environment.return_pressure()
 		else
 			if(istype(T,/turf/simulated))
 				continue
@@ -32,13 +32,13 @@
 	if(!istype(lT) || !lT.zone)
 		return 0
 	var/datum/gas_mixture/myenv=lT.return_air()
-	var/pressure=myenv.pressure
+	var/pressure=myenv.return_pressure()
 
 	for(var/dir in cardinal)
 		var/turf/simulated/T=get_turf(get_step(loc,dir))
 		if(T && istype(T) && T.zone)
 			var/datum/gas_mixture/environment = T.return_air()
-			var/pdiff = abs(pressure - environment.pressure)
+			var/pdiff = abs(pressure - environment.return_pressure())
 			if(pdiff > FALSEDOOR_MAX_PRESSURE_DIFF)
 				return pdiff
 	return 0
@@ -185,7 +185,7 @@
 			T.ChangeTurf(/turf/simulated/wall)
 		else
 			T.ChangeTurf(text2path("/turf/simulated/wall/mineral/[mineral]"))
-		if(mineral != PLASMA)
+		if(mineral != "plasma")
 			T = get_turf(src)
 			T.attackby(W,user)
 		del(src)
@@ -196,7 +196,7 @@
 			T.ChangeTurf(/turf/simulated/wall)
 		else
 			T.ChangeTurf(text2path("/turf/simulated/wall/mineral/[mineral]"))
-		if(mineral != PLASMA)
+		if(mineral != "plasma")
 			T = get_turf(src)
 			T.attackby(W,user)
 		del(src)
@@ -364,7 +364,7 @@
 	name = "plasma wall"
 	desc = "A wall with plasma plating. This is definately a bad idea."
 	icon_state = ""
-	mineral = PLASMA
+	mineral = "plasma"
 
 //-----------wtf?-----------start
 /obj/structure/falsewall/clown

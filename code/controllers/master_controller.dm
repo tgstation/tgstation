@@ -145,12 +145,12 @@ datum/controller/game_controller/proc/setup_objects()
 
 	world << "<span class='danger'>Initializing pipe networks</span>"
 	sleep(-1)
-	for(var/obj/machinery/atmospherics/machine in atmos_machines)
+	for(var/obj/machinery/atmospherics/machine in machines)
 		machine.build_network()
 
 	world << "<span class='danger'>Initializing atmos machinery.</span>"
 	sleep(-1)
-	for(var/obj/machinery/atmospherics/unary/U in atmos_machines)
+	for(var/obj/machinery/atmospherics/unary/U in machines)
 		if(istype(U, /obj/machinery/atmospherics/unary/vent_pump))
 			var/obj/machinery/atmospherics/unary/vent_pump/T = U
 			T.broadcast_status()

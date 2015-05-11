@@ -845,11 +845,6 @@ var/global/list/arenas = list()
 			sleep(2)	//giving the game some time to process to avoid unbearable lag spikes when we create a large arena, plus it looks cool.
 			pencil.y++
 
-		pencil.x = x
-		pencil.y = y+h
-		T = pencil.loc
-		T.maptext = name
-
 		qdel(pencil)	//RIP sweet prince
 
 		for (var/datum/bomberman_spawn/S in spawns)	//removing the soft walls near the spawns
@@ -883,10 +878,6 @@ var/global/list/arenas = list()
 
 		message_admins("[key_name_admin(user.client)] created a \"[size]\" Bomberman arena at [center.loc.name] ([center.x],[center.y],[center.z]) (<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[center.x];Y=[center.y];Z=[center.z]'>JMP</A>)")
 		log_game("[key_name_admin(user.client)] created a \"[size]\" Bomberman arena at [center.loc.name] ([center.x],[center.y],[center.z]) ")
-
-		for(var/mob/dead/observer/O in observers)
-			O << "<spawn class='notice'><b>[user.client.key] created a \"[size]\" Bomberman arena at [center.loc.name]. <A HREF='?src=\ref[O];jumptoarenacood=1;X=[center.x];Y=[center.y];Z=[center.z]'>Click here to JUMP to it.</A></b></span>"
-
 	else
 		qdel(src)
 
@@ -965,9 +956,6 @@ var/global/list/arenas = list()
 	for(var/obj/machinery/computer/security/telescreen/entertainment/E in machines)
 		E.visible_message("\icon[E] \The [E] brightens as it appears that a round is starting in [name].")
 		flick("entertainment_arena",E)
-
-	for(var/mob/dead/observer/O in observers)
-		O << "<b>A round has began in <A HREF='?src=\ref[O];jumptoarenacood=1;X=[center.x];Y=[center.y];Z=[center.z]'>[name]</A>!</b>"
 
 	sleep(40)
 	for(var/datum/bomberman_spawn/S in spawns)
@@ -1125,7 +1113,6 @@ var/global/list/arenas = list()
 			T.ChangeTurf(/turf/space)
 		else
 			T.ChangeTurf(/turf/simulated/floor/plating)
-		T.maptext = null
 	turfs = list()
 	arenas -= src
 	return

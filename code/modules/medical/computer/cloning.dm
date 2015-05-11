@@ -82,16 +82,17 @@
 #undef CLONEPODRANGE
 
 /obj/machinery/computer/cloning/attackby(obj/item/W as obj, mob/user as mob)
-	. = ..()
-	if(.)
-		return .
 	if (istype(W, /obj/item/weapon/disk/data)) //INSERT SOME DISKETTES
 		if (!src.diskette)
 			user.drop_item(W, src)
 			src.diskette = W
 			user << "You insert [W]."
 			src.updateUsrDialog()
-			return 1
+			return
+	if(ismultitool(W))
+		update_multitool_menu(user)
+	else
+		..()
 	return
 
 /obj/machinery/computer/cloning/attack_paw(mob/user as mob)

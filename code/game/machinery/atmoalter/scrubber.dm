@@ -101,7 +101,7 @@
 			environment = holding.air_contents
 		else
 			environment = loc.return_air()
-		var/transfer_moles = min(1, volume_rate/environment.volume)*environment.total_moles
+		var/transfer_moles = min(1, volume_rate/environment.volume)*environment.total_moles()
 
 		//Take a gas sample
 		var/datum/gas_mixture/removed
@@ -114,13 +114,26 @@
 		if (removed)
 			var/datum/gas_mixture/filtered_out = new
 
-			filtered_out.set_temperature(removed.temperature)
+			filtered_out.temperature = removed.temperature
 
-			for(var/gasid in removed.gases)
-				var/datum/gas/gas_to_remove = removed.get_gas_by_id(gasid)
-				if(gas_to_remove.gas_flags & AUTO_FILTERED)
-					filtered_out.adjust_gas(gasid, removed.gases[gasid])
-					removed.set_gas(gasid, 0)
+
+			filtered_out.toxins = removed.toxins
+			removed.toxins = 0
+
+			filtered_out.carbon_dioxide = removed.carbon_dioxide
+			removed.carbon_dioxide = 0
+
+			if(removed.trace_gases.len>0)
+				for(var/datum/gas/trace_gas in removed.trace_gases)
+					if(istype(trace_gas, /datum/gas/sleeping_agent))
+						removed.trace_gases -= trace_gas
+						filtered_out.trace_gases += trace_gas
+
+			if(removed.trace_gases.len>0)
+				for(var/datum/gas/trace_gas in removed.trace_gases)
+					if(istype(trace_gas, /datum/gas/oxygen_agent_b))
+						removed.trace_gases -= trace_gas
+						filtered_out.trace_gases += trace_gas
 
 		//Remix the resulting gases
 			air_contents.merge(filtered_out)
@@ -150,7 +163,7 @@
 /obj/machinery/portable_atmospherics/scrubber/ui_interact(mob/user, ui_key = "main", var/datum/nanoui/ui = null)
 	var/list/data[0]
 	data["portConnected"] = connected_port ? 1 : 0
-	data["tankPressure"] = round(air_contents.pressure > 0 ? air_contents.pressure : 0)
+	data["tankPressure"] = round(air_contents.return_pressure() > 0 ? air_contents.return_pressure() : 0)
 	data["rate"] = round(volume_rate)
 	data["minrate"] = round(minrate)
 	data["maxrate"] = round(maxrate)
@@ -158,7 +171,7 @@
 
 	data["hasHoldingTank"] = holding ? 1 : 0
 	if (holding)
-		data["holdingTank"] = list("name" = holding.name, "tankPressure" = round(holding.air_contents.pressure > 0 ? holding.air_contents.pressure : 0))
+		data["holdingTank"] = list("name" = holding.name, "tankPressure" = round(holding.air_contents.return_pressure() > 0 ? holding.air_contents.return_pressure() : 0))
 
 	// update the ui if it exists, returns null if no ui is passed/found
 	ui = nanomanager.try_update_ui(user, src, ui_key, ui, data)

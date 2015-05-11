@@ -17,10 +17,10 @@
 	if(holder)
 		var/datum/gas_mixture/env = holder.loc.return_air()
 		if(env)
-			env.set_temperature(env.temperature + rand(5,50))
+			env.temperature += rand(5,50)
 
 /datum/artifact_effect/heat/DoEffectAura()
 	if(holder)
 		var/datum/gas_mixture/env = holder.loc.return_air()
 		if(env && env.temperature < target_temp)
-			env.set_temperature(env.temperature + pick(0, 0, 1))
+			env.temperature += pick(0, 0, 1)
