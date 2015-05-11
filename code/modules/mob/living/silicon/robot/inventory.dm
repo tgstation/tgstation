@@ -15,9 +15,6 @@
 	if(istype(O,/obj/item/borg/sight))
 		var/obj/item/borg/sight/S = O
 		sight_mode &= ~S.sight_mode
-	else if(O.is_open_container()) // Like a drinking glass
-		var/obj/item/weapon/reagent_containers/C = O
-		C.reagents.clear_reagents() // It's now empty
 	else if(istype(O, /obj/item/device/flashlight))
 		var/obj/item/device/flashlight/F = O
 		if(F.on)
