@@ -48,7 +48,7 @@ datum/reagent/blob/skin_ripper/reaction_mob(var/mob/living/M as mob, var/method=
 		M.apply_damage(20, BRUTE)
 		if(show_message)
 			send_message(M)
-		if(isliving(M))
+		if(iscarbon(M))
 			M.emote("scream")
 
 // Combo Reagents
@@ -66,7 +66,7 @@ datum/reagent/blob/skin_melter/reaction_mob(var/mob/living/M as mob, var/method=
 		M.apply_damage(10, BURN)
 		if(show_message)
 			send_message(M)
-		if(isliving(M))
+		if(iscarbon(M))
 			M.emote("scream")
 
 
@@ -283,5 +283,4 @@ datum/reagent/blob/proc/send_message(var/mob/living/M as mob)
 	var/totalmessage = message
 	if(message_living && !issilicon(M))
 		totalmessage += message_living
-	totalmessage += "!"
 	M << "<span class = 'userdanger'>[totalmessage]</span>"
