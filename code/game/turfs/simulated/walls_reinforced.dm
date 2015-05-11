@@ -29,11 +29,8 @@
 		M << "<span class='warning'>This wall is far too strong for you to destroy.</span>"
 
 /turf/simulated/wall/r_wall/try_destroy(obj/item/weapon/W as obj, mob/user as mob, turf/T as turf)
-	if(istype(W, /obj/item/weapon/pickaxe/drill/jackhammer))
+	if(istype(W, /obj/item/weapon/pickaxe/drill/diamonddrill))
 		var/obj/item/weapon/pickaxe/drill/jackhammer/D = W
-		if(!D.bcell.use(800))
-			user << "<span class='notice'>Your [D.name] doesn't have enough power to break through the [name].</span>"
-			return 1
 		user << "<span class='notice'>You begin to smash though the [name].</span>"
 		if(do_after(user, 50))
 			if( !istype(src, /turf/simulated/wall/r_wall) || !user || !W || !T )

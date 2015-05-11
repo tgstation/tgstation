@@ -84,71 +84,36 @@
 	hitsound = 'sound/weapons/drill.ogg'
 	origin_tech = "materials=2;powerstorage=3;engineering=2"
 	desc = "An electric mining drill for the especially scrawny."
-	var/drillcost = 125 //80 mineral walls by default
-	var/obj/item/weapon/stock_parts/cell/high/bcell = null
 
-/obj/item/weapon/pickaxe/drill/New() //this one starts with a cell pre-installed.
-	..()
-	bcell = new(src)
-	return
 
-/obj/item/weapon/pickaxe/drill/update_icon()
-	if(!bcell)
-		icon_state = "[initial(icon_state)]-nocell"
-	else if(bcell.charge < drillcost)
-		icon_state = "[initial(icon_state)]-empty"
-	else
-		icon_state = "[initial(icon_state)]"
 
-/obj/item/weapon/pickaxe/drill/attackby(obj/item/weapon/W, mob/user)
-	if(istype(W, /obj/item/weapon/stock_parts/cell))
-		if(bcell)
-			user << "<span class='notice'>[src] already has a cell.</span>"
-		else
-			user.drop_item()
-			W.loc = src
-			bcell = W
-			user << "<span class='notice'>You install a cell in [src].</span>"
-			update_icon()
-	else if(istype(W, /obj/item/weapon/screwdriver))
-		if(bcell)
-			bcell.updateicon()
-			bcell.loc = get_turf(src.loc)
-			bcell = null
-			user << "<span class='notice'>You remove the cell from [src].</span>"
-			update_icon()
-			return
-		..()
-	return
 
 /obj/item/weapon/pickaxe/drill/examine(mob/user)
 	..()
-	if(bcell)
-		user <<"<span class='notice'>The [src.name] is [round(bcell.percent())]% charged.</span>"
-	if(!bcell)
-		user <<"<span class='warning'>The [src.name] does not have a power source installed.</span>"
+
 
 /obj/item/weapon/pickaxe/drill/cyborg
 	name = "cyborg mining drill"
+	flags = NODROP
 
 /obj/item/weapon/pickaxe/drill/diamonddrill
 	name = "diamond-tipped mining drill"
 	icon_state = "diamonddrill"
-	digspeed = 10 //it's a fast drill with a relatively low power cost. what more could you ask for?
+	digspeed = 10 //It wrecks all walls, but is a bit slower than the jackhammer
 	origin_tech = "materials=6;powerstorage=4;engineering=5"
 	desc = "Yours is the drill that will pierce the heavens!"
-	drillcost = 150 //66 mineral walls by default, but very quickly
+
 
 /obj/item/weapon/pickaxe/drill/jackhammer
 	name = "sonic jackhammer"
 	icon_state = "jackhammer"
 	item_state = "jackhammer"
-	digspeed = 5 //the epitome of powertools. high power consumption, extremely fast mining, laughs at puny walls
+	digspeed = 5 //sanic fast, but only destroys simple walls
 	origin_tech = "materials=3;powerstorage=2;engineering=2"
 	digsound = list('sound/weapons/sonic_jackhammer.ogg')
 	hitsound = 'sound/weapons/sonic_jackhammer.ogg'
 	desc = "Cracks rocks with sonic blasts, and doubles as a demolition power tool for smashing walls.."
-	drillcost = 200
+
 
 /obj/item/weapon/pickaxe/plasmacutter
 	name = "plasma cutter"

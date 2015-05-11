@@ -205,11 +205,8 @@
 
 
 /turf/simulated/wall/proc/try_destroy(obj/item/weapon/W as obj, mob/user as mob, turf/T as turf)
-	if(istype(W, /obj/item/weapon/pickaxe/drill/jackhammer))
-		var/obj/item/weapon/pickaxe/drill/jackhammer/D = W
-		if(!D.bcell.use(400))
-			user << "<span class='notice'>Your [D.name] doesn't have enough power to break through the [name].</span>"
-			return
+	if(istype(W, /obj/item/weapon/pickaxe/drill/jackhammer) || istype(W, /obj/item/weapon/pickaxe/drill/diamonddrill) )
+		var/obj/item/weapon/pickaxe/drill/D = W
 		D.update_icon()
 		if( !istype(src, /turf/simulated/wall) || !user || !W || !T )
 			return 1
