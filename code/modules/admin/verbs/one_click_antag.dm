@@ -18,6 +18,7 @@ client/proc/one_click_antag()
 		<a href='?src=\ref[src];makeAntag=5'>Make Malf AI</a><br>
 		<a href='?src=\ref[src];makeAntag=11'>Make Blob</a><br>
 		<a href='?src=\ref[src];makeAntag=12'>Make Gangsters</a><br>
+		<a href='?src=\ref[src];makeAntag=16'>Make Shadowling</a><br>
 		<a href='?src=\ref[src];makeAntag=6'>Make Wizard (Requires Ghosts)</a><br>
 		<a href='?src=\ref[src];makeAntag=7'>Make Nuke Team (Requires Ghosts)</a><br>
 		<a href='?src=\ref[src];makeAntag=13'>Make Centcom Response Team (Requires Ghosts)</a><br>
@@ -620,6 +621,36 @@ client/proc/one_click_antag()
 		return 1
 	else
 		return
+
+/datum/admins/proc/makeShadowling()
+	var/datum/game_mode/shadowling/temp = new
+	if(config.protect_roles_from_antagonist)
+		temp.restricted_jobs += temp.protected_jobs
+	if(config.protect_assistant_from_antagonist)
+		temp.restricted_jobs += "Assistant"
+	var/list/mob/living/carbon/human/candidates = list()
+	var/mob/living/carbon/human/H = null
+	for(var/mob/living/carbon/human/applicant in player_list)
+		if(applicant.client.prefs.be_special & BE_SHADOWLING)
+			if(!applicant.stat)
+				if(applicant.mind)
+					if(!applicant.mind.special_role)
+						if(temp.age_check(applicant.client))
+							if(!(applicant.job in temp.restricted_jobs))
+								if(!(is_shadow_or_thrall(applicant)))
+									candidates += applicant
+
+	if(candidates.len)
+		H = pick(candidates)
+		ticker.mode.shadows += H.mind
+		H.mind.special_role = "shadowling"
+		H << "<span class='shadowling'><b><i>Something stirs in the space between worlds. A red light floods your mind, and suddenly you understand. Your human disguise has served you well, but it \
+		is time you cast it away. You are a shadowling, and you are to ascend at all costs.</b></i></span>"
+		ticker.mode.finalize_shadowling(H.mind)
+		message_admins("[H] has been made into a shadowling.")
+		candidates.Remove(H)
+		return 1
+	return 0
 
 /datum/admins/proc/getCandidates(var/Question, var/jobbanType, var/datum/game_mode/gametypeCheck)
 	var/list/mob/dead/observer/candidates = list()
