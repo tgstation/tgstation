@@ -6,6 +6,7 @@
 	var/id = 1
 	var/auto_close = 0 // Time in seconds to automatically close when opened, 0 if it doesn't.
 	sub_door = 1
+	var/heat_proof = 1
 
 /obj/machinery/door/poddoor/preopen
 	icon_state = "open"
