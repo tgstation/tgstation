@@ -15,7 +15,7 @@ obj/structure/door_assembly
 	var/airlock_type = /obj/machinery/door/airlock //the type path of the airlock once completed
 	var/glass_type = /obj/machinery/door/airlock/glass
 	var/created_name = null
-	var/heat_proof_finished = 0 //will the airlock be heat proof when finished
+	var/heat_proof_finished = 0 //whether to heat-proof the finished airlock
 
 obj/structure/door_assembly/New()
 	base_icon_state = copytext(icon_state,1,lentext(icon_state))
@@ -450,6 +450,8 @@ obj/structure/door_assembly/New()
 					return
 				user << "<span class='notice'> You disassemble the airlock assembly.</span>"
 				new /obj/item/stack/sheet/metal(get_turf(src), 4)
+				if(heat_proof_finished)
+					new /obj/item/stack/sheet/plasteel(get_turf(src))
 				if (mineral)
 					if (mineral == "glass")
 						new /obj/item/stack/sheet/rglass(get_turf(src))
