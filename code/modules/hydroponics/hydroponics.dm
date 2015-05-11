@@ -649,6 +649,8 @@ obj/machinery/hydroponics/attackby(var/obj/item/O as obj, var/mob/user as mob, p
 
 	else if(istype(O, /obj/item/seeds/))
 		if(!planted)
+			if(/obj/item/seeds/kudzuseed)
+				investigate_log("had Kudzu planted in it by [user.ckey]([user]) at ([x],[y],[z])","kudzu")
 			user.unEquip(O)
 			user << "<span class='notice'>You plant [O].</span>"
 			dead = 0
