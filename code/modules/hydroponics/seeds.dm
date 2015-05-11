@@ -1349,7 +1349,7 @@
 	var/turf/T = get_turf(src)
 	user << "<span class='notice'>You plant the kudzu. You monster.</span>"
 	message_admins("Kudzu planted by [key_name(user, user.client)](<A HREF='?_src_=holder;adminmoreinfo=\ref[user]'>?</A>) at ([T.x],[T.y],[T.z] - <A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[T.x];Y=[T.y];Z=[T.z]'>(JMP)</a>)",0,1)
-	log_game("Kudzu planted by [user.ckey]([user]) at ([T.x],[T.y],[T.z])")
+	investigate_log("was planted by [user.ckey]([user]) at ([T.x],[T.y],[T.z])","kudzu")
 	new /obj/effect/spacevine_controller(user.loc, mutations, potency, production)
 	qdel(src)
 
