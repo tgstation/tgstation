@@ -618,7 +618,7 @@
 "lT" = (/turf/space,/turf/simulated/shuttle/wall{dir = 4; icon_state = "diagonalWall3"},/area/space)
 "lU" = (/obj/effect/decal/remains/human,/obj/effect/decal/cleanable/blood,/turf/unsimulated/floor{tag = "icon-cultdamage6"; icon_state = "cultdamage6"},/area/wizard_station)
 "lV" = (/obj/effect/decal/cleanable/blood/splatter,/turf/unsimulated/floor{tag = "icon-cultdamage"; icon_state = "cultdamage"},/area/wizard_station)
-"lW" = (/obj/structure/mirror{pixel_x = 28},/turf/unsimulated/floor{tag = "icon-cult"; icon_state = "cult"},/area/wizard_station)
+"lW" = (/obj/structure/mirror/magic{dir = 4; pixel_x = 30},/turf/unsimulated/floor{tag = "icon-cult"; icon_state = "cult"},/area/wizard_station)
 "lX" = (/obj/machinery/suit_storage_unit/syndicate,/turf/simulated/shuttle/floor{icon_state = "floor4"},/area/space)
 "lY" = (/obj/effect/landmark{name = "Syndicate-Uplink"},/turf/simulated/shuttle/floor{icon_state = "floor4"},/area/space)
 "lZ" = (/turf/unsimulated/wall/fakeglass,/area/syndicate_mothership)
