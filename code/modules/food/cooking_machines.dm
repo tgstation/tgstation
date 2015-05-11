@@ -323,8 +323,6 @@ var/global/ingredientLimit = 10
 
 /obj/machinery/cooking/deepfryer/initialize()
 	..()
-	if(!reagents)
-		create_reagents(500)
 	reagents.add_reagent("cornoil", 300)
 
 /obj/machinery/cooking/deepfryer/proc/empty_icon() //sees if the value is empty, and changes the icon if it is
