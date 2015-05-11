@@ -283,6 +283,37 @@
 		message_admins("<span class='adminnotice'>[key_name_admin(usr)] toggled the round to [config.midround_antag[ticker.mode.config_tag] ? "use" : "skip"] the midround antag system.</span>")
 		check_antagonists()
 
+	else if(href_list["alter_midround_time_limit"])
+		if(!check_rights(R_ADMIN))	return
+
+		var/timer = input("Enter new maximum time",, config.midround_antag_time_check ) as num
+		if(timer)
+			config.midround_antag_time_check = timer
+
+		message_admins("<span class='adminnotice'>[key_name_admin(usr)] edited the maximum midround antagonist time to [timer] minutes.</span>")
+		check_antagonists()
+
+	else if(href_list["alter_midround_life_limit"])
+		if(!check_rights(R_ADMIN))	return
+
+		var/ratio = input("Enter new life ratio",, config.midround_antag_life_check*100) as num
+		if(ratio)
+			config.midround_antag_life_check = ratio/100
+
+		message_admins("<span class='adminnotice'>[key_name_admin(usr)] edited the midround antagonist living crew ratio to [ratio * 100]% alive.</span>")
+		check_antagonists()
+
+	else if(href_list["toggle_noncontinuous_behavior"])
+		if(!check_rights(R_ADMIN))	return
+
+		if(!ticker.mode.round_ends_with_antag_death)
+			ticker.mode.round_ends_with_antag_death = 1
+		else
+			ticker.mode.round_ends_with_antag_death = 0
+
+		message_admins("<span class='adminnotice'>[key_name_admin(usr)] edited the midround antagonist system to [ticker.mode.round_ends_with_antag_death ? "end the round" : "continue as extended"] upon failure.")
+		check_antagonists()
+
 	else if(href_list["delay_round_end"])
 		if(!check_rights(R_SERVER))	return
 
