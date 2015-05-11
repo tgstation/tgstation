@@ -93,24 +93,18 @@ Thus, the two variables affect pump operation are set in New():
 
 	return 1
 
-/obj/machinery/atmospherics/binary/volume_pump/ui_interact(mob/user, ui_key = "main")
+/obj/machinery/atmospherics/binary/volume_pump/ui_interact(mob/user, ui_key = "main", var/datum/nanoui/ui = null)
 	if(stat & (BROKEN|NOPOWER))
 		return
 
-	var/data = list()
+	ui = SSnano.push_open_or_new_ui(user, src, ui_key, ui, "atmos_gas_pump.tmpl", name, 400, 120, 0)
 
+/obj/machinery/atmospherics/binary/volume_pump/get_ui_data()
+	var/data = list()
 	data["on"] = on
 	data["transfer_rate"] = round(transfer_rate*100) //Nano UI can't handle rounded non-integers, apparently.
 	data["max_rate"] = MAX_TRANSFER_RATE
-
-	var/datum/nanoui/ui = SSnano.get_open_ui(user, src, ui_key)
-	if (!ui)
-		ui = new /datum/nanoui(user, src, ui_key, "atmos_gas_pump.tmpl", name, 400, 120)
-		ui.set_initial_data(data)
-		ui.open()
-		ui.set_auto_update(1)
-	else
-		ui.push_data(data)
+	return data
 
 /obj/machinery/atmospherics/binary/volume_pump/atmosinit()
 	..()

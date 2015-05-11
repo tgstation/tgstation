@@ -1,0 +1,7 @@
+author: Fayrik
+
+delete-after: True
+
+changes:
+- tweak: "Refactored all NanoUI interfaces to use a more universal proc."
+- bugfix: "Removed automatic updates on atmospheric pumps, canisters and tanks, making them respond to button clicks much faster."

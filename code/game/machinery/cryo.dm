@@ -137,10 +137,14 @@
   *
   * @return nothing
   */
-/obj/machinery/atmospherics/unary/cryo_cell/ui_interact(mob/user, ui_key = "main")
+/obj/machinery/atmospherics/unary/cryo_cell/ui_interact(mob/user, ui_key = "main", var/datum/nanoui/ui = null)
 	if(user == occupant || user.stat || panel_open)
 		return
 
+	ui = SSnano.push_open_or_new_ui(user, src, ui_key, ui, "cryo.tmpl", "Cryo Cell Control System", 520, 410, 1)
+	//user.set_machine(src)
+
+/obj/machinery/atmospherics/unary/cryo_cell/get_ui_data()
 	// this is the data which will be sent to the ui
 	var/data[0]
 	data["isOperating"] = on
@@ -185,21 +189,7 @@
 		for(var/datum/reagent/R in beaker:reagents.reagent_list)
 			beakerContents.Add(list(list("name" = R.name, "volume" = R.volume))) // list in a list because Byond merges the first list...
 	data["beakerContents"] = beakerContents
-
-	var/datum/nanoui/ui = SSnano.get_open_ui(user, src, ui_key)
-	if (!ui)
-		// the ui does not exist, so we'll create a new one
-		ui = new(user, src, ui_key, "cryo.tmpl", "Cryo Cell Control System", 520, 410)
-		// When the UI is first opened this is the data it will use
-		ui.set_initial_data(data)
-		ui.open()
-		// Auto update every Master Controller tick
-		ui.set_auto_update(1)
-	else
-		// The UI is already open so push the new data to it
-		ui.push_data(data)
-		return
-	//user.set_machine(src)
+	return data
 
 /obj/machinery/atmospherics/unary/cryo_cell/Topic(href, href_list)
 	if(usr == occupant || panel_open)

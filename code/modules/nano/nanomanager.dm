@@ -1,3 +1,27 @@
+  /**
+  * Get an open /nanoui ui for the current user, or create a new one.
+  *
+  * @param user /mob The mob who opened/owns the ui
+  * @param src_object /obj|/mob The obj or mob which the ui belongs to
+  * @param ui_key string A string key used for the ui
+  * @param ui /datum/nanoui An existing instance of the ui (can be null)
+  * @param data list The data to be passed to the ui, if it exists
+  *
+  * @return /nanoui Returns the new or found ui
+  */
+/datum/subsystem/nano/proc/push_open_or_new_ui(var/mob/user, var/atom/movable/src_object, ui_key, var/datum/nanoui/ui, template, title, width, height, auto_update)
+	var/list/data = src_object.get_ui_data()
+	if (!data)
+		data = list()
+
+	ui = try_update_ui(user, src_object, ui_key, ui, data)
+
+	if (isnull(ui))
+		ui = new /datum/nanoui(user, src_object, ui_key, template, title, width, height)
+		ui.set_initial_data(data)
+		ui.open()
+		ui.set_auto_update(auto_update)
+
  /**
   * Get an open /nanoui ui for the current user, src_object and ui_key and try to update it with data
   *
@@ -11,9 +35,8 @@
   */
 /datum/subsystem/nano/proc/try_update_ui(var/mob/user, src_object, ui_key, var/datum/nanoui/ui, data)
 	if (isnull(ui)) // no ui has been passed, so we'll search for one
-	{
 		ui = get_open_ui(user, src_object, ui_key)
-	}
+
 	if (!isnull(ui))
 		// The UI is already open so push the data to it
 		ui.push_data(data)
