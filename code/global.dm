@@ -170,8 +170,8 @@ var/CHARGELEVEL = 0.001 // Cap for how fast cells charge, as a percentage-per-ti
 // Used for telescience.  Only apply to GPSes and other things that display coordinates to players.
 // The idea is that coordinates given will be entirely different from those displayed on the map in DreamMaker,
 //  while still making it very simple to lock onto someone who is drifting in space.
-var/WORLD_X_OFFSET=0
-var/WORLD_Y_OFFSET=0
+var/list/WORLD_X_OFFSET = list()
+var/list/WORLD_Y_OFFSET = list()
 
 var/shuttle_z = 2	//default
 var/airtunnel_start = 68 // default

@@ -48,8 +48,8 @@ var/list/doppler_arrays = list()
 		bang_data["heavy"] = bangarangs["heavy"]
 		bang_data["light"] = bangarangs["light"]
 		bang_data["took"] = bangarangs["took"]
-		bang_data["xoffset"] = bang_data["x"]-WORLD_X_OFFSET
-		bang_data["yoffset"] = bang_data["y"]-WORLD_Y_OFFSET
+		bang_data["xoffset"] = bang_data["x"]-WORLD_X_OFFSET[z]
+		bang_data["yoffset"] = bang_data["y"]-WORLD_Y_OFFSET[z]
 		explosions += list(bang_data)
 	data["explosions"]=explosions
 	data["explosion_cap"] = MAX_EXPLOSION_RANGE
@@ -125,9 +125,9 @@ var/list/doppler_arrays = list()
 	if(!(direct & dir))	return
 	*/
 
-	var/message = "Explosive disturbance detected - Epicenter at: grid ([x0-WORLD_X_OFFSET],[y0-WORLD_Y_OFFSET], [z0]). [cap ? "\[Theoretical Results\] " : ""]Epicenter radius: [devastation_range]. Outer radius: [heavy_impact_range]. Shockwave radius: [light_impact_range]. Temporal displacement of tachyons: [took] second\s.  Data logged."
+	var/message = "Explosive disturbance detected - Epicenter at: grid ([x0-WORLD_X_OFFSET[z0]],[y0-WORLD_Y_OFFSET[z0]], [z0]). [cap ? "\[Theoretical Results\] " : ""]Epicenter radius: [devastation_range]. Outer radius: [heavy_impact_range]. Shockwave radius: [light_impact_range]. Temporal displacement of tachyons: [took] second\s.  Data logged."
 	say(message)
-	//var/list/bang = params2list("x=[x0]&y=[y0]&z=[z0]&text=<tr><td>([worldtime2text()]) - ([x0-WORLD_X_OFFSET],[y0-WORLD_Y_OFFSET], [z0])</td><td>([cap ? "\[Theoretical Results\] " : ""][devastation_range],[heavy_impact_range],[light_impact_range])</td><td>[took]s</td></tr>")
+	//var/list/bang = params2list("x=[x0]&y=[y0]&z=[z0]&text=<tr><td>([worldtime2text()]) - ([x0-WORLD_X_OFFSET(z0)],[y0-WORLD_Y_OFFSET(z0)], [z0])</td><td>([cap ? "\[Theoretical Results\] " : ""][devastation_range],[heavy_impact_range],[light_impact_range])</td><td>[took]s</td></tr>")
 	var/list/bang = list()
 	bang["x"] = x0
 	bang["y"] = y0
