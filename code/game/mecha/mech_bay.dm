@@ -5,8 +5,8 @@
 	var/obj/machinery/mech_bay_recharge_port/recharge_port
 	var/obj/machinery/computer/mech_bay_power_console/recharge_console
 	var/obj/mecha/recharging_mecha = null
-	layer = TURF_LAYER + 0.1 //just above the floor
-	anchored = 0
+	layer = TURF_LAYER + 0.1 //Just above the floor
+	anchored = 1
 	density = 0
 
 	machine_flags = SCREWTOGGLE | CROWDESTROY
