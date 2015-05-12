@@ -94,7 +94,6 @@
 		src.eyeobj.name = "[src.name] (AI Eye)" // Give it a name
 
 	eyeobj.setLoc(loc)
-	//cameranet.visibility(eyeobj)
 
 /mob/living/silicon/ai/verb/toggle_acceleration()
 	set category = "AI Commands"
@@ -102,6 +101,3 @@
 
 	acceleration = !acceleration
 	usr << "Camera acceleration has been toggled [acceleration ? "on" : "off"]."
-
-
-
