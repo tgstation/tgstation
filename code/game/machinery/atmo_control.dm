@@ -161,16 +161,16 @@
 					sensor_part += "<tr><th>Pressure:</th><td>[data["pressure"]] kPa</td></tr>"
 				if(data["temperature"])
 					sensor_part += "<tr><th>Temperature:</th><td>[data["temperature"]] K</td></tr>"
-				if(data[OXYGEN]||data[PLASMA]||data[NITROGEN]||data[CARBON_DIOXIDE])
+				if(data["oxygen"]||data["toxins"]||data["nitrogen"]||data["carbon_dioxide"])
 					sensor_part += "<tr><th>Gas Composition :</th><td><ul>"
-					if(data[OXYGEN])
-						sensor_part += "<li>[data[OXYGEN]]% O<sub>2</sub></li>"
-					if(data[NITROGEN])
-						sensor_part += "<li>[data[NITROGEN]]% N</li>"
-					if(data[CARBON_DIOXIDE])
-						sensor_part += "<li>[data[CARBON_DIOXIDE]]% CO<sub>2</sub></li>"
-					if(data[PLASMA])
-						sensor_part += "<li>[data[PLASMA]]% Plasma</li>"
+					if(data["oxygen"])
+						sensor_part += "<li>[data["oxygen"]]% O<sub>2</sub></li>"
+					if(data["nitrogen"])
+						sensor_part += "<li>[data["nitrogen"]]% N</li>"
+					if(data["carbon_dioxide"])
+						sensor_part += "<li>[data["carbon_dioxide"]]% CO<sub>2</sub></li>"
+					if(data["toxins"])
+						sensor_part += "<li>[data["toxins"]]% Plasma</li>"
 					sensor_part += "</ul></td></tr>"
 				sensor_part += "</table>"
 
