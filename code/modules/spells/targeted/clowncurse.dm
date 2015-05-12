@@ -41,4 +41,6 @@
 		qdel(old_uniform)
 		qdel(old_shoes)
 		flick("e_flash", target.flash)
-		target.mutations.Add(M_CLUMSY)
+		target.dna.SetSEState(CLUMSYBLOCK,1)
+		genemutcheck(target,CLUMSYBLOCK,null,MUTCHK_FORCED)
+		target.update_mutations()
