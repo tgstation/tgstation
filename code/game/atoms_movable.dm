@@ -178,18 +178,18 @@
 		return 1
 	return 0
 
-/atom/movable/proc/hit_check(var/speed)
+/atom/movable/proc/hit_check(var/speed, mob/user)
 	if(src.throwing)
 		for(var/atom/A in get_turf(src))
 			if(A == src) continue
 			if(istype(A,/mob/living))
 				if(A:lying) continue
-				src.throw_impact(A,speed)
+				src.throw_impact(A, speed, user)
 				if(src.throwing == 1)
 					src.throwing = 0
 			if(isobj(A))
 				if(A.density && !A.throwpass)	// **TODO: Better behaviour for windows which are dense, but shouldn't always stop movement
-					src.throw_impact(A,speed)
+					src.throw_impact(A, speed, user)
 					src.throwing = 0
 
 /atom/movable/proc/throw_at(atom/target, range, speed, override = 1)
@@ -201,7 +201,9 @@
 	throwing = 1
 	throw_speed = speed
 
+	var/mob/user
 	if(usr)
+		user = usr
 		if(M_HULK in usr.mutations)
 			src.throwing = 2 // really strong throw!
 
@@ -234,7 +236,7 @@
 				if(!step) // going off the edge of the map makes get_step return null, don't let things go off the edge
 					break
 				src.Move(step)
-				hit_check(throw_speed)
+				hit_check(throw_speed, user)
 				error += dist_x
 				dist_travelled++
 				dist_since_sleep++
@@ -246,7 +248,7 @@
 				if(!step) // going off the edge of the map makes get_step return null, don't let things go off the edge
 					break
 				src.Move(step)
-				hit_check(throw_speed)
+				hit_check(throw_speed, user)
 				error -= dist_y
 				dist_travelled++
 				dist_since_sleep++
@@ -263,7 +265,7 @@
 				if(!step) // going off the edge of the map makes get_step return null, don't let things go off the edge
 					break
 				src.Move(step)
-				hit_check(throw_speed)
+				hit_check(throw_speed, user)
 				error += dist_y
 				dist_travelled++
 				dist_since_sleep++
@@ -275,7 +277,7 @@
 				if(!step) // going off the edge of the map makes get_step return null, don't let things go off the edge
 					break
 				src.Move(step)
-				hit_check(throw_speed)
+				hit_check(throw_speed, user)
 				error -= dist_x
 				dist_travelled++
 				dist_since_sleep++
@@ -287,7 +289,7 @@
 
 	//done throwing, either because it hit something or it finished moving
 	src.throwing = 0
-	if(isobj(src)) src.throw_impact(get_turf(src),throw_speed,usr)
+	if(isobj(src)) src.throw_impact(get_turf(src), throw_speed, user)
 
 
 //Overlays

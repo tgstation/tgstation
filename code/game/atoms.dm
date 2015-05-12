@@ -64,7 +64,7 @@ var/global/list/ghdel_profiling = list()
 /atom/proc/handle_beams()
 	return 1
 
-/atom/proc/throw_impact(atom/hit_atom, var/speed)
+/atom/proc/throw_impact(atom/hit_atom, var/speed, user)
 	if(istype(hit_atom,/mob/living))
 		var/mob/living/M = hit_atom
 		M.hitby(src)

@@ -1472,6 +1472,8 @@
 	else
 		if(O)
 			O.clean_blood()
+			if(O.color && istype(O, /obj/item/weapon/paper))
+				O.color = null
 
 /datum/reagent/space_cleaner/reaction_turf(var/turf/T, var/volume)
 	if(volume >= 1)
