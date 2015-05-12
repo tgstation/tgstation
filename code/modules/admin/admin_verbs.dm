@@ -114,6 +114,7 @@ var/list/admin_verbs_fun = list(
 	/client/proc/gib_money, // /vg/
 	/client/proc/smissmas,
 	/client/proc/achievement,
+	/client/proc/mommi_static
 	)
 var/list/admin_verbs_spawn = list(
 	/datum/admins/proc/spawn_atom,		/*allows us to spawn instances*/
@@ -952,3 +953,20 @@ var/list/admin_verbs_mod = list(
 	winner << "<span class='danger'>Congratulations!</span>"
 
 	achievements += "<b>[winner.key]</b> as <b>[winner.name]</b> won \"<b>[name]</b>\"! \"[desc]\""
+
+/client/proc/mommi_static()
+	set name = "Toggle MoMMI Static"
+	set desc = "Toggle whether MoMMIs can see mobs or if the mobs are cloaked in static"
+	set category = "Fun"
+
+	if(!holder || !config)
+		return
+
+	config.mommi_static = !config.mommi_static
+	log_admin("[key_name(src)] turned MoMMI static [config.mommi_static ? "on" : "off"].")
+	message_admins("[key_name(src)] turned MoMMI static [config.mommi_static ? "on" : "off"].")
+	for(var/mob/living/silicon/robot/mommi/M in player_list)
+		if(M.can_see_static())
+			M.add_static_overlays()
+		else
+			M.remove_static_overlays()

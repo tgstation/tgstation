@@ -164,6 +164,8 @@
 
 	var/default_ooc_color = "#002eb8"
 
+	var/mommi_static = 0 //Scrambling mobs for mommis or not
+
 /datum/configuration/New()
 	. = ..()
 	var/list/L = typesof(/datum/game_mode) - /datum/game_mode
@@ -522,6 +524,8 @@
 					map_voting = 1
 				if("renders_url")
 					renders_url = value
+				if("mommi_static")
+					mommi_static = 1
 				else
 					diary << "Unknown setting in configuration: '[name]'"
 
