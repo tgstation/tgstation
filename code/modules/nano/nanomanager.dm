@@ -10,7 +10,7 @@
   * @return /nanoui Returns the new or found ui
   */
 /datum/subsystem/nano/proc/push_open_or_new_ui(var/mob/user, var/atom/movable/src_object, ui_key, var/datum/nanoui/ui, template, title, width, height, auto_update)
-	var/list/data = src_object.get_ui_data()
+	var/list/data = src_object.get_ui_data(user)
 	if (!data)
 		data = list()
 

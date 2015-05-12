@@ -146,11 +146,11 @@
 
 /obj/machinery/atmospherics/unary/cryo_cell/get_ui_data()
 	// this is the data which will be sent to the ui
-	var/data[0]
+	var/data = list()
 	data["isOperating"] = on
 	data["hasOccupant"] = occupant ? 1 : 0
 
-	var/occupantData[0]
+	var/occupantData = list()
 	if (!occupant)
 		occupantData["name"] = null
 		occupantData["stat"] = null
@@ -173,7 +173,7 @@
 		occupantData["toxLoss"] = occupant.getToxLoss()
 		occupantData["fireLoss"] = occupant.getFireLoss()
 		occupantData["bodyTemperature"] = occupant.bodytemperature
-	data["occupant"] = occupantData;
+	data["occupant"] = occupantData
 
 	data["isOpen"] = state_open
 	data["cellTemperature"] = round(air_contents.temperature)
