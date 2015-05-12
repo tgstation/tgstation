@@ -3,5 +3,6 @@ author: Fayrik
 delete-after: True
 
 changes:
+- tweak: "Canisters now automatically close their valve when air tanks are removed from them."
 - tweak: "Refactored all NanoUI interfaces to use a more universal proc."
 - bugfix: "Removed automatic updates on atmospheric pumps, canisters and tanks, making them respond to button clicks much faster."
