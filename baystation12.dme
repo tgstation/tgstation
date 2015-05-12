@@ -1600,6 +1600,7 @@
 #include "code\modules\spells\general\area_teleport.dm"
 #include "code\modules\spells\general\rune_write.dm"
 #include "code\modules\spells\targeted\buttbots_revenge.dm"
+#include "code\modules\spells\targeted\clowncurse.dm"
 #include "code\modules\spells\targeted\disintegrate.dm"
 #include "code\modules\spells\targeted\ethereal_jaunt.dm"
 #include "code\modules\spells\targeted\flesh_to_stone.dm"
