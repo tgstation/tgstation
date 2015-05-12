@@ -229,7 +229,7 @@
 	flags = 0
 	slot_flags = SLOT_BELT
 	storage_slots = 6
-	can_hold = list("=/obj/item/clothing/mask/cigarette") // Strict type check.
+	can_hold = list("=/obj/item/clothing/mask/cigarette", "/obj/item/weapon/lighter") // Strict type check.
 	icon_type = "cigarette"
 
 /obj/item/weapon/storage/fancy/cigarettes/New()
