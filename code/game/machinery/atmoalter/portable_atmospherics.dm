@@ -35,7 +35,6 @@
 
 /obj/machinery/portable_atmospherics/Destroy()
 	del(air_contents)
-	atmos_machines -= src
 	..()
 
 /obj/machinery/portable_atmospherics/update_icon()
