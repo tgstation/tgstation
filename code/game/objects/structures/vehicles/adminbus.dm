@@ -10,7 +10,7 @@
 	icon = 'icons/obj/bus.dmi'
 	icon_state = "adminbus"
 	can_spacemove=1
-	layer = FLY_LAYER
+	layer = FLY_LAYER+1
 	pixel_x = -32
 	pixel_y = -32
 	var/can_move=1
@@ -43,6 +43,7 @@
 	update_lightsource()
 	warp = new/obj/structure/teleportwarp(src.loc)
 	busjuke = new/obj/machinery/media/jukebox/superjuke/adminbus(src.loc)
+	busjuke.dir = EAST
 
 /obj/structure/stool/bed/chair/vehicle/adminbus/update_mob()
 	if(buckled_mob)

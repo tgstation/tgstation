@@ -17,6 +17,8 @@
 	var/datum/radio_frequency/radio_connection
 
 	level = 1
+	
+	machine_flags = MULTITOOL_MENU
 
 /obj/machinery/atmospherics/unary/outlet_injector/update_icon()
 	if(node)
@@ -158,9 +160,6 @@
 "}
 
 /obj/machinery/atmospherics/unary/outlet_injector/attackby(var/obj/item/weapon/W as obj, var/mob/user as mob)
-	if(istype(W, /obj/item/device/multitool))
-		interact(user)
-		return 1
 	if (!istype(W, /obj/item/weapon/wrench))
 		return ..()
 	if (!(stat & NOPOWER) && on)

@@ -8,7 +8,7 @@ var/list/mass_drivers = list()
 	use_power = 1
 	idle_power_usage = 2
 	active_power_usage = 50
-	machine_flags = EMAGGABLE
+	machine_flags = EMAGGABLE | MULTITOOL_MENU
 
 	var/power = 1.0
 	var/code = 1.0
@@ -25,9 +25,9 @@ var/list/mass_drivers = list()
 
 /obj/machinery/mass_driver/attackby(obj/item/weapon/W, mob/user as mob)
 
-	if(istype(W, /obj/item/device/multitool))
-		update_multitool_menu(user)
-		return 1
+	. = ..()
+	if(.)
+		return .
 
 	if(istype(W, /obj/item/weapon/screwdriver))
 		user << "You begin to unscrew the bolts off the [src]..."

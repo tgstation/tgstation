@@ -962,6 +962,7 @@ var/list/RESTRICTED_CAMERA_NETWORKS = list( //Those networks can only be accesse
 #define FIXED2WORK		16 //does it need to be anchored to work? Try to use this with WRENCHMOVE - hooks into power code
 #define EJECTNOTDEL		32 //when we destroy the machine, does it remove all its items or destroy them?
 #define WELD_FIXED		64 //if it is attacked by a welder and is anchored, it'll toggle between welded and unwelded to the floor
+#define MULTITOOL_MENU	128 //if it has multitool menu functionality inherently
 
 #define MAX_N_OF_ITEMS 999 // Used for certain storage machinery, BYOND infinite loop detector doesn't look things over 1000.
 
@@ -1152,11 +1153,12 @@ var/list/RESTRICTED_CAMERA_NETWORKS = list( //Those networks can only be accesse
 #define LANGUAGE_CLATTER "Clatter"
 #define LANGUAGE_MONKEY "Monkey"
 #define LANGUAGE_VOX "Vox-pidgin"
+#define LANGUAGE_CULT "Cult"
 
 //#define SAY_DEBUG 0
 #ifdef SAY_DEBUG
 	#warning SOME ASSHOLE FORGOT TO COMMENT SAY_DEBUG BEFORE COMMITTING
 	#define say_testing(a,x) a << ("([__FILE__]L[__LINE__] SAYDEBUG) [x]")
 #else
-	#define say_testing(a,x)
+	#define say_testing(a,x) null << "[x][a]"
 #endif

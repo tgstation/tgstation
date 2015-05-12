@@ -147,6 +147,7 @@
 		cell_component.installed = 1
 
 	playsound(loc, startup_sound, 75, 1)
+	default_language = all_languages[LANGUAGE_SOL_COMMON]
 
 // setup the PDA and its name
 /mob/living/silicon/robot/proc/setup_PDA()

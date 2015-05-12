@@ -17,6 +17,7 @@
 
 	var/const/RADS_PER_TICK=150
 	var/const/MAX_TEMP=70 // Celsius
+	machine_flags = MULTITOOL_MENU
 
 /obj/machinery/media/transmitter/broadcast/initialize()
 	testing("[type]/initialize() called!")
@@ -49,16 +50,18 @@
 	broadcast() // Bzzt
 
 /obj/machinery/media/transmitter/broadcast/attackby(var/obj/item/W, mob/user)
-	if(istype(W, /obj/item/device/multitool))
-		update_multitool_menu(user)
-		return 1
+	. = ..()
+	if(.)
+		return .
 
 /obj/machinery/media/transmitter/broadcast/attack_ai(var/mob/user as mob)
 	src.add_hiddenprint(user)
 	attack_hand(user)
 
 /obj/machinery/media/transmitter/broadcast/attack_hand(var/mob/user as mob)
-	update_multitool_menu(user)
+	. = ..()
+	if(.)
+		return .
 
 /obj/machinery/media/transmitter/broadcast/multitool_menu(var/mob/user,var/obj/item/device/multitool/P)
 	// You need a multitool to use this, or be silicon

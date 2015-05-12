@@ -72,6 +72,7 @@
 	if(!src.species)
 		if(new_species_name)	src.set_species(new_species_name)
 		else					src.set_species()
+	default_language = get_default_language()
 
 	create_reagents(1000)
 
