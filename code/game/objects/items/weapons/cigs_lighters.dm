@@ -277,14 +277,14 @@ MATCHBOXES ARE ALSO IN FANCY.DM
 			processing_objects.Remove(src)
 			user << "<span class='warning'>Half of \the [src] dissolves with a nasty fizzle as you dip it into \the [glass].</span>"
 			user.drop_item(src)
-			del(src)
+			qdel(src)
 			return
 		if(glass.reagents.has_reagent("water") && lit) //Dumping a lit cigarette into water, the result is obvious
 			new src.type_butt(location)
 			processing_objects.Remove(src)
 			user << "<span class='warning'>\The [src] fizzles as you dip it into \the [glass].</span>"
 			user.drop_item(src)
-			del(src)
+			qdel(src)
 			return
 		var/transfered = glass.reagents.trans_to(src, chem_volume)
 		if(transfered)	//If reagents were transfered, show the message
@@ -309,7 +309,7 @@ MATCHBOXES ARE ALSO IN FANCY.DM
 		if(ismob(loc))
 			var/mob/M = loc
 			M.drop_from_inventory(src)
-		del(src)
+		qdel(src)
 		return
 
 	if(reagents.get_reagent_amount("fuel")) //Fuel explodes, too, but much less violently
@@ -319,7 +319,7 @@ MATCHBOXES ARE ALSO IN FANCY.DM
 		if(ismob(loc))
 			var/mob/M = loc
 			M.drop_from_inventory(src)
-		del(src)
+		qdel(src)
 		return
 
 	lit = 1 //All checks that could have stopped the cigarette are done, let us begin
@@ -357,7 +357,7 @@ MATCHBOXES ARE ALSO IN FANCY.DM
 			M << "<span class='notice'>Your [name] goes out.</span>"
 			M.u_equip(src, 0)	//Un-equip it so the overlays can update
 			M.update_inv_wear_mask(0)
-		del(src)
+		qdel(src)
 		return
 	if(location)
 		location.hotspot_expose(700, 5, surfaces = istype(loc, /turf))
@@ -381,7 +381,7 @@ MATCHBOXES ARE ALSO IN FANCY.DM
 		new type_butt(T)
 		lit = 0 //Needed for proper update
 		update_brightness()
-		del(src)
+		qdel(src)
 	return ..()
 
 /obj/item/clothing/mask/cigarette/attack(mob/living/carbon/M, mob/living/carbon/user)
