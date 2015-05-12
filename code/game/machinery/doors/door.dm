@@ -15,7 +15,7 @@
 	var/operating = 0
 	var/glass = 0
 	var/normalspeed = 1
-	var/heat_proof = 0 // For plasteel-plated airlocks and firedoors
+	var/heat_proof = 0 // For rglass-windowed airlocks and firedoors
 	var/emergency = 0 // Emergency access override
 	var/sub_door = 0 // 1 if it's meant to go under another door.
 

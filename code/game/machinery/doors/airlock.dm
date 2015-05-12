@@ -928,7 +928,8 @@ About the new airlock wires panel:
 			if(do_after(user,40))
 				if(src.loc)
 					if(src.doortype)
-						new src.doortype(src.loc)
+						var/obj/structure/door_assembly/A = new src.doortype(src.loc)
+						A.heat_proof_finished = src.heat_proof //tracks whether there's rglass in
 
 					if(emagged)
 						user << "<span class='warning'>You discard the damaged electronics.</span>"

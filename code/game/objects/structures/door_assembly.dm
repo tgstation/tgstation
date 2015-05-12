@@ -450,11 +450,12 @@ obj/structure/door_assembly/New()
 					return
 				user << "<span class='notice'> You disassemble the airlock assembly.</span>"
 				new /obj/item/stack/sheet/metal(get_turf(src), 4)
-				if(heat_proof_finished)
-					new /obj/item/stack/sheet/plasteel(get_turf(src))
 				if (mineral)
 					if (mineral == "glass")
-						new /obj/item/stack/sheet/rglass(get_turf(src))
+						if (heat_proof_finished)
+							new /obj/item/stack/sheet/rglass(get_turf(src))
+						else
+							new /obj/item/stack/sheet/glass(get_turf(src))
 					else
 						var/M = text2path("/obj/item/stack/sheet/mineral/[mineral]")
 						new M(get_turf(src))
@@ -496,29 +497,6 @@ obj/structure/door_assembly/New()
 			user << "<span class='notice'> You unsecure the airlock assembly.</span>"
 			src.name = "airlock assembly"
 			src.anchored = 0
-	else if(istype(W, /obj/item/stack/sheet/plasteel) && state == 1) 
-		var/obj/item/stack/sheet/plasteel/P = W
-		if (!heat_proof_finished)
-			if (P.get_amount() < 1)
-				user << "<span class='warning'>You need one sheet of plasteel to heat-proof the airlock assembly!</span>"
-				return
-			user.visible_message("[user] adds heat-proof plating to the airlock assembly.",
-								"<span class='notice'>You start adding heat-proof plating to the airlock assembly...</span>")
-			if(do_after(user, 40)) //TODO: does this need a sound?
-				if(P.get_amount() < 1) return
-				P.use(1)
-				src.heat_proof_finished = 1
-				user << "<span class='notice'>You add heat-proof plating to the airlock assembly.</span>"
-				src.name = "heat-proofed wired airlock assembly " 
-		else
-			user << "<span class='warning'>The airlock assembly already has heat-proof plating!</span>"
-	else if(istype(W, /obj/item/weapon/crowbar) && state == 1 && heat_proof_finished)
-		playsound(src.loc, 'sound/items/Crowbar.ogg', 100, 1)
-		user << "<span class='notice'>You remove the heat-proof plating from the airlock assembly.</span>"
-		src.heat_proof_finished = 0
-		new/obj/item/stack/sheet/plasteel(get_turf(user), 1)
-		src.name = "wired airlock assembly"
-		
 
 	else if(istype(W, /obj/item/stack/cable_coil) && state == 0 && anchored )
 		var/obj/item/stack/cable_coil/C = W
@@ -533,8 +511,6 @@ obj/structure/door_assembly/New()
 			src.state = 1
 			user << "<span class='notice'>You wire the airlock assembly.</span>"
 			src.name = "wired airlock assembly"
-			if(src.heat_proof_finished)
-				src.name = "heat-proofed [src.name]"
 
 	else if(istype(W, /obj/item/weapon/wirecutters) && state == 1 )
 		playsound(src.loc, 'sound/items/Wirecutter.ogg', 100, 1)
@@ -548,15 +524,11 @@ obj/structure/door_assembly/New()
 			new/obj/item/stack/cable_coil(get_turf(user), 1)
 			src.state = 0
 			src.name = "secured airlock assembly"
-			if(src.heat_proof_finished)
-				src.name = "heat-proofed [src.name]"
 
 	else if(istype(W, /obj/item/weapon/airlock_electronics) && state == 1 )
 		playsound(src.loc, 'sound/items/Screwdriver.ogg', 100, 1)
 		user.visible_message("[user] installs the electronics into the airlock assembly.", \
 							"<span class='notice'>You start to install electronics into the airlock assembly...</span>")
-
-
 		if(do_after(user, 40))
 			if( src.state != 1 )
 				return
@@ -566,8 +538,6 @@ obj/structure/door_assembly/New()
 			user << "<span class='notice'> You install the airlock electronics.</span>"
 			src.state = 2
 			src.name = "near finished airlock assembly"
-			if(src.heat_proof_finished)
-				src.name = "heat-proofed [src.name]"
 			src.electronics = W
 
 
@@ -582,8 +552,6 @@ obj/structure/door_assembly/New()
 			user << "<span class='notice'> You remove the airlock electronics.</span>"
 			src.state = 1
 			src.name = "wired airlock assembly"
-			if(src.heat_proof_finished)
-				src.name = "heat-proofed [src.name]"
 			var/obj/item/weapon/airlock_electronics/ae
 			if (!electronics)
 				ae = new/obj/item/weapon/airlock_electronics( src.loc )
@@ -595,16 +563,21 @@ obj/structure/door_assembly/New()
 		var/obj/item/stack/sheet/G = W
 		if(G)
 			if(G.get_amount() >= 1)
-				if(G.type == /obj/item/stack/sheet/rglass)
+				if(istype(G, /obj/item/stack/sheet/rglass) || istype(G, /obj/item/stack/sheet/glass)) 
 					playsound(src.loc, 'sound/items/Crowbar.ogg', 100, 1)
 					user.visible_message("[user] adds [G.name] to the airlock assembly.", \
 										"<span class='notice'>You start to install [G.name] into the airlock assembly...</span>")
 					if(do_after(user, 40))
 						if(G.get_amount() < 1 || mineral) return
-						user << "<span class='notice'>You install reinforced glass windows into the airlock assembly.</span>"
+						if (G.type == /obj/item/stack/sheet/rglass)
+							user << "<span class='notice'>You install reinforced glass windows into the airlock assembly.</span>"
+							heat_proof_finished = 1 //reinforced glass makes the airlock heat-proof
+							name = "near finished heat-proofed window airlock assembly"
+						else
+							user << "<span class='notice'>You install regular glass windows into the airlock assembly.</span>"
+							name = "near finished window airlock assembly"
 						G.use(1)
 						mineral = "glass"
-						name = "near finished window airlock assembly"
 						//This list contains the airlock paintjobs that have a glass version:
 						if(icontext in list("eng", "atmo", "sec", "com", "med", "res", "min"))
 							src.airlock_type = text2path("/obj/machinery/door/airlock/[typetext]")
@@ -629,8 +602,6 @@ obj/structure/door_assembly/New()
 							G.use(2)
 							mineral = "[M]"
 							name = "near finished [M] airlock assembly"
-							if(heat_proof_finished)
-								name = "heat-proofed [name]"
 							airlock_type = text2path ("/obj/machinery/door/airlock/[M]")
 							base_icon_state = "door_as_[M]"
 							glass_base_icon_state = "door_as_g"
