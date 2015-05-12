@@ -166,7 +166,7 @@
 	*/
 
 /obj/machinery/detector/Topic(href, href_list)
-	if(..()) return
+	if(..()) return 1
 
 	if(usr) usr.set_machine(src)
 
@@ -177,13 +177,13 @@
 			scanmode = !scanmode
 		if("senmode")
 			senset = !senset
+		else
+			return
 
 	src.updateUsrDialog()
-	return
+	return 1
 
 
-
-.
 
 /obj/machinery/detector/attack_hand(mob/user as mob)
 
