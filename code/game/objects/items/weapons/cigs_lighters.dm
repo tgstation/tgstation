@@ -121,6 +121,7 @@ MATCHBOXES ARE ALSO IN FANCY.DM
 	else
 		return ..()
 
+/*
 /obj/item/weapon/match/attackby(obj/item/weapon/W as obj, mob/user as mob)
 
 	if(W.is_hot())
@@ -129,6 +130,7 @@ MATCHBOXES ARE ALSO IN FANCY.DM
 		user.visible_message("[user] lights \the [src] with \the [W].", \
 		"You light \the [src] with \the [W].")
 	..()
+*/
 
 /obj/item/weapon/match/strike_anywhere
 	name = "strike-anywhere match"
