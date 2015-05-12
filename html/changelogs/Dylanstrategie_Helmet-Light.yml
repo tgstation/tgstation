@@ -1,0 +1,10 @@
+author: Dylanstrategie
+delete-atfer: True
+changes:
+  - experimental: Testing standardized procs designed to handle luminous items, please report any odd behaviour with RIG helmets
+  - rscadd: Add compatibility for disabling helmet lights after setup and adding in lit helmets at roundstart
+  - rscadd: Add standardized proc to disable action buttons whenever interesting (needs to be called)
+  - rscadd: Add examine() proc with extremely basic information (Can the helmet be lit, and is it lit or not ?)
+  - tweak: Helmet Light action button now only shows if there is a light to be toggled
+  - tweak: Action button for Syndie RIG helmet changed to "Toggle Helmet Camera"
+  - bugfix: Fix gold helmet's _color being incorrectly set, leading to odd behaviour if the icon is updated
