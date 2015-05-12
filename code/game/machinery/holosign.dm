@@ -73,7 +73,7 @@ obj/machinery/holosign_switch/attack_paw(mob/user as mob)
 	else
 		icon_state = "light0"
 
-	for(var/obj/machinery/holosign/M in world)
+	for(var/obj/machinery/holosign/M in machines)
 		if (M.id_tag == src.id_tag)
 			spawn( 0 )
 				M.toggle()

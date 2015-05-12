@@ -132,7 +132,7 @@
 			if (istype(T.loc, /area/security/brig)) score["arrested"] += 1
 			else if (M.current.stat == 2) score["opkilled"]++
 		if(foecount == score["arrested"]) score["allarrested"] = 1
-		for(var/mob/living/carbon/human/player in world)
+		for(var/mob/living/carbon/human/player in mob_list)
 			if(player.mind)
 				var/role = player.mind.assigned_role
 				if(role in list("Captain", "Head of Security", "Head of Personnel", "Chief Engineer", "Research Director"))
@@ -248,7 +248,7 @@
 		var/bombdat = null
 		for(var/datum/mind/M in ticker.mode:syndicates)
 			foecount++
-		for(var/mob/living/C in world)
+		for(var/mob/living/C in mob_list)
 			if (!istype(C,/mob/living/carbon/human) || !istype(C,/mob/living/silicon/robot) || !istype(C,/mob/living/silicon/ai)) continue
 			if (C.stat == 2) continue
 			if (!C.client) continue
@@ -268,7 +268,7 @@
 			diskdat += "in [disk_loc.loc]"
 			break // Should only need one go-round, probably
 		var/nukedpenalty = 0
-		for(var/obj/machinery/nuclearbomb/NUKE in world)
+		for(var/obj/machinery/nuclearbomb/NUKE in machines)
 			if (NUKE.r_code == "Nope") continue
 			var/turf/T = NUKE.loc
 			bombdat = T.loc
@@ -298,7 +298,7 @@
 			if (M.current && M.current.stat != 2) foecount++
 		for(var/datum/mind/M in ticker.mode:revolutionaries)
 			if (M.current && M.current.stat != 2) revcount++
-		for(var/mob/living/carbon/human/player in world)
+		for(var/mob/living/carbon/human/player in mob_list)
 			if(player.mind)
 				var/role = player.mind.assigned_role
 				if(role in list("Captain", "Head of Security", "Head of Personnel", "Chief Engineer", "Research Director"))
@@ -306,7 +306,7 @@
 				else
 					if(player.mind in ticker.mode:revolutionaries) continue
 					loycount++
-		for(var/mob/living/silicon/X in world)
+		for(var/mob/living/silicon/X in mob_list)
 			if (X.stat != 2) loycount++
 		var/revpenalty = 10000
 		dat += {"<B><U>MODE STATS</U></B><BR>

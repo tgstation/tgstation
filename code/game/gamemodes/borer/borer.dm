@@ -38,7 +38,7 @@
 		log_admin("MODE FAILURE: BORER. NOT ENOUGH BORER CANDIDATES.")
 		return 0 // not enough candidates for borer
 
-	for(var/obj/machinery/atmospherics/unary/vent_pump/v in world)
+	for(var/obj/machinery/atmospherics/unary/vent_pump/v in atmos_machines)
 		if(!v.welded && v.z == STATION_Z && v.canSpawnMice==1) // No more spawning in atmos.  Assuming the mappers did their jobs, anyway.
 			found_vents.Add(v)
 

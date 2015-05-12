@@ -9,7 +9,7 @@
 /obj/machinery/door_control/taxi/New()
 	..()
 	spawn(50)
-		for(var/obj/machinery/computer/taxi_shuttle/TS in world)
+		for(var/obj/machinery/computer/taxi_shuttle/TS in machines)
 			if(id_tag == TS.id_tag)
 				connected_computer = TS
 				if(!(src in connected_computer.connected_buttons))

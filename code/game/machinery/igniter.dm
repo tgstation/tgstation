@@ -174,12 +174,12 @@
 	active = 1
 	icon_state = "launcheract"
 
-	for(var/obj/machinery/sparker/M in world)
+	for(var/obj/machinery/sparker/M in machines)
 		if (M.id_tag == src.id_tag)
 			spawn( 0 )
 				M.spark()
 
-	for(var/obj/machinery/igniter/M in world)
+	for(var/obj/machinery/igniter/M in machines)
 		if(M.id_tag == src.id_tag)
 			use_power(50)
 			M.on = !( M.on )

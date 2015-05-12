@@ -663,9 +663,9 @@
 				else
 					dat += "<tr><td><i>Blob not found!</i></td></tr>"
 			dat += "</table>"
-		else if(locate(/mob/camera/blob) in world)
+		else if(locate(/mob/camera/blob) in mob_list)
 			dat += "<br><table cellspacing=5><tr><td><B>Blob</B></td><td></td><td></td></tr>"
-			for(var/mob/M in world)
+			for(var/mob/M in mob_list)
 				if(istype(M, /mob/camera/blob))
 
 					// AUTOFIXED BY fix_string_idiocy.py

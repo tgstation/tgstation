@@ -47,6 +47,7 @@
 		spawn( 0 )
 			src.Entered(AM)
 			return
+	turfs |= src
 	return
 
 /turf/DblClick()

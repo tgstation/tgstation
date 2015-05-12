@@ -282,7 +282,7 @@ client/proc/one_click_antag()
 							var/I = image('icons/mob/mob.dmi', loc = synd_mind_1.current, icon_state = "synd")
 							synd_mind.current.client.images += I
 
-		for (var/obj/machinery/nuclearbomb/bomb in world)
+		for (var/obj/machinery/nuclearbomb/bomb in machines)
 			bomb.r_code = nuke_code						// All the nukes are set to this code.
 	return 1
 
@@ -422,7 +422,7 @@ client/proc/one_click_antag()
 		var/max_raiders = 1
 		var/raiders = max_raiders
 		//Spawns vox raiders and equips them.
-		for (var/obj/effect/landmark/L in world)
+		for (var/obj/effect/landmark/L in landmarks_list)
 			if(L.name == "voxstart")
 				if(raiders<=0)
 					break

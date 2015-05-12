@@ -30,11 +30,11 @@
 		pixel_y = ((src.dir & 3)? (src.dir ==1 ? 24 : -32) : (0))
 
 		spawn(20)
-			for(var/obj/machinery/door/window/brigdoor/M in world)
+			for(var/obj/machinery/door/window/brigdoor/M in machines)
 				if (M.id_tag == src.id_tag)
 					targets += M
 
-			for(var/obj/machinery/flasher/F in world)
+			for(var/obj/machinery/flasher/F in machines)
 				if(F.id_tag == src.id_tag)
 					targets += F
 

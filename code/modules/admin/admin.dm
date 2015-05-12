@@ -1245,7 +1245,7 @@ var/global/floorIsLava = 0
 	if(!ai_number)
 		usr << "<b>No AIs located</b>" //Just so you know the thing is actually working and not just ignoring you.
 
-/datum/admins/proc/show_skills(var/mob/living/carbon/human/M as mob in world)
+/datum/admins/proc/show_skills(var/mob/living/carbon/human/M as mob in mob_list)
 	set category = "Admin"
 	set name = "Show Skills"
 
@@ -1259,7 +1259,7 @@ var/global/floorIsLava = 0
 
 	return
 
-/client/proc/update_mob_sprite(mob/living/carbon/human/H as mob)
+/client/proc/update_mob_sprite(mob/living/carbon/human/H as mob in mob_list)
 	set category = "Admin"
 	set name = "Update Mob Sprite"
 	set desc = "Should fix any mob sprite update errors."

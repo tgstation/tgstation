@@ -28,7 +28,7 @@ Message ends."}
 				aiPlayer << "Laws Updated: [law]"
 		if(2)
 			var/nukecode = "ERROR"
-			for(var/obj/machinery/nuclearbomb/bomb in world)
+			for(var/obj/machinery/nuclearbomb/bomb in machines)
 				if(bomb && bomb.r_code)
 					if(bomb.z == 1)
 						nukecode = bomb.r_code
@@ -71,7 +71,7 @@ Message ends."}
 
 
 	proc/count()
-		for(var/turf/T in world)
+		for(var/turf/T in turfs)
 			if(T.z != 1)
 				continue
 
