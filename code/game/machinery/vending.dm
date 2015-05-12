@@ -882,10 +882,10 @@
 	product_ads = "Probably not bad for you!;Don't believe the scientists!;It's good for you!;Don't quit, buy more!;Smoke!;Nicotine heaven.;Best cigarettes since 2150.;Award-winning cigs."
 	vend_delay = 34
 	icon_state = "cigs"
-	products = list(/obj/item/weapon/storage/fancy/cigarettes = 10,/obj/item/weapon/storage/box/matches = 10,/obj/item/weapon/lighter/random = 4)
+	products = list(/obj/item/weapon/storage/fancy/cigarettes = 10,/obj/item/weapon/storage/fancy/matchbox = 10,/obj/item/weapon/lighter/random = 4)
 	contraband = list(/obj/item/weapon/lighter/zippo = 4)
-	premium = list(/obj/item/clothing/mask/cigarette/cigar/havana = 2)
-	prices = list(/obj/item/weapon/storage/fancy/cigarettes = 60,/obj/item/weapon/storage/box/matches = 10,/obj/item/weapon/lighter/random = 60)
+	premium = list(/obj/item/weapon/storage/fancy/matchbox/strike_anywhere = 10,/obj/item/clothing/mask/cigarette/cigar/havana = 2)
+	prices = list(/obj/item/weapon/storage/fancy/cigarettes = 60,/obj/item/weapon/storage/fancy/matchbox = 10,/obj/item/weapon/lighter/random = 60)
 
 	pack = /obj/structure/vendomatpack/cigarette
 
@@ -1263,7 +1263,7 @@
 					/obj/item/weapon/light/tube = 10,/obj/item/clothing/suit/fire = 4, /obj/item/weapon/stock_parts/scanning_module = 5,/obj/item/weapon/stock_parts/micro_laser = 5,
 					/obj/item/weapon/stock_parts/matter_bin = 5,/obj/item/weapon/stock_parts/manipulator = 5,/obj/item/weapon/stock_parts/console_screen = 5)
 	contraband = list(/obj/item/weapon/wrench/socket = 1, /obj/item/weapon/extinguisher/foam = 1, /obj/item/device/device_analyser = 2)
-	premium = list(/obj/item/clothing/under/rank/chief_engineer = 2, /obj/item/weapon/storage/belt = 2) //belt is the best belt in the game.				
+	premium = list(/obj/item/clothing/under/rank/chief_engineer = 2, /obj/item/weapon/storage/belt = 2) //belt is the best belt in the game.
 	// There was an incorrect entry (cablecoil/power).  I improvised to cablecoil/heavyduty.
 	// Another invalid entry, /obj/item/weapon/circuitry.  I don't even know what that would translate to, removed it.
 	// The original products list wasn't finished.  The ones without given quantities became quantity 5.  -Sayu

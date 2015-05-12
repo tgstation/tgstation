@@ -723,7 +723,7 @@
 		/obj/item/weapon/storage/toolbox/syndicate,
 		/obj/item/weapon/storage/box/autoinjectors,
 		/obj/item/weapon/storage/box/donkpockets,
-		/obj/item/weapon/storage/box/matches,
+		/obj/item/weapon/storage/fancy/matchbox,
 		/obj/item/weapon/storage/fancy/donut_box,
 		/obj/item/weapon/storage/firstaid/adv,
 		/obj/item/weapon/storage/firstaid/regular,

@@ -163,6 +163,58 @@
 				return
 	..()
 
+/*
+ * Match Box
+ */
+
+/obj/item/weapon/storage/fancy/matchbox
+	name = "matchbox"
+	desc = "A box of matches. Critical element of a survival kit and equally needed by chain smokers and pyromaniacs."
+	icon = 'icons/obj/cigarettes.dmi'
+	icon_state = "matchbox"
+	item_state = "zippo"
+	storage_slots = 10
+	w_class = 1
+	flags = 0
+	can_hold = list("/obj/item/weapon/match") // Strict type check.
+	slot_flags = SLOT_BELT
+
+/obj/item/weapon/storage/fancy/matchbox/New()
+	..()
+	for(var/i = 1; i <= storage_slots; i++)
+		new /obj/item/weapon/match(src)
+
+/obj/item/weapon/storage/fancy/matchbox/update_icon()
+
+	var/contentpercent = (contents.len/storage_slots)*100
+	if(contentpercent < 33) //Looks empty, actually not a single row full because logic
+		icon_state = "[initial(icon_state)]_e"
+		return
+	else if(contentpercent < 65) //1 row full, 1 row almost full
+		icon_state = "[initial(icon_state)]_almostempty"
+		return
+	else if(contentpercent < 100) //At least one of the first row removed
+		icon_state = "[initial(icon_state)]_almostfull"
+		return
+	else if(contentpercent == 100)
+		icon_state = "[initial(icon_state)]"
+		return
+
+/obj/item/weapon/storage/fancy/matchbox/attackby(obj/item/weapon/match/W as obj, mob/user as mob)
+	if(istype(W, /obj/item/weapon/match) && !W.lit)
+		W.lit = !W.lit
+		W.update_brightness()
+	return
+
+/obj/item/weapon/storage/fancy/matchbox/strike_anywhere
+	name = "strike-anywhere matchbox"
+	desc = "A box of strike-anywhere matches. Critical element of a survival kit and equally needed by chain smokers and pyromaniacs. These ones can be lit against any surface."
+
+/obj/item/weapon/storage/fancy/matchbox/strike_anywhere/New()
+	..()
+	for(var/i = 1; i <= storage_slots; i++)
+		new /obj/item/weapon/match/strike_anywhere(src)
+
 ////////////
 //CIG PACK//
 ////////////
@@ -177,7 +229,7 @@
 	flags = 0
 	slot_flags = SLOT_BELT
 	storage_slots = 6
-	can_hold = list("=/obj/item/clothing/mask/cigarette", "/obj/item/weapon/lighter", "/obj/item/weapon/storage/box/matches") // Strict type check.
+	can_hold = list("=/obj/item/clothing/mask/cigarette") // Strict type check.
 	icon_type = "cigarette"
 
 /obj/item/weapon/storage/fancy/cigarettes/New()
