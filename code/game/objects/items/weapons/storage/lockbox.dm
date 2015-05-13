@@ -16,6 +16,7 @@
 	var/icon_closed = "lockbox"
 	var/icon_broken = "lockbox+b"
 	var/tracked_access = "It doesn't look like it's ever been used."
+	health = 50
 
 
 
