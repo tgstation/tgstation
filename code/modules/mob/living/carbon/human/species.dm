@@ -699,6 +699,10 @@
 				mspeed += H.shoes.slowdown
 			if(H.back)
 				mspeed += H.back.slowdown
+			if(H.l_hand)
+				mspeed += H.l_hand.slowdown / 2
+			if(H.r_hand)
+				mspeed += H.r_hand.slowdown / 2
 
 			if((H.disabilities & FAT))
 				mspeed += 1.5
