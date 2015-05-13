@@ -354,7 +354,7 @@
 "gP" = (/obj/structure/table,/obj/item/weapon/folder/yellow,/obj/effect/decal/cleanable/dirt{desc = "A thin layer of dust coating the floor."; name = "dust"},/turf/simulated/shuttle/floor{icon_state = "floor3"},/area/space)
 "gQ" = (/obj/machinery/door/airlock/shuttle{name = "bridge"},/obj/effect/decal/cleanable/dirt{desc = "A thin layer of dust coating the floor."; name = "dust"},/turf/simulated/shuttle/floor,/area/space)
 "gR" = (/obj/effect/decal/cleanable/blood/old,/obj/structure/stool/bed/chair/comfy/black{dir = 4},/obj/effect/decal/cleanable/dirt{desc = "A thin layer of dust coating the floor."; name = "dust"},/turf/simulated/shuttle/floor{icon_state = "floor3"},/area/space)
-"gS" = (/obj/machinery/computer/shuttle/syndicate/whiteship,/obj/effect/decal/cleanable/dirt{desc = "A thin layer of dust coating the floor."; name = "dust"},/turf/simulated/shuttle/floor{icon_state = "floor3"},/area/space)
+"gS" = (/obj/effect/decal/cleanable/dirt{desc = "A thin layer of dust coating the floor."; name = "dust"},/obj/machinery/computer/shuttle/white_ship,/turf/simulated/shuttle/floor{icon_state = "floor3"},/area/space)
 "gT" = (/turf/simulated/shuttle/wall{tag = "icon-swall2"; icon_state = "swall2"},/area/space)
 "gU" = (/obj/structure/reagent_dispensers/watertank,/obj/effect/decal/cleanable/dirt{desc = "A thin layer of dust coating the floor."; name = "dust"},/turf/simulated/shuttle/floor,/area/space)
 "gV" = (/obj/structure/stool/bed/chair{dir = 1},/obj/effect/decal/cleanable/dirt{desc = "A thin layer of dust coating the floor."; name = "dust"},/turf/simulated/shuttle/floor{icon_state = "floor3"},/area/space)
