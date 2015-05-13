@@ -370,3 +370,7 @@
 	icon_state = "tonercartridge"
 	var/charges = 5
 	var/max_charges = 5
+
+/obj/item/device/toner/cyborg
+	charges = 10
+	max_charges = 10

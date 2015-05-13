@@ -157,7 +157,25 @@
 						F.broken = 0
 						F.times_used = 0
 						F.icon_state = "flash"
+				if(istype(O, /obj/item/weapon/extinguisher))
+					var/obj/item/weapon/extinguisher/F = O
+					if(F.reagents.get_reagent_amount("water") < F.max_water)
+						F.reagents.add_reagent("water", 2 * coeff)
+						for(var/datum/reagent/water/W in F.reagents.reagent_list)
+							W.cooling_temperature = F.cooling_power
+
 				// Engineering
+				if(istype(O, /obj/item/weapon/airlock_painter))
+					var/obj/item/weapon/airlock_painter/A = O
+					if(A.ink && (A.ink.charges < A.ink.max_charges))
+						A.ink.charges++
+
+				if(istype(O, /obj/item/weapon/weldingtool))
+					var/obj/item/weapon/weldingtool/W = O
+					if(W.reagents.get_reagent_amount("fuel") < W.max_fuel)
+						W.reagents.add_reagent("fuel", 2 * coeff)
+
+
 				// Security
 				if(istype(O,/obj/item/weapon/gun/energy/gun/advtaser/cyborg))
 					var/obj/item/weapon/gun/energy/gun/advtaser/cyborg/T = O

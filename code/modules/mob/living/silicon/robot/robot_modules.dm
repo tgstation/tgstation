@@ -9,6 +9,7 @@
 	var/list/modules = list()
 	var/obj/item/emag = null
 	var/list/storages = list()
+	var/list/sensors = list()
 
 /obj/item/weapon/robot_module/emp_act(severity)
 	if(modules)
@@ -35,6 +36,7 @@
 
 /obj/item/weapon/robot_module/New()
 	modules += new /obj/item/device/flash/cyborg(src)
+	sensors += "Disable"
 	emag = new /obj/item/toy/sword(src)
 	emag.name = "Placeholder Emag Item"
 	return
@@ -72,6 +74,10 @@
 	modules += new /obj/item/weapon/wrench(src)
 	modules += new /obj/item/weapon/crowbar(src)
 	modules += new /obj/item/device/healthanalyzer(src)
+	sensors += "Security"
+	sensors += "Medical"
+	sensors += "Night Vision"
+
 	emag = new /obj/item/weapon/melee/energy/sword/cyborg(src)
 	fix_modules()
 
@@ -96,7 +102,11 @@
 	modules += new /obj/item/weapon/circular_saw(src)
 	modules += new /obj/item/weapon/extinguisher/mini(src)
 	modules += new /obj/item/roller/robo(src)
+	sensors += "Security"
+	sensors += "Medical"
+	sensors += "Night Vision"
 	emag = new /obj/item/weapon/reagent_containers/spray(src)
+
 
 	emag.reagents.add_reagent("facid", 250)
 	emag.name = "Fluacid spray"
@@ -122,11 +132,12 @@
 /obj/item/weapon/robot_module/engineering/New()
 	..()
 	modules += new /obj/item/device/flashlight(src)
-	modules += new /obj/item/borg/sight/meson(src)
+//	modules += new /obj/item/borg/sight/meson(src)
 	emag = new /obj/item/borg/stun(src)
 	modules += new /obj/item/weapon/rcd/borg(src)
 	modules += new /obj/item/weapon/pipe_dispenser(src) //What could possibly go wrong?
 	modules += new /obj/item/weapon/extinguisher(src)
+	modules += new /obj/item/weapon/airlock_painter/cyborg(src)
 	modules += new /obj/item/weapon/weldingtool/largetank/cyborg(src)
 	modules += new /obj/item/device/lightreplacer/cyborg(src)
 	modules += new /obj/item/weapon/screwdriver(src)
@@ -136,6 +147,10 @@
 	modules += new /obj/item/device/multitool(src)
 	modules += new /obj/item/device/t_scanner(src)
 	modules += new /obj/item/device/analyzer(src)
+	sensors += "Meson"
+	sensors += "Security"
+	sensors += "Medical"
+	sensors += "Night Vision"
 
 	var/datum/robot_energy_storage/metal/metstore = new /datum/robot_energy_storage/metal(src)
 	var/datum/robot_energy_storage/glass/glastore = new /datum/robot_energy_storage/glass(src)
@@ -182,6 +197,9 @@
 	modules += new /obj/item/weapon/gun/energy/disabler/cyborg(src)
 	modules += new /obj/item/clothing/mask/gas/sechailer/cyborg(src)
 	emag = new /obj/item/weapon/gun/energy/laser/cyborg(src)
+	sensors += "Security"
+	sensors += "Medical"
+	sensors += "Night Vision"
 	fix_modules()
 
 
@@ -196,6 +214,10 @@
 	modules += new /obj/item/weapon/mop/cyborg(src)
 	modules += new /obj/item/device/lightreplacer/cyborg(src)
 	modules += new /obj/item/weapon/holosign_creator(src)
+	modules += new /obj/item/weapon/reagent_containers/glass/bucket(src)
+	sensors += "Security"
+	sensors += "Medical"
+	sensors += "Night Vision"
 	emag = new /obj/item/weapon/reagent_containers/spray(src)
 
 	emag.reagents.add_reagent("lube", 250)
@@ -214,6 +236,9 @@
 	modules += new /obj/item/weapon/pen(src)
 	modules += new /obj/item/weapon/razor(src)
 	modules += new /obj/item/device/violin(src)
+	sensors += "Security"
+	sensors += "Medical"
+	sensors += "Night Vision"
 
 	var/obj/item/weapon/rsf/M = new /obj/item/weapon/rsf(src)
 	M.matter = 30
@@ -236,7 +261,7 @@
 
 /obj/item/weapon/robot_module/miner/New()
 	..()
-	modules += new /obj/item/borg/sight/meson(src)
+	//modules += new /obj/item/borg/sight/meson(src)
 	emag = new /obj/item/borg/stun(src)
 	modules += new /obj/item/weapon/storage/bag/ore(src)
 	modules += new /obj/item/weapon/pickaxe/drill/cyborg(src)
@@ -245,6 +270,10 @@
 	modules += new /obj/item/weapon/storage/bag/sheetsnatcher/borg(src)
 	modules += new /obj/item/device/t_scanner/adv_mining_scanner(src)
 	modules += new /obj/item/weapon/gun/energy/kinetic_accelerator(src)
+	sensors += "Meson"
+	sensors += "Security"
+	sensors += "Medical"
+	sensors += "Night Vision"
 	fix_modules()
 
 
@@ -261,6 +290,10 @@
 	modules += new /obj/item/weapon/tank/jetpack/carbondioxide(src)
 	modules += new /obj/item/weapon/crowbar(src)
 	modules += new /obj/item/weapon/pinpointer/operative(src)
+	sensors += "Security"
+	sensors += "Medical"
+	sensors += "Night Vision" //YES
+	sensors += "Thermal"
 	emag = null
 	fix_modules()
 

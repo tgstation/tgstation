@@ -1047,3 +1047,35 @@
 			connected_ai << "<br><br><span class='notice'>NOTICE - Cyborg module change detected: [name] has loaded the [designation] module.</span><br>"
 		if(3) //New Name
 			connected_ai << "<br><br><span class='notice'>NOTICE - Cyborg reclassification detected: [oldname] is now designated as [newname].</span><br>"
+
+/mob/living/silicon/robot/proc/get_sensor_augmentations()
+	if (module.sensors)
+		return module.sensors
+	else
+		return "Disable"
+
+
+
+/mob/living/silicon/robot/sensor_mode()
+	set name = "Set Sensor Augmentation"
+	var/sensor_type = input("Please select sensor type.", "Sensor Integration", null) in src.get_sensor_augmentations()
+	sight_mode = 0
+	remove_med_sec_hud()
+	switch(sensor_type)
+		if ("Security")
+			add_sec_hud()
+			src << "<span class='notice'>Security records overlay enabled.</span>"
+		if ("Medical")
+			add_med_hud()
+			src << "<span class='notice'>Life signs monitor overlay enabled.</span>"
+		if ("Meson")
+			sight_mode |= BORGMESON
+			src << "<span class='notice'>Meson overlay enabled.</span>"
+		if ("Thermal")
+			sight_mode |= BORGTHERM
+			src << "<span class='notice'>Thermal overlay enabled.</span>"
+		if ("Night Vision")
+			sight_mode |= BORGNV
+			src << "<span class='notice'>Night Vision enabled.</span>"
+		if ("Disable")
+			src << "Sensor augmentations disabled."

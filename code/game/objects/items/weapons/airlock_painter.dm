@@ -77,3 +77,18 @@
 		user.put_in_hands(ink)
 		user << "<span class='notice'>You remove \the [ink] from \the [name].</span>"
 		ink = null
+
+
+/obj/item/weapon/airlock_painter/cyborg
+
+
+/obj/item/weapon/airlock_painter/cyborg/New()
+	if (!ink)
+		ink = new /obj/item/device/toner/cyborg(src)
+
+
+
+/obj/item/weapon/airlock_painter/cyborg/attackby(obj/item/weapon/W, mob/user, params)
+	return
+/obj/item/weapon/airlock_painter/cyborg/attack_self(mob/user)
+	return

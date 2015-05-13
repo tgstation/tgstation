@@ -5,9 +5,10 @@
 /obj/item/weapon/robot_module/mommi/New()
 	//src.modules += new /obj/item/borg/sight/meson(src)
 	src.emag = new /obj/item/borg/stun(src)
-	//src.modules += new /obj/item/weapon/rcd/borg(src)     // Too OP
+	src.modules += new /obj/item/weapon/rcd/borg(src)     // Too OP
 	src.modules += new /obj/item/device/flashlight(src)   // Broken
 	src.modules += new /obj/item/weapon/weldingtool/largetank/cyborg(src)
+	src.modules += new /obj/item/weapon/airlock_painter/cyborg(src)
 	src.modules += new /obj/item/weapon/screwdriver(src)
 	src.modules += new /obj/item/weapon/wrench(src)
 	src.modules += new /obj/item/weapon/crowbar(src)
@@ -19,6 +20,8 @@
 	src.modules += new /obj/item/device/lightreplacer/cyborg(src)
 //	src.modules += new /obj/item/weapon/extinguisher/foam(src)
 	src.modules += new /obj/item/weapon/pipe_dispenser(src)
+	src.sensors += "Night Vision"
+	src.sensors += "Meson"
 //	src.modules += new /obj/item/weapon/tile_painter(src)
 
 	src.modules += new /obj/item/device/material_synth/cyborg(src)
