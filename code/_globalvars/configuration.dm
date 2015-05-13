@@ -41,12 +41,13 @@ var/list/be_special_flags = list(
 	"Malf AI" = BE_MALF,
 	"Revolutionary" = BE_REV,
 	"Alien Lifeform" = BE_ALIEN,
-	"pAI/Positronic Brain" = BE_PAI,
+	"pAI" = BE_PAI,
 	"Cultist" = BE_CULTIST,
 	"Blob" = BE_BLOB,
 	"Ninja" = BE_NINJA,
 	"Monkey" = BE_MONKEY,
 	"Gang" = BE_GANG,
 	"Abductor" = BE_ABDUCTOR,
-	"Revenant" = BE_REVENANT
+	"Revenant" = BE_REVENANT,
+	"Shadowling" = BE_SHADOWLING
 	)

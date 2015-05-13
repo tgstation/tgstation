@@ -188,6 +188,8 @@
 		message_admins(adminlog)
 		log_game(adminlog)
 	explosion(get_turf(src),2,5,11, flame_range = 11)
+	if(src.loc && istype(src.loc,/obj/machinery/syndicatebomb/))
+		qdel(src.loc)
 	qdel(src)
 
 /obj/item/weapon/bombcore/proc/defuse()

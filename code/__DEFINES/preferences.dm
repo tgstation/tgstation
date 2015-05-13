@@ -34,7 +34,7 @@
 #define BE_MALF			16
 #define BE_REV			32
 #define BE_ALIEN		64
-#define BE_PAI			128 //Includes Positronic brains, but the flag is already maxed.
+#define BE_PAI			128
 #define BE_CULTIST		256
 #define BE_BLOB			512
 #define BE_NINJA		1024
