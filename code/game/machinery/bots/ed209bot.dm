@@ -629,7 +629,7 @@ Auto Patrol[]"},
 				if (do_after(user, 40))
 					if (coil.get_amount() >= 1 && build_step == 6)
 						coil.use(1)
-						build_step = 7
+						build_step++
 						user << "<span class='notice'>You wire the ED-209 assembly.</span>"
 						name = "wired ED-209 assembly"
 
@@ -649,12 +649,12 @@ Auto Patrol[]"},
 					name = "taser ED-209 assembly"
 				else
 					return
+			user.drop_item()
+			qdel(W)
 			build_step++
 			user << "<span class='notice'>You add [W] to [src].</span>"
 			item_state = "[lasercolor]ed209_taser"
 			icon_state = "[lasercolor]ed209_taser"
-			user.drop_item()
-			qdel(W)
 
 		if(8)
 			if(istype(W, /obj/item/weapon/screwdriver))
