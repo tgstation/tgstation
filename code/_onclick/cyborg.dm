@@ -34,7 +34,9 @@
 
 	if(attack_delayer.blocked())
 		return
-
+	if(isVentCrawling())
+		src << "<span class='danger'>Not while we're vent crawling!</span>"
+		return
 	face_atom(A) // change direction to face what you clicked on
 
 	/*
