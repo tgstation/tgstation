@@ -246,6 +246,11 @@ datum/tech/syndicate
 	id = "syndicate"
 
 /*
+datum/tech/service
+	name = "Service Technologies Research"
+	desc = "The study and development of technologies that benefit or otherwise optimize the service industry."
+	id = "service"
+	
 datum/tech/arcane
 	name = "Arcane Research"
 	desc = "Research into the occult and arcane field for use in practical science"

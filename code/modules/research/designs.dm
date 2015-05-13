@@ -394,4 +394,3 @@ datum/design/proc/CalcReliability(var/list/temp_techs)
 	materials = list("$metal" = 2000, "$glass" = 1000)
 	build_path = /obj/item/weapon/holosign_creator
 	category = list("Equipement")
-

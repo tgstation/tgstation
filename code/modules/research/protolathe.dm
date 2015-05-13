@@ -22,7 +22,6 @@ Note: Must be placed west/left of and R&D console to function.
 	var/uranium_amount = 0.0
 	var/diamond_amount = 0.0
 	var/clown_amount = 0.0
-	var/adamantine_amount = 0.0
 	var/efficiency_coeff
 
 	var/list/categories = list(
@@ -30,6 +29,9 @@ Note: Must be placed west/left of and R&D console to function.
 								"Medical Designs",
 								"Bluespace Designs",
 								"Stock Parts",
+/*
+								"Service Designs",
+*/
 								"Equipement",
 								"Mining Designs",
 								"Electronics",
@@ -134,9 +136,6 @@ Note: Must be placed west/left of and R&D console to function.
 			if(clown_amount >= MINERAL_MATERIAL_AMOUNT)
 				var/obj/item/stack/sheet/mineral/bananium/G = new /obj/item/stack/sheet/mineral/bananium(src.loc)
 				G.amount = round(clown_amount / G.perunit)
-			if(adamantine_amount >= MINERAL_MATERIAL_AMOUNT)
-				var/obj/item/stack/sheet/mineral/adamantine/G = new /obj/item/stack/sheet/mineral/adamantine(src.loc)
-				G.amount = round(adamantine_amount / G.perunit)
 			default_deconstruction_crowbar(O)
 			return 1
 		else
@@ -193,8 +192,6 @@ Note: Must be placed west/left of and R&D console to function.
 		diamond_amount += amount * MINERAL_MATERIAL_AMOUNT
 	else if(istype(stack, /obj/item/stack/sheet/mineral/bananium))
 		clown_amount += amount * MINERAL_MATERIAL_AMOUNT
-	else if(istype(stack, /obj/item/stack/sheet/mineral/adamantine))
-		adamantine_amount += amount * MINERAL_MATERIAL_AMOUNT
 	stack.use(amount)
 	busy = 0
 	src.updateUsrDialog()
