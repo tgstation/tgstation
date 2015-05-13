@@ -5,7 +5,7 @@
 ////////////////////////
 
 /proc/get_money_account(var/account_number, var/from_z=-1)
-	for(var/obj/machinery/account_database/DB in machines)
+	for(var/obj/machinery/account_database/DB in account_DBs)
 		if(from_z > -1 && DB.z != from_z) continue
 		if((DB.stat & NOPOWER) || !DB.activated ) continue
 		var/datum/money_account/acct = DB.get_account(account_number)
