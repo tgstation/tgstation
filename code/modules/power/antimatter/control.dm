@@ -1,8 +1,12 @@
 /obj/machinery/power/am_control_unit
 	name = "antimatter control unit"
 	desc = "This device injects antimatter into connected shielding units, the more antimatter injected the more power produced.  Wrench the device to set it up."
-	icon = 'icons/obj/machines/antimatter.dmi'
+//	icon = 'icons/obj/machines/antimatter.dmi'
+	icon = 'icons/obj/machines/new_ame.dmi'
 	icon_state = "control"
+	var/icon_mod = "on" // on, critical, or fuck
+	var/old_icon_mod = "on"
+
 	anchored = 1
 	density = 1
 	use_power = 1
@@ -15,6 +19,7 @@
 	var/update_shield_icons = 0
 	var/stability = 100
 	var/exploding = 0
+	var/exploded = 0
 
 	var/active = 0//On or not
 	var/fuel_injection = 2//How much fuel to inject
@@ -57,6 +62,8 @@
 		toggle_power()
 		//Angry buzz or such here
 		return
+
+	check_core_stability()
 
 	add_avail(stored_power)
 
@@ -160,14 +167,15 @@
 
 	if(istype(W, /obj/item/weapon/am_containment))
 		if(fueljar)
-			user << "<span class='danger'>There is already a [fueljar] inside!</span>"
+			user << "<span class='warning'>There is already a [fueljar] inside!</span>"
 			return
 		fueljar = W
-		W.loc = src
 		if(user.client)
 			user.client.screen -= W
-		user.unEquip(W)
+		user.unEquip(W,1)
+		W.loc = src
 		user.update_icons()
+		message_admins("AME loaded with fuel by [user.name] at ([x],[y],[z] - <A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[x];Y=[y];Z=[z]'>JMP</a>)",0,1)
 		user.visible_message("[user.name] loads an [W.name] into the [src.name].", \
 				"You load an [W.name].", \
 				"You hear a thunk.")
@@ -218,6 +226,7 @@
 		use_power = 1
 		visible_message("The [src.name] shuts down.")
 	update_icon()
+	update_shield_icons = 1
 	return
 
 
@@ -241,14 +250,26 @@
 
 
 /obj/machinery/power/am_control_unit/proc/check_core_stability()
-	if(stored_core_stability_delay || linked_cores.len <= 0)	return
-	stored_core_stability_delay = 1
+	//if(stored_core_stability_delay || linked_cores.len <= 0)	return
+	if(linked_cores.len <=0) return
+	//stored_core_stability_delay = 1
 	stored_core_stability = 0
 	for(var/obj/machinery/am_shielding/AMS in linked_cores)
 		stored_core_stability += AMS.stability
 	stored_core_stability/=linked_cores.len
-	spawn(40)
-		stored_core_stability_delay = 0
+	switch(stored_core_stability)
+		if(0 to 24)
+			icon_mod="fuck"
+		if(25 to 49)
+			icon_mod="critical"
+		if(50 to INFINITY)
+			icon_mod="on"
+	if(icon_mod!=old_icon_mod)
+		old_icon_mod=icon_mod
+		update_icon()
+
+	//spawn(40)
+	//	stored_core_stability_delay = 0
 	return
 
 
@@ -258,41 +279,56 @@
 			user.unset_machine()
 			user << browse(null, "window=AMcontrol")
 			return
-	user.set_machine(src)
-
-	var/dat = ""
-	dat += "AntiMatter Control Panel<BR>"
-	dat += "<A href='?src=\ref[src];close=1'>Close</A><BR>"
-	dat += "<A href='?src=\ref[src];refresh=1'>Refresh</A><BR>"
-	dat += "<A href='?src=\ref[src];refreshicons=1'>Force Shielding Update</A><BR><BR>"
-	dat += "Status: [(active?"Injecting":"Standby")] <BR>"
-	dat += "<A href='?src=\ref[src];togglestatus=1'>Toggle Status</A><BR>"
-
-	dat += "Stability: [stability]%<BR>"
-	dat += "Reactor parts: [linked_shielding.len]<BR>"//TODO: perhaps add some sort of stability check
-	dat += "Cores: [linked_cores.len]<BR><BR>"
-	dat += "-Current Efficiency: [reported_core_efficiency]<BR>"
-	dat += "-Average Stability: [stored_core_stability] <A href='?src=\ref[src];refreshstability=1'>(update)</A><BR>"
-	dat += "Last Produced: [stored_power]<BR>"
-
-	dat += "Fuel: "
-	if(!fueljar)
-		dat += "<BR>No fuel receptacle detected."
-	else
-		dat += "<A href='?src=\ref[src];ejectjar=1'>Eject</A><BR>"
-		dat += "- [fueljar.fuel]/[fueljar.fuel_max] Units<BR>"
-
-		dat += "- Injecting: [fuel_injection] units<BR>"
-		dat += "- <A href='?src=\ref[src];strengthdown=1'>--</A>|<A href='?src=\ref[src];strengthup=1'>++</A><BR><BR>"
+	return ui_interact(user)
 
 
-	user << browse(dat, "window=AMcontrol;size=420x500")
-	onclose(user, "AMcontrol")
-	return
+
+/obj/machinery/power/am_control_unit/ui_interact(mob/user, ui_key = "main", var/datum/nanoui/ui = null)
+	if(!user)
+		return
+
+	var/list/fueljar_data=null
+	if(fueljar)
+		fueljar_data=list(
+			"fuel"=fueljar.fuel,
+			"fuel_max"=fueljar.fuel_max,
+			"injecting"=fuel_injection
+		)
+
+	var/list/data = list(
+		"active" = active,
+		//"stability" = stability,
+		"linked_shields" = linked_shielding.len,
+		"linked_cores" = linked_cores.len,
+		"efficiency" = reported_core_efficiency,
+		"stability" = stored_core_stability,
+		"stored_power" = stored_power,
+		"fueljar" = fueljar_data,
+		"siliconUser" = user.has_unlimited_silicon_privilege
+	)
+
+
+	ui = SSnano.try_update_ui(user, src, ui_key, ui, data)
+	if (!ui)
+		ui = new(user, src, ui_key, "ame.tmpl", "Antimatter Control Unit", 500, data["siliconUser"] ? 465 : 390)
+		// the ui does not exist, so we'll create a new() one
+        // for a list of parameters and their descriptions see the code docs in \code\modules\nano\nanoui.dm
+		// when the ui is first opened this is the data it will use
+		ui.set_initial_data(data)
+		// open the new ui window
+		ui.open()
+		ui.set_auto_update(1)
 
 
 /obj/machinery/power/am_control_unit/Topic(href, href_list)
-	if(..())
+	if(..()) return 1
+	if(href_list["close"])
+		if(usr.machine == src) usr.unset_machine()
+		return 1
+	//Ignore input if we are broken or guy is not touching us, AI can control from a ways away
+	if(stat & (BROKEN|NOPOWER))
+		usr.unset_machine()
+		usr << browse(null, "window=AMcontrol")
 		return
 
 	if(href_list["close"])
@@ -302,26 +338,34 @@
 
 	if(href_list["togglestatus"])
 		toggle_power()
+		message_admins("AME toggled [active?"on":"off"] by [usr.name] at ([x],[y],[z] - <A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[x];Y=[y];Z=[z]'>JMP</a>)",0,1)
+		return 1
 
 	if(href_list["refreshicons"])
-		update_shield_icons = 1
+		update_shield_icons = 2 // Fuck it
+		return 1
 
 	if(href_list["ejectjar"])
 		if(fueljar)
+			message_admins("AME fuel jar ejected by [usr.name] at ([x],[y],[z] - <A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[x];Y=[y];Z=[z]'>JMP</a>)",0,1)
 			fueljar.loc = src.loc
 			fueljar = null
 			//fueljar.control_unit = null currently it does not care where it is
 			//update_icon() when we have the icon for it
+		return 1
 
-	if(href_list["strengthup"])
-		fuel_injection++
-
-	if(href_list["strengthdown"])
-		fuel_injection--
-		if(fuel_injection < 0) fuel_injection = 0
+	if(href_list["set_strength"])
+		var/newval = input("Enter new injection strength") as num|null
+		if(isnull(newval))
+			return
+		fuel_injection=newval
+		fuel_injection=max(1,fuel_injection)
+		message_admins("AME injection strength set to [fuel_injection] by [usr.name] at ([x],[y],[z] - <A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[x];Y=[y];Z=[z]'>JMP</a>)",0,1)
+		return 1
 
 	if(href_list["refreshstability"])
 		check_core_stability()
+		return 1
 
 	updateDialog()
-	return
+	return 1

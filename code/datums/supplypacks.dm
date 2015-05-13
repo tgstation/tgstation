@@ -508,6 +508,38 @@ var/list/all_supply_groups = list(supply_emergency,supply_security,supply_engine
 	cost = 25
 	containername = "particle accelerator crate"
 
+
+/datum/supply_packs/engineering/engine/amrcontrol
+	name = "Antimatter control unit crate"
+	contains = list(/obj/machinery/power/am_control_unit)
+	cost = 30
+	containername = "Antimatter Control Unit crate"
+
+/datum/supply_packs/engineering/engine/amrparts
+	name = "AMR Parts crate"
+	contains  = list(/obj/item/device/am_shielding_container,
+					/obj/item/device/am_shielding_container,
+					/obj/item/device/am_shielding_container,
+					/obj/item/device/am_shielding_container,
+					/obj/item/device/am_shielding_container,
+					/obj/item/device/am_shielding_container,
+					/obj/item/device/am_shielding_container,
+					/obj/item/device/am_shielding_container,
+					/obj/item/device/am_shielding_container,
+					/obj/item/device/am_shielding_container,
+					/obj/item/device/am_shielding_container,
+					/obj/item/device/am_shielding_container)
+	cost = 30
+	containername = "packaged antimatter reactor crate"
+
+/datum/supply_packs/engineering/engine/amrcontainment
+	name = "Antimatter containment jar crate"
+	contains = list(/obj/item/weapon/am_containment,
+					/obj/item/weapon/am_containment,
+					/obj/item/weapon/am_containment)
+	cost = 15
+	containername = "Antimatter containment jar crate"
+
 /datum/supply_packs/engineering/engine/spacesuit
 	name = "Space Suit Crate"
 	contains = list(/obj/item/clothing/suit/space,
