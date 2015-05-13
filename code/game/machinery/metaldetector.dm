@@ -195,13 +195,17 @@
 		if(!src.anchored)
 			return
 
-		var/dat = "<h4>"
+		var/dat = {"
+		<TITLE>Mr. V.A.L.I.D. Portable Threat Detector</TITLE><h3>Menu:</h3><h4>
 
-		dat += "Citizens must carry ID: <A href='?src=\ref[src];action=idmode'>Turn [idmode ? "Off" : "On"]</A><BR><BR>"
-		dat += "Intrusive Scan: <A href='?src=\ref[src];action=scanmode'>Turn [scanmode ? "Off" : "On"]</A><BR><BR>"
-		dat += "DeMil Alerts: <A href='?src=\ref[src];action=senmode'>Turn [senset ? "Off" : "On"]</A><BR><BR>"
+		Citizens must carry ID: <A href='?src=\ref[src];action=idmode'>Turn [idmode ? "Off" : "On"]</A>
 
-		user << browse("<TITLE>Mr. V.A.L.I.D. Portable Threat Detector</TITLE><h3>Menu:</h3><BR><BR>[dat]</h4></ul>", "window=detector;size=575x300")
+		Intrusive Scan: <A href='?src=\ref[src];action=scanmode'>Turn [scanmode ? "Off" : "On"]</A>
+
+		DeMil Alerts: <A href='?src=\ref[src];action=senmode'>Turn [senset ? "Off" : "On"]</A></h4>
+		"}
+
+		user << browse(dat, "window=detector;size=575x300")
 		onclose(user, "detector")
 		return
 
