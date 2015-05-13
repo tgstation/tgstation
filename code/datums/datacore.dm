@@ -370,7 +370,7 @@ var/record_id_num = 1001
 		if("Bartender")
 			clothes_s = icon('icons/mob/uniform.dmi', "ba_suit_s")
 			clothes_s.Blend(icon('icons/mob/feet.dmi', "black"), ICON_UNDERLAY)
-			clothes_s.Blend(icon('icons/mob/suit.dmi', "armoralt"), ICON_OVERLAY)
+			clothes_s.Blend(icon('icons/mob/suit.dmi', "armor"), ICON_OVERLAY)
 		if("Quartermaster")
 			clothes_s = icon('icons/mob/uniform.dmi', "qm_s")
 			clothes_s.Blend(icon('icons/mob/feet.dmi', "brown"), ICON_UNDERLAY)
