@@ -8,6 +8,7 @@
  *		Butcher's cleaver
  *		Rolling Pins
  *		Trays
+ *		Whetstone
  */
 
 /obj/item/weapon/kitchen
@@ -112,7 +113,28 @@
 	origin_tech = "materials=1"
 	attack_verb = list("slashed", "stabbed", "sliced", "torn", "ripped", "diced", "cut")
 
+/obj/item/weapon/skitchenknife
+	name = "sharpened kitchen knife"
+	icon = 'icons/obj/kitchen.dmi'
+	icon_state = "knife"
+	desc = "A general purpose Chef's Knife made by SpaceCook Incorporated. Guaranteed to stay sharp for years to come. This one is extra sharp!"
+	flags = CONDUCT
+	force = 20.0
+	w_class = 3.0
+	throwforce = 15.0
+	throw_speed = 4
+	throw_range = 7
+	m_amt = 12000
+	origin_tech = "materials=3"
+	attack_verb = list("slashed", "stabbed", "sliced", "torn", "ripped", "diced", "cut")
+
 /obj/item/weapon/kitchenknife/suicide_act(mob/user)
+	user.visible_message(pick("<span class='suicide'>[user] is slitting \his wrists with the [src.name]! It looks like \he's trying to commit suicide.</span>", \
+						"<span class='suicide'>[user] is slitting \his throat with the [src.name]! It looks like \he's trying to commit suicide.</span>", \
+						"<span class='suicide'>[user] is slitting \his stomach open with the [src.name]! It looks like \he's trying to commit seppuku.</span>"))
+	return (BRUTELOSS)
+
+/obj/item/weapon/skitchenknife/suicide_act(mob/user)
 	user.visible_message(pick("<span class='suicide'>[user] is slitting \his wrists with the [src.name]! It looks like \he's trying to commit suicide.</span>", \
 						"<span class='suicide'>[user] is slitting \his throat with the [src.name]! It looks like \he's trying to commit suicide.</span>", \
 						"<span class='suicide'>[user] is slitting \his stomach open with the [src.name]! It looks like \he's trying to commit seppuku.</span>"))
@@ -143,6 +165,22 @@
 	hitsound = 'sound/weapons/bladeslice.ogg'
 	attack_verb = list("cleaved", "slashed", "stabbed", "sliced", "torn", "ripped", "diced", "cut")
 
+/obj/item/weapon/kitchenknife/sbutcher
+	name = "sharpened butcher's cleaver"
+	icon = 'icons/obj/kitchen.dmi'
+	icon_state = "butch"
+	desc = "A huge thing used for chopping and chopping up meat. This includes clowns and clown-by-products. This one is extra sharp!"
+	flags = CONDUCT
+	force = 25.0
+	w_class = 3.0
+	throwforce = 15.0
+	throw_speed = 4
+	throw_range = 7
+	m_amt = 12000
+	origin_tech = "materials=4"
+	hitsound = 'sound/weapons/bladeslice.ogg'
+	attack_verb = list("cleaved", "slashed", "stabbed", "sliced", "torn", "ripped", "diced", "cut")
+
 /*
  * Rolling Pins
  */
@@ -159,3 +197,19 @@
 	attack_verb = list("bashed", "battered", "bludgeoned", "thrashed", "whacked")
 
 /* Trays moved to /obj/item/weapon/storage/bag */
+
+/*
+ * Whetstone
+ */
+ 
+/obj/item/weapon/kitchen/whetstone
+	name = "Whetstone"
+	desc = "A tool used for sharpening your knives to make it easier to bork bork bork."
+	icon_state = "whetstone"
+	force = 5.0
+	throwforce = 3.0
+	throw_speed = 3
+	throw_range = 7
+	w_class = 3.0
+	attack_verb = list("beaten", "battered", "bludgeoned")
+	origin_tech = "materials=3"

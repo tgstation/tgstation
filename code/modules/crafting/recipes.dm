@@ -138,3 +138,27 @@
 				/obj/item/stack/packageWrap = 5,)
 	tools = list(/obj/item/weapon/screwdriver)
 	time = 200
+	
+/datum/table_recipe/sbutcher
+	name = "Sharpened Butcher's Cleaver"
+	result = /obj/item/weapon/kitchenknife/sbutcher
+	reqs = list(/obj/item/weapon/kitchen/whetstone = 1,
+				/obj/item/weapon/kitchenknife/sbutcher = 1)
+	parts = list(/obj/item/weapon/kitchenknife/sbutcher = 1)
+	time = 30
+
+/datum/table_recipe/skitchenknife
+	name = "Sharpened Butcher's Cleaver"
+	result = /obj/item/weapon/skitchenknife
+	reqs = list(/obj/item/weapon/kitchen/whetstone = 1,
+				/obj/item/weapon/kitchenknife = 1)
+	parts = list(/obj/item/weapon/kitchenknife = 1)
+	time = 30
+
+/datum/table_recipe/shatchet
+	name = "Sharpened Hatchet"
+	result = /obj/item/weapon/shatchet
+	reqs = list(/obj/item/weapon/kitchen/whetstone = 1,
+				/obj/item/weapon/hatchet = 1)
+	parts = list(/obj/item/weapon/hatchet = 1)
+	time = 30

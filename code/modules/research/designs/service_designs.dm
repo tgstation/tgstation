@@ -62,7 +62,7 @@
 	build_path = /obj/item/devices/upgrades/fastcart
 	category = list("service")
 
-/datum/design/tankcart //needs to be created and sprited
+/datum/design/tankcart //needs to be created
 	name = "Janicart Armor Module"
 	desc = "Upgraded plating for the janicart which greatly improves the durability of it and protects the user." 
 	id = "tankcart"
@@ -82,29 +82,29 @@
 	build_path = /obj/item/devices/upgrades/spacecart
 	category = list("service")
 
-/datum/design/Whetstone //needs to be created and sprited
+/datum/design/Whetstone //needs to be sprited
 	name = "Whetstone"
 	desc = "A strange stone used by many citizens of ancient Earth to sharpen metal tools."
 	id = "whetstone"
 	req_tech = ("materials" = 4 "service" = 3, "syndicate" = 3)
 	build_type = PROTOLATHE
 	materials = ("$metal" = 2500)
-	build_path = /obj/item/weapon/whetstone
+	build_path = /obj/item/weapon/kitchen/whetstone
 	category = list("service")
 	
-/datum/design/synthesizer //needs to be created
-	name = "Beverage Synthesizer"
+/datum/design/borghypo
+	name = "Advanced Shaker"
 	desc = "A tool used to generate drinks, like the one service cyborgs use."
-	id = "synthesizer"
+	id = "cyborg shaker"
 	req_tech = list("materials" = 3 "programming" = 3, "powerstorage" = 4, "bluespace" = 4, "service" = 6)
 	build_type = PROTOLATHE
 	materials = list("$metal" = 5000, "$glass" = 1000, "$diamond" = 2000)
-	build_path = /obj/item/weapon/chainsaw
+	build_path = /obj/item/weapon/reagent_containers/borghypo/borgshaker
 	category = list("service")
 	
-/datum/design/crack //needs to be created and sprited
+/datum/design/crack //needs to be sprited
 	name = "Secret Spice"
-	desc = "A fine white powder that makes most drinks and cuisine taste REALLY good."
+	desc = "A fine white powder that makes most food and drinks taste REALLY good."
 	id = "crack"
 	req_tech = list("materials" = 4, "syndicate" = 3, "service" = 2)
 	build_type = PROTOLATHE
@@ -112,7 +112,7 @@
 	build_path = /obj/item/weapon/reagent_containers/food/condiment/crack
 	category = list("service")
 	
-/datum/design/plantbag //needs to be created and maybe sprited
+/datum/design/plantbag
 	name = "Plant Bag of Holding"
 	desc = "A bag infused with bluespace magic to allow infinite storage of flora."
 	id = "plantbag"

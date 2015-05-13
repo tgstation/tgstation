@@ -66,6 +66,25 @@ datum/reagent/consumable/sugar/overdose_process(var/mob/living/M as mob)
 	..()
 	return
 
+datum/reagent/consumable/crack
+	name = "crack"
+	id = "crack"
+	description = "An illegal chemical compound used as drug."
+	color = "#FFFFFF" // rgb: 255, 255, 255
+	metabolization_rate = 1 * REAGENTS_METABOLISM
+	nutriment_factor = 15 * REAGENTS_METABOLISM
+	reagent_state = SOLID
+	
+datum/reagent/consumable/crack/on_mob_life(var/mob/living/M as mob)
+	if (M.reagents.get_reagent_amount("ephedrine") < 10)
+		M.reagents.add_reagent("ephedrine", 10)
+	if (M.reagents.get_reagent_amount("coffee") < 30)
+		M.reagents.add_reagent("coffee", 15)
+	M.druggy = max(M.druggy, 15)
+	if(prob(7)) M.emote(pick("twitch","drool","moan","giggle"))
+	..()
+	return	
+
 datum/reagent/consumable/virus_food
 	name = "Virus Food"
 	id = "virusfood"

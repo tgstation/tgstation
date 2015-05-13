@@ -30,7 +30,7 @@ Note: Must be placed west/left of and R&D console to function.
 								"Bluespace Designs",
 								"Stock Parts",
 								"Service Designs",
-								"Equipement",
+								"Equipement", // god dammit tg
 								"Mining Designs",
 								"Electronics",
 								"Weapons",

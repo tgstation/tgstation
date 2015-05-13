@@ -102,7 +102,15 @@
 	w_class = 1
 	can_hold = list(/obj/item/weapon/reagent_containers/food/snacks/grown,/obj/item/seeds,/obj/item/weapon/grown)
 
-////////
+/obj/item/weapon/storage/bag/plant/holding
+    name = "plant satchel of holding"
+    desc = "A revolution in convenience, this satchel allows for infinite plant storage. It's been outfitted with anti-malfunction safety measures, and it looks dank as fuck."
+    storage_slots = INFINITY
+    max_combined_w_class = INFINITY
+    origin_tech = "bluespace=3"
+    icon = 'icons/obj/hydroponics/equipment.dmi'
+    icon_state = "psatchel_bspace"
+	can_hold = list(/obj/item/weapon/reagent_containers/food/snacks/grown,/obj/item/seeds,/obj/item/weapon/grown)
 
 /obj/item/weapon/storage/bag/plants/portaseeder
 	name = "portable seed extractor"
@@ -331,5 +339,3 @@
 /obj/item/weapon/storage/bag/tray/handle_item_insertion(obj/item/I, prevent_warning = 0)
 	overlays += image("icon" = I.icon, "icon_state" = I.icon_state, "layer" = -1)
 	..()
-
-
