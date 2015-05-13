@@ -1,3 +1,4 @@
+var/global/list/igniters = list()
 /obj/machinery/igniter
 	name = "igniter"
 	desc = "It's useful for igniting plasma."
@@ -49,6 +50,11 @@
 /obj/machinery/igniter/New()
 	..()
 	icon_state = "igniter[on]"
+	igniters += src
+
+/obj/machinery/igniter/Destroy()
+	igniters -= src
+	..()
 
 /obj/machinery/igniter/power_change()
 	if(!( stat & NOPOWER) )
@@ -92,6 +98,11 @@
 	ghost_write = 0
 
 /obj/machinery/sparker/New()
+	..()
+	igniters += src
+
+/obj/machinery/sparker/Destroy()
+	igniters -= src
 	..()
 
 /obj/machinery/sparker/power_change()
@@ -174,12 +185,12 @@
 	active = 1
 	icon_state = "launcheract"
 
-	for(var/obj/machinery/sparker/M in machines)
+	for(var/obj/machinery/sparker/M in igniters)
 		if (M.id_tag == src.id_tag)
 			spawn( 0 )
 				M.spark()
 
-	for(var/obj/machinery/igniter/M in machines)
+	for(var/obj/machinery/igniter/M in igniters)
 		if(M.id_tag == src.id_tag)
 			use_power(50)
 			M.on = !( M.on )
