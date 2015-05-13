@@ -72,6 +72,47 @@
 	attack_verb = list("slashed", "sliced", "cut", "clawed")
 	hitsound = 'sound/weapons/bladeslice.ogg'
 
+/obj/item/weapon/hatchet
+	name = "hatchet"
+	desc = "A very sharp axe blade upon a short fibremetal handle. It has a long history of chopping things, but now it is used for chopping wood."
+	icon = 'icons/obj/weapons.dmi'
+	icon_state = "hatchet"
+	flags = CONDUCT
+	force = 12.0
+	w_class = 1.0
+	throwforce = 15.0
+	throw_speed = 3
+	throw_range = 4
+	m_amt = 15000
+	origin_tech = "materials=2;combat=1"
+	attack_verb = list("chopped", "torn", "cut")
+	hitsound = 'sound/weapons/bladeslice.ogg'
+
+/obj/item/weapon/hatchet/suicide_act(mob/user)
+	user.visible_message("<span class='suicide'>[user] is chopping at \himself with the [src.name]! It looks like \he's trying to commit suicide.</span>")
+	playsound(loc, 'sound/weapons/bladeslice.ogg', 50, 1, -1)
+	return (BRUTELOSS)
+
+/obj/item/weapon/scythe
+	icon_state = "scythe0"
+	name = "scythe"
+	desc = "A sharp and curved blade on a long fibremetal handle, this tool makes it easy to reap what you sow."
+	force = 13.0
+	throwforce = 5.0
+	throw_speed = 2
+	throw_range = 3
+	w_class = 4.0
+	flags = CONDUCT | NOSHIELD
+	slot_flags = SLOT_BACK
+	origin_tech = "materials=2;combat=2"
+	attack_verb = list("chopped", "sliced", "cut", "reaped")
+	hitsound = 'sound/weapons/bladeslice.ogg'
+
+/obj/item/weapon/scythe/suicide_act(mob/user)  // maybe later i'll actually figure out how to make it behead them
+	user.visible_message("<span class='suicide'>[user] is beheading \himself with the [src.name]! It looks like \he's trying to commit suicide.</span>")
+	playsound(loc, 'sound/weapons/bladeslice.ogg', 50, 1, -1)
+	return (BRUTELOSS)
+
 // *************************************
 // Nutrient defines for hydroponics
 // *************************************

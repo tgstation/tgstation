@@ -442,7 +442,7 @@
 "mJ" = (/obj/structure/stool{pixel_y = 8},/obj/item/clothing/head/bandana{pixel_y = -10},/obj/item/clothing/glasses/sunglasses,/turf/unsimulated/beach/sand,/area/centcom/holding)
 "mK" = (/obj/structure/stool{pixel_y = 8},/turf/unsimulated/beach/sand,/area/centcom/holding)
 "mL" = (/obj/structure/rack,/obj/item/clothing/head/that,/obj/item/clothing/under/suit_jacket,/obj/item/clothing/tie/waistcoat,/turf/unsimulated/floor{icon_state = "cafeteria"; dir = 2},/area/centcom/holding)
-"mM" = (/obj/item/weapon/beach_ball,/turf/unsimulated/beach/sand,/area/centcom/holding)
+"mM" = (/obj/item/toy/beach_ball,/turf/unsimulated/beach/sand,/area/centcom/holding)
 "mN" = (/obj/structure/rack,/obj/item/weapon/storage/fancy/crayons,/turf/unsimulated/floor{icon_state = "cafeteria"; dir = 2},/area/centcom/holding)
 "mO" = (/obj/structure/window/reinforced{dir = 4},/turf/unsimulated/floor{icon_state = "cafeteria"; dir = 2},/area/centcom/holding)
 "mP" = (/turf/unsimulated/beach/coastline,/area/centcom/holding)
