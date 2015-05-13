@@ -13,16 +13,17 @@
 	throwforce = 10
 	w_class = 3
 	hitsound = 'sound/weapons/bladeslice.ogg'
-	var/charged = 1
+	var/charges = 1
 	var/spawn_type = /obj/singularity/narsie/wizard
 	var/spawn_amt = 1
 	var/activate_descriptor = "reality"
 	var/rend_desc = "You should run now."
+	var/spawn_fast = 0 //if 1, ignores checking for mobs on loc before spawning
 
 /obj/item/weapon/veilrender/attack_self(mob/user as mob)
-	if(charged)
-		new /obj/effect/rend(get_turf(usr), spawn_type, spawn_amt, rend_desc)
-		charged = 0
+	if(charges > 0)
+		new /obj/effect/rend(get_turf(usr), spawn_type, spawn_amt, rend_desc, spawn_fast)
+		charges--
 		user.visible_message("<span class='boldannounce'>[src] hums with power as [usr] deals a blow to [activate_descriptor] itself!</span>")
 	else
 		user << "<span class='danger'>The unearthly energies that powered the blade are now dormant.</span>"
@@ -37,17 +38,20 @@
 	anchored = 1.0
 	var/spawn_path = /mob/living/simple_animal/cow //defaulty cows to prevent unintentional narsies
 	var/spawn_amt_left = 20
+	var/spawn_fast = 0
 
-/obj/effect/rend/New(loc, var/spawn_type, var/spawn_amt, var/desc)
+/obj/effect/rend/New(loc, var/spawn_type, var/spawn_amt, var/desc, var/spawn_fast)
 	src.spawn_path = spawn_type
 	src.spawn_amt_left = spawn_amt
 	src.desc = desc
+	src.spawn_fast = spawn_fast
 	SSobj.processing |= src
 	return
 
 /obj/effect/rend/process()
-	if(locate(/mob) in loc)
-		return
+	if(!spawn_fast)
+		if(locate(/mob) in loc)
+			return
 	new spawn_path(loc)
 	spawn_amt_left--
 	if(spawn_amt_left <= 0)

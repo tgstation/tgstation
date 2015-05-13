@@ -238,14 +238,14 @@
 "eD" = (/obj/machinery/door/airlock/centcom{name = "Centcom Supply"; req_access_txt = "106"},/turf/unsimulated/floor{tag = "icon-brown"; icon_state = "brown"},/area/centcom/suppy)
 "eE" = (/turf/unsimulated/wall,/area/centcom/evac)
 "eF" = (/turf/unsimulated/wall,/area/centcom/control)
-"eG" = (/obj/structure/flora/ausbushes/brflowers,/turf/unsimulated/floor{icon_state = "grass1"; name = "grass"},/area/centcom/control)
+"eG" = (/obj/structure/flora/ausbushes/brflowers,/turf/unsimulated/floor/grass,/area/centcom/control)
 "eH" = (/turf/unsimulated/wall/fakeglass{icon_state = "fakewindows"; dir = 1},/area/centcom/control)
 "eI" = (/turf/unsimulated/floor{dir = 1; icon_state = "green"},/area/centcom/control)
 "eJ" = (/turf/unsimulated/floor{tag = "icon-darkred (NORTHWEST)"; icon_state = "darkred"; dir = 9},/area/centcom/evac)
 "eK" = (/turf/unsimulated/floor{tag = "icon-darkred (NORTH)"; icon_state = "darkred"; dir = 1},/area/centcom/evac)
 "eL" = (/obj/structure/table,/obj/item/weapon/storage/box/handcuffs,/turf/unsimulated/floor{tag = "icon-darkred (NORTHEAST)"; icon_state = "darkred"; dir = 5},/area/centcom/evac)
 "eM" = (/turf/unsimulated/wall,/area/centcom/ferry)
-"eN" = (/obj/structure/flora/ausbushes/palebush,/turf/unsimulated/floor{icon_state = "grass1"; name = "grass"},/area/centcom/control)
+"eN" = (/obj/structure/flora/ausbushes/palebush,/turf/unsimulated/floor/grass,/area/centcom/control)
 "eO" = (/turf/unsimulated/wall/fakeglass{icon_state = "fakewindows2"; dir = 1},/area/centcom/control)
 "eP" = (/turf/unsimulated/floor{icon_state = "floor"},/area/centcom/control)
 "eQ" = (/turf/unsimulated/wall/fakedoor{name = "Centcom Security"},/area/centcom/evac)
@@ -287,7 +287,7 @@
 "fA" = (/obj/machinery/shower{dir = 8; icon_state = "shower"; name = "emergency shower"; tag = "icon-shower (EAST)"},/turf/simulated/shuttle/plating{dir = 1; icon_state = "delivery"},/area/space)
 "fB" = (/obj/structure/table,/obj/item/weapon/clipboard,/obj/item/weapon/folder/yellow,/obj/item/weapon/pen,/obj/item/hand_labeler_refill,/turf/simulated/shuttle/plating{icon_state = "bot"},/area/space)
 "fC" = (/obj/machinery/vending/clothing,/turf/unsimulated/floor{dir = 8; icon_state = "wood"},/area/centcom/ferry)
-"fD" = (/turf/unsimulated/floor{icon_state = "grass1"; name = "grass"},/area/centcom/control)
+"fD" = (/turf/unsimulated/floor/grass,/area/centcom/control)
 "fE" = (/turf/unsimulated/floor{icon_state = "greencorner"; dir = 8},/area/centcom/control)
 "fF" = (/turf/unsimulated/floor{icon_state = "greencorner"},/area/centcom/control)
 "fG" = (/obj/structure/flora/kirbyplants,/turf/unsimulated/floor{icon_state = "green"; dir = 9},/area/centcom/evac)
@@ -939,6 +939,7 @@
 "sc" = (/obj/effect/landmark/abductor/agent{team = 2},/turf/unsimulated/floor/abductor,/area/abductor_ship)
 "sd" = (/obj/effect/landmark/abductor/scientist{team = 3},/turf/unsimulated/floor/abductor,/area/abductor_ship)
 "se" = (/obj/effect/landmark/abductor/agent{team = 3},/turf/unsimulated/floor/abductor,/area/abductor_ship)
+"sf" = (/obj/structure/computerframe,/obj/item/weapon/paper{info = "<h3>Teleporter Instruction</h3><hr><ol><li>Install circuit board, glass and wiring to complete Teleporter Control Console</li><li>Use a screwdriver, wirecutter and screwdriver again on the Teleporter Station to connect it</li><li>Set destination with Teleporter Control Computer</li><li>Activate Teleporter Hub with Teleporter Station</li></ol>"; name = "Teleporter Instructions"},/turf/simulated/shuttle/floor{icon_state = "floor4"},/area/space)
 
 (1,1,1) = {"
 aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaabacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacabababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababadaeaeaeaeaeafaeaeaeaeaeafaeaeaeaeaeafaeaeaeaeaeag
@@ -1122,7 +1123,7 @@ ababababababababababaaaaaaaaaaaaaaocodknknodocnJnJknknknknoeocofogmPmPohaaaaaaaa
 ababababababababababaaaaaaaaaaaaaaopoqknlxknormRlxknosknknotopouovowoxoyozaaaaaaababababababgGhbiuoAiKiKiKiKoBiKiKiKoCiKiKiKiKiKiuhbhbhbhdjtgGgGgGgGgGgGgGgGabababababababababababababababababababababababababababababababababnynUnVnWnWoDnWnWnXnYnAnAnAnAnAoEoFoEnAnAnAnAnAnZnXoaoaoGoaoanVobnyababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababab
 ababababababababababaaaaaaaaaaaaaaoHodknkNmRoIkNknknoJknknknoHoKoLohoMmfaaaaaaaaababababababgGhbiuoAiKiKoNoOiuoPoQoPiuoRoSiKiKiKiuhbhdhbhKjtgGababababababababababababababababababababababababababababababababababababababababnynUnVnWnWnWnWnWnXnYnAnAnAnAnAoEoToEnAnAnAnAnAnZnXoaoaoaoaoanVobnyababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababab
 ababababababababababaaaaaaaaaaaaaajMoUknknoUjMoVknlxkNknknoVjMoWoXoYoZaaaaaaaaaaababababababgGhbiuiKiKpaiuiuiupbpciKiuiuiuiKiKiKiuhbhbhchbjtgGababababababababababababababababababababababababababababababababababababababababnynUnVnWonnWonnWnXnYnAnAnAnAnAnAnAnAnAnAnAnAnAnZnXoaoooaoooanVobnyababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababab
-ababababababababababaaaaaaaaaaaaaakonopdnqnrpenrnolLpflLnqnrpenrnokkkkkkaaaaaaaaababababababgGhbiupgphpiiuhbiupjpjpjiuhbiuiOpkpliuhbhbhbhbjtgGababababababababababababababababababababababababababababababababababababababababnynUnVnWnWnWnWnWnXnYnAnAnAnAnAnAnAnAnAnAnAnAnAnZnXoaoaoaoaoanVobnyababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababab
+ababababababababababaaaaaaaaaaaaaakonopdnqnrpenrnolLpflLnqnrpenrnokkkkkkaaaaaaaaababababababgGhbiupgphpiiuhbiupjpjpjiuhbiusfpkpliuhbhbhbhbjtgGababababababababababababababababababababababababababababababababababababababababnynUnVnWnWnWnWnWnXnYnAnAnAnAnAnAnAnAnAnAnAnAnAnZnXoaoaoaoaoanVobnyababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababab
 ababababababababababaaaaaaaaaaaaaaaaaanalxaakkaakkpmmknaaaaakkaaaaaaaakkaaaaaaaaababababababgGhbiupjpjpjiuhbkqpneBpokshbiupjpjpjiuhbhbhbhbjtgGababababababababababababababababababababababababababababababababababababababababnynynyppppppppppnynznAnAnAnAnAnAnAnAnAnAnAnAnAnznyppppppppppnynynyababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababab
 ababababababababababaaaaaaaaaaaaaaaaaakkkkaapqlxaaprpsnakkaamRaaaaaaaaaaaaaaaaaaababababababgGhbkqpneBpokshbhbhbhbhbhbhbkqpneBpokshbhbhbhbjtgGababababababababababababababababababababababababababababababababababababababababababnyptptptptptnypupvpvpvpvpvpvpvpvpvpvpvpvpvpwnypxpxpxpxpxnyababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababab
 ababababababababababaaaaaaaaaaaaaaaaaaaaaaaakkkkaapylxpzaaaaaakkaaaaaaaaaaaaaaaaababababababgGhbhbhbhbhbhbhbhbhbhbhbhbhbhbhbhbhbhbhbhbhbhbjtgGababababababababababababababababababababababababababababababababababababababababababnynynynynynynypApBpBpBpBpBpCpDpEpBpBpBpBpBpAnynynynynynynyababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababab
