@@ -9,7 +9,7 @@
 
 //remove xeno from premises
 /datum/surgery_step/xenomorph_removal
-	implements = list(/obj/item/weapon/hemostat = 100, /obj/item/weapon/shovel/spade = 65, /obj/item/weapon/minihoe = 50, /obj/item/weapon/crowbar = 35)
+	implements = list(/obj/item/weapon/hemostat = 100, /obj/item/weapon/shovel/spade = 65, /obj/item/weapon/cultivator = 50, /obj/item/weapon/crowbar = 35)
 	time = 64
 
 /datum/surgery_step/xenomorph_removal/preop(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)

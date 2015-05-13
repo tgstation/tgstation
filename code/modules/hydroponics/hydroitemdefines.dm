@@ -58,12 +58,12 @@
 	viewers(user) << "<span class='suicide'>[user] is huffing the [src.name]! It looks like \he's trying to commit suicide.</span>"
 	return (TOXLOSS)
 
-/obj/item/weapon/minihoe // -- Numbers
-	name = "mini hoe"
+/obj/item/weapon/cultivator
+	name = "cultivator"
 	desc = "It's used for removing weeds or scratching your back."
 	icon = 'icons/obj/weapons.dmi'
-	icon_state = "hoe"
-	item_state = "hoe"
+	icon_state = "cultivator"
+	item_state = "cultivator"
 	flags = CONDUCT
 	force = 5.0
 	throwforce = 7.0
