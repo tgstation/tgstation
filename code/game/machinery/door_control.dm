@@ -177,7 +177,7 @@
 	active = 1
 	icon_state = "launcheract"
 
-	for(var/obj/machinery/door/poddoor/M in range(src,7))
+	for(var/obj/machinery/door/poddoor/M in poddoors)
 		if (M.id_tag == src.id_tag)
 			spawn()
 				M.open()
