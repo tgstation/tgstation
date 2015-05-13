@@ -23,7 +23,7 @@
 	 "sodiumchloride" = list("saltshakersmall", "salt shaker", "Salt. From space oceans, presumably"),
 	 "blackpepper" = list("pepermillsmall", "pepper mill", "Often used to flavor food or make people sneeze"),
 	 "cornoil" = list("oliveoil", "corn oil bottle", "A delicious oil used in cooking. Made from corn"),
-	 "sugar" = list("emptycondiment", "sugar bottle", "Tasty spacey sugar!")
+	 "sugar" = list("emptycondiment", "sugar bottle", "Tasty spacey sugar!"),
 	 "secret spice" = list("emptycondiment", "secret spice bottle", "This tastes suspicious, suspiciously good!"))
 
 /obj/item/weapon/reagent_containers/food/condiment/attack_self(mob/user as mob)

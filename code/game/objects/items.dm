@@ -49,6 +49,7 @@
 
 	var/suittoggled = 0
 	var/hooded = 0
+	var/sharp = 0 //Not sharp/Sharp/Very sharp
 
 	//So items can have custom embedd values
 	//Because customisation is king
@@ -238,7 +239,9 @@
 
 			else if(S.can_be_inserted(src))
 				S.handle_item_insertion(src)
-
+	if(istype(W, /obj/item/weapon/kitchen/whetstone))
+		if(isSharpenable(src))
+			sharpen(src, W, user)
 	return
 
 // afterattack() and attack() prototypes moved to _onclick/item_attack.dm for consistency
