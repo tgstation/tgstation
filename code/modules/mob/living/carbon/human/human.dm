@@ -35,6 +35,7 @@
 	..()
 	var/mob/M = src
 	faction |= "\ref[M]"
+	regenerate_icons()
 
 /mob/living/carbon/human/prepare_data_huds()
 	//Update med hud images...
