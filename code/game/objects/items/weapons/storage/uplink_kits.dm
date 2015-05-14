@@ -2,7 +2,7 @@
 
 /obj/item/weapon/storage/box/syndicate/New()
 	..()
-	switch (pickweight(list("bloodyspai" = 0, "stealth" = 1, "bond" = 1, "sabotage" = 1, "heist" = 1, "murder" = 1, "implant" = 1, "hacker" = 1, "singularity" = 1, "darklord" = 1, "infiltrator" = 1)))
+	switch (pickweight(list("bloodyspai" = 0, "stealth" = 1, "bond" = 1, "sabotage" = 1, "heist" = 1, "murder" = 1, "implant" = 1, "hacker" = 1, "singularity" = 1, "darklord" = 1, "infiltrator" = 1, "falsealarm" = 1)))
 		if("bloodyspai")
 			new /obj/item/clothing/under/chameleon(src)
 			new /obj/item/clothing/mask/gas/voice(src)
@@ -95,6 +95,15 @@
 			new /obj/item/clothing/suit/hooded/chaplain_hoodie(src)
 			new /obj/item/weapon/card/id/syndicate(src)
 			return
+			
+		if("falsealarm")
+			new /obj/item/clothing/suit/space/hardsuit/syndi(src)
+			new /obj/item/weapon/tank/jetpack/oxygen/harness(src)
+			new /obj/item/weapon/card/id/syndicate(src)
+			new /obj/item/weapon/grenade/syndieminibomb(src)
+			new /obj/item/weapon/c4(src)
+			var/obj/item/weapon/implanter/S = new /obj/item/weapon/implanter(src)
+			S.imp = new /obj/item/weapon/implant/explosive(S)
 
 /obj/item/weapon/storage/box/syndie_kit
 	name = "box"
