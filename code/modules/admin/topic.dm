@@ -2506,7 +2506,7 @@
 			if("whiteout")
 				feedback_inc("admin_secrets_fun_used",1)
 				feedback_add_details("admin_secrets_fun_used","WO")
-				for(var/obj/machinery/light/L in machines)
+				for(var/obj/machinery/light/L in alllights)
 					L.fix()
 				message_admins("[key_name_admin(usr)] fixed all lights", 1)
 			if("aliens")
@@ -2615,7 +2615,7 @@
 			if("eagles")//SCRAW
 				feedback_inc("admin_secrets_fun_used",1)
 				feedback_add_details("admin_secrets_fun_used","EgL")
-				for(var/obj/machinery/door/airlock/W in machines)
+				for(var/obj/machinery/door/airlock/W in all_doors)
 					if(W.z == 1 && !istype(get_area(W), /area/bridge) && !istype(get_area(W), /area/crew_quarters) && !istype(get_area(W), /area/security/prison))
 						W.req_access = list()
 				message_admins("[key_name_admin(usr)] activated Egalitarian Station mode")
@@ -2800,7 +2800,7 @@
 				var/choice = alert("Activate Cuban Pete mode? Note that newly spawned BBD will still have player damage deactivated.","Activating Bomberman Bombs Player Damage","Confirm","Cancel")
 				if(choice=="Confirm")
 					bomberman_hurt = 1
-					for(var/obj/item/weapon/bomberman/B in world)
+					for(var/obj/item/weapon/bomberman/B in bombermangear)
 						if(!B.arena)
 							B.hurt_players = 1
 				message_admins("[key_name_admin(usr)] enabled the player damage of the Bomberman Bomb Dispensers currently in the world. Cuban Pete approves.")
@@ -2811,7 +2811,7 @@
 				var/choice = alert("Activate Michael Bay mode? Note that newly spawned BBD will still have environnement damage deactivated.","Activating Bomberman Bombs Environnement Damage","Confirm","Cancel")
 				if(choice=="Confirm")
 					bomberman_destroy = 1
-					for(var/obj/item/weapon/bomberman/B in world)
+					for(var/obj/item/weapon/bomberman/B in bombermangear)
 						if(!B.arena)
 							B.destroy_environnement = 1
 				message_admins("[key_name_admin(usr)] enabled the environnement damage of the Bomberman Bomb Dispensers currently in the world. Michael Bay approves.")
@@ -2822,7 +2822,7 @@
 				var/choice = alert("Disable Cuban Pete mode.","Disable Bomberman Bombs Player Damage","Confirm","Cancel")
 				if(choice=="Confirm")
 					bomberman_hurt = 0
-					for(var/obj/item/weapon/bomberman/B in world)
+					for(var/obj/item/weapon/bomberman/B in bombermangear)
 						if(!B.arena)
 							B.hurt_players = 0
 				message_admins("[key_name_admin(usr)] disabled the player damage of the Bomberman Bomb Dispensers currently in the world.")
@@ -2833,7 +2833,7 @@
 				var/choice = alert("Disable Michael Bay mode?","Disable Bomberman Bombs Environnement Damage","Confirm","Cancel")
 				if(choice=="Confirm")
 					bomberman_destroy = 0
-					for(var/obj/item/weapon/bomberman/B in world)
+					for(var/obj/item/weapon/bomberman/B in bombermangear)
 						if(!B.arena)
 							B.destroy_environnement = 0
 				message_admins("[key_name_admin(usr)] disabled the environnement damage of the Bomberman Bomb Dispensers currently in the world.")
@@ -2955,12 +2955,12 @@
 					dat += "No-one has done anything this round!"
 				usr << browse(dat, "window=admin_log")
 			if("maint_access_brig")
-				for(var/obj/machinery/door/airlock/maintenance/M in machines)
+				for(var/obj/machinery/door/airlock/maintenance/M in all_doors)
 					if (access_maint_tunnels in M.req_access)
 						M.req_access = list(access_brig)
 				message_admins("[key_name_admin(usr)] made all maint doors brig access-only.")
 			if("maint_access_engiebrig")
-				for(var/obj/machinery/door/airlock/maintenance/M in machines)
+				for(var/obj/machinery/door/airlock/maintenance/M in all_doors)
 					if (access_maint_tunnels in M.req_access)
 						M.req_access = list()
 						M.req_one_access = list(access_brig,access_engine)

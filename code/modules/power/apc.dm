@@ -105,6 +105,12 @@
 	src.tdir = dir		// to fix Vars bug
 	dir = SOUTH
 
+	if(areaMaster.areaapc)
+		world.log << "Secondary APC detected in area: [areaMaster.name], deleting the second APC"
+		qdel(src)
+		return
+	areaMaster.set_apc(src)
+
 	if(src.tdir & 3)
 		pixel_x = 0
 		pixel_y = (src.tdir == 1 ? 24 : -24)
@@ -1265,6 +1271,7 @@ obj/machinery/power/apc/proc/autoset(var/val, var/on)
 					sleep(1)
 
 /obj/machinery/power/apc/Destroy()
+	areaMaster.remove_apc(src)
 	if(malfai && operating)
 		if (ticker.mode.config_tag == "malfunction")
 			if (STATION_Z == z)

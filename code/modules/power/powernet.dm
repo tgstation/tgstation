@@ -266,7 +266,7 @@ var/global/powernets_broke = 0
 
 	if(isarea(power_source))
 		source_area = power_source
-		power_source = source_area.get_apc()
+		power_source = source_area.areaapc
 
 	if(istype(power_source, /obj/structure/cable))
 		var/obj/structure/cable/Cable = power_source

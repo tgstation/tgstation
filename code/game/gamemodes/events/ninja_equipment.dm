@@ -1038,7 +1038,7 @@ ________________________________________________________________________________
 				var/datum/effect/effect/system/spark_spread/spark_system = new /datum/effect/effect/system/spark_spread()
 				spark_system.set_up(5, 0, A.loc)
 
-				var/obj/machinery/power/apc/B = A.loc.loc:get_apc()//Object.turf.area find APC
+				var/obj/machinery/power/apc/B = A.areaMaster.areaapc//Object.turf.area find APC
 				if(B)//If APC exists. Might not if the area is unpowered like CentCom.
 					var/datum/powernet/PN = B.terminal.powernet
 					while(G.candrain&&!maxcapacity&&!isnull(A))//And start a proc similar to drain from wire.

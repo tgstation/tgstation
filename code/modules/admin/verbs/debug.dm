@@ -458,7 +458,7 @@ Pressure: [env.return_pressure()]"}
 		if(!(A.type in areas_all))
 			areas_all.Add(A.type)
 
-	for(var/obj/machinery/power/apc/APC in machines)
+	for(var/obj/machinery/power/apc/APC in power_machines)
 		var/area/A = get_area(APC)
 		if(!(A.type in areas_with_APC))
 			areas_with_APC.Add(A.type)
@@ -468,17 +468,17 @@ Pressure: [env.return_pressure()]"}
 		if(!(A.type in areas_with_air_alarm))
 			areas_with_air_alarm.Add(A.type)
 
-	for(var/obj/machinery/requests_console/RC in machines)
+	for(var/obj/machinery/requests_console/RC in allConsoles)
 		var/area/A = get_area(RC)
 		if(!(A.type in areas_with_RC))
 			areas_with_RC.Add(A.type)
 
-	for(var/obj/machinery/light/L in machines)
+	for(var/obj/machinery/light/L in alllights)
 		var/area/A = get_area(L)
 		if(!(A.type in areas_with_light))
 			areas_with_light.Add(A.type)
 
-	for(var/obj/machinery/light_switch/LS in machines)
+	for(var/obj/machinery/light_switch/LS in world)
 		var/area/A = get_area(LS)
 		if(!(A.type in areas_with_LS))
 			areas_with_LS.Add(A.type)
@@ -488,7 +488,7 @@ Pressure: [env.return_pressure()]"}
 		if(!(A.type in areas_with_intercom))
 			areas_with_intercom.Add(A.type)
 
-	for(var/obj/machinery/camera/C in machines)
+	for(var/obj/machinery/camera/C in cameranet.cameras)
 		var/area/A = get_area(C)
 		if(!(A.type in areas_with_camera))
 			areas_with_camera.Add(A.type)
@@ -1044,7 +1044,7 @@ Pressure: [env.return_pressure()]"}
 			if(!Rad.active)
 				Rad.toggle_power()
 
-	for(var/obj/machinery/power/smes/SMES in machines)
+	for(var/obj/machinery/power/smes/SMES in power_machines)
 		if(SMES.anchored)
 			SMES.connect_to_network() // Just in case.
 			SMES.chargemode = 1
@@ -1062,7 +1062,7 @@ Pressure: [env.return_pressure()]"}
 	log_admin("[key_name(usr)] haxed the powergrid with magic SMES.")
 	message_admins("<span class='notice'>[key_name_admin(usr)] haxed the powergrid with magic SMES.</span>", 1)
 
-	for(var/obj/machinery/power/smes/SMES in machines)
+	for(var/obj/machinery/power/smes/SMES in power_machines)
 		var/turf/T=SMES.loc
 		del(SMES)
 		var/obj/machinery/power/smes/magical/magic = new(T)
@@ -1363,13 +1363,13 @@ client/proc/delete_all_bomberman()
 	if(alert(usr, "Remove all Bomberman-related objects in the game world?", "Remove Bomberman", "Yes", "No") != "Yes")
 		return
 
-	for(var/obj/structure/bomberflame/O in world)
+	for(var/obj/structure/bomberflame/O in bombermangear)
 		qdel(O)
 
-	for(var/obj/structure/bomberman/O in world)
+	for(var/obj/structure/bomberman/O in bombermangear)
 		qdel(O)
 
-	for(var/obj/item/weapon/bomberman/O in world)
+	for(var/obj/item/weapon/bomberman/O in bombermangear)
 		if(istype(O.loc, /mob/living/carbon/))
 			var/mob/living/carbon/C = O.loc
 			C.u_equip(O,1)
@@ -1377,7 +1377,7 @@ client/proc/delete_all_bomberman()
 			//O.dropped(C)
 		qdel(O)
 
-	for(var/obj/item/clothing/suit/space/bomberman/O in world)
+	for(var/obj/item/clothing/suit/space/bomberman/O in bombermangear)
 		if(istype(O.loc, /mob/living/carbon/))
 			var/mob/living/carbon/C = O.loc
 			C.u_equip(O,1)
@@ -1385,7 +1385,7 @@ client/proc/delete_all_bomberman()
 			//O.dropped(C)
 		qdel(O)
 
-	for(var/obj/item/clothing/head/helmet/space/bomberman/O in world)
+	for(var/obj/item/clothing/head/helmet/space/bomberman/O in bombermangear)
 		if(istype(O.loc, /mob/living/carbon/))
 			var/mob/living/carbon/C = O.loc
 			C.u_equip(O,1)
@@ -1393,14 +1393,14 @@ client/proc/delete_all_bomberman()
 			//O.dropped(C)
 		qdel(O)
 
-	for(var/obj/structure/softwall/O in world)
+	for(var/obj/structure/softwall/O in bombermangear)
 		qdel(O)
 
 	for(var/turf/unsimulated/wall/bomberman/T in turfs)
 		T.ChangeTurf(/turf/simulated/wall)
 
 
-	for(var/obj/structure/powerup/O in world)
+	for(var/obj/structure/powerup/O in bombermangear)
 		qdel(O)
 
 client/proc/create_bomberman_arena()
