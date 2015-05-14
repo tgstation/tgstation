@@ -20,6 +20,7 @@
 	src.modules += new /obj/item/device/lightreplacer/cyborg(src)
 //	src.modules += new /obj/item/weapon/extinguisher/foam(src)
 	src.modules += new /obj/item/weapon/pipe_dispenser(src)
+	src.sensors += "Disable"
 	src.sensors += "Night Vision"
 	src.sensors += "Meson"
 //	src.modules += new /obj/item/weapon/tile_painter(src)
