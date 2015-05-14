@@ -141,6 +141,9 @@ steam.start() -- spawns the effect
 
 /obj/effect/effect/sparks/New(var/travel_dir)
 	..()
+	var/turf/T = loc
+	if(istype(T))
+		T.hotspot_expose(1000, 100, surfaces = 1)
 
 /obj/effect/effect/sparks/proc/start(var/travel_dir, var/max_energy=3)
 	inertia_dir=travel_dir
@@ -148,14 +151,14 @@ steam.start() -- spawns the effect
 	processing_objects.Add(src)
 	var/turf/T = loc
 	if (istype(T, /turf))
-		T.hotspot_expose(1000, 100)
+		T.hotspot_expose(1000, 100, surfaces = 1)
 
 /obj/effect/effect/sparks/Destroy()
 	processing_objects.Remove(src)
 	var/turf/T = src.loc
 
 	if (istype(T, /turf))
-		T.hotspot_expose(1000, 100)
+		T.hotspot_expose(1000, 100, surfaces = 1)
 
 	..()
 
@@ -163,7 +166,7 @@ steam.start() -- spawns the effect
 	..()
 	var/turf/T = src.loc
 	if (istype(T, /turf))
-		T.hotspot_expose(1000,100)
+		T.hotspot_expose(1000,100, surfaces = 1)
 	return
 
 /obj/effect/effect/sparks/process()
