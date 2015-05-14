@@ -37,10 +37,6 @@
 	if(config.protect_assistant_from_antagonist)
 		restricted_jobs += "Assistant"
 
-	for(var/datum/mind/player in antag_candidates)
-		for(var/job in restricted_jobs)//Removing heads and such from the list
-			if(player.assigned_role == job)
-				antag_candidates -= player
 
 	if(antag_candidates.len >= 2)
 		assign_bosses()
@@ -81,12 +77,14 @@
 /datum/game_mode/gang/proc/assign_bosses()
 	var/datum/mind/boss = pick(antag_candidates)
 	A_bosses += boss
+	boss.restricted_roles = restricted_jobs
 	antag_candidates -= boss
 	boss.special_role = "[gang_name("A")] Gang (A) Boss"
 	log_game("[boss.key] has been selected as a boss for the [gang_name("A")] Gang (A)")
 
 	boss = pick(antag_candidates)
 	B_bosses += boss
+	boss.restricted_roles = restricted_jobs
 	antag_candidates -= boss
 	boss.special_role = "[gang_name("B")] Gang (B) Boss"
 	log_game("[boss.key] has been selected as a boss for the [gang_name("B")] Gang (B)")

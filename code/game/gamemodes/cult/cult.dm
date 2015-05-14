@@ -74,17 +74,13 @@
 	if(config.protect_assistant_from_antagonist)
 		restricted_jobs += "Assistant"
 
-	for(var/datum/mind/player in antag_candidates)
-		for(var/job in restricted_jobs)//Removing heads and such from the list
-			if(player.assigned_role == job)
-				antag_candidates -= player
-
 	for(var/cultists_number = 1 to recommended_enemies)
 		if(!antag_candidates.len)
 			break
 		var/datum/mind/cultist = pick(antag_candidates)
 		antag_candidates -= cultist
 		cult += cultist
+		cultist.restricted_roles = restricted_jobs
 		cultist.special_role = "Cultist"
 		log_game("[cultist.key] (ckey) has been selected as a cultist")
 
