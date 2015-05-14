@@ -46,7 +46,7 @@
 	name = "Red Soap"
 	desc = "An untrustworthy bar of soap made of strong chemical agents that dissolve blood faster."
 	id = "soapsyndie"
-	req_tech = ("plasma" = 2 "service" = 1, "illegal" = 2)
+	req_tech = ("plasma" = 2 "illegal" = 2, "service" = 1)
 	build_type = PROTOLATHE
 	materials = ("$plasma" = 2000)
 	build_path = /obj/item/weapon/soap/syndie
@@ -96,7 +96,7 @@
 	name = "Advanced Shaker"
 	desc = "A tool used to generate drinks, like the one service cyborgs use."
 	id = "cyborg shaker"
-	req_tech = list("materials" = 3 "programming" = 3, "powerstorage" = 4, "bluespace" = 4, "service" = 6)
+	req_tech = list("materials" = 7 "programming" = 3, "powerstorage" = 4, "bluespace" = 4, "service" = 8)
 	build_type = PROTOLATHE
 	materials = list("$metal" = 5000, "$glass" = 1000, "$diamond" = 2000)
 	build_path = /obj/item/weapon/reagent_containers/borghypo/borgshaker
@@ -136,7 +136,7 @@
 	name = "Muffin Dispenser"
 	desc = "A strange machine that generates unlimited muffins with the push of a button."
 	id = "muffinbutton"
-	req_tech = list("materials" = 6 "magnets" = 5, "programming" = 3, "powerstorage" = 4, "bluespace" = 6 "service" = 8)
+	req_tech = list("materials" = 6 "magnets" = 5, "programming" = 4, "powerstorage" = 4, "bluespace" = 6 "service" = 8)
 	build_type = PROTOLATHE
 	materials = list("$metal" = 10000, "$glass" = 2000, "$diamond" = 4000)
 	build_path = /obj/machinery/muffinbutton

@@ -1,0 +1,13 @@
+/*
+
+Even this list is a work in progress, but this is generally shit we at the bus all want to get done. If you think you can help with anything, let us know on IRC.
+
+1. Remove/fix revenants.
+2. Fix abductors.
+3. Remove goonchem while keeping chemical patches.
+4. Remove tablecrafting.
+5. Finish service tech tree.
+6. Give MoMMIs their second module slot back.
+7. Polish
+
+*/
