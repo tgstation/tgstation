@@ -1,0 +1,4 @@
+author: Dylanstrategie
+delete-after: True
+changes:
+  - rscdel: Removed PDA flashlight's custom color. Too close to white and blends badly in luminous areas
