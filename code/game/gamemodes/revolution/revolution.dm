@@ -55,16 +55,13 @@
 	if(config.protect_assistant_from_antagonist)
 		restricted_jobs += "Assistant"
 
-	for(var/datum/mind/player in antag_candidates)
-		for(var/job in restricted_jobs)//Removing heads and such from the list
-			if(player.assigned_role == job)
-				antag_candidates -= player
 
 	for (var/i=1 to max_headrevs)
 		if (antag_candidates.len==0)
 			break
 		var/datum/mind/lenin = pick(antag_candidates)
 		antag_candidates -= lenin
+		lenin.restricted_roles = restricted_jobs
 		head_revolutionaries += lenin
 
 	if((head_revolutionaries.len < required_enemies)||(!head_check))

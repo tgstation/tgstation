@@ -24,17 +24,13 @@
 /datum/game_mode/monkey/pre_setup()
 	carriers_to_make = max(round(num_players()/players_per_carrier, 1), 1)
 
-	for(var/datum/mind/player in antag_candidates)
-		for(var/job in restricted_jobs)//Removing robots from the list
-			if(player.assigned_role == job)
-				antag_candidates -= player
-
 	for(var/j = 0, j < carriers_to_make, j++)
 		if (!antag_candidates.len)
 			break
 		var/datum/mind/carrier = pick(antag_candidates)
 		carriers += carrier
 		carrier.special_role = "monkey"
+		carrier.restricted_roles = restricted_jobs
 		log_game("[carrier.key] (ckey) has been selected as a Jungle Fever carrier")
 		antag_candidates -= carrier
 

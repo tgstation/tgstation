@@ -8,7 +8,6 @@
 	required_players = 15
 	required_enemies = 1
 	recommended_enemies = 1
-	pre_setup_before_jobs = 1
 	enemy_minimum_age = 14
 	var/use_huds = 0
 	var/finished = 0
