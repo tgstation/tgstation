@@ -41,6 +41,10 @@
 	// 1 to pass solid objects, 2 to pass solid turfs (results in bugs, bugs and tons of bugs)
 	var/range = 0
 
+/obj/item/projectile/New()
+	permutated = list()
+	return ..()
+
 /obj/item/projectile/proc/Range()
 	if(range)
 		range--

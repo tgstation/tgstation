@@ -28,7 +28,7 @@
 	var/unwieldsound = null
 
 /obj/item/weapon/twohanded/proc/unwield(mob/living/carbon/user)
-	if(!wielded) return
+	if(!wielded || !user) return
 	wielded = 0
 	force = force_unwielded
 	name = "[initial(name)]"
