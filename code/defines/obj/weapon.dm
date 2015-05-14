@@ -196,6 +196,7 @@
 	throw_speed = 3
 	throw_range = 4
 	m_amt = 15000
+	sharp = 1
 	origin_tech = "materials=2;combat=1"
 	attack_verb = list("chopped", "torn", "cut")
 	hitsound = 'sound/weapons/bladeslice.ogg'
@@ -205,26 +206,6 @@
 	playsound(loc, 'sound/weapons/bladeslice.ogg', 50, 1, -1)
 	return (BRUTELOSS)
 
-/obj/item/weapon/shatchet
-	name = "sharpened hatchet"
-	desc = "A very sharp axe blade upon a short fibremetal handle. It has a long history of chopping things, but now it is used for chopping wood. This one looks extra sharp!"
-	icon = 'icons/obj/weapons.dmi'
-	icon_state = "hatchet"
-	flags = CONDUCT
-	force = 22.0
-	w_class = 1.0
-	throwforce = 25.0
-	throw_speed = 3
-	throw_range = 7
-	m_amt = 15000
-	origin_tech = "materials=2;combat=3"
-	attack_verb = list("chopped", "torn", "cut")
-	hitsound = 'sound/weapons/bladeslice.ogg'
-
-/obj/item/weapon/shatchet/suicide_act(mob/user)
-	user.visible_message("<span class='suicide'>[user] is chopping at \himself with the [src.name]! It looks like \he's trying to commit suicide.</span>")
-	playsound(loc, 'sound/weapons/bladeslice.ogg', 50, 1, -1)
-	return (BRUTELOSS)
 
 /obj/item/weapon/scythe
 	icon_state = "scythe0"
@@ -235,6 +216,7 @@
 	throw_speed = 2
 	throw_range = 3
 	w_class = 4.0
+	sharp = 1
 	flags = CONDUCT | NOSHIELD
 	slot_flags = SLOT_BACK
 	origin_tech = "materials=2;combat=2"
