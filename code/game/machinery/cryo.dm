@@ -88,7 +88,8 @@ var/global/list/cryo_health_indicator = list(	"full" = image("icon" = 'icons/obj
 		user << "<span class='bnotice'>The cryo cell is already occupied!</span>"
 		return
 	if(isrobot(user))
-		if(!istype(user:module, /obj/item/weapon/robot_module/medical))
+		var/mob/living/silicon/robot/robit = usr
+		if(istype(robit) && !istype(robit.module, /obj/item/weapon/robot_module/medical))
 			user << "<span class='warning'>You do not have the means to do this!</span>"
 			return
 	var/mob/living/L = O
@@ -103,11 +104,34 @@ var/global/list/cryo_health_indicator = list(	"full" = image("icon" = 'icons/obj
 			return
 	if(put_mob(L))
 		if(L == user)
-			visible_message("[user] climbs into the cryo cell.", 3)
+			visible_message("[user] climbs into \the [src].", 3)
 		else
-			visible_message("[user] puts [L.name] into the cryo cell.", 3)
+			visible_message("[user] puts [L.name] into \the [src].", 3)
 			if(user.pulling == L)
 				user.pulling = null
+
+/obj/machinery/atmospherics/unary/cryo_cell/MouseDrop(over_object, src_location, var/turf/over_location, src_control, over_control, params)
+	if(!ishuman(usr) && !isrobot(usr) || occupant == usr)
+		return
+	if(!occupant)
+		usr << "<span class='warning'>The sleeper is unoccupied!</span>"
+		return
+	if(isrobot(usr))
+		var/mob/living/silicon/robot/robit = usr
+		if(istype(robit) && !istype(robit.module, /obj/item/weapon/robot_module/medical))
+			usr << "<span class='warning'>You do not have the means to do this!</span>"
+			return
+	if(!istype(over_location) || over_location.density)
+		return
+	if(!Adjacent(over_location) || !Adjacent(usr) || !usr.Adjacent(over_location))
+		return
+	for(var/atom/movable/A in over_location.contents)
+		if(A.density)
+			if((A == src) || istype(A, /mob))
+				continue
+			return
+	visible_message("[usr] removes [occupant.name] from \the [src].", 3)
+	go_out(over_location)
 
 /obj/machinery/atmospherics/unary/cryo_cell/process()
 	..()
@@ -388,21 +412,22 @@ var/global/list/cryo_health_indicator = list(	"full" = image("icon" = 'icons/obj
 	//expel_gas.temperature = T20C // Lets expel hot gas and see if that helps people not die as they are removed
 	//loc.assume_air(expel_gas)
 
-/obj/machinery/atmospherics/unary/cryo_cell/proc/go_out()
-	if(!( occupant ))
-		return
+/obj/machinery/atmospherics/unary/cryo_cell/proc/go_out(var/exit = src.loc)
+	if(!(occupant))
+		return 0
 	//for(var/obj/O in src)
 	//	O.loc = loc
-	if (occupant.client)
-		occupant.client.eye = occupant.client.mob
-		occupant.client.perspective = MOB_PERSPECTIVE
-	occupant.loc = get_step(loc, SOUTH)	//this doesn't account for walls or anything, but i don't forsee that being a problem.
+	if(exit == loc)
+		occupant.forceMove(get_step(loc, SOUTH))	//this doesn't account for walls or anything, but i don't forsee that being a problem.
+	else
+		occupant.forceMove(exit)
+	occupant.reset_view()
 	if (occupant.bodytemperature < 261 && occupant.bodytemperature > 140) //Patch by Aranclanos to stop people from taking burn damage after being ejected
 		occupant.bodytemperature = 261
 //	occupant.metabslow = 0
 	occupant = null
 	update_icon()
-	return
+	return 1
 /obj/machinery/atmospherics/unary/cryo_cell/proc/put_mob(mob/living/carbon/M as mob)
 	if (!istype(M))
 		usr << "<span class='danger'>The cryo cell cannot handle such a lifeform!</span>"
@@ -418,13 +443,11 @@ var/global/list/cryo_health_indicator = list(	"full" = image("icon" = 'icons/obj
 	if(!node)
 		usr << "<span class='warning'>The cell is not correctly connected to its pipe network!</span>"
 		return
-	if (M.client)
-		M.client.perspective = EYE_PERSPECTIVE
-		M.client.eye = src
 	if(usr.pulling == M)
 		usr.stop_pulling()
 	M.stop_pulling()
 	M.loc = src
+	M.reset_view()
 	if(M.health > -100 && (M.health < 0 || M.sleeping))
 		M << "<span class='bnotice'>You feel a cold liquid surround you. Your skin starts to freeze up.</span>"
 	occupant = M
