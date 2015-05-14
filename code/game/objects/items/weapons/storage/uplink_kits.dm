@@ -2,7 +2,7 @@
 
 /obj/item/weapon/storage/box/syndicate/New()
 	..()
-	switch (pickweight(list("bloodyspai" = 1, "stealth" = 1, "bond" = 1, "screwed" = 1, "guns" = 1, "murder" = 1, "implant" = 1, "hacker" = 1, "lordsingulo" = 1, "darklord" = 1)))
+	switch (pickweight(list("bloodyspai" = 0, "stealth" = 1, "bond" = 1, "sabotage" = 1, "heist" = 1, "murder" = 1, "implant" = 1, "hacker" = 1, "singularity" = 1, "darklord" = 1)))
 		if("bloodyspai")
 			new /obj/item/clothing/under/chameleon(src)
 			new /obj/item/clothing/mask/gas/voice(src)
@@ -27,7 +27,7 @@
 			new /obj/item/weapon/card/id/syndicate(src)
 			return
 
-		if("screwed")
+		if("sabotage")
 			new /obj/item/device/sbeacondrop/bomb(src)
 			new /obj/item/weapon/grenade/syndieminibomb(src)
 			new /obj/item/device/powersink(src)
@@ -35,7 +35,7 @@
 			new /obj/item/clothing/head/helmet/space/syndicate/black/red(src)
 			return
 
-		if("guns")
+		if("heist")
 			new /obj/item/weapon/gun/projectile/revolver(src)
 			new /obj/item/ammo_box/a357(src)
 			new /obj/item/weapon/card/emag(src)
@@ -73,7 +73,7 @@
 			new /obj/item/weapon/aiModule/toyAI(src)
 			return
 
-		if("lordsingulo")
+		if("singularity")
 			new /obj/item/device/sbeacondrop(src)
 			new /obj/item/clothing/suit/space/syndicate/black/red(src)
 			new /obj/item/clothing/head/helmet/space/syndicate/black/red(src)
@@ -113,7 +113,7 @@
 */
 
 /obj/item/weapon/storage/box/syndie_kit/imp_explosive
-	name = "Explosive Implant (with injector)"
+	name = "boxed explosive implant (with injector)"
 
 /obj/item/weapon/storage/box/syndie_kit/imp_explosive/New()
 	var/obj/item/weapon/implanter/O = new(src)
