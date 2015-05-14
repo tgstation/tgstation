@@ -281,7 +281,7 @@ if nudgeable:
                client.close() #Throw the bum out!
                truedata = pickle.loads(data)
                if truedata["ip"][0] == "#":
-                  conn.privmsg(truedata["ip"],"PRIVATE ANNOUNCEMENT : "+str(" ".join(truedata["data"])))
+                  conn.privmsg(truedata["ip"],"AUTOMATIC ANNOUNCEMENT : "+str(" ".join(truedata["data"])))
                else:
                   conn.privmsg(channel,"AUTOMATIC ANNOUNCEMENT : "+str(truedata["ip"])+" | "+str(" ".join(truedata["data"])))
          thread.start_new_thread(nudgereceiver,())

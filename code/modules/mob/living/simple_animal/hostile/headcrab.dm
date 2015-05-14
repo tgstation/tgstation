@@ -66,7 +66,8 @@ obj/item/body_egg/changeling_egg/proc/Pop()
 		var/mob/living/carbon/monkey/M = new(affected_mob.loc)
 		if(owner)
 			owner.transfer_to(M)
-			owner.changeling.purchasedpowers += new /obj/effect/proc_holder/changeling/humanform(null)
+			if(owner.changeling)
+				owner.changeling.purchasedpowers += new /obj/effect/proc_holder/changeling/humanform(null)
 			M.key = owner.key
 		if(ishuman(affected_mob))
 			var/mob/living/carbon/human/H = affected_mob

@@ -13,9 +13,7 @@
 				priority_announce("Hostile enviroment resolved. You have 3 minutes to board the Emergency Shuttle.", null, 'sound/AI/shuttledock.ogg', "Priority")
 			return ..()
 		return 1
-	if(station_was_nuked)//Nuke went off
-		return 1
-	return 0
+	return ..()
 
 
 /datum/game_mode/blob/declare_completion()

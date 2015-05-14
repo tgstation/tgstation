@@ -463,6 +463,8 @@ var/datum/subsystem/job/SSjob
 	return 0
 
 /datum/subsystem/job/proc/RejectPlayer(var/mob/new_player/player)
+	if(player.mind && player.mind.special_role)
+		return
 	Debug("Popcap overflow Check observer located, Player: [player]")
 	player << "<b>You have failed to qualify for any job you desired.</b>"
 	unassigned -= player

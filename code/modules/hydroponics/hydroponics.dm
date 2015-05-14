@@ -649,6 +649,8 @@ obj/machinery/hydroponics/attackby(var/obj/item/O as obj, var/mob/user as mob, p
 
 	else if(istype(O, /obj/item/seeds/))
 		if(!planted)
+			if(/obj/item/seeds/kudzuseed)
+				investigate_log("had Kudzu planted in it by [user.ckey]([user]) at ([x],[y],[z])","kudzu")
 			user.unEquip(O)
 			user << "<span class='notice'>You plant [O].</span>"
 			dead = 0
@@ -690,7 +692,7 @@ obj/machinery/hydroponics/attackby(var/obj/item/O as obj, var/mob/user as mob, p
 		user << "-Nutrition level: <span class='notice'> [nutrilevel] / [maxnutri]</span>"
 		user << ""
 
-	else if(istype(O, /obj/item/weapon/minihoe))
+	else if(istype(O, /obj/item/weapon/cultivator))
 		if(weedlevel > 0)
 			user.visible_message("[user] uproots the weeds.", "<span class='notice'>You remove the weeds from [src].</span>")
 			weedlevel = 0

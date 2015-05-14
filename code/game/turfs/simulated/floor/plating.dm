@@ -48,12 +48,13 @@
 	else if(istype(C, /obj/item/stack/tile))
 		if(!broken && !burnt)
 			var/obj/item/stack/tile/W = C
+			if(!W.use(1))
+				return
 			var/turf/simulated/floor/T = ChangeTurf(W.turf_type)
 			if(istype(W,/obj/item/stack/tile/light)) //TODO: get rid of this ugly check somehow
 				var/obj/item/stack/tile/light/L = W
 				var/turf/simulated/floor/light/F = T
 				F.state = L.state
-			W.use(1)
 			playsound(src, 'sound/weapons/Genhit.ogg', 50, 1)
 		else
 			user << "<span class='warning'>This section is too damaged to support a tile! Use a welder to fix the damage.</span>"

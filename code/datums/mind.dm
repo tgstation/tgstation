@@ -1387,7 +1387,11 @@
 
 
 /datum/mind/proc/make_Gang(var/gang)
-	special_role = "[(gang=="A") ? "[gang_name("A")] Gang (A)" : "[gang_name("B")] Gang (B)"] Boss"
+	special_role = "[gang_name(gang)] Gang ([gang]) Boss"
+	if(gang=="A")
+		ticker.mode.A_bosses += src
+	else if(gang=="B")
+		ticker.mode.B_bosses += src
 	ticker.mode.update_gang_icons_added(src, gang)
 	ticker.mode.forge_gang_objectives(src, gang)
 	ticker.mode.greet_gang(src)

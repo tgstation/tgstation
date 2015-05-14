@@ -174,9 +174,9 @@
 	overlays.Cut()
 	if(welding)
 		overlays += "[initial(icon_state)]-on"
-		item_state = "welder1"
+		item_state = "[initial(item_state)]1"
 	else
-		item_state = "welder"
+		item_state = "[initial(item_state)]"
 
 /obj/item/weapon/weldingtool/update_icon()
 	if(change_icons)
@@ -392,7 +392,9 @@
 
 
 /obj/item/weapon/weldingtool/hugetank
-	name = "upgraded welding tool"
+	name = "upgraded industrial welding tool"
+	icon_state = "upindwelder"
+	item_state = "upindwelder"
 	max_fuel = 80
 	w_class = 3.0
 	m_amt = 70
@@ -401,6 +403,8 @@
 
 /obj/item/weapon/weldingtool/experimental
 	name = "experimental welding tool"
+	icon_state = "exwelder"
+	item_state = "exwelder"
 	max_fuel = 40
 	w_class = 3.0
 	m_amt = 70
@@ -412,10 +416,17 @@
 //Proc to make the experimental welder generate fuel, optimized as fuck -Sieve
 //i don't think this is actually used, yaaaaay -Pete
 /obj/item/weapon/weldingtool/experimental/proc/fuel_gen()
-	var/gen_amount = (world.time - last_gen) / 25
-	reagents += gen_amount
-	if(reagents > max_fuel)
-		reagents = max_fuel
+	if(!last_gen)
+		last_gen = 1
+		reagents.add_reagent("fuel",1)
+		spawn(10)
+			last_gen = 0
+
+/obj/item/weapon/weldingtool/experimental/process()
+	..()
+	if(reagents.total_volume < max_fuel)
+		fuel_gen()
+
 
 
 /*

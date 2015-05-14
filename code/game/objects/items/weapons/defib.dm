@@ -363,12 +363,12 @@
 				user.visible_message("<span class='warning'>[user] begins to place [src] on [M.name]'s chest.</span>", "<span class='warning'>You overcharge the paddles and begin to place them onto [M]'s chest...</span>")
 				busy = 1
 				update_icon()
-				if(do_after(user, 30))
+				if(do_after(user, 30, target = M))
 					user.visible_message("<span class='notice'>[user] places [src] on [M.name]'s chest.</span>", "<span class='warning'>You place [src] on [M.name]'s chest and begin to charge them.</span>")
 					var/turf/T = get_turf(defib)
 					playsound(get_turf(src), 'sound/machines/defib_charge.ogg', 50, 0)
 					T.audible_message("<span class='warning'>\The [defib] lets out an urgent beep and lets out a steadily rising hum...</span>")
-					if(do_after(user, 30)) //Takes longer due to overcharging
+					if(do_after(user, 30, target = M)) //Takes longer due to overcharging
 						if(M.stat == DEAD)
 							user << "<span class='warning'>[M] is dead - you can't stop their heart.</span>"
 							return
@@ -398,7 +398,7 @@
 			user.visible_message("<span class='warning'>[user] begins to place [src] on [M.name]'s chest.</span>", "<span class='warning'>You begin to place [src] on [M.name]'s chest...</span>")
 			busy = 1
 			update_icon()
-			if(do_after(user, 30)) //beginning to place the paddles on patient's chest to allow some time for people to move away to stop the process
+			if(do_after(user, 30, target = M)) //beginning to place the paddles on patient's chest to allow some time for people to move away to stop the process
 				user.visible_message("<span class='notice'>[user] places [src] on [M.name]'s chest.</span>", "<span class='warning'>You place [src] on [M.name]'s chest.</span>")
 				playsound(get_turf(src), 'sound/machines/defib_charge.ogg', 50, 0)
 				var/tplus = world.time - H.timeofdeath
@@ -406,7 +406,7 @@
 				var/tloss = 3000 //brain damage starts setting in on the patient after some time left rotting
 				var/total_burn	= 0
 				var/total_brute	= 0
-				if(do_after(user, 20)) //placed on chest and short delay to shock for dramatic effect, revive time is 5sec total
+				if(do_after(user, 20, target = M)) //placed on chest and short delay to shock for dramatic effect, revive time is 5sec total
 					for(var/obj/item/carried_item in H.contents)
 						if(istype(carried_item, /obj/item/clothing/suit/space))
 							if(!defib.combat)

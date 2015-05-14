@@ -15,6 +15,7 @@
  *		Carp plushie
  *		Foam armblade
  *		Toy big red button
+ 		Beach ball
  */
 
 
@@ -1153,3 +1154,17 @@ obj/item/toy/cards/deck/syndicate
 
 	else
 		user << "<span class='alert'>Nothing happens.</span>"
+
+/*
+ * Beach ball
+ */
+/obj/item/toy/beach_ball
+	icon = 'icons/misc/beach.dmi'
+	icon_state = "ball"
+	name = "beach ball"
+	item_state = "beachball"
+	w_class = 4 //Stops people from hiding it in their bags/pockets
+
+/obj/item/toy/beach_ball/afterattack(atom/target as mob|obj|turf|area, mob/user as mob)
+	user.drop_item()
+	src.throw_at(target, throw_range, throw_speed)

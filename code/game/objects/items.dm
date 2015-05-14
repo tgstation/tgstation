@@ -52,6 +52,8 @@
 	var/suittoggled = 0
 	var/hooded = 0
 
+	/obj/item/mouse_drag_pointer = MOUSE_ACTIVE_POINTER //the icon to indicate this object is being dragged
+
 	//So items can have custom embedd values
 	//Because customisation is king
 	var/embed_chance = EMBED_CHANCE
@@ -289,7 +291,7 @@
 	set category = "Object"
 	set name = "Pick up"
 
-	if(!usr.canmove || usr.stat || usr.restrained() || !Adjacent(usr))
+	if(usr.stat || usr.restrained() || !Adjacent(usr) || usr.stunned || usr.weakened || usr.lying)
 		return
 
 	if(ishuman(usr) || ismonkey(usr))

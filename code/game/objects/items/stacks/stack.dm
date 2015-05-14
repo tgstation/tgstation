@@ -183,6 +183,8 @@
 	return 1
 
 /obj/item/stack/proc/zero_amount()
+	if(is_cyborg)
+		return source.energy < cost
 	if (amount < 1)
 		if(usr)
 			usr.unEquip(src, 1)
