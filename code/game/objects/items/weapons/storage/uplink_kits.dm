@@ -24,6 +24,7 @@
 			new /obj/item/weapon/gun/energy/kinetic_accelerator/crossbow(src)
 			new /obj/item/weapon/pen/sleepy(src)
 			new /obj/item/device/chameleon(src)
+			new /obj/item/clothing/glasses/thermal/syndi(src)
 			return
 
 		if("bond")
@@ -33,6 +34,7 @@
 			new /obj/item/ammo_box/magazine/m10mm(src)
 			new /obj/item/clothing/under/chameleon(src)
 			new /obj/item/weapon/card/id/syndicate(src)
+			new /obj/item/device/encryptionkey/syndicate(src)
 			return
 
 		if("sabotage")
@@ -58,6 +60,7 @@
 			new /obj/item/clothing/glasses/thermal/syndi(src)
 			new /obj/item/weapon/card/emag(src)
 			new /obj/item/clothing/shoes/sneakers/syndigaloshes(src)
+			new /obj/item/weapon/c4(src)
 			return
 
 		if("implant")
@@ -102,8 +105,11 @@
 			new /obj/item/weapon/card/id/syndicate(src)
 			new /obj/item/weapon/grenade/syndieminibomb(src)
 			new /obj/item/weapon/c4(src)
+			new /obj/item/device/encryptionkey/syndicate(src)
 			var/obj/item/weapon/implanter/S = new /obj/item/weapon/implanter(src)
 			S.imp = new /obj/item/weapon/implant/explosive(S)
+			return
+		
 
 /obj/item/weapon/storage/box/syndie_kit
 	name = "box"
