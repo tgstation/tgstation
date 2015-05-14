@@ -2,7 +2,7 @@
 
 /obj/item/weapon/storage/box/syndicate/New()
 	..()
-	switch (pickweight(list("bloodyspai" = 0, "stealth" = 1, "bond" = 1, "sabotage" = 1, "heist" = 1, "murder" = 1, "implant" = 1, "hacker" = 1, "singularity" = 1, "darklord" = 1)))
+	switch (pickweight(list("bloodyspai" = 0, "stealth" = 1, "bond" = 1, "sabotage" = 1, "heist" = 1, "murder" = 1, "implant" = 1, "hacker" = 1, "singularity" = 1, "darklord" = 1, "infiltrator" = 1)))
 		if("bloodyspai")
 			new /obj/item/clothing/under/chameleon(src)
 			new /obj/item/clothing/mask/gas/voice(src)
@@ -12,6 +12,14 @@
 			new /obj/item/device/camera_bug(src)
 			return
 
+		if("infiltrator")
+			new /obj/item/device/chameleon(src)
+			new /obj/item/clothing/under/chameleon(src)
+			new /obj/item/weapon/card/id/syndicate(src)
+			new /obj/item/weapon/card/id/syndicate(src)
+			new /obj/item/weapon/card/emag(src)
+			new /obj/item/clothing/mask/gas/voice(src)
+		
 		if("stealth")
 			new /obj/item/weapon/gun/energy/kinetic_accelerator/crossbow(src)
 			new /obj/item/weapon/pen/sleepy(src)
