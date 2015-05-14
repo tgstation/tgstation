@@ -147,6 +147,8 @@
 	var/image/holder
 	var/perpname = get_face_name(get_id_name(""))
 	if(perpname)
+		if(!data_core)
+			return
 		var/datum/data/record/R = find_record("name", perpname, data_core.security)
 		if(R)
 			holder = hud_list[WANTED_HUD]

@@ -245,7 +245,7 @@
 	else
 		icon_state_string += "_s"
 
-	if(!config.mutant_colors)
+	if(!config || (config && !config.mutant_colors))
 		H.dna.mutant_color = default_color
 
 	for(var/layer in relevent_layers)
