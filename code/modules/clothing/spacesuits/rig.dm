@@ -6,27 +6,77 @@
 	item_state = "eng_helm"
 	armor = list(melee = 40, bullet = 5, laser = 20,energy = 5, bomb = 35, bio = 100, rad = 80)
 	allowed = list(/obj/item/device/flashlight)
-	var/brightness_on = 4 //luminosity when on
-	var/on = 0
-	var/no_light=0 // Disable the light on the atmos suit
-	_color = "engineering" //Determines used sprites: rig[on]-[_color] and rig[on]-[_color]2 (lying down sprite)
+	var/brightness_on = 4 //Luminosity when on. If modified, do NOT run update_brightness() directly
+	var/on = 0 //Remember to run update_brightness() when modified, otherwise disasters happen
+	var/no_light = 0 //Disables the helmet light when set to 1. Make sure to run check_light() if this is updated
+	_color = "engineering" //Determines used sprites: rig[on]-[_color]. Use update_icon() directly to update the sprite. NEEDS TO BE SET CORRECTLY FOR HELMETS
 	action_button_name = "Toggle Helmet Light"
 	heat_protection = HEAD
 	max_heat_protection_temperature = SPACE_SUIT_MAX_HEAT_PROTECTION_TEMPERATURE
 	pressure_resistance = 200 * ONE_ATMOSPHERE
 	eyeprot = 3
 
+/obj/item/clothing/head/helmet/space/rig/New()
+	..()
+	//Needed to properly handle helmets with no lights
+	check_light()
+	//Useful for helmets with special starting conditions (namely, starts lit)
+	update_brightness()
+	update_icon()
+
+/obj/item/clothing/head/helmet/space/rig/examine(mob/user)
+
+	..()
+	if(!no_light) //There is a light attached or integrated
+		user << "The helmet is mounted with an Internal Lighting System, it is [on ? "":"un"]lit."
+
+//We check no_light and update everything accordingly
+//Used to clear up the action button and shut down the light if broken
+//Minimizes snowflake coding and allows dynamically disabling the helmet's light if needed
+/obj/item/clothing/head/helmet/space/rig/proc/check_light()
+
+	if(no_light) //There's no light on the helmet
+		if(on) //The helmet light is currently on
+			on = 0 //Force it off
+			update_brightness() //Update as neccesary
+		action_button_name = null //Disable the action button (which is only used to toggle the light, in theory)
+	else //We have a light
+		action_button_name = initial(action_button_name) //Make sure we restore the action button
+
+//This thing is a hack to circumvent lighting not working in containers (a mob's hands or pockets being a container)
+//Why that is the case is a mystery for the ages, but it should work
+//Now uses ismob(loc) to cut down on the bullshit, the proc checks if it needs to deduct lighting from a mob or from the world (more properly, the tile on which it is sitting)
+//Note to coders : DO NOT EVER FIRE THIS UNLESS YOU TOGGLE A LIGHT ON OR OFF BEFOREHAND. AND NO, CERTAINLY NOT IF YOU UPDATE BRIGHTNESS_ON
+/obj/item/clothing/head/helmet/space/rig/proc/update_brightness()
+
+	if(on)
+		if(ismob(loc))
+			var/mob/carrier = loc
+			carrier.SetLuminosity(carrier.luminosity + brightness_on)
+		else if(isturf(loc))
+			SetLuminosity(brightness_on)
+	else
+		if(ismob(loc))
+			var/mob/carrier = loc
+			carrier.SetLuminosity(carrier.luminosity - brightness_on)
+		else if(isturf(loc))
+			SetLuminosity(0)
+	update_icon()
+
+/obj/item/clothing/head/helmet/space/rig/update_icon()
+
+	icon_state = "rig[on]-[_color]" //No need for complicated if trees
+
 /obj/item/clothing/head/helmet/space/rig/attack_self(mob/user)
-	if(!isturf(user.loc))
-		user << "You cannot turn the light on while in this [user.loc]" //To prevent some lighting anomalities.
-		return
 	if(no_light)
 		return
-	on = !on
-	icon_state = "rig[on]-[_color]"
+	if(!isturf(user.loc))
+		user << "<span class='warning'>You cannot turn the light on while in this [loc]</span>" //To prevent some lighting anomalities.
+		return
 
-	if(on)	user.SetLuminosity(user.luminosity + brightness_on)
-	else	user.SetLuminosity(user.luminosity - brightness_on)
+	on = !on
+	update_brightness()
+	update_icon()
 	user.update_inv_head()
 
 /obj/item/clothing/head/helmet/space/rig/pickup(mob/user)
@@ -101,6 +151,7 @@
 	species_fit = list("Vox")
 	_color = "syndi"
 	armor = list(melee = 60, bullet = 50, laser = 30,energy = 15, bomb = 35, bio = 100, rad = 60)
+	action_button_name = "Toggle Helmet Camera" //This helmet does not have a light, but we'll do as if
 	siemens_coefficient = 0.6
 	var/obj/machinery/camera/camera
 	pressure_resistance = 40 * ONE_ATMOSPHERE
@@ -235,9 +286,9 @@
 	name = "atmos hardsuit helmet"
 	icon_state = "rig0-atmos_gold"
 	item_state = "atmos_gold_helm"
-	_color = "atmos"
+	_color = "atmos_gold"
 	species_restricted = list("exclude","Vox")
-	no_light=1
+	no_light = 1
 
 /obj/item/clothing/suit/space/rig/atmos/gold
 	desc = "A special suit that protects against hazardous low pressure environments and extreme temperatures. In other words, perfect for atmos."
