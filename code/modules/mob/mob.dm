@@ -1461,3 +1461,6 @@ var/list/slot_equipment_priority = list( \
 
 mob/proc/assess_threat()
 	return 0
+
+mob/proc/walking()
+	return !(lying || flying)

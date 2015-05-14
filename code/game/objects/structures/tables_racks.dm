@@ -273,9 +273,9 @@
 	if(air_group || (height==0)) return 1
 	if(istype(mover,/obj/item/projectile))
 		return (check_cover(mover,target))
-	if(iscarbon(mover))
-		var/mob/living/carbon/C = mover
-		if(C.flying)
+	if(ismob(mover))
+		var/mob/M = mover
+		if(M.flying)
 			return 1
 	if(istype(mover) && mover.checkpass(PASSTABLE))
 		return 1

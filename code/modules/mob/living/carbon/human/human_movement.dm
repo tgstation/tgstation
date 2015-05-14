@@ -70,9 +70,6 @@
 		skate_bonus = max(skate_bonus, dispenser.speed_bonus)//if the player is carrying multiple BBD for some reason, he'll benefit from the speed bonus of the most upgraded one
 	tally = tally - skate_bonus + (6 * disease_slow)
 
-	if(flying)
-		return -1
-
 	return (tally+config.human_delay)
 
 /mob/living/carbon/human/Process_Spacemove(var/check_drift = 0)
