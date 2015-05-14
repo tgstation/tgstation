@@ -33,7 +33,7 @@
 		user.whisper(message)
 	for(var/mob/M in mob_list)
 		if(iscultist(M) || (M in dead_mob_list))
-			if(clear)
+			if(clear || !ishuman(user))
 				M << "<span class='boldannounce'><i>[(ishuman(user) ? "Acolyte" : "Construct")] [user]:</i> [message]</span>"
 			else //Emergency comms
 				M << "<span class='ghostalert'><i>Acolyte ???:</i> [message]</span>"
