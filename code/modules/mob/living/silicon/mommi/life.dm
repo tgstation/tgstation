@@ -161,9 +161,6 @@
 			src.sight |= SEE_MOBS
 			src.see_invisible = SEE_INVISIBLE_MINIMUM
 		else if (src.sight_mode & BORGNV)
-			src.sight &= ~SEE_MOBS
-			src.sight &= ~SEE_TURFS
-			src.sight &= ~SEE_OBJS
 			src.see_invisible = SEE_INVISIBLE_MINIMUM
 			src.see_in_dark = 8
 		else if (src.sight_mode & BORGMESON)

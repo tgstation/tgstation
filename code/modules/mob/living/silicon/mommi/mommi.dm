@@ -643,21 +643,6 @@ They can only use one tool at a time, they can't choose modules, and they have 1
 */
 
 
-/mob/living/silicon/robot/mommi/sensor_mode()
-	set name = "Set Sensor Augmentation"
-	var/sensor_type = input("Please select sensor type.", "Sensor Integration", null) in list("Mesons", "Night Vision" ,"Disable")
-	sight_mode = 0
-	switch(sensor_type)
-		if ("Mesons")
-			sight_mode |= BORGMESON
-			src << "<span class='notice'>Meson overlay enabled.</span>"
-		if ("Night Vision")
-			sight_mode |= BORGNV
-			src << "<span class='notice'>Night Vision enabled.</span>"
-		if ("Disable")
-			src << "Sensor augmentations disabled."
-
-
 
 /mob/living/silicon/robot/mommi/verb/toggle_statics()
 	set name = "Change Vision Filter"
