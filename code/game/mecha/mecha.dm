@@ -1105,8 +1105,24 @@
 	add_fingerprint(usr)
 	return
 
+/obj/mecha/MouseDrop(over_object, src_location, var/turf/over_location, src_control, over_control, params)
+	if(usr!=src.occupant)
+		return
+	if(!istype(over_location) || over_location.density)
+		return
+	if(!Adjacent(over_location))
+		return
+	for(var/atom/movable/A in over_location.contents)
+		if(A.density)
+			if((A == src) || istype(A, /mob))
+				continue
+			return
+	if(istype(over_location))
+		go_out(over_location)
+	add_fingerprint(usr)
 
-/obj/mecha/proc/go_out()
+
+/obj/mecha/proc/go_out(var/exit = loc)
 	if(!src.occupant) return
 	var/atom/movable/mob_container
 	if(ishuman(occupant))
@@ -1116,7 +1132,7 @@
 		mob_container = brain.container
 	else
 		return
-	if(mob_container.forceMove(src.loc))//ejecting mob container
+	if(mob_container.forceMove(exit))//ejecting mob container
 	/*
 		if(ishuman(occupant) && (return_pressure() > HAZARD_HIGH_PRESSURE))
 			use_internal_tank = 0
@@ -1145,6 +1161,8 @@
 			src.occupant.client.eye = src.occupant.client.mob
 			src.occupant.client.perspective = MOB_PERSPECTIVE
 		*/
+		for(var/obj/O in src)
+			O.loc = src.loc
 		src.occupant << browse(null, "window=exosuit")
 		if(istype(mob_container, /obj/item/device/mmi) || istype(mob_container, /obj/item/device/mmi/posibrain))
 			var/obj/item/device/mmi/mmi = mob_container
