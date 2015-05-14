@@ -184,6 +184,8 @@
 /obj/item/weapon/kitchen/whetstone/attackby(obj/item/weapon/W as obj, mob/user as mob)
 	if(isSharpenable(W))
 		sharpen(W, src, user)
+	else
+		user << "You cannot sharpen [W][(src.sharp)? "" : " further"]."
 	..()
 
 /obj/item/weapon/kitchen/whetstone/Destroy()
@@ -208,7 +210,8 @@
 	if(do_after(user, 30))
 		user.visible_message("[src] sharpens the [O]","You sharpen \the [O]", "You hear grinding")
 		O.sharp++
-		O.force += 5
+		O.force += 9
+		O.throwforce += 7
 		O.name = "sharpened " + O.name
 		qdel(W)
 		return 1

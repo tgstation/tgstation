@@ -242,6 +242,8 @@
 	if(istype(W, /obj/item/weapon/kitchen/whetstone))
 		if(isSharpenable(src))
 			sharpen(src, W, user)
+		else
+			user << "You cannot sharpen [src][(src.sharp)? "" : " further"]."
 	return
 
 // afterattack() and attack() prototypes moved to _onclick/item_attack.dm for consistency
