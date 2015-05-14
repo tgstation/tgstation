@@ -440,7 +440,7 @@ obj/structure/cable/proc/avail()
 	spawn(0)
 		if(O && O.loc)
 			var/datum/powernet/newPN = new()// creates a new powernet...
-			propagate_network(P_list[1], newPN)//... and propagates it to the other side of the cable
+			propagate_network(O, newPN)//... and propagates it to the other side of the cable
 
 	// Disconnect machines connected to nodes
 	if(d1 == 0) // if we cut a node (O-X) cable
