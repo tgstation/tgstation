@@ -173,16 +173,25 @@
 	icon = 'icons/obj/cigarettes.dmi'
 	icon_state = "matchbox"
 	item_state = "zippo"
-	storage_slots = 10
+	storage_slots = 21 //3 rows of 7 items
 	w_class = 1
 	flags = 0
+	var/empty = 0
+	var/matchtype = /obj/item/weapon/match
 	can_hold = list("/obj/item/weapon/match") // Strict type check.
 	slot_flags = SLOT_BELT
 
+/obj/item/weapon/storage/fancy/matchbox/empty
+	empty = 1
+
 /obj/item/weapon/storage/fancy/matchbox/New()
 	..()
+	if(empty)
+		update_icon() //Make it look actually empty
+		return
 	for(var/i = 1; i <= storage_slots; i++)
-		new /obj/item/weapon/match(src)
+		new matchtype(src)
+	update_icon()
 
 /obj/item/weapon/storage/fancy/matchbox/update_icon()
 
@@ -209,11 +218,10 @@
 /obj/item/weapon/storage/fancy/matchbox/strike_anywhere
 	name = "strike-anywhere matchbox"
 	desc = "A box of strike-anywhere matches. Critical element of a survival kit and equally needed by chain smokers and pyromaniacs. These ones can be lit against any surface."
+	matchtype = /obj/item/weapon/match/strike_anywhere
 
-/obj/item/weapon/storage/fancy/matchbox/strike_anywhere/New()
-	..()
-	for(var/i = 1; i <= storage_slots; i++)
-		new /obj/item/weapon/match/strike_anywhere(src)
+/obj/item/weapon/storage/fancy/matchbox/strike_anywhere/empty
+	empty = 1
 
 ////////////
 //CIG PACK//

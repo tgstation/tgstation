@@ -880,12 +880,11 @@
 	desc = "If you want to get cancer, might as well do it in style"
 	product_slogans = "Space cigs taste good like a cigarette should.;I'd rather toolbox than switch.;Smoke!;Don't believe the reports - smoke today!"
 	product_ads = "Probably not bad for you!;Don't believe the scientists!;It's good for you!;Don't quit, buy more!;Smoke!;Nicotine heaven.;Best cigarettes since 2150.;Award-winning cigs."
-	vend_delay = 34
 	icon_state = "cigs"
 	products = list(/obj/item/weapon/storage/fancy/cigarettes = 10,/obj/item/weapon/storage/fancy/matchbox = 10,/obj/item/weapon/lighter/random = 4)
 	contraband = list(/obj/item/weapon/lighter/zippo = 4)
 	premium = list(/obj/item/weapon/storage/fancy/matchbox/strike_anywhere = 10,/obj/item/clothing/mask/cigarette/cigar/havana = 2)
-	prices = list(/obj/item/weapon/storage/fancy/cigarettes = 60,/obj/item/weapon/storage/fancy/matchbox = 10,/obj/item/weapon/lighter/random = 60)
+	prices = list(/obj/item/weapon/storage/fancy/cigarettes = 20,/obj/item/weapon/storage/fancy/matchbox = 25,/obj/item/weapon/lighter/random = 25)
 
 	pack = /obj/structure/vendomatpack/cigarette
 

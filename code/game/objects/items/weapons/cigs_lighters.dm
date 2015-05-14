@@ -69,7 +69,7 @@ MATCHBOXES ARE ALSO IN FANCY.DM
 
 /obj/item/weapon/match/proc/update_brightness()
 
-	if(lit)
+	if(lit == 1) //I wish I didn't need the == 1 part, but Dreamkamer is a dumb puppy
 		processing_objects.Add(src)
 		if(ismob(loc))
 			var/mob/carrier = loc
@@ -228,6 +228,11 @@ MATCHBOXES ARE ALSO IN FANCY.DM
 		user.SetLuminosity(user.luminosity - brightness_on)
 		SetLuminosity(brightness_on)
 
+/obj/item/clothing/mask/cigarette/fire_act(datum/gas_mixture/air, exposed_temperature, exposed_volume)
+	if(lit)
+		return
+	light("<span class='danger'>The raging fire sets \the [src] alight.</span>")
+
 /obj/item/clothing/mask/cigarette/is_hot()
 	if(lit)
 		return heat_production
@@ -259,10 +264,10 @@ MATCHBOXES ARE ALSO IN FANCY.DM
 	else if(istype(W, /obj/item/weapon/melee/energy/sword))
 		var/obj/item/weapon/melee/energy/sword/S = W
 		if(S.active)
-			light("<span class='warning'>[user] raises \his [W], lighting their [name]. Holy fucking shit.</span>")
+			light("<span class='warning'>[user] raises \his [W.name], lighting \the [src]. Holy fucking shit.</span>")
 
 	else if(istype(W, /obj/item/device/assembly/igniter))
-		light("<span class='notice'>[user] fiddles with \his [W], and manages to light their [name].</span>")
+		light("<span class='notice'>[user] fiddles with \his [W.name], and manages to light their [name].</span>")
 
 	//All other items are included here, any item that is hot can light the cigarette
 	else if(W.is_hot())
@@ -275,14 +280,14 @@ MATCHBOXES ARE ALSO IN FANCY.DM
 	var/turf/location = get_turf(src)
 	if(istype(glass))	//You can dip cigarettes into beakers and beaker subtypes
 		if(glass.reagents.has_reagent("sacid") || glass.reagents.has_reagent("pacid")) //Dumping into acid, a dumb idea
-			new src.type_butt(location)
+			new type_butt(get_turf(glass))
 			processing_objects.Remove(src)
 			user << "<span class='warning'>Half of \the [src] dissolves with a nasty fizzle as you dip it into \the [glass].</span>"
 			user.drop_item(src)
 			qdel(src)
 			return
 		if(glass.reagents.has_reagent("water") && lit) //Dumping a lit cigarette into water, the result is obvious
-			new src.type_butt(location)
+			new type_butt(get_turf(glass))
 			processing_objects.Remove(src)
 			user << "<span class='warning'>\The [src] fizzles as you dip it into \the [glass].</span>"
 			user.drop_item(src)
@@ -599,6 +604,7 @@ MATCHBOXES ARE ALSO IN FANCY.DM
 	flags = null
 	siemens_coefficient = 1
 	var/brightness_on = 2 //Sensibly better than a match or a cigarette
+	var/lightersound = list('sound/items/lighter1.ogg','sound/items/lighter2.ogg')
 	heat_production = 1500
 	slot_flags = SLOT_BELT
 	attack_verb = list("burnt", "singed")
@@ -609,6 +615,8 @@ MATCHBOXES ARE ALSO IN FANCY.DM
 	desc = "The Zippo lighter. Need to light a smoke ? Zippo !"
 	icon_state = "zippo"
 	item_state = "zippo"
+	var/open_sound = list('sound/items/zippo_open.ogg')
+	var/close_sound = list('sound/items/zippo_close.ogg')
 
 /obj/item/weapon/lighter/random/New()
 	. = ..()
@@ -666,32 +674,19 @@ MATCHBOXES ARE ALSO IN FANCY.DM
 
 /obj/item/weapon/lighter/attack_self(mob/living/user)
 
-	var/busy = 0 //We need to use this to avoid wonky behavior
-	if(busy) //No spamming
-		return
+	user.delayNextAttack(5) //Hold the fuck up
 	if(!lit) //Lighting the lighter
-		user.visible_message("<span class='notice'>[user] starts trying to light \the [src].</span>", \
-		"<span class='notice'>You start trying to light \the [src].</span>")
-		busy = 1
-		if(do_after(user, 30)) //Shitty lighter, needs a few tries and a bit of time
-			busy = 0
-			if(prob(75))
-				user.visible_message("<span class='notice'>After a few attempts, [user] manages to light \the [src].</span>", \
-				"<span class='notice'>After a few attempts, you manage to light \the [src].</span>")
-			else
-				user.visible_message("<span class='notice'>After a few attempts, [user] manages to light \the [src] but burns their finger in the process and drops the lighter in sheer pain.</span>", \
-				"<span class='warning'>After a few attempts, you manage to light \the [src] but burn your finger in the process and drop the lighter in sheer pain.</span>")
-				if(ishuman(user))
-					var/mob/living/carbon/human/H = user
-					H.apply_damage(5, BURN, H.get_active_hand())
-				user.drop_item() //OUCH !
+		playsound(get_turf(src), pick(lightersound), 50, 1)
+		if(prob(80)) //Strike, but fail to light it
+			user.visible_message("<span class='notice'>[user] tries to light \the [src].</span>", \
+			"<span class='notice'>You try to light \the [src].</span>")
+			return
+		else //Success
+			user.visible_message("<span class='notice'>[user] manages to light \the [src].</span>", \
+			"<span class='notice'>You manage to light \the [src].</span>")
 			lit = !lit
 			update_brightness()
-		else //do_after failed
-			user << "<span class='warning'>Your finger slips and you fumble with \the [src]</span>"
-			busy = 0
 	else
-		user.delayNextAttack(5) //Only turning it off causes a delay. This breaks rapid text sequences without slowing mid-sequence.
 		lit = !lit
 		update_brightness()
 		user.visible_message("<span class='notice'>[user] quietly shuts off \the [src].</span>", \
@@ -701,10 +696,13 @@ MATCHBOXES ARE ALSO IN FANCY.DM
 
 	lit = !lit
 	update_brightness()
+	user.delayNextAttack(5) //Hold on there cowboy
 	if(lit) //Was lit
+		playsound(get_turf(src), pick(open_sound), 50, 1)
 		user.visible_message("<span class='rose'>Without even breaking stride, [user] flips open and lights \the [src] in one smooth movement.</span>", \
 		"<span class='rose'>Without even breaking stride, you flip open and light \the [src] in one smooth movement.</span>")
 	else //Was shut off
+		playsound(get_turf(src), pick(close_sound), 50, 1)
 		user.visible_message("<span class='rose'>You hear a quiet click as [user] shuts off \the [src] without even looking at what they're doing. Wow.</span>", \
 		"<span class='rose'>You hear a quiet click as you shut off \the [src] without even looking at what you are doing.</span>")
 
