@@ -106,6 +106,7 @@
 			new /obj/item/weapon/grenade/syndieminibomb(src)
 			new /obj/item/weapon/c4(src)
 			new /obj/item/device/encryptionkey/syndicate(src)
+			new /obj/item/weapon/storage/belt/military(src)
 			var/obj/item/weapon/implanter/S = new /obj/item/weapon/implanter(src)
 			S.imp = new /obj/item/weapon/implant/explosive(S)
 			return
