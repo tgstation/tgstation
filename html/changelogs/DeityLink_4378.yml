@@ -1,0 +1,4 @@
+author: Deity Link
+delete-after: true
+changes:
+  - rscadd: Mechas sent from Mass Drivers now break through windows, grilles, tables, and hurt people.
