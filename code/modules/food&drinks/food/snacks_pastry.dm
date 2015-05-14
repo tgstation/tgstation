@@ -71,6 +71,11 @@
 	icon_state = "berrymuffin"
 	desc = "A delicious and spongy little cake, with berries."
 
+/obj/item/weapon/reagent_containers/food/snacks/muffin/blueberry
+	name = "blueberry muffin"
+	icon_state = "berrymuffin"
+	desc = "A delicious and spongy little cake, with blueberries."
+
 /obj/item/weapon/reagent_containers/food/snacks/muffin/booberry
 	name = "booberry muffin"
 	icon_state = "berrymuffin"
