@@ -125,8 +125,9 @@ Pipelines + Other Objects -> Pipe network
 /obj/machinery/atmospherics/Deconstruct()
 	if(can_unwrench)
 		var/turf/T = loc
-		stored.loc = T
-		transfer_fingerprints_to(stored)
+		if(stored)
+			stored.loc = T
+			transfer_fingerprints_to(stored)
 
 	qdel(src)
 
@@ -173,10 +174,10 @@ Pipelines + Other Objects -> Pipe network
 		A.initialize()
 		A.addMember(src)
 	build_network()
-/*
+
 /obj/machinery/atmospherics/singularity_pull(S, current_size)
 	if(current_size >= STAGE_FIVE)
-		Deconstruct()*/
+		Deconstruct()
 
 
 //Find a connecting /obj/machinery/atmospherics in specified direction

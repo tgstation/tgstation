@@ -143,10 +143,9 @@
 
 /obj/singularity_pull(S, current_size)
 	if(anchored)
-		return
-//		if(current_size >= STAGE_FIVE)
-//			anchored = 0
-//			step_towards(src,S)
+		if(current_size >= STAGE_FIVE)
+			anchored = 0
+			step_towards(src,S)
 	else step_towards(src,S)
 
 /obj/proc/Deconstruct()
