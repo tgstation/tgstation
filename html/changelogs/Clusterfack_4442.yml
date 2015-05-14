@@ -1,5 +1,0 @@
-author: Clusterfack
-delete-after: true
-changes:
-- rscadd: Adding mousedropping yourself and sometimes others out of the following objects: Adv scanners, Sleepers, Cryo, DNA scanners, Mechs
-- tweak: Clicking on IVs when they are attached to a person to detach them, hopefully thats more intuitive
