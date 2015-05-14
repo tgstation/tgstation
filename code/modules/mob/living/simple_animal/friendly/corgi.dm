@@ -1,45 +1,4 @@
 //Corgi
-/mob/living/simple_animal/pet
-	icon = 'icons/mob/pets.dmi'
-	mob_size = MOB_SIZE_SMALL
-	var/obj/item/clothing/tie/petcollar/pcollar = null
-	var/image/collar = null
-	var/image/pettag = null
-
-/mob/living/simple_animal/pet/attackby(var/obj/item/O as obj, var/mob/user as mob, params)
-	if(istype(O, /obj/item/clothing/tie/petcollar) && !pcollar)
-		var/obj/item/clothing/tie/petcollar/P = O
-		pcollar = P
-		update_collar()
-		if(P.tagname)
-			name = P.tagname
-		user << "<span class='notice'>You put the [P] around [src]'s neck.</span>"
-		qdel(P)
-	else
-		..()
-
-/mob/living/simple_animal/pet/New()
-	..()
-	if(pcollar)
-		pcollar = new(src)
-		update_collar()
-
-/mob/living/simple_animal/pet/revive()
-	..()
-	update_collar()
-
-/mob/living/simple_animal/pet/death(gibbed)
-	..(gibbed)
-	update_collar()
-
-/mob/living/simple_animal/pet/proc/update_collar()
-	overlays.Cut()
-	collar = image('icons/mob/pets.dmi', src, "[icon_state]collar")
-	pettag = image('icons/mob/pets.dmi', src, "[icon_state]tag")
-	overlays += collar
-	overlays += pettag
-
-
 /mob/living/simple_animal/pet/corgi
 	name = "\improper corgi"
 	real_name = "corgi"
@@ -116,14 +75,6 @@
 			if(health>0 && prob(15))
 				emote("me", 1, "looks at [user] with [pick("an amused","an annoyed","a confused","a resentful", "a happy", "an excited")] expression.")
 			return
-
-	if(istype(O, /obj/item/weapon/newspaper))
-		if(!stat)
-			user.visible_message("[user] baps [name] on the nose with the rolled up [O].")
-			spawn(0)
-				for(var/i in list(1,2,4,8,4,2,1,2))
-					dir = i
-					sleep(1)
 
 	if (istype(O, /obj/item/weapon/razor))
 		if (shaved)
@@ -488,7 +439,6 @@
 
 /mob/living/simple_animal/pet/corgi/regenerate_icons()
 	overlays.Cut()
-
 	if(inventory_head)
 		var/image/head_icon
 		if(health <= 0)
@@ -498,7 +448,6 @@
 		else
 			head_icon = image('icons/mob/corgi_head.dmi', icon_state = inventory_head.icon_state)
 		overlays += head_icon
-
 	if(inventory_back)
 		var/image/back_icon
 		if(health <= 0)
@@ -508,12 +457,14 @@
 		else
 			back_icon = image('icons/mob/corgi_back.dmi', icon_state = inventory_back.icon_state)
 		overlays += back_icon
-
 	if(facehugger)
 		if(istype(src, /mob/living/simple_animal/pet/corgi/puppy))
 			overlays += image('icons/mob/mask.dmi',"facehugger_corgipuppy")
 		else
 			overlays += image('icons/mob/mask.dmi',"facehugger_corgi")
+	if(pcollar)
+		overlays += collar
+		overlays += pettag
 
 	return
 

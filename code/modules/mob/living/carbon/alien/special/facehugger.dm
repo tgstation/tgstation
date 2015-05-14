@@ -148,6 +148,7 @@ var/const/MAX_ACTIVE_TIME = 400
 		var/mob/living/simple_animal/pet/corgi/C = M
 		loc = C
 		C.facehugger = src
+		C.regenerate_icons()
 
 	GoIdle() //so it doesn't jump the people that tear it off
 
