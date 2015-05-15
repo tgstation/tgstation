@@ -432,6 +432,10 @@
 /obj/machinery/sorting_machine/process()
 	if(stat & (BROKEN | NOPOWER))
 		return
+
+	if(!input || !input.loc)//Without that the log is filled with runtime errors during supermatter cascades.
+		return
+
 	use_power(100)
 
 	var/affecting = input.loc.contents		// moved items will be all in loc
