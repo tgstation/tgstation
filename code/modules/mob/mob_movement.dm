@@ -276,15 +276,18 @@
 				move_delay += 7+config.walk_speed
 		move_delay += mob.movement_delay()
 
+		var/obj/item/weapon/grab/Findgrab = locate() in mob
+		if(Findgrab)
+			move_delay += 7
+
 		if(config.Tickcomp)
-			move_delay += ((1/(world.tick_lag))*1.3) - 1.3
+			move_delay *= (1/(2*world.tick_lag))
 
 		//We are now going to move
 		moving = 1
 		mob.delayNextMove(move_delay)
 		//Something with pulling things
-		if(locate(/obj/item/weapon/grab, mob))
-			mob.delayNextMove(7)
+		if(Findgrab)
 			var/list/L = mob.ret_grab()
 			if(istype(L, /list))
 				if(L.len == 2)
