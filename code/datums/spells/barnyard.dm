@@ -12,6 +12,7 @@
 	range = 7
 	cooldown_min = 30
 	selection_type = "range"
+	action_icon_state = "barn"
 	var/list/compatible_mobs = list(/mob/living/carbon/human,/mob/living/carbon/monkey)
 
 /obj/effect/proc_holder/spell/targeted/barnyardcurse/cast(list/targets, mob/user = usr)

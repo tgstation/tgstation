@@ -45,3 +45,4 @@
 	var/s_cooldown = 0 //Boolean, used for emotes that produce sound
 
 	var/list/image/staticOverlays = list()
+	var/list/datum/action/actions = list()

@@ -28,6 +28,10 @@
 		//Random events (vomiting etc)
 		handle_random_events()
 
+		handle_actions()
+
+		update_action_buttons()
+
 		. = 1
 
 	//Handle temperature/pressure differences between body and environment
@@ -59,7 +63,7 @@
 ///////////////
 
 //Start of a breath chain, calls breathe()
-/mob/living/carbon/proc/handle_breathing()
+/mob/living/carbon/handle_breathing()
 	if(SSmob.times_fired%4==2 || failed_last_breath)
 		breathe() //Breathe per 4 ticks, unless suffocating
 	else
@@ -248,7 +252,7 @@
 /mob/living/carbon/proc/handle_changeling()
 	return
 
-/mob/living/carbon/proc/handle_mutations_and_radiation()
+/mob/living/carbon/handle_mutations_and_radiation()
 	if(radiation)
 
 		switch(radiation)
@@ -273,7 +277,7 @@
 		radiation = Clamp(radiation, 0, 100)
 
 
-/mob/living/carbon/proc/handle_chemicals_in_body()
+/mob/living/carbon/handle_chemicals_in_body()
 	if(reagents)
 		reagents.metabolize(src)
 
@@ -296,16 +300,16 @@
 	updatehealth()
 	return
 
-/mob/living/carbon/proc/handle_blood()
+/mob/living/carbon/handle_blood()
 	return
 
-/mob/living/carbon/proc/handle_random_events()
+/mob/living/carbon/handle_random_events()
 	return
 
-/mob/living/carbon/proc/handle_environment(var/datum/gas_mixture/environment)
+/mob/living/carbon/handle_environment(var/datum/gas_mixture/environment)
 	return
 
-/mob/living/carbon/proc/handle_stomach()
+/mob/living/carbon/handle_stomach()
 	spawn(0)
 		for(var/mob/living/M in stomach_contents)
 			if(M.loc != src)
@@ -322,7 +326,7 @@
 						M.adjustBruteLoss(5)
 					nutrition += 10
 
-/mob/living/carbon/proc/handle_regular_status_updates()
+/mob/living/carbon/handle_regular_status_updates()
 
 	if(stat == DEAD)
 		eye_blind = max(eye_blind, 1)
@@ -436,7 +440,7 @@
 		CheckStamina()
 	return 1
 
-/mob/living/carbon/proc/handle_disabilities()
+/mob/living/carbon/handle_disabilities()
 	//Eyes
 	if(!(disabilities & BLIND) && !stat)	//blindness from disability or unconsciousness doesn't get better on its own
 		if(eye_blind)			//blindness, heals slowly over time
@@ -454,10 +458,9 @@
 
 
 //this handles hud updates. Calles update_vision() and handle_hud_icons()
-/mob/living/carbon/proc/handle_regular_hud_updates()
+/mob/living/carbon/handle_regular_hud_updates()
 	if(!client)	return 0
 
-	update_action_buttons()
 
 	if(damageoverlay)
 		if(damageoverlay.overlays)
@@ -541,7 +544,7 @@
 
 	return 1
 
-/mob/living/carbon/proc/handle_vision()
+/mob/living/carbon/handle_vision()
 
 	client.screen.Remove(global_hud.blurry, global_hud.druggy, global_hud.vimpaired, global_hud.darkMask)
 
@@ -558,6 +561,11 @@
 			sight &= ~SEE_MOBS
 		if(!(SEE_OBJS & permanent_sight_flags))
 			sight &= ~SEE_OBJS
+
+		if(remote_view)
+			sight |= SEE_TURFS
+			sight |= SEE_MOBS
+			sight |= SEE_OBJS
 
 		see_in_dark = (sight == SEE_TURFS|SEE_MOBS|SEE_OBJS) ? 8 : 2  //Xray flag combo
 		see_invisible = SEE_INVISIBLE_LIVING
@@ -592,10 +600,10 @@
 			if(!client.adminobs)
 				reset_view(null)
 
-/mob/living/carbon/proc/handle_hud_icons()
+/mob/living/carbon/handle_hud_icons()
 	return
 
-/mob/living/carbon/proc/handle_hud_icons_health()
+/mob/living/carbon/handle_hud_icons_health()
 	if(healths)
 		if (stat != DEAD)
 			switch(health)

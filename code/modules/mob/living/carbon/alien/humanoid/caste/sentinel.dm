@@ -14,7 +14,10 @@
 	if(name == "alien sentinel")
 		name = text("alien sentinel ([rand(1, 1000)])")
 	real_name = name
-	verbs.Add(/mob/living/carbon/alien/humanoid/proc/corrosive_acid,/mob/living/carbon/alien/humanoid/proc/neurotoxin)
+
+	AddAbility(new/obj/effect/proc_holder/alien/acid(null))
+	AddAbility(new/obj/effect/proc_holder/alien/neurotoxin(null))
+
 	..()
 
 /mob/living/carbon/alien/humanoid/sentinel/handle_hud_icons_health()

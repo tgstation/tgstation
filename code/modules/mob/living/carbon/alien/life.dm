@@ -87,6 +87,8 @@
 
 
 /mob/living/carbon/alien/handle_hud_icons()
+	update_action_buttons()
+	handle_actions()
 
 	handle_hud_icons_health()
 
