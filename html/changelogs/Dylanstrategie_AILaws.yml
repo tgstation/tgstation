@@ -1,0 +1,4 @@
+author: Dylanstrategie
+delete-after: True
+changes:
+  - tweak: Change the AI Reset Board's description to be much less vague (it only clears non-core laws, it does NOT reset the AI to Asimov)
