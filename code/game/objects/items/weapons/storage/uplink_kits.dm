@@ -110,7 +110,14 @@
 			var/obj/item/weapon/implanter/S = new /obj/item/weapon/implanter(src)
 			S.imp = new /obj/item/weapon/implant/explosive(S)
 			return
-		
+			
+		if("takbir")
+			new /obj/item/weapon/grenade/syndieminibomb(src)
+			new /obj/item/weapon/grenade/syndieminibomb(src)
+			new /obj/item/device/sbeacondrop/bomb(src)
+			var/obj/item/weapon/implanter/S = new /obj/item/weapon/implanter(src)
+			S.imp = new /obj/item/weapon/implant/explosive(S)
+			return
 
 /obj/item/weapon/storage/box/syndie_kit
 	name = "box"
