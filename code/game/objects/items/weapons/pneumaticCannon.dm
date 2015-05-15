@@ -5,7 +5,10 @@
 	force = 8 //Very heavy
 	attack_verb = list("bludgeoned", "smashed", "beaten")
 	icon = 'icons/obj/pneumaticCannon.dmi'
-	icon_state = "main"
+	icon_state = "pneumaticCannon"
+	item_state = "bulldog"
+	lefthand_file = 'icons/mob/inhands/guns_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/guns_righthand.dmi'
 	var/maxWeightClass = 20 //The max weight of items that can fit into the cannon
 	var/loadedWeightClass = 0 //The weight of items currently in the cannon
 	var/obj/item/weapon/tank/internals/tank = null //The gas tank that is drawn from to fire things
@@ -80,6 +83,7 @@
 		return
 	user.visible_message("<span class='danger'>[user] fires \the [src]!</span>", \
 			     "<span class='warning'>You fire \the [src]!</span>")
+	add_logs(user, target, "fired at", object="pneumatic cannon")
 	playsound(src.loc, 'sound/weapons/sonic_jackhammer.ogg', (50 * pressureSetting), 1)
 	for(var/obj/item/ITD in loadedItems) //Item To Discharge
 		spawn(0)
