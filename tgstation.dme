@@ -1202,6 +1202,7 @@
 #include "code\modules\mob\living\simple_animal\friendly\fox.dm"
 #include "code\modules\mob\living\simple_animal\friendly\lizard.dm"
 #include "code\modules\mob\living\simple_animal\friendly\mouse.dm"
+#include "code\modules\mob\living\simple_animal\friendly\pet.dm"
 #include "code\modules\mob\living\simple_animal\friendly\pug.dm"
 #include "code\modules\mob\living\simple_animal\friendly\drone\_drone.dm"
 #include "code\modules\mob\living\simple_animal\friendly\drone\drones_as_items.dm"
