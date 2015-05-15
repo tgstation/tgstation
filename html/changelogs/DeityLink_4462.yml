@@ -1,7 +1,0 @@
-author: Deity Link
-delete-after: true
-changes:
-  - bugfix: Fixed Supermatter Cascades not shutting down the powernet.
-  - tweak: From now on, the access requirement on Mining/Research shuttles' consoles gets revoked once the Supermatter Cascade's Centcom Command Report is received. "So you don't have to be a nerd to survive the end of the world."
-  - tweak: Random Events won't proc anymore during Endgame events (no more powernet event bringing the power back online after Nar-Sie has risen for example, even if the event started before the summon).
-  - bugfix: Fixed some shuttle tiles still showing their "hyperspace" underlay after performing a trip.
