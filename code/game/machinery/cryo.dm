@@ -64,7 +64,8 @@ var/global/list/cryo_health_indicator = list(	"full" = image("icon" = 'icons/obj
 /obj/machinery/atmospherics/unary/cryo_cell/Destroy()
 	go_out()
 	if(beaker)
-		beaker.loc = get_step(loc, SOUTH) //Beaker is carefully ejected from the wreckage of the cryotube
+		detach()
+		//beaker.loc = get_step(loc, SOUTH) //Beaker is carefully ejected from the wreckage of the cryotube
 	..()
 
 /obj/machinery/atmospherics/unary/cryo_cell/MouseDrop_T(atom/movable/O as mob|obj, mob/user as mob)
@@ -279,8 +280,7 @@ var/global/list/cryo_health_indicator = list(	"full" = image("icon" = 'icons/obj
 
 	if(href_list["ejectBeaker"])
 		if(beaker)
-			beaker.loc = get_step(loc, SOUTH)
-			beaker = null
+			detach()
 
 	if(href_list["ejectOccupant"])
 		if(!occupant || isslime(usr) || ispAI(usr))
@@ -289,6 +289,16 @@ var/global/list/cryo_health_indicator = list(	"full" = image("icon" = 'icons/obj
 
 	add_fingerprint(usr)
 	return 1 // update UIs attached to this object
+/obj/machinery/atmospherics/unary/cryo_cell/proc/detach()
+	if(beaker)
+		beaker.loc = get_step(loc, SOUTH)
+		if(istype(beaker, /obj/item/weapon/reagent_containers/glass/beaker/large/cyborg))
+			var/mob/living/silicon/robot/R = beaker:holder:loc
+			if(R.module_state_1 == beaker || R.module_state_2 == beaker || R.module_state_3 == beaker)
+				beaker.loc = R
+			else
+				beaker.loc = beaker:holder
+		beaker = null
 
 /obj/machinery/atmospherics/unary/cryo_cell/crowbarDestroy(mob/user)
 	if(on)
@@ -298,7 +308,7 @@ var/global/list/cryo_health_indicator = list(	"full" = image("icon" = 'icons/obj
 		user << "<span class='warning'>[occupant.name] is inside the [src]!</span>"
 		return
 	if(beaker) //special check to avoid destroying this
-		beaker.loc = src.loc
+		detach()
 	return ..()
 
 /obj/machinery/atmospherics/unary/cryo_cell/attackby(var/obj/item/weapon/G as obj, var/mob/user as mob)
