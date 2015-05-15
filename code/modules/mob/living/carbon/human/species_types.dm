@@ -322,19 +322,23 @@
 	specflags = list(NOBLOOD,NOBREATH,VIRUSIMMUNE)
 	var/scientist = 0 // vars to not pollute spieces list with castes
 	var/agent = 0
+	var/abductor = 0 //If they're part of the gamemode
 	var/team = 1
 
 /datum/species/abductor/handle_speech(message)
 	//Hacks
-	var/mob/living/carbon/human/user = usr
-	for(var/mob/living/carbon/human/H in mob_list)
-		if(H.dna.species.id != "abductor")
-			continue
-		else
-			var/datum/species/abductor/target_spec = H.dna.species
-			if(target_spec.team == team)
-				H << "<i><font color=#800080><b>[user.name]:</b> [message]</font></i>"
-				//return - technically you can add more aliens to a team
-	for(var/mob/M in dead_mob_list)
-		M << "<i><font color=#800080><b>[user.name]:</b> [message]</font></i>"
-	return ""
+	if (abductor)
+		var/mob/living/carbon/human/user = usr
+		for(var/mob/living/carbon/human/H in mob_list)
+			if(H.dna.species.id != "abductor")
+				continue
+			else
+				var/datum/species/abductor/target_spec = H.dna.species
+				if(target_spec.team == team)
+					H << "<i><font color=#800080><b>[user.name]:</b> [message]</font></i>"
+					//return - technically you can add more aliens to a team
+		for(var/mob/M in dead_mob_list)
+			M << "<i><font color=#800080><b>[user.name]:</b> [message]</font></i>"
+		return ""
+	else
+		return ..()

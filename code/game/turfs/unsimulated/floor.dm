@@ -3,6 +3,11 @@
 	icon = 'icons/turf/floors.dmi'
 	icon_state = "floor"
 
+
+/turf/unsimulated/floor/abductor
+	name = "alien floor"
+	icon_state = "alienpod1"
+
 /turf/unsimulated/floor/plating
 	name = "plating"
 	icon_state = "plating"

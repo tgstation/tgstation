@@ -1,38 +1,25 @@
 /obj/structure/closet/cabinet
 	name = "cabinet"
 	desc = "Old will forever be in fashion."
-	icon_state = "cabinet_closed"
-	icon_closed = "cabinet_closed"
-	icon_opened = "cabinet_open"
+	icon_state = "cabinet"
 
-/obj/structure/closet/cabinet/update_icon()
-	if(!opened)
-		icon_state = icon_closed
-	else
-		icon_state = icon_opened
 
 /obj/structure/closet/acloset
 	name = "strange closet"
 	desc = "It looks alien!"
-	icon_state = "acloset"
-	icon_closed = "acloset"
-	icon_opened = "aclosetopen"
+	icon_state = "alien"
 
 
 /obj/structure/closet/gimmick
 	name = "administrative supply closet"
 	desc = "It's a storage unit for things that have no right being here."
-	icon_state = "syndicate1"
-	icon_closed = "syndicate1"
-	icon_opened = "syndicate1open"
+	icon_state = "syndicate"
 	anchored = 0
 
 /obj/structure/closet/gimmick/russian
 	name = "russian surplus closet"
 	desc = "It's a storage unit for Russian standard-issue surplus."
-	icon_state = "syndicate1"
-	icon_closed = "syndicate1"
-	icon_opened = "syndicate1open"
+
 
 /obj/structure/closet/gimmick/russian/New()
 	..()
@@ -51,9 +38,7 @@
 /obj/structure/closet/gimmick/tacticool
 	name = "tacticool gear closet"
 	desc = "It's a storage unit for Tacticool gear."
-	icon_state = "syndicate1"
-	icon_closed = "syndicate1"
-	icon_opened = "syndicate1open"
+
 
 /obj/structure/closet/gimmick/tacticool/New()
 	..()
@@ -76,9 +61,6 @@
 /obj/structure/closet/thunderdome
 	name = "\improper Thunderdome closet"
 	desc = "Everything you need!"
-	icon_state = "syndicate"
-	icon_closed = "syndicate"
-	icon_opened = "syndicateopen"
 	anchored = 1
 
 /obj/structure/closet/thunderdome/New()
@@ -110,9 +92,6 @@
 
 /obj/structure/closet/thunderdome/tdgreen
 	name = "green-team Thunderdome closet"
-	icon_state = "syndicate1"
-	icon_closed = "syndicate1"
-	icon_opened = "syndicate1open"
 
 /obj/structure/closet/thunderdome/tdgreen/New()
 	..()

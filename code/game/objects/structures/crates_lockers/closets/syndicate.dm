@@ -2,8 +2,6 @@
 	name = "armory closet"
 	desc = "Why is this here?"
 	icon_state = "syndicate"
-	icon_closed = "syndicate"
-	icon_opened = "syndicateopen"
 
 /obj/structure/closet/syndicate/personal
 	desc = "It's a personal storage unit for operative gear."
