@@ -365,7 +365,6 @@ MATCHBOXES ARE ALSO IN FANCY.DM
 		if(ismob(loc))
 			M << "<span class='notice'>Your [name] goes out.</span>"
 			M.u_equip(src, 0)	//Un-equip it so the overlays can update
-			M.update_inv_wear_mask(0)
 		qdel(src)
 		return
 	if(location)
@@ -373,7 +372,7 @@ MATCHBOXES ARE ALSO IN FANCY.DM
 	//Oddly specific and snowflakey reagent transfer system below
 	if(reagents && reagents.total_volume)	//Check if it has any reagents at all
 		if(iscarbon(M) && (src == M.wear_mask)) //If it's in the human/monkey mouth, transfer reagents to the mob
-			if(M.reagents.has_reagent("lexorin") || M_NO_BREATH in M.mutations || istype(M, /obj/machinery/atmospherics/unary/cryo_cell))
+			if(M.reagents.has_reagent("lexorin") || M_NO_BREATH in M.mutations || istype(M.loc, /obj/machinery/atmospherics/unary/cryo))
 				reagents.remove_any(REAGENTS_METABOLISM)
 			else
 				if(prob(25)) //So it's not an instarape in case of acid
