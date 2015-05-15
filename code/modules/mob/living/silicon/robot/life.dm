@@ -58,7 +58,7 @@
 		src.stat = 1
 
 
-/mob/living/silicon/robot/proc/handle_regular_status_updates()
+/mob/living/silicon/robot/handle_regular_status_updates()
 
 	if(src.camera && !scrambledcodes)
 		if(src.stat == 2 || wires.IsCameraCut())
@@ -129,7 +129,7 @@
 
 	return 1
 
-/mob/living/silicon/robot/proc/handle_regular_hud_updates()
+/mob/living/silicon/robot/handle_regular_hud_updates()
 
 	if (src.stat == 2 || src.sight_mode & BORGXRAY)
 		src.sight |= SEE_TURFS

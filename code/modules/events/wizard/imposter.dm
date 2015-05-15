@@ -33,9 +33,9 @@
 		I.key = C.key
 
 		//Operation: Fuck off and scare people
-		I.mind.spell_list += new /obj/effect/proc_holder/spell/targeted/area_teleport/teleport(null)
-		I.mind.spell_list += new /obj/effect/proc_holder/spell/targeted/turf_teleport/blink(null)
-		I.mind.spell_list += new /obj/effect/proc_holder/spell/targeted/ethereal_jaunt(null)
+		I.mind.AddSpell(new /obj/effect/proc_holder/spell/targeted/area_teleport/teleport(null))
+		I.mind.AddSpell(new /obj/effect/proc_holder/spell/targeted/turf_teleport/blink(null))
+		I.mind.AddSpell(new /obj/effect/proc_holder/spell/targeted/ethereal_jaunt(null))
 
 		ticker.mode.traitors += I.mind
 		I.mind.special_role = "imposter"

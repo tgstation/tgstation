@@ -9,6 +9,7 @@
 	invocation_type = "shout"
 	range = 7
 	cooldown_min = 90 //15 deciseconds reduction per rank
+	action_icon_state = "magicm"
 
 	max_targets = 0
 
@@ -41,6 +42,7 @@
 	range = -1
 	include_user = 1
 	centcom_cancast = 0
+	action_icon_state = "mutate"
 
 	mutations = list(LASEREYES, HULK)
 	duration = 300
@@ -55,6 +57,7 @@
 	clothes_req = 1
 	invocation = "EI NATH"
 	invocation_type = "shout"
+	action_icon_state = "gib"
 	range = 1
 	cooldown_min = 200 //100 deciseconds reduction per rank
 
@@ -75,6 +78,7 @@
 	range = -1
 	include_user = 1
 	cooldown_min = 20 //25 deciseconds reduction per rank
+	action_icon_state = "smoke"
 
 	smoke_spread = 2
 	smoke_amt = 10
@@ -105,6 +109,7 @@
 	range = -1
 	include_user = 1
 	cooldown_min = 5 //4 deciseconds reduction per rank
+	action_icon_state = "blink"
 
 
 	smoke_spread = 1
@@ -142,6 +147,7 @@
 	invocation_type = "whisper"
 	range = 0
 	cooldown_min = 50 //12 deciseconds reduction per rank
+	action_icon_state = "shield"
 
 	summon_type = list("/obj/effect/forcefield")
 	summon_lifespan = 300
@@ -171,6 +177,7 @@
 	invocation = "none"
 	invocation_type = "none"
 	range = 0
+	action_icon_state = "artificer"
 
 	summon_type = list(/obj/structure/constructshell)
 
@@ -200,6 +207,7 @@
 	invocation_type = "whisper"
 	message = "<span class='notice'>Your eyes cry out in pain!</span>"
 	cooldown_min = 50 //12 deciseconds reduction per rank
+	action_icon_state = "blind"
 
 	starting_spells = list("/obj/effect/proc_holder/spell/targeted/inflict_handler/blind","/obj/effect/proc_holder/spell/targeted/genetic/blind")
 
@@ -223,6 +231,7 @@
 	invocation_type = "shout"
 	amt_stunned = 2//just exists to make sure the statue "catches" them
 	cooldown_min = 200 //100 deciseconds reduction per rank
+	action_icon_state = "statue"
 
 	summon_type = "/obj/structure/closet/statue"
 
@@ -237,6 +246,7 @@
 	invocation_type = "shout"
 	range = 20
 	cooldown_min = 20 //10 deciseconds reduction per rank
+	action_icon_state = "fireball"
 
 	proj_icon_state = "fireball"
 	proj_name = "a fireball"
@@ -270,6 +280,7 @@
 	cooldown_min = 150
 	selection_type = "view"
 	var/maxthrow = 5
+	action_icon_state = "repulse"
 
 /obj/effect/proc_holder/spell/aoe_turf/repulse/cast(list/targets)
 	var/mob/user = usr
@@ -279,10 +290,10 @@
 	for(var/turf/T in targets) //Done this way so things don't get thrown all around hilariously.
 		for(var/atom/movable/AM in T)
 			thrownatoms += AM
-	
+
 	for(var/atom/movable/AM in thrownatoms)
 		if(AM == user || AM.anchored) continue
-	
+
 		var/obj/effect/overlay/targeteffect	= new /obj/effect/overlay{icon='icons/effects/effects.dmi'; icon_state="shieldsparkles"; mouse_opacity=0; density = 0}()
 		AM.overlays += targeteffect
 		throwtarget = get_edge_target_turf(user, get_dir(user, get_step_away(AM, user)))

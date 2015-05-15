@@ -20,3 +20,5 @@
 
 	var/co2overloadtime = null
 	var/temperature_resistance = T0C+75
+
+	var/remote_view = 0

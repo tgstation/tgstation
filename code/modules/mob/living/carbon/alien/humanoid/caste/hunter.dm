@@ -36,13 +36,6 @@
 		else
 			healths.icon_state = "health7"
 
-
-/mob/living/carbon/alien/humanoid/hunter/handle_environment()
-	if(m_intent == "run" || resting)
-		..()
-	else
-		adjustToxLoss(-heal_rate)
-
 /mob/living/carbon/alien/humanoid/hunter/movement_delay()
 	. = -1		//hunters are sanic
 	. += ..()	//but they still need to slow down on stun
@@ -54,6 +47,7 @@
 /mob/living/carbon/alien/humanoid/hunter/proc/toggle_leap(var/message = 1)
 	leap_on_click = !leap_on_click
 	leap_icon.icon_state = "leap_[leap_on_click ? "on":"off"]"
+	update_icons()
 	if(message)
 		src << "<span class='noticealien'>You will now [leap_on_click ? "leap at":"slash at"] enemies!</span>"
 	else

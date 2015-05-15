@@ -27,11 +27,13 @@
 
 	var/heat_protection = 0.5
 	var/leaping = 0
+	var/list/obj/effect/proc_holder/alien/abilities = list()
 
 /mob/living/carbon/alien/New()
 	verbs += /mob/living/proc/mob_sleep
 	verbs += /mob/living/proc/lay_down
 	internal_organs += new /obj/item/organ/brain/alien
+	AddAbility(new/obj/effect/proc_holder/alien/nightvisiontoggle(null))
 
 	..()
 
@@ -147,6 +149,27 @@
 		stat(null, "Move Mode: [m_intent]")
 		stat(null, "Plasma Stored: [getPlasma()]/[max_plasma]")
 
+	add_abilities_to_panel()
+
+/mob/living/carbon/alien/proc/AddAbility(var/obj/effect/proc_holder/alien/A)
+	abilities.Add(A)
+	A.on_gain(src)
+	if(A.has_action)
+		if(!A.action)
+			A.action = new/datum/action/spell_action/alien
+			A.action.target = A
+			A.action.name = A.name
+			A.action.button_icon = A.action_icon
+			A.action.button_icon_state = A.action_icon_state
+			A.action.background_icon_state = A.action_background_icon_state
+		A.action.Grant(src)
+
+
+/mob/living/carbon/alien/proc/add_abilities_to_panel()
+	for(var/obj/effect/proc_holder/alien/A in abilities)
+		statpanel("[A.panel]",A.plasma_cost > 0?"([A.plasma_cost])":"",A)
+
+
 /mob/living/carbon/alien/Stun(amount)
 	if(status_flags & CANSTUN)
 		stunned = max(max(stunned,amount),0) //can't go below 0, getting a low amount of stun doesn't lower your current stun
@@ -161,21 +184,6 @@
 /mob/living/carbon/alien/cuff_break(obj/item/I, mob/living/carbon/C)
 	playsound(C, 'sound/voice/hiss5.ogg', 40, 1, 1)  //Alien roars when breaking free.
 	..()
-
-/mob/living/carbon/alien/verb/nightvisiontoggle()
-	set name = "Toggle Night Vision"
-	set category = "Alien"
-
-	if(!nightvision)
-		see_in_dark = 8
-		see_invisible = SEE_INVISIBLE_MINIMUM
-		nightvision = 1
-		hud_used.nightvisionicon.icon_state = "nightvision1"
-	else if(nightvision == 1)
-		see_in_dark = 4
-		see_invisible = 45
-		nightvision = 0
-		hud_used.nightvisionicon.icon_state = "nightvision0"
 
 /*----------------------------------------
 Proc: AddInfectionImages()

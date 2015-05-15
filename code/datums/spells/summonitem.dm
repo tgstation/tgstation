@@ -10,6 +10,7 @@
 	level_max = 1 //cannot be improved
 	cooldown_min = 100
 	include_user = 1
+	action_icon_state = "summons"
 
 	var/obj/marked_item
 
