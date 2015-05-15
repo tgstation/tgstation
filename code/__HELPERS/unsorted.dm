@@ -852,7 +852,7 @@ var/list/ignored_keys = list("loc", "locs", "parent_type", "vars", "verbs", "typ
 							X.vars[key] = L.Copy()
 						else
 							X.vars[key] = T.vars[key]
-					if(prevtype in typesof(/turf/space))//including the transit hyperspace turfs
+					if(ispath(prevtype,/turf/space))//including the transit hyperspace turfs
 						if(T.underlays.len)
 							for(var/Over in T.underlays)
 								X.underlays += T.underlays
