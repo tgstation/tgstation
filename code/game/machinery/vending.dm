@@ -529,15 +529,24 @@
 
 	//testing("..(): [href]")
 
+	var/free_vend = 0
 	if(istype(usr,/mob/living/silicon))
+		var/can_vend = 1
+		if (href_list["vend"] && src.vend_ready && !currently_vending)
+			var/idx=text2num(href_list["vend"])
+			var/cat=text2num(href_list["cat"])
+			var/datum/data/vending_product/R = GetProductByID(idx,cat)
+			if(R.price)
+				can_vend = 0//all borgs can buy free items from vending machines
 		if(istype(usr,/mob/living/silicon/robot))
 			var/mob/living/silicon/robot/R = usr
-			if(!(R.module && istype(R.module,/obj/item/weapon/robot_module/butler) ) && !isMoMMI(R))
-				usr << "<span class='warning'>The vending machine refuses to interface with you, as you are not in its target demographic!</span>"
-				return
-		else
+			if((R.module && istype(R.module,/obj/item/weapon/robot_module/butler) ) || isMoMMI(R))
+				can_vend = 1//only service borgs and MoMMI can buy costly items
+		if(!can_vend)
 			usr << "<span class='warning'>The vending machine refuses to interface with you, as you are not in its target demographic!</span>"
 			return
+		else
+			free_vend = 1//so that don't have to swipe their non-existant IDs
 
 	if(href_list["remove_coin"])
 		if(!coin)
@@ -569,6 +578,8 @@
 			return
 
 		if(R.price == null || !R.price)
+			src.vend(R, usr)
+		else if(free_vend)//for MoMMI and Service Borgs
 			src.vend(R, usr)
 		else
 			src.currently_vending = R
