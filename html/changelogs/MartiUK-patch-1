@@ -1,0 +1,6 @@
+author: MartiUK
+
+delete-after: True
+
+changes: 
+  - bugfix: "Fixed a typo when burning someone with a lighter."
