@@ -20,14 +20,14 @@
 		desc = "It seems inactive."
 		icon_state = "pizzabox_bomb"
 		timer_set = 1
-		timer = (input(user, "Set a timer, from one second to ten seconds.", "Timer", "[timer]") as num) * 10
+		timer = (input(user, "Set a timer, from three to ten seconds.", "Timer", "[timer]") as num) * 10
 		if(!user.canUseTopic(src))
 			timer_set = 0
 			name = "pizza box"
 			desc = "A box suited for pizzas."
 			icon_state = "pizzabox1"
 			return
-		timer = Clamp(timer, 10, 100)
+		timer = Clamp(timer, 30, 100)
 		icon_state = "pizzabox1"
 		user << "<span class='notice'>You set the timer to [timer / 10] before activating the payload and closing \the [src]."
 		message_admins("[key_name(usr)]<A HREF='?_src_=holder;adminmoreinfo=\ref[usr]'>?</A> has set a timer on a pizza bomb to [timer/10] seconds at <A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[loc.x];Y=[loc.y];Z=[loc.z]'>(JMP)</a>.")
