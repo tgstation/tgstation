@@ -93,3 +93,48 @@
 		new /obj/item/weapon/evidencebag(src)
 		..()
 		return
+
+
+//Takes on some of the variables of a projectile when it embeds into humans
+//Giving humans the actual bullet item is just too funky.
+/obj/item/dummy_projectile
+	name = "projectile"
+	desc = "a projectile"
+	embed_chance = 80
+	embedded_fall_chance = 0
+	embedded_pain_multiplier = 1 //Bullets are w_class 3 so 3 damage.
+	var/proj_dam_type = BRUTE
+	var/permutated_count = 0
+	var/roughtime = 0
+
+/obj/item/dummy_projectile/proc/copy_data(var/obj/item/projectile/P)
+	if(!istype(P))
+		return 0
+
+	icon = P.icon
+	icon_state = P.icon_state
+	name = P.name
+	proj_dam_type = P.damage_type
+	roughtime = world.time*10
+	if(prob(P.damage*3))
+		permutated_count = P.permutated.len
+
+
+/obj/item/dummy_projectile/examine(mob/user)
+	..()
+	var/nowtime = world.time*10
+	var/fired_time = (nowtime-roughtime*60) //in minutes
+	var/compiledText = "<span class='notice'>\The [name] appears to be a [proj_dam_type] damage projectile"
+	if(roughtime) //the others don't matter, if this is 0, bail
+		if(fired_time < 5) //less than 5 minutes ago? it's burning hot.
+			compiledText += ", it is warm, it was fired recently"
+		else
+			compiledText += ", is is cold, it wasn't fired recently"
+	if(permutated_count)
+		compiledText += ", from the damage on it, it appears to have gone through [permutated_count] objects..."
+	compiledText += "</span>"
+	user << compiledText
+
+
+/obj/item/dummy_projectile/embed_removal_act()
+	embed_chance = 0 //it's been used.

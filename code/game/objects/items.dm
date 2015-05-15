@@ -442,7 +442,7 @@
 	if(archivedSpeed >= EMBED_THROWSPEED_THRESHOLD)
 		if(istype(A, /mob/living/carbon/human))
 			var/mob/living/carbon/human/H = A
-			if(embed_in(H,1,0))
+			if(embed_in(H,message = 1,forced = 0))
 				return
 
 

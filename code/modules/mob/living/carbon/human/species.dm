@@ -881,7 +881,7 @@
 				bloody = 1
 				var/turf/location = H.loc
 				if(istype(location, /turf/simulated))
-					location.add_blood(H)
+					location.add_blood(H,turn(user.dir,180))
 				if(get_dist(H, H) <= 1)	//people with TK won't get smeared with blood
 					if(H.wear_suit)
 						H.wear_suit.add_blood(H)

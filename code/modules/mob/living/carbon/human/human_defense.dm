@@ -65,6 +65,16 @@ emp_act
 	if(check_shields(P.damage, "the [P.name]"))
 		P.on_hit(src, 100, def_zone)
 		return 2
+
+
+	if(P.damage_type == BRUTE && P.flag == "bullet")//fireballs do not embed... yet
+		var/obj/item/dummy_projectile/DP = new /obj/item/dummy_projectile(P.current)
+		DP.copy_data(P)
+		DP.add_blood(src)
+		if(!DP.embed_in(src,def_zone,1,0))
+			qdel(DP)
+		//No return because we still need the ..() to do the actual bullet damage
+
 	return (..(P , def_zone))
 
 /mob/living/carbon/human/proc/check_reflect(var/def_zone) //Reflection checks for anything in your l_hand, r_hand, or wear_suit based on the reflection chance of the object
@@ -160,7 +170,7 @@ emp_act
 					bloody = 1
 					var/turf/location = loc
 					if(istype(location, /turf/simulated))
-						location.add_blood(src)
+						location.add_blood(src,turn(user.dir,180))//splatter the blood away from the impact
 					if(ishuman(user))
 						var/mob/living/carbon/human/H = user
 						if(get_dist(H, src) <= 1)	//people with TK won't get smeared with blood
