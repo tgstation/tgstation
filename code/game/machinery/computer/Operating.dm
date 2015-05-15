@@ -104,12 +104,11 @@
 	icon_state = initial(icon_state)
 	// Broken
 	if(stat & BROKEN)
-		icon_state += "b"
+		icon_state = "[initial(icon_state)]b"
 
 	// Powered
 	else if(stat & NOPOWER)
-		icon_state = initial(icon_state)
-		icon_state += "0"
+		icon_state = "[initial(icon_state)]0"
 
 	else
 		updatemodules()
