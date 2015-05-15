@@ -308,7 +308,7 @@
 	name = "DNA Modifier Access Console"
 	desc = "Scand DNA."
 	icon = 'icons/obj/computer.dmi'
-	icon_state = "scanner"
+	icon_state = "dna"
 	density = 1
 
 	anchored = 1

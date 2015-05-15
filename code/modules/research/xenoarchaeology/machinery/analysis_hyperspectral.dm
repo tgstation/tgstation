@@ -8,9 +8,11 @@ obj/machinery/anomaly/hyperspectral/process()
 	..()
 	if(scan_process)
 		icon_state = "scanner_active"
-	else if(prob(10))
+	else
 		icon_state = "scanner"
-		flick(src, "scanner_active")
+		if(prob(10))
+			flick(src, "scanner_active")
+
 
 obj/machinery/anomaly/hyperspectral/ScanResults()
 	var/results = "The scan was inconclusive. Check sample integrity and carrier consistency."

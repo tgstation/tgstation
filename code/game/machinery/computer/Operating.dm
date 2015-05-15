@@ -87,7 +87,6 @@
 	user.set_machine(src)
 	onclose(user, "op")
 
-
 /obj/machinery/computer/operating/Topic(href, href_list)
 	if(..())
 		return 1
@@ -95,7 +94,28 @@
 		usr.set_machine(src)
 	return
 
-
 /obj/machinery/computer/operating/process()
 	if(..())
 		src.updateDialog()
+	update_icon()
+
+/obj/machinery/computer/operating/update_icon()
+	..()
+	icon_state = initial(icon_state)
+	// Broken
+	if(stat & BROKEN)
+		icon_state += "b"
+
+	// Powered
+	else if(stat & NOPOWER)
+		icon_state = initial(icon_state)
+		icon_state += "0"
+
+	else
+		updatemodules()
+		if(!isnull(src.optable) && (src.optable.check_victim()))
+			src.victim = src.optable.victim
+			if(victim.stat == DEAD)
+				icon_state = "operating-dead"
+			else
+				icon_state = "operating-living"
