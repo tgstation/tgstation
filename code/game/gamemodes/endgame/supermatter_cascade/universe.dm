@@ -72,8 +72,18 @@ There's been a galaxy-wide electromagnetic pulse.  All of our systems are heavil
 
 You have five minutes before the universe collapses. Good l\[\[###!!!-
 
-AUTOMATED ALERT: Link to [command_name()] lost."}
+AUTOMATED ALERT: Link to [command_name()] lost.
+
+The access requirements on the Asteroid Shuttles' consoles have now been revoked.
+"}
 		command_alert(txt,"SUPERMATTER CASCADE DETECTED")
+
+		for(var/obj/machinery/computer/research_shuttle/C in machines)
+			C.req_access = null
+
+		for(var/obj/machinery/computer/mining_shuttle/C in machines)
+			C.req_access = null
+
 		sleep(5 MINUTES)
 		ticker.declare_completion()
 		ticker.station_explosion_cinematic(0,null) // TODO: Custom cinematic
@@ -141,7 +151,7 @@ AUTOMATED ALERT: Link to [command_name()] lost."}
 			alm.ex_act(2)
 
 /datum/universal_state/supermatter_cascade/proc/APCSet()
-	for (var/obj/machinery/power/apc/APC in machines)
+	for (var/obj/machinery/power/apc/APC in power_machines)
 		if (!(APC.stat & BROKEN) && !APC.is_critical)
 			APC.chargemode = 0
 			if(APC.cell)
