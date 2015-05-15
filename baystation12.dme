@@ -1076,6 +1076,7 @@
 #include "code\modules\migrations\SS13\003-add-multi-option-polls.dm"
 #include "code\modules\migrations\SS13\004-add-ip-to-sessions.dm"
 #include "code\modules\migrations\SS13\005-modernize-library.dm"
+#include "code\modules\migrations\SS13\006-sqlite-preferences.dm"
 #include "code\modules\migrations\SS13\_base.dm"
 #include "code\modules\mining\abandonedcrates.dm"
 #include "code\modules\mining\debug_shit.dm"
