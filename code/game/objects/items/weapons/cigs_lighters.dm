@@ -605,6 +605,8 @@ MATCHBOXES ARE ALSO IN FANCY.DM
 	siemens_coefficient = 1
 	var/brightness_on = 2 //Sensibly better than a match or a cigarette
 	var/lightersound = list('sound/items/lighter1.ogg','sound/items/lighter2.ogg')
+	var/fuel = 20
+	var/fueltime
 	heat_production = 1500
 	slot_flags = SLOT_BELT
 	attack_verb = list("burnt", "singed")
@@ -617,6 +619,7 @@ MATCHBOXES ARE ALSO IN FANCY.DM
 	item_state = "zippo"
 	var/open_sound = list('sound/items/zippo_open.ogg')
 	var/close_sound = list('sound/items/zippo_close.ogg')
+	fuel = 100 //Zippos da bes
 
 /obj/item/weapon/lighter/random/New()
 	. = ..()
@@ -672,36 +675,52 @@ MATCHBOXES ARE ALSO IN FANCY.DM
 		user.SetLuminosity(user.luminosity - brightness_on)
 		SetLuminosity(brightness_on)
 
+/obj/item/weapon/lighter/afterattack(obj/O, mob/user, proximity)
+	if(!proximity) return 0
+	if (istype(O, /obj/structure/reagent_dispensers/fueltank))
+		fuel += O.reagents.remove_any(initial(fuel)-fuel)
+		user << "<span class='notice'>[src] refueled</span>"
+		playsound(get_turf(src), 'sound/effects/refill.ogg', 50, 1, -6)
+		return
 /obj/item/weapon/lighter/attack_self(mob/living/user)
 
-	user.delayNextAttack(5) //Hold the fuck up
+	if(!fuel)
+		user.visible_message("<span class='rose'>[user] attempts to light \the [src] to no avail.</span>","<span class='notice'>\The [src] doesn't have enough fuel to ignite</span>")
+		return
 	if(!lit) //Lighting the lighter
 		playsound(get_turf(src), pick(lightersound), 50, 1)
-		if(prob(80)) //Strike, but fail to light it
-			user.visible_message("<span class='notice'>[user] tries to light \the [src].</span>", \
-			"<span class='notice'>You try to light \the [src].</span>")
-			return
-		else //Success
+		if(fuel >= initial(fuel)-5 || prob(100 * (fuel/initial(fuel)))) //Strike, but fail to light it
 			user.visible_message("<span class='notice'>[user] manages to light \the [src].</span>", \
 			"<span class='notice'>You manage to light \the [src].</span>")
 			lit = !lit
 			update_brightness()
+			--fuel
+			return
+		else //Failure
+			user.visible_message("<span class='notice'>[user] tries to light \the [src].</span>", \
+			"<span class='notice'>You try to light \the [src].</span>")
+			return
 	else
+		fueltime = null
 		lit = !lit
 		update_brightness()
 		user.visible_message("<span class='notice'>[user] quietly shuts off \the [src].</span>", \
 		"<span class='notice'>You quietly shut off \the [src].</span>")
 
 /obj/item/weapon/lighter/zippo/attack_self(mob/living/user)
-
+	user.delayNextAttack(5) //Hold on there cowboy
+	if(!fuel)
+		user.visible_message("<span class='rose'>[user] attempts to light \the [src] to no avail.</span>","<span class='notice'>\The [src] doesn't have enough fuel to ignite</span>")
+		return
 	lit = !lit
 	update_brightness()
-	user.delayNextAttack(5) //Hold on there cowboy
 	if(lit) //Was lit
 		playsound(get_turf(src), pick(open_sound), 50, 1)
 		user.visible_message("<span class='rose'>Without even breaking stride, [user] flips open and lights \the [src] in one smooth movement.</span>", \
 		"<span class='rose'>Without even breaking stride, you flip open and light \the [src] in one smooth movement.</span>")
+		--fuel
 	else //Was shut off
+		fueltime = null
 		playsound(get_turf(src), pick(close_sound), 50, 1)
 		user.visible_message("<span class='rose'>You hear a quiet click as [user] shuts off \the [src] without even looking at what they're doing. Wow.</span>", \
 		"<span class='rose'>You hear a quiet click as you shut off \the [src] without even looking at what you are doing.</span>")
@@ -728,4 +747,14 @@ MATCHBOXES ARE ALSO IN FANCY.DM
 	var/turf/location = get_turf(src)
 	if(location)
 		location.hotspot_expose(700, 5, surfaces = istype(loc, /turf))
+	if(!fueltime)
+		fueltime = world.time + 100
+	if(world.time > fueltime)
+		fueltime = world.time + 100
+		--fuel
+		if(!fuel)
+			lit = 0
+			update_brightness()
+			visible_message("<span class='warning'>Without warning \the [src] suddenly shuts off</span>")
+			fueltime = null
 	return
