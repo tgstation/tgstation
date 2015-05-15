@@ -55,17 +55,17 @@ MATCHBOXES ARE ALSO IN FANCY.DM
 			name = "lit [initial(name)]"
 			item_state = "[initial(item_state)]on"
 			icon_state = "[initial(icon_state)]_lit"
-			damtype = "fire"
+			damtype = BURN
 		if(0)
 			name = "[initial(name)]"
 			item_state = "[initial(item_state)]off"
 			icon_state = "[initial(icon_state)]_unlit"
-			damtype = "brute"
+			damtype = BRUTE
 		if(-1)
 			name = "burnt [initial(name)]"
 			item_state = "[initial(item_state)]off"
 			icon_state = "[initial(icon_state)]_burnt"
-			damtype = "brute"
+			damtype = BRUTE
 
 /obj/item/weapon/match/proc/update_brightness()
 
@@ -193,12 +193,12 @@ MATCHBOXES ARE ALSO IN FANCY.DM
 			name = "lit [initial(name)]"
 			item_state = "[initial(item_state)]on"
 			icon_state = "[initial(icon_state)]on"
-			damtype = "fire"
+			damtype = BURN
 		if(0)
 			name = "[initial(name)]"
 			item_state = "[initial(item_state)]off"
 			icon_state = "[initial(icon_state)]off"
-			damtype = "brute"
+			damtype = BRUTE
 
 /obj/item/clothing/mask/cigarette/proc/update_brightness()
 
@@ -279,7 +279,6 @@ MATCHBOXES ARE ALSO IN FANCY.DM
 
 /obj/item/clothing/mask/cigarette/afterattack(obj/item/weapon/reagent_containers/glass/glass, mob/user as mob)
 	..()
-	var/turf/location = get_turf(src)
 	if(istype(glass))	//You can dip cigarettes into beakers and beaker subtypes
 		if(glass.reagents.has_reagent("sacid") || glass.reagents.has_reagent("pacid")) //Dumping into acid, a dumb idea
 			new type_butt(get_turf(glass))
@@ -372,7 +371,7 @@ MATCHBOXES ARE ALSO IN FANCY.DM
 	//Oddly specific and snowflakey reagent transfer system below
 	if(reagents && reagents.total_volume)	//Check if it has any reagents at all
 		if(iscarbon(M) && (src == M.wear_mask)) //If it's in the human/monkey mouth, transfer reagents to the mob
-			if(M.reagents.has_reagent("lexorin") || M_NO_BREATH in M.mutations || istype(M.loc, /obj/machinery/atmospherics/unary/cryo))
+			if(M.reagents.has_reagent("lexorin") || M_NO_BREATH in M.mutations || istype(M.loc, /obj/machinery/atmospherics/unary/cryo_cell))
 				reagents.remove_any(REAGENTS_METABOLISM)
 			else
 				if(prob(25)) //So it's not an instarape in case of acid
@@ -540,7 +539,7 @@ MATCHBOXES ARE ALSO IN FANCY.DM
 /obj/item/clothing/mask/cigarette/pipe/light(var/flavor_text = "[usr] lights the [name].")
 	if(!lit)
 		lit = 1
-		damtype = "fire"
+		damtype = BURN
 		update_brightness()
 		var/turf/T = get_turf(src)
 		T.visible_message(flavor_text)
@@ -638,12 +637,12 @@ MATCHBOXES ARE ALSO IN FANCY.DM
 			name = "lit [initial(name)]"
 			item_state = "[initial(item_state)]on"
 			icon_state = "[initial(icon_state)]-on"
-			damtype = "fire"
+			damtype = BURN
 		if(0)
 			name = "[initial(name)]"
 			item_state = "[initial(item_state)]off"
 			icon_state = "[initial(icon_state)]"
-			damtype = "brute"
+			damtype = BRUTE
 
 /obj/item/weapon/lighter/proc/update_brightness()
 
