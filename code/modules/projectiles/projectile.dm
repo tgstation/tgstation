@@ -41,6 +41,11 @@
 	// 1 to pass solid objects, 2 to pass solid turfs (results in bugs, bugs and tons of bugs)
 	var/range = 0
 
+	//Bullets embed, for ~FUN~ and for detectives
+	embed_chance = 80
+	embedded_fall_chance = 0
+	embedded_pain_multiplier = 1 //Bullets are w_class 3 so 3 damage.
+
 /obj/item/projectile/New()
 	permutated = list()
 	return ..()
@@ -118,6 +123,10 @@
 			if(mobs_list.len)
 				var/mob/living/picked_mob = pick(mobs_list)
 				picked_mob.bullet_act(src, def_zone)
+				if(damage_type == BRUTE)
+					if(embed_in(picked_mob,1,0))
+						return //don't delete it if it embedded
+
 	qdel(src)
 
 /obj/item/projectile/Process_Spacemove(var/movement_dir = 0)
