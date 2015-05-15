@@ -11173,7 +11173,7 @@
 "egS" = (/obj/machinery/atmospherics/unary/tank/oxygen,/turf/unsimulated/floor/airless{icon_state = "asteroidplating"},/area/mine/explored)
 "egT" = (/obj/machinery/light/small{dir = 1},/turf/unsimulated/floor/asteroid,/area/mine/explored)
 "egU" = (/turf/unsimulated/floor/airless{icon_state = "asteroidwarning"; dir = 8},/area/mine/explored)
-"egV" = (/obj/machinery/door/airlock/external{name = "Mining Bridge"; req_access_txt = "54"},/turf/simulated/floor/airless{dir = 5; icon_state = "asteroidfloor"},/area/mine/explored)
+"egV" = (/obj/machinery/door/airlock/external{name = "Mining Bridge"; req_access_txt = "0"; req_one_access_txt = "47;54"},/turf/simulated/floor/airless{dir = 5; icon_state = "asteroidfloor"},/area/mine/explored)
 "egW" = (/obj/structure/window/reinforced,/obj/structure/window/reinforced{dir = 1},/turf/simulated/floor/airless,/area/mine/explored)
 "egX" = (/obj/structure/window/reinforced{dir = 4},/obj/structure/window/reinforced{dir = 1},/obj/structure/window/reinforced{dir = 8},/obj/structure/window/reinforced,/obj/structure/grille,/obj/structure/window/full/reinforced,/turf/simulated/floor/plating,/area/research_outpost/gearstore)
 "egY" = (/obj/machinery/door/airlock/external{autoclose = 0; frequency = 1331; icon_state = "door_locked"; id_tag = "anom_airlock_exterior"; locked = 1},/turf/simulated/floor{dir = 8; icon_state = "neutralfull"},/area/research_outpost/gearstore)
