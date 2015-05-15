@@ -1,0 +1,15 @@
+author: Dylanstrategie
+delete-after: True
+changes:
+  - experimental: Use update_brightness() and update_icon() for all items on the list to minimize shit coding and standardize light items
+  - experimental: You can now light cigarettes and sub-types with anything tagged as is_hot(), works with fire (fire_act)
+  - experimental: Blunts can now hold 50 units of reagents. Don't ask me, it's a really fat blunt
+  - soundadd: Lighters (regular and zippo) now have sounds
+  - rscadd: Added a strike-anywhere matchbox. Can only be obtained for premium on cigarettes machines currently
+  - rscdel: You can no longer shove an entire matchbox into a cigarette pack
+  - tweak: All matchboxes are now a fancy storage with all it entails and contain 21 matches
+  - tweak: Match duration from 5 to 10, on par with strike-anywhere matches. Matches do not go out anymore when dropped
+  - tweak: Cigarettes and sub-types will be put out when dipped into water and will not light if doused in water
+  - tweak: You no longer burn yourself with cheap lighters, instead you'll have to try multiple times to light it (20 % chance)
+  - tweak: All lighters now have 5 attack delay (not in seconds)
+  - bugfix: Fix multiple cases of cigarette-related items not updating lumcount normally
