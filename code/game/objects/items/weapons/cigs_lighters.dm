@@ -248,26 +248,28 @@ MATCHBOXES ARE ALSO IN FANCY.DM
 	//Items with special messages go first
 	if(istype(W, /obj/item/weapon/weldingtool))
 		var/obj/item/weapon/weldingtool/WT = W
-		if(WT.isOn()) //Badasses dont get blinded while lighting their cig with a welding tool
+		if(WT.is_hot()) //Badasses dont get blinded while lighting their cig with a welding tool
 			light("<span class='notice'>[user] casually lights \his [name] with \the [W], what a badass.</span>")
 
 	else if(istype(W, /obj/item/weapon/lighter/zippo))
 		var/obj/item/weapon/lighter/zippo/Z = W
-		if(Z.lit)
+		if(Z.is_hot())
 			light("<span class='rose'>With a single flick of their wrist, [user] smoothly lights \his [name] with \the [W]. Damn, that's cool.</span>")
 
 	else if(istype(W, /obj/item/weapon/lighter))
 		var/obj/item/weapon/lighter/L = W
-		if(L.lit)
+		if(L.is_hot())
 			light("<span class='notice'>After some fiddling, [user] manages to light \his [name] with \the [W].</span>")
 
 	else if(istype(W, /obj/item/weapon/melee/energy/sword))
 		var/obj/item/weapon/melee/energy/sword/S = W
-		if(S.active)
+		if(S.is_hot())
 			light("<span class='warning'>[user] raises \his [W.name], lighting \the [src]. Holy fucking shit.</span>")
 
 	else if(istype(W, /obj/item/device/assembly/igniter))
-		light("<span class='notice'>[user] fiddles with \his [W.name], and manages to light their [name].</span>")
+		var/obj/item/device/assembly/igniter/I = W
+		if(I.is_hot())
+			light("<span class='notice'>[user] fiddles with \his [W.name], and manages to light their [name].</span>")
 
 	//All other items are included here, any item that is hot can light the cigarette
 	else if(W.is_hot())
