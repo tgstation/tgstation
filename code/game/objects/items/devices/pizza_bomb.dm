@@ -54,7 +54,7 @@
 		return
 	src.audible_message("\icon[src] <b>[src]</b> beeps, \"Enjoy the pizza!\"")
 	src.visible_message("<span class='userdanger'>\The [src] violently explodes!</span>")
-	explosion(src.loc,1,2,4,flame_range = 2) //Identical to a minibomb
+	explosion(src.loc,-1,2,4,flame_range = 2) //Identical to a minibomb but with no hull breaches
 	qdel(src)
 
 /obj/item/device/pizza_bomb/attackby(var/obj/item/I, var/mob/user, params)
