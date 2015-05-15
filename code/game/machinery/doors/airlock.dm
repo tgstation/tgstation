@@ -306,6 +306,23 @@ About the new airlock wires panel:
 */
 // You can find code for the airlock wires in the wire datum folder.
 
+/obj/machinery/door/airlock/proc/bolt()
+	if(locked)
+		return
+	locked = 1
+	update_icon()
+
+/obj/machinery/door/airlock/proc/unbolt()
+	if(!locked)
+		return
+	locked = 0
+	update_icon()
+
+/obj/machinery/door/airlock/Destroy()
+	if(id_tag)
+		for(var/obj/machinery/doorButtons/D in world)
+			D.removeMe(src)
+	..()
 
 /obj/machinery/door/airlock/bumpopen(mob/living/user as mob) //Airlocks now zap you when you 'bump' them open when they're electrified. --NeoFite
 	if(!issilicon(usr))
@@ -1069,7 +1086,7 @@ About the new airlock wires panel:
 	update_freelook_sight()
 	if(locate(/mob/living) in get_turf(src))
 		open()
-	return
+	return 1
 
 /obj/machinery/door/airlock/New()
 	..()
