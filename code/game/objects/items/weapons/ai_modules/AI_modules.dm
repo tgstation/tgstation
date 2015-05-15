@@ -102,7 +102,7 @@ Refactored AI modules by N3X15
 
 /obj/item/weapon/aiModule/reset
 	modname = "Reset"
-	desc = "A 'reset' AI module: 'Clears all laws except for the core three.'"
+	desc = "A 'reset' AI module: 'Clears all non-inherent (non-core) laws.'"
 	origin_tech = "programming=3;materials=4"
 
 	// Recycling
