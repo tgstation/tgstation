@@ -100,6 +100,14 @@
 		var/turf/space/S = src.loc
 		S.Entered(src)*/
 
+/obj/structure/stool/bed/chair/vehicle/forceMove(var/atom/NewLoc)
+	..()
+	if(buckled_mob)
+		if(buckled_mob.buckled == src)
+			buckled_mob.loc = loc
+	update_mob()
+	handle_rotation()
+
 /obj/structure/stool/bed/chair/vehicle/proc/Process_Spacemove(var/check_drift = 0, mob/user)
 	if(can_spacemove && buckled_mob)
 		return 1
