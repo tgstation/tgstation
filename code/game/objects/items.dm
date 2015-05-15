@@ -642,9 +642,10 @@
 		user.drop_from_inventory(src)
 	if(istype(wielded))
 		user.u_equip(wielded,1)
-		wielded.wielding = null
-		returnToPool(wielded)
-		wielded = null
+		if(wielded)
+			wielded.wielding = null
+			returnToPool(wielded)
+			wielded = null
 	update_wield(user)
 
 /obj/item/proc/update_wield(mob/user)
