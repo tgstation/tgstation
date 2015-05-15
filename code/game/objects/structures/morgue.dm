@@ -12,7 +12,7 @@
 
 /obj/structure/morgue
 	name = "morgue"
-	desc = "Used to keep bodies in untill someone fetches them."
+	desc = "Used to keep bodies in until someone fetches them."
 	icon = 'icons/obj/stationobjs.dmi'
 	icon_state = "morgue1"
 	dir = EAST
@@ -26,18 +26,14 @@
 	else
 		if (contents.len > 0)
 			var/list/inside = recursive_type_check(src, /mob)
-
-			for (var/mob/body in inside)
-				if (body && body.client)
-					icon_state = "morgue4" // clone that mofo
-					return
-
-			if (inside.len > 0)
-				inside = null
+			if (!inside.len)
 				icon_state = "morgue3" // no mobs at all, but objects inside
 			else
+				for (var/mob/body in inside)
+					if (body && body.client)
+						icon_state = "morgue4" // clone that mofo
+						return
 				icon_state = "morgue2" // dead no-client mob
-
 		else
 			icon_state = "morgue1"
 

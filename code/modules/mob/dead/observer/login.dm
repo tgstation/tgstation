@@ -8,7 +8,8 @@
 			for(dir in list(NORTH, EAST, SOUTH, WEST))
 				if(locate(/obj/machinery/computer/cloning, get_step(canclone.loc, dir)))
 					src << 'sound/effects/adminhelp.ogg'
-					src << "<b><font color = #330033><font size = 3>Your corpse has been placed into a cloning scanner. Return to your body if you want to be resurrected/cloned!</b> (Verbs -> Ghost -> Re-enter corpse)</font color>"
+					src << "<span class='interface'><b><font size = 3>Your corpse has been placed into a cloning scanner. Return to your body if you want to be resurrected/cloned!</b> \
+						(Verbs -> Ghost -> Re-enter corpse, or <a href='?src=\ref[src];reentercorpse=1'>click here!</a>)</font></span>"
 	canclone = null
 
 /mob/dead/observer/MouseDrop(atom/over)

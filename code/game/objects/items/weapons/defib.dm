@@ -136,45 +136,46 @@
 		charges--
 		update_icon()
 		user << "<span class='notice'>You shock [target] with the paddles.</span>"
-		if(target.mind && !target.client)
-			for(var/mob/dead/observer/ghost in player_list)
-				if(ghost.mind == target.mind && ghost.can_reenter_corpse)
-					ghost << 'sound/effects/adminhelp.ogg'
-					ghost << "<span class='danger'>Someone is trying to revive your body. Return to it if you want to be resurrected!</span>"
-					user << "<span class='warning'>[src] buzzes: Defibrillation failed. Vital signs are too weak, please try again in five seconds.</span>"
-					break
-		if(!target.client || !target.mind) //Let's call up the ghost and then still revive the corspe ! Also, bodies with clients only, thank you
-			user << "<span class='warning'>[src] buzzes: Vital signs are too weak, please try again in five seconds.</span>"
+		var/datum/organ/external/head/head = target.get_organ("head")
+		if(!head || head.status & ORGAN_DESTROYED || M_NOCLONE in target.mutations  || !target.has_brain() || target.suiciding == 1)
+			target.visible_message("<span class='notice'>[src] buzzes: Defibrillation failed. Patient's condition does not allow reviving.</span>")
 			return
 		if(target.wear_suit && istype(target.wear_suit,/obj/item/clothing/suit/armor) && prob(95)) //75 ? Let's stay realistic here
 			user << "<span class='warning'>[src] buzzes: Defibrillation failed. Please apply on bare skin.</span>"
-		else if(target.w_uniform && istype(target.w_uniform,/obj/item/clothing/under && prob(50)))
+			target.apply_damage(rand(1,5),BURN,"chest")
+			return
+		if(target.w_uniform && istype(target.w_uniform,/obj/item/clothing/under) && prob(50))
 			user << "<span class='warning'>[src] buzzes: Defibrillation failed. Please apply on bare skin.</span>"
+			target.apply_damage(rand(1,5),BURN,"chest")
+			return
+		if(target.mind && !target.client) //Let's call up the ghost! Also, bodies with clients only, thank you.
+			for(var/mob/dead/observer/ghost in player_list)
+				if(ghost.mind == target.mind && ghost.can_reenter_corpse)
+					ghost << 'sound/effects/adminhelp.ogg'
+					ghost << "<span class='interface'><b><font size = 3>Someone is trying to revive your body. Return to it if you want to be resurrected!</b> \
+						(Verbs -> Ghost -> Re-enter corpse, or <a href='?src=\ref[ghost];reentercorpse=1'>click here!</a>)</font></span>"
+					break
+			user << "<span class='warning'>[src] buzzes: Defibrillation failed. Vital signs are too weak, please try again in five seconds.</span>"
+			return
+		var/datum/organ/internal/heart/heart = target.internal_organs_by_name["heart"]
+		if(prob(25)) heart.damage += 5 //Allow the defibrilator to possibly worsen heart damage. Still rare enough to just be the "clone damage" of the defib
+		target.apply_damage(-target.getOxyLoss(),OXY)
+		target.updatehealth()
+		target.visible_message("<span class='danger'>[target]'s body convulses a bit.</span>")
+		if(target.health > config.health_threshold_dead)
+			target.timeofdeath = 0
+			target.visible_message("<span class='notice'>[src] beeps: Defibrillation successful.</span>")
+			dead_mob_list -= target
+			living_mob_list |= list(target)
+			target.tod = null
+			target.stat = UNCONSCIOUS
+			target.regenerate_icons()
+			target.update_canmove()
+			flick("e_flash",target.flash)
+			target.apply_effect(10, EYE_BLUR) //I'll still put this back in to avoid dumb "pounce back up" behavior
+			target.apply_effect(10, PARALYZE)
+			target.update_canmove()
+			target << "<span class='notice'>You suddenly feel a spark and your consciousness returns, dragging you back to the mortal plane.</span>"
 		else
-			var/datum/organ/internal/heart/heart = target.internal_organs_by_name["heart"]
-			if(prob(25)) heart.damage += 5 //Allow the defibrilator to possibly worsen heart damage. Still rare enough to just be the "clone damage" of the defib
-			target.apply_damage(-target.getOxyLoss(),OXY)
-			target.updatehealth()
-			target.visible_message("<span class='danger'>[target]'s body convulses a bit.</span>")
-			var/datum/organ/external/head/head = target.get_organ("head")
-			if((target.health > config.health_threshold_dead)\
-			&&(!(head.status & ORGAN_DESTROYED))\
-			&&(!(M_NOCLONE in target.mutations))\
-			&&(target.has_brain()))
-				target.timeofdeath = 0
-				target.visible_message("<span class='notice'>[src] beeps: Defibrillation successful.</span>")
-				dead_mob_list -= target
-				living_mob_list |= list(target)
-				target.tod = null
-				target.stat = UNCONSCIOUS
-				target.regenerate_icons()
-				target.update_canmove()
-				flick("e_flash",target.flash)
-				target.apply_effect(10, EYE_BLUR) //I'll still put this back in to avoid dumd "pounce back up" behavior
-				target.apply_effect(10, PARALYZE)
-				target.update_canmove()
-				target << "<span class='notice'>You suddenly feel a spark and your consciousness returns, dragging you back to the mortal plane.</span>"
-			else
-				target.visible_message("<span class='notice'>[src] buzzes: Defibrillation failed. Patient's condition does not allow reviving.</span>")
-		target.apply_damage(rand(1,5),BURN,"chest") //Better not try too much times
+			target.visible_message("<span class='notice'>[src] buzzes: Defibrillation failed. Patient's condition does not allow reviving.</span>")
 		return

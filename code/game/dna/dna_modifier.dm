@@ -221,7 +221,8 @@
 					if(ghost.mind == M.mind)
 						if(ghost.client)
 							ghost << 'sound/effects/adminhelp.ogg'
-							ghost << "<b><font color = #330033><font size = 3>Your corpse has been placed into a cloning scanner. Return to your body if you want to be resurrected/cloned!</b> (Verbs -> Ghost -> Re-enter corpse)</font color>"
+							ghost << "<span class='interface'><b><font size = 3>Your corpse has been placed into a cloning scanner. Return to your body if you want to be resurrected/cloned!</b> \
+								(Verbs -> Ghost -> Re-enter corpse, or <a href='?src=\ref[ghost];reentercorpse=1'>click here!</a>)</font></span>"
 						else
 							ghost.canclone = M
 						break
