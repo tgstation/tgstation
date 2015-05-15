@@ -2294,7 +2294,7 @@
 "bls" = (/obj/structure/closet/crate/medical,/turf/simulated/shuttle/floor{icon_state = "floor4"},/area/syndicate_station/start)
 "blt" = (/obj/structure/shuttle/engine/heater,/obj/structure/window/reinforced{dir = 1},/turf/simulated/shuttle/plating,/area/syndicate_station/start)
 "blu" = (/obj/machinery/teleport/station,/turf/simulated/shuttle/floor{icon_state = "floor4"},/area/syndicate_station/start)
-"blv" = (/obj/machinery/teleport/hub,/turf/simulated/shuttle/floor{icon_state = "floor4"},/area/syndicate_station/start)
+"blv" = (/obj/machinery/teleport/hub{accurate = 1},/turf/simulated/shuttle/floor{icon_state = "floor4"},/area/syndicate_station/start)
 "blw" = (/obj/structure/table/woodentable,/obj/item/weapon/reagent_containers/food/snacks/chips,/turf/unsimulated/floor{dir = 8; icon_state = "wood"},/area/wizard_station)
 "blx" = (/obj/structure/table/woodentable,/obj/item/weapon/spacecash,/turf/unsimulated/floor{dir = 8; icon_state = "wood"},/area/wizard_station)
 "bly" = (/obj/structure/rack,/obj/item/clothing/suit/wizrobe/red,/obj/item/clothing/shoes/sandal,/obj/item/clothing/head/wizard/red,/obj/item/weapon/staff,/turf/unsimulated/floor{icon_state = "grimy"},/area/wizard_station)

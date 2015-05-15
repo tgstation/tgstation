@@ -7464,7 +7464,7 @@
 "cNB" = (/obj/structure/rack,/obj/item/weapon/extinguisher,/obj/item/weapon/crowbar,/turf/unsimulated/floor{icon_state = "white"},/area/syndicate_station/start)
 "cNC" = (/obj/structure/window/reinforced{dir = 1},/obj/structure/shuttle/engine/heater,/turf/unsimulated/floor{name = "plating"},/area/syndicate_station/start)
 "cND" = (/obj/machinery/teleport/station,/turf/unsimulated/floor{icon_state = "floor4"},/area/syndicate_station/start)
-"cNE" = (/obj/machinery/teleport/hub,/turf/unsimulated/floor{icon_state = "floor4"},/area/syndicate_station/start)
+"cNE" = (/obj/machinery/teleport/hub{accurate = 1},/turf/unsimulated/floor{icon_state = "floor4"},/area/syndicate_station/start)
 "cNF" = (/obj/structure/stool/bed/chair/comfy/black,/turf/unsimulated/floor{icon_state = "floor4"},/area)
 "cNG" = (/obj/structure/shuttle/engine/propulsion,/turf/space,/area/syndicate_station/start)
 "cNH" = (/obj/structure/table/reinforced,/turf/unsimulated/floor{icon_state = "floor4"},/area)

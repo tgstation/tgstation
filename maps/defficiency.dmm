@@ -9799,7 +9799,7 @@
 "dGw" = (/obj/machinery/iv_drip,/obj/item/weapon/reagent_containers/blood/OMinus,/obj/item/weapon/reagent_containers/blood/OMinus,/obj/item/weapon/reagent_containers/blood/OMinus,/turf/unsimulated/floor{icon_state = "dark"},/area/syndicate_station/start)
 "dGx" = (/obj/structure/closet/crate,/obj/item/weapon/FixOVein,/obj/item/weapon/bonegel,/obj/item/weapon/bonesetter,/obj/item/weapon/cautery,/obj/item/weapon/circular_saw,/obj/item/weapon/hemostat,/obj/item/weapon/retractor,/obj/item/weapon/scalpel,/obj/item/weapon/surgicaldrill,/turf/unsimulated/floor{icon_state = "dark"},/area/syndicate_station/start)
 "dGy" = (/obj/machinery/optable,/obj/item/weapon/tank/anesthetic,/obj/item/clothing/mask/breath/medical,/turf/unsimulated/floor{icon_state = "dark"},/area/syndicate_station/start)
-"dGz" = (/obj/machinery/teleport/hub,/turf/unsimulated/floor{icon_state = "dark"},/area/syndicate_station/start)
+"dGz" = (/obj/machinery/teleport/hub{accurate = 1},/turf/unsimulated/floor{icon_state = "dark"},/area/syndicate_station/start)
 "dGA" = (/obj/structure/computerframe,/turf/unsimulated/floor{icon_state = "dark"},/area/syndicate_station/start)
 "dGB" = (/obj/machinery/teleport/station,/turf/unsimulated/floor{icon_state = "dark"},/area/syndicate_station/start)
 "dGC" = (/obj/structure/table,/obj/item/weapon/paper_bin,/obj/item/weapon/folder,/obj/item/weapon/clipboard,/obj/item/weapon/pen,/obj/machinery/camera{c_tag = "Research Outpost Spectrometry"; dir = 8},/turf/simulated/floor{dir = 4; icon_state = "whitegreen"},/area/research_outpost/spectro)

@@ -8042,7 +8042,7 @@
 "cYH" = (/obj/structure/shuttle/engine/heater,/obj/structure/window/reinforced{dir = 1},/turf/simulated/floor/plating/airless,/area/syndicate_station/start)
 "cYI" = (/obj/structure/computerframe,/turf/unsimulated/floor{icon_state = "floor4"},/area/syndicate_station/start)
 "cYJ" = (/obj/machinery/teleport/station,/turf/unsimulated/floor{icon_state = "floor4"},/area/syndicate_station/start)
-"cYK" = (/obj/machinery/teleport/hub,/turf/unsimulated/floor{icon_state = "floor4"},/area/syndicate_station/start)
+"cYK" = (/obj/machinery/teleport/hub{accurate = 1},/turf/unsimulated/floor{icon_state = "floor4"},/area/syndicate_station/start)
 "cYL" = (/obj/structure/shuttle/engine/propulsion{icon_state = "propulsion_l"},/turf/space,/area/syndicate_station/start)
 "cYM" = (/obj/structure/shuttle/engine/propulsion,/turf/space,/area/syndicate_station/start)
 "cYN" = (/obj/structure/shuttle/engine/propulsion{icon_state = "propulsion_r"},/turf/space,/area/syndicate_station/start)

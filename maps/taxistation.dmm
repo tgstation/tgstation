@@ -4199,7 +4199,7 @@
 "bCM" = (/obj/structure/closet/crate/medical,/turf/simulated/shuttle/floor{icon_state = "floor4"},/area/syndicate_station/start)
 "bCN" = (/obj/structure/shuttle/engine/heater,/obj/structure/window/reinforced{dir = 1},/turf/simulated/shuttle/plating,/area/syndicate_station/start)
 "bCO" = (/obj/machinery/teleport/station,/turf/simulated/shuttle/floor{icon_state = "floor4"},/area/syndicate_station/start)
-"bCP" = (/obj/machinery/teleport/hub,/turf/simulated/shuttle/floor{icon_state = "floor4"},/area/syndicate_station/start)
+"bCP" = (/obj/machinery/teleport/hub{accurate = 1},/turf/simulated/shuttle/floor{icon_state = "floor4"},/area/syndicate_station/start)
 "bCQ" = (/obj/machinery/camera{pixel_x = 11; pixel_y = -9; network = list("thunder"); c_tag = "Red Team"},/obj/effect/landmark{name = "tdome2"},/turf/unsimulated/floor{name = "plating"},/area/tdome/tdome2)
 "bCR" = (/turf/simulated/floor/bluegrid,/area/tdome)
 "bCS" = (/obj/machinery/flasher{id_tag = "flash"; name = "Thunderdome Flash"},/turf/simulated/floor/bluegrid,/area/tdome)
