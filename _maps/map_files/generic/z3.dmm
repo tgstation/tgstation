@@ -52,7 +52,7 @@
 "aZ" = (/turf/simulated/shuttle/wall{icon_state = "swall7"; dir = 2},/area/space)
 "ba" = (/obj/machinery/door/airlock/glass,/turf/simulated/shuttle/floor{icon_state = "floor3"},/area/space)
 "bb" = (/turf/simulated/shuttle/floor{icon_state = "floor3"},/area/space)
-"bc" = (/obj/machinery/computer/shuttle/syndicate/whiteship,/turf/simulated/shuttle/floor{icon_state = "floor3"},/area/space)
+"bc" = (/obj/machinery/computer/shuttle/white_ship,/turf/simulated/shuttle/floor{icon_state = "floor3"},/area/space)
 "bd" = (/turf/simulated/shuttle/wall{icon_state = "swall11"; dir = 2},/area/space)
 "be" = (/obj/structure/stool/bed/chair{dir = 4},/obj/effect/decal/remains/human,/turf/simulated/shuttle/floor{icon_state = "floor3"},/area/space)
 "bf" = (/obj/machinery/portable_atmospherics/canister/oxygen,/turf/simulated/shuttle/floor{icon_state = "floor3"},/area/space)
