@@ -108,7 +108,7 @@
 	else if(istype(O, /obj/item/weapon/soap/)) // If they're trying to clean it then let them
 		var/obj/item/weapon/soap/P = O
 		user.visible_message( \
-			"[user] starts to clean the microwave.S", \
+			"[user] starts to clean the microwave.", \
 			"<span class='notice'>You start to clean the microwave...</span>" \
 		)
 		if (do_after(user, P.cleanspeed))
