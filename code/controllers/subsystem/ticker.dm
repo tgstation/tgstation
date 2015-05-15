@@ -82,7 +82,7 @@ var/datum/subsystem/ticker/ticker
 				return
 			timeLeft -= wait
 
-			if(timeLeft <= 30 && !tipped)
+			if(timeLeft <= 300 && !tipped)
 				send_random_tip()
 				tipped = 1
 
