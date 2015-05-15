@@ -809,7 +809,7 @@
 "apC" = (/obj/machinery/mineral/labor_claim_console{machinedir = 2; pixel_x = 30; pixel_y = 30},/turf/simulated/shuttle/floor{icon_state = "floor4"},/area/space)
 "apD" = (/obj/machinery/door/firedoor,/obj/machinery/door/airlock/glass_security{name = "Labor Camp Shuttle Airlock"; req_access_txt = "2"},/obj/machinery/door_control{id = "prison release"; name = "Labor Camp Shuttle Lockdown"; pixel_x = 0; pixel_y = -25; req_access_txt = "2"},/turf/simulated/floor/plasteel{icon_state = "dark"},/area/security/brig)
 "apE" = (/obj/machinery/door/airlock/glass_command{name = "Gravity Generator Area"; req_access_txt = "19; 61"},/turf/simulated/floor/plasteel{icon_state = "dark"},/area/engine/gravity_generator)
-"apF" = (/obj/item/clothing/gloves/color/rainbow,/obj/item/clothing/shoes/sneakers/rainbow,/obj/item/clothing/under/rainbow,/obj/item/clothing/head/soft/rainbow,/turf/simulated/floor/plating,/area/maintenance/fpmaint2{name = "Port Maintenance"})
+"apF" = (/obj/item/clothing/gloves/color/rainbow,/obj/item/clothing/shoes/sneakers/rainbow,/obj/item/clothing/under/color/rainbow,/obj/item/clothing/head/soft/rainbow,/turf/simulated/floor/plating,/area/maintenance/fpmaint2{name = "Port Maintenance"})
 "apG" = (/turf/simulated/shuttle/wall,/area/space)
 "apH" = (/turf/simulated/wall/r_wall,/area/maintenance/auxsolarstarboard)
 "apI" = (/obj/machinery/power/solar_control{id = "forestarboard"; name = "Fore Starboard Solar Control"; track = 0},/obj/structure/cable{icon_state = "0-4"; d2 = 4},/turf/simulated/floor/plating,/area/maintenance/auxsolarstarboard)

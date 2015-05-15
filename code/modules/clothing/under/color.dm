@@ -139,3 +139,11 @@
 	icon_state = "maroon"
 	item_state = "r_suit"
 	item_color = "maroon"
+
+/obj/item/clothing/under/color/rainbow
+	name = "rainbow jumpsuit"
+	desc = "A multi-colored jumpsuit!"
+	icon_state = "rainbow"
+	item_state = "rainbow"
+	item_color = "rainbow"
+	can_adjust = 0
