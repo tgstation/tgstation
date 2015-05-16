@@ -195,7 +195,7 @@
 			if(A in mycontents) continue
 			if(!(A in viewable)) continue
 			reactable |= A
-	var/fraction = max(reagents.total_volume/reactable.len,0)
+	var/fraction = max(reagents.total_volume/reactable.len - reagents.total_volume,0)
 	for(var/atom/A in reactable)
 		reagents.reaction(A, TOUCH, fraction)
 
