@@ -306,7 +306,7 @@ datum/reagent/blob/chaosBlob/reaction_mob(var/mob/living/M as mob, var/method=TO
 				M.irradiate(10)
 				var/newName = pick(pick(first_names_male, first_names_female))
 				newName += " [pick(last_names)]"
-				M.name = newName // :^)
+				M.real_name = newName // :^)
 			if(7)
 				message_living = " A sensation of horrible agony overwhelms you!"
 				M.apply_damage(10, BRUTE)
