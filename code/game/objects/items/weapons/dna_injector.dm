@@ -109,7 +109,7 @@
 /obj/item/weapon/dnainjector/attack(mob/M as mob, mob/user as mob)
 	if (!istype(M, /mob))
 		return
-	if (!(istype(usr, /mob/living/carbon/human) || ticker) && ticker.mode.name != "monkey")
+	if (!user.dexterity_check())
 		user << "<span class='warning'>You don't have the dexterity to do this!</span>"
 		return
 

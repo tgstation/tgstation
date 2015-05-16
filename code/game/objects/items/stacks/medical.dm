@@ -16,9 +16,7 @@
 		user << "<span class='warning'>\The [src] cannot be applied to [M]!</span>"
 		return 1
 
-	if(!(istype(user, /mob/living/carbon/human) || \
-			istype(user, /mob/living/silicon) || \
-			istype(user, /mob/living/carbon/monkey) && ticker && ticker.mode.name == "monkey"))
+	if (!user.dexterity_check())
 		user << "<span class='warning'>You don't have the dexterity to do this!</span>"
 		return 1
 

@@ -140,10 +140,13 @@
 	src.ui_interact(user)
 
 /obj/machinery/embedded_controller/attack_paw(mob/user as mob)
-	user << "You do not have the dexterity to use this."
+	attack_hand(user)
 	return
 
 /obj/machinery/embedded_controller/attack_hand(mob/user as mob)
+	if(!user.dexterity_check())
+		user << "You do not have the dexterity to use this."
+		return
 	if(build<2) return 1
 	src.ui_interact(user)
 

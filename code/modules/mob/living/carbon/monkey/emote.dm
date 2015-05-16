@@ -31,6 +31,10 @@
 		if ("custom")
 			return custom_emote(m_type, message)
 
+		if ("blink_r")
+			message = "<B>[src]</B> blinks rapidly."
+			m_type = VISIBLE
+
 		if("sign")
 			if (!src.restrained())
 				message = text("<B>The monkey</B> signs[].", (text2num(param) ? text(" the number []", text2num(param)) : null))

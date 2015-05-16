@@ -354,9 +354,7 @@ Class Procs:
 	if(!canGhostWrite(usr,src,"",ghost_flags))
 		if(usr.restrained() || usr.lying || usr.stat)
 			return 1
-		if ( ! (istype(usr, /mob/living/carbon/human) || \
-				istype(usr, /mob/living/silicon) || \
-				istype(usr, /mob/living/carbon/monkey) && ticker && ticker.mode.name == "monkey") )
+		if (!usr.dexterity_check())
 			usr << "<span class='warning'>You don't have the dexterity to do this!</span>"
 			return 1
 
@@ -409,13 +407,11 @@ Class Procs:
 	if(user.lying || (user.stat && !canGhostRead(user))) // Ghost read-only
 		return 1
 
-	if(istype(usr,/mob/dead/observer))
+	if(istype(user,/mob/dead/observer))
 		return 0
 
-	if ( ! (istype(usr, /mob/living/carbon/human) || \
-			istype(usr, /mob/living/silicon) || \
-			istype(usr, /mob/living/carbon/monkey) && ticker && ticker.mode.name == "monkey") )
-		usr << "<span class='warning'>You don't have the dexterity to do this!</span>"
+	if(!user.dexterity_check())
+		user << "<span class='warning'>You don't have the dexterity to do this!</span>"
 		return 1
 /*
 	//distance checks are made by atom/proc/DblClick

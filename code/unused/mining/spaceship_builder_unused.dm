@@ -120,7 +120,7 @@
 		user << "The machine is processing"
 		return
 
-	if (!(istype(usr, /mob/living/carbon/human) || ticker) && ticker.mode.name != "monkey")
+	if (!usr.dexterity_check())
 		usr << "<span class='warning'>You don't have the dexterity to do this!</span>"
 		return
 

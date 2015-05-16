@@ -2224,6 +2224,25 @@
 	data++
 	return ..()
 
+/datum/reagent/methylin
+	name = "Methylin"
+	id = "methylin"
+	description = "An intelligence enhancer, also used in the treatment of attention deficit hyperactivity disorder. Also known as Ritalin."
+	reagent_state = LIQUID
+	color = "#CC1122"
+	custom_metabolism = 0.03
+	overdose = REAGENTS_OVERDOSE/2
+
+/datum/reagent/methylin/on_mob_life(var/mob/living/M as mob)
+
+	if(!holder) return
+	if(!M) M = holder.my_atom
+	if(prob(5)) M.emote(pick("twitch","blink_r","shiver"))
+	if(volume > REAGENTS_OVERDOSE)
+		M:adjustBrainLoss(1)
+	..()
+	return
+
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
 

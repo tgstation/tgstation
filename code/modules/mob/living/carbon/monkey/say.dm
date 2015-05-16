@@ -5,4 +5,8 @@
 	if(other) other = other.GetSource()
 	if(issilicon(other))
 		return 1
+
+	if(dexterity_check())
+		return 1
+
 	return ..()
