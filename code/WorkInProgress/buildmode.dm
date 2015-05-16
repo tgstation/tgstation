@@ -18,6 +18,12 @@
 			for(var/obj/effect/bmode/buildholder/HH in bmholders)
 				del(HH)
 				*/
+			var/obj/effect/bmode/buildholder/holder = null
+			for(var/obj/effect/bmode/buildholder/H)
+				if(H.cl == M.client)
+					holder = H
+					break
+			if(holder) holder.buildmode.copycat = null
 			if(M.client.buildmode_objs && M.client.buildmode_objs.len)
 				for(var/BM in M.client.buildmode_objs)
 					del(BM)
@@ -134,6 +140,7 @@
 	var/varholder = "name"
 	var/valueholder = "derp"
 	var/objholder = /obj/structure/closet
+	var/atom/copycat
 
 	Click(location, control, params)
 		var/list/pa = params2list(params)
@@ -158,6 +165,7 @@
 				if(1)
 					return 1
 				if(2)
+					copycat = null
 					objholder = text2path(input(usr,"Enter typepath:" ,"Typepath","/obj/structure/closet"))
 					if(!ispath(objholder))
 						objholder = /obj/structure/closet
@@ -254,17 +262,76 @@
 						new/obj/structure/window/full/reinforced(get_turf(object))
 		if(2)
 			if(pa.Find("left"))
-				if(ispath(holder.buildmode.objholder,/turf))
-					var/turf/T = get_turf(object)
-					T.ChangeTurf(holder.buildmode.objholder)
+				if(holder.buildmode.copycat)
+					if(isturf(holder.buildmode.copycat))
+						var/turf/T = get_turf(object)
+						T.ChangeTurf(holder.buildmode.copycat.type)
+						spawn(1)
+							T.icon = holder.buildmode.copycat.icon
+							T.icon_state = holder.buildmode.copycat.icon_state
+							T.dir = holder.builddir.dir
+							if(holder.buildmode.copycat.overlays.len)
+								T.overlays.len = 0
+								for(var/i = 1; i <= holder.buildmode.copycat.overlays.len; i++)
+									var/datum/thing = holder.buildmode.copycat.overlays[i]
+									T.overlays += thing
+							if(holder.buildmode.copycat.underlays.len)
+								T.underlays.len = 0
+								for(var/i = 1; i <= holder.buildmode.copycat.underlays.len; i++)
+									var/datum/thing = holder.buildmode.copycat.underlays[i]
+									T.underlays += thing
+					else
+						var/atom/movable/A = new holder.buildmode.copycat.type(get_turf(object))
+						if(istype(A))
+							A.dir = holder.builddir.dir
+							A.icon = holder.buildmode.copycat.icon
+							A.gender = holder.buildmode.copycat.gender
+							A.name = holder.buildmode.copycat.name
+							A.icon_state = holder.buildmode.copycat.icon_state
+							A.alpha = holder.buildmode.copycat.alpha
+							A.color = holder.buildmode.copycat.color
+							A.maptext = holder.buildmode.copycat.maptext
+							A.maptext_height = holder.buildmode.copycat.maptext_height
+							A.maptext_width = holder.buildmode.copycat.maptext_width
+							A.l_color = holder.buildmode.copycat.l_color
+							A.luminosity = holder.buildmode.copycat.luminosity
+							A.molten = holder.buildmode.copycat.molten
+							A.pixel_x = holder.buildmode.copycat.pixel_x
+							A.pixel_y = holder.buildmode.copycat.pixel_y
+							A.invisibility = holder.buildmode.copycat.invisibility
+							if(holder.buildmode.copycat.overlays.len)
+								A.overlays.len = 0
+								for(var/i = 1; i <= holder.buildmode.copycat.overlays.len; i++)
+									var/datum/thing = holder.buildmode.copycat.overlays[i]
+									A.overlays += thing
+							if(holder.buildmode.copycat.underlays.len)
+								A.underlays.len = 0
+								for(var/i = 1; i <= holder.buildmode.copycat.underlays.len; i++)
+									var/datum/thing = holder.buildmode.copycat.underlays[i]
+									A.underlays += thing
+					log_admin("[key_name(usr)] made a [holder.buildmode.copycat.type] at [formatJumpTo(RT)]")
 				else
-					var/obj/A = new holder.buildmode.objholder (get_turf(object))
-					if(istype(A))
-						A.dir = holder.builddir.dir
-				log_admin("[key_name(usr)] made a [holder.buildmode.objholder] at [formatJumpTo(RT)]")
+					if(ispath(holder.buildmode.objholder,/turf))
+						var/turf/T = get_turf(object)
+						T.ChangeTurf(holder.buildmode.objholder)
+					else
+						var/obj/A = new holder.buildmode.objholder (get_turf(object))
+						if(istype(A))
+							A.dir = holder.builddir.dir
+					log_admin("[key_name(usr)] made a [holder.buildmode.objholder] at [formatJumpTo(RT)]")
 			else if(pa.Find("right"))
 				log_admin("[key_name(usr)] deleted a [object] at [formatJumpTo(RT)]")
 				if(isobj(object)) del(object)
+			else if(pa.Find("middle"))
+				if(istype(object,/mob) && !check_rights(R_DEBUG,0))
+					usr << "<span class='notice'>You don't have sufficient rights to clone [object.type]</span>"
+				else
+					if(ismob(object))
+						holder.buildmode.objholder = object.type
+						usr << "<span class='info'>You will now build [object.type] when clicking.</span>"
+					else
+						holder.buildmode.copycat = object
+						usr << "<span class='info'>You will now build a lookalike of [object] when clicking.</span>"
 
 		if(3)
 			if(pa.Find("left")) //I cant believe this shit actually compiles.
