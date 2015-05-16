@@ -1072,36 +1072,14 @@
 		desc = "A rag stuffed into a bottle."
 		update_icon()
 		slot_flags = SLOT_BELT
-	else if(istype(I, /obj/item/weapon/weldingtool))
-		var/obj/item/weapon/weldingtool/WT = I
-		if(WT.isOn())
-			light(user,I)
-			update_brightness(user)
-	else if(istype(I, /obj/item/weapon/lighter))
-		var/obj/item/weapon/lighter/L = I
-		if(L.lit)
-			light(user,I)
-			update_brightness(user)
-	else if(istype(I, /obj/item/weapon/match))
-		var/obj/item/weapon/match/M = I
-		if(M.lit)
-			light(user,I)
-			update_brightness(user)
+	else if(I.is_hot())
+		light(user,I)
+		update_brightness(user)
 	else if(istype(I, /obj/item/device/assembly/igniter))
 		var/obj/item/device/assembly/igniter/C = I
 		C.activate()
 		light(user,I)
 		update_brightness(user)
-	else if(istype(I, /obj/item/clothing/mask/cigarette))
-		var/obj/item/clothing/mask/cigarette/C = I
-		if(C.lit)
-			light(user,I)
-			update_brightness(user)
-	else if(istype(I, /obj/item/candle))
-		var/obj/item/candle/C = I
-		if(C.lit)
-			light(user,I)
-			update_brightness(user)
 		return
 
 /obj/item/weapon/reagent_containers/food/drinks/proc/light(mob/user,obj/item/I)

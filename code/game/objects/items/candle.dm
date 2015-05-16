@@ -5,6 +5,7 @@
 	icon_state = "candle1"
 	item_state = "candle1"
 	w_class = 1
+	heat_production = 1000
 
 	var/wax = 200
 	var/lit = 0
@@ -63,6 +64,11 @@
 		SetLuminosity(CANDLE_LUM)
 
 /obj/item/candle/is_hot()
+	if(lit)
+		return heat_production
+	return 0
+
+/obj/item/weapon/match/is_hot()
 	if(lit)
 		return heat_production
 	return 0
