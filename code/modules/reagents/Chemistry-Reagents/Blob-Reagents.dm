@@ -266,6 +266,72 @@ datum/reagent/blob/blob_animated_slime/reaction_mob(var/mob/living/M as mob, var
 	qdel(src)
 
 
+datum/reagent/blob/chaosBlob
+	name = "Liquid Entropy"
+	id = "b_chaos"
+	description = "An odd, dark liquid that seems to morph and change randomly. It smells of sulfur."
+	color = "#1B1B1C"
+
+datum/reagent/blob/chaosBlob/reaction_mob(var/mob/living/M as mob, var/method=TOUCH, var/volume, var/show_message = 1)
+	if(method == TOUCH)
+		var/effect = rand(1,10)
+		switch(effect)
+			if(1)
+				message_living = " You suddenly feel sick and tired!"
+				M.apply_damage(10, TOX)
+				M.drowsyness += 5
+			if(2)
+				message_living = " Your muscles painfully tighten!"
+				M.Weaken(4)
+				M.apply_damage(10, BRUTE)
+			if(3)
+				message_living = " Your skin sloughs off!"
+				M.emote("scream")
+				M.apply_damage(20, BRUTE)
+			if(4)
+				message_living = " You feel your flesh twisting and bubbling!"
+				M.emote("scream")
+				M.apply_damage(10, TOX)
+				M.irradiate(20)
+			if(5)
+				message_living = " Its tendrils wrap around your chest and squeeze!"
+				M.Stun(3)
+				M.emote("gasp")
+				M.apply_damage(15, OXY)
+				M.losebreath += 3
+				M.apply_damage(5, BRUTE) //it's crushing your chest.
+			if(6)
+				message_living = " You don't feel like yourself..."
+				M.apply_damage(5, TOX)
+				M.irradiate(10)
+				var/newName = pick(pick(first_names_male, first_names_female))
+				newName += " [pick(last_names)]"
+				M.name = newName // :^)
+			if(7)
+				message_living = " A sensation of horrible agony overwhelms you!"
+				M.apply_damage(10, BRUTE)
+				M.emote("scream")
+				M.Paralyse(2)
+			if(8)
+				message_living = " The world suddenly fades to silence..."
+				M.apply_damage(10, BRUTE)
+				M.setEarDamage(M.ear_damage + rand(0, 5), max(M.ear_deaf,15))
+			if(9)
+				message_living = " A corgi appears from within and flies at you! What the hell?!"
+				M.apply_damage(10, BRUTE)
+				var/mob/living/simple_animal/pet/corgi/notIan = new(get_turf(M))
+				notIan.color = "#1B1B1C"
+				notIan.name = "blob corgi"
+				notIan.desc = "A mass of animated blob flesh. You aren't sure how it exists."
+				notIan.say("AUUUUUU")
+			if(10)
+				message_living =  " You start tripping out. Woah, dude..."
+				M.druggy += 10
+				M.hallucination += 10
+				M.apply_damage(10, TOX)
+		if(show_message)
+			send_message(M)
+
 datum/reagent/blob/proc/reagent_vortex(var/mob/living/M as mob, var/setting_type)
 	var/turf/pull = get_turf(M)
 	for(var/atom/movable/X in range(4,pull))
