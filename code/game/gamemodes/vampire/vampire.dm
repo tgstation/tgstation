@@ -580,7 +580,7 @@ You are weak to holy things and starlight. Don't go into space and avoid the Cha
 		if(prob(35))
 			src << "<span class='danger'>This ground is blessed. Get away, or splatter it with blood to make it safe for you.</span>"
 
-	if(!((VAMP_MATURE in vampire.powers)) && get_area(src) == /area/chapel) //stay out of the chapel unless you want to turn into a pile of ashes
+	if(!((VAMP_MATURE in mind.vampire.powers)) && get_area(src) == /area/chapel) //stay out of the chapel unless you want to turn into a pile of ashes
 		mind.vampire.nullified = max(5, mind.vampire.nullified + 2)
 		if(prob(35))
 			src << "<span class='sinister'>You feel yourself growing weaker.</span>"
