@@ -101,8 +101,9 @@ Pipelines + Other Objects -> Pipe network
 /obj/machinery/atmospherics/Deconstruct()
 	if(can_unwrench)
 		var/turf/T = loc
-		stored.loc = T
-		transfer_fingerprints_to(stored)
+		if(stored)
+			stored.loc = T
+			transfer_fingerprints_to(stored)
 
 	qdel(src)
 

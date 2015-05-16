@@ -37,9 +37,9 @@
 
 //could be used to postpone a costly subsystem for one cycle
 //for instance, during cpu intensive operations like explosions
-/datum/subsystem/proc/postpone()
+/datum/subsystem/proc/postpone(var/cycles = 1)
 	if(next_fire - world.time < wait)
-		next_fire += wait
+		next_fire += (wait*cycles)
 
 //usually called via datum/subsystem/New() when replacing a subsystem (i.e. due to a recurring crash)
 //should attempt to salvage what it can from the old instance of subsystem
