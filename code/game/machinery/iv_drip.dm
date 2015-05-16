@@ -107,7 +107,7 @@
 				if(istype(beaker, /obj/item/weapon/reagent_containers/blood))
 					// speed up transfer on blood packs
 					transfer_amount = 4
-				beaker.reagents.reaction(attached, INGEST, 0,0) //make reagents reacts, but don't spam messages
+				beaker.reagents.reaction(attached, INGEST, 1,0) //make reagents reacts, but don't spam messages
 				beaker.reagents.trans_to(attached, transfer_amount)
 				update_icon()
 
