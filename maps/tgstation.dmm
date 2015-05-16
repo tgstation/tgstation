@@ -11239,7 +11239,7 @@
 "eig" = (/obj/structure/cable{d1 = 4; d2 = 8; icon_state = "4-8"},/obj/item/trash/tray,/obj/machinery/atmospherics/pipe/simple/supply/hidden{dir = 4},/turf/simulated/floor/plating,/area/maintenance/asmaint)
 "eih" = (/obj/machinery/atmospherics/trinary/filter{dir = 4; filter_type = 2; icon_state = "intact_on"; name = "Gas filter (Vox N2 tank)"; on = 1},/turf/simulated/floor/vox,/area/vox_trading_post/atmos)
 "eii" = (/obj/machinery/atmospherics/pipe/simple/yellow/visible{dir = 9},/turf/simulated/floor/vox,/area/vox_trading_post/atmos)
-"eij" = (/obj/structure/window/full/reinforced,/obj/structure/window/reinforced{dir = 8},/obj/structure/window/reinforced{dir = 4},/obj/structure/window/reinforced,/obj/structure/grille,/obj/structure/window/reinforced,/turf/simulated/floor/plating/vox,/area/vox_trading_post/atmos)
+"eij" = (/obj/structure/window/full/reinforced,/obj/structure/window/reinforced{dir = 8},/obj/structure/window/reinforced{dir = 4},/obj/structure/window/reinforced,/obj/structure/grille,/obj/structure/window/reinforced,/obj/machinery/atmospherics/pipe/simple/supply/hidden{dir = 6},/turf/simulated/floor/plating/vox,/area/vox_trading_post/atmos)
 "eik" = (/obj/machinery/atmospherics/unary/outlet_injector{dir = 8; frequency = 1441; icon_state = "on"; id_tag = "vox_in"; on = 1},/obj/effect/decal/warning_stripes{icon_state = "bot"},/turf/simulated/floor/engine{name = "n2 floor"; nitrogen = 100000; oxygen = 0},/area/vox_trading_post/atmos)
 "eil" = (/obj/structure/closet/emcloset/vox,/turf/simulated/floor/vox,/area/vox_trading_post/trade_processing)
 "eim" = (/obj/structure/closet/emcloset/vox,/obj/machinery/light,/turf/simulated/floor/vox,/area/vox_trading_post/trade_processing)
