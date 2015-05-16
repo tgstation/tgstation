@@ -458,9 +458,6 @@
 			break
 	return selected_record
 
-/obj/machinery/computer/cloning/process()
-	update_icon()
-
 /obj/machinery/computer/cloning/update_icon()
 	overlays = 0
 	if(stat & BROKEN)

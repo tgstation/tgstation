@@ -219,6 +219,8 @@
 
 	src.icon_state = "pod_1"
 
+	connected.update_icon()
+
 	//Get the clone body ready
 	H.dna = R.dna.Clone()
 	H.dna.species = R.dna.species
@@ -425,6 +427,8 @@
 		src.biomass -= CLONE_BIOMASS/resource_efficiency //Improve parts to use less biomass
 	else
 		biomass = 0
+
+	connected.update_icon()
 
 	return
 
