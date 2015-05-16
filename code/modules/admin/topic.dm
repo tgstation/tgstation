@@ -71,6 +71,22 @@
 				log_admin("[key_name(usr)] created a emergency response team.")
 				if(!src.makeEmergencyresponseteam())
 					usr << "<span class='danger'>Unfortunatly there were not enough candidates available.</span>"
+			if("14")
+				message_admins("[key_name(usr)] is creating an abductor team...")
+				if(src.makeAbductorTeam())
+					message_admins("[key_name(usr)] created an abductor team.")
+					log_admin("[key_name(usr)] created an abductor team.")
+				else
+					message_admins("[key_name_admin(usr)] tried to create an abductor team. Unfortunatly there were not enough candidates available.")
+					log_admin("[key_name(usr)] failed to create an abductor team.")
+
+			if("15")
+				if(src.makeShadowling())
+					message_admins("[key_name(usr)] created a shadowling.")
+					log_admin("[key_name(usr)] created a shadowling.")
+				else
+					message_admins("[key_name_admin(usr)] tried to create a shadowling. Unfortunately, there were no candidates available.")
+					log_admin("[key_name(usr)] failed to create a shadowling.")
 
 	else if(href_list["forceevent"])
 		var/datum/round_event_control/E = locate(href_list["forceevent"]) in SSevent.control

@@ -23,6 +23,7 @@ client/proc/one_click_antag()
 		<a href='?src=\ref[src];makeAntag=10'>Make Deathsquad (Requires Ghosts)</a><br>
 		<a href='?src=\ref[src];makeAntag=13'>Make Emergency Response Team (Requires Ghosts)</a><br>
 		<a href='?src=\ref[src];makeAntag=14'>Make Abductor Team (Requires Ghosts)</a><br>
+		<a href='?src=\ref[src];makeAntag=15'>Make Shadowling</a><br>
 		"}
 /* These dont work just yet
 	Ninja, aliens and deathsquad I have not looked into yet
@@ -523,33 +524,24 @@ client/proc/one_click_antag()
 
 	return
 
-//Abductors
 /datum/admins/proc/makeAbductorTeam()
-	var/list/mob/dead/observer/candidates = list()
-	var/time_passed = world.time
-
-	for(var/mob/dead/observer/G in player_list)
-		spawn(0)
-			switch(alert(G,"Do you wish to be considered for Abductor Team?","Please answer in 30 seconds!","Yes","No"))
-				if("Yes")
-					if((world.time-time_passed)>300)//If more than 30 game seconds passed.
-						return
-					candidates += G
-				if("No")
-					return
-				else
-					return
-	sleep(300)
-
-	for(var/mob/dead/observer/G in candidates)
-		if(!G.key)
-			candidates.Remove(G)
+	var/list/mob/dead/observer/candidates = getCandidates("Do you wish to be considered for an Abductor Team?", "abductor", null)
 
 	if(candidates.len >= 2)
 		//Oh god why we can't have static functions
-		var/teams_finished = round(ticker.mode.abductors.len / 2)
+		var/teams_finished = 0
+		if(ticker.mode.config_tag == "abduction")
+			var/datum/game_mode/abduction/A = ticker.mode
+			teams_finished = A.teams
+		else
+			teams_finished = round(ticker.mode.abductors.len / 2)
 		var/number =  teams_finished + 1
-		var/datum/game_mode/abduction/temp = new
+
+		var/datum/game_mode/abduction/temp
+		if(ticker.mode.config_tag == "abduction")
+			temp = ticker.mode
+		else
+			temp = new
 
 		var/agent_mind = pick(candidates)
 		candidates -= agent_mind
@@ -568,13 +560,48 @@ client/proc/one_click_antag()
 		temp.team_names.len = number
 		temp.scientists[number] = scientist_mind
 		temp.agents[number] = agent_mind
-		temp.abductors = list(agent_mind,scientist_mind)
-		temp.make_abductor_team(number)
+		temp.abductors |= list(agent_mind,scientist_mind)
+		temp.make_abductor_team(number,preset_scientist=scientist_mind,preset_agent=agent_mind)
 		temp.post_setup_team(number)
-		ticker.mode.abductors += temp.abductors
+		if(ticker.mode.config_tag == "abduction")
+			var/datum/game_mode/abduction/A = ticker.mode
+			A.teams += 1
+		else
+			ticker.mode.abductors |= temp.abductors
+
 		return 1
 	else
 		return
+
+/datum/admins/proc/makeShadowling()
+	var/datum/game_mode/shadowling/temp = new
+	if(config.protect_roles_from_antagonist)
+		temp.restricted_jobs += temp.protected_jobs
+	if(config.protect_assistant_from_antagonist)
+		temp.restricted_jobs += "Assistant"
+	var/list/mob/living/carbon/human/candidates = list()
+	var/mob/living/carbon/human/H = null
+	for(var/mob/living/carbon/human/applicant in player_list)
+		if(applicant.client.prefs.be_special & BE_SHADOWLING)
+			if(!applicant.stat)
+				if(applicant.mind)
+					if(!applicant.mind.special_role)
+						if(temp.age_check(applicant.client))
+							if(!(applicant.job in temp.restricted_jobs))
+								if(!(is_shadow_or_thrall(applicant)))
+									candidates += applicant
+
+	if(candidates.len)
+		H = pick(candidates)
+		ticker.mode.shadows += H.mind
+		H.mind.special_role = "shadowling"
+		H << "<span class='shadowling'><b><i>Something stirs in the space between worlds. A red light floods your mind, and suddenly you understand. Your human disguise has served you well, but it \
+		is time you cast it away. You are a shadowling, and you are to ascend at all costs.</b></i></span>"
+		ticker.mode.finalize_shadowling(H.mind)
+		message_admins("[H] has been made into a shadowling.")
+		candidates.Remove(H)
+		return 1
+	return 0
 
 /datum/admins/proc/makeBody(var/mob/dead/observer/G_found) // Uses stripped down and bastardized code from respawn character
 	if(!G_found || !G_found.key)	return
@@ -587,3 +614,43 @@ client/proc/one_click_antag()
 	new_character.key = G_found.key
 
 	return new_character
+
+
+/datum/admins/proc/getCandidates(var/Question, var/jobbanType, var/datum/game_mode/gametypeCheck)
+	var/list/mob/dead/observer/candidates = list()
+	var/time_passed = world.time
+	if (!Question)
+		Question = "Would you like to be a special role?"
+
+	for(var/mob/dead/observer/G in player_list)
+		if(!G.key || !G.client)
+			continue
+		if (gametypeCheck)
+			if(!gametypeCheck.age_check(G.client))
+				continue
+		if (jobbanType)
+			if(jobban_isbanned(G, jobbanType) || jobban_isbanned(G, "Syndicate"))
+				continue
+		spawn(0)
+			G << 'sound/misc/notice2.ogg' //Alerting them to their consideration
+			switch(alert(G,Question,"Please answer in 30 seconds!","Yes","No"))
+				if("Yes")
+					G << "<span class='notice'>Choice registered: Yes.</span>"
+					if((world.time-time_passed)>300)//If more than 30 game seconds passed.
+						G << "<span class='danger'>Sorry, you were too late for the consideration!</span>"
+						G << 'sound/machines/buzz-sigh.ogg'
+						return
+					candidates += G
+				if("No")
+					G << "<span class='danger'>Choice registered: No.</span>"
+					return
+				else
+					return
+	sleep(300)
+
+	//Check all our candidates, to make sure they didn't log off during the 30 second wait period.
+	for(var/mob/dead/observer/G in candidates)
+		if(!G.key || !G.client)
+			candidates.Remove(G)
+
+	return candidates
