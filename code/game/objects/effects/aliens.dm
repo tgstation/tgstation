@@ -23,6 +23,7 @@
 	anchored = 1
 	var/health = 200
 	var/resintype = null
+	canSmoothWith = list(/obj/structure/alien/resin)
 /obj/structure/alien/resin/New(location)
 	relativewall_neighbours()
 	..()
@@ -50,8 +51,8 @@
 	resintype = "wall"
 
 /obj/structure/alien/resin/wall/New()
-	relativewall_neighbours()
 	..()
+	relativewall_neighbours()
 
 /obj/structure/alien/resin/wall/BlockSuperconductivity()
 	return 1
@@ -59,7 +60,7 @@
 /obj/structure/alien/resin/wall/shadowling //For chrysalis
 	name = "chrysalis wall"
 	desc = "Some sort of purple substance in an egglike shape. It pulses and throbs from within and seems impenetrable."
-	health = INFINITY	
+	health = INFINITY
 
 /obj/structure/alien/resin/membrane
 	name = "resin membrane"
