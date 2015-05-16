@@ -529,3 +529,10 @@
 	icon_state = "gokugi"
 	item_state = "gokugi"
 	_color = "gokugi"
+
+/obj/item/clothing/under/doomguy
+	name = "Doomguy's pants"
+	desc = ""
+	icon_state = "doom"
+	item_state = "doom"
+	_color = "doom"

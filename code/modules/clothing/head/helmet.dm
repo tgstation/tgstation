@@ -178,3 +178,14 @@
 	item_state = "joehelmet"
 	flags_inv = HIDEMASK|HIDEEARS|HIDEHAIR|HIDEEYES
 	siemens_coefficient = 1
+
+/obj/item/clothing/head/helmet/doomguy
+	name = "Doomguy's helmet"
+	desc = ""
+	icon_state = "doom"
+	flags = FPRINT
+	body_parts_covered = HEAD|EARS
+	item_state = "doom"
+	armor = list(melee = 50, bullet = 40, laser = 40,energy = 40, bomb = 5, bio = 0, rad = 0)
+	flags_inv = HIDEEARS|HIDEHAIR
+	siemens_coefficient = 1
