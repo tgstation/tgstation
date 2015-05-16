@@ -410,11 +410,12 @@ var/shuttle_call/shuttle_calls[0]
 
 /obj/machinery/computer/communications/update_icon()
 	..()
-	icon_state = "[emagged ? "[initial(icon_state)]-emag" : "[initial(icon_state)]"]"
+	var/initial_icon = initial(icon_state)
+	icon_state = "[emagged ? "[initial_icon]-emag" : "[initial_icon]"]"
 	if(stat & BROKEN)
-		icon_state = "[initial(icon_state)]b"
+		icon_state = "[initial_icon]b"
 	else if(stat & NOPOWER)
-		icon_state = "[initial(icon_state)]0"
+		icon_state = "[initial_icon]0"
 
 
 /obj/machinery/computer/communications/proc/setCurrentMessage(var/mob/user,var/value)

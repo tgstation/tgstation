@@ -155,8 +155,6 @@ proc/move_mining_shuttle()
 	..()
 	src.req_access = list()
 	usr << "You disable the console's access requirement."
-	new/obj/effect/effect/sparks(get_turf(src))
-	playsound(loc,"sparks",50,1)
 
 /******************************Lantern*******************************/
 
