@@ -492,7 +492,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 			force = 5
 			damtype = "fire"
 			hitsound = 'sound/items/welder.ogg'
-			attack_verb = list("burnt", "signed")
+			attack_verb = list("burnt", "singed")
 			if(istype(src, /obj/item/weapon/lighter/zippo) )
 				user.visible_message("Without even breaking stride, [user] flips open and lights [src] in one smooth movement.", "<span class='notice'>Without even breaking stride, you flip open and lights [src] in one smooth movement.</span>")
 			else
