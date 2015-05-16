@@ -71,7 +71,7 @@
 	var/datum/effect/effect/system/spark_spread/S = new
 	S.set_up(10,0,place)
 	S.start()
-	sleep(80)
+	sleep(40)
 	qdel(F)
 	flick("alien-pad", src)
 	for(var/mob/living/target in src.loc)
