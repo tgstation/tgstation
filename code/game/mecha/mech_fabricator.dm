@@ -204,6 +204,8 @@
 	return 1
 
 /obj/machinery/mecha_part_fabricator/proc/process_queue()
+	if(!istype(queue) || !queue.len)
+		return
 	var/datum/design/D = queue[1]
 	if(!D)
 		remove_from_queue(1)
