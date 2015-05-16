@@ -18,7 +18,7 @@
 	desc = "Worn by robust fighters, flying high to defeat their foes!"
 	icon_state = "luchag"
 	item_state = "luchag"
-	flags = BLOCKHAIR | MASKCOVERSMOUTH
+	flags = BLOCKHAIR
 	flags_inv = HIDEFACE
 	w_class = 2
 

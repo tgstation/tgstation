@@ -142,7 +142,7 @@
 	name = "gladiator helmet"
 	desc = "Ave, Imperator, morituri te salutant."
 	icon_state = "gladiator"
-	flags = HEADCOVERSEYES|BLOCKHAIR|HEADCOVERSMOUTH
+	flags = HEADCOVERSEYES|BLOCKHAIR
 	item_state = "gladiator"
 	flags_inv = HIDEMASK|HIDEEARS|HIDEEYES
 
