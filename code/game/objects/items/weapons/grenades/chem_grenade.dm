@@ -195,9 +195,8 @@
 			if(A in mycontents) continue
 			if(!(A in viewable)) continue
 			reactable |= A
-	var/fraction = (reagents.total_volume/reactable.len) - reagents.total_volume
 	for(var/atom/A in reactable)
-		reagents.reaction(A, TOUCH, fraction)
+		reagents.reaction(A, TOUCH)
 
 	invisibility = INVISIBILITY_MAXIMUM		//Why am i doing this?
 	spawn(50)		   //To make sure all reagents can work
