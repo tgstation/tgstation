@@ -157,8 +157,10 @@ proc/secondaryexplosion(turf/epicenter, range)
 	set category = "Debug"
 
 	var/newmode = alert("Use reactionary explosions?","Check Bomb Impact", "Yes", "No")
+	var/turf/epicenter = get_turf(mob)
+	if(!epicenter)
+		return
 
-	var/turf/epicenter = get_turf(src)
 	var/dev = 0
 	var/heavy = 0
 	var/light = 0
