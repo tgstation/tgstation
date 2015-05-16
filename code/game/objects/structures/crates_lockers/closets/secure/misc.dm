@@ -2,12 +2,8 @@
 	name = "commander's closet"
 	desc = "Emergency Response Team equipment locker."
 	req_access = list(access_cent_captain)
-	icon_state = "capsecure1"
-	icon_closed = "capsecure"
-	icon_locked = "capsecure1"
-	icon_opened = "capsecureopen"
-	icon_broken = "capsecurebroken"
-	icon_off = "capsecureoff"
+	icon_state = "cap"
+
 
 /obj/structure/closet/secure_closet/ertCom/New()
 	..()
@@ -30,12 +26,7 @@
 	name = "security closet"
 	desc = "Emergency Response Team equipment locker."
 	req_access = list(access_cent_specops)
-	icon_state = "hossecure1"
-	icon_closed = "hossecure"
-	icon_locked = "hossecure1"
-	icon_opened = "hossecureopen"
-	icon_broken = "hossecurebroken"
-	icon_off = "hossecureoff"
+	icon_state = "hos"
 
 /obj/structure/closet/secure_closet/ertSec/New()
 	..()
@@ -51,12 +42,7 @@
 	name = "medical closet"
 	desc = "Emergency Response Team equipment locker."
 	req_access = list(access_cent_medical)
-	icon_state = "cmosecure1"
-	icon_closed = "cmosecure"
-	icon_locked = "cmosecure1"
-	icon_opened = "cmosecureopen"
-	icon_broken = "cmosecurebroken"
-	icon_off = "cmosecureoff"
+	icon_state = "cmo"
 
 /obj/structure/closet/secure_closet/ertMed/New()
 	..()
@@ -74,12 +60,7 @@
 	name = "engineer closet"
 	desc = "Emergency Response Team equipment locker."
 	req_access = list(access_cent_storage)
-	icon_state = "securece1"
-	icon_closed = "securece"
-	icon_locked = "securece1"
-	icon_opened = "secureceopen"
-	icon_broken = "securecebroken"
-	icon_off = "secureceoff"
+	icon_state = "ce"
 
 /obj/structure/closet/secure_closet/ertEngi/New()
 	..()

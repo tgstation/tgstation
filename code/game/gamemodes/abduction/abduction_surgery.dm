@@ -5,6 +5,7 @@
 	location = "chest"
 	user_species_restricted = 1
 	user_species_ids = list("abductor")
+	ignore_clothes = 1
 
 /datum/surgery_step/extract_organ
 	accept_hand = 1

@@ -6,6 +6,9 @@
 	density = 1
 	blocks_air = 1
 
+/turf/unsimulated/wall/abductor
+	icon_state = "alien1"
+
 /turf/unsimulated/wall/normal
 	icon_state = "wall"
 
