@@ -1,0 +1,6 @@
+author: Dylanstrategie
+delete-after: True
+changes:
+  - tweak: Delay added to regular lighters to reduce spamming
+  - spellcheck: Ensure some typecasts don't accord incorrectly for cigarette-related items
+  - bugfix: Fix some update_brightness() instructions firing before messages, causing one to light lit lighters, notably
