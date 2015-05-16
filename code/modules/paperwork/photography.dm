@@ -240,7 +240,7 @@
 	temp.Blend("#000", ICON_OVERLAY)
 	temp.Blend(camera_get_icon(turfs, target), ICON_OVERLAY)
 
-	if(!issilicon(user))
+	if(!issilicon(user) || ismommi(user))
 		printpicture(user, temp, mobs, flag)
 	else
 		aipicture(user, temp, mobs, isAi, blueprints)
