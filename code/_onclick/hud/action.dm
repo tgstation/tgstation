@@ -23,6 +23,7 @@
 	var/button_icon_state = "default"
 	var/background_icon_state = "bg_default"
 	var/mob/living/owner
+	var/atom/movable/holder //Supposed to be what item owns this button
 
 /datum/action/New(var/Target)
 	target = Target

@@ -41,12 +41,14 @@
 			if(istype(loc, /mob/living/carbon/human))
 				var/mob/living/carbon/human/H = loc
 				H.update_inv_wear_suit()
+			ActivateStealth()
 			return
 
 
 
 /obj/item/clothing/suit/armor/abductor/vest/proc/SetDisguise(var/datum/icon_snapshot/entry)
 	disguise = entry
+	ActivateStealth()
 
 /obj/item/clothing/suit/armor/abductor/vest/proc/ActivateStealth()
 	if(disguise == null)

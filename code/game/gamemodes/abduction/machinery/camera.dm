@@ -21,25 +21,34 @@
 
 /obj/machinery/computer/camera_advanced/abductor/GrantActions(var/mob/living/carbon/user)
 	off_action.target = user
+	off_action.holder = src
 	off_action.Grant(user)
 
 	jump_action.target = user
+	jump_action.holder = src
 	jump_action.Grant(user)
 	//TODO : add null checks
-	tele_in_action.target = console.pad
-	tele_in_action.Grant(user)
+	if(console)
+		if (console.pad)
+			tele_in_action.target = console.pad
+			tele_in_action.holder = src
+			tele_in_action.Grant(user)
 
-	tele_out_action.target = console
-	tele_out_action.Grant(user)
+			tele_out_action.target = console
+			tele_out_action.holder = src
+			tele_out_action.Grant(user)
 
-	tele_self_action.target = console.pad
-	tele_self_action.Grant(user)
+			tele_self_action.target = console.pad
+			tele_self_action.holder = src
+			tele_self_action.Grant(user)
 
-	vest_mode_action.target = console
-	vest_mode_action.Grant(user)
+		vest_mode_action.target = console
+		vest_mode_action.holder = src
+		vest_mode_action.Grant(user)
 
-	vest_disguise_action.target = console
-	vest_disguise_action.Grant(user)
+		vest_disguise_action.target = console
+		vest_disguise_action.holder = src
+		vest_disguise_action.Grant(user)
 
 /obj/machinery/computer/camera_advanced/abductor/proc/IsAbductor(var/mob/living/carbon/human/H)
 	return H.dna.species.id == "abductor"
@@ -57,8 +66,10 @@
 	if(!target || !iscarbon(target))
 		return
 	var/mob/living/carbon/C = target
+	var/obj/machinery/computer/camera_advanced/abductor/origin = holder
+	if (!C.remote_control)
+		C.remote_control = origin.eyeobj
 	var/mob/camera/aiEye/remote/remote_eye = C.remote_control
-	var/obj/machinery/computer/camera_advanced/abductor/origin = remote_eye.origin
 	C.remote_view = 0
 	origin.current_user = null
 	origin.jump_action.Remove(C)
@@ -70,7 +81,8 @@
 	if(C.client)
 		C.client.perspective = MOB_PERSPECTIVE
 		C.client.eye = src
-		C.client.images -= remote_eye.user_image
+		if(remote_eye)
+			C.client.images -= remote_eye.user_image
 	C.remote_control = null
 	C.unset_machine()
 	src.Remove(C)
