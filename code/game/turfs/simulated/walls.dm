@@ -31,7 +31,7 @@
 	if(src.engraving)
 		user << src.engraving
 
-/turf/simulated/wall/proc/dismantle_wall(devastated = 0, explode = 0)
+/turf/simulated/wall/dismantle_wall(devastated = 0, explode = 0)
 	if(istype(src, /turf/simulated/wall/r_wall)) //Reinforced girder has deconstruction steps too. If no girder, drop ONE plasteel sheet AND rods
 		if(!devastated)
 			getFromPool(/obj/item/stack/sheet/plasteel, get_turf(src))

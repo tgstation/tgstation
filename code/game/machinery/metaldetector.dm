@@ -44,27 +44,23 @@
 			&& !istype(perp.r_hand, /obj/item/weapon/gun/energy/laser/practice))
 				threatcount += 4
 
-		if(ishuman(perp))
-			if(istype(perp.belt, /obj/item/weapon/gun) || istype(perp.belt, /obj/item/weapon/melee))
-				if(!istype(perp.belt, /obj/item/weapon/gun/energy/laser/bluetag) \
-				&& !istype(perp.belt, /obj/item/weapon/gun/energy/laser/redtag) \
-				&& !istype(perp.belt, /obj/item/weapon/gun/energy/laser/practice))
-					threatcount += 2
-
 		if(istype(perp.back, /obj/item/weapon/gun) || istype(perp.back, /obj/item/weapon/melee))
 			if(!istype(perp.back, /obj/item/weapon/gun/energy/laser/bluetag) \
 			&& !istype(perp.back, /obj/item/weapon/gun/energy/laser/redtag) \
 			&& !istype(perp.back, /obj/item/weapon/gun/energy/laser/practice))
 				threatcount += 2
 
-
-
-		if(istype(perp.s_store, /obj/item/weapon/gun) || istype(perp.s_store, /obj/item/weapon/melee))
-			if(!istype(perp.s_store, /obj/item/weapon/gun/energy/laser/bluetag) \
-			&& !istype(perp.s_store, /obj/item/weapon/gun/energy/laser/redtag) \
-			&& !istype(perp.s_store, /obj/item/weapon/gun/energy/laser/practice))
-				threatcount += 2
-
+		if(ishuman(perp))
+			if(istype(perp.belt, /obj/item/weapon/gun) || istype(perp.belt, /obj/item/weapon/melee))
+				if(!istype(perp.belt, /obj/item/weapon/gun/energy/laser/bluetag) \
+				&& !istype(perp.belt, /obj/item/weapon/gun/energy/laser/redtag) \
+				&& !istype(perp.belt, /obj/item/weapon/gun/energy/laser/practice))
+					threatcount += 2
+			if(istype(perp.s_store, /obj/item/weapon/gun) || istype(perp.s_store, /obj/item/weapon/melee))
+				if(!istype(perp.s_store, /obj/item/weapon/gun/energy/laser/bluetag) \
+				&& !istype(perp.s_store, /obj/item/weapon/gun/energy/laser/redtag) \
+				&& !istype(perp.s_store, /obj/item/weapon/gun/energy/laser/practice))
+					threatcount += 2
 
 		if(scanmode)
 			//
