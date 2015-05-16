@@ -6,7 +6,8 @@
 	if(issilicon(other))
 		return 1
 
-	if(dexterity_check())
-		return 1
+	if(speaking && speaking.name == "Sol Common")
+		if(dexterity_check())
+			return 1
 
 	return ..()
