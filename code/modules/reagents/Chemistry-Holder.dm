@@ -428,11 +428,11 @@ datum/reagents/proc/clear_reagents()
 datum/reagents/proc/reaction(var/atom/A, var/method=TOUCH, var/volume_modifier=0,var/show_message=1)
 	for(var/datum/reagent/R in reagent_list)
 		if(ismob(A))
-			R.reaction_mob(A, method, R.volume+volume_modifier, show_message)
+			R.reaction_mob(A, method, R.volume, show_message)
 		if(isturf(A))
-			R.reaction_turf(A, R.volume+volume_modifier, show_message)
+			R.reaction_turf(A, R.volume, show_message)
 		if(isobj(A))
-			R.reaction_obj(A, R.volume+volume_modifier, show_message)
+			R.reaction_obj(A, R.volume, show_message)
 
 	return
 
