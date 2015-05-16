@@ -1629,6 +1629,9 @@ var/year_integer = text2num(year) // = 2013???
 		return 1
 	return 0
 
+/obj/mecha/allow_drop()
+	return 0
+
 
 //////////////////////////////////////////
 ////////  Mecha global iterators  ////////
