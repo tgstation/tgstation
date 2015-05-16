@@ -518,7 +518,7 @@ datum/reagent/silicon
 
 datum/reagent/fuel
 	name = "Welding fuel"
-	id = "fuel"
+	id = "welding_fuel"
 	description = "Required for welders. Flamable."
 	color = "#660000" // rgb: 102, 0, 0
 

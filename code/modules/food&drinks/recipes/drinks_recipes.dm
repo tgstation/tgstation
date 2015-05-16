@@ -206,7 +206,7 @@
 	name = "Hooch"
 	id = "hooch"
 	result = "hooch"
-	required_reagents = list ("ethanol" = 2, "fuel" = 1)
+	required_reagents = list ("ethanol" = 2, "welding_fuel" = 1)
 	required_catalysts = list("enzyme" = 1)
 	result_amount = 3
 
