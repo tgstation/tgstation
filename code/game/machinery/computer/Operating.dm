@@ -101,16 +101,7 @@
 
 /obj/machinery/computer/operating/update_icon()
 	..()
-	icon_state = initial(icon_state)
-	// Broken
-	if(stat & BROKEN)
-		icon_state = "[initial(icon_state)]b"
-
-	// Powered
-	else if(stat & NOPOWER)
-		icon_state = "[initial(icon_state)]0"
-
-	else
+	if(!(stat & (BROKEN | NOPOWER)))
 		updatemodules()
 		if(!isnull(src.optable) && (src.optable.check_victim()))
 			src.victim = src.optable.victim
