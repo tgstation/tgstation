@@ -1108,14 +1108,12 @@
 	var/flavor_text = "<span  class='rose'>[user] lights \the [name] with \the [I].</span>"
 	if(!lit && molotov == 1)
 		lit = 1
-		for(var/mob/O in viewers(usr, null))
-			O.show_message(flavor_text, 1)
+		visible_message(flavor_text)
 		processing_objects.Add(src)
 		update_icon()
 	if(!lit && flammable)
 		lit = 1
-		for(var/mob/O in viewers(usr, null))
-			O.show_message(flavor_text, 1)
+		visible_message(flavor_text)
 		flammable = 0
 		name = "Flaming [name]"
 		desc += " Damn that looks hot!"
@@ -1124,15 +1122,9 @@
 
 /obj/item/weapon/reagent_containers/food/drinks/proc/update_brightness(var/mob/user = null)
 	if(lit)
-		if(loc == user)
-			user.SetLuminosity(user.luminosity + brightness_lit)
-		else if(isturf(loc))
-			SetLuminosity(src.brightness_lit)
+		SetLuminosity(src.brightness_lit)
 	else
-		if(loc == user)
-			user.SetLuminosity(user.luminosity - brightness_lit)
-		else if(isturf(loc))
-			SetLuminosity(0)
+		SetLuminosity(0)
 
 /obj/item/weapon/reagent_containers/food/drinks/pickup(mob/user)
 	if(lit && molotov)
