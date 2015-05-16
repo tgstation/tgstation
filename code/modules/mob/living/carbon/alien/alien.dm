@@ -208,10 +208,40 @@
 	return
 
 //This proc is NOT useless, we make it so that aliens have an halved siemens_coeff. Which means they take half damage
+//I will personally find the retard who made all these VARIABLES into FUCKING CONSTANTS. THE FUCKING SOURCE AND THE SHOCK DAMAGE, CONSTANTS ? YOU THINK ?
 /mob/living/carbon/alien/electrocute_act(const/shock_damage, const/obj/source, const/siemens_coeff = 1)
 
-	shock_damage = shock_damage * 0.5 //Code-Hacks Industry Certified
-	..()
+	var/damage = shock_damage * siemens_coeff
+
+	if(damage <= 0)
+		damage = 0
+
+	if(take_overall_damage(0, damage, "[source]") == 0) // godmode
+		return 0
+
+	//src.burn_skin(shock_damage)
+	//src.adjustFireLoss(shock_damage) //burn_skin will do this for us
+	//src.updatehealth()
+
+	visible_message( \
+		"<span class='warning'>[src] was shocked by the [source]!</span>", \
+		"<span class='danger'>You feel a powerful shock course through your body!</span>", \
+		"<span class='warning'>You hear a heavy electrical crack.</span>" \
+	)
+
+	//if(src.stunned < shock_damage)	src.stunned = shock_damage
+
+	Stun(10) // this should work for now, more is really silly and makes you lay there forever
+
+	//if(src.weakened < 20*siemens_coeff)	src.weakened = 20*siemens_coeff
+
+	Weaken(10)
+
+	var/datum/effect/effect/system/spark_spread/SparkSpread = new
+	SparkSpread.set_up(5, 1, loc)
+	SparkSpread.start()
+
+	return damage/2 //Fuck this I'm not reworking your abortion of a proc, here's a copy-paste with not fucked code
 
 /*----------------------------------------
 Proc: AddInfectionImages()
