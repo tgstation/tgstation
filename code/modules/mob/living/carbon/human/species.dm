@@ -85,7 +85,8 @@
 
 	var/g = (H.gender == FEMALE) ? "f" : "m"
 
-	if(!config.mutant_colors)
+
+	if(!config || !config.mutant_colors)
 		H.dna.mutant_color = default_color
 
 	if(MUTCOLORS in specflags)
