@@ -79,9 +79,6 @@
 		return
 	close_machine(target)
 
-/obj/machinery/atmospherics/unary/cryo_cell/allow_drop()
-	return 0
-
 /obj/machinery/atmospherics/unary/cryo_cell/relaymove(var/mob/user)
 	open_machine()
 
