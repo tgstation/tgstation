@@ -14,7 +14,7 @@
 
 	var/time_coeff = 1.5 //can be upgraded with research
 	var/resource_coeff = 1.5 //can be upgraded with research
-	max_material_storage = 200000
+	max_material_storage = 225000 //All this could probably be done better with a list but meh.
 
 	var/datum/research/files
 	var/id
@@ -55,8 +55,8 @@
 /obj/machinery/r_n_d/fabricator/RefreshParts()
 	var/T = 0
 	for(var/obj/item/weapon/stock_parts/matter_bin/M in component_parts)
-		T += M.rating
-	max_material_storage = (initial(max_material_storage)+(T * 37500))
+		T += M.rating - 1
+	max_material_storage = (initial(max_material_storage)+(T * 75000))
 
 	T = 0
 	for(var/obj/item/weapon/stock_parts/micro_laser/Ma in component_parts)
@@ -413,7 +413,7 @@
 		src.visible_message("\icon[src] <b>[src]</b> beeps, \"Succesfully synchronized with R&D server. New data processed.\"")
 	if(!silent && !found)
 		temp = "Unable to connect to local R&D Database.<br>Please check your connections and try again.<br><a href='?src=\ref[src];clear_temp=1'>Return</a>"
-		src.updateUsrDialog()
+	src.updateUsrDialog()
 
 // Tell the machine to start processing the queue on the next process().
 /obj/machinery/r_n_d/fabricator/proc/start_processing_queue()
