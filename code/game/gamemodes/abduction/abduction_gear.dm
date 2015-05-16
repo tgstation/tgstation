@@ -548,8 +548,7 @@ Congratulations! You are now trained for xenobiology research!"}
 /obj/structure/stool/bed/abductor //Doesn't this already exist somewhere else?
 	name = "resting contraption"
 	desc = "This looks similar to contraptions from earth. Could aliens be stealing our technology?"
-	icon = 'icons/obj/abductor.dmi'
-	icon_state = "bed"
+	icon_state = "abed" //Until pillows get added I guess
 
 /obj/structure/table/abductor
 	name = "alien table"
