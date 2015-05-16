@@ -208,8 +208,9 @@
 	return
 
 //This proc is NOT useless, we make it so that aliens have an halved siemens_coeff. Which means they take half damage
-/mob/living/carbon/alien/electrocute_act(const/shock_damage, const/obj/source, const/siemens_coeff = 0.5)
+/mob/living/carbon/alien/electrocute_act(const/shock_damage, const/obj/source, const/siemens_coeff = 1)
 
+	siemens_coeff = siemens_coeff * 0.5 //Code-Hacks Industry Certified
 	..()
 
 /*----------------------------------------
