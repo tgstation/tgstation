@@ -562,6 +562,9 @@
 /turf/proc/canBuildPlating()
 	return BUILD_SILENT_FAILURE
 
+/turf/proc/dismantle_wall()
+	return
+
 /////////////////////////////////////////////////////
 
 /turf/proc/spawn_powerup()

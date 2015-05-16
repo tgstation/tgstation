@@ -263,7 +263,7 @@ It's fairly easy to fix if dealing with single letters but not so much with comp
 	return copytext(sanitize(t),1,MAX_MESSAGE_LEN)
 
 
-/proc/shake_camera(mob/M, duration, strength=1)
+/proc/shake_camera(mob/M, duration=0, strength=1)
 	if(!M || !M.client || M.shakecamera)
 		return
 	spawn(1)
