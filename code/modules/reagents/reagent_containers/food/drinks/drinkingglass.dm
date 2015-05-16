@@ -28,6 +28,11 @@
 				switch(R.id)*/
 		if (reagents.reagent_list.len > 0)
 			//mrid = R.get_master_reagent_id()
+			flammable = 0
+			if(!molotov)
+				lit = 0
+			l_color = null
+			SetLuminosity(0)
 			switch(reagents.get_master_reagent_id())
 				if("beer")
 					icon_state = "beerglass"
@@ -197,6 +202,9 @@
 					icon_state = "b52glass"
 					name = "B-52"
 					desc = "Kahlua, Irish Cream, and congac. You will get bombed."
+					l_color = "#000080"
+					if(!lit)
+						flammable = 1
 				if("atomicbomb")
 					icon_state = "atomicbombglass"
 					name = "Atomic Bomb"
