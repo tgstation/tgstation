@@ -681,7 +681,7 @@
 
 	if(!holder) return
 	if(ishuman(M))
-		if(iscult(M) && !isculthead(M) && prob(10))
+		if(iscult(M) && prob(10))
 			M << "<span class='notice'>A cooling sensation from inside you brings you an untold calmness.</span>"
 			ticker.mode.remove_cultist(M.mind)
 			for(var/mob/O in viewers(M, null))
