@@ -660,6 +660,8 @@ datum
 /datum/reagents/proc/is_empty()
 	return total_volume <= 0
 
+/datum/reagents/proc/is_full()
+	return total_volume >= maximum_volume
 ///////////////////////////////////////////////////////////////////////////////////
 
 

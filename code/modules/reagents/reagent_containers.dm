@@ -69,8 +69,11 @@ var/list/LOGGED_SPLASH_REAGENTS = list("fuel", "thermite")
 		var/obj/structure/reagent_dispensers/S = source
 		source_empty = S.is_empty()
 	else
-		warning("Called transfer_sub() with a non-compatible source type ([source.type], [source], \ref[source])")
-		return
+		ASSERT(istype(source.reagents))
+		source_empty = source.reagents.is_empty()
+		//warning("Called transfer_sub() with a non-compatible source type ([source.type], [source], \ref[source])")
+		//return
+
 
 	if (istype(target, /obj/item/weapon/reagent_containers))
 		var/obj/item/weapon/reagent_containers/T = target
@@ -80,8 +83,11 @@ var/list/LOGGED_SPLASH_REAGENTS = list("fuel", "thermite")
 		var/obj/structure/reagent_dispensers/T = target
 		target_full = T.is_full()*/
 	else
-		warning("Called transfer_sub() with a non-compatible target type ([target.type], [target], \ref[target])")
-		return
+		if(ismob(target)) return null
+		ASSERT(istype(target.reagents))
+		target_full = target.reagents.is_full()
+		//warning("Called transfer_sub() with a non-compatible target type ([target.type], [target], \ref[target])")
+		//return
 
 	// Actual transfer checks
 	if (source_empty)
@@ -131,22 +137,25 @@ var/list/LOGGED_SPLASH_REAGENTS = list("fuel", "thermite")
 	if (!istype(target) || !is_open_container())
 		return -1
 
+	var/success
 	// Transfer to container
-	if (can_send && istype(target, /obj/item/weapon/reagent_containers)/*&& target.reagents**/)
-		var/obj/item/weapon/reagent_containers/container = target
-		if (!container.is_open_container())
+	if (can_send /*&& target.reagents**/)
+		var/obj/container = target
+		if (!container.is_open_container() && istype(container,/obj/item/weapon/reagent_containers))
 			return -1
 
 		var/list/bad_reagents = reagents.get_bad_reagent_names() // Used for logging
 		var/tx_amount = transfer_sub(src, target, amount_per_transfer_from_this, user)
-		if (tx_amount > 0)
-			user << "<span class='notice'>You transfer [tx_amount] units of the solution to \the [target].</span>"
+		success = tx_amount
+		if(success)
+			if (tx_amount > 0)
+				user << "<span class='notice'>You transfer [tx_amount] units of the solution to \the [target].</span>"
 
-		// Log transfers of 'bad things' (/vg/)
-		if (tx_amount > 0 && container.log_reagents && bad_reagents && bad_reagents.len > 0)
-			log_reagents(user, src, target, tx_amount, bad_reagents)
+			// Log transfers of 'bad things' (/vg/)
+			if (tx_amount > 0 && container.log_reagents && bad_reagents && bad_reagents.len > 0)
+				log_reagents(user, src, target, tx_amount, bad_reagents)
 
-		return tx_amount
+			return tx_amount
 	// Transfer from dispenser
 	else if (can_receive && istype(target, /obj/structure/reagent_dispensers))
 		var/tx_amount = transfer_sub(target, src, target:amount_per_transfer_from_this, user)
@@ -154,27 +163,30 @@ var/list/LOGGED_SPLASH_REAGENTS = list("fuel", "thermite")
 			user << "<span class='notice'>You fill \the [src][src.is_full() ? " to the brim" : ""] with [tx_amount] units of the contents of \the [target].</span>"
 
 		return tx_amount
-	// Mob splashing
-	else if (splashable_units != 0 && ismob(target))
-		if (src.is_empty() || !target.reagents)
-			return -1
+	if(!success)
+		// Mob splashing
+		if(splashable_units != 0)
+			if(ismob(target))
+				if (src.is_empty() || !target.reagents)
+					return -1
 
-		var/mob/living/M = target
+				var/mob/living/M = target
 
-		// Log the 'attack'
-		var/list/splashed_reagents = english_list(get_reagent_names())
-		add_logs(user, M, "splashed", admin = TRUE, object = src, addition = "Reagents: [splashed_reagents]")
+				// Log the 'attack'
+				var/list/splashed_reagents = english_list(get_reagent_names())
+				add_logs(user, M, "splashed", admin = TRUE, object = src, addition = "Reagents: [splashed_reagents]")
 
-		// Splash the target
-		splash_sub(reagents, M, splashable_units, user)
-	// Non-mob splashing
-	else if (splashable_units != 0 && !src.is_empty())
-		for (var/reagent_id in LOGGED_SPLASH_REAGENTS)
-			if (reagents.has_reagent(reagent_id))
-				add_gamelogs(user, "poured '[reagent_id]' onto \the [target]", admin = TRUE, tp_link = TRUE, span_class = "danger")
+				// Splash the target
+				splash_sub(reagents, M, splashable_units, user)
+			// Non-mob splashing
+			else
+				if(!src.is_empty())
+					for (var/reagent_id in LOGGED_SPLASH_REAGENTS)
+						if (reagents.has_reagent(reagent_id))
+							add_gamelogs(user, "poured '[reagent_id]' onto \the [target]", admin = TRUE, tp_link = TRUE, span_class = "danger")
 
-		// Splash the thing
-		splash_sub(reagents, target, splashable_units, user)
+					// Splash the thing
+					splash_sub(reagents, target, splashable_units, user)
 
 	return 0
 
