@@ -160,6 +160,22 @@
 		reagents.remove_reagent("epinephrine", 5)
 	src.updatehealth()
 
+	if(drowsyness)
+		drowsyness--
+		eye_blurry = max(2, eye_blurry)
+		if(prob(5))
+			sleeping += 1
+			Paralyse(5)
+
+	confused = max(0, confused - 1)
+	// decrement dizziness counter, clamped to 0
+	if(resting)
+		dizziness = max(0, dizziness - 5)
+		jitteriness = max(0, jitteriness - 5)
+	else
+		dizziness = max(0, dizziness - 1)
+		jitteriness = max(0, jitteriness - 1)
+
 	return //TODO: DEFERRED
 
 

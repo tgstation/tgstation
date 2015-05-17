@@ -635,7 +635,7 @@
 	icon_state = "bottle19"
 
 /obj/item/slimepotion2/afterattack(mob/living/M as mob, mob/user as mob)
-	if(!(isslime(M) || isanimal(M) || ismonkey(M) || !M.ckey)) //I'm sorry for this line
+	if(!(isslime(M) || isanimal(M) || ismonkey(M) || !M.ckey || !M.client || !M.key)) //I'm sorry for this line
 		user << "<span class='warning'>[M] is already too intelligent for this to work!</span>"
 		return ..()
 	if(M.stat)
@@ -647,6 +647,9 @@
 
 	if(candidates.len)
 		C = pick(candidates)
+		if(!(isslime(M) || isanimal(M) || ismonkey(M) || !M.ckey || !M.client || !M.key)) //Fuck, needs a sanity check
+			user << "<span class='warning'>[M] is already too intelligent for this to work!</span>"
+			return ..()
 		M.key = C.key
 		M.languages |= HUMAN
 		M << "<span class='warning'>All at once it makes sense, you know what you are and who you are! Self awareness is yours!</span>"
