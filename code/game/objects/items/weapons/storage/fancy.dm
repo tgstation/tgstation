@@ -21,6 +21,7 @@
 	icon_state = "donutbox6"
 	name = "donut box"
 	var/icon_type = "donut"
+	var/plural_type = "s" //Why does the english language have to be so complicated to work with ?
 
 	//Note : Fancy storages generally collect one specific type of objects only due to their properties
 	//As such, it would make sense that one click on a stack of the corresponding objects should shove everything in here
@@ -37,11 +38,11 @@
 /obj/item/weapon/storage/fancy/examine(mob/user)
 	..()
 	if(contents.len <= 0)
-		user << "<span class='info'>There are no [src.icon_type]s left in the box.</span>"
+		user << "<span class='info'>There are no [src.icon_type][plural_type] left in the box.</span>"
 	else if(contents.len == 1)
 		user << "<span class='info'>There is one [src.icon_type] left in the box.</span>"
 	else
-		user << "<span class='info'>There are [src.contents.len] [src.icon_type]s in the box.</span>"
+		user << "<span class='info'>There are [src.contents.len] [src.icon_type][plural_type] in the box.</span>"
 
 
 /*
@@ -174,6 +175,7 @@
 	icon_state = "matchbox"
 	item_state = "zippo"
 	icon_type = "match"
+	plural_type = "es"
 	storage_slots = 21 //3 rows of 7 items
 	w_class = 1
 	flags = 0
@@ -184,16 +186,6 @@
 
 /obj/item/weapon/storage/fancy/matchbox/empty
 	empty = 1
-
-//Needs to be modified, because plural is -es instead of -s
-/obj/item/weapon/storage/fancy/matchbox/examine(mob/user)
-	..()
-	if(contents.len <= 0)
-		user << "<span class='info'>There are no [src.icon_type]es left in the box.</span>"
-	else if(contents.len == 1)
-		user << "<span class='info'>There is one [src.icon_type] left in the box.</span>"
-	else
-		user << "<span class='info'>There are [src.contents.len] [src.icon_type]es in the box.</span>"
 
 /obj/item/weapon/storage/fancy/matchbox/New()
 	..()
@@ -391,7 +383,7 @@
 	desc = "Now we're doing it!"
 	icon_state = "kfc_drumsticks"
 	item_state = "kfc_bucket"
-	icon_type = "drumsticks"
+	icon_type = "drumstick"
 	can_hold = list("/obj/item/weapon/reagent_containers/food/snacks/chicken_drumstick")
 
 /obj/item/weapon/storage/fancy/food_box/chicken_bucket/New()
@@ -440,34 +432,42 @@
 
 /obj/item/weapon/storage/fancy/food_box/slider_box/synth
 	name = "synth slider box"
+	icon_type = "synth slider"
 	slider_type = /obj/item/weapon/reagent_containers/food/snacks/slider/synth
 
 /obj/item/weapon/storage/fancy/food_box/slider_box/xeno
 	name = "xeno slider box"
+	icon_type = "xeno slider"
 	slider_type = /obj/item/weapon/reagent_containers/food/snacks/slider/xeno
 
 /obj/item/weapon/storage/fancy/food_box/slider_box/chicken
 	name = "chicken slider box"
+	icon_type = "chicken slider"
 	slider_type = /obj/item/weapon/reagent_containers/food/snacks/slider/chicken
 
 /obj/item/weapon/storage/fancy/food_box/slider_box/carp
 	name = "carp slider box"
+	icon_type = "carp slider"
 	slider_type = /obj/item/weapon/reagent_containers/food/snacks/slider/carp
 
 /obj/item/weapon/storage/fancy/food_box/slider_box/spider
 	name = "spidey slidey box"
+	icon_type = "spider slider"
 	slider_type = /obj/item/weapon/reagent_containers/food/snacks/slider/carp/spider
 
 /obj/item/weapon/storage/fancy/food_box/slider_box/clown
 	name = "honky slider box"
+	icon_type = "honky slider"
 	slider_type = /obj/item/weapon/reagent_containers/food/snacks/slider/clown
 
 /obj/item/weapon/storage/fancy/food_box/slider_box/mime
 	name = "quiet slider box"
+	icon_type = "quiet slider"
 	slider_type = /obj/item/weapon/reagent_containers/food/snacks/slider/mime
 
 /obj/item/weapon/storage/fancy/food_box/slider_box/slippery
 	name = "slippery slider box"
+	icon_type = "slippery slider"
 	slider_type = /obj/item/weapon/reagent_containers/food/snacks/slider/slippery
 	storage_slots = 2
 
