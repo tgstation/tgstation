@@ -11,10 +11,16 @@
 	var/opening = 0
 	density = 1
 	opacity = 1
+	canSmoothWith = list(
+	/turf/simulated/wall,
+	/obj/structure/falsewall,
+	/obj/structure/falsewall/reinforced  // WHY DO WE SMOOTH WITH FALSE R-WALLS WHEN WE DON'T SMOOTH WITH REAL R-WALLS.
+	)
+
 
 /obj/structure/falsewall/New()
-	relativewall_neighbours()
 	..()
+	relativewall_neighbours()
 
 /obj/structure/falsewall/Destroy()
 
@@ -35,16 +41,8 @@
 		icon_state = "[walltype]fwall_open"
 		return
 
-	var/junction = 0 //will be used to determine from which side the wall is connected to other walls
+	var/junction = findSmoothingNeighbors()
 
-	for(var/turf/simulated/wall/W in orange(src,1))
-		if(abs(src.x-W.x)-abs(src.y-W.y)) //doesn't count diagonal walls
-			if(walltype == W.walltype)//Only 'like' walls connect -Sieve
-				junction |= get_dir(src,W)
-	for(var/obj/structure/falsewall/W in orange(src,1))
-		if(abs(src.x-W.x)-abs(src.y-W.y)) //doesn't count diagonal walls
-			if(walltype == W.walltype)
-				junction |= get_dir(src,W)
 	icon_state = "[walltype][junction]"
 	return
 
