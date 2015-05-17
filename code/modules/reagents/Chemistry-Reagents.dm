@@ -1218,9 +1218,10 @@
 			if(G.name == "Hulk" && ishuman(M))
 				G.OnMobLife(M)
 			var/tempflag = 0
-			if(ishuman(M))
-				tempflag |= (M:species && (G.block in M:species:default_blocks) ? 4 : 0)
-			G.deactivate(M,0,"flags"= tempflag)
+			if(ishuman(M) && M:species && (G.block in M:species:default_blocks))
+				tempflag |= GENE_NATURAL
+			if(G.can_deactivate(M, tempflag))
+				G.deactivate(M,0, tempflag)
 	M.alpha = 255
 	//M.mutations = list()
 	//M.active_genes = list()
@@ -1471,6 +1472,8 @@
 	else
 		if(O)
 			O.clean_blood()
+			if(O.color && istype(O, /obj/item/weapon/paper))
+				O.color = null
 
 /datum/reagent/space_cleaner/reaction_turf(var/turf/T, var/volume)
 	if(volume >= 1)
@@ -2545,6 +2548,13 @@
 	if(prob(5))
 		M.visible_message("<span class='warning'>[M] [pick("dry heaves!","coughs!","splutters!")]</span>")
 	return
+
+/datum/reagent/blackcolor
+	name = "Black Food Coloring"
+	id = "blackcolor"
+	description = "A black coloring used to dye food and drinks."
+	reagent_state = LIQUID
+	color = "#000000"
 
 /datum/reagent/frostoil
 	name = "Frost Oil"

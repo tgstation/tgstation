@@ -39,12 +39,15 @@
 	// For building on the asteroid.
 	var/under_turf = /turf/space
 
+	var/explosion_block = 0
+
 /turf/New()
 	..()
 	for(var/atom/movable/AM as mob|obj in src)
 		spawn( 0 )
 			src.Entered(AM)
 			return
+	turfs |= src
 	return
 
 /turf/DblClick()

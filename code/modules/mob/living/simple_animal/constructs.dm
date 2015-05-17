@@ -39,11 +39,12 @@
 	if(mind in ticker.mode.cult)
 		return 1
 
-/mob/living/simple_animal/construct/handle_inherent_channels(message, message_mode)
+/mob/living/simple_animal/construct/handle_inherent_channels(message, message_mode, var/datum/language/speaking)
 	if(..())
 		return 1
 	if(message_mode == MODE_HEADSET && construct_chat_check(0))
-		log_say("Cult channel: [src.name]/[src.key] : [message]")
+		var/turf/T = get_turf(src)
+		log_say("[key_name(src)] (@[T.x],[T.y],[T.z]) Cult channel: [message]")
 		for(var/mob/M in mob_list)
 			if(M.construct_chat_check(2) /*receiving check*/ || ((M in dead_mob_list) && !istype(M, /mob/new_player)))
 				M << "<span class='sinister'><b>[src.name]:</b> [message]</span>"
@@ -56,6 +57,8 @@
 	..()
 	name = text("[initial(name)] ([rand(1, 1000)])")
 	real_name = name
+	add_language(LANGUAGE_CULT)
+	default_language = all_languages[LANGUAGE_CULT]
 	for(var/spell in construct_spells)
 		src.add_spell(new spell, "const_spell_ready")
 	updateicon()

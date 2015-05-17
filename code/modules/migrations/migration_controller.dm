@@ -10,6 +10,12 @@ var/global/datum/migration_controller/migration_controller = null
 	var/DBConnection/db
 
 /datum/migration_controller/New()
+	if(!fexists("players2.sqlite") && fexists("players2_empty.sqlite"))
+		fcopy("players2_empty.sqlite", "players2.sqlite")
+	//sqlite prefs
+	var/datum/migration/ss13/sqlite/sqli = new
+	sqli.up()
+	//end sqlite prefs
 	// Change this if needed.
 	db = dbcon
 	/////////////////////////
@@ -36,7 +42,7 @@ CREATE TABLE IF NOT EXISTS [TABLE_NAME] (
 		db_states[Q.item[1]] = text2num(Q.item[2])
 
 	var/list/newpacks[0]
-	for(var/mtype in typesof(/datum/migration)-/datum/migration)
+	for(var/mtype in typesof(/datum/migration)-list(/datum/migration, /datum/migration/ss13/sqlite))
 		var/datum/migration/M = new mtype()
 		M.db = db
 		if(M.package == "" || M.name == "") continue

@@ -78,9 +78,12 @@
 	var/fullyCustom = 0
 	var/addTop = 0
 	var/image/topping
+	var/image/filling
 
 /obj/item/weapon/reagent_containers/food/snacks/customizable/New(loc,ingredient)
 	. = ..()
+	topping = image(icon,,"[initial(icon_state)]_top")
+	filling = image(icon,,"[initial(icon_state)]_filling")
 	src.reagents.add_reagent("nutriment",3)
 	src.updateName()
 	return
@@ -95,7 +98,13 @@
 		src.ingredients += S
 
 		if(src.addTop) src.overlays -= src.topping //thank you Comic
-		src.overlays += generateFilling(S, params)
+		if(!src.fullyCustom && !src.stackIngredients && src.overlays.len)
+			src.overlays -= src.filling //we can't directly modify the overlay, so we have to remove it and then add it again
+			var/newcolor = S.filling_color != "#FFFFFF" ? S.filling_color : AverageColor(getFlatIcon(S, S.dir, 0), 1, 1)
+			src.filling.color = BlendRGB(src.filling.color, newcolor, 1/src.ingredients.len)
+			src.overlays += src.filling
+		else
+			src.overlays += generateFilling(S, params)
 		if(src.addTop) src.drawTopping()
 
 		src.updateName()
@@ -110,7 +119,7 @@
 		I = image(C)
 		I.pixel_y = 12-empty_Y_space(C)
 	else
-		I = new(src.icon,"[initial(src.icon_state)]_filling")
+		I = src.filling
 		if(S.filling_color != "#FFFFFF")
 			I.color = S.filling_color
 		else
@@ -169,22 +178,12 @@
 	I.pixel_y = (src.ingredients.len+1)*2
 	src.overlays += I
 
-/obj/item/weapon/reagent_containers/food/snacks/customizable/sandwich/New(loc,ingredient)
-	. = ..()
-	topping = image(src.icon,,"[initial(src.icon_state)]_top")
-	return
-
 /obj/item/weapon/reagent_containers/food/snacks/customizable/burger
 	name = "burger"
 	desc = "The apex of space culinary achievement."
 	icon_state = "c_burger"
 	stackIngredients = 1
 	addTop = 1
-
-/obj/item/weapon/reagent_containers/food/snacks/customizable/burger/New(loc,ingredient)
-	. = ..()
-	topping = image(src.icon,,"[initial(src.icon_state)]_top")
-	return
 
 // Misc Subtypes ///////////////////////////////////////////////
 
@@ -214,6 +213,16 @@
 /obj/item/weapon/reagent_containers/food/snacks/customizable/cook/bread
 	name = "bread"
 	icon_state = "breadcustom"
+	slice_path = /obj/item/weapon/reagent_containers/food/snacks/customizable/slices/breadslice
+	slices_num = 5
+
+/obj/item/weapon/reagent_containers/food/snacks/customizable/slices/breadslice
+	name = "slice"
+	desc = "Moist and oozing with flavor, just like how bread should be."
+	icon_state = "breadslicecustom"
+	trash = /obj/item/trash/plate
+	bitesize = 2
+	ingMax = 0
 
 /obj/item/weapon/reagent_containers/food/snacks/customizable/cook/pie
 	name = "pie"
@@ -223,6 +232,16 @@
 	name = "cake"
 	desc = "A popular band."
 	icon_state = "cakecustom"
+	slice_path = /obj/item/weapon/reagent_containers/food/snacks/customizable/slices/cakeslicecustom
+	slices_num = 5
+
+/obj/item/weapon/reagent_containers/food/snacks/customizable/slices/cakeslicecustom
+	name = "slice"
+	desc = "Delicious and moist."
+	icon_state = "cakeslicecustom"
+	trash = /obj/item/trash/plate
+	bitesize = 2
+	ingMax = 0
 
 /obj/item/weapon/reagent_containers/food/snacks/customizable/cook/jelly
 	name = "jelly"
@@ -312,11 +331,15 @@
 	var/list/ingredients = list()
 	var/initReagent
 	var/ingMax = 3
+	var/image/filling
 	isGlass = 1
 
 /obj/item/weapon/reagent_containers/food/drinks/bottle/customizable/New()
 	. = ..()
 	src.reagents.add_reagent(src.initReagent,50)
+	var/icon/opaquefilling = new(icon,"[initial(icon_state)]_filling")
+	opaquefilling.ChangeOpacity(0.8)
+	filling = image(opaquefilling)
 	return
 
 /obj/item/weapon/reagent_containers/food/drinks/bottle/customizable/attackby(obj/item/I,mob/user)
@@ -333,7 +356,10 @@
 			S.reagents.trans_to(src,S.reagents.total_volume)
 			src.ingredients += S
 			src.updateName()
-			src.overlays += generateFilling(S)
+			src.overlays -= src.filling //we can't directly modify the overlay, so we have to remove it and then add it again
+			var/newcolor = S.filling_color != "#FFFFFF" ? S.filling_color : AverageColor(getFlatIcon(S, S.dir, 0), 1, 1)
+			src.filling.color = BlendRGB(src.filling.color, newcolor, 1/src.ingredients.len)
+			src.overlays += src.filling
 		else user << "<span class='warning'>That won't fit.</span>"
 	else . = ..()
 	return
@@ -353,8 +379,7 @@
 
 /obj/item/weapon/reagent_containers/food/drinks/bottle/customizable/proc/generateFilling(var/obj/item/weapon/reagent_containers/food/snacks/S)
 	src.overlays.len = 0
-	var/image/I
-	I = new(src.icon,"[initial(src.icon_state)]_filling")
+	var/image/I = filling
 	if(S.filling_color != "#FFFFFF")
 		I.color = S.filling_color
 	else

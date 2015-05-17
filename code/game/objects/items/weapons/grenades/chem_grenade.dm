@@ -133,6 +133,11 @@
 	if(detonator)
 		user << "<span class='info'>With an attached [detonator.name]</span>"
 
+/obj/item/weapon/grenade/chem_grenade/Crossed(AM as mob|obj)
+	if(detonator)
+		detonator.Crossed(AM)
+	..()
+
 /obj/item/weapon/grenade/chem_grenade/activate(mob/user as mob)
 	if(active) return
 

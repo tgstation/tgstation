@@ -693,7 +693,7 @@
 	if(istype(C))
 		if(C.parentdeck == src)
 			src.cards += C.cardname
-			user.u_equip(C)
+			user.u_equip(C,0)
 			user.visible_message("<span class = 'notice'>[user] adds a card to the bottom of the deck.</span>",
 								 "You add the card to the bottom of the deck.</span>")
 			qdel(C)
@@ -711,7 +711,7 @@
 	if(istype(C))
 		if(C.parentdeck == src)
 			src.cards += C.currenthand
-			user.u_equip(C)
+			user.u_equip(C,0)
 			user.visible_message("<span class = 'notice'>[user] puts their hand of cards into the deck.</span>",
 								 "<span class = 'notice'>You put the hand into the deck.</span>")
 			qdel(C)
@@ -735,11 +735,11 @@
 		else if(istype(over_object, /obj/screen))
 			switch(over_object.name)
 				if("r_hand")
-					M.u_equip(src)
+					M.u_equip(src, 0)
 					M.put_in_r_hand(src)
 					usr << "<span class = 'notice'>You pick up the deck.</span>"
 				if("l_hand")
-					M.u_equip(src)
+					M.u_equip(src, 0)
 					M.put_in_l_hand(src)
 					usr << "<span class = 'notice'>You pick up the deck.</span>"
 	else
@@ -798,7 +798,7 @@
 				var/obj/item/toy/singlecard/N = new/obj/item/toy/singlecard(src.loc)
 				N.parentdeck = src.parentdeck
 				N.cardname = src.currenthand[1]
-				cardUser.u_equip(src)
+				cardUser.u_equip(src,0)
 				N.pickup(cardUser)
 				cardUser.put_in_any_hand_if_possible(N)
 				cardUser << "<span class = 'notice'>You also take [currenthand[1]] and hold it.</span>"
@@ -810,7 +810,7 @@
 	if(istype(C))
 		if(C.parentdeck == src.parentdeck)
 			src.currenthand += C.cardname
-			user.u_equip(C)
+			user.u_equip(C, 0)
 			user.visible_message("<span class = 'notice'>[user] adds a card to their hand.</span>",
 								 "<span class = 'notice'>You add the [C.cardname] to your hand.</span>")
 			interact(user)
@@ -873,7 +873,7 @@
 			H.currenthand += C.cardname
 			H.currenthand += src.cardname
 			H.parentdeck = C.parentdeck
-			user.u_equip(C)
+			user.u_equip(C,0)
 			H.pickup(user)
 			user.put_in_active_hand(H)
 			user << "<span class = 'notice'>You combine the [C.cardname] and the [src.cardname] into a hand.</span>"

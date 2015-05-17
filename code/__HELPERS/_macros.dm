@@ -89,6 +89,8 @@
 
 #define iswire(O) istype(O, /obj/item/stack/cable_coil)
 
+#define issolder(A) istype(A, /obj/item/weapon/solder)
+
 #define iscamera(A) istype(A, /obj/machinery/camera)
 
 //Macros for antags
@@ -112,8 +114,6 @@
 #define isnukeop(H) (H.mind in ticker.mode.syndicates)
 
 #define iswizard(H) (H.mind in ticker.mode.wizards)
-
-#define isborer(H) (H.mind in ticker.mode.borers)
 
 #define isbadmonkey(H) ((/datum/disease/jungle_fever in H.viruses) || H.mind in ticker.mode.infected_monkeys)
 

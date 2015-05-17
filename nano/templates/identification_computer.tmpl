@@ -198,7 +198,7 @@
                     {{/for}}
                   </td>
                 </tr>
-	      {{/if}}
+             {{/if}}
             </table>
           </div>
         </div>
@@ -210,9 +210,17 @@
           <div class='item' style='width: 100%'>
             {{for data.all_centcom_access}}
               <div class='itemContentWide'>
-              {{:helper.link(value.desc, '', {'choice' : 'access', 'access_target' : value.ref, 'allowed' : allowed}, null, value.allowed ? 'selected' : null)}}
+              {{:helper.link(value.desc, '', {'choice' : 'access', 'access_target' : value.ref, 'allowed' : value.allowed}, null, value.allowed ? 'selected' : null)}}
               </div>
             {{/for}}
+          </div>
+          <div style='float: left; width: 175px; min-height: 250px'>
+           <div class='average'><b>Card Skin</b></div>
+          {{for data.cent_card_skins}}
+              <div class='itemContentWide'>
+                {{:helper.link(value.display_name, '', {'choice' : 'skin', 'skin_target' : value.skin}, null,(data.current_skin == value.skin) ? 'selected' : null )}}
+              </div>
+           {{/for}}
           </div>
         {{else}}
           <div class='item'>
@@ -227,17 +235,17 @@
                     {{:helper.link(accessValue.desc, '', {'choice' : 'access', 'access_target' : accessValue.ref, 'allowed' : accessValue.allowed}, null, accessValue.allowed ? 'selected' : null)}}
                   </div>
                 {{/for}}
-	      </div>
-	    {{/for}}
-            <div style='float: left; width: 175px; min-height: 250px'>
-	    <div class='average'><b>Card Skin</b></div>
-	      {{for data.card_skins}}
-		<div class='itemContentWide'>
-		  {{:helper.link(value.display_name, '', {'choice' : 'skin', 'skin_target' : value.skin}, null,(data.current_skin == value.skin) ? 'selected' : null )}}
-	 	</div>
-	      {{/for}}
-	    </div>
+              </div>
+            {{/for}}
           </div>
+          <div style='float: left; width: 175px; min-height: 250px'>
+	         <div class='average'><b>Card Skin</b></div>
+	        {{for data.card_skins}}
+		          <div class='itemContentWide'>
+		            {{:helper.link(value.display_name, '', {'choice' : 'skin', 'skin_target' : value.skin}, null,(data.current_skin == value.skin) ? 'selected' : null )}}
+	          	</div>
+	         {{/for}}
+	        </div>
         {{/if}}
       {{/if}}
     {{/if}}

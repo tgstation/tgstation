@@ -104,7 +104,7 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 
 				if("client")
 					var/list/keys = list()
-					for(var/mob/M in world)
+					for(var/mob/M in mob_list)
 						keys += M.client
 					lst[i] = input("Please, select a player!", "Selection", null, null) as null|anything in keys
 
@@ -352,6 +352,8 @@ Pressure: [env.return_pressure()]"}
 			if(M.mind)
 				M.mind.special_role = "Cultist"
 				ticker.mode.cult += M.mind
+				M << "<span class='sinister'>You can now speak and understand the forgotten tongue of the occult.</span>"
+				M.add_language("Cult")
 			src << "Made [M] a cultist."
 */
 
@@ -452,31 +454,31 @@ Pressure: [env.return_pressure()]"}
 	var/list/areas_with_intercom = list()
 	var/list/areas_with_camera = list()
 
-	for(var/area/A in world)
+	for(var/area/A in areas)
 		if(!(A.type in areas_all))
 			areas_all.Add(A.type)
 
-	for(var/obj/machinery/power/apc/APC in world)
+	for(var/obj/machinery/power/apc/APC in machines)
 		var/area/A = get_area(APC)
 		if(!(A.type in areas_with_APC))
 			areas_with_APC.Add(A.type)
 
-	for(var/obj/machinery/alarm/alarm in world)
+	for(var/obj/machinery/alarm/alarm in machines)
 		var/area/A = get_area(alarm)
 		if(!(A.type in areas_with_air_alarm))
 			areas_with_air_alarm.Add(A.type)
 
-	for(var/obj/machinery/requests_console/RC in world)
+	for(var/obj/machinery/requests_console/RC in machines)
 		var/area/A = get_area(RC)
 		if(!(A.type in areas_with_RC))
 			areas_with_RC.Add(A.type)
 
-	for(var/obj/machinery/light/L in world)
+	for(var/obj/machinery/light/L in machines)
 		var/area/A = get_area(L)
 		if(!(A.type in areas_with_light))
 			areas_with_light.Add(A.type)
 
-	for(var/obj/machinery/light_switch/LS in world)
+	for(var/obj/machinery/light_switch/LS in machines)
 		var/area/A = get_area(LS)
 		if(!(A.type in areas_with_LS))
 			areas_with_LS.Add(A.type)
@@ -486,7 +488,7 @@ Pressure: [env.return_pressure()]"}
 		if(!(A.type in areas_with_intercom))
 			areas_with_intercom.Add(A.type)
 
-	for(var/obj/machinery/camera/C in world)
+	for(var/obj/machinery/camera/C in machines)
 		var/area/A = get_area(C)
 		if(!(A.type in areas_with_camera))
 			areas_with_camera.Add(A.type)
@@ -1004,15 +1006,15 @@ Pressure: [env.return_pressure()]"}
 	log_admin("[key_name(usr)] set up the singulo.")
 	message_admins("<span class='notice'>[key_name_admin(usr)] set up the singulo.</span>", 1)
 
-	for(var/obj/machinery/power/emitter/E in world)
+	for(var/obj/machinery/power/emitter/E in power_machines)
 		if(E.anchored)
 			E.active = 1
 
-	for(var/obj/machinery/field_generator/F in world)
+	for(var/obj/machinery/field_generator/F in field_gen_list)
 		if(F.anchored)
 			F.Varedit_start = 1
 	spawn(30)
-		for(var/obj/machinery/the_singularitygen/G in world)
+		for(var/obj/machinery/the_singularitygen/G in machines)
 			if(G.anchored)
 				var/obj/machinery/singularity/S = new /obj/machinery/singularity(get_turf(G), 50)
 				spawn(0)
@@ -1030,7 +1032,7 @@ Pressure: [env.return_pressure()]"}
 				//S.dissipate_track = 0
 				//S.dissipate_strength = 10
 
-	for(var/obj/machinery/power/rad_collector/Rad in world)
+	for(var/obj/machinery/power/rad_collector/Rad in rad_collectors)
 		if(Rad.anchored)
 			if(!Rad.P)
 				var/obj/item/weapon/tank/plasma/Plasma = new/obj/item/weapon/tank/plasma(Rad)
@@ -1042,7 +1044,7 @@ Pressure: [env.return_pressure()]"}
 			if(!Rad.active)
 				Rad.toggle_power()
 
-	for(var/obj/machinery/power/smes/SMES in world)
+	for(var/obj/machinery/power/smes/SMES in machines)
 		if(SMES.anchored)
 			SMES.connect_to_network() // Just in case.
 			SMES.chargemode = 1
@@ -1060,7 +1062,7 @@ Pressure: [env.return_pressure()]"}
 	log_admin("[key_name(usr)] haxed the powergrid with magic SMES.")
 	message_admins("<span class='notice'>[key_name_admin(usr)] haxed the powergrid with magic SMES.</span>", 1)
 
-	for(var/obj/machinery/power/smes/SMES in world)
+	for(var/obj/machinery/power/smes/SMES in machines)
 		var/turf/T=SMES.loc
 		del(SMES)
 		var/obj/machinery/power/smes/magical/magic = new(T)
@@ -1085,13 +1087,13 @@ Pressure: [env.return_pressure()]"}
 	log_admin("[key_name(usr)] haxed atmos.")
 	message_admins("<span class='notice'>[key_name_admin(usr)] haxed atmos.</span>", 1)
 
-	for(var/obj/machinery/atmospherics/binary/pump/P in world)
+	for(var/obj/machinery/atmospherics/binary/pump/P in atmos_machines)
 		//if(p.name == "Air to Distro")
 		P.target_pressure=4500
-	for(var/obj/machinery/atmospherics/unary/vent_pump/high_volume/P in world)
+	for(var/obj/machinery/atmospherics/unary/vent_pump/high_volume/P in atmos_machines)
 		if(P.id_tag=="air_out")
 			P.internal_pressure_bound=4500
-	for(var/obj/machinery/atmospherics/trinary/filter/F in world)
+	for(var/obj/machinery/atmospherics/trinary/filter/F in atmos_machines)
 		F.target_pressure=4500
 
 	//world << "<b>LET THERE BE AIR</b>"
@@ -1370,31 +1372,31 @@ client/proc/delete_all_bomberman()
 	for(var/obj/item/weapon/bomberman/O in world)
 		if(istype(O.loc, /mob/living/carbon/))
 			var/mob/living/carbon/C = O.loc
-			C.u_equip(O)
+			C.u_equip(O,1)
 			O.loc = C.loc
-			O.dropped(C)
+			//O.dropped(C)
 		qdel(O)
 
 	for(var/obj/item/clothing/suit/space/bomberman/O in world)
 		if(istype(O.loc, /mob/living/carbon/))
 			var/mob/living/carbon/C = O.loc
-			C.u_equip(O)
+			C.u_equip(O,1)
 			O.loc = C.loc
-			O.dropped(C)
+			//O.dropped(C)
 		qdel(O)
 
 	for(var/obj/item/clothing/head/helmet/space/bomberman/O in world)
 		if(istype(O.loc, /mob/living/carbon/))
 			var/mob/living/carbon/C = O.loc
-			C.u_equip(O)
+			C.u_equip(O,1)
 			O.loc = C.loc
-			O.dropped(C)
+			//O.dropped(C)
 		qdel(O)
 
 	for(var/obj/structure/softwall/O in world)
 		qdel(O)
 
-	for(var/turf/unsimulated/wall/bomberman/T in world)
+	for(var/turf/unsimulated/wall/bomberman/T in turfs)
 		T.ChangeTurf(/turf/simulated/wall)
 
 
@@ -1563,6 +1565,73 @@ client/proc/mob_list()
 	if(foundnull)
 		usr << "Found [foundnull] null entries in the mob list, running null clearer."
 		listclearnulls(mob_list)
+
+client/proc/check_bomb()
+	set name = "Check Bomb Impact"
+	set category = "Debug"
+
+	var/newmode = alert("Use the new method?","Check Bomb Impact", "Yes","No")
+
+
+	var/turf/epicenter = get_turf(usr)
+	var/devastation_range = 0
+	var/heavy_impact_range = 0
+	var/light_impact_range = 0
+	var/list/choices = list("Small Bomb", "Medium Bomb", "Big Bomb", "Custom Bomb")
+	var/choice = input("What size explosion would you like to produce?") in choices
+	switch(choice)
+		if(null)
+			return 0
+		if("Small Bomb")
+			devastation_range = 1
+			heavy_impact_range = 2
+			light_impact_range = 3
+		if("Medium Bomb")
+			devastation_range = 2
+			heavy_impact_range = 3
+			light_impact_range = 4
+		if("Big Bomb")
+			devastation_range = 3
+			heavy_impact_range = 5
+			light_impact_range = 7
+		if("Custom Bomb")
+			devastation_range = input("Devastation range (in tiles):") as num
+			heavy_impact_range = input("Heavy impact range (in tiles):") as num
+			light_impact_range = input("Light impact range (in tiles):") as num
+
+	var/max_range = max(devastation_range, heavy_impact_range, light_impact_range)
+
+	var/x0 = epicenter.x
+	var/y0 = epicenter.y
+
+	var/list/wipe_colors = list()
+	for (var/turf/T in trange(max_range, epicenter))
+		wipe_colors += T
+		var/dist = cheap_pythag(T.x - x0, T.y - y0)
+
+		if(newmode == "Yes")
+			var/turf/Trajectory = T
+			while(Trajectory != epicenter)
+				Trajectory = get_step_towards(Trajectory,epicenter)
+				if(Trajectory.density && Trajectory.explosion_block)
+					dist += Trajectory.explosion_block
+
+				for (var/obj/machinery/door/D in Trajectory.contents)
+					if(D.density && D.explosion_block)
+						dist += D.explosion_block
+
+		if (dist < devastation_range)
+			T.color = "red"
+		else if (dist < heavy_impact_range)
+			T.color = "yellow"
+		else if (dist < light_impact_range)
+			T.color = "blue"
+		else
+			continue
+
+	sleep(100)
+	for (var/turf/T in wipe_colors)
+		T.color = null
 
 client/proc/cure_disease()
 	set name = "Cure Disease"

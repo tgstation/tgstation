@@ -20,6 +20,8 @@
 
 	soot_type = null
 
+	explosion_block = 1
+
 /turf/simulated/wall/examine(mob/user)
 	..()
 	if(rotting)
@@ -208,6 +210,7 @@
 			playsound(src, 'sound/items/Welder.ogg', 100, 1)
 
 			if(do_after(user, 100))
+				if(!istype(src)) return
 				playsound(src, 'sound/items/Welder.ogg', 100, 1)
 				user.visible_message("<span class='warning'>[user] slices through \the [src]'s outer plating.</span>", \
 				"<span class='notice'>You slice through \the [src]'s outer plating.</span>", \

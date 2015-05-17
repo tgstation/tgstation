@@ -17,6 +17,10 @@
 /obj/structure/dispenser/plasma
 	oxygentanks = 0
 
+/obj/structure/dispenser/empty
+	plasmatanks = 0
+	oxygentanks = 0
+
 
 /obj/structure/dispenser/New()
 	. = ..()

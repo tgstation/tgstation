@@ -36,6 +36,8 @@ This is a sourcecode-only release, so the next step is to compile the server fil
 
 If you see any errors or warnings, something has gone wrong - possibly a corrupt download or the files extracted wrong, or a code issue on the main repo.  Ask on IRC.
 
+To use the sqlite preferences, rename players2_empty.sqlite to players2.sqlite
+
 Next, copy everything from config-example/ to config/ so you have some default configuration.
 
 Once that's done, open up the config folder.  You'll want to edit config.txt to set the probabilities for different gamemodes in Secret and to set your server location so that all your players don't get disconnected at the end of each round.  It's recommended you don't turn on the gamemodes with probability 0, as they have various issues and aren't currently being tested, so they may have unknown and bizarre bugs.

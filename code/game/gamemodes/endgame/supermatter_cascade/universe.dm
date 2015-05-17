@@ -11,9 +11,13 @@
 	return 0
 
 /datum/universal_state/supermatter_cascade/OnTurfChange(var/turf/T)
-	var/turf/space/spess = T
-	if(istype(spess))
-		spess.overlays += "end01"
+	if(T.name == "space")
+		T.overlays += "end01"
+		T.underlays -= "end01"
+	else
+		T.overlays -= "end01"
+		if(!T.color_lighting_lumcount)
+			T.update_lumcount(1, 160, 255, 0, 0)
 
 /datum/universal_state/supermatter_cascade/DecayTurf(var/turf/T)
 	if(istype(T,/turf/simulated/wall))
@@ -48,10 +52,9 @@
 	suspend_alert = 1
 
 	AreaSet()
-	OverlaySet()
 	MiscSet()
 	APCSet()
-	AmbientSet()
+	OverlayAndAmbientSet()
 
 	// Disable Nar-Sie.
 	ticker.mode.eldergod=0
@@ -69,8 +72,18 @@ There's been a galaxy-wide electromagnetic pulse.  All of our systems are heavil
 
 You have five minutes before the universe collapses. Good l\[\[###!!!-
 
-AUTOMATED ALERT: Link to [command_name()] lost."}
+AUTOMATED ALERT: Link to [command_name()] lost.
+
+The access requirements on the Asteroid Shuttles' consoles have now been revoked.
+"}
 		command_alert(txt,"SUPERMATTER CASCADE DETECTED")
+
+		for(var/obj/machinery/computer/research_shuttle/C in machines)
+			C.req_access = null
+
+		for(var/obj/machinery/computer/mining_shuttle/C in machines)
+			C.req_access = null
+
 		sleep(5 MINUTES)
 		ticker.declare_completion()
 		ticker.station_explosion_cinematic(0,null) // TODO: Custom cinematic
@@ -93,7 +106,7 @@ AUTOMATED ALERT: Link to [command_name()] lost."}
 		return
 
 /datum/universal_state/supermatter_cascade/proc/AreaSet()
-	for(var/area/ca in world)
+	for(var/area/ca in areas)
 		var/area/A=get_area_master(ca)
 		if(!istype(A,/area) || A.name=="Space" || istype(A,/area/beach))
 			continue
@@ -123,23 +136,22 @@ AUTOMATED ALERT: Link to [command_name()] lost."}
 
 		A.updateicon()
 
-/datum/universal_state/supermatter_cascade/proc/OverlaySet()
-	for(var/turf/space/spess in world)
-		spess.overlays += "end01"
-
-/datum/universal_state/supermatter_cascade/proc/AmbientSet()
-	for(var/turf/T in world)
-		if(istype(T, /turf/space))	continue
-		if(T.z != map.zCentcomm)
-			T.update_lumcount(1, 160, 255, 0, 0)
+/datum/universal_state/supermatter_cascade/OverlayAndAmbientSet()
+	for(var/turf/T in turfs)
+		if(istype(T, /turf/space))
+			T.overlays += "end01"
+		else
+			if(T.z != map.zCentcomm)
+				T.underlays += "end01"
+				T.update_lumcount(1, 160, 255, 0, 0)
 
 /datum/universal_state/supermatter_cascade/proc/MiscSet()
-	for (var/obj/machinery/firealarm/alm in world)
+	for (var/obj/machinery/firealarm/alm in machines)
 		if (!(alm.stat & BROKEN))
 			alm.ex_act(2)
 
 /datum/universal_state/supermatter_cascade/proc/APCSet()
-	for (var/obj/machinery/power/apc/APC in world)
+	for (var/obj/machinery/power/apc/APC in power_machines)
 		if (!(APC.stat & BROKEN) && !APC.is_critical)
 			APC.chargemode = 0
 			if(APC.cell)
@@ -194,6 +206,8 @@ AUTOMATED ALERT: Link to [command_name()] lost."}
 			if (istype(cult))
 				cult.memoize_cult_objectives(M)
 			M.current << "<span class='danger'><FONT size = 3>Nar-Sie loses interest in this plane. You are no longer a cultist.</FONT></span>"
+			M.current << "<span class='danger'>You find yourself unable to mouth the words of the forgotten...</span>"
+			M.current.remove_language("Cult")
 			M.memory = ""
 
 		if(M in ticker.mode.wizards)

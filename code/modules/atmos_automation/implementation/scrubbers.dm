@@ -35,7 +35,7 @@
 		return 1
 	if(href_list["set_scrubber"])
 		var/list/injector_names=list()
-		for(var/obj/machinery/atmospherics/unary/vent_scrubber/S in machines)
+		for(var/obj/machinery/atmospherics/unary/vent_scrubber/S in atmos_machines)
 			if(!isnull(S.id_tag) && S.frequency == parent.frequency)
 				injector_names|=S.id_tag
 		scrubber = input("Select a scrubber:", "Scrubbers", scrubber) as null|anything in injector_names
@@ -77,7 +77,7 @@
 		return 1
 	if(href_list["set_scrubber"])
 		var/list/injector_names=list()
-		for(var/obj/machinery/atmospherics/unary/vent_scrubber/S in machines)
+		for(var/obj/machinery/atmospherics/unary/vent_scrubber/S in atmos_machines)
 			if(!isnull(S.id_tag) && S.frequency == parent.frequency)
 				injector_names|=S.id_tag
 		scrubber = input("Select a scrubber:", "Scrubbers", scrubber) as null|anything in injector_names
@@ -145,7 +145,7 @@ var/global/list/gas_labels=list(
 		return 1
 	if(href_list["set_scrubber"])
 		var/list/injector_names=list()
-		for(var/obj/machinery/atmospherics/unary/vent_scrubber/S in machines)
+		for(var/obj/machinery/atmospherics/unary/vent_scrubber/S in atmos_machines)
 			if(!isnull(S.id_tag) && S.frequency == parent.frequency)
 				injector_names|=S.id_tag
 		scrubber = input("Select a scrubber:", "Scrubbers", scrubber) as null|anything in injector_names

@@ -29,7 +29,10 @@
 	real_name = src.name
 	verbs.Add(/mob/living/carbon/alien/humanoid/proc/corrosive_acid,/mob/living/carbon/alien/humanoid/proc/neurotoxin,/mob/living/carbon/alien/humanoid/proc/resin)
 	..()
+	add_language(LANGUAGE_XENO)
+	default_language = all_languages[LANGUAGE_XENO]
 	verbs -= /mob/living/carbon/alien/verb/ventcrawl
+
 
 /mob/living/carbon/alien/humanoid/queen
 

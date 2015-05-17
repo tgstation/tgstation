@@ -76,7 +76,7 @@ var/global/list/disposalpipeID2State=list(
 /datum/pipe_info/disposal/Render(var/dispenser,var/label)
 	return "<li><a href='?src=\ref[dispenser];dmake=[id];type=[PIPE_UNARY]'>[label]</a></li>" //avoid hardcoding.
 
-//find these defines in code\game\machinery\pipe\consruction.dm
+//find these defines in code\ATMOSPHERICS\pipe\consruction.dm
 var/global/list/RPD_recipes=list(
 	"Regular Pipes" = list(
 		"Pipe"           = new /datum/pipe_info(PIPE_SIMPLE_STRAIGHT,	1, PIPE_BINARY),
@@ -103,6 +103,7 @@ var/global/list/RPD_recipes=list(
 		"Gas Mixer"      = new /datum/pipe_info(PIPE_GAS_MIXER,			1, PIPE_TRIN_M),
 		"Thermal Plate"  = new /datum/pipe_info(PIPE_THERMAL_PLATE,		1, PIPE_UNARY),
 		"Injector"       = new /datum/pipe_info(PIPE_INJECTOR,     		1, PIPE_UNARY),
+		"Dual-Port Vent" = new /datum/pipe_info(PIPE_DP_VENT,			1, PIPE_UNARY),
 	),
 	"Heat Exchange" = list(
 		"Pipe"           = new /datum/pipe_info(PIPE_HE_STRAIGHT,		1, PIPE_BINARY),

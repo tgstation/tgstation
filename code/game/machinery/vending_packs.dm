@@ -6,9 +6,19 @@
 	density = 1
 	flags = FPRINT
 	var/targetvendomat = /obj/machinery/vending
+	var/list/stock = list()
+	var/list/secretstock = list()
+	var/list/preciousstock = list()
+	var/list/product_records = list()
+	var/list/hidden_records = list()
+	var/list/coin_records = list()
 
 /obj/structure/vendomatpack/undefined
 	//a placeholder for vending machines that don't have their own recharge packs
+
+/obj/structure/vendomatpack/partial
+	name = "Used recharge pack"
+	desc = "A partially filled recharge pack that can still be used on a vending machine."
 
 /obj/structure/vendomatpack/boozeomat
 	name = "Booze-O-Mat recharge pack"

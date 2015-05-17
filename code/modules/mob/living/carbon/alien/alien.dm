@@ -9,7 +9,6 @@
 	icon = 'icons/mob/alien.dmi'
 	gender = NEUTER
 	dna = null
-	languages = ALIEN
 
 	mob_bump_flag = ALIEN
 	mob_swap_flags = ALLMOBS

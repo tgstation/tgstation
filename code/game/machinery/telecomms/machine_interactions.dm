@@ -10,13 +10,15 @@
 /obj/machinery/telecomms
 	var/temp = "" // output message
 	var/construct_op = 0
+	machine_flags = MULTITOOL_MENU
 
 
 /obj/machinery/telecomms/attackby(obj/item/P as obj, mob/user as mob)
 
 	// Using a multitool lets you access the receiver's interface
-	if(istype(P, /obj/item/device/multitool))
-		attack_hand(user)
+	. = ..()
+	if(.)
+		return .
 
 	switch(construct_op)
 		if(0)

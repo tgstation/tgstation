@@ -1,3 +1,6 @@
+#define MAX_FLATPACK_STACKS	6 //how many flatpacks we can stack at once
+#define FLATPACK_HEIGHT		4 //the height of the icon
+
 /obj/structure/closet/crate/flatpack
 	name = "\improper flatpack"
 	desc = "A ready-to-assemble machine flatpack produced in the space-Swedish style.<br>Crowbar the flatpack open and follow the obtuse instructions to make the resulting machine."
@@ -7,30 +10,66 @@
 	anchored = 0
 	var/obj/machinery/machine = null
 	var/datum/construction/flatpack_unpack/unpacking
-	var/opening = 0
 	var/assembling = 0
+
+	var/list/image/stacked = list() //assoc ref list
+
+/obj/structure/closet/crate/flatpack/examine(mob/user)
+	..()
+	if(stacked.len)
+		for(var/stackpack in stacked)
+			user << "There's \a [locate(stackpack)] stacked on top of it."
 
 /obj/structure/closet/crate/flatpack/New()
 	..()
 	unpacking = new (src)
 	icon_state = "flatpack" //it gets changed in the crate code, so we reset it here
 
+/obj/structure/closet/crate/flatpack/update_icon()
+	overlays.len = 0
+
+	icon_state = "flatpack"
+
+	if(machine)
+		var/list/check_accesses = (machine.req_access | machine.req_one_access)
+		if(check_accesses && check_accesses.len)
+			for(var/i = 1 to 4) //if the machine's access lines up with security's - and so on
+				var/list/access_overlap = check_accesses & get_region_accesses(i)
+				if(access_overlap.len)
+					switch(i)
+						if (1)
+							icon_state = "flatpacksec"
+						if (2)
+							icon_state = "flatpackmed"
+						if (3)
+							icon_state = "flatpacksci"
+						if (4)
+							icon_state = "flatpackeng"
+					break
+
+	if(assembling)
+		overlays += "assembly"
+	else if(stacked.len)
+		for(var/i = 1 to stacked.len)
+			var/image/stack_image = stacked[stacked[i]] //because it's an assoc list
+			overlays -= stack_image
+			stack_image.pixel_y = 4*i
+			overlays += stack_image
+
 /obj/structure/closet/crate/flatpack/attackby(var/atom/A, mob/user)
 	if(assembling)
 		if(unpacking.action(A, user))
 			return 1
 	if(istype(A, /obj/item/weapon/crowbar) && !assembling)
-		if(opening)
-			user << "<span class='warning'>This is already being opened.</span>"
-			return 1
+		if(stacked.len)
+			user << "<span class='rose'>You can't open this flatpack while others are stacked on top of it!</span>"
+			return
 		user <<"<span class='notice'>You begin to open the flatpack...</span>"
-		opening = 1
-		if(do_after(user, rand(10,40)))
+		if(do_after(user, rand(10,40)) && !assembling)
 			if(machine)
 				user <<"<span class='notice'>\icon [src]You successfully unpack \the [src]!</span>"
 				overlays += "assembly"
 				assembling = 1
-				opening = 0
 				var/obj/item/weapon/paper/instructions = new (get_turf(src))
 				var/list/inst_list = unpacking.GenerateInstructions()
 				instructions.name = "instructions ([machine.name])"
@@ -40,9 +79,9 @@
 					instructions.name = "misprinted " + instructions.name
 				instructions.update_icon()
 			else
+				assembling = 1
 				user <<"<span class='notice'>\icon [src]It seems this [src] was empty...</span>"
 				qdel(src)
-		opening = 0
 		return
 
 /obj/structure/closet/crate/flatpack/proc/Finalize()
@@ -52,8 +91,83 @@
 		AM.loc = get_turf(src)
 	qdel(src)
 
-/obj/structure/closet/crate/flatpack/attack_hand()
+/obj/structure/closet/crate/flatpack/attack_hand(mob/user, params)
+	if(params && stacked.len)
+		var/list/params_list = params2list(params)
+		var/clicked_index = round((text2num(params_list["icon-y"]) - FLATPACK_HEIGHT)/ FLATPACK_HEIGHT) //which number are we clicking?
+
+		if(clicked_index == 0) //clicked the bottom pack? Too bad, nothing happens
+			return
+		clicked_index = Clamp(clicked_index, 1, stacked.len)
+
+		var/obj/structure/closet/crate/flatpack/bottom_pack = locate(stacked[clicked_index]) //so the very bottom pack is selected
+
+		var/list/removed_packs = list()
+		for(var/i = stacked.len; i > clicked_index; i--)
+			var/obj/structure/closet/crate/flatpack/above = locate(stacked[i])
+			removed_packs += above
+			remove_stack(above) //remove all the flatpacks stacked above the clicked one
+
+		remove_stack(bottom_pack) //moves the flatpack to where the user is
+		bottom_pack.forceMove(get_turf(user))
+
+		for(var/obj/structure/closet/crate/flatpack/newpack in removed_packs) //readd all the stacks we took off above it to the new one
+			bottom_pack.add_stack(newpack)
+
+		user.visible_message("[user] removes the top [bottom_pack.stacked.len + 1] flatpack\s from the stack.",
+								"You remove the top [bottom_pack.stacked.len + 1] flatpack\s from the stack.")
+
+		return 1
 	return
+
+/obj/structure/closet/crate/flatpack/MouseDrop_T(atom/dropping, mob/user)
+	if(istype(dropping, /obj/structure/closet/crate/flatpack) && dropping != src)
+		var/obj/structure/closet/crate/flatpack/stacking = dropping
+		if(assembling || stacking.assembling)
+			user << "You can't stack opened flatpacks."
+			return
+		if((stacked.len + stacking.stacked.len + 2) >= MAX_FLATPACK_STACKS) //how many flatpacks we can in a stack (including the bases)
+			user << "You can't stack flatpacks that high."
+			return
+		user.visible_message("[user] adds [stacking.stacked.len + 1] flatpack\s to the stack.",
+								"You add [stacking.stacked.len + 1] flatpack\s to the stack.")
+		add_stack(stacking)
+		return 1
+	return
+
+/obj/structure/closet/crate/flatpack/proc/add_stack(obj/structure/closet/crate/flatpack/flatpack)
+	if(!flatpack)
+		return
+
+	flatpack.loc = src
+
+	var/image/flatimage = image(flatpack.icon, icon_state = flatpack.icon_state)
+
+	stacked.Add(list("\ref[flatpack]" = flatimage))
+
+	flatimage.pixel_y = stacked.len * FLATPACK_HEIGHT //the height of the icon
+	overlays += flatimage
+
+	if(flatpack.stacked.len) //if it's got stacks of its own
+		var/flatpack_stacked = flatpack.stacked.Copy()
+		for(var/stackedpack in flatpack_stacked)
+			var/obj/structure/closet/crate/flatpack/newpack = locate(stackedpack)
+			flatpack.remove_stack(newpack)
+			add_stack(newpack)
+
+/obj/structure/closet/crate/flatpack/proc/remove_stack(obj/structure/closet/crate/flatpack/flatpack)
+	if(isnull(flatpack))
+		return
+	if(!("\ref[flatpack]" in stacked))
+		return
+
+	var/image/oldimage = stacked["\ref[flatpack]"]
+	overlays.Remove(oldimage)
+
+	stacked.Remove("\ref[flatpack]")
+
+	update_icon()
+
 
 #define Fl_ACTION	"action"
 

@@ -135,6 +135,8 @@
 		update_cult_icons_added(cult_mind)
 		cult_mind.special_role = "Cultist"
 		cult_mind.current << "<span class='sinister'>You are a member of the cult!</span>"
+		cult_mind.current << "<span class='sinister'>You can now speak and understand the forgotten tongue of Nar-Sie.</span>"
+		cult_mind.current.add_language("Cult")
 		//memoize_cult_objectives(cult_mind)
 
 
@@ -397,6 +399,8 @@
 		update_cult_icons_removed(cult_mind)
 		cult -= cult_mind
 		cult_mind.current << "<span class='danger'><FONT size = 3>An unfamiliar white light flashes through your mind, cleansing the taint of the dark-one and the memories of your time as his servant with it.</FONT></span>"
+		cult_mind.current << "<span class='danger'>You find yourself unable to mouth the words of the forgotten...</span>"
+		cult_mind.current.remove_language("Cult")
 		cult_mind.memory = ""
 
 		if(show_message)

@@ -76,7 +76,7 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 var/list/teleportlocs = list()
 
 proc/process_teleport_locs()
-	for(var/area/AR in world)
+	for(var/area/AR in areas)
 		if(istype(AR, /area/shuttle) || istype(AR, /area/syndicate_station) || istype(AR, /area/wizard_station)) continue
 		if(teleportlocs.Find(AR.name)) continue
 		var/turf/picked = safepick(get_area_turfs(AR.type))
@@ -89,7 +89,7 @@ proc/process_teleport_locs()
 var/list/ghostteleportlocs = list()
 
 proc/process_ghost_teleport_locs()
-	for(var/area/AR in world)
+	for(var/area/AR in areas)
 		if(ghostteleportlocs.Find(AR.name)) continue
 		if(istype(AR, /area/turret_protected/aisat) || istype(AR, /area/derelict) || istype(AR, /area/tdome))
 			ghostteleportlocs += AR.name
@@ -104,7 +104,7 @@ proc/process_ghost_teleport_locs()
 var/global/list/adminbusteleportlocs = list()
 
 proc/process_adminbus_teleport_locs()
-	for(var/area/AR in world)
+	for(var/area/AR in areas)
 		if(adminbusteleportlocs.Find(AR.name)) continue
 		var/turf/picked = safepick(get_area_turfs(AR.type))
 		if (picked)

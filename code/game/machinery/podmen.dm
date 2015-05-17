@@ -171,6 +171,7 @@ var/global/list/hasbeendiona = list() // Stores ckeys and a timestamp for ghost 
 			if ("cult")
 				if (podman.mind in ticker.mode:cult)
 					ticker.mode:add_cultist(podman.mind)
+					podman.add_language("Cult")
 					ticker.mode:update_all_cult_icons() //So the icon actually appears
 		// -- End mode specific stuff
 

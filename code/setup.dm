@@ -240,7 +240,6 @@ var/MAX_EXPLOSION_RANGE = 14
 #define ROBOT 8
 #define SLIME 16
 #define SIMPLE_ANIMAL 32
-#define SPOOKY 128
 
 #define ALLMOBS 63 //update this
 
@@ -781,7 +780,7 @@ var/list/TAGGERLOCATIONS = list(
 #define AGE_MIN 17			//youngest a character can be
 #define AGE_MAX 85			//oldest a character can be
 
-//Languages!
+/*//Languages!
 #define LANGUAGE_HUMAN		1
 #define LANGUAGE_ALIEN		2
 #define LANGUAGE_DOG		4
@@ -790,6 +789,7 @@ var/list/TAGGERLOCATIONS = list(
 #define LANGUAGE_OTHER		32768
 
 #define LANGUAGE_UNIVERSAL	65535
+*/
 
 #define LEFT 1
 #define RIGHT 2
@@ -962,6 +962,7 @@ var/list/RESTRICTED_CAMERA_NETWORKS = list( //Those networks can only be accesse
 #define FIXED2WORK		16 //does it need to be anchored to work? Try to use this with WRENCHMOVE - hooks into power code
 #define EJECTNOTDEL		32 //when we destroy the machine, does it remove all its items or destroy them?
 #define WELD_FIXED		64 //if it is attacked by a welder and is anchored, it'll toggle between welded and unwelded to the floor
+#define MULTITOOL_MENU	128 //if it has multitool menu functionality inherently
 
 #define MAX_N_OF_ITEMS 999 // Used for certain storage machinery, BYOND infinite loop detector doesn't look things over 1000.
 
@@ -1067,6 +1068,21 @@ var/list/RESTRICTED_CAMERA_NETWORKS = list( //Those networks can only be accesse
 #define BORDER_USE_TURF_EXIT 1
 
 ////////////////////////
+////PDA APPS DEFINES////
+////////////////////////
+#define PDA_APP_RINGER			101
+#define PDA_APP_SPAMFILTER		102
+#define PDA_APP_BALANCECHECK	103
+#define PDA_APP_STATIONMAP		104
+#define PDA_APP_SNAKEII			105
+#define PDA_APP_MINESWEEPER		106
+#define PDA_APP_SPESSPETS		107
+
+#define PDA_APP_SNAKEII_MAXSPEED		9
+#define PDA_APP_SNAKEII_MAXLABYRINTH	8
+
+
+////////////////////////
 ////WIZARD SHIT GO//////
 ////////////////////////
 
@@ -1123,3 +1139,26 @@ var/list/RESTRICTED_CAMERA_NETWORKS = list( //Those networks can only be accesse
 #define ARENA_AVAILABLE 1	//arena is ready for a new game
 #define ARENA_INGAME 2		//a game is currently being played in the arena
 #define ARENA_ENDGAME 3		//a game just finished and the arena is about to reset
+
+// Languages
+#define LANGUAGE_SOL_COMMON "Sol Common"
+#define LANGUAGE_UNATHI "Sinta'unathi"
+#define LANGUAGE_SIIK_TAJR "Siik'tajr"
+#define LANGUAGE_SKRELLIAN "Skrellian"
+#define LANGUAGE_ROOTSPEAK "Rootspeak"
+#define LANGUAGE_TRADEBAND "Tradeband"
+#define LANGUAGE_GUTTER "Gutter"
+#define LANGUAGE_GREY "Grey"
+#define LANGUAGE_XENO "Xenomorph"
+#define LANGUAGE_CLATTER "Clatter"
+#define LANGUAGE_MONKEY "Monkey"
+#define LANGUAGE_VOX "Vox-pidgin"
+#define LANGUAGE_CULT "Cult"
+
+//#define SAY_DEBUG 0
+#ifdef SAY_DEBUG
+	#warning SOME ASSHOLE FORGOT TO COMMENT SAY_DEBUG BEFORE COMMITTING
+	#define say_testing(a,x) a << ("([__FILE__]L[__LINE__] SAYDEBUG) [x]")
+#else
+	#define say_testing(a,x) null << "[x][a]"
+#endif

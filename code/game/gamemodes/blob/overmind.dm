@@ -70,7 +70,8 @@
 	blob_talk(message)
 
 /mob/camera/blob/proc/blob_talk(message)
-	log_say("[key_name(src)] (@[src.x],[src.y],[src.z]): [message]")
+	var/turf/T = get_turf(src)
+	log_say("[key_name(src)] (@[T.x],[T.y],[T.z]) Blob Hivemind: [message]")
 
 	message = trim(copytext(sanitize(message), 1, MAX_MESSAGE_LEN))
 
@@ -80,7 +81,7 @@
 	var/message_a = say_quote(message)
 	var/rendered = "<font color=\"#EE4000\"><i><span class='game say'>Blob Telepathy, <span class='name'>[name]</span> <span class='message'>[message_a]</span></span></i></font>"
 
-	for (var/mob/camera/blob/S in world)
+	for (var/mob/camera/blob/S in mob_list)
 		if(istype(S))
 			S.show_message(rendered, 2)
 

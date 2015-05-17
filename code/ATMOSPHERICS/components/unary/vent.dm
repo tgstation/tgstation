@@ -18,11 +18,11 @@
 	air_contents.volume=volume
 
 /obj/machinery/atmospherics/unary/vent/process()
-	..()
+	. = ..()
 
 	CHECK_DISABLED(vents)
 	if (!node)
-		return // Turning off the vent is a PITA. - N3X
+		return// Turning off the vent is a PITA. - N3X
 
 	// New GC does this sometimes
 	if(!loc) return
@@ -32,6 +32,8 @@
 	var/datum/gas_mixture/removed = air_contents.remove(volume)
 
 	loc.assume_air(removed)
+
+	return 1
 
 
 /obj/machinery/atmospherics/unary/vent/update_icon()

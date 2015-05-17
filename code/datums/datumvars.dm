@@ -836,7 +836,7 @@ client
 		else
 			usr << "Failed! Something went wrong."
 
-	/*else if(href_list["addlanguage"])
+	else if(href_list["addlanguage"])
 		if(!check_rights(R_SPAWN))	return
 
 		var/mob/H = locate(href_list["addlanguage"])
@@ -845,6 +845,9 @@ client
 			return
 
 		var/new_language = input("Please choose a language to add.","Language",null) as null|anything in all_languages
+
+		if(!new_language)
+			return
 
 		if(!H)
 			usr << "Mob doesn't exist anymore"
@@ -869,15 +872,18 @@ client
 
 		var/datum/language/rem_language = input("Please choose a language to remove.","Language",null) as null|anything in H.languages
 
+		if(!rem_language)
+			return
+
 		if(!H)
 			usr << "Mob doesn't exist anymore"
 			return
 
-		//if(H.remove_language(rem_language.name))
-		//	usr << "Removed [rem_language] from [H]."
+		if(H.remove_language(rem_language.name))
+			usr << "Removed [rem_language] from [H]."
 		else
 			usr << "Mob doesn't know that language."
-	*/
+
 	else if(href_list["regenerateicons"])
 		if(!check_rights(0))	return
 

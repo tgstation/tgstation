@@ -5,7 +5,8 @@
 
 /mob/living/proc/alien_talk(var/message)
 
-	log_say("[key_name(src)] (@[src.x],[src.y],[src.z]): [message]")
+	var/turf/T = get_turf(src)
+	log_say("[key_name(src)] (@[T.x],[T.y],[T.z]) Alien Hivemind: [message]")
 	message = trim(message)
 
 	if (!message)
@@ -17,7 +18,7 @@
 		if((!S.stat && S.hivecheck()) || ((S in dead_mob_list) && !istype(S, /mob/new_player)))
 			handle_render(S,rendered,src)
 
-/mob/living/carbon/alien/handle_inherent_channels(message, message_mode)
+/mob/living/carbon/alien/handle_inherent_channels(message, message_mode, var/datum/language/speaking)
 	if(!..())
 		if(message_mode == MODE_ALIEN)
 			if(hivecheck())

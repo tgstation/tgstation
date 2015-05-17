@@ -223,11 +223,16 @@
 		return
 	if (istype(M, /mob/living))
 		var/mob/living/MM = M
+		if(MM.locked_to_z != 0 && destination.z != MM.locked_to_z)
+			MM.visible_message("<span class='danger'>[MM] bounces off the portal!</span>","<span class='warning'>You're unable to go to that destination!</span>")
+			return
+
 		if(MM.check_contents_for(/obj/item/weapon/disk/nuclear))
 			MM << "<span class='warning'>Something you are carrying seems to be unable to pass through the portal. Better drop it if you want to go through.</span>"
 			return
 	var/disky = 0
 	for (var/atom/O in M.contents) //I'm pretty sure this accounts for the maximum amount of container in container stacking. --NeoFite
+		world << "Checking [O]([O.type]) for teleport"
 		if (istype(O, /obj/item/weapon/storage) || istype(O, /obj/item/weapon/gift))
 			for (var/obj/OO in O.contents)
 				if (istype(OO, /obj/item/weapon/storage) || istype(OO, /obj/item/weapon/gift))
@@ -240,6 +245,9 @@
 			disky = 1
 		if (istype(O, /mob/living))
 			var/mob/living/MM = O
+			if(MM.locked_to_z != 0 && destination.z != MM.locked_to_z)
+				M.visible_message("<span class='danger'>[M] bounces off the portal!</span>")
+				return
 			if(MM.check_contents_for(/obj/item/weapon/disk/nuclear))
 				disky = 1
 	if (disky)
@@ -250,12 +258,17 @@
 //Bags of Holding cause bluespace teleportation to go funky. --NeoFite
 	if (istype(M, /mob/living))
 		var/mob/living/MM = M
+		if(MM.locked_to_z != 0 && destination.z != MM.locked_to_z)
+			MM.visible_message("<span class='danger'>[MM] bounces off the portal!</span>","<span class='warning'>You're unable to go to that destination!</span>")
+			return
+
 		if(MM.check_contents_for(/obj/item/weapon/storage/backpack/holding))
 			MM << "<span class='warning'>The Bluespace interface on your Bag of Holding interferes with the teleport!</span>"
 			precision = rand(1,100)
 	if (istype(M, /obj/item/weapon/storage/backpack/holding))
 		precision = rand(1,100)
 	for (var/atom/O in M.contents) //I'm pretty sure this accounts for the maximum amount of container in container stacking. --NeoFite
+		world << "Checking [O]([O.type]) for teleport"
 		if (istype(O, /obj/item/weapon/storage) || istype(O, /obj/item/weapon/gift))
 			for (var/obj/OO in O.contents)
 				if (istype(OO, /obj/item/weapon/storage) || istype(OO, /obj/item/weapon/gift))
@@ -268,6 +281,9 @@
 			precision = rand(1,100)
 		if (istype(O, /mob/living))
 			var/mob/living/MM = O
+			if(MM.locked_to_z != 0 && destination.z != MM.locked_to_z)
+				M.visible_message("<span class='danger'>[M] bounces off the portal!</span>")
+				return
 			if(MM.check_contents_for(/obj/item/weapon/storage/backpack/holding))
 				precision = rand(1,100)
 
@@ -290,7 +306,8 @@
 	if(tmploc==null)
 		return
 
-	M.loc = tmploc
+	//M.loc = tmploc
+	M.forceMove(tmploc)
 	sleep(2)
 
 	var/datum/effect/effect/system/spark_spread/s = new /datum/effect/effect/system/spark_spread

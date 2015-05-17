@@ -50,16 +50,18 @@
 
 	if(!start_normal)
 		returnToDPool(src)
+		return
 
 	start_normal.network_expand(src, reference)
 
 	update_network_gases()
 
 	if((normal_members.len>0)||(line_members.len>0))
-		if(!(src in pipe_networks)) //Pooling makes it disposed, which causes it to no longer process while pooled
-			pipe_networks += src
+		pipe_networks |= src
 	else
 		returnToDPool(src)
+		return
+	return 1
 
 /datum/pipe_network/proc/merge(datum/pipe_network/giver)
 	if(giver==src) return 0

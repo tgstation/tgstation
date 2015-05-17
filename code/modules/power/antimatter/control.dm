@@ -183,7 +183,7 @@
 		fueljar = W
 		if(user.client)
 			user.client.screen -= W
-		user.u_equip(W)
+		user.u_equip(W,1)
 		W.loc = src
 		user.update_icons()
 		message_admins("AME loaded with fuel by [user.name] at ([x],[y],[z] - <A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[x];Y=[y];Z=[z]'>JMP</a>)",0,1)

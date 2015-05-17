@@ -50,6 +50,8 @@
 
 /obj/effect/decal/cleanable/liquid_fuel/flamethrower_fuel/New(newLoc, amt = 1, d = 0)
 	dir = d //Setting this direction means you won't get torched by your own flamethrower.
+	var/turf/T = newLoc
+	if(istype(T)) T.hotspot_expose(70000, 50000, 1, surfaces=1)
 	//. = ..()
 
 /obj/effect/decal/cleanable/liquid_fuel/flamethrower_fuel/Spread()
@@ -74,7 +76,7 @@
 					FF.amount = balanced
 			else
 				del(FF) //otherwise, we can't actually make a new patch and we bin the idea completely
-			O.hotspot_expose((T20C*2) + 380,500,surfaces=1) //Light flamethrower fuel on fire immediately.
+			spawn(1) O.hotspot_expose(7000, 500, 1, 1)
 
 			if(FF)
 				transferred_amount += FF.amount

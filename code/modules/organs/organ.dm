@@ -146,7 +146,7 @@
 					c_hand = r_hand
 
 				if (c_hand)
-					u_equip(c_hand)
+					u_equip(c_hand,1)
 
 					if(broken)
 						emote("me", 1, "[(species && species.flags & NO_PAIN) ? "" : "screams in pain and"] drops what they were holding in their [E.display_name?"[E.display_name]":"[E]"]!")

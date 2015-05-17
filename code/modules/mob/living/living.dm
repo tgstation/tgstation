@@ -550,15 +550,18 @@
 			stop_pulling()
 			return
 
+		var/mob/living/M = pulling
 		if (!restrained())
 			var/diag = get_dir(src, pulling)
 			if ((diag - 1) & diag)
 			else
 				diag = null
 			if ((get_dist(src, pulling) > 1 || diag))
-				if(isturf(pulling.loc))
+				if(!istype(pulling) || !pulling)
+					WARNING("Pulling disappeared! pulling = [pulling] old pulling = [M]")
+				else if(isturf(pulling.loc))
 					if (isliving(pulling))
-						var/mob/living/M = pulling
+						M = pulling
 						var/ok = 1
 						if (locate(/obj/item/weapon/grab, M.grabbed_by))
 							if (prob(75))

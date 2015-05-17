@@ -24,10 +24,10 @@
 	H.fire_sprite = "Plasmaman"
 
 	// Unequip existing suits and hats.
-	H.u_equip(H.wear_suit)
-	H.u_equip(H.head)
+	H.u_equip(H.wear_suit,1)
+	H.u_equip(H.head,1)
 	if(H.mind.assigned_role!="Clown")
-		H.u_equip(H.wear_mask)
+		H.u_equip(H.wear_mask,1)
 
 	H.equip_or_collect(new /obj/item/clothing/mask/breath(H), slot_wear_mask)
 	var/suit=/obj/item/clothing/suit/space/plasmaman

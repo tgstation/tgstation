@@ -57,15 +57,20 @@ h1.alert, h2.alert		{color: #000000;}
 .adminmod				{color: #402A14;	font-weight: bold;}
 .tajaran				{color: #803B56;}
 .skrell					{color: #00CED1;}
+.solcom					{color: #22228B;}
 .soghun					{color: #228B22;}
 .vox					{color: #AA00AA;}
 .rough					{font-family: 'Trebuchet MS', cursive, sans-serif;}
 .say_quote				{font-family: Georgia, Verdana, sans-serif;}
+.cult					{color: #800080; font-weight: bold; font-style: italic;}
 .interface				{color: #330033;}
 .big					{font-size: 150%;}
 .bold					{font-weight: bold;}
 .center					{text-align: center;}
 .red					{color: #FF0000;}
+.grey					{color: #585858; font-family: Dotum, sans-serif;}
+.skeleton				{color: #585858; font-weight: bold; font-style: italic;}
+.gutter					{color: #61380B; font-style: italic;}
 /* /vg/ */
 .good					{color: green;}
 .average				{color: #FF8000;}

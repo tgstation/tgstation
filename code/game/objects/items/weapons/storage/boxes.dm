@@ -555,7 +555,7 @@
 	name = "label roll box"
 	desc = "A box of refill rolls for a hand labeler."
 	icon_state = "labels"
-	
+
 	New()
 		..()
 		for(var/i=1; i <= storage_slots; i++)
@@ -573,30 +573,6 @@
 		for(var/i=1; i <= storage_slots; i++)
 			new /obj/item/toy/snappop(src)
 
-/obj/item/weapon/storage/box/matches
-	name = "matchbox"
-	desc = "A small box of Almost But Not Quite Plasma Premium Matches."
-	icon = 'icons/obj/cigarettes.dmi'
-	icon_state = "matchbox"
-	item_state = "zippo"
-	storage_slots = 10
-	w_class = 1
-	flags = 0
-	slot_flags = SLOT_BELT
-
-	New()
-		..()
-		for(var/i=1; i <= storage_slots; i++)
-			new /obj/item/weapon/match(src)
-
-	attackby(obj/item/weapon/match/W as obj, mob/user as mob)
-		if(istype(W, /obj/item/weapon/match) && W.lit == 0)
-			W.lit = 1
-			W.icon_state = "match_lit"
-			processing_objects.Add(W)
-		W.update_icon()
-		return
-
 /obj/item/weapon/storage/box/autoinjectors
 	name = "box of injectors"
 	desc = "Contains autoinjectors."
@@ -605,6 +581,20 @@
 		..()
 		for (var/i; i < storage_slots; i++)
 			new /obj/item/weapon/reagent_containers/hypospray/autoinjector(src)
+
+/obj/item/weapon/storage/box/mugs
+	name = "box of mugs"
+	desc = "It's a box of mugs."
+	icon_state = "box"
+
+	New()
+		..()
+		new /obj/item/weapon/reagent_containers/food/drinks/mug(src)
+		new /obj/item/weapon/reagent_containers/food/drinks/mug(src)
+		new /obj/item/weapon/reagent_containers/food/drinks/mug(src)
+		new /obj/item/weapon/reagent_containers/food/drinks/mug(src)
+		new /obj/item/weapon/reagent_containers/food/drinks/mug(src)
+		new /obj/item/weapon/reagent_containers/food/drinks/mug(src)
 
 // TODO Change this to a box/large. - N3X
 /obj/item/weapon/storage/box/lights
@@ -643,3 +633,19 @@
 		new /obj/item/weapon/light/tube(src)
 	for(var/i = 0; i < 7; i++)
 		new /obj/item/weapon/light/bulb(src)
+
+/obj/item/weapon/storage/box/lights/tubes/New()
+	..()
+	for(var/i = 0; i < 21; i++)
+		new /obj/item/weapon/light/tube(src)
+
+/obj/item/weapon/storage/box/lights/he
+	name = "high efficiency lights"
+	icon_state = "lightmixed"
+
+/obj/item/weapon/storage/box/lights/he/New()
+	..()
+	for(var/i = 0; i < 14; i++)
+		new /obj/item/weapon/light/tube/he(src)
+	for(var/i = 0; i < 7; i++)
+		new /obj/item/weapon/light/bulb/he(src)

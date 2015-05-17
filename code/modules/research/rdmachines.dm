@@ -212,6 +212,7 @@ var/global/list/rnd_machines = list()
 		user << "\The [src.name] must be linked to an R&D console first!"
 		return 0
 	if(istype(O,/obj/item/stack/sheet) && research_flags &TAKESMATIN)
+		busy = 1
 		var/accepted = 1
 		if(allowed_materials && allowed_materials.len)
 			if( !(O.type in allowed_materials) )
@@ -226,19 +227,23 @@ var/global/list/rnd_machines = list()
 					found=1
 			if(!found)
 				user << "<span class='warning'>The protolathe rejects \the [O].</span>"
+				busy = 0
 				return 1
 			var/obj/item/stack/sheet/S = O
 			if (TotalMaterials() + S.perunit > max_material_storage)
 				user << "<span class='warning'>The protolathe's material bin is full. Please remove material before adding more.</span>"
+				busy = 0
 				return 1
 
 			var/obj/item/stack/sheet/stack = O
 			var/amount = round(input("How many sheets do you want to add? (0 - [stack.amount])") as num)//No decimals
 			if(!O || !O.loc || O.loc != user)
+				busy = 0
 				return
 			if(amount < 0)//No negative numbers
 				amount = 0
 			if(amount == 0)
+				busy = 0
 				return
 			if(amount > stack.amount)
 				amount = stack.amount
@@ -252,7 +257,6 @@ var/global/list/rnd_machines = list()
 				overlays -= "[base_state]_[stack.name]"
 
 			icon_state = "[base_state]"
-			busy = 1
 			use_power(max(1000, (3750*amount/10)))
 			var/stacktype = stack.type
 			stack.use(amount)

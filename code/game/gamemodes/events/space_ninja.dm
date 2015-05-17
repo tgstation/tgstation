@@ -358,7 +358,7 @@ Malf AIs/silicons aren't added. Monkeys aren't added. Messes with objective comp
 			if(!ninja_mind.objectives.len||!mission_set)//If they somehow did not get an objective at this point, time to destroy the station.
 				var/nuke_code
 				var/temp_code
-				for(var/obj/machinery/nuclearbomb/N in world)
+				for(var/obj/machinery/nuclearbomb/N in machines)
 					temp_code = text2num(N.r_code)
 					if(temp_code)//if it's actually a number. It won't convert any non-numericals.
 						nuke_code = N.r_code

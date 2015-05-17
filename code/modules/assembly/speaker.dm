@@ -8,9 +8,6 @@
 	g_amt = 100
 	w_type = RECYK_ELECTRONIC
 	origin_tech = "magnets=1"
-
-	languages = HUMAN
-
 	var/message = "Thank you for using NanoSpeaker!"
 
 /obj/item/device/assembly/speaker/activate()
@@ -18,11 +15,10 @@
 
 /obj/item/device/assembly/speaker/attack_self(mob/user as mob)
 	message = sanitize(input(user,"Enter new message for the [src]","NanoSpeaker Settings",message))
+	var/datum/language/language
 	if(user.stat == DEAD) //ENGAGE SPOOKS!
-		languages = SPOOKY
-	else
-		languages |= HUMAN
-	src.say("New message: [message]")
+		language = all_languages["Spooky"]
+	src.say("New message: [message]", language)
 
 /obj/item/device/assembly/speaker/attackby(obj/item/W as obj, mob/user as mob)
 	..()

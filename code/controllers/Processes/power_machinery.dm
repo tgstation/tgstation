@@ -18,7 +18,8 @@ var/global/list/power_machines = list()
 			var/time_start = world.timeofday
 			#endif
 
-			M.check_rebuild() //Checks to make sure the powernet doesn't need to be rebuilt, rebuilds it if it does
+			if(M.check_rebuild()) //Checks to make sure the powernet doesn't need to be rebuilt, rebuilds it if it does
+				scheck()
 
 			if(M.process() == PROCESS_KILL)
 				M.inMachineList = 0

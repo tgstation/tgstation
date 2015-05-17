@@ -147,7 +147,7 @@ Implant Specifics:<BR>"}
 <b>Integrity:</b> Implant will occasionally be degraded by the body's immune system and thus will occasionally malfunction."}
 		return dat
 
-/obj/item/weapon/implant/explosive/Hear(message, atom/movable/speaker, message_langs, raw_message, radio_freq)
+/obj/item/weapon/implant/explosive/Hear(message, atom/movable/speaker, var/datum/language/speaking, raw_message, radio_freq)
 	hear(message)
 	return
 
@@ -446,15 +446,15 @@ the implant may become unstable and either pre-maturely inject the subject or si
 			
 			if(istype(t, /area/syndicate_station) || istype(t, /area/syndicate_mothership) || istype(t, /area/shuttle/syndicate_elite) )
 				//give the syndies a bit of stealth
-				Broadcast_Message(announcement_intercom, null, announcement_intercom, "[mobname] has died in Space!", "[mobname]'s Death Alarm", "Death Alarm", "[mobname]'s Death Alarm", 0, 0, list(0,1), 1459)
+				Broadcast_Message(announcement_intercom, all_languages["Sol Common"], null, announcement_intercom, "[mobname] has died in Space!", "[mobname]'s Death Alarm", "Death Alarm", "[mobname]'s Death Alarm", 0, 0, list(0,1), 1459)
 			else
-				Broadcast_Message(announcement_intercom, null, announcement_intercom, "[mobname] has died in [t.name]!", "[mobname]'s Death Alarm", "Death Alarm", "[mobname]'s Death Alarm", 0, 0, list(0,1), 1459)
+				Broadcast_Message(announcement_intercom, all_languages["Sol Common"], null, announcement_intercom, "[mobname] has died in [t.name]!", "[mobname]'s Death Alarm", "Death Alarm", "[mobname]'s Death Alarm", 0, 0, list(0,1), 1459)
 			processing_objects.Remove(src)
 		if ("emp")
 			var/name = prob(50) ? t.name : pick(teleportlocs)
-			Broadcast_Message(announcement_intercom, null, announcement_intercom, "[mobname] has died in [name]!", "[mobname]'s Death Alarm", "Death Alarm", "[mobname]'s Death Alarm", 0, 0, list(0,1), 1459)
+			Broadcast_Message(announcement_intercom, all_languages["Sol Common"], null, announcement_intercom, "[mobname] has died in [name]!", "[mobname]'s Death Alarm", "Death Alarm", "[mobname]'s Death Alarm", 0, 0, list(0,1), 1459)
 		else
-			Broadcast_Message(announcement_intercom, null, announcement_intercom, "[mobname] has died-zzzzt in-in-in...", "[mobname]'s Death Alarm", "Death Alarm", "[mobname]'s Death Alarm", 0, 0, list(0,1), 1459)
+			Broadcast_Message(announcement_intercom, all_languages["Sol Common"], null, announcement_intercom, "[mobname] has died-zzzzt in-in-in...", "[mobname]'s Death Alarm", "Death Alarm", "[mobname]'s Death Alarm", 0, 0, list(0,1), 1459)
 			processing_objects.Remove(src)
 
 /obj/item/weapon/implant/death_alarm/emp_act(severity)			//for some reason alarms stop going off in case they are emp'd, even without this

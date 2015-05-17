@@ -39,7 +39,7 @@ var/global/sent_strike_team = 0
 //Code for spawning a nuke auth code.
 	var/nuke_code
 	var/temp_code
-	for(var/obj/machinery/nuclearbomb/N in world)
+	for(var/obj/machinery/nuclearbomb/N in machines)
 		temp_code = text2num(N.r_code)
 		if(temp_code)//if it's actually a number. It won't convert any non-numericals.
 			nuke_code = N.r_code
@@ -165,8 +165,8 @@ var/global/sent_strike_team = 0
 	var/obj/item/weapon/card/id/W = new(src)
 	W.name = "[real_name]'s ID Card"
 	W.icon_state = "centcom"
-	W.access = get_all_accesses()//They get full station access.
-	W.access += list(access_cent_general, access_cent_specops, access_cent_living, access_cent_storage)//Let's add their alloted CentCom access.
+	W.access = get_centcom_access("Death Commando")
+	W.icon_state = "deathsquad"
 	W.assignment = "Death Commando"
 	W.registered_name = real_name
 	equip_to_slot_or_del(W, slot_wear_id)

@@ -65,7 +65,7 @@
 	var/largest_delay = 0
 	var/mob/most_delayed_mob = null
 	var/delay=0
-	for(var/mob/M in world)
+	for(var/mob/M in mob_list)
 		if(!M.client)
 			continue
 		// Get stats

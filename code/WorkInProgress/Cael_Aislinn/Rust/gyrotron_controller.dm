@@ -36,7 +36,7 @@
 		var/t = {"<B>Gyrotron Remote Control Console</B><BR>
 <hr>"}
 		// END AUTOFIX
-		for(var/obj/machinery/rust/gyrotron/gyro in world)
+		for(var/obj/machinery/rust/gyrotron/gyro in machines)
 			if(gyro.remoteenabled && gyro.on)
 
 				// AUTOFIXED BY fix_string_idiocy.py

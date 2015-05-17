@@ -15,8 +15,7 @@ var/specops_shuttle_timeleft = 0
 	name = "Spec. Ops. Shuttle Console"
 	icon = 'icons/obj/computer.dmi'
 	icon_state = "shuttle"
-	req_access = list(access_cent_specops)
-//	req_access = list(ACCESS_CENT_SPECOPS)
+	req_access = list(access_cent_specops,access_cent_ert)
 	var/temp = null
 	var/hacked = 0
 	var/allowedtocall = 0
@@ -30,7 +29,7 @@ var/specops_shuttle_timeleft = 0
 	var/message_tracker[] = list(0,1,2,3,5,10,30,45)//Create a a list with potential time values.
 	var/message = "\"THE SPECIAL OPERATIONS SHUTTLE IS PREPARING TO RETURN\""//Initial message shown.
 	if(announcer)
-		Broadcast_Message(announcer, null, announcer, message, "A.L.I.C.E.", "Response Team", "A.L.I.C.E.", 0, 0, list(0,1), radiochannels["Response Team"])
+		Broadcast_Message(announcer, null, null, announcer, message, "A.L.I.C.E.", "Response Team", "A.L.I.C.E.", 0, 0, list(0,1), radiochannels["Response Team"])
 
 	while(specops_shuttle_time - world.timeofday > 0)
 		var/ticksleft = specops_shuttle_time - world.timeofday
@@ -46,7 +45,7 @@ var/specops_shuttle_timeleft = 0
 				message = "\"ALERT: [rounded_time_left] SECOND[(rounded_time_left!=1)?"S":""] REMAIN\""
 				if(rounded_time_left==0)
 					message = "\"ALERT: TAKEOFF\""
-				Broadcast_Message(announcer, null, announcer, message, "A.L.I.C.E.", "Response Team", "A.L.I.C.E.", 0, 0, list(0,1), radiochannels["Response Team"])
+				Broadcast_Message(announcer, null, null, announcer, message, "A.L.I.C.E.", "Response Team", "A.L.I.C.E.", 0, 0, list(0,1), radiochannels["Response Team"])
 				message_tracker -= rounded_time_left//Remove the number from the list so it won't be called again next cycle.
 				//Should call all the numbers but lag could mean some issues. Oh well. Not much I can do about that.
 
@@ -86,7 +85,7 @@ var/specops_shuttle_timeleft = 0
 
 	specops_shuttle_at_station = 0
 
-	for(var/obj/machinery/computer/specops_shuttle/S in world)
+	for(var/obj/machinery/computer/specops_shuttle/S in machines)
 		S.specops_shuttle_timereset = world.time + SPECOPS_RETURN_DELAY
 
 	del(announcer)
@@ -98,7 +97,7 @@ var/specops_shuttle_timeleft = 0
 	var/message_tracker[] = list(0,1,2,3,5,10,30,45)//Create a a list with potential time values.
 	var/message = "\"THE SPECIAL OPERATIONS SHUTTLE IS PREPARING FOR LAUNCH\""//Initial message shown.
 	if(announcer)
-		Broadcast_Message(announcer, null, announcer, message, "A.L.I.C.E.", "Response Team", "A.L.I.C.E.", 0, 0, list(0,1), radiochannels["Response Team"])
+		Broadcast_Message(announcer, null, null, announcer, message, "A.L.I.C.E.", "Response Team", "A.L.I.C.E.", 0, 0, list(0,1), radiochannels["Response Team"])
 //		message = "ARMORED SQUAD TAKE YOUR POSITION ON GRAVITY LAUNCH PAD"
 //		announcer.autosay(message, "A.L.I.C.E.", "A.L.I.C.E.")
 
@@ -116,7 +115,7 @@ var/specops_shuttle_timeleft = 0
 				message = "\"ALERT: [rounded_time_left] SECOND[(rounded_time_left!=1)?"S":""] REMAIN\""
 				if(rounded_time_left==0)
 					message = "\"ALERT: TAKEOFF\""
-				Broadcast_Message(announcer, null, announcer, message, "A.L.I.C.E.", "Response Team", "A.L.I.C.E.", 0, 0, list(0,1), radiochannels["Response Team"])
+				Broadcast_Message(announcer, null, null, announcer, message, "A.L.I.C.E.", "Response Team", "A.L.I.C.E.", 0, 0, list(0,1), radiochannels["Response Team"])
 				message_tracker -= rounded_time_left//Remove the number from the list so it won't be called again next cycle.
 				//Should call all the numbers but lag could mean some issues. Oh well. Not much I can do about that.
 
@@ -152,10 +151,10 @@ var/specops_shuttle_timeleft = 0
 		sleep(10)
 
 		var/spawn_marauder[] = new()
-		for(var/obj/effect/landmark/L in world)
+		for(var/obj/effect/landmark/L in landmarks_list)
 			if(L.name == "Marauder Entry")
 				spawn_marauder.Add(L)
-		for(var/obj/effect/landmark/L in world)
+		for(var/obj/effect/landmark/L in landmarks_list)
 			if(L.name == "Marauder Exit")
 				var/obj/effect/portal/P = new(L.loc)
 				P.invisibility = 101//So it is not seen by anyone.
@@ -226,7 +225,7 @@ var/specops_shuttle_timeleft = 0
 		var/mob/M = locate(/mob) in T
 		M << "<span class='warning'>You have arrived to [station_name]. Commence operation!</span>"
 
-	for(var/obj/machinery/computer/specops_shuttle/S in world)
+	for(var/obj/machinery/computer/specops_shuttle/S in machines)
 		S.specops_shuttle_timereset = world.time + SPECOPS_RETURN_DELAY
 
 	del(announcer)
@@ -234,7 +233,7 @@ var/specops_shuttle_timeleft = 0
 /proc/specops_can_move()
 	if(specops_shuttle_moving_to_station || specops_shuttle_moving_to_centcom)
 		return 0
-	for(var/obj/machinery/computer/specops_shuttle/S in world)
+	for(var/obj/machinery/computer/specops_shuttle/S in machines)
 		if(world.timeofday <= S.specops_shuttle_timereset)
 			return 0
 	return 1
@@ -363,9 +362,9 @@ var/specops_shuttle_timeleft = 0
 	var/message_tracker[] = list(0,1,2,3,5,10,30,45)//Create a a list with potential time values.
 	var/message = "THE SPECIAL OPERATIONS SHUTTLE IS PREPARING FOR LAUNCH"//Initial message shown.
 	if(announcer)
-		Broadcast_Message(announcer, null, announcer, message, "A.L.I.C.E.", "A.L.I.C.E.", "A.L.I.C.E.", 0, 0, list(0,1), radiochannels["Response Team"])
+		Broadcast_Message(announcer, null, null, announcer, message, "A.L.I.C.E.", "A.L.I.C.E.", "A.L.I.C.E.", 0, 0, list(0,1), radiochannels["Response Team"])
 		message = "ARMORED SQUAD TAKE YOUR POSITION ON GRAVITY LAUNCH PAD"
-		Broadcast_Message(announcer, null, announcer, message, "A.L.I.C.E.", "A.L.I.C.E.", "A.L.I.C.E."", 0, 0, list(0,1), radiochannels["Response Team"])
+		Broadcast_Message(announcer, null, null, announcer, message, "A.L.I.C.E.", "A.L.I.C.E.", "A.L.I.C.E."", 0, 0, list(0,1), radiochannels["Response Team"])
 
 	while(specops_shuttle_time - world.timeofday > 0)
 		var/ticksleft = specops_shuttle_time - world.timeofday
@@ -381,7 +380,7 @@ var/specops_shuttle_timeleft = 0
 				message = "ALERT: [rounded_time_left] SECOND[(rounded_time_left!=1)?"S":""] REMAIN"
 				if(rounded_time_left==0)
 					message = "ALERT: TAKEOFF"
-				Broadcast_Message(announcer, null, announcer, message, "A.L.I.C.E.", "Response Team", "A.L.I.C.E.", 0, 0, list(0,1), radiochannels["Response Team"])
+				Broadcast_Message(announcer, null, null, announcer, message, "A.L.I.C.E.", "Response Team", "A.L.I.C.E.", 0, 0, list(0,1), radiochannels["Response Team"])
 				message_tracker -= rounded_time_left//Remove the number from the list so it won't be called again next cycle.
 				//Should call all the numbers but lag could mean some issues. Oh well. Not much I can do about that.
 

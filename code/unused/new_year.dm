@@ -17,7 +17,7 @@
 	W.loc = src
 	if (user.client)
 		user.client.screen -= W
-	user.u_equip(W)
+	user.u_equip(W,1)
 	var/const/bottom_right_x = 115.0
 	var/const/bottom_right_y = 150.0
 	var/const/top_left_x = 15.0

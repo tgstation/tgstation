@@ -16,7 +16,8 @@
 
 /mob/living/proc/robot_talk(var/message)
 
-	log_say("[key_name(src)] (@[src.x],[src.y],[src.z])(binary): [message]")
+	var/turf/T = get_turf(src)
+	log_say("[key_name(src)] (@[T.x],[T.y],[T.z] Binary: [message]")
 
 	var/message_a = say_quote(message)
 	var/rendered = text("<i><span class='game say'>Robotic Talk, <span class='name'>[]</span> <span class='message'>[]</span></span></i>",name,message_a)
@@ -34,18 +35,18 @@
 /mob/living/silicon/lingcheck()
 	return 0 //Borged or AI'd lings can't speak on the ling channel.
 
-/mob/living/silicon/radio(message, message_mode)
+/mob/living/silicon/radio(message, message_mode, raw_message, var/datum/language/speaking)
 	. = ..()
 	if(. != 0)
 		return .
 	if(message_mode == "robot")
 		if(radio)
-			radio.talk_into(src, message)
+			radio.talk_into(src, message, null, speaking)
 		return REDUCE_RANGE
 
 	else if(message_mode in radiochannels)
 		if(radio)
-			radio.talk_into(src, message, message_mode)
+			radio.talk_into(src, message, message_mode, speaking)
 			return ITALICS | REDUCE_RANGE
 	return 0
 
@@ -56,7 +57,7 @@
 	else
 		return .
 
-/mob/living/silicon/handle_inherent_channels(message, message_mode)
+/mob/living/silicon/handle_inherent_channels(message, message_mode, var/datum/language/speaking)
 	. = ..()
 	if(.)
 		return .
@@ -71,3 +72,16 @@
 	message = ..()
 	message = "<span class='siliconsay'>[message]</span>"
 	return message
+
+/mob/living/silicon/say_understands(var/other,var/datum/language/speaking = null)
+	//These only pertain to common. Languages are handled by mob/say_understands()
+	if (!speaking)
+		if (istype(other, /mob/living/carbon))
+			return 1
+		if (istype(other, /mob/living/silicon))
+			return 1
+		if (istype(other, /mob/living/carbon/brain))
+			return 1
+		if (isanimal(other))
+			return 1
+	return ..()

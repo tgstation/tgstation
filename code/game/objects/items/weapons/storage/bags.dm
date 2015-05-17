@@ -176,11 +176,11 @@
 				break
 
 		if(!inserted || !S.amount)
-			usr.u_equip(S)
+			usr.u_equip(S,1)
 			usr.update_icons()	//update our overlays
 			if (usr.client && usr.s_active != src)
 				usr.client.screen -= S
-			S.dropped(usr)
+			//S.dropped(usr)
 			if(!S.amount)
 				del S
 			else

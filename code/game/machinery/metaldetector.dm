@@ -166,46 +166,24 @@
 	*/
 
 /obj/machinery/detector/Topic(href, href_list)
-	if(..()) return
+	if(..()) return 1
 
 	if(usr) usr.set_machine(src)
 
-	if (href_list["idmode"])
-
-		if(idmode)
-			idmode = 0
-			//
-
+	switch(href_list["action"])
+		if("idmode")
+			idmode = !idmode
+		if("scanmode")
+			scanmode = !scanmode
+		if("senmode")
+			senset = !senset
 		else
-			idmode = 1
-
-
-
-	if (href_list["scanmode"])
-
-		if(scanmode)
-			scanmode = 0
-			//
-
-		else
-			scanmode = 1
-
-
-	if (href_list["senmode"])
-
-		if(senset)
-			senset = 0
-			//
-
-		else
-			senset = 1
+			return
 
 	src.updateUsrDialog()
-	return
+	return 1
 
 
-
-.
 
 /obj/machinery/detector/attack_hand(mob/user as mob)
 
@@ -217,28 +195,17 @@
 		if(!src.anchored)
 			return
 
-		var/dat = "<h4>"
+		var/dat = {"
+		<TITLE>Mr. V.A.L.I.D. Portable Threat Detector</TITLE><h3>Menu:</h3><h4>
 
-		if(idmode == 0)
-			dat += "Citizens must carry ID: <A href='?src=\ref[src];idmode=1'>Turn On</A><BR><BR>"
-		else
-			dat += "Citizens must carry ID: <A href='?src=\ref[src];idmode=1'>Turn Off</A><BR><BR>"
+		Citizens must carry ID: <A href='?src=\ref[src];action=idmode'>Turn [idmode ? "Off" : "On"]</A>
 
+		Intrusive Scan: <A href='?src=\ref[src];action=scanmode'>Turn [scanmode ? "Off" : "On"]</A>
 
-		if(scanmode == 0)
-			dat += "Intrusive Scan: <A href='?src=\ref[src];scanmode=1'>Turn On</A><BR><BR>"
-		else
-			dat += "Intrusive Scan: <A href='?src=\ref[src];scanmode=1'>Turn Off</A><BR><BR>"
+		DeMil Alerts: <A href='?src=\ref[src];action=senmode'>Turn [senset ? "Off" : "On"]</A></h4>
+		"}
 
-
-
-		if(senset == 0)
-			dat += "DeMil Alerts: <A href='?src=\ref[src];senmode=1'>Turn On</A><BR><BR>"
-		else
-			dat += "DeMil Alerts: <A href='?src=\ref[src];senmode=1'>Turn Off</A><BR><BR>"
-
-
-		user << browse("<TITLE>Mr. V.A.L.I.D. Portable Threat Detector</TITLE><h3>Menu:</h3><BR><BR>[dat]</h4></ul>", "window=detector;size=575x300")
+		user << browse(dat, "window=detector;size=575x300")
 		onclose(user, "detector")
 		return
 

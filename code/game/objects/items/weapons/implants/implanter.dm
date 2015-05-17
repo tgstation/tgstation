@@ -140,7 +140,7 @@
 			user << "<span class='warning'>Something is already scanned inside the implant!</span>"
 			return
 		if(user)
-			user.u_equip(I)
+			user.u_equip(I,0)
 			user.update_icons()	//update our overlays
 		c.scanned = I
 		c.scanned.loc = c

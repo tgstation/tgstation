@@ -35,7 +35,17 @@
 		return 0
 
 	if (istype(A, /mob/living/))
+		var/mob/living/L = A
+		if(L.buckled && istype(L.buckled,/obj/structure/stool/bed/))
+			var/turf/O = L.buckled
+			do_teleport(O, pick(endgame_safespawns))
+			L.loc = O.loc
+		else
+			do_teleport(L, pick(endgame_safespawns)) //dead-on precision
+
+	else if (istype(A, /obj/mecha/))
 		do_teleport(A, pick(endgame_safespawns)) //dead-on precision
+
 	else if (isturf(A))
 		var/turf/T = A
 		var/dist = get_dist(T, src)

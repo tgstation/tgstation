@@ -103,6 +103,12 @@
 	airlock_type = "/highsecurity"
 	glass = -1
 
+/obj/structure/door_assembly/door_assembly_vault
+	base_icon_state = "vault"
+	base_name = "Vault"
+	airlock_type = "/vault"
+	glass = -1
+
 /obj/structure/door_assembly/multi_tile/
 	icon = 'icons/obj/doors/door_assembly2x1.dmi'
 	dir = EAST

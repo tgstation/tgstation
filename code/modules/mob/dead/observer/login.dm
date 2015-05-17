@@ -10,3 +10,13 @@
 					src << 'sound/effects/adminhelp.ogg'
 					src << "<b><font color = #330033><font size = 3>Your corpse has been placed into a cloning scanner. Return to your body if you want to be resurrected/cloned!</b> (Verbs -> Ghost -> Re-enter corpse)</font color>"
 	canclone = null
+
+/mob/dead/observer/MouseDrop(atom/over)
+	if(!usr || !over)
+		return
+
+	if (isobserver(usr) && usr.client.holder && isliving(over))
+		if (usr.client.holder.cmd_ghost_drag(src,over))
+			return
+
+	return ..()

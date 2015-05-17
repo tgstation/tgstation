@@ -16,6 +16,7 @@
 	var/implant=null
 	var/ckey=null
 	var/mind=null
+	var/list/languages = list()
 
 /datum/dna2/record/proc/GetData()
 	var/list/ser=list("data" = null, "owner" = null, "label" = null, "type" = null, "ue" = 0)
@@ -79,6 +80,7 @@
 	src.go_out()
 	return
 
+
 /obj/machinery/dna_scannernew/verb/eject()
 	set src in oview(1)
 	set category = "Object"
@@ -92,8 +94,8 @@
 	add_fingerprint(usr)
 	return
 
-/obj/machinery/dna_scannernew/proc/eject_occupant()
-	src.go_out()
+/obj/machinery/dna_scannernew/proc/eject_occupant(var/exit = loc)
+	src.go_out(exit)
 	for(var/obj/O in src)
 		if(!istype(O,/obj/item/weapon/circuitboard/clonescanner) && \
 		   !istype(O,/obj/item/weapon/stock_parts) && \
@@ -124,9 +126,8 @@
 		usr << "<span class='notice'> <B>Subject cannot have abiotic items on.</B></span>"
 		return
 	usr.stop_pulling()
-	usr.client.perspective = EYE_PERSPECTIVE
-	usr.client.eye = src
 	usr.loc = src
+	usr.reset_view()
 	src.occupant = usr
 	src.icon_state = "scanner_1"
 	src.add_fingerprint(usr)
@@ -154,7 +155,8 @@
 		usr << "<span class='notice'> For some reason, the scanner is unable to read that person's genes.</span>"//to prevent a loophole that allows cultist to turn manifested ghosts into normal humans
 		return
 	if(isrobot(user))
-		if(!istype(user:module, /obj/item/weapon/robot_module/medical))
+		var/mob/living/silicon/robot/robit = usr
+		if(istype(robit) && !istype(robit.module, /obj/item/weapon/robot_module/medical))
 			user << "<span class='warning'>You do not have the means to do this!</span>"
 			return
 	var/mob/living/L = O
@@ -168,13 +170,42 @@
 			usr << "[L.name] will not fit into the DNA Scanner because they have a slime latched onto their head."
 			return
 	if(L == user)
-		return
-	visible_message("[user] puts [L.name] into the DNA Scanner.", 3)
+		visible_message("[user] climbs into \the [src].")
+	else
+		visible_message("[user] places [L] into \the [src].")
 	if(user.pulling == L)
 		user.stop_pulling()
 	put_in(L)
 	if(user.pulling == L)
 		user.pulling = null
+
+/obj/machinery/dna_scannernew/MouseDrop(over_object, src_location, var/turf/over_location, src_control, over_control, params)
+	if(!ishuman(usr) && !isrobot(usr))
+		return
+	if(!occupant)
+		usr << "<span class='warning'>The sleeper is unoccupied!</span>"
+		return
+	if(isrobot(usr))
+		var/mob/living/silicon/robot/robit = usr
+		if(istype(robit) && !istype(robit.module, /obj/item/weapon/robot_module/medical))
+			usr << "<span class='warning'>You do not have the means to do this!</span>"
+			return
+	if(!istype(over_location) || over_location.density)
+		return
+	if(!Adjacent(over_location))
+		return
+	if(!(occupant == usr) && (!Adjacent(usr) || !usr.Adjacent(over_location)))
+		return
+	for(var/atom/movable/A in over_location.contents)
+		if(A.density)
+			if((A == src) || istype(A, /mob))
+				continue
+			return
+	if(occupant == usr)
+		visible_message("[usr] climbs out of \the [src].", 3)
+	else
+		visible_message("[usr] removes [occupant.name] from \the [src].", 3)
+	eject_occupant(over_location)
 
 /obj/machinery/dna_scannernew/attackby(var/obj/item/weapon/item as obj, var/mob/user as mob)
 	if(istype(item, /obj/item/weapon/reagent_containers/glass))
@@ -205,10 +236,8 @@
 	return ..()
 
 /obj/machinery/dna_scannernew/proc/put_in(var/mob/M)
-	if(M.client)
-		M.client.perspective = EYE_PERSPECTIVE
-		M.client.eye = src
 	M.loc = src
+	M.reset_view()
 	src.occupant = M
 	src.icon_state = "scanner_1"
 
@@ -227,16 +256,14 @@
 			break
 	return
 
-/obj/machinery/dna_scannernew/proc/go_out()
-	if ((!( src.occupant ) || src.locked))
-		return
-	if (src.occupant.client)
-		src.occupant.client.eye = src.occupant.client.mob
-		src.occupant.client.perspective = MOB_PERSPECTIVE
-	src.occupant.loc = src.loc
-	src.occupant = null
-	src.icon_state = "scanner_0"
-	return
+/obj/machinery/dna_scannernew/proc/go_out(var/exit = src.loc)
+	if ((!(occupant) || locked))
+		return 0
+	occupant.forceMove(exit)
+	occupant.reset_view()
+	occupant = null
+	icon_state = "scanner_0"
+	return 1
 
 /obj/machinery/dna_scannernew/ex_act(severity)
 	switch(severity)

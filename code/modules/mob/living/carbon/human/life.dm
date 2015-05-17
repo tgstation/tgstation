@@ -1301,6 +1301,14 @@ var/global/list/organ_damage_overlays = list(
 					animate(src, pixel_x = pixel_x + pixel_x_diff, pixel_y = pixel_y + pixel_y_diff , time = 1, loop = -1)
 					animate(pixel_x = pixel_x - pixel_x_diff, pixel_y = pixel_y - pixel_y_diff, time = 1, loop = -1, easing = BOUNCE_EASING)
 
+		//Flying
+		if(flying)
+			spawn()
+				animate(src, pixel_y = pixel_y + 5 , time = 10, loop = 1, easing = SINE_EASING)
+			spawn(10)
+				if(flying)
+					animate(src, pixel_y = pixel_y - 5, time = 10, loop = 1, easing = SINE_EASING)
+
 		//Other
 		if(stunned)
 			AdjustStunned(-1)
@@ -1626,7 +1634,8 @@ var/global/list/organ_damage_overlays = list(
 
 				// Not on the station or mining?
 				var/turf/temp_turf = get_turf(remoteview_target)
-				if((temp_turf.z != 1 && temp_turf.z != 5) || remoteview_target.stat!=CONSCIOUS)
+
+				if(temp_turf && (temp_turf.z != 1 && temp_turf.z != 5) || remoteview_target.stat!=CONSCIOUS)
 					src << "<span class='warning'>Your psy-connection grows too faint to maintain!</span>"
 					isRemoteObserve = 0
 			if(!isRemoteObserve && client && !client.adminobs && !iscamera(client.eye))

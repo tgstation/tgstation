@@ -8,6 +8,9 @@
 
 	//(VG EDIT disabling for now) handle_embedded_objects() //Moving with objects stuck in you can cause bad times.
 
+	if(flying)
+		return -1
+
 	if(reagents.has_reagent("hyperzine"))
 		if(dna.mutantrace == "slime")
 			tally *= 2
@@ -72,6 +75,11 @@
 /mob/living/carbon/human/Process_Spacemove(var/check_drift = 0)
 	//Can we act
 	if(restrained())	return 0
+
+	//Are we flying?
+	if(flying)
+		inertia_dir = 0
+		return 1
 
 	//Do we have a working jetpack
 	if(istype(back, /obj/item/weapon/tank/jetpack))

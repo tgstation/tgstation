@@ -64,7 +64,7 @@
 
 /obj/machinery/atmospherics/unary/return_network(obj/machinery/atmospherics/reference)
 	build_network()
-	if(reference==node)
+	if(reference == node || reference == src)
 		return network
 	return null
 

@@ -11,7 +11,7 @@
 	wabbajack(change)
 
 
-/obj/item/projectile/change/proc/wabbajack(var/mob/M) //WHY: as mob in living_mob_list
+/obj/item/projectile/change/proc/wabbajack(var/mob/living/M) //WHY: as mob in living_mob_list
 	if(istype(M, /mob/living) && M.stat != DEAD)
 		if(M.monkeyizing)
 			return
@@ -53,7 +53,9 @@
 		switch(randomize)
 			if("monkey")
 				new_mob = new /mob/living/carbon/monkey(M.loc)
-				new_mob.languages |= HUMAN
+				var/mob/living/carbon/monkey/Monkey = new_mob
+				Monkey.languages |= M.languages
+				if(M.default_language) Monkey.default_language = M.default_language
 			if("robot")
 				new_mob = new /mob/living/silicon/robot(M.loc)
 				new_mob.setGender(M.gender)
@@ -62,7 +64,8 @@
 				var/mob/living/silicon/robot/Robot = new_mob
 				Robot.mmi = new /obj/item/device/mmi(new_mob)
 				Robot.mmi.transfer_identity(M)	//Does not transfer key/client.
-				new_mob.languages |= HUMAN
+				Robot.languages |= M.languages
+				if(M.default_language) Robot.default_language = M.default_language
 			if("mommi")
 				new_mob = new /mob/living/silicon/robot/mommi(M.loc)
 				new_mob.setGender(M.gender)
@@ -71,6 +74,8 @@
 				var/mob/living/silicon/robot/mommi/MoMMI = new_mob
 				MoMMI.mmi = new /obj/item/device/mmi(new_mob)
 				MoMMI.mmi.transfer_identity(M)	//Does not transfer key/client.
+				MoMMI.languages |= M.languages
+				if(M.default_language) MoMMI.default_language = M.default_language
 			if("slime")
 				var/slimey = pick("",\
 				                 "/purple",\
@@ -100,7 +105,9 @@
 
 				slimey = text2path("/mob/living/carbon/slime[slimey]")
 				new_mob = new slimey(M.loc)
-				new_mob.languages |= HUMAN
+				var/mob/living/carbon/slime/Slime = new_mob
+				Slime.languages |= M.languages
+				if(M.default_language) Slime.default_language = M.default_language
 			if("xeno")
 				var/alien_caste = pick("Hunter","Sentinel","Drone","Larva")
 				switch(alien_caste)
@@ -108,7 +115,9 @@
 					if("Sentinel")	new_mob = new /mob/living/carbon/alien/humanoid/sentinel(M.loc)
 					if("Drone")		new_mob = new /mob/living/carbon/alien/humanoid/drone(M.loc)
 					else			new_mob = new /mob/living/carbon/alien/larva(M.loc)
-				new_mob.languages |= HUMAN
+				var/mob/living/carbon/alien/Alien = new_mob
+				Alien.languages |= M.languages
+				if(M.default_language) Alien.default_language = M.default_language
 			if("human")
 				new_mob = new /mob/living/carbon/human(M.loc, delay_ready_dna=1)
 
@@ -121,6 +130,8 @@
 				var/newspecies = pick(all_species)
 				H.set_species(newspecies)
 				H.generate_name()
+				H.languages |= M.languages
+				if(M.default_language) H.default_language = M.default_language
 			if("furry")
 				new_mob = new /mob/living/carbon/human(M.loc, delay_ready_dna=1)
 
@@ -131,6 +142,8 @@
 
 				var/mob/living/carbon/human/H = new_mob
 				H.set_species("Tajaran") // idfk
+				H.languages |= M.languages
+				if(M.default_language) H.default_language = M.default_language
 				H.generate_name()
 			/* RIP
 			if("cluwne")

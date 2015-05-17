@@ -12,7 +12,7 @@
 		add_static_overlays()
 
 /mob/living/silicon/robot/mommi/proc/can_see_static()
-	return (keeper && !emagged && !syndicate)
+	return (keeper && !emagged && !syndicate && (config && config.mommi_static))
 
 /mob/living/silicon/robot/mommi/proc/add_static_overlays()
 	remove_static_overlays()

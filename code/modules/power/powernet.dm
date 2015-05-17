@@ -31,8 +31,7 @@ Powernet procs :
 */
 
 /datum/powernet/New()
-	if(!(src in powernets)) //Pooling changes a disposed variable to 1, causing it to no longer process from the list
-		powernets += src
+	powernets |= src
 
 /datum/powernet/Del()
 	powernets -= src
@@ -147,6 +146,8 @@ var/global/powernets_broke = 0
 			C.build_status = 0
 		for(var/obj/machinery/power/P in NewPN.nodes)
 			P.build_status = 0
+		return 1
+	return 0
 
 ///////////////////////////////////////////
 // GLOBAL PROCS for powernets handling

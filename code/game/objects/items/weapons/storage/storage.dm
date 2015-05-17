@@ -40,10 +40,10 @@
 		if (!( M.restrained() ) && !( M.stat ))
 			switch(over_object.name)
 				if("r_hand")
-					M.u_equip(src)
+					M.u_equip(src,0)
 					M.put_in_r_hand(src)
 				if("l_hand")
-					M.u_equip(src)
+					M.u_equip(src,0)
 					M.put_in_l_hand(src)
 			src.add_fingerprint(usr)
 			return
@@ -270,14 +270,14 @@
 /obj/item/weapon/storage/proc/handle_item_insertion(obj/item/W as obj, prevent_warning = 0)
 	if(!istype(W)) return 0
 	if(usr)
-		usr.u_equip(W)
+		usr.u_equip(W,1)
 		usr.update_icons()	//update our overlays
 	W.loc = src
 	W.on_enter_storage(src)
 	if(usr)
 		if (usr.client && usr.s_active != src)
 			usr.client.screen -= W
-		W.dropped(usr)
+		//W.dropped(usr)
 		add_fingerprint(usr)
 
 		if(!prevent_warning && !istype(W, /obj/item/weapon/gun/energy/crossbow))

@@ -124,7 +124,7 @@
 			//This happens when windows move or are constructed. We need to rebuild.
 			if((previously_open & d) && istype(unsim, /turf/simulated))
 				var/turf/simulated/sim = unsim
-				if(sim.zone == zone)
+				if(istype(zone) && sim.zone == zone)
 					zone.rebuild()
 					return
 

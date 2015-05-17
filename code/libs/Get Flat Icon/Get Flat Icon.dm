@@ -146,12 +146,13 @@ proc/getFlatIcon(atom/A, dir, cache=1, exact=0) // 1 = use cache, 2 = override c
 
 		if(I:name == "damage layer")
 			var/mob/living/carbon/human/H = A
-			for(var/datum/organ/external/O in H.organs)
-				if(!(O.status & ORGAN_DESTROYED))
-					if(O.damage_state == "00") continue
-					var/icon/DI
-					DI = H.get_damage_icon_part(O.damage_state, O.icon_name, (H.species.blood_color == "#A10808" ? "" : H.species.blood_color))
-					add.Blend(DI,ICON_OVERLAY)
+			if(istype(H))
+				for(var/datum/organ/external/O in H.organs)
+					if(!(O.status & ORGAN_DESTROYED))
+						if(O.damage_state == "00") continue
+						var/icon/DI
+						DI = H.get_damage_icon_part(O.damage_state, O.icon_name, (H.species.blood_color == "#A10808" ? "" : H.species.blood_color))
+						add.Blend(DI,ICON_OVERLAY)
 
 		if(!exact && iscarbon(A))
 			var/mob/living/carbon/C = A

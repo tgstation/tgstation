@@ -936,7 +936,8 @@ NOTE:  The change will take effect AFTER any current recruiting periods."}
 						for(var/L in all_languages)
 							var/datum/language/lang = all_languages[L]
 							if((!(lang.flags & RESTRICTED)) && (is_alien_whitelisted(user, L)||(!( lang.flags & WHITELISTED ))))
-								new_languages += lang
+								new_languages += lang.name
+
 								languages_available = 1
 
 						if(!(languages_available))

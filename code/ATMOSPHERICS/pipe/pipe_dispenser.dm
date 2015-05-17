@@ -64,6 +64,7 @@
 	<li><a href='?src=\ref[src];make=[PIPE_GAS_MIXER];dir=9'>Gas Mixer \[M]</a></li>
 	<li><a href='?src=\ref[src];make=[PIPE_THERMAL_PLATE];dir=1'>Thermal Plate</a></li>
 	<li><a href='?src=\ref[src];make=[PIPE_INJECTOR];dir=1'>Injector</a></li>
+	<li><a href='?src=\ref[src];make=[PIPE_DP_VENT];dir=1'>Dual-Port Vent</a></li>
 </ul>
 <b>Heat exchange:</b>
 <ul>

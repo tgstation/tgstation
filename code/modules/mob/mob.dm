@@ -164,6 +164,9 @@
 			del(narsimage)
 			del(narglow)
 		return
+
+	//No need to make an exception for mechas, as they get deleted as soon as they get in view of narnar
+
 	if((N.z == src.z)&&(get_dist(N,src) <= (N.consume_range+10)) && !(N in view(src)))
 		if(!narsimage) //Create narsimage
 			narsimage = image('icons/obj/narsie.dmi',src.loc,"narsie",9,1)
@@ -230,19 +233,19 @@
 			del(narglow)
 
 /mob/proc/see_rift(var/obj/machinery/singularity/narsie/large/exit/R)
-	if((R.z == src.z) && (get_dist(R,src) <= (R.consume_range+10)) && !(R in view(src)))
+	var/turf/T_mob = get_turf(src)
+	if((R.z == T_mob.z) && (get_dist(R,T_mob) <= (R.consume_range+10)) && !(R in view(T_mob)))
 		if(!riftimage)
-			riftimage = image('icons/obj/rift.dmi',src.loc,"rift",LIGHTING_LAYER+2,1)
+			riftimage = image('icons/obj/rift.dmi',T_mob,"rift",LIGHTING_LAYER+2,1)
 			riftimage.mouse_opacity = 0
 
-		var/new_x = 32 * (R.x - src.x) + R.pixel_x
-		var/new_y = 32 * (R.y - src.y) + R.pixel_y
+		var/new_x = 32 * (R.x - T_mob.x) + R.pixel_x
+		var/new_y = 32 * (R.y - T_mob.y) + R.pixel_y
 		riftimage.pixel_x = new_x
 		riftimage.pixel_y = new_y
-		riftimage.loc = src.loc
+		riftimage.loc = T_mob
 
 		src << riftimage
-
 	else
 		if(riftimage)
 			del(riftimage)
@@ -320,10 +323,10 @@
 						return
 					else
 						equip_to_slot(W, slot, redraw_mob)
-						u_equip(wearing)
+						u_equip(wearing,0)
 						put_in_active_hand(wearing)
 					if(H.s_store && !H.s_store.mob_can_equip(src, slot_s_store, 1))
-						u_equip(H.s_store)
+						u_equip(H.s_store,1)
 		return 1
 	else
 		if(!W.mob_can_equip(src, slot, disable_warning))
@@ -1194,6 +1197,7 @@ var/list/slot_equipment_priority = list( \
 						statpanel(S.panel,"[S.charge_counter]/[S.charge_max]",S)
 					if(Sp_HOLDVAR)
 						statpanel(S.panel,"[S.holder_var_type] [S.holder_var_amount]",S)
+	sleep(4) //Prevent updating the stat panel for the next .4 seconds, prevents clientside latency from updates
 
 
 
@@ -1462,3 +1466,6 @@ var/list/slot_equipment_priority = list( \
 
 mob/proc/assess_threat()
 	return 0
+
+mob/proc/walking()
+	return !(lying || flying)

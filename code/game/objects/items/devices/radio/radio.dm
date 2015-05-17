@@ -23,7 +23,6 @@
 	var/maxf = 1499
 //			"Example" = FREQ_LISTENING|FREQ_BROADCASTING
 	flags = FPRINT | HEAR
-	languages = HUMAN | ROBOT
 	siemens_coefficient = 1
 	slot_flags = SLOT_BELT
 	throw_speed = 2
@@ -213,7 +212,7 @@
 		return
 
 	var/mob/living/silicon/ai/A = new /mob/living/silicon/ai(src, null, null, 1)
-	Broadcast_Message(connection, A,
+	Broadcast_Message(connection, all_languages["Sol Common"], A,
 						0, "*garbled automated announcement*", src,
 						message, from, "Automated Announcement", from, "synthesized voice",
 						4, 0, list(1), 1459)
@@ -221,7 +220,7 @@
 	return
 
 */
-/obj/item/device/radio/talk_into(atom/movable/M, message, channel)
+/obj/item/device/radio/talk_into(atom/movable/M, message, channel, var/datum/language/speaking)
 	if(!on) return // the device has to be on
 	//  Fix for permacell radios, but kinda eh about actually fixing them.
 	if(!M || !message) return
@@ -351,7 +350,7 @@
 			"server" = null, // the last server to log this signal
 			"reject" = 0,	// if nonzero, the signal will not be accepted by any broadcasting machinery
 			"level" = position.z, // The source's z level
-			"languages" = M.languages //The languages M is talking in.
+			"language" = speaking //The language M is talking in.
 		)
 		signal.frequency = freq // Quick frequency set
 
@@ -401,7 +400,8 @@
 		"type" = 0,
 		"server" = null,
 		"reject" = 0,
-		"level" = position.z
+		"level" = position.z,
+		"language" = speaking
 	)
 	signal.frequency = text2num(freq) // Quick frequency set
 
@@ -417,16 +417,16 @@
 
   	// Oh my god; the comms are down or something because the signal hasn't been broadcasted yet in our level.
   	// Send a mundane broadcast with limited targets:
-		Broadcast_Message(M, voicemask,
+		Broadcast_Message(M, speaking, voicemask,
 						  src, message, voice, jobname, real_name,
 						  filter_type, signal.data["compression"], list(position.z), freq)
 
-/obj/item/device/radio/Hear(message, atom/movable/speaker, message_langs, raw_message, radio_freq)
+/obj/item/device/radio/Hear(message, atom/movable/speaker, var/datum/language/speaking, raw_message, radio_freq)
 	if(radio_freq)
 		return
 	if (broadcasting)
 		if(get_dist(src, speaker) <= canhear_range)
-			talk_into(speaker, raw_message)
+			talk_into(speaker, raw_message, null, speaking)
 /*
 /obj/item/device/radio/proc/accept_rad(obj/item/device/radio/R as obj, message)
 

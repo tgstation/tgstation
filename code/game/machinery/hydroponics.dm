@@ -514,7 +514,7 @@ obj/machinery/hydroponics/attackby(var/obj/item/O as obj, var/mob/user as mob)
 
 	else if ( istype(O, /obj/item/nutrient) )
 		var/obj/item/nutrient/myNut = O
-		user.u_equip(O)
+		user.u_equip(O, 1)
 		nutrilevel = 10
 		yieldmod = myNut.yieldmod
 		mutmod = myNut.mutmod
@@ -698,7 +698,7 @@ obj/machinery/hydroponics/attackby(var/obj/item/O as obj, var/mob/user as mob)
 
 	else if ( istype(O, /obj/item/seeds/) )
 		if(!planted)
-			user.u_equip(O)
+			user.u_equip(O, 0)
 			user << "You plant the [O.name]"
 			dead = 0
 			myseed = O
@@ -774,7 +774,7 @@ obj/machinery/hydroponics/attackby(var/obj/item/O as obj, var/mob/user as mob)
 
 	else if ( istype(O, /obj/item/weapon/weedspray) )
 		var/obj/item/weedkiller/myWKiller = O
-		user.u_equip(O)
+		user.u_equip(O, 1)
 		toxic += myWKiller.toxicity
 		weedlevel -= myWKiller.WeedKillStr
 		if (weedlevel < 0 ) // Make sure it won't go overoboard
@@ -796,7 +796,7 @@ obj/machinery/hydroponics/attackby(var/obj/item/O as obj, var/mob/user as mob)
 
 	else if ( istype(O, /obj/item/weapon/pestspray) )
 		var/obj/item/pestkiller/myPKiller = O
-		user.u_equip(O)
+		user.u_equip(O,1)
 		toxic += myPKiller.toxicity
 		pestlevel -= myPKiller.PestKillStr
 		if (pestlevel < 0 ) // Make sure it won't go overoboard

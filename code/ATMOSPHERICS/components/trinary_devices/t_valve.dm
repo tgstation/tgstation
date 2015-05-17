@@ -136,11 +136,12 @@
 	else
 		src.go_to_side()
 
+/*
 /obj/machinery/atmospherics/trinary/tvalve/process()
-	..()
+	. = ..()
 	//machines.Remove(src)
 
-/*		if(open && (!node1 || !node2))
+		if(open && (!node1 || !node2))
 			close()
 		if(!node1)
 			if(!nodealert)
@@ -153,7 +154,6 @@
 		else if (nodealert)
 			nodealert = 0
 */
-	return
 
 /obj/machinery/atmospherics/trinary/tvalve/return_network_air(datum/network/reference)
 	return null

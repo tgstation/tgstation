@@ -31,6 +31,8 @@
 	icon_state = "door_closed"
 	animation_delay = 5
 
+	explosion_block = 1
+
 /obj/machinery/door/unpowered/shuttle/cultify()
 	new /obj/machinery/door/mineral/wood(loc)
 	..()

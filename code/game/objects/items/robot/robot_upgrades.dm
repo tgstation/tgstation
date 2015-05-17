@@ -79,6 +79,7 @@
 	R.icon_state = "robot"
 	R.base_icon = "robot"
 	del(R.module)
+	R.module.remove_languages(R)
 	R.module = null
 	R.camera.network.Remove(list("Engineering","Medical","MINE"))
 	R.updatename("Default")

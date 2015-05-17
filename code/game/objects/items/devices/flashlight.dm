@@ -30,13 +30,13 @@
 		icon_state = "[initial(icon_state)]-on"
 		if(user && loc == user)
 			user.SetLuminosity(user.luminosity + brightness_on)
-		else if(isturf(loc))
+		else
 			SetLuminosity(brightness_on)
 	else
 		icon_state = initial(icon_state)
 		if(user && loc == user)
 			user.SetLuminosity(user.luminosity - brightness_on)
-		else if(isturf(loc))
+		else
 			SetLuminosity(0)
 
 /obj/item/device/flashlight/attack_self(mob/user)
@@ -100,7 +100,7 @@
 
 
 /obj/item/device/flashlight/dropped(mob/user)
-	if(on)
+	if(on && !luminosity)
 		user.SetLuminosity(user.luminosity - brightness_on)
 		SetLuminosity(brightness_on)
 
@@ -284,9 +284,10 @@
 
 /obj/item/device/flashlight/lamp/slime/dropped(mob/user)
 	user.l_color = initial(user.l_color)
-	if(on)
+	if(on && !luminosity)
 		user.SetLuminosity(user.luminosity - brightness_max)
 		SetLuminosity(brightness_max)
 	else
-		user.SetLuminosity(user.luminosity - brightness_min)
-		SetLuminosity(brightness_min)
+		if(!luminosity)
+			user.SetLuminosity(user.luminosity - brightness_min)
+			SetLuminosity(brightness_min)

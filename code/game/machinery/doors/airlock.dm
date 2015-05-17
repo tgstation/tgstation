@@ -53,6 +53,8 @@
 	soundeffect = 'sound/machines/airlock.ogg'
 	var/pitch = 30
 
+	explosion_block = 1
+
 	emag_cost = 1 // in MJ
 
 /obj/machinery/door/airlock/Destroy()
@@ -113,7 +115,9 @@
 	icon = 'icons/obj/doors/vault.dmi'
 	opacity = 1
 	emag_cost = 2 // in MJ
-	assembly_type = /obj/structure/door_assembly/door_assembly_highsecurity //Until somebody makes better sprites.
+	assembly_type = /obj/structure/door_assembly/door_assembly_vault
+
+	explosion_block = 3//that's some high quality plasteel door
 
 /obj/machinery/door/airlock/freezer
 	name = "Freezer Airlock"
@@ -986,6 +990,31 @@ About the new airlock wires panel:
 			if (shock(user, 75))
 				return
 
+	if(istype(I, /obj/item/weapon/batteringram))
+		user.delayNextAttack(30)
+		var/breaktime = 60 //Same amount of time as drilling a wall, then a girder
+		if(welded)
+			breaktime += 30 //Welding buys you a little time
+		src.visible_message("<span class='warning'>[user] is battering down [src]!</span>", "<span class='warning'>You begin to batter [src].</span>")
+		playsound(get_turf(src), 'sound/effects/shieldbash.ogg', 50, 1)
+		if(do_after(user, breaktime))
+			//Calculate bolts separtely, in case they dropped in the last 6-9 seconds.
+			if(src.locked == 1)
+				playsound(get_turf(src), 'sound/effects/shieldbash.ogg', 50, 1)
+				src.visible_message("<span class='warning'>[user] is battering the bolts!</span>", "<span class='warning'>You begin to smash the bolts...</span>")
+				if(!do_after(user,190)) //Same amount as drilling an R-wall, longer if it was welded
+					return //If they moved, cancel us out
+				playsound(get_turf(src), 'sound/items/Deconstruct.ogg', 50, 1)
+		src.visible_message("<span class='warning'>[user] broke down the door!</span>", "<span class='warning'>You broke the door!</span>")
+		playsound(get_turf(src), 'sound/items/Deconstruct.ogg', 50, 1)
+		operating = -1
+		var/obj/structure/door_assembly/DA = revert(user,user.dir)
+		DA.anchored = 0
+		DA.state = 0 //Completely smash the door here; reduce it to its lowest state, eject electronics smoked
+		DA.update_state()
+		qdel(src)
+		return
+
 	if (istype(I, /obj/item/weapon/weldingtool))
 		if (density && !operating)
 			var/obj/item/weapon/weldingtool/WT = I
@@ -1026,44 +1055,8 @@ About the new airlock wires panel:
 			// TODO: refactor the called proc
 			if (do_after(user, 40))
 				user << "<span class='notice'>You removed the airlock electronics!</span>"
-
-				var/obj/structure/door_assembly/DA = new assembly_type(loc)
-				DA.anchored = 1
-				DA.fingerprints += src.fingerprints
-				DA.fingerprintshidden += src.fingerprintshidden
-				DA.fingerprintslast = user.ckey
-				if (mineral)
-					DA.glass = mineral
-				// TODO: check DA.glass
-				else if (glass && !DA.glass)
-					DA.glass = 1
-
-				DA.state = 1
-				DA.created_name = name
-				DA.update_state()
-
-				var/obj/item/weapon/circuitboard/airlock/A
-
-				// TODO: check electronics
-				if (!electronics)
-					A = new/obj/item/weapon/circuitboard/airlock(loc)
-
-					// TODO: recheck the vars
-					if(req_access && req_access.len)
-						A.conf_access = req_access
-					else if(req_one_access && req_one_access.len)
-						A.conf_access = req_one_access
-						A.one_access = 1
-				else
-					A = electronics
-					electronics = null
-					A.loc = loc
-
-				if (operating == -1)
-					A.icon_state = "door_electronics_smoked"
-					operating = 0
-
-				del(src)
+				revert(user,null)
+				qdel(src)
 				return
 		else if(arePowerSystemsOn() && !(stat & NOPOWER))
 			user << "<span class='notice'>The airlock's motors resist your efforts to force it.</span>"
@@ -1101,6 +1094,43 @@ About the new airlock wires panel:
 		..(I, user)
 
 	return
+
+/obj/machinery/door/airlock/proc/revert(mob/user as mob, var/direction)
+	var/obj/structure/door_assembly/DA = new assembly_type(loc)
+	DA.anchored = 1
+	DA.fingerprints += src.fingerprints
+	DA.fingerprintshidden += src.fingerprintshidden
+	DA.fingerprintslast = user.ckey
+	if (mineral)
+		DA.glass = mineral
+	else if (glass && !DA.glass)
+		DA.glass = 1
+
+	DA.state = 1
+	DA.created_name = name
+	DA.update_state()
+
+	var/obj/item/weapon/circuitboard/airlock/A
+
+	if (!electronics)
+		A = new/obj/item/weapon/circuitboard/airlock(loc)
+
+		if(req_access && req_access.len)
+			A.conf_access = req_access
+		else if(req_one_access && req_one_access.len)
+			A.conf_access = req_one_access
+			A.one_access = 1
+	else
+		A = electronics
+		electronics = null
+		A.loc = loc
+
+	if (operating == -1)
+		A.icon_state = "door_electronics_smoked"
+		operating = 0
+	if(direction)
+		A.throw_at(get_edge_target_turf(src, direction),10,4)
+	return DA //Returns the new assembly
 
 /obj/machinery/door/airlock/plasma/attackby(C as obj, mob/user as mob)
 	if(C)
@@ -1190,7 +1220,7 @@ About the new airlock wires panel:
 	wires = new(src)
 	if(src.closeOtherId != null)
 		spawn (5)
-			for (var/obj/machinery/door/airlock/A in world)
+			for (var/obj/machinery/door/airlock/A in machines)
 				if(A.closeOtherId == src.closeOtherId && A != src)
 					src.closeOther = A
 					break

@@ -170,8 +170,8 @@ var/CHARGELEVEL = 0.001 // Cap for how fast cells charge, as a percentage-per-ti
 // Used for telescience.  Only apply to GPSes and other things that display coordinates to players.
 // The idea is that coordinates given will be entirely different from those displayed on the map in DreamMaker,
 //  while still making it very simple to lock onto someone who is drifting in space.
-var/WORLD_X_OFFSET=0
-var/WORLD_Y_OFFSET=0
+var/list/WORLD_X_OFFSET = list()
+var/list/WORLD_Y_OFFSET = list()
 
 var/shuttle_z = 2	//default
 var/airtunnel_start = 68 // default
@@ -383,3 +383,17 @@ var/arena_rounds = 0
 var/arena_top_score = 0
 
 var/endgame_info_logged = 0
+
+var/explosion_newmethod = 1	// 1 = explosions take walls and obstacles into account; 0 = explosions pass through walls and obstacles without any impediments;
+
+//PDA games vars
+//Snake II leaderboard
+var/global/list/snake_station_highscores = list()
+var/global/list/snake_best_players = list()
+
+//Minesweeper leaderboard
+var/global/list/minesweeper_station_highscores = list()
+var/global/list/minesweeper_best_players = list()
+
+var/nanocoins_rates = 1
+var/nanocoins_lastchange = 0

@@ -73,7 +73,7 @@
 	setGender(NEUTER)
 	dna.mutantrace = "plant"
 	greaterform = "Diona"
-	//add_language("Rootspeak")
+	add_language("Rootspeak")
 
 //Verbs after this point.
 
@@ -143,8 +143,8 @@
 		src.loc = L.loc
 		del(L)
 
-	//for(var/datum/language/L in languages)
-		//adult.add_language(L.name)
+	for(var/datum/language/L in languages)
+		adult.add_language(L.name)
 	adult.regenerate_icons()
 
 	adult.name = src.name
@@ -154,6 +154,13 @@
 	for (var/obj/item/W in src.contents)
 		src.drop_from_inventory(W)
 	del(src)
+/mob/living/carbon/monkey/diona/say_understands(var/mob/other,var/datum/language/speaking = null)
+
+	if (istype(other, /mob/living/carbon/human))
+		if(speaking && speaking.name == "Sol Common")
+			if(donors.len >= 2) // They have sucked down some blood.
+				return 1
+	return ..()
 
 /mob/living/carbon/monkey/diona/verb/steal_blood()
 	set category = "Diona"
@@ -189,8 +196,8 @@
 	else if(donors.len == 2)
 		src << "<span class='good'>You feel your awareness expand, and realize you know how to understand the creatures around you.</span>"
 	else if(donors.len == 4)
-		languages = HUMAN
 		src << "<span class='good'>You feel your vocal range expand, and realize you know how to speak with the creatures around you.</span>"
+		add_language("Sol Common")
 	else if(donors.len == 3)
 		src << "<span class='good'>More blood seeps into you, continuing to expand your growing collection of memories.</span>"
 	else

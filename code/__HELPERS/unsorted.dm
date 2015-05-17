@@ -723,7 +723,7 @@ proc/anim(turf/location as turf,target as mob|obj,a_icon,a_icon_state as text,fl
 //Returns sortedAreas list if populated
 //else populates the list first before returning it
 /proc/SortAreas()
-	for(var/area/A in world)
+	for(var/area/A in areas)
 		if(A.lighting_subarea)
 			continue
 		sortedAreas.Add(A)
@@ -745,10 +745,10 @@ proc/anim(turf/location as turf,target as mob|obj,a_icon,a_icon_state as text,fl
 		var/area/areatemp = areatype
 		areatype = areatemp.type
 
-	var/list/areas = new/list()
-	for(var/area/N in world)
-		if(istype(N, areatype)) areas += N
-	return areas
+	var/list/theareas = new/list()
+	for(var/area/N in areas)
+		if(istype(N, areatype)) theareas += N
+	return theareas
 
 //Takes: Area type as text string or as typepath OR an instance of the area.
 //Returns: A list of all turfs in areas of that type of that type in the world.
@@ -760,7 +760,7 @@ proc/anim(turf/location as turf,target as mob|obj,a_icon,a_icon_state as text,fl
 		areatype = areatemp.type
 
 	var/list/turfs = new/list()
-	for(var/area/N in world)
+	for(var/area/N in areas)
 		if(istype(N, areatype))
 			for(var/turf/T in N) turfs += T
 	return turfs
@@ -775,7 +775,7 @@ proc/anim(turf/location as turf,target as mob|obj,a_icon,a_icon_state as text,fl
 		areatype = areatemp.type
 
 	var/list/atoms = new/list()
-	for(var/area/N in world)
+	for(var/area/N in areas)
 		if(istype(N, areatype))
 			for(var/atom/A in N)
 				atoms += A
@@ -842,6 +842,7 @@ var/list/ignored_keys = list("loc", "locs", "parent_type", "vars", "verbs", "typ
 					var/old_icon1 = T.icon
 					var/image/undlay = image("icon"=B.icon,"icon_state"=B.icon_state,"dir"=B.dir)
 					undlay.overlays = B.overlays.Copy()
+					var/prevtype = B.type
 
 					var/turf/X = B.ChangeTurf(T.type)
 					for(var/key in T.vars)
@@ -851,7 +852,14 @@ var/list/ignored_keys = list("loc", "locs", "parent_type", "vars", "verbs", "typ
 							X.vars[key] = L.Copy()
 						else
 							X.vars[key] = T.vars[key]
-					X.underlays += undlay
+					if(ispath(prevtype,/turf/space))//including the transit hyperspace turfs
+						if(T.underlays.len)
+							for(var/Over in T.underlays)
+								X.underlays += T.underlays
+						else
+							X.underlays += undlay
+					else
+						X.underlays += undlay
 					X.dir = old_dir1
 					X.icon_state = old_icon_state1
 					X.icon = old_icon1 //Shuttle floors are in shuttle.dmi while the defaults are floors.dmi
@@ -923,6 +931,12 @@ var/list/ignored_keys = list("loc", "locs", "parent_type", "vars", "verbs", "typ
 						fromupdate += T.ChangeTurf(turftoleave)
 					else
 						T.ChangeTurf(/turf/space)
+						switch(universe.name)	//for some reason using OnTurfChange doesn't actually do anything in this case.
+							if("Hell Rising")
+								T.overlays += "hell01"
+							if("Supermatter Cascade")
+								T.overlays += "end01"
+
 
 					refined_src -= T
 					refined_trg -= B
@@ -1322,3 +1336,21 @@ proc/find_holder_of_type(var/atom/reference,var/typepath) //Returns the first ob
 			return location
 		location = location.loc
 	return 0
+
+/proc/get_distant_turf(var/turf/T,var/direction,var/distance)
+	if(!T || !direction || !distance)	return
+
+	var/dest_x = T.x
+	var/dest_y = T.y
+	var/dest_z = T.z
+
+	if(direction & NORTH)
+		dest_y = min(world.maxy, dest_y+distance)
+	if(direction & SOUTH)
+		dest_y = max(0, dest_y-distance)
+	if(direction & EAST)
+		dest_x = min(world.maxy, dest_x+distance)
+	if(direction & WEST)
+		dest_x = max(0, dest_x-distance)
+
+	return locate(dest_x,dest_y,dest_z)

@@ -663,6 +663,8 @@ datum/mind
 						if (istype(cult))
 							cult.memoize_cult_objectives(src)
 						current << "<span class='danger'><FONT size = 3>You have been brainwashed! You are no longer a cultist!</FONT></span>"
+						current << "<span class='danger'>You find yourself unable to mouth the words of the forgotten...</span>"
+						current.remove_language("Cult")
 						memory = ""
 						log_admin("[key_name_admin(usr)] has de-cult'ed [current].")
 				if("cultist")
@@ -672,6 +674,8 @@ datum/mind
 						special_role = "Cultist"
 						current << "<span class='sinister'>You catch a glimpse of the Realm of Nar-Sie, The Geometer of Blood. You now see how flimsy the world is, you see that it should be open to the knowledge of Nar-Sie.</span>"
 						current << "<span class='sinister'>Assist your new compatriots in their dark dealings. Their goal is yours, and yours is theirs. You serve the Dark One above all else. Bring It back.</span>"
+						current << "<span class='sinister'>You can now speak and understand the forgotten tongue of the occult.</span>"
+						current.add_language("Cult")
 						var/datum/game_mode/cult/cult = ticker.mode
 						if (istype(cult))
 							cult.memoize_cult_objectives(src)
@@ -1159,6 +1163,8 @@ datum/mind
 			special_role = "Cultist"
 			current << "<span class='sinister'>You catch a glimpse of the Realm of Nar-Sie, The Geometer of Blood. You now see how flimsy the world is, you see that it should be open to the knowledge of Nar-Sie.</span>"
 			current << "<span class='sinister'>Assist your new compatriots in their dark dealings. Their goal is yours, and yours is theirs. You serve the Dark One above all else. Bring It back.</span>"
+			current << "<span class='sinister'>You can now speak and understand the forgotten tongue of the occult.</span>"
+			current.add_language("Cult")
 			var/datum/game_mode/cult/cult = ticker.mode
 			if (istype(cult))
 				cult.memoize_cult_objectives(src)

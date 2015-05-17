@@ -75,3 +75,10 @@
 	if(inventory_mask)
 		inventory_mask.loc = src.loc
 		inventory_mask = null
+
+/mob/living/simple_animal/crab/kickstool
+	name = "kickstool crab"
+	desc = "Small, docile crab. They tend to live in large libraries, and eat dust for some reason."
+	icon_state = "kickstool"
+	icon_living = "kickstool"
+	icon_dead = "kickstool_dead"

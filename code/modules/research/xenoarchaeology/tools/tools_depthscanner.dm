@@ -32,7 +32,7 @@
 
 			//create a new scanlog entry
 			var/datum/depth_scan/D = new()
-			D.coords = "[M.x-WORLD_X_OFFSET].[rand(0,9)]:[M.y-WORLD_Y_OFFSET].[rand(0,9)]:[10 * M.z].[rand(0,9)]"
+			D.coords = "[M.x-WORLD_X_OFFSET[M.z]].[rand(0,9)]:[M.y-WORLD_Y_OFFSET[M.z]].[rand(0,9)]:[10 * M.z].[rand(0,9)]"
 			D.time = worldtime2text()
 			D.record_index = positive_locations.len + 1
 			D.material = M.mineral ? M.mineral.display_name : "Rock"
@@ -61,7 +61,7 @@
 		if(B.artifact_find)
 			//create a new scanlog entry
 			var/datum/depth_scan/D = new()
-			D.coords = "[10 * (B.x-WORLD_X_OFFSET)].[rand(0,9)]:[10 * (B.y-WORLD_Y_OFFSET)].[rand(0,9)]:[10 * B.z].[rand(0,9)]"
+			D.coords = "[10 * (B.x-WORLD_X_OFFSET[B.z])].[rand(0,9)]:[10 * (B.y-WORLD_Y_OFFSET[B.z])].[rand(0,9)]:[10 * B.z].[rand(0,9)]"
 			D.time = worldtime2text()
 			D.record_index = positive_locations.len + 1
 

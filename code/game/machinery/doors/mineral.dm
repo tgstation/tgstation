@@ -8,6 +8,8 @@
 	icon = 'icons/obj/doors/mineral.dmi'
 	prefix = "metal" //Corresponds to the mineral type
 
+	explosion_block = 1
+
 	soundeffect = 'sound/effects/stonedoor_openclose.ogg'
 	var/hardness = 3
 	var/oreAmount = 7
@@ -135,6 +137,7 @@
 /obj/machinery/door/mineral/sandstone
 	prefix = "sandstone"
 	hardness = 0.5
+	explosion_block = 0
 
 /obj/machinery/door/mineral/transparent
 	opacity = 0
@@ -178,6 +181,7 @@
 /obj/machinery/door/mineral/transparent/diamond
 	prefix = "diamond"
 	hardness = 10
+	explosion_block = 3
 
 /obj/machinery/door/mineral/wood
 	prefix = "wood"

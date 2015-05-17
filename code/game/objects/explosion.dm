@@ -95,6 +95,17 @@
 		for (var/turf/T in trange(max_range, epicenter))
 			var/dist = cheap_pythag(T.x - x0, T.y - y0)
 
+			if(explosion_newmethod)	//realistic explosions that take obstacles into account
+				var/turf/Trajectory = T
+				while(Trajectory != epicenter)
+					Trajectory = get_step_towards(Trajectory,epicenter)
+					if(Trajectory.density && Trajectory.explosion_block)
+						dist += Trajectory.explosion_block
+
+					for (var/obj/machinery/door/D in Trajectory.contents)
+						if(D.density && D.explosion_block)
+							dist += D.explosion_block
+
 			if (dist < devastation_range)
 				dist = 1
 			else if (dist < heavy_impact_range)

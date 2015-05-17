@@ -487,7 +487,21 @@
 			SA.health -= 20
 	..()
 
-
+/obj/item/weapon/batteringram
+	name = "battering ram"
+	desc = "A hydraulic compression/spreader-type mechanism which, when applied to a door, will charge before rapidly expanding and dislodging frames."
+	flags = TWOHANDABLE | MUSTTWOHAND | FPRINT
+	icon = 'icons/obj/weapons.dmi'
+	icon_state = "ram"
+	siemens_coefficient = 0
+	throwforce = 15
+	w_class = 3
+	w_type = RECYK_METAL
+	origin_tech = "combat=5"
+	attack_verb = list("rammed", "bludgeoned")
+	force = 15
+	throw_speed = 1
+	throw_range = 3
 
 /obj/item/weapon/caution
 	desc = "Caution! Wet Floor!"
@@ -609,6 +623,54 @@
 	desc = "Used for sweeping, and flying into the night while cackling. Black cat not included."
 	icon = 'icons/obj/wizard.dmi'
 	icon_state = "broom"
+	item_state = "broom0"
+	flags = FPRINT | TWOHANDABLE
+
+/obj/item/weapon/staff/broom/update_wield(mob/user)
+	..()
+	item_state = "broom[wielded ? 1 : 0]"
+	force = wielded ? 5 : 3
+	attack_verb = wielded ? list("rammed into", "charged at") : list("bludgeoned", "whacked", "cleaned")
+	if(user)
+		user.update_inv_l_hand()
+		user.update_inv_r_hand()
+		if(user.mind in ticker.mode.wizards)
+			user.flying = wielded ? 1 : 0
+			if(wielded)
+				user << "<span class='notice'>You hold \the [src] between your legs.</span>"
+				user.say("QUID 'ITCH")
+				animate(user, pixel_y = pixel_y + 10 , time = 10, loop = 1, easing = SINE_EASING)
+			else
+				animate(user, pixel_y = pixel_y + 10 , time = 1, loop = 1)
+				animate(user, pixel_y = pixel_y, time = 10, loop = 1, easing = SINE_EASING)
+				animate(user)
+				if(user.lying)//aka. if they have just been stunned
+					user.pixel_y -= 6
+		else
+			if(wielded)
+				user << "<span class='notice'>You hold \the [src] between your legs.</span>"
+
+/obj/item/weapon/staff/broom/attackby(var/obj/O, mob/user)
+	if(istype(O, /obj/item/clothing/mask/horsehead))
+		new/obj/item/weapon/staff/broom/horsebroom(get_turf(src))
+		user.u_equip(O)
+		qdel(O)
+		qdel(src)
+		return
+	..()
+
+/obj/item/weapon/staff/broom/horsebroom
+	name = "broomstick horse"
+	desc = "Saddle up!"
+	icon = 'icons/obj/wizard.dmi'
+	icon_state = "horsebroom"
+	item_state = "horsebroom0"
+
+/obj/item/weapon/staff/broom/horsebroom/update_wield(mob/user)
+	..()
+	item_state = "horsebroom[wielded ? 1 : 0]"
+
+
 
 /obj/item/weapon/staff/stick
 	name = "stick"
@@ -691,7 +753,8 @@
 	icon_state = "card_mod"
 	desc = "An electronic module for reading data and ID cards."
 
-/obj/item/weapon/module/power_control
+/obj/item/weapon/circuitboard/power_control
+	icon = 'icons/obj/module.dmi'
 	name = "power control module"
 	icon_state = "power_mod"
 	desc = "Heavy-duty switching circuits for power control."

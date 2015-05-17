@@ -65,7 +65,7 @@
 */
 //To do list: make this whole thing use list associations
 //Until then, change this number if you add/remove sounds
-#define SOUND_NUM 13
+#define SOUND_NUM 16
 
 
 /obj/item/device/soundsynth
@@ -83,10 +83,12 @@
 	sound_list=list('sound/items/bikehorn.ogg', 'sound/effects/bubbles.ogg', 'sound/effects/Explosion1.ogg',\
 		'sound/mecha/nominal.ogg', 'sound/effects/alert.ogg', 'sound/items/AirHorn.ogg', 'sound/misc/sadtrombone.ogg',\
 		'sound/items/Deconstruct.ogg', 'sound/items/Welder.ogg', 'sound/hallucinations/turn_around1.ogg', \
-		'sound/machines/ding.ogg', 'sound/effects/awooga.ogg', 'sound/machines/disposalflush.ogg', 'sound/machines/twobeep.ogg')
+		'sound/machines/ding.ogg', 'sound/effects/awooga.ogg', 'sound/machines/disposalflush.ogg', 'sound/machines/twobeep.ogg',\
+		'sound/effects/rimshot.ogg', 'sound/effects/laughtrack.ogg', 'sound/effects/applause.ogg')
 	var/list/sound_names
 	sound_names=list("Honk","Bubbles","Boom","Startup","Alert","Airhorn","Trombone",\
-		"Construction Noises","Welding Noises", "Creepy Whisper", "Ding", "Awooga", "Flush", "Double Beep")
+		"Construction Noises","Welding Noises", "Creepy Whisper", "Ding", "Awooga", "Flush", "Double Beep",\
+		"Rimshot", "Laughter", "Applause")
 /*
 This is to cycle sounds forward
 */

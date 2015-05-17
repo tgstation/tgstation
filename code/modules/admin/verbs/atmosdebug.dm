@@ -7,22 +7,22 @@
 	feedback_add_details("admin_verb","CP") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
 	//all plumbing - yes, some things might get stated twice, doesn't matter.
-	for (var/obj/machinery/atmospherics/plumbing in world)
+	for (var/obj/machinery/atmospherics/plumbing in atmos_machines)
 		if (plumbing.nodealert)
 			usr << "Unconnected [plumbing.name] located at [formatJumpTo(plumbing.loc)]"
 
 	//Manifolds
-	for (var/obj/machinery/atmospherics/pipe/manifold/pipe in world)
+	for (var/obj/machinery/atmospherics/pipe/manifold/pipe in atmos_machines)
 		if (!pipe.node1 || !pipe.node2 || !pipe.node3)
 			usr << "Unconnected [pipe.name] located at [formatJumpTo(pipe.loc)]"
 
 	//4-way Manifolds
-	for (var/obj/machinery/atmospherics/pipe/manifold4w/pipe in world)
+	for (var/obj/machinery/atmospherics/pipe/manifold4w/pipe in atmos_machines)
 		if (!pipe.node1 || !pipe.node2 || !pipe.node3 || !pipe.node4)
 			usr << "Unconnected [pipe.name] located at [formatJumpTo(pipe.loc)]"
 
 	//Pipes
-	for (var/obj/machinery/atmospherics/pipe/simple/pipe in world)
+	for (var/obj/machinery/atmospherics/pipe/simple/pipe in atmos_machines)
 		if (!pipe.node1 || !pipe.node2)
 			usr << "Unconnected [pipe.name] located at [formatJumpTo(pipe.loc)]"
 

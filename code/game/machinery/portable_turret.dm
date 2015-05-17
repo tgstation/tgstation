@@ -177,6 +177,12 @@
 					iconholder = 1
 					egun = 1
 					reqpower = 200
+			if(!eprojectile || !projectile)
+				projectile = /obj/item/projectile/energy/electrode// if it hasn't been emagged, it uses normal taser shots
+				eprojectile = /obj/item/projectile/beam//If it has, going to kill mode
+				iconholder = 1
+				egun = 1
+				reqpower = 200
 
 	Destroy()
 		// deletes its own cover with it

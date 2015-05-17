@@ -25,6 +25,8 @@
 	var/frequency = 0
 	var/id_tag = null
 	var/datum/radio_frequency/radio_connection
+	
+	machine_flags = MULTITOOL_MENU
 
 /obj/machinery/atmospherics/binary/dp_vent_pump/high_volume
 	name = "Large Dual Port Air Vent"
@@ -67,10 +69,10 @@
 	"}
 
 /obj/machinery/atmospherics/binary/dp_vent_pump/process()
-	..()
+	. = ..()
 
 	if(!on)
-		return 0
+		return
 
 	var/datum/gas_mixture/environment = loc.return_air()
 	var/environment_pressure = environment.return_pressure()
@@ -218,9 +220,6 @@
 	update_icon()
 
 /obj/machinery/atmospherics/binary/dp_vent_pump/attackby(var/obj/item/W as obj, var/mob/user as mob)
-	if(istype(W, /obj/item/device/multitool))
-		interact(user)
-		return 1
 	return ..()
 
 /obj/machinery/atmospherics/binary/dp_vent_pump/interact(var/mob/user)

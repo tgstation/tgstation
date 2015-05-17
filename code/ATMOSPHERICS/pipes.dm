@@ -152,9 +152,8 @@
 
 /obj/machinery/atmospherics/pipe/simple/process()
 	if(!parent) //This should cut back on the overhead calling build_network thousands of times per cycle
-		build_network()
-	else
-		. = PROCESS_KILL
+		. = ..()
+	atmos_machines.Remove(src)
 
 	/*if(!node1)
 		parent.mingle_with_turf(loc, volume)
@@ -491,9 +490,8 @@
 
 /obj/machinery/atmospherics/pipe/manifold/process()
 	if(!parent)
-		..()
-	else
-		. = PROCESS_KILL
+		. = ..()
+	atmos_machines.Remove(src)
 	/*
 	if(!node1)
 		parent.mingle_with_turf(loc, 70)
@@ -726,9 +724,8 @@
 
 /obj/machinery/atmospherics/pipe/manifold4w/process()
 	if(!parent)
-		..()
-	else
-		. = PROCESS_KILL
+		. = ..()
+	atmos_machines.Remove(src)
 	/*
 	if(!node1)
 		parent.mingle_with_turf(loc, 70)

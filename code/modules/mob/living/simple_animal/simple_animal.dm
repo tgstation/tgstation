@@ -74,7 +74,8 @@
 	var/supernatural = 0
 	var/purge = 0
 
-	languages = ALL
+	universal_speak = 1
+	universal_understand = 1
 
 /mob/living/simple_animal/apply_beam_damage(var/obj/effect/beam/B)
 	var/lastcheck=last_beamchecks["\ref[B]"]
@@ -593,3 +594,8 @@
 		return
 	gib()
 	return
+
+/mob/living/simple_animal/say_understands(var/mob/other,var/datum/language/speaking = null)
+	if(issilicon(other))
+		return 1
+	return ..()

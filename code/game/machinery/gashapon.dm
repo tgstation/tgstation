@@ -96,7 +96,7 @@
 		/obj/item/toy/gasha/huggertoy)
 
 	var/obj/item/I = new capsule_prize(M)
-	M.u_equip(src)
+	M.u_equip(src, 0)
 	M.put_in_hands(I)
 	I.add_fingerprint(M)
 	M << "<span class='notice'>You got \a [I]!</span>"

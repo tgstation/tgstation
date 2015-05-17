@@ -439,7 +439,7 @@
 					for (var/obj/item/weapon/cell/B in C.contents)
 						B.charge += 100
 				for (var/obj/machinery/power/smes/S in range (src.aurarange,src)) S.charge += 250
-				for (var/mob/living/silicon/robot/M in world)
+				for (var/mob/living/silicon/robot/M in mob_list)
 					for (var/obj/item/weapon/cell/D in M.contents)
 						D.charge += 100
 						M << "<span class='notice'>SYSTEM ALERT: Energy boost detected!</span>"
@@ -450,7 +450,7 @@
 						B.charge = max(B.charge-250,0)
 				for (var/obj/machinery/power/smes/S in range (src.aurarange,src))
 					S.charge = max(S.charge-250,0)
-				for (var/mob/living/silicon/robot/M in world)
+				for (var/mob/living/silicon/robot/M mob_list)
 					for (var/obj/item/weapon/cell/D in M.contents)
 						D.charge = max(D.charge-250,0)
 						M << "<span class='warning'>SYSTEM ALERT: Energy drain detected!</span>"

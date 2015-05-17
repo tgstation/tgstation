@@ -14,6 +14,9 @@
 	var/smashed = 0
 	locked = 1
 
+/obj/structure/closet/fireaxecabinet/empty
+	fireaxe = null
+
 /obj/structure/closet/fireaxecabinet/examine(mob/user)
 
 	..()
@@ -115,6 +118,11 @@
 					spawn(10)
 						update_icon()
 	else
+		if(iswrench(O) && src.localopened && !src.fireaxe)
+			user << "<span class='notice'>You disassemble \the [src].</span>"
+			playsound(get_turf(src), 'sound/items/Ratchet.ogg', 100, 1)
+			new /obj/item/stack/sheet/plasteel (src.loc,2)
+			qdel(src)
 		if(smashed)
 			return
 		else

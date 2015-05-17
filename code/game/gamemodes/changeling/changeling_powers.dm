@@ -23,6 +23,63 @@
 				src.verbs += P.verbpath
 
 	mind.changeling.absorbed_dna |= dna
+	var/mob/living/carbon/human/H = src
+	if(istype(H))
+		mind.changeling.absorbed_species |= H.species.name
+	for(var/language in languages)
+		mind.changeling.absorbed_languages |= language
+	return 1
+
+//Used to dump the languages from the changeling datum into the actual mob.
+/mob/proc/changeling_update_languages(var/updated_languages)
+
+	languages.len = 0
+	for(var/language in updated_languages)
+		languages += language
+
+	//This isn't strictly necessary but just to be safe...
+	add_language("Changeling")
+
+	return
+
+//Used to switch species based on the changeling datum.
+/mob/proc/changeling_change_species()
+
+	set category = "Changeling"
+	set name = "Change Species (5)"
+
+	var/mob/living/carbon/human/H = src
+	if(!istype(H))
+		src << "<span class='warning'>We may only use this power while in humanoid form.</span>"
+		return
+
+	var/datum/changeling/changeling = changeling_power(5,1,0)
+	if(!changeling)	return
+
+	if(changeling.absorbed_species.len < 2)
+		src << "<span class='warning'>We do not know of any other species genomes to use.</span>"
+		return
+
+	var/S = input("Select the target species: ", "Target Species", null) as null|anything in changeling.absorbed_species
+	if(!S)	return
+
+	domutcheck(src, null)
+
+	changeling.chem_charges -= 5
+	changeling.geneticdamage = 30
+
+	src.visible_message("<span class='warning'>[src] transforms!</span>")
+
+	src.verbs -= /mob/proc/changeling_change_species
+	H.set_species(S,1) //Until someone moves body colour into DNA, they're going to have to use the default.
+
+	spawn(10)
+		src.verbs += /mob/proc/changeling_change_species
+		src.regenerate_icons()
+
+	changeling_update_languages(changeling.absorbed_languages)
+	feedback_add_details("changeling_powers","TR")
+
 	return 1
 
 /mob/proc/changeling_horror_form()
@@ -40,7 +97,7 @@
 	var/mob/living/carbon/human/H=src
 
 	for(var/obj/item/slot in H.get_all_slots())
-		u_equip(slot)
+		u_equip(slot, 1)
 
 	monkeyizing = 1
 	canmove = 0
@@ -180,6 +237,17 @@
 	changeling.chem_charges += 10
 	changeling.geneticpoints += 2
 
+	//Steal all of their languages!
+	for(var/language in T.languages)
+		if(!(language in changeling.absorbed_languages))
+			changeling.absorbed_languages += language
+
+	changeling_update_languages(changeling.absorbed_languages)
+
+	//Steal their species!
+	if(T.species && !(T.species.name in changeling.absorbed_species))
+		changeling.absorbed_species += T.species.name
+
 	if(T.mind && T.mind.changeling)
 		if(T.mind.changeling.absorbed_dna)
 			for(var/dna_data in T.mind.changeling.absorbed_dna)	//steal all their loot
@@ -237,10 +305,14 @@
 	changeling.chem_charges -= 5
 	src.visible_message("<span class='warning'>[src] transforms!</span>")
 	changeling.geneticdamage = 30
+	var/oldspecies = src.dna.species
 	src.dna = chosen_dna.Clone()
 	src.real_name = chosen_dna.real_name
 	src.flavor_text = ""
 	src.UpdateAppearance()
+	var/mob/living/carbon/human/H = src
+	if(istype(H) && oldspecies != dna.species)
+		H.set_species(H.dna.species, 0)
 	domutcheck(src, null)
 
 	src.verbs -= /mob/proc/changeling_transform
@@ -261,8 +333,12 @@
 	if(src.has_brain_worms())
 		src << "<span class='warning'>We cannot perform this ability at the present time!</span>"
 		return
+	var/mob/living/carbon/human/C = src
 
-	var/mob/living/carbon/C = src
+	if(!istype(C) || !C.species.primitive)
+		src << "<span class='warning'>We cannot perform this ability in this form!</span>"
+		return
+
 	changeling.chem_charges--
 	C.remove_changeling_powers()
 	C.visible_message("<span class='warning'>[C] transforms!</span>")
@@ -289,6 +365,7 @@
 	animation.master = null
 	qdel(animation)
 
+
 	var/mob/living/carbon/monkey/O = new /mob/living/carbon/monkey(src)
 	O.dna = C.dna.Clone()
 	C.dna = null
@@ -314,6 +391,7 @@
 
 	O.make_changeling(1)
 	O.verbs += /mob/proc/changeling_lesser_transform
+	O.changeling_update_languages(O.mind.changeling.absorbed_languages)
 	feedback_add_details("changeling_powers","LF")
 	del(C)
 	return 1
@@ -363,7 +441,7 @@
 	del(animation)
 
 	for(var/obj/item/W in src)
-		C.u_equip(W)
+		C.u_equip(W, 1)
 		if (C.client)
 			C.client.screen -= W
 		if (W)
@@ -398,6 +476,7 @@
 
 	C.mind.transfer_to(O)
 	O.make_changeling()
+	O.changeling_update_languages(changeling.absorbed_languages)
 
 	feedback_add_details("changeling_powers","LFT")
 	del(C)
@@ -904,11 +983,13 @@ var/list/datum/dna/hivemind_bank = list()
 	if(!changeling)
 		return 0
 
-	var/mob/living/carbon/T = changeling_sting(40, /mob/proc/changeling_extract_dna_sting)
+	var/mob/living/carbon/human/T = changeling_sting(40, /mob/proc/changeling_extract_dna_sting)
 	if(!T)	return 0
 
 	T.dna.real_name = T.real_name
 	changeling.absorbed_dna |= T.dna
+	if(T.species && !(T.species.name in changeling.absorbed_species))
+		changeling.absorbed_species += T.species.name
 
 	feedback_add_details("changeling_powers","ED")
 	return 1

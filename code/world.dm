@@ -10,8 +10,9 @@
 /world/New()
 	// Honk honk, fuck you science
 	populate_seed_list()
-	WORLD_X_OFFSET=rand(-50,50)
-	WORLD_Y_OFFSET=rand(-50,50)
+	for(var/i=1, i<=map.zLevels.len, i++)
+		WORLD_X_OFFSET += rand(-50,50)
+		WORLD_Y_OFFSET += rand(-50,50)
 
 	// Initialize world events as early as possible.
 	on_login = new ()

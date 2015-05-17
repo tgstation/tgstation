@@ -9,7 +9,8 @@ var/global/list/cable_list = list() //Index for all cables, so that powernets do
 
 	for(var/obj/structure/cable/PC in cable_list)
 		if(PC.build_status)
-			PC.rebuild_from() //Does a powernet need rebuild? Lets do it!
+			if(PC.rebuild_from()) //Does a powernet need rebuild? Lets do it!
+				scheck()
 
 	for(var/datum/powernet/powerNetwork in powernets)
 		if(istype(powerNetwork) && !powerNetwork.disposed)

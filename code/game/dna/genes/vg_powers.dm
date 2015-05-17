@@ -83,6 +83,7 @@ Obviously, requires DNA2.
 		M.update_mutations()		//update our mutation overlays
 		M.update_body()
 		//M.say(pick("",";")+pick("HULK MAD","YOU MADE HULK ANGRY")) // Just a note to security.
+		log_admin("[key_name(M)] has hulked out! ([formatJumpTo(M)])")
 		message_admins("[key_name(M)] has hulked out! ([formatJumpTo(M)])")
 	return
 

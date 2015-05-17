@@ -24,7 +24,7 @@
 	var/frequency = 1367
 	var/datum/radio_frequency/radio_connection
 
-	machine_flags = SCREWTOGGLE | CROWDESTROY
+	machine_flags = SCREWTOGGLE | CROWDESTROY | MULTITOOL_MENU
 
 /obj/machinery/conveyor/centcom_auto
 	id_tag = "round_end_belt"
@@ -188,9 +188,6 @@
 	. = ..()
 	if(.)
 		return .
-	if(istype(W, /obj/item/device/multitool))
-		update_multitool_menu(user)
-		return 1
 	user.drop_item(W, src.loc)
 	return 0
 
@@ -292,6 +289,7 @@
 
 	var/frequency = 1367
 	var/datum/radio_frequency/radio_connection
+	machine_flags = MULTITOOL_MENU
 
 	anchored = 1
 
@@ -379,9 +377,9 @@
 		radio_connection.post_signal(src, signal, range = CONVEYOR_CONTROL_RANGE)
 
 /obj/machinery/conveyor_switch/attackby(var/obj/item/W, mob/user)
-	if(istype(W, /obj/item/device/multitool))
-		update_multitool_menu(user)
-		return 1
+	. = ..()
+	if(.)
+		return .
 	if(istype(W, /obj/item/weapon/wrench))
 		user << "<span class='notice'>Deconstructing \the [src]...</span>"
 		if(do_after(user,50))
@@ -392,7 +390,6 @@
 			new /obj/item/stack/rods(T,1)
 			del(src)
 		return 1
-	return ..()
 
 /obj/machinery/conveyor_switch/oneway
 	var/convdir = 1 //Set to 1 or -1 depending on which way you want the conveyor to go. (In other words keep at 1 and set the proper dir on the belts.)

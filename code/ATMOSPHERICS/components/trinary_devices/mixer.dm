@@ -1,7 +1,6 @@
 obj/machinery/atmospherics/trinary/mixer
 	icon = 'icons/obj/atmospherics/mixer.dmi'
 	icon_state = "intact_off"
-	density = 1
 
 	name = "Gas mixer"
 
@@ -37,15 +36,15 @@ obj/machinery/atmospherics/trinary/mixer/New()
 	air3.volume = 300
 
 obj/machinery/atmospherics/trinary/mixer/process()
-	..()
+	. = ..()
 	if(!on)
-		return 0
+		return
 
 	var/output_starting_pressure = air3.return_pressure()
 
 	if(output_starting_pressure >= target_pressure)
 		//No need to mix if target is already full!
-		return 1
+		return
 
 	//Calculate necessary moles to transfer using PV=nRT
 

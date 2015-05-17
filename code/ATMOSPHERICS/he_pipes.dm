@@ -52,7 +52,7 @@
 
 /obj/machinery/atmospherics/pipe/simple/heat_exchanging/process()
 	if(!parent)
-		return ..()
+		. = ..()
 
 	// Get gas from pipenet
 	var/datum/gas_mixture/internal = return_air()
@@ -80,7 +80,7 @@
 	// No internal gas.  Screw this, we're out.
 	if (!internal_removed)
 		environment.merge(external_removed)
-		return 1
+		return
 
 	//Get same info from connected gas
 	var/combined_heat_capacity = internal_removed.heat_capacity() + external_removed.heat_capacity()
@@ -99,6 +99,7 @@
 
 	if(parent && parent.network)
 		parent.network.update = 1
+	return 1
 
 /obj/machinery/atmospherics/pipe/simple/heat_exchanging/proc/radiate()
 	var/datum/gas_mixture/internal = return_air()
@@ -106,7 +107,7 @@
 	var/datum/gas_mixture/internal_removed = internal.remove(internal_transfer_moles)
 
 	if (!internal_removed)
-		return 1
+		return
 
 	var/combined_heat_capacity = internal_removed.heat_capacity() + RADIATION_CAPACITY
 	var/combined_energy = internal_removed.temperature * internal_removed.heat_capacity() + (RADIATION_CAPACITY * ENERGY_MULT)

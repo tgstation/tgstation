@@ -86,12 +86,12 @@
 		spawn(0)
 			if(occupant)
 				occupant << "<big><span class='warning'>Critical damage to the vessel detected, core explosion imminent!</span></big>"
-				for(var/i = 10, i >= 0; --i)
-					if(occupant)
-						occupant << "<span class='warning'>[i]</span>"
-					if(i == 0)
-						explosion(loc, 2, 4, 8)
-					sleep(10)
+			for(var/i = 10, i >= 0; --i)
+				if(occupant)
+					occupant << "<span class='warning'>[i]</span>"
+				if(i == 0)
+					explosion(loc, 2, 4, 8)
+				sleep(10)
 
 	update_icons()
 

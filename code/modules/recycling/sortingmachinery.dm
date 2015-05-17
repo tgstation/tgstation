@@ -266,7 +266,7 @@
 /obj/machinery/disposal/deliveryChute/interact()
 	return
 
-/obj/machinery/disposal/deliveryChute/update()
+/obj/machinery/disposal/deliveryChute/update_icon()
 	return
 
 /obj/machinery/disposal/deliveryChute/Bumped(var/atom/movable/AM) //Go straight into the chute
@@ -327,7 +327,7 @@
 	flush = 0
 	if(mode == 2)	// if was ready,
 		mode = 1	// switch to charging
-	update()
+	update_icon()
 	return
 
 /obj/machinery/disposal/deliveryChute/attackby(var/obj/item/I, var/mob/user)
@@ -432,6 +432,10 @@
 /obj/machinery/sorting_machine/process()
 	if(stat & (BROKEN | NOPOWER))
 		return
+
+	if(!input || !input.loc)//Without that the log is filled with runtime errors during supermatter cascades.
+		return
+
 	use_power(100)
 
 	var/affecting = input.loc.contents		// moved items will be all in loc

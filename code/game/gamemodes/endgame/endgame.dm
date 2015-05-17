@@ -60,6 +60,9 @@
 /datum/universal_state/proc/OnTurfChange(var/turf/NT)
  	return
 
+/datum/universal_state/proc/OverlayAndAmbientSet()
+	return
+
 /proc/SetUniversalState(var/newstate,var/on_exit=1, var/on_enter=1)
 	if(on_exit)
 		universe.OnExit()

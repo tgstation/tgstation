@@ -29,6 +29,19 @@
 		"mime",
 		"syndie" // yes no?
 	)
+	var/list/cent_card_skins = list(
+		"data",
+		"id",
+		"centcom_old",
+		"centcom",
+		"syndie",
+		"deathsquad",
+		"creed",
+		"ERT_leader",
+		"ERT_security",
+		"ERT_engineering",
+		"ERT_medical",
+	)
 
 	l_color = "#0000FF"
 
@@ -91,7 +104,10 @@
 	if(!istype(id_card))
 		return ..()
 
-	if(!scan && access_change_ids in id_card.access)
+	if(!is_centcom() && !scan && (access_change_ids in id_card.access))
+		user.drop_item(id_card, src)
+		scan = id_card
+	else if(is_centcom() && !scan && ((access_cent_creed in id_card.access) || (access_cent_captain in id_card.access)))
 		user.drop_item(id_card, src)
 		scan = id_card
 	else if(!modify)
@@ -139,6 +155,7 @@
 	data["civilian_jobs"] = format_jobs(civilian_positions)
 	data["centcom_jobs"] = format_jobs(get_all_centcom_jobs())
 	data["card_skins"] = format_card_skins(card_skins)
+	data["cent_card_skins"] = format_card_skins(cent_card_skins)
 
 	if(modify)
 		data["current_skin"] = modify.icon_state
@@ -146,10 +163,11 @@
 	if (modify && is_centcom())
 		var/list/all_centcom_access = list()
 		for(var/access in get_all_centcom_access())
-			all_centcom_access.Add(list(list(
-				"desc" = replacetext(get_centcom_access_desc(access), " ", "&nbsp"),
-				"ref" = access,
-				"allowed" = (access in modify.access) ? 1 : 0)))
+			if (get_centcom_access_desc(access))
+				all_centcom_access.Add(list(list(
+					"desc" = replacetext(get_centcom_access_desc(access), " ", "&nbsp"),
+					"ref" = access,
+					"allowed" = (access in modify.access) ? 1 : 0)))
 
 		data["all_centcom_access"] = all_centcom_access
 	else if (modify)
@@ -319,4 +337,7 @@
 /obj/machinery/computer/card/centcom
 	name = "CentCom Identification Computer"
 	circuit = "/obj/item/weapon/circuitboard/card/centcom"
-	req_access = list(access_cent_captain)
+	req_access = list(
+		access_cent_creed,
+		access_cent_captain,
+		)

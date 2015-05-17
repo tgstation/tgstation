@@ -71,7 +71,7 @@
 		SetLuminosity(0)
 
 /obj/item/clothing/head/helmet/space/plasmaman/dropped(mob/user)
-	if(on)
+	if(on && !luminosity)
 		user.SetLuminosity(user.luminosity - brightness_on)
 //		user.UpdateLuminosity()
 		SetLuminosity(brightness_on)
@@ -149,7 +149,7 @@
 	name = "plasmaman chaplain helmet"
 	icon_state = "plasmamanChaplain_helmet0"
 	base_state = "plasmamanChaplain_helmet"
-	
+
 /obj/item/clothing/suit/space/plasmaman/clown
 	name = "plasmaman clown suit"
 	icon_state = "plasmaman_Clown"
@@ -159,7 +159,7 @@
 	name = "plasmaman clown helmet"
 	icon_state = "plasmaman_Clown_helmet0"
 	base_state = "plasmaman_Clown_helmet"
-	
+
 /obj/item/clothing/suit/space/plasmaman/mime
 	name = "plasmaman mime suit"
 	icon_state = "plasmaman_Mime"

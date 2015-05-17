@@ -18,6 +18,11 @@
 
 //attaching papers!!
 /obj/structure/noticeboard/attackby(var/obj/item/weapon/O as obj, var/mob/user as mob)
+	if(iswrench(O))
+		user << "<span class='notice'>You disassemble \the [src].</span>"
+		playsound(get_turf(src), 'sound/items/Ratchet.ogg', 100, 1)
+		new /obj/item/stack/sheet/wood (src.loc,2)
+		qdel(src)
 	if(istype(O, /obj/item/weapon/paper))
 		if(notices < 5)
 			O.add_fingerprint(user)

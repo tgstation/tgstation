@@ -138,7 +138,8 @@ var/shuttle_call/shuttle_calls[0]
 				if(!input || !(usr in view(1,src)))
 					return
 				captain_announce(input)//This should really tell who is, IE HoP, CE, HoS, RD, Captain
-				log_say("[key_name(usr)] (@[usr.x],[usr.y],[usr.z]) has made a captain announcement: [input]")
+				var/turf/T = get_turf(usr)
+				log_say("[key_name(usr)] (@[T.x],[T.y],[T.z]) has made a captain announcement: [input]")
 				message_admins("[key_name_admin(usr)] has made a captain announcement.", 1)
 				message_cooldown = 1
 				spawn(600)//One minute cooldown
@@ -269,7 +270,8 @@ var/shuttle_call/shuttle_calls[0]
 					return
 				Centcomm_announce(input, usr)
 				usr << "<span class='notice'>Message transmitted.</span>"
-				log_say("[key_name(usr)] (@[usr.x],[usr.y],[usr.z]) has sent a bluespace message to Centcomm: [input]")
+				var/turf/T = get_turf(usr)
+				log_say("[key_name(usr)] (@[T.x],[T.y],[T.z]) has sent a bluespace message to Centcomm: [input]")
 				centcomm_message_cooldown = 1
 				spawn(300)//10 minute cooldown
 					centcomm_message_cooldown = 0
@@ -287,7 +289,8 @@ var/shuttle_call/shuttle_calls[0]
 					return
 				Syndicate_announce(input, usr)
 				usr << "<span class='notice'>Message transmitted.</span>"
-				log_say("[key_name(usr)] (@[usr.x],[usr.y],[usr.z]) has sent a bluespace message to the syndicate: [input]")
+				var/turf/T = get_turf(usr)
+				log_say("[key_name(usr)] (@[T.x],[T.y],[T.z]) has sent a bluespace message to the syndicate: [input]")
 				centcomm_message_cooldown = 1
 				spawn(300)//10 minute cooldown
 					centcomm_message_cooldown = 0
@@ -415,7 +418,7 @@ var/shuttle_call/shuttle_calls[0]
 		return menu_state
 
 /proc/enable_prison_shuttle(var/mob/user)
-	for(var/obj/machinery/computer/prison_shuttle/PS in world)
+	for(var/obj/machinery/computer/prison_shuttle/PS in machines)
 		PS.allowedtocall = !(PS.allowedtocall)
 
 /proc/call_shuttle_proc(var/mob/user, var/justification)
@@ -537,7 +540,7 @@ var/shuttle_call/shuttle_calls[0]
 
 /obj/machinery/computer/communications/Destroy()
 
-	for(var/obj/machinery/computer/communications/commconsole in world)
+	for(var/obj/machinery/computer/communications/commconsole in machines)
 		if(istype(commconsole.loc,/turf) && commconsole != src)
 			return ..()
 
@@ -562,7 +565,7 @@ var/shuttle_call/shuttle_calls[0]
 
 /obj/item/weapon/circuitboard/communications/Destroy()
 
-	for(var/obj/machinery/computer/communications/commconsole in world)
+	for(var/obj/machinery/computer/communications/commconsole in machines)
 		if(istype(commconsole.loc,/turf))
 			return ..()
 

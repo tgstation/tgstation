@@ -209,7 +209,7 @@
 	target.internal_organs += copied
 	affected.internal_organs += copied
 
-	user.u_equip(B)
+	user.u_equip(B,1)
 	B.loc = target
 	affected.organ_item = B //this stores the organ for continuity
 

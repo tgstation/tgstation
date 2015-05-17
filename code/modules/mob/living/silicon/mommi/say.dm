@@ -8,7 +8,7 @@
 
 	return "states, \"[text]\"";
 
-/mob/living/silicon/robot/mommi/handle_inherent_channels(var/message, var/message_mode)
+/mob/living/silicon/robot/mommi/handle_inherent_channels(var/message, var/message_mode, var/datum/language/speaking)
 	. = ..()
 	if(.)
 		return .
@@ -17,7 +17,9 @@
 		if (!message)
 			return
 
-		log_say("[key_name(src)] (@[src.x],[src.y],[src.z])(MoMMItalk): [message]")
+		var/turf/T = get_turf(src)
+		log_say("[key_name(src)] (@[T.x],[T.y],[T.z]) Damage Control: [message]")
+
 
 		var/interior_message = say_quote(message)
 		var/rendered = text("<i><span class='mommi game say'>Damage Control, <span class='name'>[]</span> <span class='message'>[]</span></span></i>",name,interior_message)

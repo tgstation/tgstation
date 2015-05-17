@@ -15,6 +15,8 @@
 	walltype = "rwall"
 	hardness = 90
 
+	explosion_block = 2
+
 	var/d_state = WALLCOMPLETED
 
 /turf/simulated/wall/r_wall/examine(mob/user)

@@ -68,9 +68,9 @@
 
 	var/list/vouchers
 	var/obj/item/weapon/storage/lockbox/coinbox/coinbox
+	var/cardboard = 0 //1 if sheets of cardboard are added
 
 	machine_flags = SCREWTOGGLE | WRENCHMOVE | FIXED2WORK | CROWDESTROY | EJECTNOTDEL
-	languages = HUMAN
 
 	var/obj/machinery/account_database/linked_db
 	var/datum/money_account/linked_account
@@ -102,17 +102,16 @@
 		// so if slogantime is 10 minutes, it will say it at somewhere between 10 and 20 minutes after the machine is crated.
 		src.last_slogan = world.time + rand(0, slogan_delay)
 
-		src.build_inventory(products)
-		 //Add hidden inventory
-		src.build_inventory(contraband, 1)
-		src.build_inventory(premium, 0, 1)
+		if(!product_records.len)
+			src.build_inventory(products)
+			src.build_inventory(contraband, 1)
+			src.build_inventory(premium, 0, 1)
 		power_change()
 
 		reconnect_database()
 		linked_account = vendor_account
 
 	coinbox = new(src)
-	coinbox.req_access |= src.req_access
 
 	return
 
@@ -121,11 +120,16 @@
 		wires.Destroy()
 		wires = null
 
-/*	var/obj/item/compressed_vend/cvc = new(src.loc)
-	cvc.products = products
-	cvc.contraband = contraband
-	cvc.premium = premium
-*/
+	if(product_records.len&&cardboard) //Only spit out if we have slotted cardboard
+		var/obj/structure/vendomatpack/partial/newpack = new(src.loc)
+		newpack.stock = products
+		newpack.secretstock = contraband
+		newpack.preciousstock = premium
+		newpack.targetvendomat = src.type
+		newpack.product_records = product_records
+		newpack.hidden_records = hidden_records
+		newpack.coin_records = coin_records
+
 	if(coinbox)
 		coinbox.loc = get_turf(src)
 	..()
@@ -155,6 +159,13 @@
 				var/obj/item/emptyvendomatpack/emptypack = new /obj/item/emptyvendomatpack(P.loc)
 				emptypack.icon_state = P.icon_state
 				emptypack.overlays += image('icons/obj/vending_pack.dmi',"emptypack")
+				if(P.stock.len)
+					newmachine.products = P.stock
+					newmachine.contraband = P.secretstock
+					newmachine.premium = P.preciousstock
+					newmachine.product_records = P.product_records
+					newmachine.hidden_records = P.hidden_records
+					newmachine.coin_records = P.coin_records
 				qdel(P)
 				if(user.machine==src)
 					newmachine.attack_hand(user)
@@ -296,10 +307,16 @@
 			voucher.loc = coinbox
 	return 1
 
-/obj/machinery/vending/attackby(obj/item/weapon/W, mob/user)
+/obj/machinery/vending/attackby(obj/item/W, mob/user)
 	. = ..()
 	if(.)
 		return .
+	if(!cardboard && istype(W, /obj/item/stack/sheet/cardboard))
+		var/obj/item/stack/sheet/cardboard/C = W
+		if(C.amount>=4)
+			C.use(4)
+			user << "<span class='notice'>You slot some cardboard into the machine into [src].</span>"
+			cardboard = 1
 	if(istype(W, /obj/item/device/multitool)||istype(W, /obj/item/weapon/wirecutters))
 		if(panel_open)
 			attack_hand(user)
@@ -512,15 +529,24 @@
 
 	//testing("..(): [href]")
 
+	var/free_vend = 0
 	if(istype(usr,/mob/living/silicon))
+		var/can_vend = 1
+		if (href_list["vend"] && src.vend_ready && !currently_vending)
+			var/idx=text2num(href_list["vend"])
+			var/cat=text2num(href_list["cat"])
+			var/datum/data/vending_product/R = GetProductByID(idx,cat)
+			if(R.price)
+				can_vend = 0//all borgs can buy free items from vending machines
 		if(istype(usr,/mob/living/silicon/robot))
 			var/mob/living/silicon/robot/R = usr
-			if(!(R.module && istype(R.module,/obj/item/weapon/robot_module/butler) ) && !isMoMMI(R))
-				usr << "<span class='warning'>The vending machine refuses to interface with you, as you are not in its target demographic!</span>"
-				return
-		else
+			if((R.module && istype(R.module,/obj/item/weapon/robot_module/butler) ) || isMoMMI(R))
+				can_vend = 1//only service borgs and MoMMI can buy costly items
+		if(!can_vend)
 			usr << "<span class='warning'>The vending machine refuses to interface with you, as you are not in its target demographic!</span>"
 			return
+		else
+			free_vend = 1//so that don't have to swipe their non-existant IDs
 
 	if(href_list["remove_coin"])
 		if(!coin)
@@ -552,6 +578,8 @@
 			return
 
 		if(R.price == null || !R.price)
+			src.vend(R, usr)
+		else if(free_vend)//for MoMMI and Service Borgs
 			src.vend(R, usr)
 		else
 			src.currently_vending = R
@@ -863,12 +891,11 @@
 	desc = "If you want to get cancer, might as well do it in style"
 	product_slogans = "Space cigs taste good like a cigarette should.;I'd rather toolbox than switch.;Smoke!;Don't believe the reports - smoke today!"
 	product_ads = "Probably not bad for you!;Don't believe the scientists!;It's good for you!;Don't quit, buy more!;Smoke!;Nicotine heaven.;Best cigarettes since 2150.;Award-winning cigs."
-	vend_delay = 34
 	icon_state = "cigs"
-	products = list(/obj/item/weapon/storage/fancy/cigarettes = 10,/obj/item/weapon/storage/box/matches = 10,/obj/item/weapon/lighter/random = 4)
+	products = list(/obj/item/weapon/storage/fancy/cigarettes = 10,/obj/item/weapon/storage/fancy/matchbox = 10,/obj/item/weapon/lighter/random = 4)
 	contraband = list(/obj/item/weapon/lighter/zippo = 4)
-	premium = list(/obj/item/clothing/mask/cigarette/cigar/havana = 2)
-	prices = list(/obj/item/weapon/storage/fancy/cigarettes = 60,/obj/item/weapon/storage/box/matches = 10,/obj/item/weapon/lighter/random = 60)
+	premium = list(/obj/item/weapon/storage/fancy/matchbox/strike_anywhere = 10,/obj/item/clothing/mask/cigarette/cigar/havana = 2)
+	prices = list(/obj/item/weapon/storage/fancy/cigarettes = 20,/obj/item/weapon/storage/fancy/matchbox = 25,/obj/item/weapon/lighter/random = 25)
 
 	pack = /obj/structure/vendomatpack/cigarette
 
@@ -1213,7 +1240,7 @@
 	icon_deny = "tool-deny"
 	//req_access_txt = "12" //Maintenance access
 	products = list(/obj/item/stack/cable_coil/random = 10,/obj/item/weapon/crowbar = 5,/obj/item/weapon/weldingtool = 3,/obj/item/weapon/wirecutters = 5,
-					/obj/item/weapon/wrench = 5,/obj/item/device/analyzer = 5,/obj/item/device/t_scanner = 5,/obj/item/weapon/screwdriver = 5)
+					/obj/item/weapon/wrench = 5,/obj/item/device/analyzer = 5,/obj/item/device/t_scanner = 5,/obj/item/weapon/screwdriver = 5,/obj/item/weapon/solder = 3)
 	contraband = list(/obj/item/weapon/weldingtool/hugetank = 2,/obj/item/clothing/gloves/fyellow = 2)
 	premium = list(/obj/item/clothing/gloves/yellow = 1)
 
@@ -1225,7 +1252,7 @@
 	icon_state = "engivend"
 	icon_deny = "engivend-deny"
 	req_access_txt = "11" //Engineering Equipment access
-	products = list(/obj/item/clothing/glasses/meson = 2,/obj/item/device/multitool = 4,/obj/item/weapon/circuitboard/airlock = 10,/obj/item/weapon/module/power_control = 10,/obj/item/weapon/circuitboard/air_alarm = 10,/obj/item/weapon/intercom_electronics = 10,/obj/item/weapon/cell/high = 10, /obj/item/mounted/frame/newscaster = 10)
+	products = list(/obj/item/clothing/glasses/meson = 2,/obj/item/device/multitool = 4,/obj/item/weapon/circuitboard/airlock = 10,/obj/item/weapon/circuitboard/power_control = 10,/obj/item/weapon/circuitboard/air_alarm = 10,/obj/item/weapon/intercom_electronics = 10,/obj/item/weapon/cell/high = 10, /obj/item/mounted/frame/newscaster = 10)
 	contraband = list(/obj/item/weapon/cell/potato = 3)
 	premium = list(/obj/item/weapon/storage/belt/utility = 3)
 
@@ -1238,12 +1265,15 @@
 	icon_state = "engi"
 	icon_deny = "engi-deny"
 	req_access_txt = "11"
-	products = list(/obj/item/clothing/under/rank/chief_engineer = 4,/obj/item/clothing/under/rank/engineer = 4,/obj/item/clothing/shoes/orange = 4,/obj/item/clothing/head/hardhat = 4,
+	products = list(/obj/item/clothing/under/rank/engineer = 4,/obj/item/clothing/under/rank/atmospheric_technician = 4,/obj/item/clothing/under/rank/maintenance_tech/ = 4,/obj/item/clothing/under/rank/engine_tech = 4,/obj/item/clothing/under/rank/electrician = 4,
+					/obj/item/clothing/shoes/orange = 4,/obj/item/clothing/head/hardhat = 4,/obj/item/clothing/head/hardhat/orange = 4,/obj/item/clothing/head/hardhat/red = 4,/obj/item/clothing/head/hardhat/white = 4,/obj/item/clothing/head/hardhat/dblue = 4,
 					/obj/item/weapon/storage/belt/utility = 4,/obj/item/clothing/glasses/meson = 4,/obj/item/clothing/gloves/yellow = 4, /obj/item/weapon/screwdriver = 12,
 					/obj/item/weapon/crowbar = 12,/obj/item/weapon/wirecutters = 12,/obj/item/device/multitool = 12,/obj/item/weapon/wrench = 12,/obj/item/device/t_scanner = 12,
 					/obj/item/stack/cable_coil/heavyduty = 8, /obj/item/weapon/cell = 8, /obj/item/weapon/weldingtool = 8,/obj/item/clothing/head/welding = 8,
 					/obj/item/weapon/light/tube = 10,/obj/item/clothing/suit/fire = 4, /obj/item/weapon/stock_parts/scanning_module = 5,/obj/item/weapon/stock_parts/micro_laser = 5,
 					/obj/item/weapon/stock_parts/matter_bin = 5,/obj/item/weapon/stock_parts/manipulator = 5,/obj/item/weapon/stock_parts/console_screen = 5)
+	contraband = list(/obj/item/weapon/wrench/socket = 1, /obj/item/weapon/extinguisher/foam = 1, /obj/item/device/device_analyser = 2)
+	premium = list(/obj/item/clothing/under/rank/chief_engineer = 2, /obj/item/weapon/storage/belt = 2) //belt is the best belt in the game.
 	// There was an incorrect entry (cablecoil/power).  I improvised to cablecoil/heavyduty.
 	// Another invalid entry, /obj/item/weapon/circuitry.  I don't even know what that would translate to, removed it.
 	// The original products list wasn't finished.  The ones without given quantities became quantity 5.  -Sayu

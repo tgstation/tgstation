@@ -18,6 +18,9 @@
 	src.real_name = src.name
 	verbs.Add(/mob/living/carbon/alien/humanoid/proc/resin,/mob/living/carbon/alien/humanoid/proc/corrosive_acid)
 	..()
+	add_language(LANGUAGE_XENO)
+	default_language = all_languages[LANGUAGE_XENO]
+
 //Drones use the same base as generic humanoids.
 //Drone verbs
 

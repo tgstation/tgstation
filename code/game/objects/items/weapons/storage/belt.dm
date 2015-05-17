@@ -26,6 +26,7 @@
 		"/obj/item/weapon/crowbar",
 		"/obj/item/weapon/screwdriver",
 		"/obj/item/weapon/weldingtool",
+		"/obj/item/weapon/solder",
 		"/obj/item/weapon/wirecutters",
 		"/obj/item/weapon/wrench",
 		"/obj/item/device/multitool",

@@ -21,7 +21,7 @@
 /obj/machinery/power/New()
 	. = ..()
 	machines -= src
-	power_machines += src
+	power_machines |= src
 	return .
 
 /obj/machinery/power/Destroy()
@@ -60,9 +60,10 @@
 
 /obj/machinery/power/check_rebuild()
 	if(!build_status)
-		return
+		return 0
 	for(var/obj/structure/cable/C in src.loc)
-		C.check_rebuild()
+		if(C.check_rebuild())
+			return 1
 
 /obj/machinery/power/proc/getPowernetNodes()
 	if(!get_powernet())
@@ -112,10 +113,7 @@
 
 // connect the machine to a powernet if a node cable is present on the turf
 /obj/machinery/power/proc/connect_to_network()
-	var/turf/T = src.loc
-
-	if(!T || !istype(T))
-		return 0
+	var/turf/T = get_turf(src)
 
 	var/obj/structure/cable/C = T.get_cable_node() // check if we have a node cable on the machine turf, the first found is picked
 
@@ -191,9 +189,6 @@
 // return a knot cable (O-X) if one is present in the turf
 // null if there's none
 /turf/proc/get_cable_node()
-	if(!istype(src, /turf/simulated/floor))
-		return null
-
 	for(var/obj/structure/cable/C in src)
 		if(C.d1 == 0)
 			return C

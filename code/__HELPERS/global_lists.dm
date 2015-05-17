@@ -10,6 +10,8 @@ var/global/list/mob_list = list()					//List of all mobs, including clientless
 var/global/list/living_mob_list = list()			//List of all alive mobs, including clientless. Excludes /mob/new_player
 var/global/list/dead_mob_list = list()				//List of all dead mobs, including clientless. Excludes /mob/new_player
 var/list/observers = new/list()
+var/global/list/areas = list()
+var/global/list/turfs = list()
 
 var/global/list/chemical_reactions_list				//list of all /datum/chemical_reaction datums. Used during chemical reactions
 var/global/list/chemical_reagents_list				//list of all /datum/reagent datums indexed by reagent id. Used by chemistry stuff
@@ -47,6 +49,7 @@ var/global/list/sec_hud_users = list() //list of all entities using a security H
 		var/datum/surgery_step/S = new T
 		surgery_steps += S
 	sort_surgeries()
+
 
 /* // Uncomment to debug chemical reaction list.
 /client/verb/debug_chemical_list()

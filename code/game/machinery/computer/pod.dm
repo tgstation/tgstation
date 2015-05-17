@@ -91,7 +91,8 @@
 		visible_message("Cannot locate any mass driver of that ID. Cancelling firing sequence!")
 		return
 
-	flick("mass_drivers_timing", src)
+	if(icon_state != "old")
+		flick("mass_drivers_timing", src)
 
 	for(var/obj/machinery/door/poddoor/M in poddoors)
 		if(M.z != src.z)	continue
@@ -191,10 +192,12 @@
 		else
 			times[ident_tag] = maxtimes[ident_tag]
 		updateDialog()
-	if(timing)
-		icon_state = "mass_drivers_timing"
-	else
-		icon_state = "mass_drivers"
+
+	if(icon_state != "old")
+		if(timing)
+			icon_state = "mass_drivers_timing"
+		else
+			icon_state = "mass_drivers"
 	return
 
 
@@ -314,7 +317,8 @@
 		visible_message("Cannot locate any mass driver of that ID. Cancelling firing sequence!")
 		return
 
-	flick("mass_drivers_timing", src)
+	if(icon_state != "old")
+		flick("mass_drivers_timing", src)
 
 	if(teleporter_dest)
 		for(var/obj/structure/deathsquad_tele/D in world)
@@ -370,5 +374,5 @@
 		AM.x = world.maxx - TRANSITIONEDGE - 2
 		AM.dir = 8
 		var/atom/target = get_edge_target_turf(AM, AM.dir)
-		AM.throw_at(target, 50, 1)
+		AM.throw_at(target, 50, AM.throw_speed)
 	return

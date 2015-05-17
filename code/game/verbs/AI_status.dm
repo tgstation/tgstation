@@ -9,10 +9,10 @@
 	if(src.ckey == "serithi")
 		ai_emotions.Add("Tribunal","Tribunal Malfunctioning")
 	var/emote = input("Please, select a status!", "AI Status", null, null) in ai_emotions
-	for (var/obj/machinery/ai_status_display/AISD in world) //change status
+	for (var/obj/machinery/ai_status_display/AISD in machines) //change status
 		spawn( 0 )
 		AISD.emotion = emote
-	for (var/obj/machinery/status_display/SD in world) //if Friend Computer, change ALL displays
+	for (var/obj/machinery/status_display/SD in machines) //if Friend Computer, change ALL displays
 		if(emote=="Friend Computer")
 			spawn(0)
 			SD.friendc = 1

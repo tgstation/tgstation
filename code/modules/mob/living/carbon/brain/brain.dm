@@ -30,3 +30,31 @@
 		use_me = 1 //If it can move, let it emote
 	else							canmove = 0
 	return canmove
+
+/mob/living/carbon/brain/say_understands(var/other)//Goddamn is this hackish, but this say code is so odd
+	if (istype(other, /mob/living/silicon/ai))
+		if(!(container && istype(container, /obj/item/device/mmi)))
+			return 0
+		else
+			return 1
+	if (istype(other, /mob/living/silicon/decoy))
+		if(!(container && istype(container, /obj/item/device/mmi)))
+			return 0
+		else
+			return 1
+	if (istype(other, /mob/living/silicon/pai))
+		if(!(container && istype(container, /obj/item/device/mmi)))
+			return 0
+		else
+			return 1
+	if (istype(other, /mob/living/silicon/robot))
+		if(!(container && istype(container, /obj/item/device/mmi)))
+			return 0
+		else
+			return 1
+	if (istype(other, /mob/living/carbon/human))
+		return 1
+	if (istype(other, /mob/living/carbon/slime))
+		return 1
+	return ..()
+

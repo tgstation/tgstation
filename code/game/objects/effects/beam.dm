@@ -121,7 +121,7 @@
 
 
 /obj/effect/beam/proc/get_master()
-	var/master_ref = "\ref[master]"
+//	var/master_ref = "\ref[master]"
 	beam_testing("\ref[src] [master ? "get_master is returning [master_ref]" : "get_master is returning ourselves."]")
 	if(master)
 		return master

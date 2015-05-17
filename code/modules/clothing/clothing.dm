@@ -60,7 +60,7 @@
 
 	var/obj/item/clothing/ears/O = src
 
-	user.u_equip(src)
+	user.u_equip(src,0)
 
 	if (O)
 		user.put_in_hands(O)

@@ -3,7 +3,7 @@
 #define BLOB_PROBABILITY 40
 #define HEADBUTT_PROBABILITY 40
 #define BRAINLOSS_FOR_HEADBUTT 60
-
+var/list/all_doors = list()
 /obj/machinery/door
 	name = "door"
 	desc = "It opens and closes."
@@ -47,6 +47,8 @@
 	var/atom/movable/overlay/c_animation = null
 
 	var/soundeffect = 'sound/machines/airlock.ogg'
+
+	var/explosion_block = 0 //regular airlocks are 1, blast doors are 3, higher values mean increasingly effective at blocking explosions.
 
 /obj/machinery/door/Bumped(atom/AM)
 	if (ismob(AM))
@@ -294,6 +296,7 @@
 
 /obj/machinery/door/New()
 	. = ..()
+	all_doors += src
 
 	if(density)
 		// above most items if closed
@@ -334,6 +337,7 @@
 
 /obj/machinery/door/Destroy()
 	update_nearby_tiles()
+	all_doors -= src
 	..()
 
 /obj/machinery/door/CanPass(atom/movable/mover, turf/target, height=1.5, air_group = 0)

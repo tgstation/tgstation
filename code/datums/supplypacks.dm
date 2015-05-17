@@ -123,12 +123,29 @@ var/list/all_supply_groups = list("Supplies","Clothing","Security","Hospitality"
 	containername = "Replacement lights"
 	group = "Supplies"
 
+/datum/supply_packs/helightbulbs
+	name = "High efficiency lights"
+	contains = list(/obj/item/weapon/storage/box/lights/he,
+					/obj/item/weapon/storage/box/lights/he)
+	cost = 20
+	containertype = /obj/structure/closet/crate
+	containername = "High efficiency lights"
+	group = "Supplies"
+
 /datum/supply_packs/mule
 	name = "MULEbot Crate"
 	contains = list(/obj/machinery/bot/mulebot)
 	cost = 20
 	containertype = /obj/structure/largecrate/mule
 	containername = "MULEbot Crate"
+	group = "Supplies"
+
+/datum/supply_packs/porcelain
+	name = "Porcelain Crate"
+	contains = list()
+	cost = 10
+	containertype = /obj/structure/largecrate/porcelain
+	containername = "Porcelain Crate"
 	group = "Supplies"
 
 /datum/supply_packs/metal50
@@ -544,11 +561,12 @@ var/list/all_supply_groups = list("Supplies","Clothing","Security","Hospitality"
 	group = "Security"
 
 /datum/supply_packs/securitybarriers
-	name = "Security Barriers"
+	name = "Security Checkpoint Equipment"
 	contains = list(/obj/machinery/deployable/barrier,
 					/obj/machinery/deployable/barrier,
 					/obj/machinery/deployable/barrier,
-					/obj/machinery/deployable/barrier)
+					/obj/machinery/deployable/barrier,
+					/obj/machinery/detector)
 	cost = 10
 	containertype = /obj/structure/closet/crate/secure/gear
 	containername = "Security Barriers crate"
@@ -603,6 +621,29 @@ var/list/all_supply_groups = list("Supplies","Clothing","Security","Hospitality"
 	cost = 15
 	containertype = /obj/structure/closet/crate/freezer
 	containername = "Pizza crate"
+	group = "Hospitality"
+
+/datum/supply_packs/cafe
+	name = "Cafe equipment"
+	contains = list(/obj/item/weapon/circuitboard/chem_dispenser/brewer,
+	/obj/item/weapon/storage/box/mugs,
+	/obj/item/weapon/storage/box/mugs,
+	/obj/item/weapon/reagent_containers/glass/kettle/red)
+	cost = 20
+	containertype = /obj/structure/closet/crate
+	containername = "Cafe equipment"
+	group = "Hospitality"
+
+/datum/supply_packs/bar
+	name = "Advanced Bartending equipment"
+	contains = list(/obj/item/weapon/circuitboard/chem_dispenser/soda_dispenser,
+	/obj/item/weapon/circuitboard/chem_dispenser/booze_dispenser,
+	/obj/item/weapon/storage/box/drinkingglasses,
+	/obj/item/weapon/storage/box/drinkingglasses,
+	/obj/item/weapon/reagent_containers/food/drinks/shaker)
+	cost = 40
+	containertype = /obj/structure/closet/crate
+	containername = "Bartending equipment"
 	group = "Hospitality"
 
 //////ENGINEERING//////

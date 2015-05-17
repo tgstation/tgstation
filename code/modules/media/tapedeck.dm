@@ -45,6 +45,7 @@
 	var/last_ad_cyc    = 0 // Last world.time of an ad cycle
 	var/list/ad_queue  = 0 // Ads queued to play
 
+	machine_flags = MULTITOOL_MENU
 	var/state_base = "tapedeck"
 
 /obj/machinery/media/tapedeck/attack_ai(var/mob/user)
@@ -188,9 +189,9 @@
 
 
 /obj/machinery/media/jukebox/attackby(obj/item/W, mob/user)
-	if(istype(W, /obj/item/device/multitool))
-		update_multitool_menu(user)
-		return 1
+	. = ..()
+	if(.)
+		return .
 	if(istype(W, /obj/item/weapon/card/emag))
 		current_song = 0
 		if(!emagged)
@@ -203,6 +204,7 @@
 			user.visible_message("<span class='warning'>[user.name] slides something into the [src.name]'s card-reader.</span>","<span class='warning'>You short out the [src.name].</span>")
 			update_icon()
 			update_music()
+			return 1
 	else if(istype(W,/obj/item/weapon/wrench))
 		var/un = !anchored ? "" : "un"
 		user.visible_message("<span class='notice'>[user.name] begins [un]locking \the [src.name]'s casters.</span>","<span class='notice'>You begin [un]locking \the [src.name]'s casters.</span>")

@@ -18,7 +18,7 @@
 		var/obj/item/weapon/ore/O = W
 		if(O.material)
 			materials.addAmount(O.material, 1)
-			user.u_equip(W)
+			user.u_equip(W,0)
 			qdel(W)
 	if (istype(W, /obj/item/weapon/storage))
 		var/turf/T=get_turf(src)

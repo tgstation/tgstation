@@ -27,6 +27,8 @@
 	var/area_uid
 	var/radio_filter_out
 	var/radio_filter_in
+	
+	machine_flags = MULTITOOL_MENU
 
 /obj/machinery/atmospherics/unary/vent_scrubber/New()
 	..()
@@ -106,17 +108,17 @@
 		set_frequency(frequency)
 
 /obj/machinery/atmospherics/unary/vent_scrubber/process()
-	..()
+	. = ..()
 	CHECK_DISABLED(scrubbers)
 	if(stat & (NOPOWER|BROKEN))
 		return
 	if (!node)
-		return 0 // Let's not shut it off, for now.
+		return // Let's not shut it off, for now.
 	if(welded)
-		return 0
+		return
 	//broadcast_status()
 	if(!on)
-		return 0
+		return
 	// New GC does this sometimes
 	if(!loc) return
 
@@ -289,9 +291,6 @@
 	return !welded
 
 /obj/machinery/atmospherics/unary/vent_scrubber/attackby(var/obj/item/weapon/W as obj, var/mob/user as mob)
-	if(istype(W, /obj/item/device/multitool))
-		update_multitool_menu(user)
-		return 1
 	if(istype(W, /obj/item/weapon/weldingtool))
 		var/obj/item/weapon/weldingtool/WT = W
 		if (WT.remove_fuel(0,user))

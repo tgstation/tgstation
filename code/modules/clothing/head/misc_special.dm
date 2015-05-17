@@ -156,7 +156,7 @@
 			SetLuminosity(0)
 
 	dropped(mob/user)
-		if(on)
+		if(on && !luminosity)
 			user.SetLuminosity(user.luminosity - brightness_on)
 //			user.UpdateLuminosity()
 			SetLuminosity(brightness_on)

@@ -39,10 +39,20 @@ Pipelines + Other Objects -> Pipe network
 
 	var/pipe_flags = 0
 
+	var/image/pipe_image
+
+/obj/machinery/atmospherics/New()
+	..()
+	machines.Remove(src)
+	atmos_machines |= src
+
 /obj/machinery/atmospherics/Destroy()
 	for(var/mob/living/M in src) //ventcrawling is serious business
 		M.remove_ventcrawl()
-		M.loc = src.loc
+		M.forceMove(src.loc)
+	if(pipe_image)
+		del(pipe_image) //we have to del it, or it might keep a ref somewhere else
+	atmos_machines -= src
 	..()
 
 // Find a connecting /obj/machinery/atmospherics in specified direction.
@@ -89,7 +99,7 @@ Pipelines + Other Objects -> Pipe network
 // I asked /tg/ and bay and they have no idea why this is here, so into the trash it goes. - N3X
 // Re-enabled for debugging.
 /obj/machinery/atmospherics/process()
-	build_network()
+	. = build_network()
 	//testing("[src] called parent process to build_network()")
 
 /obj/machinery/atmospherics/proc/network_expand(datum/pipe_network/new_network, obj/machinery/atmospherics/pipe/reference)
@@ -190,6 +200,9 @@ Pipelines + Other Objects -> Pipe network
 			user.forceMove(target_move.loc) //handles entering and so on
 			user.visible_message("You hear something squeezing through the ducts.", "You climb out the ventilation system.")
 		else if(target_move.can_crawl_through())
+			if(target_move.return_network(target_move) != return_network(src))
+				user.remove_ventcrawl()
+				user.add_ventcrawl(target_move)
 			user.loc = target_move
 			user.client.eye = target_move //if we don't do this, Byond only updates the eye every tick - required for smooth movement
 			if(world.time - user.last_played_vent > VENT_SOUND_DELAY)

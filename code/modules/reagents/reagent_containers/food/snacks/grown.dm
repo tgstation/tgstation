@@ -161,8 +161,9 @@
 	user.SetLuminosity(round(user.luminosity + (potency/5), 1))
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/glowberries/dropped(mob/user)
-	user.SetLuminosity(round(user.luminosity - (potency/5), 1))
-	src.SetLuminosity(round(potency/5, 1))
+	if(!luminosity)
+		user.SetLuminosity(round(user.luminosity - (potency/5), 1))
+		src.SetLuminosity(round(potency/5, 1))
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/cocoapod
 	name = "cocoa pod"
@@ -550,8 +551,9 @@
 	user.SetLuminosity(round(user.luminosity + (potency/10), 1))
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/mushroom/glowshroom/dropped(mob/user)
-	user.SetLuminosity(round(user.luminosity - (potency/10), 1))
-	SetLuminosity(round(potency/10,1))
+	if(!luminosity)
+		user.SetLuminosity(round(user.luminosity - (potency/10), 1))
+		SetLuminosity(round(potency/10,1))
 
 
 // *************************************
