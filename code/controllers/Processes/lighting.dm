@@ -1,6 +1,8 @@
+/datum/controller/process/lighting
+	schedule_interval = 5 // every .5 second
+
 /datum/controller/process/lighting/setup()
 	name = "lighting"
-	schedule_interval = 5 // every .5 second
 	lighting_controller.Initialize()
 
 /datum/controller/process/lighting/doWork()

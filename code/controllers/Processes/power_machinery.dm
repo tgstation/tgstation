@@ -3,10 +3,11 @@ var/global/list/power_machines = list()
 
 /datum/controller/process/power_machinery
 	var/tmp/datum/updateQueue/updateQueueInstance
+	schedule_interval = 20 // every 2 seconds
 
 /datum/controller/process/power_machinery/setup()
 	name = "pow_machine"
-	schedule_interval = 20 // every 2 seconds
+
 
 /datum/controller/process/power_machinery/doWork()
 	for(var/i = 1 to power_machines.len)

@@ -2,10 +2,10 @@
 
 /datum/controller/process/mob
 	var/tmp/datum/updateQueue/updateQueueInstance
+	schedule_interval = 20 // every 2 seconds
 
 /datum/controller/process/mob/setup()
 	name = "mob"
-	schedule_interval = 20 // every 2 seconds
 	updateQueueInstance = new
 
 /datum/controller/process/mob/started()
