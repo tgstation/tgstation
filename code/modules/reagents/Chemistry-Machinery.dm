@@ -74,9 +74,10 @@
 /obj/machinery/chem_dispenser/ui_interact(mob/user, ui_key = "main", var/datum/nanoui/ui = null)
 	if(stat & (BROKEN)) return
 	if(user.stat || user.restrained()) return
+	ui = SSnano.push_open_or_new_ui(user, src, ui_key, ui, "chem_dispenser.tmpl", "[uiname]", 490, 710, 0)
 
-	// this is the data which will be sent to the ui
-	var/data[0]
+/obj/machinery/chem_dispenser/get_ui_data()
+	var/data = list()
 	data["amount"] = amount
 	data["energy"] = energy
 	data["maxEnergy"] = max_energy
@@ -104,16 +105,7 @@
 			chemicals.Add(list(list("title" = temp.name, "id" = temp.id, "commands" = list("dispense" = temp.id)))) // list in a list because Byond merges the first list...
 	data["chemicals"] = chemicals
 
-	// update the ui if it exists, returns null if no ui is passed/found
-	ui = SSnano.try_update_ui(user, src, ui_key, ui, data)
-	if (!ui)
-		// the ui does not exist, so we'll create a new() one
-        // for a list of parameters and their descriptions see the code docs in \code\modules\nano\nanoui.dm
-		ui = new(user, src, ui_key, "chem_dispenser.tmpl", "[uiname]", 490, 710)
-		// when the ui is first opened this is the data it will use
-		ui.set_initial_data(data)
-		// open the new ui window
-		ui.open()
+	return data
 
 /obj/machinery/chem_dispenser/Topic(href, href_list)
 	if(stat & (BROKEN))
@@ -1430,7 +1422,10 @@ obj/machinery/computer/pandemic/proc/replicator_cooldown(var/waittime)
 /obj/machinery/chem_heater/ui_interact(var/mob/user, ui_key = "main", var/datum/nanoui/ui = null)
 	if(user.stat || user.restrained()) return
 
-	var/data[0]
+	ui = SSnano.push_open_or_new_ui(user, src, ui_key, ui, "chem_heater.tmpl", "ChemHeater", 350, 270, 0)
+
+/obj/machinery/chem_heater/get_ui_data()
+	var/data = list()
 	data["targetTemp"] = desired_temp
 	data["isActive"] = on
 	data["isBeakerLoaded"] = beaker ? 1 : 0
@@ -1446,12 +1441,7 @@ obj/machinery/computer/pandemic/proc/replicator_cooldown(var/waittime)
 			beakerContents.Add(list(list("name" = R.name, "volume" = R.volume))) // list in a list because Byond merges the first list...
 	data["beakerContents"] = beakerContents
 
-	// update the ui if it exists, returns null if no ui is passed/found
-	ui = SSnano.try_update_ui(user, src, ui_key, ui, data)
-	if (!ui)
-		ui = new(user, src, ui_key, "chem_heater.tmpl", "ChemHeater", 350, 270)
-		ui.set_initial_data(data)
-		ui.open()
+	return data
 
 ///////////////////////////////////////////////////////////////////////////
 

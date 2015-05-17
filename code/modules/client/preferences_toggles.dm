@@ -185,8 +185,8 @@ var/list/ghost_forms = list("ghost","ghostking","ghostian2","skeleghost","ghost_
 	set name = "Choose Ghost Form"
 	set category = "Preferences"
 	set desc = "Choose your preferred ghostly appearance."
-	if(!is_content_unlocked())	return
-	var/new_form = input(src, "Thanks for supporting BYOND - Choose your ghostly form:","Thanks for supporting BYOND",null) as null|anything in ghost_forms
+//	if(!is_content_unlocked())	return
+	var/new_form = input(src, "Choose your ghostly form:","Ghost form chooser",null) as null|anything in ghost_forms
 	if(new_form)
 		prefs.ghost_form = new_form
 		prefs.save_preferences()

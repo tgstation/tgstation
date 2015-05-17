@@ -108,10 +108,13 @@ obj/machinery/atmospherics/trinary/mixer/attack_hand(user as mob)
 
 	ui_interact(user)
 
-/obj/machinery/atmospherics/trinary/mixer/ui_interact(mob/user, ui_key = "main")
+/obj/machinery/atmospherics/trinary/mixer/ui_interact(mob/user, ui_key = "main", var/datum/nanoui/ui = null)
 	if(stat & (BROKEN|NOPOWER))
 		return
 
+	ui = SSnano.push_open_or_new_ui(user, src, ui_key, ui, "atmos_mixer.tmpl", name, 400, 320, 0)
+
+/obj/machinery/atmospherics/trinary/mixer/get_ui_data()
 	var/data = list()
 
 	data["on"] = on
@@ -120,14 +123,7 @@ obj/machinery/atmospherics/trinary/mixer/attack_hand(user as mob)
 	data["node1_concentration"] = round(node1_concentration*100)
 	data["node2_concentration"] = round(node2_concentration*100)
 
-	var/datum/nanoui/ui = SSnano.get_open_ui(user, src, ui_key)
-	if (!ui)
-		ui = new /datum/nanoui(user, src, ui_key, "atmos_mixer.tmpl", name, 400, 320)
-		ui.set_initial_data(data)
-		ui.open()
-		ui.set_auto_update(1)
-	else
-		ui.push_data(data)
+	return data
 
 /obj/machinery/atmospherics/trinary/mixer/Topic(href,href_list)
 	if(..()) return
