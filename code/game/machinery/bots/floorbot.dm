@@ -8,6 +8,7 @@
 	throwforce = 10.0
 	throw_speed = 2
 	throw_range = 5
+	var/skin = null
 	w_class = 3.0
 	var/created_name = "Floorbot"
 
@@ -20,6 +21,7 @@
 	throwforce = 10.0
 	throw_speed = 2
 	throw_range = 5
+	var/skin = null
 	w_class = 3.0
 	var/created_name = "Floorbot"
 
@@ -35,6 +37,9 @@
 	health = 25
 	maxhealth = 25
 	//weight = 1.0E7
+
+	var/skin = null //Set to "(r)ed", "(y)ellow" or "(s)yndicate" for the other toolkits.
+
 	var/amount = 10
 	var/replacetiles = 0
 	var/eattiles = 0
@@ -367,7 +372,7 @@ obj/machinery/bot/floorbot/process_scan(var/scan_target)
 		target = null
 		return
 	anchored = 1
-	icon_state = "floorbot-c"
+	icon_state = "[skin]floorbot-c"
 	if(istype(target_turf, /turf/space/)) //If we are fixing an area not part of pure space, it is
 		visible_message("<span class='notice'>[targetdirection ? "[src] begins installing a bridge plating." : "[src] begins to repair the hole."] </span>")
 		mode = BOT_REPAIRING
@@ -440,9 +445,9 @@ obj/machinery/bot/floorbot/process_scan(var/scan_target)
 
 /obj/machinery/bot/floorbot/proc/updateicon()
 	if(amount > 0)
-		icon_state = "floorbot[on]"
+		icon_state = "[skin]floorbot[on]"
 	else
-		icon_state = "floorbot[on]e"
+		icon_state = "[skin]floorbot[on]e"
 
 /obj/machinery/bot/floorbot/explode()
 	on = 0
@@ -474,7 +479,7 @@ obj/machinery/bot/floorbot/process_scan(var/scan_target)
 	return
 
 
-/obj/item/weapon/storage/toolbox/mechanical/attackby(var/obj/item/stack/tile/plasteel/T, mob/user as mob, params)
+/obj/item/weapon/storage/toolbox/attackby(var/obj/item/stack/tile/plasteel/T, mob/user as mob, params)
 	if(!istype(T, /obj/item/stack/tile/plasteel))
 		..()
 		return
@@ -485,6 +490,20 @@ obj/machinery/bot/floorbot/process_scan(var/scan_target)
 		if(user.s_active)
 			user.s_active.close(user)
 		var/obj/item/weapon/toolbox_tiles/B = new /obj/item/weapon/toolbox_tiles
+
+		if(istype(src,/obj/item/weapon/storage/toolbox/emergency))
+			B.skin = "r"
+		else if(istype(src,/obj/item/weapon/storage/toolbox/mechanical))
+			B.skin = null
+		else if(istype(src,/obj/item/weapon/storage/toolbox/electrical))
+			B.skin = "y"
+		else if(istype(src,/obj/item/weapon/storage/toolbox/syndicate))
+			B.skin = "s"
+		else
+			B.skin = "r"
+		if(B.skin)
+			B.icon_state = "[B.skin]toolbox_tiles"
+
 		user.put_in_hands(B)
 		user << "<span class='notice'>You add the tiles into the empty toolbox. They protrude from the top.</span>"
 		user.unEquip(src, 1)
@@ -499,6 +518,11 @@ obj/machinery/bot/floorbot/process_scan(var/scan_target)
 		qdel(W)
 		var/obj/item/weapon/toolbox_tiles_sensor/B = new /obj/item/weapon/toolbox_tiles_sensor()
 		B.created_name = created_name
+
+		B.skin = skin
+		if(skin)
+			B.icon_state = "[B.skin]toolbox_tiles_sensor"
+
 		user.put_in_hands(B)
 		user << "<span class='notice'>You add the sensor to the toolbox and tiles!</span>"
 		user.unEquip(src, 1)
@@ -519,6 +543,10 @@ obj/machinery/bot/floorbot/process_scan(var/scan_target)
 		qdel(W)
 		var/turf/T = get_turf(user.loc)
 		var/obj/machinery/bot/floorbot/A = new /obj/machinery/bot/floorbot(T)
+
+		A.skin = skin
+		A.icon_state = "[A.skin]floorbot0"
+
 		A.name = created_name
 		user << "<span class='notice'>You add the robot arm to the odd looking toolbox assembly! Boop beep!</span>"
 		user.unEquip(src, 1)
