@@ -49,7 +49,7 @@
 	toggle_message = "You pull the visor down on"
 	alt_toggle_message = "You push the visor up on"
 	can_toggle = 1
-	flags = HEADCOVERSEYES|HEADCOVERSMOUTH|HEADBANGPROTECT
+	flags = HEADCOVERSEYES|HEADCOVERSMOUTH|HEADBANGPROTECT|CANNOTFACEHUG
 	armor = list(melee = 82, bullet = 15, laser = 5,energy = 5, bomb = 5, bio = 2, rad = 0)
 	flags_inv = HIDEMASK|HIDEEARS|HIDEEYES|HIDEFACE
 	strip_delay = 80

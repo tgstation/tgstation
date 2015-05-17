@@ -24,6 +24,7 @@
 #define HEADCOVERSEYES		1024		// feel free to realloc these numbers for other purposes
 #define MASKCOVERSMOUTH		2048		// on other items, these are just for mask/head
 #define HEADCOVERSMOUTH		2048
+#define CANNOTFACEHUG			2048
 
 #define HEADBANGPROTECT		4096
 #define EARBANGPROTECT		1024
