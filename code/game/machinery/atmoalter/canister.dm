@@ -1,3 +1,10 @@
+#define OVERLAY_HOLDING 1
+#define OVERLAY_CONNECTED 2
+#define OVERLAY_NO_PRESSURE 4
+#define OVERLAY_LOW_PRESSURE 8
+#define OVERLAY_MEDIUM_PRESSURE 16
+#define OVERLAY_HIGH_PRESSURE 32
+
 /obj/machinery/portable_atmospherics/canister
 	name = "canister"
 	icon = 'icons/obj/atmos.dmi'
@@ -11,6 +18,7 @@
 	var/release_pressure = ONE_ATMOSPHERE
 
 	var/canister_color = "yellow"
+	var/old_color = 0
 	var/can_label = 1
 	var/filled = 0.5 // Mapping var: Set to 0 for empty, 1 to full, anywhere between.
 	pressure_resistance = 7*ONE_ATMOSPHERE
@@ -23,7 +31,17 @@
 	w_type = RECYK_METAL
 	melt_temperature = MELTPOINT_STEEL
 
+	//Icon Update Code
+	var/global/status_overlays = 0
+	var/global/list/status_overlays_pressure
+	var/global/list/status_overlays_other
+	var/overlay_status = 0
+
 	var/log="" // Bad boys, bad boys.
+
+/obj/machinery/portable_atmospherics/canister/New()
+	..()
+	old_color = canister_color
 
 /obj/machinery/portable_atmospherics/canister/sleeping_agent
 	name = "Canister: \[N2O\]"
@@ -62,32 +80,75 @@
 	can_label = 0
 
 /obj/machinery/portable_atmospherics/canister/update_icon()
-	overlays = null
-
-	if (destroyed)
+	if(destroyed)
 		icon_state = "[canister_color]-1"
-	else
-		icon_state = canister_color
-		overlays = new/list()
+		return
+
+	if(!status_overlays)
+		status_overlays = 1
+
+		status_overlays_pressure = new
+		status_overlays_other = new
+
+		status_overlays_pressure.len = 4
+		status_overlays_other.len = 2
+
+		status_overlays_pressure[1] = image(icon, "can-o0")
+		status_overlays_pressure[2] = image(icon, "can-o1")
+		status_overlays_pressure[3] = image(icon, "can-o2")
+		status_overlays_pressure[4] = image(icon, "can-o3")
+
+		status_overlays_other[1]  = image(icon, "can-open")
+		status_overlays_other[2]  = image(icon, "can-connector")
+
+	if (canister_color != old_color)
+		icon_state = "[canister_color]"
+		old_color = canister_color
+
+	var/tank_pressure = air_contents.return_pressure()
+	if(check_updates(tank_pressure))
+		if(overlays.len)
+			overlays = 0
+
+		overlay_status = 0
 
 		if (holding)
-			overlays.Add("can-open")
+			overlays += status_overlays_other[1]
+			overlay_status |= OVERLAY_HOLDING
 
 		if (connected_port)
-			overlays.Add("can-connector")
+			overlays += status_overlays_other[2]
+			overlay_status |= OVERLAY_CONNECTED
 
-		var/tank_pressure = air_contents.return_pressure()
-
-		if (tank_pressure < 10)
-			overlays.Add("can-o0")
-		else if (tank_pressure < ONE_ATMOSPHERE)
-			overlays.Add("can-o1")
-		else if (tank_pressure < 15 * ONE_ATMOSPHERE)
-			overlays.Add("can-o2")
-		else
-			overlays.Add("can-o3")
-
+		switch(tank_pressure)
+			if(15 * ONE_ATMOSPHERE to INFINITY)
+				overlays += status_overlays_pressure[4]
+				overlay_status |= OVERLAY_HIGH_PRESSURE
+			if(ONE_ATMOSPHERE to 15 * ONE_ATMOSPHERE)
+				overlays += status_overlays_pressure[3]
+				overlay_status |= OVERLAY_MEDIUM_PRESSURE
+			if(10 to ONE_ATMOSPHERE)
+				overlays += status_overlays_pressure[2]
+				overlay_status |= OVERLAY_LOW_PRESSURE
+			else
+				overlays += status_overlays_pressure[1]
+				overlay_status |= OVERLAY_NO_PRESSURE
 	return
+
+/obj/machinery/portable_atmospherics/canister/proc/check_updates(tank_pressure = 0)
+	if((overlay_status & OVERLAY_HOLDING) != holding)
+		return 1
+	if((overlay_status & OVERLAY_CONNECTED) != connected_port)
+		return 1
+	if((overlay_status & OVERLAY_HIGH_PRESSURE) && tank_pressure < 15*ONE_ATMOSPHERE)
+		return 1
+	if((overlay_status & OVERLAY_MEDIUM_PRESSURE) && (tank_pressure < ONE_ATMOSPHERE || tank_pressure > 15*ONE_ATMOSPHERE))
+		return 1
+	if((overlay_status & OVERLAY_LOW_PRESSURE) && (tank_pressure < 10 || tank_pressure > ONE_ATMOSPHERE))
+		return 1
+	if((overlay_status & OVERLAY_NO_PRESSURE) && tank_pressure > 10)
+		return 1
+	return 0
 
 
 /obj/machinery/portable_atmospherics/canister/fire_act(datum/gas_mixture/air, exposed_temperature, exposed_volume)
@@ -443,3 +504,10 @@
 	for(var/obj/effect/beam/B in beams)
 		apply_beam_damage(B)
 	healthcheck()
+
+#undef OVERLAY_HOLDING
+#undef OVERLAY_CONNECTED
+#undef OVERLAY_NO_PRESSURE
+#undef OVERLAY_LOW_PRESSURE
+#undef OVERLAY_MEDIUM_PRESSURE
+#undef OVERLAY_HIGH_PRESSURE
