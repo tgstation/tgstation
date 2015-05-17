@@ -684,10 +684,10 @@
 							temp_html += "<br>\tUI: No Data"
 						if(se)
 							temp_html += "<br>\tSE: [se] "
-							if(viable_occupant)	temp_html += "<a href='?src=\ref[src];task=transferbuffer;num=[i];text=se'>Occupant</a> "
-							else				temp_html += "<span class='linkOff'>Occupant</span> "
-							if(injectorready)	temp_html += "<a href='?src=\ref[src];task=injector;num=[i];text=se'>Injector</a>"
-							else				temp_html += "<span class='linkOff'>Injector</span>"
+							if(viable_occupant && viable_occupant.stat != DEAD)	temp_html += "<a href='?src=\ref[src];task=transferbuffer;num=[i];text=se'>Occupant</a> "
+							else												temp_html += "<span class='linkOff'>Occupant</span> "
+							if(injectorready)									temp_html += "<a href='?src=\ref[src];task=injector;num=[i];text=se'>Injector</a>"
+							else												temp_html += "<span class='linkOff'>Injector</span>"
 						else
 							temp_html += "<br>\tSE: No Data"
 						if(viable_occupant)	temp_html += "<br><a href='?src=\ref[src];task=setbuffer;num=[i];'>Save to Buffer</a> "
@@ -809,7 +809,7 @@
 				if(istype(buffer_slot))
 					buffer_slot.Cut()
 		if("transferbuffer")
-			if(num && viable_occupant)
+			if(num && viable_occupant && viable_occupant.stat != DEAD)
 				num = Clamp(num, 1, NUMBER_OF_BUFFERS)
 				var/list/buffer_slot = buffer[num]
 				if(istype(buffer_slot))                                                                                  //15 and 40 are just magic numbers that were here before so i didnt touch them, they are initial boundaries of damage
