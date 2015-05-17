@@ -173,6 +173,7 @@
 	icon = 'icons/obj/cigarettes.dmi'
 	icon_state = "matchbox"
 	item_state = "zippo"
+	icon_type = "match"
 	storage_slots = 21 //3 rows of 7 items
 	w_class = 1
 	flags = 0
@@ -183,6 +184,16 @@
 
 /obj/item/weapon/storage/fancy/matchbox/empty
 	empty = 1
+
+//Needs to be modified, because plural is -es instead of -s
+/obj/item/weapon/storage/fancy/matchbox/examine(mob/user)
+	..()
+	if(contents.len <= 0)
+		user << "<span class='info'>There are no [src.icon_type]es left in the box.</span>"
+	else if(contents.len == 1)
+		user << "<span class='info'>There is one [src.icon_type] left in the box.</span>"
+	else
+		user << "<span class='info'>There are [src.contents.len] [src.icon_type]es in the box.</span>"
 
 /obj/item/weapon/storage/fancy/matchbox/New()
 	..()
@@ -211,13 +222,14 @@
 
 /obj/item/weapon/storage/fancy/matchbox/attackby(obj/item/weapon/match/W as obj, mob/user as mob)
 	if(istype(W, /obj/item/weapon/match) && !W.lit)
-		W.lit = !W.lit
+		W.lit = 1
 		W.update_brightness()
 	return
 
 /obj/item/weapon/storage/fancy/matchbox/strike_anywhere
 	name = "strike-anywhere matchbox"
 	desc = "A box of strike-anywhere matches. Critical element of a survival kit and equally needed by chain smokers and pyromaniacs. These ones can be lit against any surface."
+	icon_type = "strike-anywhere match"
 	matchtype = /obj/item/weapon/match/strike_anywhere
 
 /obj/item/weapon/storage/fancy/matchbox/strike_anywhere/empty

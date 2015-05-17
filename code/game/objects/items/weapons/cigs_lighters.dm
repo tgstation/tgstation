@@ -97,22 +97,22 @@ MATCHBOXES ARE ALSO IN FANCY.DM
 		return
 
 /obj/item/weapon/match/pickup(mob/user)
-	if(lit)
+	if(lit == 1)
 		user.SetLuminosity(user.luminosity + brightness_on)
 		SetLuminosity(0)
 
 /obj/item/weapon/match/dropped(mob/user)
-	if(lit)
+	if(lit == 1)
 		user.SetLuminosity(user.luminosity - brightness_on)
 		SetLuminosity(brightness_on)
 
 /obj/item/weapon/match/is_hot()
-	if(lit)
+	if(lit == 1)
 		return heat_production
 	return 0
 
 /obj/item/weapon/match/attack(mob/living/carbon/M as mob, mob/living/carbon/user as mob)
-	if(istype(M.wear_mask, /obj/item/clothing/mask/cigarette) && user.zone_sel.selecting == "mouth" && lit)
+	if(istype(M.wear_mask, /obj/item/clothing/mask/cigarette) && user.zone_sel.selecting == "mouth" && lit == 1)
 		var/obj/item/clothing/mask/cigarette/cig = M.wear_mask
 		if(M == user)
 			cig.attackby(src, user)
