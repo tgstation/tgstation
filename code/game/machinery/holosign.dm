@@ -1,4 +1,6 @@
 ////////////////////HOLOSIGN///////////////////////////////////////
+var/list/obj/machinery/holosign/holosigns = list()
+
 /obj/machinery/holosign
 	name = "holosign"
 	desc = "Small wall-mounted holographic projector"
@@ -12,22 +14,30 @@
 	var/id_tag = null
 	var/on_icon = "sign_on"
 
-	proc/toggle()
-		if (stat & (BROKEN|NOPOWER))
-			return
-		lit = !lit
-		update_icon()
+/obj/machinery/holosign/New()
+	..()
+	holosigns += src
 
+/obj/machinery/holosign/proc/toggle()
+	if (stat & (BROKEN|NOPOWER))
+		return
+	lit = !lit
 	update_icon()
-		if (!lit)
-			icon_state = "sign_off"
-		else
-			icon_state = on_icon
 
-	power_change()
-		if (stat & NOPOWER)
-			lit = 0
-		update_icon()
+/obj/machinery/holosign/update_icon()
+	if (!lit)
+		icon_state = "sign_off"
+	else
+		icon_state = on_icon
+
+/obj/machinery/holosign/power_change()
+	if (stat & NOPOWER)
+		lit = 0
+	update_icon()
+
+/obj/machinery/holosign/Destroy()
+	..()
+	holosigns -= src
 
 /obj/machinery/holosign/surgery
 	name = "surgery holosign"
@@ -73,7 +83,7 @@ obj/machinery/holosign_switch/attack_paw(mob/user as mob)
 	else
 		icon_state = "light0"
 
-	for(var/obj/machinery/holosign/M in machines)
+	for(var/obj/machinery/holosign/M in holosigns)
 		if (M.id_tag == src.id_tag)
 			spawn( 0 )
 				M.toggle()

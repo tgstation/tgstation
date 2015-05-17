@@ -39,7 +39,7 @@
 		user.reset_view(src.current)
 
 	var/list/L = new/list
-	for (var/obj/machinery/camera/C in machines)
+	for (var/obj/machinery/camera/C in cameranet.cameras)
 		L.Add(C)
 
 	camera_network_sort(L)

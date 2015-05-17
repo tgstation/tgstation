@@ -11,7 +11,7 @@
 	if(..())
 		var/turf/turf_loc = get_turf(user)
 
-		if (areaMaster.get_apc())
+		if (areaMaster.areaapc)
 			user << "<span class='rose'>This area already has an APC.</span>"
 			return //only one APC per area
 		for(var/obj/machinery/power/terminal/T in turf_loc)

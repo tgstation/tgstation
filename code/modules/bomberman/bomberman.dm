@@ -29,6 +29,7 @@
 */
 
 ///////////////////////////////BOMB DISPENSER//////////////////////////
+var/global/list/bombermangear = list()
 /obj/item/weapon/bomberman/
 	name = "Bomberman's Bomb Dispenser"
 	desc = "Now to not get yourself stuck in a corner."
@@ -64,6 +65,11 @@
 		hurt_players = 1
 	if(bomberman_destroy)
 		destroy_environnement = 1
+	bombermangear += src
+
+/obj/item/weapon/bomberman/Destroy()
+	..()
+	bombermangear -= src
 
 /obj/item/weapon/bomberman/attack_self(mob/user)
 	var/turf/T = get_turf(src)
@@ -150,6 +156,7 @@
 	destroy_environnement = destroy
 	hurt_players = hurt
 	parent = dispenser
+	bombermangear += src
 
 	if((!parent || !parent.arena) && bomberman_hurt)
 		hurt_players = 1
@@ -219,6 +226,7 @@
 /obj/structure/bomberman/Destroy()
 	if(parent)
 		parent.bomblimit++
+	bombermangear -= src
 	..()
 
 /obj/structure/bomberman/emp_act(severity)	//EMPs can safely remove the bombs
@@ -275,6 +283,7 @@
 			return
 	else
 		T2 = T1
+	bombermangear += src
 
 	collisions(T2)
 
@@ -287,6 +296,10 @@
 
 	sleep(5)
 	qdel(src)
+
+obj/structure/bomberflame/Destroy()
+	..()
+	bombermangear -= src
 
 /obj/structure/bomberflame/proc/collisions(var/turf/T)
 
@@ -391,6 +404,14 @@
 	density = 1
 	anchored = 1
 
+/obj/structure/softwall/New()
+	..()
+	bombermangear += src
+
+/obj/structure/softwall/Destroy()
+	..()
+	bombermangear -= src
+
 /obj/structure/softwall/proc/pulverized()
 	icon_state = "softwall_break"
 	density = 0
@@ -448,6 +469,14 @@
 	icon_state = "powerup"
 	density = 1
 	anchored = 1
+
+/obj/structure/powerup/New()
+	..()
+	bombermangear += src
+
+/obj/structure/powerup/Destroy()
+	..()
+	bombermangear -= src
 
 /obj/structure/powerup/bombup
 	name = "bomb-up"
@@ -632,6 +661,14 @@
 	species_restricted = list("exclude")
 	var/never_removed = 1
 
+/obj/item/clothing/suit/space/bomberman/New()
+	..()
+	bombermangear += src
+
+/obj/item/clothing/suit/space/bomberman/Destroy()
+	..()
+	bombermangear -= src
+
 /obj/item/clothing/suit/space/bomberman/dropped(mob/user as mob)
 	..()
 	never_removed = 0
@@ -647,6 +684,14 @@
 	siemens_coefficient = 0
 	species_restricted = list("exclude")
 	var/never_removed = 1
+
+/obj/item/clothing/head/helmet/space/bomberman/New()
+	..()
+	bombermangear += src
+
+/obj/item/clothing/head/helmet/space/bomberman/Destroy()
+	..()
+	bombermangear -= src
 
 /obj/item/clothing/head/helmet/space/bomberman/dropped(mob/user as mob)
 	..()

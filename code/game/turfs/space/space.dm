@@ -10,6 +10,7 @@
 	intact = 0 //No seriously, that's not a joke. Allows cable to be laid PROPERLY on catwalks
 
 /turf/space/New()
+	turfs |= src
 	if(!istype(src, /turf/space/transit))
 		icon_state = "[((x + y) ^ ~(x * y) + z) % 25]"
 

@@ -5,6 +5,7 @@
 /area
 	var/global/global_uid = 0
 	var/uid
+	var/obj/machinery/power/apc/areaapc = null
 
 /area/New()
 	icon_state = ""
@@ -38,6 +39,12 @@
 //	spawn(15)
 	power_change()		// all machines set to current power level, also updates lighting icon
 	InitializeLighting()
+
+/area/Destroy()
+	..()
+	for(var/area/A in src.related)
+		A.related -= src
+	areaapc = null
 
 /*
  * Added to fix mech fabs 05/2013 ~Sayu.
@@ -498,3 +505,11 @@
 
 	mob << "Gravity!"
 
+/area/proc/set_apc(var/obj/machinery/power/apc/apctoset)
+	for(var/area/A in src.related)
+		A.areaapc = apctoset
+
+/area/proc/remove_apc(var/obj/machinery/power/apc/apctoremove)
+	for(var/area/A in src.related)
+		if(A.areaapc == apctoremove)
+			A.areaapc = null

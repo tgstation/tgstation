@@ -193,13 +193,6 @@
 		if(C.d1 == 0)
 			return C
 
-/area/proc/get_apc()
-	for(var/area/RA in src.related)
-		var/obj/machinery/power/apc/FINDME = locate() in RA
-
-		if(FINDME)
-			return FINDME
-
 /obj/machinery/proc/addStaticPower(value, powerchannel)
 	if(!areaMaster)
 		return
