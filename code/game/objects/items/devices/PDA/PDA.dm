@@ -159,6 +159,7 @@ var/global/list/obj/item/device/pda/PDAs = list()
 	icon_state = "pda-hydro"
 
 /obj/item/device/pda/roboticist
+	default_cartridge = /obj/item/weapon/cartridge/robotics
 	icon_state = "pda-roboticist"
 
 /obj/item/device/pda/librarian
@@ -336,6 +337,12 @@ var/global/list/obj/item/device/pda/PDAs = list()
 						dat += "<ul>"
 						dat += "<li><a href='byond://?src=\ref[src];choice=47'><img src=pda_crate.png> Supply Records</A></li>"
 						dat += "<li><a href='byond://?src=\ref[src];choice=48'><img src=pda_mule.png> Delivery Bot Control</A></li>"
+						dat += "</ul>"
+					if (cartridge.access_robotics)
+						dat += "<h4>Robotics Functions:</h4>"
+						dat += "<ul>"
+						dat += "<li><a href='byond://?src=\ref[src];choice=54'><img src=pda_notes.png> Cyborg specifications</A></li>"
+						dat += "<li><a href='byond://?src=\ref[src];choice=55'><img src=pda_signaler.png> Exosuit tracking</A></li>"
 						dat += "</ul>"
 				dat += "</ul>"
 
