@@ -123,12 +123,11 @@
 			sleep(50)
 			for(var/mob/M in mob_list)
 				if(is_thrall(M) && !ticker.mode.shadowling_ascended)
-					M.visible_message("<span class='userdanger'>[M] trembles minutely as their form turns to ash, black smoke pouring from their disintegrating face.</span>", \
-									  "<span class='userdanger'><font size=3>It's time! Your masters are ascending! Your last thoughts are happy as your body is drained of life.</span>")
+					M.visible_message("<span class='userdanger'>[M] trembles minutely as they collapse, black smoke pouring from their disintegrating face.</span>", \
+									  "<span class='userdanger'>It's time! Your masters are ascending! Your last thoughts are happy as your body is drained of life.</span>")
 
 					ticker.mode.thralls -= M.mind //To prevent message spam
 					M.death(0)
-					M.dust()
 
 			usr << "<span class='userdanger'>Drawing upon your thralls, you find the strength needed to finish and rend apart the final barriers to godhood.</b></span>"
 

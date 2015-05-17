@@ -31,3 +31,10 @@
 
 /mob/living/simple_animal/ascendant_shadowling/Process_Spacemove(var/movement_dir = 0)
 	return 1 //copypasta from carp code
+
+/mob/living/simple_animal/ascendant_shadowling/say(message)
+	src.audible_message("<b>[src]</b> [pick(speak_emote)], \"<font size=4>[message]</font>\"") //I WILL TEAR THIS WORLD APART
+	return
+
+/mob/living/simple_animal/ascendant_shadowling/get_spans()
+	return ..() | SPAN_REALLYBIG
