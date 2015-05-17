@@ -1480,12 +1480,11 @@
 		return
 
 	usr << "Don't move until counting is finished."
-	var/time = world.timeofday
-	sleep(60)
-	if(usr.l_move_time >= time)	//checks if our mob has moved during the sleep()
-		usr << "You moved while counting. Try again."
-	else
+
+	if (do_after(usr, 60))
 		usr << "<span class='notice'>[self ? "Your" : "[src]'s"] pulse is [src.get_pulse(GETPULSE_HAND)].</span>"
+	else
+		usr << "You moved while counting. Try again."
 
 /mob/living/carbon/human/proc/set_species(var/new_species_name, var/force_organs, var/default_colour)
 
