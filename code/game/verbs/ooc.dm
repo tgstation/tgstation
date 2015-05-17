@@ -41,7 +41,7 @@
 	var/keyname = key
 	if(prefs.unlock_content)
 		if(prefs.toggles & MEMBER_PUBLIC)
-			keyname = "<font color='[prefs.ooccolor]'><img style='width:9px;height:9px;' class=icon src=\ref['icons/member_content.dmi'] iconstate=blag>[keyname]</font>"
+			keyname = "<font color='[prefs.ooccolor ? prefs.ooccolor : normal_ooc_colour]'><img style='width:9px;height:9px;' class=icon src=\ref['icons/member_content.dmi'] iconstate=blag>[keyname]</font>"
 
 	msg = emoji_parse(msg)
 
@@ -50,7 +50,7 @@
 			if(holder)
 				if(!holder.fakekey || C.holder)
 					if(check_rights_for(src, R_ADMIN))
-						C << "<font color=[config.allow_admin_ooccolor ? prefs.ooccolor :"#b82e00" ]><b><span class='prefix'>OOC:</span> <EM>[keyname][holder.fakekey ? "/([holder.fakekey])" : ""]:</EM> <span class='message'>[msg]</span></b></font>"
+						C << "<font color=[config.allow_admin_ooccolor && prefs.ooccolor ? prefs.ooccolor :"#b82e00" ]><b><span class='prefix'>OOC:</span> <EM>[keyname][holder.fakekey ? "/([holder.fakekey])" : ""]:</EM> <span class='message'>[msg]</span></b></font>"
 					else
 						C << "<span class='adminobserverooc'><span class='prefix'>OOC:</span> <EM>[keyname][holder.fakekey ? "/([holder.fakekey])" : ""]:</EM> <span class='message'>[msg]</span></span>"
 				else
@@ -77,6 +77,12 @@ var/global/normal_ooc_colour = "#002eb8"
 	set category = "Fun"
 	normal_ooc_colour = sanitize_ooccolor(newColor)
 
+/client/proc/reset_ooc()
+	set name = "Reset Player OOC Color"
+	set desc = "Returns player OOC Color to default"
+	set category = "Fun"
+	normal_ooc_colour = initial(normal_ooc_colour)
+
 /client/verb/colorooc()
 	set name = "Set Your OOC Color"
 	set category = "Preferences"
@@ -90,6 +96,17 @@ var/global/normal_ooc_colour = "#002eb8"
 		prefs.save_preferences()
 	feedback_add_details("admin_verb","OC") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 	return
+
+/client/verb/resetcolorooc()
+	set name = "Reset Your OOC Color"
+	set desc = "Returns your OOC Color to default"
+	set category = "Preferences"
+
+	if(!holder || check_rights_for(src, R_ADMIN))
+		if(!is_content_unlocked())	return
+
+		prefs.ooccolor = initial(prefs.ooccolor)
+		prefs.save_preferences()
 
 //Checks admin notice
 /client/verb/admin_notice()
