@@ -84,7 +84,7 @@
 		var/mob/living/carbon/human/M = user
 		if(istype(M.wear_suit, suit_requirement))
 			return 1
-	user << "<span class='warning'>You need to be wearing [suit_requirement.name]!</span>"
+	user << "<span class='warning'>You need to be wearing the appropriate laser tag suit!</span>"
 	return 0
 
 /obj/item/device/firing_pin/tag/red

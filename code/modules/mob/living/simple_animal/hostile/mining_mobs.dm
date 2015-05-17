@@ -426,6 +426,8 @@
 	for(var/mob/living/M in src.loc)
 		M.Stun(5)
 		M.adjustBruteLoss(rand(10,15))
+		if(!M)
+			continue //If the mob got deleted, we don't want to process it anymore
 		latched = 1
 		visible_message("<span class='danger'>The [src.name] grabs hold of [M.name]!</span>")
 	if(!latched)
