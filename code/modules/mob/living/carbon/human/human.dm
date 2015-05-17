@@ -1481,7 +1481,7 @@
 
 	usr << "Don't move until counting is finished."
 
-	if (do_after(usr, 60))
+	if (do_mob(usr, src, 60))
 		usr << "<span class='notice'>[self ? "Your" : "[src]'s"] pulse is [src.get_pulse(GETPULSE_HAND)].</span>"
 	else
 		usr << "You moved while counting. Try again."
