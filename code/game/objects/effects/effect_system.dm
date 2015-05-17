@@ -925,8 +925,8 @@ steam.start() -- spawns the effect
 			for(var/mob/O in viewers(src))
 				if (O.client)
 					O << "<span class='warning'>[G.assailant] smashes [G.affecting] through the foamed metal wall.</span>"
-			del(I)
-			del(src)
+			returnToPool(I)
+			qdel(src)
 			return
 
 		if(prob(I.force*20 - metal*25))
@@ -934,7 +934,7 @@ steam.start() -- spawns the effect
 			for(var/mob/O in oviewers(user))
 				if ((O.client && !( O.blinded )))
 					O << "<span class='warning'>[user] smashes through the foamed metal.</span>"
-			del(src)
+			qdel(src)
 		else
 			user << "<span class='notice'>You hit the metal foam to no effect.</span>"
 

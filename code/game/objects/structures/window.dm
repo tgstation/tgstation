@@ -225,7 +225,7 @@
 		if(istype(G.affecting, /mob/living))
 			var/mob/living/M = G.affecting
 			var/gstate = G.state
-			del(W)	//Gotta delete it here because if window breaks, it won't get deleted
+			returnToPool(W)	//Gotta delete it here because if window breaks, it won't get deleted
 			switch(gstate)
 				if(GRAB_PASSIVE)
 					M.apply_damage(5) //Meh, bit of pain, window is fine, just a shove

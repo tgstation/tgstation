@@ -456,13 +456,13 @@
 	else
 		verbs -= /obj/item/weapon/storage/verb/toggle_gathering_mode
 
-	src.boxes = new /obj/screen/storage(  )
+	src.boxes = getFromPool(/obj/screen/storage)
 	src.boxes.name = "storage"
 	src.boxes.master = src
 	src.boxes.icon_state = "block"
 	src.boxes.screen_loc = "7,7 to 10,8"
 	src.boxes.layer = 19
-	src.closer = new /obj/screen/close(  )
+	src.closer = getFromPool(/obj/screen/close)
 	src.closer.master = src
 	src.closer.icon_state = "x"
 	src.closer.layer = 20
@@ -525,8 +525,10 @@
 
 /obj/item/weapon/storage/Destroy()
 	close_all()
-	qdel(boxes)
-	qdel(closer)
+	returnToPool(boxes)
+	returnToPool(closer)
+	boxes = null
+	closer = null
 	..()
 
 /obj/item/weapon/storage/preattack(atom/target, mob/user, adjacent, params)

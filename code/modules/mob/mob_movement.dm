@@ -350,12 +350,12 @@
 				mob.delayNextMove(10)
 				if(!prob(25))	return 1
 				mob.visible_message("<span class='warning'> [mob] has broken free of [G.assailant]'s grip!</span>")
-				del(G)
+				returnToPool(G)
 			if(G.state == GRAB_NECK)
 				mob.delayNextMove(10)
 				if(!prob(5))	return 1
 				mob.visible_message("<span class='warning'> [mob] has broken free of [G.assailant]'s headlock!</span>")
-				del(G)
+				returnToPool(G)
 	return 0
 
 

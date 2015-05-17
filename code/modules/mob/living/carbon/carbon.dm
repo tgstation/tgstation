@@ -402,7 +402,7 @@
 					M.LAssailant = null
 				else
 					M.LAssailant = usr
-				del(G)
+				returnToPool(G)
 	if(!item) return //Grab processing has a chance of returning null
 
 	//item.layer = initial(item.layer)

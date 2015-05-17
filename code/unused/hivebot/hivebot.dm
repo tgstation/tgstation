@@ -194,7 +194,7 @@
 	if (M.a_intent == "grab")
 		if (M == src)
 			return
-		var/obj/item/weapon/grab/G = new /obj/item/weapon/grab( M )
+		var/obj/item/weapon/grab/G = getFromPool(/obj/item/weapon/grab,M)
 		G.assailant = M
 		if (M.hand)
 			M.l_hand = G
@@ -465,7 +465,7 @@ Frequency:
 							if (istype(G, /obj/item/weapon/grab))
 								for(var/mob/O in viewers(M, null))
 									O.show_message(text("<span class='warning'>[G.affecting] has been pulled from [G.assailant]'s grip by [src]</span>"), 1)
-								del(G)
+								returnToPool(G)
 						else
 							ok = 0
 						if (locate(/obj/item/weapon/grab, M.grabbed_by.len))

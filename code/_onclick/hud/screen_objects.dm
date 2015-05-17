@@ -48,6 +48,10 @@
 /obj/screen/item_action
 	var/obj/item/owner
 
+/obj/screen/item_action/Destroy()
+	..()
+	owner = null
+
 /obj/screen/item_action/Click()
 	if(!usr || !owner)
 		return 1
@@ -82,11 +86,6 @@
 
 /obj/screen/grab/attackby()
 	return
-
-/obj/screen/grab/Destroy()
-	if(master)
-		master = null
-	..()
 
 /obj/screen/storage
 	name = "storage"
@@ -748,3 +747,8 @@
 				usr.update_inv_r_hand(0)
 				usr.delayNextAttack(6)
 	return 1
+
+client/proc/reset_screen()
+	for(var/obj/screen/objects in src.screen)
+		returnToPool(objects)
+	src.screen = null

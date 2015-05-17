@@ -88,7 +88,7 @@
 					return
 			var/mob/M = G:affecting
 			if(put_mob(M))
-				del(G)
+				returnToPool(G)
 		src.updateUsrDialog()
 		return
 
