@@ -153,7 +153,7 @@
 		</div>
 		<div class='item'>
 			<div class='itemLabel'>
-				Coordinates::
+				Coordinates:
 			</div>
 			<div class='itemContent'>
 				<a href='?src=\ref[src];setx=1'>X: [x_co]</a>
@@ -190,6 +190,7 @@
 
 	user.set_machine(src)
 	var/datum/browser/browserdatum = new(user, "telescience", name, 380, 210, src)
+	browserdatum.add_stylesheet("shared", 'nano/css/shared.css')
 	browserdatum.set_content(out)
 	browserdatum.open()
 
