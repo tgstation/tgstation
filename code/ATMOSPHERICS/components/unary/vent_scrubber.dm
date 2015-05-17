@@ -65,8 +65,8 @@
 	radio_connection = radio_controller.add_object(src, frequency, radio_filter_in)
 
 	if(frequency != 1439)
-		initial_loc.air_scrub_info -= id_tag
-		initial_loc.air_scrub_names -= id_tag
+		areaMaster.air_scrub_info -= id_tag
+		areaMaster.air_scrub_names -= id_tag
 		name = "Air Scrubber"
 	else
 		broadcast_status()
@@ -347,8 +347,8 @@
 			return
 
 		if(frequency == 1439)
-			initial_loc.air_scrub_info -= id_tag
-			initial_loc.air_scrub_names -= id_tag
+			areaMaster.air_scrub_info -= id_tag
+			areaMaster.air_scrub_names -= id_tag
 
 		id_tag = newid
 		broadcast_status()

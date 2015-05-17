@@ -147,8 +147,8 @@
 		radio_connection = radio_controller.add_object(src, frequency,radio_filter_in)
 
 	if(frequency != 1439)
-		initial_loc.air_vent_info -= id_tag
-		initial_loc.air_vent_names -= id_tag
+		areaMaster.air_vent_info -= id_tag
+		areaMaster.air_vent_names -= id_tag
 		name = "Vent Pump"
 	else
 		broadcast_status()
@@ -365,8 +365,8 @@
 		if(!newid)
 			return
 		if(frequency == 1439)
-			initial_loc.air_vent_info -= id_tag
-			initial_loc.air_vent_names -= id_tag
+			areaMaster.air_vent_info -= id_tag
+			areaMaster.air_vent_names -= id_tag
 
 		id_tag = newid
 		broadcast_status()
