@@ -3,7 +3,7 @@
 
 	var/spell_type = null
 	var/desc = ""
-	var/category = "Spells"
+	var/category = "Offensive Spells"
 	var/log_name = "XX" //What it shows up as in logs
 	var/cost = 1
 	var/refundable = 1
@@ -84,7 +84,10 @@
 	if(!S)
 		S = new spell_type()
 	var/dat =""
-	dat += "<b>[initial(S.name)]</b> : Cost : [cost]<br>"
+	dat += "<b>[initial(S.name)]</b>"
+	if(S.charge_type == "recharge")
+		dat += " Cooldown:[S.charge_max/10]"
+	dat += " Cost:[cost]<br>"
 	dat += "<i>[S.desc][desc]</i><br>"
 	dat += "[S.clothes_req?"Needs wizard garb":"Can be cast without wizard garb"]<br>"
 	return dat
@@ -108,6 +111,7 @@
 	name = "Disable Tech"
 	spell_type = /obj/effect/proc_holder/spell/targeted/emplosion/disable_tech
 	log_name = "DT"
+	category = "Utility Spells"
 
 /datum/spellbook_entry/repulse
 	name = "Repulse"
@@ -118,6 +122,7 @@
 	name = "Smoke"
 	spell_type = /obj/effect/proc_holder/spell/targeted/smoke
 	log_name = "SM"
+	category = "Utility Spells"
 
 /datum/spellbook_entry/blind
 	name = "Blind"
@@ -128,36 +133,43 @@
 	name = "Mindswap"
 	spell_type = /obj/effect/proc_holder/spell/targeted/mind_transfer
 	log_name = "MT"
+	category = "Utility Spells"
 
 /datum/spellbook_entry/forcewall
 	name = "Force Wall"
 	spell_type = /obj/effect/proc_holder/spell/aoe_turf/conjure/forcewall
 	log_name = "FW"
+	category = "Utility Spells"
 
 /datum/spellbook_entry/blink
 	name = "Blink"
 	spell_type = /obj/effect/proc_holder/spell/targeted/turf_teleport/blink
 	log_name = "BL"
+	category = "Utility Spells"
 
 /datum/spellbook_entry/teleport
 	name = "Teleport"
 	spell_type = /obj/effect/proc_holder/spell/targeted/area_teleport/teleport
 	log_name = "TP"
+	category = "Utility Spells"
 
 /datum/spellbook_entry/mutate
 	name = "Mutate"
 	spell_type = /obj/effect/proc_holder/spell/targeted/genetic/mutate
 	log_name = "MU"
+	category = "Utility Spells"
 
 /datum/spellbook_entry/jaunt
 	name = "Ethereal Jaunt"
 	spell_type = /obj/effect/proc_holder/spell/targeted/ethereal_jaunt
 	log_name = "EJ"
+	category = "Utility Spells"
 
 /datum/spellbook_entry/knock
 	name = "Knock"
 	spell_type = /obj/effect/proc_holder/spell/aoe_turf/knock
 	log_name = "KN"
+	category = "Utility Spells"
 
 /datum/spellbook_entry/fleshtostone
 	name = "Flesh to Stone"
@@ -168,6 +180,7 @@
 	name = "Summon Item"
 	spell_type = /obj/effect/proc_holder/spell/targeted/summonitem
 	log_name = "IS"
+	category = "Utility Spells"
 
 /datum/spellbook_entry/lightningbolt
 	name = "Lightning Bolt"
@@ -194,7 +207,8 @@
 
 /datum/spellbook_entry/item/GetInfo()
 	var/dat =""
-	dat += "<b>[name]</b> : Cost : [cost]<br>"
+	dat += "<b>[name]</b>"
+	dat += " Cost:[cost]<br>"
 	dat += "<i>[desc]</i><br>"
 	if(surplus>=0)
 		dat += "[surplus] left.<br>"
@@ -290,11 +304,11 @@
 
 /datum/spellbook_entry/summon/GetInfo()
 	var/dat =""
-	dat += "<b>[name]</b> : "
+	dat += "<b>[name]</b>"
 	if(cost>0)
-		dat += "Cost : [cost]<br>"
+		dat += " Cost:[cost]<br>"
 	else
-		dat += "No Cost<br>"
+		dat += " No Cost<br>"
 	dat += "<i>[desc]</i><br>"
 	if(active)
 		dat += "<b>Already cast!</b><br>"
@@ -372,6 +386,7 @@
 	var/uses = 5
 	var/temp = null
 	var/op = 1
+	var/tab = null
 	var/mob/living/carbon/human/owner
 	var/list/datum/spellbook_entry/entries = list()
 	var/list/categories = list()
@@ -386,6 +401,7 @@
 			categories |= E.category
 		else
 			del(E)
+	tab = categories[1]
 
 
 /obj/item/weapon/spellbook/attackby(obj/item/O as obj, mob/user as mob, params)
@@ -401,9 +417,14 @@
 /obj/item/weapon/spellbook/proc/GetCategoryHeader(var/category)
 	var/dat = ""
 	switch(category)
-		if("Spells")
+		if("Offensive Spells")
 			dat += "Spells that can be reused endlessly.<BR>"
-			dat += "The number after the spell name is the cooldown time. You can reduce this number by spending more points on the spell.<BR>"
+			dat += "The number after the spell name is the cooldown time.<BR>"
+			dat += "You can reduce this number by spending more points on the spell.<BR>"
+		if("Utility Spells")
+			dat += "Spells that can be reused endlessly.<BR>"
+			dat += "The number after the spell name is the cooldown time.<BR>"
+			dat += "You can reduce this number by spending more points on the spell.<BR>"
 		if("Artifacts")
 			dat += "Powerful items imbued with eldritch magics. Summoning one will count towards your maximum number of uses.<BR>"
 			dat += "These items are not bound to you and can be stolen. Additionaly they cannot typically be returned once purchased.<BR>"
@@ -429,69 +450,8 @@
       		div.tabContent { border: 1px solid #c9c3ba; padding: 0.5em; background-color: #f1f0ee; }
       		div.tabContent.hide { display: none; }
     	</style>
-
-		<script type="text/javascript">
-
-			var tabLinks = new Array();
-			var contentDivs = new Array();
-
-			function init() {
-
-				var tabNames = document.getElementById('tabs').childNodes;
-				for ( var i = 0; i < tabNames.length; i++ ) {
-					if ( tabNames\[i\].nodeName == "LI" ) {
-						var tabLink = getFirstChildWithTagName( tabNames\[i\], 'A' );
-						var id = getHash( tabLink.getAttribute('href') );
-						tabLinks\[id\] = tabLink;
-						contentDivs\[id\] = document.getElementById( id );
-					}
-				}
-
-				var i = 0;
-
-				for ( var id in tabLinks ) {
-					tabLinks\[id\].onclick = showTab;
-					tabLinks\[id\].onfocus = function() { this.blur() };
-					if ( i == 0 ) tabLinks\[id\].className = 'selected';
-					i++;
-				}
-
-				var i = 0;
-				for ( var id in contentDivs ) {
-					if ( i != 0 ) contentDivs\[id\].className = 'tabContent hide';
-					i++;
-				}
-			}
-
-			function showTab() {
-				var selectedId = getHash( this.getAttribute('href') );
-
-				for ( var id in contentDivs ) {
-					if ( id == selectedId ) {
-						tabLinks\[id\].className = 'selected';
-						contentDivs\[id\].className = 'tabContent';
-						} else {
-						tabLinks\[id\].className = '';
-						contentDivs\[id\].className = 'tabContent hide';
-						}
-					}
-					return false;
-				}
-
-				function getFirstChildWithTagName( element, tagName ) {
-					for ( var i = 0; i < element.childNodes.length; i++ ) {
-						if ( element.childNodes\[i\].nodeName == tagName ) return element.childNodes\[i\];
-					}
-				}
-
-				function getHash( url ) {
-					var hashPos = url.lastIndexOf ( '#' );
-					return url.substring( hashPos + 1 );
-				}
-		</script>
   	</head>
 	"}
-	dat += "<body onload='init()'>"
 	dat += {"[content]</body></html>"}
 	return dat
 
@@ -505,13 +465,14 @@
 		return
 	user.set_machine(src)
 	var/dat = ""
-	dat += "Uses remaining : [uses]<br>"
-	
+
 	dat += "<ul id=\"tabs\">"
 	var/list/cat_dat = list()
 	for(var/category in categories)
 		cat_dat[category] = "<hr>"
-		dat += "<li><a href=\"#[category]\">[category]</a></li>"
+		dat += "<li><a [tab==category?"class=selected":""] href='byond://?src=\ref[src];page=[category]'>[category]</a></li>"
+
+	dat += "<li><a><b>Uses remaining : [uses]</b></a></li>"
 	dat += "</ul>"
 	
 	var/datum/spellbook_entry/E
@@ -530,12 +491,12 @@
 			cat_dat[E.category] += spell_info
 
 	for(var/category in categories)
-		dat += "<div class=\"tabContent\" id=\"[category]\">"
+		dat += "<div class=\"[tab==category?"tabContent":"tabContent hide"]\" id=\"[category]\">"
 		dat += GetCategoryHeader(category)
 		dat += cat_dat[category]
 		dat += "</div>"
 
-	user << browse(wrap(dat), "window=spellbook")
+	user << browse(wrap(dat), "window=spellbook;size=600x300")
 	onclose(user, "spellbook")
 	return
 
@@ -566,6 +527,8 @@
 				var/result = E.Refund(H,src)
 				if(result > 0)
 					uses += result
+		else if(href_list["page"])
+			tab = href_list["page"]
 	attack_self(H)
 	return
 
