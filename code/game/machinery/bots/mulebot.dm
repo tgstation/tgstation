@@ -659,7 +659,7 @@ obj/machinery/bot/mulebot/bot_reset()
 // calculates a path to the current destination
 // given an optional turf to avoid
 /obj/machinery/bot/mulebot/calc_path(var/turf/avoid = null)
-	path = get_path_to(loc, target, /turf/proc/CardinalTurfsWithAccess, /turf/proc/Distance_cardinal, 0, 250, id=botcard, exclude=avoid)
+	path = get_path_to(loc, target, src, /turf/proc/Distance_cardinal, 0, 250, id=botcard, exclude=avoid)
 
 
 // sets the current destination
