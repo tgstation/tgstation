@@ -70,6 +70,11 @@
 	var/datum/events/events
 
 	var/turf/crashing = null
+	var/list/mech_parts = list(/obj/item/weapon/cell,
+						/obj/machinery/portable_atmospherics/canister, //I shit you not this thing uses a literal air canister
+						/obj/item/device/radio,
+						/obj/item/mecha_parts,
+						/obj/item/device/mmi)
 
 /obj/mecha/New()
 	..()
@@ -1217,7 +1222,8 @@
 			src.occupant.client.perspective = MOB_PERSPECTIVE
 		*/
 		for(var/obj/O in src)
-			O.loc = src.loc
+			if(!is_type_in_list(O,mech_parts))
+				O.loc = src.loc
 		src.occupant << browse(null, "window=exosuit")
 		if(istype(mob_container, /obj/item/device/mmi) || istype(mob_container, /obj/item/device/mmi/posibrain))
 			var/obj/item/device/mmi/mmi = mob_container
