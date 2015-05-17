@@ -158,14 +158,12 @@
 			usr << "<span class='warning'>You can only enthrall humans.</span>"
 			charge_counter = charge_max
 			return
-		if(!target.client)
-			usr << "<span class='warning'>[target]'s mind is vacant of activity.</span>"
-			charge_counter = charge_max
-			return
 		if(enthralling)
 			usr << "<span class='warning'>You are already enthralling!</span>"
 			charge_counter = charge_max
 			return
+		if(!target.client)
+			usr << "<span class='warning'>[target]'s mind is vacant of activity. Still, you may rearrange their memories in the case of their return.</span>"
 		enthralling = 1
 		usr << "<span class='danger'>This target is valid. You begin the enthralling.</span>"
 		target << "<span class='userdanger'>[usr] stares at you. You feel your head begin to pulse.</span>"
@@ -275,7 +273,7 @@
 /obj/effect/proc_holder/spell/targeted/collective_mind/cast(list/targets)
 	for(var/mob/living/user in targets)
 		var/thralls = 0
-		var/victory_threshold = 15
+		var/victory_threshold = 0
 		var/mob/M
 
 		user << "<span class='shadowling'><b>You focus your telepathic energies abound, harnessing and drawing together the strength of your thralls.</b></span>"
@@ -496,7 +494,7 @@ datum/reagent/shadowling_blindness_smoke/on_mob_life(var/mob/living/M as mob)
 	desc = "Gibs a human after a short time."
 	panel = "Ascendant"
 	range = 7
-	charge_max = 300
+	charge_max = 0
 	clothes_req = 0
 
 /obj/effect/proc_holder/spell/targeted/annihilate/cast(list/targets)
@@ -528,7 +526,7 @@ datum/reagent/shadowling_blindness_smoke/on_mob_life(var/mob/living/M as mob)
 	desc = "Instantly enthralls a human."
 	panel = "Ascendant"
 	range = 7
-	charge_max = 450
+	charge_max = 0
 	clothes_req = 0
 
 /obj/effect/proc_holder/spell/targeted/hypnosis/cast(list/targets)
@@ -600,7 +598,7 @@ datum/reagent/shadowling_blindness_smoke/on_mob_life(var/mob/living/M as mob)
 	desc = "Extremely empowered version of Flash Freeze."
 	panel = "Ascendant"
 	range = 5
-	charge_max = 600
+	charge_max = 100
 	clothes_req = 0
 
 /obj/effect/proc_holder/spell/aoe_turf/glacial_blast/cast(list/targets)
@@ -634,7 +632,7 @@ datum/reagent/shadowling_blindness_smoke/on_mob_life(var/mob/living/M as mob)
 	panel = "Ascendant"
 	range = -1
 	include_user = 1
-	charge_max = 1200
+	charge_max = 300
 	clothes_req = 0
 
 /obj/effect/proc_holder/spell/targeted/vortex/cast(list/targets)
@@ -653,9 +651,9 @@ datum/reagent/shadowling_blindness_smoke/on_mob_life(var/mob/living/M as mob)
 
 /obj/effect/proc_holder/spell/targeted/shadowling_hivemind_ascendant
 	name = "Ascendant Commune"
-	desc = "Allows you to silently communicate with all other shadowlings and thralls."
+	desc = "Allows you to LOUDLY communicate with all other shadowlings and thralls."
 	panel = "Ascendant"
-	charge_max = 20
+	charge_max = 0
 	clothes_req = 0
 	range = -1
 	include_user = 1
@@ -665,7 +663,25 @@ datum/reagent/shadowling_blindness_smoke/on_mob_life(var/mob/living/M as mob)
 		var/text = stripped_input(user, "What do you want to say to fellow thralls and shadowlings?.", "Hive Chat", "")
 		if(!text)
 			return
-		text = "<font size=3>[text]</font>"
+		text = "<font size=4>[text]</font>"
 		for(var/mob/M in mob_list)
 			if(is_shadow_or_thrall(M) || (M in dead_mob_list))
 				M << "<span class='shadowling'><b>\[Hive Chat\]<i> [usr.real_name] (ASCENDANT)</i>: [text]</b></span>" //Bigger text for ascendants.
+
+
+
+/obj/effect/proc_holder/spell/targeted/shadowlingAscendantTransmit
+	name = "Ascendant Broadcast"
+	desc = "Sends a message to the whole wide world."
+	panel = "Ascendant"
+	charge_max = 200
+	clothes_req = 0
+	range = -1
+	include_user = 1
+
+/obj/effect/proc_holder/spell/targeted/shadowlingAscendantTransmit/cast(list/targets)
+	for(var/mob/living/user in targets)
+		var/text = stripped_input(user, "What do you want to say to everything on and near [world.name]?.", "Transmit to World", "")
+		if(!text)
+			return
+		world << "<font size=4><span class='shadowling'><b>\"[text]\"</font></span>"

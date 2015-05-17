@@ -1,7 +1,6 @@
 #define LIGHT_DAM_THRESHOLD 4
 #define LIGHT_HEAL_THRESHOLD 2
 #define LIGHT_DAMAGE_TAKEN 10
-
 /*
 
 SHADOWLING: A gamemode based on previously-run events

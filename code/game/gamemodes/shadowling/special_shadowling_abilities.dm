@@ -1,5 +1,5 @@
 //In here: Hatch and Ascendance
-
+var/list/possibleShadowlingNames = list("U'ruan", "Y`shej", "Nex", "Hel-uae", "Noaey'gief", "Mii`mahza", "Amerziox", "Gyrg-mylin", "Kanet'pruunance", "Vigistaezian")
 /mob/living/carbon/human/proc/shadowling_hatch()
 	set category = "Shadowling Evolution"
 	set name = "Hatch"
@@ -13,7 +13,7 @@
 			usr.verbs += /mob/living/carbon/human/proc/shadowling_hatch
 			return
 		if("Yes")
-			usr.notransform = 1
+			usr.Stun(INFINITY) //This is bad but notransform won't work.
 			usr.visible_message("<span class='warning'>[usr]'s things suddenly slip off. They hunch over and vomit up a copious amount of purple goo which begins to shape around them!</span>", \
 								"<span class='shadowling'>You remove any equipment which would hinder your hatching and begin regurgitating the resin which will protect you.</span>")
 
@@ -37,7 +37,7 @@
 								"<span class='shadowling'>Spines pierce your back. Your claws break apart your fingers. You feel excruciating pain as your true form begins its exit.</span>")
 
 			sleep(90)
-			usr.visible_message("<span class='warning'><b>[usr], now no longer recognizable as human, begins clawing at the resin walls around them.</b></span>", \
+			usr.visible_message("<span class='warning'><b>[usr], skin shifting, begins tearing at the walls around them.</b></span>", \
 							"<span class='shadowling'>Your false skin slips away. You begin tearing at the fragile membrane protecting you.</span>")
 
 			sleep(80)
@@ -52,9 +52,11 @@
 
 			sleep(10)
 			playsound(usr.loc, 'sound/effects/ghost.ogg', 100, 1)
-			usr.real_name = "Shadowling ([rand(1,1000)])"
+			var/newNameId = pick(possibleShadowlingNames)
+			possibleShadowlingNames.Remove(newNameId)
+			usr.real_name = newNameId
 			usr.name = usr.real_name
-			usr.notransform = 0
+			usr.SetStunned(0)
 			usr << "<i><b><font size=3>YOU LIVE!!!</i></b></font>"
 
 			for(var/obj/structure/alien/resin/wall/shadowling/W in orange(usr, 1))
@@ -130,13 +132,17 @@
 					M.death(0)
 
 			usr << "<span class='userdanger'>Drawing upon your thralls, you find the strength needed to finish and rend apart the final barriers to godhood.</b></span>"
-
-			sleep(40)
+			sleep(20)
+			usr << "<span class='big'>Yes!</span>"
+			sleep(10)
+			usr << "<span class='reallybig'>YES!</span>"
+			sleep(10)
+			usr << "<font size=5>YE--</font>"
+			sleep(2)
 			for(var/mob/living/M in orange(7, src))
 				M.Weaken(10)
 				M << "<span class='userdanger'>An immense pressure slams you onto the ground!</span>"
-			usr << "<font size=3.5><span class='shadowling'>YOU LIVE!!!</font></span>"
-			world << "<br><br><font size=4><span class='shadowling'><b>A horrible wail echoes in your mind as the world plunges into blackness.</font></span><br><br>"
+			world << "<font size=4><span class='shadowling'><b>\"I LIVE!!!\"</font></span>"
 			world << 'sound/hallucinations/veryfar_noise.ogg'
 			for(var/obj/machinery/power/apc/A in world)
 				A.overload_lighting()
@@ -148,6 +154,7 @@
 			usr.mind.spell_list += new /obj/effect/proc_holder/spell/aoe_turf/glacial_blast
 			usr.mind.spell_list += new /obj/effect/proc_holder/spell/targeted/vortex
 			usr.mind.spell_list += new /obj/effect/proc_holder/spell/targeted/shadowling_hivemind_ascendant
+			usr.mind.spell_list += new /obj/effect/proc_holder/spell/targeted/shadowlingAscendantTransmit
 			usr.mind.transfer_to(A)
 			A.name = usr.real_name
 			if(A.real_name)
