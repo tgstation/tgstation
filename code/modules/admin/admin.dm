@@ -254,8 +254,9 @@ var/global/floorIsLava = 0
 		usr << "Error: you are not an admin!"
 		return
 	checkSessionKey()
-	var/cid = input("Type computer ID", "CID", 0)
-	usr << link(getVGPanel("rapsheet",admin=1,query=list("cid"=cid)))
+	var/cid = input("Type computer ID", "CID", 0) as num | null
+	if(cid)
+		usr << link(getVGPanel("rapsheet",admin=1,query=list("cid"=cid)))
 	//usr << link("[config.vgws_base_url]/index.php/rapsheet/?s=[sessKey]&cid=[cid]")
 	return
 
