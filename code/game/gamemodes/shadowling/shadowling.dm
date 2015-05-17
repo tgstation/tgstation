@@ -50,6 +50,7 @@ Made by Xhuis
 	var/required_thralls = 15 //How many thralls are needed (hardcoded for now)
 	var/shadowling_ascended = 0 //If at least one shadowling has ascended
 	var/shadowling_dead = 0 //is shadowling kill
+	var/objective_explanation
 
 
 /proc/is_thrall(var/mob/living/M)
@@ -122,7 +123,7 @@ Made by Xhuis
 	var/objective = "enthrall" //may be devour later, but for now it seems murderbone-y
 
 	if(objective == "enthrall")
-		var/objective_explanation = "Ascend to your true form by use of the Ascendance ability. This may only be used with [required_thralls] collective thralls, while hatched, and is unlocked with the Collective Mind ability."
+		objective_explanation = "Ascend to your true form by use of the Ascendance ability. This may only be used with [required_thralls] collective thralls, while hatched, and is unlocked with the Collective Mind ability."
 		shadow_objectives += "enthrall"
 		shadow_mind.memory += "<b>Objective #1</b>: [objective_explanation]"
 		shadow_mind.current << "<b>Objective #1</b>: [objective_explanation]<br>"
@@ -146,10 +147,8 @@ Made by Xhuis
 		update_shadow_icons_added(new_thrall_mind)
 		thralls += new_thrall_mind
 		new_thrall_mind.current.attack_log += "\[[time_stamp()]\] <span class='danger'>Became a thrall</span>"
-		new_thrall_mind.memory += "<b>The Shadowlings' Objectives:</b> Ascend to your true form by use of the Ascendance ability. \
-		This may only be used with [required_thralls] collective thralls, while hatched, and is unlocked with the Collective Mind ability."
-		new_thrall_mind.current << "<b>The objectives of your shadowlings:</b>: Ascend to your true form by use of the Ascendance ability. \
-		This may only be used with [required_thralls] collective thralls, while hatched, and is unlocked with the Collective Mind ability."
+		new_thrall_mind.memory += "<b>The Shadowlings' Objectives:</b> [objective_explanation]"
+		new_thrall_mind.current << "<b>The objectives of the shadowlings:</b> [objective_explanation]"
 		new_thrall_mind.spell_list += new /obj/effect/proc_holder/spell/targeted/shadowling_hivemind
 		return 1
 

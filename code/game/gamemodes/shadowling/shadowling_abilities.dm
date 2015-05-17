@@ -133,7 +133,7 @@
 	var/mob/living/carbon/human/user = usr
 	for(var/datum/mind/mindToCount in ticker.mode.thralls)
 		thrallsPresent++
-	if(thrallsPresent >= 1 && (user.dna.species.id != "shadowling"))
+	if(thrallsPresent >= 5 && (user.dna.species.id != "shadowling"))
 		user << "<span class='warning'>With your telepathic abilities suppressed, your human form will not allow you to enthrall any others. Hatch first.</span>"
 		charge_counter = charge_max
 		return
@@ -194,7 +194,7 @@
 								target << "<span class='boldannounce'>Your unwavering loyalty to Nanotrasen unexpectedly falters, dims, dies. You feel a sense of liberation which is quickly stifled by terror.</span>"
 				if(3)
 					usr << "<span class='notice'>You begin rearranging [target]'s memories.</span>"
-					usr.visible_message("<span class='danger'>[usr]'s eyes flare brightly, and a horrible grin begins to spread across [target]'s face...</span>")
+					usr.visible_message("<span class='danger'>[usr]'s eyes flare brightly, their unflinching gaze staring constantly at [target].</span>")
 					target << "<span class='boldannounce'>Your head cries out. The veil of reality begins to crumple and something evil bleeds through.</span>" //Ow the edge
 			if(!do_mob(usr, target, 100)) //around 30 seconds total for enthralling, 45 for someone with a loyalty implant
 				usr << "<span class='warning'>The enthralling has been interrupted - your target's mind returns to its previous state.</span>"
@@ -204,7 +204,8 @@
 
 		enthralling = 0
 		usr << "<span class='shadowling'>You have enthralled <b>[target]</b>!</span>"
-		target << "<span class='shadowling'><b>You see the Truth. Reality has been torn away and you realize what a fool you've been.</b></span>"
+		target.visible_message("<span class='big'>[target]'s expression appears as if they have experienced a revelation!</span>", \
+		"<span class='shadowling'><b>You see the Truth. Reality has been torn away and you realize what a fool you've been.</b></span>")
 		target << "<span class='shadowling'><b>The shadowlings are your masters.</b> Serve them above all else and ensure they complete their goals.</span>"
 		target << "<span class='shadowling'>You may not harm other thralls or the shadowlings. However, you do not need to obey other thralls.</span>"
 		target << "<span class='shadowling'>You can communicate with the other enlightened ones by using the Hivemind Commune ability.</span>"
@@ -473,7 +474,7 @@ datum/reagent/shadowling_blindness_smoke/on_mob_life(var/mob/living/M as mob)
 			usr << "<span class='warning'>[thrallToRevive] is not dead.</span>"
 			charge_counter = charge_max
 			return
-		usr.visible_message("<span class='danger'>[usr] kneels over [thrallToRevive], placing their hands on \his chest</span>", \
+		usr.visible_message("<span class='danger'>[usr] kneels over [thrallToRevive], placing their hands on \his chest.</span>", \
 							"<span class='shadowling'>You crouch over the body of your thrall and gather energy.</span>")
 		var/mob/dead/observer/ghost = thrallToRevive.get_ghost()
 		if(ghost)
