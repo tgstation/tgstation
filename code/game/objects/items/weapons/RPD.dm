@@ -51,14 +51,11 @@ var/global/list/disposalpipeID2State=list(
 	"pipe-s",
 	"pipe-c",
 	"pipe-j1",
-	"pipe-j2",
 	"pipe-y",
 	"pipe-t",
-	"condisposal",
+	"disposal",
 	"outlet",
 	"intake",
-	"pipe-j1s",
-	"pipe-j2s"
 )
 
 /datum/pipe_info/disposal
@@ -118,12 +115,12 @@ var/global/list/RPD_recipes=list(
 		"4-Way Manifold" = new /datum/pipe_info(PIPE_INSUL_MANIFOLD4W,	1, PIPE_BINARY),
 	),
 	"Disposal Pipes" = list(
-		"Pipe"       = new /datum/pipe_info/disposal(DISP_PIPE_STRAIGHT,	PIPE_BINARY),
+		"Pipe"       = new /datum/pipe_info/disposal(DISP_PIPE_STRAIGHT,	PIPE_UNARY),
 		"Bent Pipe"  = new /datum/pipe_info/disposal(DISP_PIPE_BENT,		PIPE_BENT),
 		"Junction"   = new /datum/pipe_info/disposal(DISP_JUNCTION,			PIPE_TRINARY),
 		"Y-Junction" = new /datum/pipe_info/disposal(DISP_YJUNCTION,		PIPE_TRINARY),
-		"Trunk"      = new /datum/pipe_info/disposal(DISP_END_TRUNK,		PIPE_TRINARY),
-		"Bin"        = new /datum/pipe_info/disposal(DISP_END_BIN,			PIPE_UNARY),
+		"Trunk"      = new /datum/pipe_info/disposal(DISP_END_TRUNK,		PIPE_UNARY),
+		"Bin"        = new /datum/pipe_info/disposal(DISP_END_BIN,			PIPE_BINARY),
 		"Outlet"     = new /datum/pipe_info/disposal(DISP_END_OUTLET,		PIPE_UNARY),
 		"Chute"      = new /datum/pipe_info/disposal(DISP_END_CHUTE,		PIPE_UNARY),
 	)
