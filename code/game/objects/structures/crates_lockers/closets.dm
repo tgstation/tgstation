@@ -88,6 +88,9 @@
 
 	for(var/mob/M in src)
 		M.loc = src.loc
+		if (ismommi(M))
+			var/mob/living/silicon/robot/mommi/R = M
+			R.updateicon()
 		if(M.client)
 			M.client.eye = M.client.mob
 			M.client.perspective = MOB_PERSPECTIVE

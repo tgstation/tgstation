@@ -100,6 +100,9 @@
 		open_machine()
 
 /obj/machinery/recharge_station/open_machine()
+	if(ismommi(occupant))
+		var/mob/living/silicon/robot/mommi/R = occupant
+		R.updateicon()
 	..()
 	use_power = 1
 
