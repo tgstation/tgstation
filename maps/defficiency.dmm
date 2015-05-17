@@ -9004,7 +9004,7 @@
 "drh" = (/obj/machinery/atmospherics/pipe/simple/supply/hidden{dir = 4},/turf/simulated/wall,/area/research_outpost/dorm1)
 "dri" = (/obj/machinery/atmospherics/pipe/manifold/supply/hidden{dir = 4},/obj/structure/cable{d1 = 1; d2 = 2; icon_state = "1-2"},/turf/simulated/floor{icon_state = "white"},/area/research_outpost/hallway)
 "drj" = (/obj/structure/cable{d1 = 1; d2 = 2; icon_state = "1-2"},/turf/simulated/floor/plating,/area/research_outpost/atmos)
-"drk" = (/obj/structure/table,/obj/item/weapon/reagent_containers/ld50_syringe/chloral{pixel_y = 10},/obj/item/weapon/reagent_containers/ld50_syringe/chloral{pixel_y = 5},/obj/item/weapon/reagent_containers/ld50_syringe/chloral,/turf/simulated/floor{icon_state = "dark"},/area/security/gas_chamber)
+"drk" = (/obj/structure/table,/obj/item/weapon/reagent_containers/syringe/giant/chloral{pixel_y = 10},/obj/item/weapon/reagent_containers/syringe/giant/chloral{pixel_y = 5},/obj/item/weapon/reagent_containers/syringe/giant/chloral,/turf/simulated/floor{icon_state = "dark"},/area/security/gas_chamber)
 "drl" = (/obj/machinery/conveyor{dir = 8; id_tag = "outpost_driver"},/turf/simulated/floor/plating,/area/research_outpost/atmos)
 "drm" = (/obj/machinery/disposal/deliveryChute{dir = 8},/obj/structure/disposalpipe/trunk{dir = 4},/turf/simulated/floor/plating,/area/research_outpost/atmos)
 "drn" = (/turf/simulated/wall/r_wall,/area/research_outpost/power)

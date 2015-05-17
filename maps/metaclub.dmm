@@ -9530,7 +9530,7 @@
 "dBn" = (/obj/machinery/light/small{dir = 4},/turf/simulated/floor/airless,/area/tcommsat/chamber)
 "dBo" = (/obj/item/weapon/cigbutt,/turf/simulated/floor/plating/airless,/area/tcommsat/chamber)
 "dBp" = (/obj/effect/decal/cleanable/blood,/obj/item/device/assembly/signaler,/turf/simulated/floor/airless{icon_state = "dark"},/area/tcommsat/chamber)
-"dBq" = (/obj/structure/table,/obj/item/weapon/reagent_containers/ld50_syringe/chloral,/obj/item/weapon/reagent_containers/ld50_syringe/chloral{pixel_y = 4},/obj/item/device/spacepod_equipment/weaponry/taser,/turf/simulated/floor/airless{icon_state = "dark"},/area/tcommsat/chamber)
+"dBq" = (/obj/structure/table,/obj/item/weapon/reagent_containers/syringe/giant/chloral,/obj/item/weapon/reagent_containers/syringe/giant/chloral{pixel_y = 4},/obj/item/device/spacepod_equipment/weaponry/taser,/turf/simulated/floor/airless{icon_state = "dark"},/area/tcommsat/chamber)
 "dBr" = (/obj/structure/grille,/obj/structure/window/reinforced{dir = 4},/obj/structure/window/reinforced{dir = 8},/obj/structure/window/reinforced{dir = 1},/turf/simulated/floor/plating,/area/tcommsat/chamber)
 "dBs" = (/obj/item/weapon/storage/toolbox/syndicate,/turf/simulated/floor/airless,/area/tcommsat/chamber)
 "dBt" = (/obj/structure/table,/obj/item/device/radio/electropack,/turf/simulated/floor/plating/airless,/area/tcommsat/chamber)

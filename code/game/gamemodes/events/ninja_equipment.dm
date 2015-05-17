@@ -834,7 +834,7 @@ ________________________________________________________________________________
 					I.reagents.update_total()//Now we manually update the total to make sure everything is properly shoved under the rug.
 
 			U << "Replenished a total of [total_reagent_transfer ? total_reagent_transfer : "zero"] chemical units."//Let the player know how much total volume was added.
-			return
+			return 1 // avoid calling afterattack()
 		else if(istype(I, /obj/item/weapon/cell))
 			if(I:maxcharge>cell.maxcharge&&n_gloves&&n_gloves.candrain)
 				U << "<span class='notice'>Higher maximum capacity detected.\nUpgrading...</span>"

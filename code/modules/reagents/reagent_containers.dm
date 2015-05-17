@@ -1,3 +1,6 @@
+// Reagents to log when splashing non-mobs (all mob splashes are logged automatically)
+var/list/LOGGED_SPLASH_REAGENTS = list("fuel", "thermite")
+
 /obj/item/weapon/reagent_containers
 	name = "Container"
 	desc = "..."
@@ -7,7 +10,6 @@
 	var/amount_per_transfer_from_this = 5
 	var/possible_transfer_amounts = list(5,10,15,25,30)
 	var/volume = 30
-	var/list/can_be_placed_into = null
 
 /obj/item/weapon/reagent_containers/verb/set_APTFT() //set amount_per_transfer_from_this
 	set name = "Set transfer amount"
@@ -37,8 +39,160 @@
 /obj/item/weapon/reagent_containers/attackby(obj/item/I as obj, mob/user as mob)
 	return
 */
-/obj/item/weapon/reagent_containers/afterattack(obj/target, mob/user , flag)
+
+/**
+ * This usually handles reagent transfer between containers and splashing the contents.
+ * Please see `transfer()` for a general reusable proc for that.
+ *
+ * If you're wondering why you're splashing machinery that accepts beakers when
+ * inserting them, it's because the machine is returning `FALSE` on `attackby()`,
+ * which causes `afterattack()` to be called. Return 1 instead on those cases.
+ *
+ * If your container is splashing/transferring things at a distance, your `afterattack()`
+ * isn't checking for adjacency. For that, check that `adjacency_flag` is `TRUE`.
+ */
+/obj/item/weapon/reagent_containers/afterattack(var/obj/target, var/mob/user, var/adjacency_flag, var/click_params)
 	return
+
+/**
+ * Transfer reagents between reagent_containers/reagent_dispensers.
+ */
+/proc/transfer_sub(var/atom/source, var/atom/target, var/amount, var/mob/user)
+	// Typecheck shenanigans
+	var/source_empty
+	var/target_full
+
+	if (istype(source, /obj/item/weapon/reagent_containers))
+		var/obj/item/weapon/reagent_containers/S = source
+		source_empty = S.is_empty()
+	else if (istype(source, /obj/structure/reagent_dispensers))
+		var/obj/structure/reagent_dispensers/S = source
+		source_empty = S.is_empty()
+	else
+		warning("Called transfer_sub() with a non-compatible source type ([source.type], [source], \ref[source])")
+		return
+
+	if (istype(target, /obj/item/weapon/reagent_containers))
+		var/obj/item/weapon/reagent_containers/T = target
+		target_full = T.is_full()
+	// Reagent dispensers can't be refilled (yet) through normal means (TODO?)
+	/*else if (istype(target, /obj/structure/reagent_dispensers))
+		var/obj/structure/reagent_dispensers/T = target
+		target_full = T.is_full()*/
+	else
+		warning("Called transfer_sub() with a non-compatible target type ([target.type], [target], \ref[target])")
+		return
+
+	// Actual transfer checks
+	if (source_empty)
+		user << "<span class='warning'>\The [source] is empty.</span>"
+		return -1
+
+	if (target_full)
+		user << "<span class='warning'>\The [target] is full.</span>"
+		return -1
+
+	return source.reagents.trans_to(target, amount)
+
+/**
+ * Helper proc to handle reagent splashes. A negative `amount` will splash all the reagents.
+ */
+/proc/splash_sub(var/datum/reagents/reagents, var/atom/target, var/amount, var/mob/user)
+	if (amount == 0 || reagents.is_empty())
+		user << "<span class='warning'>There's nothing to splash with!</span>"
+		return -1
+
+	reagents.reaction(target, TOUCH)
+
+	if (amount > 0)
+		reagents.remove_any(amount)
+		user.visible_message("<span class='warning'>\The [target] has been splashed with something by [user]!</span>",
+		                     "<span class='notice'>You splash some of the solution onto \the [target].</span>")
+	else
+		reagents.clear_reagents()
+		user.visible_message("<span class='warning'>\The [target] has been splashed with something by [user]!</span>",
+		                     "<span class='notice'>You splash the solution onto \the [target].</span>")
+
+/**
+ * Transfers reagents to other containers/from dispensers. Handles splashing as well.
+ *
+ * Use this to avoid having duplicate code on every container. Note that this procedure doesn't check for
+ * adjacency between the source and the target.
+ *
+ * @param target What to check for transferring/splashing.
+ * @param user The mob performing the transfer.
+ * @param can_send Whether we are allowed to transfer our reagents to the target.
+ * @param can_receive Whether we are allowed to transfer from `reagent_dispensers`
+ * @param splashable_units How many units of reagents should be splashed. -1 for all of them, 0 to disable splashing.
+ *
+ * @return If we have transferred reagents, the amount transferred; otherwise, -1 if the transfer has failed, 0 if was a splash.
+ */
+/obj/item/weapon/reagent_containers/proc/transfer(var/atom/target, var/mob/user, var/can_send = TRUE, var/can_receive = TRUE, var/splashable_units = 0)
+	if (!istype(target) || !is_open_container())
+		return -1
+
+	// Transfer to container
+	if (can_send && istype(target, /obj/item/weapon/reagent_containers)/*&& target.reagents**/)
+		var/obj/item/weapon/reagent_containers/container = target
+		if (!container.is_open_container())
+			return -1
+
+		var/list/bad_reagents = reagents.get_bad_reagent_names() // Used for logging
+		var/tx_amount = transfer_sub(src, target, amount_per_transfer_from_this, user)
+		if (tx_amount > 0)
+			user << "<span class='notice'>You transfer [tx_amount] units of the solution to \the [target].</span>"
+
+		// Log transfers of 'bad things' (/vg/)
+		if (tx_amount > 0 && container.log_reagents && bad_reagents && bad_reagents.len > 0)
+			log_reagents(user, src, target, tx_amount, bad_reagents)
+
+		return tx_amount
+	// Transfer from dispenser
+	else if (can_receive && istype(target, /obj/structure/reagent_dispensers))
+		var/tx_amount = transfer_sub(target, src, target:amount_per_transfer_from_this, user)
+		if (tx_amount > 0)
+			user << "<span class='notice'>You fill \the [src][src.is_full() ? " to the brim" : ""] with [tx_amount] units of the contents of \the [target].</span>"
+
+		return tx_amount
+	// Mob splashing
+	else if (splashable_units != 0 && ismob(target))
+		if (src.is_empty() || !target.reagents)
+			return -1
+
+		var/mob/living/M = target
+
+		// Log the 'attack'
+		var/list/splashed_reagents = english_list(get_reagent_names())
+		add_logs(user, M, "splashed", admin = TRUE, object = src, addition = "Reagents: [splashed_reagents]")
+
+		// Splash the target
+		splash_sub(reagents, M, splashable_units, user)
+	// Non-mob splashing
+	else if (splashable_units != 0 && !src.is_empty())
+		for (var/reagent_id in LOGGED_SPLASH_REAGENTS)
+			if (reagents.has_reagent(reagent_id))
+				add_gamelogs(user, "poured '[reagent_id]' onto \the [target]", admin = TRUE, tp_link = TRUE, span_class = "danger")
+
+		// Splash the thing
+		splash_sub(reagents, target, splashable_units, user)
+
+	return 0
+
+/obj/item/weapon/reagent_containers/proc/is_empty()
+	return reagents.total_volume <= 0
+
+/obj/item/weapon/reagent_containers/proc/is_full()
+	return reagents.total_volume >= reagents.maximum_volume
+
+/obj/item/weapon/reagent_containers/proc/can_transfer_an_APTFT()
+	return reagents.total_volume >= amount_per_transfer_from_this
+
+/obj/item/weapon/reagent_containers/proc/get_reagent_names()
+	var/list/reagent_names = list()
+	for (var/datum/reagent/R in reagents.reagent_list)
+		reagent_names += R.name
+
+	return reagent_names
 
 /obj/item/weapon/reagent_containers/proc/reagentlist(var/obj/item/weapon/reagent_containers/snack) //Attack logs for regents in pills
 	var/data
@@ -47,94 +201,3 @@
 			data += "[R.id]([R.volume] units); " //Using IDs because SOME chemicals(I'm looking at you, chlorhydrate-beer) have the same names as other chemicals.
 		return data
 	else return "No reagents"
-
-/obj/item/weapon/reagent_containers/proc/try_to_transfer(obj/target, mob/user, flag)
-	if(!is_open_container() || !flag)
-		return
-
-	if(can_be_placed_into)
-		for(var/type in src.can_be_placed_into)
-			if(istype(target, type))
-				return
-
-	if(ismob(target) && target.reagents && reagents.total_volume)
-
-		var/mob/living/M = target
-		var/list/injected = list()
-		for(var/datum/reagent/R in src.reagents.reagent_list)
-			injected += R.name
-		var/contained = english_list(injected)
-		M.attack_log += text("\[[time_stamp()]\] <font color='orange'>Has been splashed with \the [src.name] by [user.name] ([user.ckey]). Reagents: [contained]</font>")
-		user.attack_log += text("\[[time_stamp()]\] <font color='red'>Used \the [src.name] to splash [M.name] ([M.key]). Reagents: [contained]</font>")
-		msg_admin_attack("[user.name] ([user.ckey]) splashed [M.name] ([M.key]) with \the [src.name]. Reagents: [contained] (INTENT: [uppertext(user.a_intent)]) (<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[user.x];Y=[user.y];Z=[user.z]'>JMP</a>)")
-		if(!iscarbon(user))
-			M.LAssailant = null
-		else
-			M.LAssailant = user
-
-		user.visible_message("<span class='warning'>[target] has been splashed with something by [user]!</span>", \
-		"<span class='notice'>You splash the solution onto \the [target].</span>")
-		src.reagents.reaction(target, TOUCH)
-		spawn(5)
-			src.reagents.clear_reagents()
-		return
-
-	else if(istype(target, /obj/structure/reagent_dispensers)) //A dispenser. Transfer FROM it TO us.
-
-		if(!target.reagents.total_volume && target.reagents)
-			user << "<span class='warning'>\The [target] is empty.</span>"
-			return
-
-		if(reagents.total_volume >= reagents.maximum_volume)
-			user << "<span class='warning'>\The [src] is full.</span>"
-			return
-
-		var/trans = target.reagents.trans_to(src, target:amount_per_transfer_from_this)
-		user << "<span class='notice'>You fill \the [src] with [trans] units of the contents of \the [target].</span>"
-
-	else if(target.is_open_container() && target.reagents) //Something like a glass. Player probably wants to transfer TO it.
-		if(!reagents.total_volume)
-			user << "<span class='warning'>\The [src] is empty.</span>"
-			return
-
-		if(target.reagents.total_volume >= target.reagents.maximum_volume)
-			user << "<span class='warning'>\The [target] is full.</span>"
-			return
-
-		var/trans = src.reagents.trans_to(target, amount_per_transfer_from_this)
-		user << "<span class='notice'>You transfer [trans] units of the solution to \the [target].</span>"
-
-		// /vg/: Logging transfers of bad things
-		if(istype(reagents_to_log) && reagents_to_log.len && target.log_reagents)
-			var/list/badshit=list()
-			for(var/bad_reagent in reagents_to_log)
-				if(reagents.has_reagent(bad_reagent))
-					badshit += reagents_to_log[bad_reagent]
-			if(badshit.len)
-				var/hl="<span class='danger'>([english_list(badshit)])</span>"
-				message_admins("[user.name] ([user.ckey]) added [trans]U to \a [target] with \the [src].[hl] (<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[user.x];Y=[user.y];Z=[user.z]'>JMP</a>)")
-				log_game("[user.name] ([user.ckey]) added [trans]U to \a [target] with \the [src].")
-
-	//Safety for dumping stuff into a ninja suit. It handles everything through attackby() and this is unnecessary.
-	else if(istype(target, /obj/item/clothing/suit/space/space_ninja))
-		return
-
-	else if(istype(target, /obj/machinery/bunsen_burner))
-		return
-
-	else if(istype(target, /obj/machinery/anomaly))
-		return
-
-	else if(reagents.total_volume) //We have already checked for mobs, so this has to be a non-mob
-		user.visible_message("<span class='warning'>\The [target] has been splashed with something by [user]!</span>", \
-		"<span class='notice'>You splash the solution onto \the [target].</span>")
-		if(reagents.has_reagent("fuel"))
-			message_admins("<span class='red'>[user.name] ([user.ckey]) poured Welder Fuel on \the [target]. (<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[user.x];Y=[user.y];Z=[user.z]'>JMP</a>)</span>")
-			log_game("[user.name] ([user.ckey]) poured Welder Fuel on \the [target]. (<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[user.x];Y=[user.y];Z=[user.z]'>JMP</a>)")
-		if(reagents.has_reagent("thermite"))
-			message_admins("<span class='red'>[user.name] ([user.ckey]) poured Thermite onto \the [target]. (<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[user.x];Y=[user.y];Z=[user.z]'>JMP</a>)</span>")
-			log_game("[user.name] ([user.ckey]) poured Thermite onto \the [target]. (<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[user.x];Y=[user.y];Z=[user.z]'>JMP</a>)")
-		src.reagents.reaction(target, TOUCH)
-		spawn(5)
-			src.reagents.clear_reagents()
-		return

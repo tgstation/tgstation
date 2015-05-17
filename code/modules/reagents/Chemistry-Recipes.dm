@@ -267,8 +267,8 @@ datum
 			name = "Virus Food"
 			id = "virusfood"
 			result = "virusfood"
-			required_reagents = list("water" = 1, "milk" = 1)
-			result_amount = 5
+			required_reagents = list("water" = 5, "milk" = 5)
+			result_amount = 15
 
 		leporazine
 			name = "Leporazine"
@@ -582,12 +582,6 @@ datum
 				new /obj/item/stack/sheet/mineral/plastic(get_turf(holder.my_atom),10)
 				return
 
-		virus_food
-			name = "Virus Food"
-			id = "virusfood"
-			result = "virusfood"
-			required_reagents = list("water" = 5, "milk" = 5, "oxygen" = 5)
-			result_amount = 15
 /*
 		mix_virus
 			name = "Mix Virus"

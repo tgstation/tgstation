@@ -142,6 +142,7 @@ obj/machinery/anomaly/attackby(obj/item/weapon/W as obj, mob/living/user as mob)
 			held_container = W
 			updateDialog()
 
+		return 1 // avoid afterattack() being called
 	/*else if(istype(W, /obj/item/weapon/tank))
 		//var/obj/item/weapon/reagent_containers/glass/G = W
 		if(fuel_container)

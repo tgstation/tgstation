@@ -278,8 +278,8 @@
 	New()
 		..()
 		sleep(2)
-		new /obj/item/weapon/reagent_containers/ld50_syringe/chloral(src)
-		new /obj/item/weapon/reagent_containers/ld50_syringe/chloral(src)
+		new /obj/item/weapon/reagent_containers/syringe/giant/chloral(src)
+		new /obj/item/weapon/reagent_containers/syringe/giant/chloral(src)
 		return
 
 
