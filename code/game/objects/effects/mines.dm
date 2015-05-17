@@ -54,8 +54,10 @@
 		if(!target.blocks_air)
 
 			var/datum/gas_mixture/payload = new
+			var/datum/gas/sleeping_agent/trace_gas = new
 
-			payload.set_gas(NITROUS_OXIDE, 30, 0)
+			trace_gas.moles = 30
+			payload += trace_gas
 
 			target.zone.air.merge(payload)
 
@@ -68,7 +70,7 @@
 
 			var/datum/gas_mixture/payload = new
 
-			payload.set_gas(PLASMA, 30, 0)
+			payload.toxins = 30
 
 			target.zone.air.merge(payload)
 

@@ -51,7 +51,11 @@ proc/random_facial_hair_style(gender, species = "Human")
 
 proc/random_name(gender, speciesName = "Human")
 	var/datum/species/S = all_species[speciesName]
-	return S.makeName(gender)
+	if(S)
+		return S.makeName(gender)
+	else
+		var/datum/species/human/H
+		return H.makeName(gender)
 
 proc/random_skin_tone()
 	switch(pick(60;"caucasian", 15;"afroamerican", 10;"african", 10;"latino", 5;"albino"))
@@ -158,3 +162,6 @@ proc/add_ghostlogs(var/mob/user, var/obj/target, var/what_done, var/admin=1, var
 			log_adminghost("[subject_text] [what_done] [target_text] [addition]")
 		else
 			log_ghost("[subject_text] [what_done] [target_text] [addition]")
+
+/mob/proc/isVentCrawling()
+	return (istype(loc, /obj/machinery/atmospherics)) // Crude but no other situation would put them inside of this

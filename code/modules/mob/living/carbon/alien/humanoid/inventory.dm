@@ -32,8 +32,9 @@
 	if(success)
 		if (client)
 			client.screen -= W
-		W.loc = loc
-		if(dropped) W.dropped(src)
+		if(dropped)
+			W.loc = loc
+			W.dropped(src)
 		if(W)
 			W.layer = initial(W.layer)
 	return 1

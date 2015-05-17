@@ -46,7 +46,7 @@ var/global/list/whitelisted_species = list("Human")
 	var/punch_throw_speed = 1
 	var/mutantrace											// Safeguard due to old code.
 
-	var/breath_type = OXYGEN   // Non-oxygen gas breathed, if any.
+	var/breath_type = "oxygen"   // Non-oxygen gas breathed, if any.
 	var/survival_gear = /obj/item/weapon/storage/box/survival // For spawnin'.
 
 	var/cold_level_1 = 260  // Cold damage level 1 below this point.
@@ -103,7 +103,6 @@ var/global/list/whitelisted_species = list("Human")
 	var/wear_mask_icons = 'icons/mob/mask.dmi'
 	var/back_icons      = 'icons/mob/back.dmi'
 
-	var/species_toxic_to_breathe = list(PLASMA)
 
 	//Used in icon caching.
 	var/race_key = 0
@@ -173,26 +172,23 @@ var/global/list/whitelisted_species = list("Human")
 	var/safe_oxygen_min = 16 // Minimum safe partial pressure of O2, in kPa
 	//var/safe_oxygen_max = 140 // Maximum safe partial pressure of O2, in kPa (Not used for now)
 	var/safe_co2_max = 10 // Yes it's an arbitrary value who cares?
-	var/safe_plasma_max = 0.5
-	var/safe_plasma_mask = 5
-	var/N2O_para_min = 1
-	var/N2O_sleep_min = 5
-	var/N2O_emote_min = 0.15
+	var/safe_toxins_max = 0.5
+	var/safe_toxins_mask = 5
+	var/SA_para_min = 1
+	var/SA_sleep_min = 5
 	var/oxygen_used = 0
 	var/nitrogen_used = 0
-	var/breath_pressure = (breath.total_moles*R_IDEAL_GAS_EQUATION*breath.temperature)/BREATH_VOLUME
+	var/breath_pressure = (breath.total_moles()*R_IDEAL_GAS_EQUATION*breath.temperature)/BREATH_VOLUME
 	var/vox_oxygen_max = 1 // For vox.
 
 	//Partial pressure of the O2 in our breath
-	var/O2_pp = (breath.gases[OXYGEN]/breath.total_moles)*breath_pressure
+	var/O2_pp = (breath.oxygen/breath.total_moles())*breath_pressure
 	// Same, but for the toxins
-	var/Plasma_pp = (breath.gases[PLASMA]/breath.total_moles)*breath_pressure
+	var/Toxins_pp = (breath.toxins/breath.total_moles())*breath_pressure
 	// And CO2, lets say a PP of more than 10 will be bad (It's a little less really, but eh, being passed out all round aint no fun)
-	var/CO2_pp = (breath.gases[CARBON_DIOXIDE]/breath.total_moles)*breath_pressure // Tweaking to fit the hacky bullshit I've done with atmo -- TLE
+	var/CO2_pp = (breath.carbon_dioxide/breath.total_moles())*breath_pressure // Tweaking to fit the hacky bullshit I've done with atmo -- TLE
 	// Nitrogen, for Vox.
-	var/Nitrogen_pp = (breath.gases[NITROGEN]/breath.total_moles)*breath_pressure
-
-	var/N2O_pp = (breath.gases[NITROUS_OXIDE]/breath.total_moles)*breath_pressure
+	var/Nitrogen_pp = (breath.nitrogen/breath.total_moles())*breath_pressure
 
 	// TODO: Split up into Voxs' own proc.
 	if(O2_pp < safe_oxygen_min && name != "Vox") 	// Too little oxygen
@@ -203,7 +199,7 @@ var/global/list/whitelisted_species = list("Human")
 			var/ratio = safe_oxygen_min/O2_pp
 			H.adjustOxyLoss(min(5*ratio, HUMAN_MAX_OXYLOSS)) // Don't fuck them up too fast (space only does HUMAN_MAX_OXYLOSS after all!)
 			H.failed_last_breath = 1
-			oxygen_used = breath.gases[OXYGEN]*ratio/6
+			oxygen_used = breath.oxygen*ratio/6
 		else
 			H.adjustOxyLoss(HUMAN_MAX_OXYLOSS)
 			H.failed_last_breath = 1
@@ -216,7 +212,7 @@ var/global/list/whitelisted_species = list("Human")
 			var/ratio = safe_oxygen_min/Nitrogen_pp
 			H.adjustOxyLoss(min(5*ratio, HUMAN_MAX_OXYLOSS))
 			H.failed_last_breath = 1
-			nitrogen_used = breath.gases[NITROGEN]*ratio/6
+			nitrogen_used = breath.nitrogen*ratio/6
 		else
 			H.adjustOxyLoss(HUMAN_MAX_OXYLOSS)
 			H.failed_last_breath = 1
@@ -225,12 +221,12 @@ var/global/list/whitelisted_species = list("Human")
 	else								// We're in safe limits
 		H.failed_last_breath = 0
 		H.adjustOxyLoss(-5)
-		oxygen_used = breath.gases[OXYGEN]/6
+		oxygen_used = breath.oxygen/6
 		H.oxygen_alert = 0
 
-	breath.adjust_gas(OXYGEN, -oxygen_used)
-	breath.adjust_gas(NITROGEN, -nitrogen_used)
-	breath.adjust_gas(CARBON_DIOXIDE, oxygen_used)
+	breath.oxygen -= oxygen_used
+	breath.nitrogen -= nitrogen_used
+	breath.carbon_dioxide += oxygen_used
 
 	//CO2 does not affect failed_last_breath. So if there was enough oxygen in the air but too much co2, this will hurt you, but only once per 4 ticks, instead of once per tick.
 	if(CO2_pp > safe_co2_max)
@@ -247,13 +243,13 @@ var/global/list/whitelisted_species = list("Human")
 	else
 		H.co2overloadtime = 0
 
-	if(Plasma_pp > safe_plasma_max) // Too much toxins
-		var/ratio = (breath.gases[PLASMA]/safe_plasma_max) * 10
+	if(Toxins_pp > safe_toxins_max) // Too much toxins
+		var/ratio = (breath.toxins/safe_toxins_max) * 10
 		//adjustToxLoss(Clamp(ratio, MIN_PLASMA_DAMAGE, MAX_PLASMA_DAMAGE))	//Limit amount of damage toxin exposure can do per second
 		if(H.wear_mask)
 			if(H.wear_mask.flags & BLOCK_GAS_SMOKE_EFFECT)
-				if(breath.gases[PLASMA] > safe_plasma_mask)
-					ratio = (breath.gases[PLASMA]/safe_plasma_mask) * 10
+				if(breath.toxins > safe_toxins_mask)
+					ratio = (breath.toxins/safe_toxins_mask) * 10
 				else
 					ratio = 0
 		if(ratio)
@@ -261,20 +257,23 @@ var/global/list/whitelisted_species = list("Human")
 				H.reagents.add_reagent("plasma", Clamp(ratio, MIN_PLASMA_DAMAGE, MAX_PLASMA_DAMAGE))
 			H.toxins_alert = max(H.toxins_alert, 1)
 	else if(O2_pp > vox_oxygen_max && name == "Vox") //Oxygen is toxic to vox.
-		var/ratio = (breath.gases[OXYGEN]/vox_oxygen_max) * 1000
+		var/ratio = (breath.oxygen/vox_oxygen_max) * 1000
 		H.adjustToxLoss(Clamp(ratio, MIN_PLASMA_DAMAGE, MAX_PLASMA_DAMAGE))
 		H.toxins_alert = max(H.toxins_alert, 1)
 	else
 		H.toxins_alert = 0
 
-	if(N2O_pp > N2O_para_min) // Enough to make us paralysed for a bit
-		H.Paralyse(3) // 3 gives them one second to wake up and run away a bit!
-		if(N2O_pp > N2O_sleep_min) // Enough to make us sleep as well
-			H.sleeping = min(H.sleeping+2, 10)
-	else if(N2O_pp > N2O_emote_min)	// There is sleeping gas in their lungs, but only a little, so give them a bit of a warning
-		if(prob(20))
-			spawn(0) H.emote(pick("giggle", "laugh"))
-	breath.adjust_gas(NITROUS_OXIDE, -breath.gases[NITROUS_OXIDE]) //purge it
+	if(breath.trace_gases.len)	// If there's some other shit in the air lets deal with it here.
+		for(var/datum/gas/sleeping_agent/SA in breath.trace_gases)
+			var/SA_pp = (SA.moles/breath.total_moles())*breath_pressure
+			if(SA_pp > SA_para_min) // Enough to make us paralysed for a bit
+				H.Paralyse(3) // 3 gives them one second to wake up and run away a bit!
+				if(SA_pp > SA_sleep_min) // Enough to make us sleep as well
+					H.sleeping = min(H.sleeping+2, 10)
+			else if(SA_pp > 0.15)	// There is sleeping gas in their lungs, but only a little, so give them a bit of a warning
+				if(prob(20))
+					spawn(0) H.emote(pick("giggle", "laugh"))
+			SA.moles = 0
 
 	if( (abs(310.15 - breath.temperature) > 50) && !(M_RESIST_HEAT in H.mutations)) // Hot air hurts :(
 		if(H.status_flags & GODMODE)	return 1	//godmode
@@ -535,8 +534,7 @@ var/global/list/whitelisted_species = list("Human")
 	cold_level_3 = 0
 
 	eyes = "vox_eyes_s"
-	breath_type = NITROGEN
-	species_toxic_to_breathe = list(OXYGEN, PLASMA)
+	breath_type = "nitrogen"
 
 	flags = IS_WHITELISTED | NO_SCAN
 

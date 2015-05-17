@@ -316,8 +316,8 @@
 
 	var/hotspot = (locate(/obj/fire) in T)
 	if(hotspot && !istype(T, /turf/space))
-		var/datum/gas_mixture/lowertemp = T.remove_air( T:air:total_moles )
-		lowertemp.set_temperature( Clamp(lowertemp.temperature-2000, 0, lowertemp.temperature / 2) )
+		var/datum/gas_mixture/lowertemp = T.remove_air( T:air:total_moles() )
+		lowertemp.temperature = max( min(lowertemp.temperature-2000,lowertemp.temperature / 2) ,0)
 		lowertemp.react()
 		T.assume_air(lowertemp)
 		qdel(hotspot)
@@ -328,8 +328,8 @@
 	var/turf/T = get_turf(O)
 	var/hotspot = (locate(/obj/fire) in T)
 	if(hotspot && !istype(T, /turf/space))
-		var/datum/gas_mixture/lowertemp = T.remove_air( T:air:total_moles )
-		lowertemp.set_temperature( Clamp(lowertemp.temperature-2000, 0, lowertemp.temperature / 2) )
+		var/datum/gas_mixture/lowertemp = T.remove_air( T:air:total_moles() )
+		lowertemp.temperature = max( min(lowertemp.temperature-2000,lowertemp.temperature / 2) ,0)
 		lowertemp.react()
 		T.assume_air(lowertemp)
 		qdel(hotspot)
@@ -681,7 +681,7 @@
 
 	if(!holder) return
 	if(ishuman(M))
-		if(iscult(M) && !isculthead(M) && prob(10))
+		if(iscult(M) && prob(10))
 			M << "<span class='notice'>A cooling sensation from inside you brings you an untold calmness.</span>"
 			ticker.mode.remove_cultist(M.mind)
 			for(var/mob/O in viewers(M, null))
@@ -1472,6 +1472,8 @@
 	else
 		if(O)
 			O.clean_blood()
+			if(O.color && istype(O, /obj/item/weapon/paper))
+				O.color = null
 
 /datum/reagent/space_cleaner/reaction_turf(var/turf/T, var/volume)
 	if(volume >= 1)
@@ -1616,13 +1618,17 @@
 	var/turf/the_turf = get_turf(O)
 	if(!the_turf) return 0
 	var/datum/gas_mixture/napalm = new
-	napalm.set_gas(VOLATILE_FUEL, 5, 0)
+	var/datum/gas/volatile_fuel/fuel = new
+	fuel.moles = 5
+	napalm.trace_gases += fuel
 	the_turf.assume_air(napalm)
 
 /datum/reagent/plasma/reaction_turf(var/turf/T, var/volume)
 	src = null
 	var/datum/gas_mixture/napalm = new
-	napalm.set_gas(VOLATILE_FUEL, 5, 0)
+	var/datum/gas/volatile_fuel/fuel = new
+	fuel.moles = 5
+	napalm.trace_gases += fuel
 	T.assume_air(napalm)
 	return
 
@@ -2889,8 +2895,8 @@
 		T.wet(800)
 	var/hotspot = (locate(/obj/fire) in T)
 	if(hotspot)
-		var/datum/gas_mixture/lowertemp = T.remove_air( T:air:total_moles )
-		lowertemp.set_temperature( Clamp(lowertemp.temperature-2000, 0, lowertemp.temperature / 2) )
+		var/datum/gas_mixture/lowertemp = T.remove_air( T:air:total_moles() )
+		lowertemp.temperature = max( min(lowertemp.temperature-2000,lowertemp.temperature / 2) ,0)
 		lowertemp.react()
 		T.assume_air(lowertemp)
 		del(hotspot)

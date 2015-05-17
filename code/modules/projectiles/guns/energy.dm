@@ -27,6 +27,9 @@
 
 
 /obj/item/weapon/gun/energy/update_icon()
+	if(!power_supply.maxcharge)
+		ASSERT(power_supply.maxcharge > 0)
+		return
 	var/ratio = power_supply.charge / power_supply.maxcharge
 	ratio = round(ratio, 0.25) * 100
 	if(modifystate && charge_states)

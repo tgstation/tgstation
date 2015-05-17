@@ -154,7 +154,7 @@ Class Procs:
 	..()
 
 /obj/machinery/New()
-	machines |= src
+	machines += src
 	return ..()
 
 /obj/machinery/examine(mob/user)

@@ -42,7 +42,7 @@
 	for(var/A in possible_modes)
 		intercepttext += i_text.build(A, pick(head_revolutionaries))
 
-	for (var/obj/machinery/computer/communications/comm in world)
+	for (var/obj/machinery/computer/communications/comm in machines)
 		if (!(comm.stat & (BROKEN | NOPOWER)) && comm.prints_intercept)
 			var/obj/item/weapon/paper/intercept = new /obj/item/weapon/paper( comm.loc )
 			intercept.name = "paper - 'Cent. Com. Status Summary'"
@@ -113,7 +113,7 @@
 	for(var/A in possible_modes)
 		intercepttext += i_text.build(A, pick(head_revolutionaries))
 
-	for (var/obj/machinery/computer/communications/comm in world)
+	for (var/obj/machinery/computer/communications/comm in machines)
 		if (!(comm.stat & (BROKEN | NOPOWER)) && comm.prints_intercept)
 			var/obj/item/weapon/paper/intercept = new /obj/item/weapon/paper( comm.loc )
 			intercept.name = "paper - 'Cent. Com. Status Summary'"
@@ -131,7 +131,7 @@
 		for(var/datum/mind/revmind in head_revolutionaries)
 			intercepttext += "<br>[revmind.current.real_name]"
 		intercepttext += "<br>Please arrest them at once."
-		for (var/obj/machinery/computer/communications/comm in world)
+		for (var/obj/machinery/computer/communications/comm in machines)
 			if (!(comm.stat & (BROKEN | NOPOWER)) && comm.prints_intercept)
 				var/obj/item/weapon/paper/intercept = new /obj/item/weapon/paper( comm.loc )
 				intercept.name = "paper - 'Cent. Com. Status Summary'"
@@ -179,13 +179,13 @@
 /datum/game_mode/rp_revolution/proc/get_possible_revolutionaries()
 	var/list/candidates = list()
 
-	for(var/mob/living/carbon/human/player in world)
+	for(var/mob/living/carbon/human/player in mob_list)
 		if(player.client)
 			if(player.client.be_syndicate & BE_REV)
 				candidates += player.mind
 
 	if(candidates.len < 1)
-		for(var/mob/living/carbon/human/player in world)
+		for(var/mob/living/carbon/human/player in mob_list)
 			if(player.client)
 				candidates += player.mind
 
@@ -200,7 +200,7 @@
 
 /datum/game_mode/rp_revolution/proc/get_unconvertables()
 	var/list/ucs = list()
-	for(var/mob/living/carbon/human/player in world)
+	for(var/mob/living/carbon/human/player in mob_list)
 		if(player.mind)
 			var/role = player.mind.assigned_role
 			if(role in list("Captain", "Head of Security", "Head of Personnel", "Chief Engineer", "Research Director", "Security Officer", "Forensic Technician", "AI"))

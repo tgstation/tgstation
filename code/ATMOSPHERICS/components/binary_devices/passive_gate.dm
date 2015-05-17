@@ -33,8 +33,8 @@
 	if(!on)
 		return
 
-	var/output_starting_pressure = air2.pressure
-	var/input_starting_pressure = air1.pressure
+	var/output_starting_pressure = air2.return_pressure()
+	var/input_starting_pressure = air1.return_pressure()
 
 	if(output_starting_pressure >= min(target_pressure,input_starting_pressure-10))
 		//No need to pump gas if target is already reached or input pressure is too low
@@ -42,7 +42,7 @@
 		return
 
 	//Calculate necessary moles to transfer using PV = nRT
-	if((air1.total_moles > 0) && (air1.temperature>0))
+	if((air1.total_moles() > 0) && (air1.temperature>0))
 		var/pressure_delta = min(target_pressure - output_starting_pressure, (input_starting_pressure - output_starting_pressure)/2)
 		//Can not have a pressure delta that would cause output_pressure > input_pressure
 

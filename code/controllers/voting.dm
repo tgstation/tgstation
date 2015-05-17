@@ -232,6 +232,7 @@ var/global/datum/controller/vote/vote = new()
 		initiator = initiator_key
 		started_time = world.time
 		var/text = "[capitalize(mode)] vote started by [initiator]."
+		choices = shuffle(choices)
 		if(mode == "custom")
 			text += "<br>[question]"
 

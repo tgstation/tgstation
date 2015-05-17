@@ -170,7 +170,8 @@
 		user << "<span class='notice'>\The [src] is already occupied!</span>"
 		return
 	if(isrobot(user))
-		if(!istype(user:module, /obj/item/weapon/robot_module/medical))
+		var/mob/living/silicon/robot/robit = usr
+		if(istype(robit) && !istype(robit.module, /obj/item/weapon/robot_module/medical))
 			user << "<span class='warning'>You do not have the means to do this!</span>"
 			return
 	var/mob/living/L = O
@@ -184,20 +185,17 @@
 			usr << "[L.name] will not fit into the sleeper because they have a slime latched onto their head."
 			return
 	if(L == user)
-		visible_message("[user] starts climbing into the sleeper.", 3)
+		visible_message("[user] starts climbing into \the [src].", 3)
 	else
-		visible_message("[user] starts putting [L.name] into the sleeper.", 3)
+		visible_message("[user] starts putting [L.name] into \the [src].", 3)
 
 	if(do_after(user, 20))
 		if(src.occupant)
 			user << "<span class='notice'><B>The sleeper is already occupied!</B></span>"
 			return
 		if(!L || L.buckled) return
-
-		if(L.client)
-			L.client.perspective = EYE_PERSPECTIVE
-			L.client.eye = src
 		L.loc = src
+		L.reset_view()
 		src.occupant = L
 		src.icon_state = "sleeper_1"
 		if(orient == "RIGHT")
@@ -210,6 +208,36 @@
 			user.stop_pulling()
 		return
 	return
+
+
+/obj/machinery/sleeper/MouseDrop(over_object, src_location, var/turf/over_location, src_control, over_control, params)
+	if(!ishuman(usr) && !isrobot(usr))
+		return
+	if(!occupant)
+		usr << "<span class='warning'>The sleeper is unoccupied!</span>"
+		return
+	if(isrobot(usr))
+		var/mob/living/silicon/robot/robit = usr
+		if(istype(robit) && !istype(robit.module, /obj/item/weapon/robot_module/medical))
+			usr << "<span class='warning'>You do not have the means to do this!</span>"
+			return
+	if(!istype(over_location) || over_location.density)
+		return
+	if(!Adjacent(over_location))
+		return
+	if(!(occupant == usr) && (!Adjacent(usr) || !usr.Adjacent(over_location)))
+		return
+	for(var/atom/movable/A in over_location.contents)
+		if(A.density)
+			if((A == src) || istype(A, /mob))
+				continue
+			return
+	if(occupant == usr)
+		visible_message("[usr] starts climbing out of \the [src].", 3)
+	else
+		visible_message("[usr] starts removing [occupant.name] from \the [src].", 3)
+	if(do_after(usr, 20) && occupant)
+		go_out(over_location)
 
 /obj/machinery/sleeper/allow_drop()
 	return 0
@@ -252,9 +280,7 @@
 		var/mob/M = G.affecting
 		if(!isliving(M) || M.buckled)
 			return
-		if(M.client)
-			M.client.perspective = EYE_PERSPECTIVE
-			M.client.eye = src
+		M.reset_view()
 		M.loc = src
 		src.occupant = M
 		src.icon_state = "sleeper_1"
@@ -321,19 +347,17 @@
 	return
 
 
-/obj/machinery/sleeper/proc/go_out()
-	if(!src.occupant)
-		return
+/obj/machinery/sleeper/proc/go_out(var/exit = src.loc)
+	if(!occupant)
+		return 0
 	for(var/obj/O in src)
 		O.loc = src.loc
-	if(src.occupant.client)
-		src.occupant.client.eye = src.occupant.client.mob
-		src.occupant.client.perspective = MOB_PERSPECTIVE
-	src.occupant.loc = src.loc
-	src.occupant = null
+	occupant.forceMove(exit)
+	occupant.reset_view()
+	occupant = null
 	if(orient == "RIGHT")
 		icon_state = "sleeper_0-r"
-	return
+	return 1
 
 
 /obj/machinery/sleeper/proc/inject_chemical(mob/living/user as mob, chemical, amount)
@@ -410,9 +434,8 @@
 		if(usr.buckled)
 			return
 		usr.stop_pulling()
-		usr.client.perspective = EYE_PERSPECTIVE
-		usr.client.eye = src
 		usr.loc = src
+		usr.reset_view()
 		src.occupant = usr
 		src.icon_state = "sleeper_1"
 		if(orient == "RIGHT")

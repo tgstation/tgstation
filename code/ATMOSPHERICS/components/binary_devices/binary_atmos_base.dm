@@ -31,8 +31,8 @@
 	air1 = new
 	air2 = new
 
-	air1.set_volume(200)
-	air2.set_volume(200)
+	air1.volume = 200
+	air2.volume = 200
 
 /obj/machinery/atmospherics/binary/buildFrom(var/mob/usr,var/obj/item/pipe/pipe)
 	dir = pipe.dir

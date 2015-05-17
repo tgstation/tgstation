@@ -48,7 +48,7 @@ datum/shuttle_controller/proc/incall(coeff = 1)
 			fake_recall = rand(300,500)
 	//turning on the red lights in hallways
 	if(alert == 0)
-		for(var/area/A in world)
+		for(var/area/A in areas)
 			if(istype(A, /area/hallway) && !A.lighting_subarea)
 				A.readyalert()
 
@@ -75,7 +75,7 @@ datum/shuttle_controller/proc/recall()
 			world << sound('sound/AI/shuttlerecalled.ogg')
 			setdirection(-1)
 			online = 1
-			for(var/area/A in world)
+			for(var/area/A in areas)
 				if(istype(A, /area/hallway) && !A.lighting_subarea)
 					A.readyreset()
 			return

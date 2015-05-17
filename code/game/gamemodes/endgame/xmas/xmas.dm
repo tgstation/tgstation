@@ -23,7 +23,7 @@
 	world << "<span class='sinister' style='font-size:22pt'>You feel a sudden chill in the air...</span>"
 
 	// Yes, this will lag.  No, there's nothing I can do about it.
-	for(var/turf/T in world)
+	for(var/turf/T in turfs)
 		OnTurfChange(T)
 
 /client/proc/smissmas()

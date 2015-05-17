@@ -66,11 +66,15 @@
 
 	// AUTOFIXED BY fix_string_idiocy.py
 	// C:\Users\Rob\Documents\Projects\vgstation13\code\modules\mob\mob.dm:25: t+= "<span class='warning'> Temperature: [environment.temperature] \n"
-	t += {"<span class='warning'> Temperature: [environment.temperature] \n</span>"}
-	for(var/gasid in environment.gases)
-		var/datum/gas/gas = environment.get_gas_by_id(gasid)
-		t += {"<span class='notice'> [gas.display_name]: [environment.gases[gasid]] \n</span>"}
+	t += {"<span class='warning'> Temperature: [environment.temperature] \n</span>
+<span class='notice'> Nitrogen: [environment.nitrogen] \n</span>
+<span class='notice'> Oxygen: [environment.oxygen] \n</span>
+<span class='notice'> Plasma : [environment.toxins] \n</span>
+<span class='notice'> Carbon Dioxide: [environment.carbon_dioxide] \n</span>"}
 	// END AUTOFIX
+	for(var/datum/gas/trace_gas in environment.trace_gases)
+		usr << "<span class='notice'> [trace_gas.type]: [trace_gas.moles] \n</span>"
+
 	usr.show_message(t, 1)
 
 /mob/proc/show_message(msg, type, alt, alt_type)//Message, type of message (1 or 2), alternative message, alt message type (1 or 2)
@@ -1193,6 +1197,7 @@ var/list/slot_equipment_priority = list( \
 						statpanel(S.panel,"[S.charge_counter]/[S.charge_max]",S)
 					if(Sp_HOLDVAR)
 						statpanel(S.panel,"[S.holder_var_type] [S.holder_var_amount]",S)
+	sleep(4) //Prevent updating the stat panel for the next .4 seconds, prevents clientside latency from updates
 
 
 
@@ -1461,3 +1466,6 @@ var/list/slot_equipment_priority = list( \
 
 mob/proc/assess_threat()
 	return 0
+
+mob/proc/walking()
+	return !(lying || flying)

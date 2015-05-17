@@ -51,8 +51,8 @@ Thus, the two variables affect pump operation are set in New():
 
 // Pump mechanism just won't do anything if the pressure is too high/too low
 
-	var/input_starting_pressure = air1.pressure
-	var/output_starting_pressure = air2.pressure
+	var/input_starting_pressure = air1.return_pressure()
+	var/output_starting_pressure = air2.return_pressure()
 
 	if((input_starting_pressure < 0.01) || (output_starting_pressure > 9000))
 		return

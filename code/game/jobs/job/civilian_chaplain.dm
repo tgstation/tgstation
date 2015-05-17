@@ -198,7 +198,7 @@
 					if("Koran")
 						B.icon_state = "koran"
 						B.item_state = "koran"
-						for(var/area/chapel/main/A in world)
+						for(var/area/chapel/main/A in areas)
 							for(var/turf/T in A.contents)
 								if(T.icon_state == "carpetsymbol")
 									T.dir = 4
@@ -217,7 +217,7 @@
 					if("Athiest")
 						B.icon_state = "athiest"
 						B.item_state = "syringe_kit"
-						for(var/area/chapel/main/A in world)
+						for(var/area/chapel/main/A in areas)
 							for(var/turf/T in A.contents)
 								if(T.icon_state == "carpetsymbol")
 									T.dir = 10
@@ -230,14 +230,14 @@
 					if("Ithaqua")
 						B.icon_state = "ithaqua"
 						B.item_state = "ithaqua"
-						for(var/area/chapel/main/A in world)
+						for(var/area/chapel/main/A in areas)
 							for(var/turf/T in A.contents)
 								if(T.icon_state == "carpetsymbol")
 									T.dir = 5
 					if("Scientology")
 						B.icon_state = "scientology"
 						B.item_state = "scientology"
-						for(var/area/chapel/main/A in world)
+						for(var/area/chapel/main/A in areas)
 							for(var/turf/T in A.contents)
 								if(T.icon_state == "carpetsymbol")
 									T.dir = 8
@@ -253,14 +253,14 @@
 					if("Book of Shadows")
 						B.icon_state = "shadows"
 						B.item_state = "shadows"
-						for(var/area/chapel/main/A in world)
+						for(var/area/chapel/main/A in areas)
 							for(var/turf/T in A.contents)
 								if(T.icon_state == "carpetsymbol")
 									T.dir = 6
 					if("Torah")
 						B.icon_state = "torah"
 						B.item_state = "torah"
-						for(var/area/chapel/main/A in world)
+						for(var/area/chapel/main/A in areas)
 							for(var/turf/T in A.contents)
 								if(T.icon_state == "carpetsymbol")
 									T.dir = 1
@@ -273,7 +273,7 @@
 					if("Ianism")
 						B.icon_state = "ianism"
 						B.item_state = "ianism"
-						for(var/area/chapel/main/A in world)
+						for(var/area/chapel/main/A in areas)
 							for(var/turf/T in A.contents)
 								if(T.icon_state == "carpetsymbol")
 									T.dir = 9
@@ -284,7 +284,7 @@
 						// if christian bible, revert to default
 						B.icon_state = "bible"
 						B.item_state = "bible"
-						for(var/area/chapel/main/A in world)
+						for(var/area/chapel/main/A in areas)
 							for(var/turf/T in A.contents)
 								if(T.icon_state == "carpetsymbol")
 									T.dir = 2

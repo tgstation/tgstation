@@ -66,7 +66,7 @@ In short:
 
 
 /datum/universal_state/hell/proc/AreaSet()
-	for(var/area/ca in world)
+	for(var/area/ca in areas)
 		var/area/A=get_area_master(ca)
 		if(!istype(A,/area) || A.name=="Space")
 			continue
@@ -99,7 +99,7 @@ In short:
 		A.updateicon()
 
 /datum/universal_state/hell/OverlayAndAmbientSet()
-	for(var/turf/T in world)
+	for(var/turf/T in turfs)
 		if(istype(T, /turf/space))
 			T.overlays += "hell01"
 		else
@@ -107,7 +107,7 @@ In short:
 			T.update_lumcount(1, 255, 0, 0, 0)
 
 /datum/universal_state/hell/proc/MiscSet()
-	for(var/turf/simulated/floor/T in world)
+	for(var/turf/simulated/floor/T in turfs)
 		if(!T.holy && prob(1))
 			new /obj/effect/gateway/active/cult(T)
 

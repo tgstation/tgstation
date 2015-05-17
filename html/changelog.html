@@ -80,6 +80,115 @@ ADDING CREDITS?  EDIT templates/header.html (or footer.html if they're for old t
 		-->
 		<div class="commit sansserif">
 
+			<h2 class="date">2015.05.16</h2>
+			<h3 class="author">Pomf123 updated:</h3>
+			<ul class="changes bgimages16">
+				<li class="tweak">Remove chapel burning vampires, instead nullifies their powers while in side and for a short time afterwards</li>
+				<li class="tweak">head cultists can be deconverted using bible or holy water like the underlings.</li>
+			</ul>
+
+			<h2 class="date">2015.05.15</h2>
+			<h3 class="author">Deity Link updated:</h3>
+			<ul class="changes bgimages16">
+				<li class="bugfix">Fixed Supermatter Cascades not shutting down the powernet.</li>
+				<li class="tweak">From now on, the access requirement on Mining/Research shuttles' consoles gets revoked once the Supermatter Cascade's Centcom Command Report is received. "So you don't have to be a nerd to survive the end of the world."</li>
+				<li class="tweak">Random Events won't proc anymore during Endgame events (no more powernet event bringing the power back online after Nar-Sie has risen for example, even if the event started before the summon).</li>
+				<li class="bugfix">Fixed some shuttle tiles still showing their "hyperspace" underlay after performing a trip.</li>
+				<li class="tweak">All silicons (AI, Borgs, MoMMIs) can now purchase free items from all vending machines.</li>
+				<li class="tweak">Service borgs and MoMMI can purchase items that cost money as well (as they were supposed to originally it seems, but couldn't, because they couldn't swipe their fucking non-existent ID on the machine)</li>
+				<li class="rscadd">Players can now dual-hand a broom to place it between their legs</li>
+				<li class="rscadd">If a Wizard does it, he will start floating, allowing him to fly above tables, wet floors and peels, and move at hyperzine speed. Also lets him move around in space.</li>
+				<li class="rscadd">Stuns will affect a flying Wizard as per usual, making him drop the broom and stop flying.</li>
+				<li class="rscadd">If the Wizard ever stops dual-handing the broom, the effect stops.</li>
+				<li class="rscadd">Broom + Horse mask = Broomstick Horse. Same properties as regular broom, but much more classy.</li>
+				<li class="tweak">the airlocks on the bridge to the west just outside the Research Outpost are now accessible to players with Research access. About damn time.</li>
+			</ul>
+			<h3 class="author">Dylanstrategie updated:</h3>
+			<ul class="changes bgimages16">
+				<li class="tweak">Change the AI Reset Board's description to be much less vague (it only clears non-core laws, it does NOT reset the AI to Asimov)</li>
+				<li class="experimental">Use update_brightness() and update_icon() for all items on the list to minimize shit coding and standardize light items</li>
+				<li class="experimental">You can now light cigarettes and sub-types with anything tagged as is_hot(), works with fire (fire_act)</li>
+				<li class="experimental">Blunts can now hold 50 units of reagents. Don't ask me, it's a really fat blunt</li>
+				<li class="soundadd">Lighters (regular and zippo) now have sounds</li>
+				<li class="rscadd">Added a strike-anywhere matchbox. Can only be obtained for premium on cigarettes machines currently</li>
+				<li class="rscdel">You can no longer shove an entire matchbox into a cigarette pack</li>
+				<li class="tweak">All matchboxes are now a fancy storage with all it entails and contain 21 matches</li>
+				<li class="tweak">Match duration from 5 to 10, on par with strike-anywhere matches. Matches do not go out anymore when dropped</li>
+				<li class="tweak">Cigarettes and sub-types will be put out when dipped into water and will not light if doused in water</li>
+				<li class="tweak">You no longer burn yourself with cheap lighters, instead you'll have to try multiple times to light it (20 % chance)</li>
+				<li class="tweak">All lighters now have 5 attack delay (not in seconds)</li>
+				<li class="bugfix">Fix multiple cases of cigarette-related items not updating lumcount normally</li>
+				<li class="bugfix">Voxes can no longer wear Engineering Hardsuits as intended (Hardsuit doesn't fit, use the pressure suits)</li>
+			</ul>
+			<h3 class="author">Pomf123 updated:</h3>
+			<ul class="changes bgimages16">
+				<li class="bugfix">Fixed secondary language not saving properly.</li>
+				<li class="bugfix">Vehicles and beds or chairs will now properly take their buckled mob with them when using a teleporter.</li>
+				<li class="bugfix">Fixed being able to bypass a zlevel lock using a closet and a teleporter.</li>
+				<li class="tweak">Changed dylans shit a bit and made lighters use fuel, cheap lighters have a lower chance of igniting at lower fuels. Can refuel using a welder tank.</li>
+				<li class="tweak">Restored the QM's ensamble</li>
+				<li class="rscadd">Advanced buildmode now has the ability to copy something with middle click, then build with left click as normal. 'look alike' copying does not work on mobs.</li>
+			</ul>
+
+			<h2 class="date">2015.05.14</h2>
+			<h3 class="author">Clusterfack updated:</h3>
+			<ul class="changes bgimages16">
+				<li class="rscadd">Adding mousedropping yourself and sometimes others out of the following objects Adv scanners, Sleepers, Cryo, DNA scanners, Mechs</li>
+				<li class="tweak">Clicking on IVs when they are attached to a person to detach them, hopefully thats more intuitive</li>
+			</ul>
+			<h3 class="author">Deity Link updated:</h3>
+			<ul class="changes bgimages16">
+				<li class="rscadd">Mechas sent from Mass Drivers now break through windows, grilles, tables, and hurt people.</li>
+			</ul>
+			<h3 class="author">Dylanstrategie updated:</h3>
+			<ul class="changes bgimages16">
+				<li class="rscdel">Removed PDA flashlight's custom color. Too close to white and blends badly in luminous areas</li>
+				<li class="experimental">Testing standardized procs designed to handle luminous items, please report any odd behaviour with RIG helmets</li>
+				<li class="rscadd">Add compatibility for disabling helmet lights after setup and adding in lit helmets at roundstart</li>
+				<li class="rscadd">Add standardized proc to disable action buttons whenever interesting (needs to be called)</li>
+				<li class="rscadd">Add examine() proc with extremely basic information (Can the helmet be lit, and is it lit or not ?)</li>
+				<li class="tweak">Helmet Light action button now only shows if there is a light to be toggled</li>
+				<li class="tweak">Action button for Syndie RIG helmet changed to "Toggle Helmet Camera"</li>
+				<li class="bugfix">Fix gold helmet's _color being incorrectly set, leading to odd behaviour if the icon is updated</li>
+			</ul>
+			<h3 class="author">Pomf123 updated:</h3>
+			<ul class="changes bgimages16">
+				<li class="bugfix">Fix lit flamethrowers not igniting the thrown fuel.</li>
+			</ul>
+
+			<h2 class="date">2015.05.13</h2>
+			<h3 class="author">Pomf123 updated:</h3>
+			<ul class="changes bgimages16">
+				<li class="bugfix">Fixed toxins driver blastdoor not opening, fixed igniters not firing as well</li>
+				<li class="bugfix">Finally fixed what http://github.com/d3athrow/vgstation13/commit/35069b98a71116ffcf48858d372c5ff5afd2a92b should have done and keep 0 damage projectiles from affecting lockboxes.</li>
+			</ul>
+
+			<h2 class="date">2015.05.12</h2>
+			<h3 class="author">9600bauds updated:</h3>
+			<ul class="changes bgimages16">
+				<li class="rscadd">You can now fold paper into paper planes, origami etc. by using the "Fold paper" verb in the rightclick menu.</li>
+				<li class="rscadd">You can also get rid of paper by burning it with a lighter or similar.</li>
+			</ul>
+			<h3 class="author">Clusterfack updated:</h3>
+			<ul class="changes bgimages16">
+				<li class="experimental">All zlevels now have their own bluespace drift when using telescience.</li>
+			</ul>
+			<h3 class="author">Dylanstrategie updated:</h3>
+			<ul class="changes bgimages16">
+				<li class="bugfix">Fix Mech Bay Recharge Ports starting unanchored, leading to all sorts of undesirable behaviour</li>
+			</ul>
+			<h3 class="author">PJB3005 updated:</h3>
+			<ul class="changes bgimages16">
+				<li class="bugfix">Fixed DP vent construction. Never trust other code. Never.</li>
+			</ul>
+
+			<h2 class="date">2015.05.11</h2>
+			<h3 class="author">Pomf123 updated:</h3>
+			<ul class="changes bgimages16">
+				<li class="bugfix">Fixed some parts of Box being disconnected from the main scrubber loop</li>
+				<li class="tweak">Xenobio is now its own closed loop.</li>
+			</ul>
+
 			<h2 class="date">2015.05.09</h2>
 			<h3 class="author">Deity Link updated:</h3>
 			<ul class="changes bgimages16">

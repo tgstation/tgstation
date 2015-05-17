@@ -33,6 +33,12 @@
 		..()
 	handle_layer()
 
+
+/obj/structure/stool/bed/chair/office/forceMove(atom/newLoc)
+	..()
+	handle_rotation(newLoc, dir)
+	handle_layer()
+
 /obj/structure/stool/bed/chair/proc/handle_rotation(atom/newloc, direction)
 	if(buckled_mob)
 		buckled_mob.buckled = null //Temporary, so Move() succeeds.

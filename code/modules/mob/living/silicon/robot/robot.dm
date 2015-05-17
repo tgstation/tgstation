@@ -147,6 +147,18 @@
 		cell_component.installed = 1
 
 	playsound(loc, startup_sound, 75, 1)
+	add_language(LANGUAGE_SOL_COMMON)
+	add_language(LANGUAGE_TRADEBAND)
+	add_language(LANGUAGE_VOX, 0)
+	add_language(LANGUAGE_ROOTSPEAK, 0)
+	add_language(LANGUAGE_GREY, 0)
+	add_language(LANGUAGE_CLATTER, 0)
+	add_language(LANGUAGE_MONKEY, 0)
+	add_language(LANGUAGE_UNATHI, 0)
+	add_language(LANGUAGE_SIIK_TAJR, 0)
+	add_language(LANGUAGE_SKRELLIAN, 0)
+	add_language(LANGUAGE_GUTTER, 0)
+	add_language(LANGUAGE_MONKEY, 0)
 	default_language = all_languages[LANGUAGE_SOL_COMMON]
 
 // setup the PDA and its name
@@ -506,7 +518,7 @@
 	var/obj/item/weapon/tank/jetpack/current_jetpack = installed_jetpack()
 	if (current_jetpack)
 		stat("Internal Atmosphere Info", current_jetpack.name)
-		stat("Tank Pressure", current_jetpack.air_contents.pressure)
+		stat("Tank Pressure", current_jetpack.air_contents.return_pressure())
 
 
 // this function returns the robots jetpack, if one is installed

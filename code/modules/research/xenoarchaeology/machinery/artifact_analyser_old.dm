@@ -257,7 +257,7 @@
 
 	if(href_list["upload"] && cur_id != "")
 		//add new datum to every DB in the world
-		for(var/obj/machinery/computer/artifact_database/DB in world)
+		for(var/obj/machinery/computer/artifact_database/DB in machines)
 			var/update = 0
 			for(var/datum/catalogued_artifact/CA in DB.catalogued_artifacts)
 				if(CA.display_id == cur_id)

@@ -69,6 +69,13 @@
 	var/max_equip = 3
 	var/datum/events/events
 
+	var/turf/crashing = null
+	var/list/mech_parts = list(/obj/item/weapon/cell,
+						/obj/machinery/portable_atmospherics/canister, //I shit you not this thing uses a literal air canister
+						/obj/item/device/radio,
+						/obj/item/mecha_parts,
+						/obj/item/device/mmi)
+
 /obj/mecha/New()
 	..()
 	events = new
@@ -119,10 +126,10 @@
 
 /obj/mecha/proc/add_cabin()
 	cabin_air = new
-	cabin_air.set_temperature(T20C)
-	cabin_air.set_volume(200)
-	cabin_air.adjust_gas(OXYGEN, O2STANDARD*cabin_air.volume/(R_IDEAL_GAS_EQUATION*cabin_air.temperature))
-	cabin_air.adjust_gas(NITROGEN, N2STANDARD*cabin_air.volume/(R_IDEAL_GAS_EQUATION*cabin_air.temperature))
+	cabin_air.temperature = T20C
+	cabin_air.volume = 200
+	cabin_air.oxygen = O2STANDARD*cabin_air.volume/(R_IDEAL_GAS_EQUATION*cabin_air.temperature)
+	cabin_air.nitrogen = N2STANDARD*cabin_air.volume/(R_IDEAL_GAS_EQUATION*cabin_air.temperature)
 	return cabin_air
 
 /obj/mecha/proc/add_radio()
@@ -323,8 +330,61 @@
 
 /obj/mecha/Bump(var/atom/obstacle)
 //	src.inertia_dir = null
-	if(src.throwing)
-		src.throwing = 0//so mechas don't get stuck when landing after being sent by a Mass Driver
+	if(src.throwing)//high velocity mechas in your face!
+		var/breakthrough = 0
+		if(istype(obstacle, /obj/structure/window/))
+			obstacle.Destroy(brokenup = 1)
+			breakthrough = 1
+
+		else if(istype(obstacle, /obj/structure/grille/))
+			var/obj/structure/grille/G = obstacle
+			G.health = (0.25*initial(G.health))
+			G.broken = 1
+			G.icon_state = "[initial(G.icon_state)]-b"
+			G.density = 0
+			getFromPool(/obj/item/stack/rods, get_turf(G.loc))
+			breakthrough = 1
+
+		else if(istype(obstacle, /obj/structure/table))
+			var/obj/structure/table/T = obstacle
+			T.destroy()
+			breakthrough = 1
+
+		else if(istype(obstacle, /obj/structure/rack))
+			new /obj/item/weapon/rack_parts(obstacle.loc)
+			qdel(obstacle)
+			breakthrough = 1
+
+		else if(istype(obstacle, /obj/structure/reagent_dispensers/fueltank))
+			obstacle.ex_act(1)
+
+		else if(istype(obstacle, /mob/living))
+			var/mob/living/L = obstacle
+			var/hit_sound = list('sound/weapons/genhit1.ogg','sound/weapons/genhit2.ogg','sound/weapons/genhit3.ogg')
+			if(L.flags & INVULNERABLE)
+				return
+			L.take_overall_damage(5,0)
+			if(L.buckled)
+				L.buckled = 0
+			L.Stun(5)
+			L.Weaken(5)
+			L.apply_effect(STUTTER, 5)
+			playsound(src, pick(hit_sound), 50, 0, 0)
+			breakthrough = 1
+
+		else
+			src.throwing = 0//so mechas don't get stuck when landing after being sent by a Mass Driver
+			src.crashing = null
+
+		if(breakthrough)
+			if(crashing)
+				spawn(1)
+					src.throw_at(crashing, 50, src.throw_speed)
+			else
+				spawn(1)
+					crashing = get_distant_turf(get_turf(src), dir, 3)//don't use get_dir(src, obstacle) or the mech will stop if he bumps into a one-direction window on his tile.
+					src.throw_at(crashing, 50, src.throw_speed)
+
 	if(istype(obstacle, /obj))
 		var/obj/O = obstacle
 		if(istype(O, /obj/effect/portal)) //derpfix
@@ -821,22 +881,22 @@
 /obj/mecha/proc/return_pressure()
 	. = 0
 	if(use_internal_tank)
-		. =  cabin_air.pressure
+		. =  cabin_air.return_pressure()
 	else
 		var/datum/gas_mixture/t_air = get_turf_air()
 		if(t_air)
-			. = t_air.pressure
+			. = t_air.return_pressure()
 	return
 
 //skytodo: //No idea what you want me to do here, mate.
 /obj/mecha/proc/return_temperature()
 	. = 0
 	if(use_internal_tank)
-		. = cabin_air.temperature
+		. = cabin_air.return_temperature()
 	else
 		var/datum/gas_mixture/t_air = get_turf_air()
 		if(t_air)
-			. = t_air.temperature
+			. = t_air.return_temperature()
 	return
 
 /obj/mecha/proc/connect(obj/machinery/atmospherics/unary/portables_connector/new_port)
@@ -1105,8 +1165,24 @@
 	add_fingerprint(usr)
 	return
 
+/obj/mecha/MouseDrop(over_object, src_location, var/turf/over_location, src_control, over_control, params)
+	if(usr!=src.occupant)
+		return
+	if(!istype(over_location) || over_location.density)
+		return
+	if(!Adjacent(over_location))
+		return
+	for(var/atom/movable/A in over_location.contents)
+		if(A.density)
+			if((A == src) || istype(A, /mob))
+				continue
+			return
+	if(istype(over_location))
+		go_out(over_location)
+	add_fingerprint(usr)
 
-/obj/mecha/proc/go_out()
+
+/obj/mecha/proc/go_out(var/exit = loc)
 	if(!src.occupant) return
 	var/atom/movable/mob_container
 	if(ishuman(occupant))
@@ -1116,19 +1192,19 @@
 		mob_container = brain.container
 	else
 		return
-	if(mob_container.forceMove(src.loc))//ejecting mob container
+	if(mob_container.forceMove(exit))//ejecting mob container
 	/*
-		if(ishuman(occupant) && (pressure > HAZARD_HIGH_PRESSURE))
+		if(ishuman(occupant) && (return_pressure() > HAZARD_HIGH_PRESSURE))
 			use_internal_tank = 0
 			var/datum/gas_mixture/environment = get_turf_air()
 			if(environment)
-				var/env_pressure = environment.pressure
-				var/pressure_delta = (cabin.pressure - env_pressure)
+				var/env_pressure = environment.return_pressure()
+				var/pressure_delta = (cabin.return_pressure() - env_pressure)
 		//Can not have a pressure delta that would cause environment pressure > tank pressure
 
 				var/transfer_moles = 0
 				if(pressure_delta > 0)
-					transfer_moles = pressure_delta*environment.volume/(cabin.temperature * R_IDEAL_GAS_EQUATION)
+					transfer_moles = pressure_delta*environment.volume/(cabin.return_temperature() * R_IDEAL_GAS_EQUATION)
 
 			//Actually transfer the gas
 					var/datum/gas_mixture/removed = cabin.air_contents.remove(transfer_moles)
@@ -1145,6 +1221,9 @@
 			src.occupant.client.eye = src.occupant.client.mob
 			src.occupant.client.perspective = MOB_PERSPECTIVE
 		*/
+		for(var/obj/O in src)
+			if(!is_type_in_list(O,mech_parts))
+				O.loc = src.loc
 		src.occupant << browse(null, "window=exosuit")
 		if(istype(mob_container, /obj/item/device/mmi) || istype(mob_container, /obj/item/device/mmi/posibrain))
 			var/obj/item/device/mmi/mmi = mob_container
@@ -1688,9 +1767,9 @@
 	delay = 20
 
 	process(var/obj/mecha/mecha)
-		if(mecha.cabin_air && mecha.cabin_air.volume > 0)
+		if(mecha.cabin_air && mecha.cabin_air.return_volume() > 0)
 			var/delta = mecha.cabin_air.temperature - T20C
-			mecha.cabin_air.set_temperature(mecha.cabin_air.temperature - max(-10, min(10, round(delta/4,0.1))))
+			mecha.cabin_air.temperature -= max(-10, min(10, round(delta/4,0.1)))
 		return
 
 /datum/global_iterator/mecha_tank_give_air
@@ -1702,21 +1781,21 @@
 			var/datum/gas_mixture/cabin_air = mecha.cabin_air
 
 			var/release_pressure = mecha.internal_tank_valve
-			var/cabin_pressure = cabin_air.pressure
-			var/pressure_delta = min(release_pressure - cabin_pressure, (tank_air.pressure - cabin_pressure)/2)
+			var/cabin_pressure = cabin_air.return_pressure()
+			var/pressure_delta = min(release_pressure - cabin_pressure, (tank_air.return_pressure() - cabin_pressure)/2)
 			var/transfer_moles = 0
 			if(pressure_delta > 0) //cabin pressure lower than release pressure
-				if(tank_air.temperature > 0)
-					transfer_moles = pressure_delta*cabin_air.volume/(cabin_air.temperature * R_IDEAL_GAS_EQUATION)
+				if(tank_air.return_temperature() > 0)
+					transfer_moles = pressure_delta*cabin_air.return_volume()/(cabin_air.return_temperature() * R_IDEAL_GAS_EQUATION)
 					var/datum/gas_mixture/removed = tank_air.remove(transfer_moles)
 					cabin_air.merge(removed)
 			else if(pressure_delta < 0) //cabin pressure higher than release pressure
 				var/datum/gas_mixture/t_air = mecha.get_turf_air()
 				pressure_delta = cabin_pressure - release_pressure
 				if(t_air)
-					pressure_delta = min(cabin_pressure - t_air.pressure, pressure_delta)
+					pressure_delta = min(cabin_pressure - t_air.return_pressure(), pressure_delta)
 				if(pressure_delta > 0) //if location pressure is lower than cabin pressure
-					transfer_moles = pressure_delta*cabin_air.volume/(cabin_air.temperature * R_IDEAL_GAS_EQUATION)
+					transfer_moles = pressure_delta*cabin_air.return_volume()/(cabin_air.return_temperature() * R_IDEAL_GAS_EQUATION)
 					var/datum/gas_mixture/removed = cabin_air.remove(transfer_moles)
 					if(t_air)
 						t_air.merge(removed)
@@ -1749,12 +1828,12 @@
 				if(mecha.internal_tank.return_pressure()>mecha.internal_tank.maximum_pressure && !(mecha.hasInternalDamage(MECHA_INT_TANK_BREACH)))
 					mecha.setInternalDamage(MECHA_INT_TANK_BREACH)
 				var/datum/gas_mixture/int_tank_air = mecha.internal_tank.return_air()
-				if(int_tank_air && int_tank_air.volume>0) //heat the air_contents
-					int_tank_air.set_temperature(min(6000+T0C, int_tank_air.temperature+rand(10,15)))
-			if(mecha.cabin_air && mecha.cabin_air.volume>0)
-				mecha.cabin_air.set_temperature(min(6000+T0C, mecha.cabin_air.temperature+rand(10,15)))
-				if(mecha.cabin_air.temperature>mecha.max_temperature/2)
-					mecha.take_damage(4/round(mecha.max_temperature/mecha.cabin_air.temperature,0.1),"fire")
+				if(int_tank_air && int_tank_air.return_volume()>0) //heat the air_contents
+					int_tank_air.temperature = min(6000+T0C, int_tank_air.temperature+rand(10,15))
+			if(mecha.cabin_air && mecha.cabin_air.return_volume()>0)
+				mecha.cabin_air.temperature = min(6000+T0C, mecha.cabin_air.return_temperature()+rand(10,15))
+				if(mecha.cabin_air.return_temperature()>mecha.max_temperature/2)
+					mecha.take_damage(4/round(mecha.max_temperature/mecha.cabin_air.return_temperature(),0.1),"fire")
 		if(mecha.hasInternalDamage(MECHA_INT_TEMP_CONTROL)) //stop the mecha_preserve_temp loop datum
 			mecha.pr_int_temp_processor.stop()
 		if(mecha.hasInternalDamage(MECHA_INT_TANK_BREACH)) //remove some air from internal tank

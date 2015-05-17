@@ -228,7 +228,7 @@
 	damage = max( damage + ( (removed.temperature - 800) / 150 ) , 0 )
 	//Ok, 100% oxygen atmosphere = best reaction
 	//Maxes out at 100% oxygen pressure
-	oxygen = Clamp((removed.gases[OXYGEN] - (removed.gases[NITROGEN] * NITROGEN_RETARDATION_FACTOR)) / MOLES_CELLSTANDARD, 0, 1)
+	oxygen = max(min((removed.oxygen - (removed.nitrogen * NITROGEN_RETARDATION_FACTOR)) / MOLES_CELLSTANDARD, 1), 0)
 
 	var/temp_factor = 100
 
@@ -254,14 +254,16 @@
 
 	//Also keep in mind we are only adding this temperature to (efficiency)% of the one tile the rock
 	//is on. An increase of 4*C @ 25% efficiency here results in an increase of 1*C / (#tilesincore) overall.
-	removed.set_temperature(removed.temperature + (device_energy / THERMAL_RELEASE_MODIFIER))
+	removed.temperature += (device_energy / THERMAL_RELEASE_MODIFIER)
 
-	removed.set_temperature(Clamp(removed.temperature, 0, 2500))
+	removed.temperature = max(0, min(removed.temperature, 2500))
 
 	//Calculate how much gas to release
-	removed.adjust_gas(PLASMA, max(device_energy / PLASMA_RELEASE_MODIFIER, 0))
+	removed.toxins += max(device_energy / PLASMA_RELEASE_MODIFIER, 0)
 
-	removed.adjust_gas(OXYGEN, max((device_energy + removed.temperature - T0C) / OXYGEN_RELEASE_MODIFIER, 0))
+	removed.oxygen += max((device_energy + removed.temperature - T0C) / OXYGEN_RELEASE_MODIFIER, 0)
+
+	removed.update_values()
 
 	env.merge(removed)
 

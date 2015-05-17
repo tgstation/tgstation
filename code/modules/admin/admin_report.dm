@@ -118,7 +118,7 @@ client/proc/display_admin_reports()
 	usr << browse(output, "window=news;size=600x400")
 
 
-client/proc/Report(mob/M as mob in world)
+client/proc/Report(mob/M as mob in mob_list)
 	set category = "Admin"
 	if(!src.holder)
 		return

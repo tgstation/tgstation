@@ -30,13 +30,13 @@
 		icon_state = "[initial(icon_state)]-on"
 		if(user && loc == user)
 			user.SetLuminosity(user.luminosity + brightness_on)
-		else if(isturf(loc))
+		else
 			SetLuminosity(brightness_on)
 	else
 		icon_state = initial(icon_state)
 		if(user && loc == user)
 			user.SetLuminosity(user.luminosity - brightness_on)
-		else if(isturf(loc))
+		else
 			SetLuminosity(0)
 
 /obj/item/device/flashlight/attack_self(mob/user)

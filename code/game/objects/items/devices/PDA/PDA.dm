@@ -24,7 +24,6 @@ var/global/list/obj/item/device/pda/PDAs = list()
 	//Secondary variables
 	var/scanmode = 0 //1 is medical scanner, 2 is forensics, 3 is reagent scanner, 4 is halogen counter, 5 is gas scanner, 6 is device analyser -- keep this list updated if you add one
 	var/fon = 0 //Is the flashlight function on?
-	l_color = "#D8FFF2" //Related to the flashlight function. We Fallout now
 	var/f_lum = 2 //Luminosity for the flashlight function
 	var/silent = 0 //To beep or not to beep, that is the question
 	var/toff = 0 //If 1, messenger disabled
@@ -839,7 +838,28 @@ var/global/list/obj/item/device/pda/PDAs = list()
 				else
 					var/datum/gas_mixture/environment = T.return_air()
 
-					dat += atmos_analys.output_gas_scan(environment, T, 0) //no human standards, go get a real analyzer
+					var/pressure = environment.return_pressure()
+					var/total_moles = environment.total_moles()
+
+					dat += "Air Pressure: [round(pressure,0.1)] kPa<br>"
+
+					if (total_moles)
+						var/o2_level = environment.oxygen/total_moles
+						var/n2_level = environment.nitrogen/total_moles
+						var/co2_level = environment.carbon_dioxide/total_moles
+						var/plasma_level = environment.toxins/total_moles
+						var/unknown_level =  1-(o2_level+n2_level+co2_level+plasma_level)
+
+						// AUTOFIXED BY fix_string_idiocy.py
+						// C:\Users\Rob\Documents\Projects\vgstation13\code\game\objects\items\devices\PDA\PDA.dm:476: dat += "Nitrogen: [round(n2_level*100)]%<br>"
+						dat += {"Nitrogen: [round(n2_level*100)]%<br>
+							Oxygen: [round(o2_level*100)]%<br>
+							Carbon Dioxide: [round(co2_level*100)]%<br>
+							Plasma: [round(plasma_level*100)]%<br>"}
+						// END AUTOFIX
+						if(unknown_level > 0.01)
+							dat += "OTHER: [round(unknown_level)]%<br>"
+					dat += "Temperature: [round(environment.temperature-T0C)]&deg;C<br>"
 				dat += "<br>"
 
 			if (5)
@@ -955,7 +975,7 @@ var/global/list/obj/item/device/pda/PDAs = list()
 						dat += {"<span class='warning'>It appears that our services have yet to produce a minimap of this station. We apologize for the inconvenience.</span>"}
 
 					if(T.z == map.zMainStation)
-						dat += {"Current Location: <b>[T.loc.name] ([T.x-WORLD_X_OFFSET],[T.y-WORLD_Y_OFFSET],1)</b><br>"}	//it's a "Station Map" app, so it only gives information reguarding
+						dat += {"Current Location: <b>[T.loc.name] ([T.x-WORLD_X_OFFSET[map.zMainStation]],[T.y-WORLD_Y_OFFSET[map.zMainStation]],1)</b><br>"}	//it's a "Station Map" app, so it only gives information reguarding
 					else																									//the station's z-level
 						dat += {"Current Location: <b>Unknown</b><br>"}
 
@@ -967,7 +987,7 @@ var/global/list/obj/item/device/pda/PDAs = list()
 						if(T.z == map.zMainStation)
 							dat += {"<img src="pda_minimap_loc.gif" style="position: absolute; top: [(T.y * -1) + 247]px; left: [T.x-8]px;"/>"}
 						for(var/datum/minimap_marker/mkr in app.markers)
-							dat += {"<img src="pda_minimap_mkr.gif" style="position: absolute; top: [((mkr.y+WORLD_Y_OFFSET) * -1) + 247]px; left: [mkr.x+WORLD_X_OFFSET-8]px;"/>"}
+							dat += {"<img src="pda_minimap_mkr.gif" style="position: absolute; top: [((mkr.y+WORLD_Y_OFFSET[map.zMainStation]) * -1) + 247]px; left: [mkr.x+WORLD_X_OFFSET[map.zMainStation]-8]px;"/>"}
 						dat += {"</div>"}
 
 					else
@@ -978,7 +998,7 @@ var/global/list/obj/item/device/pda/PDAs = list()
 						if(T.z == map.zMainStation)
 							dat += {"<img src="pda_minimap_loc.gif" style="position: absolute; top: [(T.y * -1) + 247]px; left: [T.x-8]px;"/>"}
 						for(var/datum/minimap_marker/mkr in app.markers)
-							dat += {"<img src="pda_minimap_mkr.gif" style="position: absolute; top: [((mkr.y+WORLD_Y_OFFSET) * -1) + 247]px; left: [mkr.x+WORLD_X_OFFSET-8]px;"/>"}
+							dat += {"<img src="pda_minimap_mkr.gif" style="position: absolute; top: [((mkr.y+WORLD_Y_OFFSET[map.zMainStation]) * -1) + 247]px; left: [mkr.x+WORLD_X_OFFSET[map.zMainStation]-8]px;"/>"}
 						dat += {"</div>"}
 
 /*
@@ -1398,14 +1418,14 @@ var/global/list/obj/item/device/pda/PDAs = list()
 				switch(href_list["mMark"])
 					if("x")
 						var/new_x = input("Please input desired X coordinate.", "Station Map App", app.markx) as num
-						var/x_validate=new_x+WORLD_X_OFFSET
+						var/x_validate=new_x+WORLD_X_OFFSET[map.zMainStation]
 						if(x_validate < 1 || x_validate > 255)
 							usr << "<span class='caution'>Error: Invalid X coordinate.</span>"
 						else
 							app.markx = new_x
 					if("y")
 						var/new_y = input("Please input desired Y coordinate.", "Station Map App", app.marky) as num
-						var/y_validate=new_y+WORLD_Y_OFFSET
+						var/y_validate=new_y+WORLD_Y_OFFSET[map.zMainStation]
 						if(y_validate < 1 || y_validate > 255)
 							usr << "<span class='caution'>Error: Invalid Y coordinate.</span>"
 						else

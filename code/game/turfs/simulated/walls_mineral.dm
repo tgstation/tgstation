@@ -105,8 +105,8 @@
 			target_tile.parent.suspend_group_processing()*/
 		var/datum/gas_mixture/napalm = new
 		var/toxinsToDeduce = 20
-		napalm.adjust_gas(PLASMA, toxinsToDeduce)
-		napalm.set_temperature(400+T0C)
+		napalm.toxins = toxinsToDeduce
+		napalm.temperature = 400+T0C
 		target_tile.assume_air(napalm)
 		spawn (0) target_tile.hotspot_expose(temperature, 400,surfaces=1)
 	for(var/obj/structure/falsewall/plasma/F in range(3,src))//Hackish as fuck, but until fire_act works, there is nothing I can do -Sieve

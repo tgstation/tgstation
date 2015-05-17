@@ -101,6 +101,9 @@ var/list/department_radio_keys = list(
 )
 
 /mob/living/proc/get_default_language()
+	if(!default_language)
+		if(languages && languages.len)
+			default_language = languages[1]
 	return default_language
 
 /mob/living/hivecheck()

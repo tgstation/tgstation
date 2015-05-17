@@ -44,7 +44,7 @@ var/global/sent_syndicate_strike_team = 0
 //Code for spawning a nuke auth code.
 	var/nuke_code
 	var/temp_code
-	for(var/obj/machinery/nuclearbomb/N in world)
+	for(var/obj/machinery/nuclearbomb/N in machines)
 		temp_code = text2num(N.r_code)
 		if(temp_code)//if it's actually a number. It won't convert any non-numericals.
 			nuke_code = N.r_code

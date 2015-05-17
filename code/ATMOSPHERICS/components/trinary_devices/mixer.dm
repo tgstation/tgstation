@@ -33,14 +33,14 @@ obj/machinery/atmospherics/trinary/mixer/power_change()
 
 obj/machinery/atmospherics/trinary/mixer/New()
 	..()
-	air3.set_volume(300)
+	air3.volume = 300
 
 obj/machinery/atmospherics/trinary/mixer/process()
 	. = ..()
 	if(!on)
 		return
 
-	var/output_starting_pressure = air3.pressure
+	var/output_starting_pressure = air3.return_pressure()
 
 	if(output_starting_pressure >= target_pressure)
 		//No need to mix if target is already full!
@@ -58,8 +58,8 @@ obj/machinery/atmospherics/trinary/mixer/process()
 	if(air2.temperature > 0)
 		transfer_moles2 = (node2_concentration*pressure_delta)*air3.volume/(air2.temperature * R_IDEAL_GAS_EQUATION)
 
-	var/air1_moles = air1.total_moles
-	var/air2_moles = air2.total_moles
+	var/air1_moles = air1.total_moles()
+	var/air2_moles = air2.total_moles()
 
 	if((air1_moles < transfer_moles1) || (air2_moles < transfer_moles2))
 		if(!transfer_moles1 || !transfer_moles2) return

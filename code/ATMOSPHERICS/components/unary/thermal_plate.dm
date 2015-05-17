@@ -26,34 +26,34 @@
 
 	//Get processable air sample and thermal info from environment
 
-	var/transfer_moles = 0.25 * environment.total_moles
+	var/transfer_moles = 0.25 * environment.total_moles()
 	var/datum/gas_mixture/external_removed = environment.remove(transfer_moles)
 
 	if (!external_removed)
 		return radiate()
 
-	if (external_removed.total_moles < 10)
+	if (external_removed.total_moles() < 10)
 		return radiate()
 
 	//Get same info from connected gas
 
-	var/internal_transfer_moles = 0.25 * air_contents.total_moles
+	var/internal_transfer_moles = 0.25 * air_contents.total_moles()
 	var/datum/gas_mixture/internal_removed = air_contents.remove(internal_transfer_moles)
 
 	if (!internal_removed)
 		environment.merge(external_removed)
 		return
 
-	var/combined_heat_capacity = internal_removed.heat_capacity + external_removed.heat_capacity
-	var/combined_energy = internal_removed.thermal_energy() + external_removed.thermal_energy()
+	var/combined_heat_capacity = internal_removed.heat_capacity() + external_removed.heat_capacity()
+	var/combined_energy = internal_removed.temperature * internal_removed.heat_capacity() + external_removed.heat_capacity() * external_removed.temperature
 
 	if(!combined_heat_capacity) combined_heat_capacity = 1
 	var/final_temperature = combined_energy / combined_heat_capacity
 
-	external_removed.set_temperature(final_temperature)
+	external_removed.temperature = final_temperature
 	environment.merge(external_removed)
 
-	internal_removed.set_temperature(final_temperature)
+	internal_removed.temperature = final_temperature
 	air_contents.merge(internal_removed)
 
 	network.update = 1
@@ -73,18 +73,18 @@
 		air_contents.copy_from(network.radiate) //We can cut down on processing time by only calculating radiate() once and then applying the result
 		return
 
-	var/internal_transfer_moles = 0.25 * air_contents.total_moles
+	var/internal_transfer_moles = 0.25 * air_contents.total_moles()
 	var/datum/gas_mixture/internal_removed = air_contents.remove(internal_transfer_moles)
 
 	if (!internal_removed)
 		return
 
-	var/combined_heat_capacity = internal_removed.heat_capacity + RADIATION_CAPACITY
-	var/combined_energy = internal_removed.thermal_energy() + (RADIATION_CAPACITY * 6.4)
+	var/combined_heat_capacity = internal_removed.heat_capacity() + RADIATION_CAPACITY
+	var/combined_energy = internal_removed.temperature * internal_removed.heat_capacity() + (RADIATION_CAPACITY * 6.4)
 
 	var/final_temperature = combined_energy / combined_heat_capacity
 
-	internal_removed.set_temperature(final_temperature)
+	internal_removed.temperature = final_temperature
 	air_contents.merge(internal_removed)
 
 	if (network)

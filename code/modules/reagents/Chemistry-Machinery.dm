@@ -1770,17 +1770,7 @@ USE THIS CHEMISTRY DISPENSER FOR MAPS SO THEY START AT 100 ENERGY
 
 
 /obj/item/weapon/reagent_containers/mortar/afterattack(obj/target, mob/user , flag)
-	if(target.is_open_container() && target.reagents) //Something like a glass. Player probably wants to transfer TO it.
-		if(!reagents.total_volume)
-			user << "<span class='warning'>[src] is empty.</span>"
-			return
-
-		if(target.reagents.total_volume >= target.reagents.maximum_volume)
-			user << "<span class='warning'>[target] is full.</span>"
-			return
-
-		var/trans = src.reagents.trans_to(target, amount_per_transfer_from_this)
-		user << "<span class='notice'>You transfer [trans] units of the solution to [target].</span>"
+	try_to_transfer(target,user,flag)
 
 /obj/item/weapon/reagent_containers/mortar/attackby(var/obj/item/O as obj, var/mob/user as mob)
 	if (isscrewdriver(O))

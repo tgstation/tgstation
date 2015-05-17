@@ -166,7 +166,7 @@
 				del(internal)
 			else
 				stat("Internal Atmosphere Info", internal.name)
-				stat("Tank Pressure", internal.air_contents.pressure)
+				stat("Tank Pressure", internal.air_contents.return_pressure())
 				stat("Distribution Pressure", internal.distribute_pressure)
 		if(mind)
 			if(mind.changeling)
@@ -1515,7 +1515,6 @@
 	else					src.see_invisible = SEE_INVISIBLE_LIVING
 	if((src.species.default_mutations.len > 0) || (src.species.default_blocks.len > 0))
 		src.do_deferred_species_setup = 1
-	src.toxic_to_breathe = species.species_toxic_to_breathe //stops Vox breathing out of oxy tanks
 	spawn()
 		src.dna.species = new_species_name
 		src.update_icons()

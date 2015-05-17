@@ -72,8 +72,18 @@ There's been a galaxy-wide electromagnetic pulse.  All of our systems are heavil
 
 You have five minutes before the universe collapses. Good l\[\[###!!!-
 
-AUTOMATED ALERT: Link to [command_name()] lost."}
+AUTOMATED ALERT: Link to [command_name()] lost.
+
+The access requirements on the Asteroid Shuttles' consoles have now been revoked.
+"}
 		command_alert(txt,"SUPERMATTER CASCADE DETECTED")
+
+		for(var/obj/machinery/computer/research_shuttle/C in machines)
+			C.req_access = null
+
+		for(var/obj/machinery/computer/mining_shuttle/C in machines)
+			C.req_access = null
+
 		sleep(5 MINUTES)
 		ticker.declare_completion()
 		ticker.station_explosion_cinematic(0,null) // TODO: Custom cinematic
@@ -96,7 +106,7 @@ AUTOMATED ALERT: Link to [command_name()] lost."}
 		return
 
 /datum/universal_state/supermatter_cascade/proc/AreaSet()
-	for(var/area/ca in world)
+	for(var/area/ca in areas)
 		var/area/A=get_area_master(ca)
 		if(!istype(A,/area) || A.name=="Space" || istype(A,/area/beach))
 			continue
@@ -127,7 +137,7 @@ AUTOMATED ALERT: Link to [command_name()] lost."}
 		A.updateicon()
 
 /datum/universal_state/supermatter_cascade/OverlayAndAmbientSet()
-	for(var/turf/T in world)
+	for(var/turf/T in turfs)
 		if(istype(T, /turf/space))
 			T.overlays += "end01"
 		else
@@ -136,12 +146,12 @@ AUTOMATED ALERT: Link to [command_name()] lost."}
 				T.update_lumcount(1, 160, 255, 0, 0)
 
 /datum/universal_state/supermatter_cascade/proc/MiscSet()
-	for (var/obj/machinery/firealarm/alm in world)
+	for (var/obj/machinery/firealarm/alm in machines)
 		if (!(alm.stat & BROKEN))
 			alm.ex_act(2)
 
 /datum/universal_state/supermatter_cascade/proc/APCSet()
-	for (var/obj/machinery/power/apc/APC in world)
+	for (var/obj/machinery/power/apc/APC in power_machines)
 		if (!(APC.stat & BROKEN) && !APC.is_critical)
 			APC.chargemode = 0
 			if(APC.cell)

@@ -119,8 +119,6 @@
 
 	explosion_block = 3//that's some high quality plasteel door
 
-	explosion_block = 2
-
 /obj/machinery/door/airlock/freezer
 	name = "Freezer Airlock"
 	icon = 'icons/obj/doors/Doorfreezer.dmi'
@@ -256,8 +254,8 @@
 //			target_tile.parent.suspend_group_processing()
 		var/datum/gas_mixture/napalm = new
 		var/toxinsToDeduce = 35
-		napalm.adjust_gas(PLASMA, toxinsToDeduce)
-		napalm.set_temperature(400+T0C)
+		napalm.toxins = toxinsToDeduce
+		napalm.temperature = 400+T0C
 		target_tile.assume_air(napalm)
 		spawn (0)
 			target_tile.hotspot_expose(temperature, 400, surfaces=1)
@@ -1222,7 +1220,7 @@ About the new airlock wires panel:
 	wires = new(src)
 	if(src.closeOtherId != null)
 		spawn (5)
-			for (var/obj/machinery/door/airlock/A in world)
+			for (var/obj/machinery/door/airlock/A in machines)
 				if(A.closeOtherId == src.closeOtherId && A != src)
 					src.closeOther = A
 					break

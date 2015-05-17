@@ -280,7 +280,7 @@
 	if(!environment)
 		return
 
-	var/pressure = environment.pressure
+	var/pressure = environment.return_pressure()
 	if(pressure < seed.lowkpa_tolerance || pressure > seed.highkpa_tolerance)
 		die()
 		return

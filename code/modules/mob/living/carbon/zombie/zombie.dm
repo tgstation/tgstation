@@ -537,7 +537,7 @@ datum/reagent/zed
 	if(usr) message_admins("[key_name_admin(usr)] has spawned a zombie", 1)
 	biohazard_alert(7)
 	var/list/t = list()
-	for(var/obj/landmark/zspawn/O in world)
+	for(var/obj/landmark/zspawn/O in landmarks_list)
 		t += O
 	if(!t.len)
 		usr<<"No spawn points exist."

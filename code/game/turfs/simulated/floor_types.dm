@@ -1,8 +1,8 @@
 /turf/simulated/floor/airless
 	icon_state = "floor"
 	name = "airless floor"
-	starting_gases = list(OXYGEN = 0.01, // BIRDS HATE OXYGEN FOR SOME REASON
-						NITROGEN = 0.01)
+	oxygen = 0.01
+	nitrogen = 0.01
 	temperature = TCMB
 
 	New()
@@ -15,8 +15,8 @@
 	icon_state = "plating"
 	name = "vox plating"
 	//icon = 'icons/turf/shuttle-debug.dmi'
-	starting_gases = list(OXYGEN = 0, // BIRDS HATE OXYGEN FOR SOME REASON
-						NITROGEN = MOLES_O2STANDARD+MOLES_N2STANDARD) // So it totals to the same pressure
+	oxygen=0 // BIRDS HATE OXYGEN FOR SOME REASON
+	nitrogen = MOLES_O2STANDARD+MOLES_N2STANDARD // So it totals to the same pressure
 
 	New()
 		..()
@@ -26,8 +26,8 @@
 	icon_state = "floor"
 	name = "vox floor"
 	//icon = 'icons/turf/shuttle-debug.dmi'
-	starting_gases = list(OXYGEN = 0, // BIRDS HATE OXYGEN FOR SOME REASON
-						NITROGEN = MOLES_O2STANDARD+MOLES_N2STANDARD) // So it totals to the same pressure
+	oxygen=0 // BIRDS HATE OXYGEN FOR SOME REASON
+	nitrogen = MOLES_O2STANDARD+MOLES_N2STANDARD // So it totals to the same pressure
 
 	New()
 		..()
@@ -149,18 +149,24 @@
 	return
 
 /turf/simulated/floor/engine/airless
-	starting_gases = list(OXYGEN = 0.01,
-						NITROGEN = 0.01)
+	oxygen = 0.01
+	nitrogen = 0.01
 
 /turf/simulated/floor/engine/n20
-
-
+	New()
+		..()
+		if(src.air)
+			// EXACTLY the same code as fucking roomfillers.  If this doesn't work, something's fucked.
+			var/datum/gas/sleeping_agent/trace_gas = new
+			air.trace_gases += trace_gas
+			trace_gas.moles = 9*4000
+			air.update_values()
 
 /turf/simulated/floor/engine/vacuum
 	name = "vacuum floor"
 	icon_state = "engine"
-	starting_gases = list(OXYGEN = 0,
-						NITROGEN = 0.001)
+	oxygen = 0
+	nitrogen = 0.001
 	temperature = TCMB
 
 /turf/simulated/floor/plating
@@ -178,8 +184,8 @@
 /turf/simulated/floor/plating/airless
 	icon_state = "plating"
 	name = "airless plating"
-	starting_gases = list(OXYGEN = 0.01,
-						NITROGEN = 0.01)
+	oxygen = 0.01
+	nitrogen = 0.01
 	temperature = TCMB
 
 	New()
@@ -367,11 +373,11 @@
 
 // VOX SHUTTLE SHIT
 /turf/simulated/shuttle/floor/vox
-	starting_gases = list(OXYGEN = 0, // BIRDS HATE OXYGEN FOR SOME REASON
-						NITROGEN = MOLES_O2STANDARD+MOLES_N2STANDARD) // So it totals to the same pressure
+	oxygen=0 // BIRDS HATE OXYGEN FOR SOME REASON
+	nitrogen = MOLES_O2STANDARD+MOLES_N2STANDARD // So it totals to the same pressure
 	//icon = 'icons/turf/shuttle-debug.dmi'
 
 /turf/simulated/shuttle/plating/vox
-	starting_gases = list(OXYGEN = 0, // BIRDS HATE OXYGEN FOR SOME REASON
-						NITROGEN = MOLES_O2STANDARD+MOLES_N2STANDARD) // So it totals to the same pressure
+	oxygen=0 // BIRDS HATE OXYGEN FOR SOME REASON
+	nitrogen = MOLES_O2STANDARD+MOLES_N2STANDARD // So it totals to the same pressure
 	//icon = 'icons/turf/shuttle-debug.dmi'

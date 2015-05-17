@@ -55,7 +55,7 @@ var/list/SPS_list = list()
 			if(G.emped == 1)
 				t += "<BR>[tracked_gpstag]: ERROR"
 			else
-				t += "<BR>[tracked_gpstag]: [format_text(gps_area.name)] ([pos.x-WORLD_X_OFFSET], [pos.y-WORLD_Y_OFFSET], [pos.z])"
+				t += "<BR>[tracked_gpstag]: [format_text(gps_area.name)] ([pos.x-WORLD_X_OFFSET[pos.z]], [pos.y-WORLD_Y_OFFSET[pos.z]], [pos.z])"
 
 	var/datum/browser/popup = new(user, "GPS", name, 600, 450)
 	popup.set_content(t)

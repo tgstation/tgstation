@@ -118,7 +118,7 @@ obj/item/check_airflow_movable(n)
 
 proc/Airflow(zone/A, zone/B)
 	set background = 1
-	var/n = B.air.pressure - A.air.pressure
+	var/n = B.air.return_pressure() - A.air.return_pressure()
 
 	 //Don't go any further if n is lower than the lowest value needed for airflow.
 	if(abs(n) < zas_settings.Get(/datum/ZAS_Setting/airflow_lightest_pressure)) return
@@ -199,7 +199,7 @@ proc/AirflowSpace(zone/A)
 	spawn()
 		//The space version of the Airflow(A,B,n) proc.
 
-		var/n = A.air.pressure
+		var/n = A.air.return_pressure()
 		//Here, n is determined by only the pressure in the room.
 
 		if(n < zas_settings.Get(/datum/ZAS_Setting/airflow_lightest_pressure)) return

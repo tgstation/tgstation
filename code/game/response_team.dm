@@ -142,14 +142,13 @@ proc/trigger_armed_response_team(var/force = 0)
 	sleep(600 * 5)
 	send_emergency_team = 0 // Can no longer join the ERT.
 
-	var/area/storage/nuke_storage/nukeloc = locate()//To find the nuke in the vault
-	var/obj/machinery/nuclearbomb/nuke = locate() in nukeloc
-	if(!nuke)
-		nuke = locate() in world
+	var/nuke_code
+	for(var/obj/machinery/nuclearbomb/nuke in machines)
+		nuke_code = nuke.r_code
 	var/obj/item/weapon/paper/P = new
-	P.info = "Your orders, Commander, are to use all means necessary to return the station to a survivable condition.<br>To this end, you have been provided with the best tools we can give in the three areas of Medicine, Engineering, and Security. The nuclear authorization code is: <b>[ nuke ? nuke.r_code : "AHH, THE NUKE IS GONE!"]</b>. Be warned, if you detonate this without good reason, we will hold you to account for damages. Memorise this code, and then burn this message."
+	P.info = "Your orders, Commander, are to use all means necessary to return the station to a survivable condition.<br>To this end, you have been provided with the best tools we can give in the three areas of Medicine, Engineering, and Security. The nuclear authorization code is: <b>[ nuke_code ? nuke_code : "No Nuke Found, Request Another!"]</b>. Be warned, if you detonate this without good reason, we will hold you to account for damages. Memorise this code, and then burn this message."
 	P.name = "Emergency Nuclear Code, and ERT Orders"
-	for (var/obj/effect/landmark/A in world)
+	for (var/obj/effect/landmark/A in landmarks_list)
 		if (A.name == "nukecode")
 			P.loc = A.loc
 			del(A)

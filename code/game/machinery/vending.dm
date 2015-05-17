@@ -529,15 +529,24 @@
 
 	//testing("..(): [href]")
 
+	var/free_vend = 0
 	if(istype(usr,/mob/living/silicon))
+		var/can_vend = 1
+		if (href_list["vend"] && src.vend_ready && !currently_vending)
+			var/idx=text2num(href_list["vend"])
+			var/cat=text2num(href_list["cat"])
+			var/datum/data/vending_product/R = GetProductByID(idx,cat)
+			if(R.price)
+				can_vend = 0//all borgs can buy free items from vending machines
 		if(istype(usr,/mob/living/silicon/robot))
 			var/mob/living/silicon/robot/R = usr
-			if(!(R.module && istype(R.module,/obj/item/weapon/robot_module/butler) ) && !isMoMMI(R))
-				usr << "<span class='warning'>The vending machine refuses to interface with you, as you are not in its target demographic!</span>"
-				return
-		else
+			if((R.module && istype(R.module,/obj/item/weapon/robot_module/butler) ) || isMoMMI(R))
+				can_vend = 1//only service borgs and MoMMI can buy costly items
+		if(!can_vend)
 			usr << "<span class='warning'>The vending machine refuses to interface with you, as you are not in its target demographic!</span>"
 			return
+		else
+			free_vend = 1//so that don't have to swipe their non-existant IDs
 
 	if(href_list["remove_coin"])
 		if(!coin)
@@ -569,6 +578,8 @@
 			return
 
 		if(R.price == null || !R.price)
+			src.vend(R, usr)
+		else if(free_vend)//for MoMMI and Service Borgs
 			src.vend(R, usr)
 		else
 			src.currently_vending = R
@@ -880,12 +891,11 @@
 	desc = "If you want to get cancer, might as well do it in style"
 	product_slogans = "Space cigs taste good like a cigarette should.;I'd rather toolbox than switch.;Smoke!;Don't believe the reports - smoke today!"
 	product_ads = "Probably not bad for you!;Don't believe the scientists!;It's good for you!;Don't quit, buy more!;Smoke!;Nicotine heaven.;Best cigarettes since 2150.;Award-winning cigs."
-	vend_delay = 34
 	icon_state = "cigs"
-	products = list(/obj/item/weapon/storage/fancy/cigarettes = 10,/obj/item/weapon/storage/box/matches = 10,/obj/item/weapon/lighter/random = 4)
+	products = list(/obj/item/weapon/storage/fancy/cigarettes = 10,/obj/item/weapon/storage/fancy/matchbox = 10,/obj/item/weapon/lighter/random = 4)
 	contraband = list(/obj/item/weapon/lighter/zippo = 4)
-	premium = list(/obj/item/clothing/mask/cigarette/cigar/havana = 2)
-	prices = list(/obj/item/weapon/storage/fancy/cigarettes = 60,/obj/item/weapon/storage/box/matches = 10,/obj/item/weapon/lighter/random = 60)
+	premium = list(/obj/item/weapon/storage/fancy/matchbox/strike_anywhere = 10,/obj/item/clothing/mask/cigarette/cigar/havana = 2)
+	prices = list(/obj/item/weapon/storage/fancy/cigarettes = 20,/obj/item/weapon/storage/fancy/matchbox = 25,/obj/item/weapon/lighter/random = 25)
 
 	pack = /obj/structure/vendomatpack/cigarette
 
@@ -1263,7 +1273,7 @@
 					/obj/item/weapon/light/tube = 10,/obj/item/clothing/suit/fire = 4, /obj/item/weapon/stock_parts/scanning_module = 5,/obj/item/weapon/stock_parts/micro_laser = 5,
 					/obj/item/weapon/stock_parts/matter_bin = 5,/obj/item/weapon/stock_parts/manipulator = 5,/obj/item/weapon/stock_parts/console_screen = 5)
 	contraband = list(/obj/item/weapon/wrench/socket = 1, /obj/item/weapon/extinguisher/foam = 1, /obj/item/device/device_analyser = 2)
-	premium = list(/obj/item/clothing/under/rank/chief_engineer = 2, /obj/item/weapon/storage/belt = 2) //belt is the best belt in the game.				
+	premium = list(/obj/item/clothing/under/rank/chief_engineer = 2, /obj/item/weapon/storage/belt = 2) //belt is the best belt in the game.
 	// There was an incorrect entry (cablecoil/power).  I improvised to cablecoil/heavyduty.
 	// Another invalid entry, /obj/item/weapon/circuitry.  I don't even know what that would translate to, removed it.
 	// The original products list wasn't finished.  The ones without given quantities became quantity 5.  -Sayu

@@ -339,7 +339,7 @@ client/proc/antag_madness(var/mob/M in mob_list)
 			M.equip_to_slot_or_del(new/obj/item/clothing/gloves/grey, slot_gloves)
 			M.equip_to_slot_or_del(new/obj/item/weapon/katana, slot_belt)
 			M.equip_to_slot_or_del(new/obj/item/device/flash, slot_l_store)
-			M.equip_to_slot_or_del(new/obj/item/weapon/storage/box/matches, slot_r_store)
+			M.equip_to_slot_or_del(new/obj/item/weapon/storage/fancy/matchbox/strike_anywhere, slot_r_store)
 			M.regenerate_icons()
 			M.equip_to_slot_or_del(new/obj/item/weapon/gun/energy/laser/LaserAK, slot_in_backpack)
 			M.equip_to_slot_or_del(new/obj/item/weapon/gun/energy/laser/LaserAK, slot_in_backpack)
@@ -483,6 +483,7 @@ client/proc/antag_madness(var/mob/M in mob_list)
 				M.equip_to_slot_or_del(new/obj/item/clothing/shoes/sandal, slot_shoes)
 				M.equip_to_slot_or_del(new/obj/item/clothing/head/wizard, slot_head)
 				M.equip_to_slot_or_del(new/obj/item/clothing/suit/wizrobe, slot_wear_suit)
+				M.equip_to_slot_or_del(new/obj/item/weapon/staff, slot_l_hand)
 
 				M.r_eyes = 102
 				M.g_eyes = 51
@@ -503,6 +504,7 @@ client/proc/antag_madness(var/mob/M in mob_list)
 				M.equip_to_slot_or_del(new/obj/item/clothing/shoes/sandal/marisa, slot_shoes)
 				M.equip_to_slot_or_del(new/obj/item/clothing/head/wizard/marisa, slot_head)
 				M.equip_to_slot_or_del(new/obj/item/clothing/suit/wizrobe/marisa, slot_wear_suit)
+				M.equip_to_slot_or_del(new/obj/item/weapon/staff/broom, slot_l_hand)
 
 				M.r_eyes = 153
 				M.g_eyes = 102
@@ -525,7 +527,6 @@ client/proc/antag_madness(var/mob/M in mob_list)
 			M.equip_to_slot_or_del(new/obj/item/device/radio/headset, slot_ears)
 			M.equip_to_slot_or_del(new/obj/item/clothing/under/lightpurple, slot_w_uniform)
 			M.equip_to_slot_or_del(new/obj/item/weapon/storage/backpack/satchel, slot_back)
-			M.equip_to_slot_or_del(new/obj/item/weapon/staff, slot_l_hand)
 			var/obj/item/weapon/spellbook/S = new/obj/item/weapon/spellbook(M)
 			S.uses = 30
 			S.op = 0
