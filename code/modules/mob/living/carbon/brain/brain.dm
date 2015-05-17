@@ -10,6 +10,8 @@
 	hasmouth=0 // Can't feed it.
 	icon = 'icons/obj/surgery.dmi'
 	icon_state = "brain1"
+	universal_speak = 1
+	universal_understand = 1
 
 /mob/living/carbon/brain/New()
 		var/datum/reagents/R = new/datum/reagents(1000)
