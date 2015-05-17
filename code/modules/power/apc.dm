@@ -598,17 +598,18 @@
 		return
 	src.add_fingerprint(user)
 	if(usr == user && opened && (!issilicon(user) || ismommi(user)))
-		if(cell)
-			user.put_in_hands(cell)
-			cell.add_fingerprint(user)
-			cell.updateicon()
+		if(src.Adjacent(user))
+			if(cell)
+				user.put_in_hands(cell)
+				cell.add_fingerprint(user)
+				cell.updateicon()
 
-			src.cell = null
-			user.visible_message("<span class='warning'>[user.name] removes the power cell from [src.name]!</span>",\
-								 "<span class='notice'>You remove the power cell.</span>")
-			//user << "You remove the power cell."
-			charging = 0
-			src.update_icon()
+				src.cell = null
+				user.visible_message("<span class='warning'>[user.name] removes the power cell from [src.name]!</span>",\
+									 "<span class='notice'>You remove the power cell.</span>")
+				//user << "You remove the power cell."
+				charging = 0
+				src.update_icon()
 		return
 	if(stat & (BROKEN|MAINT))
 		return
