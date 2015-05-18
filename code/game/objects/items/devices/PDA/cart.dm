@@ -23,6 +23,10 @@
 	var/access_status_display = 0
 	var/access_quartermaster = 0
 	var/access_hydroponics = 0
+
+	var/access_robotics = 0
+	var/access_botcontrol = 0
+
 	var/mode = null
 	var/menu
 	var/datum/data/record/active1 = null //General
@@ -211,18 +215,6 @@
 	..()
 	radio = new /obj/item/radio/integrated/medbot(src)
 
-/obj/item/weapon/cartridge/rd
-	name = "\improper Signal Ace DELUXE cartridge"
-	icon_state = "cart-rd"
-	access_manifest = 1
-	access_status_display = 1
-	access_reagent_scanner = 1
-	access_atmos = 1
-
-/obj/item/weapon/cartridge/rd/New()
-	..()
-	radio = new /obj/item/radio/integrated/signal(src)
-
 /obj/item/weapon/cartridge/captain
 	name = "\improper Value-PAK cartridge"
 	desc = "Now with 200% more value!"
@@ -245,6 +237,35 @@
 	access_remote_door = 1
 	remote_door_id = "smindicate" //Make sure this matches the syndicate shuttle's shield/door id!!	//don't ask about the name, testing.
 	var/shock_charges = 4
+
+/obj/item/weapon/cartridge/robotics
+	name = "\improper Botmaster cartridge"
+	icon_state = "cart-tox"
+	access_robotics = 1
+	var/obj/item/radio/integrated/radioclean	//Cleanbot radio
+	var/obj/item/radio/integrated/radiofloor	//Floorbot radio
+	var/obj/item/radio/integrated/radiomed		//Medbot radio
+
+/obj/item/weapon/cartridge/robotics/New()
+	..()
+	radioclean = new /obj/item/radio/integrated/cleanbot(src)
+	radiofloor = new /obj/item/radio/integrated/floorbot(src)
+	radiomed = new /obj/item/radio/integrated/medbot(src)
+	if(radioclean && radiofloor && radiomed)
+		access_botcontrol = 1	//Sanity check
+
+/obj/item/weapon/cartridge/robotics/rd	//Child of cartridge/robotics now
+	name = "\improper Signal Ace DELUXE cartridge"
+	icon_state = "cart-rd"
+	access_manifest = 1
+	access_status_display = 1
+	access_reagent_scanner = 1
+	access_atmos = 1
+	access_robotics = 1	//Redundant since inherited from cartridge/robotics
+
+/obj/item/weapon/cartridge/robotics/rd/New()
+	..()
+	radio = new /obj/item/radio/integrated/signal(src)
 
 /obj/item/weapon/cartridge/proc/unlock()
 	if (!istype(loc, /obj/item/device/pda))
@@ -735,6 +756,74 @@ Code:
 			for(var/datum/feed_message/msg in current.messages)
 				menu +="-[msg.body] <BR><FONT SIZE=1>\[Story by <FONT COLOR='maroon'>[msg.author]</FONT>\]</FONT><BR>"
 			menu += "<br> <A href='byond://?src=\ref[src];choice=Newscaster Message'>Post Message</a>"
+
+		if (54) // Borg specs
+			menu = "<h4><img src=pda_notes.png> Cyborg specifications</h4>"
+			menu += "<br>"
+			var/robots = 0
+			for(var/mob/living/silicon/robot/R in mob_list)
+				if(!istype(R))
+					continue
+				else if(R.scrambledcodes)
+					continue
+				robots++
+				menu += "[R.name] |"
+				if(R.stat)
+					menu += " Not Responding<br>"
+				else if (!R.canmove)
+					menu += " Locked Down<br>"
+				else
+					menu += " Operating Normally<br>"
+				if (!R.canmove)
+				else if(R.cell)
+					menu += "Battery Installed ([R.cell.charge]/[R.cell.maxcharge])<br>"
+				else
+					menu += "No Cell Installed<br>"
+				if(R.module)
+					menu += "Module Installed ([R.module.name])<br>"
+				else
+					menu += "No Module Installed<br>"
+				if(R.connected_ai)
+					menu += " Slaved to [R.connected_ai.name]"
+				else
+					menu += " Independent from AI"
+				menu += "<BR>"
+
+			if(!robots)
+				menu += "No Cyborg Units detected within access parameters."
+
+		if (55) // Mech tracking
+			menu = "<h4><img src=pda_signaler.png> Tracking beacons data</h4>"
+			for(var/obj/item/mecha_parts/mecha_tracking/TR in world)
+				var/answer = TR.get_mecha_info()
+				if(answer)
+					menu += "<hr>[answer]<br/>"
+
+/obj/item/weapon/cartridge/robotics/generate_menu()
+	..()
+
+	switch(mode)
+		if (56) //Robotics cleanbot control
+			if(radioclean)
+				menu = "<br><h4><img src=pda_cleanbot.png> Cleanbot Interlink</h4>"
+				var/obj/item/radio/integrated/cleanbot/SC = radioclean
+				bot_control(SC)
+			else
+				menu = "Cleanbot interlink error<br>"
+		if (57) //Robotics floorbot control
+			if(radiofloor)
+				menu = "<h4><img src=pda_floorbot.png> Floorbot Interlink</h4>"
+				var/obj/item/radio/integrated/floorbot/SC = radiofloor
+				bot_control(SC)
+			else
+				menu = "Floorbot interlink error<br>"
+		if (58) //Robotics medibot control
+			if(radiomed)
+				menu = "<h4><img src=pda_medbot.png> Medibot Interlink</h4>"
+				var/obj/item/radio/integrated/medbot/SC = radiomed
+				bot_control(SC)
+			else
+				menu = "Medibot interlink error<br>"
 
 /obj/item/weapon/cartridge/Topic(href, href_list)
 	..()
