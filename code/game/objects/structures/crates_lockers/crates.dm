@@ -362,6 +362,7 @@
 
 	icon_state = icon_opened
 	src.opened = 1
+	src.density = 0
 	return 1
 
 /obj/structure/closet/crate/close()
@@ -371,6 +372,7 @@
 
 	icon_state = icon_closed
 	src.opened = 0
+	src.density = 1
 	return 1
 
 /obj/structure/closet/crate/insert(var/atom/movable/AM, var/include_mobs = 0)
