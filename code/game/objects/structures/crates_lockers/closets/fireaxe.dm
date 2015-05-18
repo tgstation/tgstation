@@ -16,6 +16,9 @@
 
 /obj/structure/closet/fireaxecabinet/empty
 	fireaxe = null
+	locked = 0 //Doesn't matter if an empty cabinet is locked. Make sure to lock it after you put the axe in, though.
+	localopened = 1
+	icon_state = "fireaxe0100"
 
 /obj/structure/closet/fireaxecabinet/examine(mob/user)
 
