@@ -356,8 +356,12 @@
 		var/obj/item/stack/rods/R = I
 		if (R.use(1))
 			var/obj/item/weapon/flamethrower/F = new /obj/item/weapon/flamethrower(user.loc)
-			user.unEquip(src)
-			loc = F
+			if(istype(loc,/obj/item/weapon/storage))
+				var/obj/item/weapon/storage/S = loc
+				S.remove_from_storage(src,F)
+			else
+				user.unEquip(src)
+				loc = F
 			F.weldtool = src
 			add_fingerprint(user)
 			user << "<span class='notice'>You add a rod to a welder, starting to build a flamethrower.</span>"
