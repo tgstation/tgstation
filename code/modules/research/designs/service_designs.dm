@@ -92,7 +92,7 @@
 	build_path = /obj/item/devices/upgrades/spacecart
 	category = list("service")
 
-/datum/design/Whetstone //needs to be sprited
+/datum/design/whetstone //needs to be sprited
 	name = "Whetstone"
 	desc = "A strange stone used by many citizens of ancient Earth to sharpen metal tools."
 	id = "whetstone"
@@ -102,7 +102,7 @@
 	build_path = /obj/item/weapon/kitchen/whetstone
 	category = list("service")
 	
-/datum/design/borghypo
+/datum/design/borghypo // needs to be fixed for carbon use
 	name = "Advanced Shaker"
 	desc = "A tool used to generate drinks, like the one service cyborgs use."
 	id = "cyborg shaker"
