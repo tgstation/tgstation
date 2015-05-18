@@ -14,7 +14,7 @@
 
 	var/time_coeff = 1.5 //can be upgraded with research
 	var/resource_coeff = 1.5 //can be upgraded with research
-	max_material_storage = 225000 //All this could probably be done better with a list but meh.
+	max_material_storage = 450000 //All this could probably be done better with a list but meh.
 
 	var/datum/research/files
 	var/id
@@ -56,7 +56,7 @@
 	var/T = 0
 	for(var/obj/item/weapon/stock_parts/matter_bin/M in component_parts)
 		T += M.rating - 1
-	max_material_storage = (initial(max_material_storage)+(T * 75000))
+	max_material_storage = (initial(max_material_storage)+(T * 112500))
 
 	T = 0
 	for(var/obj/item/weapon/stock_parts/micro_laser/Ma in component_parts)
