@@ -39,11 +39,6 @@
 	else
 		num_changelings = max(1, min(num_players(), changeling_amount/2))
 
-	for(var/datum/mind/player in possible_changelings)
-		for(var/job in restricted_jobs)//Removing robots from the list
-			if(player.assigned_role == job)
-				possible_changelings -= player
-
 	if(possible_changelings.len>0)
 		for(var/j = 0, j < num_changelings, j++)
 			if(!possible_changelings.len) break
@@ -51,6 +46,7 @@
 			possible_changelings -= changeling
 			changelings += changeling
 			modePlayer += changelings
+			changeling.restricted_roles = restricted_jobs
 		return ..()
 	else
 		return 0
