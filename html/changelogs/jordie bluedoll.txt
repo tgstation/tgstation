@@ -1,0 +1,6 @@
+author: Jordie0608
+
+delete-after: True
+
+changes: 
+  - imageadd: "The healthdoll is now blue when at full health to make it more clear when a body part is injured."
