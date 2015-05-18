@@ -4,13 +4,13 @@
 	name = "emergency floodlight"
 	icon = 'icons/obj/machines/floodlight.dmi'
 	icon_state = "flood00"
-	anchored = 1
+	density = 1
 	var/on = 0
 	var/obj/item/weapon/cell/high/cell = null
 	var/powercost = 5
 	var/brightness_on = 8	//This time justified in balance. Encumbering but nice lightning
 
-	machine_flags = SCREWTOGGLE | WRENCHMOVE | FIXED2WORK
+	machine_flags = SCREWTOGGLE
 
 /obj/machinery/floodlight/New()
 	src.cell = new(src)
