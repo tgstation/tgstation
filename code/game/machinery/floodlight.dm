@@ -10,7 +10,7 @@
 	var/powercost = 5
 	var/brightness_on = 8	//This time justified in balance. Encumbering but nice lightning
 
-	machine_flags = SCREWTOGGLE
+	machine_flags = SCREWTOGGLE | WRENCHMOVE
 
 /obj/machinery/floodlight/New()
 	src.cell = new(src)
