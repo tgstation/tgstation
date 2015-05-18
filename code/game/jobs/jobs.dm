@@ -121,7 +121,7 @@ var/list/nonhuman_positions = list(
 	"AI",
 	"Cyborg",
 	"pAI",
-	"Mobile MMI"
+	"MoMMI"
 )
 
 
