@@ -138,8 +138,15 @@ var/list/LOGGED_SPLASH_REAGENTS = list("fuel", "thermite")
 		return -1
 
 	var/success
+	// Transfer from dispenser
+	if (can_receive && istype(target, /obj/structure/reagent_dispensers))
+		var/tx_amount = transfer_sub(target, src, target:amount_per_transfer_from_this, user)
+		if (tx_amount > 0)
+			user << "<span class='notice'>You fill \the [src][src.is_full() ? " to the brim" : ""] with [tx_amount] units of the contents of \the [target].</span>"
+
+		return tx_amount
 	// Transfer to container
-	if (can_send /*&& target.reagents**/)
+	else if (can_send /*&& target.reagents**/)
 		var/obj/container = target
 		if (!container.is_open_container() && istype(container,/obj/item/weapon/reagent_containers))
 			return -1
@@ -156,13 +163,7 @@ var/list/LOGGED_SPLASH_REAGENTS = list("fuel", "thermite")
 				log_reagents(user, src, target, tx_amount, bad_reagents)
 
 			return tx_amount
-	// Transfer from dispenser
-	else if (can_receive && istype(target, /obj/structure/reagent_dispensers))
-		var/tx_amount = transfer_sub(target, src, target:amount_per_transfer_from_this, user)
-		if (tx_amount > 0)
-			user << "<span class='notice'>You fill \the [src][src.is_full() ? " to the brim" : ""] with [tx_amount] units of the contents of \the [target].</span>"
 
-		return tx_amount
 	if(!success)
 		// Mob splashing
 		if(splashable_units != 0)
