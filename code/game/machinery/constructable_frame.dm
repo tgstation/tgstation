@@ -399,7 +399,7 @@ obj/item/weapon/circuitboard/rdserver
 							"/obj/item/weapon/stock_parts/manipulator" = 2,
 							"/obj/item/weapon/stock_parts/micro_laser" = 3,
 							"/obj/item/weapon/stock_parts/console_screen" = 1)
-							
+
 /obj/item/weapon/circuitboard/chem_dispenser/brewer
 	name = "Circuit Board (Brewer)"
 	build_path = "/obj/machinery/chem_dispenser/brewer"
@@ -407,7 +407,7 @@ obj/item/weapon/circuitboard/rdserver
 /obj/item/weapon/circuitboard/chem_dispenser/soda_dispenser
 	name = "Circuit Board (Soda Dispenser)"
 	build_path = "/obj/machinery/chem_dispenser/soda_dispenser"
-	
+
 /obj/item/weapon/circuitboard/chem_dispenser/booze_dispenser
 	name = "Circuit Board (Booze Dispenser)"
 	build_path = "/obj/machinery/chem_dispenser/booze_dispenser"
@@ -527,7 +527,26 @@ obj/item/weapon/circuitboard/rdserver
 							"/obj/item/weapon/stock_parts/scanning_module" = 1,
 							"/obj/item/weapon/stock_parts/manipulator" = 1,
 							"/obj/item/weapon/stock_parts/micro_laser" = 1,
-							"/obj/item/weapon/stock_parts/console_screen" = 1,)
+							"/obj/item/weapon/stock_parts/console_screen" = 1)
+
+/obj/item/weapon/circuitboard/fullbodyscanner
+	name = "Circuit board (Full Body Scanner)"
+	build_path = "/obj/machinery/bodyscanner"
+	board_type = "machine"
+	origin_tech = "biotech=2"
+	frame_desc = "Requires 3 Scanning Module."
+	req_components = list(
+							"/obj/item/weapon/stock_parts/scanning_module" = 3)
+
+/obj/item/weapon/circuitboard/sleeper
+	name = "Circuit board (Sleeper)"
+	build_path = "/obj/machinery/sleeper"
+	board_type = "machine"
+	origin_tech = "biotech=2"
+	frame_desc = "Requires 2 Scanning Module, 2 Manipulator."
+	req_components = list(
+							"/obj/item/weapon/stock_parts/scanning_module" = 1,
+							"/obj/item/weapon/stock_parts/manipulator" = 2)
 
 /obj/item/weapon/circuitboard/biogenerator
 	name = "Circuit Board (Biogenerator)"
