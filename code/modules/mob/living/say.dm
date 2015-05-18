@@ -218,7 +218,8 @@ var/list/department_radio_keys = list(
 	else
 		deaf_message = "<span class='notice'>You can't hear yourself!</span>"
 		deaf_type = 2 // Since you should be able to hear yourself without looking
-	if(!say_understands(speaker, speaking) || force_compose) //force_compose is so AIs don't end up without their hrefs.
+	var/atom/movable/AM = speaker.GetSource()
+	if(!say_understands((istype(AM) ? AM : speaker),speaking)|| force_compose) //force_compose is so AIs don't end up without their hrefs.
 		message = compose_message(speaker, speaking, raw_message, radio_freq)
 	show_message(message, 2, deaf_message, deaf_type)
 	return message

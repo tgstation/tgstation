@@ -13,6 +13,7 @@
 
 /mob/living/carbon/slime/Hear(message, atom/movable/speaker, var/datum/language/speaking, raw_message, radio_freq)
 	if(speaker != src && !radio_freq)
+		if(speaker) speaker = speaker.GetSource()
 		if(speaker in Friends)
 			speech_buffer = list()
 			speech_buffer += speaker.name

@@ -159,7 +159,7 @@
 				winset(client, "input", "text=[null]")
 
 /mob/living/carbon/human/say_understands(var/mob/other,var/datum/language/speaking = null)
-
+	if(other) other = other.GetSource()
 	if(has_brain_worms()) //Brain worms translate everything. Even mice and alien speak.
 		return 1
 
@@ -176,10 +176,10 @@
 		if (istype(other, /mob/living/carbon/slime))
 			return 1
 
+
 	//This is already covered by mob/say_understands()
 	//if (istype(other, /mob/living/simple_animal))
 	//	if((other.universal_speak && !speaking) || src.universal_speak || src.universal_understand)
 	//		return 1
 	//	return 0
-
 	return ..()

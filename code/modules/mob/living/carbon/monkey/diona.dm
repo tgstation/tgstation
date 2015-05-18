@@ -155,7 +155,7 @@
 		src.drop_from_inventory(W)
 	del(src)
 /mob/living/carbon/monkey/diona/say_understands(var/mob/other,var/datum/language/speaking = null)
-
+	if(other) other = other.GetSource()
 	if (istype(other, /mob/living/carbon/human))
 		if(speaking && speaking.name == "Sol Common")
 			if(donors.len >= 2) // They have sucked down some blood.

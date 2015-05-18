@@ -73,9 +73,10 @@
 	message = "<span class='siliconsay'>[message]</span>"
 	return message
 
-/mob/living/silicon/say_understands(var/other,var/datum/language/speaking = null)
+/mob/living/silicon/say_understands(var/atom/movable/other,var/datum/language/speaking = null)
 	//These only pertain to common. Languages are handled by mob/say_understands()
 	if (!speaking)
+		if(other) other = other.GetSource()
 		if (istype(other, /mob/living/carbon))
 			return 1
 		if (istype(other, /mob/living/silicon))
