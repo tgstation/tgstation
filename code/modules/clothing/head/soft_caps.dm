@@ -19,7 +19,14 @@
 
 
 /obj/item/clothing/head/soft/AltClick(var/mob/user)
-	flip(user)
+	..()
+	if(!user.canUseTopic(user))
+		user << "<span class='warning'>You can't do that right now!</span>"
+		return
+	if(!in_range(src, user))
+		return
+	else
+		flip(user)
 
 
 /obj/item/clothing/head/soft/proc/flip(var/mob/user)
