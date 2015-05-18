@@ -23,14 +23,10 @@
 	update_icon()
 
 /obj/item/device/assembly_holder/proc/attach(var/obj/item/device/assembly/A, var/mob/user)
-	if(istype(A.loc,/obj/item/weapon/storage))
-		var/obj/item/weapon/storage/S = A.loc
-		S.remove_from_storage(A,src)
-	else
+	if(!A.remove_item_from_storage(src))
 		if(user)
 			user.remove_from_mob(A)
 		A.loc = src
-
 	A.holder = src
 	A.toggle_secure()
 	if(!a_left)

@@ -23,17 +23,11 @@
 	else if(istype(over_object, /obj/screen))
 		switch(over_object.name)
 			if("r_hand")
-				if(istype(loc,/obj/item/weapon/storage))
-					var/obj/item/weapon/storage/S = loc
-					S.remove_from_storage(src,M)
-				else
+				if(!remove_item_from_storage(M))
 					M.unEquip(src)
 				M.put_in_r_hand(src)
 			if("l_hand")
-				if(istype(loc,/obj/item/weapon/storage))
-					var/obj/item/weapon/storage/S = loc
-					S.remove_from_storage(src,M)
-				else
+				if(!remove_item_from_storage(M))
 					M.unEquip(src)
 				M.put_in_l_hand(src)
 

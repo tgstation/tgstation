@@ -356,10 +356,7 @@
 		var/obj/item/stack/rods/R = I
 		if (R.use(1))
 			var/obj/item/weapon/flamethrower/F = new /obj/item/weapon/flamethrower(user.loc)
-			if(istype(loc,/obj/item/weapon/storage))
-				var/obj/item/weapon/storage/S = loc
-				S.remove_from_storage(src,F)
-			else
+			if(!remove_item_from_storage(F))
 				user.unEquip(src)
 				loc = F
 			F.weldtool = src
