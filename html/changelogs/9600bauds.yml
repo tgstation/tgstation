@@ -36,5 +36,5 @@ changes:
   - rscadd: Added a "Custom" queue amount for said menus, which lets you queue a custom number of items in one go
   - rscadd: Also added an option to turn off window auto-updating for the Protolathe, which caused you to be sent at the top of the list every time you built or queued something
   - bugfix: Fixed Circuit Imprinter's glass counter always being 0 and not letting you eject glass from it
-  - bugfix: Accidentally fixed a bug where fabricators would always hold infinite materials. To compensate, maximum material amount was buffed to 120 sheets unupgraded for most fabricators, 180 for the Exosuit fabricator (+30 sheets per matter bin upgrade)
+  - bugfix: Accidentally fixed a bug where fabricators would always hold infinite materials. To compensate, maximum material amount was buffed to 150 sheets unupgraded for most fabricators, 250 for the Exosuit fabricator (+50 sheets per matter bin upgrade)
   - bugfix: Fixed micro-manipulator upgrades not upgrading the Protolathe's speed
