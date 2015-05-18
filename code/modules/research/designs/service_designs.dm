@@ -22,6 +22,16 @@
 	build_path = /obj/item/weapon/holosign_creator
 	category = list("service")
 
+/datum/design/flora_gun
+	name = "Floral Somatoray"
+	desc = "A tool that discharges controlled radiation which induces mutation in plant cells. Harmless to other organic life."
+	id = "flora_gun"
+	req_tech = list("materials" = 2, "biotech" = 3, "powerstorage" = 3, "service" = 2)
+	build_type = PROTOLATHE
+	materials = list("$metal" = 2000, "$glass" = 500, "radium" = 20)
+	build_path = /obj/item/weapon/gun/energy/floragun
+	category = list("service")
+
 /datum/design/galoshes
 	name = "Galoshes"
 	desc = "A pair of yellow rubber boots, designed to prevent slipping on wet surfaces." 

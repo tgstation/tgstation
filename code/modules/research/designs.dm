@@ -373,11 +373,15 @@ datum/design/proc/CalcReliability(var/list/temp_techs)
 
 // remove shit below later
 
+/////////////////////////////////////////
+////////////Janitor Designs//////////////
+/////////////////////////////////////////
+
 /datum/design/buffer
 	name = "Floor Buffer Upgrade"
 	desc = "A floor buffer that can be attached to vehicular janicarts."
 	id = "buffer"
-	req_tech = list("materials" = 5, "engineering" = 3, "service" = 1)
+	req_tech = list("materials" = 5, "engineering" = 3)
 	build_type = PROTOLATHE
 	materials = list("$metal" = 3000, "$glass" = 200)
 	build_path = /obj/item/janiupgrade
@@ -387,7 +391,7 @@ datum/design/proc/CalcReliability(var/list/temp_techs)
 	name = "Holographic Sign Projector"
 	desc = "A holograpic projector used to project various warning signs."
 	id = "holosign"
-	req_tech = list("magnets" = 3, "powerstorage" = 2, "service" = 1)
+	req_tech = list("magnets" = 3, "powerstorage" = 2)
 	build_type = PROTOLATHE
 	materials = list("$metal" = 2000, "$glass" = 1000)
 	build_path = /obj/item/weapon/holosign_creator
