@@ -10,5 +10,5 @@
 	mount_reqs = list("simfloor", "nospace")
 
 /obj/item/mounted/frame/fireaxe_cabinet_frame/do_build(turf/on_wall, mob/user)
-	new /obj/structure_fireaxecabinet/empty(get_turf(src), get_dir(on_wall, user), 1)
+	new /obj/structure/fireaxecabinet/empty(get_turf(src), get_dir(on_wall, user), 1)
 	qdel(src)
