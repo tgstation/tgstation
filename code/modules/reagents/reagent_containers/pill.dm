@@ -30,7 +30,7 @@
 			return 1
 
 		user.visible_message("<span class='warning'>[user] forces [M] to swallow \the [src].</span>", "<span class='notice'>You force [M] to swallow \the [src].</span>")
-		add_attacklogs(user, M, "fed", object = src, addition = "Reagents: [english_list(reagentlist(src))]", admin_warn = TRUE)
+		add_attacklogs(user, M, "fed", object = src, addition = "Reagents: [english_list(list(reagentlist(src)))]", admin_warn = TRUE)
 	else if (user == M)
 		user.visible_message("<span class='notice'>[user] swallows \the [src].</span>", "<span class='notice'>You swallow \the [src].</span>")
 	else
