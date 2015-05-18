@@ -3588,7 +3588,7 @@
 "bqZ" = (/obj/structure/grille,/obj/structure/window/reinforced,/obj/structure/window/reinforced{dir = 4},/obj/structure/window/reinforced{dir = 1},/turf/simulated/floor/plating,/area/science/lab)
 "bra" = (/obj/machinery/door/firedoor,/obj/structure/cable{d1 = 1; d2 = 2; icon_state = "1-2"},/obj/machinery/door/airlock/maintenance{req_access_txt = "12"},/turf/simulated/floor/plating,/area/maintenance/asmaint2)
 "brb" = (/turf/simulated/wall,/area/maintenance/asmaint2)
-"brc" = (/obj/effect/decal/warning_stripes{tag = "icon-warning (WEST)"; icon_state = "warning"; dir = 8},/obj/machinery/atmospherics/unary/vent_pump{dir = 1; external_pressure_bound = 140; on = 1; pressure_checks = 0},/turf/simulated/floor,/area/hallway/secondary/entry)
+"brc" = (/obj/effect/decal/warning_stripes{tag = "icon-warning (WEST)"; icon_state = "warning"; dir = 8},/obj/machinery/atmospherics/unary/vent_pump{dir = 1; on = 1},/turf/simulated/floor,/area/hallway/secondary/entry)
 "brd" = (/obj/machinery/light{dir = 4},/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,/turf/simulated/floor,/area/hallway/secondary/entry)
 "bre" = (/obj/structure/stool/bed/chair{dir = 4},/obj/machinery/light/small{dir = 8},/obj/machinery/door_control{id_tag = "Incinerator Vent"; name = "Disposal Vent Control"; pixel_x = -25; pixel_y = 4; req_access_txt = "12"},/turf/simulated/floor/plating,/area/maintenance/disposal)
 "brf" = (/obj/structure/table,/obj/item/weapon/folder,/obj/machinery/atmospherics/pipe/simple/supply/hidden{dir = 5},/obj/item/weapon/pen,/turf/simulated/floor/plating,/area/maintenance/disposal)
