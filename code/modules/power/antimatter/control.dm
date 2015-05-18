@@ -286,7 +286,10 @@
 /obj/machinery/power/am_control_unit/ui_interact(mob/user, ui_key = "main", var/datum/nanoui/ui = null)
 	if(!user)
 		return
+	ui = SSnano.push_open_or_new_ui(user, src, ui_key, ui, "ame.tmpl", "Antimatter Control Unit", 500, 465, 1)
 
+
+/obj/machinery/power/am_control_unit/get_ui_data()
 	var/list/fueljar_data=null
 	if(fueljar)
 		fueljar_data=list(
@@ -304,20 +307,9 @@
 		"stability" = stored_core_stability,
 		"stored_power" = stored_power,
 		"fueljar" = fueljar_data,
-		"siliconUser" = user.has_unlimited_silicon_privilege
 	)
 
-
-	ui = SSnano.try_update_ui(user, src, ui_key, ui, data)
-	if (!ui)
-		ui = new(user, src, ui_key, "ame.tmpl", "Antimatter Control Unit", 500, data["siliconUser"] ? 465 : 390)
-		// the ui does not exist, so we'll create a new() one
-        // for a list of parameters and their descriptions see the code docs in \code\modules\nano\nanoui.dm
-		// when the ui is first opened this is the data it will use
-		ui.set_initial_data(data)
-		// open the new ui window
-		ui.open()
-		ui.set_auto_update(1)
+	return data
 
 
 /obj/machinery/power/am_control_unit/Topic(href, href_list)

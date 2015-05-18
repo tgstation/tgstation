@@ -200,10 +200,12 @@
 	return
 
 
-/obj/machinery/alarm/ui_interact(mob/user, ui_key = "main")
+/obj/machinery/alarm/ui_interact(mob/user, ui_key = "main", var/datum/nanoui/ui = null)
 	if(stat & (BROKEN|NOPOWER))
 		return
+	ui = SSnano.push_open_or_new_ui(user, src, ui_key, ui, "air_alarm.tmpl", "Air Alarm", 350, 500, 1)
 
+/obj/machinery/alarm/get_ui_data(mob/user)
 	var/data = list()
 
 	data["locked"] = locked
@@ -215,15 +217,7 @@
 	if (!locked || user.has_unlimited_silicon_privilege)
 		populate_controls(data)
 
-	var/datum/nanoui/ui = SSnano.get_open_ui(user, src, ui_key)
-	if (!ui)
-		ui = new /datum/nanoui(user, src, ui_key, "air_alarm.tmpl", "Air Alarm", 350, 500)
-		ui.set_initial_data(data)
-		ui.open()
-		ui.set_auto_update(1)
-	else
-		ui.push_data(data)
-
+	return data
 
 /obj/machinery/alarm/proc/shock(mob/user, prb)
 	if((stat & (NOPOWER)))		// unpowered, no shock
