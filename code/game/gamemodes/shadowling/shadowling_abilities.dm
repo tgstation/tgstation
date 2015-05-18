@@ -273,7 +273,7 @@
 /obj/effect/proc_holder/spell/targeted/collective_mind/cast(list/targets)
 	for(var/mob/living/user in targets)
 		var/thralls = 0
-		var/victory_threshold = 0
+		var/victory_threshold = 15
 		var/mob/M
 
 		user << "<span class='shadowling'><b>You focus your telepathic energies abound, harnessing and drawing together the strength of your thralls.</b></span>"
@@ -623,29 +623,6 @@ datum/reagent/shadowling_blindness_smoke/on_mob_life(var/mob/living/M as mob)
 			if(target.bodytemperature)
 				target.bodytemperature -= INFINITY //:^)
 			target.take_organ_damage(0,80)
-
-
-
-/obj/effect/proc_holder/spell/targeted/vortex
-	name = "Vortex"
-	desc = "Tears open a hole in reality. Anyone, INCLUDING YOU, walking through it will be trapped there for eternity."
-	panel = "Ascendant"
-	range = -1
-	include_user = 1
-	charge_max = 300
-	clothes_req = 0
-
-/obj/effect/proc_holder/spell/targeted/vortex/cast(list/targets)
-	var/mob/living/simple_animal/ascendant_shadowling/SHA = usr
-	if(SHA.phasing)
-		usr << "<span class='warning'>You are not in the same plane of existence. Unphase first.</span>"
-		return
-
-	for(SHA in targets)
-		SHA.visible_message("<span class='userdanger'>[SHA] raises their arms upward as the markings on their body flare a blinding red!</span>", \
-						"<span class='shadowling'>You tear open a rift to the black space between worlds. <b><font size=3>It would be wise to avoid it.</font></b></span>")
-
-		new /obj/structure/shadow_vortex(SHA.loc)
 
 
 

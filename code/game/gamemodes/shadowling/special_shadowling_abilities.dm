@@ -104,7 +104,7 @@ var/list/possibleShadowlingNames = list("U'ruan", "Y`shej", "Nex", "Hel-uae", "N
 			usr.verbs += /mob/living/carbon/human/proc/shadowling_ascendance
 			return
 		if("Yes")
-			usr.notransform = 1
+			usr.Stun(INFINITY)
 			usr.visible_message("<span class='warning'>[usr] rapidly bends and contorts, their eyes flaring a deep crimson!</span>", \
 								"<span class='shadowling'>You begin unlocking the genetic vault within you and prepare yourself for the power to come.</span>")
 
@@ -133,16 +133,16 @@ var/list/possibleShadowlingNames = list("U'ruan", "Y`shej", "Nex", "Hel-uae", "N
 
 			usr << "<span class='userdanger'>Drawing upon your thralls, you find the strength needed to finish and rend apart the final barriers to godhood.</b></span>"
 			sleep(20)
-			usr << "<span class='big'>Yes!</span>"
+			usr << "<span class='big'><b>Yes!</b></span>"
 			sleep(10)
-			usr << "<span class='reallybig'>YES!</span>"
+			usr << "<span class='reallybig'><b>YES!</b></span>"
 			sleep(10)
-			usr << "<font size=5>YE--</font>"
-			sleep(2)
+			usr << "<font size=5><b><i>YE--</b></I></font>"
+			sleep(1)
 			for(var/mob/living/M in orange(7, src))
 				M.Weaken(10)
 				M << "<span class='userdanger'>An immense pressure slams you onto the ground!</span>"
-			world << "<font size=4><span class='shadowling'><b>\"I LIVE!!!\"</font></span>"
+			world << "<font size=5><span class='shadowling'><b>\"VYSHA NERADA YEKHEZET U'RUU!!\"</font></span>"
 			world << 'sound/hallucinations/veryfar_noise.ogg'
 			for(var/obj/machinery/power/apc/A in world)
 				A.overload_lighting()
@@ -152,16 +152,14 @@ var/list/possibleShadowlingNames = list("U'ruan", "Y`shej", "Nex", "Hel-uae", "N
 			usr.mind.spell_list += new /obj/effect/proc_holder/spell/targeted/hypnosis
 			usr.mind.spell_list += new /obj/effect/proc_holder/spell/targeted/shadowling_phase_shift
 			usr.mind.spell_list += new /obj/effect/proc_holder/spell/aoe_turf/glacial_blast
-			usr.mind.spell_list += new /obj/effect/proc_holder/spell/targeted/vortex
 			usr.mind.spell_list += new /obj/effect/proc_holder/spell/targeted/shadowling_hivemind_ascendant
 			usr.mind.spell_list += new /obj/effect/proc_holder/spell/targeted/shadowlingAscendantTransmit
 			usr.mind.transfer_to(A)
 			A.name = usr.real_name
 			if(A.real_name)
 				A.real_name = usr.real_name
-			usr.alpha = 0 //This is pretty bad, but is also necessary for the shuttle call to function properly
+			usr.invisibility = 60 //This is pretty bad, but is also necessary for the shuttle call to function properly
 			usr.flags |= GODMODE
-			usr.notransform = 1
 			sleep(50)
 			if(!ticker.mode.shadowling_ascended)
 				SSshuttle.emergency.request(null, 0.3)
