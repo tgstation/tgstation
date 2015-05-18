@@ -25,6 +25,7 @@
 	var/access_hydroponics = 0
 
 	var/access_robotics = 0
+	var/access_botcontrol = 0
 
 	var/mode = null
 	var/menu
@@ -214,19 +215,6 @@
 	..()
 	radio = new /obj/item/radio/integrated/medbot(src)
 
-/obj/item/weapon/cartridge/rd
-	name = "\improper Signal Ace DELUXE cartridge"
-	icon_state = "cart-rd"
-	access_manifest = 1
-	access_status_display = 1
-	access_reagent_scanner = 1
-	access_atmos = 1
-	access_robotics = 1
-
-/obj/item/weapon/cartridge/rd/New()
-	..()
-	radio = new /obj/item/radio/integrated/signal(src)
-
 /obj/item/weapon/cartridge/captain
 	name = "\improper Value-PAK cartridge"
 	desc = "Now with 200% more value!"
@@ -254,10 +242,30 @@
 	name = "\improper Botmaster cartridge"
 	icon_state = "cart-tox"
 	access_robotics = 1
+	var/obj/item/radio/integrated/radioclean	//Cleanbot radio
+	var/obj/item/radio/integrated/radiofloor	//Floorbot radio
+	var/obj/item/radio/integrated/radiomed		//Medbot radio
 
-/*	/obj/item/weapon/cartridge/robotics/New()
-		..()
-		radio = new /obj/item/radio/integrated/robotics(src)*/
+/obj/item/weapon/cartridge/robotics/New()
+	..()
+	radioclean = new /obj/item/radio/integrated/cleanbot(src)
+	radiofloor = new /obj/item/radio/integrated/floorbot(src)
+	radiomed = new /obj/item/radio/integrated/medbot(src)
+	if(radioclean && radiofloor && radiomed)
+		access_botcontrol = 1	//Sanity check
+
+/obj/item/weapon/cartridge/robotics/rd	//Child of cartridge/robotics now
+	name = "\improper Signal Ace DELUXE cartridge"
+	icon_state = "cart-rd"
+	access_manifest = 1
+	access_status_display = 1
+	access_reagent_scanner = 1
+	access_atmos = 1
+	access_robotics = 1	//Redundant since inherited from cartridge/robotics
+
+/obj/item/weapon/cartridge/robotics/rd/New()
+	..()
+	radio = new /obj/item/radio/integrated/signal(src)
 
 /obj/item/weapon/cartridge/proc/unlock()
 	if (!istype(loc, /obj/item/device/pda))
@@ -790,6 +798,32 @@ Code:
 				var/answer = TR.get_mecha_info()
 				if(answer)
 					menu += "<hr>[answer]<br/>"
+
+/obj/item/weapon/cartridge/robotics/generate_menu()
+	..()
+
+	switch(mode)
+		if (56) //Robotics cleanbot control
+			if(radioclean)
+				menu = "<br><h4><img src=pda_cleanbot.png> Cleanbot Interlink</h4>"
+				var/obj/item/radio/integrated/cleanbot/SC = radioclean
+				bot_control(SC)
+			else
+				menu = "Cleanbot interlink error<br>"
+		if (57) //Robotics floorbot control
+			if(radiofloor)
+				menu = "<h4><img src=pda_floorbot.png> Floorbot Interlink</h4>"
+				var/obj/item/radio/integrated/floorbot/SC = radiofloor
+				bot_control(SC)
+			else
+				menu = "Floorbot interlink error<br>"
+		if (58) //Robotics medibot control
+			if(radiomed)
+				menu = "<h4><img src=pda_medbot.png> Medibot Interlink</h4>"
+				var/obj/item/radio/integrated/medbot/SC = radiomed
+				bot_control(SC)
+			else
+				menu = "Medibot interlink error<br>"
 
 /obj/item/weapon/cartridge/Topic(href, href_list)
 	..()

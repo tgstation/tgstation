@@ -119,7 +119,7 @@ var/global/list/obj/item/device/pda/PDAs = list()
 	icon_state = "pda-cmo"
 
 /obj/item/device/pda/heads/rd
-	default_cartridge = /obj/item/weapon/cartridge/rd
+	default_cartridge = /obj/item/weapon/cartridge/robotics/rd
 	icon_state = "pda-rd"
 
 /obj/item/device/pda/captain
@@ -343,6 +343,12 @@ var/global/list/obj/item/device/pda/PDAs = list()
 						dat += "<ul>"
 						dat += "<li><a href='byond://?src=\ref[src];choice=54'><img src=pda_notes.png> Cyborg specifications</A></li>"
 						dat += "<li><a href='byond://?src=\ref[src];choice=55'><img src=pda_signaler.png> Exosuit tracking</A></li>"
+						if(cartridge.access_botcontrol)	//Can't check for the cartridge.radioclean, a bit hackish solution
+							dat += "<li><a href='byond://?src=\ref[src];choice=56'><img src=pda_cleanbot.png> Cleanbot Access</A></li>"
+						if(cartridge.access_botcontrol) //Ditto
+							dat += "<li><a href='byond://?src=\ref[src];choice=57'><img src=pda_floorbot.png> Floorbot Access</A></li>"
+						if(cartridge.access_botcontrol)	//Ditto
+							dat += "<li><a href='byond://?src=\ref[src];choice=58'><img src=pda_medbot.png> Medibot Access</A></li>"
 						dat += "</ul>"
 				dat += "</ul>"
 
