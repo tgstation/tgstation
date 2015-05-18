@@ -2,7 +2,7 @@
 	name = "traitor+changeling"
 	config_tag = "traitorchan"
 	traitors_possible = 3 //hard limit on traitors if scaling is turned off
-	restricted_jobs = list("AI", "Cyborg")
+	restricted_jobs = list("AI", "Cyborg", "MoMMI")
 	required_players = 0
 	required_enemies = 1	// how many of each type are required
 	recommended_enemies = 3
@@ -38,17 +38,13 @@
 	else
 		num_changelings = max(1, min(num_players(), changeling_amount/2))
 
-	for(var/datum/mind/player in possible_changelings)
-		for(var/job in restricted_jobs)//Removing robots from the list
-			if(player.assigned_role == job)
-				possible_changelings -= player
-
 	if(possible_changelings.len>0)
 		for(var/j = 0, j < num_changelings, j++)
 			if(!possible_changelings.len) break
 			var/datum/mind/changeling = pick(possible_changelings)
 			possible_changelings -= changeling
 			changelings += changeling
+			changeling.restricted_roles = restricted_jobs
 			modePlayer += changelings
 		return ..()
 	else
