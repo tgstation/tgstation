@@ -197,7 +197,7 @@ var/global/list/image/fluidtrack_cache=list()
 		if(truedir&240) // Check if we're in the GOING block
 			state=going_state
 			truedir=truedir>>4
-		var/icon/add = icon('icons/effects/fluidtracks.dmi', state, num2dir(truedir))
+		var/icon/add = icon('icons/effects/fluidtracks.dmi', state, truedir)
 		add.Blend(track.basecolor,ICON_MULTIPLY)
 		flat.Blend(add,ICON_OVERLAY)
 
