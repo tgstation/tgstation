@@ -127,6 +127,7 @@
 
 /obj/structure/stool/bed/chair/office
 	anchored = 0
+	pressure_resistance = 5
 
 /obj/structure/stool/bed/chair/office/light
 	icon_state = "officechair_white"

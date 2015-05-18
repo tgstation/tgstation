@@ -165,6 +165,7 @@
 	icon_state = "pussywagon"
 	anchored = 0
 	density = 1
+	pressure_resistance = 5
 	var/obj/item/weapon/storage/bag/trash/mybag = null
 	var/callme = "pimpin' ride"	//how do people refer to it?
 	var/move_delay = 0
