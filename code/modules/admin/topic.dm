@@ -1076,6 +1076,41 @@
 				alert(usr,"This ban has already been lifted / does not exist.","Error","Ok")
 				unjobbanpanel()
 
+	//Watchlist
+	else if(href_list["watchlist"])
+		if(!check_rights(R_ADMIN))	return
+		var/mob/M = locate(href_list["watchlist"])
+		if(!dbcon.IsConnected())
+			usr << "<span class='danger'>Failed to establish database connection.</span>"
+			return
+		if(!ismob(M))
+			usr << "This can only be used on instances of type /mob"
+			return
+		if(!M.ckey)
+			usr << "This mob has no ckey"
+			return
+		var/sql_ckey = sanitizeSQL(M.ckey)
+		var/DBQuery/query = dbcon.NewQuery("SELECT ckey FROM [format_table_name("watch")] WHERE (ckey = '[sql_ckey]')")
+		query.Execute()
+		if(query.NextRow())
+			var/reason = input(usr,"Reason?","reason","Metagaming") as text|null
+			if(!reason)
+				return
+			log_admin("[key_name_admin(usr)] has added [key_name_admin(M)] to the watchlist - Reason: [reason]")
+			message_admins("[key_name_admin(usr)] has added [key_name_admin(M)] to the watchlist - Reason: [reason]", 1)
+			reason = sanitizeSQL(reason)
+			var/DBQuery/query_watchadd = dbcon.NewQuery("INSERT INTO [format_table_name("watch")] (ckey, reason) VALUES ('[sql_ckey]', '[reason]')")
+			if(!query_watchadd.Execute())
+				var/err = query_watchadd.ErrorMsg()
+				log_game("SQL ERROR during adding new watch entry. Error : \[[err]\]\n")
+		else
+			log_admin("[key_name_admin(usr)] has removed [key_name_admin(M)] from the watchlist")
+			message_admins("[key_name_admin(usr)] has removed [key_name_admin(M)] from the watchlist", 1)
+			var/DBQuery/query_watchdel = dbcon.NewQuery("DELETE FROM [format_table_name("watch")] WHERE ckey = '[sql_ckey]'")
+			if(!query_watchdel.Execute())
+				var/err = query_watchdel.ErrorMsg()
+				log_game("SQL ERROR during removing watch entry. Error : \[[err]\]\n")
+
 	else if(href_list["mute"])
 		if(!check_rights(R_ADMIN))	return
 		cmd_admin_mute(href_list["mute"], text2num(href_list["mute_type"]))

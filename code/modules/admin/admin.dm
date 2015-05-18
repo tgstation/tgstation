@@ -47,7 +47,8 @@ var/global/floorIsLava = 0
 	body += "<A href='?_src_=holder;newban=\ref[M]'>Ban</A> | "
 	body += "<A href='?_src_=holder;jobban2=\ref[M]'>Jobban</A> | "
 	body += "<A href='?_src_=holder;appearanceban=\ref[M]'>Identity Ban</A> | "
-	body += "<A href='?_src_=holder;notes=show;ckey=[M.ckey]'>Notes</A> "
+	body += "<A href='?_src_=holder;notes=show;ckey=[M.ckey]'>Notes</A> | "
+	body += "<A href='?_src_=holder;watchlist=\ref[M]'>Watchlist Flag</A> "
 
 	if(M.client)
 		body += "| <A href='?_src_=holder;sendtoprison=\ref[M]'>Prison</A> | "

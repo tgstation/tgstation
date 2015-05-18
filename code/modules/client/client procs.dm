@@ -229,6 +229,11 @@ var/next_external_rsc = 0
 	while (query_cid.NextRow())
 		related_accounts_cid += "[query_cid.item[1]], "
 
+	var/DBQuery/query = dbcon.NewQuery("SELECT ckey, reason FROM [format_table_name("watch")] WHERE (ckey = '[sql_ckey]')")
+	query.Execute()
+	if(query.NextRow())
+		message_admins("<font color='red'><B>Notice: </B></font><font color='blue'>[key_name_admin(src)] is flagged for watching and has just connected - Reason: [query_cid.item[2]]</font>")
+		send2irc_adminless_only("Watchlist", "[key_name_admin(src)] is flagged for watching and has just connected - Reason: [query_cid.item[2]]")
 
 	var/admin_rank = "Player"
 	if (src.holder && src.holder.rank)
