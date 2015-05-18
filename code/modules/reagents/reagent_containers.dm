@@ -69,7 +69,7 @@ var/list/LOGGED_SPLASH_REAGENTS = list("fuel", "thermite")
 		var/obj/structure/reagent_dispensers/S = source
 		source_empty = S.is_empty()
 	else
-		ASSERT(istype(source.reagents))
+		//ASSERT(istype(source.reagents))
 		source_empty = source.reagents.is_empty()
 		//warning("Called transfer_sub() with a non-compatible source type ([source.type], [source], \ref[source])")
 		//return
@@ -84,7 +84,7 @@ var/list/LOGGED_SPLASH_REAGENTS = list("fuel", "thermite")
 		target_full = T.is_full()*/
 	else
 		if(ismob(target)) return null
-		ASSERT(istype(target.reagents))
+		//ASSERT(istype(target.reagents))
 		target_full = target.reagents.is_full()
 		//warning("Called transfer_sub() with a non-compatible target type ([target.type], [target], \ref[target])")
 		//return
