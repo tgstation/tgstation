@@ -63,7 +63,7 @@
 		if(W.flags&USEDELAY)
 			next_move += 5
 		*/
-		W.attack_self(src)
+		W.attack_self(src, params)
 		return
 
 	// cyborgs are prohibited from using storage items so we can I think safely remove (A.loc in contents)
