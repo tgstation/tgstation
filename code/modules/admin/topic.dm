@@ -1076,13 +1076,6 @@
 				alert(usr,"This ban has already been lifted / does not exist.","Error","Ok")
 				unjobbanpanel()
 
-
-
-
-
-
-
-
 	//Watchlist
 	else if(href_list["watchlist"])
 		if(!check_rights(R_ADMIN))	return
@@ -1111,7 +1104,7 @@
 						return
 					log_admin("[key_name_admin(usr)] has removed [key_name_admin(M)] from the watchlist")
 					message_admins("[key_name_admin(usr)] has removed [key_name_admin(M)] from the watchlist", 1)
-				if("Edit Reason")
+				if("Edit reason")
 					var/DBQuery/query_reason = dbcon.NewQuery("SELECT ckey, reason FROM [format_table_name("watch")] WHERE (ckey = '[sql_ckey]')")
 					query_reason.Execute()
 					if(query_reason.NextRow())
