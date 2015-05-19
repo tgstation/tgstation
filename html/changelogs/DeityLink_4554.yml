@@ -1,0 +1,4 @@
+author: Deity Link
+delete-after: true
+changes:
+  - rscadd: Deconstructing a Cloning Pod removes the Biomass from it as Synthmeat slabs.
