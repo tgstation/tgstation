@@ -519,17 +519,20 @@
 	return cansee
 
 /obj/item/weapon/storage/proc/close_all()
-	for(var/mob/M in can_see_contents())
+	for(var/mob/M in is_seeing)
 		close(M)
 		. = 1 //returns 1 if any mobs actually got a close(M) call
 
 /obj/item/weapon/storage/Destroy()
+	..()
 	close_all()
 	returnToPool(boxes)
 	returnToPool(closer)
 	boxes = null
 	closer = null
-	..()
+	for(var/atom/movable/AM in contents)
+		qdel(AM)
+	contents = null
 
 /obj/item/weapon/storage/preattack(atom/target, mob/user, adjacent, params)
 	if(!adjacent) return 0

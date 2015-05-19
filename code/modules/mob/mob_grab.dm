@@ -18,13 +18,12 @@
 	w_class = 5.0
 
 
-/obj/item/weapon/grab/New(mob/user, mob/victim)
+/obj/item/weapon/grab/New(mob/victim)
 	..()
-	loc = user
-	assailant = user
+	assailant = loc
 	affecting = victim
 
-	if(affecting.anchored)
+	if(affecting && affecting.anchored)
 		returnToPool(src)
 		return
 
@@ -221,5 +220,7 @@
 		if(assailant.client)
 			assailant.client.screen -= hud
 		assailant = null
-	returnToPool(hud)
+	if(hud)
+		returnToPool(hud)
+	hud = null
 	..()
