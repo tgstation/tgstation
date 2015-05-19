@@ -540,8 +540,11 @@ Class Procs:
  * @param user /mob The mob that used the emag.
  */
 /obj/machinery/proc/emag(mob/user as mob)
-	// Disable emaggability.
+	// Disable emaggability. Note that some machines such as the Communications Computer might be emaggable multiple times.
 	machine_flags &= ~EMAGGABLE
+	new/obj/effect/effect/sparks(get_turf(src))
+	playsound(loc,"sparks",50,1)
+
 
 /**
  * Returns the cost of emagging this machine (emag_cost by default)
