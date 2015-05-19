@@ -18,6 +18,7 @@
 	var/heat_proof = 0 // For glass airlocks/opacity firedoors
 	var/emergency = 0 // Emergency access override
 	var/sub_door = 0 // 1 if it's meant to go under another door.
+	var/closingLayer = 3.1
 
 /obj/machinery/door/New()
 	..()
@@ -236,7 +237,7 @@
 	operating = 1
 
 	do_animate("closing")
-	src.layer = 3.1
+	src.layer = closingLayer
 	sleep(5)
 	src.density = 1
 	sleep(5)

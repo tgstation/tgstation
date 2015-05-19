@@ -182,6 +182,9 @@
 	else
 		swap_hand()
 
+/mob/living/simple_animal/drone/MiddleClickOn(var/atom/A)
+	swap_hand()
+
 // In case of use break glass
 /*
 /atom/proc/MiddleClick(var/mob/M as mob)
