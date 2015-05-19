@@ -97,27 +97,27 @@ MATCHBOXES ARE ALSO IN FANCY.DM
 		return
 
 /obj/item/weapon/match/pickup(mob/user)
-	if(lit)
+	if(lit == 1)
 		user.SetLuminosity(user.luminosity + brightness_on)
 		SetLuminosity(0)
 
 /obj/item/weapon/match/dropped(mob/user)
-	if(lit)
+	if(lit == 1)
 		user.SetLuminosity(user.luminosity - brightness_on)
 		SetLuminosity(brightness_on)
 
 /obj/item/weapon/match/is_hot()
-	if(lit)
+	if(lit == 1)
 		return heat_production
 	return 0
 
 /obj/item/weapon/match/attack(mob/living/carbon/M as mob, mob/living/carbon/user as mob)
-	if(istype(M.wear_mask, /obj/item/clothing/mask/cigarette) && user.zone_sel.selecting == "mouth" && lit)
+	if(istype(M.wear_mask, /obj/item/clothing/mask/cigarette) && user.zone_sel.selecting == "mouth" && lit == 1)
 		var/obj/item/clothing/mask/cigarette/cig = M.wear_mask
 		if(M == user)
 			cig.attackby(src, user)
 		else
-			cig.light("<span class='notice'>[user] holds \the [name] out for [M], and lights \his [cig].</span>")
+			cig.light("<span class='notice'>[user] holds \the [name] out for [M], and lights \his [cig.name].</span>")
 	else
 		return ..()
 
@@ -550,11 +550,12 @@ MATCHBOXES ARE ALSO IN FANCY.DM
 	if(smoketime <= 0)
 		new /obj/effect/decal/cleanable/ash(location)
 		lit = 0
-		update_brightness()
 		if(ismob(loc))
 			var/mob/living/M = loc
-			M << "<span class='notice'>Your [name] goes out, and you empty the ash.</span>"
+			M.visible_message("<span class='notice'>[M]'s [name] goes out.</span>", \
+			"<span class='notice'>Your [name] goes out, and you empty the ash.</span>")
 			M.update_inv_wear_mask(0)
+		update_brightness()
 		return
 	if(location)
 		location.hotspot_expose(700, 5, surfaces = istype(loc, /turf))
@@ -676,20 +677,24 @@ MATCHBOXES ARE ALSO IN FANCY.DM
 		SetLuminosity(brightness_on)
 
 /obj/item/weapon/lighter/afterattack(obj/O, mob/user, proximity)
-	if(!proximity) return 0
-	if (istype(O, /obj/structure/reagent_dispensers/fueltank))
-		fuel += O.reagents.remove_any(initial(fuel)-fuel)
-		user << "<span class='notice'>[src] refueled</span>"
+	if(!proximity)
+		return 0
+	if(istype(O, /obj/structure/reagent_dispensers/fueltank))
+		fuel += O.reagents.remove_any(initial(fuel) - fuel)
+		user.visible_message("<span class='notice'>[user] refuels \the [src].</span>", \
+		"<span class='notice'>You refuel \the [src].</span>")
 		playsound(get_turf(src), 'sound/effects/refill.ogg', 50, 1, -6)
 		return
 /obj/item/weapon/lighter/attack_self(mob/living/user)
 
+	user.delayNextAttack(5) //Hold on there cowboy
 	if(!fuel)
-		user.visible_message("<span class='rose'>[user] attempts to light \the [src] to no avail.</span>","<span class='notice'>\The [src] doesn't have enough fuel to ignite</span>")
+		user.visible_message("<span class='rose'>[user] attempts to light \the [src] to no avail.</span>", \
+		"<span class='notice'>\The [src] doesn't have enough fuel to ignite</span>")
 		return
 	if(!lit) //Lighting the lighter
 		playsound(get_turf(src), pick(lightersound), 50, 1)
-		if(fuel >= initial(fuel)-5 || prob(100 * (fuel/initial(fuel)))) //Strike, but fail to light it
+		if(fuel >= initial(fuel) - 5 || prob(100 * (fuel/initial(fuel)))) //Strike, but fail to light it
 			user.visible_message("<span class='notice'>[user] manages to light \the [src].</span>", \
 			"<span class='notice'>You manage to light \the [src].</span>")
 			lit = !lit
@@ -703,17 +708,17 @@ MATCHBOXES ARE ALSO IN FANCY.DM
 	else
 		fueltime = null
 		lit = !lit
-		update_brightness()
 		user.visible_message("<span class='notice'>[user] quietly shuts off \the [src].</span>", \
 		"<span class='notice'>You quietly shut off \the [src].</span>")
+		update_brightness()
 
 /obj/item/weapon/lighter/zippo/attack_self(mob/living/user)
 	user.delayNextAttack(5) //Hold on there cowboy
 	if(!fuel)
-		user.visible_message("<span class='rose'>[user] attempts to light \the [src] to no avail.</span>","<span class='notice'>\The [src] doesn't have enough fuel to ignite</span>")
+		user.visible_message("<span class='rose'>[user] attempts to light \the [src] to no avail.</span>", \
+		"<span class='notice'>\The [src] doesn't have enough fuel to ignite</span>")
 		return
 	lit = !lit
-	update_brightness()
 	if(lit) //Was lit
 		playsound(get_turf(src), pick(open_sound), 50, 1)
 		user.visible_message("<span class='rose'>Without even breaking stride, [user] flips open and lights \the [src] in one smooth movement.</span>", \
@@ -724,6 +729,7 @@ MATCHBOXES ARE ALSO IN FANCY.DM
 		playsound(get_turf(src), pick(close_sound), 50, 1)
 		user.visible_message("<span class='rose'>You hear a quiet click as [user] shuts off \the [src] without even looking at what they're doing. Wow.</span>", \
 		"<span class='rose'>You hear a quiet click as you shut off \the [src] without even looking at what you are doing.</span>")
+	update_brightness()
 
 /obj/item/weapon/lighter/is_hot()
 	if(lit)
