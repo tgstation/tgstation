@@ -99,8 +99,8 @@ Powernet procs :
 	netexcess = avail - load
 
 	if(netexcess > 100 && nodes && nodes.len) // if there was excess power last cycle
-		for(var/obj/machinery/power/smes/S in nodes) // find the SMESes in the network
-			S.restore() // and restore some of the power that was used
+		for(var/obj/machinery/power/battery/B in nodes) // find the SMESes in the network
+			B.restore() // and restore some of the power that was used
 
 	// updates the viewed load (as seen on power computers)
 	viewload = 0.8 * viewload + 0.2 * load

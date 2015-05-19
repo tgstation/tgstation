@@ -185,7 +185,7 @@
 		/obj/machinery/power/rad_collector,
 		/obj/machinery/power/rust_core,
 		/obj/machinery/power/rust_fuel_injector,
-		/obj/machinery/power/smes,
+		/obj/machinery/power/battery/smes,
 		/obj/machinery/processor,
 		/obj/machinery/recharge_station,
 		/obj/machinery/rust/gyrotron,

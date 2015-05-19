@@ -991,7 +991,7 @@ ________________________________________________________________________________
 				U << "<span class='warning'>This APC has run dry of power. You must find another source.</span>"
 
 		if("SMES")
-			var/obj/machinery/power/smes/A = target
+			var/obj/machinery/power/battery/smes/A = target
 			if(A.charge)
 				var/datum/effect/effect/system/spark_spread/spark_system = new /datum/effect/effect/system/spark_spread()
 				spark_system.set_up(5, 0, A.loc)

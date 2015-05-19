@@ -19,7 +19,7 @@
 		for (var/obj/machinery/power/apc/C in range(200, holder))
 			for (var/obj/item/weapon/cell/B in C.contents)
 				B.charge += 25
-		for (var/obj/machinery/power/smes/S in range (src.effectrange,src))
+		for (var/obj/machinery/power/battery/S in range (src.effectrange,src))
 			S.charge += 25
 		for (var/mob/living/silicon/robot/M in mob_list)
 			for (var/obj/item/weapon/cell/D in M.contents)
@@ -35,7 +35,7 @@
 		for (var/obj/machinery/power/apc/C in range(200, holder))
 			for (var/obj/item/weapon/cell/B in C.contents)
 				B.charge += rand() * 100
-		for (var/obj/machinery/power/smes/S in range (src.effectrange,src))
+		for (var/obj/machinery/power/battery/S in range (src.effectrange,src))
 			S.charge += 250
 		for (var/mob/living/silicon/robot/M in mob_list)
 			for (var/obj/item/weapon/cell/D in M.contents)
