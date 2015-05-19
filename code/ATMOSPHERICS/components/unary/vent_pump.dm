@@ -29,7 +29,7 @@
 
 	var/radio_filter_out
 	var/radio_filter_in
-	
+
 	machine_flags = MULTITOOL_MENU
 
 /obj/machinery/atmospherics/unary/vent_pump/on
@@ -146,6 +146,13 @@
 	if(frequency)
 		radio_connection = radio_controller.add_object(src, frequency,radio_filter_in)
 
+	if(frequency != 1439)
+		areaMaster.air_vent_info -= id_tag
+		areaMaster.air_vent_names -= id_tag
+		name = "Vent Pump"
+	else
+		broadcast_status()
+
 /obj/machinery/atmospherics/unary/vent_pump/buildFrom(var/mob/usr,var/obj/item/pipe/pipe)
 	..()
 	src.broadcast_status()
@@ -172,11 +179,12 @@
 		"sigtype" = "status"
 	)
 
-	if(!areaMaster.air_vent_names[id_tag])
-		var/new_name = "[areaMaster.name] Vent Pump #[areaMaster.air_vent_names.len+1]"
-		areaMaster.air_vent_names[id_tag] = new_name
-		name = new_name
-	areaMaster.air_vent_info[id_tag] = signal.data
+	if(frequency == 1439)
+		if(!areaMaster.air_vent_names[id_tag])
+			var/new_name = "[areaMaster.name] Vent Pump #[areaMaster.air_vent_names.len+1]"
+			areaMaster.air_vent_names[id_tag] = new_name
+			name = new_name
+		areaMaster.air_vent_info[id_tag] = signal.data
 
 	radio_connection.post_signal(src, signal, radio_filter_out)
 
@@ -350,3 +358,19 @@
 	areaMaster.air_vent_info.Remove(id_tag)
 	areaMaster.air_vent_names.Remove(id_tag)
 	..()
+
+/obj/machinery/atmospherics/unary/vent_pump/multitool_topic(var/mob/user, var/list/href_list, var/obj/O)
+	if("set_id" in href_list)
+		var/newid = copytext(reject_bad_text(input(usr, "Specify the new ID tag for this machine", src, src.id_tag) as null|text), 1, MAX_MESSAGE_LEN)
+		if(!newid)
+			return
+		if(frequency == 1439)
+			areaMaster.air_vent_info -= id_tag
+			areaMaster.air_vent_names -= id_tag
+
+		id_tag = newid
+		broadcast_status()
+
+		return MT_UPDATE
+
+	return ..()
