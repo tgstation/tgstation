@@ -93,7 +93,6 @@
 
 		M.invisibility = 0
 		//M.custom_name = created_name
-		M.rename_self("MoMMI", 1)
 		M.choose_icon()
 		brainmob.mind.transfer_to(M)
 

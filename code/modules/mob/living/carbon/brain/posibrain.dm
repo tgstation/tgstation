@@ -140,6 +140,8 @@ var/global/posibrain_notif_cooldown = 0
 
 
 /obj/item/device/mmi/posibrain/attackby(var/obj/item/O as obj, var/mob/user as mob)
+	if(try_handling_mommi_construction(O,user))
+		return
 	return
 
 
