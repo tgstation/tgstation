@@ -19,7 +19,7 @@ var/global/disable_vents     = 0
 
 #define PI 3.1415
 
-#define R_IDEAL_GAS_EQUATION	8.31 //kPa*L/(K*mol)
+#define R_IDEAL_GAS_EQUATION	8.314 //kPa*L/(K*mol)
 #define ONE_ATMOSPHERE		101.325	//kPa
 
 #define CELL_VOLUME 2500	//liters in a cell
