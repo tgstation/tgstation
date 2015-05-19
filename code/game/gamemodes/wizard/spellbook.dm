@@ -528,7 +528,7 @@
 				if(result > 0)
 					uses += result
 		else if(href_list["page"])
-			tab = href_list["page"]
+			tab = sanitize(href_list["page"])
 	attack_self(H)
 	return
 
