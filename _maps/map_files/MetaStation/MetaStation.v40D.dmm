@@ -3726,7 +3726,7 @@
 "btH" = (/obj/structure/reagent_dispensers/beerkeg,/turf/simulated/floor/wood,/area/crew_quarters/bar)
 "btI" = (/obj/machinery/atmospherics/unary/vent_pump{dir = 2; on = 1},/obj/effect/landmark{name = "xeno_spawn"; pixel_x = -1},/obj/structure/disposalpipe/segment{dir = 4; icon_state = "pipe-c"},/turf/simulated/floor/wood,/area/crew_quarters/bar)
 "btJ" = (/obj/structure/disposalpipe/segment{dir = 8; icon_state = "pipe-c"},/turf/simulated/floor/wood,/area/crew_quarters/bar)
-"btK" = (/obj/structure/closet/gmcloset{desc = "It's a storage unit."; icon_state = "black"; name = "spare gear"},/obj/item/weapon/wrench,/turf/simulated/floor/wood,/area/crew_quarters/bar)
+"btK" = (/obj/structure/closet/gmcloset{desc = "It's a storage unit."; name = "spare gear"},/obj/item/weapon/wrench,/turf/simulated/floor/wood,/area/crew_quarters/bar)
 "btL" = (/obj/structure/cable/yellow{d1 = 1; d2 = 2; icon_state = "1-2"},/obj/machinery/door/airlock/maintenance{req_access_txt = "12"},/obj/structure/disposalpipe/segment,/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,/turf/simulated/floor/plating,/area/maintenance/starboard)
 "btM" = (/obj/item/weapon/stock_parts/cell/high{charge = 100; maxcharge = 15000},/turf/simulated/floor/plating{tag = "icon-platingdmg2"; icon_state = "platingdmg2"},/area/maintenance/starboard)
 "btN" = (/obj/item/weapon/storage/toolbox/emergency,/obj/machinery/atmospherics/pipe/simple/supply/hidden,/obj/effect/spawner/lootdrop/maintenance,/turf/simulated/floor/plating,/area/maintenance/starboard)
