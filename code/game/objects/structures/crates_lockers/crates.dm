@@ -355,22 +355,37 @@
 	new /obj/item/clothing/suit/radiation(src)
 	new /obj/item/clothing/head/radiation(src)
 
+/obj/structure/closet/CanPass(atom/movable/mover, turf/target, height=1.5, air_group = 0)
+	if(air_group || (height==0 || wall_mounted)) return 1
+	if(istype(mover, /obj/structure/closet/crate)) return 0
+	return (!density)
+
 /obj/structure/closet/crate/open()
+	if(src.opened)
+		return 0
+	if(!src.can_open())
+		return 0
 	playsound(get_turf(src), sound_effect_open, 15, 1, -3)
 
 	dump_contents()
 
 	icon_state = icon_opened
 	src.opened = 1
+	src.density = 0
 	return 1
 
 /obj/structure/closet/crate/close()
+	if(!src.opened)
+		return 0
+	if(!src.can_close())
+		return 0
 	playsound(get_turf(src), sound_effect_close, 15, 1, -3)
 
 	take_contents()
 
 	icon_state = icon_closed
 	src.opened = 0
+	src.density = 1
 	return 1
 
 /obj/structure/closet/crate/insert(var/atom/movable/AM, var/include_mobs = 0)

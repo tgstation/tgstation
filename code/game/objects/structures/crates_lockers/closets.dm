@@ -28,6 +28,8 @@
 	..()
 	if(!opened)		// if closed, any item at the crate's loc is put in the contents
 		take_contents()
+	else
+		density = 0
 
 // Fix for #383 - C4 deleting fridges with corpses
 /obj/structure/closet/Destroy()
