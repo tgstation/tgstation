@@ -456,7 +456,7 @@ Alien plants should do something if theres a lot of poison
 					new /obj/effect/decal/cleanable/blood/xeno(src)
 					var/obj/effect/decal/cleanable/blood/xeno/O = getFromPool(/obj/effect/decal/cleanable/blood/xeno, src)
 					O.New(src)
-				loc.contents += child//need to write the code for giving it to the alien later
+				child.loc = loc
 				if(kill && istype(child))
 					child.Die()
 				else
