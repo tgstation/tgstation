@@ -105,6 +105,8 @@
 			qdel(O)
 
 /datum/mind/proc/remove_changeling()
+	if(!ticker || !ticker.mode)
+		return
 	if(src in ticker.mode.changelings)
 		ticker.mode.changelings -= src
 		current.remove_changeling_powers()
@@ -115,6 +117,8 @@
 	remove_antag_equip()
 
 /datum/mind/proc/remove_traitor()
+	if(!ticker || !ticker.mode)
+		return
 	if(src in ticker.mode.traitors)
 		ticker.mode.traitors -= src
 		if(isAI(current))
@@ -125,6 +129,8 @@
 	remove_antag_equip()
 
 /datum/mind/proc/remove_nukeop()
+	if(!ticker || !ticker.mode)
+		return
 	if(src in ticker.mode.syndicates)
 		ticker.mode.syndicates -= src
 		ticker.mode.update_synd_icons_removed(src)
@@ -133,6 +139,8 @@
 	remove_antag_equip()
 
 /datum/mind/proc/remove_wizard()
+	if(!ticker || !ticker.mode)
+		return
 	if(src in ticker.mode.wizards)
 		ticker.mode.wizards -= src
 		current.spellremove(current)
@@ -140,6 +148,8 @@
 	remove_antag_equip()
 
 /datum/mind/proc/remove_cultist()
+	if(!ticker || !ticker.mode)
+		return
 	if(src in ticker.mode.cult)
 		ticker.mode.cult -= src
 		ticker.mode.update_cult_icons_removed(src)
@@ -151,6 +161,8 @@
 	remove_antag_equip()
 
 /datum/mind/proc/remove_rev()
+	if(!ticker || !ticker.mode)
+		return
 	if(src in ticker.mode.revolutionaries)
 		ticker.mode.revolutionaries -= src
 		ticker.mode.update_rev_icons_removed(src)
@@ -163,10 +175,14 @@
 
 
 /datum/mind/proc/remove_gang()
-		ticker.mode.remove_gangster(src,0,1)
-		remove_objectives()
+	if(!ticker || !ticker.mode)
+		return
+	ticker.mode.remove_gangster(src,0,1)
+	remove_objectives()
 
 /datum/mind/proc/remove_malf()
+	if(!ticker || !ticker.mode)
+		return
 	if(src in ticker.mode.malf_ai)
 		ticker.mode.malf_ai -= src
 		var/mob/living/silicon/ai/A = current

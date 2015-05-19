@@ -91,17 +91,20 @@ They can only use one tool at a time, they can't choose modules, and they have 1
 			camera.status = 0
 
 	//MMI copypasta, magic and more magic
-	mmi = new(src)
-	mmi.brain = new /obj/item/organ/brain(mmi)
-	mmi.brain.name = "[real_name]'s brain"
-	mmi.locked = 1
-	mmi.icon_state = "mmi_full"
-	mmi.name = "Man-Machine Interface: [real_name]"
-	mmi.brainmob = new(src)
-	mmi.brainmob.name = src.real_name
-	mmi.brainmob.real_name = src.real_name
-	mmi.brainmob.container = mmi
-	mmi.contents += mmi.brainmob
+	if(!mmi || !mmi.brainmob)
+		mmi = new(src)
+		mmi.brain = new /obj/item/organ/brain(mmi)
+		mmi.brain.name = "[real_name]'s brain"
+		mmi.locked = 1
+		mmi.icon_state = "mmi_full"
+		mmi.name = "Man-Machine Interface: [real_name]"
+		mmi.brainmob = new(src)
+		mmi.brainmob.name = src.real_name
+		mmi.brainmob.real_name = src.real_name
+		mmi.brainmob.container = mmi
+		mmi.contents += mmi.brainmob
+
+	updatename()
 
 	spawn (10)
 		updateSeeStaticMobs()
