@@ -339,6 +339,8 @@
 	if (occupant)
 		user << "<span class='warning'>You cannot disassemble this [src], it's occupado.</span>"
 		return
+	for(biomass; biomass > 0;biomass -= 50)
+		new /obj/item/weapon/reagent_containers/food/snacks/meat/syntiflesh(loc)
 	return..()
 
 //Let's unlock this early I guess.  Might be too early, needs tweaking.
