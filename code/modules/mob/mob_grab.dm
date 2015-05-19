@@ -18,7 +18,7 @@
 	w_class = 5.0
 
 
-/obj/item/weapon/grab/New(mob/victim)
+/obj/item/weapon/grab/New(atom/loc, mob/victim)
 	..()
 	assailant = loc
 	affecting = victim

@@ -1,4 +1,0 @@
-author: Dylanstrategie
-delete-after: True
-changes:
-  - bugfix: Fix the Supermatter Shard puking runtimes and having its process() broken if a mob is on the same tile as it is (possible with spawning/teleportation)

@@ -1,4 +1,0 @@
-author: Dylanstrategie
-delete-after: True
-changes:
-  - experiment: Xenos now take halved electrocution damage to make up for the fact that they tend to go through a lot of wiring. Crit threshold is now 8 million W with full transfer for them (1 million W for APCs due to double electrocution) up from 1 million W (125 000 W)

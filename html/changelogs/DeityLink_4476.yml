@@ -1,7 +1,0 @@
-author: Deity Link
-delete-after: true
-changes:
-  - bugfix: Communications Consoles can be emagged once again, which will fully unlock them, and allow its users to contact the Syndicate.
-  - bugfix: Once emagged the console has the option to "Reset Arrays" which will de-emag the console and allow its users to contact Centcomm again.
-  - imageadd: Emagged Communication Consoles have a slightly different sprite.
-  - soundadd: Added notification sounds for admins when players contact Centcomm/the Syndicate.

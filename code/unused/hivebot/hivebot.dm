@@ -194,7 +194,7 @@
 	if (M.a_intent == "grab")
 		if (M == src)
 			return
-		var/obj/item/weapon/grab/G = getFromPool(/obj/item/weapon/grab,M)
+		var/obj/item/weapon/grab/G = getFromPool(/obj/item/weapon/grab,M,src)
 		G.assailant = M
 		if (M.hand)
 			M.l_hand = G
