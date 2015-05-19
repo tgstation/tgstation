@@ -151,14 +151,26 @@ Frequency:
 					L["[R.id] (Active)"] = R.locked
 				else
 					L["[R.id] (Inactive)"] = R.locked
-	var/list/turfs = list(	)
-	for(var/turf/T in orange(10))
-		if(T.x>world.maxx-8 || T.x<8)	continue	//putting them at the edge is dumb
-		if(T.y>world.maxy-8 || T.y<8)	continue
+
+	var/list/turfs = new/list()
+
+	for (var/turf/T in trange(10, user))
+		// putting them at the edge is dumb
+		if (T.x > world.maxx - 8 || T.x < 8)
+			continue
+
+		if (T.y > world.maxy - 8 || T.y < 8)
+			continue
+
 		turfs += T
-	if(turfs.len)
+
+	if (turfs.len)
 		L["None (Dangerous)"] = pick(turfs)
+
+	turfs = null
+
 	var/t1 = input(user, "Please select a teleporter to lock in on.", "Hand Teleporter") in L
+
 	if ((user.get_active_hand() != src || user.stat || user.restrained()))
 		return
 	var/count = 0	//num of portals from this teleport in world
