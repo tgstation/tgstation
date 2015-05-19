@@ -200,13 +200,13 @@
 
 /obj/item/clothing/suit/storage/New()
 	. = ..()
-	boxes = new /obj/screen/storage(  )
+	boxes = getFromPool(/obj/screen/storage)
 	boxes.name = "storage"
 	boxes.master = src
 	boxes.icon_state = "block"
 	boxes.screen_loc = "7,7 to 10,8"
 	boxes.layer = 19
-	closer = new /obj/screen/close(  )
+	closer = getFromPool(/obj/screen/close)
 	closer.master = src
 	closer.icon_state = "x"
 	closer.layer = 20

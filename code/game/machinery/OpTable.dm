@@ -180,7 +180,7 @@
 	if (istype(W, /obj/item/weapon/grab))
 		if(iscarbon(W:affecting))
 			take_victim(W:affecting,usr)
-			del(W)
+			returnToPool(W)
 			return
 	if(isrobot(user)) return
 	user.drop_item(W, src.loc)

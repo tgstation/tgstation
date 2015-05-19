@@ -456,13 +456,13 @@
 	else
 		verbs -= /obj/item/weapon/storage/verb/toggle_gathering_mode
 
-	src.boxes = new /obj/screen/storage(  )
+	src.boxes = getFromPool(/obj/screen/storage)
 	src.boxes.name = "storage"
 	src.boxes.master = src
 	src.boxes.icon_state = "block"
 	src.boxes.screen_loc = "7,7 to 10,8"
 	src.boxes.layer = 19
-	src.closer = new /obj/screen/close(  )
+	src.closer = getFromPool(/obj/screen/close)
 	src.closer.master = src
 	src.closer.icon_state = "x"
 	src.closer.layer = 20
@@ -519,15 +519,20 @@
 	return cansee
 
 /obj/item/weapon/storage/proc/close_all()
-	for(var/mob/M in can_see_contents())
+	for(var/mob/M in is_seeing)
 		close(M)
 		. = 1 //returns 1 if any mobs actually got a close(M) call
 
 /obj/item/weapon/storage/Destroy()
-	close_all()
-	qdel(boxes)
-	qdel(closer)
 	..()
+	close_all()
+	returnToPool(boxes)
+	returnToPool(closer)
+	boxes = null
+	closer = null
+	for(var/atom/movable/AM in contents)
+		qdel(AM)
+	contents = null
 
 /obj/item/weapon/storage/preattack(atom/target, mob/user, adjacent, params)
 	if(!adjacent) return 0

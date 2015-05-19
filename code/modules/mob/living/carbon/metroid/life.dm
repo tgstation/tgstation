@@ -522,3 +522,6 @@
 		else
 			if(!AIproc)
 				spawn() AIprocess()
+
+/mob/living/carbon/slime/regular_hud_updates()
+	return

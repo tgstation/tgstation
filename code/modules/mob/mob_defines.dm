@@ -11,9 +11,6 @@
 
 	var/stat = 0 //Whether a mob is alive or dead. TODO: Move this to living - Nodrak
 
-	//Not in use yet
-	var/obj/effect/organstructure/organStructure = null
-
 	var/obj/screen/flash = null
 	var/obj/screen/blind = null
 	var/obj/screen/hands = null

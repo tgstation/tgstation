@@ -356,7 +356,7 @@
 				G.affecting.loc = src.loc
 				G.affecting.Weaken(5)
 				visible_message("<span class='warning'>[G.assailant] puts [G.affecting] on \the [src].</span>")
-			del(W)
+			returnToPool(W)
 			return
 
 	if (istype(W, /obj/item/weapon/wrench) && can_disassemble())

@@ -18,17 +18,16 @@
 	w_class = 5.0
 
 
-/obj/item/weapon/grab/New(mob/user, mob/victim)
+/obj/item/weapon/grab/New(mob/victim)
 	..()
-	loc = user
-	assailant = user
+	assailant = loc
 	affecting = victim
 
-	if(affecting.anchored)
-		qdel(src)
+	if(affecting && affecting.anchored)
+		returnToPool(src)
 		return
 
-	hud = new /obj/screen/grab(src)
+	hud = getFromPool(/obj/screen/grab)
 	hud.icon_state = "reinforce"
 	hud.name = "reinforce grab"
 	hud.master = src
@@ -57,7 +56,7 @@
 	confirm()
 	if(!assailant)
 		affecting = null
-		qdel(src)
+		returnToPool(src)
 		return
 
 	if(assailant.client)
@@ -116,7 +115,7 @@
 		return
 	*/
 	if(!assailant.canmove || assailant.lying)
-		qdel(src)
+		returnToPool(src)
 		return
 
 	last_upgrade = world.time
@@ -150,10 +149,10 @@
 					if(state == GRAB_KILL)
 						return
 					if(!assailant || !affecting)
-						qdel(src)
+						returnToPool(src)
 						return
 					if(!assailant.canmove || assailant.lying)
-						qdel(src)
+						returnToPool(src)
 						return
 					state = GRAB_KILL
 					assailant.visible_message("<span class='danger'>[assailant] has tightened \his grip on [affecting]'s neck!</span>")
@@ -167,7 +166,7 @@
 					affecting.losebreath += 1
 				else
 					if(!assailant || !affecting)
-						qdel(src)
+						returnToPool(src)
 						return
 					assailant.visible_message("<span class='warning'>[assailant] was unable to tighten \his grip on [affecting]'s neck!</span>")
 					hud.icon_state = "disarm/kill"
@@ -177,12 +176,12 @@
 //This is used to make sure the victim hasn't managed to yackety sax away before using the grab.
 /obj/item/weapon/grab/proc/confirm()
 	if(!assailant || !affecting)
-		qdel(src)
+		returnToPool(src)
 		return 0
 
 	if(affecting)
 		if(!isturf(assailant.loc) || ( !isturf(affecting.loc) || assailant.loc != affecting.loc && get_dist(assailant, affecting) > 1) )
-			qdel(src)
+			returnToPool(src)
 			return 0
 
 	return 1
@@ -207,11 +206,11 @@
 			user.visible_message("<span class='danger'>[user] devours [affecting]!</span>")
 			affecting.loc = user
 			attacker.stomach_contents.Add(affecting)
-			qdel(src)
+			returnToPool(src)
 
 
 /obj/item/weapon/grab/dropped()
-	qdel(src)
+	returnToPool(src)
 
 /obj/item/weapon/grab/Destroy()
 	if(affecting)
@@ -221,5 +220,7 @@
 		if(assailant.client)
 			assailant.client.screen -= hud
 		assailant = null
-	qdel(hud)
+	if(hud)
+		returnToPool(hud)
+	hud = null
 	..()
