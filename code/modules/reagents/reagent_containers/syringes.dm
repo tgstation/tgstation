@@ -244,7 +244,7 @@
 /obj/item/weapon/reagent_containers/syringe/proc/get_injection_action(var/mob/target)
 	if (istype(target, /mob/living/carbon/human))
 		var/mob/living/carbon/human/H = target
-		return H.wear_suit ? INJECTION_SUIT_PORT : INJECTION_BODY
+		return (H.wear_suit && istype(H.wear_suit,/obj/item/clothing/suit/space)) ? INJECTION_SUIT_PORT : INJECTION_BODY
 	else
 		return INJECTION_BODY
 
