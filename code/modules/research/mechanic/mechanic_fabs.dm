@@ -3,7 +3,7 @@
 
 #define GEN_FAB_BASETIME 	5
 
-#define GEN_FAB_BASESTORAGE 150000
+#define GEN_FAB_BASESTORAGE 225000
 
 /obj/machinery/r_n_d/fabricator/mechanic_fab
 	name = "General Fabricator"

@@ -19,6 +19,15 @@ using metal and glass, it uses glass and reagents (usually sulfuric acis).
 
 	research_flags = HASOUTPUT | TAKESMATIN | CONSOLECONTROL | LOCKBOXES
 
+	part_sets = list(
+		"Machine Boards" = list(),
+		"Console Boards" = list(),
+		"Mecha Boards" = list(),
+		"Module Boards" = list(),
+		"Engineering Boards" = list(),
+		"Misc" = list()
+	)
+
 	allowed_materials=list(
 		/obj/item/stack/sheet/glass/glass,
 		/obj/item/stack/sheet/mineral/gold,

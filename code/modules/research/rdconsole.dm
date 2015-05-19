@@ -59,6 +59,12 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 	var/id = 0			//ID of the computer (for server restrictions).
 	var/sync = 1		//If sync = 0, it doesn't show up on Server Control Console
 
+	var/list/filtered = list( //Filters categories in the protolathe menu
+		"protolathe" = list(),
+		"imprinter" = list()
+	)
+	var/autorefresh = 1 //Prevents the window from being updated while queueing items
+
 	req_access = list(access_tox)	//Data and setting manipulation requires scientist access.
 
 	l_color = "#CD00CD"
@@ -191,6 +197,8 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 /obj/machinery/computer/rdconsole/Topic(href, href_list)
 	if(..())
 		return
+
+	var/updateAfter = 1 //STOP
 
 	add_fingerprint(usr)
 
@@ -362,6 +370,7 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 		sync = !sync
 
 	else if(href_list["build"]) //Causes the Protolathe to build something.
+		if (!autorefresh) updateAfter = 0 //STOP
 		if(linked_lathe)
 			var/datum/design/being_built = null
 			for(var/datum/design/D in files.known_designs)
@@ -374,15 +383,21 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 					power += round(being_built.materials[M] / 5)
 				power = max(2000, power)
 				//screen = 0.3
-				var/n = Clamp(text2num(href_list["n"]), 0, RESEARCH_MAX_Q_LEN - linked_lathe.queue.len)
+				var/n
+				if (href_list["customamt"])
+					n = round(input("Queue how many? (Maximum [RESEARCH_MAX_Q_LEN - linked_lathe.queue.len])", "Protolathe Queue") as num|null)
+					if (!linked_lathe) return //in case the 'lathe gets unlinked or destroyed or someshit while the popup is open
+				else
+					n = text2num(href_list["n"])
+				n = Clamp(n, 0, RESEARCH_MAX_Q_LEN - linked_lathe.queue.len)
 				for(var/i=1;i<=n;i++)
 					use_power(power)
 					linked_lathe.queue += being_built
 				if(href_list["now"]=="1")
 					linked_lathe.stopped=0
-				updateUsrDialog()
 
 	else if(href_list["imprint"]) //Causes the Circuit Imprinter to build something.
+		if (!autorefresh) updateAfter = 0 //STOP
 		if(linked_imprinter)
 			var/datum/design/being_built = null
 
@@ -399,13 +414,18 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 				for(var/M in being_built.materials)
 					power += round(being_built.materials[M] / 5)
 				power = max(2000, power)
-				var/n = Clamp(text2num(href_list["n"]), 0, RESEARCH_MAX_Q_LEN - linked_imprinter.queue.len)
+				var/n
+				if (href_list["customamt"])
+					n = round(input("Queue how many? (Maximum [RESEARCH_MAX_Q_LEN - linked_imprinter.queue.len])", "Circuit Imprinter Queue") as num|null)
+					if (!linked_imprinter) return //in case the imprinter gets unlinked or destroyed or someshit while the popup is open
+				else
+					n = text2num(href_list["n"])
+				n = Clamp(n, 0, RESEARCH_MAX_Q_LEN - linked_imprinter.queue.len)
 				for(var/i=1;i<=n;i++)
 					linked_imprinter.queue += being_built
 					use_power(power)
 				if(href_list["now"]=="1")
 					linked_imprinter.stopped=0
-				updateUsrDialog()
 
 	else if(href_list["disposeI"] && linked_imprinter)  //Causes the circuit imprinter to dispose of a single reagent (all of it)
 		linked_imprinter.reagents.del_reagent(href_list["dispose"])
@@ -510,7 +530,33 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 			spawn(20)
 				screen = 1.6
 				updateUsrDialog()
-	updateUsrDialog()
+
+	else if(href_list["toggleCategory"]) //Filter or unfilter a category
+		var/cat = href_list["toggleCategory"]
+		var/machine = href_list["machine"]
+		if (cat in filtered[machine])
+			filtered[machine] -= cat
+		else
+			filtered[machine] += cat
+
+	else if(href_list["toggleAllCategories"]) //Filter all categories, if all are filtered, clear filter.
+		var/machine = href_list["machine"]
+		var/list/tempfilter = filtered[machine] //t-thanks BYOND
+		if(tempfilter.len == linked_lathe.part_sets.len)
+			filtered[machine] = list()
+		else
+			filtered[machine] = list()
+			if (machine == "protolathe")
+				for(var/name_set in linked_lathe.part_sets)
+					filtered[machine] += name_set
+			else
+				for(var/name_set in linked_imprinter.part_sets)
+					filtered[machine] += name_set
+
+	else if(href_list["toggleAutoRefresh"]) //STOP
+		autorefresh = !autorefresh
+
+	if (updateAfter) updateUsrDialog()
 	return
 
 /obj/machinery/computer/rdconsole/proc/protolathe_header()
@@ -549,7 +595,7 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 			return
 
 	user.set_machine(src)
-	var/dat = ""
+	var/dat = "<style>a:link {color: #0066CC} a:visited {color: #0066CC}</style>"
 	files.RefreshResearch()
 	switch(screen) //A quick check to make sure you get the right screen when a device is disconnected.
 		if(2 to 2.9)
@@ -805,32 +851,43 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 
 			// AUTOFIXED BY fix_string_idiocy.py
 			// C:\Users\Rob\Documents\Projects\vgstation13\code\modules\research\rdconsole.dm:724: dat += "<A href='?src=\ref[src];menu=1.0'>Main Menu</A> || "
-			dat += protolathe_header()+{"Protolathe Menu:<BR>
-				<B>Material Amount:</B> [linked_lathe.TotalMaterials()] cm<sup>3</sup> (MAX: [linked_lathe.max_material_storage])<BR>
-				<B>Chemical Volume:</B> [linked_lathe.reagents.total_volume] (MAX: [linked_lathe.reagents.maximum_volume])<HR><ul>"}
+			dat += protolathe_header()+{"Protolathe Construction Menu \[<A href='?src=\ref[src];toggleAutoRefresh=1'>Auto-Refresh: [autorefresh ? "ON" : "OFF"]</A>\]<HR>"}
 			// END AUTOFIX
-			for(var/datum/design/D in files.known_designs)
-				if(!(D.build_type & PROTOLATHE))
-					continue
-				var/temp_dat = "[D.name]"
-				var/upTo=10
-				for(var/M in D.materials)
-					temp_dat += " [D.materials[M]] [CallMaterialName(M)]"
-					var/num_units_avail=linked_lathe.check_mat(D,M,upTo)
-					if(upTo && num_units_avail<upTo)
-						upTo=num_units_avail
-				if (upTo)
-					dat += {"<li>
-						<A href='?src=\ref[src];build=[D.id];n=1;now=1'>[temp_dat]</A>
-						<A href='?src=\ref[src];build=[D.id];n=1'>(Queue &times;1)</A>"}
-					if(upTo>=5)
-						dat += "<A href='?src=\ref[src];build=[D.id];n=5'>(&times;5)</A>"
-					if(upTo>=10)
-						dat += "<A href='?src=\ref[src];build=[D.id];n=10'>(&times;10)</A>"
-					dat += "</li>"
+			dat += "Filter: "
+			for(var/name_set in linked_lathe.part_sets)
+				if (name_set in filtered["protolathe"])
+					dat += "<A href='?src=\ref[src];toggleCategory=[name_set];machine=["protolathe"]' style='color: #A66300'>[name_set]</a> / "
 				else
-					dat += "<li>[temp_dat]</li>"
-			dat += "</ul>"
+					dat += "<A href='?src=\ref[src];toggleCategory=[name_set];machine=["protolathe"]' style='color: #0066CC'>[name_set]</a> / "
+			dat += "<A href='?src=\ref[src];toggleAllCategories=1;machine=["protolathe"]' style='color: #0066CC'>Filter All</a><HR>"
+
+			for(var/name_set in linked_lathe.part_sets)
+				if(name_set in filtered["protolathe"])
+					continue
+				dat += "<h2>[name_set]</h2><ul>"
+				for(var/datum/design/D in files.known_designs)
+					if(!(D.build_type & PROTOLATHE) || D.category != name_set)
+						continue
+					var/temp_dat = "[D.name]"
+					var/upTo=10
+					for(var/M in D.materials)
+						temp_dat += " [D.materials[M]] [CallMaterialName(M)]"
+						var/num_units_avail=linked_lathe.check_mat(D,M,upTo)
+						if(upTo && num_units_avail<upTo)
+							upTo=num_units_avail
+					if (upTo)
+						dat += {"<li>
+							<A href='?src=\ref[src];build=[D.id];n=1;now=1'>[temp_dat]</A>
+							<A href='?src=\ref[src];build=[D.id];n=1'>(Queue &times;1)</A>"}
+						if(upTo>=5)
+							dat += "<A href='?src=\ref[src];build=[D.id];n=5'>(&times;5)</A>"
+						if(upTo>=10)
+							dat += "<A href='?src=\ref[src];build=[D.id];n=10'>(&times;10)</A>"
+						dat += "<A href='?src=\ref[src];build=[D.id];customamt=1'>(Custom)</A>"
+						dat += "</li>"
+					else
+						dat += "<li>[temp_dat]</li>"
+				dat += "</ul>"
 
 		if(3.2) //Protolathe Material Storage Sub-menu
 
@@ -894,33 +951,46 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 			// AUTOFIXED BY fix_string_idiocy.py
 			// C:\Users\Rob\Documents\Projects\vgstation13\code\modules\research\rdconsole.dm:837: dat += "<A href='?src=\ref[src];menu=1.0'>Main Menu</A> || "
 			dat += {"[CircuitImprinterHeader()]
-				Circuit Imprinter Menu:<BR>
+				Circuit Imprinter Menu \[<A href='?src=\ref[src];toggleAutoRefresh=1'>Auto-Refresh: [autorefresh ? "ON" : "OFF"]</A>\]<BR>
 				<b>Material Amount:</b> [linked_imprinter.TotalMaterials()] cm<sup>3</sup><BR>
-				<b>Chemical Volume:</b> [linked_imprinter.reagents.total_volume]<ul>"}
+				<b>Chemical Volume:</b> [linked_imprinter.reagents.total_volume]<HR>"}
 			// END AUTOFIX
-			for(var/datum/design/D in files.known_designs)
-				if(!(D.build_type & IMPRINTER))
-					continue
-				var/temp_dat = "[D.name]"
-				var/upTo=10
-				for(var/M in D.materials)
-					temp_dat += " [D.materials[M]] [CallMaterialName(M)]"
-					var/num_units_avail=linked_imprinter.check_mat(D,M,upTo)
-					if(num_units_avail<upTo)
-						upTo=num_units_avail
-						if(!upTo)
-							break
-				if (upTo)
-					dat += {"<li><A href='?src=\ref[src];imprint=[D.id];n=1;now=1'>[temp_dat]</A>
-						<A href='?src=\ref[src];imprint=[D.id];n=1'>(Queue &times;1)</A>"}
-					if(upTo>=5)
-						dat += "<A href='?src=\ref[src];imprint=[D.id];n=5'>(&times;5)</A>"
-					if(upTo>=10)
-						dat += "<A href='?src=\ref[src];imprint=[D.id];n=10'>(&times;10)</A>"
-					dat += "</li>"
+			dat += "Filter: "
+			for(var/name_set in linked_imprinter.part_sets)
+				if (name_set in filtered["imprinter"])
+					dat += "<A href='?src=\ref[src];toggleCategory=[name_set];machine=["imprinter"]' style='color: #A66300'>[name_set]</a> / "
 				else
-					dat += "<li>[temp_dat]</li>"
-			dat += "</ul>"
+					dat += "<A href='?src=\ref[src];toggleCategory=[name_set];machine=["imprinter"]' style='color: #0066CC'>[name_set]</a> / "
+			dat += "<A href='?src=\ref[src];toggleAllCategories=1;machine=["imprinter"]' style='color: #0066CC'>Filter All</a><HR>"
+
+			for(var/name_set in linked_imprinter.part_sets)
+				if(name_set in filtered["imprinter"])
+					continue
+				dat += "<h2>[name_set]</h2><ul>"
+				for(var/datum/design/D in files.known_designs)
+					if(!(D.build_type & IMPRINTER) || D.category != name_set)
+						continue
+					var/temp_dat = "[D.name]"
+					var/upTo=10
+					for(var/M in D.materials)
+						temp_dat += " [D.materials[M]] [CallMaterialName(M)]"
+						var/num_units_avail=linked_imprinter.check_mat(D,M,upTo)
+						if(num_units_avail<upTo)
+							upTo=num_units_avail
+							if(!upTo)
+								break
+					if (upTo)
+						dat += {"<li><A href='?src=\ref[src];imprint=[D.id];n=1;now=1'>[temp_dat]</A>
+							<A href='?src=\ref[src];imprint=[D.id];n=1'>(Queue &times;1)</A>"}
+						if(upTo>=5)
+							dat += "<A href='?src=\ref[src];imprint=[D.id];n=5'>(&times;5)</A>"
+						if(upTo>=10)
+							dat += "<A href='?src=\ref[src];imprint=[D.id];n=10'>(&times;10)</A>"
+						dat += "<A href='?src=\ref[src];imprint=[D.id];customamt=1'>(Custom)</A>"
+						dat += "</li>"
+					else
+						dat += "<li>[temp_dat]</li>"
+				dat += "</ul>"
 
 		if(4.2)
 
@@ -945,8 +1015,8 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 				Material Storage<HR><ul>"}
 
 
-			for(var/matID in linked_imprinter.materials.storage)
-				var/datum/material/M=linked_imprinter.materials.storage[matID]
+			for(var/matID in linked_imprinter.materials)
+				var/datum/material/M=linked_imprinter.materials[matID]
 				if(!(M.sheettype in linked_imprinter.allowed_materials))
 					continue
 				dat += "<li>[M.stored] cm<sup>3</sup> of [M.processed_name]"

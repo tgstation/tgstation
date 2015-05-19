@@ -14,6 +14,7 @@ datum/design/rust_core_control
 	req_tech = list("programming" = 4, "engineering" = 4)
 	build_type = IMPRINTER
 	materials = list("$glass" = 2000, "sacid" = 20)
+	category = "Misc"
 	build_path = "/obj/item/weapon/circuitboard/rust_core_control"
 
 //////////////////////////////////////
@@ -31,6 +32,7 @@ datum/design/rust_fuel_control
 	req_tech = list("programming" = 4, "engineering" = 4)
 	build_type = IMPRINTER
 	materials = list("$glass" = 2000, "sacid" = 20)
+	category = "Misc"
 	build_path = "/obj/item/weapon/circuitboard/rust_fuel_control"
 
 //////////////////////////////////////
@@ -48,6 +50,7 @@ datum/design/rust_fuel_port
 	req_tech = list("engineering" = 4, "materials" = 5)
 	build_type = IMPRINTER
 	materials = list("$glass" = 2000, "sacid" = 20, "$uranium" = 3000)
+	category = "Misc"
 	build_path = "/obj/item/weapon/module/rust_fuel_port"
 
 //////////////////////////////////////
@@ -65,6 +68,7 @@ datum/design/rust_fuel_compressor
 	req_tech = list("materials" = 6, "plasmatech" = 4)
 	build_type = IMPRINTER
 	materials = list("$glass" = 2000, "sacid" = 20, "$plasma" = 3000, "$diamond" = 1000)
+	category = "Misc"
 	build_path = "/obj/item/weapon/module/rust_fuel_compressor"
 
 //////////////////////////////////////
@@ -91,6 +95,7 @@ datum/design/rust_core
 	build_type = IMPRINTER
 	reliability_base = 79
 	materials = list("$glass" = 2000, "sacid" = 20, "$plasma" = 3000, "$diamond" = 2000)
+	category = "Misc"
 	build_path = "/obj/item/weapon/circuitboard/rust_core"
 
 //////////////////////////////////////
@@ -117,4 +122,5 @@ datum/design/rust_injector
 	build_type = IMPRINTER
 	reliability_base = 79
 	materials = list("$glass" = 2000, "sacid" = 20, "$plasma" = 3000, "$uranium" = 2000)
+	category = "Misc"
 	build_path = "/obj/item/weapon/circuitboard/rust_core"

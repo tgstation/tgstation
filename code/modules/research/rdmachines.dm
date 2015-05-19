@@ -226,12 +226,12 @@ var/global/list/rnd_machines = list()
 				if(M.sheettype==O.type)
 					found=1
 			if(!found)
-				user << "<span class='warning'>The protolathe rejects \the [O].</span>"
+				user << "<span class='warning'>\The [src.name] rejects \the [O.name].</span>"
 				busy = 0
 				return 1
 			var/obj/item/stack/sheet/S = O
 			if (TotalMaterials() + S.perunit > max_material_storage)
-				user << "<span class='warning'>The protolathe's material bin is full. Please remove material before adding more.</span>"
+				user << "<span class='warning'>\The [src.name]'s material bin is full. Please remove material before adding more.</span>"
 				busy = 0
 				return 1
 
@@ -277,8 +277,9 @@ var/global/list/rnd_machines = list()
 /obj/machinery/r_n_d/proc/TotalMaterials() //returns the total of all the stored materials. Makes code neater.
 	var/total=0
 	if(materials)
-		for(var/id in materials.storage)
-			total += materials.getAmount(id)
+		for(var/id in materials)
+			var/datum/material/mattype = materials[id]
+			total += mattype.stored
 		return total
 	else
 		return null
