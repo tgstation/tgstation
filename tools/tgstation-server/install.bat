@@ -1,5 +1,6 @@
 @echo off
 @title Server Tools Installer.
+set HOME = %USERPROFILE%
 call config.bat
 
 echo This will download the game code from git and install the all the files and folders and symbolic links needed to use the server tools in to the current directory.
@@ -20,6 +21,10 @@ IF %ERRORLEVEL% NEQ 0 (
 	pause
 	goto ABORT
 )
+cd gitrepo
+git checkout %REPO_BRANCH%
+cd ..
+
 echo Repo downloaded.
 echo Setting up folders...
 mkdir gamecode\a
@@ -36,8 +41,12 @@ xcopy gitrepo\cfg gamedata\cfg /Y /X /K /R /H /I /C /V /E /Q >nul
 xcopy gitrepo\bot bot /Y /X /K /R /H /I /C /V /E /Q >nul
 echo (2/3)
 xcopy gitrepo gamecode\a /Y /X /K /R /H /I /C /V /E /Q /EXCLUDE:copyexclude.txt >nul
+mkdir gamecode\a\.git\logs\
+copy gitrepo\.git\logs\HEAD gamecode\a\.git\logs\HEAD /D /V /Y >nul
 echo (3/3)
 xcopy gitrepo gamecode\b /Y /X /K /R /H /I /C /V /E /Q /EXCLUDE:copyexclude.txt >nul
+mkdir gamecode\b\.git\logs >nul
+copy gitrepo\.git\logs\HEAD gamecode\b\.git\logs\HEAD /D /V /Y >nul
 echo done.
 
 echo Setting up symbolic links.

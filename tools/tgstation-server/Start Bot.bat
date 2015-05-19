@@ -9,7 +9,7 @@ if not exist ..\gamedata\data\logs\bot mkdir ..\gamedata\data\logs\bot\
 cls
 echo NT IRC Bot
 echo Bot Running. Watching for Bot exits.
-start /WAIT pythonw NanoTrasenBot.py >>..\gamedata\data\logs\bot\bot-%CUR_DATE%.txt
+start /WAIT python NanoTrasenBot.py >>..\gamedata\data\logs\bot\bot-%CUR_DATE%.txt
 cls
 echo NT IRC Bot
 echo Bot exit detected. Restarting in 15 minutes.
