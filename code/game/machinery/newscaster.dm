@@ -832,7 +832,7 @@ var/list/obj/machinery/newscaster/allCasters = list() //Global list that will co
 	if(photo)
 		if(!photo.sillynewscastervar)
 			photo.loc = src.loc
-			if(!issilicon(user))
+			if(!issilicon(user) || ismommi(user))
 				user.put_in_inactive_hand(photo)
 		else
 			qdel(photo)
@@ -841,7 +841,7 @@ var/list/obj/machinery/newscaster/allCasters = list() //Global list that will co
 		photo = user.get_active_hand()
 		user.drop_item()
 		photo.loc = src
-	if(istype(user,/mob/living/silicon))
+	if(istype(user,/mob/living/silicon) && !ismommi(user))
 		var/list/nametemp = list()
 		var/find
 		var/datum/picture/selection

@@ -124,6 +124,34 @@ Borg Hypospray
 
 	if(empty)
 		usr << "<span class='notice'>It is currently empty. Allow some time for the internal syntheszier to produce more.</span>"
+
+/*
+Borg Patch Applier
+*/
+/obj/item/weapon/reagent_containers/borghypo/patcher
+	name = "cyborg applicator"
+	desc = "An advanced chemical synthesizer and application system, designed for heavy-duty medical equipment."
+	icon = 'icons/obj/chemical.dmi'
+	icon_state = "bandaid"
+	item_state = "bandaid"
+	reagent_ids = list("styptic_powder", "silver_sulfadiazine")
+
+/obj/item/weapon/reagent_containers/borghypo/attack(mob/living/M as mob, mob/user as mob)
+	var/datum/reagents/R = reagent_list[mode]
+	if(!R.total_volume)
+		user << "<span class='notice'>The applicator is empty.</span>"
+		return
+	if (!( istype(M) ))
+		return
+	if (R.total_volume)
+		M << "<span class='warning'>Something got squirted on you!</span>"
+		user << "<span class='notice'>You patch [M] with the applier.</span>"
+		R.reaction(M, TOUCH)
+		if(M.reagents)
+			var/trans = R.trans_to(M, amount_per_transfer_from_this)
+			user << "<span class='notice'>[trans] unit\s applied.  [R.total_volume] unit\s remaining.</span>"
+
+
 /*
 Borg Shaker
 */
@@ -200,3 +228,36 @@ Borg Shaker
 	recharge_time = 3
 
 	reagent_ids = list("beer2")
+
+/*
+Human variants
+*/
+
+
+/obj/item/weapon/reagent_containers/borghypo/human  //honk
+	name = "advanced hypospray"
+	charge_cost = 0
+
+/obj/item/weapon/reagent_containers/borghypo/human/regenerate_reagents()
+	var/datum/reagents/RG = reagent_list[mode]
+	if(RG.total_volume < RG.maximum_volume) 	//Don't recharge reagents if the storage is full.
+		RG.add_reagent(reagent_ids[mode], 5)		//And fill hypo with reagent.
+
+/obj/item/weapon/reagent_containers/borghypo/patcher/human
+	name = "advanced applier"
+	charge_cost = 0
+
+/obj/item/weapon/reagent_containers/borghypo/patcher/human/regenerate_reagents()
+	var/datum/reagents/RG = reagent_list[mode]
+	if(RG.total_volume < RG.maximum_volume)
+		RG.add_reagent(reagent_ids[mode], 5)
+
+/obj/item/weapon/reagent_containers/borghypo/borgshaker/human
+	name = "advanced shaker"
+	charge_cost = 0
+
+
+/obj/item/weapon/reagent_containers/borghypo/borgshaker/human/regenerate_reagents()
+	var/datum/reagents/RG = reagent_list[mode]
+	if(RG.total_volume < RG.maximum_volume)
+		RG.add_reagent(reagent_ids[mode], 5)
