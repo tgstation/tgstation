@@ -404,7 +404,7 @@
 /mob/living/silicon/robot/attackby(obj/item/weapon/W as obj, mob/user as mob, params)
 	if (ismommi(user) && user:keeper)
 		if (!ismommi(src) || (ismommi(src) && !src:keeper))
-			user << "<span class ='warning'>No.</span>"
+			user << "<span class ='warning'>Your laws prevent you from doing this</span>"
 			return
 
 	if (istype(W, /obj/item/weapon/restraints/handcuffs)) // fuck i don't even know why isrobot() in handcuff code isn't working so this will have to do
@@ -692,6 +692,20 @@
 				sleep(3)
 				step_away(src,user,15)
 
+/mob/living/silicon/robot/attack_hand(mob/living/silicon/robot/mommi/user)
+	add_fingerprint(user)
+
+	if(opened && !wiresexposed)
+		if(cell)
+			if(user.keeper)
+				user << "Your laws prevent you from doing this"
+				return
+			cell.updateicon()
+			cell.add_fingerprint(user)
+			user.put_in_active_hand(cell)
+			user << "You remove \the [cell]."
+			cell = null
+			update_icons()
 
 /mob/living/silicon/robot/proc/allowed(mob/M)
 	//check if it doesn't require any access at all

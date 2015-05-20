@@ -14,9 +14,10 @@
 
 /mob/living/attackby(obj/item/I, mob/user, params)
 	if(ismommi(user) && user:keeper)	//REMOVE SHITTER REMOVE SHITTER
-		if(!ismommi(src) ||(ismommi(src) && !src:keeper)) //They can interfere with keeper mommis
-			user << "<span class ='warning'>No.</span>"
-			return
+		if(src.client || src.ckey || istype(src,/mob/living/carbon/human) || istype(src,/mob/living/silicon))	//If it's a human, silicon or another sentient it's not ok => animals are fair game!
+			if(!ismommi(src) || (ismommi(src) && !src:keeper)) //They can interfere with keeper mommis
+				user << "<span class ='warning'>Your laws prevent you from doing this</span>"
+				return
 	user.changeNext_move(CLICK_CD_MELEE)
 	I.attack(src, user)
 
