@@ -2,3 +2,4 @@ author: Deity Link
 delete-after: true
 changes:
   - rscadd: Deconstructing a Cloning Pod removes the Biomass from it as Synthmeat slabs.
+  - tweak: Built Cloning Pods are now empty of any biomass (fixing an exploit that'd reset the biomass to 150 every time the machine was deconstructed-reconstructed) doesn't affect Cloning Pods already built at roundstart.

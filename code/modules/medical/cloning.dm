@@ -30,6 +30,9 @@
 
 	l_color = "#7BF9FF"
 
+/obj/machinery/cloning/clonepod/empty
+	biomass = 0
+
 /obj/machinery/cloning/clonepod/multitool_menu(var/mob/user, var/obj/item/device/multitool/P)
 	return ""
 
