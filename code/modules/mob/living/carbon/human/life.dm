@@ -332,10 +332,12 @@
 	if(mind)
 		if(mind.changeling)
 			mind.changeling.regenerate()
-			hud_used.lingchemdisplay.invisibility = 0
-			hud_used.lingchemdisplay.maptext = "<div align='center' valign='middle' style='position:relative; top:0px; left:6px'> <font color='#dd66dd'>[mind.changeling.chem_charges]</font></div>"
+			if(hud_used)
+				hud_used.lingchemdisplay.invisibility = 0
+				hud_used.lingchemdisplay.maptext = "<div align='center' valign='middle' style='position:relative; top:0px; left:6px'> <font color='#dd66dd'>[mind.changeling.chem_charges]</font></div>"
 		else
-			hud_used.lingchemdisplay.invisibility = 101
+			if(hud_used)
+				hud_used.lingchemdisplay.invisibility = 101
 
 /mob/living/carbon/human/has_smoke_protection()
 	if(wear_mask)

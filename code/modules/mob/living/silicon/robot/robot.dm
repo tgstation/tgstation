@@ -1055,7 +1055,7 @@
 			connected_ai << "<br><br><span class='notice'>NOTICE - Cyborg reclassification detected: [oldname] is now designated as [newname].</span><br>"
 
 /mob/living/silicon/robot/proc/get_sensor_augmentations()
-	if (module.sensors)
+	if (module && module.sensors)
 		return module.sensors
 	else
 		return "Disable"
