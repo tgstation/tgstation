@@ -74,7 +74,12 @@
 	icon_state = "tomealtar"
 	luminosity = 2
 	l_color = "#3e0000"
-//	luminosity = 5
+
+/obj/structure/cult/tome/attackby(obj/item/weapon/W as obj, mob/user as mob)
+	if(isrobot(user))
+		return
+	user.drop_item(W, src.loc)
+	return 1
 
 //sprites for this no longer exist	-Pete
 //(they were stolen from another game anyway)

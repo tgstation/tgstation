@@ -1638,6 +1638,22 @@
 
 		message_admins("Admin [key_name_admin(usr)] has talked with the Voice of Nar-Sie.")
 
+	else if(href_list["cult_privatespeak"])
+		var/mob/M = locate(href_list["cult_privatespeak"])
+		if(!M)
+			return
+
+		var/input = stripped_input(usr, "Whisper to [M.real_name] with the voice of Nar-Sie", "Voice of Nar-Sie", "")
+		if(!input)
+			return
+
+		M << "<span class='game say'><span class='danger'>Nar-Sie</span> whispers to you, <span class='sinister'>[input]</span></span>"
+
+		for(var/mob/dead/observer/O in player_list)
+			O << "<span class='game say'><span class='danger'>Nar-Sie</span> whispers to [M.real_name], <span class='sinister'>[input]</span></span>"
+
+		message_admins("Admin [key_name_admin(usr)] has talked with the Voice of Nar-Sie.")
+
 	else if(href_list["adminplayerobservecoodjump"])
 		if(!check_rights(R_ADMIN))	return
 

@@ -154,6 +154,7 @@
 		new /obj/item/weapon/tome(src.loc)
 	else
 		new /obj/item/weapon/tome(usr.loc)
+	invocation("tome_spawn")
 	qdel(src)
 	return
 
@@ -233,6 +234,9 @@
 
 		if((ticker.mode.name != "cult") || mode_ticker.narsie_condition_cleared)//if the game mode wasn't cult to begin with, there won't be need to complete a first objective to prepare the summoning.
 			if(active_cultists.len >= 9)
+				if(z != map.zMainStation)
+					for(var/mob/M in active_cultists)
+						M << "<span class='danger'>YOU HAVE A TERRIBLE FEELING. IS SOMETHING WRONG WITH THE RITUAL?</span>"//You get one warning
 				summoning = 1
 				log_admin("NAR-SIE SUMMONING: [active_cultists.len] are summoning Nar-Sie at ([x],[y],[z] - <A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[x];Y=[y];Z=[z]'>JMP</a>). [6 + (ghostcount * 5)] seconds remaining.")
 				message_admins("NAR-SIE SUMMONING: [active_cultists.len] are summoning Nar-Sie at ([x],[y],[z] - <A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[x];Y=[y];Z=[z]'>JMP</a>). [6 + (ghostcount * 5)] seconds remaining.")
@@ -276,13 +280,22 @@
 		return
 
 	if(currentCountdown <= 0)
-		for(var/mob/M in active_cultists)
-			// Only chant when Nar-Sie spawns
-			M.say("Tok-lyr rqa'nap g[pick("'","`")]lt-ulotf!")
-		ticker.mode.eldergod = 0
-		summonturfs = list()
-		summoning = 0
-		new /obj/machinery/singularity/narsie/large(src.loc)
+		if(z != map.zMainStation)//No more summonings on the Asteroid!
+			for(var/mob/M in active_cultists)
+				M.say("Tok-lyr rqa'nap g[pick("'","`")]lt-ulotf!")
+			summonturfs = list()
+			summoning = 0
+			for(var/mob/M in active_cultists)
+				M << "<span class='sinister'>THE GEOMETER OF BLOOD IS HIGHLY DISAPOINTED WITH YOUR INABILITY TO PERFORM THE RITUAL IN ITS REQUESTED LOCATION.</span>"
+				M.gib()
+		else
+			for(var/mob/M in active_cultists)
+				// Only chant when Nar-Sie spawns
+				M.say("Tok-lyr rqa'nap g[pick("'","`")]lt-ulotf!")
+			ticker.mode.eldergod = 0
+			summonturfs = list()
+			summoning = 0
+			new /obj/machinery/singularity/narsie/large(src.loc)
 		return
 
 	currentCountdown--
@@ -728,7 +741,8 @@
 // returns 0 if the rune is not used. returns 1 if the rune is used.
 /obj/effect/rune/proc/communicate()
 	. = 1 // Default output is 1. If the rune is deleted it will return 1
-	var/input = stripped_input(usr, "Please choose a message to tell to the other acolytes.", "Voice of Blood", "")
+	var/mob/user = usr
+	var/input = stripped_input(user, "Please choose a message to tell to the other acolytes.", "Voice of Blood", "")
 	if(!input)
 		if (istype(src))
 			fizzle()
@@ -736,17 +750,21 @@
 		else
 			return 0
 	if(istype(src,/obj/effect/rune))
-		usr.say("O bidai nabora se[pick("'","`")]sma!")
+		user.say("O bidai nabora se[pick("'","`")]sma!")
 	else
-		usr.whisper("O bidai nabora se[pick("'","`")]sma!")
+		user.whisper("O bidai nabora se[pick("'","`")]sma!")
 
 	if(istype(src,/obj/effect/rune))
-		usr.say("[input]")
+		user.say("[input]")
 	else
-		usr.whisper("[input]")
+		user.whisper("[input]")
 	for(var/datum/mind/H in ticker.mode.cult)
 		if (H.current)
-			H.current << "<span class='sinister'> <B>[input]</span></B>"//changed from red to purple - Deity Link
+			H.current << "<span class='game say'><b>[user.real_name]</b>'s voice echoes in your head, <B><span class='sinister'>[input]</span></B></span>"//changed from red to purple - Deity Link
+
+	for(var/mob/dead/observer/O in player_list)
+		O << "<span class='game say'><b>[user.real_name]</b> communicates, <span class='sinister'>[input]</span></span>"
+
 	qdel(src)
 	return 1
 
@@ -1202,8 +1220,13 @@
 		if(ishuman(user))
 			usr.visible_message("<span class='warning'> In flash of red light, a set of armor appears on [usr]...</span>", \
 			"<span class='warning'> You are blinded by the flash of red light! After you're able to see again, you see that you are now wearing a set of armor.</span>")
-			user.equip_to_slot_or_del(new /obj/item/clothing/head/culthood/alt(user), slot_head)
-			user.equip_to_slot_or_del(new /obj/item/clothing/suit/cultrobes/alt(user), slot_wear_suit)
+			var/datum/game_mode/cult/mode_ticker = ticker.mode
+			if((istype(mode_ticker) && mode_ticker.narsie_condition_cleared) || (universe.name == "Hell Rising"))
+				user.equip_to_slot_or_del(new /obj/item/clothing/head/helmet/space/cult(user), slot_head)
+				user.equip_to_slot_or_del(new /obj/item/clothing/suit/space/cult(user), slot_wear_suit)
+			else
+				user.equip_to_slot_or_del(new /obj/item/clothing/head/culthood/alt(user), slot_head)
+				user.equip_to_slot_or_del(new /obj/item/clothing/suit/cultrobes/alt(user), slot_wear_suit)
 			user.equip_to_slot_or_del(new /obj/item/clothing/shoes/cult(user), slot_shoes)
 			user.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack/cultpack(user), slot_back)
 			//the above update their overlay icons cache but do not call update_icons()
@@ -1229,8 +1252,13 @@
 				if(ishuman(M))
 					M.visible_message("<span class='warning'> In flash of red light, and a set of armor appears on [M]...</span>", \
 					"<span class='warning'> You are blinded by the flash of red light! After you're able to see again, you see that you are now wearing a set of armor.</span>")
-					M.equip_to_slot_or_del(new /obj/item/clothing/head/culthood/alt(M), slot_head)
-					M.equip_to_slot_or_del(new /obj/item/clothing/suit/cultrobes/alt(M), slot_wear_suit)
+					var/datum/game_mode/cult/mode_ticker = ticker.mode
+					if((istype(mode_ticker) && mode_ticker.narsie_condition_cleared) || (universe.name == "Hell Rising"))
+						M.equip_to_slot_or_del(new /obj/item/clothing/head/helmet/space/cult(M), slot_head)
+						M.equip_to_slot_or_del(new /obj/item/clothing/suit/space/cult(M), slot_wear_suit)
+					else
+						M.equip_to_slot_or_del(new /obj/item/clothing/head/culthood/alt(M), slot_head)
+						M.equip_to_slot_or_del(new /obj/item/clothing/suit/cultrobes/alt(M), slot_wear_suit)
 					M.equip_to_slot_or_del(new /obj/item/clothing/shoes/cult(M), slot_shoes)
 					M.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack/cultpack(M), slot_back)
 					M.put_in_hands(new /obj/item/weapon/melee/cultblade(M))

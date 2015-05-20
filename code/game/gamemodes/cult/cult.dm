@@ -166,7 +166,7 @@
 			if(unconvertables.len <= (cult.len * 2))//if cultists are getting radically outnumbered, they get a free pass to the summon objective.
 				new_objective = pick_objective()
 			else
-				message_admins("There are over twice more unconvertables than there are cultists! Nar-Sie objective unlocked.")
+				message_admins("There are over twice more unconvertables than there are cultists ([cult.len] cultists for [unconvertables.len]) unconvertables! Nar-Sie objective unlocked.")
 		else
 			message_admins("The Cult has already completed [prenarsie_objectives] objectives! Nar-Sie objective unlocked.")
 	else
@@ -187,7 +187,7 @@
 			if("convert")
 				explanation = "We must increase our influence before we can summon Nar-Sie. Convert [convert_target] crew members. Take it slowly to avoid raising suspicions."
 			if("bloodspill")
-				explanation = "We must prepare this place for the Geometer of Blood's coming. Spill blood and gibs over [spilltarget] floor tiles."
+				explanation = "We must prepare this place for the Geometer of Blood's coming. Spread blood and gibs over [spilltarget] of the Station's floor tiles."
 			if("sacrifice")
 				explanation = "We need to sacrifice [sacrifice_target.name], the [sacrifice_target.assigned_role], for his blood is the key that will lead our master to this realm. You will need 3 cultists around a Sacrifice rune (Hell Blood Join) to perform the ritual."
 
@@ -201,7 +201,7 @@
 
 	objectives += "eldergod"
 
-	var/explanation = "Summon Nar-Sie via the use of the Tear Reality rune (Hell Join Self). You will need 9 cultists standing on and around the rune to summon Him."
+	var/explanation = "Summon Nar-Sie on the Station via the use of the Tear Reality rune (Hell Join Self). You will need 9 cultists standing on and around the rune to summon Him."
 
 	for(var/datum/mind/cult_mind in cult)
 		cult_mind.current << "<span class='sinister'>You and your acolytes have succeeded in preparing the station for the ultimate ritual!</span>"
