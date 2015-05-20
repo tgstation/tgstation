@@ -16,7 +16,14 @@
 	adjustmask(user)
 
 /obj/item/clothing/mask/breath/AltClick(var/mob/user)
-	adjustmask(user)
+	..()
+	if(!user.canUseTopic(user))
+		user << "<span class='warning'>You can't do that right now!</span>"
+		return
+	if(!in_range(src, user))
+		return
+	else
+		adjustmask(user)
 
 /obj/item/clothing/mask/breath/examine(mob/user)
 	..()

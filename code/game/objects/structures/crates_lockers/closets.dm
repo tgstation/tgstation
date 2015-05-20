@@ -351,8 +351,8 @@
 
 /obj/structure/closet/AltClick(var/mob/user)
 	..()
-	if(user.stat || !user.canmove || user.restrained() || broken)
-		user << "<span class='notice'>You can't do that right now.</span>"
+	if(!user.canUseTopic(user) || broken)
+		user << "<span class='warning'>You can't do that right now!</span>"
 		return
 	if(src.opened || !secure || !in_range(src, user))
 		return
