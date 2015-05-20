@@ -114,7 +114,7 @@ GUEST_BAN
 FORUMURL http://8ch.net/nt
 
 ## Wiki address
-WIKIURL https://tgstation13.org/wiki/Main_Page
+WIKIURL https://tgstation13.org/wiki
 
 ##Rules address
 RULESURL https://8ch.net/nt/ruurs.html
