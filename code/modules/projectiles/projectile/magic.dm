@@ -268,7 +268,7 @@ proc/wabbajack(mob/living/M)
 				S.icon = change.icon
 				if(H.mind)
 					H.mind.transfer_to(S)
-					S << "You are an animate statue. You cannot move when monitored, but are nearly invincible and deadly when unobserved! Do not harm [firer.name], your creator."
+					S << "<span class = 'userdanger'>You are an animate statue. You cannot move when monitored, but are nearly invincible and deadly when unobserved! Do not harm [firer.name], your creator.</span>"
 				H = change
 				H.loc = S
 				qdel(src)
