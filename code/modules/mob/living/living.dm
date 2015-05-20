@@ -11,7 +11,7 @@ Sorry Giacom. Please don't be mad :(
 
 /mob/living/New()
 	. = ..()
-	if (!ismommi(src))
+	if ((src.client || src.ckey || istype(src,/mob/living/carbon/human) || istype(src,/mob/living/silicon)) && !ismommi(src))	//Only for humans, silicons and other sentients now
 		generateStaticOverlay()
 		if(staticOverlays.len)
 			for(var/mob/living/silicon/robot/mommi/M in player_list)

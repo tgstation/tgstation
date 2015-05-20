@@ -676,9 +676,10 @@ They can only use one tool at a time, they can't choose modules, and they have 1
 	if(is_blind(src))
 		src << "<span class='notice'>Something is there but you can't see it.</span>"
 		return
-	if(istype(A, /mob) && !ismommi(A) && src.keeper)
-		src << "<span class='notice'>Something is there, but you can't see it.</span>"
-		return
+	if(istype(A, /mob) && src.keeper)
+		if(!src.can_interfere(A))
+			src << "<span class='notice'>Something is there, but you can't see it.</span>"
+			return
 
 	face_atom(A)
 	A.examine(src)
@@ -698,8 +699,15 @@ They can only use one tool at a time, they can't choose modules, and they have 1
 
 
 /mob/living/silicon/robot/mommi/start_pulling(var/atom/movable/AM)
-	if(istype(AM,/mob) && !ismommi(AM))
+	if(istype(AM,/mob))
 		if(src.keeper)
-			src << "Your laws prevent you from doing this"
-			return
+			if(!src.can_interfere(AM))
+				src << "Your laws prevent you from doing this"
+				return
 	..(AM)
+
+/mob/living/silicon/robot/mommi/proc/can_interfere(mob/AN)
+	if(istype(AN,/mob/living/carbon/human) || istype(AN,/mob/living/silicon) || AN.client || AN.ckey)	//If it's a human, silicon or other sentient it's not ok => animals are fair game!
+		if(!ismommi(AN) || (ismommi(AN) && !AN:keeper))	//Keeper MoMMIs can be interfered with
+			return 0	//Not ok
+	return 1	//Ok!
