@@ -65,9 +65,9 @@
 			eye_blind = max(eye_blind, 1)
 			silent = 0
 			return 1
-		if(health < config.health_threshold_crit)
+	/*	if(health < config.health_threshold_crit)
 			stat = UNCONSCIOUS
-			eye_blind = max(eye_blind, 1)
+			eye_blind = max(eye_blind, 1) */
 		else
 			stat = CONSCIOUS
 
