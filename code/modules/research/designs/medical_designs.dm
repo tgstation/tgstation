@@ -52,9 +52,9 @@ datum/design/posibrain
 	name = "Positronic Brain"
 	desc = "The latest in Artificial Intelligences."
 	id = "mmi_posi"
-	req_tech = list("programming" = 5, "biotech" = 4)
+	req_tech = list("programming" = 5, "biotech" = 4, "materials" = 6, "bluespace" = 4)
 	build_type = PROTOLATHE | MECHFAB
-	materials = list("$metal" = 1700, "$glass" = 1350, "$gold" = 500) //Gold, because SWAG.
+	materials = list("$metal" = 1700, "$glass" = 1350, "$gold" = 1000, "$diamond" = 500) //Gold, because SWAG.
 	reliability = 74
 	construction_time = 75
 	build_path = /obj/item/device/mmi/posibrain

@@ -6,7 +6,7 @@ var/global/posibrain_notif_cooldown = 0
 	icon = 'icons/obj/assemblies.dmi'
 	icon_state = "posibrain"
 	w_class = 3
-	origin_tech = "biotech=3;programming=2"
+	origin_tech = "biotech=3;programming=2;bluespace=4;materials=6"
 	var/notified = 0
 	var/askDelay = 10 * 60 * 1
 	brainmob = null

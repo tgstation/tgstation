@@ -157,6 +157,12 @@
 			user << "<span class='notice'>The endoskeleton must be assembled before debugging can begin.</span>"
 
 	if(istype(W, /obj/item/device/mmi))
+		if(user && ismommi(user))
+			var/mob/living/silicon/robot/mommi/R = user
+			if(R.keeper)
+				user << "Your laws forbid you from doing this"
+				return
+
 		var/obj/item/device/mmi/M = W
 		if(check_completion())
 			if(!istype(loc,/turf))
