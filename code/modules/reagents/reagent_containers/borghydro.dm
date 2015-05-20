@@ -136,7 +136,7 @@ Borg Patch Applier
 	item_state = "bandaid"
 	reagent_ids = list("styptic_powder", "silver_sulfadiazine")
 
-/obj/item/weapon/reagent_containers/borghypo/attack(mob/living/M as mob, mob/user as mob)
+/obj/item/weapon/reagent_containers/borghypo/patcher/attack(mob/living/M as mob, mob/user as mob)
 	var/datum/reagents/R = reagent_list[mode]
 	if(!R.total_volume)
 		user << "<span class='notice'>The applicator is empty.</span>"
