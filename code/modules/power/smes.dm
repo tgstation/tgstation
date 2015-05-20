@@ -92,29 +92,6 @@
 			return 1
 	return
 
-/obj/machinery/power/battery/smes/update_icon()
-	overlays.len = 0
-	if(stat & BROKEN)	return
-
-	overlays += image('icons/obj/power.dmi', "smes-op[online]")
-
-	if(charging)
-		overlays += image('icons/obj/power.dmi', "smes-oc1")
-	else
-		if(chargemode)
-			overlays += image('icons/obj/power.dmi', "smes-oc0")
-
-	var/clevel = chargedisplay()
-	if(clevel>0)
-		overlays += image('icons/obj/power.dmi', "smes-og[clevel]")
-	return
-
-/obj/machinery/power/battery/smes/restore()
-	var/_chargedisplay = chargedisplay()
-	..()
-	if(_chargedisplay != chargedisplay()) // If needed updates the icons overlay
-		update_icon()
-
 /obj/machinery/power/battery/smes/can_attach_terminal(mob/user)
 	return ..(user) && panel_open
 

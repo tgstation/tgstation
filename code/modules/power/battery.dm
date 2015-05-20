@@ -1,6 +1,43 @@
 // Generic battery machine
 // stores power
 
+#define SMESLEVELCHARGE		1
+#define SMESLEVELCHARGING	2
+#define SMESLEVELONLINE		3
+
+var/global/list/battery_charge = 	list(
+										image('icons/obj/power.dmi', "smes-og1"),
+										image('icons/obj/power.dmi', "smes-og2"),
+										image('icons/obj/power.dmi', "smes-og3"),
+										image('icons/obj/power.dmi', "smes-og4"),
+										image('icons/obj/power.dmi', "smes-og5")
+										)
+
+var/global/list/battery_charging =	list(
+										image('icons/obj/power.dmi', "smes-oc0"),
+										image('icons/obj/power.dmi', "smes-oc1")
+										)
+var/global/list/battery_online =	list(
+										image('icons/obj/power.dmi', "smes-op0"),
+										image('icons/obj/power.dmi', "smes-op1")
+										)
+
+/obj/machinery/power/battery/update_icon()
+	overlays.len = 0
+	if(stat & BROKEN)	return
+
+	overlays += battery_online[online + 1]
+
+	if(charging)
+		overlays += battery_charging[2]
+	else if(chargemode)
+		overlays += battery_charging[1]
+
+	var/clevel = chargedisplay()
+	if(clevel>0)
+		overlays += battery_charge[clevel]
+	return
+
 #define SMESMAXCHARGELEVEL 200000
 #define SMESMAXOUTPUT 200000
 #define SMESRATE 0.05 				// rate of internal charge to external power
@@ -101,6 +138,8 @@
 	if (stat & BROKEN)
 		return
 
+	var/_chargedisplay = chargedisplay()
+
 	var/excess = powernet.netexcess // This was how much wasn't used on the network last ptick, minus any removed by other SMESes
 
 	excess = min(lastout, excess) // Clamp it to how much was actually output by this SMES last ptick
@@ -114,6 +153,9 @@
 	powernet.netexcess -= excess // Remove the excess from the powernet, so later SMESes don't try to use it
 
 	loaddemand = lastout - excess
+
+	if(_chargedisplay != chargedisplay()) // If needed updates the icons overlay
+		update_icon()
 
 /obj/machinery/power/battery/attack_ai(mob/user)
 	src.add_hiddenprint(user)
@@ -240,15 +282,23 @@
 
 
 /obj/machinery/power/battery/emp_act(severity)
+
+	var/old_online = online
+	var/old_charging = charging
+	var/old_output = output
+
 	online = 0
 	charging = 0
 	output = 0
 	charge = max(0, charge - 1e6/severity)
 
 	spawn(100)
-		output = initial(output)
-		charging = initial(charging)
-		online = initial(online)
+		if(output == 0)
+			output = old_output
+		if(online == 0)
+			online = old_online
+		if(charging == 0)
+			charging = old_charging
 	..()
 
 /proc/rate_control(var/S, var/V, var/C, var/Min=1, var/Max=5, var/Limit=null)
@@ -257,4 +307,3 @@
 	if(Limit) return "[href]=-[Limit]'>-</A>"+rate+"[href]=[Limit]'>+</A>"
 	return rate
 
-#undef SMESRATE
