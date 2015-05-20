@@ -209,6 +209,9 @@ They can only use one tool at a time, they can't choose modules, and they have 1
 		return
 
 	if (istype(W, /obj/item/weapon/weldingtool))
+		if (src.health >= src.maxHealth)	//When you don't inherit parent functions shit like this goes forgotten
+			user << "<span class='warning'>[src] is already in good condition.</span>"
+			return 1
 		var/obj/item/weapon/weldingtool/WT = W
 		if (WT.remove_fuel(0))
 			adjustBruteLoss(-30)
@@ -391,8 +394,11 @@ They can only use one tool at a time, they can't choose modules, and they have 1
 /mob/living/silicon/robot/mommi/attack_hand(mob/user)
 	add_fingerprint(user)
 
-	if(opened && !wiresexposed && (!istype(user, /mob/living/silicon)))
+	if(opened && !wiresexposed && (!istype(user, /mob/living/silicon) || ismommi(user)))	//MoMMIs can remove MoMMI power cells
 		if(cell)
+			if (user == src)
+				user << "You lack the dexterity to remove your own power cell."
+				return
 			cell.updateicon()
 			cell.add_fingerprint(user)
 			user.put_in_active_hand(cell)
