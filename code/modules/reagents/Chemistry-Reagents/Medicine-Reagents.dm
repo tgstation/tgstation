@@ -401,7 +401,7 @@ datum/reagent/medicine/ephedrine
 	addiction_threshold = 30
 
 datum/reagent/medicine/ephedrine/on_mob_life(var/mob/living/M as mob)
-	M.status_flags |= IGNORESLOWDOWN
+	M.status_flags |= GOTTAGOFAST
 	M.AdjustParalysis(-1)
 	M.AdjustStunned(-1)
 	M.AdjustWeakened(-1)
@@ -470,8 +470,8 @@ datum/reagent/medicine/morphine
 
 datum/reagent/medicine/morphine/on_mob_life(var/mob/living/M as mob)
 	M.status_flags |= IGNORESLOWDOWN
-	if(current_cycle >= 36)
-		M.sleeping += 3
+	if(current_cycle >= 12)
+		M.sleeping += 1
 	..()
 	return
 
@@ -698,7 +698,7 @@ datum/reagent/medicine/antihol/on_mob_life(var/mob/living/M as mob)
 	overdose_threshold = 60
 
 datum/reagent/medicine/stimulants/on_mob_life(var/mob/living/M as mob)
-	M.status_flags |= IGNORESLOWDOWN
+	M.status_flags |= GOTTAGOFAST
 	if(M.health < 50 && M.health > 0)
 		M.adjustOxyLoss(-1*REM)
 		M.adjustToxLoss(-1*REM)
