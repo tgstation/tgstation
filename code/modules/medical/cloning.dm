@@ -21,7 +21,7 @@
 	var/mess = 0 //Need to clean out it if it's full of exploded clone.
 	var/attempting = 0 //One clone attempt at a time thanks
 	var/eject_wait = 0 //Don't eject them as soon as they are created fuckkk
-	var/biomass = CLONE_BIOMASS // * 3 - N3X
+	var/biomass = 0
 	var/time_coeff = 1 //Upgraded via part upgrading
 	var/resource_efficiency = 1
 	var/id_tag = "clone_pod"
@@ -30,8 +30,8 @@
 
 	l_color = "#7BF9FF"
 
-/obj/machinery/cloning/clonepod/empty
-	biomass = 0
+/obj/machinery/cloning/clonepod/full
+	biomass = CLONE_BIOMASS // * 3 - N3X
 
 /obj/machinery/cloning/clonepod/multitool_menu(var/mob/user, var/obj/item/device/multitool/P)
 	return ""
