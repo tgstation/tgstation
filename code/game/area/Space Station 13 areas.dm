@@ -116,9 +116,7 @@ proc/process_ghost_teleport_locs()
 
 
 
-//These are shuttle areas, they must contain two areas in a subgroup if you want to move a shuttle from one
-//place to another. Look at escape shuttle for example.
-//All shuttles show now be under shuttle since we have smooth-wall code.
+//These are shuttle areas; all subtypes are only used as teleportation markers, they have no actual function beyond that.
 
 /area/shuttle
 	name = "\improper Shuttle"
@@ -127,7 +125,43 @@ proc/process_ghost_teleport_locs()
 	lighting_use_dynamic = 1
 	has_gravity = 1
 	valid_territory = 0
+	icon_state = "shuttle"
 
+/area/shuttle/arrival
+	name = "\improper Arrival Shuttle"
+
+/area/shuttle/pod_1
+	name = "\improper Escape Pod One"
+
+/area/shuttle/pod_2
+	name = "\improper Escape Pod Two"
+
+/area/shuttle/pod_3
+	name = "\improper Escape Pod Three"
+
+/area/shuttle/pod_4
+	name = "\improper Escape Pod Four"
+
+/area/shuttle/mining
+	name = "\improper Mining Shuttle"
+
+/area/shuttle/labor
+	name = "\improper Labor Camp Shuttle"
+
+/area/shuttle/supply
+	name = "\improper Supply Shuttle"
+
+/area/shuttle/escape
+	name = "\improper Emergency Shuttle"
+
+/area/shuttle/transport
+	name = "\improper Transport Shuttle"
+
+/area/shuttle/syndicate
+	name = "\improper Syndicate Infiltrator"
+
+/area/shuttle/abandoned
+	name = "\improper Abandoned Ship"
 
 /area/start
 	name = "start area"
@@ -149,13 +183,13 @@ proc/process_ghost_teleport_locs()
 	name = "\improper Centcom Docks"
 
 /area/centcom/evac
-	name = "\improper Centcom Emergency Shuttle"
+	name = "\improper Centcom Recovery Ship"
 
-/area/centcom/suppy
-	name = "\improper Centcom Supply Shuttle"
+/area/centcom/supply
+	name = "\improper Centcom Supply Shuttle Dock"
 
 /area/centcom/ferry
-	name = "\improper Centcom Transport Shuttle"
+	name = "\improper Centcom Transport Shuttle Dock"
 
 /area/centcom/prison
 	name = "\improper Admin Prison"
@@ -1153,10 +1187,6 @@ proc/process_ghost_teleport_locs()
 
 /area/construction
 	name = "\improper Construction Area"
-	icon_state = "yellow"
-
-/area/construction/supplyshuttle
-	name = "\improper Supply Shuttle"
 	icon_state = "yellow"
 
 /area/construction/quarters
