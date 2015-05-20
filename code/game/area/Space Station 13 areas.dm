@@ -276,6 +276,11 @@ proc/process_ghost_teleport_locs()
 
 //ENEMY
 
+/area/chrono_station
+	name = "\improper TIME DEN"
+	icon_state = "yellow"
+	requires_power = 0
+	has_gravity = 1
 
 /area/wizard_station
 	name = "\improper Wizard's Den"
