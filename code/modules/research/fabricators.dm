@@ -214,7 +214,7 @@
 	for(var/M in part.materials)
 		if(copytext(M,1,2) == "$")
 			var/matID=copytext(M,2)
-			var/datum/material/material=materials[matID]
+			var/datum/material/material=materials.getMaterial(matID)
 			output += "[output ? " | " : null][get_resource_cost_w_coeff(part,"$[matID]")] [material.processed_name]"
 	return output
 
@@ -224,9 +224,7 @@
 			return 0
 		if(copytext(M,1,2) == "$" && !(research_flags & IGNORE_MATS))
 			var/matID=copytext(M,2)
-			var/datum/material/material=materials[matID]
-			material.stored = max(0, (material.stored-part.materials[M]))
-			materials[matID]=material
+			materials.removeAmount(matID, part.materials[M])
 		else if(!(research_flags & IGNORE_CHEMS))
 			reagents.remove_reagent(M, part.materials[M])
 	return 1
@@ -452,8 +450,8 @@
 	data["screen"]=screen
 	var/materials_list[0]
 		//Get the material names
-	for(var/matID in materials)
-		var/datum/material/material = materials[matID] // get the ID of the materials
+	for(var/matID in materials.storage)
+		var/datum/material/material = materials.getMaterial(matID) // get the ID of the materials
 		if(material && material.stored > 0)
 			materials_list.Add(list(list("name" = material.processed_name, "storage" = material.stored, "commands" = list("eject" = matID)))) // get the amount of the materials
 	data["materials"] = materials_list
@@ -635,8 +633,9 @@
 	return
 */
 /obj/machinery/r_n_d/fabricator/proc/remove_material(var/matID, var/amount)
-	if(matID in materials)
-		var/datum/material/material = materials[matID]
+
+	var/datum/material/material = materials.getMaterial(matID)
+	if(material)
 		//var/obj/item/stack/sheet/res = new material.sheettype(src)
 		var/total_amount = min(round(material.stored/material.cc_per_sheet),amount)
 		var/to_spawn = total_amount
@@ -653,8 +652,7 @@
 				mats.amount = to_spawn
 				to_spawn = 0
 
-			material.stored -= mats.amount * mats.perunit
-			//materials[matID]=material - why?
+			materials.removeAmount(matID, mats.amount * mats.perunit)
 			mats.loc = src.loc
 		return total_amount
 	return 0
