@@ -103,10 +103,13 @@
 			if("r_leg")
 				limb_type = /obj/item/organ/limb/r_leg
 			else
-				return
+				return ..()
 		var/obj/item/organ/limb/limb = target.getlimb(limb_type)
 		if(limb)
 			limb.heal_damage(45,0,0)
+
+	return ..()
+
 
 /datum/surgery_step/proc/tool_check(mob/user, obj/item/tool)
 	return 1
