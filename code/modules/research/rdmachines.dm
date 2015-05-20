@@ -25,9 +25,9 @@ var/global/list/rnd_machines = list()
 
 	var/nano_file = ""
 
-	var/list/datum/materials/materials = list()
+	var/datum/materials/materials
 	var/max_material_storage = 0
-	var/list/allowed_materials[0]
+	var/list/allowed_materials[0] //list of material IDs we take, if we whitelist
 
 	var/research_flags //see setup.dm for details of these
 
@@ -51,9 +51,8 @@ var/global/list/rnd_machines = list()
 	base_state = icon_state
 	icon_state_open = "[base_state]_t"
 
-	for(var/oredata in typesof(/datum/material) - /datum/material)
-		var/datum/material/ore_datum = new oredata
-		materials[ore_datum.id]=ore_datum
+	if(research_flags & TAKESMATIN)
+		materials = new
 
 	// Define initial output.
 	if(research_flags &HASOUTPUT)
@@ -159,16 +158,16 @@ var/global/list/rnd_machines = list()
 
 /obj/machinery/r_n_d/crowbarDestroy(mob/user)
 	if(..() == 1)
-		for(var/matID in materials)
-			var/datum/material/M = materials[matID]
+		for(var/matID in materials.storage)
+			var/datum/material/M = materials.storage[matID]
 			var/obj/item/stack/sheet/sheet = new M.sheettype(src.loc)
-			var/available_num_sheets = round(M.stored/sheet.perunit)
-			if(available_num_sheets>0)
-				sheet.amount = available_num_sheets
-				M.stored = max(0, (M.stored-sheet.amount * sheet.perunit))
-				materials[M.id]=M
-			else
-				del sheet
+			if(sheet)
+				var/available_num_sheets = round(M.stored/sheet.perunit)
+				if(available_num_sheets>0)
+					sheet.amount = available_num_sheets
+					M.stored = max(0, (M.stored-sheet.amount * sheet.perunit))
+				else
+					qdel(sheet)
 		return 1
 	return -1
 
@@ -213,83 +212,76 @@ var/global/list/rnd_machines = list()
 		return 0
 	if(istype(O,/obj/item/stack/sheet) && research_flags &TAKESMATIN)
 		busy = 1
-		var/accepted = 1
+
+		var/found = "" //the matID we're compatible with
+		for(var/matID in materials.storage)
+			var/datum/material/M = materials.getMaterial(matID)
+			if(M.sheettype==O.type)
+				found = matID
+		if(!found)
+			user << "<span class='warning'>\The [src.name] rejects \the [O.name].</span>"
+			busy = 0
+			return 1
 		if(allowed_materials && allowed_materials.len)
-			if( !(O.type in allowed_materials) )
-				accepted = 0
-			else
-				accepted = 1
-		if(accepted)
-			var/found=0
-			for(var/matID in materials)
-				var/datum/material/M = materials[matID]
-				if(M.sheettype==O.type)
-					found=1
-			if(!found)
+			if(!(found in allowed_materials))
 				user << "<span class='warning'>\The [src.name] rejects \the [O.name].</span>"
 				busy = 0
 				return 1
-			var/obj/item/stack/sheet/S = O
-			if (TotalMaterials() + S.perunit > max_material_storage)
-				user << "<span class='warning'>\The [src.name]'s material bin is full. Please remove material before adding more.</span>"
-				busy = 0
-				return 1
 
-			var/obj/item/stack/sheet/stack = O
-			var/amount = round(input("How many sheets do you want to add? (0 - [stack.amount])") as num)//No decimals
-			if(!O || !O.loc || O.loc != user)
-				busy = 0
-				return
-			if(amount < 0)//No negative numbers
-				amount = 0
-			if(amount == 0)
-				busy = 0
-				return
-			if(amount > stack.amount)
-				amount = stack.amount
-			if(max_material_storage - TotalMaterials() < (amount*stack.perunit))//Can't overfill
-				amount = min(stack.amount, round((max_material_storage-TotalMaterials())/stack.perunit))
+		var/obj/item/stack/sheet/S = O
+		if (TotalMaterials() + S.perunit > max_material_storage)
+			user << "<span class='warning'>\The [src.name]'s material bin is full. Please remove material before adding more.</span>"
+			busy = 0
+			return 1
 
-			if(research_flags &HASMAT_OVER)
-				update_icon()
-				overlays += "[base_state]_[stack.name]"
-				sleep(10)
+		var/obj/item/stack/sheet/stack = O
+		var/amount = round(input("How many sheets do you want to add? (0 - [stack.amount])") as num)//No decimals
+		if(!O || !O.loc || O.loc != user)
+			busy = 0
+			return
+		if(amount < 0)//No negative numbers
+			amount = 0
+		if(amount == 0)
+			busy = 0
+			return
+		if(amount > stack.amount)
+			amount = stack.amount
+		if(max_material_storage - TotalMaterials() < (amount*stack.perunit))//Can't overfill
+			amount = min(stack.amount, round((max_material_storage-TotalMaterials())/stack.perunit))
+
+		if(research_flags & HASMAT_OVER)
+			update_icon()
+			overlays |= "[base_state]_[stack.name]"
+			spawn(10)
 				overlays -= "[base_state]_[stack.name]"
 
-			icon_state = "[base_state]"
-			use_power(max(1000, (3750*amount/10)))
-			var/stacktype = stack.type
-			stack.use(amount)
-			user << "<span class='notice'>You add [amount] sheets to the [src.name].</span>"
-			icon_state = "[base_state]"
-			for(var/id in materials)
-				var/datum/material/material=materials[id]
-				if(stacktype == material.sheettype)
-					material.stored += (amount * material.cc_per_sheet)
-					materials[id]=material
-		else
-			user <<"<span class='notice'>The [src.name] rejects the [O]!</span>"
+		icon_state = "[base_state]"
+		use_power(max(1000, (3750*amount/10)))
+		stack.use(amount)
+		user << "<span class='notice'>You add [amount] sheets to the [src.name].</span>"
+		icon_state = "[base_state]"
+
+		var/datum/material/material = materials.getMaterial(found)
+		materials.addAmount(found, amount * material.cc_per_sheet)
 		busy = 0
-		src.updateUsrDialog()
 		return 1
+
+	else
+		user <<"<span class='notice'>The [src.name] rejects the [O]!</span>"
+	src.updateUsrDialog()
 	return 0
 
 /obj/machinery/r_n_d/proc/TotalMaterials() //returns the total of all the stored materials. Makes code neater.
-	var/total=0
 	if(materials)
-		for(var/id in materials)
-			var/datum/material/mattype = materials[id]
-			total += mattype.stored
-		return total
-	else
-		return null
+		return materials.getVolume()
+	return 0
 
 /obj/machinery/r_n_d/proc/check_mat(var/datum/design/being_built, var/M, var/num_requested=1)
 	if(copytext(M,1,2) == "$")
 		if(src.research_flags & IGNORE_MATS)
 			return num_requested
 		var/matID=copytext(M,2)
-		var/datum/material/material=materials[matID]
+		var/datum/material/material = materials.getMaterial(matID)
 		for(var/n=num_requested,n>=1,n--)
 			if ((material.stored-(being_built.materials[M]*n)) >= 0)
 				return n
