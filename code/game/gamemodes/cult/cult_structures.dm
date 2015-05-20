@@ -76,8 +76,6 @@
 	l_color = "#3e0000"
 
 /obj/structure/cult/tome/attackby(obj/item/weapon/W as obj, mob/user as mob)
-	if(isrobot(user))
-		return
 	user.drop_item(W, src.loc)
 	return 1
 

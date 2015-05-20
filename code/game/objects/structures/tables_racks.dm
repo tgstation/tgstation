@@ -326,8 +326,6 @@
 /obj/structure/table/MouseDrop_T(obj/O as obj, mob/user as mob)
 	if ((!( istype(O, /obj/item/weapon) ) || user.get_active_hand() != O))
 		return
-	if(isrobot(user))
-		return
 	user.drop_item()
 	if (O.loc != src.loc)
 		step(O, get_dir(O, src))
@@ -620,8 +618,6 @@
 /obj/structure/rack/MouseDrop_T(obj/O as obj, mob/user as mob)
 	if ((!( istype(O, /obj/item/weapon) ) || user.get_active_hand() != O))
 		return
-	if(isrobot(user))
-		return
 	user.drop_item(O)
 	if (O.loc != src.loc)
 		step(O, get_dir(O, src))
@@ -632,8 +628,6 @@
 		new /obj/item/weapon/rack_parts( src.loc )
 		playsound(get_turf(src), 'sound/items/Ratchet.ogg', 50, 1)
 		del(src)
-		return
-	if(isrobot(user))
 		return
 	user.drop_item(W, src.loc)
 	return 1
