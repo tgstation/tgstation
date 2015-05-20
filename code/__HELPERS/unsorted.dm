@@ -558,12 +558,13 @@ Turf and target are seperate in case you want to teleport some distance from a t
 		include_link = 0
 
 	if(key)
-		if(include_link)
-			. += "<a href='?priv_msg=[ckey]'>"
-
 		if(C && C.holder && C.holder.fakekey && !include_name)
+			if(include_link)
+				. += "<a href='?priv_msg=[C.findStealthKey()]'>"
 			. += "Administrator"
 		else
+			if(include_link)
+				. += "<a href='?priv_msg=[ckey]'>"
 			. += key
 		if(!C)
 			. += "\[DC\]"

@@ -381,6 +381,26 @@ var/list/admin_verbs_hideable = list(
 	feedback_add_details("admin_verb","S") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 	return
 
+
+/client/proc/findStealthKey(txt)
+	if(txt)
+		for(var/P in stealthminID)
+			if(stealthminID[P] == txt)
+				return P
+	txt = stealthminID[ckey]
+	return txt
+
+/client/proc/createStealthKey()
+	var/num = (rand(0,1000))
+	var/i = 0
+	while(i == 0)
+		i = 1
+		for(var/P in stealthminID)
+			if(num == stealthminID[P])
+				num++
+				i = 0
+	stealthminID["[ckey]"] = "@[num2text(num)]"
+
 /client/proc/stealth()
 	set category = "Admin"
 	set name = "Stealth Mode"
@@ -393,6 +413,7 @@ var/list/admin_verbs_hideable = list(
 			if(length(new_key) >= 26)
 				new_key = copytext(new_key, 1, 26)
 			holder.fakekey = new_key
+			createStealthKey()
 		log_admin("[key_name(usr)] has turned stealth mode [holder.fakekey ? "ON" : "OFF"]")
 		message_admins("[key_name_admin(usr)] has turned stealth mode [holder.fakekey ? "ON" : "OFF"]")
 	feedback_add_details("admin_verb","SM") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
