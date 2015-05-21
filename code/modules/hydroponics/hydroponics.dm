@@ -787,6 +787,8 @@ obj/machinery/hydroponics/attackby(var/obj/item/O as obj, var/mob/user as mob, p
 	var/list/result = list()
 	var/output_loc = parent.Adjacent(user) ? user.loc : parent.loc //needed for TK
 
+	var/critfail = 0 //If potency is 0
+
 	while(t_amount < getYield())
 		var/obj/item/weapon/reagent_containers/food/snacks/grown/t_prod = new product(output_loc, potency)
 		result.Add(t_prod) // User gets a consumable
@@ -798,7 +800,12 @@ obj/machinery/hydroponics/attackby(var/obj/item/O as obj, var/mob/user as mob, p
 		t_prod.yield = yield
 		t_prod.potency = potency
 		t_prod.plant_type = plant_type
+		if(potency == 0) // :^(
+			critfail = 1 //Won't play for replica pods, but these don't need the trombone
 		t_amount++
+
+	if(critfail)
+		playsound(loc, 'sound/misc/sadtrombone.ogg', 50, 0)
 
 	parent.update_tray()
 
@@ -872,6 +879,7 @@ obj/machinery/hydroponics/attackby(var/obj/item/O as obj, var/mob/user as mob, p
 		user << "You harvest from the [myseed.plantname]."
 	else if(myseed.getYield() <= 0)
 		user << "<span class='warning'>You fail to harvest anything useful.</span>"
+		playsound(loc, 'sound/misc/sadtrombone.ogg', 50, 0)
 	else
 		user << "You harvest [myseed.getYield()] items from the [myseed.plantname]."
 	if(myseed.oneharvest)
