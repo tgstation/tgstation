@@ -266,9 +266,6 @@ var/global/list/rnd_machines = list()
 		materials.addAmount(found, amount * material.cc_per_sheet)
 		busy = 0
 		return 1
-
-	else
-		user <<"<span class='notice'>The [src.name] rejects the [O]!</span>"
 	src.updateUsrDialog()
 	return 0
 
