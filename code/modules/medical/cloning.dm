@@ -21,7 +21,7 @@
 	var/mess = 0 //Need to clean out it if it's full of exploded clone.
 	var/attempting = 0 //One clone attempt at a time thanks
 	var/eject_wait = 0 //Don't eject them as soon as they are created fuckkk
-	var/biomass = CLONE_BIOMASS // * 3 - N3X
+	var/biomass = 0
 	var/time_coeff = 1 //Upgraded via part upgrading
 	var/resource_efficiency = 1
 	var/id_tag = "clone_pod"
@@ -29,6 +29,9 @@
 	machine_flags = EMAGGABLE | SCREWTOGGLE | CROWDESTROY | MULTITOOL_MENU
 
 	l_color = "#7BF9FF"
+
+/obj/machinery/cloning/clonepod/full
+	biomass = CLONE_BIOMASS // * 3 - N3X
 
 /obj/machinery/cloning/clonepod/multitool_menu(var/mob/user, var/obj/item/device/multitool/P)
 	return ""
@@ -339,6 +342,8 @@
 	if (occupant)
 		user << "<span class='warning'>You cannot disassemble this [src], it's occupado.</span>"
 		return
+	for(biomass; biomass > 0;biomass -= 50)
+		new /obj/item/weapon/reagent_containers/food/snacks/meat/syntiflesh(loc)
 	return..()
 
 //Let's unlock this early I guess.  Might be too early, needs tweaking.

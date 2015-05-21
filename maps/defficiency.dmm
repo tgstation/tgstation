@@ -2259,7 +2259,7 @@
 "aRw" = (/obj/machinery/portable_atmospherics/scrubber,/turf/simulated/floor{icon_state = "white"},/area/science/mixing)
 "aRx" = (/obj/machinery/portable_atmospherics/pump,/turf/simulated/floor{icon_state = "white"},/area/science/mixing)
 "aRy" = (/obj/structure/sign/securearea{pixel_y = -32},/turf/simulated/floor{icon_state = "white"},/area/medical/genetics)
-"aRz" = (/obj/machinery/cloning/clonepod,/obj/machinery/alarm{dir = 4; pixel_x = -24},/turf/simulated/floor{dir = 10; icon_state = "whiteblue"},/area/medical/genetics_cloning)
+"aRz" = (/obj/machinery/cloning/clonepod/full,/obj/machinery/alarm{dir = 4; pixel_x = -24},/turf/simulated/floor{dir = 10; icon_state = "whiteblue"},/area/medical/genetics_cloning)
 "aRA" = (/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,/obj/machinery/vending/snack,/turf/simulated/floor/wood,/area/crew_quarters/bar)
 "aRB" = (/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{dir = 4},/turf/simulated/wall,/area/medical/genetics_cloning)
 "aRC" = (/obj/machinery/atmospherics/unary/vent_scrubber{dir = 4; on = 1},/obj/machinery/door_control{desc = "A remote control switch for the genetics doors."; id_tag = "GeneticsDoor"; name = "Genetics Exit Button"; normaldoorcontrol = 1; pixel_x = 27; pixel_y = -4},/turf/simulated/floor{icon_state = "white"},/area/medical/genetics_cloning)
