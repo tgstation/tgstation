@@ -31,6 +31,21 @@
 	target.surgeries -= src
 	src = null
 
+/datum/surgery/proc/cancel(var/mob/user, var/mob/living/carbon/human/target)
+	if(src.can_cancel())
+		target.surgeries -= src
+		user << "<span class='warning'>You cancel the [src].</span>"
+		src = null
+
+	else
+		user << "<span class='warning'>You can't cancel the [src].</span>" //Maybe add a explaination that the procedure has already started?
+
+/datum/surgery/proc/can_cancel() //Can be overriden on specific surgeries so you could cancel them at a later step (like augging etc,)
+	if(status < 2) //If the procedure hasn't been started
+		return 1
+	return 0
+
+
 
 
 //INFO
