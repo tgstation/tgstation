@@ -420,6 +420,9 @@
 	name += spellname
 
 /obj/item/weapon/spellbook/oneuse/attack_self(mob/user as mob)
+	if(ismommi(user))
+		user << "You are incapable of learning magic as a mobile MMI"
+		return
 	var/obj/effect/proc_holder/spell/S = new spell
 	for(var/obj/effect/proc_holder/spell/knownspell in user.mind.spell_list)
 		if(knownspell.type == S.type)
