@@ -65,7 +65,7 @@
 	icon_state = "crossbow"
 	w_class = 2.0
 	item_state = "crossbow"
-	m_amt = 2000
+	starting_materials = list(MAT_IRON = 2000)
 	w_type = RECYK_ELECTRONIC
 	origin_tech = "combat=2;magnets=2;syndicate=5"
 	silenced = 1
@@ -104,7 +104,7 @@
 	desc = "A weapon favored by syndicate infiltration teams."
 	w_class = 4.0
 	force = 10
-	m_amt = 200000
+	starting_materials = list(MAT_IRON = 200000)
 	w_type = RECYK_ELECTRONIC
 	projectile_type = "/obj/item/projectile/energy/bolt/large"
 

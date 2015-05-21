@@ -9,7 +9,7 @@
 	item_state = "electronic"
 	throw_speed = 4
 	throw_range = 20
-	m_amt = 500
+	starting_materials = list(MAT_IRON = 500)
 	w_type = RECYK_ELECTRONIC
 	melt_temperature = MELTPOINT_STEEL
 	var/obj/item/weapon/disk/nuclear/the_disk = null

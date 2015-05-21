@@ -30,11 +30,11 @@
 			var/p = 0
 			for(var/ore_id in BOX.materials.storage)
 				var/datum/material/mat = BOX.materials.getMaterial(ore_id)
-				var/n=mat.stored
+				var/n=BOX.materials.storage[ore_id]
 				if(n<=0 || !mat.oretype) continue
 				for(var/i=0;i<n;i++)
 					new mat.oretype(get_turf(output))
-					mat.stored-=1
+					BOX.materials.storage[ore_id]--
 					p++
 					if (p>=10)
 						return

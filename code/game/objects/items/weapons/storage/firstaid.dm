@@ -124,8 +124,7 @@
 	allow_quick_gather = 1
 	use_to_pickup = 1
 	storage_slots = 14
-	m_amt = 10
-	g_amt = 60
+	starting_materials = list(MAT_IRON = 10, MAT_GLASS = 60)
 
 /obj/item/weapon/storage/pill_bottle/MouseDrop(obj/over_object as obj) //Quick pillbottle fix. -Agouri
 

@@ -4,8 +4,7 @@
 	icon_state = "taperecorderidle"
 	item_state = "analyzer"
 	w_class = 1.0
-	m_amt = 60
-	g_amt = 30
+	starting_materials = list(MAT_IRON = 60, MAT_GLASS = 30)
 	w_type = RECYK_ELECTRONIC
 	melt_temperature = MELTPOINT_PLASTIC
 	var/emagged = 0.0

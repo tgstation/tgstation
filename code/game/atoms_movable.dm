@@ -1,7 +1,6 @@
 /atom/movable
 	// Recycling shit
-	var/m_amt = 0	         // metal (CC)
-	var/g_amt = 0	         // glass (CC)
+
 	var/w_type = NOT_RECYCLABLE  // Waste category for sorters. See setup.dm
 
 	layer = 3
@@ -124,6 +123,9 @@
 	return .
 
 /atom/movable/proc/recycle(var/datum/materials/rec)
+	if(materials)
+		rec.removeFrom(materials, 1) //the 1 zeroes our stored amounts after
+		return 1
 	return 0
 
 // Previously known as HasEntered()

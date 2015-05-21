@@ -14,7 +14,7 @@
 // This WAS a macro, but BYOND a shit.
 /proc/REG_BBTAG(x)
 	return "\\\[[x]\\\]"
-	
+
 // [x]blah[/x]
 /proc/REG_BETWEEN_BBTAG(x)
 	return "[REG_BBTAG(x)]([REG_NOTBB])[REG_BBTAG("/[x]")]"
@@ -67,7 +67,7 @@
 	// Fallthrough just fucking kills the tag
 	addReplacement(REG_BBTAG("\[^\\\]\]"), "")
 	return
-	
+
 //var/stdshellout_dllFile = 'byond_markdown.dll'
 var/paperwork = 0
 var/paperwork_library
@@ -76,9 +76,9 @@ var/paperwork_library
 
 	set category = "Debug"
 	set name = "Modify Paperwork Mode"
-	
+
 	if(!check_rights(R_DEBUG)) return
-	
+
 	if(!paperwork)
 		paperwork_setup()
 	else
@@ -101,7 +101,7 @@ var/paperwork_library
 	else
 		return 0
 	return 0
-	
+
 /proc/paperwork_stop()
 	if(!fexists(paperwork_library))
 		world.log << "Paperwork file may be missing or something terrible has happened, don't panic and notify a coder/host about this issue."
@@ -111,12 +111,12 @@ var/paperwork_library
 		return
 	else
 		return
-	
+
 /datum/writing_style/proc/parse_markdown(command_args)
 //	if(!fexists("byond_markdown.dll")){fcopy(stdshellout_dllFile,"[stdshellout_dllFile]")}
 	return call(paperwork_library,"render_html")(command_args)
 
-	
+
 /datum/writing_style/proc/Format(var/t, var/obj/item/weapon/pen/P, var/mob/user, var/obj/item/weapon/paper/paper)
 	if(paperwork)
 		t = parse_markdown(t)
@@ -175,7 +175,7 @@ var/paperwork_library
 	w_class = 1.0
 	throw_speed = 7
 	throw_range = 15
-	m_amt = 10
+	starting_materials = list(MAT_IRON = 10)
 	w_type = RECYK_MISC
 	pressure_resistance = 2
 

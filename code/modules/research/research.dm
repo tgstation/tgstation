@@ -44,19 +44,20 @@ research holder datum.
 **	Includes all the helper procs and basic tech processing.  **
 ***************************************************************/
 
-/datum/research								//Holder for all the existing, archived, and known tech. Individual to console.
+var/global/list/design_list = list()
+var/global/list/tech_list = list()
 
-									//Datum/tech go here.
-	var/list/possible_tech = list()			//List of all tech in the game that players have access to (barring special events).
-	var/list/known_tech = list()				//List of locally known tech.
-	var/list/possible_designs = list()		//List of all designs (at base reliability).
+/datum/research								//Holder for all the existing, archived, and known tech. Individual to console.
+	var/list/known_tech = list()			//List of locally known tech.
 	var/list/known_designs = list()			//List of available designs (at base reliability).
 
 /datum/research/New()		//Insert techs into possible_tech here. Known_tech automatically updated.
-	for(var/T in typesof(/datum/tech) - /datum/tech)
-		possible_tech += new T(src)
-	for(var/D in typesof(/datum/design) - /datum/design)
-		possible_designs += new D(src)
+	if(!tech_list.len)
+		for(var/T in typesof(/datum/tech) - /datum/tech)
+			tech_list += new T()
+	if(!design_list.len)
+		for(var/D in typesof(/datum/design) - /datum/design)
+			design_list += new D()
 	RefreshResearch()
 
 
@@ -134,10 +135,10 @@ research holder datum.
 //Refreshes known_tech and known_designs list. Then updates the reliability vars of the designs in the known_designs list.
 //Input/Output: n/a
 /datum/research/proc/RefreshResearch()
-	for(var/datum/tech/PT in possible_tech)
+	for(var/datum/tech/PT in tech_list)
 		if(TechHasReqs(PT))
 			AddTech2Known(PT)
-	for(var/datum/design/PD in possible_designs)
+	for(var/datum/design/PD in design_list)
 		if(DesignHasReqs(PD))
 			AddDesign2Known(PD)
 	for(var/datum/tech/T in known_tech)
@@ -282,8 +283,7 @@ datum/tech/robotics
 	icon_state = "datadisk2"
 	item_state = "card-id"
 	w_class = 1.0
-	m_amt = 30
-	g_amt = 10
+	starting_materials = list(MAT_IRON = 30, MAT_GLASS = 10)
 	w_type = RECYK_ELECTRONIC
 	var/datum/tech/stored
 

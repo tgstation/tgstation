@@ -19,7 +19,7 @@ RCD
 	throw_speed = 1
 	throw_range = 5
 	w_class = 3.0
-	m_amt = 50000
+	starting_materials = list(MAT_IRON = 50000)
 	w_type = RECYK_ELECTRONIC
 	melt_temperature = MELTPOINT_STEEL // Lots of metal
 	origin_tech = "engineering=4;materials=2"
@@ -267,8 +267,7 @@ RCD
 	anchored = 0.0
 	origin_tech = "materials=2"
 	w_class = 2.0
-	m_amt = 30000
-	g_amt = 15000
+	starting_materials = list(MAT_IRON = 30000, MAT_GLASS = 15000)
 	w_type = RECYK_ELECTRONIC
 
 /obj/item/weapon/rcd_ammo/attackby(var/obj/O, mob/user)

@@ -12,8 +12,7 @@
 	slot_flags = SLOT_BELT
 	w_class = 2
 	item_state = "electronic"
-	m_amt = 0 //So the autolathe doesn't try to eat it
-	g_amt = 0
+	starting_materials = null
 	w_type = RECYK_ELECTRONIC
 	origin_tech = "magnets=2;engineering=4;materials=5;programming=3"
 	var/emagged = 0 //So we can emag it for "improved" functionality

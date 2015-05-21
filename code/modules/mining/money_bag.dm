@@ -10,25 +10,25 @@
 	throwforce = 2.0
 	w_class = 4.0
 
+	var/datum/materials/coin_value
+
 /obj/item/weapon/moneybag/attack_hand(user as mob)
 	var/credits=0
-	var/list/ore=list()
-	for(var/oredata in typesof(/datum/material) - /datum/material)
-		var/datum/material/ore_datum = new oredata
-		ore[ore_datum.id]=ore_datum
+	if(!coin_value)
+		coin_value = getFromDPool(/datum/materials)
+	else
+		coin_value.resetVariables() //make its storage be 0
 
 	for (var/obj/item/weapon/coin/C in contents)
 		if (istype(C,/obj/item/weapon/coin))
-			var/datum/material/ore_info=ore[C.material]
-			ore_info.stored++
-			ore[C.material]=ore_info
+			coin_value.addAmount(C.material, 1)
 			credits += C.credits
 
 	var/dat = "<b>The contents of the moneybag reveal...</b><ul>"
-	for(var/ore_id in ore)
-		var/datum/material/ore_info=ore[ore_id]
-		if(ore_info.stored)
-			dat += "<li>[ore_info.processed_name] coins: [ore_info.stored] <A href='?src=\ref[src];remove=[ore_id]'>Remove one</A></li>"
+	for(var/ore_id in coin_value.storage)
+		var/datum/material/ore_info = coin_value.getMaterial(ore_id)
+		if(coin_value.storage[ore_id])
+			dat += "<li>[ore_info.processed_name] coins: [coin_value.storage[ore_id]] <A href='?src=\ref[src];remove=[ore_id]'>Remove one</A></li>"
 	dat += "</ul><b>Total haul:</b> $[credits]"
 	user << browse("[dat]", "window=moneybag")
 
@@ -41,7 +41,7 @@
 	if (istype(W, /obj/item/weapon/moneybag))
 		var/obj/item/weapon/moneybag/C = W
 		for (var/obj/O in C.contents)
-			contents += O;
+			contents += O
 		user << "<span class='notice'>You empty the [C.name] into the bag.</span>"
 	return
 

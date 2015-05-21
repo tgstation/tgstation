@@ -11,7 +11,7 @@ RSF
 	opacity = 0
 	density = 0
 	anchored = 0.0
-	m_amt = 40000
+	starting_materials = list(MAT_IRON = 40000)
 	var/matter = 0
 	var/max_matter = 40
 	var/matter_respawn = 0

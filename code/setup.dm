@@ -541,7 +541,7 @@ var/static/list/scarySounds = list('sound/weapons/thudswoosh.ogg','sound/weapons
 
 var/list/liftable_structures = list(\
 
-	/obj/machinery/autolathe, \
+	/obj/machinery/r_n_d/fabricator/mechanic_fab/autolathe, \
 	/obj/machinery/constructable_frame, \
 	/obj/machinery/portable_atmospherics/hydroponics, \
 	/obj/machinery/computer, \
@@ -687,6 +687,20 @@ var/list/TAGGERLOCATIONS = list(
 #define ORGAN_DEAD			1024
 #define ORGAN_MUTATED		2048
 #define ORGAN_PEG			4096 // ROB'S MAGICAL PEGLEGS v2
+
+//////////////////MATERIAL DEFINES/////////////////
+
+#define MAT_IRON		"$iron"
+#define MAT_GLASS		"$glass"
+#define MAT_GOLD		"$gold"
+#define MAT_SILVER		"$silver"
+#define MAT_URANIUM		"$uranium"
+#define MAT_DIAMOND		"$diamond"
+#define MAT_PHAZON		"$phazon"
+#define MAT_PLASMA		"$plasma"
+#define MAT_CLOWN		"$clown"
+#define MAT_PLASTIC		"$plastic"
+
 
 //Please don't edit these values without speaking to Errorage first	~Carn
 //Admin Permissions

@@ -8,11 +8,11 @@
 	melt_temperature=0
 	light_color = LIGHT_COLOR_ORANGE
 
-	var/datum/materials/mats=new
+	starting_materials = list()
 
 /obj/effect/decal/slag/proc/slaggify(var/obj/O)
 	// This is basically a crude recycler doohicky
-	if (O.recycle(mats))
+	if (O.recycle(materials))
 		if(melt_temperature==0)
 			// Set up our solidification temperature.
 			melt_temperature=O.melt_temperature
@@ -50,9 +50,9 @@
 		user << "<span class=\"warning\">Jesus, it's hot!</span>"
 
 	var/list/bits=list()
-	for(var/mat_id in mats.storage)
-		var/datum/material/mat=mats.getMaterial(mat_id)
-		if(mat.stored > 0)
+	for(var/mat_id in materials.storage)
+		var/datum/material/mat=materials.getMaterial(mat_id)
+		if(materials.storage[mat_id] > 0)
 			bits.Add(mat.processed_name)
 
 	if(bits.len>0)
@@ -94,7 +94,8 @@
 			"<span class=\"danger\">You break apart \the [src] with your [W.name]!", \
 			"You hear the sound of rock crumbling.")
 		var/obj/item/weapon/ore/slag/slag = new /obj/item/weapon/ore/slag(loc)
-		slag.mats = src.mats
+		slag.materials = src.materials
+		slag.materials.holder = slag
 		qdel(src)
 	else
 		user.visible_message("<span class=\"attack\">[user.name] hits \the [src] with his [W.name].</span>", \

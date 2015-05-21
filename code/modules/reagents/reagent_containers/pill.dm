@@ -9,7 +9,8 @@
 	item_state = "pill"
 	possible_transfer_amounts = null
 	volume = 50
-	m_amt = 5
+	starting_materials = null
+//	starting_materials = list(MAT_IRON = 5) //What?
 	w_type = RECYK_METAL
 
 	New()

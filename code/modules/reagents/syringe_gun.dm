@@ -14,7 +14,7 @@
 	force = 4.0
 	var/list/syringes = new/list()
 	var/max_syringes = 1
-	m_amt = 2000
+	starting_materials = list(MAT_IRON = 2000)
 	w_type = RECYK_METAL
 
 /obj/item/weapon/gun/syringe/examine(mob/user)

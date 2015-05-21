@@ -7,7 +7,7 @@
 	icon_state = "flareshell"
 	caliber = "flare"
 	projectile_type = "/obj/item/projectile/flare"
-	m_amt = 1000
+	starting_materials = list(MAT_IRON = 1000)
 	w_type = RECYK_METAL
 	w_class = 1.0
 	var/obj/item/device/flashlight/flare/stored_flare = null

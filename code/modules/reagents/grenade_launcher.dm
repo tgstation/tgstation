@@ -11,7 +11,7 @@
 	force = 5.0
 	var/list/grenades = new/list()
 	var/max_grenades = 3
-	m_amt = 2000
+	starting_materials = list(MAT_IRON = 2000)
 	w_type = RECYK_METAL
 
 /obj/item/weapon/gun/grenadelauncher/examine(mob/user)

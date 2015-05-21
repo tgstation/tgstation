@@ -170,7 +170,7 @@
 	chance = 75
 	toSpawn = list(
 		/obj/machinery/atmospherics/binary/circulator,
-		/obj/machinery/autolathe,
+		/obj/machinery/r_n_d/fabricator/mechanic_fab/autolathe,
 		/obj/machinery/field_generator,
 		/obj/machinery/floodlight,
 		/obj/machinery/mineral/mint,

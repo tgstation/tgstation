@@ -13,7 +13,7 @@
 	siemens_coefficient = 1
 	attack_verb = list("rang")
 	hitsound = 'sound/machines/ding2.ogg'
-	m_amt = 3750
+	starting_materials = list(MAT_IRON = 3750)
 	w_type = RECYK_METAL
 	melt_temperature=MELTPOINT_STEEL
 	anchored = 1
@@ -238,7 +238,7 @@
 	throw_range = 10
 	flags = FPRINT
 	siemens_coefficient = 1
-	m_amt = 3750
+	starting_materials = list(MAT_IRON = 3750)
 	w_type = RECYK_METAL
 	melt_temperature=MELTPOINT_STEEL
 

@@ -18,7 +18,7 @@
 		access_ce,
 		access_virology
 	)
-	var/datum/materials/materials = new
+	materials = list() //makes the new datum
 	var/stack_amt = 50 //amount to stack before releasing
 	var/obj/item/weapon/card/id/inserted_id
 	var/credits = 0
@@ -46,7 +46,7 @@
 	var/obj/item/stack/sheet/processed_sheet = SmeltMineral(O)
 	if(processed_sheet)
 		var/datum/material/mat = materials.getMaterial(O.material)
-		mat.stored += processed_sheet.amount //Stack the sheets
+		materials.addAmount(O.material, processed_sheet.amount) //Stack the sheets
 		credits += mat.value * processed_sheet.amount // Gimme my fucking credits
 	returnToPool(O)
 
@@ -69,10 +69,10 @@
 			if(B)
 				for(var/mat_id in B.materials.storage)
 					var/datum/material/mat = B.materials.getMaterial(mat_id)
-					materials.addAmount(mat_id,mat.stored)
-					score["oremined"] += mat.stored
-					credits += mat.value * mat.stored // Gimme my fucking credits
-					mat.stored=0
+					materials.addAmount(mat_id, B.materials.storage[mat_id])
+					score["oremined"] += B.materials.storage[mat_id]
+					credits += mat.value * B.materials.storage[mat_id] // Gimme my fucking credits
+					B.materials.removeAmount(mat_id, B.materials.storage[mat_id])
 
 /obj/machinery/mineral/ore_redemption/proc/SmeltMineral(var/obj/item/weapon/ore/O)
 	if(O.material)
@@ -102,9 +102,9 @@
 		dat += text("No ID inserted.  <A href='?src=\ref[src];choice=insert'>Insert ID.</A><br>")
 
 	for(var/O in materials.storage)
-		var/datum/material/mat = materials.getMaterial(O)
-		if(mat.stored > 0)
-			dat += text("[capitalize(mat.processed_name)]: [mat.stored] <A href='?src=\ref[src];release=[mat.id]'>Release</A><br>")
+		if(materials.storage[O] > 0)
+			var/datum/material/mat = materials.getMaterial(O)
+			dat += text("[capitalize(mat.processed_name)]: [materials.storage[O]] <A href='?src=\ref[src];release=[mat.id]'>Release</A><br>")
 
 	dat += text("<br>This unit can hold stacks of [stack_amt] sheets of each mineral type.<br><br>")
 
@@ -154,13 +154,13 @@
 			if(!mat)
 				usr << "<span class='warning'>Unable to find material [release]!</span>"
 				return 1
-			var/desired = input("How much?","How much [mat.processed_name] to eject?",mat.stored) as num
+			var/desired = input("How much?","How much [mat.processed_name] to eject?", materials.storage[release]) as num
 			if(desired==0)
 				return 1
 			var/obj/item/stack/sheet/out = new mat.sheettype(output.loc)
 			out.redeemed = 1 //Central command will not pay for this mineral stack.
-			out.amount = Clamp(desired, 0, min(mat.stored, out.max_amount))
-			mat.stored -= out.amount
+			out.amount = Clamp(desired, 0, min(materials.storage[release], out.max_amount))
+			materials.removeAmount(release, out.amount)
 	updateUsrDialog()
 	return
 

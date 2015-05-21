@@ -140,8 +140,7 @@ var/global/list/RPD_recipes=list(
 	throw_speed = 1
 	throw_range = 5
 	w_class = 3.0
-	m_amt = 75000
-	g_amt = 37500
+	starting_materials = list(MAT_IRON = 75000, MAT_GLASS = 37500)
 	w_type = RECYK_ELECTRONIC
 	melt_temperature = MELTPOINT_STEEL
 	origin_tech = "engineering=4;materials=2"

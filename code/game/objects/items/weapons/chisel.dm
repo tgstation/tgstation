@@ -5,7 +5,7 @@
 	icon = 'icons/obj/items.dmi'
 	icon_state = "chisel"
 
-	m_amt = 120
+	starting_materials = list(MAT_IRON = 120)
 
 	flags = FPRINT
 	siemens_coefficient = 1

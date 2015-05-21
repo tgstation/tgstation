@@ -75,8 +75,7 @@ datum
 	desc = "A small, open-topped glass container for delicate research samples. It sports a re-useable strip for labelling with a pen."
 	icon = 'icons/obj/device.dmi'
 	icon_state = "solution_tray"
-	m_amt = 0
-	g_amt = 50
+	starting_materials = list(MAT_GLASS = 20)
 	w_type = RECYK_GLASS
 	w_class = 1.0
 	amount_per_transfer_from_this = 1

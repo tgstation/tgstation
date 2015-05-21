@@ -10,7 +10,7 @@
 	throwforce = 15.0
 	throw_speed = 5
 	throw_range = 20
-	m_amt = 1875
+	starting_materials = list(MAT_IRON = 1875)
 	max_amount = 60
 	attack_verb = list("hit", "bludgeoned", "whacked")
 	w_type=RECYK_METAL

@@ -72,7 +72,7 @@
 	icon_state = "gshell"
 	caliber = "shotgun"
 	projectile_type = "/obj/item/projectile/bullet"
-	m_amt = 12500
+	starting_materials = list(MAT_IRON = 12500)
 	w_type = RECYK_METAL
 
 	update_icon()
@@ -86,17 +86,15 @@
 	desc = "A blank shell."
 	icon_state = "blshell"
 	projectile_type = ""
-	m_amt = 250
+	starting_materials = list(MAT_IRON = 250)
 	w_type = RECYK_METAL
-
-
 
 /obj/item/ammo_casing/shotgun/beanbag
 	name = "beanbag shell"
 	desc = "A weak beanbag shell."
 	icon_state = "bshell"
 	projectile_type = "/obj/item/projectile/bullet/weakbullet"
-	m_amt = 500
+	starting_materials = list(MAT_IRON = 500)
 	w_type = RECYK_METAL
 
 /obj/item/ammo_casing/shotgun/fakebeanbag
@@ -104,7 +102,7 @@
 	desc = "A weak beanbag shell."
 	icon_state = "bshell"
 	projectile_type = "/obj/item/projectile/bullet/weakbullet/booze"
-	m_amt = 12500
+	starting_materials = list(MAT_IRON = 12500)
 	w_type = RECYK_METAL
 
 /obj/item/ammo_casing/shotgun/stunshell
@@ -112,16 +110,15 @@
 	desc = "A stunning shell."
 	icon_state = "stunshell"
 	projectile_type = "/obj/item/projectile/bullet/stunshot"
-	m_amt = 2500
+	starting_materials = list(MAT_IRON = 2500)
 	w_type = RECYK_METAL
-
 
 /obj/item/ammo_casing/shotgun/dart
 	name = "shotgun darts"
 	desc = "A dart for use in shotguns."
 	icon_state = "blshell"
 	projectile_type = "/obj/item/projectile/bullet/dart"
-	m_amt = 12500
+	starting_materials = list(MAT_IRON = 12500)
 	w_type = RECYK_METAL
 
 /obj/item/ammo_casing/a762

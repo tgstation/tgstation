@@ -87,7 +87,7 @@ var/global/list/datum/stack_recipe/metal_recipes = list ( \
 	desc = "Sheets made out of metal. It has been dubbed Metal Sheets."
 	singular_name = "metal sheet"
 	icon_state = "sheet-metal"
-	m_amt = 3750
+	starting_materials = list(MAT_IRON = 3750)
 	w_type = RECYK_METAL
 	throwforce = 14.0
 	flags = FPRINT
@@ -127,7 +127,7 @@ var/global/list/datum/stack_recipe/metal_recipes = list ( \
 
 // Diet metal.
 /obj/item/stack/sheet/metal/cyborg
-	m_amt = 0
+	starting_materials = null
 
 /obj/item/stack/sheet/metal/New(var/loc, var/amount=null)
 	recipes = metal_recipes
@@ -155,7 +155,7 @@ var/global/list/datum/stack_recipe/plasteel_recipes = list ( \
 	desc = "This sheet is an alloy of iron and plasma."
 	icon_state = "sheet-plasteel"
 	item_state = "sheet-plasteel"
-	m_amt = 3750 // Was 7500, which doesn't make any fucking sense
+	starting_materials = list(MAT_IRON = 3750) // Was 7500, which doesn't make any fucking sense
 	perunit = 2875 //average of plasma and metal
 	throwforce = 15.0
 	flags = FPRINT

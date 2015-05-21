@@ -12,7 +12,7 @@ Used By Machine(s): Flatpack Fabricator, General Fabricator
 	}
 	#misc
 	{
-		width:350px;
+		width:300px;
 		float:left;
 	}
 </style>
@@ -21,26 +21,18 @@ Used By Machine(s): Flatpack Fabricator, General Fabricator
 		<div class="itemLabel">
 			Design List
 		</div>
-		<div class="itemContentWide">
+		<div class="line">
 			<div class="statusDisplay">
 				<div class="line">
 							{{for data.parts.Items}}
 							<div class="line">
-								<div class="line">
-										<div class="statusValue">
-											{{:helper.link(value.name, 'gear', null, null, null, 'misc')}}
-											{{:helper.link(value.cost, null, null, null, null, 'cost')}}
-										</div>
-								</div>
-								<div class="line">
-										<div class="statusValue">
-											{{:helper.link("Build Design", 'gear', value.command2, null, 'fixedLeftWide')}}
-											{{:helper.link("Add to Queue", 'gear', value.command1, null, 'fixedLeftWide')}}
-											{{:helper.link("Remove", 'circle-arrow-s', value.command3, null, 'fixedLeft')}}
-											{{if value.uses >= 0}}
-												{{:helper.link("Uses: " + value.uses, null, null, null, 'fixedLeft')}}
-											{{/if}}
-										</div>
+								<div class="statusValue">
+									{{:helper.link(value.name, 'gear', value.command2, null, null, 'misc')}}
+									{{:helper.link(value.cost, null, null, null, null, 'cost')}}
+									{{:helper.link("Queue", 'gear', value.command1, null, 'fixedLeft')}}
+									{{if data.removableDesigns}}
+										{{:helper.link("Remove", 'circle-arrow-s', value.command3, null, 'fixedLeft')}}
+									{{/if}}
 								</div>
 							</div>
 							{{empty}}
@@ -52,7 +44,7 @@ Used By Machine(s): Flatpack Fabricator, General Fabricator
 		<div class="itemLabel">
 			Queue
 		</div>
-		<div class="itemContentWide">
+		<div class="line">
 			<div class="statusDisplay">
 				<div class="line">
 							{{for data.queue}}
@@ -60,8 +52,8 @@ Used By Machine(s): Flatpack Fabricator, General Fabricator
 								<div class="line">
 										<div class="statusValue">
 											{{:helper.link(value.name, 'gear', null, null, null, 'misc')}}
-											{{:helper.link(value.cost, null, null, null, 'fixedLeftWide')}}
-											{{:helper.link("Remove", 'circle-arrow-s', value.commands, null, 'fixedLeftWide')}}
+											{{:helper.link(value.cost, null, null, null, null, 'cost')}}
+											{{:helper.link("Remove", 'circle-arrow-s', value.commands, null, 'fixedLeft')}}
 										</div>
 								</div>
 							</div>
@@ -78,7 +70,7 @@ Used By Machine(s): Flatpack Fabricator, General Fabricator
 		<div class="itemLabel">
 			Materials
 		</div>
-		<div class="itemContentWide">
+		<div class="line">
 			<div class="statusDisplay">
 				<div class="line">
 					{{for data.materials}}

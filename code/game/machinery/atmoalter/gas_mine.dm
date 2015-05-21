@@ -5,7 +5,7 @@
 	icon_state = "miner"
 	power_channel=ENVIRON
 
-	m_amt = 0 // fuk u
+	starting_materials = null
 	w_type = NOT_RECYCLABLE
 
 	var/datum/gas_mixture/air_contents

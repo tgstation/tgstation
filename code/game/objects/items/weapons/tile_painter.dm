@@ -308,8 +308,7 @@ var/global/list/paint_variants = list(
 	throw_speed = 1
 	throw_range = 5
 	w_class = 3.0
-	m_amt = 15000
-	g_amt = 7500
+	starting_materials = list(MAT_IRON = 15000, MAT_GLASS = 7500)
 	w_type = RECYK_ELECTRONIC
 	melt_temperature = MELTPOINT_STEEL
 	origin_tech = "engineering=2;materials=1"

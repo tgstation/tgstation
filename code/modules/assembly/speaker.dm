@@ -4,8 +4,7 @@
 	desc = "Used to play pre-recorded messages."
 	icon_state = "speaker"
 	item_state = "speaker"
-	m_amt = 800
-	g_amt = 100
+	starting_materials = list(MAT_IRON = 800, MAT_GLASS = 100)
 	w_type = RECYK_ELECTRONIC
 	origin_tech = "magnets=1"
 	var/message = "Thank you for using NanoSpeaker!"

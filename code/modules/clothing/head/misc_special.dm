@@ -17,8 +17,7 @@
 	icon_state = "welding"
 	flags = FPRINT
 	item_state = "welding"
-	m_amt = 3000
-	g_amt = 1000
+	starting_materials = list(MAT_IRON = 3000, MAT_GLASS = 1000)
 	w_type = RECYK_MISC
 	var/up = 0
 	eyeprot = 3

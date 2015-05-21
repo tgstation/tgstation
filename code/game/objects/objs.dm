@@ -36,10 +36,8 @@ var/global/list/reagents_to_log = list("fuel"  =  "welder fuel", "plasma"=  "pla
 /obj/item/proc/is_used_on(obj/O, mob/user)
 
 /obj/recycle(var/datum/materials/rec)
-	if (src.m_amt == 0 && src.g_amt == 0)
-		return NOT_RECYCLABLE
-	rec.addAmount("iron",src.m_amt/CC_PER_SHEET_METAL)
-	rec.addAmount("glass",src.g_amt/CC_PER_SHEET_GLASS)
+	if(..())
+		return 1
 	return w_type
 
 /*

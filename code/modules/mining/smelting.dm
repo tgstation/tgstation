@@ -8,7 +8,6 @@
 	var/sufficient_ore=1
 	var/matching_ingredient_count=0
 	for(var/ore_id in P.ore.storage)
-		var/datum/material/po=P.ore.getMaterial(ore_id)
 		var/required=(ore_id in ingredients)
 		var/selected=(ore_id in P.selected)
 
@@ -24,7 +23,7 @@
 
 		// Selected, in ingredients, but not enough in stock.
 		if(selected && required)
-			if(po.stored < min_ore_required)
+			if(P.ore.storage[ore_id] < min_ore_required)
 				sufficient_ore=0
 				continue
 
@@ -39,65 +38,65 @@
 /datum/smelting_recipe/glass
 	name="Glass"
 	ingredients=list(
-		"glass"=1
+		MAT_GLASS=1
 	)
 	yieldtype=/obj/item/stack/sheet/glass/glass
 
 /datum/smelting_recipe/rglass
 	name="Reinforced Glass"
 	ingredients=list(
-		"glass"=1,
-		"iron"=1
+		MAT_GLASS=1,
+		MAT_IRON=1
 	)
 	yieldtype=/obj/item/stack/sheet/glass/rglass
 
 /datum/smelting_recipe/gold
 	name="Gold"
 	ingredients=list(
-		"gold"=1
+		MAT_GOLD=1
 	)
 	yieldtype=/obj/item/stack/sheet/mineral/gold
 
 /datum/smelting_recipe/silver
 	name="Silver"
 	ingredients=list(
-		"silver"=1
+		MAT_SILVER=1
 	)
 	yieldtype=/obj/item/stack/sheet/mineral/silver
 
 /datum/smelting_recipe/diamond
 	name="Diamond"
 	ingredients=list(
-		"diamond"=1
+		MAT_DIAMOND=1
 	)
 	yieldtype=/obj/item/stack/sheet/mineral/diamond
 
 /datum/smelting_recipe/plasma
 	name="Plasma"
 	ingredients=list(
-		"plasma"=1
+		MAT_PLASMA=1
 	)
 	yieldtype=/obj/item/stack/sheet/mineral/plasma
 
 /datum/smelting_recipe/uranium
 	name="Uranium"
 	ingredients=list(
-		"uranium"=1
+		MAT_URANIUM=1
 	)
 	yieldtype=/obj/item/stack/sheet/mineral/uranium
 
 /datum/smelting_recipe/metal
 	name="Metal"
 	ingredients=list(
-		"iron"=1
+		MAT_IRON=1
 	)
 	yieldtype=/obj/item/stack/sheet/metal
 
 /datum/smelting_recipe/plasteel
 	name="Plasteel"
 	ingredients=list(
-		"iron"=1,
-		"plasma"=1
+		MAT_IRON=1,
+		MAT_PLASMA=1
 	)
 	yieldtype=/obj/item/stack/sheet/plasteel
 
@@ -111,31 +110,31 @@
 /datum/smelting_recipe/plasma_glass
 	name="Plasma Glass"
 	ingredients=list(
-		"plasma"=1,
-		"glass"=1
+		MAT_PLASMA=1,
+		MAT_GLASS=1
 	)
 	yieldtype=/obj/item/stack/sheet/glass/plasmaglass
 
 /datum/smelting_recipe/plasma_rglass
 	name="Reinforced Plasma Glass"
 	ingredients=list(
-		"plasma"=1,
-		"glass"=1,
-		"iron"=1
+		MAT_PLASMA=1,
+		MAT_GLASS=1,
+		MAT_IRON=1
 	)
 	yieldtype=/obj/item/stack/sheet/glass/plasmarglass
 
 /datum/smelting_recipe/phazon
 	name="phazon"
 	ingredients=list(
-		"phazon"=1
+		MAT_PHAZON=1
 	)
 	yieldtype=/obj/item/stack/sheet/mineral/phazon
 
 /datum/smelting_recipe/plastic
-	name="plastic"
+	name="Plastic"
 	ingredients=list(
-		"plastic"=1
+		MAT_PLASTIC=1
 	)
 	yieldtype=/obj/item/stack/sheet/mineral/plastic
 

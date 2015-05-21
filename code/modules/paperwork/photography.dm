@@ -105,7 +105,7 @@
 	flags = FPRINT
 	siemens_coefficient = 1
 	slot_flags = SLOT_BELT
-	m_amt = 2000
+	starting_materials = list(MAT_IRON = 2000)
 	w_type = RECYK_ELECTRONIC
 	min_harm_label = 3
 	harm_label_examine = list("<span class='info'>A tiny label is on the lens.</span>", "<span class='warning'>A label covers the lens!</span>")

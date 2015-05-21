@@ -20,7 +20,7 @@
 	var/obj/item/weapon/aiModule/standard/clone = ..()
 	clone.law=law
 	return clone
-	
+
 /******************** ProtectStation ********************/
 
 /obj/item/weapon/aiModule/standard/protectStation
@@ -31,8 +31,7 @@
 	priority = 5
 
 	// Recycling
-	g_amt=2000/CC_PER_SHEET_GLASS  // Glass
-	gold_amt=100/CC_PER_SHEET_MISC // Gold
+	starting_materials = list(MAT_GLASS = 2000/CC_PER_SHEET_GLASS, MAT_GOLD = 100/CC_PER_SHEET_MISC)
 
 /******************** PrototypeEngineOffline ********************/
 
@@ -44,8 +43,7 @@
 	priority = LAW_IONIC // Was 6, but doesn't jive with law priority numbering.
 
 	// Recycling
-	g_amt=2000/CC_PER_SHEET_GLASS  // Glass
-	gold_amt=100/CC_PER_SHEET_MISC // Gold
+	starting_materials = list(MAT_GLASS = 2000/CC_PER_SHEET_GLASS, MAT_GOLD = 100/CC_PER_SHEET_MISC)
 
 /******************** TeleporterOffline ********************/
 
@@ -56,8 +54,7 @@
 	priority = 7
 
 	// Recycling
-	g_amt=2000/CC_PER_SHEET_GLASS  // Glass
-	gold_amt=100/CC_PER_SHEET_MISC // Gold
+	starting_materials = list(MAT_GLASS = 2000/CC_PER_SHEET_GLASS, MAT_GOLD = 100/CC_PER_SHEET_MISC)
 
 /******************** Quarantine ********************/
 
@@ -68,8 +65,7 @@
 	priority = 8
 
 	// Recycling
-	g_amt=2000/CC_PER_SHEET_GLASS  // Glass
-	gold_amt=100/CC_PER_SHEET_MISC // Gold
+	starting_materials = list(MAT_GLASS = 2000/CC_PER_SHEET_GLASS, MAT_GOLD = 100/CC_PER_SHEET_MISC)
 
 /******************** OxygenIsToxicToHumans ********************/
 
@@ -80,5 +76,4 @@
 	priority = 9
 
 	// Recycling
-	g_amt=2000/CC_PER_SHEET_GLASS  // Glass
-	gold_amt=100/CC_PER_SHEET_MISC // Gold
+	starting_materials = list(MAT_GLASS = 2000/CC_PER_SHEET_GLASS, MAT_GOLD = 100/CC_PER_SHEET_MISC)

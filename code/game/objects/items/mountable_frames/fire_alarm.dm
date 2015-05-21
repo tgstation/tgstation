@@ -4,7 +4,7 @@ obj/item/mounted/frame/firealarm
 	icon = 'icons/obj/monitors.dmi'
 	icon_state = "fire_bitem"
 	flags = FPRINT
-	m_amt=2*CC_PER_SHEET_METAL
+	starting_materials = list(MAT_IRON = 2*CC_PER_SHEET_METAL)
 	melt_temperature = MELTPOINT_STEEL
 	w_type = RECYK_METAL
 	mount_reqs = list("simfloor", "nospace")

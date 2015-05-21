@@ -597,7 +597,7 @@ var/global/list/obj/machinery/light/alllights = list()
 	var/status = 0		// LIGHT_OK, LIGHT_BURNED or LIGHT_BROKEN
 	var/base_state
 	var/switchcount = 0	// number of times switched
-	m_amt = 60
+	starting_materials = list(MAT_IRON = 60)
 	var/rigged = 0		// true if rigged to explode
 	var/brightness_range = 2 //how much light it gives off
 	var/brightness_power = 1
@@ -611,7 +611,7 @@ var/global/list/obj/machinery/light/alllights = list()
 	icon_state = "tube"
 	base_state = "tube"
 	item_state = "c_tube"
-	g_amt = 100
+	starting_materials = list(MAT_GLASS = 100)
 	w_type = RECYK_GLASS
 	brightness_range = 8
 	brightness_power = 3
@@ -637,10 +637,10 @@ var/global/list/obj/machinery/light/alllights = list()
 	base_state = "bulb"
 	item_state = "contvapour"
 	fitting = "bulb"
-	g_amt = 100
 	brightness_range = 5
 	brightness_power = 2
 	brightness_color = "#a0a080"
+	starting_materials = list(MAT_GLASS = 100)
 	cost = 5
 	w_type = RECYK_GLASS
 
@@ -661,9 +661,9 @@ var/global/list/obj/machinery/light/alllights = list()
 	icon_state = "fbulb"
 	base_state = "fbulb"
 	item_state = "egg4"
-	g_amt = 100
 	brightness_range = 5
 	brightness_power = 2
+	starting_materials = list(MAT_GLASS = 100)
 
 // update the icon state and description of the light
 

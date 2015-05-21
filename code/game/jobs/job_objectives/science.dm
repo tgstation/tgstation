@@ -19,7 +19,7 @@
 		// This was just used for testing.
 		//world << "UNABLE TO FIND A GODDAMN RND SERVER. FUCK."
 		return
-	for(var/datum/tech/T in server.files.possible_tech)
+	for(var/datum/tech/T in tech_list)
 		if(T.goal_level==0) // Ignore illegal tech, etc
 			continue
 		var/datum/tech/KT  = locate(T.type, server.files.known_tech)

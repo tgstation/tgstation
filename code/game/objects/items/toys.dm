@@ -131,8 +131,7 @@
 	siemens_coefficient = 1
 	slot_flags = SLOT_BELT
 	w_class = 3.0
-	g_amt = 10
-	m_amt = 10
+	starting_materials = list(MAT_IRON = 10, MAT_GLASS = 10)
 	w_type = RECYK_MISC
 	melt_temperature = MELTPOINT_PLASTIC
 	attack_verb = list("struck", "pistol whipped", "hit", "bashed")
@@ -186,8 +185,7 @@
 	flags = FPRINT
 	siemens_coefficient = 1
 	w_class = 1.0
-	g_amt = 10
-	m_amt = 10
+	starting_materials = list(MAT_IRON = 10, MAT_GLASS = 10)
 	melt_temperature = MELTPOINT_PLASTIC
 	w_type = RECYK_MISC
 	var/amount_left = 7.0

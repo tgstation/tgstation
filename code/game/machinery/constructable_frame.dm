@@ -249,7 +249,7 @@ to destroy them and players will be able to make replacements.
 
 /obj/item/weapon/circuitboard/autolathe
 	name = "Circuit board (Autolathe)"
-	build_path = "/obj/machinery/autolathe"
+	build_path = "/obj/machinery/r_n_d/fabricator/mechanic_fab/autolathe"
 	board_type = "machine"
 	origin_tech = "engineering=2;programming=2"
 	frame_desc = "Requires 3 Matter Bins, 1 Manipulator, and 1 Console Screen."

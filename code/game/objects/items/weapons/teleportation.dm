@@ -22,7 +22,7 @@
 	item_state = "electronic"
 	throw_speed = 4
 	throw_range = 20
-	m_amt = 400
+	starting_materials = list(MAT_IRON = 400)
 	w_type = RECYK_ELECTRONIC
 	origin_tech = "magnets=1"
 
@@ -134,7 +134,7 @@ Frequency:
 	w_class = 2.0
 	throw_speed = 3
 	throw_range = 5
-	m_amt = 10000
+	starting_materials = list(MAT_IRON = 10000, MAT_GOLD = 500, MAT_PHAZON = 50)
 	w_type = RECYK_ELECTRONIC
 	origin_tech = "magnets=1;bluespace=3"
 

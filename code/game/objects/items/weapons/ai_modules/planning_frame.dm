@@ -25,9 +25,7 @@
 	item_state = "electronic"
 
 	//Recycling
-	g_amt=2000 // Glass
-	var/gold_amt=0
-	var/diamond_amt=0
+	starting_materials = list(MAT_GLASS = 2000/CC_PER_SHEET_GLASS)
 	w_type=RECYK_ELECTRONIC
 	// Don't specify sulfuric, as that's renewable and is used up in the etching process anyway.
 
@@ -40,12 +38,6 @@
 /obj/item/weapon/planning_frame/New()
 	. = ..()
 	laws = new base_law_type
-
-/obj/item/weapon/planning_frame/recycle(var/datum/materials/rec)
-	rec.addAmount("glass",  g_amt)
-	rec.addAmount("gold",   gold_amt)
-	rec.addAmount("diamond",diamond_amt)
-	return 1
 
 /obj/item/weapon/planning_frame/attackby(var/obj/item/W,var/mob/user)
 	if(istype(W, /obj/item/weapon/aiModule))
