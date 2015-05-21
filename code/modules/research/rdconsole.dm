@@ -312,7 +312,7 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 						for(var/obj/I in linked_destroy.contents)
 							for(var/mob/M in I.contents)
 								M.death()
-							if(istype(I,/obj/item/stack/sheet))//Only deconsturcts one sheet at a time instead of the entire stack
+							if(istype(I,/obj/item/stack/sheet)) //Only deconstructs one sheet at a time instead of the entire stack
 								var/obj/item/stack/sheet/S = I
 								if(S.amount > 1)
 									S.amount--
@@ -897,8 +897,8 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 			// END AUTOFIX
 
 
-			for(var/matID in linked_lathe.materials)
-				var/datum/material/M=linked_lathe.materials[matID]
+			for(var/matID in linked_lathe.materials.storage)
+				var/datum/material/M=linked_lathe.materials.getMaterial(matID)
 				dat += "<li>[M.stored] cm<sup>3</sup> of [M.processed_name]"
 				if(M.stored >= M.cc_per_sheet)
 					dat += " - <A href='?src=\ref[src];lathe_ejectsheet=[matID];lathe_ejectsheet_amt=1'>(1 Sheet)</A> "
@@ -1015,8 +1015,8 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 				Material Storage<HR><ul>"}
 
 
-			for(var/matID in linked_imprinter.materials)
-				var/datum/material/M=linked_imprinter.materials[matID]
+			for(var/matID in linked_imprinter.materials.storage)
+				var/datum/material/M=linked_imprinter.materials.getMaterial(matID)
 				if(!(M.sheettype in linked_imprinter.allowed_materials))
 					continue
 				dat += "<li>[M.stored] cm<sup>3</sup> of [M.processed_name]"

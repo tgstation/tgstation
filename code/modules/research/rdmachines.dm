@@ -154,20 +154,21 @@ var/global/list/rnd_machines = list()
 					linked_console.linked_imprinter = null
 			linked_console = null
 			overlays -= "[base_state]_link"
-			return 1
+		return 1
 
 /obj/machinery/r_n_d/crowbarDestroy(mob/user)
 	if(..() == 1)
-		for(var/matID in materials.storage)
-			var/datum/material/M = materials.storage[matID]
-			var/obj/item/stack/sheet/sheet = new M.sheettype(src.loc)
-			if(sheet)
-				var/available_num_sheets = round(M.stored/sheet.perunit)
-				if(available_num_sheets>0)
-					sheet.amount = available_num_sheets
-					M.stored = max(0, (M.stored-sheet.amount * sheet.perunit))
-				else
-					qdel(sheet)
+		if (materials)
+			for(var/matID in materials.storage)
+				var/datum/material/M = materials.storage[matID]
+				var/obj/item/stack/sheet/sheet = new M.sheettype(src.loc)
+				if(sheet)
+					var/available_num_sheets = round(M.stored/sheet.perunit)
+					if(available_num_sheets>0)
+						sheet.amount = available_num_sheets
+						M.stored = max(0, (M.stored-sheet.amount * sheet.perunit))
+					else
+						qdel(sheet)
 		return 1
 	return -1
 
@@ -209,7 +210,7 @@ var/global/list/rnd_machines = list()
 		return
 	if (!linked_console && !(istype(src, /obj/machinery/r_n_d/fabricator))) //fabricators get a free pass because they aren't tied to a console
 		user << "\The [src.name] must be linked to an R&D console first!"
-		return 0
+		return 1
 	if(istype(O,/obj/item/stack/sheet) && research_flags &TAKESMATIN)
 		busy = 1
 
@@ -265,9 +266,6 @@ var/global/list/rnd_machines = list()
 		materials.addAmount(found, amount * material.cc_per_sheet)
 		busy = 0
 		return 1
-
-	else
-		user <<"<span class='notice'>The [src.name] rejects the [O]!</span>"
 	src.updateUsrDialog()
 	return 0
 
