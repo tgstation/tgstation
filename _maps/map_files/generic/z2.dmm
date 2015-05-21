@@ -580,7 +580,7 @@
 "lh" = (/obj/machinery/sleeper{desc = "A comfortable stasis pod used for long-term sleep. Said to hold the secret of the cultivation of wizard beards."; dir = 4; icon_state = "sleeper-open"; name = "luxury sleeper"; use_power = 0},/turf/simulated/shuttle/floor{icon_state = "floor3"},/area/wizard_station)
 "li" = (/obj/structure/table/wood,/obj/item/weapon/storage/bag/tray,/obj/item/weapon/reagent_containers/food/snacks/burger/spell{pixel_x = 0},/turf/simulated/shuttle/floor{icon_state = "floor3"},/area/wizard_station)
 "lj" = (/turf/simulated/shuttle/wall{icon_state = "swall4"; dir = 2},/area/wizard_station)
-"lk" = (/obj/machinery/door/airlock/shuttle{name = "Auxilary Storage"; use_power = 0},/turf/simulated/shuttle/floor{icon_state = "floor3"},/area/wizard_station)
+"lk" = (/obj/machinery/door/airlock/shuttle{name = "Auxilary Storage"; use_power = 0},/turf/simulated/shuttle/plating,/area/wizard_station)
 "ll" = (/turf/simulated/shuttle/wall{icon_state = "swallc2"; dir = 2},/area/wizard_station)
 "lm" = (/obj/structure/showcase{desc = "A haughty piece of hardware that controls everything aboard a wizard's ship, from communications to the available library books. Prone to random crashes and known to spout warnings."; icon = 'icons/obj/machines/telecomms.dmi'; icon_state = "hub"; name = "the master controller"},/turf/simulated/shuttle/floor{icon_state = "floor5"},/area/wizard_station)
 "ln" = (/obj/machinery/vending/snack,/turf/simulated/shuttle/floor{icon_state = "floor5"},/area/wizard_station)
