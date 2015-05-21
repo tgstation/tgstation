@@ -13,13 +13,17 @@
 		visible_message("<span class='danger'>[user] has hit [src] with [W].</span>")
 
 /mob/living/attackby(obj/item/I, mob/user, params)
-	if(ismommi(user) && user:keeper)	//REMOVE SHITTER REMOVE SHITTER
-		if(src.client || src.ckey || istype(src,/mob/living/carbon/human) || istype(src,/mob/living/silicon))	//If it's a human, silicon or another sentient it's not ok => animals are fair game!
-			if(!ismommi(src) || (ismommi(src) && !src:keeper)) //They can interfere with keeper mommis
-				user << "<span class ='warning'>Your laws prevent you from doing this</span>"
-				return
+	if(ismommi(user))
+		if(!src.canmommiattack(user))
+			user << "<span class ='warning'>Your laws prevent you from doing this</span>"
+			return
 	user.changeNext_move(CLICK_CD_MELEE)
 	I.attack(src, user)
+
+/mob/living/proc/canmommiattack(var/mob/living/silicon/robot/mommi/user)
+	if(user.can_interfere(src))	//MoMMI proc
+		return 1
+	return 0
 
 /mob/living/proc/attacked_by(var/obj/item/I, var/mob/living/user, var/def_zone)
 	apply_damage(I.force, I.damtype)
