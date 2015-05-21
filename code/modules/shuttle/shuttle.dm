@@ -174,6 +174,10 @@
 	if(name == "shuttle")
 		name = "shuttle[SSshuttle.mobile.len]"
 
+	var/area/A = src.loc.loc
+	if(istype(A, /area/shuttle))
+		areaInstance = A
+
 	if(!areaInstance)
 		areaInstance = new()
 		areaInstance.name = name
