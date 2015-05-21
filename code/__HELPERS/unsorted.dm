@@ -1074,7 +1074,13 @@ Turf and target are seperate in case you want to teleport some distance from a t
 //Gets the turf this atom inhabits
 /proc/get_turf(atom/movable/AM)
 	if(istype(AM))
-		return locate(/turf) in AM.locs
+		var/list/atom/moveable/checkedlocs = list() //prevent recursion from badmins being dumbasses
+		while (!isturf(AM))
+			if (AM in checkedlocs || !AM.loc)
+				return
+			checkedlocs += AM
+			AM = AM.loc
+		return AM
 	else if(isturf(AM))
 		return AM
 
