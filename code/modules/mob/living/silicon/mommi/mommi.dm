@@ -677,7 +677,7 @@ They can only use one tool at a time, they can't choose modules, and they have 1
 	if(is_blind(src))
 		src << "<span class='notice'>Something is there but you can't see it.</span>"
 		return
-	if(istype(A, /mob) && src.keeper)
+	if(istype(A, /mob))
 		if(!src.can_interfere(A))
 			src << "<span class='notice'>Something is there, but you can't see it.</span>"
 			return
@@ -700,15 +700,15 @@ They can only use one tool at a time, they can't choose modules, and they have 1
 
 
 /mob/living/silicon/robot/mommi/start_pulling(var/atom/movable/AM)
-	if(istype(AM,/mob))
-		if(src.keeper)
-			if(!src.can_interfere(AM))
-				src << "Your laws prevent you from doing this"
-				return
+	if(istype(AM,/mob) || istype(AM,/obj/item/clothing/mask/facehugger))
+		if(!src.can_interfere(AM))
+			src << "Your laws prevent you from doing this"
+			return
 	..(AM)
 
-/mob/living/silicon/robot/mommi/proc/can_interfere(mob/AN)
-	if(istype(AN,/mob/living/carbon/human) || istype(AN,/mob/living/silicon) || AN.client || AN.ckey)	//If it's a human, silicon or other sentient it's not ok => animals are fair game!
-		if(!ismommi(AN) || (ismommi(AN) && !AN:keeper))	//Keeper MoMMIs can be interfered with
-			return 0	//Not ok
+/mob/living/silicon/robot/mommi/proc/can_interfere(var/mob/AN)
+	if(src.keeper)
+		if(AN.client || AN.ckey || (iscarbon(AN) && (!ismonkey(AN) && !isslime(AN))) || issilicon(AN))	//If it's a non-monkey/slime carbon, silicon or other sentient it's not ok => animals are fair game!
+			if(!ismommi(AN) || (ismommi(AN) && !AN:keeper))	//Keeper MoMMIs can be interfered with
+				return 0	//Not ok
 	return 1	//Ok!

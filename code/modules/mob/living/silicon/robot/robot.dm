@@ -402,8 +402,8 @@
 
 
 /mob/living/silicon/robot/attackby(obj/item/weapon/W as obj, mob/user as mob, params)
-	if (ismommi(user) && user:keeper)
-		if (!ismommi(src) || (ismommi(src) && !src:keeper))
+	if (ismommi(user))
+		if (!canmommiattack(user))
 			user << "<span class ='warning'>Your laws prevent you from doing this</span>"
 			return
 
