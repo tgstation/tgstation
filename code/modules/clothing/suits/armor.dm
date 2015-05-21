@@ -206,3 +206,15 @@
 	min_cold_protection_temperature = SPACE_SUIT_MIN_COLD_PROTECTION_TEMPERATURE
 	slowdown = 0
 	armor = list(melee = 50, bullet = 40, laser = 40, energy = 40, bomb = 40, bio = 0, rad = 0)
+
+/obj/item/clothing/suit/armor/doomguy
+	name = "Doomguy's armor"
+	desc = ""
+	icon_state = "doom"
+	item_state = "doom"
+	body_parts_covered = UPPER_TORSO|LOWER_TORSO
+	flags_inv = null
+	cold_protection = UPPER_TORSO|LOWER_TORSO
+	min_cold_protection_temperature = SPACE_SUIT_MIN_COLD_PROTECTION_TEMPERATURE
+	slowdown = 0
+	armor = list(melee = 50, bullet = 30, laser = 20, energy = 20, bomb = 30, bio = 0, rad = 0)

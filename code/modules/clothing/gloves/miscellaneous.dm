@@ -118,3 +118,9 @@
 	icon_state = "joegloves"
 	item_state = "joegloves"
 	species_fit = list("Vox")
+
+/obj/item/clothing/gloves/doomguy
+	desc = ""
+	name = "Doomguy's gloves"
+	icon_state = "doom"
+	item_state = "doom"
