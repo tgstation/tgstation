@@ -60,6 +60,8 @@
 				I.pixel_y = -10
 			if("mommiprime")
 				I.pixel_y = -7
+			if("scout")
+				I.pixel_y = -15
 		// Add the adjusted hat to our overlays
 		overlays += I
 
