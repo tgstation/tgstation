@@ -68,6 +68,7 @@ var/list/exclude = list("inhand_states", "loc", "locs", "parent_type", "vars", "
  * Example call: returnToPool(src)
  */
 /proc/returnToPool(const/atom/movable/AM)
+	ASSERT(AM)
 	if(istype(AM.loc,/mob/living))
 		var/mob/living/L = AM.loc
 		L.u_equip(AM,1)
