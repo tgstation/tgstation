@@ -583,7 +583,7 @@
 "lk" = (/obj/machinery/door/airlock/shuttle{name = "Auxilary Storage"; use_power = 0},/turf/simulated/shuttle/floor{icon_state = "floor3"},/area/wizard_station)
 "ll" = (/turf/simulated/shuttle/wall{icon_state = "swallc2"; dir = 2},/area/wizard_station)
 "lm" = (/obj/structure/showcase{desc = "A haughty piece of hardware that controls everything aboard a wizard's ship, from communications to the available library books. Prone to random crashes and known to spout warnings."; icon = 'icons/obj/machines/telecomms.dmi'; icon_state = "hub"; name = "the master controller"},/turf/simulated/shuttle/floor,/area/wizard_station)
-"ln" = (/obj/machinery/vending/sustenance{use_power = 0},/turf/simulated/shuttle/floor,/area/wizard_station)
+"ln" = (/obj/machinery/vending/snack,/turf/simulated/shuttle/floor,/area/wizard_station)
 "lo" = (/obj/structure/stool,/turf/simulated/shuttle/floor{icon_state = "floor4"},/area/space)
 "lp" = (/obj/structure/table,/obj/item/device/aicard,/turf/simulated/shuttle/floor{icon_state = "floor4"},/area/space)
 "lq" = (/obj/structure/table,/obj/item/weapon/gun/energy/ionrifle{pin = /obj/item/device/firing_pin},/turf/unsimulated/floor{icon_state = "dark"},/area/syndicate_mothership)
