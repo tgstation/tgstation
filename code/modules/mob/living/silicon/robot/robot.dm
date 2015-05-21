@@ -403,7 +403,8 @@
 
 /mob/living/silicon/robot/attackby(obj/item/weapon/W as obj, mob/user as mob, params)
 	if (ismommi(user))
-		if (!canmommiattack(user))
+		var/mob/living/silicon/robot/mommi/R = user
+		if (R.keeper)
 			user << "<span class ='warning'>Your laws prevent you from doing this</span>"
 			return
 
@@ -678,12 +679,13 @@
 	if(opened && !wiresexposed)
 		if(issilicon(user) && !ismommi(user))
 			return
-		if(ismommi(user))
-			var/mob/living/silicon/robot/mommi/R = user
-			if(R.keeper)
-				user << "<span class ='warning'>Your laws prevent you from doing this</span>"
 
 		if(cell)
+			if(ismommi(user))
+				var/mob/living/silicon/robot/mommi/R = user
+				if(R.keeper)
+					user << "<span class ='warning'>Your laws prevent you from doing this</span>"
+					return
 			cell.updateicon()
 			cell.add_fingerprint(user)
 			user.put_in_active_hand(cell)
