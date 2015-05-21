@@ -154,7 +154,7 @@ var/global/list/rnd_machines = list()
 					linked_console.linked_imprinter = null
 			linked_console = null
 			overlays -= "[base_state]_link"
-			return 1
+		return 1
 
 /obj/machinery/r_n_d/crowbarDestroy(mob/user)
 	if(..() == 1)
