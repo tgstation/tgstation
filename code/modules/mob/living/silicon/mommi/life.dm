@@ -40,9 +40,7 @@
 			uneq_all()
 			src.stat = 1
 		else if (src.cell.charge <= 100)
-			src.module_active = null
-			src.sight_state = null
-			src.tool_state = null
+			uneq_active()
 			src.sight_mode = 0
 			src.cell.use(1)
 		else
