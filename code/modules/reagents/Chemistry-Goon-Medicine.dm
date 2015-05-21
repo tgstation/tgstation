@@ -658,6 +658,7 @@ datum/reagent/life
 proc/chemical_mob_spawn(var/datum/reagents/holder, var/amount_to_spawn, var/reaction_name, var/mob_faction = "chemicalsummon")
 	if(holder && holder.my_atom)
 		var/blocked = list(/mob/living/simple_animal/hostile,
+			/mob/living/simple_animal,
 			/mob/living/simple_animal/hostile/pirate,
 			/mob/living/simple_animal/hostile/pirate/ranged,
 			/mob/living/simple_animal/hostile/russian,
@@ -670,6 +671,7 @@ proc/chemical_mob_spawn(var/datum/reagents/holder, var/amount_to_spawn, var/reac
 			/mob/living/simple_animal/hostile/alien/queen/large,
 			/mob/living/simple_animal/hostile/retaliate,
 			/mob/living/simple_animal/hostile/retaliate/clown,
+			/mob/living/simple_animal/hostile/mimic/copy/ranged,
 			/mob/living/simple_animal/hostile/mushroom,
 			/mob/living/simple_animal/hostile/asteroid,
 			/mob/living/simple_animal/hostile/asteroid/basilisk,
