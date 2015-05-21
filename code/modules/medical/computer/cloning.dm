@@ -25,16 +25,16 @@
 		updatemodules()
 		return
 	return
-	
+
 /obj/machinery/computer/cloning/initialize()
 	src.pod1 = findcloner()
-	
+
 /obj/machinery/computer/cloning/multitool_menu(var/mob/user, var/obj/item/device/multitool/P)
 	return ""
-		
+
 /obj/machinery/computer/cloning/canLink(var/obj/O)
 	return (istype(O,/obj/machinery/cloning) && get_dist(src,O) < CLONEPODRANGE)
-	
+
 /obj/machinery/computer/cloning/isLinkedWith(var/obj/O)
 	return O != null && O in links
 
@@ -49,7 +49,7 @@
 		species_mod = O
 		return 1
 */
-		
+
 /obj/machinery/computer/cloning/proc/updatemodules()
 	src.scanner = findscanner()
 	if (!isnull(src.pod1))
@@ -390,18 +390,29 @@
 	if (!subject.has_brain())
 		scantemp = "Error: No signs of intelligence detected."
 		return
-	if (subject.suiciding == 1)
-		scantemp = "Error: Subject's brain is not responding to scanning stimuli."
+	if ((M_NOCLONE in subject.mutations) || (subject.suiciding == 1))
+		scantemp = "Error: Mental interface failure." //uncloneable, this guy is done for
 		return
-	if ((!subject.ckey) || (!subject.client))
-		scantemp = "Error: Mental interface failure."
+	if (!subject.client)
+		if (subject.mind) //this guy ghosted from his corpse, but he can still come back!
+			for(var/mob/dead/observer/ghost in player_list)
+				if(ghost.mind == subject.mind)
+					if(ghost.client)
+						ghost << 'sound/effects/adminhelp.ogg'
+						ghost << "<span class='interface'><b><font size = 3>Someone is trying to clone your corpse. Return to your body if you want to be resurrected/cloned!</b> \
+							(Verbs -> Ghost -> Re-enter corpse, or <a href='?src=\ref[ghost];reentercorpse=1'>click here!</a>)</font></span>"
+			scantemp = "Error: Subject's brain is not responding to scanning stimuli, subject may be brain dead. Please try again in five seconds."
+			return
+		else
+			scantemp = "Error: Mental interface failure."
+			return
+	if (!subject.ckey) //checking this only now, since a ghosted player won't have a ckey
+		scantemp = "Error: Mental interface failure." //ideally would never happen but a check never hurts
 		return
-	if (M_NOCLONE in subject.mutations)
-		scantemp = "Error: Mental interface failure."
-		return
-	if (!isnull(find_record(subject.ckey)))
-		scantemp = "Subject already in database."
-		return
+	else
+		if(!isnull(find_record(subject.ckey)))
+			scantemp = "Subject already in database."
+			return
 
 	subject.dna.check_integrity()
 	var/datum/organ/internal/brain/Brain = subject.internal_organs_by_name["brain"]

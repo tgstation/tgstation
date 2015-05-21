@@ -802,8 +802,13 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 
 	usr.loc = arena_target.center
 
-//BEGIN TELEPORT HREF CODE
 /mob/dead/observer/Topic(href, href_list)
+	if (href_list["reentercorpse"])
+		if(istype(usr, /mob/dead/observer))
+			var/mob/dead/observer/A = usr
+			A.reenter_corpse()
+
+	//BEGIN TELEPORT HREF CODE
 	if(usr != src)
 		return
 	..()
@@ -859,7 +864,9 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 		var/client/C = usr.client
 		sleep(2)
 		C.jumptocoord(x,y,z)
+
 	..()
+
 //END TELEPORT HREF CODE
 
 
