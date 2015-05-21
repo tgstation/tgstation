@@ -230,10 +230,9 @@
 	return 1 // update UIs attached to this object
 
 /obj/machinery/atmospherics/unary/cryo_cell/attackby(obj/item/I, mob/user, params)
-	if(isrobot(user))
-		return
-
 	if(istype(I, /obj/item/weapon/reagent_containers/glass))
+		if(isrobot(user))
+			return
 		if(beaker)
 			user << "<span class='warning'>A beaker is already loaded into [src]!</span>"
 			return

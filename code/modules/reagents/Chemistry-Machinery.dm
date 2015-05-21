@@ -280,13 +280,12 @@
 
 
 /obj/machinery/chem_master/attackby(var/obj/item/B as obj, var/mob/user as mob, params)
-	if(isrobot(user))
-		return
-
 	if(default_unfasten_wrench(user, B))
 		return
 
 	if(istype(B, /obj/item/weapon/reagent_containers/glass))
+		if(isrobot(user))
+			return
 		if(src.beaker)
 			user << "<span class='warning'>A beaker is already loaded into the machine!</span>"
 			return
