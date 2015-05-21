@@ -107,4 +107,4 @@
 			else
 				chosen = L.staticOverlays["static"]
 			staticOverlays |= chosen
-			client.images |= chosen
+			//client.images |= chosen

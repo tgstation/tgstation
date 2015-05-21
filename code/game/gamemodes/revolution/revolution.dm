@@ -42,11 +42,6 @@
 		recommended_enemies = 3
 		max_headrevs = 3
 
-	var/head_check = 0
-	for(var/mob/new_player/player in player_list)
-		if(player.mind.assigned_role in command_positions)
-			head_check = 1
-			break
 
 
 	if(config.protect_roles_from_antagonist)
@@ -64,7 +59,7 @@
 		lenin.restricted_roles = restricted_jobs
 		head_revolutionaries += lenin
 
-	if((head_revolutionaries.len < required_enemies)||(!head_check))
+	if((head_revolutionaries.len < required_enemies))
 		return 0
 
 	return 1

@@ -36,6 +36,7 @@
 		if(M in hud.hudusers)
 			hud.leave_hud(M)
 	var/image/holder = M.hud_list[ANTAG_HUD]
-	holder.icon_state = antag_hud_icon_state
+	if(holder && !istype(holder, /mob/dead/observer))
+		holder.icon_state = antag_hud_icon_state
 	if(antag_hud)
 		antag_hud.join_hud(M)
