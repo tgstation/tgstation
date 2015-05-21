@@ -469,7 +469,7 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 		if (desired_num_sheets <= 0)
 			return
 		var/matID=href_list["lathe_ejectsheet"]
-		var/datum/material/M=linked_lathe.materials[matID]
+		var/datum/material/M=linked_lathe.materials.getMaterial(matID)
 		if(!istype(M))
 			warning("PROTOLATHE: Unknown material [matID]! ([href])")
 		else
@@ -478,14 +478,13 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 			if(available_num_sheets>0)
 				sheet.amount = min(available_num_sheets, desired_num_sheets)
 				M.stored = max(0, (M.stored-sheet.amount * sheet.perunit))
-				linked_lathe.materials[M.id]=M
 			else
 				del sheet
 	else if(href_list["imprinter_ejectsheet"] && linked_imprinter) //Causes the protolathe to eject a sheet of material
 		var/desired_num_sheets = text2num(href_list["imprinter_ejectsheet_amt"])
 		if (desired_num_sheets <= 0) return
 		var/matID=href_list["imprinter_ejectsheet"]
-		var/datum/material/M=linked_imprinter.materials[matID]
+		var/datum/material/M=linked_imprinter.materials.getMaterial(matID)
 		if(!istype(M))
 			warning("IMPRINTER: Unknown material [matID]! ([href])")
 		else
@@ -494,7 +493,6 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 			if(available_num_sheets>0)
 				sheet.amount = min(available_num_sheets, desired_num_sheets)
 				M.stored = max(0, (M.stored-sheet.amount * sheet.perunit))
-				linked_imprinter.materials[M.id]=M
 			else
 				del sheet
 
