@@ -14,16 +14,12 @@
 
 /mob/living/attackby(obj/item/I, mob/user, params)
 	if(ismommi(user))
-		if(!src.canmommiattack(user))
+		var/mob/living/silicon/robot/mommi/R = user
+		if(!R.can_interfere(src))	//MoMMI proc
 			user << "<span class ='warning'>Your laws prevent you from doing this</span>"
 			return
 	user.changeNext_move(CLICK_CD_MELEE)
 	I.attack(src, user)
-
-/mob/living/proc/canmommiattack(var/mob/living/silicon/robot/mommi/user)
-	if(user.can_interfere(src))	//MoMMI proc
-		return 1
-	return 0
 
 /mob/living/proc/attacked_by(var/obj/item/I, var/mob/living/user, var/def_zone)
 	apply_damage(I.force, I.damtype)
