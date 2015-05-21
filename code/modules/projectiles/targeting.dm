@@ -263,9 +263,9 @@ client/proc/remove_gun_icons()
 	screen -= usr.gun_move_icon
 	if (target_can_move)
 		screen -= usr.gun_run_icon
-	returnToPool(usr.gun_move_icon)
-	returnToPool(usr.item_use_icon)
-	returnToPool(usr.gun_run_icon)
+	if(usr.gun_move_icon) returnToPool(usr.gun_move_icon)
+	if(usr.item_use_icon) returnToPool(usr.item_use_icon)
+	if(usr.gun_run_icon) returnToPool(usr.gun_run_icon)
 
 client/verb/ToggleGunMode()
 	set hidden = 1
