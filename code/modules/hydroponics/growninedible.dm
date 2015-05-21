@@ -163,7 +163,7 @@
 
 
 /obj/item/weapon/grown/nettle //abstract type
-	name = "abstract nettle"
+	name = "nettle"
 	desc = "It's probably <B>not</B> wise to touch it with bare hands..."
 	icon = 'icons/obj/weapons.dmi'
 	icon_state = "nettle"
@@ -211,7 +211,6 @@
 
 /obj/item/weapon/grown/nettle/basic
 	seed = /obj/item/seeds/nettleseed
-	name = "nettle"
 
 /obj/item/weapon/grown/nettle/basic/add_juice()
 	..()

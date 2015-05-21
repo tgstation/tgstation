@@ -675,7 +675,14 @@
 
 	add_fingerprint(user)
 
-	if(opened && !wiresexposed && (!istype(user, /mob/living/silicon)))
+	if(opened && !wiresexposed)
+		if(issilicon(user) && !ismommi(user))
+			return
+		if(ismommi(user))
+			var/mob/living/silicon/robot/mommi/R = user
+			if(R.keeper)
+				user << "<span class ='warning'>Your laws prevent you from doing this</span>"
+
 		if(cell)
 			cell.updateicon()
 			cell.add_fingerprint(user)
@@ -692,20 +699,7 @@
 				sleep(3)
 				step_away(src,user,15)
 
-/mob/living/silicon/robot/attack_hand(mob/living/silicon/robot/mommi/user)
-	add_fingerprint(user)
 
-	if(opened && !wiresexposed)
-		if(cell)
-			if(user.keeper)
-				user << "Your laws prevent you from doing this"
-				return
-			cell.updateicon()
-			cell.add_fingerprint(user)
-			user.put_in_active_hand(cell)
-			user << "You remove \the [cell]."
-			cell = null
-			update_icons()
 
 /mob/living/silicon/robot/proc/allowed(mob/M)
 	//check if it doesn't require any access at all

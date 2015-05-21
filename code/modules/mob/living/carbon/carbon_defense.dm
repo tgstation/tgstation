@@ -59,14 +59,14 @@
 		if(D.IsSpreadByTouch())
 			ContractDisease(D)
 
+	if(M.a_intent == "help")
+		help_shake_act(M)
+		return 0
+
 	if(..()) //successful monkey bite.
 		for(var/datum/disease/D in M.viruses)
 			ForceContractDisease(D)
 		return 1
-
-	if(M.a_intent == "help")
-		help_shake_act(M)
-	return 0
 
 
 /mob/living/carbon/attack_slime(mob/living/carbon/slime/M)
