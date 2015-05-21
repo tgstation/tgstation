@@ -383,6 +383,7 @@
 	name = "emergency welding tool"
 	icon_state = "miniwelder"
 	max_fuel = 10
+	w_class = 1
 	m_amt = 30
 	g_amt = 10
 	change_icons = 0
@@ -396,7 +397,6 @@
 	icon_state = "upindwelder"
 	item_state = "upindwelder"
 	max_fuel = 80
-	w_class = 3.0
 	m_amt = 70
 	g_amt = 120
 	origin_tech = "engineering=3"
@@ -406,7 +406,6 @@
 	icon_state = "exwelder"
 	item_state = "exwelder"
 	max_fuel = 40
-	w_class = 3.0
 	m_amt = 70
 	g_amt = 120
 	origin_tech = "engineering=4;plasmatech=3"
