@@ -211,4 +211,4 @@ proc/SendFax(var/sent, var/sentname, var/mob/Sender, var/dpt)
 					P.info = "[sent]"
 					P.update_icon()
 
-					playsound(F.loc, "sound/items/polaroid1.ogg", 50, 1)
+					playsound(F.loc, "sound/effects/fax.ogg", 50, 1)
