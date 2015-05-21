@@ -171,29 +171,27 @@
 			if(!M.brainmob)
 				user << "<span class='danger'>Sticking an empty MMI into the frame would sort of defeat the purpose.</span>"
 				return
-			if(!M.brainmob.key)
-				var/ghost_can_reenter = 0
-				if(M.brainmob.mind)
-					for(var/mob/dead/observer/G in player_list)
-						if(G.can_reenter_corpse && G.mind == M.brainmob.mind)
-							ghost_can_reenter = 1
-							break
-				if(!ghost_can_reenter)
-					user << "<span class='notice'>The mmi indicates that their mind is completely unresponsive; there's no point.</span>"
-					return
 
-			if(M.brainmob.stat == DEAD)
-				user << "<span class='danger'>Sticking a dead brain into the frame would sort of defeat the purpose.</span>"
+			var/mob/living/carbon/brain/BM = M.brainmob
+			if(!BM.key || !BM.mind)
+				user << "<span class='warning'>The mmi indicates that their mind is completely unresponsive; there's no point!</span>"
 				return
 
-			if((M.brainmob.mind in ticker.mode.head_revolutionaries) || (M.brainmob.mind in ticker.mode.A_bosses) || (M.brainmob.mind in ticker.mode.B_bosses))
-				user << "<span class='danger'>The frame's firmware lets out a shrill sound, and flashes 'Abnormal Memory Engram'. It refuses to accept the MMI.</span>"
+			if(!BM.client) //braindead
+				user << "<span class='warning'>The mmi indicates that their mind is currently inactive; it might change!</span>"
 				return
 
-			if(jobban_isbanned(M.brainmob, "Cyborg"))
-				user << "<span class='danger'>This MMI does not seem to fit.</span>"
+			if(BM.stat == DEAD)
+				user << "<span class='warning'>Sticking a dead brain into the frame would sort of defeat the purpose!</span>"
 				return
 
+			if((BM.mind in ticker.mode.head_revolutionaries) || (BM.mind in ticker.mode.A_bosses) || (BM.mind in ticker.mode.B_bosses))
+				user << "<span class='warning'>The frame's firmware lets out a shrill sound, and flashes 'Abnormal Memory Engram'. It refuses to accept the MMI!</span>"
+				return
+
+			if(jobban_isbanned(BM, "Cyborg"))
+				user << "<span class='warning'>This MMI does not seem to fit!</span>"
+				return
 			var/mob/living/silicon/robot/O = new /mob/living/silicon/robot(get_turf(loc))
 			if(!O)	return
 

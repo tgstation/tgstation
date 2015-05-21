@@ -46,6 +46,13 @@
 	user << "The safety is [safety ? "on" : "off"]."
 	return
 
+/obj/item/weapon/extinguisher/examine(mob/user as mob)
+	..()
+	if(reagents.total_volume)
+		user << "It contains [round(reagents.total_volume)] units."
+	else
+		user << "It is empty."
+
 /obj/item/weapon/extinguisher/proc/AttemptRefill(atom/target, mob/user)
 	if(istype(target, /obj/structure/reagent_dispensers/watertank) && target.Adjacent(user))
 		var/safety_save = safety
