@@ -56,7 +56,7 @@
 "bd" = (/turf/simulated/floor/holofloor{dir = 10; icon_state = "red"},/area/holodeck/source_basketball)
 "be" = (/turf/simulated/floor/holofloor{dir = 2; icon_state = "red"},/area/holodeck/source_basketball)
 "bf" = (/turf/simulated/floor/holofloor{dir = 6; icon_state = "red"},/area/holodeck/source_basketball)
-"bg" = (/obj/item/clothing/under/rainbow,/obj/item/clothing/glasses/sunglasses,/turf/simulated/floor/beach/sand,/area/holodeck/source_beach)
+"bg" = (/obj/item/clothing/under/color/rainbow,/obj/item/clothing/glasses/sunglasses,/turf/simulated/floor/beach/sand,/area/holodeck/source_beach)
 "bh" = (/obj/structure/holowindow,/turf/simulated/floor/holofloor{dir = 8; icon_state = "red"},/area/holodeck/source_thunderdomecourt)
 "bi" = (/obj/structure/holowindow,/turf/simulated/floor/holofloor,/area/holodeck/source_thunderdomecourt)
 "bj" = (/obj/structure/holowindow,/turf/simulated/floor/holofloor{dir = 4; icon_state = "red"},/area/holodeck/source_thunderdomecourt)

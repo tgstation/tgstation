@@ -2449,7 +2449,7 @@
 "aVe" = (/obj/structure/cable{d1 = 4; d2 = 8; icon_state = "4-8"},/turf/simulated/floor/plating,/area/maintenance/port)
 "aVf" = (/obj/machinery/power/apc{dir = 1; name = "Port Emergency Storage APC"; pixel_y = 24},/obj/structure/cable{d2 = 8; icon_state = "0-8"},/turf/simulated/floor/plating,/area/storage/emergency2)
 "aVg" = (/obj/structure/reagent_dispensers/fueltank,/turf/simulated/floor/plating,/area/maintenance/port)
-"aVh" = (/obj/item/clothing/gloves/color/rainbow,/obj/item/clothing/shoes/sneakers/rainbow,/obj/item/clothing/under/rainbow,/obj/item/clothing/head/soft/rainbow,/turf/simulated/floor/plating,/area/maintenance/port)
+"aVh" = (/obj/item/clothing/gloves/color/rainbow,/obj/item/clothing/shoes/sneakers/rainbow,/obj/item/clothing/under/color/rainbow,/obj/item/clothing/head/soft/rainbow,/turf/simulated/floor/plating,/area/maintenance/port)
 "aVi" = (/obj/structure/reagent_dispensers/watertank,/turf/simulated/floor/plasteel,/area/storage/tools)
 "aVj" = (/obj/structure/reagent_dispensers/fueltank,/turf/simulated/floor/plasteel,/area/storage/tools)
 "aVk" = (/obj/structure/rack{dir = 8; layer = 2.9},/obj/machinery/light,/obj/item/device/multitool,/turf/simulated/floor/plasteel,/area/storage/tools)
