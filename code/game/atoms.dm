@@ -9,6 +9,7 @@
 	var/last_bumped = 0
 	var/throwpass = 0
 	var/explosion_block = 0
+	var/allow_spin = 1
 
 	///Chemistry.
 	var/datum/reagents/reagents = null
