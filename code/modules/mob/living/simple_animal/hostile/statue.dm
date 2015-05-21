@@ -100,7 +100,7 @@
 		..()
 
 /mob/living/simple_animal/hostile/statue/face_atom()
-if(!can_be_seen(get_turf(loc)))
+	if(!can_be_seen(get_turf(loc)))
 		..()
 
 /mob/living/simple_animal/hostile/statue/proc/can_be_seen(var/turf/destination)
