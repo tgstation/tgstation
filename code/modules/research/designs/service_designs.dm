@@ -92,7 +92,7 @@
 	build_path = /obj/item/devices/upgrades/spacecart
 	category = list("service")
 
-/datum/design/whetstone //needs to be sprited
+/datum/design/whetstone
 	name = "Whetstone"
 	desc = "A strange stone used by many citizens of ancient Earth to sharpen metal tools."
 	id = "whetstone"
@@ -112,7 +112,7 @@
 	build_path = /obj/item/weapon/reagent_containers/borghypo/borgshaker/human
 	category = list("service")
 
-/datum/design/crack //needs to be sprited
+/datum/design/crack
 	name = "Secret Spice"
 	desc = "A fine white powder that makes most food and drinks taste REALLY good."
 	id = "crack"
