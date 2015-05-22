@@ -139,10 +139,10 @@
 		contents -= tool_state
 		var/obj/item/TS = tool_state
 		var/turf/T = null
-		if(Target)
-			T=get_turf(Target)
-		else
-			T=get_turf(src)
+	//	if(Target)
+	//		T=get_turf(Target)
+	//	else
+		T=get_turf(src)
 		TS.layer=initial(TS.layer)
 		TS.loc = T.loc
 
