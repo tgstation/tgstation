@@ -61,3 +61,8 @@
 	if(lit && !luminosity)
 		user.SetLuminosity(user.luminosity - CANDLE_LUM)
 		SetLuminosity(CANDLE_LUM)
+
+/obj/item/candle/is_hot()
+	if(lit)
+		return heat_production
+	return 0
