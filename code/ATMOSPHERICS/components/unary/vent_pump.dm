@@ -322,6 +322,11 @@
 	if(welded)
 		L << "That vent is welded shut."
 		return
+	if(isborer(L))
+		var/mob/living/simple_animal/borer/B = L
+		if (B.host)
+			L << "You cannot ventcrawl while inside a host"
+			return
 
 	var/list/vents = list()
 	for(var/obj/machinery/atmospherics/unary/vent_pump/temp_vent in parent.other_atmosmch)

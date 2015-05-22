@@ -472,7 +472,7 @@ var/const/GALOSHES_DONT_HELP = 8
 		B.host_brain << "<span class='danger'><FONT size=3>Horrific, burning agony lances through you, ripping a soundless scream from your trapped mind!</FONT></span>"
 
 //Check for brain worms in head.
-/mob/living/proc/has_brain_worms()
+/mob/proc/has_brain_worms()
 
 	for(var/I in contents)
 		if(isborer(I))
