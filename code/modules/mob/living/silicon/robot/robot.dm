@@ -404,7 +404,7 @@
 /mob/living/silicon/robot/attackby(obj/item/weapon/W as obj, mob/user as mob, params)
 	if (ismommi(user))
 		var/mob/living/silicon/robot/mommi/R = user
-		if (R.keeper)
+		if (!R.can_interfere(src))
 			user << "<span class ='warning'>Your laws prevent you from doing this</span>"
 			return
 
