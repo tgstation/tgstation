@@ -49,7 +49,7 @@ var/list/freqtospan = list(
 	//Message
 	var/messagepart = " <span class='message'>[lang_treat(speaker, message_langs, raw_message)]</span></span>"
 
-	return "[spanpart1][spanpart2][freqpart][compose_track_href(speaker, message_langs, raw_message, radio_freq)][namepart][compose_job(speaker, message_langs, raw_message, radio_freq)][endspanpart][messagepart]"
+	return "[spanpart1][spanpart2][freqpart][compose_track_href(speaker, namepart)][namepart][compose_job(speaker, message_langs, raw_message, radio_freq)][endspanpart][messagepart]"
 
 /atom/movable/proc/compose_track_href(atom/movable/speaker, message_langs, raw_message, radio_freq)
 	return ""
@@ -119,8 +119,6 @@ var/list/freqtospan = list(
 /atom/movable/proc/GetJob()
 	return
 
-/atom/movable/proc/GetTrack()
-	return
 
 /atom/movable/proc/GetSource()
 	return
@@ -129,15 +127,11 @@ var/list/freqtospan = list(
 
 /atom/movable/virtualspeaker
 	var/job
-	var/faketrack
 	var/atom/movable/source
 	var/obj/item/device/radio/radio
 
 /atom/movable/virtualspeaker/GetJob()
 	return job
-
-/atom/movable/virtualspeaker/GetTrack()
-	return faketrack
 
 /atom/movable/virtualspeaker/GetSource()
 	return source
