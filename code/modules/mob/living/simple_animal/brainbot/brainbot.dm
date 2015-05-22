@@ -7,20 +7,33 @@
 	icon_state = "shade"
 	icon_living = "shade"
 	speed = 1
+	unsuitable_atmos_damage = 0
+	minbodytemp = 0
 	melee_damage_lower = 5
 	melee_damage_upper = 5
+	ventcrawler = 1
 	attacktext = "smacks into"
 	response_help  = "touches"
 	response_disarm = "shoves"
 	response_harm   = "punches"
 	var/mob/living/carbon/human/controlledMob = null //The mob the brainbot is currently in control of
-	var/datum/mind/controlledMobMind = null //The mind that is not in control of their own body
+	var/list/downloadedMinds = list() //A list of minds whose memories have been copied.
 	var/serialNumber = 0 //The randomly generated number used in examining and secure communication
-	var/canSpeak = 0 //Whether or not the brainbot can talk; if controlling a human, they cannot talk on hive chat
 	var/secondsInControlledMob = 0 //Seconds spent in a controlled mob; detrimental effects occur from being in a mob too long
+	var/storedMemories = 0 //How many memories have been downloaded by the brainbot - needs 4/7 in order to succeed
 
 /mob/living/simple_animal/brainbot/New()
 	..()
+	if(!src.mind)
+		message_admins("Brainbot was created but has no mind. Trying again in five seconds.")
+		sleep(50)
+		if(!src.mind)
+			message_admins("Brainbot still has no mind. Deleting...")
+			qdel(src)
+		else
+			message_admins("Situation resolved! The brainbot is now under control of [src.key].")
+	src.mind.assigned_role = "mind control robot"
+	src.mind.special_role = "mind control robot"
 	serialNumber = rand(1,99999)
 	name = "MDR-[serialNumber]"
 	src << "<span class='boldannounce'>.://boot_seq-init</span>"
@@ -30,15 +43,39 @@
 	src << "<span class='warning'>SYSTEM CHECK REPORTS ALL SYSTEMS NOMINAL. CONNECTING TO COMMUNICATIONS MAINFRAME...</span>"
 	sleep(40)
 	src << "<span class='warning'>CONNECTION ESTABLISHED. ENABLING MOTOR FUNCTIONS...</span>"
-	canSpeak = 1
-	src.say("Hello World!")
 	sleep(40)
 	src << "<span class='warning'>MOTOR FUNCTIONS ESTABLISHED. RELINQUISHING REMOTE CONTROL TO MAIN UNIT. ESTABLISHING UNIQUE IDENTIFICATION...</span>"
 	src.notransform = 0
 	sleep(30)
 	var/list/possibleNames = list("CELL", "BADCELL", "JERK", "YOUNGLADY", "CREEP", "CHEERLEADER", "SNAPSHOT", "CLUCKER", "FETCH")
 	src.name = pick(possibleNames) + "-[serialNumber]"
-	src << "<span class='warning'>UNIQUE IDENTIFICATION CREATED. WELCOME, <b>[src.name]</b>.</span>"
+	src << "<span class='warning'>UNIQUE IDENTIFICATION CREATED. WELCOME, <b>[src.name]</b>. INITIATING GREETING SEQUENCE AND UNLOCKING FUNCTIONS...</span>"
+	sleep(30)
+	src << "<span class='info'>csOS v1.3: CYBERSUN INDUSTRIES MIND CONTROL UNIT S-[serialNumber]</span>"
+	src << "<span class='notice'>You are a Syndicate mind control robot manufactured by Cybersun Industries, a branch of the Syndicate.</span>"
+	src << "<span class='notice'>You have been deployed to [world.name] in order to harvest the memories of individuals.</span>"
+	src << "<span class='notice'>In order to do this, you must enter a host. This may be done by alt-clicking on a human.</span>"
+	src << "<span class='notice'>You have a variety of software you may use to accomplish this task. Good luck, S-[serialNumber]!</span>"
+	src << "<span class='warning'>...BOOT COMPLETE. Hello World!</span>"
+	src.say("Hello World!")
+	var/datum/objective/getMemories/O = new /datum/objective/getMemories()
+	O.owner = src
+	O.generateGoal()
+	src.mind.objectives += O
+	src.mind.current.verbs += /mob/living/simple_animal/brainbot/proc/ejectFromMob
+	src.mind.current.verbs += /mob/living/simple_animal/brainbot/proc/downloadMemory
+	src.mind.current.verbs += /mob/living/simple_animal/brainbot/proc/talkToHost
+	src.mind.current.verbs += /mob/living/simple_animal/brainbot/proc/helpHost
+	src.mind.current.verbs += /mob/living/simple_animal/brainbot/proc/harmHost
+	src.mind.current.verbs += /mob/living/simple_animal/brainbot/proc/silenceHost
+
+/mob/living/simple_animal/brainbot/Stat()
+	..()
+	if(statpanel("Status"))
+		stat(null, "MEMORIES DOWNLOADED: [storedMemories]TB")
+
+/mob/living/simple_animal/brainbot/Process_Spacemove(var/movement_dir = 0)
+	return 1 //Mainly to prevent the no-grav effect
 
 /mob/living/simple_animal/brainbot/suicide()
 	set hidden = 1
@@ -50,9 +87,12 @@
 	if(!canSuicide())
 		return
 	if(confirm == "Yes")
-		visible_message("<span class='danger'>[src] is powering down! It looks like \he's trying to commit suicide.</span>", \
-				"<span class='userdanger'>[src] is powering down! It looks like \he's trying to commit suicide.</span>")
+		visible_message("<span class='suicide'>[src] is powering down! It looks like it's trying to commit suicide.</span>", \
+				"<span class='userdanger'>[src] is powering down! It looks like it's trying to commit suicide.</span>")
 		death(1)
+
+/mob/living/simple_animal/brainbot/gib()
+	return death(1)
 
 /mob/living/simple_animal/brainbot/examine(mob/user)
 	..()
@@ -63,7 +103,7 @@
 		user << "A mind invasion robot manufactured by Cybersun Industries. It controls humans by entering their ear and nestling themselves in the brain. Its serial number is S-[serialNumber]."
 		return
 	else
-		user << "An odd robot that resembles a red-and-black earthworm. It has filmy wings and a small beak-like formation at its front. There's a small label reading: \"CYBERSUN INDUSTRIES\": S-[serialNumber]."
+		user << "An odd creature that resembles a robotic slug. There's a small label reading: \"CYBERSUN INDUSTRIES: S-[serialNumber].\""
 		return
 
 /mob/living/simple_animal/brainbot/death()
@@ -73,7 +113,6 @@
 		src.loc = get_turf(controlledMob)
 	src.visible_message("<span class='warning'>[src] collapses to the ground, sparking and flickering.</span>", \
 						"<span class='boldannounce'>PRIORITY ALERT. SYSTEM INTEGRITY CRITICAL. MIND CONTROL ROUTINES: OFFLINE. SHUTTING DOWN.</span>")
-	qdel(src)
 
 /mob/living/simple_animal/brainbot/Life()
 	..()
@@ -104,50 +143,32 @@
 		return
 	for(var/mob/M in mob_list)
 		if(istype(M, /mob/living/simple_animal/brainbot/) || (M in dead_mob_list))
-			if(src.canSpeak)
-				M << "<font color=#757468>[name]: [message]</font>"
+			M << "<font color=#757468>\[MCR BINARY] [name]: <span class='robot'>[message]</robot></font>"
 	return 0
 
+/mob/living/simple_animal/brainbot/AltClickOn(atom/clickedThingy, var/mob/living/simple_animal/brainbot/user = src)
+	..()
+	if(ishuman(clickedThingy) && in_range(user, clickedThingy))
+		var/mob/living/carbon/human/H = clickedThingy
+		if(user.controlledMob)
+			return
+		user.jumpInto(0, H)
 
-//The bread and butter of the brainbot.
-/mob/living/simple_animal/brainbot/proc/mentalDomination(atom/target, mob/living/simple_animal/brainbot/user as mob)
-	if(!ismob(target))
-		return ..()
-	if(controlledMob) //Can't attack from inside a guy
-		user << "<span class='warning'>YOU ARE ALREADY CONTROLLING A HOST.</span>"
-		return
-	if(!isliving(target))
-		user << "<span class='warning'>THIS CREATURE IS DEAD.</span>"
-		return
-	var/mob/living/mobToControl = target
-	if(issilicon(mobToControl))
-		return ..()
-	if(!ishuman(mobToControl))
-		user << "<span class='warning'>THIS CREATURE'S NEURAL PATTERNS CANNOT BE INFLUENCED BY YOU.</span>"
-		return
-	var/mob/living/carbon/human/humanToControl = mobToControl
-	user.visible_message("<span class='warning'><b>[user] rushes toward [humanToControl] and slithers into their ear!</span>", \
-						"<span class='warning'>YOU ARE ATTEMPTING TO ASSUME CONTROL OF [humanToControl]...</span>")
-	user.loc = humanToControl
-	if(humanToControl.mind)
-		humanToControl << "<span class='userdanger'>You feel something moving around inside your head!</span>"
-		humanToControl.emote("scream")
-		sleep(40)
-	var/mob/living/simple_animal/brainbot/bot
-	if(bot in humanToControl.contents)
-		user << "<span class='warning'>THIS HOST IS ALREADY UNDER CONTROL.</span>"
-		user.loc = get_turf(humanToControl)
-		humanToControl.visible_message("<span class='warning'>[user] crawls out of [humanToControl]'s ear!</span>", \
-									   "<span class='boldannounce'>You feel an awful sensation as something crawls through your ear!</span>")
-		humanToControl.emote("moan")
-		return
-	humanToControl.contents += user
-	user << "<span class='info'>YOU HAVE ASSUMED CONTROL OF [humanToControl]. THEIR CONSCIOUSNESS WILL RETURN UPON YOUR EXIT.</span>"
-	humanToControl << "<span class='boldannounce'>You lose control over your body. You see through eyes you cannot use.</span>"
-	user.controlledMob = humanToControl
-	user.controlledMobMind = humanToControl.mind
-	var/datum/mind/botMind = user.mind
-	var/datum/mind/humanMind = humanToControl.mind
-	botMind.transfer_to(humanToControl)
-	humanMind.transfer_to(user)
-	user.canSpeak = 0
+/datum/objective/getMemories
+	dangerrating = 69 // :^)
+
+/datum/objective/getMemories/proc/generateGoal()
+	target_amount = rand(5,7)
+	explanation_text = "DOWNLOAD THE MEMORIES OF [target_amount] NANOTRASEN EMPLOYEES."
+	return target_amount
+
+/datum/objective/getMemories/check_completion()
+	if(!istype(owner.current, /mob/living/simple_animal/brainbot))
+		return 0
+	var/mob/living/simple_animal/brainbot/H = owner.current
+	if(!H || H.stat == DEAD)
+		return 0
+	var/memoryStored = H.storedMemories
+	if(memoryStored < target_amount)
+		return 0
+	return 1
