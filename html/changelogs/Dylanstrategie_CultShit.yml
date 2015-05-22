@@ -1,0 +1,4 @@
+author: Dylanstrategie
+delete-after: True
+changes:
+  - bugfix: Attempt to fix runtimes related to Cult mobs
