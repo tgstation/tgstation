@@ -78,8 +78,8 @@
 	..()
 	if(emergency_shuttle.location == 1)
 		if(!enroute && !target)	//The shuttle docked, all monsters rush for the escape hallway
-			if(!shuttletarget && escape_list.len && (!get_dist(src, shuttletarget) <= 2))
-				shuttletarget = pick(escape_list)
+			if(!shuttletarget && escape_list.len) //Make sure we didn't already assign it a target, and that there are targets to pick
+				shuttletarget = pick(escape_list) //Pick a shuttle target
 			enroute = 1
 			stop_automated_movement = 1
 			spawn()
