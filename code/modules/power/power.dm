@@ -18,6 +18,8 @@
 	//For powernet rebuilding
 	var/build_status = 0 //1 means it needs rebuilding during the next tick or on usage
 
+	var/obj/machinery/power/terminal/terminal = null //not strictly used on all machines - a placeholder
+
 /obj/machinery/power/New()
 	. = ..()
 	machines -= src
@@ -27,6 +29,11 @@
 /obj/machinery/power/Destroy()
 	disconnect_from_network()
 	power_machines -= src
+
+	if (terminal)
+		terminal.master = null
+		terminal = null
+
 	..()
 
 ///////////////////////////////

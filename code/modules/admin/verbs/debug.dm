@@ -1044,7 +1044,7 @@ Pressure: [env.return_pressure()]"}
 			if(!Rad.active)
 				Rad.toggle_power()
 
-	for(var/obj/machinery/power/smes/SMES in power_machines)
+	for(var/obj/machinery/power/battery/smes/SMES in power_machines)
 		if(SMES.anchored)
 			SMES.connect_to_network() // Just in case.
 			SMES.chargemode = 1
@@ -1062,10 +1062,10 @@ Pressure: [env.return_pressure()]"}
 	log_admin("[key_name(usr)] haxed the powergrid with magic SMES.")
 	message_admins("<span class='notice'>[key_name_admin(usr)] haxed the powergrid with magic SMES.</span>", 1)
 
-	for(var/obj/machinery/power/smes/SMES in power_machines)
+	for(var/obj/machinery/power/battery/smes/SMES in power_machines)
 		var/turf/T=SMES.loc
 		del(SMES)
-		var/obj/machinery/power/smes/magical/magic = new(T)
+		var/obj/machinery/power/battery/smes/infinite/magic = new(T)
 		// Manually set up our powernets since stupid seems to reign in the powernet code.
 		magic.connect_to_network()
 		magic.output=200000 // AKA rape
