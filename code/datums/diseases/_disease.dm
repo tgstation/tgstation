@@ -126,7 +126,7 @@ var/list/diseases = typesof(/datum/disease) - /datum/disease
 					C.ContractDisease(src)
 
 
-/datum/disease/proc/process()
+/datum/disease/process()
 	if(!holder)
 		SSdisease.processing -= src
 		return

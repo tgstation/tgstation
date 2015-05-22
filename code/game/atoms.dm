@@ -357,6 +357,9 @@ var/list/blood_splatter_icons = list()
 	if( istype(src, /turf/simulated) )
 		var/obj/effect/decal/cleanable/vomit/this = new /obj/effect/decal/cleanable/vomit(src)
 
+		if(M.reagents)
+			M.reagents.trans_to(this, M.reagents.total_volume / 10)
+
 		// Make toxins vomit look different
 		if(toxvomit)
 			this.icon_state = "vomittox_[pick(1,4)]"

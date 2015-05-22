@@ -84,6 +84,15 @@
 	new /obj/item/weapon/reagent_containers/food/snacks/cheesewheel(location)
 	return
 
+/datum/chemical_reaction/corn_syrup
+	name = "corn_syrup"
+	id = "corn_syrup"
+	result = "corn_syrup"
+	required_reagents = list("corn_starch" = 1, "sacid" = 1)
+	result_amount = 5
+	required_temp = 374
+
+
 /datum/chemical_reaction/synthmeat
 	name = "synthmeat"
 	id = "synthmeat"

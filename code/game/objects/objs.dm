@@ -10,9 +10,7 @@
 	var/damtype = "brute"
 	var/force = 0
 
-/obj/proc/process()
-	SSobj.processing.Remove(src)
-	return 0
+
 
 /obj/Destroy()
 	if(!istype(src, /obj/machinery))

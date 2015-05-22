@@ -15,7 +15,7 @@ var/datum/controller/failsafe/Failsafe
 	Failsafe.process()
 
 
-/datum/controller/failsafe/proc/process()
+/datum/controller/failsafe/process()
 	spawn(0)
 		while(1)	//more efficient than recursivly calling ourself over and over. background = 1 ensures we do not trigger an infinite loop
 			if(!master_controller)		new /datum/controller/game_controller()	//replace the missing master_controller! This should never happen.

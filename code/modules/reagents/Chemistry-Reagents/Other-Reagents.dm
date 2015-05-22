@@ -1,124 +1,3 @@
-#define SOLID 1
-#define LIQUID 2
-#define GAS 3
-
-#define REM REAGENTS_EFFECT_MULTIPLIER
-
-//The reaction procs must ALWAYS set src = null, this detaches the proc from the object (the reagent)
-//so that it can continue working when the reagent is deleted while the proc is still active.
-
-
-//Various reagents
-//Toxin & acid reagents
-//Hydroponics stuff
-
-datum/reagent
-	var/name = "Reagent"
-	var/id = "reagent"
-	var/description = ""
-	var/datum/reagents/holder = null
-	var/reagent_state = LIQUID
-	var/list/data
-	var/volume = 0
-	//var/list/viruses = list()
-	var/color = "#000000" // rgb: 0, 0, 0 (does not support alpha channels - yet!)
-	var/can_synth = 1
-	var/metabolization_rate = REAGENTS_METABOLISM
-	var/overrides_metab = 0
-	var/overdose_threshold = 0
-	var/addiction_threshold = 0
-	var/addiction_stage = 0
-	var/overdosed = 0 // You fucked up and this is now triggering it's overdose effects, purge that shit quick.
-
-datum/reagent/proc/reaction_mob(var/mob/M, var/method=TOUCH, var/volume, var/show_message = 1) //By default we have a chance to transfer some
-	if(!istype(M, /mob/living))
-		return 0
-	var/datum/reagent/self = src
-	src = null										  //of the reagent to the mob on TOUCHING it.
-
-	if(!istype(self.holder.my_atom, /obj/effect/effect/chem_smoke))
-				// If the chemicals are in a smoke cloud, do not try to let the chemicals "penetrate" into the mob's system (balance station 13) -- Doohl
-
-		if(method == TOUCH)
-
-			var/chance = 1
-			var/block  = 0
-
-			for(var/obj/item/clothing/C in M.get_equipped_items())
-				if(C.permeability_coefficient < chance) chance = C.permeability_coefficient
-				if(istype(C, /obj/item/clothing/suit/bio_suit))
-					// bio suits are just about completely fool-proof - Doohl
-					// kind of a hacky way of making bio suits more resistant to chemicals but w/e
-					if(prob(75))
-						block = 1
-
-				if(istype(C, /obj/item/clothing/head/bio_hood))
-					if(prob(75))
-						block = 1
-
-			chance = chance * 100
-
-			if(prob(chance) && !block)
-				if(M.reagents)
-					M.reagents.add_reagent(self.id,self.volume/2)
-	return 1
-
-datum/reagent/proc/reaction_obj(var/obj/O, var/volume) //By default we transfer a small part of the reagent to the object
-	src = null						//if it can hold reagents. nope!
-	//if(O.reagents)
-	//	O.reagents.add_reagent(id,volume/3)
-	return
-
-datum/reagent/proc/reaction_turf(var/turf/T, var/volume)
-	src = null
-	return
-
-datum/reagent/proc/on_mob_life(var/mob/living/M as mob)
-	if(!istype(M, /mob/living))
-		return //Noticed runtime errors from facid trying to damage ghosts, this should fix. --NEO
-	holder.remove_reagent(src.id, metabolization_rate * M.metabolism_efficiency) //By default it slowly disappears.
-	return
-
-datum/reagent/proc/on_move(var/mob/M)
-	return
-
-// Called after add_reagents creates a new reagent.
-datum/reagent/proc/on_new(var/data)
-	return
-
-// Called when two reagents of the same are mixing.
-datum/reagent/proc/on_merge(var/data)
-	return
-
-datum/reagent/proc/on_update(var/atom/A)
-	return
-
-// Called if the reagent has passed the overdose threshold and is set to be triggering overdose effects
-datum/reagent/proc/overdose_process(var/mob/living/M as mob)
-	return
-
-datum/reagent/proc/overdose_start(var/mob/living/M as mob)
-	return
-
-datum/reagent/proc/addiction_act_stage1(var/mob/living/M as mob)
-	if(prob(30))
-		M << "<span class = 'notice'>You feel like some [name] right about now.</span>"
-	return
-
-datum/reagent/proc/addiction_act_stage2(var/mob/living/M as mob)
-	if(prob(30))
-		M << "<span class = 'notice'>You feel like you need [name]. You just can't get enough.</span>"
-	return
-
-datum/reagent/proc/addiction_act_stage3(var/mob/living/M as mob)
-	if(prob(30))
-		M << "<span class = 'danger'>You have an intense craving for [name].</span>"
-	return
-
-datum/reagent/proc/addiction_act_stage4(var/mob/living/M as mob)
-	if(prob(30))
-		M << "<span class = 'userdanger'>You're not feeling good at all! You really need some [name].</span>"
-	return
 
 datum/reagent/blood
 			data = list("donor"=null,"viruses"=null,"blood_DNA"=null,"blood_type"=null,"resistances"=null,"trace_chem"=null,"mind"=null,"ckey"=null,"gender"=null,"real_name"=null,"cloneable"=null,"factions"=null)
@@ -208,14 +87,6 @@ datum/reagent/blood/reaction_turf(var/turf/simulated/T, var/volume)//splash the 
 			newVirus.holder = blood_prop
 	return
 
-/* Must check the transfering of reagents and their data first. They all can point to one disease datum.
-
-			Del()
-				if(src.data["virus"])
-					var/datum/disease/D = src.data["virus"]
-					D.cure(0)
-				..()
-*/
 datum/reagent/vaccine
 	//data must contain virus type
 	name = "Vaccine"
@@ -244,6 +115,10 @@ datum/reagent/water
 	color = "#AAAAAA77" // rgb: 170, 170, 170, 77 (alpha)
 	var/cooling_temperature = 2
 
+/*
+ *	Water reaction to turf
+ */
+
 datum/reagent/water/reaction_turf(var/turf/simulated/T, var/volume)
 	if (!istype(T)) return
 	var/CT = cooling_temperature
@@ -254,29 +129,41 @@ datum/reagent/water/reaction_turf(var/turf/simulated/T, var/volume)
 	for(var/mob/living/carbon/slime/M in T)
 		M.apply_water()
 
-	var/hotspot = (locate(/obj/effect/hotspot) in T)
+	var/obj/effect/hotspot/hotspot = (locate(/obj/effect/hotspot) in T)
 	if(hotspot && !istype(T, /turf/space))
 		if(T.air)
 			var/datum/gas_mixture/G = T.air
 			G.temperature = max(min(G.temperature-(CT*1000),G.temperature/CT),0)
 			G.react()
-			qdel(hotspot)
-	T.color = initial(T.color)
+			hotspot.Kill()
 	return
+
+/*
+ *	Water reaction to an object
+ */
 
 datum/reagent/water/reaction_obj(var/obj/O, var/volume)
 	src = null
-	O.color = initial(O.color)
+	// Monkey cube
 	if(istype(O,/obj/item/weapon/reagent_containers/food/snacks/monkeycube))
 		var/obj/item/weapon/reagent_containers/food/snacks/monkeycube/cube = O
 		if(!cube.wrapped)
 			cube.Expand()
+/* We don't have this
+	// Dehydrated carp
+	if(istype(O,/obj/item/toy/carpplushie/dehy_carp))
+		var/obj/item/toy/carpplushie/dehy_carp/dehy = O
+		dehy.Swell() // Makes a carp
+*/
 	return
+
+/*
+ *	Water reaction to a mob
+ */
 
 datum/reagent/water/reaction_mob(var/mob/living/M, var/method=TOUCH, var/volume)//Splashing people with water can help put them out!
 	if(!istype(M, /mob/living))
 		return
-	M.color = initial(M.color)
 	if(method == TOUCH)
 		M.adjust_fire_stacks(-(volume / 10))
 		if(M.fire_stacks <= 0)
@@ -370,6 +257,34 @@ datum/reagent/slimetoxin
 	description = "A corruptive toxin produced by slimes."
 	color = "#13BC5E" // rgb: 19, 188, 94
 
+datum/reagent/unstableslimetoxin
+	name = "Unstable Mutation Toxin"
+	id = "unstablemutationtoxin"
+	description = "An unstable and unpredictable corruptive toxin produced by slimes."
+	color = "#5EFF3B" //RGB: 94, 255, 59
+	metabolization_rate = INFINITY //So it instantly removes all of itself
+
+datum/reagent/unstableslimetoxin/on_mob_life(var/mob/living/carbon/human/H as mob)
+	..()
+	H << "<span class='warning'><b>You crumple in agony as your flesh wildly morphs into new forms!</b></span>"
+	H.visible_message("<b>[H]</b> falls to the ground and screams as their skin bubbles and froths!") //'froths' sounds painful when used with SKIN.
+	H.Weaken(3)
+	sleep(30)
+	var/list/blacklisted_species = list(/datum/species/zombie, /datum/species/skeleton, /datum/species/human, /datum/species/golem, /datum/species/golem/adamantine, /datum/species/shadow, /datum/species/shadow/ling, /datum/species)
+	var/list/possible_morphs = typesof(/datum/species/) - blacklisted_species
+	var/datum/species/mutation = pick(possible_morphs)
+	if(prob(90) && mutation && H.dna.species != /datum/species/golem && H.dna.species != /datum/species/golem/adamantine)
+		H << "<span class='danger'>The pain subsides. You feel... different.</span>"
+		hardset_dna(H, null, null, null, null, mutation)
+		H.regenerate_icons()
+		if(mutation == /datum/species/slime)
+			H.faction |= "slime"
+		else
+			H.faction -= "slime"
+	else
+		H << "<span class='danger'>The pain vanishes suddenly. You feel no different.</span>"
+	return 1
+
 datum/reagent/aslimetoxin
 	name = "Advanced Mutation Toxin"
 	id = "amutationtoxin"
@@ -379,22 +294,6 @@ datum/reagent/aslimetoxin
 datum/reagent/aslimetoxin/reaction_mob(var/mob/M, var/volume)
 	src = null
 	M.ForceContractDisease(new /datum/disease/transformation/slime(0))
-
-datum/reagent/space_drugs
-	name = "Space drugs"
-	id = "space_drugs"
-	description = "An illegal chemical compound used as drug."
-	color = "#60A584" // rgb: 96, 165, 132
-	metabolization_rate = 0.5 * REAGENTS_METABOLISM
-
-datum/reagent/space_drugs/on_mob_life(var/mob/living/M as mob)
-	M.druggy = max(M.druggy, 15)
-	if(isturf(M.loc) && !istype(M.loc, /turf/space))
-		if(M.canmove)
-			if(prob(10)) step(M, pick(cardinal))
-	if(prob(7)) M.emote(pick("twitch","drool","moan","giggle"))
-	..()
-	return
 
 datum/reagent/serotrotium
 	name = "Serotrotium"
@@ -537,12 +436,6 @@ datum/reagent/glycerol
 	description = "Glycerol is a simple polyol compound. Glycerol is sweet-tasting and of low toxicity."
 	color = "#808080" // rgb: 128, 128, 128
 
-datum/reagent/nitroglycerin
-	name = "Nitroglycerin"
-	id = "nitroglycerin"
-	description = "Nitroglycerin is a heavy, colorless, oily, explosive liquid obtained by nitrating glycerol."
-	color = "#808080" // rgb: 128, 128, 128
-
 datum/reagent/radium
 	name = "Radium"
 	id = "radium"
@@ -559,32 +452,8 @@ datum/reagent/radium/reaction_turf(var/turf/T, var/volume)
 	src = null
 	if(volume >= 3)
 		if(!istype(T, /turf/space))
-			new /obj/effect/decal/cleanable/greenglow(T)
-			return
-
-datum/reagent/thermite
-	name = "Thermite"
-	id = "thermite"
-	description = "Thermite produces an aluminothermic reaction known as a thermite reaction. Can be used to melt walls."
-	reagent_state = SOLID
-	color = "#673910" // rgb: 103, 57, 16
-
-datum/reagent/thermite/reaction_turf(var/turf/T, var/volume)
-	src = null
-	if(volume >= 1 && istype(T, /turf/simulated/wall))
-		var/turf/simulated/wall/Wall = T
-		if(istype(Wall, /turf/simulated/wall/r_wall))
-			Wall.thermite = Wall.thermite+(volume*2.5)
-		else
-			Wall.thermite = Wall.thermite+(volume*10)
-		Wall.overlays = list()
-		Wall.overlays += image('icons/effects/effects.dmi',"thermite")
-	return
-
-datum/reagent/thermite/on_mob_life(var/mob/living/M as mob)
-	M.adjustFireLoss(1)
-	..()
-	return
+			var/obj/effect/decal/cleanable/reagentdecal = new/obj/effect/decal/cleanable/greenglow(T)
+			reagentdecal.reagents.add_reagent("uranium", volume)
 
 datum/reagent/sterilizine
 	name = "Sterilizine"
@@ -630,7 +499,8 @@ datum/reagent/uranium/reaction_turf(var/turf/T, var/volume)
 	src = null
 	if(volume >= 3)
 		if(!istype(T, /turf/space))
-			new /obj/effect/decal/cleanable/greenglow(T)
+			var/obj/effect/decal/cleanable/reagentdecal = new/obj/effect/decal/cleanable/greenglow(T)
+			reagentdecal.reagents.add_reagent("uranium", volume)
 
 datum/reagent/aluminium
 	name = "Aluminium"
@@ -676,16 +546,14 @@ datum/reagent/space_cleaner/reaction_obj(var/obj/O, var/volume)
 	else
 		if(O)
 			O.clean_blood()
-			O.color = initial(O.color)
 
 datum/reagent/space_cleaner/reaction_turf(var/turf/T, var/volume)
 	if(volume >= 1)
 		T.clean_blood()
-		T.color = initial(T.color)
 		for(var/obj/effect/decal/cleanable/C in T)
 			qdel(C)
 
-		for(var/mob/living/carbon/slime/M in T)
+		for(var/mob/living/simple_animal/slime/M in T)
 			M.adjustToxLoss(rand(5,10))
 	if(istype(T, /turf/simulated/floor))
 		var/turf/simulated/floor/F = T
@@ -695,7 +563,11 @@ datum/reagent/space_cleaner/reaction_turf(var/turf/T, var/volume)
 datum/reagent/space_cleaner/reaction_mob(var/mob/M, var/method=TOUCH, var/volume)
 	if(iscarbon(M))
 		var/mob/living/carbon/C = M
-		C.color = initial(C.color)
+		if(istype(M,/mob/living/carbon/human))
+			var/mob/living/carbon/human/H = M
+			if(H.lip_style)
+				H.lip_style = null
+				H.update_body()
 		if(C.r_hand)
 			C.r_hand.clean_blood()
 		if(C.l_hand)
@@ -896,5 +768,170 @@ datum/reagent/plantnutriment/robustharvestnutriment
 
 
 
-// Undefine the alias for REAGENTS_EFFECT_MULTIPLER
-#undef REM
+
+
+
+
+// GOON OTHERS
+
+
+
+datum/reagent/oil
+	name = "Oil"
+	id = "oil"
+	description = "Burns in a small smoky fire, mostly used to get Ash."
+	reagent_state = LIQUID
+	color = "#C8A5DC"
+
+datum/reagent/stable_plasma
+	name = "Stable Plasma"
+	id = "stable_plasma"
+	description = "Non-flammable plasma locked into a liquid form that cannot ignite or become gaseous/solid."
+	reagent_state = LIQUID
+	color = "#C8A5DC"
+
+datum/reagent/iodine
+	name = "Iodine"
+	id = "iodine"
+	description = "A slippery solution."
+	reagent_state = LIQUID
+	color = "#C8A5DC"
+
+datum/reagent/fluorine
+	name = "Fluorine"
+	id = "fluorine"
+	description = "A slippery solution."
+	reagent_state = LIQUID
+	color = "#C8A5DC"
+
+datum/reagent/carpet
+	name = "Carpet"
+	id = "carpet"
+	description = "A slippery solution."
+	reagent_state = LIQUID
+	color = "#C8A5DC"
+
+/datum/reagent/carpet/reaction_turf(var/turf/simulated/T, var/volume)
+	if(istype(T, /turf/simulated/floor/plating) || istype(T, /turf/simulated/floor/plasteel))
+		var/turf/simulated/floor/F = T
+		F.ChangeTurf(/turf/simulated/floor/fancy/carpet)
+	..()
+	return
+
+datum/reagent/bromine
+	name = "Bromine"
+	id = "bromine"
+	description = "A slippery solution."
+	reagent_state = LIQUID
+	color = "#C8A5DC"
+
+datum/reagent/phenol
+	name = "Phenol"
+	id = "phenol"
+	description = "Used for certain medical recipes."
+	reagent_state = LIQUID
+	color = "#C8A5DC"
+
+datum/reagent/ash
+	name = "Ash"
+	id = "ash"
+	description = "Basic ingredient in a couple of recipes."
+	reagent_state = LIQUID
+	color = "#C8A5DC"
+
+datum/reagent/acetone
+	name = "Acetone"
+	id = "acetone"
+	description = "Common ingredient in other recipes."
+	reagent_state = LIQUID
+	color = "#C8A5DC"
+
+datum/reagent/colorful_reagent
+	name = "Colorful Reagent"
+	id = "colorful_reagent"
+	description = "A solution."
+	reagent_state = LIQUID
+	color = "#C8A5DC"
+	var/list/random_color_list = list("#00aedb","#a200ff","#f47835","#d41243","#d11141","#00b159","#00aedb","#f37735","#ffc425","#008744","#0057e7","#d62d20","#ffa700")
+
+
+datum/reagent/colorful_reagent/on_mob_life(var/mob/living/M as mob)
+	if(M && isliving(M))
+		M.color = pick(random_color_list)
+	..()
+	return
+
+datum/reagent/colorful_reagent/reaction_mob(var/mob/living/M, var/volume)
+	if(M && isliving(M))
+		M.color = pick(random_color_list)
+	..()
+	return
+datum/reagent/colorful_reagent/reaction_obj(var/obj/O, var/volume)
+	if(O)
+		O.color = pick(random_color_list)
+	..()
+	return
+datum/reagent/colorful_reagent/reaction_turf(var/turf/T, var/volume)
+	if(T)
+		T.color = pick(random_color_list)
+	..()
+	return
+
+datum/reagent/hair_dye
+	name = "Quantum Hair Dye"
+	id = "hair_dye"
+	description = "A solution."
+	reagent_state = LIQUID
+	color = "#C8A5DC"
+	var/list/potential_colors = list("0ad","a0f","f73","d14","d14","0b5","0ad","f73","fc2","084","05e","d22","fa0") // fucking hair code
+
+datum/reagent/hair_dye/reaction_mob(var/mob/living/M, var/volume)
+	if(M && ishuman(M))
+		var/mob/living/carbon/human/H = M
+		H.hair_color = pick(potential_colors)
+		H.facial_hair_color = pick(potential_colors)
+		H.update_hair()
+	..()
+	return
+
+datum/reagent/barbers_aid
+	name = "Barber's Aid"
+	id = "barbers_aid"
+	description = "A solution to hair loss across the world."
+	reagent_state = LIQUID
+	color = "#C8A5DC"
+
+datum/reagent/barbers_aid/reaction_mob(var/mob/living/M, var/volume)
+	if(M && ishuman(M))
+		var/mob/living/carbon/human/H = M
+		var/datum/sprite_accessory/hair/picked_hair = pick(hair_styles_list)
+		var/datum/sprite_accessory/facial_hair/picked_beard = pick(facial_hair_styles_list)
+		H.hair_style = picked_hair
+		H.facial_hair_style = picked_beard
+		H.update_hair()
+	..()
+	return
+
+datum/reagent/concentrated_barbers_aid
+	name = "Concentrated Barber's Aid"
+	id = "concentrated_barbers_aid"
+	description = "A concentrated solution to hair loss across the world."
+	reagent_state = LIQUID
+	color = "#C8A5DC"
+
+datum/reagent/concentrated_barbers_aid/reaction_mob(var/mob/living/M, var/volume)
+	if(M && ishuman(M))
+		var/mob/living/carbon/human/H = M
+		H.hair_style = "Very Long Hair"
+		H.facial_hair_style = "Very Long Beard"
+		H.update_hair()
+	..()
+	return
+
+/datum/reagent/saltpetre
+	name = "Saltpetre"
+	id = "saltpetre"
+	description = "Volatile."
+	reagent_state = LIQUID
+	color = "#60A584" // rgb: 96, 165, 132
+

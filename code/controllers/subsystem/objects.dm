@@ -31,6 +31,12 @@ var/datum/subsystem/objects/SSobj
 		SSobj.processing.Cut(i, i+1)
 
 
+/datum/proc/process()
+	SSobj.processing.Remove(src)
+	return 0
+
+
+
 /*	This is FPSS13 code, has not yet been ported/implemented
 /obj/New()
 	..()
