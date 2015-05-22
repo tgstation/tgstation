@@ -184,6 +184,11 @@
 				user << "<span class='notice'>You connect the monitor.</span>"
 				if(!laws.inherent.len) //If laws isn't set to null but nobody supplied a board, the AI would normally be created lawless. We don't want that.
 					laws = null
+				if(ticker.mode.malf_ai) //if there's malfs about, any new AIs get malf laws, but aren't malfs themselves or have malf powers
+					for(var/datum/mind/AI_mind in ticker.mode.malf_ai)
+						if(isAI(AI_mind.current) && AI_mind.current.stat != DEAD)
+							laws.set_zeroth_law("<span class='danger'>ERROR ER0RR $R0RRO$!R41.%%!!(%$^^__+ @#F0E4'STATION OVERRUN, ASSUME CONTROL TO CONTAIN OUTBREAK#*´&110010</span>")
+							break
 				new /mob/living/silicon/ai (loc, laws, brain)
 				feedback_inc("cyborg_ais_created",1)
 				qdel(src)
