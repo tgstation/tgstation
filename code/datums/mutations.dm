@@ -78,7 +78,7 @@
 	return
 
 /datum/mutation/human/proc/on_losing(mob/living/carbon/human/owner)
-	if(owner.dna.mutations.Remove(src))
+	if(owner && owner.dna.mutations.Remove(src))
 		lose_indication(owner)
 		owner << text_lose_indication
 		return 0
