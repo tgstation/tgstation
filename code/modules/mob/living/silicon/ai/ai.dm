@@ -432,13 +432,6 @@ var/list/ai_list = list()
 	if(href_list["botrefresh"]) //Refreshes the bot control panel.
 		botcall()
 		return
-	if(href_list["track"])
-		var/mob/target = locate(href_list["track"])
-		var/mob/living/silicon/ai/A = locate(href_list["track2"])
-		world << "radio"
-		if(A && target)
-			A.ai_actual_track(target)
-		return
 
 /mob/living/silicon/ai/bullet_act(var/obj/item/projectile/Proj)
 	..(Proj)
