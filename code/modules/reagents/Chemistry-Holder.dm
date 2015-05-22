@@ -437,7 +437,8 @@ datum/reagents/proc/reaction(var/atom/A, var/method=TOUCH, var/volume_modifier=1
 	return
 
 datum/reagents/proc/add_reagent(var/reagent, var/amount, var/list/data=null, var/reagtemp = 300)
-	if(!isnum(amount)) return 1
+	if(!isnum(amount) || !amount)
+		return 1
 	update_total()
 	if(total_volume + amount > maximum_volume) amount = (maximum_volume - total_volume) //Doesnt fit in. Make it disappear. Shouldnt happen. Will happen.
 	chem_temp = round(((amount * reagtemp) + (total_volume * chem_temp)) / (total_volume + amount)) //equalize with new chems
