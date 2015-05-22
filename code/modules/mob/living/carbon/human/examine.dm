@@ -61,6 +61,10 @@
 				t_his = "her"
 				t_him = "her"
 
+	var/distance = get_dist(user,src)
+	if(istype(user, /mob/dead/observer) || user.stat == 2) // ghosts can see anything
+		distance = 1
+
 	msg += "<EM>[src.name]</EM>!\n"
 
 	//uniform
@@ -207,12 +211,6 @@
 	if(M_DWARF in mutations)
 		msg += "[t_He] [t_is] a short, sturdy creature fond of drink and industry.\n"
 
-	var/distance = get_dist(user,src)
-	if(istype(user, /mob/dead/observer) || user.stat == 2) // ghosts can see anything
-		distance = 1
-	if(distance <= 3)
-		if(!has_brain())
-			msg += "<font color='blue'><b>[t_He] has had [t_his] brain removed.</b></font>\n"
 	if (src.stat || (status_flags & FAKEDEATH))
 		msg += "<span class='warning'>[t_He] [t_is]n't responding to anything around [t_him] and seems to be asleep.</span>\n"
 		if((stat == 2 || src.health < config.health_threshold_crit || status_flags & FAKEDEATH) && distance <= 3)
@@ -238,9 +236,6 @@
 			msg += "[t_He] [t_is] quite chubby.\n"
 
 	msg += "</span>"
-
-	if(getBrainLoss() >= 60)
-		msg += "[t_He] [t_has] a stupid expression on [t_his] face.\n"
 
 	if(has_brain() && stat != DEAD)
 		if(!key)
@@ -410,6 +405,14 @@
 		msg += "<span class='warning'><b>[src] has \a [implant] sticking out of [t_his] flesh!</span>\n"
 	if(digitalcamo)
 		msg += "[t_He] [t_is] repulsively uncanny!\n"
+
+	if(!is_destroyed["head"])
+		if(getBrainLoss() >= 60)
+			msg += "[t_He] [t_has] a stupid expression on [t_his] face.\n"
+
+		if(distance <= 3)
+			if(!has_brain())
+				msg += "<font color='blue'><b>[t_He] has had [t_his] brain removed.</b></font>\n"
 
 
 	if(hasHUD(user,"security"))
