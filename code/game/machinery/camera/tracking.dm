@@ -99,7 +99,7 @@
 
 	return targets
 
-/mob/living/silicon/ai/verb/ai_camera_track(var/target_name as null|anything in trackable_mobs())
+/mob/living/silicon/ai/verb/ai_camera_track(var/target_name in trackable_mobs())
 	set name = "track"
 	set hidden = 1 //Don't display it on the verb lists. This verb exists purely so you can type "track Oldman Robustin" and follow his ass
 

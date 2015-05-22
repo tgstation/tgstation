@@ -4,15 +4,11 @@
 		return
 	..(message)
 
-/mob/living/silicon/ai/compose_track_href(atom/movable/speaker, message_langs, raw_message, radio_freq)
+/mob/living/silicon/ai/compose_track_href(atom/movable/speaker, namepart)
 	//this proc assumes that the message originated from a radio. if the speaker is not a virtual speaker this will probably fuck up hard.
 	var/mob/M = speaker.GetSource()
-	var/obj/item/device/radio = speaker.GetRadio()
 	if(M)
-		var/faketrack = "byond://?src=\ref[radio];track2=\ref[src];track=\ref[M]"
-		if(speaker.GetTrack())
-			faketrack = "byond://?src=\ref[radio];track2=\ref[src];faketrack=\ref[M]"
-		return "<a href='[faketrack]'>"
+		return "<a href='?src=\ref[src];track=[namepart]'>"
 	return ""
 
 /mob/living/silicon/ai/compose_job(atom/movable/speaker, message_langs, raw_message, radio_freq)
