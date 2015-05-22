@@ -2,12 +2,13 @@
 
 Even this list is a work in progress, but this is generally shit we at the bus all want to get done. If you think you can help with anything, let us know on IRC.
 
-1. Fix abductors.
-2. Remove goonchem while keeping chemical patches.
+1. Update abductors.
+2. Remove goonchem while keeping chemical patches and some other cool shit maybe.
 3. Remove tablecrafting.
 4. Finish service tech tree.
 5. Finish time wizard.
 6. Give MoMMIs their second module slot back.
-7. Polish
+7. VOLUME CONTROL OPTIONS
+8. Polish
 
 */
