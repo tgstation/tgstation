@@ -176,7 +176,7 @@ obj/machinery/hydroponics/process()
 			adjustWater(-rand(1,6))
 
 			// If the plant is dry, it loses health pretty fast, unless mushroom
-			if((waterlevel <= 10 < safe_co2_min) && myseed.plant_type != 2)	//Add CO2 check here?
+			if(waterlevel <= 10 && myseed.plant_type != 2)	//Add CO2 check here?
 				adjustHealth(-rand(0,1))
 				if(waterlevel <= 0)
 					adjustHealth(-rand(0,2))
