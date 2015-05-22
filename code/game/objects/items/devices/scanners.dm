@@ -263,27 +263,27 @@ MASS SPECTROMETER
 
 		var/unknown_concentration =  1-(o2_concentration+n2_concentration+co2_concentration+plasma_concentration)
 		if(abs(n2_concentration - N2STANDARD) < 20)
-			user.show_message("<span class='info'> Nitrogen: [round(n2_concentration*100)]%</span>", 1)
+			user.show_message("<span class='info'> Nitrogen: [round(n2_concentration*100,0.1)]%</span>", 1)
 		else
-			user.show_message("<span class='warning'> Nitrogen: [round(n2_concentration*100)]%</span>", 1)
+			user.show_message("<span class='warning'> Nitrogen: [round(n2_concentration*100,0.1)]%</span>", 1)
 
 		if(abs(o2_concentration - O2STANDARD) < 2)
-			user.show_message("<span class='info'> Oxygen: [round(o2_concentration*100)]%</span>", 1)
+			user.show_message("<span class='info'> Oxygen: [round(o2_concentration*100,0.1)]%</span>", 1)
 		else
-			user.show_message("<span class='warning'> Oxygen: [round(o2_concentration*100)]%</span>", 1)
+			user.show_message("<span class='warning'> Oxygen: [round(o2_concentration*100,0.1)]%</span>", 1)
 
 		if(co2_concentration > 0.01)
-			user.show_message("<span class='warning'> CO2: [round(co2_concentration*100)]%</span>", 1)
+			user.show_message("<span class='warning'> CO2: [round(co2_concentration*100,0.1)]%</span>", 1)
 		else
-			user.show_message("<span class='info'> CO2: [round(co2_concentration*100)]%</span>", 1)
+			user.show_message("<span class='info'> CO2: [round(co2_concentration*100,0.1)]%</span>", 1)
 
 		if(plasma_concentration > 0.01)
-			user.show_message("<span class='info'> Plasma: [round(plasma_concentration*100)]%</span>", 1)
+			user.show_message("<span class='info'> Plasma: [round(plasma_concentration*100,0.1)]%</span>", 1)
 
 		if(unknown_concentration > 0.01)
-			user.show_message("<span class='warning'> Unknown: [round(unknown_concentration*100)]%</span>", 1)
+			user.show_message("<span class='warning'> Unknown: [round(unknown_concentration*100,0.1)]%</span>", 1)
 
-		user.show_message("<span class='info'> Temperature: [round(environment.temperature-T0C)]&deg;C</span>", 1)
+		user.show_message("<span class='info'> Temperature: [round(environment.temperature-T0C,0.1)]&deg;C</span>", 1)
 
 	src.add_fingerprint(user)
 	return
