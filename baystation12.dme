@@ -622,6 +622,7 @@
 #include "code\game\objects\items\mountable_frames\apc_frame.dm"
 #include "code\game\objects\items\mountable_frames\driver_button.dm"
 #include "code\game\objects\items\mountable_frames\fire_alarm.dm"
+#include "code\game\objects\items\mountable_frames\fireaxe_cabinet_frame.dm"
 #include "code\game\objects\items\mountable_frames\frames.dm"
 #include "code\game\objects\items\mountable_frames\intercom.dm"
 #include "code\game\objects\items\mountable_frames\lights.dm"
