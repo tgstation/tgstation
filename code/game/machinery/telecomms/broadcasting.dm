@@ -72,7 +72,6 @@
 	virt.job = job
 	virt.languages = AM.languages
 	virt.source = AM
-	virt.faketrack = data == 4 ? 1 : 0
 	virt.radio = radio
 	virt.verb_say = verb_say
 	virt.verb_ask = verb_ask
