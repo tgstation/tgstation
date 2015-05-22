@@ -9,7 +9,8 @@
 /obj/effect/effect/trails/firebird/Play()
 	dir=pick(cardinal)
 	spawn(rand(10,20))
-		qdel(src)
+		if(src)
+			returnToPool(src)
 
 /datum/effect/effect/system/trail/firebird
 	trail_type = /obj/effect/effect/trails/firebird
