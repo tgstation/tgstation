@@ -71,6 +71,7 @@
 		I.implanted = O
 
 	//transfer mind and delete old mob
+	transfer_borer(O)
 	if(mind)
 		mind.transfer_to(O)
 		if(O.mind.changeling)
@@ -184,6 +185,8 @@
 		I.loc = O
 		I.implanted = O
 	O.sec_hud_set_implants()
+
+	transfer_borer(O)
 
 	if(mind)
 		mind.transfer_to(O)

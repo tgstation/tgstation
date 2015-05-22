@@ -41,6 +41,7 @@
 		user << "<span class='noticealien'>You begin to evolve!</span>"
 		user.visible_message("<span class='alertalien'>[user] begins to twist and contort!</span>")
 		var/mob/living/carbon/alien/humanoid/queen/new_xeno = new (user.loc)
+		user.transfer_borer(new_xeno)
 		user.mind.transfer_to(new_xeno)
 		qdel(user)
 		return 1

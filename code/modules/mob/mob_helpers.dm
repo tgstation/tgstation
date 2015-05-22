@@ -15,6 +15,7 @@
 		return 1
 	return 0
 
+
 /proc/isalien(A)
 	if(istype(A, /mob/living/carbon/alien))
 		return 1
@@ -27,6 +28,11 @@
 
 /proc/islarva(A)
 	if(istype(A, /mob/living/carbon/alien/larva))
+		return 1
+	return 0
+
+/proc/isborer(A)
+	if(A && istype(A, /mob/living/simple_animal/borer))
 		return 1
 	return 0
 

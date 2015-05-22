@@ -548,3 +548,24 @@ datum/objective/destroy/update_explanation_text()
 		explanation_text = "Destroy [target.name], the experimental AI."
 	else
 		explanation_text = "Free Objective"
+
+
+
+
+
+
+datum/objective/multiply
+	explanation_text = "Procreate, and protect your spawn."
+	var/already_completed=0
+	check_completion()
+		if(already_completed)
+			return 1
+		if(!owner.current)
+			return 0
+		var/mob/living/simple_animal/borer/B=owner.current
+		if(!istype(B))
+			return 0
+		if(B.numChildren>0)
+			already_completed=1
+			return 1
+		return 0

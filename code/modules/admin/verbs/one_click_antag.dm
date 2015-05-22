@@ -24,6 +24,7 @@ client/proc/one_click_antag()
 		<a href='?src=\ref[src];makeAntag=13'>Make Emergency Response Team (Requires Ghosts)</a><br>
 		<a href='?src=\ref[src];makeAntag=14'>Make Abductor Team (Requires Ghosts)</a><br>
 		<a href='?src=\ref[src];makeAntag=15'>Make Shadowling</a><br>
+		<a href='?src=\ref[src];makeAntag=16'>Make Borers (Requires Ghosts)</a><br>
 		"}
 /* These dont work just yet
 	Ninja, aliens and deathsquad I have not looked into yet
@@ -603,6 +604,11 @@ client/proc/one_click_antag()
 		return 1
 	return 0
 
+
+/datum/admins/proc/makeBorer()
+	new /datum/round_event/borer_infestation{spawncount=3}()
+	return 1
+
 /datum/admins/proc/makeBody(var/mob/dead/observer/G_found) // Uses stripped down and bastardized code from respawn character
 	if(!G_found || !G_found.key)	return
 
@@ -616,7 +622,7 @@ client/proc/one_click_antag()
 	return new_character
 
 
-/datum/admins/proc/getCandidates(var/Question, var/jobbanType, var/datum/game_mode/gametypeCheck)
+/proc/getCandidates(var/Question, var/jobbanType, var/datum/game_mode/gametypeCheck)
 	var/list/mob/dead/observer/candidates = list()
 	var/time_passed = world.time
 	if (!Question)

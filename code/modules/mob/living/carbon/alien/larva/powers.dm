@@ -53,6 +53,7 @@
 				new_xeno = new /mob/living/carbon/alien/humanoid/sentinel(L.loc)
 			if("Drone")
 				new_xeno = new /mob/living/carbon/alien/humanoid/drone(L.loc)
+		L.transfer_borer(new_xeno)
 		if(L.mind)	L.mind.transfer_to(new_xeno)
 		qdel(L)
 		return 0

@@ -88,6 +88,14 @@
 					message_admins("[key_name_admin(usr)] tried to create a shadowling. Unfortunately, there were no candidates available.")
 					log_admin("[key_name(usr)] failed to create a shadowling.")
 
+			if("16")
+				if(src.makeBorer())
+					message_admins("[key_name(usr)] created a borer.")
+					log_admin("[key_name(usr)] created a borer.")
+				else
+					message_admins("[key_name_admin(usr)] tried to create a borer. Unfortunately, there were no candidates available.")
+					log_admin("[key_name(usr)] failed to create a borer.")
+
 	else if(href_list["forceevent"])
 		var/datum/round_event_control/E = locate(href_list["forceevent"]) in SSevent.control
 		if(E)
