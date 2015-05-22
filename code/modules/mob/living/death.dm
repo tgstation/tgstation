@@ -6,6 +6,7 @@
 	if(animate)
 		gib_animation(animate)
 
+
 	if (buckled)
 		buckled.unbuckle_mob()
 
@@ -25,6 +26,7 @@
 	if(animate)
 		dust_animation(animate)
 
+
 	spawn_dust()
 	end_animation(animate)
 
@@ -36,6 +38,9 @@
 
 /mob/living/death(gibbed)
 	timeofdeath = world.time
+
+	if(gibbed)
+		src.destroy_borer()
 
 	for(var/obj/item/I in src)
 		I.OnMobDeath(src)

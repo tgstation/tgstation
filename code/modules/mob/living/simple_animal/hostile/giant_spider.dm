@@ -7,6 +7,8 @@
 /mob/living/simple_animal/hostile/poison
 	var/poison_per_bite = 5
 	var/poison_type = "toxin"
+	see_invisible = SEE_INVISIBLE_OBSERVER_NOLIGHTING
+	see_in_dark = 14
 
 /mob/living/simple_animal/hostile/poison/AttackingTarget()
 	..()

@@ -66,6 +66,9 @@
 
 /mob/living/carbon/gib(var/animation = 1)
 	for(var/mob/M in src)
+		if(isborer(M))
+			qdel(M)
+			continue
 		if(M in stomach_contents)
 			stomach_contents.Remove(M)
 		M.loc = loc
@@ -420,3 +423,92 @@ var/const/GALOSHES_DONT_HELP = 8
 	else
 		show_message("<span class='userdanger'>The blob attacks!</span>")
 		adjustBruteLoss(10)
+
+
+//Brain slug proc for voluntary removal of control.
+/mob/living/carbon/proc/release_control()
+
+	set category = "Borer"
+	set name = "Release Control"
+	set desc = "Release control of your host's body."
+
+	do_release_control(0)
+
+/mob/living/carbon/proc/do_release_control(var/rptext=1)
+	var/mob/living/simple_animal/borer/B = has_brain_worms()
+
+	if(!B)
+		return
+
+	if(B.controlling)
+		if(rptext)
+			src << "<span class='danger'>You withdraw your probosci, releasing control of [B.host_brain]</span>"
+			B.host_brain << "<span class='danger'>Your vision swims as the alien parasite releases control of your body.</span>"
+		B.ckey = ckey
+		B.controlling = 0
+	if(B.host_brain.ckey)
+		ckey = B.host_brain.ckey
+		B.host_brain.ckey = null
+		B.host_brain.name = "host brain"
+		B.host_brain.real_name = "host brain"
+
+	verbs -= /mob/living/carbon/proc/release_control
+	verbs -= /mob/living/carbon/proc/punish_host
+	verbs -= /mob/living/carbon/proc/spawn_larvae
+
+//Brain slug proc for tormenting the host.
+/mob/living/carbon/proc/punish_host()
+	set category = "Borer"
+	set name = "Torment host"
+	set desc = "Punish your host with agony."
+
+	var/mob/living/simple_animal/borer/B = has_brain_worms()
+
+	if(!B)
+		return
+
+	if(B.host_brain.ckey)
+		src << "<span class='danger'>You send a punishing spike of psychic agony lancing into your host's brain.</span>"
+		B.host_brain << "<span class='danger'><FONT size=3>Horrific, burning agony lances through you, ripping a soundless scream from your trapped mind!</FONT></span>"
+
+//Check for brain worms in head.
+/mob/living/proc/has_brain_worms()
+
+	for(var/I in contents)
+		if(isborer(I))
+			return I
+
+	return 0
+
+/mob/living/carbon/proc/spawn_larvae()
+	set category = "Borer"
+	set name = "Reproduce"
+	set desc = "Spawn several young."
+
+	var/mob/living/simple_animal/borer/B = has_brain_worms()
+
+	if(!B)
+		return
+
+	if(B.chemicals >= 100)
+		src << "<span class='warning'>You strain, trying to push out your young...</span>"
+		var/mob/dead/observer/O = B.request_player()
+		if(!O)
+			// No spaceghoasts.
+			src << "<span class='warning'>Your young are not ready yet.</span>"
+		else
+			src << "<span class='danger'>Your host twitches and quivers as you rapidly excrete several larvae from your sluglike body.</span>"
+			visible_message("<span class='danger'>[src] heaves violently, expelling a rush of vomit and a wriggling, sluglike creature!</span>")
+			B.chemicals -= 100
+
+			B.numChildren++
+
+			new /obj/effect/decal/cleanable/vomit(get_turf(src))
+			playsound(loc, 'sound/effects/splat.ogg', 50, 1)
+
+			var/mob/living/simple_animal/borer/nB = new (get_turf(src),by_gamemode=1) // We've already chosen.
+			nB.transfer_personality(O.client)
+
+	else
+		src << "You do not have enough chemicals stored to reproduce."
+		return
