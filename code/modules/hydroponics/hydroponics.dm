@@ -137,7 +137,7 @@ obj/machinery/hydroponics/process()
 
 //Breathing//////////////////////////////////////////////////////////////
 			//Non-mushrooms consume CO2 and produce O2
-			var/safe_co2_min = 0.1	//These values are too high, but if they were lower you would barely notice them
+		//	var/safe_co2_min = 0.1	//These values are too high, but if they were lower you would barely notice them   ASD PLS
 			var/CO2_partialpressure = 0
 
 			if(myseed.plant_type != 2 && isturf(loc)) //Breathe from loc as turf
@@ -443,6 +443,8 @@ obj/machinery/hydroponics/proc/mutatepest()
 
 obj/machinery/hydroponics/proc/applyChemicals(var/datum/reagents/S)
 
+	if(!myseed)
+		return
 	myseed.on_chem_reaction(S) //In case seeds have some special interactions with special chems, currently only used by vines
 
 	// Requires 5 mutagen to possibly change species.// Poor man's mutagen.

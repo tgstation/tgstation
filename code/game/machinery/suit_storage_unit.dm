@@ -327,6 +327,8 @@
 	STORAGE = null
 
 /obj/machinery/suit_storage_unit/proc/eject(atom/movable/ITEM)
+	if(!loc || !ITEM)
+		return
 	ITEM.loc = src.loc
 
 /obj/machinery/suit_storage_unit/proc/dump_everything()
