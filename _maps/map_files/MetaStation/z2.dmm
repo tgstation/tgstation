@@ -202,7 +202,7 @@
 "dT" = (/obj/structure/closet/secure_closet/cargotech,/turf/unsimulated/floor{dir = 1; icon_state = "loadingarea"},/area/centcom/suppy)
 "dU" = (/obj/structure/closet/secure_closet/quartermaster,/turf/unsimulated/floor{dir = 1; icon_state = "loadingarea"},/area/centcom/suppy)
 "dV" = (/obj/structure/closet,/turf/unsimulated/floor{icon_state = "floor"},/area/centcom/suppy)
-"dW" = (/obj/machinery/conveyor{dir = 4; id = "QMLoad2"},/obj/machinery/door/poddoor{id = "QMLoaddoor2"; name = "supply dock loading door"},/turf/simulated/shuttle/plating,/area/space)
+"dW" = (/obj/machinery/conveyor{dir = 8; id = "QMLoad2"},/obj/machinery/door/poddoor{id = "QMLoaddoor2"; name = "supply dock loading door"},/turf/simulated/shuttle/plating,/area/space)
 "dX" = (/turf/unsimulated/wall/fakeglass{icon_state = "fakewindows2"; dir = 6},/area/centcom/suppy)
 "dY" = (/turf/unsimulated/floor{dir = 8; heat_capacity = 1; icon_state = "warning"},/area/centcom/suppy)
 "dZ" = (/turf/unsimulated/floor{icon_state = "floor"},/area/centcom/suppy)
