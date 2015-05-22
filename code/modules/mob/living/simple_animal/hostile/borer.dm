@@ -35,7 +35,7 @@
 
 var/global/list/borer_attached_verbs = list(
 	/mob/living/simple_animal/borer/proc/bond_brain,
-	/mob/living/simple_animal/borer/proc/borer_speak,
+//	/mob/living/simple_animal/borer/proc/borer_speak,
 	/mob/living/simple_animal/borer/proc/kill_host,
 	/mob/living/simple_animal/borer/proc/damage_brain,
 	/mob/living/simple_animal/borer/proc/secrete_chemicals,
@@ -270,13 +270,19 @@ var/global/borer_chem_types = typesof(/datum/borer_chem) - /datum/borer_chem
 		if(istype(M, /mob/new_player))
 			continue
 
-		if( isborer(M) || (istype(M,/mob/dead/observer) && M.client && M.client.prefs.toggles & CHAT_GHOSTEARS))
+		var/bored = M.has_brain_worms()
+
+		if(bored || isborer(M) || (istype(M,/mob/dead/observer) && M.client && M.client.prefs.toggles & CHAT_GHOSTEARS))
 			var/controls = ""
 			if(isobserver(M))
 				controls = " (<a href='byond://?src=\ref[M];follow2=\ref[M];follow=\ref[src]'>Follow</a>"
 		//		if(M.client.holder)
 		//			controls+= " | <A HREF='?_src_=holder;adminmoreinfo=\ref[src]'>?</A>"
 				controls += ") in [host]"
+			if(bored)
+				var/mob/living/simple_animal/borer/B = bored
+				if(!B.controlling)
+					return
 
 			M << "<span class='cortical'>Cortical link, <b>[truename]</b>[controls]: [message]</span>"
 
