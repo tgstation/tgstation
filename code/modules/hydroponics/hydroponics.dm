@@ -24,6 +24,8 @@
 	var/obj/item/seeds/myseed = null	//The currently planted seed
 	var/unwrenchable = 1
 
+	var/co2mod = 1	//Carbon dioxide effect on yield, currently varies between 0.75 and 1.25. Only checked aty
+
 	pixel_y=8
 
 /obj/machinery/hydroponics/constructable
@@ -133,12 +135,48 @@ obj/machinery/hydroponics/process()
 					if(lightAmt < 4)
 						adjustHealth(-2)
 
+//Breathing//////////////////////////////////////////////////////////////
+			//Non-mushrooms consume CO2 and produce O2
+			var/safe_co2_min = 0.1	//These values are too high, but if they were lower you would barely notice them
+			var/CO2_partialpressure = 0
+
+			if(myseed.plant_type != 2 && isturf(loc)) //Breathe from loc as turf
+				var/datum/gas_mixture/environment
+				if(loc)
+					environment = loc.return_air()
+
+				var/breath_moles = 0
+				if(environment)
+					breath_moles = environment.total_moles()*BREATH_PERCENTAGE
+
+				var/datum/gas_mixture/breath = loc.remove_air(breath_moles)
+
+				var/average_co2 = 0.4	//Yield calculated from this
+
+				var/breath_pressure = (breath.total_moles()*R_IDEAL_GAS_EQUATION*T20C)/BREATH_VOLUME
+				CO2_partialpressure = (breath.carbon_dioxide/breath.total_moles())*breath_pressure
+
+				co2mod = (CO2_partialpressure/average_co2 + 1)/2	//Average of the pressures. Only the last tick matters for co2 right now
+
+				if (co2mod < 0.75)	//Partial pressure under 0.2
+					co2mod = 0.75
+				else if (co2mod > 1.25)	//Partial pressure over 1
+					co2mod = 1.25
+
+				var/co2_used = breath.carbon_dioxide/0.12	//I'm assuming plants process every 200 ticks, so this makes them breathe as fast as humans; a gross overestimation
+
+				breath.carbon_dioxide -= co2_used
+				breath.oxygen += co2_used	//Let's pretend plants turn all CO2 into oxygen
+
+				if(breath)
+					loc.assume_air(breath)
+
 //Water//////////////////////////////////////////////////////////////////
 			// Drink random amount of water
 			adjustWater(-rand(1,6))
 
 			// If the plant is dry, it loses health pretty fast, unless mushroom
-			if(waterlevel <= 10 && myseed.plant_type != 2)
+			if(waterlevel <= 10 && myseed.plant_type != 2)	//Add CO2 check here?
 				adjustHealth(-rand(0,1))
 				if(waterlevel <= 0)
 					adjustHealth(-rand(0,2))
@@ -779,7 +817,7 @@ obj/machinery/hydroponics/attackby(var/obj/item/O as obj, var/mob/user as mob, p
 	var/obj/machinery/hydroponics/parent = loc
 	if (parent.yieldmod == 0)
 		return min(yield, 1)//1 if above zero, 0 otherwise
-	return (yield * parent.yieldmod)
+	return (round(yield * parent.yieldmod * parent.co2mod))
 
 /obj/item/seeds/proc/harvest(mob/user = usr)
 	var/obj/machinery/hydroponics/parent = loc //for ease of access
