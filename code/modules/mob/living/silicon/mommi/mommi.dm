@@ -206,6 +206,12 @@ They can only use one tool at a time, they can't choose modules, and they have 1
 	name = real_name
 
 /mob/living/silicon/robot/mommi/attackby(obj/item/weapon/W as obj, mob/user as mob)
+	if (ismommi(user))
+		var/mob/living/silicon/robot/mommi/R = user
+		if (R.keeper && !src.keeper)
+			user << "<span class ='warning'>Your laws prevent you from doing this</span>"
+			return
+
 	if (istype(W, /obj/item/weapon/restraints/handcuffs)) // fuck i don't even know why isrobot() in handcuff code isn't working so this will have to do
 		return
 
@@ -397,6 +403,11 @@ They can only use one tool at a time, they can't choose modules, and they have 1
 
 	if(opened && !wiresexposed && (!istype(user, /mob/living/silicon) || ismommi(user)))	//MoMMIs can remove MoMMI power cells
 		if(cell)
+			if(ismommi(user))
+				var/mob/living/silicon/robot/mommi/R = user
+				if(R.keeper && !src.keeper)
+					user << "<span class ='warning'>Your laws prevent you from doing this</span>"
+					return
 			if (user == src)
 				user << "You lack the dexterity to remove your own power cell."
 				return
