@@ -112,6 +112,7 @@ var/global/borer_chem_types = typesof(/datum/borer_chem) - /datum/borer_chem
 
 /mob/living/simple_animal/borer/New(var/loc,var/by_gamemode=0)
 	..(loc)
+	languages |= HUMAN
 	truename = "[pick("Primary","Secondary","Tertiary","Quaternary")] [rand(1000,9999)]"
 	host_brain = new/mob/living/captive_brain(src)
 
@@ -282,7 +283,7 @@ var/global/borer_chem_types = typesof(/datum/borer_chem) - /datum/borer_chem
 			if(bored)
 				var/mob/living/simple_animal/borer/B = bored
 				if(!B.controlling)
-					return
+					continue
 
 			M << "<span class='cortical'>Cortical link, <b>[truename]</b>[controls]: [message]</span>"
 
