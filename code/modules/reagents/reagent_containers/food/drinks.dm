@@ -248,6 +248,7 @@
 		spawn(5)
 			reagents.trans_to(user, gulp_size)
 
+	update_brightness()
 	return 1
 
 /obj/item/weapon/reagent_containers/food/drinks/New()
