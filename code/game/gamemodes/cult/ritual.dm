@@ -98,7 +98,8 @@ var/global/list/rune_list = list() // HOLY FUCK WHY ARE WE LOOPING THROUGH THE W
 /obj/effect/rune/examine(mob/user)
 	..()
 	if(iscultist(user))
-		user << "A spell circle drawn in blood. It reads: <i>[word1] [word2] [word3]</i>."
+		var/rune_name = get_uristrune_name(word1,word2,word3)
+		user << "A spell circle drawn in blood. It reads: <i>[word1] [word2] [word3]</i>.[rune_name ? " From [pick("your intuition, you are pretty sure that","deep memories, you determine that","the rune's energies, you deduct that","Nar-Sie's murmurs, you know that")] this is \a <b>[rune_name]</b> rune." : ""]"
 
 
 /obj/effect/rune/attackby(I as obj, user as mob)
@@ -435,20 +436,25 @@ var/global/list/rune_list = list() // HOLY FUCK WHY ARE WE LOOPING THROUGH THE W
 		for (var/w in words)
 			english+=words[w]
 		if(usr)
-			w1 = input("Write your first rune:", "Rune Scribing") in english
-			for (var/w in words)
-				if (words[w] == w1)
-					w1 = w
+			w1 = input("Write your first rune: \[ __ \] \[ ... \] \[ ... \]", "Rune Scribing") as null|anything in english
+			if(!w1)
+				return
 		if(usr)
-			w2 = input("Write your second rune:", "Rune Scribing") in english
-			for (var/w in words)
-				if (words[w] == w2)
-					w2 = w
+			w2 = input("Write your second rune: \[ [w1] \] \[ __ \] \[ ... \]", "Rune Scribing") as null|anything in english
+			if(!w2)
+				return
 		if(usr)
-			w3 = input("Write your third rune:", "Rune Scribing") in english
-			for (var/w in words)
-				if (words[w] == w3)
-					w3 = w
+			w3 = input("Write your third rune: \[ [w1] \] \[ [w2] \] \[ __ \]", "Rune Scribing") as null|anything in english
+			if(!w3)
+				return
+
+		for (var/w in words)
+			if (words[w] == w1)
+				w1 = w
+			if (words[w] == w2)
+				w2 = w
+			if (words[w] == w3)
+				w3 = w
 
 		if(usr.get_active_hand() != src)
 			return
@@ -460,7 +466,7 @@ var/global/list/rune_list = list() // HOLY FUCK WHY ARE WE LOOPING THROUGH THE W
 			if(usr.get_active_hand() != src)
 				return
 			var/mob/living/carbon/human/H = user
-			var/obj/effect/rune/R = new /obj/effect/rune(user.loc)
+			var/obj/effect/rune/R = new /obj/effect/rune(get_turf(user))
 			user << "<span class='warning'>You finish drawing the arcane markings of the Geometer.</span>"
 			R.word1 = w1
 			R.word2 = w2
