@@ -67,6 +67,7 @@
 /obj/item/weapon/implant/weapons_auth
 	name = "firearms authentication implant"
 	desc = "Lets you shoot your guns"
+	activated = 0
 	icon_state = "auth"
 
 /obj/item/weapon/implant/weapons_auth/get_data()
