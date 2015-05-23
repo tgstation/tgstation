@@ -28,11 +28,16 @@
 	..()
 	RefreshParts()
 	spawn( 5 )
+		var/t
 		if(orient == "RIGHT")
 			update_icon()
-			generate_console(get_step(get_turf(src), WEST))
+			var t = get_step(get_turf(src), WEST)
+			// generate_console(get_step(get_turf(src), WEST))
 		else
-			generate_console(get_step(get_turf(src), EAST))
+			var t = get_step(get_turf(src), EAST)
+			// generate_console(get_step(get_turf(src), EAST))
+		world.log << "DEBUG: generating console at [t.loc] for body scanner at [src.loc]"
+		generate_console(t)
 		return
 	return
 
@@ -51,9 +56,10 @@
 
 /obj/machinery/bodyscanner/Destroy()
 	..()
-	connected.connected = null
-	qdel(connected)
-	connected = null
+	if(connected)
+		connected.connected = null
+		qdel(connected)
+		connected = null
 
 /obj/machinery/bodyscanner/update_icon()
 	icon_state = "body_scanner_[occupant ? "1" : "0"][orient == "LEFT" ? null : "-r"]"
