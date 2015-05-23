@@ -36,8 +36,14 @@
 		else
 			var t = get_step(get_turf(src), EAST)
 			// generate_console(get_step(get_turf(src), EAST))
-		world.log << "DEBUG: generating console at [t.loc] for body scanner at [src.loc]"
-		generate_console(t)
+		ASSERT(t)
+		var/obj/machinery/body_scanconsole/c = locate(t.loc)
+		if(c)
+			connected = c
+			c.connected = src
+		else
+			world.log << "DEBUG: generating console at [t.loc] for body scanner at [src.loc]"
+			generate_console(t)
 		return
 	return
 
