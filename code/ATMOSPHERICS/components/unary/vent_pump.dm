@@ -119,6 +119,9 @@
 				loc.assume_air(removed)
 				air_update_turf()
 
+				if(!parent)
+					return
+
 				parent.update = 1
 
 	else //external -> internal
