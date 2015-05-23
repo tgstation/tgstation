@@ -832,6 +832,7 @@ var/list/ignored_keys = list("loc", "locs", "parent_type", "vars", "verbs", "typ
 
 	moving:
 		for (var/turf/T in refined_src)
+			var/area/AA = get_area(T)
 			var/datum/coords/C_src = refined_src[T]
 			for (var/turf/B in refined_trg)
 				var/datum/coords/C_trg = refined_trg[B]
@@ -853,7 +854,9 @@ var/list/ignored_keys = list("loc", "locs", "parent_type", "vars", "verbs", "typ
 						else
 							X.vars[key] = T.vars[key]
 					if(ispath(prevtype,/turf/space))//including the transit hyperspace turfs
-						if(T.underlays.len)
+						if(ispath(AA.type, /area/syndicate_station/start) || ispath(AA.type, /area/syndicate_station/transit))//that's the snowflake to pay when people map their ships over the snow.
+							X.underlays += undlay
+						else if(T.underlays.len)
 							for(var/Over in T.underlays)
 								X.underlays += T.underlays
 						else
@@ -930,12 +933,17 @@ var/list/ignored_keys = list("loc", "locs", "parent_type", "vars", "verbs", "typ
 					if(turftoleave)
 						fromupdate += T.ChangeTurf(turftoleave)
 					else
-						T.ChangeTurf(/turf/space)
-						switch(universe.name)	//for some reason using OnTurfChange doesn't actually do anything in this case.
-							if("Hell Rising")
-								T.overlays += "hell01"
-							if("Supermatter Cascade")
-								T.overlays += "end01"
+						if(ispath(AA.type, /area/syndicate_station/start))
+							T.ChangeTurf(/turf/unsimulated/floor)
+							T.icon = 'icons/turf/snow.dmi'
+							T.icon_state = "snow"
+						else
+							T.ChangeTurf(/turf/space)
+							switch(universe.name)	//for some reason using OnTurfChange doesn't actually do anything in this case.
+								if("Hell Rising")
+									T.overlays += "hell01"
+								if("Supermatter Cascade")
+									T.overlays += "end01"
 
 
 					refined_src -= T
