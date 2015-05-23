@@ -2021,6 +2021,20 @@
 					H << "<span class='userdanger'>You suddenly feel stupid.</span>"
 					H.setBrainLoss(60)
 				message_admins("[key_name_admin(usr)] made everybody retarded")
+			if("schoolgirl")
+				feedback_inc("admin_secrets_fun_used",1)
+				feedback_add_details("admin_secrets_fun_used","SG")
+				for(var/obj/item/clothing/under/W in world)
+					W.icon_state = "schoolgirl" //Maybe add the other colors in a pick()?
+					W.item_state = "schoolgirl"
+					W.item_color = "schoolgirl"
+					if(ishuman(W.loc))
+						var/mob/living/carbon/human/H = W.loc
+						H.update_inv_w_uniform()
+						H.update_inv_r_hand()
+						H.update_inv_l_hand()
+				message_admins("[key_name_admin(usr)] activated Japanese Animes mode")
+				world << sound('sound/AI/animes.ogg')
 			if("eagles")//SCRAW
 				feedback_inc("admin_secrets_fun_used",1)
 				feedback_add_details("admin_secrets_fun_used","EgL")
