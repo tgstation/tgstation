@@ -28,7 +28,8 @@
 	..()
 	RefreshParts()
 	spawn( 5 )
-		var/t
+		var/turf/t
+		world.log << "DEBUG: Beginning body scanner console checking/auto-generation for scanner [src] at [src.loc.x],[src.loc.y],[src.loc.z]..."
 		if(orient == "RIGHT")
 			update_icon()
 			t = get_step(get_turf(src), WEST)
@@ -37,12 +38,12 @@
 			t = get_step(get_turf(src), EAST)
 			// generate_console(get_step(get_turf(src), EAST))
 		ASSERT(t)
-		var/obj/machinery/body_scanconsole/c = locate(t.loc)
+		var/obj/machinery/body_scanconsole/c = locate() in t.contents
 		if(c)
 			connected = c
 			c.connected = src
 		else
-			world.log << "DEBUG: generating console at [t.loc] for body scanner at [src.loc]"
+			world.log << "DEBUG: generating console at [t.loc.x],[t.loc.y],[t.loc.z] for scanner at [src.loc.x],[src.loc.y],[src.loc.z]"
 			generate_console(t)
 		return
 	return

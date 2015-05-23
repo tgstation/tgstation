@@ -155,11 +155,23 @@
 	..()
 	RefreshParts()
 	spawn( 5 )
-		update_icon()
+		var/turf/t
+		world.log << "DEBUG: Beginning sleeper console checking/auto-generation for sleeper [src] at [src.loc.x],[src.loc.y],[src.loc.z]..."
 		if(orient == "RIGHT")
-			generate_console(get_step(get_turf(src), WEST))
+			update_icon() // Only needs to update if it's orientation isn't default
+			t = get_step(get_turf(src), WEST)
+			// generate_console(get_step(get_turf(src), WEST))
 		else
-			generate_console(get_step(get_turf(src), EAST))
+			t = get_step(get_turf(src), EAST)
+			// generate_console(get_step(get_turf(src), EAST))
+		ASSERT(t)
+		var/obj/machinery/sleep_console/c = locate() in t.contents
+		if(c)
+			connected = c
+			c.connected = src
+		else
+			world.log << "DEBUG: generating console at [t.loc.x],[t.loc.y],[t.loc.z] for sleeper at [src.loc.x],[src.loc.y],[src.loc.z]"
+			generate_console(t)
 		return
 	return
 
