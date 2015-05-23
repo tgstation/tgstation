@@ -327,18 +327,17 @@
 		mode = !mode
 
 	else if(href_list["createbottle"])
-		if(!condi)
-			var/name = stripped_input(usr, "Name:","Name your bottle!", (reagents.total_volume ? reagents.get_master_reagent_name() : " "), MAX_NAME_LEN)
-			if(!name)
-				return
+		var/name = stripped_input(usr, "Name:","Name your bottle!", (reagents.total_volume ? reagents.get_master_reagent_name() : " "), MAX_NAME_LEN)
+		if(!name)
+			return
+		if(condi)
+			var/obj/item/weapon/reagent_containers/food/condiment/P = new/obj/item/weapon/reagent_containers/food/condiment(src.loc)
+		else
 			var/obj/item/weapon/reagent_containers/glass/bottle/P = new/obj/item/weapon/reagent_containers/glass/bottle(src.loc)
-			P.name = trim("[name] bottle")
 			P.pixel_x = rand(-7, 7) //random position
 			P.pixel_y = rand(-7, 7)
-			reagents.trans_to(P, 30)
-		else
-			var/obj/item/weapon/reagent_containers/food/condiment/P = new/obj/item/weapon/reagent_containers/food/condiment(src.loc)
-			reagents.trans_to(P, 50)
+		P.name = trim("[name] bottle")
+		reagents.trans_to(P, P.volume)
 
 	if(beaker)
 
