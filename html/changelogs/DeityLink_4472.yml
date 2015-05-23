@@ -1,7 +1,0 @@
-author: Deity Link
-delete-after: true
-changes:
-  - imageadd: The Disease Splicer now has its own sprite, was previously using the Crew Monitoring Computer sprite.
-  - imageadd: The Operating Computer's sprite now updates depending on whether there is someone on the operating table, and whether that person is alive or dead.
-  - imageadd: New sprite for the Cloning Computer, which updates when there is someone in the DNA Scanner or the Cloning Pod.
-  - imageadd: The Xenoarchaeology machines now use the "analyser_processing" sprite when they process samples.
