@@ -1,0 +1,4 @@
+author: Deity Link
+delete-after: true
+changes:
+  - bugfix: Fixed the Syndicate Mothership's corner shuttle tiles keeping the snow underlay from their home base.
