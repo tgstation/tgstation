@@ -23,6 +23,9 @@
 	var/smashtext = "bottle of " //To handle drinking glasses and the flask of holy water
 	var/smashname = "broken bottle" //As above
 	var/viewcontents = 1
+	var/flammable = 0
+	var/flammin = 0
+	var/flammin_color = null
 
 /obj/item/weapon/reagent_containers/food/drinks/on_reagent_change()
 	if(gulp_size < 5)
@@ -231,8 +234,11 @@
 
 /obj/item/weapon/reagent_containers/food/drinks/proc/imbibe(mob/user) //Drink the liquid within
 
-	user << "<span  class='notice'>You swallow a gulp of \the [src].</span>"
+	user << "<span  class='notice'>You swallow a gulp of \the [src].[lit ? " It's hot!" : ""]</span>"
 	playsound(user.loc,'sound/items/drink.ogg', rand(10,50), 1)
+
+	if(lit)
+		user.bodytemperature += 30 * TEMPERATURE_DAMAGE_COEFFICIENT//only the first gulp will be hot.
 
 	if(isrobot(user))
 		reagents.remove_any(gulp_size)
@@ -1066,57 +1072,37 @@
 		desc = "A rag stuffed into a bottle."
 		update_icon()
 		slot_flags = SLOT_BELT
-	else if(istype(I, /obj/item/weapon/weldingtool))
-		var/obj/item/weapon/weldingtool/WT = I
-		if(WT.isOn())
-			light()
-			update_brightness(user)
-	else if(istype(I, /obj/item/weapon/lighter))
-		var/obj/item/weapon/lighter/L = I
-		if(L.lit)
-			light()
-			update_brightness(user)
-	else if(istype(I, /obj/item/weapon/match))
-		var/obj/item/weapon/match/M = I
-		if(M.lit)
-			light()
-			update_brightness(user)
+	else if(I.is_hot())
+		light(user,I)
+		update_brightness(user)
 	else if(istype(I, /obj/item/device/assembly/igniter))
 		var/obj/item/device/assembly/igniter/C = I
 		C.activate()
-		light()
+		light(user,I)
 		update_brightness(user)
-	else if(istype(I, /obj/item/clothing/mask/cigarette))
-		var/obj/item/clothing/mask/cigarette/C = I
-		if(C.lit)
-			light()
-			update_brightness(user)
-	else if(istype(I, /obj/item/candle))
-		var/obj/item/candle/C = I
-		if(C.lit)
-			light()
-			update_brightness(user)
 		return
 
-/obj/item/weapon/reagent_containers/food/drinks/proc/light(var/flavor_text = "<span  class='rose'>[usr] lights the [name].</span>")
+/obj/item/weapon/reagent_containers/food/drinks/proc/light(mob/user,obj/item/I)
+	var/flavor_text = "<span  class='rose'>[user] lights \the [name] with \the [I].</span>"
 	if(!lit && molotov == 1)
 		lit = 1
-		for(var/mob/O in viewers(usr, null))
-			O.show_message(flavor_text, 1)
+		visible_message(flavor_text)
 		processing_objects.Add(src)
+		update_icon()
+	if(!lit && flammable)
+		lit = 1
+		visible_message(flavor_text)
+		flammable = 0
+		name = "Flaming [name]"
+		desc += " Damn that looks hot!"
+		icon_state += "-flamin"
 		update_icon()
 
 /obj/item/weapon/reagent_containers/food/drinks/proc/update_brightness(var/mob/user = null)
-	if(lit && molotov)
-		if(loc == user)
-			user.SetLuminosity(user.luminosity + brightness_lit)
-		else if(isturf(loc))
-			SetLuminosity(src.brightness_lit)
-	else if(molotov)
-		if(loc == user)
-			user.SetLuminosity(user.luminosity - brightness_lit)
-		else if(isturf(loc))
-			SetLuminosity(0)
+	if(lit)
+		SetLuminosity(src.brightness_lit)
+	else
+		SetLuminosity(0)
 
 /obj/item/weapon/reagent_containers/food/drinks/pickup(mob/user)
 	if(lit && molotov)
@@ -1146,6 +1132,7 @@
 	if(ishuman(src.loc))
 		var/mob/living/carbon/human/H = src.loc
 		H.update_inv_belt()
+
 	return
 
 
