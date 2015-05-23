@@ -2,7 +2,7 @@
 /obj/machinery/computer/cloning
 	name = "Cloning console"
 	icon = 'icons/obj/computer.dmi'
-	icon_state = "dna"
+	icon_state = "cloning"
 	circuit = "/obj/item/weapon/circuitboard/cloning"
 	var/list/links = list() //list of machines connected to this cloning console.
 	req_access = list(access_heads) //Only used for record deletion right now.
@@ -459,11 +459,17 @@
 	return selected_record
 
 /obj/machinery/computer/cloning/update_icon()
+	overlays = 0
 	if(stat & BROKEN)
 		icon_state = "broken"
 	else if(powered())
 		icon_state = initial(icon_state)
 		stat &= ~NOPOWER
+
+		if(scanner && scanner.occupant)
+			overlays += "cloning-scan"
+		if(pod1 && pod1.occupant)
+			overlays += "cloning-pod"
 	else
 		spawn(rand(0, 15))
 			src.icon_state = "c_unpowered"

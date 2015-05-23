@@ -64,8 +64,12 @@
 
 		use_power = 2
 
+		icon_state = "analyser_processing"
 	else
 		use_power = 1
+		icon_state = "analyser"
+		if(prob(10))
+			flick(src, "analyser_processing")
 
 	//Add 3000 joules when active.  This is about 0.6 degrees per tick.
 	//May need adjustment
