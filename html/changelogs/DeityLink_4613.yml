@@ -1,0 +1,4 @@
+author: Deity Link
+delete-after: true
+changes:
+  - bugfix: Fixed a B52 bug that caused the glass to remain luminescent after being drank.
