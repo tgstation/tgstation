@@ -48,19 +48,20 @@ var/global/list/narsie_list = list()
 		world << "<font size='15' color='red'><b>[uppertext(name)] HAS RISEN</b></font>"
 		world << sound('sound/effects/wind/wind_5_1.ogg')
 
-	if(istype(ticker.mode, /datum/game_mode/cult))
-		var/datum/game_mode/cult/mode_ticker = ticker.mode
-		if (mode_ticker.objectives[mode_ticker.current_objective] == "eldergod")
-			mode_ticker.third_phase()
+	if(!narsie_cometh)//so we don't initiate Hell more than one time.
+		if(istype(ticker.mode, /datum/game_mode/cult))
+			var/datum/game_mode/cult/mode_ticker = ticker.mode
+			if (mode_ticker.objectives[mode_ticker.current_objective] == "eldergod")
+				mode_ticker.third_phase()
 
-	if (emergency_shuttle)
-		emergency_shuttle.incall()
-		emergency_shuttle.can_recall = 0
-		emergency_shuttle.settimeleft(600)
+		if (emergency_shuttle)
+			emergency_shuttle.incall()
+			emergency_shuttle.can_recall = 0
+			emergency_shuttle.settimeleft(600)
 
-	if(narnar)
-		SetUniversalState(/datum/universal_state/hell)
-	narsie_cometh = 1
+		if(narnar)
+			SetUniversalState(/datum/universal_state/hell)
+		narsie_cometh = 1
 
 	/* //For animating narsie manually, doesn't work well
 	//Begin narsie vision

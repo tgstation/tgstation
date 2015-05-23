@@ -54,7 +54,7 @@ var/global/list/blood_list = list()
 		var/datum/game_mode/cult/mode_ticker = ticker.mode
 		if((mode_ticker.objectives[mode_ticker.current_objective] == "bloodspill") && !mode_ticker.narsie_condition_cleared)
 			var/turf/T = get_turf(src)
-			if(T && (T.z == map.zMainStation))
+			if(T && (T.z == map.zMainStation))//F I V E   T I L E S
 				if(locate("\ref[T]") in mode_ticker.bloody_floors)
 				else
 					mode_ticker.bloody_floors += T

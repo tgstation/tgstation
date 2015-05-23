@@ -1,0 +1,13 @@
+author: Deity Link
+delete-after: true
+changes:
+  - tweak: Attempting to summon Nar-Sie elswhere than on the station will warn the cultists. If they don't abort their summoning they'll all get gibbed.
+  - rscadd: Admins can now use the voice of Nar-Sie to talk to a single cultist, rather than to all of them (more immersive than using Subtle Messages)
+  - rscadd: The Cult Armor rune will now cloth cultists in spaceworthy armor if the conditions for Nar-Sie's summoning have been completed or Nar-Sie has risen. (AT LAST)
+  - imageadd: Tweaked the Cult Spacesuit sprite so its user no longer appears bare footed.
+  - tweak: Communicate runes now lets you automatically recognize the voice of whoever is using it. Telling your name with the rune at roundstart isn't mandatory anymore.
+  - imageadd: Tweaked the Arcane Tome sprite.
+  - imageadd: Added animations for the Summon Tome rune, and for when you copy words on a tome.
+  - bugfix: Fixed non-cultists being able to copy words from an Arcane Tome to another one.
+  - rscadd: You can now place items on Cult "tome" structures (such as the one in the librarian's closet) just like racks.
+  - tweak: Hell will only be initialized the first time Nar-Sie is spawned, so admins can spawn multiple Nar-Sies without causing multiple instances of Hell to overlap, with all the server-ending features it'd create.
