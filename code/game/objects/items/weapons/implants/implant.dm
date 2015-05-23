@@ -103,7 +103,7 @@
 	if(!cause || !imp_in)	return 0
 	if(cause == "action_button" && alert(imp_in, "Are you sure you want to activate your explosive implant? This will cause you to explode and gib!", "Explosive Implant Confirmation", "Yes", "No") != "Yes")
 		return 0
-	explosion(src,0,1,5,7,10, flame_range = 5)
+	explosion(src,1,2,5,7,10, flame_range = 5)
 	if(imp_in)
 		imp_in.gib()
 
