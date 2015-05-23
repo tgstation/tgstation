@@ -19,12 +19,28 @@
 	var/build_status = 0 //1 means it needs rebuilding during the next tick or on usage
 
 	var/obj/machinery/power/terminal/terminal = null //not strictly used on all machines - a placeholder
+	var/starting_terminal = 0
 
 /obj/machinery/power/New()
 	. = ..()
 	machines -= src
 	power_machines |= src
 	return .
+
+/obj/machinery/power/initialize()
+	..()
+	if(starting_terminal)
+		for(var/d in cardinal)
+			var/turf/T = get_step(src, d)
+			for(var/obj/machinery/power/terminal/term in T)
+				if(term && term.dir == turn(d, 180))
+					terminal = term
+					break
+			if(terminal)
+				break
+		if(terminal)
+			terminal.master = src
+			update_icon()
 
 /obj/machinery/power/Destroy()
 	disconnect_from_network()

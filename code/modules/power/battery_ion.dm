@@ -9,6 +9,8 @@
 	anchored = 0
 	use_power = 0
 
+	capacity = 3e6
+
 	machine_flags = SCREWTOGGLE | CROWDESTROY | WRENCHMOVE
 
 	var/obj/machinery/power/battery_port/connected_to

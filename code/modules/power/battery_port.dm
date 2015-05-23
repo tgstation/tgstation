@@ -10,6 +10,7 @@
 
 	machine_flags = SCREWTOGGLE | CROWDESTROY
 
+	starting_terminal = 1
 
 /obj/machinery/power/battery_port/New()
 	. = ..()

@@ -11,21 +11,10 @@
 
 	machine_flags = SCREWTOGGLE | CROWDESTROY
 
+	starting_terminal = 1
+
 /obj/machinery/power/battery/smes/New()
 	. = ..()
-	spawn(5)
-		dir_loop:
-			for(var/d in cardinal)
-				var/turf/T = get_step(src, d)
-				for(var/obj/machinery/power/terminal/term in T)
-					if(term && term.dir == turn(d, 180))
-						terminal = term
-						break dir_loop
-		if(!terminal)
-			stat |= BROKEN
-			return
-		terminal.master = src
-		update_icon()
 
 	component_parts = newlist(
 		/obj/item/weapon/circuitboard/smes,
@@ -43,7 +32,17 @@
 		/obj/item/weapon/stock_parts/console_screen
 	)
 
+
+
 	RefreshParts()
+
+	if(ticker)
+		initialize()
+
+/obj/machinery/power/battery/smes/initialize()
+	..()
+	if(!terminal)
+		stat |= BROKEN
 
 /obj/machinery/power/battery/smes/attackby(var/obj/item/weapon/W as obj, var/mob/user as mob) //these can only be moved by being reconstructed, solves having to remake the powernet.
 	if(iscrowbar(W) && panel_open && terminal)
