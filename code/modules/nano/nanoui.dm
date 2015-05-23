@@ -11,7 +11,7 @@ nanoui is used to open and update nano browser uis
 #define STATUS_UPDATE 1 // ORANGE Visability
 #define STATUS_DISABLED 0 // RED Visability
 
-/datum/nanoui	
+/datum/nanoui
 	// the user who opened this ui
 	var/mob/user
 	// the object this ui "belongs" to
@@ -180,7 +180,7 @@ nanoui is used to open and update nano browser uis
 	data["ui"] = list(
 			"status" = status,
 			"user" = list("name" = user.name)
-		)	
+		)
 	return data
 
  /**
@@ -256,10 +256,10 @@ nanoui is used to open and update nano browser uis
   */
 /datum/nanoui/proc/get_header()
 	var/head_content = ""
-	
+
 	for (var/filename in scripts)
 		head_content += "<script type='text/javascript' src='[filename]'></script> "
-	
+
 	for (var/filename in stylesheets)
 		head_content += "<link rel='stylesheet' type='text/css' href='[filename]'> "
 
@@ -284,7 +284,7 @@ nanoui is used to open and update nano browser uis
 		<script type='text/javascript'>
 			function receiveUpdateData(jsonString)
 			{
-				// We need both jQuery and NanoUpdate to be able to recieve data				
+				// We need both jQuery and NanoUpdate to be able to recieve data
 				// At the moment any data received before those libraries are loaded will be lost
 				if (typeof NanoUpdate != 'undefined' && typeof jQuery != 'undefined')
 				{
@@ -294,7 +294,7 @@ nanoui is used to open and update nano browser uis
 		</script>
 		[head_content]
 	</head>
-	<body scroll=auto data-url-parameters='[url_parameters_json]' data-template-data='[template_data_json]' data-initial-data='[initial_data_json]'>		
+	<body scroll=auto data-url-parameters='[url_parameters_json]' data-template-data='[template_data_json]' data-initial-data='[initial_data_json]'>
 		<div id='uiWrapper'>
 			[title ? "<div id='uiTitleWrapper'><div id='uiStatusIcon' class='icon24 uiStatusGood'></div><div id='uiTitle'>[title]</div><div id='uiTitleFluff'></div></div>" : ""]
 			<div id='uiContent'>
@@ -340,7 +340,7 @@ nanoui is used to open and update nano browser uis
 	winset(user, "mapwindow.map", "focus=true") // return keyboard focus to map
 	on_close_winset()
 	//onclose(user, window_id)
-	nanomanager.ui_opened(src)
+	SSnano.ui_opened(src)
 
  /**
   * Close this UI
@@ -349,7 +349,7 @@ nanoui is used to open and update nano browser uis
   */
 /datum/nanoui/proc/close()
 	is_auto_updating = 0
-	nanomanager.ui_closed(src)
+	SSnano.ui_closed(src)
 	user << browse(null, "window=[window_id]")
 
  /**
@@ -392,7 +392,7 @@ nanoui is used to open and update nano browser uis
 		return
 
 	if (src_object && src_object.Topic(href, href_list))
-		nanomanager.update_uis(src_object) // update all UIs attached to src_object
+		SSnano.update_uis(src_object) // update all UIs attached to src_object
 
  /**
   * Process this UI, updating the entire UI or just the status (aka visibility)
@@ -402,11 +402,11 @@ nanoui is used to open and update nano browser uis
   *
   * @return nothing
   */
-/datum/nanoui/proc/process(update = 0)
+/datum/nanoui/process(update = 0)
 	if (!src_object || !user)
 		close()
 		return
-		
+
 	if (status && (update || is_auto_updating))
 		src_object.ui_interact(user, ui_key, src) // Update the UI (update_status() is called whenever a UI is updated)
 	else

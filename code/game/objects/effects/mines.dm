@@ -1,88 +1,94 @@
 /obj/effect/mine
-	name = "mine"
-	desc = "I Better stay away from that thing."
-	density = 1
+	name = "dummy mine"
+	desc = "Better stay away from that thing."
+	density = 0
 	anchored = 1
 	layer = 3
 	icon = 'icons/obj/weapons.dmi'
 	icon_state = "uglymine"
-	var/triggerproc = "explode" //name of the proc thats called when the mine is triggered
 	var/triggered = 0
 
-/obj/effect/mine/New()
-	icon_state = "uglyminearmed"
+/obj/effect/mine/proc/mineEffect(mob/victim)
+	victim << "<span class='danger'>*click*</span>"
 
 /obj/effect/mine/Crossed(AM as mob|obj)
-	Bumped(AM)
+	if(isanimal(AM))
+		var/mob/living/simple_animal/SA = AM
+		if(!SA.flying)
+			Bumped(SA)
+	else
+		Bumped(AM)
 
-/obj/effect/mine/Bumped(mob/M as mob|obj)
+/obj/effect/mine/Bumped(AM as mob|obj)
 
 	if(triggered) return
+	visible_message("<span class='danger'>[AM] sets off \icon[src] [src]!</span>")
+	triggermine(AM)
 
-	if(istype(M, /mob/living/carbon/human) || istype(M, /mob/living/carbon/monkey))
-		for(var/mob/O in viewers(world.view, src.loc))
-			O << "<font color='red'>[M] triggered the \icon[src] [src]</font>"
-		triggered = 1
-		call(src,triggerproc)(M)
-
-/obj/effect/mine/proc/triggerrad(obj)
+/obj/effect/mine/proc/triggermine(mob/victim)
 	var/datum/effect/effect/system/spark_spread/s = new /datum/effect/effect/system/spark_spread
 	s.set_up(3, 1, src)
 	s.start()
-	obj:radiation += 50
-	randmutb(obj)
-	domutcheck(obj,null)
+	mineEffect(victim)
+	triggered = 1
 	qdel(src)
 
-/obj/effect/mine/proc/triggerstun(obj)
-	if(ismob(obj))
-		var/mob/M = obj
-		M.Stun(30)
-	var/datum/effect/effect/system/spark_spread/s = new /datum/effect/effect/system/spark_spread
-	s.set_up(3, 1, src)
-	s.start()
-	qdel(src)
 
-/obj/effect/mine/proc/triggern2o(obj)
-	atmos_spawn_air("n2o", 360)
-	qdel(src)
+/obj/effect/mine/explosive
+	name = "explosive mine"
+	var/range_devastation = 0
+	var/range_heavy = 1
+	var/range_light = 2
+	var/range_flash = 3
 
-/obj/effect/mine/proc/triggerplasma(obj)
-	atmos_spawn_air(SPAWN_HEAT | SPAWN_TOXINS, 360)
-	qdel(src)
+/obj/effect/mine/explosive/mineEffect(mob/victim)
+	explosion(loc, range_devastation, range_heavy, range_light, range_flash)
 
-/obj/effect/mine/proc/triggerkick(obj)
-	var/datum/effect/effect/system/spark_spread/s = new /datum/effect/effect/system/spark_spread
-	s.set_up(3, 1, src)
-	s.start()
-	del(obj:client)
-	qdel(src)
-
-/obj/effect/mine/proc/explode(obj)
-	explosion(loc, 0, 1, 2, 3)
-	qdel(src)
-
-/obj/effect/mine/dnascramble
-	name = "radiation mine"
-	icon_state = "uglymine"
-	triggerproc = "triggerrad"
-
-/obj/effect/mine/plasma
-	name = "plasma mine"
-	icon_state = "uglymine"
-	triggerproc = "triggerplasma"
-
-/obj/effect/mine/kick
-	name = "kick mine"
-	icon_state = "uglymine"
-	triggerproc = "triggerkick"
-
-/obj/effect/mine/n2o
-	name = "\improper N2O mine"
-	icon_state = "uglymine"
-	triggerproc = "triggern2o"
 
 /obj/effect/mine/stun
 	name = "stun mine"
-	icon_state = "uglymine"
-	triggerproc = "triggerstun"
+	var/stun_time = 8
+
+/obj/effect/mine/stun/mineEffect(mob/victim)
+	if(isliving(victim))
+		victim.Weaken(stun_time)
+
+/obj/effect/mine/kickmine
+	name = "kick mine"
+
+/obj/effect/mine/kickmine/mineEffect(mob/victim)
+	if(isliving(victim) && victim.client)
+		victim << "<span class='userdanger'>You have been kicked FOR NO REISIN!</span>"
+		del(victim.client)
+
+
+/obj/effect/mine/gas
+	name = "oxygen mine"
+	var/gas_amount = 360
+	var/gas_type = SPAWN_OXYGEN
+
+/obj/effect/mine/gas/mineEffect(mob/victim)
+	atmos_spawn_air(gas_type, gas_amount)
+
+
+/obj/effect/mine/gas/plasma
+	name = "plasma mine"
+	gas_type = SPAWN_TOXINS
+
+
+/obj/effect/mine/gas/n2o
+	name = "\improper N2O mine"
+	gas_type = SPAWN_N2O
+
+
+/obj/effect/mine/sound
+	name = "honkblaster 1000"
+	var/sound = 'sound/items/bikehorn.ogg'
+
+/obj/effect/mine/sound/mineEffect(mob/victim)
+	playsound(loc, sound, 100, 1)
+
+
+/obj/effect/mine/sound/bwoink
+	name = "bwoink mine"
+	sound = 'sound/effects/adminhelp.ogg'

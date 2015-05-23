@@ -23,8 +23,6 @@
 	//2: Do not pass internal_pressure_bound
 	//3: Do not pass either
 
-	var/welded = 0
-
 	var/frequency = 1439
 	var/datum/radio_frequency/radio_connection
 
@@ -52,6 +50,7 @@
 		assign_uid()
 		id_tag = num2text(uid)
 	if(ticker && ticker.current_state == 3)//if the game is running
+		src.atmosinit()
 		src.initialize()
 		src.broadcast_status()
 
@@ -86,7 +85,7 @@
 	else
 		icon_state = "vent_in"
 
-/obj/machinery/atmospherics/unary/vent_pump/process()
+/obj/machinery/atmospherics/unary/vent_pump/process_atmos()
 	..()
 	if(stat & (NOPOWER|BROKEN))
 		return
@@ -183,14 +182,16 @@
 	return 1
 
 
-/obj/machinery/atmospherics/unary/vent_pump/initialize()
-	..()
-
+/obj/machinery/atmospherics/unary/vent_pump/atmosinit()
 	//some vents work his own spesial way
 	radio_filter_in = frequency==1439?(RADIO_FROM_AIRALARM):null
 	radio_filter_out = frequency==1439?(RADIO_TO_AIRALARM):null
 	if(frequency)
 		set_frequency(frequency)
+	..()
+/obj/machinery/atmospherics/unary/vent_pump/initialize()
+	..()
+	broadcast_status()
 
 /obj/machinery/atmospherics/unary/vent_pump/receive_signal(datum/signal/signal)
 	if(stat & (NOPOWER|BROKEN))
@@ -265,24 +266,24 @@
 	update_icon()
 	return
 
-/obj/machinery/atmospherics/unary/vent_pump/attackby(obj/item/W, mob/user)
+/obj/machinery/atmospherics/unary/vent_pump/attackby(obj/item/W, mob/user, params)
 	if (istype(W, /obj/item/weapon/wrench)&& !(stat & NOPOWER) && on)
-		user << "<span class='danger'>You cannot unwrench this [src], turn it off first.</span>"
+		user << "<span class='warning'>You cannot unwrench this [src], turn it off first!</span>"
 		return 1
 	if(istype(W, /obj/item/weapon/weldingtool))
 		var/obj/item/weapon/weldingtool/WT = W
 		if (WT.remove_fuel(0,user))
 			playsound(loc, 'sound/items/Welder.ogg', 40, 1)
-			user << "<span class='notice'>Now welding the vent.</span>"
+			user << "<span class='notice'>You begin welding the vent...</span>"
 			if(do_after(user, 20))
 				if(!src || !WT.isOn()) return
 				playsound(src.loc, 'sound/items/Welder2.ogg', 50, 1)
 				if(!welded)
-					user.visible_message("[user] welds the vent shut.", "You weld the vent shut.", "You hear welding.")
+					user.visible_message("[user] welds the vent shut.", "<span class='notice'>You weld the vent shut.</span>", "<span class='italics'>You hear welding.</span>")
 					welded = 1
 					update_icon()
 				else
-					user.visible_message("[user] unwelds the vent.", "You unweld the vent.", "You hear welding.")
+					user.visible_message("[user] unwelds the vent.", "<span class='notice'>You unweld the vent.</span>", "<span class='italics'>You hear welding.</span>")
 					welded = 0
 					update_icon()
 			return 1
@@ -307,68 +308,6 @@
 		initial_loc.air_vent_names -= id_tag
 	..()
 
-/*
-	Alt-click to ventcrawl
-*/
-/obj/machinery/atmospherics/unary/vent_pump/AltClick(var/mob/living/L)
-	if(!L.ventcrawler || !isliving(L) || !Adjacent(L))
-		return
-	if(L.stat)
-		L << "You must be conscious to do this!"
-		return
-	if(L.lying)
-		L << "You can't vent crawl while you're stunned!"
-		return
-	if(welded)
-		L << "That vent is welded shut."
-		return
 
-	var/list/vents = list()
-	for(var/obj/machinery/atmospherics/unary/vent_pump/temp_vent in parent.other_atmosmch)
-		if(temp_vent.welded)
-			continue
-		if(temp_vent in loc)
-			continue
-		var/turf/T = get_turf(temp_vent)
-
-		if(!T || T.z != loc.z)
-			continue
-
-		var/i = 1
-		var/index = "[T.loc.name]\[[i]\]"
-		while(index in vents)
-			i++
-			index = "[T.loc.name]\[[i]\]"
-		vents[index] = temp_vent
-	if(!vents.len)
-		L << "<span class='warning'>There are no available vents to travel to, they could be welded. </span>"
-		return
-
-	var/obj/selection = input(L,"Select a destination.", "Duct System") as null|anything in sortList(vents)
-	if(!selection)
-		return
-
-	if(!Adjacent(L) || L.stat || L.lying || !L.ventcrawler || welded)
-		return
-	if(iscarbon(L) && L.ventcrawler < 2) // lesser ventcrawlers can't bring items
-		for(var/obj/item/carried_item in L.contents)
-			if(!istype(carried_item, /obj/item/weapon/implant))//If it's not an implant
-				L << "<span class='warning'>You can't be carrying items or have items equipped when vent crawling!</span>"
-				return
-
-	var/obj/machinery/atmospherics/unary/vent_pump/target_vent = vents[selection]
-	if(!target_vent)
-		return
-
-	L.visible_message("<span class='notice'>[L] scrambles into the ventilation ducts!</span>", \
-						"<span class='notice'>You scramble into the ventilation ducts.</span>")
-
-	target_vent.audible_message("<span class='notice'>You hear something squeezing through the ventilation ducts.</span>")
-
-	if(target_vent.welded)		//the vent can be welded while they scrolled through the list.
-		target_vent = src
-		L << "<span class='warning'>The vent you were heading to appears to be welded.</span>"
-	L.loc = target_vent.loc
-	var/area/new_area = get_area(L.loc)
-	if(new_area)
-		new_area.Entered(L)
+/obj/machinery/atmospherics/unary/vent_pump/can_crawl_through()
+	return !welded

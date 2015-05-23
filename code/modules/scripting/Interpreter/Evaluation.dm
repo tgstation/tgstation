@@ -134,7 +134,7 @@
 			else if(isobject(b) && !isobject(a))
 				RaiseError(new/runtimeError/TypeMismatch("/", a, b))
 				return null
-			if(b==0)
+			if(b==0 || b==null)
 				RaiseError(new/runtimeError/DivisionByZero())
 				return null
 			return a/b

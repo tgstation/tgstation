@@ -13,29 +13,21 @@
 	speak_chance = 1
 	turns_per_move = 5
 	see_in_dark = 6
-	meat_type = /obj/item/weapon/reagent_containers/food/snacks/bearmeat
-	meat_amount = 3
+	butcher_results = list(/obj/item/weapon/reagent_containers/food/snacks/meat/slab/bear = 5)
 	response_help  = "pets"
 	response_disarm = "gently pushes aside"
 	response_harm   = "hits"
-	stop_automated_movement_when_pulled = 0
 	maxHealth = 60
 	health = 60
 
 	melee_damage_lower = 20
 	melee_damage_upper = 30
 	attacktext = "claws"
+	attack_sound = 'sound/weapons/bladeslice.ogg'
 	friendly = "bear hugs"
 
 	//Space bears aren't affected by cold.
-	min_oxy = 0
-	max_oxy = 0
-	min_tox = 0
-	max_tox = 0
-	min_co2 = 0
-	max_co2 = 0
-	min_n2 = 0
-	max_n2 = 0
+	atmos_requirements = list("min_oxy" = 0, "max_oxy" = 0, "min_tox" = 0, "max_tox" = 0, "min_co2" = 0, "max_co2" = 0, "min_n2" = 0, "max_n2" = 0)
 	minbodytemp = 0
 	maxbodytemp = 1500
 
@@ -61,7 +53,6 @@
 	. = ..()
 	if(.)
 		emote("me", 1, "stares alertly at [.]")
-		stance = HOSTILE_STANCE_ATTACK
 
 /mob/living/simple_animal/hostile/bear/LoseTarget()
 	..(5)

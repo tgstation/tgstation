@@ -8,7 +8,7 @@
 /obj/item/weapon/reagent_containers/food/condiment
 	name = "condiment container"
 	desc = "Just your average condiment container."
-	icon = 'icons/obj/food.dmi'
+	icon = 'icons/obj/food/containers.dmi'
 	icon_state = "emptycondiment"
 	flags = OPENCONTAINER
 	possible_transfer_amounts = list(1,5,10)
@@ -25,8 +25,6 @@
 	 "cornoil" = list("oliveoil", "corn oil bottle", "A delicious oil used in cooking. Made from corn"),
 	 "sugar" = list("emptycondiment", "sugar bottle", "Tasty spacey sugar!"))
 
-/obj/item/weapon/reagent_containers/food/condiment/attackby(obj/item/weapon/W as obj, mob/user as mob)
-	return
 
 /obj/item/weapon/reagent_containers/food/condiment/attack_self(mob/user as mob)
 	return
@@ -42,9 +40,6 @@
 		return 0
 
 	if(M == user)
-		if(src.reagents.has_reagent("sugar") && M.satiety < -150 && M.nutrition > NUTRITION_LEVEL_STARVING + 50 )
-			M << "<span class='notice'>You don't feel like drinking any more sugary food at the moment.</span>"
-			return 0
 		M << "<span class='notice'>You swallow some of contents of \the [src].</span>"
 		if(reagents.total_volume)
 			reagents.reaction(M, INGEST)
@@ -69,19 +64,16 @@
 		return 1
 	return 0
 
-/obj/item/weapon/reagent_containers/food/condiment/attackby(obj/item/I as obj, mob/user as mob)
-	return
-
 /obj/item/weapon/reagent_containers/food/condiment/afterattack(obj/target, mob/user , proximity)
 	if(!proximity) return
 	if(istype(target, /obj/structure/reagent_dispensers)) //A dispenser. Transfer FROM it TO us.
 
 		if(!target.reagents.total_volume)
-			user << "<span class='warning'>[target] is empty.</span>"
+			user << "<span class='warning'>[target] is empty!</span>"
 			return
 
 		if(reagents.total_volume >= reagents.maximum_volume)
-			user << "<span class='warning'>[src] is full.</span>"
+			user << "<span class='warning'>[src] is full!</span>"
 			return
 
 		var/trans = target.reagents.trans_to(src, target:amount_per_transfer_from_this)
@@ -90,16 +82,16 @@
 	//Something like a glass or a food item. Player probably wants to transfer TO it.
 	else if(target.is_open_container() || istype(target, /obj/item/weapon/reagent_containers/food/snacks))
 		if(!reagents.total_volume)
-			user << "<span class='warning'>[src] is empty.</span>"
+			user << "<span class='warning'>[src] is empty!</span>"
 			return
 		if(target.reagents.total_volume >= target.reagents.maximum_volume)
-			user << "<span class='warning'>you can't add anymore to [target].</span>"
+			user << "<span class='warning'>you can't add anymore to [target]!</span>"
 			return
 		var/trans = src.reagents.trans_to(target, amount_per_transfer_from_this)
 		user << "<span class='notice'>You transfer [trans] units of the condiment to [target].</span>"
 
 /obj/item/weapon/reagent_containers/food/condiment/on_reagent_change()
-	if(icon_state == "saltshakersmall" || icon_state == "peppermillsmall")
+	if(!possible_states.len)
 		return
 	if(reagents.reagent_list.len > 0)
 		var/main_reagent = reagents.get_master_reagent_id()
@@ -127,16 +119,12 @@
 	name = "universal enzyme"
 	desc = "Used in cooking various dishes."
 	icon_state = "enzyme"
-
-/obj/item/weapon/reagent_containers/food/condiment/enzyme/New()
-	..()
-	reagents.add_reagent("enzyme", 50)
+	list_reagents = list("enzyme" = 50)
 
 /obj/item/weapon/reagent_containers/food/condiment/sugar
-
-/obj/item/weapon/reagent_containers/food/condiment/sugar/New()
-	..()
-	reagents.add_reagent("sugar", 50)
+	name = "sugar bottle"
+	desc = "Tasty spacey sugar!"
+	list_reagents = list("sugar" = 50)
 
 /obj/item/weapon/reagent_containers/food/condiment/saltshaker		//Seperate from above since it's a small shaker rather then
 	name = "salt shaker"											//	a large one.
@@ -145,10 +133,8 @@
 	possible_transfer_amounts = list(1,20) //for clown turning the lid off
 	amount_per_transfer_from_this = 1
 	volume = 20
-
-/obj/item/weapon/reagent_containers/food/condiment/saltshaker/New()
-	..()
-	reagents.add_reagent("sodiumchloride", 20)
+	list_reagents = list("sodiumchloride" = 20)
+	possible_states = list()
 
 /obj/item/weapon/reagent_containers/food/condiment/peppermill
 	name = "pepper mill"
@@ -157,12 +143,45 @@
 	possible_transfer_amounts = list(1,20) //for clown turning the lid off
 	amount_per_transfer_from_this = 1
 	volume = 20
+	list_reagents = list("blackpepper" = 20)
+	possible_states = list()
 
-/obj/item/weapon/reagent_containers/food/condiment/peppermill/New()
-	..()
-	reagents.add_reagent("blackpepper", 20)
+/obj/item/weapon/reagent_containers/food/condiment/milk
+	name = "space milk"
+	desc = "It's milk. White and nutritious goodness!"
+	icon_state = "milk"
+	item_state = "carton"
+	list_reagents = list("milk" = 50)
+	possible_states = list()
+
+/obj/item/weapon/reagent_containers/food/condiment/flour
+	name = "flour sack"
+	desc = "A big bag of flour. Good for baking!"
+	icon_state = "flour"
+	item_state = "flour"
+	list_reagents = list("flour" = 30)
+	possible_states = list()
+
+/obj/item/weapon/reagent_containers/food/condiment/soymilk
+	name = "soy milk"
+	desc = "It's soy milk. White and nutritious goodness!"
+	icon_state = "soymilk"
+	item_state = "carton"
+	list_reagents = list("soymilk" = 50)
+	possible_states = list()
+
+/obj/item/weapon/reagent_containers/food/condiment/rice
+	name = "rice sack"
+	desc = "A big bag of rice. Good for cooking!"
+	icon_state = "rice"
+	item_state = "flour"
+	list_reagents = list("rice" = 30)
+	possible_states = list()
+
+
 
 //Food packs. To easily apply deadly toxi... delicious sauces to your food!
+
 /obj/item/weapon/reagent_containers/food/condiment/pack
 	name = "condiment pack"
 	desc = "A small plastic pack with condiments to put on your food"
@@ -172,11 +191,6 @@
 	possible_transfer_amounts = list(10)
 	possible_states = list("ketchup" = list("condi_ketchup", "Ketchup", "You feel more American already."), "capsaicin" = list("condi_hotsauce", "Hotsauce", "You can almost TASTE the stomach ulcers now!"), "soysauce" = list("condi_soysauce", "Soy Sauce", "A salty soy-based flavoring"), "frostoil" = list("condi_frostoil", "Coldsauce", "Leaves the tongue numb in it's passage"), "sodiumchloride" = list("condi_salt", "Salt Shaker", "Salt. From space oceans, presumably"), "blackpepper" = list("condi_pepper", "Pepper Mill", "Often used to flavor food or make people sneeze"), "cornoil" = list("condi_cornoil", "Corn Oil", "A delicious oil used in cooking. Made from corn"), "sugar" = list("condi_sugar", "Sugar", "Tasty spacey sugar!"))
 	var/originalname = "condiment" //Can't use initial(name) for this. This stores the name set by condimasters.
-
-/obj/item/weapon/reagent_containers/food/condiment/pack/New()
-	..()
-	pixel_x = rand(-7, 7)
-	pixel_y = rand(-7, 7)
 
 /obj/item/weapon/reagent_containers/food/condiment/pack/attack(mob/M, mob/user, def_zone) //Can't feed these to people directly.
 	return
@@ -217,16 +231,10 @@
 /obj/item/weapon/reagent_containers/food/condiment/pack/ketchup
 	name = "ketchup pack"
 	originalname = "ketchup"
-
-/obj/item/weapon/reagent_containers/food/condiment/pack/ketchup/New()
-		..()
-		reagents.add_reagent("ketchup", 10)
+	list_reagents = list("ketchup" = 10)
 
 //Hot sauce
 /obj/item/weapon/reagent_containers/food/condiment/pack/hotsauce
 	name = "hotsauce pack"
 	originalname = "hotsauce"
-
-/obj/item/weapon/reagent_containers/food/condiment/pack/hotsauce/New()
-		..()
-		reagents.add_reagent("capsaicin", 10)
+	list_reagents = list("capsaicin" = 10)

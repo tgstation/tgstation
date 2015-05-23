@@ -15,37 +15,37 @@
 	var/list/crowbar_salvage = list()
 	var/salvage_num = 5
 
-/obj/structure/mecha_wreckage/attackby(obj/item/I, mob/user)
+/obj/structure/mecha_wreckage/attackby(obj/item/I, mob/user, params)
 	if(istype(I, /obj/item/weapon/weldingtool))
 		if(salvage_num <= 0)
-			user << "<span class='notice'>You don't see anything that can be cut with [I].</span>"
+			user << "<span class='warning'>You don't see anything that can be cut with [I]!</span>"
 			return
 		var/obj/item/weapon/weldingtool/WT = I
 		if(welder_salvage && welder_salvage.len && WT.remove_fuel(0, user))
 			var/type = prob(70) ? pick(welder_salvage) : null
 			if(type)
 				var/N = new type(get_turf(user))
-				user.visible_message("<span class='notice'>[user] cuts [N] from [src].</span>", "<span class='notice'>You cut [N] from [src].</span>")
+				user.visible_message("[user] cuts [N] from [src].", "<span class='notice'>You cut [N] from [src].</span>")
 				if(istype(N, /obj/item/mecha_parts/part))
 					welder_salvage -= type
 				salvage_num--
 			else
-				user << "<span class='notice'>You failed to salvage anything valuable from [src].</span>"
+				user << "<span class='warning'>You fail to salvage anything valuable from [src]!</span>"
 		else
 			return
 
 	if(istype(I, /obj/item/weapon/wirecutters))
 		if(salvage_num <= 0)
-			user << "<span class='notice'>You don't see anything that can be cut with [I].</span>"
+			user << "<span class='warning'>You don't see anything that can be cut with [I]!</span>"
 			return
 		else if(wirecutters_salvage && wirecutters_salvage.len)
 			var/type = prob(70) ? pick(wirecutters_salvage) : null
 			if(type)
 				var/N = new type(get_turf(user))
-				user.visible_message("<span class='notice'>[user] cuts [N] from [src].</span>", "<span class='notice'>You cut [N] from [src].</span>")
+				user.visible_message("[user] cuts [N] from [src].", "<span class='notice'>You cut [N] from [src].</span>")
 				salvage_num--
 			else
-				user << "<span class='notice'>You failed to salvage anything valuable from [src].</span>"
+				user << "<span class='warning'>You fail to salvage anything valuable from [src]!</span>"
 
 	if(istype(I, /obj/item/weapon/crowbar))
 		if(crowbar_salvage && crowbar_salvage.len)
@@ -53,10 +53,10 @@
 			if(S)
 				S.loc = get_turf(user)
 				crowbar_salvage -= S
-				user.visible_message("<span class='notice'>[user] pries [S] from [src].</span>", "<span class='notice'>You pry [S] from [src].</span>")
+				user.visible_message("[user] pries [S] from [src].", "<span class='notice'>You pry [S] from [src].</span>")
 			return
 		else
-			user << "<span class='notice'>You don't see anything that can be pried with [I].</span>"
+			user << "<span class='warning'>You don't see anything that can be pried with [I]!</span>"
 
 	else
 		..()

@@ -1,6 +1,6 @@
 /obj/structure/lattice
 	name = "lattice"
-	desc = "A lightweight support lattice."
+	desc = "A lightweight support lattice. These hold our station together."
 	icon = 'icons/obj/structures.dmi'
 	icon_state = "latticefull"
 	density = 0
@@ -50,7 +50,7 @@
 		else
 	return
 
-/obj/structure/lattice/attackby(obj/item/C as obj, mob/user as mob)
+/obj/structure/lattice/attackby(obj/item/C as obj, mob/user as mob, params)
 	var/turf/T = get_turf(src)
 	if (istype(C, /obj/item/stack/tile/plasteel))
 		T.attackby(C, user) //BubbleWrap - hand this off to the underlying turf instead (for building plating)
@@ -95,26 +95,19 @@
 	desc = "A catwalk for easier EVA manuevering and cable placement."
 	icon_state = "catwalkfull"
 
-/obj/structure/lattice/catwalk/New()
+/obj/structure/lattice/catwalk/Move()
 	var/turf/T = loc
-	T.cancable = 1
-	..()
-
-/obj/structure/lattice/catwalk/Destroy()
-	var/turf/T = loc
-	T.cancable = 0
-	for(var/obj/structure/cable/C in T)
-		C.Destroy()
-	..()
-
-/obj/structure/lattice/catwalk/Deconstruct()
-	var/turf/T = loc
-	T.cancable = 0
 	for(var/obj/structure/cable/C in T)
 		C.Deconstruct()
 	..()
 
-/obj/structure/lattice/catwalk/attackby(obj/item/C as obj, mob/user as mob)
+/obj/structure/lattice/catwalk/Deconstruct()
+	var/turf/T = loc
+	for(var/obj/structure/cable/C in T)
+		C.Deconstruct()
+	..()
+
+/obj/structure/lattice/catwalk/attackby(obj/item/C as obj, mob/user as mob, params)
 	..()
 	if(istype(C, /obj/item/stack/cable_coil))
 		var/turf/T = get_turf(src)
@@ -127,11 +120,8 @@
 	var/dir_sum = 0
 
 	for (var/direction in cardinal)
-		if(locate(/obj/structure/lattice/catwalk, get_step(src, direction)))
+		if(locate(/obj/structure/lattice/catwalk, get_step(src, direction))) //so we only blend with other catwalks
 			dir_sum += direction
-		else
-			if(!(istype(get_step(src, direction), /turf/space)))
-				dir_sum += direction
 
 	icon_state = "[name][dir_sum]"
 	return

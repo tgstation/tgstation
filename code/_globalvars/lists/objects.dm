@@ -3,12 +3,10 @@ var/global/list/portals = list()					//list of all /obj/effect/portal
 var/global/list/airlocks = list()					//list of all airlocks
 var/global/list/mechas_list = list()				//list of all mechs. Used by hostile mobs target tracking.
 var/global/list/shuttle_caller_list = list()  		//list of all communication consoles and AIs, for automatic shuttle calls when there are none.
-
-//items that ask to be called every cycle
-var/global/list/machines = list()
-var/global/list/processing_objects = list()
-var/global/list/active_diseases = list()
-var/global/list/aibots = list()
+var/global/list/machines = list()					//NOTE: this is a list of ALL machines now. The processing machines list is SSmachine.processing !
+var/global/list/navbeacons = list()					//list of all bot nagivation beacons, used for patrolling.
+var/global/list/deliverybeacons = list()			//list of all MULEbot delivery beacons.
+var/global/list/deliverybeacontags = list()			//list of all tags associated with delivery beacons.
 
 var/global/list/chemical_reactions_list				//list of all /datum/chemical_reaction datums. Used during chemical reactions
 var/global/list/chemical_reagents_list				//list of all /datum/reagent datums indexed by reagent id. Used by chemistry stuff

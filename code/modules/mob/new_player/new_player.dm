@@ -3,8 +3,6 @@
 /mob/new_player
 	var/ready = 0
 	var/spawning = 0//Referenced when you want to delete the new_player later on in the code.
-	var/totalPlayers = 0		 //Player counts for the Lobby tab
-	var/totalPlayersReady = 0
 
 	flags = NONE
 
@@ -31,7 +29,7 @@
 			output += "<p>\[ <a href='byond://?src=\ref[src];ready=1'>Ready</a> | <b>Not Ready</b> \]</p>"
 
 	else
-		output += "<a href='byond://?src=\ref[src];manifest=1'>View the Crew Manifest</A><br><br>"
+		output += "<p><a href='byond://?src=\ref[src];manifest=1'>View the Crew Manifest</A></p>"
 		output += "<p><a href='byond://?src=\ref[src];late_join=1'>Join Game!</A></p>"
 
 	output += "<p><a href='byond://?src=\ref[src];observe=1'>Observe</A></p>"
@@ -58,7 +56,7 @@
 	output += "</center>"
 
 	//src << browse(output,"window=playersetup;size=210x240;can_close=0")
-	var/datum/browser/popup = new(src, "playersetup", "<div align='center'>New Player Options</div>", 220, 250)
+	var/datum/browser/popup = new(src, "playersetup", "<div align='center'>New Player Options</div>", 220, 265)
 	popup.set_window_options("can_close=0")
 	popup.set_content(output)
 	popup.open(0)
@@ -67,28 +65,16 @@
 /mob/new_player/Stat()
 	..()
 
-	statpanel("Lobby")
-	if(client.statpanel == "Lobby" && ticker)
-		if(ticker.hide_mode)
-			stat("Game Mode:", "Secret")
-		else
-			stat("Game Mode:", "[master_mode]")
-
-		if((ticker.current_state == GAME_STATE_PREGAME) && going)
-			stat("Time To Start:", ticker.pregame_timeleft)
-		if((ticker.current_state == GAME_STATE_PREGAME) && !going)
-			stat("Time To Start:", "DELAYED")
+	if(statpanel("Lobby"))
+		stat("Game Mode:", (ticker.hide_mode) ? "Secret" : "[master_mode]")
 
 		if(ticker.current_state == GAME_STATE_PREGAME)
-			stat("Players:", "[totalPlayers]")
-			if(src.client in admins)
-				stat("Players Ready:", "[totalPlayersReady]")
-			totalPlayers = 0
-			totalPlayersReady = 0
-			for(var/mob/new_player/player in player_list)
-				stat("[player.key]", (player.ready && src.client in admins)?("(Playing)"):(null))
-				totalPlayers++
-				if(player.ready)totalPlayersReady++
+			stat("Time To Start:", (ticker.timeLeft >= 0) ? "[round(ticker.timeLeft / 10)]s" : "DELAYED")
+
+			stat("Players:", "[ticker.totalPlayers]")
+			if(client.holder)
+				stat("Players Ready:", "[ticker.totalPlayersReady]")
+
 
 /mob/new_player/Topic(href, href_list[])
 	if(src != usr)
@@ -102,7 +88,7 @@
 
 	if(href_list["ready"])
 		if(!ticker || ticker.current_state <= GAME_STATE_PREGAME) // Make sure we don't ready up after the round has started
-			ready = !ready
+			ready = text2num(href_list["ready"])
 		else
 			ready = 0
 
@@ -139,6 +125,14 @@
 	if(href_list["late_join"])
 		if(!ticker || ticker.current_state != GAME_STATE_PLAYING)
 			usr << "<span class='danger'>The round is either not ready, or has already finished...</span>"
+			return
+		var/relevant_cap
+		if(config.hard_popcap && config.extreme_popcap)
+			relevant_cap = min(config.hard_popcap, config.extreme_popcap)
+		else
+			relevant_cap = max(config.hard_popcap, config.extreme_popcap)
+		if(relevant_cap && living_player_count() >= relevant_cap && !(ckey(key) in admin_datums))
+			usr << "<span class='danger'>[config.hard_popcap_message]</span>"
 			return
 		LateChoices()
 
@@ -252,11 +246,18 @@
 						vote_on_poll(pollid, optionid, 1)
 
 /mob/new_player/proc/IsJobAvailable(rank)
-	var/datum/job/job = job_master.GetJob(rank)
+	var/datum/job/job = SSjob.GetJob(rank)
 	if(!job)
 		return 0
 	if((job.current_positions >= job.total_positions) && job.total_positions != -1)
-		return 0
+		if(job.title == "Assistant")
+			if(isnum(client.player_age) && client.player_age <= 14) //Newbies can always be assistants
+				return 1
+			for(var/datum/job/J in SSjob.occupations)
+				if(J && J.current_positions < J.total_positions && J.title != job.title)
+					return 0
+		else
+			return 0
 	if(jobban_isbanned(src,rank))
 		return 0
 	if(!job.player_old_enough(src.client))
@@ -271,10 +272,10 @@
 		src << alert("[rank] is not available. Please try another.")
 		return 0
 
-	job_master.AssignRole(src, rank, 1)
+	SSjob.AssignRole(src, rank, 1)
 
 	var/mob/living/carbon/human/character = create_character()	//creates the human and transfers vars and mind
-	job_master.EquipRank(character, rank, 1)					//equips the human
+	SSjob.EquipRank(character, rank, 1)					//equips the human
 	character.loc = pick(latejoin)
 	character.lastarea = get_area(loc)
 
@@ -287,8 +288,13 @@
 
 	joined_player_list += character.ckey
 
-	if(config.allow_latejoin_antagonists && emergency_shuttle.timeleft() > 300) //Don't make them antags if the station is evacuating
-		ticker.mode.make_antag_chance(character)
+	if(config.allow_latejoin_antagonists)
+		switch(SSshuttle.emergency.mode)
+			if(SHUTTLE_RECALL, SHUTTLE_IDLE)
+				ticker.mode.make_antag_chance(character)
+			if(SHUTTLE_CALL)
+				if(SSshuttle.emergency.timeLeft(1) > initial(SSshuttle.emergencyCallTime)*0.5)
+					ticker.mode.make_antag_chance(character)
 	qdel(src)
 
 /mob/new_player/proc/AnnounceArrival(var/mob/living/carbon/human/character, var/rank)
@@ -310,21 +316,22 @@
 
 	var/dat = "<div class='notice'>Round Duration: [round(hours)]h [round(mins)]m</div>"
 
-	if(emergency_shuttle) //In case Nanotrasen decides reposess Centcom's shuttles.
-		if(emergency_shuttle.direction == 2) //Shuttle is going to centcom, not recalled
+	switch(SSshuttle.emergency.mode)
+		if(SHUTTLE_ESCAPE)
 			dat += "<div class='notice red'>The station has been evacuated.</div><br>"
-		if(emergency_shuttle.direction == 1 && emergency_shuttle.timeleft() < 300) //Shuttle is past the point of no recall
-			dat += "<div class='notice red'>The station is currently undergoing evacuation procedures.</div><br>"
+		if(SHUTTLE_CALL)
+			if(SSshuttle.emergency.timeLeft() < 0.5 * initial(SSshuttle.emergencyCallTime)) //Shuttle is past the point of no recall
+				dat += "<div class='notice red'>The station is currently undergoing evacuation procedures.</div><br>"
 
 	var/available_job_count = 0
-	for(var/datum/job/job in job_master.occupations)
+	for(var/datum/job/job in SSjob.occupations)
 		if(job && IsJobAvailable(job.title))
 			available_job_count++;
 
 	dat += "<div class='clearBoth'>Choose from the following open positions:</div><br>"
 	dat += "<div class='jobs'><div class='jobsColumn'>"
 	var/job_count = 0
-	for(var/datum/job/job in job_master.occupations)
+	for(var/datum/job/job in SSjob.occupations)
 		if(job && IsJobAvailable(job.title))
 			job_count++;
 			if (job_count > round(available_job_count / 2))
@@ -333,6 +340,11 @@
 			if (job.title in command_positions)
 				position_class = "commandPosition"
 			dat += "<a class='[position_class]' href='byond://?src=\ref[src];SelectedJob=[job.title]'>[job.title] ([job.current_positions])</a><br>"
+	if(!job_count) //if there's nowhere to go, assistant opens up.
+		for(var/datum/job/job in SSjob.occupations)
+			if(job.title != "Assistant") continue
+			dat += "<a class='otherPosition' href='byond://?src=\ref[src];SelectedJob=[job.title]'>[job.title] ([job.current_positions])</a><br>"
+			break
 	dat += "</div></div>"
 
 	// Removing the old window method but leaving it here for reference
@@ -378,7 +390,7 @@
 	dat += "<h4>Crew Manifest</h4>"
 	dat += data_core.get_manifest(OOC = 1)
 
-	src << browse(dat, "window=manifest;size=370x420;can_close=1")
+	src << browse(dat, "window=manifest;size=387x420;can_close=1")
 
 /mob/new_player/Move()
 	return 0

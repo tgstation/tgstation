@@ -34,7 +34,6 @@ var/list/ai_list = list()
 	radiomod = ";" //AIs will, by default, state their laws on the internal radio.
 	var/obj/item/device/pda/ai/aiPDA = null
 	var/obj/item/device/multitool/aiMulti = null
-	var/obj/item/device/camera/siliconcam/aicamera = null
 	var/obj/machinery/bot/Bot
 
 	//MALFUNCTION
@@ -64,17 +63,7 @@ var/list/ai_list = list()
 	var/apc_override = 0 //hack for letting the AI use its APC even when visionless
 
 /mob/living/silicon/ai/New(loc, var/datum/ai_laws/L, var/obj/item/device/mmi/B, var/safety = 0)
-	var/list/possibleNames = ai_names
-
-	var/pickedName = null
-	while(!pickedName)
-		pickedName = pick(ai_names)
-		for (var/mob/living/silicon/ai/A in mob_list)
-			if (A.real_name == pickedName && possibleNames.len > 1) //fixing the theoretically possible infinite loop
-				possibleNames -= pickedName
-				pickedName = null
-
-	real_name = pickedName
+	rename_self("ai", 1)
 	name = real_name
 	anchored = 1
 	canmove = 0
@@ -135,7 +124,7 @@ var/list/ai_list = list()
 /mob/living/silicon/ai/Destroy()
 	ai_list -= src
 	shuttle_caller_list -= src
-	emergency_shuttle.autoshuttlecall()
+	SSshuttle.autoEvac()
 	..()
 
 
@@ -146,7 +135,7 @@ var/list/ai_list = list()
 		return
 
 		//if(icon_state == initial(icon_state))
-	var/icontype = input("Please, select a display!", "AI", null/*, null*/) in list("Clown", "Monochrome", "Blue", "Inverted", "Firewall", "Green", "Red", "Static", "Red October", "House", "Heartline")
+	var/icontype = input("Please, select a display!", "AI", null/*, null*/) in list("Clown", "Monochrome", "Blue", "Inverted", "Firewall", "Green", "Red", "Static", "Red October", "House", "Heartline", "Hades", "Helios", "President", "Syndicat Meow", "Alien", "Too Deep", "Triumvirate", "Triumvirate-M", "Text", "Matrix", "Dorf", "Bliss", "Not Malf", "Fuzzy", "Goon", "Database", "Glitchman", "Murica", "Nanotrasen", "Gentoo")
 	if(icontype == "Clown")
 		icon_state = "ai-clown2"
 	else if(icontype == "Monochrome")
@@ -169,19 +158,53 @@ var/list/ai_list = list()
 		icon_state = "ai-house"
 	else if(icontype == "Heartline")
 		icon_state = "ai-heartline"
+	else if(icontype == "Hades")
+		icon_state = "ai-hades"
+	else if(icontype == "Helios")
+		icon_state = "ai-helios"
+	else if(icontype == "President")
+		icon_state = "ai-pres"
+	else if(icontype == "Syndicat Meow")
+		icon_state = "ai-syndicatmeow"
+	else if(icontype == "Alien")
+		icon_state = "ai-alien"
+	else if(icontype == "Too Deep")
+		icon_state = "ai-toodeep"
+	else if(icontype == "Triumvirate")
+		icon_state = "ai-triumvirate"
+	else if(icontype == "Triumvirate-M")
+		icon_state = "ai-triumvirate-malf"
+	else if(icontype == "Text")
+		icon_state = "ai-text"
+	else if(icontype == "Matrix")
+		icon_state = "ai-matrix"
+	else if(icontype == "Dorf")
+		icon_state = "ai-dorf"
+	else if(icontype == "Bliss")
+		icon_state = "ai-bliss"
+	else if(icontype == "Not Malf")
+		icon_state = "ai-notmalf"
+	else if(icontype == "Fuzzy")
+		icon_state = "ai-fuzz"
+	else if(icontype == "Goon")
+		icon_state = "ai-goon"
+	else if(icontype == "Database")
+		icon_state = "ai-database"
+	else if(icontype == "Glitchman")
+		icon_state = "ai-glitchman"
+	else if(icontype == "Murica")
+		icon_state = "ai-murica"
+	else if(icontype == "Nanotrasen")
+		icon_state = "ai-nanotrasen"
+	else if(icontype == "Gentoo")
+		icon_state = "ai-gentoo"
 	//else
 			//usr <<"You can only change your display once!"
 			//return
 
 /mob/living/silicon/ai/Stat()
 	..()
-	statpanel("Status")
-	if (client.statpanel == "Status")
-		if(emergency_shuttle.online && emergency_shuttle.location < 2)
-			var/timeleft = emergency_shuttle.timeleft()
-			if (timeleft)
-				stat(null, "ETA-[(timeleft / 60) % 60]:[add_zero(num2text(timeleft % 60), 2)]")
-
+	if(statpanel("Status"))
 		if(ticker.mode.name == "AI malfunction")
 			var/datum/game_mode/malfunction/malf = ticker.mode
 			for (var/datum/mind/malfai in malf.malf_ai)
@@ -190,8 +213,26 @@ var/list/ai_list = list()
 
 		if(!stat)
 			stat(null, text("System integrity: [(health+100)/2]%"))
+			stat(null, "Station Time: [worldtime2text()]")
+			stat(null, text("Connected cyborgs: [connected_robots.len]"))
+			var/area/borg_area
+			for(var/mob/living/silicon/robot/R in connected_robots)
+				borg_area = get_area(R)
+				var/robot_status = "Nominal"
+				if(R.stat || !R.client)
+					robot_status = "OFFLINE"
+				else if(!R.cell || R.cell.charge <= 0)
+					robot_status = "DEPOWERED"
+				//Name, Health, Battery, Module, Area, and Status! Everything an AI wants to know about its borgies!
+				stat(null, text("[R.name] | S.Integrity: [R.health]% | Cell: [R.cell ? "[R.cell.charge]/[R.cell.maxcharge]" : "Empty"] | \
+ 				Module: [R.designation] | Loc: [borg_area.name] | Status: [robot_status]"))
 		else
 			stat(null, text("Systems nonfunctional"))
+
+/mob/living/silicon/ai/canUseTopic()
+	if(stat)
+		return
+	return 1
 
 /mob/living/silicon/ai/proc/ai_alerts()
 	var/dat = "<HEAD><TITLE>Current Station Alerts</TITLE><META HTTP-EQUIV='Refresh' CONTENT='10'></HEAD><BODY>\n"
@@ -237,7 +278,7 @@ var/list/ai_list = list()
 	onclose(src, "airoster")
 
 /mob/living/silicon/ai/proc/ai_call_shuttle()
-	if(src.stat == 2)
+	if(src.stat == DEAD)
 		src << "You can't call the shuttle because you are dead!"
 		return
 	if(istype(usr,/mob/living/silicon/ai))
@@ -248,11 +289,11 @@ var/list/ai_list = list()
 
 	var/reason = input(src, "What is the nature of your emergency? ([CALL_SHUTTLE_REASON_LENGTH] characters required.)", "Confirm Shuttle Call") as text
 
-	if(length(trim(reason)) > 0)
-		call_shuttle_proc(src, reason)
+	if(trim(reason))
+		SSshuttle.requestEvac(src, reason)
 
 	// hack to display shuttle timer
-	if(emergency_shuttle.online)
+	if(SSshuttle.emergency.mode >= SHUTTLE_CALL)
 		var/obj/machinery/computer/communications/C = locate() in machines
 		if(C)
 			C.post_status("shuttle")
@@ -276,7 +317,7 @@ var/list/ai_list = list()
 	return 0
 
 /mob/living/silicon/ai/proc/ai_cancel_call()
-	set category = "AI Commands"
+	set category = "Malfunction"
 	if(src.stat == 2)
 		src << "You can't send the shuttle back because you are dead!"
 		return
@@ -285,7 +326,7 @@ var/list/ai_list = list()
 		if(AI.control_disabled)
 			src	 << "Wireless control is disabled!"
 			return
-	cancel_call_proc(src)
+	SSshuttle.cancelEvac(src)
 	return
 
 /mob/living/silicon/ai/check_eye(var/mob/user as mob)
@@ -368,7 +409,7 @@ var/list/ai_list = list()
 		return
 
 	if (href_list["callbot"]) //Command a bot to move to a selected location.
-		Bot = locate(href_list["callbot"]) in aibots
+		Bot = locate(href_list["callbot"]) in SSbot.processing
 		if(!Bot || Bot.remote_disabled || src.control_disabled)
 			return //True if there is no bot found, the bot is manually emagged, or the AI is carded with wireless off.
 		waypoint_mode = 1
@@ -376,7 +417,7 @@ var/list/ai_list = list()
 		return
 
 	if (href_list["interface"]) //Remotely connect to a bot!
-		Bot = locate(href_list["interface"]) in aibots
+		Bot = locate(href_list["interface"]) in SSbot.processing
 		if(!Bot || Bot.remote_disabled || src.control_disabled)
 			return
 		Bot.attack_ai(src)
@@ -459,12 +500,12 @@ var/list/ai_list = list()
 	d += "<A HREF=?src=\ref[src];botrefresh=\ref[Bot]>Query network status</A><br>"
 	d += "<table width='100%'><tr><td width='40%'><h3>Name</h3></td><td width='30%'><h3>Status</h3></td><td width='30%'><h3>Location</h3></td><td width='10%'><h3>Control</h3></td></tr>"
 
-	for (Bot in aibots)
+	for (Bot in SSbot.processing)
 		if(Bot.z == ai_Zlevel && !Bot.remote_disabled) //Only non-emagged bots on the same Z-level are detected!
 			bot_area = get_area(Bot)
-			d += "<tr><td width='30%'>[Bot.hacked ? "<span class='bad'>(!) </span>[Bot.name]" : Bot.name]</td>"
+			d += "<tr><td width='30%'>[Bot.hacked ? "<span class='bad'>(!)</span>" : ""] [Bot.name] ([Bot.model])</td>"
 			//If the bot is on, it will display the bot's current mode status. If the bot is not mode, it will just report "Idle". "Inactive if it is not on at all.
-			d += "<td width='30%'>[Bot.on ? "[Bot.mode ? "<span class='average'>[ Bot.mode_name[Bot.mode] ]</span>": "<span class='good'>Idle</span>"]" : "<span class='bad'>Inactive</span>"]</td>"
+			d += "<td width='30%'>[Bot.on ? "[Bot.mode ? "<span class='average'>[ Bot.get_mode() ]</span>": "<span class='good'>Idle</span>"]" : "<span class='bad'>Inactive</span>"]</td>"
 			d += "<td width='30%'>[bot_area.name]</td>"
 			d += "<td width='10%'><A HREF=?src=\ref[src];interface=\ref[Bot]>Interface</A></td>"
 			d += "<td width='10%'><A HREF=?src=\ref[src];callbot=\ref[Bot]>Call</A></td>"
@@ -742,9 +783,6 @@ var/list/ai_list = list()
 
 	set_autosay()
 
-/mob/living/silicon/ai/attack_slime(mob/living/carbon/slime/user)
-	return
-
-/mob/living/silicon/ai/grabbedby(mob/living/user)
+/mob/living/silicon/ai/attack_slime(mob/living/simple_animal/slime/user)
 	return
 

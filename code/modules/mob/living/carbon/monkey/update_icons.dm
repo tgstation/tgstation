@@ -1,11 +1,12 @@
 //Monkey Overlays Indexes////////
-#define M_FIRE_LAYER			6
-#define M_MASK_LAYER			5
+#define M_FIRE_LAYER			7
+#define M_MASK_LAYER			6
+#define M_HEAD_LAYER			5
 #define M_BACK_LAYER			4
 #define M_HANDCUFF_LAYER		3
 #define M_L_HAND_LAYER			2
 #define M_R_HAND_LAYER			1
-#define M_TOTAL_LAYERS			6
+#define M_TOTAL_LAYERS			7
 /////////////////////////////////
 
 /mob/living/carbon/monkey
@@ -14,6 +15,7 @@
 /mob/living/carbon/monkey/regenerate_icons()
 	..()
 	update_inv_wear_mask(0)
+	update_inv_head(0)
 	update_inv_back(0)
 	update_inv_r_hand(0)
 	update_inv_l_hand(0)
@@ -39,7 +41,7 @@
 		if(client && hud_used)
 			client.screen += wear_mask
 		overlays -= overlays_standing[M_MASK_LAYER]
-		var/image/standing	= image("icon" = 'icons/mob/monkey.dmi', "icon_state" = "[wear_mask.icon_state]", "layer" = -M_MASK_LAYER)
+		var/image/standing	= image("icon" = 'icons/mob/mask.dmi', "icon_state" = "[wear_mask.icon_state]", "layer" = -M_MASK_LAYER)
 		if(!istype(wear_mask, /obj/item/clothing/mask/cigarette) && wear_mask.blood_DNA )
 			standing.overlays	+= image("icon" = 'icons/effects/blood.dmi', "icon_state" = "maskblood")
 		overlays_standing[M_MASK_LAYER]	= standing
@@ -47,6 +49,21 @@
 	else
 		overlays -= overlays_standing[M_MASK_LAYER]
 		overlays_standing[M_MASK_LAYER]	= null
+	if(update_icons)		update_icons()
+
+
+/mob/living/carbon/monkey/update_inv_head(var/update_icons=1)
+	if(head)
+		head.screen_loc = ui_monkey_head
+		if(client && hud_used)
+			client.screen += head
+		overlays -= overlays_standing[M_HEAD_LAYER]
+		var/image/standing	= image("icon" = 'icons/mob/head.dmi', "icon_state" = "[head.icon_state]", "layer" = -M_HEAD_LAYER)
+		overlays_standing[M_HEAD_LAYER]	= standing
+		overlays += overlays_standing[M_HEAD_LAYER]
+	else
+		overlays -= overlays_standing[M_HEAD_LAYER]
+		overlays_standing[M_HEAD_LAYER]	= null
 	if(update_icons)		update_icons()
 
 
@@ -61,7 +78,9 @@
 		var/t_state = r_hand.item_state
 		if(!t_state)	t_state = r_hand.icon_state
 		overlays -= overlays_standing[M_R_HAND_LAYER]
-		overlays_standing[M_R_HAND_LAYER]	= image("icon" = 'icons/mob/items_righthand.dmi', "icon_state" = t_state, "layer" = -M_R_HAND_LAYER)
+		var/image/standing = image("icon" = r_hand.righthand_file, "icon_state" = t_state, "layer" = -M_R_HAND_LAYER)
+		standing.pixel_y = 2
+		overlays_standing[M_R_HAND_LAYER]	= standing
 		overlays += overlays_standing[M_R_HAND_LAYER]
 	else
 		overlays -= overlays_standing[M_R_HAND_LAYER]
@@ -80,7 +99,9 @@
 		var/t_state = l_hand.item_state
 		if(!t_state)	 t_state = l_hand.icon_state
 		overlays -= overlays_standing[M_L_HAND_LAYER]
-		overlays_standing[M_L_HAND_LAYER]	= image("icon" = 'icons/mob/items_lefthand.dmi', "icon_state" = t_state, "layer" = -M_L_HAND_LAYER)
+		var/image/standing = image("icon" = l_hand.lefthand_file, "icon_state" = t_state, "layer" = -M_L_HAND_LAYER)
+		standing.pixel_y = 2
+		overlays_standing[M_L_HAND_LAYER]	= standing
 		overlays += overlays_standing[M_L_HAND_LAYER]
 	else
 		overlays -= overlays_standing[M_L_HAND_LAYER]

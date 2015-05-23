@@ -8,15 +8,11 @@
 	flag = "laser"
 	eyeblur = 2
 
-/obj/item/projectile/practice
-	name = "laser"
-	icon_state = "laser"
-	pass_flags = PASSTABLE | PASSGLASS | PASSGRILLE
+/obj/item/projectile/beam/practice
+	name = "practice laser"
 	damage = 0
 	hitsound = null
-	damage_type = BURN
-	flag = "laser"
-	eyeblur = 2
+	nodamage = 1
 
 /obj/item/projectile/beam/scatter
 	name = "laser pellet"
@@ -41,6 +37,7 @@
 	icon_state = "omnilaser"
 	damage = 36
 	damage_type = STAMINA
+	flag = "energy"
 	hitsound = 'sound/weapons/tap.ogg'
 	eyeblur = 0
 
@@ -50,9 +47,9 @@
 	damage = 50
 
 /obj/item/projectile/beam/pulse/on_hit(var/atom/target, var/blocked = 0)
+	. = ..()
 	if(istype(target,/turf/)||istype(target,/obj/structure/))
 		target.ex_act(2)
-	..()
 
 /obj/item/projectile/beam/pulse/shot
 	damage = 40
@@ -66,8 +63,7 @@
 	return //don't want the emitters to miss
 
 obj/item/projectile/beam/emitter/Destroy()
-	PlaceInPool(src)
-	return 1 //cancels the GCing
+	return QDEL_HINT_PUTINPOOL
 
 /obj/item/projectile/lasertag
 	name = "laser tag beam"
@@ -80,12 +76,13 @@ obj/item/projectile/beam/emitter/Destroy()
 	var/suit_types = list(/obj/item/clothing/suit/redtag, /obj/item/clothing/suit/bluetag)
 
 /obj/item/projectile/lasertag/on_hit(var/atom/target, var/blocked = 0)
-	if(istype(target, /mob/living/carbon/human))
+	. = ..()
+	if(ishuman(target))
 		var/mob/living/carbon/human/M = target
 		if(istype(M.wear_suit))
 			if(M.wear_suit.type in suit_types)
 				M.adjustStaminaLoss(34)
-	return 1
+
 
 /obj/item/projectile/lasertag/redtag
 	icon_state = "laser"

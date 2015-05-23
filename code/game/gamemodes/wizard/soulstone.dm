@@ -1,5 +1,5 @@
 /obj/item/device/soulstone
-	name = "Soul Stone Shard"
+	name = "soulstone shard"
 	icon = 'icons/obj/wizard.dmi'
 	icon_state = "soulstone"
 	item_state = "electronic"
@@ -8,11 +8,23 @@
 	slot_flags = SLOT_BELT
 	origin_tech = "bluespace=4;materials=4"
 	var/imprinted = "empty"
+	var/usability = 0
 
+/obj/item/device/soulstone/anybody
+	usability = 1
+
+/obj/item/device/soulstone/pickup(mob/living/user as mob)
+	if(!iscultist(user) && !iswizard(user) && !usability)
+		user << "<span class='danger'>An overwhelming feeling of dread comes over you as you pick up the soulstone. It would be wise to be rid of this quickly.</span>"
+		user.Dizzy(120)
 
 //////////////////////////////Capturing////////////////////////////////////////////////////////
 
 /obj/item/device/soulstone/attack(mob/living/carbon/human/M as mob, mob/user as mob)
+	if(!iscultist(user) && !iswizard(user) && !usability)
+		user.Paralyse(5)
+		user << "<span class='userdanger'>Your body is wracked with debilitating pain!</span>"
+		return
 	if(!istype(M, /mob/living/carbon/human))//If target is not a human.
 		return ..()
 	if(istype(M, /mob/living/carbon/human/dummy))
@@ -26,6 +38,10 @@
 
 /obj/item/device/soulstone/attack_self(mob/user)
 	if (!in_range(src, user))
+		return
+	if(!iscultist(user) && !iswizard(user) && !usability)
+		user.Paralyse(5)
+		user << "<span class='userdanger'>Your body is wracked with debilitating pain!</span>"
 		return
 	user.set_machine(src)
 	var/dat = "<TT><B>Soul Stone</B><BR>"
@@ -59,10 +75,14 @@
 			for(var/mob/living/simple_animal/shade/A in src)
 				A.status_flags &= ~GODMODE
 				A.canmove = 1
-				A << "<b>You have been released from your prison, but you are still bound to [U.name]'s will. Help them suceed in their goals at all costs.</b>"
 				A.loc = U.loc
 				A.cancel_camera()
 				src.icon_state = "soulstone"
+				if(iswizard(U) || usability)
+					A << "<b>You have been released from your prison, but you are still bound to [U.name]'s will. Help them suceed in their goals at all costs.</b>"
+				else if(iscultist(U))
+					A << "<b>You have been released from your prison, but you are still bound to the cult's will. Help them suceed in their goals at all costs.</b>"
+
 	attack_self(U)
 
 ///////////////////////////Transferring to constructs/////////////////////////////////////////////////////
@@ -72,7 +92,7 @@
 	icon_state = "construct"
 	desc = "A wicked machine used by those skilled in magical arts. It is inactive"
 
-/obj/structure/constructshell/attackby(obj/item/O as obj, mob/user as mob)
+/obj/structure/constructshell/attackby(obj/item/O as obj, mob/user as mob, params)
 	if(istype(O, /obj/item/device/soulstone))
 		var/obj/item/device/soulstone/SS = O
 		SS.transfer_soul("CONSTRUCT",src,user)
@@ -149,6 +169,8 @@
 			var/mob/living/simple_animal/shade/A = locate() in C
 			if(A)
 				var/construct_class = alert(U, "Please choose which type of construct you wish to create.",,"Juggernaut","Wraith","Artificer")
+				if(!T || !T.loc)
+					return
 				switch(construct_class)
 					if("Juggernaut")
 						makeNewConstruct(/mob/living/simple_animal/construct/armored, A, U)
@@ -177,7 +199,11 @@ proc/makeNewConstruct(var/mob/living/simple_animal/construct/ctype, var/mob/targ
 			ticker.mode.cult+=newstruct.mind
 		ticker.mode.update_cult_icons_added(newstruct.mind)
 	newstruct << newstruct.playstyle_string
-	newstruct << "<B>You are still bound to serve your creator, follow their orders and help them complete their goals at all costs.</B>"
+	if(stoner && iswizard(stoner))
+		newstruct << "<B>You are still bound to serve your creator, follow their orders and help them complete their goals at all costs.</B>"
+	else if(stoner && iscultist(stoner))
+		newstruct << "<B>You are still bound to serve the cult, follow their orders and help them complete their goals at all costs.</B>"
+	else newstruct << "<B>You are still bound to serve your creator, follow their orders and help them complete their goals at all costs.</B>"
 	newstruct.cancel_camera()
 
 
@@ -203,7 +229,10 @@ proc/makeNewConstruct(var/mob/living/simple_animal/construct/ctype, var/mob/targ
 	S.cancel_camera()
 	C.icon_state = "soulstone2"
 	C.name = "Soul Stone: [S.real_name]"
-	S << "Your soul has been captured! You are now bound to [U.name]'s will, help them suceed in their goals at all costs."
+	if(iswizard(U) || usability)
+		S << "Your soul has been captured! You are now bound to [U.name]'s will, help them suceed in their goals at all costs."
+	else if(iscultist(U))
+		S << "Your soul has been captured! You are now bound to the cult's will, help them suceed in their goals at all costs."
 	C.imprinted = "[S.name]"
 	if(vic)
 		U << "<span class='info'><b>Capture successful!</b>:</span> [T.real_name]'s soul has been ripped from their body and stored within the soul stone."

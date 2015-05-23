@@ -104,7 +104,7 @@
 /obj/item/weapon/storage/proc/can_see_contents()
 	var/list/cansee = list()
 	for(var/mob/M in is_seeing)
-		if(M.s_active == src)
+		if(M.s_active == src && M.client)
 			cansee |= M
 		else
 			is_seeing -= M
@@ -213,7 +213,7 @@
 		return 0 //Means the item is already in the storage item
 	if(contents.len >= storage_slots)
 		if(!stop_messages)
-			usr << "<span class='notice'>[src] is full, make some space.</span>"
+			usr << "<span class='warning'>[src] is full, make some space!</span>"
 		return 0 //Storage item is full
 
 	if(can_hold.len)
@@ -224,18 +224,18 @@
 				break
 		if(!ok)
 			if(!stop_messages)
-				usr << "<span class='notice'>[src] cannot hold [W].</span>"
+				usr << "<span class='warning'>[src] cannot hold [W]!</span>"
 			return 0
 
 	for(var/A in cant_hold) //Check for specific items which this container can't hold.
 		if(istype(W, A))
 			if(!stop_messages)
-				usr << "<span class='notice'>[src] cannot hold [W].</span>"
+				usr << "<span class='warning'>[src] cannot hold [W]!</span>"
 			return 0
 
 	if(W.w_class > max_w_class)
 		if(!stop_messages)
-			usr << "<span class='notice'>[W] is too big for [src].</span>"
+			usr << "<span class='warning'>[W] is too big for [src]!</span>"
 		return 0
 
 	var/sum_w_class = W.w_class
@@ -244,17 +244,17 @@
 
 	if(sum_w_class > max_combined_w_class)
 		if(!stop_messages)
-			usr << "<span class='notice'>[src] is full, make some space.</span>"
+			usr << "<span class='warning'>[src] is full, make some space!</span>"
 		return 0
 
 	if(W.w_class >= w_class && (istype(W, /obj/item/weapon/storage)))
 		if(!istype(src, /obj/item/weapon/storage/backpack/holding))	//bohs should be able to hold backpacks again. The override for putting a boh in a boh is in backpack.dm.
 			if(!stop_messages)
-				usr << "<span class='notice'>[src] cannot hold [W] as it's a storage item of the same size.</span>"
+				usr << "<span class='warning'>[src] cannot hold [W] as it's a storage item of the same size!</span>"
 			return 0 //To prevent the stacking of same sized storage items.
 
 	if(W.flags & NODROP) //SHOULD be handled in unEquip, but better safe than sorry.
-		usr << "<span class='notice'>\the [W] is stuck to your hand, you can't put it in \the [src]</span>"
+		usr << "<span class='warning'>\the [W] is stuck to your hand, you can't put it in \the [src]!</span>"
 		return 0
 
 	return 1
@@ -276,7 +276,7 @@
 
 		add_fingerprint(usr)
 
-		if(!prevent_warning && !istype(W, /obj/item/weapon/gun/energy/crossbow))
+		if(!prevent_warning && !istype(W, /obj/item/weapon/gun/energy/kinetic_accelerator/crossbow))
 			for(var/mob/M in viewers(usr, null))
 				if(M == usr)
 					usr << "<span class='notice'>You put [W] [preposition]to [src].</span>"
@@ -321,11 +321,11 @@
 
 
 //This proc is called when you want to place an item into the storage item.
-/obj/item/weapon/storage/attackby(obj/item/W, mob/user)
+/obj/item/weapon/storage/attackby(obj/item/W, mob/user, params)
 	..()
 
 	if(isrobot(user))
-		user << "<span class='notice'>You're a robot. No.</span>"
+		user << "<span class='warning'>You're a robot. No.</span>"
 		return 0	//Robots can't interact with storage items.
 
 	if(!can_be_inserted(W, 0 , user))

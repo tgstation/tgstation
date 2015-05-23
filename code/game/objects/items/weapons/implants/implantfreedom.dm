@@ -17,6 +17,8 @@
 		if (C_imp_in.handcuffed)
 			var/obj/item/weapon/W = C_imp_in.handcuffed
 			C_imp_in.handcuffed = null
+			if(C_imp_in.buckled && C_imp_in.buckled.buckle_requires_restraints)
+				C_imp_in.buckled.unbuckle_mob()
 			C_imp_in.update_inv_handcuffed(0)
 			if (C_imp_in.client)
 				C_imp_in.client.screen -= W

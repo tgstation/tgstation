@@ -124,7 +124,7 @@
 	add_hiddenprint(user)
 	deactivate(user,0)
 
-/obj/machinery/camera/attackby(W as obj, mob/living/user as mob)
+/obj/machinery/camera/attackby(W as obj, mob/living/user as mob, params)
 	var/msg = "<span class='notice'>You attach [W] into the assembly inner circuits.</span>"
 	var/msg2 = "<span class='notice'>The camera already has that upgrade!</span>"
 
@@ -133,7 +133,7 @@
 		//user << "<span class='notice'>You start to [panel_open ? "close" : "open"] the camera's panel.</span>"
 		//if(toggle_panel(user)) // No delay because no one likes screwdrivers trying to be hip and have a duration cooldown
 		panel_open = !panel_open
-		user.visible_message("<span class='warning'>[user] screws the camera's panel [panel_open ? "open" : "closed"]!</span>",
+		user.visible_message("[user] screws the camera's panel [panel_open ? "open" : "closed"]!",
 		"<span class='notice'>You screw the camera's panel [panel_open ? "open" : "closed"].</span>")
 		playsound(src.loc, 'sound/items/Screwdriver.ogg', 50, 1)
 
@@ -142,7 +142,7 @@
 
 	else if(istype(W, /obj/item/weapon/weldingtool) && wires.CanDeconstruct())
 		if(weld(W, user))
-			user << "You unweld the camera leaving it as just a frame screwed to the wall."
+			user << "<span class='notice'>You unweld the camera leaving it as just a frame screwed to the wall.</span>"
 			if(!assembly)
 				assembly = new()
 			assembly.loc = src.loc
@@ -191,7 +191,7 @@
 			P = W
 			itemname = P.name
 			info = P.notehtml
-		U << "You hold \the [itemname] up to the camera ..."
+		U << "<span class='notice'>You hold \the [itemname] up to the camera...</span>"
 		U.changeNext_move(CLICK_CD_MELEE)
 		for(var/mob/O in player_list)
 			if(istype(O, /mob/living/silicon/ai))
@@ -214,15 +214,6 @@
 			user << "<span class='notice'>Camera bugged.</span>"
 			src.bug = W
 			src.bug.bugged_cameras[src.c_tag] = src
-	else if(istype(W, /obj/item/weapon/melee/energy/blade))//Putting it here last since it's a special case. I wonder if there is a better way to do these than type casting.
-		deactivate(user,2)//Here so that you can disconnect anyone viewing the camera, regardless if it's on or off.
-		var/datum/effect/effect/system/spark_spread/spark_system = new /datum/effect/effect/system/spark_spread()
-		spark_system.set_up(5, 0, loc)
-		spark_system.start()
-		playsound(loc, 'sound/weapons/blade1.ogg', 50, 1)
-		playsound(loc, "sparks", 50, 1)
-		visible_message("<span class='notice'>[user] has sliced the camera apart with an energy blade!</span>")
-		qdel(src)
 	else if(istype(W, /obj/item/device/laser_pointer))
 		var/obj/item/device/laser_pointer/L = W
 		L.laser_act(src, user)
@@ -323,17 +314,15 @@
 
 	return null
 
-/obj/machinery/camera/proc/weld(var/obj/item/weapon/weldingtool/WT, var/mob/user)
+/obj/machinery/camera/proc/weld(var/obj/item/weapon/weldingtool/WT, var/mob/living/user)
 
 	if(busy)
 		return 0
-	if(!WT.isOn())
+	if(!WT.remove_fuel(0, user))
 		return 0
 
-	// Do after stuff here
-	user << "<span class='notice'>You start to weld [src].</span>"
+	user << "<span class='notice'>You start to weld [src]...</span>"
 	playsound(src.loc, 'sound/items/Welder.ogg', 50, 1)
-	WT.eyecheck(user)
 	busy = 1
 	if(do_after(user, 100))
 		busy = 0
@@ -342,3 +331,18 @@
 		return 1
 	busy = 0
 	return 0
+
+
+/obj/machinery/camera/portable //Cameras which are placed inside of things, such as helmets.
+	var/turf/prev_turf
+
+/obj/machinery/camera/portable/New()
+	..()
+	assembly.state = 0 //These cameras are portable, and so shall be in the portable state if removed.
+	assembly.anchored = 0
+	assembly.update_icon()
+
+/obj/machinery/camera/portable/process() //Updates whenever the camera is moved.
+	if(cameranet && get_turf(src) != prev_turf)
+		cameranet.updatePortableCamera(src)
+		prev_turf = get_turf(src)

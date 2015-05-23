@@ -4,6 +4,9 @@
 /* --- Traffic Control Scripting Language --- */
 	// Nanotrasen TCS Language - Made by Doohl
 
+//Span classes that players are allowed to set in a radio transmission.
+var/list/allowed_custom_spans = list(SPAN_ROBOT,SPAN_YELL,SPAN_ITALICS,SPAN_SANS)
+
 /n_Interpreter/TCS_Interpreter
 	var/datum/TCS_Compiler/Compiler
 
@@ -96,6 +99,17 @@
 		interpreter.SetVar("$job"    , 	signal.data["job"])
 		interpreter.SetVar("$sign"   ,	signal)
 		interpreter.SetVar("$pass"	 ,  !(signal.data["reject"])) // if the signal isn't rejected, pass = 1; if the signal IS rejected, pass = 0
+		interpreter.SetVar("$filters"  ,	signal.data["spans"]) //Important, this is given as a vector! (a list)
+		interpreter.SetVar("$say"    , 	signal.data["verb_say"])
+		interpreter.SetVar("$ask"    , 	signal.data["verb_ask"])
+		interpreter.SetVar("$yell"    , 	signal.data["verb_yell"])
+		interpreter.SetVar("$exclaim"    , 	signal.data["verb_exclaim"])
+
+		//Current allowed span classes
+		interpreter.SetVar("$robot",	SPAN_ROBOT) //The font used by silicons!
+		interpreter.SetVar("$loud",		SPAN_YELL)	//Bolding, applied when ending a message with several exclamation marks.
+		interpreter.SetVar("$emphasis",	SPAN_ITALICS) //Italics
+		interpreter.SetVar("$wacky",		SPAN_SANS) //Comic sans font, normally seen from the genetics power.
 
 		//Language bitflags
 		interpreter.SetVar("HUMAN"   ,	HUMAN)
@@ -124,9 +138,15 @@
 					@param content:		Message to broadcast
 					@param frequency:	Frequency to broadcast to
 					@param source:		The name of the source you wish to imitate. Must be stored in stored_names list.
-					@param job:				The name of the job.
+					@param job:			The name of the job.
+					@param spans		What span classes you want to apply to your message. Must be in the "allowed_custom_spans" list.
+					@param say			Say verb used in messages ending in ".".
+					@param ask			Say verb used in messages ending in "?".
+					@param yell			Say verb used in messages ending in "!!" (or more).
+					@param exclaim		Say verb used in messages ending in "!".
+
 		*/
-		interpreter.SetProc("broadcast", "tcombroadcast", signal, list("message", "freq", "source", "job"))
+		interpreter.SetProc("broadcast", "tcombroadcast", signal, list("message", "freq", "source", "job","spans","say","ask","yell","exclaim"))
 
 		/*
 			-> Send a code signal.
@@ -190,6 +210,11 @@
 		interpreter.SetProc("randseed", /proc/n_randseed)
 		interpreter.SetProc("min", /proc/n_min)
 		interpreter.SetProc("max", /proc/n_max)
+		interpreter.SetProc("sin", /proc/n_sin)
+		interpreter.SetProc("cos", /proc/n_cos)
+		interpreter.SetProc("asin", /proc/n_asin)
+		interpreter.SetProc("acos", /proc/n_acos)
+		interpreter.SetProc("log", /proc/n_log)
 
 		// Time
 		interpreter.SetProc("time", /proc/n_time)
@@ -209,9 +234,16 @@
 
 		if(signal.data["name"] != setname)
 			signal.data["realname"] = setname
-		signal.data["name"]		= setname
-		signal.data["job"]		= interpreter.GetCleanVar("$job", signal.data["job"])
-		signal.data["reject"]	= !(interpreter.GetCleanVar("$pass")) // set reject to the opposite of $pass
+		signal.data["name"]			= setname
+		signal.data["job"]			= interpreter.GetCleanVar("$job", signal.data["job"])
+		signal.data["reject"]		= !(interpreter.GetCleanVar("$pass")) // set reject to the opposite of $pass
+		signal.data["verb_say"]		= interpreter.GetCleanVar("$say")
+		signal.data["verb_ask"]		= interpreter.GetCleanVar("$ask")
+		signal.data["verb_yell"]	= interpreter.GetCleanVar("$yell")
+		signal.data["verb_exclaim"]	= interpreter.GetCleanVar("$exclaim")
+		var/list/setspans 			= interpreter.GetCleanVar("$filters") //Save the span vector/list to a holder list
+		setspans &= allowed_custom_spans //Prune out any illegal ones. Go ahead, comment this line out. See the horror you can unleash!
+		signal.data["spans"]		= setspans //Apply it to the signal
 
 		// If the message is invalid, just don't broadcast it!
 		if(signal.data["message"] == "" || !signal.data["message"])
@@ -266,7 +298,7 @@ datum/signal
 			lastsignalers.Add("[time] <B>:</B> [S.id] sent a signal command, which was triggered by NTSL.<B>:</B> [format_frequency(freq)]/[code]")
 
 
-	proc/tcombroadcast(var/message, var/freq, var/source, var/job)
+	proc/tcombroadcast(var/message, var/freq, var/source, var/job, var/spans, var/say = "says", var/ask = "asks", var/yell = "yells", var/exclaim = "exclaims")
 
 		var/datum/signal/newsign = new
 		var/obj/machinery/telecomms/server/S = data["server"]
@@ -289,6 +321,11 @@ datum/signal
 		if(!job)
 			job = "Unknown"
 
+		if(!islist(spans))
+			spans = list()
+		else
+			spans &= allowed_custom_spans //Removes any spans not on the allowed list. Comment this out if want to let players use ANY span in stylesheet.dm!
+
 		//SAY REWRITE RELATED CODE.
 		//This code is a little hacky, but it *should* work. Even though it'll result in a virtual speaker referencing another virtual speaker. vOv
 		var/atom/movable/virtualspeaker/virt = PoolOrNew(/atom/movable/virtualspeaker,null)
@@ -306,6 +343,11 @@ datum/signal
 		newsign.data["compression"] = 0
 		newsign.data["message"] = message
 		newsign.data["type"] = 2 // artificial broadcast
+		newsign.data["spans"] = spans
+		newsign.data["verb_say"] = say
+		newsign.data["verb_ask"] = ask
+		newsign.data["verb_yell"]= yell
+		newsign.data["verb_exclaim"] = exclaim
 		if(!isnum(freq))
 			freq = text2num(freq)
 		newsign.frequency = freq

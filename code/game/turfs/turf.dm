@@ -3,7 +3,6 @@
 	level = 1.0
 
 	var/intact = 1
-	var/cancable = 0
 
 	//Properties for open tiles (/floor)
 	var/oxygen = 0
@@ -29,19 +28,32 @@
 	for(var/atom/movable/AM in src)
 		Entered(AM)
 	return
+/turf/Destroy()
+	return QDEL_HINT_HARDDEL_NOW
 
 // Adds the adjacent turfs to the current atmos processing
 /turf/Del()
-	if(air_master)
-		for(var/direction in cardinal)
-			if(atmos_adjacent_turfs & direction)
-				var/turf/simulated/T = get_step(src, direction)
-				if(istype(T))
-					air_master.add_to_active(T)
+	for(var/direction in cardinal)
+		if(atmos_adjacent_turfs & direction)
+			var/turf/simulated/T = get_step(src, direction)
+			if(istype(T))
+				SSair.add_to_active(T)
 	..()
 
 /turf/attack_hand(mob/user as mob)
 	user.Move_Pulled(src)
+
+/turf/attackby(obj/item/C, mob/user, params)
+	if(can_lay_cable() && istype(C, /obj/item/stack/cable_coil))
+		var/obj/item/stack/cable_coil/coil = C
+		for(var/obj/structure/cable/LC in src)
+			if((LC.d1==0)||(LC.d2==0))
+				LC.attackby(C,user)
+				return
+		coil.place_turf(src, user)
+		return 1
+
+	return 0
 
 /turf/Enter(atom/movable/mover as mob|obj, atom/forget as mob|obj|turf|area)
 	if (!mover)
@@ -81,7 +93,7 @@
 		var/mob/O = M
 		if(!O.lastarea)
 			O.lastarea = get_area(O.loc)
-		O.update_gravity(O.mob_has_gravity())
+//		O.update_gravity(O.mob_has_gravity())
 
 	var/loopsanity = 100
 	for(var/atom/A in range(1))
@@ -116,25 +128,14 @@
 /turf/proc/ChangeTurf(var/path)
 	if(!path)			return
 	if(path == type)	return src
-	var/old_lumcount = lighting_lumcount - initial(lighting_lumcount)
-	var/old_opacity = opacity
-	if(air_master)
-		air_master.remove_from_active(src)
+
+	SSair.remove_from_active(src)
 
 	var/turf/W = new path(src)
 
 	if(istype(W, /turf/simulated))
 		W:Assimilate_Air()
 		W.RemoveLattice()
-
-	W.lighting_lumcount += old_lumcount
-	if(old_lumcount != W.lighting_lumcount)	//light levels of the turf have changed. We need to shift it to another lighting-subarea
-		W.lighting_changed = 1
-		lighting_controller.changed_turfs += W
-
-	if(old_opacity != W.opacity)			//opacity has changed. Need to update surrounding lights
-		if(W.lighting_lumcount)				//unless we're being illuminated, don't bother (may be buggy, hard to test)
-			W.UpdateAffectingLights()
 
 	W.levelupdate()
 	W.CalculateAdjacentTurfs()
@@ -169,8 +170,7 @@
 		air.carbon_dioxide = (aco/max(turf_count,1))
 		air.toxins = (atox/max(turf_count,1))
 		air.temperature = (atemp/max(turf_count,1))//Trace gases can get bant
-		if(air_master)
-			air_master.add_to_active(src)
+		SSair.add_to_active(src)
 
 /turf/proc/ReplaceWithLattice()
 	src.ChangeTurf(/turf/space)
@@ -178,10 +178,9 @@
 
 /turf/proc/ReplaceWithCatwalk()
 	src.ChangeTurf(/turf/space)
-	src.cancable = 1//so cables can be laid
 	new /obj/structure/lattice/catwalk(locate(src.x, src.y, src.z) )
 
-/turf/proc/phase_damage_creatures(damage,mob/U = null)//>Ninja Code. Hurts and knocks out creatures on this turf
+/turf/proc/phase_damage_creatures(damage,mob/U = null)//>Ninja Code. Hurts and knocks out creatures on this turf //NINJACODE
 	for(var/mob/living/M in src)
 		if(M==U)
 			continue//Will not harm U. Since null != M, can be excluded to kill everyone.
@@ -305,7 +304,7 @@
 		var/mob/living/carbon/M = slipper
 		if (M.m_intent=="walk" && (lube&NO_SLIP_WHEN_WALKING))
 			return 0
-		if(!M.lying) // we slip those who are standing and can fall.
+		if(!M.lying && (M.status_flags & CANWEAKEN)) // we slip those who are standing and can fall.
 			var/olddir = M.dir
 			M.Stun(s_amount)
 			M.Weaken(w_amount)
@@ -334,3 +333,9 @@
 				O.singularity_act()
 	ChangeTurf(/turf/space)
 	return(2)
+
+/turf/proc/can_have_cabling()
+	return !density
+
+/turf/proc/can_lay_cable()
+	return can_have_cabling() & !intact

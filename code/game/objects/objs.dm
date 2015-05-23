@@ -10,13 +10,9 @@
 	var/damtype = "brute"
 	var/force = 0
 
-/obj/proc/process()
-	processing_objects.Remove(src)
-	return 0
-
 /obj/Destroy()
 	if(!istype(src, /obj/machinery))
-		processing_objects.Remove(src) // TODO: Have a processing bitflag to reduce on unnecessary loops through the processing lists
+		SSobj.processing.Remove(src) // TODO: Have a processing bitflag to reduce on unnecessary loops through the processing lists
 	..()
 
 /obj/assume_air(datum/gas_mixture/giver)

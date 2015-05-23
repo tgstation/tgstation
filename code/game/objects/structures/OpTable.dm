@@ -5,6 +5,9 @@
 	icon_state = "optable"
 	density = 1
 	anchored = 1
+	can_buckle = 1
+	buckle_lying = 1
+	buckle_requires_restraints = 1
 	var/mob/living/carbon/human/patient = null
 	var/obj/machinery/computer/operating/computer = null
 
@@ -28,7 +31,7 @@
 		return 0
 
 
-/obj/structure/optable/attackby(obj/item/weapon/W, mob/user)
+/obj/structure/optable/attackby(obj/item/weapon/W, mob/user, params)
 	if(istype(W, /obj/item/weapon/grab))
 		var/obj/item/weapon/grab/G = W
 		if(!G.confirm())

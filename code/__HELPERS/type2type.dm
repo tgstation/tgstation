@@ -123,7 +123,7 @@
 		. = "[ls[++i]]" // Make sure the initial element is converted to text.
 
 		if(l-1 & 0x01) // 'i' will always be 1 here.
-			. += S1 // Append 1 element if the remaining elements are not a multiple of 2.
+			. += "[S1]" // Append 1 element if the remaining elements are not a multiple of 2.
 		if(l-i & 0x02)
 			. = text("[][][]", ., S1, S1) // Append 2 elements if the remaining elements are not a multiple of 4.
 		if(l-i & 0x04)
@@ -510,3 +510,80 @@ for(var/t in test_times)
 				covered_parts |= list("r_leg")
 
 	return covered_parts
+
+
+
+//adapted from http://www.tannerhelland.com/4435/convert-temperature-rgb-algorithm-code/
+/proc/heat2colour(temp)
+	return rgb(heat2colour_r(temp), heat2colour_g(temp), heat2colour_b(temp))
+
+
+/proc/heat2colour_r(temp)
+	temp /= 100
+	if(temp <= 66)
+		. = 255
+	else
+		. = max(0, min(255, 329.698727446 * (temp - 60) ** -0.1332047592))
+
+
+/proc/heat2colour_g(temp)
+	temp /= 100
+	if(temp <= 66)
+		. = max(0, min(255, 99.4708025861 * log(temp) - 161.1195681661))
+	else
+		. = max(0, min(255, 288.1221685293 * ((temp - 60) ** -0.075148492)))
+
+
+/proc/heat2colour_b(temp)
+	temp /= 100
+	if(temp >= 66)
+		. = 255
+	else
+		if(temp <= 16)
+			. = 0
+		else
+			. = max(0, min(255, 138.5177312231 * log(temp - 10) - 305.0447927307))
+
+/proc/color2hex(var/color)	//web colors
+	if(!color)
+		return "#000000"
+
+	switch(color)
+		if("white")
+			return "#FFFFFF"
+		if("black")
+			return "#000000"
+		if("gray")
+			return "#808080"
+		if("brown")
+			return "#A52A2A"
+		if("red")
+			return "#FF0000"
+		if("darkred")
+			return "#8B0000"
+		if("crimson")
+			return "#DC143C"
+		if("orange")
+			return "#FFA500"
+		if("yellow")
+			return "#FFFF00"
+		if("green")
+			return "#008000"
+		if("lime")
+			return "#00FF00"
+		if("darkgreen")
+			return "#006400"
+		if("cyan")
+			return "#00FFFF"
+		if("blue")
+			return "#0000FF"
+		if("navy")
+			return "#000080"
+		if("teal")
+			return "#008080"
+		if("purple")
+			return "#800080"
+		if("indigo")
+			return "#4B0082"
+		else
+			return "#FFFFFF"

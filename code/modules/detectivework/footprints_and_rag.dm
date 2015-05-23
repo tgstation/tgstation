@@ -8,26 +8,6 @@
 	var/mob/living/carbon/human/bloody_hands_mob
 
 
-
-/proc/blood_incompatible(donor,receiver)
-
-	var/donor_antigen = copytext(donor,1,lentext(donor))
-	var/receiver_antigen = copytext(receiver,1,lentext(receiver))
-	var/donor_rh = findtext("+",donor)
-	var/receiver_rh = findtext("+",receiver)
-
-	if(donor_rh && !receiver_rh) return 1
-	switch(receiver_antigen)
-		if("A")
-			if(donor_antigen != "A" && donor_antigen != "O") return 1
-		if("B")
-			if(donor_antigen != "B" && donor_antigen != "O") return 1
-		if("O")
-			if(donor_antigen != "O") return 1
-		//AB is a universal receiver.
-	return 0
-
-
 /obj/item/weapon/reagent_containers/glass/rag
 	name = "damp rag"
 	desc = "For cleaning up messes, you suppose."
@@ -39,20 +19,19 @@
 	volume = 5
 	can_be_placed_into = null
 
-/obj/item/weapon/reagent_containers/glass/rag/attack(atom/target as obj|turf|area, mob/user as mob , flag)
-	if(ismob(target) && target.reagents && reagents.total_volume)
-		user.visible_message("<span class='danger'>[user] has smothered \the [target] with \the [src]!</span>", "<span class='danger'>You smother \the [target] with \the [src]!</span>", "You hear some struggling and muffled cries of surprise")
-		src.reagents.reaction(target, TOUCH)
-		src.reagents.clear_reagents()
-		return
-	else
-		..()
-
 /obj/item/weapon/reagent_containers/glass/rag/afterattack(atom/A as obj|turf|area, mob/user as mob,proximity)
-	if(!proximity) return
-	if(istype(A) && src in user)
-		user.visible_message("[user] starts to wipe down [A] with [src]!")
+	if(!proximity)
+		return
+	if(ismob(A) && A.reagents && reagents.total_volume)
+		if(user.a_intent == "harm")
+			src.reagents.reaction(A, TOUCH)
+			src.reagents.clear_reagents()
+		else
+			reagents.trans_to(A, reagents.total_volume)
+		user.visible_message("<span class='danger'>[user] has smothered \the [A] with \the [src]!</span>", "<span class='danger'>You smother \the [A] with \the [src]!</span>", "<span class='italics'>You hear some struggling and muffled cries of surprise.</span>")
+	else if(istype(A) && src in user)
+		user.visible_message("[user] starts to wipe down [A] with [src]!", "<span class='notice'>You start to wipe down [A] with [src]...</span>")
 		if(do_after(user,30))
-			user.visible_message("[user] finishes wiping off the [A]!")
+			user.visible_message("[user] finishes wiping off the [A]!", "<span class='notice'>You finish wiping off the [A].</span>")
 			A.clean_blood()
 	return

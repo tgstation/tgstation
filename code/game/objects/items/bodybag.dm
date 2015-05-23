@@ -34,22 +34,19 @@
 	name = "body bag"
 	desc = "A plastic bag designed for the storage and transportation of cadavers."
 	icon = 'icons/obj/bodybag.dmi'
-	icon_state = "bodybag_closed"
-	icon_closed = "bodybag_closed"
-	icon_opened = "bodybag_open"
+	icon_state = "bodybag"
 	var/foldedbag_path = /obj/item/bodybag
 	density = 0
 	mob_storage_capacity = 2
 
 
-/obj/structure/closet/body_bag/attackby(obj/item/I, mob/user)
+/obj/structure/closet/body_bag/attackby(obj/item/I, mob/user, params)
 	if (istype(I, /obj/item/weapon/pen))
-		var/t = input(user, "What would you like the label to be?", name, null) as text
+		var/t = stripped_input(user, "What would you like the label to be?", name, null, 53)
 		if(user.get_active_hand() != I)
 			return
 		if(!in_range(src, user) && loc != user)
 			return
-		t = copytext(sanitize(t), 1, 53)	//max length of 64 - "body bag - " instead of MAX_MESSAGE_LEN, as per the hand labeler
 		if(t)
 			name = "body bag - "
 			name += t
@@ -85,13 +82,6 @@
 		qdel(src)
 
 
-/obj/structure/closet/body_bag/update_icon()
-	if(!opened)
-		icon_state = icon_closed
-	else
-		icon_state = icon_opened
-
-
 // Bluespace bodybag
 
 /obj/item/bodybag/bluespace
@@ -106,10 +96,8 @@
 	name = "bluespace body bag"
 	desc = "A bluespace body bag designed for the storage and transportation of cadavers."
 	icon = 'icons/obj/bodybag.dmi'
-	icon_state = "bluebodybag_closed"
-	icon_closed = "bluebodybag_closed"
-	icon_opened = "bluebodybag_open"
+	icon_state = "bluebodybag"
 	foldedbag_path = /obj/item/bodybag/bluespace
 	density = 0
 	mob_storage_capacity = 15
-	max_mob_size = 2
+	max_mob_size = MOB_SIZE_LARGE

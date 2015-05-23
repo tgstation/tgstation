@@ -17,7 +17,7 @@
 /datum/round_event/vent_clog/setup()
 	endWhen = rand(25, 100)
 	for(var/obj/machinery/atmospherics/unary/vent_scrubber/temp_vent in machines)
-		if(temp_vent.loc.z == 1)
+		if(temp_vent.loc.z == ZLEVEL_STATION)
 			if(temp_vent.parent.other_atmosmch.len > 20)
 				vents += temp_vent
 	if(!vents.len)
@@ -28,7 +28,7 @@
 		var/obj/vent = pick_n_take(vents)
 		if(vent && vent.loc)
 			var/list/gunk = list("water","carbon","flour","radium","toxin","cleaner","nutriment","condensedcapsaicin","mushroomhallucinogen","lube",
-								 "plantbgone","banana","anti_toxin","space_drugs","hyperzine","holywater","ethanol","hot_coco","pacid")
+								 "plantbgone","banana","charcoal","space_drugs","morphine","holywater","ethanol","hot_coco","facid")
 			var/datum/reagents/R = new/datum/reagents(50)
 			R.my_atom = vent
 			R.add_reagent(pick(gunk), 50)
@@ -37,4 +37,4 @@
 			smoke.set_up(R, rand(1, 2), 0, vent, 0, silent = 1)
 			playsound(vent.loc, 'sound/effects/smoke.ogg', 50, 1, -3)
 			smoke.start()
-			R.delete()	//GC the reagents
+			qdel(R)

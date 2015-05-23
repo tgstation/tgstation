@@ -31,23 +31,8 @@
 	..()
 	user << text("The service panel is [src.open ? "open" : "closed"].")
 
-/obj/item/weapon/storage/secure/attackby(obj/item/weapon/W as obj, mob/user as mob)
+/obj/item/weapon/storage/secure/attackby(obj/item/weapon/W as obj, mob/user as mob, params)
 	if(locked)
-		if (istype(W, /obj/item/weapon/melee/energy/blade) && !emagged)
-			emagged = 1
-			src.overlays += image('icons/obj/storage.dmi', icon_sparking)
-			sleep(6)
-			src.overlays = null
-			overlays += image('icons/obj/storage.dmi', icon_locking)
-			locked = 0
-			var/datum/effect/effect/system/spark_spread/spark_system = new /datum/effect/effect/system/spark_spread()
-			spark_system.set_up(5, 0, src.loc)
-			spark_system.start()
-			playsound(src.loc, 'sound/weapons/blade1.ogg', 50, 1)
-			playsound(src.loc, "sparks", 50, 1)
-			user << "You slice through the lock on [src]."
-			return
-
 		if (istype(W, /obj/item/weapon/screwdriver))
 			if (do_after(user, 20))
 				src.open =! src.open
@@ -85,7 +70,7 @@
 			src.overlays = null
 			overlays += image('icons/obj/storage.dmi', icon_locking)
 			locked = 0
-			user << "You short out the lock on [src]."
+			user << "<span class='notice'>You short out the lock on [src].</span>"
 
 /obj/item/weapon/storage/secure/MouseDrop(over_object, src_location, over_location)
 	if (locked)
@@ -168,13 +153,13 @@
 	attack_verb = list("bashed", "battered", "bludgeoned", "thrashed", "whacked")
 
 /obj/item/weapon/storage/secure/briefcase/New()
-	..()
 	new /obj/item/weapon/paper(src)
 	new /obj/item/weapon/pen(src)
+	return ..()
 
 /obj/item/weapon/storage/secure/briefcase/attack_hand(mob/user as mob)
 	if ((src.loc == user) && (src.locked == 1))
-		usr << "<span class='danger'>[src] is locked and cannot be opened!</span>"
+		usr << "<span class='warning'>[src] is locked and cannot be opened!</span>"
 	else if ((src.loc == user) && (!src.locked))
 		playsound(src.loc, "rustle", 50, 1, -5)
 		if (user.s_active)
@@ -188,6 +173,16 @@
 		src.orient2hud(user)
 	src.add_fingerprint(user)
 	return
+
+//Syndie variant of Secure Briefcase. Contains space cash, slightly more robust.
+/obj/item/weapon/storage/secure/briefcase/syndie
+	force = 15.0
+
+/obj/item/weapon/storage/secure/briefcase/syndie/New()
+	for(var/i = 0, i < storage_slots - 2, i++)
+		new /obj/item/stack/spacecash/c1000(src)
+	return ..()
+
 
 // -----------------------------
 //        Secure Safe

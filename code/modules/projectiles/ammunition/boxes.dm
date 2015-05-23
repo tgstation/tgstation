@@ -39,3 +39,22 @@
 	ammo_type = /obj/item/ammo_casing/a40mm
 	max_ammo = 4
 	multiple_sprites = 1
+
+/obj/item/ammo_box/a762
+	name = "stripper clip (7.62mm)"
+	desc = "A stripper clip."
+	icon_state = "762"
+	ammo_type = /obj/item/ammo_casing/a762
+	max_ammo = 5
+	multiple_sprites = 1
+
+/obj/item/ammo_box/foambox
+	name = "ammo box (Foam Darts)"
+	icon = 'icons/obj/guns/toy.dmi'
+	icon_state = "foambox"
+	ammo_type = /obj/item/ammo_casing/caseless/foam_dart
+	max_ammo = 40
+
+/obj/item/ammo_box/foambox/riot
+	icon_state = "foambox_riot"
+	ammo_type = /obj/item/ammo_casing/caseless/foam_dart/riot

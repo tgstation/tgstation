@@ -67,7 +67,7 @@ emp_act
 		return 2
 	return (..(P , def_zone))
 
-/mob/living/carbon/human/proc/check_reflect(var/def_zone) //Reflection checks for anything in your l_hand, r_hand, or wear_suit based on reflect_chance var of the object
+/mob/living/carbon/human/proc/check_reflect(var/def_zone) //Reflection checks for anything in your l_hand, r_hand, or wear_suit based on the reflection chance of the object
 	if(wear_suit && istype(wear_suit, /obj/item/))
 		var/obj/item/I = wear_suit
 		if(I.IsReflect(def_zone) == 1)
@@ -100,21 +100,21 @@ emp_act
 			return 1
 	if(wear_suit && istype(wear_suit, /obj/item/))
 		var/obj/item/I = wear_suit
-		if(I.IsShield() && (prob(35)))
+		if(I.IsShield() && (prob(50)))
 			visible_message("<span class='danger'>The reactive teleport system flings [src] clear of [attack_text]!</span>", \
 							"<span class='userdanger'>The reactive teleport system flings [src] clear of [attack_text]!</span>")
 			var/list/turfs = new/list()
-			for(var/turf/T in orange(6))
+			for(var/turf/T in orange(6, src))
 				if(istype(T,/turf/space)) continue
 				if(T.density) continue
 				if(T.x>world.maxx-6 || T.x<6)	continue
 				if(T.y>world.maxy-6 || T.y<6)	continue
 				turfs += T
-			if(!turfs.len) turfs += pick(/turf in orange(6))
+			if(!turfs.len) turfs += pick(/turf in orange(6, src))
 			var/turf/picked = pick(turfs)
 			if(!isturf(picked)) return
 			if(buckled)
-				buckled.unbuckle()
+				buckled.unbuckle_mob()
 			src.loc = picked
 			return 1
 	return 0
@@ -146,7 +146,7 @@ emp_act
 		else
 			return 0
 
-		var/armor = run_armor_check(affecting, "melee", "<span class='warning'>Your armor has protected your [hit_area].</span>", "<span class='warning'>Your armor has softened a hit to your [hit_area].</span>")
+		var/armor = run_armor_check(affecting, "melee", "<span class='notice'>Your armor has protected your [hit_area].</span>", "<span class='notice'>Your armor has softened a hit to your [hit_area].</span>")
 		if(armor >= 100)	return 0
 		var/Iforce = I.force //to avoid runtimes on the forcesay checks at the bottom. Some items might delete themselves if you drop them. (stunning yourself, ninja swords)
 
@@ -179,13 +179,14 @@ emp_act
 
 			switch(hit_area)
 				if("head")	//Harder to score a stun but if you do it lasts a bit longer
-					if(stat == CONSCIOUS && prob(I.force))
-						visible_message("<span class='danger'>[src] has been knocked unconscious!</span>", \
-										"<span class='userdanger'>[src] has been knocked unconscious!</span>")
-						apply_effect(20, PARALYZE, armor)
-						if(src != user && I.damtype == BRUTE)
+					if(stat == CONSCIOUS)
+						if(prob(I.force))
+							visible_message("<span class='danger'>[src] has been knocked unconscious!</span>", \
+											"<span class='userdanger'>[src] has been knocked unconscious!</span>")
+							apply_effect(20, PARALYZE, armor)
+						if(prob(I.force + ((100 - src.health)/2)) && src != user && I.damtype == BRUTE)
 							ticker.mode.remove_revolutionary(mind)
-							ticker.mode.remove_gangster(mind)
+							ticker.mode.remove_gangster(mind, exclude_bosses=1)
 					if(bloody)	//Apply blood
 						if(wear_mask)
 							wear_mask.add_blood(src)
@@ -219,7 +220,7 @@ emp_act
 	for(var/obj/item/organ/limb/L in src.organs)
 		if(L.status == ORGAN_ROBOTIC)
 			if(!informed)
-				src << "<span class='danger'>You feel a sharp pain as your robotic limbs overload.</span>"
+				src << "<span class='userdanger'>You feel a sharp pain as your robotic limbs overload.</span>"
 				informed = 1
 			switch(severity)
 				if(1)
@@ -249,7 +250,7 @@ emp_act
 			update_inv_wear_mask()
 			update_inv_head()
 		else
-			src << "<span class='warning'>Your [head_clothes.name] protects your head and face from the acid!</span>"
+			src << "<span class='notice'>Your [head_clothes.name] protects your head and face from the acid!</span>"
 	else
 		. = get_organ("head")
 		if(.)
@@ -269,7 +270,7 @@ emp_act
 			update_inv_w_uniform()
 			update_inv_wear_suit()
 		else
-			src << "<span class='warning'>Your [chest_clothes.name] protects your body from the acid!</span>"
+			src << "<span class='notice'>Your [chest_clothes.name] protects your body from the acid!</span>"
 	else
 		. = get_organ("chest")
 		if(.)
@@ -299,7 +300,7 @@ emp_act
 			update_inv_w_uniform()
 			update_inv_wear_suit()
 		else
-			src << "<span class='warning'>Your [arm_clothes.name] protects your arms and hands from the acid!</span>"
+			src << "<span class='notice'>Your [arm_clothes.name] protects your arms and hands from the acid!</span>"
 	else
 		. = get_organ("r_arm")
 		if(.)
@@ -324,7 +325,7 @@ emp_act
 			update_inv_w_uniform()
 			update_inv_wear_suit()
 		else
-			src << "<span class='warning'>Your [leg_clothes.name] protects your legs and feet from the acid!</span>"
+			src << "<span class='notice'>Your [leg_clothes.name] protects your legs and feet from the acid!</span>"
 	else
 		. = get_organ("r_leg")
 		if(.)
@@ -397,25 +398,21 @@ emp_act
 			updatehealth()
 
 
-/mob/living/carbon/human/attack_slime(mob/living/carbon/slime/M as mob)
-	..()
-	var/damage = rand(1, 3)
+/mob/living/carbon/human/attack_slime(mob/living/simple_animal/slime/M as mob)
+	if(..()) //successful slime attack
+		var/damage = rand(5, 25)
+		if(M.is_adult)
+			damage = rand(10, 35)
 
-	if(M.is_adult)
-		damage = rand(10, 35)
-	else
-		damage = rand(5, 25)
+		if(check_shields(damage, "the [M.name]"))
+			return 0
 
-	if(check_shields(damage, "the [M.name]"))
-		return 0
+		var/dam_zone = pick("head", "chest", "l_arm", "r_arm", "l_leg", "r_leg", "groin")
 
-	var/dam_zone = pick("head", "chest", "l_arm", "r_arm", "l_leg", "r_leg", "groin")
+		var/obj/item/organ/limb/affecting = get_organ(ran_zone(dam_zone))
+		var/armor_block = run_armor_check(affecting, "melee")
+		apply_damage(damage, BRUTE, affecting, armor_block)
 
-	var/obj/item/organ/limb/affecting = get_organ(ran_zone(dam_zone))
-	var/armor_block = run_armor_check(affecting, "melee")
-	apply_damage(damage, BRUTE, affecting, armor_block)
-
-	return
 /mob/living/carbon/human/mech_melee_attack(obj/mecha/M)
 
 	if(M.occupant.a_intent == "harm")

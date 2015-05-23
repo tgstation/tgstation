@@ -1,8 +1,4 @@
 
-#define REM REAGENTS_EFFECT_MULTIPLIER
-
-
-
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////// DRINKS BELOW, Beer is up there though, along with cola. Cap'n Pete's Cuban Spiced Rum////////////////////////////////
@@ -53,15 +49,12 @@ datum/reagent/consumable/carrotjuice
 datum/reagent/consumable/carrotjuice/on_mob_life(var/mob/living/M as mob)
 	M.eye_blurry = max(M.eye_blurry-1 , 0)
 	M.eye_blind = max(M.eye_blind-1 , 0)
-	if(!data)
-		data = 1
-	switch(data)
+	switch(current_cycle)
 		if(1 to 20)
 			//nothing
 		if(21 to INFINITY)
-			if (prob(data-10))
+			if (prob(current_cycle-10))
 				M.disabilities &= ~NEARSIGHT
-	data++
 	..()
 	return
 
@@ -166,6 +159,11 @@ datum/reagent/consumable/coffee
 	description = "Coffee is a brewed drink prepared from roasted seeds, commonly called coffee beans, of the coffee plant."
 	color = "#482000" // rgb: 72, 32, 0
 	nutriment_factor = 0
+	overdose_threshold = 80
+
+datum/reagent/consumable/coffee/overdose_process(var/mob/living/M as mob)
+	M.Jitter(5)
+	..()
 
 datum/reagent/consumable/coffee/on_mob_life(var/mob/living/M as mob)
 	M.dizziness = max(0,M.dizziness-5)
@@ -173,11 +171,9 @@ datum/reagent/consumable/coffee/on_mob_life(var/mob/living/M as mob)
 	M.sleeping = max(0,M.sleeping - 2)
 	if (M.bodytemperature < 310)//310 is the normal bodytemp. 310.055
 		M.bodytemperature = min(310, M.bodytemperature + (25 * TEMPERATURE_DAMAGE_COEFFICIENT))
-	M.Jitter(5)
 	if(holder.has_reagent("frostoil"))
 		holder.remove_reagent("frostoil", 5)
 	..()
-	return
 
 datum/reagent/consumable/tea
 	name = "Tea"
@@ -399,21 +395,65 @@ datum/reagent/consumable/doctor_delight
 	description = "A gulp a day keeps the MediBot away. That's probably for the best."
 	color = "#FF8CFF" // rgb: 255, 140, 255
 
-datum/reagent/consumable/doctor_delight/on_mob_life(var/mob/living/M as mob)
-	if(M.getOxyLoss() && prob(80))
-		M.adjustOxyLoss(-2)
-	if(M.getBruteLoss() && prob(80))
-		M.heal_organ_damage(2,0)
-	if(M.getFireLoss() && prob(80))
-		M.heal_organ_damage(0,2)
-	if(M.getToxLoss() && prob(80))
-		M.adjustToxLoss(-2)
-	if(M.dizziness !=0)
-		M.dizziness = max(0,M.dizziness-15)
-	if(M.confused !=0)
-		M.confused = max(0,M.confused - 5)
-	holder.remove_reagent(id, metabolization_rate/M.metabolism_efficiency)
-	return
+datum/reagent/consumable/chocolatepudding
+	name = "Chocolate Pudding"
+	id = "chocolatepudding"
+	description = "A great dessert for chocolate lovers."
+	color = "#800000"
+	nutriment_factor = 4 * REAGENTS_METABOLISM
+
+datum/reagent/consumable/vanillapudding
+	name = "Vanilla Pudding"
+	id = "vanillapudding"
+	description = "A great dessert for vanilla lovers."
+	color = "#FAFAD2"
+	nutriment_factor = 4 * REAGENTS_METABOLISM
+
+datum/reagent/consumable/cherryshake
+	name = "Cherry Shake"
+	id = "cherryshake"
+	description = "A cherry flavored milkshake."
+	color = "#FFB6C1"
+	nutriment_factor = 4 * REAGENTS_METABOLISM
+
+datum/reagent/consumable/bluecherryshake
+	name = "Blue Cherry Shake"
+	id = "bluecherryshake"
+	description = "An exotic milkshake."
+	color = "#00F1FF"
+	nutriment_factor = 4 * REAGENTS_METABOLISM
+
+datum/reagent/consumable/pumpkin_latte
+	name = "Pumpkin Latte"
+	id = "pumpkin_latte"
+	description = "A mix of pumpkin juice and coffee."
+	color = "#F4A460"
+	nutriment_factor = 3 * REAGENTS_METABOLISM
+
+datum/reagent/consumable/gibbfloats
+	name = "Gibb Floats"
+	id = "gibbfloats"
+	description = "Icecream on top of a Dr. Gibb glass."
+	color = "#B22222"
+	nutriment_factor = 3 * REAGENTS_METABOLISM
+
+datum/reagent/consumable/pumpkinjuice
+	name = "Pumpkin Juice"
+	id = "pumpkinjuice"
+	description = "Juiced from real pumpkin."
+	color = "#FFA500"
+
+datum/reagent/consumable/blumpkinjuice
+	name = "Blumpkin Juice"
+	id = "blumpkinjuice"
+	description = "Juiced from real blumpkin."
+	color = "#00BFFF"
+
+datum/reagent/consumable/triple_citrus
+	name = "Triple Citrus"
+	id = "triple_citrus"
+	description = "A solution."
+	color = "#C8A5DC"
 
 
 //////////////////////////////////////////////The ten friggen million reagents that get you drunk//////////////////////////////////////////////
@@ -428,13 +468,10 @@ datum/reagent/consumable/atomicbomb/on_mob_life(var/mob/living/M as mob)
 	M.druggy = max(M.druggy, 50)
 	M.confused = max(M.confused+2,0)
 	M.Dizzy(10)
-	if (!M.stuttering)
-		M.stuttering = 1
-	M.stuttering += 3
-	if(!data)
-		data = 1
-	data++
-	switch(data)
+	if (!M.slurring)
+		M.slurring = 1
+	M.slurring += 3
+	switch(current_cycle)
 		if(51 to 200)
 			M.sleeping += 1
 		if(201 to INFINITY)
@@ -450,20 +487,19 @@ datum/reagent/consumable/gargle_blaster
 	color = "#664300" // rgb: 102, 67, 0
 
 datum/reagent/consumable/gargle_blaster/on_mob_life(var/mob/living/M as mob)
-	if(!data)
-		data = 1
-	data++
 	M.dizziness +=6
-	if(data >= 15 && data <45)
-		if (!M.stuttering)
-			M.stuttering = 1
-		M.stuttering += 3
-	else if(data >= 45 && prob(50) && data <55)
-		M.confused = max(M.confused+3,0)
-	else if(data >=55)
-		M.druggy = max(M.druggy, 55)
-	else if(data >=200)
-		M.adjustToxLoss(2)
+	switch(current_cycle)
+		if(15 to 45)
+			if(!M.slurring)
+				M.slurring = 1
+			M.slurring += 3
+		if(45 to 55)
+			if(prob(50))
+				M.confused = max(M.confused+3,0)
+		if(55 to 200)
+			M.druggy = max(M.druggy, 55)
+		if(200 to INFINITY)
+			M.adjustToxLoss(2)
 	..()
 	return
 
@@ -475,20 +511,19 @@ datum/reagent/consumable/neurotoxin
 
 datum/reagent/consumable/neurotoxin/on_mob_life(var/mob/living/carbon/M as mob)
 	M.weakened = max(M.weakened, 3)
-	if(!data)
-		data = 1
-	data++
 	M.dizziness +=6
-	if(data >= 15 && data <45)
-		if (!M.stuttering)
-			M.stuttering = 1
-		M.stuttering += 3
-	else if(data >= 45 && prob(50) && data <55)
-		M.confused = max(M.confused+3,0)
-	else if(data >=55)
-		M.druggy = max(M.druggy, 55)
-	else if(data >=200)
-		M.adjustToxLoss(2)
+	switch(current_cycle)
+		if(15 to 45)
+			if(!M.slurring)
+				M.slurring = 1
+			M.slurring += 3
+		if(45 to 55)
+			if(prob(50))
+				M.confused = max(M.confused+3,0)
+		if(55 to 200)
+			M.druggy = max(M.druggy, 55)
+		if(200 to INFINITY)
+			M.adjustToxLoss(2)
 	..()
 	return
 
@@ -502,28 +537,25 @@ datum/reagent/consumable/hippies_delight
 
 datum/reagent/consumable/hippies_delight/on_mob_life(var/mob/living/M as mob)
 	M.druggy = max(M.druggy, 50)
-	if(!data)
-		data = 1
-	data++
-	switch(data)
+	switch(current_cycle)
 		if(1 to 5)
-			if (!M.stuttering) M.stuttering = 1
+			if (!M.slurring) M.slurring = 1
 			M.Dizzy(10)
 			if(prob(10)) M.emote(pick("twitch","giggle"))
 		if(5 to 10)
-			if (!M.stuttering) M.stuttering = 1
+			if (!M.slurring) M.slurring = 1
 			M.Jitter(20)
 			M.Dizzy(20)
 			M.druggy = max(M.druggy, 45)
 			if(prob(20)) M.emote(pick("twitch","giggle"))
 		if (10 to 200)
-			if (!M.stuttering) M.stuttering = 1
+			if (!M.slurring) M.slurring = 1
 			M.Jitter(40)
 			M.Dizzy(40)
 			M.druggy = max(M.druggy, 60)
 			if(prob(30)) M.emote(pick("twitch","giggle"))
 		if(200 to INFINITY)
-			if (!M.stuttering) M.stuttering = 1
+			if (!M.slurring) M.slurring = 1
 			M.Jitter(60)
 			M.Dizzy(60)
 			M.druggy = max(M.druggy, 75)
@@ -531,7 +563,3 @@ datum/reagent/consumable/hippies_delight/on_mob_life(var/mob/living/M as mob)
 			if(prob(30)) M.adjustToxLoss(2)
 	..()
 	return
-
-
-// Undefine the alias for REAGENTS_EFFECT_MULTIPLER
-#undef REM

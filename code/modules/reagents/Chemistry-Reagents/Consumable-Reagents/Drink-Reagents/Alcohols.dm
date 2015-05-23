@@ -22,18 +22,15 @@ datum/reagent/consumable/ethanol
 	var/boozepwr = 10 //lower numbers mean the booze will have an effect faster.
 
 datum/reagent/consumable/ethanol/on_mob_life(var/mob/living/M as mob)
-	if(!data)
-		data = 1
-	data++
 	M.jitteriness = max(M.jitteriness-5,0)
-	if(data >= boozepwr)
-		if (!M.stuttering) M.stuttering = 1
-		M.stuttering += 4
+	if(current_cycle >= boozepwr)
+		if (!M.slurring) M.slurring = 1
+		M.slurring += 4
 		M.Dizzy(5)
-	if(data >= boozepwr*2.5 && prob(33))
+	if(current_cycle >= boozepwr*2.5 && prob(33))
 		if (!M.confused) M.confused = 1
 		M.confused += 3
-	if(data >= boozepwr*10 && prob(33))
+	if(current_cycle >= boozepwr*10 && prob(33))
 		M.adjustToxLoss(2)
 	..()
 	return
@@ -163,10 +160,10 @@ datum/reagent/consumable/ethanol/rum
 	color = "#664300" // rgb: 102, 67, 0
 	boozepwr = 45
 
-datum/reagent/consumable/ethanol/tequilla
+datum/reagent/consumable/ethanol/tequila
 	name = "Tequila"
-	id = "tequilla"
-	description = "A strong and mildly flavoured, mexican produced spirit. Feeling thirsty hombre?"
+	id = "tequila"
+	description = "A strong and mildly flavoured, mexican produced spirit. Feeling thirsty, hombre?"
 	color = "#FFFF91" // rgb: 255, 255, 145
 	boozepwr = 35
 
@@ -289,9 +286,9 @@ datum/reagent/consumable/ethanol/brave_bull
 	color = "#664300" // rgb: 102, 67, 0
 	boozepwr = 35
 
-datum/reagent/consumable/ethanol/tequilla_sunrise
+datum/reagent/consumable/ethanol/tequila_sunrise
 	name = "Tequila Sunrise"
-	id = "tequillasunrise"
+	id = "tequilasunrise"
 	description = "Tequila and orange juice. Much like a Screwdriver, only Mexican~"
 	color = "#FFE48C" // rgb: 255, 228, 140
 	boozepwr = 35
@@ -315,9 +312,10 @@ datum/reagent/consumable/ethanol/beepsky_smash
 	description = "Deny drinking this and prepare for THE LAW."
 	color = "#664300" // rgb: 102, 67, 0
 	boozepwr = 25
+	metabolization_rate = 0.8
 
 datum/reagent/consumable/ethanol/beepsky_smash/on_mob_life(var/mob/living/M as mob)
-	M.Stun(2)
+	M.Stun(1)
 	..()
 	return
 
@@ -618,3 +616,10 @@ datum/reagent/consumable/ethanol/silencer/on_mob_life(var/mob/living/M as mob)
 		M.heal_organ_damage(1,1)
 	..()
 	return
+
+datum/reagent/consumable/ethanol/drunkenblumpkin
+	name = "Drunken Blumpkin"
+	id = "drunkenblumpkin"
+	description = "A weird mix of whiskey and blumpkin juice."
+	color = "#1EA0FF" // rgb: 102, 67, 0
+	boozepwr = 35

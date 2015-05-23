@@ -33,7 +33,7 @@
 /obj/machinery/shield/CanAtmosPass(var/turf/T)
 	return !density
 
-/obj/machinery/shield/attackby(obj/item/weapon/W as obj, mob/user as mob)
+/obj/machinery/shield/attackby(obj/item/weapon/W as obj, mob/user as mob, params)
 	if(!istype(W)) return
 
 	//Calculate damage
@@ -91,7 +91,7 @@
 
 /obj/machinery/shield/hitby(AM as mob|obj)
 	//Let everyone know we've been hit!
-	visible_message("<span class='userdanger'>[src] was hit by [AM].</span>")
+	visible_message("<span class='boldannounce'>[src] was hit by [AM].</span>")
 
 	//Super realistic, resource-intensive, real-time damage calculations.
 	var/tforce = 0
@@ -142,6 +142,7 @@
 /obj/machinery/shieldgen/Destroy()
 	for(var/obj/machinery/shield/shield_tile in deployed_shields)
 		qdel(shield_tile)
+	deployed_shields = null
 	..()
 
 
@@ -210,28 +211,28 @@
 
 /obj/machinery/shieldgen/attack_hand(mob/user as mob)
 	if(locked)
-		user << "The machine is locked, you are unable to use it."
+		user << "<span class='warning'>The machine is locked, you are unable to use it!</span>"
 		return
 	if(is_open)
-		user << "The panel must be closed before operating this machine."
+		user << "<span class='warning'>The panel must be closed before operating this machine!</span>"
 		return
 
 	if (src.active)
-		user.visible_message("<span class='notice'>\icon[src] [user] deactivated the shield generator.</span>", \
-			"<span class='notice'>\icon[src] You deactivate the shield generator.</span>", \
-			"You hear heavy droning fade out.")
+		user.visible_message("[src] [user] deactivated the shield generator.", \
+			"<span class='notice'>[src] You deactivate the shield generator.</span>", \
+			"<span class='italics'>You hear heavy droning fade out.</span>")
 		src.shields_down()
 	else
 		if(anchored)
-			user.visible_message("<span class='notice'>\icon[src] [user] activated the shield generator.</span>", \
-				"<span class='notice'>\icon[src] You activate the shield generator.</span>", \
-				"You hear heavy droning.")
+			user.visible_message("[src] [user] activated the shield generator.", \
+				"<span class='notice'>[src] You activate the shield generator.</span>", \
+				"<span class='italics'>You hear heavy droning.</span>")
 			src.shields_up()
 		else
-			user << "The device must first be secured to the floor."
+			user << "<span class='warning'>The device must first be secured to the floor!</span>"
 	return
 
-/obj/machinery/shieldgen/attackby(obj/item/weapon/W as obj, mob/user as mob)
+/obj/machinery/shieldgen/attackby(obj/item/weapon/W as obj, mob/user as mob, params)
 	if(istype(W, /obj/item/weapon/screwdriver))
 		playsound(src.loc, 'sound/items/Screwdriver.ogg', 100, 1)
 		if(is_open)
@@ -244,21 +245,21 @@
 	else if(istype(W, /obj/item/stack/cable_coil) && malfunction && is_open)
 		var/obj/item/stack/cable_coil/coil = W
 		if (coil.get_amount() < 1)
-			user << "You need one length of cable to repair [src]."
+			user << "<span class='warning'>You need one length of cable to repair [src]!</span>"
 			return
-		user << "<span class='notice'>You begin to replace the wires.</span>"
+		user << "<span class='notice'>You begin to replace the wires...</span>"
 		if(do_after(user, 30))
 			if(coil.get_amount() < 1)
 				return
 			coil.use(1)
 			health = max_health
 			malfunction = 0
-			user << "<span class='notice'>You repair \the [src]!</span>"
+			user << "<span class='notice'>You repair \the [src].</span>"
 			update_icon()
 
 	else if(istype(W, /obj/item/weapon/wrench))
 		if(locked)
-			user << "The bolts are covered, unlocking this would retract the covers."
+			user << "<span class='warning'>The bolts are covered! Unlocking this would retract the covers.</span>"
 			return
 		if(!anchored && !isinspace())
 			playsound(src.loc, 'sound/items/Ratchet.ogg', 100, 1)
@@ -276,7 +277,7 @@
 	else if(istype(W, /obj/item/weapon/card/id) || istype(W, /obj/item/device/pda))
 		if(src.allowed(user))
 			src.locked = !src.locked
-			user << "The controls are now [src.locked ? "locked." : "unlocked."]"
+			user << "<span class='notice'>You [src.locked ? "lock" : "unlock"] the controls.</span>"
 		else
 			user << "<span class='danger'>Access denied.</span>"
 
@@ -348,13 +349,13 @@
 
 /obj/machinery/shieldwallgen/attack_hand(mob/user as mob)
 	if(!anchored)
-		user << "<span class='danger'>The shield generator needs to be firmly secured to the floor first.</span>"
+		user << "<span class='warning'>The shield generator needs to be firmly secured to the floor first!</span>"
 		return 1
 	if(locked && !istype(user, /mob/living/silicon))
-		user << "<span class='danger'>The controls are locked!</span>"
+		user << "<span class='warning'>The controls are locked!</span>"
 		return 1
 	if(power != 1)
-		user << "<span class='danger'>The shield generator needs to be powered by wire underneath.</span>"
+		user << "<span class='warning'>The shield generator needs to be powered by wire underneath!</span>"
 		return 1
 
 	if(src.active >= 1)
@@ -362,15 +363,15 @@
 		icon_state = "Shield_Gen"
 
 		user.visible_message("[user] turned the shield generator off.", \
-			"You turn off the shield generator.", \
-			"You hear heavy droning fade out.")
+			"<span class='notice'>You turn off the shield generator.</span>", \
+			"<span class='italics'>You hear heavy droning fade out.</span>")
 		src.cleanup()
 	else
 		src.active = 1
 		icon_state = "Shield_Gen +a"
 		user.visible_message("[user] turned the shield generator on.", \
-			"You turn on the shield generator.", \
-			"You hear heavy droning.")
+			"<span class='notice'>You turn on the shield generator.</span>", \
+			"<span class='italics'>You hear heavy droning.</span>")
 	src.add_fingerprint(user)
 
 /obj/machinery/shieldwallgen/process()
@@ -396,7 +397,7 @@
 	if(src.active >= 1)
 		if(src.power == 0)
 			src.visible_message("<span class='danger'>The [src.name] shuts down due to lack of power!</span>", \
-				"You hear heavy droning fade out")
+				"<span class='italics'>You hear heavy droning fade out.</span>")
 			icon_state = "Shield_Gen"
 			src.active = 0
 			src.cleanup(1)
@@ -449,10 +450,10 @@
 		CF.dir = field_dir
 
 
-/obj/machinery/shieldwallgen/attackby(obj/item/W, mob/user)
+/obj/machinery/shieldwallgen/attackby(obj/item/W, mob/user, params)
 	if(istype(W, /obj/item/weapon/wrench))
 		if(active)
-			user << "Turn off the field generator first."
+			user << "<span class='warning'>Turn off the field generator first!</span>"
 			return
 
 		else if(!anchored && !isinspace()) //Can't fasten this thing in space
@@ -470,7 +471,7 @@
 	if(istype(W, /obj/item/weapon/card/id)||istype(W, /obj/item/device/pda))
 		if (src.allowed(user))
 			src.locked = !src.locked
-			user << "Controls are now [src.locked ? "locked." : "unlocked."]"
+			user << "<span class='notice'>You [src.locked ? "lock" : "unlock"] the controls.</span>"
 		else
 			user << "<span class='danger'>Access denied.</span>"
 

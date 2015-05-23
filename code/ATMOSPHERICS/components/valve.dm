@@ -38,17 +38,20 @@
 	update_icon_nopipes()
 	parent1.update = 0
 	parent2.update = 0
+	parent1.reconcile_air()
+	investigate_log("was opened by [usr ? key_name(usr) : "a remote signal"]", "atmos")
 	return
 
 /obj/machinery/atmospherics/binary/valve/proc/close()
 	open = 0
 	update_icon_nopipes()
+	investigate_log("was closed by [usr ? key_name(usr) : "a remote signal"]", "atmos")
 	return
 
 /obj/machinery/atmospherics/binary/valve/proc/normalize_dir()
-	if(dir==3)
+	if(dir==2)
 		dir = 1
-	else if(dir==12)
+	else if(dir==8)
 		dir = 4
 
 /obj/machinery/atmospherics/binary/valve/attack_ai(mob/user)
@@ -62,14 +65,14 @@
 		close()
 	else
 		open()
-		parent1.reconcile_air()
+
 
 /obj/machinery/atmospherics/binary/valve/digital		// can be controlled by AI
 	name = "digital valve"
 	desc = "A digitally controlled valve."
 	icon_state = "dvalve_map"
 
-/obj/machinery/atmospherics/valve/digital/attack_ai(mob/user)
+/obj/machinery/atmospherics/binary/valve/digital/attack_ai(mob/user)
 	return src.attack_hand(user)
 
 /obj/machinery/atmospherics/binary/valve/digital/update_icon_nopipes(animation)

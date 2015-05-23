@@ -25,14 +25,29 @@ var/list/chatchannels = list(default_ntrc_chatroom.name = default_ntrc_chatroom)
 
 	MS.send_chat_message(nick,name,message)
 
-	var/list/cmd=text2list(message, " ")
-	switch(cmd[1])
-		if("/register")
-			return register_auth(client,nick)
-		if("/join")
-			if(cmd[2])	return channel_join(client,nick,cmd[2])
-		if("/log")
-			if(cmd[2])	return get_log(client,nick,cmd[2])
+	if(findtext(message,"/",1,2))
+		var/list/cmd=text2list(message, " ")
+		switch(cmd[1])
+			if("/register")
+				if(cmd.len == 1)
+					return register_auth(client,nick)
+				else
+					return "BAD_COMMAND_ARGUMENTS"
+			if("/join")
+				if(cmd.len == 2 && cmd[2])
+					if((findtext(cmd[2],"#",1,2) && length(cmd[2]) > 1) || (!findtext(cmd[2],"#",1,2) && length(cmd[2]) > 0))
+						return channel_join(client,nick,copytext(cmd[2], 1, 15))
+					else // Happens only if "" or "#" is entered as a channel name.
+						return "BAD_CHANNEL"
+				else
+					return "BAD_COMMAND_ARGUMENTS"
+			if("/log")
+				if(cmd.len == 2 && cmd[2])
+					return get_log(client,nick,cmd[2])
+				else
+					return "BAD_COMMAND_ARGUMENTS"
+			else
+				return "BAD_COMMAND"
 
 	return send_message(client,nick,message)
 

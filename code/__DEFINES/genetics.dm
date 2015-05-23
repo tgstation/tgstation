@@ -15,7 +15,15 @@
 #define RACEMUT		"Monkified"
 #define BADSIGHT	"Near Sightness"
 #define LASEREYES	"Laser Eyes"
-
+#define STEALTH		"Cloak Of Darkness"
+#define CHAMELEON	"Chameleon"
+#define WACKY		"Wacky"
+#define MUT_MUTE	"Mute"
+#define SMILE		"Smile"
+#define UNINTELLIGABLE		"Unintelligable"
+#define SWEDISH		"Swedish"
+#define CHAV		"Chav"
+#define ELVIS		"Elvis"
 
 // String identifiers for associative list lookup
 
@@ -53,7 +61,7 @@
 #define DNA_FACIAL_HAIR_STYLE_BLOCK	6
 #define DNA_HAIR_STYLE_BLOCK		7
 
-#define DNA_STRUC_ENZYMES_BLOCKS	14
+#define DNA_STRUC_ENZYMES_BLOCKS	23
 #define DNA_UNIQUE_ENZYMES_LEN		32
 
 //Transformation proc stuff

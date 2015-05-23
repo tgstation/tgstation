@@ -53,7 +53,7 @@
 	else
 		icon_state = "vent_in"
 
-/obj/machinery/atmospherics/binary/dp_vent_pump/process()
+/obj/machinery/atmospherics/binary/dp_vent_pump/process_atmos()
 	..()
 
 	if(!on)
@@ -133,10 +133,14 @@
 
 	return 1
 
-/obj/machinery/atmospherics/binary/dp_vent_pump/initialize()
+/obj/machinery/atmospherics/binary/dp_vent_pump/atmosinit()
 	..()
 	if(frequency)
 		set_frequency(frequency)
+
+/obj/machinery/atmospherics/binary/dp_vent_pump/initialize()
+	..()
+	broadcast_status()
 
 /obj/machinery/atmospherics/binary/dp_vent_pump/receive_signal(datum/signal/signal)
 

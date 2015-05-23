@@ -273,7 +273,7 @@
 			src.die()
 	return
 
-/obj/machinery/turret/attackby(obj/item/weapon/W, mob/user)//I can't believe no one added this before/N
+/obj/machinery/turret/attackby(obj/item/weapon/W, mob/user, params)//I can't believe no one added this before/N
 	..()
 	user.changeNext_move(CLICK_CD_MELEE)
 	playsound(src.loc, 'sound/weapons/smash.ogg', 60, 1)
@@ -313,7 +313,7 @@
 	M.do_attack_animation(src)
 	if(M.melee_damage_upper == 0)	return
 	if(!(stat & BROKEN))
-		visible_message("<span class='userdanger'>[M] [M.attacktext] [src]!</span>")
+		visible_message("<span class='danger'>[M] [M.attacktext] [src]!</span>")
 		add_logs(M, src, "attacked", admin=0)
 		//src.attack_log += text("\[[time_stamp()]\] <font color='orange'>was attacked by [M.name] ([M.ckey])</font>")
 		src.health -= M.melee_damage_upper
@@ -419,7 +419,7 @@
 /obj/machinery/gun_turret/attack_alien(mob/living/user as mob)
 	user.changeNext_move(CLICK_CD_MELEE)
 	user.do_attack_animation(src)
-	user.visible_message("<span class='danger'>[user] slashes at [src]</span>", "<span class='danger'>You slash at [src]</span>")
+	user.visible_message("<span class='danger'>[user] slashes at [src]!</span>", "<span class='danger'>You slash at [src]!</span>")
 	take_damage(15)
 	return
 
@@ -527,7 +527,7 @@
 	//don't have to check if control_area is path, since get_area_all_atoms can take path.
 	return
 
-/obj/machinery/areaturretid/attackby(obj/item/weapon/W, mob/user)
+/obj/machinery/areaturretid/attackby(obj/item/weapon/W, mob/user, params)
 	if(stat & BROKEN) return
 	if (istype(user, /mob/living/silicon))
 		return src.attack_hand(user)

@@ -252,33 +252,9 @@
 	mymob.throw_icon.screen_loc = ui_drop_throw
 	hotkeybuttons += mymob.throw_icon
 
-	mymob.oxygen = new /obj/screen()
-	mymob.oxygen.icon_state = "oxy0"
-	mymob.oxygen.name = "oxygen"
-	mymob.oxygen.screen_loc = ui_oxygen
-
-	mymob.pressure = new /obj/screen()
-	mymob.pressure.icon_state = "pressure0"
-	mymob.pressure.name = "pressure"
-	mymob.pressure.screen_loc = ui_pressure
-
-	mymob.toxin = new /obj/screen()
-	mymob.toxin.icon_state = "tox0"
-	mymob.toxin.name = "toxin"
-	mymob.toxin.screen_loc = ui_toxin
 
 	mymob.internals = new /obj/screen/internals()
 	mymob.internals.screen_loc = ui_internal
-
-	mymob.fire = new /obj/screen()
-	mymob.fire.icon_state = "fire0"
-	mymob.fire.name = "fire"
-	mymob.fire.screen_loc = ui_fire
-
-	mymob.bodytemp = new /obj/screen()
-	mymob.bodytemp.icon_state = "temp1"
-	mymob.bodytemp.name = "body temperature"
-	mymob.bodytemp.screen_loc = ui_temp
 
 	mymob.healths = new /obj/screen()
 	mymob.healths.icon_state = "health0"
@@ -289,14 +265,9 @@
 	mymob.healthdoll.name = "health doll"
 	mymob.healthdoll.screen_loc = ui_healthdoll
 
-	mymob.nutrition_icon = new /obj/screen()
-	mymob.nutrition_icon.icon_state = "nutrition0"
-	mymob.nutrition_icon.name = "nutrition"
-	mymob.nutrition_icon.screen_loc = ui_nutrition
-
 	mymob.pullin = new /obj/screen/pull()
 	mymob.pullin.icon = ui_style
-	mymob.pullin.icon_state = "pull0"
+	mymob.pullin.update_icon(mymob)
 	mymob.pullin.screen_loc = ui_pull_resist
 	hotkeybuttons += mymob.pullin
 
@@ -336,7 +307,7 @@
 
 	mymob.client.screen = null
 
-	mymob.client.screen += list( mymob.throw_icon, mymob.zone_sel, mymob.oxygen, mymob.pressure, mymob.toxin, mymob.bodytemp, mymob.internals, mymob.fire, mymob.healths, mymob.healthdoll, mymob.nutrition_icon, mymob.pullin, mymob.blind, mymob.flash, mymob.damageoverlay, lingchemdisplay, lingstingdisplay) //, mymob.hands, mymob.rest, mymob.sleep) //, mymob.mach )
+	mymob.client.screen += list( mymob.throw_icon, mymob.zone_sel, mymob.internals, mymob.healths, mymob.healthdoll, mymob.pullin, mymob.blind, mymob.flash, mymob.damageoverlay, lingchemdisplay, lingstingdisplay) //, mymob.hands, mymob.rest, mymob.sleep) //, mymob.mach )
 	mymob.client.screen += adding + hotkeybuttons
 	inventory_shown = 0;
 
@@ -352,50 +323,3 @@
 	else
 		client.screen -= hud_used.hotkeybuttons
 		hud_used.hotkey_ui_hidden = 1
-
-
-/mob/living/carbon/human/update_action_buttons()
-	var/num = 1
-	if(!hud_used) return
-	if(!client) return
-
-	if(hud_used.hud_shown != 1)	//Hud toggled to minimal
-		return
-
-	client.screen -= hud_used.item_action_list
-
-	for(var/obj/item/I in src)
-		if(I.action_button_name)
-			if(hud_used.item_action_list.len < num)
-				var/obj/screen/item_action/N = new(hud_used)
-				hud_used.item_action_list += N
-
-			var/obj/screen/item_action/A = hud_used.item_action_list[num]
-
-			A.icon = ui_style2icon(client.prefs.UI_style)
-			A.icon_state = "template"
-
-			A.overlays = list()
-			var/image/img = image(I.icon, A, I.icon_state)
-			img.pixel_x = 0
-			img.pixel_y = 0
-			A.overlays += img
-
-			A.name = I.action_button_name
-			A.owner = I
-
-			client.screen += hud_used.item_action_list[num]
-
-			switch(num)
-				if(1)
-					A.screen_loc = ui_action_slot1
-				if(2)
-					A.screen_loc = ui_action_slot2
-				if(3)
-					A.screen_loc = ui_action_slot3
-				if(4)
-					A.screen_loc = ui_action_slot4
-				if(5)
-					A.screen_loc = ui_action_slot5
-					break //5 slots available, so no more can be added.
-			num++

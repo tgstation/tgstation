@@ -107,7 +107,7 @@ AngleToHue(hue)
     Converts an angle to a hue in the valid range.
 RotateHue(hsv, angle)
     Takes an HSV or HSVA value and rotates the hue forward through red, green, and blue by an angle from 0 to 360.
-    (Rotating red by 60° produces yellow.) The result is another HSV or HSVA color with the same saturation and value
+    (Rotating red by 60Â° produces yellow.) The result is another HSV or HSVA color with the same saturation and value
     as the original, but a different hue.
 GrayScale(rgb)
     Takes an RGB or RGBA color and converts it to grayscale. Returns an RGB or RGBA string.
@@ -618,6 +618,26 @@ world
 	else return BlendRGB(tone, "#ffffff", (gray-tone_gray)/((255-tone_gray) || 1))
 
 
+//Used in the OLD chem colour mixing algorithm
+/proc/GetColors(hex)
+	hex = uppertext(hex)
+	// No alpha set? Default to full alpha.
+	if(length(hex) == 7)
+		hex += "FF"
+	var/hi1 = text2ascii(hex, 2) // R
+	var/lo1 = text2ascii(hex, 3) // R
+	var/hi2 = text2ascii(hex, 4) // G
+	var/lo2 = text2ascii(hex, 5) // G
+	var/hi3 = text2ascii(hex, 6) // B
+	var/lo3 = text2ascii(hex, 7) // B
+	var/hi4 = text2ascii(hex, 8) // A
+	var/lo4 = text2ascii(hex, 9) // A
+	return list(((hi1>= 65 ? hi1-55 : hi1-48)<<4) | (lo1 >= 65 ? lo1-55 : lo1-48),
+		((hi2 >= 65 ? hi2-55 : hi2-48)<<4) | (lo2 >= 65 ? lo2-55 : lo2-48),
+		((hi3 >= 65 ? hi3-55 : hi3-48)<<4) | (lo3 >= 65 ? lo3-55 : lo3-48),
+		((hi4 >= 65 ? hi4-55 : hi4-48)<<4) | (lo4 >= 65 ? lo4-55 : lo4-48))
+
+
 /*
 Get flat icon by DarkCampainger. As it says on the tin, will return an icon with all the overlays
 as a single icon. Useful for when you want to manipulate an icon via the above as overlays are not normally included.
@@ -689,7 +709,9 @@ The _flatIcons list is a cache for generated icon files.
 	while(TRUE)
 		if(curIndex<=process.len)
 			current = process[curIndex]
-			if(!current)	continue
+			if(!current)
+				curIndex++ //Try the next layer
+				continue
 			currentLayer = current:layer
 			if(currentLayer<0) // Special case for FLY_LAYER
 				if(currentLayer <= -1000) return flat
@@ -798,3 +820,99 @@ The _flatIcons list is a cache for generated icon files.
 		var/image/I = O
 		composite.Blend(icon(I.icon, I.icon_state, I.dir, 1), ICON_OVERLAY)
 	return composite
+
+
+//What the mob looks like as animated static
+//By vg's ComicIronic
+/proc/getStaticIcon(icon/A, safety=1)
+	var/icon/flat_icon = safety ? A : new(A)
+	flat_icon.Blend(rgb(255,255,255))
+	flat_icon.BecomeAlphaMask()
+	var/icon/static_icon = new/icon('icons/effects/effects.dmi', "static_base")
+	static_icon.AddAlphaMask(flat_icon)
+	return static_icon
+
+
+//What the mob looks like as a pitch black outline
+//By vg's ComicIronic
+/proc/getBlankIcon(icon/A, safety=1)
+	var/icon/flat_icon = safety ? A : new(A)
+	flat_icon.Blend(rgb(255,255,255))
+	flat_icon.BecomeAlphaMask()
+	var/icon/blank_icon = new/icon('icons/effects/effects.dmi', "blank_base")
+	blank_icon.AddAlphaMask(flat_icon)
+	return blank_icon
+
+
+//Dwarf fortress style icons based on letters (defaults to the first letter of the Atom's name)
+//By vg's ComicIronic
+/proc/getLetterImage(atom/A, letter= "", uppercase = 0)
+	if(!A)
+		return
+
+	var/icon/atom_icon = new(A.icon, A.icon_state)
+
+	if(!letter)
+		letter = copytext(A.name, 1, 2)
+		if(uppercase == 1)
+			letter = uppertext(letter)
+		else if(uppercase == -1)
+			letter = lowertext(letter)
+
+	var/image/text_image = new(loc = A)
+	text_image.maptext = "<font size = 4>[letter]</font>"
+	text_image.color = AverageColour(atom_icon)
+	text_image.pixel_x = 7
+	text_image.pixel_y = 5
+	del(atom_icon)
+	return text_image
+
+
+//Find's the average colour of the icon
+//By vg's ComicIronic
+/proc/AverageColour(var/icon/I)
+	var/list/colours = list()
+	for(var/x_pixel = 1 to I.Width())
+		for(var/y_pixel = 1 to I.Height())
+			var/this_colour = I.GetPixel(x_pixel, y_pixel)
+			if(this_colour)
+				colours.Add(this_colour)
+
+	if(!colours.len)
+		return null
+
+	var/final_average = colours[1]
+	for(var/colour in (colours - colours[1]))
+		final_average = BlendRGB(final_average, colour, 1)
+	return final_average
+
+
+//Interface for using DrawBox() to draw 1 pixel on a coordinate.
+//Returns the same icon specifed in the argument, but with the pixel drawn
+/proc/DrawPixel(var/icon/I,var/colour,var/drawX,var/drawY)
+	if(!I)
+		return 0
+
+	var/Iwidth = I.Width()
+	var/Iheight = I.Height()
+
+	if(drawX > Iwidth || drawX <= 0)
+		return 0
+	if(drawY > Iheight || drawY <= 0)
+		return 0
+
+	I.DrawBox(colour,drawX, drawY)
+	return I
+
+
+//Interface for easy drawing of one pixel on an atom.
+/atom/proc/DrawPixelOn(var/colour, var/drawX, var/drawY)
+	var/icon/I = new(icon)
+	var/icon/J = DrawPixel(I, colour, drawX, drawY)
+	if(J) //Only set the icon if it succeeded, the icon without the pixel is 1000x better than a black square.
+		icon = J
+		return J
+	return 0
+
+
+

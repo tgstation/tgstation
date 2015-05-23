@@ -31,7 +31,7 @@
 	return 0
 
 /proc/isslime(A)
-	if(istype(A, /mob/living/carbon/slime))
+	if(istype(A, /mob/living/simple_animal/slime))
 		return 1
 	return 0
 
@@ -46,7 +46,7 @@
 	return 0
 
 /proc/iscorgi(A)
-	if(istype(A, /mob/living/simple_animal/corgi))
+	if(istype(A, /mob/living/simple_animal/pet/corgi))
 		return 1
 	return 0
 
@@ -56,7 +56,7 @@
 	return 0
 
 /proc/iscat(A)
-	if(istype(A, /mob/living/simple_animal/cat))
+	if(istype(A, /mob/living/simple_animal/pet/cat))
 		return 1
 	return 0
 
@@ -163,14 +163,14 @@ proc/isorgan(A)
 	if(prob(probability))
 		return zone
 
-	var/t = rand(1, 17) // randomly pick a different zone, or maybe the same one
+	var/t = rand(1, 18) // randomly pick a different zone, or maybe the same one
 	switch(t)
 		if(1)		 return "head"
 		if(2)		 return "chest"
 		if(3 to 6)	 return "l_arm"
 		if(7 to 10)	 return "r_arm"
-		if(10 to 13) return "l_leg"
-		if(14 to 17) return "r_leg"
+		if(11 to 14) return "l_leg"
+		if(15 to 18) return "r_leg"
 
 	return zone
 
@@ -203,6 +203,29 @@ proc/isorgan(A)
 		p++
 	return sanitize(t)
 
+proc/slur(n)
+	var/phrase = html_decode(n)
+	var/leng = lentext(phrase)
+	var/counter=lentext(phrase)
+	var/newphrase=""
+	var/newletter=""
+	while(counter>=1)
+		newletter=copytext(phrase,(leng-counter)+1,(leng-counter)+2)
+		if(rand(1,3)==3)
+			if(lowertext(newletter)=="o")	newletter="u"
+			if(lowertext(newletter)=="s")	newletter="ch"
+			if(lowertext(newletter)=="a")	newletter="ah"
+			if(lowertext(newletter)=="u")	newletter="oo"
+			if(lowertext(newletter)=="c")	newletter="k"
+		if(rand(1,20)==20)
+			if(newletter==" ")	newletter="...huuuhhh..."
+			if(newletter==".")	newletter=" *BURP*."
+		switch(rand(1,20))
+			if(1)	newletter+="'"
+			if(10)	newletter+="[newletter]"
+			if(20)	newletter+="[newletter][newletter]"
+		newphrase+="[newletter]";counter-=1
+	return newphrase
 
 /proc/stutter(n)
 	var/te = html_decode(n)
@@ -263,7 +286,7 @@ proc/Gibberish(t, p)//t is the inputted message, and any value higher than 70 fo
 	return returntext
 
 
-/proc/ninjaspeak(n)
+/proc/ninjaspeak(n) //NINJACODE
 /*
 The difference with stutter is that this proc can stutter more than 1 letter
 The issue here is that anything that does not have a space is treated as one word (in many instances). For instance, "LOOKING," is a word, including the comma.
@@ -419,6 +442,9 @@ proc/is_special_character(mob/M) // returns 1 for special characters and 2 for h
 			if("monkey")
 				if(M.viruses && (locate(/datum/disease/transformation/jungle_fever) in M.viruses))
 					return 2
+			if("abductor")
+				if(M.mind in ticker.mode.abductors)
+					return 2
 		return 1
 	return 0
 
@@ -454,10 +480,10 @@ proc/is_special_character(mob/M) // returns 1 for special characters and 2 for h
 			affecting.heal_damage(brute,burn,1)
 			H.update_damage_overlays(0)
 			H.updatehealth()
-			user.visible_message("<span class='notice'>[user] has fixed some of the [dam ? "dents on" : "burnt wires in"] [H]'s [affecting.getDisplayName()]!</span>")
+			user.visible_message("[user] has fixed some of the [dam ? "dents on" : "burnt wires in"] [H]'s [affecting.getDisplayName()].", "<span class='notice'>You fix some of the [dam ? "dents on" : "burnt wires in"] [H]'s [affecting.getDisplayName()].</span>")
 			return
 		else
-			user << "<span class='notice'>[H]'s [affecting.getDisplayName()] is already in good condition</span>"
+			user << "<span class='warning'>[H]'s [affecting.getDisplayName()] is already in good condition!</span>"
 			return
 	else
 		return

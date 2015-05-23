@@ -52,7 +52,7 @@
 
 	var/mob/living/carbon/human/H = M
 	if(istype(M, /mob/living/carbon/human) && ((H.head && H.head.flags & HEADCOVERSEYES) || (H.wear_mask && H.wear_mask.flags & MASKCOVERSEYES) || (H.glasses && H.glasses.flags & GLASSESCOVERSEYES)))
-		user << "<span class='notice'>You're going to need to remove their head cover first.</span>"
+		user << "<span class='warning'>You're going to need to remove their head cover first!</span>"
 		return
 
 //since these people will be dead M != usr
@@ -63,15 +63,15 @@
 			if(O == (user || M))
 				continue
 			if(M == user)
-				O << "<span class='notice'>[user] inserts [src] into \his head!</span>"
+				O << "[user] inserts [src] into \his head!"
 			else
-				O << "<span class='notice'>[M] has [src] inserted into \his head by [user].</span>"
+				O << "[M] has [src] inserted into \his head by [user]."
 
 		if(M != user)
-			M << "<span class='notice'>[user] inserts [src] into your head!</span>"
-			user << "<span class='notice'>You insert [src] into [M]'s head!</span>"
+			M << "<span class='notice'>[user] inserts [src] into your head.</span>"
+			user << "<span class='notice'>You insert [src] into [M]'s head.</span>"
 		else
-			user << "<span class='notice'>You insert [src] into your head!</span>"	//LOL
+			user << "<span class='notice'>You insert [src] into your head.</span>"	//LOL
 
 		//this might actually be outdated since barring badminnery, a debrain'd body will have any client sucked out to the brain's internal mob. Leaving it anyway to be safe. --NEO
 		if(M.key)
@@ -99,3 +99,9 @@
 	desc = "We barely understand the brains of terrestial animals. Who knows what we may find in the brain of such an advanced species?"
 	icon_state = "brain-alien"
 	origin_tech = "biotech=7"
+
+/obj/item/organ/brain/Destroy() //copypasted from MMIs.
+	if(brainmob)
+		qdel(brainmob)
+		brainmob = null
+	..()

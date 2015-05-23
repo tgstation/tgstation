@@ -25,7 +25,7 @@
 		if(bananium.amount < 100)
 			on = !on
 			update_icon()
-			usr << "<span class='danger'>You ran out of bananium!</span>"
+			usr << "<span class='warning'>You ran out of bananium!</span>"
 	else
 		..()
 
@@ -36,7 +36,7 @@
 	else
 		user << "<span class='notice'>You cannot retrieve any bananium from the prototype shoes.</span>"
 
-/obj/item/clothing/shoes/clown_shoes/banana_shoes/attackby(obj/item/O, mob/user)
+/obj/item/clothing/shoes/clown_shoes/banana_shoes/attackby(obj/item/O, mob/user, params)
 	var/sheet_amount = bananium.insert_sheet(O)
 	if(sheet_amount > 0)
 		user << "<span class='notice'>You insert [sheet_amount] bananium sheets into the prototype shoes.</span>"
@@ -55,9 +55,9 @@
 	if(bananium.amount > 0)
 		on = !on
 		update_icon()
-		usr << "You [on ? "activate" : "deactivate"] the prototype shoes."
+		usr << "<span class='notice'>You [on ? "activate" : "deactivate"] the prototype shoes.</span>"
 	else
-		usr << "You need bananium to turn the prototype shoes on."
+		usr << "<span class='warning'>You need bananium to turn the prototype shoes on!</span>"
 
 /obj/item/clothing/shoes/clown_shoes/banana_shoes/update_icon()
 	if(on)

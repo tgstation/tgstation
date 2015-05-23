@@ -11,6 +11,8 @@ var/datum/atom_hud/huds = list( \
 	ANTAG_HUD_OPS = new/datum/atom_hud/antag(), \
 	ANTAG_HUD_GANG_A = new/datum/atom_hud/antag(), \
 	ANTAG_HUD_GANG_B = new/datum/atom_hud/antag(), \
+	ANTAG_HUD_WIZ = new/datum/atom_hud/antag(), \
+	ANTAG_HUD_SHADOW = new/datum/atom_hud/antag(), \
 	)
 
 /datum/atom_hud
@@ -19,6 +21,8 @@ var/datum/atom_hud/huds = list( \
 	var/list/hud_icons = list() //these will be the indexes for the atom's hud_list
 
 /datum/atom_hud/proc/remove_hud_from(var/mob/M)
+	if(src in M.permanent_huds)
+		return
 	for(var/atom/A in hudatoms)
 		remove_from_single_hud(M, A)
 	hudusers -= M

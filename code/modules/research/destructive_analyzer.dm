@@ -37,7 +37,7 @@ Note: Must be placed within 3 tiles of the R&D Console
 	return temp_list
 
 
-/obj/machinery/r_n_d/destructive_analyzer/attackby(var/obj/item/O as obj, var/mob/user as mob)
+/obj/machinery/r_n_d/destructive_analyzer/attackby(var/obj/item/O as obj, var/mob/user as mob, params)
 	if (shocked)
 		shock(user,50)
 	if (default_deconstruction_screwdriver(user, "d_analyzer_t", "d_analyzer", O))

@@ -12,69 +12,74 @@
 	force = 15
 	throwforce = 10
 	w_class = 3
-	var/charged = 1
 	hitsound = 'sound/weapons/bladeslice.ogg'
+	var/charges = 1
+	var/spawn_type = /obj/singularity/narsie/wizard
+	var/spawn_amt = 1
+	var/activate_descriptor = "reality"
+	var/rend_desc = "You should run now."
+	var/spawn_fast = 0 //if 1, ignores checking for mobs on loc before spawning
+
+/obj/item/weapon/veilrender/attack_self(mob/user as mob)
+	if(charges > 0)
+		new /obj/effect/rend(get_turf(usr), spawn_type, spawn_amt, rend_desc, spawn_fast)
+		charges--
+		user.visible_message("<span class='boldannounce'>[src] hums with power as [usr] deals a blow to [activate_descriptor] itself!</span>")
+	else
+		user << "<span class='danger'>The unearthly energies that powered the blade are now dormant.</span>"
 
 /obj/effect/rend
 	name = "tear in the fabric of reality"
-	desc = "You should run now"
+	desc = "You should run now."
 	icon = 'icons/obj/biomass.dmi'
 	icon_state = "rift"
 	density = 1
 	unacidable = 1
 	anchored = 1.0
+	var/spawn_path = /mob/living/simple_animal/cow //defaulty cows to prevent unintentional narsies
+	var/spawn_amt_left = 20
+	var/spawn_fast = 0
 
-/obj/effect/rend/New()
-	spawn(50)
-		new /obj/singularity/narsie/wizard(get_turf(src))
-		qdel(src)
-		return
+/obj/effect/rend/New(loc, var/spawn_type, var/spawn_amt, var/desc, var/spawn_fast)
+	src.spawn_path = spawn_type
+	src.spawn_amt_left = spawn_amt
+	src.desc = desc
+	src.spawn_fast = spawn_fast
+	SSobj.processing |= src
 	return
 
-/obj/item/weapon/veilrender/attack_self(mob/user as mob)
-	if(charged == 1)
-		new /obj/effect/rend(get_turf(usr))
-		charged = 0
-		visible_message("<span class='userdanger'>[src] hums with power as [usr] deals a blow to reality itself!</span>")
-	else
-		user << "<span class='danger'>The unearthly energies that powered the blade are now dormant.</span>"
-
-
-
-/obj/item/weapon/veilrender/vealrender
-	name = "veal render"
-	desc = "A wicked curved blade of alien origin, recovered from the ruins of a vast farm."
-
-/obj/item/weapon/veilrender/vealrender/attack_self(mob/user as mob)
-	if(charged)
-		new /obj/effect/rend/cow(get_turf(usr))
-		charged = 0
-		visible_message("<span class='userdanger'>[src] hums with power as [usr] deals a blow to hunger itself!</span>")
-	else
-		user << "<span class='danger'>The unearthly energies that powered the blade are now dormant.</span>"
-
-/obj/effect/rend/cow
-	desc = "Reverberates with the sound of ten thousand moos."
-	var/cowsleft = 20
-
-/obj/effect/rend/cow/New()
-	processing_objects.Add(src)
-	return
-
-/obj/effect/rend/cow/process()
-	if(locate(/mob) in loc) return
-	new /mob/living/simple_animal/cow(loc)
-	cowsleft--
-	if(cowsleft <= 0)
+/obj/effect/rend/process()
+	if(!spawn_fast)
+		if(locate(/mob) in loc)
+			return
+	new spawn_path(loc)
+	spawn_amt_left--
+	if(spawn_amt_left <= 0)
 		qdel(src)
 
-/obj/effect/rend/cow/attackby(obj/item/I as obj, mob/user as mob)
+/obj/effect/rend/attackby(obj/item/I as obj, mob/user as mob, params)
 	if(istype(I, /obj/item/weapon/nullrod))
-		visible_message("<span class='danger'>[I] strikes a blow against \the [src], banishing it!</span>")
+		user.visible_message("<span class='danger'>[usr] seals \the [src] with \the [I].</span>")
 		qdel(src)
 		return
 	..()
 
+/obj/item/weapon/veilrender/vealrender
+	name = "veal render"
+	desc = "A wicked curved blade of alien origin, recovered from the ruins of a vast farm."
+	spawn_type = /mob/living/simple_animal/cow
+	spawn_amt = 20
+	activate_descriptor = "hunger"
+	rend_desc = "Reverberates with the sound of ten thousand moos."
+
+/obj/item/weapon/veilrender/honkrender
+	name = "honk render"
+	desc = "A wicked curved blade of alien origin, recovered from the ruins of a vast circus."
+	spawn_type = /mob/living/simple_animal/hostile/retaliate/clown
+	spawn_amt = 10
+	activate_descriptor = "depression"
+	rend_desc = "Gently wafting with the sounds of endless laughter."
+	icon_state = "clownrender"
 
 /////////////////////////////////////////Scrying///////////////////
 
@@ -95,3 +100,76 @@
 	visible_message("<span class='danger'>[usr] stares into [src], their eyes glazing over.</span>")
 	user.ghostize(1)
 	return
+
+/////////////////////////////////////////Necromantic Stone///////////////////
+
+/obj/item/device/necromantic_stone
+	name = "necromantic stone"
+	desc = "A shard capable of resurrecting humans as skeleton thralls."
+	icon = 'icons/obj/wizard.dmi'
+	icon_state = "necrostone"
+	item_state = "electronic"
+	origin_tech = "bluespace=4;materials=4"
+	w_class = 1
+	var/list/spooky_scaries = list()
+	var/unlimited = 0
+
+/obj/item/device/necromantic_stone/unlimited
+	unlimited = 1
+
+/obj/item/device/necromantic_stone/attack(mob/living/carbon/human/M, mob/living/carbon/human/user)
+	if(!istype(M, /mob/living/carbon/human))
+		return ..()
+
+	if(!istype(user) || !user.canUseTopic(M,1))
+		return
+
+	if(M.stat != DEAD)
+		user << "<span class='warning'>This artifact can only affect the dead!</span>"
+		return
+
+	if(!M.mind || !M.client)
+		user << "<span class='warning'>There is no soul connected to this body...</span>"
+		return
+
+	check_spooky()//clean out/refresh the list
+	if(spooky_scaries.len >= 3 && !unlimited)
+		user << "<span class='warning'>This artifact can only affect three undead at a time!</span>"
+		return
+
+	hardset_dna(M, null, null, null, null, /datum/species/skeleton)
+	M.revive()
+	spooky_scaries |= M
+	M << "<span class='userdanger'>You have been revived by </span><B>[user.real_name]!</B>"
+	M << "<span class='userdanger'>They are your master now, assist them even if it costs you your new life!</span>"
+
+	equip_roman_skeleton(M)
+
+	desc = "A shard capable of resurrecting humans as skeleton thralls[unlimited ? "." : ", [spooky_scaries.len]/3 active thralls."]"
+
+/obj/item/device/necromantic_stone/proc/check_spooky()
+	if(unlimited) //no point, the list isn't used.
+		return
+
+	for(var/X in spooky_scaries)
+		if(!istype(X, /mob/living/carbon/human))
+			spooky_scaries.Remove(X)
+			continue
+		var/mob/living/carbon/human/H = X
+		if(H.stat == DEAD)
+			spooky_scaries.Remove(X)
+			continue
+	listclearnulls(spooky_scaries)
+
+//Funny gimmick, skeletons always seem to wear roman/ancient armour
+/obj/item/device/necromantic_stone/proc/equip_roman_skeleton(var/mob/living/carbon/human/H)
+	for(var/obj/item/I in H)
+		H.unEquip(I)
+
+	var/hat = pick(/obj/item/clothing/head/helmet/roman, /obj/item/clothing/head/helmet/roman/legionaire)
+	H.equip_to_slot_or_del(new hat(H), slot_head)
+	H.equip_to_slot_or_del(new /obj/item/clothing/under/roman(H), slot_w_uniform)
+	H.equip_to_slot_or_del(new /obj/item/clothing/shoes/roman(H), slot_shoes)
+	H.equip_to_slot_or_del(new /obj/item/weapon/shield/riot/roman(H), slot_l_hand)
+	H.equip_to_slot_or_del(new /obj/item/weapon/claymore(H), slot_r_hand)
+	H.equip_to_slot_or_del(new /obj/item/weapon/twohanded/spear(H), slot_back)

@@ -10,7 +10,6 @@
 	response_disarm = "flails at"
 	response_harm = "hits"
 	speak_chance = 0
-	stop_automated_movement_when_pulled = 0
 	maxHealth = 15
 	health = 15
 	see_in_dark = 10
@@ -18,21 +17,20 @@
 	melee_damage_lower = 6
 	melee_damage_upper = 5
 	attacktext = "bites"
+	butcher_results = list(/obj/item/weapon/reagent_containers/food/snacks/meat/slab = 1)
 	pass_flags = PASSTABLE
 	faction = list("hostile")
 	attack_sound = 'sound/weapons/bite.ogg'
 	environment_smash = 0
 	ventcrawler = 2
-	mob_size = 0
+	mob_size = MOB_SIZE_TINY
+	flying = 1
+	speak_emote = list("squeaks")
+	var/max_co2 = 0 //to be removed once metastation map no longer use those for Sgt Araneus
+	var/min_oxy = 0
+	var/max_tox = 0
 
 
 	//Space bats need no air to fly in.
-	min_oxy = 0
-	max_oxy = 0
-	min_tox = 0
-	max_tox = 0
-	min_co2 = 0
-	max_co2 = 0
-	min_n2 = 0
-	max_n2 = 0
+	atmos_requirements = list("min_oxy" = 0, "max_oxy" = 0, "min_tox" = 0, "max_tox" = 0, "min_co2" = 0, "max_co2" = 0, "min_n2" = 0, "max_n2" = 0)
 	minbodytemp = 0

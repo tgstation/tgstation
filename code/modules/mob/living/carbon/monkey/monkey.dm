@@ -1,13 +1,12 @@
 /mob/living/carbon/monkey
 	name = "monkey"
 	voice_name = "monkey"
-	say_message = "chimpers"
+	verb_say = "chimpers"
 	icon = 'icons/mob/monkey.dmi'
 	icon_state = "monkey1"
 	gender = NEUTER
 	pass_flags = PASSTABLE
 	languages = MONKEY
-	update_icon = 0		///no need to call regenerate_icon
 	ventcrawler = 1
 
 /mob/living/carbon/monkey/New()
@@ -36,7 +35,7 @@
 /mob/living/carbon/monkey/movement_delay()
 	var/tally = 0
 	if(reagents)
-		if(reagents.has_reagent("hyperzine")) return -1
+		if(reagents.has_reagent("morphine")) return -1
 
 		if(reagents.has_reagent("nuka_cola")) return -1
 
@@ -138,7 +137,6 @@
 
 		if (M.a_intent == "disarm")
 			playsound(loc, 'sound/weapons/pierce.ogg', 25, 1, -1)
-			var/damage = 5
 			if(prob(95))
 				Weaken(10)
 				visible_message("<span class='danger'>[M] has tackled down [name]!</span>", \
@@ -148,7 +146,6 @@
 					visible_message("<span class='danger'>[M] has disarmed [name]!</span>", \
 							"<span class='userdanger'>[M] has disarmed [name]!</span>")
 			add_logs(M, src, "disarmed", admin=0)
-			adjustBruteLoss(damage)
 			updatehealth()
 	return
 
@@ -159,26 +156,20 @@
 		updatehealth()
 
 
-/mob/living/carbon/monkey/attack_slime(mob/living/carbon/slime/M as mob)
-	..()
-	var/damage = rand(1, 3)
-
-	if(M.is_adult)
-		damage = rand(20, 40)
-	else
-		damage = rand(5, 35)
-	adjustBruteLoss(damage)
-	updatehealth()
-
-	return
+/mob/living/carbon/monkey/attack_slime(mob/living/simple_animal/slime/M as mob)
+	if(..()) //successful slime attack
+		var/damage = rand(5, 35)
+		if(M.is_adult)
+			damage = rand(20, 40)
+		adjustBruteLoss(damage)
+		updatehealth()
 
 /mob/living/carbon/monkey/Stat()
 	..()
-	statpanel("Status")
-	stat(null, "Intent: [a_intent]")
-	stat(null, "Move Mode: [m_intent]")
-	if(client && mind)
-		if (client.statpanel == "Status")
+	if(statpanel("Status"))
+		stat(null, "Intent: [a_intent]")
+		stat(null, "Move Mode: [m_intent]")
+		if(client && mind)
 			if(mind.changeling)
 				stat("Chemical Storage", "[mind.changeling.chem_charges]/[mind.changeling.chem_storage]")
 				stat("Absorbed DNA", mind.changeling.absorbedcount)
@@ -191,9 +182,6 @@
 	internal = null
 	return
 
-/mob/living/carbon/monkey/var/co2overloadtime = null
-/mob/living/carbon/monkey/var/temperature_resistance = T0C+75
-
 /mob/living/carbon/monkey/ex_act(severity, target)
 	..()
 	switch(severity)
@@ -203,29 +191,20 @@
 		if(2.0)
 			adjustBruteLoss(60)
 			adjustFireLoss(60)
+			adjustEarDamage(30,120)
 		if(3.0)
 			adjustBruteLoss(30)
 			if (prob(50))
 				Paralyse(10)
+			adjustEarDamage(15,60)
+
+	updatehealth()
 	return
 
-/mob/living/carbon/monkey/blob_act()
-	if (stat != 2)
-		show_message("<span class='userdanger'>The blob attacks you!</span>")
-		adjustFireLoss(60)
-		health = 100 - getOxyLoss() - getToxLoss() - getFireLoss() - getBruteLoss()
-	if (prob(50))
-		Paralyse(10)
-	if (stat == DEAD && client)
-		gib()
-		return
-	if (stat == DEAD && !client)
-		gibs(loc, viruses)
-		qdel(src)
-		return
-
-
 /mob/living/carbon/monkey/IsAdvancedToolUser()//Unless its monkey mode monkeys cant use advanced tools
+	return 0
+
+/mob/living/carbon/monkey/reagent_check(var/datum/reagent/R) //can metabolize all reagents
 	return 0
 
 /mob/living/carbon/monkey/canBeHandcuffed()
@@ -265,10 +244,6 @@
 
 	return threatcount
 
-/mob/living/carbon/monkey/SpeciesCanConsume()
-	return 1 // Monkeys can eat, drink, and be forced to do so
-
-
 /mob/living/carbon/monkey/acid_act(var/acidpwr, var/toxpwr, var/acid_volume)
 	if(wear_mask)
 		if(!wear_mask.unacidable)
@@ -278,5 +253,11 @@
 			src << "<span class='warning'>Your mask protects you from the acid.</span>"
 		return
 
-	if(!unacidable)
-		take_organ_damage(min(6*toxpwr, acid_volume * toxpwr))
+	take_organ_damage(min(6*toxpwr, acid_volume * toxpwr))
+
+/mob/living/carbon/monkey/help_shake_act(mob/living/carbon/M)
+	if(health < 0 && ishuman(M))
+		var/mob/living/carbon/human/H = M
+		H.do_cpr(src)
+	else
+		..()

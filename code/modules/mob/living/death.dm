@@ -2,6 +2,9 @@
 	var/prev_lying = lying
 	death(1)
 
+	if(buckled)
+		buckled.unbuckle_mob() //to update alien nest overlay.
+
 	var/atom/movable/overlay/animate = setup_animation(animation, prev_lying)
 	if(animate)
 		gib_animation(animate)
@@ -32,11 +35,14 @@
 	flick(flick_name, animate)
 
 /mob/living/death(gibbed)
+	eye_blind = max(eye_blind, 1)
 	timeofdeath = world.time
 
 	living_mob_list -= src
 	if(!gibbed)
 		dead_mob_list += src
+	else if(buckled)
+		buckled.unbuckle_mob()
 
 
 /mob/living/proc/setup_animation(var/animation, var/prev_lying)

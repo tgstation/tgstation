@@ -30,7 +30,7 @@
 
 /obj/machinery/computer/robotics/interact(var/mob/user as mob)
 	if (src.z > 6)
-		user << "<span class='userdanger'>Unable to establish a connection</span>: \black You're too far away from the station!"
+		user << "<span class='boldannounce'>Unable to establish a connection</span>: \black You're too far away from the station!"
 		return
 	user.set_machine(src)
 	var/dat

@@ -33,7 +33,7 @@
 
 		var/list/L = list()
 		for (var/obj/machinery/camera/C in cameranet.cameras)
-			if((z > 7 || C.z > 7) && (C.z != z))//if on away mission, can only recieve feed from same z_level cameras
+			if((z > ZLEVEL_SPACEMAX || C.z > ZLEVEL_SPACEMAX) && (C.z != z))//if on away mission, can only recieve feed from same z_level cameras
 				continue
 			L.Add(C)
 
@@ -94,6 +94,7 @@
 
 /obj/machinery/computer/security/telescreen/update_icon()
 	icon_state = initial(icon_state)
+	SetLuminosity(brightness_on)
 	if(stat & BROKEN)
 		icon_state += "b"
 	return

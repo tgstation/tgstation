@@ -1,5 +1,3 @@
-//Hyposprays
-
 /obj/item/weapon/reagent_containers/hypospray
 	name = "hypospray"
 	desc = "The DeForest Medical Corporation hypospray is a sterile, air-needle autoinjector for rapid administration of drugs to patients."
@@ -18,7 +16,7 @@
 
 /obj/item/weapon/reagent_containers/hypospray/attack(mob/living/M, mob/user)
 	if(!reagents.total_volume)
-		user << "<span class='notice'>[src] is empty.</span>"
+		user << "<span class='warning'>[src] is empty!</span>"
 		return
 	if(!istype(M))
 		return
@@ -40,28 +38,27 @@
 
 			add_logs(user, M, "injected", object="[src.name]", addition="([contained])")
 
-/obj/item/weapon/reagent_containers/hypospray/CMO/New()
-	..()
-	reagents.add_reagent("doctorsdelight", 30)
+/obj/item/weapon/reagent_containers/hypospray/CMO
+	list_reagents = list("omnizine" = 30)
 
 /obj/item/weapon/reagent_containers/hypospray/combat
 	name = "combat stimulant injector"
 	desc = "A modified air-needle autoinjector, used by support operatives to quickly heal injuries in combat."
 	amount_per_transfer_from_this = 10
 	icon_state = "combat_hypo"
-	volume = 60
+	volume = 90
 	ignore_flags = 1 // So they can heal their comrades.
+	list_reagents = list("epinephrine" = 30, "omnizine" = 30, "leporazine" = 15, "atropine" = 15)
 
-/obj/item/weapon/reagent_containers/hypospray/combat/New()
-	..()
-	reagents.add_reagent("synaptizine", 30)
-
-
+/obj/item/weapon/reagent_containers/hypospray/combat/nanites
+	desc = "A modified air-needle autoinjector for use in combat situations. Prefilled with expensive medical nanites for rapid healing."
+	volume = 100
+	list_reagents = list("nanites" = 80, "synaptizine" = 20)
 
 //MediPens
 
 /obj/item/weapon/reagent_containers/hypospray/medipen
-	name = "inaprovaline medipen" //lol epipen is copyrighted
+	name = "epinephrine medipen"
 	desc = "A rapid and safe way to stabilize patients in critical condition for personnel without advanced medical knowledge."
 	icon_state = "medipen"
 	item_state = "medipen"
@@ -69,13 +66,12 @@
 	volume = 10
 	ignore_flags = 1 //so you can medipen through hardsuits
 	flags = null
+	list_reagents = list("epinephrine" = 10)
 
 /obj/item/weapon/reagent_containers/hypospray/medipen/New()
 	..()
-	reagents.add_reagent("inaprovaline", 10)
 	update_icon()
 	return
-
 
 /obj/item/weapon/reagent_containers/hypospray/medipen/attack(mob/M as mob, mob/user as mob)
 	..()
@@ -95,29 +91,15 @@
 	else
 		usr << "<span class='notice'>It is spent.</span>"
 
-
-/obj/item/weapon/reagent_containers/hypospray/medipen/leporazine //basilisks
-	name = "leporazine medipen"
-	desc = "A rapid way to regulate your body's temperature in the event of a hardsuit malfunction at the cost of some shortness of breath."
-	icon_state = "lepopen"
-
-/obj/item/weapon/reagent_containers/hypospray/medipen/leporazine/New()
-	..()
-	reagents.remove_reagent("inaprovaline", 10)
-	reagents.add_reagent("leporazine", 9)
-	reagents.add_reagent("lexorin", 1)
-	update_icon()
-	return
-
 /obj/item/weapon/reagent_containers/hypospray/medipen/stimpack //goliath kiting
 	name = "stimpack medipen"
-	desc = "A rapid way to stimulate your body's adrenaline, allowing for freer movement in restrictive armor at the cost of some shortness of breath."
+	desc = "A rapid way to stimulate your body's adrenaline, allowing for freer movement in restrictive armor."
 	icon_state = "stimpen"
+	volume = 20
+	amount_per_transfer_from_this = 20
+	list_reagents = list("ephedrine" = 10, "coffee" = 10)
 
-/obj/item/weapon/reagent_containers/hypospray/medipen/stimpack/New()
-	..()
-	reagents.remove_reagent("inaprovaline", 10)
-	reagents.add_reagent("hyperzine", 9)
-	reagents.add_reagent("lexorin", 1)
-	update_icon()
-	return
+/obj/item/weapon/reagent_containers/hypospray/medipen/morphine
+	name = "morphine medipen"
+	desc = "A rapid way to get you out of a tight situation and fast! You'll feel rather drowsy, though."
+	list_reagents = list("morphine" = 10)

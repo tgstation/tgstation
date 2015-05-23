@@ -3,9 +3,8 @@
 	name = "fire axe cabinet"
 	desc = "There is small label that reads \"For Emergency use only\" along with details for safe use of the axe. As if."
 	var/obj/item/weapon/twohanded/fireaxe/fireaxe = new/obj/item/weapon/twohanded/fireaxe
+	icon = 'icons/obj/wallmounts.dmi'
 	icon_state = "fireaxe1000"
-	icon_closed = "fireaxe1000"
-	icon_opened = "fireaxe1100"
 	anchored = 1
 	density = 0
 	wall_mounted = 1
@@ -15,7 +14,7 @@
 	locked = 1
 	var/smashed = 0
 
-/obj/structure/closet/fireaxecabinet/attackby(var/obj/item/O as obj, var/mob/living/user as mob)  //Marker -Agouri
+/obj/structure/closet/fireaxecabinet/attackby(var/obj/item/O as obj, var/mob/living/user as mob, params)  //Marker -Agouri
 	//..() //That's very useful, Erro
 
 	var/hasaxe = 0       //gonna come in handy later~

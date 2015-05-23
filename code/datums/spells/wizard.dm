@@ -24,6 +24,8 @@
 	proj_trail_lifespan = 5
 	proj_trail_icon_state = "magicmd"
 
+	action_icon_state = "magicm"
+
 /obj/effect/proc_holder/spell/targeted/inflict_handler/magic_missile
 	amt_weakened = 3
 	amt_dam_fire = 10
@@ -46,6 +48,8 @@
 	duration = 300
 	cooldown_min = 300 //25 deciseconds reduction per rank
 
+	action_icon_state = "mutate"
+
 /obj/effect/proc_holder/spell/targeted/inflict_handler/disintegrate
 	name = "Disintegrate"
 	desc = "This spell instantly kills somebody adjacent to you with the vilest of magick."
@@ -63,6 +67,8 @@
 	sparks_spread = 1
 	sparks_amt = 4
 
+	action_icon_state = "gib"
+
 /obj/effect/proc_holder/spell/targeted/smoke
 	name = "Smoke"
 	desc = "This spell spawns a cloud of choking smoke at your location and does not require wizard garb."
@@ -78,6 +84,8 @@
 
 	smoke_spread = 2
 	smoke_amt = 10
+
+	action_icon_state = "smoke"
 
 /obj/effect/proc_holder/spell/targeted/emplosion/disable_tech
 	name = "Disable Tech"
@@ -115,6 +123,8 @@
 
 	centcom_cancast = 0 //prevent people from getting to centcom
 
+	action_icon_state = "blink"
+
 /obj/effect/proc_holder/spell/targeted/area_teleport/teleport
 	name = "Teleport"
 	desc = "This spell teleports you to a type of area of your selection."
@@ -146,6 +156,8 @@
 	summon_type = list("/obj/effect/forcefield")
 	summon_lifespan = 300
 
+	action_icon_state = "shield"
+
 
 /obj/effect/proc_holder/spell/aoe_turf/conjure/carp
 	name = "Summon Carp"
@@ -173,6 +185,8 @@
 	range = 0
 
 	summon_type = list(/obj/structure/constructshell)
+
+	action_icon_state = "artificer"
 
 
 /obj/effect/proc_holder/spell/aoe_turf/conjure/creature
@@ -203,6 +217,8 @@
 
 	starting_spells = list("/obj/effect/proc_holder/spell/targeted/inflict_handler/blind","/obj/effect/proc_holder/spell/targeted/genetic/blind")
 
+	action_icon_state = "blind"
+
 /obj/effect/proc_holder/spell/targeted/inflict_handler/blind
 	amt_eye_blind = 10
 	amt_eye_blurry = 20
@@ -226,6 +242,8 @@
 
 	summon_type = "/obj/structure/closet/statue"
 
+	action_icon_state = "statue"
+
 /obj/effect/proc_holder/spell/dumbfire/fireball
 	name = "Fireball"
 	desc = "This spell fires a fireball at a target and does not require wizard garb."
@@ -245,6 +263,8 @@
 	proj_lifespan = 200
 	proj_step_delay = 1
 
+	action_icon_state = "fireball"
+
 /obj/effect/proc_holder/spell/turf/fireball/cast(var/turf/T)
 	explosion(T, -1, 0, 2, 3, 0, flame_range = 2)
 
@@ -258,3 +278,49 @@
 	ex_heavy = -1
 	ex_light = 2
 	ex_flash = 5
+
+/obj/effect/proc_holder/spell/aoe_turf/repulse
+	name = "Repulse"
+	desc = "This spell throws everything around the user away."
+	charge_max = 400
+	clothes_req = 1
+	invocation = "GITTAH WEIGH"
+	invocation_type = "shout"
+	range = 5
+	cooldown_min = 150
+	selection_type = "view"
+	var/maxthrow = 5
+
+	action_icon_state = "repulse"
+
+/obj/effect/proc_holder/spell/aoe_turf/repulse/cast(list/targets)
+	var/mob/user = usr
+	var/list/thrownatoms = list()
+	var/atom/throwtarget
+	var/distfromcaster
+	for(var/turf/T in targets) //Done this way so things don't get thrown all around hilariously.
+		for(var/atom/movable/AM in T)
+			thrownatoms += AM
+
+	for(var/atom/movable/AM in thrownatoms)
+		if(AM == user || AM.anchored) continue
+
+		var/obj/effect/overlay/targeteffect	= new /obj/effect/overlay{icon='icons/effects/effects.dmi'; icon_state="shieldsparkles"; mouse_opacity=0; density = 0}()
+		AM.overlays += targeteffect
+		throwtarget = get_edge_target_turf(user, get_dir(user, get_step_away(AM, user)))
+		distfromcaster = get_dist(user, AM)
+		spawn(10)
+			AM.overlays -= targeteffect
+			qdel(targeteffect)
+		if(distfromcaster == 0)
+			if(istype(AM, /mob/living))
+				var/mob/living/M = AM
+				M.Weaken(5)
+				M.adjustBruteLoss(5)
+				M << "<span class='userdanger'>You're slammed into the floor by a mystical force!</span>"
+		else
+			if(istype(AM, /mob/living))
+				var/mob/living/M = AM
+				M.Weaken(2)
+				M << "<span class='userdanger'>You're thrown back by a mystical force!</span>"
+			spawn(0) AM.throw_at(throwtarget, ((Clamp((maxthrow - (Clamp(distfromcaster - 2, 0, distfromcaster))), 3, maxthrow))), 1)//So stuff gets tossed around at the same time.

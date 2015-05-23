@@ -42,16 +42,15 @@
 
 /obj/effect/blob/fire_act(datum/gas_mixture/air, exposed_temperature, exposed_volume)
 	..()
-	var/damage = Clamp(0.01 * exposed_temperature / fire_resist, 0, 4 - fire_resist)
-	if(damage)
-		health -= damage
-		update_icon()
+	var/damage = Clamp(0.01 * exposed_temperature, 0, 4)
+	take_damage(damage, BURN)
 
 /obj/effect/blob/proc/Life()
 	return
 
 /obj/effect/blob/proc/PulseAnimation()
-	flick("[icon_state]_glow", src)
+	if(!istype(src, /obj/effect/blob/core) || !istype(src, /obj/effect/blob/node))
+		flick("[icon_state]_glow", src)
 	return
 
 /obj/effect/blob/proc/RegenHealth()
@@ -64,7 +63,7 @@
 		health_timestamp = world.time + 10 // 1 seconds
 
 
-/obj/effect/blob/proc/Pulse(var/pulse = 0, var/origin_dir = 0)//Todo: Fix spaceblob expand
+/obj/effect/blob/proc/Pulse(var/pulse = 0, var/origin_dir = 0, var/a_color)//Todo: Fix spaceblob expand
 
 	set background = BACKGROUND_ENABLED
 
@@ -88,9 +87,11 @@
 		var/turf/T = get_step(src, dirn)
 		var/obj/effect/blob/B = (locate(/obj/effect/blob) in T)
 		if(!B)
-			expand(T)//No blob here so try and expand
+			expand(T,1,a_color)//No blob here so try and expand
 			return
-		B.Pulse((pulse+1),get_dir(src.loc,T))
+		B.adjustcolors(a_color)
+
+		B.Pulse((pulse+1),get_dir(src.loc,T), a_color)
 		return
 	return
 
@@ -99,7 +100,7 @@
 	return 0
 
 
-/obj/effect/blob/proc/expand(var/turf/T = null, var/prob = 1)
+/obj/effect/blob/proc/expand(var/turf/T = null, var/prob = 1, var/a_color)
 	if(prob && !prob(health))	return
 	if(istype(T, /turf/space) && prob(75)) 	return
 	if(!T)
@@ -113,6 +114,7 @@
 
 	if(!T)	return 0
 	var/obj/effect/blob/normal/B = new /obj/effect/blob/normal(src.loc, min(src.health, 30))
+	B.color = a_color
 	B.density = 1
 	if(T.Enter(B,src))//Attempt to move into the tile
 		B.density = initial(B.density)
@@ -128,21 +130,12 @@
 
 /obj/effect/blob/ex_act(severity, target)
 	..()
-	var/damage = 150
-	health -= ((damage/brute_resist) - (severity * 5))
-	update_icon()
-	return
-
+	var/damage = 150 - 20 * severity
+	take_damage(damage, BRUTE)
 
 /obj/effect/blob/bullet_act(var/obj/item/projectile/Proj)
 	..()
-	switch(Proj.damage_type)
-	 if(BRUTE)
-		 health -= (Proj.damage/brute_resist)
-	 if(BURN)
-		 health -= (Proj.damage/fire_resist)
-
-	update_icon()
+	take_damage(Proj.damage, Proj.damage_type)
 	return 0
 
 /obj/effect/blob/Crossed(var/mob/living/L)
@@ -150,23 +143,14 @@
 	L.blob_act()
 
 
-/obj/effect/blob/attackby(var/obj/item/weapon/W, var/mob/living/user)
+/obj/effect/blob/attackby(var/obj/item/weapon/W, var/mob/living/user, params)
 	user.changeNext_move(CLICK_CD_MELEE)
 	user.do_attack_animation(src)
 	playsound(src.loc, 'sound/effects/attackblob.ogg', 50, 1)
 	visible_message("<span class='danger'>[user] has attacked the [src.name] with \the [W]!</span>")
-	var/damage = 0
-	switch(W.damtype)
-		if("fire")
-			damage = (W.force / max(src.fire_resist,1))
-			if(istype(W, /obj/item/weapon/weldingtool))
-				playsound(src.loc, 'sound/items/Welder.ogg', 100, 1)
-		if("brute")
-			damage = (W.force / max(src.brute_resist,1))
-
-	health -= damage
-	update_icon()
-	return
+	if(W.damtype == BURN)
+		playsound(src.loc, 'sound/items/Welder.ogg', 100, 1)
+	take_damage(W.force, W.damtype)
 
 /obj/effect/blob/attack_animal(mob/living/simple_animal/M as mob)
 	M.changeNext_move(CLICK_CD_MELEE)
@@ -174,18 +158,43 @@
 	playsound(src.loc, 'sound/effects/attackblob.ogg', 50, 1)
 	visible_message("<span class='danger'>\The [M] has attacked the [src.name]!</span>")
 	var/damage = rand(M.melee_damage_lower, M.melee_damage_upper)
-	if(!damage) // Avoid divide by zero errors
+	take_damage(damage, BRUTE)
+	return
+
+/obj/effect/blob/attack_alien(mob/living/carbon/alien/humanoid/M as mob)
+	M.changeNext_move(CLICK_CD_MELEE)
+	M.do_attack_animation(src)
+	playsound(src.loc, 'sound/effects/attackblob.ogg', 50, 1)
+	visible_message("<span class='danger'>[M] has slashed the [src.name]!</span>")
+	var/damage = rand(15, 30)
+	take_damage(damage, BRUTE)
+	return
+
+/obj/effect/blob/proc/take_damage(damage, damage_type)
+	if(!damage || damage_type == STAMINA) // Avoid divide by zero errors
 		return
-	damage /= max(src.brute_resist, 1)
+	switch(damage_type)
+		if(BRUTE)
+			damage /= max(brute_resist, 1)
+		if(BURN)
+			damage /= max(fire_resist, 1)
 	health -= damage
 	update_icon()
-	return
 
 /obj/effect/blob/proc/change_to(var/type)
 	if(!ispath(type))
 		ERROR("[type] is an invalid type for the blob.")
-	new type(src.loc)
+	var/obj/effect/blob/B = new type(src.loc)
+	if(!istype(type, /obj/effect/blob/core) || !istype(type, /obj/effect/blob/node))
+		B.color = color
+	else
+		B.adjustcolors(color)
 	qdel(src)
+
+/obj/effect/blob/proc/adjustcolors(var/a_color)
+	if(a_color)
+		color = a_color
+	return
 
 /obj/effect/blob/normal
 	icon_state = "blob"

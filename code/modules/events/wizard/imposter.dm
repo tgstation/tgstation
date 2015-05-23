@@ -14,7 +14,7 @@
 		if(!candidates)	return //Sad Trombone
 		var/client/C = pick(candidates)
 
-		new /obj/effect/effect/harmless_smoke(W.loc)
+		PoolOrNew(/obj/effect/effect/harmless_smoke, W.loc)
 
 		var/mob/living/carbon/human/I = new /mob/living/carbon/human(W.loc)
 		I.real_name = W.real_name
@@ -33,9 +33,9 @@
 		I.key = C.key
 
 		//Operation: Fuck off and scare people
-		I.mind.spell_list += new /obj/effect/proc_holder/spell/targeted/area_teleport/teleport(null)
-		I.mind.spell_list += new /obj/effect/proc_holder/spell/targeted/turf_teleport/blink(null)
-		I.mind.spell_list += new /obj/effect/proc_holder/spell/targeted/ethereal_jaunt(null)
+		I.mind.AddSpell(new /obj/effect/proc_holder/spell/targeted/area_teleport/teleport(null))
+		I.mind.AddSpell(new /obj/effect/proc_holder/spell/targeted/turf_teleport/blink(null))
+		I.mind.AddSpell(new /obj/effect/proc_holder/spell/targeted/ethereal_jaunt(null))
 
 		ticker.mode.traitors += I.mind
 		I.mind.special_role = "imposter"
@@ -45,6 +45,7 @@
 		protect_objective.target = W.mind
 		protect_objective.explanation_text = "Protect [W.real_name], the wizard."
 		I.mind.objectives += protect_objective
+		ticker.mode.update_wiz_icons_added(I.mind)
 
 		I.attack_log += "\[[time_stamp()]\] <font color='red'>Is an imposter!</font>"
 		I << "<B>You are an imposter! Trick and confuse the crew to misdirect malice from your handsome original!</B>"

@@ -2,50 +2,11 @@
 // It functions almost identically (see code/datums/diseases/alien_embryo.dm)
 var/const/ALIEN_AFK_BRACKET = 450 // 45 seconds
 
-/obj/item/alien_embryo
+/obj/item/body_egg/alien_embryo
 	name = "alien embryo"
-	desc = "All slimy and yuck."
-	icon = 'icons/mob/alien.dmi'
-	icon_state = "larva0_dead"
-	var/mob/living/affected_mob
 	var/stage = 0
 
-/obj/item/alien_embryo/New()
-	if(istype(loc, /mob/living))
-		affected_mob = loc
-		affected_mob.status_flags |= XENO_HOST
-		if(istype(affected_mob,/mob/living/carbon))
-			var/mob/living/carbon/H = affected_mob
-			H.med_hud_set_status()
-		processing_objects.Add(src)
-		spawn(0)
-			AddInfectionImages(affected_mob)
-	else
-		qdel(src)
-
-/obj/item/alien_embryo/Destroy()
-	if(affected_mob)
-		affected_mob.status_flags &= ~(XENO_HOST)
-		if(istype(affected_mob,/mob/living/carbon))
-			var/mob/living/carbon/H = affected_mob
-			H.med_hud_set_status()
-		spawn(0)
-			RemoveInfectionImages(affected_mob)
-	..()
-
-/obj/item/alien_embryo/process()
-	if(!affected_mob)	return
-	if(loc != affected_mob)
-		affected_mob.status_flags &= ~(XENO_HOST)
-		if(istype(affected_mob,/mob/living/carbon))
-			var/mob/living/carbon/H = affected_mob
-			H.med_hud_set_status()
-		processing_objects.Remove(src)
-		spawn(0)
-			RemoveInfectionImages(affected_mob)
-			affected_mob = null
-		return
-
+/obj/item/body_egg/alien_embryo/egg_process()
 	if(stage < 5 && prob(3))
 		stage++
 		spawn(0)
@@ -87,7 +48,9 @@ var/const/ALIEN_AFK_BRACKET = 450 // 45 seconds
 			if(prob(50))
 				AttemptGrow()
 
-/obj/item/alien_embryo/proc/AttemptGrow(var/gib_on_success = 1)
+
+
+/obj/item/body_egg/alien_embryo/proc/AttemptGrow(var/gib_on_success = 1)
 	var/list/candidates = get_candidates(BE_ALIEN, ALIEN_AFK_BRACKET)
 	var/client/C = null
 
@@ -123,7 +86,7 @@ var/const/ALIEN_AFK_BRACKET = 450 // 45 seconds
 Proc: RefreshInfectionImage()
 Des: Removes the current icons located in the infected mob adds the current stage
 ----------------------------------------*/
-/obj/item/alien_embryo/proc/RefreshInfectionImage()
+/obj/item/body_egg/alien_embryo/RefreshInfectionImage()
 	RemoveInfectionImages()
 	AddInfectionImages()
 
@@ -131,7 +94,7 @@ Des: Removes the current icons located in the infected mob adds the current stag
 Proc: AddInfectionImages(C)
 Des: Adds the infection image to all aliens for this embryo
 ----------------------------------------*/
-/obj/item/alien_embryo/proc/AddInfectionImages()
+/obj/item/body_egg/alien_embryo/AddInfectionImages()
 	for(var/mob/living/carbon/alien/alien in player_list)
 		if(alien.client)
 			var/I = image('icons/mob/alien.dmi', loc = affected_mob, icon_state = "infected[stage]")
@@ -141,7 +104,7 @@ Des: Adds the infection image to all aliens for this embryo
 Proc: RemoveInfectionImage(C)
 Des: Removes all images from the mob infected by this embryo
 ----------------------------------------*/
-/obj/item/alien_embryo/proc/RemoveInfectionImages()
+/obj/item/body_egg/alien_embryo/RemoveInfectionImages()
 	for(var/mob/living/carbon/alien/alien in player_list)
 		if(alien.client)
 			for(var/image/I in alien.client.images)

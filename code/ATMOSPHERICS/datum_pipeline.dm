@@ -1,5 +1,3 @@
-var/global/list/datum/pipeline/pipe_networks = list()
-
 /datum/pipeline
 	var/datum/gas_mixture/air
 	var/list/datum/gas_mixture/other_airs = list()
@@ -12,10 +10,10 @@ var/global/list/datum/pipeline/pipe_networks = list()
 	var/alert_pressure = 0
 
 /datum/pipeline/New()
-	pipe_networks += src
+	SSair.networks += src
 
 /datum/pipeline/Destroy()
-	pipe_networks -= src
+	SSair.networks -= src
 	if(air && air.volume)
 		temporarily_store_air()
 	for(var/obj/machinery/atmospherics/pipe/P in members)
@@ -24,10 +22,11 @@ var/global/list/datum/pipeline/pipe_networks = list()
 		A.nullifyPipenet(src)
 	..()
 
-/datum/pipeline/proc/process()//This use to be called called from the pipe networks
+/datum/pipeline/process()
 	if(update)
 		update = 0
 		reconcile_air()
+
 	return
 	/*
 	//Check to see if pressure is within acceptable limits
@@ -44,7 +43,6 @@ var/global/list/datum/pipeline/pipe_networks = list()
 var/pipenetwarnings = 10
 
 /datum/pipeline/proc/build_pipeline(obj/machinery/atmospherics/base)
-	base.setPipenet(src)
 	var/volume = 0
 	if(istype(base, /obj/machinery/atmospherics/pipe))
 		var/obj/machinery/atmospherics/pipe/E = base
@@ -72,7 +70,7 @@ var/pipenetwarnings = 10
 
 							if(item.parent)
 								if(pipenetwarnings > 0)
-									error("[item.type] added to a pipenet while still having one. ([item.x], [item.y], [item.z])")
+									error("[item.type] added to a pipenet while still having one. (pipes leading to the same spot stacking in one turf) Nearby: ([item.x], [item.y], [item.z])")
 									pipenetwarnings -= 1
 									if(pipenetwarnings == 0)
 										error("further messages about pipenets will be supressed")

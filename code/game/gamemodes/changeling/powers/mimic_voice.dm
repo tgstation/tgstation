@@ -16,7 +16,7 @@
 		user << "<span class='notice'>We return our vocal glands to their original position.</span>"
 		return
 
-	var/mimic_voice = input("Enter a name to mimic.", "Mimic Voice", null) as text
+	var/mimic_voice = stripped_input(user, "Enter a name to mimic.", "Mimic Voice", null, MAX_NAME_LEN)
 	if(!mimic_voice)
 		return
 

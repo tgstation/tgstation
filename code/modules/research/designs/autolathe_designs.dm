@@ -106,6 +106,14 @@
 	build_path = /obj/item/weapon/stock_parts/console_screen
 	category = list("initial", "Electronics")
 
+/datum/design/apc_board
+	name = "APC Power Control Module"
+	id = "power control"
+	build_type = AUTOLATHE
+	materials = list("$metal" = 100, "$glass" = 100)
+	build_path = /obj/item/weapon/module/power_control
+	category = list("initial", "Electronics")
+
 /datum/design/airlock_board
 	name = "Airlock electronics"
 	id = "airlock_board"
@@ -183,7 +191,7 @@
 	id = "kitchen_knife"
 	build_type = AUTOLATHE
 	materials = list("$metal" = 12000)
-	build_path = /obj/item/weapon/kitchenknife
+	build_path = /obj/item/weapon/kitchen/knife
 	category = list("initial","Misc")
 
 /datum/design/scalpel
@@ -386,6 +394,14 @@
 	build_path = /obj/item/device/assembly/prox_sensor
 	category = list("initial", "Misc")
 
+/datum/design/foam_dart
+	name = "Box of Foam Darts"
+	id = "foam_dart"
+	build_type = AUTOLATHE
+	materials = list("$metal" = 500)
+	build_path = /obj/item/ammo_box/foambox
+	category = list("initial", "Misc")
+
 //hacked autolathe recipes
 /datum/design/flamethrower
 	name = "Flamethrower"
@@ -498,3 +514,11 @@
 	materials = list("$metal" = 30000)
 	build_path = /obj/item/ammo_box/c9mm
 	category = list("hacked", "Security")
+
+/datum/design/spraycan
+	name = "Spraycan"
+	id = "spraycan"
+	build_type = AUTOLATHE
+	materials = list("$metal" = 100, "$glass" = 100)
+	build_path = /obj/item/toy/crayon/spraycan
+	category = list("initial", "Tools")

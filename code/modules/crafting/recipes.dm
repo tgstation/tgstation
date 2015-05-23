@@ -3,9 +3,9 @@
 	var/reqs[] = list() //type paths of items consumed associated with how many are needed
 	var/result //type path of item resulting from this craft
 	var/tools[] = list() //type paths of items needed but not consumed
-	var/time = 0 //time in deciseconds
+	var/time = 30 //time in deciseconds
 	var/parts[] = list() //type paths of items that will be placed in the result
-	var/chem_catalists[] = list() //like tools but for reagents
+	var/chem_catalysts[] = list() //like tools but for reagents
 
 
 /datum/table_recipe/IED
@@ -49,7 +49,7 @@
 	name = "Secbot"
 	result = /obj/machinery/bot/secbot
 	reqs = list(/obj/item/device/assembly/signaler = 1,
-				/obj/item/clothing/head/helmet = 1,
+				/obj/item/clothing/head/helmet/sec = 1,
 				/obj/item/weapon/melee/baton = 1,
 				/obj/item/device/assembly/prox_sensor = 1,
 				/obj/item/robot_parts/r_arm = 1)
@@ -87,7 +87,9 @@
 	result = /obj/item/weapon/flamethrower
 	reqs = list(/obj/item/weapon/weldingtool = 1,
 				/obj/item/device/assembly/igniter = 1,
-				/obj/item/stack/rods = 2)
+				/obj/item/stack/rods = 1)
+	parts = list(/obj/item/device/assembly/igniter = 1,
+				/obj/item/weapon/weldingtool = 1)
 	tools = list(/obj/item/weapon/screwdriver)
 	time = 20
 
@@ -123,7 +125,43 @@
 	reqs = list(/obj/item/ammo_casing/shotgun/techshell = 1,
 				/datum/reagent/glycerol = 5,
 				/datum/reagent/toxin/acid = 5,
-				/datum/reagent/toxin/acid/polyacid = 5,)
+				/datum/reagent/toxin/acid/fluacid = 5,)
+	tools = list(/obj/item/weapon/screwdriver)
+	time = 5
+
+/datum/table_recipe/ionslug
+	name = "Ion Scatter Shell"
+	result = /obj/item/ammo_casing/shotgun/ion
+	reqs = list(/obj/item/ammo_casing/shotgun/techshell = 1,
+				/obj/item/weapon/stock_parts/micro_laser/ultra = 1,
+				/obj/item/weapon/stock_parts/subspace/crystal = 1)
+	tools = list(/obj/item/weapon/screwdriver)
+	time = 5
+
+/datum/table_recipe/improvisedslug
+	name = "Improvised Shotgun Shell"
+	result = /obj/item/ammo_casing/shotgun/improvised
+	reqs = list(/obj/item/weapon/grenade/chem_grenade = 1,
+				/obj/item/stack/sheet/metal = 1,
+				/obj/item/stack/cable_coil = 1,
+				/datum/reagent/fuel = 10)
+	tools = list(/obj/item/weapon/screwdriver)
+	time = 5
+
+/datum/table_recipe/improvisedslugoverload
+	name = "Overload Improvised Shell"
+	result = /obj/item/ammo_casing/shotgun/improvised/overload
+	reqs = list(/obj/item/ammo_casing/shotgun/improvised = 1,
+				/datum/reagent/blackpowder = 5)
+	tools = list(/obj/item/weapon/screwdriver)
+	time = 5
+
+/datum/table_recipe/laserslug
+	name = "Laser Slug Shell"
+	result = /obj/item/ammo_casing/shotgun/laserslug
+	reqs = list(/obj/item/ammo_casing/shotgun/techshell = 1,
+				/obj/item/weapon/stock_parts/capacitor/adv = 1,
+				/obj/item/weapon/stock_parts/micro_laser/high = 1)
 	tools = list(/obj/item/weapon/screwdriver)
 	time = 5
 

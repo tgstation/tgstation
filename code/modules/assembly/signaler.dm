@@ -7,11 +7,11 @@
 	g_amt = 120
 	origin_tech = "magnets=1"
 	wires = WIRE_RECEIVE | WIRE_PULSE | WIRE_RADIO_PULSE | WIRE_RADIO_RECEIVE
+	attachable = 1
 
 	var/code = 30
 	var/frequency = 1457
 	var/delay = 0
-	var/datum/wires/connected = null
 	var/datum/radio_frequency/radio_connection
 
 /obj/item/device/assembly/signaler/New()
@@ -126,21 +126,12 @@ Code:
 					if(S)	S.pulse(0)
 		return 0*/
 
-
-/obj/item/device/assembly/signaler/pulse(var/radio = 0)
-	if(src.connected && src.wires)
-		connected.Pulse(src)
-	else
-		return ..(radio)
-
-
 /obj/item/device/assembly/signaler/receive_signal(datum/signal/signal)
 	if(!signal)	return 0
 	if(signal.encryption != code)	return 0
 	if(!(src.wires & WIRE_RADIO_RECEIVE))	return 0
 	pulse(1)
-	if(src.loc)
-		src.loc.audible_message("\icon[src] *beep* *beep*", null, 1)
+	audible_message("\icon[src] *beep* *beep*", null, 1)
 	return
 
 
@@ -168,7 +159,7 @@ Code:
 	return 1
 
 /obj/item/device/assembly/signaler/reciever/describe()
-	return "The radio reciever is [on?"on":"off"]."
+	return "The radio receiver is [on?"on":"off"]."
 
 /obj/item/device/assembly/signaler/reciever/receive_signal(datum/signal/signal)
 	if(!on) return

@@ -79,13 +79,21 @@
 		if(0)				//blank
 			remove_display()
 		if(1)				//emergency shuttle timer
-			if(emergency_shuttle.online)
+			if(SSshuttle.emergency.timer)
 				var/line1
 				var/line2 = get_shuttle_timer()
-				if(emergency_shuttle.location == 1)
-					line1 = "-ETD-"
-				else
-					line1 = "-ETA-"
+				switch(SSshuttle.emergency.mode)
+					if(SHUTTLE_RECALL)
+						line1 = "-RCL-"
+					if(SHUTTLE_CALL)
+						line1 = "-ETA-"
+					if(SHUTTLE_DOCKED)
+						line1 = "-ETD-"
+					if(SHUTTLE_ESCAPE)
+						line1 = "-ESC-"
+					if(SHUTTLE_STRANDED)
+						line1 = "-ERR-"
+						line2 = "??:??"
 				if(length(line2) > CHARS_PER_LINE)
 					line2 = "Error!"
 				update_display(line1, line2)
@@ -114,17 +122,18 @@
 					index2 -= message2_len
 			update_display(line1, line2)
 		if(4)				// supply shuttle timer
-			var/line1 = "CARGO"
+			var/line1
 			var/line2
-			if(supply_shuttle.moving)
+			if(SSshuttle.supply.mode == SHUTTLE_IDLE)
+				if(SSshuttle.supply.z == ZLEVEL_STATION)
+					line1 = "CARGO"
+					line2 = "Docked"
+			else
+				line1 = "CARGO"
 				line2 = get_supply_shuttle_timer()
 				if(lentext(line2) > CHARS_PER_LINE)
 					line2 = "Error"
-			else
-				if(supply_shuttle.at_station)
-					line2 = "Docked"
-				else
-					line1 = ""
+
 			update_display(line1, line2)
 
 /obj/machinery/status_display/examine(mob/user)
@@ -160,18 +169,16 @@
 		maptext = new_text
 
 /obj/machinery/status_display/proc/get_shuttle_timer()
-	var/timeleft = emergency_shuttle.timeleft()
-	if(timeleft)
+	var/timeleft = SSshuttle.emergency.timeLeft()
+	if(timeleft > 0)
 		return "[add_zero(num2text((timeleft / 60) % 60),2)]:[add_zero(num2text(timeleft % 60), 2)]"
-	return ""
+	return "00:00"
 
 /obj/machinery/status_display/proc/get_supply_shuttle_timer()
-	if(supply_shuttle.moving)
-		var/timeleft = round((supply_shuttle.eta_timeofday - world.timeofday) / 10,1)
-		if(timeleft < 0)
-			return "Late"
+	var/timeleft = SSshuttle.supply.timeLeft()
+	if(timeleft > 0)
 		return "[add_zero(num2text((timeleft / 60) % 60),2)]:[add_zero(num2text(timeleft % 60), 2)]"
-	return ""
+	return "00:00"
 
 /obj/machinery/status_display/proc/remove_display()
 	if(overlays.len)

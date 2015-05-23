@@ -12,8 +12,8 @@ var/list/archive_diseases = list()
 // The order goes from easy to cure to hard to cure.
 var/list/advance_cures = 	list(
 									"nutriment", "sugar", "orangejuice",
-									"spaceacillin", "kelotane", "ethanol",
-									"leporazine", "synaptizine", "lipozine",
+									"spaceacillin", "salglu_solution", "ethanol",
+									"leporazine", "synaptizine", "lipolicide",
 									"silver", "gold"
 								)
 
@@ -396,13 +396,13 @@ var/list/advance_cures = 	list(
 
 	if(D.symptoms.len > 0)
 
-		var/new_name = input(user, "Name your new disease.", "New Name")
+		var/new_name = stripped_input(user, "Name your new disease.", "New Name")
 		if(!new_name)
 			return
 		D.AssignName(new_name)
 		D.Refresh()
 
-		for(var/datum/disease/advance/AD in active_diseases)
+		for(var/datum/disease/advance/AD in SSdisease.processing)
 			AD.Refresh()
 
 		for(var/mob/living/carbon/human/H in shuffle(living_mob_list))
@@ -420,7 +420,7 @@ var/list/advance_cures = 	list(
 /*
 /mob/verb/test()
 
-	for(var/datum/disease/D in active_diseases)
+	for(var/datum/disease/D in SSdisease.processing)
 		src << "<a href='?_src_=vars;Vars=\ref[D]'>[D.name] - [D.holder]</a>"
 */
 

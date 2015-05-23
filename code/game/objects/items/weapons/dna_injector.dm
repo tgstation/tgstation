@@ -24,7 +24,7 @@
 		M.radiation += rand(20/(damage_coeff  ** 2),50/(damage_coeff  ** 2))
 		var/log_msg = "[key_name(user)] injected [key_name(M)] with the [name]"
 		for(var/datum/mutation/human/HM in remove_mutations)
-			HM.on_losing(M)
+			HM.force_lose(M)
 		for(var/datum/mutation/human/HM in add_mutations)
 			if(HM.name == RACEMUT)
 				message_admins("[key_name_admin(user)] injected [key_name_admin(M)] with the [name] <span class='danger'>(MONKEY)</span>")
@@ -46,8 +46,12 @@
 
 /obj/item/weapon/dnainjector/attack(mob/target, mob/user)
 	if(!user.IsAdvancedToolUser())
-		user << "<span class='notice'>You don't have the dexterity to do this!</span>"
+		user << "<span class='warning'>You don't have the dexterity to do this!</span>"
 		return
+	if(ishuman(target))
+		var/mob/living/carbon/human/humantarget = target
+		if (!humantarget.can_inject(user, 1))
+			return
 	add_logs(user, target, "attempted to inject", object="[name]")
 
 	if(target != user)
@@ -250,3 +254,112 @@
 	New()
 		..()
 		remove_mutations.Add(mutations_list[RACEMUT])
+
+/obj/item/weapon/dnainjector/antistealth
+	name = "\improper DNA injector (Anti-Cloak Of Darkness)"
+	New()
+		..()
+		remove_mutations.Add(mutations_list[STEALTH])
+
+/obj/item/weapon/dnainjector/stealthmut
+	name = "\improper DNA injector (Cloak of Darkness)"
+	desc = "Enables the subject to bend low levels of light around themselves, creating a cloaking effect."
+	New()
+		..()
+		add_mutations.Add(mutations_list[STEALTH])
+
+/obj/item/weapon/dnainjector/antichameleon
+	name = "\improper DNA injector (Anti-Chameleon)"
+	New()
+		..()
+		remove_mutations.Add(mutations_list[CHAMELEON])
+
+/obj/item/weapon/dnainjector/chameleonmut
+	name = "\improper DNA injector (Chameleon)"
+	New()
+		..()
+		add_mutations.Add(mutations_list[CHAMELEON])
+
+/obj/item/weapon/dnainjector/antiwacky
+	name = "\improper DNA injector (Anti-Wacky)"
+	New()
+		..()
+		remove_mutations.Add(mutations_list[WACKY])
+
+/obj/item/weapon/dnainjector/wackymut
+	name = "\improper DNA injector (Wacky)"
+	New()
+		..()
+		add_mutations.Add(mutations_list[WACKY])
+
+/obj/item/weapon/dnainjector/antimute
+	name = "\improper DNA injector (Anti-Mute)"
+	New()
+		..()
+		remove_mutations.Add(mutations_list[MUT_MUTE])
+
+/obj/item/weapon/dnainjector/mutemut
+	name = "\improper DNA injector (Mute)"
+	New()
+		..()
+		add_mutations.Add(mutations_list[MUT_MUTE])
+
+/obj/item/weapon/dnainjector/antismile
+	name = "\improper DNA injector (Anti-Smile)"
+	New()
+		..()
+		remove_mutations.Add(mutations_list[SMILE])
+
+/obj/item/weapon/dnainjector/smilemut
+	name = "\improper DNA injector (Smile)"
+	New()
+		..()
+		add_mutations.Add(mutations_list[SMILE])
+
+/obj/item/weapon/dnainjector/unintelligablemut
+	name = "\improper DNA injector (Unintelligable)"
+	New()
+		..()
+		add_mutations.Add(mutations_list[UNINTELLIGABLE])
+
+/obj/item/weapon/dnainjector/antiunintelligable
+	name = "\improper DNA injector (Anti-Unintelligable)"
+	New()
+		..()
+		remove_mutations.Add(mutations_list[UNINTELLIGABLE])
+
+/obj/item/weapon/dnainjector/swedishmut
+	name = "\improper DNA injector (Swedish)"
+	New()
+		..()
+		add_mutations.Add(mutations_list[SWEDISH])
+
+/obj/item/weapon/dnainjector/antiswedish
+	name = "\improper DNA injector (Anti-Swedish)"
+	New()
+		..()
+		remove_mutations.Add(mutations_list[SWEDISH])
+
+/obj/item/weapon/dnainjector/chavmut
+	name = "\improper DNA injector (Chav)"
+	New()
+		..()
+		add_mutations.Add(mutations_list[CHAV])
+
+/obj/item/weapon/dnainjector/antichav
+	name = "\improper DNA injector (Anti-Chav)"
+	New()
+		..()
+		remove_mutations.Add(mutations_list[CHAV])
+
+/obj/item/weapon/dnainjector/elvismut
+	name = "\improper DNA injector (Elvis)"
+	New()
+		..()
+		add_mutations.Add(mutations_list[ELVIS])
+
+/obj/item/weapon/dnainjector/antielvis
+	name = "\improper DNA injector (Anti-Elvis)"
+	New()
+		..()
+		remove_mutations.Add(mutations_list[ELVIS])

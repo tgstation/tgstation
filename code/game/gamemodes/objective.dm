@@ -5,6 +5,7 @@ datum/objective
 	var/target_amount = 0				//If they are focused on a particular number. Steal objectives have their own counter.
 	var/completed = 0					//currently only used for custom objectives.
 	var/dangerrating = 0				//How hard the objective is, essentially. Used for dishing out objectives and checking overall victory.
+	var/martyr_compatible = 0			//If the objective is compatible with martyr objective, i.e. if you can still do it while dead.
 
 datum/objective/New(var/text)
 	if(text)
@@ -47,6 +48,7 @@ datum/objective/proc/update_explanation_text()
 datum/objective/assassinate
 	var/target_role_type=0
 	dangerrating = 10
+	martyr_compatible = 1
 
 datum/objective/assassinate/find_target_by_role(role, role_type=0)
 	target_role_type = role_type
@@ -71,6 +73,7 @@ datum/objective/assassinate/update_explanation_text()
 
 datum/objective/mutiny
 	var/target_role_type=0
+	martyr_compatible = 1
 
 datum/objective/mutiny/find_target_by_role(role, role_type=0)
 	target_role_type = role_type
@@ -82,7 +85,7 @@ datum/objective/mutiny/check_completion()
 		if(target.current.stat == DEAD || !ishuman(target.current) || !target.current.ckey || !target.current.client)
 			return 1
 		var/turf/T = get_turf(target.current)
-		if(T && (T.z != 1))			//If they leave the station they count as dead for this
+		if(T && (T.z != ZLEVEL_STATION))			//If they leave the station they count as dead for this
 			return 2
 		return 0
 	return 1
@@ -99,6 +102,7 @@ datum/objective/mutiny/update_explanation_text()
 datum/objective/maroon
 	var/target_role_type=0
 	dangerrating = 5
+	martyr_compatible = 1
 
 datum/objective/maroon/find_target_by_role(role, role_type=0)
 	target_role_type = role_type
@@ -109,19 +113,8 @@ datum/objective/maroon/check_completion()
 	if(target && target.current)
 		if(target.current.stat == DEAD || issilicon(target.current) || isbrain(target.current) || target.current.z > 6 || !target.current.ckey) //Borgs/brains/AIs count as dead for traitor objectives. --NeoFite
 			return 1
-		var/area/A = get_area(target.current)
-		if(istype(A, /area/shuttle/escape/centcom))
+		if(target.current.onCentcom())
 			return 0
-		if(istype(A, /area/shuttle/escape_pod1/centcom))
-			return 0
-		if(istype(A, /area/shuttle/escape_pod2/centcom))
-			return 0
-		if(istype(A, /area/shuttle/escape_pod3/centcom))
-			return 0
-		if(istype(A, /area/shuttle/escape_pod4/centcom))
-			return 0
-		else
-			return 1
 	return 1
 
 datum/objective/maroon/update_explanation_text()
@@ -167,6 +160,7 @@ datum/objective/debrain/update_explanation_text()
 datum/objective/protect//The opposite of killing a dude.
 	var/target_role_type=0
 	dangerrating = 10
+	martyr_compatible = 1
 
 datum/objective/protect/find_target_by_role(role, role_type=0)
 	target_role_type = role_type
@@ -194,25 +188,27 @@ datum/objective/protect/update_explanation_text()
 datum/objective/hijack
 	explanation_text = "Hijack the emergency shuttle by escaping alone."
 	dangerrating = 25
+	martyr_compatible = 0 //Technically you won't get both anyway.
 
 datum/objective/hijack/check_completion()
 	if(!owner.current || owner.current.stat)
 		return 0
-	if(emergency_shuttle.location<2)
+	if(SSshuttle.emergency.mode < SHUTTLE_ENDGAME)
 		return 0
 	if(issilicon(owner.current))
 		return 0
-	var/area/shuttle = locate(/area/shuttle/escape/centcom)
 
-	if(!(get_turf(owner.current) in shuttle))
+	var/area/A = get_area(owner.current)
+	if(SSshuttle.emergency.areaInstance != A)
 		return 0
 
-	var/list/protected_mobs = list(/mob/living/silicon/ai, /mob/living/silicon/pai)
 	for(var/mob/living/player in player_list)
-		if(player.type in protected_mobs)	continue
-		if (player.mind && (player.mind != owner))
-			if(player.stat != DEAD)			//they're not dead!
-				if(get_turf(player) in shuttle)
+		if(player.mind && player.mind != owner)
+			if(player.stat != DEAD)
+				switch(player.type)
+					if(/mob/living/silicon/ai, /mob/living/silicon/pai)
+						continue
+				if(get_area(player) == A)
 					return 0
 	return 1
 
@@ -220,24 +216,25 @@ datum/objective/hijack/check_completion()
 datum/objective/block
 	explanation_text = "Do not allow any organic lifeforms to escape on the shuttle alive."
 	dangerrating = 25
+	martyr_compatible = 1
 
 datum/objective/block/check_completion()
 	if(!istype(owner.current, /mob/living/silicon))
 		return 0
-	if(emergency_shuttle.location<2)
-		return 0
-	if(!owner.current)
-		return 0
-	var/area/shuttle = locate(/area/shuttle/escape/centcom)
-	var/protected_mobs[] = list(/mob/living/silicon/ai, /mob/living/silicon/pai, /mob/living/silicon/robot)
-	for(var/mob/living/player in player_list)
-		if(player.type in protected_mobs)	continue
-		if (player.mind)
-			if (player.stat != 2)
-				if (get_turf(player) in shuttle)
-					return 0
-	return 1
+	if(SSshuttle.emergency.mode < SHUTTLE_ENDGAME)
+		return 1
 
+	var/area/A = SSshuttle.emergency.areaInstance
+
+	for(var/mob/living/player in player_list)
+		if(istype(player, /mob/living/silicon))
+			continue
+		if(player.mind)
+			if(player.stat != DEAD)
+				if(get_area(player) == A)
+					return 0
+
+	return 1
 
 
 datum/objective/escape
@@ -249,34 +246,26 @@ datum/objective/escape/check_completion()
 		return 0
 	if(isbrain(owner.current))
 		return 0
-	if(emergency_shuttle.location<2)
+	if(SSshuttle.emergency.mode < SHUTTLE_ENDGAME)
 		return 0
-	if(!owner.current || owner.current.stat ==2)
+	if(!owner.current || owner.current.stat == DEAD)
 		return 0
-	var/turf/location = get_turf(owner.current.loc)
+	var/turf/location = get_turf(owner.current)
 	if(!location)
 		return 0
 
 	if(istype(location, /turf/simulated/shuttle/floor4)) // Fails traitors if they are in the shuttle brig -- Polymorph
 		return 0
 
-	var/area/check_area = location.loc
-	if(istype(check_area, /area/shuttle/escape/centcom))
+	if(location.onCentcom())
 		return 1
-	if(istype(check_area, /area/shuttle/escape_pod1/centcom))
-		return 1
-	if(istype(check_area, /area/shuttle/escape_pod2/centcom))
-		return 1
-	if(istype(check_area, /area/shuttle/escape_pod3/centcom))
-		return 1
-	if(istype(check_area, /area/shuttle/escape_pod4/centcom))
-		return 1
-	else
-		return 0
+
+	return 0
 
 datum/objective/escape/escape_with_identity
 	dangerrating = 10
 	var/target_real_name // Has to be stored because the target's real_name can change over the course of the round
+	var/target_missing_id
 
 datum/objective/escape/escape_with_identity/find_target()
 	target = ..()
@@ -285,7 +274,16 @@ datum/objective/escape/escape_with_identity/find_target()
 datum/objective/escape/escape_with_identity/update_explanation_text()
 	if(target && target.current)
 		target_real_name = target.current.real_name
-		explanation_text = "Escape on the shuttle or an escape pod with the identity of [target_real_name], the [target.assigned_role] while wearing their identification card."
+		explanation_text = "Escape on the shuttle or an escape pod with the identity of [target_real_name], the [target.assigned_role]"
+		var/mob/living/carbon/human/H
+		if(ishuman(target.current))
+			H = target.current
+		if(H && H.get_id_name() != target_real_name)
+			target_missing_id = 1
+		else
+			explanation_text += " while wearing their identification card"
+		explanation_text += "." //Proper punctuation is important!
+
 	else
 		explanation_text = "Free Objective."
 
@@ -297,7 +295,7 @@ datum/objective/escape/escape_with_identity/check_completion()
 	var/mob/living/carbon/human/H = owner.current
 	if(..())
 		if(H.dna.real_name == target_real_name)
-			if(H.get_id_name()== target_real_name)
+			if(H.get_id_name()== target_real_name || target_missing_id)
 				return 1
 	return 0
 
@@ -314,10 +312,21 @@ datum/objective/survive/check_completion()
 	return 1
 
 
+datum/objective/martyr
+	explanation_text = "Die a glorious death."
+	dangerrating = 1
+
+datum/objective/martyr/check_completion()
+	if(!owner.current) //Gibbed, etc.
+		return 1
+	if(owner.current && owner.current.stat == DEAD) //You're dead! Yay!
+		return 1
+	return 0
+
 
 datum/objective/nuclear
 	explanation_text = "Destroy the station with a nuclear device."
-
+	martyr_compatible = 1
 
 
 var/global/list/possible_items = list()
@@ -325,6 +334,7 @@ datum/objective/steal
 	var/datum/objective_item/targetinfo = null //Save the chosen item datum so we can access it later.
 	var/obj/item/steal_target = null //Needed for custom objectives (they're just items, not datums).
 	dangerrating = 5 //Overridden by the individual item's difficulty, but defaults to 5 for custom objectives.
+	martyr_compatible = 0
 
 datum/objective/steal/get_target()
 	return steal_target
@@ -364,7 +374,7 @@ datum/objective/steal/proc/select_target() //For admins setting objectives manua
 		var/tmp_obj = new custom_target
 		var/custom_name = tmp_obj:name
 		qdel(tmp_obj)
-		custom_name = copytext(sanitize(input("Enter target name:", "Objective target", custom_name) as text|null),1,MAX_MESSAGE_LEN)
+		custom_name = stripped_input("Enter target name:", "Objective target", custom_name)
 		if (!custom_name) return
 		steal_target = custom_target
 		explanation_text = "Steal [custom_name]."
@@ -445,21 +455,30 @@ datum/objective/download/proc/gen_amount_goal()
 	explanation_text = "Download [target_amount] research level\s."
 	return target_amount
 
-datum/objective/download/check_completion()
+datum/objective/download/check_completion()//NINJACODE
 	if(!ishuman(owner.current))
 		return 0
-	if(!owner.current || owner.current.stat == 2)
+
+	var/mob/living/carbon/human/H = owner.current
+	if(!H || H.stat == DEAD)
 		return 0
-	if(!(istype(owner.current:wear_suit, /obj/item/clothing/suit/space/space_ninja)&&owner.current:wear_suit:s_initialized))
+
+	if(!istype(H.wear_suit, /obj/item/clothing/suit/space/space_ninja))
 		return 0
+
+	var/obj/item/clothing/suit/space/space_ninja/SN = H.wear_suit
+	if(!SN.s_initialized)
+		return 0
+
 	var/current_amount
-	var/obj/item/clothing/suit/space/space_ninja/S = owner.current:wear_suit
-	if(!S.stored_research.len)
+	if(!SN.stored_research.len)
 		return 0
 	else
-		for(var/datum/tech/current_data in S.stored_research)
-			if(current_data.level>1)	current_amount+=(current_data.level-1)
-	if(current_amount<target_amount)	return 0
+		for(var/datum/tech/current_data in SN.stored_research)
+			if(current_data.level)
+				current_amount += (current_data.level-1)
+	if(current_amount<target_amount)
+		return 0
 	return 1
 
 
@@ -534,6 +553,7 @@ datum/objective/absorb/check_completion()
 
 datum/objective/destroy
 	dangerrating = 10
+	martyr_compatible = 1
 
 datum/objective/destroy/find_target()
 	var/list/possible_targets = active_ais(1)

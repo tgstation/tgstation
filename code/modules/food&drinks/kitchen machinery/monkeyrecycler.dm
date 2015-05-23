@@ -12,7 +12,7 @@
 	var/grinded = 0
 
 
-/obj/machinery/monkey_recycler/attackby(var/obj/item/O as obj, var/mob/user as mob)
+/obj/machinery/monkey_recycler/attackby(var/obj/item/O as obj, var/mob/user as mob, params)
 	if(default_unfasten_wrench(user, O))
 		return
 
@@ -20,6 +20,8 @@
 		return
 	if (istype(O, /obj/item/weapon/grab))
 		var/obj/item/weapon/grab/G = O
+		if(!user.Adjacent(G.affecting))
+			return
 		var/grabbed = G.affecting
 		if(istype(grabbed, /mob/living/carbon/monkey))
 			var/mob/living/carbon/monkey/target = grabbed

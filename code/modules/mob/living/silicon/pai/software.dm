@@ -109,7 +109,7 @@
 					<div id=\"rightmenu\">[right_part]</div>
 				</div>
 			</body>
-			</html>"}
+			</html>"} //"
 	usr << browse(dat, "window=pai;size=640x480;border=0;can_close=1;can_resize=1;can_minimize=1;titlebar=1")
 	onclose(usr, "pai")
 	temp = null
@@ -167,6 +167,8 @@
 					pID = 8
 				if("What")
 					pID = 9
+				if("Null")
+					pID = 10
 			src.card.setEmotion(pID)
 
 		if("signaller")
@@ -250,7 +252,7 @@
 					add_med_hud()
 		if("translator")
 			if(href_list["toggle"])
-				languages = languages == ALL ? HUMAN & ROBOT : ALL
+				languages = (languages == ALL) ? (HUMAN | ROBOT) : ALL
 		if("doorjack")
 			if(href_list["jack"])
 				if(src.cable && src.cable.machine)
@@ -262,7 +264,7 @@
 				var/turf/T = get_turf(src.loc)
 				src.cable = new /obj/item/weapon/pai_cable(T)
 				for (var/mob/M in viewers(T))
-					M.show_message("<span class='danger'>A port on [src] opens to reveal [src.cable], which promptly falls to the floor.</span>", 3, "<span class='danger'>You hear the soft click of something light and hard falling to the ground.</span>", 2)
+					M.show_message("<span class='warning'>A port on [src] opens to reveal [src.cable], which promptly falls to the floor.</span>", 3, "<span class='italics'>You hear the soft click of something light and hard falling to the ground.</span>", 2)
 	//src.updateUsrDialog()		We only need to account for the single mob this is intended for, and he will *always* be able to call this window
 	src.paiInterface()		 // So we'll just call the update directly rather than doing some default checks
 	return

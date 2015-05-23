@@ -5,23 +5,17 @@
 	name = "chocolate egg"
 	desc = "Such, sweet, fattening food."
 	icon_state = "chocolateegg"
-
-/obj/item/weapon/reagent_containers/food/snacks/chocolateegg/New()
-	..()
-	reagents.add_reagent("nutriment", 4)
-	reagents.add_reagent("sugar", 2)
-	reagents.add_reagent("coco", 2)
-	bitesize = 2
+	bonus_reagents = list("nutriment" = 1, "vitamin" = 1)
+	list_reagents = list("nutriment" = 4, "sugar" = 2, "cocoa" = 2)
+	filling_color = "#A0522D"
 
 /obj/item/weapon/reagent_containers/food/snacks/egg
 	name = "egg"
 	desc = "An egg!"
 	icon_state = "egg"
-
-/obj/item/weapon/reagent_containers/food/snacks/egg/New()
-	..()
-	reagents.add_reagent("nutriment", 1)
-	reagents.add_reagent("vitamin", 1)
+	list_reagents = list("nutriment" = 1)
+	cooked_type = /obj/item/weapon/reagent_containers/food/snacks/boiledegg
+	filling_color = "#F0E68C"
 
 /obj/item/weapon/reagent_containers/food/snacks/egg/throw_impact(atom/hit_atom)
 	..()
@@ -29,7 +23,7 @@
 	reagents.reaction(hit_atom, TOUCH)
 	del(src) // Not qdel, because it'll hit other mobs then the floor for runtimes.
 
-/obj/item/weapon/reagent_containers/food/snacks/egg/attackby(obj/item/weapon/W as obj, mob/user as mob)
+/obj/item/weapon/reagent_containers/food/snacks/egg/attackby(obj/item/weapon/W as obj, mob/user as mob, params)
 	if(istype( W, /obj/item/toy/crayon ))
 		var/obj/item/toy/crayon/C = W
 		var/clr = C.colourName
@@ -80,47 +74,44 @@
 	name = "fried egg"
 	desc = "A fried egg, with a touch of salt and pepper."
 	icon_state = "friedegg"
-
-/obj/item/weapon/reagent_containers/food/snacks/friedegg/New()
-	..()
-	reagents.add_reagent("nutriment", 2)
-	reagents.add_reagent("sodiumchloride", 1)
-	reagents.add_reagent("blackpepper", 1)
+	bonus_reagents = list("nutriment" = 1, "vitamin" = 1)
 	bitesize = 1
+	filling_color = "#FFFFF0"
+	list_reagents = list("nutriment" = 3)
 
 /obj/item/weapon/reagent_containers/food/snacks/boiledegg
 	name = "boiled egg"
 	desc = "A hard boiled egg."
 	icon_state = "egg"
-
-/obj/item/weapon/reagent_containers/food/snacks/boiledegg/New()
-	..()
-	reagents.add_reagent("nutriment", 2)
+	bonus_reagents = list("nutriment" = 1, "vitamin" = 1)
+	filling_color = "#FFFFF0"
+	list_reagents = list("nutriment" = 2, "vitamin" = 1)
 
 /obj/item/weapon/reagent_containers/food/snacks/omelette	//FUCK THIS
 	name = "omelette du fromage"
 	desc = "That's all you can say!"
 	icon_state = "omelette"
 	trash = /obj/item/trash/plate
-
-/obj/item/weapon/reagent_containers/food/snacks/omelette/New()
-	..()
-	reagents.add_reagent("nutriment", 8)
+	bonus_reagents = list("nutriment" = 1, "vitamin" = 2)
+	list_reagents = list("nutriment" = 8, "vitamin" = 1)
 	bitesize = 1
+	w_class = 3
 
-/obj/item/weapon/reagent_containers/food/snacks/omelette/attackby(obj/item/weapon/W, mob/user)
-	if(istype(W,/obj/item/weapon/kitchen/utensil/fork))
-		if(W.icon_state == "forkloaded")
-			user << "<span class='notice'>You already have omelette on your fork.</span>"
-			return
-		W.icon_state = "forkloaded"
-		user.visible_message( \
-			"<span class='notice'>[user] takes a piece of omelette with their fork!</span>", \
-			"<span class='notice'>You take a piece of omelette with your fork!</span>" \
-		)
-		reagents.remove_reagent("nutriment", 1)
-		if(reagents.total_volume <= 0)
-			qdel(src)
+/obj/item/weapon/reagent_containers/food/snacks/omelette/attackby(obj/item/weapon/W, mob/user, params)
+	if(istype(W,/obj/item/weapon/kitchen/fork))
+		var/obj/item/weapon/kitchen/fork/F = W
+		if(F.forkload)
+			user << "<span class='warning'>You already have omelette on your fork!</span>"
+		else
+			F.icon_state = "forkloaded"
+			user.visible_message("[user] takes a piece of omelette with their fork!", \
+				"<span class='notice'>You take a piece of omelette with your fork.</span>")
+
+			var/datum/reagent/R = pick(reagents.reagent_list)
+			reagents.remove_reagent(R.id, 1)
+			F.forkload = R
+			if(reagents.total_volume <= 0)
+				qdel(src)
 		return
 	..()
 
@@ -128,9 +119,7 @@
 	name = "eggs benedict"
 	desc = "There is only one egg on this, how rude."
 	icon_state = "benedict"
-
-/obj/item/weapon/reagent_containers/food/snacks/benedict/New()
-	..()
-	reagents.add_reagent("nutriment", 6)
-	reagents.add_reagent("vitamin", 4)
-	bitesize = 3
+	bonus_reagents = list("vitamin" = 4)
+	trash = /obj/item/trash/plate
+	w_class = 3
+	list_reagents = list("nutriment" = 6, "vitamin" = 4)

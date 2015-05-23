@@ -10,7 +10,7 @@ var/list/possible_uplinker_IDs = list("Alfa","Bravo","Charlie","Delta","Echo","F
 
 /////////////////////////////////////////////
 /obj/machinery/computer/telecrystals/uplinker
-	name = "\improper Telecrystal upload/recieve station"
+	name = "\improper Telecrystal upload/receive station"
 	desc = "A device used to manage telecrystals during group operations. To use, simply insert your uplink. With your uplink installed \
 	you can upload your telecrystals to the group's pool using the console, or be assigned additional telecrystals by your lieutenant."
 	icon_state = "tcstation"
@@ -29,7 +29,7 @@ var/list/possible_uplinker_IDs = list("Alfa","Bravo","Charlie","Delta","Echo","F
 		name = "[name] [rand(1,999)]"
 
 
-/obj/machinery/computer/telecrystals/uplinker/attackby(var/obj/item/O as obj, var/mob/user as mob)
+/obj/machinery/computer/telecrystals/uplinker/attackby(var/obj/item/O as obj, var/mob/user as mob, params)
 	if(istype(O, /obj/item))
 
 		if(uplinkholder)
@@ -75,7 +75,7 @@ var/list/possible_uplinker_IDs = list("Alfa","Bravo","Charlie","Delta","Echo","F
 			uplinkholder.hidden_uplink.uses += amt
 			linkedboss.storedcrystals -= amt
 			if(addLog)
-				linkedboss.logTransfer("[src] recieved [amt] telecrystals from [linkedboss].")
+				linkedboss.logTransfer("[src] received [amt] telecrystals from [linkedboss].")
 
 ///////
 
@@ -98,7 +98,7 @@ var/list/possible_uplinker_IDs = list("Alfa","Bravo","Charlie","Delta","Echo","F
 		dat += "<br><a href='byond://?src=\ref[src];eject=1'>Eject Uplink</a>"
 
 
-	var/datum/browser/popup = new(user, "computer", "Telecrystal Upload/Recieve Station", 700, 500)
+	var/datum/browser/popup = new(user, "computer", "Telecrystal Upload/Receive Station", 700, 500)
 	popup.set_content(dat)
 	popup.set_title_image(user.browse_rsc_icon(src.icon, src.icon_state))
 	popup.open()

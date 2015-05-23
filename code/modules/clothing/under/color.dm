@@ -98,20 +98,16 @@
 	item_state = "g_suit"
 	item_color = "lightgreen"
 
-/obj/item/clothing/under/color/lightblue
-	name = "lightblue jumpsuit"
-	icon_state = "lightblue"
-	item_state = "b_suit"
-	item_color = "lightblue"
-
 /obj/item/clothing/under/color/lightbrown
 	name = "lightbrown jumpsuit"
 	icon_state = "lightbrown"
+	item_state = "lb_suit"
 	item_color = "lightbrown"
 
 /obj/item/clothing/under/color/brown
 	name = "brown jumpsuit"
 	icon_state = "brown"
+	item_state = "lb_suit"
 	item_color = "brown"
 
 /obj/item/clothing/under/color/yellowgreen
@@ -143,3 +139,11 @@
 	icon_state = "maroon"
 	item_state = "r_suit"
 	item_color = "maroon"
+
+/obj/item/clothing/under/color/rainbow
+	name = "rainbow jumpsuit"
+	desc = "A multi-colored jumpsuit!"
+	icon_state = "rainbow"
+	item_state = "rainbow"
+	item_color = "rainbow"
+	can_adjust = 0

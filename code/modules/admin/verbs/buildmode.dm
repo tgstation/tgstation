@@ -95,8 +95,8 @@
 			usr << "\blue ***********************************************************"
 		if(4)
 			usr << "\blue ***********************************************************"
-			usr << "\blue Left Mouse Button on turf/obj/mob      = Throw"
-			usr << "\blue Right Mouse Button on turf/obj/mob     = Select"
+			usr << "\blue Left Mouse Button on turf/obj/mob      = Select"
+			usr << "\blue Right Mouse Button on turf/obj/mob     = Throw"
 			usr << "\blue ***********************************************************"
 	return 1
 

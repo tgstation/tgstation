@@ -42,7 +42,7 @@ var/time_last_changed_position = 0
 	//Assoc array: "JobName" = (int)<Opened Positions>
 	var/list/opened_positions = list();
 
-/obj/machinery/computer/card/attackby(O as obj, user as mob)//TODO:SANITY
+/obj/machinery/computer/card/attackby(O as obj, user as mob, params)//TODO:SANITY
 	if(istype(O, /obj/item/weapon/card/id))
 		var/obj/item/weapon/card/id/idcard = O
 		if(check_access(idcard))
@@ -121,7 +121,7 @@ var/time_last_changed_position = 0
 			ID = 1
 		else
 			ID = 0
-		for(var/datum/job/job in job_master.occupations)
+		for(var/datum/job/job in SSjob.occupations)
 			dat += "<tr>"
 			if(job.title in blacklisted)
 				continue
@@ -354,7 +354,7 @@ var/time_last_changed_position = 0
 						if(region_access)
 							authenticated = 1
 			else if ((!( authenticated ) && (istype(usr, /mob/living/silicon))) && (!modify))
-				usr << "You can't modify an ID without an ID inserted to modify. Once one is in the modify slot on the computer, you can log in."
+				usr << "<span class='warning'>You can't modify an ID without an ID inserted to modify! Once one is in the modify slot on the computer, you can log in.</span>"
 		if ("logout")
 			region_access = null
 			head_subordinates = null
@@ -420,7 +420,7 @@ var/time_last_changed_position = 0
 			// MAKE ANOTHER JOB POSITION AVAILABLE FOR LATE JOINERS
 			if(scan && (access_change_ids in scan.access))
 				var/edit_job_target = href_list["job"]
-				var/datum/job/j = job_master.GetJob(edit_job_target)
+				var/datum/job/j = SSjob.GetJob(edit_job_target)
 				if(!j)
 					return 0
 				if(can_open_job(j) != 1)
@@ -434,7 +434,7 @@ var/time_last_changed_position = 0
 			// MAKE JOB POSITION UNAVAILABLE FOR LATE JOINERS
 			if(scan && (access_change_ids in scan.access))
 				var/edit_job_target = href_list["job"]
-				var/datum/job/j = job_master.GetJob(edit_job_target)
+				var/datum/job/j = SSjob.GetJob(edit_job_target)
 				if(!j)
 					return 0
 				if(can_close_job(j) != 1)
@@ -462,7 +462,7 @@ var/time_last_changed_position = 0
 	return
 
 /obj/machinery/computer/card/proc/get_subordinates(var/rank)
-	for(var/datum/job/job in job_master.occupations)
+	for(var/datum/job/job in SSjob.occupations)
 		if(rank in job.department_head)
 			head_subordinates += job.title
 

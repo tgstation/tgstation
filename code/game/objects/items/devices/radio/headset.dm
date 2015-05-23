@@ -23,7 +23,7 @@
 	keyslot2 = null
 	..()
 
-/obj/item/device/radio/headset/talk_into(mob/living/M as mob, message, channel)
+/obj/item/device/radio/headset/talk_into(mob/living/M, message, channel, list/spans)
 	if (!listening)
 		return
 	..()
@@ -188,10 +188,22 @@
 
 /obj/item/device/radio/headset/headset_cent
 	name = "\improper Centcom headset"
-	desc = "A headset used by the upper echelons of Nanotrasen. \nChannels are as follows: :c - command, :s - security, :e - engineering, :u - supply, :v - service, :m - medical, :n - science."
+	desc = "A headset used by the upper echelons of Nanotrasen. \nTo access the centcom channel, use :y."
 	icon_state = "cent_headset"
 	item_state = "headset"
+	keyslot = new /obj/item/device/encryptionkey/headset_com
+	keyslot2 = new /obj/item/device/encryptionkey/headset_cent
+
+/obj/item/device/radio/headset/headset_cent/commander
 	keyslot = new /obj/item/device/encryptionkey/heads/captain
+
+/obj/item/device/radio/headset/headset_cent/alt
+	name = "\improper Centcom bowman headset"
+	desc = "A headset especially for emergency response personnel. Protects ears from flashbangs. \nTo access the centcom channel, use :y."
+	flags = EARBANGPROTECT
+	icon_state = "cent_headset_alt"
+	item_state = "cent_headset_alt"
+	keyslot = null
 
 /obj/item/device/radio/headset/ai
 	name = "\proper Integrated Subspace Transceiver "
@@ -200,7 +212,7 @@
 /obj/item/device/radio/headset/ai/receive_range(freq, level)
 	return ..(freq, level, 1)
 
-/obj/item/device/radio/headset/attackby(obj/item/weapon/W as obj, mob/user as mob)
+/obj/item/device/radio/headset/attackby(obj/item/weapon/W as obj, mob/user as mob, params)
 //	..()
 	user.set_machine(src)
 	if (!( istype(W, /obj/item/weapon/screwdriver) || (istype(W, /obj/item/device/encryptionkey/ ))))
@@ -230,14 +242,14 @@
 					keyslot2 = null
 
 			recalculateChannels()
-			user << "You pop out the encryption keys in the headset!"
+			user << "<span class='notice'>You pop out the encryption keys in the headset.</span>"
 
 		else
-			user << "This headset doesn't have any unique encryption keys!  How useless..."
+			user << "<span class='warning'>This headset doesn't have any unique encryption keys!  How useless...</span>"
 
 	if(istype(W, /obj/item/device/encryptionkey/))
 		if(keyslot && keyslot2)
-			user << "The headset can't hold another key!"
+			user << "<span class='warning'>The headset can't hold another key!</span>"
 			return
 
 		if(!keyslot)
@@ -273,6 +285,9 @@
 
 		if(keyslot2.syndie)
 			src.syndie = 1
+
+		if (keyslot2.centcom)
+			centcom = 1
 
 
 	for(var/ch_name in channels)

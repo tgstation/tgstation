@@ -20,6 +20,16 @@
 
 /obj/machinery/atmospherics/trinary/New()
 	..()
+
+	air1 = new
+	air2 = new
+	air3 = new
+
+	air1.volume = 200
+	air2.volume = 200
+	air3.volume = 200
+
+/obj/machinery/atmospherics/trinary/SetInitDirections()
 	switch(dir)
 		if(NORTH)
 			initialize_directions = EAST|NORTH|SOUTH
@@ -29,14 +39,6 @@
 			initialize_directions = EAST|WEST|SOUTH
 		if(WEST)
 			initialize_directions = WEST|NORTH|EAST
-	air1 = new
-	air2 = new
-	air3 = new
-
-	air1.volume = 200
-	air2.volume = 200
-	air3.volume = 200
-
 /*
 Iconnery
 */
@@ -92,7 +94,7 @@ Housekeeping and pipe network stuff below
 		nullifyPipenet(parent3)
 	..()
 
-/obj/machinery/atmospherics/trinary/initialize()
+/obj/machinery/atmospherics/trinary/atmosinit()
 
 	//Mixer:
 	//1 and 2 is input
@@ -129,6 +131,13 @@ Housekeeping and pipe network stuff below
 			break
 
 	update_icon()
+	..()
+
+/obj/machinery/atmospherics/trinary/construction()
+	..()
+	parent1.update = 1
+	parent2.update = 1
+	parent3.update = 1
 
 /obj/machinery/atmospherics/trinary/build_network()
 	if(!parent1)

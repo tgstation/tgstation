@@ -3,31 +3,36 @@
 	desc = "random arcade machine"
 	icon = 'icons/obj/computer.dmi'
 	icon_state = "arcade"
-	var/list/prizes = list(	/obj/item/weapon/storage/box/snappops			= 2,
-							/obj/item/toy/AI								= 2,
-							/obj/item/clothing/under/syndicate/tacticool	= 2,
-							/obj/item/toy/sword								= 2,
-							/obj/item/toy/gun								= 2,
-							/obj/item/toy/crossbow							= 2,
-							/obj/item/weapon/storage/box/fakesyndiesuit		= 2,
-							/obj/item/weapon/storage/fancy/crayons			= 2,
-							/obj/item/toy/spinningtoy						= 2,
-							/obj/item/toy/prize/ripley						= 1,
-							/obj/item/toy/prize/fireripley					= 1,
-							/obj/item/toy/prize/deathripley					= 1,
-							/obj/item/toy/prize/gygax						= 1,
-							/obj/item/toy/prize/durand						= 1,
-							/obj/item/toy/prize/honk						= 1,
-							/obj/item/toy/prize/marauder					= 1,
-							/obj/item/toy/prize/seraph						= 1,
-							/obj/item/toy/prize/mauler						= 1,
-							/obj/item/toy/prize/odysseus					= 1,
-							/obj/item/toy/prize/phazon						= 1,
-							/obj/item/toy/prize/reticence					= 1,
-							/obj/item/toy/cards/deck						= 2,
-							/obj/item/toy/nuke								= 2,
-							/obj/item/toy/minimeteor						= 2,
-							/obj/item/toy/carpplushie						= 2
+	var/list/prizes = list(	/obj/item/weapon/storage/box/snappops					= 2,
+							/obj/item/toy/AI										= 2,
+							/obj/item/clothing/under/syndicate/tacticool			= 2,
+							/obj/item/toy/sword										= 2,
+							/obj/item/toy/gun										= 2,
+							/obj/item/weapon/gun/projectile/shotgun/toy/crossbow	= 2,
+							/obj/item/weapon/storage/box/fakesyndiesuit				= 2,
+							/obj/item/weapon/storage/fancy/crayons					= 2,
+							/obj/item/toy/spinningtoy								= 2,
+							/obj/item/toy/prize/ripley								= 1,
+							/obj/item/toy/prize/fireripley							= 1,
+							/obj/item/toy/prize/deathripley							= 1,
+							/obj/item/toy/prize/gygax								= 1,
+							/obj/item/toy/prize/durand								= 1,
+							/obj/item/toy/prize/honk								= 1,
+							/obj/item/toy/prize/marauder							= 1,
+							/obj/item/toy/prize/seraph								= 1,
+							/obj/item/toy/prize/mauler								= 1,
+							/obj/item/toy/prize/odysseus							= 1,
+							/obj/item/toy/prize/phazon								= 1,
+							/obj/item/toy/prize/reticence							= 1,
+							/obj/item/toy/cards/deck								= 2,
+							/obj/item/toy/nuke										= 2,
+							/obj/item/toy/minimeteor								= 2,
+							/obj/item/toy/carpplushie								= 2,
+							/obj/item/toy/foamblade									= 2,
+							/obj/item/toy/redbutton									= 2,
+							/obj/item/toy/owl										= 2,
+							/obj/item/toy/griffin									= 2,
+							/obj/item/weapon/coin/antagtoken						= 2,
 							)
 
 /obj/machinery/computer/arcade/New()
@@ -363,9 +368,27 @@
 		else
 			if(food <= 0)
 				dat += "<br>You ran out of food and starved."
+				if(emagged)
+					user.nutrition = 0 //yeah you pretty hongry
+					user << "<span class='userdanger'><font size=3>Your body instantly contracts to that of one who has not eaten in months. Agonizing cramps seize you as you fall to the floor.</span>"
 			if(fuel <= 0)
 				dat += "<br>You ran out of fuel, and drift, slowly, into a star."
+				if(emagged)
+					var/mob/living/M = user
+					M.adjust_fire_stacks(5)
+					M.IgniteMob() //flew into a star, so you're on fire
+					user << "<span class='userdanger'><font size=3>You feel an immense wave of heat emanate from the arcade machine. Your skin bursts into flames.</span>"
 		dat += "<br><P ALIGN=Right><a href='byond://?src=\ref[src];menu=1'>OK...</a></P>"
+
+		if(emagged)
+			user << "<span class='userdanger'><font size=3>You're never going to make it to Orion...</span></font>"
+			user.death()
+			emagged = 0 //removes the emagged status after you lose
+			playing = 0 //also a new game
+			name = "The Orion Trail"
+			desc = "Learn how our ancestors got to Orion, and have fun in the process!"
+
+
 	else if(event)
 		dat = eventdat
 	else if(playing)
@@ -423,6 +446,77 @@
 			if(prob(75))
 				event = pickweight(events)
 				event()
+		if(emagged)
+			var/mob/living/carbon/M = usr //for some vars
+			switch(event)
+				if("Raiders")
+					if(prob(50))
+						usr << "<span class='userdanger'>You hear battle shouts. The tramping of boots on cold metal. Screams of agony. The rush of venting air. Are you going insane?</span>"
+						M.hallucination += 30
+					else
+						usr << "<span class='userdanger'>Something strikes you from behind! It hurts like hell and feel like a blunt weapon, but nothing is there...</span>"
+						M.take_organ_damage(30)
+						playsound(loc, 'sound/weapons/genhit2.ogg', 100, 1)
+				if("Illness")
+					var/severity = rand(1,3) //pray to RNGesus. PRAY, PIGS
+					if(severity == 1)
+						M << "<span class='userdanger'>You suddenly feel slightly nauseous.</span>" //got off lucky
+					if(severity == 2)
+						usr << "<span class='userdanger'>You suddenly feel extremely nauseous and hunch over until it passes.</span>"
+						M.Stun(3)
+					if(severity >= 3) //you didn't pray hard enough
+						M << "<span class='warning'>An overpowering wave of nausea consumes over you. You hunch over, your stomach's contents preparing for a spectacular exit.</span>"
+						M.Stun(5)
+						sleep(30)
+						M.visible_message("<span class='warning'>[M] throws up!</span>", "<span class='userdanger'>You violently throw up!</span>")
+						playsound(loc, 'sound/effects/splat.ogg', 50, 1)
+						M.nutrition -= 50 //lose a lot of food
+						var/turf/location = usr.loc
+						if(istype(location, /turf/simulated))
+							location.add_vomit_floor(src, 1)
+				if("Interstellar Flux")
+					if(prob(75))
+						M.Weaken(3)
+						M.visible_message("<span class='danger'>[M] is swept off their feet!</span>", "<span class='userdanger'>A sudden gust of powerful wind slams you into the floor!</span>")
+						M.take_organ_damage(25)
+						playsound(src.loc, 'sound/weapons/Genhit.ogg', 100, 1)
+					else
+						M << "<span class='userdanger'>A violent gale blows past you, and you barely manage to stay standing!</span>"
+				if("Collision") //by far the most damaging event
+					if(prob(90))
+						playsound(src.loc, 'sound/effects/bang.ogg', 100, 1)
+						var/turf/simulated/floor/F
+						for(F in orange(1, src))
+							F.ChangeTurf(/turf/space)
+						src.visible_message("<span class='userdanger'>Something slams into the floor around [src], exposing it to space!</span>")
+						if(hull)
+							sleep(10)
+							src.visible_message("<span class='danger'>A new floor suddenly appears around [src]. What the hell?</span>")
+							playsound(src.loc, 'sound/weapons/Genhit.ogg', 100, 1)
+							var/turf/space/T
+							for(T in orange(1, src))
+								T.ChangeTurf(/turf/simulated/floor/plating/)
+					else
+						src.visible_message("<span class='danger'>Something slams into the floor around [src] - luckily, it didn't get through!</span>")
+						playsound(src.loc, 'sound/effects/bang.ogg', 50, 1)
+				if("Malfunction")
+					playsound(src.loc, 'sound/effects/EMPulse.ogg', 50, 1)
+					src.visible_message("<span class='danger'>[src] malfunctions, randomizing in-game stats!</span>")
+					var/oldfood = food
+					var/oldfuel = fuel
+					food = rand(10,80) / rand(1,2)
+					fuel = rand(10,60) / rand(1,2)
+					if(electronics)
+						sleep(10)
+						if(oldfuel > fuel && oldfood > food)
+							src.audible_message("<span class='danger'>[src] lets out a somehow reassuring chime.</span>")
+						else if(oldfuel < fuel || oldfood < food)
+							src.audible_message("<span class='danger'>[src] lets out a somehow ominous chime.</span>")
+						food = oldfood
+						fuel = oldfuel
+						playsound(src.loc, 'sound/machines/chime.ogg', 50, 1)
+
+
 	else if(href_list["newgame"]) //Reset everything
 		newgame()
 	else if(href_list["menu"]) //back to the main menu
@@ -463,6 +557,15 @@
 		if(prob(75))
 			event = "BlackHole"
 			event()
+			if(emagged) //has to be here because otherwise it doesn't work
+				playsound(src.loc, 'sound/effects/supermatter.ogg', 100, 1)
+				src.visible_message("<span class='userdanger'><font size=3>A miniature black hole suddenly appears in front of [src], devouring [usr] alive!</font></span>")
+				usr.Stun(10) //you can't run :^)
+				var/S = new /obj/singularity/academy(usr.loc)
+				emagged = 0 //immediately removes emagged status so people can't kill themselves by sprinting up and interacting
+				sleep(50)
+				src.visible_message("<span class='userdanger'>[S] winks out, just as suddenly as it appeared.</span>")
+				qdel(S)
 		else
 			event = null
 			turns += 1
@@ -495,7 +598,6 @@
 			eventdat += "<br>Fortunately you fended them off without any trouble."
 		eventdat += "<P ALIGN=Right><a href='byond://?src=\ref[src];eventclose=1'>Continue</a></P>"
 		eventdat += "<P ALIGN=Right><a href='byond://?src=\ref[src];close=1'>Close</a></P>"
-
 	else if(event == "Interstellar Flux")
 		eventdat += "This region of space is highly turbulent. <br>If we go slowly we may avoid more damage, but if we keep our speed we won't waste supplies."
 		eventdat += "<br>What will you do?"
@@ -509,7 +611,6 @@
 		alive -= 1
 		eventdat += "<P ALIGN=Right><a href='byond://?src=\ref[src];eventclose=1'>Continue</a></P>"
 		eventdat += "<P ALIGN=Right><a href='byond://?src=\ref[src];close=1'>Close</a></P>"
-
 	else if(event == "Breakdown")
 		eventdat += "Oh no! The engine has broken down!"
 		eventdat += "<br>You can repair it with an engine part, or you can make repairs for 3 days."
@@ -556,4 +657,60 @@
 
 /obj/machinery/computer/arcade/orion_trail/proc/win()
 	playing = 0
-	prizevend()
+	if(emagged)
+		new /obj/item/weapon/orion_ship(src.loc)
+		message_admins("[key_name_admin(usr)] made it to Orion on an emagged machine and got an explosive toy ship.")
+		log_game("[key_name(usr)] made it to Orion on an emagged machine and got an explosive toy ship.")
+	else
+		prizevend()
+	emagged = 0
+	name = "The Orion Trail"
+	desc = "Learn how our ancestors got to Orion, and have fun in the process!"
+
+/obj/machinery/computer/arcade/orion_trail/emag_act(mob/user as mob)
+	if(!emagged)
+		user << "<span class='notice'>You override the cheat code menu and skip to Cheat #[rand(1, 50)]: Realism Mode.</span>"
+		name = "The Orion Trail: Realism Edition"
+		desc = "Learn how our ancestors got to Orion, and try not to die in the process!"
+		newgame()
+		emagged = 1
+
+/obj/item/weapon/orion_ship
+	name = "model settler ship"
+	desc = "A model spaceship, it looks like those used back in the day when travelling to Orion! It even has a miniature FX-293 reactor, which was renowned for its instability and tendency to explode..."
+	icon = 'icons/obj/toy.dmi'
+	icon_state = "ship"
+	w_class = 2
+	var/active = 0 //if the ship is on
+
+/obj/item/weapon/orion_ship/examine(mob/user)
+	..()
+	if(!(in_range(user, src)))
+		return
+	if(!active)
+		user << "<span class='notice'>There's a little switch on the bottom. It's flipped down.</span>"
+	else
+		user << "<span class='notice'>There's a little switch on the bottom. It's flipped up.</span>"
+
+/obj/item/weapon/orion_ship/attack_self(mob/user) //Minibomb-level explosion. Should probably be more because of how hard it is to survive the machine! Also, just over a 5-second fuse
+	if(active)
+		return
+
+	message_admins("[key_name_admin(usr)] primed an explosive Orion ship for detonation.")
+	log_game("[key_name(usr)] primed an explosive Orion ship for detonation.")
+
+	user << "<span class='warning'>You flip the switch on the underside of [src].</span>"
+	active = 1
+	src.visible_message("<span class='notice'>[src] softly beeps and whirs to life!</span>")
+	playsound(src.loc, 'sound/machines/defib_SaftyOn.ogg', 25, 1)
+	say("This is ship ID #[rand(1,1000)] to Orion Port Authority. We're coming in for landing, over.")
+	sleep(20)
+	src.visible_message("<span class='warning'>[src] begins to vibrate...</span>")
+	say("Uh, Port? Having some issues with our reactor, could you check it out? Over.")
+	sleep(30)
+	say("Oh, God! Code Eight! CODE EIGHT! IT'S GONNA BL-")
+	playsound(src.loc, 'sound/machines/buzz-sigh.ogg', 25, 1)
+	sleep(3.6)
+	src.visible_message("<span class='userdanger'>[src] explodes!</span>")
+	explosion(src.loc, 1,2,4, flame_range = 3)
+	qdel(src)

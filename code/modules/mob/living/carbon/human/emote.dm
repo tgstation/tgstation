@@ -82,6 +82,9 @@
 			else if(copytext(input,1,9) == "exclaims")
 				src << "<span class='danger'>Invalid emote.</span>"
 				return
+			else if(copytext(input,1,6) == "yells")
+				src << "<span class='danger'>Invalid emote.</span>"
+				return
 			else if(copytext(input,1,5) == "asks")
 				src << "<span class='danger'>Invalid emote.</span>"
 				return
@@ -184,19 +187,6 @@
 				else
 					message = "<B>[src]</B> hugs \himself."
 
-		if ("johnny")
-			var/M
-			if (param)
-				M = param
-			if (!M)
-				param = null
-			else
-				if(miming)
-					message = "<B>[src]</B> takes a drag from a cigarette and blows \"[M]\" out in smoke."
-				else
-					message = "<B>[src]</B> says, \"[M], please. He had a family.\" [src.name] takes a drag from a cigarette and blows \his name out in smoke."
-					m_type = 2
-
 		if ("me")
 			if(silent)
 				return
@@ -214,6 +204,9 @@
 				src << "<span class='danger'>Invalid emote.</span>"
 				return
 			else if(copytext(message,1,9) == "exclaims")
+				src << "<span class='danger'>Invalid emote.</span>"
+				return
+			else if(copytext(message,1,6) == "yells")
 				src << "<span class='danger'>Invalid emote.</span>"
 				return
 			else if(copytext(message,1,5) == "asks")
@@ -316,7 +309,7 @@
 				m_type = 2
 
 		if ("help") //This can stay at the bottom.
-			src << "Help for human emotes. You can use these emotes with say \"*emote\":\n\naflap, airguitar, blink, blink_r, blush, bow-(none)/mob, burp, choke, chuckle, clap, collapse, cough, cry, custom, dance, dap, deathgasp, drool, eyebrow, faint, flap, frown, gasp, giggle, glare-(none)/mob, grin, groan, grumble, handshake, hug-(none)/mob, johnny, jump, laugh, look-(none)/mob, me, moan, mumble, nod, pale, point-(atom), raise, salute, scream, shake, shiver, shrug, sigh, signal-#1-10, sit, smile, sneeze, sniff, snore, stare-(none)/mob, sulk, sway, tremble, twitch, twitch_s, wave, whimper, wink, yawn"
+			src << "Help for human emotes. You can use these emotes with say \"*emote\":\n\naflap, airguitar, blink, blink_r, blush, bow-(none)/mob, burp, choke, chuckle, clap, collapse, cough, cry, custom, dance, dap, deathgasp, drool, eyebrow, faint, flap, frown, gasp, giggle, glare-(none)/mob, grin, groan, grumble, handshake, hug-(none)/mob, jump, laugh, look-(none)/mob, me, moan, mumble, nod, pale, point-(atom), raise, salute, scream, shake, shiver, shrug, sigh, signal-#1-10, sit, smile, sneeze, sniff, snore, stare-(none)/mob, sulk, sway, tremble, twitch, twitch_s, wave, whimper, wink, yawn"
 
 		else
 			..(act)
@@ -335,12 +328,12 @@
 		for(var/mob/M in dead_mob_list)
 			if(!M.client || istype(M, /mob/new_player))
 				continue //skip monkeys, leavers and new players
-			if(M.stat == DEAD && (M.client.prefs.toggles & CHAT_GHOSTSIGHT) && !(M in viewers(src,null)))
+			if(M.stat == DEAD && M.client && (M.client.prefs.chat_toggles & CHAT_GHOSTSIGHT) && !(M in viewers(src,null)))
 				M.show_message(message)
 
 
 		if (m_type & 1)
 			visible_message(message)
 		else if (m_type & 2)
-			src.loc.audible_message(message)
+			audible_message(message)
 

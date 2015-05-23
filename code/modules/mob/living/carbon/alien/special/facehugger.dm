@@ -48,13 +48,13 @@ var/const/MAX_ACTIVE_TIME = 400
 		return
 	switch(stat)
 		if(DEAD,UNCONSCIOUS)
-			user << "<span class='userdanger'>[src] is not moving.</span>"
+			user << "<span class='boldannounce'>[src] is not moving.</span>"
 		if(CONSCIOUS)
-			user << "<span class='userdanger'>[src] seems to be active!</span>"
+			user << "<span class='boldannounce'>[src] seems to be active!</span>"
 	if (sterile)
-		user << "<span class='userdanger'>It looks like the proboscis has been removed.</span>"
+		user << "<span class='boldannounce'>It looks like the proboscis has been removed.</span>"
 
-/obj/item/clothing/mask/facehugger/attackby(var/obj/item/O,var/mob/m)
+/obj/item/clothing/mask/facehugger/attackby(var/obj/item/O,var/mob/m, params)
 	if(O.force)
 		Die()
 	return
@@ -115,7 +115,7 @@ var/const/MAX_ACTIVE_TIME = 400
 
 	if(loc == L) return 0
 	if(stat != CONSCIOUS)	return 0
-	if(locate(/obj/item/alien_embryo) in L) return 0
+	if(locate(/obj/item/body_egg/alien_embryo) in L) return 0
 	if(!sterile) L.take_organ_damage(strength,0) //done here so that even borgs and humans in helmets take damage
 
 	L.visible_message("<span class='danger'>[src] leaps at [L]'s face!</span>", \
@@ -123,7 +123,7 @@ var/const/MAX_ACTIVE_TIME = 400
 
 	if(ishuman(L))
 		var/mob/living/carbon/human/H = L
-		if(H.head && H.head.flags & HEADCOVERSMOUTH)
+		if(H.is_mouth_covered(head_only = 1))
 			H.visible_message("<span class='danger'>[src] smashes against [H]'s [H.head]!</span>", \
 								"<span class='userdanger'>[src] smashes against [H]'s [H.head]!</span>")
 			Die()
@@ -145,9 +145,10 @@ var/const/MAX_ACTIVE_TIME = 400
 
 		if(!sterile) L.Paralyse(MAX_IMPREGNATION_TIME/6) //something like 25 ticks = 20 seconds with the default settings
 	else if (iscorgi(M))
-		var/mob/living/simple_animal/corgi/C = M
+		var/mob/living/simple_animal/pet/corgi/C = M
 		loc = C
 		C.facehugger = src
+		C.regenerate_icons()
 
 	GoIdle() //so it doesn't jump the people that tear it off
 
@@ -174,11 +175,11 @@ var/const/MAX_ACTIVE_TIME = 400
 		icon_state = "[initial(icon_state)]_impregnated"
 
 		if(!target.getlimb(/obj/item/organ/limb/robot/chest) && !(target.status_flags & XENO_HOST))
-			new /obj/item/alien_embryo(target)
+			new /obj/item/body_egg/alien_embryo(target)
 
 
 		if(iscorgi(target))
-			var/mob/living/simple_animal/corgi/C = target
+			var/mob/living/simple_animal/pet/corgi/C = target
 			src.loc = get_turf(C)
 			C.facehugger = null
 	else
@@ -223,7 +224,7 @@ var/const/MAX_ACTIVE_TIME = 400
 	icon_state = "[initial(icon_state)]_dead"
 	stat = DEAD
 
-	src.visible_message("<span class='userdanger'>[src] curls up into a ball!</span>")
+	visible_message("<span class='danger'>[src] curls up into a ball!</span>")
 
 	return
 
@@ -239,7 +240,7 @@ var/const/MAX_ACTIVE_TIME = 400
 	var/mob/living/carbon/C = M
 	if(ishuman(C))
 		var/mob/living/carbon/human/H = C
-		if(H.head && H.head.flags & HEADCOVERSMOUTH)
+		if(H.is_mouth_covered(head_only = 1))
 			return 0
 		return 1
 	return 0

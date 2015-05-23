@@ -28,3 +28,6 @@ var/cmp_field = "name"
 
 /proc/cmp_ckey_dsc(client/a, client/b)
 	return sorttext(a.ckey, b.ckey)
+
+/proc/cmp_subsystem_priority(datum/subsystem/a, datum/subsystem/b)
+	return b.priority - a.priority

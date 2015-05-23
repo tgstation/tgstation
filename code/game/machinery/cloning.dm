@@ -83,7 +83,7 @@
 
 /obj/item/weapon/disk/data/attack_self(mob/user as mob)
 	read_only = !read_only
-	user << "You flip the write-protect tab to [src.read_only ? "protected" : "unprotected"]."
+	user << "<span class='notice'>You flip the write-protect tab to [src.read_only ? "protected" : "unprotected"].</span>"
 
 /obj/item/weapon/disk/data/examine(mob/user)
 	..()
@@ -152,6 +152,17 @@
 		src.eject_wait = 0
 
 	var/mob/living/carbon/human/H = new /mob/living/carbon/human(src)
+
+	if(efficiency > 2)
+		for(var/A in bad_se_blocks)
+			setblock(H.dna.struc_enzymes, A, construct_block(0,2))
+	if(efficiency > 5 && prob(20))
+		randmutg(H)
+	if(efficiency < 3 && prob(50))
+		var/mob/M = randmutb(H)
+		if(ismob(M))
+			H = M
+
 	H.silent = 20 //Prevents an extreme edge case where clones could speak if they said something at exactly the right moment.
 	occupant = H
 
@@ -174,14 +185,6 @@
 
 	hardset_dna(H, ui, se, null, null, mrace, mcolor)
 	H.faction |= factions
-
-	if(efficiency > 2)
-		for(var/A in bad_se_blocks)
-			setblock(H.dna.struc_enzymes, A, construct_block(0,2))
-	if(efficiency > 5 && prob(20))
-		randmutg(H)
-	if(efficiency < 3 && prob(50))
-		randmutb(H)
 
 	H.set_cloned_appearance()
 
@@ -215,8 +218,8 @@
 			src.occupant.adjustBrainLoss(-((speed_coeff/2)))
 
 			//So clones don't die of oxyloss in a running pod.
-			if (src.occupant.reagents.get_reagent_amount("inaprovaline") < 30)
-				src.occupant.reagents.add_reagent("inaprovaline", 60)
+			if (src.occupant.reagents.get_reagent_amount("salbutamol") < 30)
+				src.occupant.reagents.add_reagent("salbutamol", 60)
 
 			use_power(7500) //This might need tweaking.
 			return
@@ -239,7 +242,7 @@
 	return
 
 //Let's unlock this early I guess.  Might be too early, needs tweaking.
-/obj/machinery/clonepod/attackby(obj/item/weapon/W as obj, mob/user as mob)
+/obj/machinery/clonepod/attackby(obj/item/weapon/W as obj, mob/user as mob, params)
 	if(!(occupant || mess || locked))
 		if(default_deconstruction_screwdriver(user, "[icon_state]_maintenance", "[initial(icon_state)]",W))
 			return
@@ -267,7 +270,7 @@
 /obj/machinery/clonepod/emag_act(user as mob)
 	if (isnull(src.occupant))
 		return
-	user << "You force an emergency ejection."
+	user << "<span class='notice'>You force an emergency ejection.</span>"
 	src.locked = 0
 	src.go_out()
 

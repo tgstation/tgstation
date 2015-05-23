@@ -262,6 +262,31 @@
 	if(isnum(num)&&isnum(min)&&isnum(max))
 		return ((min <= num) && (num <= max))
 
+// Returns the sine of num
+/proc/n_sin(var/num)
+	if(isnum(num))
+		return sin(num)
+
+// Returns the cosine of num
+/proc/n_cos(var/num)
+	if(isnum(num))
+		return cos(num)
+
+// Returns the arcsine of num
+/proc/n_asin(var/num)
+	if(isnum(num)&&-1<=num&&num<=1)
+		return arcsin(num)
+
+// Returns the arccosine of num
+/proc/n_acos(var/num)
+	if(isnum(num)&&-1<=num&&num<=1)
+		return arccos(num)
+
+// Returns the natural log of num
+/proc/n_log(var/num)
+	if(isnum(num)&&0<num)
+		return log(num)
+
 // Replace text
 /proc/n_replace(text, find, replacement)
 	if(istext(text) && istext(find) && istext(replacement))

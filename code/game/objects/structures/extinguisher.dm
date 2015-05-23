@@ -1,7 +1,7 @@
 /obj/structure/extinguisher_cabinet
 	name = "extinguisher cabinet"
 	desc = "A small wall mounted cabinet designed to hold a fire extinguisher."
-	icon = 'icons/obj/closet.dmi'
+	icon = 'icons/obj/wallmounts.dmi'
 	icon_state = "extinguisher_closed"
 	anchored = 1
 	density = 0
@@ -24,7 +24,7 @@
 			return
 
 
-/obj/structure/extinguisher_cabinet/attackby(obj/item/O, mob/user)
+/obj/structure/extinguisher_cabinet/attackby(obj/item/O, mob/user, params)
 	if(isrobot(user) || isalien(user))
 		return
 	if(istype(O, /obj/item/weapon/extinguisher))

@@ -128,14 +128,14 @@ By design, d1 is the smallest direction and d2 is the highest
 //   - Cable coil : merge cables
 //   - Multitool : get the power currently passing through the cable
 //
-/obj/structure/cable/attackby(obj/item/W, mob/user)
+/obj/structure/cable/attackby(obj/item/W, mob/user, params)
 	var/turf/T = src.loc
 	if(T.intact)
 		return
 	if(istype(W, /obj/item/weapon/wirecutters))
 		if (shock(user, 50))
 			return
-		visible_message("<span class='warning'>[user] cuts the cable.</span>")
+		user.visible_message("[user] cuts the cable.", "<span class='notice'>You cut the cable.</span>")
 		stored.add_fingerprint(user)
 		investigate_log("was cut by [key_name(usr, usr.client)] in [user.loc.loc]","wires")
 		Deconstruct()
@@ -144,7 +144,7 @@ By design, d1 is the smallest direction and d2 is the highest
 	else if(istype(W, /obj/item/stack/cable_coil))
 		var/obj/item/stack/cable_coil/coil = W
 		if (coil.get_amount() < 1)
-			user << "Not enough cable"
+			user << "<span class='warning'>Not enough cable!</span>"
 			return
 		coil.cable_join(src, user)
 
@@ -453,7 +453,7 @@ obj/structure/cable/proc/avail()
 // Definitions
 ////////////////////////////////
 
-#define MAXCOIL 30
+
 
 /obj/item/stack/cable_coil
 	name = "cable coil"
@@ -480,6 +480,11 @@ obj/structure/cable/proc/avail()
 	m_amt = 0
 	g_amt = 0
 	cost = 1
+
+/obj/item/stack/cable_coil/cyborg/attack_self(mob/user)
+	var/cable_color = input(user,"Pick a cable color.","Cable Color") in list("red","yellow","green","blue","pink","orange","cyan","white")
+	item_color = cable_color
+	update_icon()
 
 /obj/item/stack/cable_coil/suicide_act(mob/user)
 	if(locate(/obj/structure/stool) in user.loc)
@@ -537,25 +542,25 @@ obj/structure/cable/proc/avail()
 		if(!istype(usr.loc,/turf))
 			return
 		if(src.amount <= 14)
-			usr << "<span class='danger'>You need at least 15 lengths to make restraints!</span>"
+			usr << "<span class='warning'>You need at least 15 lengths to make restraints!</span>"
 			return
 		var/obj/item/weapon/restraints/handcuffs/cable/B = new /obj/item/weapon/restraints/handcuffs/cable(usr.loc)
 		B.icon_state = "cuff_[item_color]"
 		usr << "<span class='notice'>You wind some cable together to make some restraints.</span>"
 		src.use(15)
 	else
-		usr << "<span class='notice'>You cannot do that.</span>"
+		usr << "<span class='warning'>You cannot do that!</span>"
 	..()
 
 // Items usable on a cable coil :
 //   - Wirecutters : cut them duh !
 //   - Cable coil : merge cables
-/obj/item/stack/cable_coil/attackby(obj/item/weapon/W, mob/user)
+/obj/item/stack/cable_coil/attackby(obj/item/weapon/W, mob/user, params)
 	..()
 	if( istype(W, /obj/item/weapon/wirecutters) && src.amount > 1)
 		src.amount--
 		new /obj/item/stack/cable_coil(user.loc, 1,item_color)
-		user << "You cut a piece off the cable coil."
+		user << "<span class='notice'>You cut a piece off the cable coil.</span>"
 		src.update_icon()
 		return
 
@@ -567,18 +572,18 @@ obj/structure/cable/proc/avail()
 	else if(istype(W, /obj/item/stack/cable_coil))
 		var/obj/item/stack/cable_coil/C = W
 		if(C.amount >= MAXCOIL)
-			user << "The coil is too long, you cannot add any more cable to it."
+			user << "<span class='warning'>The coil is too long, you cannot add any more cable to it!</span>"
 			return
 
 		if( (C.amount + src.amount <= MAXCOIL) )
-			user << "You join the cable coils together."
+			user << "<span class='notice'>You join the cable coils together.</span>"
 			C.give(src.amount) // give it cable
 			src.use(src.amount) // make sure this one cleans up right
 			return
 
 		else
 			var/amt = MAXCOIL - C.amount
-			user << "You transfer [amt] length\s of cable from one coil to the other."
+			user << "<span class='notice'>You transfer [amt] length\s of cable from one coil to the other.</span>"
 			C.give(amt)
 			src.use(amt)
 			return
@@ -627,20 +632,16 @@ obj/structure/cable/proc/avail()
 	if(!isturf(user.loc))
 		return
 
-	if(!T.cancable)
-		user << "You can only lay cables on catwalks and plating!"
+	if(!T.can_have_cabling())
+		user << "<span class='warning'>You can only lay cables on catwalks and plating!</span>"
 		return
 
 	if(get_amount() < 1) // Out of cable
-		user << "There is no cable left."
+		user << "<span class='warning'>There is no cable left!</span>"
 		return
 
 	if(get_dist(T,user) > 1) // Too far
-		user << "You can't lay cable at a place that far away."
-		return
-
-	if(T.intact)		// Ff floor is intact, complain
-		user << "You can't lay cable there unless the floor tiles are removed."
+		user << "<span class='warning'>You can't lay cable at a place that far away!</span>"
 		return
 
 	else
@@ -653,7 +654,7 @@ obj/structure/cable/proc/avail()
 
 		for(var/obj/structure/cable/LC in T)
 			if(LC.d2 == dirn && LC.d1 == 0)
-				user << "There's already a cable at that position."
+				user << "<span class='warning'>There's already a cable at that position!</span>"
 				return
 
 		var/obj/structure/cable/C = get_new_cable(T)
@@ -694,7 +695,7 @@ obj/structure/cable/proc/avail()
 		return
 
 	if(get_dist(C, user) > 1)		// make sure it's close enough
-		user << "You can't lay cable at a place that far away."
+		user << "<span class='warning'>You can't lay cable at a place that far away!</span>"
 		return
 
 
@@ -706,11 +707,11 @@ obj/structure/cable/proc/avail()
 
 	// one end of the clicked cable is pointing towards us
 	if(C.d1 == dirn || C.d2 == dirn)
-		if(!U.cancable)						//checking if it's a plating or catwalk
-			user << "You can only lay cables on catwalks and plating!"
+		if(!U.can_have_cabling())						//checking if it's a plating or catwalk
+			user << "<span class='warning'>You can only lay cables on catwalks and plating!</span>"
 			return
 		if(U.intact)						//can't place a cable if it's a plating with a tile on it
-			user << "You can't lay cable there unless the floor tiles are removed."
+			user << "<span class='warning'>You can't lay cable there unless the floor tiles are removed!</span>"
 			return
 		else
 			// cable is pointing at us, we're standing on an open tile
@@ -720,7 +721,7 @@ obj/structure/cable/proc/avail()
 
 			for(var/obj/structure/cable/LC in U)		// check to make sure there's not a cable there already
 				if(LC.d1 == fdirn || LC.d2 == fdirn)
-					user << "There's already a cable at that position."
+					user << "<span class='warning'>There's already a cable at that position!</span>"
 					return
 
 			var/obj/structure/cable/NC = get_new_cable (U)
@@ -764,7 +765,7 @@ obj/structure/cable/proc/avail()
 			if(LC == C)			// skip the cable we're interacting with
 				continue
 			if((LC.d1 == nd1 && LC.d2 == nd2) || (LC.d1 == nd2 && LC.d2 == nd1) )	// make sure no cable matches either direction
-				user << "There's already a cable at that position."
+				user << "<span class='warning'>There's already a cable at that position!</span>"
 				return
 
 

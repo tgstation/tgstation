@@ -25,6 +25,9 @@
 	var/framestack = /obj/item/stack/rods
 	var/buildstack = /obj/item/stack/sheet/metal
 	var/busy = 0
+	var/buildstackamount = 1
+	var/framestackamount = 2
+	var/mob/tableclimber
 
 /obj/structure/table/New()
 	..()
@@ -217,6 +220,10 @@
 
 /obj/structure/table/attack_hand(mob/living/user)
 	user.changeNext_move(CLICK_CD_MELEE)
+	if(tableclimber && tableclimber != user)
+		tableclimber.Weaken(2)
+		tableclimber.visible_message("<span class='warning'>[tableclimber.name] has been knocked off the table", "You're knocked off the table!", "You see [tableclimber.name] get knocked off the table</span>")
+
 
 /obj/structure/table/attack_tk() // no telehulk sorry
 	return
@@ -266,7 +273,7 @@
 		return 1
 	qdel(I)
 
-/obj/structure/table/attackby(obj/item/I, mob/user)
+/obj/structure/table/attackby(obj/item/I, mob/user, params)
 	if (istype(I, /obj/item/weapon/grab))
 		tablepush(I, user)
 		return
@@ -300,26 +307,23 @@
 			for(var/obj/item/C in oldContents)
 				C.loc = src.loc
 
-			user.visible_message("<span class='notice'>[user] empties [I] on [src].</span>")
+			user.visible_message("[user] empties [I] on [src].")
 			return
 		// If the tray IS empty, continue on (tray will be placed on the table like other items)
 
 	if(isrobot(user))
 		return
 
-	if(istype(I, /obj/item/weapon/melee/energy/blade))
-		var/datum/effect/effect/system/spark_spread/SS = new /datum/effect/effect/system/spark_spread()
-		SS.set_up(5, 0, src.loc)
-		SS.start()
-		playsound(src.loc, 'sound/weapons/blade1.ogg', 50, 1)
-		playsound(src.loc, "sparks", 50, 1)
-		user.visible_message("<span class='notice'>The [src.name] was sliced apart by [user]!</span>")
-		table_destroy(1)
-		return
-
 	if(!(I.flags & ABSTRACT)) //rip more parems rip in peace ;_;
 		if(user.drop_item())
 			I.Move(loc)
+			var/list/click_params = params2list(params)
+			//Center the icon where the user clicked.
+			if(!click_params || !click_params["icon-x"] || !click_params["icon-y"])
+				return
+			//Clamp it so that the icon never moves more than 16 pixels in either direction (thus leaving the table turf)
+			I.pixel_x = Clamp(text2num(click_params["icon-x"]) - 16, -(world.icon_size/2), world.icon_size/2)
+			I.pixel_y = Clamp(text2num(click_params["icon-y"]) - 16, -(world.icon_size/2), world.icon_size/2)
 
 
 /*
@@ -333,26 +337,31 @@
 /obj/structure/table/proc/table_destroy(var/destroy_type, var/mob/user)
 
 	if(destroy_type == TBL_DESTROY)
-		new framestack(src.loc)
-		new buildstack(src.loc)
+		for(var/i = 1, i <= framestackamount, i++)
+			new framestack(get_turf(src))
+		for(var/i = 1, i <= buildstackamount, i++)
+			new buildstack(get_turf(src))
 		qdel(src)
 		return
 
 	if(destroy_type == TBL_DISASSEMBLE)
-		user << "<span class='notice'>Now disassembling [src].</span>"
+		user << "<span class='notice'>You start disassembling [src]...</span>"
 		playsound(src.loc, 'sound/items/Screwdriver.ogg', 50, 1)
 		if(do_after(user, 20))
 			new frame(src.loc)
-			new buildstack(src.loc)
+			for(var/i = 1, i <= buildstackamount, i++)
+				new buildstack(get_turf(src))
 			qdel(src)
 			return
 
 	if(destroy_type == TBL_DECONSTRUCT)
-		user << "<span class='notice'>Now deconstructing [src].</span>"
+		user << "<span class='notice'>You start deconstructing [src]...</span>"
 		playsound(src.loc, 'sound/items/Ratchet.ogg', 50, 1)
 		if(do_after(user, 40))
-			new framestack(src.loc)
-			new buildstack(src.loc)
+			for(var/i = 1, i <= framestackamount, i++)
+				new framestack(get_turf(src))
+			for(var/i = 1, i <= buildstackamount, i++)
+				new buildstack(get_turf(src))
 			playsound(src.loc, 'sound/items/Deconstruct.ogg', 50, 1)
 			qdel(src)
 			return
@@ -365,10 +374,11 @@
 /obj/structure/table/proc/climb_table(mob/user)
 	src.add_fingerprint(user)
 	user.visible_message("<span class='warning'>[user] starts climbing onto [src].</span>", \
-								"<span class='notice'>You start climbing onto [src].</span>")
+								"<span class='notice'>You start climbing onto [src]...</span>")
 	var/climb_time = 20
 	if(user.restrained()) //Table climbing takes twice as long when restrained.
 		climb_time *= 2
+	tableclimber = user
 	if(do_mob(user, user, climb_time))
 		if(src.loc) //Checking if table has been destroyed
 			user.pass_flags += PASSTABLE
@@ -378,7 +388,9 @@
 									"<span class='notice'>You climb onto [src].</span>")
 			add_logs(user, src, "climbed onto")
 			user.Stun(2)
+			tableclimber = null
 			return 1
+	tableclimber = null
 	return 0
 
 
@@ -437,23 +449,23 @@
 	var/status = 2
 	buildstack = /obj/item/stack/sheet/plasteel
 
-/obj/structure/table/reinforced/attackby(obj/item/weapon/W as obj, mob/user as mob)
+/obj/structure/table/reinforced/attackby(obj/item/weapon/W as obj, mob/user as mob, params)
 	if (istype(W, /obj/item/weapon/weldingtool))
 		var/obj/item/weapon/weldingtool/WT = W
 		if(WT.remove_fuel(0, user))
 			if(src.status == 2)
-				user << "<span class='notice'>Now weakening the reinforced table</span>"
+				user << "<span class='notice'>You start weakening the reinforced table...</span>"
 				playsound(src.loc, 'sound/items/Welder.ogg', 50, 1)
 				if (do_after(user, 50))
 					if(!src || !WT.isOn()) return
-					user << "<span class='notice'>Table weakened</span>"
+					user << "<span class='notice'>You weaken the table.</span>"
 					src.status = 1
 			else
-				user << "<span class='notice'>Now strengthening the reinforced table</span>"
+				user << "<span class='notice'>You start strengthening the reinforced table...</span>"
 				playsound(src.loc, 'sound/items/Welder.ogg', 50, 1)
 				if (do_after(user, 50))
 					if(!src || !WT.isOn()) return
-					user << "<span class='notice'>Table strengthened</span>"
+					user << "<span class='notice'>You strengthen the table.</span>"
 					src.status = 2
 			return
 	..()
@@ -522,13 +534,13 @@
 	if(isrobot(user))
 		return
 	if(!user.drop_item())
-		user << "<span class='notice'>\The [O] is stuck to your hand, you cannot put it in the rack!</span>"
+		user << "<span class='warning'>\The [O] is stuck to your hand, you cannot put it in the rack!</span>"
 		return
 	if (O.loc != src.loc)
 		step(O, get_dir(O, src))
 	return
 
-/obj/structure/rack/attackby(obj/item/weapon/W as obj, mob/user as mob)
+/obj/structure/rack/attackby(obj/item/weapon/W as obj, mob/user as mob, params)
 	if (istype(W, /obj/item/weapon/wrench))
 		playsound(src.loc, 'sound/items/Ratchet.ogg', 50, 1)
 		rack_destroy()
@@ -537,7 +549,7 @@
 	if(isrobot(user))
 		return
 	if(!user.drop_item())
-		user << "<span class='notice'>\The [W] is stuck to your hand, you cannot put it in the rack!</span>"
+		user << "<span class='warning'>\The [W] is stuck to your hand, you cannot put it in the rack!</span>"
 		return
 	W.Move(loc)
 	return 1
@@ -556,20 +568,20 @@
 	user.do_attack_animation(src)
 	playsound(loc, 'sound/items/dodgeball.ogg', 80, 1)
 	user.visible_message("<span class='warning'>[user] kicks [src].</span>", \
-						 "<span class='warning'>You kick [src].</span>")
+						 "<span class='danger'>You kick [src].</span>")
 	health -= rand(1,2)
 	healthcheck()
 
 /obj/structure/rack/attack_alien(mob/living/user)
 	user.do_attack_animation(src)
-	visible_message("<span class='danger'>[user] slices [src] apart!</span>")
+	visible_message("<span class='warning'>[user] slices [src] apart.</span>")
 	rack_destroy()
 
 
 /obj/structure/rack/attack_animal(mob/living/simple_animal/user)
 	if(user.environment_smash)
 		user.do_attack_animation(src)
-		visible_message("<span class='danger'>[user] smashes [src] apart!</span>")
+		visible_message("<span class='warning'>[user] smashes [src] apart.</span>")
 		rack_destroy()
 /obj/structure/rack/attack_tk() // no telehulk sorry
 	return
@@ -594,7 +606,15 @@
  * Rack Parts
  */
 
-/obj/item/weapon/rack_parts/attackby(obj/item/weapon/W as obj, mob/user as mob)
+/obj/item/weapon/rack_parts
+	name = "rack parts"
+	desc = "Parts of a rack."
+	icon = 'icons/obj/items.dmi'
+	icon_state = "rack_parts"
+	flags = CONDUCT
+	m_amt = 3750
+
+/obj/item/weapon/rack_parts/attackby(obj/item/weapon/W as obj, mob/user as mob, params)
 	..()
 	if (istype(W, /obj/item/weapon/wrench))
 		new /obj/item/stack/sheet/metal( user.loc )
@@ -603,7 +623,7 @@
 	return
 
 /obj/item/weapon/rack_parts/attack_self(mob/user as mob)
-	user << "<span class='notice'>Constructing rack...</span>"
+	user << "<span class='notice'>You start constructing rack...</span>"
 	if (do_after(user, 50))
 		var/obj/structure/rack/R = new /obj/structure/rack( user.loc )
 		R.add_fingerprint(user)

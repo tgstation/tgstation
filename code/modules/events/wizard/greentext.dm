@@ -39,7 +39,7 @@
 	if(!(user in color_altered_mobs))
 		color_altered_mobs += user
 	user.color = "#00FF00"
-	processing_objects.Add(src)
+	SSobj.processing |= src
 	..()
 
 /obj/item/weapon/greentext/dropped(mob/living/user as mob)
@@ -48,11 +48,11 @@
 		user.color = "#FF0000" //ya blew it
 	last_holder 	= null
 	new_holder 		= null
-	processing_objects.Remove(src)
+	SSobj.processing.Remove(src)
 	..()
 
 /obj/item/weapon/greentext/process()
-	if(new_holder && new_holder.z == 2)//you're winner!
+	if(new_holder && new_holder.z == ZLEVEL_CENTCOM)//you're winner!
 		new_holder << "<font color='green'>At last it feels like victory is assured!</font>"
 		if(!(new_holder in ticker.mode.traitors))
 			ticker.mode.traitors += new_holder.mind
@@ -63,7 +63,7 @@
 		new_holder.mind.objectives += O
 		new_holder.attack_log += "\[[time_stamp()]\] <font color='green'>Won with greentext!!!</font>"
 		color_altered_mobs -= new_holder
-		Destroy()
+		qdel(src)
 
 	if(last_holder && last_holder != new_holder) //Somehow it was swiped without ever getting dropped
 		last_holder << "<span class='warning'>A sudden wave of failure washes over you...</span>"

@@ -1,6 +1,6 @@
 /datum/round_event_control/treevenge
 	name = "Treevenge (Christmas)"
-	holidayID = "Xmas"
+	holidayID = CHRISTMAS
 	typepath = /datum/round_event/treevenge
 	max_occurrences = 1
 	weight = 20
@@ -17,7 +17,7 @@
 //this is an example of a possible round-start event
 /datum/round_event_control/presents
 	name = "Presents under Trees (Christmas)"
-	holidayID = "Xmas"
+	holidayID = CHRISTMAS
 	typepath = /datum/round_event/presents
 	weight = -1							//forces it to be called, regardless of weight
 	max_occurrences = 1
@@ -29,7 +29,7 @@
 		for(var/turf/simulated/floor/T in orange(1,xmas))
 			for(var/i=1,i<=rand(1,5),i++)
 				new /obj/item/weapon/a_gift(T)
-	for(var/mob/living/simple_animal/corgi/Ian/Ian in mob_list)
+	for(var/mob/living/simple_animal/pet/corgi/Ian/Ian in mob_list)
 		Ian.place_on_head(new /obj/item/clothing/head/helmet/space/santahat(Ian))
 	for(var/obj/machinery/computer/security/telescreen/entertainment/Monitor in machines)
 		Monitor.icon_state = "entertainment_xmas"
@@ -47,7 +47,7 @@
 
 /obj/item/weapon/toy/xmas_cracker/attack(mob/target, mob/user)
 	if( !cracked && istype(target,/mob/living/carbon/human) && (target.stat == CONSCIOUS) && !target.get_active_hand() )
-		target.visible_message("<span class='notice'>[user] and [target] pop \an [src]! *pop*</span>", "<span class='notice'>You pull \an [src] with [target]! *pop*</span>", "<span class='notice'>You hear a *pop*.</span>")
+		target.visible_message("[user] and [target] pop \an [src]! *pop*", "<span class='notice'>You pull \an [src] with [target]! *pop*</span>", "<span class='italics'>You hear a pop.</span>")
 		var/obj/item/weapon/paper/Joke = new /obj/item/weapon/paper(user.loc)
 		Joke.name = "[pick("awful","terrible","unfunny")] joke"
 		Joke.info = pick("What did one snowman say to the other?\n\n<i>'Is it me or can you smell carrots?'</i>",
@@ -81,7 +81,7 @@
 
 /datum/round_event_control/santa
 	name = "Santa is coming to town! (Christmas)"
-	holidayID = "Xmas"
+	holidayID = CHRISTMAS
 	typepath = /datum/round_event/santa
 	weight = 150
 	max_occurrences = 1
@@ -119,7 +119,7 @@
 				santa.equip_to_slot_or_del(new /obj/item/clothing/mask/breath, slot_wear_mask)
 				santa.equip_to_slot_or_del(new /obj/item/clothing/gloves/color/red, slot_gloves)
 				santa.equip_to_slot_or_del(new /obj/item/clothing/shoes/sneakers/red, slot_shoes)
-				santa.equip_to_slot_or_del(new /obj/item/weapon/tank/emergency_oxygen/double, slot_belt)
+				santa.equip_to_slot_or_del(new /obj/item/weapon/tank/internals/emergency_oxygen/double, slot_belt)
 				santa.equip_to_slot_or_del(new /obj/item/device/radio/headset/heads/captain, slot_ears)
 				santa.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack/santabag, slot_back)
 				santa.equip_to_slot_or_del(new /obj/item/device/flashlight, slot_r_store) //most blob spawn locations are really dark.
@@ -143,9 +143,9 @@
 				santa_objective.completed = 1 //lets cut our santas some slack.
 				santa_objective.owner = santa.mind
 				santa.mind.objectives += santa_objective
-				santa.mind.spell_list += new /obj/effect/proc_holder/spell/aoe_turf/conjure/presents
+				santa.mind.AddSpell(new /obj/effect/proc_holder/spell/aoe_turf/conjure/presents)
 				var/obj/effect/proc_holder/spell/targeted/area_teleport/teleport/telespell = new(santa)
 				telespell.clothes_req = 0 //santa robes aren't actually magical.
-				santa.mind.spell_list += telespell //does the station have chimneys? WHO KNOWS!
+				santa.mind.AddSpell(telespell) //does the station have chimneys? WHO KNOWS!
 
-				santa << "<span class='userdanger'>You are Santa! Your objective is to bring joy to the people on this station. You can conjure more presents using a spell, and there are several presents in your bag.</span>"
+				santa << "<span class='boldannounce'>You are Santa! Your objective is to bring joy to the people on this station. You can conjure more presents using a spell, and there are several presents in your bag.</span>"

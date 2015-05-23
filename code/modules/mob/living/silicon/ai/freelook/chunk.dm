@@ -21,26 +21,24 @@
 
 // Add an AI eye to the chunk, then update if changed.
 
-/datum/camerachunk/proc/add(mob/camera/aiEye/ai)
-	if(!ai.ai)
-		return
-	ai.visibleCameraChunks += src
-	if(ai.ai.client)
-		ai.ai.client.images += obscured
+/datum/camerachunk/proc/add(mob/camera/aiEye/eye)
+	var/client/client = eye.GetViewerClient()
+	if(client)
+		client.images += obscured
+	eye.visibleCameraChunks += src
 	visible++
-	seenby += ai
+	seenby += eye
 	if(changed && !updating)
 		update()
 
 // Remove an AI eye from the chunk, then update if changed.
 
-/datum/camerachunk/proc/remove(mob/camera/aiEye/ai)
-	if(!ai.ai)
-		return
-	ai.visibleCameraChunks -= src
-	if(ai.ai.client)
-		ai.ai.client.images -= obscured
-	seenby -= ai
+/datum/camerachunk/proc/remove(mob/camera/aiEye/eye)
+	var/client/client = eye.GetViewerClient()
+	if(client)
+		client.images -= obscured
+	eye.visibleCameraChunks -= src
+	seenby -= eye
 	if(visible > 0)
 		visible--
 
@@ -106,10 +104,11 @@
 			obscured -= t.obscured
 			for(var/eye in seenby)
 				var/mob/camera/aiEye/m = eye
-				if(!m || !m.ai)
+				if(!m)
 					continue
-				if(m.ai.client)
-					m.ai.client.images -= t.obscured
+				var/client/client = m.GetViewerClient()
+				if(client)
+					client.images -= t.obscured
 
 	for(var/turf in visRemoved)
 		var/turf/t = turf
@@ -120,11 +119,12 @@
 			obscured += t.obscured
 			for(var/eye in seenby)
 				var/mob/camera/aiEye/m = eye
-				if(!m || !m.ai)
+				if(!m)
 					seenby -= m
 					continue
-				if(m.ai.client)
-					m.ai.client.images += t.obscured
+				var/client/client = m.GetViewerClient()
+				if(client)
+					client.images += t.obscured
 
 	changed = 0
 

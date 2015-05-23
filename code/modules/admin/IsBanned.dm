@@ -1,6 +1,9 @@
 //Blocks an attempt to connect before even creating our client datum thing.
 
 world/IsBanned(key,address,computer_id)
+	if (!key || !address || !computer_id)
+		log_access("Failed Login (invalid data): [key] [address]-[computer_id]")
+		return list("reason"="invalid login data", "desc"="Your computer provided invalid or blank information to the server on connection (byond username, IP, and Computer ID.) Provided information for reference: Username:'[key]' IP:'[address]' Computer ID:'[computer_id]' If you continue to get this error, please restart byond or contact byond support.")
 	if(ckey(key) in admin_datums)
 		//It has proven to be a bad idea to make admins completely immune to bans, making them have to wait for someone with daemon access
 		//to add a daemon ban to finally stop them. Admin tempbans and admin permabans are special, high-level ban types, which are there to help
@@ -42,10 +45,18 @@ world/IsBanned(key,address,computer_id)
 		return ..()
 
 	//Guest Checking
-	if(!guests_allowed && IsGuestKey(key))
-		log_access("Failed Login: [key] - Guests not allowed")
-		message_admins("<span class='adminnotice'>Failed Login: [key] - Guests not allowed</span>")
-		return list("reason"="guest", "desc"="\nReason: Guests not allowed. Please sign in with a byond account.")
+	if(IsGuestKey(key))
+		if (!guests_allowed)
+			log_access("Failed Login: [key] - Guests not allowed")
+			return list("reason"="guest", "desc"="\nReason: Guests not allowed. Please sign in with a byond account.")
+		if (config.panic_bunker && dbcon && dbcon.IsConnected())
+			log_access("Failed Login: [key] - Guests not allowed during panic bunker")
+			return list("reason"="guest", "desc"="\nReason: Sorry but the server is currently not accepting connections from never before seen players or guests. If you have played on this server with a byond account before, please log in to the byond account you have played from.")
+
+	//Population Cap Checking
+	if(config.extreme_popcap && living_player_count() >= config.extreme_popcap && !(ckey(key) in admin_datums))
+		log_access("Failed Login: [key] - Population cap reached")
+		return list("reason"="popcap", "desc"= "\nReason: [config.extreme_popcap_message]")
 
 	if(config.ban_legacy_system)
 
@@ -53,7 +64,6 @@ world/IsBanned(key,address,computer_id)
 		. = CheckBan( ckey(key), computer_id, address )
 		if(.)
 			log_access("Failed Login: [key] [computer_id] [address] - Banned [.["reason"]]")
-			message_admins("<span class='adminnotice'>Failed Login: [key] id:[computer_id] ip:[address] - Banned [.["reason"]]</span>")
 			return .
 
 		return ..()	//default pager ban stuff
@@ -66,18 +76,13 @@ world/IsBanned(key,address,computer_id)
 			world.log << "Ban database connection failure. Key [ckeytext] not checked"
 			diary << "Ban database connection failure. Key [ckeytext] not checked"
 			return
-
-		var/failedcid = 1
-		var/failedip = 1
-
+		
 		var/ipquery = ""
 		var/cidquery = ""
 		if(address)
-			failedip = 0
 			ipquery = " OR ip = '[address]' "
 
 		if(computer_id)
-			failedcid = 0
 			cidquery = " OR computerid = '[computer_id]' "
 
 		var/DBQuery/query = dbcon.NewQuery("SELECT ckey, ip, computerid, a_ckey, reason, expiration_time, duration, bantime, bantype FROM [format_table_name("ban")] WHERE (ckey = '[ckeytext]' [ipquery] [cidquery]) AND (bantype = 'PERMABAN'  OR (bantype = 'TEMPBAN' AND expiration_time > Now())) AND isnull(unbanned)")
@@ -102,9 +107,4 @@ world/IsBanned(key,address,computer_id)
 			var/desc = "\nReason: You, or another user of this computer or connection ([pckey]) is banned from playing here. The ban reason is:\n[reason]\nThis ban was applied by [ackey] on [bantime], [expires]"
 
 			return list("reason"="[bantype]", "desc"="[desc]")
-
-		if (failedcid)
-			message_admins("[key] has logged in with a blank computer id in the ban check.")
-		if (failedip)
-			message_admins("[key] has logged in with a blank ip in the ban check.")
 		return ..()	//default pager ban stuff

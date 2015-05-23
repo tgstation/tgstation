@@ -25,16 +25,7 @@
 	var/arrest_type = 0 //If true, don't handcuff
 	radio_frequency = SEC_FREQ //Security channel
 	bot_type = SEC_BOT
-	bot_filter = RADIO_SECBOT
-
-	//List of weapons that secbots will not arrest for
-	var/safe_weapons = list(\
-		/obj/item/weapon/gun/energy/laser/bluetag,\
-		/obj/item/weapon/gun/energy/laser/redtag,\
-		/obj/item/weapon/gun/energy/laser/practice,\
-		/obj/item/weapon/melee/classic_baton/telescopic,\
-		/obj/item/weapon/gun/energy/kinetic_accelerator)
-
+	model = "Securitron"
 
 /obj/machinery/bot/secbot/beepsky
 	name = "Officer Beep O'sky"
@@ -65,9 +56,8 @@
 	spawn(3)
 
 		var/datum/job/detective/J = new/datum/job/detective
-		botcard.access = J.get_access()
+		botcard.access += J.get_access()
 		prev_access = botcard.access
-		add_to_beacons(bot_filter)
 
 
 /obj/machinery/bot/secbot/turn_on()
@@ -155,7 +145,7 @@ Auto Patrol: []"},
 			updateUsrDialog()
 
 
-/obj/machinery/bot/secbot/attackby(obj/item/weapon/W as obj, mob/user as mob)
+/obj/machinery/bot/secbot/attackby(obj/item/weapon/W as obj, mob/user as mob, params)
 	if(istype(W, /obj/item/weapon/card/id)||istype(W, /obj/item/device/pda))
 		if(allowed(user) && !open && !emagged)
 			locked = !locked
@@ -188,6 +178,17 @@ Auto Patrol: []"},
 		audible_message("<span class='danger'>[src] buzzes oddly!</span>")
 		declare_arrests = 0
 		icon_state = "secbot[on]"
+
+/obj/machinery/bot/secbot/bullet_act(var/obj/item/projectile/Proj)
+	if(istype(Proj ,/obj/item/projectile/beam)||istype(Proj,/obj/item/projectile/bullet))
+		if((Proj.damage_type == BURN) || (Proj.damage_type == BRUTE))
+			if (!Proj.nodamage && Proj.damage < src.health)
+				threatlevel = Proj.firer.assess_threat(src)
+				threatlevel += 6
+				if(threatlevel >= 4)
+					target = Proj.firer
+					mode = BOT_HUNT
+	..()
 
 /obj/machinery/bot/secbot/bot_process()
 	if (!..())
@@ -230,7 +231,7 @@ Auto Patrol: []"},
 						var/area/location = get_area(src)
 						speak("[arrest_type ? "Detaining" : "Arresting"] level [threatlevel] scumbag <b>[target]</b> in [location].", radio_frequency)
 					target.visible_message("<span class='danger'>[src] has stunned [target]!</span>",\
-											"<span class='userdanger'>[src] has stunned [target]!</span>")
+											"<span class='userdanger'>[src] has stunned you!</span>")
 
 					mode = BOT_PREP_ARREST
 					anchored = 1
@@ -260,7 +261,7 @@ Auto Patrol: []"},
 						mode = BOT_ARREST
 						playsound(loc, 'sound/weapons/cablecuff.ogg', 30, 1, -2)
 						target.visible_message("<span class='danger'>[src] is trying to put zipties on [target]!</span>",\
-											"<span class='userdanger'>[src] is trying to put zipties on [target]!</span>")
+											"<span class='userdanger'>[src] is trying to put zipties on you!</span>")
 						spawn(60)
 							if( !Adjacent(target) || !isturf(target.loc) ) //if he's in a closet or not adjacent, we cancel cuffing.
 								return
@@ -350,15 +351,14 @@ Auto Patrol: []"},
 		else
 			continue
 /obj/machinery/bot/secbot/proc/check_for_weapons(var/obj/item/slot_item)
-	if(istype(slot_item, /obj/item/weapon/gun) || istype(slot_item, /obj/item/weapon/melee))
-		if(!(slot_item.type in safe_weapons))
-			return 1
+	if(slot_item && slot_item.needs_permit)
+		return 1
 	return 0
 
 /obj/machinery/bot/secbot/explode()
 
 	walk_to(src,0)
-	visible_message("<span class='userdanger'>[src] blows apart!</span>")
+	visible_message("<span class='boldannounce'>[src] blows apart!</span>")
 	var/turf/Tsec = get_turf(src)
 
 	var/obj/item/weapon/secbot_assembly/Sa = new /obj/item/weapon/secbot_assembly(Tsec)
@@ -386,13 +386,20 @@ Auto Patrol: []"},
 
 //Secbot Construction
 
-/obj/item/clothing/head/helmet/attackby(var/obj/item/device/assembly/signaler/S, mob/user as mob)
+/obj/item/clothing/head/helmet/attackby(var/obj/item/device/assembly/signaler/S, mob/user as mob, params)
 	..()
 	if(!issignaler(S))
 		..()
 		return
 
-	if(type != /obj/item/clothing/head/helmet) //Eh, but we don't want people making secbots out of space helmets.
+	if(type != /obj/item/clothing/head/helmet/sec) //Eh, but we don't want people making secbots out of space helmets.
+		return
+
+	if(!helmetCam) //I am so sorry for this. I could not think of a less terrible (and lazy) way.
+		user << "<span class='warning'>[src] needs to have a camera attached first!</span>"
+		return
+	if(F) //Has a flashlight. Player must remove it, else it will be lost forever.
+		user << "<span class='warning'>The mounted flashlight is in the way, remove it first!</span>"
 		return
 
 	if(S.secured)
@@ -405,7 +412,7 @@ Auto Patrol: []"},
 	else
 		return
 
-/obj/item/weapon/secbot_assembly/attackby(obj/item/I, mob/user)
+/obj/item/weapon/secbot_assembly/attackby(obj/item/I, mob/user, params)
 	..()
 	if(istype(I, /obj/item/weapon/weldingtool))
 		if(!build_step)
@@ -458,7 +465,7 @@ Auto Patrol: []"},
 	else if(istype(I, /obj/item/weapon/screwdriver))
 		if(!build_step)
 			new /obj/item/device/assembly/signaler(get_turf(src))
-			new /obj/item/clothing/head/helmet(get_turf(src))
+			new /obj/item/clothing/head/helmet/sec(get_turf(src))
 			user << "<span class='notice'>You disconnect the signaler from the helmet.</span>"
 			qdel(src)
 

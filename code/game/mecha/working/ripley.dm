@@ -7,7 +7,8 @@
 	health = 200
 	lights_power = 7
 	deflect_chance = 15
-	damage_absorption = list("brute"=0.6,"bomb"=0.2)
+	damage_absorption = list("brute"=0.6,"fire"=1,"bullet"=0.8,"laser"=0.9,"energy"=1,"bomb"=0.6)
+	max_equip = 6
 	wreckage = /obj/structure/mecha_wreckage/ripley
 	var/list/cargo = new
 	var/cargo_capacity = 15
@@ -17,6 +18,15 @@
 	..()
 	return
 */
+
+/obj/mecha/working/ripley/Move()
+	. = ..()
+	if(. && (locate(/obj/item/mecha_parts/mecha_equipment/tool/hydraulic_clamp) in equipment))
+		var/obj/structure/ore_box/ore_box = locate(/obj/structure/ore_box) in cargo
+		if(ore_box)
+			for(var/obj/item/weapon/ore/ore in get_turf(src))
+				ore.Move(ore_box)
+	update_pressure()
 
 /obj/mecha/working/ripley/Destroy()
 	while(src.damage_absorption.["brute"] < 0.6)
@@ -30,7 +40,7 @@
 
 /obj/mecha/working/ripley/go_out()
 	..()
-	if (src.damage_absorption.["brute"] < 0.6 && src.damage_absorption.["brute"] > 0.3)
+	if (src.damage_absorption["brute"] < 0.6 && src.damage_absorption["brute"] > 0.3)
 		src.overlays = null
 		src.overlays += image("icon" = "mecha.dmi", "icon_state" = "ripley-g-open")
 	else if (src.damage_absorption.["brute"] == 0.3)
@@ -39,30 +49,31 @@
 
 /obj/mecha/working/ripley/moved_inside(var/mob/living/carbon/human/H as mob)
 	..()
-	if (src.damage_absorption.["brute"] < 0.6 && src.damage_absorption.["brute"] > 0.3)
+	if (src.damage_absorption["brute"] < 0.6 && src.damage_absorption["brute"] > 0.3)
 		src.overlays = null
 		src.overlays += image("icon" = "mecha.dmi", "icon_state" = "ripley-g")
-	else if (src.damage_absorption.["brute"] == 0.3)
+	else if (src.damage_absorption["brute"] == 0.3)
 		src.overlays = null
 		src.overlays += image("icon" = "mecha.dmi", "icon_state" = "ripley-g-full")
 
 /obj/mecha/working/ripley/mmi_moved_inside(var/obj/item/device/mmi/mmi_as_oc as obj,mob/user as mob)
 	..()
-	if (src.damage_absorption.["brute"] < 0.6 && src.damage_absorption.["brute"] > 0.3)
+	if (src.damage_absorption["brute"] < 0.6 && src.damage_absorption["brute"] > 0.3)
 		src.overlays = null
 		src.overlays += image("icon" = "mecha.dmi", "icon_state" = "ripley-g")
-	else if (src.damage_absorption.["brute"] == 0.3)
+	else if (src.damage_absorption["brute"] == 0.3)
 		src.overlays = null
 		src.overlays += image("icon" = "mecha.dmi", "icon_state" = "ripley-g-full")
 
 /obj/mecha/working/ripley/firefighter
-	desc = "Standart APLU chassis was refitted with additional thermal protection and cistern."
+	desc = "Autonomous Power Loader Unit. This model is refitted with additional thermal protection."
 	name = "\improper APLU \"Firefighter\""
 	icon_state = "firefighter"
 	max_temperature = 65000
 	health = 250
 	lights_power = 7
-	damage_absorption = list("brute"=1,"fire"=0.5,"bullet"=0.8,"bomb"=0.5)
+	damage_absorption = list("brute"=0.6,"fire"=0.5,"bullet"=0.7,"laser"=0.7,"energy"=1,"bomb"=0.4)
+	max_equip = 5 // More armor, less tools
 	wreckage = /obj/structure/mecha_wreckage/ripley/firefighter
 
 /obj/mecha/working/ripley/deathripley
@@ -82,7 +93,7 @@
 	return
 
 /obj/mecha/working/ripley/mining
-	desc = "An old, dusty mining ripley."
+	desc = "An old, dusty mining Ripley."
 	name = "\improper APLU \"Miner\""
 
 /obj/mecha/working/ripley/mining/New()
@@ -95,11 +106,22 @@
 		var/obj/item/mecha_parts/mecha_equipment/tool/drill/D = new /obj/item/mecha_parts/mecha_equipment/tool/drill
 		D.attach(src)
 
-	//Attach hydrolic clamp
+	//Add possible plasma cutter
+	if(prob(25))
+		var/obj/item/mecha_parts/mecha_equipment/M = new /obj/item/mecha_parts/mecha_equipment/weapon/energy/plasma
+		M.attach(src)
+
+	//Add ore box to cargo
+	cargo.Add(new /obj/structure/ore_box(src))
+
+	//Attach hydraulic clamp
 	var/obj/item/mecha_parts/mecha_equipment/tool/hydraulic_clamp/HC = new /obj/item/mecha_parts/mecha_equipment/tool/hydraulic_clamp
 	HC.attach(src)
 	for(var/obj/item/mecha_parts/mecha_tracking/B in src.contents)//Deletes the beacon so it can't be found easily
 		qdel(B)
+
+	var/obj/item/mecha_parts/mecha_equipment/tool/mining_scanner/scanner = new /obj/item/mecha_parts/mecha_equipment/tool/mining_scanner
+	scanner.attach(src)
 
 /obj/mecha/working/ripley/Exit(atom/movable/O)
 	if(O in cargo)
@@ -130,4 +152,16 @@
 	output += "</div>"
 	return output
 
+/obj/mecha/working/ripley/proc/update_pressure()
+	var/turf/T = get_turf(loc)
+	var/datum/gas_mixture/environment = T.return_air()
+	var/pressure = environment.return_pressure()
 
+	if(pressure < 20)
+		step_in = 3
+		for(var/obj/item/mecha_parts/mecha_equipment/tool/drill/drill in equipment)
+			drill.equip_cooldown = initial(drill.equip_cooldown)/2
+	else
+		step_in = 5
+		for(var/obj/item/mecha_parts/mecha_equipment/tool/drill/drill in equipment)
+			drill.equip_cooldown = initial(drill.equip_cooldown)

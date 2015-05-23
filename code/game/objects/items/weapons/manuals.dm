@@ -150,7 +150,7 @@
 				<body>
 
 				<H3>How to Clone People</H3>
-				So thereís 50 dead people lying on the floor, chairs are spinning like no tomorrow and you havenít the foggiest idea of what to do? Not to worry! This guide is intended to teach you how to clone people and how to do it right, in a simple step-by-step process! If at any point of the guide you have a mental meltdown, genetics probably isnít for you and you should get a job-change as soon as possible before youíre sued for malpractice.
+				So there‚Äôs 50 dead people lying on the floor, chairs are spinning like no tomorrow and you haven‚Äôt the foggiest idea of what to do? Not to worry! This guide is intended to teach you how to clone people and how to do it right, in a simple step-by-step process! If at any point of the guide you have a mental meltdown, genetics probably isn‚Äôt for you and you should get a job-change as soon as possible before you‚Äôre sued for malpractice.
 
 				<ol>
 					<li><a href='#1'>Acquire body</a></li>
@@ -170,36 +170,36 @@
 				This is pretty much vital for the process because without a body, you cannot clone it. Usually, bodies will be brought to you, so you do not need to worry so much about this step. If you already have a body, great! Move on to the next step.
 
 				<a name='2'><H4>Step 2: Strip body</H4>
-				The cloning machine does not like abiotic items. What this means is you canít clone anyone if theyíre wearing clothes, so take all of it off. If itís just one person, itís courteous to put their possessions in the closet. If you have about seven people awaiting cloning, just leave the piles where they are, but donít mix them around and for Godís sake donít let the Clown in to steal them.
+				The cloning machine does not like abiotic items. What this means is you can‚Äôt clone anyone if they‚Äôre wearing clothes, so take all of it off. If it‚Äôs just one person, it‚Äôs courteous to put their possessions in the closet. If you have about seven people awaiting cloning, just leave the piles where they are, but don‚Äôt mix them around and for God‚Äôs sake don‚Äôt let the Clown in to steal them.
 
 				<a name='3'><H4>Step 3: Put body in cloning machine</H4>
 				Grab the body and then put it inside the DNA modifier. If you cannot do this, then you messed up at Step 2. Go back and check you took EVERYTHING off - a commonly missed item is their headset.
 
 				<a name='4'><H4>Step 4: Scan body</H4>
-				Go onto the computer and scan the body by pressing ëScan - <Subject Name Here>í. If youíre successful, they will be added to the records (note that this can be done at any time, even with living people, so that they can be cloned without a body in the event that they are lying dead on port solars and didnët turn on their suit sensors)! If not, and it says ìError: Mental interface failure.î, then they have left their bodily confines and are one with the spirits. If this happens, just shout at them to get back in their body, click ëRefreshë and try scanning them again. If thereís no success, threaten them with gibbing. Still no success? Skip over to Step 7 and donët continue after it, as you have an unresponsive body and it cannot be cloned. If you got ìError: Unable to locate valid genetic data.ì, you are trying to clone a monkey - start over.
+				Go onto the computer and scan the body by pressing ‚ÄòScan - <Subject Name Here>‚Äô. If you‚Äôre successful, they will be added to the records (note that this can be done at any time, even with living people, so that they can be cloned without a body in the event that they are lying dead on port solars and didn‚Äòt turn on their suit sensors)! If not, and it says ‚ÄúError: Mental interface failure.‚Äù, then they have left their bodily confines and are one with the spirits. If this happens, just shout at them to get back in their body, click ‚ÄòRefresh‚Äò and try scanning them again. If there‚Äôs no success, threaten them with gibbing. Still no success? Skip over to Step 7 and don‚Äòt continue after it, as you have an unresponsive body and it cannot be cloned. If you got ‚ÄúError: Unable to locate valid genetic data.‚Äú, you are trying to clone a monkey - start over.
 
 				<a name='5'><H4>Step 5: Clone body</H4>
-				Now that the body has a record, click íView Recordsí, click the subjectís name, and then click ëCloneí to start the cloning process. Congratulations! Youíre halfway there. Remember not to ëEjectí the cloning pod as this will kill the developing clone and youíll have to start the process again.
+				Now that the body has a record, click ‚ÄôView Records‚Äô, click the subject‚Äôs name, and then click ‚ÄòClone‚Äô to start the cloning process. Congratulations! You‚Äôre halfway there. Remember not to ‚ÄòEject‚Äô the cloning pod as this will kill the developing clone and you‚Äôll have to start the process again.
 
 				<a name='6'><H4>Step 6: Get clean SEs for body</H4>
-				Cloning is a finicky and unreliable process. Whilst it will most certainly bring someone back from the dead, they can have any number of nasty disabilities given to them during the cloning process! For this reason, you need to prepare a clean, defect-free Structural Enzyme (SE) injection for when theyíre done. If youíre a competent Geneticist, you will already have one ready on your working computer. If, for any reason, you do not, then eject the body from the DNA modifier (NOT THE CLONING POD) and take it next door to the Genetics research room. Put the body in one of those DNA modifiers and then go onto the console. Go into View/Edit/Transfer Buffer, find an open slot and click ìSEì to save it. Then click ëInjectorí to get the SEs in syringe form. Put this in your pocket or something for when the body is done.
+				Cloning is a finicky and unreliable process. Whilst it will most certainly bring someone back from the dead, they can have any number of nasty disabilities given to them during the cloning process! For this reason, you need to prepare a clean, defect-free Structural Enzyme (SE) injection for when they‚Äôre done. If you‚Äôre a competent Geneticist, you will already have one ready on your working computer. If, for any reason, you do not, then eject the body from the DNA modifier (NOT THE CLONING POD) and take it next door to the Genetics research room. Put the body in one of those DNA modifiers and then go onto the console. Go into View/Edit/Transfer Buffer, find an open slot and click ‚ÄúSE‚Äú to save it. Then click ‚ÄòInjector‚Äô to get the SEs in syringe form. Put this in your pocket or something for when the body is done.
 
 				<a name='7'><H4>Step 7: Put body in morgue</H4>
-				Now that the cloning process has been initiated and you have some clean Structural Enzymes, you no longer need the body! Drag it to the morgue and tell the Chef over the radio that they have some fresh meat waiting for them in there. To put a body in a morgue bed, simply open the tray, grab the body, put it on the open tray, then close the tray again. Use one of the nearby pens to label the bed ìCHEF MEATî in order to avoid confusion.
+				Now that the cloning process has been initiated and you have some clean Structural Enzymes, you no longer need the body! Drag it to the morgue and tell the Chef over the radio that they have some fresh meat waiting for them in there. To put a body in a morgue bed, simply open the tray, grab the body, put it on the open tray, then close the tray again. Use one of the nearby pens to label the bed ‚ÄúCHEF MEAT‚Äù in order to avoid confusion.
 
 				<a name='8'><H4>Step 8: Await cloned body</H4>
-				Now go back to the lab and wait for your patient to be cloned. It wonít be long now, I promise.
+				Now go back to the lab and wait for your patient to be cloned. It won‚Äôt be long now, I promise.
 
 				<a name='9'><H4>Step 9: Use the clean SE injector on person</H4>
-				Has your body been cloned yet? Great! As soon as the guy pops out, grab your injector and jab it in them. Once youíve injected them, they now have clean Structural Enzymes and their defects, if any, will disappear in a short while.
+				Has your body been cloned yet? Great! As soon as the guy pops out, grab your injector and jab it in them. Once you‚Äôve injected them, they now have clean Structural Enzymes and their defects, if any, will disappear in a short while.
 
 				<a name='10'><H4>Step 10: Give person clothes back</H4>
-				Obviously the person will be naked after they have been cloned. Provided you werenít an irresponsible little shit, you should have protected their possessions from thieves and should be able to give them back to the patient. No matter how cruel you are, itís simply against protocol to force your patients to walk outside naked.
+				Obviously the person will be naked after they have been cloned. Provided you weren‚Äôt an irresponsible little shit, you should have protected their possessions from thieves and should be able to give them back to the patient. No matter how cruel you are, it‚Äôs simply against protocol to force your patients to walk outside naked.
 
 				<a name='11'><H4>Step 11: Send person on their way</H4>
-				Give the patient one last check-over - make sure they donít still have any defects and that they have all their possessions. Ask them how they died, if they know, so that you can report any foul play over the radio. Once youíre done, your patient is ready to go back to work! Chances are they do not have Medbay access, so you should let them out of Genetics and the Medbay main entrance.
+				Give the patient one last check-over - make sure they don‚Äôt still have any defects and that they have all their possessions. Ask them how they died, if they know, so that you can report any foul play over the radio. Once you‚Äôre done, your patient is ready to go back to work! Chances are they do not have Medbay access, so you should let them out of Genetics and the Medbay main entrance.
 
-				<p>If youíve gotten this far, congratulations! You have mastered the art of cloning. Now, the real problem is how to resurrect yourself after that traitor had his way with you for cloning his target.
+				<p>If you‚Äôve gotten this far, congratulations! You have mastered the art of cloning. Now, the real problem is how to resurrect yourself after that traitor had his way with you for cloning his target.
 
 
 
@@ -283,6 +283,136 @@
 				Coming soon...
 			"}
 
+/obj/item/weapon/book/manual/experimentor
+	name = "Mentoring your Experiments"
+	icon_state = "rdbook"
+	author = "Dr. H.P. Kritz"
+	dat = {"<html>
+		<head>
+		<style>
+		h1 {font-size: 18px; margin: 15px 0px 5px;}
+		h2 {font-size: 15px; margin: 15px 0px 5px;}
+		li {margin: 2px 0px 2px 15px;}
+		ul {list-style: none; margin: 5px; padding: 0px;}
+		ol {margin: 5px; padding: 0px 15px;}
+		</style>
+		</head>
+		<body>
+		<h1>THE E.X.P.E.R.I-MENTOR</h1>
+		The Enhanced Xenobiological Period Extraction (and) Restoration Instructor is a machine designed to discover the secrets behind every item in existence.
+		With advanced technology, it can process 99.95% of items, and discover their uses and secrets.
+		The E.X.P.E.R.I-MENTOR is a Research apparatus that takes items, and through a process of elimination, it allows you to deduce new technological designs from them.
+		Due to the volatile nature of the E.X.P.E.R.I-MENTOR, there is a slight chance for malfunction, potentially causing irreparable damage to you or your environment.
+		However, upgrading the apparatus has proven to decrease the chances of undesirable, potentially life-threatening outcomes.
+		Please note that the E.X.P.E.R.I-MENTOR uses a state-of-the-art random generator, which has a larger entropy than the observable universe,
+		therefore it can generate wildly different results each day, therefore it is highly suggested to re-scan objects of interests frequently (e.g. each shift).
+
+		<h2>BASIC PROCESS</h2>
+		The usage of the E.X.P.E.R.I-MENTOR is quite simple:
+		<ol>
+			<li>Find an item with a technological background</li>
+			<li>Insert the item into the E.X.P.E.R.I-MENTOR</li>
+			<li>Cycle through each processing method of the device.</li>
+			<li>Stand back, even in case of a successful experiment, as the machine might produce undesired behaviour.</li>
+		</ol>
+
+		<h2>ADVANCED USAGE</h2>
+		The E.X.P.E.R.I-MENTOR has a variety of uses, beyond menial research work. The different results can be used to combat localised events, or even to get special items.
+
+		The E.X.P.E.R.I-MENTOR's OBLITERATE function has the added use of transferring the destroyed item's material into a linked lathe.
+
+		The IRRADIATE function can be used to transform items into other items, resulting in potential upgrades (or downgrades).
+
+		Users should remember to always wear appropriate protection when using the machine, because malfunction can occur at any moment!
+
+		<h1>EVENTS</h1>
+		<h2>GLOBAL (happens at any time):</h2>
+			<ol>
+			<li>DETECTION MALFUNCTION - The machine's onboard sensors have malfunctioned, causing it to redefine the item's experiment type.
+			Produces the message: The E.X.P.E.R.I-MENTOR's onboard detection system has malfunctioned!</li>
+
+			<li>IANIZATION - The machine's onboard corgi-filter has malfunctioned, causing it to produce a corgi from.. somewhere.
+			Produces the message: The E.X.P.E.R.I-MENTOR melts the banana, ian-izing the air around it!</li>
+
+			<li>RUNTIME ERROR - The machine's onboard C4T-P processor has encountered a critical error, causing it to produce a cat from.. somewhere.
+			Produces the message: The E.X.P.E.R.I-MENTOR encounters a run-time error!</li>
+
+			<li>B100DG0D.EXE - The machine has encountered an unknown subroutine, which has been injected into it's runtime. It upgrades the held item!
+			Produces the message: The E.X.P.E.R.I-MENTOR improves the banana, drawing the life essence of those nearby!</li>
+
+			<li>POWERSINK - The machine's PSU has tripped the charging mechanism! It consumes massive amounts of power!
+			Produces the message: The E.X.P.E.R.I-MENTOR begins to smoke and hiss, shaking violently!</li>
+			</ol>
+		<h2>FAIL:</h2>
+			This event is produced when the item mismatches the selected experiment.
+			Produces a random message similar to: "the Banana rumbles, and shakes, the experiment was a failure!"
+
+		<h2>POKE:</h2>
+			<ol>
+			<li>WILD ARMS - The machine's gryoscopic processors malfunction, causing it to lash out at nearby people with it's arms.
+			Produces the message: The E.X.P.E.R.I-MENTOR malfunctions and destroys the banana, lashing it's arms out at nearby people!</li>
+
+			<li>MISTYPE - The machine's interface has been garbled, and it switches to OBLITERATE.
+			Produces the message: The E.X.P.E.R.I-MENTOR malfunctions!</li>
+
+			<li>THROW - The machine's spatial recognition device has shifted several meters across the room, causing it to try and repostion the item there.
+			Produces the message: The E.X.P.E.R.I-MENTOR malfunctions, throwing the banana!</li>
+			</ol>
+		<h2>IRRADIATE:</h2>
+			<ol>
+			<li>RADIATION LEAK - The machine's shield has failed, resulting in a toxic radiation leak.
+			Produces the message: The E.X.P.E.R.I-MENTOR malfunctions, melting the banana and leaking radiation!</li>
+
+			<li>RADIATION DUMP - The machine's recycling and containment functions have failed, resulting in a dump of toxic waste around it
+			Produces the message: The E.X.P.E.R.I-MENTOR malfunctions, spewing toxic waste!</li>
+
+			<li>MUTATION - The machine's radio-isotope level meter has malfunctioned, causing it over-irradiate the item, making it transform.
+			Produces the message: The E.X.P.E.R.I-MENTOR malfunctions, transforming the banana!</li>
+			</ol>
+		<h2>GAS:</h2>
+			<ol>
+			<li>TOXIN LEAK - The machine's filtering and vent systems have failed, resulting in a cloud of toxic gas being expelled.
+			Produces the message: The E.X.P.E.R.I-MENTOR destroys the banana, leaking dangerous gas!</li>
+
+			<li>GAS LEAK - The machine's vent systems have failed, resulting in a cloud of harmless, but obscuring gas.
+			Produces the message: The E.X.P.E.R.I-MENTOR malfunctions, spewing harmless gas!</li>
+
+			<li>ELECTROMAGNETIC IONS - The machine's electrolytic scanners have failed, causing a dangerous Electromagnetic reaction.
+			Produces the message: The E.X.P.E.R.I-MENTOR melts the banana, ionizing the air around it!</li>
+			</ol>
+		<h2>HEAT:</h2>
+			<ol>
+			<li>TOASTER - The machine's heating coils have come into contact with the machine's gas storage, causing a large, sudden blast of flame.
+			Produces the message: The E.X.P.E.R.I-MENTOR malfunctions, melting the banana and releasing a burst of flame!</li>
+
+			<li>SAUNA - The machine's vent loop has sprung a leak, resulting in a large amount of superheated air being dumped around it.
+			Produces the message: The E.X.P.E.R.I-MENTOR malfunctions, melting the banana and leaking hot air!</li>
+
+			<li>EMERGENCY VENT - The machine's temperature gauge has malfunctioned, resulting in it attempting to cool the area around it, but instead, dumping a cloud of steam.
+			Produces the message: The E.X.P.E.R.I-MENTOR malfunctions, activating it's emergency coolant systems!</li>
+			</ol>
+		<h2>COLD:</h2>
+			<ol>
+			<li>FREEZER - The machine's cooling loop has sprung a leak, resulting in a cloud of super-cooled liquid being blasted into the air.
+			Produces the message: The E.X.P.E.R.I-MENTOR malfunctions, shattering the banana and releasing a dangerous cloud of coolant!</li>
+
+			<li>FRIDGE - The machine's cooling loop has been exposed to the outside air, resulting in a large decrease in temperature.
+			Produces the message: The E.X.P.E.R.I-MENTOR malfunctions, shattering the banana and leaking cold air!</li>
+
+			<li>SNOWSTORM - The machine's cooling loop has come into contact with the heating coils, resulting in a sudden blast of cool air.
+			Produces the message: The E.X.P.E.R.I-MENTOR malfunctions, releasing a flurry of chilly air as the banana pops out!</li>
+			</ol>
+		<h2>OBLITERATE:</h2>
+			<ol>
+			<li>IMPLOSION - The machine's pressure leveller has malfunctioned, causing it to pierce the space-time momentarily, making everything in the area fly towards it.
+			Produces the message: The E.X.P.E.R.I-MENTOR's crusher goes way too many levels too high, crushing right through space-time!</li>
+
+			<li>DISTORTION - The machine's pressure leveller has completely disabled, resulting in a momentary space-time distortion, causing everything to fly around.
+			Produces the message: The E.X.P.E.R.I-MENTOR's crusher goes one level too high, crushing right into space-time!</li>
+			</ol>
+		</body>
+	</html>
+	"}
 
 /obj/item/weapon/book/manual/research_and_development
 	name = "Research and Development 101"
@@ -547,33 +677,60 @@
 				<h1>Food for Dummies</h1>
 				Here is a guide on basic food recipes and also how to not poison your customers accidentally.
 
-				<h2>Burger:<h2>
-				Put 1 meat and 1 flour into the microwave and turn it on. Then wait.
 
-				<h2>Bread:<h2>
-				Put 3 flour into the microwave and then wait.
+				<h2>Basic ingredients preparation:</h2>
 
-				<h2>Waffles:<h2>
-				Add 2 flour and 2 egg to the microwave and then wait.
+				<b>Dough:</b> 10u water + 15u flour for simple dough.<br>
+				15u egg yolk + 15u flour + 5u sugar for cake batter.<br>
+				Doughs can be transformed by using a knife and rolling pin.<br>
+				All doughs can be microwaved.<br>
+				<b>Bowl:</b> Add water to it for soup preparation.<br>
+				<b>Meat:</b> Microwave it, process it, slice it into microwavable cutlets with your knife, or use it raw.<br>
+				<b>Cheese:</b> Add 5u universal enzyme (catalyst) to milk and soy milk to prepare cheese (sliceable) and tofu.<br>
+				<b>Rice:</b> Mix 10u rice with 10u water in a bowl then microwave it.
 
-				<h2>Popcorn:<h2>
-				Add 1 corn to the microwave and wait.
+				<h2>Custom food:</h2>
+				Add ingredients to a base item to prepare a custom meal.<br>
+				The bases are:<br>
+				- bun (burger)<br>
+				- breadslices(sandwich)<br>
+				- plain bread<br>
+				- plain pie<br>
+				- vanilla cake<br>
+				- empty bowl (salad)<br>
+				- bowl with 10u water (soup)<br>
+				- boiled spaghetti<br>
+				- pizza bread<br>
+				- metal rod (kebab)
 
-				<h2>Meat Steak:<h2>
-				Put 1 meat, 1 unit of salt and 1 unit of pepper into the microwave and wait.
+				<h2>Table Craft:</h2>
+				Put ingredients on table, then click and drag the table onto yourself to see what recipes you can prepare.
 
-				<h2>Meat Pie:<h2>
-				Put 1 meat and 2 flour into the microwave and wait.
+				<h2>Microwave:</h2>
+				Use it to cook or boil food ingredients (meats, doughs, egg, spaghetti, donkpocket, etc...).
+				It can cook multiple items at once. Use the higher power settings for faster (and riskier) cooking.
 
-				<h2>Boiled Spagetti:<h2>
-				Put 1 spagetti and 5 units of water into the microwave and wait.
+				<h2>Processor:</h2>
+				Use it to process certain ingredients (meat into faggot, doughslice into spaghetti, potato into fries,etc...)
 
-				<h2>Donuts:<h2>
-				Add 1 egg and 1 flour to the microwave and wait.
+				<h2>Gibber:</h2>
+				Stuff an animal in it to grind it into meat.
 
-				<h2>Fries:<h2>
-				Add one potato to the processor and wait.
+				<h2>Meat spike:</h2>
+				Stick an animal on it then begin collecting its meat.
 
+
+				<h2>Example recipes:</h2>
+				<b>Vanilla Cake</b>: Microwave cake batter.<br>
+				<b>Burger:</b> 1 bun + 1 meat steak<br>
+				<b>Bread:</b> Microwave dough.<br>
+				<b>Waffles:</b> 2 pastry base<br>
+				<b>Popcorn:</b> Microwave corn.<br>
+				<b>Meat Steak:</b> Microwave meat.<br>
+				<b>Meat Pie:</b> 1 plain pie + 1u black pepper + 1u salt + 2 meat cutlets<br>
+				<b>Boiled Spagetti:</b> Microwave spaghetti.<br>
+				<b>Donuts:</b> 1u sugar + 1 pastry base<br>
+				<b>Fries:</b> Process potato.
 
 				</body>
 				</html>

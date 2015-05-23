@@ -2,6 +2,7 @@
  * Contains:
  *		Soap
  *		Bike Horns
+ *		Air Horns
  */
 
 /*
@@ -45,17 +46,17 @@
 	//I couldn't feasibly  fix the overlay bugs caused by cleaning items we are wearing.
 	//So this is a workaround. This also makes more sense from an IC standpoint. ~Carn
 	if(user.client && (target in user.client.screen))
-		user << "<span class='notice'>You need to take that [target.name] off before cleaning it.</span>"
+		user << "<span class='warning'>You need to take that [target.name] off before cleaning it!</span>"
 	else if(istype(target,/obj/effect/decal/cleanable))
-		user.visible_message("<span class='warning'>[user] begins to scrub \the [target.name] out with [src].</span>")
+		user.visible_message("[user] begins to scrub \the [target.name] out with [src].", "<span class='warning'>You begin to scrub \the [target.name] out with [src]...</span>")
 		if(do_after(user, src.cleanspeed))
 			user << "<span class='notice'>You scrub \the [target.name] out.</span>"
 			qdel(target)
 	else if(ishuman(target) && user.zone_sel && user.zone_sel.selecting == "mouth")
-		user.visible_message("<span class='warning'>\the [user] washes \the [target]'s mouth out with [src.name]!</span>") //washes mouth out with soap sounds better than 'the soap' here
+		user.visible_message("<span class='warning'>\the [user] washes \the [target]'s mouth out with [src.name]!</span>", "<span class='notice'>You wash \the [target]'s mouth out with [src.name]!</span>") //washes mouth out with soap sounds better than 'the soap' here
 		return
 	else
-		user.visible_message("<span class='warning'>[user] begins to clean \the [target.name] with [src].</span>")
+		user.visible_message("[user] begins to clean \the [target.name] with [src]...", "<span class='notice'>You begin to clean \the [target.name] with [src]...</span>")
 		if(do_after(user, src.cleanspeed))
 			user << "<span class='notice'>You clean \the [target.name].</span>"
 			var/obj/effect/decal/cleanable/C = locate() in target
@@ -82,16 +83,26 @@
 	throw_range = 7
 	attack_verb = list("HONKED")
 	var/spam_flag = 0
+	var/honksound = 'sound/items/bikehorn.ogg'
+	var/cooldowntime = 20
 
 /obj/item/weapon/bikehorn/attack(mob/living/carbon/M as mob, mob/living/carbon/user as mob)
-	playsound(loc, 'sound/items/bikehorn.ogg', 50, 1, -1) //plays instead of tap.ogg!
+	if(!spam_flag)
+		playsound(loc, honksound, 50, 1, -1) //plays instead of tap.ogg!
 	return ..()
 
 /obj/item/weapon/bikehorn/attack_self(mob/user as mob)
-	if(spam_flag == 0)
+	if(!spam_flag)
 		spam_flag = 1
-		playsound(src.loc, 'sound/items/bikehorn.ogg', 50, 1)
+		playsound(src.loc, honksound, 50, 1)
 		src.add_fingerprint(user)
-		spawn(20)
+		spawn(cooldowntime)
 			spam_flag = 0
 	return
+
+/obj/item/weapon/bikehorn/airhorn
+	name = "air horn"
+	desc = "Damn son, where'd you find this?"
+	icon_state = "air_horn"
+	honksound = 'sound/items/AirHorn2.ogg'
+	cooldowntime = 50

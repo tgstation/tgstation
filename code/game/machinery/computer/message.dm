@@ -23,7 +23,6 @@
 	//Computer properties
 	var/screen = 0 		// 0 = Main menu, 1 = Message Logs, 2 = Hacked screen, 3 = Custom Message
 	var/hacking = 0		// Is it being hacked into by the AI/Cyborg
-	var/emag = 0		// When it is emagged.
 	var/message = "<span class='notice'>System bootup complete. Please select an option.</span>"	// The message that shows on the main menu.
 	var/auth = 0 // Are they authenticated?
 	var/optioncount = 7
@@ -33,25 +32,18 @@
 	var/customjob		= "Admin"
 	var/custommessage 	= "This is a test, please ignore."
 
-
-/obj/machinery/computer/message_monitor/attackby(obj/item/weapon/O as obj, mob/living/user as mob)
-	if(stat & (NOPOWER|BROKEN))
-		return
-	if(!istype(user))
-		return
-	if(istype(O, /obj/item/weapon/screwdriver) && emag)
+/obj/machinery/computer/message_monitor/attackby(obj/item/weapon/O as obj, mob/living/user as mob, params)
+	if(istype(O, /obj/item/weapon/screwdriver) && emagged)
 		//Stops people from just unscrewing the monitor and putting it back to get the console working again.
 		user << "<span class='warning'>It is too hot to mess with!</span>"
 		return
-
 	..()
-	return
 
 /obj/machinery/computer/message_monitor/emag_act(user as mob)
-	if(!emag)
+	if(!emagged)
 		if(!isnull(src.linkedServer))
 			icon_state = hack_icon // An error screen I made in the computers.dmi
-			emag = 1
+			emagged = 1
 			screen = 2
 			spark_system.set_up(5, 0, src)
 			src.spark_system.start()
@@ -68,7 +60,7 @@
 	..()
 	if(stat & (NOPOWER|BROKEN))
 		return
-	if(emag || hacking)
+	if(emagged || hacking)
 		icon_state = hack_icon
 	else
 		icon_state = normal_icon
@@ -84,7 +76,7 @@
 	if(..())
 		return
 	//If the computer is being hacked or is emagged, display the reboot message.
-	if(hacking || emag)
+	if(hacking || emagged)
 		message = rebootmsg
 	var/dat = "<center><font color='blue'[message]</font>/</center>"
 
@@ -95,7 +87,7 @@
 		dat += "<h4><dd><A href='?src=\ref[src];auth=1'>&#09;<font color='red'>\[Unauthenticated\]</font></a>&#09;/"
 		dat += " Server Power: <u>[src.linkedServer && src.linkedServer.active ? "<font color='green'>\[On\]</font>":"<font color='red'>\[Off\]</font>"]</u></h4>"
 
-	if(hacking || emag)
+	if(hacking || emagged)
 		screen = 2
 	else if(!auth || !linkedServer || (linkedServer.stat & (NOPOWER|BROKEN)))
 		if(!linkedServer || (linkedServer.stat & (NOPOWER|BROKEN))) message = noserver
@@ -276,7 +268,7 @@
 
 /obj/machinery/computer/message_monitor/proc/UnmagConsole()
 	src.icon_state = normal_icon
-	src.emag = 0
+	src.emagged = 0
 
 /obj/machinery/computer/message_monitor/proc/ResetMessage()
 	customsender 	= "System Administrator"
@@ -417,7 +409,7 @@
 
 					//Select Your Name
 					if("Sender")
-						customsender 	= input(usr, "Please enter the sender's name.") as text|null
+						customsender 	= stripped_input(usr, "Please enter the sender's name.")
 
 					//Select Receiver
 					if("Recepient")
@@ -430,12 +422,11 @@
 
 					//Enter custom job
 					if("RecJob")
-						customjob	 	= input(usr, "Please enter the sender's job.") as text|null
+						customjob	 	= stripped_input(usr, "Please enter the sender's job.")
 
 					//Enter message
 					if("Message")
-						custommessage	= input(usr, "Please enter your message.") as text|null
-						custommessage	= copytext(sanitize(custommessage), 1, MAX_MESSAGE_LEN)
+						custommessage	= stripped_input(usr, "Please enter your message.")
 
 					//Send message
 					if("Send")
@@ -461,7 +452,7 @@
 							customrecepient.tnote += "<i><b>&larr; From <a href='byond://?src=\ref[customrecepient];choice=Message;target=\ref[src]'>[customsender]</a> ([customjob]):</b></i><br>[custommessage]<br>"
 							if (!customrecepient.silent)
 								playsound(customrecepient.loc, 'sound/machines/twobeep.ogg', 50, 1)
-								customrecepient.loc.audible_message("\icon[customrecepient] *[customrecepient.ttone]*", null, 3)
+								customrecepient.audible_message("\icon[customrecepient] *[customrecepient.ttone]*", null, 3)
 								if( customrecepient.loc && ishuman(customrecepient.loc) )
 									var/mob/living/carbon/human/H = customrecepient.loc
 									H << "\icon[customrecepient] <b>Message from [customsender] ([customjob]), </b>\"[custommessage]\" (<a href='byond://?src=\ref[src];choice=Message;skiprefresh=1;target=\ref[src]'>Reply</a>)"
@@ -474,7 +465,7 @@
 							customrecepient.tnote += "<i><b>&larr; From <a href='byond://?src=\ref[customrecepient];choice=Message;target=\ref[PDARec]'>[PDARec.owner]</a> ([customjob]):</b></i><br>[custommessage]<br>"
 							if (!customrecepient.silent)
 								playsound(customrecepient.loc, 'sound/machines/twobeep.ogg', 50, 1)
-								customrecepient.loc.audible_message("\icon[customrecepient] *[customrecepient.ttone]*", null, 3)
+								customrecepient.audible_message("\icon[customrecepient] *[customrecepient.ttone]*", null, 3)
 								if( customrecepient.loc && ishuman(customrecepient.loc) )
 									var/mob/living/carbon/human/H = customrecepient.loc
 									H << "\icon[customrecepient] <b>Message from [PDARec.owner] ([customjob]), </b>\"[custommessage]\" (<a href='byond://?src=\ref[customrecepient];choice=Message;skiprefresh=1;target=\ref[PDARec]'>Reply</a>)"

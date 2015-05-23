@@ -55,7 +55,7 @@
 
 /obj/item/clothing/head/cakehat/process()
 	if(!onfire)
-		processing_objects.Remove(src)
+		SSobj.processing.Remove(src)
 		return
 
 	var/turf/location = src.loc
@@ -74,7 +74,7 @@
 		src.force = 3
 		src.damtype = "fire"
 		src.icon_state = "cake1"
-		processing_objects.Add(src)
+		SSobj.processing |= src
 	else
 		src.force = null
 		src.damtype = "brute"
@@ -100,12 +100,12 @@
 		src.icon_state = "ushankaup"
 		src.item_state = "ushankaup"
 		earflaps = 0
-		user << "You raise the ear flaps on the ushanka."
+		user << "<span class='notice'>You raise the ear flaps on the ushanka.</span>"
 	else
 		src.icon_state = "ushankadown"
 		src.item_state = "ushankadown"
 		earflaps = 1
-		user << "You lower the ear flaps on the ushanka."
+		user << "<span class='notice'>You lower the ear flaps on the ushanka.</span>"
 
 /*
  * Pumpkin head

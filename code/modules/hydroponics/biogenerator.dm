@@ -36,7 +36,7 @@
 	productivity = P
 
 /obj/machinery/biogenerator/on_reagent_change()			//When the reagents change, change the icon as well.
-		update_icon()
+	update_icon()
 
 /obj/machinery/biogenerator/update_icon()
 	if(panel_open)
@@ -49,7 +49,7 @@
 		icon_state = "biogen-work"
 	return
 
-/obj/machinery/biogenerator/attackby(var/obj/item/O as obj, var/mob/user as mob)
+/obj/machinery/biogenerator/attackby(var/obj/item/O as obj, var/mob/user as mob, params)
 	if(istype(O, /obj/item/weapon/reagent_containers/glass) && !panel_open)
 		if(beaker)
 			user << "<span class='warning'>A container is already loaded into the machine.</span>"
@@ -82,7 +82,7 @@
 
 
 	else if(!istype(O, /obj/item/weapon/reagent_containers/food/snacks/grown))
-		user << "<span class='warning'>You cannot put this in [src.name]</span>"
+		user << "<span class='warning'>You cannot put this in [src.name]!</span>"
 	else
 		var/i = 0
 		for(var/obj/item/weapon/reagent_containers/food/snacks/grown/G in contents)
@@ -135,15 +135,19 @@
 			dat += "<A href='?src=\ref[src];activate=1'>Activate</A><A href='?src=\ref[src];detach=1'>Detach Container</A>"
 			dat += "<h3>Food:</h3>"
 			dat += "<div class='statusDisplay'>"
-			dat += "10 milk: <A href='?src=\ref[src];create=milk;amount=1'>Make</A> ([20/efficiency])<BR>"
-			dat += "10 cream: <A href='?src=\ref[src];create=cream;amount=1'>Make</A> ([30/efficiency])<BR>"
-			dat += "Monkey cube: <A href='?src=\ref[src];create=meat;amount=1'>Make</A> ([250/efficiency])"
+			dat += "10 milk: <A href='?src=\ref[src];create=milk;amount=1'>Make</A><A href='?src=\ref[src];create=milk;amount=5'>x5</A> ([20/efficiency])<BR>"
+			dat += "10 cream: <A href='?src=\ref[src];create=cream;amount=1'>Make</A><A href='?src=\ref[src];create=cream;amount=5'>x5</A> ([30/efficiency])<BR>"
+			dat += "Milk Carton: <A href='?src=\ref[src];create=cmilk;amount=1'>Make</A><A href='?src=\ref[src];create=cmilk;amount=5'>x5</A> ([100/efficiency])<BR>"
+			dat += "Cream Carton: <A href='?src=\ref[src];create=ccream;amount=1'>Make</A><A href='?src=\ref[src];create=ccream;amount=5'>x5</A> ([300/efficiency])<BR>"
+			dat += "Monkey cube: <A href='?src=\ref[src];create=meat;amount=1'>Make</A><A href='?src=\ref[src];create=meat;amount=5'>x5</A> ([250/efficiency])"
 			dat += "</div>"
-			dat += "<h3>Nutrients:</h3>"
+			dat += "<h3>Botany Chemicals:</h3>"
 			dat += "<div class='statusDisplay'>"
 			dat += "E-Z-Nutrient: <A href='?src=\ref[src];create=ez;amount=1'>Make</A><A href='?src=\ref[src];create=ez;amount=5'>x5</A> ([10/efficiency])<BR>"
 			dat += "Left 4 Zed: <A href='?src=\ref[src];create=l4z;amount=1'>Make</A><A href='?src=\ref[src];create=l4z;amount=5'>x5</A> ([20/efficiency])<BR>"
 			dat += "Robust Harvest: <A href='?src=\ref[src];create=rh;amount=1'>Make</A><A href='?src=\ref[src];create=rh;amount=5'>x5</A> ([25/efficiency])<BR>"
+			dat += "Weed Killer: <A href='?src=\ref[src];create=wk;amount=1'>Make</A><A href='?src=\ref[src];create=wk;amount=5'>x5</A> ([50/efficiency])<BR>"
+			dat += "Pest Killer: <A href='?src=\ref[src];create=pk;amount=1'>Make</A><A href='?src=\ref[src];create=pk;amount=5'>x5</A> ([50/efficiency])<BR>"
 			dat += "</div>"
 			dat += "<h3>Leather:</h3>"
 			dat += "<div class='statusDisplay'>"
@@ -153,6 +157,11 @@
 			dat += "Mining satchel: <A href='?src=\ref[src];create=mnbag;amount=1'>Make</A> ([200/efficiency])<BR>"
 			dat += "Botanical gloves: <A href='?src=\ref[src];create=gloves;amount=1'>Make</A> ([250/efficiency])<BR>"
 			dat += "Utility belt: <A href='?src=\ref[src];create=tbelt;amount=1'>Make</A> ([300/efficiency])<BR>"
+			dat += "Security belt: <A href='?src=\ref[src];create=sbelt;amount=1'>Make</A> ([300/efficiency])<BR>"
+			dat += "Medical belt: <A href='?src=\ref[src];create=mbelt;amount=1'>Make</A> ([300/efficiency])<BR>"
+			dat += "Janitorial belt: <A href='?src=\ref[src];create=jbelt;amount=1'>Make</A> ([300/efficiency])<BR>"
+			dat += "Bandolier belt: <A href='?src=\ref[src];create=bbelt;amount=1'>Make</A> ([300/efficiency])<BR>"
+			dat += "Shoulder holster: <A href='?src=\ref[src];create=sholster;amount=1'>Make</A> ([400/efficiency])<BR>"
 			dat += "Leather Satchel: <A href='?src=\ref[src];create=satchel;amount=1'>Make</A> ([400/efficiency])<BR>"
 			dat += "Leather Jacket: <A href='?src=\ref[src];create=jacket;amount=1'>Make</A> ([500/efficiency])<BR>"
 			dat += "</div>"
@@ -221,6 +230,12 @@
 			if(check_container_volume(10)) return 0
 			else if (check_cost(30/efficiency)) return 0
 			else beaker.reagents.add_reagent("cream",10)
+		if("cmilk")
+			if (check_cost(100/efficiency)) return 0
+			else new/obj/item/weapon/reagent_containers/food/condiment/milk(src.loc)
+		if("ccream")
+			if (check_cost(300/efficiency)) return 0
+			else new/obj/item/weapon/reagent_containers/food/drinks/bottle/cream(src.loc)
 		if("meat")
 			if (check_cost(250/efficiency)) return 0
 			else new/obj/item/weapon/reagent_containers/food/snacks/monkeycube(src.loc)
@@ -233,6 +248,12 @@
 		if("rh")
 			if (check_cost(25/efficiency)) return 0
 			else new/obj/item/weapon/reagent_containers/glass/bottle/nutrient/rh(src.loc)
+		if("wk")
+			if (check_cost(50/efficiency)) return 0
+			else new/obj/item/weapon/reagent_containers/glass/bottle/weedkiller(src.loc)
+		if("pk")
+			if (check_cost(50/efficiency)) return 0
+			else new/obj/item/weapon/reagent_containers/glass/bottle/pestkiller(src.loc)
 		if("wallet")
 			if (check_cost(100/efficiency)) return 0
 			else new/obj/item/weapon/storage/wallet(src.loc)
@@ -251,6 +272,21 @@
 		if("tbelt")
 			if (check_cost(300/efficiency)) return 0
 			else new/obj/item/weapon/storage/belt/utility(src.loc)
+		if("sbelt")
+			if (check_cost(300/efficiency)) return 0
+			else new/obj/item/weapon/storage/belt/security(src.loc)
+		if("mbelt")
+			if (check_cost(300/efficiency)) return 0
+			else new/obj/item/weapon/storage/belt/medical(src.loc)
+		if("jbelt")
+			if (check_cost(300/efficiency)) return 0
+			else new/obj/item/weapon/storage/belt/janitor(src.loc)
+		if("bbelt")
+			if (check_cost(300/efficiency)) return 0
+			else new/obj/item/weapon/storage/belt/bandolier(src.loc)
+		if("sholster")
+			if (check_cost(400/efficiency)) return 0
+			else new/obj/item/weapon/storage/belt/holster(src.loc)
 		if("satchel")
 			if (check_cost(400/efficiency)) return 0
 			else new/obj/item/weapon/storage/backpack/satchel(src.loc)

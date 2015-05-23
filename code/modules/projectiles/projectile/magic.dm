@@ -11,6 +11,7 @@
 	icon_state = "pulse1_bl"
 
 /obj/item/projectile/magic/death/on_hit(var/target)
+	. = ..()
 	if(ismob(target))
 		var/mob/M = target
 		M.death(0)
@@ -31,6 +32,7 @@
 	..()
 
 /obj/item/projectile/magic/fireball/on_hit(var/target)
+	. = ..()
 	var/turf/T = get_turf(target)
 	explosion(T, -1, 0, 2, 3, 0, flame_range = 2)
 	if(ismob(target)) //multiple flavors of pain
@@ -46,8 +48,8 @@
 	flag = "magic"
 
 /obj/item/projectile/magic/resurrection/on_hit(var/mob/living/carbon/target)
-
-	if(istype(target,/mob))
+	. = ..()
+	if(ismob(target))
 		var/old_stat = target.stat
 		target.revive()
 		target.suiciding = 0
@@ -72,6 +74,7 @@
 	var/outer_tele_radius = 6
 
 /obj/item/projectile/magic/teleport/on_hit(var/mob/target)
+	. = ..()
 	var/teleammount = 0
 	var/teleloc = target
 	if(!isturf(target))
@@ -93,15 +96,20 @@
 	flag = "magic"
 
 /obj/item/projectile/magic/door/on_hit(var/atom/target)
+	. = ..()
 	var/atom/T = target.loc
-	if(isturf(target))
-		if(target.density)
-			new /obj/structure/mineral_door/wood(target)
-			target:ChangeTurf(/turf/simulated/floor/plating)
-	else if (isturf(T))
-		if(T.density)
-			new /obj/structure/mineral_door/wood(T)
-			T:ChangeTurf(/turf/simulated/floor/plating)
+	if(isturf(target) && target.density)
+		CreateDoor(target)
+	else if (isturf(T) && T.density)
+		CreateDoor(T)
+
+/obj/item/projectile/magic/door/proc/CreateDoor(var/turf/T)
+	new /obj/structure/mineral_door/wood(T)
+	if(istype(T,/turf/simulated/shuttle/wall))
+		T.ChangeTurf(/turf/simulated/shuttle/plating)
+	else
+		T.ChangeTurf(/turf/simulated/floor/plating)
+
 
 /obj/item/projectile/magic/change
 	name = "bolt of change"
@@ -112,6 +120,7 @@
 	flag = "magic"
 
 /obj/item/projectile/magic/change/on_hit(var/atom/change)
+	. = ..()
 	wabbajack(change)
 
 proc/wabbajack(mob/living/M)
@@ -160,9 +169,9 @@ proc/wabbajack(mob/living/M)
 					else
 						new_mob.languages |= HUMAN
 				if("slime")
-					new_mob = new /mob/living/carbon/slime(M.loc)
+					new_mob = new /mob/living/simple_animal/slime(M.loc)
 					if(prob(50))
-						var/mob/living/carbon/slime/Slime = new_mob
+						var/mob/living/simple_animal/slime/Slime = new_mob
 						Slime.is_adult = 1
 					new_mob.languages |= HUMAN
 				if("xeno")
@@ -192,21 +201,23 @@ proc/wabbajack(mob/living/M)
 							if("killertomato")	new_mob = new /mob/living/simple_animal/hostile/killertomato(M.loc)
 							if("spiderbase")	new_mob = new /mob/living/simple_animal/hostile/poison/giant_spider(M.loc)
 							if("spiderhunter")	new_mob = new /mob/living/simple_animal/hostile/poison/giant_spider/hunter(M.loc)
-							if("blobbernaut")	new_mob = new /mob/living/simple_animal/hostile/blobbernaut(M.loc)
+							if("blobbernaut")	new_mob = new /mob/living/simple_animal/hostile/blob/blobbernaut(M.loc)
 							if("magicarp")		new_mob = new /mob/living/simple_animal/hostile/carp/ranged(M.loc)
 							if("chaosmagicarp")	new_mob = new /mob/living/simple_animal/hostile/carp/ranged/chaos(M.loc)
 					else
-						var/animal = pick("parrot","corgi","crab","pug","cat","mouse","chicken","cow","lizard","chick")
+						var/animal = pick("parrot","corgi","crab","pug","cat","mouse","chicken","cow","lizard","chick","fox","butterfly")
 						switch(animal)
 							if("parrot")	new_mob = new /mob/living/simple_animal/parrot(M.loc)
-							if("corgi")		new_mob = new /mob/living/simple_animal/corgi(M.loc)
+							if("corgi")		new_mob = new /mob/living/simple_animal/pet/corgi(M.loc)
 							if("crab")		new_mob = new /mob/living/simple_animal/crab(M.loc)
-							if("pug")		new_mob = new /mob/living/simple_animal/pug(M.loc)
-							if("cat")		new_mob = new /mob/living/simple_animal/cat(M.loc)
+							if("pug")		new_mob = new /mob/living/simple_animal/pet/pug(M.loc)
+							if("cat")		new_mob = new /mob/living/simple_animal/pet/cat(M.loc)
 							if("mouse")		new_mob = new /mob/living/simple_animal/mouse(M.loc)
 							if("chicken")	new_mob = new /mob/living/simple_animal/chicken(M.loc)
 							if("cow")		new_mob = new /mob/living/simple_animal/cow(M.loc)
 							if("lizard")	new_mob = new /mob/living/simple_animal/lizard(M.loc)
+							if("fox") new_mob = new /mob/living/simple_animal/pet/fox(M.loc)
+							if("butterfly")	new_mob = new /mob/living/simple_animal/butterfly(M.loc)
 							else			new_mob = new /mob/living/simple_animal/chick(M.loc)
 					new_mob.languages |= HUMAN
 				if("human")
@@ -218,8 +229,11 @@ proc/wabbajack(mob/living/M)
 					var/mob/living/carbon/human/H = new_mob
 					ready_dna(H)
 					if(H.dna && prob(50))
-						var/new_species = pick(typesof(/datum/species) - /datum/species)
-						H.dna.species = new new_species()
+						var/list/all_species = list()
+						for(var/datum/species/S in typesof(/datum/species) - /datum/species)
+							if(!S.dangerous_existence)
+								all_species += S
+						hardset_dna(H, null, null, null, null, pick(all_species))
 					H.update_icons()
 				else
 					return
@@ -264,7 +278,11 @@ proc/wabbajack(mob/living/M)
 				return
 		else
 			var/obj/O = change
-			new /mob/living/simple_animal/hostile/mimic/copy(O.loc, O, firer)
+			if(istype(O, /obj/item/weapon/gun))
+				new /mob/living/simple_animal/hostile/mimic/copy/ranged(O.loc, O, firer)
+			else
+				new /mob/living/simple_animal/hostile/mimic/copy(O.loc, O, firer)
+
 	else if(istype(change, /mob/living/simple_animal/hostile/mimic/copy))
 		// Change our allegiance!
 		var/mob/living/simple_animal/hostile/mimic/copy/C = change

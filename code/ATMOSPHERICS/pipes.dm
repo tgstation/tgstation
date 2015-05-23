@@ -1,12 +1,16 @@
 /obj/machinery/atmospherics/pipe
 	var/datum/gas_mixture/air_temporary //used when reconstructing a pipeline that broke
-	var/datum/pipeline/parent
 	var/volume = 0
 	layer = 2.4 //under wires with their 2.44
 	use_power = 0
 	can_unwrench = 1
 	var/alert_pressure = 80*ONE_ATMOSPHERE
 		//minimum pressure before check_pressure(...) should be called
+
+	//Buckling
+	can_buckle = 1
+	buckle_requires_restraints = 1
+	buckle_lying = -1
 
 /obj/machinery/atmospherics/proc/pipeline_expansion()
 	return null
@@ -30,9 +34,10 @@
 		parent = new /datum/pipeline()
 		parent.build_pipeline(src)
 
-/obj/machinery/atmospherics/pipe/attackby(obj/item/weapon/W, mob/user)
+/obj/machinery/atmospherics/pipe/attackby(obj/item/weapon/W, mob/user, params)
 	if(istype(W, /obj/item/device/analyzer))
 		atmosanalyzer_scan(parent.air, user)
+		return
 
 	if(istype(W,/obj/item/device/pipe_painter) || istype(W,/obj/item/weapon/pipe_dispenser))
 		return
@@ -50,3 +55,7 @@
 			meter.transfer_fingerprints_to(PM)
 			qdel(meter)
 	..()
+
+/obj/machinery/atmospherics/pipe/proc/update_node_icon()
+	//Used for pipe painting. Overriden in the children.
+	return

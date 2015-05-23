@@ -110,8 +110,8 @@ var/datum/global_hud/global_hud = new()
 	var/list/other
 	var/list/obj/screen/hotkeybuttons
 
-	var/list/obj/screen/item_action/item_action_list = list()	//Used for the item action ui buttons.
-
+	var/obj/screen/movable/action_button/hide_toggle/hide_actions_toggle
+	var/action_buttons_hidden = 0
 
 datum/hud/New(mob/owner)
 	mymob = owner
@@ -225,21 +225,16 @@ datum/hud/New(mob/owner)
 
 			action_intent.screen_loc = ui_acti //Restore intent selection to the original position
 			mymob.client.screen += mymob.zone_sel				//This one is a special snowflake
-			mymob.client.screen += mymob.bodytemp				//As are the rest of these...
-			mymob.client.screen += mymob.fire
-			mymob.client.screen += mymob.healths
+			mymob.client.screen += mymob.healths				//As are the rest of these.
 			mymob.client.screen += mymob.healthdoll
 			mymob.client.screen += mymob.internals
-			mymob.client.screen += mymob.nutrition_icon
-			mymob.client.screen += mymob.oxygen
-			mymob.client.screen += mymob.pressure
-			mymob.client.screen += mymob.toxin
 			mymob.client.screen += lingstingdisplay
 			mymob.client.screen += lingchemdisplay
 
 			hidden_inventory_update()
 			persistant_inventory_update()
 			mymob.update_action_buttons()
+			reorganize_alerts()
 		if(HUD_STYLE_REDUCED)	//Reduced HUD
 			hud_shown = 0	//Governs behavior of other procs
 			if(adding)
@@ -248,8 +243,6 @@ datum/hud/New(mob/owner)
 				mymob.client.screen -= other
 			if(hotkeybuttons)
 				mymob.client.screen -= hotkeybuttons
-			if(item_action_list)
-				mymob.client.screen -= item_action_list
 
 			//These ones are not a part of 'adding', 'other' or 'hotkeybuttons' but we want them gone.
 			mymob.client.screen -= mymob.zone_sel	//zone_sel is a mob variable for some reason.
@@ -265,6 +258,7 @@ datum/hud/New(mob/owner)
 			hidden_inventory_update()
 			persistant_inventory_update()
 			mymob.update_action_buttons()
+			reorganize_alerts()
 		if(HUD_STYLE_NOHUD)	//No HUD
 			hud_shown = 0	//Governs behavior of other procs
 			if(adding)
@@ -273,26 +267,19 @@ datum/hud/New(mob/owner)
 				mymob.client.screen -= other
 			if(hotkeybuttons)
 				mymob.client.screen -= hotkeybuttons
-			if(item_action_list)
-				mymob.client.screen -= item_action_list
 
 			//These ones are not a part of 'adding', 'other' or 'hotkeybuttons' but we want them gone.
 			mymob.client.screen -= mymob.zone_sel	//zone_sel is a mob variable for some reason.
-			mymob.client.screen -= mymob.bodytemp
-			mymob.client.screen -= mymob.fire
 			mymob.client.screen -= mymob.healths
 			mymob.client.screen -= mymob.healthdoll
 			mymob.client.screen -= mymob.internals
-			mymob.client.screen -= mymob.nutrition_icon
-			mymob.client.screen -= mymob.oxygen
-			mymob.client.screen -= mymob.pressure
-			mymob.client.screen -= mymob.toxin
 			mymob.client.screen -= lingstingdisplay
 			mymob.client.screen -= lingchemdisplay
 
 			hidden_inventory_update()
 			persistant_inventory_update()
 			mymob.update_action_buttons()
+			reorganize_alerts()
 	hud_version = display_hud_version
 
 //Triggered when F12 is pressed (Unless someone changed something in the DMF)

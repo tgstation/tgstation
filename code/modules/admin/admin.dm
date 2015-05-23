@@ -27,7 +27,7 @@ var/global/floorIsLava = 0
 	body += "<body>Options panel for <b>[M]</b>"
 	if(M.client)
 		body += " played by <b>[M.client]</b> "
-		body += "\[<A href='?_src_=holder;editrights=show'>[M.client.holder ? M.client.holder.rank : "Player"]</A>\]"
+		body += "\[<A href='?_src_=holder;editrights=rank;ckey=[M.ckey]'>[M.client.holder ? M.client.holder.rank : "Player"]</A>\]"
 
 	if(istype(M, /mob/new_player))
 		body += " <B>Hasn't Entered Game</B> "
@@ -50,7 +50,8 @@ var/global/floorIsLava = 0
 	body += "<A href='?_src_=holder;notes=show;ckey=[M.ckey]'>Notes</A> "
 
 	if(M.client)
-		body += "| <A HREF='?_src_=holder;sendtoprison=\ref[M]'>Prison</A> | "
+		body += "| <A href='?_src_=holder;sendtoprison=\ref[M]'>Prison</A> | "
+		body += "\ <A href='?_src_=holder;sendbacktolobby=\ref[M]'>Send back to Lobby</A> | "
 		var/muted = M.client.prefs.muted
 		body += "<br><b>Mute: </b> "
 		body += "\[<A href='?_src_=holder;mute=[M.ckey];mute_type=[MUTE_IC]'><font color='[(muted & MUTE_IC)?"red":"blue"]'>IC</font></a> | "
@@ -497,7 +498,7 @@ var/global/floorIsLava = 0
 	if(confirm == "Cancel")
 		return
 	if(confirm == "Yes")
-		world << "<span class='userdanger'>Restarting world!</span> <span class='adminnotice'> Initiated by [usr.client.holder.fakekey ? "Admin" : usr.key]!</span>"
+		world << "<span class='boldannounce'>Restarting world!</span> <span class='adminnotice'> Initiated by [usr.client.holder.fakekey ? "Admin" : usr.key]!</span>"
 		log_admin("[key_name(usr)] initiated a reboot.")
 
 		feedback_set_details("end_error","admin reboot - by [usr.key] [usr.client.holder.fakekey ? "(stealth)" : ""]")
@@ -578,11 +579,9 @@ var/global/floorIsLava = 0
 	set category = "Server"
 	set desc="Start the round RIGHT NOW"
 	set name="Start Now"
-	if(!ticker)
-		alert("Unable to start the game as it is not set up.")
-		return
 	if(ticker.current_state == GAME_STATE_PREGAME)
-		ticker.current_state = GAME_STATE_SETTING_UP
+		ticker.can_fire = 1
+		ticker.timeLeft = 0
 		log_admin("[usr.key] has started the game.")
 		message_admins("<font color='blue'>[usr.key] has started the game.</font>")
 		feedback_add_details("admin_verb","SN") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
@@ -635,17 +634,21 @@ var/global/floorIsLava = 0
 /datum/admins/proc/delay()
 	set category = "Server"
 	set desc="Delay the game start"
-	set name="Delay"
-	if (!ticker || ticker.current_state != GAME_STATE_PREGAME)
-		return alert("Too late... The game has already started!", null, null, null, null, null)
-	going = !( going )
-	if (!( going ))
-		world << "<b>The game start has been delayed.</b>"
-		log_admin("[key_name(usr)] delayed the game.")
-	else
-		world << "<b>The game will start soon.</b>"
-		log_admin("[key_name(usr)] removed the delay.")
-	feedback_add_details("admin_verb","DELAY") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
+	set name="Delay pre-game"
+
+	var/newtime = input("Set a new time in seconds. Set -1 for indefinite delay.","Set Delay",round(ticker.timeLeft/10)) as num|null
+	if(ticker.current_state > GAME_STATE_PREGAME)
+		return alert("Too late... The game has already started!")
+	if(newtime)
+		ticker.timeLeft = newtime * 10
+		if(newtime < 0)
+			world << "<b>The game start has been delayed.</b>"
+			log_admin("[key_name(usr)] delayed the round start.")
+		else
+			world << "<b>The game will start in [newtime] seconds.</b>"
+			world << 'sound/ai/attention.ogg'
+			log_admin("[key_name(usr)] set the pre-game delay to [newtime] seconds.")
+		feedback_add_details("admin_verb","DELAY") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
 /datum/admins/proc/immreboot()
 	set category = "Server"
@@ -654,7 +657,7 @@ var/global/floorIsLava = 0
 	if(!usr.client.holder)	return
 	if( alert("Reboot server?",,"Yes","No") == "No")
 		return
-	world << "<span class='userdanger'>Rebooting world!</span> <span class='adminnotice'>Initiated by [usr.client.holder.fakekey ? "Admin" : usr.key]!</span>"
+	world << "<span class='boldannounce'>Rebooting world!</span> <span class='adminnotice'>Initiated by [usr.client.holder.fakekey ? "Admin" : usr.key]!</span>"
 	log_admin("[key_name(usr)] initiated an immediate reboot.")
 
 	feedback_set_details("end_error","immediate admin reboot - by [usr.key] [usr.client.holder.fakekey ? "(stealth)" : ""]")
@@ -668,7 +671,7 @@ var/global/floorIsLava = 0
 /datum/admins/proc/unprison(var/mob/M in mob_list)
 	set category = "Admin"
 	set name = "Unprison"
-	if (M.z == 2)
+	if (M.z == ZLEVEL_CENTCOM)
 		M.loc = pick(latejoin)
 		message_admins("[key_name_admin(usr)] has unprisoned [key_name_admin(M)]")
 		log_admin("[key_name(usr)] has unprisoned [key_name(M)]")
@@ -810,28 +813,35 @@ var/global/floorIsLava = 0
 		alert(usr, "You cannot manage jobs before the round starts!")
 		return
 
-	if(job_master)
-		for(var/datum/job/job in job_master.occupations)
+	if(SSjob)
+		for(var/datum/job/job in SSjob.occupations)
 			count++
 			var/J_title = html_encode(job.title)
 			var/J_opPos = html_encode(job.total_positions - (job.total_positions - job.current_positions))
 			var/J_totPos = html_encode(job.total_positions)
-			if(job.total_positions <= 0)
-				dat += "[J_title]: [J_opPos]"
+			if(job.total_positions < 0)
+				dat += "[J_title]: [J_opPos]   (unlimited)"
 			else
 				dat += "[J_title]: [J_opPos]/[J_totPos]"
-			if(initial(job.total_positions) > 0)
+
+			if(job.title == "AI" || job.title == "Cyborg")
+				dat += "   (Cannot Late Join)<br>"
+				continue
+			if(job.total_positions >= 0)
 				dat += "   <A href='?src=\ref[src];addjobslot=[job.title]'>Add</A>  |  "
 				if(job.total_positions > job.current_positions)
-					dat += "<A href='?src=\ref[src];removejobslot=[job.title]'>Remove</A>"
+					dat += "<A href='?src=\ref[src];removejobslot=[job.title]'>Remove</A>  |  "
 				else
-					dat += "Remove"
+					dat += "Remove  |  "
+				dat += "<A href='?src=\ref[src];unlimitjobslot=[job.title]'>Unlimit</A>"
+			else
+				dat += "   <A href='?src=\ref[src];limitjobslot=[job.title]'>Limit</A>"
 			dat += "<br>"
 
 	dat += "</body>"
 	var/winheight = 100 + (count * 20)
 	winheight = min(winheight, 690)
-	usr << browse(dat, "window=players;size=316x[winheight]")
+	usr << browse(dat, "window=players;size=375x[winheight]")
 
 //
 //
@@ -857,3 +867,37 @@ proc/kick_clients_in_lobby(var/message, var/kick_only_afk = 0)
 			kicked_client_names.Add("[C.ckey]")
 			del(C)
 	return kicked_client_names
+
+//returns 1 to let the dragdrop code know we are trapping this event
+//returns 0 if we don't plan to trap the event
+/datum/admins/proc/cmd_ghost_drag(var/mob/dead/observer/frommob, var/mob/living/tomob)
+
+	//this is the exact two check rights checks required to edit a ckey with vv.
+	if (!check_rights(R_VAREDIT,0) || !check_rights(R_SPAWN|R_DEBUG,0))
+		return 0
+
+	if (!frommob.ckey)
+		return 0
+
+	var/question = ""
+	if (tomob.ckey)
+		question = "This mob already has a user ([tomob.key]) in control of it! "
+	question += "Are you sure you want to place [frommob.name]([frommob.key]) in control of [tomob.name]?"
+
+	var/ask = alert(question, "Place ghost in control of mob?", "Yes", "No")
+	if (ask != "Yes")
+		return 1
+
+	if (!frommob || !tomob) //make sure the mobs don't go away while we waited for a response
+		return 1
+
+	tomob.ghostize(0)
+
+	message_admins("<span class='adminnotice'>[key_name_admin(usr)] has put [frommob.ckey] in control of [tomob.name].</span>")
+	log_admin("[key_name(usr)] stuffed [frommob.ckey] into [tomob.name].")
+	feedback_add_details("admin_verb","CGD")
+
+	tomob.ckey = frommob.ckey
+	qdel(frommob)
+
+	return 1

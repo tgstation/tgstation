@@ -111,7 +111,7 @@
 
 	anchored = 0
 	density = 1
-	layer = MOB_LAYER - 0.1 //so people can't hide it and it's REALLY OBVIOUS
+	layer = MOB_LAYER - 0.2 //so people can't hide it and it's REALLY OBVIOUS
 	stat = 0
 
 	var/active = 0
@@ -150,14 +150,14 @@
 	if(anchored)
 		return active ? Deactivate(user) : Activate(user)
 	else
-		user << "<span class='danger'>You need to screw the beacon to the floor first!</span>"
+		user << "<span class='warning'>You need to screw the beacon to the floor first!</span>"
 		return
 
 
-/obj/machinery/power/singularity_beacon/attackby(obj/item/weapon/W as obj, mob/user as mob)
+/obj/machinery/power/singularity_beacon/attackby(obj/item/weapon/W as obj, mob/user as mob, params)
 	if(istype(W,/obj/item/weapon/screwdriver))
 		if(active)
-			user << "<span class='danger'>You need to deactivate the beacon first!</span>"
+			user << "<span class='warning'>You need to deactivate the beacon first!</span>"
 			return
 
 		if(anchored)

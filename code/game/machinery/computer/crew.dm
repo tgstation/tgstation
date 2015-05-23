@@ -22,7 +22,7 @@
 /obj/machinery/computer/crew/Topic(href, href_list)
 	if(..()) return
 	if (src.z > 6)
-		usr << "<span class='userdanger'>Unable to establish a connection</span>: \black You're too far away from the station!"
+		usr << "<span class='boldannounce'>Unable to establish a connection</span>: \black You're too far away from the station!"
 		return
 	if( href_list["close"] )
 		usr << browse(null, "window=crewcomp")
@@ -63,7 +63,17 @@ proc/crewmonitor(mob/user,var/atom/source)
 	jobs["Clown"] = 66
 	jobs["Mime"] = 67
 	jobs["Janitor"] = 68
-	jobs["Assistant"] = 99	//Unknowns/custom jobs should appear after civilians, and before assistants
+	jobs["Lawyer"] = 69
+	jobs["Admiral"] = 200
+	jobs["Centcom Commander"] = 210
+	jobs["Custodian"] = 211
+	jobs["Medical Officer"] = 212
+	jobs["Research Officer"] = 213
+	jobs["Emergency Response Team Commander"] = 220
+	jobs["Security Response Officer"] = 221
+	jobs["Engineer Response Officer"] = 222
+	jobs["Medical Response Officer"] = 223
+	jobs["Assistant"] = 999	//Unknowns/custom jobs should appear after civilians, and before assistants
 
 	var/t = "<table width='100%'><tr><td width='40%'><h3>Name</h3></td><td width='30%'><h3>Vitals</h3></td><td width='30%'><h3>Position</h3></td></tr>"
 	var/list/logs = list()
@@ -96,6 +106,8 @@ proc/crewmonitor(mob/user,var/atom/source)
 						style += "color: #F1C40F; "	//engineering
 					if(ijob >= 50 && ijob < 60)
 						style += "color: #F39C12; "	//cargo
+					if(ijob >= 200 && ijob < 230)
+						style += "color: #00C100; "	//Centcom
 					log += "<span style=\"display: none\">[ijob]]</span><tr><td width='40%'><span style=\"[style]\">[I.registered_name]</span> ([I.assignment])</td>"		//ijob does not get displayed, nor does it take up space, it's just used for the positioning of an entry
 				else
 					log += "<span style=\"display: none\">80</span><tr><td width='40%'><i>Unknown</i></td>"

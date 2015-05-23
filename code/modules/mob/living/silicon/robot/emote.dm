@@ -30,7 +30,7 @@
 			else
 				message = "<B>[src]</B> beeps."
 			playsound(src.loc, 'sound/machines/twobeep.ogg', 50, 0)
-			m_type = 1
+			m_type = 2
 
 		if ("bow")
 			if (!src.buckled)
@@ -63,7 +63,17 @@
 			else
 				message = "<B>[src]</B> buzzes."
 			playsound(src.loc, 'sound/machines/buzz-sigh.ogg', 50, 0)
-			m_type = 1
+			m_type = 2
+
+		if ("buzz2")
+			message = "<B>[src]</B> buzzes twice."
+			playsound(loc, 'sound/machines/buzz-two.ogg', 50, 0)
+			m_type = 2
+
+		if ("chime") //You have mail!
+			message = "<B>[src]</B> chimes."
+			playsound(loc, 'sound/machines/chime.ogg', 50, 0)
+			m_type = 2
 
 		if ("clap")
 			if (!src.restrained())
@@ -106,6 +116,11 @@
 				message = "<B>[src]</B> glares at [param]."
 			else
 				message = "<B>[src]</B> glares."
+
+		if ("honk") //Honk!
+			message = "<B>[src]</B> honks!"
+			playsound(loc, 'sound/items/bikehorn.ogg', 50, 1)
+			m_type = 2
 
 		if ("look")
 			var/M = null
@@ -153,7 +168,12 @@
 			else
 				message = "<B>[src]</B> pings."
 			playsound(src.loc, 'sound/machines/ping.ogg', 50, 0)
-			m_type = 1
+			m_type = 2
+
+		if ("sad") //When words cannot express...
+			message = "<B>[src]</B> plays a sad trombone."
+			playsound(loc, 'sound/misc/sadtrombone.ogg', 50, 0)
+			m_type = 2
 
 		if ("salute")
 			if (!src.buckled)
@@ -194,16 +214,21 @@
 			message = "<B>[src]</B> twitches."
 			m_type = 1
 
+		if ("warn") //HUMAN HARM DETECTED. PLEASE DIE IN AN ORDERLY FASHION.
+			message = "<B>[src]</B> blares an alarm!"
+			playsound(loc, 'sound/machines/warning-buzzer.ogg', 50, 0)
+			m_type = 2
+
 		if ("help")
-			src << "Help for cyborg emotes. You can use these emotes with say \"*emote\":\n\naflap, beep-(none)/mob, bow-(none)/mob, buzz-(none)/mob, clap, custom, deathgasp, flap, glare-(none)/mob, look-(none)/mob, me, nod, ping-(none)/mob, \nsalute-(none)/mob, twitch, twitch_s,"
+			src << "Help for cyborg emotes. You can use these emotes with say \"*emote\":\n\naflap, beep-(none)/mob, bow-(none)/mob, buzz-(none)/mob,buzz2,chime, clap, custom, deathgasp, flap, glare-(none)/mob, honk, look-(none)/mob, me, nod, ping-(none)/mob, sad, \nsalute-(none)/mob, twitch, twitch_s, warn,"
 
 		else
 			src << "<span class='notice'>Unusable emote '[act]'. Say *help for a list.</span>"
 
-	if ((message && src.stat == 0))
+	if (message && src.stat == CONSCIOUS)
 		log_emote("[name]/[key] : [message]")
 		if (m_type & 1)
 			visible_message(message)
 		else
-			src.loc.audible_message(message)
+			audible_message(message)
 	return

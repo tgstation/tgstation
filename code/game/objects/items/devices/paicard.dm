@@ -62,14 +62,14 @@
 
 	if(href_list["request"])
 		src.looking_for_personality = 1
-		paiController.findPAI(src, usr)
+		SSpai.findPAI(src, usr)
 
 	if(pai)
 		if(href_list["setdna"])
 			if(pai.master_dna)
 				return
 			if(!istype(usr, /mob/living/carbon))
-				usr << "<span class='notice'>You don't have any DNA, or your DNA is incompatible with this device.</span>"
+				usr << "<span class='warning'>You don't have any DNA, or your DNA is incompatible with this device!</span>"
 			else
 				var/mob/living/carbon/M = usr
 				pai.master = M.real_name
@@ -105,7 +105,7 @@
 
 /obj/item/device/paicard/proc/setPersonality(mob/living/silicon/pai/personality)
 	src.pai = personality
-	src.overlays += "pai-happy"
+	src.overlays += "pai-null"
 
 /obj/item/device/paicard/proc/removePersonality()
 	src.pai = null
@@ -125,6 +125,7 @@
 			if(7) src.overlays += "pai-sad"
 			if(8) src.overlays += "pai-angry"
 			if(9) src.overlays += "pai-what"
+			if(10) src.overlays += "pai-null"
 
 /obj/item/device/paicard/proc/alertUpdate()
 	visible_message("<span class ='info'>[src] flashes a message across its screen, \"Additional personalities available for download.\"", 3, "<span class='notice'>[src] bleeps electronically.</span>", 2)

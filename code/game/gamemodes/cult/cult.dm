@@ -19,6 +19,26 @@
 		if(mind.current == ticker.mode.sacrifice_target)	return 0
 	return 1
 
+/proc/cultist_commune(var/mob/living/user, var/clear = 0, var/say = 0, var/message)
+	if(!message)
+		return
+	if(say)
+		user.say("O bidai nabora se[pick("'","`")]sma!")
+	else
+		user.whisper("O bidai nabora se[pick("'","`")]sma!")
+	sleep(10)
+	if(say)
+		user.say(message)
+	else
+		user.whisper(message)
+	for(var/mob/M in mob_list)
+		if(iscultist(M) || (M in dead_mob_list))
+			if(clear || !ishuman(user))
+				M << "<span class='boldannounce'><i>[(ishuman(user) ? "Acolyte" : "Construct")] [user]:</i> [message]</span>"
+			else //Emergency comms
+				M << "<span class='ghostalert'><i>Acolyte ???:</i> [message]</span>"
+
+
 
 /datum/game_mode/cult
 	name = "cult"
@@ -29,6 +49,7 @@
 	required_players = 20
 	required_enemies = 6
 	recommended_enemies = 6
+	enemy_minimum_age = 14
 
 
 	var/finished = 0
@@ -65,10 +86,6 @@
 	if(config.protect_assistant_from_antagonist)
 		restricted_jobs += "Assistant"
 
-	for(var/datum/mind/player in antag_candidates)
-		for(var/job in restricted_jobs)//Removing heads and such from the list
-			if(player.assigned_role == job)
-				antag_candidates -= player
 
 	for(var/cultists_number = 1 to recommended_enemies)
 		if(!antag_candidates.len)
@@ -77,6 +94,7 @@
 		antag_candidates -= cultist
 		cult += cultist
 		cultist.special_role = "Cultist"
+		cultist.restricted_roles = restricted_jobs
 		log_game("[cultist.key] (ckey) has been selected as a cultist")
 
 	return (cult.len>=required_enemies)
@@ -156,6 +174,10 @@
 	else
 		mob << "You have a talisman in your [where], one that will help you start the cult on this station. Use it well and remember - there are others."
 		mob.update_icons()
+		if(where == "backpack")
+			var/obj/item/weapon/storage/B = mob.back
+			B.orient2hud(mob)
+			B.show_to(mob)
 		return 1
 
 
@@ -215,6 +237,7 @@
 	if (!istype(cult_mind))
 		return 0
 	if(!(cult_mind in cult) && is_convertable_to_cult(cult_mind))
+		cult_mind.current.Paralyse(5)
 		cult += cult_mind
 		cult_mind.current.cult_add_comm()
 		update_cult_icons_added(cult_mind)
@@ -232,7 +255,8 @@
 	if(cult_mind in cult)
 		cult -= cult_mind
 		cult_mind.current.verbs -= /mob/living/proc/cult_innate_comm
-		cult_mind.current << "<span class='userdanger'><FONT size = 3>An unfamiliar white light flashes through your mind, cleansing the taint of the dark-one and the memories of your time as his servant with it.</FONT></span>"
+		cult_mind.current.Paralyse(5)
+		cult_mind.current << "<span class='userdanger'>An unfamiliar white light flashes through your mind, cleansing the taint of the dark-one and the memories of your time as his servant with it.</span>"
 		cult_mind.memory = ""
 		cult_mind.cult_words = initial(cult_mind.cult_words)
 		update_cult_icons_removed(cult_mind)
@@ -275,9 +299,8 @@
 /datum/game_mode/cult/proc/check_survive()
 	acolytes_survived = 0
 	for(var/datum/mind/cult_mind in cult)
-		if (cult_mind.current && cult_mind.current.stat!=2)
-			var/area/A = get_area(cult_mind.current )
-			if ( is_type_in_list(A, centcom_areas))
+		if (cult_mind.current && cult_mind.current.stat != DEAD)
+			if(cult_mind.current.onCentcom())
 				acolytes_survived++
 	if(acolytes_survived>=acolytes_needed)
 		return 0

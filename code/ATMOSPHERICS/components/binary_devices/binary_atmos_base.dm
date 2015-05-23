@@ -17,6 +17,14 @@
 
 /obj/machinery/atmospherics/binary/New()
 	..()
+
+	air1 = new
+	air2 = new
+
+	air1.volume = 200
+	air2.volume = 200
+
+/obj/machinery/atmospherics/binary/SetInitDirections()
 	switch(dir)
 		if(NORTH)
 			initialize_directions = NORTH|SOUTH
@@ -26,11 +34,6 @@
 			initialize_directions = EAST|WEST
 		if(WEST)
 			initialize_directions = EAST|WEST
-	air1 = new
-	air2 = new
-
-	air1.volume = 200
-	air2.volume = 200
 
 //Separate this because we don't need to update pipe icons if we just are going to change the state
 /obj/machinery/atmospherics/binary/proc/update_icon_nopipes()
@@ -71,8 +74,7 @@
 		nullifyPipenet(parent2)
 	..()
 
-/obj/machinery/atmospherics/binary/initialize()
-	src.disconnect(src)
+/obj/machinery/atmospherics/binary/atmosinit()
 
 	var/node2_connect = dir
 	var/node1_connect = turn(dir, 180)
@@ -91,6 +93,12 @@
 		showpipe = 1
 
 	update_icon()
+	..()
+
+/obj/machinery/atmospherics/binary/construction()
+	..()
+	parent1.update = 1
+	parent2.update = 1
 
 /obj/machinery/atmospherics/binary/build_network()
 	if(!parent1)

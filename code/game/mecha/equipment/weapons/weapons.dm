@@ -4,6 +4,9 @@
 	origin_tech = "materials=3;combat=3"
 	var/projectile
 	var/fire_sound
+	var/projectiles_per_shot = 1
+	var/deviation = 0
+	var/shot_delay = 0
 
 /obj/item/mecha_parts/mecha_equipment/weapon/can_attach(var/obj/mecha/combat/M as obj)
 	if(..())
@@ -11,23 +14,40 @@
 			return 1
 	return 0
 
+/obj/item/mecha_parts/mecha_equipment/weapon/proc/get_shot_amount()
+	return 1
+
 /obj/item/mecha_parts/mecha_equipment/weapon/action(atom/target)
-	if(!action_checks(target)) return 0
+	if(!action_checks(target))
+		return 0
 	set_ready_state(0)
-	var/turf/curloc = chassis.loc
-	var/atom/targloc = get_turf(target)
-	if (!targloc || !istype(targloc, /turf) || !curloc)
-		return
+
+	var/turf/curloc = get_turf(chassis)
+	var/turf/targloc = get_turf(target)
+	if (!targloc || !istype(targloc) || !curloc)
+		return 0
 	if (targloc == curloc)
-		return
-	playsound(chassis, fire_sound, 50, 1)
-	var/obj/item/projectile/A = new projectile(curloc)
-	A.firer = chassis.occupant
-	A.original = target
-	A.current = curloc
-	A.yo = targloc.y - curloc.y
-	A.xo = targloc.x - curloc.x
-	A.fire()
+		return 0
+
+	for(var/i=1 to get_shot_amount())
+		var/obj/item/projectile/A = new projectile(curloc)
+		A.firer = chassis.occupant
+		A.original = target
+		A.current = curloc
+
+		if(deviation)
+			A.yo = (targloc.y + round(gaussian(0,deviation),1)) - curloc.y
+			A.xo = (targloc.x + round(gaussian(0,deviation),1)) - curloc.x
+		else
+			A.yo = targloc.y - curloc.y
+			A.xo = targloc.x - curloc.x
+
+		A.fire()
+		playsound(chassis, fire_sound, 50, 1)
+
+		if(shot_delay)
+			sleep(shot_delay)
+
 	chassis.log_message("Fired from [src.name], targeting [target].")
 	do_after_cooldown()
 	return 1
@@ -36,9 +56,12 @@
 /obj/item/mecha_parts/mecha_equipment/weapon/energy
 	name = "general energy weapon"
 
+/obj/item/mecha_parts/mecha_equipment/weapon/energy/get_shot_amount()
+	return min(round(chassis.cell.charge / energy_drain), projectiles_per_shot)
+
 /obj/item/mecha_parts/mecha_equipment/weapon/energy/action(atom/target)
 	..()
-	chassis.use_power(energy_drain)
+	chassis.use_power(energy_drain * get_shot_amount())
 
 
 /obj/item/mecha_parts/mecha_equipment/weapon/energy/laser
@@ -78,6 +101,22 @@
 	projectile = /obj/item/projectile/beam/pulse/heavy
 	fire_sound = 'sound/weapons/marauder.ogg'
 
+/obj/item/mecha_parts/mecha_equipment/weapon/energy/plasma
+	equip_cooldown = 20
+	name = "217-D Heavy Plasma Cutter"
+	desc = "A device that shoots resonant plasma bursts at extreme velocity. The blasts are capable of crushing rock and demloishing solid obstacles."
+	icon_state = "mecha_plasmacutter"
+	item_state = "plasmacutter"
+	energy_drain = 60
+	origin_tech = "materials=3;combat=2;powerstorage=3;plasma=3"
+	projectile = /obj/item/projectile/plasma/adv/mech
+	fire_sound = 'sound/weapons/Laser.ogg'
+
+/obj/item/mecha_parts/mecha_equipment/weapon/energy/plasma/can_attach(obj/mecha/M as obj)
+	if(istype(M, /obj/mecha/working))
+		if(M.equipment.len < M.max_equip)
+			return 1
+	return 0
 
 /obj/item/projectile/beam/pulse/heavy
 	name = "heavy pulse laser"
@@ -131,7 +170,7 @@
 		M << "<font color='red' size='7'>HONK</font>"
 		M.sleeping = 0
 		M.stuttering += 20
-		M.ear_deaf += 30
+		M.adjustEarDamage(0, 30)
 		M.Weaken(3)
 		if(prob(30))
 			M.Stun(10)
@@ -165,6 +204,9 @@
 	var/projectiles
 	var/projectile_energy_cost
 
+/obj/item/mecha_parts/mecha_equipment/weapon/ballistic/get_shot_amount()
+	return min(projectiles, projectiles_per_shot)
+
 /obj/item/mecha_parts/mecha_equipment/weapon/ballistic/action_checks(target)
 	if(!..())
 		return 0
@@ -196,7 +238,7 @@
 
 /obj/item/mecha_parts/mecha_equipment/weapon/ballistic/action(atom/target)
 	if(..())
-		src.projectiles--
+		src.projectiles -= get_shot_amount()
 		send_byjax(chassis.occupant,"exosuit.browser","\ref[src]",src.get_equip_info())
 
 
@@ -227,83 +269,20 @@
 	projectile = /obj/item/projectile/bullet/midbullet
 	projectiles = 40
 	projectile_energy_cost = 25
-	var/projectiles_per_shot = 4
-	var/deviation = 0.7
-
-/obj/item/mecha_parts/mecha_equipment/weapon/ballistic/scattershot/action(atom/target)
-	if(!action_checks(target)) return
-	var/turf/curloc = get_turf(chassis)
-	var/turf/targloc = get_turf(target)
-	if(!curloc || !targloc) return
-	var/target_x = targloc.x
-	var/target_y = targloc.y
-	var/target_z = targloc.z
-	targloc = null
-	for(var/i=1 to min(projectiles, projectiles_per_shot))
-		var/dx = round(gaussian(0,deviation),1)
-		var/dy = round(gaussian(0,deviation),1)
-		targloc = locate(target_x+dx, target_y+dy, target_z)
-		if(!targloc || targloc == curloc)
-			break
-		playsound(chassis, fire_sound, 80, 1)
-		var/obj/item/projectile/A = new projectile(curloc)
-		src.projectiles--
-		A.firer = chassis.occupant
-		A.original = target
-		A.current = curloc
-		A.yo = targloc.y - curloc.y
-		A.xo = targloc.x - curloc.x
-		set_ready_state(0)
-		A.process()
-	log_message("Fired from [src.name], targeting [target].")
-	do_after_cooldown()
-	return
-
-
+	projectiles_per_shot = 4
+	deviation = 0.7
 
 /obj/item/mecha_parts/mecha_equipment/weapon/ballistic/lmg
 	name = "\improper Ultra AC 2"
 	desc = "A weapon for combat exosuits. Shoots a rapid, three shot burst."
 	icon_state = "mecha_uac2"
 	equip_cooldown = 10
-	projectile = /obj/item/projectile/bullet/weakbullet
+	projectile = /obj/item/projectile/bullet/weakbullet3
 	projectiles = 300
 	projectile_energy_cost = 20
-	var/projectiles_per_shot = 3
-	var/deviation = 0.3
-
-/obj/item/mecha_parts/mecha_equipment/weapon/ballistic/lmg/action(atom/target)
-	if(!action_checks(target)) return
-	var/turf/targloc = get_turf(target)
-	var/target_x = targloc.x
-	var/target_y = targloc.y
-	var/target_z = targloc.z
-	targloc = null
-	spawn	for(var/i=1 to min(projectiles, projectiles_per_shot))
-		if(!chassis) break
-		var/turf/curloc = get_turf(chassis)
-		var/dx = round(gaussian(0,deviation),1)
-		var/dy = round(gaussian(0,deviation),1)
-		targloc = locate(target_x+dx, target_y+dy, target_z)
-		if (!targloc || !curloc)
-			continue
-		if (targloc == curloc)
-			continue
-
-		playsound(chassis, fire_sound, 50, 1)
-		var/obj/item/projectile/A = new projectile(curloc)
-		src.projectiles--
-		A.firer = chassis.occupant
-		A.original = target
-		A.current = curloc
-		A.yo = targloc.y - curloc.y
-		A.xo = targloc.x - curloc.x
-		A.process()
-		sleep(2)
-	set_ready_state(0)
-	log_message("Fired from [src.name], targeting [target].")
-	do_after_cooldown()
-	return
+	projectiles_per_shot = 3
+	deviation = 0.3
+	shot_delay = 2
 
 /obj/item/mecha_parts/mecha_equipment/weapon/ballistic/missile_rack
 	name = "\improper SRM-8 missile rack"
@@ -380,7 +359,7 @@
 	name = "\improper SOB-3 grenade launcher"
 	desc = "A weapon for combat exosuits. Launches primed clusterbangs. You monster."
 	projectiles = 3
-	projectile = /obj/item/weapon/grenade/flashbang/clusterbang
+	projectile = /obj/item/weapon/grenade/clusterbuster
 	projectile_energy_cost = 1600 //getting off cheap seeing as this is 3 times the flashbangs held in the grenade launcher.
 	equip_cooldown = 90
 
@@ -417,7 +396,7 @@
 	name = "mousetrap mortar"
 	desc = "Equipment for clown exosuits. Launches armed mousetraps."
 	icon_state = "mecha_mousetrapmrtr"
-	projectile = /obj/item/device/assembly/mousetrap
+	projectile = /obj/item/device/assembly/mousetrap/armed
 	fire_sound = 'sound/items/bikehorn.ogg'
 	projectiles = 15
 	missile_speed = 1.5
@@ -433,7 +412,7 @@
 /obj/item/mecha_parts/mecha_equipment/weapon/ballistic/missile_rack/mousetrap_mortar/action(target)
 	if(!action_checks(target)) return
 	set_ready_state(0)
-	var/obj/item/device/assembly/mousetrap/M = new projectile(chassis.loc)
+	var/obj/item/device/assembly/mousetrap/armed/M = new projectile(chassis.loc)
 	M.secured = 1
 	playsound(chassis, fire_sound, 60, 1)
 	M.throw_at(target, missile_range, missile_speed)

@@ -6,6 +6,9 @@
 	if(admin_notice)
 		src << "<span class='notice'><b>Admin Notice:</b>\n \t [admin_notice]</span>"
 
+	if(config.soft_popcap && living_player_count() >= config.soft_popcap)
+		src << "<span class='notice'><b>Server Notice:</b>\n \t [config.soft_popcap_message]</span>"
+
 	if(!mind)
 		mind = new /datum/mind(key)
 		mind.active = 1
@@ -30,6 +33,8 @@
 		loc = pick(watch_locations)
 */
 	new_player_panel()
+	if(ckey in deadmins)
+		verbs += /client/proc/readmin
 	spawn(40)
 		if(client)
 			handle_privacy_poll()

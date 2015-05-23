@@ -203,6 +203,11 @@ CREATE TABLE `library` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
+-- Create an index to speed up the libary
+--
+CREATE INDEX deleted_idx ON `library` (`deleted`);
+
+--
 -- Table structure for table `player`
 --
 

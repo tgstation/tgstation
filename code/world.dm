@@ -3,11 +3,11 @@
 	turf = /turf/space
 	area = /area/space
 	view = "15x15"
-	cache_lifespan = 1
-
-#define RECOMMENDED_VERSION 495
+	cache_lifespan = 7
 
 /world/New()
+	map_ready = 1
+
 #if (PRELOAD_RSC == 0)
 	external_rsc_urls = file2list("config/external_rsc_urls.txt","\n")
 	var/i=1
@@ -30,9 +30,6 @@
 	diaryofmeanpeople << "\n\nStarting up. [time2text(world.timeofday, "hh:mm.ss")]\n---------------------"
 	changelog_hash = md5('html/changelog.html')					//used for telling if the changelog has changed recently
 
-	if(byond_version < RECOMMENDED_VERSION)
-		world.log << "Your server's BYOND version does not meet the recommended requirements for /tg/station code. Please update BYOND."
-
 	make_datum_references_lists()	//initialises global lists for referencing frequently used datums (so that we only ever do it once)
 
 	load_configuration()
@@ -54,48 +51,22 @@
 
 	timezoneOffset = text2num(time2text(0,"hh")) * 36000
 
-	sun = new /datum/sun()
-	radio_controller = new /datum/controller/radio()
-	data_core = new /obj/effect/datacore()
-	paiController = new /datum/paiController()
-
 	if(config.sql_enabled)
 		if(!setup_database_connection())
 			world.log << "Your server failed to establish a connection with the database."
 		else
 			world.log << "Database connection established."
 
-	plmaster = new /obj/effect/overlay()
-	plmaster.icon = 'icons/effects/tile_effects.dmi'
-	plmaster.icon_state = "plasma"
-	plmaster.layer = FLY_LAYER
-	plmaster.mouse_opacity = 0
 
-	slmaster = new /obj/effect/overlay()
-	slmaster.icon = 'icons/effects/tile_effects.dmi'
-	slmaster.icon_state = "sleeping_agent"
-	slmaster.layer = FLY_LAYER
-	slmaster.mouse_opacity = 0
+	data_core = new /datum/datacore()
 
-	setup_map_transitions()
 
-	for(var/i=0, i<max_secret_rooms, i++)
-		make_mining_asteroid_secret()
-
-	createRandomZlevel()
-
-	makepowernets()
-
-	master_controller = new /datum/controller/game_controller()
 	spawn(-1)
 		master_controller.setup()
-		lighting_controller.initializeLighting()
-
-	src.update_status()
 
 	process_teleport_locs()			//Sets up the wizard teleport locations
 	process_ghost_teleport_locs()	//Sets up ghost teleport locations.
-	sleep_offline = 1
+	SortAreas()						//Build the list of all existing areas and sort it alphabetically
 
 	#ifdef MAP_NAME
 	map_name = "[MAP_NAME]"
@@ -103,23 +74,8 @@
 	map_name = "Unknown"
 	#endif
 
-	spawn(3000)		//so we aren't adding to the round-start lag
-		if(config.kick_inactive)
-			KickInactiveClients()
+
 	return
-
-#undef RECOMMENDED_VERSION
-
-//world/Topic(href, href_list[])
-//		world << "Received a Topic() call!"
-//		world << "[href]"
-//		for(var/a in href_list)
-//			world << "[a]"
-//		if(href_list["hello"])
-//			world << "Hello world!"
-//			return "Hello world!"
-//		world << "End of Topic() call."
-//		..()
 
 
 /world/Topic(T, addr, master, key)
@@ -173,11 +129,11 @@
 			if(input["key"] != global.comms_key)
 				return "Bad Key"
 			else
-				#define CHAT_PULLR 2048
+#define CHAT_PULLR	64 //for some reason this has to be here, not sure why. Look in preferences.dm for the "proper" definition.
 				for(var/client/C in clients)
-					if(C.prefs && (C.prefs.toggles & CHAT_PULLR))
+					if(C.prefs && (C.prefs.chat_toggles & CHAT_PULLR))
 						C << "<span class='announce'>PR: [input["announce"]]</span>"
-				#undef CHAT_PULLR
+#undef CHAT_PULLR
 
 /world/Reboot(var/reason)
 #ifdef dellogging
@@ -190,7 +146,10 @@
 			log << "#[count]\t[index]"
 #endif
 	spawn(0)
-		world << sound(pick('sound/AI/newroundsexy.ogg','sound/misc/apcdestroyed.ogg','sound/misc/bangindonk.ogg')) // random end sounds!! - LastyBatsy
+		if(ticker && ticker.round_end_sound)
+			world << sound(ticker.round_end_sound)
+		else
+			world << sound(pick('sound/AI/newroundsexy.ogg','sound/misc/apcdestroyed.ogg','sound/misc/bangindonk.ogg','sound/misc/leavingtg.ogg')) // random end sounds!! - LastyBatsy
 
 	for(var/client/C in clients)
 		if(config.server)	//if you set a server location in config.txt, it sends you there instead of trying to reconnect to the same world address. -- NeoFite
@@ -199,21 +158,6 @@
 	// Note: all clients automatically connect to the world after it restarts
 
 	..(reason)
-
-
-#define INACTIVITY_KICK	6000	//10 minutes in ticks (approx.)
-/world/proc/KickInactiveClients()
-	spawn(-1)
-		set background = BACKGROUND_ENABLED
-		while(1)
-			sleep(INACTIVITY_KICK)
-			for(var/client/C in clients)
-				if(C.is_afk(INACTIVITY_KICK))
-					if(!istype(C.mob, /mob/dead))
-						log_access("AFK: [key_name(C)]")
-						C << "<span class='danger'>You have been inactive for more than 10 minutes and have been disconnected.</span>"
-						del(C)
-#undef INACTIVITY_KICK
 
 
 /world/proc/load_mode()

@@ -26,10 +26,7 @@
 	var/list/stamped
 	var/rigged = 0
 	var/spam_flag = 0
-
-	var/const/deffont = "Verdana"
-	var/const/signfont = "Times New Roman"
-	var/const/crayonfont = "Comic Sans MS"
+	var/burning = 0 //Whether or not the paper is on fire
 
 
 /obj/item/weapon/paper/New()
@@ -76,7 +73,7 @@
 		H << "<span class='warning'>You cut yourself on the paper! Ahhhh! Ahhhhh!</span>"
 		H.damageoverlaytemp = 9001
 		return
-	var/n_name = copytext(sanitize(input(usr, "What would you like to label the paper?", "Paper Labelling", null)  as text), 1, MAX_NAME_LEN)
+	var/n_name = stripped_input(usr, "What would you like to label the paper?", "Paper Labelling", null, MAX_NAME_LEN)
 	if((loc == usr && usr.stat == 0))
 		name = "paper[(n_name ? text("- '[n_name]'") : null)]"
 	add_fingerprint(usr)
@@ -84,12 +81,21 @@
 
 /obj/item/weapon/paper/attack_self(mob/user)
 	user.examinate(src)
-	if(rigged && (events.holiday == "April Fool's Day"))
+	if(rigged && (SSevent.holidays && SSevent.holidays[APRIL_FOOLS]))
 		if(spam_flag == 0)
 			spam_flag = 1
 			playsound(loc, 'sound/items/bikehorn.ogg', 50, 1)
 			spawn(20)
 				spam_flag = 0
+
+
+/obj/item/weapon/paper/attack_hand()
+	var/mob/living/carbon/M = usr
+	if(burning)
+		M << "<span class='danger'>Picking up a burning paper seems awfully stupid.</span>"
+		return //Doesn't make any sense to pick up a burning paper
+	else //Probably isn't necessary but it's safer
+		..()
 
 
 /obj/item/weapon/paper/attack_ai(mob/living/silicon/ai/user)
@@ -148,8 +154,8 @@
 	info_links = info
 	var/i = 0
 	for(i=1,i<=fields,i++)
-		addtofield(i, "<font face=\"[deffont]\"><A href='?src=\ref[src];write=[i]'>write</A></font>", 1)
-	info_links = info_links + "<font face=\"[deffont]\"><A href='?src=\ref[src];write=end'>write</A></font>"
+		addtofield(i, "<font face=\"[PEN_FONT]\"><A href='?src=\ref[src];write=[i]'>write</A></font>", 1)
+	info_links = info_links + "<font face=\"[PEN_FONT]\"><A href='?src=\ref[src];write=end'>write</A></font>"
 
 
 /obj/item/weapon/paper/proc/clearpaper()
@@ -178,7 +184,7 @@
 	t = replacetext(t, "\[/u\]", "</U>")
 	t = replacetext(t, "\[large\]", "<font size=\"4\">")
 	t = replacetext(t, "\[/large\]", "</font>")
-	t = replacetext(t, "\[sign\]", "<font face=\"[signfont]\"><i>[user.real_name]</i></font>")
+	t = replacetext(t, "\[sign\]", "<font face=\"[SIGNFONT]\"><i>[user.real_name]</i></font>")
 	t = replacetext(t, "\[field\]", "<span class=\"paper_field\"></span>")
 
 	if(!iscrayon)
@@ -189,7 +195,7 @@
 		t = replacetext(t, "\[list\]", "<ul>")
 		t = replacetext(t, "\[/list\]", "</ul>")
 
-		t = "<font face=\"[deffont]\" color=[P.colour]>[t]</font>"
+		t = "<font face=\"[PEN_FONT]\" color=[P.colour]>[t]</font>"
 	else // If it is a crayon, and he still tries to use these, make them empty!
 		t = replacetext(t, "\[*\]", "")
 		t = replacetext(t, "\[hr\]", "")
@@ -198,7 +204,7 @@
 		t = replacetext(t, "\[list\]", "")
 		t = replacetext(t, "\[/list\]", "")
 
-		t = "<font face=\"[crayonfont]\" color=[P.colour]><b>[t]</b></font>"
+		t = "<font face=\"[CRAYON_FONT]\" color=[P.colour]><b>[t]</b></font>"
 
 //	t = replacetext(t, "#", "") // Junk converted to nothing!
 
@@ -243,7 +249,9 @@
 
 	if(href_list["write"])
 		var/id = href_list["write"]
-		var/t =  stripped_input("Enter what you want to write:", "Write")
+		var/t =  stripped_multiline_input("Enter what you want to write:", "Write")
+		if(!t)
+			return
 		var/obj/item/i = usr.get_active_hand()	//Check to see if he still got that darn pen, also check if he's using a crayon or pen.
 		var/iscrayon = 0
 		if(!istype(i, /obj/item/weapon/pen))
@@ -267,15 +275,14 @@
 			update_icon()
 
 
-/obj/item/weapon/paper/attackby(obj/item/weapon/P, mob/living/carbon/human/user)
+/obj/item/weapon/paper/attackby(obj/item/weapon/P, mob/living/carbon/human/user, params)
 	..()
+
+	if(burning)
+		return
 
 	if(is_blind(user))
 		return
-
-	var/clown = 0
-	if(user.disabilities & CLUMSY)
-		clown = 1
 
 	if(istype(P, /obj/item/weapon/pen) || istype(P, /obj/item/toy/crayon))
 		if(user.IsAdvancedToolUser())
@@ -288,11 +295,6 @@
 	else if(istype(P, /obj/item/weapon/stamp))
 		if(!in_range(src, usr) && loc != user && !istype(loc, /obj/item/weapon/clipboard) && loc.loc != user && user.get_active_hand() != P)
 			return
-
-		if(istype(P, /obj/item/weapon/stamp/clown))
-			if(!clown)
-				user << "<span class='notice'>You are totally unable to use the stamp. HONK!</span>"
-				return
 
 		stamps += "<img src=large_[P.icon_state].png>"
 
@@ -309,8 +311,39 @@
 
 		user << "<span class='notice'>You stamp the paper with your rubber stamp.</span>"
 
+	if(is_hot(P))
+		if(user.disabilities & CLUMSY && prob(10))
+			user.visible_message("<span class='warning'>[user] accidentally ignites themselves!</span>", \
+								"<span class='userdanger'>You miss the paper and accidentally light yourself on fire!</span>")
+			user.unEquip(P)
+			user.adjust_fire_stacks(1)
+			user.IgniteMob()
+			return
+
+		if(!(in_range(user, src))) //to prevent issues as a result of telepathically lighting a paper
+			return
+
+		user.unEquip(src)
+		user.visible_message("<span class='danger'>[user] lights [src] ablaze with [P]!</span>", "<span class='danger'>You light [src] on fire!</span>")
+		burn(0, 100)
+
+
+
 	add_fingerprint(user)
 
+/obj/item/weapon/paper/fire_act()
+	burn(1, 50)
+
+/obj/item/weapon/paper/proc/burn(var/showmsg, var/burntime)
+	if(showmsg)
+		src.visible_message("<span class='warning'>[src] catches on fire.</span>")
+	burning = 1
+	icon_state = "paper_onfire"
+	info = "[stars(info)]"
+	sleep(burntime) //7 seconds
+	src.visible_message("<span class='warning'>[src] burns away, leaving behind a pile of ashes.</span>")
+	new /obj/effect/decal/cleanable/ash(src.loc)
+	qdel(src)
 
 /*
  * Premade paper
@@ -322,7 +355,7 @@
 
 /obj/item/weapon/paper/Toxin
 	name = "paper- 'Chemical Information'"
-	info = "Known Onboard Toxins:<BR>\n\tGrade A Semi-Liquid Plasma:<BR>\n\t\tHighly poisonous. You cannot sustain concentrations above 15 units.<BR>\n\t\tA gas mask fails to filter plasma after 50 units.<BR>\n\t\tWill attempt to diffuse like a gas.<BR>\n\t\tFiltered by scrubbers.<BR>\n\t\tThere is a bottled version which is very different<BR>\n\t\t\tfrom the version found in canisters!<BR>\n<BR>\n\t\tWARNING: Highly Flammable. Keep away from heat sources<BR>\n\t\texcept in a enclosed fire area!<BR>\n\t\tWARNING: It is a crime to use this without authorization.<BR>\nKnown Onboard Anti-Toxin:<BR>\n\tAnti-Toxin Type 01P: Works against Grade A Plasma.<BR>\n\t\tBest if injected directly into bloodstream.<BR>\n\t\tA full injection is in every regular Med-Kit.<BR>\n\t\tSpecial toxin Kits hold around 7.<BR>\n<BR>\nKnown Onboard Chemicals (other):<BR>\n\tRejuvenation T#001:<BR>\n\t\tEven 1 unit injected directly into the bloodstream<BR>\n\t\t\twill cure paralysis and sleep toxins.<BR>\n\t\tIf administered to a dying patient it will prevent<BR>\n\t\t\tfurther damage for about units*3 seconds.<BR>\n\t\t\tit will not cure them or allow them to be cured.<BR>\n\t\tIt can be administeredd to a non-dying patient<BR>\n\t\t\tbut the chemicals disappear just as fast.<BR>\n\tSleep Toxin T#054:<BR>\n\t\t5 units wilkl induce precisely 1 minute of sleep.<BR>\n\t\t\tThe effect are cumulative.<BR>\n\t\tWARNING: It is a crime to use this without authorization"
+	info = "Known Onboard Toxins:<BR>\n\tGrade A Semi-Liquid Plasma:<BR>\n\t\tHighly poisonous. You cannot sustain concentrations above 15 units.<BR>\n\t\tA gas mask fails to filter plasma after 50 units.<BR>\n\t\tWill attempt to diffuse like a gas.<BR>\n\t\tFiltered by scrubbers.<BR>\n\t\tThere is a bottled version which is very different<BR>\n\t\t\tfrom the version found in canisters!<BR>\n<BR>\n\t\tWARNING: Highly Flammable. Keep away from heat sources<BR>\n\t\texcept in a enclosed fire area!<BR>\n\t\tWARNING: It is a crime to use this without authorization.<BR>\nKnown Onboard Anti-Toxin:<BR>\n\tAnti-Toxin Type 01P: Works against Grade A Plasma.<BR>\n\t\tBest if injected directly into bloodstream.<BR>\n\t\tA full injection is in every regular Med-Kit.<BR>\n\t\tSpecial toxin Kits hold around 7.<BR>\n<BR>\nKnown Onboard Chemicals (other):<BR>\n\tRejuvenation T#001:<BR>\n\t\tEven 1 unit injected directly into the bloodstream<BR>\n\t\t\twill cure paralysis and sleep toxins.<BR>\n\t\tIf administered to a dying patient it will prevent<BR>\n\t\t\tfurther damage for about units*3 seconds.<BR>\n\t\t\tit will not cure them or allow them to be cured.<BR>\n\t\tIt can be administeredd to a non-dying patient<BR>\n\t\t\tbut the chemicals disappear just as fast.<BR>\n\tMorphine T#054:<BR>\n\t\t5 units wilkl induce precisely 1 minute of sleep.<BR>\n\t\t\tThe effect are cumulative.<BR>\n\t\tWARNING: It is a crime to use this without authorization"
 
 /obj/item/weapon/paper/courtroom
 	name = "paper- 'A Crash Course in Legal SOP on SS13'"

@@ -77,7 +77,7 @@
 	else
 		src.startgibbing(user)
 
-/obj/machinery/gibber/attackby(obj/item/weapon/grab/G as obj, mob/user as mob)
+/obj/machinery/gibber/attackby(obj/item/weapon/grab/G as obj, mob/user as mob, params)
 	if(src.occupant)
 		user << "<span class='danger'>The gibber is full, empty it first!</span>"
 		return
@@ -124,10 +124,10 @@
 	if(src.operating)
 		return
 	if(!src.occupant)
-		visible_message("<span class='danger'>You hear a loud metallic grinding sound.</span>")
+		visible_message("<span class='italics'>You hear a loud metallic grinding sound.</span>")
 		return
 	use_power(1000)
-	visible_message("<span class='danger'>You hear a loud squelchy grinding sound.</span>")
+	visible_message("<span class='italics'>You hear a loud squelchy grinding sound.</span>")
 	src.operating = 1
 	update_icon()
 	var/sourcename = src.occupant.real_name
@@ -136,16 +136,16 @@
 	var/sourcetotalreagents = src.occupant.reagents.total_volume
 	var/totalslabs = 3
 
-	var/obj/item/weapon/reagent_containers/food/snacks/meat/human/allmeat[totalslabs]
+	var/obj/item/weapon/reagent_containers/food/snacks/meat/slab/human/allmeat[totalslabs]
 
 	if(ishuman(occupant))
 		var/mob/living/carbon/human/gibee = occupant
 		if(gibee.dna && gibee.dna.species)
 			typeofmeat = gibee.dna.species.meat
 		else
-			typeofmeat = /obj/item/weapon/reagent_containers/food/snacks/meat/human
+			typeofmeat = /obj/item/weapon/reagent_containers/food/snacks/meat/slab/human
 	for (var/i=1 to totalslabs)
-		var/obj/item/weapon/reagent_containers/food/snacks/meat/human/newmeat = new typeofmeat
+		var/obj/item/weapon/reagent_containers/food/snacks/meat/slab/human/newmeat = new typeofmeat
 		newmeat.name = sourcename + newmeat.name
 		newmeat.subjectname = sourcename
 		newmeat.subjectjob = sourcejob

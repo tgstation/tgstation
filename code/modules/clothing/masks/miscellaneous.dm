@@ -12,7 +12,7 @@
 	if(iscarbon(user))
 		var/mob/living/carbon/C = user
 		if(src == C.wear_mask)
-			user << "<span class='notice'>You need help taking this off!</span>"
+			user << "<span class='warning'>You need help taking this off!</span>"
 			return
 	..()
 
@@ -49,6 +49,48 @@
 	flags = BLOCKHAIR
 	flags_inv = HIDEFACE
 	w_class = 2
+	action_button_name = "Toggle Voice Box"
+	var/voicechange = 0
+
+/obj/item/clothing/mask/pig/attack_self(mob/user)
+	voicechange = !voicechange
+	user << "<span class='notice'>You turn the voice box [voicechange ? "on" : "off"]!</span>"
+
+/obj/item/clothing/mask/pig/speechModification(message)
+	if(voicechange)
+		message = pick("Oink!","Squeeeeeeee!","Oink Oink!")
+	return message
+
+/obj/item/clothing/mask/spig //needs to be different otherwise you could turn the speedmodification off and on
+	name = "Pig face"
+	desc = "It looks like a mask, but closer inspection reveals it's melded onto this persons face!" //It's only ever going to be attached to your face.
+	icon_state = "pig"
+	item_state = "pig"
+	flags = BLOCKHAIR
+	flags_inv = HIDEFACE
+	w_class = 2
+	var/voicechange = 1
+
+/obj/item/clothing/mask/spig/speechModification(message)
+	if(voicechange)
+		message = pick("Oink!","Squeeeeeeee!","Oink Oink!")
+	return message
+
+/obj/item/clothing/mask/cowmask
+	name = "Cowface"
+	desc = "It looks like a mask, but closer inspection reveals it's melded onto this persons face!"
+	icon = 'icons/mob/mask.dmi'
+	icon_state = "cowmask"
+	item_state = "cowmask"
+	flags = BLOCKHAIR
+	flags_inv = HIDEFACE
+	w_class = 2
+	var/voicechange = 1
+
+/obj/item/clothing/mask/cowmask/speechModification(message)
+	if(voicechange)
+		message = pick("Moooooooo!","Moo!","Moooo!")
+	return message
 
 /obj/item/clothing/mask/horsehead
 	name = "horse head mask"
@@ -58,9 +100,55 @@
 	flags = BLOCKHAIR
 	flags_inv = HIDEFACE
 	w_class = 2
-	var/voicechange = 0
+	var/voicechange = 1
 
 /obj/item/clothing/mask/horsehead/speechModification(message)
 	if(voicechange)
 		message = pick("NEEIIGGGHHHH!", "NEEEIIIIGHH!", "NEIIIGGHH!", "HAAWWWWW!", "HAAAWWW!")
 	return message
+
+/obj/item/clothing/mask/bandana
+	name = "botany bandana"
+	desc = "A fine bandana with nanotech lining and a hydroponics pattern."
+	w_class = 1
+	flags = MASKCOVERSMOUTH
+	flags_inv = HIDEFACE
+	visor_flags = MASKCOVERSMOUTH
+	visor_flags_inv = HIDEFACE
+	slot_flags = SLOT_MASK
+	ignore_maskadjust = 0
+	adjusted_flags = SLOT_HEAD
+	icon_state = "bandbotany"
+
+/obj/item/clothing/mask/bandana/attack_self(var/mob/user)
+	adjustmask(user)
+
+/obj/item/clothing/mask/bandana/red
+	name = "red bandana"
+	desc = "A fine red bandana with nanotech lining."
+	icon_state = "bandred"
+
+/obj/item/clothing/mask/bandana/blue
+	name = "blue bandana"
+	desc = "A fine blue bandana with nanotech lining."
+	icon_state = "bandblue"
+
+/obj/item/clothing/mask/bandana/green
+	name = "green bandana"
+	desc = "A fine green bandana with nanotech lining."
+	icon_state = "bandgreen"
+
+/obj/item/clothing/mask/bandana/gold
+	name = "gold bandana"
+	desc = "A fine gold bandana with nanotech lining."
+	icon_state = "bandgold"
+
+/obj/item/clothing/mask/bandana/black
+	name = "black bandana"
+	desc = "A fine black bandana with nanotech lining."
+	icon_state = "bandblack"
+
+/obj/item/clothing/mask/bandana/skull
+	name = "skull bandana"
+	desc = "A fine black bandana with nanotech lining and a skull emblem."
+	icon_state = "bandskull"

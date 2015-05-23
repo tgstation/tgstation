@@ -23,8 +23,8 @@ Borg Hypospray
 	var/recharge_time = 5 //Time it takes for shots to recharge (in seconds)
 
 	var/list/datum/reagents/reagent_list = list()
-	var/list/reagent_ids = list("doctorsdelight", "inaprovaline", "spaceacillin")
-	//var/list/reagent_ids = list("dexalin", "kelotane", "bicaridine", "anti_toxin", "inaprovaline", "spaceacillin")
+	var/list/reagent_ids = list("salbutamol", "salglu_solution", "charcoal", "epinephrine", "spaceacillin")
+	//var/list/reagent_ids = list("salbutamol", "salglu_solution", "salglu_solution", "charcoal", "ephedrine", "spaceacillin")
 	var/list/modes = list() //Basically the inverse of reagent_ids. Instead of having numbers as "keys" and strings as values it has strings as keys and numbers as values.
 								//Used as list for input() in shakers.
 
@@ -38,11 +38,11 @@ Borg Hypospray
 		modes[R] = iteration
 		iteration++
 
-	processing_objects.Add(src)
+	SSobj.processing |= src
 
 
 /obj/item/weapon/reagent_containers/borghypo/Destroy()
-	processing_objects.Remove(src)
+	SSobj.processing.Remove(src)
 	..()
 
 
@@ -123,7 +123,7 @@ Borg Hypospray
 			empty = 0
 
 	if(empty)
-		usr << "<span class='notice'>It is currently empty. Allow some time for the internal syntheszier to produce more.</span>"
+		usr << "<span class='warning'>It is currently empty! Allow some time for the internal syntheszier to produce more.</span>"
 /*
 Borg Shaker
 */
@@ -136,7 +136,7 @@ Borg Shaker
 	charge_cost = 20 //Lots of reagents all regenerating at once, so the charge cost is lower. They also regenerate faster.
 	recharge_time = 3
 
-	reagent_ids = list("beer", "orangejuice", "limejuice", "tomatojuice", "cola", "tonic", "sodawater", "ice", "cream", "whiskey", "vodka", "rum", "gin", "tequilla", "vermouth", "wine", "kahlua", "cognac", "ale")
+	reagent_ids = list("beer", "orangejuice", "limejuice", "tomatojuice", "cola", "tonic", "sodawater", "ice", "cream", "whiskey", "vodka", "rum", "gin", "tequila", "vermouth", "wine", "kahlua", "cognac", "ale")
 
 /obj/item/weapon/reagent_containers/borghypo/borgshaker/attack(mob/M as mob, mob/user as mob)
 	return //Can't inject stuff with a shaker, can we?
@@ -167,7 +167,7 @@ Borg Shaker
 	else if(target.is_open_container() && target.reagents)
 		var/datum/reagents/R = reagent_list[mode]
 		if(!R.total_volume)
-			user << "<span class='notice'>[src] is currently out of this ingredient. Please allow some time for the synthesizer to produce more.</span>"
+			user << "<span class='warning'>[src] is currently out of this ingredient! Please allow some time for the synthesizer to produce more.</span>"
 			return
 
 		if(target.reagents.total_volume >= target.reagents.maximum_volume)
@@ -187,7 +187,7 @@ Borg Shaker
 		empty = 0
 
 	if(empty)
-		usr << "<span class='notice'>It is currently empty. Please allow some time for the synthesizer to produce more.</span>"
+		usr << "<span class='warning'>It is currently empty! Please allow some time for the synthesizer to produce more.</span>"
 
 /obj/item/weapon/reagent_containers/borghypo/borgshaker/hacked
 	..()

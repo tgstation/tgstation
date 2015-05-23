@@ -24,7 +24,7 @@
 				minor_announce(config.alert_desc_green, "Attention! Security level lowered to green:")
 				security_level = SEC_LEVEL_GREEN
 				for(var/obj/machinery/firealarm/FA in world)
-					if(FA.z == 1)
+					if(FA.z == ZLEVEL_STATION)
 						FA.update_icon()
 			if(SEC_LEVEL_BLUE)
 				if(security_level < SEC_LEVEL_BLUE)
@@ -33,7 +33,7 @@
 					minor_announce(config.alert_desc_blue_downto, "Attention! Security level lowered to blue:")
 				security_level = SEC_LEVEL_BLUE
 				for(var/obj/machinery/firealarm/FA in world)
-					if(FA.z == 1)
+					if(FA.z == ZLEVEL_STATION)
 						FA.update_icon()
 			if(SEC_LEVEL_RED)
 				if(security_level < SEC_LEVEL_RED)
@@ -48,13 +48,13 @@
 					CC.post_status("alert", "redalert")*/
 
 				for(var/obj/machinery/firealarm/FA in world)
-					if(FA.z == 1)
+					if(FA.z == ZLEVEL_STATION)
 						FA.update_icon()
 			if(SEC_LEVEL_DELTA)
 				minor_announce(config.alert_desc_delta, "Attention! Delta security level reached!",1)
 				security_level = SEC_LEVEL_DELTA
 				for(var/obj/machinery/firealarm/FA in world)
-					if(FA.z == 1)
+					if(FA.z == ZLEVEL_STATION)
 						FA.update_icon()
 	else
 		return

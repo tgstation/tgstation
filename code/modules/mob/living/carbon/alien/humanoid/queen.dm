@@ -22,29 +22,34 @@
 			break
 
 	real_name = src.name
-	verbs.Add(/mob/living/carbon/alien/humanoid/proc/corrosive_acid,/mob/living/carbon/alien/humanoid/proc/neurotoxin,/mob/living/carbon/alien/humanoid/proc/resin)
+
+	AddAbility(new/obj/effect/proc_holder/alien/acid(null))
+	AddAbility(new/obj/effect/proc_holder/alien/neurotoxin(null))
+	AddAbility(new/obj/effect/proc_holder/alien/resin(null))
+	AddAbility(new/obj/effect/proc_holder/alien/lay_egg(null))
+
 	..()
 
-/mob/living/carbon/alien/humanoid/queen/handle_regular_hud_updates()
-	..() //-Yvarov
-
+/mob/living/carbon/alien/humanoid/queen/handle_hud_icons_health()
 	if (src.healths)
 		if (src.stat != 2)
 			switch(health)
 				if(250 to INFINITY)
 					src.healths.icon_state = "health0"
-				if(175 to 250)
+				if(200 to 250)
 					src.healths.icon_state = "health1"
-				if(100 to 175)
+				if(150 to 200)
 					src.healths.icon_state = "health2"
-				if(50 to 100)
+				if(100 to 150)
 					src.healths.icon_state = "health3"
-				if(0 to 50)
+				if(50 to 100)
 					src.healths.icon_state = "health4"
-				else
+				if(0 to 50)
 					src.healths.icon_state = "health5"
+				else
+					src.healths.icon_state = "health6"
 		else
-			src.healths.icon_state = "health6"
+			src.healths.icon_state = "health7"
 
 /mob/living/carbon/alien/humanoid/queen/movement_delay()
 	. = ..()
@@ -52,29 +57,27 @@
 
 
 //Queen verbs
-/mob/living/carbon/alien/humanoid/queen/verb/lay_egg()
+/obj/effect/proc_holder/alien/lay_egg
+	name = "Lay Egg"
+	desc = "Lay an egg to produce huggers to impregnate prey with."
+	plasma_cost = 75
+	check_turf = 1
 
-	set name = "Lay Egg (75)"
-	set desc = "Lay an egg to produce huggers to impregnate prey with."
-	set category = "Alien"
+	action_icon_state = "alien_egg"
 
-	if(locate(/obj/structure/alien/egg) in get_turf(src))
-		src << "There's already an egg here."
-		return
-
-	if(powerc(75,1))//Can't plant eggs on spess tiles. That's silly.
-		adjustToxLoss(-75)
-		for(var/mob/O in viewers(src, null))
-			O.show_message(text("<span class='alertalien'>[src] has laid an egg!</span>"), 1)
-		new /obj/structure/alien/egg(loc)
-	return
-
+/obj/effect/proc_holder/alien/lay_egg/fire(var/mob/living/carbon/alien/user)
+	if(locate(/obj/structure/alien/egg) in get_turf(user))
+		user << "There's already an egg here."
+		return 0
+	user.visible_message("<span class='alertalien'>[user] has laid an egg!</span>")
+	new /obj/structure/alien/egg(user.loc)
+	return 1
 
 /mob/living/carbon/alien/humanoid/queen/large
 	icon = 'icons/mob/alienqueen.dmi'
 	icon_state = "queen_s"
 	pixel_x = -16
-	mob_size = 2
+	mob_size = MOB_SIZE_LARGE
 
 /mob/living/carbon/alien/humanoid/queen/large/update_icons()
 	update_hud()		//TODO: remove the need for this to be here

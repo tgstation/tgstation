@@ -5,6 +5,7 @@
 	m_amt = 500
 	g_amt = 50
 	origin_tech = "magnets=1"
+	attachable = 1
 
 	var/timing = 0
 	var/time = 5
@@ -26,10 +27,10 @@
 /obj/item/device/assembly/timer/toggle_secure()
 	secured = !secured
 	if(secured)
-		processing_objects.Add(src)
+		SSobj.processing |= src
 	else
 		timing = 0
-		processing_objects.Remove(src)
+		SSobj.processing.Remove(src)
 	update_icon()
 	return secured
 
@@ -38,8 +39,7 @@
 	if((!secured)||(cooldown > 0))
 		return 0
 	pulse(0)
-	if(src.loc)
-		src.loc.audible_message("\icon[src] *beep* *beep*", null, 3)
+	audible_message("\icon[src] *beep* *beep*", null, 3)
 	cooldown = 2
 	spawn(10)
 		process_cooldown()

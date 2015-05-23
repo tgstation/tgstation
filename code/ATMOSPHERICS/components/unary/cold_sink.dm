@@ -22,7 +22,7 @@
 
 	return
 
-/obj/machinery/atmospherics/unary/cold_sink/process()
+/obj/machinery/atmospherics/unary/cold_sink/process_atmos()
 	..()
 	if(!on)
 		return 0

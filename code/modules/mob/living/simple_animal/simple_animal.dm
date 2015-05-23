@@ -7,7 +7,7 @@
 	status_flags = CANPUSH
 
 	var/icon_living = ""
-	var/icon_dead = ""
+	var/icon_dead = "" //icon when the animal is dead. Don't use animated icons for this.
 	var/icon_gib = null	//We only try to show a gibbing animation if this exists.
 
 	var/list/speak = list()
@@ -18,8 +18,7 @@
 
 	var/turns_per_move = 1
 	var/turns_since_move = 0
-	var/meat_amount = 0
-	var/meat_type
+	var/list/butcher_results = null
 	var/stop_automated_movement = 0 //Use this to temporarely stop random movement or to if you write special movement code for animals.
 	var/wander = 1	// Does the mob wander around when idle?
 	var/stop_automated_movement_when_pulled = 1 //When set to 1 this stops the animal from moving when someone is pulling it.
@@ -34,20 +33,10 @@
 	//Temperature effect
 	var/minbodytemp = 250
 	var/maxbodytemp = 350
-	var/heat_damage_per_tick = 3	//amount of damage applied if animal's body temperature is higher than maxbodytemp
-	var/cold_damage_per_tick = 2	//same as heat_damage_per_tick, only if the bodytemperature it's lower than minbodytemp
 
 	//Atmos effect - Yes, you can make creatures that require plasma or co2 to survive. N2O is a trace gas and handled separately, hence why it isn't here. It'd be hard to add it. Hard and me don't mix (Yes, yes make all the dick jokes you want with that.) - Errorage
-	var/min_oxy = 5
-	var/max_oxy = 0					//Leaving something at 0 means it's off - has no maximum
-	var/min_tox = 0
-	var/max_tox = 1
-	var/min_co2 = 0
-	var/max_co2 = 5
-	var/min_n2 = 0
-	var/max_n2 = 0
+	var/list/atmos_requirements = list("min_oxy" = 5, "max_oxy" = 0, "min_tox" = 0, "max_tox" = 1, "min_co2" = 0, "max_co2" = 5, "min_n2" = 0, "max_n2" = 0) //Leaving something at 0 means it's off - has no maximum
 	var/unsuitable_atmos_damage = 2	//This damage is taken when atmos doesn't fit all the requirements above
-
 
 	//LETTING SIMPLE ANIMALS ATTACK? WHAT COULD GO WRONG. Defaults to zero so Ian can still be cuddly
 	var/melee_damage_lower = 0
@@ -66,7 +55,7 @@
 
 	//simple_animal access
 	var/obj/item/weapon/card/id/access_card = null	//innate access uses an internal ID card
-
+	var/flying = 0 //whether it's flying or touching the ground.
 
 /mob/living/simple_animal/New()
 	..()
@@ -80,48 +69,64 @@
 	..()
 
 /mob/living/simple_animal/updatehealth()
-	return
+	..()
+	health = Clamp(health, 0, maxHealth)
 
 /mob/living/simple_animal/Life()
+	if(..())
+		if(!client && !stat)
+			handle_automated_movement()
 
-	//Health
-	if(stat == DEAD)
-		if(health > 0)
-			icon_state = icon_living
-			dead_mob_list -= src
-			living_mob_list += src
-			stat = CONSCIOUS
-			density = 1
-			update_canmove()
-		return 0
+			handle_automated_speech()
+		return 1
 
+/mob/living/simple_animal/handle_regular_status_updates()
+	if(..()) //alive
+		if(health < 1)
+			death()
+			return 0
+		return 1
 
-	if(health < 1 && stat != DEAD)
-		Die()
+/mob/living/simple_animal/handle_disabilities()
+	//Eyes
+	if(disabilities & BLIND || stat)
+		eye_blind = max(eye_blind, 1)
+	else
+		if(eye_blind)
+			eye_blind = 0
+		if(eye_blurry)
+			eye_blurry = 0
+		if(eye_stat)
+			eye_stat = 0
 
-	if(health > maxHealth)
-		health = maxHealth
+	//Ears
+	if(disabilities & DEAF)
+		setEarDamage(-1, max(ear_deaf, 1))
+	else if(ear_damage < 100)
+		setEarDamage(0, 0)
 
-	if(stunned)
-		AdjustStunned(-1)
-	if(weakened)
-		AdjustWeakened(-1)
-	if(paralysis)
-		AdjustParalysis(-1)
+/mob/living/simple_animal/handle_status_effects()
+	..()
+	if(stuttering)
+		stuttering = 0
 
-	//Movement
-	if(!client && !stop_automated_movement && wander)
+	if(druggy)
+		druggy = 0
+
+/mob/living/simple_animal/proc/handle_automated_movement()
+	if(!stop_automated_movement && wander)
 		if(isturf(src.loc) && !resting && !buckled && canmove)		//This is so it only moves if it's not inside a closet, gentics machine, etc.
 			turns_since_move++
 			if(turns_since_move >= turns_per_move)
-				if(!(stop_automated_movement_when_pulled && pulledby)) //Soma animals don't move when pulled
+				if(!(stop_automated_movement_when_pulled && pulledby)) //Some animals don't move when pulled
 					var/anydir = pick(cardinal)
 					if(Process_Spacemove(anydir))
 						Move(get_step(src, anydir), anydir)
 						turns_since_move = 0
+			return 1
 
-	//Speaking
-	if(!client && speak_chance)
+/mob/living/simple_animal/proc/handle_automated_speech()
+	if(speak_chance)
 		if(rand(0,200) < speak_chance)
 			if(speak && speak.len)
 				if((emote_hear && emote_hear.len) || (emote_see && emote_see.len))
@@ -155,13 +160,13 @@
 						emote("me", 2, pick(emote_hear))
 
 
-	//Atmos
+/mob/living/simple_animal/handle_environment(datum/gas_mixture/environment)
 	var/atmos_suitable = 1
 
 	var/atom/A = src.loc
 	if(isturf(A))
 		var/turf/T = A
-		var/areatemp = T.temperature
+		var/areatemp = get_temperature(environment)
 		if( abs(areatemp - bodytemperature) > 40 )
 			var/diff = areatemp - bodytemperature
 			diff = diff / 5
@@ -176,47 +181,41 @@
 				var/n2  = ST.air.nitrogen
 				var/co2 = ST.air.carbon_dioxide
 
-				if(min_oxy)
-					if(oxy < min_oxy)
-						atmos_suitable = 0
-				if(max_oxy)
-					if(oxy > max_oxy)
-						atmos_suitable = 0
-				if(min_tox)
-					if(tox < min_tox)
-						atmos_suitable = 0
-				if(max_tox)
-					if(tox > max_tox)
-						atmos_suitable = 0
-				if(min_n2)
-					if(n2 < min_n2)
-						atmos_suitable = 0
-				if(max_n2)
-					if(n2 > max_n2)
-						atmos_suitable = 0
-				if(min_co2)
-					if(co2 < min_co2)
-						atmos_suitable = 0
-				if(max_co2)
-					if(co2 > max_co2)
-						atmos_suitable = 0
+				if(atmos_requirements["min_oxy"] && oxy < atmos_requirements["min_oxy"])
+					atmos_suitable = 0
+				else if(atmos_requirements["max_oxy"] && oxy > atmos_requirements["max_oxy"])
+					atmos_suitable = 0
+				else if(atmos_requirements["min_tox"] && tox < atmos_requirements["min_tox"])
+					atmos_suitable = 0
+				else if(atmos_requirements["max_tox"] && tox > atmos_requirements["max_tox"])
+					atmos_suitable = 0
+				else if(atmos_requirements["min_n2"] && n2 < atmos_requirements["min_n2"])
+					atmos_suitable = 0
+				else if(atmos_requirements["max_n2"] && n2 > atmos_requirements["max_n2"])
+					atmos_suitable = 0
+				else if(atmos_requirements["min_co2"] && co2 < atmos_requirements["min_co2"])
+					atmos_suitable = 0
+				else if(atmos_requirements["max_co2"] && co2 > atmos_requirements["max_co2"])
+					atmos_suitable = 0
 
-	//Atmos effect
+				if(!atmos_suitable)
+					adjustBruteLoss(unsuitable_atmos_damage)
+
+	handle_temperature_damage()
+
+/mob/living/simple_animal/proc/handle_temperature_damage()
 	if(bodytemperature < minbodytemp)
-		adjustBruteLoss(cold_damage_per_tick)
+		adjustBruteLoss(2)
 	else if(bodytemperature > maxbodytemp)
-		adjustBruteLoss(heat_damage_per_tick)
-
-	if(!atmos_suitable)
-		adjustBruteLoss(unsuitable_atmos_damage)
-	return 1
+		adjustBruteLoss(3)
 
 /mob/living/simple_animal/gib(var/animation = 0)
 	if(icon_gib)
 		flick(icon_gib, src)
-	if(meat_amount && meat_type)
-		for(var/i = 0; i < meat_amount; i++)
-			new meat_type(src.loc)
+	if(butcher_results)
+		for(var/path in butcher_results)
+			for(var/i = 1; i <= butcher_results[path];i++)
+				new path(src.loc)
 	..()
 
 
@@ -224,12 +223,13 @@
 	adjustBruteLoss(20)
 	return
 
-/mob/living/simple_animal/say_quote(var/text)
-	if(speak_emote && speak_emote.len)
+/mob/living/simple_animal/say_quote(input)
+	var/ending = copytext(input, length(input))
+	if(speak_emote && speak_emote.len && ending != "?" && ending != "!")
 		var/emote = pick(speak_emote)
 		if(emote)
-			return "[emote], \"[text]\""
-	return "says, \"[text]\"";
+			return "[emote], \"[input]\""
+	return ..()
 
 /mob/living/simple_animal/emote(var/act, var/m_type=1, var/message = null)
 	if(stat)
@@ -243,14 +243,20 @@
 	if(..())
 		var/damage = rand(M.melee_damage_lower, M.melee_damage_upper)
 		attack_threshold_check(damage)
+		return 1
 
 /mob/living/simple_animal/bullet_act(var/obj/item/projectile/Proj)
 	if(!Proj)
 		return
-	if((Proj.damage_type != STAMINA))
-		adjustBruteLoss(Proj.damage)
-		Proj.on_hit(src, 0)
+	apply_damage(Proj.damage, Proj.damage_type)
+	Proj.on_hit(src, 0)
 	return 0
+
+/mob/living/simple_animal/adjustFireLoss(var/amount)
+	adjustBruteLoss(amount)
+
+/mob/living/simple_animal/adjustStaminaLoss(var/amount)
+	return
 
 /mob/living/simple_animal/attack_hand(mob/living/carbon/human/M as mob)
 	switch(M.a_intent)
@@ -267,16 +273,17 @@
 			M.do_attack_animation(src)
 			visible_message("<span class='danger'>[M] [response_harm] [src]!</span>")
 			playsound(loc, "punch", 25, 1, -1)
-			adjustBruteLoss(harm_intent_damage)
+			attack_threshold_check(harm_intent_damage)
 			add_logs(M, src, "attacked", admin=0)
 			updatehealth()
-	return
+			return 1
 
 /mob/living/simple_animal/attack_paw(mob/living/carbon/monkey/M as mob)
 	if(..()) //successful monkey bite.
 		if(stat != DEAD)
 			var/damage = rand(1, 3)
 			attack_threshold_check(damage)
+			return 1
 	if (M.a_intent == "help")
 		if (health > 0)
 			visible_message("<span class='notice'>[M.name] [response_help] [src].</span>")
@@ -286,13 +293,19 @@
 
 /mob/living/simple_animal/attack_alien(mob/living/carbon/alien/humanoid/M as mob)
 	if(..()) //if harm or disarm intent.
-		var/damage = rand(15, 30)
-		visible_message("<span class='danger'>[M] has slashed at [src]!</span>", \
-				"<span class='userdanger'>[M] has slashed at [src]!</span>")
-		playsound(loc, 'sound/weapons/slice.ogg', 25, 1, -1)
-		add_logs(M, src, "attacked", admin=0)
-		attack_threshold_check(damage)
-	return
+		if(M.a_intent == "disarm")
+			playsound(loc, 'sound/weapons/pierce.ogg', 25, 1, -1)
+			visible_message("<span class='danger'>[M] [response_disarm] [name]!</span>", \
+					"<span class='userdanger'>[M] [response_disarm] [name]!</span>")
+			add_logs(M, src, "disarmed", admin=0)
+		else
+			var/damage = rand(15, 30)
+			visible_message("<span class='danger'>[M] has slashed at [src]!</span>", \
+					"<span class='userdanger'>[M] has slashed at [src]!</span>")
+			playsound(loc, 'sound/weapons/slice.ogg', 25, 1, -1)
+			add_logs(M, src, "attacked", admin=0)
+			attack_threshold_check(damage)
+		return 1
 
 /mob/living/simple_animal/attack_larva(mob/living/carbon/alien/larva/L as mob)
 	if(..()) //successful larva bite
@@ -300,17 +313,15 @@
 		if(stat != DEAD)
 			L.amount_grown = min(L.amount_grown + damage, L.max_grown)
 			attack_threshold_check(damage)
+		return 1
 
-/mob/living/simple_animal/attack_slime(mob/living/carbon/slime/M as mob)
-	..()
-	var/damage = rand(1, 3)
-
-	if(M.is_adult)
-		damage = rand(20, 40)
-	else
-		damage = rand(5, 35)
-	attack_threshold_check(damage)
-	return
+/mob/living/simple_animal/attack_slime(mob/living/simple_animal/slime/M as mob)
+	if(..()) //successful slime attack
+		var/damage = rand(15, 25)
+		if(M.is_adult)
+			damage = rand(20, 35)
+		attack_threshold_check(damage)
+		return 1
 
 /mob/living/simple_animal/proc/attack_threshold_check(var/damage)
 	if(damage <= force_threshold)
@@ -320,11 +331,12 @@
 		updatehealth()
 
 
-/mob/living/simple_animal/attackby(var/obj/item/O as obj, var/mob/living/user as mob) //Marker -Agouri
+/mob/living/simple_animal/attackby(var/obj/item/O as obj, var/mob/living/user as mob, params) //Marker -Agouri
 	if(O.flags & NOBLUDGEON)
 		return
 
 	if(istype(O, /obj/item/stack/medical))
+		user.changeNext_move(CLICK_CD_MELEE)
 		if(stat != DEAD)
 			var/obj/item/stack/medical/MED = O
 			if(health < maxHealth)
@@ -345,28 +357,18 @@
 		else
 			user << "<span class='notice'> [src] is dead, medical items won't bring it back to life.</span>"
 			return
-	if(meat_type && (stat == DEAD))	//if the animal has a meat, and if it is dead.
-		if(istype(O, /obj/item/weapon/kitchenknife) || istype(O, /obj/item/weapon/butch))
-			harvest()
 
-	user.changeNext_move(CLICK_CD_MELEE)
-	user.do_attack_animation(src)
-	var/damage = 0
-	if(O.force)
-		if(O.force >= force_threshold)
-			damage = O.force
-			if (O.damtype == STAMINA)
-				damage = 0
-			visible_message("<span class='danger'>[user] has [O.attack_verb.len ? "[pick(O.attack_verb)]": "attacked"] [src] with [O]!</span>",\
-							"<span class='userdanger'>[user] has [O.attack_verb.len ? "[pick(O.attack_verb)]": "attacked"] you with [O]!</span>")
-		else
-			visible_message("<span class='danger'>[O] bounces harmlessly off of [src].</span>",\
-							"<span class='userdanger'>[O] bounces harmlessly off of [src].</span>")
-		playsound(loc, O.hitsound, 50, 1, -1)
-	else
-		user.visible_message("<span class='warning'>[user] gently taps [src] with [O].</span>",\
-							"<span class='warning'>This weapon is ineffective, it does no damage.</span>")
-	adjustBruteLoss(damage)
+	if((butcher_results) && (stat == DEAD))
+		user.changeNext_move(CLICK_CD_MELEE)
+		var/sharpness = is_sharp(O)
+		if(sharpness)
+			user << "<span class='notice'>You begin to butcher [src]...</span>"
+			playsound(loc, 'sound/weapons/slice.ogg', 50, 1, -1)
+			if(do_mob(user, src, 80/sharpness))
+				harvest(user)
+			return
+
+	..()
 
 /mob/living/simple_animal/movement_delay()
 	var/tally = 0 //Incase I need to add stuff other than "speed" later
@@ -378,25 +380,18 @@
 /mob/living/simple_animal/Stat()
 	..()
 
-	statpanel("Status")
-	stat(null, "Health: [round((health / maxHealth) * 100)]%")
+	if(statpanel("Status"))
+		stat(null, "Health: [round((health / maxHealth) * 100)]%")
+		return 1
 
-/mob/living/simple_animal/proc/Die()
-	health = 0 // so /mob/living/simple_animal/Life() doesn't magically revive them
-	dead_mob_list += src
+/mob/living/simple_animal/death(gibbed)
+	health = 0
 	icon_state = icon_dead
 	stat = DEAD
 	density = 0
-	return
-
-/mob/living/simple_animal/death(gibbed)
-	if(stat == DEAD)
-		return
-
 	if(!gibbed)
 		visible_message("<span class='danger'>\the [src] stops moving...</span>")
-
-	Die()
+	..()
 
 /mob/living/simple_animal/ex_act(severity, target)
 	..()
@@ -408,14 +403,9 @@
 		if (2.0)
 			adjustBruteLoss(60)
 
-
 		if(3.0)
 			adjustBruteLoss(30)
-
-/mob/living/simple_animal/adjustBruteLoss(damage)
-	health = Clamp(health - damage, 0, maxHealth)
-	if(health < 1 && stat != DEAD)
-		Die()
+	updatehealth()
 
 /mob/living/simple_animal/proc/CanAttack(var/atom/the_target)
 	if(see_invisible < the_target.invisibility)
@@ -430,6 +420,8 @@
 			return 0
 	return 1
 
+/mob/living/simple_animal/handle_fire()
+	return
 
 /mob/living/simple_animal/update_fire()
 	return
@@ -440,6 +432,9 @@
 
 /mob/living/simple_animal/revive()
 	health = maxHealth
+	icon_state = icon_living
+	density = initial(density)
+	update_canmove()
 	..()
 
 /mob/living/simple_animal/proc/make_babies() // <3 <3 <3
@@ -457,7 +452,7 @@
 		else if(istype(M, childtype)) //Check for children FIRST.
 			children++
 		else if(istype(M, species))
-			if(M.client)
+			if(M.ckey)
 				continue
 			else if(!istype(M, childtype) && M.gender == MALE) //Better safe than sorry ;_;
 				partner = M
@@ -468,9 +463,9 @@
 		new childtype(loc)
 
 // Harvest an animal's delicious byproducts
-/mob/living/simple_animal/proc/harvest()
+/mob/living/simple_animal/proc/harvest(mob/living/user)
+	visible_message("<span class='notice'>[user] butchers [src].</span>")
 	gib()
-	return
 
 /mob/living/simple_animal/stripPanelUnequip(obj/item/what, mob/who, where, child_override)
 	if(!child_override)
@@ -485,3 +480,25 @@
 		return
 	else
 		..()
+
+/mob/living/simple_animal/update_canmove()
+	if(paralysis || stunned || weakened || stat || resting || buckled)
+		drop_r_hand()
+		drop_l_hand()
+		canmove = 0
+	else
+		canmove = 1
+	update_transform()
+	return canmove
+
+/mob/living/simple_animal/update_transform()
+	var/matrix/ntransform = matrix(transform) //aka transform.Copy()
+	var/changed = 0
+	
+	if(resize != RESIZE_DEFAULT_SIZE)
+		changed++
+		ntransform.Scale(resize)
+		resize = RESIZE_DEFAULT_SIZE
+	
+	if(changed)
+		animate(src, transform = ntransform, time = 2, easing = EASE_IN|EASE_OUT)

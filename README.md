@@ -71,6 +71,18 @@ compiled tgstation.dmb file.  Make sure to set the port to the one you
 specified in the config.txt, and set the Security box to 'Safe'.  Then press GO
 and the server should start up and be ready to join.
 
+###HOSTING ON LINUX
+We use BYGEX for some of our text replacement related code. Unfortunately, we
+only have a windows dll included right now. If you're up to it, you can head
+over to https://code.google.com/p/byond-regex/ and compile it for linux.
+
+Otherwise, edit the file `code/_compile_options.dm`, and comment out:
+`#define USE_BYGEX`
+at the bottom, so that it looks like this:
+`//#define USE_BYGEX`
+Recompile the codebase afterwards.
+
+
 ##UPDATING
 
 To update an existing installation, first back up your /config and /data folders
@@ -123,7 +135,9 @@ Please see [CONTRIBUTING.md](CONTRIBUTING.md)
 
 ##LICENSE
 
-All code is under a GNU GPL v3 license (http://www.gnu.org/licenses/gpl.html),
-including tools unless their readme specifies otherwise.
+All code after commit 333c566b88108de218d882840e61928a9b759d8f on 2014/31/12 at 4:38 PM PST (https://github.com/tgstation/-tg-station/commit/333c566b88108de218d882840e61928a9b759d8f) is licensed under GNU AGPL v3 (http://www.gnu.org/licenses/agpl-3.0.html).
+All code before commit 333c566b88108de218d882840e61928a9b759d8f on 2014/31/12 at 4:38 PM PST (https://github.com/tgstation/-tg-station/commit/333c566b88108de218d882840e61928a9b759d8f) is licensed under GNU GPL v3 (https://www.gnu.org/licenses/gpl-3.0.html).
+
+including tools unless their readme specifies otherwise. See LICENSE-AGPLv3.txt and LICENSE-GPLv3.txt for more details.
 All content including icons and sound is under a Creative Commons 3.0 BY-SA
 license (http://creativecommons.org/licenses/by-sa/3.0/).

@@ -39,11 +39,11 @@
 
 	for(var/turf/simulated/wall/W in orange(src,1))
 		if(abs(src.x-W.x)-abs(src.y-W.y)) //doesn't count diagonal walls
-			if(walltype == W.walltype)//Only 'like' walls connect -Sieve
+			if(mineral == W.mineral)//Only 'like' walls connect -Sieve
 				junction |= get_dir(src,W)
 	for(var/obj/structure/falsewall/W in orange(src,1))
 		if(abs(src.x-W.x)-abs(src.y-W.y)) //doesn't count diagonal walls
-			if(walltype == W.walltype)
+			if(mineral == W.mineral)
 				junction |= get_dir(src,W)
 	icon_state = "[walltype][junction]"
 	return
@@ -95,9 +95,9 @@
 		qdel(src)
 	return T
 
-/obj/structure/falsewall/attackby(obj/item/weapon/W, mob/user)
+/obj/structure/falsewall/attackby(obj/item/weapon/W, mob/user, params)
 	if(opening)
-		user << "<span class='warning'>You must wait until the door has stopped moving.</span>"
+		user << "<span class='warning'>You must wait until the door has stopped moving!</span>"
 		return
 
 	if(density)
@@ -109,7 +109,7 @@
 			if (!istype(T, /turf/simulated/floor))
 				user << "<span class='warning'>[src] bolts must be tightened on the floor!</span>"
 				return
-			user.visible_message("<span class='notice'>[user] tightens some bolts on the wall.</span>", "<span class='warning'>You tighten the bolts on the wall.</span>")
+			user.visible_message("<span class='notice'>[user] tightens some bolts on the wall.</span>", "<span class='notice'>You tighten the bolts on the wall.</span>")
 			ChangeToWall()
 		if(istype(W, /obj/item/weapon/weldingtool))
 			var/obj/item/weapon/weldingtool/WT = W
@@ -118,11 +118,16 @@
 	else
 		user << "<span class='warning'>You can't reach, close it first!</span>"
 
-	if(istype(W, /obj/item/weapon/pickaxe/plasmacutter) || istype(W, /obj/item/weapon/pickaxe/drill/diamonddrill) || istype(W, /obj/item/weapon/melee/energy/blade))
+	if(istype(W, /obj/item/weapon/gun/energy/plasmacutter))
+		dismantle(user)
+
+	if(istype(W, /obj/item/weapon/pickaxe/drill/jackhammer))
+		var/obj/item/weapon/pickaxe/drill/jackhammer/D = W
+		D.playDigSound()
 		dismantle(user)
 
 /obj/structure/falsewall/proc/dismantle(mob/user)
-	user.visible_message("<span class='notice'>[user] dismantles the false wall.</span>", "<span class='warning'>You dismantle the false wall.</span>")
+	user.visible_message("<span class='notice'>[user] dismantles the false wall.</span>", "<span class='notice'>You dismantle the false wall.</span>")
 	new /obj/structure/girder/displaced(loc)
 	if(mineral == "metal")
 		if(istype(src, /obj/structure/falsewall/reinforced))
@@ -146,6 +151,7 @@
 	name = "reinforced wall"
 	desc = "A huge chunk of reinforced metal used to seperate rooms."
 	icon_state = "r_wall"
+	walltype = "rwall"
 
 /obj/structure/falsewall/reinforced/ChangeToWall(delete = 1)
 	var/turf/T = get_turf(src)
@@ -167,25 +173,6 @@
 	else
 		icon_state = "frwall_open"
 
-/obj/structure/falsewall/reinforced/relativewall()
-
-	if(!density)
-		icon_state = "frwall_open"
-		return
-
-	var/junction = 0 //will be used to determine from which side the wall is connected to other walls
-
-	for(var/turf/simulated/wall/W in orange(src,1))
-		if(abs(src.x-W.x)-abs(src.y-W.y)) //doesn't count diagonal walls
-			if(src.walltype == W.walltype)//Only 'like' walls connect -Sieve
-				junction |= get_dir(src,W)
-	for(var/obj/structure/falsewall/W in orange(src,1))
-		if(abs(src.x-W.x)-abs(src.y-W.y)) //doesn't count diagonal walls
-			if(src.walltype == W.walltype)
-				junction |= get_dir(src,W)
-	icon_state = "rwall[junction]"
-	return
-
 /*
  * Uranium Falsewalls
  */
@@ -199,7 +186,7 @@
 	var/active = null
 	var/last_event = 0
 
-/obj/structure/falsewall/uranium/attackby(obj/item/weapon/W, mob/user)
+/obj/structure/falsewall/uranium/attackby(obj/item/weapon/W, mob/user, params)
 	radiate()
 	..()
 
@@ -212,8 +199,8 @@
 		if(world.time > last_event+15)
 			active = 1
 			for(var/mob/living/L in range(3,src))
-				L.apply_effect(12,IRRADIATE,0)
-			for(var/turf/simulated/wall/mineral/uranium/T in range(3,src))
+				L.irradiate(4)
+			for(var/turf/simulated/wall/mineral/uranium/T in orange(1,src))
 				T.radiate()
 			last_event = world.time
 			active = null
@@ -251,7 +238,7 @@
 	mineral = "plasma"
 	walltype = "plasma"
 
-/obj/structure/falsewall/plasma/attackby(obj/item/weapon/W, mob/user)
+/obj/structure/falsewall/plasma/attackby(obj/item/weapon/W, mob/user, params)
 	if(is_hot(W) > 300)
 		message_admins("Plasma falsewall ignited by [key_name(user, user.client)](<A HREF='?_src_=holder;adminmoreinfo=\ref[user]'>?</A>) in ([x],[y],[z] - <A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[x];Y=[y];Z=[z]'>JMP</a>)",0,1)
 		log_game("Plasma falsewall ignited by [user.ckey]([user]) in ([x],[y],[z])")

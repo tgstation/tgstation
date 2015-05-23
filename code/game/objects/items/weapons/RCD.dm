@@ -22,6 +22,7 @@ RCD
 	origin_tech = "engineering=4;materials=2"
 	var/datum/effect/effect/system/spark_spread/spark_system
 	var/matter = 0
+	var/max_matter = 100
 	var/working = 0
 	var/mode = 1
 	var/canRwall = 0
@@ -92,25 +93,31 @@ RCD
 
 
 /obj/item/weapon/rcd/New()
-	desc = "A RCD. It currently holds [matter]/100 matter-units."
+	desc = "A RCD. It currently holds [matter]/[max_matter] matter-units."
 	src.spark_system = new /datum/effect/effect/system/spark_spread
 	spark_system.set_up(5, 0, src)
 	spark_system.attach(src)
 	return
 
 
-/obj/item/weapon/rcd/attackby(obj/item/weapon/W, mob/user)
+/obj/item/weapon/rcd/Destroy()
+	qdel(spark_system)
+	spark_system = null
+	return ..()
+
+/obj/item/weapon/rcd/attackby(obj/item/weapon/W, mob/user, params)
 	..()
 	if(istype(W, /obj/item/weapon/rcd_ammo))
-		if((matter + 20) > 100)
-			user << "<span class='notice'>The RCD cant hold any more matter-units.</span>"
+		var/obj/item/weapon/rcd_ammo/R = W
+		if((matter + R.ammoamt) > max_matter)
+			user << "<span class='warning'>The RCD can't hold any more matter-units!</span>"
 			return
 		user.drop_item()
 		qdel(W)
-		matter += 20
+		matter += R.ammoamt
 		playsound(src.loc, 'sound/machines/click.ogg', 50, 1)
-		user << "<span class='notice'>The RCD now holds [matter]/30 matter-units.</span>"
-		desc = "A RCD. It currently holds [matter]/30 matter-units."
+		user << "<span class='notice'>The RCD now holds [matter]/[max_matter] matter-units.</span>"
+		desc = "A RCD. It currently holds [matter]/[max_matter] matter-units."
 		return
 
 
@@ -120,19 +127,19 @@ RCD
 	switch(mode)
 		if(1)
 			mode = 2
-			user << "<span class='notice'>Changed mode to 'Airlock'</span>"
+			user << "<span class='notice'>You change RCD's mode to 'Airlock'.</span>"
 			if(prob(20))
 				src.spark_system.start()
 			return
 		if(2)
 			mode = 3
-			user << "<span class='notice'>Changed mode to 'Deconstruct'</span>"
+			user << "<span class='notice'>You change RCD's mode to 'Deconstruct'.</span>"
 			if(prob(20))
 				src.spark_system.start()
 			return
 		if(3)
 			mode = 1
-			user << "<span class='notice'>Changed mode to 'Floor & Walls'</span>"
+			user << "<span class='notice'>You change RCD's mode to 'Floor & Walls'.</span>"
 			if(prob(20))
 				src.spark_system.start()
 			return
@@ -154,7 +161,7 @@ RCD
 		if(1)
 			if(istype(A, /turf/space))
 				if(useResource(1, user))
-					user << "Building Floor..."
+					user << "<span class='notice'>You start building floor...</span>"
 					activate()
 					A:ChangeTurf(/turf/simulated/floor/plating)
 					return 1
@@ -162,7 +169,7 @@ RCD
 
 			if(istype(A, /turf/simulated/floor))
 				if(checkResource(3, user))
-					user << "Building Wall ..."
+					user << "<span class='notice'>You start building wall...</span>"
 					playsound(src.loc, 'sound/machines/click.ogg', 50, 1)
 					if(do_after(user, 20))
 						if(!useResource(3, user)) return 0
@@ -174,8 +181,14 @@ RCD
 		if(2)
 			if(istype(A, /turf/simulated/floor))
 				if(checkResource(10, user))
-					if(!locate(/obj/machinery/door) in A)
-						user << "Building Airlock..."
+					var/door_check = 1
+					for(var/obj/machinery/door/D in A)
+						if(!D.sub_door)
+							door_check = 0
+							break
+
+					if(door_check)
+						user << "<span class='notice'>You start building airlock...</span>"
 						playsound(src.loc, 'sound/machines/click.ogg', 50, 1)
 						if(do_after(user, 50))
 							if(!useResource(10, user)) return 0
@@ -189,7 +202,7 @@ RCD
 							return 1
 						return 0
 					else
-						user << "There is another door here!"
+						user << "<span class='warning'>There is another door here!</span>"
 						return 0
 				return 0
 
@@ -198,7 +211,7 @@ RCD
 				if(istype(A, /turf/simulated/wall/r_wall) && !canRwall)
 					return 0
 				if(checkResource(5, user))
-					user << "Deconstructing Wall..."
+					user << "<span class='notice'>You start deconstructing wall...</span>"
 					playsound(src.loc, 'sound/machines/click.ogg', 50, 1)
 					if(do_after(user, 40))
 						if(!useResource(5, user)) return 0
@@ -209,7 +222,7 @@ RCD
 
 			if(istype(A, /turf/simulated/floor))
 				if(checkResource(5, user))
-					user << "Deconstructing Floor..."
+					user << "<span class='notice'>You start deconstructing floor...</span>"
 					playsound(src.loc, 'sound/machines/click.ogg', 50, 1)
 					if(do_after(user, 50))
 						if(!useResource(5, user)) return 0
@@ -220,7 +233,7 @@ RCD
 
 			if(istype(A, /obj/machinery/door/airlock))
 				if(checkResource(20, user))
-					user << "Deconstructing Airlock..."
+					user << "<span class='notice'>You start deconstructing airlock...</span>"
 					playsound(src.loc, 'sound/machines/click.ogg', 50, 1)
 					if(do_after(user, 50))
 						if(!useResource(20, user)) return 0
@@ -237,7 +250,7 @@ RCD
 	if(matter < amount)
 		return 0
 	matter -= amount
-	desc = "A RCD. It currently holds [matter]/30 matter-units."
+	desc = "A RCD. It currently holds [matter]/[max_matter] matter-units."
 	return 1
 
 /obj/item/weapon/rcd/proc/checkResource(var/amount, var/mob/user)
@@ -258,6 +271,15 @@ RCD
 	desc = "A device used to rapidly build walls/floor."
 	canRwall = 1
 
+/obj/item/weapon/rcd/loaded
+	matter = 100
+
+/obj/item/weapon/rcd/combat
+	name = "combat RCD"
+	max_matter = 500
+	matter = 500
+	canRwall = 1
+
 /obj/item/weapon/rcd_ammo
 	name = "compressed matter cartridge"
 	desc = "Highly compressed matter for the RCD."
@@ -270,3 +292,7 @@ RCD
 	origin_tech = "materials=2"
 	m_amt = 16000
 	g_amt = 8000
+	var/ammoamt = 20
+
+/obj/item/weapon/rcd_ammo/large
+	ammoamt = 100

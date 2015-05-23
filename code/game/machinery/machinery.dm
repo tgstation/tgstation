@@ -82,10 +82,13 @@ Class Procs:
       Called by machine to assign a value to the uid variable.
 
    process()                  'game/machinery/machine.dm'
-      Called by the 'master_controller' once per game tick for each machine that is listed in the 'machines' list.
+      Called by the 'machinery subsystem' once per machinery tick for each machine that is listed in its 'machines' list.
 
-	is_operational()
-		Returns 0 if the machine is unpowered, broken or undergoing maintenance, 1 if not
+   process_atmos()
+      Called by the 'air subsystem' once per atmos tick for each machine that is listed in its 'atmos_machines' list.
+
+   is_operational()
+		Returns 0 if the machine is unpowered, broken or undergoing maintenance, something else if not
 
 	Compiled by Aygar
 */
@@ -93,6 +96,7 @@ Class Procs:
 /obj/machinery
 	name = "machinery"
 	icon = 'icons/obj/stationobjs.dmi'
+	verb_yell = "blares"
 	var/stat = 0
 	var/emagged = 0
 	var/use_power = 1
@@ -115,15 +119,23 @@ Class Procs:
 /obj/machinery/New()
 	..()
 	machines += src
+	SSmachine.processing += src
 	auto_use_power()
 
 /obj/machinery/Destroy()
 	machines.Remove(src)
+	SSmachine.processing -= src
 	if(occupant)
-		open_machine()
+		dropContents()
 	..()
 
+/obj/machinery/proc/locate_machinery()
+	return
+
 /obj/machinery/process()//If you dont use process or power why are you here
+	return PROCESS_KILL
+
+/obj/machinery/proc/process_atmos()//If you dont use process why are you here
 	return PROCESS_KILL
 
 /obj/machinery/emp_act(severity)
@@ -138,7 +150,7 @@ Class Procs:
 		pulse2.dir = pick(cardinal)
 
 		spawn(10)
-			pulse2.delete()
+			qdel(pulse2)
 	..()
 
 /obj/machinery/proc/open_machine()
@@ -206,6 +218,7 @@ Class Procs:
 /obj/machinery/proc/is_operational()
 	return !(stat & (NOPOWER|BROKEN|MAINT))
 
+
 ////////////////////////////////////////////////////////////////////////////////////////////
 
 /mob/proc/canUseTopic() //TODO: once finished, place these procs on the respective mob files
@@ -220,13 +233,13 @@ Class Procs:
 		if(be_close && in_range(M, src))
 			return 1
 	else
-		src << "<span class='notice'>You don't have the dexterity to do this!</span>"
+		src << "<span class='warning'>You don't have the dexterity to do this!</span>"
 	return
 
 /mob/living/carbon/human/canUseTopic(atom/movable/M, be_close = 0)
-	if(restrained() || lying || stat || stunned || weakened)
+	if(incapacitated() || lying )
 		return
-	if(!in_range(M, src))
+	if(!Adjacent(M))
 		if((be_close == 0) && (dna.check_mutation(TK)))
 			if(tkMaxRangeCheck(src, M))
 				return 1
@@ -266,15 +279,18 @@ Class Procs:
 /obj/machinery/attack_paw(mob/user as mob)
 	return src.attack_hand(user)
 
-/obj/machinery/attack_hand(mob/user as mob, var/check_power = 1)
+//set_machine must be 0 if clicking the machinery doesn't bring up a dialog
+/obj/machinery/attack_hand(mob/user as mob, var/check_power = 1, var/set_machine = 1)
 	if(check_power && stat & NOPOWER)
+		user << "<span class='danger'>\The [src] seems unpowered.</span>"
 		return 1
 	if(!interact_offline && stat & (BROKEN|MAINT))
+		user << "<span class='danger'>\The [src] seems broken.</span>"
 		return 1
 	if(user.lying || user.stat)
 		return 1
 	if(!user.IsAdvancedToolUser())
-		usr << "<span class='danger'>You don't have the dexterity to do this!</span>"
+		usr << "<span class='warning'>You don't have the dexterity to do this!</span>"
 		return 1
 /*
 	//distance checks are made by atom/proc/DblClick
@@ -287,11 +303,12 @@ Class Procs:
 			visible_message("<span class='danger'>[H] stares cluelessly at [src] and drools.</span>")
 			return 1
 		else if(prob(H.getBrainLoss()))
-			user << "<span class='danger'>You momentarily forget how to use [src].</span>"
+			user << "<span class='warning'>You momentarily forget how to use [src]!</span>"
 			return 1
 
 	src.add_fingerprint(user)
-	user.set_machine(src)
+	if(set_machine)
+		user.set_machine(src)
 	return 0
 
 /obj/machinery/CheckParts()
@@ -304,6 +321,14 @@ Class Procs:
 /obj/machinery/proc/assign_uid()
 	uid = gl_uid
 	gl_uid++
+
+/obj/machinery/proc/default_pry_open(var/obj/item/weapon/crowbar/C)
+	. = !(state_open || panel_open || is_operational()) && istype(C)
+	if(.)
+		playsound(src.loc, 'sound/items/Crowbar.ogg', 50, 1)
+		visible_message("<span class = 'notice'>[usr] pry open \the [src].</span>", "<span class = 'notice'>You pry open \the [src].</span>")
+		open_machine()
+		return 1
 
 /obj/machinery/proc/default_deconstruction_crowbar(var/obj/item/weapon/crowbar/C, var/ignore_panel = 0)
 	. = istype(C) && (panel_open || ignore_panel)
@@ -342,10 +367,10 @@ Class Procs:
 
 /obj/machinery/proc/default_unfasten_wrench(mob/user, obj/item/weapon/wrench/W, time = 20)
 	if(istype(W))
-		user << "<span class='notice'>Now [anchored ? "un" : ""]securing [name].</span>"
+		user << "<span class='notice'>You begin [anchored ? "un" : ""]securing [name]...</span>"
 		playsound(src.loc, 'sound/items/Ratchet.ogg', 50, 1)
 		if(do_after(user, time))
-			user << "<span class='notice'>You've [anchored ? "un" : ""]secured [name].</span>"
+			user << "<span class='notice'>You [anchored ? "un" : ""]secure [name].</span>"
 			anchored = !anchored
 			playsound(src.loc, 'sound/items/Deconstruct.ogg', 50, 1)
 		return 1
@@ -386,3 +411,6 @@ Class Procs:
 //called on machinery construction (i.e from frame to machinery) but not on initialization
 /obj/machinery/proc/construction()
 	return
+
+/obj/machinery/allow_drop()
+	return 0

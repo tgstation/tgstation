@@ -51,7 +51,9 @@
 		if(PARALYZE)
 			Paralyse(effect * blocked)
 		if(IRRADIATE)
-			radiation += max(effect * ((100-run_armor_check(null, "rad", "Your clothes feel warm.", "Your clothes feel warm."))/100),0)//Rads auto check armor
+			radiation += max(effect * blocked, 0)
+		if(SLUR)
+			slurring = max(slurring,(effect * blocked))
 		if(STUTTER)
 			if(status_flags & CANSTUN) // stun is usually associated with stutter
 				stuttering = max(stuttering,(effect * blocked))
@@ -60,17 +62,19 @@
 		if(DROWSY)
 			drowsyness = max(drowsyness,(effect * blocked))
 		if(JITTER)
-			jitteriness = max(jitteriness,(effect * blocked))
+			if(status_flags & CANSTUN)
+				jitteriness = max(jitteriness,(effect * blocked))
 	updatehealth()
 	return 1
 
 
-/mob/living/proc/apply_effects(var/stun = 0, var/weaken = 0, var/paralyze = 0, var/irradiate = 0, var/stutter = 0, var/eyeblur = 0, var/drowsy = 0, var/blocked = 0, var/stamina = 0, var/jitter = 0)
+/mob/living/proc/apply_effects(var/stun = 0, var/weaken = 0, var/paralyze = 0, var/irradiate = 0, var/slur = 0, var/stutter = 0, var/eyeblur = 0, var/drowsy = 0, var/blocked = 0, var/stamina = 0, var/jitter = 0)
 	if(blocked >= 100)	return 0
 	if(stun)		apply_effect(stun, STUN, blocked)
 	if(weaken)		apply_effect(weaken, WEAKEN, blocked)
 	if(paralyze)	apply_effect(paralyze, PARALYZE, blocked)
 	if(irradiate)	apply_effect(irradiate, IRRADIATE, blocked)
+	if(slur)		apply_effect(slur, SLUR, blocked)
 	if(stutter)		apply_effect(stutter, STUTTER, blocked)
 	if(eyeblur)		apply_effect(eyeblur, EYE_BLUR, blocked)
 	if(drowsy)		apply_effect(drowsy, DROWSY, blocked)

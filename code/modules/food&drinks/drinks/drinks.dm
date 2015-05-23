@@ -11,6 +11,11 @@
 	possible_transfer_amounts = list(5,10,25)
 	volume = 50
 
+/obj/item/weapon/reagent_containers/food/drinks/New()
+	..()
+	pixel_x = rand(-5, 5)
+	pixel_y = rand(-5, 5)
+
 /obj/item/weapon/reagent_containers/food/drinks/on_reagent_change()
 	if (gulp_size < 5) gulp_size = 5
 	else gulp_size = max(round(reagents.total_volume / 5), 5)
@@ -28,10 +33,6 @@
 		return 0
 
 	if(M == user)
-		if(src.reagents.has_reagent("sugar") && M.satiety < -150 && M.nutrition > NUTRITION_LEVEL_STARVING + 50 )
-			M << "<span class='notice'>You don't feel like drinking any more sugary drink at the moment.</span>"
-			return 0
-
 		M << "<span class='notice'>You swallow a gulp of [src].</span>"
 		if(reagents.total_volume)
 			reagents.reaction(M, INGEST)
@@ -41,10 +42,10 @@
 		playsound(M.loc,'sound/items/drink.ogg', rand(10,50), 1)
 		return 1
 
-	M.visible_message("<span class='warning'>[user] attempts to feed [src] to [M].</span>", "<span class='notice'>You attempt to feed [src] to [M].</span>")
+	user.visible_message("<span class='warning'>[user] attempts to feed [src] to [M].</span>", "<span class='notice'>You attempt to feed [src] to [M].</span>")
 	if(!do_mob(user, M)) return
 	if(!reagents.total_volume) return // The drink might be empty after the delay, such as by spam-feeding
-	M.visible_message("<span class='warning'>[user] feeds [src] to [M].</span>", "<span class='notice'>You feed [src] to [M].</span>")
+	user.visible_message("<span class='warning'>[user] feeds [src] to [M].</span>", "<span class='notice'>You feed [src] to [M].</span>")
 	add_logs(user, M, "fed", object="[reagentlist(src)]")
 	if(reagents.total_volume)
 		reagents.reaction(M, INGEST)
@@ -90,6 +91,16 @@
 
 	return
 
+/obj/item/weapon/reagent_containers/food/drinks/attackby(var/obj/item/I, mob/user as mob, params)
+	if(istype(I, /obj/item/clothing/mask/cigarette)) //ciggies are weird
+		return
+	if(is_hot(I))
+		var/added_heat = (is_hot(I) / 100) //ishot returns a temperature
+		if(src.reagents)
+			src.reagents.chem_temp += added_heat
+			user << "<span class='notice'>You heat [src] with [I].</span>"
+			src.reagents.handle_reactions()
+
 ////////////////////////////////////////////////////////////////////////////////
 /// Drinks. END
 ////////////////////////////////////////////////////////////////////////////////
@@ -115,123 +126,50 @@
 //	rather then having to add it to something else first. They should only contain liquids. They have a default container size of 50.
 //	Formatting is the same as food.
 
-/obj/item/weapon/reagent_containers/food/drinks/milk
-	name = "Space Milk"
-	desc = "It's milk. White and nutritious goodness!"
-	icon_state = "milk"
-	item_state = "carton"
-
-/obj/item/weapon/reagent_containers/food/drinks/milk/New()
-	..()
-	reagents.add_reagent("milk", 50)
-	src.pixel_x = rand(-10.0, 10)
-	src.pixel_y = rand(-10.0, 10)
-
-/obj/item/weapon/reagent_containers/food/drinks/flour
-	name = "flour sack"
-	desc = "A big bag of flour. Good for baking!"
-	icon = 'icons/obj/food.dmi'
-	icon_state = "flour"
-	item_state = "flour"
-
-/obj/item/weapon/reagent_containers/food/drinks/flour/New()
-	..()
-	reagents.add_reagent("flour", 30)
-	src.pixel_x = rand(-10.0, 10)
-	src.pixel_y = rand(-10.0, 10)
-
-/obj/item/weapon/reagent_containers/food/drinks/soymilk
-	name = "SoyMilk"
-	desc = "It's soy milk. White and nutritious goodness!"
-	icon_state = "soymilk"
-	item_state = "carton"
-
-/obj/item/weapon/reagent_containers/food/drinks/soymilk/New()
-	..()
-	reagents.add_reagent("soymilk", 50)
-	src.pixel_x = rand(-10.0, 10)
-	src.pixel_y = rand(-10.0, 10)
-
 /obj/item/weapon/reagent_containers/food/drinks/coffee
 	name = "Robust Coffee"
 	desc = "Careful, the beverage you're about to enjoy is extremely hot."
 	icon_state = "coffee"
-
-/obj/item/weapon/reagent_containers/food/drinks/coffee/New()
-	..()
-	reagents.add_reagent("coffee", 30)
-	src.pixel_x = rand(-10.0, 10)
-	src.pixel_y = rand(-10.0, 10)
+	list_reagents = list("coffee" = 30)
 
 /obj/item/weapon/reagent_containers/food/drinks/tea
 	name = "Duke Purple Tea"
 	desc = "An insult to Duke Purple is an insult to the Space Queen! Any proper gentleman will fight you, if you sully this tea."
 	icon_state = "tea"
 	item_state = "coffee"
-
-/obj/item/weapon/reagent_containers/food/drinks/tea/New()
-	..()
-	reagents.add_reagent("tea", 30)
-	src.pixel_x = rand(-10.0, 10)
-	src.pixel_y = rand(-10.0, 10)
+	list_reagents = list("tea" = 30)
 
 /obj/item/weapon/reagent_containers/food/drinks/ice
 	name = "Ice Cup"
 	desc = "Careful, cold ice, do not chew."
 	icon_state = "coffee"
-
-/obj/item/weapon/reagent_containers/food/drinks/ice/New()
-	..()
-	reagents.add_reagent("ice", 30)
-	src.pixel_x = rand(-10.0, 10)
-	src.pixel_y = rand(-10.0, 10)
+	list_reagents = list("ice" = 30)
 
 /obj/item/weapon/reagent_containers/food/drinks/h_chocolate
 	name = "Dutch Hot Coco"
 	desc = "Made in Space South America."
 	icon_state = "tea"
 	item_state = "coffee"
-
-/obj/item/weapon/reagent_containers/food/drinks/h_chocolate/New()
-	..()
-	reagents.add_reagent("hot_coco", 30)
-	reagents.add_reagent("sugar", 5)
-	src.pixel_x = rand(-10.0, 10)
-	src.pixel_y = rand(-10.0, 10)
+	list_reagents = list("hot_coco" = 30, "sugar" = 5)
 
 /obj/item/weapon/reagent_containers/food/drinks/dry_ramen
 	name = "Cup Ramen"
-	desc = "Just add 10ml water, self heats! A taste that reminds you of your school years."
+	desc = "Just add 10ml of water, self heats! A taste that reminds you of your school years."
 	icon_state = "ramen"
-
-/obj/item/weapon/reagent_containers/food/drinks/dry_ramen/New()
-	..()
-	reagents.add_reagent("dry_ramen", 30)
-	src.pixel_x = rand(-10.0, 10)
-	src.pixel_y = rand(-10.0, 10)
+	list_reagents = list("dry_ramen" = 30)
 
 /obj/item/weapon/reagent_containers/food/drinks/beer
 	name = "Space Beer"
 	desc = "Beer. In space."
 	icon_state = "beer"
-
-/obj/item/weapon/reagent_containers/food/drinks/beer/New()
-	..()
-	reagents.add_reagent("beer", 30)
-	src.pixel_x = rand(-10.0, 10)
-	src.pixel_y = rand(-10.0, 10)
+	list_reagents = list("beer" = 30)
 
 /obj/item/weapon/reagent_containers/food/drinks/ale
 	name = "Magm-Ale"
 	desc = "A true dorf's drink of choice."
 	icon_state = "alebottle"
 	item_state = "beer"
-
-/obj/item/weapon/reagent_containers/food/drinks/ale/New()
-	..()
-	reagents.add_reagent("ale", 30)
-	src.pixel_x = rand(-10.0, 10)
-	src.pixel_y = rand(-10.0, 10)
+	list_reagents = list("ale" = 30)
 
 /obj/item/weapon/reagent_containers/food/drinks/sillycup
 	name = "Paper Cup"
@@ -240,16 +178,13 @@
 	possible_transfer_amounts = null
 	volume = 10
 
-/obj/item/weapon/reagent_containers/food/drinks/sillycup/New()
-	..()
-	src.pixel_x = rand(-10.0, 10)
-	src.pixel_y = rand(-10.0, 10)
-
 /obj/item/weapon/reagent_containers/food/drinks/sillycup/on_reagent_change()
 	if(reagents.total_volume)
 		icon_state = "water_cup"
 	else
 		icon_state = "water_cup_e"
+
+
 
 //////////////////////////drinkingglass and shaker//
 //Note by Darem: This code handles the mixing of drinks. New drinks go in three places: In Chemistry-Reagents.dm (for the drink
@@ -265,7 +200,7 @@
 
 /obj/item/weapon/reagent_containers/food/drinks/flask
 	name = "captain's flask"
-	desc = "A silver flask belonging to the captain"
+	desc = "A silver flask belonging to the captain."
 	icon_state = "flask"
 	volume = 60
 
@@ -273,9 +208,7 @@
 	name = "detective's flask"
 	desc = "The detective's only true friend."
 	icon_state = "detflask"
-	New()
-		..()
-		reagents.add_reagent("whiskey", 30)
+	list_reagents = list("whiskey" = 30)
 
 /obj/item/weapon/reagent_containers/food/drinks/britcup
 	name = "cup"
@@ -286,9 +219,12 @@
 //////////////////////////soda_cans//
 //These are in their own group to be used as IED's in /obj/item/weapon/grenade/ghettobomb.dm
 
+/obj/item/weapon/reagent_containers/food/drinks/soda_cans
+	name = "soda can"
+
 /obj/item/weapon/reagent_containers/food/drinks/soda_cans/attack(mob/M, mob/user)
 	if(M == user && !src.reagents.total_volume && user.a_intent == "harm" && user.zone_sel.selecting == "head")
-		user.visible_message("<span class='notice'>[user] crushes the can of [src] on \his forehead!</span>", "<span class='notice'>You crush the can of [src] on your forehead!</span>")
+		user.visible_message("<span class='warning'>[user] crushes the can of [src] on \his forehead!</span>", "<span class='notice'>You crush the can of [src] on your forehead.</span>")
 		playsound(user.loc,'sound/weapons/pierce.ogg', rand(10,50), 1)
 		var/obj/item/trash/can/crushed_can = new /obj/item/trash/can(user.loc)
 		crushed_can.icon_state = icon_state
@@ -299,96 +235,56 @@
 	name = "Space Cola"
 	desc = "Cola. in space."
 	icon_state = "cola"
-
-/obj/item/weapon/reagent_containers/food/drinks/soda_cans/cola/New()
-	..()
-	reagents.add_reagent("cola", 30)
-	src.pixel_x = rand(-10.0, 10)
-	src.pixel_y = rand(-10.0, 10)
+	list_reagents = list("cola" = 30)
 
 /obj/item/weapon/reagent_containers/food/drinks/soda_cans/tonic
 	name = "T-Borg's Tonic Water"
 	desc = "Quinine tastes funny, but at least it'll keep that Space Malaria away."
 	icon_state = "tonic"
-
-/obj/item/weapon/reagent_containers/food/drinks/soda_cans/tonic/New()
-	..()
-	reagents.add_reagent("tonic", 50)
+	list_reagents = list("tonic" = 50)
 
 /obj/item/weapon/reagent_containers/food/drinks/soda_cans/sodawater
 	name = "Soda Water"
 	desc = "A can of soda water. Why not make a scotch and soda?"
 	icon_state = "sodawater"
-
-/obj/item/weapon/reagent_containers/food/drinks/soda_cans/sodawater/New()
-	..()
-	reagents.add_reagent("sodawater", 50)
+	list_reagents = list("sodawater" = 50)
 
 /obj/item/weapon/reagent_containers/food/drinks/soda_cans/lemon_lime
 	name = "Orange Soda"
 	desc = "You wanted ORANGE. It gave you Lemon Lime."
 	icon_state = "lemon-lime"
+	list_reagents = list("lemon_lime" = 30)
 
 /obj/item/weapon/reagent_containers/food/drinks/soda_cans/lemon_lime/New()
 	..()
 	name = "Lemon-Lime Soda"
-	reagents.add_reagent("lemon_lime", 30)
-	src.pixel_x = rand(-10.0, 10)
-	src.pixel_y = rand(-10.0, 10)
 
 /obj/item/weapon/reagent_containers/food/drinks/soda_cans/space_up
 	name = "Space-Up"
 	desc = "Tastes like a hull breach in your mouth."
 	icon_state = "space-up"
-
-/obj/item/weapon/reagent_containers/food/drinks/soda_cans/space_up/New()
-	..()
-	reagents.add_reagent("space_up", 30)
-	src.pixel_x = rand(-10.0, 10)
-	src.pixel_y = rand(-10.0, 10)
+	list_reagents = list("space_up" = 30)
 
 /obj/item/weapon/reagent_containers/food/drinks/soda_cans/starkist
 	name = "Star-kist"
 	desc = "The taste of a star in liquid form. And, a bit of tuna...?"
 	icon_state = "starkist"
-
-/obj/item/weapon/reagent_containers/food/drinks/soda_cans/starkist/New()
-	..()
-	reagents.add_reagent("cola", 15)
-	reagents.add_reagent("orangejuice", 15)
-	src.pixel_x = rand(-10.0, 10)
-	src.pixel_y = rand(-10.0, 10)
+	list_reagents = list("cola" = 15, "orangejuice" = 15)
 
 /obj/item/weapon/reagent_containers/food/drinks/soda_cans/space_mountain_wind
 	name = "Space Mountain Wind"
 	desc = "Blows right through you like a space wind."
 	icon_state = "space_mountain_wind"
-
-/obj/item/weapon/reagent_containers/food/drinks/soda_cans/space_mountain_wind/New()
-	..()
-	reagents.add_reagent("spacemountainwind", 30)
-	src.pixel_x = rand(-10.0, 10)
-	src.pixel_y = rand(-10.0, 10)
+	list_reagents = list("spacemountainwind" = 30)
 
 /obj/item/weapon/reagent_containers/food/drinks/soda_cans/thirteenloko
 	name = "Thirteen Loko"
-	desc = "The CMO has advised crew members that consumption of Thirteen Loko may result in seizures, blindness, drunkeness, or even death. Please Drink Responsably."
+	desc = "The CMO has advised crew members that consumption of Thirteen Loko may result in seizures, blindness, drunkeness, or even death. Please Drink Responsibly."
 	icon_state = "thirteen_loko"
-
-/obj/item/weapon/reagent_containers/food/drinks/soda_cans/thirteenloko/New()
-	..()
-	reagents.add_reagent("thirteenloko", 30)
-	src.pixel_x = rand(-10.0, 10)
-	src.pixel_y = rand(-10.0, 10)
+	list_reagents = list("thirteenloko" = 30)
 
 /obj/item/weapon/reagent_containers/food/drinks/soda_cans/dr_gibb
 	name = "Dr. Gibb"
 	desc = "A delicious mixture of 42 different flavors."
 	icon_state = "dr_gibb"
-
-/obj/item/weapon/reagent_containers/food/drinks/soda_cans/dr_gibb/New()
-	..()
-	reagents.add_reagent("dr_gibb", 30)
-	src.pixel_x = rand(-10.0, 10)
-	src.pixel_y = rand(-10.0, 10)
-
+	list_reagents = list("dr_gibb" = 30)

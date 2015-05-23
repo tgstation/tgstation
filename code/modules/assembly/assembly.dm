@@ -17,6 +17,8 @@
 	var/obj/item/device/assembly_holder/holder = null
 	var/cooldown = 0//To prevent spam
 	var/wires = WIRE_RECEIVE | WIRE_PULSE
+	var/attachable = 0 // can this be attached to wires
+	var/datum/wires/connected = null
 
 	var/const/WIRE_RECEIVE = 1			//Allows Pulsed(0) to call Activate()
 	var/const/WIRE_PULSE = 2				//Allows Pulse(0) to act on the holder
@@ -59,6 +61,9 @@
 
 //Called when this device attempts to act on another device, var/radio determines if it was sent via radio or direct
 /obj/item/device/assembly/proc/pulse(var/radio = 0)
+	if(src.connected && src.wires)
+		connected.Pulse(src)
+		return 1
 	if(holder && (wires & WIRE_PULSE))
 		holder.process_activation(src, 1, 0)
 	if(holder && (wires & WIRE_PULSE_SPECIAL))
@@ -82,7 +87,7 @@
 	return secured
 
 
-/obj/item/device/assembly/attackby(obj/item/weapon/W as obj, mob/user as mob)
+/obj/item/device/assembly/attackby(obj/item/weapon/W as obj, mob/user as mob, params)
 	if(isassembly(W))
 		var/obj/item/device/assembly/A = W
 		if((!A.secured) && (!secured))
@@ -103,7 +108,7 @@
 
 
 /obj/item/device/assembly/process()
-	processing_objects.Remove(src)
+	SSobj.processing.Remove(src)
 	return
 
 

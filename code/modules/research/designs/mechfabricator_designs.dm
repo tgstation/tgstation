@@ -487,7 +487,7 @@
 
 //Exosuit Equipment
 /datum/design/mech_hydraulic_clamp
-	name = "Exosuit Engineering Equipement (Hydraulic Clamp)"
+	name = "Exosuit Engineering Equipment (Hydraulic Clamp)"
 	id = "mech_hydraulic_clamp"
 	build_type = MECHFAB
 	build_path = /obj/item/mecha_parts/mecha_equipment/tool/hydraulic_clamp
@@ -496,7 +496,7 @@
 	category = list("Exosuit Equipment")
 
 /datum/design/mech_drill
-	name = "Exosuit Engineering Equipement (Drill)"
+	name = "Exosuit Engineering Equipment (Drill)"
 	id = "mech_drill"
 	build_type = MECHFAB
 	build_path = /obj/item/mecha_parts/mecha_equipment/tool/drill
@@ -504,8 +504,17 @@
 	construction_time = 100
 	category = list("Exosuit Equipment")
 
+/datum/design/mech_mining_scanner
+	name = "Exosuit Engineering Equipement (Mining Scanner)"
+	id = "mech_mscanner"
+	build_type = MECHFAB
+	build_path = /obj/item/mecha_parts/mecha_equipment/tool/mining_scanner
+	materials = list("$metal"=5000,"$glass"=2500)
+	construction_time = 50
+	category = list("Exosuit Equipment")
+
 /datum/design/mech_extinguisher
-	name = "Exosuit Engineering Equipement (Extinguisher)"
+	name = "Exosuit Engineering Equipment (Extinguisher)"
 	id = "mech_extinguisher"
 	build_type = MECHFAB
 	build_path = /obj/item/mecha_parts/mecha_equipment/tool/extinguisher
@@ -514,7 +523,7 @@
 	category = list("Exosuit Equipment")
 
 /datum/design/mech_cable_layer
-	name = "Exosuit Engineering Equipement (Cable Layer)"
+	name = "Exosuit Engineering Equipment (Cable Layer)"
 	id = "mech_cable_layer"
 	build_type = MECHFAB
 	build_path = /obj/item/mecha_parts/mecha_equipment/tool/cable_layer
@@ -523,7 +532,7 @@
 	category = list("Exosuit Equipment")
 
 /datum/design/mech_sleeper
-	name = "Exosuit Medical Equipement (Mounted Sleeper)"
+	name = "Exosuit Medical Equipment (Mounted Sleeper)"
 	id = "mech_sleeper"
 	build_type = MECHFAB
 	build_path = /obj/item/mecha_parts/mecha_equipment/tool/sleeper
@@ -532,7 +541,7 @@
 	category = list("Exosuit Equipment")
 
 /datum/design/mech_syringe_gun
-	name = "Exosuit Medical Equipement (Syringe Gun)"
+	name = "Exosuit Medical Equipment (Syringe Gun)"
 	id = "mech_syringe_gun"
 	build_type = MECHFAB
 	build_path = /obj/item/mecha_parts/mecha_equipment/tool/syringe_gun
@@ -541,7 +550,7 @@
 	category = list("Exosuit Equipment")
 
 /datum/design/mech_generator
-	name = "Exosuit Equipement (Plasma Generator)"
+	name = "Exosuit Equipment (Plasma Generator)"
 	id = "mech_generator"
 	build_type = MECHFAB
 	build_path = /obj/item/mecha_parts/mecha_equipment/generator
@@ -599,7 +608,7 @@
 /////////////////////////////////////////
 
 /datum/design/borg_upgrade_reset
-	name = "Cyborg Upgrade Module (Reset Module)"
+	name = "Cyborg Upgrade (Module Reset Board)"
 	id = "borg_upgrade_reset"
 	build_type = MECHFAB
 	build_path = /obj/item/borg/upgrade/reset
@@ -608,7 +617,7 @@
 	category = list("Cyborg Upgrade Modules")
 
 /datum/design/borg_upgrade_rename
-	name = "Cyborg Upgrade Module (Rename Module)"
+	name = "Cyborg Upgrade (Rename Board)"
 	id = "borg_upgrade_rename"
 	build_type = MECHFAB
 	build_path = /obj/item/borg/upgrade/rename
@@ -617,7 +626,7 @@
 	category = list("Cyborg Upgrade Modules")
 
 /datum/design/borg_upgrade_restart
-	name = "Cyborg Upgrade Module (Restart Module)"
+	name = "Cyborg Upgrade (Emergency Reboot Board)"
 	id = "borg_upgrade_restart"
 	build_type = MECHFAB
 	build_path = /obj/item/borg/upgrade/restart
@@ -626,35 +635,58 @@
 	category = list("Cyborg Upgrade Modules")
 
 /datum/design/borg_upgrade_vtec
-	name = "Cyborg Upgrade Module (VTEC Module)"
+	name = "Cyborg Upgrade (VTEC Module)"
 	id = "borg_upgrade_vtec"
 	build_type = MECHFAB
 	build_path = /obj/item/borg/upgrade/vtec
-	materials = list("$metal"=80000 , "$glass"=6000 , "$gold"= 5000)
+	req_tech = list("engineering" = 4, "materials" = 5)
+	materials = list("$metal"=80000 , "$glass"=6000 , "$uranium"= 5000)
 	construction_time = 120
 	category = list("Cyborg Upgrade Modules")
 
-/datum/design/borg_upgrade_tasercooler
-	name = "Cyborg Upgrade Module (Rapid Taser Cooling Module)"
-	id = "borg_upgrade_tasercooler"
+/datum/design/borg_upgrade_disablercooler
+	name = "Cyborg Upgrade (Rapid Disabler Cooling Module)"
+	id = "borg_upgrade_disablercooler"
 	build_type = MECHFAB
-	build_path = /obj/item/borg/upgrade/tasercooler
+	build_path = /obj/item/borg/upgrade/disablercooler
+	req_tech = list("combat" = 5, "powerstorage" = 4)
 	materials = list("$metal"=80000 , "$glass"=6000 , "$gold"= 2000, "$diamond" = 500)
 	construction_time = 120
 	category = list("Cyborg Upgrade Modules")
 
 /datum/design/borg_upgrade_jetpack
-	name = "Cyborg Upgrade Module (Mining Jetpack)"
+	name = "Cyborg Upgrade (Mining Jetpack)"
 	id = "borg_upgrade_jetpack"
 	build_type = MECHFAB
 	build_path = /obj/item/borg/upgrade/jetpack
-	materials = list("$metal"=10000,"$plasma"=15000,"$uranium" = 20000)
+	req_tech = list("engineering" = 4, "powerstorage" = 4)
+	materials = list("$metal"=10000, "$plasma"=5000, "$uranium" = 6000)
+	construction_time = 120
+	category = list("Cyborg Upgrade Modules")
+
+/datum/design/borg_upgrade_diamonddrill
+	name = "Cyborg Upgrade (Diamond Drill)"
+	id = "borg_upgrade_diamonddrill"
+	build_type = MECHFAB
+	build_path = /obj/item/borg/upgrade/ddrill
+	req_tech = list("engineering" = 5, "materials" = 5)
+	materials = list("$metal"=10000, "$diamond"=3750)
+	construction_time = 120
+	category = list("Cyborg Upgrade Modules")
+
+/datum/design/borg_upgrade_holding
+	name = "Cyborg Upgrade (Ore Satchel of Holding)"
+	id = "borg_upgrade_holding"
+	build_type = MECHFAB
+	build_path = /obj/item/borg/upgrade/soh
+	req_tech = list("engineering" = 5, "materials" = 5, "bluespace" = 3)
+	materials = list("$metal" = 10000, "$gold" = 250, "$uranium" = 500)
 	construction_time = 120
 	category = list("Cyborg Upgrade Modules")
 
 /datum/design/borg_syndicate_module
-	name = "Borg Illegal Weapons Upgrade"
-	desc = "Allows for the construction of illegal upgrades for cyborgs"
+	name = "Cyborg Illegal Upgrades Module"
+	desc = "Allows for the construction of restricted upgrades for cyborgs"
 	id = "borg_syndicate_module"
 	build_type = MECHFAB
 	req_tech = list("combat" = 4, "syndicate" = 3)

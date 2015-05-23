@@ -34,7 +34,7 @@
 		/obj/item/weapon/storage/backpack/holding,
 		/obj/item/weapon/storage/belt/champion,
 		/obj/item/weapon/soap/deluxe,
-		/obj/item/weapon/pickaxe/silver,
+		/obj/item/weapon/pickaxe/diamond,
 		/obj/item/weapon/pen/invisible,
 		/obj/item/weapon/lipstick/random,
 		/obj/item/weapon/grenade/smokebomb,
@@ -44,23 +44,24 @@
 		/obj/item/weapon/book/manual/barman_recipes,
 		/obj/item/weapon/book/manual/chef_recipes,
 		/obj/item/weapon/bikehorn,
-		/obj/item/weapon/beach_ball,
-		/obj/item/weapon/beach_ball/holoball,
+		/obj/item/toy/beach_ball,
+		/obj/item/toy/beach_ball/holoball,
 		/obj/item/weapon/banhammer,
 		/obj/item/weapon/reagent_containers/food/snacks/grown/ambrosia/deus,
 		/obj/item/weapon/reagent_containers/food/snacks/grown/ambrosia/vulgaris,
 		/obj/item/device/paicard,
-		/obj/item/device/violin,
+		/obj/item/device/instrument/violin,
+		/obj/item/device/instrument/guitar,
 		/obj/item/weapon/storage/belt/utility/full,
 		/obj/item/clothing/tie/horrible,
 		/obj/item/clothing/suit/jacket/leather,
 		/obj/item/clothing/suit/poncho,
 		/obj/item/clothing/suit/poncho/green,
 		/obj/item/clothing/suit/poncho/red)
-	
+
 	gift_type_list += typesof(/obj/item/clothing/head/collectable) - /obj/item/clothing/head/collectable
 	gift_type_list += typesof(/obj/item/toy) - (((typesof(/obj/item/toy/cards) - /obj/item/toy/cards/deck) + /obj/item/toy/ammo) + /obj/item/toy) //All toys, except for abstract types and syndicate cards.
-	
+
 	var/gift_type = pick(gift_type_list)
 
 	if(!ispath(gift_type,/obj/item))	return
@@ -86,4 +87,4 @@
 	max_amount = 25
 
 /obj/item/stack/wrapping_paper/attack_self(mob/user)
-	user << "<span class='notice'>You need to use it on a package that has already been wrapped!</span>"
+	user << "<span class='warning'>You need to use it on a package that has already been wrapped!</span>"

@@ -82,25 +82,64 @@ PROBABILITY TRAITORCHAN 4
 PROBABILITY DOUBLE_AGENTS 3
 PROBABILITY NUCLEAR 2
 PROBABILITY REVOLUTION 2
-PROBABILITY GANG 0
+PROBABILITY SHADOWLING 2
+PROBABILITY GANG 2
 PROBABILITY CULT 2
 PROBABILITY CHANGELING 2
 PROBABILITY WIZARD 4
 PROBABILITY MALFUNCTION 1
 PROBABILITY BLOB 2
-PROBABILITY MONKEY 1
+PROBABILITY RAGINMAGES 2
+PROBABILITY MONKEY 0
 PROBABILITY METEOR 0
 PROBABILITY EXTENDED 0
 
 ## You probably want to keep sandbox off by default for secret and random.
 PROBABILITY SANDBOX 0
 
-## Uncomment to make rounds which end instantly (Rev, Wizard, Malf) continue until
-## the shuttle is called or the station is nuked.
-## Malf and Rev will let the shuttle be called when the antags/protags are dead.
-#CONTINUOUS_ROUND_REV
-#CONTINUOUS_ROUND_WIZ
-#CONTINUOUS_ROUND_MALF
+
+## Toggles for continuous modes.
+## Modes that aren't continuous will end the instant all antagonists are dead.
+
+CONTINUOUS TRAITOR
+CONTINUOUS TRAITORCHAN
+CONTINUOUS DOUBLE_AGENTS
+#CONTINUOUS NUCLEAR
+#CONTINUOUS REVOLUTION
+#CONTINUOUS SHADOWLING
+#CONTINUOUS GANG
+CONTINUOUS CULT
+CONTINUOUS CHANGELING
+CONTINUOUS WIZARD
+CONTINUOUS MALFUNCTION
+CONTINUOUS BLOB
+#CONTINUOUS RAGINMAGES
+#CONTINUOUS MONKEY
+
+##Note: do not toggle continuous off for these modes, as they have no antagonists and would thus end immediately!
+
+CONTINUOUS METEOR
+CONTINUOUS EXTENDED
+
+
+## Toggles for allowing midround antagonists (aka mulligan antagonists).
+## In modes that are continuous, if all antagonists should die then a new set of antagonists will be created.
+
+MIDROUND_ANTAG TRAITOR
+MIDROUND_ANTAG TRAITORCHAN
+MIDROUND_ANTAG DOUBLE_AGENTS
+#MIDROUND_ANTAG  NUCLEAR
+#MIDROUND_ANTAG  REVOLUTION
+#MIDROUND_ANTAG  SHADOWLING
+#MIDROUND_ANTAG  GANG
+MIDROUND_ANTAG CULT
+MIDROUND_ANTAG CHANGELING
+MIDROUND_ANTAG WIZARD
+MIDROUND_ANTAG MALFUNCTION
+MIDROUND_ANTAG BLOB
+#MIDROUND_ANTAG  RAGINMAGES
+#MIDROUND_ANTAG  MONKEY
+
 
 ## The amount of time it takes for the emergency shuttle to be called, from round start.
 SHUTTLE_REFUEL_DELAY 12000
@@ -157,10 +196,16 @@ GATEWAY_DELAY 18000
 
 
 ### ACCESS ###
+
+## If the number of players ready at round starts exceeds this threshold, JOBS_HAVE_MINIMAL_ACCESS will automatically be enabled. Otherwise, it will be disabled.
+## This is useful for accomodating both low and high population rounds on the same server.
+## Comment out or set to 0 to disable this automatic toggle.
+MINIMAL_ACCESS_THRESHOLD 20
+
 ## Comment this out if you wish to use the setup where jobs have more access.
 ## This is intended for servers with low populations - where there are not enough
 ## players to fill all roles, so players need to do more than just one job.
-## Also for servers where they don't want people to hide in their own departments.
+## This option is ignored if MINIMAL_ACCESS_THRESHOLD is used.
 #JOBS_HAVE_MINIMAL_ACCESS
 
 ## Uncomment to give assistants maint access.
@@ -207,6 +252,27 @@ SILICON_MAX_LAW_AMOUNT 12
 ## Uncoment to give players the choice of their species before they join the game
 #JOIN_WITH_MUTANT_RACE
 
-## Uncomment to allow certain species to have custom colors
+## Assistant slot cap. Set to -1 for unlimited.
+ASSISTANT_CAP -1
 
-#MUTANT_COLORS
+## Starlight for exterior walls and breaches. Uncomment for starlight!
+STARLIGHT
+
+## Uncomment to bring back old grey suit assistants instead of the now default rainbow colored assistants.
+#GREY_ASSISTANTS
+
+### Midround Antag (aka Mulligan antag) config options ###
+
+## A time, in minutes, after which the midround antag system stops attempting to run and continuous rounds end immediately upon completion.
+MIDROUND_ANTAG_TIME_CHECK 60
+
+## A ratio of living to total crew members, the lower this is, the more people will have to die in order for midround antag to be skipped
+MIDROUND_ANTAG_LIFE_CHECK 0.7
+
+###Limit Spell Choices##
+## Uncomment to disallow wizards from using certain spells that may be too chaotic/fun for your playerbase
+
+#NO_SUMMON_GUNS
+#NO_SUMMON_MAGIC
+#NO_SUMMON_EVENTS
+

@@ -33,24 +33,23 @@
 	if(!foldable)
 		return
 	if(contents.len)
-		user << "<span class='notice'>You can't fold this box with items still inside.</span>"
+		user << "<span class='warning'>You can't fold this box with items still inside!</span>"
 		return
 	if(!ispath(foldable))
 		return
 
 	//Close any open UI windows first
-	var/found = close_all()
-	if(!found)	//No user had any windows closed
-		return
+	close_all()
 
 	user << "<span class='notice'>You fold [src] flat.</span>"
 	var/obj/item/I = new foldable(get_turf(src))
+	user.drop_item()
 	user.put_in_hands(I)
 	user.update_inv_l_hand()
 	user.update_inv_r_hand()
 	qdel(src)
 
-/obj/item/weapon/storage/box/attackby(obj/item/W, mob/user)
+/obj/item/weapon/storage/box/attackby(obj/item/W, mob/user, params)
 	if(istype(W, /obj/item/stack/packageWrap))
 		return 0
 	..()
@@ -62,7 +61,7 @@
 	..()
 	contents = list()
 	new /obj/item/clothing/mask/breath(src)
-	new /obj/item/weapon/tank/emergency_oxygen(src)
+	new /obj/item/weapon/tank/internals/emergency_oxygen(src)
 	new /obj/item/weapon/reagent_containers/hypospray/medipen(src)
 	return
 
@@ -72,7 +71,7 @@
 	..()
 	contents = list()
 	new /obj/item/clothing/mask/breath(src)
-	new /obj/item/weapon/tank/emergency_oxygen/engi(src)
+	new /obj/item/weapon/tank/internals/emergency_oxygen/engi(src)
 	new /obj/item/weapon/reagent_containers/hypospray/medipen(src)
 	return
 
@@ -124,7 +123,7 @@
 
 /obj/item/weapon/storage/box/medipens
 	name = "box of medipens"
-	desc = "A box full of inaprovaline MediPens."
+	desc = "A box full of epinephrine MediPens."
 	icon_state = "syringe"
 
 /obj/item/weapon/storage/box/medipens/New()
@@ -138,17 +137,17 @@
 	new /obj/item/weapon/reagent_containers/hypospray/medipen( src )
 
 /obj/item/weapon/storage/box/medipens/utility
-	name = "medipens kit"
-	desc = "A box with several utility medipens for the economical miner."
+	name = "stimpack value kit"
+	desc = "A box with several stimpack medipens for the economical miner."
 	icon_state = "syringe"
 
 /obj/item/weapon/storage/box/medipens/utility/New()
 	..()
-	new /obj/item/weapon/reagent_containers/hypospray/medipen/leporazine( src )
-	new /obj/item/weapon/reagent_containers/hypospray/medipen/leporazine( src )
-	new /obj/item/weapon/reagent_containers/hypospray/medipen/stimpack( src )
-	new /obj/item/weapon/reagent_containers/hypospray/medipen/stimpack( src )
-	new /obj/item/weapon/reagent_containers/hypospray/medipen/stimpack( src )
+	new /obj/item/weapon/reagent_containers/hypospray/medipen/stimpack(src)
+	new /obj/item/weapon/reagent_containers/hypospray/medipen/stimpack(src)
+	new /obj/item/weapon/reagent_containers/hypospray/medipen/stimpack(src)
+	new /obj/item/weapon/reagent_containers/hypospray/medipen/stimpack(src)
+	new /obj/item/weapon/reagent_containers/hypospray/medipen/stimpack(src)
 
 /obj/item/weapon/storage/box/beakers
 	name = "box of beakers"
@@ -350,7 +349,7 @@
 /obj/item/weapon/storage/box/monkeycubes
 	name = "monkey cube box"
 	desc = "Drymate brand monkey cubes. Just add water!"
-	icon = 'icons/obj/food.dmi'
+	icon = 'icons/obj/food/food.dmi'
 	icon_state = "monkeycubebox"
 	storage_slots = 7
 	can_hold = list(/obj/item/weapon/reagent_containers/food/snacks/monkeycube)
@@ -432,6 +431,21 @@
 	new /obj/item/weapon/cartridge/security(src)
 	new /obj/item/weapon/cartridge/security(src)
 	new /obj/item/weapon/cartridge/security(src)
+
+/obj/item/weapon/storage/box/firingpins
+	name = "box of standard firing pins"
+	desc = "A box full of standard firing pins, to allow newly-developed firearms to operate."
+	icon_state = "id"
+
+/obj/item/weapon/storage/box/firingpins/New()
+	..()
+	new /obj/item/device/firing_pin(src)
+	new /obj/item/device/firing_pin(src)
+	new /obj/item/device/firing_pin(src)
+	new /obj/item/device/firing_pin(src)
+	new /obj/item/device/firing_pin(src)
+	new /obj/item/device/firing_pin(src)
+	new /obj/item/device/firing_pin(src)
 
 /obj/item/weapon/storage/box/handcuffs
 	name = "box of spare handcuffs"
@@ -531,7 +545,7 @@
 	for(var/i=1; i <= storage_slots; i++)
 		new /obj/item/weapon/match(src)
 
-/obj/item/weapon/storage/box/matches/attackby(obj/item/weapon/match/W as obj, mob/user as mob)
+/obj/item/weapon/storage/box/matches/attackby(obj/item/weapon/match/W as obj, mob/user as mob, params)
 	if(istype(W, /obj/item/weapon/match))
 		W.matchignite()
 	return
@@ -587,3 +601,18 @@
 	new /obj/item/clothing/tie/armband/deputy(src)
 	new /obj/item/clothing/tie/armband/deputy(src)
 	new /obj/item/clothing/tie/armband/deputy(src)
+
+/obj/item/weapon/storage/box/metalfoam
+	name = "box of metal foam grenades"
+	desc = "To be used to rapidly seal hull breaches"
+	icon_state = "flashbang"
+
+/obj/item/weapon/storage/box/metalfoam/New()
+	..()
+	new /obj/item/weapon/grenade/chem_grenade/metalfoam(src)
+	new /obj/item/weapon/grenade/chem_grenade/metalfoam(src)
+	new /obj/item/weapon/grenade/chem_grenade/metalfoam(src)
+	new /obj/item/weapon/grenade/chem_grenade/metalfoam(src)
+	new /obj/item/weapon/grenade/chem_grenade/metalfoam(src)
+	new /obj/item/weapon/grenade/chem_grenade/metalfoam(src)
+	new /obj/item/weapon/grenade/chem_grenade/metalfoam(src)

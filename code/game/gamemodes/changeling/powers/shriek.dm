@@ -11,7 +11,7 @@
 	for(var/mob/living/M in get_hearers_in_view(4, user))
 		if(iscarbon(M))
 			if(!M.mind || !M.mind.changeling)
-				M.ear_deaf += 30
+				M.adjustEarDamage(0,30)
 				M.confused += 20
 				M.Jitter(50)
 			else

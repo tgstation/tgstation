@@ -12,6 +12,9 @@
 	var/obj/item/weapon/disk/nuclear/the_disk = null
 	var/active = 0
 
+/obj/item/weapon/pinpointer/Destroy()
+	active = 0
+	..()
 
 /obj/item/weapon/pinpointer/attack_self()
 	if(!active)
@@ -66,6 +69,7 @@
 		if(bomb.timing)
 			user << "Extreme danger.  Arming signal detected.   Time remaining: [bomb.timeleft]"
 
+
 /obj/item/weapon/pinpointer/advpinpointer
 	name = "advanced pinpointer"
 	icon = 'icons/obj/device.dmi'
@@ -118,7 +122,7 @@
 
 			location = locate(locationx,locationy,Z.z)
 
-			usr << "You set the pinpointer to locate [locationx],[locationy]"
+			usr << "<span class='notice'>You set the pinpointer to locate [locationx],[locationy]</span>"
 
 
 			return attack_self()
@@ -136,9 +140,9 @@
 						return
 					target=locate(possible_items[targetitem])
 					if(!target)
-						usr << "Failed to locate [targetitem]!"
+						usr << "<span class='warning'>Failed to locate [targetitem]!</span>"
 						return
-					usr << "You set the pinpointer to locate [targetitem]"
+					usr << "<span class='notice'>You set the pinpointer to locate [targetitem].</span>"
 				if("DNA")
 					var/DNAstring = input("Input DNA string to search for." , "Please Enter String." , "")
 					if(!DNAstring)
@@ -160,18 +164,19 @@
 
 /obj/item/weapon/pinpointer/nukeop
 	var/mode = 0	//Mode 0 locates disk, mode 1 locates the shuttle
-	var/obj/machinery/computer/syndicate_station/home = null
+	var/obj/docking_port/mobile/home
 
 
 /obj/item/weapon/pinpointer/nukeop/attack_self(mob/user as mob)
 	if(!active)
 		active = 1
+		var/mode_text = "Authentication Disk Locator mode"
 		if(!mode)
 			workdisk()
-			user << "<span class='notice'>Authentication Disk Locator active.</span>"
 		else
+			mode_text = "Shuttle Locator mode"
 			worklocation()
-			user << "<span class='notice'>Shuttle Locator active.</span>"
+		user << "<span class='notice'>You activate the pinpointer([mode_text]).</span>"
 	else
 		active = 0
 		icon_state = "pinoff"
@@ -187,7 +192,7 @@
 		mode = 1	//Ensures worklocation() continues to work
 		worklocation()
 		playsound(loc, 'sound/machines/twobeep.ogg', 50, 1)	//Plays a beep
-		visible_message("Shuttle Locator active.")			//Lets the mob holding it know that the mode has changed
+		visible_message("Shuttle Locator mode actived.")			//Lets the mob holding it know that the mode has changed
 		return		//Get outta here
 	scandisk()
 	if(!the_disk)
@@ -217,10 +222,10 @@
 		mode = 0
 		workdisk()
 		playsound(loc, 'sound/machines/twobeep.ogg', 50, 1)
-		visible_message("<span class='notice'>Authentication Disk Locator active.</span>")
+		visible_message("<span class='notice'>Authentication Disk Locator mode actived.</span>")
 		return
 	if(!home)
-		home = locate()
+		home = SSshuttle.getShuttle("syndicate")
 		if(!home)
 			icon_state = "pinonnull"
 			return
@@ -238,4 +243,40 @@
 			if(16 to INFINITY)
 				icon_state = "pinonfar"
 
-	spawn(5) .()
+	spawn(5)
+		.()
+
+/obj/item/weapon/pinpointer/operative
+	name = "operative pinpointer"
+	icon = 'icons/obj/device.dmi'
+	desc = "A pinpointer that leads to the first Syndicate operative detected."
+	var/mob/living/carbon/nearest_op = null
+
+/obj/item/weapon/pinpointer/operative/attack_self()
+	if(!active)
+		active = 1
+		workop()
+		usr << "<span class='notice'>You activate the pinpointer.</span>"
+	else
+		active = 0
+		icon_state = "pinoff"
+		usr << "<span class='notice'>You deactivate the pinpointer.</span>"
+
+/obj/item/weapon/pinpointer/operative/proc/scan_for_ops()
+	if(!nearest_op)
+		for(var/mob/living/carbon/M in mob_list)
+			if(M.mind in ticker.mode.syndicates)
+				nearest_op = M
+
+/obj/item/weapon/pinpointer/operative/proc/workop()
+	scan_for_ops()
+	point_at(nearest_op, 0)
+	spawn(5)
+		.()
+
+/obj/item/weapon/pinpointer/operative/examine(mob/user)
+	..()
+	if(nearest_op != null)
+		user << "Nearest operative: <b>[nearest_op]</b>."
+	if(nearest_op == null && active)
+		user << "No operatives detected within scanning range."

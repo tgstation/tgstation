@@ -3,8 +3,10 @@
 
 	if (src.handcuffed)
 		msg += "It is \icon[src.handcuffed] handcuffed!\n"
+	if (src.head)
+		msg += "It has \icon[src.head] \a [src.head] on its head. \n"
 	if (src.wear_mask)
-		msg += "It has \icon[src.wear_mask] \a [src.wear_mask] on its head.\n"
+		msg += "It has \icon[src.wear_mask] \a [src.wear_mask] on its face.\n"
 	if (src.l_hand)
 		msg += "It has \icon[src.l_hand] \a [src.l_hand] in its left hand.\n"
 	if (src.r_hand)

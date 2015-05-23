@@ -36,7 +36,7 @@
 /datum/recipe
 	var/list/reagents // example:  = list("berryjuice" = 5) // do not list same reagent twice
 	var/list/items // example: =list(/obj/item/weapon/crowbar, /obj/item/weapon/welder) // place /foo/bar before /foo
-	var/result //example: = /obj/item/weapon/reagent_containers/food/snacks/donut/normal
+	var/result //example: = /obj/item/weapon/reagent_containers/food/snacks/donut
 	var/time = 100 // 1/10 part of second
 
 

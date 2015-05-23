@@ -26,12 +26,14 @@ Buildable meters
 #define DISP_PIPE_STRAIGHT		0
 #define DISP_PIPE_BENT			1
 #define DISP_JUNCTION			2
-#define DISP_YJUNCTION			3
-#define DISP_END_TRUNK			4
-#define DISP_END_BIN			5
-#define DISP_END_OUTLET			6
-#define DISP_END_CHUTE			7
-#define DISP_SORTJUNCTION		8
+#define DISP_JUNCTION_FLIP		3
+#define DISP_YJUNCTION			4
+#define DISP_END_TRUNK			5
+#define DISP_END_BIN			6
+#define DISP_END_OUTLET			7
+#define DISP_END_CHUTE			8
+#define DISP_SORTJUNCTION		9
+#define DISP_SORTJUNCTION_FLIP	10
 
 /obj/item/pipe
 	name = "pipe"
@@ -51,6 +53,7 @@ Buildable meters
 	if (make_from)
 		src.dir = make_from.dir
 		src.pipename = make_from.name
+		src.color = make_from.color
 		var/is_bent
 		if  (make_from.initialize_directions in list(NORTH|SOUTH, WEST|EAST))
 			is_bent = 0
@@ -70,7 +73,7 @@ Buildable meters
 			src.pipe_type = PIPE_MANIFOLD
 		else if(istype(make_from, /obj/machinery/atmospherics/unary/vent_pump))
 			src.pipe_type = PIPE_UVENT
-		else if(istype(make_from, /obj/machinery/atmospherics/valve/digital))
+		else if(istype(make_from, /obj/machinery/atmospherics/binary/valve/digital))
 			src.pipe_type = PIPE_DVALVE
 		else if(istype(make_from, /obj/machinery/atmospherics/binary/valve))
 			src.pipe_type = PIPE_MVALVE
@@ -293,8 +296,8 @@ var/global/list/pipeID2State = list(
 /obj/item/pipe/attack_self(mob/user as mob)
 	return rotate()
 
-/obj/item/pipe/attackby(var/obj/item/weapon/W as obj, var/mob/user as mob)
-	..()
+/obj/item/pipe/attackby(var/obj/item/weapon/W as obj, var/mob/user as mob, params)
+
 	//*
 	if (!istype(W, /obj/item/weapon/wrench))
 		return ..()
@@ -307,58 +310,58 @@ var/global/list/pipeID2State = list(
 
 	for(var/obj/machinery/atmospherics/M in src.loc)
 		if(M.initialize_directions & pipe_dir)	// matches at least one direction on either type of pipe
-			user << "<span class='danger'>There is already a pipe at that location.</span>"
+			user << "<span class='warning'>There is already a pipe at that location!</span>"
 			return 1
 	// no conflicts found
 
 	switch(pipe_type)
 		if(PIPE_SIMPLE_STRAIGHT, PIPE_SIMPLE_BENT)
 			var/obj/machinery/atmospherics/pipe/simple/P = new( src.loc )
-			P.construction(dir, pipe_dir)
+			P.construction(dir, pipe_dir, pipe_type, color)
 
 		if(PIPE_HE_STRAIGHT, PIPE_HE_BENT)
 			var/obj/machinery/atmospherics/pipe/simple/heat_exchanging/P = new ( src.loc )
 			P.initialize_directions_he = pipe_dir
-			P.construction(dir, pipe_dir)
+			P.construction(dir, pipe_dir, pipe_type, color)
 
 		if(PIPE_CONNECTOR)
 			var/obj/machinery/atmospherics/unary/portables_connector/C = new( src.loc )
 			if (pipename)
 				C.name = pipename
-			C.construction(dir, pipe_dir)
+			C.construction(dir, pipe_dir, pipe_type, color)
 
 		if(PIPE_MANIFOLD)
 			var/obj/machinery/atmospherics/pipe/manifold/M = new(loc)
-			M.construction(dir, pipe_dir)
+			M.construction(dir, pipe_dir, pipe_type, color)
 
 		if(PIPE_4WAYMANIFOLD)
 			var/obj/machinery/atmospherics/pipe/manifold4w/M = new( src.loc )
-			M.construction(dir, pipe_dir)
+			M.construction(dir, pipe_dir, pipe_type, color)
 
 		if(PIPE_JUNCTION)
 			var/obj/machinery/atmospherics/pipe/simple/heat_exchanging/junction/P = new ( src.loc )
 			P.initialize_directions_he = src.get_hdir()
-			P.construction(dir, get_pdir())
+			P.construction(dir, get_pdir(), pipe_type, color)
 
 		if(PIPE_UVENT)
 			var/obj/machinery/atmospherics/unary/vent_pump/V = new( src.loc )
-			V.construction(dir, pipe_dir)
+			V.construction(dir, pipe_dir, pipe_type, color)
 
 		if(PIPE_MVALVE)
 			var/obj/machinery/atmospherics/binary/valve/V = new(src.loc)
 			if (pipename)
 				V.name = pipename
-			V.construction(dir, get_pdir())
+			V.construction(dir, get_pdir(), pipe_type, color)
 
 		if(PIPE_DVALVE)
-			var/obj/machinery/atmospherics/valve/digital/V = new(src.loc)
+			var/obj/machinery/atmospherics/binary/valve/digital/V = new(src.loc)
 			if (pipename)
 				V.name = pipename
-			V.construction(dir, get_pdir())
+			V.construction(dir, get_pdir(), pipe_type, color)
 
 		if(PIPE_PUMP)
 			var/obj/machinery/atmospherics/binary/pump/P = new(src.loc)
-			P.construction(dir, pipe_dir)
+			P.construction(dir, pipe_dir, pipe_type, color)
 
 		if(PIPE_GAS_FILTER, PIPE_GAS_MIXER)
 			var/obj/machinery/atmospherics/trinary/P
@@ -369,41 +372,42 @@ var/global/list/pipeID2State = list(
 			P.flipped = flipped
 			if (pipename)
 				P.name = pipename
-			P.construction(unflip(dir), pipe_dir)
+			P.construction(unflip(dir), pipe_dir, pipe_type, color)
 
 		if(PIPE_SCRUBBER)
 			var/obj/machinery/atmospherics/unary/vent_scrubber/S = new(src.loc)
 			if (pipename)
 				S.name = pipename
-			S.construction(dir, pipe_dir)
+			S.construction(dir, pipe_dir, pipe_type, color)
 
 		if(PIPE_INSULATED_STRAIGHT, PIPE_INSULATED_BENT)
 			var/obj/machinery/atmospherics/pipe/simple/insulated/P = new( src.loc )
-			P.construction(dir, pipe_dir)
+			P.construction(dir, pipe_dir, pipe_type, color)
 
 		if(PIPE_PASSIVE_GATE)
 			var/obj/machinery/atmospherics/binary/passive_gate/P = new(src.loc)
 			if (pipename)
 				P.name = pipename
-			P.construction(dir, pipe_dir)
+			P.construction(dir, pipe_dir, pipe_type, color)
 
 		if(PIPE_VOLUME_PUMP)
 			var/obj/machinery/atmospherics/binary/volume_pump/P = new(src.loc)
 			if (pipename)
 				P.name = pipename
-			P.construction(dir, pipe_dir)
+			P.construction(dir, pipe_dir, pipe_type, color)
 
 		if(PIPE_HEAT_EXCHANGE)
 			var/obj/machinery/atmospherics/unary/heat_exchanger/C = new( src.loc )
 			if (pipename)
 				C.name = pipename
-			C.construction(dir, pipe_dir)
+			C.construction(dir, pipe_dir, pipe_type, color)
 
 	playsound(src.loc, 'sound/items/Ratchet.ogg', 50, 1)
 	user.visible_message( \
 		"[user] fastens \the [src].", \
-		"<span class='notice'>You have fastened \the [src].</span>", \
-		"You hear ratchet.")
+		"<span class='notice'>You fasten \the [src].</span>", \
+		"<span class='italics'>You hear ratchet.</span>")
+
 	qdel(src)	// remove the pipe item
 
 	return
@@ -421,15 +425,15 @@ var/global/list/pipeID2State = list(
 	item_state = "buildpipe"
 	w_class = 4
 
-/obj/item/pipe_meter/attackby(var/obj/item/weapon/W as obj, var/mob/user as mob)
+/obj/item/pipe_meter/attackby(var/obj/item/weapon/W as obj, var/mob/user as mob, params)
 	..()
 
 	if (!istype(W, /obj/item/weapon/wrench))
 		return ..()
 	if(!locate(/obj/machinery/atmospherics/pipe, src.loc))
-		user << "<span class='danger'>You need to fasten it to a pipe.</span>"
+		user << "<span class='warning'>You need to fasten it to a pipe!</span>"
 		return 1
 	new/obj/machinery/meter( src.loc )
 	playsound(src.loc, 'sound/items/Ratchet.ogg', 50, 1)
-	user << "<span class='notice'>You have fastened the meter to the pipe.</span>"
+	user << "<span class='notice'>You fasten the meter to the pipe.</span>"
 	qdel(src)

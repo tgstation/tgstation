@@ -60,7 +60,7 @@
 	return
 
 
-/obj/structure/lamarr/attackby(obj/item/weapon/W as obj, mob/user as mob)
+/obj/structure/lamarr/attackby(obj/item/weapon/W as obj, mob/user as mob, params)
 	user.changeNext_move(CLICK_CD_MELEE)
 	src.health -= W.force
 	src.healthcheck()
@@ -75,8 +75,8 @@
 	if (src.destroyed)
 		return
 	else
-		user.visible_message("<span class='danger'>[user] kicks the lab cage.</span>", \
-					 		"<span class='notice'>You kick the lab cage.</span>")
+		user.visible_message("<span class='warning'>[user] kicks the lab cage.</span>", \
+					 		"<span class='danger'>You kick the lab cage.</span>")
 		src.health -= 2
 		healthcheck()
 		return

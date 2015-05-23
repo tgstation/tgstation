@@ -39,7 +39,6 @@ datum/design						//Datum for object designs, used in construction
 	var/list/materials = list()			//List of materials. Format: "id" = amount.
 	var/construction_time				//Amount of time required for building the object
 	var/build_path = ""					//The file path of the object that gets created
-	var/locked = 0						//If true it will spawn inside a lockbox with currently sec access
 	var/list/category = null 			//Primarily used for Mech Fabricators, but can be used for anything
 
 
@@ -127,16 +126,6 @@ datum/design/proc/CalcReliability(var/list/temp_techs)
 /////////////////Mining//////////////////
 /////////////////////////////////////////
 
-/datum/design/jackhammer
-	name = "Sonic Jackhammer"
-	desc = "Cracks rocks with sonic blasts, perfect for killing cave lizards."
-	id = "jackhammer"
-	req_tech = list("materials" = 3, "powerstorage" = 2, "engineering" = 2)
-	build_type = PROTOLATHE
-	materials = list("$metal" = 2000, "$glass" = 500, "$silver" = 500)
-	build_path = /obj/item/weapon/pickaxe/jackhammer
-	category = list("Mining Designs")
-
 /datum/design/drill
 	name = "Mining Drill"
 	desc = "Yours is the drill that will pierce through the rock walls."
@@ -147,36 +136,47 @@ datum/design/proc/CalcReliability(var/list/temp_techs)
 	build_path = /obj/item/weapon/pickaxe/drill
 	category = list("Mining Designs")
 
-/datum/design/plasmacutter
-	name = "Plasma Cutter"
-	desc = "You could use it to cut limbs off of xenos! Or, you know, mine stuff."
-	id = "plasmacutter"
-	req_tech = list("materials" = 4, "plasmatech" = 3, "engineering" = 3)
-	build_type = PROTOLATHE
-	materials = list("$metal" = 1500, "$glass" = 500, "$gold" = 500, "$plasma" = 500)
-	reliability = 79
-	build_path = /obj/item/weapon/pickaxe/plasmacutter
-	category = list("Mining Designs")
-
-/datum/design/pick_diamond
-	name = "Diamond Pickaxe"
-	desc = "A pickaxe with a diamond pick head, this is just like minesim 2554!."
-	id = "pick_diamond"
-	req_tech = list("materials" = 6)
-	build_type = PROTOLATHE
-	materials = list("$diamond" = 3000)
-	build_path = /obj/item/weapon/pickaxe/diamond
-	category = list("Mining Designs")
-
 /datum/design/drill_diamond
-	name = "Diamond Mining Drill"
+	name = "Diamond-Tipped Mining Drill"
 	desc = "Yours is the drill that will pierce the heavens!"
 	id = "drill_diamond"
 	req_tech = list("materials" = 6, "powerstorage" = 4, "engineering" = 4)
 	build_type = PROTOLATHE
-	materials = list("$metal" = 3000, "$glass" = 1000, "$diamond" = 3750) //Yes, a whole diamond is needed.
+	materials = list("$metal" = 6000, "$glass" = 1000, "$diamond" = 3750) //Yes, a whole diamond is needed.
 	reliability = 79
 	build_path = /obj/item/weapon/pickaxe/drill/diamonddrill
+	category = list("Mining Designs")
+
+/datum/design/plasmacutter
+	name = "Plasma Cutter"
+	desc = "You could use it to cut limbs off of xenos! Or, you know, mine stuff."
+	id = "plasmacutter"
+	req_tech = list("materials" = 2, "plasmatech" = 2, "engineering" = 2, "combat" = 1, "magnets" = 2)
+	build_type = PROTOLATHE
+	materials = list("$metal" = 1500, "$glass" = 500, "$plasma" = 400)
+	reliability = 79
+	build_path = /obj/item/weapon/gun/energy/plasmacutter
+	category = list("Mining Designs")
+
+/datum/design/plasmacutter_adv
+	name = "Advanced Plasma Cutter"
+	desc = "It's an advanced plasma cutter, oh my god."
+	id = "plasmacutter_adv"
+	req_tech = list("materials" = 4, "plasmatech" = 3, "engineering" = 3, "combat" = 3, "magnets" = 3)
+	build_type = PROTOLATHE
+	materials = list("$metal" = 3000, "$glass" = 1000, "$plasma" = 2000, "$gold" = 500)
+	reliability = 79
+	build_path = /obj/item/weapon/gun/energy/plasmacutter/adv
+	category = list("Mining Designs")
+
+/datum/design/jackhammer
+	name = "Sonic Jackhammer"
+	desc = "Essentially a handheld planet-cracker. Can drill through walls with ease as well."
+	id = "jackhammer"
+	req_tech = list("materials" = 6, "powerstorage" = 6, "engineering" = 5, "magnets" = 6)
+	build_type = PROTOLATHE
+	materials = list("$metal" = 8000, "$glass" = 1500, "$silver" = 2000, "$diamond" = 6000)
+	build_path = /obj/item/weapon/pickaxe/drill/jackhammer
 	category = list("Mining Designs")
 
 /////////////////////////////////////////
@@ -225,6 +225,17 @@ datum/design/proc/CalcReliability(var/list/temp_techs)
 	build_path = /obj/item/device/gps
 	category = list("Bluespace Designs")
 
+/datum/design/miningsatchel_holding
+	name = "Mining Satchel of Holding"
+	desc = "A mining satchel that can hold an infinite amount of ores."
+	id = "minerbag_holding"
+	req_tech = list("bluespace" = 3, "materials" = 4)
+	build_type = PROTOLATHE
+	materials = list("$gold" = 250, "$uranium" = 500) //quite cheap, for more convenience
+	reliability = 100
+	build_path = /obj/item/weapon/storage/bag/ore/holding
+	category = list("Bluespace Designs")
+
 
 /////////////////////////////////////////
 /////////////////HUDs////////////////////
@@ -238,7 +249,7 @@ datum/design/proc/CalcReliability(var/list/temp_techs)
 	build_type = PROTOLATHE
 	materials = list("$metal" = 50, "$glass" = 50)
 	build_path = /obj/item/clothing/glasses/hud/health
-	category = list("Equipement")
+	category = list("Equipment")
 
 /datum/design/health_hud_night
 	name = "Night Vision Health Scanner HUD"
@@ -248,7 +259,7 @@ datum/design/proc/CalcReliability(var/list/temp_techs)
 	build_type = PROTOLATHE
 	materials = list("$metal" = 200, "$glass" = 200, "$uranium" = 1000, "$silver" = 250)
 	build_path = /obj/item/clothing/glasses/hud/health/night
-	category = list("Equipement")
+	category = list("Equipment")
 
 /datum/design/security_hud
 	name = "Security HUD"
@@ -258,7 +269,7 @@ datum/design/proc/CalcReliability(var/list/temp_techs)
 	build_type = PROTOLATHE
 	materials = list("$metal" = 50, "$glass" = 50)
 	build_path = /obj/item/clothing/glasses/hud/security
-	category = list("Equipement")
+	category = list("Equipment")
 
 /datum/design/security_hud_night
 	name = "Night Vision Security HUD"
@@ -268,7 +279,7 @@ datum/design/proc/CalcReliability(var/list/temp_techs)
 	build_type = PROTOLATHE
 	materials = list("$metal" = 200, "$glass" = 200, "$uranium" = 1000, "$gold" = 350)
 	build_path = /obj/item/clothing/glasses/hud/security/night
-	category = list("Equipement")
+	category = list("Equipment")
 
 /////////////////////////////////////////
 //////////////////Test///////////////////
@@ -296,17 +307,47 @@ datum/design/proc/CalcReliability(var/list/temp_techs)
 	build_type = PROTOLATHE
 	materials = list("$metal" = 4000, "$glass" = 1000)
 	build_path = /obj/item/clothing/mask/gas/welding
-	category = list("Equipement")
+	category = list("Equipment")
+
+/datum/design/air_horn
+	name = "Air Horn"
+	desc = "Damn son, where'd you find this?"
+	id = "air_horn"
+	req_tech = list("materials" = 2, "engineering" = 2)
+	build_type = PROTOLATHE
+	materials = list("$metal" = 4000, "$bananium" = 1000)
+	build_path = /obj/item/weapon/bikehorn/airhorn
+	category = list("Equipment")
 
 /datum/design/mesons
 	name = "Optical Meson Scanners"
 	desc = "Used by engineering and mining staff to see basic structural and terrain layouts through walls, regardless of lighting condition."
 	id = "mesons"
-	req_tech = list("materials" = 3, "magnets" = 3, "engineering" = 3)
+	req_tech = list("materials" = 3, "magnets" = 2, "engineering" = 2)
+	build_type = PROTOLATHE
+	materials = list("$metal" = 200, "$glass" = 300)
+	build_path = /obj/item/clothing/glasses/meson
+	category = list("Equipment")
+
+/datum/design/engine_goggles
+	name = "Engineering Scanner Goggles"
+	desc = "Goggles used by engineers. The Meson Scanner mode lets you see basic structural and terrain layouts through walls, regardless of lighting condition. The T-ray Scanner mode lets you see underfloor objects such as cables and pipes."
+	id = "engine_goggles"
+	req_tech = list("materials" = 4, "magnets" = 3, "engineering" = 4)
 	build_type = PROTOLATHE
 	materials = list("$metal" = 200, "$glass" = 300, "$plasma" = 100)
-	build_path = /obj/item/clothing/glasses/meson
-	category = list("Equipement")
+	build_path = /obj/item/clothing/glasses/meson/engine
+	category = list("Equipment")
+
+/datum/design/nvgmesons
+	name = "Night Vision Optical Meson Scanners"
+	desc = "Prototype meson scanners fitted with an extra sensor which amplifies the visible light spectrum and overlays it to the UHD display."
+	id = "nvgmesons"
+	req_tech = list("materials" = 5, "magnets" = 5, "engineering" = 4)
+	build_type = PROTOLATHE
+	materials = list("$metal" = 300, "$glass" = 400, "$plasma" = 250, "$uranium" = 1000)
+	build_path = /obj/item/clothing/glasses/meson/night
+	category = list("Equipment")
 
 /datum/design/night_vision_goggles
 	name = "Night Vision Goggles"
@@ -316,7 +357,7 @@ datum/design/proc/CalcReliability(var/list/temp_techs)
 	build_type = PROTOLATHE
 	materials = list("$metal" = 100, "$glass" = 100, "$uranium" = 1000)
 	build_path = /obj/item/clothing/glasses/night
-	category = list("Equipement")
+	category = list("Equipment")
 
 /datum/design/magboots
 	name = "Magnetic Boots"
@@ -326,21 +367,21 @@ datum/design/proc/CalcReliability(var/list/temp_techs)
 	build_type = PROTOLATHE
 	materials = list("$metal" = 4500, "$silver" = 1500, "$gold" = 2500)
 	build_path = /obj/item/clothing/shoes/magboots
-	category = list("Equipement")
+	category = list("Equipment")
 
 /////////////////////////////////////////
 ////////////Janitor Designs//////////////
 /////////////////////////////////////////
 
-/datum/design/advmop
-	name = "Advanced Mop"
-	desc = "An upgraded mop with a large internal capacity for holding water or other cleaning chemicals."
-	id = "advmop"
-	req_tech = list("materials" = 4, "engineering" = 3)
+/datum/design/buffer
+	name = "Floor Buffer Upgrade"
+	desc = "A floor buffer that can be attached to vehicular janicarts."
+	id = "buffer"
+	req_tech = list("materials" = 5, "engineering" = 3)
 	build_type = PROTOLATHE
-	materials = list("$metal" = 2500, "$glass" = 200)
-	build_path = /obj/item/weapon/mop/advanced
-	category = list("Equipement")
+	materials = list("$metal" = 3000, "$glass" = 200)
+	build_path = /obj/item/janiupgrade
+	category = list("Equipment")
 
 /datum/design/holosign
 	name = "Holographic Sign Projector"
@@ -350,4 +391,4 @@ datum/design/proc/CalcReliability(var/list/temp_techs)
 	build_type = PROTOLATHE
 	materials = list("$metal" = 2000, "$glass" = 1000)
 	build_path = /obj/item/weapon/holosign_creator
-	category = list("Equipement")
+	category = list("Equipment")

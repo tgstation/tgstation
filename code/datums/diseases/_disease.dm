@@ -126,9 +126,9 @@ var/list/diseases = typesof(/datum/disease) - /datum/disease
 					C.ContractDisease(src)
 
 
-/datum/disease/proc/process()
+/datum/disease/process()
 	if(!holder)
-		active_diseases -= src
+		SSdisease.processing -= src
 		return
 
 	if(prob(infectivity))
@@ -169,7 +169,7 @@ var/list/diseases = typesof(/datum/disease) - /datum/disease
 						cure()
 						return
 
-	active_diseases += src
+	SSdisease.processing += src
 
 
 /datum/disease/proc/IsSame(var/datum/disease/D)
@@ -179,7 +179,9 @@ var/list/diseases = typesof(/datum/disease) - /datum/disease
 
 
 /datum/disease/proc/Copy()
-	return new type()
+	var/datum/disease/D = new type()
+	D.strain_data = strain_data.Copy()
+	return D
 
 
 /datum/disease/proc/GetDiseaseID()
@@ -187,7 +189,7 @@ var/list/diseases = typesof(/datum/disease) - /datum/disease
 
 
 /datum/disease/Del()
-	active_diseases.Remove(src)
+	SSdisease.processing.Remove(src)
 	..()
 
 

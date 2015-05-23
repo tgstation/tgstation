@@ -4,20 +4,26 @@
 	icon = 'icons/obj/computer.dmi'
 	icon_state = "shuttle"
 	circuit = /obj/item/weapon/circuitboard/labor_shuttle
-	id = "laborcamp"
+	shuttleId = "laborcamp"
+	possible_destinations = "laborcamp_home;laborcamp_away"
 	req_access = list(access_brig)
 
 
 /obj/machinery/computer/shuttle/labor/one_way
 	name = "prisoner shuttle console"
 	desc = "A one-way shuttle console, used to summon the shuttle to the labor camp."
+	possible_destinations = "laborcamp_away"
 	circuit = /obj/item/weapon/circuitboard/labor_shuttle/one_way
 	req_access = list( )
 
 /obj/machinery/computer/shuttle/labor/one_way/Topic(href, href_list)
 	if(href_list["move"])
-		var/datum/shuttle_manager/s = shuttles["laborcamp"]
-		if(s.location == /area/shuttle/laborcamp/outpost)
-			usr << "<span class='notice'>Shuttle is already at the outpost.</span>"
+		var/obj/docking_port/mobile/M = SSshuttle.getShuttle("laborcamp")
+		if(!M)
+			usr << "<span class='warning'>Cannot locate shuttle!</span>"
+			return 0
+		var/obj/docking_port/stationary/S = M.get_docked()
+		if(S && S.name == "laborcamp_away")
+			usr << "<span class='warning'>Shuttle is already at the outpost!</span>"
 			return 0
 	..()

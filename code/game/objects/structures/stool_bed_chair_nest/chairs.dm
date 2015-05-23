@@ -2,6 +2,7 @@
 	name = "chair"
 	desc = "You sit in this. Either by will or force."
 	icon_state = "chair"
+	buckle_lying = 0 //you sit in a chair, not lay
 
 /obj/structure/stool/bed/chair/New()
 	..()
@@ -13,7 +14,7 @@
 	..()
 	handle_rotation()
 
-/obj/structure/stool/bed/chair/attackby(obj/item/weapon/W as obj, mob/user as mob)
+/obj/structure/stool/bed/chair/attackby(obj/item/weapon/W as obj, mob/user as mob, params)
 	..()
 	if(istype(W, /obj/item/assembly/shock_kit))
 		var/obj/item/assembly/shock_kit/SK = W
@@ -40,6 +41,7 @@
 			dir = buckled_mob.dir
 			return 0
 		buckled_mob.buckled = src //Restoring
+	handle_layer()
 	return 1
 
 /obj/structure/stool/bed/chair/proc/handle_layer()
@@ -68,10 +70,6 @@
 			return
 		spin()
 
-/obj/structure/stool/bed/chair/MouseDrop_T(mob/M as mob, mob/user as mob)
-	if(!istype(M)) return
-	buckle_mob(M, user)
-	return
 
 // Chair types
 /obj/structure/stool/bed/chair/wood/normal
@@ -84,7 +82,7 @@
 	name = "wooden chair"
 	desc = "Old is never too old to not be in fashion."
 
-/obj/structure/stool/bed/chair/wood/attackby(obj/item/weapon/W as obj, mob/user as mob)
+/obj/structure/stool/bed/chair/wood/attackby(obj/item/weapon/W as obj, mob/user as mob, params)
 	if(istype(W, /obj/item/weapon/wrench))
 		playsound(src.loc, 'sound/items/Ratchet.ogg', 50, 1)
 		new /obj/item/stack/sheet/mineral/wood(src.loc)
@@ -105,11 +103,12 @@
 
 	return ..()
 
-/obj/structure/stool/bed/chair/comfy/afterbuckle()
+/obj/structure/stool/bed/chair/comfy/post_buckle_mob(mob/living/M)
 	if(buckled_mob)
 		overlays += armrest
 	else
 		overlays -= armrest
+
 
 /obj/structure/stool/bed/chair/comfy/brown
 	color = rgb(255,113,0)
