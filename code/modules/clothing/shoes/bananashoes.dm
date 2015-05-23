@@ -10,11 +10,11 @@
 
 /obj/item/clothing/shoes/clown_shoes/banana_shoes/New()
 	..()
-	bananium = new/datum/mineral_container(loc,/obj/item/stack/sheet/mineral/bananium,200000)
+	bananium = new/datum/mineral_container(src,/obj/item/stack/sheet/mineral/bananium,200000)
 
 /obj/item/clothing/shoes/clown_shoes/banana_shoes/step_action()
 	if(on)
-		if(footstep > 1)//honks when activated
+		if(footstep > 1)//honks when its on
 			playsound(src, "sound/items/bikehorn.ogg", 75, 1)
 			footstep = 0
 		else
@@ -25,7 +25,7 @@
 		if(bananium.amount < 100)
 			on = !on
 			update_icon()
-			usr << "<span class='warning'>You ran out of bananium!</span>"
+			loc << "<span class='warning'>You ran out of bananium!</span>"
 	else
 		..()
 
@@ -52,12 +52,12 @@
 	user << "<span class='notice'>The shoes are [on ? "enabled" : "disabled"]. There is [bananium.amount] bananium left.</span>"
 
 /obj/item/clothing/shoes/clown_shoes/banana_shoes/ui_action_click()
-	if(bananium.amount > 0)
+	if(bananium.amount)
 		on = !on
 		update_icon()
-		usr << "<span class='notice'>You [on ? "activate" : "deactivate"] the prototype shoes.</span>"
+		loc << "<span class='notice'>You [on ? "activate" : "deactivate"] the prototype shoes.</span>"
 	else
-		usr << "<span class='warning'>You need bananium to turn the prototype shoes on!</span>"
+		loc << "<span class='warning'>You need bananium to turn the prototype shoes on!</span>"
 
 /obj/item/clothing/shoes/clown_shoes/banana_shoes/update_icon()
 	if(on)
