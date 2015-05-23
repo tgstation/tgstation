@@ -463,14 +463,14 @@ datum/reagent/medicine/morphine
 	description = "Will allow you to ignore slowdown from equipment and damage. Will eventually knock you out if you take too much. If overdosed it will cause jitteriness, dizziness, force the victim to drop items in their hands and eventually deal toxin damage."
 	reagent_state = LIQUID
 	color = "#C8A5DC"
-	metabolization_rate = 0.5 * REAGENTS_METABOLISM
+	metabolization_rate = 2 * REAGENTS_METABOLISM //WAKE ME UP INSIDE
 	overdose_threshold = 30
 	addiction_threshold = 25
 
 
 datum/reagent/medicine/morphine/on_mob_life(var/mob/living/M as mob)
 	M.status_flags |= IGNORESLOWDOWN
-	if(current_cycle >= 12)
+	if(current_cycle >= 12) //CAN'T WAKE UP
 		M.sleeping += 1
 	..()
 	return
@@ -699,7 +699,7 @@ datum/reagent/medicine/antihol/on_mob_life(var/mob/living/M as mob)
 
 datum/reagent/medicine/stimulants/on_mob_life(var/mob/living/M as mob)
 	M.status_flags |= GOTTAGOFAST
-	if(M.health < 50 && M.health > 0)
+	if(prob(33))
 		M.adjustOxyLoss(-1*REM)
 		M.adjustToxLoss(-1*REM)
 		M.adjustBruteLoss(-1*REM)
@@ -707,7 +707,7 @@ datum/reagent/medicine/stimulants/on_mob_life(var/mob/living/M as mob)
 	M.AdjustParalysis(-1)
 	M.AdjustStunned(-1)
 	M.AdjustWeakened(-1)
-	M.adjustStaminaLoss(-1.5*REM)
+	M.adjustStaminaLoss(-2.5*REM)
 	..()
 
 datum/reagent/medicine/stimulants/overdose_process(var/mob/living/M as mob)

@@ -165,6 +165,10 @@ datum/reagent/cryostylane/on_mob_life(var/mob/living/M as mob) //TODO: code free
 	..()
 
 datum/reagent/cryostylane/on_tick()
+	if(istype(holder.my_atom,/obj/item/weapon/reagent_containers))
+		var/obj/item/weapon/reagent_containers/G = holder.my_atom
+		if(G.flags & NOREACT)
+			return
 	if(holder.has_reagent("oxygen"))
 		holder.remove_reagent("oxygen", 1)
 		holder.chem_temp -= 10
@@ -173,13 +177,13 @@ datum/reagent/cryostylane/on_tick()
 
 datum/reagent/cryostylane/reaction_turf(var/turf/simulated/T, var/volume)
 	if(volume >= 5)
-		for(var/mob/living/simple_animal/slime/M in T)
+		for(var/mob/living/carbon/slime/M in T)
 			M.adjustToxLoss(rand(15,30))
 
 datum/reagent/pyrosium
 	name = "Pyrosium"
 	id = "pyrosium"
-	description = "Comes into existence at 20K. As long as there is sufficient oxygen for it to react with, Pyrosium slowly cools all other reagents in the mob down to 0K."
+	description = "Comes into existence at 20K. As long as there is sufficient oxygen for it to react with, Pyrosium slowly heats all other reagents in the mob."
 	color = "#B20000" // rgb: 139, 166, 233
 	metabolization_rate = 0.5 * REAGENTS_METABOLISM
 
@@ -190,6 +194,10 @@ datum/reagent/pyrosium/on_mob_life(var/mob/living/M as mob)
 	..()
 
 datum/reagent/pyrosium/on_tick()
+	if(istype(holder.my_atom,/obj/item/weapon/reagent_containers))
+		var/obj/item/weapon/reagent_containers/G = holder.my_atom
+		if(G.flags & NOREACT)
+			return
 	if(holder.has_reagent("oxygen"))
 		holder.remove_reagent("oxygen", 1)
 		holder.chem_temp += 10

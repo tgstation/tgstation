@@ -336,20 +336,20 @@ datum/reagent/drug/hotline //gotta get a grip
 	addiction_threshold = 10
 
 datum/reagent/drug/hotline/on_mob_life(var/mob/living/M as mob)
-	if(!M) M = holder.my_atom
 	var/high_message = pick("You feel alert.", "You feel like you can see everything more clearly.", "You feel like you need to relax and examine your surroundings.")
 	if(prob(5))
 		M << "<span class='notice'>[high_message]</span>"
 	M.druggy = max(M.druggy, 15)
 	M.hallucination += 10
-	M.adjustBrainLoss(0.2)
-	M.adjustBruteLoss(-0.2)
-	M.adjustFireLoss(-0.2)
+	M.adjustBrainLoss(0.2*REM)
+	M.adjustBruteLoss(-0.2*REM)
+	M.adjustFireLoss(-0.2*REM)
 	M.status_flags |= GOTTAGOFAST
 	M.adjustStaminaLoss(-3)
 	..()
 	return
-datum/reagent/hotline/overdose_process(var/mob/living/M as mob)
+
+datum/reagent/drug/hotline/overdose_process(var/mob/living/M as mob)
 	M.adjustBrainLoss(rand(1,20)*REM)
 	M.adjustToxLoss(rand(1,20)*REM)
 	M.adjustBruteLoss(rand(1,20)*REM)
@@ -360,25 +360,25 @@ datum/reagent/hotline/overdose_process(var/mob/living/M as mob)
 	..()
 	return
 
-datum/reagent/hotline/addiction_act_stage1(var/mob/living/M as mob)
+datum/reagent/drug/hotline/addiction_act_stage1(var/mob/living/M as mob)
 	M.adjustBrainLoss(rand(1,10))
 	M.hallucination += 30
 	M.druggy = max(M.druggy, 30)
 	..()
 	return
-datum/reagent/hotline/addiction_act_stage2(var/mob/living/M as mob)
+datum/reagent/drug/hotline/addiction_act_stage2(var/mob/living/M as mob)
 	M.adjustBrainLoss(rand(1,20))
 	M.hallucination += 30
 	M.druggy = max(M.druggy, 30)
 	..()
 	return
-datum/reagent/hotline/addiction_act_stage3(var/mob/living/M as mob)
+datum/reagent/drug/hotline/addiction_act_stage3(var/mob/living/M as mob)
 	M.adjustBrainLoss(rand(1,30))
 	M.hallucination += 30
 	M.druggy = max(M.druggy, 30)
 	..()
 	return
-datum/reagent/hotline/addiction_act_stage4(var/mob/living/M as mob)
+datum/reagent/drug/hotline/addiction_act_stage4(var/mob/living/M as mob)
 	M.adjustBrainLoss(rand(1,30))
 	M.hallucination += 30
 	M.druggy = max(M.druggy, 30)
