@@ -97,6 +97,7 @@
 		camera.network = list("SS13")
 		if(wires.IsCameraCut()) // 5 = BORG CAMERA
 			camera.status = 0
+		camera.inborg = 1
 	..()
 
 	//MMI stuff. Held togheter by magic. ~Miauw
