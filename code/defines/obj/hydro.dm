@@ -262,7 +262,7 @@
 	mypath = "/obj/item/seeds/eggy"
 	species = "eggy"
 	plantname = "Eggplants"
-	productname = "/obj/item/weapon/reagent_containers/food/snacks/egg"
+	productname = "/obj/item/weapon/reagent_containers/food/snacks/meat/egg"
 	lifespan = 75
 	endurance = 15
 	maturation = 6
