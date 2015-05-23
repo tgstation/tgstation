@@ -458,6 +458,7 @@ var/global/floorIsLava = 0
 			<A href='?src=\ref[src];secretsfun=eagles'>Egalitarian Station Mode</A><BR>
 			<A href='?src=\ref[src];secretsfun=blackout'>Break all lights</A><BR>
 			<A href='?src=\ref[src];secretsfun=whiteout'>Fix all lights</A><BR>
+			<A href='?src=\ref[src];secretsfun=schoolgirl'>Japanese Animes Mode</A><BR>
 			<A href='?src=\ref[src];secretsfun=floorlava'>The floor is lava! (DANGEROUS: extremely lame)</A><BR>
 			<BR>
 			"}
