@@ -506,7 +506,7 @@
 	update_window(usr)
 
 /obj/item/toy/crayon/afterattack(atom/target, mob/user as mob, proximity)
-	if(!proximity) return
+	if(!proximity || !check_allowed_items(target)) return
 	if(istype(target,/turf/simulated/floor))
 		var/temp = "rune"
 		if(letters.Find(drawtype))

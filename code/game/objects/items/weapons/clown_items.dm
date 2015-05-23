@@ -41,7 +41,7 @@
 		M.slip(4, 2, src)
 
 /obj/item/weapon/soap/afterattack(atom/target, mob/user as mob, proximity)
-	if(!proximity)
+	if(!proximity || !check_allowed_items(target))
 		return
 	//I couldn't feasibly  fix the overlay bugs caused by cleaning items we are wearing.
 	//So this is a workaround. This also makes more sense from an IC standpoint. ~Carn
