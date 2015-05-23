@@ -14,13 +14,11 @@
 	if(active)
 		user << "<span class='notice'>We feel a minute twitch in our eyes, and darkness creeps away.</span>"
 		user.weakeyes = 1
+		user.sight |= SEE_MOBS
+		user.permanent_sight_flags |= SEE_MOBS
 	else
 		user << "<span class='notice'>Our vision dulls. Shadows gather.</span>"
-		user.sight -= SEE_MOBS
 		user.weakeyes = 0
-	while(active)
-		user.see_in_dark = 8
-		user.see_invisible = 2
-		user.sight |= SEE_MOBS
-		sleep(1) //BAD THINGS HAPPEN WITHOUT THIS.
+		user.sight -= SEE_MOBS
+		user.permanent_sight_flags -= SEE_MOBS
 	return 1

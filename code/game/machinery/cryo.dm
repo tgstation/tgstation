@@ -80,9 +80,6 @@
 		return
 	close_machine(target)
 
-/obj/machinery/atmospherics/unary/cryo_cell/allow_drop()
-	return 0
-
 /obj/machinery/atmospherics/unary/cryo_cell/relaymove(var/mob/user)
 	open_machine()
 
@@ -235,6 +232,8 @@
 
 /obj/machinery/atmospherics/unary/cryo_cell/attackby(obj/item/I, mob/user, params)
 	if(istype(I, /obj/item/weapon/reagent_containers/glass))
+		if(isrobot(user))
+			return
 		if(beaker)
 			user << "<span class='warning'>A beaker is already loaded into [src]!</span>"
 			return
