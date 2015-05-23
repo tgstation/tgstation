@@ -330,10 +330,11 @@
 		var/name = stripped_input(usr, "Name:","Name your bottle!", (reagents.total_volume ? reagents.get_master_reagent_name() : " "), MAX_NAME_LEN)
 		if(!name)
 			return
+		var/obj/item/weapon/reagent_containers/P
 		if(condi)
-			var/obj/item/weapon/reagent_containers/food/condiment/P = new/obj/item/weapon/reagent_containers/food/condiment(src.loc)
+			P = new/obj/item/weapon/reagent_containers/food/condiment(src.loc)
 		else
-			var/obj/item/weapon/reagent_containers/glass/bottle/P = new/obj/item/weapon/reagent_containers/glass/bottle(src.loc)
+			P = new/obj/item/weapon/reagent_containers/glass/bottle(src.loc)
 			P.pixel_x = rand(-7, 7) //random position
 			P.pixel_y = rand(-7, 7)
 		P.name = trim("[name] bottle")
