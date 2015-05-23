@@ -692,9 +692,7 @@
 
 
 /mob/living/carbon/monkey/IsAdvancedToolUser()//Unless its monkey mode monkeys cant use advanced tools
-	if(!ticker)	return 0
-	if(!ticker.mode.name == "monkey")	return 0
-	return 1
+	return dexterity_check()
 
 // Get ALL accesses available.
 /mob/living/carbon/monkey/GetAccess()
@@ -734,3 +732,12 @@
 		threatcount -= 1
 
 	return threatcount
+
+/mob/living/carbon/monkey/dexterity_check()
+	if(stat != CONSCIOUS)
+		return 0
+	if(ticker.mode.name == "monkey")
+		return 1
+	if(reagents.has_reagent("methylin"))
+		return 1
+	return 0

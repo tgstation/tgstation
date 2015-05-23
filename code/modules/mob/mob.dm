@@ -1506,3 +1506,6 @@ mob/proc/assess_threat()
 
 mob/proc/walking()
 	return !(lying || flying)
+
+/mob/proc/dexterity_check()
+	return 0

@@ -628,6 +628,16 @@ datum
 			required_reagents = list("capsaicin" = 2)
 			required_catalysts = list("plasma" = 5)
 			result_amount = 1
+
+		methylin
+			name = "Methylin"
+			id = "methylin"
+			result = "methylin"
+			required_reagents = list("hydrogen" = 1, "chlorine" = 1, "ethanol" = 1)
+			required_catalysts = list("fluorine" = 5)
+			result_amount = 1
+
+
 ///////////////////////////////////////////////////////////////////////////////////
 
 // foam and foam precursor

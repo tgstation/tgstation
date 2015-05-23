@@ -107,9 +107,7 @@ var/global/automation_types=typesof(/datum/automation) - /datum/automation
 	if(!canGhostWrite(usr,parent,"",ghost_flags))
 		if(usr.restrained() || usr.lying || usr.stat)
 			return 1
-		if ( ! (istype(usr, /mob/living/carbon/human) || \
-				istype(usr, /mob/living/silicon) || \
-				istype(usr, /mob/living/carbon/monkey) && ticker && ticker.mode.name == "monkey") )
+		if (!usr.dexterity_check())
 			usr << "<span class='warning'>You don't have the dexterity to do this!</span>"
 			return 1
 

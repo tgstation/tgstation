@@ -80,7 +80,7 @@
 
 	if(!usr || usr.stat || usr.lying || (usr.status_flags & FAKEDEATH))	return
 
-	if (!ishuman(usr))
+	if(!usr.dexterity_check())
 		usr << "<span class='warning'>You don't have the dexterity to do this!</span>"
 		return
 

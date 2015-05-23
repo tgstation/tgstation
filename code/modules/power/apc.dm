@@ -750,10 +750,7 @@
 		return 0
 	if(!user.client)
 		return 0
-	if ( ! (istype(user, /mob/living/carbon/human) || \
-			istype(user, /mob/living/silicon) || \
-			istype(user, /mob/dead/observer) || \
-			istype(user, /mob/living/carbon/monkey) /*&& ticker && ticker.mode.name == "monkey"*/) )
+	if (!user.dexterity_check())
 		user << "<span class='warning'>You don't have the dexterity to use this [src]!</span>"
 		nanomanager.close_user_uis(user, src)
 

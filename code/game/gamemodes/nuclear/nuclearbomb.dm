@@ -160,7 +160,7 @@ var/bomb_set
 	set src in oview(1)
 
 	if (!usr || usr.stat || usr.lying || (usr.status_flags & FAKEDEATH)) return
-	if (!ishuman(usr))
+	if (!usr.dexterity_check())
 		usr << "<span class='warning'>You don't have the dexterity to do this!</span>"
 		return
 
@@ -175,7 +175,7 @@ var/bomb_set
 	if(..()) return 1
 	if (!usr.canmove || usr.stat || usr.restrained())
 		return
-	if (!ishuman(usr))
+	if (!usr.dexterity_check())
 		usr << "<span class='warning'>You don't have the dexterity to do this!</span>"
 		return 1
 	if (istype(src.loc, /turf))

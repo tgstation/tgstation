@@ -1,7 +1,7 @@
 //Methylphenidate
 
 #define ANTIDEPRESSANT_MESSAGE_DELAY 5*60*10
-
+/*REPLACED WITH METHYLIN
 /datum/reagent/antidepressant/methylphenidate
 	name = "Methylphenidate"
 	id = "methylphenidate"
@@ -29,6 +29,7 @@
 	result = "methylphenidate"
 	required_reagents = list("mindbreaker" = 1, "hydrogen" = 1)
 	result_amount = 3
+*/
 
 /datum/reagent/antidepressant/citalopram
 	name = "Citalopram"

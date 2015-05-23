@@ -1737,3 +1737,13 @@
 	if(!species)
 		return null
 	return species.default_language ? all_languages[species.default_language] : null
+
+/mob/living/carbon/human/dexterity_check()
+	if (stat != CONSCIOUS)
+		return 0
+	if(reagents.has_reagent("methylin"))
+		return 1
+	if (getBrainLoss() >= 60)
+		return 0
+
+	return 1
