@@ -1135,17 +1135,17 @@ Turf and target are seperate in case you want to teleport some distance from a t
 		var/n_height = (world.icon_size - (i_height/2))
 
 		//DY and DX
-		rough_x = round(AM.pixel_x/n_width)
-		rough_y = round(AM.pixel_y/n_height)
+		if(n_width)
+			rough_x = round(AM.pixel_x/n_width)
+		if(n_height)
+			rough_y = round(AM.pixel_y/n_height)
 
 		//Find coordinates
 		final_x = AM.x + rough_x
 		final_y = AM.y + rough_y
 
 		if(final_x || final_y)
-			var/turf/T = locate(final_x, final_y, AM.z)
-			if(T)
-				return T
+			return locate(final_x, final_y, AM.z)
 
 //Finds the distance between two atoms, in pixels
 /proc/getPixelDistance(var/atom/A, var/atom/B)
