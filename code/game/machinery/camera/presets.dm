@@ -8,12 +8,10 @@
 
 // X-RAY
 
-/obj/machinery/camera/xray
-	icon_state = "xraycam" // Thanks to Krutchen for the icons.
-
 /obj/machinery/camera/xray/New()
 	..()
 	upgradeXRay()
+	update_icon()
 
 // MOTION
 
@@ -28,6 +26,7 @@
 	upgradeEmpProof()
 	upgradeXRay()
 	upgradeMotion()
+	update_icon()
 
 // AUTONAME
 

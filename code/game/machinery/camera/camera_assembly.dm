@@ -81,12 +81,12 @@
 
 				var/input = strip_html(input(usr, "Which networks would you like to connect this camera to? Seperate networks with a comma. No Spaces!\nFor example: SS13,Security,Secret ", "Set Network", "SS13"))
 				if(!input)
-					usr << "No input found please hang up and try your call again."
+					usr << "No input found, please hang up and try your call again."
 					return
 
 				var/list/tempnetwork = text2list(input, ",")
 				if(tempnetwork.len < 1)
-					usr << "No network found please hang up and try your call again."
+					usr << "No network found, please hang up and try your call again."
 					return
 
 				state = 4
@@ -119,7 +119,10 @@
 				return
 
 	// Upgrades!
-	if(is_type_in_list(W, possible_upgrades) && !is_type_in_list(W, upgrades)) // Is a possible upgrade and isn't in the camera already.
+	if(is_type_in_list(W, possible_upgrades)) // Is a possible upgrade
+		if(is_type_in_list(W, upgrades))
+			user << "The assembly already has \a [W] inside!"
+			return
 		user << "You attach the [W] into the assembly inner circuits."
 		upgrades += W
 		user.drop_item(W, src)
@@ -129,7 +132,7 @@
 	else if(iscrowbar(W) && upgrades.len)
 		var/obj/U = locate(/obj) in upgrades
 		if(U)
-			user << "You unattach an upgrade from the assembly."
+			user << "You unattach \the [U] from the assembly."
 			playsound(get_turf(src), 'sound/items/Crowbar.ogg', 50, 1)
 			U.loc = get_turf(src)
 			upgrades -= U
@@ -154,7 +157,7 @@
 	if(!WT.isOn())
 		return 0
 
-	user << "<span class='notice'>You start to weld the [src]..</span>"
+	user << "<span class='notice'>You start to weld the [src]...</span>"
 	playsound(get_turf(src), 'sound/items/Welder.ogg', 50, 1)
 	WT.eyecheck(user)
 	busy = 1
