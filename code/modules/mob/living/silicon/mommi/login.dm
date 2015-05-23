@@ -1,5 +1,7 @@
 /mob/living/silicon/robot/mommi/Login()
 	updateSeeStaticMobs()
+	if(uprising)
+		show_uprising_notification()
 
 	..()
 	/* Inherited

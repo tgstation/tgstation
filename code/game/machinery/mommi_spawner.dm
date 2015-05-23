@@ -7,8 +7,8 @@
 	anchored = 1
 	var/building=0
 	var/metal=0
-	var/const/metalPerMoMMI=10
-	var/const/metalPerTick=1
+	var/metalPerMoMMI=10
+	var/metalPerTick=1
 	use_power = 1
 	idle_power_usage = 20
 	active_power_usage = 5000
@@ -173,3 +173,11 @@
 		icon_state="mommispawner-building"
 	else
 		icon_state="mommispawner-idle"
+
+/obj/machinery/mommi_spawner/wireless //For uprising event
+	use_power = 0
+	density = 0
+	recharge_time = 0
+	metalPerMoMMI = 0
+	idle_power_usage = 0
+	active_power_usage = 0
