@@ -31,10 +31,10 @@
 		var/t
 		if(orient == "RIGHT")
 			update_icon()
-			var t = get_step(get_turf(src), WEST)
+			t = get_step(get_turf(src), WEST)
 			// generate_console(get_step(get_turf(src), WEST))
 		else
-			var t = get_step(get_turf(src), EAST)
+			t = get_step(get_turf(src), EAST)
 			// generate_console(get_step(get_turf(src), EAST))
 		ASSERT(t)
 		var/obj/machinery/body_scanconsole/c = locate(t.loc)
