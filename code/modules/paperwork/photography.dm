@@ -348,12 +348,13 @@ obj/item/device/camera/siliconcam/proc/selectpicture(var/obj/item/device/camera/
 obj/item/device/camera/siliconcam/proc/viewpichelper(var/obj/item/device/camera/siliconcam/targetloc)
 	var/obj/item/weapon/photo/P = new/obj/item/weapon/photo()
 	var/datum/picture/selection = selectpicture(targetloc)
-	P.photocreate(selection.fields["icon"], selection.fields["img"], selection.fields["desc"])
-	P.pixel_x = selection.fields["pixel_x"]
-	P.pixel_y = selection.fields["pixel_y"]
+	if(selection)
+		P.photocreate(selection.fields["icon"], selection.fields["img"], selection.fields["desc"])
+		P.pixel_x = selection.fields["pixel_x"]
+		P.pixel_y = selection.fields["pixel_y"]
 
-	P.show(usr)
-	usr << P.desc
+		P.show(usr)
+		usr << P.desc
 	qdel(P)    //so 10 thousand picture items are not left in memory should an AI take them and then view them all
 
 obj/item/device/camera/siliconcam/proc/viewpictures(user)
