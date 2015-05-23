@@ -965,6 +965,3 @@ var/list/slot_equipment_priority = list( \
 	if(isliving(src))
 		spell.action.Grant(src)
 	return
-
-/mob/proc/stopLobbySound()
-	src << sound(null, repeat = 0, wait = 0, volume = 85, channel = 1)
