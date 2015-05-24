@@ -122,6 +122,11 @@
 
 			if(istype(P, /obj/item/device/mmi))
 				var/obj/item/device/mmi/M = P
+				if(user && ismommi(user))
+					var/mob/living/silicon/robot/mommi/R = user
+					if(R.keeper)
+						user << "Your laws forbid you from doing this"
+						return
 				if(!M.brainmob)
 					user << "<span class='warning'>Sticking an empty MMI into the frame would sort of defeat the purpose.</span>"
 					return
