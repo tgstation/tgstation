@@ -1,8 +1,8 @@
 /datum/round_event_control/camerafail
 	name = "Major Camera Failure"
 	typepath = /datum/round_event/camfail
-	weight = 50
-	max_occurrences = 100
+	weight = 40 //same as light failure
+	max_occurrences = 10
 	earliest_start = 20
 	alertadmins = 1
 
@@ -18,8 +18,8 @@
 
 /datum/round_event/camfail/start()
 	var/disabledcount = 0
-	for( var/obj/machinery/camera/C in world)
-		if((C.z == 1) && !(C.inborg == 1))
+	for( var/obj/machinery/camera/C in cameranet.cameras)
+		if((C.z == 1) && !C.inborg)
 			if( !(disabledcount > maxfailures))
 				if(prob(10) && (C.status))
 					C.status = !(C.status)
@@ -40,7 +40,7 @@
 	name = "Minor Camera Failure"
 	typepath = /datum/round_event/camfail/mini
 	weight = 100
-	max_occurrences = 1000
+	max_occurrences = 100
 	earliest_start = 0
 	alertadmins = 0
 
