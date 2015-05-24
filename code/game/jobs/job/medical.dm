@@ -64,7 +64,11 @@
 		H.equip_or_collect(new /obj/item/device/radio/headset/headset_med(H), slot_ears)
 		switch(H.backbag)
 			if(2) H.equip_or_collect(new /obj/item/weapon/storage/backpack/medic(H), slot_back)
-			if(3) H.equip_or_collect(new /obj/item/weapon/storage/backpack/satchel_med(H), slot_back)
+			if(3)
+				if(H.mind.role_alt_title=="Virologist")
+					H.equip_or_collect(new /obj/item/weapon/storage/backpack/satchel_vir)
+				else
+					H.equip_or_collect(new /obj/item/weapon/storage/backpack/satchel_med(H), slot_back)
 			if(4) H.equip_or_collect(new /obj/item/weapon/storage/backpack/satchel(H), slot_back)
 		if (H.mind.role_alt_title)
 			switch(H.mind.role_alt_title)
@@ -128,6 +132,10 @@
 	equip(var/mob/living/carbon/human/H)
 		if(!H)	return 0
 		H.equip_or_collect(new /obj/item/device/radio/headset/headset_med(H), slot_ears)
+		switch(H.backbag)
+			if(2) H.equip_or_collect(new /obj/item/weapon/storage/backpack/medic(H), slot_back)
+			if(3) H.equip_or_collect(new /obj/item/weapon/storage/backpack/satchel_chem(H), slot_back)
+			if(4) H.equip_or_collect(new /obj/item/weapon/storage/backpack/satchel(H), slot_back)
 		switch(H.mind.role_alt_title)
 			if("Chemist")
 				H.equip_or_collect(new /obj/item/clothing/under/rank/chemist(H), slot_w_uniform)
@@ -160,6 +168,10 @@
 
 	equip(var/mob/living/carbon/human/H)
 		if(!H)	return 0
+		switch(H.backbag)
+			if(2) H.equip_or_collect(new /obj/item/weapon/storage/backpack/medic(H), slot_back)
+			if(3) H.equip_or_collect(new /obj/item/weapon/storage/backpack/satchel_gen(H), slot_back)
+			if(4) H.equip_or_collect(new /obj/item/weapon/storage/backpack/satchel(H), slot_back)
 		H.equip_or_collect(new /obj/item/device/radio/headset/headset_medsci(H), slot_ears)
 		H.equip_or_collect(new /obj/item/clothing/under/rank/geneticist(H), slot_w_uniform)
 		H.equip_or_collect(new /obj/item/clothing/shoes/white(H), slot_shoes)

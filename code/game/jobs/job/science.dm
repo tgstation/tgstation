@@ -66,6 +66,8 @@
 				H.equip_or_collect(new /obj/item/clothing/under/rank/scientist(H), slot_w_uniform)
 			if("Plasma Researcher")
 				H.equip_or_collect(new /obj/item/clothing/under/rank/plasmares(H), slot_w_uniform)
+				if(H.backbag==3)
+					H.equip_or_collect(new /obj/item/weapon/storage/backpack/satchel_tox(H), slot_back)
 			if("Xenobiologist")
 				H.equip_or_collect(new /obj/item/clothing/under/rank/xenobio(H), slot_w_uniform)
 			if("Anomalist")
