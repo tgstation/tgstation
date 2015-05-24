@@ -208,13 +208,19 @@
 /obj/item/stack/sheet/glass/glass/attackby(obj/item/W, mob/user)
 	if(istype(W,/obj/item/stack/cable_coil))
 		var/obj/item/stack/cable_coil/CC = W
-		if(CC.amount < 5)
-			user << "<B>There is not enough wire in this coil. You need 5 lengths.</B>"
+		if(CC.amount < 2) //Cost changed from 5 to 2, so that you get 15 tiles from a cable coil instead of only 6 (!)
+			user << "<B>There is not enough wire in this coil. You need at least two lengths.</B>"
 			return
-		CC.use(5)
-		user << "<span class='notice'>You attach wire to the [name].</span></span>"
-		new /obj/item/stack/light_w(user.loc)
+		CC.use(2)
 		src.use(1)
+		user << "<span class='notice'>You attach some wires to the [name].</span></span>"
+		var/obj/item/stack/light_w/L=locate(/obj/item/stack/light_w) in get_turf(user)
+		if(L && L.amount<L.max_amount)
+			L.amount++
+			user << "You add [L] to the stack. It now contains [L.amount] tiles."
+			return
+		else
+			new /obj/item/stack/light_w(user.loc)
 	else
 		return ..()
 
