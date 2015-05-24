@@ -45,6 +45,8 @@
 	busjuke = new/obj/machinery/media/jukebox/superjuke/adminbus(src.loc)
 	busjuke.dir = EAST
 	layer = FLY_LAYER+1
+	spawn(10)
+		layer = FLY_LAYER+1
 
 /obj/structure/stool/bed/chair/vehicle/adminbus/update_mob()
 	if(buckled_mob)
@@ -245,7 +247,7 @@
 				B.explode()
 
 /obj/structure/stool/bed/chair/vehicle/adminbus/handle_rotation()
-	layer = FLY_LAYER
+	layer = FLY_LAYER+1
 
 	if(buckled_mob)
 		if(buckled_mob.loc != loc)
