@@ -111,9 +111,8 @@
 		reconnect_database()
 		linked_account = vendor_account
 
-	coinbox = new(src)
-	spawn
-		coinbox.loc = src
+	coinbox = new()
+	coinbox.loc = src
 
 	return
 

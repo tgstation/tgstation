@@ -86,8 +86,8 @@
 			if(!target_obj.vars.Find("unacidable") || target_obj.unacidable)	return
 		set_ready_state(0)
 		chassis.use_power(energy_drain)
-		chassis.visible_message("<font color='red'><b>[chassis] starts to drill [target]</b></font>", "You hear the drill.")
-		occupant_message("<font color='red'><b>You start to drill [target]</b></font>")
+		chassis.visible_message("<font color='red'><b>[chassis] starts to drill [target]!</b></font>", "You hear a drill.")
+		occupant_message("<font color='red'><b>You start to drill [target]!</b></font>")
 		var/T = chassis.loc
 		var/C = target.loc	//why are these backwards? we may never know -Pete
 		if(do_after_cooldown(target))
@@ -153,8 +153,8 @@
 			if(target_obj.unacidable)	return
 		set_ready_state(0)
 		chassis.use_power(energy_drain)
-		chassis.visible_message("<font color='red'><b>[chassis] starts to drill [target]</b></font>", "You hear the drill.")
-		occupant_message("<font color='red'><b>You start to drill [target]</b></font>")
+		chassis.visible_message("<font color='red'><b>[chassis] starts to drill [target]!</b></font>", "You hear a drill.")
+		occupant_message("<font color='red'><b>You start to drill [target]!</b></font>")
 		var/T = chassis.loc
 		var/C = target.loc	//why are these backwards? we may never know -Pete
 		if(do_after_cooldown(target))
