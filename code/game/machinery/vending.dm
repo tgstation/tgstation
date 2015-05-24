@@ -112,6 +112,7 @@
 		linked_account = vendor_account
 
 	coinbox = new(src)
+	coinbox.loc = src
 
 	return
 
