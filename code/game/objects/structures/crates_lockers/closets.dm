@@ -220,6 +220,8 @@
 		if(isrobot(user))
 			return
 		if(user.drop_item())
+			if(!W || isnull(W))
+				return
 			W.Move(loc)
 	else
 		if(istype(W, /obj/item/stack/packageWrap))

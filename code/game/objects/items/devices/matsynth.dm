@@ -104,6 +104,8 @@
 			var/tospawn = max(0, round(input("How many sheets of [mat_name] do you want to synthesize?") as num))
 			if(tospawn)
 				if(TakeCost(tospawn, modifier, r_user))
+					if(!active_material)
+						return
 					var/obj/item/stack/sheet/spawned_sheet = new active_material(get_turf(src))
 					spawned_sheet.amount = tospawn
 				else
