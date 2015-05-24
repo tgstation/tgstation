@@ -210,6 +210,8 @@
 			//Modules display is hidden
 			r.client.screen -= r.throw_icon	//"store" icon
 
+			if(!r.module)
+				return
 			for(var/atom/A in r.module.get_inactive_modules())
 				//Module is not currently active
 				r.client.screen -= A

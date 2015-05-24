@@ -19,7 +19,7 @@ proc/set_runecults( setELDERGOD_CULTS = null, setCONVERT_CULTS = null, setSACRIF
 	if(setITEMPORT_CULTS)
 		ITEMPORT_CULTS = setITEMPORT_CULTS
 	if(setFREEDOM_CULTS)
-		FREEDOM_CULTS = setFREEDOM_CULTS 
+		FREEDOM_CULTS = setFREEDOM_CULTS
 	if(setCULTSUMMON_CULTS)
 		CULTSUMMON_CULTS = setCULTSUMMON_CULTS
 	if(setBLOODBOIL_CULTS)
@@ -1005,9 +1005,9 @@ proc/set_runecults( setELDERGOD_CULTS = null, setCONVERT_CULTS = null, setSACRIF
 				continue
 			M.take_overall_damage(51,51)
 			M << "<span class='danger'>Your blood boils!</span>"
-			if(prob(5))
+		/*	if(prob(5))		Commented out so cults can't accidentally gib their sac target
 				spawn(5)
-					M.gib()
+					M.gib() */
 		for(var/obj/effect/rune/R in view(src))
 			if(prob(10))
 				explosion(R.loc, -1, 0, 1, 5)

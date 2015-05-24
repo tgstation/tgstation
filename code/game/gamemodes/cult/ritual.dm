@@ -236,6 +236,8 @@ var/engwords = list("travel", "blood", "join", "hell", "destroy", "technology", 
 			cultist.say(gibberish)
 		else
 			cultist.whisper(gibberish)
+	if(!src) //HOW COULD THIS HAPPEN
+		return
 	visible_message("<span class='danger'>The markings pulse with a small burst of light, then fall dark.</span>", 3, "<span class='danger'>You hear a faint fizzle.</span>", 2)
 	return
 

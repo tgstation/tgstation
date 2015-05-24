@@ -94,7 +94,8 @@ var/list/department_radio_keys = list(
 	if(check_emote(message))
 		return
 
-	if(!can_speak_basic(message)) //Stat is seperate so I can handle whispers properly.
+	if(!can_speak_basic(message)) //Stat is seperate so I can handle whispers properly
+		src << "<span class='danger'>You find yourself unable to speak!</span>"
 		return
 
 	var/message_mode = get_message_mode(message)
@@ -110,6 +111,7 @@ var/list/department_radio_keys = list(
 		return
 
 	if(!can_speak_vocal(message))
+		src << "<span class='danger'>You find yourself unable to speak!</span>"
 		return
 
 	message = treat_message(message)

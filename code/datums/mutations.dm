@@ -19,6 +19,8 @@
 	var/list/visual_indicators = list()
 
 /datum/mutation/human/proc/force_give(mob/living/carbon/human/owner)
+	if(!owner)
+		return
 	set_block(owner)
 	. = on_acquiring(owner)
 
@@ -50,6 +52,8 @@
 		. = on_losing(owner)
 
 /datum/mutation/human/proc/on_acquiring(mob/living/carbon/human/owner)
+	if(!owner || !owner.dna)
+		return
 	if(src in owner.dna.mutations)
 		return 1
 	owner.dna.mutations.Add(src)

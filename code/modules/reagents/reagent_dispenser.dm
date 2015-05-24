@@ -119,8 +119,9 @@
 		usr.visible_message("[usr] begins to detach [rig] from \the [src].", "You begin to detach [rig] from \the [src]")
 		if(do_after(usr, 20))
 			usr.visible_message("\blue [usr] detaches [rig] from \the [src].", "\blue  You detach [rig] from \the [src]")
-			rig.loc = get_turf(usr)
-			rig = null
+			if(rig)
+				rig.loc = get_turf(usr)
+				rig = null
 			overlays = new/list()
 
 /obj/structure/reagent_dispensers/fueltank/HasProximity(atom/movable/AM as mob|obj)

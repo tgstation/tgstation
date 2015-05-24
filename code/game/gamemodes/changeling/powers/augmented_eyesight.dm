@@ -10,6 +10,8 @@
 	var/active = 0 //Whether or not vision is enhanced
 
 /obj/effect/proc_holder/changeling/augmented_eyesight/sting_action(var/mob/user)
+	if(!user)
+		return
 	active = !active
 	if(active)
 		user << "<span class='notice'>We feel a minute twitch in our eyes, and darkness creeps away.</span>"
