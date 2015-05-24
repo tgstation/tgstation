@@ -198,6 +198,3 @@
 		icon_state = "experiment-open"
 	else
 		icon_state = "experiment"
-
-/obj/machinery/abductor/experiment/say_quote(text)
-	return "beeps, \"[text]\""
