@@ -187,7 +187,7 @@
 "dE" = (/obj/machinery/atmospherics/unary/outlet_injector/on{dir = 4},/turf/simulated/floor/plating,/area/derelict/research)
 "dF" = (/obj/machinery/atmospherics/pipe/simple/green/visible{dir = 4},/turf/simulated/floor/plating,/area/derelict/research)
 "dG" = (/obj/machinery/atmospherics/pipe/simple/green/visible{dir = 10},/obj/structure/grille,/obj/structure/window/reinforced/fulltile,/turf/simulated/floor/plating,/area/derelict/research)
-"dH" = (/obj/machinery/atmospherics/unary/portables_connector/visible,/obj/machinery/atmospherics/unary/tank/oxygen,/turf/simulated/floor/plasteel,/area/derelict/research)
+"dH" = (/obj/machinery/atmospherics/unary/tank/oxygen,/turf/simulated/floor/plasteel,/area/derelict/research)
 "dI" = (/obj/machinery/r_n_d/server/robotics,/turf/simulated/floor/plating,/area/derelict/research)
 "dJ" = (/obj/machinery/atmospherics/unary/vent_pump/siphon/on{dir = 4},/turf/simulated/floor/plating,/area/derelict/research)
 "dK" = (/obj/machinery/atmospherics/pipe/manifold/green/hidden,/obj/structure/grille,/obj/structure/window/reinforced/fulltile,/turf/simulated/floor/plating,/area/derelict/research)
