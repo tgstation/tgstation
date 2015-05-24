@@ -179,6 +179,7 @@
 				priority_announce("Hostile enviroment resolved. You have 3 minutes to board the Emergency Shuttle.", null, 'sound/AI/shuttledock.ogg', "Priority")
 			SSshuttle.emergencyNoEscape = 0
 			malf_mode_declared = 0
+			continuous_sanity_checked = 1
 			if(get_security_level() == "delta")
 				set_security_level("red")
 			return ..()
