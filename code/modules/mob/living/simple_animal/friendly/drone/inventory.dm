@@ -113,3 +113,30 @@
 
 /mob/living/simple_animal/drone/stripPanelEquip(obj/item/what, mob/who, where)
 	..(what, who, where, 1)
+
+/mob/living/simple_animal/drone/verb/quick_equip()
+	set name = "quick-equip"
+	set hidden = 1
+	if (isdrone(src))
+		var/mob/living/simple_animal/drone/D = src
+		var/obj/item/I = D.get_active_hand()
+		var/obj/item/weapon/storage/S = D.get_inactive_hand()
+		var/obj/item/weapon/storage/T = D.internal_storage
+		if (!I)
+			usr << "<span class='warning'>You are not holding anything to equip!</span>"
+			return
+		if(D.equip_to_appropriate_slot(I))
+			if(hand)
+				update_inv_l_hand(0)
+			else
+				update_inv_r_hand(0)
+		else if(s_active && s_active.can_be_inserted(I,1))	//if storage active insert there
+			s_active.handle_item_insertion(I)
+		else if(istype(S, /obj/item/weapon/storage) && S.can_be_inserted(I,1))	//see if we have box in other hand
+			S.handle_item_insertion(I)
+		else if (istype(T) && T.can_be_inserted(I,1)) // If carrying storage item like toolbox
+			T.handle_item_insertion(I)
+		else if(!D.internal_storage)
+			D.equip_to_slot(I, "drone_storage_slot")
+		else
+			D << "<span class='warning'>You are unable to equip that!</span>"
