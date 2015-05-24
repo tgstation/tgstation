@@ -5,7 +5,7 @@
 	desc = "A small bottle."
 	icon_state = null
 	item_state = "atoxinbottle"
-	possible_transfer_amounts = list(5,10,15,25,30)
+	possible_transfer_amounts = list(1,2,5,10,15,25,30)
 	volume = 30
 
 /obj/item/weapon/reagent_containers/glass/bottle/New()

@@ -16,28 +16,30 @@
 		((hi3 >= 65 ? hi3-55 : hi3-48)<<4) | (lo3 >= 65 ? lo3-55 : lo3-48),
 		((hi4 >= 65 ? hi4-55 : hi4-48)<<4) | (lo4 >= 65 ? lo4-55 : lo4-48))
 
+
 /proc/mix_color_from_reagents(var/list/reagent_list)
-	if(!reagent_list || !reagent_list.len) return 0
+	if(!istype(reagent_list))
+		return
 
-	var/list/rgbcolor = list(0,0,0,0)
-	var/finalcolor = 0
-	for(var/datum/reagent/re in reagent_list) // natural color mixing bullshit/algorithm
-		if(!finalcolor)
-			rgbcolor = GetColors(re.color)
-			finalcolor = re.color
+	var/color
+	var/vol_counter = 0
+	var/vol_temp
+
+	for(var/datum/reagent/R in reagent_list)
+		vol_temp = R.volume
+		vol_counter += vol_temp
+
+		if(!color)
+			color = R.color
+
+		else if (length(color) >= length(R.color))
+			color = BlendRGB(color, R.color, vol_temp/vol_counter)
 		else
-			var/newcolor[4]
-			var/prergbcolor[4]
-			prergbcolor = rgbcolor
-			newcolor = GetColors(re.color)
+			color = BlendRGB(R.color, color, vol_temp/vol_counter)
 
-			rgbcolor[1] = (prergbcolor[1]+newcolor[1])/2
-			rgbcolor[2] = (prergbcolor[2]+newcolor[2])/2
-			rgbcolor[3] = (prergbcolor[3]+newcolor[3])/2
-			rgbcolor[4] = (prergbcolor[4]+newcolor[4])/2
+	return color
 
-			finalcolor = rgb(rgbcolor[1], rgbcolor[2], rgbcolor[3], rgbcolor[4])
-	return finalcolor
+
 
 // This isn't a perfect color mixing system, the more reagents that are inside,
 // the darker it gets until it becomes absolutely pitch black! I dunno, maybe

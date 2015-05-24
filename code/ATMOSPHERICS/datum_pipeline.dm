@@ -22,7 +22,7 @@
 		A.nullifyPipenet(src)
 	..()
 
-/datum/pipeline/proc/process()//This use to be called called from the pipe networks
+/datum/pipeline/process()//This use to be called called from the pipe networks
 	if(update)
 		update = 0
 		reconcile_air()

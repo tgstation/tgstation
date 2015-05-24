@@ -16,7 +16,7 @@ would spawn and follow the beaker, even if it is carried or thrown.
 /obj/effect/proc/delete()
 	loc = null
 	if(reagents)
-		reagents.delete()
+		qdel(reagents)
 	return
 
 /datum/effect/effect/proc/fadeOut(var/atom/A, var/frames = 16)
