@@ -1,213 +1,295 @@
-//States for airlock_control
-#define ACCESS_STATE_INTERNAL	-1
-#define ACCESS_STATE_LOCKED		0
-#define ACCESS_STATE_EXTERNAL	1
+#define CLOSING			1
+#define OPENING			2
+#define CYCLE			3
+#define CYCLE_EXTERIOR	4
+#define CYCLE_INTERIOR	5
 
-datum/computer/file/embedded_program/access_controller
-	var/id_tag
-	var/exterior_door_tag
-	var/interior_door_tag
+/obj/machinery/doorButtons
+	power_channel = ENVIRON
+	anchored = 1
+	use_power = 1
+	idle_power_usage = 2
+	active_power_usage = 4
+	var/idSelf
 
-	state = ACCESS_STATE_LOCKED
-	var/target_state = ACCESS_STATE_LOCKED
+/obj/machinery/doorButtons/attackby(obj/O, mob/user)
+	attack_hand(user)
 
-datum/computer/file/embedded_program/access_controller/receive_signal(datum/signal/signal, receive_method, receive_param)
-	var/receive_tag = signal.data["tag"]
-	if(!receive_tag) return
+/obj/machinery/doorButtons/proc/findObjsByTag()
+	return
 
-	if(receive_tag==exterior_door_tag)
-		if(signal.data["door_status"] == "closed")
-			if(signal.data["lock_status"] == "locked")
-				memory["exterior_status"] = "locked"
+/obj/machinery/doorButtons/initialize()
+	findObjsByTag()
+
+/obj/machinery/doorButtons/proc/removeMe()
+
+
+/obj/machinery/doorButtons/access_button
+	icon = 'icons/obj/airlock_machines.dmi'
+	icon_state = "access_button_standby"
+	name = "access button"
+	var/idDoor
+	var/obj/machinery/door/airlock/door
+	var/obj/machinery/doorButtons/airlock_controller/controller
+	var/busy
+
+/obj/machinery/doorButtons/access_button/findObjsByTag()
+	for(var/obj/machinery/doorButtons/airlock_controller/A in world)
+		if(A.idSelf == idSelf)
+			controller = A
+			break
+	for(var/obj/machinery/door/airlock/I in world)
+		if(I.id_tag == idDoor)
+			door = I
+			break
+
+/obj/machinery/doorButtons/access_button/attack_hand(mob/user)
+	if(..())
+		return
+	if(busy)
+		return
+	if(controller && !controller.busy && door)
+		if(controller.stat & NOPOWER)
+			return
+		busy = 1
+		update_icon()
+		if(door.density)
+			if(!controller.exteriorAirlock || !controller.interiorAirlock)
+				controller.onlyOpen(door)
 			else
-				memory["exterior_status"] = "closed"
-		else
-			memory["exterior_status"] = "open"
-
-	else if(receive_tag==interior_door_tag)
-		if(signal.data["door_status"] == "closed")
-			if(signal.data["lock_status"] == "locked")
-				memory["interior_status"] = "locked"
-			else
-				memory["interior_status"] = "closed"
-		else
-			memory["interior_status"] = "open"
-
-	else if(receive_tag==id_tag)
-		switch(signal.data["command"])
-			if("cycle_interior")
-				target_state = ACCESS_STATE_INTERNAL
-			if("cycle_exterior")
-				target_state = ACCESS_STATE_EXTERNAL
-			if("cycle")
-				if(state < ACCESS_STATE_LOCKED)
-					target_state = ACCESS_STATE_EXTERNAL
+				if(controller.exteriorAirlock.density && controller.interiorAirlock.density)
+					controller.onlyOpen(door)
 				else
-					target_state = ACCESS_STATE_INTERNAL
+					controller.cycleClose(door)
+		else
+			controller.onlyClose(door)
+		sleep(20)
+		busy = 0
+		update_icon()
 
-datum/computer/file/embedded_program/access_controller/receive_user_command(command)
-	switch(command)
-		if("cycle_closed")
-			target_state = ACCESS_STATE_LOCKED
-		if("cycle_exterior")
-			target_state = ACCESS_STATE_EXTERNAL
-		if("cycle_interior")
-			target_state = ACCESS_STATE_INTERNAL
+/obj/machinery/doorButtons/access_button/update_icon()
+	if(stat & NOPOWER)
+		icon_state = "access_button_off"
+	else
+		if(busy)
+			icon_state = "access_button_cycle"
+		else
+			icon_state = "access_button_standby"
 
-datum/computer/file/embedded_program/access_controller/process()
-	var/process_again = 1
-	while(process_again)
-		process_again = 0
-		switch(state)
-			if(ACCESS_STATE_INTERNAL) // state -1
-				if(target_state > state)
-					if(memory["interior_status"] == "locked")
-						state = ACCESS_STATE_LOCKED
-						process_again = 1
-					else
-						var/datum/signal/signal = new
-						signal.data["tag"] = interior_door_tag
-						if(memory["interior_status"] == "closed")
-							signal.data["command"] = "lock"
-						else
-							signal.data["command"] = "secure_close"
-						post_signal(signal)
+/obj/machinery/doorButtons/access_button/power_change()
+	..()
+	update_icon()
 
-			if(ACCESS_STATE_LOCKED)
-				if(target_state < state)
-					if(memory["exterior_status"] != "locked")
-						var/datum/signal/signal = new
-						signal.data["tag"] = exterior_door_tag
-						if(memory["exterior_status"] == "closed")
-							signal.data["command"] = "lock"
-						else
-							signal.data["command"] = "secure_close"
-						post_signal(signal)
-					else
-						if(memory["interior_status"] == "closed" || memory["interior_status"] == "open")
-							state = ACCESS_STATE_INTERNAL
-							process_again = 1
-						else
-							var/datum/signal/signal = new
-							signal.data["tag"] = interior_door_tag
-							signal.data["command"] = "secure_open"
-							post_signal(signal)
-				else if(target_state > state)
-					if(memory["interior_status"] != "locked")
-						var/datum/signal/signal = new
-						signal.data["tag"] = interior_door_tag
-						if(memory["interior_status"] == "closed")
-							signal.data["command"] = "lock"
-						else
-							signal.data["command"] = "secure_close"
-						post_signal(signal)
-					else
-						if(memory["exterior_status"] == "closed" || memory["exterior_status"] == "open")
-							state = ACCESS_STATE_EXTERNAL
-							process_again = 1
-						else
-							var/datum/signal/signal = new
-							signal.data["tag"] = exterior_door_tag
-							signal.data["command"] = "secure_open"
-							post_signal(signal)
-				else
-					if(memory["interior_status"] != "locked")
-						var/datum/signal/signal = new
-						signal.data["tag"] = interior_door_tag
-						if(memory["interior_status"] == "closed")
-							signal.data["command"] = "lock"
-						else
-							signal.data["command"] = "secure_close"
-						post_signal(signal)
-					else if(memory["exterior_status"] != "locked")
-						var/datum/signal/signal = new
-						signal.data["tag"] = exterior_door_tag
-						if(memory["exterior_status"] == "closed")
-							signal.data["command"] = "lock"
-						else
-							signal.data["command"] = "secure_close"
-						post_signal(signal)
-
-			if(ACCESS_STATE_EXTERNAL) //state 1
-				if(target_state < state)
-					if(memory["exterior_status"] == "locked")
-						state = ACCESS_STATE_LOCKED
-						process_again = 1
-					else
-						var/datum/signal/signal = new
-						signal.data["tag"] = exterior_door_tag
-						if(memory["exterior_status"] == "closed")
-							signal.data["command"] = "lock"
-						else
-							signal.data["command"] = "secure_close"
-						post_signal(signal)
+/obj/machinery/doorButtons/access_button/removeMe(obj/O)
+	if(O == door)
+		door = null
 
 
-	return 1
 
-
-obj/machinery/embedded_controller/radio/access_controller
+/obj/machinery/doorButtons/airlock_controller
 	icon = 'icons/obj/airlock_machines.dmi'
 	icon_state = "access_control_standby"
-
 	name = "access console"
-	density = 0
-	power_channel = ENVIRON
+	var/obj/machinery/door/airlock/interiorAirlock
+	var/obj/machinery/door/airlock/exteriorAirlock
+	var/idInterior
+	var/idExterior
+	var/busy
+	var/lostPower
 
-	frequency = 1449
+/obj/machinery/doorButtons/airlock_controller/removeMe(obj/O)
+	if(O == interiorAirlock)
+		interiorAirlock = null
+	else if(O == exteriorAirlock)
+		exteriorAirlock = null
 
-	// Setup parameters only
-	var/id_tag
-	var/exterior_door_tag
-	var/interior_door_tag
-
-obj/machinery/embedded_controller/radio/access_controller/initialize()
+/obj/machinery/doorButtons/airlock_controller/Destroy()
+	for(var/obj/machinery/doorButtons/access_button/A in world)
+		if(A.controller == src)
+			A.controller = null
 	..()
 
-	var/datum/computer/file/embedded_program/access_controller/new_prog = new
+/obj/machinery/doorButtons/airlock_controller/Topic(href, href_list)
+	if(..())
+		return
+	if(busy)
+		return
+	switch(href_list["command"])
+		if("close_exterior")
+			onlyClose(exteriorAirlock)
+		if("close_interior")
+			onlyClose(interiorAirlock)
+		if("cycle_exterior")
+			cycleClose(exteriorAirlock)
+		if("cycle_interior")
+			cycleClose(interiorAirlock)
+		if("open_exterior")
+			onlyOpen(exteriorAirlock)
+		if("open_interior")
+			onlyOpen(interiorAirlock)
 
-	new_prog.id_tag = id_tag
-	new_prog.exterior_door_tag = exterior_door_tag
-	new_prog.interior_door_tag = interior_door_tag
+/obj/machinery/doorButtons/airlock_controller/proc/onlyOpen(obj/machinery/door/airlock/A)
+	if(A)
+		busy = CLOSING
+		update_icon()
+		openDoor(A)
 
-	new_prog.master = src
-	program = new_prog
+/obj/machinery/doorButtons/airlock_controller/proc/onlyClose(obj/machinery/door/airlock/A)
+	if(A)
+		busy = CLOSING
+		closeDoor(A)
 
-obj/machinery/embedded_controller/radio/access_controller/update_icon()
-	if(on && program)
-		if(program.memory["processing"])
-			icon_state = "access_control_process"
+/obj/machinery/doorButtons/airlock_controller/proc/closeDoor(obj/machinery/door/airlock/A)
+	if(A.density)
+		goIdle()
+		return 0
+	update_icon()
+	A.unbolt()
+	spawn()
+		if(A && A.close())
+			if(stat & NOPOWER || lostPower || !A || A.gc_destroyed)
+				goIdle(1)
+				return
+			A.bolt()
+			if(busy == CLOSING)
+				goIdle(1)
 		else
-			icon_state = "access_control_standby"
+			goIdle(1)
+	return 1
+
+/obj/machinery/doorButtons/airlock_controller/proc/cycleClose(obj/machinery/door/airlock/A)
+	if(!A || !exteriorAirlock || !interiorAirlock)
+		return
+	if(exteriorAirlock.density == interiorAirlock.density)
+		return
+	busy = CYCLE
+	update_icon()
+	if(A == interiorAirlock)
+		if(closeDoor(exteriorAirlock))
+			busy = CYCLE_INTERIOR
 	else
+		if(closeDoor(interiorAirlock))
+			busy = CYCLE_EXTERIOR
+
+/obj/machinery/doorButtons/airlock_controller/proc/cycleOpen(obj/machinery/door/airlock/A)
+	if(!A)
+		goIdle(1)
+	if(A == exteriorAirlock)
+		if(interiorAirlock)
+			if(!interiorAirlock.density || !interiorAirlock.locked)
+				return
+	else
+		if(exteriorAirlock)
+			if(!exteriorAirlock.density || !exteriorAirlock.locked)
+				return
+	if(busy != OPENING)
+		busy = OPENING
+		openDoor(A)
+
+/obj/machinery/doorButtons/airlock_controller/proc/openDoor(obj/machinery/door/airlock/A)
+	if(exteriorAirlock && interiorAirlock && (!exteriorAirlock.density || !interiorAirlock.density))
+		goIdle(1)
+		return
+	A.unbolt()
+	spawn()
+		if(A && A.open())
+			if(stat | (NOPOWER) && !lostPower && A && !A.gc_destroyed)
+				A.bolt()
+		goIdle(1)
+
+/obj/machinery/doorButtons/airlock_controller/proc/goIdle(var/update)
+	lostPower = 0
+	busy = 0
+	if(update)
+		update_icon()
+
+/obj/machinery/doorButtons/airlock_controller/process()
+	if(stat & NOPOWER)
+		return
+	if(busy == CYCLE_EXTERIOR)
+		cycleOpen(exteriorAirlock)
+	else if(busy == CYCLE_INTERIOR)
+		cycleOpen(interiorAirlock)
+
+/obj/machinery/doorButtons/airlock_controller/power_change()
+	..()
+	if(stat & NOPOWER)
+		lostPower = 1
+	else
+		if(!busy)
+			lostPower = 0
+	update_icon()
+
+/obj/machinery/doorButtons/airlock_controller/findObjsByTag()
+	for(var/obj/machinery/door/airlock/A in world)
+		if(A.id_tag == idInterior)
+			interiorAirlock = A
+		else if(A.id_tag == idExterior)
+			exteriorAirlock = A
+
+/obj/machinery/doorButtons/airlock_controller/update_icon()
+	if(stat & NOPOWER)
 		icon_state = "access_control_off"
+		return
+	if(busy || lostPower)
+		icon_state = "access_control_process"
+	else
+		icon_state = "access_control_standby"
+
+/obj/machinery/doorButtons/airlock_controller/attack_hand(mob/user)
+	if(..())
+		return
+	var/datum/browser/popup = new(user, "computer", name)
+	popup.set_title_image(user.browse_rsc_icon(src.icon, src.icon_state))
+	popup.set_content(returnText())
+	popup.open()
+
+/obj/machinery/doorButtons/airlock_controller/proc/returnText()
+	var/output
+	if(!exteriorAirlock && !interiorAirlock)
+		return "ERROR ERROR ERROR ERROR"
+	if(lostPower)
+		output = "Initializing..."
+	else
+		if(!exteriorAirlock || !interiorAirlock)
+			if(!exteriorAirlock)
+				if(interiorAirlock.density)
+					output = "<A href='?src=\ref[src];command=open_interior'>Open Interior Airlock</A><BR>"
+				else
+					output = "<A href='?src=\ref[src];command=close_interior'>Close Interior Airlock</A><BR>"
+			else
+				if(exteriorAirlock.density)
+					output = "<A href='?src=\ref[src];command=open_exterior'>Open Exterior Airlock</A><BR>"
+				else
+					output = "<A href='?src=\ref[src];command=close_exterior'>Close Exterior Airlock</A><BR>"
+		else
+			if(exteriorAirlock.density)
+				if(interiorAirlock.density)
+					output = {"<A href='?src=\ref[src];command=open_exterior'>Open Exterior Airlock</A><BR>
+					<A href='?src=\ref[src];command=open_interior'>Open Interior Airlock</A><BR>"}
+				else
+					output = {"<A href='?src=\ref[src];command=cycle_exterior'>Cycle to Exterior Airlock</A><BR>
+					<A href='?src=\ref[src];command=close_interior'>Close Interior Airlock</A><BR>"}
+			else
+				if(interiorAirlock.density)
+					output = {"<A href='?src=\ref[src];command=close_exterior'>Close Exterior Airlock</A><BR>
+					<A href='?src=\ref[src];command=cycle_interior'>Cycle to Interior Airlock</A><BR>"}
+				else
+					output = {"<A href='?src=\ref[src];command=close_exterior'>Close Exterior Airlock</A><BR>
+					<A href='?src=\ref[src];command=close_interior'>Close Interior Airlock</A><BR>"}
 
 
-obj/machinery/embedded_controller/radio/access_controller/return_text()
-	var/state_options = null
-
-	var/state = 0
-	var/exterior_status = "----"
-	var/interior_status = "----"
-	if(program)
-		state = program.state
-		exterior_status = program.memory["exterior_status"]
-		interior_status = program.memory["interior_status"]
-
-	switch(state)
-		if(ACCESS_STATE_INTERNAL)
-			state_options = {"<A href='?src=\ref[src];command=cycle_closed'>Lock Interior Airlock</A><BR>
-<A href='?src=\ref[src];command=cycle_exterior'>Cycle to Exterior Airlock</A><BR>"}
-		if(ACCESS_STATE_LOCKED)
-			state_options = {"<A href='?src=\ref[src];command=cycle_interior'>Unlock Interior Airlock</A><BR>
-<A href='?src=\ref[src];command=cycle_exterior'>Unlock Exterior Airlock</A><BR>"}
-		if(ACCESS_STATE_EXTERNAL)
-			state_options = {"<A href='?src=\ref[src];command=cycle_interior'>Cycle to Interior Airlock</A><BR>
-<A href='?src=\ref[src];command=cycle_closed'>Lock Exterior Airlock</A><BR>"}
-
-	var/output = {"<B>Access Control Console</B><HR>
-[state_options]<HR>
-<B>Exterior Door: </B> [exterior_status]<BR>
-<B>Interior Door: </B> [interior_status]<BR>"}
+	output = {"<B>Access Control Console</B><HR>
+				[output]<HR>"}
+	if(exteriorAirlock)
+		output += "<B>Exterior Door: </B> [exteriorAirlock.density ? "closed" : "open"]<BR>"
+	if(interiorAirlock)
+		output += "<B>Interior Door: </B> [interiorAirlock.density ? "closed" : "open"]<BR>"
 
 	return output
+
+#undef CLOSING
+#undef OPENING
+#undef CYCLE
+#undef CYCLE_EXTERIOR
+#undef CYCLE_INTERIOR

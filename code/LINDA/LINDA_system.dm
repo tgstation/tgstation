@@ -82,9 +82,11 @@ turf/CanPass(atom/movable/mover, turf/target, height=1.5)
 /atom/movable/proc/air_update_turf(var/command = 0)
 	if(!istype(loc,/turf) && command)
 		return
-	var/turf/T = loc
+
+	var/turf/T = get_turf(loc)
 	if(!T)
 		return
+
 	T.air_update_turf(command)
 
 /turf/proc/air_update_turf(var/command = 0)
