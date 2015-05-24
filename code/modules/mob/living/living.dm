@@ -857,13 +857,15 @@
 	return 1
 
 /mob/living/singularity_act()
-	var/gain = 20
-	investigation_log(I_SINGULO,"has been consumed by a singularity")
-	gib()
-	return(gain)
+	if(!(src.flags & INVULNERABLE))
+		var/gain = 20
+		investigation_log(I_SINGULO,"has been consumed by a singularity")
+		gib()
+		return(gain)
 
 /mob/living/singularity_pull(S)
-	step_towards(src, S)
+	if(!(src.flags & INVULNERABLE))
+		step_towards(src, S)
 
 /mob/living/proc/InCritical()
 	return (src.health < 0 && src.health > -95.0 && stat == UNCONSCIOUS)
