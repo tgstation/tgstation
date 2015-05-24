@@ -1,7 +1,7 @@
 
 
 /obj/item/weapon/reagent_containers/food/drinks/drinkingglass
-	name = "glass"
+	name = "drinking glass"
 	desc = "Your standard drinking glass."
 	icon_state = "glass_empty"
 	amount_per_transfer_from_this = 10

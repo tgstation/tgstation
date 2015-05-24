@@ -151,6 +151,9 @@ obj/machinery/hydroponics/process()
 
 				var/datum/gas_mixture/breath = loc.remove_air(breath_moles)
 
+				if(!breath)
+					return
+
 				var/average_co2 = 0.4	//Yield calculated from this
 
 				var/breath_pressure = (breath.total_moles()*R_IDEAL_GAS_EQUATION*T20C)/BREATH_VOLUME

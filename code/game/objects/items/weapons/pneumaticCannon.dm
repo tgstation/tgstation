@@ -70,6 +70,8 @@
 
 
 /obj/item/weapon/pneumatic_cannon/afterattack(atom/target as mob|obj|turf, mob/living/carbon/human/user as mob|obj, flag, params)
+	if(target.loc == user || !check_allowed_items(target))
+		return
 	if(user.a_intent == "harm" || !ishuman(user))
 		return ..()
 	if(!loadedItems || !loadedWeightClass)
