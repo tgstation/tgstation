@@ -43,7 +43,7 @@ var/global/list/taxi_computers = list()
 		return
 	var/area/dest_location = locate(destination)
 	if(curr_location == dest_location)
-		return -1 //stops the fail message
+		return 1 //we did it!
 
 	moving = 1
 	broadcast("Taxi [letter] will move in [wait_time / 10] second\s.")
