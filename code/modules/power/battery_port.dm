@@ -15,13 +15,16 @@
 /obj/machinery/power/battery_port/New()
 	. = ..()
 
-/*
 	component_parts = newlist(
-		/obj/item/weapon/circuitboard/battery_port
+		/obj/item/weapon/circuitboard/battery_port,
+		/obj/item/weapon/stock_parts/capacitor,
+		/obj/item/weapon/stock_parts/capacitor,
+		/obj/item/weapon/stock_parts/capacitor,
+		/obj/item/weapon/stock_parts/console_screen
 	)
 
 	RefreshParts()
-*/
+
 	connect_to_network()
 
 

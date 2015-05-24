@@ -1,5 +1,6 @@
-#define TAXI_SHUTTLE_MOVE_TIME 240
-#define TAXI_SHUTTLE_COOLDOWN 300
+#define TAXI_SHUTTLE_MOVE_TIME 120
+
+var/const/TAXI_SHUTTLE_COOLDOWN = 100
 
 ////////////////////
 // TAXI SHUTTLES  //
@@ -25,6 +26,12 @@ var/global/list/taxi_computers = list()
 	..()
 	taxi_computers += src
 
+/obj/machinery/computer/taxi_shuttle/Destroy()
+	taxi_computers -= src
+	connected_buttons = list()
+	..()
+
+
 /obj/machinery/computer/taxi_shuttle/update_icon()
 	..()
 	icon_state = "syndishuttle"
@@ -36,10 +43,10 @@ var/global/list/taxi_computers = list()
 		return
 	var/area/dest_location = locate(destination)
 	if(curr_location == dest_location)
-		return
+		return -1 //stops the fail message
 
 	moving = 1
-	broadcast("Taxi [letter] will move in [wait_time / 10] seconds.")
+	broadcast("Taxi [letter] will move in [wait_time / 10] second\s.")
 	sleep(wait_time)
 	lastMove = world.time
 
@@ -117,9 +124,9 @@ var/global/list/taxi_computers = list()
 	for(var/place in href_list)
 		if(href_list[place])
 			if(copytext(place, 1, 7) == "unauth") // if it's unauthorised, we take longer
-				callTo(copytext(place, 7), 100)
+				callTo(copytext(place, 7), TAXI_NOACCESS_TIME)
 			else
-				callTo(place, 30) //otherwise, double quick time
+				callTo(place, TAXI_ACCESS_TIME) //otherwise, double quick time
 
 	add_fingerprint(usr)
 	updateUsrDialog()

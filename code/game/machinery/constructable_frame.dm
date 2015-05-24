@@ -378,7 +378,7 @@ obj/item/weapon/circuitboard/rdserver
 
 /obj/item/weapon/circuitboard/smes
 	name = "Circuit Board (SMES)"
-	build_path = "/obj/machinery/power/smes"
+	build_path = "/obj/machinery/power/battery/smes"
 	board_type = "machine"
 	origin_tech = "powerstorage=4;engineering=4;programming=4"
 	frame_desc = "Requires 4 matter bins, 3 manipulators, 3 micro-lasers, and 2 console screens."
@@ -387,6 +387,28 @@ obj/item/weapon/circuitboard/rdserver
 							"/obj/item/weapon/stock_parts/manipulator" = 3,
 							"/obj/item/weapon/stock_parts/micro_laser" = 3,
 							"/obj/item/weapon/stock_parts/console_screen" = 2)
+
+/obj/item/weapon/circuitboard/port_smes
+	name = "Circuit Board (Portable SMES)"
+	build_path = "/obj/machinery/power/battery/portable"
+	board_type = "machine"
+	origin_tech = "powerstorage=5;engineering=4;programming=4"
+	frame_desc = "Requires 4 matter bins, 3 manipulators, 3 micro-lasers, and 2 console screens."
+	req_components = list(
+							"/obj/item/weapon/stock_parts/matter_bin" = 4,
+							"/obj/item/weapon/stock_parts/manipulator" = 3,
+							"/obj/item/weapon/stock_parts/micro_laser" = 3,
+							"/obj/item/weapon/stock_parts/console_screen" = 2)
+
+/obj/item/weapon/circuitboard/battery_port
+	name = "Circuit Board (SMES Port)"
+	build_path = "/obj/machinery/power/battery_port"
+	board_type = "machine"
+	origin_tech = "powerstorage=5;engineering=4;programming=4"
+	frame_desc = "Requires 3 capacitors and 1 console screen."
+	req_components = list(
+							"/obj/item/weapon/stock_parts/capacitor" = 3,
+							"/obj/item/weapon/stock_parts/console_screen" = 1)
 
 /obj/item/weapon/circuitboard/chem_dispenser
 	name = "Circuit Board (Chemistry Dispenser)"

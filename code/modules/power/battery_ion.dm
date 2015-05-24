@@ -15,6 +15,27 @@
 
 	var/obj/machinery/power/battery_port/connected_to
 
+/obj/machinery/power/battery/portable/New()
+	..()
+
+	component_parts = newlist(
+		/obj/item/weapon/circuitboard/port_smes,
+		/obj/item/weapon/stock_parts/matter_bin,
+		/obj/item/weapon/stock_parts/matter_bin,
+		/obj/item/weapon/stock_parts/matter_bin,
+		/obj/item/weapon/stock_parts/matter_bin,
+		/obj/item/weapon/stock_parts/manipulator,
+		/obj/item/weapon/stock_parts/manipulator,
+		/obj/item/weapon/stock_parts/manipulator,
+		/obj/item/weapon/stock_parts/micro_laser,
+		/obj/item/weapon/stock_parts/micro_laser,
+		/obj/item/weapon/stock_parts/micro_laser,
+		/obj/item/weapon/stock_parts/console_screen,
+		/obj/item/weapon/stock_parts/console_screen
+	)
+
+	RefreshParts()
+
 /obj/machinery/power/battery/portable/Destroy()
 	if(connected_to)
 		connected_to.disconnect_battery()

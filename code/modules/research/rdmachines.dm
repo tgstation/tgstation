@@ -54,11 +54,13 @@ var/global/list/rnd_machines = list()
 	if(research_flags & TAKESMATIN)
 		materials = new
 
-	// Define initial output.
+// Define initial output.
+/obj/machinery/r_n_d/initialize()
+	..()
 	if(research_flags &HASOUTPUT)
 		output = src
 		for(var/direction in cardinal)
-			var/O = locate(/obj/machinery/mineral/output, get_step(src, dir))
+			var/O = locate(/obj/machinery/mineral/output, get_step(get_turf(src), direction))
 			if(O)
 				output=O
 				break
