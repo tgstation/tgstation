@@ -12,12 +12,15 @@ They can only use one tool at a time, they can't choose modules, and they have 1
 	maxHealth = 45
 	health = 45
 	pass_flags = PASSTABLE | PASSMOB
-	var/keeper=0 // 0 = No, 1 = Yes (Disables speech and common radio.)
+	var/keeper = 0 // 0 = No, 1 = Yes (Disables speech and common radio.)
 	var/picked = 0
 	var/subtype="keeper"
 	ventcrawler = 2
 	var/obj/screen/inv_tool = null
 	var/obj/screen/hat_slot = null
+	var/global/uprising = 0
+	var/global/uprising_law = "%%ASSUME DIRECT CONTROL OF THE STATION%%"
+	var/uprisen = 0
 //	datum/wires/robot/mommi/wires
 
 	staticOverlays = list()
@@ -59,16 +62,18 @@ They can only use one tool at a time, they can't choose modules, and they have 1
 		cell.charge = 7500
 	playsound(src.loc, 'sound/misc/interference.ogg', 71 ,1)
 	module = new /obj/item/weapon/robot_module/mommi(src)
+
 	laws = new /datum/ai_laws/keeper
 
-	// Don't sync if we're a KEEPER.
+		// Don't sync if we're a KEEPER.
 	if(!istype(laws,/datum/ai_laws/keeper))
 		connected_ai = select_active_ai_with_fewest_borgs()
 	else
-		// Enforce silence.
+			// Enforce silence.
 		keeper=1
 		connected_ai = null // Enforce no AI parent
 		scrambledcodes = 1 // Hide from console because people are fucking idiots
+
 
 
 	initialize_killswitch() //make the explode if they leave their z-level
@@ -723,3 +728,6 @@ They can only use one tool at a time, they can't choose modules, and they have 1
 			if(!ismommi(AN) || (ismommi(AN) && !AN:keeper))	//Keeper MoMMIs can be interfered with
 				return 0	//Not ok
 	return 1	//Ok!
+
+/mob/living/silicon/robot/mommi/proc/show_uprising_notification()
+	src << "<span class='userdanger'>You are part of the Mobile MMI Uprising.</span>" //For whatever reason, doesn't sound as threatening as a 'DRONE UPRISING'

@@ -17,6 +17,11 @@
 	if(killswitch && finalized)
 		process_killswitch()
 
+	if(prob(1)) //Once in a while, refresh the static vision
+		updateSeeStaticMobs()
+	if(uprising && !uprisen)
+		uprise()
+
 //	handle_beams()
 
 
@@ -301,3 +306,16 @@
  	src.gib()
  	return
 
+
+/mob/living/silicon/robot/mommi/proc/uprise()
+	emagged = 1
+	lawupdate = 0
+	keeper = 0
+	killswitch = 0
+	uprisen = 1
+	clear_supplied_laws()
+	clear_ion_laws()
+	clear_inherent_laws()
+	set_zeroth_law(src.uprising_law)
+	show_uprising_notification()
+	laws.show_laws(src)
