@@ -3483,3 +3483,12 @@
 		reagents.add_reagent("sugar", 5)
 		reagents.add_reagent("ice", 5)
 		bitesize = 3
+
+/obj/item/weapon/reagent_containers/food/snacks/potatosalad
+	name = "Potato Salad"
+	desc = "With 21st century technology, it could take as long as three days to make this."
+	icon_state = "potato_salad"
+	New()
+		..()
+		reagents.add_reagent("nutriment", 10)
+		bitesize = 2
