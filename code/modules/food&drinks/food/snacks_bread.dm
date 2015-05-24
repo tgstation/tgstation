@@ -127,6 +127,7 @@
 	name = "baguette"
 	desc = "Bon appetit!"
 	icon_state = "baguette"
+	icon = 'icons/obj/food/burgerbread.dmi'
 	list_reagents = list("nutriment" = 2, "vitamin" = 2)
 	bitesize = 3
 	w_class = 3
