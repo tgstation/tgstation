@@ -152,7 +152,7 @@ emp_act
 	if(user == src) // Attacking yourself can't miss
 		target_zone = user.zone_sel.selecting
 	if(!target_zone && !src.stat)
-		visible_message("<span class='warning'><B>[user] misses [src] with \the [I]!</span>")
+		visible_message("<span class='danger'>[user] misses [src] with \the [I]!</span>")
 		return
 	if(istype(I, /obj/item/weapon/kitchen/utensil/knife/large/butch/meatcleaver) && src.stat == DEAD && user.a_intent == I_HURT)
 		var/obj/item/weapon/reagent_containers/food/snacks/meat/human/newmeat = new /obj/item/weapon/reagent_containers/food/snacks/meat/human(get_turf(src.loc))
@@ -201,8 +201,8 @@ emp_act
 		visible_message("<span class='danger'>[src] has been attacked in the [hit_area] with [I.name] by [user]!</span>")
 
 	var/armor = run_armor_check(affecting, "melee", "Your armor has protected your [hit_area].", "Your armor has softened hit to your [hit_area].")
-	if(armor >= 2)	return 0
-	if(!I.force)	return 0
+	if(armor >= 2)	return 1 //We still connected
+	if(!I.force)	return 1
 
 	apply_damage(I.force, I.damtype, affecting, armor , I.is_sharp(), I)
 

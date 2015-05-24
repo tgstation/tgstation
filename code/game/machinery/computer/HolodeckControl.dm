@@ -410,7 +410,7 @@
 	name = "table"
 	desc = "A square piece of wood standing on four wooden legs. It can not move."
 	icon = 'icons/obj/structures.dmi'
-	icon_state = "wood_table"
+	icon_state = "woodtable"
 
 /obj/item/clothing/gloves/boxing/hologlove
 	name = "boxing gloves"

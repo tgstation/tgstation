@@ -548,7 +548,7 @@ steam.start() -- spawns the effect
 	icon_state = "blank"
 	spawn( 20 )
 		if(src)
-			qdel(src)
+			returnToPool(src)
 
 /obj/effect/effect/trails/ion
 	base_name = "ion"
@@ -574,7 +574,7 @@ steam.start() -- spawns the effect
 				var/turf/T = get_turf(src.holder)
 				if(T != src.oldposition)
 					if(istype(T, /turf/space))
-						var/obj/effect/effect/trails/I = new trail_type(src.oldposition)
+						var/obj/effect/effect/trails/I = getFromPool(trail_type,src.oldposition)
 						src.oldposition = T
 						I.dir = src.holder.dir
 						I.Play()
@@ -622,8 +622,8 @@ steam.start() -- spawns the effect
 						src.oldloc = get_step(oldposition,NORTH)
 						//src.oldloc = get_step(oldloc,EAST)
 				if(istype(T, /turf/space))
-					var/obj/effect/effect/trails/ion/I = new /obj/effect/effect/trails/ion(src.oldposition)
-					var/obj/effect/effect/trails/ion/II = new /obj/effect/effect/trails/ion(src.oldloc)
+					var/obj/effect/effect/trails/ion/I = getFromPool(/obj/effect/effect/trails/ion,src.oldposition)
+					var/obj/effect/effect/trails/ion/II = getFromPool(/obj/effect/effect/trails/ion,src.oldloc)
 					//src.oldposition = T
 					I.dir = src.holder.dir
 					II.dir = src.holder.dir
@@ -632,8 +632,8 @@ steam.start() -- spawns the effect
 					I.icon_state = "blank"
 					II.icon_state = "blank"
 					spawn( 20 )
-						if(I) qdel(I)
-						if(II) qdel(II)
+						if(I) returnToPool(I)
+						if(II) returnToPool(II)
 
 			spawn(2)
 				if(src.on)
@@ -925,8 +925,8 @@ steam.start() -- spawns the effect
 			for(var/mob/O in viewers(src))
 				if (O.client)
 					O << "<span class='warning'>[G.assailant] smashes [G.affecting] through the foamed metal wall.</span>"
-			del(I)
-			del(src)
+			returnToPool(I)
+			qdel(src)
 			return
 
 		if(prob(I.force*20 - metal*25))
@@ -934,7 +934,7 @@ steam.start() -- spawns the effect
 			for(var/mob/O in oviewers(user))
 				if ((O.client && !( O.blinded )))
 					O << "<span class='warning'>[user] smashes through the foamed metal.</span>"
-			del(src)
+			qdel(src)
 		else
 			user << "<span class='notice'>You hit the metal foam to no effect.</span>"
 

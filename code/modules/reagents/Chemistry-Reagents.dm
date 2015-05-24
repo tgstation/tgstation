@@ -249,6 +249,8 @@
 	if(!istype(M, /mob/living))
 		return
 
+	src = null
+
 	// Put out fire
 	if(method == TOUCH)
 		M.adjust_fire_stacks(-(volume / 10))
@@ -674,6 +676,7 @@
 
 
 /datum/reagent/holywater/reaction_obj(var/obj/O, var/volume)
+	src = null
 	if(volume>=1)
 		O.blessed=1
 
@@ -699,6 +702,7 @@
 	holder.remove_reagent(src.id, 10 * REAGENTS_METABOLISM) //high metabolism to prevent extended uncult rolls.
 
 /datum/reagent/holywater/reaction_mob(var/mob/living/M, var/method=TOUCH, var/volume)//Splashing people with water can help put them out!
+	src = null
 	// Vamps react to this like acid
 	if(ishuman(M))
 		if(M.mind.vampire)
@@ -1002,6 +1006,7 @@
 /datum/reagent/sacid/reaction_mob(var/mob/living/M, var/method=TOUCH, var/volume)
 	if(!istype(M, /mob/living))
 		return
+	src = null
 	if(method == TOUCH)
 		if(ishuman(M))
 			var/mob/living/carbon/human/H = M
@@ -1059,6 +1064,7 @@
 			M.take_organ_damage(min(15, volume * 2))
 
 /datum/reagent/sacid/reaction_obj(var/obj/O, var/volume)
+	src = null
 	if((istype(O,/obj/item) || istype(O,/obj/effect/glowshroom)) && prob(10))
 		if(!O.unacidable)
 			var/obj/effect/decal/cleanable/molten_item/I = new/obj/effect/decal/cleanable/molten_item(O.loc)
@@ -1085,6 +1091,7 @@
 /datum/reagent/pacid/reaction_mob(var/mob/living/M, var/method=TOUCH, var/volume)
 	if(!istype(M, /mob/living))
 		return //wooo more runtime fixin
+	src = null
 	if(method == TOUCH)
 		if(ishuman(M))
 			var/mob/living/carbon/human/H = M
@@ -1139,6 +1146,7 @@
 				M.take_organ_damage(min(15, volume * 4))
 
 /datum/reagent/pacid/reaction_obj(var/obj/O, var/volume)
+	src = null
 	if((istype(O,/obj/item) || istype(O,/obj/effect/glowshroom)))
 		if(!O.unacidable)
 			var/obj/effect/decal/cleanable/molten_item/I = new/obj/effect/decal/cleanable/molten_item(O.loc)
@@ -1439,16 +1447,20 @@
 	reagent_state = LIQUID
 	color = "#660000" // rgb: 102, 0, 0
 
-
-/datum/reagent/fuel/reaction_obj(var/obj/O, var/volume)
+// This adds a fuel decal to the turf, which reaction_turf already handles!
+// TODO Replace this with something that makes sense in the future
+/*/datum/reagent/fuel/reaction_obj(var/obj/O, var/volume)
+	src = null
 	var/turf/the_turf = get_turf(O)
 	if(!the_turf)
 		return //No sense trying to start a fire if you don't have a turf to set on fire. --NEO
-	new /obj/effect/decal/cleanable/liquid_fuel(the_turf, volume)
+	new /obj/effect/decal/cleanable/liquid_fuel(the_turf, volume)*/
 
-/datum/reagent/fuel/reaction_turf(var/turf/T, var/volume)
-	new /obj/effect/decal/cleanable/liquid_fuel(T, volume)
-	return
+/datum/reagent/fuel/reaction_turf(var/turf/simulated/T, var/volume)
+	if (!istype(T)) // Avoids dumping fuel to unsimulated/space/etc. turfs
+		return
+	src = null
+	getFromPool(/obj/effect/decal/cleanable/liquid_fuel, T, volume)
 
 /datum/reagent/fuel/on_mob_life(var/mob/living/M as mob)
 
@@ -1458,7 +1470,6 @@
 	..()
 	return
 
-
 /datum/reagent/space_cleaner
 	name = "Space cleaner"
 	id = "cleaner"
@@ -1467,6 +1478,7 @@
 	color = "#A5F0EE" // rgb: 165, 240, 238
 
 /datum/reagent/space_cleaner/reaction_obj(var/obj/O, var/volume)
+	src = null
 	if(istype(O,/obj/effect/decal/cleanable))
 		qdel(O)
 	else
@@ -1476,6 +1488,7 @@
 				O.color = null
 
 /datum/reagent/space_cleaner/reaction_turf(var/turf/T, var/volume)
+	src = null
 	if(volume >= 1)
 		T.overlays.len = 0
 		T.clean_blood()
@@ -1490,8 +1503,8 @@
 				H.adjustToxLoss(rand(0.5,1))
 
 /datum/reagent/space_cleaner/reaction_mob(var/mob/M, var/method=TOUCH, var/volume)
-
 	if(!holder) return
+	src = null
 	if(iscarbon(M))
 		var/mob/living/carbon/C = M
 		if(C.r_hand)
@@ -1548,6 +1561,7 @@
 
 			// Clear off wallrot fungi
 /datum/reagent/toxin/plantbgone/reaction_turf(var/turf/T, var/volume)
+	src = null
 	if(istype(T, /turf/simulated/wall))
 		var/turf/simulated/wall/W = T
 		if(W.rotting)
@@ -1558,6 +1572,7 @@
 				O.show_message(text("<span class='notice'>The fungi are completely dissolved by the solution!</span>"), 1)
 
 /datum/reagent/toxin/plantbgone/reaction_obj(var/obj/O, var/volume)
+	src = null
 	if(istype(O,/obj/effect/alien/weeds/))
 		var/obj/effect/alien/weeds/alien_weeds = O
 		alien_weeds.health -= rand(15,35) // Kills alien weeds pretty fast
@@ -2209,6 +2224,25 @@
 	data++
 	return ..()
 
+/datum/reagent/methylin
+	name = "Methylin"
+	id = "methylin"
+	description = "An intelligence enhancer, also used in the treatment of attention deficit hyperactivity disorder. Also known as Ritalin."
+	reagent_state = LIQUID
+	color = "#CC1122"
+	custom_metabolism = 0.03
+	overdose = REAGENTS_OVERDOSE/2
+
+/datum/reagent/methylin/on_mob_life(var/mob/living/M as mob)
+
+	if(!holder) return
+	if(!M) M = holder.my_atom
+	if(prob(5)) M.emote(pick("twitch","blink_r","shiver"))
+	if(volume > REAGENTS_OVERDOSE)
+		M:adjustBrainLoss(1)
+	..()
+	return
+
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -2220,7 +2254,6 @@
 	color = "#535E66" // rgb: 83, 94, 102
 
 /datum/reagent/nanites/reaction_mob(var/mob/M, var/method=TOUCH, var/volume)
-
 	if(!holder) return
 	src = null
 	if( (prob(10) && method==TOUCH) || method==INGEST)
@@ -2234,7 +2267,6 @@
 	color = "#535E66" // rgb: 83, 94, 102
 
 /datum/reagent/xenomicrobes/reaction_mob(var/mob/M, var/method=TOUCH, var/volume)
-
 	if(!holder) return
 	src = null
 	if( (prob(10) && method==TOUCH) || method==INGEST)
@@ -2512,6 +2544,7 @@
 /datum/reagent/condensedcapsaicin/reaction_mob(var/mob/living/M, var/method=TOUCH, var/volume)
 	if(!istype(M, /mob/living))
 		return
+	src = null
 	if(method == TOUCH)
 		if(istype(M, /mob/living/carbon/human))
 			var/mob/living/carbon/human/victim = M
@@ -2596,6 +2629,7 @@
 	return
 
 /datum/reagent/frostoil/reaction_turf(var/turf/simulated/T, var/volume)
+	src = null
 	for(var/mob/living/carbon/slime/M in T)
 		M.adjustToxLoss(rand(15,30))
 	for(var/mob/living/carbon/human/H in T)
@@ -3690,6 +3724,7 @@
 
 
 /datum/reagent/ethanol/reaction_obj(var/obj/O, var/volume)
+	src = null
 	if(istype(O,/obj/item/weapon/paper))
 		var/obj/item/weapon/paper/paperaffected = O
 		paperaffected.clearpaper()

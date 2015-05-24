@@ -12,7 +12,7 @@
 
 /obj/structure/morgue
 	name = "morgue"
-	desc = "Used to keep bodies in untill someone fetches them."
+	desc = "Used to keep bodies in until someone fetches them."
 	icon = 'icons/obj/stationobjs.dmi'
 	icon_state = "morgue1"
 	dir = EAST
@@ -26,18 +26,14 @@
 	else
 		if (contents.len > 0)
 			var/list/inside = recursive_type_check(src, /mob)
-
-			for (var/mob/body in inside)
-				if (body && body.client)
-					icon_state = "morgue4" // clone that mofo
-					return
-
-			if (inside.len > 0)
-				inside = null
+			if (!inside.len)
 				icon_state = "morgue3" // no mobs at all, but objects inside
 			else
+				for (var/mob/body in inside)
+					if (body && body.client)
+						icon_state = "morgue4" // clone that mofo
+						return
 				icon_state = "morgue2" // dead no-client mob
-
 		else
 			icon_state = "morgue1"
 
@@ -100,6 +96,18 @@
 	return
 
 /obj/structure/morgue/attackby(P as obj, mob/user as mob)
+	if(iscrowbar(P)&&!contents.len)
+		if(do_after(user,50))
+			playsound(get_turf(src), 'sound/items/Deconstruct.ogg', 50, 1)
+			new /obj/structure/closet/body_bag(src.loc)
+			new /obj/item/stack/sheet/metal(src.loc,5)
+			qdel(src)
+	if(iswrench(P))
+		playsound(get_turf(src), 'sound/items/Ratchet.ogg', 50, 1)
+		if(dir==4)
+			dir=8
+		else
+			dir=4
 	if (istype(P, /obj/item/weapon/pen))
 		var/t = input(user, "What would you like the label to be?", text("[]", src.name), null)  as text
 		if (user.get_active_hand() != P)

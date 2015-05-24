@@ -6,52 +6,28 @@
 			log_admin("[key_name(usr)] has left build mode.")
 			M.client.buildmode = 0
 			M.client.show_popup_menus = 1
-			/*
-			var/list/bmholders = list()
-			for(var/obj/effect/bmode/buildholder/H)
-				if(H.cl == M.client)
-					//del(H)
-					bmholders += H
-			for(var/obj/effect/bmode/bm)
-				for(var/obj/effect/bmode/buildholder/HH in bmholders)
-					if(bm.master == HH) del(bm)
-			for(var/obj/effect/bmode/buildholder/HH in bmholders)
-				del(HH)
-				*/
 			var/obj/effect/bmode/buildholder/holder = null
-			for(var/obj/effect/bmode/buildholder/H)
+			for(var/obj/effect/bmode/buildholder/H in buildmodeholders)
 				if(H.cl == M.client)
 					holder = H
 					break
 			if(holder) holder.buildmode.copycat = null
 			if(M.client.buildmode_objs && M.client.buildmode_objs.len)
 				for(var/BM in M.client.buildmode_objs)
-					del(BM)
+					returnToPool(BM)
 		else
 			log_admin("[key_name(usr)] has entered build mode.")
 			M.client.buildmode = 1
 			M.client.show_popup_menus = 0
 
-			var/obj/effect/bmode/buildholder/H = new/obj/effect/bmode/buildholder()
-			var/obj/effect/bmode/builddir/A = new/obj/effect/bmode/builddir(H)
-			A.master = H
-			var/obj/effect/bmode/buildhelp/B = new/obj/effect/bmode/buildhelp(H)
-			B.master = H
-			var/obj/effect/bmode/buildmode/C = new/obj/effect/bmode/buildmode(H)
-			C.master = H
-			var/obj/effect/bmode/buildquit/D = new/obj/effect/bmode/buildquit(H)
-			D.master = H
-
-			H.builddir = A
-			H.buildhelp = B
-			H.buildmode = C
-			H.buildquit = D
-			M.client.screen += A
-			M.client.screen += B
-			M.client.screen += C
-			M.client.screen += D
-			H.cl = M.client
-			M.client.buildmode_objs |= list(H,A,B,C,D)
+			var/obj/effect/bmode/buildholder/hold = getFromPool(/obj/effect/bmode/buildholder)
+			hold.builddir = getFromPool(/obj/effect/bmode/builddir,hold)
+			hold.buildhelp = getFromPool(/obj/effect/bmode/buildhelp,hold)
+			hold.buildmode = getFromPool(/obj/effect/bmode/buildmode,hold)
+			hold.buildquit = getFromPool(/obj/effect/bmode/buildquit,hold)
+			M.client.screen += list(hold.builddir,hold.buildhelp,hold.buildmode,hold.buildquit)
+			hold.cl = M.client
+			M.client.buildmode_objs |= list(hold,hold.builddir,hold.buildhelp,hold.buildmode,hold.buildquit)
 
 /obj/effect/bmode//Cleaning up the tree a bit
 	density = 1
@@ -60,6 +36,16 @@
 	dir = NORTH
 	icon = 'icons/misc/buildmode.dmi'
 	var/obj/effect/bmode/buildholder/master = null
+
+/obj/effect/bmode/New()
+	..()
+	master = loc
+
+/obj/effect/bmode/Destroy()
+	..()
+	if(master && master.cl)
+		master.cl.buildmode_objs &= ~src
+		master.cl.screen -= src
 
 /obj/effect/bmode/builddir
 	icon_state = "build"
@@ -124,6 +110,7 @@
 		togglebuildmode(master.cl.mob)
 		return 1
 
+var/global/list/obj/effect/bmode/buildholder/buildmodeholders = list()
 /obj/effect/bmode/buildholder
 	density = 0
 	anchored = 1
@@ -134,6 +121,16 @@
 	var/obj/effect/bmode/buildquit/buildquit = null
 	var/atom/movable/throw_atom = null
 
+obj/effect/bmode/buildholder/New()
+	..()
+	buildmodeholders |= src
+
+/obj/effect/bmode/buildholder/Destroy()
+	..()
+	cl.screen -= list(builddir,buildhelp,buildmode,buildquit)
+	cl.buildmode_objs &= ~list(builddir,buildhelp,buildmode,buildquit,src)
+	buildmodeholders -= src
+
 /obj/effect/bmode/buildmode
 	icon_state = "buildmode1"
 	screen_loc = "NORTH,WEST+2"
@@ -142,61 +139,61 @@
 	var/objholder = /obj/structure/closet
 	var/atom/copycat
 
-	Click(location, control, params)
-		var/list/pa = params2list(params)
+/obj/effect/bmode/buildmode/Click(location, control, params)
+	var/list/pa = params2list(params)
 
-		if(pa.Find("left"))
-			switch(master.cl.buildmode)
-				if(1)
-					master.cl.buildmode = 2
-					src.icon_state = "buildmode2"
-				if(2)
-					master.cl.buildmode = 3
-					src.icon_state = "buildmode3"
-				if(3)
-					master.cl.buildmode = 4
-					src.icon_state = "buildmode4"
-				if(4)
-					master.cl.buildmode = 1
-					src.icon_state = "buildmode1"
+	if(pa.Find("left"))
+		switch(master.cl.buildmode)
+			if(1)
+				master.cl.buildmode = 2
+				src.icon_state = "buildmode2"
+			if(2)
+				master.cl.buildmode = 3
+				src.icon_state = "buildmode3"
+			if(3)
+				master.cl.buildmode = 4
+				src.icon_state = "buildmode4"
+			if(4)
+				master.cl.buildmode = 1
+				src.icon_state = "buildmode1"
 
-		else if(pa.Find("right"))
-			switch(master.cl.buildmode)
-				if(1)
-					return 1
-				if(2)
-					copycat = null
-					objholder = text2path(input(usr,"Enter typepath:" ,"Typepath","/obj/structure/closet"))
-					if(!ispath(objholder))
+	else if(pa.Find("right"))
+		switch(master.cl.buildmode)
+			if(1)
+				return 1
+			if(2)
+				copycat = null
+				objholder = text2path(input(usr,"Enter typepath:" ,"Typepath","/obj/structure/closet"))
+				if(!ispath(objholder))
+					objholder = /obj/structure/closet
+					alert("That path is not allowed.")
+				else
+					if(ispath(objholder,/mob) && !check_rights(R_DEBUG,0))
 						objholder = /obj/structure/closet
-						alert("That path is not allowed.")
-					else
-						if(ispath(objholder,/mob) && !check_rights(R_DEBUG,0))
-							objholder = /obj/structure/closet
-				if(3)
-					var/list/locked = list("vars", "key", "ckey", "client", "firemut", "ishulk", "telekinesis", "xray", "virus", "viruses", "cuffed", "ka", "last_eaten", "urine")
+			if(3)
+				var/list/locked = list("vars", "key", "ckey", "client", "firemut", "ishulk", "telekinesis", "xray", "virus", "viruses", "cuffed", "ka", "last_eaten", "urine")
 
-					master.buildmode.varholder = input(usr,"Enter variable name:" ,"Name", "name")
-					if(master.buildmode.varholder in locked && !check_rights(R_DEBUG,0))
-						return 1
-					var/thetype = input(usr,"Select variable type:" ,"Type") in list("text","number","mob-reference","obj-reference","turf-reference")
-					if(!thetype) return 1
-					switch(thetype)
-						if("text")
-							master.buildmode.valueholder = input(usr,"Enter variable value:" ,"Value", "value") as text
-						if("number")
-							master.buildmode.valueholder = input(usr,"Enter variable value:" ,"Value", 123) as num
-						if("mob-reference")
-							master.buildmode.valueholder = input(usr,"Enter variable value:" ,"Value") as mob in mob_list
-						if("obj-reference")
-							master.buildmode.valueholder = input(usr,"Enter variable value:" ,"Value") as obj in world
-						if("turf-reference")
-							master.buildmode.valueholder = input(usr,"Enter variable value:" ,"Value") as turf in world
-    	return 1
+				master.buildmode.varholder = input(usr,"Enter variable name:" ,"Name", "name")
+				if(master.buildmode.varholder in locked && !check_rights(R_DEBUG,0))
+					return 1
+				var/thetype = input(usr,"Select variable type:" ,"Type") in list("text","number","mob-reference","obj-reference","turf-reference")
+				if(!thetype) return 1
+				switch(thetype)
+					if("text")
+						master.buildmode.valueholder = input(usr,"Enter variable value:" ,"Value", "value") as text
+					if("number")
+						master.buildmode.valueholder = input(usr,"Enter variable value:" ,"Value", 123) as num
+					if("mob-reference")
+						master.buildmode.valueholder = input(usr,"Enter variable value:" ,"Value") as mob in mob_list
+					if("obj-reference")
+						master.buildmode.valueholder = input(usr,"Enter variable value:" ,"Value") as obj in world
+					if("turf-reference")
+						master.buildmode.valueholder = input(usr,"Enter variable value:" ,"Value") as turf in world
+	return 1
 
 /proc/build_click(var/mob/user, buildmode, params, var/obj/object)
 	var/obj/effect/bmode/buildholder/holder = null
-	for(var/obj/effect/bmode/buildholder/H)
+	for(var/obj/effect/bmode/buildholder/H in buildmodeholders)
 		if(H.cl == user.client)
 			holder = H
 			break

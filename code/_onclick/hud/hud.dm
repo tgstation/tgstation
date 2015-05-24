@@ -1,85 +1,4 @@
 /*
-	The global hud:
-	Uses the same visual objects for all players.
-*/
-var/datum/global_hud/global_hud = new()
-
-/datum/hud/var/obj/screen/grab_intent
-/datum/hud/var/obj/screen/hurt_intent
-/datum/hud/var/obj/screen/disarm_intent
-/datum/hud/var/obj/screen/help_intent
-
-/datum/global_hud
-	var/obj/screen/druggy
-	var/obj/screen/blurry
-	var/list/vimpaired
-	var/list/darkMask
-
-/datum/global_hud/New()
-	//420erryday psychedellic colours screen overlay for when you are high
-	druggy = new /obj/screen()
-	druggy.screen_loc = "WEST,SOUTH to EAST,NORTH"
-	druggy.icon_state = "druggy"
-	druggy.layer = 17
-	druggy.mouse_opacity = 0
-
-	//that white blurry effect you get when you eyes are damaged
-	blurry = new /obj/screen()
-	blurry.screen_loc = "WEST,SOUTH to EAST,NORTH"
-	blurry.icon_state = "blurry"
-	blurry.layer = 17
-	blurry.mouse_opacity = 0
-
-	var/obj/screen/O
-	var/i
-	//that nasty looking dither you  get when you're short-sighted
-	vimpaired = newlist(/obj/screen,/obj/screen,/obj/screen,/obj/screen)
-	O = vimpaired[1]
-	O.screen_loc = "1,1 to 5,15"
-	O = vimpaired[2]
-	O.screen_loc = "5,1 to 10,5"
-	O = vimpaired[3]
-	O.screen_loc = "6,11 to 10,15"
-	O = vimpaired[4]
-	O.screen_loc = "11,1 to 15,15"
-
-	//welding mask overlay black/dither
-	darkMask = newlist(/obj/screen, /obj/screen, /obj/screen, /obj/screen, /obj/screen, /obj/screen, /obj/screen, /obj/screen)
-	O = darkMask[1]
-	O.screen_loc = "3,3 to 5,13"
-	O = darkMask[2]
-	O.screen_loc = "5,3 to 10,5"
-	O = darkMask[3]
-	O.screen_loc = "6,11 to 10,13"
-	O = darkMask[4]
-	O.screen_loc = "11,3 to 13,13"
-	O = darkMask[5]
-	O.screen_loc = "1,1 to 15,2"
-	O = darkMask[6]
-	O.screen_loc = "1,3 to 2,15"
-	O = darkMask[7]
-	O.screen_loc = "14,3 to 15,15"
-	O = darkMask[8]
-	O.screen_loc = "3,14 to 13,15"
-
-	for(i = 1, i <= 4, i++)
-		O = vimpaired[i]
-		O.icon_state = "dither50"
-		O.layer = 17
-		O.mouse_opacity = 0
-
-		O = darkMask[i]
-		O.icon_state = "dither50"
-		O.layer = 17
-		O.mouse_opacity = 0
-
-	for(i = 5, i <= 8, i++)
-		O = darkMask[i]
-		O.icon_state = "black"
-		O.layer = 17
-		O.mouse_opacity = 0
-
-/*
 	The hud datum
 	Used to show and hide huds for all the different mob types,
 	including inventories and item quick actions.
@@ -87,6 +6,11 @@ var/datum/global_hud/global_hud = new()
 
 /datum/hud
 	var/mob/mymob
+
+	var/obj/screen/grab_intent
+	var/obj/screen/hurt_intent
+	var/obj/screen/disarm_intent
+	var/obj/screen/help_intent
 
 	var/hud_shown = 1			//Used for the HUD toggle (F12)
 	var/inventory_shown = 1		//the inventory
@@ -108,11 +32,30 @@ var/datum/global_hud/global_hud = new()
 
 	var/list/obj/screen/item_action/item_action_list = list()	//Used for the item action ui buttons.
 
-
-datum/hud/New(mob/owner)
+/datum/hud/New(mob/owner)
 	mymob = owner
 	instantiate()
 	..()
+
+/datum/hud/Destroy()
+	..()
+	grab_intent = null
+	hurt_intent = null
+	disarm_intent = null
+	help_intent = null
+	lingchemdisplay = null
+	blobpwrdisplay = null
+	blobhealthdisplay = null
+	vampire_blood_display = null
+	r_hand_hud_object = null
+	l_hand_hud_object = null
+	action_intent = null
+	move_intent = null
+	adding = null
+	other = null
+	hotkeybuttons = null
+	item_action_list = null
+	mymob = null
 
 
 /datum/hud/proc/hidden_inventory_update()
@@ -262,3 +205,79 @@ datum/hud/New(mob/owner)
 			usr << "<span class='warning'>Inventory hiding is currently only supported for human mobs, sorry.</span>"
 	else
 		usr << "<span class='warning'>This mob type does not use a HUD.</span>"
+
+/*
+	The global hud:
+	Uses the same visual objects for all players.
+*/
+var/datum/global_hud/global_hud = new()
+
+/datum/global_hud
+	var/obj/screen/druggy
+	var/obj/screen/blurry
+	var/list/vimpaired
+	var/list/darkMask
+
+/datum/global_hud/New()
+	//420erryday psychedellic colours screen overlay for when you are high
+	druggy = getFromPool(/obj/screen)
+	druggy.screen_loc = "WEST,SOUTH to EAST,NORTH"
+	druggy.icon_state = "druggy"
+	druggy.layer = 17
+	druggy.mouse_opacity = 0
+
+	//that white blurry effect you get when you eyes are damaged
+	blurry = getFromPool(/obj/screen)
+	blurry.screen_loc = "WEST,SOUTH to EAST,NORTH"
+	blurry.icon_state = "blurry"
+	blurry.layer = 17
+	blurry.mouse_opacity = 0
+
+	var/obj/screen/O
+	var/i
+	//that nasty looking dither you  get when you're short-sighted
+	vimpaired = newlist(/obj/screen,/obj/screen,/obj/screen,/obj/screen)
+	O = vimpaired[1]
+	O.screen_loc = "1,1 to 5,15"
+	O = vimpaired[2]
+	O.screen_loc = "5,1 to 10,5"
+	O = vimpaired[3]
+	O.screen_loc = "6,11 to 10,15"
+	O = vimpaired[4]
+	O.screen_loc = "11,1 to 15,15"
+
+	//welding mask overlay black/dither
+	darkMask = newlist(/obj/screen, /obj/screen, /obj/screen, /obj/screen, /obj/screen, /obj/screen, /obj/screen, /obj/screen)
+	O = darkMask[1]
+	O.screen_loc = "3,3 to 5,13"
+	O = darkMask[2]
+	O.screen_loc = "5,3 to 10,5"
+	O = darkMask[3]
+	O.screen_loc = "6,11 to 10,13"
+	O = darkMask[4]
+	O.screen_loc = "11,3 to 13,13"
+	O = darkMask[5]
+	O.screen_loc = "1,1 to 15,2"
+	O = darkMask[6]
+	O.screen_loc = "1,3 to 2,15"
+	O = darkMask[7]
+	O.screen_loc = "14,3 to 15,15"
+	O = darkMask[8]
+	O.screen_loc = "3,14 to 13,15"
+
+	for(i = 1, i <= 4, i++)
+		O = vimpaired[i]
+		O.icon_state = "dither50"
+		O.layer = 17
+		O.mouse_opacity = 0
+
+		O = darkMask[i]
+		O.icon_state = "dither50"
+		O.layer = 17
+		O.mouse_opacity = 0
+
+	for(i = 5, i <= 8, i++)
+		O = darkMask[i]
+		O.icon_state = "black"
+		O.layer = 17
+		O.mouse_opacity = 0

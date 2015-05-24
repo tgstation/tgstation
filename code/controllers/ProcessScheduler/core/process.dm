@@ -91,7 +91,6 @@ datum/controller/process/New(var/datum/controller/processScheduler/scheduler)
 	previousStatus = "idle"
 	idle()
 	name = "process"
-	schedule_interval = 50
 	sleep_interval = 2
 	last_slept = 0
 	run_start = 0

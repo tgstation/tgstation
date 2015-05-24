@@ -101,7 +101,7 @@
 
 /mob/living/simple_animal/Login()
 	if(src && src.client)
-		src.client.screen = null
+		src.client.reset_screen()
 	..()
 
 /mob/living/simple_animal/updatehealth()
@@ -327,7 +327,7 @@
 			if (!(status_flags & CANPUSH))
 				return
 
-			var/obj/item/weapon/grab/G = new /obj/item/weapon/grab(M, src )
+			var/obj/item/weapon/grab/G = getFromPool(/obj/item/weapon/grab,M,src)
 
 			M.put_in_active_hand(G)
 
@@ -363,7 +363,7 @@
 			if(!(status_flags & CANPUSH))
 				return
 
-			var/obj/item/weapon/grab/G = new /obj/item/weapon/grab(M, src )
+			var/obj/item/weapon/grab/G = getFromPool(/obj/item/weapon/grab,M,src)
 
 			M.put_in_active_hand(G)
 
@@ -596,6 +596,7 @@
 	return
 
 /mob/living/simple_animal/say_understands(var/mob/other,var/datum/language/speaking = null)
+	if(other) other = other.GetSource()
 	if(issilicon(other))
 		return 1
 	return ..()

@@ -27,7 +27,7 @@
 	var/area_uid
 	var/radio_filter_out
 	var/radio_filter_in
-	
+
 	machine_flags = MULTITOOL_MENU
 
 /obj/machinery/atmospherics/unary/vent_scrubber/New()
@@ -64,6 +64,13 @@
 	frequency = new_frequency
 	radio_connection = radio_controller.add_object(src, frequency, radio_filter_in)
 
+	if(frequency != 1439)
+		areaMaster.air_scrub_info -= id_tag
+		areaMaster.air_scrub_names -= id_tag
+		name = "Air Scrubber"
+	else
+		broadcast_status()
+
 /obj/machinery/atmospherics/unary/vent_scrubber/buildFrom(var/mob/usr,var/obj/item/pipe/pipe)
 	..()
 	src.broadcast_status()
@@ -91,11 +98,13 @@
 		"filter_n2" = scrub_N2,
 		"sigtype" = "status"
 	)
-	if(!areaMaster.air_scrub_names[id_tag])
-		var/new_name = "[areaMaster.name] Air Scrubber #[areaMaster.air_scrub_names.len+1]"
-		areaMaster.air_scrub_names[id_tag] = new_name
-		src.name = new_name
-	areaMaster.air_scrub_info[id_tag] = signal.data
+	if(frequency == 1439)
+		if(!areaMaster.air_scrub_names[id_tag])
+			var/new_name = "[areaMaster.name] Air Scrubber #[areaMaster.air_scrub_names.len+1]"
+			areaMaster.air_scrub_names[id_tag] = new_name
+			src.name = new_name
+		areaMaster.air_scrub_info[id_tag] = signal.data
+
 	radio_connection.post_signal(src, signal, radio_filter_out)
 
 	return 1
@@ -322,7 +331,7 @@
 	return {"
 	<ul>
 		<li><b>Frequency:</b> <a href="?src=\ref[src];set_freq=-1">[format_frequency(frequency)] GHz</a> (<a href="?src=\ref[src];set_freq=[1439]">Reset</a>)</li>
-		<li>[format_tag("ID Tag","id_tag")]</li>
+		<li>[format_tag("ID Tag","id_tag", "set_id")]</li>
 	</ul>
 	"}
 
@@ -330,3 +339,20 @@
 	areaMaster.air_scrub_info.Remove(id_tag)
 	areaMaster.air_scrub_names.Remove(id_tag)
 	..()
+
+/obj/machinery/atmospherics/unary/vent_scrubber/multitool_topic(var/mob/user, var/list/href_list, var/obj/O)
+	if("set_id" in href_list)
+		var/newid = copytext(reject_bad_text(input(usr, "Specify the new ID tag for this machine", src, src:id_tag) as null|text),1,MAX_MESSAGE_LEN)
+		if(!newid)
+			return
+
+		if(frequency == 1439)
+			areaMaster.air_scrub_info -= id_tag
+			areaMaster.air_scrub_names -= id_tag
+
+		id_tag = newid
+		broadcast_status()
+
+		return MT_UPDATE
+
+	return ..()

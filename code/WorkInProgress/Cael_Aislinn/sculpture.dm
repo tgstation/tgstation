@@ -24,7 +24,7 @@
 
 /mob/living/simple_animal/sculpture/proc/GrabMob(var/mob/living/target)
 	if(target && target != src && ishuman(target) && !observed)
-		G = new /obj/item/weapon/grab(src, target)
+		G = getFromPool(/obj/item/weapon/grab,src,target)
 		target.Stun(1)
 		target.Paralyse(1)
 		G.loc = src

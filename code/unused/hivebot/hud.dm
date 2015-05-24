@@ -243,7 +243,7 @@
 	mymob.zone_sel.overlays.len = 0
 	mymob.zone_sel.overlays += image("icon" = 'icons/mob/zone_sel.dmi', "icon_state" = text("[]", mymob.zone_sel.selecting))
 
-	mymob.client.screen = null
+	mymob.client.reset_screen()
 
 	mymob.client.screen += list(mymob.throw_icon, mymob.zone_sel, mymob.oxygen, mymob.fire, mymob.hands, mymob.healths, mymob:cells, mymob.pullin, mymob.blind, mymob.flash, mymob.rest, mymob.sleep) //, mymob.mach )
 	mymob.client.screen += src.adding + src.other

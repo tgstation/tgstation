@@ -1,4 +1,5 @@
 // It is a gizmo that flashes a small area
+var/list/obj/machinery/flasher/flashers = list()
 
 /obj/machinery/flasher
 	name = "Mounted flash"
@@ -17,6 +18,13 @@
 	min_harm_label = 15 //Seems low, but this is going by the sprite. May need to be changed for balance.
 	harm_label_examine = list("<span class='info'>A label is on the bulb, but doesn't cover it.</span>", "<span class='warning'>A label covers the bulb!</span>")
 
+/obj/machinery/flasher/New()
+	..()
+	flashers += src
+
+/obj/machinery/flasher/Destroy()
+	..()
+	flashers -= src
 
 /obj/machinery/flasher/portable //Portable version of the flasher. Only flashes when anchored
 	name = "portable flasher"
@@ -150,7 +158,7 @@
 	active = 1
 	icon_state = "launcheract"
 
-	for(var/obj/machinery/flasher/M in machines)
+	for(var/obj/machinery/flasher/M in flashers)
 		if(M.id_tag == src.id_tag)
 			spawn()
 				M.flash()

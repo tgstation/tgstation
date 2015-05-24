@@ -57,6 +57,9 @@ var/global/list/obj/machinery/telecomms/telecomms_list = list()
 
 // Loop through all linked machines and send the signal or copy.
 	for(var/obj/machinery/telecomms/machine in links)
+		if(!machine.loc)
+			world.log << "DEBUG: telecomms machine has null loc: [machine.name]"
+			continue
 		if(filter && !istype( machine, text2path(filter) ))
 			continue
 		if(!machine.on)
@@ -568,7 +571,7 @@ var/global/list/obj/machinery/telecomms/telecomms_list = list()
 				log.parameters["name"] = signal.data["name"]
 				log.parameters["realname"] = signal.data["realname"]
 
-				if(!istype(M, /mob/new_player) && M)
+				if(!istype(M, /mob/new_player) && istype(M))
 					log.parameters["uspeech"] = M.universal_speak
 				else
 					log.parameters["uspeech"] = 0

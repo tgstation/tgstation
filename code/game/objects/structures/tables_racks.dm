@@ -326,8 +326,6 @@
 /obj/structure/table/MouseDrop_T(obj/O as obj, mob/user as mob)
 	if ((!( istype(O, /obj/item/weapon) ) || user.get_active_hand() != O))
 		return
-	if(isrobot(user))
-		return
 	user.drop_item()
 	if (O.loc != src.loc)
 		step(O, get_dir(O, src))
@@ -356,7 +354,7 @@
 				G.affecting.loc = src.loc
 				G.affecting.Weaken(5)
 				visible_message("<span class='warning'>[G.assailant] puts [G.affecting] on \the [src].</span>")
-			del(W)
+			returnToPool(W)
 			return
 
 	if (istype(W, /obj/item/weapon/wrench) && can_disassemble())
@@ -540,6 +538,15 @@
 		return ..()
 
 /obj/structure/table/reinforced/attackby(obj/item/weapon/W as obj, mob/user as mob, params)
+	if(istype(W,/obj/item/weapon/stock_parts/scanning_module))
+		playsound(get_turf(src), 'sound/items/Deconstruct.ogg', 50, 1)
+		var/obj/machinery/optable/OPT = new /obj/machinery/optable(src.loc)
+		var/obj/item/weapon/stock_parts/scanning_module/SM = W
+		OPT.rating = SM.rating
+		user.drop_item(W)
+		qdel(W)
+		qdel(src)
+		return
 	if (istype(W, /obj/item/weapon/weldingtool))
 		var/obj/item/weapon/weldingtool/WT = W
 		if(!(WT.welding)/* || (params_list.len && text2num(params_list["icon-y"]) > 8)*/) //8 above the bottom of the icon
@@ -611,8 +618,6 @@
 /obj/structure/rack/MouseDrop_T(obj/O as obj, mob/user as mob)
 	if ((!( istype(O, /obj/item/weapon) ) || user.get_active_hand() != O))
 		return
-	if(isrobot(user))
-		return
 	user.drop_item(O)
 	if (O.loc != src.loc)
 		step(O, get_dir(O, src))
@@ -623,8 +628,6 @@
 		new /obj/item/weapon/rack_parts( src.loc )
 		playsound(get_turf(src), 'sound/items/Ratchet.ogg', 50, 1)
 		del(src)
-		return
-	if(isrobot(user))
 		return
 	user.drop_item(W, src.loc)
 	return 1

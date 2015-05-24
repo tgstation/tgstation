@@ -354,9 +354,7 @@ Class Procs:
 	if(!canGhostWrite(usr,src,"",ghost_flags))
 		if(usr.restrained() || usr.lying || usr.stat)
 			return 1
-		if ( ! (istype(usr, /mob/living/carbon/human) || \
-				istype(usr, /mob/living/silicon) || \
-				istype(usr, /mob/living/carbon/monkey) && ticker && ticker.mode.name == "monkey") )
+		if (!usr.dexterity_check())
 			usr << "<span class='warning'>You don't have the dexterity to do this!</span>"
 			return 1
 
@@ -409,13 +407,11 @@ Class Procs:
 	if(user.lying || (user.stat && !canGhostRead(user))) // Ghost read-only
 		return 1
 
-	if(istype(usr,/mob/dead/observer))
+	if(istype(user,/mob/dead/observer))
 		return 0
 
-	if ( ! (istype(usr, /mob/living/carbon/human) || \
-			istype(usr, /mob/living/silicon) || \
-			istype(usr, /mob/living/carbon/monkey) && ticker && ticker.mode.name == "monkey") )
-		usr << "<span class='warning'>You don't have the dexterity to do this!</span>"
+	if(!user.dexterity_check())
+		user << "<span class='warning'>You don't have the dexterity to do this!</span>"
 		return 1
 /*
 	//distance checks are made by atom/proc/DblClick
@@ -540,8 +536,11 @@ Class Procs:
  * @param user /mob The mob that used the emag.
  */
 /obj/machinery/proc/emag(mob/user as mob)
-	// Disable emaggability.
+	// Disable emaggability. Note that some machines such as the Communications Computer might be emaggable multiple times.
 	machine_flags &= ~EMAGGABLE
+	new/obj/effect/effect/sparks(get_turf(src))
+	playsound(loc,"sparks",50,1)
+
 
 /**
  * Returns the cost of emagging this machine (emag_cost by default)

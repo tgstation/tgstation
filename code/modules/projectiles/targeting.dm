@@ -237,17 +237,17 @@ client/var
 //These are called by the on-screen buttons, adjusting what the victim can and cannot do.
 client/proc/add_gun_icons()
 	if (!usr.item_use_icon)
-		usr.item_use_icon = new /obj/screen/gun/item(null)
+		usr.item_use_icon = getFromPool(/obj/screen/gun/item)
 		usr.item_use_icon.icon_state = "no_item[target_can_click]"
 		usr.item_use_icon.name = "[target_can_click ? "Disallow" : "Allow"] Item Use"
 
 	if (!usr.gun_move_icon)
-		usr.gun_move_icon = new /obj/screen/gun/move(null)
+		usr.gun_move_icon = getFromPool(/obj/screen/gun/move)
 		usr.gun_move_icon.icon_state = "no_walk[target_can_move]"
 		usr.gun_move_icon.name = "[target_can_move ? "Disallow" : "Allow"] Walking"
 
 	if (target_can_move && !usr.gun_run_icon)
-		usr.gun_run_icon = new /obj/screen/gun/run(null)
+		usr.gun_run_icon = getFromPool(/obj/screen/gun/run)
 		usr.gun_run_icon.icon_state = "no_run[target_can_run]"
 		usr.gun_run_icon.name = "[target_can_run ? "Disallow" : "Allow"] Running"
 
@@ -263,9 +263,9 @@ client/proc/remove_gun_icons()
 	screen -= usr.gun_move_icon
 	if (target_can_move)
 		screen -= usr.gun_run_icon
-	del usr.gun_move_icon
-	del usr.item_use_icon
-	del usr.gun_run_icon
+	if(usr.gun_move_icon) returnToPool(usr.gun_move_icon)
+	if(usr.item_use_icon) returnToPool(usr.item_use_icon)
+	if(usr.gun_run_icon) returnToPool(usr.gun_run_icon)
 
 client/verb/ToggleGunMode()
 	set hidden = 1
@@ -289,7 +289,7 @@ client/verb/AllowTargetMove()
 	target_can_move = !target_can_move
 	if(target_can_move)
 		usr << "Target may now walk."
-		usr.gun_run_icon = new /obj/screen/gun/run(null)	//adding icon for running permission
+		usr.gun_run_icon = getFromPool(/obj/screen/gun/run)	//adding icon for running permission
 		screen += usr.gun_run_icon
 	else
 		usr << "Target may no longer move."

@@ -9,7 +9,7 @@
 /obj/machinery/door_control/taxi/New()
 	..()
 	spawn(50)
-		for(var/obj/machinery/computer/taxi_shuttle/TS in machines)
+		for(var/obj/machinery/computer/taxi_shuttle/TS in taxi_computers)
 			if(id_tag == TS.id_tag)
 				connected_computer = TS
 				if(!(src in connected_computer.connected_buttons))
@@ -20,6 +20,10 @@
 	if(stat & (NOPOWER|BROKEN))
 		return
 
+	if(!connected_computer)
+		user << "<span class='warning'>No request could be made to the Taxi Computer! Make contact with Centcomm to report them the issue!</span>"
+		return
+
 	var/wait_time = 30
 	if(!allowed(user) && (wires & 1))
 		wait_time = 100
@@ -27,6 +31,8 @@
 	use_power(5)
 	icon_state = "doorctrl1"
 	add_fingerprint(user)
+
+	user << "<span class='notice'>Taxi request sent!</span>"
 
 	spawn if(!connected_computer.callTo(destination, wait_time))
 		src.visible_message("Taxi engines are on cooldown. Please wait before trying again.")

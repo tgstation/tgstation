@@ -32,6 +32,7 @@
 
 	nano_file = "exofab.tmpl"
 
+	max_material_storage = 937500
 	build_time = MECH_BUILD_TIME
 	build_number = 16
 

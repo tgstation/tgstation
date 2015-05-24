@@ -45,8 +45,8 @@
 				src.meattype = 1
 				for(var/mob/O in viewers(src, null))
 					O.show_message(text("<span class='warning'>[user] has forced [G.affecting] onto the spike, killing them instantly!</span>"))
-				del(G.affecting)
-				del(G)
+				qdel(G.affecting)
+				returnToPool(G)
 
 			else
 				user << "<span class='warning'>The spike already has something on it, finish collecting its meat first!</span>"
@@ -59,8 +59,8 @@
 			src.meattype = 2
 			for(var/mob/O in viewers(src, null))
 				O.show_message(text("<span class='warning'>[user] has forced [G.affecting] onto the spike, killing them instantly!</span>"))
-			del(G.affecting)
-			del(G)
+			qdel(G.affecting)
+			returnToPool(G)
 
 		else
 			user << "<span class='warning'>The spike already has something on it, finish collecting its meat first!</span>"

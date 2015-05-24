@@ -110,16 +110,16 @@
 	return null
 
 /mob/say_understands(var/mob/other,var/datum/language/speaking = null)
-
 	if (src.stat == 2)		//Dead
 		return 1
 
 	//Universal speak makes everything understandable, for obvious reasons.
-	else if(src.universal_speak || src.universal_understand)
+	if(src.universal_speak || src.universal_understand)
 		return 1
 
 	//Languages are handled after.
 	if (!speaking)
+		if(other) other = other.GetSource()
 		if(!other || !ismob(other))
 			return 1
 		if(other.universal_speak)
@@ -134,5 +134,4 @@
 	for(var/datum/language/L in src.languages)
 		if(speaking.name == L.name)
 			return 1
-
 	return 0

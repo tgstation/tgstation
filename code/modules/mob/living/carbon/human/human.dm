@@ -645,51 +645,51 @@
 
 	return ..(shock_damage, source, siemens_coeff, def_zone)
 
-/mob/living/carbon/human/proc/num2slotname(var/slot_id)
-	if(slot_id == null)
-		return
-	else if(slot_id == 1)
-		return "back"
-	else if(slot_id == 2)
-		return "mask"
-	else if(slot_id == 3)
-		return "handcuffed"
-	else if(slot_id == 4)
-		return "l_hand"
-	else if(slot_id == 5)
-		return "r_hand"
-	else if(slot_id == 6)
-		return "belt"
-	else if(slot_id == 7)
-		return "id"
-	else if(slot_id == 8)
-		return "ears"
-	else if(slot_id == 9)
-		return "eyes"
-	else if(slot_id == 10)
-		return "gloves"
-	else if(slot_id == 11)
-		return "head"
-	else if(slot_id == 12)
-		return "shoes"
-	else if(slot_id == 13)
-		return "suit"
-	else if(slot_id == 14)
-		return "uniform"
-	else if(slot_id == 15)
-		return "l_store"
-	else if(slot_id == 16)
-		return "r_store"
-	else if(slot_id == 17)
-		return "s_store"
-	else if(slot_id == 18)
-		return "in_backpack"
-	else if(slot_id == 19)
-		return "h_store"
+/mob/living/carbon/human/proc/num2slotname(slot_id)
+	switch (slot_id)
+		if (slot_back)
+			return "back"
+		if (slot_wear_mask)
+			return "mask"
+		if (slot_handcuffed)
+			return "handcuffed"
+		if (slot_l_hand)
+			return "l_hand"
+		if (slot_r_hand)
+			return "r_hand"
+		if (slot_belt)
+			return "belt"
+		if (slot_wear_id)
+			return "id"
+		if (slot_ears)
+			return "ears"
+		if (slot_glasses)
+			return "eyes"
+		if (slot_gloves)
+			return "gloves"
+		if (slot_head)
+			return "head"
+		if (slot_shoes)
+			return "shoes"
+		if (slot_wear_suit)
+			return "suit"
+		if (slot_w_uniform)
+			return "uniform"
+		if (slot_l_store)
+			return "l_store"
+		if (slot_r_store)
+			return "r_store"
+		if (slot_s_store)
+			return "s_store"
+		if (slot_in_backpack)
+			return "in_backpack"
+		if (slot_legcuffed)
+			return "h_store"
+		else
+			return ""
 
 /mob/living/carbon/human/Topic(href, href_list)
 	var/pickpocket = 0
-	var/list/ourlist = list()
 	var/able = (!usr.stat && usr.canmove && !usr.restrained() && in_range(src, usr) && Adjacent(usr))
 
 	if(href_list["item"])
@@ -698,11 +698,15 @@
 		var/obj/item/place_item = usr.get_active_hand()
 		var/obj/item/id_item = src.wear_id
 
-		for(var/things in check_obscured_slots())
-			ourlist += num2slotname(things)
-		for(var/thingsa in ourlist)
+		var/list/obscured_slots = new/list()
 
-		if(slot in ourlist)
+		for (var/obscured_slot_num in check_obscured_slots())
+			var/slot_name = num2slotname(obscured_slot_num)
+
+			if (slot_name != "")
+				obscured_slots += slot_name
+
+		if (slot in obscured_slots)
 			usr << "<span class='warning'>You can't reach that. Something is covering it.</span>"
 			return
 		else
@@ -1480,12 +1484,11 @@
 		return
 
 	usr << "Don't move until counting is finished."
-	var/time = world.timeofday
-	sleep(60)
-	if(usr.l_move_time >= time)	//checks if our mob has moved during the sleep()
-		usr << "You moved while counting. Try again."
-	else
+
+	if (do_mob(usr, src, 60))
 		usr << "<span class='notice'>[self ? "Your" : "[src]'s"] pulse is [src.get_pulse(GETPULSE_HAND)].</span>"
+	else
+		usr << "You moved while counting. Try again."
 
 /mob/living/carbon/human/proc/set_species(var/new_species_name, var/force_organs, var/default_colour)
 
@@ -1734,3 +1737,13 @@
 	if(!species)
 		return null
 	return species.default_language ? all_languages[species.default_language] : null
+
+/mob/living/carbon/human/dexterity_check()
+	if (stat != CONSCIOUS)
+		return 0
+	if(reagents.has_reagent("methylin"))
+		return 1
+	if (getBrainLoss() >= 60)
+		return 0
+
+	return 1

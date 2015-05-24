@@ -40,9 +40,9 @@ obj/item/proc/get_clamped_volume()
 		return Clamp(src.w_class * 6, 10, 100) // Multiply the item's weight class by 6, then clamp the value between 10 and 100
 
 /obj/item/proc/attack(mob/living/M as mob, mob/living/user as mob, def_zone)
-
+	. = 1
 	if (!istype(M)) // not sure if this is the right thing...
-		return
+		return 0
 	//var/messagesource = M
 	if (can_operate(M))        //Checks if mob is lying down on table for surgery
 		if (do_surgery(M,user,src))
@@ -70,7 +70,7 @@ obj/item/proc/get_clamped_volume()
 			var/mob/living/carbon/slime/slime = M
 			if(prob(25))
 				user << "<span class='warning'>[src] passes right through [M]!</span>"
-				return
+				return 0
 
 			if(power > 0)
 				slime.attacked += 10
@@ -158,10 +158,9 @@ obj/item/proc/get_clamped_volume()
 				user << "<span class='danger'>You attack [M] with [src]. </span>"
 
 
-
 	if(istype(M, /mob/living/carbon/human))
 		var/mob/living/carbon/human/H = M
-		H.attacked_by(src, user, def_zone)
+		. = H.attacked_by(src, user, def_zone)
 	else
 		switch(damtype)
 			if("brute")
@@ -186,4 +185,4 @@ obj/item/proc/get_clamped_volume()
 					M << "Aargh it burns!"
 		M.updatehealth()
 	add_fingerprint(user)
-	return 1
+	return .

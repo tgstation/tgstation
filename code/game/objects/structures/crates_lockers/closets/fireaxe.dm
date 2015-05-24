@@ -13,9 +13,20 @@
 	var/hitstaken = 0
 	var/smashed = 0
 	locked = 1
+	layer = TURF_LAYER + 0.1 //The sprite is fucking huge, so render it under all other mounted items so it doesn't cover any of them.
 
 /obj/structure/closet/fireaxecabinet/empty
 	fireaxe = null
+	locked = 0 //Doesn't matter if an empty cabinet is locked. Make sure to lock it after you put the axe in, though.
+	localopened = 1
+
+/obj/structure/closet/fireaxecabinet/New(loc, var/ndir)
+	..()
+	if(ndir)
+		pixel_x = (ndir & 3)? 0 : (ndir == 4 ? 32 : -32) //Stolen from one of several near-identical other things
+		pixel_y = (ndir & 3)? (ndir == 1 ? 32 : -32) : 0 //Stolen from one of several near-identical other things
+		dir = ndir
+	update_icon()
 
 /obj/structure/closet/fireaxecabinet/examine(mob/user)
 

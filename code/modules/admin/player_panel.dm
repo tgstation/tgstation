@@ -554,7 +554,8 @@
 					// AUTOFIXED BY fix_string_idiocy.py
 					// C:\Users\Rob\Documents\Projects\vgstation13\code\modules\admin\player_panel.dm:503: dat += "<tr><td><a href='?src=\ref[src];adminplayeropts=\ref[M]'>[M.real_name]</a>[M.client ? "" : " <i>(logged out)</i>"][M.stat == 2 ? " <b><font color=red>(DEAD)</font></b>" : ""]</td>"
 					dat += {"<tr><td><a href='?src=\ref[src];adminplayeropts=\ref[M]'>[M.real_name]</a>[M.client ? "" : " <i>(logged out)</i>"][M.stat == 2 ? " <b><font color=red>(DEAD)</font></b>" : ""]</td>
-						<td><A href='?src=\ref[usr];priv_msg=\ref[M]'>PM</A></td></tr>"}
+						<td><A href='?src=\ref[usr];priv_msg=\ref[M]'>PM</A></td>
+						<td><A href='?src=\ref[src];cult_privatespeak=\ref[M]'>Nar-Speak</A></td></tr>"}
 					// END AUTOFIX
 			dat += "</table>"
 

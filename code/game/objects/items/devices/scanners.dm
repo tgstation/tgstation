@@ -106,7 +106,7 @@ proc/healthanalyze(mob/living/M as mob, mob/living/user as mob, var/mode = 0)
 		user.show_message("<span class='notice'>Key: Suffocation/Toxin/Burns/Brute</span>", 1)
 		user.show_message("<span class='notice'>Body Temperature: ???</span>", 1)
 		return
-	if (!(istype(usr, /mob/living/carbon/human) || ticker) && ticker.mode.name != "monkey")
+	if (!usr.dexterity_check())
 		usr << "<span class='warning'>You don't have the dexterity to do this!</span>"
 		return
 	user.visible_message("<span class='notice'> [user] has analyzed [M]'s vitals.","<span class='notice'> You have analyzed [M]'s vitals.")
@@ -252,8 +252,8 @@ proc/healthanalyze(mob/living/M as mob, mob/living/user as mob, var/mode = 0)
 
 	if (user.stat)
 		return
-	if (!(istype(usr, /mob/living/carbon/human) || ticker) && ticker.mode.name != "monkey")
-		usr << "<span class='warning'>You don't have the dexterity to do this!</span>"
+	if (!user.dexterity_check())
+		user << "<span class='warning'>You don't have the dexterity to do this!</span>"
 		return
 
 	var/turf/location = user.loc
@@ -341,7 +341,7 @@ proc/healthanalyze(mob/living/M as mob, mob/living/user as mob, var/mode = 0)
 		if(reagents.total_volume)
 			user << "<span class='warning'>This device already has a blood sample!</span>"
 			return
-		if(!(istype(user, /mob/living/carbon/human) || ticker) && ticker.mode.name != "monkey")
+		if (!user.dexterity_check())
 			user << "<span class='warning'>You don't have the dexterity to do this!</span>"
 			return
 
@@ -367,7 +367,7 @@ proc/healthanalyze(mob/living/M as mob, mob/living/user as mob, var/mode = 0)
 	if (crit_fail)
 		user << "<span class='warning'>This device has critically failed and is no longer functional!</span>"
 		return
-	if (!(istype(user, /mob/living/carbon/human) || ticker) && ticker.mode.name != "monkey")
+	if (!user.dexterity_check())
 		user << "<span class='warning'>You don't have the dexterity to do this!</span>"
 		return
 	if(reagents.total_volume)
@@ -431,7 +431,7 @@ proc/healthanalyze(mob/living/M as mob, mob/living/user as mob, var/mode = 0)
 /obj/item/device/reagent_scanner/afterattack(obj/O, mob/user as mob)
 	if (user.stat)
 		return
-	if (!(istype(user, /mob/living/carbon/human) || ticker) && ticker.mode.name != "monkey")
+	if (!user.dexterity_check())
 		user << "<span class='warning'>You don't have the dexterity to do this!</span>"
 		return
 	if(!istype(O))

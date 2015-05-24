@@ -5,6 +5,8 @@
 // TAXI SHUTTLES  //
 ////////////////////
 
+var/global/list/taxi_computers = list()
+
 /obj/machinery/computer/taxi_shuttle
 	name = "taxi shuttle terminal"
 	icon = 'icons/obj/computer.dmi'
@@ -18,6 +20,10 @@
 	var/list/connected_buttons = list()
 
 	l_color = "#B40000"
+
+/obj/machinery/computer/taxi_shuttle/New()
+	..()
+	taxi_computers += src
 
 /obj/machinery/computer/taxi_shuttle/update_icon()
 	..()
@@ -135,6 +141,7 @@
 	letter = "A"
 
 /obj/machinery/computer/taxi_shuttle/taxi_a/New()
+	..()
 	curr_location= locate(/area/shuttle/taxi_a/engineering_cargo_station)
 
 /obj/machinery/computer/taxi_shuttle/taxi_a/callTo(var/place = "", var/wait_time)
@@ -163,6 +170,7 @@
 	letter = "B"
 
 /obj/machinery/computer/taxi_shuttle/taxi_b/New()
+	..()
 	curr_location= locate(/area/shuttle/taxi_b/engineering_cargo_station)
 
 /obj/machinery/computer/taxi_shuttle/taxi_b/callTo(var/place = "", var/wait_time)

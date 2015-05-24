@@ -26,14 +26,17 @@
 
 	//Get processable air sample and thermal info from environment
 
-	var/transfer_moles = 0.25 * environment.total_moles()
+	var/environment_moles = environment.total_moles()
+	var/transfer_moles = 0.25 * environment_moles
 	var/datum/gas_mixture/external_removed = environment.remove(transfer_moles)
 
-	if (!external_removed)
+	if(!external_removed)
 		return radiate()
 
-	if (external_removed.total_moles() < 10)
+	if(environment_moles < NO_GAS)
 		return radiate()
+	else if(environment_moles < SOME_GAS)
+		return 0
 
 	//Get same info from connected gas
 

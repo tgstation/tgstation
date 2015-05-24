@@ -14,7 +14,7 @@
 
 	var/time_coeff = 1.5 //can be upgraded with research
 	var/resource_coeff = 1.5 //can be upgraded with research
-	max_material_storage = 200000
+	max_material_storage = 562500 //All this could probably be done better with a list but meh.
 
 	var/datum/research/files
 	var/id
@@ -55,8 +55,8 @@
 /obj/machinery/r_n_d/fabricator/RefreshParts()
 	var/T = 0
 	for(var/obj/item/weapon/stock_parts/matter_bin/M in component_parts)
-		T += M.rating
-	max_material_storage = (initial(max_material_storage)+(T * 37500))
+		T += M.rating - 1
+	max_material_storage = (initial(max_material_storage)+(T * 187500))
 
 	T = 0
 	for(var/obj/item/weapon/stock_parts/micro_laser/Ma in component_parts)
@@ -214,7 +214,7 @@
 	for(var/M in part.materials)
 		if(copytext(M,1,2) == "$")
 			var/matID=copytext(M,2)
-			var/datum/material/material=materials[matID]
+			var/datum/material/material=materials.getMaterial(matID)
 			output += "[output ? " | " : null][get_resource_cost_w_coeff(part,"$[matID]")] [material.processed_name]"
 	return output
 
@@ -224,9 +224,7 @@
 			return 0
 		if(copytext(M,1,2) == "$" && !(research_flags & IGNORE_MATS))
 			var/matID=copytext(M,2)
-			var/datum/material/material=materials[matID]
-			material.stored = max(0, (material.stored-part.materials[M]))
-			materials[matID]=material
+			materials.removeAmount(matID, part.materials[M])
 		else if(!(research_flags & IGNORE_CHEMS))
 			reagents.remove_reagent(M, part.materials[M])
 	return 1
@@ -413,7 +411,7 @@
 		src.visible_message("\icon[src] <b>[src]</b> beeps, \"Succesfully synchronized with R&D server. New data processed.\"")
 	if(!silent && !found)
 		temp = "Unable to connect to local R&D Database.<br>Please check your connections and try again.<br><a href='?src=\ref[src];clear_temp=1'>Return</a>"
-		src.updateUsrDialog()
+	src.updateUsrDialog()
 
 // Tell the machine to start processing the queue on the next process().
 /obj/machinery/r_n_d/fabricator/proc/start_processing_queue()
@@ -452,8 +450,8 @@
 	data["screen"]=screen
 	var/materials_list[0]
 		//Get the material names
-	for(var/matID in materials)
-		var/datum/material/material = materials[matID] // get the ID of the materials
+	for(var/matID in materials.storage)
+		var/datum/material/material = materials.getMaterial(matID) // get the ID of the materials
 		if(material && material.stored > 0)
 			materials_list.Add(list(list("name" = material.processed_name, "storage" = material.stored, "commands" = list("eject" = matID)))) // get the amount of the materials
 	data["materials"] = materials_list
@@ -635,8 +633,9 @@
 	return
 */
 /obj/machinery/r_n_d/fabricator/proc/remove_material(var/matID, var/amount)
-	if(matID in materials)
-		var/datum/material/material = materials[matID]
+
+	var/datum/material/material = materials.getMaterial(matID)
+	if(material)
 		//var/obj/item/stack/sheet/res = new material.sheettype(src)
 		var/total_amount = min(round(material.stored/material.cc_per_sheet),amount)
 		var/to_spawn = total_amount
@@ -653,8 +652,7 @@
 				mats.amount = to_spawn
 				to_spawn = 0
 
-			material.stored -= mats.amount * mats.perunit
-			//materials[matID]=material - why?
+			materials.removeAmount(matID, mats.amount * mats.perunit)
 			mats.loc = src.loc
 		return total_amount
 	return 0

@@ -1,7 +1,7 @@
 /obj/machinery/computer/diseasesplicer
 	name = "Disease Splicer"
 	icon = 'icons/obj/computer.dmi'
-	icon_state = "crew"
+	icon_state = "virus"
 	circuit = "/obj/item/weapon/circuitboard/splicer"
 
 	var/datum/disease2/effectholder/memorybank = null

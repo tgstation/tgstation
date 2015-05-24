@@ -66,6 +66,9 @@
 	if (!possible_transfer_amounts)
 		verbs -= /obj/structure/reagent_dispensers/verb/set_APTFT
 
+/obj/structure/reagent_dispensers/proc/is_empty()
+	return reagents.total_volume <= 0
+
 //Dispensers
 /obj/structure/reagent_dispensers/watertank
 	name = "watertank"

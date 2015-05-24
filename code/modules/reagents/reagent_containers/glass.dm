@@ -18,7 +18,8 @@
 	var/label_text = ""
 
 	//This is absolutely terrible
-	can_be_placed_into = list(
+	// TODO To remove this, return 1 on every attackby() that handles reagent_containers.
+	var/list/can_be_placed_into = list(
 		/obj/machinery/chem_master/,
 		/obj/machinery/chem_dispenser/,
 		/obj/machinery/snackbar_machine/,
@@ -44,7 +45,10 @@
 		/mob/living/simple_animal/hostile/retaliate/goat,
 		/obj/machinery/computer/centrifuge,
 		/obj/machinery/cooking/icemachine,
-		/obj/machinery/sleeper	)
+		/obj/machinery/sleeper,
+		/obj/machinery/anomaly,
+		/obj/machinery/bunsen_burner
+		)
 
 /obj/item/weapon/reagent_containers/glass/New()
 	..()
@@ -68,8 +72,14 @@
 		flags |= OPENCONTAINER
 	update_icon()
 
-/obj/item/weapon/reagent_containers/glass/afterattack(obj/target, mob/user , flag)
-	try_to_transfer(target, user, flag)
+/obj/item/weapon/reagent_containers/glass/afterattack(var/atom/target, var/mob/user, var/adjacency_flag, var/click_params)
+	if (!adjacency_flag)
+		return
+
+	if (is_type_in_list(target, can_be_placed_into))
+		return
+
+	transfer(target, user, splashable_units = -1) // Potentially splash with everything inside
 
 /obj/item/weapon/reagent_containers/glass/attackby(obj/item/weapon/W as obj, mob/user as mob)
 	if(istype(W, /obj/item/weapon/pen) || istype(W, /obj/item/device/flashlight/pen))

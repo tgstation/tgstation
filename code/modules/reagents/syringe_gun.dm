@@ -35,6 +35,7 @@
 		else
 			usr << "<span class='warning'>This syringe is broken!</span>"
 
+		return 1 // Avoid calling the syringe's afterattack()
 
 /obj/item/weapon/gun/syringe/afterattack(obj/target, mob/user , flag)
 	if(/*!isturf(target.loc) || */target == user) return

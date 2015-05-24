@@ -66,7 +66,6 @@
 	var/coverlocked = 1
 	var/aidisabled = 0
 	var/tdir = null
-	var/obj/machinery/power/terminal/terminal = null
 	var/lastused_light = 0
 	var/lastused_equip = 0
 	var/lastused_environ = 0
@@ -105,6 +104,12 @@
 	src.tdir = dir		// to fix Vars bug
 	dir = SOUTH
 
+	if(areaMaster.areaapc)
+		world.log << "Secondary APC detected in area: [areaMaster.name], deleting the second APC"
+		qdel(src)
+		return
+	areaMaster.set_apc(src)
+
 	if(src.tdir & 3)
 		pixel_x = 0
 		pixel_y = (src.tdir == 1 ? 24 : -24)
@@ -130,9 +135,9 @@
 		cell.maxcharge = cell_type	// cell_type is maximum charge (old default was 1000 or 2500 (values one and two respectively)
 		cell.charge = start_charge * cell.maxcharge / 100.0 		// (convert percentage to actual value)
 
-	make_terminal()
+	finalise_terminal() //creates the terminal itself
 
-/obj/machinery/power/apc/proc/make_terminal()
+/obj/machinery/power/apc/finalise_terminal()
 	// create a terminal object at the same position as original turf loc
 	// wires will attach to this
 	terminal = new/obj/machinery/power/terminal(src.loc)
@@ -458,36 +463,15 @@
 				else
 					user << "You fail to [ locked ? "unlock" : "lock"] the APC interface."
 	else if (istype(W, /obj/item/stack/cable_coil) && !terminal && opened && has_electronics != 2)
-		var/turf/T = get_turf(src)
-
-		// APCs are actually on the same tile as their terminal
-		if (T != get_turf(user))
-			user << "<span class='warning'>You can't wire the APC from there!</span>"
-			return
-
-		if (T.intact)
-			user << "<span class='warning'>You must remove the floor plating in front of the APC first.</span>"
-			return
-
 		var/obj/item/stack/cable_coil/C = W
 		if(C.amount < 10)
 			user << "<span class='warning'>You need more wires.</span>"
 			return
-		user << "You start adding cables to the APC frame..."
-		playsound(get_turf(src), 'sound/items/Deconstruct.ogg', 50, 1)
-		if (do_after(user, 20) && !T.intact && opened && !terminal && has_electronics != 2 && C.amount >= 10)
-			var/obj/structure/cable/N = T.get_cable_node()
-			if (prob(50) && electrocute_mob(usr, N, N))
-				var/datum/effect/effect/system/spark_spread/s = new /datum/effect/effect/system/spark_spread
-				s.set_up(5, 1, src)
-				s.start()
-				return
+
+		if(make_terminal(user))
 			C.use(10)
-			user.visible_message(\
-				"<span class='warning'>[user.name] has added cables to the APC frame!</span>",\
-				"You add cables to the APC frame.")
-			make_terminal()
 			terminal.connect_to_network()
+
 	else if (istype(W, /obj/item/weapon/wirecutters) && opened && terminal && has_electronics!=2)
 		var/turf/T = get_turf(src)
 		if (T.intact)
@@ -766,10 +750,7 @@
 		return 0
 	if(!user.client)
 		return 0
-	if ( ! (istype(user, /mob/living/carbon/human) || \
-			istype(user, /mob/living/silicon) || \
-			istype(user, /mob/dead/observer) || \
-			istype(user, /mob/living/carbon/monkey) /*&& ticker && ticker.mode.name == "monkey"*/) )
+	if (!user.dexterity_check())
 		user << "<span class='warning'>You don't have the dexterity to use this [src]!</span>"
 		nanomanager.close_user_uis(user, src)
 
@@ -996,6 +977,8 @@
 				for(var/mob/M in viewers(src))
 					M.show_message("<span class='warning'>The [src.name] suddenly lets out a blast of smoke and some sparks!</span>", 3, "<span class='warning'>You hear sizzling electronics.</span>", 2)
 
+/obj/machinery/power/apc/can_attach_terminal(mob/user)
+	return user.loc == src.loc && has_electronics != 2 && !terminal
 
 /obj/machinery/power/apc/surplus()
 	if(terminal)
@@ -1265,6 +1248,7 @@ obj/machinery/power/apc/proc/autoset(var/val, var/on)
 					sleep(1)
 
 /obj/machinery/power/apc/Destroy()
+	areaMaster.remove_apc(src)
 	if(malfai && operating)
 		if (ticker.mode.config_tag == "malfunction")
 			if (STATION_Z == z)

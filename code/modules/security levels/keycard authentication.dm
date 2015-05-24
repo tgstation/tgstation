@@ -1,3 +1,5 @@
+var/global/list/obj/machinery/keycard_auth/authenticators = list()
+
 /obj/machinery/keycard_auth
 	name = "Keycard Authentication Device"
 	desc = "This device is used to trigger station functions, which require more than one ID card to authenticate."
@@ -19,6 +21,10 @@
 	idle_power_usage = 2
 	active_power_usage = 6
 	power_channel = ENVIRON
+
+/obj/machinery/keycard_auth/New()
+	..()
+	authenticators += src
 
 /obj/machinery/keycard_auth/attack_ai(mob/user as mob)
 	user << "The station AI is not to interact with these devices."
@@ -50,6 +56,10 @@
 		icon_state = "auth_off"
 	else
 		stat |= NOPOWER
+
+/obj/machinery/keycard_auth/Destroy()
+	..()
+	authenticators -= src
 
 /obj/machinery/keycard_auth/attack_hand(mob/user as mob)
 	if(user.stat || stat & (NOPOWER|BROKEN))
@@ -126,7 +136,7 @@
 
 /obj/machinery/keycard_auth/proc/broadcast_request()
 	icon_state = "auth_on"
-	for(var/obj/machinery/keycard_auth/KA in machines)
+	for(var/obj/machinery/keycard_auth/KA in authenticators)
 		if(KA == src) continue
 		KA.reset()
 		spawn()

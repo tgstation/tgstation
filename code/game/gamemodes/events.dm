@@ -253,20 +253,20 @@
 /proc/prison_break() // -- Callagan
 
 
-	var/list/area/areas = list()
+	var/list/area/theareas = list()
 	for(var/area/A in areas)
 		if(istype(A, /area/security/prison) || istype(A, /area/security/brig))
-			areas += A
+			theareas += A
 
-	if(areas && areas.len > 0)
+	if(theareas && theareas.len > 0)
 
-		for(var/area/A in areas)
+		for(var/area/A in theareas)
 			for(var/obj/machinery/light/L in A)
 				L.flicker(10)
 
 		sleep(100)
 
-		for(var/area/A in areas)
+		for(var/area/A in theareas)
 			for (var/obj/machinery/power/apc/temp_apc in A)
 				temp_apc.overload_lighting()
 

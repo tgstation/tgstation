@@ -115,15 +115,26 @@
 
 	var/mob/living/L = M
 
+	var/hit = 1
 	if(user.a_intent == I_HURT)
-		..()
-		playsound(loc, "swing_hit", 50, 1, -1)
+		hit = ..()
+		if(hit)
+			playsound(loc, "swing_hit", 50, 1, -1)
+	else
+		hit = -1
+		if(!status)
+			L.visible_message("<span class='attack'>[L] has been prodded with the [src] by [user]. Luckily it was off.</span>")
+			return
 
-	else if(!status)
-		L.visible_message("<span class='attack'>[L] has been prodded with the [src] by [user]. Luckily it was off.</span>")
-		return
-
-	if(status)
+	if(status && hit)
+		if(hit == -1)
+			//Copypasted from human/attacked_by()
+			var/target_zone = get_zone_with_miss_chance(user.zone_sel.selecting, L)
+			if(user == L) // Attacking yourself can't miss
+				target_zone = user.zone_sel.selecting
+			if(!target_zone && !L.stat)
+				visible_message("<span class='danger'>[user] misses [L] with \the [src]!</span>")
+				return
 		user.lastattacked = L
 		L.lastattacker = user
 

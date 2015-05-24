@@ -1,3 +1,5 @@
+#define NO_GAS 0.01
+#define SOME_GAS 1
 
 /obj/machinery/atmospherics/pipe/simple/heat_exchanging
 	icon = 'icons/obj/pipes/heat.dmi'
@@ -61,24 +63,28 @@
 
 	//Get processable air sample and thermal info from environment
 	var/datum/gas_mixture/environment = loc.return_air()
-	var/transfer_moles = 0.25 * environment.total_moles()
+	var/environment_moles = environment.total_moles()
+	var/transfer_moles = 0.25 * environment_moles
 	var/datum/gas_mixture/external_removed = environment.remove(transfer_moles)
 
 	// No environmental gas?  We radiate it, then.
-	if (!external_removed)
+	if(!external_removed)
 		if(internal_removed)
 			internal.merge(internal_removed)
 		return radiate()
 
-	// Not enough gas in the air around us to care about.  Radiate.
-	if (external_removed.total_moles() < 10)
+	// Not enough gas in the air around us to care about.  Radiate. Less gas than airless tiles start with.
+	if(environment_moles < NO_GAS)
 		if(internal_removed)
 			internal.merge(internal_removed)
 		environment.merge(external_removed)
 		return radiate()
+	// A tiny bit of air so this isn't really space, but its not worth activating exchange procs
+	else if(environment_moles < SOME_GAS)
+		return 0
 
 	// No internal gas.  Screw this, we're out.
-	if (!internal_removed)
+	if(!internal_removed)
 		environment.merge(external_removed)
 		return
 

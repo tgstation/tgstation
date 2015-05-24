@@ -213,7 +213,7 @@
 *   Item Adding
 ********************/
 
-/obj/machinery/smartfridge/attackby(var/obj/item/O as obj, var/mob/user as mob)
+/obj/machinery/smartfridge/attackby(var/obj/item/O as obj, var/mob/user as mob, params)
 	if(stat & NOPOWER)
 		user << "<span class='notice'>\The [src] is unpowered and useless.</span>"
 		return 1
@@ -261,6 +261,14 @@
 			if(bag.contents.len > 0)
 				user << "<span class='notice'>Some items are refused.</span>"
 
+	else if(istype(O, /obj/item/weapon/paper) && user.drop_item(O, src.loc))
+		var/list/params_list = params2list(params)
+		if(O.loc == src.loc && params_list.len)
+			var/clamp_x = 16
+			var/clamp_y = 16
+			O.pixel_x = Clamp(text2num(params_list["icon-x"]) - clamp_x, -clamp_x, clamp_x)
+			O.pixel_y = Clamp(text2num(params_list["icon-y"]) - clamp_y, -clamp_y, clamp_y)
+			user << "<span class='notice'>You hang \the [O.name] on the fridge.</span>"
 	else
 		user << "<span class='notice'>\The [src] smartly refuses [O].</span>"
 		return 1

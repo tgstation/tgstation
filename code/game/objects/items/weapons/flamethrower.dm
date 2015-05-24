@@ -85,8 +85,8 @@
 		if(ptank)
 			ptank.loc = T
 			ptank = null
-		new /obj/item/stack/rods(T)
-		del(src)
+		getFromPool(/obj/item/stack/rods, T)
+		qdel(src)
 		return
 
 	if(isscrewdriver(W) && igniter && !lit)
@@ -192,7 +192,8 @@
 	//Transfer 5% of current tank air contents to turf
 	var/datum/gas_mixture/air_transfer = ptank.air_contents.remove_ratio(0.02*(throw_amount/100))
 	//air_transfer.toxins = air_transfer.toxins * 5 // This is me not comprehending the air system. I realize this is retarded and I could probably make it work without fucking it up like this, but there you have it. -- TLE
-	new/obj/effect/decal/cleanable/liquid_fuel/flamethrower_fuel(target,air_transfer.toxins*10,get_dir(loc,target))
+	var/plasma_moles = air_transfer.toxins
+	getFromPool(/obj/effect/decal/cleanable/liquid_fuel/flamethrower_fuel, target, plasma_moles*10, get_dir(loc, target))
 	air_transfer.toxins = 0
 	target.assume_air(air_transfer)
 	//Burn it based on transfered gas

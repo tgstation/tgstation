@@ -659,17 +659,17 @@
 		for(var/obj/item/weapon/grab/G in usr.grabbed_by)
 			resisting++
 			if (G.state == GRAB_PASSIVE)
-				del(G)
+				returnToPool(G)
 			else
 				if (G.state == GRAB_AGGRESSIVE)
 					if (prob(25))
 						L.visible_message("<span class='danger'>[L] has broken free of [G.assailant]'s grip!</span>")
-						del(G)
+						returnToPool(G)
 				else
 					if (G.state == GRAB_NECK)
 						if (prob(5))
 							L.visible_message("<span class='danger'>[L] has broken free of [G.assailant]'s headlock!</span>")
-							del(G)
+							returnToPool(G)
 		if(resisting)
 			L.visible_message("<span class='danger'>[L] resists!</span>")
 

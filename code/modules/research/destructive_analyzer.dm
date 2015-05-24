@@ -29,7 +29,7 @@ Note: Must be placed within 3 tiles of the R&D Console
 
 /obj/machinery/r_n_d/destructive_analyzer/RefreshParts()
 	var/T = 0
-	for(var/obj/item/weapon/stock_parts/S in src)
+	for(var/obj/item/weapon/stock_parts/S in component_parts)
 		T += S.rating * 0.1
 	T = Clamp(T, 0, 1)
 	decon_mod = T
@@ -60,7 +60,7 @@ Note: Must be placed within 3 tiles of the R&D Console
 /obj/machinery/r_n_d/destructive_analyzer/attackby(var/obj/O as obj, var/mob/user as mob)
 	if(..())
 		return 1
-	if (istype(O, /obj/item) && !loaded_item)
+	if (istype(O, /obj/item) && !loaded_item && !panel_open)
 		if(isrobot(user)) //Don't put your module items in there!
 			if(isMoMMI(user))
 				var/mob/living/silicon/robot/mommi/mommi = user

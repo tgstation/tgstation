@@ -22,88 +22,51 @@
 	return attack(user, user) //Dealt with in attack code
 
 /obj/item/weapon/reagent_containers/pill/attack(mob/M as mob, mob/user as mob, def_zone)
+	// Feeding others needs time to succeed
+	if (user != M && (ishuman(M) || ismonkey(M)))
+		user.visible_message("<span class='warning'>[user] attempts to force [M] to swallow \the [src].</span>", "<span class='notice'>You attempt to force [M] to swallow \the [src].</span>")
 
-	if(M == user) //Someone swallowing a pill
-		user.visible_message("<span class='notice'>[user] swallows \the [src].</span>", \
-		"<span class='notice'>You swallow \the [src].</span>")
-		M.drop_from_inventory(src) //Icon update
-		if(reagents.total_volume) //Is there anything in the pill ?
-			reagents.reaction(M, INGEST) //Ready up
-			spawn(5)
-				reagents.trans_to(M, reagents.total_volume) //Transfer whatever is good to go
-				del(src)
-		else //Nothing in the pill, just get rid of it
-			del(src)
-		return 1
+		if (!do_mob(user, M))
+			return 1
 
-	else if(istype(M, /mob/living/carbon/human)) //Feeding to someone else
+		user.visible_message("<span class='warning'>[user] forces [M] to swallow \the [src].</span>", "<span class='notice'>You force [M] to swallow \the [src].</span>")
+		add_attacklogs(user, M, "fed", object = src, addition = "Reagents: [english_list(list(reagentlist(src)))]", admin_warn = TRUE)
+	else if (user == M)
+		user.visible_message("<span class='notice'>[user] swallows \the [src].</span>", "<span class='notice'>You swallow \the [src].</span>")
+	else
+		return 0
 
-		user.visible_message("<span class='warning'>[user] attempts to force [M] to swallow \the [src].</span>", \
-		"<span class='notice'>You attempt to force [M] to swallow \the [src].</span>")
+	user.drop_from_inventory(src) // Update icon
+	if (!src.is_empty())
+		reagents.reaction(M, INGEST)
+		reagents.trans_to(M, reagents.total_volume)
 
-		if(!do_mob(user, M))
-			return
+	qdel(src)
+	return 1
 
-		user.drop_from_inventory(src) //Icon update
-		user.visible_message("<span class='warning'>[user] forces [M] to swallow \the [src].</span>", \
-		"<span class='notice'>You force [M] to swallow \the [src].</span>")
+// Handles pill dissolving in containers
+/obj/item/weapon/reagent_containers/pill/afterattack(var/obj/item/weapon/reagent_containers/target, var/mob/user, var/adjacency_flag, var/click_params)
+	if (!adjacency_flag || !istype(target) || !target.is_open_container())
+		return
 
-		M.attack_log += "\[[time_stamp()]\] <font color='orange'>Has been fed [src.name] by [key_name(user)] Reagents: [reagentlist(src)]</font>"
-		user.attack_log += "\[[time_stamp()]\] <font color='red'>Fed [key_name(M)] by [src.name] Reagents: [reagentlist(src)]</font>"
-		msg_admin_attack("[key_name_admin(user)] fed [key_name_admin(M)] with [src.name] Reagents: [reagentlist(src)] (INTENT: [uppertext(user.a_intent)]) ([formatJumpTo(user)])")
+	var/target_was_empty = (target.reagents.total_volume == 0)
+	var/list/bad_reagents = reagents.get_bad_reagent_names()
+	var/tx_amount = reagents.trans_to(target, reagents.total_volume)
 
-		if(!iscarbon(user))
-			M.LAssailant = null
+	// Log transfers of 'bad 'things' (/vg/)
+	if (tx_amount > 0 && target.log_reagents && bad_reagents && bad_reagents.len > 0)
+		log_reagents(user, src, target, tx_amount, bad_reagents)
+
+	// Show messages
+	if (tx_amount > 0)
+		user.visible_message("<span class='warning'>[user] puts something into \the [target], filling it.</span>")
+		if (src.is_empty())
+			user << "<span class='notice'>You [target_was_empty ? "crush" : "dissolve"] the pill into \the [target].</span>"
+			qdel(src)
 		else
-			M.LAssailant = user
-
-		if(reagents.total_volume)
-			reagents.reaction(M, INGEST)
-			spawn(5)
-				reagents.trans_to(M, reagents.total_volume)
-				del(src)
-		else
-			del(src)
-
-		return 1
-	return 0
-
-/obj/item/weapon/reagent_containers/pill/afterattack(obj/target, mob/user , flag) //Attacking anything but a mob
-
-	if(target.is_open_container() != 0 && target.reagents && !ismob(target)) //We're working with containers, and we do NOT want mobs here
-		var/hadContents = target.reagents.total_volume
-		var/trans = reagents.trans_to(target, reagents.total_volume)
-
-		// /vg/: Logging transfers of bad things
-		if(istype(reagents_to_log) && reagents_to_log.len && target.log_reagents)
-			var/list/badshit = list()
-			for(var/bad_reagent in reagents_to_log)
-				if(reagents.has_reagent(bad_reagent))
-					badshit += reagents_to_log[bad_reagent]
-			if(badshit.len)
-				var/hl="<span class='danger'>([english_list(badshit)])</span>"
-				message_admins("[user.name] ([user.ckey]) added [trans]U to \a [target] with [src].[hl] (<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[user.x];Y=[user.y];Z=[user.z]'>JMP</a>)")
-				log_game("[user.name] ([user.ckey]) added [trans]U to \a [target] with [src].")
-
-		if(trans)
-			if(reagents.total_volume == 0) //Total transfer case
-				if(hadContents)
-					user << "<span class='notice'>You dissolve the pill into \the [target]</span>"
-				else
-					user << "<span class='notice'>You crush the pill into \the [target]</span>"
-				spawn(1)
-					qdel(src)
-			else //Partial transfer case
-				if(hadContents)
-					user << "<span class='notice'>You partially dissolve the pill into \the [target], filling it</span>"
-				else
-					user << "<span class='notice'>You crush part of the pill into \the [target], filling it</span>"
-			user.visible_message("<span class='warning'>[user] puts something in \the [target].</span>", \
-			"<span class='notice'>You put \the [src] in \the [target].</span>")
-		else //No transfer case
-			user << "<span class='notice'>\The [target] is full!</span>"
-
-	return
+			user << "<span class='notice'>You [target_was_empty ? "crush partially" : "partially dissolve"] the pill into \the [target], filling it.</span>"
+	else
+		user << "<span class='notice'>\The [target] is full!</span>"
 
 ////////////////////////////////////////////////////////////////////////////////
 /// Pills. END

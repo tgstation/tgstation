@@ -47,7 +47,8 @@ var/global/list/hasbeendiona = list() // Stores ckeys and a timestamp for ghost 
 			if(!source.client && source.mind)
 				for(var/mob/dead/observer/O in player_list)
 					if(O.mind == source.mind && config.revival_pod_plants)
-						O << "<b><font color = #330033><font size = 3>Your blood has been placed into a replica pod seed. Return to your body if you want to be returned to life as a pod person!</b> (Verbs -> Ghost -> Re-enter corpse)</font color>"
+						O << "<span class='interface'><b><font size = 3>Your blood has been placed into a replica pod seed. Return to your body if you want to be returned to life as a pod person!</b> \
+							(Verbs -> Ghost -> Re-enter corpse, or <a href='?src=\ref[O];reentercorpse=1'>click here!</a>)</font></span>"
 						break
 		else
 			user << "Nothing happens."

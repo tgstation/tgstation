@@ -255,6 +255,12 @@
 	playing = 0
 	updateUsrDialog()
 
+/obj/structure/device/piano/attack_paw(var/mob/user)
+	if (!user.dexterity_check())
+		user << "<span class='warning'>You don't have the dexterity to do this!</span>"
+		return
+	attack_hand(user)
+
 /obj/structure/device/piano/attack_hand(var/mob/user as mob)
 	if(!anchored)
 		return

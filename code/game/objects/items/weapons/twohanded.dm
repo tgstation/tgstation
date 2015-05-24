@@ -30,6 +30,7 @@
 	return wielding.unwield(user)
 
 /obj/item/offhand/preattack(atom/target, mob/user, proximity_flag, click_parameters)
+	if(!proximity_flag) return
 	if(istype(target, /obj/item/weapon/storage)) //we place automatically
 		return
 	if(wielding)

@@ -3,7 +3,7 @@
 
 #define GEN_FAB_BASETIME 	5
 
-#define GEN_FAB_BASESTORAGE 150000
+#define GEN_FAB_BASESTORAGE 225000
 
 /obj/machinery/r_n_d/fabricator/mechanic_fab
 	name = "General Fabricator"
@@ -76,8 +76,8 @@
 	data["screen"]=screen
 	var/materials_list[0]
 		//Get the material names
-	for(var/matID in materials)
-		var/datum/material/material = materials[matID] // get the ID of the materials
+	for(var/matID in materials.storage)
+		var/datum/material/material = materials.getMaterial(matID) // get the ID of the materials
 		if(material && material.stored > 0)
 			materials_list.Add(list(list("name" = material.processed_name, "storage" = material.stored, "commands" = list("eject" = matID)))) // get the amount of the materials
 	data["materials"] = materials_list

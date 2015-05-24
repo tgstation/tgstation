@@ -23,6 +23,9 @@
 	var/smashtext = "bottle of " //To handle drinking glasses and the flask of holy water
 	var/smashname = "broken bottle" //As above
 	var/viewcontents = 1
+	var/flammable = 0
+	var/flammin = 0
+	var/flammin_color = null
 
 /obj/item/weapon/reagent_containers/food/drinks/on_reagent_change()
 	if(gulp_size < 5)
@@ -180,67 +183,34 @@
 	return 0
 
 
-/obj/item/weapon/reagent_containers/food/drinks/afterattack(obj/target, mob/user , flag)
+/obj/item/weapon/reagent_containers/food/drinks/afterattack(var/atom/target, var/mob/user, var/adjacency_flag, var/click_params)
+	if (!adjacency_flag)
+		return
 
-	if(istype(target, /obj/structure/reagent_dispensers)) //A dispenser. Transfer FROM it TO us.
+	// Attempt to transfer to our glass
+	if (transfer(target, user, can_send = FALSE, can_receive = TRUE))
+		return
 
-		if(!is_open_container()) //In any case, we aren't working with a closed bottle
-			user << "<span class='warning'>You can't, \the [src] is closed.</span>"
+	// Attempt to transfer from our glass
+	var/refill_id = reagents.get_master_reagent_id()
+	var/refill_name = reagents.get_master_reagent_name()
+
+	var/sent_amount = transfer(target, user, can_send = TRUE, can_receive = FALSE)
+
+	// Service borgs regenerate the amount transferred after a while
+	// TODO Why doesn't the borg module handle this nonsense?
+	if (sent_amount > 0 && isrobot(user))
+		var/mob/living/silicon/robot/borg = user
+		if (!istype(borg.module, /obj/item/weapon/robot_module/butler) || !borg.cell)
 			return
 
-		if(!target.reagents.total_volume)
-			user << "<span class='warning'>\The [target] is empty.</span>"
-			return
+		var/charge_amount = max(30, 4*sent_amount)
+		borg.cell.use(charge_amount)
 
-		if(reagents.total_volume >= reagents.maximum_volume)
-			user << "<span class='warning'>\The [src] is full.</span>"
-			return
-
-		var/trans = target.reagents.trans_to(src, target:amount_per_transfer_from_this)
-		user << "<span  class='notice'>You fill \the [src] with [trans] units of the contents of \the [target].<span>"
-
-	else //Something like a glass. Player probably wants to transfer TO it.
-
-		if(!istype(target, /obj/item/weapon/reagent_containers) && !istype(target, /obj/machinery/microwave)) //Not a reagent container or microwave, we most likely shouldn't be dealing with it here !
-			return //We're done here
-
-		if(!is_open_container()) //In any case, we aren't working with a closed bottle
-			user << "<span class='warning'>You can't, \the [src] is closed.</span>"
-			return
-
-		if(!target.is_open_container()) //Is the reagent container we're transfering to closed ?
-			user << "<span class='warning'>You can't, \the [target] is closed.</span>"
-			return
-
-		if(!reagents.total_volume)
-			user << "<span class='warning'>\The [src] is empty.</span>"
-			return
-
-		if(target.reagents.total_volume >= target.reagents.maximum_volume)
-			user << "<span class='warning'>\The [target] is full.</span>"
-			return
-
-		var/datum/reagent/refill
-		var/datum/reagent/refillName
-		if(isrobot(user))
-			refill = reagents.get_master_reagent_id()
-			refillName = reagents.get_master_reagent_name()
-
-		var/trans = src.reagents.trans_to(target, amount_per_transfer_from_this)
-		user << "<span class='notice'>You transfer [trans] units of the solution to \the [target].</span>"
-
-		if(isrobot(user)) //Cyborg modules that include drinks automatically refill themselves, but drain the borg's cell
-			var/mob/living/silicon/robot/bro = user
-			if(!istype(bro.module, /obj/item/weapon/robot_module/butler))
-				return
-			var/chargeAmount = max(30, 4*trans)
-			bro.cell.use(chargeAmount)
-			user << "Now synthesizing [trans] units of [refillName]..."
-
-			spawn(300)
-				reagents.add_reagent(refill, trans)
-				user << "Cyborg [src] refilled."
-	return
+		user << "Now synthesizing [sent_amount] units of [refill_name]..."
+		spawn(300)
+			reagents.add_reagent(refill_id, sent_amount)
+			user << "<span class='notice'>Cyborg [src] refilled with [refill_name] ([sent_amount] units).</span>"
 
 /obj/item/weapon/reagent_containers/food/drinks/examine(mob/user)
 
@@ -264,8 +234,11 @@
 
 /obj/item/weapon/reagent_containers/food/drinks/proc/imbibe(mob/user) //Drink the liquid within
 
-	user << "<span  class='notice'>You swallow a gulp of \the [src].</span>"
+	user << "<span  class='notice'>You swallow a gulp of \the [src].[lit ? " It's hot!" : ""]</span>"
 	playsound(user.loc,'sound/items/drink.ogg', rand(10,50), 1)
+
+	if(lit)
+		user.bodytemperature += 30 * TEMPERATURE_DAMAGE_COEFFICIENT//only the first gulp will be hot.
 
 	if(isrobot(user))
 		reagents.remove_any(gulp_size)
@@ -275,6 +248,7 @@
 		spawn(5)
 			reagents.trans_to(user, gulp_size)
 
+	update_brightness()
 	return 1
 
 /obj/item/weapon/reagent_containers/food/drinks/New()
@@ -890,83 +864,12 @@
 /obj/item/weapon/reagent_containers/food/drinks/bottle/holywater/attack(mob/living/M as mob, mob/user as mob, def_zone)
 	return
 
-/obj/item/weapon/reagent_containers/food/drinks/bottle/holywater/afterattack(obj/target, mob/user , flag)//copied from glass.dm, only way to have it only dispense 5u of its content
-	..()
-	if(ismob(target) && target.reagents && reagents.total_volume)
-		user << "<span class='notice'>You splash some the flask's content onto [target].</span>"
-
-		var/mob/living/M = target
-		var/list/injected = list()
-		for(var/datum/reagent/R in src.reagents.reagent_list)
-			injected += R.name
-		var/contained = english_list(injected)
-		M.attack_log += text("\[[time_stamp()]\] <font color='orange'>Has been splashed with [src.name] by [user.name] ([user.ckey]). Reagents: [contained]</font>")
-		user.attack_log += text("\[[time_stamp()]\] <font color='red'>Used the [src.name] to splash [M.name] ([M.key]). Reagents: [contained]</font>")
-		msg_admin_attack("[user.name] ([user.ckey]) splashed [M.name] ([M.key]) with [src.name]. Reagents: [contained] (INTENT: [uppertext(user.a_intent)]) (<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[user.x];Y=[user.y];Z=[user.z]'>JMP</a>)")
-		if(!iscarbon(user))
-			M.LAssailant = null
-		else
-			M.LAssailant = user
-
-		for(var/mob/O in viewers(world.view, user))
-			O.show_message(text("<span class='warning'>[] has been splashed with something by []!</span>", target, user), 1)
-		src.reagents.reaction(target, TOUCH)
-		spawn(5) src.reagents.remove_any(5)
-		return
-	else if(istype(target, /obj/structure/reagent_dispensers)) //A dispenser. Transfer FROM it TO us.
-
-		if(!target.reagents.total_volume && target.reagents)
-			user << "<span class='warning'>[target] is empty.</span>"
-			return
-
-		if(reagents.total_volume >= reagents.maximum_volume)
-			user << "<span class='warning'>[src] is full.</span>"
-			return
-
-		var/trans = target.reagents.trans_to(src, target:amount_per_transfer_from_this)
-		user << "<span class='notice'>You fill [src] with [trans] units of the contents of [target].</span>"
-
-	else if(target.is_open_container() && target.reagents) //Something like a glass. Player probably wants to transfer TO it.
-		if(!reagents.total_volume)
-			user << "<span class='warning'>[src] is empty.</span>"
-			return
-
-		if(target.reagents.total_volume >= target.reagents.maximum_volume)
-			user << "<span class='warning'>[target] is full.</span>"
-			return
-
-		var/trans = src.reagents.trans_to(target, amount_per_transfer_from_this)
-		user << "<span class='notice'>You transfer [trans] units of the solution to [target].</span>"
-
-		// /vg/: Logging transfers of bad things
-		if(istype(reagents_to_log) && reagents_to_log.len && target.log_reagents)
-			var/list/badshit=list()
-			for(var/bad_reagent in reagents_to_log)
-				if(reagents.has_reagent(bad_reagent))
-					badshit += reagents_to_log[bad_reagent]
-			if(badshit.len)
-				var/hl="<span class='warning'>([english_list(badshit)])</span>"
-				message_admins("[user.name] ([user.ckey]) added [trans]U to \a [target] with [src].[hl] (<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[user.x];Y=[user.y];Z=[user.z]'>JMP</a>)")
-				log_game("[user.name] ([user.ckey]) added [trans]U to \a [target] with [src].")
-
-	//Safety for dumping stuff into a ninja suit. It handles everything through attackby() and this is unnecessary.
-	else if(istype(target, /obj/item/clothing/suit/space/space_ninja))
+/obj/item/weapon/reagent_containers/food/drinks/bottle/holywater/afterattack(var/atom/target, var/mob/user, var/adjacency_flag, var/click_params)
+	if (!adjacency_flag)
 		return
 
-	else if(istype(target, /obj/machinery/bunsen_burner))
-		return
-
-	else if(istype(target, /obj/machinery/anomaly))
-		return
-
-	else if(reagents.total_volume)
-		user << "<span class='notice'>You splash some the flask's content onto [target].</span>"
-		if(reagents.has_reagent("fuel"))
-			message_admins("[user.name] ([user.ckey]) poured Welder Fuel onto [target]. (<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[user.x];Y=[user.y];Z=[user.z]'>JMP</a>)")
-			log_game("[user.name] ([user.ckey]) poured Welder Fuel onto [target]. (<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[user.x];Y=[user.y];Z=[user.z]'>JMP</a>)")
-		src.reagents.reaction(target, TOUCH)
-		spawn(5) src.reagents.remove_any(5)
-		return
+	// Holy water flasks only splash 5u instead of the whole contents
+	transfer(target, user, can_send = TRUE, can_receive = TRUE, splashable_units = 5)
 
 /obj/item/weapon/reagent_containers/food/drinks/bottle/vermouth
 	name = "Goldeneye Vermouth"
@@ -1170,57 +1073,37 @@
 		desc = "A rag stuffed into a bottle."
 		update_icon()
 		slot_flags = SLOT_BELT
-	else if(istype(I, /obj/item/weapon/weldingtool))
-		var/obj/item/weapon/weldingtool/WT = I
-		if(WT.isOn())
-			light()
-			update_brightness(user)
-	else if(istype(I, /obj/item/weapon/lighter))
-		var/obj/item/weapon/lighter/L = I
-		if(L.lit)
-			light()
-			update_brightness(user)
-	else if(istype(I, /obj/item/weapon/match))
-		var/obj/item/weapon/match/M = I
-		if(M.lit)
-			light()
-			update_brightness(user)
+	else if(I.is_hot())
+		light(user,I)
+		update_brightness(user)
 	else if(istype(I, /obj/item/device/assembly/igniter))
 		var/obj/item/device/assembly/igniter/C = I
 		C.activate()
-		light()
+		light(user,I)
 		update_brightness(user)
-	else if(istype(I, /obj/item/clothing/mask/cigarette))
-		var/obj/item/clothing/mask/cigarette/C = I
-		if(C.lit)
-			light()
-			update_brightness(user)
-	else if(istype(I, /obj/item/candle))
-		var/obj/item/candle/C = I
-		if(C.lit)
-			light()
-			update_brightness(user)
 		return
 
-/obj/item/weapon/reagent_containers/food/drinks/proc/light(var/flavor_text = "<span  class='rose'>[usr] lights the [name].</span>")
+/obj/item/weapon/reagent_containers/food/drinks/proc/light(mob/user,obj/item/I)
+	var/flavor_text = "<span  class='rose'>[user] lights \the [name] with \the [I].</span>"
 	if(!lit && molotov == 1)
 		lit = 1
-		for(var/mob/O in viewers(usr, null))
-			O.show_message(flavor_text, 1)
+		visible_message(flavor_text)
 		processing_objects.Add(src)
+		update_icon()
+	if(!lit && flammable)
+		lit = 1
+		visible_message(flavor_text)
+		flammable = 0
+		name = "Flaming [name]"
+		desc += " Damn that looks hot!"
+		icon_state += "-flamin"
 		update_icon()
 
 /obj/item/weapon/reagent_containers/food/drinks/proc/update_brightness(var/mob/user = null)
-	if(lit && molotov)
-		if(loc == user)
-			user.SetLuminosity(user.luminosity + brightness_lit)
-		else if(isturf(loc))
-			SetLuminosity(src.brightness_lit)
-	else if(molotov)
-		if(loc == user)
-			user.SetLuminosity(user.luminosity - brightness_lit)
-		else if(isturf(loc))
-			SetLuminosity(0)
+	if(lit)
+		SetLuminosity(src.brightness_lit)
+	else
+		SetLuminosity(0)
 
 /obj/item/weapon/reagent_containers/food/drinks/pickup(mob/user)
 	if(lit && molotov)
@@ -1250,6 +1133,7 @@
 	if(ishuman(src.loc))
 		var/mob/living/carbon/human/H = src.loc
 		H.update_inv_belt()
+
 	return
 
 

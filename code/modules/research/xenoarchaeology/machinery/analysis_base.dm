@@ -64,8 +64,12 @@
 
 		use_power = 2
 
+		icon_state = "analyser_processing"
 	else
 		use_power = 1
+		icon_state = "analyser"
+		if(prob(10))
+			flick(src, "analyser_processing")
 
 	//Add 3000 joules when active.  This is about 0.6 degrees per tick.
 	//May need adjustment
@@ -142,6 +146,7 @@ obj/machinery/anomaly/attackby(obj/item/weapon/W as obj, mob/living/user as mob)
 			held_container = W
 			updateDialog()
 
+		return 1 // avoid afterattack() being called
 	/*else if(istype(W, /obj/item/weapon/tank))
 		//var/obj/item/weapon/reagent_containers/glass/G = W
 		if(fuel_container)

@@ -18,6 +18,18 @@
 		switch(alert("Enable Tick Compensation?","Tick Comp is currently: [config.Tickcomp]","Yes","No"))
 			if("Yes")	config.Tickcomp = 1
 			else		config.Tickcomp = 0
+		
+		var/origtick = 0.9
+		if(config.Ticklag)
+			origtick = config.Ticklag
+		if(processScheduler && processScheduler.processes && processScheduler.processes.len)
+			for(var/datum/controller/process/P in processScheduler.processes)
+				if(P.name == "inactivity") continue
+				if(newtick == origtick) P.schedule_interval = initial(P.schedule_interval)
+				else
+					var/intv = P.schedule_interval
+					P.schedule_interval = round(initial(P.schedule_interval) / (newtick /origtick), 1)
+					testing("Set [P.name]'s schedule_interval to [P.schedule_interval] old: [intv], original: [initial(P.schedule_interval)] ratio applied: [newtick/origtick]")
 	else
 		src << "<span class='warning'>Error: ticklag(): Invalid world.ticklag value. No changes made.</span>"
 

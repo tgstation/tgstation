@@ -99,8 +99,11 @@ Powernet procs :
 	netexcess = avail - load
 
 	if(netexcess > 100 && nodes && nodes.len) // if there was excess power last cycle
-		for(var/obj/machinery/power/smes/S in nodes) // find the SMESes in the network
-			S.restore() // and restore some of the power that was used
+		for(var/obj/machinery/power/battery/B in nodes) // find the SMESes in the network
+			B.restore() // and restore some of the power that was used
+		for(var/obj/machinery/power/battery_port/BP in nodes) //Since portable batteries aren't in our nodes, we pass ourselves to restore them via their connectors
+			if(BP.connected)
+				BP.connected.restore()
 
 	// updates the viewed load (as seen on power computers)
 	viewload = 0.8 * viewload + 0.2 * load
@@ -266,7 +269,7 @@ var/global/powernets_broke = 0
 
 	if(isarea(power_source))
 		source_area = power_source
-		power_source = source_area.get_apc()
+		power_source = source_area.areaapc
 
 	if(istype(power_source, /obj/structure/cable))
 		var/obj/structure/cable/Cable = power_source

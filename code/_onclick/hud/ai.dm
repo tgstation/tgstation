@@ -7,7 +7,7 @@
 	var/obj/screen/using
 
 //AI core
-	using = new /obj/screen()
+	using = getFromPool(/obj/screen)
 	using.name = "AI Core"
 	using.icon = 'icons/mob/screen_ai.dmi'
 	using.icon_state = "ai_core"
@@ -16,7 +16,7 @@
 	adding += using
 
 //Camera list
-	using = new /obj/screen()
+	using = getFromPool(/obj/screen)
 	using.name = "Show Camera List"
 	using.icon = 'icons/mob/screen_ai.dmi'
 	using.icon_state = "camera"
@@ -25,7 +25,7 @@
 	adding += using
 
 //Track
-	using = new /obj/screen()
+	using = getFromPool(/obj/screen)
 	using.name = "Track With Camera"
 	using.icon = 'icons/mob/screen_ai.dmi'
 	using.icon_state = "track"
@@ -34,7 +34,7 @@
 	adding += using
 
 //Camera light
-	using = new /obj/screen()
+	using = getFromPool(/obj/screen)
 	using.name = "Toggle Camera Light"
 	using.icon = 'icons/mob/screen_ai.dmi'
 	using.icon_state = "camera_light"
@@ -43,7 +43,7 @@
 	adding += using
 
 //Crew Manifest
-	using = new /obj/screen()
+	using = getFromPool(/obj/screen)
 	using.name = "Show Crew Manifest"
 	using.icon = 'icons/mob/screen_ai.dmi'
 	using.icon_state = "manifest"
@@ -52,7 +52,7 @@
 	adding += using
 
 //Alerts
-	using = new /obj/screen()
+	using = getFromPool(/obj/screen)
 	using.name = "Show Alerts"
 	using.icon = 'icons/mob/screen_ai.dmi'
 	using.icon_state = "alerts"
@@ -61,7 +61,7 @@
 	adding += using
 
 //Announcement
-	using = new /obj/screen()
+	using = getFromPool(/obj/screen)
 	using.name = "Announcement"
 	using.icon = 'icons/mob/screen_ai.dmi'
 	using.icon_state = "announcement"
@@ -70,7 +70,7 @@
 	adding += using
 
 //Shuttle
-	using = new /obj/screen()
+	using = getFromPool(/obj/screen)
 	using.name = "Call Emergency Shuttle"
 	using.icon = 'icons/mob/screen_ai.dmi'
 	using.icon_state = "call_shuttle"
@@ -79,7 +79,7 @@
 	adding += using
 
 //Laws
-	using = new /obj/screen()
+	using = getFromPool(/obj/screen)
 	using.name = "State Laws"
 	using.icon = 'icons/mob/screen_ai.dmi'
 	using.icon_state = "state_laws"
@@ -88,7 +88,7 @@
 	adding += using
 
 //PDA message
-	using = new /obj/screen()
+	using = getFromPool(/obj/screen)
 	using.name = "PDA - Send Message"
 	using.icon = 'icons/mob/screen_ai.dmi'
 	using.icon_state = "pda_send"
@@ -97,7 +97,7 @@
 	adding += using
 
 //PDA log
-	using = new /obj/screen()
+	using = getFromPool(/obj/screen)
 	using.name = "PDA - Show Message Log"
 	using.icon = 'icons/mob/screen_ai.dmi'
 	using.icon_state = "pda_receive"
@@ -106,7 +106,7 @@
 	adding += using
 
 //Take image
-	using = new /obj/screen()
+	using = getFromPool(/obj/screen)
 	using.name = "Take Image"
 	using.icon = 'icons/mob/screen_ai.dmi'
 	using.icon_state = "take_picture"
@@ -115,7 +115,7 @@
 	adding += using
 
 //View images
-	using = new /obj/screen()
+	using = getFromPool(/obj/screen)
 	using.name = "View Images"
 	using.icon = 'icons/mob/screen_ai.dmi'
 	using.icon_state = "view_images"

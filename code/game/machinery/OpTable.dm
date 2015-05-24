@@ -11,6 +11,7 @@
 	var/mob/living/carbon/human/victim = null
 	var/strapped = 0.0
 	throwpass = 1 //so Adjacent passes.
+	var/rating = 1 //Use this for upgrades some day
 
 	var/obj/machinery/computer/operating/computer = null
 
@@ -164,10 +165,22 @@
 	take_victim(usr,usr)
 
 /obj/machinery/optable/attackby(obj/item/weapon/W as obj, mob/living/carbon/user as mob)
+	if(iswrench(W))
+		playsound(get_turf(src), 'sound/items/Ratchet.ogg', 50, 1)
+		switch(rating)
+			if(1)
+				new /obj/item/weapon/stock_parts/scanning_module(src.loc)
+			if(2)
+				new /obj/item/weapon/stock_parts/scanning_module/adv(src.loc)
+			if(3)
+				new /obj/item/weapon/stock_parts/scanning_module/phasic(src.loc)
+		new /obj/structure/table/reinforced(src.loc)
+		qdel(src)
+		return
 	if (istype(W, /obj/item/weapon/grab))
 		if(iscarbon(W:affecting))
 			take_victim(W:affecting,usr)
-			del(W)
+			returnToPool(W)
 			return
 	if(isrobot(user)) return
 	user.drop_item(W, src.loc)

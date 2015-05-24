@@ -85,6 +85,8 @@ var/shuttle_call/shuttle_calls[0]
 			if (istype(I, /obj/item/device/pda))
 				var/obj/item/device/pda/pda = I
 				I = pda.id
+			if (istype(I,/obj/item/weapon/card/emag))
+				emag(usr)
 			if (I && istype(I))
 				if(src.check_access(I))
 					authenticated = 1
@@ -93,7 +95,6 @@ var/shuttle_call/shuttle_calls[0]
 		if("logout")
 			authenticated = 0
 			setMenuState(usr,COMM_SCREEN_MAIN)
-
 		// ALART LAVUL
 		if("changeseclevel")
 			setMenuState(usr,COMM_SCREEN_SECLEVEL)
@@ -263,7 +264,7 @@ var/shuttle_call/shuttle_calls[0]
 		if("MessageCentcomm")
 			if(src.authenticated==2)
 				if(centcomm_message_cooldown)
-					usr << "<span class='warning'>Arrays recycling.  Please stand by.</span>"
+					usr << "<span class='warning'>Arrays recycling.  Please stand by for a few seconds.</span>"
 					return
 				var/input = stripped_input(usr, "Please choose a message to transmit to Centcomm via quantum entanglement.  Please be aware that this process is very expensive, and abuse will lead to... termination.  Transmission does not guarantee a response. There is a 30 second delay before you may send another message, be clear, full and concise.", "To abort, send an empty message.", "")
 				if(!input || !(usr in view(1,src)))
@@ -273,7 +274,7 @@ var/shuttle_call/shuttle_calls[0]
 				var/turf/T = get_turf(usr)
 				log_say("[key_name(usr)] (@[T.x],[T.y],[T.z]) has sent a bluespace message to Centcomm: [input]")
 				centcomm_message_cooldown = 1
-				spawn(300)//10 minute cooldown
+				spawn(300)//30 seconds cooldown
 					centcomm_message_cooldown = 0
 			setMenuState(usr,COMM_SCREEN_MAIN)
 
@@ -282,7 +283,7 @@ var/shuttle_call/shuttle_calls[0]
 		if("MessageSyndicate")
 			if((src.authenticated==2) && (src.emagged))
 				if(centcomm_message_cooldown)
-					usr << "<span class='warning'>Arrays recycling.  Please stand by.</span>"
+					usr << "<span class='warning'>Arrays recycling.  Please stand by for a few seconds.</span>"
 					return
 				var/input = stripped_input(usr, "Please choose a message to transmit to \[ABNORMAL ROUTING CORDINATES\] via quantum entanglement.  Please be aware that this process is very expensive, and abuse will lead to... termination. Transmission does not guarantee a response. There is a 30 second delay before you may send another message, be clear, full and concise.", "To abort, send an empty message.", "")
 				if(!input || !(usr in view(1,src)))
@@ -292,7 +293,7 @@ var/shuttle_call/shuttle_calls[0]
 				var/turf/T = get_turf(usr)
 				log_say("[key_name(usr)] (@[T.x],[T.y],[T.z]) has sent a bluespace message to the syndicate: [input]")
 				centcomm_message_cooldown = 1
-				spawn(300)//10 minute cooldown
+				spawn(300)//30 seconds cooldown
 					centcomm_message_cooldown = 0
 			setMenuState(usr,COMM_SCREEN_MAIN)
 
@@ -300,6 +301,7 @@ var/shuttle_call/shuttle_calls[0]
 			usr << "Backup routing data restored!"
 			src.emagged = 0
 			setMenuState(usr,COMM_SCREEN_MAIN)
+			update_icon()
 
 	return 1
 
@@ -392,6 +394,29 @@ var/shuttle_call/shuttle_calls[0]
 		ui.open()
 		// auto update every Master Controller tick
 		ui.set_auto_update(1)
+
+/obj/machinery/computer/communications/emag(mob/user as mob)
+	if(!emagged)
+		emagged = 1
+		user << "Syndicate routing data uploaded!"
+		new/obj/effect/effect/sparks(get_turf(src))
+		playsound(loc,"sparks",50,1)
+		authenticated = 2
+		setMenuState(usr,COMM_SCREEN_MAIN)
+		update_icon()
+		return 1
+	return
+
+
+/obj/machinery/computer/communications/update_icon()
+	..()
+	var/initial_icon = initial(icon_state)
+	icon_state = "[emagged ? "[initial_icon]-emag" : "[initial_icon]"]"
+	if(stat & BROKEN)
+		icon_state = "[initial_icon]b"
+	else if(stat & NOPOWER)
+		icon_state = "[initial_icon]0"
+
 
 /obj/machinery/computer/communications/proc/setCurrentMessage(var/mob/user,var/value)
 	if(issilicon(user))

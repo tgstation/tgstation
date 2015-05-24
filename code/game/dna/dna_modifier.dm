@@ -242,14 +242,17 @@
 	src.icon_state = "scanner_1"
 
 	// search for ghosts, if the corpse is empty and the scanner is connected to a cloner
-	for(dir in list(NORTH, EAST, SOUTH, WEST))
-		if(locate(/obj/machinery/computer/cloning, get_step(src, dir)))
+	for(dir in cardinal)
+		var/obj/machinery/computer/cloning/C = locate(/obj/machinery/computer/cloning) in get_step(src, dir)
+		if(C)
+			C.update_icon()
 			if(!M.client && M.mind)
 				for(var/mob/dead/observer/ghost in player_list)
 					if(ghost.mind == M.mind)
 						if(ghost.client)
 							ghost << 'sound/effects/adminhelp.ogg'
-							ghost << "<b><font color = #330033><font size = 3>Your corpse has been placed into a cloning scanner. Return to your body if you want to be resurrected/cloned!</b> (Verbs -> Ghost -> Re-enter corpse)</font color>"
+							ghost << "<span class='interface'><b><font size = 3>Your corpse has been placed into a cloning scanner. Return to your body if you want to be resurrected/cloned!</b> \
+								(Verbs -> Ghost -> Re-enter corpse, or <a href='?src=\ref[ghost];reentercorpse=1'>click here!</a>)</font></span>"
 						else
 							ghost.canclone = M
 						break
@@ -263,6 +266,12 @@
 	occupant.reset_view()
 	occupant = null
 	icon_state = "scanner_0"
+
+	for(dir in cardinal)
+		var/obj/machinery/computer/cloning/C = locate(/obj/machinery/computer/cloning) in get_step(src, dir)
+		if(C)
+			C.update_icon()
+
 	return 1
 
 /obj/machinery/dna_scannernew/ex_act(severity)
@@ -307,7 +316,7 @@
 	name = "DNA Modifier Access Console"
 	desc = "Scand DNA."
 	icon = 'icons/obj/computer.dmi'
-	icon_state = "scanner"
+	icon_state = "dna"
 	density = 1
 
 	anchored = 1

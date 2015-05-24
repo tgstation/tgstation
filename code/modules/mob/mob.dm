@@ -5,11 +5,15 @@
 
 /mob/Destroy() // This makes sure that mobs with clients/keys are not just deleted from the game.
 	unset_machine()
-	if(client)
-		for(var/atom/movable/AM in client.screen)
-			qdel(AM)
-		client.screen = list()
 	qdel(hud_used)
+	if(client)
+		remove_screen_obj_references()
+		for(var/atom/movable/AM in client.screen)
+			if(istype(AM,/obj/screen))
+				returnToPool(AM)
+			else
+				qdel(AM)
+		client.screen = list()
 	if(mind && mind.current == src)
 		spellremove(src)
 	mob_list.Remove(src)
@@ -17,6 +21,39 @@
 	living_mob_list.Remove(src)
 	ghostize()
 	..()
+
+/mob/proc/remove_screen_obj_references()
+	flash = null
+	blind = null
+	hands = null
+	pullin = null
+	visible = null
+	purged = null
+	internals = null
+	oxygen = null
+	i_select = null
+	m_select = null
+	toxin = null
+	fire = null
+	bodytemp = null
+	healths = null
+	throw_icon = null
+	nutrition_icon = null
+	pressure = null
+	damageoverlay = null
+	pain = null
+	item_use_icon = null
+	gun_move_icon = null
+	gun_run_icon = null
+	gun_setting_icon = null
+	m_suitclothes = null
+	m_suitclothesbg = null
+	m_hat = null
+	m_hatbg = null
+	m_glasses = null
+	m_glassesbg = null
+	spell_masters = null
+	zone_sel = null
 
 /mob/proc/cultify()
 	return
@@ -1469,3 +1506,6 @@ mob/proc/assess_threat()
 
 mob/proc/walking()
 	return !(lying || flying)
+
+/mob/proc/dexterity_check()
+	return 0

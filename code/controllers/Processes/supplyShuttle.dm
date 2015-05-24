@@ -1,6 +1,7 @@
+/datum/controller/process/supplyShuttle
+	schedule_interval = 300 // every 30 seconds
 /datum/controller/process/supplyShuttle/setup()
 	name = "supply shuttle"
-	schedule_interval = 300 // every 30 seconds
 
 	for(var/typepath in (typesof(/datum/supply_packs) - /datum/supply_packs))
 		var/datum/supply_packs/P = new typepath()

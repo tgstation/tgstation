@@ -274,3 +274,9 @@
 
 /obj/item/weapon/storage/belt/thunderdome/red
 	icon_state = "td_belt-red"
+
+/obj/item/weapon/storage/belt/security/doomguy
+	name = "Doomguy's belt"
+	desc = ""
+	icon_state = "doom"
+	item_state = "doom"

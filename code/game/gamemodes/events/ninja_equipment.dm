@@ -834,7 +834,7 @@ ________________________________________________________________________________
 					I.reagents.update_total()//Now we manually update the total to make sure everything is properly shoved under the rug.
 
 			U << "Replenished a total of [total_reagent_transfer ? total_reagent_transfer : "zero"] chemical units."//Let the player know how much total volume was added.
-			return
+			return 1 // avoid calling afterattack()
 		else if(istype(I, /obj/item/weapon/cell))
 			if(I:maxcharge>cell.maxcharge&&n_gloves&&n_gloves.candrain)
 				U << "<span class='notice'>Higher maximum capacity detected.\nUpgrading...</span>"
@@ -991,7 +991,7 @@ ________________________________________________________________________________
 				U << "<span class='warning'>This APC has run dry of power. You must find another source.</span>"
 
 		if("SMES")
-			var/obj/machinery/power/smes/A = target
+			var/obj/machinery/power/battery/smes/A = target
 			if(A.charge)
 				var/datum/effect/effect/system/spark_spread/spark_system = new /datum/effect/effect/system/spark_spread()
 				spark_system.set_up(5, 0, A.loc)
@@ -1038,7 +1038,7 @@ ________________________________________________________________________________
 				var/datum/effect/effect/system/spark_spread/spark_system = new /datum/effect/effect/system/spark_spread()
 				spark_system.set_up(5, 0, A.loc)
 
-				var/obj/machinery/power/apc/B = A.loc.loc:get_apc()//Object.turf.area find APC
+				var/obj/machinery/power/apc/B = A.areaMaster.areaapc//Object.turf.area find APC
 				if(B)//If APC exists. Might not if the area is unpowered like CentCom.
 					var/datum/powernet/PN = B.terminal.powernet
 					while(G.candrain&&!maxcapacity&&!isnull(A))//And start a proc similar to drain from wire.

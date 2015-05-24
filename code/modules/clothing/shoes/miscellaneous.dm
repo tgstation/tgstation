@@ -254,3 +254,9 @@
 	desc = "Nearly identical to the Prototype's boots, except in black."
 	icon_state = "joeboots"
 	item_state = "joeboots"
+
+/obj/item/clothing/shoes/doomguy
+	name = "Doomguy's boots"
+	desc = ""
+	icon_state = "doom"
+	item_state = "doom"

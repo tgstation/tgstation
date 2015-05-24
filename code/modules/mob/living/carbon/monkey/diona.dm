@@ -155,7 +155,7 @@
 		src.drop_from_inventory(W)
 	del(src)
 /mob/living/carbon/monkey/diona/say_understands(var/mob/other,var/datum/language/speaking = null)
-
+	if(other) other = other.GetSource()
 	if (istype(other, /mob/living/carbon/human))
 		if(speaking && speaking.name == "Sol Common")
 			if(donors.len >= 2) // They have sucked down some blood.
@@ -202,3 +202,6 @@
 		src << "<span class='good'>More blood seeps into you, continuing to expand your growing collection of memories.</span>"
 	else
 		src << "<span class='good'>The blood seeps into your small form, and you draw out the echoes of memories and personality from it, working them into your budding mind.</span>"
+
+/mob/living/carbon/monkey/diona/dexterity_check()
+	return 0

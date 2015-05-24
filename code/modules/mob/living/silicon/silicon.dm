@@ -287,3 +287,6 @@
 
 	src << browse(dat, "window=checklanguage")
 	return
+
+/mob/living/silicon/dexterity_check()
+	return 1
