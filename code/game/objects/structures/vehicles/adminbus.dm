@@ -44,6 +44,9 @@
 	warp = new/obj/structure/teleportwarp(src.loc)
 	busjuke = new/obj/machinery/media/jukebox/superjuke/adminbus(src.loc)
 	busjuke.dir = EAST
+	layer = FLY_LAYER+1
+	spawn(10)
+		layer = FLY_LAYER+1
 
 /obj/structure/stool/bed/chair/vehicle/adminbus/update_mob()
 	if(buckled_mob)
@@ -244,7 +247,7 @@
 				B.explode()
 
 /obj/structure/stool/bed/chair/vehicle/adminbus/handle_rotation()
-	layer = FLY_LAYER
+	layer = FLY_LAYER+1
 
 	if(buckled_mob)
 		if(buckled_mob.loc != loc)
@@ -442,6 +445,12 @@
 /obj/structure/stool/bed/chair/vehicle/adminbus/singuloCanEat()
 	return 0
 
+/obj/structure/stool/bed/chair/vehicle/adminbus/singularity_act()
+	return 0
+
+/obj/structure/stool/bed/chair/vehicle/adminbus/singularity_pull()
+	return 0
+
 /////HOOKSHOT/////////
 
 /obj/structure/hookshot
@@ -524,6 +533,12 @@
 /obj/structure/hookshot/singuloCanEat()
 	return 0
 
+/obj/structure/hookshot/singularity_act()
+	return 0
+
+/obj/structure/hookshot/singularity_pull()
+	return 0
+
 /////SINGULO CHAIN/////////
 
 /obj/structure/singulo_chain
@@ -569,6 +584,12 @@
 /obj/structure/singulo_chain/singuloCanEat()
 	return 0
 
+/obj/structure/singulo_chain/singularity_act()
+	return 0
+
+/obj/structure/singulo_chain/singularity_pull()
+	return 0
+
 /////ROADLIGHTS/////////
 
 /obj/structure/buslight//the things you have to do to pretend that your bus has directional lights...
@@ -587,6 +608,13 @@
 
 /obj/structure/buslight/singuloCanEat()
 	return 0
+
+/obj/structure/buslight/singularity_act()
+	return 0
+
+/obj/structure/buslight/singularity_pull()
+	return 0
+
 
 /////TELEPORT WARP/////////
 
@@ -609,6 +637,12 @@
 	return
 
 /obj/structure/teleportwarp/singuloCanEat()
+	return 0
+
+/obj/structure/teleportwarp/singularity_act()
+	return 0
+
+/obj/structure/teleportwarp/singularity_pull()
 	return 0
 
 #undef MAX_CAPACITY

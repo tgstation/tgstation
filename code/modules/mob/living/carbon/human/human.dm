@@ -1708,6 +1708,8 @@
 	return 0
 
 /mob/living/carbon/human/singularity_act()
+	if(src.flags & INVULNERABLE)
+		return 0
 	var/gain = 20
 	if(mind)
 		if((mind.assigned_role == "Station Engineer") || (mind.assigned_role == "Chief Engineer"))
@@ -1719,6 +1721,8 @@
 	return gain
 
 /mob/living/carbon/human/singularity_pull(S, current_size)
+	if(src.flags & INVULNERABLE)
+		return 0
 	if(current_size >= STAGE_THREE)
 		var/list/handlist = list(l_hand, r_hand)
 		for(var/obj/item/hand in handlist)

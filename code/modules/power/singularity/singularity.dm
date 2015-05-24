@@ -301,10 +301,6 @@
  * Jump out whenever we've made a decision.
  */
 /obj/machinery/singularity/proc/canPull(const/atom/movable/A)
-	// If we're big enough, stop checking for this and that and JUST EAT.
-	if (current_size >= 9)
-		return 1
-
 	if (A && !A.anchored)
 		if (A.canSingulothPull(src))
 			return 1
@@ -312,9 +308,6 @@
 	return 0
 
 /obj/machinery/singularity/proc/consume(const/atom/A)
-	//if(!(A.singuloCanEat()))
-	//	return 0
-
 	var/gain = A.singularity_act(current_size)
 	src.energy += gain
 	/*if (istype(A, /obj/))

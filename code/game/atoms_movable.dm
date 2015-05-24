@@ -320,7 +320,7 @@
 // SINGULOTH PULL REFACTOR
 /////////////////////////////
 /atom/movable/proc/canSingulothPull(var/obj/machinery/singularity/singulo)
-	return 1
+	return singuloCanEat()
 
 /atom/movable/proc/say_understands(var/mob/other)
 	return 1
