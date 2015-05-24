@@ -45,7 +45,11 @@
 	SSobj.processing.Remove(src)
 	flick("[icon_state]-disolve", src)
 	spawn(5)
-		delete()
+		qdel(src)
+
+/obj/effect/effect/foam/Destroy()
+	SSobj.processing.Remove(src)
+	return ..()
 
 
 /obj/effect/effect/foam/process()
@@ -84,7 +88,7 @@
 		if(foundfoam)
 			continue
 
-		var/obj/effect/effect/foam/F = new type(T)
+		var/obj/effect/effect/foam/F = PoolOrNew(/obj/effect/effect/foam, T)
 		F.amount = amount
 		reagents.copy_to(F, (reagents.total_volume))
 		F.color = color
@@ -114,10 +118,15 @@
 
 /datum/effect/effect/system/foam_spread/New()
 	..()
-	chemholder = new/obj()
+	chemholder = PoolOrNew(/obj)
 	var/datum/reagents/R = new/datum/reagents(1000)
 	chemholder.reagents = R
 	R.my_atom = chemholder
+
+/datum/effect/effect/system/foam_spread/Destroy()
+	qdel(chemholder)
+	chemholder = null
+	return ..()
 
 
 /datum/effect/effect/system/foam_spread/set_up(amt=5, loca, var/datum/reagents/carry = null)
@@ -139,7 +148,7 @@
 	if(foundfoam)//If there was already foam where we start, we add our foaminess to it.
 		foundfoam.amount += amount
 	else
-		var/obj/effect/effect/foam/F = new foamtype(src.location)
+		var/obj/effect/effect/foam/F = PoolOrNew(foamtype, location)
 		var/foamcolor = mix_color_from_reagents(chemholder.reagents.reagent_list)
 		chemholder.reagents.copy_to(F, chemholder.reagents.total_volume)
 		F.color = foamcolor
