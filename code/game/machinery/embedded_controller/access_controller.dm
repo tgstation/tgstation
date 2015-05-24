@@ -160,7 +160,7 @@
 /obj/machinery/doorButtons/airlock_controller/proc/cycleClose(obj/machinery/door/airlock/A)
 	if(!A || !exteriorAirlock || !interiorAirlock)
 		return
-	if(exteriorAirlock.density == interiorAirlock.density)
+	if(exteriorAirlock.density == interiorAirlock.density || !A.density)
 		return
 	busy = CYCLE
 	update_icon()
@@ -202,6 +202,7 @@
 	busy = 0
 	if(update)
 		update_icon()
+	updateUsrDialog()
 
 /obj/machinery/doorButtons/airlock_controller/process()
 	if(stat & NOPOWER)
