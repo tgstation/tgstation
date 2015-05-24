@@ -92,6 +92,12 @@ RCD
 			airlock_type = /obj/machinery/door/airlock
 
 
+/obj/item/weapon/rcd/Destroy()
+	qdel(spark_system)
+	spark_system = null
+	return ..()
+
+
 /obj/item/weapon/rcd/New()
 	desc = "A RCD. It currently holds [matter]/[max_matter] matter-units."
 	src.spark_system = new /datum/effect/effect/system/spark_spread

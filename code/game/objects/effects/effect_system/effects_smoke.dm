@@ -28,12 +28,7 @@
 /obj/effect/effect/harmless_smoke/New()
 	..()
 	spawn (100)
-		delete()
-	return
-
-/obj/effect/effect/harmless_smoke/Move()
-	..()
-	return
+		qdel(src)
 
 /datum/effect/effect/system/harmless_smoke_spread
 	var/total_smoke = 0 // To stop it being spammed and lagging!
@@ -60,7 +55,7 @@
 		spawn(0)
 			if(holder)
 				src.location = get_turf(holder)
-			var/obj/effect/effect/harmless_smoke/smoke = new /obj/effect/effect/harmless_smoke(src.location)
+			var/obj/effect/effect/harmless_smoke/smoke = PoolOrNew(/obj/effect/effect/harmless_smoke, location)
 			src.total_smoke++
 			var/direction = src.direction
 			if(!direction)
@@ -74,7 +69,7 @@
 			spawn(75+rand(10,30))
 				if(smoke)
 					fadeOut(smoke)
-					smoke.delete()
+					qdel(src)
 				src.total_smoke--
 
 
@@ -96,7 +91,7 @@
 /obj/effect/effect/bad_smoke/New()
 	..()
 	spawn (200+rand(10,30))
-		delete()
+		qdel(src)
 	return
 
 /obj/effect/effect/bad_smoke/Move()
@@ -163,7 +158,7 @@
 		spawn(0)
 			if(holder)
 				src.location = get_turf(holder)
-			var/obj/effect/effect/bad_smoke/smoke = new /obj/effect/effect/bad_smoke(src.location)
+			var/obj/effect/effect/bad_smoke/smoke = PoolOrNew(/obj/effect/effect/bad_smoke, location)
 			src.total_smoke++
 			var/direction = src.direction
 			if(!direction)
@@ -177,7 +172,7 @@
 			spawn(150+rand(10,30))
 				if(smoke)
 					fadeOut(smoke)
-					smoke.delete()
+					qdel(smoke)
 				src.total_smoke--
 
 
@@ -201,8 +196,7 @@
 	..()
 	create_reagents(500)
 	spawn(200+rand(10,30))
-		delete()
-	return
+		qdel(src)
 
 
 /obj/effect/effect/chem_smoke/Move()
@@ -229,11 +223,15 @@
 
 /datum/effect/effect/system/chem_smoke_spread/New()
 	..()
-	chemholder = new/obj()
+	chemholder = PoolOrNew(/obj)
 	var/datum/reagents/R = new/datum/reagents(500)
 	chemholder.reagents = R
 	R.my_atom = chemholder
 
+/datum/effect/effect/system/chem_smoke_spread/Destroy()
+	PlaceInPool(chemholder)
+	chemholder = null
+	..()
 
 /datum/effect/effect/system/chem_smoke_spread/set_up(var/datum/reagents/carry = null, n = 5, c = 0, loca, direct, silent = 0)
 	if(n > 20)
@@ -285,7 +283,7 @@
 		spawn(0)
 			if(holder)
 				src.location = get_turf(holder)
-			var/obj/effect/effect/chem_smoke/smoke = new /obj/effect/effect/chem_smoke(src.location)
+			var/obj/effect/effect/chem_smoke/smoke = PoolOrNew(/obj/effect/effect/chem_smoke, location)
 			src.total_smoke++
 			var/direction = src.direction
 			if(!direction)
@@ -310,7 +308,7 @@
 			spawn(150+rand(10,30))
 				if(smoke)
 					fadeOut(smoke)
-					smoke.delete()
+					qdel(smoke)
 				src.total_smoke--
 
 
@@ -335,8 +333,7 @@
 /obj/effect/effect/sleep_smoke/New()
 	..()
 	spawn (200+rand(10,30))
-		delete()
-	return
+		qdel(src)
 
 /obj/effect/effect/sleep_smoke/Move()
 	..()
@@ -396,7 +393,7 @@
 		spawn(0)
 			if(holder)
 				src.location = get_turf(holder)
-			var/obj/effect/effect/sleep_smoke/smoke = new /obj/effect/effect/sleep_smoke(src.location)
+			var/obj/effect/effect/sleep_smoke/smoke = PoolOrNew(/obj/effect/effect/sleep_smoke, location)
 			src.total_smoke++
 			var/direction = src.direction
 			if(!direction)
@@ -410,5 +407,5 @@
 			spawn(150+rand(10,30))
 				if(smoke)
 					fadeOut(smoke)
-					smoke.delete()
+					qdel(smoke)
 				src.total_smoke--

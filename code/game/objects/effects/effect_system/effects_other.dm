@@ -29,13 +29,12 @@
 		var/turf/T = get_turf(src.holder)
 		if(T != src.oldposition)
 			if(!has_gravity(T))
-				var/obj/effect/effect/ion_trails/I = new /obj/effect/effect/ion_trails(src.oldposition)
+				var/obj/effect/effect/ion_trails/I = PoolOrNew(/obj/effect/effect/ion_trails, oldposition)
 				I.dir = src.holder.dir
 				flick("ion_fade", I)
 				I.icon_state = "ion_trails"
 				spawn( 20 )
-					if(I)
-						I.delete()
+					qdel(I)
 			src.oldposition = T
 		spawn(2)
 			if(src.on)
@@ -47,6 +46,9 @@
 	src.on = 0
 	oldposition = null
 
+/datum/effect/effect/system/ion_trail_follow/Destroy()
+	oldposition = null
+	return ..()
 
 
 //Reagent-based explosion effect
