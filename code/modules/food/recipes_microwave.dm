@@ -1538,7 +1538,7 @@
 	items = list(
 		/obj/item/weapon/reagent_containers/food/snacks/grown/potato,
 		/obj/item/weapon/reagent_containers/food/snacks/grown/potato,
-		/obj/item/weapon/reagent_containers/food/snacks/egg,
+		/obj/item/weapon/reagent_containers/food/snacks/meat/egg,
 		)
 	result = /obj/item/weapon/reagent_containers/food/snacks/potatosalad
 
