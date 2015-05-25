@@ -78,6 +78,9 @@
 		return
 	..()
 
+/mob/proc/stopLobbySound()
+	src << sound(null, repeat = 0, wait = 0, volume = 85, channel = 1)
+
 /client/proc/playtitlemusic()
 	if(!ticker || !ticker.login_music)	return
 	if(prefs && (prefs.toggles & SOUND_LOBBY))
