@@ -1,0 +1,5 @@
+author: Deity Link
+delete-after: true
+changes:
+  - rscadd: Gyro tea now makes you spin, and heals leg and foot damage.
+  - bugfix: "Monkey" mobs no longer have "the" before their emotes if they have a proper name. No more "The Pun Pun jumps".
