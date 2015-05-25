@@ -1,8 +1,0 @@
-author: xxalpha
-
-delete-after: True
-
-changes: 
-  - bugfix: "You can no longer drop items inside mechas nor machinery (this includes gas pipes, disposal pipes, cryopods, sleepers, etc.)."
-  - bugfix: "Fixed exploit of changelings being able to keep thermal vision after resetting their powers."
-  - bugfix: "Fixed being able to implant NODROP items with cavity implant surgery."
