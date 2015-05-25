@@ -173,14 +173,14 @@ var/global/floorIsLava = 0
 			dat += "Welcome to the admin newscaster.<BR> Here you can add, edit and censor every newspiece on the network."
 			dat += "<BR>Feed channels and stories entered through here will be uneditable and handled as official news by the rest of the units."
 			dat += "<BR>Note that this panel allows full freedom over the news network, there are no constrictions except the few basic ones. Don't break things!</FONT>"
-			if(news_network.wanted_issue)
+			if(news_network.wanted_issue.active)
 				dat+= "<HR><A href='?src=\ref[src];ac_view_wanted=1'>Read Wanted Issue</A>"
 			dat+= "<HR><BR><A href='?src=\ref[src];ac_create_channel=1'>Create Feed Channel</A>"
 			dat+= "<BR><A href='?src=\ref[src];ac_view=1'>View Feed Channels</A>"
 			dat+= "<BR><A href='?src=\ref[src];ac_create_feed_story=1'>Submit new Feed story</A>"
 			dat+= "<BR><BR><A href='?src=\ref[usr];mach_close=newscaster_main'>Exit</A>"
 			var/wanted_already = 0
-			if(news_network.wanted_issue)
+			if(news_network.wanted_issue.active)
 				wanted_already = 1
 			dat+="<HR><B>Feed Security functions:</B><BR>"
 			dat+="<BR><A href='?src=\ref[src];ac_menu_wanted=1'>[(wanted_already) ? ("Manage") : ("Publish")] \"Wanted\" Issue</A>"
@@ -192,7 +192,7 @@ var/global/floorIsLava = 0
 			if( isemptylist(news_network.network_channels) )
 				dat+="<I>No active channels found...</I>"
 			else
-				for(var/datum/feed_channel/CHANNEL in news_network.network_channels)
+				for(var/datum/newscaster/feed_channel/CHANNEL in news_network.network_channels)
 					if(CHANNEL.is_admin_channel)
 						dat+="<B><FONT style='BACKGROUND-COLOR: LightGreen'><A href='?src=\ref[src];ac_show_channel=\ref[CHANNEL]'>[CHANNEL.channel_name]</A></FONT></B><BR>"
 					else
@@ -209,7 +209,7 @@ var/global/floorIsLava = 0
 			dat+="Creating new Feed Message..."
 			dat+="<HR><B><A href='?src=\ref[src];ac_set_channel_receiving=1'>Receiving Channel</A>:</B> [src.admincaster_feed_channel.channel_name]<BR>" //MARK
 			dat+="<B>Message Author:</B> <FONT COLOR='green'>[src.admincaster_signature]</FONT><BR>"
-			dat+="<B><A href='?src=\ref[src];ac_set_new_message=1'>Message Body</A>:</B> [src.admincaster_feed_message.body] <BR>"
+			dat+="<B><A href='?src=\ref[src];ac_set_new_message=1'>Message Body</A>:</B> [src.admincaster_feed_message.returnBody(-1)] <BR>"
 			dat+="<BR><A href='?src=\ref[src];ac_submit_new_message=1'>Submit</A><BR><BR><A href='?src=\ref[src];ac_setScreen=[0]'>Cancel</A><BR>"
 		if(4)
 			dat+="Feed story successfully submitted to [src.admincaster_feed_channel.channel_name].<BR><BR>"
@@ -221,7 +221,7 @@ var/global/floorIsLava = 0
 			dat+="<B><FONT COLOR='maroon'>ERROR: Could not submit Feed story to Network.</B></FONT><HR><BR>"
 			if(src.admincaster_feed_channel.channel_name=="")
 				dat+="<FONT COLOR='maroon'>•Invalid receiving channel name.</FONT><BR>"
-			if(src.admincaster_feed_message.body == "" || src.admincaster_feed_message.body == "\[REDACTED\]")
+			if(src.admincaster_feed_message.returnBody(-1) == "" || src.admincaster_feed_message.returnBody(-1) == "\[REDACTED\]")
 				dat+="<FONT COLOR='maroon'>•Invalid message body.</FONT><BR>"
 			dat+="<BR><A href='?src=\ref[src];ac_setScreen=[3]'>Return</A><BR>"
 		if(7)
@@ -229,7 +229,7 @@ var/global/floorIsLava = 0
 			if(src.admincaster_feed_channel.channel_name =="" || src.admincaster_feed_channel.channel_name == "\[REDACTED\]")
 				dat+="<FONT COLOR='maroon'>•Invalid channel name.</FONT><BR>"
 			var/check = 0
-			for(var/datum/feed_channel/FC in news_network.network_channels)
+			for(var/datum/newscaster/feed_channel/FC in news_network.network_channels)
 				if(FC.channel_name == src.admincaster_feed_channel.channel_name)
 					check = 1
 					break
@@ -237,7 +237,7 @@ var/global/floorIsLava = 0
 				dat+="<FONT COLOR='maroon'>•Channel name already in use.</FONT><BR>"
 			dat+="<BR><A href='?src=\ref[src];ac_setScreen=[2]'>Return</A><BR>"
 		if(9)
-			dat+="<B>[src.admincaster_feed_channel.channel_name]: </B><FONT SIZE=1>\[created by: <FONT COLOR='maroon'>[src.admincaster_feed_channel.author]</FONT>\]</FONT><HR>"
+			dat+="<B>[admincaster_feed_channel.channel_name]: </B><FONT SIZE=1>\[created by: <FONT COLOR='maroon'>[admincaster_feed_channel.returnAuthor(-1)]</FONT>\]</FONT><HR>"
 			if(src.admincaster_feed_channel.censored)
 				dat+="<FONT COLOR='red'><B>ATTENTION: </B></FONT>This channel has been deemed as threatening to the welfare of the station, and marked with a Nanotrasen D-Notice.<BR>"
 				dat+="No further feed story additions are allowed while the D-Notice is in effect.</FONT><BR><BR>"
@@ -246,15 +246,15 @@ var/global/floorIsLava = 0
 					dat+="<I>No feed messages found in channel...</I><BR>"
 				else
 					var/i = 0
-					for(var/datum/feed_message/MESSAGE in src.admincaster_feed_channel.messages)
+					for(var/datum/newscaster/feed_message/MESSAGE in src.admincaster_feed_channel.messages)
 						i++
-						dat+="-[MESSAGE.body] <BR>"
+						dat+="-[MESSAGE.returnBody(-1)] <BR>"
 						if(MESSAGE.img)
 							usr << browse_rsc(MESSAGE.img, "tmp_photo[i].png")
 							dat+="<img src='tmp_photo[i].png' width = '180'><BR><BR>"
-						dat+="<FONT SIZE=1>\[Story by <FONT COLOR='maroon'>[MESSAGE.author]</FONT>\]</FONT><BR>"
+						dat+="<FONT SIZE=1>\[Story by <FONT COLOR='maroon'>[MESSAGE.returnAuthor(-1)]</FONT>\]</FONT><BR>"
 						dat+="[MESSAGE.comments.len] comment[MESSAGE.comments.len > 1 ? "s" : ""]:<br>"
-						for(var/datum/feed_comment/comment in MESSAGE.comments)
+						for(var/datum/newscaster/feed_comment/comment in MESSAGE.comments)
 							dat+="[comment.body]<br><font size=1>[comment.author] [comment.time_stamp]</font><br>"
 						dat+="<br>"
 			dat+="<BR><HR><A href='?src=\ref[src];ac_refresh=1'>Refresh</A>"
@@ -267,7 +267,7 @@ var/global/floorIsLava = 0
 			if(isemptylist(news_network.network_channels))
 				dat+="<I>No feed channels found active...</I><BR>"
 			else
-				for(var/datum/feed_channel/CHANNEL in news_network.network_channels)
+				for(var/datum/newscaster/feed_channel/CHANNEL in news_network.network_channels)
 					dat+="<A href='?src=\ref[src];ac_pick_censor_channel=\ref[CHANNEL]'>[CHANNEL.channel_name]</A> [(CHANNEL.censored) ? ("<FONT COLOR='red'>***</FONT>") : ()]<BR>"
 			dat+="<BR><A href='?src=\ref[src];ac_setScreen=[0]'>Cancel</A>"
 		if(11)
@@ -278,26 +278,26 @@ var/global/floorIsLava = 0
 			if(isemptylist(news_network.network_channels))
 				dat+="<I>No feed channels found active...</I><BR>"
 			else
-				for(var/datum/feed_channel/CHANNEL in news_network.network_channels)
+				for(var/datum/newscaster/feed_channel/CHANNEL in news_network.network_channels)
 					dat+="<A href='?src=\ref[src];ac_pick_d_notice=\ref[CHANNEL]'>[CHANNEL.channel_name]</A> [(CHANNEL.censored) ? ("<FONT COLOR='red'>***</FONT>") : ()]<BR>"
 
 			dat+="<BR><A href='?src=\ref[src];ac_setScreen=[0]'>Back</A>"
 		if(12)
-			dat+="<B>[src.admincaster_feed_channel.channel_name]: </B><FONT SIZE=1>\[ created by: <FONT COLOR='maroon'>[src.admincaster_feed_channel.author]</FONT> \]</FONT><BR>"
-			dat+="<FONT SIZE=2><A href='?src=\ref[src];ac_censor_channel_author=\ref[src.admincaster_feed_channel]'>[(src.admincaster_feed_channel.author=="\[REDACTED\]") ? ("Undo Author censorship") : ("Censor channel Author")]</A></FONT><HR>"
+			dat+="<B>[src.admincaster_feed_channel.channel_name]: </B><FONT SIZE=1>\[ created by: <FONT COLOR='maroon'>[src.admincaster_feed_channel.returnAuthor(-1)]</FONT> \]</FONT><BR>"
+			dat+="<FONT SIZE=2><A href='?src=\ref[src];ac_censor_channel_author=\ref[src.admincaster_feed_channel]'>[(src.admincaster_feed_channel.authorCensor) ? ("Undo Author censorship") : ("Censor channel Author")]</A></FONT><HR>"
 
 			if( isemptylist(src.admincaster_feed_channel.messages) )
 				dat+="<I>No feed messages found in channel...</I><BR>"
 			else
-				for(var/datum/feed_message/MESSAGE in src.admincaster_feed_channel.messages)
-					dat+="-[MESSAGE.body] <BR><FONT SIZE=1>\[Story by <FONT COLOR='maroon'>[MESSAGE.author]</FONT>\]</FONT><BR>"
-					dat+="<FONT SIZE=2><A href='?src=\ref[src];ac_censor_channel_story_body=\ref[MESSAGE]'>[(MESSAGE.body == "\[REDACTED\]") ? ("Undo story censorship") : ("Censor story")]</A>  -  <A href='?src=\ref[src];ac_censor_channel_story_author=\ref[MESSAGE]'>[(MESSAGE.author == "\[REDACTED\]") ? ("Undo Author Censorship") : ("Censor message Author")]</A></FONT><BR>"
+				for(var/datum/newscaster/feed_message/MESSAGE in src.admincaster_feed_channel.messages)
+					dat+="-[MESSAGE.returnBody(-1)] <BR><FONT SIZE=1>\[Story by <FONT COLOR='maroon'>[MESSAGE.returnAuthor(-1)]</FONT>\]</FONT><BR>"
+					dat+="<FONT SIZE=2><A href='?src=\ref[src];ac_censor_channel_story_body=\ref[MESSAGE]'>[(MESSAGE.bodyCensor) ? ("Undo story censorship") : ("Censor story")]</A>  -  <A href='?src=\ref[src];ac_censor_channel_story_author=\ref[MESSAGE]'>[(MESSAGE.authorCensor) ? ("Undo Author Censorship") : ("Censor message Author")]</A></FONT><BR>"
 					dat+="[MESSAGE.comments.len] comment[MESSAGE.comments.len > 1 ? "s" : ""]: <a href='?src=\ref[src];ac_lock_comment=\ref[MESSAGE]'>[MESSAGE.locked ? "Unlock" : "Lock"]</a><br>"
-					for(var/datum/feed_comment/comment in MESSAGE.comments)
+					for(var/datum/newscaster/feed_comment/comment in MESSAGE.comments)
 						dat+="[comment.body] <a href='?src=\ref[src];ac_del_comment=\ref[comment];ac_del_comment_msg=\ref[MESSAGE]'>X</a><br><font size=1>[comment.author] [comment.time_stamp]</font><br>"
 			dat+="<BR><A href='?src=\ref[src];ac_setScreen=[10]'>Back</A>"
 		if(13)
-			dat+="<B>[src.admincaster_feed_channel.channel_name]: </B><FONT SIZE=1>\[ created by: <FONT COLOR='maroon'>[src.admincaster_feed_channel.author]</FONT> \]</FONT><BR>"
+			dat+="<B>[src.admincaster_feed_channel.channel_name]: </B><FONT SIZE=1>\[ created by: <FONT COLOR='maroon'>[src.admincaster_feed_channel.returnAuthor(-1)]</FONT> \]</FONT><BR>"
 			dat+="Channel messages listed below. If you deem them dangerous to the station, you can <A href='?src=\ref[src];ac_toggle_d_notice=\ref[src.admincaster_feed_channel]'>Bestow a D-Notice upon the channel</A>.<HR>"
 			if(src.admincaster_feed_channel.censored)
 				dat+="<FONT COLOR='red'><B>ATTENTION: </B></FONT>This channel has been deemed as threatening to the welfare of the station, and marked with a Nanotrasen D-Notice.<BR>"
@@ -306,23 +306,23 @@ var/global/floorIsLava = 0
 				if( isemptylist(src.admincaster_feed_channel.messages) )
 					dat+="<I>No feed messages found in channel...</I><BR>"
 				else
-					for(var/datum/feed_message/MESSAGE in src.admincaster_feed_channel.messages)
-						dat+="-[MESSAGE.body] <BR><FONT SIZE=1>\[Story by <FONT COLOR='maroon'>[MESSAGE.author]</FONT>\]</FONT><BR>"
+					for(var/datum/newscaster/feed_message/MESSAGE in src.admincaster_feed_channel.messages)
+						dat+="-[MESSAGE.returnBody(-1)] <BR><FONT SIZE=1>\[Story by <FONT COLOR='maroon'>[MESSAGE.returnAuthor(-1)]</FONT>\]</FONT><BR>"
 			dat+="<BR><A href='?src=\ref[src];ac_setScreen=[11]'>Back</A>"
 		if(14)
 			dat+="<B>Wanted Issue Handler:</B>"
 			var/wanted_already = 0
 			var/end_param = 1
-			if(news_network.wanted_issue)
+			if(news_network.wanted_issue.active)
 				wanted_already = 1
 				end_param = 2
 			if(wanted_already)
 				dat+="<FONT SIZE=2><BR><I>A wanted issue is already in Feed Circulation. You can edit or cancel it below.</FONT></I>"
 			dat+="<HR>"
-			dat+="<A href='?src=\ref[src];ac_set_wanted_name=1'>Criminal Name</A>: [src.admincaster_feed_message.author] <BR>"
-			dat+="<A href='?src=\ref[src];ac_set_wanted_desc=1'>Description</A>: [src.admincaster_feed_message.body] <BR>"
+			dat+="<A href='?src=\ref[src];ac_set_wanted_name=1'>Criminal Name</A>: [src.admincaster_wanted_message.criminal] <BR>"
+			dat+="<A href='?src=\ref[src];ac_set_wanted_desc=1'>Description</A>: [src.admincaster_wanted_message.body] <BR>"
 			if(wanted_already)
-				dat+="<B>Wanted Issue created by:</B><FONT COLOR='green'> [news_network.wanted_issue.backup_author]</FONT><BR>"
+				dat+="<B>Wanted Issue created by:</B><FONT COLOR='green'> [news_network.wanted_issue.scannedUser]</FONT><BR>"
 			else
 				dat+="<B>Wanted Issue will be created under prosecutor:</B><FONT COLOR='green'> [src.admincaster_signature]</FONT><BR>"
 			dat+="<BR><A href='?src=\ref[src];ac_submit_wanted=[end_param]'>[(wanted_already) ? ("Edit Issue") : ("Submit")]</A>"
@@ -330,21 +330,21 @@ var/global/floorIsLava = 0
 				dat+="<BR><A href='?src=\ref[src];ac_cancel_wanted=1'>Take down Issue</A>"
 			dat+="<BR><A href='?src=\ref[src];ac_setScreen=[0]'>Cancel</A>"
 		if(15)
-			dat+="<FONT COLOR='green'>Wanted issue for [src.admincaster_feed_message.author] is now in Network Circulation.</FONT><BR><BR>"
+			dat+="<FONT COLOR='green'>Wanted issue for [src.admincaster_wanted_message.criminal] is now in Network Circulation.</FONT><BR><BR>"
 			dat+="<BR><A href='?src=\ref[src];ac_setScreen=[0]'>Return</A><BR>"
 		if(16)
 			dat+="<B><FONT COLOR='maroon'>ERROR: Wanted Issue rejected by Network.</B></FONT><HR><BR>"
-			if(src.admincaster_feed_message.author =="" || src.admincaster_feed_message.author == "\[REDACTED\]")
+			if(src.admincaster_wanted_message.criminal =="" || src.admincaster_wanted_message.criminal == "\[REDACTED\]")
 				dat+="<FONT COLOR='maroon'>•Invalid name for person wanted.</FONT><BR>"
-			if(src.admincaster_feed_message.body == "" || src.admincaster_feed_message.body == "\[REDACTED\]")
+			if(src.admincaster_wanted_message.body == "" || src.admincaster_wanted_message.body == "\[REDACTED\]")
 				dat+="<FONT COLOR='maroon'>•Invalid description.</FONT><BR>"
 			dat+="<BR><A href='?src=\ref[src];ac_setScreen=[0]'>Return</A><BR>"
 		if(17)
 			dat+="<B>Wanted Issue successfully deleted from Circulation</B><BR>"
 			dat+="<BR><A href='?src=\ref[src];ac_setScreen=[0]'>Return</A><BR>"
 		if(18)
-			dat+="<B><FONT COLOR ='maroon'>-- STATIONWIDE WANTED ISSUE --</B></FONT><BR><FONT SIZE=2>\[Submitted by: <FONT COLOR='green'>[news_network.wanted_issue.backup_author]</FONT>\]</FONT><HR>"
-			dat+="<B>Criminal</B>: [news_network.wanted_issue.author]<BR>"
+			dat+="<B><FONT COLOR ='maroon'>-- STATIONWIDE WANTED ISSUE --</B></FONT><BR><FONT SIZE=2>\[Submitted by: <FONT COLOR='green'>[news_network.wanted_issue.scannedUser]</FONT>\]</FONT><HR>"
+			dat+="<B>Criminal</B>: [news_network.wanted_issue.criminal]<BR>"
 			dat+="<B>Description</B>: [news_network.wanted_issue.body]<BR>"
 			dat+="<B>Photo:</B>: "
 			if(news_network.wanted_issue.img)
@@ -354,7 +354,7 @@ var/global/floorIsLava = 0
 				dat+="None"
 			dat+="<BR><A href='?src=\ref[src];ac_setScreen=[0]'>Back</A><BR>"
 		if(19)
-			dat+="<FONT COLOR='green'>Wanted issue for [src.admincaster_feed_message.author] successfully edited.</FONT><BR><BR>"
+			dat+="<FONT COLOR='green'>Wanted issue for [src.admincaster_wanted_message.criminal] successfully edited.</FONT><BR><BR>"
 			dat+="<BR><A href='?src=\ref[src];ac_setScreen=[0]'>Return</A><BR>"
 		else
 			dat+="I'm sorry to break your immersion. This shit's bugged. Report this bug to Agouri, polyxenitopalidou@gmail.com"

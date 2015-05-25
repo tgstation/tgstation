@@ -8,10 +8,11 @@ var/list/admin_datums = list()
 
 	var/datum/marked_datum
 
-	var/admincaster_screen = 0	//See newscaster.dm under machinery for a full description
-	var/datum/feed_message/admincaster_feed_message = new /datum/feed_message   //These two will act as holders.
-	var/datum/feed_channel/admincaster_feed_channel = new /datum/feed_channel
-	var/admincaster_signature	//What you'll sign the newsfeeds as
+	var/admincaster_screen = 0	//TODO: remove all these 5 variables, they are completly unacceptable
+	var/datum/newscaster/feed_message/admincaster_feed_message = new /datum/newscaster/feed_message
+	var/datum/newscaster/wanted_message/admincaster_wanted_message = new /datum/newscaster/wanted_message
+	var/datum/newscaster/feed_channel/admincaster_feed_channel = new /datum/newscaster/feed_channel
+	var/admincaster_signature
 
 /datum/admins/New(datum/admin_rank/R, ckey)
 	if(!ckey)
