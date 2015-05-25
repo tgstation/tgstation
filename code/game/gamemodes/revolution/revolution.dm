@@ -339,7 +339,7 @@
 			if(headrev.current)
 				if(headrev.current.stat == DEAD)
 					text += "died"
-				else if(headrev.current.z != ZLEVEL_STATION)
+				else if(headrev.current.z > ZLEVEL_STATION)
 					text += "fled the station"
 				else
 					text += "survived the revolution"
@@ -363,7 +363,7 @@
 			if(rev.current)
 				if(rev.current.stat == DEAD || isbrain(rev.current))
 					text += "died"
-				else if(rev.current.z != ZLEVEL_STATION)
+				else if(rev.current.z > ZLEVEL_STATION)
 					text += "fled the station"
 				else
 					text += "survived the revolution"
@@ -389,7 +389,7 @@
 			if(head.current)
 				if(head.current.stat == DEAD || isbrain(head.current))
 					text += "died"
-				else if(head.current.z != ZLEVEL_STATION)
+				else if(head.current.z > ZLEVEL_STATION)
 					text += "fled the station"
 				else
 					text += "survived the revolution"

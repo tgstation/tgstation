@@ -62,7 +62,7 @@ emp_act
 
 			return -1 // complete projectile permutation
 
-	if(check_shields(P.damage, "the [P.name]"))
+	if(check_shields(P.damage, "the [P.name]", P))
 		P.on_hit(src, 100, def_zone)
 		return 2
 	return (..(P , def_zone))
@@ -85,7 +85,10 @@ emp_act
 
 //End Here
 
-/mob/living/carbon/human/proc/check_shields(var/damage = 0, var/attack_text = "the attack")
+/mob/living/carbon/human/proc/check_shields(var/damage = 0, var/attack_text = "the attack", var/obj/item/O)
+	if(O)
+		if(O.flags & NOSHIELD) //weapon ignores shields altogether
+			return 0
 	if(l_hand && istype(l_hand, /obj/item/weapon))//Current base is the prob(50-d/3)
 		var/obj/item/weapon/I = l_hand
 		if(I.IsShield() && (prob(50 - round(damage / 3))))
@@ -134,7 +137,7 @@ emp_act
 	else
 		if(user != src)
 			user.do_attack_animation(src)
-			if(check_shields(I.force, "the [I.name]"))
+			if(check_shields(I.force, "the [I.name]", I))
 				return 0
 
 		if(I.attack_verb && I.attack_verb.len)

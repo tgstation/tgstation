@@ -11,6 +11,7 @@
 	clothes_req = 0
 	range = 0
 	cast_sound = null
+	human_req = 1
 
 	action_icon_state = "mime"
 	action_background_icon_state = "bg_mime"
