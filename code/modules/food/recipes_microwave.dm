@@ -1533,6 +1533,15 @@
 	items = list(/obj/item/weapon/reagent_containers/food/snacks/chocolatebar)
 	result = /obj/item/weapon/reagent_containers/food/snacks/sundae
 
+/datum/recipe/potatosalad
+	reagents = list("water" = 10, "milk" = 10, "sodiumchloride" = 1, "blackpepper" = 1)
+	items = list(
+		/obj/item/weapon/reagent_containers/food/snacks/grown/potato,
+		/obj/item/weapon/reagent_containers/food/snacks/grown/potato,
+		/obj/item/weapon/reagent_containers/food/snacks/egg,
+		)
+	result = /obj/item/weapon/reagent_containers/food/snacks/potatosalad
+
 // Currently Disabled //////////////////////////////////////////
 
 /*
