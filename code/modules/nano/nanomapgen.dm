@@ -82,7 +82,7 @@
 		for(var/WorldY = startY, WorldY <= endY, WorldY++)
 
 			var/atom/Turf = locate(WorldX, WorldY, currentZ)
-
+			if(Turf.type == /turf/space) continue
 			var/icon/TurfIcon = new(Turf.icon, Turf.icon_state, Turf, 1, 0)
 			TurfIcon.Scale(NANOMAP_ICON_SIZE, NANOMAP_ICON_SIZE)
 
@@ -97,8 +97,10 @@
 	world.log << "NanoMapGen: sending nanoMap.png to client"
 
 	usr << browse(Tile, "window=picture;file=nanoMap[currentZ].png;display=0")
-
-	world.log << "NanoMapGen: Done."
+	var/F =file("nano/images/genned/[map.map_dir]/nanoMap[currentZ].png")
+	fdel(F)
+	fcopy(Tile, F)
+	world.log << "NanoMapGen: z-level [currentZ] Done."
 
 	if (Tile.Width() != NANOMAP_MAX_ICON_DIMENSION || Tile.Height() != NANOMAP_MAX_ICON_DIMENSION)
 		return NANOMAP_BADOUTPUT
