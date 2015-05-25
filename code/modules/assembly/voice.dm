@@ -22,9 +22,9 @@
 		if(findtext(raw_message, recorded))
 			pulse(0)
 
-/obj/item/device/assembly/voice/activate()
+/obj/item/device/assembly/voice/activate(var/manual = 0)
 	if(secured)
-		if(!holder)
+		if(manual)
 			listening = !listening
 			say("[listening ? "Now" : "No longer"] recording input.")
 
@@ -34,7 +34,7 @@
 /obj/item/device/assembly/voice/attack_self(mob/user)
 	if(!user)
 		return 0
-	activate()
+	activate(manual = 1)
 	return 1
 
 /obj/item/device/assembly/voice/toggle_secure()
