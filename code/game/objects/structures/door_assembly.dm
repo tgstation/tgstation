@@ -15,6 +15,7 @@ obj/structure/door_assembly
 	var/airlock_type = /obj/machinery/door/airlock //the type path of the airlock once completed
 	var/glass_type = /obj/machinery/door/airlock/glass
 	var/created_name = null
+	var/heat_proof_finished = 0 //whether to heat-proof the finished airlock
 
 obj/structure/door_assembly/New()
 	base_icon_state = copytext(icon_state,1,lentext(icon_state))
@@ -451,7 +452,10 @@ obj/structure/door_assembly/New()
 				new /obj/item/stack/sheet/metal(get_turf(src), 4)
 				if (mineral)
 					if (mineral == "glass")
-						new /obj/item/stack/sheet/rglass(get_turf(src))
+						if (heat_proof_finished)
+							new /obj/item/stack/sheet/rglass(get_turf(src))
+						else
+							new /obj/item/stack/sheet/glass(get_turf(src))
 					else
 						var/M = text2path("/obj/item/stack/sheet/mineral/[mineral]")
 						new M(get_turf(src))
@@ -525,8 +529,6 @@ obj/structure/door_assembly/New()
 		playsound(src.loc, 'sound/items/Screwdriver.ogg', 100, 1)
 		user.visible_message("[user] installs the electronics into the airlock assembly.", \
 							"<span class='notice'>You start to install electronics into the airlock assembly...</span>")
-
-
 		if(do_after(user, 40))
 			if( src.state != 1 )
 				return
@@ -561,16 +563,21 @@ obj/structure/door_assembly/New()
 		var/obj/item/stack/sheet/G = W
 		if(G)
 			if(G.get_amount() >= 1)
-				if(G.type == /obj/item/stack/sheet/rglass)
+				if(istype(G, /obj/item/stack/sheet/rglass) || istype(G, /obj/item/stack/sheet/glass)) 
 					playsound(src.loc, 'sound/items/Crowbar.ogg', 100, 1)
 					user.visible_message("[user] adds [G.name] to the airlock assembly.", \
 										"<span class='notice'>You start to install [G.name] into the airlock assembly...</span>")
 					if(do_after(user, 40))
 						if(G.get_amount() < 1 || mineral) return
-						user << "<span class='notice'>You install reinforced glass windows into the airlock assembly.</span>"
+						if (G.type == /obj/item/stack/sheet/rglass)
+							user << "<span class='notice'>You install reinforced glass windows into the airlock assembly.</span>"
+							heat_proof_finished = 1 //reinforced glass makes the airlock heat-proof
+							name = "near finished heat-proofed window airlock assembly"
+						else
+							user << "<span class='notice'>You install regular glass windows into the airlock assembly.</span>"
+							name = "near finished window airlock assembly"
 						G.use(1)
 						mineral = "glass"
-						name = "near finished window airlock assembly"
 						//This list contains the airlock paintjobs that have a glass version:
 						if(icontext in list("eng", "atmo", "sec", "com", "med", "res", "min"))
 							src.airlock_type = text2path("/obj/machinery/door/airlock/[typetext]")
@@ -615,6 +622,7 @@ obj/structure/door_assembly/New()
 					door = new src.airlock_type( src.loc )
 				//door.req_access = src.req_access
 				door.electronics = src.electronics
+				door.heat_proof = src.heat_proof_finished
 				if(src.electronics.use_one_access)
 					door.req_one_access = src.electronics.conf_access
 				else
