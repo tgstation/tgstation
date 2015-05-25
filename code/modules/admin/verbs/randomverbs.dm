@@ -10,7 +10,9 @@
 		return
 
 	for(var/obj/item/W in M)
-		M.unEquip(W)
+		if(!M.unEquip(W))
+			qdel(W)
+			M.regenerate_icons()
 
 	log_admin("[key_name(usr)] made [key_name(M)] drop everything!")
 	message_admins("[key_name_admin(usr)] made [key_name_admin(M)] drop everything!")
@@ -33,7 +35,7 @@
 	if(usr)
 		if (usr.client)
 			if(usr.client.holder)
-				M << "\bold You hear a voice in your head... \italic [msg]"
+				M << "<i>You hear [ticker.Bible_deity_name ? "the voice of " + ticker.Bible_deity_name : "a voice"] in your head... <b>[msg]</i></b>"
 
 	log_admin("SubtlePM: [key_name(usr)] -> [key_name(M)] : [msg]")
 	message_admins("<span class='adminnotice'><b> SubtleMessage: [key_name_admin(usr)] -> [key_name_admin(M)] :</b> [msg]</span>")
@@ -296,7 +298,7 @@ Traitors and the like can also be revived with the previous role mostly intact.
 
 	//DNA
 	if(record_found)//Pull up their name from database records if they did have a mind.
-		hardset_dna(new_character, record_found.fields["identity"], record_found.fields["enzymes"], record_found.fields["name"], null, record_found.fields["blood_type"])
+		hardset_dna(new_character, record_found.fields["identity"], record_found.fields["enzymes"], record_found.fields["name"], record_found.fields["blood_type"], record_found.fields["species"], record_found.fields["mcolor"])
 	else//If they have no records, we just do a random DNA for them, based on their random appearance/savefile.
 		ready_dna(new_character)
 
@@ -327,7 +329,7 @@ Traitors and the like can also be revived with the previous role mostly intact.
 				new_character.loc = get_turf(synd_spawn)
 			call(/datum/game_mode/proc/equip_syndicate)(new_character)
 		if("Space Ninja")
-			var/ninja_spawn[] = list()
+			var/list/ninja_spawn = list()
 			for(var/obj/effect/landmark/L in landmarks_list)
 				if(L.name=="carpspawn")
 					ninja_spawn += L
@@ -681,13 +683,6 @@ Traitors and the like can also be revived with the previous role mostly intact.
 	var/confirm = alert(src, "You sure?", "Confirm", "Yes", "No")
 	if(confirm != "Yes") return
 
-	if(ticker.mode.name == "revolution" || ticker.mode.name == "AI malfunction" || ticker.mode.name == "confliction")
-		var/choice = input("The shuttle will just return if you call it. Call anyway?") in list("Confirm", "Cancel")
-		if(choice == "Confirm")
-			SSshuttle.emergencyFakeRecall = rand(5,9) * 0.1
-		else
-			return
-
 	SSshuttle.emergency.request()
 	feedback_add_details("admin_verb","CSHUT") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 	log_admin("[key_name(usr)] admin-called the emergency shuttle.")
@@ -714,7 +709,7 @@ Traitors and the like can also be revived with the previous role mostly intact.
 	set category = "Special Verbs"
 	set name = "Attack Log"
 
-	usr << text("<span class='userdanger'>Attack Log for []</span>", mob)
+	usr << "<span class='boldannounce'>Attack Log for [mob]</span>"
 	for(var/t in M.attack_log)
 		usr << t
 	feedback_add_details("admin_verb","ATTL") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
@@ -774,6 +769,10 @@ Traitors and the like can also be revived with the previous role mostly intact.
 	if(!holder)
 		usr << "Admin only."
 		return
+
+	var/confirm = alert(src, "You sure you want to blank all NTSL scripts?", "Confirm", "Yes", "No")
+	if(confirm !="Yes") return
+
 	for(var/obj/machinery/telecomms/server/S in telecomms_list)
 		var/datum/TCS_Compiler/C = S.Compiler
 		S.rawcode = ""

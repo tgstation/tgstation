@@ -40,23 +40,47 @@ var/const/HOLOPAD_MODE = RANGE_BASED
 	var/list/masters = list()//List of AIs that use the holopad
 	var/last_request = 0 //to prevent request spam. ~Carn
 	var/holo_range = 5 // Change to change how far the AI can move away from the holopad before deactivating.
+	var/temp = ""
 
 /obj/machinery/hologram/holopad/attack_hand(var/mob/living/carbon/human/user) //Carn: Hologram requests.
 	if(!istype(user))
 		return
-	if(alert(user,"Would you like to request an AI's presence?",,"Yes","No") == "Yes")
-		if(!Adjacent(user)) //also prevents request spam!
-			user << "<span class='notice'>You are too far from the holopad.</span>"
-			return
-		if(last_request + 200 < world.time) //don't spam the AI with requests you jerk!
+	if(user.stat || stat & (NOPOWER|BROKEN))
+		return
+	user.set_machine(src)
+	var/dat
+	if(temp)
+		dat = temp
+	else
+		dat = "<A href='?src=\ref[src];AIrequest=1'>request an AI's presence.</A>"
+
+	var/datum/browser/popup = new(user, "holopad", name, 300, 130)
+	popup.set_content(dat)
+	popup.set_title_image(user.browse_rsc_icon(src.icon, src.icon_state))
+	popup.open()
+
+/obj/machinery/hologram/holopad/Topic(href, href_list)
+	if(..())
+		return
+	if (href_list["AIrequest"])
+		if(last_request + 200 < world.time)
 			last_request = world.time
-			user << "<span class='notice'>You request an AI's presence.</span>"
+			temp = "You requested an AI's presence.<BR>"
+			temp += "<A href='?src=\ref[src];mainmenu=1'>Main Menu</A>"
 			var/area/area = get_area(src)
 			for(var/mob/living/silicon/ai/AI in living_mob_list)
-				if(!AI.client)	continue
+				if(!AI.client)
+					continue
 				AI << "<span class='info'>Your presence is requested at <a href='?src=\ref[AI];jumptoholopad=\ref[src]'>\the [area]</a>.</span>"
 		else
-			user << "<span class='notice'>A request for AI presence was already sent recently.</span>"
+			temp = "A request for AI presence was already sent recently.<BR>"
+			temp += "<A href='?src=\ref[src];mainmenu=1'>Main Menu</A>"
+
+	else if(href_list["mainmenu"])
+		temp = ""
+
+	updateUsrDialog()
+	add_fingerprint(usr)
 
 /obj/machinery/hologram/holopad/attack_ai(mob/living/silicon/ai/user)
 	if (!istype(user))
@@ -85,11 +109,11 @@ var/const/HOLOPAD_MODE = RANGE_BASED
 
 /*This is the proc for special two-way communication between AI and holopad/people talking near holopad.
 For the other part of the code, check silicon say.dm. Particularly robot talk.*/
-/obj/machinery/hologram/holopad/Hear(message, atom/movable/speaker, message_langs, raw_message, radio_freq)
+/obj/machinery/hologram/holopad/Hear(message, atom/movable/speaker, message_langs, raw_message, radio_freq, list/spans)
 	if(speaker && masters.len && !radio_freq)//Master is mostly a safety in case lag hits or something. Radio_freq so AIs dont hear holopad stuff through radios.
 		for(var/mob/living/silicon/ai/master in masters)
 			if(masters[master] && speaker != master)
-				raw_message = master.lang_treat(speaker, message_langs, raw_message)
+				raw_message = master.lang_treat(speaker, message_langs, raw_message, spans)
 				var/name_used = speaker.GetVoice()
 				var/rendered = "<i><span class='game say'>Holopad received, <span class='name'>[name_used]</span> <span class='message'>[raw_message]</span></span></i>"
 				master.show_message(rendered, 2)

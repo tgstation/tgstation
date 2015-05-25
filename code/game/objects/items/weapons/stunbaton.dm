@@ -44,6 +44,9 @@
 		else
 			return 0
 
+
+
+
 /obj/item/weapon/melee/baton/update_icon()
 	if(status)
 		icon_state = "[initial(name)]_active"
@@ -59,7 +62,7 @@
 	if(!bcell)
 		user <<"<span class='warning'>The baton does not have a power source installed.</span>"
 
-/obj/item/weapon/melee/baton/attackby(obj/item/weapon/W, mob/user)
+/obj/item/weapon/melee/baton/attackby(obj/item/weapon/W, mob/user, params)
 	if(istype(W, /obj/item/weapon/stock_parts/cell))
 		var/obj/item/weapon/stock_parts/cell/C = W
 		if(bcell)
@@ -125,9 +128,10 @@
 							"<span class='warning'>[user] has prodded you with [src]. Luckily it was off</span>")
 			return
 	else
-		..()
 		if(status)
 			baton_stun(L, user)
+		..()
+
 
 
 /obj/item/weapon/melee/baton/proc/baton_stun(mob/living/L, mob/user)

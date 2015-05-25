@@ -3,7 +3,7 @@
 	var/force_on = 30 //force when active
 	var/throwforce_on = 20
 	var/icon_state_on = "axe1"
-	var/attack_verb_on = list("attacked", "slashed", "stabbed", "sliced", "torn", "ripped", "diced", "cut")
+	var/list/attack_verb_on = list("attacked", "slashed", "stabbed", "sliced", "torn", "ripped", "diced", "cut")
 	w_class = 2
 	var/w_class_on = 4
 
@@ -31,7 +31,7 @@
 	flags = CONDUCT | NOSHIELD
 	origin_tech = "combat=3"
 	attack_verb = list("attacked", "chopped", "cleaved", "torn", "cut")
-	attack_verb_on = null
+	attack_verb_on = list()
 
 /obj/item/weapon/melee/energy/axe/suicide_act(mob/user)
 	user.visible_message("<span class='suicide'>[user] swings the [src.name] towards /his head! It looks like \he's trying to commit suicide.</span>")
@@ -47,7 +47,6 @@
 	throw_speed = 3
 	throw_range = 5
 	flags = NOSHIELD
-	attack_verb = null
 	origin_tech = "magnets=3;syndicate=4"
 	var/hacked = 0
 
@@ -69,7 +68,7 @@
 		force = force_on
 		throwforce = throwforce_on
 		hitsound = 'sound/weapons/blade1.ogg'
-		if(attack_verb_on)
+		if(attack_verb_on.len)
 			attack_verb = attack_verb_on
 		if(!item_color)
 			icon_state = icon_state_on
@@ -82,7 +81,8 @@
 		force = initial(force)
 		throwforce = initial(throwforce)
 		hitsound = initial(hitsound)
-		attack_verb = initial(attack_verb)
+		if(attack_verb_on.len)
+			attack_verb = list()
 		icon_state = initial(icon_state)
 		w_class = initial(w_class)
 		playsound(user, 'sound/weapons/saberoff.ogg', 35, 1)  //changed it from 50% volume to 35% because deafness
@@ -117,7 +117,7 @@
 /obj/item/weapon/melee/energy/sword/saber/red
 	item_color = "red"
 
-/obj/item/weapon/melee/energy/sword/saber/attackby(obj/item/weapon/W, mob/living/user)
+/obj/item/weapon/melee/energy/sword/saber/attackby(obj/item/weapon/W, mob/living/user, params)
 	..()
 	if(istype(W, /obj/item/weapon/melee/energy/sword/saber))
 		if(W == src)

@@ -9,6 +9,7 @@ var/datum/subsystem/ticker/ticker
 
 	var/restart_timeout = 250				//delay when restarting server
 	var/current_state = GAME_STATE_STARTUP	//state of current round (used by process()) Use the defines GAME_STATE_* !
+	var/force_ending = 0					//Round was ended by admin intervention
 
 	var/hide_mode = 0
 	var/datum/game_mode/mode = null
@@ -16,6 +17,7 @@ var/datum/subsystem/ticker/ticker
 	var/event = 0
 
 	var/login_music							//music played in pregame lobby
+	var/round_end_sound						//music/jingle played when the world reboots
 
 	var/list/datum/mind/minds = list()		//The characters in the game. Used for objective tracking.
 
@@ -46,10 +48,12 @@ var/datum/subsystem/ticker/ticker
 	NEW_SS_GLOBAL(ticker)
 
 	login_music = pickweight(list('sound/ambience/title2.ogg' = 49, 'sound/ambience/title1.ogg' = 49, 'sound/ambience/clown.ogg' = 2)) // choose title music!
-	if(SSevent.holiday == "April Fool's Day")
+	if(SSevent.holidays && SSevent.holidays[APRIL_FOOLS])
 		login_music = 'sound/ambience/clown.ogg'
 
-/datum/subsystem/ticker/Initialize()
+/datum/subsystem/ticker/Initialize(timeofday, zlevel)
+	if (zlevel)
+		return ..()
 	if(!syndicate_code_phrase)		syndicate_code_phrase	= generate_code_phrase()
 	if(!syndicate_code_response)	syndicate_code_response	= generate_code_phrase()
 	setupGenetics()
@@ -74,9 +78,11 @@ var/datum/subsystem/ticker/ticker
 					++totalPlayersReady
 
 			//countdown
+			if(timeLeft < 0)
+				return
 			timeLeft -= wait
 
-			if(timeLeft <= 30 && !tipped)
+			if(timeLeft <= 300 && !tipped)
 				send_random_tip()
 				tipped = 1
 
@@ -91,7 +97,7 @@ var/datum/subsystem/ticker/ticker
 		if(GAME_STATE_PLAYING)
 			mode.process(wait * 0.1)
 
-			if(!mode.explosion_in_progress && mode.check_finished())
+			if(!mode.explosion_in_progress && mode.check_finished() || force_ending)
 				current_state = GAME_STATE_FINISHED
 				auto_toggle_ooc(1) // Turn it on
 				declare_completion()
@@ -148,11 +154,8 @@ var/datum/subsystem/ticker/ticker
 
 	//Configure mode and assign player to special mode stuff
 	var/can_continue = 0
-	if(mode.pre_setup_before_jobs)
-		can_continue = src.mode.pre_setup()
+	can_continue = src.mode.pre_setup()		//Choose antagonists
 	SSjob.DivideOccupations() 				//Distribute jobs
-	if(!mode.pre_setup_before_jobs)
-		can_continue = src.mode.pre_setup()
 
 	if(!Debug2)
 		if(!can_continue)
@@ -177,6 +180,7 @@ var/datum/subsystem/ticker/ticker
 	auto_toggle_ooc(0) // Turn it off
 	round_start_time = world.time
 
+	start_landmarks_list = shuffle(start_landmarks_list) //Shuffle the order of spawn points so they dont always predictably spawn bottom-up and right-to-left
 	create_characters() //Create player characters and transfer them
 	collect_minds()
 	equip_characters()
@@ -186,11 +190,13 @@ var/datum/subsystem/ticker/ticker
 
 
 	world << "<FONT color='blue'><B>Welcome to [station_name()], enjoy your stay!</B></FONT>"
-	world << sound('sound/AI/welcome.ogg') // Skie
-	//Holiday Round-start stuff	~Carn
-	if(SSevent.holiday)
+	world << sound('sound/AI/welcome.ogg')
+
+	if(SSevent.holidays)
 		world << "<font color='blue'>and...</font>"
-		world << "<h4>Happy [SSevent.holiday] Everybody!</h4>"
+		for(var/holidayname in SSevent.holidays)
+			var/datum/holiday/holiday = SSevent.holidays[holidayname]
+			world << "<h4>[holiday.greet()]</h4>"
 
 
 	spawn(0)//Forking here so we dont have to wait for this to finish
@@ -360,7 +366,7 @@ var/datum/subsystem/ticker/ticker
 	//Round statistics report
 	var/datum/station_state/end_state = new /datum/station_state()
 	end_state.count()
-	var/station_integrity = round( 100.0 *  start_state.score(end_state), 0.1)
+	var/station_integrity = min(round( 100.0 *  start_state.score(end_state), 0.1), 100.0)
 
 	world << "<BR>[TAB]Shift Duration: <B>[round(world.time / 36000)]:[add_zero("[world.time / 600 % 60]", 2)]:[world.time / 100 % 6][world.time / 100 % 10]</B>"
 	world << "<BR>[TAB]Station Integrity: <B>[mode.station_was_nuked ? "<font color='red'>Destroyed</font>" : "[station_integrity]%"]</B>"
@@ -380,6 +386,8 @@ var/datum/subsystem/ticker/ticker
 		else if (aiPlayer.mind) //if the dead ai has a mind, use its key instead
 			world << "<b>[aiPlayer.name] (Played by: [aiPlayer.mind.key])'s laws when it was deactivated were:</b>"
 			aiPlayer.show_laws(1)
+
+		world << "<b>Total law changes: [aiPlayer.law_change_counter]</b>"
 
 		if (aiPlayer.connected_robots.len)
 			var/robolist = "<b>[aiPlayer.real_name]'s minions were:</b> "

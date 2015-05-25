@@ -39,6 +39,8 @@
 /mob/living/carbon/human/get_visible_name()
 	var/face_name = get_face_name("")
 	var/id_name = get_id_name("")
+	if(name_override)
+		return name_override
 	if(face_name)
 		if(id_name && (id_name != face_name))
 			return "[face_name] (as [id_name])"
@@ -75,9 +77,9 @@
 	if(wear_id)
 		return wear_id.GetID()
 
-///eyecheck()
+///checkeyeprot()
 ///Returns a number between -1 to 2
-/mob/living/carbon/human/eyecheck()
+/mob/living/carbon/human/check_eye_prot()
 	var/number = 0
 	if(istype(src.head, /obj/item/clothing/head))			//are they wearing something on their head
 		var/obj/item/clothing/head/HFP = src.head			//if yes gets the flash protection value from that item
@@ -88,7 +90,14 @@
 	if(istype(src.wear_mask, /obj/item/clothing/mask))		//mask
 		var/obj/item/clothing/mask/MFP = src.wear_mask
 		number += MFP.flash_protect
+	var/obj/item/cybernetic_implant/eyes/EFP = locate() in src
+	if(EFP)
+		number += EFP.flash_protect
 	return number
+
+/mob/living/carbon/human/check_ear_prot()
+	if((ears && (ears.flags & EARBANGPROTECT)) || (head && (head.flags & HEADBANGPROTECT)))
+		return 1
 
 ///tintcheck()
 ///Checks eye covering items for visually impairing tinting, such as welding masks
@@ -117,9 +126,6 @@
 
 /mob/living/carbon/human/IsAdvancedToolUser()
 	return 1//Humans can use guns and such
-
-/mob/living/carbon/human/SpeciesCanConsume()
-	return 1 // Humans can eat, drink, and be forced to do so
 
 /mob/living/carbon/human/InCritical()
 	return (health <= config.health_threshold_crit && stat == UNCONSCIOUS)

@@ -7,6 +7,10 @@
 	permeability_coefficient = 0.05
 	item_color="yellow"
 
+/obj/item/clothing/gloves/color/yellow/fake
+	desc = "These gloves will protect the wearer from electric shock. They don't feel like rubber..."
+	siemens_coefficient = 1
+
 /obj/item/clothing/gloves/color/fyellow                             //Cheap Chinese Crap
 	desc = "These gloves are cheap knockoffs of the coveted ones - no way this can end badly."
 	name = "budget insulated gloves"
@@ -37,7 +41,7 @@
 /obj/item/clothing/gloves/color/black/ce
 	item_color = "chief"			//Exists for washing machines. Is not different from black gloves in any way.
 
-/obj/item/clothing/gloves/color/black/attackby(obj/item/weapon/W as obj, mob/user as mob)
+/obj/item/clothing/gloves/color/black/attackby(obj/item/weapon/W as obj, mob/user as mob, params)
 	if(istype(W, /obj/item/weapon/wirecutters))
 		if(icon_state == initial(icon_state)) //only if not dyed
 			user << "<span class='notice'>You snip the fingertips off of [src].</span>"
@@ -145,14 +149,12 @@
 	item_color="white"
 	transfer_prints = TRUE
 
-/obj/item/clothing/gloves/color/latex/cmo
-	item_color = "medical"		//Exists for washing machines. Is not different from latex gloves in any way.
-
 /obj/item/clothing/gloves/color/latex/nitrile
 	name = "nitrile gloves"
 	desc = "Pricy sterile gloves that are stronger than latex."
 	icon_state = "nitrile"
 	item_state = "nitrilegloves"
+	item_color = "cmo"
 	transfer_prints = FALSE
 
 /obj/item/clothing/gloves/color/white

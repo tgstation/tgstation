@@ -17,6 +17,7 @@
 /obj/machinery/door/airlock/alarmlock/Destroy()
 	if(radio_controller)
 		radio_controller.remove_object(src,air_frequency)
+	air_connection = null
 	..()
 
 /obj/machinery/door/airlock/alarmlock/initialize()

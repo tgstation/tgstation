@@ -9,7 +9,7 @@
 	floor_tile = /obj/item/stack/tile/wood
 	broken_states = list("wood-broken", "wood-broken2", "wood-broken3", "wood-broken4", "wood-broken5", "wood-broken6", "wood-broken7")
 
-/turf/simulated/floor/wood/attackby(obj/item/C as obj, mob/user as mob)
+/turf/simulated/floor/wood/attackby(obj/item/C as obj, mob/user as mob, params)
 	if(..())
 		return
 	if(istype(C, /obj/item/weapon/screwdriver))
@@ -38,19 +38,18 @@
 
 /turf/simulated/floor/fancy/grass
 	name = "Grass patch"
-	icon_state = "grass1"
+	icon_state = "grass"
 	floor_tile = /obj/item/stack/tile/grass
-	broken_states = list("sand1", "sand2", "sand3")
+	broken_states = list("sand")
 	ignoredirt = 1
 
 /turf/simulated/floor/fancy/grass/New()
 	..()
-	icon_state = "grass[pick("1","2","3","4")]"
 	spawn(1)
 		update_icon()
 		fancy_update(type)
 
-/turf/simulated/floor/fancy/grass/attackby(obj/item/C as obj, mob/user as mob)
+/turf/simulated/floor/fancy/grass/attackby(obj/item/C as obj, mob/user as mob, params)
 	if(..())
 		return
 	if(istype(C, /obj/item/weapon/shovel))

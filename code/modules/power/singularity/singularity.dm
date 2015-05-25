@@ -25,14 +25,14 @@
 	var/target = null //its target. moves towards the target if it has one
 	var/last_failed_movement = 0//Will not move in the same dir if it couldnt before, will help with the getting stuck on fields thing
 	var/last_warning
-
+	allow_spin = 0
 /obj/singularity/New(loc, var/starting_energy = 50, var/temp = 0)
 	//CARN: admin-alert for chuckle-fuckery.
 	admin_investigate_setup()
 
 	src.energy = starting_energy
 	..()
-	SSobj.processing.Add(src)
+	SSobj.processing |= src
 	for(var/obj/machinery/power/singularity_beacon/singubeacon in world)
 		if(singubeacon.active)
 			target = singubeacon
@@ -341,7 +341,7 @@
 		radiation = round(((src.energy-150)/50)*5,1)
 		radiationmin = round((radiation/5),1)//
 	for(var/mob/living/M in view(toxrange, src.loc))
-		M.apply_effect(rand(radiationmin,radiation), IRRADIATE)
+		M.irradiate(rand(radiationmin,radiation))
 		toxdamage = (toxdamage - (toxdamage*M.getarmor(null, "rad")))
 		M.apply_effect(toxdamage, TOX)
 	return
@@ -355,9 +355,12 @@
 		if(M.stat == CONSCIOUS)
 			if (istype(M,/mob/living/carbon/human))
 				var/mob/living/carbon/human/H = M
-				if(istype(H.glasses,/obj/item/clothing/glasses/meson))
-					H << "<span class='notice'>You look directly into the [src.name], good thing you had your protective eyewear on!</span>"
-					return
+				if(istype(H.glasses, /obj/item/clothing/glasses/meson))
+					var/obj/item/clothing/glasses/meson/MS = H.glasses
+					if(MS.vision_flags == SEE_TURFS)
+						H << "<span class='notice'>You look directly into the [src.name], good thing you had your protective eyewear on!</span>"
+						return
+
 		M.apply_effect(3, STUN)
 		M.visible_message("<span class='danger'>[M] stares blankly at the [src.name]!</span>", \
 						"<span class='userdanger'>You look directly into the [src.name] and feel weak.</span>")

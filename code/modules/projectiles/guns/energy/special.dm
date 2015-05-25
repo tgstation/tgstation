@@ -4,15 +4,25 @@
 	icon_state = "ionrifle"
 	item_state = null	//so the human update icon uses the icon_state instead.
 	origin_tech = "combat=2;magnets=4"
+	can_flashlight = 1
 	w_class = 5
 	flags =  CONDUCT
 	slot_flags = SLOT_BACK
 	ammo_type = list(/obj/item/ammo_casing/energy/ion)
-	pin = null
 
 
 /obj/item/weapon/gun/energy/ionrifle/emp_act(severity)
 	return
+
+/obj/item/weapon/gun/energy/ionrifle/carbine
+	name = "ion carbine"
+	desc = "The MK.II Prototype Ion Projector is a lightweight carbine version of the larger ion rifle, built to be ergonomic and efficient."
+	icon_state = "ioncarbine"
+	item_state = "ioncarbine"
+	origin_tech = "combat=4;magnets=4;materials=4"
+	w_class = 3
+	slot_flags = SLOT_BELT
+	pin = null
 
 /obj/item/weapon/gun/energy/decloner
 	name = "biological demolecularisor"
@@ -35,7 +45,7 @@
 
 /obj/item/weapon/gun/energy/floragun/New()
 	..()
-	SSobj.processing.Add(src)
+	SSobj.processing |= src
 
 
 /obj/item/weapon/gun/energy/floragun/Destroy()
@@ -71,7 +81,7 @@
 
 /obj/item/weapon/gun/energy/meteorgun/New()
 	..()
-	SSobj.processing.Add(src)
+	SSobj.processing |= src
 
 
 /obj/item/weapon/gun/energy/meteorgun/Destroy()
@@ -113,15 +123,21 @@
 	item_state = "kineticgun"
 	ammo_type = list(/obj/item/ammo_casing/energy/kinetic)
 	cell_type = "/obj/item/weapon/stock_parts/cell/emproof"
+	needs_permit = 0 // Aparently these are safe to carry? I'm sure Golliaths would disagree.
 	var/overheat = 0
+	var/overheat_time = 16
 	var/recent_reload = 1
+	unique_rename = 1
 
 /obj/item/weapon/gun/energy/kinetic_accelerator/shoot_live_shot()
 	overheat = 1
-	spawn(20)
+	spawn(overheat_time)
 		overheat = 0
 		recent_reload = 0
 	..()
+
+/obj/item/weapon/gun/energy/kinetic_accelerator/emp_act(severity)
+	return
 
 /obj/item/weapon/gun/energy/kinetic_accelerator/attack_self(mob/living/user)
 	if(overheat || recent_reload)
@@ -130,7 +146,7 @@
 	if(!suppressed)
 		playsound(src.loc, 'sound/weapons/kenetic_reload.ogg', 60, 1)
 	else
-		playsound(user, 'sound/weapons/kenetic_reload.ogg', 60, 1)
+		user << "<span class='warning'>You silently charge [src].<span>"
 	recent_reload = 1
 	update_icon()
 	return
@@ -145,6 +161,8 @@
 	origin_tech = "combat=2;magnets=2;syndicate=5"
 	suppressed = 1
 	ammo_type = list(/obj/item/ammo_casing/energy/bolt)
+	unique_rename = 0
+	overheat_time = 20
 
 /obj/item/weapon/gun/energy/kinetic_accelerator/crossbow/large
 	name = "energy crossbow"
@@ -155,6 +173,43 @@
 	origin_tech = "combat=2;magnets=2;syndicate=3" //can be further researched for more syndie tech
 	suppressed = 0
 	ammo_type = list(/obj/item/ammo_casing/energy/bolt/large)
+	pin = null
+
+/obj/item/weapon/gun/energy/plasmacutter
+	name = "plasma cutter"
+	desc = "A mining tool capable of expelling concentrated plasma bursts. You could use it to cut limbs off of xenos! Or, you know, mine stuff."
+	icon_state = "plasmacutter"
+	item_state = "plasmacutter"
+	modifystate = -1
+	origin_tech = "combat=1;materials=3;magnets=2;plasmatech=2;engineering=1"
+	ammo_type = list(/obj/item/ammo_casing/energy/plasma)
+	flags = CONDUCT | OPENCONTAINER
+	attack_verb = list("attacked", "slashed", "cut", "sliced")
+	can_charge = 0
+
+/obj/item/weapon/gun/energy/plasmacutter/examine(mob/user)
+	..()
+	if(power_supply)
+		user <<"<span class='notice'>[src] is [round(power_supply.percent())]% charged.</span>"
+
+/obj/item/weapon/gun/energy/plasmacutter/attackby(var/obj/item/A, var/mob/user)
+	if(istype(A, /obj/item/stack/sheet/mineral/plasma))
+		var/obj/item/stack/sheet/S = A
+		S.use(1)
+		power_supply.give(1000)
+		user << "<span class='notice'>You insert [A] in [src], recharging it.</span>"
+	else if(istype(A, /obj/item/weapon/ore/plasma))
+		qdel(A)
+		power_supply.give(500)
+		user << "<span class='notice'>You insert [A] in [src], recharging it.</span>"
+	else
+		..()
+
+/obj/item/weapon/gun/energy/plasmacutter/adv
+	name = "advanced plasma cutter"
+	icon_state = "adv_plasmacutter"
+	origin_tech = "combat=3;materials=4;magnets=3;plasmatech=3;engineering=2"
+	ammo_type = list(/obj/item/ammo_casing/energy/plasma/adv)
 
 /obj/item/weapon/gun/energy/disabler
 	name = "disabler"
@@ -163,6 +218,37 @@
 	item_state = null
 	ammo_type = list(/obj/item/ammo_casing/energy/disabler)
 
+/obj/item/weapon/gun/energy/disabler/cyborg
+	name = "cyborg disabler"
+	desc = "An integrated disabler that draws from a cyborg's power cell. This weapon contains a limiter to prevent the cyborg's power cell from overheating."
+	var/charge_tick = 0
+	var/recharge_time = 2.5
+	can_charge = 0
+
+/obj/item/weapon/gun/energy/disabler/cyborg/New()
+	..()
+	SSobj.processing |= src
+
+
+/obj/item/weapon/gun/energy/disabler/cyborg/Destroy()
+	SSobj.processing.Remove(src)
+	..()
+
+/obj/item/weapon/gun/energy/disabler/cyborg/process() //Every [recharge_time] ticks, recharge a shot for the cyborg
+	charge_tick++
+	if(charge_tick < recharge_time) return 0
+	charge_tick = 0
+
+	if(!power_supply) return 0 //sanity
+	if(isrobot(src.loc))
+		var/mob/living/silicon/robot/R = src.loc
+		if(R && R.cell)
+			var/obj/item/ammo_casing/energy/shot = ammo_type[select] //Necessary to find cost of shot
+			if(R.cell.use(shot.e_cost)) 		//Take power from the borg...
+				power_supply.give(shot.e_cost)	//... to recharge the shot
+
+	update_icon()
+	return 1
 
 /obj/item/weapon/gun/energy/wormhole_projector
 	name = "bluespace wormhole projector"
@@ -226,7 +312,7 @@
 
 /obj/item/weapon/gun/energy/printer/New()
 	..()
-	SSobj.processing.Add(src)
+	SSobj.processing |= src
 
 
 /obj/item/weapon/gun/energy/printer/Destroy()

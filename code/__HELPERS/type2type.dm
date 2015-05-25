@@ -544,3 +544,46 @@ for(var/t in test_times)
 		else
 			. = max(0, min(255, 138.5177312231 * log(temp - 10) - 305.0447927307))
 
+/proc/color2hex(var/color)	//web colors
+	if(!color)
+		return "#000000"
+
+	switch(color)
+		if("white")
+			return "#FFFFFF"
+		if("black")
+			return "#000000"
+		if("gray")
+			return "#808080"
+		if("brown")
+			return "#A52A2A"
+		if("red")
+			return "#FF0000"
+		if("darkred")
+			return "#8B0000"
+		if("crimson")
+			return "#DC143C"
+		if("orange")
+			return "#FFA500"
+		if("yellow")
+			return "#FFFF00"
+		if("green")
+			return "#008000"
+		if("lime")
+			return "#00FF00"
+		if("darkgreen")
+			return "#006400"
+		if("cyan")
+			return "#00FFFF"
+		if("blue")
+			return "#0000FF"
+		if("navy")
+			return "#000080"
+		if("teal")
+			return "#008080"
+		if("purple")
+			return "#800080"
+		if("indigo")
+			return "#4B0082"
+		else
+			return "#FFFFFF"

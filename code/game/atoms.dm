@@ -20,7 +20,7 @@
 	//var/chem_is_open_container = 0
 	// replaced by OPENCONTAINER flags and atom/proc/is_open_container()
 	///Chemistry.
-
+	var/allow_spin = 1
 /atom/proc/onCentcom()
 	var/turf/T = get_turf(src)
 	if(!T)
@@ -121,8 +121,7 @@
 	return
 
 /atom/proc/bullet_act(obj/item/projectile/P, def_zone)
-	P.on_hit(src, 0, def_zone)
-	. = 0
+	. = P.on_hit(src, 0, def_zone)
 
 /atom/proc/in_contents_of(container)//can take class or object instance as argument
 	if(ispath(container))
@@ -279,7 +278,7 @@ var/list/blood_splatter_icons = list()
 	return "\ref[initial(icon)]-[initial(icon_state)]"
 
 /atom/proc/add_blood_list(mob/living/carbon/M)
-	// Returns 1 if we had blood already
+	// Returns 0 if we have that blood already
 	if(!istype(blood_DNA, /list))	//if our list of DNA doesn't exist yet (or isn't a list) initialise it.
 		blood_DNA = list()
 	//if this blood isn't already in the list, add it
@@ -300,15 +299,17 @@ var/list/blood_splatter_icons = list()
 		return 0
 	if(!check_dna_integrity(M))		//check dna is valid and create/setup if necessary
 		return 0					//no dna!
-	return
+	return 1
 
 /obj/add_blood(mob/living/carbon/M)
-	if(..() == 0)   return 0
+	if(..() == 0)
+		return 0
 	return add_blood_list(M)
 
 /obj/item/add_blood(mob/living/carbon/M)
 	var/blood_count = blood_DNA == null ? 0 : blood_DNA.len
-	if(..() == 0)	return 0
+	if(..() == 0)
+		return 0
 	//apply the blood-splatter overlay if it isn't already in there
 	if(!blood_count && initial(icon) && initial(icon_state))
 		//try to find a pre-processed blood-splatter. otherwise, make a new one
@@ -324,21 +325,26 @@ var/list/blood_splatter_icons = list()
 	return 1 //we applied blood to the item
 
 /obj/item/clothing/gloves/add_blood(mob/living/carbon/M)
-	if(..() == 0) return 0
+	if(..() == 0)
+		return 0
 	transfer_blood = rand(2, 4)
 	bloody_hands_mob = M
 	return 1
 
-/turf/simulated/add_blood(mob/living/carbon/M)
-	if(..() == 0)	return 0
+/turf/simulated/add_blood(mob/living/carbon/human/M)
+	if(..() == 0)
+		return 0
 
 	var/obj/effect/decal/cleanable/blood/B = locate() in contents	//check for existing blood splatter
-	if(!B)	B = new /obj/effect/decal/cleanable/blood(src)			//make a bloood splatter if we couldn't find one
+	if(!B)
+		blood_splatter(src,M.get_blood(M.vessel),1)
+		B = locate(/obj/effect/decal/cleanable/blood) in contents
 	B.add_blood_list(M)
 	return 1 //we bloodied the floor
 
 /mob/living/carbon/human/add_blood(mob/living/carbon/M)
-	if(..() == 0)	return 0
+	if(..() == 0)
+		return 0
 	add_blood_list(M)
 	bloody_hands = rand(2, 4)
 	bloody_hands_mob = M
@@ -351,7 +357,8 @@ var/list/blood_splatter_icons = list()
 /atom/proc/add_vomit_floor(mob/living/carbon/M as mob, var/toxvomit = 0)
 	if( istype(src, /turf/simulated) )
 		var/obj/effect/decal/cleanable/vomit/this = new /obj/effect/decal/cleanable/vomit(src)
-
+		if(M.reagents)
+			M.reagents.trans_to(this, M.reagents.total_volume / 10)
 		// Make toxins vomit look different
 		if(toxvomit)
 			this.icon_state = "vomittox_[pick(1,4)]"
@@ -366,7 +373,9 @@ var/list/blood_splatter_icons = list()
 	if(istype(src, /turf/simulated))
 		if(check_dna_integrity(M))	//mobs with dna = (monkeys + humans at time of writing)
 			var/obj/effect/decal/cleanable/blood/B = locate() in contents
-			if(!B)	B = new(src)
+			if(!B)
+				blood_splatter(src,M,1)
+				B = locate(/obj/effect/decal/cleanable/blood) in contents
 			B.blood_DNA[M.dna.unique_enzymes] = M.dna.blood_type
 		else if(istype(M, /mob/living/carbon/alien))
 			var/obj/effect/decal/cleanable/xenoblood/B = locate() in contents

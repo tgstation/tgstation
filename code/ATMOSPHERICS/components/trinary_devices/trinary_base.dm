@@ -94,7 +94,7 @@ Housekeeping and pipe network stuff below
 		nullifyPipenet(parent3)
 	..()
 
-/obj/machinery/atmospherics/trinary/initialize()
+/obj/machinery/atmospherics/trinary/atmosinit()
 
 	//Mixer:
 	//1 and 2 is input
@@ -131,6 +131,13 @@ Housekeeping and pipe network stuff below
 			break
 
 	update_icon()
+	..()
+
+/obj/machinery/atmospherics/trinary/construction()
+	..()
+	parent1.update = 1
+	parent2.update = 1
+	parent3.update = 1
 
 /obj/machinery/atmospherics/trinary/build_network()
 	if(!parent1)

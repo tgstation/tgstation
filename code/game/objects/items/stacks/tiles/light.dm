@@ -25,7 +25,7 @@
 	else
 		state = 0 //fine
 
-/obj/item/stack/tile/light/attackby(var/obj/item/O as obj, var/mob/user as mob)
+/obj/item/stack/tile/light/attackby(var/obj/item/O as obj, var/mob/user as mob, params)
 	..()
 	if(istype(O,/obj/item/weapon/crowbar))
 		new/obj/item/stack/sheet/metal(user.loc)

@@ -44,7 +44,7 @@
 /obj/item/device/laser_pointer/attack(mob/living/M, mob/user)
 	laser_act(M, user)
 
-/obj/item/device/laser_pointer/attackby(obj/item/W, mob/user)
+/obj/item/device/laser_pointer/attackby(obj/item/W, mob/user, params)
 	if(istype(W, /obj/item/weapon/stock_parts/micro_laser))
 		if(!diode)
 			user.drop_item()
@@ -96,66 +96,36 @@
 
 	//human/alien mobs
 	if(iscarbon(target))
+		var/mob/living/carbon/C = target
 		if(user.zone_sel.selecting == "eyes")
-			var/mob/living/carbon/C = target
+			add_logs(user, C, "shone in the eyes", object="laser pointer")
+
+			var/severity = 1
+			if(prob(33))
+				severity = 2
+			else if(prob(50))
+				severity = 0
 
 			//20% chance to actually hit the eyes
-			if(prob(effectchance * diode.rating))
-				add_logs(user, C, "shone in the eyes", object="laser pointer")
-
-				//eye target check
+			if(prob(effectchance * diode.rating) && C.flash_eyes(severity))
 				outmsg = "<span class='notice'>You blind [C] by shining [src] in their eyes.</span>"
-				var/eye_prot = C.eyecheck()
-				if(C.eye_blind || eye_prot >= 2)
-					eye_prot = 4
-				var/severity = 3 - eye_prot
-				if(prob(33))
-					severity += 1
-				else if(prob(50))
-					severity -= 1
-				severity = min(max(severity, 0), 4)
-
-				switch(severity)
-					if(0)
-						//no effect
-						C << "<span class='info'>A small, bright dot appears in your vision.</span>"
-					if(1)
-						//industrial grade eye protection
-						C.eye_stat += rand(0, 2)
-						C << "<span class='notice'>Something bright flashes in the corner of your vision!</span>"
-					if(2)
-						//basic eye protection (sunglasses)
-						flick("flash", C.flash)
-						C.eye_stat += rand(1, 6)
-						C << "<span class='danger'>Your eyes were blinded!</span>"
-					if(3)
-						//no eye protection
-						if(prob(2))
-							C.Weaken(1)
-						flick("e_flash", C.flash)
-						C.eye_stat += rand(3, 7)
-						C << "<span class='danger'>Your eyes were blinded!</span>"
-					if(4)
-						//the effect has been worsened by something
-						if(prob(5))
-							C.Weaken(1)
-						flick("e_flash", C.flash)
-						C.eye_stat += rand(5, 10)
-						C << "<span class='danger'>Your eyes were blinded!</span>"
+				if(C.weakeyes)
+					C.Stun(1)
 			else
-				outmsg = "<span class='notice'>You fail to blind [C] by shining [src] at their eyes.</span>"
+				outmsg = "<span class='warning'>You fail to blind [C] by shining [src] at their eyes!</span>"
 
 	//robots and AI
 	else if(issilicon(target))
 		var/mob/living/silicon/S = target
 		//20% chance to actually hit the sensors
 		if(prob(effectchance * diode.rating))
+			flick("e_flash", S.flash)
 			S.Weaken(rand(5,10))
-			S << "<span class='warning'>Your sensors were overloaded by a laser!</span>"
+			S << "<span class='danger'>Your sensors were overloaded by a laser!</span>"
 			outmsg = "<span class='notice'>You overload [S] by shining [src] at their sensors.</span>"
 			add_logs(user, S, "shone in the sensors", object="laser pointer")
 		else
-			outmsg = "<span class='notice'>You fail to overload [S] by shining [src] at their sensors.</span>"
+			outmsg = "<span class='warning'>You fail to overload [S] by shining [src] at their sensors!</span>"
 
 	//cameras
 	else if(istype(target, /obj/machinery/camera))
@@ -165,7 +135,7 @@
 			outmsg = "<span class='notice'>You hit the lens of [C] with [src], temporarily disabling the camera!</span>"
 			add_logs(user, C, "EMPed", object="laser pointer")
 		else
-			outmsg = "<span class='info'>You missed the lens of [C] with [src].</span>"
+			outmsg = "<span class='warning'>You miss the lens of [C] with [src]!</span>"
 
 	//laser pointer image
 	icon_state = "pointer_[pointer_icon_state]"
@@ -186,9 +156,9 @@
 	if(energy <= max_energy)
 		if(!recharging)
 			recharging = 1
-			SSobj.processing.Add(src)
+			SSobj.processing |= src
 		if(energy <= 0)
-			user << "<span class='warning'>You've overused the battery of [src], now it needs time to recharge!</span>"
+			user << "<span class='warning'>The [src]'s battery is overused, it needs time to recharge!</span>"
 			recharge_locked = 1
 
 	flick_overlay(I, showto, 10)

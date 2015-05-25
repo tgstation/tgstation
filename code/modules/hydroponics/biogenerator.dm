@@ -36,7 +36,7 @@
 	productivity = P
 
 /obj/machinery/biogenerator/on_reagent_change()			//When the reagents change, change the icon as well.
-		update_icon()
+	update_icon()
 
 /obj/machinery/biogenerator/update_icon()
 	if(panel_open)
@@ -49,7 +49,7 @@
 		icon_state = "biogen-work"
 	return
 
-/obj/machinery/biogenerator/attackby(var/obj/item/O as obj, var/mob/user as mob)
+/obj/machinery/biogenerator/attackby(var/obj/item/O as obj, var/mob/user as mob, params)
 	if(istype(O, /obj/item/weapon/reagent_containers/glass) && !panel_open)
 		if(beaker)
 			user << "<span class='warning'>A container is already loaded into the machine.</span>"
@@ -82,7 +82,7 @@
 
 
 	else if(!istype(O, /obj/item/weapon/reagent_containers/food/snacks/grown))
-		user << "<span class='warning'>You cannot put this in [src.name]</span>"
+		user << "<span class='warning'>You cannot put this in [src.name]!</span>"
 	else
 		var/i = 0
 		for(var/obj/item/weapon/reagent_containers/food/snacks/grown/G in contents)
@@ -161,6 +161,7 @@
 			dat += "Medical belt: <A href='?src=\ref[src];create=mbelt;amount=1'>Make</A> ([300/efficiency])<BR>"
 			dat += "Janitorial belt: <A href='?src=\ref[src];create=jbelt;amount=1'>Make</A> ([300/efficiency])<BR>"
 			dat += "Bandolier belt: <A href='?src=\ref[src];create=bbelt;amount=1'>Make</A> ([300/efficiency])<BR>"
+			dat += "Shoulder holster: <A href='?src=\ref[src];create=sholster;amount=1'>Make</A> ([400/efficiency])<BR>"
 			dat += "Leather Satchel: <A href='?src=\ref[src];create=satchel;amount=1'>Make</A> ([400/efficiency])<BR>"
 			dat += "Leather Jacket: <A href='?src=\ref[src];create=jacket;amount=1'>Make</A> ([500/efficiency])<BR>"
 			dat += "</div>"
@@ -231,7 +232,7 @@
 			else beaker.reagents.add_reagent("cream",10)
 		if("cmilk")
 			if (check_cost(100/efficiency)) return 0
-			else new/obj/item/weapon/reagent_containers/food/drinks/milk(src.loc)
+			else new/obj/item/weapon/reagent_containers/food/condiment/milk(src.loc)
 		if("ccream")
 			if (check_cost(300/efficiency)) return 0
 			else new/obj/item/weapon/reagent_containers/food/drinks/bottle/cream(src.loc)
@@ -283,6 +284,9 @@
 		if("bbelt")
 			if (check_cost(300/efficiency)) return 0
 			else new/obj/item/weapon/storage/belt/bandolier(src.loc)
+		if("sholster")
+			if (check_cost(400/efficiency)) return 0
+			else new/obj/item/weapon/storage/belt/holster(src.loc)
 		if("satchel")
 			if (check_cost(400/efficiency)) return 0
 			else new/obj/item/weapon/storage/backpack/satchel(src.loc)

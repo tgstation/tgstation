@@ -37,6 +37,8 @@
 
 
 /obj/item/weapon/paper_bin/attack_hand(mob/user)
+	if(user.lying)
+		return
 	if(amount >= 1)
 		amount--
 		update_icon()
@@ -47,7 +49,7 @@
 			papers.Remove(P)
 		else
 			P = new /obj/item/weapon/paper
-			if(SSevent.holiday == "April Fool's Day")
+			if(SSevent.holidays && SSevent.holidays[APRIL_FOOLS])
 				if(prob(30))
 					P.info = "<font face=\"[CRAYON_FONT]\" color=\"red\"><b>HONK HONK HONK HONK HONK HONK HONK<br>HOOOOOOOOOOOOOOOOOOOOOONK<br>APRIL FOOLS</b></font>"
 					P.rigged = 1
@@ -57,12 +59,12 @@
 		user.put_in_hands(P)
 		user << "<span class='notice'>You take [P] out of \the [src].</span>"
 	else
-		user << "<span class='notice'>[src] is empty!</span>"
+		user << "<span class='warning'>[src] is empty!</span>"
 
 	add_fingerprint(user)
 
 
-/obj/item/weapon/paper_bin/attackby(obj/item/weapon/paper/i, mob/user)
+/obj/item/weapon/paper_bin/attackby(obj/item/weapon/paper/i, mob/user, params)
 	if(!istype(i))
 		return ..()
 

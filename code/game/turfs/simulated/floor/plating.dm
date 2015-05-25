@@ -12,7 +12,6 @@
 	name = "plating"
 	icon_state = "plating"
 	intact = 0
-	cancable = 1
 	broken_states = list("platingdmg1", "platingdmg2", "platingdmg3")
 	burnt_states = list("panelscorched")
 
@@ -26,45 +25,39 @@
 	if(!broken && !burnt)
 		icon_state = icon_plating //Because asteroids are 'platings' too.
 
-/turf/simulated/floor/plating/attackby(obj/item/C as obj, mob/user as mob)
-	if(!C || !user)
+/turf/simulated/floor/plating/attackby(obj/item/C as obj, mob/user as mob, params)
+	if(..())
 		return
 	if(istype(C, /obj/item/stack/rods))
 		if(broken || burnt)
-			user << "<span class='warning'>Repair the plating first.</span>"
+			user << "<span class='warning'>Repair the plating first!</span>"
 			return
 		var/obj/item/stack/rods/R = C
 		if (R.get_amount() < 2)
-			user << "<span class='warning'>You need two rods to make a reinforced floor.</span>"
+			user << "<span class='warning'>You need two rods to make a reinforced floor!</span>"
 			return
 		else
-			user << "<span class='notice'>Reinforcing the floor...</span>"
+			user << "<span class='notice'>You begin reinforcing the floor...</span>"
 			if(do_after(user, 30))
 				if (R.get_amount() >= 2)
 					ChangeTurf(/turf/simulated/floor/engine)
 					playsound(src, 'sound/items/Deconstruct.ogg', 80, 1)
 					R.use(2)
-					user << "<span class='notice'>You have reinforced the floor.</span>"
+					user << "<span class='notice'>You reinforce the floor.</span>"
 				return
 	else if(istype(C, /obj/item/stack/tile))
 		if(!broken && !burnt)
 			var/obj/item/stack/tile/W = C
+			if(!W.use(1))
+				return
 			var/turf/simulated/floor/T = ChangeTurf(W.turf_type)
 			if(istype(W,/obj/item/stack/tile/light)) //TODO: get rid of this ugly check somehow
 				var/obj/item/stack/tile/light/L = W
 				var/turf/simulated/floor/light/F = T
 				F.state = L.state
-			W.use(1)
 			playsound(src, 'sound/weapons/Genhit.ogg', 50, 1)
 		else
-			user << "<span class='notice'>This section is too damaged to support a tile. Use a welder to fix the damage.</span>"
-	else if(istype(C, /obj/item/stack/cable_coil))
-		var/obj/item/stack/cable_coil/coil = C
-		for(var/obj/structure/cable/LC in src)
-			if((LC.d1==0)||(LC.d2==0))
-				LC.attackby(C,user)
-				return
-		coil.place_turf(src, user)
+			user << "<span class='warning'>This section is too damaged to support a tile! Use a welder to fix the damage.</span>"
 	else if(istype(C, /obj/item/weapon/weldingtool))
 		var/obj/item/weapon/weldingtool/welder = C
 		if( welder.isOn() && (broken || burnt) )
@@ -99,13 +92,15 @@
 		..()
 	return //unplateable
 
-/turf/simulated/floor/engine/attackby(obj/item/weapon/C as obj, mob/user as mob)
+/turf/simulated/floor/engine/attackby(obj/item/weapon/C as obj, mob/user as mob, params)
 	if(!C || !user)
 		return
 	if(istype(C, /obj/item/weapon/wrench))
-		user << "<span class='notice'>Removing rods...</span>"
+		user << "<span class='notice'>You begin removing rods...</span>"
 		playsound(src, 'sound/items/Ratchet.ogg', 80, 1)
 		if(do_after(user, 30))
+			if(!istype(src, /turf/simulated/floor/engine))
+				return
 			new /obj/item/stack/rods(src, 2)
 			ChangeTurf(/turf/simulated/floor/plating)
 			return

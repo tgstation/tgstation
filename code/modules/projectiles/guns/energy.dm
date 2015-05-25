@@ -9,6 +9,7 @@
 	var/modifystate = 0
 	var/list/ammo_type = list(/obj/item/ammo_casing/energy)
 	var/select = 1 //The state of the select fire switch. Determines from the ammo_type list what kind of shot is fired next.
+	var/can_charge = 1 //Can it be charged in a recharger?
 
 /obj/item/weapon/gun/energy/emp_act(severity)
 	power_supply.use(round(power_supply.charge / severity))
@@ -29,6 +30,7 @@
 		ammo_type[i] = shot
 	shot = ammo_type[select]
 	fire_sound = shot.fire_sound
+	fire_delay = shot.delay
 	update_icon()
 	return
 
@@ -36,6 +38,7 @@
 /obj/item/weapon/gun/energy/afterattack(atom/target as mob|obj|turf, mob/living/user as mob|obj, params)
 	newshot() //prepare a new shot
 	..()
+
 /obj/item/weapon/gun/energy/can_shoot()
 	var/obj/item/ammo_casing/energy/shot = ammo_type[select]
 	return power_supply.charge >= shot.e_cost
@@ -62,14 +65,15 @@
 		select = 1
 	var/obj/item/ammo_casing/energy/shot = ammo_type[select]
 	fire_sound = shot.fire_sound
+	fire_delay = shot.delay
 	if (shot.select_name)
-		user << "<span class='danger'>[src] is now set to [shot.select_name].</span>"
+		user << "<span class='notice'>[src] is now set to [shot.select_name].</span>"
 	update_icon()
 	return
 
 /obj/item/weapon/gun/energy/update_icon()
 	var/ratio = power_supply.charge / power_supply.maxcharge
-	ratio = Ceiling(ratio*4) * 25
+	ratio = min(Ceiling(ratio*4) * 25, 100)
 	var/obj/item/ammo_casing/energy/shot = ammo_type[select]
 	if(power_supply.charge < shot.e_cost)
 		ratio = 0 //so the icon changes to empty if the charge isn't zero but not enough for a shot.
@@ -83,10 +87,29 @@
 	overlays.Cut()
 	if(F)
 		if(F.on)
-			overlays += "flight-on"
+			overlays += "flight-[initial(icon_state)]-on"
 		else
-			overlays += "flight"
+			overlays += "flight-[initial(icon_state)]"
 	return
 
 /obj/item/weapon/gun/energy/ui_action_click()
 	toggle_gunlight()
+
+/obj/item/weapon/gun/energy/suicide_act(mob/user)
+	if (src.can_shoot())
+		user.visible_message("<span class='suicide'>[user] is putting the barrel of the [src.name] in \his mouth.  It looks like \he's trying to commit suicide.</span>")
+		sleep(25)
+		if(user.l_hand == src || user.r_hand == src)
+			user.visible_message("<span class='suicide'>[user] melts \his face off with the [src.name]!</span>")
+			playsound(loc, fire_sound, 50, 1, -1)
+			var/obj/item/ammo_casing/energy/shot = ammo_type[select]
+			power_supply.use(shot.e_cost)
+			update_icon()
+			return(FIRELOSS)
+		else
+			user.visible_message("<span class='suicide'>[user] panics and starts choking to death!</span>")
+			return(OXYLOSS)
+	else
+		user.visible_message("<span class='suicide'>[user] is pretending to blow \his brains out with the [src.name]! It looks like \he's trying to commit suicide!</b></span>")
+		playsound(loc, 'sound/weapons/empty.ogg', 50, 1, -1)
+		return (OXYLOSS)

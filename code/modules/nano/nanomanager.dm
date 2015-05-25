@@ -141,7 +141,8 @@
 		return 0 // wasn't open
 
 	processing_uis.Remove(ui)
-	ui.user.open_uis.Remove(ui)
+	if(ui.user)	// Sanity check in case a user has been deleted (say a blown up borg watching the alarm interface)
+		ui.user.open_uis.Remove(ui)
 	var/list/uis = open_uis[src_object_key][ui.ui_key]
 	return uis.Remove(ui)
 
@@ -182,3 +183,7 @@
 
 	return 1 // success
 
+//Send all needed nano ui files to the client
+/datum/subsystem/nano/proc/send_resources(client)
+	for(var/file in asset_files)
+		client << browse_rsc(file)

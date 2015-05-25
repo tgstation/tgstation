@@ -39,7 +39,7 @@
 	if(!(user in color_altered_mobs))
 		color_altered_mobs += user
 	user.color = "#00FF00"
-	SSobj.processing.Add(src)
+	SSobj.processing |= src
 	..()
 
 /obj/item/weapon/greentext/dropped(mob/living/user as mob)
@@ -63,7 +63,7 @@
 		new_holder.mind.objectives += O
 		new_holder.attack_log += "\[[time_stamp()]\] <font color='green'>Won with greentext!!!</font>"
 		color_altered_mobs -= new_holder
-		Destroy()
+		qdel(src)
 
 	if(last_holder && last_holder != new_holder) //Somehow it was swiped without ever getting dropped
 		last_holder << "<span class='warning'>A sudden wave of failure washes over you...</span>"

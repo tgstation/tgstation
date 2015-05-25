@@ -1,6 +1,5 @@
 /obj/machinery/atmospherics/pipe
 	var/datum/gas_mixture/air_temporary //used when reconstructing a pipeline that broke
-	var/datum/pipeline/parent
 	var/volume = 0
 	layer = 2.4 //under wires with their 2.44
 	use_power = 0
@@ -35,9 +34,10 @@
 		parent = new /datum/pipeline()
 		parent.build_pipeline(src)
 
-/obj/machinery/atmospherics/pipe/attackby(obj/item/weapon/W, mob/user)
+/obj/machinery/atmospherics/pipe/attackby(obj/item/weapon/W, mob/user, params)
 	if(istype(W, /obj/item/device/analyzer))
 		atmosanalyzer_scan(parent.air, user)
+		return
 
 	if(istype(W,/obj/item/device/pipe_painter) || istype(W,/obj/item/weapon/pipe_dispenser))
 		return

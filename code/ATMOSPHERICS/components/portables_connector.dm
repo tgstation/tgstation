@@ -24,7 +24,7 @@
 			state = "pipe_exposed"
 		underlays += getpipeimage('icons/obj/atmospherics/binary_devices.dmi', state, initialize_directions, col)
 
-/obj/machinery/atmospherics/unary/portables_connector/process()
+/obj/machinery/atmospherics/unary/portables_connector/process_atmos()
 	if(!connected_device)
 		return
 	parent.update = 1
@@ -34,10 +34,10 @@
 		connected_device.disconnect()
 	..()
 
-/obj/machinery/atmospherics/unary/portables_connector/attackby(obj/item/weapon/W, mob/user)
+/obj/machinery/atmospherics/unary/portables_connector/attackby(obj/item/weapon/W, mob/user, params)
 	if(istype(W, /obj/item/weapon/wrench))
 		if(connected_device)
-			user << "<span class='danger'>You cannot unwrench this [src], dettach [connected_device] first.</span>"
+			user << "<span class='warning'>You cannot unwrench this [src], dettach [connected_device] first!</span>"
 			return 1
 	return ..()
 

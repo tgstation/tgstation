@@ -8,8 +8,7 @@
 	turns_per_move = 1
 	maxHealth = 10
 	health = 10
-	meat_type = /obj/item/weapon/reagent_containers/food/snacks/hugemushroomslice
-	meat_amount = 1
+	butcher_results = list(/obj/item/weapon/reagent_containers/food/snacks/hugemushroomslice = 1)
 	response_help  = "pets"
 	response_disarm = "gently pushes aside"
 	response_harm   = "whacks"
@@ -18,6 +17,7 @@
 	melee_damage_upper = 1
 	attack_same = 2
 	attacktext = "chomps"
+	attack_sound = 'sound/weapons/bite.ogg'
 	faction = list("mushroom")
 	environment_smash = 0
 	stat_attack = 2
@@ -25,6 +25,7 @@
 	speed = 1
 	ventcrawler = 2
 	robust_searching = 1
+	speak_emote = list("squeaks")
 	var/powerlevel = 0 //Tracks our general strength level gained from eating other shrooms
 	var/bruised = 0 //If someone tries to cheat the system by attacking a shroom to lower its health, punish them so that it wont award levels to shrooms that eat it
 	var/recovery_cooldown = 0 //So you can't repeatedly revive it during a fight
@@ -42,7 +43,7 @@
 /mob/living/simple_animal/hostile/mushroom/Life()
 	..()
 	if(!stat)//Mushrooms slowly regenerate if conscious, for people who want to save them from being eaten
-		health = min(health+2, maxHealth)
+		adjustBruteLoss(-2)
 
 /mob/living/simple_animal/hostile/mushroom/New()//Makes every shroom a little unique
 	melee_damage_lower += rand(3, 5)
@@ -69,16 +70,16 @@
 	if(istype(L, /mob/living/simple_animal/hostile/mushroom) && stat == DEAD)
 		var/mob/living/simple_animal/hostile/mushroom/M = L
 		if(faint_ticker < 2)
-			M.visible_message("<span class='notice'>[M] chews a bit on [src].</span>")
+			M.visible_message("[M] chews a bit on [src].")
 			faint_ticker++
 			return
-		M.visible_message("<span class='notice'>[M] devours [src]!</span>")
+		M.visible_message("<span class='warning'>[M] devours [src]!</span>")
 		var/level_gain = (powerlevel - M.powerlevel)
 		if(level_gain >= -1 && !bruised && !M.ckey)//Player shrooms can't level up to become robust gods.
 			if(level_gain < 1)//So we still gain a level if two mushrooms were the same level
 				level_gain = 1
 			M.LevelUp(level_gain)
-		M.health = M.maxHealth
+		M.adjustBruteLoss(-M.maxHealth)
 		qdel(src)
 	..()
 
@@ -87,9 +88,10 @@
 	icon_state = "mushroom_color"
 	UpdateMushroomCap()
 
-/mob/living/simple_animal/hostile/mushroom/Die()
-	visible_message("<span class='notice'>[src] fainted.</span>")
-	..()
+/mob/living/simple_animal/hostile/mushroom/death(gibbed)
+	if(!gibbed)
+		visible_message("[src] fainted.")
+	..(gibbed)
 	UpdateMushroomCap()
 
 /mob/living/simple_animal/hostile/mushroom/proc/UpdateMushroomCap()
@@ -100,10 +102,9 @@
 		overlays += cap_living
 
 /mob/living/simple_animal/hostile/mushroom/proc/Recover()
-	visible_message("<span class='notice'>[src] slowly begins to recover.</span>")
-	health = 5
+	visible_message("[src] slowly begins to recover.")
 	faint_ticker = 0
-	icon_state = icon_living
+	revive()
 	UpdateMushroomCap()
 	recovery_cooldown = 1
 	spawn(300)
@@ -117,20 +118,20 @@
 		else
 			melee_damage_upper += (level_gain * rand(1,5))
 		maxHealth += (level_gain * rand(1,5))
-	health = maxHealth //They'll always heal, even if they don't gain a level, in case you want to keep this shroom around instead of harvesting it
+	adjustBruteLoss(-maxHealth) //They'll always heal, even if they don't gain a level, in case you want to keep this shroom around instead of harvesting it
 
 /mob/living/simple_animal/hostile/mushroom/proc/Bruise()
 	if(!bruised && !stat)
-		src.visible_message("<span class='notice'>The [src.name] was bruised!</span>")
+		src.visible_message("The [src.name] was bruised!")
 		bruised = 1
 
-/mob/living/simple_animal/hostile/mushroom/attackby(obj/item/I as obj, mob/user as mob)
+/mob/living/simple_animal/hostile/mushroom/attackby(obj/item/I as obj, mob/user as mob, params)
 	if(istype(I, /obj/item/weapon/reagent_containers/food/snacks/grown/mushroom))
 		if(stat == DEAD && !recovery_cooldown)
 			Recover()
 			qdel(I)
 		else
-			user << "<span class='notice'>[src] won't eat it!</span>"
+			user << "<span class='warning'>[src] won't eat it!</span>"
 		return
 	if(I.force)
 		Bruise()

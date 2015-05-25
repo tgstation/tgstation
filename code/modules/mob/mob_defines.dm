@@ -13,16 +13,10 @@
 	var/obj/screen/hands = null
 	var/obj/screen/pullin = null
 	var/obj/screen/internals = null
-	var/obj/screen/oxygen = null
 	var/obj/screen/i_select = null
 	var/obj/screen/m_select = null
-	var/obj/screen/toxin = null
-	var/obj/screen/fire = null
-	var/obj/screen/bodytemp = null
 	var/obj/screen/healths = null
 	var/obj/screen/throw_icon = null
-	var/obj/screen/nutrition_icon = null
-	var/obj/screen/pressure = null
 	var/obj/screen/damageoverlay = null
 	/*A bunch of this stuff really needs to go under their own defines instead of being globally attached to mob.
 	A variable should only be globally attached to turfs/objects/whatever, when it is in fact needed as such.
@@ -52,6 +46,7 @@
 	var/ear_deaf = 0		//Carbon
 	var/ear_damage = 0		//Carbon
 	var/stuttering = null	//Carbon
+	var/slurring = 0		//Carbon
 	var/real_name = null
 	var/bhunger = 0			//Carbon
 	var/ajourn = 0
@@ -64,7 +59,6 @@
 	var/canmove = 1
 	var/eye_stat = null//Living, potentially Carbon
 	var/lastpuke = 0
-	var/unacidable = 0
 
 	var/name_archive //For admin things like possession
 
@@ -117,7 +111,6 @@
 	//see: setup.dm for list of mutations
 
 	var/voice_name = "unidentifiable voice"
-	var/say_message = null // When you are understood by others. Currently only used by aliens and monkeys in their say_quote procs
 
 	var/list/faction = list("neutral") //A list of factions that this mob is currently in, for hostile mob targetting, amongst other things
 	var/move_on_shuttle = 1 // Can move on the shuttle.
@@ -141,18 +134,15 @@
 
 	mouse_drag_pointer = MOUSE_ACTIVE_POINTER
 
-	var/update_icon = 1 //Set to 1 to trigger update_icons() at the next life() call
 
 	var/status_flags = CANSTUN|CANWEAKEN|CANPARALYSE|CANPUSH	//bitflags defining which status effects can be inflicted (replaces canweaken, canstun, etc)
 
 	var/area/lastarea = null
 
 	var/digitalcamo = 0 // Can they be tracked by the AI?
+	var/weakeyes = 0 //Are they vulnerable to flashes?
 
 	var/has_unlimited_silicon_privilege = 0 // Can they interact with station electronics
-
-	var/list/radar_blips = list() // list of screen objects, radar blips
-	var/radar_open = 0 	// nonzero is radar is open
 
 	var/force_compose = 0 //If this is nonzero, the mob will always compose it's own hear message instead of using the one given in the arguments.
 
@@ -160,4 +150,8 @@
 	var/atom/movable/remote_control //Calls relaymove() to whatever it is
 
 	var/turf/listed_turf = null	//the current turf being examined in the stat panel
-	var/last_movement = 0 // Last world.time the mob actually moved of its own accord.
+
+	var/list/permanent_huds = list()
+	var/permanent_sight_flags = 0
+
+	var/resize = 1 //Badminnery resize

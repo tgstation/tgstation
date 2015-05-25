@@ -12,15 +12,6 @@
 	origin_tech = "programming=3"
 	var/list/signs = list()
 	var/max_signs = 10
-	can_be_placed_into = list(
-		/obj/machinery/r_n_d/destructive_analyzer,
-		/obj/structure/table,
-		/obj/structure/rack,
-		/obj/structure/closet,
-		/obj/item/weapon/storage,
-		/obj/structure/safe,
-		/obj/machinery/disposal
-	)
 
 /obj/item/weapon/holosign_creator/afterattack(atom/target, mob/user, flag)
 	if(flag)
@@ -29,6 +20,7 @@
 		var/obj/effect/overlay/holograph/H = locate() in T
 		if(H)
 			user << "<span class='notice'>You use [src] to destroy [H].</span>"
+			signs.Remove(H)
 			qdel(H)
 		else
 			if(signs.len < max_signs)

@@ -1,16 +1,24 @@
 /datum/game_mode/blob/check_finished()
-	if(!declared)//No blobs have been spawned yet
+	if(infected_crew.len > burst)//Some blobs have yet to burst
 		return 0
 	if(blobwincount <= blobs.len)//Blob took over
 		return 1
 	if(!blob_cores.len) // blob is dead
+		if(config.continuous["blob"])
+			continuous_sanity_checked = 1 //Nonstandard definition of "alive" gets past the check otherwise
+			SSshuttle.emergencyNoEscape = 0
+			if(SSshuttle.emergency.mode == SHUTTLE_STRANDED)
+				SSshuttle.emergency.mode = SHUTTLE_DOCKED
+				SSshuttle.emergency.timer = world.time
+				priority_announce("Hostile enviroment resolved. You have 3 minutes to board the Emergency Shuttle.", null, 'sound/AI/shuttledock.ogg', "Priority")
+			return ..()
 		return 1
-	if(station_was_nuked)//Nuke went off
-		return 1
-	return 0
+	return ..()
 
 
 /datum/game_mode/blob/declare_completion()
+	if(round_converted) //So badmin blobs later don't step on the dead natural blobs metaphorical toes
+		..()
 	if(blobwincount <= blobs.len)
 		feedback_set_details("round_end_result","win - blob took over")
 		world << "<FONT size = 3><B>The blob has taken over the station!</B></FONT>"

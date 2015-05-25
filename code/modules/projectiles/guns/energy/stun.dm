@@ -8,9 +8,8 @@
 
 /obj/item/weapon/gun/energy/stunrevolver
 	name = "stun revolver"
-	desc = "A high-tech revolver that fires internal, reusable stun cartidges in a revolving cylinder. Holds twice as many electrodes as a standard taser."
+	desc = "A high-tech revolver that fires internal, reusable taser cartridges in a revolving cylinder. The cartridges can be recharged using conventional rechargers."
 	icon_state = "stunrevolver"
-	origin_tech = "combat=3;materials=3;powerstorage=2"
 	ammo_type = list(/obj/item/ammo_casing/energy/electrode/gun)
 	can_flashlight = 0
 	pin = null
@@ -31,7 +30,7 @@
 
 /obj/item/weapon/gun/energy/gun/advtaser/cyborg/New()
 	..()
-	SSobj.processing.Add(src)
+	SSobj.processing |= src
 
 
 /obj/item/weapon/gun/energy/gun/advtaser/cyborg/Destroy()

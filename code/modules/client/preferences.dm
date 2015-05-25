@@ -2,22 +2,23 @@
 
 var/list/preferences_datums = list()
 
-#define IS_MODE_COMPILED(MODE) (ispath(text2path("/datum/game_mode/"+(MODE))))
-
 var/global/list/special_roles = list( //keep synced with the defines BE_* in setup.dm
 //some autodetection here.
-	"traitor" = IS_MODE_COMPILED("traitor"),             // 0
-	"operative" = IS_MODE_COMPILED("nuclear"),           // 1
-	"changeling" = IS_MODE_COMPILED("changeling"),       // 2
-	"wizard" = IS_MODE_COMPILED("wizard"),               // 3
-	"malf AI" = IS_MODE_COMPILED("malfunction"),         // 4
-	"revolutionary" = IS_MODE_COMPILED("revolution"),    // 5
-	"alien" = 1, //always show                			 // 6
-	"pAI candidate" = 1,                                 // 7
-	"cultist" = IS_MODE_COMPILED("cult"),                // 8
-	"blob" = IS_MODE_COMPILED("blob"),					 // 9
-	"monkey" = IS_MODE_COMPILED("monkey"),				// 10
-	"gangster" = IS_MODE_COMPILED("gang")				// 11
+	"traitor" = /datum/game_mode/traitor,			//0
+	"operative" = /datum/game_mode/nuclear,			//1
+	"changeling" = /datum/game_mode/changeling,		//2
+	"wizard" = /datum/game_mode/wizard,				//3
+	"malf AI" = /datum/game_mode/malfunction,		//4
+	"revolutionary" = /datum/game_mode/revolution,	//5
+	"alien",										//6
+	"pAI/posibrain",								//7
+	"cultist" = /datum/game_mode/cult,				//8
+	"blob" = /datum/game_mode/blob,					//9
+	"ninja",										//10
+	"monkey" = /datum/game_mode/monkey,				//11
+	"gangster" = /datum/game_mode/gang,				//12
+	"shadowling" = /datum/game_mode/shadowling,		//13
+	"abductor" = /datum/game_mode/abduction			//14
 )
 
 
@@ -34,11 +35,13 @@ datum/preferences
 
 	//game-preferences
 	var/lastchangelog = ""				//Saved changlog filesize to detect if there was a change
-	var/ooccolor = "#002eb8"
+	var/ooccolor = null
 	var/be_special = 0					//Special role selection
 	var/UI_style = "Midnight"
 	var/toggles = TOGGLES_DEFAULT
+	var/chat_toggles = TOGGLES_DEFAULT_CHAT
 	var/ghost_form = "ghost"
+	var/allow_midround_antag = 1
 
 	//character preferences
 	var/real_name						//our character's name
@@ -59,6 +62,7 @@ datum/preferences
 	var/eye_color = "000"				//Eye color
 	var/datum/species/pref_species = new /datum/species/human()	//Mutant race
 	var/mutant_color = "FFF"			//Mutant race skin color
+	var/list/custom_names = list("clown", "mime", "ai", "cyborg", "religion", "deity")
 
 		//Mob preview
 	var/icon/preview_icon_front = null
@@ -90,7 +94,10 @@ datum/preferences
 
 /datum/preferences/New(client/C)
 	blood_type = random_blood_type()
-	ooccolor = normal_ooc_colour
+	custom_names["ai"] = pick(ai_names)
+	custom_names["cyborg"] = pick(ai_names)
+	custom_names["clown"] = pick(clown_names)
+	custom_names["mime"] = pick(mime_names)
 	if(istype(C))
 		if(!IsGuestKey(C.key))
 			load_path(C.ckey)
@@ -155,10 +162,18 @@ datum/preferences
 				dat += "<a href='?_src_=prefs;preference=name;task=input'>[real_name]</a><BR>"
 
 				dat += "<b>Gender:</b> <a href='?_src_=prefs;preference=gender'>[gender == MALE ? "Male" : "Female"]</a><BR>"
-				dat += "<b>Age:</b> <a href='?_src_=prefs;preference=age;task=input'>[age]</a>"
+				dat += "<b>Age:</b> <a href='?_src_=prefs;preference=age;task=input'>[age]</a><BR>"
+
+				dat += "<b>Special Names:</b><BR>"
+				dat += "<a href ='?_src_=prefs;preference=clown_name;task=input'><b>Clown:</b> [custom_names["clown"]]</a> "
+				dat += "<a href ='?_src_=prefs;preference=mime_name;task=input'><b>Mime:</b>[custom_names["mime"]]</a><BR>"
+				dat += "<a href ='?_src_=prefs;preference=ai_name;task=input'><b>AI:</b> [custom_names["ai"]]</a> "
+				dat += "<a href ='?_src_=prefs;preference=cyborg_name;task=input'><b>Cyborg:</b> [custom_names["cyborg"]]</a><BR>"
+				dat += "<a href ='?_src_=prefs;preference=religion_name;task=input'><b>Chaplain religion:</b> [custom_names["religion"]] </a>"
+				dat += "<a href ='?_src_=prefs;preference=deity_name;task=input'><b>Chaplain deity:</b> [custom_names["deity"]]</a><BR></td>"
 
 
-				dat += "</td><td valign='center'>"
+				dat += "<td valign='center'>"
 
 				dat += "<div class='statusDisplay'><center><img src=previewicon.png height=64 width=64><img src=previewicon2.png height=64 width=64></center></div>"
 
@@ -176,44 +191,63 @@ datum/preferences
 					dat += "<b>Species:</b> Human<BR>"
 
 				dat += "<b>Blood Type:</b> [blood_type]<BR>"
-				dat += "<b>Skin Tone:</b><BR><a href='?_src_=prefs;preference=s_tone;task=input'>[skin_tone]</a><BR>"
 				dat += "<b>Underwear:</b><BR><a href ='?_src_=prefs;preference=underwear;task=input'>[underwear]</a><BR>"
 				dat += "<b>Undershirt:</b><BR><a href ='?_src_=prefs;preference=undershirt;task=input'>[undershirt]</a><BR>"
 				dat += "<b>Socks:</b><BR><a href ='?_src_=prefs;preference=socks;task=input'>[socks]</a><BR>"
-				dat += "<b>Backpack:</b><BR><a href ='?_src_=prefs;preference=bag;task=input'>[backbaglist[backbag]]</a><BR>"
+				dat += "<b>Backpack:</b><BR><a href ='?_src_=prefs;preference=bag;task=input'>[backbaglist[backbag]]</a><BR></td>"
+
+				if(pref_species.use_skintones)
+
+					dat += "<td valign='top' width='21%'>"
+
+					dat += "<h3>Skin Tone</h3>"
+
+					dat += "<a href='?_src_=prefs;preference=s_tone;task=input'>[skin_tone]</a><BR>"
+
+					dat += "</td>"
+
+				if(HAIR in pref_species.specflags)
+
+					dat += "<td valign='top' width='21%'>"
+
+					dat += "<h3>Hair Style</h3>"
+
+					dat += "<a href='?_src_=prefs;preference=hair_style;task=input'>[hair_style]</a><BR>"
+					dat += "<a href='?_src_=prefs;preference=previous_hair_style;task=input'>&lt;</a> <a href='?_src_=prefs;preference=next_hair_style;task=input'>&gt;</a><BR>"
+					dat += "<span style='border:1px solid #161616; background-color: #[hair_color];'>&nbsp;&nbsp;&nbsp;</span> <a href='?_src_=prefs;preference=hair;task=input'>Change</a><BR>"
 
 
-				dat += "</td><td valign='top' width='21%'>"
+					dat += "</td><td valign='top' width='21%'>"
 
-				dat += "<h3>Hair Style</h3>"
+					dat += "<h3>Facial Hair Style</h3>"
 
-				dat += "<a href='?_src_=prefs;preference=hair_style;task=input'>[hair_style]</a><BR>"
-				dat += "<a href='?_src_=prefs;preference=previous_hair_style;task=input'>&lt;</a> <a href='?_src_=prefs;preference=next_hair_style;task=input'>&gt;</a><BR>"
-				dat += "<span style='border:1px solid #161616; background-color: #[hair_color];'>&nbsp;&nbsp;&nbsp;</span> <a href='?_src_=prefs;preference=hair;task=input'>Change</a><BR>"
+					dat += "<a href='?_src_=prefs;preference=facial_hair_style;task=input'>[facial_hair_style]</a><BR>"
+					dat += "<a href='?_src_=prefs;preference=previous_facehair_style;task=input'>&lt;</a> <a href='?_src_=prefs;preference=next_facehair_style;task=input'>&gt;</a><BR>"
+					dat += "<span style='border: 1px solid #161616; background-color: #[facial_hair_color];'>&nbsp;&nbsp;&nbsp;</span> <a href='?_src_=prefs;preference=facial;task=input'>Change</a><BR>"
 
+					dat += "</td>"
 
-				dat += "</td><td valign='top' width='21%'>"
+				if(EYECOLOR in pref_species.specflags)
 
-				dat += "<h3>Facial Hair Style</h3>"
+					dat += "<td valign='top' width='21%'>"
 
-				dat += "<a href='?_src_=prefs;preference=facial_hair_style;task=input'>[facial_hair_style]</a><BR>"
-				dat += "<a href='?_src_=prefs;preference=previous_facehair_style;task=input'>&lt;</a> <a href='?_src_=prefs;preference=next_facehair_style;task=input'>&gt;</a><BR>"
-				dat += "<span style='border: 1px solid #161616; background-color: #[facial_hair_color];'>&nbsp;&nbsp;&nbsp;</span> <a href='?_src_=prefs;preference=facial;task=input'>Change</a><BR>"
+					dat += "<h3>Eye Color</h3>"
 
+					dat += "<span style='border: 1px solid #161616; background-color: #[eye_color];'>&nbsp;&nbsp;&nbsp;</span> <a href='?_src_=prefs;preference=eyes;task=input'>Change</a><BR>"
 
-				dat += "</td><td valign='top' width='21%'>"
+					dat += "</td>"
 
-				dat += "<h3>Eye Color</h3>"
+				if(MUTCOLORS in pref_species.specflags)
 
-				dat += "<span style='border: 1px solid #161616; background-color: #[eye_color];'>&nbsp;&nbsp;&nbsp;</span> <a href='?_src_=prefs;preference=eyes;task=input'>Change</a><BR>"
+					dat += "<td valign='top' width='21%'>"
 
-				dat += "</td><td valign='top' width='21%'>"
+					dat += "<h3>Alien Color</h3>"
 
-				dat += "<h3>Alien Color</h3>"  // even if choosing your mutantrace is off, this is here in case you gain one during a round
+					dat += "<span style='border: 1px solid #161616; background-color: #[mutant_color];'>&nbsp;&nbsp;&nbsp;</span> <a href='?_src_=prefs;preference=mutant_color;task=input'>Change</a><BR>"
 
-				dat += "<span style='border: 1px solid #161616; background-color: #[mutant_color];'>&nbsp;&nbsp;&nbsp;</span> <a href='?_src_=prefs;preference=mutant_color;task=input'>Change</a><BR>"
+					dat += "</td>"
 
-				dat += "</td></tr></table>"
+				dat += "</tr></table>"
 
 
 			if (1) // Game Preferences
@@ -222,11 +256,13 @@ datum/preferences
 				dat += "<b>UI Style:</b> <a href='?_src_=prefs;preference=ui'>[UI_style]</a><br>"
 				dat += "<b>Play admin midis:</b> <a href='?_src_=prefs;preference=hear_midis'>[(toggles & SOUND_MIDI) ? "Yes" : "No"]</a><br>"
 				dat += "<b>Play lobby music:</b> <a href='?_src_=prefs;preference=lobby_music'>[(toggles & SOUND_LOBBY) ? "Yes" : "No"]</a><br>"
-				dat += "<b>Ghost ears:</b> <a href='?_src_=prefs;preference=ghost_ears'>[(toggles & CHAT_GHOSTEARS) ? "Nearest Creatures" : "All Speech"]</a><br>"
-				dat += "<b>Ghost sight:</b> <a href='?_src_=prefs;preference=ghost_sight'>[(toggles & CHAT_GHOSTSIGHT) ? "Nearest Creatures" : "All Emotes"]</a><br>"
-				dat += "<b>Ghost whispers:</b> <a href='?_src_=prefs;preference=ghost_whispers'>[(toggles & CHAT_GHOSTWHISPER) ? "Nearest Creatures" : "All Speech"]</a><br>"
-				dat += "<b>Pull requests:</b> <a href='?_src_=prefs;preference=pull_requests'>[(toggles & CHAT_PULLR) ? "Yes" : "No"]</a><br>"
-
+				dat += "<b>Ghost ears:</b> <a href='?_src_=prefs;preference=ghost_ears'>[(chat_toggles & CHAT_GHOSTEARS) ? "Nearest Creatures" : "All Speech"]</a><br>"
+				dat += "<b>Ghost sight:</b> <a href='?_src_=prefs;preference=ghost_sight'>[(chat_toggles & CHAT_GHOSTSIGHT) ? "Nearest Creatures" : "All Emotes"]</a><br>"
+				dat += "<b>Ghost whispers:</b> <a href='?_src_=prefs;preference=ghost_whispers'>[(chat_toggles & CHAT_GHOSTWHISPER) ? "Nearest Creatures" : "All Speech"]</a><br>"
+				dat += "<b>Ghost radio:</b> <a href='?_src=prefs;preference=ghost_radio'>[(chat_toggles & CHAT_GHOSTRADIO) ? "Yes" : "No"]</a><br>"
+				dat += "<b>Ghost pda:</b> <a href='?_src=prefs;preference=ghost_pda'>[(chat_toggles & CHAT_GHOSTPDA) ? "Nearest Creatures" : "All Messages"]</a><br>"
+				dat += "<b>Pull requests:</b> <a href='?_src_=prefs;preference=pull_requests'>[(chat_toggles & CHAT_PULLR) ? "Yes" : "No"]</a><br>"
+				dat += "<b>Midround Antagonist:</b> <a href='?_src_=prefs;preference=allow_midround_antag'>[(toggles & MIDROUND_ANTAG) ? "Yes" : "No"]</a><br>"
 				if(config.allow_Metadata)
 					dat += "<b>OOC Notes:</b> <a href='?_src_=prefs;preference=metadata;task=input'> Edit </a><br>"
 
@@ -236,7 +272,7 @@ datum/preferences
 						dat += "<a href='?_src_=prefs;preference=hear_adminhelps'>[(toggles & SOUND_ADMINHELP)?"On":"Off"]</a><br>"
 
 					if(unlock_content || check_rights_for(user.client, R_ADMIN))
-						dat += "<b>OOC:</b> <span style='border: 1px solid #161616; background-color: [ooccolor];'>&nbsp;&nbsp;&nbsp;</span> <a href='?_src_=prefs;preference=ooccolor;task=input'>Change</a><br>"
+						dat += "<b>OOC:</b> <span style='border: 1px solid #161616; background-color: [ooccolor ? ooccolor : normal_ooc_colour];'>&nbsp;&nbsp;&nbsp;</span> <a href='?_src_=prefs;preference=ooccolor;task=input'>Change</a><br>"
 
 					if(unlock_content)
 						dat += "<b>BYOND Membership Publicity:</b> <a href='?_src_=prefs;preference=publicity'>[(toggles & MEMBER_PUBLIC) ? "Public" : "Hidden"]</a><br>"
@@ -248,17 +284,23 @@ datum/preferences
 				dat += "<h2>Antagonist Settings</h2>"
 
 				if(jobban_isbanned(user, "Syndicate"))
-					dat += "<b>You are banned from antagonist roles.</b>"
+					dat += "<font color=red><b>You are banned from antagonist roles.</b></font>"
 					src.be_special = 0
+
 				else
 					var/n = 0
 					for (var/i in special_roles)
-						if(special_roles[i]) //if mode is available on the server
-							if(jobban_isbanned(user, i))
-								dat += "<b>Be [i]:</b> <font color=red><b>\[BANNED]</b></font><br>"
-							else if(i == "pai candidate")
-								if(jobban_isbanned(user, "pAI"))
-									dat += "<b>Be [i]:</b> <font color=red><b>\[BANNED]</b></font><br>"
+						if(jobban_isbanned(user, i))
+							dat += "<b>Be [i]:</b> <font color=red><b>\[BANNED]</b></font><br>"
+						else
+							var/days_remaining = null
+							if(config.use_age_restriction_for_jobs && ispath(special_roles[i])) //If it's a game mode antag, check if the player meets the minimum age
+								var/mode_path = special_roles[i]
+								var/datum/game_mode/temp_mode = new mode_path
+								days_remaining = temp_mode.get_remaining_days(user.client)
+
+							if(days_remaining)
+								dat += "<b>Be [i]:</b> <font color=red> \[IN [days_remaining] DAYS]</font><br>"
 							else
 								dat += "<b>Be [i]:</b> <a href='?_src_=prefs;preference=be_special;num=[n]'>[src.be_special&(1<<n) ? "Yes" : "No"]</a><br>"
 						n++
@@ -274,7 +316,7 @@ datum/preferences
 		dat += "</center>"
 
 		//user << browse(dat, "window=preferences;size=560x560")
-		var/datum/browser/popup = new(user, "preferences", "<div align='center'>Character Setup</div>", 640, 680)
+		var/datum/browser/popup = new(user, "preferences", "<div align='center'>Character Setup</div>", 640, 750)
 		popup.set_content(dat)
 		popup.open(0)
 
@@ -694,13 +736,10 @@ datum/preferences
 						if(result)
 							var/newtype = roundstart_species[result]
 							pref_species = new newtype()
-							if(!config.mutant_colors || mutant_color == "#000")
+							if(mutant_color == "#000")
 								mutant_color = pref_species.default_color
 
 					if("mutant_color")
-						if(!config.mutant_colors)
-							user << "<span class='danger'>Alien colors are disabled.</span>"
-							return
 						var/new_mutantcolor = input(user, "Choose your character's alien skin color:", "Character Preference") as color|null
 						if(new_mutantcolor)
 							var/temp_hsv = RGBtoHSV(new_mutantcolor)
@@ -725,6 +764,50 @@ datum/preferences
 						var/new_backbag = input(user, "Choose your character's style of bag:", "Character Preference")  as null|anything in backbaglist
 						if(new_backbag)
 							backbag = backbaglist.Find(new_backbag)
+
+					if("clown_name")
+						var/new_clown_name = reject_bad_name( input(user, "Choose your character's clown name:", "Character Preference")  as text|null )
+						if(new_clown_name)
+							custom_names["clown"] = new_clown_name
+						else
+							user << "<font color='red'>Invalid name. Your name should be at least 2 and at most [MAX_NAME_LEN] characters long. It may only contain the characters A-Z, a-z, -, ' and .</font>"
+
+					if("mime_name")
+						var/new_mime_name = reject_bad_name( input(user, "Choose your character's mime name:", "Character Preference")  as text|null )
+						if(new_mime_name)
+							custom_names["mime"] = new_mime_name
+						else
+							user << "<font color='red'>Invalid name. Your name should be at least 2 and at most [MAX_NAME_LEN] characters long. It may only contain the characters A-Z, a-z, -, ' and .</font>"
+
+					if("ai_name")
+						var/new_ai_name = reject_bad_name( input(user, "Choose your character's AI name:", "Character Preference")  as text|null, 1 )
+						if(new_ai_name)
+							custom_names["ai"] = new_ai_name
+						else
+							user << "<font color='red'>Invalid name. Your name should be at least 2 and at most [MAX_NAME_LEN] characters long. It may only contain the characters A-Z, a-z, 0-9, -, ' and .</font>"
+
+					if("cyborg_name")
+						var/new_cyborg_name = reject_bad_name( input(user, "Choose your character's cyborg name:", "Character Preference")  as text|null, 1 )
+						if(new_cyborg_name)
+							custom_names["cyborg"] = new_cyborg_name
+						else
+							user << "<font color='red'>Invalid name. Your name should be at least 2 and at most [MAX_NAME_LEN] characters long. It may only contain the characters A-Z, a-z, 0-9, -, ' and .</font>"
+
+					if("religion_name")
+						var/new_religion_name = reject_bad_name( input(user, "Choose your character's religion:", "Character Preference")  as text|null )
+						if(new_religion_name)
+							custom_names["religion"] = new_religion_name
+						else
+							user << "<font color='red'>Invalid name. Your name should be at least 2 and at most [MAX_NAME_LEN] characters long. It may only contain the characters A-Z, a-z, -, ' and .</font>"
+
+					if("deity_name")
+						var/new_deity_name = reject_bad_name( input(user, "Choose your character's deity:", "Character Preference")  as text|null )
+						if(new_deity_name)
+							custom_names["deity"] = new_deity_name
+						else
+							user << "<font color='red'>Invalid name. Your name should be at least 2 and at most [MAX_NAME_LEN] characters long. It may only contain the characters A-Z, a-z, -, ' and .</font>"
+
+
 			else
 				switch(href_list["preference"])
 					if("publicity")
@@ -771,19 +854,28 @@ datum/preferences
 						if(toggles & SOUND_LOBBY)
 							user << sound(ticker.login_music, repeat = 0, wait = 0, volume = 85, channel = 1)
 						else
-							user << sound(null, repeat = 0, wait = 0, volume = 85, channel = 1)
+							user.stopLobbySound()
 
 					if("ghost_ears")
-						toggles ^= CHAT_GHOSTEARS
+						chat_toggles ^= CHAT_GHOSTEARS
 
 					if("ghost_sight")
-						toggles ^= CHAT_GHOSTSIGHT
+						chat_toggles ^= CHAT_GHOSTSIGHT
 
 					if("ghost_whispers")
-						toggles ^= CHAT_GHOSTWHISPER
+						chat_toggles ^= CHAT_GHOSTWHISPER
+
+					if("ghost_radio")
+						chat_toggles ^= CHAT_GHOSTRADIO
+
+					if("ghost_pda")
+						chat_toggles ^= CHAT_GHOSTPDA
 
 					if("pull_requests")
-						toggles ^= CHAT_PULLR
+						chat_toggles ^= CHAT_PULLR
+
+					if("allow_midround_antag")
+						toggles ^= MIDROUND_ANTAG
 
 					if("save")
 						save_preferences()
@@ -827,9 +919,9 @@ datum/preferences
 		if(character.dna)
 			character.dna.real_name = character.real_name
 			if(pref_species != /datum/species/human && config.mutant_races)
-				character.dna.species = new pref_species.type()
+				hardset_dna(character, null, null, null, null, pref_species.type)
 			else
-				character.dna.species = new /datum/species/human()
+				hardset_dna(character, null, null, null, null, /datum/species/human)
 			character.dna.mutant_color = mutant_color
 			character.update_mutcolor()
 
@@ -852,11 +944,5 @@ datum/preferences
 			backbag = 1 //Same as above
 		character.backbag = backbag
 
-		/*
-		//Debugging report to track down a bug, which randomly assigned the plural gender to people.
-		if(character.gender in list(PLURAL, NEUTER))
-			if(isliving(src)) //Ghosts get neuter by default
-				message_admins("[character] ([character.ckey]) has spawned with their gender as plural or neuter. Please notify coders.")
-				character.gender = MALE
-		*/
-
+		character.update_body()
+		character.update_hair()

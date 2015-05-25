@@ -17,6 +17,7 @@
 	var/last_attack = 0
 	var/datum/reagent/blob_reagent_datum = new/datum/reagent()
 	var/list/blob_mobs = list()
+	var/ghostimage = null
 
 /mob/camera/blob/New()
 	var/new_name = "[initial(name)] ([rand(1, 999)])"
@@ -27,6 +28,25 @@
 	for(var/type in (typesof(/datum/reagent/blob) - /datum/reagent/blob))
 		possible_reagents.Add(new type)
 	blob_reagent_datum = pick(possible_reagents)
+	if(blob_core)
+		blob_core.adjustcolors(blob_reagent_datum.color)
+
+	ghostimage = image(src.icon,src,src.icon_state)
+	ghost_darkness_images |= ghostimage //so ghosts can see the blob cursor when they disable darkness
+	updateallghostimages()
+	..()
+
+/mob/camera/blob/Life()
+	if(!blob_core)
+		qdel(src)
+	..()
+
+/mob/camera/blob/Destroy()
+	if (ghostimage)
+		ghost_darkness_images -= ghostimage
+		qdel(ghostimage)
+		ghostimage = null;
+		updateallghostimages()
 	..()
 
 /mob/camera/blob/Login()

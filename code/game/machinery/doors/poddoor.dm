@@ -6,12 +6,15 @@
 	var/id = 1
 	var/auto_close = 0 // Time in seconds to automatically close when opened, 0 if it doesn't.
 	sub_door = 1
+	heat_proof = 1
 
 /obj/machinery/door/poddoor/preopen
 	icon_state = "open"
 	density = 0
 	opacity = 0
 
+/obj/machinery/door/poddoor/ert
+	desc = "A heavy duty blast door that only opens for dire emergencies."
 
 /obj/machinery/door/poddoor/Bumped(atom/AM)
 	if(density)
@@ -20,7 +23,7 @@
 		return ..()
 
 
-/obj/machinery/door/poddoor/attackby(obj/item/I, mob/user)
+/obj/machinery/door/poddoor/attackby(obj/item/I, mob/user, params)
 	add_fingerprint(user)
 
 	if(istype(I, /obj/item/weapon/twohanded/fireaxe))
@@ -73,13 +76,14 @@
 	flick("closing", src)
 	icon_state = "closed"
 	SetOpacity(1)
+	sleep(5)
+	density = 1
+	sleep(5)
 	air_update_turf(1)
 	update_freelook_sight()
 	sleep(5)
 	crush()
-	density = 1
 	sleep(5)
-
 	operating = 0
 
 

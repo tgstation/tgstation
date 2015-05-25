@@ -70,7 +70,7 @@
 	..()
 	user << "It has [uses] light\s remaining."
 
-/obj/item/device/lightreplacer/attackby(obj/item/W, mob/user)
+/obj/item/device/lightreplacer/attackby(obj/item/W, mob/user, params)
 
 	if(istype(W, /obj/item/stack/sheet/glass))
 		var/obj/item/stack/sheet/glass/G = W
@@ -82,19 +82,19 @@
 			user << "<span class='notice'>You insert a piece of glass into the [src.name]. You have [uses] lights remaining.</span>"
 			return
 		else
-			user << "<span class='warning'>You need one sheet of glass to replace lights.</span>"
+			user << "<span class='warning'>You need one sheet of glass to replace lights!</span>"
 
 	if(istype(W, /obj/item/weapon/light))
 		var/obj/item/weapon/light/L = W
 		if(L.status == 0) // LIGHT OKAY
 			if(uses < max_uses)
 				AddUses(1)
-				user << "You insert the [L.name] into the [src.name]. You have [uses] lights remaining."
+				user << "<span class='notice'>You insert the [L.name] into the [src.name]. You have [uses] lights remaining.</span>"
 				user.drop_item()
 				qdel(L)
 				return
 		else
-			user << "You need a working light."
+			user << "<span class='warning'>You need a working light!</span>"
 			return
 
 /obj/item/device/lightreplacer/emag_act()
@@ -170,7 +170,7 @@
 			U << failmsg
 			return
 	else
-		U << "There is a working [target.fitting] already inserted."
+		U << "<span class='warning'>There is a working [target.fitting] already inserted!</span>"
 		return
 
 /obj/item/device/lightreplacer/proc/Emag()

@@ -36,8 +36,8 @@
 	return
 
 
-/obj/structure/janitorialcart/attackby(obj/item/I, mob/user)
-	var/fail_msg = "<span class='notice'>There is already one of those in [src].</span>"
+/obj/structure/janitorialcart/attackby(obj/item/I, mob/user, params)
+	var/fail_msg = "<span class='warning'>There is already one of those in [src]!</span>"
 
 	if(istype(I, /obj/item/weapon/mop))
 		var/obj/item/weapon/mop/m=I
@@ -74,11 +74,11 @@
 			signs++
 			update_icon()
 		else
-			user << "<span class='notice'>[src] can't hold any more signs.</span>"
+			user << "<span class='warning'>[src] can't hold any more signs!</span>"
 	else if(mybag)
 		mybag.attackby(I, user)
 	else if(istype(I, /obj/item/weapon/crowbar))
-		user.visible_message("<span class='warning'>[user] begins to empty the contents of [src].</span>")
+		user.visible_message("[user] begins to empty the contents of [src].", "<span class='notice'>You begin to empty the contents of [src]...</span>")
 		if(do_after(user, 30))
 			usr << "<span class='notice'>You empty the contents of [src]'s bucket onto the floor.</span>"
 			reagents.reaction(src.loc)
@@ -185,7 +185,7 @@
 				F.dirt = 0
 			for(var/A in tile)
 				if(istype(A, /obj/effect))
-					if(istype(A, /obj/effect/rune) || istype(A, /obj/effect/decal/cleanable) || istype(A, /obj/effect/overlay))
+					if(is_cleanable(A))
 						qdel(A)
 
 /obj/structure/stool/bed/chair/janicart/examine(mob/user)
@@ -194,7 +194,7 @@
 		user << "It has been upgraded with a floor buffer."
 
 
-/obj/structure/stool/bed/chair/janicart/attackby(obj/item/I, mob/user)
+/obj/structure/stool/bed/chair/janicart/attackby(obj/item/I, mob/user, params)
 	if(istype(I, keytype))
 		user << "Hold [I] in one of your hands while you drive this [callme]."
 	else if(istype(I, /obj/item/weapon/storage/bag/trash))
@@ -250,14 +250,15 @@
 	else
 		user << "<span class='notice'>You'll need the keys in one of your hands to drive this [callme].</span>"
 
-
-/obj/structure/stool/bed/chair/janicart/user_buckle_mob(mob/M, mob/user)
-	if(M != user || !ismob(M) || get_dist(src, user) > 1 || user.restrained() || user.lying || user.stat || M.buckled || istype(user, /mob/living/silicon))
+/obj/structure/stool/bed/chair/janicart/user_buckle_mob(mob/living/M, mob/user)
+	if(user.incapacitated()) //user can't move the mob on the janicart's turf if incapacitated
 		return
-
+	for(var/atom/movable/A in get_turf(src)) //we check for obstacles on the turf.
+		if(A.density)
+			if(A != src && A != M)
+				return
+	M.loc = loc //we move the mob on the janicart's turf before checking if we can buckle.
 	..()
-
-	M.loc = loc
 	update_mob()
 
 /obj/structure/stool/bed/chair/janicart/unbuckle_mob()

@@ -7,6 +7,12 @@
 	slot_flags = SLOT_BELT
 	attack_verb = list("whipped", "lashed", "disciplined")
 
+/obj/item/weapon/storage/belt/update_icon()
+	overlays.Cut()
+	for(var/obj/item/I in contents)
+		overlays += "[I.name]"
+	..()
+
 /obj/item/weapon/storage/belt/utility
 	name = "toolbelt" //Carn: utility belt is nicer, but it bamboozles the text parsing.
 	desc = "Holds tools."
@@ -33,6 +39,7 @@
 	new /obj/item/weapon/weldingtool(src)
 	new /obj/item/weapon/crowbar(src)
 	new /obj/item/weapon/wirecutters(src)
+	new /obj/item/device/multitool(src)
 	new /obj/item/stack/cable_coil(src,30,pick("red","yellow","orange"))
 
 
@@ -68,7 +75,8 @@
 		/obj/item/device/flashlight/pen,
 		/obj/item/weapon/extinguisher/mini,
 		/obj/item/weapon/reagent_containers/hypospray,
-		/obj/item/device/rad_laser
+		/obj/item/device/rad_laser,
+		/obj/item/device/sensor_device
 		)
 
 
@@ -187,14 +195,15 @@
 
 /obj/item/weapon/storage/belt/holster
 	name = "shoulder holster"
-	desc = "A holster to conceal a carried handgun. WARNING: Badasses only."
+	desc = "A holster to conceal a carried handgun and ammo. WARNING: Badasses only."
 	icon_state = "holster"
 	item_state = "holster"
-	storage_slots = 1
-	max_w_class = 4
+	storage_slots = 3
+	max_w_class = 3
 	can_hold = list(
 		/obj/item/weapon/gun/projectile/automatic/pistol,
-		/obj/item/weapon/gun/projectile/revolver/detective
+		/obj/item/weapon/gun/projectile/revolver,
+		/obj/item/ammo_box,
 		)
 
 /obj/item/weapon/storage/belt/fannypack

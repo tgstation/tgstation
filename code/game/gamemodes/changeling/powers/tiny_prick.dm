@@ -40,7 +40,7 @@
 		return
 	if(get_dist(user, target) > (user.mind.changeling.sting_range))
 		return //sanity check as AStar is still throwing insane stunts
-	if(!AStar(user.loc, target.loc, /turf/proc/AdjacentTurfs, /turf/proc/Distance, user.mind.changeling.sting_range))
+	if(!AStar(user.loc, target.loc, null, /turf/proc/Distance, user.mind.changeling.sting_range))
 		return //hope this ancient magic still works
 	if(target.mind && target.mind.changeling)
 		sting_feedback(user,target)
@@ -174,6 +174,5 @@ obj/effect/proc_holder/changeling/sting/cryo
 	add_logs(user, target, "stung", object="cryo sting")
 	if(target.reagents)
 		target.reagents.add_reagent("frostoil", 30)
-		target.reagents.add_reagent("ice", 30)
 	feedback_add_details("changeling_powers","CS")
 	return 1

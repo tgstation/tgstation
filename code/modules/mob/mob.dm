@@ -229,6 +229,9 @@ var/next_mob_id = 0
 /mob/proc/restrained()
 	return
 
+/mob/proc/incapacitated()
+	return
+
 //This proc is called whenever someone clicks an inventory ui slot.
 /mob/proc/attack_ui(slot)
 	var/obj/item/W = get_active_hand()
@@ -263,7 +266,7 @@ var/next_mob_id = 0
 			qdel(W)
 		else
 			if(!disable_warning)
-				src << "<span class='danger'>You are unable to equip that.</span>" //Only print if qdel_on_fail is false
+				src << "<span class='warning'>You are unable to equip that!</span>" //Only print if qdel_on_fail is false
 		return 0
 	equip_to_slot(W, slot, redraw_mob) //This proc should not ever fail.
 	return 1
@@ -387,6 +390,8 @@ var/list/slot_equipment_priority = list( \
 
 		src.pulling = AM
 		AM.pulledby = src
+		if(pullin)
+			pullin.update_icon(src)
 		if(ismob(AM))
 			var/mob/M = AM
 			if(!iscarbon(src))
@@ -402,6 +407,8 @@ var/list/slot_equipment_priority = list( \
 	if(pulling)
 		pulling.pulledby = null
 		pulling = null
+		if(pullin)
+			pullin.update_icon(src)
 
 /mob/verb/mode()
 	set name = "Activate Held Object"
@@ -467,13 +474,6 @@ var/list/slot_equipment_priority = list( \
 	if (popup)
 		memory()
 
-/*
-/mob/verb/help()
-	set name = "Help"
-	src << browse('html/help.html', "window=help")
-	return
-*/
-
 /mob/verb/abandon_mob()
 	set name = "Respawn"
 	set category = "OOC"
@@ -510,8 +510,6 @@ var/list/slot_equipment_priority = list( \
 	set name = "Changelog"
 	set category = "OOC"
 	getFiles(
-		'html/postcardsmall.jpg',
-		'html/somerights20.png',
 		'html/88x31.png',
 		'html/bug-minus.png',
 		'html/cross-circle.png',
@@ -534,7 +532,7 @@ var/list/slot_equipment_priority = list( \
 	if(prefs.lastchangelog != changelog_hash)
 		prefs.lastchangelog = changelog_hash
 		prefs.save_preferences()
-		winset(src, "rpane.changelog", "background-color=none;font-style=;")
+		winset(src, "rpane.changelogb", "background-color=none;font-style=;")
 
 /mob/verb/observe()
 	set name = "Observe"
@@ -695,6 +693,7 @@ var/list/slot_equipment_priority = list( \
 	..()
 
 	if(statpanel("Status"))
+		stat(null, "Server Time: [time2text(world.realtime, "YYYY-MM-DD hh:mm")]")
 		var/ETA
 		switch(SSshuttle.emergency.mode)
 			if(SHUTTLE_RECALL)
@@ -705,6 +704,8 @@ var/list/slot_equipment_priority = list( \
 				ETA = "ETD"
 			if(SHUTTLE_ESCAPE)
 				ETA = "ESC"
+			if(SHUTTLE_STRANDED)
+				ETA = "ERR"
 		if(ETA)
 			var/timeleft = SSshuttle.emergency.timeLeft()
 			stat(null, "[ETA]-[(timeleft / 60) % 60]:[add_zero(num2text(timeleft % 60), 2)]")
@@ -730,6 +731,8 @@ var/list/slot_equipment_priority = list( \
 		else
 			statpanel(listed_turf.name, null, listed_turf)
 			for(var/atom/A in listed_turf)
+				if(!A.mouse_opacity)
+					continue
 				if(A.invisibility > see_invisible)
 					continue
 				statpanel(listed_turf.name, null, A)
@@ -770,7 +773,7 @@ var/list/slot_equipment_priority = list( \
 
 
 //Updates canmove, lying and icons. Could perhaps do with a rename but I can't think of anything to describe it.
-//Robots and brains have their own version so don't worry about them
+//Robots, animals and brains have their own version so don't worry about them
 /mob/proc/update_canmove()
 	var/ko = weakened || paralysis || stat || (status_flags & FAKEDEATH)
 	var/buckle_lying = !(buckled && !buckled.buckle_lying)
@@ -787,11 +790,14 @@ var/list/slot_equipment_priority = list( \
 			fall(ko)
 	canmove = !(ko || resting || stunned || buckled)
 	density = !lying
+	if(lying)
+		if(layer == initial(layer)) //to avoid special cases like hiding larvas.
+			layer = MOB_LAYER - 0.2 //so mob lying always appear behind standing mobs
+	else
+		if(layer == MOB_LAYER - 0.2)
+			layer = initial(layer)
 	update_transform()
 	lying_prev = lying
-	if(update_icon) //forces a full overlay update
-		update_icon = 0
-		regenerate_icons()
 	return canmove
 
 
@@ -839,9 +845,6 @@ var/list/slot_equipment_priority = list( \
 
 /mob/proc/activate_hand(var/selhand)
 	return
-
-/mob/proc/SpeciesCanConsume()
-	return 0
 
 /mob/proc/Jitter(amount)
 	jitteriness = max(jitteriness,amount,0)
@@ -948,4 +951,17 @@ var/list/slot_equipment_priority = list( \
 	return
 
 /mob/proc/setEarDamage()
+	return
+
+/mob/proc/AddSpell(var/obj/effect/proc_holder/spell/spell)
+	mob_spell_list += spell
+	if(!spell.action)
+		spell.action = new/datum/action/spell_action
+		spell.action.target = spell
+		spell.action.name = spell.name
+		spell.action.button_icon = spell.action_icon
+		spell.action.button_icon_state = spell.action_icon_state
+		spell.action.background_icon_state = spell.action_background_icon_state
+	if(isliving(src))
+		spell.action.Grant(src)
 	return

@@ -46,7 +46,7 @@
 
 	var/list/listening_dead = list()
 	for(var/mob/M in player_list)
-		if(M.stat == DEAD && ((M.client.prefs.toggles & CHAT_GHOSTWHISPER) || (get_dist(M, src) <= 7)))
+		if(M.stat == DEAD && M.client && ((M.client.prefs.chat_toggles & CHAT_GHOSTWHISPER) || (get_dist(M, src) <= 7)))
 			listening_dead |= M
 
 	var/list/listening = get_hearers_in_view(1, src)
@@ -63,15 +63,16 @@
 	for(var/mob/M in watching)
 		M.show_message(rendered, 2)
 
-	rendered = "<span class='game say'><span class='name'>[GetVoice()]</span>[alt_name] [whispers], <span class='message'>\"<i>[message]</i>\"</span></span>"
+	var/spans = list(SPAN_ITALICS)
+	rendered = "<span class='game say'><span class='name'>[GetVoice()]</span>[alt_name] [whispers], <span class='message'>\"[attach_spans(message, spans)]\"</span></span>"
 
 	for(var/mob/M in listening)
-		M.Hear(rendered, src, languages, message)
+		M.Hear(rendered, src, languages, message, , spans)
 
 	message = stars(message)
-	rendered = "<span class='game say'><span class='name'>[GetVoice()]</span>[alt_name] [whispers], <span class='message'>\"<i>[message]</i>\"</span></span>"
+	rendered = "<span class='game say'><span class='name'>[GetVoice()]</span>[alt_name] [whispers], <span class='message'>\"[attach_spans(message, spans)]\"</span></span>"
 	for(var/mob/M in eavesdropping)
-		M.Hear(rendered, src, languages, message)
+		M.Hear(rendered, src, languages, message, , spans)
 
 	if(critical) //Dying words.
 		succumb(1)

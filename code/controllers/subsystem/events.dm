@@ -11,7 +11,7 @@ var/datum/subsystem/events/SSevent
 	var/frequency_lower = 3000	//5 minutes lower bound.
 	var/frequency_upper = 9000	//15 minutes upper bound. Basically an event will happen every 5 to 15 minutes.
 
-	var/holiday					//This will be a string of the name of any realworld holiday which occurs today (GMT time)
+	var/list/holidays			//List of all holidays occuring today or null if no holidays
 	var/wizardmode = 0
 
 
@@ -19,7 +19,9 @@ var/datum/subsystem/events/SSevent
 	NEW_SS_GLOBAL(SSevent)
 
 
-/datum/subsystem/events/Initialize()
+/datum/subsystem/events/Initialize(time, zlevel)
+	if (zlevel)
+		return ..()
 	for(var/type in typesof(/datum/round_event_control))
 		var/datum/round_event_control/E = new type()
 		if(!E.typepath)
@@ -65,11 +67,14 @@ var/datum/subsystem/events/SSevent
 		if(E.occurrences >= E.max_occurrences)	continue
 		if(E.earliest_start >= world.time)		continue
 		if(E.holidayID)
-			if(E.holidayID != holiday)			continue
+			if(!holidays || !holidays[E.holidayID])			continue
 		if(E.weight < 0)						//for round-start events etc.
 			if(E.runEvent() == PROCESS_KILL)
 				E.max_occurrences = 0
 				continue
+			if (E.alertadmins)
+				message_admins("Random Event triggering: [E.name] ([E.typepath])")
+			log_game("Random Event triggering: [E.name] ([E.typepath])")
 			return
 		sum_of_weights += E.weight
 
@@ -79,13 +84,16 @@ var/datum/subsystem/events/SSevent
 		if(E.occurrences >= E.max_occurrences)	continue
 		if(E.earliest_start >= world.time)		continue
 		if(E.holidayID)
-			if(E.holidayID != holiday)			continue
+			if(!holidays || !holidays[E.holidayID])			continue
 		sum_of_weights -= E.weight
 
 		if(sum_of_weights <= 0)				//we've hit our goal
 			if(E.runEvent() == PROCESS_KILL)//we couldn't run this event for some reason, set its max_occurrences to 0
 				E.max_occurrences = 0
 				continue
+			if (E.alertadmins)
+				message_admins("Random Event triggering: [E.name] ([E.typepath])")
+			log_game("Random Event triggering: [E.name] ([E.typepath])")
 			return
 
 
@@ -146,12 +154,12 @@ var/datum/subsystem/events/SSevent
 //////////////
 //Uncommenting ALLOW_HOLIDAYS in config.txt will enable holidays
 
-//It's easy to add stuff. Just modify getHoliday to set holiday to something using the switch for DD(#day) MM(#month) YY(#year).
-//You can then check if it's a special day in any code in the game by doing if(events.holiday == "MyHolidayID")
+//It's easy to add stuff. Just add a holiday datum in code/modules/holiday/holidays.dm
+//You can then check if it's a special day in any code in the game by doing if(SSevent.holidays["Groundhog Day"])
 
 //You can also make holiday random events easily thanks to Pete/Gia's system.
-//simply make a random event normally, then assign it a holidayID string which matches the one you gave it in getHolday.
-//Anything with a holidayID, which does not match the holiday string, will never occur.
+//simply make a random event normally, then assign it a holidayID string which matches the holiday's name.
+//Anything with a holidayID, which isn't in the holidays list, will never occur.
 
 //Please, Don't spam stuff up with stupid stuff (key example being april-fools Pooh/ERP/etc),
 //And don't forget: CHECK YOUR CODE!!!! We don't want any zero-day bugs which happen only on holidays and never get found/fixed!
@@ -159,111 +167,27 @@ var/datum/subsystem/events/SSevent
 //////////////////////////////////////////////////////////////////////////////////////////////////////////
 //ALSO, MOST IMPORTANTLY: Don't add stupid stuff! Discuss bonus content with Project-Heads first please!//
 //////////////////////////////////////////////////////////////////////////////////////////////////////////
-~Carn */
+*/
 
-//sets up the holiday string in the events manager.
+//sets up the holidays and holidays list
 /datum/subsystem/events/proc/getHoliday()
 	if(!config.allow_holidays)	return		// Holiday stuff was not enabled in the config!
-	holiday = null
 
-	var/YY	=	text2num(time2text(world.timeofday, "YY")) 	// get the current year
-	var/MM	=	text2num(time2text(world.timeofday, "MM")) 	// get the current month
-	var/DD	=	text2num(time2text(world.timeofday, "DD")) 	// get the current day
+	var/YY = text2num(time2text(world.timeofday, "YY")) 	// get the current year
+	var/MM = text2num(time2text(world.timeofday, "MM")) 	// get the current month
+	var/DD = text2num(time2text(world.timeofday, "DD")) 	// get the current day
 
-	//Main switch. If any of these are too dumb/inappropriate, or you have better ones, feel free to change whatever
-	switch(MM)
-		if(1)	//Jan
-			switch(DD)
-				if(1)							holiday = "New Year"
+	for(var/H in typesof(/datum/holiday) - /datum/holiday)
+		var/datum/holiday/holiday = new H()
+		if(holiday.shouldCelebrate(DD, MM, YY))
+			holiday.celebrate()
+			if(!holidays)
+				holidays = list()
+			holidays[holiday.name] = holiday
 
-		if(2)	//Feb
-			switch(DD)
-				if(2)							holiday = "Groundhog Day"
-				if(14)							holiday = "Valentine's Day"
-				if(17)							holiday = "Random Acts of Kindness Day"
-
-		if(3)	//Mar
-			switch(DD)
-				if(14)							holiday = "Pi Day"
-				if(17)							holiday = "St. Patrick's Day"
-				if(27)
-					if(YY == 16)
-						holiday = "Easter"
-				if(31)
-					if(YY == 13)
-						holiday = "Easter"
-
-		if(4)	//Apr
-			switch(DD)
-				if(1)
-					holiday = "April Fool's Day"
-					if(YY == 18 && prob(50)) 	holiday = "Easter"
-				if(5)
-					if(YY == 15)				holiday = "Easter"
-				if(16)
-					if(YY == 17)				holiday = "Easter"
-				if(20)
-					holiday = "Four-Twenty"
-					if(YY == 14 && prob(50))	holiday = "Easter"
-				if(22)							holiday = "Earth Day"
-
-		if(5)	//May
-			switch(DD)
-				if(1)							holiday = "Labour Day"
-				if(4)							holiday = "FireFighter's Day"
-				if(12)							holiday = "Owl and Pussycat Day"	//what a dumb day of observence...but we -do- have costumes already :3
-
-		if(6)	//Jun
-
-		if(7)	//Jul
-			switch(DD)
-				if(1)							holiday = "Doctor's Day"
-				if(2)							holiday = "UFO Day"
-				if(8)							holiday = "Writer's Day"
-				if(30)							holiday = "Friendship Day"
-
-		if(8)	//Aug
-			switch(DD)
-				if(5)							holiday = "Beer Day"
-
-		if(9)	//Sep
-			switch(DD)
-				if(19)							holiday = "Talk-Like-a-Pirate Day"
-				if(28)							holiday = "Stupid-Questions Day"
-
-		if(10)	//Oct
-			switch(DD)
-				if(4)							holiday = "Animal's Day"
-				if(7)							holiday = "Smiling Day"
-				if(16)							holiday = "Boss' Day"
-				if(31)							holiday = "Halloween"
-
-		if(11)	//Nov
-			switch(DD)
-				if(1)							holiday = "Vegan Day"
-				if(13)							holiday = "Kindness Day"
-				if(19)							holiday = "Flowers Day"
-				if(21)							holiday = "Saying-'Hello' Day"
-
-		if(12)	//Dec
-			switch(DD)
-				if(10)							holiday = "Human-Rights Day"
-				if(14)							holiday = "Monkey Day"
-				if(21)							holiday = "Mayan Doomsday Anniversary"
-				if(22)							holiday = "Orgasming Day"		//lol. These all actually exist
-				if(24)							holiday = "Xmas"
-				if(25)							holiday = "Xmas"
-				if(26)							holiday = "Boxing Day"
-				if(31)							holiday = "New Year"
-
-	if(!holiday)
-		//Friday the 13th
-		if(DD == 13)
-			if(time2text(world.timeofday, "DDD") == "Fri")
-				holiday = "Friday the 13th"
-
-	world.update_status()
-
+	if(holidays)
+		holidays = shuffle(holidays)
+		world.update_status()
 
 /datum/subsystem/events/proc/toggleWizardmode()
 	wizardmode = !wizardmode

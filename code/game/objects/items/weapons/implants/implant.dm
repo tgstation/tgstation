@@ -69,7 +69,7 @@
 	desc = "Lets you shoot your guns"
 	icon_state = "auth"
 
-/obj/item/weapon/implant/tracking/get_data()
+/obj/item/weapon/implant/weapons_auth/get_data()
 	var/dat = {"<b>Implant Specifications:</b><BR>
 				<b>Name:</b> Firearms Authentication Implant<BR>
 				<b>Life:</b> 4 hours after death of host<BR>
@@ -141,10 +141,15 @@
 /obj/item/weapon/implant/chem/activate(var/cause)
 	if(!cause || !imp_in)	return 0
 	var/mob/living/carbon/R = imp_in
-	reagents.trans_to(R, cause)
-	R << "You hear a faint *beep*."
+	var/injectamount = null
+	if (cause == "action_button")
+		injectamount = reagents.total_volume
+	else
+		injectamount = cause
+	reagents.trans_to(R, injectamount)
+	R << "<span class='italics'>You hear a faint beep.</span>"
 	if(!reagents.total_volume)
-		R << "You hear a faint click from your chest."
+		R << "<span class='italics'>You hear a faint click from your chest.</span>"
 		qdel(src)
 
 
@@ -168,8 +173,11 @@
 
 /obj/item/weapon/implant/loyalty/implanted(mob/target)
 	..()
-	if(target.mind in ticker.mode.head_revolutionaries)
+	if((target.mind in (ticker.mode.head_revolutionaries | ticker.mode.A_bosses | ticker.mode.B_bosses)) || is_shadow_or_thrall(target))
 		target.visible_message("<span class='warning'>[target] seems to resist the implant!</span>", "<span class='warning'>You feel the corporate tendrils of Nanotrasen try to invade your mind!</span>")
+		return 0
+	if(target.mind in (ticker.mode.A_gang | ticker.mode.B_gang))
+		ticker.mode.remove_gangster(target.mind, exclude_bosses=0)
 		return 0
 	if(target.mind in ticker.mode.revolutionaries)
 		ticker.mode.remove_revolutionary(target.mind)
@@ -207,7 +215,7 @@
 
 	imp_in.reagents.add_reagent("synaptizine", 10)
 	imp_in.reagents.add_reagent("omnizine", 10)
-	imp_in.reagents.add_reagent("morphine", 10)
+	imp_in.reagents.add_reagent("stimulants", 10)
 
 
 /obj/item/weapon/implant/emp

@@ -1,80 +1,5 @@
-/mob/living/carbon/alien/proc/handle_chemicals_in_body()
-	if(reagents)
-		reagents.metabolize(src)
 
-	if (drowsyness)
-		drowsyness--
-		eye_blurry = max(2, eye_blurry)
-		if (prob(5))
-			sleeping += 1
-			Paralyse(5)
-
-	confused = max(0, confused - 1)
-	// decrement dizziness counter, clamped to 0
-	if(resting)
-		dizziness = max(0, dizziness - 5)
-		jitteriness = max(0, jitteriness - 5)
-	else
-		dizziness = max(0, dizziness - 1)
-		jitteriness = max(0, jitteriness - 1)
-
-	updatehealth()
-
-	return //TODO: DEFERRED
-
-/mob/living/carbon/alien/proc/breathe()
-	if(reagents)
-		if(reagents.has_reagent("lexorin")) return
-	if(istype(loc, /obj/machinery/atmospherics/unary/cryo_cell)) return
-
-	var/datum/gas_mixture/environment = loc.return_air()
-	var/datum/gas_mixture/breath
-	// HACK NEED CHANGING LATER
-	if(health <= config.health_threshold_crit)
-		losebreath++
-
-	if(losebreath>0) //Suffocating so do not take a breath
-		losebreath--
-		if (prob(75)) //High chance of gasping for air
-			spawn emote("gasp")
-		if(istype(loc, /obj/))
-			var/obj/location_as_object = loc
-			location_as_object.handle_internal_lifeform(src, 0)
-	else
-		//First, check for air from internal atmosphere (using an air tank and mask generally)
-		breath = get_breath_from_internal(BREATH_VOLUME)
-
-		//No breath from internal atmosphere so get breath from location
-		if(!breath)
-			if(istype(loc, /obj/))
-				var/obj/location_as_object = loc
-				breath = location_as_object.handle_internal_lifeform(src, BREATH_VOLUME)
-			else if(istype(loc, /turf/))
-				var/breath_moles = environment.total_moles()*BREATH_PERCENTAGE
-
-				breath = loc.remove_air(breath_moles)
-
-				// Handle chem smoke effect  -- Doohl
-				for(var/obj/effect/effect/chem_smoke/smoke in view(1, src))
-					if(smoke.reagents.total_volume)
-						smoke.reagents.reaction(src, INGEST)
-						spawn(5)
-							if(smoke)
-								smoke.reagents.copy_to(src, 10) // I dunno, maybe the reagents enter the blood stream through the lungs?
-						break // If they breathe in the nasty stuff once, no need to continue checking
-
-
-		else //Still give containing object the chance to interact
-			if(istype(loc, /obj/))
-				var/obj/location_as_object = loc
-				location_as_object.handle_internal_lifeform(src, 0)
-
-	handle_breath(breath)
-
-	if(breath)
-		loc.assume_air(breath)
-
-/mob/living/carbon/alien/proc/handle_breath(datum/gas_mixture/breath)
+/mob/living/carbon/alien/check_breath(datum/gas_mixture/breath)
 	if(status_flags & GODMODE)
 		return
 
@@ -91,41 +16,52 @@
 	if(Toxins_pp) // Detect toxins in air
 
 		adjustToxLoss(breath.toxins*250)
-		toxins_alert = max(toxins_alert, 1)
+		throw_alert("alien_tox")
 
 		toxins_used = breath.toxins
 
 	else
-		toxins_alert = 0
+		clear_alert("alien_tox")
 
 	//Breathe in toxins and out oxygen
 	breath.toxins -= toxins_used
 	breath.oxygen += toxins_used
 
-	if(breath.temperature > (T0C+66)) // Hot air hurts :(
-		if(prob(20))
-			src << "<span class='danger'>You feel a searing heat in your lungs!</span>"
-		fire_alert = max(fire_alert, 1)
-	else
-		fire_alert = 0
+	//BREATH TEMPERATURE
+	handle_breath_temperature(breath)
 
-	//Temporary fixes to the alerts.
+/mob/living/carbon/alien/handle_status_effects()
+	..()
+	//natural reduction of movement delay due to stun.
+	if(move_delay_add > 0)
+		move_delay_add = max(0, move_delay_add - rand(1, 2))
+
+/mob/living/carbon/alien/update_sight()
+
+	if(stat == DEAD)
+		sight |= SEE_TURFS
+		sight |= SEE_MOBS
+		sight |= SEE_OBJS
+		see_in_dark = 8
+		see_invisible = SEE_INVISIBLE_LEVEL_TWO
+	else
+		sight |= SEE_MOBS
+		sight &= ~SEE_TURFS
+		sight &= ~SEE_OBJS
+		if(nightvision)
+			see_in_dark = 8
+			see_invisible = SEE_INVISIBLE_MINIMUM
+		else if(!nightvision)
+			see_in_dark = 4
+			see_invisible = 45
+		if(see_override)
+			see_invisible = see_override
+
+/mob/living/carbon/alien/handle_hud_icons()
+
+	handle_hud_icons_health()
 
 	return 1
 
-/mob/living/carbon/alien/proc/handle_stomach()
-	spawn(0)
-		for(var/mob/living/M in stomach_contents)
-			if(M.loc != src)
-				stomach_contents.Remove(M)
-				continue
-			if(istype(M, /mob/living/carbon) && stat != 2)
-				if(M.stat == 2)
-					M.death(1)
-					stomach_contents.Remove(M)
-					qdel(M)
-					continue
-				if(SSmob.times_fired%3==1)
-					if(!(M.status_flags & GODMODE))
-						M.adjustBruteLoss(5)
-					nutrition += 10
+/mob/living/carbon/alien/CheckStamina()
+	return

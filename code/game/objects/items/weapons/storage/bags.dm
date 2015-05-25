@@ -39,6 +39,10 @@
 	can_hold = list() // any
 	cant_hold = list(/obj/item/weapon/disk/nuclear)
 
+/obj/item/weapon/storage/bag/trash/suicide_act(mob/user)
+	user.visible_message("<span class='suicide'>[user] puts the [src.name] over their head and starts chomping at the insides! Disgusting!</span>")
+	playsound(loc, 'sound/items/eatfood.ogg', 50, 1, -1)
+	return (TOXLOSS)
 
 /obj/item/weapon/storage/bag/trash/update_icon()
 	if(contents.len == 0)
@@ -75,6 +79,16 @@
 	max_w_class = 3
 	can_hold = list(/obj/item/weapon/ore)
 
+/obj/item/weapon/storage/bag/ore/cyborg
+	name = "cyborg mining satchel"
+
+/obj/item/weapon/storage/bag/ore/holding //miners, your messiah has arrived
+	name = "mining satchel of holding"
+	desc = "A revolution in convenience, this satchel allows for infinite ore storage. It's been outfitted with anti-malfunction safety measures."
+	storage_slots = INFINITY
+	max_combined_w_class = INFINITY
+	origin_tech = "bluespace=3"
+	icon_state = "satchel_bspace"
 
 // -----------------------------
 //          Plant bag
@@ -82,7 +96,7 @@
 
 /obj/item/weapon/storage/bag/plants
 	name = "plant bag"
-	icon = 'icons/obj/hydroponics.dmi'
+	icon = 'icons/obj/hydroponics/equipment.dmi'
 	icon_state = "plantbag"
 	storage_slots = 50; //the number of plant pieces it can carry.
 	max_combined_w_class = 200 //Doesn't matter what this is, so long as it's more or equal to storage_slots * plants.w_class
@@ -265,14 +279,14 @@
 	max_combined_w_class = 21
 	max_w_class = 3
 	w_class = 4 //Bigger than a book because physics
-	can_hold = list(/obj/item/weapon/book, /obj/item/weapon/spellbook) //No bibles, consistent with bookcase
+	can_hold = list(/obj/item/weapon/book, /obj/item/weapon/storage/book, /obj/item/weapon/spellbook)
 
 /*
  * Trays - Agouri
  */
 /obj/item/weapon/storage/bag/tray
 	name = "tray"
-	icon = 'icons/obj/food.dmi'
+	icon = 'icons/obj/food/containers.dmi'
 	icon_state = "tray"
 	desc = "A metal tray to lay food on."
 	force = 5

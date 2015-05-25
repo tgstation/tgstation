@@ -15,33 +15,26 @@
 	real_name = name
 	..()
 
-/mob/living/carbon/alien/humanoid/hunter/handle_regular_hud_updates()
-	..() //-Yvarov
-
+/mob/living/carbon/alien/humanoid/hunter/handle_hud_icons_health()
 	if (healths)
 		if (stat != 2)
 			switch(health)
 				if(150 to INFINITY)
 					healths.icon_state = "health0"
-				if(100 to 150)
+				if(120 to 150)
 					healths.icon_state = "health1"
-				if(50 to 100)
+				if(90 to 120)
 					healths.icon_state = "health2"
-				if(25 to 50)
+				if(60 to 90)
 					healths.icon_state = "health3"
-				if(0 to 25)
+				if(30 to 60)
 					healths.icon_state = "health4"
-				else
+				if(0 to 30)
 					healths.icon_state = "health5"
+				else
+					healths.icon_state = "health6"
 		else
-			healths.icon_state = "health6"
-
-
-/mob/living/carbon/alien/humanoid/hunter/handle_environment()
-	if(m_intent == "run" || resting)
-		..()
-	else
-		adjustToxLoss(-heal_rate)
+			healths.icon_state = "health7"
 
 /mob/living/carbon/alien/humanoid/hunter/movement_delay()
 	. = -1		//hunters are sanic
@@ -54,6 +47,7 @@
 /mob/living/carbon/alien/humanoid/hunter/proc/toggle_leap(var/message = 1)
 	leap_on_click = !leap_on_click
 	leap_icon.icon_state = "leap_[leap_on_click ? "on":"off"]"
+	update_icons()
 	if(message)
 		src << "<span class='noticealien'>You will now [leap_on_click ? "leap at":"slash at"] enemies!</span>"
 	else
@@ -93,7 +87,6 @@
 		update_icons()
 
 /mob/living/carbon/alien/humanoid/hunter/throw_impact(A)
-	var/msg = ""
 
 	if(!leaping)
 		return ..()
@@ -101,7 +94,7 @@
 	if(A)
 		if(istype(A, /mob/living))
 			var/mob/living/L = A
-			msg = "<span class ='alertalien'>[src] pounces on [A]!</span>"
+			L.visible_message("<span class ='danger'>[src] pounces on [L]!</span>", "<span class ='userdanger'>[src] pounces on you!</span>")
 			L.Weaken(5)
 			sleep(2)//Runtime prevention (infinite bump() calls on hulks)
 			step_towards(src,L)
@@ -111,13 +104,13 @@
 			spawn(pounce_cooldown_time) //3s by default
 				pounce_cooldown = !pounce_cooldown
 		else
-			msg = "<span class ='alertalien'>[src] smashes into [A]!</span>"
+			visible_message("<span class ='danger'>[src] smashes into [A]!</span>", "<span class ='alertalien'>[src] smashes into [A]!</span>")
 			weakened = 2
 
 		if(leaping)
 			leaping = 0
 			update_canmove()
-			visible_message(msg)
+
 
 
 /mob/living/carbon/alien/humanoid/float(on)

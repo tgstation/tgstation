@@ -122,16 +122,16 @@
 	else
 		icon_state = mineralType
 
-/obj/structure/mineral_door/attackby(obj/item/weapon/W, mob/user)
+/obj/structure/mineral_door/attackby(obj/item/weapon/W, mob/user, params)
 	if(istype(W,/obj/item/weapon/pickaxe))
 		var/obj/item/weapon/pickaxe/digTool = W
-		user << "You start digging the [name]."
+		user << "<span class='notice'>You start digging the [name]...</span>"
 		if(do_after(user,digTool.digspeed*hardness) && src)
-			user << "You finished digging."
+			user << "<span class='notice'>You finish digging.</span>"
 			Dismantle()
 	else if(istype(W,/obj/item/weapon)) //not sure, can't not just weapons get passed to this proc?
 		hardness -= W.force/100
-		user << "You hit the [name] with your [W.name]!"
+		user << "<span class='danger'>You hit the [name] with your [W.name]!</span>"
 		CheckHardness()
 	else
 		attack_hand(user)
@@ -217,7 +217,7 @@
 /obj/structure/mineral_door/transparent/plasma
 	mineralType = "plasma"
 
-/obj/structure/mineral_door/transparent/plasma/attackby(obj/item/weapon/W, mob/user)
+/obj/structure/mineral_door/transparent/plasma/attackby(obj/item/weapon/W, mob/user, params)
 	if(is_hot(W))
 		message_admins("Plasma mineral door ignited by [key_name(user, user.client)](<A HREF='?_src_=holder;adminmoreinfo=\ref[user]'>?</A>) in ([x],[y],[z] - <A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[x];Y=[y];Z=[z]'>JMP</a>)",0,1)
 		log_game("Plasma mineral door ignited by [user.ckey]([user]) in ([x],[y],[z])")

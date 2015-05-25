@@ -30,7 +30,7 @@
 		if(air_contents.oxygen < 0.5 || air_contents.toxins < 0.5)
 			return 0
 
-		active_hotspot = new(src)
+		active_hotspot = PoolOrNew(/obj/effect/hotspot, src)
 		active_hotspot.temperature = exposed_temperature
 		active_hotspot.volume = exposed_volume
 
@@ -61,7 +61,7 @@
 
 /obj/effect/hotspot/proc/perform_exposure()
 	var/turf/simulated/location = loc
-	if(!istype(location))	return 0
+	if(!istype(location) || !(location.air))	return 0
 
 	if(volume > CELL_VOLUME*0.95)	bypassing = 1
 	else bypassing = 0
@@ -101,7 +101,7 @@
 		Kill()
 		return
 
-	if(location.air.toxins < 0.5 || location.air.oxygen < 0.5)
+	if(!(location.air) || location.air.toxins < 0.5 || location.air.oxygen < 0.5)
 		Kill()
 		return
 
@@ -142,16 +142,17 @@
 // Garbage collect itself by nulling reference to it
 
 /obj/effect/hotspot/proc/Kill()
-	SSair.hotspots -= src
-	DestroyTurf()
-	qdel(src)
+	PlaceInPool(src)
 
 /obj/effect/hotspot/Destroy()
+	SSair.hotspots -= src
+	DestroyTurf()
 	if(istype(loc, /turf/simulated))
 		var/turf/simulated/T = loc
 		if(T.active_hotspot == src)
 			T.active_hotspot = null
 	loc = null
+	return QDEL_HINT_PUTINPOOL
 
 /obj/effect/hotspot/proc/DestroyTurf()
 

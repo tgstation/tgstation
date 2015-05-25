@@ -5,7 +5,6 @@
 	layer = TURF_LAYER+0.1
 	var/datum/gas_mixture/air_contents
 	var/obj/machinery/atmospherics/node
-	var/datum/pipeline/parent
 	var/showpipe = 0
 
 /obj/machinery/atmospherics/unary/New()
@@ -60,7 +59,7 @@ Housekeeping and pipe network stuff below
 	..()
 
 
-/obj/machinery/atmospherics/unary/initialize()
+/obj/machinery/atmospherics/unary/atmosinit()
 	for(var/obj/machinery/atmospherics/target in get_step(src, dir))
 		if(target.initialize_directions & get_dir(target,src))
 			node = target
@@ -68,6 +67,11 @@ Housekeeping and pipe network stuff below
 	if(level == 2)
 		showpipe = 1
 	update_icon()
+	..()
+
+/obj/machinery/atmospherics/unary/construction()
+	..()
+	parent.update = 1
 
 /obj/machinery/atmospherics/unary/default_change_direction_wrench(mob/user, obj/item/weapon/wrench/W)
 	if(..())
@@ -76,8 +80,10 @@ Housekeeping and pipe network stuff below
 			node.disconnect(src)
 		node = null
 		nullifyPipenet(parent)
+		atmosinit()
 		initialize()
 		if(node)
+			node.atmosinit()
 			node.initialize()
 			node.addMember(src)
 		build_network()
@@ -108,9 +114,6 @@ Housekeeping and pipe network stuff below
 
 /obj/machinery/atmospherics/unary/setPipenet(datum/pipeline/P)
 	parent = P
-
-/obj/machinery/atmospherics/unary/returnPipenet()
-	return parent
 
 /obj/machinery/atmospherics/unary/replacePipenet(datum/pipeline/Old, datum/pipeline/New)
 	if(Old == parent)

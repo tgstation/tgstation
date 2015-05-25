@@ -246,7 +246,7 @@ mob/living/carbon/proc/handle_hallucinations()
 
 	var/health = 100
 
-/obj/effect/fake_attacker/attackby(var/obj/item/weapon/P as obj, mob/living/user as mob)
+/obj/effect/fake_attacker/attackby(var/obj/item/weapon/P as obj, mob/living/user as mob, params)
 	step_away(src,my_target,2)
 	user.changeNext_move(CLICK_CD_MELEE)
 	user.do_attack_animation(src)
@@ -345,7 +345,7 @@ var/list/non_fakeattack_weapons = list(/obj/item/weapon/gun/projectile, /obj/ite
 	/obj/item/weapon/gun/energy/kinetic_accelerator/crossbow, /obj/item/weapon/melee/energy/sword/saber,\
 	/obj/item/weapon/storage/box/syndicate, /obj/item/weapon/storage/box/emps,\
 	/obj/item/weapon/cartridge/syndicate, /obj/item/clothing/under/chameleon,\
-	/obj/item/clothing/shoes/syndigaloshes, /obj/item/weapon/card/id/syndicate,\
+	/obj/item/clothing/shoes/sneakers/syndigaloshes, /obj/item/weapon/card/id/syndicate,\
 	/obj/item/clothing/mask/gas/voice, /obj/item/clothing/glasses/thermal,\
 	/obj/item/device/chameleon, /obj/item/weapon/card/emag,\
 	/obj/item/weapon/storage/toolbox/syndicate, /obj/item/weapon/aiModule,\

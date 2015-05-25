@@ -24,7 +24,7 @@
 
 	return
 
-/obj/machinery/atmospherics/unary/heat_reservoir/process()
+/obj/machinery/atmospherics/unary/heat_reservoir/process_atmos()
 	..()
 	if(!on)
 		return 0

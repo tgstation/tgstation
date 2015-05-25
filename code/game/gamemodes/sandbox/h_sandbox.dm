@@ -37,7 +37,7 @@ datum/hSB/proc/update()
 			"Space Gear",
 			"Suit Up (Space Travel Gear)"		= "hsbsuit",
 			"Spawn Gas Mask"					= "hsbspawn&path=[/obj/item/clothing/mask/gas]",
-			"Spawn Emergency Air Tank"			= "hsbspawn&path=[/obj/item/weapon/tank/emergency_oxygen/double]",
+			"Spawn Emergency Air Tank"			= "hsbspawn&path=[/obj/item/weapon/tank/internals/emergency_oxygen/double]",
 
 			"Standard Tools",
 			"Spawn Flashlight"					= "hsbspawn&path=[/obj/item/device/flashlight]",
@@ -115,7 +115,7 @@ datum/hSB/Topic(href, href_list)
 			if("hsbtobj")
 				if(!admin) return
 				if(hsboxspawn)
-					world << "<span class='userdanger'>Sandbox:</span> <b>\black[usr.key] has disabled object spawning!</b>"
+					world << "<span class='boldannounce'>Sandbox:</span> <b>\black[usr.key] has disabled object spawning!</b>"
 					hsboxspawn = 0
 					return
 				else

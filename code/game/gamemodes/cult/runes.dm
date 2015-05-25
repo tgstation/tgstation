@@ -1,7 +1,11 @@
 var/list/sacrificed = list()
 
 /obj/effect/rune
-/////////////////////////////////////////FIRST RUNE
+
+
+///Teleport: Teleports the user to a random teleport rune with the same rune. Can be imbued into a talisman.
+
+
 /obj/effect/rune/proc/teleport(var/key)
 	var/mob/living/user = usr
 	var/allrunesloc[]
@@ -26,8 +30,8 @@ var/list/sacrificed = list()
 		else
 			user.whisper("Sas[pick("'","`")]so c'arta forbici!")
 		user.visible_message("<span class='danger'>[user] disappears in a flash of red light!</span>", \
-		"<span class='danger'>You feel as your body gets dragged through the dimension of Nar-Sie!</span>", \
-		"<span class='danger'>You hear a sickening crunch and sloshing of viscera.</span>")
+		"<span class='userdanger'>You feel as your body gets dragged through the dimension of Nar-Sie!</span>", \
+		"<span class='italics'>You hear a sickening crunch and sloshing of viscera.</span>")
 		user.loc = allrunesloc[rand(1,index)]
 		return
 	if(istype(src,/obj/effect/rune))
@@ -37,6 +41,7 @@ var/list/sacrificed = list()
 		return
 
 
+//Subtype of teleport, teleports any items and mobs on top of the rune rather than the user themselves
 /obj/effect/rune/proc/itemport(var/key)
 //	var/allrunesloc[]
 //	allrunesloc = new/list()
@@ -53,7 +58,7 @@ var/list/sacrificed = list()
 			IP = R
 			runecount++
 	if(runecount >= 2)
-		user << "<span class='danger'>You feel pain, as the rune disappears in reality shift caused by too much wear of space-time fabric</span>"
+		user << "<span class='userdanger'>You feel pain, as the rune disappears in reality shift caused by too much wear of space-time fabric</span>"
 		if (istype(user, /mob/living))
 			user.take_overall_damage(5, 0)
 		qdel(src)
@@ -76,7 +81,9 @@ var/list/sacrificed = list()
 
 	return fizzle(user)
 
-/////////////////////////////////////////SECOND RUNE
+
+///Summon Tome: Summons a completely untranslated tome.
+
 
 /obj/effect/rune/proc/tomesummon()
 	if(istype(src,/obj/effect/rune))
@@ -85,7 +92,7 @@ var/list/sacrificed = list()
 		usr.whisper("N[pick("'","`")]ath reth sh'yro eth d'raggathnor!")
 	usr.visible_message("<span class='danger'>Rune disappears with a flash of red light, and in its place now a book lies.</span>", \
 	"<span class='danger'>You are blinded by the flash of red light! After you're able to see again, you see that now instead of the rune there's a book.</span>", \
-	"<span class='danger'>You hear a pop and smell ozone.</span>")
+	"<span class='italics'>You hear a pop and smell ozone.</span>")
 	if(istype(src,/obj/effect/rune))
 		new /obj/item/weapon/tome(src.loc)
 	else
@@ -94,8 +101,8 @@ var/list/sacrificed = list()
 	return
 
 
+///Convert: The primary method of gaining new followers. Requires three cultists, doesn't work on loyalty implanted people, captains, or chaplains.
 
-/////////////////////////////////////////THIRD RUNE
 
 /obj/effect/rune/proc/convert()
 	var/list/mob/living/cultsinrange = list()
@@ -110,36 +117,20 @@ var/list/sacrificed = list()
 				C.say("Mah[pick("'","`")]weyh pleggh at e'ntrath!")
 		if(cultsinrange.len >= 3)
 			M.visible_message("<span class='danger'>[M] writhes in pain as the markings below him glow a bloody red.</span>", \
-			"<span class='danger'>AAAAAAHHHH!</span>", \
-			"<span class='danger'>You hear an anguished scream.</span>")
+			"<span class='userdanger'>AAAAAAHHHH!</span>", \
+			"<span class='italics'>You hear an anguished scream.</span>")
 			if(is_convertable_to_cult(M.mind))
 				ticker.mode.add_cultist(M.mind)
 				M.mind.special_role = "Cultist"
 				M << "<font color=\"purple\"><b><i>Your blood pulses. Your head throbs. The world goes red. All at once you are aware of a horrible, horrible truth. The veil of reality has been ripped away and in the festering wound left behind something sinister takes root.</b></i></font>"
 				M << "<font color=\"purple\"><b><i>Assist your new compatriots in their dark dealings. Their goal is yours, and yours is theirs. You serve the Dark One above all else. Bring It back.</b></i></font>"
-/*//convert no longer gives words
-				//picking which word to use
-				if(usr.mind.cult_words.len != ticker.mode.allwords.len) // No point running if they already know everything
-					var/convert_word
-					for(var/i=1, i<=3, i++)
-						convert_word = pick(ticker.mode.grantwords)
-						if(convert_word in usr.mind.cult_words)
-							if(i==3) convert_word = null				//NOTE: If max loops is changed ensure this condition is changed to match /Mal
-						else
-							break
-					if(!convert_word)
-						usr << "\red This Convert was unworthy of knowledge of the other side!"
-					else
-						usr << "\red The Geometer of Blood is pleased to see his followers grow in numbers."
-						ticker.mode.grant_runeword(usr, convert_word)
-					return 1		*/
 			else
 				M << "<font color=\"purple\"><b><i>Your blood pulses. Your head throbs. The world goes red. All at once you are aware of a horrible, horrible truth. The veil of reality has been ripped away and in the festering wound left behind something sinister takes root.</b></i></font>"
-				M << "<span class='userdanger'>And not a single fuck was given, exterminate the cult at all costs.</span>"
+				M << "<span class='boldannounce'>And not a single fuck was given, exterminate the cult at all costs.</span>"
 				if(ticker.mode.name == "cult")
 					if(M.mind == ticker.mode.sacrifice_target)
 						for(var/mob/living/carbon/human/cultist in cultsinrange)
-							cultist << "<span class='h2.userdanger'>The Chosen One!! <BR>KILL THE CHOSEN ONE!!! </span>"
+							cultist << "<span class='h2.boldannounce'>The Chosen One!! <BR>KILL THE CHOSEN ONE!!! </span>"
 				return 0
 		else
 			for(var/mob/living/carbon/human/cultist in cultsinrange)
@@ -147,11 +138,11 @@ var/list/sacrificed = list()
 	return fizzle()
 
 
+///Summon Nar-Sie: Summons the avatar of Nar-Sie to wreak havoc on the station. Will turn walls and floors to cult version and make anyone it touches into a harvester.
 
-/////////////////////////////////////////FOURTH RUNE
 
 /obj/effect/rune/proc/tearreality()
-	var/list/mob/living/carbon/human/cultist_count = list()
+	var/list/mob/living/cultist_count = list()
 	var/mob/living/user = usr
 	user.say("Tok-lyr rqa'nap g[pick("'","`")]lt-ulotf!")
 	for(var/mob/M in range(1,src))
@@ -159,17 +150,25 @@ var/list/sacrificed = list()
 			cultist_count += M
 	if(cultist_count.len >= 9)
 		if(ticker.mode.name == "cult")
-			if("eldergod" in ticker.mode.cult_objectives)
-				ticker.mode:eldergod = 0
-			else
+			var/datum/game_mode/cult/cultmode = ticker.mode
+			if(!("eldergod" in cultmode.cult_objectives))
 				message_admins("[usr.real_name]([usr.ckey]) tried to summon a god when she didn't want to come out to play.")	// Admin alert because you *KNOW* dickbutts are going to abuse this.
 				for(var/mob/M in cultist_count)
 					M.reagents.add_reagent("hell_water", 10)
 					M << "<span class='h2.userdanger'>YOUR SOUL BURNS WITH YOUR ARROGANCE!!!</span>"
 				return
+			else
+				for(var/obj_count=1, obj_count <= cultmode.cult_objectives.len, obj_count++)
+					if(cultmode.cult_objectives[obj_count] == "sacrifice")
+						if(cultmode.sacrifice_target)
+							if(!(cultmode.sacrifice_target in sacrificed))
+								for(var/mob/M in cultist_count)
+									M << "<span class='h2.userdanger'>Nar-sie refuses to be summoned while the sacrifice isn't complete.</span>"
+								return
+				cultmode.eldergod = 0
 		var/narsie_type = /obj/singularity/narsie/large
 		// Moves narsie if she was already summoned.
-		var/obj/her = locate(narsie_type, SSmachine.processing)
+		var/obj/her = locate(narsie_type, SSobj.processing)
 		if(her)
 			her.loc = get_turf(src)
 			return
@@ -181,7 +180,9 @@ var/list/sacrificed = list()
 	else
 		return fizzle()
 
-/////////////////////////////////////////FIFTH RUNE
+
+///EMP: Lets out a large EMP blast
+
 
 /obj/effect/rune/proc/emp(var/U,var/range_red) //range_red - var which determines by which number to reduce the default emp range, U is the source loc, needed because of talisman emps which are held in hand at the moment of using and that apparently messes things up -- Urist
 	if(istype(src,/obj/effect/rune))
@@ -196,7 +197,7 @@ var/list/sacrificed = list()
 	empulse(U, (range_red - 2), range_red)
 	qdel(rune)
 
-/////////////////////////////////////////SIXTH RUNE
+///Blood Drain: Deals 1-25 damage to someone on top of it and heals an equivalent amount of brute damage to the user. Can be stacked. Too much blood drain = blood hunger that must be sated.
 
 /obj/effect/rune/proc/drain()
 	var/drain = 0
@@ -213,14 +214,14 @@ var/list/sacrificed = list()
 	usr.say ("Yu[pick("'","`")]gular faras desdae. Havas mithum javara. Umathar uf'kal thenar!")
 	usr.visible_message("<span class='danger'>Blood flows from the rune into [usr]!</span>", \
 	"<span class='danger'>The blood starts flowing from the rune and into your frail mortal body. You feel... empowered.</span>", \
-	"<span class='danger'>You hear a liquid flowing.</span>")
+	"<span class='italics'>You hear a liquid flowing.</span>")
 	var/mob/living/user = usr
 	if(user.bhunger)
 		user.bhunger = max(user.bhunger-2*drain,0)
 	if(drain>=50)
 		user.visible_message("<span class='danger'>[user]'s eyes give off eerie red glow!</span>", \
 		"<span class='danger'>...but it wasn't nearly enough. You crave, crave for more. The hunger consumes you from within.</span>", \
-		"<span class='danger'>You hear a heartbeat.</span>")
+		"<span class='italics'>You hear a heartbeat.</span>")
 		user.bhunger += drain
 		src = user
 		spawn()
@@ -236,31 +237,8 @@ var/list/sacrificed = list()
 	return
 
 
+///Raise Dead: Requires two corpses. Brings one to life and gibs the other.
 
-
-
-
-/////////////////////////////////////////SEVENTH RUNE
-
-/obj/effect/rune/proc/seer()
-	if(usr.loc==src.loc)
-		usr.say("Rash'tla sektath mal[pick("'","`")]zua. Zasan therium vivira. Itonis al'ra matum!")
-		var/mob/living/carbon/human/user = usr
-		if(user.see_invisible!=25  || (istype(user) && user.glasses))	//check for non humans
-			user << "<span class='danger'>The world beyond flashes your eyes but disappears quickly, as if something is disrupting your vision.</span>"
-		else
-			user << "<span class='danger'>The world beyond opens to your eyes.</span>"
-		var/see_temp = user.see_invisible
-		user.see_invisible = SEE_INVISIBLE_OBSERVER
-		user.seer = 1
-		while(user.loc==src.loc)
-			sleep(30)
-		user.seer = 0
-		user.see_invisible = see_temp
-		return
-	return fizzle()
-
-/////////////////////////////////////////EIGHTH RUNE
 
 /obj/effect/rune/proc/raise()
 	var/mob/living/carbon/human/corpse_to_raise
@@ -320,39 +298,30 @@ var/list/sacrificed = list()
 	corpse_to_raise.SetStunned(0)
 	corpse_to_raise.SetWeakened(0)
 	corpse_to_raise.radiation = 0
-//	corpse_to_raise.buckled = null
-//	if(corpse_to_raise.handcuffed)
-//		qdel(corpse_to_raise.handcuffed)
-//		corpse_to_raise.update_inv_handcuffed(0)
 	corpse_to_raise.stat = CONSCIOUS
 	corpse_to_raise.updatehealth()
 	corpse_to_raise.update_damage_overlays(0)
 
 	corpse_to_raise.key = ghost.key	//the corpse will keep its old mind! but a new player takes ownership of it (they are essentially possessed)
 									//This means, should that player leave the body, the original may re-enter
-	usr.say("Pasnar val'keriam usinar. Savrae ines amutan. Yam'toth remium il'tarat!")
+	if(usr.real_name == "Herbert West")
+		usr.say("To life, to life, I bring them!")
+	else
+		usr.say("Pasnar val'keriam usinar. Savrae ines amutan. Yam'toth remium il'tarat!")
 	corpse_to_raise.visible_message("<span class='danger'>[corpse_to_raise]'s eyes glow with a faint red as he stands up, slowly starting to breathe again.</span>", \
 	"<span class='danger'>Life... I'm alive again...</span>", \
-	"<span class='danger'>You hear a faint, slightly familiar whisper.</span>")
+	"<span class='italics'>You hear a faint, slightly familiar whisper.</span>")
 	body_to_sacrifice.visible_message("<span class='danger'>[body_to_sacrifice] is torn apart, a black smoke swiftly dissipating from his remains!</span>", \
-	"<span class='danger'>You feel as your blood boils, tearing you apart.</span>", \
-	"<span class='danger'>You hear a thousand voices, all crying in pain.</span>")
+	"<span class='userdanger'>You feel a horrible sensation of being torn apart, and--</span>", \
+	"<span class='italics'>You hear a thousand voices, all crying in pain.</span>")
 	body_to_sacrifice.gib()
-
-//	if(ticker.mode.name == "cult")
-//		ticker.mode:add_cultist(corpse_to_raise.mind)
-//	else
-//		ticker.mode.cult |= corpse_to_raise.mind
-
 	corpse_to_raise << "<font color=\"purple\"><b><i>Your blood pulses. Your head throbs. The world goes red. All at once you are aware of a horrible, horrible truth. The veil of reality has been ripped away and in the festering wound left behind something sinister takes root.</b></i></font>"
 	corpse_to_raise << "<font color=\"purple\"><b><i>Assist your new compatriots in their dark dealings. Their goal is yours, and yours is theirs. You serve the Dark One above all else. Bring It back.</b></i></font>"
 	return
 
 
+///Veil: Makes all surrounding runes invisible. They cannot be used directly but still used indirectly (i.e. teleport...)
 
-
-
-/////////////////////////////////////////NINETH RUNE
 
 /obj/effect/rune/proc/obscure(var/rad)
 	var/S=0
@@ -380,7 +349,9 @@ var/list/sacrificed = list()
 		call(/obj/effect/rune/proc/fizzle)()
 		return
 
-/////////////////////////////////////////TENTH RUNE
+
+///Astral Journey: Lets a player explore around as a ghost but does 10 brute damage for every tick they are like that. If they are moved from the rune they cannot return.
+
 
 /obj/effect/rune/proc/ajourney() //some bits copypastaed from admin tools - Urist
 	if(usr.loc==src.loc)
@@ -388,7 +359,7 @@ var/list/sacrificed = list()
 		usr.say("Fwe[pick("'","`")]sh mah erl nyag r'ya!")
 		usr.visible_message("<span class='danger'>[usr]'s eyes glow blue as \he freezes in place, absolutely motionless.</span>", \
 		"<span class='danger'>The shadow that is your spirit separates itself from your body. You are now in the realm beyond. While this is a great sight, being here strains your mind and body. Hurry...</span>", \
-		"<span class='danger'>You hear only complete silence for a moment.</span>")
+		"<span class='italics'>You hear only complete silence for a moment.</span>")
 		usr.ghostize(1)
 		L.ajourn = 1
 		while(L)
@@ -401,9 +372,8 @@ var/list/sacrificed = list()
 	return fizzle()
 
 
+///Manifest: User must be standing on rune. When invoked, makes a culted human spawn. The user takes damage depending on how many humans there are. If the user moves, all manifested humans are killed.
 
-
-/////////////////////////////////////////ELEVENTH RUNE
 
 /obj/effect/rune/proc/manifest()
 	var/obj/effect/rune/this_rune = src
@@ -423,7 +393,7 @@ var/list/sacrificed = list()
 	var/mob/living/carbon/human/dummy/D = new(this_rune.loc)
 	usr.visible_message("<span class='danger'>A shape forms in the center of the rune. A shape of... a man.</span>", \
 	"<span class='danger'>A shape forms in the center of the rune. A shape of... a man.</span>", \
-	"<span class='danger'>You hear liquid flowing.</span>")
+	"<span class='italics'>You hear liquid flowing.</span>")
 	D.real_name = "[pick(first_names_male)] [pick(last_names)]"
 	D.status_flags = CANSTUN|CANWEAKEN|CANPARALYSE|CANPUSH
 
@@ -445,15 +415,13 @@ var/list/sacrificed = list()
 	if(D)
 		D.visible_message("<span class='danger'>[D] slowly dissipates into dust and bones.</span>", \
 		"<span class='danger'>You feel pain, as bonds formed between your soul and this homunculus break.</span>", \
-		"<span class='danger'>You hear faint rustle.</span>")
+		"<span class='italics'>You hear faint rustle.</span>")
 		D.dust()
 	return
 
 
+///Imbue Talisman: Put a compatible rune near this one and a paper on top of the imbue rune. Activate, and the compatible rune will be imbued into the paper.
 
-
-
-/////////////////////////////////////////TWELFTH RUNE
 
 /obj/effect/rune/proc/talisman()//only hide, emp, teleport, deafen, blind and tome runes can be imbued atm
 	var/obj/item/weapon/paper/newtalisman
@@ -534,52 +502,24 @@ var/list/sacrificed = list()
 	else
 		return fizzle()
 
-/////////////////////////////////////////THIRTEENTH RUNE
 
-/obj/effect/rune/proc/mend()
-	var/mob/living/user = usr
-	src = null
-	user.say("Uhrast ka'hfa heldsagen ver[pick("'","`")]lot!")
-	user.take_overall_damage(200, 0)
-	runedec+=10
-	user.visible_message("<span class='danger'>[user] keels over dead, his blood glowing blue as it escapes his body and dissipates into thin air.</span>", \
-	"<span class='danger'>In the last moment of your humble life, you feel an immense pain as fabric of reality mends... with your blood.</span>", \
-	"<span class='danger'>You hear faint rustle.</span>")
-	for(,user.stat==2)
-		sleep(600)
-		if (!user)
-			return
-	runedec-=10
-	return
+///Communicate: Static communication rune. Somewhat pointless with free communications with tomes.
 
 
-/////////////////////////////////////////FOURTEETH RUNE
-
-		// returns 0 if the rune is not used. returns 1 if the rune is used.
 /obj/effect/rune/proc/communicate()
-	. = 1 // Default output is 1. If the rune is deleted it will return 1
-	var/input = stripped_input(usr, "Please choose a message to tell to the other acolytes.", "Voice of Blood", "")
+	var/input = stripped_input(usr, "Please enter a message to tell to the other acolytes.", "Voice of Blood", "")
 	if(!input)
-		if (istype(src))
+		if(istype(src))
 			fizzle()
 			return 0
 		else
 			return 0
-	if(istype(src,/obj/effect/rune))
-		usr.say("O bidai nabora se[pick("'","`")]sma!")
-	else
-		usr.whisper("O bidai nabora se[pick("'","`")]sma!")
-
-	if(istype(src,/obj/effect/rune))
-		usr.say("[input]")
-	else
-		usr.whisper("[input]")
-	for(var/mob/M in mob_list)
-		if((M.mind && (M.mind in ticker.mode.cult)) || (M in dead_mob_list))
-			M << "<span class='userdanger'>[input]</span>"
+	cultist_commune(usr , 1, 1, input)
 	return 1
 
-/////////////////////////////////////////FIFTEENTH RUNE
+
+///Sacrifice: Gibs a target as an offering. Gives tome words as a reward and if the target has a mind, spawns a soul shard with their shade contained within.
+
 
 /obj/effect/rune/proc/sacrifice()
 	var/list/mob/living/carbon/human/cultsinrange = list()
@@ -695,23 +635,8 @@ var/list/sacrificed = list()
 			if(prob(30))
 				ticker.mode.grant_runeword(usr)
 		stone_or_gib(M)
-	for(var/mob/victim in src.loc)			//TO-DO: Move the shite above into the mob's own sac_act - see /mob/living/simple_animal/corgi/sac_act for an example
+	for(var/mob/victim in src.loc)			//TO-DO: Move the shite above into the mob's own sac_act - see /mob/living/simple_animal/pet/corgi/sac_act for an example
 		victim.sac_act(src, victim)			//Sacrifice procs are now seperate per mob, this allows us to allow sacrifice on as many mob types as we want without making an already clunky system worse
-/*	for(var/mob/living/carbon/alien/A)
-		for(var/mob/K in cultsinrange)
-			K.say("Barhah hra zar'garis!")
-		A.dust()      /// A.gib() doesnt work for some reason, and dust() leaves that skull and bones thingy which we dont really need.
-		if (ticker.mode.name == "cult")
-			if(prob(75))
-				usr << "\red The Geometer of Blood accepts your exotic sacrifice."
-				sac_grant_word()
-			else
-				usr << "\red The Geometer of Blood accepts your exotic sacrifice."
-				usr << "\red However, this alien is not enough to gain His favor."
-		else
-			usr << "\red The Geometer of Blood accepts your exotic sacrifice."
-		return
-	return fizzle() */
 
 /obj/effect/rune/proc/sac_grant_word(var/mob/living/C)	//The proc that which chooses a word rewarded for a successful sacrifice, sacrifices always give a currently unknown word if the normal checks pass
 	if(C.mind.cult_words.len != ticker.mode.allwords.len) // No point running if they already know everything
@@ -731,7 +656,8 @@ var/list/sacrificed = list()
 			T.gib()
 
 
-/////////////////////////////////////////SIXTEENTH RUNE
+///Reveal: Reverses the Veil rune's effect, revealing all hidden runes.
+
 
 /obj/effect/rune/proc/revealrunes(var/obj/W as obj)
 	var/go=0
@@ -775,7 +701,9 @@ var/list/sacrificed = list()
 		call(/obj/effect/rune/proc/fizzle)()
 		return
 
-/////////////////////////////////////////SEVENTEENTH RUNE
+
+///Wall: Makes the rune dense and uncrossable. You can invoke it again to make it normal again. Deals 2 brute damage when used.
+
 
 /obj/effect/rune/proc/wall()
 	usr.say("Khari[pick("'","`")]d! Eske'te tannin!")
@@ -788,9 +716,11 @@ var/list/sacrificed = list()
 		usr << "<span class='danger'>Your blood flows into the rune, and you feel as the rune releases its grasp on space.</span>"
 	return
 
-/////////////////////////////////////////EIGHTTEENTH RUNE
 
-/obj/effect/rune/proc/freedom()
+///Free Cultist: If the cultist is not walking free, makes it so.
+
+
+/obj/effect/rune/proc/freedom() //MURICA ;_;7
 	var/mob/living/user = usr
 	var/list/mob/living/cultists = new
 	for(var/datum/mind/H in ticker.mode.cult)
@@ -815,7 +745,8 @@ var/list/sacrificed = list()
 		))
 			user << "<span class='danger'>The [cultist] is already free.</span>"
 			return
-		cultist.buckled = null
+		if(cultist.buckled)
+			cultist.buckled.unbuckle_mob()
 		if (cultist.handcuffed)
 			cultist.handcuffed.loc = cultist.loc
 			cultist.handcuffed = null
@@ -838,7 +769,9 @@ var/list/sacrificed = list()
 		qdel(src)
 	return fizzle(user)
 
-/////////////////////////////////////////NINETEENTH RUNE
+
+///Summon Cultist: Requires 3 cultists, summons a cultist to the rune's location and does 25 brute to all users.
+
 
 /obj/effect/rune/proc/cultsummon()
 	var/mob/living/user = usr
@@ -868,11 +801,13 @@ var/list/sacrificed = list()
 				C.take_overall_damage(25, 0)
 		user.visible_message("<span class='danger'>Rune disappears with a flash of red light, and in its place now a body lies.</span>", \
 		"<span class='danger'>You are blinded by the flash of red light! After you're able to see again, you see that now instead of the rune there's a body.</span>", \
-		"<span class='danger'>You hear a pop and smell ozone.</span>")
+		"<span class='italics'>You hear a pop and smell ozone.</span>")
 		qdel(src)
 	return fizzle(user)
 
-/////////////////////////////////////////TWENTIETH RUNES
+
+///Deafen: Makes all nearby non-cultists deaf.
+
 
 /obj/effect/rune/proc/deafen()
 	if(istype(src,/obj/effect/rune))
@@ -913,6 +848,10 @@ var/list/sacrificed = list()
 				if(!(iscultist(V)))
 					V.show_message("<span class='danger'>Dust flows from [usr]'s hands for a moment, and the world suddenly becomes quiet..</span>", 3)
 	return
+
+
+///Blind: Makes all non-cultists nearby blind. Combine with Deafen to make the entire shuttle go into a panic and laugh as they bumble around.
+
 
 /obj/effect/rune/proc/blind()
 	if(istype(src,/obj/effect/rune))
@@ -956,15 +895,11 @@ var/list/sacrificed = list()
 	return
 
 
+///Blood Boil: Every non-cultist nearby will take 51 burn and 51 brute damage. 5% chance for them to gib as well. Users will take 15 brute. 10% chance for the rune to blow up.
+
+
 /obj/effect/rune/proc/bloodboil() //cultists need at least one DANGEROUS rune. Even if they're all stealthy.
-/*
-	var/list/mob/living/carbon/cultists = new
-	for(var/datum/mind/H in ticker.mode.cult)
-		if (istype(H.current,/mob/living/carbon))
-			cultists+=H.current
-*/
-	var/culcount = 0 //also, wording for it is old wording for obscure rune, which is now hide-see-blood.
-//	var/list/cultboil = list(cultists-usr) //and for this words are destroy-see-blood.
+	var/culcount = 0
 	for(var/mob/living/carbon/C in orange(1,src))
 		if(iscultist(C) && !C.stat)
 			culcount++
@@ -977,9 +912,6 @@ var/list/sacrificed = list()
 				continue
 			M.take_overall_damage(51,51)
 			M << "<span class='danger'>Your blood boils!</span>"
-			if(prob(5))
-				spawn(5)
-					M.gib()
 		for(var/obj/effect/rune/R in view(src))
 			if(prob(10))
 				explosion(R.loc, -1, 0, 1, 5)
@@ -992,35 +924,9 @@ var/list/sacrificed = list()
 		return fizzle()
 	return
 
-// WIP rune, I'll wait for Rastaf0 to add limited blood.
 
-/obj/effect/rune/proc/burningblood()
-	var/culcount = 0
-	for(var/mob/living/carbon/C in orange(1,src))
-		if(iscultist(C) && !C.stat)
-			culcount++
-	if(culcount >= 5)
-		for(var/obj/effect/rune/R in world)
-			if(R.blood_DNA == src.blood_DNA)
-				for(var/mob/living/M in orange(2,R))
-					M.take_overall_damage(0,15)
-					if (R.invisibility>M.see_invisible)
-						M << "<span class='danger'>Aargh it burns!</span>"
-					else
-						M << "<span class='danger'>Rune suddenly ignites, burning you!</span>"
-					var/turf/T = get_turf(R)
-					T.hotspot_expose(700,125)
-		for(var/obj/effect/decal/cleanable/blood/B in world)
-			if(B.blood_DNA == src.blood_DNA)
-				for(var/mob/living/M in orange(1,B))
-					M.take_overall_damage(0,5)
-					M << "<span class='danger'>Blood suddenly ignites, burning you!</span>"
-					var/turf/T = get_turf(B)
-					T.hotspot_expose(700,125)
-					qdel(B)
-		qdel(src)
+///Stun: Everyone nearby would be stunned for a -very- short time. If used in a talisman, it stuns and mutes a single target.
 
-//////////             Rune 24 (counting burningblood, which kinda doesnt work yet.)
 
 /obj/effect/rune/proc/runestun(var/mob/living/T as mob)
 	if(istype(src,/obj/effect/rune))   ///When invoked as rune, flash and stun everyone around.
@@ -1038,7 +944,7 @@ var/list/sacrificed = list()
 			else if(issilicon(L))
 				var/mob/living/silicon/S = L
 				S.Weaken(5)
-				S.show_message("<span class='danger'>BZZZT... The rune has exploded in a bright flash.</span>", 3)
+				S.show_message("<span class='danger'>!@(%* BZZZZZT !@(%!)$</span>", 3)
 		qdel(src)
 	else                        ///When invoked as talisman, stun and mute the target mob.
 		usr.say("Dream sign ''Evil sealing talisman'[pick("'","`")]!")
@@ -1061,7 +967,9 @@ var/list/sacrificed = list()
 				C.Stun(10)
 		return
 
-/////////////////////////////////////////TWENTY-FIFTH RUNE
+
+///Armor: The user will be armed with cultist garb, a trophy rack, and a high-damage sword. If items are in these slots, they will not be equipped and simply deleted.
+
 
 /obj/effect/rune/proc/armor()
 	var/mob/living/carbon/human/user = usr
@@ -1081,6 +989,10 @@ var/list/sacrificed = list()
 	user.put_in_hands(new /obj/item/weapon/melee/cultblade(user))	//put in hands or on floor
 
 	qdel(src)
+
+
+///Summon Shell: Summons a construct shell if there's four plasteel sheets on top of the rune
+
 
 /obj/effect/rune/proc/summon_shell()		// Summons a construct shell
 	for(var/obj/item/stack/sheet/plasteel/PS in src.loc)		//I could probably combine the amounts but I'm too lazy to compensate for others' lazyness

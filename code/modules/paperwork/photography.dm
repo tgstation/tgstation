@@ -38,7 +38,7 @@
 	user.examinate(src)
 
 
-/obj/item/weapon/photo/attackby(obj/item/weapon/P, mob/user)
+/obj/item/weapon/photo/attackby(obj/item/weapon/P, mob/user, params)
 	if(istype(P, /obj/item/weapon/pen) || istype(P, /obj/item/toy/crayon))
 		var/txt = sanitize(input(user, "What would you like to write on the back?", "Photo Writing", null)  as text)
 		txt = copytext(txt, 1, 128)
@@ -53,7 +53,7 @@
 	if(in_range(user, src))
 		show(user)
 	else
-		user << "You need to get closer to get a good look at this photo."
+		user << "<span class='warning'>You need to get closer to get a good look at this photo!</span>"
 
 
 /obj/item/weapon/photo/proc/show(mob/user)
@@ -135,7 +135,7 @@
 	return
 
 
-/obj/item/device/camera/attackby(obj/item/I, mob/user)
+/obj/item/device/camera/attackby(obj/item/I, mob/user, params)
 	if(istype(I, /obj/item/device/camera_film))
 		if(pictures_left)
 			user << "<span class='notice'>[src] still has some film in it!</span>"
@@ -332,28 +332,29 @@
 	else
 		injectaialbum(icon, img, desc, pixel_x, pixel_y, blueprintsinject)
 
-
-obj/item/device/camera/siliconcam/proc/viewpichelper(var/obj/item/device/camera/siliconcam/targetloc)
+obj/item/device/camera/siliconcam/proc/selectpicture(var/obj/item/device/camera/siliconcam/targetloc)
 	var/list/nametemp = list()
 	var/find
-	var/datum/picture/selection
 	if(targetloc.aipictures.len == 0)
-		usr << "<span class='userdanger'>No images saved</span>"
+		usr << "<span class='boldannounce'>No images saved</span>"
 		return
 	for(var/datum/picture/t in targetloc.aipictures)
 		nametemp += t.fields["name"]
 	find = input("Select image (numbered in order taken)") in nametemp
-	var/obj/item/weapon/photo/P = new/obj/item/weapon/photo()
 	for(var/datum/picture/q in targetloc.aipictures)
 		if(q.fields["name"] == find)
-			selection = q
-			break  	// just in case some AI decides to take 10 thousand pictures in a round
-	P.photocreate(selection.fields["icon"], selection.fields["img"], selection.fields["desc"])
-	P.pixel_x = selection.fields["pixel_x"]
-	P.pixel_y = selection.fields["pixel_y"]
+			return q
 
-	P.show(usr)
-	usr << P.desc
+obj/item/device/camera/siliconcam/proc/viewpichelper(var/obj/item/device/camera/siliconcam/targetloc)
+	var/obj/item/weapon/photo/P = new/obj/item/weapon/photo()
+	var/datum/picture/selection = selectpicture(targetloc)
+	if(selection)
+		P.photocreate(selection.fields["icon"], selection.fields["img"], selection.fields["desc"])
+		P.pixel_x = selection.fields["pixel_x"]
+		P.pixel_y = selection.fields["pixel_y"]
+
+		P.show(usr)
+		usr << P.desc
 	qdel(P)    //so 10 thousand picture items are not left in memory should an AI take them and then view them all
 
 obj/item/device/camera/siliconcam/proc/viewpictures(user)
@@ -427,4 +428,4 @@ obj/item/device/camera/siliconcam/robot_camera/proc/borgprint()
 	p.pixel_y = rand(-10, 10)
 	C.toner -= 20	 //Cyborgs are very ineffeicient at printing an image
 	visible_message("[C.name] spits out a photograph from a narrow slot on it's chassis.")
-	usr << "You print a photograph."
+	usr << "<span class='notice'>You print a photograph.</span>"

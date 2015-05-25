@@ -91,6 +91,9 @@
 						line1 = "-ETD-"
 					if(SHUTTLE_ESCAPE)
 						line1 = "-ESC-"
+					if(SHUTTLE_STRANDED)
+						line1 = "-ERR-"
+						line2 = "??:??"
 				if(length(line2) > CHARS_PER_LINE)
 					line2 = "Error!"
 				update_display(line1, line2)

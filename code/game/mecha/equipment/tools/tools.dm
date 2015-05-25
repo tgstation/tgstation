@@ -47,12 +47,12 @@
 						occupant_message("<span class='notice'>[target] successfully loaded.</span>")
 						log_message("Loaded [O]. Cargo compartment capacity: [cargo_holder.cargo_capacity - cargo_holder.cargo.len]")
 					else
-						occupant_message("<span class='warning'>You must hold still while handling objects.</span>")
+						occupant_message("<span class='warning'>You must hold still while handling objects!</span>")
 						O.anchored = initial(O.anchored)
 			else
-				occupant_message("<span class='warning'>Not enough room in cargo compartment.</span>")
+				occupant_message("<span class='warning'>Not enough room in cargo compartment!</span>")
 		else
-			occupant_message("<span class='warning'>[target] is firmly secured.</span>")
+			occupant_message("<span class='warning'>[target] is firmly secured!</span>")
 
 	else if(istype(target,/mob/living))
 		var/mob/living/M = target
@@ -65,7 +65,7 @@
 			M.updatehealth()
 			target.visible_message("<span class='danger'>[chassis] squeezes [target].</span>", \
 								"<span class='userdanger'>[chassis] squeezes [target].</span>",\
-								"You hear something crack")
+								"<span class='italics'>You hear something crack.</span>")
 			add_logs(chassis.occupant, M, "attacked", object="[name]", addition="(INTENT: [uppertext(chassis.occupant.a_intent)]) (DAMTYE: [uppertext(damtype)])")
 		else
 			step_away(M,chassis)
@@ -87,15 +87,17 @@
 /obj/item/mecha_parts/mecha_equipment/tool/drill/action(atom/target)
 	if(!action_checks(target))
 		return
+	if(istype(target, /turf) && !istype(target, /turf/simulated))
+		return
 	if(isobj(target))
 		var/obj/target_obj = target
 		if(target_obj.unacidable)
 			return
 	set_ready_state(0)
 	chassis.use_power(energy_drain)
-	target.visible_message("<span class='danger'>[chassis] starts to drill [target]</span>", \
-					"<span class='userdanger'>[chassis] starts to drill [target]</span>", \
-					 "You hear drilling.")
+	target.visible_message("<span class='warning'>[chassis] starts to drill [target].</span>", \
+					"<span class='userdanger'>[chassis] starts to drill [target]...</span>", \
+					 "<span class='italics'>You hear drilling.</span>")
 	var/T = chassis.loc
 	var/C = target.loc	//why are these backwards? we may never know -Pete
 	if(do_after_cooldown(target))
@@ -176,6 +178,34 @@
 			return 1
 	return 0
 
+/obj/item/mecha_parts/mecha_equipment/tool/mining_scanner
+	name = "exosuit mining scanner"
+	desc = "Equipment for engineering and combat exosuits. It will automatically check surrounding rock for useful minerals."
+	icon_state = "mecha_analyzer"
+	origin_tech = "materials=3;engineering=2"
+	equip_cooldown = 30
+	var/scanning = 0
+
+/obj/item/mecha_parts/mecha_equipment/tool/mining_scanner/New()
+	SSobj.processing |= src
+
+/obj/item/mecha_parts/mecha_equipment/tool/mining_scanner/process()
+	if(!loc)
+		SSobj.processing.Remove(src)
+		qdel(src)
+	if(scanning)
+		return
+	if(istype(loc,/obj/mecha/working))
+		var/obj/mecha/working/mecha = loc
+		if(!mecha.occupant)
+			return
+		var/list/occupant = list()
+		occupant |= mecha.occupant
+		scanning = 1
+		mineral_scan_pulse(occupant,get_turf(loc))
+		spawn(equip_cooldown)
+			scanning = 0
+
 /obj/item/mecha_parts/mecha_equipment/tool/extinguisher
 	name = "exosuit extinguisher"
 	desc = "Equipment for engineering exosuits. A rapid-firing high capacity fire extinguisher."
@@ -211,7 +241,7 @@
 				var/list/the_targets = list(T,T1,T2)
 				spawn(0)
 					for(var/a=0, a<5, a++)
-						var/obj/effect/effect/water/W = new /obj/effect/effect/water(get_turf(chassis))
+						var/obj/effect/effect/water/W = PoolOrNew(/obj/effect/effect/water, get_turf(chassis))
 						if(!W)
 							return
 						var/turf/my_target = pick(the_targets)
@@ -1028,7 +1058,7 @@
 		var/result = load_fuel(target)
 		var/message
 		if(isnull(result))
-			message = "<span class='danger'>[fuel] traces in target minimal. [target] cannot be used as fuel.</span>"
+			message = "<span class='warning'>[fuel] traces in target minimal! [target] cannot be used as fuel.</span>"
 		else if(!result)
 			message = "Unit is full."
 		else
@@ -1050,7 +1080,7 @@
 			return 0
 	return
 
-/obj/item/mecha_parts/mecha_equipment/generator/attackby(weapon,mob/user)
+/obj/item/mecha_parts/mecha_equipment/generator/attackby(weapon,mob/user, params)
 	var/result = load_fuel(weapon)
 	if(isnull(result))
 		user.visible_message("[user] tries to shove [weapon] into [src]. What a dumb-ass.","<span class='danger'>[fuel] traces minimal. [weapon] cannot be used as fuel.</span>")
@@ -1138,9 +1168,9 @@
 	if(..())
 		for(var/mob/living/carbon/M in view(EG.chassis))
 			if(istype(M,/mob/living/carbon/human))
-				M.apply_effect((EG.rad_per_cycle*3),IRRADIATE,0)
+				M.irradiate(EG.rad_per_cycle*3)
 			else
-				M.radiation += EG.rad_per_cycle
+				M.irradiate(EG.rad_per_cycle)
 	return 1
 
 
@@ -1186,12 +1216,12 @@
 						chassis.occupant_message("<span class='notice'>[target] successfully loaded.</span>")
 						chassis.log_message("Loaded [O]. Cargo compartment capacity: [cargo_holder.cargo_capacity - cargo_holder.cargo.len]")
 					else
-						chassis.occupant_message("<span class='warning'>You must hold still while handling objects.</span>")
+						chassis.occupant_message("<span class='warning'>You must hold still while handling objects!</span>")
 						O.anchored = initial(O.anchored)
 			else
-				chassis.occupant_message("<span class='warning'>Not enough room in cargo compartment.</span>")
+				chassis.occupant_message("<span class='warning'>Not enough room in cargo compartment!</span>")
 		else
-			chassis.occupant_message("<span class='warning'>[target] is firmly secured.</span>")
+			chassis.occupant_message("<span class='warning'>[target] is firmly secured!</span>")
 
 	else if(istype(target,/mob/living))
 		var/mob/living/M = target

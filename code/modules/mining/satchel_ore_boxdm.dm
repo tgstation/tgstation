@@ -8,7 +8,7 @@
 	desc = "It's heavy"
 	density = 1
 
-/obj/structure/ore_box/attackby(obj/item/weapon/W as obj, mob/user as mob)
+/obj/structure/ore_box/attackby(obj/item/weapon/W as obj, mob/user as mob, params)
 	if (istype(W, /obj/item/weapon/ore))
 		user.drop_item()
 		W.loc = src

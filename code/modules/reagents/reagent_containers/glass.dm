@@ -11,6 +11,9 @@
 		/obj/machinery/chem_heater/,
 		/obj/machinery/reagentgrinder,
 		/obj/machinery/biogenerator,
+		/obj/machinery/r_n_d/destructive_analyzer,
+		/obj/machinery/r_n_d/experimentor,
+		/obj/machinery/autolathe,
 		/obj/structure/table,
 		/obj/structure/rack,
 		/obj/structure/closet,
@@ -50,7 +53,7 @@
 	else if(istype(target, /obj/structure/reagent_dispensers)) //A dispenser. Transfer FROM it TO us.
 
 		if(target.reagents && !target.reagents.total_volume)
-			user << "<span class='notice'>[target] is empty and can't be refilled.</span>"
+			user << "<span class='warning'>[target] is empty and can't be refilled!</span>"
 			return
 
 		if(reagents.total_volume >= reagents.maximum_volume)
@@ -62,7 +65,7 @@
 
 	else if(target.is_open_container() && target.reagents) //Something like a glass. Player probably wants to transfer TO it.
 		if(!reagents.total_volume)
-			user << "<span class='notice'>[src] is empty.</span>"
+			user << "<span class='warning'>[src] is empty!</span>"
 			return
 
 		if(target.reagents.total_volume >= target.reagents.maximum_volume)
@@ -80,13 +83,43 @@
 		user << "<span class='notice'>You transfer [trans] unit\s of the solution to [target].</span>"
 
 	//Safety for dumping stuff into a ninja suit. It handles everything through attackby() and this is unnecessary.	//gee thanks noize
+	//NINJACODE
 	else if(istype(target, /obj/item/clothing/suit/space/space_ninja))
+		return
+
+	else if(istype(target, /obj/effect/decal/cleanable)) //stops splashing while scooping up fluids
 		return
 
 	else if(reagents.total_volume)
 		user << "<span class='notice'>You splash the solution onto [target].</span>"
 		reagents.reaction(target, TOUCH)
 		reagents.clear_reagents()
+
+/obj/item/weapon/reagent_containers/glass/attackby(var/obj/item/I, mob/user as mob, params)
+	if(istype(I, /obj/item/clothing/mask/cigarette)) //ciggies are weird
+		return
+	var/hotness = is_hot(I)
+	if(hotness)
+		var/added_heat = (hotness / 100) //ishot returns a temperature
+		if(reagents)
+			if(reagents.chem_temp < hotness) //can't be heated to be hotter than the source
+				reagents.chem_temp += added_heat
+				user << "<span class='notice'>You heat [src] with [I].</span>"
+				reagents.handle_reactions()
+			else
+				user << "<span class='warning'>[src] is already hotter than [I]!</span>"
+
+	if(istype(I,/obj/item/weapon/reagent_containers/food/snacks/egg)) //breaking eggs
+		var/obj/item/weapon/reagent_containers/food/snacks/egg/E = I
+		if(reagents)
+			if(reagents.total_volume >= reagents.maximum_volume)
+				user << "<span class='notice'>[src] is full.</span>"
+			else
+				user << "<span class='notice'>You break [E] in [src].</span>"
+				reagents.add_reagent("eggyolk", 5)
+				qdel(E)
+			return
+	..()
 
 
 /obj/item/weapon/reagent_containers/glass/beaker
@@ -204,10 +237,12 @@
 	volume = 70
 	flags = OPENCONTAINER
 
-/obj/item/weapon/reagent_containers/glass/bucket/attackby(var/obj/D, mob/user as mob)
+/obj/item/weapon/reagent_containers/glass/bucket/attackby(var/obj/D, mob/user as mob, params)
 	if(isprox(D))
 		user << "<span class='notice'>You add [D] to [src].</span>"
 		qdel(D)
 		user.put_in_hands(new /obj/item/weapon/bucket_sensor)
 		user.unEquip(src)
 		qdel(src)
+	else
+		..()

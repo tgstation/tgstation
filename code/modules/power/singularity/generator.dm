@@ -15,19 +15,19 @@
 		new /obj/singularity/(T, 50)
 		if(src) qdel(src)
 
-/obj/machinery/the_singularitygen/attackby(obj/item/W, mob/user)
+/obj/machinery/the_singularitygen/attackby(obj/item/W, mob/user, params)
 	if(istype(W, /obj/item/weapon/wrench))
 
 		if(!anchored && !isinspace())
 			user.visible_message("[user.name] secures [src.name] to the floor.", \
-				"You secure the [src.name] to the floor.", \
-				"You hear a ratchet")
+				"<span class='notice'>You secure the [src.name] to the floor.</span>", \
+				"<span class='italics'>You hear a ratchet.</span>")
 			playsound(src.loc, 'sound/items/Ratchet.ogg', 75, 1)
 			anchored = 1
 		else if(anchored)
 			user.visible_message("[user.name] unsecures [src.name] from the floor.", \
-				"You unsecure the [src.name] from the floor.", \
-				"You hear a ratchet")
+				"<span class='notice'>You unsecure the [src.name] from the floor.</span>", \
+				"<span class='italics'>You hear a ratchet.</span>")
 			playsound(src.loc, 'sound/items/Ratchet.ogg', 75, 1)
 			anchored = 0
 		return

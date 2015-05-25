@@ -52,12 +52,12 @@
 	if(istype(loc, /turf/simulated))
 		var/turf/simulated/T = loc
 		if(T.intact)
-			user << "<span class='alert'>You must first expose the power terminal!</span>"
+			user << "<span class='warning'>You must first expose the power terminal!</span>"
 			return
 
 		if(master && master.can_terminal_dismantle())
-			user.visible_message("<span class='warning'>[user.name] dismantles the power terminal from [master].</span>", \
-								"You begin to cut the cables...")
+			user.visible_message("[user.name] dismantles the power terminal from [master].", \
+								"<span class='notice'>You begin to cut the cables...</span>")
 
 			playsound(src.loc, 'sound/items/Deconstruct.ogg', 50, 1)
 			if(do_after(user, 50))
@@ -72,7 +72,7 @@
 					qdel(src)
 
 
-/obj/machinery/power/terminal/attackby(obj/item/W, mob/living/user)
+/obj/machinery/power/terminal/attackby(obj/item/W, mob/living/user, params)
 	if(istype(W, /obj/item/weapon/wirecutters))
 		dismantle(user)
 		return

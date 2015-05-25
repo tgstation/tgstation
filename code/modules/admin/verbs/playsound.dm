@@ -13,7 +13,7 @@ var/sound/admin_sound
 	log_admin("[key_name(src)] played sound [S]")
 	message_admins("[key_name_admin(src)] played sound [S]")
 
-	if(SSevent.holiday == "April Fool's Day")
+	if(SSevent.holidays && SSevent.holidays[APRIL_FOOLS])
 		admin_sound.frequency = pick(0.5, 0.7, 0.8, 0.85, 0.9, 0.95, 1.1, 1.2, 1.4, 1.6, 2.0, 2.5)
 		src << "You feel the Honkmother messing with your song..."
 
@@ -35,6 +35,20 @@ var/sound/admin_sound
 	message_admins("[key_name_admin(src)] played a local sound [S]")
 	playsound(get_turf(src.mob), S, 50, 0, 0)
 	feedback_add_details("admin_verb","PLS") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
+
+/client/proc/set_round_end_sound(S as sound)
+	set category = "Fun"
+	set name = "Set Round End Sound"
+	if(!check_rights(R_SOUNDS))	return
+
+	if(ticker)
+		ticker.round_end_sound = fcopy_rsc(S)
+	else
+		return
+
+	log_admin("[key_name(src)] set the round end sound to [S]")
+	message_admins("[key_name_admin(src)] set the round end sound to [S]")
+	feedback_add_details("admin_verb","SRES") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
 /client/proc/stop_sounds()
 	set category = "Debug"

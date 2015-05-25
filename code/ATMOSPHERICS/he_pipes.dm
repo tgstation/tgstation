@@ -36,7 +36,7 @@
 		if(SOUTHWEST)
 			initialize_directions_he = SOUTH|WEST
 
-/obj/machinery/atmospherics/pipe/simple/heat_exchanging/initialize()
+/obj/machinery/atmospherics/pipe/simple/heat_exchanging/atmosinit()
 	normalize_dir()
 	var/N = 2
 	for(var/D in cardinal)
@@ -51,8 +51,9 @@
 						node2 = target
 						break
 	update_icon()
+	..()
 
-/obj/machinery/atmospherics/pipe/simple/heat_exchanging/process()
+/obj/machinery/atmospherics/pipe/simple/heat_exchanging/process_atmos()
 	var/environment_temperature = 0
 	var/datum/gas_mixture/pipe_air = return_air()
 
@@ -69,15 +70,18 @@
 		parent.temperature_interact(loc, volume, thermal_conductivity)
 
 
-	//Burn any mobs buckled to ourselves based on our temperature
+	//heatup/cooldown any mobs buckled to ourselves based on our temperature
 	if(buckled_mob)
 		var/hc = pipe_air.heat_capacity()
 		var/avg_temp = (pipe_air.temperature * hc + buckled_mob.bodytemperature * 3500) / (hc + 3500)
 		pipe_air.temperature = avg_temp
 		buckled_mob.bodytemperature = avg_temp
 
+/obj/machinery/atmospherics/pipe/simple/heat_exchanging/process()
+	var/datum/gas_mixture/pipe_air = return_air()
+	//Burn any mobs buckled to ourselves based on our temperature
+	if(buckled_mob)
 		var/heat_limit = 1000
-
 		if(pipe_air.temperature > heat_limit + 1)
 			buckled_mob.apply_damage(4 * log(pipe_air.temperature - heat_limit), BURN, "chest")
 
@@ -131,7 +135,7 @@
 		var/have_node2 = node2?1:0
 		icon_state = "exposed[have_node1][have_node2]"
 
-/obj/machinery/atmospherics/pipe/simple/heat_exchanging/junction/initialize()
+/obj/machinery/atmospherics/pipe/simple/heat_exchanging/junction/atmosinit()
 	for(var/obj/machinery/atmospherics/target in get_step(src,initialize_directions))
 		if(target.initialize_directions & get_dir(target,src))
 			node1 = target
@@ -141,4 +145,4 @@
 			node2 = target
 			break
 	update_icon()
-	return
+	..()

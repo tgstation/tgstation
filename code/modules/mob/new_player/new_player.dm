@@ -69,7 +69,7 @@
 		stat("Game Mode:", (ticker.hide_mode) ? "Secret" : "[master_mode]")
 
 		if(ticker.current_state == GAME_STATE_PREGAME)
-			stat("Time To Start:", (ticker.can_fire) ? "[round(ticker.timeLeft / 10)]s" : "DELAYED")
+			stat("Time To Start:", (ticker.timeLeft >= 0) ? "[round(ticker.timeLeft / 10)]s" : "DELAYED")
 
 			stat("Players:", "[ticker.totalPlayers]")
 			if(client.holder)
@@ -88,7 +88,7 @@
 
 	if(href_list["ready"])
 		if(!ticker || ticker.current_state <= GAME_STATE_PREGAME) // Make sure we don't ready up after the round has started
-			ready = !ready
+			ready = text2num(href_list["ready"])
 		else
 			ready = 0
 
@@ -103,7 +103,6 @@
 			var/mob/dead/observer/observer = new()
 
 			spawning = 1
-			src << sound(null, repeat = 0, wait = 0, volume = 85, channel = 1) // MAD JAMS cant last forever yo
 
 			observer.started_as_observer = 1
 			close_spawn_windows()
@@ -117,6 +116,7 @@
 			observer.real_name = client.prefs.real_name
 			observer.name = observer.real_name
 			observer.key = key
+			observer.stopLobbySound()
 			qdel(mind)
 
 			qdel(src)
@@ -125,6 +125,14 @@
 	if(href_list["late_join"])
 		if(!ticker || ticker.current_state != GAME_STATE_PLAYING)
 			usr << "<span class='danger'>The round is either not ready, or has already finished...</span>"
+			return
+		var/relevant_cap
+		if(config.hard_popcap && config.extreme_popcap)
+			relevant_cap = min(config.hard_popcap, config.extreme_popcap)
+		else
+			relevant_cap = max(config.hard_popcap, config.extreme_popcap)
+		if(relevant_cap && living_player_count() >= relevant_cap && !(ckey(key) in admin_datums))
+			usr << "<span class='danger'>[config.hard_popcap_message]</span>"
 			return
 		LateChoices()
 
@@ -242,7 +250,14 @@
 	if(!job)
 		return 0
 	if((job.current_positions >= job.total_positions) && job.total_positions != -1)
-		return 0
+		if(job.title == "Assistant")
+			if(isnum(client.player_age) && client.player_age <= 14) //Newbies can always be assistants
+				return 1
+			for(var/datum/job/J in SSjob.occupations)
+				if(J && J.current_positions < J.total_positions && J.title != job.title)
+					return 0
+		else
+			return 0
 	if(jobban_isbanned(src,rank))
 		return 0
 	if(!job.player_old_enough(src.client))
@@ -325,6 +340,11 @@
 			if (job.title in command_positions)
 				position_class = "commandPosition"
 			dat += "<a class='[position_class]' href='byond://?src=\ref[src];SelectedJob=[job.title]'>[job.title] ([job.current_positions])</a><br>"
+	if(!job_count) //if there's nowhere to go, assistant opens up.
+		for(var/datum/job/job in SSjob.occupations)
+			if(job.title != "Assistant") continue
+			dat += "<a class='otherPosition' href='byond://?src=\ref[src];SelectedJob=[job.title]'>[job.title] ([job.current_positions])</a><br>"
+			break
 	dat += "</div></div>"
 
 	// Removing the old window method but leaving it here for reference
@@ -351,8 +371,6 @@
 		client.prefs.real_name = random_name(gender)
 	client.prefs.copy_to(new_character)
 
-	src << sound(null, repeat = 0, wait = 0, volume = 85, channel = 1) // MAD JAMS cant last forever yo
-
 	if(mind)
 		mind.active = 0					//we wish to transfer the key manually
 		mind.transfer_to(new_character)					//won't transfer key since the mind is not active
@@ -362,6 +380,7 @@
 	ready_dna(new_character, client.prefs.blood_type)
 
 	new_character.key = key		//Manually transfer the key to log them in
+	new_character.stopLobbySound()
 
 	return new_character
 

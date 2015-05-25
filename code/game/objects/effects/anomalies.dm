@@ -27,7 +27,7 @@
 
 
 /obj/effect/anomaly/proc/anomalyNeutralize()
-	new /obj/effect/effect/bad_smoke(loc)
+	PoolOrNew(/obj/effect/effect/bad_smoke, loc)
 
 	for(var/atom/movable/O in src)
 		O.loc = src.loc
@@ -35,7 +35,7 @@
 	qdel(src)
 
 
-/obj/effect/anomaly/attackby(obj/item/I, mob/user)
+/obj/effect/anomaly/attackby(obj/item/I, mob/user, params)
 	if(istype(I, /obj/item/device/analyzer))
 		user << "<span class='notice'>Analyzing... [src]'s unstable field is fluctuating along frequency [aSignal.code]:[format_frequency(aSignal.frequency)].</span>"
 

@@ -23,21 +23,30 @@ var/global/datum/controller/game_controller/master_controller = new()
 			init_subtypes(/datum/subsystem, subsystems)
 
 		master_controller = src
+	calculateGCD()
+
 
 /*
 calculate the longest number of ticks the MC can wait between each cycle without causing subsystems to not fire on schedule
-Note: you can set the datum's defined processing_interval to some integer to set an -absolute- minimum wait duration.
 */
+/datum/controller/game_controller/proc/calculateGCD()
 	var/GCD
 	for(var/datum/subsystem/SS in subsystems)
 		if(SS.wait)
-			GCD = Gcd(SS.wait, GCD)
+			GCD = Gcd(round(SS.wait*10), GCD)
 	GCD = round(GCD)
-	if(GCD > processing_interval)
-		processing_interval = GCD
+	if(GCD < world.tick_lag*10)
+		GCD = world.tick_lag*10
+	processing_interval = GCD/10
 
-/datum/controller/game_controller/proc/setup()
-	world << "<span class='userdanger'>Initializing Subsystems...</span>"
+/datum/controller/game_controller/proc/setup(zlevel)
+	if (zlevel && zlevel > 0 && zlevel <= world.maxz)
+		for(var/datum/subsystem/S in subsystems)
+			S.Initialize(world.timeofday, zlevel)
+			sleep(-1)
+		return
+	world << "<span class='boldannounce'>Initializing Subsystems...</span>"
+
 
 	//sort subsystems by priority, so they initialize in the correct order
 	sortTim(subsystems, /proc/cmp_subsystem_priority)
@@ -49,10 +58,10 @@ Note: you can set the datum's defined processing_interval to some integer to set
 
 	//Eventually all this other setup stuff should be contained in subsystems and done in subsystem.Initialize()
 	for(var/datum/subsystem/S in subsystems)
-		S.Initialize(world.timeofday)
+		S.Initialize(world.timeofday, zlevel)
 		sleep(-1)
 
-	world << "<span class='userdanger'>Initializations complete</span>"
+	world << "<span class='boldannounce'>Initializations complete</span>"
 	world.log << "Initializations complete"
 
 	world.sleep_offline = 1
@@ -65,7 +74,7 @@ Note: you can set the datum's defined processing_interval to some integer to set
 //used for smoothing out the cost values so they don't fluctuate wildly
 #define MC_AVERAGE(average, current) (0.8*(average) + 0.2*(current))
 
-/datum/controller/game_controller/proc/process()
+/datum/controller/game_controller/process()
 	if(!Failsafe)	new /datum/controller/failsafe()
 	spawn(0)
 		var/timer = world.time
@@ -74,7 +83,6 @@ Note: you can set the datum's defined processing_interval to some integer to set
 			SS.next_fire = timer
 
 		var/start_time
-		var/cpu
 
 		while(1)	//far more efficient than recursively calling ourself
 			if(processing_interval > 0)
@@ -85,16 +93,19 @@ Note: you can set the datum's defined processing_interval to some integer to set
 				for(var/datum/subsystem/SS in subsystems)
 					if(SS.can_fire > 0)
 						if(SS.next_fire <= world.time)
-							SS.next_fire += SS.wait
-
 							timer = world.timeofday
-							cpu = world.cpu
 							last_thing_processed = SS.type
 							SS.last_fire = world.time
 							SS.fire()
-							SS.cpu = MC_AVERAGE(SS.cpu, world.cpu - cpu)
 							SS.cost = MC_AVERAGE(SS.cost, world.timeofday - timer)
+							if (SS.dynamic_wait)
+								var/oldwait = SS.wait
+								SS.wait = min(max(round(SS.cost*SS.dwait_delta, 0.1),SS.dwait_lower),SS.dwait_upper)
+								if (oldwait != SS.wait)
+									calculateGCD()
+							SS.next_fire += SS.wait
 							++SS.times_fired
+
 							sleep(-1)
 
 				cost = MC_AVERAGE(cost, world.timeofday - start_time)
@@ -108,6 +119,7 @@ Note: you can set the datum's defined processing_interval to some integer to set
 /datum/controller/game_controller/proc/roundHasStarted()
 	for(var/datum/subsystem/SS in subsystems)
 		SS.can_fire = 1
+		SS.next_fire = world.time + rand(0,SS.wait)
 
 /datum/controller/game_controller/proc/Recover()
 	var/msg = "## DEBUG: [time2text(world.timeofday)] MC restarted. Reports:\n"

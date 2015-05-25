@@ -144,6 +144,14 @@
 	flags = BLOCKHAIR
 	flags_inv = HIDEMASK|HIDEEARS|HIDEEYES|HIDEFACE
 
+/obj/item/clothing/head/griffin
+	name = "griffon head"
+	desc = "Why not 'eagle head'? Who knows."
+	icon_state = "griffinhat"
+	item_state = "griffinhat"
+	flags = BLOCKHAIR
+	flags_inv = HIDEMASK|HIDEEARS|HIDEEYES|HIDEFACE
+
 /obj/item/clothing/head/bearpelt
 	name = "bear pelt hat"
 	desc = "Fuzzy."
@@ -203,3 +211,8 @@
 	item_state = "that"
 	cold_protection = HEAD
 	min_cold_protection_temperature = FIRE_HELM_MIN_TEMP_PROTECT
+
+/obj/item/clothing/head/jester
+	name = "jester hat"
+	desc = "A hat with bells, to add some merryness to the suit."
+	icon_state = "jester_hat"

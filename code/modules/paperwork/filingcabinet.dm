@@ -35,8 +35,13 @@
 		if(istype(I, /obj/item/weapon/paper) || istype(I, /obj/item/weapon/folder) || istype(I, /obj/item/weapon/photo))
 			I.loc = src
 
+/obj/structure/filingcabinet/ex_act(severity, target)
+	for(var/obj/item/I in src)
+		I.loc = src.loc
+	qdel(src)
+	..()
 
-/obj/structure/filingcabinet/attackby(obj/item/P, mob/user)
+/obj/structure/filingcabinet/attackby(obj/item/P, mob/user, params)
 	if(istype(P, /obj/item/weapon/paper) || istype(P, /obj/item/weapon/folder) || istype(P, /obj/item/weapon/photo) || istype(P, /obj/item/documents))
 		user << "<span class='notice'>You put [P] in [src].</span>"
 		user.drop_item()
@@ -50,7 +55,7 @@
 		anchored = !anchored
 		user << "<span class='notice'>You [anchored ? "wrench" : "unwrench"] [src].</span>"
 	else
-		user << "<span class='notice'>You can't put [P] in [src]!</span>"
+		user << "<span class='warning'>You can't put [P] in [src]!</span>"
 
 
 /obj/structure/filingcabinet/attack_hand(mob/user)

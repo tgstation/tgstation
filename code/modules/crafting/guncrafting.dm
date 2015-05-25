@@ -4,8 +4,8 @@
 // PARTS //
 
 /obj/item/weaponcrafting/reciever
-	name = "modular reciever"
-	desc = "A prototype modular reciever and trigger assembly for a firearm."
+	name = "modular receiver"
+	desc = "A prototype modular receiver and trigger assembly for a firearm."
 	icon = 'icons/obj/improvised.dmi'
 	icon_state = "reciever"
 
@@ -18,9 +18,9 @@
 
 // CRAFTING //
 
-/obj/item/weaponcrafting/reciever/attackby(obj/item/W as obj, mob/user as mob)
+/obj/item/weaponcrafting/reciever/attackby(obj/item/W as obj, mob/user as mob, params)
 	if(istype(W,/obj/item/pipe))
-		user << "You attach the shotgun barrel to the reciever. The pins seem loose."
+		user << "<span class='notice'>You attach the shotgun barrel to the receiver. The pins seem loose.</span>"
 		var/obj/item/weaponcrafting/ishotgunconstruction/I = new /obj/item/weaponcrafting/ishotgunconstruction
 		user.unEquip(src)
 		user.put_in_hands(I)
@@ -32,17 +32,17 @@
 
 /obj/item/weaponcrafting/ishotgunconstruction
 	name = "slightly conspicuous metal construction"
-	desc = "A long pipe attached to a firearm reciever. The pins seem loose."
+	desc = "A long pipe attached to a firearm receiver. The pins seem loose."
 	icon = 'icons/obj/improvised.dmi'
 	icon_state = "ishotgunstep1"
 
-/obj/item/weaponcrafting/ishotgunconstruction/attackby(var/obj/item/I, mob/user as mob)
+/obj/item/weaponcrafting/ishotgunconstruction/attackby(var/obj/item/I, mob/user as mob, params)
 	..()
 	if(istype(I, /obj/item/weapon/screwdriver))
 		var/obj/item/weaponcrafting/ishotgunconstruction2/C = new /obj/item/weaponcrafting/ishotgunconstruction2
 		user.unEquip(src)
 		user.put_in_hands(C)
-		user << "<span class='notice'>You screw the pins into place, securing the pipe to the reciever.</span>"
+		user << "<span class='notice'>You screw the pins into place, securing the pipe to the receiver.</span>"
 		qdel(src)
 
 /obj/item/weaponcrafting/ishotgunconstruction2
@@ -51,9 +51,9 @@
 	icon = 'icons/obj/improvised.dmi'
 	icon_state = "ishotgunstep1"
 
-/obj/item/weaponcrafting/ishotgunconstruction2/attackby(obj/item/W as obj, mob/user as mob)
+/obj/item/weaponcrafting/ishotgunconstruction2/attackby(obj/item/W as obj, mob/user as mob, params)
 	if(istype(W,/obj/item/weaponcrafting/stock))
-		user << "You attach the stock to the reciever-barrel assembly."
+		user << "<span class='notice'>You attach the stock to the receiver-barrel assembly.</span>"
 		var/obj/item/weaponcrafting/ishotgunconstruction3/I = new /obj/item/weaponcrafting/ishotgunconstruction3
 		user.unEquip(src)
 		user.put_in_hands(I)
@@ -63,11 +63,11 @@
 
 /obj/item/weaponcrafting/ishotgunconstruction3
 	name = "extremely conspicuous metal construction"
-	desc = "A reciever-barrel shotgun assembly with a loose wooden stock. There's no way you can fire it without the stock coming loose."
+	desc = "A receiver-barrel shotgun assembly with a loose wooden stock. There's no way you can fire it without the stock coming loose."
 	icon = 'icons/obj/improvised.dmi'
 	icon_state = "ishotgunstep2"
 
-/obj/item/weaponcrafting/ishotgunconstruction3/attackby(var/obj/item/I, mob/user as mob)
+/obj/item/weaponcrafting/ishotgunconstruction3/attackby(var/obj/item/I, mob/user as mob, params)
 	..()
 	if(istype(I, /obj/item/stack/packageWrap))
 		var/obj/item/stack/packageWrap/C = I
@@ -78,6 +78,6 @@
 			user << "<span class='notice'>You tie the wrapping paper around the stock and the barrel to secure it.</span>"
 			qdel(src)
 		else
-			user << "<span class='warning'>You need at least five feet of wrapping paper to secure the stock.</span>"
+			user << "<span class='warning'>You need at least five feet of wrapping paper to secure the stock!</span>"
 			return
 

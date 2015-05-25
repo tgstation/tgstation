@@ -3,7 +3,7 @@ var/list/icons_to_ignore_at_floor_init = list("damaged1","damaged2","damaged3","
 				"damaged5","panelscorched","floorscorched1","floorscorched2","platingdmg1","platingdmg2",
 				"platingdmg3","plating","light_on","light_on_flicker1","light_on_flicker2",
 				"light_on_clicker3","light_on_clicker4","light_on_clicker5","light_broken",
-				"light_on_broken","light_off","wall_thermite","grass1","grass2","grass3","grass4",
+				"light_on_broken","light_off","wall_thermite","grass", "sand",
 				"asteroid","asteroid_dug",
 				"asteroid0","asteroid1","asteroid2","asteroid3","asteroid4",
 				"asteroid5","asteroid6","asteroid7","asteroid8","asteroid9","asteroid10","asteroid11","asteroid12",
@@ -123,10 +123,12 @@ var/list/icons_to_ignore_at_floor_init = list("damaged1","damaged2","damaged3","
 	W.update_icon()
 	return W
 
-/turf/simulated/floor/attackby(obj/item/C as obj, mob/user as mob)
+/turf/simulated/floor/attackby(obj/item/C as obj, mob/user as mob, params)
 	if(!C || !user)
 		return 1
-	if(istype(C, /obj/item/weapon/crowbar))
+	if(..())
+		return 1
+	if(intact && istype(C, /obj/item/weapon/crowbar))
 		if(broken || burnt)
 			broken = 0
 			burnt = 0
@@ -181,3 +183,6 @@ var/list/icons_to_ignore_at_floor_init = list("damaged1","damaged2","damaged3","
 						dirtoverlay.alpha = 10
 					else if(dirt > 100)
 						dirtoverlay.alpha = min(dirtoverlay.alpha+10, 200)
+
+/turf/simulated/floor/can_have_cabling()
+	return !burnt & !broken & !lava

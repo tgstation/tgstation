@@ -48,7 +48,7 @@
 
 
 /obj/item/weapon/gun/magic/wand/proc/zap_self(mob/living/user as mob)
-	user.visible_message("<span class='notice'>[user] zaps \himself with [src]!</span>")
+	user.visible_message("<span class='danger'>[user] zaps \himself with [src].</span>")
 	playsound(user, fire_sound, 50, 1)
 	user.attack_log += "\[[time_stamp()]\] <b>[user]/[user.ckey]</b> zapped \himself with a <b>[src]</b>"
 

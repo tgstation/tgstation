@@ -175,7 +175,6 @@ with open(args.targetFile.replace('.htm', '.dry.htm') if args.dryRun else args.t
     
     for _date in reversed(sorted(all_changelog_entries.keys())):
         entry_htm = '\n'
-        entry_htm += '\t\t<div class="commit sansserif">\n'
         entry_htm += '\t\t\t<h2 class="date">{date}</h2>\n'.format(date=_date.strftime(dateformat))
         write_entry = False
         for author in sorted(all_changelog_entries[_date].keys()):
@@ -191,7 +190,6 @@ with open(args.targetFile.replace('.htm', '.dry.htm') if args.dryRun else args.t
             author_htm += '\t\t\t</ul>\n'
             if len(changes_added) > 0:
                 entry_htm += author_htm
-        entry_htm += '\t\t</div>\n'
         if write_entry:
             changelog.write(entry_htm)
         

@@ -134,14 +134,31 @@ proc/vol_by_throwforce_and_or_w_class(var/obj/item/I)
 	adjust_fire_stacks(0.5)
 	IgniteMob()
 
+
+//Share fire evenly between the two mobs
+//Called in MobBump() and Crossed()
+/mob/living/proc/spreadFire(var/mob/living/L)
+	if(!istype(L))
+		return
+	var/L_old_on_fire = L.on_fire
+
+	if(on_fire) //Only spread fire stacks if we're on fire
+		fire_stacks /= 2
+		L.fire_stacks += fire_stacks
+		L.IgniteMob()
+
+	if(L_old_on_fire) //Only ignite us and gain their stacks if they were onfire before we bumped them
+		L.fire_stacks /= 2
+		fire_stacks += L.fire_stacks
+		IgniteMob()
+
 //Mobs on Fire end
 
 
 /mob/living/acid_act(var/acidpwr, var/toxpwr, var/acid_volume)
-	if(!unacidable)
-		take_organ_damage(min(10*toxpwr, acid_volume * toxpwr))
+	take_organ_damage(min(10*toxpwr, acid_volume * toxpwr))
 
-/mob/living/proc/grabbedby(mob/living/carbon/user)
+/mob/living/proc/grabbedby(mob/living/carbon/user,var/supress_message = 0)
 	if(user == src || anchored)
 		return 0
 	if(!(status_flags & CANPUSH))
@@ -151,7 +168,7 @@ proc/vol_by_throwforce_and_or_w_class(var/obj/item/I)
 
 	var/obj/item/weapon/grab/G = new /obj/item/weapon/grab(user, src)
 	if(buckled)
-		user << "<span class='notice'>You cannot grab [src], \he is buckled in!</span>"
+		user << "<span class='warning'>You cannot grab [src], \he is buckled in!</span>"
 	if(!G)	//the grab will delete itself in New if src is anchored
 		return 0
 	user.put_in_active_hand(G)
@@ -159,10 +176,11 @@ proc/vol_by_throwforce_and_or_w_class(var/obj/item/I)
 	LAssailant = user
 
 	playsound(src.loc, 'sound/weapons/thudswoosh.ogg', 50, 1, -1)
-	visible_message("<span class='warning'>[user] has grabbed [src] passively!</span>")
+	if(!supress_message)
+		visible_message("<span class='warning'>[user] has grabbed [src] passively!</span>")
 
 
-/mob/living/attack_slime(mob/living/carbon/slime/M as mob)
+/mob/living/attack_slime(mob/living/simple_animal/slime/M as mob)
 	if (!ticker)
 		M << "You cannot attack people before the game has started."
 		return
@@ -171,26 +189,11 @@ proc/vol_by_throwforce_and_or_w_class(var/obj/item/I)
 		return // can't attack while eating!
 
 	if (stat != DEAD)
+		add_logs(M, src, "attacked", admin=0)
 		M.do_attack_animation(src)
 		visible_message("<span class='danger'>The [M.name] glomps [src]!</span>", \
 				"<span class='userdanger'>The [M.name] glomps [src]!</span>")
-
-		if(M.powerlevel > 0)
-			var/stunprob = M.powerlevel * 7 + 10  // 17 at level 1, 80 at level 10
-			if(prob(stunprob))
-				M.powerlevel -= 3
-				if(M.powerlevel < 0)
-					M.powerlevel = 0
-
-				visible_message("<span class='danger'>The [M.name] has shocked [src]!</span>", \
-				"<span class='userdanger'>The [M.name] has shocked [src]!</span>")
-
-				var/datum/effect/effect/system/spark_spread/s = new /datum/effect/effect/system/spark_spread
-				s.set_up(5, 1, src)
-				s.start()
-				return 1
-	add_logs(M, src, "attacked", admin=0)
-	return
+		return 1
 
 /mob/living/attack_animal(mob/living/simple_animal/M as mob)
 	if(M.melee_damage_upper == 0)
@@ -271,3 +274,12 @@ proc/vol_by_throwforce_and_or_w_class(var/obj/item/I)
 		else
 			M.do_attack_animation(src)
 			return 1
+
+/mob/living/incapacitated()
+	if(stat || paralysis || stunned || weakened || restrained())
+		return 1
+
+/mob/living/proc/irradiate(amount)
+	if(amount)
+		var/blocked = run_armor_check(null, "rad", "Your clothes feel warm", "Your clothes feel warm")
+		apply_effect(amount, IRRADIATE, blocked)

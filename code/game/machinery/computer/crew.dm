@@ -22,7 +22,7 @@
 /obj/machinery/computer/crew/Topic(href, href_list)
 	if(..()) return
 	if (src.z > 6)
-		usr << "<span class='userdanger'>Unable to establish a connection</span>: \black You're too far away from the station!"
+		usr << "<span class='boldannounce'>Unable to establish a connection</span>: \black You're too far away from the station!"
 		return
 	if( href_list["close"] )
 		usr << browse(null, "window=crewcomp")

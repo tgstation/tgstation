@@ -35,15 +35,7 @@
 	var/shoot_sound = 'sound/weapons/Taser.ogg'
 	radio_frequency = SEC_FREQ
 	bot_type = SEC_BOT
-	bot_filter = RADIO_SECBOT
-
-	//List of weapons that secbots will not arrest for
-	var/safe_weapons = list(\
-		/obj/item/weapon/gun/energy/laser/bluetag,\
-		/obj/item/weapon/gun/energy/laser/redtag,\
-		/obj/item/weapon/gun/energy/laser/practice,\
-		/obj/item/weapon/melee/classic_baton/telescopic,\
-		/obj/item/weapon/gun/energy/kinetic_accelerator)
+	model = "ED-209"
 
 
 /obj/item/weapon/ed209_assembly
@@ -67,11 +59,9 @@
 	set_weapon() //giving it the right projectile and firing sound.
 	spawn(3)
 		var/datum/job/detective/J = new/datum/job/detective
-		botcard.access = J.get_access()
+		botcard.access += J.get_access()
 		prev_access = botcard.access
 
-
-		add_to_beacons(bot_filter)
 		if(lasercolor)
 			shot_delay = 6//Longer shot delay because JESUS CHRIST
 			check_records = 0//Don't actively target people set to arrest
@@ -169,7 +159,7 @@ Auto Patrol[]"},
 			declare_arrests = !declare_arrests
 			updateUsrDialog()
 
-/obj/machinery/bot/ed209/attackby(obj/item/weapon/W as obj, mob/user as mob)
+/obj/machinery/bot/ed209/attackby(obj/item/weapon/W as obj, mob/user as mob, params)
 	if (istype(W, /obj/item/weapon/card/id)||istype(W, /obj/item/device/pda))
 		if (allowed(user) && !open && !emagged)
 			locked = !locked
@@ -205,6 +195,17 @@ Auto Patrol[]"},
 		declare_arrests = 0
 		icon_state = "[lasercolor]ed209[on]"
 		set_weapon()
+
+/obj/machinery/bot/ed209/bullet_act(var/obj/item/projectile/Proj)
+	if(istype(Proj ,/obj/item/projectile/beam)||istype(Proj,/obj/item/projectile/bullet))
+		if((Proj.damage_type == BURN) || (Proj.damage_type == BRUTE))
+			if (!Proj.nodamage && Proj.damage < src.health)
+				threatlevel = Proj.firer.assess_threat(src)
+				threatlevel += 6
+				if(threatlevel >= 4)
+					target = Proj.firer
+					mode = BOT_HUNT
+	..()
 
 /obj/machinery/bot/ed209/bot_process()
 	if (!..())
@@ -267,7 +268,7 @@ Auto Patrol[]"},
 						var/area/location = get_area(src)
 						speak("[arrest_type ? "Detaining" : "Arresting"] level [threatlevel] scumbag <b>[target]</b> in [location].", radio_frequency)
 					target.visible_message("<span class='danger'>[src] has stunned [target]!</span>",\
-											"<span class='userdanger'>[src] has stunned [target]!</span></span>")
+											"<span class='userdanger'>[src] has stunned you!</span>")
 
 					mode = BOT_PREP_ARREST
 					anchored = 1
@@ -297,7 +298,7 @@ Auto Patrol[]"},
 						mode = BOT_ARREST
 						playsound(loc, 'sound/weapons/cablecuff.ogg', 30, 1, -2)
 						target.visible_message("<span class='danger'>[src] is trying to put zipties on [target]!</span>",\
-											"<span class='userdanger'>[src] is trying to put zipties on [target]!</span>")
+											"<span class='userdanger'>[src] is trying to put zipties on you!</span>")
 
 						spawn(60)
 							if( !Adjacent(target) || !isturf(target.loc) ) //if he's in a closet or not adjacent, we cancel cuffing.
@@ -392,9 +393,8 @@ Auto Patrol[]"},
 			continue
 
 /obj/machinery/bot/ed209/proc/check_for_weapons(var/obj/item/slot_item)
-	if(istype(slot_item, /obj/item/weapon/gun) || istype(slot_item, /obj/item/weapon/melee))
-		if(!(slot_item.type in safe_weapons))
-			return 1
+	if(slot_item && slot_item.needs_permit)
+		return 1
 	return 0
 
 /* terrible
@@ -407,7 +407,7 @@ Auto Patrol[]"},
 
 /obj/machinery/bot/ed209/explode()
 	walk_to(src,0)
-	visible_message("<span class='userdanger'>[src] blows apart!</span>")
+	visible_message("<span class='boldannounce'>[src] blows apart!</span>")
 	var/turf/Tsec = get_turf(src)
 
 	var/obj/item/weapon/ed209_assembly/Sa = new /obj/item/weapon/ed209_assembly(Tsec)
@@ -513,7 +513,7 @@ Auto Patrol[]"},
 		pulse2.anchored = 1
 		pulse2.dir = pick(cardinal)
 		spawn(10)
-			pulse2.delete()
+			qdel(pulse2)
 		var/list/mob/living/carbon/targets = new
 		for (var/mob/living/carbon/C in view(12,src))
 			if (C.stat==2)
@@ -541,7 +541,7 @@ Auto Patrol[]"},
 
 
 
-/obj/item/weapon/ed209_assembly/attackby(obj/item/weapon/W as obj, mob/user as mob)
+/obj/item/weapon/ed209_assembly/attackby(obj/item/weapon/W as obj, mob/user as mob, params)
 	..()
 
 	if(istype(W, /obj/item/weapon/pen))
@@ -586,7 +586,7 @@ Auto Patrol[]"},
 				if(WT.remove_fuel(0,user))
 					build_step++
 					name = "shielded frame assembly"
-					user << "<span class='notice'>You welded the vest to [src].</span>"
+					user << "<span class='notice'>You weld the vest to [src].</span>"
 		if(4)
 			switch(lasercolor)
 				if("b")
@@ -623,7 +623,7 @@ Auto Patrol[]"},
 			if(istype(W, /obj/item/stack/cable_coil))
 				var/obj/item/stack/cable_coil/coil = W
 				if (coil.get_amount() < 1)
-					user << "<span class='warning'>You need one length of cable to wire the ED-209.</span>"
+					user << "<span class='warning'>You need one length of cable to wire the ED-209!</span>"
 					return
 				user << "<span class='notice'>You start to wire [src]...</span>"
 				if (do_after(user, 40))
@@ -660,7 +660,7 @@ Auto Patrol[]"},
 			if(istype(W, /obj/item/weapon/screwdriver))
 				playsound(loc, 'sound/items/Screwdriver.ogg', 100, 1)
 				var/turf/T = get_turf(user)
-				user << "<span class='notice'>Now attaching the gun to the frame...</span>"
+				user << "<span class='notice'>You start attaching the gun to the frame...</span>"
 				sleep(40)
 				if(get_turf(user) == T)
 					build_step++

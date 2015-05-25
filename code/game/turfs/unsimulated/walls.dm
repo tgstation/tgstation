@@ -29,6 +29,9 @@ turf/unsimulated/wall/splashscreen
 	icon_state = "r_wall"
 	name = "reinforced wall"
 
+/turf/unsimulated/wall/vault
+	icon_state = "rockvault"
+
 /turf/unsimulated/shuttle
 	name = "shuttle"
 	icon = 'icons/turf/shuttle.dmi'
@@ -43,6 +46,26 @@ turf/unsimulated/wall/splashscreen
 	density = 1
 	blocks_air = 1
 
+//sub-type to be used for interior shuttle walls
+//won't get an underlay of the destination turf on shuttle move
+/turf/unsimulated/shuttle/wall/interior/copyTurf(turf/T)
+	if(T.type != type)
+		T = new type(T)
+		if(underlays.len)
+			T.underlays = underlays
+	if(T.icon_state != icon_state)
+		T.icon_state = icon_state
+	if(T.icon != icon)
+		T.icon = icon
+	if(T.color != color)
+		T.color = color
+	if(T.dir != dir)
+		T.dir = dir
+	return T
+
 /turf/unsimulated/shuttle/floor
 	name = "floor"
 	icon_state = "floor"
+
+/turf/unsimulated/wall/abductor
+	icon_state = "alien1"

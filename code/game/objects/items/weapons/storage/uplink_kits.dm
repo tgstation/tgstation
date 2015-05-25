@@ -8,7 +8,7 @@
 			new /obj/item/clothing/mask/gas/voice(src)
 			new /obj/item/weapon/card/id/syndicate(src)
 			new /obj/item/weapon/card/id/syndicate(src)
-			new /obj/item/clothing/shoes/syndigaloshes(src)
+			new /obj/item/clothing/shoes/sneakers/syndigaloshes(src)
 			new /obj/item/device/camera_bug(src)
 			return
 
@@ -49,7 +49,7 @@
 			new /obj/item/weapon/melee/energy/sword/saber(src)
 			new /obj/item/clothing/glasses/thermal/syndi(src)
 			new /obj/item/weapon/card/emag(src)
-			new /obj/item/clothing/shoes/syndigaloshes(src)
+			new /obj/item/clothing/shoes/sneakers/syndigaloshes(src)
 			return
 
 		if("implant")
@@ -84,7 +84,7 @@
 			new /obj/item/weapon/melee/energy/sword/saber(src)
 			new /obj/item/weapon/melee/energy/sword/saber(src)
 			new /obj/item/weapon/dnainjector/telemut/darkbundle(src)
-			new /obj/item/clothing/suit/toggle/chaplain_hoodie(src)
+			new /obj/item/clothing/suit/hooded/chaplain_hoodie(src)
 			new /obj/item/weapon/card/id/syndicate(src)
 			return
 
@@ -178,4 +178,10 @@
 	new /obj/item/weapon/reagent_containers/glass/bottle/formaldehyde(src)
 	new /obj/item/weapon/reagent_containers/glass/bottle/cyanide(src)
 	new /obj/item/weapon/reagent_containers/glass/bottle/histamine(src)
+	new /obj/item/weapon/reagent_containers/glass/bottle/initropidril(src)
+	new /obj/item/weapon/reagent_containers/glass/bottle/pancuronium(src)
+	new /obj/item/weapon/reagent_containers/glass/bottle/sodium_thiopental(src)
+	new /obj/item/weapon/reagent_containers/glass/bottle/coniine(src)
+	new /obj/item/weapon/reagent_containers/glass/bottle/curare(src)
+	new /obj/item/weapon/reagent_containers/glass/bottle/amanitin(src)
 	return

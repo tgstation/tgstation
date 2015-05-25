@@ -47,9 +47,6 @@
 	efficiency = E
 	min_health = -E * 25
 
-/obj/machinery/sleeper/allow_drop()
-	return 0
-
 /obj/machinery/sleeper/MouseDrop_T(mob/target, mob/user)
 	if(stat || user.stat || user.lying || !Adjacent(user) || !target.Adjacent(user)|| !iscarbon(target))
 		return
@@ -69,7 +66,7 @@
 		qdel(src)
 	return
 
-/obj/machinery/sleeper/attackby(obj/item/I, mob/user)
+/obj/machinery/sleeper/attackby(obj/item/I, mob/user, params)
 	if(!state_open && !occupant)
 		if(default_deconstruction_screwdriver(user, "sleeper-o", "sleeper", I))
 			return
@@ -125,7 +122,7 @@
 	var/dat
 	dat += "<h3>Injector</h3>"
 	if(occupant)
-		dat += "<A href='?src=\ref[src];inject=epinephrine'>Inject epinephrine</A>"
+		dat += "<A href='?src=\ref[src];inject=epinephrine'>Inject Epinephrine</A>"
 	else
 		dat += "<span class='linkOff'>Inject Epinephrine</span>"
 	if(occupant && occupant.health > min_health)
@@ -161,14 +158,14 @@
 		dat +=  "<div class='line'><div class='statusLabel'>\> Toxin Content:</div><div class='progressBar'><div style='width: [occupant.getToxLoss()]%;' class='progressFill bad'></div></div><div class='statusValue'>[occupant.getToxLoss()]%</div></div>"
 		dat +=  "<div class='line'><div class='statusLabel'>\> Burn Severity:</div><div class='progressBar'><div style='width: [occupant.getFireLoss()]%;' class='progressFill bad'></div></div><div class='statusValue'>[occupant.getFireLoss()]%</div></div>"
 
-		dat += "<HR><div class='line'><div class='statusLabel'>Paralysis Summary:</div><div class='statusValue'>[round(occupant.paralysis)]% [occupant.paralysis ? "([round(occupant.paralysis / 4)] seconds left)" : ""]</div></div>"
+		dat += "<HR><div class='line'><div style='width: 170px;' class='statusLabel'>Paralysis Summary:</div><div class='statusValue'>[round(occupant.paralysis)]% [occupant.paralysis ? "([round(occupant.paralysis / 4)] seconds left)" : ""]</div></div>"
 		if(occupant.getCloneLoss())
 			dat += "<div class='line'><span class='average'>Subject appears to have cellular damage.</span></div>"
 		if(occupant.getBrainLoss())
 			dat += "<div class='line'><span class='average'>Significant brain damage detected.</span></div>"
 		if(occupant.reagents.reagent_list.len)
 			for(var/datum/reagent/R in occupant.reagents.reagent_list)
-				dat += text("<div class='line'><div class='statusLabel'>[R.name]:</div><div class='statusValue'>[] units</div></div>", round(R.volume, 0.1))
+				dat += "<div class='line'><div style='width: 170px;' class='statusLabel'>[R.name]:</div><div class='statusValue'>[round(R.volume, 0.1)] units</div></div>"
 	dat += "</div>"
 
 	var/datum/browser/popup = new(user, "sleeper", "Sleeper Console", 520, 540)	//Set up the popup browser window
@@ -221,7 +218,7 @@
 			if(occupant.reagents.get_reagent_amount(chem) + 10 <= 20 * efficiency)
 				occupant.reagents.add_reagent(chem, 10)
 			var/units = round(occupant.reagents.get_reagent_amount(chem))
-			user << "<span class='notice'>Occupant now has [units] unit\s of [chem] in their bloodstream.</span>"
+			user << "<span class='notice'>Occupant now has [units] unit\s of [chemical_reagents_list[chem]] in their bloodstream.</span>"
 
 /obj/machinery/sleeper/update_icon()
 	if(state_open)

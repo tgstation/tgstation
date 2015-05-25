@@ -73,8 +73,10 @@
 			//Cameras can't track people wearing an agent card or a ninja hood.
 			if(H.wear_id && istype(H.wear_id.GetID(), /obj/item/weapon/card/id/syndicate))
 				continue
-		 	if(istype(H.head, /obj/item/clothing/head/helmet/space/space_ninja) && (H.head.flags & NODROP))
-		 		continue
+			if(istype(H.head, /obj/item/clothing/head))
+				var/obj/item/clothing/head/hat = H.head
+				if(hat.blockTracking)
+					continue
 
 		 // Now, are they viewable by a camera? (This is last because it's the most intensive check)
 		if(!near_camera(M))
@@ -96,7 +98,7 @@
 
 	return targets
 
-/mob/living/silicon/ai/verb/ai_camera_track(var/target_name as null|anything in trackable_mobs())
+/mob/living/silicon/ai/verb/ai_camera_track(var/target_name in trackable_mobs())
 	set name = "track"
 	set hidden = 1 //Don't display it on the verb lists. This verb exists purely so you can type "track Oldman Robustin" and follow his ass
 
@@ -110,7 +112,6 @@
 /mob/living/silicon/ai/proc/ai_actual_track(mob/living/target as mob)
 	if(!istype(target))	return
 	var/mob/living/silicon/ai/U = usr
-
 	U.cameraFollow = target
 	//U << text("Now tracking [] on camera.", target.name)
 	//if (U.machine == null)
@@ -127,10 +128,12 @@
 					U << "Follow camera mode terminated."
 					U.cameraFollow = null
 					return
-		 		if(istype(H.head, /obj/item/clothing/head/helmet/space/space_ninja) && (H.head.flags & NODROP))
-		 			U << "Follow camera mode terminated."
-					U.cameraFollow = null
-					return
+				if(istype(H.head, /obj/item/clothing/head))
+					var/obj/item/clothing/head/hat = H.head
+					if(hat.blockTracking)
+						U << "Follow camera mode terminated."
+						U.cameraFollow = null
+						return
 				if(H.digitalcamo)
 					U << "Follow camera mode terminated."
 					U.cameraFollow = null

@@ -11,6 +11,7 @@
 
 
 /obj/structure/bigDelivery/attack_hand(mob/user as mob)
+	playsound(src.loc, 'sound/items/poster_ripped.ogg', 50, 1)
 	qdel(src)
 
 /obj/structure/bigDelivery/Destroy()
@@ -24,7 +25,7 @@
 		AM.loc = T
 	..()
 
-/obj/structure/bigDelivery/attackby(obj/item/W as obj, mob/user as mob)
+/obj/structure/bigDelivery/attackby(obj/item/W as obj, mob/user as mob, params)
 	if(istype(W, /obj/item/device/destTagger))
 		var/obj/item/device/destTagger/O = W
 
@@ -37,15 +38,15 @@
 	else if(istype(W, /obj/item/weapon/pen))
 		var/str = copytext(sanitize(input(user,"Label text?","Set label","")),1,MAX_NAME_LEN)
 		if(!str || !length(str))
-			user << "<span class='notice'>Invalid text.</span>"
+			user << "<span class='warning'>Invalid text!</span>"
 			return
-		user.visible_message("<span class='notice'>[user] labels [src] as [str].</span>")
+		user.visible_message("[user] labels [src] as [str].")
 		name = "[name] ([str])"
 
 	else if(istype(W, /obj/item/stack/wrapping_paper) && !giftwrapped)
 		var/obj/item/stack/wrapping_paper/WP = W
 		if(WP.use(3))
-			user.visible_message("<span class='notice'>[user] wraps the package in festive paper!</span>")
+			user.visible_message("[user] wraps the package in festive paper!")
 			giftwrapped = 1
 			if(istype(wrapped, /obj/structure/closet/crate))
 				icon_state = "giftcrate"
@@ -54,7 +55,7 @@
 			if(WP.amount <= 0 && !WP.loc) //if we used our last wrapping paper, drop a cardboard tube
 				new /obj/item/weapon/c_tube( get_turf(user) )
 		else
-			user << "<span class='notice'>You need more paper.</span>"
+			user << "<span class='warning'>You need more paper!</span>"
 
 
 /obj/item/smallDelivery
@@ -74,11 +75,11 @@
 			user.put_in_hands(wrapped)
 		else
 			wrapped.loc = get_turf(src)
-
+	playsound(src.loc, 'sound/items/poster_ripped.ogg', 50, 1)
 	qdel(src)
 
 
-/obj/item/smallDelivery/attackby(obj/item/W as obj, mob/user as mob)
+/obj/item/smallDelivery/attackby(obj/item/W as obj, mob/user as mob, params)
 	if(istype(W, /obj/item/device/destTagger))
 		var/obj/item/device/destTagger/O = W
 
@@ -91,9 +92,9 @@
 	else if(istype(W, /obj/item/weapon/pen))
 		var/str = copytext(sanitize(input(user,"Label text?","Set label","")),1,MAX_NAME_LEN)
 		if(!str || !length(str))
-			user << "<span class='notice'>Invalid text.</span>"
+			user << "<span class='warning'>Invalid text!</span>"
 			return
-		user.visible_message("<span class='notice'>[user] labels [src] as [str].</span>")
+		user.visible_message("[user] labels [src] as [str].")
 		name = "[name] ([str])"
 
 	else if(istype(W, /obj/item/stack/wrapping_paper) && !giftwrapped)
@@ -101,11 +102,11 @@
 		if(WP.use(1))
 			icon_state = "giftcrate[wrapped.w_class]"
 			giftwrapped = 1
-			user.visible_message("<span class='notice'>[user] wraps the package in festive paper!</span>")
+			user.visible_message("[user] wraps the package in festive paper!")
 			if(WP.amount <= 0 && !WP.loc) //if we used our last wrapping paper, drop a cardboard tube
 				new /obj/item/weapon/c_tube( get_turf(user) )
 		else
-			user << "<span class='notice'>You need more paper.</span>"
+			user << "<span class='warning'>You need more paper!</span>"
 
 
 
@@ -160,7 +161,7 @@
 			P.wrapped = O
 			O.loc = P
 		else
-			user << "<span class='notice'>You need more paper.</span>"
+			user << "<span class='warning'>You need more paper!</span>"
 			return
 	else if(istype (target, /obj/structure/closet))
 		var/obj/structure/closet/O = target
@@ -172,13 +173,13 @@
 			O.welded = 1
 			O.loc = P
 		else
-			user << "<span class='notice'>You need more paper.</span>"
+			user << "<span class='warning'>You need more paper!</span>"
 			return
 	else
-		user << "<span class='notice'>The object you are trying to wrap is unsuitable for the sorting machinery.</span>"
+		user << "<span class='warning'>The object you are trying to wrap is unsuitable for the sorting machinery!</span>"
 		return
 
-	user.visible_message("<span class='notice'>[user] wraps [target].</span>")
+	user.visible_message("[user] wraps [target].")
 	user.attack_log += text("\[[time_stamp()]\] <font color='blue'>Has used [name] on [target]</font>")
 
 	if(amount <= 0 && !src.loc) //if we used our last wrapping paper, drop a cardboard tube
@@ -189,7 +190,7 @@
 /obj/item/device/destTagger
 	name = "destination tagger"
 	desc = "Used to set the destination of properly wrapped packages."
-	icon_state = "forensic0"
+	icon_state = "cargotagger"
 	var/currTag = 0
 	//The whole system for the sorttype var is determined based on the order of this list,
 	//disposals must always be 1, since anything that's untagged will automatically go to disposals, or sorttype = 1 --Superxpdude
@@ -321,7 +322,7 @@
 	update()
 	return
 
-/obj/machinery/disposal/deliveryChute/attackby(var/obj/item/I, var/mob/user)
+/obj/machinery/disposal/deliveryChute/attackby(var/obj/item/I, var/mob/user, params)
 	if(!I || !user)
 		return
 
@@ -341,14 +342,24 @@
 
 		if(W.remove_fuel(0,user))
 			playsound(loc, 'sound/items/Welder2.ogg', 100, 1)
-			user << "<span class='notice'>You start slicing the floorweld off the delivery chute.</span>"
+			user << "<span class='notice'>You start slicing the floorweld off the delivery chute...</span>"
 			if(do_after(user,20))
 				if(!src || !W.isOn()) return
 				Deconstruct()
-				user << "<span class='notice'>You sliced the floorweld off the delivery chute.</span>"
+				user << "<span class='notice'>You slice the floorweld off the delivery chute.</span>"
 			return
 		else
 			return
 
 /obj/machinery/disposal/deliveryChute/process()
 	return PROCESS_KILL
+
+/obj/item/weapon/c_tube
+	name = "cardboard tube"
+	desc = "A tube... of cardboard."
+	icon = 'icons/obj/items.dmi'
+	icon_state = "c_tube"
+	throwforce = 0
+	w_class = 1.0
+	throw_speed = 3
+	throw_range = 5

@@ -92,7 +92,7 @@
 	icon_state = "construct"
 	desc = "A wicked machine used by those skilled in magical arts. It is inactive"
 
-/obj/structure/constructshell/attackby(obj/item/O as obj, mob/user as mob)
+/obj/structure/constructshell/attackby(obj/item/O as obj, mob/user as mob, params)
 	if(istype(O, /obj/item/device/soulstone))
 		var/obj/item/device/soulstone/SS = O
 		SS.transfer_soul("CONSTRUCT",src,user)
@@ -169,6 +169,8 @@
 			var/mob/living/simple_animal/shade/A = locate() in C
 			if(A)
 				var/construct_class = alert(U, "Please choose which type of construct you wish to create.",,"Juggernaut","Wraith","Artificer")
+				if(!T || !T.loc)
+					return
 				switch(construct_class)
 					if("Juggernaut")
 						makeNewConstruct(/mob/living/simple_animal/construct/armored, A, U)

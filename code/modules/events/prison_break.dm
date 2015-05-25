@@ -40,7 +40,7 @@
 			else if(istype(O,/obj/structure/closet/secure_closet/brig))
 				var/obj/structure/closet/secure_closet/brig/temp = O
 				temp.locked = 0
-				temp.icon_state = temp.icon_closed
+				temp.update_icon()
 			else if(istype(O,/obj/machinery/door/airlock/security))
 				var/obj/machinery/door/airlock/security/temp = O
 				temp.prison_open()

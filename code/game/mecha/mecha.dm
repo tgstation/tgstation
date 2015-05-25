@@ -16,7 +16,7 @@
 	opacity = 1 ///opaque. Menacing.
 	anchored = 1 //no pulling around.
 	unacidable = 1 //and no deleting hoomans inside
-	layer = MOB_LAYER //icon draw layer
+	layer = MOB_LAYER - 0.2//icon draw layer
 	infra_luminosity = 15 //byond implementation is bugged.
 	force = 5
 	var/can_move = 1
@@ -236,9 +236,9 @@ obj/mecha/proc/can_use(mob/user)
 /obj/mecha/proc/drop_item()//Derpfix, but may be useful in future for engineering exosuits.
 	return
 
-/obj/mecha/Hear(message, atom/movable/speaker, message_langs, raw_message, radio_freq)
+/obj/mecha/Hear(message, atom/movable/speaker, message_langs, raw_message, radio_freq, list/spans)
 	if(speaker == occupant && radio.broadcasting)
-		radio.talk_into(speaker, text)
+		radio.talk_into(speaker, text, , spans)
 	return
 
 ////////////////////////////
@@ -344,17 +344,19 @@ obj/mecha/proc/can_use(mob/user)
 	return ..()
 
 /obj/mecha/relaymove(mob/user,direction)
+	if(!direction)
+		return
 	if(user != src.occupant) //While not "realistic", this piece is player friendly.
 		user.forceMove(get_turf(src))
-		user << "You climb out from [src]"
+		user << "<span class='notice'>You climb out from [src].</span>"
 		return 0
 	if(connected_port)
 		if(world.time - last_message > 20)
-			src.occupant_message("Unable to move while connected to the air system port")
+			src.occupant_message("<span class='warning'>Unable to move while connected to the air system port!</span>")
 			last_message = world.time
 		return 0
 	if(state)
-		occupant_message("<span class='danger'>Maintenance protocols in effect</span>")
+		occupant_message("<span class='danger'>Maintenance protocols in effect.</span>")
 		return
 	return domove(direction)
 
@@ -660,13 +662,13 @@ obj/mecha/proc/can_use(mob/user)
 ////// AttackBy //////
 //////////////////////
 
-/obj/mecha/attackby(obj/item/W as obj, mob/user as mob)
+/obj/mecha/attackby(obj/item/W as obj, mob/user as mob, params)
 
 	if(istype(W, /obj/item/device/mmi))
 		if(mmi_move_inside(W,user))
-			user << "[src]-MMI interface initialized successfuly"
+			user << "[src]-[W] interface initialized successfuly"
 		else
-			user << "[src]-MMI interface initialization failed."
+			user << "[src]-[W] interface initialization failed."
 		return
 
 	if(istype(W, /obj/item/mecha_parts/mecha_equipment))
@@ -675,9 +677,9 @@ obj/mecha/proc/can_use(mob/user)
 			if(E.can_attach(src))
 				user.drop_item()
 				E.attach(src)
-				user.visible_message("[user] attaches [W] to [src]", "You attach [W] to [src]")
+				user.visible_message("[user] attaches [W] to [src].", "<span class='notice'>You attach [W] to [src].</span>")
 			else
-				user << "You were unable to attach [W] to [src]"
+				user << "<span class='warning'>You were unable to attach [W] to [src]!</span>"
 		return
 	if(istype(W, /obj/item/weapon/card/id)||istype(W, /obj/item/device/pda))
 		if(add_req_access || maint_access)
@@ -697,18 +699,18 @@ obj/mecha/proc/can_use(mob/user)
 	else if(istype(W, /obj/item/weapon/wrench))
 		if(state==1)
 			state = 2
-			user << "You undo the securing bolts."
+			user << "<span class='notice'>You undo the securing bolts.</span>"
 		else if(state==2)
 			state = 1
-			user << "You tighten the securing bolts."
+			user << "<span class='notice'>You tighten the securing bolts.</span>"
 		return
 	else if(istype(W, /obj/item/weapon/crowbar))
 		if(state==2)
 			state = 3
-			user << "You open the hatch to the power unit"
+			user << "<span class='notice'>You open the hatch to the power unit.</span>"
 		else if(state==3)
 			state=2
-			user << "You close the hatch to the power unit"
+			user << "<span class='notice'>You close the hatch to the power unit.</span>"
 		return
 	else if(istype(W, /obj/item/stack/cable_coil))
 		if(state == 3 && hasInternalDamage(MECHA_INT_SHORT_CIRCUIT))
@@ -717,35 +719,35 @@ obj/mecha/proc/can_use(mob/user)
 				clearInternalDamage(MECHA_INT_SHORT_CIRCUIT)
 				user << "<span class='notice'>You replace the fused wires.</span>"
 			else
-				user << "<span class='warning'>You need two lengths of cable to fix this mecha.</span>"
+				user << "<span class='warning'>You need two lengths of cable to fix this mech!</span>"
 		return
 	else if(istype(W, /obj/item/weapon/screwdriver))
 		if(hasInternalDamage(MECHA_INT_TEMP_CONTROL))
 			clearInternalDamage(MECHA_INT_TEMP_CONTROL)
-			user << "You repair the damaged temperature controller."
+			user << "<span class='notice'>You repair the damaged temperature controller.</span>"
 		else if(state==3 && src.cell)
 			src.cell.forceMove(src.loc)
 			src.cell = null
 			state = 4
-			user << "You unscrew and pry out the powercell."
+			user << "<span class='notice'>You unscrew and pry out the powercell.</span>"
 			src.log_message("Powercell removed")
 		else if(state==4 && src.cell)
 			state=3
-			user << "You screw the cell in place"
+			user << "<span class='notice'>You screw the cell in place.</span>"
 		return
 
 	else if(istype(W, /obj/item/weapon/stock_parts/cell))
 		if(state==4)
 			if(!src.cell)
 				var/obj/item/weapon/stock_parts/cell/C = W
-				user << "You install the powercell"
+				user << "<span class='notice'>You install the powercell.</span>"
 				user.drop_item()
 				C.forceMove(src)
 				C.use(C.charge * 0.8)
 				src.cell = C
 				src.log_message("Powercell installed")
 			else
-				user << "There's already a powercell installed."
+				user << "<span class='notice'>There's already a powercell installed.</span>"
 		return
 
 	else if(istype(W, /obj/item/weapon/weldingtool) && user.a_intent != "harm")
@@ -760,18 +762,18 @@ obj/mecha/proc/can_use(mob/user)
 					user.visible_message("<span class='notice'>[user] repairs some damage to [src.name].</span>")
 					src.health += min(10, initial(src.health)-src.health)
 			else
-				user << "<span class='warning'>The welder must be on for this task.</span>"
+				user << "<span class='warning'>The welder must be on for this task!</span>"
 				return 1
 		else
-			user << "<span class='warning'>The [src.name] is at full integrity.</span>"
+			user << "<span class='warning'>The [src.name] is at full integrity!</span>"
 		return 1
 
 	else if(istype(W, /obj/item/mecha_parts/mecha_tracking))
 		if(!user.unEquip(W))
-			user << "<span class='notice'>\the [W] is stuck to your hand, you cannot put it in \the [src]</span>"
+			user << "<span class='warning'>\the [W] is stuck to your hand, you cannot put it in \the [src]!</span>"
 			return
 		W.forceMove(src)
-		user.visible_message("[user] attaches [W] to [src].", "You attach [W] to [src]")
+		user.visible_message("[user] attaches [W] to [src].", "<span class='notice'>You attach [W] to [src].</span>")
 		return
 
 	else if(!(W.flags&NOBLUDGEON))
@@ -945,22 +947,22 @@ obj/mecha/proc/can_use(mob/user)
 		user << "<span class='warning'>Access denied.</span>"
 		src.log_append_to_last("Permission denied.")
 		return
-	for(var/mob/living/carbon/slime/S in range(1,user))
+	for(var/mob/living/simple_animal/slime/S in range(1,user))
 		if(S.Victim == user)
-			user << "You're too busy getting your life sucked out of you."
+			user << "<span class='warning'>You're too busy getting your life sucked out of you!</span>"
 			return
 
-	visible_message("<span class='notice'>[user] starts to climb into [src.name]")
+	visible_message("[user] starts to climb into [src.name].")
 
 	if(enter_after(40,user))
 		if(src.health <= 0)
-			user << "You cannot get in the [src.name], it has been destroyed."
+			user << "<span class='warning'>You cannot get in the [src.name], it has been destroyed!</span>"
 		else if(!src.occupant)
 			moved_inside(user)
 		else if(src.occupant!=user)
-			user << "[src.occupant] was faster. Try better next time, loser."
+			user << "<span class='danger'>[src.occupant] was faster! Try better next time, loser.</span>"
 	else
-		user << "You stop entering the exosuit."
+		user << "<span class='warning'>You stop entering the exosuit!</span>"
 	return
 
 /obj/mecha/proc/moved_inside(var/mob/living/carbon/human/H as mob)
@@ -991,41 +993,41 @@ obj/mecha/proc/can_use(mob/user)
 
 /obj/mecha/proc/mmi_move_inside(var/obj/item/device/mmi/mmi_as_oc as obj,mob/user as mob)
 	if(!mmi_as_oc.brainmob || !mmi_as_oc.brainmob.client)
-		user << "Consciousness matrix not detected."
+		user << "<span class='warning'>Consciousness matrix not detected!</span>"
 		return 0
 	else if(mmi_as_oc.brainmob.stat)
-		user << "Beta-rhythm below acceptable level."
+		user << "<span class='warning'>Beta-rhythm below acceptable level!</span>"
 		return 0
 	else if(occupant)
-		user << "Occupant detected."
+		user << "<span class='warning'>Occupant detected!</span>"
 		return 0
 	else if(dna && dna!=mmi_as_oc.brainmob.dna.unique_enzymes)
-		user << "Stop it!"
+		user << "<span class='warning'>Stop it!</span>"
 		return 0
 	//Added a message here since people assume their first click failed or something./N
 //	user << "Installing MMI, please stand by."
 
-	visible_message("<span class='notice'>[user] starts to insert an MMI into [src.name]</span>")
+	visible_message("<span class='notice'>[user] starts to insert an MMI into [src.name].</span>")
 
 	if(enter_after(40,user))
 		if(!occupant)
 			return mmi_moved_inside(mmi_as_oc,user)
 		else
-			user << "Occupant detected."
+			user << "<span class='warning'>Occupant detected!</span>"
 	else
-		user << "You stop inserting the MMI."
+		user << "<span class='notice'>You stop inserting the MMI.</span>"
 	return 0
 
 /obj/mecha/proc/mmi_moved_inside(var/obj/item/device/mmi/mmi_as_oc as obj,mob/user as mob)
 	if(mmi_as_oc && user in range(1))
 		if(!mmi_as_oc.brainmob || !mmi_as_oc.brainmob.client)
-			user << "Consciousness matrix not detected."
+			user << "<span class='notice'>Consciousness matrix not detected!</span>"
 			return 0
 		else if(mmi_as_oc.brainmob.stat)
-			user << "Beta-rhythm below acceptable level."
+			user << "<span class='warning'>Beta-rhythm below acceptable level!</span>"
 			return 0
 		if(!user.unEquip(mmi_as_oc))
-			user << "<span class='notice'>\the [mmi_as_oc] is stuck to your hand, you cannot put it in \the [src]</span>"
+			user << "<span class='warning'>\the [mmi_as_oc] is stuck to your hand, you cannot put it in \the [src]!</span>"
 			return
 		var/mob/brainmob = mmi_as_oc.brainmob
 		brainmob.reset_view(src)
@@ -1135,6 +1137,7 @@ obj/mecha/proc/can_use(mob/user)
 			if(mmi.brainmob)
 				occupant.loc = mmi
 			mmi.mecha = null
+			mmi.update_icon()
 			src.occupant.canmove = 0
 			src.verbs += /obj/mecha/verb/eject
 		src.occupant = null
@@ -1516,7 +1519,7 @@ var/year_integer = text2num(year) // = 2013???
 		return
 	if(href_list["dna_lock"])
 		if(usr != src.occupant)	return
-		if(src.occupant)
+		if(src.occupant && occupant.dna)
 			src.dna = src.occupant.dna.unique_enzymes
 			src.occupant_message("You feel a prick as the needle takes your DNA sample.")
 		return
@@ -1525,7 +1528,7 @@ var/year_integer = text2num(year) // = 2013???
 		src.dna = null
 	if(href_list["repair_int_control_lost"])
 		if(usr != src.occupant)	return
-		src.occupant_message("Recalibrating coordination system.")
+		src.occupant_message("Recalibrating coordination system...")
 		src.log_message("Recalibration of coordination system started.")
 		var/T = src.loc
 		if(do_after(100))
@@ -1534,7 +1537,7 @@ var/year_integer = text2num(year) // = 2013???
 				src.occupant_message("<span class='notice'>Recalibration successful.</span>")
 				src.log_message("Recalibration of coordination system finished with 0 errors.")
 			else
-				src.occupant_message("<span class='danger'>Recalibration failed.</span>")
+				src.occupant_message("<span class='warning'>Recalibration failed!</span>")
 				src.log_message("Recalibration of coordination system failed with 1 error.",1)
 
 	//debug
@@ -1624,6 +1627,9 @@ var/year_integer = text2num(year) // = 2013???
 	if(!isnull(get_charge()))
 		cell.give(amount)
 		return 1
+	return 0
+
+/obj/mecha/allow_drop()
 	return 0
 
 

@@ -17,13 +17,6 @@
 	Therefore, the top right corner (except during admin shenanigans) is at "15,15"
 */
 
-//Upper left action buttons, displayed when you pick up an item that has this enabled.
-#define ui_action_slot1 "WEST  :6, NORTH-1:26"
-#define ui_action_slot2 "WEST+1:8, NORTH-1:26"
-#define ui_action_slot3 "WEST+2:10,NORTH-1:26"
-#define ui_action_slot4 "WEST+3:12,NORTH-1:26"
-#define ui_action_slot5 "WEST+4:14,NORTH-1:26"
-
 //Lower left, persistant menu
 #define ui_inventory "WEST:6,SOUTH:5"
 
@@ -54,6 +47,7 @@
 #define ui_borg_camera "CENTER+3:21,SOUTH:5"	//borgs
 #define ui_borg_album "CENTER+4:21,SOUTH:5"		//borgs
 
+#define ui_monkey_head "CENTER-4:13,SOUTH:5"	//monkey
 #define ui_monkey_mask "CENTER-3:14,SOUTH:5"	//monkey
 #define ui_monkey_back "CENTER-2:15,SOUTH:5"	//monkey
 
@@ -77,25 +71,22 @@
 #define ui_borg_radio "EAST-1:28,SOUTH+1:7"
 #define ui_borg_intents "EAST-2:26,SOUTH:5"
 
-//Upper-middle right (damage indicators)
-#define ui_toxin "EAST-1:28,CENTER+5:27"
-#define ui_fire "EAST-1:28,CENTER+4:25"
-#define ui_oxygen "EAST-1:28,CENTER+3:23"
-#define ui_pressure "EAST-1:28,CENTER+2:21"
 
-#define ui_alien_toxin "EAST-1:28,CENTER+5:25"
-#define ui_alien_fire "EAST-1:28,CENTER+4:25"
-#define ui_alien_oxygen "EAST-1:28,CENTER+3:25"
-#define ui_alien_nightvision "EAST-1:28,CENTER+2:25"
+//Upper-middle right (alerts)
+#define ui_alert1 "EAST-1:28,CENTER+5:27"
+#define ui_alert2 "EAST-1:28,CENTER+4:25"
+#define ui_alert3 "EAST-1:28,CENTER+3:23"
+#define ui_alert4 "EAST-1:28,CENTER+2:21"
+#define ui_alert5 "EAST-1:28,CENTER+1:19"
+
 
 //Middle right (status indicators)
-#define ui_nutrition "EAST-1:28,CENTER-3:11"
-#define ui_temp "EAST-1:28,CENTER-2:13"
-#define ui_healthdoll "EAST-1:28,CENTER-1:15"
-#define ui_health "EAST-1:28,CENTER:17"
-#define ui_internal "EAST-1:28,CENTER+1:19"
+#define ui_healthdoll "EAST-1:28,CENTER-2:13"
+#define ui_health "EAST-1:28,CENTER-1:15"
+#define ui_internal "EAST-1:28,CENTER:17"
 
 //borgs and aliens
+#define ui_alien_nightvision "EAST-1:28,CENTER:17"
 #define ui_borg_health "EAST-1:28,CENTER-1:15"		//borgs have the health display where humans have the pressure damage indicator.
 #define ui_alien_health "EAST-1:28,CENTER-1:15"	//aliens have the health display where humans have the pressure damage indicator.
 #define ui_alienplasmadisplay "EAST-1:28,CENTER-2:15"

@@ -2,7 +2,7 @@
 #define SAVEFILE_VERSION_MIN	8
 
 //This is the current version, anything below this will attempt to update (if it's not obsolete)
-#define SAVEFILE_VERSION_MAX	10
+#define SAVEFILE_VERSION_MAX	11
 /*
 SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Carn
 	This proc checks if the current directory of the savefile S needs updating
@@ -33,7 +33,9 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 /datum/preferences/proc/update_preferences(current_version)
 	if(current_version < 10)
 		toggles |= MEMBER_PUBLIC
-	return
+	if(current_version < 11)
+		chat_toggles = TOGGLES_DEFAULT_CHAT
+		toggles = TOGGLES_DEFAULT
 
 //should this proc get fairly long (say 3 versions long),
 //just increase SAVEFILE_VERSION_MIN so it's not as far behind
@@ -99,6 +101,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	S["UI_style"]			>> UI_style
 	S["be_special"]			>> be_special
 	S["default_slot"]		>> default_slot
+	S["chat_toggles"]		>> chat_toggles
 	S["toggles"]			>> toggles
 	S["ghost_form"]			>> ghost_form
 
@@ -132,6 +135,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	S["be_special"]			<< be_special
 	S["default_slot"]		<< default_slot
 	S["toggles"]			<< toggles
+	S["chat_toggles"]		<< chat_toggles
 	S["ghost_form"]			<< ghost_form
 
 	return 1
@@ -183,6 +187,12 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	S["socks"]				>> socks
 	S["backbag"]			>> backbag
 	S["mutant_color"]		>> mutant_color
+	S["clown_name"]			>> custom_names["clown"]
+	S["mime_name"]			>> custom_names["mime"]
+	S["ai_name"]			>> custom_names["ai"]
+	S["cyborg_name"]		>> custom_names["cyborg"]
+	S["religion_name"]		>> custom_names["religion"]
+	S["deity_name"]			>> custom_names["deity"]
 
 	//Jobs
 	S["userandomjob"]		>> userandomjob
@@ -270,6 +280,12 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	S["backbag"]			<< backbag
 	S["species"]			<< pref_species.name
 	S["mutant_color"]		<< mutant_color
+	S["clown_name"]			<< custom_names["clown"]
+	S["mime_name"]			<< custom_names["mime"]
+	S["ai_name"]			<< custom_names["ai"]
+	S["cyborg_name"]		<< custom_names["cyborg"]
+	S["religion_name"]		<< custom_names["religion"]
+	S["deity_name"]			<< custom_names["deity"]
 
 	//Jobs
 	S["userandomjob"]		<< userandomjob

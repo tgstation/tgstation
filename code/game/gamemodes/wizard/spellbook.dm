@@ -12,14 +12,15 @@
 	var/op = 1
 	var/activepage
 	var/list/active_challenges = list()
+	var/mob/living/carbon/human/owner
 
-/obj/item/weapon/spellbook/attackby(obj/item/O as obj, mob/user as mob)
+/obj/item/weapon/spellbook/attackby(obj/item/O as obj, mob/user as mob, params)
 	if(istype(O, /obj/item/weapon/antag_spawner/contract))
 		var/obj/item/weapon/antag_spawner/contract/contract = O
 		if(contract.used)
-			user << "The contract has been used, you can't get your points back now."
+			user << "<span class='warning'>The contract has been used, you can't get your points back now!</span>"
 		else
-			user << "You feed the contract back into the spellbook, refunding your points."
+			user << "<span class='notice'>You feed the contract back into the spellbook, refunding your points.</span>"
 			src.max_uses++
 			src.uses++
 			qdel(O)
@@ -28,6 +29,13 @@
 
 
 /obj/item/weapon/spellbook/attack_self(mob/user as mob)
+	if(!owner)
+		user << "<span class='notice'>You bind the spellbook to yourself.</span>"
+		owner = user
+		return
+	if(user != owner)
+		user << "<span class='warning'>The [name] does not recognize you as it's owner and refuses to open!</span>"
+		return
 	user.set_machine(src)
 	var/dat
 	if(temp)
@@ -38,7 +46,7 @@
 		dat += "<HR>"
 		dat += "<A href='byond://?src=\ref[src];spell_choice=spells'>Learn and Improve Magical Abilities</A><BR>"
 		dat += "<A href='byond://?src=\ref[src];spell_choice=artifacts'>Summon Magical Tools and Weapons</A><BR>"
-		if(ticker.mode != "ragin' mages") // we totally need summon guns x100
+		if(ticker.mode.name != "ragin' mages") // we totally need summon guns x100
 			dat += "<A href='byond://?src=\ref[src];spell_choice=challenge'>Raise The Stakes For More Power</A><BR>"
 		dat += "<HR>"
 		dat += "<A href='byond://?src=\ref[src];spell_choice=rememorize'>Re-memorize Spells</A><BR>"
@@ -92,15 +100,18 @@
 		dat += "<A href='byond://?src=\ref[src];spell_choice=knock'>Knock</A> (10)<BR>"
 		dat += "<I>This spell opens nearby doors and does not require wizard garb.</I><BR>"
 
-		dat += "<A href='byond://?src=\ref[src];spell_choice=horseman'>Curse of the Horseman</A> (15)<BR>"
-		dat += "<I>This spell will curse a person to wear an unremovable horse mask (it has glue on the inside) and speak like a horse. It does not require wizard garb.</I><BR>"
+		dat += "<A href='byond://?src=\ref[src];spell_choice=barnyard'>Curse of the Barnyard</A> (15)<BR>"
+		dat += "<I> This Spell dooms any unlucky soul to the life of a barnyard animal. Well not exactly but you still get to laugh at them when they MOO!. It does not require a wizard garb.</I><BR>"
 
 		dat += "<A href='byond://?src=\ref[src];spell_choice=fleshtostone'>Flesh to Stone</A> (60)<BR>"
 		dat += "<I>This spell will curse a person to immediately turn into an unmoving statue. The effect will eventually wear off if the statue is not destroyed.</I><BR>"
 
+		dat += "<A href='byond://?src=\ref[src];spell_choice=lightningbolt'>Lightning Bolt</A> (30)<BR>"
+		dat += "<I>Charge up and throw lightning bolt at the nearby enemy. Classic. The longer you charge the more powerful the spell, beware of overcharge however!</I><BR>"
+
 		dat += "<A href='byond://?src=\ref[src];spell_choice=summonitem'>Instant Summons</A> (10)<BR>"
 		dat += "<I>This spell can be used to bind a valuable item to you, bringing it to your hand at will. Using this spell while holding the bound item will allow you to unbind it. It does not require wizard garb.</I><BR>"
-		if(ticker.mode != "ragin' mages") // we totally need summon guns x100
+		if(ticker.mode.name != "ragin' mages" && !config.no_summon_events) // we totally need summon greentext x100
 			dat += "<A href='byond://?src=\ref[src];spell_choice=summonevents'>Summon Events</A> (One time use, persistent global spell)<BR>"
 			dat += "<I>Give Murphy's law a little push and replace all events with special wizard ones that will confound and confuse everyone. Multiple castings increase the rate of these events.</I><BR>"
 
@@ -116,11 +127,11 @@
 
 		dat += "<HR>"
 
-		if(!("summon guns" in active_challenges))
+		if(!("summon guns" in active_challenges) && !config.no_summon_guns)
 			dat += "<A href='byond://?src=\ref[src];spell_choice=summonguns'>Summon Guns</A> (Single use only, global spell)<BR>"
 			dat += "<I>Nothing could possibly go wrong with arming a crew of lunatics just itching for an excuse to kill you. Just be careful not to stand still too long!</I><BR>"
 
-		if(!("summon magic" in active_challenges))
+		if(!("summon magic" in active_challenges) && !config.no_summon_magic)
 			dat += "<A href='byond://?src=\ref[src];spell_choice=summonmagic'>Summon Magic</A> (Single use only, global spell)<BR>"
 			dat += "<I>Share the wonders of magic with the crew and show them why they aren't to be trusted with it at the same time.</I><BR>"
 
@@ -153,6 +164,10 @@
 
 		dat += "<A href='byond://?src=\ref[src];spell_choice=soulstone'>Six Soul Stone Shards and the spell Artificer</A><BR>"
 		dat += "<I>Soul Stone Shards are ancient tools capable of capturing and harnessing the spirits of the dead and dying. The spell Artificer allows you to create arcane machines for the captured souls to pilot.</I><BR>"
+		dat += "<HR>"
+
+		dat += "<A href='byond://?src=\ref[src];spell_choice=necrostone'>A Necromantic Stone</A><BR>"
+		dat += "<I>A Necromantic stone is able to resurrect three dead individuals as skeletal thralls for you to command.</I>"
 		dat += "<HR>"
 
 		dat += "<A href='byond://?src=\ref[src];spell_choice=wands'>Wand Assortment</A><BR>"
@@ -208,7 +223,7 @@
 				uses--
 			/*
 			*/
-				var/list/available_spells = list(magicmissile = "Magic Missile", fireball = "Fireball", disintegrate = "Disintegrate", disabletech = "Disable Tech", repulse = "Repulse", smoke = "Smoke", blind = "Blind", mindswap = "Mind Transfer", forcewall = "Forcewall", blink = "Blink", teleport = "Teleport", mutate = "Mutate", etherealjaunt = "Ethereal Jaunt", knock = "Knock", horseman = "Curse of the Horseman", fleshtostone = "Flesh to Stone", summonitem = "Instant Summons", summonguns = "Summon Guns", summonmagic = "Summon Magic", summonevents = "Summon Events", staffchange = "Staff of Change", soulstone = "Six Soul Stone Shards and the spell Artificer", armor = "Mastercrafted Armor Set", staffanimate = "Staff of Animation", staffchaos = "Staff of Chaos", staffdoor = "Staff of Door Creation", wands = "Wand Assortment")
+				var/list/available_spells = list(magicmissile = "Magic Missile", fireball = "Fireball", disintegrate = "Disintegrate", disabletech = "Disable Tech", repulse = "Repulse", smoke = "Smoke", blind = "Blind", mindswap = "Mind Transfer", forcewall = "Forcewall", blink = "Blink", teleport = "Teleport", mutate = "Mutate", etherealjaunt = "Ethereal Jaunt", knock = "Knock", barnyard = "Curse of the Barnyard", fleshtostone = "Flesh to Stone", summonitem = "Instant Summons", summonguns = "Summon Guns", summonmagic = "Summon Magic", summonevents = "Summon Events", staffchange = "Staff of Change", soulstone = "Six Soul Stone Shards and the spell Artificer", necrostone = "A Necromantic Stone", armor = "Mastercrafted Armor Set", staffanimate = "Staff of Animation", staffchaos = "Staff of Chaos", staffdoor = "Staff of Door Creation", wands = "Wand Assortment", lightningbolt = "Lightning Bolt")
 				var/already_knows = 0
 				for(var/obj/effect/proc_holder/spell/aspell in H.mind.spell_list)
 					if(available_spells[href_list["spell_choice"]] == initial(aspell.name))
@@ -244,72 +259,72 @@
 					switch(href_list["spell_choice"])
 						if("magicmissile")
 							feedback_add_details("wizard_spell_learned","MM") //please do not change the abbreviation to keep data processing consistent. Add a unique id to any new spells
-							H.mind.spell_list += new /obj/effect/proc_holder/spell/targeted/projectile/magic_missile(null)
+							H.mind.AddSpell(new /obj/effect/proc_holder/spell/targeted/projectile/magic_missile(null))
 							temp = "You have learned magic missile."
 						if("fireball")
 							feedback_add_details("wizard_spell_learned","FB") //please do not change the abbreviation to keep data processing consistent. Add a unique id to any new spells
-							H.mind.spell_list += new /obj/effect/proc_holder/spell/dumbfire/fireball(null)
+							H.mind.AddSpell(new /obj/effect/proc_holder/spell/dumbfire/fireball(null))
 							temp = "You have learned fireball."
 						if("disintegrate")
 							feedback_add_details("wizard_spell_learned","DG") //please do not change the abbreviation to keep data processing consistent. Add a unique id to any new spells
-							H.mind.spell_list += new /obj/effect/proc_holder/spell/targeted/inflict_handler/disintegrate(null)
+							H.mind.AddSpell(new /obj/effect/proc_holder/spell/targeted/inflict_handler/disintegrate(null))
 							temp = "You have learned disintegrate."
 						if("disabletech")
 							feedback_add_details("wizard_spell_learned","DT") //please do not change the abbreviation to keep data processing consistent. Add a unique id to any new spells
-							H.mind.spell_list += new /obj/effect/proc_holder/spell/targeted/emplosion/disable_tech(null)
+							H.mind.AddSpell(new /obj/effect/proc_holder/spell/targeted/emplosion/disable_tech(null))
 							temp = "You have learned disable technology."
 						if("repulse")
 							feedback_add_details("wizard_spell_learned","RP") //please do not change the abbreviation to keep data processing consistent. Add a unique id to any new spells
-							H.mind.spell_list += new /obj/effect/proc_holder/spell/aoe_turf/repulse(null)
+							H.mind.AddSpell(new /obj/effect/proc_holder/spell/aoe_turf/repulse(null))
 							temp = "You have learned repulse."
 						if("smoke")
 							feedback_add_details("wizard_spell_learned","SM") //please do not change the abbreviation to keep data processing consistent. Add a unique id to any new spells
-							H.mind.spell_list += new /obj/effect/proc_holder/spell/targeted/smoke(null)
+							H.mind.AddSpell(new /obj/effect/proc_holder/spell/targeted/smoke(null))
 							temp = "You have learned smoke."
 						if("blind")
 							feedback_add_details("wizard_spell_learned","BD") //please do not change the abbreviation to keep data processing consistent. Add a unique id to any new spells
-							H.mind.spell_list += new /obj/effect/proc_holder/spell/targeted/trigger/blind(null)
+							H.mind.AddSpell(new /obj/effect/proc_holder/spell/targeted/trigger/blind(null))
 							temp = "You have learned blind."
 						if("mindswap")
 							feedback_add_details("wizard_spell_learned","MT") //please do not change the abbreviation to keep data processing consistent. Add a unique id to any new spells
-							H.mind.spell_list += new /obj/effect/proc_holder/spell/targeted/mind_transfer(null)
+							H.mind.AddSpell(new /obj/effect/proc_holder/spell/targeted/mind_transfer(null))
 							temp = "You have learned mindswap."
 						if("forcewall")
 							feedback_add_details("wizard_spell_learned","FW") //please do not change the abbreviation to keep data processing consistent. Add a unique id to any new spells
-							H.mind.spell_list += new /obj/effect/proc_holder/spell/aoe_turf/conjure/forcewall(null)
+							H.mind.AddSpell(new /obj/effect/proc_holder/spell/aoe_turf/conjure/forcewall(null))
 							temp = "You have learned forcewall."
 						if("blink")
 							feedback_add_details("wizard_spell_learned","BL") //please do not change the abbreviation to keep data processing consistent. Add a unique id to any new spells
-							H.mind.spell_list += new /obj/effect/proc_holder/spell/targeted/turf_teleport/blink(null)
+							H.mind.AddSpell(new /obj/effect/proc_holder/spell/targeted/turf_teleport/blink(null))
 							temp = "You have learned blink."
 						if("teleport")
 							feedback_add_details("wizard_spell_learned","TP") //please do not change the abbreviation to keep data processing consistent. Add a unique id to any new spells
-							H.mind.spell_list += new /obj/effect/proc_holder/spell/targeted/area_teleport/teleport(null)
+							H.mind.AddSpell(new /obj/effect/proc_holder/spell/targeted/area_teleport/teleport(null))
 							temp = "You have learned teleport."
 						if("mutate")
 							feedback_add_details("wizard_spell_learned","MU") //please do not change the abbreviation to keep data processing consistent. Add a unique id to any new spells
-							H.mind.spell_list += new /obj/effect/proc_holder/spell/targeted/genetic/mutate(null)
+							H.mind.AddSpell(new /obj/effect/proc_holder/spell/targeted/genetic/mutate(null))
 							temp = "You have learned mutate."
 						if("etherealjaunt")
 							feedback_add_details("wizard_spell_learned","EJ") //please do not change the abbreviation to keep data processing consistent. Add a unique id to any new spells
-							H.mind.spell_list += new /obj/effect/proc_holder/spell/targeted/ethereal_jaunt(null)
+							H.mind.AddSpell(new /obj/effect/proc_holder/spell/targeted/ethereal_jaunt(null))
 							temp = "You have learned ethereal jaunt."
 						if("knock")
 							feedback_add_details("wizard_spell_learned","KN") //please do not change the abbreviation to keep data processing consistent. Add a unique id to any new spells
-							H.mind.spell_list += new /obj/effect/proc_holder/spell/aoe_turf/knock(null)
+							H.mind.AddSpell(new /obj/effect/proc_holder/spell/aoe_turf/knock(null))
 							temp = "You have learned knock."
-						if("horseman")
-							feedback_add_details("wizard_spell_learned","HH") //please do not change the abbreviation to keep data processing consistent. Add a unique id to any new spells
-							H.mind.spell_list += new /obj/effect/proc_holder/spell/targeted/horsemask(null)
-							temp = "You have learned curse of the horseman."
 						if("fleshtostone")
 							feedback_add_details("wizard_spell_learned","FS") //please do not change the abbreviation to keep data processing consistent. Add a unique id to any new spells
-							H.mind.spell_list += new /obj/effect/proc_holder/spell/targeted/inflict_handler/flesh_to_stone(null)
+							H.mind.AddSpell(new /obj/effect/proc_holder/spell/targeted/inflict_handler/flesh_to_stone(null))
 							temp = "You have learned flesh to stone."
 						if("summonitem")
 							feedback_add_details("wizard_spell_learned","IS") //please do not change the abbreviation to keep data processing consistent. Add a unique id to any new spells
-							H.mind.spell_list += new /obj/effect/proc_holder/spell/targeted/summonitem(null)
+							H.mind.AddSpell(new /obj/effect/proc_holder/spell/targeted/summonitem(null))
 							temp = "You have learned instant summons."
+						if("lightningbolt")
+							feedback_add_details("wizard_spell_learned","LB") //please do not change the abbreviation to keep data processing consistent. Add a unique id to any new spells
+							H.mind.AddSpell(new /obj/effect/proc_holder/spell/targeted/lightning(null))
+							temp = "You have learned lightning bolt."
 						if("summonguns")
 							feedback_add_details("wizard_spell_learned","SG") //please do not change the abbreviation to keep data processing consistent. Add a unique id to any new spells
 							rightandwrong(0, H, 0)
@@ -337,15 +352,19 @@
 						if("soulstone")
 							feedback_add_details("wizard_spell_learned","SS") //please do not change the abbreviation to keep data processing consistent. Add a unique id to any new spells
 							new /obj/item/weapon/storage/belt/soulstone/full(get_turf(H))
-							H.mind.spell_list += new /obj/effect/proc_holder/spell/aoe_turf/conjure/construct(null)
+							H.mind.AddSpell(new /obj/effect/proc_holder/spell/aoe_turf/conjure/construct(null))
 							temp = "You have purchased a belt full of soulstones and have learned the artificer spell."
+							max_uses--
+						if("necrostone")
+							feedback_add_details("wizard_spell_learned","NS") //please do not change the abbreviation to keep data processing consistent. Add a unique id to any new spells
+							new /obj/item/device/necromantic_stone(get_turf(H))
+							temp = "You have purchased a necromantic stone."
 							max_uses--
 						if("armor")
 							feedback_add_details("wizard_spell_learned","HS") //please do not change the abbreviation to keep data processing consistent. Add a unique id to any new spells
 							new /obj/item/clothing/shoes/sandal(get_turf(H)) //In case they've lost them.
 							new /obj/item/clothing/gloves/color/purple(get_turf(H))//To complete the outfit
 							new /obj/item/clothing/suit/space/hardsuit/wizard(get_turf(H))
-							new /obj/item/clothing/head/helmet/space/hardsuit/wizard(get_turf(H))
 							temp = "You have purchased a suit of wizard armor."
 							max_uses--
 						if("staffanimation")
@@ -363,6 +382,10 @@
 							new /obj/item/weapon/gun/magic/staff/door(get_turf(H))
 							temp = "You have purchased a staff of door creation."
 							max_uses--
+						if("barnyard")
+							feedback_add_details("wizard_spell_learned","BC") //please do not change the abbreviation to keep data processing consistent. Add a unique id to any new spells
+							H.mind.AddSpell(new /obj/effect/proc_holder/spell/targeted/barnyardcurse(null))
+							temp = "You have learned the curse of the barnyard."
 						if("wands")
 							feedback_add_details("wizard_spell_learned","WA") //please do not change the abbreviation to keep data processing consistent. Add a unique id to any new spells
 							new /obj/item/weapon/storage/belt/wands/full(get_turf(H))
@@ -416,7 +439,7 @@
 	if(used)
 		recoil(user)
 	else
-		user.mind.spell_list += S
+		user.mind.AddSpell(S)
 		user <<"<span class='notice'>you rapidly read through the arcane book. Suddenly you realize you understand [spellname]!</span>"
 		user.attack_log += text("\[[time_stamp()]\] <font color='orange'>[user.real_name] ([user.ckey]) learned the spell [spellname] ([S]).</font>")
 		onlearned(user)
@@ -475,7 +498,7 @@
 	var/mob/stored_swap = null //Used in used book recoils to store an identity for mindswaps
 
 /obj/item/weapon/spellbook/oneuse/mindswap/onlearned()
-	spellname = pick("fireball","smoke","blind","forcewall","knock","horses","charge")
+	spellname = pick("fireball","smoke","blind","forcewall","knock","barnyard","charge")
 	icon_state = "book[spellname]"
 	name = "spellbook of [spellname]" //Note, desc doesn't change by design
 	..()
@@ -544,13 +567,13 @@
 	user <<"<span class='warning'>You're knocked down!</span>"
 	user.Weaken(20)
 
-/obj/item/weapon/spellbook/oneuse/horsemask
-	spell = /obj/effect/proc_holder/spell/targeted/horsemask
-	spellname = "horses"
+/obj/item/weapon/spellbook/oneuse/barnyard
+	spell = /obj/effect/proc_holder/spell/targeted/barnyardcurse
+	spellname = "barnyard"
 	icon_state ="bookhorses"
 	desc = "This book is more horse than your mind has room for."
 
-/obj/item/weapon/spellbook/oneuse/horsemask/recoil(mob/living/carbon/user as mob)
+/obj/item/weapon/spellbook/oneuse/barnyard/recoil(mob/living/carbon/user as mob)
 	if(istype(user, /mob/living/carbon/human))
 		user <<"<font size='15' color='red'><b>HOR-SIE HAS RISEN</b></font>"
 		var/obj/item/clothing/mask/horsehead/magichead = new /obj/item/clothing/mask/horsehead
@@ -562,7 +585,7 @@
 		user.equip_to_slot_if_possible(magichead, slot_wear_mask, 1, 1)
 		qdel(src)
 	else
-		user <<"<span class='notice'>I say thee neigh</span>"
+		user <<"<span class='notice'>I say thee neigh</span>" //It still lives here
 
 /obj/item/weapon/spellbook/oneuse/charge
 	spell = /obj/effect/proc_holder/spell/targeted/charge

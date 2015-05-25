@@ -19,15 +19,15 @@
 	var/input
 	var/output
 	var/time = 40
-	proc/process(loc, what)
-		if (src.output && loc)
-			new src.output(loc)
-		if (what)
-			qdel(what) // Note to self: Make this safer
+/datum/food_processor_process/proc/process_food(loc, what)
+	if (src.output && loc)
+		new src.output(loc)
+	if (what)
+		qdel(what) // Note to self: Make this safer
 
 	/* objs */
 /datum/food_processor_process/meat
-	input = /obj/item/weapon/reagent_containers/food/snacks/meat
+	input = /obj/item/weapon/reagent_containers/food/snacks/meat/slab
 	output = /obj/item/weapon/reagent_containers/food/snacks/faggot
 
 /datum/food_processor_process/potato
@@ -42,14 +42,30 @@
 	input = /obj/item/weapon/reagent_containers/food/snacks/grown/soybeans
 	output = /obj/item/weapon/reagent_containers/food/snacks/soydope
 
+/datum/food_processor_process/spaghetti
+	input = /obj/item/weapon/reagent_containers/food/snacks/doughslice
+	output = /obj/item/weapon/reagent_containers/food/snacks/spaghetti
+
+/datum/food_processor_process/corn
+	input = /obj/item/weapon/reagent_containers/food/snacks/grown/corn
+	output = /obj/item/weapon/reagent_containers/food/snacks/tortilla
+
+/datum/food_processor_process/parsnip
+	input = /obj/item/weapon/reagent_containers/food/snacks/grown/parsnip
+	output = /obj/item/weapon/reagent_containers/food/snacks/roastparsnip
+
+/datum/food_processor_process/sweetpotato
+	input = /obj/item/weapon/reagent_containers/food/snacks/grown/sweetpotato
+	output = /obj/item/weapon/reagent_containers/food/snacks/yakiimo
+
 
 /* mobs */
-/datum/food_processor_process/mob/process(loc, what)
+/datum/food_processor_process/mob/process_food(loc, what)
 	..()
 
 
-/datum/food_processor_process/mob/slime/process(loc, what)
-	var/mob/living/carbon/slime/S = what
+/datum/food_processor_process/mob/slime/process_food(loc, what)
+	var/mob/living/simple_animal/slime/S = what
 	var/C = S.cores
 	if(S.stat != DEAD)
 		S.loc = loc
@@ -60,16 +76,16 @@
 		feedback_add_details("slime_core_harvested","[replacetext(S.colour," ","_")]")
 	..()
 
-/datum/food_processor_process/mob/slime/input = /mob/living/carbon/slime
+/datum/food_processor_process/mob/slime/input = /mob/living/simple_animal/slime
 /datum/food_processor_process/mob/slime/output = null
 
-/datum/food_processor_process/mob/monkey/process(loc, what)
+/datum/food_processor_process/mob/monkey/process_food(loc, what)
 	var/mob/living/carbon/monkey/O = what
 	if (O.client) //grief-proof
 		O.loc = loc
 		O.visible_message("<span class='notice'>Suddenly [O] jumps out from the processor!</span>", \
-				"You jump out from the processor", \
-				"You hear chimpering")
+				"<span class='notice'>You jump out from the processor!</span>", \
+				"<span class='italics'>You hear chimpering.</span>")
 		return
 	var/obj/item/weapon/reagent_containers/glass/bucket/bucket_of_blood = new(loc)
 	var/datum/reagent/blood/B = new()
@@ -103,23 +119,22 @@
 		return P
 	return 0
 
-/obj/machinery/processor/attackby(var/obj/item/O as obj, var/mob/user as mob)
+/obj/machinery/processor/attackby(var/obj/item/O as obj, var/mob/user as mob, params)
 	if(src.processing)
-		user << "<span class='danger'>The processor is in the process of processing.</span>"
-		return 1
-	if(src.contents.len > 0) //TODO: several items at once? several different items?
-		user << "<span class='danger'>Something is already in the processing chamber.</span>"
+		user << "<span class='warning'>The processor is in the process of processing!</span>"
 		return 1
 	if(default_unfasten_wrench(user, O))
 		return
 	var/what = O
 	if (istype(O, /obj/item/weapon/grab))
 		var/obj/item/weapon/grab/G = O
+		if(!user.Adjacent(G.affecting))
+			return
 		what = G.affecting
 
 	var/datum/food_processor_process/P = select_recipe(what)
 	if (!P)
-		user << "<span class='danger'>That probably won't blend.</span>"
+		user << "<span class='warning'>That probably won't blend!</span>"
 		return 1
 	user.visible_message("[user] put [what] into [src].", \
 		"You put the [what] into [src].")
@@ -131,10 +146,10 @@
 	if (src.stat != 0) //NOPOWER etc
 		return
 	if(src.processing)
-		user << "<span class='danger'>The processor is in the process of processing.</span>"
+		user << "<span class='warning'>The processor is in the process of processing!</span>"
 		return 1
 	if(src.contents.len == 0)
-		user << "<span class='danger'>The processor is empty.</span>"
+		user << "<span class='warning'>The processor is empty!</span>"
 		return 1
 	for(var/O in src.contents)
 		var/datum/food_processor_process/P = select_recipe(O)
@@ -142,15 +157,15 @@
 			log_admin("DEBUG: [O] in processor havent suitable recipe. How do you put it in?") //-rastaf0
 			continue
 		src.processing = 1
-		user.visible_message("<span class='notice'>[user] turns on \a [src].</span>", \
-			"You turn on \a [src].", \
-			"You hear a food processor")
+		user.visible_message("[user] turns on \a [src].", \
+			"<span class='notice'>You turn on \a [src].</span>", \
+			"<span class='italics'>You hear a food processor.</span>")
 		playsound(src.loc, 'sound/machines/blender.ogg', 50, 1)
 		use_power(500)
 		sleep(P.time)
-		P.process(src.loc, O)
+		P.process_food(src.loc, O)
 		src.processing = 0
-	src.visible_message("<span class='notice'>\the [src] finished processing.</span>")
+	src.visible_message("\the [src] finishes processing.")
 
 /obj/machinery/processor/verb/eject()
 	set category = "Object"

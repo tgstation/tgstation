@@ -15,8 +15,7 @@ var/datum/subsystem/shuttle/SSshuttle
 	var/emergencyDockTime = 1800	//time taken for emergency shuttle to leave again once it has docked (in deciseconds)
 	var/emergencyEscapeTime = 1200	//time taken for emergency shuttle to reach a safe distance after leaving station (in deciseconds)
 	var/area/emergencyLastCallLoc
-	var/emergencyAlwaysFakeRecall
-	var/emergencyFakeRecall
+	var/emergencyNoEscape
 
 		//supply shuttle stuff
 	var/obj/docking_port/mobile/supply/supply
@@ -40,7 +39,9 @@ var/datum/subsystem/shuttle/SSshuttle
 	NEW_SS_GLOBAL(SSshuttle)
 
 
-/datum/subsystem/shuttle/Initialize()
+/datum/subsystem/shuttle/Initialize(timeofday, zlevel)
+	if (zlevel)
+		return ..()
 	if(!emergency)
 		WARNING("No /obj/docking_port/mobile/emergency placed on the map!")
 	if(!supply)
@@ -104,6 +105,9 @@ var/datum/subsystem/shuttle/SSshuttle
 		if(SHUTTLE_ESCAPE)
 			user << "The emergency shuttle is moving away to a safe distance."
 			return
+		if(SHUTTLE_STRANDED)
+			user << "The emergency shuttle has been disabled by Centcom."
+			return
 
 	call_reason = strip_html_properly(trim(call_reason))
 
@@ -160,7 +164,7 @@ var/datum/subsystem/shuttle/SSshuttle
 			break
 
 	if(callShuttle)
-		if(emergency.mode < SHUTTLE_DOCKED)
+		if(emergency.mode < SHUTTLE_CALL)
 			emergency.request(null, 2.5)
 			log_game("There is no means of calling the shuttle anymore. Shuttle automatically called.")
 			message_admins("All the communications consoles were destroyed and all AIs are inactive. Shuttle called.")
@@ -294,7 +298,15 @@ var/datum/subsystem/shuttle/SSshuttle
 	slip.info += "</ul><br>"
 	slip.info += "CHECK CONTENTS AND STAMP BELOW THE LINE TO CONFIRM RECEIPT OF GOODS<hr>" // And now this is actually meaningful.
 	slip.loc = Crate
-
+	if(istype(Crate, /obj/structure/closet/crate))
+		var/obj/structure/closet/crate/CR = Crate
+		CR.manifest = slip
+		CR.update_icon()
+	if(istype(Crate, /obj/structure/largecrate))
+		var/obj/structure/largecrate/LC = Crate
+		LC.manifest = slip
+		LC.update_icon()
+	
 	return Crate
 
 /datum/subsystem/shuttle/proc/generateSupplyOrder(packId, _orderedby, _orderedbyRank, _comment)

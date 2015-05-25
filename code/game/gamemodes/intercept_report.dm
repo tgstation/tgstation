@@ -228,9 +228,9 @@
 	*/
 
 /datum/intercept_text/proc/build_gang(datum/mind/correct_person)
-	src.text += "<BR><BR>Syndicate forces may be supplying opposing criminal organizations within your sector in an attempt at destabilizing our operations."
-	src.text += "Ensure law and order is maintained on the station and be on the lookout for violent confrontations between station factions."
-	src.text += "Central Command retains an interest in any criminal leaders captured by station security. The execution or exile of these persons are ill-advised."
+	src.text += "<BR><BR>We have recieved reports of a sudden increase of criminal activity in close proximity to our operations within your sector."
+	src.text += "Ensure law and order is maintained on the station and be on the lookout for unusually territorial behavior from the crew."
+	src.text += "In the event of a full-scale takeover attempt, sensitive research items are to be secured and the station evacuated ASAP."
 	src.text += "<BR><HR>"
 
 /datum/intercept_text/proc/build_wizard(datum/mind/correct_person)
@@ -243,7 +243,7 @@
 	src.text += "<BR><HR>"
 
 /datum/intercept_text/proc/build_nuke(datum/mind/correct_person)
-	src.text += "<BR><BR>Centcom recently recieved a report of a plot to destroy one of our stations in your area. We believe the Nuclear Authentication Disc "
+	src.text += "<BR><BR>Centcom recently received a report of a plot to destroy one of our stations in your area. We believe the Nuclear Authentication Disc "
 	src.text += "that is standard issue aboard your vessel may be a target. We recommend removal of this object, and it's storage in a safe "
 	src.text += "environment. As this may cause panic among the crew, all efforts should be made to keep this information a secret from all but "
 	src.text += "the most trusted crew-members."

@@ -20,7 +20,7 @@
 
 	return
 
-/obj/machinery/atmospherics/unary/heat_exchanger/initialize()
+/obj/machinery/atmospherics/unary/heat_exchanger/atmosinit()
 	if(!partner)
 		var/partner_connect = turn(dir,180)
 
@@ -32,7 +32,7 @@
 
 	..()
 
-/obj/machinery/atmospherics/unary/heat_exchanger/process()
+/obj/machinery/atmospherics/unary/heat_exchanger/process_atmos()
 	..()
 	if(!partner)
 		return 0

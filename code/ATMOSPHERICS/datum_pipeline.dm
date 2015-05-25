@@ -10,10 +10,10 @@
 	var/alert_pressure = 0
 
 /datum/pipeline/New()
-	SSpipe.networks += src
+	SSair.networks += src
 
 /datum/pipeline/Destroy()
-	SSpipe.networks -= src
+	SSair.networks -= src
 	if(air && air.volume)
 		temporarily_store_air()
 	for(var/obj/machinery/atmospherics/pipe/P in members)
@@ -22,10 +22,11 @@
 		A.nullifyPipenet(src)
 	..()
 
-/datum/pipeline/proc/process()//This use to be called called from the pipe networks
+/datum/pipeline/process()
 	if(update)
 		update = 0
 		reconcile_air()
+
 	return
 	/*
 	//Check to see if pressure is within acceptable limits
@@ -69,7 +70,7 @@ var/pipenetwarnings = 10
 
 							if(item.parent)
 								if(pipenetwarnings > 0)
-									error("[item.type] added to a pipenet while still having one. ([item.x], [item.y], [item.z])")
+									error("[item.type] added to a pipenet while still having one. (pipes leading to the same spot stacking in one turf) Nearby: ([item.x], [item.y], [item.z])")
 									pipenetwarnings -= 1
 									if(pipenetwarnings == 0)
 										error("further messages about pipenets will be supressed")

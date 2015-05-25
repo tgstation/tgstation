@@ -8,12 +8,13 @@
 	var/translate_binary = 0
 	var/translate_hive = 0
 	var/syndie = 0
+	var/centcom = 0
 	var/list/channels = list()
 
 
 /obj/item/device/encryptionkey/New()
 
-/obj/item/device/encryptionkey/attackby(obj/item/weapon/W as obj, mob/user as mob)
+/obj/item/device/encryptionkey/attackby(obj/item/weapon/W as obj, mob/user as mob, params)
 
 /obj/item/device/encryptionkey/syndicate
 	icon_state = "cypherkey"
@@ -117,6 +118,13 @@
 	desc = "An encryption key for a radio headset.  To access the service channel, use :v."
 	icon_state = "srv_cypherkey"
 	channels = list("Service" = 1)
+
+/obj/item/device/encryptionkey/headset_cent
+	name = "centcom radio encryption key"
+	desc = "An encryption key for a radio headset.  To access the centcom channel, use :y."
+	icon_state = "cent_cypherkey"
+	centcom = 1
+	channels = list("Centcom" = 1)
 
 /obj/item/device/encryptionkey/ai //ported from NT, this goes 'inside' the AI.
 	channels = list("Command" = 1, "Security" = 1, "Engineering" = 1, "Science" = 1, "Medical" = 1, "Supply" = 1, "Service" = 1, "AI Private" = 1)

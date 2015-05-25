@@ -42,6 +42,10 @@
 	for(var/datum/mutation/human/HM in dna.mutations)
 		HM.on_ranged_attack(src, A)
 
+	var/turf/T = A
+	if(istype(T) && get_dist(src,T) <= 1)
+		src.Move_Pulled(T)
+
 /*
 	Animals & All Unspecified
 */
@@ -117,11 +121,11 @@
 	Slimes
 	Nothing happening here
 */
-/mob/living/carbon/slime/UnarmedAttack(var/atom/A)
+/mob/living/simple_animal/slime/UnarmedAttack(var/atom/A)
 	A.attack_slime(src)
 /atom/proc/attack_slime(mob/user as mob)
 	return
-/mob/living/carbon/slime/RestrainedClickOn(var/atom/A)
+/mob/living/simple_animal/slime/RestrainedClickOn(var/atom/A)
 	return
 
 /*

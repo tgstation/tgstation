@@ -17,6 +17,9 @@
 	e_cost = 83
 	select_name = "kill"
 
+/obj/item/ammo_casing/energy/laser/hos
+	e_cost = 100
+
 /obj/item/ammo_casing/energy/laser/practice
 	projectile_type = /obj/item/projectile/beam/practice
 	select_name = "practice"
@@ -38,24 +41,6 @@
 	select_name = "DESTROY"
 	fire_sound = 'sound/weapons/pulse.ogg'
 
-/obj/item/ammo_casing/energy/laser/pulse/carbine
-	e_cost = 50
-
-/obj/item/ammo_casing/energy/laser/carbine
-	e_cost = 50
-
-/obj/item/ammo_casing/energy/electrode/carbine
-	e_cost = 50
-
-/obj/item/ammo_casing/energy/laser/pulse/pistol
-	e_cost = 100
-
-/obj/item/ammo_casing/energy/laser/pistol
-	e_cost = 50
-
-/obj/item/ammo_casing/energy/electrode/pistol
-	e_cost = 50
-
 /obj/item/ammo_casing/energy/laser/bluetag
 	projectile_type = /obj/item/projectile/lasertag/bluetag
 	select_name = "bluetag"
@@ -74,10 +59,14 @@
 	select_name = "stun"
 	fire_sound = 'sound/weapons/taser.ogg'
 	e_cost = 200
+	delay = 15
 
 /obj/item/ammo_casing/energy/electrode/gun
 	fire_sound = 'sound/weapons/gunshot.ogg'
 	e_cost = 100
+
+/obj/item/ammo_casing/energy/electrode/hos
+	e_cost = 200
 
 /obj/item/ammo_casing/energy/ion
 	projectile_type = /obj/item/projectile/ion
@@ -132,6 +121,18 @@
 	select_name  = "disable"
 	e_cost = 50
 	fire_sound = "sound/weapons/taser2.ogg"
+
+/obj/item/ammo_casing/energy/plasma
+	projectile_type = /obj/item/projectile/plasma
+	select_name = "plasma burst"
+	fire_sound = 'sound/weapons/Laser.ogg'
+	delay = 10
+	e_cost = 25
+
+/obj/item/ammo_casing/energy/plasma/adv
+	projectile_type = /obj/item/projectile/plasma/adv
+	delay = 8
+	e_cost = 10
 
 /obj/item/ammo_casing/energy/wormhole
 	projectile_type = /obj/item/projectile/beam/wormhole

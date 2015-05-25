@@ -4,6 +4,10 @@
 	var/item_state = null
 	var/lefthand_file = 'icons/mob/inhands/items_lefthand.dmi'
 	var/righthand_file = 'icons/mob/inhands/items_righthand.dmi'
+
+	//Not on /clothing because for some reason any /obj/item can technically be "worn" with enough fuckery.
+	var/icon/alternate_worn_icon = null//If this is set, update_icons() will find on mob (WORN, NOT INHANDS) states in this file instead, primary use: badminnery/events
+
 	var/hitsound = null
 	var/throwhitsound = null
 	var/w_class = 3.0
@@ -20,6 +24,7 @@
 	//If this is set, The item will make an action button on the player's HUD when picked up.
 	var/action_button_name //It is also the text which gets displayed on the action button. If not set it defaults to 'Use [name]'. If it's not set, there'll be no button.
 	var/action_button_is_hands_free = 0 //If 1, bypass the restrained, lying, and stunned checks action buttons normally test for
+	var/datum/action/item_action/action = null
 
 	//Since any item can now be a piece of clothing, this has to be put here so all items share it.
 	var/flags_inv //This flag is used to determine when items in someone's inventory cover others. IE helmets making it so you can't see glasses, etc.
@@ -33,26 +38,43 @@
 	var/list/armor = list(melee = 0, bullet = 0, laser = 0,energy = 0, bomb = 0, bio = 0, rad = 0)
 	var/list/allowed = null //suit storage stuff.
 	var/obj/item/device/uplink/hidden/hidden_uplink = null // All items can have an uplink hidden inside, just remember to add the triggers.
-	var/reflect_chance = 0 //This var dictates what % of a time an object will reflect an energy based weapon's shot
 	var/strip_delay = 40
 	var/put_on_delay = 20
 	var/m_amt = 0	// metal
 	var/g_amt = 0	// glass
 	var/reliability = 100	//Used by SOME devices to determine how reliable they are.
 	var/origin_tech = null	//Used by R&D to determine what research bonuses it grants.
+	var/needs_permit = 0			//Used by security bots to determine if this item is safe for public use.
 
 	var/list/attack_verb = list() //Used in attackby() to say how something was attacked "[x] has been [z.attack_verb] by [y] with [z]"
 	var/list/species_exception = list()	// even if a species cannot put items in a certain slot, if the species id is in the item's exception list, it will be able to wear that item
 
 	var/suittoggled = 0
 	var/hooded = 0
+
+	/obj/item/mouse_drag_pointer = MOUSE_ACTIVE_POINTER //the icon to indicate this object is being dragged
+
+	//So items can have custom embedd values
+	//Because customisation is king
+	var/embed_chance = EMBED_CHANCE
+	var/embedded_fall_chance = EMBEDDED_ITEM_FALLOUT
+	var/embedded_pain_chance = EMBEDDED_PAIN_CHANCE
+	var/embedded_pain_multiplier = EMBEDDED_PAIN_MULTIPLIER  //The coefficient of multiplication for the damage this item does while embedded (this*w_class)
+	var/embedded_fall_pain_multiplier = EMBEDDED_FALL_PAIN_MULTIPLIER //The coefficient of multiplication for the damage this item does when falling out of a limb (this*w_class)
+	var/embedded_impact_pain_multiplier = EMBEDDED_IMPACT_PAIN_MULTIPLIER //The coefficient of multiplication for the damage this item does when first embedded (this*w_class)
+	var/embedded_unsafe_removal_pain_multiplier = EMBEDDED_UNSAFE_REMOVAL_PAIN_MULTIPLIER //The coefficient of multiplication for the damage removing this without surgery causes (this*w_class)
+	var/embedded_unsafe_removal_time = EMBEDDED_UNSAFE_REMOVAL_TIME //A time in ticks, multiplied by the w_class.
+
 	var/list/can_be_placed_into = list(
 		/obj/structure/table,
 		/obj/structure/rack,
 		/obj/structure/closet,
 		/obj/item/weapon/storage,
 		/obj/structure/safe,
-		/obj/machinery/disposal
+		/obj/machinery/disposal,
+		/obj/machinery/r_n_d/destructive_analyzer,
+		/obj/machinery/r_n_d/experimentor,
+		/obj/machinery/autolathe
 	)
 /obj/item/proc/check_allowed_items(atom/target, not_inside)
 	if((src in target) || ((!istype(target.loc, /turf)) && (!istype(target, /turf)) && (not_inside)) || is_type_in_list(target, can_be_placed_into))
@@ -173,10 +195,10 @@
 /obj/item/attack_alien(mob/user as mob)
 	var/mob/living/carbon/alien/A = user
 
-	if(!A.has_fine_manipulation || w_class >= 4)
+	if(!A.has_fine_manipulation)
 		if(src in A.contents) // To stop Aliens having items stuck in their pockets
 			A.unEquip(src)
-		user << "Your claws aren't capable of such fine manipulation."
+		user << "<span class='warning'>Your claws aren't capable of such fine manipulation!</span>"
 		return
 	attack_paw(A)
 
@@ -190,7 +212,7 @@
 
 // Due to storage type consolidation this should get used more now.
 // I have cleaned it up a little, but it could probably use more.  -Sayu
-/obj/item/attackby(obj/item/weapon/W as obj, mob/user as mob)
+/obj/item/attackby(obj/item/weapon/W as obj, mob/user as mob, params)
 	if(istype(W,/obj/item/weapon/storage))
 		var/obj/item/weapon/storage/S = W
 		if(S.use_to_pickup)
@@ -218,7 +240,7 @@
 					else if(success)
 						user << "<span class='notice'>You put some things [S.preposition] [S].</span>"
 					else
-						user << "<span class='notice'>You fail to pick anything up with [S].</span>"
+						user << "<span class='warning'>You fail to pick anything up with [S]!</span>"
 
 			else if(S.can_be_inserted(src))
 				S.handle_item_insertion(src)
@@ -227,7 +249,7 @@
 
 // afterattack() and attack() prototypes moved to _onclick/item_attack.dm for consistency
 
-/obj/item/proc/talk_into(mob/M as mob, text)
+/obj/item/proc/talk_into(mob/M, input, channel, spans)
 	return
 
 /obj/item/proc/dropped(mob/user as mob)
@@ -272,7 +294,7 @@
 	set category = "Object"
 	set name = "Pick up"
 
-	if(!usr.canmove || usr.stat || usr.restrained() || !Adjacent(usr))
+	if(usr.stat || usr.restrained() || !Adjacent(usr) || usr.stunned || usr.weakened || usr.lying)
 		return
 
 	if(ishuman(usr) || ismonkey(usr))
@@ -285,45 +307,46 @@
 			usr << "\red You already have something in your hand."
 		*/
 	else
-		usr << "<span class='notice'>This mob type can't use this verb.</span>"
+		usr << "<span class='warning'>This mob type can't use this verb!</span>"
 
 //This proc is executed when someone clicks the on-screen UI button. To make the UI button show, set the 'action_button_name'.
 //The default action is attack_self().
 //Checks before we get to here are: mob is alive, mob is not restrained, paralyzed, asleep, resting, laying, item is on the mob.
 /obj/item/proc/ui_action_click()
-	if(src in usr)
-		attack_self(usr)
-
+	attack_self(usr)
 
 /obj/item/proc/IsShield()
 	return 0
 
 /obj/item/proc/IsReflect(var/def_zone) //This proc determines if and at what% an object will reflect energy projectiles if it's in l_hand,r_hand or wear_suit
-	if(prob(reflect_chance))
-		return 1
+	return 0
 
 /obj/item/proc/eyestab(mob/living/carbon/M as mob, mob/living/carbon/user as mob)
 
-	var/mob/living/carbon/human/H = M
-	if(istype(H) && ( \
-			(H.head && H.head.flags & HEADCOVERSEYES) || \
+	var/is_human_victim = 0
+	if(ishuman(M))
+		is_human_victim = 1
+		var/mob/living/carbon/human/H = M
+		if((H.head && H.head.flags & HEADCOVERSEYES) || \
 			(H.wear_mask && H.wear_mask.flags & MASKCOVERSEYES) || \
-			(H.glasses && H.glasses.flags & GLASSESCOVERSEYES) \
-		))
-		// you can't stab someone in the eyes wearing a mask!
-		user << "<span class='danger'>You're going to need to remove that mask/helmet/glasses first.</span>"
+			(H.glasses && H.glasses.flags & GLASSESCOVERSEYES))
+			// you can't stab someone in the eyes wearing a mask!
+			user << "<span class='danger'>You're going to need to remove that mask/helmet/glasses first!</span>"
+			return
+
+	if(ismonkey(M))
+		var/mob/living/carbon/monkey/Mo = M
+		if(Mo.wear_mask && Mo.wear_mask.flags & MASKCOVERSEYES)
+			// you can't stab someone in the eyes wearing a mask!
+			user << "<span class='danger'>You're going to need to remove that mask/helmet/glasses first!</span>"
+			return
+
+	if(isalien(M))//Aliens don't have eyes./N     slimes also don't have eyes!
+		user << "<span class='warning'>You cannot locate any eyes on this creature!</span>"
 		return
 
-	var/mob/living/carbon/monkey/Mo = M
-	if(istype(Mo) && ( \
-			(Mo.wear_mask && Mo.wear_mask.flags & MASKCOVERSEYES) \
-		))
-		// you can't stab someone in the eyes wearing a mask!
-		user << "<span class='danger'>You're going to need to remove that mask/helmet/glasses first.</span>"
-		return
-
-	if(istype(M, /mob/living/carbon/alien) || istype(M, /mob/living/carbon/slime))//Aliens don't have eyes./N     slimes also don't have eyes!
-		user << "<span class='danger'>You cannot locate any eyes on this creature!</span>"
+	if(isbrain(M))
+		user << "<span class='danger'>You cannot locate any organic eyes on this brain!</span>"
 		return
 
 	add_logs(user, M, "attacked", object="[src.name]", addition="(INTENT: [uppertext(user.a_intent)])")
@@ -338,7 +361,7 @@
 			"<span class='danger'>[user] has stabbed themself in the eyes with [src]!</span>", \
 			"<span class='userdanger'>You stab yourself in the eyes with [src]!</span>" \
 		)
-	if(istype(M, /mob/living/carbon/human))
+	if(is_human_victim)
 		var/mob/living/carbon/human/U = M
 		var/obj/item/organ/limb/affecting = U.get_organ("head")
 		if(affecting.take_damage(7))
@@ -346,6 +369,7 @@
 
 	else
 		M.take_organ_damage(7)
+
 	M.eye_blurry += rand(3,4)
 	M.eye_stat += rand(2,4)
 	if (M.eye_stat >= 10)
@@ -389,6 +413,9 @@
 
 /obj/item/acid_act(var/acidpwr, var/toxpwr, var/acid_volume)
 	. = 1
+	if(unacidable)
+		return
+
 	for(var/V in armor)
 		if(armor[V] > 0)
 			.-- //it survives the acid...
@@ -407,3 +434,23 @@
 			armor[armour_value] = max(armor[armour_value]-acidpwr,0)
 		if(!findtext(desc, "it looks slightly melted...")) //it looks slightly melted... it looks slightly melted... it looks slightly melted... etc.
 			desc += " it looks slightly melted..." //needs a space at the start, formatting
+
+
+
+/obj/item/throw_impact(A)
+	if(throw_speed >= EMBED_THROWSPEED_THRESHOLD)
+		if(istype(A, /mob/living/carbon/human))
+			var/mob/living/carbon/human/H = A
+			if(can_embed(src))
+				if(prob(embed_chance))
+					var/obj/item/organ/limb/L = pick(H.organs)
+					L.embedded_objects |= src
+					add_blood(H)//it embedded itself in you, of course it's bloody!
+					loc = H
+					L.take_damage(w_class*embedded_impact_pain_multiplier)
+					H.visible_message("<span class='danger'>\the [name] embeds itself in [H]'s [L.getDisplayName()]!</span>","<span class='userdanger'>\the [name] embeds itself in your [L.getDisplayName()]!</span>")
+					return
+
+	//Reset regardless of if we hit a human.
+	throw_speed = initial(throw_speed) //explosions change this.
+	..()

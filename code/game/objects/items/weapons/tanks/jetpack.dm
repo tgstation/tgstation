@@ -23,7 +23,7 @@
 	if(usr.stat || !usr.canmove || usr.restrained())
 		return
 	src.stabilization_on = !( src.stabilization_on )
-	usr << "You toggle the stabilization [stabilization_on? "on":"off"]."
+	usr << "<span class='notice'>You toggle the stabilization [stabilization_on? "on":"off"].</span>"
 	return
 
 
@@ -41,7 +41,7 @@
 		icon_state = initial(icon_state)
 	//	item_state = initial(item_state)
 		ion_trail.stop()
-	usr << "You toggle the jetpack [on? "on":"off"]."
+	usr << "<span class='notice'>You toggle the jetpack [on? "on":"off"].</span>"
 	return
 
 
@@ -107,3 +107,61 @@
 	ion_trail = new /datum/effect/effect/system/ion_trail_follow()
 	ion_trail.set_up(src)
 	air_contents.carbon_dioxide = (6*ONE_ATMOSPHERE)*volume/(R_IDEAL_GAS_EQUATION*T20C)
+
+
+/obj/item/weapon/tank/jetpack/suit
+	name = "suit inbuilt jetpack"
+	desc = "A device that will use your internals tank as a gas source for propulsion."
+	icon_state = "jetpack-void"
+	item_state =  "jetpack-void"
+	var/obj/item/weapon/tank/internals/tank = null
+
+/obj/item/weapon/tank/jetpack/suit/New()
+	..()
+	SSobj.processing -= src
+	air_contents = null
+
+/obj/item/weapon/tank/jetpack/suit/toggle()
+	set name = "Toggle Jetpack"
+	set category = "Object"
+
+	if(istype(loc.loc,/mob/living/carbon/human))
+		var/mob/living/carbon/human/H = loc.loc
+
+		if(!H.wear_suit)
+			H << "<span class='warning'>You must be wearing the suit to use the inbuilt jetpack!</span>"
+			return
+		if(!istype(H.s_store,/obj/item/weapon/tank/internals))
+			H << "<span class='warning'>You must have a tank in your suit's storage to use the inbuilt jetpack!</span>"
+			return
+		if(usr.stat || !usr.canmove || usr.restrained())
+			return
+
+		on = !on
+		if(on)
+			ion_trail.start()
+			tank = H.s_store
+			air_contents = tank.air_contents
+			SSobj.processing |= src
+			icon_state = "[icon_state]-on"
+		else
+			turn_off()
+		H << "<span class='notice'>You toggle the inbuilt jetpack [on? "on":"off"].</span>"
+
+/obj/item/weapon/tank/jetpack/suit/proc/turn_off()
+	on = 0
+	SSobj.processing -= src
+	ion_trail.stop()
+	air_contents = null
+	tank = null
+	icon_state = initial(icon_state)
+
+/obj/item/weapon/tank/jetpack/suit/process()
+	if(!istype(loc.loc,/mob/living/carbon/human))
+		turn_off()
+		return
+	var/mob/living/carbon/human/H = loc.loc
+	if(!tank || tank != H.s_store)
+		turn_off()
+		return
+	..()

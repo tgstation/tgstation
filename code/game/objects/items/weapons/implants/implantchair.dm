@@ -73,11 +73,11 @@
 	return
 
 
-/obj/machinery/implantchair/attackby(var/obj/item/weapon/G as obj, var/mob/user as mob)
+/obj/machinery/implantchair/attackby(var/obj/item/weapon/G as obj, var/mob/user as mob, params)
 	if(istype(G, /obj/item/weapon/grab))
 		if(!ismob(G:affecting))
 			return
-		for(var/mob/living/carbon/slime/M in range(1,G:affecting))
+		for(var/mob/living/simple_animal/slime/M in range(1,G:affecting))
 			if(M.Victim == G:affecting)
 				usr << "[G:affecting:name] will not fit into the [src.name] because they have a slime latched onto their head."
 				return
@@ -107,10 +107,10 @@
 
 /obj/machinery/implantchair/put_mob(mob/living/carbon/M as mob)
 	if(!iscarbon(M))
-		usr << "<span class='userdanger'>The [src.name] cannot hold this!</span>"
+		usr << "<span class='warning'>The [src.name] cannot hold this!</span>"
 		return
 	if(src.occupant)
-		usr << "<span class='userdanger'>The [src.name] is already occupied!</span>"
+		usr << "<span class='warning'>The [src.name] is already occupied!</span>"
 		return
 	if(M.client)
 		M.client.perspective = EYE_PERSPECTIVE

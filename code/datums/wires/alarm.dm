@@ -11,7 +11,7 @@ var/const/AALARM_WIRE_AALARM = 16
 
 /datum/wires/alarm/CanUse(var/mob/living/L)
 	var/obj/machinery/alarm/A = holder
-	if(A.panel_open)
+	if(A.panel_open && A.buildstage == 2)
 		return 1
 	return 0
 

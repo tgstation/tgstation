@@ -11,6 +11,7 @@
 	req_access = list(access_robotics)
 	var/recharge_speed
 	var/repairs
+	state_open = 1
 
 /obj/machinery/recharge_station/New()
 	..()
@@ -42,11 +43,6 @@
 		process_occupant()
 	return 1
 
-
-/obj/machinery/recharge_station/allow_drop()
-	return 0
-
-
 /obj/machinery/recharge_station/relaymove(mob/user as mob)
 	if(user.stat)
 		return
@@ -72,7 +68,7 @@
 /obj/machinery/recharge_station/attack_ai(user as mob)
 	return attack_hand(user)
 
-/obj/machinery/recharge_station/attackby(obj/item/P as obj, mob/user as mob)
+/obj/machinery/recharge_station/attackby(obj/item/P as obj, mob/user as mob, params)
 	if(state_open)
 		if(default_deconstruction_screwdriver(user, "borgdecon2", "borgcharger0", P))
 			return
@@ -156,7 +152,6 @@
 						F.broken = 0
 						F.times_used = 0
 						F.icon_state = "flash"
-				// Engineering
 				// Security
 				if(istype(O,/obj/item/weapon/gun/energy/gun/advtaser/cyborg))
 					var/obj/item/weapon/gun/energy/gun/advtaser/cyborg/T = O

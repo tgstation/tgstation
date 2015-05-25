@@ -1,9 +1,9 @@
 //In this file: Summon Magic/Summon Guns/Summon Events
 
 /proc/rightandwrong(var/summon_type, var/mob/user, var/survivor_probability) //0 = Summon Guns, 1 = Summon Magic
-	var/list/gunslist 			= list("taser","egun","laser","revolver","detective","c20r","nuclear","deagle","gyrojet","pulse","suppressed","cannon","doublebarrel","shotgun","combatshotgun","bulldog","mateba","sabr","uzi","crossbow","saw","car","boltaction","speargun")
-	var/list/magiclist 			= list("fireball","smoke","blind","mindswap","forcewall","knock","horsemask","charge", "summonitem", "wandnothing", "wanddeath", "wandresurrection", "wandpolymorph", "wandteleport", "wanddoor", "wandfireball", "staffchange", "staffhealing", "armor", "scrying", "staffdoor", "special")
-	var/list/magicspeciallist	= list("staffchange","staffanimation", "wandbelt", "contract", "staffchaos")
+	var/list/gunslist 			= list("taser","egun","laser","revolver","detective","c20r","nuclear","deagle","gyrojet","pulse","suppressed","cannon","doublebarrel","shotgun","combatshotgun","bulldog","mateba","sabr","crossbow","saw","car","boltaction","speargun","arg")
+	var/list/magiclist 			= list("fireball","smoke","blind","mindswap","forcewall","knock","horsemask","charge", "summonitem", "wandnothing", "wanddeath", "wandresurrection", "wandpolymorph", "wandteleport", "wanddoor", "wandfireball", "staffchange", "staffhealing", "armor", "scrying","staffdoor", "special")
+	var/list/magicspeciallist	= list("staffchange","staffanimation", "wandbelt", "contract", "staffchaos", "necromantic")
 
 	if(user) //in this case either someone holding a spellbook or a badmin
 		user << "<B>You summoned [summon_type ? "magic" : "guns"]!</B>"
@@ -45,50 +45,49 @@
 				if("gyrojet")
 					new /obj/item/weapon/gun/projectile/automatic/gyropistol(get_turf(H))
 				if("pulse")
-					new /obj/item/weapon/gun/energy/pulse_rifle(get_turf(H))
+					new /obj/item/weapon/gun/energy/pulse(get_turf(H))
 				if("suppressed")
 					new /obj/item/weapon/gun/projectile/automatic/pistol(get_turf(H))
 					new /obj/item/weapon/suppressor(get_turf(H))
-				if("cannon")
-					new /obj/item/weapon/gun/energy/lasercannon(get_turf(H))
 				if("doublebarrel")
 					new /obj/item/weapon/gun/projectile/revolver/doublebarrel(get_turf(H))
 				if("shotgun")
 					new /obj/item/weapon/gun/projectile/shotgun(get_turf(H))
 				if("combatshotgun")
 					new /obj/item/weapon/gun/projectile/shotgun/combat(get_turf(H))
+				if("arg")
+					new /obj/item/weapon/gun/projectile/automatic/ar(get_turf(H))
 				if("mateba")
 					new /obj/item/weapon/gun/projectile/revolver/mateba(get_turf(H))
-				if("crossbow")
-					new /obj/item/weapon/gun/energy/kinetic_accelerator/crossbow/large(get_turf(H))
-				if("nuclear")
-					var/obj/item/weapon/gun/energy/gun/nuclear/gat
-					gat.pin = /obj/item/device/firing_pin //no authentication pins for spawned guns. fun allowed.
-					new gat(get_turf(H))
-				if("sabr")
-					var/obj/item/weapon/gun/projectile/automatic/gat
-					gat.pin = /obj/item/device/firing_pin
-					new gat(get_turf(H))
-				if("bulldog")
-					var/obj/item/weapon/gun/projectile/automatic/shotgun/bulldog/gat
-					gat.pin = /obj/item/device/firing_pin
-					new gat(get_turf(H))
-				if("c20r")
-					var/obj/item/weapon/gun/projectile/automatic/c20r/gat
-					gat.pin = /obj/item/device/firing_pin
-					new gat(get_turf(H))
-				if("saw")
-					var/obj/item/weapon/gun/projectile/automatic/l6_saw/gat
-					gat.pin = /obj/item/device/firing_pin
-					new gat(get_turf(H))
-				if("car")
-					var/obj/item/weapon/gun/projectile/automatic/m90/gat
-					gat.pin = /obj/item/device/firing_pin
-					new gat(get_turf(H))
 				if("boltaction")
 					new /obj/item/weapon/gun/projectile/shotgun/boltaction(get_turf(H))
 				if("speargun")
 					new /obj/item/weapon/gun/projectile/automatic/speargun(get_turf(H))
+				if("cannon")
+					var/obj/item/weapon/gun/energy/lasercannon/gat  = new(get_turf(H))
+					gat.pin = new /obj/item/device/firing_pin //no authentication pins for spawned guns. fun allowed.
+				if("crossbow")
+					var/obj/item/weapon/gun/energy/kinetic_accelerator/crossbow/large/gat  = new(get_turf(H))
+					gat.pin = new /obj/item/device/firing_pin
+				if("nuclear")
+					var/obj/item/weapon/gun/energy/gun/nuclear/gat  = new(get_turf(H))
+					gat.pin = new /obj/item/device/firing_pin
+				if("sabr")
+					var/obj/item/weapon/gun/projectile/automatic/gat  = new(get_turf(H))
+					gat.pin = new /obj/item/device/firing_pin
+				if("bulldog")
+					var/obj/item/weapon/gun/projectile/automatic/shotgun/bulldog/gat  = new(get_turf(H))
+					gat.pin = new /obj/item/device/firing_pin
+				if("c20r")
+					var/obj/item/weapon/gun/projectile/automatic/c20r/gat = new(get_turf(H))
+					gat.pin = new /obj/item/device/firing_pin
+				if("saw")
+					var/obj/item/weapon/gun/projectile/automatic/l6_saw/gat  = new(get_turf(H))
+					gat.pin = new /obj/item/device/firing_pin
+				if("car")
+					var/obj/item/weapon/gun/projectile/automatic/m90/gat  = new(get_turf(H))
+					gat.pin = new /obj/item/device/firing_pin
+
 		else
 			switch (randomizemagic)
 				if("fireball")
@@ -104,7 +103,7 @@
 				if("knock")
 					new /obj/item/weapon/spellbook/oneuse/knock(get_turf(H))
 				if("horsemask")
-					new /obj/item/weapon/spellbook/oneuse/horsemask(get_turf(H))
+					new /obj/item/weapon/spellbook/oneuse/barnyard(get_turf(H))
 				if("charge")
 					new /obj/item/weapon/spellbook/oneuse/charge(get_turf(H))
 				if("summonitem")
@@ -129,13 +128,11 @@
 					new /obj/item/weapon/gun/magic/staff/door(get_turf(H))
 				if("armor")
 					new /obj/item/clothing/suit/space/hardsuit/wizard(get_turf(H))
-					new /obj/item/clothing/head/helmet/space/hardsuit/wizard(get_turf(H))
 				if("scrying")
 					new /obj/item/weapon/scrying(get_turf(H))
 					if (!(H.dna.check_mutation(XRAY)))
 						H.dna.add_mutation(XRAY)
 						H << "<span class='notice'>The walls suddenly disappear.</span>"
-
 				if("special")
 					magiclist -= "special" //only one super OP item per summoning max
 					switch (randomizemagicspecial)
@@ -149,6 +146,8 @@
 							new /obj/item/weapon/antag_spawner/contract(get_turf(H))
 						if("staffchaos")
 							new /obj/item/weapon/gun/magic/staff/chaos(get_turf(H))
+						if("necromantic")
+							new /obj/item/device/necromantic_stone(get_turf(H))
 					H << "<span class='notice'>You suddenly feel lucky.</span>"
 
 /proc/summonevents()
@@ -159,10 +158,9 @@
 		SSevent.reschedule()
 
 	else 																//Speed it up
-		SSevent.frequency_lower = round(SSevent.frequency_lower * 0.8)	//1 minute | 48 seconds | 34.8 seconds | 30.7 seconds | 24.6 seconds
-		SSevent.frequency_upper = round(SSevent.frequency_upper * 0.6)	//5 minutes | 3 minutes | 1 minute 48 seconds | 1 minute 4.8 seconds | 38.9 seconds
-		if(SSevent.frequency_upper < SSevent.frequency_lower)
-			SSevent.frequency_upper = SSevent.frequency_lower				//this can't happen unless somehow multiple spellbooks are used, but just in case
+		SSevent.frequency_upper -= 600	//The upper bound falls a minute each time, making the AVERAGE time between events lessen
+		if(SSevent.frequency_upper < SSevent.frequency_lower) //Sanity
+			SSevent.frequency_upper = SSevent.frequency_lower
 
 		SSevent.reschedule()
 		message_admins("Summon Events intensifies, events will now occur every [SSevent.frequency_lower / 600] to [SSevent.frequency_upper / 600] minutes.")

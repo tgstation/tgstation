@@ -47,10 +47,15 @@
 /mob/living/silicon/ai/proc/upgrade_turrets()
 	set category = "Malfunction"
 	set name = "Upgrade Turrets"
+
+	if(!canUseTopic())
+		return
+
 	src.verbs -= /mob/living/silicon/ai/proc/upgrade_turrets
-	for(var/obj/machinery/turret/turret in machines)
-		turret.health += 30
-		turret.shot_delay = 20
+	for(var/obj/machinery/porta_turret/turret in machines)
+		if(turret.ai) //Make sure only the AI's turrets are affected.
+			turret.health += 30
+			turret.shot_delay = 10 //Standard portable turret delay is 15.
 	src << "<span class='notice'>Turrets upgraded.</span>"
 
 /datum/AI_Module/large/lockdown
@@ -66,8 +71,7 @@
 	set category = "Malfunction"
 	set name = "Initiate Hostile Lockdown"
 
-	if(src.stat == 2)
-		src <<"You cannot begin a lockdown because you are dead!"
+	if(!canUseTopic())
 		return
 
 	if(malf_cooldown)
@@ -104,8 +108,7 @@
 	set category = "Malfunction"
 	set name = "Disable Lockdown"
 
-	if(src.stat == 2)
-		src <<"You cannot disable lockdown because you are dead!"
+	if(!canUseTopic())
 		return
 	if(malf_cooldown)
 		return
@@ -140,6 +143,10 @@
 /mob/living/silicon/ai/proc/disable_rcd()
 	set category = "Malfunction"
 	set name = "Disable RCDs"
+
+	if(!canUseTopic())
+		return
+
 	for(var/datum/AI_Module/large/disable_rcd/rcdmod in current_modules)
 		if(rcdmod.uses > 0)
 			rcdmod.uses --
@@ -149,6 +156,56 @@
 				rcd.disabled = 1
 			src << "<span class='warning>RCD-disabling pulse emitted.</span>"
 		else src << "<span class='notice'>Out of uses.</span>"
+
+/datum/AI_Module/large/break_fire_alarms
+	module_name = "Thermal Sensor Override"
+	mod_pick_name = "burnpigs"
+	description = "Gives you the ability to override the thermal sensors on all fire alarms. This will remove their ability to scan for fire and thus their ability to alert. \
+	Anyone can check the fire alarm's interface and may be tipped off by its status."
+	one_time = 1
+	cost = 25
+
+	power_type = /mob/living/silicon/ai/proc/break_fire_alarms
+
+/mob/living/silicon/ai/proc/break_fire_alarms()
+	set name = "Override Thermal Sensors"
+	set category = "Malfunction"
+
+	if(!canUseTopic())
+		return
+
+	for(var/obj/machinery/firealarm/F in world)
+		if(F.z != ZLEVEL_STATION)
+			continue
+		F.emagged = 1
+	src << "<span class='notice'>All thermal sensors on the station have been disabled. Fire alerts will no longer be recognized.</span>"
+	src.verbs -= /mob/living/silicon/ai/proc/break_fire_alarms
+
+/datum/AI_Module/large/break_air_alarms
+	module_name = "Air Alarm Safety Override"
+	mod_pick_name = "allow_flooding"
+	description = "Gives you the ability to disable safeties on all air alarms. This will allow you to use the environmental mode Flood, which disables scrubbers as well as pressure checks on vents. \
+	Anyone can check the air alarm's interface and may be tipped off by their nonfunctionality."
+	one_time = 1
+	cost = 50
+
+	power_type = /mob/living/silicon/ai/proc/break_air_alarms
+
+/mob/living/silicon/ai/proc/break_air_alarms()
+	set name = "Disable Air Alarm Safeties"
+	set category = "Malfunction"
+
+	if(!canUseTopic())
+		return
+
+	for(var/obj/machinery/alarm/A in world)
+		if(A.z != ZLEVEL_STATION)
+			continue
+		A.emagged = 1
+	src << "<span class='notice'>All air alarm safeties on the station have been overriden. Air alarms may now use the Flood environmental mode."
+	src.verbs -= /mob/living/silicon/ai/proc/break_air_alarms
+
+
 
 /datum/AI_Module/small/overload_machine
 	module_name = "Machine overload"
@@ -162,11 +219,15 @@
 /mob/living/silicon/ai/proc/overload_machine(obj/machinery/M as obj in world)
 	set name = "Overload Machine"
 	set category = "Malfunction"
+
+	if(!canUseTopic())
+		return
+
 	if (istype(M, /obj/machinery))
 		for(var/datum/AI_Module/small/overload_machine/overload in current_modules)
 			if(overload.uses > 0)
 				overload.uses --
-				audible_message("<span class='notice'>You hear a loud electrical buzzing sound!</span>")
+				audible_message("<span class='italics'>You hear a loud electrical buzzing sound!</span>")
 				src << "<span class='warning'>Overloading machine circuitry...</span>"
 				spawn(50)
 					if(M)
@@ -188,11 +249,15 @@
 /mob/living/silicon/ai/proc/override_machine(obj/machinery/M as obj in world)
 	set name = "Override Machine"
 	set category = "Malfunction"
+
+	if(!canUseTopic())
+		return
+
 	if (istype(M, /obj/machinery))
 		for(var/datum/AI_Module/small/override_machine/override in current_modules)
 			if(override.uses > 0)
 				override.uses --
-				audible_message("<span class='notice'>You hear a loud electrical buzzing sound!</span>")
+				audible_message("<span class='italics'>You hear a loud electrical buzzing sound!</span>")
 				src << "<span class='warning'>Reprogramming machine behaviour...</span>"
 				spawn(50)
 					if(M && !M.gc_destroyed)
@@ -224,6 +289,9 @@
 
 	if(PCT.uses < 1)
 		src << "Out of uses."
+		return
+
+	if(!canUseTopic())
 		return
 
 	var/sure = alert(src, "Make sure the room it is in is big enough, there is camera vision and that there is a 1x3 area for the machine. Are you sure you want to place the machine here?", "Are you sure?", "Yes", "No")
@@ -274,6 +342,10 @@
 /mob/living/silicon/ai/proc/blackout()
 	set category = "Malfunction"
 	set name = "Blackout"
+
+	if(!canUseTopic())
+		return
+
 	for(var/datum/AI_Module/small/blackout/blackout in current_modules)
 		if(blackout.uses > 0)
 			blackout.uses --
@@ -296,6 +368,10 @@
 /mob/living/silicon/ai/proc/reactivate_camera(obj/machinery/camera/C as obj in cameranet.cameras)
 	set name = "Reactivate Camera"
 	set category = "Malfunction"
+
+	if(!canUseTopic())
+		return
+
 	if (istype (C, /obj/machinery/camera))
 		for(var/datum/AI_Module/small/reactivate_camera/camera in current_modules)
 			if(camera.uses > 0)
@@ -320,6 +396,10 @@
 /mob/living/silicon/ai/proc/upgrade_camera(obj/machinery/camera/C as obj in cameranet.cameras)
 	set name = "Upgrade Camera"
 	set category = "Malfunction"
+
+	if(!canUseTopic())
+		return
+
 	if(istype(C))
 		var/datum/AI_Module/small/upgrade_camera/UC = locate(/datum/AI_Module/small/upgrade_camera) in current_modules
 		if(UC)
@@ -346,12 +426,11 @@
 					if(upgraded)
 						UC.uses --
 						C.visible_message("<span class='notice'>\icon[C] *beep*</span>")
-						src << "<span class='notice'>Camera successully upgraded!</span>"
+						src << "<span class='notice'>You successully upgrade the camera.</span>"
 					else
-						src << "<span class='notice'>This camera is already upgraded!</span>"
+						src << "<span class='warning'>This camera is already upgraded!</span>"
 			else
-				src << "<span class='notice'>Out of uses.</span>"
-
+				src << "<span class='warning'>Out of uses!</span>"
 
 /datum/module_picker
 	var/temp = null
@@ -394,6 +473,10 @@
 	if(!isAI(usr))
 		return
 	var/mob/living/silicon/ai/A = usr
+
+	if(A.stat == DEAD)
+		A <<"You are already dead!" //Omae Wa Mou Shindeiru
+		return
 
 	for(var/datum/AI_Module/AM in possible_modules)
 		if (href_list[AM.mod_pick_name])

@@ -69,7 +69,7 @@
 			if(pai.master_dna)
 				return
 			if(!istype(usr, /mob/living/carbon))
-				usr << "<span class='notice'>You don't have any DNA, or your DNA is incompatible with this device.</span>"
+				usr << "<span class='warning'>You don't have any DNA, or your DNA is incompatible with this device!</span>"
 			else
 				var/mob/living/carbon/M = usr
 				pai.master = M.real_name

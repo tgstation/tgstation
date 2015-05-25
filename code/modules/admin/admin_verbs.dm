@@ -20,7 +20,6 @@ var/list/admin_verbs_default = list(
 	/client/proc/stop_sounds
 	)
 var/list/admin_verbs_admin = list(
-	/client/proc/player_panel,			/*shows an interface for all players, with links to various panels (old style)*/
 	/client/proc/player_panel_new,		/*shows an interface for all players, with links to various panels*/
 	/client/proc/invisimin,				/*allows our mob to go invisible/visible*/
 //	/datum/admins/proc/show_traitor_panel,	/*interface which shows a mob's mind*/ -Removed due to rare practical use. Moved to debug verbs ~Errorage
@@ -49,7 +48,7 @@ var/list/admin_verbs_admin = list(
 	/client/proc/Getmob,				/*teleports a mob to our location*/
 	/client/proc/Getkey,				/*teleports a mob with a certain ckey to our location*/
 //	/client/proc/sendmob,				/*sends a mob somewhere*/ -Removed due to it needing two sorting procs to work, which were executed every time an admin right-clicked. ~Errorage
-	/client/proc/Jump,
+	/client/proc/jumptoarea,
 	/client/proc/jumptokey,				/*allows us to jump to the location of a mob with a certain ckey*/
 	/client/proc/jumptomob,				/*allows us to jump to a specific mob*/
 	/client/proc/jumptoturf,			/*allows us to jump to a specific turf*/
@@ -70,6 +69,7 @@ var/list/admin_verbs_ban = list(
 var/list/admin_verbs_sounds = list(
 	/client/proc/play_local_sound,
 	/client/proc/play_sound,
+	/client/proc/set_round_end_sound,
 	)
 var/list/admin_verbs_fun = list(
 	/client/proc/cmd_admin_dress,
@@ -83,7 +83,9 @@ var/list/admin_verbs_fun = list(
 	/client/proc/object_say,
 	/client/proc/toggle_random_events,
 	/client/proc/set_ooc,
-	/client/proc/forceEvent
+	/client/proc/reset_ooc,
+	/client/proc/forceEvent,
+	/client/proc/bluespace_artillery
 	)
 var/list/admin_verbs_spawn = list(
 	/datum/admins/proc/spawn_atom,		/*allows us to spawn instances*/
@@ -100,7 +102,8 @@ var/list/admin_verbs_server = list(
 	/datum/admins/proc/toggleAI,
 	/client/proc/cmd_admin_delete,		/*delete an instance/object/mob/etc*/
 	/client/proc/cmd_debug_del_all,
-	/client/proc/toggle_random_events
+	/client/proc/toggle_random_events,
+	/client/proc/panicbunker
 	)
 var/list/admin_verbs_debug = list(
 	/client/proc/restart_controller,
@@ -114,7 +117,11 @@ var/list/admin_verbs_debug = list(
 	/client/proc/restart_controller,
 	/client/proc/enable_debug_verbs,
 	/client/proc/callproc,
-	/client/proc/SDQL2_query
+	/client/proc/callproc_datum,
+	/client/proc/SDQL2_query,
+	/client/proc/test_movable_UI,
+	/client/proc/test_snap_UI,
+	/client/proc/debugNatureMapGenerator
 	)
 var/list/admin_verbs_possess = list(
 	/proc/possess,
@@ -130,6 +137,7 @@ var/list/admin_verbs_rejuv = list(
 //verbs which can be hidden - needs work
 var/list/admin_verbs_hideable = list(
 	/client/proc/set_ooc,
+	/client/proc/reset_ooc,
 	/client/proc/deadmin_self,
 	/client/proc/deadchat,
 	/client/proc/toggleprayers,
@@ -153,6 +161,7 @@ var/list/admin_verbs_hideable = list(
 	/client/proc/check_words,
 	/client/proc/play_local_sound,
 	/client/proc/play_sound,
+	/client/proc/set_round_end_sound,
 	/client/proc/cmd_admin_dress,
 	/client/proc/cmd_admin_gib_self,
 	/client/proc/drop_bomb,
@@ -175,6 +184,7 @@ var/list/admin_verbs_hideable = list(
 	/client/proc/restart_controller,
 	/client/proc/cmd_admin_list_open_jobs,
 	/client/proc/callproc,
+	/client/proc/callproc_datum,
 	/client/proc/Debug2,
 	/client/proc/reload_admins,
 	/client/proc/cmd_debug_make_powernets,
@@ -186,7 +196,8 @@ var/list/admin_verbs_hideable = list(
 	/proc/possess,
 	/proc/release,
 	/client/proc/reload_admins,
-	/client/proc/reset_all_tcs
+	/client/proc/reset_all_tcs,
+	/client/proc/panicbunker
 	)
 
 /client/proc/add_admin_verbs()
@@ -312,22 +323,13 @@ var/list/admin_verbs_hideable = list(
 	if(holder && mob)
 		if(mob.invisibility == INVISIBILITY_OBSERVER)
 			mob.invisibility = initial(mob.invisibility)
-			mob << "<span class='userdanger'>Invisimin off. Invisibility reset.</span>"
+			mob << "<span class='boldannounce'>Invisimin off. Invisibility reset.</span>"
 		else
 			mob.invisibility = INVISIBILITY_OBSERVER
 			mob << "<span class='adminnotice'><b>Invisimin on. You are now as invisible as a ghost.</b></span>"
 
-
-/client/proc/player_panel()
-	set name = "Player Panel"
-	set category = "Admin"
-	if(holder)
-		holder.player_panel_old()
-	feedback_add_details("admin_verb","PP") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
-	return
-
 /client/proc/player_panel_new()
-	set name = "Player Panel New"
+	set name = "Player Panel"
 	set category = "Admin"
 	if(holder)
 		holder.player_panel_new()
@@ -443,9 +445,9 @@ var/list/admin_verbs_hideable = list(
 	message_admins("<span class='adminnotice'>[key_name_admin(usr)] gave [key_name(T)] the spell [S].</span>")
 
 	if(T.mind)
-		T.mind.spell_list += new S
+		T.mind.AddSpell(new S)
 	else
-		T.mob_spell_list += new S
+		T.AddSpell(new S)
 		message_admins("<span class='danger'>Spells given to mindless mobs will not be transferred in mindswap or cloning!</span>")
 
 
