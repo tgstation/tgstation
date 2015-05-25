@@ -338,7 +338,7 @@
 		return
 
 	if(patient && path.len == 0 && (get_dist(src,patient) > 1))
-		path = get_path_to(loc, get_turf(patient), /turf/proc/CardinalTurfsWithAccess, /turf/proc/Distance_cardinal, 0, 30,id=botcard)
+		path = get_path_to(loc, get_turf(patient), src, /turf/proc/Distance_cardinal, 0, 30,id=botcard)
 		mode = BOT_MOVING
 		if(!path.len) //Do not chase a patient we cannot reach.
 			soft_reset()
