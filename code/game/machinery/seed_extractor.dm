@@ -7,6 +7,9 @@
 	anchored = 1
 	var/piles = list()
 
+	var/min_seeds = 1 //better manipulators improve this
+	var/max_seeds = 4 //better scanning modules improve this
+
 	machine_flags = SCREWTOGGLE | CROWDESTROY | WRENCHMOVE | FIXED2WORK
 
 /********************************************************************
@@ -26,6 +29,17 @@
 	)
 
 	RefreshParts()
+
+/obj/machinery/seed_extractor/RefreshParts()
+	var/B=0
+	for(var/obj/item/weapon/stock_parts/manipulator/M in component_parts)
+		B += (M.rating-1)*0.5
+	min_seeds=1+B
+
+	B=0
+	for(var/obj/item/weapon/stock_parts/scanning_module/M in component_parts)
+		B += M.rating-1
+	max_seeds=4+B
 
 obj/machinery/seed_extractor/attackby(var/obj/item/O as obj, var/mob/user as mob)
 
@@ -72,7 +86,7 @@ obj/machinery/seed_extractor/attackby(var/obj/item/O as obj, var/mob/user as mob
 
 		if(new_seed_type)
 			user << "<span class='notice'>You extract some seeds from [O].</span>"
-			var/produce = rand(1,4)
+			var/produce = rand(min_seeds,max_seeds)
 			for(var/i = 0;i<=produce;i++)
 				var/obj/item/seeds/seeds = new(get_turf(src))
 				seeds.seed_type = new_seed_type.name

@@ -108,6 +108,13 @@
 		del src
 		return
 
+/obj/machinery/power/supermatter/ex_act(severity)
+	switch(severity)
+		if(3.0)
+			return //Should be improved
+		else
+			return explode()
+
 /obj/machinery/power/supermatter/shard/singularity_act()
 	var/prints = ""
 	if(src.fingerprintshidden)

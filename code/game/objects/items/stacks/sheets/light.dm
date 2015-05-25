@@ -21,16 +21,22 @@
 		if(amount <= 0)
 			user.drop_from_inventory(src)
 			del(src)
-		return 1
+		return
 
 	if(istype(O,/obj/item/stack/sheet/metal))
 		var/obj/item/stack/sheet/metal/M = O
 		M.use(1)
 		amount--
-		new/obj/item/stack/tile/light(user.loc)
+		var/obj/item/stack/tile/light/L=locate(/obj/item/stack/tile/light) in get_turf(user)
+		if(L && L.amount<L.max_amount)
+			L.amount++
+			user << "You add [L] to the stack. It now contains [L.amount] tiles."
+		else
+			new/obj/item/stack/tile/light(user.loc)
+
 		if(amount <= 0)
 			user.drop_from_inventory(src)
 			del(src)
-		return 1
+		return
 
 	return ..()

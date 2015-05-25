@@ -1,7 +1,7 @@
 /obj/item/stack/tile/light
 	name = "light tile"
 	singular_name = "light floor tile"
-	desc = "A floor tile, made out off glass. It produces light."
+	desc = "A floor tile made out of glass. It produces light."
 	icon_state = "tile_e"
 	w_class = 3.0
 	force = 3.0
@@ -13,18 +13,18 @@
 	max_amount = 60
 	attack_verb = list("bashed", "battered", "bludgeoned", "thrashed", "smashed")
 	var/on = 1
-	var/state //0 = fine, 1 = flickering, 2 = breaking, 3 = broken
+	var/state = 0//0 = fine, 1 = flickering, 2 = breaking, 3 = broken
 
 /obj/item/stack/tile/light/New(var/loc, var/amount=null)
 	..()
-	if(prob(5))
-		state = 3 //broken
-	else if(prob(5))
-		state = 2 //breaking
-	else if(prob(10))
-		state = 1 //flickering occasionally
-	else
-		state = 0 //fine
+	//if(prob(5))
+	//	state = 3 //broken
+	//else if(prob(5))
+	//	state = 2 //breaking
+	//else if(prob(10))
+	//	state = 1 //flickering occasionally
+	//else
+	//	state = 0 //fine //This behaved stupidly with stacks, removing for now
 
 /obj/item/stack/tile/light/attackby(var/obj/item/O as obj, var/mob/user as mob)
 	if(istype(O,/obj/item/weapon/crowbar))

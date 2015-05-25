@@ -170,6 +170,7 @@
 				if(user.machine==src)
 					newmachine.attack_hand(user)
 				component_parts = 0
+				qdel(coinbox)
 				qdel(src)
 		else
 			if(istype(P,pack))
