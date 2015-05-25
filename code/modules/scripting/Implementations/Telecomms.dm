@@ -331,7 +331,6 @@ datum/signal
 		var/atom/movable/virtualspeaker/virt = PoolOrNew(/atom/movable/virtualspeaker,null)
 		virt.name = source
 		virt.job = job
-		virt.faketrack = 1
 		virt.languages = HUMAN
 		//END SAY REWRITE RELATED CODE.
 
