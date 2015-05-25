@@ -17,6 +17,8 @@
 				src << link("[config.renders_url]/defficiency/")
 			if("box")
 				src << link("[config.renders_url]/tgstation/")
+			if("taxi")
+				src << link("[config.renders_url]/taxistation/")
 			else
 				src << "<span class='warning'>No map render for [map.nameLong], bug Pomf about it!</span>"
 	return
