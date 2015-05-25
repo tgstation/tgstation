@@ -1,3 +1,5 @@
+var/global/datum/universal_state/universe = new
+
 var/admin_notice = "" // Admin notice that all clients see when joining the server
 
 var/timezoneOffset = 0 // The difference betwen midnight (of the host computer) and 0 world.ticks.

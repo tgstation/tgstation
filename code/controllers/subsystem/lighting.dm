@@ -1,8 +1,6 @@
 var/datum/subsystem/lighting/SSlighting
 
 #define MC_AVERAGE(average, current) (0.8*(average) + 0.2*(current))
-#define LIGHTING_ICON 'icons/effects/ss13_dark_alpha6.dmi'
-#define LIGHTING_LAYER 10									//Drawing layer for lighting overlays
 
 /datum/subsystem/lighting
 	name = "Lighting"
@@ -12,6 +10,7 @@ var/datum/subsystem/lighting/SSlighting
 	var/list/lighting_images = list()		//replaces lighting_states (use lighting_images.len) ~carn
 	var/list/lights = list()				//list of all datum/light_source
 	var/lights_workload = 0					//stats on the largest number of lights (max lights.len)
+	var/lighting_states = 6
 	var/list/changed_turfs = list()			//list of all turfs which need moving to a new lighting subarea
 	var/changed_turfs_workload = 0			//stats on the largest number of turfs changed (max changed_turfs.len)
 
@@ -131,6 +130,3 @@ var/datum/subsystem/lighting/SSlighting
 					varval2 = "/list([length(varval2)])"
 				msg += "\t [varname] = [varval1] -> [varval2]\n"
 	world.log << msg
-
-#undef LIGHTING_ICON
-#undef LIGHTING_LAYER

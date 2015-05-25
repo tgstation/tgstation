@@ -461,6 +461,12 @@ var/global/floorIsLava = 0
 			<A href='?src=\ref[src];secretsfun=schoolgirl'>Japanese Animes Mode</A><BR>
 			<A href='?src=\ref[src];secretsfun=floorlava'>The floor is lava! (DANGEROUS: extremely lame)</A><BR>
 			<BR>
+			<B>Final Solutions</B><BR>
+			<I>(Warning, these will end the round!)</I><BR>
+			<BR>
+			<A href='?src=\ref[src];secretsfun=hellonearth'>Summon Nar-Sie</A><BR>
+			<A href='?src=\ref[src];secretsfun=supermattercascade'>Start a Supermatter Cascade</A><BR>
+			<BR>
 			"}
 
 /* DEATH SQUADS

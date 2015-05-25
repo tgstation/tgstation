@@ -179,3 +179,9 @@
 	..()
 	if(isliving(L))
 		L.fire_act()
+
+/atom/proc/melt()
+	return //lolidk
+
+/atom/proc/solidify()
+	return //lolidk
