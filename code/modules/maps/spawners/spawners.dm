@@ -570,7 +570,7 @@
 		/obj/item/weapon/reagent_containers/food/snacks/bigbiteburger,
 		/obj/item/weapon/reagent_containers/food/snacks/boiledegg,
 		/obj/item/weapon/reagent_containers/food/snacks/brainburger,
-		/obj/item/weapon/reagent_containers/food/snacks/carpmeat,
+		/obj/item/weapon/reagent_containers/food/snacks/meat/carpmeat,
 		/obj/item/weapon/reagent_containers/food/snacks/cheesiehonkers,
 		/obj/item/weapon/reagent_containers/food/snacks/chips,
 		/obj/item/weapon/reagent_containers/food/snacks/chocolatebar/wrapped,
@@ -750,8 +750,8 @@
 		//obj/item/weapon/reagent_containers/food/snacks/grown/ghost_chilli,
 		/obj/item/weapon/reagent_containers/food/snacks/wingfangchu,
 		/obj/item/weapon/reagent_containers/food/snacks/soylentgreen,
-		/obj/item/weapon/reagent_containers/food/snacks/bearmeat,
-		/obj/item/weapon/reagent_containers/food/snacks/xenomeat,
+		/obj/item/weapon/reagent_containers/food/snacks/meat/bearmeat,
+		/obj/item/weapon/reagent_containers/food/snacks/meat/xenomeat,
 		)
 
 /obj/map/spawner/space/drinks

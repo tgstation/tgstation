@@ -293,7 +293,7 @@ obj/machinery/gibber/New()
 			newmeat:subjectname = sourcename
 			newmeat:subjectjob = sourcejob
 		if(istype(victim, /mob/living/carbon/alien))
-			newmeat = new/obj/item/weapon/reagent_containers/food/snacks/xenomeat
+			newmeat = new/obj/item/weapon/reagent_containers/food/snacks/meat/xenomeat
 		if(istype(victim, /mob/living/carbon/monkey))
 			newmeat = new/obj/item/weapon/reagent_containers/food/snacks/meat/monkey
 		if(istype(victim, /mob/living/simple_animal))

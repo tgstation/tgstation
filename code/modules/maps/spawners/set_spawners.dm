@@ -34,7 +34,7 @@
 	list(
 		/obj/item/clothing/suit/chickensuit,
 		/obj/item/clothing/head/chicken,
-		/obj/item/weapon/reagent_containers/food/snacks/egg,
+		/obj/item/weapon/reagent_containers/food/snacks/meat/egg,
 		),
 	list(
 		/obj/item/clothing/under/gladiator,

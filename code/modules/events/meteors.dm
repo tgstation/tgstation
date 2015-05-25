@@ -39,7 +39,7 @@
 var/global/list/thing_storm_types = list(
 	"meaty gore storm" = list(
 		/obj/item/weapon/reagent_containers/food/snacks/meat/human,
-		/obj/item/weapon/reagent_containers/food/snacks/carpmeat,
+		/obj/item/weapon/reagent_containers/food/snacks/meat/carpmeat,
 		/obj/item/weapon/organ/head,
 		/obj/item/weapon/organ/r_arm,
 		/obj/item/weapon/organ/l_arm,
