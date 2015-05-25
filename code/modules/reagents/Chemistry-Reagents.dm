@@ -4608,6 +4608,24 @@ var/global/list/chifir_doesnt_remove=list(
 	id = "gyro"
 	description = "Nyo ho ho~"
 
+/datum/reagent/drink/tea/gyro/on_mob_life(var/mob/living/M as mob)
+	if(!holder) return
+	if(!M) M = holder.my_atom
+	if(prob(30))
+		M.emote("spin")
+	var/prev_dir = M.dir
+	M.confused++
+	for(var/i in list(1,4,2,8,1,4,2,8,1,4,2,8,1,4,2,8))
+		M.dir = i
+		sleep(1)
+	M.dir = prev_dir
+	if(istype(M, /mob/living/carbon/human))
+		var/mob/living/carbon/human/H = M
+		for(var/zone in list("l_leg","r_leg","l_foot","r_foot"))
+			H.HealDamage(zone, rand(1, 3), rand(1, 3))//Thank you Gyro...
+	..()
+	return
+
 /datum/reagent/drink/tea/dantea
 	name = "Discount Dan's Green Flavor Tea"
 	id = "dantea"

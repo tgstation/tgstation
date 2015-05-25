@@ -478,6 +478,10 @@
 			message = "<B>[src]</B> winks."
 			m_type = VISIBLE
 
+		if ("spin")
+			message = "<B>[src]</B> spins out of control!"
+			m_type = VISIBLE
+
 		if ("yawn")
 			if (!muzzled)
 				message = "<B>[src]</B> yawns."
