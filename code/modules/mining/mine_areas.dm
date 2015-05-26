@@ -65,7 +65,7 @@
 	name = "North Mining Outpost"
 
 /area/mine/west_outpost
-	name = "West Mining Outpost"
+	name = "Research Outpost"
 
 /area/mine/laborcamp
 	name = "Labor Camp"
