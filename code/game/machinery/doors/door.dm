@@ -3,6 +3,10 @@
 #define BLOB_PROBABILITY 40
 #define HEADBUTT_PROBABILITY 40
 #define BRAINLOSS_FOR_HEADBUTT 60
+
+#define DOOR_LAYER		2.7
+#define DOOR_CLOSED_MOD	0.3 //how much the layer is increased when the door is closed
+
 var/list/all_doors = list()
 /obj/machinery/door
 	name = "door"
@@ -12,7 +16,8 @@ var/list/all_doors = list()
 	anchored = 1
 	opacity = 1
 	density = 1
-	layer = 2.7
+	layer = DOOR_LAYER
+	var/base_layer = DOOR_LAYER
 
 	var/secondsElectrified = 0
 	var/visible = 1
@@ -248,7 +253,7 @@ var/list/all_doors = list()
 	door_animate("opening")
 	src.SetOpacity(0)
 	sleep(10)
-	src.layer = 2.7
+	src.layer = base_layer
 	src.density = 0
 	explosion_resistance = 0
 	update_icon()
@@ -274,7 +279,7 @@ var/list/all_doors = list()
 	operating = 1
 	door_animate("closing")
 
-	layer = 3.0
+	layer = base_layer + DOOR_CLOSED_MOD
 
 	density = 1
 	update_icon()
@@ -300,12 +305,12 @@ var/list/all_doors = list()
 
 	if(density)
 		// above most items if closed
-		layer = 3.1
+		layer = base_layer + DOOR_CLOSED_MOD
 
 		explosion_resistance = initial(explosion_resistance)
 	else
 		// under all objects if opened. 2.7 due to tables being at 2.6
-		layer = 2.7
+		layer = base_layer
 
 		explosion_resistance = 0
 
