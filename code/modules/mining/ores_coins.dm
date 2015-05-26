@@ -3,9 +3,11 @@
 /obj/item/weapon/ore
 	name = "rock"
 	icon = 'icons/obj/mining.dmi'
-	icon_state = "ore"
+	icon_state = "ore2"
 	var/points = 0 //How many points this ore gets you from the ore redemption machine
 	var/refined_type = null //What this ore defaults to being refined into
+	var/datum/geosample/geologic_data
+
 
 /obj/item/weapon/ore/attackby(obj/item/I as obj, mob/user as mob, params)
 	if(istype(I, /obj/item/weapon/weldingtool))

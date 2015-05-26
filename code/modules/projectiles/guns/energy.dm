@@ -9,6 +9,7 @@
 	var/modifystate = 0
 	var/list/ammo_type = list(/obj/item/ammo_casing/energy)
 	var/select = 1 //The state of the select fire switch. Determines from the ammo_type list what kind of shot is fired next.
+	var/charge_states = 1
 
 /obj/item/weapon/gun/energy/emp_act(severity)
 	power_supply.use(round(power_supply.charge / severity))
@@ -73,18 +74,19 @@
 	return
 
 /obj/item/weapon/gun/energy/update_icon()
-	var/ratio = power_supply.charge / power_supply.maxcharge
-	ratio = Ceiling(ratio*4) * 25
-	var/obj/item/ammo_casing/energy/shot = ammo_type[select]
-	if(power_supply.charge < shot.e_cost)
-		ratio = 0 //so the icon changes to empty if the charge isn't zero but not enough for a shot.
-	switch(modifystate)
-		if (0)
-			icon_state = "[initial(icon_state)][ratio]"
-		if (1)
-			icon_state = "[initial(icon_state)][shot.mod_name][ratio]"
-		if (2)
-			icon_state = "[initial(icon_state)][shot.select_name][ratio]"
+	if(charge_states)
+		var/ratio = power_supply.charge / power_supply.maxcharge
+		ratio = Ceiling(ratio*4) * 25
+		var/obj/item/ammo_casing/energy/shot = ammo_type[select]
+		if(power_supply.charge < shot.e_cost)
+			ratio = 0 //so the icon changes to empty if the charge isn't zero but not enough for a shot.
+		switch(modifystate)
+			if (0)
+				icon_state = "[initial(icon_state)][ratio]"
+			if (1)
+				icon_state = "[initial(icon_state)][shot.mod_name][ratio]"
+			if (2)
+				icon_state = "[initial(icon_state)][shot.select_name][ratio]"
 	overlays.Cut()
 	if(F)
 		if(F.on)

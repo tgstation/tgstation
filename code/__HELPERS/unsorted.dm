@@ -1535,3 +1535,12 @@ var/list/WALLITEMS = list(
 						"lime","darkgreen","cyan","navy","teal","purple","indigo")
 		else
 			return "white"
+
+
+proc/find_holder_of_type(var/atom/reference,var/typepath) //Returns the first object holder of the type you specified
+	var/atom/location = reference.loc //ie /mob to find the first mob holding it
+	while(!istype(location,/turf) && !istype(location,null))
+		if(istype(location,typepath))
+			return location
+		location = location.loc
+	return 0

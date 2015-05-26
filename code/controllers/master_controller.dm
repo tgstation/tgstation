@@ -44,6 +44,7 @@ Note: you can set the datum's defined processing_interval to some integer to set
 
 	createRandomZlevel()	//gate system
 	setup_map_transitions()
+	SetupXenoarch()
 	for(var/i=0, i<max_secret_rooms, i++)
 		make_mining_asteroid_secret()
 
