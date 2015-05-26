@@ -13,3 +13,22 @@
 	attack_sound = 'sound/weapons/bite.ogg'
 	faction = list("creature")
 
+/mob/living/simple_animal/hostile/creature/cult
+	faction = list("cult")
+
+	min_oxy = 0
+	max_oxy = 0
+	min_tox = 0
+	max_tox = 0
+	min_co2 = 0
+	max_co2 = 0
+	min_n2 = 0
+	max_n2 = 0
+	minbodytemp = 0
+
+	supernatural = 1
+
+/mob/living/simple_animal/hostile/creature/cult/narsie_act()
+	return
+
+

@@ -160,6 +160,8 @@
 	var/starlight = 0
 	var/grey_assistants = 0
 
+	var/colour_lights //gay
+
 	var/aggressive_changelog = 0
 
 /datum/configuration/New()

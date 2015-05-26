@@ -39,3 +39,9 @@
 	name = "Coconuts"
 	icon = 'icons/misc/beach.dmi'
 	icon_state = "coconuts"
+
+/obj/effect/overlay/bluespacify
+	name = "Bluespace"
+	icon = 'icons/turf/space.dmi'
+	icon_state = "bluespacify"
+	layer = LIGHTING_LAYER

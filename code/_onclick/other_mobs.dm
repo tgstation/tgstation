@@ -49,6 +49,10 @@
 /mob/living/UnarmedAttack(var/atom/A)
 	A.attack_animal(src)
 
+/mob/living/captive_brain/UnarmedAttack(var/atom/A)
+	return
+
+
 /mob/living/simple_animal/hostile/UnarmedAttack(var/atom/A)
 	target = A
 	AttackingTarget()

@@ -1,4 +1,6 @@
 /**********************Mineral deposits**************************/
+/datum/controller/game_controller
+	var/list/artifact_spawning_turfs = list()
 
 /turf/simulated/mineral //wall piece
 	name = "rock"
@@ -17,6 +19,14 @@
 	var/last_act = 0
 	var/scan_state = null //Holder for the image we display when we're pinged by a mining scanner
 	var/hidden = 1
+	var/datum/geosample/geologic_data
+	var/excavation_level = 0
+	var/list/finds = list()//no longer null to prevent those pesky runtime errors
+	var/next_rock = 0
+	var/archaeo_overlay = ""
+	var/excav_overlay = ""
+	var/obj/item/weapon/last_find
+	var/datum/artifact_find/artifact_find
 
 /turf/simulated/mineral/ex_act(severity, target)
 	..()
@@ -381,13 +391,34 @@
 				new /mob/living/simple_animal/hostile/asteroid/hivelord(T)
 	return
 
-/turf/simulated/mineral/attackby(var/obj/item/weapon/pickaxe/P as obj, mob/user as mob, params)
+/turf/simulated/mineral/attackby(var/obj/item/weapon/W as obj, mob/user as mob, params)
 
 	if (!user.IsAdvancedToolUser())
 		usr << "<span class='danger'>You don't have the dexterity to do this!</span>"
 		return
 
-	if (istype(P, /obj/item/weapon/pickaxe))
+	if (istype(W, /obj/item/device/core_sampler))
+		if(!geologic_data)
+			geologic_data = new/datum/geosample(src)
+		geologic_data.UpdateNearbyArtifactInfo(src)
+		var/obj/item/device/core_sampler/C = W
+		C.sample_item(src, user)
+		return
+
+	if (istype(W, /obj/item/device/depth_scanner))
+		var/obj/item/device/depth_scanner/C = W
+		C.scan_atom(user, src)
+		return
+
+	if (istype(W, /obj/item/device/measuring_tape))
+		var/obj/item/device/measuring_tape/P = W
+		user.visible_message("<span class='notice'>[user] extends [P] towards [src].</span>","<span class='notice'>You extend [P] towards [src].</span>")
+		if(do_after(user,25))
+			user << "<span class='notice'>\icon[P] [src] has been excavated to a depth of [2*excavation_level]cm.</span>"
+		return
+
+	if (istype(W, /obj/item/weapon/pickaxe))
+		var/obj/item/weapon/pickaxe/P = W
 		var/turf/T = user.loc
 		if (!( istype(T, /turf) ))
 			return
@@ -395,19 +426,110 @@
 		if(last_act+P.digspeed > world.time)//prevents message spam
 			return
 		last_act = world.time
+
+
+		var/fail_message = ""
+		if(finds && finds.len)
+			var/datum/find/F = finds[1]
+			if(excavation_level + P.excavation_amount > F.excavation_required)
+				fail_message = ", <b>[pick("there is a crunching noise","[W] collides with some different rock","part of the rock face crumbles away","something breaks under [W]")]</b>"
+
 		user << "<span class='danger'>You start picking.</span>"
+
+		if(fail_message && prob(90))
+			if(prob(25))
+				excavate_find(5, finds[1])
+			else if(prob(50))
+				finds.Remove(finds[1])
+				if(prob(50))
+					artifact_debris()
 		P.playDigSound()
 
 		if(do_after(user,P.digspeed))
 			if(istype(src, /turf/simulated/mineral)) //sanity check against turf being deleted during digspeed delay
 				user << "<span class='notice'>You finish cutting into the rock.</span>"
+				if(finds && finds.len)
+					var/datum/find/F = finds[1]
+					if(round(excavation_level + P.excavation_amount) == F.excavation_required)
+
+						if(excavation_level + P.excavation_amount > F.excavation_required)
+
+							excavate_find(100, F)
+						else
+							excavate_find(80, F)
+
+					else if(excavation_level + P.excavation_amount > F.excavation_required - F.clearance_range)
+
+						excavate_find(0, F)
+
+				if( excavation_level + P.excavation_amount >= 100 )
+					var/obj/structure/boulder/B
+					if(artifact_find)
+						if( excavation_level > 0 || prob(15) )
+
+							B = new(src)
+							if(artifact_find)
+								B.artifact_find = artifact_find
+						else
+							artifact_debris(1)
+
+					else if(prob(15))
+						B = new(src)
+
+					if(B)
+						gets_drilled(user, artifact_fail = 0)
+					else
+						gets_drilled(user, artifact_fail = 1)
+					return
+
+				excavation_level += P.excavation_amount
+
+			if(!archaeo_overlay && finds && finds.len)
+				var/datum/find/F = finds[1]
+				if(F.excavation_required <= excavation_level + F.view_range)
+					archaeo_overlay = "overlay_archaeo[rand(1,3)]"
+					overlays += archaeo_overlay
+
+			var/update_excav_overlay = 0
+
+			var/subtractions = 0
+			while(excavation_level - 25*(subtractions + 1) >= 0 && subtractions < 3)
+				subtractions++
+			if(excavation_level - P.excavation_amount < subtractions * 25)
+				update_excav_overlay = 1
+
+			//update overlays displaying excavation level
+			if( !(excav_overlay && excavation_level > 0) || update_excav_overlay )
+				var/excav_quadrant = round(excavation_level / 25) + 1
+				excav_overlay = "overlay_excv[excav_quadrant]_[rand(1,3)]"
+				overlays += excav_overlay
+
+			//drop some rocks
+			next_rock += P.excavation_amount * 10
+			while(next_rock > 100)
+				next_rock -= 100
+				var/obj/item/weapon/ore/O = new(src)
+				if(!geologic_data)
+					geologic_data = new/datum/geosample(src)
+				geologic_data.UpdateNearbyArtifactInfo(src)
+				O.geologic_data = geologic_data
 				P.update_icon()
-				gets_drilled(user)
 	else
 		return attack_hand(user)
 	return
 
-/turf/simulated/mineral/proc/gets_drilled()
+/turf/simulated/mineral/proc/gets_drilled(var/mob/user, triggered_by_explosion = 0, var/artifact_fail = 0)
+	if(artifact_find && artifact_fail)
+		for(var/mob/living/M in range(src, 200))
+			M << "<span class='userdanger'>[pick("A high pitched [pick("keening","wailing","whistle")]","A rumbling noise like [pick("thunder","heavy machinery")]")] somehow penetrates your mind before fading away!</span>"
+			if(prob(50)) //pain
+		//		flick("pain",M.pain)
+				M.adjustBruteLoss(5)
+			else
+				flick("flash",M.flash)
+				if(prob(50))
+					M.Stun(5)
+			M.apply_effect(25, IRRADIATE)
 	if ((src.mineralName != "") && (src.mineralAmt > 0) && (src.mineralAmt < 11))
 		var/i
 		for (i=0;i<mineralAmt;i++)
@@ -430,9 +552,73 @@
 	N.fullUpdateMineralOverlays()
 	return
 
+/turf/simulated/mineral/proc/excavate_find(var/prob_clean = 0, var/datum/find/F)
+	//with skill and luck, players can cleanly extract finds
+	//otherwise, they come out inside a chunk of rock
+	var/obj/item/weapon/X
+	if(prob_clean)
+		X = new /obj/item/weapon/archaeological_find(src, new_item_type = F.find_type)
+	else
+		X = new /obj/item/weapon/strangerock(src, inside_item_type = F.find_type)
+		if(!geologic_data)
+			geologic_data = new/datum/geosample(src)
+		geologic_data.UpdateNearbyArtifactInfo(src)
+		X:geologic_data = geologic_data
+
+	//some find types delete the /obj/item/weapon/archaeological_find and replace it with something else, this handles when that happens
+	//yuck
+	var/display_name = "something"
+	if(!X)
+		X = last_find
+	if(X)
+		display_name = X.name
+
+	//many finds are ancient and thus very delicate - luckily there is a specialised energy suspension field which protects them when they're being extracted
+	if(prob(F.prob_delicate))
+		var/obj/effect/suspension_field/S = locate() in src
+		if(!S || S.field_type != get_responsive_reagent(F.find_type))
+			if(X)
+				visible_message("<span class='danger'>[pick("[display_name] crumbles away into dust","[display_name] breaks apart")].</span>")
+				del(X)
+
+	finds.Remove(F)
+
+/turf/simulated/mineral/proc/artifact_debris(var/severity = 0)
+	for(var/j in 1 to rand(1, 3 + max(min(severity, 1), 0) * 2))
+		switch(rand(1,6))
+			if(1)
+				var/obj/item/stack/rods/R = new(src)
+				R.amount = rand(5,25)
+
+			if(2)
+				var/obj/item/stack/tile/R = new(src)
+				R.amount = rand(1,5)
+
+			if(3)
+				var/obj/item/stack/sheet/metal/M = new/obj/item/stack/sheet/metal(src)
+				M.amount = rand(5,25)
+
+			if(4)
+				var/obj/item/stack/sheet/plasteel/R = new(src)
+				R.amount = rand(5,25)
+
+			if(5)
+				var/quantity = rand(1,3)
+				for(var/i=0, i<quantity, i++)
+					new/obj/item/weapon/shard(loc)
+
+//			if(6)
+//				var/quantity = rand(1,3)
+//				for(var/i=0, i<quantity, i++)
+//					getFromPool(/obj/item/weapon/shard/plasma, loc)
+
+			if(6)
+				var/obj/item/stack/sheet/mineral/uranium/R = new(src)
+				R.amount = rand(5,25)
+
 /turf/simulated/mineral/attack_animal(mob/living/simple_animal/user as mob)
 	if(user.environment_smash >= 2)
-		gets_drilled()
+		gets_drilled(artifact_fail = 1)
 	..()
 
 /*

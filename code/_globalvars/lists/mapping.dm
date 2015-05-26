@@ -47,6 +47,9 @@ var/list/secequipment = list()
 var/list/deathsquadspawn = list()
 var/list/emergencyresponseteamspawn = list()
 
+var/list/endgame_safespawns = list()
+var/list/endgame_exits = list()
+
 	//away missions
 var/list/awaydestinations = list()	//a list of landmarks that the warpgate can take you to
 

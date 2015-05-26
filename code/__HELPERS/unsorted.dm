@@ -634,7 +634,8 @@ Turf and target are seperate in case you want to teleport some distance from a t
 // note range is non-pythagorean
 // used for disposal system
 /proc/get_ranged_target_turf(var/atom/A, var/direction, var/range)
-
+	if(!A)
+		return
 	var/x = A.x
 	var/y = A.y
 	if(direction & NORTH)
@@ -1534,3 +1535,12 @@ var/list/WALLITEMS = list(
 						"lime","darkgreen","cyan","navy","teal","purple","indigo")
 		else
 			return "white"
+
+
+proc/find_holder_of_type(var/atom/reference,var/typepath) //Returns the first object holder of the type you specified
+	var/atom/location = reference.loc //ie /mob to find the first mob holding it
+	while(!istype(location,/turf) && !istype(location,null))
+		if(istype(location,typepath))
+			return location
+		location = location.loc
+	return 0

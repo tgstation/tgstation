@@ -138,12 +138,13 @@ turf/simulated/proc/share_temperature_mutual_solid(turf/simulated/sharer, conduc
 
 
 /turf/simulated/proc/process_cell()
-
 	if(archived_cycle < SSair.times_fired) //archive self if not already done
 		archive()
 	current_cycle = SSair.times_fired
 
 	var/remove = 1 //set by non simulated turfs who are sharing with this turf
+
+	universe.OnTurfTick()
 
 	for(var/direction in cardinal)
 		if(!(atmos_adjacent_turfs & direction))

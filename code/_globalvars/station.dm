@@ -12,3 +12,5 @@ var/list/powernets = list()
 var/datum/moduletypes/mods = new()
 
 var/map_name = "Unknown"	//The name of the map that is loaded. Assigned in world/New()
+
+var/global/list/escape_list = list()

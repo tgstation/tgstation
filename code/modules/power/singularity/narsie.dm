@@ -11,6 +11,10 @@
 	grav_pull = 5 //How many tiles out do we pull?
 	consume_range = 6 //How many tiles out do we eat
 
+
+var/global/narsie_cometh = 0
+var/global/list/narsie_list = list()
+
 /obj/singularity/narsie/large
 	name = "Nar-Sie"
 	icon = 'icons/obj/narsie.dmi'
@@ -21,28 +25,43 @@
 	move_self = 1 //Do we move on our own?
 	grav_pull = 10
 	consume_range = 12 //How many tiles out do we eat
+	var/announce = 1
+	var/narnar = 1
 
 /obj/singularity/narsie/large/New()
 	..()
-	world << "<font size='15' color='red'><b>NAR-SIE HAS RISEN</b></font>"
-	world << pick(sound('sound/hallucinations/im_here1.ogg'), sound('sound/hallucinations/im_here2.ogg'))
+	if(narnar)
+		narsie_list.Add(src)
+	if(announce)
+		world << "<font size='15' color='red'><b>NAR-SIE HAS RISEN</b></font>"
+		world << pick(sound('sound/hallucinations/im_here1.ogg'), sound('sound/hallucinations/im_here2.ogg'))
 
-	var/area/A = get_area(src)
-	if(A)
-		notify_ghosts("Nar-Sie has risen in \the [A.name]. Reach out to the Geometer to be given a new shell for your soul.")
+		var/area/A = get_area(src)
+		if(A)
+			notify_ghosts("Nar-Sie has risen in \the [A.name]. Reach out to the Geometer to be given a new shell for your soul.")
 
 	narsie_spawn_animation()
 
-	sleep(70)
-	SSshuttle.emergency.request(null, 0.3) // Cannot recall
+	if(!narsie_cometh && narnar)
+		sleep(70)
+		SSshuttle.emergency.request(null, 0.3) // Cannot recall
+		if(narnar)
+			SetUniversalState(/datum/universal_state/hell)
+		narsie_cometh = 1
 
+
+/obj/singularity/narsie/large/Destroy()
+	if(narnar)
+		narsie_list.Remove(src)
+	..()
 
 /obj/singularity/narsie/large/attack_ghost(mob/dead/observer/user as mob)
-	if(!(src in view()))
-		user << "Your soul is too far away."
-		return
-	makeNewConstruct(/mob/living/simple_animal/construct/harvester, user, null, 1)
-	new /obj/effect/effect/sleep_smoke(user.loc)
+	if(narnar)
+		if(!(src in view()))
+			user << "Your soul is too far away."
+			return
+		makeNewConstruct(/mob/living/simple_animal/construct/harvester, user, null, 1)
+		new /obj/effect/effect/sleep_smoke(user.loc)
 
 
 /obj/singularity/narsie/process()

@@ -659,6 +659,27 @@ Sorry Giacom. Please don't be mad :(
 
 	var/mob/living/L = usr
 
+	if(istype(src.loc,/mob/living/simple_animal/borer))
+		var/mob/living/simple_animal/borer/B = src.loc
+		var/mob/living/captive_brain/H = src
+
+		H << "<span class='danger'>You begin doggedly resisting the parasite's control (this will take approximately sixty seconds).</span>"
+		B.host << "<span class='danger'>You feel the captive mind of [src] begin to resist your control.</span>"
+
+		spawn(rand(350,450)+B.host.brainloss)
+
+			if(!B || !B.controlling)
+				return
+
+			B.host.adjustBrainLoss(rand(5,10))
+			H << "<span class='danger'>With an immense exertion of will, you regain control of your body!</span>"
+			B.host << "<span class='userdanger'>You feel control of the host brain ripped from your grasp, and retract your probosci before the wild neural impulses can damage you.</span>"
+
+			var/mob/living/carbon/C=B.host
+			C.do_release_control(0) // Was detach().
+
+			return
+
 	//resisting grabs (as if it helps anyone...)
 	if(!L.stat && L.canmove && !L.restrained())
 		var/resisting = 0
@@ -886,3 +907,11 @@ Sorry Giacom. Please don't be mad :(
 	animate(pixel_x = initial(pixel_x) , pixel_y = initial(pixel_y) , time = 2)
 	floating = 0 // If we were without gravity, the bouncing animation got stopped, so we make sure to restart it in next life().
 
+/mob/living/rift_act()
+	if(buckled && istype(buckled,/obj/structure/stool/bed/))
+		var/turf/O = buckled
+		do_teleport(O, pick(endgame_safespawns))
+		loc = O.loc
+	else
+		do_teleport(src, pick(endgame_safespawns)) //dead-on precision
+	return 1

@@ -1750,3 +1750,7 @@ var/year_integer = text2num(year) // = 2013???
 	//src.check_for_internal_damage(list(MECHA_INT_FIRE,MECHA_INT_TEMP_CONTROL,MECHA_INT_TANK_BREACH,MECHA_INT_CONTROL_LOST))
 	return
 */
+
+/obj/mecha/rift_act()
+	do_teleport(src, pick(endgame_safespawns)) //dead-on precision
+	return 1

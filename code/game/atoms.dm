@@ -433,3 +433,5 @@ var/list/blood_splatter_icons = list()
 
 /atom/proc/narsie_act()
 	return
+/atom/proc/rift_act()
+	return 0

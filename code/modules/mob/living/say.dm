@@ -17,6 +17,7 @@
 #define MODE_ALIEN "alientalk"
 #define MODE_HOLOPAD "holopad"
 #define MODE_CHANGELING "changeling"
+#define MODE_ANCIENT "ancientchat"
 
 //my god why isn't this shit sorted
 var/list/department_radio_keys = list(
@@ -38,6 +39,7 @@ var/list/department_radio_keys = list(
 	  ":v" = "Service",		"#v" = "Service",		".v" = "Service",
 	  ":o" = "AI Private",	"#o" = "AI Private",	".o" = "AI Private",
 	  ":g" = "changeling",	"#g" = "changeling",	".g" = "changeling",
+	  ":y" = "ancientchat",	"#y" = "ancientchat",	".y" = "ancientchat",
 
 	  ":R" = "right hand",	"#R" = "right hand",	".R" = "right hand",
 	  ":L" = "left hand",	"#L" = "left hand",		".L" = "left hand",
@@ -57,6 +59,7 @@ var/list/department_radio_keys = list(
 	  ":V" = "Service",		"#V" = "Service",		".V" = "Service",
 	  ":O" = "AI Private",	"#O" = "AI Private",	".O" = "AI Private",
 	  ":G" = "changeling",	"#G" = "changeling",	".G" = "changeling",
+	  ":y" = "ancientchat",	"#y" = "ancientchat",	".y" = "ancientchat",
 
 		//fugg
 	  //kinda localization -- rastaf0
@@ -240,6 +243,23 @@ var/list/department_radio_keys = list(
 		return department_radio_keys[copytext(message, 1, 3)]
 
 /mob/living/proc/handle_inherent_channels(message, message_mode)
+	if(MODE_ANCIENT)
+		if(ismommi(src)) return 0 //Noice try, I really do appreciate the effort
+		var/list/stone = search_contents_for(/obj/item/commstone)
+		if(stone.len)
+			var/obj/item/commstone/commstone = stone[1]
+			if(commstone.commdevice)
+				var/list/stones = commstone.commdevice.get_active_stones()
+				var/themessage = text("<span class='ancient'>Ancient communication, <b>[]:</b> []</span>",src.name,message)
+				var/turf/T = get_turf(src)
+				log_say("[key_name(src)] (@[T.x],[T.y],[T.z]) Ancient chat: [message]")
+				for(var/thestone in stones)
+					var/mob/M = find_holder_of_type(thestone,/mob)
+					handle_render(M,themessage,src)
+				for(var/M in dead_mob_list)
+					if(!istype(M,/mob/new_player))
+						handle_render(M,themessage,src)
+				return 1
 	if(message_mode == MODE_CHANGELING)
 		switch(lingcheck())
 			if(2)

@@ -86,6 +86,9 @@ var/datum/subsystem/shuttle/SSshuttle
 		ERROR("There is no emergency shuttle! The game will be unresolvable. This is likely due to a mapping error")
 		return
 
+	if(!universe.OnShuttleCall(user))
+		return
+
 	if(world.time - round_start_time < config.shuttle_refuel_delay)
 		user << "The emergency shuttle is refueling. Please wait another [abs(round(((world.time - round_start_time) - config.shuttle_refuel_delay)/600))] minutes before trying again."
 		return
@@ -142,6 +145,7 @@ var/datum/subsystem/shuttle/SSshuttle
 	log_game("[key_name(user)] has recalled the shuttle.")
 	message_admins("[key_name_admin(user)] has recalled the shuttle.")
 	return 1
+
 
 /datum/subsystem/shuttle/proc/autoEvac()
 	var/callShuttle = 1

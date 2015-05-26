@@ -71,6 +71,14 @@
 			clownland += loc
 			qdel(src)
 			return
+		if("endgame_exit")
+			endgame_safespawns += loc
+			qdel(src)
+			return
+		if("bluespacerift")
+			endgame_exits += loc
+			qdel(src)
+			return
 
 	return 1
 
@@ -97,6 +105,21 @@
 	tag = text("landmark*[]", name)
 	invisibility = 101
 	name = "Clown Land"
+
+/obj/effect/landmark/bluespacerift/New()
+	..()
+	tag = text("landmark*[]", name)
+	invisibility = 101
+	name = "bluespacerift"
+	endgame_exits += loc
+
+/obj/effect/landmark/endgame_exit/New()
+	..()
+	tag = text("landmark*[]", name)
+	invisibility = 101
+	name = "endgame_exit"
+	endgame_safespawns += loc
+
 
 //Costume spawner landmarks
 

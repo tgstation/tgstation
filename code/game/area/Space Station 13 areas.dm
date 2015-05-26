@@ -210,13 +210,13 @@ proc/process_ghost_teleport_locs()
 	has_gravity = 1
 	luminosity = 1
 	lighting_use_dynamic = 0
-	
+
 /area/planet/clown/town
 	name = "Mime Town"
 	icon_state = "red"
 	requires_power = 1
 	has_gravity = 1
-	
+
 /area/planet/clown/desert
 	name = "The Silent Dunes"
 	icon_state = "blue"
@@ -224,7 +224,7 @@ proc/process_ghost_teleport_locs()
 	has_gravity = 1
 	luminosity = 1
 	lighting_use_dynamic = 0
-	
+
 /area/planet/clown/oasis
 	name = "The Honking Palms"
 	icon_state = "green"
@@ -232,13 +232,13 @@ proc/process_ghost_teleport_locs()
 	has_gravity = 1
 	luminosity = 1
 	lighting_use_dynamic = 0
-	
+
 /area/planet/clown/motherlode
 	name = "The Bananium Vaults"
 	icon_state = "yellow"
 	requires_power = 1
 	has_gravity = 1
-	
+
 /area/telesciareas
 	name = "\improper Cosmic Anomaly"
 	icon_state = "telesci"
@@ -674,6 +674,10 @@ proc/process_ghost_teleport_locs()
 /area/engine/gravity_generator
 	name = "Gravity Generator Room"
 	icon_state = "blue"
+
+/area/engine/engineering/supermatter
+	name = "Supermatter Engine"
+	icon_state = "engine"
 
 //Solars
 
