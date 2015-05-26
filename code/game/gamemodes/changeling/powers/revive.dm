@@ -8,7 +8,6 @@
 	if(user.stat == DEAD)
 		dead_mob_list -= user
 		living_mob_list += user
-	user.stat = CONSCIOUS
 	user.tod = null
 	user.setToxLoss(0)
 	user.setOxyLoss(0)
@@ -30,4 +29,5 @@
 	user.med_hud_set_status()
 	user.med_hud_set_health()
 	feedback_add_details("changeling_powers","CR")
+	user.stat = CONSCIOUS
 	return 1
