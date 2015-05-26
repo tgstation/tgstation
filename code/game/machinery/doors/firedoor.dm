@@ -45,6 +45,8 @@
 #define FIREDOOR_ALERT_COLD     2
 // Not used #define FIREDOOR_ALERT_LOWPRESS 4
 
+#define FIREDOOR_CLOSED_MOD	0.8
+
 /obj/machinery/door/firedoor
 	name = "\improper Emergency Shutter"
 	desc = "Emergency air-tight shutter, capable of sealing off breached areas."
@@ -53,7 +55,8 @@
 	req_one_access = list(access_atmospherics, access_engine_equip)
 	opacity = 0
 	density = 0
-	layer = 2.6
+	layer = 2.5
+	base_layer = 2.5
 
 	var/blocked = 0
 	var/lockdown = 0 // When the door has detected a problem, it locks.
@@ -299,7 +302,7 @@
 		return
 	..()
 	latetoggle()
-	layer = 2.6
+	layer = base_layer
 	var/area/A = get_area_master(src)
 	ASSERT(istype(A)) // This worries me.
 	var/alarmed = A.doors_down || A.fire
@@ -312,7 +315,7 @@
 		return
 	..()
 	latetoggle()
-	layer = 3.1
+	layer = base_layer + FIREDOOR_CLOSED_MOD
 
 /obj/machinery/door/firedoor/door_animate(animation)
 	switch(animation)
