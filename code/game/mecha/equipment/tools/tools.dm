@@ -75,61 +75,92 @@
 	name = "Drill"
 	desc = "This is the drill that'll pierce the heavens! (Can be attached to: Combat and Engineering Exosuits)"
 	icon_state = "mecha_drill"
-	equip_cooldown = 30
+	equip_cooldown = 45
 	energy_drain = 10
 	force = 15
+	var/dig_rwalls = 0 //probably a better way to do this through bitflags but I don't really know how
 
 	action(atom/target)
 		if(!action_checks(target)) return
 		if(isobj(target))
 			var/obj/target_obj = target
-			if(!target_obj.vars.Find("unacidable") || target_obj.unacidable)	return
+			if(!target_obj.vars.Find("unacidable") || target_obj.unacidable) return
 		set_ready_state(0)
-		chassis.use_power(energy_drain)
 		chassis.visible_message("<font color='red'><b>[chassis] starts to drill [target]!</b></font>", "You hear a drill.")
 		occupant_message("<font color='red'><b>You start to drill [target]!</b></font>")
-		var/T = chassis.loc
-		var/C = target.loc	//why are these backwards? we may never know -Pete
-		if(do_after_cooldown(target))
-			if(T == chassis.loc && src == chassis.selected)
-				if(istype(target, /turf/simulated/wall/r_wall))
-					occupant_message("<font color='red'>[target] is too durable to drill through.</font>")
-				else if(istype(target, /turf/unsimulated/mineral))
-					for(var/turf/unsimulated/mineral/M in range(chassis,1))
-						if(get_dir(chassis,M)&chassis.dir)
-							M.GetDrilled()
+		var/C = chassis.loc
+		var/T = target.loc	//why were these backwards? we may never know -Pete & Bauds, years apart
+
+		if(istype(target, /turf/simulated/wall/r_wall))
+			if(dig_rwalls)
+				if(do_after_cooldown(target, 10) && C == chassis.loc && src == chassis.selected)
 					log_message("Drilled through [target]")
-					if(locate(/obj/item/mecha_parts/mecha_equipment/tool/hydraulic_clamp) in chassis.equipment)
-						var/obj/structure/ore_box/ore_box = locate(/obj/structure/ore_box) in chassis:cargo
-						if(ore_box)
-							for(var/obj/item/weapon/ore/ore in range(chassis,1))
-								if(get_dir(chassis,ore)&chassis.dir && ore.material)
-									ore_box.materials.addAmount(ore.material,1)
-									qdel(ore)
-				else if(istype(target, /turf/unsimulated/floor/asteroid))
-					for(var/turf/unsimulated/floor/asteroid/M in range(chassis,1))
-						if(get_dir(chassis,M)&chassis.dir)
-							M.gets_dug()
-					log_message("Drilled through [target]")
-					if(locate(/obj/item/mecha_parts/mecha_equipment/tool/hydraulic_clamp) in chassis.equipment)
-						var/obj/structure/ore_box/ore_box = locate(/obj/structure/ore_box) in chassis:cargo
-						if(ore_box)
-							for(var/obj/item/weapon/ore/ore in range(chassis,1))
-								if(get_dir(chassis,ore)&chassis.dir && ore.material)
-									ore_box.materials.addAmount(ore.material,1)
-									qdel(ore)
-				else if(target.loc == C)
-					if(istype(target, /mob/living))
-						var/mob/living/M = target
-						M.attack_log +="\[[time_stamp()]\]<font color='orange'> Mech Drilled by [chassis.occupant.name] ([chassis.occupant.ckey]) with [src.name]</font>"
-						chassis.occupant.attack_log += "\[[time_stamp()]\]<font color='red'> Mech Drilled [M.name] ([M.ckey]) with [src.name]</font>"
-						log_attack("<font color='red'>[chassis.occupant.name] ([chassis.occupant.ckey]) mech drilled [M.name] ([M.ckey]) with [src.name]</font>" )
-						if(!iscarbon(chassis.occupant))
-							M.LAssailant = null
-						else
-							M.LAssailant = chassis.occupant
-					log_message("Drilled through [target]")
-					target.ex_act(2)
+					occupant_message("<font color='red'><b>Your powerful drill screeches as it tears through the last of \the [target], leaving nothing but a girder!</b></font>")
+					chassis.visible_message("<font color='red'><b>[chassis] drills through \the [target]!</b></font>", "You hear a drill screeching to a halt.")
+					//target.ex_act(3) //Why
+					target.mech_drill_act(3)
+			else
+				occupant_message("<font color='red'>[target] is too durable to drill through.</font>")
+
+		else if(istype(target, /turf/simulated/wall))
+			if(do_after_cooldown(target, 2) && C == chassis.loc && src == chassis.selected)
+				log_message("Drilled through [target]")
+				occupant_message("<font color='red'><b>Your drill tears through the last of \the [target], leaving nothing but a girder!</b></font>")
+				chassis.visible_message("<font color='red'><b>[chassis] drills through \the [target]!</b></font>", "You hear a drill screeching to a halt.")
+				target.mech_drill_act(2)
+
+		else if(istype(target, /obj/structure/girder))
+			if(do_after_cooldown(target) && C == chassis.loc && src == chassis.selected)
+				log_message("Drilled through [target]")
+				occupant_message("<font color='red'><b>Your drill destroys \the [target]!</b></font>")
+				chassis.visible_message("<font color='red'><b>[chassis] destroys \the [target]!</b></font>", "You hear a drill breaking something.")
+				target.mech_drill_act(2)
+
+		else if(istype(target, /turf/unsimulated/mineral))
+			if(do_after_cooldown(target, 1/3) && C == chassis.loc && src == chassis.selected)
+				for(var/turf/unsimulated/mineral/M in range(chassis,1))
+					if(get_dir(chassis,M)&chassis.dir)
+						M.GetDrilled()
+				log_message("Drilled through [target]")
+				if(locate(/obj/item/mecha_parts/mecha_equipment/tool/hydraulic_clamp) in chassis.equipment)
+					var/obj/structure/ore_box/ore_box = locate(/obj/structure/ore_box) in chassis:cargo
+					if(ore_box)
+						for(var/obj/item/weapon/ore/ore in range(chassis,1))
+							if(get_dir(chassis,ore)&chassis.dir && ore.material)
+								ore_box.materials.addAmount(ore.material,1)
+								qdel(ore)
+
+		else if(istype(target, /turf/unsimulated/floor/asteroid)) //Digging for sand
+			if(do_after_cooldown(target, 1/3) && C == chassis.loc && src == chassis.selected)
+				for(var/turf/unsimulated/floor/asteroid/M in range(chassis,1))
+					if(dig_rwalls || get_dir(chassis,M)&chassis.dir)
+						M.gets_dug()
+				log_message("Drilled through [target]")
+				if(locate(/obj/item/mecha_parts/mecha_equipment/tool/hydraulic_clamp) in chassis.equipment)
+					var/obj/structure/ore_box/ore_box = locate(/obj/structure/ore_box) in chassis:cargo
+					if(ore_box)
+						for(var/obj/item/weapon/ore/ore in range(chassis,1)) //Get a 3x3 area around the mech
+							if(get_dir(chassis,ore)&chassis.dir && ore.material) //Only dig 1x3 in front of the chassis unless the drill is diamond
+								ore_box.materials.addAmount(ore.material,1)
+								qdel(ore)
+
+		else
+			if(do_after_cooldown(target, 1) && C == chassis.loc && src == chassis.selected && target.loc == T) //also check that our target hasn't moved
+				if(istype(target, /mob/living))
+					var/mob/living/M = target
+					M.attack_log +="\[[time_stamp()]\]<font color='orange'> Mech Drilled by [chassis.occupant.name] ([chassis.occupant.ckey]) with [src.name]</font>"
+					chassis.occupant.attack_log += "\[[time_stamp()]\]<font color='red'> Mech Drilled [M.name] ([M.ckey]) with [src.name]</font>"
+					log_attack("<font color='red'>[chassis.occupant.name] ([chassis.occupant.ckey]) mech drilled [M.name] ([M.ckey]) with [src.name]</font>" )
+					if(!iscarbon(chassis.occupant))
+						M.LAssailant = null
+					else
+						M.LAssailant = chassis.occupant
+				log_message("Drilled through [target]")
+				occupant_message("<font color='red'><b>You drill into \the [target].</b></font>")
+				chassis.visible_message("<font color='red'><b>[chassis] drills into \the [target]!</b></font>", "You hear a drill.")
+				target.mech_drill_act(2)
+
+		chassis.use_power(energy_drain)
 		return 1
 
 	can_attach(obj/mecha/M as obj)
@@ -143,68 +174,13 @@
 	desc = "This is an upgraded version of the drill that'll pierce the heavens! (Can be attached to: Combat and Engineering Exosuits)"
 	icon_state = "mecha_diamond_drill"
 	origin_tech = "materials=4;engineering=3"
-	equip_cooldown = 20
+	equip_cooldown = 15
 	force = 15
+	dig_rwalls = 1
 
-	action(atom/target)
-		if(!action_checks(target)) return
-		if(isobj(target))
-			var/obj/target_obj = target
-			if(target_obj.unacidable)	return
-		set_ready_state(0)
-		chassis.use_power(energy_drain)
-		chassis.visible_message("<font color='red'><b>[chassis] starts to drill [target]!</b></font>", "You hear a drill.")
-		occupant_message("<font color='red'><b>You start to drill [target]!</b></font>")
-		var/T = chassis.loc
-		var/C = target.loc	//why are these backwards? we may never know -Pete
-		if(do_after_cooldown(target))
-			if(T == chassis.loc && src == chassis.selected)
-				if(istype(target, /turf/simulated/wall/r_wall))
-					if(do_after_cooldown(target))//To slow down how fast mechs can drill through the station
-						log_message("Drilled through [target]")
-						target.ex_act(3)
-				else if(istype(target, /turf/unsimulated/mineral))
-					for(var/turf/unsimulated/mineral/M in range(chassis,1))
-						if(get_dir(chassis,M)&chassis.dir)
-							M.GetDrilled()
-					log_message("Drilled through [target]")
-					if(locate(/obj/item/mecha_parts/mecha_equipment/tool/hydraulic_clamp) in chassis.equipment)
-						var/obj/structure/ore_box/ore_box = locate(/obj/structure/ore_box) in chassis:cargo
-						if(ore_box)
-							for(var/obj/item/weapon/ore/ore in range(chassis,1))
-								if(get_dir(chassis,ore)&chassis.dir && ore.material)
-									ore_box.materials.addAmount(ore.material,1)
-									qdel(ore)
-				else if(istype(target,/turf/unsimulated/floor/asteroid))
-					for(var/turf/unsimulated/floor/asteroid/M in range(target,1))
-						M.gets_dug()
-					log_message("Drilled through [target]")
-					if(locate(/obj/item/mecha_parts/mecha_equipment/tool/hydraulic_clamp) in chassis.equipment)
-						var/obj/structure/ore_box/ore_box = locate(/obj/structure/ore_box) in chassis:cargo
-						if(ore_box)
-							for(var/obj/item/weapon/ore/ore in range(target,1))
-								if(ore.material)
-									ore_box.materials.addAmount(ore.material,1)
-									qdel(ore)
-				else if(target.loc == C)
-					if(istype(target, /mob/living))
-						var/mob/living/M = target
-						M.attack_log +="\[[time_stamp()]\]<font color='orange'> Mech Drilled by [chassis.occupant.name] ([chassis.occupant.ckey]) with [src.name]</font>"
-						chassis.occupant.attack_log += "\[[time_stamp()]\]<font color='red'> Mech Drilled [M.name] ([M.ckey]) with [src.name]</font>"
-						log_attack("<font color='red'>[chassis.occupant.name] ([chassis.occupant.ckey]) mech drilled [M.name] ([M.ckey]) with [src.name]</font>" )
-						if(!iscarbon(chassis.occupant))
-							M.LAssailant = null
-						else
-							M.LAssailant = chassis.occupant
-					log_message("Drilled through [target]")
-					target.ex_act(2)
-		return 1
-
-	can_attach(obj/mecha/M as obj)
-		if(..())
-			if(istype(M, /obj/mecha/working) || istype(M, /obj/mecha/combat))
-				return 1
-		return 0
+	//OBJECT
+	//ORIENTED
+	//PROGRAMMING
 
 /obj/item/mecha_parts/mecha_equipment/tool/extinguisher
 	name = "Extinguisher"
