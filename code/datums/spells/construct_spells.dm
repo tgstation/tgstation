@@ -126,3 +126,22 @@
 
 	smoke_spread = 3
 	smoke_amt = 10
+
+/obj/effect/proc_holder/spell/aoe_turf/knock/harvester
+	name = "Disintegrate Doors"
+	desc = "No door shall stop you."
+
+
+	charge_max = 100
+	invocation = ""
+	invocation_type = "silent"
+	range = 5
+
+	action_icon_state = "knock"
+
+/obj/effect/proc_holder/spell/aoe_turf/knock/harvester/cast(list/targets)
+	for(var/turf/T in targets)
+		for(var/obj/machinery/door/door in T.contents)
+			spawn(1)
+				door.narsie_act()
+	return

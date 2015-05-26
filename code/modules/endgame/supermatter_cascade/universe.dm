@@ -50,7 +50,7 @@
 //	emergency_shuttle.force_shutdown()
 	SSshuttle.emergency.cancel()
 
-	suspend_alert = 1
+	//suspend_alert = 1
 
 	AreaSet()
 	MiscSet()
@@ -58,13 +58,13 @@
 	OverlayAndAmbientSet()
 
 	// Disable Nar-Sie.
-	ticker.mode.eldergod=0
+//	ticker.mode.eldergod=0
 
 //	ticker.StartThematic("endgame")
 
 	PlayerSet()
 
-	new /obj/machinery/singularity/narsie/large/exit(pick(endgame_exits))
+	new /obj/singularity/narsie/large/exit(pick(endgame_exits))
 	spawn(rand(300,600))
 		var/txt = {"
 There's been a galaxy-wide electromagnetic pulse.  All of our systems are heavily damaged and many personnel are dead or dying. We are seeing increasing indications of the universe itself beginning to unravel.
@@ -86,18 +86,21 @@ The access requirements on the Asteroid Shuttles' consoles have now been revoked
 			C.req_access = null
 
 		sleep(5 * 10 * 60) // 5 minutes
-		ticker.declare_completion()
-		ticker.station_explosion_cinematic(0,null) // TODO: Custom cinematic
+		if(!ticker.mode.check_finished())
+			ticker.station_explosion_cinematic(0,null) // TODO: Custom cinematic
 
-		world << "<B>Resetting in 30 seconds!</B>"
+			world << "<B>Resetting in 30 seconds!</B>"
 
-		feedback_set_details("end_error","Universe ended")
+			feedback_set_details("end_error","Universe ended")
 
-		sleep(300)
-		log_game("Rebooting due to universal collapse")
-	//	CallHook("Reboot",list())
-		world.Reboot()
-		return
+			if(blackbox)
+				blackbox.save_all_data_to_sql()
+			sleep(300)
+			log_game("Rebooting due to universal collapse")
+
+
+			world.Reboot()
+			return
 
 /datum/universal_state/supermatter_cascade/proc/AreaSet()
 	for(var/area/ca in areas)
@@ -135,7 +138,7 @@ The access requirements on the Asteroid Shuttles' consoles have now been revoked
 		if(istype(T, /turf/space))
 			T.overlays += "end01"
 		else
-			if(T.z != map.zCentcomm)
+			if(T.z != ZLEVEL_CENTCOM)
 				T.underlays += "end01"
 				T.update_lumcount(1, 160, 255, 0, 0)
 

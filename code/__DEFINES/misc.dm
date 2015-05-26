@@ -117,3 +117,8 @@
 //mommi shit
 #define INV_SLOT_SIGHT "sight_slot"
 #define INV_SLOT_TOOL "tool_slot"
+
+//take your time
+#define SECONDS * 10
+#define MINUTES * 600
+#define HOURS   * 36000

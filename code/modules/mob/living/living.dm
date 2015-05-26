@@ -886,3 +886,11 @@ Sorry Giacom. Please don't be mad :(
 	animate(pixel_x = initial(pixel_x) , pixel_y = initial(pixel_y) , time = 2)
 	floating = 0 // If we were without gravity, the bouncing animation got stopped, so we make sure to restart it in next life().
 
+/mob/living/rift_act()
+	if(buckled && istype(buckled,/obj/structure/stool/bed/))
+		var/turf/O = buckled
+		do_teleport(O, pick(endgame_safespawns))
+		loc = O.loc
+	else
+		do_teleport(src, pick(endgame_safespawns)) //dead-on precision
+	return 1

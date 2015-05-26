@@ -118,6 +118,10 @@
 		return
 	..()
 
+/obj/machinery/door/narsie_act()
+	qdel(src)
+
+
 /obj/machinery/door/attackby(obj/item/I as obj, mob/user as mob, params)
 	if(istype(I, /obj/item/device/detective_scanner))
 		return

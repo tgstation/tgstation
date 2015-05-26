@@ -1,6 +1,6 @@
 /*** EXIT PORTAL ***/
 
-/obj/machinery/singularity/narsie/large/exit
+/obj/singularity/narsie/large/exit
 	name = "Bluespace Rift"
 	desc = "NO TIME TO EXPLAIN, JUMP IN"
 	icon = 'icons/obj/rift.dmi'
@@ -14,26 +14,33 @@
 
 	consume_range = 6
 
-/obj/machinery/singularity/narsie/large/exit/New()
+/obj/singularity/narsie/large/exit/New()
 	..()
-	SSobj.Add(src)
+	SSobj.processing |= src
 
-/obj/machinery/singularity/narsie/large/exit/update_icon()
+/obj/singularity/narsie/large/exit/update_icon()
 	overlays = 0
 
-/obj/machinery/singularity/narsie/large/exit/process()
-	for(var/mob/M in player_list)
-		if(M.client)
-			M.see_rift(src)
+/obj/singularity/narsie/large/exit/process()
+//	for(var/mob/M in player_list)
+//		if(M.client)
+//			M.see_rift(src)
 	eat()
 
-/obj/machinery/singularity/narsie/large/exit/acquire(var/mob/food)
+/obj/singularity/narsie/large/exit/acquire(var/mob/food)
 	return
 
-/obj/machinery/singularity/narsie/large/exit/consume(const/atom/A)
-	if(!(A.singuloCanEat()))
-		return 0
+/obj/singularity/narsie/large/exit/Bump(atom/A)
+	A.rift_act(src)
 
+/obj/singularity/narsie/large/exit/Bumped(atom/A)
+	A.rift_act(src)
+	return
+
+/obj/singularity/narsie/large/exit/consume(const/atom/A)
+	A.rift_act(src)
+
+/*
 	if (istype(A, /mob/living/))
 		var/mob/living/L = A
 		if(L.buckled && istype(L.buckled,/obj/structure/stool/bed/))
@@ -69,3 +76,6 @@
 
 				spawn (0)
 					step_towards(AM, src)
+*/
+
+/obj/singularity/narsie/large/exit/admin_investigate_setup()

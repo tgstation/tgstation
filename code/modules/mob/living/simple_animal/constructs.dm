@@ -197,7 +197,7 @@
 	environment_smash = 1
 	see_in_dark = 7
 	attack_sound = 'sound/weapons/tap.ogg'
-	construct_spells = list(/obj/effect/proc_holder/spell/targeted/smoke/disable)
+	construct_spells = list(/obj/effect/proc_holder/spell/targeted/smoke/disable, /obj/effect/proc_holder/spell/aoe_turf/knock/harvester)
 	playstyle_string = "<B>You are a Harvester. You are not strong, but your powers of domination will assist you in your role: \
 						Bring those who still cling to this world of illusion back to the Geometer so they may know Truth.</B>"
 

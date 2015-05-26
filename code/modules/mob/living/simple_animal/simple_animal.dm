@@ -65,6 +65,9 @@
 	var/scan_ready = 1
 	var/species //Sorry, no spider+corgi buttbabies.
 
+	var/supernatural = 0
+	var/purge = 0
+
 	//simple_animal access
 	var/obj/item/weapon/card/id/access_card = null	//innate access uses an internal ID card
 

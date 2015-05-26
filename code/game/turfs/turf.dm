@@ -18,6 +18,8 @@
 	//Properties for both
 	var/temperature = T20C
 
+	var/holy = 0 //Will be probably used for supernatural shit
+
 	var/blocks_air = 0
 
 	var/PathNode/PNode = null //associated PathNode in the A* algorithm
@@ -26,12 +28,14 @@
 
 /turf/New()
 	..()
+	turfs.Add(src)
 	for(var/atom/movable/AM in src)
 		Entered(AM)
 	return
 
 // Adds the adjacent turfs to the current atmos processing
 /turf/Del()
+	turfs.Remove(src)
 	for(var/direction in cardinal)
 		if(atmos_adjacent_turfs & direction)
 			var/turf/simulated/T = get_step(src, direction)
@@ -346,3 +350,18 @@
 				O.singularity_act()
 	ChangeTurf(/turf/space)
 	return(2)
+
+/turf/rift_act(rift)
+	var/turf/T = src
+	var/obj/singularity/narsie/large/exit/R = rift
+	var/dist = get_dist(T, R)
+	if (dist <= R.consume_range && T.density)
+		T.density = 0
+
+	for (var/atom/movable/AM in T.contents)
+		if (AM == R) // This is the snowflake.
+			continue
+
+		if (dist <= R.consume_range)
+			R.consume(AM)
+			continue

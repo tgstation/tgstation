@@ -16,20 +16,20 @@
 
 /turf/unsimulated/wall/supermatter/New()
 	..()
-	SSobj.Add(src)
+	SSobj.processing |= src
 	next_check = world.time+50
 
 /turf/unsimulated/wall/supermatter/Destroy()
-	SSobj.Remove(src)
+	SSobj.processing.Remove(src)
 	..()
 
-/turf/unsimulated/wall/supermatter/proc/process()
+/turf/unsimulated/wall/supermatter/process()
 	// Only check infrequently.
 	if(next_check>world.time) return
 
 	// No more available directions? Shut down process().
 	if(avail_dirs.len==0)
-		processing_objects.Remove(src)
+		SSobj.processing.Remove(src)
 		return 1
 
 	// We're checking, reset the timer.
@@ -49,14 +49,14 @@
 			for(var/atom/movable/A in T)
 				if(A)
 					if(istype(A,/mob/living))
-						del(A)
+						qdel(A)
 					else if(istype(A,/mob)) // Observers, AI cameras.
 						continue
 					qdel(A)
 			T.ChangeTurf(type)
 
 	if((spawned & (NORTH|SOUTH|EAST|WEST)) == (NORTH|SOUTH|EAST|WEST))
-		processing_objects -= src
+		SSobj.processing.Remove(src)
 		return
 
 /turf/unsimulated/wall/supermatter/attack_paw(mob/user as mob)
@@ -69,12 +69,7 @@
 		user << "<span class = \"warning\">What the fuck are you doing?</span>"
 	return
 
-// /vg/: Don't let ghosts fuck with this.
-/turf/unsimulated/wall/supermatter/attack_ghost(mob/user as mob)
-	user.examination(src)
 
-/turf/unsimulated/wall/supermatter/attack_ai(mob/user as mob)
-	return user.examination(src)
 
 /turf/unsimulated/wall/supermatter/attack_hand(mob/user as mob)
 	user.visible_message("<span class=\"warning\">\The [user] reaches out and touches \the [src]... And then blinks out of existance.</span>",\
@@ -114,4 +109,4 @@
 	if(istype(user,/mob/dead/observer))
 		return
 
-	del(user)
+	qdel(user)

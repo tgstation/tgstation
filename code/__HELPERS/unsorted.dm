@@ -634,7 +634,8 @@ Turf and target are seperate in case you want to teleport some distance from a t
 // note range is non-pythagorean
 // used for disposal system
 /proc/get_ranged_target_turf(var/atom/A, var/direction, var/range)
-
+	if(!A)
+		return
 	var/x = A.x
 	var/y = A.y
 	if(direction & NORTH)

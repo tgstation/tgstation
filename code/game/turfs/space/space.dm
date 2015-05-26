@@ -13,11 +13,14 @@
 	var/destination_y
 
 /turf/space/New()
+	turfs.Add(src)
 	if(!istype(src, /turf/space/transit))
 		icon_state = "[((x + y) ^ ~(x * y) + z) % 25]"
 	if(config)
 		if(config.starlight)
 			update_starlight()
+
+
 
 /turf/space/proc/update_starlight()
 /*	if(config)
