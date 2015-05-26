@@ -55,8 +55,8 @@
 	req_one_access = list(access_atmospherics, access_engine_equip)
 	opacity = 0
 	density = 0
-	layer = 2.5
-	base_layer = 2.5
+	layer = DOOR_LAYER - 0.2
+	base_layer = DOOR_LAYER - 0.2
 
 	var/blocked = 0
 	var/lockdown = 0 // When the door has detected a problem, it locks.
