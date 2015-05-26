@@ -732,21 +732,29 @@ var/list/slot_equipment_priority = list( \
 /mob/proc/start_pulling(var/atom/movable/AM)
 	if ( !AM || !src || src==AM || !isturf(src.loc) )	//if there's no person pulling OR the person is pulling themself OR the object being pulled is inside something: abort!
 		return
-	if (!( AM.anchored ))
-		AM.add_fingerprint(src)
+
+	var/atom/movable/P = AM
+
+	if (ismob(AM))
+		var/mob/M = AM
+		if (M.buckled) //If the mob is buckled on something, let's just try to pull the thing they're buckled to for convenience's sake.
+			P = M.buckled
+
+	if (!( P.anchored ))
+		P.add_fingerprint(src)
 
 		// If we're pulling something then drop what we're currently pulling and pull this instead.
 		if(pulling)
-			// Are we trying to pull something we are already pulling? Then just stop here, no need to continue.
-			var/p = pulling
+			// Are we trying to pull something we are already pulling? Then just stop here, no need to continue
+			var/temp_P = pulling
 			stop_pulling()
-			if(AM == p)
+			if(P == temp_P)
 				return
 
-		src.pulling = AM
-		AM.pulledby = src
-		if(ismob(AM))
-			var/mob/M = AM
+		src.pulling = P
+		P.pulledby = src
+		if(ismob(P))
+			var/mob/M = P
 			if(!iscarbon(src))
 				M.LAssailant = null
 			else
