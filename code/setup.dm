@@ -473,13 +473,6 @@ var/MAX_EXPLOSION_RANGE = 14
 #define INV_SLOT_SIGHT "sight_slot"
 #define INV_SLOT_TOOL "tool_slot"
 
-var/list/accessable_z_levels = list("1" = 5, "3" = 10, "4" = 15, "5" = 10, "6" = 60)
-//This list contains the z-level numbers which can be accessed via space travel and the percentile chances to get there.
-//(Exceptions: extended, sandbox and nuke) -Errorage
-//Was list("3" = 30, "4" = 70).
-//Spacing should be a reliable method of getting rid of a body -- Urist.
-//Go away Urist, I'm restoring this to the longer list. ~Errorage
-
 #define IS_MODE_COMPILED(MODE) (ispath(text2path("/datum/game_mode/"+(MODE))))
 
 

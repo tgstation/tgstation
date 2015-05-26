@@ -1,5 +1,9 @@
-proc/createRandomZlevel()
-	if(awaydestinations.len)	//crude, but it saves another var!
+/datum/zLevel/away
+	name = "awaymission"
+	movementJammed = 1 //no drifting here
+
+/proc/createRandomZlevel(override = 0)
+	if(awaydestinations.len && !override)	//crude, but it saves another var!
 		return
 
 	var/list/potentialRandomZlevels = list()

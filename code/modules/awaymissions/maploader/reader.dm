@@ -53,7 +53,9 @@ var/global/dmm_suite/preloader/_preloader = null
 	for(var/zpos=findtext(tfile,"\n(1,1,",lpos,0);zpos!=0;zpos=findtext(tfile,"\n(1,1,",zpos+1,0))	//in case there's several maps to load
 
 		zcrd++
-		world.maxz = max(world.maxz, zcrd+z_offset)//create a new z_level if needed
+		if(zcrd+z_offset > world.maxz)
+			world.maxz = zcrd+z_offset
+			map.addZLevel(new /datum/zLevel/away, world.maxz) //create a new z_level if needed
 
 		var/zgrid = copytext(tfile,findtext(tfile,quote+"\n",zpos,0)+2,findtext(tfile,"\n"+quote,zpos,0)+1) //copy the whole map grid
 		var/z_depth = length(zgrid)
@@ -204,6 +206,8 @@ var/global/dmm_suite/preloader/_preloader = null
 
 //Instance an atom at (x,y,z) and gives it the variables in attributes
 /dmm_suite/proc/instance_atom(var/path,var/list/attributes, var/x, var/y, var/z)
+	if(!path)
+		return
 	var/atom/instance
 	_preloader = new(attributes, path)
 
