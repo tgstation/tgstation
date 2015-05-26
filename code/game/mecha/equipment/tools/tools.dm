@@ -87,6 +87,8 @@
 /obj/item/mecha_parts/mecha_equipment/tool/drill/action(atom/target)
 	if(!action_checks(target))
 		return
+	if(istype(target, /turf) && !istype(target, /turf/simulated))
+		return
 	if(isobj(target))
 		var/obj/target_obj = target
 		if(target_obj.unacidable)

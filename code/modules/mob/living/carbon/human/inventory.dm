@@ -182,6 +182,7 @@
 				S = H.get_item_by_slot(slot_back)	//else we put in backpack
 				if(istype(S, /obj/item/weapon/storage) && S.can_be_inserted(I,1))
 					S.handle_item_insertion(I)
+					playsound(src.loc, "rustle", 50, 1, -5)
 				else
 					H << "<span class='warning'>You are unable to equip that!</span>"
 

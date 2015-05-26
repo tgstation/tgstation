@@ -238,7 +238,7 @@
 		if(secure && broken)
 			user << "<span class='notice'>The locker appears to be broken.</span>"
 			return
-		if(!place(user, W))
+		if(!place(user, W) && !isnull(W))
 			src.attack_hand(user)
 
 /obj/structure/closet/proc/place(var/mob/user, var/obj/item/I)

@@ -312,7 +312,7 @@
 		defib.on = 0
 		loc = defib
 		defib.update_icon()
-	return	unwield(user)
+	return unwield(user)
 
 /obj/item/weapon/twohanded/shockpaddles/proc/check_defib_exists(mainunit, var/mob/living/carbon/human/M, var/obj/O)
 	if (!mainunit || !istype(mainunit, /obj/item/weapon/defibrillator))	//To avoid weird issues from admin spawns
@@ -370,7 +370,10 @@
 					T.audible_message("<span class='warning'>\The [defib] lets out an urgent beep and lets out a steadily rising hum...</span>")
 					if(do_after(user, 30, target = M)) //Takes longer due to overcharging
 						if(M.stat == DEAD)
-							user << "<span class='warning'>[M] is dead - you can't stop their heart.</span>"
+							user << "<span class='warning'>[M] is dead.</span>"
+							playsound(get_turf(src), 'sound/machines/defib_failed.ogg', 50, 0)
+							busy = 0
+							update_icon()
 							return
 						user.visible_message("<span class='boldannounce'><i>[user] shocks [M] with \the [src]!</span>", "<span class='warning'>You shock [M] with \the [src]!</span>")
 						playsound(get_turf(src), 'sound/machines/defib_zap.ogg', 100, 1, -1)
@@ -390,6 +393,9 @@
 						busy = 0
 						update_icon()
 						defib.cooldowncheck(user)
+						return
+				busy = 0
+				update_icon()
 				return
 			var/mob/dead/observer/ghost = H.get_ghost()
 			if(ghost)

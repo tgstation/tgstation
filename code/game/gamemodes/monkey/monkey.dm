@@ -71,6 +71,7 @@
 
 	if(!round_converted)
 		for(var/datum/mind/monkey_mind in ape_infectees)
+			continuous_sanity_checked = 1
 			if(monkey_mind.current && monkey_mind.current.stat != DEAD)
 				return 0
 

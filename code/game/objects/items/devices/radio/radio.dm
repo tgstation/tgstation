@@ -182,31 +182,7 @@
 		usr << browse(null, "window=radio")
 		return
 	usr.set_machine(src)
-	if (href_list["track"])
-		var/mob/target = locate(href_list["track"])
-		var/mob/living/silicon/ai/A = locate(href_list["track2"])
-		if(A && target)
-			A.ai_actual_track(target)
-		return
-
-	else if (href_list["faketrack"])
-		var/mob/target = locate(href_list["track"])
-		var/mob/living/silicon/ai/A = locate(href_list["track2"])
-		if(A && target)
-
-			A:cameraFollow = target
-			A << text("Now tracking [] on camera.", target.name)
-			if (usr.machine == null)
-				usr.machine = usr
-
-			while (usr:cameraFollow == target)
-				usr << "Target is not on or near any active cameras on the station. We'll check again in 5 seconds (unless you use the cancel-camera verb)."
-				sleep(40)
-				continue
-
-		return
-
-	else if (href_list["freq"])
+	if (href_list["freq"])
 		if (!freqlock)
 			var/new_frequency = (frequency + text2num(href_list["freq"]))
 			if (!freerange || (frequency < 1200 || frequency > 1600))

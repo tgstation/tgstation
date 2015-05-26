@@ -50,7 +50,8 @@
 	if(rigged && amount > 0)
 		explode()
 		return 0
-	if(maxcharge < amount)	return 0
+	if(maxcharge < amount)
+		amount = maxcharge
 	var/power_used = min(maxcharge-charge,amount)
 	if(crit_fail)	return 0
 	if(!prob(reliability))
@@ -106,7 +107,7 @@
 
 /obj/item/weapon/stock_parts/cell/proc/corrupt()
 	charge /= 2
-	maxcharge /= 2
+	maxcharge = max(maxcharge/2, chargerate)
 	if (prob(10))
 		rigged = 1 //broken batterys are dangerous
 

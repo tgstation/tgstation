@@ -259,6 +259,8 @@ var/record_id_num = 1001
 		L.fields["b_dna"]		= H.dna.unique_enzymes
 		L.fields["enzymes"]		= H.dna.struc_enzymes
 		L.fields["identity"]	= H.dna.uni_identity
+		L.fields["species"]		= H.dna.species.type
+		L.fields["mcolor"]		= H.dna.mutant_color
 		L.fields["image"]		= image
 		locked += L
 	return

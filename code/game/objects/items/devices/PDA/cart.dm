@@ -569,22 +569,22 @@ Code:
 		if (53) // Newscaster
 			menu = "<h4><img src=pda_notes.png> Newscaster Access</h4>"
 			menu += "<br> Current Newsfeed: <A href='byond://?src=\ref[src];choice=Newscaster Switch Channel'>[current_channel ? current_channel : "None"]</a> <br>"
-			var/datum/feed_channel/current
-			for(var/datum/feed_channel/chan in news_network.network_channels)
+			var/datum/newscaster/feed_channel/current
+			for(var/datum/newscaster/feed_channel/chan in news_network.network_channels)
 				if (chan.channel_name == current_channel)
 					current = chan
 			if(!current)
 				menu += "<h5> ERROR : NO CHANNEL FOUND </h5>"
 				return
 			var/i = 1
-			for(var/datum/feed_message/msg in current.messages)
-				menu +="-[msg.body] <BR><FONT SIZE=1>\[Story by <FONT COLOR='maroon'>[msg.author]</FONT>\]</FONT><BR>"
+			for(var/datum/newscaster/feed_message/msg in current.messages)
+				menu +="-[msg.returnBody(-1)] <BR><FONT SIZE=1>\[Story by <FONT COLOR='maroon'>[msg.returnAuthor(-1)]</FONT>\]</FONT><BR>"
 				menu +="<b><font size=1>[msg.comments.len] comment[msg.comments.len > 1 ? "s" : ""]</font></b><br>"
 				if(msg.img)
 					user << browse_rsc(msg.img, "tmp_photo[i].png")
 					menu +="<img src='tmp_photo[i].png' width = '180'><BR>"
 				i++
-				for(var/datum/feed_comment/comment in msg.comments)
+				for(var/datum/newscaster/feed_comment/comment in msg.comments)
 					menu +="<font size=1><small>[comment.body]</font><br><font size=1><small><small><small>[comment.author] [comment.time_stamp]</small></small></small></small></font><br>"
 			menu += "<br> <A href='byond://?src=\ref[src];choice=Newscaster Message'>Post Message</a>"
 
@@ -662,8 +662,8 @@ Code:
 		if("Newscaster Message")
 			var/pda_owner_name = pda.id ? "[pda.id.registered_name] ([pda.id.assignment])" : "Unknown"
 			var/message = pda.msg_input()
-			var/datum/feed_channel/current
-			for(var/datum/feed_channel/chan in news_network.network_channels)
+			var/datum/newscaster/feed_channel/current
+			for(var/datum/newscaster/feed_channel/chan in news_network.network_channels)
 				if (chan.channel_name == current_channel)
 					current = chan
 			if(current.locked && current.author != pda_owner_name)

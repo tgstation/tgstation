@@ -214,8 +214,27 @@
 					if(is_stack)
 						m_amount -= metal_cost*multiplier
 						g_amount -= glass_cost*multiplier
-						var/obj/item/stack/S = new being_built.build_path(T)
-						S.amount = multiplier
+
+						for(var/obj/item/stack/S in T)
+							if(multiplier <= 0)
+								break
+							if(S.amount >= S.max_amount)
+								continue
+							var/to_transfer = S.max_amount - S.amount
+							if(to_transfer < multiplier)
+								S.amount += to_transfer
+								multiplier -= to_transfer
+								S.update_icon()
+								continue
+							else
+								S.amount += multiplier
+								multiplier = 0
+								S.update_icon()
+								break
+						if(multiplier)
+							var/obj/item/stack/N = new being_built.build_path(T)
+							N.amount = multiplier
+							N.update_icon()
 					else
 						m_amount -= metal_cost/coeff
 						g_amount -= glass_cost/coeff

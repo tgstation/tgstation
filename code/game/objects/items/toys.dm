@@ -399,7 +399,7 @@
 	update_window(usr)
 
 /obj/item/toy/crayon/afterattack(atom/target, mob/user as mob, proximity)
-	if(!proximity) return
+	if(!proximity || !check_allowed_items(target)) return
 	if(!uses)
 		user << "<span class='warning'>There is no more of [src.name] left!</span>"
 		if(!instant)

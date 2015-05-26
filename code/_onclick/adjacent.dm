@@ -62,17 +62,11 @@
 /*
 	Adjacency (to anything else):
 	* Must be on a turf
-	* In the case of a multiple-tile object, all valid locations are checked for adjacency.
-
-	Note: Multiple-tile objects are created when the bound_width and bound_height are creater than the tile size.
-	This is not used in stock /tg/station currently.
 */
 /atom/movable/Adjacent(var/atom/neighbor)
 	if(neighbor == loc) return 1
 	if(!isturf(loc)) return 0
-	for(var/turf/T in locs)
-		if(isnull(T)) continue
-		if(T.Adjacent(neighbor,src)) return 1
+	if(loc.Adjacent(neighbor,src)) return 1
 	return 0
 
 // This is necessary for storage items not on your person.

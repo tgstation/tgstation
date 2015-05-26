@@ -25,7 +25,7 @@
 
 /datum/surgery_step/handle_cavity/success(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)
 	if(tool)
-		if(IC || tool.w_class > 3 || NODROP in tool.flags || tool.GetTypeInAllContents(/obj/item/weapon/disk/nuclear) || istype(tool, /obj/item/weapon/disk/nuclear) || istype(tool, /obj/item/organ))
+		if(IC || tool.w_class > 3 || (tool.flags & NODROP) || tool.GetTypeInAllContents(/obj/item/weapon/disk/nuclear) || istype(tool, /obj/item/weapon/disk/nuclear) || istype(tool, /obj/item/organ))
 			user << "<span class='warning'>You can't seem to fit [tool] in [target]'s [target_zone]!</span>"
 			return 0
 		else

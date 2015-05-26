@@ -43,11 +43,6 @@
 		process_occupant()
 	return 1
 
-
-/obj/machinery/recharge_station/allow_drop()
-	return 0
-
-
 /obj/machinery/recharge_station/relaymove(mob/user as mob)
 	if(user.stat)
 		return
