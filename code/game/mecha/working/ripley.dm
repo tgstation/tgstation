@@ -2,7 +2,7 @@
 	desc = "Autonomous Power Loader Unit. The workhorse of the exosuit world."
 	name = "APLU \"Ripley\""
 	icon_state = "ripley"
-	step_in = 3
+	step_in = 4
 	max_temperature = 20000
 	health = 200
 	wreckage = /obj/effect/decal/mecha_wreckage/ripley
