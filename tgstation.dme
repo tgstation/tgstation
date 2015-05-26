@@ -32,6 +32,7 @@
 #define FILE_DIR "icons/Testing"
 #define FILE_DIR "icons/turf"
 #define FILE_DIR "icons/vending_icons"
+#define FILE_DIR "icons/xenoarch_icons"
 #define FILE_DIR "nano"
 #define FILE_DIR "nano/images"
 #define FILE_DIR "sound"
