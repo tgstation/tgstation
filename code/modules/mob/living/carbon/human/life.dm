@@ -1017,7 +1017,8 @@ var/global/list/organ_damage_overlays = list(
 				if(/datum/species/diona)	alien = IS_DIONA
 				if(/datum/species/vox)	alien = IS_VOX
 				if(/datum/species/plasmaman)	alien = IS_PLASMA
-		reagents.metabolize(src,alien)
+		spawn()
+			reagents.metabolize(src,alien)
 
 	var/total_plasmaloss = 0
 	for(var/obj/item/I in src)
