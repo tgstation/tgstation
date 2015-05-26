@@ -31,6 +31,10 @@ Sorry Giacom. Please don't be mad :(
 			D.client.images.Remove(I)
 			qdel(I)
 	staticOverlays.len = 0
+	
+	for(var/obj/item/device/pda/P in src.get_contents())	//i know, it's awful -bear1ake
+		if(P.id)
+			qdel(P.id)
 
 	return QDEL_HINT_HARDDEL_NOW
 
