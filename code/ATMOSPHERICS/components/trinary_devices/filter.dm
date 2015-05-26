@@ -44,12 +44,6 @@ Filter types:
 	if(frequency)
 		radio_connection = radio_controller.add_object(src, frequency, RADIO_ATMOSIA)
 
-/obj/machinery/atmospherics/trinary/filter/New()
-	..()
-	if(radio_controller)
-		atmosinit()
-		initialize()
-
 /obj/machinery/atmospherics/trinary/filter/Destroy()
 	if(radio_controller)
 		radio_controller.remove_object(src,frequency)

@@ -912,9 +912,6 @@ var/list/sacrificed = list()
 				continue
 			M.take_overall_damage(51,51)
 			M << "<span class='danger'>Your blood boils!</span>"
-			if(prob(5))
-				spawn(5)
-					M.gib()
 		for(var/obj/effect/rune/R in view(src))
 			if(prob(10))
 				explosion(R.loc, -1, 0, 1, 5)
