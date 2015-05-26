@@ -1,0 +1,4 @@
+author: Deity Link
+delete-after: true
+changes:
+  - tweak: The teleporter on the Syndicate Mothership is now always accurate (won't ever send things into deep space instead of its designated destination again)
