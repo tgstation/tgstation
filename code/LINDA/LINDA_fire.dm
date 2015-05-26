@@ -93,6 +93,8 @@
 	if(!istype(location))
 		Kill()
 		return
+	if(!location)
+		return
 
 	if(location.excited_group)
 		location.excited_group.reset_cooldowns()

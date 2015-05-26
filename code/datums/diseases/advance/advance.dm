@@ -260,7 +260,8 @@ var/list/advance_cures = 	list(
 
 		// Get the cure name from the cure_id
 		var/datum/reagent/D = chemical_reagents_list[cures[1]]
-		cure_text = D.name
+		if(D && D.name)
+			cure_text = D.name
 
 
 	return

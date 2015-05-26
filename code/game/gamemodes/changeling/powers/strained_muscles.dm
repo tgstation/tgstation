@@ -13,6 +13,8 @@
 
 /obj/effect/proc_holder/changeling/strained_muscles/sting_action(var/mob/living/carbon/user)
 	active = !active
+	if(!user)
+		return
 	if(active)
 		user << "<span class='notice'>Our muscles tense and strengthen.</span>"
 	else

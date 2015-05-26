@@ -635,6 +635,8 @@
 	icon_state = "bottle19"
 
 /obj/item/slimepotion2/afterattack(mob/living/M as mob, mob/user as mob)
+	if(!istype(M, /mob))
+		return
 	if(!(isslime(M) || isanimal(M) || ismonkey(M) || !M.ckey || !M.client || !M.key)) //I'm sorry for this line
 		user << "<span class='warning'>[M] is already too intelligent for this to work!</span>"
 		return ..()

@@ -949,6 +949,8 @@ Status: []<BR>"},
 
 
 /obj/machinery/porta_turret_cover/attackby(obj/item/I, mob/user, params)
+	if(!Parent_Turret)
+		return
 	if(istype(I, /obj/item/weapon/wrench) && !Parent_Turret.on)
 		if(Parent_Turret.raised) return
 
