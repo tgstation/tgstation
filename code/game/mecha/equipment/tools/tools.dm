@@ -78,7 +78,7 @@
 	equip_cooldown = 45
 	energy_drain = 10
 	force = 15
-	var/dig_rwalls = 0 //probably a better way to do this through bitflags but I don't really know how
+	var/dig_walls = 0 //probably a better way to do this through bitflags but I don't really know how
 
 	action(atom/target)
 		if(!action_checks(target)) return
@@ -91,23 +91,18 @@
 		var/C = chassis.loc
 		var/T = target.loc	//why were these backwards? we may never know -Pete & Bauds, years apart
 
-		if(istype(target, /turf/simulated/wall/r_wall))
-			if(dig_rwalls)
-				if(do_after_cooldown(target, 10) && C == chassis.loc && src == chassis.selected)
+		if(istype(target, /turf/simulated/wall))
+			if(dig_walls)
+				var/delay = istype(target, /turf/simulated/wall/r_wall) ? 10 : 2
+				if(do_after_cooldown(target, delay) && C == chassis.loc && src == chassis.selected)
 					log_message("Drilled through [target]")
 					occupant_message("<font color='red'><b>Your powerful drill screeches as it tears through the last of \the [target], leaving nothing but a girder!</b></font>")
-					chassis.visible_message("<font color='red'><b>[chassis] drills through \the [target]!</b></font>", "You hear a drill screeching to a halt.")
+					chassis.visible_message("<font color='red'><b>[chassis] drills through \the [target]!</b></font>", "You hear a drill tearing through plating.")
 					//target.ex_act(3) //Why
 					target.mech_drill_act(3)
 			else
-				occupant_message("<font color='red'>[target] is too durable to drill through.</font>")
-
-		else if(istype(target, /turf/simulated/wall))
-			if(do_after_cooldown(target, 2) && C == chassis.loc && src == chassis.selected)
-				log_message("Drilled through [target]")
-				occupant_message("<font color='red'><b>Your drill tears through the last of \the [target], leaving nothing but a girder!</b></font>")
-				chassis.visible_message("<font color='red'><b>[chassis] drills through \the [target]!</b></font>", "You hear a drill screeching to a halt.")
-				target.mech_drill_act(2)
+				if(do_after_cooldown(target, 1) && C == chassis.loc && src == chassis.selected)
+					occupant_message("<font color='red'>[target] is too durable to drill through.</font>")
 
 		else if(istype(target, /obj/structure/girder))
 			if(do_after_cooldown(target) && C == chassis.loc && src == chassis.selected)
@@ -132,15 +127,15 @@
 
 		else if(istype(target, /turf/unsimulated/floor/asteroid)) //Digging for sand
 			if(do_after_cooldown(target, 1/3) && C == chassis.loc && src == chassis.selected)
-				for(var/turf/unsimulated/floor/asteroid/M in range(chassis,1))
-					if(dig_rwalls || get_dir(chassis,M)&chassis.dir)
+				for(var/turf/unsimulated/floor/asteroid/M in range(chassis,1)) //Get a 3x3 area around the mech
+					if(istype(src, /obj/item/mecha_parts/mecha_equipment/tool/drill/diamonddrill) || get_dir(chassis,M)&chassis.dir) //Only dig frontmost 1x3 unless the drill is diamond
 						M.gets_dug()
 				log_message("Drilled through [target]")
 				if(locate(/obj/item/mecha_parts/mecha_equipment/tool/hydraulic_clamp) in chassis.equipment)
 					var/obj/structure/ore_box/ore_box = locate(/obj/structure/ore_box) in chassis:cargo
 					if(ore_box)
-						for(var/obj/item/weapon/ore/ore in range(chassis,1)) //Get a 3x3 area around the mech
-							if(get_dir(chassis,ore)&chassis.dir && ore.material) //Only dig 1x3 in front of the chassis unless the drill is diamond
+						for(var/obj/item/weapon/ore/ore in range(chassis,1))
+							if(get_dir(chassis,ore)&chassis.dir && ore.material)
 								ore_box.materials.addAmount(ore.material,1)
 								qdel(ore)
 
@@ -157,7 +152,7 @@
 						M.LAssailant = chassis.occupant
 				log_message("Drilled through [target]")
 				occupant_message("<font color='red'><b>You drill into \the [target].</b></font>")
-				chassis.visible_message("<font color='red'><b>[chassis] drills into \the [target]!</b></font>", "You hear a drill.")
+				chassis.visible_message("<font color='red'><b>[chassis] drills into \the [target]!</b></font>", "You hear a drill breaking something.")
 				target.mech_drill_act(2)
 
 		chassis.use_power(energy_drain)
@@ -176,7 +171,7 @@
 	origin_tech = "materials=4;engineering=3"
 	equip_cooldown = 15
 	force = 15
-	dig_rwalls = 1
+	dig_walls = 1
 
 	//OBJECT
 	//ORIENTED
