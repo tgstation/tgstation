@@ -112,7 +112,6 @@
 	name = "pizza slice"
 	icon_state = "pizzamargheritaslice"
 	filling_color = "#FFFFFF"
-
 /obj/item/pizzabox
 	name = "pizza box"
 	desc = "A box suited for pizzas."
@@ -151,7 +150,7 @@
 			icon_state = "pizzabox_open"
 
 		if(pizza)
-			var/image/pizzaimg = image("food.dmi", icon_state = pizza.icon_state)
+			var/image/pizzaimg = image('icons/obj/food/pizzaspaghetti.dmi', icon_state = pizza.icon_state)
 			pizzaimg.pixel_y = -3
 			overlays += pizzaimg
 
@@ -168,7 +167,7 @@
 				doimgtag = 1
 
 		if(doimgtag)
-			var/image/tagimg = image("food.dmi", icon_state = "pizzabox_tag")
+			var/image/tagimg = image('icons/obj/food/containers.dmi', icon_state = "pizzabox_tag")
 			tagimg.pixel_y = boxes.len * 3
 			overlays += tagimg
 
@@ -242,6 +241,9 @@
 
 	if(istype(I, /obj/item/weapon/reagent_containers/food/snacks/pizza/)) // Long ass fucking object name
 		if(open)
+			if(pizza)
+				user << "<span class='notice'>There is already a pizza inside.</span>"
+				return
 			user.drop_item()
 			I.loc = src
 			pizza = I
