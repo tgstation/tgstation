@@ -1,0 +1,6 @@
+author: Jordie0608
+
+delete-after: True
+
+changes: 
+  - rscdel: "ProtectStation AI Module removed."
