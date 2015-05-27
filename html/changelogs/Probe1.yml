@@ -1,4 +1,4 @@
 author: Probe1
 delete-after: True
 changes: 
-  - rscadd: Added a food delivery bags to the dinnerware vending machine.
+  - rscadd: Added food delivery bags to the dinnerware vending machine to facilitate delivery boys.
