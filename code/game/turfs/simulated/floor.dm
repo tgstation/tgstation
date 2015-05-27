@@ -104,9 +104,6 @@ turf/simulated/floor/proc/update_icon()
 	else if(is_light_floor())
 		var/obj/item/stack/tile/light/T = floor_tile
 		if(T.on)
-	else if(is_light_floor())
-		var/obj/item/stack/tile/light/T = floor_tile
-		if(T.on)
 			switch(T.state)
 				if(LIGHTFLOOR_ON)
 					icon_state = "light_on"
