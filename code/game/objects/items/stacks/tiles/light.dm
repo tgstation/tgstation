@@ -62,6 +62,7 @@
 	else if(istype(O,/obj/item/device/multitool))
 		state++
 		if(state>LIGHTFLOOR_PURPLE) state=LIGHTFLOOR_ON
+		icon_state="tile_"+color_desc()
 		user << "[src] is now "+color_desc()
 
 	return ..()
