@@ -10,10 +10,10 @@
 	gas_transfer_coefficient = 0.90
 	unacidable = 1
 
-/obj/item/clothing/mask/happy/equipped(M as mob, wear_mask)
+/obj/item/clothing/mask/happy/equipped(M as mob, slot)
 	var/mob/living/carbon/human/H = M
 	if(!istype(H)) return
-	if(H.wear_mask == src)
+	if(slot == slot_wear_mask)
 		flick("happiest_flash", src)
 		H << "<span class='sinister'>Your thoughts are bombarded by incessant laughter.</span>"
 		H << sound('sound/effects/hellclown.ogg')

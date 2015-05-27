@@ -15,15 +15,20 @@
 /obj/machinery/communication/attackby(obj/item/W as obj, mob/user as mob)
 	if(istype(W,/obj/item/commstone))
 		if((W in allstones) && remaining < 6)
-			user.drop_item(W, src)
+			user.drop_item()
+			W.loc = src
 			user << "<span class='notice'>You place one of the strange stones back onto the ancient device, it snaps into place.</span>"
 
 	if(default_unfasten_wrench(user, W, time = 60))
+		power_change()
 		return
 	..()
 
-/obj/machinery/communication/attack_ghost(mob/user as mob)
-	return //Dont want even adminghosts touching this
+/obj/machinery/communication/process()
+	if(!anchored)
+		stat = NOPOWER
+	..()
+
 
 /obj/machinery/communication/attack_ai(mob/user as mob)
 	return //Robots HA
