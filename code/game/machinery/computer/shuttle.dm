@@ -161,3 +161,12 @@
 	circuit = /obj/item/weapon/circuitboard/white_ship
 	shuttleId = "whiteship"
 	possible_destinations = "whiteship_ss13;whiteship_home;whiteship_z4"
+
+
+/obj/machinery/computer/shuttle/research
+	name = "Research Shuttle Console"
+	desc = "Used to control the research shuttle."
+	req_access = list(access_research)
+	circuit = /obj/item/weapon/circuitboard/research_shuttle
+	shuttleId = "research"
+	possible_destinations = "research_home;research_away"
