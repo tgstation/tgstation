@@ -221,6 +221,9 @@
 /obj/item/weapon/circuitboard/mining_shuttle
 	name = "circuit Board (Mining Shuttle)"
 	build_path = /obj/machinery/computer/shuttle/mining
+/obj/item/weapon/circuitboard/research_shuttle
+	name = "circuit Board (Research Shuttle)"
+	build_path = /obj/machinery/computer/shuttle/research
 /obj/item/weapon/circuitboard/HolodeckControl // Not going to let people get this, but it's just here for future
 	name = "circuit board (Holodeck Control)"
 	build_path = /obj/machinery/computer/HolodeckControl
