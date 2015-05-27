@@ -21,7 +21,6 @@
 	100;/obj/machinery/giga_drill,\
 	100;/obj/mecha/working/hoverpod,\
 	100;/obj/machinery/replicator,\
-	150;/obj/structure/crystal,\
 	100;/obj/machinery/communication,\
 	1000;/obj/machinery/artifact)
 
@@ -39,6 +38,7 @@
 	var/excavation_level = 0
 	var/datum/geosample/geological_data
 	var/datum/artifact_find/artifact_find
+	var/last_act = 0
 
 /obj/structure/boulder/New()
 	..()
@@ -68,6 +68,10 @@
 
 	if (istype(W, /obj/item/weapon/pickaxe))
 		var/obj/item/weapon/pickaxe/P = W
+
+		if(last_act+P.digspeed > world.time)//prevents message spam
+			return
+		last_act = world.time
 
 		user << "<span class='danger'>You start picking [src].</span>"
 

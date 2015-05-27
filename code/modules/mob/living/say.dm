@@ -243,7 +243,7 @@ var/list/department_radio_keys = list(
 		return department_radio_keys[copytext(message, 1, 3)]
 
 /mob/living/proc/handle_inherent_channels(message, message_mode)
-	if(MODE_ANCIENT)
+	if(message_mode == MODE_ANCIENT)
 		if(ismommi(src)) return 0 //Noice try, I really do appreciate the effort
 		var/list/stone = search_contents_for(/obj/item/commstone)
 		if(stone.len)
