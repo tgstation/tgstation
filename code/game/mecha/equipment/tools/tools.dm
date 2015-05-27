@@ -83,7 +83,7 @@
 		return 1
 
 /obj/item/mecha_parts/mecha_equipment/tool/drill
-	name = "Drill"
+	name = "Exosuit-Mounted Drill"
 	desc = "This is the drill that'll pierce the heavens! (Can be attached to: Combat and Engineering Exosuits)"
 	icon_state = "mecha_drill"
 	equip_cooldown = 45
@@ -169,7 +169,7 @@
 		return 0
 
 /obj/item/mecha_parts/mecha_equipment/tool/drill/diamonddrill
-	name = "Diamond Drill"
+	name = "Exosuit-Mounted Diamond Drill"
 	desc = "This is an upgraded version of the drill that'll pierce the heavens! (Can be attached to: Combat and Engineering Exosuits)"
 	icon_state = "mecha_diamond_drill"
 	origin_tech = "materials=4;engineering=3"
@@ -182,12 +182,19 @@
 	//PROGRAMMING
 
 /obj/item/mecha_parts/mecha_equipment/tool/extinguisher
-	name = "Foam Extinguisher"
-	desc = "Exosuit-mounted foam extinguisher (Can be attached to: Engineering exosuits)"
+	name = "Exosuit-Mounted Foam Extinguisher"
+	desc = "A fire extinguisher module for an exosuit. (Can be attached to: Firefighting exosuits)"
 	icon_state = "mecha_exting"
-	equip_cooldown = 5
+	origin_tech = "materials=1;engineering=2"
+	equip_cooldown = 15
 	energy_drain = 0
 	range = MELEE|RANGED
+
+	can_attach(obj/mecha/working/ripley/firefighter/M as obj)
+		if(..())
+			if(istype(M))
+				return 1
+		return 0
 
 	action(atom/target) //copypasted from extinguisher. TODO: Rewrite from scratch.
 		if(!action_checks(target) || get_dist(chassis, target)>5) return
@@ -265,7 +272,7 @@
 
 
 /obj/item/mecha_parts/mecha_equipment/jetpack
-	name = "Jetpack"
+	name = "Exosuit-Mounted Jetpack"
 	desc = "Using directed ion bursts and cunning solar wind reflection technique, this device enables controlled space flight."
 	icon_state = "mecha_jetpack"
 	origin_tech = "materials=5;engineering=5;magnets=4"
@@ -364,7 +371,7 @@
 		return 1
 
 /obj/item/mecha_parts/mecha_equipment/tool/rcd
-	name = "Mounted RCD"
+	name = "Exosuit-Mounted RCD"
 	desc = "An exosuit-mounted Rapid Construction Device. (Can be attached to: Any exosuit)"
 	icon_state = "mecha_rcd"
 	origin_tech = "materials=4;bluespace=3;magnets=4;powerstorage=4"
@@ -466,7 +473,7 @@
 
 
 /obj/item/mecha_parts/mecha_equipment/teleporter
-	name = "Teleporter"
+	name = "Exosuit-Mounted Teleporter"
 	desc = "An exosuit module that allows exosuits to teleport to any position in view."
 	icon_state = "mecha_teleport"
 	origin_tech = "bluespace=10"
@@ -732,7 +739,7 @@
 
 
 /obj/item/mecha_parts/mecha_equipment/repair_droid
-	name = "Repair Droid"
+	name = "Repair Droid Module"
 	desc = "Automated repair droid. Scans exosuit for damage and repairs it. Can fix almost all types of external or internal damage."
 	icon_state = "repair_droid"
 	origin_tech = "magnets=3;programming=3"
@@ -821,7 +828,7 @@
 
 
 /obj/item/mecha_parts/mecha_equipment/tesla_energy_relay
-	name = "Energy Relay"
+	name = "Energy Relay Module"
 	desc = "Wirelessly drains energy from any available power channel in area. The performance index is quite low."
 	icon_state = "tesla"
 	origin_tech = "magnets=4;syndicate=2"
@@ -932,7 +939,7 @@
 
 
 /obj/item/mecha_parts/mecha_equipment/generator
-	name = "Plasma Converter"
+	name = "Plasma Converter Module"
 	desc = "Generates power using solid plasma as fuel. Pollutes the environment."
 	icon_state = "tesla"
 	origin_tech = "plasmatech=2;powerstorage=2;engineering=1"

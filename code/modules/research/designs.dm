@@ -1455,11 +1455,11 @@ k
 	materials = list("$iron"=10000)
 
 /datum/design/mech_extinguisher
-	name = "Module Design (Extinguisher)"
-	desc = "An extinguisher for mechs."
+	name = "Module Design (Foam Extinguisher)"
+	desc = "A foam extinguisher module for firefighting mechs."
 	id = "mech_extinguisher"
 	build_type = MECHFAB
-	req_tech = list("engineering" = 1)
+	req_tech = list("materials" = 1, "engineering" = 2)
 	build_path = /obj/item/mecha_parts/mecha_equipment/tool/extinguisher
 	category = "Exosuit_Equipment"
 	materials = list("$iron"=10000)
