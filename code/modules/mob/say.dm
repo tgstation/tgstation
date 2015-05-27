@@ -28,12 +28,10 @@
 		usr << "<span class='danger'>Doing this will give us away!</span>"
 	message = trim(copytext(sanitize(message), 1, MAX_MESSAGE_LEN))
 
-	if(ishuman(src) || isrobot(src))
-		usr.emote("me",usr.emote_type,message)
-	else if(usr.stat == DEAD)
+	if(usr.stat == DEAD)
 		usr.emote_dead(message)
 	else
-		usr.emote(message)
+		usr.emote("me",usr.emote_type,message)
 
 /mob/proc/say_dead(var/message)
 	var/name = src.real_name
