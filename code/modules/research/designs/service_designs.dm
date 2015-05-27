@@ -82,7 +82,7 @@
 	build_path = /obj/item/devices/upgrades/tankcart
 	category = list("service")
 
-/datum/design/spacecart //needs to be created and sprited
+/datum/design/spacecart //needs to be created
 	name = "Janicart Thruster Module"
 	desc = "Adds a set of recharging thrusters to the janicart for those hard to reach messes in space."
 	id = "spacecart"
@@ -142,12 +142,12 @@
 	build_path = /obj/item/weapon/chainsaw
 	category = list("service")
 
-/datum/design/muffinbutton //needs to be created and sprited
+/datum/design/muffinmachine //needs to be created
 	name = "Muffin Dispenser"
 	desc = "A strange machine that generates unlimited muffins with the push of a button."
-	id = "muffinbutton"
+	id = "muffinmachine"
 	req_tech = list("materials" = 6 "magnets" = 5, "programming" = 4, "powerstorage" = 4, "bluespace" = 6 "service" = 8)
 	build_type = PROTOLATHE
 	materials = list("$metal" = 10000, "$glass" = 2000, "$diamond" = 4000)
-	build_path = /obj/machinery/muffinbutton
+	build_path = /obj/machinery/muffinmachine
 	category = list("service")
