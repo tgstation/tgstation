@@ -21,7 +21,7 @@
 	max_amount = 60
 	attack_verb = list("bashed", "battered", "bludgeoned", "thrashed", "smashed")
 	var/on = 1
-	var/state = LIGHTFLOOR_ON//0 = fine, 1 = flickering, 2 = breaking, 3 = broken
+	var/state = LIGHTFLOOR_ON
 
 /obj/item/stack/tile/light/proc/color_desc()
 	switch(state)
@@ -33,17 +33,6 @@
 		if(LIGHTFLOOR_BLUE) return "dark blue"
 		if(LIGHTFLOOR_PURPLE) return "purple"
 		else return "broken"
-
-/obj/item/stack/tile/light/New(var/loc, var/amount=null)
-	..()
-	//if(prob(5))
-	//	state = 3 //broken
-	//else if(prob(5))
-	//	state = 2 //breaking
-	//else if(prob(10))
-	//	state = 1 //flickering occasionally
-	//else
-	//	state = 0 //fine //This behaved stupidly with stacks, removing for now
 
 /obj/item/stack/tile/light/attackby(var/obj/item/O as obj, var/mob/user as mob)
 	if(istype(O,/obj/item/weapon/crowbar))
