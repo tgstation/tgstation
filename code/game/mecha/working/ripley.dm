@@ -93,6 +93,14 @@
 	output += "</div>"
 	return output
 
+/obj/mecha/working/ripley/empty_bad_contents()
+	for(var/obj/O in src)
+		if(O in cargo) //mom's spaghetti
+			continue
+		if(!is_type_in_list(O,mech_parts))
+			O.loc = src.loc
+	return
+
 /obj/mecha/working/ripley/Destroy()
 	for(var/mob/M in src)
 		if(M==src.occupant)

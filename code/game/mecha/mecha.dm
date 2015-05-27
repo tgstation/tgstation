@@ -1181,6 +1181,11 @@
 		go_out(over_location)
 	add_fingerprint(usr)
 
+/obj/mecha/proc/empty_bad_contents() //stuff that shouldn't be there, possibly caused by the driver dropping it while inside the mech
+	for(var/obj/O in src)
+		if(!is_type_in_list(O,mech_parts))
+			O.loc = src.loc
+	return
 
 /obj/mecha/proc/go_out(var/exit = loc)
 	if(!src.occupant) return
@@ -1221,9 +1226,7 @@
 			src.occupant.client.eye = src.occupant.client.mob
 			src.occupant.client.perspective = MOB_PERSPECTIVE
 		*/
-		for(var/obj/O in src)
-			if(!is_type_in_list(O,mech_parts))
-				O.loc = src.loc
+		empty_bad_contents()
 		src.occupant << browse(null, "window=exosuit")
 		if(istype(mob_container, /obj/item/device/mmi) || istype(mob_container, /obj/item/device/mmi/posibrain))
 			var/obj/item/device/mmi/mmi = mob_container
