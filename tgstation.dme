@@ -1506,7 +1506,6 @@
 #include "code\modules\research\xenoarchaeology\artifact\effects\unknown_effect_badfeeling.dm"
 #include "code\modules\research\xenoarchaeology\artifact\effects\unknown_effect_cellcharge.dm"
 #include "code\modules\research\xenoarchaeology\artifact\effects\unknown_effect_celldrain.dm"
-#include "code\modules\research\xenoarchaeology\artifact\effects\unknown_effect_dnaswitch.dm"
 #include "code\modules\research\xenoarchaeology\artifact\effects\unknown_effect_emp.dm"
 #include "code\modules\research\xenoarchaeology\artifact\effects\unknown_effect_gasco2.dm"
 #include "code\modules\research\xenoarchaeology\artifact\effects\unknown_effect_gasnitro.dm"
