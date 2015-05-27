@@ -23,10 +23,6 @@
 	var/on = 1
 	var/state = LIGHTFLOOR_ON//0 = fine, 1 = flickering, 2 = breaking, 3 = broken
 
-/obj/item/stack/tile/light/examine(mob/user)
-	..()
-
-
 /obj/item/stack/tile/light/proc/color_desc()
 	switch(state)
 		if(LIGHTFLOOR_ON) return "light blue"
