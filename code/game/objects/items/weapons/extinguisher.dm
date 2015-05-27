@@ -233,7 +233,7 @@
 
 	if (!safety && !is_open_container())
 		if (src.reagents.total_volume < 1)
-			usr << "<span class='warning'>\The [src] is empty."
+			usr << "<span class='warning'>\The [src] is empty.</span>"
 			return
 
 		if (world.time < src.last_use + 20)

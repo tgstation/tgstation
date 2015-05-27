@@ -178,22 +178,21 @@
 	//PROGRAMMING
 
 /obj/item/mecha_parts/mecha_equipment/tool/extinguisher
-	name = "Extinguisher"
-	desc = "Exosuit-mounted extinguisher (Can be attached to: Engineering exosuits)"
+	name = "Foam Extinguisher"
+	desc = "Exosuit-mounted foam extinguisher (Can be attached to: Engineering exosuits)"
 	icon_state = "mecha_exting"
 	equip_cooldown = 5
 	energy_drain = 0
 	range = MELEE|RANGED
 
 	action(atom/target) //copypasted from extinguisher. TODO: Rewrite from scratch.
-		if(!action_checks(target) || get_dist(chassis, target)>3) return
-		if(get_dist(chassis, target)>2) return
+		if(!action_checks(target) || get_dist(chassis, target)>5) return
 		set_ready_state(0)
 		if(do_after_cooldown(target))
 			if(istype(target, /obj/structure/reagent_dispensers/watertank) && get_dist(chassis,target) <= 1)
 				var/obj/o = target
 				o.reagents.trans_to(src, 200)
-				occupant_message("<span class='notice'>Extinguisher refilled</span>")
+				occupant_message("<span class='notice'>Extinguisher refilled.</span>")
 				playsound(chassis, 'sound/effects/refill.ogg', 50, 1, -6)
 			else
 				if(src.reagents.total_volume > 0)
@@ -204,29 +203,44 @@
 					var/turf/T2 = get_step(T,turn(direction, -90))
 
 					var/list/the_targets = list(T,T1,T2)
-					spawn(0)
-						for(var/a=0, a<5, a++)
-							var/obj/effect/effect/water/W = new /obj/effect/effect/water(get_turf(chassis))
-							if(!W)
+					for(var/a=0, a<5, a++)
+						spawn(0)
+							var/datum/reagents/R = new/datum/reagents(5)
+							R.my_atom = src
+							reagents.trans_to_holder(R,1)
+							var/obj/effect/effect/foam/fire/W = new /obj/effect/effect/foam/fire(get_turf(chassis), R)
+							if(!W || !src)
 								return
 							var/turf/my_target = pick(the_targets)
-							var/datum/reagents/R = new/datum/reagents(5)
-							W.reagents = R
-							R.my_atom = W
-							src.reagents.trans_to(W,1)
 							for(var/b=0, b<4, b++)
-								if(!W)
-									return
+								var/turf/oldturf = get_turf(W)
 								step_towards(W,my_target)
-								if(!W)
+								if(!W || !W.reagents)
 									return
 								var/turf/W_turf = get_turf(W)
-								W.reagents.reaction(W_turf)
+								W.reagents.reaction(W_turf, TOUCH)
 								for(var/atom/atm in W_turf)
-									W.reagents.reaction(atm)
+									if(!W || !W.reagents)
+										return
+									W.reagents.reaction(atm, TOUCH) // Touch, since we sprayed it.
+									if(W.reagents.has_reagent("water"))
+										if(isliving(atm)) // For extinguishing mobs on fire
+											var/mob/living/M = atm // Why isn't this handled by the reagent? - N3X
+											M.ExtinguishMob()
+										if(atm.on_fire) // For extinguishing objects on fire
+											atm.extinguish()
+										if(atm.molten) // Molten shit.
+											atm.molten=0
+											atm.solidify()
+
+								var/obj/effect/effect/foam/fire/F = locate() in oldturf
+								if(!istype(F) && oldturf != get_turf(src))
+									F = new /obj/effect/effect/foam/fire( get_turf(oldturf) , W.reagents)
+
 								if(W.loc == my_target)
 									break
 								sleep(2)
+								//No fire extinguisher jetpack, c'mon, you're a huge dude.
 		return 1
 
 	get_equip_info()
@@ -264,7 +278,7 @@
 			disabled = 0
 		if(!istype(target, /turf) && !istype(target, /obj/machinery/door/airlock))
 			target = get_turf(target)
-		if(!action_checks(target) || disabled || get_dist(chassis, target)>3) return
+		if(!action_checks(target) || disabled || get_dist(chassis, target)>1) return
 		playsound(chassis, 'sound/machines/click.ogg', 50, 1)
 		//meh
 		switch(mode)
@@ -367,7 +381,6 @@
 			do_teleport(chassis, T, 4)
 			do_after_cooldown()
 		return
-
 
 /obj/item/mecha_parts/mecha_equipment/wormhole_generator
 	name = "Wormhole Generator"
