@@ -28,7 +28,18 @@
 		if(istype(target,/obj))
 			var/obj/O = target
 			if(!O.anchored)
-				if(cargo_holder.cargo.len < cargo_holder.cargo_capacity)
+				var/obj/structure/ore_box/ore_box = locate(/obj/structure/ore_box) in cargo_holder.cargo
+				if(ore_box && istype(O, /obj/item/weapon/ore))
+					var/count = 0
+					for(var/obj/item/weapon/ore/I in get_turf(target))
+						if(I.material)
+							ore_box.materials.addAmount(I.material, 1)
+							qdel(I)
+							count++
+					log_message("Loaded [count] ore into compatible ore box.")
+					occupant_message("<font color='blue'>[count] ore successfully loaded into cargo compartment.</font>")
+					chassis.visible_message("[chassis] scoops up the ore from the ground and loads it into cargo compartment.")
+				else if(cargo_holder.cargo.len < cargo_holder.cargo_capacity)
 					occupant_message("You lift [target] and start to load it into cargo compartment.")
 					chassis.visible_message("[chassis] lifts [target] and starts to load it into cargo compartment.")
 					set_ready_state(0)
@@ -128,16 +139,9 @@
 		else if(istype(target, /turf/unsimulated/floor/asteroid)) //Digging for sand
 			if(do_after_cooldown(target, 1/3) && C == chassis.loc && src == chassis.selected)
 				for(var/turf/unsimulated/floor/asteroid/M in range(chassis,1)) //Get a 3x3 area around the mech
-					if(istype(src, /obj/item/mecha_parts/mecha_equipment/tool/drill/diamonddrill) || get_dir(chassis,M)&chassis.dir) //Only dig frontmost 1x3 unless the drill is diamond
+					if(get_dir(chassis,M)&chassis.dir || istype(src, /obj/item/mecha_parts/mecha_equipment/tool/drill/diamonddrill)) //Only dig frontmost 1x3 unless the drill is diamond
 						M.gets_dug()
 				log_message("Drilled through [target]")
-				if(locate(/obj/item/mecha_parts/mecha_equipment/tool/hydraulic_clamp) in chassis.equipment)
-					var/obj/structure/ore_box/ore_box = locate(/obj/structure/ore_box) in chassis:cargo
-					if(ore_box)
-						for(var/obj/item/weapon/ore/ore in range(chassis,1))
-							if(get_dir(chassis,ore)&chassis.dir && ore.material)
-								ore_box.materials.addAmount(ore.material,1)
-								qdel(ore)
 
 		else
 			if(do_after_cooldown(target, 1) && C == chassis.loc && src == chassis.selected && target.loc == T) //also check that our target hasn't moved
@@ -240,7 +244,6 @@
 								if(W.loc == my_target)
 									break
 								sleep(2)
-								//No fire extinguisher jetpack, c'mon, you're a huge dude.
 		return 1
 
 	get_equip_info()
@@ -259,6 +262,106 @@
 	. = ..()
 	create_reagents(200)
 	reagents.add_reagent("water", 200)
+
+
+/obj/item/mecha_parts/mecha_equipment/jetpack
+	name = "Jetpack"
+	desc = "Using directed ion bursts and cunning solar wind reflection technique, this device enables controlled space flight."
+	icon_state = "mecha_jetpack"
+	origin_tech = "materials=5;engineering=5;magnets=4"
+	equip_cooldown = 5
+	energy_drain = 75
+	var/wait = 0
+	var/datum/effect/effect/system/trail/ion_trail
+
+
+	can_attach(obj/mecha/M as obj)
+		if(!(locate(src.type) in M.equipment) && !M.proc_res["dyndomove"])
+			return ..()
+
+	detach()
+		..()
+		chassis.proc_res["dyndomove"] = null
+		return
+
+	attach(obj/mecha/M as obj)
+		..()
+		if(!ion_trail)
+			ion_trail = new /datum/effect/effect/system/trail()
+		ion_trail.set_up(chassis)
+		return
+
+	proc/toggle()
+		if(!chassis)
+			return
+		!equip_ready? turn_off() : turn_on()
+		return equip_ready
+
+	proc/turn_on()
+		set_ready_state(0)
+		chassis.proc_res["dyndomove"] = src
+		ion_trail.start()
+		occupant_message("Activated")
+		log_message("Activated")
+
+	proc/turn_off()
+		set_ready_state(1)
+		chassis.proc_res["dyndomove"] = null
+		ion_trail.stop()
+		occupant_message("Deactivated")
+		log_message("Deactivated")
+
+	proc/dyndomove(direction)
+		if(!action_checks())
+			return chassis.dyndomove(direction)
+		var/move_result = 0
+		if(chassis.hasInternalDamage(MECHA_INT_CONTROL_LOST))
+			move_result = step_rand(chassis)
+		else if(chassis.dir!=direction)
+			chassis.dir = direction
+			move_result = 1
+		else
+			move_result	= step(chassis,direction)
+			if(chassis.occupant)
+				for(var/obj/effect/speech_bubble/B in range(1, chassis))
+					if(B.parent == chassis.occupant)
+						B.loc = chassis.loc
+		if(move_result)
+			wait = 1
+			chassis.use_power(energy_drain)
+			if(!chassis.pr_inertial_movement.active())
+				chassis.pr_inertial_movement.start(list(chassis,direction))
+			else
+				chassis.pr_inertial_movement.set_process_args(list(chassis,direction))
+			do_after_cooldown()
+			return 1
+		return 0
+
+	action_checks()
+		if(equip_ready || wait)
+			return 0
+		if(energy_drain && !chassis.has_charge(energy_drain))
+			return 0
+		if(crit_fail)
+			return 0
+		if(chassis.check_for_support())
+			return 0
+		return 1
+
+	get_equip_info()
+		if(!chassis) return
+		return "<span style=\"color:[equip_ready?"#0f0":"#f00"];\">*</span>&nbsp;[src.name] \[<a href=\"?src=\ref[src];toggle=1\">Toggle</a>\]"
+
+
+	Topic(href,href_list)
+		..()
+		if(href_list["toggle"])
+			toggle()
+
+	do_after_cooldown()
+		sleep(equip_cooldown)
+		wait = 0
+		return 1
 
 /obj/item/mecha_parts/mecha_equipment/tool/rcd
 	name = "Mounted RCD"
@@ -359,7 +462,6 @@
 
 	get_equip_info()
 		return "[..()] \[<a href='?src=\ref[src];mode=0'>D</a>|<a href='?src=\ref[src];mode=1'>C</a>|<a href='?src=\ref[src];mode=2'>A</a>\]"
-
 
 
 

@@ -1525,6 +1525,15 @@ k
 	category = "Misc"
 	materials = list("$iron"=500)
 
+/datum/design/mech_jetpack
+	name = "Module Design (Exosuit Jetpack)"
+	desc = "An exosuit-mounted Jetpack module."
+	id = "mech_jetpack"
+	build_type = MECHFAB
+	req_tech = list("materials" = 5, "magnets" = 4, "engineering" = 5)
+	build_path = /obj/item/mecha_parts/mecha_equipment/jetpack
+	category = "Exosuit_Equipment"
+	materials = list("$iron"=25000,"$plasma"=25000,"$uranium"=7500)
 
 ////////////////////////////////////////
 //////////Disk Construction Disks///////
