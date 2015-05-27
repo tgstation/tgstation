@@ -218,7 +218,27 @@
 	if(istype(I, /obj/item/device/mining_scanner) || istype(I, /obj/item/device/t_scanner/adv_mining_scanner) && stage == 1)
 		user.visible_message("<span class='notice'>You use [I] to locate where to cut off the chain reaction and attempt to stop it...</span>")
 		defuse()
-	..()
+	if (istype(I, /obj/item/weapon/pickaxe))
+		var/obj/item/weapon/pickaxe/P = I
+		var/turf/T = user.loc
+		if (!( istype(T, /turf) ))
+			return
+
+		if(last_act+P.digspeed > world.time)//prevents message spam
+			return
+		last_act = world.time
+		user << "<span class='notice'>You start picking...</span>"
+		P.playDigSound()
+
+		if(do_after(user,P.digspeed))
+			if(istype(src, /turf/simulated/mineral)) //sanity check against turf being deleted during digspeed delay
+				user << "<span class='notice'>You finish cutting into the rock.</span>"
+				P.update_icon()
+				gets_drilled(user)
+	else
+		return attack_hand(user)
+	return
+
 
 /turf/simulated/mineral/gibtonite/proc/explosive_reaction(var/mob/user = null, triggered_by_explosion = 0)
 	if(stage == 0)
@@ -268,6 +288,7 @@
 		if(det_time < 0)
 			det_time = 0
 		visible_message("<span class='notice'>The chain reaction was stopped! The gibtonite had [src.det_time] reactions left till the explosion!</span>")
+
 
 /turf/simulated/mineral/gibtonite/gets_drilled(var/mob/user, triggered_by_explosion = 0)
 	if(stage == 0 && mineralAmt >= 1) //Gibtonite deposit is activated

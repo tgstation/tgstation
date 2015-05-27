@@ -16,8 +16,10 @@
 	if(istype(W,/obj/item/commstone))
 		if((W in allstones) && remaining < 6)
 			user.drop_item()
-			W.loc = src
+			qdel(W)
 			user << "<span class='notice'>You place one of the strange stones back onto the ancient device, it snaps into place.</span>"
+			remaining++
+			return
 
 	if(default_unfasten_wrench(user, W, time = 60))
 		power_change()
@@ -35,11 +37,11 @@
 
 /obj/machinery/communication/attack_hand(mob/user as mob)
 	if(..()) return 1
-	if(contents.len)
-		var/obj/item/commstone/stone = contents[1]
-		user.put_in_hands(stone)
-		user << "<span class='notice'>You delicately remove one of the strange stones from the ancient device.</span>"
-		return
+//	if(contents.len)
+//		var/obj/item/commstone/stone = contents[1]
+//		user.put_in_hands(stone)
+//		user << "<span class='notice'>You delicately remove one of the strange stones from the ancient device.</span>"
+//		return
 	if(remaining)
 		var/obj/item/commstone/stone = new(remaining)
 		user.put_in_hands(stone)
@@ -84,6 +86,10 @@
 	..()
 	number = remaining
 	update_icon()
+
+/obj/item/commstone/Destroy()
+	commdevice.allstones -= src
+	..()
 
 /obj/item/commstone/examine(mob/user as mob)
 	..()
