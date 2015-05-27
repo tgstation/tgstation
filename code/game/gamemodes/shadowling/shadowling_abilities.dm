@@ -473,7 +473,7 @@ datum/reagent/shadowling_blindness_smoke/on_mob_life(var/mob/living/M as mob)
 			charge_counter = charge_max
 			return
 		usr.visible_message("<span class='danger'>[usr] kneels over [thrallToRevive], placing their hands on \his chest.</span>", \
-							"<span class='shadowling'>You crouch over the body of your thrall and gather energy.</span>")
+							"<span class='shadowling'>You crouch over the body of your thrall and begin gathering energy...</span>")
 		var/mob/dead/observer/ghost = thrallToRevive.get_ghost()
 		if(ghost)
 			ghost << "<span class='ghostalert'>Your masters are resuscitating you! Return to your corpse if you wish to be brought to life.</span> (Verbs -> Ghost -> Re-enter corpse)"
@@ -482,10 +482,17 @@ datum/reagent/shadowling_blindness_smoke/on_mob_life(var/mob/living/M as mob)
 			usr << "<span class='warning'>Your concentration snaps. The flow of energy ebbs.</span>"
 			charge_counter= charge_max
 			return
-		usr << "<span class='shadowling'>In a massive surge of energy, you bring [thrallToRevive] back to life!</span>"
+		usr << "<span class='shadowling'><b><i>You release a massive surge of energy into [thrallToRevive]!</b></i></span>"
+		usr.visible_message("<span class='boldannounce'><i>Red lightning surges from [usr]'s hands into [thrallToRevive]'s chest!</i></span>")
+		playsound(thrallToRevive, 'sound/weapons/Egloves.ogg', 50, 1)
+		playsound(thrallToRevive, 'sound/machines/defib_zap.ogg', 50, 1)
+		sleep(20)
 		thrallToRevive.revive()
-		thrallToRevive.visible_message("<span class='boldannounce'>[thrallToRevive] gasps, a blinding purple light shining from their eyes, before slowly rising.</span>", \
+		thrallToRevive.visible_message("<span class='boldannounce'>[thrallToRevive] draws in a huge breath, blinding violet light shining from their eyes.</span>", \
 									   "<span class='shadowling'><b><i>You have returned. One of your masters has brought you from the darkness beyond.</b></i></span>")
+		thrallToRevive.Weaken(4)
+		thrallToRevive.emote("gasp")
+		playsound(thrallToRevive, "bodyfall", 50, 1)
 
 // ASCENDANT ABILITIES BEYOND THIS POINT //
 
