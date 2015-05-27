@@ -144,7 +144,7 @@
 	..()
 	if(spellmaster)
 		spellmaster.spell_objects -= src
-	if(spellmaster && !spellmaster.spell_objects.len)
+	if(spellmaster && !spellmaster.spell_objects.len && master)
 		returnToPool(master)
 	spellmaster = null
 
