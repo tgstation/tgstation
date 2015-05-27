@@ -358,17 +358,17 @@
 		else if(istype(obstacle, /obj/structure/reagent_dispensers/fueltank))
 			obstacle.ex_act(1)
 
-		else if(istype(obstacle, /mob/living))
-			var/mob/living/L = obstacle
+		else if(istype(obstacle, /mob/living/carbon))
+			var/mob/living/carbon/C = obstacle
 			var/hit_sound = list('sound/weapons/genhit1.ogg','sound/weapons/genhit2.ogg','sound/weapons/genhit3.ogg')
-			if(L.flags & INVULNERABLE)
+			if(C.flags & INVULNERABLE)
 				return
-			L.take_overall_damage(5,0)
-			if(L.buckled)
-				L.buckled = 0
-			L.Stun(5)
-			L.Weaken(5)
-			L.apply_effect(STUTTER, 5)
+			C.take_overall_damage(5,0)
+			if(C.buckled)
+				C.buckled = 0
+			C.Stun(5)
+			C.Weaken(5)
+			C.apply_effect(STUTTER, 5)
 			playsound(src, pick(hit_sound), 50, 0, 0)
 			breakthrough = 1
 
