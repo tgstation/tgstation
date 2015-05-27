@@ -293,6 +293,8 @@ var/message_delay = 0 // To make sure restarting the recentmessages list is kept
 					blackbox.msg_security += blackbox_msg
 				if(1441)
 					blackbox.msg_deathsquad += blackbox_msg
+				if(1345)
+					blackbox.msg_ert += blackbox_msg
 				if(1213)
 					blackbox.msg_syndicate += blackbox_msg
 				if(1349)
@@ -462,6 +464,8 @@ var/message_delay = 0 // To make sure restarting the recentmessages list is kept
 			part_a = "<span class='supradio'><span class='name'>"
 		else if (display_freq==DSQUAD_FREQ)
 			part_a = "<span class='dsquadradio'><span class='name'>"
+		else if (display_freq==RESTEAM_FREQ)
+			part_a = "<span class='dsquadradio'><span class='name'>"
 		else if (display_freq==AIPRIV_FREQ)
 			part_a = "<span class='aiprivradio'><span class='name'>"
 
@@ -488,6 +492,8 @@ var/message_delay = 0 // To make sure restarting the recentmessages list is kept
 					blackbox.msg_security += blackbox_msg
 				if(1441)
 					blackbox.msg_deathsquad += blackbox_msg
+				if(1345)
+					blackbox.msg_ert += blackbox_msg
 				if(1213)
 					blackbox.msg_syndicate += blackbox_msg
 				if(1349)

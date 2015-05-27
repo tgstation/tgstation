@@ -60,7 +60,7 @@
 	id = "Receiver B"
 	network = "tcommsat"
 	autolinkers = list("receiverB") // link to relay
-	freq_listening = list(1353, 1357, 1359) //command, engineering, security
+	freq_listening = list(1345, 1353, 1357, 1359) //ert, command, engineering, security
 
 	//Common and other radio frequencies for people to freely use
 	New()
@@ -95,7 +95,7 @@
 /obj/machinery/telecomms/bus/preset_four
 	id = "Bus 4"
 	network = "tcommsat"
-	freq_listening = list(1357)
+	freq_listening = list(1345, 1357)
 	autolinkers = list("processor4", "engineering", "common")
 
 /obj/machinery/telecomms/bus/preset_four/New()
@@ -169,7 +169,7 @@
 
 /obj/machinery/telecomms/server/presets/common
 	id = "Common Server"
-	freq_listening = list()
+	freq_listening = list(1345)
 	autolinkers = list("common")
 
 	//Common and other radio frequencies for people to freely use

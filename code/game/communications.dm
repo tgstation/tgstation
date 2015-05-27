@@ -158,7 +158,7 @@ var/const/AIPRIV_FREQ = 1447 //AI private, colored magenta in chat window
 
 
 // central command channels, i.e deathsquid & response teams
-var/list/CENT_FREQS = list(1345, 1341)
+var/list/CENT_FREQS = list(1345, 1441)
 
 var/const/COMM_FREQ = 1353 //command, colored gold in chat window
 var/const/SYND_FREQ = 1213

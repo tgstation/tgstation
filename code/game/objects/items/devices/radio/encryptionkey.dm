@@ -130,7 +130,14 @@
 	icon_state = "servsci_cypherkey"
 	channels = list("Science" = 1, "Service" = 1)
 
+/obj/item/device/encryptionkey/deathsquad
+	name = "Deathsquad Radio Encryption Key"
+	desc = "An encryption key for a radio headset.  Contains cypherkeys."
+	icon_state = "deathsquad_cypherkey"
+	channels = list("Deathsquad" = 1, "Science" = 1, "Command" = 1, "Medical" = 1, "Engineering" = 1, "Security" = 1, "Mining" = 1, "Cargo" = 1,)
+
 /obj/item/device/encryptionkey/ert
 	name = "NanoTrasen ERT Radio Encryption Key"
 	desc = "An encryption key for a radio headset.  Contains cypherkeys."
+	icon_state = "ert_cypherkey"
 	channels = list("Response Team" = 1, "Science" = 1, "Command" = 1, "Medical" = 1, "Engineering" = 1, "Security" = 1, "Mining" = 1, "Cargo" = 1,)
