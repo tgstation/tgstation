@@ -153,16 +153,6 @@ AI MODULES
 	return targetName
 
 
-/******************** ProtectStation ********************/
-
-/obj/item/weapon/aiModule/supplied/protectStation
-	name = "'ProtectStation' AI Module"
-	desc = "A 'protect station' AI module: 'Protect the space station against damage. Anyone you see harming the station is to be no longer considered human, and is a threat to the station which must be neutralized.'"
-	origin_tech = "programming=3;materials=4" //made of gold
-	laws = list("Protect the space station against damage. Anyone you see harming the station is to be no longer considered human, and is a threat to the station which must be neutralized.")
-	lawpos = 5
-
-
 /******************** Quarantine ********************/
 
 /obj/item/weapon/aiModule/supplied/quarantine
