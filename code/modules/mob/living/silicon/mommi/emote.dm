@@ -234,7 +234,7 @@
 			m_type = VISIBLE
 
 		else
-			src << text("Invalid Emote: [], use *help", act)
+			custom_emote(VISIBLE, act) //src << text("Invalid Emote: [], use *help", act)
 	if ((message && src.stat == 0))
 		if (m_type & 1)
 			for(var/mob/O in viewers(src, null))

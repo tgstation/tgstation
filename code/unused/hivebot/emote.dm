@@ -129,7 +129,7 @@
 				message = "<B>[src]</B> looks."
 			m_type = 1
 		else
-			src << text("Invalid Emote: []", act)
+			custom_emote(VISIBLE, act)//src << text("Invalid Emote: []", act)
 	if ((message && src.stat == 0))
 		if (m_type & 1)
 			for(var/mob/O in viewers(src, null))
