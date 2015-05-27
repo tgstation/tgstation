@@ -57,8 +57,8 @@ var/global/list/rnd_machines = list()
 // Define initial output.
 /obj/machinery/r_n_d/initialize()
 	..()
+	output = src // broke protolathes you dummy
 	if(research_flags &HASOUTPUT)
-		output = src
 		for(var/direction in cardinal)
 			var/O = locate(/obj/machinery/mineral/output, get_step(get_turf(src), direction))
 			if(O)
