@@ -36,7 +36,7 @@ Targeted spells have two useful flags: INCLUDEUSER and SELECTABLE. These are exp
 		if(range == -2)
 			targets = living_mob_list
 		else
-			for(var/mob/living/target in view_or_range(range, user, selection_type))
+			for(var/mob/living/target in view_or_range(range, holder, selection_type))
 				targets += target
 
 	else if(max_targets == 1) //single target can be picked
@@ -48,7 +48,7 @@ Targeted spells have two useful flags: INCLUDEUSER and SELECTABLE. These are exp
 			if(range == -2)
 				starting_targets = living_mob_list
 			else
-				starting_targets = view_or_range(range, user, selection_type)
+				starting_targets = view_or_range(range, holder, selection_type)
 
 			for(var/mob/living/M in starting_targets)
 				if(!(spell_flags & INCLUDEUSER) && M == user)
@@ -76,7 +76,7 @@ Targeted spells have two useful flags: INCLUDEUSER and SELECTABLE. These are exp
 		if(range == -2)
 			starting_targets = living_mob_list
 		else
-			starting_targets = view_or_range(range, user, selection_type)
+			starting_targets = view_or_range(range, holder, selection_type)
 
 		for(var/mob/living/target in starting_targets)
 			if(!(spell_flags & INCLUDEUSER) && target == user)
@@ -93,7 +93,7 @@ Targeted spells have two useful flags: INCLUDEUSER and SELECTABLE. These are exp
 				if(!M)
 					break
 				if(range != -2)
-					if(!(M in view_or_range(range, user, selection_type)))
+					if(!(M in view_or_range(range, holder, selection_type)))
 						continue
 				targets += M
 				possible_targets -= M
@@ -121,7 +121,7 @@ Targeted spells have two useful flags: INCLUDEUSER and SELECTABLE. These are exp
 /spell/targeted/cast(var/list/targets, mob/user)
 	for(var/mob/living/target in targets)
 		if(range >= 0)
-			if(!(target in view_or_range(range, user, selection_type))) //filter at time of casting
+			if(!(target in view_or_range(range, holder, selection_type))) //filter at time of casting
 				targets -= target
 				continue
 		apply_spell_damage(target)
