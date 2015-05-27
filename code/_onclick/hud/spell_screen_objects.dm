@@ -145,7 +145,7 @@
 	if(spellmaster)
 		spellmaster.spell_objects -= src
 	if(spellmaster && !spellmaster.spell_objects.len)
-		returnToPool(master)
+		returnToPool(spellmaster)
 	spellmaster = null
 
 /obj/screen/spell/proc/update_charge(var/forced_update = 0)

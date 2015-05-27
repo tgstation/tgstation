@@ -51,7 +51,7 @@
 	unsuitable_atoms_damage = 10
 
 	disabilities=EPILEPSY|COUGHING
-	mutations = M_CLUMSY
+	mutations = list(M_CLUMSY)
 
 	var/datum/speech_filter/filter
 
