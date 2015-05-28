@@ -13,8 +13,6 @@
 // END_PREFERENCES
 
 // BEGIN_INCLUDE
-#include "_maps\tgstation2.dm"
-#include "_maps\map_files\TgStation\tgstation.2.1.3.dmm"
 #include "code\_compile_options.dm"
 #include "code\hub.dm"
 #include "code\world.dm"
