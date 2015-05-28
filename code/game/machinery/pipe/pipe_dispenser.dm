@@ -35,9 +35,6 @@
 <A href='?src=\ref[src];make=3;dir=5'>Bent Pipe</A><BR>
 <A href='?src=\ref[src];make=6;dir=1'>Junction</A><BR>
 <A href='?src=\ref[src];make=17;dir=1'>Heat Exchanger</A><BR>
-<b>Insulated pipes:</b><BR>
-<A href='?src=\ref[src];make=11;dir=1'>Pipe</A><BR>
-<A href='?src=\ref[src];make=12;dir=5'>Bent Pipe</A><BR>
 "}
 
 
