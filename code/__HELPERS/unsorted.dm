@@ -1193,17 +1193,9 @@ proc/get_mob_with_client_list()
 /proc/get_turf(const/atom/O)
 	if (isnull(O) || isarea(O))
 		return
-
-	var/atom/A = O
-
-	for (var/i = 0, ++i <= 16)
-		if (isturf(A))
-			return A
-
-		if (istype(A))
-			A = A.loc
-		else
-			return
+	var/atom/A
+	for(A=O, A && !isturf(A), A=A.loc);  // semicolon is for the empty statement
+	return A
 
 /proc/get(atom/loc, type)
 	while(loc)
