@@ -131,10 +131,14 @@
 				if(locate(/obj/item/mecha_parts/mecha_equipment/tool/hydraulic_clamp) in chassis.equipment)
 					var/obj/structure/ore_box/ore_box = locate(/obj/structure/ore_box) in chassis:cargo
 					if(ore_box)
+						var/count = 0
 						for(var/obj/item/weapon/ore/ore in range(chassis,1))
 							if(get_dir(chassis,ore)&chassis.dir && ore.material)
 								ore_box.materials.addAmount(ore.material,1)
 								qdel(ore)
+								count++
+						if(count)
+							occupant_message("<font color='blue'>[count] ore successfully loaded into cargo compartment.</font>")
 
 		else if(istype(target, /turf/unsimulated/floor/asteroid)) //Digging for sand
 			if(do_after_cooldown(target, 1/3) && C == chassis.loc && src == chassis.selected)
