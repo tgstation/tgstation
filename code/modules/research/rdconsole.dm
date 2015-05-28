@@ -205,7 +205,7 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 	usr.set_machine(src)
 	if(href_list["menu"]) //Switches menu screens. Converts a sent text string into a number. Saves a LOT of code.
 		var/temp_screen = text2num(href_list["menu"])
-		if(temp_screen <= 1.1 || (3 <= temp_screen && 4.9 >= temp_screen) || src.allowed(usr) || emagged) //Unless you are making something, you need access.
+		if(temp_screen <= 1.1 || (2 <= temp_screen && 4.9 >= temp_screen) || src.allowed(usr) || emagged) //Unless you are making something, you need access.
 			screen = temp_screen
 		else
 			usr << "Unauthorized Access."
@@ -278,6 +278,9 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 
 	else if(href_list["deconstruct"]) //Deconstruct the item in the destructive analyzer and update the research holder.
 		if(linked_destroy)
+			if(!src.allowed(usr))
+				usr << "Unauthorized Access."
+				return
 			if(linked_destroy.busy)
 				usr << "<span class='warning'>The destructive analyzer is busy at the moment.</span>"
 			else
@@ -428,15 +431,27 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 					linked_imprinter.stopped=0
 
 	else if(href_list["disposeI"] && linked_imprinter)  //Causes the circuit imprinter to dispose of a single reagent (all of it)
+		if(!src.allowed(usr))
+			usr << "Unauthorized Access."
+			return
 		linked_imprinter.reagents.del_reagent(href_list["dispose"])
 
 	else if(href_list["disposeallI"] && linked_imprinter) //Causes the circuit imprinter to dispose of all it's reagents.
+		if(!src.allowed(usr))
+			usr << "Unauthorized Access."
+			return
 		linked_imprinter.reagents.clear_reagents()
 
 	else if(href_list["disposeP"] && linked_lathe)  //Causes the protolathe to dispose of a single reagent (all of it)
+		if(!src.allowed(usr))
+			usr << "Unauthorized Access."
+			return
 		linked_lathe.reagents.del_reagent(href_list["dispose"])
 
 	else if(href_list["disposeallP"] && linked_lathe) //Causes the protolathe to dispose of all it's reagents.
+		if(!src.allowed(usr))
+			usr << "Unauthorized Access."
+			return
 		linked_lathe.reagents.clear_reagents()
 
 	else if(href_list["removeQItem"]) //Causes the protolathe to dispose of all it's reagents.
@@ -465,6 +480,9 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 		linked_imprinter.stopped=(href_list["setImprinterStopped"]=="1")
 
 	else if(href_list["lathe_ejectsheet"] && linked_lathe) //Causes the protolathe to eject a sheet of material
+		if(!src.allowed(usr))
+			usr << "Unauthorized Access."
+			return
 		var/desired_num_sheets = text2num(href_list["lathe_ejectsheet_amt"])
 		if (desired_num_sheets <= 0)
 			return
@@ -481,6 +499,9 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 			else
 				del sheet
 	else if(href_list["imprinter_ejectsheet"] && linked_imprinter) //Causes the protolathe to eject a sheet of material
+		if(!src.allowed(usr))
+			usr << "Unauthorized Access."
+			return
 		var/desired_num_sheets = text2num(href_list["imprinter_ejectsheet_amt"])
 		if (desired_num_sheets <= 0) return
 		var/matID=href_list["imprinter_ejectsheet"]
