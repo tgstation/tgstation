@@ -133,7 +133,7 @@
 	return
 
 /datum/construction/proc/try_consume(mob/user as mob, atom/movable/used_atom, given_step)
-	if(!used_atom.construction_delay_mult[Co_CON_SPEED])
+	if(used_atom.construction_delay_mult && !used_atom.construction_delay_mult[Co_CON_SPEED])
 		user << "<span class='warning'>This tool only works for deconstruction!</span>" //It doesn't technically have to be a tool to cause this message, but it wouldn't make sense for anything else to do so.
 		return 0
 
@@ -143,7 +143,10 @@
 
 	var/delay = 0
 	if(Co_DELAY in given_step)
-		delay = given_step[Co_DELAY] * used_atom.construction_delay_mult[Co_CON_SPEED]
+		if(used_atom.construction_delay_mult)
+			delay = given_step[Co_DELAY] * used_atom.construction_delay_mult[Co_CON_SPEED]
+		else
+			delay = given_step[Co_DELAY]
 	if(delay > 0)
 		start_construct_message(given_step, user, used_atom)
 		if(!do_after(user, delay, needhand = 1))
@@ -289,7 +292,7 @@
 /datum/construction/reversible/try_consume(mob/user as mob, atom/movable/used_atom, given_step, index, diff)
 	//if we've made some progress on a step, we want to drop it
 	var/current_step = (diff == BACKWARD ? get_forward_step(index) : get_backward_step(index))
-	if(!used_atom.construction_delay_mult[diff == FORWARD ? Co_CON_SPEED : Co_DECON_SPEED])
+	if(used_atom.construction_delay_mult && !used_atom.construction_delay_mult[diff == FORWARD ? Co_CON_SPEED : Co_DECON_SPEED])
 		user << "<span class='warning'>This tool only works for [diff == FORWARD ? "de" : ""]construction!</span>" //It doesn't technically have to be a tool to cause this message, but it wouldn't make sense for anything else to do so.
 		return 0
 	if(current_step && (Co_AMOUNT in current_step) && (Co_MAX_AMOUNT in current_step) && (current_step[Co_AMOUNT] < current_step[Co_MAX_AMOUNT]))
@@ -311,7 +314,10 @@
 
 	var/delay = 0
 	if(Co_DELAY in given_step)
-		delay = given_step[Co_DELAY] * used_atom.construction_delay_mult[diff == FORWARD ? Co_CON_SPEED : Co_DECON_SPEED]
+		if(used_atom.construction_delay_mult)
+			delay = given_step[Co_DELAY] * used_atom.construction_delay_mult[diff == FORWARD ? Co_CON_SPEED : Co_DECON_SPEED]
+		else
+			delay = given_step[Co_DELAY]
 	if(delay > 0)
 		start_construct_message(given_step, user, used_atom)
 		if(!do_after(user, delay, needhand = 1))
