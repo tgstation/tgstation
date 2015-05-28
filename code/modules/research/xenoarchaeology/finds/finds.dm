@@ -331,7 +331,7 @@
 			if(spawn_type)
 				var/obj/item/weapon/gun/energy/new_gun = new spawn_type(src.loc)
 				new_item = new_gun
-				new_gun.pin = /obj/item/device/firing_pin
+				new_gun.pin = new /obj/item/device/firing_pin(new_gun)
 				new_item.icon = 'icons/obj/xenoarchaeology.dmi'
 				new_item.icon_state = "egun[rand(1,6)]"
 				new_gun.desc = "This is an antique energy weapon, you're not sure if it will fire or not."

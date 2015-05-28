@@ -125,16 +125,9 @@ var/list/valid_secondary_effect_types = list(\
 		secondary_effect.process()
 
 	if(pulledby)
-		if(!Adjacent(pulledby)) //Not actually next to them
-			if(pulledby.pulling == src)
-				pulledby.stop_pulling()
-			pulledby = null
-		else if(pulledby.stat || pulledby.sleeping || pulledby.lying || pulledby.weakened || pulledby.stunned) //To prevent getting stuck stunned forever due to not being able to break the pull.
-			if(pulledby.pulling == src)
-				pulledby.stop_pulling()
-			pulledby = null
-		else
-			Bumped(pulledby)
+		if(!(!Adjacent(pulledby) || pulledby.stat || pulledby.sleeping || pulledby.lying || pulledby.weakened || pulledby.stunned)) //prevents CAN'T WAKE UP and other silliness
+			if(prob(50))
+				Bumped(pulledby)
 
 	//if either of our effects rely on environmental factors, work that out
 	var/trigger_cold = 0
@@ -310,7 +303,6 @@ var/list/valid_secondary_effect_types = list(\
 			secondary_effect.ToggleActivate(0)
 
 /obj/machinery/artifact/Bumped(M as mob|obj)
-	..()
 	if(istype(M,/obj))
 		if(M:throwforce >= 10)
 			if(my_effect.trigger == TRIGGER_FORCE)
