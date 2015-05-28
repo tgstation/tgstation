@@ -29,8 +29,9 @@
 	..()
 
 /obj/effect/blob/node/Life()
-	for(var/i = 1; i < 8; i += i)
-		Pulse(5, i, overmind.blob_reagent_datum.color)
+	if(overmind)
+		for(var/i = 1; i < 8; i += i)
+			Pulse(5, i, overmind.blob_reagent_datum.color)
 	health = min(initial(health), health + 1)
 	color = null
 

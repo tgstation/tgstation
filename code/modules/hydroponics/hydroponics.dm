@@ -153,6 +153,8 @@ obj/machinery/hydroponics/process()
 
 				if(!breath)
 					return
+				if(!breath.total_moles())
+					return
 
 				var/average_co2 = 0.4	//Yield calculated from this
 
