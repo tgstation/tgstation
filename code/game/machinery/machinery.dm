@@ -155,7 +155,7 @@ Class Procs:
 
 /obj/machinery/New()
 	machines += src
-	if(ticker) initialize()
+	//if(ticker) initialize()
 	return ..()
 
 /obj/machinery/examine(mob/user)

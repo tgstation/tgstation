@@ -53,6 +53,7 @@ var/global/list/rnd_machines = list()
 
 	if(research_flags & TAKESMATIN)
 		materials = new
+	if(ticker) initialize()
 
 // Define initial output.
 /obj/machinery/r_n_d/initialize()
