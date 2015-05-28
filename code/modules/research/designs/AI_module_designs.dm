@@ -23,6 +23,16 @@
 	build_path = /obj/item/weapon/aiModule/zeroth/oneHuman
 	category = list("AI Modules")
 
+/datum/design/protectstation_module
+	name = "Module Design (ProtectStation)"
+	desc = "Allows for the construction of a ProtectStation AI Module."
+	id = "protectstation_module"
+	req_tech = list("programming" = 3, "materials" = 6)
+	build_type = IMPRINTER
+	materials = list("$glass" = 1000, "sacid" = 20, "$gold" = 100)
+	build_path = /obj/item/weapon/aiModule/supplied/protectStation
+	category = list("AI Modules")
+
 /datum/design/quarantine_module
 	name = "Module Design (Quarantine)"
 	desc = "Allows for the construction of a Quarantine AI Module."

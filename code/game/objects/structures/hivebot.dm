@@ -30,7 +30,7 @@
 				new /mob/living/simple_animal/hostile/hivebot/range(get_turf(src))
 			if("rapid")
 				new /mob/living/simple_animal/hostile/hivebot/rapid(get_turf(src))
-	spawn(100)
+	sleep(100)
 		visible_message("<span class='boldannounce'>The [src] warps out!</span>")
 		playsound(src.loc, 'sound/effects/EMPulse.ogg', 25, 1)
 		qdel(src)

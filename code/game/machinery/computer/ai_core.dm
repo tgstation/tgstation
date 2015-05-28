@@ -109,14 +109,12 @@
 			if(istype(P, /obj/item/weapon/aiModule/core/full)) //Allows any full core boards to be applied to AI cores.
 				var/obj/item/weapon/aiModule/core/M = P
 				laws.clear_inherent_laws()
-				laws.clear_zeroth_law(0)
 				for(var/templaw in M.laws)
 					laws.add_inherent_law(templaw)
 				usr << "<span class='notice'>Law module applied.</span>"
 
 			if(istype(P, /obj/item/weapon/aiModule/reset/purge))
 				laws.clear_inherent_laws()
-				laws.clear_zeroth_law(0)
 				usr << "<span class='notice'>Laws cleared applied.</span>"
 
 

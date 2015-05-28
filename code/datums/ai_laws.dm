@@ -5,7 +5,6 @@
 	var/list/inherent = list()
 	var/list/supplied = list()
 	var/list/ion = list()
-	var/mob/living/silicon/owner
 
 /datum/ai_laws/default/asimov
 	name = "Three Laws of Robotics"
@@ -170,20 +169,3 @@
 		if (length(law) > 0)
 			who << "[number]. [law]"
 			number++
-
-/datum/ai_laws/proc/clear_zeroth_law(var/force) //only removes zeroth from antag ai if force is 1
-	if(force)
-		src.zeroth = null
-		src.zeroth_borg = null
-		return
-	else
-		if(src.owner.mind.special_role)
-			return
-		else
-			src.zeroth = null
-			src.zeroth_borg = null
-			return
-
-/datum/ai_laws/proc/associate(var/mob/living/silicon/M)
-	if(!owner)
-		owner = M
