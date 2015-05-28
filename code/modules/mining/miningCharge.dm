@@ -4,7 +4,7 @@
 	desc = "A pyrotechnical device used to cause controlled explosions for digging tunnels without manual labor. It can only be attached to rocks and mineral deposits."
 	w_class = 2
 	icon = 'icons/obj/mining.dmi'
-	icon_state = "miningCharge"
+	icon_state = "miningCharge" //there is no difference between small and regular sized mining charges
 	item_state = "electronic"
 	throw_speed = 3
 	throw_range = 5
@@ -20,7 +20,6 @@
 		return
 	user << "<span class='warning'>You press the emag onto [src], disabling its safeties.</span>"
 	safety = 0
-	explosionPower-- //Makes them less powerful when you emag them - for balance
 
 /obj/item/device/miningCharge/New()
 	..()
