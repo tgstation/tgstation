@@ -233,6 +233,9 @@
 	var/list/prize_list = list(
 		new /datum/data/mining_equipment("Stimpack",			/obj/item/weapon/reagent_containers/hypospray/medipen/stimpack,	    50),
 		new /datum/data/mining_equipment("Stimpack Bundle",		/obj/item/weapon/storage/box/medipens/utility,	 				   200),
+		new /datum/data/mining_equipment("Mining Charge", 		/obj/item/device/miningCharge,									    75),
+		new /datum/data/mining_equipment("Mining Charge Kit",	/obj/item/weapon/storage/box/miningCharges,						   300),
+		new /datum/data/mining_equipment("Monster Bait",		/obj/item/weapon/miningBait,									   100),
 		new /datum/data/mining_equipment("Whiskey",             /obj/item/weapon/reagent_containers/food/drinks/bottle/whiskey,    100),
 		new /datum/data/mining_equipment("Cigar",               /obj/item/clothing/mask/cigarette/cigar/havana,                    150),
 		new /datum/data/mining_equipment("Soap",                /obj/item/weapon/soap/nanotrasen, 						           200),
@@ -248,6 +251,7 @@
 		new /datum/data/mining_equipment("Diamond Pickaxe",		/obj/item/weapon/pickaxe/diamond,				                  1200),
 		new /datum/data/mining_equipment("Jetpack",             /obj/item/weapon/tank/jetpack/carbondioxide/mining,               1500),
 		new /datum/data/mining_equipment("Space Cash",    		/obj/item/stack/spacecash/c1000,                    			  2000),
+		new /datum/data/mining_equipment("Capture Sphere", 		/obj/item/device/captureSphere,									   500),
 		new /datum/data/mining_equipment("Point Transfer Card", /obj/item/weapon/card/mining_point_card,               			   500),
 		)
 
