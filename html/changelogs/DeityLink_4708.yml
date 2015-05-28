@@ -1,6 +1,0 @@
-author: Deity Link
-delete-after: true
-changes:
-  - rscadd: ERT and Deathsquad now have their own headsets with their own encryption keys
-  - rscadd: The ERT's channel letter is "r"
-  - rscadd: The Deathsquad's channel letter (number technically) is "0"
