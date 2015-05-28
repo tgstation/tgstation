@@ -132,14 +132,14 @@
 	build_path = /obj/item/weapon/storage/bag/plants/holding
 	category = list("service")
 
-/datum/design/chainsaw //needs to be ported
+/datum/design/chainsaw
 	name = "Chainsaw"
 	desc = "A curious tool used to effectively and efficiently cuts down trees and hedges. Powered by ???."
 	id = "chainsaw"
 	req_tech = list("materials" = 5 "combat" = 5, "powerstorage" = 3, "syndicate" = 5, "service" = 8)
 	build_type = PROTOLATHE
 	materials = list("$metal" = 5000, "$glass" = 1000, "$diamond" = 2000, "$plasma" = 1000)
-	build_path = /obj/item/weapon/chainsaw
+	build_path = /obj/item/weapon/twohanded/chainsaw
 	category = list("service")
 
 /datum/design/muffinmachine //needs to be created
