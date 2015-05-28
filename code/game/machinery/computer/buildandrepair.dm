@@ -261,7 +261,7 @@
 	if(issolder(I))
 		var/obj/item/weapon/solder/S = I
 		if(S.remove_fuel(2,user))
-			solder_improve()
+			solder_improve(user)
 	else if(iswelder(I))
 		var/obj/item/weapon/weldingtool/WT = I
 		if(WT.remove_fuel(1,user))
@@ -284,6 +284,8 @@
 
 /obj/item/weapon/circuitboard/security/solder_improve(mob/user as mob)
 	if(istype(src,/obj/item/weapon/circuitboard/security/advanced))
+		return ..()
+	if(istype(src,/obj/item/weapon/circuitboard/security/engineering))
 		return ..()
 	else
 		user << "<span class='notice'>You locate a short that makes the feed circuitry more elegant.</span>"
