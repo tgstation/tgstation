@@ -105,17 +105,28 @@ turf/simulated/floor/proc/update_icon()
 		var/obj/item/stack/tile/light/T = floor_tile
 		if(T.on)
 			switch(T.state)
-				if(0)
+				if(LIGHTFLOOR_ON)
 					icon_state = "light_on"
 					SetLuminosity(5)
-				if(1)
-					var/num = pick("1","2","3","4")
-					icon_state = "light_on_flicker[num]"
+				if(LIGHTFLOOR_WHITE)
+					icon_state = "light_on-w"
 					SetLuminosity(5)
-				if(2)
-					icon_state = "light_on_broken"
+				if(LIGHTFLOOR_RED)
+					icon_state = "light_on-r"
 					SetLuminosity(5)
-				if(3)
+				if(LIGHTFLOOR_GREEN)
+					icon_state = "light_on-g"
+					SetLuminosity(5)
+				if(LIGHTFLOOR_YELLOW)
+					icon_state = "light_on-y"
+					SetLuminosity(5)
+				if(LIGHTFLOOR_BLUE)
+					icon_state = "light_on-b"
+					SetLuminosity(5)
+				if(LIGHTFLOOR_PURPLE)
+					icon_state = "light_on-p"
+					SetLuminosity(5)
+				else
 					icon_state = "light_off"
 					SetLuminosity(0)
 		else
