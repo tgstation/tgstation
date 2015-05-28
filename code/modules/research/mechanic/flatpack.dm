@@ -3,13 +3,13 @@
 
 /obj/structure/closet/crate/flatpack
 	name = "\improper flatpack"
-	desc = "A ready-to-assemble machine flatpack produced in the space-Swedish style.<br>Crowbar the flatpack open and follow the obtuse instructions to make the resulting machine."
+	desc = "A ready-to-assemble machine flatpack produced in the space-Swedish style."
 	icon = 'icons/obj/machines/flatpack.dmi'
 	icon_state = "flatpack"
 	density = 1
 	anchored = 0
 	var/obj/machinery/machine = null
-	var/datum/construction/flatpack_unpack/unpacking
+//	var/datum/construction/flatpack_unpack/unpacking
 	var/assembling = 0
 
 	var/list/image/stacked = list() //assoc ref list
@@ -22,7 +22,7 @@
 
 /obj/structure/closet/crate/flatpack/New()
 	..()
-	unpacking = new (src)
+//	unpacking = new (src)
 	icon_state = "flatpack" //it gets changed in the crate code, so we reset it here
 
 /obj/structure/closet/crate/flatpack/update_icon()
@@ -47,8 +47,8 @@
 							icon_state = "flatpackeng"
 					break
 
-	if(assembling)
-		overlays += "assembly"
+/*	if(assembling)
+		overlays += "assembly" */
 	else if(stacked.len)
 		for(var/i = 1 to stacked.len)
 			var/image/stack_image = stacked[stacked[i]] //because it's an assoc list
@@ -57,20 +57,20 @@
 			overlays += stack_image
 
 /obj/structure/closet/crate/flatpack/attackby(var/atom/A, mob/user)
-	if(assembling)
+/*	if(assembling)
 		if(unpacking.action(A, user))
-			return 1
+			return 1 */
 	if(istype(A, /obj/item/weapon/crowbar) && !assembling)
 		if(stacked.len)
 			user << "<span class='rose'>You can't open this flatpack while others are stacked on top of it!</span>"
 			return
-		user <<"<span class='notice'>You begin to open the flatpack...</span>"
-		if(do_after(user, rand(10,40)) && !assembling)
+		assembling = 1
+		user.visible_message("<span class='notice'>[user] begins to open the flatpack...</span>", "<span class='notice'>You begin to open the flatpack...</span>")
+		if(do_after(user, rand(10,40)))
 			if(machine)
-				user <<"<span class='notice'>\icon [src]You successfully unpack \the [src]!</span>"
-				overlays += "assembly"
-				assembling = 1
-				var/obj/item/weapon/paper/instructions = new (get_turf(src))
+				user <<"<span class='notice'>\icon [src]You successfully unpack \the [machine]!</span>"
+//				overlays += "assembly"
+/*				var/obj/item/weapon/paper/instructions = new (get_turf(src))
 				var/list/inst_list = unpacking.GenerateInstructions()
 				instructions.name = "instructions ([machine.name])"
 				instructions.info = inst_list["instructions"]
@@ -78,10 +78,14 @@
 					instructions.overlays += "paper_stamped_denied"
 					instructions.name = "misprinted " + instructions.name
 				instructions.update_icon()
+*/
+				machine.forceMove(src.loc)
+				machine = null
+				qdel(src)
 			else
-				assembling = 1
 				user <<"<span class='notice'>\icon [src]It seems this [src] was empty...</span>"
 				qdel(src)
+		assembling = 0
 		return
 
 /obj/structure/closet/crate/flatpack/proc/Finalize()
@@ -123,9 +127,9 @@
 /obj/structure/closet/crate/flatpack/MouseDrop_T(atom/dropping, mob/user)
 	if(istype(dropping, /obj/structure/closet/crate/flatpack) && dropping != src)
 		var/obj/structure/closet/crate/flatpack/stacking = dropping
-		if(assembling || stacking.assembling)
+/*		if(assembling || stacking.assembling)
 			user << "You can't stack opened flatpacks."
-			return
+			return */
 		if((stacked.len + stacking.stacked.len + 2) >= MAX_FLATPACK_STACKS) //how many flatpacks we can in a stack (including the bases)
 			user << "You can't stack flatpacks that high."
 			return
@@ -168,7 +172,7 @@
 
 	update_icon()
 
-
+/*
 #define Fl_ACTION	"action"
 
 /datum/construction/flatpack_unpack
@@ -240,3 +244,4 @@
 		return 1
 
 #undef Fl_ACTION
+*/
