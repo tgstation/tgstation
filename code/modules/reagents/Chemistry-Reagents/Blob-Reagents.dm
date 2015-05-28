@@ -4,6 +4,11 @@ datum/reagent/blob
 	var/message = "The blob strikes you" //message sent to any mob hit by the blob
 	var/message_living = null //extension to first mob sent to only living mobs i.e. silicons have no skin to be burnt
 
+datum/reagent/blob/reaction_mob(var/mob/living/M as mob, var/method=TOUCH, var/volume, var/show_message = 1)
+	if(!istype(M, /mob/living)) //gods why
+		return
+
+
 datum/reagent/blob/boiling_oil
 	name = "Boiling Oil"
 	id = "boiling_oil"
@@ -12,6 +17,7 @@ datum/reagent/blob/boiling_oil
 	message = "The blob splashes you with burning oil"
 
 datum/reagent/blob/boiling_oil/reaction_mob(var/mob/living/M as mob, var/method=TOUCH, var/volume, var/show_message = 1)
+	..()
 	if(method == TOUCH)
 		M.apply_damage(15, BURN)
 		M.adjust_fire_stacks(2)
@@ -28,6 +34,7 @@ datum/reagent/blob/toxic_goop
 	message_living = ", and you feel sick and nauseated"
 
 datum/reagent/blob/toxic_goop/reaction_mob(var/mob/living/M as mob, var/method=TOUCH, var/volume, var/show_message = 1)
+	..()
 	if(method == TOUCH)
 		M.apply_damage(20, TOX)
 		if(show_message)
@@ -41,6 +48,7 @@ datum/reagent/blob/skin_ripper
 	message_living = ", and you feel your skin ripping and tearing off"
 
 datum/reagent/blob/skin_ripper/reaction_mob(var/mob/living/M as mob, var/method=TOUCH, var/volume, var/show_message = 1)
+	..()
 	if(method == TOUCH)
 		M.apply_damage(20, BRUTE)
 		if(show_message)
@@ -57,6 +65,7 @@ datum/reagent/blob/skin_melter
 	message_living = ", and you feel your skin char and melt"
 
 datum/reagent/blob/skin_melter/reaction_mob(var/mob/living/M as mob, var/method=TOUCH, var/volume, var/show_message = 1)
+	..()
 	if(method == TOUCH)
 		M.apply_damage(10, BRUTE)
 		M.apply_damage(10, BURN)
@@ -74,6 +83,7 @@ datum/reagent/blob/lung_destroying_toxin
 	message_living = ", and your lungs feel heavy and weak"
 
 datum/reagent/blob/lung_destroying_toxin/reaction_mob(var/mob/living/M as mob, var/method=TOUCH, var/volume,var/show_message = 1)
+	..()
 	if(method == TOUCH)
 		M.apply_damage(20, OXY)
 		M.losebreath += 15
@@ -89,6 +99,7 @@ datum/reagent/blob/acid
 	color = "#BD80F4"
 
 datum/reagent/blob/acid/reaction_mob(var/mob/living/M as mob, var/method=TOUCH, var/volume, var/show_message = 1)
+	..()
 	if(method == TOUCH)
 		if(prob(50))
 			M.acid_act(5,1,5)
@@ -104,6 +115,7 @@ datum/reagent/blob/radioactive_liquid
 	message_living = ", and your skin feels papery and everything hurts"
 
 datum/reagent/blob/radioactive_liquid/reaction_mob(var/mob/living/M as mob, var/method=TOUCH, var/volume,var/show_message = 1)
+	..()
 	if(method == TOUCH)
 		if(istype(M, /mob/living/carbon/human))
 			M.apply_damage(10, BRUTE)
@@ -125,6 +137,7 @@ datum/reagent/blob/dark_matter
 	message = "You feel a thrum as the blob strikes you, and everything flies at you"
 
 datum/reagent/blob/dark_matter/reaction_mob(var/mob/living/M as mob, var/method=TOUCH, var/volume, var/show_message = 1)
+	..()
 	if(method == TOUCH)
 		M.apply_damage(15, BRUTE)
 		reagent_vortex(M, 0)
@@ -139,6 +152,7 @@ datum/reagent/blob/b_sorium
 	message = "The blob slams into you, and sends you flying"
 
 datum/reagent/blob/b_sorium/reaction_mob(var/mob/living/M as mob, var/method=TOUCH, var/volume, var/show_message = 1)
+	..()
 	if(method == TOUCH)
 		M.apply_damage(15, BRUTE)
 		if(show_message)
@@ -154,6 +168,7 @@ datum/reagent/blob/explosive // I'm gonna burn in hell for this one
 	message = "The blob strikes you, and its tendrils explode"
 
 datum/reagent/blob/explosive/reaction_mob(var/mob/living/M as mob, var/method=TOUCH, var/volume, var/show_message = 1)
+	..()
 	if(method == TOUCH)
 		if(prob(75))
 			if(show_message)
