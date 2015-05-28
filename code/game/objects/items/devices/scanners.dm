@@ -92,10 +92,10 @@ MASS SPECTROMETER
 	if ((user.disabilities & CLUMSY || user.getBrainLoss() >= 60) && prob(50))
 		user << "<span class='notice'>You stupidly try to analyze the floor's vitals!</span>"
 		user.visible_message("<span class='warning'>[user] has analyzed the floor's vitals!</span>")
-		user.show_message("<span class='info'>Analyzing results for The floor:\n\tOverall status: <b>Healthy</b>", 1)
-		user.show_message("<span class='info'>Key: <font color='blue'>Suffocation</font>/<font color='green'>Toxin</font>/<font color='#FF8000'>Burn</font>/<font color='red'>Brute</font></span>", 1)
-		user.show_message("<span class='info'>\tDamage specifics: <font color='blue'>0</font>-<font color='green'>0</font>-<font color='#FF8000'>0</font>-<font color='red'>0</font></span>", 1)
-		user.show_message("<span class='info'>Body temperature: ???</span>", 1)
+		user << "<span class='info'>Analyzing results for The floor:\n\tOverall status: <b>Healthy</b>"
+		user << "<span class='info'>Key: <font color='blue'>Suffocation</font>/<font color='green'>Toxin</font>/<font color='#FF8000'>Burn</font>/<font color='red'>Brute</font></span>"
+		user << "<span class='info'>\tDamage specifics: <font color='blue'>0</font>-<font color='green'>0</font>-<font color='#FF8000'>0</font>-<font color='red'>0</font></span>"
+		user << "<span class='info'>Body temperature: ???</span>"
 		return
 
 	user.visible_message("<span class='notice'>[user] has analyzed [M]'s vitals.</span>")
@@ -125,88 +125,88 @@ MASS SPECTROMETER
 	if(ishuman(M))
 		var/mob/living/carbon/human/H = M
 		if(H.heart_attack)
-			user.show_message("<span class='danger'>Subject suffering from heart attack: Apply defibrillator immediately!</span>")
-	user.show_message(text("<span class='info'>Analyzing results for []:\n\tOverall status: []</span>", M, mob_status), 1)
-	if(ishuman(M))
-		var/mob/living/carbon/human/H = M
-		if(H.dna)// Show target's species, if they have one
-			user.show_message("<span class='info'>Species: [H.dna.species.name]</span>", 1)
-		else // Otherwise we can assume that they are a regular human
-			user.show_message("<span class='info'>Species: <b>Human</b></span>", 1)
-	user.show_message("<span class='info'>\tKey: <font color='blue'>Suffocation</font>-<font color='green'>Toxin</font>-<font color='#FF8000'>Burn</font>-<font color='red'>Brute</font></span>\n\t<span class='info'>Damage specifics: <font color='blue'>[oxy_loss]</font>-<font color='green'>[tox_loss]</font>-<font color='#FF8000'>[fire_loss]</font>-<font color='red'>[brute_loss]</font></span>", 1)
+			user << "<span class='danger'>Subject suffering from heart attack: Apply defibrillator immediately!</span>"
+	user << "<span class='info'>Analyzing results for [M]:\n\tOverall status: [mob_status]</span>"
+
+	// Damage descriptions
+	if(oxy_loss > 10)
+		user << "\t<span class='info'><span class='alert'>[oxy_loss > 50 ? "Severe" : "Minor"] oxygen deprivation detected.</span>"
+	if(tox_loss > 10)
+		user << "\t<span class='alert'>[tox_loss > 50 ? "Critical" : "Dangerous"] amount of toxins detected.</span>"
+	if(fire_loss > 10)
+		user << "\t<span class='alert'>[fire_loss > 50 ? "Severe" : "Minor"] burn damage detected.</span>"
+	if(brute_loss > 10)
+		user << "\t<span class='alert'>[brute_loss > 50 ? "Severe" : "Minor"] tissue damage detected.</span>"
+	if(M.getStaminaLoss())
+		user << "\t<span class='alert'>Subject appears to be suffering from fatigue.</span>"
+	if (M.getCloneLoss())
+		user << "\t<span class='alert'>Subject appears to have [M.getCloneLoss() > 30 ? "severe" : "minor"] cellular damage.</span>"
+	if (M.reagents && M.reagents.get_reagent_amount("epinephrine"))
+		user << "\t<span class='info'>Bloodstream analysis located [M.reagents:get_reagent_amount("epinephrine")] units of rejuvenation chemicals.</span>"
+	if (M.getBrainLoss() >= 100 || !M.getorgan(/obj/item/organ/brain))
+		user << "\t<span class='alert'>Subject brain function is non-existant.</span>"
+	else if (M.getBrainLoss() >= 60)
+		user << "\t<span class='alert'>Severe brain damage detected. Subject likely to have mental retardation.</span>"
+	else if (M.getBrainLoss() >= 10)
+		user << "\t<span class='alert'>Brain damage detected. Subject may have had a concussion.</span>"
 
 	// Organ damage report
 	if(istype(M, /mob/living/carbon/human) && mode == 1)
 		var/mob/living/carbon/human/H = M
 		var/list/damaged = H.get_damaged_organs(1,1)
-		if(length(damaged)>0)
+		if(length(damaged)>0 || oxy_loss>0 || tox_loss>0 || fire_loss>0)
+			user << "<span class='info'>\tDamage: <font color='blue'>Suffocation</font>-<font color='green'>Toxin</font>-<font color='#FF8000'>Burn</font>-<font color='red'>Brute</font></span><span class='info'>\n\t\tSpecifics: <font color='blue'>[oxy_loss]</font>-<font color='green'>[tox_loss]</font>-<font color='#FF8000'>[fire_loss]</font>-<font color='red'>[brute_loss]</font></span>"
 			for(var/obj/item/organ/limb/org in damaged)
-				user.show_message(text("<span class='info'>\t\t[]: []-[]", capitalize(org.getDisplayName()), (org.burn_dam > 0) ? "<font color='#FF8000'>[org.burn_dam]</font>" : "<font color='#FF8000'>0</font>", (org.brute_dam > 0) ? "<font color='red'>[org.brute_dam]</font></span>" : "<font color='red'>0</font>"), 1)
-		else
-			return
+				user << "\t\t<span class='info'>[capitalize(org.getDisplayName())]: [(org.burn_dam > 0) ? "<font color='#FF8000'>[org.burn_dam]</font>" : "<font color='#FF8000'>0</font>"]-[(org.brute_dam > 0) ? "<font color='red'>[org.brute_dam]</font></span>" : "<font color='red'>0</font>"]"
 
-	user.show_message("<span class='info'>Body temperature: [round(M.bodytemperature-T0C,0.1)] &deg;C ([round(M.bodytemperature*1.8-459.67,0.1)] &deg;F)</span>", 1)
+	// Species and body temperature
+	if(ishuman(M))
+		var/mob/living/carbon/human/H = M
+		if(H.dna)
+			user << "<span class='info'>Species: [H.dna.species.name]</span>"
+	user << "<span class='info'>Body temperature: [round(M.bodytemperature-T0C,0.1)] &deg;C ([round(M.bodytemperature*1.8-459.67,0.1)] &deg;F)</span>"
 
 	// Time of death
 	if(M.tod && (M.stat == DEAD || (M.status_flags & FAKEDEATH)))
-		user.show_message("<span class='info'>Time of Death:</span> [M.tod]", 1)
-
-	// Damage descriptions
-
-	user.show_message(text("<span class='info'>[] | [] | [] | []</span>", oxy_loss > 50 ? "<span class='alert'>Severe oxygen deprivation detected</span>" : "<span class='info'>Bloodstream oxygen level nominal</span>", tox_loss > 50 ? "<span class='alert'>Dangerous amount of toxins detected</span>" : "<span class='info'>Bloodstream toxin level minimal</span>", fire_loss > 50 ? "<span class='alert'>Severe burn damage detected</span>" : "<span class='info'>Burn injury status nominal</span>", brute_loss > 50 ? "<span class='alert'>Severe tissue damage detected</span>" : "<span class='info'>Brute-force injury status nominal</span>"), 1)
-
-	if(M.getStaminaLoss())
-		user.show_message("<span class='alert'>Subject appears to be suffering from fatigue.</span>", 1)
-
-	if (M.getCloneLoss())
-		user.show_message("<span class='alert'>Subject appears to have [M.getCloneLoss() > 30 ? "severe" : "minor"] cellular damage.</span>", 1)
+		user << "<span class='info'>Time of Death:</span> [M.tod]"
 
 	for(var/datum/disease/D in M.viruses)
 		if(!(D.visibility_flags & HIDDEN_SCANNER))
-			user.show_message("<span class='alert'><b>Warning: [D.form] detected</b>\nName: [D.name].\nType: [D.spread_text].\nStage: [D.stage]/[D.max_stages].\nPossible Cure: [D.cure_text]</span>", 1)
-
-	if (M.reagents && M.reagents.get_reagent_amount("epinephrine"))
-		user.show_message("<span class='info'>Bloodstream analysis located [M.reagents:get_reagent_amount("epinephrine")] units of rejuvenation chemicals.</span>", 1)
-	if (M.getBrainLoss() >= 100 || !M.getorgan(/obj/item/organ/brain))
-		user.show_message("<span class='alert'>Subject brain function is non-existant.</span>", 1)
-	else if (M.getBrainLoss() >= 60)
-		user.show_message("<span class='alert'>Severe brain damage detected. Subject likely to have mental retardation.</span>", 1)
-	else if (M.getBrainLoss() >= 10)
-		user.show_message("<span class='alert'>Significant brain damage detected. Subject may have had a concussion.</span>", 1)
+			user << "<span class='alert'><b>Warning: [D.form] detected</b>\nName: [D.name].\nType: [D.spread_text].\nStage: [D.stage]/[D.max_stages].\nPossible Cure: [D.cure_text]</span>"
 
 	// Blood Level
 	if(ishuman(M))
 		var/mob/living/carbon/human/H = M
 		if(H.vessel)
 			if(H.blood_max)
-				user.show_message("<span class='danger'>Subject is bleeding!</span>")
+				user << "<span class='danger'>Subject is bleeding!</span>"
 			var/blood_volume = round(H.vessel.get_reagent_amount("blood"))
 			var/blood_percent =  round((blood_volume / 560),0.01)
 			var/blood_type = H.dna.blood_type
 			blood_percent *= 100
 			if(blood_volume <= 500 && blood_volume > 336)
-				user.show_message("<span class='danger'>LOW blood level [blood_percent] %, [blood_volume] cl,</span> <span class='info'>type: [blood_type]</span>")
+				user << "<span class='danger'>LOW blood level [blood_percent] %, [blood_volume] cl,</span> <span class='info'>type: [blood_type]</span>"
 			else if(blood_volume <= 336)
-				user.show_message("<span class='danger'>CRITICAL blood level CRITICAL [blood_percent] %, [blood_volume] cl,</span> <span class='info'>type: [blood_type]</span>")
+				user << "<span class='danger'>CRITICAL blood level CRITICAL [blood_percent] %, [blood_volume] cl,</span> <span class='info'>type: [blood_type]</span>"
 			else
-				user.show_message("<span class='info'>Blood level [blood_percent] %, [blood_volume] cl, type: [blood_type]</span>")
+				user << "<span class='info'>Blood level [blood_percent] %, [blood_volume] cl, type: [blood_type]</span>"
 
 /proc/chemscan(var/mob/living/user, var/mob/living/M)
 	if(ishuman(M))
 		var/mob/living/carbon/human/H = M
 		if(H.reagents)
 			if(H.reagents.reagent_list.len)
-				user.show_message("<span class='notice'>Subject contains the following reagents:</span>")
+				user << "<span class='notice'>Subject contains the following reagents:</span>"
 				for(var/datum/reagent/R in H.reagents.reagent_list)
-					user.show_message("<span class='notice'>[R.volume] units of [R.name][R.overdosed == 1 ? "</span> - <span class = 'boldannounce'>OVERDOSING</span>" : ".</span>"]")
+					user << "<span class='notice'>[R.volume] units of [R.name][R.overdosed == 1 ? "</span> - <span class = 'boldannounce'>OVERDOSING</span>" : ".</span>"]"
 			else
-				user.show_message("<span class = 'notice'>Subject contains no reagents.</span>")
+				user << "<span class = 'notice'>Subject contains no reagents.</span>"
 			if(H.reagents.addiction_list.len)
-				user.show_message("<span class='boldannounce'>Subject is addicted to the following reagents:</span>")
+				user << "<span class='boldannounce'>Subject is addicted to the following reagents:</span>"
 				for(var/datum/reagent/R in H.reagents.addiction_list)
-					user.show_message("<span class='danger'>[R.name]</span>")
+					user << "<span class='danger'>[R.name]</span>"
 			else
-				user.show_message("<span class='notice'>Subject is not addicted to any reagents.</span>")
+				user << "<span class='notice'>Subject is not addicted to any reagents.</span>"
 
 /obj/item/device/healthanalyzer/verb/toggle_mode()
 	set name = "Switch Verbosity"
