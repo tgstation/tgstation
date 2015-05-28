@@ -216,10 +216,21 @@
 		keyslot2 = new /obj/item/device/encryptionkey/headset_servsci
 		..()
 
+/obj/item/device/radio/headset/deathsquad
+	name = "Deathsquad headset"
+	desc = "A headset used by the dark side of Nanotrasen's Spec Ops. Channels are as follows: :0 - Deathsquad :c - command, :s - security, :e - engineering, :d - mining, :q - cargo, :m - medical, :n - science."
+	icon_state = "deathsquad_headset"
+	item_state = "headset"
+	freerange = 1
+
+	New()
+		keyslot2 = new /obj/item/device/encryptionkey/deathsquad
+		..()
+
 /obj/item/device/radio/headset/ert
 	name = "CentCom Response Team headset"
-	desc = "The headset of the boss's boss. Channels are as follows: :h - Response Team :c - command, :s - security, :e - engineering, :d - mining, :q - cargo, :m - medical, :n - science."
-	icon_state = "com_headset"
+	desc = "The headset of the boss's boss. Channels are as follows: :r - Response Team :c - command, :s - security, :e - engineering, :d - mining, :q - cargo, :m - medical, :n - science."
+	icon_state = "ert_headset"
 	item_state = "headset"
 	freerange = 1
 

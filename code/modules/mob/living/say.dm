@@ -42,6 +42,8 @@
 		else
 			return "Unknown"
 var/list/department_radio_keys = list(
+	  ":0" = "Deathsquad",	"#0" = "Deathsquad",	".0" = "Deathsquad",
+
 	  ":r" = "right ear",	"#r" = "right ear",		".r" = "right ear", "!r" = "fake right ear",
 	  ":l" = "left ear",	"#l" = "left ear",		".l" = "left ear",  "!l" = "fake left ear",
 	  ":i" = "intercom",	"#i" = "intercom",		".i" = "intercom",
@@ -55,6 +57,7 @@ var/list/department_radio_keys = list(
 	  ":b" = "binary",		"#b" = "binary",		".b" = "binary",
 	  ":a" = "alientalk",	"#a" = "alientalk",		".a" = "alientalk",
 	  ":t" = "Syndicate",	"#t" = "Syndicate",		".t" = "Syndicate",
+	  ":r" = "Response Team","#r" = "Response Team",".r" = "Response Team",
 	  ":u" = "Supply",		"#u" = "Supply",		".u" = "Supply",
 	  ":d" = "Service",     "#d" = "Service",       ".d" = "Service",
 	  ":g" = "changeling",	"#g" = "changeling",	".g" = "changeling",
@@ -74,6 +77,7 @@ var/list/department_radio_keys = list(
 	  ":B" = "binary",		"#B" = "binary",		".B" = "binary",
 	  ":A" = "alientalk",	"#A" = "alientalk",		".A" = "alientalk",
 	  ":T" = "Syndicate",	"#T" = "Syndicate",		".T" = "Syndicate",
+	  ":R" = "Response Team","#R" = "Response Team",".R" = "Response Team",
 	  ":U" = "Supply",		"#U" = "Supply",		".U" = "Supply",
 	  ":D" = "Service",     "#D" = "Service",       ".D" = "Service",
 	  ":G" = "changeling",	"#G" = "changeling",	".G" = "changeling",

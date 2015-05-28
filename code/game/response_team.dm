@@ -311,7 +311,7 @@ proc/trigger_armed_response_team(var/force = 0)
 	W.name = "[real_name]'s ID Card ([W.assignment])"
 	if(!leader_selected)
 		W.access = get_centcom_access("Emergency Responder")
-		W.icon_state = "ERT_security"	//placeholder until revamp
+		W.icon_state = "ERT_empty"	//placeholder until revamp
 	else
 		W.access = get_centcom_access("Emergency Responders Leader")
 		W.icon_state = "ERT_leader"

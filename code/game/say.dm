@@ -13,7 +13,8 @@ var/list/freqtospan = list(
 	"1353" = "comradio",
 	"1447" = "aiprivradio",
 	"1213" = "syndradio",
-	"1441" = "dsquadradio"
+	"1441" = "dsquadradio",
+	"1345" = "resteamradio",
 	)
 
 var/list/freqtoname = list(
@@ -26,7 +27,8 @@ var/list/freqtoname = list(
 	"1213" = "Syndicate",
 	"1347" = "Supply",
 	"1349" = "Service",
-	"1447" = "AI Private"
+	"1447" = "AI Private",
+	"1345" = "Response Team",
 )
 
 /atom/movable/proc/say(message, var/datum/language/speaking) //so we can force nonmobs to speak a certain language
