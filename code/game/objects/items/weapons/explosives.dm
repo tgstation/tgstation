@@ -23,7 +23,7 @@
 
 /obj/item/weapon/c4/suicide_act(var/mob/user)
 	user.visible_message("<span class='suicide'>[user] activates the [src.name] and holds it above his head! It looks like \he's going out with a bang!</span>")
-	var/message_say = "FOR NO RAISIN!"
+	var/message_say = "FOR NO RIESEN!"
 	if(user.mind)
 		if(user.mind.special_role)
 			var/role = lowertext(user.mind.special_role)
@@ -61,9 +61,12 @@
 /obj/item/weapon/c4/afterattack(atom/movable/target, mob/user, flag)
 	if (!flag)
 		return
-	if (ismob(target) || istype(target, /turf/unsimulated) || istype(target, /turf/simulated/shuttle) || istype(target, /obj/item/weapon/storage/))
+	if (istype(target, /turf/unsimulated) || istype(target, /turf/simulated/shuttle) || istype(target, /obj/item/weapon/storage/))
 		return
 	user << "Planting explosives..."
+	if(ismob(target))
+		add_logs(user, target, "tried to plant explosives on", object="[name]")
+		user.visible_message("\red [user.name] is trying to plant some kind of explosive on [target.name]!")
 
 	if(do_after(user, 50) && in_range(user, target))
 		user.drop_item()
@@ -90,7 +93,7 @@
 
 /obj/item/weapon/c4/proc/explode(var/turf/location)
 	location.ex_act(2, target)
-	explosion(location,0,0,3)
+	explosion(location,1,2,3)
 	if(target)
 		target.overlays -= image_overlay
 	qdel(src)

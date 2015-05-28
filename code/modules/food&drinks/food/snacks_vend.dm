@@ -31,7 +31,7 @@
 	filling_color = "#FFD700"
 
 /obj/item/weapon/reagent_containers/food/snacks/no_raisin
-	name = "4no raisins"
+	name = "4no riesens"
 	icon_state = "4no_raisins"
 	desc = "Best raisins in the universe. Not sure why."
 	trash = /obj/item/trash/raisins

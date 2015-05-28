@@ -37,6 +37,7 @@
 #define FILE_DIR "nano/images"
 #define FILE_DIR "sound"
 #define FILE_DIR "sound/AI"
+#define FILE_DIR "sound/AI_vox"
 #define FILE_DIR "sound/ambience"
 #define FILE_DIR "sound/effects"
 #define FILE_DIR "sound/hallucinations"
@@ -49,7 +50,6 @@
 #define FILE_DIR "sound/violin"
 #define FILE_DIR "sound/voice"
 #define FILE_DIR "sound/voice/complionator"
-#define FILE_DIR "sound/vox_fem"
 #define FILE_DIR "sound/weapons"
 // END_FILE_DIR
 

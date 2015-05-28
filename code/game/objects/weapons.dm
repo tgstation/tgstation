@@ -1,10 +1,11 @@
 /obj/item/weapon/
 	name = "weapon"
 	icon = 'icons/obj/weapons.dmi'
+	var/no_hitsound = 0 //Make this 1 if you want no hitsounds
 
 /obj/item/weapon/New()
 	..()
-	if(!hitsound)
+	if(!hitsound && !no_hitsound)
 		if(damtype == "fire")
 			hitsound = 'sound/items/welder.ogg'
 		if(damtype == "brute")

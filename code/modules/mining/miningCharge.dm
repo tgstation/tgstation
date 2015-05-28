@@ -18,7 +18,7 @@
 /obj/item/device/miningCharge/emag_act(mob/user)
 	if(!safety)
 		return
-	user << "<span class='warning'>You press the emag onto [src], disabling its safeties.</span>"
+	user << "<span class='warning'>You press the cryptographic sequencer onto [src], disabling its safeties.</span>"
 	safety = 0
 
 /obj/item/device/miningCharge/New()
