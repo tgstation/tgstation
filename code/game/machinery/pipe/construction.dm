@@ -13,13 +13,13 @@ Buildable meters
 #define PIPE_MVALVE				8
 #define PIPE_PUMP				9
 #define PIPE_SCRUBBER			10
-#define PIPE_GAS_FILTER			13
-#define PIPE_GAS_MIXER			14
-#define PIPE_PASSIVE_GATE       15
-#define PIPE_VOLUME_PUMP        16
-#define PIPE_HEAT_EXCHANGE      17
-#define PIPE_DVALVE             18
-#define PIPE_4WAYMANIFOLD       19
+#define PIPE_GAS_FILTER			11
+#define PIPE_GAS_MIXER			12
+#define PIPE_PASSIVE_GATE       13
+#define PIPE_VOLUME_PUMP        14
+#define PIPE_HEAT_EXCHANGE      15
+#define PIPE_DVALVE             16
+#define PIPE_4WAYMANIFOLD       17
 //Disposal piping numbers - do NOT hardcode these, use the defines
 #define DISP_PIPE_STRAIGHT		0
 #define DISP_PIPE_BENT			1
