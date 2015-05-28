@@ -43,19 +43,21 @@ var/global/datum/controller/gameticker/ticker
 #define LOBBY_TICKING 1
 #define LOBBY_TICKING_RESTARTED 2
 /datum/controller/gameticker/proc/pregame()
-	login_music = pick(\
-	'sound/music/space.ogg',\
-	'sound/music/traitor.ogg',\
-	'sound/music/space_oddity.ogg',\
-	'sound/music/title1.ogg',\
-	'sound/music/title2.ogg',\
-	'sound/music/clown.ogg',\
-	'sound/music/robocop.ogg',\
-	'sound/music/gaytony.ogg',\
-	'sound/music/rocketman.ogg',\
-	'sound/music/2525.ogg',\
-	'sound/music/moonbaseoddity.ogg',\
-	'sound/music/whatisthissong.ogg')
+	var/oursong = file(pick(\
+	"sound/music/space.ogg",\
+	"sound/music/traitor.ogg",\
+	"sound/music/space_oddity.ogg",\
+	"sound/music/title1.ogg",\
+	"sound/music/title2.ogg",\
+	"sound/music/clown.ogg",\
+	"sound/music/robocop.ogg",\
+	"sound/music/gaytony.ogg",\
+	"sound/music/rocketman.ogg",\
+	"sound/music/2525.ogg",\
+	"sound/music/moonbaseoddity.ogg",\
+	"sound/music/whatisthissong.ogg"))
+	login_music = fcopy_rsc(oursong)
+
 	do
 		var/delay_timetotal = 3000 //actually 5 minutes or incase this is changed from 3000, (time_in_seconds * 10)
 		pregame_timeleft = world.timeofday + delay_timetotal
