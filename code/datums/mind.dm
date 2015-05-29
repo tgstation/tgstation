@@ -137,6 +137,8 @@ datum/mind
 			"traitor", // "traitorchan",
 			"monkey",
 			"malfunction",
+			"resteam",
+			"dsquad",
 		)
 		var/text = ""
 
@@ -385,14 +387,38 @@ datum/mind
 			text += "." //hiel grammar
 			out += text
 
-		// NOT-QUITE-AUTOFIXED BY fix_string_idiocy.py
-		// C:\Users\Rob\Documents\Projects\vgstation13\code\datums\mind.dm:325: out += "<br>"
+		/** ERT ***/
+		if (istype(current, /mob/living/carbon))
+			text = "Emergency Response Team"
+			text = "<i><b>[text]</b></i>: "
+			if (src in ticker.mode.ert)
+				text += "<b>YES</b>|<a href='?src=\ref[src];resteam=clear'>no</a>"
+			else
+				text += "<a href='?src=\ref[src];resteam=resteam'>yes</a>|<b>NO</b>"
+			sections["resteam"] = text
+
+		/** DEATHSQUAD ***/
+		if (istype(current, /mob/living/carbon))
+			text = "Death Squad"
+			text = "<i><b>[text]</b></i>: "
+			if (src in ticker.mode.deathsquad)
+				text += "<b>YES</b>|<a href='?src=\ref[src];dsquad=clear'>no</a>"
+			else
+				text += "<a href='?src=\ref[src];dsquad=dsquad'>yes</a>|<b>NO</b>"
+			sections["dsquad"] = text
+
+		out += {"<br>
+			<b>Strike Teams:</b><br>
+			[sections["resteam"]]<br>
+			[sections["dsquad"]]<br>
+			<br>"}
+
 		out += {"<br>
 			<b>Memory:</b>
 			<br>[memory]
 			<br><a href='?src=\ref[src];memory_edit=1'>Edit memory</a>
 			<br>Objectives:<br>"}
-		// END AUTOFIX
+
 		if (objectives.len == 0)
 			out += "EMPTY<br>"
 		else
@@ -1028,6 +1054,37 @@ datum/mind
 			for(var/datum/objective/objective in objectives)
 				current << "<B>Objective #[obj_count]</B>: [objective.explanation_text]"
 				obj_count++
+
+		else if (href_list["resteam"])
+			switch(href_list["resteam"])
+				if ("clear")
+					if(src in ticker.mode.ert)
+						ticker.mode.ert -= src
+						special_role = null
+						current << "<span class='danger'><FONT size = 3>You have been demoted! You are no longer an Emergency Responder!</FONT></span>"
+						log_admin("[key_name_admin(usr)] has de-ERT'ed [current].")
+				if ("resteam")
+					if (!(src in ticker.mode.ert))
+						ticker.mode.ert += src
+						assigned_role = "MODE"
+						special_role = "Response Team"
+						log_admin("[key_name(usr)] has ERT'ed [key_name(current)].")
+
+		else if (href_list["dsquad"])
+			switch(href_list["dsquad"])
+				if ("clear")
+					if(src in ticker.mode.deathsquad)
+						ticker.mode.deathsquad -= src
+						special_role = null
+						current << "<span class='danger'><FONT size = 3>You have been demoted! You are no longer a Death Commando!</FONT></span>"
+						log_admin("[key_name_admin(usr)] has de-deathsquad'ed [current].")
+				if ("dsquad")
+					if (!(src in ticker.mode.deathsquad))
+						ticker.mode.deathsquad += src
+						assigned_role = "MODE"
+						special_role = "Death Commando"
+						log_admin("[key_name(usr)] has deathsquad'ed [key_name(current)].")
+
 
 		edit_memory()
 /*

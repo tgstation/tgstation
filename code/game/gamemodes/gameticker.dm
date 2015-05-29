@@ -501,6 +501,70 @@ var/global/datum/controller/gameticker/ticker
 
 	return 1
 
+/datum/controller/gameticker/proc/ert_declare_completion()
+	var/text = ""
+	if( ticker.mode.ert.len )
+		var/icon/logo = icon('icons/mob/mob.dmi', "ert-logo")
+		end_icons += logo
+		var/tempstate = end_icons.len
+		text += {"<br><img src="logo_[tempstate].png"> <FONT size = 2><B>The emergency responders were:</B></FONT> <img src="logo_[tempstate].png">"}
+		for(var/datum/mind/ert in ticker.mode.ert)
+			if(ert.current)
+				var/icon/flat = getFlatIcon(ert.current, SOUTH, 1, 1)
+				end_icons += flat
+				tempstate = end_icons.len
+				text += {"<br><img src="logo_[tempstate].png"> <b>[ert.key]</b> was <b>[ert.name]</b> ("}
+				if(ert.current.stat == DEAD)
+					text += "died"
+					flat.Turn(90)
+					end_icons[tempstate] = flat
+				else
+					text += "survived"
+				if(ert.current.real_name != ert.name)
+					text += " as [ert.current.real_name]"
+			else
+				var/icon/sprotch = icon('icons/effects/blood.dmi', "floor1-old")
+				end_icons += sprotch
+				tempstate = end_icons.len
+				text += {"<br><img src="logo_[tempstate].png"> [ert.key] was [ert.name] ("}
+				text += "body destroyed"
+			text += ")"
+		text += "<BR><HR>"
+
+	return text
+
+/datum/controller/gameticker/proc/deathsquad_declare_completion()
+	var/text = ""
+	if( ticker.mode.deathsquad.len )
+		var/icon/logo = icon('icons/mob/mob.dmi', "death-logo")
+		end_icons += logo
+		var/tempstate = end_icons.len
+		text += {"<br><img src="logo_[tempstate].png"> <FONT size = 2><B>The death commando were:</B></FONT> <img src="logo_[tempstate].png">"}
+		for(var/datum/mind/deathsquad in ticker.mode.deathsquad)
+			if(deathsquad.current)
+				var/icon/flat = getFlatIcon(deathsquad.current, SOUTH, 1, 1)
+				end_icons += flat
+				tempstate = end_icons.len
+				text += {"<br><img src="logo_[tempstate].png"> <b>[deathsquad.key]</b> was <b>[deathsquad.name]</b> ("}
+				if(deathsquad.current.stat == DEAD)
+					text += "died"
+					flat.Turn(90)
+					end_icons[tempstate] = flat
+				else
+					text += "survived"
+				if(deathsquad.current.real_name != deathsquad.name)
+					text += " as [deathsquad.current.real_name]"
+			else
+				var/icon/sprotch = icon('icons/effects/blood.dmi', "floor1-old")
+				end_icons += sprotch
+				tempstate = end_icons.len
+				text += {"<br><img src="logo_[tempstate].png"> [deathsquad.key] was [deathsquad.name] ("}
+				text += "body destroyed"
+			text += ")"
+		text += "<BR><HR>"
+
+	return text
+
 /datum/controller/gameticker/proc/bomberman_declare_completion()
 	var/icon/bomberhead = icon('icons/obj/clothing/hats.dmi', "bomberman")
 	end_icons += bomberhead
