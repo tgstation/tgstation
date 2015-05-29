@@ -176,3 +176,55 @@ obj/effect/proc_holder/changeling/sting/cryo
 		target.reagents.add_reagent("frostoil", 30)
 	feedback_add_details("changeling_powers","CS")
 	return 1
+
+/*
+honk // this code has only been partially updated, and probably doesn't work (also has no icons)
+obj/effect/proc_holder/changeling/sting/deaf
+	name = "Deaf sting"
+	sting_icon = "sting_deaf"
+	chemical_cost = 5
+	dna_cost = 1
+	desc = "We silently sting a human with a cocktail of chemicals that rapidly expands their ear drums, deafening them temporarily."
+
+/obj/effect/proc_holder/changeling/sting/deaf/sting_action(var/mob/user, var/mob/target)
+	var/mob/living/carbon/T = changeling_sting(5,/mob/living/carbon/proc/changeling_deaf_sting)
+	if(!T)	return 0
+	T << "<span class='danger'>Your ears pop and begin ringing loudly!</span>"
+	T.sdisabilities |= DEAF
+	spawn(300)	T.sdisabilities &= ~DEAF
+	feedback_add_details("changeling_powers","DS")
+	return 1
+
+obj/effect/proc_holder/changeling/sting/para
+	name = "Paralysis sting"
+	sting_icon = "sting_para"
+	chemical_cost = 30
+	dna_cost = 2
+	desc = "We sting a human with a cocktail of chemicals that forces their muscles to quickly contract, resulting in temporary paralysis."
+
+/obj/effect/proc_holder/changeling/sting/para/sting_action(var/mob/user, var/mob/target)
+	var/mob/living/carbon/T = changeling_sting(30,/mob/living/carbon/proc/changeling_paralysis_sting)
+	if(!T)	return 0
+	T << "<span class='danger'>Your muscles begin to painfully tighten.</span>"
+	T.Weaken(20)
+	feedback_add_details("changeling_powers","PS")
+	return 1
+
+obj/effect/proc_holder/changeling/sting/death
+	name = "Death Sting"
+	sting_icon = "sting_death"
+	chemical_cost = 40
+	dna_cost = 3
+	desc = "Causes spasms onto death."
+
+/obj/effect/proc_holder/changeling/sting/death/sting_action(var/mob/user, var/mob/target)
+	var/mob/living/carbon/T = changeling_sting(40,/mob/living/carbon/proc/changeling_DEATHsting)
+	if(!T)	return 0
+	T << "<span class='danger'>You feel a small prick and your chest becomes tight.</span>"
+	T.silent = 10
+	T.Paralyse(10)
+	T.make_jittery(1000)
+	if(T.reagents)	T.reagents.add_reagent("lexorin", 40)
+	feedback_add_details("changeling_powers","DTHS")
+	return 1
+*/

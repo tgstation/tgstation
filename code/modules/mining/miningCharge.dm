@@ -4,7 +4,7 @@
 	desc = "A pyrotechnical device used to cause controlled explosions for digging tunnels without manual labor. It can only be attached to rocks and mineral deposits."
 	w_class = 2
 	icon = 'icons/obj/mining.dmi'
-	icon_state = "miningCharge" //there is no difference between small and regular sized mining charges
+	icon_state = "miningCharge"
 	item_state = "electronic"
 	throw_speed = 3
 	throw_range = 5
@@ -96,6 +96,7 @@
 /obj/item/device/miningCharge/small
 	name = "compact mining charge"
 	desc = "A smaller mining charge that weighs less at the cost of a less powerful explosion."
+	icon_state = "miningCharges"
 	w_class = 1
 	explosionPower = 1
 
