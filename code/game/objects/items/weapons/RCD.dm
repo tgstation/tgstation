@@ -221,13 +221,17 @@ RCD
 				return 0
 
 			if(istype(A, /turf/simulated/floor))
-				if(checkResource(5, user))
+				var/turf/simulated/floor/F = A
+				if(istype(F, F.baseturf))
+					user << "<span class='notice'>You can't dig any deeper!</span>"
+					return 0
+				else if(checkResource(5, user))
 					user << "<span class='notice'>You start deconstructing floor...</span>"
 					playsound(src.loc, 'sound/machines/click.ogg', 50, 1)
 					if(do_after(user, 50))
 						if(!useResource(5, user)) return 0
 						activate()
-						A:ChangeTurf(/turf/space)
+						F:ChangeTurf(F.baseturf)
 						return 1
 				return 0
 

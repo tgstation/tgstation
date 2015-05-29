@@ -3,12 +3,14 @@
 	level = 1.0
 
 	var/intact = 1
+	var/baseturf =/turf/space
 
 	//Properties for open tiles (/floor)
 	var/oxygen = 0
 	var/carbon_dioxide = 0
 	var/nitrogen = 0
 	var/toxins = 0
+
 
 	//Properties for airtight tiles (/wall)
 	var/thermal_conductivity = 0.05
@@ -132,11 +134,9 @@
 	SSair.remove_from_active(src)
 
 	var/turf/W = new path(src)
-
 	if(istype(W, /turf/simulated))
 		W:Assimilate_Air()
 		W.RemoveLattice()
-
 	W.levelupdate()
 	W.CalculateAdjacentTurfs()
 	return W
@@ -173,11 +173,11 @@
 		SSair.add_to_active(src)
 
 /turf/proc/ReplaceWithLattice()
-	src.ChangeTurf(/turf/space)
+	src.ChangeTurf(src.baseturf)
 	new /obj/structure/lattice(locate(src.x, src.y, src.z) )
 
 /turf/proc/ReplaceWithCatwalk()
-	src.ChangeTurf(/turf/space)
+	src.ChangeTurf(src.baseturf)
 	new /obj/structure/lattice/catwalk(locate(src.x, src.y, src.z) )
 
 /turf/proc/phase_damage_creatures(damage,mob/U = null)//>Ninja Code. Hurts and knocks out creatures on this turf //NINJACODE
@@ -248,7 +248,7 @@
 				continue
 			if(O.invisibility == 101)
 				O.singularity_act()
-	ChangeTurf(/turf/space)
+	ChangeTurf(src.baseturf)
 	return(2)
 
 /turf/proc/can_have_cabling()

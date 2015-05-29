@@ -10,6 +10,7 @@ var/global/list/rockTurfEdgeCache
 	name = "rock"
 	icon = 'icons/turf/mining.dmi'
 	icon_state = "rock_nochance"
+	baseturf = /turf/simulated/floor/plating/asteroid
 	oxygen = 0
 	nitrogen = 0
 	opacity = 1
@@ -498,6 +499,7 @@ var/global/list/rockTurfEdgeCache
 
 /turf/simulated/floor/plating/asteroid //floor piece
 	name = "Asteroid"
+	baseturf = /turf/simulated/floor/plating/asteroid
 	icon = 'icons/turf/floors.dmi'
 	icon_state = "asteroid"
 	icon_plating = "asteroid"
@@ -584,6 +586,17 @@ var/global/list/rockTurfEdgeCache
 			for(var/obj/item/weapon/ore/O in src.contents)
 				O.attackby(W,user)
 				return
+
+	if(istype(W, /obj/item/stack/tile))
+		var/obj/item/stack/tile/Z = W
+		if(!Z.use(1))
+			return
+		var/turf/simulated/floor/T = ChangeTurf(Z.turf_type)
+		if(istype(Z,/obj/item/stack/tile/light)) //TODO: get rid of this ugly check somehow
+			var/obj/item/stack/tile/light/L = Z
+			var/turf/simulated/floor/light/F = T
+			F.state = L.state
+		playsound(src, 'sound/weapons/Genhit.ogg', 50, 1)
 
 /turf/simulated/floor/plating/asteroid/proc/gets_dug()
 	if(dug)
