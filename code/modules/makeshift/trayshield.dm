@@ -23,7 +23,13 @@
 	else
 		return 1
 
-/obj/item/weapon/storage/bag/tray/attackby(obj/item/W, mob/user, params)
-	if(istype(W, /obj/item/stack/ducttape))
-		return
+/obj/item/weapon/storage/bag/tray/attackby(obj/item/W as obj, mob/user as mob, params)
 	..()
+	if(istype(W, /obj/item/stack/cable_coil))
+		var/obj/item/stack/cable_coil/M = W
+		if(M.use(15))
+			var/obj/item/weapon/shield/riot/trayshield/new_item = new(user.loc)
+			user << "<span class='notice'>You use [W] to turn [src] into [new_item].</span>"
+			qdel(src)
+			user.put_in_hands(new_item)
+		return
