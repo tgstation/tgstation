@@ -23,7 +23,8 @@
  * Might work for borg stack modules, though. Worth looking into.
  */
 /atom
-	var/list/construction_delay_mult = list(Co_CON_SPEED = 1, Co_DECON_SPEED = 1)
+	var/list/construction_delay_mult = null
+	//Formatted as list(Co_CON_SPEED = value, Co_DECON_SPEED = value)
 
 /*
  * Wrench
