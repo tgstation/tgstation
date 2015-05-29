@@ -200,7 +200,7 @@
 	A.ShiftClick(src)
 	return
 /atom/proc/ShiftClick(var/mob/user)
-	if(user.client && user.client.eye == user)
+	if(user.client && user.client.eye == user || user.client.eye == user.loc)
 		user.examinate(src)
 	return
 

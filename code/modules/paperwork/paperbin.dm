@@ -41,6 +41,7 @@
 /obj/item/weapon/paper_bin/attack_hand(mob/user)
 	if(user.lying)
 		return
+	user.changeNext_move(CLICK_CD_MELEE)
 	if(amount >= 1)
 		amount--
 		update_icon()
