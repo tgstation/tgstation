@@ -1,13 +1,15 @@
 /var/const/OPEN = 1
 /var/const/CLOSED = 2
 
+var/global/list/alert_overlays_global = list()
+
 /proc/convert_k2c(var/temp)
 	return ((temp - T0C)) // * 1.8) + 32
 
 /proc/convert_c2k(var/temp)
 	return ((temp + T0C)) // * 1.8) + 32
 
-/proc/getCardinalAirInfo(var/turf/loc, var/list/stats=list("temperature"))
+/proc/getCardinalAirInfo(var/atom/source, var/turf/loc, var/list/stats=list("temperature"))
 	var/list/temps = new/list(4)
 	for(var/dir in cardinal)
 		var/direction
@@ -21,6 +23,8 @@
 			if(WEST)
 				direction = 4
 		var/turf/simulated/T=get_turf(get_step(loc,dir))
+		if(dir == turn(source.dir, 180) && source.flags & ON_BORDER)
+			T = get_turf(source)
 		var/list/rstats = new /list(stats.len)
 		if(T && istype(T) && T.zone)
 			var/datum/gas_mixture/environment = T.return_air()
@@ -58,6 +62,8 @@
 	layer = DOOR_LAYER - 0.2
 	base_layer = DOOR_LAYER - 0.2
 
+	var/list/alert_overlays_local
+
 	var/blocked = 0
 	var/lockdown = 0 // When the door has detected a problem, it locks.
 	var/pdiff_alert = 0
@@ -77,10 +83,30 @@
 
 /obj/machinery/door/firedoor/New()
 	. = ..()
+
+	if(!("[src.type]" in alert_overlays_global))
+		alert_overlays_global += list("[src.type]" = list("alert_hot" = list(),
+														"alert_cold" = list())
+									)
+
+		var/list/type_states = alert_overlays_global["[src.type]"]
+
+		for(var/alert_state in type_states)
+			var/list/starting = list()
+			for(var/cdir in cardinal)
+				starting["[cdir]"] = icon(src.icon, alert_state, dir = cdir)
+			type_states[alert_state] = starting
+		alert_overlays_global["[src.type]"] = type_states
+		alert_overlays_local = type_states
+	else
+		alert_overlays_local = alert_overlays_global["[src.type]"]
+
 	for(var/obj/machinery/door/firedoor/F in loc)
 		if(F != src)
+			if(F.flags & ON_BORDER && src.flags & ON_BORDER && F.dir != src.dir) //two border doors on the same tile don't collide
+				continue
 			spawn(1)
-				del src
+				qdel(src)
 			return .
 	var/area/A = get_area(src)
 	ASSERT(istype(A))
@@ -327,7 +353,7 @@
 
 
 /obj/machinery/door/firedoor/update_icon()
-	overlays = 0
+	overlays.len = 0
 	if(density)
 		icon_state = "door_closed"
 		if(blocked)
@@ -340,7 +366,11 @@
 				// Loop while i = [1, 3], incrementing each loop
 				for(var/i=1;i<=ALERT_STATES.len;i++) //
 					if(dir_alerts[d] & (1<<(i-1))) // Check to see if dir_alerts[d] has the i-1th bit set.
-						overlays += new /icon(icon,"alert_[ALERT_STATES[i]]",dir=cdir)
+						var/list/state_list = alert_overlays_local["alert_[ALERT_STATES[i]]"]
+						if(flags & ON_BORDER)
+							overlays += turn(state_list["[turn(cdir, dir2angle(src.dir))]"], dir2angle(src.dir))
+						else
+							overlays += state_list["[cdir]"]
 	else
 		icon_state = "door_open"
 		if(blocked)
@@ -366,7 +396,7 @@
 				pdiff_alert = 0
 				changed = 1 // update_icon()
 
-		tile_info = getCardinalAirInfo(src.loc,list("temperature","pressure"))
+		tile_info = getCardinalAirInfo(src,src.loc,list("temperature","pressure"))
 		var/old_alerts = dir_alerts
 		for(var/index = 1; index <= 4; index++)
 			var/list/tileinfo=tile_info[index]
@@ -405,22 +435,24 @@
 
 /obj/machinery/door/firedoor/border_only
 //These are playing merry hell on ZAS.  Sorry fellas :(
+//Or they were, until you disable their inherent air-blocking
 
-	//icon = 'icons/obj/doors/edge_Doorfire.dmi'
+	icon = 'icons/obj/doors/edge_DoorHazard.dmi'
 	glass = 1 //There is a glass window so you can see through the door
 			  //This is needed due to BYOND limitations in controlling visibility
 	heat_proof = 1
 	air_properties_vary_with_direction = 1
+	flags = ON_BORDER
 
 /obj/machinery/door/firedoor/border_only/CanPass(atom/movable/mover, turf/target, height=1.5, air_group = 0)
 	if(istype(mover) && mover.checkpass(PASSGLASS))
 		return 1
-/*
+
 	if(get_dir(loc, target) == dir) //Make sure looking at appropriate border
-		if(air_group) return 0
-		return !density*/
-	else
+		//if(air_group) return 0
 		return !density
+	else
+		return 1
 
 //used in the AStar algorithm to determinate if the turf the door is on is passable
 /obj/machinery/door/firedoor/CanAStarPass()
