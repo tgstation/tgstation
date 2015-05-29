@@ -84,6 +84,16 @@
 					qdel(J)
 					break
 				qdel(J)
+			for(var/T in typesof(/obj/item/clothing/under/rank))
+				var/obj/item/clothing/under/rank/J = new T
+				//world << "DEBUG: [wash_color] == [J.item_color]"
+				if(wash_color == J.item_color)
+					new_jumpsuit_icon_state = J.icon_state
+					new_jumpsuit_item_state = J.item_state
+					new_jumpsuit_name = J.name
+					qdel(J)
+					break
+				qdel(J)
 			for(var/T in typesof(/obj/item/clothing/gloves/color))
 				var/obj/item/clothing/gloves/color/G = new T
 				if(wash_color == G.item_color)
@@ -281,7 +291,7 @@
 			crayon = null
 			state = 1
 		if(5)
-			user << "<span class='danger'>The [src] is busy.</span>"
+			user << "<span class='danger'>[src] is busy.</span>"
 		if(6)
 			state = 7
 		if(7)
