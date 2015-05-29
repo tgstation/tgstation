@@ -1032,6 +1032,7 @@
 #include "code\modules\mining\bugBait.dm"
 #include "code\modules\mining\captureSphere.dm"
 #include "code\modules\mining\equipment_locker.dm"
+#include "code\modules\mining\hivelordFridge.dm"
 #include "code\modules\mining\machine_input_output_plates.dm"
 #include "code\modules\mining\machine_processing.dm"
 #include "code\modules\mining\machine_stacking.dm"
