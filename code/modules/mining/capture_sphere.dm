@@ -1,10 +1,10 @@
 //CAPTURE SPHERE: Captures a monster for later use. Gotta catch 'em all.
-/obj/item/device/captureSphere
+/obj/item/device/capture_sphere
 	name = "capture sphere"
 	desc = "An odd device that can be used to entrap a creature for later release."
 	w_class = 2
 	icon = 'icons/obj/mining.dmi'
-	icon_state = "captureSphere"
+	icon_state = "capture_sphere"
 	item_state = "electronic"
 	throw_speed = 3
 	throw_range = 7
@@ -13,7 +13,7 @@
 	var/capturing = 0
 	var/newlyCaught = 0
 
-/obj/item/device/captureSphere/attack_hand(mob/user)
+/obj/item/device/capture_sphere/attack_hand(mob/user)
 	if(capturing)
 		return 0
 	if(newlyCaught)
@@ -22,7 +22,7 @@
 		name = "[initial(name)] ([capturedMob.name])"
 	..()
 
-/obj/item/device/captureSphere/attack_self(mob/user)
+/obj/item/device/capture_sphere/attack_self(mob/user)
 	if(capturedMob && capturedMob.loc != src)
 		if(!in_range(user, capturedMob))
 			return
@@ -32,7 +32,7 @@
 		capturedMob.revive() //todo: replace
 	..()
 
-/obj/item/device/captureSphere/throw_impact(atom/hitAtom)
+/obj/item/device/capture_sphere/throw_impact(atom/hitAtom)
 	..()
 	if(!capturedMob)
 		if(ismob(hitAtom))
@@ -41,7 +41,7 @@
 	if(capturedMob)
 		Release(usr)
 
-/obj/item/device/captureSphere/proc/Capture(var/mob/living/simple_animal/M)
+/obj/item/device/capture_sphere/proc/Capture(var/mob/living/simple_animal/M)
 	if(M.client || M.key || !istype(M) || !M || capturedMob || capturing)
 		return 0
 	capturing = 1
@@ -68,7 +68,7 @@
 	name = "[initial(name)] ([capturedMob.name])"
 	return
 
-/obj/item/device/captureSphere/proc/Release(var/mob/user)
+/obj/item/device/capture_sphere/proc/Release(var/mob/user)
 	if(!capturedMob)
 		return
 	if(capturedMob && capturedMob.loc != src)
@@ -94,15 +94,15 @@ HELP ME EI- ZAERS
 			log_game("[user] has captured hostile mob [M] with a malfunctioning capture sphere!")
 			return
 
-/obj/item/device/captureSphere/proc/Healing
+/obj/item/device/capture_sphere/proc/Healing
 	health ++ 10
 	spawn(50)
 
-/obj/item/device/captureSphere/emp_act()
+/obj/item/device/capture_sphere/emp_act()
     if(!malfunctioning)
         malfunctioning = 1
 
-/obj/item/device/captureSphere/examine(mob/user)
+/obj/item/device/capture_sphere/examine(mob/user)
     ..()
     if(malfunctioning)
         user << "<span class='info'>The display on [src] seems to be flickering.</span>"

@@ -234,9 +234,9 @@
 		new /datum/data/mining_equipment("Whiskey",             /obj/item/weapon/reagent_containers/food/drinks/bottle/whiskey,    100),
 		new /datum/data/mining_equipment("Cigar",               /obj/item/clothing/mask/cigarette/cigar/havana,                    150),
 		new /datum/data/mining_equipment("Soap",                /obj/item/weapon/soap/nanotrasen, 						           200),
-		new /datum/data/mining_equipment("Mining Charge", 		/obj/item/device/miningCharge,									    75),
-		new /datum/data/mining_equipment("Mining Charge Kit",	/obj/item/weapon/storage/box/miningCharges,						   300),
-		new /datum/data/mining_equipment("Monster Bait",		/obj/item/weapon/miningBait,									   100),
+		new /datum/data/mining_equipment("Mining Charge", 		/obj/item/device/mining_charge,									    75),
+		new /datum/data/mining_equipment("Mining Charge Kit",	/obj/item/weapon/storage/box/mining_charges,						   300),
+		new /datum/data/mining_equipment("Monster Bait",		/obj/item/weapon/mining_bait,									   100),
 		new /datum/data/mining_equipment("Jaunter",             /obj/item/device/wormhole_jaunter,                                 250),
 		new /datum/data/mining_equipment("Laser Pointer",       /obj/item/device/laser_pointer, 				                   300),
 		new /datum/data/mining_equipment("Alien Toy",           /obj/item/clothing/mask/facehugger/toy, 		                   300),
@@ -248,7 +248,7 @@
 		new /datum/data/mining_equipment("Diamond Pickaxe",		/obj/item/weapon/pickaxe/diamond,				                  1200),
 		new /datum/data/mining_equipment("Jetpack",             /obj/item/weapon/tank/jetpack/carbondioxide/mining,               1500),
 		new /datum/data/mining_equipment("Space Cash",    		/obj/item/weapon/spacecash/c1000,                    			  2000),
-		new /datum/data/mining_equipment("Capture Sphere", 		/obj/item/device/captureSphere,									   500),
+		new /datum/data/mining_equipment("Capture Sphere", 		/obj/item/device/capture_sphere,									   500),
 		new /datum/data/mining_equipment("Point Transfer Card", /obj/item/weapon/card/mining_point_card,               			   500),
 		)
 
