@@ -1,14 +1,14 @@
 //BAIT: Stops a mining creature from following you, distracting it if it hits
-/obj/item/weapon/miningBait
+/obj/item/weapon/mining_bait
 	name = "chunk of rotten meat"
 	desc ="A chunk of raw meat used to distract some hostile creatures to allow for an escape. Only works on goliaths and basilisks. It's possible that this is a piece of an unfortunate miner's flesh."
 	icon = 'icons/obj/mining.dmi'
-	icon_state = "bugBait"
+	icon_state = "bug_bait"
 	w_class = 2
 	throw_range = 9
 	throw_speed = 5
 
-/obj/item/weapon/miningBait/throw_impact(atom/hitAtom)
+/obj/item/weapon/mining_bait/throw_impact(atom/hitAtom)
 	..()
 	src.visible_message("<span class='warning'>[src] breaks apart into chunks of meat!</span>")
 	if(ismob(hitAtom))

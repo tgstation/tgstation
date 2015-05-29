@@ -10,11 +10,10 @@
 /obj/item/clothing/suit/hazardvest/attackby(obj/item/W as obj, mob/user as mob, params)
 	..()
 	if(istype(W, /obj/item/stack/sheet/metal))
-		var/obj/item/clothing/suit/armor/makeshift/new_item = new(user.loc)
-		user << "<span class='notice'>You use [W] to turn [src] into [new_item].</span>"
-		var/replace = (user.get_inactive_hand()==src)
-		qdel(W)
-		qdel(src)
-		if(replace)
+		var/obj/item/stack/sheet/metal/M = W
+		if(M.use(6))
+			var/obj/item/clothing/suit/armor/makeshift/new_item = new(user.loc)
+			user << "<span class='notice'>You use [W] to turn [src] into [new_item].</span>"
+			qdel(src)
 			user.put_in_hands(new_item)
 		return

@@ -1,11 +1,12 @@
 //MINING CHARGE: Slap it in rocks to cause a controlled explosion. Can be emagged to slap on other things.
-/obj/item/device/miningCharge
+/obj/item/device/mining_charge
 	name = "standard mining charge"
 	desc = "A pyrotechnical device used to cause controlled explosions for digging tunnels without manual labor. It can only be attached to rocks and mineral deposits."
 	w_class = 2
 	icon = 'icons/obj/mining.dmi'
-	icon_state = "miningCharge"
+	icon_state = "mining_charge"
 	item_state = "electronic"
+	var/active_state = "mining_charge_active"
 	throw_speed = 3
 	throw_range = 5
 	slot_flags = SLOT_BELT
@@ -15,35 +16,35 @@
 	var/atom/movable/putOn = null //The atom the charge is on
 	var/primedOverlay = null
 
-/obj/item/device/miningCharge/emag_act(mob/user)
+/obj/item/device/mining_charge/emag_act(mob/user)
 	if(!safety)
 		return
 	user << "<span class='warning'>You press the cryptographic sequencer onto [src], disabling its safeties.</span>"
 	safety = 0
 
-/obj/item/device/miningCharge/New()
+/obj/item/device/mining_charge/New()
 	..()
-	primedOverlay = image('icons/obj/mining.dmi', "miningCharge_active")
+	primedOverlay = image('icons/obj/mining.dmi', "mining_charge_active")
 
-/obj/item/device/miningCharge/examine(mob/user)
+/obj/item/device/mining_charge/examine(mob/user)
 	..()
 	user << "A small LED is blinking [safety ? "green" : "red"]."
 	if(detonating)
 		user << "It appears to be primed."
 
-/obj/item/device/miningCharge/attackby(obj/item/weapon/W, mob/user)
+/obj/item/device/mining_charge/attackby(obj/item/weapon/W, mob/user)
 	if(istype(W, /obj/item/weapon/screwdriver) && !safety)
 		user << "<span class='notice'>You restore the safeties on [src].</span>"
 		safety = 1
 		return
 	..()
 
-/obj/item/device/miningCharge/attack_hand(mob/user)
+/obj/item/device/mining_charge/attack_hand(mob/user)
 	if(detonating)
 		return
 	..()
 
-/obj/item/device/miningCharge/afterattack(atom/movable/target, mob/user, flag)
+/obj/item/device/mining_charge/afterattack(atom/movable/target, mob/user, flag)
 	if(!istype(target, /turf/simulated/mineral) && safety)
 		return
 	if(!in_range(user, target))
@@ -60,12 +61,12 @@
 		loc = target
 		putOn = target
 		anchored = 1
-		icon_state = "miningCharge_active"
+		icon_state = active_state
 		target.overlays += primedOverlay
 		Detonate()
 
-/obj/item/device/miningCharge/proc/Detonate(var/timer = 5)
-	icon_state = "miningCharge_active"
+/obj/item/device/mining_charge/proc/Detonate(var/timer = 5)
+	icon_state = active_state
 	update_icon()
 	detonating = 1
 	luminosity = 1
@@ -93,26 +94,27 @@
 	if(src) //In case it survived
 		qdel(src)
 
-/obj/item/device/miningCharge/small
+/obj/item/device/mining_charge/small
 	name = "compact mining charge"
 	desc = "A smaller mining charge that weighs less at the cost of a less powerful explosion."
-	icon_state = "miningCharges"
+	icon_state = "mining_charges"
+	active_state = "mining_charges_active"
 	w_class = 1
 	explosionPower = 1
 
-/obj/item/weapon/storage/box/miningCharges
+/obj/item/weapon/storage/box/mining_charges
 	name = "box of mining charges"
 	desc = "A box shaped to hold mining charges."
-	can_hold = list(/obj/item/device/miningCharge/)
+	can_hold = list(/obj/item/device/mining_charge/)
 
-/obj/item/weapon/storage/box/miningCharges/New()
+/obj/item/weapon/storage/box/mining_charges/New()
 	..()
 	contents = list()
-	new /obj/item/device/miningCharge(src)
-	new /obj/item/device/miningCharge(src)
-	new /obj/item/device/miningCharge/small(src)
-	new /obj/item/device/miningCharge/small(src)
-	new /obj/item/device/miningCharge/small(src)
-	new /obj/item/device/miningCharge/small(src)
-	new /obj/item/device/miningCharge/small(src)
+	new /obj/item/device/mining_charge(src)
+	new /obj/item/device/mining_charge(src)
+	new /obj/item/device/mining_charge/small(src)
+	new /obj/item/device/mining_charge/small(src)
+	new /obj/item/device/mining_charge/small(src)
+	new /obj/item/device/mining_charge/small(src)
+	new /obj/item/device/mining_charge/small(src)
 	return
