@@ -22,7 +22,7 @@
 	var/datum/mind/wizard = pick(antag_candidates)
 	wizards += wizard
 	modePlayer += wizard
-	wizard.assigned_role = "MODE"
+	wizard.assigned_role = "Wizard"
 	wizard.special_role = "Wizard"
 	if(wizardstart.len == 0)
 		wizard.current << "<span class='boldannounce'>A starting location for you could not be found, please report this bug!</span>"
