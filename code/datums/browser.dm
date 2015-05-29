@@ -8,12 +8,18 @@
 	var/window_options = "focus=0;can_close=1;can_minimize=1;can_maximize=0;can_resize=1;titlebar=1;" // window option is set using window_id
 	var/stylesheets[0]
 	var/scripts[0]
-	var/title_image
 	var/head_elements
 	var/body_elements
 	var/head_content = ""
 	var/content = ""
 
+/datum/browser/aran
+	var/list/mobs = list()
+	var/obj/item
+
+/datum/browser/aran/proc/UIprocess()
+	for(var/mob/M in mobs)
+		item.ui_interact(M)
 
 /datum/browser/New(nuser, nwindow_id, ntitle = 0, nwidth = 0, nheight = 0, var/atom/nref = null)
 
@@ -28,6 +34,7 @@
 	if (nref)
 		ref = nref
 	add_stylesheet("common", 'html/browser/common.css') // this CSS sheet is common to all UIs
+	//add_stylesheet("icon", 'html/browser/icons.css')
 
 /datum/browser/proc/add_head_content(nhead_content)
 	head_content = nhead_content
@@ -63,10 +70,6 @@
 		user << browse_rsc(scripts[key], filename)
 		head_content += "<script type='text/javascript' src='[filename]'></script>"
 
-	var/title_attributes = "class='uiTitle'"
-	if (title_image)
-		title_attributes = "class='uiTitle icon' style='background-image: url([title_image]);'"
-
 	return {"<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 	<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
@@ -76,7 +79,7 @@
 	</head>
 	<body scroll=auto>
 		<div class='uiWrapper'>
-			[title ? "<div class='uiTitleWrapper'><div [title_attributes]><tt>[title]</tt></div></div>" : ""]
+			[title ? "<div id='uiTitleWrapper'><div id='uiTitle'>[title]</div><div id='uiTitleFluff'></div></div>" : ""]
 			<div class='uiContent'>
 	"}
 //" This is here because else the rest of the file looks like a string in notepad++.
