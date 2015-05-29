@@ -84,6 +84,7 @@ HELP ME EI- ZAERS
 //captured mobs hp resets when released
 //mobs previously captured can been stolen by other trainers, every ball is a snag ball
 //captured mobs do not stay in the ball upon being captured and instead pop out immediately
+//captured mobs are neutral, and will not attack anyone unless provoked
 
 		if(malfunctioning)
 			var/mob/living/simple_animal/hostile/H = M
