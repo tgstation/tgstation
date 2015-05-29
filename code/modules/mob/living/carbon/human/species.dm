@@ -37,7 +37,7 @@
 	var/meat = /obj/item/weapon/reagent_containers/food/snacks/meat/slab/human //What the species drops on gibbing
 	var/list/no_equip = list()	// slots the race can't equip stuff to
 	var/nojumpsuit = 0	// this is sorta... weird. it basically lets you equip stuff that usually needs jumpsuits without one, like belts and pockets and ids
-
+	var/dangerous_existence = 0 //A flag for transformation spells that tells them "hey if you turn a person into one of these without preperation, they'll probably die!"
 	var/say_mod = "says"	// affects the speech message
 
 	var/list/mutant_bodyparts = list() 	// Parts of the body that are diferent enough from the standard human model that they cause clipping with some equipment
@@ -61,6 +61,24 @@
 	var/sound/miss_sound = 'sound/weapons/punchmiss.ogg'
 
 	var/mob/living/list/ignored_by = list()	// list of mobs that will ignore this species
+
+	//Breathing!
+	var/safe_oxygen_min = 16 // Minimum safe partial pressure of O2, in kPa
+	var/safe_oxygen_max = 0
+	var/safe_co2_min = 0
+	var/safe_co2_max = 10 // Yes it's an arbitrary value who cares?
+	var/safe_toxins_min = 0
+	var/safe_toxins_max = 0.005
+	var/SA_para_min = 1 //Sleeping agent
+	var/SA_sleep_min = 5 //Sleeping agent
+
+	//Breath damage
+	var/oxy_breath_dam_min = 1
+	var/oxy_breath_dam_max = 10
+	var/co2_breath_dam_min = 1
+	var/co2_breath_dam_max = 10
+	var/tox_breath_dam_min = MIN_PLASMA_DAMAGE
+	var/tox_breath_dam_max = MAX_PLASMA_DAMAGE
 
 	///////////
 	// PROCS //
@@ -310,7 +328,7 @@
 				return 0
 			if(!H.w_uniform && !nojumpsuit)
 				if(!disable_warning)
-					H << "<span class='danger'>You need a jumpsuit before you can attach this [I.name].</span>"
+					H << "<span class='warning'>You need a jumpsuit before you can attach this [I.name]!</span>"
 				return 0
 			if( !(I.slot_flags & SLOT_BELT) )
 				return
@@ -344,7 +362,7 @@
 				return 0
 			if(!H.w_uniform && !nojumpsuit)
 				if(!disable_warning)
-					H << "<span class='danger'>You need a jumpsuit before you can attach this [I.name].</span>"
+					H << "<span class='warning'>You need a jumpsuit before you can attach this [I.name]!</span>"
 				return 0
 			if( !(I.slot_flags & SLOT_ID) )
 				return 0
@@ -356,7 +374,7 @@
 				return 0
 			if(!H.w_uniform && !nojumpsuit)
 				if(!disable_warning)
-					H << "<span class='danger'>You need a jumpsuit before you can attach this [I.name].</span>"
+					H << "<span class='warning'>You need a jumpsuit before you can attach this [I.name]!</span>"
 				return 0
 			if(I.slot_flags & SLOT_DENYPOCKET)
 				return
@@ -369,7 +387,7 @@
 				return 0
 			if(!H.w_uniform && !nojumpsuit)
 				if(!disable_warning)
-					H << "<span class='danger'>You need a jumpsuit before you can attach this [I.name].</span>"
+					H << "<span class='warning'>You need a jumpsuit before you can attach this [I.name]!</span>"
 				return 0
 			if(I.slot_flags & SLOT_DENYPOCKET)
 				return 0
@@ -383,7 +401,7 @@
 				return 0
 			if(!H.wear_suit)
 				if(!disable_warning)
-					H << "<span class='danger'>You need a suit before you can attach this [I.name].</span>"
+					H << "<span class='warning'>You need a suit before you can attach this [I.name]!</span>"
 				return 0
 			if(!H.wear_suit.allowed)
 				if(!disable_warning)
@@ -837,7 +855,7 @@
 	// Allows you to put in item-specific reactions based on species
 	if(user != src)
 		user.do_attack_animation(H)
-	if((user != H) && H.check_shields(I.force, "the [I.name]"))
+	if((user != H) && H.check_shields(I.force, "the [I.name]", I))
 		return 0
 
 	if(I.attack_verb && I.attack_verb.len)
@@ -849,7 +867,7 @@
 	else
 		return 0
 
-	var/armor = H.run_armor_check(affecting, "melee", "<span class='warning'>Your armor has protected your [hit_area].</span>", "<span class='warning'>Your armor has softened a hit to your [hit_area].</span>")
+	var/armor = H.run_armor_check(affecting, "melee", "<span class='notice'>Your armor has protected your [hit_area].</span>", "<span class='notice'>Your armor has softened a hit to your [hit_area].</span>")
 	if(armor >= 100)	return 0
 	var/Iforce = I.force //to avoid runtimes on the forcesay checks at the bottom. Some items might delete themselves if you drop them. (stunning yourself, ninja swords)
 
@@ -1064,47 +1082,44 @@
 
 		return 0
 
-	var/safe_oxygen_min = 16 // Minimum safe partial pressure of O2, in kPa
-	//var/safe_oxygen_max = 140 // Maximum safe partial pressure of O2, in kPa (Not used for now)
-	var/safe_co2_max = 10 // Yes it's an arbitrary value who cares?
-	var/safe_toxins_max = 0.005
-	var/SA_para_min = 1
-	var/SA_sleep_min = 5
-	var/oxygen_used = 0
-	var/breath_pressure = (breath.total_moles()*R_IDEAL_GAS_EQUATION*breath.temperature)/BREATH_VOLUME
+	var/gas_breathed = 0
 
-	//Partial pressure of the O2 in our breath
-	var/O2_pp = (breath.oxygen/breath.total_moles())*breath_pressure
-	// Same, but for the toxins
-	var/Toxins_pp = (breath.toxins/breath.total_moles())*breath_pressure
-	// And CO2, lets say a PP of more than 10 will be bad (It's a little less really, but eh, being passed out all round aint no fun)
-	var/CO2_pp = (breath.carbon_dioxide/breath.total_moles())*breath_pressure // Tweaking to fit the hacky bullshit I've done with atmo -- TLE
-	//var/CO2_pp = (breath.carbon_dioxide/breath.total_moles())*0.5 // The default pressure value
+	//Partial pressures in our breath
+	var/O2_pp = breath.get_breath_partial_pressure(breath.oxygen)
+	var/Toxins_pp = breath.get_breath_partial_pressure(breath.toxins)
+	var/CO2_pp = breath.get_breath_partial_pressure(breath.carbon_dioxide)
 
-	if(O2_pp < safe_oxygen_min) // Too little oxygen
-		if(!(NOBREATH in specflags) || (H.health <= config.health_threshold_crit))
-			if(prob(20))
-				spawn(0) H.emote("gasp")
-			if(O2_pp > 0)
-				var/ratio = safe_oxygen_min/O2_pp
-				H.adjustOxyLoss(min(5*ratio, HUMAN_MAX_OXYLOSS)) // Don't fuck them up too fast (space only does HUMAN_MAX_OXYLOSS after all!)
-				H.failed_last_breath = 1
-				oxygen_used = breath.oxygen*ratio/6
-			else
-				H.adjustOxyLoss(HUMAN_MAX_OXYLOSS)
-				H.failed_last_breath = 1
-			H.throw_alert("oxy")
-	else								// We're in safe limits
+
+	//-- OXY --//
+
+	//Too much oxygen! //Yes, some species may not like it.
+	if(safe_oxygen_max && O2_pp > safe_oxygen_max && !(NOBREATH in specflags))
+		var/ratio = (breath.oxygen/safe_oxygen_max) * 10
+		H.adjustOxyLoss(Clamp(ratio,oxy_breath_dam_min,oxy_breath_dam_max))
+		H.throw_alert("too_much_oxy")
+	else
+		H.clear_alert("too_much_oxy")
+
+	//Too little oxygen!
+	if(safe_oxygen_min && O2_pp < safe_oxygen_min)
+		gas_breathed = handle_too_little_breath(H,O2_pp,safe_oxygen_min,breath.oxygen)
+		H.throw_alert("oxy")
+	else
 		H.failed_last_breath = 0
 		H.adjustOxyLoss(-5)
-		oxygen_used = breath.oxygen/6
+		gas_breathed = breath.oxygen/6
 		H.clear_alert("oxy")
 
-	breath.oxygen -= oxygen_used
-	breath.carbon_dioxide += oxygen_used
+	//Exhale
+	breath.oxygen -= gas_breathed
+	breath.carbon_dioxide += gas_breathed
+	gas_breathed = 0
+
+
+	//-- CO2 --//
 
 	//CO2 does not affect failed_last_breath. So if there was enough oxygen in the air but too much co2, this will hurt you, but only once per 4 ticks, instead of once per tick.
-	if(CO2_pp > safe_co2_max && !(NOBREATH in specflags))
+	if(safe_co2_max && CO2_pp > safe_co2_max && !(NOBREATH in specflags))
 		if(!H.co2overloadtime) // If it's the first breath with too much CO2 in it, lets start a counter, then have them pass out after 12s or so.
 			H.co2overloadtime = world.time
 		else if(world.time - H.co2overloadtime > 120)
@@ -1112,24 +1127,63 @@
 			H.adjustOxyLoss(3) // Lets hurt em a little, let them know we mean business
 			if(world.time - H.co2overloadtime > 300) // They've been in here 30s now, lets start to kill them for their own good!
 				H.adjustOxyLoss(8)
+			H.throw_alert("too_much_co2")
 		if(prob(20)) // Lets give them some chance to know somethings not right though I guess.
 			spawn(0) H.emote("cough")
 
 	else
 		H.co2overloadtime = 0
+		H.clear_alert("too_much_co2")
 
-	if(Toxins_pp > safe_toxins_max && !(NOBREATH in specflags)) // Too much toxins
+	//Too little CO2!
+	if(safe_co2_min && CO2_pp < safe_co2_min)
+		gas_breathed = handle_too_little_breath(H,CO2_pp, safe_co2_min,breath.carbon_dioxide)
+		H.throw_alert("not_enough_co2")
+	else
+		H.failed_last_breath = 0
+		H.adjustOxyLoss(-5)
+		gas_breathed = breath.carbon_dioxide/6
+		H.clear_alert("not_enough_co2")
+
+	//Exhale
+	breath.carbon_dioxide -= gas_breathed
+	breath.oxygen += gas_breathed
+	gas_breathed = 0
+
+
+	//-- TOX --//
+
+	//Too much toxins!
+	if(safe_toxins_max && Toxins_pp > safe_toxins_max && !(NOBREATH in specflags))
 		var/ratio = (breath.toxins/safe_toxins_max) * 10
-		//adjustToxLoss(Clamp(ratio, MIN_PLASMA_DAMAGE, MAX_PLASMA_DAMAGE))	//Limit amount of damage toxin exposure can do per second
 		if(H.reagents)
-			H.reagents.add_reagent("plasma", Clamp(ratio, MIN_PLASMA_DAMAGE, MAX_PLASMA_DAMAGE))
+			H.reagents.add_reagent("plasma", Clamp(ratio, tox_breath_dam_min, tox_breath_dam_max))
 		H.throw_alert("tox_in_air")
 	else
 		H.clear_alert("tox_in_air")
 
+
+	//Too little toxins!
+	if(safe_toxins_min && Toxins_pp < safe_toxins_min && !(NOBREATH in specflags))
+		gas_breathed = handle_too_little_breath(H,Toxins_pp, safe_toxins_min, breath.toxins)
+		H.throw_alert("not_enough_tox")
+	else
+		H.failed_last_breath = 0
+		H.adjustOxyLoss(-5)
+		gas_breathed = breath.toxins/6
+		H.clear_alert("not_enough_tox")
+
+	//Exhale
+	breath.toxins -= gas_breathed
+	breath.carbon_dioxide += gas_breathed
+	gas_breathed = 0
+
+
+	//-- TRACES --//
+
 	if(breath.trace_gases.len && !(NOBREATH in specflags))	// If there's some other shit in the air lets deal with it here.
 		for(var/datum/gas/sleeping_agent/SA in breath.trace_gases)
-			var/SA_pp = (SA.moles/breath.total_moles())*breath_pressure
+			var/SA_pp = breath.get_breath_partial_pressure(SA.moles)
 			if(SA_pp > SA_para_min) // Enough to make us paralysed for a bit
 				H.Paralyse(3) // 3 gives them one second to wake up and run away a bit!
 				if(SA_pp > SA_sleep_min) // Enough to make us sleep as well
@@ -1141,6 +1195,27 @@
 	handle_breath_temperature(breath, H)
 
 	return 1
+
+
+//Returns the amount of true_pp we breathed
+/datum/species/proc/handle_too_little_breath(var/mob/living/carbon/human/H = null,var/breath_pp = 0, var/safe_breath_min = 0, var/true_pp = 0)
+	. = 0
+	if(!H || !safe_breath_min) //the other args are either: Ok being 0 or Specifically handled.
+		return 0
+
+	if(!(NOBREATH in specflags) || (H.health <= config.health_threshold_crit))
+		if(prob(20))
+			spawn(0)
+				H.emote("gasp")
+		if(breath_pp > 0)
+			var/ratio = safe_breath_min/breath_pp
+			H.adjustOxyLoss(min(5*ratio, HUMAN_MAX_OXYLOSS)) // Don't fuck them up too fast (space only does HUMAN_MAX_OXYLOSS after all!
+			H.failed_last_breath = 1
+			. = true_pp*ratio/6
+		else
+			H.adjustOxyLoss(HUMAN_MAX_OXYLOSS)
+			H.failed_last_breath = 1
+
 
 /datum/species/proc/handle_breath_temperature(datum/gas_mixture/breath, var/mob/living/carbon/human/H) // called by human/life, handles temperatures
 	if(abs(310.15 - breath.temperature) > 50)

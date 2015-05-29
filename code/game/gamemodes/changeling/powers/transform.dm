@@ -17,7 +17,7 @@
 
 	user.dna = chosen_dna
 	user.real_name = chosen_dna.real_name
-	user.dna.species = new chosen_dna.species.type(user)
+	hardset_dna(user, null, null, null, null, chosen_dna.species.type)
 	user.dna.mutant_color = chosen_dna.mutant_color
 	updateappearance(user)
 	domutcheck(user)

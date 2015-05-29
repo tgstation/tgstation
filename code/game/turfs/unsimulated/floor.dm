@@ -20,8 +20,12 @@
 
 
 /turf/unsimulated/floor/grass
-	icon_state = "grass1"
+	icon_state = "grass"
 
-/turf/unsimulated/floor/grass/New()
+/turf/unsimulated/floor/abductor
+	name = "alien floor"
+	icon_state = "alienpod1"
+
+/turf/unsimulated/floor/abductor/New()
 	..()
-	icon_state = "grass[rand(1,4)]"
+	icon_state = "alienpod[rand(1,9)]"

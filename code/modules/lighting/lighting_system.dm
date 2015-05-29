@@ -224,7 +224,7 @@
 	anchored = 1
 
 /atom/movable/light/Destroy()
-	return 1
+	return QDEL_HINT_LETMELIVE
 
 /atom/movable/light/Move()
 	return 0

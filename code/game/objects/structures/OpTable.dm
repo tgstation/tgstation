@@ -5,6 +5,9 @@
 	icon_state = "optable"
 	density = 1
 	anchored = 1
+	can_buckle = 1
+	buckle_lying = 1
+	buckle_requires_restraints = 1
 	var/mob/living/carbon/human/patient = null
 	var/obj/machinery/computer/operating/computer = null
 

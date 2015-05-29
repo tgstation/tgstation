@@ -214,18 +214,18 @@
 	if(Adjacent(user))
 		return attack_hand(user)
 	else
-		user << "<span class = \"warning\">You attempt to interface with the control circuits but find they are not connected to your network. Maybe in a future firmware update.</span>"
+		user << "<span class = 'warning'>You attempt to interface with the control circuits but find they are not connected to your network. Maybe in a future firmware update.</span>"
 	return
 
 /obj/machinery/power/supermatter_shard/attack_ai(mob/user as mob)
-	user << "<span class = \"warning\">You attempt to interface with the control circuits but find they are not connected to your network. Maybe in a future firmware update.</span>"
+	user << "<span class = 'warning'>You attempt to interface with the control circuits but find they are not connected to your network. Maybe in a future firmware update.</span>"
 
 /obj/machinery/power/supermatter_shard/attack_hand(mob/living/user as mob)
 	if(!istype(user))
 		return
-	user.visible_message("<span class=\"warning\">\The [user] reaches out and touches \the [src], inducing a resonance... \his body starts to glow and bursts into flames before flashing into ash.</span>",\
-		"<span class=\"danger\">You reach out and touch \the [src]. Everything starts burning and all you can hear is ringing. Your last thought is \"That was not a wise decision.\"</span>",\
-		"<span class=\"warning\">You hear an unearthly noise as a wave of heat washes over you.</span>")
+	user.visible_message("<span class='danger'>\The [user] reaches out and touches \the [src], inducing a resonance... \his body starts to glow and bursts into flames before flashing into ash.</span>",\
+		"<span class='userdanger'>You reach out and touch \the [src]. Everything starts burning and all you can hear is ringing. Your last thought is \"That was not a wise decision.\"</span>",\
+		"<span class='italics'>You hear an unearthly noise as a wave of heat washes over you.</span>")
 
 	playsound(get_turf(src), 'sound/effects/supermatter.ogg', 50, 1)
 
@@ -242,9 +242,9 @@
 		return
 	if(user.drop_item(W))
 		Consume(W)
-		user.visible_message("<span class=\"warning\">As [user] touches \the [src] with \a [W], silence fills the room...</span>",\
-			"<span class=\"danger\">You touch \the [src] with \the [W], and everything suddenly goes silent.\"</span>\n<span class=\"notice\">\The [W] flashes into dust as you flinch away from \the [src].</span>",\
-			"<span class=\"warning\">Everything suddenly goes silent.</span>")
+		user.visible_message("<span class='danger'>As [user] touches \the [src] with \a [W], silence fills the room...</span>",\
+			"<span class='userdanger'>You touch \the [src] with \the [W], and everything suddenly goes silent.\"</span>\n<span class='notice'>\The [W] flashes into dust as you flinch away from \the [src].</span>",\
+			"<span class='italics'>Everything suddenly goes silent.</span>")
 
 		playsound(get_turf(src), 'sound/effects/supermatter.ogg', 50, 1)
 
@@ -253,12 +253,12 @@
 
 /obj/machinery/power/supermatter_shard/Bumped(atom/AM as mob|obj)
 	if(istype(AM, /mob/living))
-		AM.visible_message("<span class=\"warning\">\The [AM] slams into \the [src] inducing a resonance... \his body starts to glow and catch flame before flashing into ash.</span>",\
-		"<span class=\"danger\">You slam into \the [src] as your ears are filled with unearthly ringing. Your last thought is \"Oh, fuck.\"</span>",\
-		"<span class=\"warning\">You hear an unearthly noise as a wave of heat washes over you.</span>")
+		AM.visible_message("<span class='danger'>\The [AM] slams into \the [src] inducing a resonance... \his body starts to glow and catch flame before flashing into ash.</span>",\
+		"<span class='userdanger'>You slam into \the [src] as your ears are filled with unearthly ringing. Your last thought is \"Oh, fuck.\"</span>",\
+		"<span class='italics'>You hear an unearthly noise as a wave of heat washes over you.</span>")
 	else if(isobj(AM) && !istype(AM, /obj/effect))
-		AM.visible_message("<span class=\"warning\">\The [AM] smacks into \the [src] and rapidly flashes to ash.</span>",\
-		"<span class=\"warning\">You hear a loud crack as you are washed with a wave of heat.</span>")
+		AM.visible_message("<span class='danger'>\The [AM] smacks into \the [src] and rapidly flashes to ash.</span>",\
+		"<span class='italics'>You hear a loud crack as you are washed with a wave of heat.</span>")
 	else
 		return
 
@@ -286,7 +286,7 @@
 		L.irradiate(rads)
 		investigate_log("has irradiated [L] after consuming [AM].", "supermatter")
 		if(L in view())
-			L.show_message("<span class=\"warning\">As \the [src] slowly stops resonating, you find your skin covered in new radiation burns.</span>", 1,\
-				"<span class=\"warning\">The unearthly ringing subsides and you notice you have new radiation burns.</span>", 2)
+			L.show_message("<span class='danger'>As \the [src] slowly stops resonating, you find your skin covered in new radiation burns.</span>", 1,\
+				"<span class='danger'>The unearthly ringing subsides and you notice you have new radiation burns.</span>", 2)
 		else
-			L.show_message("<span class=\"warning\">You hear an uneartly ringing and notice your skin is covered in fresh radiation burns.</span>", 2)
+			L.show_message("<span class='italics'>You hear an uneartly ringing and notice your skin is covered in fresh radiation burns.</span>", 2)

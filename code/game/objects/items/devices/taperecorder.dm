@@ -69,7 +69,7 @@
 
 /obj/item/device/taperecorder/proc/can_use(mob/user)
 	if(user && ismob(user))
-		if(!user.stat && user.canmove && !user.restrained())
+		if(!user.incapacitated())
 			return 1
 	return 0
 
@@ -282,9 +282,9 @@
 
 /obj/item/device/tape/attackby(obj/item/I, mob/user, params)
 	if(ruined && istype(I, /obj/item/weapon/screwdriver))
-		user << "<span class='notice'>You start winding the tape back in.</span>"
+		user << "<span class='notice'>You start winding the tape back in...</span>"
 		if(do_after(user, 120))
-			user << "<span class='notice'>You wound the tape back in!</span>"
+			user << "<span class='notice'>You wound the tape back in.</span>"
 			fix()
 
 

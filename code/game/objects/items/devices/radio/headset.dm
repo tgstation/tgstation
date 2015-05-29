@@ -242,14 +242,14 @@
 					keyslot2 = null
 
 			recalculateChannels()
-			user << "You pop out the encryption keys in the headset!"
+			user << "<span class='notice'>You pop out the encryption keys in the headset.</span>"
 
 		else
-			user << "This headset doesn't have any unique encryption keys!  How useless..."
+			user << "<span class='warning'>This headset doesn't have any unique encryption keys!  How useless...</span>"
 
 	if(istype(W, /obj/item/device/encryptionkey/))
 		if(keyslot && keyslot2)
-			user << "The headset can't hold another key!"
+			user << "<span class='warning'>The headset can't hold another key!</span>"
 			return
 
 		if(!keyslot)

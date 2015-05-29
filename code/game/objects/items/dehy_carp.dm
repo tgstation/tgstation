@@ -38,6 +38,11 @@
 	sleep(6)
 	// Make space carp
 	var/mob/living/simple_animal/hostile/carp/C = new /mob/living/simple_animal/hostile/carp(get_turf(src))
-	// Make carp non-hostile to user, yes this means
-	C.faction |= "\ref[owner]"
+	// Make carp non-hostile to user, and their allies
+	if(owner)
+		var/list/factions = owner.faction
+		for(var/F in factions)
+			if(F == "neutral")
+				factions -= F
+		C.faction = factions
 	qdel(src)

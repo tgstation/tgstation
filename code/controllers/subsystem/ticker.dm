@@ -51,9 +51,9 @@ var/datum/subsystem/ticker/ticker
 	if(SSevent.holidays && SSevent.holidays[APRIL_FOOLS])
 		login_music = 'sound/ambience/clown.ogg'
 
-	round_end_sound = pick('sound/AI/newroundsexy.ogg','sound/misc/apcdestroyed.ogg','sound/misc/bangindonk.ogg','sound/misc/leavingtg.ogg')
-
-/datum/subsystem/ticker/Initialize()
+/datum/subsystem/ticker/Initialize(timeofday, zlevel)
+	if (zlevel)
+		return ..()
 	if(!syndicate_code_phrase)		syndicate_code_phrase	= generate_code_phrase()
 	if(!syndicate_code_response)	syndicate_code_response	= generate_code_phrase()
 	setupGenetics()
@@ -78,9 +78,11 @@ var/datum/subsystem/ticker/ticker
 					++totalPlayersReady
 
 			//countdown
+			if(timeLeft < 0)
+				return
 			timeLeft -= wait
 
-			if(timeLeft <= 30 && !tipped)
+			if(timeLeft <= 300 && !tipped)
 				send_random_tip()
 				tipped = 1
 
@@ -152,11 +154,8 @@ var/datum/subsystem/ticker/ticker
 
 	//Configure mode and assign player to special mode stuff
 	var/can_continue = 0
-	if(mode.pre_setup_before_jobs)
-		can_continue = src.mode.pre_setup()
+	can_continue = src.mode.pre_setup()		//Choose antagonists
 	SSjob.DivideOccupations() 				//Distribute jobs
-	if(!mode.pre_setup_before_jobs)
-		can_continue = src.mode.pre_setup()
 
 	if(!Debug2)
 		if(!can_continue)
@@ -330,7 +329,7 @@ var/datum/subsystem/ticker/ticker
 		if(player && player.mind && player.mind.assigned_role)
 			if(player.mind.assigned_role == "Captain")
 				captainless=0
-			if(player.mind.assigned_role != "MODE")
+			if(player.mind.assigned_role != player.mind.special_role)
 				SSjob.EquipRank(player, player.mind.assigned_role, 0)
 	if(captainless)
 		for(var/mob/M in player_list)
@@ -367,7 +366,7 @@ var/datum/subsystem/ticker/ticker
 	//Round statistics report
 	var/datum/station_state/end_state = new /datum/station_state()
 	end_state.count()
-	var/station_integrity = round( 100.0 *  start_state.score(end_state), 0.1)
+	var/station_integrity = min(round( 100.0 *  start_state.score(end_state), 0.1), 100.0)
 
 	world << "<BR>[TAB]Shift Duration: <B>[round(world.time / 36000)]:[add_zero("[world.time / 600 % 60]", 2)]:[world.time / 100 % 6][world.time / 100 % 10]</B>"
 	world << "<BR>[TAB]Station Integrity: <B>[mode.station_was_nuked ? "<font color='red'>Destroyed</font>" : "[station_integrity]%"]</B>"

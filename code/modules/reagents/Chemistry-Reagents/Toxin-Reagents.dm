@@ -402,7 +402,7 @@ datum/reagent/toxin/venom/on_mob_life(var/mob/living/M as mob)
 datum/reagent/toxin/neurotoxin2
 	name = "Neurotoxin"
 	id = "neurotoxin2"
-	description = "Deals toxin and brain damage up to 60 before it slows down, causing confusion and a knockout after 54 elapsed cycles."
+	description = "Deals toxin and brain damage up to 60 before it slows down, causing confusion and a knockout after 18 elapsed cycles."
 	reagent_state = LIQUID
 	color = "#CF3600"
 	metabolization_rate = 0.5 * REAGENTS_METABOLISM
@@ -412,8 +412,8 @@ datum/reagent/toxin/neurotoxin2/on_mob_life(var/mob/living/M as mob)
 	if(M.brainloss + M.toxloss <= 60)
 		M.adjustBrainLoss(1*REM)
 		M.adjustToxLoss(1*REM)
-	if(current_cycle >= 54)
-		M.sleeping += 5
+	if(current_cycle >= 18)
+		M.sleeping += 1
 	..()
 
 datum/reagent/toxin/cyanide
@@ -504,15 +504,15 @@ datum/reagent/toxin/initropidril/on_mob_life(var/mob/living/M as mob)
 datum/reagent/toxin/pancuronium
 	name = "Pancuronium"
 	id = "pancuronium"
-	description = "Knocks you out after 30 seconds, 7% chance to cause some oxygen loss."
+	description = "Knocks you out after 10 seconds, 7% chance to cause some oxygen loss."
 	reagent_state = LIQUID
 	color = "#CF3600"
 	metabolization_rate = 0.25 * REAGENTS_METABOLISM
 	toxpwr = 0
 
 datum/reagent/toxin/pancuronium/on_mob_life(var/mob/living/M as mob)
-	if(current_cycle >= 30)
-		M.SetParalysis(3)
+	if(current_cycle >= 10)
+		M.SetParalysis(1)
 	if(prob(7))
 		M.losebreath += 4
 	..()
@@ -527,8 +527,8 @@ datum/reagent/toxin/sodium_thiopental
 	toxpwr = 0
 
 datum/reagent/toxin/sodium_thiopental/on_mob_life(var/mob/living/M as mob)
-	if(current_cycle >= 30)
-		M.sleeping += 1.5
+	if(current_cycle >= 10)
+		M.sleeping += 1
 	M.adjustStaminaLoss(5*REM)
 	..()
 
@@ -542,8 +542,8 @@ datum/reagent/toxin/sulfonal
 	toxpwr = 0.5
 
 datum/reagent/toxin/sulfonal/on_mob_life(var/mob/living/M as mob)
-	if(current_cycle >= 66)
-		M.sleeping += 1.5
+	if(current_cycle >= 22)
+		M.sleeping += 1
 	..()
 
 datum/reagent/toxin/amanitin
@@ -593,15 +593,15 @@ datum/reagent/toxin/coniine/on_mob_life(var/mob/living/M as mob)
 datum/reagent/toxin/curare
 	name = "Curare"
 	id = "curare"
-	description = "Does some oxygen and toxin damage, weakens you after 33 seconds."
+	description = "Does some oxygen and toxin damage, weakens you after 11 seconds."
 	reagent_state = LIQUID
 	color = "#CF3600"
 	metabolization_rate = 0.125 * REAGENTS_METABOLISM
 	toxpwr = 0.5
 
 datum/reagent/toxin/curare/on_mob_life(var/mob/living/M as mob)
-	if(current_cycle >= 33)
-		M.Weaken(3)
+	if(current_cycle >= 11)
+		M.Weaken(1)
 	M.adjustOxyLoss(0.5*REM)
 	..()
 

@@ -101,7 +101,7 @@ using metal and glass, it uses glass and reagents (usually sulfuric acis).
 			default_deconstruction_crowbar(O)
 			return
 		else
-			user << "<span class='warning'>You can't load the [src.name] while it's opened.</span>"
+			user << "<span class='warning'>You can't load the [src.name] while it's opened!</span>"
 			return
 	if (disabled)
 		return
@@ -116,11 +116,11 @@ using metal and glass, it uses glass and reagents (usually sulfuric acis).
 	if (stat)
 		return
 	if (busy)
-		user << "<span class='warning'>The [name] is busy. Please wait for completion of previous operation.</span>"
+		user << "<span class='warning'>The [name] is busy! Please wait for completion of previous operation.</span>"
 		return
 	var/obj/item/stack/sheet/stack = O
 	if ((TotalMaterials() + stack.perunit) > max_material_amount)
-		user << "<span class='warning'>The [name] is full. Please remove glass from the protolathe in order to insert more.</span>"
+		user << "<span class='warning'>The [name] is full! Please remove glass from the protolathe in order to insert more.</span>"
 		return
 
 	var/amount = round(input("How many sheets do you want to add?") as num)

@@ -40,6 +40,7 @@
 	var/treat_virus = 1 //If on, the bot will attempt to treat viral infections, curing them if possible.
 	var/shut_up = 0 //self explanatory :)
 	bot_type = MED_BOT
+	model = "Medibot"
 
 /obj/machinery/bot/medbot/mysterious
 	name = "\improper Mysterious Medibot"
@@ -97,12 +98,10 @@
 		if(skin)
 			overlays += image('icons/obj/aibots.dmi', "medskin_[skin]")
 
-		if(isnull(botcard_access) || (botcard_access.len < 1))
-			var/datum/job/doctor/J = new/datum/job/doctor
-			botcard.access = J.get_access()
-		else
-			botcard.access = botcard_access
+		var/datum/job/doctor/J = new/datum/job/doctor
+		botcard.access += J.get_access()
 		prev_access = botcard.access
+
 
 /obj/machinery/bot/medbot/turn_on()
 	. = ..()
@@ -234,16 +233,16 @@
 			if(emagged)
 				user << "<span class='warning'>ERROR</span>"
 			if(open)
-				user << "<span class='warning'>Please close the access panel before locking it.</span>"
+				user << "<span class='warning'>Please close the access panel before locking it!</span>"
 			else
 				user << "<span class='warning'>Access denied.</span>"
 
 	else if (istype(W, /obj/item/weapon/reagent_containers/glass))
 		if(locked)
-			user << "<span class='notice'>You cannot insert a beaker because the panel is locked.</span>"
+			user << "<span class='warning'>You cannot insert a beaker because the panel is locked!</span>"
 			return
 		if(!isnull(reagent_glass))
-			user << "<span class='notice'>There is already a beaker loaded.</span>"
+			user << "<span class='warning'>There is already a beaker loaded!</span>"
 			return
 
 		user.drop_item()
@@ -264,7 +263,7 @@
 	if(emagged == 2)
 		declare_crit = 0
 		if(user)
-			user << "<span class='warning'>You short out [src]'s reagent synthesis circuits.</span>"
+			user << "<span class='notice'>You short out [src]'s reagent synthesis circuits.</span>"
 		spawn(0)
 			audible_message("<span class='danger'>[src] buzzes oddly!</span>")
 		flick("medibot_spark", src)
@@ -339,7 +338,7 @@
 		return
 
 	if(patient && path.len == 0 && (get_dist(src,patient) > 1))
-		path = get_path_to(loc, get_turf(patient), /turf/proc/CardinalTurfsWithAccess, /turf/proc/Distance_cardinal, 0, 30,id=botcard)
+		path = get_path_to(loc, get_turf(patient), src, /turf/proc/Distance_cardinal, 0, 30,id=botcard)
 		mode = BOT_MOVING
 		if(!path.len) //Do not chase a patient we cannot reach.
 			soft_reset()
@@ -482,7 +481,7 @@
 		return
 	else
 		C.visible_message("<span class='danger'>[src] is trying to inject [patient]!</span>", \
-			"<span class='userdanger'>[src] is trying to inject [patient]!</span>")
+			"<span class='userdanger'>[src] is trying to inject you!</span>")
 
 		spawn(30)
 			if ((get_dist(src, patient) <= 1) && (on))
@@ -492,8 +491,8 @@
 						reagent_glass.reagents.reaction(patient, INGEST)
 				else
 					patient.reagents.add_reagent(reagent_id,injection_amount)
-				C.visible_message("<span class='danger'>[src] injects [patient] with the syringe!</span>", \
-					"<span class='userdanger'>[src] injects [patient] with the syringe!</span>")
+				C.visible_message("<span class='danger'>[src] injects [patient] with its syringe!</span>", \
+					"<span class='userdanger'>[src] injects you with its syringe!</span>")
 				patient = null
 
 			mode = BOT_IDLE
@@ -553,7 +552,7 @@
 
 	//Making a medibot!
 	if(contents.len >= 1)
-		user << "<span class='notice'>You need to empty [src] out first.</span>"
+		user << "<span class='warning'>You need to empty [src] out first!</span>"
 		return
 
 	var/obj/item/weapon/firstaid_arm_assembly/A = new /obj/item/weapon/firstaid_arm_assembly
@@ -598,7 +597,7 @@
 					user.drop_item()
 					qdel(W)
 					build_step++
-					user << "<span class='notice'>You complete the Medibot! Beep boop.</span>"
+					user << "<span class='notice'>You complete the Medibot. Beep boop!</span>"
 					var/turf/T = get_turf(src)
 					var/obj/machinery/bot/medbot/S = new /obj/machinery/bot/medbot(T)
 					S.skin = skin

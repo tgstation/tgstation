@@ -28,6 +28,8 @@
 	for(var/atom/movable/AM in src)
 		Entered(AM)
 	return
+/turf/Destroy()
+	return QDEL_HINT_HARDDEL_NOW
 
 // Adds the adjacent turfs to the current atmos processing
 /turf/Del()
@@ -189,89 +191,6 @@
 
 /turf/proc/Bless()
 	flags |= NOJAUNT
-
-/////////////////////////////////////////////////////////////////////////
-// Navigation procs
-// Used for A-star pathfinding
-////////////////////////////////////////////////////////////////////////
-
-///////////////////////////
-//Cardinal only movements
-///////////////////////////
-
-// Returns the surrounding cardinal turfs with open links
-// Including through doors openable with the ID
-/turf/proc/CardinalTurfsWithAccess(var/obj/item/weapon/card/id/ID)
-	var/list/L = new()
-	var/turf/simulated/T
-
-	for(var/dir in cardinal)
-		T = get_step(src, dir)
-		if(istype(T) && !T.density)
-			if(!LinkBlockedWithAccess(src, T, ID))
-				L.Add(T)
-	return L
-
-// Returns the surrounding cardinal turfs with open links
-// Don't check for ID, doors passable only if open
-/turf/proc/CardinalTurfs()
-	var/list/L = new()
-	var/turf/simulated/T
-
-	for(var/dir in cardinal)
-		T = get_step(src, dir)
-		if(istype(T) && !T.density)
-			if(!LinkBlocked(src, T))
-				L.Add(T)
-	return L
-
-///////////////////////////
-//All directions movements
-///////////////////////////
-
-// Returns the surrounding simulated turfs with open links
-// Including through doors openable with the ID
-/turf/proc/AdjacentTurfsWithAccess(var/obj/item/weapon/card/id/ID = null,var/list/closed)//check access if one is passed
-	var/list/L = new()
-	var/turf/simulated/T
-	for(var/dir in list(NORTHWEST,NORTHEAST,SOUTHEAST,SOUTHWEST,NORTH,EAST,SOUTH,WEST)) //arbitrarily ordered list to favor non-diagonal moves in case of ties
-		T = get_step(src,dir)
-		if(T in closed) //turf already proceeded in A*
-			continue
-		if(istype(T) && !T.density)
-			if(!LinkBlockedWithAccess(src, T, ID))
-				L.Add(T)
-	return L
-
-//Idem, but don't check for ID and goes through open doors
-/turf/proc/AdjacentTurfs(var/list/closed)
-	var/list/L = new()
-	var/turf/simulated/T
-	for(var/dir in list(NORTHWEST,NORTHEAST,SOUTHEAST,SOUTHWEST,NORTH,EAST,SOUTH,WEST)) //arbitrarily ordered list to favor non-diagonal moves in case of ties
-		T = get_step(src,dir)
-		if(T in closed) //turf already proceeded by A*
-			continue
-		if(istype(T) && !T.density)
-			if(!LinkBlocked(src, T))
-				L.Add(T)
-	return L
-
-// check for all turfs, including unsimulated ones
-/turf/proc/AdjacentTurfsSpace(var/obj/item/weapon/card/id/ID = null, var/list/closed)//check access if one is passed
-	var/list/L = new()
-	var/turf/T
-	for(var/dir in list(NORTHWEST,NORTHEAST,SOUTHEAST,SOUTHWEST,NORTH,EAST,SOUTH,WEST)) //arbitrarily ordered list to favor non-diagonal moves in case of ties
-		T = get_step(src,dir)
-		if(T in closed) //turf already proceeded by A*
-			continue
-		if(istype(T) && !T.density)
-			if(!ID)
-				if(!LinkBlocked(src, T))
-					L.Add(T)
-			else
-				if(!LinkBlockedWithAccess(src, T, ID))
-					L.Add(T)
-	return L
 
 //////////////////////////////
 //Distance procs

@@ -61,21 +61,21 @@
 			if(isturf(T) && !T.intact)
 				attached = locate() in T
 				if(!attached)
-					user << "No exposed cable here to attach to."
+					user << "<span class='warning'>No exposed cable here to attach to!</span>"
 				else
 					set_mode(CLAMPED_OFF)
 					user.visible_message( \
 						"[user] attaches \the [src] to the cable.", \
-						"You attach \the [src] to the cable.",
-						"You hear some wires being connected to something.")
+						"<span class='notice'>You attach \the [src] to the cable.</span>",
+						"<span class='italics'>You hear some wires being connected to something.</span>")
 			else
-				user << "Device must be placed over an exposed cable to attach to it."
+				user << "<span class='warning'>Device must be placed over an exposed cable to attach to it!</span>"
 		else
 			set_mode(DISCONNECTED)
 			user.visible_message( \
 				"[user] detaches \the [src] from the cable.", \
-				"You detach \the [src] from the cable.",
-				"You hear some wires being disconnected from something.")
+				"<span class='notice'>You detach \the [src] from the cable.</span>",
+				"<span class='italics'>You hear some wires being disconnected from something.</span>")
 	else
 		..()
 
@@ -93,8 +93,8 @@
 		if(CLAMPED_OFF)
 			user.visible_message( \
 				"[user] activates \the [src]!", \
-				"You activate \the [src]!",
-				"You hear a click.")
+				"<span class='notice'>You activate \the [src].</span>",
+				"<span class='italics'>You hear a click.</span>")
 			message_admins("Power sink activated by [key_name(user, user.client)](<A HREF='?_src_=holder;adminmoreinfo=\ref[user]'>?</A>) at ([x],[y],[z] - <A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[x];Y=[y];Z=[z]'>JMP</a>)")
 			log_game("Power sink activated by [key_name(user)] at ([x],[y],[z])")
 			set_mode(OPERATING)
@@ -102,8 +102,8 @@
 		if(OPERATING)
 			user.visible_message( \
 				"[user] deactivates \the [src]!", \
-				"You deactivate \the [src]!",
-				"You hear a click.")
+				"<span class='notice'>You deactivate \the [src].</span>",
+				"<span class='italics'>You hear a click.</span>")
 			set_mode(CLAMPED_OFF)
 
 /obj/item/device/powersink/process()

@@ -562,7 +562,7 @@
 
 datum/configuration/proc/get_runnable_midround_modes(crew)
 	var/list/datum/game_mode/runnable_modes = new
-	for(var/T in (typesof(/datum/game_mode) - /datum/game_mode))
+	for(var/T in (typesof(/datum/game_mode) - /datum/game_mode - ticker.mode.type))
 		var/datum/game_mode/M = new T()
 		if(!(M.config_tag in modes))
 			qdel(M)

@@ -67,7 +67,7 @@
 		user.visible_message("<span class='warning'>[user] cuts the [chosen_wire] wire!</span>", "<span class='danger'>You cut the [chosen_wire] wire!</span>")
 		sleep(5)
 		if(chosen_wire == correct_wire)
-			src.audible_message("<span class='warning'>\icon[src] \The [src] suddenly stops beeping and seems lifeless.</span>")
+			src.audible_message("\icon[src] \The [src] suddenly stops beeping and seems lifeless.")
 			user << "<span class='notice'>You did it!</span>"
 			icon_state = "pizzabox_bomb_[correct_wire]"
 			name = "pizza bomb"
@@ -81,13 +81,13 @@
 			return
 	if(istype(I, /obj/item/weapon/wirecutters) && disarmed)
 		if(!in_range(user, src))
-			user << "<span class='warning'>You can't see the box well enough to cut the wires out.</span>"
+			user << "<span class='warning'>You can't see the box well enough to cut the wires out!</span>"
 			return
-		user.visible_message("<span class='notice'>[user] starts removing the payload and wires from \the [src].</span>")
+		user.visible_message("<span class='notice'>[user] starts removing the payload and wires from \the [src].</span>", "<span class='notice'>You start removing the payload and wires from \the [src]...</span>")
 		if(do_after(user, 40))
 			playsound(src, 'sound/items/Wirecutter.ogg', 50, 1, 1)
 			user.unEquip(src)
-			user.visible_message("<span class='notice'>[user] removes the insides of \the [src]!</span>")
+			user.visible_message("<span class='notice'>[user] removes the insides of \the [src]!</span>", "<span class='notice'>You remove the insides of \the [src].</span>")
 			var/obj/item/stack/cable_coil/C = new /obj/item/stack/cable_coil(src.loc)
 			C.amount = 3
 			new /obj/item/weapon/bombcore/miniature(src.loc)

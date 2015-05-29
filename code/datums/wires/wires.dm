@@ -113,14 +113,14 @@ var/list/wireColours = list("red", "blue", "green", "black", "orange", "brown", 
 					var/colour = href_list["cut"]
 					CutWireColour(colour)
 				else
-					L << "<span class='error'>You need wirecutters!</span>"
+					L << "<span class='warning'>You need wirecutters!</span>"
 
 			else if(href_list["pulse"])
 				if(istype(I, /obj/item/device/multitool))
 					var/colour = href_list["pulse"]
 					PulseColour(colour)
 				else
-					L << "<span class='error'>You need a multitool!</span>"
+					L << "<span class='warning'>You need a multitool!</span>"
 
 			else if(href_list["attach"])
 				var/colour = href_list["attach"]
@@ -138,7 +138,7 @@ var/list/wireColours = list("red", "blue", "green", "black", "orange", "brown", 
 							L.drop_item()
 							Attach(colour, A)
 						else
-							L << "<span class='error'>You need a attachable assembly!</span>"
+							L << "<span class='warning'>You need a attachable assembly!</span>"
 
 
 

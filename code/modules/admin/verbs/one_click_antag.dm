@@ -18,11 +18,12 @@ client/proc/one_click_antag()
 		<a href='?src=\ref[src];makeAntag=5'>Make Malf AI</a><br>
 		<a href='?src=\ref[src];makeAntag=11'>Make Blob</a><br>
 		<a href='?src=\ref[src];makeAntag=12'>Make Gangsters</a><br>
+		<a href='?src=\ref[src];makeAntag=16'>Make Shadowling</a><br>
 		<a href='?src=\ref[src];makeAntag=6'>Make Wizard (Requires Ghosts)</a><br>
 		<a href='?src=\ref[src];makeAntag=7'>Make Nuke Team (Requires Ghosts)</a><br>
-		<a href='?src=\ref[src];makeAntag=10'>Make Deathsquad (Requires Ghosts)</a><br>
-		<a href='?src=\ref[src];makeAntag=13'>Make Emergency Response Team (Requires Ghosts)</a><br>
+		<a href='?src=\ref[src];makeAntag=13'>Make Centcom Response Team (Requires Ghosts)</a><br>
 		<a href='?src=\ref[src];makeAntag=14'>Make Abductor Team (Requires Ghosts)</a><br>
+		<a href='?src=\ref[src];makeAntag=15'>Make Revenant (Requires Ghost)</a><br>
 		"}
 /* These dont work just yet
 	Ninja, aliens and deathsquad I have not looked into yet
@@ -319,7 +320,7 @@ client/proc/one_click_antag()
 	if(candidates.len >= 2) //Minimum 2 to be considered a squad
 		//Pick the lucky players
 		var/numagents = min(5,candidates.len) //How many commandos to spawn
-		var/list/spawnpoints = deathsquadspawn
+		var/list/spawnpoints = emergencyresponseteamspawn
 		while(numagents && candidates.len)
 			if (numagents > spawnpoints.len)
 				numagents--
@@ -342,6 +343,9 @@ client/proc/one_click_antag()
 				equip_deathsquad(Commando)
 			Commando.key = chosen_candidate.key
 			Commando.mind.assigned_role = "Death Commando"
+			for(var/obj/machinery/door/poddoor/ert/door in airlocks)
+				spawn(0)
+					door.open()
 
 			//Assign antag status and the mission
 			ticker.mode.traitors += Commando.mind
@@ -409,15 +413,71 @@ client/proc/one_click_antag()
 
 	return 0
 
-// EMERGENCY RESPONSE TEAM
+/datum/admins/proc/makeOfficial()
+	var/mission = input("Assign a task for the official", "Assign Task", "Conduct a routine preformance review of [station_name()] and its Captain.")
+	var/list/mob/dead/observer/candidates = getCandidates("Do you wish to be considered to be a Centcom Official?", "pAI")
+
+	if(candidates.len)
+		var/mob/dead/observer/chosen_candidate = pick(candidates)
+
+		//Create the official
+		var/mob/living/carbon/human/newmob = new (pick(emergencyresponseteamspawn))
+		chosen_candidate.client.prefs.copy_to(newmob)
+		ready_dna(newmob)
+		newmob.real_name = random_name(newmob.gender)
+		newmob.key = chosen_candidate.key
+		newmob.mind.assigned_role = "Centcom Official"
+		equip_centcomofficial(newmob)
+
+		//Assign antag status and the mission
+		ticker.mode.traitors += newmob.mind
+		newmob.mind.special_role = "official"
+		var/datum/objective/missionobj = new
+		missionobj.owner = newmob.mind
+		missionobj.explanation_text = mission
+		missionobj.completed = 1
+		newmob.mind.objectives += missionobj
+
+		//Greet the official
+		newmob << "<B><font size=3 color=red>You are a Centcom Official.</font></B>"
+		newmob << "<BR>Central Command is sending you to [station_name()] with the task: [mission]"
+
+		//Logging and cleanup
+		message_admins("Centcom Official [key_name_admin(newmob)] has spawned with the task: [mission]")
+		log_game("[key_name(newmob)] has been selected as a Centcom Official")
+
+		return 1
+
+	return 0
+
+// CENTCOM RESPONSE TEAM
 /datum/admins/proc/makeEmergencyresponseteam()
+	var/alert = input("Which team should we send?", "Select Response Level") as null|anything in list("Green: Centcom Official", "Blue: Light ERT", "Amber: Full ERT", "Red: Elite ERT", "Delta: Deathsquad")
+	if(!alert)
+		return
+	switch(alert)
+		if("Delta: Deathsquad")
+			return makeDeathsquad()
+		if("Red: Elite ERT")
+			alert = "Red"
+		if("Amber: Full ERT")
+			alert = "Amber"
+		if("Blue: Light ERT")
+			alert = "Blue"
+		if("Green: Centcom Official")
+			return makeOfficial()
+	var/teamsize = min(7,input("Maximum size of team? (7 max)", "Select Team Size",4) as null|num)
 	var/mission = input("Assign a mission to the Emergency Response Team", "Assign Mission", "Assist the station.")
-	var/list/mob/dead/observer/candidates = getCandidates("Do you wish to be considered for an elite Nanotrasen Emergency Response Team?", "deathsquad", null)
+	var/list/mob/dead/observer/candidates = getCandidates("Do you wish to be considered for a Code [alert] Nanotrasen Emergency Response Team?", "deathsquad", null)
 	var/teamSpawned = 0
 
-	if(candidates.len >= 4) //Minimum 4 to be considered a squad
+	if(candidates.len > 0)
 		//Pick the (un)lucky players
-		var/numagents = min(7,candidates.len) //How many officers to spawn
+		var/numagents = min(teamsize,candidates.len) //How many officers to spawn
+		var/redalert //If the ert gets super weapons
+		if (alert == "Red")
+			numagents = min(teamsize,candidates.len)
+			redalert = 1
 		var/list/spawnpoints = emergencyresponseteamspawn
 		while(numagents && candidates.len)
 			if (numagents > spawnpoints.len)
@@ -437,31 +497,37 @@ client/proc/one_click_antag()
 			switch(numagents)
 				if(1)
 					ERTOperative.real_name = "Commander [pick(lastname)]"
-					equip_emergencyresponsesquad(ERTOperative, "commander")
+					equip_emergencyresponsesquad(ERTOperative, "commander",redalert)
 				if(2)
 					ERTOperative.real_name = "Security Officer [pick(lastname)]"
-					equip_emergencyresponsesquad(ERTOperative, "sec")
+					equip_emergencyresponsesquad(ERTOperative, "sec",redalert)
 				if(3)
 					ERTOperative.real_name = "Medical Officer [pick(lastname)]"
-					equip_emergencyresponsesquad(ERTOperative, "med")
+					equip_emergencyresponsesquad(ERTOperative, "med",redalert)
 				if(4)
 					ERTOperative.real_name = "Engineer [pick(lastname)]"
-					equip_emergencyresponsesquad(ERTOperative, "eng")
+					equip_emergencyresponsesquad(ERTOperative, "eng",redalert)
 				if(5)
 					ERTOperative.real_name = "Security Officer [pick(lastname)]"
-					equip_emergencyresponsesquad(ERTOperative, "sec")
+					equip_emergencyresponsesquad(ERTOperative, "sec",redalert)
 				if(6)
 					ERTOperative.real_name = "Medical Officer [pick(lastname)]"
-					equip_emergencyresponsesquad(ERTOperative, "med")
+					equip_emergencyresponsesquad(ERTOperative, "med",redalert)
 				if(7)
 					ERTOperative.real_name = "Engineer [pick(lastname)]"
-					equip_emergencyresponsesquad(ERTOperative, "eng")
+					equip_emergencyresponsesquad(ERTOperative, "eng",redalert)
 			ERTOperative.key = chosen_candidate.key
 			ERTOperative.mind.assigned_role = "ERT"
 
+			//Open the Armory doors
+			if(alert != "Blue")
+				for(var/obj/machinery/door/poddoor/ert/door in airlocks)
+					spawn(0)
+						door.open()
+
 			//Assign antag status and the mission
 			ticker.mode.traitors += ERTOperative.mind
-			ERTOperative.mind.special_role = "ert"
+			ERTOperative.mind.special_role = "ERT"
 			var/datum/objective/missionobj = new
 			missionobj.owner = ERTOperative.mind
 			missionobj.explanation_text = mission
@@ -470,7 +536,7 @@ client/proc/one_click_antag()
 
 			//Greet the commando
 			ERTOperative << "<B><font size=3 color=red>You are [numagents==1?"the Emergency Response Team Commander":"an Emergency Response Officer"].</font></B>"
-			var/missiondesc = "Your squad is being sent on a mission to [station_name()] by Nanotrasen's Security Division."
+			var/missiondesc = "Your squad is being sent on a Code [alert] mission to [station_name()] by Nanotrasen's Security Division."
 			if(numagents == 1) //If Squad Leader
 				missiondesc += " Lead your squad to ensure the completion of the mission. Avoid civilian casualites when possible. Board the shuttle when your team is ready."
 			else
@@ -480,7 +546,7 @@ client/proc/one_click_antag()
 
 			//Logging and cleanup
 			if(numagents == 1)
-				message_admins("The emergency response team has spawned with the mission: [mission].")
+				message_admins("A Code [alert] emergency response team has spawned with the mission: [mission]")
 			log_game("[key_name(ERTOperative)] has been selected as an Emergency Response Officer")
 			numagents--
 			teamSpawned++
@@ -499,14 +565,18 @@ client/proc/one_click_antag()
 	if(candidates.len >= 2)
 		//Oh god why we can't have static functions
 		var/teams_finished = 0
-		if(ticker.mode.config_tag == "abductor")
+		if(ticker.mode.config_tag == "abduction")
 			var/datum/game_mode/abduction/A = ticker.mode
 			teams_finished = A.teams
 		else
 			teams_finished = round(ticker.mode.abductors.len / 2)
 		var/number =  teams_finished + 1
 
-		var/datum/game_mode/abduction/temp = new
+		var/datum/game_mode/abduction/temp
+		if(ticker.mode.config_tag == "abduction")
+			temp = ticker.mode
+		else
+			temp = new
 
 		var/agent_mind = pick(candidates)
 		candidates -= agent_mind
@@ -525,17 +595,62 @@ client/proc/one_click_antag()
 		temp.team_names.len = number
 		temp.scientists[number] = scientist_mind
 		temp.agents[number] = agent_mind
-		temp.abductors = list(agent_mind,scientist_mind)
-		temp.make_abductor_team(number)
+		temp.abductors |= list(agent_mind,scientist_mind)
+		temp.make_abductor_team(number,preset_scientist=scientist_mind,preset_agent=agent_mind)
 		temp.post_setup_team(number)
-		ticker.mode.abductors += temp.abductors
-		if(ticker.mode.config_tag == "abductor")
+		if(ticker.mode.config_tag == "abduction")
 			var/datum/game_mode/abduction/A = ticker.mode
 			A.teams += 1
+		else
+			ticker.mode.abductors |= temp.abductors
 
 		return 1
 	else
 		return
+
+/datum/admins/proc/makeRevenant()
+	var/list/mob/dead/observer/candidates = getCandidates("Do you wish to be considered for becoming a revenant?", "revenant", null)
+	if(candidates.len >= 1)
+		var/spook_op = pick(candidates)
+		var/mob/dead/observer/O = spook_op
+		candidates -= spook_op
+		var/mob/living/simple_animal/revenant/revvie = new /mob/living/simple_animal/revenant(get_turf(O))
+		revvie.key = O.key
+		revvie.mind.assigned_role = "revenant"
+		revvie.mind.special_role = "Revenant"
+		return 1
+	else
+		return
+
+/datum/admins/proc/makeShadowling()
+	var/datum/game_mode/shadowling/temp = new
+	if(config.protect_roles_from_antagonist)
+		temp.restricted_jobs += temp.protected_jobs
+	if(config.protect_assistant_from_antagonist)
+		temp.restricted_jobs += "Assistant"
+	var/list/mob/living/carbon/human/candidates = list()
+	var/mob/living/carbon/human/H = null
+	for(var/mob/living/carbon/human/applicant in player_list)
+		if(applicant.client.prefs.be_special & BE_SHADOWLING)
+			if(!applicant.stat)
+				if(applicant.mind)
+					if(!applicant.mind.special_role)
+						if(temp.age_check(applicant.client))
+							if(!(applicant.job in temp.restricted_jobs))
+								if(!(is_shadow_or_thrall(applicant)))
+									candidates += applicant
+
+	if(candidates.len)
+		H = pick(candidates)
+		ticker.mode.shadows += H.mind
+		H.mind.special_role = "shadowling"
+		H << "<span class='shadowling'><b><i>Something stirs in the space between worlds. A red light floods your mind, and suddenly you understand. Your human disguise has served you well, but it \
+		is time you cast it away. You are a shadowling, and you are to ascend at all costs.</b></i></span>"
+		ticker.mode.finalize_shadowling(H.mind)
+		message_admins("[H] has been made into a shadowling.")
+		candidates.Remove(H)
+		return 1
+	return 0
 
 /datum/admins/proc/getCandidates(var/Question, var/jobbanType, var/datum/game_mode/gametypeCheck)
 	var/list/mob/dead/observer/candidates = list()
@@ -553,12 +668,17 @@ client/proc/one_click_antag()
 			if(jobban_isbanned(G, jobbanType) || jobban_isbanned(G, "Syndicate"))
 				continue
 		spawn(0)
+			G << 'sound/misc/notice2.ogg' //Alerting them to their consideration
 			switch(alert(G,Question,"Please answer in 30 seconds!","Yes","No"))
 				if("Yes")
+					G << "<span class='notice'>Choice registered: Yes.</span>"
 					if((world.time-time_passed)>300)//If more than 30 game seconds passed.
+						G << "<span class='danger'>Sorry, you were too late for the consideration!</span>"
+						G << 'sound/machines/buzz-sigh.ogg'
 						return
 					candidates += G
 				if("No")
+					G << "<span class='danger'>Choice registered: No.</span>"
 					return
 				else
 					return

@@ -211,28 +211,54 @@
 	return
 
 
-/obj/structure/foamedmetal/attack_animal(var/mob/living/simple_animal/M)
-	if(M.environment_smash >= 1)
-		M.do_attack_animation(src)
-		M << "<span class='notice'>You smash apart the foam wall.</span>"
+/obj/structure/foamedmetal/attack_animal(var/mob/living/simple_animal/user)
+	user.changeNext_move(CLICK_CD_MELEE)
+	user.do_attack_animation(src)
+	if(user.environment_smash >= 1)
+		user.do_attack_animation(src)
+		user << "<span class='notice'>You smash apart the foam wall.</span>"
 		qdel(src)
 		return
 
 
 /obj/structure/foamedmetal/attack_hulk(mob/living/carbon/human/user)
 	..(user, 1)
+	user.changeNext_move(CLICK_CD_MELEE)
+	user.do_attack_animation(src)
 	if(prob(75 - metal*25))
-		user.visible_message("<span class='danger'>[user] smashes through the foamed metal.</span>", \
-						"<span class='danger'>You smash through the metal foam wall.</span>")
+		user.visible_message("<span class='danger'>[user] smashes through the foamed metal!</span>", \
+						"<span class='danger'>You smash through the metal foam wall!</span>")
 		qdel(src)
 	return 1
 
+/obj/structure/foamedmetal/attack_alien(var/mob/living/carbon/alien/humanoid/user)
+	user.changeNext_move(CLICK_CD_MELEE)
+	user.do_attack_animation(src)
+	if(prob(75 - metal*25))
+		user.visible_message("<span class='danger'>[user] smashes through the foamed metal!</span>", \
+						"<span class='danger'>You smash through the metal foam wall!</span>")
+		qdel(src)
+
+/obj/structure/foamedmetal/attack_slime(var/mob/living/simple_animal/slime/user)
+	user.changeNext_move(CLICK_CD_MELEE)
+	user.do_attack_animation(src)
+	if(!user.is_adult)
+		attack_hand(user)
+		return
+	if(prob(75 - metal*25))
+		user.visible_message("<span class='danger'>[user] smashes through the foamed metal!</span>", \
+						"<span class='danger'>You smash through the metal foam wall!</span>")
+		qdel(src)
 
 /obj/structure/foamedmetal/attack_hand(var/mob/user)
-	user << "<span class='notice'>You hit the metal foam but bounce off it.</span>"
+	user.changeNext_move(CLICK_CD_MELEE)
+	user.do_attack_animation(src)
+	user << "<span class='warning'>You hit the metal foam but bounce off it!</span>"
 
 
 /obj/structure/foamedmetal/attackby(var/obj/item/I, var/mob/user, params)
+	user.changeNext_move(CLICK_CD_MELEE)
+	user.do_attack_animation(src)
 	if (istype(I, /obj/item/weapon/grab))
 		var/obj/item/weapon/grab/G = I
 		G.affecting.loc = src.loc
@@ -242,11 +268,11 @@
 		return
 
 	if(prob(I.force*20 - metal*25))
-		user.visible_message("<span class='danger'>[user] smashes through the foamed metal.</span>", \
-						"<span class='danger'>You smash through the foamed metal with \the [I].</span>")
+		user.visible_message("<span class='danger'>[user] smashes through the foamed metal!</span>", \
+						"<span class='danger'>You smash through the foamed metal with \the [I]!</span>")
 		qdel(src)
 	else
-		user << "<span class='notice'>You hit the metal foam to no effect.</span>"
+		user << "<span class='warning'>You hit the metal foam to no effect!</span>"
 
 
 /obj/structure/foamedmetal/CanPass(atom/movable/mover, turf/target, height=1.5)

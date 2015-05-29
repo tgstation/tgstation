@@ -6,8 +6,6 @@
 	icon_state = "eyeball"
 	icon_living = "eyeball"
 	icon_gib = ""
-	meat_type = null
-	meat_amount = 0
 	response_help = "pets"
 	response_disarm = "gently pushes aside"
 	response_harm = "hits"

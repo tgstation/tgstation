@@ -55,7 +55,7 @@
 
 /obj/machinery/constructable_frame/machine_frame/attackby(obj/item/P as obj, mob/user as mob, params)
 	if(P.crit_fail)
-		user << "<span class='danger'>This part is faulty, you cannot add this to the machine!</span>"
+		user << "<span class='warning'>This part is faulty, you cannot add this to the machine!</span>"
 		return
 	switch(state)
 		if(1)
@@ -76,20 +76,16 @@
 				else
 					user << "<span class='warning'>You need five length of cable to wire the frame!</span>"
 					return
-			if(istype(P, /obj/item/weapon/weldingtool) && !anchored)
-				var/obj/item/weapon/weldingtool/WT = P
-				if(WT.remove_fuel(0,user))
-					playsound(src.loc, 'sound/items/Welder2.ogg', 50, 1)
-					user.visible_message("<span class='warning'>[user] disassembles the frame.</span>", \
-										"<span class='notice'>You start to disassemble the frame...</span>", "You hear welding and clanking.")
-					if(do_after(user, 40, target = src))
-						if( !WT.isOn() )
-							return
-						if(state == 1)
-							user << "<span class='notice'>You disassemble the frame.</span>"
-							var/obj/item/stack/sheet/metal/M = new (loc, 5)
-							M.add_fingerprint(user)
-							qdel(src)
+			if(istype(P, /obj/item/weapon/screwdriver) && !anchored)
+				playsound(src.loc, 'sound/items/Screwdriver.ogg', 50, 1)
+				user.visible_message("<span class='warning'>[user] disassembles the frame.</span>", \
+									"<span class='notice'>You start to disassemble the frame...</span>", "You hear banging and clanking.")
+				if(do_after(user, 40, target = src))
+					if(state == 1)
+						user << "<span class='notice'>You disassemble the frame.</span>"
+						var/obj/item/stack/sheet/metal/M = new (loc, 5)
+						M.add_fingerprint(user)
+						qdel(src)
 			if(istype(P, /obj/item/weapon/wrench))
 				user << "<span class='notice'>You start [anchored ? "un" : ""]securing [name]...</span>"
 				playsound(src.loc, 'sound/items/Ratchet.ogg', 75, 1)
@@ -207,7 +203,7 @@
 						if(istype(P, /obj/item/stack/cable_coil))
 							var/obj/item/stack/cable_coil/CP = P
 							if (CP.get_amount() < 1)
-								user << "You need more cable!"
+								user << "<span class='warning'>You need more cable!</span>"
 								return
 							var/obj/item/stack/cable_coil/CC = new /obj/item/stack/cable_coil(src, 1, CP.item_color)
 							if(CP.use(1))
@@ -222,7 +218,7 @@
 						update_req_desc()
 						return 1
 				if(!success)
-					user << "<span class='danger'>You cannot add that to the machine!</span>"
+					user << "<span class='warning'>You cannot add that to the machine!</span>"
 					return 0
 
 

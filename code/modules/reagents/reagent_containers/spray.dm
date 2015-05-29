@@ -40,7 +40,7 @@
 		return
 
 	if(reagents.total_volume < amount_per_transfer_from_this)
-		user << "<span class='notice'>\The [src] is empty!</span>"
+		user << "<span class='warning'>\The [src] is empty!</span>"
 		return
 
 	spray(A)

@@ -12,14 +12,14 @@
 		var/mob/living/M = buckled_mob
 		if(M != user)
 			M.visible_message(\
-				"<span class='notice'>[user.name] pulls [M.name] free from the sticky nest!</span>",\
+				"[user.name] pulls [M.name] free from the sticky nest!",\
 				"<span class='notice'>[user.name] pulls you free from the gelatinous resin.</span>",\
-				"You hear squelching...")
+				"<span class='italics'>You hear squelching...</span>")
 		else
 			M.visible_message(\
 				"<span class='warning'>[M.name] struggles to break free from the gelatinous resin!</span>",\
-				"<span class='warning'>You struggle to break free from the gelatinous resin. (Stay still for two minutes.)</span>",\
-				"You hear squelching...")
+				"<span class='notice'>You struggle to break free from the gelatinous resin... (Stay still for two minutes.)</span>",\
+				"<span class='italics'>You hear squelching...</span>")
 			if(!do_after(M, 1200))
 				if(M && M.buckled)
 					M << "<span class='warning'>You fail to unbuckle yourself!</span>"
@@ -28,8 +28,8 @@
 				return
 			M.visible_message(\
 				"<span class='warning'>[M.name] breaks free from the gelatinous resin!</span>",\
-				"<span class='warning'>You break free from the gelatinous resin!</span>",\
-				"You hear squelching...")
+				"<span class='notice'>You break free from the gelatinous resin!</span>",\
+				"<span class='italics'>You hear squelching...</span>")
 
 		unbuckle_mob()
 		add_fingerprint(user)
@@ -47,9 +47,9 @@
 
 	if(buckle_mob(M))
 		M.visible_message(\
-			"<span class='notice'>[user.name] secretes a thick vile goo, securing [M.name] into [src]!</span>",\
-			"<span class='warning'>[user.name] drenches you in a foul-smelling resin, trapping you in [src]!</span>",\
-			"<span class='notice'>You hear squelching...</span>")
+			"[user.name] secretes a thick vile goo, securing [M.name] into [src]!",\
+			"<span class='danger'>[user.name] drenches you in a foul-smelling resin, trapping you in [src]!</span>",\
+			"<span class='italics'>You hear squelching...</span>")
 
 /obj/structure/stool/bed/nest/post_buckle_mob(mob/living/M)
 	if(M == buckled_mob)

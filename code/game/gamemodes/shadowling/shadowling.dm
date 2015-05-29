@@ -85,11 +85,6 @@ Made by Xhuis
 	if(config.protect_assistant_from_antagonist)
 		restricted_jobs += "Assistant"
 
-	for(var/datum/mind/player in antag_candidates)
-		for(var/job in restricted_jobs)
-			if(player.assigned_role == job)
-				antag_candidates -= player
-
 	var/shadowlings = 2 //How many shadowlings there are; hardcoded to 2
 
 	while(shadowlings)
@@ -98,6 +93,7 @@ Made by Xhuis
 		antag_candidates -= shadow
 		modePlayer += shadow
 		shadow.special_role = "Shadowling"
+		shadow.restricted_roles = restricted_jobs
 		shadowlings--
 	return 1
 
@@ -157,28 +153,6 @@ Made by Xhuis
 		new_thrall_mind.spell_list += new /obj/effect/proc_holder/spell/targeted/shadowling_hivemind
 		return 1
 
-
-
-/*
-	GAME FINISH CHECKS
-*/
-
-
-/datum/game_mode/shadowling/check_finished()
-	var/shadows_alive = 0 //and then shadowling was kill
-	for(var/datum/mind/shadow in shadows) //but what if shadowling was not kill?
-		if(!istype(shadow.current,/mob/living/carbon/human) && !istype(shadow.current,/mob/living/simple_animal/ascendant_shadowling))
-			continue
-		if(shadow.current.stat == DEAD)
-			continue
-		shadows_alive++
-	if(shadows_alive)
-		return ..()
-	else
-		shadowling_dead = 1 //but shadowling was kill :(
-		return 1
-
-
 /datum/game_mode/shadowling/proc/check_shadow_victory()
 	var/success = 0 //Did they win?
 	if(shadow_objectives.Find("enthrall"))
@@ -193,6 +167,8 @@ Made by Xhuis
 		world << "<span class='redtext'><b>The shadowlings have been killed by the crew!</b></span>"
 	else if(!check_shadow_victory() && SSshuttle.emergency.mode >= SHUTTLE_ESCAPE)
 		world << "<span class='redtext'><b>The crew has escaped the station before the shadowlings could ascend!</b></span>"
+	else
+		world << "<span class='redtext'><b>The shadowlings have failed!</b></span>"
 	..()
 	return 1
 

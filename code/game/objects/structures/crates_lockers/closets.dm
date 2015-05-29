@@ -211,7 +211,7 @@
 						return
 					playsound(loc, 'sound/items/Welder2.ogg', 50, 1)
 					new /obj/item/stack/sheet/metal(src.loc)
-					visible_message("<span class='notice'>[user] has cut \the [src] apart with \the [WT].</span>", "You hear welding.")
+					visible_message("[user] has cut \the [src] apart with \the [WT].", "<span class='italics'>You hear welding.</span>")
 					qdel(src)
 				return
 		if(isrobot(user))
@@ -231,18 +231,18 @@
 						return
 					playsound(loc, 'sound/items/welder.ogg', 50, 1)
 					welded = !welded
-					user << "<span class='notice'>You [welded ? "welded [src] shut":"unwelded [src]"].</span>"
+					user << "<span class='notice'>You [welded ? "weld [src] shut":"unweld [src]"].</span>"
 					update_icon()
-					user.visible_message("<span class='warning'>[user.name] has [welded ? "welded [src] shut":"unwelded [src]"].</span>")
+					user.visible_message("[user.name] has [welded ? "welded [src] shut":"unwelded [src]"].", "<span class='warning'>You [welded ? "weld [src] shut":"unweld [src]"].</span>")
 				return
 		if(secure && broken)
 			user << "<span class='notice'>The locker appears to be broken.</span>"
 			return
-		if(!place(user, W))
+		if(!place(user, W) && !isnull(W))
 			src.attack_hand(user)
 
 /obj/structure/closet/proc/place(var/mob/user, var/obj/item/I)
-	if(!src.opened)
+	if(!src.opened && secure)
 		togglelock(user)
 		return 1
 	return 0
@@ -285,6 +285,8 @@
 
 /obj/structure/closet/attack_hand(mob/user as mob)
 	src.add_fingerprint(user)
+	if(user.lying && get_dist(src, user) > 0)
+		return
 
 	if(!src.toggle())
 		return src.attackby(null, user)
@@ -301,7 +303,7 @@
 	if(!usr.canmove || usr.stat || usr.restrained())
 		return
 
-	if(ishuman(usr))
+	if(iscarbon(usr) || issilicon(usr))
 		src.attack_hand(usr)
 	else
 		usr << "<span class='warning'>This mob type can't use this verb.</span>"
@@ -337,8 +339,7 @@
 		welded = 0 //applies to all lockers lockers
 		locked = 0 //applies to critter crates and secure lockers only
 		broken = 1 //applies to secure lockers only
-		visible_message("<span class='danger'>[user] successfully broke out of [src]!</span>")
-		user << "<span class='notice'>You successfully break out of [src]!</span>"
+		user.visible_message("<span class='danger'>[user] successfully broke out of [src]!</span>", "<span class='notice'>You successfully break out of [src]!</span>")
 		if(istype( src.loc, /obj/structure/bigDelivery))
 			var/obj/structure/bigDelivery/D = src.loc
 			qdel(D)
@@ -350,8 +351,8 @@
 
 /obj/structure/closet/AltClick(var/mob/user)
 	..()
-	if(user.stat || !user.canmove || user.restrained() || broken)
-		user << "<span class='notice'>You can't do that right now.</span>"
+	if(!user.canUseTopic(user) || broken)
+		user << "<span class='warning'>You can't do that right now!</span>"
 		return
 	if(src.opened || !secure || !in_range(src, user))
 		return

@@ -6,12 +6,15 @@
 	var/id = 1
 	var/auto_close = 0 // Time in seconds to automatically close when opened, 0 if it doesn't.
 	sub_door = 1
+	heat_proof = 1
 
 /obj/machinery/door/poddoor/preopen
 	icon_state = "open"
 	density = 0
 	opacity = 0
 
+/obj/machinery/door/poddoor/ert
+	desc = "A heavy duty blast door that only opens for dire emergencies."
 
 /obj/machinery/door/poddoor/Bumped(atom/AM)
 	if(density)

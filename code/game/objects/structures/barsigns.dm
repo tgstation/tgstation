@@ -66,11 +66,11 @@
 		return
 	if( istype(I, /obj/item/weapon/screwdriver))
 		if(!panel_open)
-			user << "You open the maintenance panel."
+			user << "<span class='notice'>You open the maintenance panel.</span>"
 			set_sign(new /datum/barsign/hiddensigns/signoff)
 			panel_open = 1
 		else
-			user << "You close the maintenance panel."
+			user << "<span class='notice'>You close the maintenance panel.</span>"
 			if(!broken && !emagged)
 				set_sign(pick(barsigns))
 			else if(emagged)
@@ -82,17 +82,17 @@
 	if(istype(I, /obj/item/stack/cable_coil) && panel_open)
 		var/obj/item/stack/cable_coil/C = I
 		if(emagged) //Emagged, not broken by EMP
-			user << "Sign has been damaged beyond repair."
+			user << "<span class='warning'>Sign has been damaged beyond repair!</span>"
 			return
 		else if(!broken)
-			user << "This sign is functioning properly."
+			user << "<span class='warning'>This sign is functioning properly!</span>"
 			return
 
 		if(C.use(2))
 			user << "<span class='notice'>You replace the burnt wiring.</span>"
 			broken = 0
 		else
-			user << "<span class='warning'>You need at least two lengths of cable.</span>"
+			user << "<span class='warning'>You need at least two lengths of cable!</span>"
 
 
 
@@ -105,7 +105,7 @@
 
 /obj/structure/sign/barsign/emag_act(mob/user)
 	if(broken || emagged)
-		user << "Nothing interesting happens."
+		user << "<span class='warning'>Nothing interesting happens!</span>"
 		return
 	user << "<span class='notice'>You emag the barsign. Takeover in progress...</span>"
 	sleep(100) //10 seconds
@@ -273,6 +273,11 @@
 	icon = "alohasnackbar"
 	desc = "A tasteful, inoffensive tiki bar sign."
 
+/datum/barsign/thenet
+	name = "The Net"
+	icon = "thenet"
+	desc = "The sea of drinkformation." //you couldn't come up with something better?
+
 
 /datum/barsign/hiddensigns
 	hidden = 1
@@ -300,3 +305,4 @@
 	name = "Bar Sign"
 	icon = "empty"
 	desc = "This sign doesn't seem to be on."
+

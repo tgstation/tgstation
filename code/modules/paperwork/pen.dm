@@ -113,7 +113,7 @@
 	cooldown = 1
 	icon_state = "pen_blink"
 	//The more gang members there are the longer the cooldown will be
-	var/time = 500 + (100 * modifier) //50 seconds + 10 seconds for every member in the gang
+	var/time = 450 + (150 * modifier) //45 seconds + 15 seconds for every member in the gang
 	spawn(time)
 		cooldown = 0
 		icon_state = "pen"

@@ -34,9 +34,9 @@
 	if(requires_power)
 		luminosity = 0
 	else
-		power_light = 0			//rastaf0
-		power_equip = 0			//rastaf0
-		power_environ = 0		//rastaf0
+		power_light = 1			//rastaf0
+		power_equip = 1			//rastaf0
+		power_environ = 1		//rastaf0
 		luminosity = 1
 		lighting_use_dynamic = 0
 

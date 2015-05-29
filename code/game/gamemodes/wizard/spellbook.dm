@@ -18,9 +18,9 @@
 	if(istype(O, /obj/item/weapon/antag_spawner/contract))
 		var/obj/item/weapon/antag_spawner/contract/contract = O
 		if(contract.used)
-			user << "The contract has been used, you can't get your points back now."
+			user << "<span class='warning'>The contract has been used, you can't get your points back now!</span>"
 		else
-			user << "You feed the contract back into the spellbook, refunding your points."
+			user << "<span class='notice'>You feed the contract back into the spellbook, refunding your points.</span>"
 			src.max_uses++
 			src.uses++
 			qdel(O)
@@ -30,11 +30,11 @@
 
 /obj/item/weapon/spellbook/attack_self(mob/user as mob)
 	if(!owner)
-		user << "You bind the spellbook to yourself."
+		user << "<span class='notice'>You bind the spellbook to yourself.</span>"
 		owner = user
 		return
 	if(user != owner)
-		user << "The [name] does not recognize you as it's owner and refuses to open."
+		user << "<span class='warning'>The [name] does not recognize you as it's owner and refuses to open!</span>"
 		return
 	user.set_machine(src)
 	var/dat
@@ -100,7 +100,7 @@
 		dat += "<A href='byond://?src=\ref[src];spell_choice=knock'>Knock</A> (10)<BR>"
 		dat += "<I>This spell opens nearby doors and does not require wizard garb.</I><BR>"
 
-		dat += "<A href='byond://?src=\ref[src];spell_choice=barnyard'>Curse of the Barnyward</A> (15)<BR>"
+		dat += "<A href='byond://?src=\ref[src];spell_choice=barnyard'>Curse of the Barnyard</A> (15)<BR>"
 		dat += "<I> This Spell dooms any unlucky soul to the life of a barnyard animal. Well not exactly but you still get to laugh at them when they MOO!. It does not require a wizard garb.</I><BR>"
 
 		dat += "<A href='byond://?src=\ref[src];spell_choice=fleshtostone'>Flesh to Stone</A> (60)<BR>"
@@ -223,7 +223,7 @@
 				uses--
 			/*
 			*/
-				var/list/available_spells = list(magicmissile = "Magic Missile", fireball = "Fireball", disintegrate = "Disintegrate", disabletech = "Disable Tech", repulse = "Repulse", smoke = "Smoke", blind = "Blind", mindswap = "Mind Transfer", forcewall = "Forcewall", blink = "Blink", teleport = "Teleport", mutate = "Mutate", etherealjaunt = "Ethereal Jaunt", knock = "Knock", barnyardcurse = "The Curse of the Barnyard", fleshtostone = "Flesh to Stone", summonitem = "Instant Summons", summonguns = "Summon Guns", summonmagic = "Summon Magic", summonevents = "Summon Events", staffchange = "Staff of Change", soulstone = "Six Soul Stone Shards and the spell Artificer", necrostone = "A Necromantic Stone", armor = "Mastercrafted Armor Set", staffanimate = "Staff of Animation", staffchaos = "Staff of Chaos", staffdoor = "Staff of Door Creation", wands = "Wand Assortment", lightningbolt = "Lightning Bolt")
+				var/list/available_spells = list(magicmissile = "Magic Missile", fireball = "Fireball", disintegrate = "Disintegrate", disabletech = "Disable Tech", repulse = "Repulse", smoke = "Smoke", blind = "Blind", mindswap = "Mind Transfer", forcewall = "Forcewall", blink = "Blink", teleport = "Teleport", mutate = "Mutate", etherealjaunt = "Ethereal Jaunt", knock = "Knock", barnyard = "Curse of the Barnyard", fleshtostone = "Flesh to Stone", summonitem = "Instant Summons", summonguns = "Summon Guns", summonmagic = "Summon Magic", summonevents = "Summon Events", staffchange = "Staff of Change", soulstone = "Six Soul Stone Shards and the spell Artificer", necrostone = "A Necromantic Stone", armor = "Mastercrafted Armor Set", staffanimate = "Staff of Animation", staffchaos = "Staff of Chaos", staffdoor = "Staff of Door Creation", wands = "Wand Assortment", lightningbolt = "Lightning Bolt")
 				var/already_knows = 0
 				for(var/obj/effect/proc_holder/spell/aspell in H.mind.spell_list)
 					if(available_spells[href_list["spell_choice"]] == initial(aspell.name))

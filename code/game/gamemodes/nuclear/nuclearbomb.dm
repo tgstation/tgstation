@@ -246,6 +246,7 @@ This is here to make the tiles around the station mininuke change when it's arme
 /obj/item/weapon/disk/nuclear
 	name = "nuclear authentication disk"
 	desc = "Better keep this safe."
+	icon = 'icons/obj/items.dmi'
 	icon_state = "nucleardisk"
 	item_state = "card-id"
 	w_class = 1.0
@@ -258,7 +259,7 @@ This is here to make the tiles around the station mininuke change when it's arme
 	var/turf/disk_loc = get_turf(src)
 	if(disk_loc.z > ZLEVEL_CENTCOM)
 		get(src, /mob) << "<span class='danger'>You can't help but feel that you just lost something back there...</span>"
-		Destroy()
+		qdel(src)
 
 /obj/item/weapon/disk/nuclear/Destroy()
 	if(blobstart.len > 0)
@@ -267,7 +268,7 @@ This is here to make the tiles around the station mininuke change when it's arme
 		var/turf/diskturf = get_turf(src)
 		message_admins("[src] has been destroyed in ([diskturf.x], [diskturf.y] ,[diskturf.z] - <A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[diskturf.x];Y=[diskturf.y];Z=[diskturf.z]'>JMP</a>). Moving it to ([NEWDISK.x], [NEWDISK.y], [NEWDISK.z] - <A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[NEWDISK.x];Y=[NEWDISK.y];Z=[NEWDISK.z]'>JMP</a>).")
 		log_game("[src] has been destroyed in ([diskturf.x], [diskturf.y] ,[diskturf.z]). Moving it to ([NEWDISK.x], [NEWDISK.y], [NEWDISK.z]).")
-		del(src) //Needed to clear all references to it
+		return QDEL_HINT_HARDDEL_NOW
 	else
 		ERROR("[src] was supposed to be destroyed, but we were unable to locate a blobstart landmark to spawn a new one.")
-	return 1 // Cancel destruction.
+	return QDEL_HINT_LETMELIVE // Cancel destruction.

@@ -1,6 +1,7 @@
 /datum/round_event_control/revenant
 	name = "Spawn Revenant"
 	typepath = /datum/round_event/revenant
+	weight = 0 //Admin only
 	max_occurrences = 3
 	earliest_start = 0 //Meant to mix things up early-game.
 
@@ -37,21 +38,11 @@
 		return find_revenant()
 	var/mob/living/simple_animal/revenant/revvie = new /mob/living/simple_animal/revenant/(pick(spawn_locs))
 	player_mind.transfer_to(revvie)
-	player_mind.assigned_role = "MODE"
+	player_mind.assigned_role = "revenant"
 	player_mind.special_role = "Revenant"
 	ticker.mode.traitors |= player_mind
-	revvie << 'sound/effects/ghost.ogg'
 	message_admins("[key_of_revenant] has been made into a Revenant by an event.")
 	log_game("[key_of_revenant] was spawned as a Revenant by an event.")
-	player_mind.store_memory("<span class='deadsay'>I am a revenant. My spectral form has been empowered. My only goal is to gather essence from the humans of [world.name].</span>")
-	revvie << "<br>"
-	revvie << "<span class='deadsay'><font size=3><b>You are a revenant!</b></font></span>"
-	revvie << "<b>Your formerly mundane spirit has been infused with alien energies and empowered into a revenant.</b>"
-	revvie << "<b>You are not dead, not alive, but somewhere in between. You are capable of very limited interaction with both worlds.</b>"
-	revvie << "<b>You are invincible and invisible to everyone but other ghosts. Some abilities may change this.</b>"
-	revvie << "<b>Your goal is to gather essence from humans. Your essence passively regenerates up to 25E over time. You can use the Harvest abilities to gather more from corpses.</b>"
-	//revvie << "<b>Be sure to read the wiki page at https://tgstation13.org/wiki/Revenant !</b>" //Not added yet.
-	revvie << "<br>"
 	return 1
 
 

@@ -23,7 +23,7 @@
 		if(Uses == 0)
 			user << "<span class='warning'> You can't enhance a used extract!</span>"
 			return ..()
-		user <<"You apply the enhancer. It now has triple the amount of uses."
+		user <<"<span class='notice'>You apply the enhancer. It now has triple the amount of uses.</span>"
 		Uses = 3
 		enhanced = 1
 		qdel(O)
@@ -204,8 +204,8 @@
 		M.languages |= HUMAN
 		M.faction -= "neutral"
 		M << "<span class='warning'>All at once it makes sense, you know what you are and who you are! Self awareness is yours!</span>"
-		M << "You are grateful to be self aware and owe [user] a great debt. Serve [user], and assist them in completing their goals at any cost."
-		user << "<span class='warning'>[M] is suddenly attentive and aware. It worked!</span>"
+		M << "<span class='userdanger'>You are grateful to be self aware and owe [user] a great debt. Serve [user], and assist them in completing their goals at any cost.</span>"
+		user << "<span class='notice'>[M] is suddenly attentive and aware. It worked!</span>"
 		qdel(src)
 	else
 		user << "<span class='notice'>[M] looks interested for a moment, but then looks back down. Maybe you should try again later...</span>"
@@ -232,9 +232,16 @@
 		user <<"<span class='warning'> The slime already has the maximum amount of extract!</span>"
 		return..()
 
-	user <<"You feed the slime the steroid. It now has triple the amount of extract."
+	user <<"<span class='notice'>You feed the slime the steroid. It now has triple the amount of extract.</span>"
 	M.cores = 3
 	qdel(src)
+
+
+/obj/item/weapon/slimesteroid3
+	name = "slime steroid"
+	desc = "A potent chemical mix that will cause a slime to generate more extract."
+	icon = 'icons/obj/chemical.dmi'
+	icon_state = "bottle16"
 
 /obj/item/weapon/slimesteroid2
 	name = "extract enhancer"
@@ -254,6 +261,54 @@
 			target.Uses = 3
 			target.enahnced = 1
 			qdel(src)*/
+
+
+/obj/item/weapon/slimestabilizer
+	name = "slime stabilizer"
+	desc = "A potent chemical mix that will reduce the chance of a slime mutating."
+	icon = 'icons/obj/chemical.dmi'
+	icon_state = "bottle15"
+
+/obj/item/weapon/slimestabilizer/attack(mob/living/simple_animal/slime/M as mob, mob/user as mob)
+	if(!isslime(M))
+		user << "<span class='warning'> The stabilizer only works on slimes!</span>"
+		return ..()
+	if(M.stat)
+		user << "<span class='warning'> The slime is dead!</span>"
+		return..()
+	if(M.mutation_chance == 0)
+		user <<"<span class='warning'> The slime already has no chance of mutating!</span>"
+		return..()
+
+	user <<"<span class='notice'>You feed the slime the stabilizer. It is now less likely to mutate.</span>"
+	M.mutation_chance = Clamp(M.mutation_chance-15,0,100)
+	qdel(src)
+
+/obj/item/weapon/slimemutator
+	name = "slime mutator"
+	desc = "A potent chemical mix that will increase the chance of a slime mutating."
+	icon = 'icons/obj/chemical.dmi'
+	icon_state = "bottle3"
+
+/obj/item/weapon/slimemutator/attack(mob/living/simple_animal/slime/M as mob, mob/user as mob)
+	if(!isslime(M))
+		user << "<span class='warning'> The mutator only works on slimes!</span>"
+		return ..()
+	if(M.stat)
+		user << "<span class='warning'> The slime is dead!</span>"
+		return..()
+	if(M.mutator_used)
+		user << "<span class='warning'> This slime has already consumed a mutator, any more would be far too unstable!</span>"
+		return..()
+	if(M.mutation_chance == 100)
+		user <<"<span class='warning'> The slime is already guaranteed to mutate!</span>"
+		return..()
+
+	user <<"<span class='notice'>You feed the slime the mutator. It is now more likely to mutate.</span>"
+	M.mutation_chance = Clamp(M.mutation_chance+12,0,100)
+	M.mutator_used = TRUE
+	qdel(src)
+
 
 
 ////////Adamantine Golem stuff I dunno where else to put it
@@ -350,7 +405,7 @@
 		ghost = O
 		break
 	if(!ghost)
-		user << "The rune fizzles uselessly. There is no spirit nearby."
+		user << "<span class='warning'>The rune fizzles uselessly! There is no spirit nearby.</span>"
 		return
 	var/mob/living/carbon/human/G = new /mob/living/carbon/human
 	if(prob(50))	G.gender = "female"

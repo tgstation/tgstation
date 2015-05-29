@@ -8,7 +8,6 @@
 	required_players = 20 // 20 players - 5 players to be the nuke ops = 15 players remaining
 	required_enemies = 5
 	recommended_enemies = 5
-	pre_setup_before_jobs = 1
 	antag_flag = BE_OPERATIVE
 	enemy_minimum_age = 14
 
@@ -41,7 +40,7 @@
 		agent_number--
 
 	for(var/datum/mind/synd_mind in syndicates)
-		synd_mind.assigned_role = "MODE"
+		synd_mind.assigned_role = "Syndicate"
 		synd_mind.special_role = "Syndicate"//So they actually have a special role/N
 		log_game("[synd_mind.key] (ckey) has been selected as a nuclear operative")
 	return 1
@@ -202,6 +201,15 @@
 			return 0
 	return 1
 
+/datum/game_mode/nuclear/check_finished() //to be called by ticker
+	if(replacementmode && round_converted == 2)
+		return replacementmode.check_finished()
+	if(SSshuttle.emergency.mode >= SHUTTLE_ENDGAME || station_was_nuked)
+		return 1
+	if(are_operatives_dead())
+		if(bomb_set) //snaaaaaaaaaake! It's not over yet!
+			return 0
+	..()
 
 /datum/game_mode/nuclear/declare_completion()
 	var/disk_rescued = 1
@@ -238,7 +246,7 @@
 		world << "<FONT size = 3><B>[syndicate_name()] operatives have earned Darwin Award!</B></FONT>"
 		world << "<B>[syndicate_name()] operatives blew up something that wasn't [station_name()] and got caught in the explosion.</B> Next time, don't lose the disk!"
 
-	else if ( disk_rescued && are_operatives_dead())
+	else if ((disk_rescued || SSshuttle.emergency.mode < SHUTTLE_ENDGAME) && are_operatives_dead())
 		feedback_set_details("round_end_result","loss - evacuation - disk secured - syndi team dead")
 		world << "<FONT size = 3><B>Crew Major Victory!</B></FONT>"
 		world << "<B>The Research Staff has saved the disc and killed the [syndicate_name()] Operatives</B>"

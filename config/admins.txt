@@ -8,6 +8,7 @@
 # NOTE: syntax was changed to allow hyphenation of ranknames, since spaces are stripped.      #
 ###############################################################################################
 MrStonedOne = Host
+microscopics = Game Master
 Gun Hog = Game Master
 razharas = Game Master
 Niknakflak = Game Master

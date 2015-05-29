@@ -75,8 +75,8 @@
 	if (src.destroyed)
 		return
 	else
-		user.visible_message("<span class='danger'>[user] kicks the lab cage.</span>", \
-					 		"<span class='notice'>You kick the lab cage.</span>")
+		user.visible_message("<span class='warning'>[user] kicks the lab cage.</span>", \
+					 		"<span class='danger'>You kick the lab cage.</span>")
 		src.health -= 2
 		healthcheck()
 		return

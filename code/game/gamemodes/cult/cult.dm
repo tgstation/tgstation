@@ -19,6 +19,26 @@
 		if(mind.current == ticker.mode.sacrifice_target)	return 0
 	return 1
 
+/proc/cultist_commune(var/mob/living/user, var/clear = 0, var/say = 0, var/message)
+	if(!message)
+		return
+	if(say)
+		user.say("O bidai nabora se[pick("'","`")]sma!")
+	else
+		user.whisper("O bidai nabora se[pick("'","`")]sma!")
+	sleep(10)
+	if(say)
+		user.say(message)
+	else
+		user.whisper(message)
+	for(var/mob/M in mob_list)
+		if(iscultist(M) || (M in dead_mob_list))
+			if(clear || !ishuman(user))
+				M << "<span class='boldannounce'><i>[(ishuman(user) ? "Acolyte" : "Construct")] [user]:</i> [message]</span>"
+			else //Emergency comms
+				M << "<span class='ghostalert'><i>Acolyte ???:</i> [message]</span>"
+
+
 
 /datum/game_mode/cult
 	name = "cult"
@@ -66,10 +86,6 @@
 	if(config.protect_assistant_from_antagonist)
 		restricted_jobs += "Assistant"
 
-	for(var/datum/mind/player in antag_candidates)
-		for(var/job in restricted_jobs)//Removing heads and such from the list
-			if(player.assigned_role == job)
-				antag_candidates -= player
 
 	for(var/cultists_number = 1 to recommended_enemies)
 		if(!antag_candidates.len)
@@ -78,6 +94,7 @@
 		antag_candidates -= cultist
 		cult += cultist
 		cultist.special_role = "Cultist"
+		cultist.restricted_roles = restricted_jobs
 		log_game("[cultist.key] (ckey) has been selected as a cultist")
 
 	return (cult.len>=required_enemies)
@@ -157,6 +174,10 @@
 	else
 		mob << "You have a talisman in your [where], one that will help you start the cult on this station. Use it well and remember - there are others."
 		mob.update_icons()
+		if(where == "backpack")
+			var/obj/item/weapon/storage/B = mob.back
+			B.orient2hud(mob)
+			B.show_to(mob)
 		return 1
 
 

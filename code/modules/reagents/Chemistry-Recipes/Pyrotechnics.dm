@@ -109,7 +109,7 @@
 /datum/chemical_reaction/clf3/on_reaction(var/datum/reagents/holder, var/created_volume)
 	var/turf/T = get_turf(holder.my_atom)
 	for(var/turf/turf in range(1,T))
-		new /obj/effect/hotspot(turf)
+		PoolOrNew(/obj/effect/hotspot, turf)
 	holder.chem_temp = 1000 // hot as shit
 
 /datum/chemical_reaction/sorium
@@ -325,7 +325,7 @@
 	name = "Napalm"
 	id = "napalm"
 	result = "napalm"
-	required_reagents = list("sugar" = 1, "fuel" = 1, "ethanol" = 1 )
+	required_reagents = list("sugar" = 1, "welding_fuel" = 1, "ethanol" = 1 )
 	result_amount = 3
 
 

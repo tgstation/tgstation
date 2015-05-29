@@ -113,8 +113,7 @@
 				P.icon_state = "[P.icon_base]_[dir]"
 			cur = get_step_towards(cur,end)
 
-		usr << "<span class='notice'>You finish project the legnth of [icon_base] holotape.</span>"
-		user.visible_message("<span class='warning'>[user] finishes projecting the length of [icon_base] holotape.</span>")
+		user.visible_message("[user] finishes projecting the length of [icon_base] holotape.", "<span class='notice'>You finish projecting the length of [icon_base] holotape.</span>")
 
 		charging = 1
 		spawn(40)
@@ -138,7 +137,7 @@
 			if(!(W.dir == 5) || !(W.fulltile == 1))
 				return
 
-		user << "<span class='notice'>You start projecting the [icon_base] holotape onto [target].</span>"
+		user << "<span class='notice'>You start projecting the [icon_base] holotape onto [target]...</span>"
 
 		if(!do_mob(user, target, 30))
 			return
@@ -177,8 +176,8 @@
 	user.changeNext_move(CLICK_CD_MELEE)
 	user.do_attack_animation(src)
 	playsound(loc, 'sound/weapons/Egloves.ogg', 80, 1)
-	user.visible_message("<span class='warning'>[user] hits [src].</span>", \
-						 "<span class='warning'>You hit [src].</span>" )
+	user.visible_message("<span class='danger'>[user] hits [src].</span>", \
+						 "<span class='danger'>You hit [src].</span>" )
 
 	health -= rand(1,2)
 	healthcheck()

@@ -10,7 +10,7 @@ var/datum/subsystem/mobs/SSmob
 
 
 /datum/subsystem/mobs/stat_entry()
-	stat(name, "[round(cost,0.001)]ds (CPU:[round(cpu,1)]%) [mob_list.len]")
+	..("P:[mob_list.len]")
 
 
 /datum/subsystem/mobs/fire()

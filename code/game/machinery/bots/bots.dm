@@ -46,14 +46,14 @@
 	var/turf/nearest_beacon_loc	// the nearest beacon's location
 
 	var/beacon_freq = 1445		// navigation beacon frequency
-	var/control_freq = 1447		// bot control frequency
 
+	var/model = "" //The type of bot it is.
 	var/bot_type = 0 //The type of bot it is, for radio control.
 	#define SEC_BOT				1	// Secutritrons (Beepsky) and ED-209s
 	#define MULE_BOT			2	// MULEbots
-	#define FLOOR_BOT			3	// Floorbots
-	#define CLEAN_BOT			4	// Cleanbots
-	#define MED_BOT				5	// Medibots
+	#define FLOOR_BOT			4	// Floorbots
+	#define CLEAN_BOT			8	// Cleanbots
+	#define MED_BOT				16	// Medibots
 
 	#define DEFAULT_SCAN_RANGE		7	//default view range for finding targets.
 
@@ -77,10 +77,18 @@
 	#define BOT_NAV				16	// computing navigation
 	#define BOT_WAIT_FOR_NAV	17	// waiting for nav computation
 	#define BOT_NO_ROUTE		18	// no destination beacon found (or no route)
-	var/list/mode_name = list("In Pursuit","Preparing to Arrest","Arresting","Beginning Patrol","Patrolling","Summoned by PDA", \
-	"Cleaning", "Repairing", "Proceeding to work site","Healing","Responding","Loading/Unloading","Navigating to Delivery Location","Navigating to Home", \
-	"Waiting for clear path","Calculating navigation path","Pinging beacon network","Unable to reach destination")
-	//This holds text for what the bot is mode doing, reported on the AI's bot control interface.
+	var/list/mode_name = list("In Pursuit","Preparing to Arrest", "Arresting", \
+	"Beginning Patrol", "Patrolling", "Summoned by PDA", \
+	"Cleaning", "Repairing", "Proceeding to work site", "Healing", \
+	"Proceeding to AI waypoint", "Loading/Unloading", "Navigating to Delivery Location", "Navigating to Home", \
+	"Waiting for clear path", "Calculating navigation path", "Pinging beacon network", "Unable to reach destination")
+	//This holds text for what the bot is mode doing, reported on the remote bot control interface.
+
+/obj/machinery/bot/proc/get_mode()
+	if(!mode)
+		return "Idle"
+	else
+		return mode_name[mode]
 
 /obj/machinery/bot/proc/turn_on()
 	if(stat)	return 0
@@ -96,24 +104,17 @@
 /obj/machinery/bot/New()
 	..()
 	SSbot.processing += src //Global bot list
-	SSbp.insertBot(src)
 	botcard = new /obj/item/weapon/card/id(src)
+//This access is so bots can be immediately set to patrol and leave Robotics, instead of having to be let out first.
+	botcard.access += access_robotics
 	set_custom_texts()
 	Radio = new /obj/item/device/radio(src)
 	Radio.listening = 0 //Makes bot radios transmit only so no one hears things while adjacent to one.
-	spawn(5)
-		add_to_beacons()
 
 /obj/machinery/bot/Destroy()
-	if(radio_controller)
-		radio_controller.remove_object(src,beacon_freq)
-		radio_controller.remove_object(src,control_freq)
+	qdel(Radio)
+	qdel(botcard)
 	..()
-
-/obj/machinery/bot/proc/add_to_beacons() //Master radio control for bots. Must be placed in the bot's local New() to support map spawned bots.
-	if(radio_controller)
-		radio_controller.add_object(src, beacon_freq, filter = RADIO_NAVBEACONS)
-		radio_controller.add_object(src, control_freq)
 
 
 /obj/machinery/bot/proc/explode()
@@ -128,7 +129,7 @@
 	if(locked) //First emag application unlocks the bot's interface. Apply a screwdriver to use the emag again.
 		locked = 0
 		emagged = 1
-		user << "<span class='warning'>You bypass [src]'s controls.</span>"
+		user << "<span class='notice'>You bypass [src]'s controls.</span>"
 	if(!locked && open) //Bot panel is unlocked by ID or emag, and the panel is screwed open. Ready for emagging.
 		emagged = 2
 		remote_disabled = 1 //Manually emagging the bot locks out the AI built in panel.
@@ -136,15 +137,15 @@
 		bot_reset()
 		turn_on() //The bot automatically turns on when emagged, unless recently hit with EMP.
 	else //Bot is unlocked, but the maint panel has not been opened with a screwdriver yet.
-		user << "<span class='notice'>You need to open maintenance panel first.</span>"
+		user << "<span class='warning'>You need to open maintenance panel first!</span>"
 
 /obj/machinery/bot/examine(mob/user)
 	..()
 	if (health < maxhealth)
 		if (health > maxhealth/3)
-			user << "<span class='danger'>[src]'s parts look loose.</span>"
+			user << "[src]'s parts look loose."
 		else
-			user << "<span class='danger'>[src]'s parts look very loose.</span>"
+			user << "[src]'s parts look very loose!"
 	else
 		user << "[src] is in pristine condition."
 
@@ -191,7 +192,7 @@
 	switch(href_list["operation"])
 		if("patrol")
 			auto_patrol = !auto_patrol
-			mode = BOT_IDLE
+			bot_reset()
 		if("remote")
 			remote_disabled = !remote_disabled
 		if("hack")
@@ -248,17 +249,17 @@
 		user.changeNext_move(CLICK_CD_MELEE)
 		if(istype(W, /obj/item/weapon/weldingtool) && user.a_intent != "harm")
 			if(health >= maxhealth)
-				user << "<span class='warning'>[src] does not need a repair.</span>"
+				user << "<span class='warning'>[src] does not need a repair!</span>"
 				return
 			if(!open)
-				user << "<span class='warning'>Unable to repair with the maintenance panel closed.</span>"
+				user << "<span class='warning'>Unable to repair with the maintenance panel closed!</span>"
 				return
 			var/obj/item/weapon/weldingtool/WT = W
 			if(WT.remove_fuel(0, user))
 				health = min(maxhealth, health+10)
-				user.visible_message("<span class='notice'>[user] repairs [src]!</span>","<span class='notice'>You repair [src]!</span>")
+				user.visible_message("[user] repairs [src]!","<span class='notice'>You repair [src].</span>")
 			else
-				user << "<span class='warning'>The welder must be on for this task.</span>"
+				user << "<span class='warning'>The welder must be on for this task!</span>"
 		else
 			if(W.force) //if force is non-zero
 				var/datum/effect/effect/system/spark_spread/s = new /datum/effect/effect/system/spark_spread
@@ -286,6 +287,7 @@
 			s.start()
 		..()
 		healthcheck()
+		return 1
 	return
 
 /obj/machinery/bot/blob_act()
@@ -453,7 +455,7 @@ obj/machinery/bot/proc/bot_step(var/dest)
 	var/datum/job/captain/All = new/datum/job/captain
 	all_access.access = All.get_access()
 
-	path = get_path_to(src, waypoint, /turf/proc/CardinalTurfsWithAccess, /turf/proc/Distance_cardinal, 0, 200, id=all_access)
+	path = get_path_to(src, waypoint, src, /turf/proc/Distance_cardinal, 0, 200, id=all_access)
 	calling_ai = caller //Link the AI to the bot!
 	ai_waypoint = waypoint
 
@@ -524,12 +526,12 @@ obj/machinery/bot/proc/start_patrol()
 		spawn(0)
 			calc_path()		// Find a route to it
 			if(path.len == 0)
-				patrol_target = 0
+				patrol_target = null
 				return
 			mode = BOT_PATROL
 	else					// no patrol target, so need a new one
-		find_patrol_target()
 		speak("Engaging patrol mode.")
+		find_patrol_target()
 		tries++
 	return
 
@@ -538,8 +540,9 @@ obj/machinery/bot/proc/start_patrol()
 /obj/machinery/bot/proc/patrol_step()
 
 	if(loc == patrol_target)		// reached target
-
-		at_patrol_target()
+		//Find the next beacon matching the target.
+		if(!get_next_patrol_target())
+			find_patrol_target() //If it fails, look for the nearest one instead.
 		return
 
 	else if(path.len > 0 && patrol_target)		// valid path
@@ -562,7 +565,8 @@ obj/machinery/bot/proc/start_patrol()
 				spawn(2)
 					calc_path(next)
 					if(path.len == 0)
-						find_patrol_target()
+						find_patrol_target() //Start looking for the next nearest beacon
+						tries++
 					else
 						blockcount = 0
 						tries = 0
@@ -576,165 +580,72 @@ obj/machinery/bot/proc/start_patrol()
 
 	return
 
-// finds a new patrol target
-/obj/machinery/bot/proc/find_patrol_target()
-	send_status()
-	if(awaiting_beacon)			// awaiting beacon response
-		awaiting_beacon++
-		if(awaiting_beacon > 5)	// wait 5 secs for beacon response
-			find_nearest_beacon()	// then go to nearest instead
-		return
-	if(next_destination)
-		set_destination(next_destination)
-	else
-
-		find_nearest_beacon()
-	return
-
-
 // finds the nearest beacon to self
-// signals all beacons matching the patrol code
-/obj/machinery/bot/proc/find_nearest_beacon()
+/obj/machinery/bot/proc/find_patrol_target()
 	nearest_beacon = null
-	new_destination = "__nearest__"
-	post_signal(beacon_freq, "findbeacon", "patrol")
-	awaiting_beacon = 1
-	spawn(10)
-		awaiting_beacon = 0
-		if(nearest_beacon)
-			set_destination(nearest_beacon)
-			tries = 0
-		else
-			auto_patrol = 0
-			mode = BOT_IDLE
-			speak("Disengaging patrol mode.")
-			send_status()
-
-
-/obj/machinery/bot/proc/at_patrol_target()
-
-	find_patrol_target()
-	return
-
-
-// sets the current destination
-// signals all beacons matching the patrol code
-// beacons will return a signal giving their locations
-/obj/machinery/bot/proc/set_destination(var/new_dest)
-	new_destination = new_dest
-	post_signal(beacon_freq, "findbeacon", "patrol")
-	awaiting_beacon = 1
-
-
-// receive a radio signal
-// used for beacon reception
-
-/obj/machinery/bot/receive_signal(datum/signal/signal)
-	//log_admin("DEBUG \[[// world.timeofday]\]: /obj/machinery/bot/receive_signal([signal.debug_print()])")
-	if(!on)
-		return
-/*
-	if(!signal.data["beacon"])
-
-		for(var/x in signal.data)
-			world << "* [x] = [signal.data[x]]"
-	*/
-
-	var/recv = signal.data["command"]
-	// process all-bot input
-
-	if(recv=="bot_status")
-		send_status()
-
-	// check to see if we are the commanded bot
-	if(signal.data["active"] == src)
-		if(emagged == 2 || remote_disabled) //Emagged bots do not respect anyone's authority! Bots with their remote controls off cannot get commands.
-			return
-	// process control input
-		switch(recv)
-			if("stop")
-				bot_reset() //HOLD IT!!
-				auto_patrol = 0
-				return
-
-			if("go")
-				auto_patrol = 1
-				return
-
-			if("summon")
-				bot_reset()
-				var/list/user_access = signal.data["useraccess"]
-				summon_target = signal.data["target"]	//Location of the user
-				if(user_access.len != 0)
-					botcard.access = user_access + prev_access //Adds the user's access, if any.
-				mode = BOT_SUMMON
-				calc_summon_path()
-				speak("Responding.", radio_frequency)
-				return
-
-	// receive response from beacon
-	recv = signal.data["beacon"]
-	var/valid = signal.data["patrol"]
-	if(!recv || !valid)
-		return
-	if(recv == new_destination)	// if the recvd beacon location matches the set destination
-								// the we will navigate there
-		destination = new_destination
-		patrol_target = signal.source.loc
-		next_destination = signal.data["next_patrol"]
-		awaiting_beacon = 0
-
-	// if looking for nearest beacon
-	else if(new_destination == "__nearest__")
-		var/dist = get_dist(src,signal.source.loc)
-		if(nearest_beacon)
-			// note we ignore the beacon we are located at
-			if(dist>1 && dist<get_dist(src,nearest_beacon_loc))
-				nearest_beacon = recv
-				nearest_beacon_loc = signal.source.loc
-				return
-			else
-				return
-		else if(dist > 1)
-			nearest_beacon = recv
-			nearest_beacon_loc = signal.source.loc
-	return
-
-
-// send a radio signal with a single data key/value pair
-/obj/machinery/bot/proc/post_signal(var/freq, var/key, var/value)
-	post_signal_multiple(freq, list("[key]" = value) )
-
-// send a radio signal with multiple data key/values
-/obj/machinery/bot/proc/post_signal_multiple(var/freq, var/list/keyval)
-	var/datum/radio_frequency/frequency = radio_controller.return_frequency(freq)
-
-	if(!frequency) return
-
-	var/datum/signal/signal = new()
-	signal.source = src
-	signal.transmission_method = 1
-//	for(var/key in keyval)
-//		signal.data[key] = keyval[key]
-	signal.data = keyval
-//	world << "sent [key],[keyval[key]] on [freq]"
-	if(signal.data["findbeacon"])
-		frequency.post_signal(src, signal, filter = RADIO_NAVBEACONS)
+	new_destination = null
+	find_nearest_beacon()
+	if(nearest_beacon)
+		patrol_target = nearest_beacon_loc
+		destination = next_destination
 	else
-		frequency.post_signal(src, signal)
+		auto_patrol = 0
+		mode = BOT_IDLE
+		speak("Disengaging patrol mode.")
 
-// signals bot status etc. to controller
-/obj/machinery/bot/proc/send_status()
-	if(remote_disabled || emagged == 2)
-		return
-	var/list/kv = list(
-	"type" = bot_type,
-	"name" = name,
-	"loca" = get_area(src),	// area
-	"mode" = mode,
-	"sect" = z	// z-level, or "sector"
-	)
-	post_signal_multiple(control_freq, kv)
+/obj/machinery/bot/proc/get_next_patrol_target()
+	// search the beacon list for the next target in the list.
+	for(var/obj/machinery/navbeacon/NB in navbeacons)
+		if(NB.location == next_destination) //Does the Beacon location text match the destination?
+			destination = new_destination //We now know the name of where we want to go.
+			patrol_target = NB.loc //Get its location and set it as the target.
+			next_destination = NB.codes["next_patrol"] //Also get the name of the next beacon in line.
+			return 1
+
+/obj/machinery/bot/proc/find_nearest_beacon()
+	for(var/obj/machinery/navbeacon/NB in navbeacons)
+		var/dist = get_dist(src, NB)
+		if(nearest_beacon) //Loop though the beacon net to find the true closest beacon.
+			//Ignore the beacon if were are located on it.
+			if(dist>1 && dist<get_dist(src,nearest_beacon_loc))
+				nearest_beacon = NB.location
+				nearest_beacon_loc = NB.loc
+				next_destination = NB.codes["next_patrol"]
+			else
+				continue
+		else if(dist > 1) //Begin the search, save this one for comparison on the next loop.
+			nearest_beacon = NB.location
+			nearest_beacon_loc = NB.loc
+	patrol_target = nearest_beacon_loc
+	destination = nearest_beacon
+
+//PDA control. Some bots, especially MULEs, may have more parameters.
+/obj/machinery/bot/proc/bot_control(var/command, mob/user, var/turf/user_turf, var/list/user_access = list())
+	if(!on || emagged == 2 || remote_disabled) //Emagged bots do not respect anyone's authority! Bots with their remote controls off cannot get commands.
+		return 1 //ACCESS DENIED
+	// process control input
+	switch(command)
+		if("patroloff")
+			bot_reset() //HOLD IT!!
+			auto_patrol = 0
+			return
+
+		if("patrolon")
+			auto_patrol = 1
+			return
+
+		if("summon")
+			bot_reset()
+			summon_target = user_turf
+			if(user_access.len != 0)
+				botcard.access = user_access + prev_access //Adds the user's access, if any.
+			mode = BOT_SUMMON
+			speak("Responding.", radio_frequency)
+			calc_summon_path()
+			return
+
+
+	return
 
 
 obj/machinery/bot/proc/bot_summon()
@@ -746,14 +657,15 @@ obj/machinery/bot/proc/bot_summon()
 // given an optional turf to avoid
 /obj/machinery/bot/proc/calc_path(var/turf/avoid)
 	check_bot_access()
-	path = get_path_to(loc, patrol_target, /turf/proc/CardinalTurfsWithAccess, /turf/proc/Distance_cardinal, 0, 120, id=botcard, exclude=avoid)
+	path = get_path_to(loc, patrol_target, src, /turf/proc/Distance_cardinal, 0, 120, id=botcard, exclude=avoid)
 
 /obj/machinery/bot/proc/calc_summon_path(var/turf/avoid)
 	check_bot_access()
-	path = get_path_to(loc, summon_target, /turf/proc/CardinalTurfsWithAccess, /turf/proc/Distance_cardinal, 0, 150, id=botcard, exclude=avoid)
-	if(!path.len || tries >= 5) //Cannot reach target. Give up and announce the issue.
-		speak("Summon command failed, destination unreachable.",radio_frequency)
-		bot_reset()
+	spawn()
+		path = get_path_to(loc, summon_target, src, /turf/proc/Distance_cardinal, 0, 150, id=botcard, exclude=avoid)
+		if(!path.len || tries >= 5) //Cannot reach target. Give up and announce the issue.
+			speak("Summon command failed, destination unreachable.",radio_frequency)
+			bot_reset()
 
 /obj/machinery/bot/proc/summon_step()
 

@@ -23,6 +23,8 @@
 	var/trashtype = null //for disposable cuffs
 
 /obj/item/weapon/restraints/handcuffs/attack(mob/living/carbon/C, mob/living/carbon/human/user)
+	if(!istype(C))
+		return
 	if(user.disabilities & CLUMSY && prob(50))
 		user << "<span class='warning'>Uh... how do those things work?!</span>"
 		apply_cuffs(user,user)
@@ -43,7 +45,7 @@
 
 			add_logs(user, C, "handcuffed")
 		else
-			user << "<span class='warning'>You fail to handcuff [C].</span>"
+			user << "<span class='warning'>You fail to handcuff [C]!</span>"
 
 /obj/item/weapon/restraints/handcuffs/proc/apply_cuffs(mob/living/carbon/target, mob/user)
 	if(!target.handcuffed)
@@ -97,12 +99,13 @@
 		var/obj/item/stack/rods/R = I
 		if (R.use(1))
 			var/obj/item/weapon/wirerod/W = new /obj/item/weapon/wirerod
-			user.unEquip(src)
+			if(!remove_item_from_storage(user))
+				user.unEquip(src)
 			user.put_in_hands(W)
 			user << "<span class='notice'>You wrap the cable restraint around the top of the rod.</span>"
 			qdel(src)
 		else
-			user << "<span class='warning'>You need one rod to make a wired rod.</span>"
+			user << "<span class='warning'>You need one rod to make a wired rod!</span>"
 			return
 
 /obj/item/weapon/restraints/handcuffs/cable/zipties/cyborg/attack(mob/living/carbon/C, mob/user)
@@ -118,7 +121,7 @@
 					user << "<span class='notice'>You handcuff [C].</span>"
 					add_logs(user, C, "handcuffed")
 			else
-				user << "<span class='warning'>You fail to handcuff [C].</span>"
+				user << "<span class='warning'>You fail to handcuff [C]!</span>"
 
 /obj/item/weapon/restraints/handcuffs/cable/zipties
 	name = "zipties"

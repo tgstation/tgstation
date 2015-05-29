@@ -15,6 +15,7 @@ var/list/blob_nodes = list()
 	required_enemies = 1
 	recommended_enemies = 1
 
+	round_ends_with_antag_death = 1
 	restricted_jobs = list("Cyborg", "AI")
 
 	var/declared = 0
@@ -33,17 +34,13 @@ var/list/blob_nodes = list()
 
 	blobwincount = initial(blobwincount) * cores_to_spawn
 
-	for(var/datum/mind/player in antag_candidates)
-		for(var/job in restricted_jobs)//Removing robots from the list
-			if(player.assigned_role == job)
-				antag_candidates -= player
-
 	for(var/j = 0, j < cores_to_spawn, j++)
 		if (!antag_candidates.len)
 			break
 		var/datum/mind/blob = pick(antag_candidates)
 		infected_crew += blob
 		blob.special_role = "Blob"
+		blob.restricted_roles = restricted_jobs
 		log_game("[blob.key] (ckey) has been selected as a Blob")
 		antag_candidates -= blob
 
@@ -140,6 +137,7 @@ var/list/blob_nodes = list()
 					core.overmind.mind.name = blob.name
 					infected_crew -= blob
 					infected_crew += core.overmind.mind
+					core.overmind.mind.special_role = "Blob Overmind"
 
 /datum/game_mode/blob/post_setup()
 

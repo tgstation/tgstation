@@ -16,7 +16,7 @@
 	else
 		user.layer = MOB_LAYER
 		user.visible_message("[user.] slowly peaks up from the ground...", \
-					"<span class='noticealien'>You have stopped hiding.</span>")
+					"<span class='noticealien'>You stop hiding.</span>")
 	return 1
 
 

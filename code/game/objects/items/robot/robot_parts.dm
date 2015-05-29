@@ -92,13 +92,13 @@
 		if (M.use(1))
 			var/obj/item/weapon/ed209_assembly/B = new /obj/item/weapon/ed209_assembly
 			B.loc = get_turf(src)
-			user << "<span class='notice'>You armed the robot frame.</span>"
+			user << "<span class='notice'>You arm the robot frame.</span>"
 			if (user.get_inactive_hand()==src)
 				user.unEquip(src)
 				user.put_in_inactive_hand(B)
 			qdel(src)
 		else
-			user << "<span class='warning'>You need one sheet of metal to start building ED-209.</span>"
+			user << "<span class='warning'>You need one sheet of metal to start building ED-209!</span>"
 			return
 	if(istype(W, /obj/item/robot_parts/l_leg))
 		if(src.l_leg)	return
@@ -136,9 +136,9 @@
 			src.chest = W
 			src.updateicon()
 		else if(!W:wires)
-			user << "<span class='notice'>You need to attach wires to it first!</span>"
+			user << "<span class='warning'>You need to attach wires to it first!</span>"
 		else
-			user << "<span class='notice'>You need to attach a cell to it first!</span>"
+			user << "<span class='warning'>You need to attach a cell to it first!</span>"
 
 	if(istype(W, /obj/item/robot_parts/head))
 		if(src.head)	return
@@ -148,44 +148,43 @@
 			src.head = W
 			src.updateicon()
 		else
-			user << "<span class='notice'>You need to attach a flash to it first!</span>"
+			user << "<span class='warning'>You need to attach a flash to it first!</span>"
 
 	if (istype(W, /obj/item/device/multitool))
 		if(check_completion())
 			Interact(user)
 		else
-			user << "<span class='notice'>The endoskeleton must be assembled before debugging can begin.</span>"
+			user << "<span class='warning'>The endoskeleton must be assembled before debugging can begin!</span>"
 
 	if(istype(W, /obj/item/device/mmi))
 		var/obj/item/device/mmi/M = W
 		if(check_completion())
 			if(!istype(loc,/turf))
-				user << "<span class='danger'>You can't put the MMI in, the frame has to be standing on the ground to be perfectly precise.</span>"
+				user << "<span class='warning'>You can't put the MMI in, the frame has to be standing on the ground to be perfectly precise!</span>"
 				return
 			if(!M.brainmob)
-				user << "<span class='danger'>Sticking an empty MMI into the frame would sort of defeat the purpose.</span>"
-				return
-			if(!M.brainmob.key)
-				var/ghost_can_reenter = 0
-				if(M.brainmob.mind)
-					for(var/mob/dead/observer/G in player_list)
-						if(G.can_reenter_corpse && G.mind == M.brainmob.mind)
-							ghost_can_reenter = 1
-							break
-				if(!ghost_can_reenter)
-					user << "<span class='notice'>The mmi indicates that their mind is completely unresponsive; there's no point.</span>"
-					return
-
-			if(M.brainmob.stat == DEAD)
-				user << "<span class='danger'>Sticking a dead brain into the frame would sort of defeat the purpose.</span>"
+				user << "<span class='warning'>Sticking an empty MMI into the frame would sort of defeat the purpose!</span>"
 				return
 
-			if((M.brainmob.mind in ticker.mode.head_revolutionaries) || (M.brainmob.mind in ticker.mode.A_bosses) || (M.brainmob.mind in ticker.mode.B_bosses))
-				user << "<span class='danger'>The frame's firmware lets out a shrill sound, and flashes 'Abnormal Memory Engram'. It refuses to accept the MMI.</span>"
+			var/mob/living/carbon/brain/BM = M.brainmob
+			if(!BM.key || !BM.mind)
+				user << "<span class='warning'>The mmi indicates that their mind is completely unresponsive; there's no point!</span>"
 				return
 
-			if(jobban_isbanned(M.brainmob, "Cyborg"))
-				user << "<span class='danger'>This MMI does not seem to fit.</span>"
+			if(!BM.client) //braindead
+				user << "<span class='warning'>The mmi indicates that their mind is currently inactive; it might change!</span>"
+				return
+
+			if(BM.stat == DEAD)
+				user << "<span class='warning'>Sticking a dead brain into the frame would sort of defeat the purpose!</span>"
+				return
+
+			if((BM.mind in ticker.mode.head_revolutionaries) || (BM.mind in ticker.mode.A_bosses) || (BM.mind in ticker.mode.B_bosses))
+				user << "<span class='warning'>The frame's firmware lets out a shrill sound, and flashes 'Abnormal Memory Engram'. It refuses to accept the MMI!</span>"
+				return
+
+			if(jobban_isbanned(BM, "Cyborg"))
+				user << "<span class='warning'>This MMI does not seem to fit!</span>"
 				return
 
 			var/mob/living/silicon/robot/O = new /mob/living/silicon/robot(get_turf(loc))
@@ -211,7 +210,7 @@
 				if(ticker.mode.config_tag == "malfunction") //Don't let humans get a cyborg on their side during malf, for balance reasons.
 					O.set_zeroth_law("<span class='danger'>ERROR ER0RR $R0RRO$!R41.%%!!(%$^^__+ @#F0E4'STATION OVERRUN, ASSUME CONTROL TO CONTAIN OUTBREAK#*�&110010</span>")
 
-			M.brainmob.mind.transfer_to(O)
+			BM.mind.transfer_to(O)
 
 			if(O.mind && O.mind.special_role)
 				O.mind.store_memory("As a cyborg, any objectives listed here are null and void, and will be marked as failed. They are simply here for memory purposes.")
@@ -223,6 +222,7 @@
 			chest.cell = null
 			W.loc = O//Should fix cybros run time erroring when blown up. It got deleted before, along with the frame.
 			O.mmi = W
+			O.updatename()
 
 			feedback_inc("cyborg_birth",1)
 
@@ -235,10 +235,10 @@
 				O << "<span class='warning'>Error: Servo motors unresponsive.</span>"
 
 		else
-			user << "<span class='notice'>The MMI must go in after everything else!</span>"
+			user << "<span class='warning'>The MMI must go in after everything else!</span>"
 
 	if(istype(W,/obj/item/weapon/pen))
-		user << "<span class='warning'>You need to use a multitool to name [src].</span>"
+		user << "<span class='warning'>You need to use a multitool to name [src]!</span>"
 	return
 
 /obj/item/robot_parts/robot_suit/proc/Interact(mob/user)
@@ -260,7 +260,7 @@
 	var/mob/living/living_user = usr
 	var/obj/item/item_in_hand = living_user.get_active_hand()
 	if(!istype(item_in_hand, /obj/item/device/multitool))
-		living_user << "<span class='error'>You need a multitool!</span>"
+		living_user << "<span class='warning'>You need a multitool!</span>"
 		return
 
 	if(href_list["Name"])
@@ -294,23 +294,23 @@
 	..()
 	if(istype(W, /obj/item/weapon/stock_parts/cell))
 		if(src.cell)
-			user << "<span class='notice'>You have already inserted a cell!</span>"
+			user << "<span class='warning'>You have already inserted a cell!</span>"
 			return
 		else
 			user.drop_item()
 			W.loc = src
 			src.cell = W
-			user << "<span class='notice'>You insert the cell!</span>"
+			user << "<span class='notice'>You insert the cell.</span>"
 	if(istype(W, /obj/item/stack/cable_coil))
 		if(src.wires)
-			user << "<span class='warning'>You have already inserted wire.</span>"
+			user << "<span class='warning'>You have already inserted wire!</span>"
 			return
 		var/obj/item/stack/cable_coil/coil = W
 		if (coil.use(1))
 			src.wires = 1.0
 			user << "<span class='notice'>You insert the wire.</span>"
 		else
-			user << "<span class='warning'>You need one length of coil to wire it.</span>"
+			user << "<span class='warning'>You need one length of coil to wire it!</span>"
 	return
 
 /obj/item/robot_parts/head/attackby(obj/item/W as obj, mob/user as mob, params)
@@ -318,10 +318,10 @@
 	if(istype(W, /obj/item/device/flash/handheld))
 		var/obj/item/device/flash/handheld/F = W
 		if(src.flash1 && src.flash2)
-			user << "<span class='notice'>You have already inserted the eyes!</span>"
+			user << "<span class='warning'>You have already inserted the eyes!</span>"
 			return
 		else if(F.broken)
-			user << "<span class='notice'>You can't use a broken flash!</span>"
+			user << "<span class='warning'>You can't use a broken flash!</span>"
 			return
 		else
 			user.drop_item()
@@ -330,6 +330,6 @@
 				src.flash2 = F
 			else
 				src.flash1 = F
-			user << "<span class='notice'>You insert the flash into the eye socket!</span>"
+			user << "<span class='notice'>You insert the flash into the eye socket.</span>"
 	return
 

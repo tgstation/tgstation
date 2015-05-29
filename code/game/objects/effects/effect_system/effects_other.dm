@@ -75,7 +75,7 @@
 /datum/effect/effect/system/reagents_explosion/start()
 	if(explosion_message)
 		location.visible_message("<span class='danger'>The solution violently explodes!</span>", \
-								"You hear an explosion!")
+								"<span class='italics'>You hear an explosion!</span>")
 	if (amount <= 2)
 		var/datum/effect/effect/system/spark_spread/s = new /datum/effect/effect/system/spark_spread
 		s.set_up(2, 1, location)

@@ -266,7 +266,7 @@ var/next_mob_id = 0
 			qdel(W)
 		else
 			if(!disable_warning)
-				src << "<span class='danger'>You are unable to equip that.</span>" //Only print if qdel_on_fail is false
+				src << "<span class='warning'>You are unable to equip that!</span>" //Only print if qdel_on_fail is false
 		return 0
 	equip_to_slot(W, slot, redraw_mob) //This proc should not ever fail.
 	return 1

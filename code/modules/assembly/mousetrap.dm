@@ -19,7 +19,7 @@
 			if(ishuman(usr))
 				var/mob/living/carbon/human/user = usr
 				if((user.getBrainLoss() >= 60) || user.disabilities & CLUMSY && prob(50))
-					user << "Your hand slips, setting off the trigger."
+					user << "<span class='warning'>Your hand slips, setting off the trigger!</span>"
 					pulse(0)
 		update_icon()
 		if(usr)
@@ -42,6 +42,12 @@
 	var/obj/item/organ/limb/affecting = null
 	if(ishuman(target))
 		var/mob/living/carbon/human/H = target
+		if(HARDFEET in H.dna.species.specflags)
+			playsound(src.loc, 'sound/effects/snap.ogg', 50, 1)
+			armed = 0
+			update_icon()
+			pulse(0)
+			return 0
 		switch(type)
 			if("feet")
 				if(!H.shoes)

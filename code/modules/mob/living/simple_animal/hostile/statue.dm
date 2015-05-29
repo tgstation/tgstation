@@ -81,7 +81,7 @@
 				GiveTarget(watching)
 
 /mob/living/simple_animal/hostile/statue/AttackingTarget()
-	if(can_be_seen())
+	if(can_be_seen(get_turf(loc)))
 		if(client)
 			src << "<span class='warning'>You cannot attack, there are eyes on you!</span>"
 			return
@@ -89,11 +89,11 @@
 		..()
 
 /mob/living/simple_animal/hostile/statue/DestroySurroundings()
-	if(!can_be_seen())
+	if(!can_be_seen(get_turf(loc)))
 		..()
 
 /mob/living/simple_animal/hostile/statue/face_atom()
-	if(!can_be_seen())
+	if(!can_be_seen(get_turf(loc)))
 		..()
 
 /mob/living/simple_animal/hostile/statue/proc/can_be_seen(var/turf/destination)
@@ -102,11 +102,10 @@
 	// Check for darkness
 	var/turf/T = get_turf(loc)
 	if(T && destination)
-		// Don't check it twice if our destination is the tile we are on or we can't even get to our destination
+		if(T.lighting_lumcount<1 && destination.lighting_lumcount<1) // No one can see us in the darkness, right?
+			return null
 		if(T == destination)
 			destination = null
-		else if(!T.lighting_lumcount && !destination.lighting_lumcount) // No one can see us in the darkness, right?
-			return null
 
 	// We aren't in darkness, loop for viewers.
 	var/list/check_list = list(src)
@@ -119,6 +118,10 @@
 			if(M.client && CanAttack(M) && !issilicon(M))
 				if(!M.eye_blind)
 					return M
+		for(var/obj/mecha/M in view(world.view + 1, check)) //assuming if you can see them they can see you
+			if(M.occupant && M.occupant.client)
+				if(!M.occupant.eye_blind)
+					return M.occupant
 	return null
 
 // Cannot talk

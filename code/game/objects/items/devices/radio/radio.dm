@@ -182,31 +182,7 @@
 		usr << browse(null, "window=radio")
 		return
 	usr.set_machine(src)
-	if (href_list["track"])
-		var/mob/target = locate(href_list["track"])
-		var/mob/living/silicon/ai/A = locate(href_list["track2"])
-		if(A && target)
-			A.ai_actual_track(target)
-		return
-
-	else if (href_list["faketrack"])
-		var/mob/target = locate(href_list["track"])
-		var/mob/living/silicon/ai/A = locate(href_list["track2"])
-		if(A && target)
-
-			A:cameraFollow = target
-			A << text("Now tracking [] on camera.", target.name)
-			if (usr.machine == null)
-				usr.machine = usr
-
-			while (usr:cameraFollow == target)
-				usr << "Target is not on or near any active cameras on the station. We'll check again in 5 seconds (unless you use the cancel-camera verb)."
-				sleep(40)
-				continue
-
-		return
-
-	else if (href_list["freq"])
+	if (href_list["freq"])
 		if (!freqlock)
 			var/new_frequency = (frequency + text2num(href_list["freq"]))
 			if (!freerange || (frequency < 1200 || frequency > 1600))
@@ -372,7 +348,7 @@
 		signal.frequency = freqnum // Quick frequency set
 		Broadcast_Message(M, voicemask,
 				  src, message, voice, jobname, real_name,
-				  4, signal.data["compression"], list(position.z, 0), freq, spans,
+				  5, signal.data["compression"], list(position.z, 0), freq, spans,
 				  verb_say, verb_ask, verb_exclaim, verb_yell)
 		return
 
@@ -621,14 +597,14 @@
 					keyslot = null
 
 			recalculateChannels()
-			user << "You pop out the encryption key in the radio!"
+			user << "<span class='notice'>You pop out the encryption key in the radio.</span>"
 
 		else
-			user << "This radio doesn't have any encryption keys!"
+			user << "<span class='warning'>This radio doesn't have any encryption keys!</span>"
 
 	if(istype(W, /obj/item/device/encryptionkey/))
 		if(keyslot)
-			user << "The radio can't hold another key!"
+			user << "<span class='warning'>The radio can't hold another key!</span>"
 			return
 
 		if(!keyslot)

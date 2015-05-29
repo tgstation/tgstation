@@ -151,7 +151,7 @@
 		/obj/item/weapon/reagent_containers/food/snacks/meat,
 		/obj/item/weapon/reagent_containers/food/snacks/soup,
 		/obj/item/weapon/reagent_containers/food/snacks/grown,
-		/obj/item/weapon/reagent_containers/food/snacks/grown/mushroom
+		/obj/item/weapon/reagent_containers/food/snacks/grown/mushroom,
 		)
 	blocked |= typesof(/obj/item/weapon/reagent_containers/food/snacks/customizable)
 
@@ -185,8 +185,9 @@
 /datum/chemical_reaction/slimebork2/on_reaction(var/datum/reagents/holder)
 
 	feedback_add_details("slime_cores_used","[replacetext(name," ","_")]")
+	var/list/blocked = list(/obj/item/weapon/reagent_containers/food/drinks)
 
-	var/list/borks = typesof(/obj/item/weapon/reagent_containers/food/drinks) - /obj/item/weapon/reagent_containers/food/drinks
+	var/list/borks = typesof(/obj/item/weapon/reagent_containers/food/drinks) - blocked
 	// BORK BORK BORK
 
 	playsound(get_turf(holder.my_atom), 'sound/effects/phasein.ogg', 100, 1)
@@ -216,6 +217,23 @@
 
 /datum/chemical_reaction/slimefrost/on_reaction(var/datum/reagents/holder)
 		feedback_add_details("slime_cores_used","[replacetext(name," ","_")]")
+
+
+/datum/chemical_reaction/slimestabilizer
+	name = "Slime Stabilizer"
+	id = "m_slimestabilizer"
+	result = null
+	required_reagents = list("blood" = 1)
+	result_amount = 1
+	required_container = /obj/item/slime_extract/blue
+	required_other = 1
+
+/datum/chemical_reaction/slimestabilizer/on_reaction(var/datum/reagents/holder)
+	feedback_add_details("slime_cores_used","[replacetext(name," ","_")]")
+	var/obj/item/weapon/slimestabilizer/P = new /obj/item/weapon/slimestabilizer
+	P.loc = get_turf(holder.my_atom)
+
+
 
 //Dark Blue
 /datum/chemical_reaction/slimefreeze
@@ -362,7 +380,7 @@
 	P.loc = get_turf(holder.my_atom)
 
 //Red
-/datum/chemical_reaction/slimeglycerol
+/*/datum/chemical_reaction/slimeglycerol
 	name = "Slime Glycerol"
 	id = "m_glycerol"
 	result = "glycerol"
@@ -373,7 +391,21 @@
 
 /datum/chemical_reaction/slimeglycerol/on_reaction(var/datum/reagents/holder)
 	feedback_add_details("slime_cores_used","[replacetext(name," ","_")]")
+*/
 
+/datum/chemical_reaction/slimemutator
+	name = "Slime Mutator"
+	id = "m_slimemutator"
+	result = null
+	required_reagents = list("plasma" = 1)
+	result_amount = 1
+	required_container = /obj/item/slime_extract/red
+	required_other = 1
+
+/datum/chemical_reaction/slimemutator/on_reaction(var/datum/reagents/holder)
+	feedback_add_details("slime_cores_used","[replacetext(name," ","_")]")
+	var/obj/item/weapon/slimemutator/P = new /obj/item/weapon/slimemutator
+	P.loc = get_turf(holder.my_atom)
 
 /datum/chemical_reaction/slimebloodlust
 	name = "Bloodlust"

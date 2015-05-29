@@ -28,7 +28,7 @@
 		usr.drop_item()
 		O.loc = src
 		scan = O
-		user << "You insert [O]."
+		user << "<span class='notice'>You insert [O].</span>"
 	else
 		..()
 

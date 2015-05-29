@@ -1,5 +1,11 @@
 /**********************Mineral deposits**************************/
 
+var/global/list/rockTurfEdgeCache
+#define NORTH_EDGING	"north"
+#define SOUTH_EDGING	"south"
+#define EAST_EDGING		"east"
+#define WEST_EDGING		"west"
+
 /turf/simulated/mineral //wall piece
 	name = "rock"
 	icon = 'icons/turf/mining.dmi'
@@ -32,25 +38,32 @@
 	return
 
 /turf/simulated/mineral/New()
+	if(!rockTurfEdgeCache || !rockTurfEdgeCache.len)
+		rockTurfEdgeCache = list()
+		rockTurfEdgeCache.len = 4
+		rockTurfEdgeCache[NORTH_EDGING] = image('icons/turf/mining.dmi', "rock_side_n", layer = 6)
+		rockTurfEdgeCache[SOUTH_EDGING] = image('icons/turf/mining.dmi', "rock_side_s")
+		rockTurfEdgeCache[EAST_EDGING] = image('icons/turf/mining.dmi', "rock_side_e", layer = 6)
+		rockTurfEdgeCache[WEST_EDGING] = image('icons/turf/mining.dmi', "rock_side_w", layer = 6)
 
 	spawn(1)
 		var/turf/T
 		if((istype(get_step(src, NORTH), /turf/simulated/floor)) || (istype(get_step(src, NORTH), /turf/space)) || (istype(get_step(src, NORTH), /turf/simulated/shuttle/floor)))
 			T = get_step(src, NORTH)
 			if (T)
-				T.overlays += image('icons/turf/mining.dmi', "rock_side_s")
+				T.overlays += rockTurfEdgeCache[SOUTH_EDGING]
 		if((istype(get_step(src, SOUTH), /turf/simulated/floor)) || (istype(get_step(src, SOUTH), /turf/space)) || (istype(get_step(src, SOUTH), /turf/simulated/shuttle/floor)))
 			T = get_step(src, SOUTH)
 			if (T)
-				T.overlays += image('icons/turf/mining.dmi', "rock_side_n", layer=6)
+				T.overlays += rockTurfEdgeCache[NORTH_EDGING]
 		if((istype(get_step(src, EAST), /turf/simulated/floor)) || (istype(get_step(src, EAST), /turf/space)) || (istype(get_step(src, EAST), /turf/simulated/shuttle/floor)))
 			T = get_step(src, EAST)
 			if (T)
-				T.overlays += image('icons/turf/mining.dmi', "rock_side_w", layer=6)
+				T.overlays += rockTurfEdgeCache[WEST_EDGING]
 		if((istype(get_step(src, WEST), /turf/simulated/floor)) || (istype(get_step(src, WEST), /turf/space)) || (istype(get_step(src, WEST), /turf/simulated/shuttle/floor)))
 			T = get_step(src, WEST)
 			if (T)
-				T.overlays += image('icons/turf/mining.dmi', "rock_side_e", layer=6)
+				T.overlays += rockTurfEdgeCache[EAST_EDGING]
 
 	if (mineralType && mineralAmt && spread && spreadChance)
 		for(var/dir in cardinal)
@@ -238,7 +251,7 @@
 		name = "gibtonite deposit"
 		desc = "An active gibtonite reserve. Run!"
 		stage = 1
-		visible_message("<span class='warning'>There was gibtonite inside! It's going to explode!</span>")
+		visible_message("<span class='danger'>There was gibtonite inside! It's going to explode!</span>")
 		var/turf/bombturf = get_turf(src)
 		var/area/A = get_area(bombturf)
 
@@ -406,7 +419,7 @@
 /turf/simulated/mineral/attackby(var/obj/item/weapon/pickaxe/P as obj, mob/user as mob, params)
 
 	if (!user.IsAdvancedToolUser())
-		usr << "<span class='danger'>You don't have the dexterity to do this!</span>"
+		usr << "<span class='warning'>You don't have the dexterity to do this!</span>"
 		return
 
 	if (istype(P, /obj/item/weapon/pickaxe))
@@ -414,20 +427,10 @@
 		if (!( istype(T, /turf) ))
 			return
 
-		if(istype(P, /obj/item/weapon/pickaxe/drill))
-			var/obj/item/weapon/pickaxe/drill/D = P
-			if(isrobot(user))
-				var/obj/item/weapon/pickaxe/drill/cyborg/RD = D
-				if(!RD.use_robot_power(user))
-					return
-			else if(!D.bcell.use(D.drillcost))
-				user << "<span class='notice'>Your [D.name] doesn't have enough charge.</span>"
-				return
-
 		if(last_act+P.digspeed > world.time)//prevents message spam
 			return
 		last_act = world.time
-		user << "<span class='danger'>You start picking.</span>"
+		user << "<span class='notice'>You start picking...</span>"
 		P.playDigSound()
 
 		if(do_after(user,P.digspeed))
@@ -544,15 +547,15 @@
 			return
 
 		if (dug)
-			user << "<span class='danger'>This area has already been dug.</span>"
+			user << "<span class='warning'>This area has already been dug!</span>"
 			return
 
-		user << "<span class='danger'>You start digging.</span>"
+		user << "<span class='notice'>You start digging...</span>"
 		playsound(src, 'sound/effects/shovel_dig.ogg', 50, 1) //FUCK YO RUSTLE I GOT'S THE DIGS SOUND HERE
 
 		sleep(20)
 		if ((user.loc == T && user.get_active_hand() == W))
-			user << "<span class='notice'>You dug a hole.</span>"
+			user << "<span class='notice'>You dig a hole.</span>"
 			gets_dug()
 			return
 
@@ -563,15 +566,15 @@
 			return
 
 		if (dug)
-			user << "<span class='danger'>This area has already been dug.</span>"
+			user << "<span class='warning'>This area has already been dug!</span>"
 			return
 
-		user << "<span class='danger'>You start digging.</span>"
+		user << "<span class='notice'>You start digging...</span>"
 		playsound(src, 'sound/effects/shovel_dig.ogg', 50, 1) //FUCK YO RUSTLE I GOT'S THE DIGS SOUND HERE
 
 		sleep(P.digspeed)
 		if ((user.loc == T && user.get_active_hand() == W))
-			user << "<span class='notice'>You dug a hole.</span>"
+			user << "<span class='notice'>You dig a hole.</span>"
 			gets_dug()
 			return
 
@@ -599,13 +602,13 @@
 	src.overlays.Cut()
 
 	if(istype(get_step(src, NORTH), /turf/simulated/mineral))
-		src.overlays += image('icons/turf/mining.dmi', "rock_side_n")
+		src.overlays += rockTurfEdgeCache[NORTH_EDGING]
 	if(istype(get_step(src, SOUTH), /turf/simulated/mineral))
-		src.overlays += image('icons/turf/mining.dmi', "rock_side_s", layer=6)
+		src.overlays += rockTurfEdgeCache[SOUTH_EDGING]
 	if(istype(get_step(src, EAST), /turf/simulated/mineral))
-		src.overlays += image('icons/turf/mining.dmi', "rock_side_e", layer=6)
+		src.overlays += rockTurfEdgeCache[EAST_EDGING]
 	if(istype(get_step(src, WEST), /turf/simulated/mineral))
-		src.overlays += image('icons/turf/mining.dmi', "rock_side_w", layer=6)
+		src.overlays += rockTurfEdgeCache[WEST_EDGING]
 
 /turf/simulated/mineral/updateMineralOverlays()
 	return
@@ -613,3 +616,9 @@
 /turf/proc/fullUpdateMineralOverlays()
 	for (var/turf/t in range(1,src))
 		t.updateMineralOverlays()
+
+
+#undef NORTH_EDGING
+#undef SOUTH_EDGING
+#undef EAST_EDGING
+#undef WEST_EDGING

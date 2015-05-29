@@ -67,13 +67,13 @@
 	fire_sound = shot.fire_sound
 	fire_delay = shot.delay
 	if (shot.select_name)
-		user << "<span class='danger'>[src] is now set to [shot.select_name].</span>"
+		user << "<span class='notice'>[src] is now set to [shot.select_name].</span>"
 	update_icon()
 	return
 
 /obj/item/weapon/gun/energy/update_icon()
 	var/ratio = power_supply.charge / power_supply.maxcharge
-	ratio = Ceiling(ratio*4) * 25
+	ratio = min(Ceiling(ratio*4) * 25, 100)
 	var/obj/item/ammo_casing/energy/shot = ammo_type[select]
 	if(power_supply.charge < shot.e_cost)
 		ratio = 0 //so the icon changes to empty if the charge isn't zero but not enough for a shot.

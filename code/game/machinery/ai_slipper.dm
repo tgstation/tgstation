@@ -36,7 +36,7 @@
 	else // trying to unlock the interface
 		if (src.allowed(usr))
 			locked = !locked
-			user << "You [ locked ? "lock" : "unlock"] the device."
+			user << "<span class='notice'>You [ locked ? "lock" : "unlock"] the device.</span>"
 			if (locked)
 				if (user.machine==src)
 					user.unset_machine()

@@ -63,8 +63,8 @@
 			visible_message("<span class='danger'>[src] blocks [O] with its shield!</span>")
 		playsound(loc, O.hitsound, 25, 1, -1)
 	else
-		usr << "<span class='danger'>This weapon is ineffective, it does no damage.</span>"
-		visible_message("<span class='danger'>[user] gently taps [src] with [O].</span>")
+		usr << "<span class='warning'>This weapon is ineffective, it does no damage!</span>"
+		visible_message("<span class='warning'>[user] gently taps [src] with [O].</span>")
 
 
 /mob/living/simple_animal/hostile/syndicate/melee/bullet_act(var/obj/item/projectile/Proj)

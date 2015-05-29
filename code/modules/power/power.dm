@@ -216,17 +216,7 @@
 	return .
 
 
-// rebuild all power networks from scratch - only called at world creation or by the admin verb
-/datum/subsystem/power/proc/makepowernets()
-	for(var/datum/powernet/PN in powernets)
-		del(PN)
-	powernets.Cut()
 
-	for(var/obj/structure/cable/PC in cable_list)
-		if(!PC.powernet)
-			var/datum/powernet/NewPN = new()
-			NewPN.add_cable(PC)
-			propagate_network(PC,PC.powernet)
 
 //remove the old powernet and replace it with a new one throughout the network.
 /proc/propagate_network(var/obj/O, var/datum/powernet/PN)
@@ -349,112 +339,6 @@
 	else if (istype(power_source, /obj/item/weapon/stock_parts/cell))
 		cell.use(drained_energy)
 	return drained_energy
-
-////////////////////////////////////////////
-// POWERNET DATUM PROCS
-// each contiguous network of cables & nodes
-////////////////////////////////////////////
-
-/datum/powernet/New()
-	SSpower.powernets += src
-
-/datum/powernet/Destroy()
-	SSpower.powernets -= src
-
-/datum/powernet/proc/is_empty()
-	return !cables.len && !nodes.len
-
-//remove a cable from the current powernet
-//if the powernet is then empty, delete it
-//Warning : this proc DON'T check if the cable exists
-/datum/powernet/proc/remove_cable(var/obj/structure/cable/C)
-	cables -= C
-	C.powernet = null
-	if(is_empty())//the powernet is now empty...
-		qdel(src)///... delete it
-
-//add a cable to the current powernet
-//Warning : this proc DON'T check if the cable exists
-/datum/powernet/proc/add_cable(var/obj/structure/cable/C)
-	if(C.powernet)// if C already has a powernet...
-		if(C.powernet == src)
-			return
-		else
-			C.powernet.remove_cable(C) //..remove it
-	C.powernet = src
-	cables +=C
-
-//remove a power machine from the current powernet
-//if the powernet is then empty, delete it
-//Warning : this proc DON'T check if the machine exists
-/datum/powernet/proc/remove_machine(var/obj/machinery/power/M)
-	nodes -=M
-	M.powernet = null
-	if(is_empty())//the powernet is now empty...
-		qdel(src)///... delete it
-
-
-//add a power machine to the current powernet
-//Warning : this proc DON'T check if the machine exists
-/datum/powernet/proc/add_machine(var/obj/machinery/power/M)
-	if(M.powernet)// if M already has a powernet...
-		if(M.powernet == src)
-			return
-		else
-			M.disconnect_from_network()//..remove it
-	M.powernet = src
-	nodes[M] = M
-
-//handles the power changes in the powernet
-//called every ticks by the powernet controller
-/datum/powernet/proc/reset()
-
-	//see if there's a surplus of power remaining in the powernet and stores unused power in the SMES
-	netexcess = avail - load
-
-	if(netexcess > 100 && nodes && nodes.len)		// if there was excess power last cycle
-		for(var/obj/machinery/power/smes/S in nodes)	// find the SMESes in the network
-			S.restore()				// and restore some of the power that was used
-
-	//updates the viewed load (as seen on power computers)
-	viewload = 0.8*viewload + 0.2*load
-	viewload = round(viewload)
-
-	//reset the powernet
-	load = 0
-	avail = newavail
-	newavail = 0
-
-/datum/powernet/proc/get_electrocute_damage()
-	switch(avail)/*
-		if (1300000 to INFINITY)
-			return min(rand(70,150),rand(70,150))
-		if (750000 to 1300000)
-			return min(rand(50,115),rand(50,115))
-		if (100000 to 750000-1)
-			return min(rand(35,101),rand(35,101))
-		if (75000 to 100000-1)
-			return min(rand(30,95),rand(30,95))
-		if (50000 to 75000-1)
-			return min(rand(25,80),rand(25,80))
-		if (25000 to 50000-1)
-			return min(rand(20,70),rand(20,70))
-		if (10000 to 25000-1)
-			return min(rand(20,65),rand(20,65))
-		if (1000 to 10000-1)
-			return min(rand(10,20),rand(10,20))*/
-		if (1000000 to INFINITY)
-			return min(rand(50,160),rand(50,160))
-		if (200000 to 1000000)
-			return min(rand(25,80),rand(25,80))
-		if (100000 to 200000)//Ave powernet
-			return min(rand(20,60),rand(20,60))
-		if (50000 to 100000)
-			return min(rand(15,40),rand(15,40))
-		if (1000 to 50000)
-			return min(rand(10,20),rand(10,20))
-		else
-			return 0
 
 ////////////////////////////////////////////////
 // Misc.

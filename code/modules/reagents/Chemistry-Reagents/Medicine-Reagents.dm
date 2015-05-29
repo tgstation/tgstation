@@ -162,7 +162,6 @@ datum/reagent/medicine/silver_sulfadiazine
 	description = "On touch, quickly heals burn damage. Basic anti-burn healing drug. On ingestion, deals minor toxin damage."
 	reagent_state = LIQUID
 	color = "#C8A5DC"
-	metabolization_rate = 5 * REAGENTS_METABOLISM
 
 datum/reagent/medicine/silver_sulfadiazine/reaction_mob(var/mob/living/M as mob, var/method=TOUCH, var/volume, var/show_message = 1)
 	if(iscarbon(M))
@@ -179,7 +178,7 @@ datum/reagent/medicine/silver_sulfadiazine/reaction_mob(var/mob/living/M as mob,
 	return
 
 datum/reagent/medicine/silver_sulfadiazine/on_mob_life(var/mob/living/M as mob)
-	M.adjustFireLoss(-1*REM)
+	M.adjustFireLoss(-2*REM)
 	..()
 	return
 
@@ -189,7 +188,6 @@ datum/reagent/medicine/styptic_powder
 	description = "On touch, quickly heals brute damage. Basic anti-brute healing drug. On ingestion, deals minor toxin damage."
 	reagent_state = LIQUID
 	color = "#C8A5DC"
-	metabolization_rate = 5 * REAGENTS_METABOLISM
 
 datum/reagent/medicine/styptic_powder/reaction_mob(var/mob/living/M as mob, var/method=TOUCH, var/volume, var/show_message = 1)
 	if(iscarbon(M))
@@ -197,11 +195,12 @@ datum/reagent/medicine/styptic_powder/reaction_mob(var/mob/living/M as mob, var/
 			M.adjustBruteLoss(-volume)
 			if(show_message)
 				M << "<span class='notice'>You feel your wounds knitting back together!</span>"
-			M.emote("scream")
+			if(M.stat)
+				M.emote("scream")
 		if(method == INGEST)
 			M.adjustToxLoss(0.5*volume)
 			if(show_message)
-				M << "<span class='notice'>You probably shouldn't have eaten that. Maybe you should of splashed it on, or applied a patch?</span>"
+				M << "<span class='notice'>You feel kind of ill. Maybe you ate a medicine you shouldn't have?</span>"
 	..()
 	return
 
@@ -251,10 +250,10 @@ datum/reagent/medicine/charcoal
 	metabolization_rate = 0.5 * REAGENTS_METABOLISM
 
 datum/reagent/medicine/charcoal/on_mob_life(var/mob/living/M as mob)
-	M.adjustToxLoss(-1.5*REM)
+	M.adjustToxLoss(-2*REM)
 	for(var/datum/reagent/R in M.reagents.reagent_list)
 		if(R != src)
-			M.reagents.remove_reagent(R.id,0.5)
+			M.reagents.remove_reagent(R.id,1)
 	..()
 	return
 
@@ -402,7 +401,7 @@ datum/reagent/medicine/ephedrine
 	addiction_threshold = 30
 
 datum/reagent/medicine/ephedrine/on_mob_life(var/mob/living/M as mob)
-	M.status_flags |= IGNORESLOWDOWN
+	M.status_flags |= GOTTAGOFAST
 	M.AdjustParalysis(-1)
 	M.AdjustStunned(-1)
 	M.AdjustWeakened(-1)
@@ -471,8 +470,8 @@ datum/reagent/medicine/morphine
 
 datum/reagent/medicine/morphine/on_mob_life(var/mob/living/M as mob)
 	M.status_flags |= IGNORESLOWDOWN
-	if(current_cycle >= 36)
-		M.sleeping += 3
+	if(current_cycle >= 12)
+		M.sleeping += 1
 	..()
 	return
 
@@ -699,7 +698,7 @@ datum/reagent/medicine/antihol/on_mob_life(var/mob/living/M as mob)
 	overdose_threshold = 60
 
 datum/reagent/medicine/stimulants/on_mob_life(var/mob/living/M as mob)
-	M.status_flags |= IGNORESLOWDOWN
+	M.status_flags |= GOTTAGOFAST
 	if(M.health < 50 && M.health > 0)
 		M.adjustOxyLoss(-1*REM)
 		M.adjustToxLoss(-1*REM)

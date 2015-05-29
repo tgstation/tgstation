@@ -129,13 +129,13 @@ datum/reagent/water/reaction_turf(var/turf/simulated/T, var/volume)
 	for(var/mob/living/simple_animal/slime/M in T)
 		M.apply_water()
 
-	var/hotspot = (locate(/obj/effect/hotspot) in T)
+	var/obj/effect/hotspot/hotspot = (locate(/obj/effect/hotspot) in T)
 	if(hotspot && !istype(T, /turf/space))
 		if(T.air)
 			var/datum/gas_mixture/G = T.air
 			G.temperature = max(min(G.temperature-(CT*1000),G.temperature/CT),0)
 			G.react()
-			qdel(hotspot)
+			hotspot.Kill()
 	return
 
 /*
@@ -270,12 +270,12 @@ datum/reagent/unstableslimetoxin/on_mob_life(var/mob/living/carbon/human/H as mo
 	H.visible_message("<b>[H]</b> falls to the ground and screams as their skin bubbles and froths!") //'froths' sounds painful when used with SKIN.
 	H.Weaken(3)
 	sleep(30)
-	var/list/blacklisted_species = list(/datum/species/zombie, /datum/species/skeleton, /datum/species/human, /datum/species/golem, /datum/species/golem/adamantine, /datum/species/shadow)
+	var/list/blacklisted_species = list(/datum/species/zombie, /datum/species/skeleton, /datum/species/human, /datum/species/golem, /datum/species/golem/adamantine, /datum/species/shadow, /datum/species/shadow/ling, /datum/species/plasmaman, /datum/species)
 	var/list/possible_morphs = typesof(/datum/species/) - blacklisted_species
 	var/datum/species/mutation = pick(possible_morphs)
 	if(prob(90) && mutation && H.dna.species != /datum/species/golem && H.dna.species != /datum/species/golem/adamantine)
 		H << "<span class='danger'>The pain subsides. You feel... different.</span>"
-		H.dna.species = new mutation()
+		hardset_dna(H, null, null, null, null, mutation)
 		H.regenerate_icons()
 		if(mutation == /datum/species/slime)
 			H.faction |= "slime"
@@ -518,7 +518,7 @@ datum/reagent/silicon
 
 datum/reagent/fuel
 	name = "Welding fuel"
-	id = "fuel"
+	id = "welding_fuel"
 	description = "Required for welders. Flamable."
 	color = "#660000" // rgb: 102, 0, 0
 

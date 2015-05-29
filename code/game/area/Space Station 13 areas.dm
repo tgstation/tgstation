@@ -47,6 +47,7 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 	var/static_environ
 
 	var/has_gravity = 0
+	var/safe = 0 				//Is the area teleport-safe: no space / radiation / aggresive mobs / other dangers
 
 	var/no_air = null
 	var/area/master				// master area used for power calcluations
@@ -68,22 +69,6 @@ proc/process_teleport_locs()
 			teleportlocs[AR.name] = AR
 
 	sortTim(teleportlocs, /proc/cmp_text_dsc)
-
-var/list/ghostteleportlocs = list()
-
-proc/process_ghost_teleport_locs()
-	for(var/area/AR in world)
-		if(ghostteleportlocs.Find(AR.name)) continue
-		if(istype(AR, /area/turret_protected/aisat) || istype(AR, /area/derelict) || istype(AR, /area/tdome))
-			ghostteleportlocs += AR.name
-			ghostteleportlocs[AR.name] = AR
-		var/turf/picked = safepick(get_area_turfs(AR.type))
-		if (picked && (picked.z == ZLEVEL_STATION || picked.z == ZLEVEL_MINING || picked.z == ZLEVEL_ABANDONNEDTSAT))
-			ghostteleportlocs += AR.name
-			ghostteleportlocs[AR.name] = AR
-
-	sortTim(ghostteleportlocs, /proc/cmp_text_dsc)
-
 
 /*-----------------------------------------------------------------------------*/
 
@@ -113,11 +98,7 @@ proc/process_ghost_teleport_locs()
 	valid_territory = 0
 	ambientsounds = list('sound/ambience/ambispace.ogg','sound/ambience/title2.ogg',)
 
-
-
-//These are shuttle areas, they must contain two areas in a subgroup if you want to move a shuttle from one
-//place to another. Look at escape shuttle for example.
-//All shuttles show now be under shuttle since we have smooth-wall code.
+//These are shuttle areas; all subtypes are only used as teleportation markers, they have no actual function beyond that.
 
 /area/shuttle
 	name = "\improper Shuttle"
@@ -125,7 +106,44 @@ proc/process_ghost_teleport_locs()
 	luminosity = 1
 	lighting_use_dynamic = 1
 	has_gravity = 1
+	valid_territory = 0
+	icon_state = "shuttle"
 
+/area/shuttle/arrival
+	name = "\improper Arrival Shuttle"
+
+/area/shuttle/pod_1
+	name = "\improper Escape Pod One"
+
+/area/shuttle/pod_2
+	name = "\improper Escape Pod Two"
+
+/area/shuttle/pod_3
+	name = "\improper Escape Pod Three"
+
+/area/shuttle/pod_4
+	name = "\improper Escape Pod Four"
+
+/area/shuttle/mining
+	name = "\improper Mining Shuttle"
+
+/area/shuttle/labor
+	name = "\improper Labor Camp Shuttle"
+
+/area/shuttle/supply
+	name = "\improper Supply Shuttle"
+
+/area/shuttle/escape
+	name = "\improper Emergency Shuttle"
+
+/area/shuttle/transport
+	name = "\improper Transport Shuttle"
+
+/area/shuttle/syndicate
+	name = "\improper Syndicate Infiltrator"
+
+/area/shuttle/abandoned
+	name = "\improper Abandoned Ship"
 
 /area/start
 	name = "start area"
@@ -147,13 +165,13 @@ proc/process_ghost_teleport_locs()
 	name = "\improper Centcom Docks"
 
 /area/centcom/evac
-	name = "\improper Centcom Emergency Shuttle"
+	name = "\improper Centcom Recovery Ship"
 
-/area/centcom/suppy
-	name = "\improper Centcom Supply Shuttle"
+/area/centcom/supply
+	name = "\improper Centcom Supply Shuttle Dock"
 
 /area/centcom/ferry
-	name = "\improper Centcom Transport Shuttle"
+	name = "\improper Centcom Transport Shuttle Dock"
 
 /area/centcom/prison
 	name = "\improper Admin Prison"
@@ -501,6 +519,7 @@ proc/process_ghost_teleport_locs()
 /area/crew_quarters
 	name = "\improper Dormitories"
 	icon_state = "Sleep"
+	safe = 1
 
 /area/crew_quarters/toilet
 	name = "\improper Dormitory Toilets"
@@ -658,6 +677,7 @@ proc/process_ghost_teleport_locs()
 	requires_power = 0
 	luminosity = 1
 	lighting_use_dynamic = 0
+	valid_territory = 0
 
 	auxport
 		name = "\improper Fore Port Solar Array"
@@ -966,6 +986,7 @@ proc/process_ghost_teleport_locs()
 	icon_state = "toxmisc"
 
 /area/toxins/test_area
+	valid_territory = 0
 	name = "\improper Toxins Test Area"
 	icon_state = "toxtest"
 

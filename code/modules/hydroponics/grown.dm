@@ -168,7 +168,7 @@
 /obj/item/weapon/reagent_containers/food/snacks/grown/harebell
 	seed = /obj/item/seeds/harebell
 	name = "harebell"
-	desc = "\"I'll sweeten thy sad grave: thou shalt not lack the flower that's like thy face, pale primrose, nor the azured hare-bell, like thy veins; no, nor the leaf of eglantine, whom not to slander, out-sweeten’d not thy breath.\""
+	desc = "\"I'll sweeten thy sad grave: thou shalt not lack the flower that's like thy face, pale primrose, nor the azured hare-bell, like thy veins; no, nor the leaf of eglantine, whom not to slander, out-sweeten'd not thy breath.\""
 	icon_state = "harebell"
 	slot_flags = SLOT_HEAD
 	filling_color = "#E6E6FA"
@@ -204,7 +204,7 @@
 			qdel(src)
 			return
 		else
-			user << "<span class='warning'>You need five lengths of cable to make a potato battery.</span>"
+			user << "<span class='warning'>You need five lengths of cable to make a potato battery!</span>"
 			return
 
 
@@ -702,7 +702,7 @@
 		if( (held_mob.l_hand == src) || (held_mob.r_hand == src))
 			if(hasvar(held_mob,"gloves") && held_mob:gloves)
 				return
-			held_mob.bodytemperature += 20 * TEMPERATURE_DAMAGE_COEFFICIENT
+			held_mob.bodytemperature += 15 * TEMPERATURE_DAMAGE_COEFFICIENT
 			if(prob(10))
 				held_mob << "<span class='warning'>Your hand holding [src] burns!</span>"
 	else
@@ -806,7 +806,7 @@ obj/item/weapon/reagent_containers/food/snacks/grown/shell/eggy/add_juice()
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/tomato/proc/squish(atom/target)
 	new splat(src.loc)
-	src.visible_message("<span class='notice'>The [src.name] has been squashed.</span>","<span class='notice'>You hear a smack.</span>")
+	src.visible_message("The [src.name] has been squashed.","<span class='italics'>You hear a smack.</span>")
 	for(var/atom/A in get_turf(target))
 		src.reagents.reaction(A)
 
@@ -834,7 +834,7 @@ obj/item/weapon/reagent_containers/food/snacks/grown/shell/eggy/add_juice()
 /obj/item/weapon/reagent_containers/food/snacks/grown/tomato/killer/attack_self(mob/user as mob)
 	if(awakening || istype(user.loc,/turf/space))
 		return
-	user << "<span class='notice'>You begin to awaken the Killer Tomato.</span>"
+	user << "<span class='notice'>You begin to awaken the Killer Tomato...</span>"
 	awakening = 1
 
 	spawn(30)
@@ -898,7 +898,7 @@ obj/item/weapon/reagent_containers/food/snacks/grown/shell/eggy/add_juice()
 /obj/item/weapon/reagent_containers/food/snacks/grown/tomato/blue/bluespace/attack_self(var/mob/user)
 	squish(user)
 	user.drop_item()
-	src.visible_message("<span class='notice'>[user] squashes the [src.name].</span>","<span class='notice'>You hear a smack.</span>")
+	src.visible_message("[user] squashes the [src.name].","<span class='italics'>You hear a smack.</span>")
 	qdel(src)
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/tomato/blue/bluespace/squish(atom/squishee)

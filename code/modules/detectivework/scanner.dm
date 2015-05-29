@@ -151,7 +151,7 @@
 			if(!found_something)
 				add_log("<I># No forensic traces found #</I>", 0) // Don't display this to the holder user
 				if(holder)
-					holder << "<span class='notice'>Unable to locate any fingerprints, materials, fibers, or blood on \the [target_name]!</span>"
+					holder << "<span class='warning'>Unable to locate any fingerprints, materials, fibers, or blood on \the [target_name]!</span>"
 			else
 				if(holder)
 					holder << "<span class='notice'>You finish scanning \the [target_name].</span>"

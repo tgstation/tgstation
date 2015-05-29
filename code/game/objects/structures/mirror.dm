@@ -65,7 +65,7 @@
 		return
 
 	if(prob(I.force * 2))
-		visible_message("<span class='warning'>[user] smashes [src] with [I]!</span>")
+		visible_message("<span class='warning'>[user] smashes [src] with [I].</span>")
 		shatter()
 	else
 		visible_message("<span class='warning'>[user] hits [src] with [I]!</span>")
@@ -136,7 +136,7 @@
 			if(!newrace || !H.dna)
 				return
 
-			H.dna.species = new newrace
+			hardset_dna(H, null, null, null, null, newrace)
 
 			if(H.dna.species.use_skintones)
 				var/new_s_tone = input(user, "What are we again?", "Race change")  as null|anything in skin_tones

@@ -171,7 +171,7 @@ datum/design/proc/CalcReliability(var/list/temp_techs)
 
 /datum/design/jackhammer
 	name = "Sonic Jackhammer"
-	desc = "Essentially a handheld planet-cracker. Can drill through walls with ease as well, but has high power cost for doing so."
+	desc = "Essentially a handheld planet-cracker. Can drill through walls with ease as well."
 	id = "jackhammer"
 	req_tech = list("materials" = 6, "powerstorage" = 6, "engineering" = 5, "magnets" = 6)
 	build_type = PROTOLATHE

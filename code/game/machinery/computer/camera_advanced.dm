@@ -3,14 +3,21 @@
 	desc = "Used to access the various cameras on the station."
 	icon_state = "cameras"
 	//circuit = /obj/item/weapon/circuitboard/security
-	var/mob/camera/aiEye/remote/eyeobj = new()
+	var/mob/camera/aiEye/remote/eyeobj
 	var/mob/living/carbon/human/current_user = null
 	var/list/networks = list("SS13")
 	var/datum/action/camera_off/off_action = new
 	var/datum/action/camera_jump/jump_action = new
 
-/obj/machinery/computer/camera_advanced/New()
+/obj/machinery/computer/camera_advanced/proc/CreateEye()
+	eyeobj = new()
 	eyeobj.origin = src
+
+/obj/machinery/computer/camera_advanced/proc/GrantActions(var/mob/living/carbon/user)
+	off_action.target = user
+	off_action.Grant(user)
+	jump_action.target = user
+	jump_action.Grant(user)
 
 /obj/machinery/computer/camera_advanced/check_eye(var/mob/user as mob)
 	if (get_dist(user, src) > 1 || user.eye_blind)
@@ -24,11 +31,11 @@
 	if(!iscarbon(user))
 		return
 	var/mob/living/carbon/L = user
+
 	if(!current_user)
-		off_action.target = user
-		off_action.Grant(user)
-		jump_action.target = user
-		jump_action.Grant(user)
+		if(!eyeobj)
+			CreateEye()
+		GrantActions(user)
 		current_user = user
 		eyeobj.user = user
 		eyeobj.name = "Camere Eye ([user.name])"
@@ -43,6 +50,8 @@
 					eyeobj.setLoc(get_turf(C))
 					break
 			eyeobj.initialized = 1
+		else
+			eyeobj.setLoc(eyeobj.loc)
 	else
 		user << "The console is already in use!"
 
@@ -56,6 +65,11 @@
 	var/initialized = 0
 	var/visible_icon = 0
 	var/image/user_image = null
+
+/mob/camera/aiEye/remote/GetViewerClient()
+	if(user)
+		return user.client
+	return null
 
 /mob/camera/aiEye/remote/setLoc(var/T)
 	if(user)

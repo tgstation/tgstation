@@ -2,6 +2,7 @@
 #define GIRDER_REINF_STRUTS 1
 #define GIRDER_REINF 2
 #define GIRDER_DISPLACED 3
+#define GIRDER_DISASSEMBLED 4
 
 /obj/structure/girder
 	name = "girder"
@@ -14,23 +15,22 @@
 
 /obj/structure/girder/attackby(obj/item/W as obj, mob/user as mob, params)
 	add_fingerprint(user)
-	if(istype(W, /obj/item/weapon/weldingtool) && state == GIRDER_DISPLACED)
-		var/obj/item/weapon/weldingtool/WT = W
-		if(WT.remove_fuel(0,user))
-			playsound(src.loc, 'sound/items/Welder2.ogg', 50, 1)
-			user.visible_message("<span class='warning'>[user] disassembles the girder.</span>", \
-								"<span class='notice'>You start to disassemble the girder...</span>", "You hear welding and clanking.")
-			if(do_after(user, 40, target = src))
-				if( !WT.isOn() )
-					return
-				user << "<span class='notice'>You disassemble the girder.</span>"
-				var/obj/item/stack/sheet/metal/M = new (loc, 2)
-				M.add_fingerprint(user)
-				qdel(src)
+	if(istype(W, /obj/item/weapon/screwdriver) && state == GIRDER_DISPLACED)
+		playsound(src.loc, 'sound/items/Screwdriver.ogg', 100, 1)
+		user.visible_message("<span class='warning'>[user] disassembles the girder.</span>", \
+							"<span class='notice'>You start to disassemble the girder...</span>", "You hear clanking and banging noises.")
+		if(do_after(user, 40, target = src))
+			if(state == GIRDER_DISASSEMBLED)
+				return
+			state = GIRDER_DISASSEMBLED
+			user << "<span class='notice'>You disassemble the girder.</span>"
+			var/obj/item/stack/sheet/metal/M = new (loc, 2)
+			M.add_fingerprint(user)
+			qdel(src)
 
 	else if(istype(W, /obj/item/weapon/wrench) && state == GIRDER_DISPLACED)
 		if (!istype(src.loc, /turf/simulated/floor))
-			usr << "<span class='warning'>A floor must be present to secure the girder!</span>"
+			user << "<span class='warning'>A floor must be present to secure the girder!</span>"
 			return
 		playsound(src.loc, 'sound/items/Ratchet.ogg', 100, 1)
 		user << "<span class='notice'>You start securing the girder...</span>"
@@ -50,10 +50,6 @@
 
 	else if(istype(W, /obj/item/weapon/pickaxe/drill/jackhammer))
 		var/obj/item/weapon/pickaxe/drill/jackhammer/D = W
-		if(!D.bcell.use(D.drillcost))
-			user << "<span class='warning'>Your [D.name] doesn't have enough power to break through the [name]!</span>"
-			return
-		D.update_icon()
 		user << "<span class='notice'>You smash through the girder!</span>"
 		new /obj/item/stack/sheet/metal(get_turf(src))
 		D.playDigSound()
@@ -86,8 +82,14 @@
 			qdel(src)
 
 	else if(istype(W, /obj/item/stack/sheet))
+		if (istype(src.loc, /turf/simulated/wall))
+			user << "<span class='warning'>There is already a wall present!</span>"
+			return
 		if (!istype(src.loc, /turf/simulated/floor))
-			usr << "<span class='warning'>A floor must be present to build a false wall!</span>"
+			user << "<span class='warning'>A floor must be present to build a false wall!</span>"
+			return
+		if (locate(/obj/structure/falsewall) in src.loc.contents)
+			user << "<span class='warning'>There is already a false wall present!</span>"
 			return
 
 		var/obj/item/stack/sheet/S = W
@@ -194,7 +196,7 @@
 					qdel(src)
 				return
 
-		add_hiddenprint(usr)
+		add_hiddenprint(user)
 
 	else if(istype(W, /obj/item/pipe))
 		var/obj/item/pipe/P = W
@@ -307,9 +309,6 @@
 
 	else if(istype(W, /obj/item/weapon/pickaxe/drill/jackhammer))
 		var/obj/item/weapon/pickaxe/drill/jackhammer/D = W
-		if(!D.bcell.use(D.drillcost))
-			return
-		D.update_icon()
 		user << "<span class='notice'>Your jackhammer smashes through the girder!</span>"
 		var/obj/effect/decal/remains/human/R = new (get_turf(src))
 		transfer_fingerprints_to(R)

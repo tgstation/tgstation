@@ -28,7 +28,7 @@
 	else if(mind) // Let's make this a feature
 		egg.owner = mind
 	victim.internal_organs += egg
-	visible_message("<span class='notice'>[src] lays an egg in a [victim]!</span>")
+	visible_message("<span class='warning'>[src] lays an egg in a [victim].</span>")
 	egg_lain = 1
 
 /mob/living/simple_animal/hostile/headcrab/AttackingTarget()
@@ -39,7 +39,7 @@
 		var/mob/living/carbon/human/H = target
 		if(H.stat == DEAD)
 			Infect(target)
-			src << "<span class='danger'>With your egg laid you feel your death rapidly approaching, time to die...</span>"
+			src << "<span class='userdanger'>With your egg laid you feel your death rapidly approaching, time to die...</span>"
 			spawn(100)
 				death()
 			return
@@ -66,7 +66,8 @@ obj/item/body_egg/changeling_egg/proc/Pop()
 		var/mob/living/carbon/monkey/M = new(affected_mob.loc)
 		if(owner)
 			owner.transfer_to(M)
-			owner.changeling.purchasedpowers += new /obj/effect/proc_holder/changeling/humanform(null)
+			if(owner.changeling)
+				owner.changeling.purchasedpowers += new /obj/effect/proc_holder/changeling/humanform(null)
 			M.key = owner.key
 		if(ishuman(affected_mob))
 			var/mob/living/carbon/human/H = affected_mob

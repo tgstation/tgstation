@@ -25,7 +25,7 @@
 /obj/item/device/flash/proc/burn_out() //Made so you can override it if you want to have an invincible flash from R&D or something.
 	broken = 1
 	icon_state = "[initial(icon_state)]burnt"
-	visible_message("<span class='notice'>The [src.name] burns out!</span>")
+	visible_message("The [src.name] burns out!")
 
 
 /obj/item/device/flash/proc/flash_recharge(var/mob/user)
@@ -66,12 +66,16 @@
 			M.confused += power
 			terrible_conversion_proc(M, user)
 			M.Stun(1)
-			user.visible_message("<span class='disarm'>[user] blinds [M] with the flash!</span>")
+			visible_message("<span class='disarm'>[user] blinds [M] with the flash!</span>")
+			user << "<span class='danger'>You blind [M] with the flash!</span>"
+			M << "<span class='userdanger'>[user] blinds you with the flash!</span>"
 			if(M.weakeyes)
 				M.Stun(2)
-				M.visible_message("<span class='disarm'><b>[M]</b> gasps and shields their eyes!</span>")
+				M.visible_message("<span class='disarm'>[M] gasps and shields their eyes!</span>", "<span class='userdanger'>You gasp and shields your eyes!</span>")
 		else
-			user.visible_message("<span class='disarm'>[user] fails to blind [M] with the flash!</span>")
+			visible_message("<span class='disarm'>[user] fails to blind [M] with the flash!</span>")
+			user << "<span class='warning'>You fail to blind [M] with the flash!</span>"
+			M << "<span class='danger'>[user] fails to blind you with the flash!</span>"
 	else
 		if(M.flash_eyes())
 			M.confused += power
@@ -88,16 +92,16 @@
 		add_logs(user, M, "flashed", object="[src.name]")
 		flick("e_flash", M.flash)
 		M.Weaken(rand(5,10))
-		user.visible_message("<span class='disarm'>[user] overloads [M]'s sensors with the flash!</span>")
+		user.visible_message("<span class='disarm'>[user] overloads [M]'s sensors with the flash!</span>", "<span class='danger'>You overload [M]'s sensors with the flash!</span>")
 		return 1
 
-	user.visible_message("<span class='notice'>[user] fails to blind [M] with the flash!</span>")
+	user.visible_message("<span class='disarm'>[user] fails to blind [M] with the flash!</span>", "<span class='warning'>You fail to blind [M] with the flash!</span>")
 
 
 /obj/item/device/flash/attack_self(mob/living/carbon/user, flag = 0, emp = 0)
 	if(!try_use_flash(user))
 		return 0
-	user.visible_message("<span class='disarm'>[user]'s flash emits a blinding light!</span>")
+	user.visible_message("<span class='disarm'>[user]'s flash emits a blinding light!</span>", "<span class='danger'>Your flash emits a blinding light!</span>")
 	for(var/mob/living/carbon/M in oviewers(3, null))
 		flash_carbon(M, user, 3, 0)
 

@@ -1,8 +1,8 @@
 /mob/living/carbon/brain/death(gibbed)
 	if(stat == DEAD)	return
 	if(!gibbed && container && istype(container, /obj/item/device/mmi))//If not gibbed but in a container.
-		container.visible_message("<span class='danger'>[src]'s MMI flatlines!</span>", \
-					"<span class='danger'>You hear something flatline.</span>")
+		container.visible_message("<span class='warning'>[src]'s MMI flatlines!</span>", \
+					"<span class='italics'>You hear something flatline.</span>")
 		if(istype(src,/obj/item/organ/brain/alien))
 			container.icon_state = "mmi_alien_dead"
 		else

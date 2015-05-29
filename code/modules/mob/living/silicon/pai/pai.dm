@@ -108,7 +108,7 @@
 		// 33% chance of no additional effect
 
 	if(prob(20))
-		visible_message("<span class='danger'>A shower of sparks spray from [src]'s inner workings.</span>", 3, "<span class='danger'>You hear and smell the ozone hiss of electrical sparks being expelled violently.</span>", 2)
+		visible_message("<span class='warning'>A shower of sparks spray from [src]'s inner workings.</span>", 3, "<span class='italics'>You hear and smell the ozone hiss of electrical sparks being expelled violently.</span>", 2)
 		return src.death(0)
 
 	silence_time = world.timeofday + 120 * 10		// Silence for 2 minutes

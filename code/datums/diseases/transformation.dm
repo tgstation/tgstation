@@ -93,8 +93,8 @@
 
 /datum/disease/transformation/jungle_fever/do_disease_transformation(var/mob/living/carbon/affected_mob)
 	if(!ismonkey(affected_mob))
-		affected_mob.monkeyize(TR_KEEPITEMS | TR_KEEPIMPLANTS | TR_KEEPDAMAGE | TR_KEEPVIRUS | TR_KEEPSE)
 		ticker.mode.add_monkey(affected_mob.mind)
+		affected_mob.monkeyize(TR_KEEPITEMS | TR_KEEPIMPLANTS | TR_KEEPDAMAGE | TR_KEEPVIRUS | TR_KEEPSE)
 
 /datum/disease/transformation/jungle_fever/stage_act()
 	..()
@@ -202,7 +202,7 @@
 			if(ishuman(affected_mob))
 				var/mob/living/carbon/human/human = affected_mob
 				if(human.dna && human.dna.species.id != "slime")
-					human.dna.species = new /datum/species/slime()
+					hardset_dna(human, null, null, null, null, /datum/species/slime)
 					human.regenerate_icons()
 
 /datum/disease/transformation/corgi

@@ -12,7 +12,7 @@
 /datum/species/human/handle_chemicals(datum/reagent/chem, mob/living/carbon/human/H)
 	if(chem.id == "mutationtoxin")
 		H << "<span class='danger'>Your flesh rapidly mutates!</span>"
-		H.dna.species = new /datum/species/slime()
+		hardset_dna(H, null, null, null, null, /datum/species/slime)
 		H.regenerate_icons()
 		H.reagents.del_reagent(chem.type)
 		H.faction |= "slime"
@@ -72,7 +72,7 @@
 			if(prob(15))
 				H.irradiate(rand(30,80))
 				H.Weaken(5)
-				H.visible_message("<span class='danger'>[H] writhes in pain as \his vacuoles boil.</span>", "<span class='userdanger'>[H] writhes in pain as \his vacuoles boil.</span>", "<span class='danger'>You hear the crunching of leaves.</span>")
+				H.visible_message("<span class='warning'>[H] writhes in pain as \his vacuoles boil.</span>", "<span class='userdanger'>You writhe in pain as your vacuoles boil!</span>", "<span class='italics'>You hear the crunching of leaves.</span>")
 				if(prob(80))
 					randmutb(H)
 					domutcheck(H,null)
@@ -81,7 +81,7 @@
 					domutcheck(H,null)
 			else
 				H.adjustFireLoss(rand(5,15))
-				H.show_message("<span class='danger'>The radiation beam singes you!</span>")
+				H.show_message("<span class='userdanger'>The radiation beam singes you!</span>")
 		if(/obj/item/projectile/energy/florayield)
 			H.nutrition = min(H.nutrition+30, NUTRITION_LEVEL_FULL)
 	return
@@ -128,6 +128,7 @@
 	ignored_by = list(/mob/living/simple_animal/hostile/faithless)
 	meat = /obj/item/weapon/reagent_containers/food/snacks/meat/slab/human/mutant/shadow
 	specflags = list(NOBREATH,NOBLOOD,RADIMMUNE)
+	dangerous_existence = 1
 
 /datum/species/shadow/spec_life(mob/living/carbon/human/H)
 	var/light_amount = 0
@@ -232,7 +233,7 @@
 	// Animated beings of stone. They have increased defenses, and do not need to breathe. They're also slow as fuuuck.
 	name = "Golem"
 	id = "golem"
-	specflags = list(NOBREATH,HEATRES,COLDRES,NOGUNS,NOBLOOD,RADIMMUNE)
+	specflags = list(NOBREATH,HEATRES,COLDRES,NOGUNS,NOBLOOD,RADIMMUNE,VIRUSIMMUNE,HARDFEET)
 	speedmod = 3
 	armor = 55
 	punchmod = 5
@@ -281,7 +282,7 @@
 	say_mod = "rattles"
 	sexes = 0
 	meat = /obj/item/weapon/reagent_containers/food/snacks/meat/slab/human/mutant/skeleton
-	specflags = list(NOBREATH,HEATRES,COLDRES,NOBLOOD,RADIMMUNE)
+	specflags = list(NOBREATH,HEATRES,COLDRES,NOBLOOD,RADIMMUNE,VIRUSIMMUNE,HARDFEET)
 /*
  ZOMBIES
 */
@@ -325,7 +326,7 @@
 	say_mod = "gibbers"
 	sexes = 0
 	invis_sight = SEE_INVISIBLE_LEVEL_ONE
-	specflags = list(NOBLOOD,NOBREATH)
+	specflags = list(NOBLOOD,NOBREATH,VIRUSIMMUNE)
 	var/scientist = 0 // vars to not pollute spieces list with castes
 	var/agent = 0
 	var/team = 1
@@ -344,3 +345,60 @@
 	for(var/mob/M in dead_mob_list)
 		M << "<i><font color=#800080><b>[user.name]:</b> [message]</font></i>"
 	return ""
+
+
+var/global/image/plasmaman_on_fire = image("icon"='icons/mob/OnFire.dmi', "icon_state"="plasmaman")
+
+/datum/species/plasmaman
+	name = "Plasbone"
+	id = "plasmaman"
+	say_mod = "rattles"
+	sexes = 0
+	meat = /obj/item/weapon/reagent_containers/food/snacks/meat/slab/human/mutant/skeleton
+	specflags = list(NOBLOOD,RADIMMUNE)
+	safe_oxygen_min = 0 //We don't breath this
+	safe_toxins_min = 16 //We breath THIS!
+	safe_toxins_max = 0
+	dangerous_existence = 1 //So so much
+	var/skin = 0
+
+/datum/species/plasmaman/skin
+	name = "Skinbone"
+	skin = 1
+
+/datum/species/plasmaman/update_base_icon_state(var/mob/living/carbon/human/H)
+	var/base = ..()
+	if(base == id)
+		base = "[base][skin]"
+	return base
+
+/datum/species/plasmaman/spec_life(var/mob/living/carbon/human/H)
+	var/datum/gas_mixture/environment = H.loc.return_air()
+
+	if(!istype(H.wear_suit, /obj/item/clothing/suit/space/eva/plasmaman) || !istype(H.head, /obj/item/clothing/head/helmet/space/hardsuit/plasmaman))
+		if(environment)
+			var/total_moles = environment.total_moles()
+			if(total_moles)
+				if((environment.oxygen /total_moles) >= 0.01)
+					if(!H.on_fire)
+						H.visible_message("<span class='danger'>[H]'s body reacts with the atmosphere and bursts into flames!</span>","<span class='userdanger'>Your body reacts with the atmosphere and bursts into flame!</span>")
+					H.adjust_fire_stacks(0.5)
+					H.IgniteMob()
+	else
+		if(H.fire_stacks)
+			var/obj/item/clothing/suit/space/eva/plasmaman/P = H.wear_suit
+			if(istype(P))
+				P.Extinguish(H)
+	H.update_fire()
+
+//Heal from plasma
+/datum/species/plasmaman/handle_chemicals(datum/reagent/chem, mob/living/carbon/human/H)
+	if(chem.id == "plasma")
+		H.adjustBruteLoss(-5)
+		H.adjustFireLoss(-5)
+		H.reagents.remove_reagent(chem.id, REAGENTS_METABOLISM)
+		return 1
+
+
+
+

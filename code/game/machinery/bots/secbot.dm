@@ -25,6 +25,7 @@
 	var/arrest_type = 0 //If true, don't handcuff
 	radio_frequency = SEC_FREQ //Security channel
 	bot_type = SEC_BOT
+	model = "Securitron"
 
 /obj/machinery/bot/secbot/beepsky
 	name = "Officer Beep O'sky"
@@ -55,7 +56,7 @@
 	spawn(3)
 
 		var/datum/job/detective/J = new/datum/job/detective
-		botcard.access = J.get_access()
+		botcard.access += J.get_access()
 		prev_access = botcard.access
 
 
@@ -230,7 +231,7 @@ Auto Patrol: []"},
 						var/area/location = get_area(src)
 						speak("[arrest_type ? "Detaining" : "Arresting"] level [threatlevel] scumbag <b>[target]</b> in [location].", radio_frequency)
 					target.visible_message("<span class='danger'>[src] has stunned [target]!</span>",\
-											"<span class='userdanger'>[src] has stunned [target]!</span>")
+											"<span class='userdanger'>[src] has stunned you!</span>")
 
 					mode = BOT_PREP_ARREST
 					anchored = 1
@@ -260,7 +261,7 @@ Auto Patrol: []"},
 						mode = BOT_ARREST
 						playsound(loc, 'sound/weapons/cablecuff.ogg', 30, 1, -2)
 						target.visible_message("<span class='danger'>[src] is trying to put zipties on [target]!</span>",\
-											"<span class='userdanger'>[src] is trying to put zipties on [target]!</span>")
+											"<span class='userdanger'>[src] is trying to put zipties on you!</span>")
 						spawn(60)
 							if( !Adjacent(target) || !isturf(target.loc) ) //if he's in a closet or not adjacent, we cancel cuffing.
 								return
@@ -395,10 +396,10 @@ Auto Patrol: []"},
 		return
 
 	if(!helmetCam) //I am so sorry for this. I could not think of a less terrible (and lazy) way.
-		user << "[src] needs to have a camera attached first."
+		user << "<span class='warning'>[src] needs to have a camera attached first!</span>"
 		return
 	if(F) //Has a flashlight. Player must remove it, else it will be lost forever.
-		user << "The mounted flashlight is in the way, remove it first."
+		user << "<span class='warning'>The mounted flashlight is in the way, remove it first!</span>"
 		return
 
 	if(S.secured)

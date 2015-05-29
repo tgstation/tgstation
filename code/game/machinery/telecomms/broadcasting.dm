@@ -72,7 +72,6 @@
 	virt.job = job
 	virt.languages = AM.languages
 	virt.source = AM
-	virt.faketrack = data == 4 ? 1 : 0
 	virt.radio = radio
 	virt.verb_say = verb_say
 	virt.verb_ask = verb_ask
@@ -104,7 +103,7 @@
 
 	// --- Centcom radio, yo. ---
 
-	else if(data == 4)
+	else if(data == 5)
 
 		for(var/obj/item/device/radio/R in all_radios["[freq]"])
 			if(!R.centcom)
@@ -219,7 +218,7 @@
 
 	// --- Centcom radio, yo. ---
 
-	else if(data == 4)
+	else if(data == 5)
 
 		for(var/obj/item/device/radio/R in all_radios["[RADIO_CHAT]"])
 			if(R.centcom)

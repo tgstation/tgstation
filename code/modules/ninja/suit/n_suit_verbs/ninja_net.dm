@@ -12,7 +12,7 @@
 			if(!locate(/obj/effect/energy_net) in C.loc)//Check if they are already being affected by an energy net.
 				for(var/turf/T in getline(H.loc, C.loc))
 					if(T.density)//Don't want them shooting nets through walls. It's kind of cheesy.
-						H << "You may not use an energy net through solid obstacles!"
+						H << "<span class='warning'>You may not use an energy net through solid obstacles!</span>"
 						return
 				spawn(0)
 					H.Beam(C,"n_beam",,15)
@@ -25,7 +25,7 @@
 				spawn(0)//Parallel processing.
 					E.process(C)
 			else
-				H << "They are already trapped inside an energy net."
+				H << "<span class='warning'>They are already trapped inside an energy net!</span>"
 		else
-			H << "They will bring no honor to your Clan!"
+			H << "<span class='warning'>They will bring no honor to your Clan!</span>"
 	return
