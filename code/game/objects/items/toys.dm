@@ -845,8 +845,12 @@ obj/item/toy/cards/deck/attackby(obj/item/toy/cards/cardhand/C, mob/living/user,
 		else if(istype(over_object, /obj/screen))
 			switch(over_object.name)
 				if("l_hand")
+					if(!remove_item_from_storage(M))
+						M.unEquip(src)
 					M.put_in_l_hand(src)
 				else if("r_hand")
+					if(!remove_item_from_storage(M))
+						M.unEquip(src)
 					M.put_in_r_hand(src)
 				usr << "<span class='notice'>You pick up the deck.</span>"
 	else

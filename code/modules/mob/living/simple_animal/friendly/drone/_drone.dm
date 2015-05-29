@@ -8,6 +8,7 @@
 
 #define MAINTDRONE	"drone_maint"
 #define REPAIRDRONE	"drone_repair"
+#define SCOUTDRONE	"drone_scout"
 
 /mob/living/simple_animal/drone
 	name = "Drone"

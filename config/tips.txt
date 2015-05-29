@@ -8,25 +8,25 @@ With the right slime cores, you can get up to nine uses of a single slime's effe
 Touching a supermatter shard is akin to hugging a singularity.
 To catch thrown items, toggle throw mode on and make sure you have an open hand.
 Updating sec records regularly helps avoid confusion in the brig!
-You can drag the icon of an equipped headset or PDA onto your screen to interact with them.
+You can drag the icon of an equipped headset or PDA onto your screen to interact with it.
 The mime's invisible wall will block electrodes and other projectiles, but beams pass straight through it like windows.
-The Librarian system is much more robust than most people think! Mess around with it, see if you can log who takes out the books for radio-reading.
+The Library system is much more robust than most people think! Mess around with it, see if you can log who takes out the books for radio-reading.
 Use a pair of handcuffs on a pair of orange shoes (standard prisoner issue) to chain them together.
-Revolutionaries brainwashed by Rev leaders can have their opinions swayed back to nanotrasen loyalty by enough heavy objects to the head.
+Revolutionaries brainwashed by Rev leaders can have their opinions swayed back to Nanotrasen loyalty by enough heavy objects to the head.
 Husked corpses that have been drained of their genomes by a changeling also lack blood in their veins, unlike burned or space frozen corpses.
-The stethoscope's utility extends beyond lung and heart checkups. They can also be used to crack certain safes.
+The stethoscope's utility extends beyond lung and heart check-ups. They can also be used to crack certain safes.
 Chloral Hydrate can be counteracted by having coffee in your system!
 The AI system integrity restorer in both the RD's office and on the bridge can revive a dead AI loaded onto an intellicard.
-If an anomaly appears, scan it with an analyzer and then ping the frequency it gives you with a remote signaling device. 
+If an anomaly appears, scan it with an analyzer and then ping the frequency it gives you with a remote signalling device.
 Various creatures can crawl through air vents by holding alt while left clicking them.
 Nuclear operatives can be extremely powerful, but only if they work together. Communication is key!
-A rogue AI can be an extremely powerful tool for traitors, but be wary of the laws you use to slave it to you, as it may try to find loopholes to get back at you.
+A rogue AI can be an extremely powerful tool for traitors, but be wary of the laws you use to slave it to you as it may try to find loopholes to get back at you.
 You can drag yourself onto tables to climb on them. This takes a moment and requires two free hands.
 You can drag other players onto yourself to open the strip menu, letting you remove their equipment or force them to equip something.
 Aliens are by far the most powerful close-quarters combat menace. Fight them at a distance to gain the upper hand!
 Aliens take double damage from all burn sources, such as lasers and fires. Flamethrowers are extremely effective against them.
 As an alien, your most powerful weapon is the facehugger. It can instantly win any fight, but can be completely blocked by certain headgear. Strip downed victims before applying one.
-Monkeys can still wear some human items, such as masks and backpacks, but they cannot bring anything with them when vent crawling.
+Monkeys can still wear some human items, such as masks and backpacks, but they cannot bring anything with themselves when vent crawling.
 Nuclear operatives are very effective in a blitzkrieg tactic: attacking almost as soon as the round starts and well before the crew is prepared.
 You can use a fire extinguisher as a ghetto jetpack by spraying in the opposite direction of where you want to go. This also works with any gun.
 Coffee can keep you very warm. Drink a lot before running around through exposed space.
@@ -72,16 +72,16 @@ Using ethanol on a piece of paper will remove any writing on it.
 Using an emag on the gibber will allow you to throw people into it!
 Using the comms console with captain level access will allow you to broadcast announcements in BIG, RED LETTERS!
 You can repair cracked windows with a welding tool on help intent.
-Alt-click on an adjacent tile to see its contents in the top right pane.
+Hold alt and left click on an adjacent tile to see its contents in the top right pane.
 While observing or as a ghost, double click on people, bots, or the singularity to follow them.
 Ghosts can click on active teleporters, portals, wormholes, or the gateway to jump to its destination!
 Ghosts can double-click their corpse, or the object containing their corpse (such as the cloning scanner), to re-enter it.
 Ghosts can see inside storage items that have been left on the ground.
 If you click on the command/chat bar to give it full focus you can use control + arrow keys to move the cursor around or scroll through the history of commands. (Control + home/end work too)
-Locked down rogue borgs can be dismantled to return the mmi for placement in a new borg.
+Locked down rogue borgs can be dismantled to return the MMI for placement in a new borg.
 Fore = north, aft = south, starboard = east and port = west.
-Many things that bind you can be resisted out of with the resist button. This includes locked or welded lockers, chairs, handcuffs. When ever stuck, just give it a try!
+Many things that bind you can be resisted out of with the resist button. This includes locked or welded lockers, chairs and handcuffs. Whenever stuck, just give it a try!
 You can use . or # instead of : for radio channels. Building this habit reduces the chance of accidentally saying things on common.
-Clicking on a tile with an empty hand while pulling something moves it to that tile. No more getting stuck in maint while dragging something!
+While pulling something, clicking on a tile with an empty hand will move it to that tile. No more getting stuck in maint while dragging something!
 Things that override clicks like decks of cards or paper bins can still be picked up by dragging them to your character. Equipped things that override click can be unequipped by dragging it to an empty hand.
 In the job selection menu, from the lobby, you can use right click on the "Low/Medium/High" priority button to make it cycle backwards.
