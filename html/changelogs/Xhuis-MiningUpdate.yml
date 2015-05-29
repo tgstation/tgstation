@@ -2,4 +2,9 @@ author: Xhuis
 delete-after: True
 
 changes: 
-  - rscadd: "Nanotrasen management has recently expanded the equipment available to miners from equipment vendors. Explosive mining charges are now available, as well as monster bait to deter attackers and capture spheres to collect companions."
+  - tweak: "Nanotrasen management has recently expanded the equipment available to miners from equipment vendors. A full list may be found below."
+  - rscadd: "Explosive mining charges are now available and will provide a less labor-intensive way to break through rocks and mineral deposits. They may only be placed on rock (unless the safety is disabled)."
+  - rscadd: "By compacting various meats into a ball, throwable bait is now available and will distract certain carnivorous xenobiological entities if they happen to be attacking you."
+  - rscadd: "Capture spheres are the newest from BackpackMinions Inc. and will allow you to capture monsters to use in battles and for companionship."
+  - rscadd: "We've negotiated a deal with FreezeWare, and they've provided us with portable refrigerators which can keep hivelord cores in stasis, preventing them from becoming inert while stored."
+  - rscadd: "Nanotrasen scientists have begun work on a synthetic, non-decaying replica of hivelord cores. Time of completion unknown."

@@ -268,7 +268,7 @@
 
 /obj/item/asteroid/hivelord_core/New()
 	..()
-	SSobj.processing += src //Workaround
+	SSobj.processing += src
 
 /obj/item/asteroid/hivelord_core/Destroy()
 	SSobj.processing -= src
