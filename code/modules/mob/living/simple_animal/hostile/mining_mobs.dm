@@ -289,11 +289,11 @@
 	if(ishuman(M))
 		var/mob/living/carbon/human/H = M
 		if(inert)
-			user << "<span class='notice'>[src] has become inert, its healing properties are no more.</span>"
+			user << "<span class='notice'>[src] have become inert, its healing properties are no more.</span>"
 			return
 		else
 			if(H.stat == DEAD)
-				user << "<span class='notice'>[src] is useless on the dead.</span>"
+				user << "<span class='notice'>[src] are useless on the dead.</span>"
 				return
 			if(H != user)
 				H.visible_message("[user] forces [H] to eat [src]... they quickly regenerate all injuries!")
