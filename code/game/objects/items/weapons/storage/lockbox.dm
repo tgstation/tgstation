@@ -35,7 +35,7 @@
 		else
 			user << "<span class='danger'>Access Denied.</span>"
 			return
-	if(!locked)
+	if(!locked || istype(user, /mob/dead/observer)) //Spooky ghosts can see the contents
 		..()
 	else
 		user << "<span class='danger'>It's locked!</span>"
@@ -51,7 +51,7 @@
 			O.show_message(text("<span class='notice'>\The [src] has been broken by [] with an electromagnetic card!</span>", user), 1, text("You hear a faint electrical spark."), 2)
 			return
 /obj/item/weapon/storage/lockbox/show_to(mob/user as mob)
-	if(locked)
+	if(locked && !istype(user, /mob/dead/observer))
 		user << "<span class='danger'>It's locked!</span>"
 	else
 		..()
