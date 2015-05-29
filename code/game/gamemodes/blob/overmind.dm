@@ -121,3 +121,7 @@
 /mob/camera/blob/proc/can_attack()
 	return (world.time > (last_attack + CLICK_CD_RANGE))
 
+/mob/camera/blob/Life()
+	if(!blob_core) //To prevent overminds from sticking around when their core is kill
+		qdel(src)
+	..()
