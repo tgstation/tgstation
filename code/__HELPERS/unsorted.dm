@@ -1059,36 +1059,15 @@ Turf and target are seperate in case you want to teleport some distance from a t
 			return locate(final_x, final_y, AM.z)
 
 //Finds the distance between two atoms, in pixels
-/proc/getPixelDistance(var/atom/A, var/atom/B)
+//centered = 0 counts from turf edge to edge
+//centered = 1 counts from turf center to turf center
+//of course mathematically this is just adding world.icon_size on again
+/proc/getPixelDistance(var/atom/A, var/atom/B, var/centered = 1)
 	if(!istype(A)||!istype(B))
 		return 0
-
-	var/_x1 = A.x
-	var/_x2 = B.x
-	var/_y1 = A.y
-	var/_y2 = B.y
-
-	//Ensure _x1 is bigger, simplicity
-	if(_x2 > _x1)
-		var/tx = _x1
-		_x1 = _x2
-		_x2 = tx
-
-	//Ensure _y1 is bigger, simplicity
-	if(_y2 > _y1)
-		var/ty = _y1
-		_y1 = _y2
-		_y2 = ty
-
-	//DY/DX
-	var/dx = _x1 - _x2 + A.pixel_x + B.pixel_x
-	var/dy = _y1 - _y2 + A.pixel_y + B.pixel_y
-
-	//Distance check
-	if(dx == 0 && dy == 0) //No distance, don't bother calculating
-		return 0
-
-	. = sqrt(((dx**2) + (dy**2)))
+	. = bounds_dist(A, B) + sqrt((((A.pixel_x+B.pixel_x)**2) + ((A.pixel_y+B.pixel_y)**2)))
+	if(centered)
+		. += world.icon_size
 
 /proc/get(atom/loc, type)
 	while(loc)
