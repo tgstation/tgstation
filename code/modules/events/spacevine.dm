@@ -88,16 +88,16 @@
 
 /turf/simulated/floor/vines/ex_act(severity, target)
 	if(severity < 3 || target == src)
-		ChangeTurf(/turf/space)
+		ChangeTurf(src.baseturf)
 
 /turf/simulated/floor/vines/narsie_act()
 	if(prob(20))
-		ChangeTurf(/turf/space) //nar sie eats this shit
+		ChangeTurf(src.baseturf) //nar sie eats this shit
 
 /turf/simulated/floor/vines/singularity_pull(S, current_size)
 	if(current_size >= STAGE_FIVE)
 		if(prob(50))
-			ChangeTurf(/turf/space)
+			ChangeTurf(src.baseturf)
 
 /turf/simulated/floor/vines/ChangeTurf(turf/simulated/floor/T)
 	for(var/obj/effect/spacevine/SV in src)

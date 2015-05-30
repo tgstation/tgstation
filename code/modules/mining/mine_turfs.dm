@@ -6,6 +6,7 @@
 	name = "rock"
 	icon = 'icons/turf/walls.dmi'
 	icon_state = "rock_nochance"
+	baseturf = /turf/simulated/floor/plating/asteroid
 	oxygen = 0
 	nitrogen = 0
 	opacity = 1
@@ -686,6 +687,7 @@
 	icon = 'icons/turf/floors.dmi'
 	icon_state = "asteroid"
 	icon_plating = "asteroid"
+	baseturf = /turf/simulated/floor/plating/asteroid
 	var/dug = 0       //0 = has not yet been dug, 1 = has already been dug
 	ignoredirt = 1
 
@@ -769,6 +771,16 @@
 			for(var/obj/item/weapon/ore/O in src.contents)
 				O.attackby(W,user)
 				return
+	if(istype(W, /obj/item/stack/tile))
+		var/obj/item/stack/tile/Z = W
+		if(!Z.use(1))
+			return
+		var/turf/simulated/floor/T = ChangeTurf(Z.turf_type)
+		if(istype(Z,/obj/item/stack/tile/light)) //TODO: get rid of this ugly check somehow
+			var/obj/item/stack/tile/light/L = Z
+			var/turf/simulated/floor/light/F = T
+			F.state = L.state
+		playsound(src, 'sound/weapons/Genhit.ogg', 50, 1)
 
 /turf/simulated/floor/plating/asteroid/proc/gets_dug()
 	if(dug)

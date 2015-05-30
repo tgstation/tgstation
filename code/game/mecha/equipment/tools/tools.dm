@@ -282,10 +282,11 @@
 			else if (istype(target, /turf/simulated/floor))
 				occupant_message("Deconstructing [target]...")
 				set_ready_state(0)
+				var/turf/simulated/floor/F = target
 				if(do_after_cooldown(target))
 					if(disabled) return
 					chassis.spark_system.start()
-					target:ChangeTurf(/turf/space)
+					target:ChangeTurf(F.baseturf)
 					playsound(target, 'sound/items/Deconstruct.ogg', 50, 1)
 					chassis.use_power(energy_drain)
 			else if (istype(target, /obj/machinery/door/airlock))

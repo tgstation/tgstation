@@ -4,6 +4,7 @@
 
 	var/intact = 1
 	var/cancable = 0
+	var/baseturf = /turf/space
 
 	//Properties for open tiles (/floor)
 	var/oxygen = 0
@@ -133,9 +134,11 @@
 	if(path == type)	return src
 	var/old_lumcount = lighting_lumcount - initial(lighting_lumcount)
 	var/old_opacity = opacity
+	var/old_baseturf = baseturf
 	SSair.remove_from_active(src)
 
 	var/turf/W = new path(src)
+	W.baseturf = old_baseturf
 
 	if(istype(W, /turf/simulated))
 		W:Assimilate_Air()
@@ -155,6 +158,7 @@
 
 	W.levelupdate()
 	W.CalculateAdjacentTurfs()
+	universe.OnTurfChange(W)
 	return W
 
 //////Assimilate Air//////
