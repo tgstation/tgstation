@@ -1,5 +1,5 @@
 //The newest tool in the Mechanic's arsenal, the Rapid Machinery Component Exchanger (RMCE)
-//It can load up a maximum of ten machinery modules and can replace machinery modules without even having to rebuild them
+//It can load up a maximum of twenty-one machinery modules and can replace machinery modules without even having to rebuild them
 //Useful if you want to replace a large amount of modules quickly and painlessly
 
 /obj/item/weapon/storage/component_exchanger
