@@ -245,7 +245,7 @@ a.notsmelting {
 				score["oremined"] += 1
 				if(po && po.oretype && istype(O, po.oretype))
 					po.stored++
-					qdel(O)
+					returnToPool(O)
 					continue
 			if(I)
 				I.loc = src.output.loc

@@ -48,7 +48,7 @@
 		var/datum/material/mat = materials.getMaterial(O.material)
 		mat.stored += processed_sheet.amount //Stack the sheets
 		credits += mat.value * processed_sheet.amount // Gimme my fucking credits
-	qdel(O)
+	returnToPool(O)
 
 /obj/machinery/mineral/ore_redemption/process()
 	var/turf/T = get_turf(input)

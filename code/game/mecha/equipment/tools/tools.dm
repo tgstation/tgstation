@@ -34,7 +34,7 @@
 				for(var/obj/item/weapon/ore/I in get_turf(target))
 					if(I.material)
 						ore_box.materials.addAmount(I.material, 1)
-						qdel(I)
+						returnToPool(I)
 						count++
 				log_message("Loaded [count] ore into compatible ore box.")
 				occupant_message("<font color='blue'>[count] ore successfully loaded into cargo compartment.</font>")
