@@ -62,7 +62,7 @@
 		user.visible_message("<span class='notice'>[user] starts setting up \the [src] in \the [M]'s maintenance hatch</span>", \
 		"<span class='notice'>You carefully insert \the [src] through \the [M]'s maintenance hatch, it starts scanning the machine's components.</span>")
 
-		if(do_after(user, 30)) //3 seconds to obtain a complete reading of the machine's components
+		if(do_after(user, 20)) //2 seconds to obtain a complete reading of the machine's components
 
 			if(!Adjacent(user))
 				user << "<span class='warning'>An error message flashes on \the [src]'s HUD, stating its scan was disrupted.</span>"
@@ -137,28 +137,28 @@
 			if(istype(P, /obj/item/weapon/stock_parts/capacitor))
 				for(var/obj/item/weapon/stock_parts/capacitor/R in src.contents)
 					if(R.rating > P.rating && P in M.component_parts) //Kind of a hack, but makes sure we don't replace components that already were
-						sleep(10) //One second per component
+						sleep(5) //Half a second per component
 						perform_indiv_replace(P, R, M)
 						//Do not break in case we find even better
 			if(istype(P, /obj/item/weapon/stock_parts/scanning_module))
 				for(var/obj/item/weapon/stock_parts/scanning_module/R in src.contents)
 					if(R.rating > P.rating && P in M.component_parts)
-						sleep(10) //One second per component
+						sleep(5) //Half a second per component
 						perform_indiv_replace(P, R, M)
 			if(istype(P, /obj/item/weapon/stock_parts/manipulator))
 				for(var/obj/item/weapon/stock_parts/manipulator/R in src.contents)
 					if(R.rating > P.rating && P in M.component_parts)
-						sleep(10) //One second per component
+						sleep(5) //Half a second per component
 						perform_indiv_replace(P, R, M)
 			if(istype(P, /obj/item/weapon/stock_parts/micro_laser))
 				for(var/obj/item/weapon/stock_parts/micro_laser/R in src.contents)
 					if(R.rating > P.rating && P in M.component_parts)
-						sleep(10) //One second per component
+						sleep(5) //Half a second per component
 						perform_indiv_replace(P, R, M)
 			if(istype(P, /obj/item/weapon/stock_parts/matter_bin))
 				for(var/obj/item/weapon/stock_parts/matter_bin/R in src.contents)
 					if(R.rating > P.rating && P in M.component_parts)
-						sleep(10) //One second per component
+						sleep(5) //Half a second per component
 						perform_indiv_replace(P, R, M)
 			//Good thing there's only a few stock parts types
 
@@ -166,7 +166,7 @@
 		user.visible_message("<span class='notice'>[user]'s [name] stops rattling as it finishes working on \the [M]'s components.</span>", \
 		"<span class='notice'>A message flashes on \the [src]'s HUD stating it has finished remplacing [M]]'s components and will return to the input screen shortly.</span>")
 
-		spawn(30)
+		spawn(5)
 			component_interaction(M, user)
 
 //So we don't copy the same thing a thousand fucking times
