@@ -6,7 +6,8 @@
 	item_state = "toolbox_red"
 	flags = FPRINT
 	siemens_coefficient = 1
-	force = 5.0
+	force = 8.0
+	hitsound = 'sound/weapons/toolbox.ogg'
 	throwforce = 10.0
 	throw_speed = 1
 	throw_range = 7
@@ -15,10 +16,10 @@
 	w_class = 4.0
 	melt_temperature = MELTPOINT_STEEL
 	origin_tech = "combat=1"
-	attack_verb = list("robusted")
+	attack_verb = list("robusted", "battered", "staved in")
 
 	suicide_act(mob/user)
-		viewers(user) << "<span class='danger'>[user] is [pick("stoving","robusting")] \his head in with the [src.name]! It looks like \he's  trying to commit suicide!</span>"
+		viewers(user) << "<span class='danger'>[user] is [pick("staving","robusting")] \his head in with the [src.name]! It looks like \he's  trying to commit suicide!</span>"
 		return (BRUTELOSS)
 
 
@@ -82,7 +83,7 @@
 	icon_state = "syndicate"
 	item_state = "toolbox_syndi"
 	origin_tech = "combat=1;syndicate=1"
-	force = 7.0
+	force = 10.0
 
 	New()
 		..()

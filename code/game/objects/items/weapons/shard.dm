@@ -9,6 +9,7 @@
 	sharpness = 0.8
 	desc = "Could probably be used as ... a throwing weapon?"
 	w_class = 1.0
+	hitsound = 'sound/weapons/bladeslice.ogg'
 	force = 5.0
 	throwforce = 15.0
 	item_state = "shard-glassnew"
