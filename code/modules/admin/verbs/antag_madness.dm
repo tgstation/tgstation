@@ -400,6 +400,7 @@ client/proc/antag_madness(var/mob/M in mob_list)
 
 		if("deathsquad")
 			if(isdeathsquad(M))	return 0
+			ticker.mode.deathsquad += M.mind
 			M.mind.assigned_role = "MODE"
 			M.mind.special_role = "Death Commando"
 			ticker.mode.deathsquads += M.mind

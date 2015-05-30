@@ -36,6 +36,9 @@
 	var/eldergod = 1 // Can cultists spawn Nar-Sie? (Set to 0 on cascade or narsie spawn)
 	var/completion_text = ""
 
+	var/list/datum/mind/deathsquad = list()
+	var/list/datum/mind/ert = list()
+
 /datum/game_mode/proc/announce() //to be calles when round starts
 	world << "<B>Notice</B>: [src] did not define announce()"
 

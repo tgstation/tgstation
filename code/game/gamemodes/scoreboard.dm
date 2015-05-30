@@ -5,6 +5,9 @@
 		if (findtext("[handler]","auto_declare_completion_"))
 			completions += "[call(mode, handler)()]"
 
+	completions += "<br>[ert_declare_completion()]"
+	completions += "<br>[deathsquad_declare_completion()]"
+
 	if(bomberman_mode)
 		completions += "<br>[bomberman_declare_completion()]"
 

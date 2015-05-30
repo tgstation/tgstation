@@ -676,7 +676,33 @@
 					// END AUTOFIX
 			dat += "</table>"
 
+		if(ticker.mode.ert.len > 0)
+			dat += "<br><table cellspacing=5><tr><td><B>ERT</B></td><td></td><td></td></tr>"
+			for(var/datum/mind/ert in ticker.mode.ert)
+				var/mob/M = ert.current
+				if(M)
+
+					dat += {"<tr><td><a href='?src=\ref[src];adminplayeropts=\ref[M]'>[M.real_name]</a>[M.client ? "" : " <i>(logged out)</i>"][M.stat == 2 ? " <b><font color=red>(DEAD)</font></b>" : ""]</td>
+						<td><A href='?src=\ref[usr];priv_msg=\ref[M]'>PM</A></td>"}
+
+				else
+					dat += "<tr><td><i>Emergency Responder not found!</i></td></tr>"
+			dat += "</table>"
+
+		if(ticker.mode.deathsquad.len > 0)
+			dat += "<br><table cellspacing=5><tr><td><B>Deathsquad</B></td><td></td><td></td></tr>"
+			for(var/datum/mind/deathsquad in ticker.mode.deathsquad)
+				var/mob/M = deathsquad.current
+				if(M)
+
+					dat += {"<tr><td><a href='?src=\ref[src];adminplayeropts=\ref[M]'>[M.real_name]</a>[M.client ? "" : " <i>(logged out)</i>"][M.stat == 2 ? " <b><font color=red>(DEAD)</font></b>" : ""]</td>
+						<td><A href='?src=\ref[usr];priv_msg=\ref[M]'>PM</A></td>"}
+
+				else
+					dat += "<tr><td><i>Death Commando not found!</i></td></tr>"
+			dat += "</table>"
+
 		dat += "</body></html>"
-		usr << browse(dat, "window=roundstatus;size=400x500")
+		usr << browse(dat, "window=roundstatus;size=440x500")
 	else
 		alert("The game hasn't started yet!")
