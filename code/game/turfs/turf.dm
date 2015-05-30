@@ -3,7 +3,7 @@
 	level = 1.0
 
 	var/intact = 1
-	var/baseturf =/turf/space
+	var/baseturf = /turf/space
 
 	//Properties for open tiles (/floor)
 	var/oxygen = 0
