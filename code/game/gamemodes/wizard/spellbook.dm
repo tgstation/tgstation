@@ -241,15 +241,15 @@
 							temp = "You have learned knock."
 						if("horseman")
 							feedback_add_details("wizard_spell_learned","HH") //please do not change the abbreviation to keep data processing consistent. Add a unique id to any new spells
-							add_spell(new/spell/targeted/horsemask,H)
+							add_spell(new/spell/targeted/equip_item/horsemask,H)
 							temp = "You have learned curse of the horseman."
 						if("frenchcurse")
 							feedback_add_details("wizard_spell_learned","FC") //please do not change the abbreviation to keep data processing consistent. Add a unique id to any new spells
-							add_spell(new/spell/targeted/frenchcurse,H)
+							add_spell(new/spell/targeted/equip_item/frenchcurse,H)
 							temp = "You have learned the french curse."
 						if("clowncurse")
 							feedback_add_details("wizard_spell_learned","CC") //please do not change the abbreviation to keep data processing consistent. Add a unique id to any new spells
-							add_spell(new/spell/targeted/genetic/clowncurse,H)
+							add_spell(new/spell/targeted/equip_item/clowncurse,H)
 							temp = "You have learned the clown curse."
 						if("shoesnatch")
 							feedback_add_details("wizard_spell_learned","SS") //please do not change the abbreviation to keep data processing consistent. Add a unique id to any new spells
@@ -504,7 +504,7 @@
 	user.Weaken(20)
 
 /obj/item/weapon/spellbook/oneuse/horsemask
-	spell = /spell/targeted/horsemask
+	spell = /spell/targeted/equip_item/horsemask
 	spellname = "horses"
 	icon_state ="bookhorses"
 	desc = "This book is more horse than your mind has room for."

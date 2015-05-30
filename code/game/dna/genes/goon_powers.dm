@@ -309,7 +309,7 @@
 			if(!found)
 				targets -= target
 	for(var/obj/item/I in targets)
-		if(!istype(I) || Adjacent(I))
+		if(!istype(I) || holder.Adjacent(I))
 			targets -= I
 
 	return targets

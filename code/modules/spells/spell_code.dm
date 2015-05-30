@@ -1,9 +1,9 @@
 var/list/spells = typesof(/spell) //needed for the badmin verb for now
 
 /spell
-	name = "Spell"
-	desc = "A spell"
-	parent_type = /atom/movable
+	var/name = "Spell"
+	var/desc = "A spell"
+	parent_type = /datum
 	var/panel = "Spells"//What panel the proc holder needs to go on.
 
 	var/school = "evocation" //not relevant at now, but may be important later if there are changes to how spells work. the ones I used for now will probably be changed... maybe spell presets? lacking flexibility but with some other benefit?
@@ -25,8 +25,7 @@ var/list/spells = typesof(/spell) //needed for the badmin verb for now
 	var/range = 7					//the range of the spell; outer radius for aoe spells
 	var/message = ""				//whatever it says to the guy affected by it
 	var/selection_type = "view"		//can be "range" or "view"
-	var/atom/movable/holder			//where the spell is. Normally the user, can be a projectile
-
+	var/atom/movable/holder			//where the spell is. Normally the user, can be an item
 	var/duration = 0 //how long the spell lasts
 
 	var/list/spell_levels = list(Sp_SPEED = 0, Sp_POWER = 0) //the current spell levels - total spell levels can be obtained by just adding the two values
@@ -68,11 +67,6 @@ var/list/spells = typesof(/spell) //needed for the badmin verb for now
 		charge_counter++
 		sleep(1)
 	return
-
-/spell/Click()
-	..()
-
-	perform(usr)
 
 /////////////////
 /////CASTING/////
@@ -182,14 +176,14 @@ var/list/spells = typesof(/spell) //needed for the badmin verb for now
 
 /spell/proc/cast_check(skipcharge = 0,mob/user = usr) //checks if the spell can be cast based on its settings; skipcharge is used when an additional cast_check is called inside the spell
 
-	if(!(src in user.spell_list))
+	if(!(src in user.spell_list) && holder == user)
 		user << "<span class='warning'>You shouldn't have this spell! Something's wrong.</span>"
 		return 0
 
 	if(silenced > 0)
 		return
 
-	if(user.z == 2 && spell_flags & Z2NOCAST) //Certain spells are not allowed on the centcomm zlevel
+	if(istype(map.zLevels[user.z], /datum/zLevel/centcomm) && spell_flags & Z2NOCAST) //Certain spells are not allowed on the centcomm zlevel
 		return 0
 
 	if(spell_flags & CONSTRUCT_CHECK)
@@ -197,7 +191,7 @@ var/list/spells = typesof(/spell) //needed for the badmin verb for now
 			if(findNullRod(T))
 				return 0
 
-	if(istype(user, /mob/living/simple_animal))
+	if(istype(user, /mob/living/simple_animal) && holder == user)
 		var/mob/living/simple_animal/SA = user
 		if(SA.purge)
 			SA << "<span class='warning'>The nullrod's power interferes with your own!</span>"
@@ -206,7 +200,7 @@ var/list/spells = typesof(/spell) //needed for the badmin verb for now
 	if(!src.check_charge(skipcharge, user)) //sees if we can cast based on charges alone
 		return 0
 
-	if(!(spell_flags & GHOSTCAST))
+	if(!(spell_flags & GHOSTCAST) && holder == user)
 		if(user.stat && !(spell_flags & STATALLOWED))
 			usr << "Not when you're incapacitated."
 			return 0
@@ -217,7 +211,7 @@ var/list/spells = typesof(/spell) //needed for the badmin verb for now
 				return 0
 
 	var/spell/noclothes/spell = locate() in user.spell_list
-	if((spell_flags & NEEDSCLOTHES) && !(spell && istype(spell)))//clothes check
+	if((spell_flags & NEEDSCLOTHES) && !(spell && istype(spell)) && holder == user)//clothes check
 		if(!user.wearing_wiz_garb())
 			return 0
 
