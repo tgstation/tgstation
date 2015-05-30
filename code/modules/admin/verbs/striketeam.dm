@@ -120,7 +120,7 @@ var/global/sent_strike_team = 0
 	ticker.mode.traitors |= new_commando.mind//Adds them to current traitor list. Which is really the extra antagonist list.
 	new_commando.equip_death_commando(leader_selected)
 
-	ticker.mode.deathsquad = new_commando.mind
+	ticker.mode.deathsquad += new_commando.mind
 	return new_commando
 
 /mob/living/carbon/human/proc/equip_death_commando(leader_selected = 0)
