@@ -1073,9 +1073,9 @@ var/list/slot_equipment_priority = list( \
 
 /mob/verb/cancel_camera()
 	set name = "Cancel Camera View"
-	set category = "OOC"
-	reset_view(null)
+	set category = "OOC" //Why the fuck?
 	unset_machine()
+	reset_view(null)
 	if(istype(src, /mob/living))
 		if(src:cameraFollow)
 			src:cameraFollow = null
