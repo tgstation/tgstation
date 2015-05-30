@@ -293,6 +293,15 @@ turf/simulated/floor/proc/update_icon()
 	else if(is_grass_floor())
 		src.icon_state = "sand[pick("1","2","3")]"
 		broken = 1
+	else if(is_mineral_floor())
+		if(material=="diamond") return //diamond doesn't break
+		if(material=="phazon") //Phazon shatters
+			spawn(rand(2,10))
+				playsound(get_turf(src), "shatter", 70, 1)
+				make_plating()
+			return
+
+		src.icon_state = "[material]_broken"
 
 /turf/simulated/floor/proc/burn_tile()
 	if(istype(src,/turf/simulated/floor/engine)) return
@@ -314,6 +323,8 @@ turf/simulated/floor/proc/update_icon()
 		burnt = 1
 	else if(is_grass_floor())
 		src.icon_state = "sand[pick("1","2","3")]"
+		burnt = 1
+	else if(is_mineral_floor())
 		burnt = 1
 
 //This proc will delete the floor_tile and the update_iocn() proc will then change the icon_state of the turf
