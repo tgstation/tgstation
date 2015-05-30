@@ -555,8 +555,8 @@ var/list/admin_verbs_hideable = list(
 		var/list/Lines = file2list("config/admins.txt")
 		for(var/line in Lines)
 			var/list/splitline = text2list(line, " = ")
-			if(splitline[1] == ckey)
-				if(splitline.len >= 2)
+			if(splitline.len >= 2)
+				if(cmptext(splitline[1], src.ckey))
 					rank = ckeyEx(splitline[2])
 				break
 			continue
