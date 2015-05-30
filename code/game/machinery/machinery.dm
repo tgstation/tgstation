@@ -246,6 +246,12 @@ Class Procs:
 		return
 	if(!isturf(M.loc) && M.loc != src)
 		return
+	if(getBrainLoss() >= 60)
+		visible_message("<span class='danger'>[src] stares cluelessly at [M] and drools.</span>")
+		return
+	if(prob(getBrainLoss()))
+		src << "<span class='warning'>You momentarily forget how to use [M]!</span>"
+		return
 	return 1
 
 /mob/living/silicon/ai/canUseTopic(atom/movable/M, be_close = 0)
@@ -281,22 +287,11 @@ Class Procs:
 
 //set_machine must be 0 if clicking the machinery doesn't bring up a dialog
 /obj/machinery/attack_hand(mob/user as mob, var/check_power = 1, var/set_machine = 1)
-	if(check_power && stat & NOPOWER)
-		user << "<span class='danger'>\The [src] seems unpowered.</span>"
-		return 1
-	if(!interact_offline && stat & (BROKEN|MAINT))
-		user << "<span class='danger'>\The [src] seems broken.</span>"
-		return 1
 	if(user.lying || user.stat)
 		return 1
 	if(!user.IsAdvancedToolUser())
 		usr << "<span class='warning'>You don't have the dexterity to do this!</span>"
 		return 1
-/*
-	//distance checks are made by atom/proc/DblClick
-	if ((get_dist(src, user) > 1 || !istype(src.loc, /turf)) && !istype(user, /mob/living/silicon))
-		return 1
-*/
 	if (ishuman(user))
 		var/mob/living/carbon/human/H = user
 		if(H.getBrainLoss() >= 60)
@@ -305,7 +300,15 @@ Class Procs:
 		else if(prob(H.getBrainLoss()))
 			user << "<span class='warning'>You momentarily forget how to use [src]!</span>"
 			return 1
-
+	if(panel_open)
+		src.add_fingerprint(user)
+		return 0
+	if(check_power && stat & NOPOWER)
+		user << "<span class='danger'>\The [src] seems unpowered.</span>"
+		return 1
+	if(!interact_offline && stat & (BROKEN|MAINT))
+		user << "<span class='danger'>\The [src] seems broken.</span>"
+		return 1
 	src.add_fingerprint(user)
 	if(set_machine)
 		user.set_machine(src)
