@@ -112,6 +112,12 @@
 	icon_state = "cargo_cypherkey"
 	channels = list("Supply" = 1)
 
+/obj/item/device/encryptionkey/headset_mining
+	name = "Mining Radio Encryption Key"
+	desc = "An encryption key for a radio headset.  Contains cypherkeys."
+	icon_state = "mine_cypherkey"
+	channels = list("Supply" = 1, "Science" = 1)
+
 /obj/item/device/encryptionkey/headset_service
 	name = "Service Radio Encryption Key"
 	desc = "An encryption key for a radio headset.  Contains cypherkeys."
