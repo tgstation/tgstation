@@ -59,7 +59,6 @@
 	icon = 'icons/obj/rollerbed.dmi'
 	icon_state = "down"
 	anchored = 0
-	pressure_resistance = 5
 
 /obj/structure/stool/bed/roller/post_buckle_mob(mob/living/M)
 	if(M == buckled_mob)
