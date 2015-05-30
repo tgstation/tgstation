@@ -308,7 +308,7 @@ var/global/list/obj/machinery/light/alllights = list()
 		else
 			src.add_fingerprint(user)
 			var/obj/item/weapon/light/L = W
-			if(istype(L, light_type))
+			if(L.fitting == fitting)
 				status = L.status
 				user << "You insert the [L.name]."
 				switchcount = L.switchcount
@@ -589,6 +589,7 @@ var/global/list/obj/machinery/light/alllights = list()
 	var/rigged = 0		// true if rigged to explode
 	var/brightness = 2 //how much light it gives off
 	var/cost = 2 //How much power does it consume in an idle state?
+	var/fitting = "tube"
 
 /obj/item/weapon/light/tube
 	name = "light tube"
@@ -619,6 +620,7 @@ var/global/list/obj/machinery/light/alllights = list()
 	icon_state = "bulb"
 	base_state = "bulb"
 	item_state = "contvapour"
+	fitting = "bulb"
 	g_amt = 100
 	brightness = 5
 	cost = 5

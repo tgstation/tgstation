@@ -1005,14 +1005,14 @@ About the new airlock wires panel:
 				if(!do_after(user,190)) //Same amount as drilling an R-wall, longer if it was welded
 					return //If they moved, cancel us out
 				playsound(get_turf(src), 'sound/items/Deconstruct.ogg', 50, 1)
-		src.visible_message("<span class='warning'>[user] broke down the door!</span>", "<span class='warning'>You broke the door!</span>")
-		playsound(get_turf(src), 'sound/items/Deconstruct.ogg', 50, 1)
-		operating = -1
-		var/obj/structure/door_assembly/DA = revert(user,user.dir)
-		DA.anchored = 0
-		DA.state = 0 //Completely smash the door here; reduce it to its lowest state, eject electronics smoked
-		DA.update_state()
-		qdel(src)
+			src.visible_message("<span class='warning'>[user] broke down the door!</span>", "<span class='warning'>You broke the door!</span>")
+			playsound(get_turf(src), 'sound/items/Deconstruct.ogg', 50, 1)
+			operating = -1
+			var/obj/structure/door_assembly/DA = revert(user,user.dir)
+			DA.anchored = 0
+			DA.state = 0 //Completely smash the door here; reduce it to its lowest state, eject electronics smoked
+			DA.update_state()
+			qdel(src)
 		return
 
 	if (istype(I, /obj/item/weapon/weldingtool))

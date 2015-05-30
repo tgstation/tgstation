@@ -1,0 +1,6 @@
+author: Kurfurst
+delete-after: True
+changes:
+ - tweak: Battering rams now properly cancel when you move away from the target door
+ - tweak: Electrolyzers are now compatible with a much wider variety of reagent_containers, including cans
+ - tweak: HE lights now no longer prevent you from downgrading the light fixture to a non-HE version

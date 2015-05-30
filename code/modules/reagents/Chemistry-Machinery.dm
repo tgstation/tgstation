@@ -1511,7 +1511,7 @@ USE THIS CHEMISTRY DISPENSER FOR MAPS SO THEY START AT 100 ENERGY
 	w_class = 2.0
 	force = 2.0
 	var/list/beakers = new/list()
-	var/list/allowed_containers = list(/obj/item/weapon/reagent_containers/glass/beaker, /obj/item/weapon/reagent_containers/glass/bottle)
+	var/list/allowed_containers = list(/obj/item/weapon/reagent_containers/glass, /obj/item/weapon/reagent_containers/food/drinks/soda_cans/)
 	var/list/allowed_reactions = list(/datum/chemical_reaction/water, /datum/chemical_reaction/creatine,
 	/datum/chemical_reaction/discount, /datum/chemical_reaction/peptobismol, /datum/chemical_reaction/phalanximine,
 	/datum/chemical_reaction/stoxin, /datum/chemical_reaction/sterilizine, /datum/chemical_reaction/inaprovaline,
