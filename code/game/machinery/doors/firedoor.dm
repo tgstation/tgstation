@@ -62,6 +62,8 @@ var/global/list/alert_overlays_global = list()
 	layer = DOOR_LAYER - 0.2
 	base_layer = DOOR_LAYER - 0.2
 
+	dir = 2
+
 	var/list/alert_overlays_local
 
 	var/blocked = 0
