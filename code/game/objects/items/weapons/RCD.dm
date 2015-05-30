@@ -225,11 +225,17 @@ RCD
 				if(checkResource(5, user))
 					user << "Deconstructing Floor..."
 					playsound(src.loc, 'sound/machines/click.ogg', 50, 1)
-					if(do_after(user, 50))
-						if(!useResource(5, user)) return 0
-						activate()
-						A:ChangeTurf(/turf/space)
-						return 1
+					var/turf/simulated/floor/F = A
+					if(istype(F, F.baseturf))
+						user << "<span class='notice'>You can't dig any deeper!</span>"
+						return 0
+					else
+						if(do_after(user, 50))
+							if(!useResource(5, user))
+								return 0
+							activate()
+							F.ChangeTurf(F.baseturf)
+							return 1
 				return 0
 
 			if(istype(A, /obj/machinery/door/airlock))

@@ -8,16 +8,16 @@
 	contents_explosion(severity, target)
 	switch(severity)
 		if(1)
-			ChangeTurf(/turf/space)
+			ChangeTurf(src.baseturf)
 		if(2)
 			if(prob(50))
-				ChangeTurf(/turf/space)
+				ChangeTurf(src.baseturf)
 		else
 			return
 
 /turf/simulated/floor/engine/blob_act()
 	if (prob(25))
-		ChangeTurf(/turf/space)
+		ChangeTurf(src.baseturf)
 		qdel(src)
 		return
 	return

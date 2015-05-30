@@ -51,7 +51,7 @@ datum/reagent/nitroglycerin
 	if(istype(T, /turf/simulated/floor/plating))
 		var/turf/simulated/floor/plating/F = T
 		if(prob(1 + F.burnt + 5*F.broken)) //broken or burnt plating is more susceptible to being destroyed
-			F.ChangeTurf(/turf/space)
+			F.ChangeTurf(F.baseturf)
 	if(istype(T, /turf/simulated/floor/))
 		var/turf/simulated/floor/F = T
 		if(prob(volume/10))
