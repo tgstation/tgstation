@@ -45,6 +45,7 @@
 
 /obj/item/weapon/pickaxe
 	name = "pickaxe"
+	desc = "An ancient tool still used in modern times due to its effectiveness and digging tunnels."
 	icon = 'icons/obj/mining.dmi'
 	icon_state = "pickaxe"
 	flags = CONDUCT
@@ -138,6 +139,6 @@
 
 /obj/structure/closet/crate/miningcar
 	desc = "A mining car. This one doesn't work on rails, but has to be dragged."
-	name = "Mining car (not for rails)"
+	name = "mine cart"
 	icon_crate = "miningcar"
 	icon_state = "miningcar"

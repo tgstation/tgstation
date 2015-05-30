@@ -5,8 +5,9 @@
 	icon = 'icons/obj/mining.dmi'
 	icon_state = "orebox"
 	name = "ore box"
-	desc = "It's heavy"
+	desc = "A huge wooden box used for moving ores en masse."
 	density = 1
+	var/blastProof = 0
 
 /obj/structure/ore_box/attackby(obj/item/weapon/W as obj, mob/user as mob, params)
 	if (istype(W, /obj/item/weapon/ore))
@@ -48,7 +49,7 @@
 		if (istype(C,/obj/item/weapon/ore/bananium))
 			amt_clown++;
 
-	var/dat = text("<b>The contents of the ore box reveal...</b><br>")
+	var/dat = text("<b>The ore box contains...</b><br>")
 	if (amt_gold)
 		dat += text("Gold ore: [amt_gold]<br>")
 	if (amt_silver)
@@ -70,6 +71,17 @@
 	user << browse("[dat]", "window=orebox")
 	return
 
+/obj/structure/ore_box/attackby(obj/item/I as obj, mob/user as mob, params)
+	if(istype(I, /obj/item/asteroid/goliath_hide) && !blastProof)
+		user.visible_message("<span class='notice'>[user] plates [src] with [I].</span>", \
+							 "<span class='notice'>\icon[src]\icon[I]You plate [src] with [I], making it blast-proof.</span>")
+		user.drop_item()
+		qdel(I)
+		blastProof = 1
+		icon_state = "orebox_reinforced"
+		desc = "[initial(desc)] It's reinforced with some kind of armor."
+	..()
+
 /obj/structure/ore_box/Topic(href, href_list)
 	if(..())
 		return
@@ -84,5 +96,18 @@
 	return
 
 obj/structure/ore_box/ex_act(severity, target)
+	if(blastProof)
+		src.visible_message("<span class='warning'>[src] withstands the blast!</span>")
+		if(prob(25))
+			src.visible_message("<span class='warning'>[src]'s plating breaks apart in the explosion!</span>")
+			blastProof = 0
+			desc = "[initial(desc)]"
+			icon_state = "orebox"
+		return
 	if(prob(100 / severity) && severity < 3)
-		qdel(src) //nothing but ores can get inside unless its a bug and ores just return nothing on ex_act, not point in calling it on them
+		for(var/obj/item/weapon/ore/O in contents) //Drops a bit of the ore
+			if(prob(50))
+				return
+			contents -= O
+			O.loc = src.loc
+		qdel(src) //Deletes ores too

@@ -18,7 +18,7 @@
 /obj/item/device/miningCharge/emag_act(mob/user)
 	if(!safety)
 		return
-	user << "<span class='warning'>You press the emag onto [src], disabling its safeties.</span>"
+	user << "<span class='warning'>You press the cryptographic sequencer onto [src], disabling its safeties.</span>"
 	safety = 0
 	explosionPower-- //Makes them less powerful when you emag them - for balance
 
@@ -83,9 +83,9 @@
 		if(-INFINITY to 0)
 			explosion(src.loc,-1,0,3)
 		if(1)
-			explosion(src.loc,-1,1,3)
+			explosion(src.loc,-1,1,6)
 		if(2)
-			explosion(src.loc,-1,2,6)
+			explosion(src.loc,-1,2,9)
 		if(3 to INFINITY)
 			explosion(src.loc,-1,4,12)
 	if(putOn)
