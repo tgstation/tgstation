@@ -4,7 +4,7 @@
 
 /obj/item/weapon/storage/component_exchanger
 	name = "rapid machinery component exchanger"
-	desc = "A tool used to replace machinery components without having to deconstruct the entire machine. It can load up to tweny-one components at once"
+	desc = "A tool used to replace machinery components without having to deconstruct the entire machine. It can load up to twenty-one components at once"
 	icon = 'icons/obj/device.dmi'
 	icon_state = "comp_exchanger"
 	gender = NEUTER
