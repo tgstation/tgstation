@@ -23,6 +23,12 @@
 
 	if (istype(loc, /turf/space)) return -1 // It's hard to be slowed down in space by... anything
 
+	if(istype(loc,/turf/simulated/floor))
+		var/turf/simulated/floor/T = loc
+
+		if(T.material=="phazon")
+			return -1 // Phazon floors make us go fast
+
 	var/health_deficiency = (100 - health - halloss)
 	if(health_deficiency >= 40) tally += (health_deficiency / 25)
 

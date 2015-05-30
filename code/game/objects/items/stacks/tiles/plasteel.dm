@@ -15,6 +15,8 @@
 	siemens_coefficient = 1
 	max_amount = 60
 
+	material = "metal"
+
 /obj/item/stack/tile/plasteel/New(var/loc, var/amount=null)
 	. = ..()
 	pixel_x = rand(1, 14)

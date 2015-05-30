@@ -192,6 +192,8 @@
 	return 0
 /turf/proc/is_carpet_floor()
 	return 0
+/turf/proc/is_mineral_floor()
+	return 0
 /turf/proc/return_siding_icon_state()		//used for grass floors, which have siding.
 	return 0
 

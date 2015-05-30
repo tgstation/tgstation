@@ -5,6 +5,9 @@
  *		Carpet
  */
 
+/obj/item/stack/tile
+	var/material
+
 /obj/item/stack/tile/ex_act(severity)
 	switch(severity)
 		if(1.0)
@@ -46,6 +49,8 @@
 	max_amount = 60
 	origin_tech = "biotech=1"
 
+	material = "grass"
+
 /*
  * Wood
  */
@@ -63,6 +68,8 @@
 	siemens_coefficient = 1
 	max_amount = 60
 
+	material = "wood"
+
 /*
  * Carpets
  */
@@ -79,3 +86,5 @@
 	flags = FPRINT
 	siemens_coefficient = 1
 	max_amount = 60
+
+	material = "fabric"

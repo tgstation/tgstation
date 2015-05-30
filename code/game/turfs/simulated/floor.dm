@@ -33,7 +33,8 @@ var/image/list/w_overlays = list("wet" = image('icons/effects/water.dmi',icon_st
 	var/lava = 0
 	var/broken = 0
 	var/burnt = 0
-	var/mineral = "metal"
+	var/material = "metal"
+	var/spam_flag = 0 //For certain interactions, like bananium floors honking when stepped on
 	var/obj/item/stack/tile/floor_tile
 
 	melt_temperature = 1643.15 // Melting point of steel
@@ -183,6 +184,9 @@ turf/simulated/floor/proc/update_icon()
 			if( !(icon_state in wood_icons) )
 				icon_state = "wood"
 				//world << "[icon_state]y's got [icon_state]"
+	else if(is_mineral_floor())
+		if(!broken && !burnt)
+			icon_state = floor_tile.material
 	/*spawn(1)
 		if(istype(src,/turf/simulated/floor)) //Was throwing runtime errors due to a chance of it changing to space halfway through.
 			if(air)
@@ -210,6 +214,14 @@ turf/simulated/floor/proc/update_icon()
 		var/obj/item/stack/tile/light/T = floor_tile
 		T.on = !T.on
 		update_icon()
+
+	switch(material)
+		if("bananium")
+			if(!spam_flag)
+				spam_flag = 1
+				playsound(get_turf(src), 'sound/items/bikehorn.ogg', 50, 1)
+				spawn(20)
+					spam_flag = 0
 	..()
 
 /turf/simulated/floor/proc/gets_drilled()
@@ -252,6 +264,11 @@ turf/simulated/floor/proc/update_icon()
 
 /turf/simulated/floor/is_plating()
 	if(!floor_tile)
+		return 1
+	return 0
+
+/turf/simulated/floor/is_mineral_floor()
+	if(istype(floor_tile,/obj/item/stack/tile/mineral))
 		return 1
 	return 0
 
@@ -326,6 +343,7 @@ turf/simulated/floor/proc/update_icon()
 	intact = 0
 	broken = 0
 	burnt = 0
+	material = "metal"
 
 	update_icon()
 	levelupdate()
@@ -443,18 +461,6 @@ turf/simulated/floor/proc/update_icon()
 	if(!C || !user)
 		return 0
 
-	if(istype(C,/obj/item/weapon/light/bulb)) //only for light tiles
-		if(is_light_floor())
-			var/obj/item/stack/tile/light/T = floor_tile
-			if(T.state)
-				user.drop_item(C)
-				del(C)
-				T.state = C //fixing it by bashing it with a light bulb, fun eh?
-				update_icon()
-				user << "<span class='notice'>You replace \the [C].</span>"
-			else
-				user << "<span class='notice'>\The [C] seems fine, no need to replace it.</span>"
-
 	if(istype(C, /obj/item/weapon/crowbar) && (!(is_plating())))
 		if(broken || burnt)
 			user << "<span class='warning'>You remove the broken plating.</span>"
@@ -471,8 +477,7 @@ turf/simulated/floor/proc/update_icon()
 		playsound(src, 'sound/items/Crowbar.ogg', 80, 1)
 
 		return
-
-	if(istype(C, /obj/item/weapon/screwdriver))
+	else if(istype(C, /obj/item/weapon/screwdriver))
 		if(is_wood_floor())
 			if(broken || burnt)
 				return
@@ -484,8 +489,7 @@ turf/simulated/floor/proc/update_icon()
 			make_plating()
 			playsound(src, 'sound/items/Screwdriver.ogg', 80, 1)
 		return
-
-	if(istype(C, /obj/item/stack/rods))
+	else if(istype(C, /obj/item/stack/rods))
 		var/obj/item/stack/rods/R = C
 		if (is_plating())
 			if (R.amount >= 2)
@@ -500,8 +504,7 @@ turf/simulated/floor/proc/update_icon()
 		else
 			user << "<span class='warning'>You must remove the plating first.</span>"
 		return
-
-	if(istype(C, /obj/item/stack/tile))
+	else if(istype(C, /obj/item/stack/tile))
 		if(is_plating())
 			if(!broken && !burnt)
 				var/obj/item/stack/tile/T = C
@@ -509,6 +512,7 @@ turf/simulated/floor/proc/update_icon()
 					if(floor_tile) returnToPool(floor_tile)
 					floor_tile = null
 					floor_tile = getFromPool(T.type, null)
+					material = floor_tile.material
 					intact = 1
 					if(istype(T,/obj/item/stack/tile/light))
 						var/obj/item/stack/tile/light/L = T
@@ -530,16 +534,13 @@ turf/simulated/floor/proc/update_icon()
 					playsound(src, 'sound/weapons/Genhit.ogg', 50, 1)
 			else
 				user << "<span class='warning'>This section is too damaged to support a tile. Use a welder to fix the damage.</span>"
-
-
-	if(istype(C, /obj/item/stack/cable_coil))
+	else if(istype(C, /obj/item/stack/cable_coil))
 		if(is_plating())
 			var/obj/item/stack/cable_coil/coil = C
 			coil.turf_place(src, user)
 		else
 			user << "<span class='warning'>You must remove the plating first.</span>"
-
-	if(istype(C, /obj/item/weapon/pickaxe/shovel))
+	else if(istype(C, /obj/item/weapon/pickaxe/shovel))
 		if(is_grass_floor())
 			new /obj/item/weapon/ore/glass(src)
 			new /obj/item/weapon/ore/glass(src) //Make some sand if you shovel grass
@@ -547,8 +548,7 @@ turf/simulated/floor/proc/update_icon()
 			make_plating()
 		else
 			user << "<span class='warning'>You cannot shovel this.</span>"
-
-	if(istype(C, /obj/item/weapon/weldingtool))
+	else if(istype(C, /obj/item/weapon/weldingtool))
 		var/obj/item/weapon/weldingtool/welder = C
 		if(welder.isOn() && (is_plating()))
 			if(broken || burnt)
@@ -560,6 +560,18 @@ turf/simulated/floor/proc/update_icon()
 					broken = 0
 				else
 					user << "<span class='notice'>You need more welding fuel to complete this task.</span>"
+
+/turf/simulated/floor/Enter(mob/AM)
+	.=..()
+
+	if(AM)
+		switch(material)
+			if("bananium")
+				if(!spam_flag)
+					spam_flag = 1
+					playsound(get_turf(src), "clownstep", 50, 1)
+					spawn(20)
+						spam_flag = 0
 
 /turf/simulated/proc/wet(delay = 800)
 	if(wet >= 1) return
