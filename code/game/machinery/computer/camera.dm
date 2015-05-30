@@ -55,12 +55,14 @@
 		var/t = input(user, "Which camera should you change to?") as null|anything in D
 		if(!t)
 			user.unset_machine()
+			user.reset_view(null)
 			return 0
 
 		var/obj/machinery/camera/C = D[t]
 
 		if(t == "Cancel")
 			user.unset_machine()
+			user.reset_view(null)
 			return 0
 
 		if(C)
