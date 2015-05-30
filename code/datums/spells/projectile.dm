@@ -11,6 +11,7 @@
 	var/proj_trail_icon = 'icons/obj/wizard.dmi'
 	var/proj_trail_icon_state = "trail"
 
+
 	var/proj_type = "/obj/effect/proc_holder/spell/targeted" //IMPORTANT use only subtypes of this
 
 	var/proj_lingering = 0 //if it lingers or disappears upon hitting an obstacle
@@ -22,7 +23,7 @@
 	var/proj_step_delay = 1 //lower = faster
 
 /obj/effect/proc_holder/spell/targeted/projectile/cast(list/targets, mob/user = usr)
-
+	playMagSound()
 	for(var/mob/living/target in targets)
 		spawn(0)
 			var/obj/effect/proc_holder/spell/targeted/projectile
