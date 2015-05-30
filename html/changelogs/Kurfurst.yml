@@ -1,0 +1,5 @@
+author: Kurfurst
+delete-after: True
+changes:
+ - tweak: Central Command has removed redundancies in the toolbelt, expanding its storage space by 100% and allowing it to hold emergency fire extinguishers, as well as compressed matter cartridges.
+ - rscadd: Anthroarcheologists have recently discovered the belt of Many-APCs-Charging, and made it available to our Chief Engineer. It can hold many useful tools, including the RCD, RPD, and RMCE. Because it holds larger objects, it can hold full size extinguihsers (including foam) and large welders as well.

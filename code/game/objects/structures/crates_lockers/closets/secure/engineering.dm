@@ -31,6 +31,7 @@
 		new /obj/item/device/multitool(src)
 		new /obj/item/device/flash(src)
 		new /obj/item/device/gps/engineering(src)
+		new /obj/item/weapon/storage/belt/utility/chief(src)
 		return
 
 
