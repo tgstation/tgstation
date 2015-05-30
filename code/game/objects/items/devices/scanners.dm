@@ -129,14 +129,14 @@ MASS SPECTROMETER
 	user << "<span class='info'>Analyzing results for [M]:\n\tOverall status: [mob_status]</span>"
 
 	// Damage descriptions
+	if(brute_loss > 10)
+		user << "\t<span class='alert'>[brute_loss > 50 ? "Severe" : "Minor"] tissue damage detected.</span>"
+	if(fire_loss > 10)
+		user << "\t<span class='alert'>[fire_loss > 50 ? "Severe" : "Minor"] burn damage detected.</span>"
 	if(oxy_loss > 10)
 		user << "\t<span class='info'><span class='alert'>[oxy_loss > 50 ? "Severe" : "Minor"] oxygen deprivation detected.</span>"
 	if(tox_loss > 10)
 		user << "\t<span class='alert'>[tox_loss > 50 ? "Critical" : "Dangerous"] amount of toxins detected.</span>"
-	if(fire_loss > 10)
-		user << "\t<span class='alert'>[fire_loss > 50 ? "Severe" : "Minor"] burn damage detected.</span>"
-	if(brute_loss > 10)
-		user << "\t<span class='alert'>[brute_loss > 50 ? "Severe" : "Minor"] tissue damage detected.</span>"
 	if(M.getStaminaLoss())
 		user << "\t<span class='alert'>Subject appears to be suffering from fatigue.</span>"
 	if (M.getCloneLoss())
@@ -155,9 +155,9 @@ MASS SPECTROMETER
 		var/mob/living/carbon/human/H = M
 		var/list/damaged = H.get_damaged_organs(1,1)
 		if(length(damaged)>0 || oxy_loss>0 || tox_loss>0 || fire_loss>0)
-			user << "<span class='info'>\tDamage: <font color='blue'>Suffocation</font>-<font color='green'>Toxin</font>-<font color='#FF8000'>Burn</font>-<font color='red'>Brute</font></span><span class='info'>\n\t\tSpecifics: <font color='blue'>[oxy_loss]</font>-<font color='green'>[tox_loss]</font>-<font color='#FF8000'>[fire_loss]</font>-<font color='red'>[brute_loss]</font></span>"
+			user << "<span class='info'>\tDamage: <span class='info'><font color='red'>Brute</font></span>-<font color='#FF8000'>Burn</font>-<font color='green'>Toxin</font>-<font color='blue'>Suffocation</font>\n\t\tSpecifics: <font color='red'>[brute_loss]</font>-<font color='#FF8000'>[fire_loss]</font>-<font color='green'>[tox_loss]</font>-<font color='blue'>[oxy_loss]</font></span>"
 			for(var/obj/item/organ/limb/org in damaged)
-				user << "\t\t<span class='info'>[capitalize(org.getDisplayName())]: [(org.burn_dam > 0) ? "<font color='#FF8000'>[org.burn_dam]</font>" : "<font color='#FF8000'>0</font>"]-[(org.brute_dam > 0) ? "<font color='red'>[org.brute_dam]</font></span>" : "<font color='red'>0</font>"]"
+				user << "\t\t<span class='info'>[capitalize(org.getDisplayName())]: [(org.brute_dam > 0) ? "<font color='red'>[org.brute_dam]</font></span>" : "<font color='red'>0</font>"]-[(org.burn_dam > 0) ? "<font color='#FF8000'>[org.burn_dam]</font>" : "<font color='#FF8000'>0</font>"]"
 
 	// Species and body temperature
 	if(ishuman(M))
