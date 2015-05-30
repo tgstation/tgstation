@@ -4,7 +4,7 @@
 
 /obj/item/weapon/storage/component_exchanger
 	name = "rapid machinery component exchanger"
-	desc = "A tool used to replace machinery components without having to deconstruct them. It can load up to ten components at once"
+	desc = "A tool used to replace machinery components without having to deconstruct the entire machine. It can load up to tweny-one components at once"
 	icon = 'icons/obj/device.dmi'
 	icon_state = "comp_exchanger"
 	gender = NEUTER
@@ -17,6 +17,7 @@
 	w_type = RECYK_ELECTRONIC
 	origin_tech = "magnets=2;engineering=4;materials=5;programming=3"
 	var/emagged = 0 //So we can emag it for "improved" functionality
+	var/working = 0 //Busy check to make sure the user doesn't try to multi-task (this causes serious problems)
 
 	allow_quick_gather = 1
 	use_to_pickup = 1
@@ -54,7 +55,11 @@
 			user << "<span class='warning'>The maintenance hatch of \the [M] is closed, you can't just stab \the [src] into it and hope it'll work.</span>"
 			return
 
-		user.visible_message("<span class='notice'>[user] starts setting up \a [src] in \the [M]'s maintenance hatch</span>", \
+		if(working) //We are already using the RMCE
+			user << "<span class='warning'>You are aleady using \the [src] on another machine. You'll have to pull it out or wait.</span>"
+			return
+
+		user.visible_message("<span class='notice'>[user] starts setting up \the [src] in \the [M]'s maintenance hatch</span>", \
 		"<span class='notice'>You carefully insert \the [src] through \the [M]'s maintenance hatch, it starts scanning the machine's components.</span>")
 
 		if(do_after(user, 30)) //3 seconds to obtain a complete reading of the machine's components
@@ -77,8 +82,11 @@
 
 /obj/item/weapon/storage/component_exchanger/proc/component_interaction(obj/machinery/M, mob/user)
 
+	working = 1 //In-house busy check to make sure the user doesn't juggle around with the RMCE
+
 	if(!Adjacent(user)) //We aren't hugging the machine, so don't bother. This'll prop up often
 		user << "<span class='warning'>A blue screen suddenly flashes on \the [src]'s HUD. It appears the critical failure was caused by suddenly yanking it out of \the [M]'s maintenance hatch.</span>"
+		working = 0
 		return //Done, done and done, pull out
 
 	//Recurring option menu, what do we wish to do ?
@@ -88,6 +96,7 @@
 
 		user.visible_message("<span class='notice'>[user] pulls \the [src] out of \the [M]'s maintenance hatch.</span>", \
 		"<span class='notice'>A fancy log-out screen appears and \the [src]'s systems shut down. You pull it out of \the [M] carefully.</span>")
+		working = 0
 		return //Done
 
 	if(interactoption == "Output Information") //This also acts as a data dumping tool, if needed
@@ -154,8 +163,8 @@
 			//Good thing there's only a few stock parts types
 
 		M.RefreshParts()
-		user.visible_message("<span class='notice'>[user] pulls \the [src] out of \the [M] as it finishes remplacing components.</span>", \
-		"<span class='notice'>You pull \the [src] out of \the [M] as a message flashes on its HUD stating it has finished remplacing components and will return to the input screen shortly.</span>")
+		user.visible_message("<span class='notice'>[user]'s [name] stops rattling as it finishes working on \the [M]'s components.</span>", \
+		"<span class='notice'>A message flashes on \the [src]'s HUD stating it has finished remplacing [M]]'s components and will return to the input screen shortly.</span>")
 
 		spawn(30)
 			component_interaction(M, user)
