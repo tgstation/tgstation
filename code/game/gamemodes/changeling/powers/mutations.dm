@@ -108,7 +108,7 @@
 /obj/effect/proc_holder/changeling/weapon/arm_blade
 	name = "Arm Blade"
 	desc = "We reform one of our arms into a deadly blade."
-	helptext = "Cannot be used while in lesser form."
+	helptext = "We may retract our armblade in the same manner as we form it. Cannot be used while in lesser form."
 	chemical_cost = 20
 	dna_cost = 2
 	genetic_damage = 10
@@ -176,7 +176,7 @@
 /obj/effect/proc_holder/changeling/weapon/shield
 	name = "Organic Shield"
 	desc = "We reform one of our arms into a hard shield."
-	helptext = "Organic tissue cannot resist damage forever, the shield will break after it is hit too much. The more genomes we absorb, the stronger it is. Cannot be used while in lesser form."
+	helptext = "Organic tissue cannot resist damage forever; the shield will break after it is hit too much. The more genomes we absorb, the stronger it is. Cannot be used while in lesser form."
 	chemical_cost = 20
 	dna_cost = 1
 	genetic_damage = 12
