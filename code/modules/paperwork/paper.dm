@@ -335,6 +335,8 @@
 	burn(1, 50)
 
 /obj/item/weapon/paper/proc/burn(var/showmsg, var/burntime)
+	if (burning)
+		return
 	if(showmsg)
 		src.visible_message("<span class='warning'>[src] catches on fire.</span>")
 	burning = 1
