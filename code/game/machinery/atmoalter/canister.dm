@@ -82,6 +82,7 @@
 /obj/machinery/portable_atmospherics/canister/update_icon()
 	if(destroyed)
 		icon_state = "[canister_color]-1"
+		overlays.len = 0
 		return
 
 	if(!status_overlays)
