@@ -226,7 +226,7 @@ a.notsmelting {
 					on=0
 
 					// Spawn slag
-					var/obj/item/weapon/ore/slag/slag = new /obj/item/weapon/ore/slag(output.loc)
+					var/obj/item/weapon/ore/slag/slag = getFromPool(/obj/item/weapon/ore/slag, (output.loc))
 
 					// Take one of every ore selected and give it to the slag.
 					for(var/ore_id in ore.storage)
@@ -298,7 +298,7 @@ a.notsmelting {
 					on=0
 
 					// Spawn slag
-					var/obj/item/weapon/ore/slag/slag = new /obj/item/weapon/ore/slag(output.loc)
+					var/obj/item/weapon/ore/slag/slag = getFromPool(/obj/item/weapon/ore/slag, (output.loc))
 
 					// Take one of every ore selected and give it to the slag.
 					for(var/ore_id in ore.storage)

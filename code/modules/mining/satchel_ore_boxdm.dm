@@ -52,7 +52,7 @@
 		for(var/ore_id in materials.storage)
 			var/datum/material/mat = materials.getMaterial(ore_id)
 			for(var/i=0;i<mat.stored;i++)
-				new mat.oretype(get_turf(src))
+				getFromPool(mat.oretype, get_turf(src))
 			mat.stored=0
 		usr << "<span class='notice'>You empty the box</span>"
 	src.updateUsrDialog()
