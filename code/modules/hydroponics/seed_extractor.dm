@@ -88,7 +88,7 @@ obj/machinery/seed_extractor/attackby(var/obj/item/O as obj, var/mob/user as mob
 	else
 		user << "<span class='warning'>You can't extract any seeds from \the [O.name]!</span>"
 
-datum/seed_pile
+/datum/seed_pile
 	var/name = ""
 	var/lifespan = 0	//Saved stats
 	var/endurance = 0
@@ -98,7 +98,7 @@ datum/seed_pile
 	var/potency = 0
 	var/amount = 0
 
-datum/seed_pile/New(var/name, var/life, var/endur, var/matur, var/prod, var/yie, var/poten, var/am = 1)
+/datum/seed_pile/New(var/name, var/life, var/endur, var/matur, var/prod, var/yie, var/poten, var/am = 1)
 	src.name = name
 	src.lifespan = life
 	src.endurance = endur
