@@ -18,6 +18,9 @@
 	src.modules += new /obj/item/device/analyzer(src)
 	src.modules += new /obj/item/weapon/extinguisher(src) // Aurx sed so
 	src.modules += new /obj/item/device/lightreplacer/cyborg(src)
+	src.modules += new /obj/item/device/t_scanner/adv_mining_scanner(src)
+	src.modules += new /obj/item/weapon/pickaxe(src)
+	src.modules += new /obj/item/weapon/storage/bag/ore(src)
 //	src.modules += new /obj/item/weapon/extinguisher/foam(src)
 	src.modules += new /obj/item/weapon/pipe_dispenser(src)
 	src.sensors += "Disable"
