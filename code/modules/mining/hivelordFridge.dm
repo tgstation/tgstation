@@ -10,7 +10,6 @@
 	throw_range = 2
 	slot_flags = SLOT_BELT
 	var/obj/item/asteroid/hivelord_core/storedCore = null
-	var/emagged = 0
 
 /obj/item/device/hivelordFridge/attack_self(mob/user)
 	if(!storedCore)
@@ -38,7 +37,7 @@
 							 "\icon[src]<span class='notice'>You place [H] into [src] and close it with a hiss of cold air.</span>")
 		user.drop_item()
 		H.loc = src
-		icon_state = "fridgeOn[emagged]"
+		icon_state = "fridgeOn"
 		playsound(src, 'sound/machines/hiss.ogg', 50, 0, 0)
 		H.preserved = 1
 		storedCore = H
