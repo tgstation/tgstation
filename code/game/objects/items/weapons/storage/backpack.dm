@@ -49,18 +49,13 @@
 	if(crit_fail)
 		user << "<span class = 'warning'>The Bluespace generator isn't working.</span>"
 		return
-	if(istype(W, /obj/item/weapon/storage/backpack/holding) && !W.crit_fail)
-		user << "<span class = 'warning'>The Bluespace interfaces of the two devices conflict and malfunction.</span>"
-		del(W)
-		return
 	//BoH+BoH=Singularity, WAS commented out
 	if(istype(W, /obj/item/weapon/storage/backpack/holding) && !W.crit_fail)
 		investigation_log(I_SINGULO,"has become a singularity. Caused by [user.key]")
 		message_admins("[src] has become a singularity. Caused by [user.key]")
 		user << "<span class = 'danger'>The Bluespace interfaces of the two devices catastrophically malfunction!</span>"
 		del(W)
-		var/obj/machinery/singularity/singulo = new /obj/machinery/singularity (get_turf(src))
-		singulo.energy = 300 //should make it a bit bigger~
+		new /obj/machinery/singularity (get_turf(src))
 		message_admins("[key_name_admin(user)] detonated a bag of holding")
 		log_game("[key_name(user)] detonated a bag of holding")
 		del(src)
