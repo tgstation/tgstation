@@ -40,7 +40,8 @@
 	if(istype(I, /obj/item/weapon/anobattery))
 		if(!inserted_battery)
 			user << "<span class='notice'>You insert the battery.</span>"
-			user.drop_item(I, src)
+			user.drop_item()
+			I.loc = src
 			inserted_battery = I
 			UpdateSprite()
 	else
