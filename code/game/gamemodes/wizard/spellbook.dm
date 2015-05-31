@@ -331,6 +331,7 @@
 							max_uses++
 							uses = uses + 2 //refund plus a free point
 							active_challenges += "summon guns"
+							playsound(get_turf(H),"sound/magic/CastSummon.ogg",50,1)
 							temp = "You have cast summon guns and gained an extra charge for your spellbook."
 						if("summonmagic")
 							feedback_add_details("wizard_spell_learned","SU") //please do not change the abbreviation to keep data processing consistent. Add a unique id to any new spells
@@ -338,10 +339,12 @@
 							max_uses++
 							uses = uses + 2 //refund plus a free point
 							active_challenges += "summon magic"
+							playsound(get_turf(H),"sound/magic/CastSummon.ogg",50,1)
 							temp = "You have cast summon magic and gained an extra charge for your spellbook."
 						if("summonevents")
 							feedback_add_details("wizard_spell_learned","SE") //please do not change the abbreviation to keep data processing consistent. Add a unique id to any new spells
 							summonevents()
+							playsound(get_turf(H),"sound/magic/CastSummon.ogg",50,1)
 							max_uses--
 							temp = "You have cast summon events."
 						if("staffchange")
