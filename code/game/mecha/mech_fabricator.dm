@@ -121,10 +121,14 @@
 	return output
 
 /obj/machinery/mecha_part_fabricator/proc/output_part_info(datum/design/D)
+	if(!istype(D))
+		return
 	var/output = "[initial(D.name)] (Cost: [output_part_cost(D)]) [get_construction_time_w_coeff(D)/10]sec"
 	return output
 
 /obj/machinery/mecha_part_fabricator/proc/output_part_cost(datum/design/D)
+	if(!istype(D))
+		return
 	var/i = 0
 	var/output
 	for(var/c in D.materials)
@@ -144,11 +148,15 @@
 	return output
 
 /obj/machinery/mecha_part_fabricator/proc/remove_resources(datum/design/D)
+	if(!istype(D))
+		return
 	for(var/resource in D.materials)
 		if(resource in resources)
 			resources[resource] -= get_resource_cost_w_coeff(D,resource)
 
 /obj/machinery/mecha_part_fabricator/proc/check_resources(datum/design/D)
+	if(!istype(D))
+		return
 	for(var/R in D.materials)
 		if(R in resources)
 			if(resources[R] < get_resource_cost_w_coeff(D, R))

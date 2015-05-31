@@ -392,6 +392,8 @@ datum/reagents/proc/check_ignoreslow(var/mob/M)
 	if(!M)
 		return
 	if(istype(M, /mob))
+		if(!M.reagents)
+			return
 		if(M.reagents.has_reagent("morphine")||M.reagents.has_reagent("ephedrine"))
 			return 1
 		else
@@ -401,6 +403,8 @@ datum/reagents/proc/check_gofast(var/mob/M)
 	if(!M)
 		return
 	if(istype(M, /mob))
+		if(!M.reagents)
+			return
 		if(M.reagents.has_reagent("unholywater")||M.reagents.has_reagent("nuka_cola"))
 			return 1
 		else
@@ -410,6 +414,8 @@ datum/reagents/proc/check_goreallyfast(var/mob/M)
 	if(!M)
 		return
 	if(istype(M, /mob))
+		if(!M.reagents)
+			return
 		if(M.reagents.has_reagent("methamphetamine"))
 			return 1
 		else

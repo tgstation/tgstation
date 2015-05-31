@@ -95,6 +95,8 @@
 	var/mat_name = initial(active_material.name)
 	if(isrobot(user))
 		var/mob/living/silicon/robot/r_user = user
+		if(!r_user.cell)
+			return
 		if(active_material && r_user.cell.charge)
 			var/modifier = MAT_COST_COMMON
 			if(initial(active_material.perunit) < 3750)
