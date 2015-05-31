@@ -527,45 +527,59 @@
 	icon_state = "at_shield1"
 	icon_living = "at_shield1"
 	icon_aggro = "at_shield2"
-	vision_range = 7
+	vision_range = 6
 	aggro_vision_range = 9
-	idle_vision_range = 7
+	idle_vision_range = 6
 	move_to_delay = 5
-	friendly = "passes through"
 	maxHealth = 30
 	health = 30
-	speed = 2
-	harm_intent_damage = 5
+	speed = 3
+	harm_intent_damage = 10
 	melee_damage_lower = 15
 	melee_damage_upper = 15
+	retreat_distance = 3
+	minimum_distance = 3
 	luminosity = 4
+	friendly = "blinks at"
 	attacktext = "sears"
 	attack_sound = 'sound/weapons/sear.ogg'
 	a_intent = "help"
-	speak_emote = list("gently speaks")
+	speak_emote = list("croons")
 	throw_message = "passes through "
 	environment_smash = 0
 	var/recentlyStunned = 0
+	var/hypnotizing = 0
 
 /mob/living/simple_animal/hostile/asteroid/willothewisp/Aggro()
 	var/mob/living/M = target
 	if(!M.stunned && !recentlyStunned)
-		recentlyStunned = 10
+		recentlyStunned = 30
 		visible_message("<span class='warning'>[src] flickers hypnotically...</span>")
 		M << "<span class='boldannounce'>Your gaze is drawn to [src], and you find yourself lost in its beauty...</span>"
-		M.Stun(3)
+		M << "<span class='ghostalert'>\"Come... I show the way...\"</span>"
+		M.Stun(9)
+		if(ishuman(M))
+			var/mob/living/carbon/human/H = M
+			H.silent += 9
+		melee_damage_lower = 0
+		melee_damage_upper = 0
+		hypnotizing = 1
+		spawn(150)
+			target << "<span class='warning'>You snap out of your hypnosis!</span>"
+			hypnotizing = 0
+			melee_damage_lower = 15
+			melee_damage_upper = 15
 	..()
 
 /mob/living/simple_animal/hostile/asteroid/willothewisp/Life()
 	..()
 	if(recentlyStunned > 0)
 		recentlyStunned--
-	if(target)
-		if(prob(25))
-			target << "<span class='ghostalert'>[pick("See... the wonders...", "Lights... northern lights...", "Beautiful... so pretty...", "Gentle light...", "Show the way...")]</span>"
+	if(target && hypnotizing)
+		step_towards(target, src)
 
 /mob/living/simple_animal/hostile/asteroid/willothewisp/bullet_act(var/obj/item/projectile/P)
-	visible_message("<span class='danger'>[P] passes through [src]!</span>")
+	visible_message("<span class='warning'>[P] passes through [src]!</span>")
 	return
 
 /mob/living/simple_animal/hostile/asteroid/willothewisp/death(gibbed)
