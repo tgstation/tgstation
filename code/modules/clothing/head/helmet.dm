@@ -146,7 +146,7 @@
 	item_state = "gladiator"
 	flags_inv = HIDEMASK|HIDEEARS|HIDEEYES
 
-obj/item/clothing/head/helmet/redtaghelm
+/obj/item/clothing/head/helmet/redtaghelm
 	name = "red laser tag helmet"
 	desc = "They have chosen their own end."
 	icon_state = "redtaghelm"
@@ -156,7 +156,7 @@ obj/item/clothing/head/helmet/redtaghelm
 	// Offer about the same protection as a hardhat.
 	flags_inv = HIDEEARS|HIDEEYES
 
-obj/item/clothing/head/helmet/bluetaghelm
+/obj/item/clothing/head/helmet/bluetaghelm
 	name = "blue laser tag helmet"
 	desc = "They'll need more men."
 	icon_state = "bluetaghelm"

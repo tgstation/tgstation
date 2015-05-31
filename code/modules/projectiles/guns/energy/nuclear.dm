@@ -126,5 +126,5 @@
 	can_flashlight = 0
 	trigger_guard = 0
 
-obj/item/weapon/gun/energy/gun/turret/update_icon()
+/obj/item/weapon/gun/energy/gun/turret/update_icon()
 	icon_state = initial(icon_state)

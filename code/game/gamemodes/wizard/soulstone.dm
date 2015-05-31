@@ -188,7 +188,7 @@
 	return
 
 
-proc/makeNewConstruct(var/mob/living/simple_animal/construct/ctype, var/mob/target, var/mob/stoner = null, cultoverride = 0)
+/proc/makeNewConstruct(var/mob/living/simple_animal/construct/ctype, var/mob/target, var/mob/stoner = null, cultoverride = 0)
 	var/mob/living/simple_animal/construct/newstruct = new ctype(get_turf(target))
 	newstruct.faction |= "\ref[stoner]"
 	newstruct.key = target.key

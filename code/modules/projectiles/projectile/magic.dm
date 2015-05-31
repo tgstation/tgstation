@@ -123,7 +123,7 @@
 	. = ..()
 	wabbajack(change)
 
-proc/wabbajack(mob/living/M)
+/proc/wabbajack(mob/living/M)
 	if(istype(M))
 		if(istype(M, /mob/living) && M.stat != DEAD)
 			if(M.notransform)	return

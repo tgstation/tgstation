@@ -104,7 +104,7 @@ var/list/adminhelp_ignored_words = list("unknown","the","a","an","of","monkey","
 	feedback_add_details("admin_verb","AH") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 	return
 
-proc/send2irc_adminless_only(source, msg, requiredflags = R_BAN)
+/proc/send2irc_adminless_only(source, msg, requiredflags = R_BAN)
 	var/admin_number_total = 0		//Total number of admins
 	var/admin_number_afk = 0		//Holds the number of admins who are afk
 	var/admin_number_ignored = 0	//Holds the number of admins without +BAN (so admins who are not really admins)
@@ -131,7 +131,7 @@ proc/send2irc_adminless_only(source, msg, requiredflags = R_BAN)
 			send2irc(source, "[msg] - All admins AFK ([admin_number_afk]/[admin_number_total]) or skipped ([admin_number_ignored]/[admin_number_total])")
 	return admin_number_present
 
-proc/send2irc(msg,msg2)
+/proc/send2irc(msg,msg2)
 	if(config.useircbot)
 		shell("python nudge.py [msg] [msg2]")
 	return

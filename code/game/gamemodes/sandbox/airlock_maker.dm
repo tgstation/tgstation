@@ -4,7 +4,7 @@
 	-Sayu
 */
 
-obj/structure/door_assembly
+/obj/structure/door_assembly
 	var/datum/airlock_maker/maker = null
 
 /obj/structure/door_assembly/attack_hand()

@@ -2,7 +2,7 @@
 
 var/hsboxspawn = 1
 
-mob
+/mob
 	var/datum/hSB/sandbox = null
 /mob/proc/CanBuild()
 	if(master_mode == "sandbox")

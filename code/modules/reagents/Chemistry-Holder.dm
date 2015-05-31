@@ -589,7 +589,7 @@ var/const/INGEST = 2
 
 // Convenience proc to create a reagents holder for an atom
 // Max vol is maximum volume of holder
-atom/proc/create_reagents(var/max_vol)
+/atom/proc/create_reagents(var/max_vol)
 	if(reagents)
 		qdel(reagents)
 	reagents = new/datum/reagents(max_vol)
