@@ -84,7 +84,7 @@
 		/*next_move = world.time + 6
 		if(W.flags&USEDELAY)
 			next_move += 5*/
-		W.attack_self(src)
+		W.attack_self(src, params)
 		if(hand)
 			update_inv_l_hand(0)
 		else
