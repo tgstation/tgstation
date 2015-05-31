@@ -170,9 +170,33 @@
 	else
 		..()
 
+//Comfy chairs
+
 /obj/structure/stool/bed/chair/comfy
 	name = "comfy chair"
 	desc = "It looks comfy."
+	icon_state = "comfychair_black"
+
+	var/image/armrest
+
+/obj/structure/stool/bed/chair/comfy/New()
+	..()
+	armrest = image("icons/obj/objects.dmi", "[icon_state]_armrest", MOB_LAYER + 0.1)
+
+/obj/structure/stool/bed/chair/comfy/buckle_mob(mob/M as mob, mob/user as mob)
+	..()
+	update_icon()
+
+/obj/structure/stool/bed/chair/comfy/unbuckle()
+	..()
+	update_icon()
+
+/obj/structure/stool/bed/chair/comfy/update_icon()
+	..()
+	if(buckled_mob)
+		overlays += armrest
+	else
+		overlays -= armrest
 
 /obj/structure/stool/bed/chair/comfy/brown
 	icon_state = "comfychair_brown"
@@ -183,27 +207,41 @@
 /obj/structure/stool/bed/chair/comfy/teal
 	icon_state = "comfychair_teal"
 
-/obj/structure/stool/bed/chair/office
-	anchored = 0
-
 /obj/structure/stool/bed/chair/comfy/black
 	icon_state = "comfychair_black"
 
 /obj/structure/stool/bed/chair/comfy/lime
 	icon_state = "comfychair_lime"
 
+//Office chairs
+
+/obj/structure/stool/bed/chair/office
+	anchored = 0
+	icon_state = "officechair_white"
+	var/image/back
+
+/obj/structure/stool/bed/chair/office/New()
+	..()
+	back = image("icons/obj/objects.dmi", "[icon_state]-overlay", MOB_LAYER + 0.1)
+
+/obj/structure/stool/bed/chair/office/buckle_mob(mob/M as mob, mob/user as mob)
+	..()
+	update_icon()
+
+/obj/structure/stool/bed/chair/office/unbuckle()
+	..()
+	update_icon()
+
+/obj/structure/stool/bed/chair/office/update_icon()
+	..()
+	if(buckled_mob)
+		overlays += back
+	else
+		overlays -= back
 
 /obj/structure/stool/bed/chair/office/light
 	icon_state = "officechair_white"
 
-/obj/structure/stool/bed/chair/office/light/New()
-	..()
-	overlays += image(icon,"officechair_white-overlay",FLY_LAYER)
-
 /obj/structure/stool/bed/chair/office/dark
 	icon_state = "officechair_dark"
-
-/obj/structure/stool/bed/chair/office/dark/New()
-	..()
-	overlays += image(icon,"officechair_dark-overlay",FLY_LAYER)
 
