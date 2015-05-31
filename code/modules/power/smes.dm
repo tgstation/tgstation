@@ -160,6 +160,18 @@
 	//crowbarring it !
 	default_deconstruction_crowbar(I)
 
+	if(istype(I, /obj/item/weapon/glowCore))
+		user.visible_message("<span class='warning'>[user] zaps [src] with [I]!</span>", \
+							 "<span class='danger'>You hold [I] up to [src], recharging it!</span>")
+		user.drop_item()
+		playsound(get_turf(I), 'sound/machines/defib_zap.ogg', 50, 1, -1)
+		I.Beam(src,icon_state="lightning",icon='icons/effects/effects.dmi',time=15)
+		charge = capacity
+		qdel(I)
+		update_icon()
+		return
+	..()
+
 /obj/machinery/power/smes/Destroy()
 	if(ticker && ticker.current_state == GAME_STATE_PLAYING)
 		var/area/area = get_area(src)

@@ -113,3 +113,15 @@
 		user.visible_message("<span class='suicide'>[user] is pretending to blow \his brains out with the [src.name]! It looks like \he's trying to commit suicide!</b></span>")
 		playsound(loc, 'sound/weapons/empty.ogg', 50, 1, -1)
 		return (OXYLOSS)
+
+/obj/item/weapon/gun/energy/attackby(obj/item/I, mob/user)
+	if(istype(I, /obj/item/weapon/glowCore))
+		user.visible_message("<span class='warning'>[user] zaps [src] with [I]!</span>", \
+							 "<span class='danger'>You recharge [src] with [I]!</span>")
+		user.drop_item()
+		power_supply.give(power_supply.maxcharge)
+		playsound(get_turf(user), 'sound/machines/defib_zap.ogg', 50, 1, -1)
+		update_icon()
+		qdel(I)
+		return
+	..()
