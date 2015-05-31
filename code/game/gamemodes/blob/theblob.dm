@@ -19,8 +19,9 @@
 	blobs += src
 	if(istype(ticker.mode,/datum/game_mode/blob))
 		var/datum/game_mode/blob/blobmode = ticker.mode
-		if((blobs.len >= blobmode.blobnukeposs) && prob(3))
+		if((blobs.len >= blobmode.blobnukeposs) && prob(3) && !blobmode.nuclear)
 			blobmode.stage(2)
+			blobmode.nuclear = 1
 	src.dir = pick(1, 2, 4, 8)
 	src.update_icon()
 	..(loc)

@@ -19,6 +19,7 @@ var/list/blob_nodes = list()
 
 	var/declared = 0
 	var/outbreak = 0
+	var/nuclear = 0
 
 	var/cores_to_spawn = 15
 	var/players_per_core = 30
