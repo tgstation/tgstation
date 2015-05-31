@@ -159,7 +159,7 @@
 	var/timer						//used as a timer (if you want time left to complete move, use timeLeft proc)
 	var/mode = SHUTTLE_IDLE			//current shuttle mode (see global defines)
 	var/callTime = 50				//time spent in transit (deciseconds)
-
+	var/turfchecks = 3			//0 = move ALL turfs, 1 = move all non-space turfs, 2 = move only simulated turfs, 3 (or anything else) move only shuttle turfs.
 	var/travelDir = 0			//direction the shuttle would travel in
 
 	var/obj/docking_port/stationary/destination
@@ -297,13 +297,24 @@
 		for(var/turf/T0 in L0)
 			A0.contents += T0
 
-	//move or squish anything in the way ship at destination
+	//move or squish anything in the way of the ship at destination
 	roadkill(L1, S1.dir)
 
 	for(var/i=1, i<=L0.len, ++i)
 		var/turf/T0 = L0[i]
-		if(!istype(T0, /turf/simulated/shuttle))	//only move shuttle turfs!
-			continue
+		if (turfchecks) //if 0, move ALL turfs.
+			switch (turfchecks)
+				if (1) //only move non-space turfs!
+					if(istype(T0, /turf/space))
+						continue
+				if (2) //only move simulated turfs!
+					if(!istype(T0, /turf/simulated))
+						continue
+				else //only move shuttle turfs!
+					if(!istype(T0, /turf/simulated/shuttle))
+						continue
+
+
 
 		var/turf/T1 = L1[i]
 		if(!T1)
