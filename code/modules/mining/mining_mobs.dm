@@ -575,7 +575,7 @@
 
 /obj/item/weapon/glowCore
 	name = "energetic sphere"
-	desc = "A jellylike blob of condensed light and energy. It burns to hold and glows with dim light."
+	desc = "A jellylike blob of condensed light and energy. It burns to hold and glows with dim light. Perhaps it could be used to recharge something."
 	icon = 'icons/effects/effects.dmi'
 	icon_state = "electricity2"
 	w_class = 2
