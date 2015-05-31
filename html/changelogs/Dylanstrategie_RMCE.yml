@@ -1,0 +1,4 @@
+author: Dylanstrategie
+delete-after: True
+changes:
+  - bugfix: You can no longer work on multiple machines at once with the RMCE, which caused serious problems. Updated a few outdated messages
