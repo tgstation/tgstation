@@ -340,10 +340,10 @@
 	burning = 1
 	icon_state = "paper_onfire"
 	info = "[stars(info)]"
-	sleep(burntime) //7 seconds
-	src.visible_message("<span class='warning'>[src] burns away, leaving behind a pile of ashes.</span>")
-	new /obj/effect/decal/cleanable/ash(src.loc)
-	qdel(src)
+	spawn(burntime) //7 seconds
+		src.visible_message("<span class='warning'>[src] burns away, leaving behind a pile of ashes.</span>")
+		new /obj/effect/decal/cleanable/ash(src.loc)
+		qdel(src)
 
 /*
  * Premade paper
