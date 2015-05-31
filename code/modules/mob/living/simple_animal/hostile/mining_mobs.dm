@@ -266,15 +266,16 @@
 	icon = 'icons/obj/food/food.dmi'
 	icon_state = "boiledrorocore"
 	var/inert = 0
-
-/obj/item/asteroid/hivelord_core/New()
-	spawn(1200)
-		inert = 1
-		desc = "The remains of a hivelord that have become useless, having been left alone too long after being harvested."
-
-/* //replaces 271 and below
 	var/life = 120
 	var/preserved = 0
+
+/obj/item/asteroid/hivelord_core/New()
+//	spawn(1200)
+//		inert = 1
+//		desc = "The remains of a hivelord that have become useless, having been left alone too long after being harvested."
+
+///replaces 271 and below
+
 
 /obj/item/asteroid/hivelord_core/New()
 	..()
@@ -285,16 +286,15 @@
 	..()
 
 /obj/item/asteroid/hivelord_core/process()
-	spawn(10)
-		if(preserved)
-			return
-		life--
-		if(life <= 0)
-			SSobj.processing -= src
-			inert = 1
-			name = "inert [initial(name)]"
-			desc = "The remains of a hivelord that have become useless, having been left alone too long after being harvested."
-*/
+	if(preserved)
+		return
+	life--
+	if(life <= 0)
+		SSobj.processing -= src
+		inert = 1
+		name = "inert [initial(name)]"
+		desc = "The remains of a hivelord that have become useless, having been left alone too long after being harvested."
+
 
 /obj/item/asteroid/hivelord_core/attack(mob/living/M as mob, mob/living/user as mob)
 	if(ishuman(M))
@@ -312,7 +312,7 @@
 				user << "<span class='notice'>You chomp into [src], barely managing to hold it down, but feel amazingly refreshed in mere moments.</span>"
 			playsound(src.loc,'sound/items/eatfood.ogg', rand(10,50), 1)
 			H.revive()
-//			H.drop_item()
+			H.drop_item()
 			qdel(src)
 	..()
 

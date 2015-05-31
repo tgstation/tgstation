@@ -1086,6 +1086,7 @@
 #include "code\modules\makeshift\trayshield.dm"
 #include "code\modules\mining\bug_bait.dm"
 #include "code\modules\mining\equipment_locker.dm"
+#include "code\modules\mining\hivelord_fridge.dm"
 #include "code\modules\mining\machine_input_output_plates.dm"
 #include "code\modules\mining\machine_processing.dm"
 #include "code\modules\mining\machine_stacking.dm"
