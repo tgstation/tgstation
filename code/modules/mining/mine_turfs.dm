@@ -90,8 +90,7 @@ var/global/list/rockTurfEdgeCache
 		"Uranium" = 5, "Diamond" = 1, "Gold" = 10,
 		"Silver" = 12, "Plasma" = 20, "Iron" = 40,
 		"Gibtonite" = 4, "Cave" = 2, "BScrystal" = 1,
-		/*, "Adamantine" =5*/)
-		//Currently, Adamantine won't spawn as it has no uses. -Durandan
+		"Adamantine" = 3)
 	var/mineralChance = 13
 
 /turf/simulated/mineral/random/New()
@@ -122,8 +121,8 @@ var/global/list/rockTurfEdgeCache
 					M = new/turf/simulated/mineral/clown(src)
 				if("BScrystal")
 					M = new/turf/simulated/mineral/bscrystal(src)
-				/*if("Adamantine")
-					M = new/turf/simulated/mineral/adamantine(src)*/
+				if("Adamantine")
+					M = new/turf/simulated/mineral/adamantine(src)
 			if(M)
 				src = M
 				M.levelupdate()
@@ -135,7 +134,7 @@ var/global/list/rockTurfEdgeCache
 	mineralSpawnChanceList = list(
 		"Uranium" = 35, "Diamond" = 30,
 		"Gold" = 45, "Silver" = 50, "Plasma" = 50,
-		"BScrystal" = 20)
+		"BScrystal" = 20, "Adamantine" = 25)
 
 /turf/simulated/mineral/random/high_chance/New()
 	icon_state = "rock"
@@ -147,7 +146,7 @@ var/global/list/rockTurfEdgeCache
 	mineralSpawnChanceList = list(
 		"Uranium" = 2, "Diamond" = 1, "Gold" = 4,
 		"Silver" = 6, "Plasma" = 15, "Iron" = 40,
-		"Gibtonite" = 2, "BScrystal" = 1)
+		"Gibtonite" = 2, "BScrystal" = 1, "Adamantine" = 3)
 
 /turf/simulated/mineral/random/low_chance/New()
 	icon_state = "rock"
@@ -220,6 +219,14 @@ var/global/list/rockTurfEdgeCache
 	spread = 0
 	hidden = 1
 	scan_state = "rock_BScrystal"
+
+/turf/simulated/mineral/adamantine
+	name = "adamantine deposit"
+	icon_state = "rock_Adamantine"
+	mineralType = /obj/item/weapon/ore/adamantine
+	spreadChance = 10
+	spread = 1
+	hidden = 0 //Not hidden
 
 ////////////////////////////////Gibtonite
 /turf/simulated/mineral/gibtonite

@@ -73,6 +73,9 @@
 
 /obj/structure/ore_box/attackby(obj/item/I as obj, mob/user as mob, params)
 	if(istype(I, /obj/item/asteroid/goliath_hide) && !blastProof)
+		if(istype(I, /obj/item/asteroid/goliath_hide/adamantinePlates))
+			user << "<span class='warning'>The plates are too heavy to fasten to [src]!</span>"
+			return
 		user.visible_message("<span class='notice'>[user] plates [src] with [I].</span>", \
 							 "<span class='notice'>\icon[src]\icon[I]You plate [src] with [I], making it blast-proof.</span>")
 		user.drop_item()

@@ -23,7 +23,7 @@ Mineral Sheets
 
 /obj/item/stack/sheet/mineral/sandstone
 	name = "sandstone brick"
-	desc = "This appears to be a combination of both sand and stone."
+	desc = "Some bricks made of compacted sand, ideal for construction."
 	singular_name = "sandstone brick"
 	icon_state = "sheet-sandstone"
 	throw_speed = 3
@@ -50,6 +50,7 @@ var/global/list/datum/stack_recipe/sandstone_recipes = list ( \
  */
 /obj/item/stack/sheet/mineral/diamond
 	name = "diamond"
+	desc = "A very tough form of carbon. Prized in adornments and some construction."
 	icon_state = "sheet-diamond"
 	singular_name = "diamond"
 	force = 5.0
@@ -78,6 +79,7 @@ var/global/list/datum/stack_recipe/diamond_recipes = list ( \
  */
 /obj/item/stack/sheet/mineral/uranium
 	name = "uranium"
+	desc = "A radioactive element commonly used in exosuit construction."
 	icon_state = "sheet-uranium"
 	singular_name = "uranium sheet"
 	force = 5.0
@@ -106,6 +108,7 @@ var/global/list/datum/stack_recipe/uranium_recipes = list ( \
  */
 /obj/item/stack/sheet/mineral/plasma
 	name = "solid plasma"
+	desc = "Plasma. Very toxic, very flammable, and very mysterious. Nanotrasen is currently researching potential uses for this substance."
 	icon_state = "sheet-plasma"
 	singular_name = "plasma sheet"
 	force = 5.0
@@ -133,6 +136,7 @@ var/global/list/datum/stack_recipe/plasma_recipes = list ( \
  */
 /obj/item/stack/sheet/mineral/gold
 	name = "gold"
+	desc = "A precious metal used commonly in electronics and circuits."
 	icon_state = "sheet-gold"
 	singular_name = "gold bar"
 	force = 5.0
@@ -164,6 +168,7 @@ var/global/list/datum/stack_recipe/gold_recipes = list ( \
  */
 /obj/item/stack/sheet/mineral/silver
 	name = "silver"
+	desc = "A semi-precious metal used in science for electronics."
 	icon_state = "sheet-silver"
 	singular_name = "silver bar"
 	force = 5.0
@@ -195,6 +200,7 @@ var/global/list/datum/stack_recipe/silver_recipes = list ( \
  */
 /obj/item/stack/sheet/mineral/bananium
 	name = "bananium"
+	desc = "A strange metal that gains its toughness from sodium chloride."
 	icon_state = "sheet-clown"
 	singular_name = "bananium sheet"
 	force = 5.0
@@ -215,6 +221,75 @@ var/global/list/datum/stack_recipe/clown_recipes = list ( \
 	pixel_x = rand(0,4)-4
 	pixel_y = rand(0,4)-4
 	..()
+
+/*
+ * Adamantine
+ */
+
+/obj/item/stack/sheet/mineral/adamantine
+	name = "adamantine"
+	desc = "Adamantine. It's an extremely tough metal when shaped, but otherwise soft and malleable even at room temperature."
+	icon_state = "sheet-adamantine"
+	singular_name = "adamantine bar"
+	force = 5
+	throwforce = 5
+	w_class = 3.0
+	throw_speed = 1
+	throw_range = 3
+	origin_tech = "materials=4"
+	sheettype = "adamantine"
+
+var/global/list/datum/stack_recipe/adamantine_recipes = list(\
+	new/datum/stack_recipe("adamantine wrench", /obj/item/weapon/wrench/adamantine, 1, 0, 1), \
+	new/datum/stack_recipe("adamantine crowbar", /obj/item/weapon/crowbar/adamantine, 1, 0, 1), \
+	new/datum/stack_recipe("adamantine screwdriver", /obj/item/weapon/screwdriver/adamantine, 1, 0, 1), \
+	new/datum/stack_recipe("adamantine wirecutters", /obj/item/weapon/wirecutters/adamantine, 1, 0, 1), \
+	new/datum/stack_recipe("adamantine hardsuit plates", /obj/item/asteroid/goliath_hide/adamantinePlates, 10, 0, 1), \
+	)
+
+/obj/item/stack/sheet/mineral/adamantine/New(var/loc, var/amount=null)
+	recipes = adamantine_recipes
+	pixel_x = rand(0,4)-4
+	pixel_y = rand(0,4)-4
+	..()
+
+//Tools creatable by adamantine
+/obj/item/weapon/wrench/adamantine
+	name = "adamantine wrench"
+	desc = "A lump of shapen adamantine vaguely resembling a wrench."
+	force = 7
+	icon = 'icons/obj/mining.dmi'
+	icon_state = "adamantineWrench"
+	item_state = "wrench"
+
+/obj/item/weapon/crowbar/adamantine
+	name = "adamantine crowbar"
+	desc = "A hook-shaped rod of shapen adamantine that looks like a cane."
+	force = 7
+	icon = 'icons/obj/mining.dmi'
+	icon_state = "adamantineCrowbar"
+
+/obj/item/weapon/screwdriver/adamantine
+	name = "adamantine screwdriver"
+	desc = "A chunk of shapen adamantine that looks like a very misshapen screwdriver."
+	force = 7
+	icon = 'icons/obj/mining.dmi'
+	icon_state = "adamantineScrewdriver"
+
+/obj/item/weapon/screwdriver/adamantine/New()
+	..()
+	icon_state = "[initial(icon_state)]"
+
+/obj/item/weapon/wirecutters/adamantine
+	name = "adamantine wirecutters"
+	desc = "A pair of wirecutters made of shapen adamantine. Resemblance is only cursory."
+	force = 7
+	icon = 'icons/obj/mining.dmi'
+	icon_state = "adamantineWirecutters"
+
+/obj/item/weapon/wirecutters/adamantine/New()
+	..()
+	icon_state = "[initial(icon_state)]"
 
 
 /****************************** Others ****************************/
