@@ -446,7 +446,7 @@
 "iD" = (/turf/simulated/floor/plasteel/airless{icon_state = "floorscorched2"},/area/derelict/arrival)
 "iE" = (/turf/simulated/floor/plating/airless,/area/derelict/arrival)
 "iF" = (/turf/simulated/floor/plasteel/airless{icon_state = "damaged3"},/area/derelict/arrival)
-"iG" = (/obj/docking_port/stationary{dheight = 0; dir = 2; dwidth = 11; height = 22; id = "whiteship_z4"; name = "KSS13: Derelict"; width = 35},/turf/space,/area/space)
+"iG" = (/obj/docking_port/stationary{dheight = 0; dir = 2; dwidth = 11; height = 15; id = "whiteship_z4"; name = "KSS13: Derelict"; width = 27},/turf/space,/area/space)
 "iH" = (/obj/machinery/light/small,/turf/simulated/floor/plasteel{icon_state = "dark"},/area/derelict/medical/chapel)
 "iI" = (/obj/machinery/door/airlock/medical{name = "Morgue"; req_access_txt = "6"},/turf/simulated/floor/plasteel{icon_state = "dark"},/area/derelict/medical/chapel)
 "iJ" = (/turf/simulated/wall,/area/derelict/medical)

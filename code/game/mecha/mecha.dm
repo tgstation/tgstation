@@ -1001,7 +1001,7 @@ obj/mecha/proc/can_use(mob/user)
 	else if(occupant)
 		user << "Occupant detected."
 		return 0
-	else if(dna && dna!=mmi_as_oc.brainmob.dna.unique_enzymes)
+	else if(dna && (!mmi_as_oc.brainmob || !mmi_as_oc.brainmob.dna || dna!=mmi_as_oc.brainmob.dna.unique_enzymes))
 		user << "Stop it!"
 		return 0
 	//Added a message here since people assume their first click failed or something./N

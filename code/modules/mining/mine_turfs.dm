@@ -689,6 +689,7 @@
 	icon_plating = "asteroid"
 	baseturf = /turf/simulated/floor/plating/asteroid
 	var/dug = 0       //0 = has not yet been dug, 1 = has already been dug
+	var/archaeo_overlay = ""
 	ignoredirt = 1
 
 /turf/simulated/floor/plating/asteroid/airless

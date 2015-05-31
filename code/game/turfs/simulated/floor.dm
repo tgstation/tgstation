@@ -35,6 +35,9 @@ var/list/icons_to_ignore_at_floor_init = list("damaged1","damaged2","damaged3","
 	var/dirt = 0
 	var/ignoredirt = 0
 
+/turf/simulated/floor/proc/try_destroy()
+	return
+
 /turf/simulated/floor/New()
 	..()
 	if(icon_state in icons_to_ignore_at_floor_init) //so damaged/burned tiles or plating icons aren't saved as the default

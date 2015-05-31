@@ -389,10 +389,14 @@ var/datum/subsystem/ticker/ticker
 		if (aiPlayer.connected_robots.len)
 			var/robolist = "<b>[aiPlayer.real_name]'s minions were:</b> "
 			for(var/mob/living/silicon/robot/robo in aiPlayer.connected_robots)
+				if(!robo || !robo.mind)
+					continue
 				robolist += "[robo.name][robo.stat?" (Deactivated) (Played by: [robo.mind.key]), ":" (Played by: [robo.mind.key]), "]"
 			world << "[robolist]"
 	for (var/mob/living/silicon/robot/robo in mob_list)
 		if (!robo.connected_ai && robo.mind)
+			if(!robo || !robo.mind)
+				continue
 			if (robo.stat != 2)
 				world << "<b>[robo.name] (Played by: [robo.mind.key]) survived as an AI-less [ismommi(robo)?"MoMMI":"borg"]! Its laws were:</b>"
 			else
