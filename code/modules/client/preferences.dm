@@ -854,7 +854,7 @@ var/global/list/special_roles = list( //keep synced with the defines BE_* in set
 						if(toggles & SOUND_LOBBY)
 							user << sound(ticker.login_music, repeat = 0, wait = 0, volume = 85, channel = 1)
 						else
-							user << sound(null, repeat = 0, wait = 0, volume = 85, channel = 1)
+							user.stopLobbySound()
 
 					if("ghost_ears")
 						chat_toggles ^= CHAT_GHOSTEARS

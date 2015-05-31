@@ -77,7 +77,7 @@
 
 /obj/item/weapon/extinguisher/afterattack(atom/target, mob/user , flag)
 	//TODO; Add support for reagents in water.
-	if(target.loc == user)//No more spraying yourself when putting your extinguisher away
+	if(target.loc == user || !check_allowed_items(target)) //No more spraying yourself when putting your extinguisher away
 		return
 	var/Refill = AttemptRefill(target, user)
 	if(Refill)

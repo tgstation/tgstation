@@ -169,6 +169,10 @@
 	..()
 	SSshuttle.mobile += src
 
+	var/area/A = get_area(src)
+	if(istype(A, /area/shuttle))
+		areaInstance = A
+
 	if(!id)
 		id = "[SSshuttle.mobile.len]"
 	if(name == "shuttle")

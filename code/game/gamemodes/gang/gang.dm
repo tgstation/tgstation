@@ -320,7 +320,7 @@
 		if(gang_mind.current)
 			if(gang_mind.current.stat == DEAD || isbrain(gang_mind.current))
 				text += "died"
-			else if(gang_mind.current.z != ZLEVEL_STATION)
+			else if(gang_mind.current.z > ZLEVEL_STATION)
 				text += "fled the station"
 			else
 				text += "survived"

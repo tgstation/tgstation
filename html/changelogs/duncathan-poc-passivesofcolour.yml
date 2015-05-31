@@ -1,0 +1,6 @@
+author: duncathan
+
+delete-after: True
+
+changes: 
+  - bugfix: "Fixes passive gates not auto-coloring."

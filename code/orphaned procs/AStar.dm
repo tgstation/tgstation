@@ -140,11 +140,11 @@ length to avoid portals or something i guess?? Not that they're counted right no
 //////////////////////
 
 //the weighting function, used in the A* algorithm
-proc/PathWeightCompare(PathNode/a, PathNode/b)
+/proc/PathWeightCompare(PathNode/a, PathNode/b)
 	return a.f - b.f
 
 //search if there's a PathNode that points to turf T in the Priority Queue
-proc/SeekTurf(var/PriorityQueue/Queue, var/turf/T)
+/proc/SeekTurf(var/PriorityQueue/Queue, var/turf/T)
 	var/i = 1
 	var/PathNode/PN
 	while(i < Queue.L.len + 1)
@@ -154,8 +154,15 @@ proc/SeekTurf(var/PriorityQueue/Queue, var/turf/T)
 		i++
 	return 0
 
+//wrapper that returns an empty list if A* failed to find a path
+/proc/get_path_to(start, end, atom, dist, maxnodes, maxnodedepth = 30, mintargetdist, minnodedist, id=null, turf/exclude=null)
+	var/list/path = AStar(start, end, atom, dist, maxnodes, maxnodedepth, mintargetdist, minnodedist,id, exclude)
+	if(!path)
+		path = list()
+	return path
+
 //the actual algorithm
-proc/AStar(start,end,adjacent,dist,maxnodes,maxnodedepth = 30,mintargetdist,minnodedist,id=null, var/turf/exclude=null)
+proc/AStar(start, end, atom, dist, maxnodes, maxnodedepth = 30, mintargetdist, minnodedist, id=null, var/turf/exclude=null)
 	var/PriorityQueue/open = new /PriorityQueue(/proc/PathWeightCompare) //the open list, ordered using the PathWeightCompare proc, from lower f to higher
 	var/list/closed = new() //the closed list
 	var/list/path = null //the returned path, if any
@@ -202,8 +209,8 @@ proc/AStar(start,end,adjacent,dist,maxnodes,maxnodedepth = 30,mintargetdist,minn
 		*/
 
 		//get adjacents turfs using the adjacent proc, checking for access with id
-		var/list/L = call(cur.source,adjacent)(id,closed)
-
+		//var/list/L = call(cur.source,adjacent)(id,closed)
+		var/list/L = cur.source.reachableAdjacentTurfs(atom, id)
 		for(var/turf/T in L)
 			if(T == exclude)
 				continue
@@ -237,9 +244,55 @@ proc/AStar(start,end,adjacent,dist,maxnodes,maxnodedepth = 30,mintargetdist,minn
 
 	return path
 
-//wrapper that returns an empty list if A* failed to find a path
-/proc/get_path_to(var/start,var/end,var/adjacent,var/dist,var/maxnodes,var/maxnodedepth = 30,var/mintargetdist,var/minnodedist,id=null, var/turf/exclude=null)
-	var/list/path = AStar(start, end, adjacent, dist, maxnodes, maxnodedepth, mintargetdist, minnodedist,id, exclude)
-	if(!path)
-		path = list()
-	return path
+/turf/proc/reachableAdjacentTurfs(atom, ID)
+	var/list/L = new()
+	var/turf/simulated/T
+	if(ID)
+		for(var/dir in cardinal)
+			T = get_step(src,dir)
+			if(!istype(T) || T.density)
+				continue
+			if(!LinkBlockedWithAccess(T, ID))
+				L.Add(T)
+	else
+		for(var/dir in cardinal)
+			if(dir & atmos_adjacent_turfs)
+				T = get_step(src,dir)
+				if(!istype(T))
+					continue
+				if(!LinkBlocked(atom, T))
+					L.Add(T)
+	return L
+
+/turf/proc/LinkBlocked(atom, turf/T)
+	if(istype(atom, /atom/movable))
+		for(var/obj/O in T)
+			if(!O.CanPass(atom, T, 1))
+				return 1
+		return 0
+	return 0
+
+/turf/proc/LinkBlockedWithAccess(turf/T, obj/item/weapon/card/id/ID)
+	var/adir = get_dir(src, T)
+	var/rdir = get_dir(T, src)
+	if(DirBlockedWithAccess(src, adir, ID))
+		return 1
+	if(DirBlockedWithAccess(T, rdir, ID))
+		return 1
+	for(var/obj/O in T)
+		if(O.density && !istype(O, /obj/machinery/door) && !(O.flags & ON_BORDER))
+			return 1
+	return 0
+
+/proc/DirBlockedWithAccess(turf/T, dir, ID)
+	for(var/obj/structure/window/D in T)
+		if(!D.density)
+			continue
+		if(D.dir == SOUTHWEST)
+			return 1
+		if(D.dir == dir)
+			return 1
+	for(var/obj/machinery/door/D in T)
+		if(!D.CanAStarPass(ID, dir))
+			return 1
+	return 0

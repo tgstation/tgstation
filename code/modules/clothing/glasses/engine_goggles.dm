@@ -67,7 +67,7 @@
 		if(!t_ray_on() || !(O in range(1, loc)))
 			invis_objects -= O
 			var/turf/T = O.loc
-			if(T.intact)
+			if(T && T.intact)
 				O.invisibility = 101
 
 /obj/item/clothing/glasses/meson/engine/proc/t_ray_on()

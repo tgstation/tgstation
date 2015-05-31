@@ -164,7 +164,6 @@
 	opacity = 0
 	doortype = /obj/structure/door_assembly/door_assembly_research/glass
 	glass = 1
-	heat_proof = 1
 
 /obj/machinery/door/airlock/glass_mining
 	name = "maintenance hatch"
@@ -946,7 +945,8 @@ About the new airlock wires panel:
 			if(do_after(user,40))
 				if(src.loc)
 					if(src.doortype)
-						new src.doortype(src.loc)
+						var/obj/structure/door_assembly/A = new src.doortype(src.loc)
+						A.heat_proof_finished = src.heat_proof //tracks whether there's rglass in
 
 					if(emagged)
 						user << "<span class='warning'>You discard the damaged electronics.</span>"
@@ -1131,35 +1131,27 @@ About the new airlock wires panel:
 			if("Default")
 				icon = 'icons/obj/doors/Doorglass.dmi'
 				doortype = /obj/structure/door_assembly/door_assembly_glass
-				heat_proof = 0
 			if("Engineering")
 				icon = 'icons/obj/doors/Doorengglass.dmi'
 				doortype = /obj/structure/door_assembly/door_assembly_eng/glass
-				heat_proof = 0
 			if("Atmospherics")
 				icon = 'icons/obj/doors/Dooratmoglass.dmi'
 				doortype = /obj/structure/door_assembly/door_assembly_atmo/glass
-				heat_proof = 0
 			if("Security")
 				icon = 'icons/obj/doors/Doorsecglass.dmi'
 				doortype = /obj/structure/door_assembly/door_assembly_sec/glass
-				heat_proof = 0
 			if("Command")
 				icon = 'icons/obj/doors/Doorcomglass.dmi'
 				doortype = /obj/structure/door_assembly/door_assembly_com/glass
-				heat_proof = 0
 			if("Medical")
 				icon = 'icons/obj/doors/Doormedglass.dmi'
 				doortype = /obj/structure/door_assembly/door_assembly_med/glass
-				heat_proof = 0
 			if("Research")
 				icon = 'icons/obj/doors/Doorresearchglass.dmi'
 				doortype = /obj/structure/door_assembly/door_assembly_research/glass
-				heat_proof = 1
 			if("Mining")
 				icon = 'icons/obj/doors/Doorminingglass.dmi'
 				doortype = /obj/structure/door_assembly/door_assembly_min/glass
-				heat_proof = 0
 	else
 		//These airlocks have a regular version.
 		var optionlist = list("Default", "Engineering", "Atmospherics", "Security", "Command", "Medical", "Research", "Mining", "Maintenance", "External", "High Security")
@@ -1169,47 +1161,36 @@ About the new airlock wires panel:
 			if("Default")
 				icon = 'icons/obj/doors/Doorint.dmi'
 				doortype = /obj/structure/door_assembly/door_assembly_0
-				heat_proof = 0
 			if("Engineering")
 				icon = 'icons/obj/doors/Dooreng.dmi'
 				doortype = /obj/structure/door_assembly/door_assembly_eng
-				heat_proof = 0
 			if("Atmospherics")
 				icon = 'icons/obj/doors/Dooratmo.dmi'
 				doortype = /obj/structure/door_assembly/door_assembly_atmo
-				heat_proof = 0
 			if("Security")
 				icon = 'icons/obj/doors/Doorsec.dmi'
 				doortype = /obj/structure/door_assembly/door_assembly_sec
-				heat_proof = 0
 			if("Command")
 				icon = 'icons/obj/doors/Doorcom.dmi'
 				doortype = /obj/structure/door_assembly/door_assembly_com
-				heat_proof = 0
 			if("Medical")
 				icon = 'icons/obj/doors/Doormed.dmi'
 				doortype = /obj/structure/door_assembly/door_assembly_med
-				heat_proof = 0
 			if("Research")
 				icon = 'icons/obj/doors/Doorresearch.dmi'
 				doortype = /obj/structure/door_assembly/door_assembly_research
-				heat_proof = 0
 			if("Mining")
 				icon = 'icons/obj/doors/Doormining.dmi'
 				doortype = /obj/structure/door_assembly/door_assembly_min
-				heat_proof = 0
 			if("Maintenance")
 				icon = 'icons/obj/doors/Doormaint.dmi'
 				doortype = /obj/structure/door_assembly/door_assembly_mai
-				heat_proof = 0
 			if("External")
 				icon = 'icons/obj/doors/Doorext.dmi'
 				doortype = /obj/structure/door_assembly/door_assembly_ext
-				heat_proof = 0
 			if("High Security")
 				icon = 'icons/obj/doors/hightechsecurity.dmi'
 				doortype = /obj/structure/door_assembly/door_assembly_highsecurity
-				heat_proof = 0
 	update_icon()
 
 /obj/machinery/door/airlock/CanAStarPass(var/obj/item/weapon/card/id/ID)

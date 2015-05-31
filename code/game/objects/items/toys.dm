@@ -399,7 +399,7 @@
 	update_window(usr)
 
 /obj/item/toy/crayon/afterattack(atom/target, mob/user as mob, proximity)
-	if(!proximity) return
+	if(!proximity || !check_allowed_items(target)) return
 	if(!uses)
 		user << "<span class='warning'>There is no more of [src.name] left!</span>"
 		if(!instant)
@@ -845,8 +845,12 @@
 		else if(istype(over_object, /obj/screen))
 			switch(over_object.name)
 				if("l_hand")
+					if(!remove_item_from_storage(M))
+						M.unEquip(src)
 					M.put_in_l_hand(src)
 				else if("r_hand")
+					if(!remove_item_from_storage(M))
+						M.unEquip(src)
 					M.put_in_r_hand(src)
 				usr << "<span class='notice'>You pick up the deck.</span>"
 	else
