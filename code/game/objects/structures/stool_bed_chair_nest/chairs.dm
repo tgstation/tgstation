@@ -173,6 +173,28 @@
 /obj/structure/stool/bed/chair/comfy
 	name = "comfy chair"
 	desc = "It looks comfy."
+	icon_state = "comfychair_black"
+
+	var/image/armrest
+
+/obj/structure/stool/bed/chair/comfy/New()
+	..()
+	armrest = image("icons/obj/objects.dmi", "[icon_state]_armrest", MOB_LAYER + 0.1)
+
+/obj/structure/stool/bed/chair/comfy/buckle_mob(mob/M as mob, mob/user as mob)
+	..()
+	update_icon()
+
+/obj/structure/stool/bed/chair/comfy/unbuckle()
+	..()
+	update_icon()
+
+/obj/structure/stool/bed/chair/comfy/update_icon()
+	..()
+	if(buckled_mob)
+		overlays += armrest
+	else
+		overlays -= armrest
 
 /obj/structure/stool/bed/chair/comfy/brown
 	icon_state = "comfychair_brown"
