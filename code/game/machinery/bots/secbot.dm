@@ -262,6 +262,8 @@ Auto Patrol: []"},
 						target.visible_message("<span class='danger'>[src] is trying to put zipties on [target]!</span>",\
 											"<span class='userdanger'>[src] is trying to put zipties on [target]!</span>")
 						spawn(60)
+							if(!target)
+								return
 							if( !Adjacent(target) || !isturf(target.loc) ) //if he's in a closet or not adjacent, we cancel cuffing.
 								return
 							if(!target.handcuffed)

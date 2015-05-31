@@ -130,6 +130,8 @@ atom/proc/add_fibers(mob/living/carbon/human/M)
 /atom/proc/transfer_fingerprints_to(var/atom/A)
 
 	// Make sure everything are lists.
+	if(!A)
+		return
 	if(!islist(A.fingerprints))
 		A.fingerprints = list()
 	if(!islist(A.fingerprintshidden))
