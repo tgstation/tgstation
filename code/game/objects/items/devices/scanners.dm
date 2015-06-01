@@ -123,6 +123,11 @@ MASS SPECTROMETER
 		mob_status = "<font color='red'>Deceased</font>"
 		oxy_loss = max(rand(1, 40), oxy_loss, (300 - (tox_loss + fire_loss + brute_loss))) // Random oxygen loss
 
+	if(ishuman(M))
+		var/mob/living/carbon/human/H = M
+		if(H.heart_attack)
+			user.show_message("<span class='danger'>Subject suffering from heart attack: Apply defibrillator immediately!</span>", 1)
+
 	user.show_message(text("<span class='notice'>Analyzing Results for []:\n\t Overall Status: []</span>", M, mob_status), 1)
 	if(ishuman(M))
 		var/mob/living/carbon/human/H = M
@@ -166,7 +171,7 @@ MASS SPECTROMETER
 	if (M.reagents && M.reagents.get_reagent_amount("epinephrine"))
 		user.show_message("<span class='notice'>Bloodstream Analysis located [M.reagents:get_reagent_amount("epinephrine")] units of rejuvenation chemicals.</span>", 1)
 	if (M.has_brain_worms())
-		user.show_message("<span class='warning'>Subject suffering from aberrant brain activity. Recommend further scanning.</span>")
+		user.show_message("<span class='warning'>Subject suffering from aberrant brain activity. Recommend further scanning.</span>", 1)
 	if (M.getBrainLoss() >= 100 || !M.getorgan(/obj/item/organ/brain))
 		user.show_message("<span class='warning'>Subject brain function is non-existant.</span>", 1)
 	else if (M.getBrainLoss() >= 60)

@@ -34,6 +34,7 @@ var/list/image/ghost_darkness_images = list() //this is a list of images for thi
 	ghostimage = image(src.icon,src,src.icon_state)
 	ghost_darkness_images |= ghostimage
 	updateallghostimages()
+	overlays.len = 0
 	var/turf/T
 	if(ismob(body))
 		T = get_turf(body)				//Where is the body located?
