@@ -1,5 +1,5 @@
 /datum/surgery
-	var/name = "surgery"
+	var/name = null
 	var/status = 1
 	var/list/steps = list()										//Steps in a surgery
 	var/step_in_progress = 0									//Actively performing a Surgery
