@@ -7848,7 +7848,7 @@
 "cUV" = (/obj/item/device/radio/beacon,/turf/simulated/floor/engine,/area/toxins/xenobiology)
 "cUW" = (/obj/structure/table,/obj/machinery/cell_charger{pixel_y = 5},/obj/item/stack/cable_coil,/obj/item/device/multitool,/obj/item/weapon/stock_parts/cell/high{charge = 100; maxcharge = 15000},/turf/simulated/floor/engine,/area/toxins/xenobiology)
 "cUX" = (/obj/effect/decal/remains/xeno,/turf/simulated/floor/engine,/area/toxins/xenobiology)
-"cUY" = (/obj/machinery/light{dir = 2},/obj/machinery/camera{c_tag = "Xenobiology Lab - Test Chamber"; dir = 1; network = list("SS13","RD")},/turf/simulated/floor/engine,/area/toxins/xenobiology)
+"cUY" = (/obj/machinery/light{dir = 2},/obj/machinery/camera{c_tag = "Xenobiology Lab - Test Chamber"; dir = 1; network = list("SS13","RD","Xeno")},/turf/simulated/floor/engine,/area/toxins/xenobiology)
 "cUZ" = (/obj/item/device/radio/intercom{pixel_y = -25},/turf/simulated/floor/engine,/area/toxins/xenobiology)
 "cVa" = (/obj/structure/table,/obj/item/device/assembly/igniter{pixel_x = -5; pixel_y = 3},/obj/item/device/assembly/igniter{pixel_x = 5; pixel_y = -4},/obj/item/device/assembly/igniter{pixel_x = 2; pixel_y = 6},/obj/item/device/assembly/igniter{pixel_x = 2; pixel_y = -1},/turf/simulated/floor/engine,/area/toxins/xenobiology)
 "cVb" = (/obj/structure/disposalpipe/segment{dir = 1; icon_state = "pipe-c"},/turf/simulated/floor/plating,/area/toxins/xenobiology)
