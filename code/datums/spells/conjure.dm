@@ -16,13 +16,10 @@
 	var/cast_sound = 'sound/items/welder.ogg'
 
 /obj/effect/proc_holder/spell/aoe_turf/conjure/cast(list/targets)
-
+	playsound(get_turf(usr), cast_sound, 50,1)
 	for(var/turf/T in targets)
 		if(T.density && !summon_ignore_density)
 			targets -= T
-
-	if(cast_sound)
-		playsound(src.loc, cast_sound, 50, 1)
 
 	for(var/i=0,i<summon_amt,i++)
 		if(!targets.len)
