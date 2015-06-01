@@ -22,7 +22,8 @@
 /obj/machinery/portable_atmospherics/process()
 	if(!connected_port) //only react when pipe_network will ont it do it for you
 		//Allow for reactions
-		air_contents.react()
+		if(air_contents)
+			air_contents.react()
 	else
 		update_icon()
 

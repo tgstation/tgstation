@@ -35,6 +35,7 @@
 	var/base_icon_state = "darkmatter"
 
 	var/damage = 0
+	var/exploding = 0
 	var/damage_archived = 0
 	var/warning_point = 100
 	var/audio_warning_point=500
@@ -140,6 +141,7 @@
 	. = ..()
 
 /obj/machinery/power/supermatter/proc/explode()
+		exploding = 1
 		explosion(get_turf(src), explosion_power, explosion_power * 2, explosion_power * 3, explosion_power * 4, 1)
 		new /turf/unsimulated/wall/supermatter(get_turf(src))
 		SetUniversalState(/datum/universal_state/supermatter_cascade)
@@ -147,6 +149,7 @@
 
 /obj/machinery/power/supermatter/shard/explode()
 		explosion(get_turf(src), explosion_power, explosion_power * 2, explosion_power * 3, explosion_power * 4, 1)
+		exploding = 1
 		qdel(src)
 		return
 
@@ -417,8 +420,9 @@
 			L.show_message("<span class='italics'>You hear an uneartly ringing and notice your skin is covered in fresh radiation burns.</span>", 2)
 
 /obj/machinery/power/supermatter/ex_act(severity) //Do not explode the supermatters
-	switch(severity)
-		if(3.0)
-			return //Should be improved
-		else
-			return explode()
+	if(!exploding)
+		switch(severity)
+			if(3.0)
+				return //Should be improved
+			else
+				return explode()

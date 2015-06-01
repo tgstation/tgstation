@@ -169,7 +169,8 @@ update_flag
 				air_update_turf()
 			src.update_icon()
 
-
+	if(!air_contents)
+		return
 	if(air_contents.return_pressure() < 1)
 		can_label = 1
 	else
