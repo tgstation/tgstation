@@ -493,13 +493,12 @@ datum/reagent/toxin/initropidril/on_mob_life(var/mob/living/M as mob)
 				M.adjustOxyLoss(rand(5,25))
 			if(3)
 				var/mob/living/carbon/human/H = M
-				//if(!H.heart_attack)
-				H.visible_message("<span class = 'userdanger'>[H] clutches at their chest as if their heart stopped!</span>")
-				M.adjustBruteLoss(80) //We still don't have heart attacks
-			//		H.heart_attack = 1 // rip in pepperoni
-			//	else
-				H.losebreath += 10
-				H.adjustOxyLoss(rand(5,25))
+				if(!H.heart_attack)
+					H.visible_message("<span class = 'userdanger'>[H] clutches at their chest as if their heart stopped!</span>")
+					H.heart_attack = 1 // rip in pepperoni
+				else
+					H.losebreath += 10
+					H.adjustOxyLoss(rand(5,25))
 	..()
 
 datum/reagent/toxin/pancuronium

@@ -53,6 +53,7 @@
 
 	if(client)
 		handle_regular_hud_updates()
+	handle_heart()
 
 	return .
 
@@ -623,3 +624,6 @@
 					healths.icon_state = "health6"
 		else
 			healths.icon_state = "health7"
+
+/mob/living/carbon/proc/handle_heart()
+	return

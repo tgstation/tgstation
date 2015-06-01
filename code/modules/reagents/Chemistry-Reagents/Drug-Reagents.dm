@@ -350,9 +350,9 @@ datum/reagent/drug/hotline/on_mob_life(var/mob/living/M as mob)
 	return
 
 datum/reagent/drug/hotline/overdose_process(var/mob/living/M as mob)
-	M.adjustBrainLoss(rand(1,20)*REM)
-	M.adjustToxLoss(rand(1,20)*REM)
-	M.adjustBruteLoss(rand(1,20)*REM)
+	M.adjustBrainLoss(5*REM)
+	M.adjustToxLoss(5*REM)
+	M.adjustBruteLoss(5*REM)
 	M.druggy = max(M.druggy, 30)
 	M.hallucination += 30
 	if(prob(5))
@@ -383,7 +383,9 @@ datum/reagent/drug/hotline/addiction_act_stage4(var/mob/living/M as mob)
 	M.hallucination += 30
 	M.druggy = max(M.druggy, 30)
 	if(prob(1))
-		M.visible_message("<span class = 'userdanger'>[M] clutches at their chest! It looks like they're having a heart attack!</span>")
-		M.adjustBruteLoss(80) // don't do drugs kids
+		if(ishuman(M))
+			var/mob/living/carbon/human/H = M
+			H.visible_message("<span class = 'userdanger'>[M] clutches at their chest! It looks like they're having a heart attack!</span>")
+			H.heart_attack = 1 // don't do drugs kids
 	..()
 	return
