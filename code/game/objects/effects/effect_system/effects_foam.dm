@@ -26,6 +26,9 @@
 	name = "iron foam"
 	metal = 2
 
+/obj/effect/effect/foam/Destroy()
+	SSobj.processing.Remove(src)
+	return ..()
 
 /obj/effect/effect/foam/New(loc)
 	..(loc)
@@ -46,10 +49,6 @@
 	flick("[icon_state]-disolve", src)
 	spawn(5)
 		qdel(src)
-
-/obj/effect/effect/foam/Destroy()
-	SSobj.processing.Remove(src)
-	return ..()
 
 
 /obj/effect/effect/foam/process()
@@ -88,7 +87,7 @@
 		if(foundfoam)
 			continue
 
-		var/obj/effect/effect/foam/F = PoolOrNew(/obj/effect/effect/foam, T)
+		var/obj/effect/effect/foam/F = new type(T)
 		F.amount = amount
 		reagents.copy_to(F, (reagents.total_volume))
 		F.color = color
@@ -106,7 +105,7 @@
 ///////////////////////////////////////////////
 //FOAM EFFECT DATUM
 /datum/effect/effect/system/foam_spread
-	var/amount = 5		// the size of the foam spread.
+	var/amount = 10		// the size of the foam spread.
 	var/obj/chemholder
 	var/obj/effect/effect/foam/foamtype = /obj/effect/effect/foam
 	var/metal = 0
@@ -128,14 +127,13 @@
 	chemholder = null
 	return ..()
 
-
 /datum/effect/effect/system/foam_spread/set_up(amt=5, loca, var/datum/reagents/carry = null)
 	if(istype(loca, /turf/))
 		location = loca
 	else
 		location = get_turf(loca)
 
-	amount = round(sqrt(amt / 3), 1)
+	amount = round(sqrt(amt / 2), 1)
 	carry.copy_to(chemholder, carry.total_volume)
 
 
@@ -144,7 +142,7 @@
 	metal = metaltype
 
 /datum/effect/effect/system/foam_spread/start()
-	var/obj/effect/effect/foam/foundfoam = locate()
+	var/obj/effect/effect/foam/foundfoam = locate() in location
 	if(foundfoam)//If there was already foam where we start, we add our foaminess to it.
 		foundfoam.amount += amount
 	else
@@ -154,6 +152,7 @@
 		F.color = foamcolor
 		F.amount = amount
 		F.metal = metal
+
 
 
 //////////////////////////////////////////////////////////
@@ -229,6 +228,11 @@
 		qdel(src)
 	return 1
 
+/obj/structure/foamedmetal/attack_alien(mob/living/carbon/alien/user)
+	user.visible_message("<span class='danger'>[user] smashes through the foamed metal.</span>", \
+					"<span class='danger'>You smash through the metal foam wall.</span>")
+	qdel(src)
+	return 1
 
 /obj/structure/foamedmetal/attack_hand(var/mob/user)
 	user << "<span class='notice'>You hit the metal foam but bounce off it.</span>"
