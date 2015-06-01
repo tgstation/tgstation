@@ -223,71 +223,71 @@ var/global/list/datum/stack_recipe/clown_recipes = list ( \
 	..()
 
 /*
- * Adamantine
+ * Mythril
  */
 
-/obj/item/stack/sheet/mineral/adamantine
-	name = "adamantine"
-	desc = "Adamantine. It's an extremely tough metal when shaped, but otherwise soft and malleable even at room temperature."
-	icon_state = "sheet-adamantine"
-	singular_name = "adamantine bar"
+/obj/item/stack/sheet/mineral/mythril
+	name = "mythril bars"
+	desc = "Mythril. It's an extremely tough metal when shaped, but otherwise soft and malleable even at room temperature."
+	icon_state = "sheet-mythril"
+	singular_name = "mythril bar"
 	force = 5
 	throwforce = 5
 	w_class = 3.0
 	throw_speed = 1
 	throw_range = 3
 	origin_tech = "materials=4"
-	sheettype = "adamantine"
+	sheettype = "mythril"
 
-var/global/list/datum/stack_recipe/adamantine_recipes = list(\
-	new/datum/stack_recipe("adamantine wrench", /obj/item/weapon/wrench/adamantine, 1, 0, 1), \
-	new/datum/stack_recipe("adamantine crowbar", /obj/item/weapon/crowbar/adamantine, 1, 0, 1), \
-	new/datum/stack_recipe("adamantine screwdriver", /obj/item/weapon/screwdriver/adamantine, 1, 0, 1), \
-	new/datum/stack_recipe("adamantine wirecutters", /obj/item/weapon/wirecutters/adamantine, 1, 0, 1), \
-	new/datum/stack_recipe("adamantine hardsuit plates", /obj/item/asteroid/goliath_hide/adamantinePlates, 10, 0, 1), \
+var/global/list/datum/stack_recipe/mythril_recipes = list(\
+	new/datum/stack_recipe("mythril wrench", /obj/item/weapon/wrench/mythril, 1, 0, 1), \
+	new/datum/stack_recipe("mythril crowbar", /obj/item/weapon/crowbar/mythril, 1, 0, 1), \
+	new/datum/stack_recipe("mythril screwdriver", /obj/item/weapon/screwdriver/mythril, 1, 0, 1), \
+	new/datum/stack_recipe("mythril wirecutters", /obj/item/weapon/wirecutters/mythril, 1, 0, 1), \
+	new/datum/stack_recipe("mythril hardsuit plates", /obj/item/asteroid/goliath_hide/mythrilPlates, 10, 0, 1), \
 	)
 
-/obj/item/stack/sheet/mineral/adamantine/New(var/loc, var/amount=null)
-	recipes = adamantine_recipes
+/obj/item/stack/sheet/mineral/mythril/New(var/loc, var/amount=null)
+	recipes = mythril_recipes
 	pixel_x = rand(0,4)-4
 	pixel_y = rand(0,4)-4
 	..()
 
-//Tools creatable by adamantine
-/obj/item/weapon/wrench/adamantine
-	name = "adamantine wrench"
-	desc = "A lump of shapen adamantine vaguely resembling a wrench."
+//Tools creatable by mythril
+/obj/item/weapon/wrench/mythril
+	name = "mythril wrench"
+	desc = "A lump of shapen mythril vaguely resembling a wrench."
 	force = 7
 	icon = 'icons/obj/mining.dmi'
-	icon_state = "adamantineWrench"
+	icon_state = "mythrilWrench"
 	item_state = "wrench"
 
-/obj/item/weapon/crowbar/adamantine
-	name = "adamantine crowbar"
-	desc = "A hook-shaped rod of shapen adamantine that looks like a cane."
+/obj/item/weapon/crowbar/mythril
+	name = "mythril crowbar"
+	desc = "A hook-shaped rod of shapen mythril that looks like a cane."
 	force = 7
 	icon = 'icons/obj/mining.dmi'
-	icon_state = "adamantineCrowbar"
+	icon_state = "mythrilCrowbar"
 
-/obj/item/weapon/screwdriver/adamantine
-	name = "adamantine screwdriver"
-	desc = "A chunk of shapen adamantine that looks like a very misshapen screwdriver."
+/obj/item/weapon/screwdriver/mythril
+	name = "mythril screwdriver"
+	desc = "A chunk of shapen mythril that looks like a very misshapen screwdriver."
 	force = 7
 	icon = 'icons/obj/mining.dmi'
-	icon_state = "adamantineScrewdriver"
+	icon_state = "mythrilScrewdriver"
 
-/obj/item/weapon/screwdriver/adamantine/New()
+/obj/item/weapon/screwdriver/mythril/New()
 	..()
 	icon_state = "[initial(icon_state)]"
 
-/obj/item/weapon/wirecutters/adamantine
-	name = "adamantine wirecutters"
-	desc = "A pair of wirecutters made of shapen adamantine. Resemblance is only cursory."
+/obj/item/weapon/wirecutters/mythril
+	name = "mythril wirecutters"
+	desc = "A pair of wirecutters made of shapen mythril. Resemblance is only cursory."
 	force = 7
 	icon = 'icons/obj/mining.dmi'
-	icon_state = "adamantineWirecutters"
+	icon_state = "mythrilWirecutters"
 
-/obj/item/weapon/wirecutters/adamantine/New()
+/obj/item/weapon/wirecutters/mythril/New()
 	..()
 	icon_state = "[initial(icon_state)]"
 

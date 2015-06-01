@@ -80,25 +80,25 @@
 	hitsound = 'sound/weapons/drill.ogg'
 	origin_tech = "materials=2;powerstorage=3;engineering=2"
 	desc = "An electric mining drill for the especially scrawny."
-	var/adamantinePlated = 0
+	var/mythrilPlated = 0
 
 /obj/item/weapon/pickaxe/drill/attackby(obj/item/W, mob/user)
-	if(istype(W, /obj/item/stack/sheet/mineral/adamantine))
-		if(istype(src, /obj/item/weapon/pickaxe/drill/jackhammer) || adamantinePlated)
+	if(istype(W, /obj/item/stack/sheet/mineral/mythril))
+		if(istype(src, /obj/item/weapon/pickaxe/drill/jackhammer) || mythrilPlated)
 			return
-		user << "<span class='notice'>\icon[src]\icon[W]You begin plating [src] with some adamantine...</span>"
+		user << "<span class='notice'>\icon[src]\icon[W]You begin plating [src] with some mythril...</span>"
 		if(!do_after(user, 50))
 			return
-		if(adamantinePlated)
+		if(mythrilPlated)
 			return
-		adamantinePlated = 1
-		user << "<span class='notice'>\icon[src]\icon[W]You plate [src]'s head with adamantine!</span>"
-		name = "adamantine-plated [initial(name)]"
-		desc = "[initial(desc)] It's been plated with some adamantine."
-		icon_state = "adamantinedrill"
+		mythrilPlated = 1
+		user << "<span class='notice'>\icon[src]\icon[W]You plate [src]'s head with mythril!</span>"
+		name = "mythril-plated [initial(name)]"
+		desc = "[initial(desc)] It's been plated with some mythril."
+		icon_state = "mythrildrill"
 		digspeed -= 10
 		digspeed = Clamp(digspeed, 0, INFINITY)
-		var/obj/item/stack/sheet/mineral/adamantine/A = W
+		var/obj/item/stack/sheet/mineral/mythril/A = W
 		if(A.amount <= 1)
 			user.drop_item()
 			qdel(A)

@@ -30,6 +30,7 @@
 	var/amt_plasma = 0
 	var/amt_uranium = 0
 	var/amt_clown = 0
+	var/amt_mythril = 0
 
 	for (var/obj/item/weapon/ore/C in contents)
 		if (istype(C,/obj/item/weapon/ore/diamond))
@@ -48,6 +49,8 @@
 			amt_uranium++;
 		if (istype(C,/obj/item/weapon/ore/bananium))
 			amt_clown++;
+		if (istype(C,/obj/item/weapon/ore/mythril))
+			amt_mythril++;
 
 	var/dat = text("<b>The ore box contains...</b><br>")
 	if (amt_gold)
@@ -66,6 +69,8 @@
 		dat += text("Uranium ore: [amt_uranium]<br>")
 	if (amt_clown)
 		dat += text("Bananium ore: [amt_clown]<br>")
+	if(amt_mythril)
+		dat += text("Mythril ore: [amt_mythril]<br>")
 
 	dat += text("<br><br><A href='?src=\ref[src];removeall=1'>Empty box</A>")
 	user << browse("[dat]", "window=orebox")
@@ -73,7 +78,7 @@
 
 /obj/structure/ore_box/attackby(obj/item/I as obj, mob/user as mob, params)
 	if(istype(I, /obj/item/asteroid/goliath_hide) && !blastProof)
-		if(istype(I, /obj/item/asteroid/goliath_hide/adamantinePlates))
+		if(istype(I, /obj/item/asteroid/goliath_hide/mythrilPlates))
 			user << "<span class='warning'>The plates are too heavy to fasten to [src]!</span>"
 			return
 		user.visible_message("<span class='notice'>[user] plates [src] with [I].</span>", \

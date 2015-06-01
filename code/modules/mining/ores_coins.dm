@@ -101,12 +101,12 @@
 	points = 30
 	refined_type = /obj/item/stack/sheet/mineral/bananium
 
-/obj/item/weapon/ore/adamantine
-	name = "adamantine ore"
-	icon_state = "Adamantine ore"
+/obj/item/weapon/ore/mythril
+	name = "mythril ore"
+	icon_state = "Mythril ore"
 	origin_tech = "materials=5"
 	points = 25
-	refined_type = /obj/item/stack/sheet/mineral/adamantine
+	refined_type = /obj/item/stack/sheet/mineral/mythril
 
 /obj/item/weapon/ore/slag
 	name = "slag"
@@ -269,11 +269,6 @@
 	cmineral = "bananium"
 	icon_state = "coin_bananium_heads"
 	value = 600 //makes the clown cri
-
-/obj/item/weapon/coin/adamantine
-	cmineral = "adamantine"
-	icon_state = "coin_adamantine_heads"
-	value = 400
 
 /obj/item/weapon/coin/mythril
 	cmineral = "mythril"

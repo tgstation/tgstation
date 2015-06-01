@@ -16,7 +16,7 @@
 	var/stack_list[0] //Key: Type.  Value: Instance of type.
 	var/obj/item/weapon/card/id/inserted_id
 	var/points = 0
-	var/list/ore_values = list(("sand" = 1), ("iron" = 1), ("gold" = 20), ("silver" = 20), ("uranium" = 20), ("adamantine") = 25, ("bananium" = 30), ("diamond" = 40), ("plasma" = 40))
+	var/list/ore_values = list(("sand" = 1), ("iron" = 1), ("gold" = 20), ("silver" = 20), ("uranium" = 20), ("mythril") = 25, ("bananium" = 30), ("diamond" = 40), ("plasma" = 40))
 
 /obj/machinery/mineral/ore_redemption/New()
 	..()

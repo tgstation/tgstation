@@ -468,9 +468,9 @@
 	w_class = 3
 	layer = 4
 
-/obj/item/asteroid/goliath_hide/adamantinePlates
-	name = "adamantine armor plating"
-	desc = "Some sturdy adamantine plating, used to improve the durability of hardsuits."
+/obj/item/asteroid/goliath_hide/mythrilPlates
+	name = "mythril armor plating"
+	desc = "Some sturdy mythril plating, used to improve the durability of hardsuits."
 	icon_state = "armorPlating"
 
 /obj/item/asteroid/goliath_hide/afterattack(atom/target, mob/user, proximity_flag)
@@ -487,7 +487,7 @@
 				user << "<span class='warning'>You can't improve [C] any further!</span>"
 				return
 		if(istype(target, /obj/mecha/working/ripley))
-			if(istype(src, /obj/item/asteroid/goliath_hide/adamantinePlates))
+			if(istype(src, /obj/item/asteroid/goliath_hide/mythrilPlates))
 				user << "<span class='warning'>You can't seem to get the plates to stay attached to [target]...</span>"
 				return
 			var/obj/mecha/D = target
