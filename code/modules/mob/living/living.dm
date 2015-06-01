@@ -478,18 +478,18 @@ Sorry Giacom. Please don't be mad :(
 	return
 
 
-/mob/living/proc/Examine_OOC()
+/mob/verb/Examine_OOC()
 	set name = "Examine Meta-Info (OOC)"
 	set category = "OOC"
 	set src in view()
 
 	if(config.allow_Metadata)
 		if(client)
-			src << "[src]'s Metainfo:<br>[client.prefs.metadata]"
+			usr << "[src]'s Metainfo:<br>[client.prefs.metadata]"
 		else
-			src << "[src] does not have any stored infomation!"
+			usr << "[src] does not have any stored infomation!"
 	else
-		src << "OOC Metadata is not supported by this server!"
+		usr << "OOC Metadata is not supported by this server!"
 
 	return
 
