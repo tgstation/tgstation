@@ -125,7 +125,6 @@ var/global/list/obj/item/device/pda/PDAs = list()
 /obj/item/device/pda/captain
 	default_cartridge = /obj/item/weapon/cartridge/captain
 	icon_state = "pda-captain"
-	detonate = 0
 
 /obj/item/device/pda/cargo
 	default_cartridge = /obj/item/weapon/cartridge/quartermaster
@@ -698,7 +697,7 @@ var/global/list/obj/item/device/pda/PDAs = list()
 					if(!isnull(P))
 						if (!P.toff && cartridge:shock_charges > 0)
 							cartridge:shock_charges--
-
+/*
 							var/difficulty = 0
 
 							if(P.cartridge)
@@ -710,13 +709,9 @@ var/global/list/obj/item/device/pda/PDAs = list()
 								difficulty += P.cartridge.access_manifest * 2
 							else
 								difficulty += 2
-
-							if(prob(difficulty * 12) || (P.hidden_uplink))
+*/
+							if(P.hidden_uplink) //technically this could be used to confirm who is a fellow tator, but it SHOULDN'T matter
 								U.show_message("<span class='danger'>An error flashes on your [src].</span>", 1)
-							else if (prob(difficulty * 3))
-								U.show_message("<span class='danger'>Energy feeds back into your [src]!</span>", 1)
-								U << browse(null, "window=pda")
-								explode()
 							else
 								U.show_message("<span class='notice'>Success!</span>", 1)
 								P.explode()
