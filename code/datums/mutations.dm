@@ -46,10 +46,9 @@
 
 /datum/mutation/human/proc/check_block(mob/living/carbon/human/owner)
 	if(check_block_string(owner.dna.struc_enzymes))
-		if(prob(get_chance))
-			. = on_acquiring(owner)
+		return on_acquiring(owner)
 	else
-		. = on_losing(owner)
+		return on_losing(owner)
 
 /datum/mutation/human/proc/on_acquiring(mob/living/carbon/human/owner)
 	if(!owner || !owner.dna)
@@ -96,7 +95,7 @@
 
 	name = "Hulk"
 	quality = POSITIVE
-	get_chance = 15
+	get_chance = 100
 	lowest_value = 256 * 14
 	text_gain_indication = "<span class='notice'>Your muscles hurt!</span>"
 
@@ -137,7 +136,7 @@
 
 	name = "Telekinesis"
 	quality = POSITIVE
-	get_chance = 20
+	get_chance = 100
 	lowest_value = 256 * 14
 	text_gain_indication = "<span class='notice'>You feel smarter!</span>"
 
@@ -152,7 +151,7 @@
 
 	name = "Cold Resistance"
 	quality = POSITIVE
-	get_chance = 33
+	get_chance = 100
 	lowest_value = 256 * 12
 	text_gain_indication = "<span class='notice'>Your body feels warm!</span>"
 
@@ -169,7 +168,7 @@
 
 	name = "X Ray Vision"
 	quality = POSITIVE
-	get_chance = 20
+	get_chance = 100
 	lowest_value = 256 * 15
 	text_gain_indication = "<span class='notice'>The walls suddenly disappear!</span>"
 
