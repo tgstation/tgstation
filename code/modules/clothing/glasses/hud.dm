@@ -15,10 +15,15 @@
 		var/datum/atom_hud/H = huds[hud_type]
 		H.remove_hud_from(user)
 
-/obj/item/clothing/glasses/hud/emp_act(severity)
-	if(emagged == 0)
-		emagged = 1
-		desc = desc + " The display flickers slightly."
+/obj/item/clothing/glasses/hud/attackby(obj/item/weapon/W as obj, mob/user as mob)
+	..()
+	if(istype(W, /obj/item/weapon/card/emag))
+		if(emagged == 0)
+			emagged = 1
+			user << "<span class='warning'>PZZTTPFFFT</span>"
+			desc = desc + " The display flickers slightly."
+		else
+			user << "<span class='warning'>It is already emagged!</span>"
 
 /obj/item/clothing/glasses/hud/health
 	name = "Health Scanner HUD"
@@ -60,10 +65,15 @@
 	darkness_view = 8
 	invis_view = SEE_INVISIBLE_MINIMUM
 
-/obj/item/clothing/glasses/hud/security/sunglasses/emp_act(severity)
-	if(emagged == 0)
-		emagged = 1
-		desc = desc + " The display flickers slightly."
+/obj/item/clothing/glasses/hud/security/sunglasses/attackby(obj/item/weapon/W as obj, mob/user as mob)
+	..()
+	if(istype(W, /obj/item/weapon/card/emag))
+		if(emagged == 0)
+			emagged = 1
+			user << "<span class='warning'>PZZTTPFFFT</span>"
+			desc = desc + " The display flickers slightly."
+		else
+			user << "<span class='warning'>It is already emagged!</span>"
 
 /obj/item/clothing/glasses/hud/security/sunglasses/gars
 	name = "HUD gar glasses"
