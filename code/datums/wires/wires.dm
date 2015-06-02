@@ -66,7 +66,9 @@ var/list/wireColours = list("red", "blue", "green", "black", "orange", "brown", 
 
 
 /datum/wires/proc/Interact(var/mob/living/user)
-
+	if (!user.IsAdvancedToolUser())
+		user << "<span class='warning'>You don't have the dexterity to do this!</span>"
+		return
 	var/html = null
 	if(holder && CanUse(user))
 		html = GetInteractWindow()
@@ -105,6 +107,9 @@ var/list/wireColours = list("red", "blue", "green", "black", "orange", "brown", 
 	if(in_range(holder, usr) && isliving(usr))
 
 		var/mob/living/L = usr
+		if (!L.IsAdvancedToolUser())
+			L << "<span class='warning'>You don't have the dexterity to do this!</span>"
+			return
 		if(CanUse(L) && href_list["action"])
 			var/obj/item/I = L.get_active_hand()
 			holder.add_hiddenprint(L)

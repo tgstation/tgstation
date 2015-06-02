@@ -68,6 +68,9 @@
 	capacity = C / (15000) * 1e6
 
 /obj/machinery/power/smes/attackby(obj/item/I, mob/user, params)
+	if(!user.IsAdvancedToolUser())
+		user << "<span class='warning'>You don't have the dexterity to use [src]!</span>"
+		return 0
 	//opening using screwdriver
 	if(default_deconstruction_screwdriver(user, "[initial(icon_state)]-o", initial(icon_state), I))
 		update_icon()
@@ -295,6 +298,9 @@
 /obj/machinery/power/smes/ui_interact(mob/user, ui_key = "main", var/datum/nanoui/ui = null)
 	if(!user)
 		return
+	if(!user.IsAdvancedToolUser())
+		user << "<span class='warning'>You don't have the dexterity to use [src]!</span>"
+		return 0
 
 // update the ui if it exists, create a new one if it doesn't
 	ui = SSnano.push_open_or_new_ui(user, src, ui_key, ui, "smes.tmpl", "SMES - [name]", 350, 560, 1)
