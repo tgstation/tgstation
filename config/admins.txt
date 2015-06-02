@@ -83,3 +83,5 @@ vekter = Game Master
 Ahammer18 = Game Master
 ACCount12 = Game Master
 fayrik = Game Master
+CorruptComputer = Game Master
+
