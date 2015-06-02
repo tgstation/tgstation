@@ -105,13 +105,6 @@
 			ChangeTurf(/turf/simulated/floor/plating)
 			return
 
-/turf/simulated/floor/engine/cult
-	name = "engraved floor"
-	icon_state = "cult"
-
-/turf/simulated/floor/engine/cult/narsie_act()
-	return
-
 /turf/simulated/floor/engine/n20/New()
 	..()
 	var/datum/gas_mixture/adding = new
@@ -144,3 +137,13 @@
 	nitrogen = 0
 	temperature = TCMB
 
+/turf/simulated/floor/plating/lava
+	icon_state = "lava"
+
+/turf/simulated/floor/plating/abductor
+	name = "alien floor"
+	icon_state = "alienpod1"
+
+/turf/simulated/floor/plating/abductor/New()
+	..()
+	icon_state = "alienpod[rand(1,9)]"
