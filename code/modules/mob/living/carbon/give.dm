@@ -39,16 +39,8 @@
 					src << "<span class='warning'>Your hands are full.</span>"
 					user << "<span class='warning'>Their hands are full.</span>"
 					return
-				else
-					user.drop_item(I)
-					src.put_in_hands(I)
-				I.loc = src
-				I.layer = 20
-				I.add_fingerprint(src)
-				src.update_inv_l_hand()
-				src.update_inv_r_hand()
-				user.update_inv_l_hand()
-				user.update_inv_r_hand()
+				user.drop_item(I)
+				src.put_in_hands(I)
 				src.visible_message("<span class='notice'>[user] handed \the [I] to [src].</span>")
 			if("No")
 				src.visible_message("<span class='warning'>[user] tried to hand \the [I] to [src] but \he didn't want it.</span>")

@@ -173,8 +173,8 @@
 	breaktape(/obj/item/weapon/wirecutters,user)
 
 /obj/item/tape/proc/breaktape(obj/item/weapon/W as obj, mob/user as mob)
-	if(user.a_intent == I_HELP && ((!is_sharp(W) && src.allowed(user))))
-		user << "<span class='notice'>You can't break [src] with that!</span>"
+	if(user.a_intent == I_HELP && (!W || !W.is_sharp()) && !src.allowed(user))
+		user << "<span class='notice'>You can't break [src] [W ? "with \the [W] " : ""]unless you use force.</span>"
 		return
 	user.visible_message("<span class='warning'>[user] breaks [src]!</span>")
 

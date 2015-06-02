@@ -81,6 +81,9 @@ var/global/list/datum/stack_recipe/cable_recipes = list ( \
 	. = ..()
 	update_icon()
 
+/obj/item/stack/cable_coil/can_stack_with(obj/item/other_stack)
+	return istype(other_stack, /obj/item/stack/cable_coil) && !istype(other_stack, /obj/item/stack/cable_coil/heavyduty) //it can be any cable, except the fat stuff
+
 /obj/item/stack/cable_coil/update_icon()
 	if(!_color)
 		_color = pick("red", "yellow", "blue", "green")

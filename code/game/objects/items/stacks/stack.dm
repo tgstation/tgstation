@@ -186,12 +186,15 @@
 	for (var/obj/item/stack/item in usr.loc)
 		if (src == item)
 			continue
-		if(src.type != item.type)
+		if(!can_stack_with(item))
 			continue
 		if (item.amount>=item.max_amount)
 			continue
 		src.preattack(item, usr,1)
 		break
+
+/obj/item/stack/proc/can_stack_with(obj/item/other_stack)
+	return src.type == other_stack.type
 
 /obj/item/stack/attack_hand(mob/user as mob)
 	if (user.get_inactive_hand() == src)
@@ -211,7 +214,7 @@
 	if (!proximity_flag)
 		return 0
 
-	if (istype(target, src.type) && src.type==target.type)
+	if (can_stack_with(target))
 		var/obj/item/stack/S = target
 		if (amount >= max_amount)
 			user << "\The [src] cannot hold anymore [singular_name]."
@@ -276,7 +279,7 @@
 
 /obj/item/stack/verb_pickup(mob/living/user)
 	var/obj/item/I = user.get_active_hand()
-	if(I && I.type == src.type)
-		src.attackby(I, user)
+	if(I && can_stack_with(I))
+		I.preattack(src, user, 1)
 		return
 	return ..()

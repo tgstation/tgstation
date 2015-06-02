@@ -15,6 +15,7 @@
 	max_heat_protection_temperature = SPACE_SUIT_MAX_HEAT_PROTECTION_TEMPERATURE
 	pressure_resistance = 200 * ONE_ATMOSPHERE
 	eyeprot = 3
+	species_restricted = list("exclude","Vox")
 
 /obj/item/clothing/head/helmet/space/rig/New()
 	..()
@@ -156,6 +157,8 @@
 	var/obj/machinery/camera/camera
 	pressure_resistance = 40 * ONE_ATMOSPHERE
 
+	species_restricted = null
+
 /obj/item/clothing/head/helmet/space/rig/syndi/attack_self(mob/user)
 	if(camera)
 		..(user)
@@ -184,6 +187,7 @@
 	siemens_coefficient = 0.6
 	pressure_resistance = 40 * ONE_ATMOSPHERE
 
+	species_restricted = null
 
 //Wizard Rig
 /obj/item/clothing/head/helmet/space/rig/wizard
@@ -199,6 +203,8 @@
 
 	wizard_garb = 1
 
+	species_restricted = null
+
 /obj/item/clothing/suit/space/rig/wizard
 	icon_state = "rig-wiz"
 	name = "gem-encrusted hardsuit"
@@ -212,6 +218,8 @@
 	siemens_coefficient = 0.7
 
 	wizard_garb = 1
+
+	species_restricted = null
 
 //Medical Rig
 /obj/item/clothing/head/helmet/space/rig/medical
