@@ -153,6 +153,9 @@ Class Procs:
 	update_icon()
 	updateUsrDialog()
 
+/obj/machinery/allow_drop()
+	return 0
+
 /obj/machinery/proc/dropContents()
 	var/turf/T = get_turf(src)
 	T.contents += contents

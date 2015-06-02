@@ -272,6 +272,8 @@
 
 
 /obj/machinery/chem_master/attackby(var/obj/item/B as obj, var/mob/user as mob, params)
+	if(isrobot(user) && !ismommi(user))
+		return
 
 	if(default_unfasten_wrench(user, B))
 		return

@@ -489,6 +489,9 @@
 	active = 0
 	..()
 
+/obj/structure/disposalholder/allow_drop()
+	return 0
+
 	// initialize a holder from the contents of a disposal unit
 /obj/structure/disposalholder/proc/init(var/obj/machinery/disposal/D)
 	gas = D.air_contents// transfer gas resv. into holder object
