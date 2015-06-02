@@ -418,6 +418,9 @@
 		for(var/mob/living/simple_animal/SA in turretview)
 			if(!SA.stat && (!SA.has_unlimited_silicon_privilege || !(faction in SA.faction)) ) //don't target dead animals or NT maint drones.
 				targets += SA
+		for(var/mob/living/carbon/monkey/M in turretview)
+			if(!M.stat)
+				targets += M
 
 	for(var/mob/living/carbon/C in turretview)	//loops through all carbon-based lifeforms in view(7)
 		if(emagged && C.stat != DEAD)	//if emagged, every living carbon is a target.
@@ -1132,7 +1135,7 @@ Status: []<BR>"},
 /obj/machinery/turretid/proc/updateTurrets()
 	if(control_area)
 		for (var/obj/machinery/porta_turret/aTurret in get_area_all_atoms(control_area))
-			aTurret.setState(enabled, lethal)
+			aTurret.setState(src.enabled, src.lethal)
 	src.update_icon()
 
 /obj/machinery/turretid/power_change()
