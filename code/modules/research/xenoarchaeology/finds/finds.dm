@@ -526,7 +526,7 @@
 		desc += engravings
 
 	if(apply_prefix)
-		name = "[pick("Strange","Ancient","Alien","")] [item_type]"
+		name = "[pick("Strange ","Ancient ","Alien ","")][item_type]"
 	else
 		name = item_type
 
