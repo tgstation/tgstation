@@ -3,12 +3,10 @@
 //I should really make the shuttle wall check run every time it's moved, but centcom uses unsimulated floors so !effort
 
 /atom/proc/relativewall() //atom because it should be useable both for walls and false walls
-	if(istype(src,/turf/simulated/floor/vault)||istype(src,/turf/simulated/wall/vault)) //HACK!!!
-		return
 
 	var/junction = 0 //will be used to determine from which side the wall is connected to other walls
 
-	if(!istype(src,/turf/simulated/shuttle/wall)) //or else we'd have wacky shuttle merging with walls action
+	if(!istype(src,/turf/simulated/wall/shuttle)) //or else we'd have wacky shuttle merging with walls action
 		for(var/turf/simulated/wall/W in orange(src,1))
 			if(abs(src.x-W.x)-abs(src.y-W.y)) //doesn't count diagonal walls
 				junction |= get_dir(src,W)
@@ -117,9 +115,6 @@
 	..()
 
 /turf/simulated/wall/relativewall()
-	if(istype(src,/turf/simulated/wall/vault)) //HACK!!!
-		return
-
 	var/junction = 0 //will be used to determine from which side the wall is connected to other walls
 
 	for(var/turf/simulated/wall/W in orange(src,1))
@@ -134,6 +129,8 @@
 	wall.icon_state = "[wall.walltype][junction]"
 	return
 
+/turf/simulated/wall/vault/relativewall()
+	return
 
 /obj/structure/alien/resin/relativewall()
 

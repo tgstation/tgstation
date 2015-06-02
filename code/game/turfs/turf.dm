@@ -256,3 +256,9 @@
 
 /turf/proc/can_lay_cable()
 	return can_have_cabling() & !intact
+
+/turf/splashscreen
+	name = "Space Station 13"
+	icon = 'icons/misc/fullscreen.dmi'
+	icon_state = "title"
+	layer = FLY_LAYER
