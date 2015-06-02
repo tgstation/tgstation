@@ -105,10 +105,7 @@
 
 /obj/item/projectile/magic/door/proc/CreateDoor(var/turf/T)
 	new /obj/structure/mineral_door/wood(T)
-	if(istype(T,/turf/simulated/shuttle/wall))
-		T.ChangeTurf(/turf/simulated/shuttle/plating)
-	else
-		T.ChangeTurf(/turf/simulated/floor/plating)
+	T.ChangeTurf(/turf/simulated/floor/plating)
 
 
 /obj/item/projectile/magic/change

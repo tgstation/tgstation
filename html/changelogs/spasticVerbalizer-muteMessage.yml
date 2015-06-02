@@ -1,5 +1,0 @@
-author: spasticVerbalizer
-delete-after: True
-
-changes:
-  - tweak: "Players trying to speak but unable to will now get a message."

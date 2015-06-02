@@ -6,9 +6,10 @@
 	var/emp_light = 3
 
 	action_icon_state = "emp"
+	sound = "sound/weapons/ZapBang.ogg"
 
 /obj/effect/proc_holder/spell/targeted/emplosion/cast(list/targets)
-
+	playsound(get_turf(usr), sound, 50,1)
 	for(var/mob/living/target in targets)
 		empulse(target.loc, emp_heavy, emp_light)
 

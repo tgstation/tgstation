@@ -1254,13 +1254,13 @@ var/list/WALLITEMS = list(
 		var/unknown_concentration =  1-(o2_concentration+n2_concentration+co2_concentration+plasma_concentration)
 
 		user << "<span class='notice'>Pressure: [round(pressure,0.1)] kPa</span>"
-		user << "<span class='notice'>Nitrogen: [round(n2_concentration*100)]</span>%"
-		user << "<span class='notice'>Oxygen: [round(o2_concentration*100)]%</span>"
-		user << "<span class='notice'>CO2: [round(co2_concentration*100)]%</span>"
-		user << "<span class='notice'>Plasma: [round(plasma_concentration*100)]%</span>"
+		user << "<span class='notice'>Nitrogen: [round(n2_concentration*100)] %</span>"
+		user << "<span class='notice'>Oxygen: [round(o2_concentration*100)] %</span>"
+		user << "<span class='notice'>CO2: [round(co2_concentration*100)] %</span>"
+		user << "<span class='notice'>Plasma: [round(plasma_concentration*100)] %</span>"
 		if(unknown_concentration>0.01)
-			user << "<span class='danger'>Unknown: [round(unknown_concentration*100)]%</span>"
-		user << "<span class='notice'>Temperature: [round(air_contents.temperature-T0C)]&deg;C</span>"
+			user << "<span class='danger'>Unknown: [round(unknown_concentration*100)] %</span>"
+		user << "<span class='notice'>Temperature: [round(air_contents.temperature-T0C)] &deg;C</span>"
 	else
 		user << "<span class='notice'>[target] is empty!</span>"
 	return

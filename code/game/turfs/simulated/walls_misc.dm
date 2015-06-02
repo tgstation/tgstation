@@ -32,3 +32,31 @@
 	icon_state = "rrust"
 	walltype = "rrust"
 	hardness = 15
+
+
+
+/turf/simulated/wall/shuttle
+	name = "wall"
+	icon = 'icons/turf/shuttle.dmi'
+	icon_state = "wall1"
+	walltype = "shuttle"
+
+/turf/simulated/wall/shuttle/relativewall()
+	return
+
+//sub-type to be used for interior shuttle walls
+//won't get an underlay of the destination turf on shuttle move
+/turf/simulated/wall/shuttle/interior/copyTurf(turf/T)
+	if(T.type != type)
+		T = new type(T)
+		if(underlays.len)
+			T.underlays = underlays
+	if(T.icon_state != icon_state)
+		T.icon_state = icon_state
+	if(T.icon != icon)
+		T.icon = icon
+	if(T.color != color)
+		T.color = color
+	if(T.dir != dir)
+		T.dir = dir
+	return T

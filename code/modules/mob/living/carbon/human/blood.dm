@@ -130,7 +130,8 @@ var/const/BLOOD_VOLUME_SURVIVE = 122
 		return
 
 	vessel.remove_reagent("blood",amt)
-	blood_splatter(src,src)
+	if (isturf(src.loc)) //Blood loss still happens in locker, floor stays clean
+		blood_splatter(src,src)
 
 /****************************************************
 				BLOOD TRANSFERS
