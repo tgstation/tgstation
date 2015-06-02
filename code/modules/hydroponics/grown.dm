@@ -149,7 +149,6 @@
 	if(..())
 		reagents.add_reagent("nutriment", 1 + round((potency / 20), 1))
 		reagents.add_reagent("styptic_powder", 1 + round((potency / 20), 1))
-		reagents.add_reagent("charcoal", 1 + round((potency / 20), 1))
 		bitesize = 1 + round(reagents.total_volume / 3, 1)
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/poppy/lily
@@ -376,10 +375,8 @@
 /obj/item/weapon/reagent_containers/food/snacks/grown/ambrosia/vulgaris/add_juice()
 	..()
 	reagents.add_reagent("space_drugs", 1 + round(potency / 8, 1))
-	reagents.add_reagent("charcoal", 1 + round(potency / 8, 1))
 	reagents.add_reagent("styptic_powder", 1 + round(potency / 10, 1))
 	reagents.add_reagent("silver_sulfadiazine", 1 + round(potency / 10, 1))
-	reagents.add_reagent("toxin", 1 + round(potency / 10, 1))
 	reagents.add_reagent("vitamin", 1 + round((potency / 25), 1))
 
 
@@ -1347,5 +1344,4 @@ obj/item/weapon/reagent_containers/food/snacks/grown/shell/eggy/add_juice()
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/tea/astra/add_juice()
 	..()
-	reagents.add_reagent("charcoal", 1 + round((potency / 20), 1))
 	reagents.add_reagent("silver_sulfadiazine", 1 + round((potency / 20), 1))
