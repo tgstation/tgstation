@@ -123,17 +123,17 @@
 		reagents.add_reagent("sugar", 1 + round((potency / 15), 1))
 		bitesize = 1 + round(reagents.total_volume / 2, 1)
 
-/obj/item/weapon/reagent_containers/food/snacks/grown/bluecherries
-	seed = /obj/item/seeds/bluecherryseed
-	name = "blue cherries"
-	desc = "They're cherries that are blue."
-	icon_state = "bluecherry"
-	filling_color = "#6495ED"
+/obj/item/weapon/reagent_containers/food/snacks/grown/cherrybomb
+	seed = /obj/item/seeds/cherrybomb
+	name = "cherry bomb"
+	desc = "Light and throw."
+	icon_state = "cherrybomb"
+	filling_color = "#000000"
 
-/obj/item/weapon/reagent_containers/food/snacks/grown/bluecherries/add_juice()
+/obj/item/weapon/reagent_containers/food/snacks/grown/cherrybomb/add_juice()
 	if(..())
-		reagents.add_reagent("nutriment", 1 + round((potency / 15), 1))
-		reagents.add_reagent("sugar", 1 + round((potency / 50), 1))
+		reagents.add_reagent("blackpowder", 1 + round((potency / 15), 1))
+		reagents.chem_temp = 473 // taking a welder or something to it will "light" the cherry bomb.
 		bitesize = 1 + round(reagents.total_volume / 2, 1)
 
 
@@ -148,7 +148,8 @@
 /obj/item/weapon/reagent_containers/food/snacks/grown/poppy/add_juice()
 	if(..())
 		reagents.add_reagent("nutriment", 1 + round((potency / 20), 1))
-		reagents.add_reagent("salglu_solution", 1 + round((potency / 20), 1))
+		reagents.add_reagent("styptic_powder", 1 + round((potency / 20), 1))
+		reagents.add_reagent("charcoal", 1 + round((potency / 20), 1))
 		bitesize = 1 + round(reagents.total_volume / 3, 1)
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/poppy/lily
@@ -233,7 +234,7 @@
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/grapes/green/add_juice()
 	..()
-	reagents.add_reagent("salglu_solution", 3 + round((potency / 5), 1))
+	reagents.add_reagent("charcoal", 3 + round((potency / 5), 1))
 
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/cabbage
@@ -375,8 +376,9 @@
 /obj/item/weapon/reagent_containers/food/snacks/grown/ambrosia/vulgaris/add_juice()
 	..()
 	reagents.add_reagent("space_drugs", 1 + round(potency / 8, 1))
-	reagents.add_reagent("salglu_solution", 1 + round(potency / 8, 1))
-	reagents.add_reagent("salglu_solution", 1 + round(potency / 10, 1))
+	reagents.add_reagent("charcoal", 1 + round(potency / 8, 1))
+	reagents.add_reagent("styptic_powder", 1 + round(potency / 10, 1))
+	reagents.add_reagent("silver_sulfadiazine", 1 + round(potency / 10, 1))
 	reagents.add_reagent("toxin", 1 + round(potency / 10, 1))
 	reagents.add_reagent("vitamin", 1 + round((potency / 25), 1))
 
@@ -392,6 +394,7 @@
 	..()
 	reagents.add_reagent("omnizine", 1 + round(potency / 8, 1))
 	reagents.add_reagent("synaptizine", 1 + round(potency / 8, 1))
+	reagents.add_reagent("ephedrine", 1 + round(potency / 8, 1))
 	reagents.add_reagent("space_drugs", 1 + round(potency / 10, 1))
 	reagents.add_reagent("vitamin", 1 + round((potency / 25), 1))
 
@@ -1117,7 +1120,7 @@ obj/item/weapon/reagent_containers/food/snacks/grown/shell/eggy/add_juice()
 /obj/item/weapon/reagent_containers/food/snacks/grown/mushroom/plumphelmet
 	seed = /obj/item/seeds/plumpmycelium
 	name = "plump-helmet"
-	desc = "<I>Plumus Hellmus</I>: Plump, soft and s-so inviting~"
+	desc = "<I>Plumus Hellmus</I>: The plant of the aspiring brewer."
 	icon_state = "plumphelmet"
 	filling_color = "#9370DB"
 
@@ -1344,4 +1347,5 @@ obj/item/weapon/reagent_containers/food/snacks/grown/shell/eggy/add_juice()
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/tea/astra/add_juice()
 	..()
-	reagents.add_reagent("salglu_solution", 1 + round((potency / 20), 1))
+	reagents.add_reagent("charcoal", 1 + round((potency / 20), 1))
+	reagents.add_reagent("silver_sulfadiazine", 1 + round((potency / 20), 1))
