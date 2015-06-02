@@ -27,7 +27,7 @@
 "aA" = (/obj/machinery/gateway,/turf/simulated/shuttle/plating{tag = "icon-gcircuitoff"; icon_state = "gcircuitoff"},/area/awaymission/wwvault)
 "aB" = (/obj/machinery/gateway{dir = 6},/turf/simulated/shuttle/plating{tag = "icon-gcircuitoff"; icon_state = "gcircuitoff"},/area/awaymission/wwvault)
 "aC" = (/obj/structure/girder,/turf/simulated/shuttle/plating{tag = "icon-gcircuitoff"; icon_state = "gcircuitoff"},/area/awaymission/wwvault)
-"aD" = (/mob/living/simple_animal/hostile/blob/blobbernaut{desc = "Get out of here S.T.A.L.K.E.R."; health = 500; maxHealth = 500; melee_damage_lower = 100; melee_damage_upper = 100; name = "Monolith Guardian"},/turf/simulated/shuttle/plating{tag = "icon-gcircuitoff"; icon_state = "gcircuitoff"},/area/awaymission/wwvault)
+"aD" = (/mob/living/simple_animal/hostile/blob/blobbernaut{desc = "Get out of here S.T.A.L.K.E.R."; faction = list("faithless"); health = 500; maxHealth = 500; melee_damage_lower = 100; melee_damage_upper = 100; name = "Monolith Guardian"},/turf/simulated/shuttle/plating{tag = "icon-gcircuitoff"; icon_state = "gcircuitoff"},/area/awaymission/wwvault)
 "aE" = (/obj/structure/cult/pylon,/turf/simulated/shuttle/plating{tag = "icon-bcircuitoff"; icon_state = "bcircuitoff"},/area/awaymission/wwvault)
 "aF" = (/turf/simulated/shuttle/plating{tag = "icon-cultdamage2"; icon_state = "cultdamage2"},/area/awaymission/wwvault)
 "aG" = (/turf/simulated/floor/fancy/carpet,/area/awaymission/wwvault)

@@ -11,16 +11,6 @@
 	caliber = "357"
 	max_ammo = 7
 
-/obj/item/ammo_box/magazine/internal/cylinder/ammo_count(var/countempties = 1)
-	if (!countempties)
-		var/boolets = 0
-		for (var/i = 1, i <= stored_ammo.len, i++)
-			var/obj/item/ammo_casing/bullet = stored_ammo[i]
-			if (bullet.BB)
-				boolets++
-		return boolets
-	else
-		return ..()
 
 /obj/item/ammo_box/magazine/internal/cylinder/rus357
 	name = "russian revolver cylinder"

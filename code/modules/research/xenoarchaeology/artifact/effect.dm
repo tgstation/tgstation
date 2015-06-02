@@ -5,7 +5,7 @@
 	var/effect = EFFECT_TOUCH
 	var/effectrange = 4
 	var/trigger = TRIGGER_TOUCH
-	var/atom/holder
+	var/atom/movable/holder
 	var/activated = 0
 	var/chargelevel = 0
 	var/chargelevelmax = 10

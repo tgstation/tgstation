@@ -61,7 +61,6 @@
 	if(air_contents)
 		temperature_archived = air_contents.temperature
 		heat_gas_contents()
-		expel_gas()
 
 		if(occupant)
 			process_occupant()
@@ -222,6 +221,8 @@
 
 /obj/machinery/atmospherics/unary/cryo_cell/attackby(obj/item/I, mob/user, params)
 	if(istype(I, /obj/item/weapon/reagent_containers/glass))
+		if(isrobot(user) && !ismommi(user))
+			return
 		if(beaker)
 			user << "<span class='notice'>A beaker is already loaded into [src].</span>"
 			return

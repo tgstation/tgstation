@@ -17,6 +17,7 @@
 			var/datum/gas/sleeping_agent/trace_gas = new
 			env.trace_gases += trace_gas
 			trace_gas.moles = rand(2,15)
+			holder.air_update_turf(0)
 		//	env.update_values()
 
 
@@ -27,5 +28,6 @@
 			var/datum/gas/sleeping_agent/trace_gas = new
 			env.trace_gases += trace_gas
 			trace_gas.moles = pick(0, 0, 0.1, rand())
+			holder.air_update_turf(0)
 		//	env.update_values()
 

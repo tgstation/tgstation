@@ -191,6 +191,9 @@
 	if(src)
 		return 1
 	return 0
+/obj/mecha/allow_drop()
+	return 0
+
 
 /obj/mecha/proc/enter_after(delay as num, var/mob/user as mob, var/numticks = 5)
 	var/delayfraction = delay/numticks
