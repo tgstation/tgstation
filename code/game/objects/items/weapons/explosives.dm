@@ -61,7 +61,7 @@
 /obj/item/weapon/c4/afterattack(atom/movable/target, mob/user, flag)
 	if (!flag)
 		return
-	if (ismob(target) || istype(target, /turf/unsimulated) || istype(target, /turf/simulated/shuttle) || istype(target, /obj/item/weapon/storage/))
+	if (ismob(target) || istype(target, /obj/item/weapon/storage/))
 		return
 	if(loc == target)
 		return
