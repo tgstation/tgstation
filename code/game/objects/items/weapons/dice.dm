@@ -80,7 +80,7 @@
 
 /obj/item/weapon/dice/d4/Crossed(var/mob/living/carbon/human/H)
 	if(istype(H) && !H.shoes)
-		if(HARDFEET in H.dna.species.specflags)
+		if(PIERCEIMMUNE in H.dna.species.specflags)
 			return 0
 		H << "<span class='userdanger'>You step on the D4!</span>"
 		H.apply_damage(4,BRUTE,(pick("l_leg", "r_leg")))
