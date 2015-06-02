@@ -257,8 +257,29 @@
 /turf/proc/can_lay_cable()
 	return can_have_cabling() & !intact
 
-/turf/splashscreen
+
+/turf/indestructible
+	name = "wall"
+	icon = 'icons/turf/walls.dmi'
+
+/turf/indestructible/splashscreen
 	name = "Space Station 13"
 	icon = 'icons/misc/fullscreen.dmi'
 	icon_state = "title"
 	layer = FLY_LAYER
+
+/turf/indestructible/riveted
+	icon_state = "riveted"
+
+/turf/indestructible/abductor
+	icon_state = "alien1"
+
+/turf/indestructible/fakeglass
+	name = "window"
+	icon_state = "fakewindows"
+	opacity = 0
+
+/turf/indestructible/fakedoor
+	name = "Centcom Access"
+	icon = 'icons/obj/doors/Doorele.dmi'
+	icon_state = "door_closed"

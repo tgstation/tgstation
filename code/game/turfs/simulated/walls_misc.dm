@@ -33,37 +33,7 @@
 	walltype = "rrust"
 	hardness = 15
 
-/turf/simulated/wall/riveted
-	icon_state = "riveted"
-	walltype = "riveted"
 
-/turf/simulated/wall/riveted/relativewall()
-	return
-
-/turf/simulated/wall/abductor
-	icon_state = "alien1"
-	walltype = "alien"
-
-/turf/simulated/wall/abductor/relativewall()
-	return
-
-/turf/simulated/wall/fakeglass
-	name = "window"
-	icon_state = "fakewindows"
-	walltype = "fakewindows"
-	opacity = 0
-
-/turf/simulated/wall/fakeglass/relativewall()
-	return
-
-/turf/simulated/wall/fakedoor
-	name = "Centcom Access"
-	icon = 'icons/obj/doors/Doorele.dmi'
-	walltype = "door"
-	icon_state = "door_closed"
-
-/turf/simulated/wall/fakedoor/relativewall()
-	return
 
 /turf/simulated/wall/shuttle
 	name = "wall"
