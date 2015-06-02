@@ -330,7 +330,7 @@
 
 	if(patient && path.len == 0 && (get_dist(src,patient) > 1))
 		spawn(0)
-			path = get_path_to(loc, get_turf(patient), /turf/proc/CardinalTurfsWithAccess, /turf/proc/Distance_cardinal, 0, 30,id=botcard)
+			path = get_path_to(loc, get_turf(patient), src, /turf/proc/Distance_cardinal, 0, 30,id=botcard)
 
 	if(path.len > 0 && patient)
 		if(!bot_move(patient))

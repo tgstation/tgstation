@@ -602,6 +602,7 @@
 	return 0
 
 /mob/living/simple_animal/parrot/proc/search_for_item()
+	var/item
 	for(var/atom/movable/AM in view(src))
 		//Skip items we already stole or are wearing or are too big
 		if(parrot_perch && AM.loc == parrot_perch.loc || AM.loc == src)
@@ -610,12 +611,17 @@
 		if(istype(AM, /obj/item))
 			var/obj/item/I = AM
 			if(I.w_class < 2)
-				return I
+				item = I
 
-		if(iscarbon(AM))
+		else if(iscarbon(AM))
 			var/mob/living/carbon/C = AM
 			if((C.l_hand && C.l_hand.w_class <= 2) || (C.r_hand && C.r_hand.w_class <= 2))
-				return C
+				item = C
+		if(item)
+			if(!AStar(loc, get_turf(item), src, /turf/proc/Distance))
+				item = null
+				continue
+			return item
 	return null
 
 /mob/living/simple_animal/parrot/proc/search_for_perch()
@@ -644,7 +650,7 @@
 		if(iscarbon(AM))
 			var/mob/living/carbon/C = AM
 			if(C.l_hand && C.l_hand.w_class <= 2 || C.r_hand && C.r_hand.w_class <= 2)
-				return C
+				return  C
 	return null
 
 
