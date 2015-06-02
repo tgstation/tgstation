@@ -2,7 +2,7 @@
 	name = "helmet"
 	desc = "Standard Security gear. Protects the head from impacts."
 	icon_state = "helmet"
-	flags = HEADCOVERSEYES | HEADBANGPROTECT
+	flags = HEADCOVERSEYES | HEADBANGPROTECT | BLOCKHAIR
 	item_state = "helmet"
 	armor = list(melee = 50, bullet = 15, laser = 50,energy = 10, bomb = 25, bio = 0, rad = 0)
 	flags_inv = HIDEEARS|HIDEEYES
@@ -49,7 +49,7 @@
 	toggle_message = "You pull the visor down on"
 	alt_toggle_message = "You push the visor up on"
 	can_toggle = 1
-	flags = HEADCOVERSEYES|HEADCOVERSMOUTH|HEADBANGPROTECT
+	flags = HEADCOVERSEYES|HEADCOVERSMOUTH|HEADBANGPROTECT|BLOCKHAIR
 	armor = list(melee = 82, bullet = 15, laser = 5,energy = 5, bomb = 5, bio = 2, rad = 0)
 	flags_inv = HIDEMASK|HIDEEARS|HIDEEYES|HIDEFACE
 	strip_delay = 80
