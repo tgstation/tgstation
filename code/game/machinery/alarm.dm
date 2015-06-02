@@ -662,6 +662,9 @@
 	update_icon()
 
 /obj/machinery/alarm/attackby(obj/item/W as obj, mob/user as mob, params)
+	if (!user.IsAdvancedToolUser())
+		user << "<span class='warning'>You don't have the dexterity to do this!</span>"
+		return
 	switch(buildstage)
 		if(2)
 			if(istype(W, /obj/item/weapon/wirecutters) && panel_open && (wires.wires_status == 27 || wires.wires_status == 31))   //this checks for all wires to be cut, except the syphon wire which is optional.
@@ -914,6 +917,9 @@ FIRE ALARM
 
 /obj/machinery/firealarm/attackby(obj/item/W as obj, mob/user as mob, params)
 	src.add_fingerprint(user)
+	if (!user.IsAdvancedToolUser())
+		user << "<span class='warning'>You don't have the dexterity to do this!</span>"
+		return
 
 	if (istype(W, /obj/item/weapon/screwdriver) && buildstage == 2)
 		playsound(src.loc, 'sound/items/Screwdriver.ogg', 50, 1)

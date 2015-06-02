@@ -183,6 +183,14 @@
 /obj/structure/window/attackby(obj/item/I, mob/living/user, params)
 	if(!can_be_reached(user))
 		return 1 //skip the afterattack
+	if(!user.IsAdvancedToolUser())
+		if(I.damtype == BRUTE || I.damtype == BURN)
+			user.changeNext_move(CLICK_CD_MELEE)
+			hit(I.force)
+		else
+			playsound(loc, 'sound/effects/Glasshit.ogg', 75, 1)
+		..()
+		return
 
 	add_fingerprint(user)
 	if(istype(I, /obj/item/weapon/screwdriver))
