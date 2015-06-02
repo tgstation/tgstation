@@ -87,7 +87,6 @@
 				if("car")
 					var/obj/item/weapon/gun/projectile/automatic/m90/gat  = new(get_turf(H))
 					gat.pin = new /obj/item/device/firing_pin
-			playsound(get_turf(H),'sound/magic/Summon_guns.ogg', 50, 1)
 
 		else
 			switch (randomizemagic)
@@ -150,8 +149,6 @@
 						if("necromantic")
 							new /obj/item/device/necromantic_stone(get_turf(H))
 					H << "<span class='notice'>You suddenly feel lucky.</span>"
-			playsound(get_turf(H),'sound/magic/Summon_Magic.ogg', 50, 1)
-
 
 /proc/summonevents()
 	if(!SSevent.wizardmode)

@@ -25,12 +25,10 @@
 	proj_trail_icon_state = "magicmd"
 
 	action_icon_state = "magicm"
-	sound = "sound/magic/MAGIC_MISSILE.ogg"
 
 /obj/effect/proc_holder/spell/targeted/inflict_handler/magic_missile
 	amt_weakened = 3
 	amt_dam_fire = 10
-	sound = "sound/magic/MM_Hit.ogg"
 
 /obj/effect/proc_holder/spell/targeted/genetic/mutate
 	name = "Mutate"
@@ -51,7 +49,6 @@
 	cooldown_min = 300 //25 deciseconds reduction per rank
 
 	action_icon_state = "mutate"
-	sound = "sound/magic/Mutate.ogg"
 
 /obj/effect/proc_holder/spell/targeted/inflict_handler/disintegrate
 	name = "Disintegrate"
@@ -71,7 +68,6 @@
 	sparks_amt = 4
 
 	action_icon_state = "gib"
-	sound = "sound/magic/Disintegrate.ogg"
 
 /obj/effect/proc_holder/spell/targeted/smoke
 	name = "Smoke"
@@ -104,7 +100,6 @@
 
 	emp_heavy = 6
 	emp_light = 10
-	sound = "sound/magic/Disable_Tech.ogg"
 
 /obj/effect/proc_holder/spell/targeted/turf_teleport/blink
 	name = "Blink"
@@ -129,8 +124,6 @@
 	centcom_cancast = 0 //prevent people from getting to centcom
 
 	action_icon_state = "blink"
-	sound1="sound/magic/blink.ogg"
-	sound2="sound/magic/blink.ogg"
 
 /obj/effect/proc_holder/spell/targeted/area_teleport/teleport
 	name = "Teleport"
@@ -147,8 +140,6 @@
 
 	smoke_spread = 1
 	smoke_amt = 5
-	sound1="sound/magic/Teleport_diss.ogg"
-	sound2="sound/magic/Teleport_app.ogg"
 
 /obj/effect/proc_holder/spell/aoe_turf/conjure/forcewall
 	name = "Forcewall"
@@ -166,7 +157,6 @@
 	summon_lifespan = 300
 
 	action_icon_state = "shield"
-	cast_sound = "sound/magic/ForceWall.ogg"
 
 
 /obj/effect/proc_holder/spell/aoe_turf/conjure/carp
@@ -181,7 +171,6 @@
 	range = 1
 
 	summon_type = list(/mob/living/simple_animal/hostile/carp)
-	cast_sound = "sound/magic/Summon_Karp.ogg"
 
 
 /obj/effect/proc_holder/spell/aoe_turf/conjure/construct
@@ -198,7 +187,6 @@
 	summon_type = list(/obj/structure/constructshell)
 
 	action_icon_state = "artificer"
-	cast_sound = "sound/magic/SummonItems_generic.ogg"
 
 
 /obj/effect/proc_holder/spell/aoe_turf/conjure/creature
@@ -214,7 +202,6 @@
 	range = 3
 
 	summon_type = list(/mob/living/simple_animal/hostile/creature)
-	cast_sound = "sound/magic/SummonItems_generic.ogg"
 
 /obj/effect/proc_holder/spell/targeted/trigger/blind
 	name = "Blind"
@@ -232,17 +219,13 @@
 
 	action_icon_state = "blind"
 
-
-
 /obj/effect/proc_holder/spell/targeted/inflict_handler/blind
 	amt_eye_blind = 10
 	amt_eye_blurry = 20
-	sound="sound/magic/Blind.ogg"
 
 /obj/effect/proc_holder/spell/targeted/genetic/blind
 	disabilities = 1
 	duration = 300
-	sound="sound/magic/Blind.ogg"
 
 /obj/effect/proc_holder/spell/targeted/inflict_handler/flesh_to_stone
 	name = "Flesh to Stone"
@@ -260,7 +243,6 @@
 	summon_type = "/obj/structure/closet/statue"
 
 	action_icon_state = "statue"
-	sound = "sound/magic/FleshToStone.ogg"
 
 /obj/effect/proc_holder/spell/dumbfire/fireball
 	name = "Fireball"
@@ -282,7 +264,6 @@
 	proj_step_delay = 1
 
 	action_icon_state = "fireball"
-	sound = "sound/magic/Fireball.ogg"
 
 /obj/effect/proc_holder/spell/turf/fireball/cast(var/turf/T)
 	explosion(T, -1, 0, 2, 3, 0, flame_range = 2)
@@ -317,7 +298,6 @@
 	var/list/thrownatoms = list()
 	var/atom/throwtarget
 	var/distfromcaster
-	playsound(user, "sound/magic/Repulse.ogg", 50, 1, -1)
 	for(var/turf/T in targets) //Done this way so things don't get thrown all around hilariously.
 		for(var/atom/movable/AM in T)
 			thrownatoms += AM
