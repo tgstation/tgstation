@@ -322,6 +322,12 @@
 	if(L.lying)
 		L << "You can't vent crawl while you're stunned!"
 		return
+	if(iscarbon(L))
+		var/mob/living/carbon/C = L
+		if(C.handcuffed)
+			return
+
+
 	if(welded)
 		L << "That vent is welded shut."
 		return
@@ -358,11 +364,21 @@
 
 	if(!Adjacent(L) || L.stat || L.lying || !L.ventcrawler || welded)
 		return
-	if(iscarbon(L) && L.ventcrawler < 2) // lesser ventcrawlers can't bring items
-		for(var/obj/item/carried_item in L.contents)
-			if(!istype(carried_item, /obj/item/weapon/implant))//If it's not an implant
-				L << "<span class='warning'>You can't be carrying items or have items equipped when vent crawling!</span>"
-				return
+	if(iscarbon(L))
+		var/mob/living/carbon/C = L
+		if(L.ventcrawler < 2)
+			for(var/obj/item/carried_item in L.contents)
+				if(!istype(carried_item, /obj/item/weapon/implant))//If it's not an implant
+					L << "<span class='warning'>You can't be carrying items or have items equipped when vent crawling!</span>"
+					return
+		if(C.handcuffed)
+			return
+	if(isborer(L))
+		var/mob/living/simple_animal/borer/B = L
+		if (B.host)
+			L << "You cannot ventcrawl while inside a host"
+			return
+
 
 	var/obj/machinery/atmospherics/unary/vent_pump/target_vent = vents[selection]
 	if(!target_vent)
