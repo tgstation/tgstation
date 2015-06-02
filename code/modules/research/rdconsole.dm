@@ -259,7 +259,7 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 				spawn(24)
 					if(linked_destroy)
 						linked_destroy.busy = 0
-						if(!linked_destroy.hacked)
+						if(linked_destroy && !linked_destroy.hacked)
 							if(!linked_destroy.loaded_item)
 								usr <<"<span class='danger'> The destructive analyzer appears to be empty.</span>"
 								screen = 1.0
