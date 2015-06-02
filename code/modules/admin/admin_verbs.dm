@@ -939,7 +939,6 @@ var/list/admin_verbs_mod = list(
 		C.desc = desc
 		if(iscarbon(winner) && (winner.stat == CONSCIOUS))
 			winner.put_in_hands(C)
-			winner.update_icons()
 	else
 		winner << "<span class='danger'>You win [name]! [desc]</span>"
 
