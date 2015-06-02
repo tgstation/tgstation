@@ -18,7 +18,8 @@
 /obj/item/clothing/head/collectable/xenom
 	name = "collectable xenomorph helmet!"
 	desc = "Hiss hiss hiss!"
-	icon_state = "xenom"
+	icon_state = "xenos"
+	item_state = "xenos_helm"
 
 /obj/item/clothing/head/collectable/chef
 	name = "collectable chef's hat"
