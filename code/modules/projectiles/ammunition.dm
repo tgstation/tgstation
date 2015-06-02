@@ -135,5 +135,13 @@
 	desc = "[initial(desc)] There are [stored_ammo.len] shell\s left!"
 
 //Behavior for magazines
-/obj/item/ammo_box/magazine/proc/ammo_count()
-	return stored_ammo.len
+/obj/item/ammo_box/magazine/proc/ammo_count(var/countempties = 1)
+	if (!countempties)
+		var/boolets = 0
+		for (var/i = 1, i <= stored_ammo.len, i++)
+			var/obj/item/ammo_casing/bullet = stored_ammo[i]
+			if (bullet.BB)
+				boolets++
+		return boolets
+	else
+		return stored_ammo.len

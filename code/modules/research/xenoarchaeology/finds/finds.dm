@@ -257,7 +257,9 @@
 				icon_state = "changerock"
 			else
 				item_type = "smooth red crystal"
+				icon = 'icons/obj/mining.dmi'
 				icon_state = "ore"
+
 			additional_desc = pick("It shines faintly as it catches the light.","It appears to have a faint inner glow.","It seems to draw you inward as you look it at.","Something twinkles faintly as you look at it.","It's mesmerizing to behold.")
 
 			apply_material_decorations = 0
@@ -352,7 +354,7 @@
 			item_type = "gun"
 		if(27)
 			//revolver
-			var/obj/item/weapon/gun/projectile/new_gun = new /obj/item/weapon/gun/projectile(src.loc)
+			var/obj/item/weapon/gun/projectile/revolver/new_gun = new /obj/item/weapon/gun/projectile/revolver(src.loc)
 			new_item = new_gun
 			new_item.icon_state = "gun[rand(1,4)]"
 			new_item.icon = 'icons/obj/xenoarchaeology.dmi'
@@ -362,36 +364,30 @@
 								   10;list("75" = 1),
 								   30;list("38" = 1),
 								   10;list("12mm" = 1)) */
+			new_gun.mag_type = pick (30;/obj/item/ammo_box/magazine/m10mm,
+									50;/obj/item/ammo_box/magazine/internal/cylinder,
+									10;/obj/item/ammo_box/magazine/m50,
+									10;/obj/item/ammo_box/magazine/m45)
+
+			new_gun.chambered = null
 
 			new_gun.magazine = new new_gun.mag_type
 
-			new_gun.magazine.ammo_type = pick(30;/obj/item/ammo_casing/c10mm,
-											50;/obj/item/ammo_casing/a357,
-											10;/obj/item/ammo_casing/a50,
-											10;/obj/item/ammo_casing/c45)
 
 			//33% chance to fill it with a random amount of bullets
 			new_gun.magazine.max_ammo = rand(1,12)
 			if(prob(33))
 				var/num_bullets = rand(1,new_gun.magazine.max_ammo)
-				if(num_bullets < new_gun.mag_type)
-					new_gun.magazine.stored_ammo = 0
+				if(num_bullets < new_gun.magazine.stored_ammo.len)
+					new_gun.magazine.stored_ammo.len = 0
 					for(var/i = 1, i <= num_bullets, i++)
 						var/A = new_gun.magazine.ammo_type
-						new_gun.magazine.stored_ammo += new A(new_gun.magazine)
+						new_gun.magazine.give_round(new A)
 				else
-					for(var/obj/item/I in new_gun.magazine.stored_ammo)
-						if(new_gun.magazine.stored_ammo.len > num_bullets)
-							if(I in new_gun.magazine.stored_ammo)
-								new_gun.magazine.stored_ammo.Remove(I)
-								I.loc = null
-						else
-							break
+					if(new_gun.magazine.stored_ammo.len > num_bullets)
+						new_gun.magazine.stored_ammo.len = num_bullets
 			else
-				for(var/obj/item/I in new_gun.magazine.stored_ammo)
-					if(I in new_gun.magazine.stored_ammo)
-						new_gun.magazine.stored_ammo.Remove(I)
-						I.loc = null
+				new_gun.magazine.stored_ammo.len = 0
 
 			item_type = "gun"
 		if(28)
@@ -448,7 +444,7 @@
 			//robot remains
 			apply_prefix = 0
 			item_type = "[pick("mechanical","robotic","cyborg")] [pick("remains","chassis","debris")]"
-			icon = 'icons/effects/blood.dmi'
+			icon = 'icons/mob/robots.dmi'
 			icon_state = "remainsrobot"
 			additional_desc = pick("Almost mistakeable for the remains of a modern cyborg.",\
 			"They are barely recognisable as anything other than a pile of waste metals.",\
