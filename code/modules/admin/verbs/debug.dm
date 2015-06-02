@@ -1121,7 +1121,7 @@ var/global/list/g_fancy_list_of_types = null
 
 //Deathsquad
 /proc/equip_deathsquad(var/mob/living/carbon/human/M, var/officer)
-	var/obj/item/device/radio/R = new /obj/item/device/radio/headset(M)
+	var/obj/item/device/radio/R = new /obj/item/device/radio/headset/heads/captain/alt(M)
 	R.set_frequency(1441)
 	M.equip_to_slot_or_del(R, slot_ears)
 
@@ -1170,7 +1170,7 @@ var/global/list/g_fancy_list_of_types = null
 
 //Emergency Response Team
 /proc/equip_emergencyresponsesquad(var/mob/living/carbon/human/M, var/ertrole)
-	var/obj/item/device/radio/R = new /obj/item/device/radio/headset(M)
+	var/obj/item/device/radio/R = new /obj/item/device/radio/headset/heads/captain/alt(M)
 	R.set_frequency(1441)
 	M.equip_to_slot_or_del(R, slot_ears)
 
