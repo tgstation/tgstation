@@ -33,7 +33,7 @@
 
 	if(spell_masters)
 		for(var/obj/screen/movable/spell_master/spell_master in spell_masters)
-			spell_master.toggle_open()
+			spell_master.toggle_open(1)
 			client.screen -= spell_master
 
 	client.reset_screen()				//remove hud items just in case
