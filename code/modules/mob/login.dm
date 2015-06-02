@@ -30,6 +30,12 @@
 
 	if(hud_used)	qdel(hud_used)		//remove the hud objects
 	client.images = null				//remove the images such as AIs being unable to see runes
+
+	if(spell_masters)
+		for(var/obj/screen/movable/spell_master/spell_master in spell_masters)
+			spell_master.toggle_open()
+			client.screen -= spell_master
+
 	client.reset_screen()				//remove hud items just in case
 	hud_used = new /datum/hud(src)
 	gui_icons = new /datum/ui_icons(src)
