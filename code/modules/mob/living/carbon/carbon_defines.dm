@@ -25,3 +25,4 @@
 	has_limbs = 1
 
 	var/remote_view = 0
+	var/is_mouse_down = null

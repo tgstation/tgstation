@@ -20,6 +20,34 @@
 		- If so, is there any protection against somebody spam-clicking a link?
 	If you have any  questions about this stuff feel free to ask. ~Carn
 	*/
+
+/client/MouseDown(object,location,control,params)
+	if(mob && prefs && prefs.autoclick_delay && object && istype(mob, /mob/living/carbon))
+		var/mob/living/carbon/C = mob
+		if(!C.get_active_hand())
+			return ..()
+		C.is_mouse_down = object
+		spawn()
+			while(C.is_mouse_down == object)
+				C.ClickOn(C.is_mouse_down, params)
+				sleep(1)
+			return
+
+/client/MouseDrag(src_object,over_object,src_location,over_location,src_control,over_control,params)
+	if(over_object)
+		MouseDown(over_object, over_location, over_control, params)
+
+/client/MouseUp(object,location,control,params)
+	if(mob)
+		if(!object)
+			var/list/modifiers = params2list(params)
+			if(modifiers["middle"])
+				mob.MiddleClickOn()
+				return
+		if(istype(mob, /mob/living/carbon))
+			var/mob/living/carbon/C = mob
+			C.is_mouse_down = null
+
 /client/Topic(href, href_list, hsrc)
 	if(!usr || usr != mob)	//stops us calling Topic for somebody else's client. Also helps prevent usr=null
 		return

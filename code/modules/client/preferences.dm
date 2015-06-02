@@ -63,6 +63,7 @@ datum/preferences
 	var/datum/species/pref_species = new /datum/species/human()	//Mutant race
 	var/mutant_color = "FFF"			//Mutant race skin color
 	var/list/custom_names = list("clown", "mime", "ai", "cyborg", "religion", "deity")
+	var/autoclick_delay = 0
 
 		//Mob preview
 	var/icon/preview_icon_front = null
@@ -253,6 +254,7 @@ datum/preferences
 			if (1) // Game Preferences
 				dat += "<table><tr><td width='340px' height='300px' valign='top'>"
 				dat += "<h2>General Settings</h2>"
+				dat += "<b>Autoclick on mouse button hold:</b> <a href='?_src_=prefs;preference=autoclick'>[autoclick_delay ? "Yes" : "No"]</a><br>"
 				dat += "<b>UI Style:</b> <a href='?_src_=prefs;preference=ui'>[UI_style]</a><br>"
 				dat += "<b>Play admin midis:</b> <a href='?_src_=prefs;preference=hear_midis'>[(toggles & SOUND_MIDI) ? "Yes" : "No"]</a><br>"
 				dat += "<b>Play lobby music:</b> <a href='?_src_=prefs;preference=lobby_music'>[(toggles & SOUND_LOBBY) ? "Yes" : "No"]</a><br>"
@@ -826,6 +828,12 @@ datum/preferences
 
 					if("hear_adminhelps")
 						toggles ^= SOUND_ADMINHELP
+
+					if("autoclick")
+						if(autoclick_delay)
+							autoclick_delay = 0
+						else
+							autoclick_delay = AUTOCLICK_DELAY
 
 					if("ui")
 						switch(UI_style)
