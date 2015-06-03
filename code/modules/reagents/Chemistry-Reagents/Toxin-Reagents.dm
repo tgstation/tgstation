@@ -255,14 +255,14 @@ datum/reagent/toxin/chloralhydrate
 
 datum/reagent/toxin/chloralhydrate/on_mob_life(var/mob/living/M as mob)
 	switch(current_cycle)
-		if(1 to 10)
+		if(1 to 5)
 			M.confused += 2
 			M.drowsyness += 2
-		if(10 to 50)
+		if(5 to 25)
 			M.sleeping += 1
-		if(51 to INFINITY)
+		if(25 to INFINITY)
 			M.sleeping += 1
-			M.adjustToxLoss((current_cycle - 50)*REM)
+			M.adjustToxLoss((current_cycle - 25)*REM)
 	..()
 	return
 
