@@ -293,7 +293,7 @@ datum/chemical_reaction/pestkiller
 	name = "Life"
 	id = "life"
 	result = null
-	required_reagents = list("strange_reagent" = 1, "synthflesh" = 1, "blood" = 1)
+	required_reagents = list("strange_reagent" = 1, "cryoxadone" = 1, "blood" = 1)
 	result_amount = 1
 	required_temp = 374
 
