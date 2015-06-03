@@ -235,9 +235,6 @@
 	flags = OPENCONTAINER
 
 /obj/item/weapon/reagent_containers/glass/bucket/attackby(var/obj/O, mob/user as mob, params)
-	if(isprox(O))
-		user << "<span class='notice'>You add [O] to [src].</span>"
-		qdel(O)
 	if(istype(O, /obj/item/weapon/mop))
 		if(reagents.total_volume < 1)
 			user << "<span class='warning'>[src] is out of water!</span>"
@@ -247,9 +244,9 @@
 			playsound(loc, 'sound/effects/slosh.ogg', 25, 1)
 	else if(isprox(O))
 		user << "<span class='notice'>You add [O] to [src].</span>"
-
-		user.put_in_hands(new /obj/item/weapon/bucket_sensor)
+		qdel(O)
 		user.unEquip(src)
 		qdel(src)
+		user.put_in_hands(new /obj/item/weapon/bucket_sensor)
 	else
 		..()
