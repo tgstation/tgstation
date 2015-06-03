@@ -732,3 +732,82 @@ datum/reagent/medicine/insulin/on_mob_life(var/mob/living/M as mob)
 	M.reagents.remove_reagent("sugar", 3)
 	..()
 	return
+ // TREK CHEMS
+datum/reagent/medicine/bicaridine
+	name = "Bicaridine"
+	id = "bicaridine"
+	description = "Heals brute damage."
+	reagent_state = LIQUID
+	color = "#C8A5DC"
+
+datum/reagent/medicine/bicaridine/on_mob_life(var/mob/living/M as mob)
+	M.adjustBruteLoss(-2*REM)
+	..()
+	return
+
+datum/reagent/medicine/dexalin
+	name = "Dexalin"
+	id = "dexalin"
+	description = "Heals oxygen damage."
+	reagent_state = LIQUID
+	color = "#C8A5DC"
+
+datum/reagent/medicine/dexalin/on_mob_life(var/mob/living/M as mob)
+	M.adjustOxyLoss(-2*REM)
+	..()
+	return
+
+datum/reagent/medicine/kelotane
+	name = "Kelotane"
+	id = "kelotane"
+	description = "Heals burn damage."
+	reagent_state = LIQUID
+	color = "#C8A5DC"
+
+datum/reagent/medicine/kelotane/on_mob_life(var/mob/living/M as mob)
+	M.adjustFireLoss(-2*REM)
+	..()
+	return
+
+datum/reagent/medicine/antitoxin
+	name = "Anti-toxin"
+	id = "antitoxin"
+	description = "Heals toxin damage."
+	reagent_state = LIQUID
+	color = "#C8A5DC"
+
+datum/reagent/medicine/antitoxin/on_mob_life(var/mob/living/M as mob)
+	M.adjustToxLoss(-2*REM)
+	..()
+	return
+
+datum/reagent/medicine/inaprovaline
+	name = "Inaprovaline"
+	id = "inaprovaline"
+	description = "Stabilizes critical condition patients."
+	reagent_state = LIQUID
+	color = "#C8A5DC"
+
+datum/reagent/medicine/inaprovaline/on_mob_life(var/mob/living/M as mob)
+	if(M.losebreath >= 5)
+		M.losebreath -= 5
+	..()
+	return
+
+datum/reagent/medicine/tricordrazine
+	name = "Tricordrazine"
+	id = "tricordrazine"
+	description = "Chance to heal 1 of each damage type."
+	reagent_state = LIQUID
+	color = "#C8A5DC"
+
+datum/reagent/medicine/tricordrazine/on_mob_life(var/mob/living/M as mob)
+	if(prob(80))
+		M.adjustBruteLoss(-1*REM)
+		M.adjustFireLoss(-1*REM)
+		M.adjustOxyLoss(-1*REM)
+		M.adjustToxLoss(-1*REM)
+	..()
+	return
+
+
