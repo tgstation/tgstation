@@ -5,7 +5,7 @@
 	circuit = /obj/item/weapon/circuitboard/security
 	var/obj/machinery/camera/current = null
 	var/last_pic = 1.0
-	var/list/network = list("SS13")
+	var/list/network = list("SS13","Helm")
 	var/mapping = 0//For the overview file, interesting bit of code.
 
 /obj/machinery/computer/security/check_eye(var/mob/user as mob)
