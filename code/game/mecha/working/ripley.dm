@@ -60,6 +60,7 @@
 	HC.attach(src)
 	for(var/obj/item/mecha_parts/mecha_tracking/B in src.contents)//Deletes the beacon so it can't be found easily
 		del (B)
+		src.tracking = null
 
 /obj/mecha/working/ripley/Exit(atom/movable/O)
 	if(O in cargo)
