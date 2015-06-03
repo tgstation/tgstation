@@ -1312,7 +1312,7 @@ obj/item/weapon/reagent_containers/food/snacks/grown/shell/eggy/add_juice()
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/tobacco/space/add_juice()
 	..()
-	reagents.add_reagent("salbutamol", 1 + round((potency / 20), 1))
+	reagents.add_reagent("dexalin", 1 + round((potency / 20), 1))
 	reagents.add_reagent("nicotine", 1 + round((potency / 20), 1))
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/tea //abstract type
