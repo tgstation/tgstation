@@ -321,6 +321,7 @@
 /datum/surgery_step/generic/cut_limb
 	allowed_tools = list(
 		/obj/item/weapon/circular_saw = 100,
+		/obj/item/weapon/kitchen/utensil/knife/large/butch = 75,
 		/obj/item/weapon/hatchet = 75,
 		)
 

@@ -12,6 +12,7 @@
 /datum/surgery_step/brain/saw_skull
 	allowed_tools = list(
 	/obj/item/weapon/circular_saw = 100, \
+	/obj/item/weapon/kitchen/utensil/knife/large/butch = 75, \
 	/obj/item/weapon/hatchet = 75
 	)
 
@@ -72,6 +73,7 @@
 /datum/surgery_step/brain/saw_spine
 	allowed_tools = list(
 	/obj/item/weapon/circular_saw = 100, \
+	/obj/item/weapon/kitchen/utensil/knife/large/butch = 75, \
 	/obj/item/weapon/hatchet = 75
 	)
 
@@ -249,6 +251,7 @@
 /datum/surgery_step/slime/saw_core
 	allowed_tools = list(
 	/obj/item/weapon/circular_saw = 100, \
+	/obj/item/weapon/kitchen/utensil/knife/large/butch = 75, \
 	/obj/item/weapon/hatchet = 75
 	)
 
