@@ -113,7 +113,7 @@ datum/reagent/medicine/dermaline
 	id = "dermaline"
 	description = "Dermaline is the next step in burn medication. Works twice as good as kelotane and enables the body to restore even the direst heat-damaged tissue."
 	color = "#C8A5DC" // rgb: 200, 165, 220
-	overdose_threshold = 40
+	overdose_threshold = 60
 
 datum/reagent/medicine/dermaline/on_mob_life(var/mob/living/M as mob)
 	if(M.stat != DEAD) //THE GUY IS **DEAD**! BEREFT OF ALL LIFE HE RESTS IN PEACE etc etc. He does NOT metabolise shit anymore, god DAMN
@@ -157,7 +157,7 @@ datum/reagent/medicine/dexalinp
 	id = "dexalinp"
 	description = "Dexalin Plus is used in the treatment of oxygen deprivation. Its highly effective."
 	color = "#C8A5DC" // rgb: 200, 165, 220
-	overdose_threshold = 30
+	overdose_threshold = 60
 
 datum/reagent/medicine/dexalinp/on_mob_life(var/mob/living/M as mob)
 	if(M.stat != DEAD)
@@ -182,7 +182,7 @@ datum/reagent/medicine/tricordrazine
 	id = "tricordrazine"
 	description = "Tricordrazine is a highly potent stimulant, originally derived from cordrazine. Can be used to treat a wide range of injuries."
 	color = "#C8A5DC" // rgb: 200, 165, 220
-	overdose_threshold = 50
+	overdose_threshold = 60
 
 datum/reagent/medicine/tricordrazine/on_mob_life(var/mob/living/M as mob)
 	if(M.stat != DEAD)
@@ -576,7 +576,7 @@ datum/reagent/medicine/omnizine/overdose_process(var/mob/living/M as mob)
 	..()
 	return
 
-datum/reagent/medicine/calomel
+datum/reagent/medicine/calomel //
 	name = "Calomel"
 	id = "calomel"
 	description = "Quickly purges the body of all chemicals. If your health is above 20, toxin damage is dealt. When you hit 20 health or lower, the damage will cease."
@@ -593,7 +593,7 @@ datum/reagent/medicine/calomel/on_mob_life(var/mob/living/M as mob)
 	..()
 	return
 
-datum/reagent/medicine/potass_iodide
+datum/reagent/medicine/potass_iodide //
 	name = "Potassium Iodide"
 	id = "potass_iodide"
 	description = "Reduces low radiation damage very effectively."
@@ -609,7 +609,7 @@ datum/reagent/medicine/potass_iodide/on_mob_life(var/mob/living/M as mob)
 	..()
 	return
 
-datum/reagent/medicine/pen_acid
+datum/reagent/medicine/pen_acid //
 	name = "Pentetic Acid"
 	id = "pen_acid"
 	description = "Reduces massive amounts of radiation and toxin damage while purging other chemicals from the body. Has a chance of dealing brute damage."
@@ -684,7 +684,7 @@ datum/reagent/medicine/perfluorodecalin/on_mob_life(var/mob/living/carbon/human/
 	..()
 	return
 */
-datum/reagent/medicine/ephedrine
+datum/reagent/medicine/ephedrine //
 	name = "Ephedrine"
 	id = "ephedrine"
 	description = "Reduces stun times, increases run speed. If overdosed it will deal toxin and oxyloss damage."
@@ -735,7 +735,7 @@ datum/reagent/medicine/ephedrine/addiction_act_stage4(var/mob/living/M as mob)
 	..()
 	return
 
-datum/reagent/medicine/diphenhydramine
+datum/reagent/medicine/diphenhydramine //
 	name = "Diphenhydramine"
 	id = "diphenhydramine"
 	description = "Purges body of lethal Histamine and reduces jitteriness while causing minor drowsiness."
@@ -751,7 +751,7 @@ datum/reagent/medicine/diphenhydramine/on_mob_life(var/mob/living/M as mob)
 	..()
 	return
 
-datum/reagent/medicine/morphine
+datum/reagent/medicine/morphine //
 	name = "Morphine"
 	id = "morphine"
 	description = "Will allow you to ignore slowdown from equipment and damage. Will eventually knock you out if you take too much. If overdosed it will cause jitteriness, dizziness, force the victim to drop items in their hands and eventually deal toxin damage."
@@ -840,7 +840,7 @@ datum/reagent/medicine/oculine/on_mob_life(var/mob/living/M as mob)
 	..()
 	return
 
-datum/reagent/medicine/atropine
+datum/reagent/medicine/atropine //
 	name = "Atropine"
 	id = "atropine"
 	description = "If patients health is below -25 it will heal 1.5 brute and burn damage per cycle, as well as stop any oxyloss. Good for stabilising critical patients."
@@ -908,7 +908,7 @@ datum/reagent/medicine/epinephrine/overdose_process(var/mob/living/M as mob)
 	..()
 	return
 */
-datum/reagent/medicine/strange_reagent
+datum/reagent/medicine/strange_reagent //
 	name = "Strange Reagent"
 	id = "strange_reagent"
 	description = "A miracle drug that can bring a dead body back to life! If the corpse has suffered too much damage, however, no change will occur to the body. If used on a living person it will deal Brute and Burn damage."
@@ -945,7 +945,7 @@ datum/reagent/medicine/strange_reagent/on_mob_life(var/mob/living/M as mob)
 	return
 
 
-datum/reagent/medicine/ryetalyn
+datum/reagent/medicine/ryetalyn //
 	name = "Ryetalyn"
 	id = "ryetalyn"
 	description = "Ryetalyn can cure all genetic abnomalities."
@@ -961,7 +961,7 @@ datum/reagent/medicine/ryetalyn/on_mob_life(mob/living/carbon/human/M)
 	..()
 	return
 
-datum/reagent/medicine/antihol
+datum/reagent/medicine/antihol //
 	name = "Antihol"
 	id = "antihol"
 	description = "Helps remove Alcohol from someone's body, as well as eliminating its side effects."
@@ -976,7 +976,7 @@ datum/reagent/medicine/antihol/on_mob_life(var/mob/living/M as mob)
 	M.adjustToxLoss(-0.2*REM)
 	..()
 
-/datum/reagent/medicine/stimulants
+/datum/reagent/medicine/stimulants //
 	name = "Stimulants"
 	id = "stimulants"
 	description = "Increases run speed and eliminates stuns, can heal minor damage. If overdosed it will deal toxin damage and stun."
@@ -1005,7 +1005,7 @@ datum/reagent/medicine/stimulants/overdose_process(var/mob/living/M as mob)
 	..()
 	return
 
-datum/reagent/medicine/insulin
+datum/reagent/medicine/insulin //
 	name = "Insulin"
 	id = "insulin"
 	description = "Increases sugar depletion rates."
