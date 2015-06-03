@@ -246,12 +246,6 @@ Class Procs:
 		return
 	if(!isturf(M.loc) && M.loc != src)
 		return
-	if(getBrainLoss() >= 60)
-		visible_message("<span class='danger'>[src] stares cluelessly at [M] and drools.</span>")
-		return
-	if(prob(getBrainLoss()))
-		src << "<span class='warning'>You momentarily forget how to use [M]!</span>"
-		return
 	return 1
 
 /mob/living/silicon/ai/canUseTopic(atom/movable/M, be_close = 0)
