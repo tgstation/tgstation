@@ -276,7 +276,21 @@
 
 	var/mob/living/carbon/human/character = create_character()	//creates the human and transfers vars and mind
 	SSjob.EquipRank(character, rank, 1)					//equips the human
-	character.loc = pick(latejoin)
+
+	var/D = pick(latejoin)
+	if(!D)
+		for(var/turf/T in get_area_turfs(/area/shuttle/arrival))
+			if(!T.density)
+				var/clear = 1
+				for(var/obj/O in T)
+					if(O.density)
+						clear = 0
+						break
+				if(clear)
+					D = T
+					continue
+
+	character.loc = D
 	character.lastarea = get_area(loc)
 
 	if(character.mind.assigned_role != "Cyborg")
