@@ -30,8 +30,8 @@ Bonus
 		var/mob/living/M = A.affected_mob
 		switch(A.stage)
 			if(4, 5)
-				if (M.reagents.get_reagent_amount("salbutamol") < 20)
-					M.reagents.add_reagent("salbutamol", 20)
+				if (M.reagents.get_reagent_amount("dexalin") < 20)
+					M.reagents.add_reagent("dexalin", 20)
 			else
 				if(prob(SYMPTOM_ACTIVATION_PROB * 5))
 					M << "<span class='notice'>[pick("Your lungs feel great.", "You are now breathing manually.", "You don't feel the need to breathe.")]</span>"

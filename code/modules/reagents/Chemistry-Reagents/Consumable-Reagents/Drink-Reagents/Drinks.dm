@@ -395,7 +395,7 @@ datum/reagent/consumable/doctor_delight
 	id = "doctorsdelight"
 	description = "A gulp a day keeps the MediBot away. That's probably for the best."
 	color = "#FF8CFF" // rgb: 255, 140, 255
-	overdose_threshold = 40
+	overdose_threshold = 55
 
 datum/reagent/consumable/doctor_delight/on_mob_life(var/mob/living/M as mob)
 	if(M.getOxyLoss() && prob(80))

@@ -160,8 +160,10 @@ var/datum/subsystem/ticker/ticker
 
 	if(!Debug2)
 		if(!can_continue)
-			del(mode)
 			world << "<B>Error setting up [master_mode].</B> Reverting to pre-game lobby."
+			log_admin("The gamemode setup for [mode.name] errored out.")
+			world.log << "The gamemode setup for [mode.name] errored out."
+			del(mode)
 			SSjob.ResetOccupations()
 			return 0
 	else

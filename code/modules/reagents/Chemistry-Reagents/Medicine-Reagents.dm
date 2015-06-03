@@ -357,6 +357,8 @@ datum/reagent/medicine/inacusiate
 
 datum/reagent/medicine/inacusiate/on_mob_life(var/mob/living/M as mob)
 	M.setEarDamage(0,0)
+	if(M.disabilities & DEAF)
+		M.disabilities &= ~DEAF
 	..()
 	return
 
