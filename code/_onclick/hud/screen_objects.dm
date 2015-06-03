@@ -26,6 +26,9 @@
 	maptext_height = 480
 	maptext_width = 480
 
+/obj/screen/proc/pool_on_reset() //This proc should be redefined to 0 for ANY obj/screen that is shared between more than 1 mob, ie storage screens
+	. = 1
+
 
 /obj/screen/inventory
 	var/slot_id	//The indentifier for the slot. It has nothing to do with ID cards.
@@ -43,6 +46,9 @@
 			var/obj/item/clothing/suit/storage/S = master
 			S.close(usr)
 	return 1
+
+/obj/screen/close/pool_on_reset()
+	. = 0
 
 
 /obj/screen/item_action
@@ -103,6 +109,9 @@
 			master.attackby(I, usr, params)
 			//usr.next_move = world.time+2
 	return 1
+
+/obj/screen/storage/pool_on_reset()
+	. = 0
 
 /obj/screen/gun
 	name = "gun"
@@ -750,5 +759,6 @@
 
 client/proc/reset_screen()
 	for(var/obj/screen/objects in src.screen)
-		returnToPool(objects)
+		if(objects.pool_on_reset())
+			returnToPool(objects)
 	src.screen = null
