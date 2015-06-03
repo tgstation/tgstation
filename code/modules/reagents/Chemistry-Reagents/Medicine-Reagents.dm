@@ -755,7 +755,7 @@ datum/reagent/medicine/morphine
 	description = "Will allow you to ignore slowdown from equipment and damage. Will eventually knock you out if you take too much. If overdosed it will cause jitteriness, dizziness, force the victim to drop items in their hands and eventually deal toxin damage."
 	reagent_state = LIQUID
 	color = "#C8A5DC"
-	metabolization_rate = 2 * REAGENTS_METABOLISM //WAKE ME UP INSIDE
+	metabolization_rate = REAGENTS_METABOLISM //WAKE ME UP INSIDE
 	overdose_threshold = 30
 	addiction_threshold = 25
 
