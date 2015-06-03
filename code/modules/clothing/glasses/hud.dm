@@ -20,13 +20,11 @@
 		emagged = 1
 		desc = desc + " The display flickers slightly."
 
-/obj/item/clothing/glasses/hud/attackby(obj/item/weapon/W as obj, mob/user as mob)
-	..()
-	if(istype(W, /obj/item/weapon/card/emag))
-		if(emagged == 0)
-			emagged = 1
-			user << "<span class='warning'>PZZTTPFFFT</span>"
-			desc = desc + " The display flickers slightly."
+/obj/item/clothing/glasses/hud/emag_act(mob/user)
+	if(emagged == 0)
+		emagged = 1
+		user << "<span class='warning'>PZZTTPFFFT</span>"
+		desc = desc + " The display flickers slightly."
 
 
 
@@ -75,13 +73,11 @@
 		emagged = 1
 		desc = desc + " The display flickers slightly."
 
-/obj/item/clothing/glasses/hud/security/sunglasses/attackby(obj/item/weapon/W as obj, mob/user as mob)
-	..()
-	if(istype(W, /obj/item/weapon/card/emag))
-		if(emagged == 0)
-			emagged = 1
-			user << "<span class='warning'>PZZTTPFFFT</span>"
-			desc = desc + " The display flickers slightly."
+/obj/item/clothing/glasses/hud/security/sunglasses/emag_act(mob/user)
+	if(emagged == 0)
+		emagged = 1
+		user << "<span class='warning'>PZZTTPFFFT</span>"
+		desc = desc + " The display flickers slightly."
 
 
 /obj/item/clothing/glasses/hud/security/sunglasses/gars
