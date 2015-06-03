@@ -1,9 +1,9 @@
 /datum/mapGeneratorModule/bottomLayer/shuttleFloor
-	spawnableTurfs = list(/turf/simulated/shuttle/floor = 100)
+	spawnableTurfs = list(/turf/simulated/floor/plasteel/shuttle = 100)
 
 /datum/mapGeneratorModule/border/shuttleWalls
 	spawnableAtoms = list()
-	spawnableTurfs = list(/turf/simulated/shuttle/wall = 100)
+	spawnableTurfs = list(/turf/simulated/wall/shuttle = 100)
 // Generators
 
 /datum/mapGenerator/shuttle/full 

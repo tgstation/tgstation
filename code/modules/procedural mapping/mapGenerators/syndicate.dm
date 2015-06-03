@@ -1,10 +1,10 @@
 // Modules
 
-/turf/simulated/shuttle/floor/syndicate //TODO: move to proper file/replace syndie shuttle turfs
-	icon_state = "floor4"
+/turf/simulated/floor/plasteel/shuttle/red/syndicate
+	name = "floor" //Not Brig Floor
 
 /datum/mapGeneratorModule/bottomLayer/syndieFloor
-	spawnableTurfs = list(/turf/simulated/shuttle/floor/syndicate = 100)
+	spawnableTurfs = list(/turf/simulated/floor/plasteel/shuttle/red/syndicate = 100)
 
 /datum/mapGeneratorModule/border/syndieWalls
 	spawnableAtoms = list()
