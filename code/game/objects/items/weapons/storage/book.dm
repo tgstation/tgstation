@@ -70,6 +70,7 @@ var/global/list/bibleitemstates =	list("bible", "koran", "scrapbook", "bible", "
 		if("honk1","honk2")
 			new /obj/item/weapon/bikehorn(B)
 			H.dna.add_mutation(CLOWNMUT)
+			H.equip_to_slot_or_del(new /obj/item/clothing/mask/gas/clown_hat(H), slot_wear_mask)
 
 		if("bible")
 			for(var/area/chapel/main/A in world)
