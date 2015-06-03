@@ -178,7 +178,16 @@ var/list/uplink_items = list()
 	desc = "The Minibomb is a grenade with a five-second fuse."
 	item = /obj/item/weapon/grenade/syndieminibomb
 	cost = 6
+	
+/datum/uplink_item/dangerous/grenade_launcher
+	name = "Syndicate Grenade Launcher"
+	desc = "A 6-cylinder grenade launcher used for rapid delivery of multiple grenades to a target area. Comes unloaded."
+	item = /obj/item/weapon/gun/grenadelauncher
+	cost = 25
+	gamemodes = list(/datum/game_mode/nuclear)
+	surplus = 2
 
+	
 /datum/uplink_item/dangerous/foamsmg
 	name = "Toy Submachine Gun"
 	desc = "A fully-loaded Donksoft bullpup submachine gun that fires riot grade rounds with a 20-round magazine."
