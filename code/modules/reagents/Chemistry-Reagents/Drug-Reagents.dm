@@ -21,6 +21,19 @@ datum/reagent/drug/space_drugs/on_mob_life(var/mob/living/M as mob)
 		M.emote(pick("twitch","drool","moan","giggle"))
 	..()
 	return
+
+datum/reagent/drug/serotrotium
+	name = "Serotrotium"
+	id = "serotrotium"
+	description = "A chemical compound that promotes concentrated production of the serotonin neurotransmitter in humans."
+	color = "#202040" // rgb: 20, 20, 40
+	metabolization_rate = 0.25 * REAGENTS_METABOLISM
+
+datum/reagent/serotrotium/on_mob_life(var/mob/living/M as mob)
+	if(ishuman(M))
+		if(prob(7)) M.emote(pick("twitch","drool","moan","gasp"))
+	..()
+	return
 /*
 datum/reagent/drug/space_drugs/overdose_process(var/mob/living/M as mob)
 	if(prob(20))

@@ -308,6 +308,8 @@ obj/item/device/flashlight/lamp/bananalamp
 	return
 
 /obj/item/device/flashlight/emp/afterattack(atom/A as mob|obj, mob/user, proximity)
+	if(A.loc == user || !check_allowed_items(A)) //why isn't this the default behaviour
+		return
 	if(!proximity) return
 	if (emp_cur_charges > 0)
 		emp_cur_charges -= 1

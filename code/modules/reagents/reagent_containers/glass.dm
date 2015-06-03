@@ -207,21 +207,21 @@
 /obj/item/weapon/reagent_containers/glass/beaker/slime
 	list_reagents = list("slimejelly" = 50)
 
-/obj/item/weapon/reagent_containers/glass/beaker/large/styptic
-	name = "styptic reserve tank"
-	list_reagents = list("styptic_powder" = 50)
+/obj/item/weapon/reagent_containers/glass/beaker/large/bicaridine
+	name = "bicaridine reserve tank"
+	list_reagents = list("bicaridine" = 50)
 
-/obj/item/weapon/reagent_containers/glass/beaker/large/silver_sulfadiazine
-	name = "silver sulfadiazine reserve tank"
-	list_reagents = list("silver_sulfadiazine" = 50)
+/obj/item/weapon/reagent_containers/glass/beaker/large/kelotane
+	name = "kelotane reserve tank"
+	list_reagents = list("kelotane" = 50)
 
-/obj/item/weapon/reagent_containers/glass/beaker/large/charcoal
+/obj/item/weapon/reagent_containers/glass/beaker/large/antitoxin
 	name = "antitoxin reserve tank"
-	list_reagents = list("charcoal" = 50)
+	list_reagents = list("antitoxin" = 50)
 
-/obj/item/weapon/reagent_containers/glass/beaker/large/epinephrine
-	name = "epinephrine reserve tank"
-	list_reagents = list("epinephrine" = 50)
+/obj/item/weapon/reagent_containers/glass/beaker/large/inaprovaline
+	name = "inaprovaline reserve tank"
+	list_reagents = list("inaprovaline" = 50)
 
 /obj/item/weapon/reagent_containers/glass/bucket
 	name = "bucket"

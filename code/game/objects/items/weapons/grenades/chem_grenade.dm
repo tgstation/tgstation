@@ -272,7 +272,7 @@
 
 	B1.reagents.add_reagent("aluminium", 30)
 	B2.reagents.add_reagent("foaming_agent", 10)
-	B2.reagents.add_reagent("facid", 10)
+	B2.reagents.add_reagent("pacid", 10)
 
 	beakers += B1
 	beakers += B2
@@ -352,17 +352,17 @@
 	beakers += B2
 
 
-/obj/item/weapon/grenade/chem_grenade/facid
+/obj/item/weapon/grenade/chem_grenade/pacid
 	name = "acid grenade"
 	desc = "Used for melting armoured opponents."
 	stage = READY
 
-/obj/item/weapon/grenade/chem_grenade/facid/New()
+/obj/item/weapon/grenade/chem_grenade/pacid/New()
 	..()
 	var/obj/item/weapon/reagent_containers/glass/beaker/B1 = new(src)
 	var/obj/item/weapon/reagent_containers/glass/beaker/B2 = new(src)
 
-	B1.reagents.add_reagent("facid", 25)
+	B1.reagents.add_reagent("pacid", 25)
 	B1.reagents.add_reagent("potassium", 25)
 	B2.reagents.add_reagent("phosphorus", 25)
 	B2.reagents.add_reagent("sugar", 25)

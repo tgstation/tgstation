@@ -16,12 +16,12 @@
 	new /obj/item/weapon/reagent_containers/glass/bottle/toxin(src)
 	new /obj/item/weapon/reagent_containers/glass/bottle/morphine(src)
 	new /obj/item/weapon/reagent_containers/glass/bottle/morphine(src)
-	new /obj/item/weapon/reagent_containers/glass/bottle/epinephrine(src)
-	new /obj/item/weapon/reagent_containers/glass/bottle/epinephrine(src)
-	new /obj/item/weapon/reagent_containers/glass/bottle/epinephrine(src)
-	new /obj/item/weapon/reagent_containers/glass/bottle/charcoal(src)
-	new /obj/item/weapon/reagent_containers/glass/bottle/charcoal(src)
-	new /obj/item/weapon/reagent_containers/glass/bottle/charcoal(src)
+	new /obj/item/weapon/reagent_containers/glass/bottle/inaprovaline(src)
+	new /obj/item/weapon/reagent_containers/glass/bottle/inaprovaline(src)
+	new /obj/item/weapon/reagent_containers/glass/bottle/inaprovaline(src)
+	new /obj/item/weapon/reagent_containers/glass/bottle/antitoxin(src)
+	new /obj/item/weapon/reagent_containers/glass/bottle/antitoxin(src)
+	new /obj/item/weapon/reagent_containers/glass/bottle/antitoxin(src)
 	new /obj/item/weapon/storage/box/rxglasses(src)
 	return
 

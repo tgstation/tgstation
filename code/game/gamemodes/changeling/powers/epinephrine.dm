@@ -1,5 +1,5 @@
 /obj/effect/proc_holder/changeling/epinephrine
-	name = "Epinephrine Overdose"
+	name = "Epinephrine Overdose" //THIS IS NOT EVEN EPINEPHRINE WHAT THE FUCK GOOFCHEM
 	desc = "We evolve additional sacs of adrenaline throughout our body."
 	helptext = "Removes all stuns instantly and adds a short-term reduction in further stuns. Can be used while unconscious. Continued use poisons the body."
 	chemical_cost = 30

@@ -90,7 +90,6 @@
 	modules += new /obj/item/device/flashlight(src)
 	modules += new /obj/item/device/healthanalyzer(src)
 	modules += new /obj/item/weapon/reagent_containers/borghypo(src)
-	modules += new /obj/item/weapon/reagent_containers/borghypo/patcher(src)
 	modules += new /obj/item/weapon/reagent_containers/glass/beaker/large(src)
 	modules += new /obj/item/weapon/reagent_containers/dropper(src)
 	modules += new /obj/item/weapon/reagent_containers/syringe(src)
@@ -109,7 +108,7 @@
 	emag = new /obj/item/weapon/reagent_containers/spray(src)
 
 
-	emag.reagents.add_reagent("facid", 250)
+	emag.reagents.add_reagent("pacid", 250)
 	emag.name = "Fluacid spray"
 
 	var/obj/item/weapon/reagent_containers/spray/S = emag

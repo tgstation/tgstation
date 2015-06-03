@@ -3,7 +3,7 @@
 	name = "Sterilizine"
 	id = "sterilizine"
 	result = "sterilizine"
-	required_reagents = list("ethanol" = 1, "charcoal" = 1, "chlorine" = 1)
+	required_reagents = list("ethanol" = 1, "anti_toxin" = 1, "chlorine" = 1)
 	result_amount = 3
 
 /datum/chemical_reaction/lube
@@ -38,8 +38,8 @@
 	name = "Sodium Chloride"
 	id = "sodiumchloride"
 	result = "sodiumchloride"
-	required_reagents = list("water" = 1, "sodium" = 1, "chlorine" = 1)
-	result_amount = 3
+	required_reagents = list("sodium" = 1, "chlorine" = 1)
+	result_amount = 2
 
 /datum/chemical_reaction/plasmasolidification
 	name = "Solid Plasma"
@@ -158,7 +158,7 @@
 	name = "Metal Foam"
 	id = "metalfoam"
 	result = null
-	required_reagents = list("aluminium" = 3, "foaming_agent" = 1, "facid" = 1)
+	required_reagents = list("aluminium" = 3, "foaming_agent" = 1, "pacid" = 1)
 	result_amount = 5
 	mob_react = 1
 
@@ -177,7 +177,7 @@
 	name = "Iron Foam"
 	id = "ironlfoam"
 	result = null
-	required_reagents = list("iron" = 3, "foaming_agent" = 1, "facid" = 1)
+	required_reagents = list("iron" = 3, "foaming_agent" = 1, "pacid" = 1)
 	result_amount = 5
 	mob_react = 1
 

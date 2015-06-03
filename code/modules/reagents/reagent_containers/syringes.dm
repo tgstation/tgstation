@@ -204,15 +204,15 @@
 		filling.color = mix_color_from_reagents(reagents.reagent_list)
 		overlays += filling
 
-/obj/item/weapon/reagent_containers/syringe/epinephrine
-	name = "syringe (epinephrine)"
-	desc = "Contains epinephrine - used to stabilize patients."
-	list_reagents = list("epinephrine" = 15)
+/obj/item/weapon/reagent_containers/syringe/inaprovaline
+	name = "syringe (inaprovaline)"
+	desc = "Contains inaprovaline - used to stabilize patients."
+	list_reagents = list("inaprovaline" = 15)
 
-/obj/item/weapon/reagent_containers/syringe/charcoal
-	name = "syringe (charcoal)"
-	desc = "Contains charcoal."
-	list_reagents = list("charcoal" = 15)
+/obj/item/weapon/reagent_containers/syringe/antitoxin
+	name = "syringe (anti-toxin)"
+	desc = "Contains anti-toxins."
+	list_reagents = list("anti_toxin" = 15)
 
 /obj/item/weapon/reagent_containers/syringe/antiviral
 	name = "syringe (spaceacillin)"
