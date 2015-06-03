@@ -186,6 +186,11 @@
 //////////////////////////////////////////////////////////////////
 //				CHEST INTERNAL ORGAN SURGERY					//
 //////////////////////////////////////////////////////////////////
+/datum/surgery_step/ribcage/fix_chest_internal/tool_quality(obj/item/tool)
+	. = ..()
+	if(!tool.is_sharp())
+		return 0
+
 /datum/surgery_step/ribcage/fix_chest_internal
 	allowed_tools = list(
 	/obj/item/weapon/scalpel = 100,		\

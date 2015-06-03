@@ -37,10 +37,9 @@
 
 /obj/effect/plantsegment/attackby(obj/item/weapon/W as obj, mob/user as mob)
 	if (!W || !user || !W.type) return
-	switch(W.type)
+	switch(W.type) //This is absolutely terrible AND copypasted from biomass (or other way around)
 		if(/obj/item/weapon/circular_saw) qdel(src)
 		if(/obj/item/weapon/kitchen/utensil/knife) qdel(src)
-		if(/obj/item/weapon/scalpel) qdel(src)
 		if(/obj/item/weapon/fireaxe) qdel(src)
 		if(/obj/item/weapon/hatchet) qdel(src)
 		if(/obj/item/weapon/melee/energy) qdel(src)
@@ -55,6 +54,7 @@
 		// Weapons with subtypes
 		else
 			if(istype(W, /obj/item/weapon/melee/energy/sword)) qdel(src)
+			else if(istype(W, /obj/item/weapon/scalpel)) qdel(src)
 			else if(istype(W, /obj/item/weapon/weldingtool))
 				var/obj/item/weapon/weldingtool/WT = W
 				if(WT.remove_fuel(0, user)) qdel(src)

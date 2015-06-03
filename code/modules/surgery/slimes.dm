@@ -12,6 +12,11 @@
 
 
 //////CUT FLESH//////
+/datum/surgery_step/slime/cut_flesh/tool_quality(obj/item/tool)
+	. = ..()
+	if(!tool.is_sharp())
+		return 0
+
 /datum/surgery_step/slime/cut_flesh
 	allowed_tools = list(
 		/obj/item/weapon/scalpel = 100,
@@ -41,6 +46,11 @@
 
 
 //////CUT INNARDS///////
+/datum/surgery_step/slime/cut_innards/tool_quality(obj/item/tool)
+	. = ..()
+	if(!tool.is_sharp())
+		return 0
+
 /datum/surgery_step/slime/cut_innards
 	allowed_tools = list(
 		/obj/item/weapon/scalpel = 100,

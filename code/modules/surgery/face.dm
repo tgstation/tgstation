@@ -16,6 +16,11 @@
 
 
 ///////CUT FACE/////////
+/datum/surgery_step/generic/cut_face/tool_quality(obj/item/tool)
+	. = ..()
+	if(!tool.is_sharp())
+		return 0
+
 /datum/surgery_step/generic/cut_face
 	allowed_tools = list(
 		/obj/item/weapon/scalpel = 100,
@@ -121,6 +126,7 @@
 /datum/surgery_step/face/cauterize
 	allowed_tools = list(
 		/obj/item/weapon/cautery = 100,
+		/obj/item/weapon/scalpel/laser = 100,
 		/obj/item/clothing/mask/cigarette = 75,
 		/obj/item/weapon/lighter = 50,
 		/obj/item/weapon/weldingtool = 25,

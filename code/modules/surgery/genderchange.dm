@@ -32,6 +32,11 @@
 
 
 //////RESHAPE GENITALS//////
+/datum/surgery_step/reshape_genitals/tool_quality(obj/item/tool)
+	. = ..()
+	if(!tool.is_sharp())
+		return 0
+
 /datum/surgery_step/reshape_genitals
 	allowed_tools = list(
 		/obj/item/weapon/scalpel = 100,

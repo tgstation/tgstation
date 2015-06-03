@@ -57,6 +57,11 @@
 
 
 //////FIX DEAD TISSUE/////
+/datum/surgery_step/fix_dead_tissue/tool_quality(obj/item/tool)
+	. = ..()
+	if(!tool.is_sharp())
+		return 0
+
 /datum/surgery_step/fix_dead_tissue		//Debridement
 	priority = 2
 	allowed_tools = list(

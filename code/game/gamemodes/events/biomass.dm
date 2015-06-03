@@ -27,12 +27,10 @@
 	if (!W || !user || !W.type)
 		return
 
-	switch(W.type)
+	switch(W.type) //This is absolutely terrible
 		if(/obj/item/weapon/circular_saw)
 			qdel(src)
 		if(/obj/item/weapon/kitchen/utensil/knife)
-			qdel(src)
-		if(/obj/item/weapon/scalpel)
 			qdel(src)
 		if(/obj/item/weapon/fireaxe)
 			qdel(src)
@@ -52,6 +50,8 @@
 
 		else // weapons with subtypes
 			if(istype(W, /obj/item/weapon/melee/energy/sword))
+				qdel(src)
+			else if(istype(W, /obj/item/weapon/scalpel))
 				qdel(src)
 			else if(istype(W, /obj/item/weapon/weldingtool))
 				var/obj/item/weapon/weldingtool/WeldingTool = W

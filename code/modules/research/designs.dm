@@ -2114,43 +2114,33 @@ k
 
 /datum/design/laserscalpel1
 	name = "Laser Scalpel"
-	desc = "A scalpel augmented with a directed laser, allowing for bloodless incisions."
+	desc = "A scalpel augmented with a directed laser, allowing for bloodless incisions and built-in cautery."
 	id = "laserscalpel1"
 	req_tech = list("materials" = 3, "engineering" = 2, "biotech" = 2)
 	build_type = PROTOLATHE
-	materials = list ("$iron" = 10000, "$glass" = 5000, "$plasma" = 500)
+	materials = list ("$iron" = 10000, "$glass" = 5000)
 	category = "Medical"
-	build_path = /obj/item/weapon/scalpel/laser1
+	build_path = /obj/item/weapon/scalpel/laser/tier1
 
 /datum/design/laserscalpel2
-	name = "Augmented Laser Scalpel"
-	desc = "A scalpel augmented with a directed laser, allowing for bloodless incisions."
-	id = "laserscalpel2"
-	req_tech = list("materials" = 3, "engineering" = 2, "biotech" = 3)
-	build_type = PROTOLATHE
-	materials = list ("$iron" = 10000, "$glass" = 5000, "$gold" = 500)
-	category = "Medical"
-	build_path = /obj/item/weapon/scalpel/laser2
-
-/datum/design/laserscalpel3
 	name = "High Precision Laser Scalpel"
-	desc = "A scalpel augmented with a directed laser, allowing for bloodless incisions."
-	id = "laserscalpel3"
+	desc = "A scalpel augmented with a directed laser, allowing for bloodless incisions and built-in cautery."
+	id = "laserscalpel2"
 	req_tech = list("materials" = 4, "engineering" = 3, "biotech" = 4)
 	build_type = PROTOLATHE
 	materials = list ("$iron" = 10000, "$glass" = 5000, "$uranium" = 500)
 	category = "Medical"
-	build_path = /obj/item/weapon/scalpel/laser3
+	build_path = /obj/item/weapon/scalpel/laser/tier2
 
-/datum/design/managerscalpel
+/datum/design/incisionmanager
 	name = "Incision Management System"
 	desc = "A true extension of the surgeon's body, this marvel instantly cuts the organ, clamp any bleeding, and retract the skin, allowing for the immediate commencement of therapeutic steps."
-	id = "managerscalpel"
+	id = "incisionmanager"
 	req_tech = list("materials" = 5, "engineering" = 4, "biotech" = 5)
 	build_type = PROTOLATHE
-	materials = list ("$iron" = 10000, "$glass" = 5000, "$diamond" = 500)
+	materials = list ("$iron" = 10000, "$glass" = 5000, "$uranium" = 250, "$silver" = 500)
 	category = "Medical"
-	build_path = /obj/item/weapon/scalpel/manager
+	build_path = /obj/item/weapon/retractor/manager
 
 /////////////////////////////////////////
 /////////////////Weapons/////////////////

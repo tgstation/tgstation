@@ -36,6 +36,11 @@
 		"<span class='warning'>Your hand slips, cracking [target]'s skull with \the [tool]!</span>" )
 		target.apply_damage(max(10, tool.force), BRUTE, "head")
 
+/datum/surgery_step/brain/cut_brain/tool_quality(obj/item/tool)
+	. = ..()
+	if(!tool.is_sharp())
+		return 0
+
 /datum/surgery_step/brain/cut_brain
 	allowed_tools = list(
 	/obj/item/weapon/scalpel = 100,		\
@@ -179,6 +184,11 @@
 	can_use(mob/living/user, mob/living/carbon/slime/target, target_zone, obj/item/tool)
 		return istype(target, /mob/living/carbon/slime/) && target.stat == 2
 
+/datum/surgery_step/slime/cut_flesh/tool_quality(obj/item/tool)
+	. = ..()
+	if(!tool.is_sharp())
+		return 0
+
 /datum/surgery_step/slime/cut_flesh
 	allowed_tools = list(
 	/obj/item/weapon/scalpel = 100,		\
@@ -204,6 +214,11 @@
 	fail_step(mob/living/user, mob/living/carbon/slime/target, target_zone, obj/item/tool)
 		user.visible_message("<span class='warning'>[user]'s hand slips, tearing [target]'s flesh with \the [tool]!</span>", \
 		"<span class='warning'>Your hand slips, tearing [target]'s flesh with \the [tool]!</span>")
+
+/datum/surgery_step/slime/cut_innards/tool_quality(obj/item/tool)
+	. = ..()
+	if(!tool.is_sharp())
+		return 0
 
 /datum/surgery_step/slime/cut_innards
 	allowed_tools = list(
