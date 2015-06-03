@@ -59,7 +59,7 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 /*I am far too lazy to make it a proper list of areas so I'll just make it run the usual telepot routine at the start of the game*/
 var/list/teleportlocs = list()
 
-proc/process_teleport_locs()
+/proc/process_teleport_locs()
 	for(var/area/AR in world)
 		if(istype(AR, /area/shuttle) || istype(AR, /area/wizard_station)) continue
 		if(teleportlocs.Find(AR.name)) continue

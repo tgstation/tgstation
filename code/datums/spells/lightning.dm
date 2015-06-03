@@ -40,7 +40,7 @@
 				Discharge()
 			sleep(1)
 
-obj/effect/proc_holder/spell/targeted/lightning/proc/Reset(mob/user = usr)
+/obj/effect/proc_holder/spell/targeted/lightning/proc/Reset(mob/user = usr)
 	ready = 0
 	energy = 0
 	if(halo)

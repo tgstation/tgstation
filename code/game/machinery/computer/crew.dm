@@ -33,7 +33,7 @@
 		return
 
 
-proc/crewmonitor(mob/user,var/atom/source)
+/proc/crewmonitor(mob/user,var/atom/source)
 	var/jobs[0]
 	jobs["Captain"] = 00
 	jobs["Head of Personnel"] = 50
@@ -138,7 +138,7 @@ proc/crewmonitor(mob/user,var/atom/source)
 	popup.open()
 
 
-proc/crewscan()
+/proc/crewscan()
 	var/list/tracked = list()
 	for(var/mob/living/carbon/human/H in mob_list)
 		if(istype(H.w_uniform, /obj/item/clothing/under))

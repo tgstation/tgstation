@@ -95,7 +95,7 @@
 /obj/item/weapon/katana/IsShield()
 		return 1
 
-obj/item/weapon/wirerod
+/obj/item/weapon/wirerod
 	name = "wired rod"
 	desc = "A rod with some wire wrapped around the top. It'd be easy to attach something to the top bit."
 	icon_state = "wiredrod"
@@ -107,7 +107,7 @@ obj/item/weapon/wirerod
 	m_amt = 1875
 	attack_verb = list("hit", "bludgeoned", "whacked", "bonked")
 
-obj/item/weapon/wirerod/attackby(var/obj/item/I, mob/user as mob, params)
+/obj/item/weapon/wirerod/attackby(var/obj/item/I, mob/user as mob, params)
 	..()
 	if(istype(I, /obj/item/weapon/shard))
 		var/obj/item/weapon/twohanded/spear/S = new /obj/item/weapon/twohanded/spear

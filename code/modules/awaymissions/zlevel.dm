@@ -1,4 +1,4 @@
-proc/createRandomZlevel()
+/proc/createRandomZlevel()
 	if(awaydestinations.len)	//crude, but it saves another var!
 		return
 

@@ -217,7 +217,7 @@
 		toggle_drying(1)
 	update_icon()
 
-obj/machinery/smartfridge/drying_rack/load() //For updating the filled overlay
+/obj/machinery/smartfridge/drying_rack/load() //For updating the filled overlay
 	..()
 	update_icon()
 
