@@ -329,6 +329,7 @@
 	rightandwrong(0, user, 0)
 	book.uses += 1
 	active = 1
+	playsound(get_turf(user),"sound/magic/CastSummon.ogg",50,1)
 	user << "<span class='notice'>You have cast summon guns and gained an extra charge for your spellbook.</span>"
 	return 1
 
@@ -347,6 +348,7 @@
 	rightandwrong(1, user, 0)
 	book.uses += 1
 	active = 1
+	playsound(get_turf(user),"sound/magic/CastSummon.ogg",50,1)
 	user << "<span class='notice'>You have cast summon magic and gained an extra charge for your spellbook.</span>"
 	return 1
 
@@ -364,6 +366,7 @@
 	feedback_add_details("wizard_spell_learned",log_name)
 	summonevents()
 	times++
+	playsound(get_turf(user),"sound/magic/CastSummon.ogg",50,1)
 	user << "<span class='notice'>You have cast summon events.</span>"
 	return 1
 
