@@ -51,8 +51,8 @@ var/global/list/borer_detached_verbs = list(
 	var/cost = 1 // Per unit delivered.
 	var/dose_size = 15
 
-/datum/borer_chem/omnizine
-	name = "omnizine"
+/datum/borer_chem/tricordrazine
+	name = "tricordrazine"
 	cost = 3
 
 ///datum/borer_chem/salglu
@@ -61,21 +61,17 @@ var/global/list/borer_detached_verbs = list(
 ///datum/borer_chem/tramadol
 //	name = "tramadol"
 
-///datum/borer_chem/alkysine
-//	name = "alkysine"
-//	cost = 0
-
-/datum/borer_chem/mannitol
-	name = "mannitol"
+/datum/borer_chem/alkysine
+	name = "alkysine"
 	cost = 0
 
-/datum/borer_chem/hotline
-	name = "hotline"
-	cost = 2
-	dose_size = 5
+///datum/borer_chem/hotline
+//	name = "hotline"
+//	cost = 2
+//	dose_size = 5
 
-///datum/borer_chem/hyperzine
-//	name = "hyperzine"
+/datum/borer_chem/hyperzine
+	name = "hyperzine"
 
 var/global/borer_chem_types = typesof(/datum/borer_chem) - /datum/borer_chem
 
@@ -374,7 +370,7 @@ var/global/borer_chem_types = typesof(/datum/borer_chem) - /datum/borer_chem
 /mob/living/simple_animal/borer/proc/damage_brain()
 	set category = "Borer"
 	set name = "Retard Host"
-	set desc = "Give the host a bit of brain damage.  Can be healed with mannitol."
+	set desc = "Give the host a bit of brain damage.  Can be healed with alkysine."
 
 	if(!host)
 		src << "You are not inside a host body."

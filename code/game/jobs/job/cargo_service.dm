@@ -79,12 +79,12 @@ Shaft Miner
 		H.equip_to_slot_or_del(new /obj/item/weapon/crowbar(H), slot_belt)
 		H.equip_to_slot_or_del(new /obj/item/weapon/storage/bag/ore(H), slot_l_store)
 		H.equip_to_slot_or_del(new /obj/item/weapon/mining_voucher(H), slot_l_hand)
-		H.equip_to_slot_or_del(new /obj/item/weapon/reagent_containers/pill/patch/styptic(H), slot_r_store)
+		H.equip_to_slot_or_del(new /obj/item/weapon/reagent_containers/pill/patch/bicaridine(H), slot_r_store)
 	else
 		H.equip_to_slot_or_del(new /obj/item/weapon/crowbar(H), slot_in_backpack)
 		H.equip_to_slot_or_del(new /obj/item/weapon/storage/bag/ore(H), slot_in_backpack)
 		H.equip_to_slot_or_del(new /obj/item/weapon/mining_voucher(H), slot_in_backpack)
-		H.equip_to_slot_or_del(new /obj/item/weapon/reagent_containers/pill/patch/styptic(H), slot_l_store)
+		H.equip_to_slot_or_del(new /obj/item/weapon/reagent_containers/pill/patch/bicaridine(H), slot_l_store)
 
 /*
 Bartender

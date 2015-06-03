@@ -144,7 +144,7 @@
 
 	//CRIT
 	if(!breath || (breath.total_moles() == 0))
-		if(reagents.has_reagent("epinephrine"))
+		if(reagents.has_reagent("inaprovaline"))
 			return
 		adjustOxyLoss(1)
 		failed_last_breath = 1

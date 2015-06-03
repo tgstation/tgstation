@@ -92,49 +92,66 @@
 	icon_state = "pill8"
 	list_reagents = list("morphine" = 30)
 	roundstart = 1
+/obj/item/weapon/reagent_containers/pill/stoxin
+	name = "morphine pill"
+	desc = "Commonly used to treat insomnia."
+	icon_state = "pill8"
+	list_reagents = list("stoxin" = 30)
+	roundstart = 1
 /obj/item/weapon/reagent_containers/pill/stimulant
 	name = "stimulant pill"
 	desc = "Often taken by overworked employees, athletes, and the inebriated. You'll snap to attention immediately!"
 	icon_state = "pill19"
-	list_reagents = list("ephedrine" = 10, "ethylredoxrazine" = 10, "coffee" = 30)
+	list_reagents = list("ephedrine" = 10, "ethylredoxrazine" = 10, "coffee" = 30) //>goofchem
 	roundstart = 1
-/obj/item/weapon/reagent_containers/pill/salbutamol
-	name = "salbutamol pill"
+/obj/item/weapon/reagent_containers/pill/dexalin
+	name = "dexalin pill"
 	desc = "Used to treat oxygen deprivation."
 	icon_state = "pill18"
-	list_reagents = list("salbutamol" = 30)
+	list_reagents = list("dexalin" = 30)
 	roundstart = 1
-/obj/item/weapon/reagent_containers/pill/charcoal
+/obj/item/weapon/reagent_containers/pill/antitoxin
 	name = "antitoxin pill"
 	desc = "Neutralizes many common toxins."
 	icon_state = "pill17"
-	list_reagents = list("charcoal" = 50)
+	list_reagents = list("anti_toxin" = 50)
 	roundstart = 1
-/obj/item/weapon/reagent_containers/pill/epinephrine
-	name = "epinephrine pill"
+/obj/item/weapon/reagent_containers/pill/inaprovaline
+	name = "inaprovaline pill"
 	desc = "Used to stabilize patients."
 	icon_state = "pill5"
-	list_reagents = list("epinephrine" = 15)
+	list_reagents = list("inaprovaline" = 15)
 	roundstart = 1
-/obj/item/weapon/reagent_containers/pill/mannitol
-	name = "mannitol pill"
+/obj/item/weapon/reagent_containers/pill/alkysine
+	name = "alkysine pill"
 	desc = "Used to treat brain damage."
 	icon_state = "pill17"
-	list_reagents = list("mannitol" = 50)
+	list_reagents = list("alkysine" = 50)
 	roundstart = 1
-/obj/item/weapon/reagent_containers/pill/mutadone
-	name = "mutadone pill"
+/obj/item/weapon/reagent_containers/pill/ryetalyn
+	name = "ryetalyn pill"
 	desc = "Used to treat genetic damage."
 	icon_state = "pill20"
-	list_reagents = list("mutadone" = 50)
+	list_reagents = list("ryetalyn" = 50)
 	roundstart = 1
-/obj/item/weapon/reagent_containers/pill/salicyclic
-	name = "salicylic acid pill"
-	desc = "Used to dull pain."
+/obj/item/weapon/reagent_containers/pill/kelotane
+	name = "kelotane pill"
+	desc = "Used to treat burns."
 	icon_state = "pill5"
-	list_reagents = list("sal_acid" = 24)
+	list_reagents = list("kelotane" = 50)
 	roundstart = 1
-
+/obj/item/weapon/reagent_containers/pill/dermaline
+	name = "dermaline pill"
+	desc = "Used to treat severe burns."
+	icon_state = "pill5"
+	list_reagents = list("kelotane" = 25)
+	roundstart = 1
+/obj/item/weapon/reagent_containers/pill/bicaridine
+	name = "dermaline pill"
+	desc = "Used to treat physical injuries."
+	icon_state = "pill5"
+	list_reagents = list("bicaridine" = 50)
+	roundstart = 1
 /obj/item/weapon/reagent_containers/pill/insulin
 	name = "insulin pill"
 	desc = "Handles hyperglycaemic coma."

@@ -17,9 +17,9 @@
 	S.loc = get_turf(holder.my_atom)
 
 /datum/chemical_reaction/slimeinaprov
-	name = "Slime epinephrine"
+	name = "Slime inaprovaline"
 	id = "m_inaprov"
-	result = "epinephrine"
+	result = "inaprovaline"
 	required_reagents = list("water" = 5)
 	result_amount = 3
 	required_other = 1

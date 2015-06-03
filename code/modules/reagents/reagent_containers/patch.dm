@@ -21,12 +21,12 @@
 		return 0
 	return 1 // Masks were stopping people from "eating" patches. Thanks, inheritance.
 
-/obj/item/weapon/reagent_containers/pill/patch/styptic
+/obj/item/weapon/reagent_containers/pill/patch/bicaridine
 	name = "brute patch"
 	desc = "Helps with brute injuries."
-	list_reagents = list("styptic_powder" = 50)
+	list_reagents = list("bicaridine" = 50)
 
-/obj/item/weapon/reagent_containers/pill/patch/silver_sulf
+/obj/item/weapon/reagent_containers/pill/patch/kelotane
 	name = "burn patch"
 	desc = "Helps with burn injuries."
-	list_reagents = list("silver_sulfadiazine" = 50)
+	list_reagents = list("kelotane" = 50)

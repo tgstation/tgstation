@@ -42,11 +42,11 @@
 	..()
 	if(empty) return
 	icon_state = pick("ointment","firefirstaid")
-	new /obj/item/weapon/reagent_containers/pill/patch/silver_sulf(src)
-	new /obj/item/weapon/reagent_containers/pill/patch/silver_sulf(src)
-	new /obj/item/weapon/reagent_containers/pill/patch/silver_sulf(src)
-	new /obj/item/weapon/reagent_containers/pill/salicyclic(src)
-	new /obj/item/weapon/reagent_containers/pill/salicyclic(src)
+	new /obj/item/weapon/reagent_containers/pill/patch/kelotane(src)
+	new /obj/item/weapon/reagent_containers/pill/patch/kelotane(src)
+	new /obj/item/weapon/reagent_containers/pill/patch/kelotane(src)
+	new /obj/item/weapon/reagent_containers/pill/kelotane(src)
+	new /obj/item/weapon/reagent_containers/pill/kelotane(src)
 	new /obj/item/weapon/reagent_containers/hypospray/medipen(src)
 	new /obj/item/device/healthanalyzer(src)
 	return
@@ -61,12 +61,12 @@
 	..()
 	if(empty) return
 	icon_state = pick("antitoxin","antitoxfirstaid","antitoxfirstaid2","antitoxfirstaid3")
-	new /obj/item/weapon/reagent_containers/syringe/charcoal(src)
-	new /obj/item/weapon/reagent_containers/syringe/charcoal(src)
-	new /obj/item/weapon/reagent_containers/syringe/charcoal(src)
-	new /obj/item/weapon/reagent_containers/pill/charcoal(src)
-	new /obj/item/weapon/reagent_containers/pill/charcoal(src)
-	new /obj/item/weapon/reagent_containers/pill/charcoal(src)
+	new /obj/item/weapon/reagent_containers/syringe/antitoxin(src)
+	new /obj/item/weapon/reagent_containers/syringe/antitoxin(src)
+	new /obj/item/weapon/reagent_containers/syringe/antitoxin(src)
+	new /obj/item/weapon/reagent_containers/pill/antitoxin(src)
+	new /obj/item/weapon/reagent_containers/pill/antitoxin(src)
+	new /obj/item/weapon/reagent_containers/pill/antitoxin(src)
 	new /obj/item/device/healthanalyzer(src)
 	return
 
@@ -79,10 +79,10 @@
 /obj/item/weapon/storage/firstaid/o2/New()
 	..()
 	if(empty) return
-	new /obj/item/weapon/reagent_containers/pill/salbutamol(src)
-	new /obj/item/weapon/reagent_containers/pill/salbutamol(src)
-	new /obj/item/weapon/reagent_containers/pill/salbutamol(src)
-	new /obj/item/weapon/reagent_containers/pill/salbutamol(src)
+	new /obj/item/weapon/reagent_containers/pill/dexalin(src)
+	new /obj/item/weapon/reagent_containers/pill/dexalin(src)
+	new /obj/item/weapon/reagent_containers/pill/dexalin(src)
+	new /obj/item/weapon/reagent_containers/pill/dexalin(src)
 	new /obj/item/weapon/reagent_containers/hypospray/medipen(src)
 	new /obj/item/weapon/reagent_containers/hypospray/medipen(src)
 	new /obj/item/device/healthanalyzer(src)
@@ -97,10 +97,10 @@
 /obj/item/weapon/storage/firstaid/brute/New()
 	..()
 	if(empty) return
-	new /obj/item/weapon/reagent_containers/pill/patch/styptic(src)
-	new /obj/item/weapon/reagent_containers/pill/patch/styptic(src)
-	new /obj/item/weapon/reagent_containers/pill/patch/styptic(src)
-	new /obj/item/weapon/reagent_containers/pill/patch/styptic(src)
+	new /obj/item/weapon/reagent_containers/pill/patch/bicaridine(src)
+	new /obj/item/weapon/reagent_containers/pill/patch/bicaridine(src)
+	new /obj/item/weapon/reagent_containers/pill/patch/bicaridine(src)
+	new /obj/item/weapon/reagent_containers/pill/patch/bicaridine(src)
 	new /obj/item/stack/medical/gauze(src)
 	new /obj/item/stack/medical/gauze(src)
 	new /obj/item/device/healthanalyzer(src)
@@ -118,8 +118,8 @@
 	new /obj/item/stack/medical/gauze(src)
 	new /obj/item/weapon/defibrillator/compact/combat/loaded(src)
 	new /obj/item/weapon/reagent_containers/hypospray/combat(src)
-	new /obj/item/weapon/reagent_containers/pill/patch/styptic(src)
-	new /obj/item/weapon/reagent_containers/pill/patch/silver_sulf(src)
+	new /obj/item/weapon/reagent_containers/pill/patch/bicaridine(src)
+	new /obj/item/weapon/reagent_containers/pill/patch/kelotane(src)
 	new /obj/item/weapon/reagent_containers/syringe/lethal/choral(src)
 	new /obj/item/clothing/glasses/hud/health/night(src)
 	return
@@ -162,76 +162,76 @@
 			return
 	return
 
-/obj/item/weapon/storage/box/silver_sulf
-	name = "box of silver sulfadiazine patches"
+/obj/item/weapon/storage/box/kelotane
+	name = "box of kelotane patches"
 	desc = "Contains patches used to treat burns."
 
-/obj/item/weapon/storage/box/silver_sulf/New()
+/obj/item/weapon/storage/box/kelotane/New()
 	..()
-	new /obj/item/weapon/reagent_containers/pill/patch/silver_sulf(src)
-	new /obj/item/weapon/reagent_containers/pill/patch/silver_sulf(src)
-	new /obj/item/weapon/reagent_containers/pill/patch/silver_sulf(src)
-	new /obj/item/weapon/reagent_containers/pill/patch/silver_sulf(src)
-	new /obj/item/weapon/reagent_containers/pill/patch/silver_sulf(src)
-	new /obj/item/weapon/reagent_containers/pill/patch/silver_sulf(src)
-	new /obj/item/weapon/reagent_containers/pill/patch/silver_sulf(src)
+	new /obj/item/weapon/reagent_containers/pill/patch/kelotane(src)
+	new /obj/item/weapon/reagent_containers/pill/patch/kelotane(src)
+	new /obj/item/weapon/reagent_containers/pill/patch/kelotane(src)
+	new /obj/item/weapon/reagent_containers/pill/patch/kelotane(src)
+	new /obj/item/weapon/reagent_containers/pill/patch/kelotane(src)
+	new /obj/item/weapon/reagent_containers/pill/patch/kelotane(src)
+	new /obj/item/weapon/reagent_containers/pill/patch/kelotane(src)
 
 
-/obj/item/weapon/storage/pill_bottle/charcoal
-	name = "bottle of charcoal pills"
+/obj/item/weapon/storage/pill_bottle/antitoxin
+	name = "bottle of antitoxin pills"
 	desc = "Contains pills used to counter toxins."
 
-/obj/item/weapon/storage/pill_bottle/charcoal/New()
+/obj/item/weapon/storage/pill_bottle/antitoxin/New()
 	..()
-	new /obj/item/weapon/reagent_containers/pill/charcoal(src)
-	new /obj/item/weapon/reagent_containers/pill/charcoal(src)
-	new /obj/item/weapon/reagent_containers/pill/charcoal(src)
-	new /obj/item/weapon/reagent_containers/pill/charcoal(src)
-	new /obj/item/weapon/reagent_containers/pill/charcoal(src)
-	new /obj/item/weapon/reagent_containers/pill/charcoal(src)
-	new /obj/item/weapon/reagent_containers/pill/charcoal(src)
+	new /obj/item/weapon/reagent_containers/pill/antitoxin(src)
+	new /obj/item/weapon/reagent_containers/pill/antitoxin(src)
+	new /obj/item/weapon/reagent_containers/pill/antitoxin(src)
+	new /obj/item/weapon/reagent_containers/pill/antitoxin(src)
+	new /obj/item/weapon/reagent_containers/pill/antitoxin(src)
+	new /obj/item/weapon/reagent_containers/pill/antitoxin(src)
+	new /obj/item/weapon/reagent_containers/pill/antitoxin(src)
 
-/obj/item/weapon/storage/pill_bottle/epinephrine
-	name = "bottle of epinephrine pills"
+/obj/item/weapon/storage/pill_bottle/inaprovaline
+	name = "bottle of inaprovaline pills"
 	desc = "Contains pills used to stabilize patients."
 
-/obj/item/weapon/storage/pill_bottle/epinephrine/New()
+/obj/item/weapon/storage/pill_bottle/inaprovaline/New()
 	..()
-	new /obj/item/weapon/reagent_containers/pill/epinephrine(src)
-	new /obj/item/weapon/reagent_containers/pill/epinephrine(src)
-	new /obj/item/weapon/reagent_containers/pill/epinephrine(src)
-	new /obj/item/weapon/reagent_containers/pill/epinephrine(src)
-	new /obj/item/weapon/reagent_containers/pill/epinephrine(src)
-	new /obj/item/weapon/reagent_containers/pill/epinephrine(src)
-	new /obj/item/weapon/reagent_containers/pill/epinephrine(src)
+	new /obj/item/weapon/reagent_containers/pill/inaprovaline(src)
+	new /obj/item/weapon/reagent_containers/pill/inaprovaline(src)
+	new /obj/item/weapon/reagent_containers/pill/inaprovaline(src)
+	new /obj/item/weapon/reagent_containers/pill/inaprovaline(src)
+	new /obj/item/weapon/reagent_containers/pill/inaprovaline(src)
+	new /obj/item/weapon/reagent_containers/pill/inaprovaline(src)
+	new /obj/item/weapon/reagent_containers/pill/inaprovaline(src)
 
-/obj/item/weapon/storage/pill_bottle/mutadone
-	name = "bottle of mutadone pills"
+/obj/item/weapon/storage/pill_bottle/ryetalyn
+	name = "bottle of ryetalyn pills"
 	desc = "Contains pills used to treat genetic abnormalities."
 
-/obj/item/weapon/storage/pill_bottle/mutadone/New()
+/obj/item/weapon/storage/pill_bottle/ryetalyn/New()
 	..()
-	new /obj/item/weapon/reagent_containers/pill/mutadone(src)
-	new /obj/item/weapon/reagent_containers/pill/mutadone(src)
-	new /obj/item/weapon/reagent_containers/pill/mutadone(src)
-	new /obj/item/weapon/reagent_containers/pill/mutadone(src)
-	new /obj/item/weapon/reagent_containers/pill/mutadone(src)
-	new /obj/item/weapon/reagent_containers/pill/mutadone(src)
-	new /obj/item/weapon/reagent_containers/pill/mutadone(src)
+	new /obj/item/weapon/reagent_containers/pill/ryetalyn(src)
+	new /obj/item/weapon/reagent_containers/pill/ryetalyn(src)
+	new /obj/item/weapon/reagent_containers/pill/ryetalyn(src)
+	new /obj/item/weapon/reagent_containers/pill/ryetalyn(src)
+	new /obj/item/weapon/reagent_containers/pill/ryetalyn(src)
+	new /obj/item/weapon/reagent_containers/pill/ryetalyn(src)
+	new /obj/item/weapon/reagent_containers/pill/ryetalyn(src)
 
-/obj/item/weapon/storage/pill_bottle/mannitol
-	name = "bottle of mannitol pills"
+/obj/item/weapon/storage/pill_bottle/alkysine
+	name = "bottle of alkysine pills"
 	desc = "Contains pills used to treat brain damage."
 
-/obj/item/weapon/storage/pill_bottle/mannitol/New()
+/obj/item/weapon/storage/pill_bottle/alkysine/New()
 	..()
-	new /obj/item/weapon/reagent_containers/pill/mannitol(src)
-	new /obj/item/weapon/reagent_containers/pill/mannitol(src)
-	new /obj/item/weapon/reagent_containers/pill/mannitol(src)
-	new /obj/item/weapon/reagent_containers/pill/mannitol(src)
-	new /obj/item/weapon/reagent_containers/pill/mannitol(src)
-	new /obj/item/weapon/reagent_containers/pill/mannitol(src)
-	new /obj/item/weapon/reagent_containers/pill/mannitol(src)
+	new /obj/item/weapon/reagent_containers/pill/alkysine(src)
+	new /obj/item/weapon/reagent_containers/pill/alkysine(src)
+	new /obj/item/weapon/reagent_containers/pill/alkysine(src)
+	new /obj/item/weapon/reagent_containers/pill/alkysine(src)
+	new /obj/item/weapon/reagent_containers/pill/alkysine(src)
+	new /obj/item/weapon/reagent_containers/pill/alkysine(src)
+	new /obj/item/weapon/reagent_containers/pill/alkysine(src)
 
 /obj/item/weapon/storage/pill_bottle/stimulant
 	name = "bottle of stimulant pills"

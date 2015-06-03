@@ -81,6 +81,7 @@ var/next_mob_id = 0
 // self_message (optional) is what the src mob sees e.g. "You do something!"
 // blind_message (optional) is what blind people will hear e.g. "You hear something!"
 
+
 /mob/visible_message(var/message, var/self_message, var/blind_message)
 	var/list/mob_viewers = list()
 	var/list/possible_viewers = list()
@@ -232,6 +233,8 @@ var/next_mob_id = 0
 /mob/proc/incapacitated()
 	return
 
+/mob/allow_drop()
+	return 0
 //This proc is called whenever someone clicks an inventory ui slot.
 /mob/proc/attack_ui(slot)
 	var/obj/item/W = get_active_hand()

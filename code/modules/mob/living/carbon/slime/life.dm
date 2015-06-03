@@ -155,9 +155,9 @@
 	if (reagents.get_reagent_amount("plasma")>=5)
 		mutation_chance = min(mutation_chance + 5,50) //Prevents mutation chance going >50%
 		reagents.remove_reagent("plasma", 5)
-	if (reagents.get_reagent_amount("epinephrine")>=5)
+	if (reagents.get_reagent_amount("inaprovaline")>=5)
 		mutation_chance = max(mutation_chance - 5,0) //Prevents muation chance going <0%
-		reagents.remove_reagent("epinephrine", 5)
+		reagents.remove_reagent("inaprovaline", 5)
 	src.updatehealth()
 
 	if(drowsyness)
@@ -198,7 +198,7 @@
 
 	else if(health < config.health_threshold_crit)
 
-		if(!reagents.has_reagent("epinephrine"))
+		if(!reagents.has_reagent("inaprovaline"))
 			adjustOxyLoss(3)
 
 		if(stat != DEAD)

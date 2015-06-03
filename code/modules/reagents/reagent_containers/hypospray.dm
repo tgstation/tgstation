@@ -39,7 +39,7 @@
 			add_logs(user, M, "injected", object="[src.name]", addition="([contained])")
 
 /obj/item/weapon/reagent_containers/hypospray/CMO
-	list_reagents = list("omnizine" = 30)
+	list_reagents = list("tricordrazine" = 30)
 
 /obj/item/weapon/reagent_containers/hypospray/combat
 	name = "combat stimulant injector"
@@ -48,7 +48,7 @@
 	icon_state = "combat_hypo"
 	volume = 60
 	ignore_flags = 1 // So they can heal their comrades.
-	list_reagents = list("epinephrine" = 15, "salglu_solution" = 15)
+	list_reagents = list("inaprovaline" = 15, "doctorsdelight" = 15)
 
 /obj/item/weapon/reagent_containers/hypospray/combat/nanites
 	desc = "A modified air-needle autoinjector for use in combat situations. Prefilled with expensive medical nanites for rapid healing."
@@ -58,7 +58,7 @@
 //MediPens
 
 /obj/item/weapon/reagent_containers/hypospray/medipen
-	name = "epinephrine medipen"
+	name = "inaprovaline medipen"
 	desc = "A rapid and safe way to stabilize patients in critical condition for personnel without advanced medical knowledge."
 	icon_state = "medipen"
 	item_state = "medipen"
@@ -66,7 +66,7 @@
 	volume = 10
 	ignore_flags = 1 //so you can medipen through hardsuits
 	flags = null
-	list_reagents = list("epinephrine" = 10)
+	list_reagents = list("inaprovaline" = 10)
 
 /obj/item/weapon/reagent_containers/hypospray/medipen/New()
 	..()

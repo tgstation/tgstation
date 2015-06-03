@@ -44,5 +44,5 @@
 	name = "aranesp"
 	id = "aranesp"
 	result = "aranesp"
-	required_reagents = list("epinephrine" = 1, "atropine" = 1, "morphine" = 1)
+	required_reagents = list("inaprovaline" = 1, "atropine" = 1, "morphine" = 1)
 	result_amount = 3

@@ -3,7 +3,7 @@
 	name = "Nitroglycerin"
 	id = "nitroglycerin"
 	result = "nitroglycerin"
-	required_reagents = list("glycerol" = 1, "facid" = 1, "sacid" = 1)
+	required_reagents = list("glycerol" = 1, "pacid" = 1, "sacid" = 1)
 	result_amount = 2
 
 /datum/chemical_reaction/nitroglycerin/on_reaction(var/datum/reagents/holder, var/created_volume)
@@ -49,7 +49,7 @@
 	name = "Black Powder"
 	id = "blackpowder"
 	result = "blackpowder"
-	required_reagents = list("saltpetre" = 1, "charcoal" = 1, "sulfur" = 1)
+	required_reagents = list("saltpetre" = 1, "anti_toxin" = 1, "sulfur" = 1)
 	result_amount = 3
 
 /datum/chemical_reaction/blackpowder_explosion

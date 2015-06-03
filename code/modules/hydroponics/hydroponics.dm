@@ -495,8 +495,8 @@ obj/machinery/hydroponics/proc/applyChemicals(var/datum/reagents/S)
 		adjustNutri(round(S.get_reagent_amount("robustharvestnutriment") *1 ))
 
 	// Antitoxin binds shit pretty well. So the tox goes significantly down
-	if(S.has_reagent("charcoal", 1))
-		adjustToxic(-round(S.get_reagent_amount("charcoal") * 2))
+	if(S.has_reagent("anti_toxin", 1))
+		adjustToxic(-round(S.get_reagent_amount("anti_toxin") * 2))
 
 	// NIGGA, YOU JUST WENT ON FULL RETARD.
 	if(S.has_reagent("toxin", 1))
@@ -562,9 +562,9 @@ obj/machinery/hydroponics/proc/applyChemicals(var/datum/reagents/S)
 		adjustWeeds(-rand(1,2))
 
 	// SERIOUSLY
-	if(S.has_reagent("facid", 1))
-		adjustHealth(-round(S.get_reagent_amount("facid") * 2))
-		adjustToxic(round(S.get_reagent_amount("facid") * 3))
+	if(S.has_reagent("pacid", 1))
+		adjustHealth(-round(S.get_reagent_amount("pacid") * 2))
+		adjustToxic(round(S.get_reagent_amount("pacid") * 3))
 		adjustWeeds(-rand(1,4))
 
 	// Plant-B-Gone is just as bad

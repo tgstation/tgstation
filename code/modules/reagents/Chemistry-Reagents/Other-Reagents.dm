@@ -212,7 +212,6 @@ datum/reagent/fuel/unholywater		//if you somehow managed to extract this from so
 	description = "Something that shouldn't exist on this plane of existance."
 
 datum/reagent/fuel/unholywater/on_mob_life(var/mob/living/M as mob)
-	M.adjustBrainLoss(3)
 	if(iscultist(M))
 		M.status_flags |= GOTTAGOFAST
 		M.drowsyness = max(M.drowsyness-5, 0)
@@ -224,6 +223,7 @@ datum/reagent/fuel/unholywater/on_mob_life(var/mob/living/M as mob)
 		M.adjustFireLoss(2)
 		M.adjustOxyLoss(2)
 		M.adjustBruteLoss(2)
+		M.adjustBrainLoss(5)
 	holder.remove_reagent(src.id, 1)
 
 datum/reagent/hellwater			//if someone has this in their system they've really pissed off an eldrich god

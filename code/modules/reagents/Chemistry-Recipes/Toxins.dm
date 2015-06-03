@@ -27,29 +27,14 @@
 	name = "Itching Powder"
 	id = "itching_powder"
 	result = "itching_powder"
-	required_reagents = list("fuel" = 1, "ammonia" = 1, "charcoal" = 1)
+	required_reagents = list("fuel" = 1, "ammonia" = 1, "anti_toxin" = 1)
 	result_amount = 3
-
-/datum/chemical_reaction/facid
-	name = "Fluorosulfuric acid"
-	id = "facid"
-	result = "facid"
-	required_reagents = list("sacid" = 1, "fluorine" = 1, "hydrogen" = 1, "potassium" = 1)
-	result_amount = 4
-	required_temp = 380
 
 /datum/chemical_reaction/sulfonal
 	name = "sulfonal"
 	id = "sulfonal"
 	result = "sulfonal"
 	required_reagents = list("acetone" = 1, "diethylamine" = 1, "sulfur" = 1)
-	result_amount = 3
-
-/datum/chemical_reaction/lipolicide
-	name = "lipolicide"
-	id = "lipolicide"
-	result = "lipolicide"
-	required_reagents = list("mercury" = 1, "diethylamine" = 1, "ephedrine" = 1)
 	result_amount = 3
 
 /datum/chemical_reaction/mutagen
@@ -88,8 +73,23 @@
 	result_amount = 2
 
 /datum/chemical_reaction/mindbreaker
-	name = "Mindbreaker Toxin"
+	name = "Mindbreaker Toxin" //man I wish it was still named LSD
 	id = "mindbreaker"
 	result = "mindbreaker"
-	required_reagents = list("silicon" = 1, "hydrogen" = 1, "charcoal" = 1)
+	required_reagents = list("silicon" = 1, "hydrogen" = 1, "anti_toxin" = 1)
 	result_amount = 5
+
+/datum/chemical_reaction/stoxin
+	name = "Sleep Toxin"
+	id = "stoxin"
+	result = "stoxin"
+	required_reagents = list("chloralhydrate" = 1, "sugar" = 4)
+	result_amount = 5
+
+
+/datum/chemical_reaction/pacid
+	name = "Polytrinic acid"
+	id = "pacid"
+	result = "pacid"
+	required_reagents = list("sacid" = 1, "chlorine" = 1, "potassium" = 1)
+	result_amount = 3

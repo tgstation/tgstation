@@ -58,8 +58,8 @@ datum/reagent/toxin/plasma
 	toxpwr = 3
 
 datum/reagent/toxin/plasma/on_mob_life(var/mob/living/M as mob)
-	if(holder.has_reagent("epinephrine"))
-		holder.remove_reagent("epinephrine", 2*REM)
+	if(holder.has_reagent("inaprovaline"))
+		holder.remove_reagent("inaprovaline", 2*REM)
 	..()
 	return
 
@@ -559,23 +559,6 @@ datum/reagent/toxin/amanitin/on_mob_delete(var/mob/living/M as mob)
 	M.adjustToxLoss(current_cycle*3*REM)
 	..()
 
-datum/reagent/toxin/lipolicide
-	name = "Lipolicide"
-	id = "lipolicide"
-	description = "Deals some toxin damage unless they keep eating food. Will reduce nutrition values."
-	reagent_state = LIQUID
-	color = "#CF3600"
-	metabolization_rate = 0.5 * REAGENTS_METABOLISM
-	toxpwr = 0.5
-
-datum/reagent/toxin/lipolicide/on_mob_life(var/mob/living/M as mob)
-	if(!holder.has_reagent("nutriment"))
-		M.adjustToxLoss(0.5*REM)
-	M.nutrition -= 5 * REAGENTS_METABOLISM
-	M.overeatduration = 0
-	if(M.nutrition < 0)//Prevent from going into negatives.
-		M.nutrition = 0
-	..()
 
 datum/reagent/toxin/coniine
 	name = "Coniine"
@@ -631,11 +614,57 @@ datum/reagent/toxin/acid/reaction_obj(var/obj/O, var/volume)
 		return
 	O.acid_act(acidpwr, toxpwr, volume)
 
+//2acid
+//lmao 2acid
 datum/reagent/toxin/acid/fluacid
 	name = "Fluorosulfuric acid"
-	id = "facid"
+	id = "pacid"
 	description = "Fluorosulfuric acid is a an extremely corrosive chemical substance."
 	color = "#8E18A9" // rgb: 142, 24, 169
 	toxpwr = 2
 	acidpwr = 20
 
+datum/reagent/toxin/acid/polyacid
+	name = "Polytrinic acid"
+	id = "pacid"
+	description = "Polytrinic acid is a an extremely corrosive chemical substance."
+	color = "#8E18A9" // rgb: 142, 24, 169
+	toxpwr = 2
+	acidpwr = 20
+
+
+datum/reagent/toxin/impedrezene
+	name = "Impedrezene"
+	id = "impedrezene"
+	description = "Impedrezene is a narcotic that impedes one's ability by slowing down the higher brain cell functions."
+	color = "#C8A5DC" // rgb: 200, 165, 220
+	toxpwr = 0
+
+datum/reagent/impedrezene/on_mob_life(var/mob/living/M as mob)
+	M.jitteriness = max(M.jitteriness-5,0)
+	if(prob(80)) M.adjustBrainLoss(5*REM)
+	if(prob(50)) M.drowsyness = max(M.drowsyness, 3)
+	if(prob(10)) M.emote("drool")
+	..()
+	return
+
+datum/reagent/toxin/stoxin
+	name = "Sleep Toxin"
+	id = "stoxin"
+	description = "An effective hypnotic used to treat insomnia."
+	color = "#E895CC" // rgb: 232, 149, 204
+	toxpwr = 0
+
+datum/reagent/toxin/stoxin/on_mob_life(var/mob/living/M as mob)
+	switch(current_cycle)
+		if(1 to 12)
+			if(prob(5))	M.emote("yawn")
+		if(12 to 15)
+			M.eye_blurry = max(M.eye_blurry, 10)
+		if(15 to 25)
+			M.drowsyness  = max(M.drowsyness, 20)
+		if(25 to INFINITY) //CAN'T WAKE UP
+			M.Paralyse(20)
+			M.drowsyness  = max(M.drowsyness, 30)
+	..()
+	return

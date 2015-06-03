@@ -405,7 +405,7 @@ datum/reagents/proc/check_gofast(var/mob/M)
 	if(istype(M, /mob))
 		if(!M.reagents)
 			return
-		if(M.reagents.has_reagent("unholywater")||M.reagents.has_reagent("nuka_cola"))
+		if(M.reagents.has_reagent("unholywater")||M.reagents.has_reagent("nuka_cola")||M.reagents.has_reagent("hyperzine"))
 			return 1
 		else
 			M.status_flags &= ~GOTTAGOFAST

@@ -105,9 +105,9 @@
 	name = "Oignon Grenade"
 	payload = /obj/item/weapon/grenade/chem_grenade/teargas
 
-/obj/item/weapon/grenade/clusterbuster/facid
+/obj/item/weapon/grenade/clusterbuster/pacid
 	name = "Aciding Rain"
-	payload = /obj/item/weapon/grenade/chem_grenade/facid
+	payload = /obj/item/weapon/grenade/chem_grenade/pacid
 
 /obj/item/weapon/grenade/clusterbuster/syndieminibomb
 	name = "SyndiWrath"
