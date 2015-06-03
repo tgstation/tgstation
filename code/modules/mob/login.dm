@@ -72,7 +72,7 @@
 	if(spell_masters)
 		for(var/obj/screen/movable/spell_master/spell_master in spell_masters)
 			client.screen += spell_master
-			spell_master.toggle_open(spell_master.showing + 1)
+			spell_master.toggle_open(1)
 
 	if (isobj(loc))
 		var/obj/location = loc

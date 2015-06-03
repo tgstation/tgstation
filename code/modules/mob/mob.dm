@@ -7,9 +7,12 @@
 	unset_machine()
 	qdel(hud_used)
 	if(client)
+		for(var/obj/screen/movable/spell_master/spell_master in spell_masters)
+			returnToPool(spell_master)
 		remove_screen_obj_references()
 		for(var/atom/movable/AM in client.screen)
-			if(istype(AM,/obj/screen))
+			var/obj/screen/screenobj = AM
+			if(istype(screenobj) && screenobj.pool_on_reset())
 				returnToPool(AM)
 			else
 				qdel(AM)

@@ -12,6 +12,9 @@
 
 	var/mob/spell_holder
 
+/obj/screen/movable/spell_master/pool_on_reset()
+	. = 0
+
 /obj/screen/movable/spell_master/Destroy()
 	..()
 	for(var/obj/screen/spell/spells in spell_objects)
@@ -139,6 +142,9 @@
 	var/obj/screen/movable/spell_master/spellmaster
 
 	var/icon/last_charged_icon
+
+/obj/screen/spell/pool_on_reset()
+	. = 0
 
 /obj/screen/spell/Destroy()
 	..()

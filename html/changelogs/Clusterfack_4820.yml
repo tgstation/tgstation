@@ -1,0 +1,5 @@
+author: Clusterfack
+delete-after: true
+changes:
+- bugfix: Fixes a bug where you could lose your spell icons as wizard by leaving your body
+- bugfix: Another fix that should hopefully resolve all issues revolving around storage containers
