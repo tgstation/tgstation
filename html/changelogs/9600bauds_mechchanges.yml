@@ -37,6 +37,5 @@ changes:
   - tweak: The Ripley's Hydraulic Clamp now picks up loose ore like a mining satchel.
   - tweak: Firefighter Ripley's fire extinguisher module has gotten an upgrade to a foam fire extinguisher.
   - rscadd: Added Exosuit Jetpacks, which were previously just lying around unimplemented in the code. Please report any bugs.
-  - bugfix: Fixes ranged exosuit RCD.
   - bugfix: Fixes bug where ripleys would drop their spaghetti when the driver ejected, said spaghetti would then gain the ability to teleport back under the ripley's feet at command.
   
