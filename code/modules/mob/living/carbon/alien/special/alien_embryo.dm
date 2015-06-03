@@ -144,12 +144,12 @@
 	else
 		affected_mob.overlays += image('icons/mob/alien.dmi', loc = affected_mob, icon_state = "burst_stand")
 	spawn(6)
-		var/mob/living/carbon/alien/larva/new_xeno = new(affected_mob.loc)
+		var/mob/living/carbon/alien/larva/new_xeno = new(get_turf(affected_mob))
 		new_xeno.key = picked
 		new_xeno << sound('sound/voice/hiss5.ogg',0,0,0,100)	//To get the player's attention
 		if(gib_on_success)
 			affected_mob.gib()
-		del(src)
+		qdel(src)
 
 /*----------------------------------------
 Proc: RefreshInfectionImage()
