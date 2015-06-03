@@ -138,7 +138,7 @@
 	name = "kelotane pill"
 	desc = "Used to treat burns."
 	icon_state = "pill5"
-	list_reagents = list("kelotane" = 50)
+	list_reagents = list("kelotane" = 30)
 	roundstart = 1
 /obj/item/weapon/reagent_containers/pill/dermaline
 	name = "dermaline pill"
@@ -150,7 +150,7 @@
 	name = "dermaline pill"
 	desc = "Used to treat physical injuries."
 	icon_state = "pill5"
-	list_reagents = list("bicaridine" = 50)
+	list_reagents = list("bicaridine" = 30)
 	roundstart = 1
 /obj/item/weapon/reagent_containers/pill/insulin
 	name = "insulin pill"

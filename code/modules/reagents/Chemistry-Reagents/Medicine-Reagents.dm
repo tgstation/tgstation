@@ -449,7 +449,7 @@ datum/reagent/medicine/spaceacillin
 								//GOON MEDICINE
 //------------------------------------------------------------------------------------------------------
 
-/*
+
 datum/reagent/medicine/silver_sulfadiazine
 	name = "Silver Sulfadiazine"
 	id = "silver_sulfadiazine"
@@ -471,10 +471,6 @@ datum/reagent/medicine/silver_sulfadiazine/reaction_mob(var/mob/living/M as mob,
 	..()
 	return
 
-datum/reagent/medicine/silver_sulfadiazine/on_mob_life(var/mob/living/M as mob)
-	M.adjustFireLoss(-2*REM)
-	..()
-	return
 
 datum/reagent/medicine/styptic_powder
 	name = "Styptic Powder"
@@ -498,11 +494,6 @@ datum/reagent/medicine/styptic_powder/reaction_mob(var/mob/living/M as mob, var/
 	..()
 	return
 
-datum/reagent/medicine/styptic_powder/on_mob_life(var/mob/living/M as mob)
-	M.adjustBruteLoss(-2*REM)
-	..()
-	return
-*/
 datum/reagent/medicine/salglu_solution
 	name = "Saline-Glucose Solution"
 	id = "salglu_solution"

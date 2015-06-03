@@ -5,7 +5,7 @@
 	icon_state = "bandaid"
 	item_state = "bandaid"
 	possible_transfer_amounts = null
-	volume = 50
+	volume = 25
 	apply_type = TOUCH
 	apply_method = "apply"
 
@@ -24,9 +24,9 @@
 /obj/item/weapon/reagent_containers/pill/patch/bicaridine
 	name = "brute patch"
 	desc = "Helps with brute injuries."
-	list_reagents = list("bicaridine" = 50)
+	list_reagents = list("styptic_powder" = 50)
 
 /obj/item/weapon/reagent_containers/pill/patch/kelotane
 	name = "burn patch"
 	desc = "Helps with burn injuries."
-	list_reagents = list("kelotane" = 50)
+	list_reagents = list("silver_sulfadiazine" = 50)
