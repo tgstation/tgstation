@@ -2,7 +2,7 @@
 
 /obj/item/weapon/storage/box/syndicate/New()
 	..()
-	switch (pickweight(list("bloodyspai" = 1, "stealth" = 1, "bond" = 1, "screwed" = 1, "guns" = 1, "murder" = 1, "implant" = 1, "hacker" = 1, "lordsingulo" = 1, "darklord" = 1)))
+	switch (pickweight(list("bloodyspai" = 0, "stealth" = 1, "bond" = 1, "sabotage" = 1, "heist" = 1, "murder" = 1, "implant" = 1, "hacker" = 1, "singularity" = 1, "darklord" = 1, "infiltrator" = 1, "falsealarm" = 1)))
 		if("bloodyspai")
 			new /obj/item/clothing/under/chameleon(src)
 			new /obj/item/clothing/mask/gas/voice(src)
@@ -12,10 +12,19 @@
 			new /obj/item/device/camera_bug(src)
 			return
 
+		if("infiltrator")
+			new /obj/item/device/chameleon(src)
+			new /obj/item/clothing/under/chameleon(src)
+			new /obj/item/weapon/card/id/syndicate(src)
+			new /obj/item/weapon/card/id/syndicate(src)
+			new /obj/item/weapon/card/emag(src)
+			new /obj/item/clothing/mask/gas/voice(src)
+		
 		if("stealth")
 			new /obj/item/weapon/gun/energy/kinetic_accelerator/crossbow(src)
 			new /obj/item/weapon/pen/sleepy(src)
 			new /obj/item/device/chameleon(src)
+			new /obj/item/clothing/glasses/thermal/syndi(src)
 			return
 
 		if("bond")
@@ -25,9 +34,10 @@
 			new /obj/item/ammo_box/magazine/m10mm(src)
 			new /obj/item/clothing/under/chameleon(src)
 			new /obj/item/weapon/card/id/syndicate(src)
+			new /obj/item/device/encryptionkey/syndicate(src)
 			return
 
-		if("screwed")
+		if("sabotage")
 			new /obj/item/device/sbeacondrop/bomb(src)
 			new /obj/item/weapon/grenade/syndieminibomb(src)
 			new /obj/item/device/powersink(src)
@@ -35,7 +45,7 @@
 			new /obj/item/clothing/head/helmet/space/syndicate/black/red(src)
 			return
 
-		if("guns")
+		if("heist")
 			new /obj/item/weapon/gun/projectile/revolver(src)
 			new /obj/item/ammo_box/a357(src)
 			new /obj/item/weapon/card/emag(src)
@@ -50,6 +60,7 @@
 			new /obj/item/clothing/glasses/thermal/syndi(src)
 			new /obj/item/weapon/card/emag(src)
 			new /obj/item/clothing/shoes/sneakers/syndigaloshes(src)
+			new /obj/item/weapon/c4(src)
 			return
 
 		if("implant")
@@ -73,7 +84,7 @@
 			new /obj/item/weapon/aiModule/toyAI(src)
 			return
 
-		if("lordsingulo")
+		if("singularity")
 			new /obj/item/device/sbeacondrop(src)
 			new /obj/item/clothing/suit/space/syndicate/black/red(src)
 			new /obj/item/clothing/head/helmet/space/syndicate/black/red(src)
@@ -86,6 +97,26 @@
 			new /obj/item/weapon/dnainjector/telemut/darkbundle(src)
 			new /obj/item/clothing/suit/hooded/chaplain_hoodie(src)
 			new /obj/item/weapon/card/id/syndicate(src)
+			return
+			
+		if("falsealarm")
+			new /obj/item/clothing/suit/space/hardsuit/syndi(src)
+			new /obj/item/weapon/tank/jetpack/oxygen/harness(src)
+			new /obj/item/weapon/card/id/syndicate(src)
+			new /obj/item/weapon/grenade/syndieminibomb(src)
+			new /obj/item/weapon/c4(src)
+			new /obj/item/device/encryptionkey/syndicate(src)
+			new /obj/item/weapon/storage/belt/military(src)
+			var/obj/item/weapon/implanter/S = new /obj/item/weapon/implanter(src)
+			S.imp = new /obj/item/weapon/implant/explosive(S)
+			return
+			
+		if("takbir")
+			new /obj/item/weapon/grenade/syndieminibomb(src)
+			new /obj/item/weapon/grenade/syndieminibomb(src)
+			new /obj/item/device/sbeacondrop/bomb(src)
+			var/obj/item/weapon/implanter/S = new /obj/item/weapon/implanter(src)
+			S.imp = new /obj/item/weapon/implant/explosive(S)
 			return
 
 /obj/item/weapon/storage/box/syndie_kit
@@ -113,7 +144,7 @@
 */
 
 /obj/item/weapon/storage/box/syndie_kit/imp_explosive
-	name = "Explosive Implant (with injector)"
+	name = "boxed explosive implant (with injector)"
 
 /obj/item/weapon/storage/box/syndie_kit/imp_explosive/New()
 	var/obj/item/weapon/implanter/O = new(src)
