@@ -19,6 +19,8 @@
 		user << "<span class='notice'>Our vision dulls. Shadows gather.</span>"
 		user.sight -= SEE_MOBS
 	while(active)
+		if(!user)
+			return
 		user.see_in_dark = 8
 		user.see_invisible = 2
 		user.sight |= SEE_MOBS

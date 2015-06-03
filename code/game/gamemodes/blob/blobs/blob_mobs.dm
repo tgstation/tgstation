@@ -88,7 +88,8 @@
 	H.hair_style = null
 	H.update_hair()
 	human_overlays = H.overlays
-	adjustcolors(overmind.blob_reagent_datum.color)
+	if(overmind)
+		adjustcolors(overmind.blob_reagent_datum.color)
 	H.loc = src
 	loc.visible_message("<span class='warning'> The corpse of [H.name] suddenly rises!</span>")
 
