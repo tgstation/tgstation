@@ -388,7 +388,7 @@ datum/reagent/medicine/cryoxadone
 
 datum/reagent/medicine/cryoxadone/on_mob_life(var/mob/living/M as mob)
 	if(M.stat != DEAD && M.bodytemperature < 170)
-		M.adjustCloneLoss(-1)
+		M.adjustCloneLoss(-2)
 		M.adjustOxyLoss(-3)
 		M.heal_organ_damage(3,3)
 		M.adjustToxLoss(-3)
@@ -403,7 +403,7 @@ datum/reagent/medicine/clonexadone
 
 datum/reagent/medicine/clonexadone/on_mob_life(var/mob/living/M as mob)
 	if(M.stat != DEAD && M.bodytemperature < 170)
-		M.adjustCloneLoss(-3)
+		M.adjustCloneLoss(-4)
 		M.adjustOxyLoss(-3)
 		M.heal_organ_damage(3,3)
 		M.adjustToxLoss(-3)
