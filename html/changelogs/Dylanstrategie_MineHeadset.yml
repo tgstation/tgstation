@@ -1,5 +1,0 @@
-author: Dylanstrategie
-delete-after: True
-changes:
-  - rscadd: Shaft Miners now have their very own headset with a special Cargo/Mining encryption key. Roboticists and Research Directors everywhere rejoice as their bitching about the miners being too busy jacking off in a cavern to deliver minerals no longer falls on deaf ears
-  - imageadd: Modify the existing and unsued Mining headset and encryption key, and the existing Cargo ones to look more distinct and related to their functions

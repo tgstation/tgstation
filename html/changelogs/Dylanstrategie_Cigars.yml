@@ -1,4 +1,0 @@
-author: Dylanstrategie
-delete-after: True
-changes:
-  - imageadd: Add 'cigar2on' sprite, thereby fixing Havana and Cobana cigars no showing up on the mob's sprite when lit
