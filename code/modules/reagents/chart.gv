@@ -1,0 +1,166 @@
+digraph chemistry{
+    rankdir=LR
+    node [shape=record;]
+    subgraph cluster_dispenser{
+        label="Dispenser reagents";
+        rank=same;
+        style=filled;
+        fillcolor="grey";
+        {  node 
+            [
+             style=filled;
+             fillcolor="white",
+             shape=box;
+             ]
+            
+            "hydrogen","lithium","carbon","nitrogen","oxygen","fluorine",
+            "sodium","aluminium","silicon","phosphorus","sulfur","chlorine","potassium","iron",
+            "copper","mercury","radium","water","ethanol","sugar","sacid","fuel","silver","iodine","bromine","stable plasma","tungsten"    
+            };
+            }
+
+        subgraph cluster_medicine{
+            label="Medicine"
+            bicaridine [label="Bicaridine | Heals brute damage| OD: 60 |No addiction |{1: inaprovaline | 1: carbon }"]
+            kelotane [label="Kelotane| Heals burn damage| OD: 60 | No addiction | {1: silicon | 1: carbon}"]
+            dermaline [label="Dermaline| Heals burn damage efficiently| OD: 40| {1: oxygen| 1: phosporous| 1: kelotane}"]
+            dylovene [label="Anti-toxin (Dylovene)| Heals toxin damage and purges other chemicals| No overdose| No addiction | {1: nitrogen| 1: silicon| 1: potassium}"]
+            inaprovaline [label="Inaprovaline| Stabilizes people in crit| OD: 30 | No addiction | {1: carbon | 1: oxygen| 1: sugar}"]
+            tricordrazine [label="Tricordrazine| Heals all damage slowly| OD: 60 | No addiction | {1: inaprovaline | 1: dylovene}"]
+            alkysine [label="Alkysine| Heals brain damage| No overdose| No addiction | {1: dylovene| 1: chlorine | 1: nitrogen}"]
+            dexalin [label="Dexalin| Heals oxygen damage| OD: 60| No addiction| {2:oxygen |CATALYST: 5 plasma}"]
+            dexalinplus [label="Dexalin Plus| Heals oxygen damage very well| OD: 30| No addiction| {1: dexalin| 1: iron| 1: carbon}"]
+            hyperzine [label="Hyperzine| Makes you go fast | No overdose | No addiction | {1: sugar| 1: phosporous | 1: sulfur}"]
+            hyronalin [label="Hyronalin| Heals radiation damage| No overdose| No addiction| {1:dylovene| 1:radium}"]
+            arithrazine [label="Arithrazine| Heals radiation damage efficiently| No overdose| No addiction | {1: hyronalin | 1: hydrogen}"]
+            ryetalyn [label="Ryetalyn| Cures mutations| No overdose| No addiction| {1: arithrazine |1: carbon}"]
+            cryoxadone [label="Cryoxadone| Heals damage when patient is cold| No overdose| No addiction| {1: stable plasma| 1: acetone | 1: mutagen}"]
+            clonexadone [label="Clonexadone | Heals damage when patien is cold| No overdose| No addiction| {1: cryoxadone| 1: sodium| CATALYST: 5 plasma}"]
+            spaceacillin [label="Spaceacillin| Cures viruses | No overdose | No addiction | {1: cryptobiolin | 1: inaprovaline}"]
+            inacusiate [label="Inacusiate| Heals ear damage| No overdose | No addiction | {1: water | 1: carbon| 1: dylovene}"]
+            imidazoline [label="Imidazoline| Heals eye damage| No overdose | No addiction | {1: hydrogen | 1: carbon| 1: dylovene}"]
+            ethylredoxrazine [label="Ethylredoxrazine| Cures drunkness| No overdose | No addiction | {1: oxygen | 1: carbon| 1: dylovene}"]
+            leporazine [label="Leporazine| Stabilizes patient temperature| No overdose| No addiction| {1: silicon| 1: copper| CATALYST: 5 plasma}"]
+            rezadone [label="Rezadone| Heals clone damage (toxic in high concentrations) | No overdose | No addiction| {1: carpotoxin | 1: cryptobiolin | 1: copper}"]
+            synaptizine [label="Synaptizine| Cures diseases | No overdose | No addiction | {1: sugar | 1: lithium | 1: water}"]
+            salglu [label="Saline Glucose Solution| Slowly heals burns and brute| No overdose| No addiction |{1: salt | 1: water| 1: sugar}"]
+            calomel [label="Calomel | Purges other chemicals quickly and deals toxin damage| No overdose| No addiction |{1: mercury | 1: chlorine| TEMP: 374K}"]
+            potiod [label="Potassium Iodide| Heals low radiation damage| No overdose| No addiction| {1: potassium| 1:iodine}"]
+            penacid [label="Pentetic Acid| Purges other chems and heals tox damage| No overdose| No addiction| {1: fuel| 1: chlorine| 1: ammonia| 1: formaldehyde| 1: sodium| 1: cyanide}"]
+            ephedrine [label="Ephedrine| Makes you go fast and lessens stuns| OD: 45 | AD: 30 | {1: sugar| 1: oil| 1:hydrogen| 1: diethylamine}"]
+            dipenhydramine [label="Dipenhydramine| Purges histamine| No overdose| No addiction |{1: oil | 1: carbon | 1: bromine | 1: diethylamine| 1: ethanol}"]
+            atropine [label="Atropine| Heals critted patients| OD: 35| No addiction | {1: ethanol| 1: acetone | 1: diethylamine| 1: phenol | 1: sacid}"]
+            "strange reagent" [label="Strange Reagent| Can revive dead people, but hurts the living| No overdose| No addiction| {1:tricordrazine |1: holy water | 1:mutagen}"]
+            insulin [label="Insulin | Removes sugar from patient| No overdose | No addiction"]
+            morphine [label="Morphine | Knocks patient out after some time | OD: 30 | AD: 25"]
+            omnizine [label="Omnizine | Heals all damage | OD: 30 | No addiction"]
+            doctordelight [label="Doctor's Delight | Heals all damage | OD: 55 | No addiction | {1: tricordrazine | 1: cream | 1: tomato juice | 1: lime juice | 1: orange juice}"]
+            silver_sulf [label="Silver Sulfadiazine | Heals burn damage on touch| No overdose| No addiction| {1: ammonia|1: silver|1: sulfur|1: oxygen|1: chlorine}"]
+            styptic [label="Styptic Powder | Heals brute damage on touch| No overdose | No addiction| {1: aluminium| 1: hydrogen| 1: oxygen |1: sacid}"] 
+             
+            };
+            
+              
+        subgraph cluster_drugs{
+            label="Drugs"
+            "space drugs" [label="Space Drugs| A generic drug| No overdose |No addiction | {1: lithium| 1: sugar| 1: mercury}"]
+            nicotine [label="Nicotine| Reduces stun times| No overdose| AD: 30"]
+            crank [label="Crank| Reduce stun times| OD: 20| AD: 10|{1: dipenhydramate| 1: ammonia | 1: lithium| 1: sacid| 1: fuel | TEMP: 390K}"]
+            krokodil [label="Krokodil| Calming and skeletons| OD: 20 | AD:10| {1: diphenhydramine| 1: morphine| 1: cleaner| 1: potassium | 1: phosphorus| 1: fuel| TEMP: 380K}"]
+            meth [label="Methanphetamine| Reduce stuns and speed user up| OD: 20| AD:10 |{1: ephedrine| 1: iodine| 1: phosphorus | 1:hydrogen| TEMP: 374K }"]
+            "bath salts" [label="Bath Salts| Reduce stuns and stamina damage| OD: 20| AD: 10 |{ 1: ???? (bad food)| 1: saltpetre 1: nutriment| 1: cleaner| 1: enzyme| 1: tea |1: mercury| TEMP = 374K}"]
+            aranesp [label="Aranesp| Makes you feel amped and take oxygen damage | No overdose | No addiction | {1: inaprovaline| 1: atropine| 1: morphine}"]
+            hotline [label="Hotline| Make you feel alert and relaxed | OD: 15 | AD: 10"];
+            };
+            
+        subgraph cluster_other{
+            label="Misc"
+            lube [label="Space Lube| Makes floors slippery| {1: water | 1: silicon | 1: oxygen}"]
+            sterilizine [label="Sterilizine| Minor tox damage when ingested| {1: ethanol| 1: dylovene| 1: chlorine}"]
+            cryptobiolin [label="Cryptobiolin| Confuses when ingested|{1: potassium| 1: oxygen| 1:sugar}"]
+            glycerol [label="Glycerol| Used for nitroglycerine| {3: cornoil| 1: sacid}"]
+            salt [label="Salt| Standard table salt| {1: sodium| 1: chlorine}"]
+            "condensed capsacin" [label="Condensed Capsacin| Used for riot control| {1: capsacin | 5: ethanol}"]
+            "virus food" [label="Virus Food| Used to get low level virus symptoms| {5: water|5: milk}"]
+            surfactant [label="Foam Surfactant| Used to make foam| {2: carbon| 2: fluorine| 1: sacid}"]
+            foam [label="Foam reaction| The actual foam releasing reaction| {1: foam surfactant| 1: water}"]
+            foaming_agent [label="Foaming Agent| Used in metal foams|{1: lithium | 1:hydrogen}"]
+            metalfoam [label="Metal Foam| Creates light metal walls| {1: foaming agent| 1: pacid | 3: aluminium}"]
+            ironfoam [label="Iron Foam| Creates metal walls| {1: foaming agent| 1: pacid | 3: iron}"]
+            ammonia [label="Ammonia| Fertilizer | {3: hydrogen | 1:nitrogen}"]
+            diethylamine [label="Diethylamine| More powerful fertizer | {1: ammonia | 1: ethanol}"]
+            spacecleaner [label="Space cleaner| A cleaner that doesn't slip| {1: ammonia | 1: water}"]
+            plantbgone [label="Plant-b-Gone| A weedkiller|{1: toxin | 4: water}"]
+            weedkiller [label="Weedkiller| A weedkiller|{1: toxin | 4: ammonia}"]
+            pestkiller [label="Pestkiller| A pestkiller|{1: toxin | 4: ethanol}"]
+            acetone [label="Acetone| Chemical component|{1: oil | 1:fuel| 1:oxygen}"]
+            carpet [label="Carpet | Makes carpets | {1: space drugs | 1: blood}"]
+            oil [label="Oil| Chemical component | {1: fuel| 1: carbon| 1: hydrogen}"]
+            ash [label="Ash| Chemical waste | {1: Oil | TEMP: 480K}"]
+            phenol [label="Phenol| Chemical component| {1: water| 1: chlorine| 1: oil}"]
+            colorful_reagent [label="Colorful Reagent| Colors things| {1: stable plasma| 1: radium| 1: space drugs | 1: cryoxadone | 1: triple citrus}"]
+            life [label="Life| Creates a lifeform when mixed | {1: strange reagent | 1: cryoxadone | 1: blood| TEMP: 374K}"]
+            corgium [label="Corgium| Creates a corgi| {1: nutriment | 1: colorful_reagent| 1: strange_reagent| 1: blood| TEMP: 374K}"]
+            hair_dye [label="Hair dye| Colors hair when used | {1: colorful reagent| 1:radium | 1:space drugs}"]
+            barbers_aid [label="Barber's aid| Changes hairstyle when used| {1: carpet| 1: radium| 1: space drugs}"]
+            concentrated_barbers_aid [label="Concentrated barber's aid| Grows hair when used| {1: barber's aid| 1: mutagen}"]
+            saltpetre [label="Saltpetre| Chemical component| {1: nitrogen| 1: potassium| 3: oxygen}"];
+            };
+            
+        subgraph cluster_pyro{
+            label="Pyrotechnics"
+            nitroglycerin [label="Nitroglycerin| Explodes well (can be stabilized)|{3: glycerol| 1: pacid| 1: sacid}"]
+            potassium_explosion [label="Potassium explosion| Explodes|{1: water | 1: potassium}"]
+            blackpowder [label="Blackpowder| Explodes at 474K|{1: saltpetre| 1: anti_toxin | 1: sulfur}"]
+            thermite [label="Thermite| Can melt walls| {1: aluminium| 1:oxygen | 1:iron}"]
+            emp_pulse [label="EMP| Disables electronics | {1: uranium | 1: iron}"]
+            stabilizing_agent [label="Stabilizing Agent| Stops certain reaction from happening| {1: iron| 1: oxygen| 1: hydrogen}"]
+            clf3 [label="Chlorine Trifluoride| Flammable| {1:chlorine | 3:fluorine | TEMP: 374K}"]
+            sorium [label="Sorium| Sends everything flying away from the reaction (can be stabilized)| {1: mercury| 1: oxygen | 1: nitrogen| 1: carbon}"]
+            ldm [label="Liquid Dark Matter| Sends everything flying into the reaction (can be stabilized)| {1: stable plasma| 1: radium| 1: carbon}"]
+            flash [label="Flash Powder| Emit a bright flash (can be stabilized)|{1: aluminium| 1: potassium| 1: sulfur}"]
+            smoke [label="Smoke Powder| Creates smoke (can be stabilized)|{1: phosporous| 1: potassium| 1: sugar}"]
+            sonic [label="Sonic Powder| Makes a loud noise (can be stabilized)|{1: oxygen| 1: cola | 1: phosporous}"]
+            phlogiston [label="Phlogiston| Sets things on fire (can be stabilized)| {1: phosporous| 1: sacid| 1: stable plasma}"]
+            napalm [label="Napalm| Sets things on fire|{1: sugar| 1: fuel| 1: ethanol}"]
+            cryostylene [label="Cryostylene| Comes into existance at 20K and cools down when reacting with oxygen|{1: water| 1: stable plasma | 1:nitrogen}"]
+            pyrosium [label="Pyrosium| Comes into existance at 20K and heats up when reacting with oxygen|{1: radium| 1: stable plasma | 1:phosporus}"]
+        }
+        subgraph cluster_toxins{
+            label="Toxins"
+            formaldehyde [label="Formaldehyde| Toxic chemical component, decays into histamine|{1: ethanol| 1: oxygen| 1: silver}"]
+            neurotoxin [label="Neurotoxin| Does brain and tox damage, possibly knocking the user out|{1:space drugs| TEMP:674}"]
+            cyanide [label="Cyanide| Does oxygen and toxic damage| {1: oil| 1: ammonia| 1:oxygen| TEMP:380}"]
+            itching_powder [label="Itching Powder| Does minor brute damage and annoyance and decays into histamine|{1: fuel| 1:ammonia| 1: anti toxin}"]
+            sulfonal [label="Sulfonal| Does toxin damage and also a knockout after some time| {1: acetone|1: diethylamine| 1: sulfur}"]
+            mutagen [label="Unstable Mutagen| Causes mutations| {1: chlorine | 1: radium| 1: phosporus}"]
+            lexorin [label="Lexorin| Prevents breathing and causes tissue damage| {1: plasma| 1: hydrogen | 1: nitrogen}"]
+            chloral [label="Chloral Hydrate| Knocks out user and causes toxin damage after some time| {3: chlorine | 1: ethanol | 1:water}"]
+            mutetoxin [label="Mute Toxin| Makes user silent | {2:uranium | 1: water | 1: carbon}"]
+            zombiepowder [label="Zombie Powder| User appears dead on examination| {5: carpotoxin | 5: morphine | 5: copper}"]
+            mindbreaker [label="Mindbreaker| Causes hallucinations on user| {1: silicon| 1: hydrogen| 1: dylovene}"]
+            stoxin [label="Sleep Toxin| Makes user sleep after some time| {1: chloral hydrate | 4: sugar}"]
+            pacid [label="Polytrinic Acid| Melts things | {1: sacid | 1: chlorine | 1: potassium}"]
+            impedrezene [label="Impedrezene| Causes brain damage when ingested| {1: mercury| 1:oxygen| 1: sugar}"]
+            toxin [label="Toxin| A basic toxin"]
+            amatoxin [label="Amatoxin| Toxin found in fly amanitas"]
+            slimejelly [label="Slime Jelly| Toxin extracted from slimes"]
+            minttoxin [label="Mint Toxin| Gibs fat people and is found on mint"]
+            carpotoxin [label="Carpotoxin| Found in space carps"]
+            spore [label="Spore Toxin| Causes vision impairment"]
+            burningspore [label="Burning Spore Toxin| Ignites people"]
+            staminatoxin [label="Stamina Toxin| Causes stamina damage"]
+            polonium [label="Polonium| Cause significant irradiation over time"]
+            histamine [label="Histamine | Created by toxin decay, the effects greatly depend on the dose| OD: 30"]
+            venom [label="Venom| Does brute and toxin damage while decaying into histamine"]
+            foodpoisoning [label="Food Poisoning (????)| Found in burned messes"]
+            initropidril [label="Initropidril| Causes some toxin damage and can cause heart attacks"]
+            pancuronium [label="Pancuronium| Causes oxygen loss and knockouts"]
+            sodiumthiopental [label="Sodium thiopental| Causes sleep and stamina loss"]
+            amanitin [label="Amanitin| Deal toxin damage proportional to the time it has been in the user's body"]
+            coniine [label="Coniine| Deals oxygen and toxin damage"]
+            curare [label="Curare| Deals oxygen and toxin damage, can weaken"]
+            
+            }
+}            
+            
