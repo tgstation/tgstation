@@ -505,12 +505,12 @@
 					return
 
 				excavation_level += P.excavation_amount
-
-			if(!archaeo_overlay && finds && finds.len)
-				var/datum/find/F = finds[1]
-				if(F.excavation_required <= excavation_level + F.view_range)
-					archaeo_overlay = "overlay_archaeo[rand(1,3)]"
-					overlays += archaeo_overlay
+			if(istype(src, /turf/simulated/mineral))
+				if(!archaeo_overlay && finds && finds.len)
+					var/datum/find/F = finds[1]
+					if(F.excavation_required <= excavation_level + F.view_range)
+						archaeo_overlay = "overlay_archaeo[rand(1,3)]"
+						overlays += archaeo_overlay
 
 			var/update_excav_overlay = 0
 

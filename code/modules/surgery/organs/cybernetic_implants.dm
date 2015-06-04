@@ -106,6 +106,8 @@
 	update_eye_color("You see prey everywhere you look...")
 
 /obj/item/cybernetic_implant/eyes/emp_act(severity)
+	if(!istype(owner))
+		return
 	if(!owner)
 		return
 	if(severity > 1)
