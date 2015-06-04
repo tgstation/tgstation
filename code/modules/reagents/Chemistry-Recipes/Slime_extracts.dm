@@ -511,6 +511,65 @@
 		var/obj/item/bluespace_crystal/BC = new(get_turf(holder.my_atom))
 		BC.visible_message("<span class='notice'>The [BC.name] appears out of thin air!</span>")
 
+/datum/chemical_reaction/slimeteleport
+	name = "Slime Teleport"
+	id = "m_teleport"
+	result = null
+	required_reagents = list("plasma" = 1)
+	result_amount = 1
+	required_container = /obj/item/slime_extract/bluespace
+	required_other = 1
+
+/datum/chemical_reaction/slimeteleport/on_reaction(var/datum/reagents/holder, var/created_volume)
+	feedback_add_details("slime_cores_used","[replacetext(name," ","_")]")
+	if(holder.my_atom)
+		var/obj/item/device/radio/beacon/chosen
+		var/list/possible = list()
+		for(var/obj/item/device/radio/beacon/W in world)
+			possible += W
+
+		if(possible.len > 0)
+			chosen = pick(possible)
+
+		if(chosen)
+				// Calculate previous position for transition
+
+			var/turf/FROM = get_turf(holder.my_atom) // the turf of origin we're travelling FROM
+			var/turf/TO = get_turf(chosen)			 // the turf of origin we're travelling TO
+
+			playsound(TO, 'sound/effects/phasein.ogg', 100, 1)
+
+			var/list/flashers = list()
+			for(var/mob/living/carbon/human/M in viewers(TO, null))
+				if(M.flash_eyes())
+					flashers += M
+
+			var/y_distance = TO.y - FROM.y
+			var/x_distance = TO.x - FROM.x
+			for (var/atom/movable/A in range(5, FROM )) // iterate thru list of mobs in the area
+				if(istype(A, /obj/item/device/radio/beacon)) continue // don't teleport beacons because that's just insanely stupid
+				if(A.anchored) continue
+
+
+				var/turf/newloc = locate(A.x + x_distance, A.y + y_distance, TO.z) // calculate the new place
+				if(!A.Move(newloc) && newloc) // if the atom, for some reason, can't move, FORCE them to move! :) We try Move() first to invoke any movement-related checks the atom needs to perform after moving
+					A.loc = newloc
+
+				spawn()
+					if(ismob(A) && !(A in flashers)) // don't flash if we're already doing an effect
+						var/mob/M = A
+						if(M.client)
+							var/obj/blueeffect = new /obj(src)
+							blueeffect.screen_loc = "WEST,SOUTH to EAST,NORTH"
+							blueeffect.icon = 'icons/effects/effects.dmi'
+							blueeffect.icon_state = "shieldsparkles"
+							blueeffect.layer = 17
+							blueeffect.mouse_opacity = 0
+							M.client.screen += blueeffect
+							sleep(20)
+							M.client.screen -= blueeffect
+							qdel(blueeffect)
+
 //Cerulean
 /datum/chemical_reaction/slimepsteroid2
 	name = "Slime Steroid 2"
