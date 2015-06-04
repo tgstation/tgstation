@@ -128,11 +128,13 @@
 		return drop_item()
 	return 0
 
-/mob/living/silicon/robot/mommi/drop_item(var/atom/Target)
+/mob/living/silicon/robot/mommi/drop_item()
 	if(tool_state)
 		//var/obj/item/found = locate(tool_state) in src.module.modules
 		if(is_in_modules(tool_state))
 			src << "\red This item cannot be dropped."
+			return 0
+		if(!loc.allow_drop())
 			return 0
 		if(client)
 			client.screen -= tool_state
@@ -178,7 +180,8 @@
 		//var/obj/item/found = locate(tool_state) in src.module.modules
 		TS = tool_state
 		if(!is_in_modules(TS))
-			drop_item()
+			if(!drop_item())
+				return 0
 			if(TS && TS.loc)
 				TS.loc = get_turf(src)
 		if(istype(tool_state,/obj/item/borg/sight))
@@ -245,7 +248,8 @@
 	if(tool_state)
 		var/obj/item/TS=tool_state
 		if(!is_in_modules(TS))
-			drop_item()
+			if(!drop_item())
+				return 0
 			if(TS && TS.loc)
 				TS.loc = get_turf(src)
 		if(istype(tool_state,/obj/item/borg/sight))
