@@ -384,6 +384,22 @@ Auto Patrol: []"},
 		target = user
 		mode = BOT_HUNT
 
+/obj/machinery/bot/secbot/Crossed(atom/movable/AM)
+	if(ismob(AM) && target)
+		var/mob/living/carbon/C = AM
+		if(!istype(C) || !C || in_range(src, target))
+			return
+		C.visible_message("<span class='warning'>[pick( \
+						  "[C] dives out of [src]'s way!", \
+						  "[C] stumbles over [src]!", \
+						  "[C] jumps out of [src]'s path!", \
+						  "[C] trips over [src] and falls!", \
+						  "[C] topples over [src]!", \
+						  "[C] leaps out of [src]'s way!")]</span>")
+		C.Weaken(2)
+		return
+	..()
+
 //Secbot Construction
 
 /obj/item/clothing/head/helmet/attackby(var/obj/item/device/assembly/signaler/S, mob/user as mob, params)
