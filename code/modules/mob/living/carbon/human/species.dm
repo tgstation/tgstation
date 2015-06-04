@@ -704,7 +704,6 @@
 				mspeed += 1.5
 			if(H.bodytemperature < BODYTEMP_COLD_DAMAGE_LIMIT)
 				mspeed += (BODYTEMP_COLD_DAMAGE_LIMIT - H.bodytemperature) / COLD_SLOWDOWN_FACTOR
-
 			mspeed += speedmod
 
 	if(H.status_flags & GOTTAGOFAST)
@@ -712,6 +711,9 @@
 
 	if(H.status_flags & GOTTAGOREALLYFAST)
 		mspeed -= 2
+
+	if(H.status_flags & SLOWDOWN)
+		mspeed += 4
 
 	return mspeed
 
@@ -761,6 +763,8 @@
 
 				var/damage = rand(0, 9)
 				if(M.dna)
+					if(M.status_flags & INCREASEDAMAGE)
+						damage += 5
 					damage += M.dna.species.punchmod
 
 				if(!damage)

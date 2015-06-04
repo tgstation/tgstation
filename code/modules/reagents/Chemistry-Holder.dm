@@ -387,6 +387,7 @@ var/const/INGEST = 2
 			check_ignoreslow(my_atom)
 			check_gofast(my_atom)
 			check_goreallyfast(my_atom)
+			check_increasedamage(my_atom)
 	return 1
 
 /datum/reagents/proc/check_ignoreslow(var/mob/M)
@@ -398,7 +399,7 @@ var/const/INGEST = 2
 
 /datum/reagents/proc/check_gofast(var/mob/M)
 	if(istype(M, /mob))
-		if(M.reagents.has_reagent("unholywater")||M.reagents.has_reagent("nuka_cola"))
+		if(M.reagents.has_reagent("unholywater")||M.reagents.has_reagent("nuka_cola")||M.reagents.has_reagent("endurance_feat"))
 			return 1
 		else
 			M.status_flags &= ~GOTTAGOFAST
@@ -409,6 +410,20 @@ var/const/INGEST = 2
 			return 1
 		else
 			M.status_flags &= ~GOTTAGOREALLYFAST
+
+/datum/reagents/proc/check_increasedamage(var/mob/M)
+	if(istype(M, /mob))
+		if(M.reagents.has_reagent("bezerkers_rage"))
+			return 1
+		else
+			M.status_flags &= ~INCREASEDAMAGE
+
+/datum/reagents/proc/check_slowdown(var/mob/M)
+	if(istype(M, /mob))
+		if(M.reagents.has_reagent("web_of_lies"))
+			return 1
+		else
+			M.status_flags &= ~SLOWDOWN
 
 /datum/reagents/proc/update_total()
 	total_volume = 0
