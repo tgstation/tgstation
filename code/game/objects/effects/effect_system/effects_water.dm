@@ -77,7 +77,7 @@ steam.start() -- spawns the effect
 				sleep(5)
 				step(steam,direction)
 			spawn(20)
-				qdel(src)
+				qdel(steam)
 
 
 /////////////////////////////////////////////
