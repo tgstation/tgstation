@@ -276,13 +276,13 @@
 
 
 /obj/screen/Click(location, control, params)
-	if(!usr)	return 1
-
-	if(name == "Reset Machine") //I don't know what this is, CTRL+F has the only entry right here in this file, so I'm going to leave it in case it is something important
-		usr.unset_machine()
+	var/list/modifiers = params2list(params)
+	if(modifiers["middle"] && istype(usr, /mob/living/carbon))
+		var/mob/living/carbon/C = usr
+		C.swap_hand()
 	else
-		return 0
-
+		var/turf/T = screen_loc2turf(modifiers["screen-loc"], get_turf(usr))
+		T.Click(location, control, params)
 	return 1
 
 /obj/screen/inventory/Click()

@@ -134,6 +134,7 @@
 	mymob.blind.name = " "
 	mymob.blind.screen_loc = "CENTER-7,CENTER-7"
 	mymob.blind.layer = 0
+	mymob.blind.mouse_opacity = 1
 
 	mymob.flash = new /obj/screen()
 	mymob.flash.icon = 'icons/mob/screen_gen.dmi'

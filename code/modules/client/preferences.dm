@@ -830,10 +830,7 @@ datum/preferences
 						toggles ^= SOUND_ADMINHELP
 
 					if("autoclick")
-						if(autoclick_delay)
-							autoclick_delay = 0
-						else
-							autoclick_delay = AUTOCLICK_DELAY
+						autoclick_delay = !autoclick_delay
 
 					if("ui")
 						switch(UI_style)

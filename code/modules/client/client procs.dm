@@ -22,16 +22,15 @@
 	*/
 
 /client/MouseDown(object,location,control,params)
-	if(mob && prefs && prefs.autoclick_delay && object && istype(mob, /mob/living/carbon))
+	if(mob && prefs && prefs.autoclick_delay && object && !istype(object, /obj/screen) && istype(mob, /mob/living/carbon))
 		var/mob/living/carbon/C = mob
-		if(!C.get_active_hand())
-			return ..()
 		C.is_mouse_down = object
 		spawn()
-			while(C.is_mouse_down == object)
+			while(C && C.is_mouse_down == object)
+				if(!C.get_active_hand())
+					return ..()
 				C.ClickOn(C.is_mouse_down, params)
-				sleep(1)
-			return
+				sleep(world.tick_lag)
 
 /client/MouseDrag(src_object,over_object,src_location,over_location,src_control,over_control,params)
 	if(over_object)
@@ -39,11 +38,6 @@
 
 /client/MouseUp(object,location,control,params)
 	if(mob)
-		if(!object)
-			var/list/modifiers = params2list(params)
-			if(modifiers["middle"])
-				mob.MiddleClickOn()
-				return
 		if(istype(mob, /mob/living/carbon))
 			var/mob/living/carbon/C = mob
 			C.is_mouse_down = null
