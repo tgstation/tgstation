@@ -262,12 +262,12 @@ atom/proc/transfer_ai(var/choice as text, var/interaction as text, var/target, v
 			var/obj/mecha/M = target
 			var/mob/living/silicon/ai/AI
 			switch(interaction)
-				if("HACK") //Called by AI mob on the mech.
+				if("HACK") //Called by Malf AI mob on the mech.
 					AI = src
 					new /obj/structure/AIcore/deactivated(AI.loc)
 					if(M.occupant) //Oh, I am sorry, were you using that?
-						AI << "<span class='warning'>Pilot detected. Forced ejection initated!"
-						M.occupant << "<span class='danger'>You have been forcibly ejected!</span>!"
+						AI << "<span class='warning'>Pilot detected! Forced ejection initiated!"
+						M.occupant << "<span class='danger'>You have been forcibly ejected!</span>"
 						M.go_out(1) //IT IS MINE, NOW. SUCK IT, RD!
 				if("AICARD") //Using an AI card on a mech.
 					var/obj/item/device/aicard/C = src

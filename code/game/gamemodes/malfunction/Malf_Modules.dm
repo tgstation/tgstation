@@ -38,7 +38,7 @@
 /datum/AI_Module/large/upgrade_turrets
 	module_name = "AI Turret upgrade"
 	mod_pick_name = "turret"
-	description = "Improves the firing speed and health of all AI turrets. This effect is permanent."
+	description = "Improves the power and health of all AI turrets. This effect is permanent."
 	cost = 50
 	one_time = 1
 
@@ -55,14 +55,15 @@
 	for(var/obj/machinery/porta_turret/turret in machines)
 		if(turret.ai) //Make sure only the AI's turrets are affected.
 			turret.health += 30
-			turret.shot_delay = 10 //Standard portable turret delay is 15.
+			turret.eprojectile = /obj/item/projectile/beam/heavylaser //Once you see it, you will know what it means to FEAR.
+			turret.eshot_sound = 'sound/weapons/lasercannonfire.ogg'
 	src << "<span class='notice'>Turrets upgraded.</span>"
 
 /datum/AI_Module/large/lockdown
 	module_name = "Hostile Station Lockdown"
 	mod_pick_name = "lockdown"
-	description = "Take control of the airlock, blast door and fire control networks, locking them down. Caution! This command also electrifies all airlocks."
-	cost = 20
+	description = "Overload the airlock, blast door and fire control networks, locking them down. Caution! This command also electrifies all airlocks. The networks will automatically reset after 60 seconds."
+	cost = 40
 	one_time = 1
 
 	power_type = /mob/living/silicon/ai/proc/lockdown
@@ -72,9 +73,6 @@
 	set name = "Initiate Hostile Lockdown"
 
 	if(!canUseTopic())
-		return
-
-	if(malf_cooldown)
 		return
 
 	var/obj/machinery/door/airlock/AL
@@ -88,8 +86,7 @@
 					AL.locked = 0 //For airlocks that were bolted open.
 					AL.safe = 0 //DOOR CRUSH
 					AL.close()
-					AL.locked = 1 //Bolt it!
-					AL.lights = 0 //Stealth bolt for a classic AI door trap.
+					AL.bolt() //Bolt it!
 					AL.secondsElectrified = -1  //Shock it!
 			else if(!D.stat) //So that only powered doors are closed.
 				D.close() //Close ALL the doors!
@@ -98,19 +95,17 @@
 	if(C)
 		C.post_status("alert", "lockdown")
 
-	src.verbs += /mob/living/silicon/ai/proc/disablelockdown
-	src << "<span class = 'warning'>Lockdown Initiated.</span>"
-	malf_cooldown = 1
-	spawn(30)
-	malf_cooldown = 0
+	verbs -= /mob/living/silicon/ai/proc/lockdown
+	minor_announce("Hostile runtime detected in door controllers. Isolation Lockdown protocols are now in effect. Please remain calm.","Network Alert:", 1)
+	src << "<span class = 'warning'>Lockdown Initiated. Network reset in 60 seconds.</span>"
+	spawn(600) //1 minute.
+		disablelockdown() //Reset the lockdown after one minute.
 
 /mob/living/silicon/ai/proc/disablelockdown()
 	set category = "Malfunction"
 	set name = "Disable Lockdown"
 
 	if(!canUseTopic())
-		return
-	if(malf_cooldown)
 		return
 
 	var/obj/machinery/door/airlock/AL
@@ -119,18 +114,14 @@
 			if(istype(D, /obj/machinery/door/airlock))
 				AL = D
 				if(AL.canAIControl() && !AL.stat) //Must be powered and have working AI wire.
-					AL.locked = 0
+					AL.unbolt()
 					AL.secondsElectrified = 0
 					AL.open()
 					AL.safe = 1
-					AL.lights = 1 //Essentially reset the airlock to normal.
 			else if(!D.stat) //Opens only powered doors.
 				D.open() //Open everything!
 
-	src << "<span class = 'notice'>Lockdown Lifted.</span>"
-	malf_cooldown = 1
-	spawn(30)
-	malf_cooldown = 0
+	minor_announce("Automatic system reboot complete. Have a secure day.","Network reset:")
 
 /datum/AI_Module/large/disable_rcd
 	module_name = "RCD disable"
@@ -159,7 +150,7 @@
 
 /datum/AI_Module/large/mecha_domination
 	module_name = "Viral Mech Domination"
-	mod_pick_name = "mechhack"
+	mod_pick_name = "mechjack"
 	description = "Hack into a mech's onboard computer, shunting all processes into it and ejecting any occupants. Once uploaded to the mech, it is impossible to leave.\
 	Do not allow the mech to leave the station's vicinity or allow it to be destroyed."
 	cost = 30
@@ -174,7 +165,7 @@
 	if(stat)
 		return
 	can_dominate_mechs = 1 //Yep. This is all it does. Honk!
-	src << "Virus package compiled. Select a target mech at any time.<b>You must remain on the station at all times. Loss of signal will result in total system lockout.</b>"
+	src << "Virus package compiled. Select a target mech at any time. <b>You must remain on the station at all times. Loss of signal will result in total system lockout.</b>"
 	verbs -= /mob/living/silicon/ai/proc/mech_takeover
 
 
