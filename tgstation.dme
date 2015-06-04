@@ -6,6 +6,9 @@
 
 // BEGIN_FILE_DIR
 #define FILE_DIR .
+#define FILE_DIR "code"
+#define FILE_DIR "code/modules"
+#define FILE_DIR "code/modules/reagents"
 #define FILE_DIR "html"
 #define FILE_DIR "icons"
 #define FILE_DIR "icons/ass"
