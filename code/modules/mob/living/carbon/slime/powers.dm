@@ -214,6 +214,7 @@
 					M.colour = colour
 				if(ckey)	M.nutrition = new_nutrition //Player slimes are more robust at spliting. Once an oversight of poor copypasta, now a feature!
 				M.powerlevel = new_powerlevel
+				M.mutation_chance = Clamp(mutation_chance+(rand(5,-5)),0,100)
 				if(i != 1) step_away(M,src)
 				M.Friends = Friends.Copy()
 				babies += M
