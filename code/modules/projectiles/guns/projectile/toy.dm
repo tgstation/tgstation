@@ -32,6 +32,9 @@
 	..()
 	icon_state = "[initial(icon_state)][chambered ? "" : "-e"]"
 
+/obj/item/weapon/gun/projectile/automatic/toy/pistol/riot
+	mag_type = /obj/item/ammo_box/magazine/toy/pistol/riot
+
 /obj/item/weapon/gun/projectile/automatic/toy/pistol/riot/New()
 	magazine = new /obj/item/ammo_box/magazine/toy/pistol/riot(src)
 	..()

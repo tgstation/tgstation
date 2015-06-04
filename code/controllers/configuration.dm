@@ -560,7 +560,7 @@
 			//world << "DEBUG: runnable_mode\[[runnable_modes.len]\] = [M.config_tag]"
 	return runnable_modes
 
-datum/configuration/proc/get_runnable_midround_modes(crew)
+/datum/configuration/proc/get_runnable_midround_modes(crew)
 	var/list/datum/game_mode/runnable_modes = new
 	for(var/T in (typesof(/datum/game_mode) - /datum/game_mode - ticker.mode.type))
 		var/datum/game_mode/M = new T()

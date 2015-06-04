@@ -96,7 +96,7 @@
 	feedback_add_details("admin_verb","GOD") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
 
-proc/cmd_admin_mute(whom, mute_type, automute = 0)
+/proc/cmd_admin_mute(whom, mute_type, automute = 0)
 	if(!whom)
 		return
 
