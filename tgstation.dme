@@ -42,6 +42,7 @@
 #define FILE_DIR "sound/hallucinations"
 #define FILE_DIR "sound/items"
 #define FILE_DIR "sound/machines"
+#define FILE_DIR "sound/magic"
 #define FILE_DIR "sound/mecha"
 #define FILE_DIR "sound/misc"
 #define FILE_DIR "sound/piano"
