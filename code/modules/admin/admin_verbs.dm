@@ -937,8 +937,8 @@ var/list/admin_verbs_mod = list(
 		var/obj/item/weapon/reagent_containers/food/drinks/golden_cup/C = new(get_turf(winner))
 		C.name = name
 		C.desc = desc
-		winner.put_in_hands(C)
-		winner.update_icons()
+		if(iscarbon(winner) && (winner.stat == CONSCIOUS))
+			winner.put_in_hands(C)
 	else
 		winner << "<span class='danger'>You win [name]! [desc]</span>"
 
@@ -946,6 +946,8 @@ var/list/admin_verbs_mod = list(
 
 	if(glob == "No!")
 		winner.client << sound('sound/misc/achievement.ogg')
+		for(var/mob/dead/observer/O in player_list)
+			O << "<span class='danger'>\icon[cup] <b>[winner.name]</b> wins \"<b>[name]</b>\"!</span>"
 	else
 		world  << sound('sound/misc/achievement.ogg')
 		world << "<span class='danger'>\icon[cup] <b>[winner.name]</b> wins \"<b>[name]</b>\"!</span>"
@@ -953,6 +955,8 @@ var/list/admin_verbs_mod = list(
 	winner << "<span class='danger'>Congratulations!</span>"
 
 	achievements += "<b>[winner.key]</b> as <b>[winner.name]</b> won \"<b>[name]</b>\"! \"[desc]\""
+
+	message_admins("[key_name_admin(usr)] has awarded <b>[winner.key]</b>([winner.name]) with the achievement \"<b>[name]</b>\"! \"[desc]\".", 1)
 
 /client/proc/mommi_static()
 	set name = "Toggle MoMMI Static"

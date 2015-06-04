@@ -1,0 +1,6 @@
+author: Deity Link
+delete-after: true
+changes:
+  - bugfix: Admins now get notified when one of them gives an achievement. (Including who gave it)
+  - bugfix: Ghosts now get notified when someone receives an achievement.
+  - bugfix: Fixed an exception in case you tried to give a trophy to a non-carbon mob (the trophy will now appear on the floor)
