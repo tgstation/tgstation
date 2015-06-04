@@ -47,9 +47,6 @@
 	efficiency = E
 	min_health = -E * 25
 
-/obj/machinery/sleeper/allow_drop()
-	return 0
-
 /obj/machinery/sleeper/MouseDrop_T(mob/target, mob/user)
 	if(stat || user.stat || user.lying || !Adjacent(user) || !target.Adjacent(user)|| !iscarbon(target))
 		return

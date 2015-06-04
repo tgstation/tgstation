@@ -8,7 +8,9 @@
 # NOTE: syntax was changed to allow hyphenation of ranknames, since spaces are stripped.      #
 ###############################################################################################
 MrStonedOne = Host
+microscopics = Game Master
 Gun Hog = Game Master
+KorPhaeron = Game Master
 razharas = Game Master
 Niknakflak = Game Master
 rolan7 = Game Master
@@ -81,3 +83,4 @@ lo6a4evskiy = Game Master
 vekter = Game Master
 Ahammer18 = Game Master
 ACCount12 = Game Master
+fayrik = Game Master

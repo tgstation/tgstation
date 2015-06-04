@@ -16,7 +16,10 @@
 	robust_searching = 1
 	stat_attack = 2
 	environment_smash = 0
+	speak_emote = list("squeaks")
+	ventcrawler = 2
 	var/datum/mind/origin
+	var/egg_lain = 0
 
 /mob/living/simple_animal/hostile/headcrab/proc/Infect(var/mob/living/carbon/human/victim)
 	var/obj/item/body_egg/changeling_egg/egg = new(victim)
@@ -25,14 +28,20 @@
 	else if(mind) // Let's make this a feature
 		egg.owner = mind
 	victim.internal_organs += egg
-	visible_message("<span class='notice'>[src] lays an egg in a [victim]!</span>")
+	visible_message("<span class='warning'>[src] lays an egg in a [victim].</span>")
+	egg_lain = 1
 
 /mob/living/simple_animal/hostile/headcrab/AttackingTarget()
+	if(egg_lain)
+		target.attack_animal(src)
+		return
 	if(ishuman(target))
 		var/mob/living/carbon/human/H = target
 		if(H.stat == DEAD)
 			Infect(target)
-			death()
+			src << "<span class='userdanger'>With your egg laid you feel your death rapidly approaching, time to die...</span>"
+			spawn(100)
+				death()
 			return
 	target.attack_animal(src)
 
@@ -52,12 +61,13 @@
 	if(time >= EGG_INCUBATION_TIME)
 		Pop()
 
-obj/item/body_egg/changeling_egg/proc/Pop()
+/obj/item/body_egg/changeling_egg/proc/Pop()
 	if(!used)
 		var/mob/living/carbon/monkey/M = new(affected_mob.loc)
 		if(owner)
 			owner.transfer_to(M)
-			owner.changeling.purchasedpowers += new /obj/effect/proc_holder/changeling/humanform(null)
+			if(owner.changeling)
+				owner.changeling.purchasedpowers += new /obj/effect/proc_holder/changeling/humanform(null)
 			M.key = owner.key
 		if(ishuman(affected_mob))
 			var/mob/living/carbon/human/H = affected_mob

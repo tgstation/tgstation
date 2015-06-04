@@ -37,6 +37,15 @@
 	)
 	result = /obj/item/weapon/reagent_containers/food/snacks/soup/nettle
 
+/datum/table_recipe/wingfangchu
+	name = "Wingfangchu"
+	reqs = list(
+		/obj/item/weapon/reagent_containers/glass/bowl = 1,
+		/datum/reagent/consumable/soysauce = 5,
+		/obj/item/weapon/reagent_containers/food/snacks/meat/cutlet/xeno = 2
+	)
+	result = /obj/item/weapon/reagent_containers/food/snacks/soup/wingfangchu
+
 /datum/table_recipe/wishsoup
 	name = "Wish soup"
 	reqs = list(

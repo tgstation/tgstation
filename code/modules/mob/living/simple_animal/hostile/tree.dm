@@ -23,6 +23,7 @@
 	melee_damage_upper = 12
 	attacktext = "bites"
 	attack_sound = 'sound/weapons/bite.ogg'
+	speak_emote = list("pines")
 
 	//Space carp aren't affected by atmos.
 	atmos_requirements = list("min_oxy" = 0, "max_oxy" = 0, "min_tox" = 0, "max_tox" = 0, "min_co2" = 0, "max_co2" = 0, "min_n2" = 0, "max_n2" = 0)
@@ -38,11 +39,12 @@
 
 /mob/living/simple_animal/hostile/tree/AttackingTarget()
 	..()
-	if(isliving(target))
-		var/mob/living/L = target
+	if(iscarbon(target))
+		var/mob/living/carbon/C = target
 		if(prob(15))
-			L.Weaken(3)
-			L.visible_message("<span class='danger'>\The [src] knocks down \the [L]!</span>")
+			C.Weaken(3)
+			C.visible_message("<span class='danger'>\The [src] knocks down \the [C]!</span>", \
+					"<span class='userdanger'>\The [src] knocks you down!</span>")
 
 /mob/living/simple_animal/hostile/tree/death(gibbed)
 	..(1)
@@ -59,4 +61,5 @@
 	icon_dead = "festivus_pole"
 	icon_gib = "festivus_pole"
 	drop_type = /obj/item/stack/rods
+	speak_emote = list("polls")
 

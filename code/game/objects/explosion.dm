@@ -6,7 +6,7 @@
 	if(dx>=dy)	return dx + (0.5*dy)	//The longest side add half the shortest side approximates the hypotenuse
 	else		return dy + (0.5*dx)
 
-proc/trange(var/Dist=0,var/turf/Center=null)//alternative to range (ONLY processes turfs and thus less intensive)
+/proc/trange(var/Dist=0,var/turf/Center=null)//alternative to range (ONLY processes turfs and thus less intensive)
 	if(Center==null) return
 
 	//var/x1=((Center.x-Dist)<1 ? 1 : Center.x-Dist)
@@ -19,7 +19,7 @@ proc/trange(var/Dist=0,var/turf/Center=null)//alternative to range (ONLY process
 	return block(x1y1,x2y2)
 
 
-proc/explosion(turf/epicenter, devastation_range, heavy_impact_range, light_impact_range, flash_range, adminlog = 1, ignorecap = 0, flame_range = 0 ,silent = 0)
+/proc/explosion(turf/epicenter, devastation_range, heavy_impact_range, light_impact_range, flash_range, adminlog = 1, ignorecap = 0, flame_range = 0 ,silent = 0)
 	src = null	//so we don't abort once src is deleted
 	epicenter = get_turf(epicenter)
 
@@ -73,8 +73,10 @@ proc/explosion(turf/epicenter, devastation_range, heavy_impact_range, light_impa
 							far_volume += (dist <= far_dist * 0.5 ? 50 : 0) // add 50 volume if the mob is pretty close to the explosion
 							M.playsound_local(epicenter, 'sound/effects/explosionfar.ogg', far_volume, 1, frequency, falloff = 5)
 
-		//postpone light processing for a bit
-		SSlighting.postpone()
+		//postpone processing for a bit
+		var/postponeCycles = max(round(devastation_range/8),1)
+		SSlighting.postpone(postponeCycles)
+		SSmachine.postpone(postponeCycles)
 
 		if(heavy_impact_range > 1)
 			var/datum/effect/system/explosion/E = new/datum/effect/system/explosion()
@@ -103,7 +105,7 @@ proc/explosion(turf/epicenter, devastation_range, heavy_impact_range, light_impa
 
 			if(T)
 				if(flame_dist && prob(40) && !istype(T, /turf/space) && !T.density)
-					new/obj/effect/hotspot(T) //Mostly for ambience!
+					PoolOrNew(/obj/effect/hotspot, T) //Mostly for ambience!
 				if(dist > 0)
 					T.ex_act(dist)
 
@@ -112,10 +114,11 @@ proc/explosion(turf/epicenter, devastation_range, heavy_impact_range, light_impa
 			var/throw_dir = get_dir(epicenter,T)
 			for(var/obj/item/I in T)
 				spawn(0) //Simultaneously not one at a time
-					var/throw_range = rand(throw_dist, max_range)
-					var/turf/throw_at = get_ranged_target_turf(I, throw_dir, throw_range)
-					I.throw_speed = 4 //Temporarily change their throw_speed for embedding purposes (Reset when it finishes throwing, regardless of hitting anything)
-					I.throw_at(throw_at, throw_range, 2)//Throw it at 2 speed, this is purely visual anyway.
+					if(I)
+						var/throw_range = rand(throw_dist, max_range)
+						var/turf/throw_at = get_ranged_target_turf(I, throw_dir, throw_range)
+						I.throw_speed = 4 //Temporarily change their throw_speed for embedding purposes (Reset when it finishes throwing, regardless of hitting anything)
+						I.throw_at(throw_at, throw_range, 2)//Throw it at 2 speed, this is purely visual anyway.
 
 
 		var/took = (world.timeofday-start)/10
@@ -132,6 +135,6 @@ proc/explosion(turf/epicenter, devastation_range, heavy_impact_range, light_impa
 
 
 
-proc/secondaryexplosion(turf/epicenter, range)
+/proc/secondaryexplosion(turf/epicenter, range)
 	for(var/turf/tile in trange(range, epicenter))
 		tile.ex_act(2)

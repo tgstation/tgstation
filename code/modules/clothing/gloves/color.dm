@@ -149,14 +149,12 @@
 	item_color="white"
 	transfer_prints = TRUE
 
-/obj/item/clothing/gloves/color/latex/cmo
-	item_color = "medical"		//Exists for washing machines. Is not different from latex gloves in any way.
-
 /obj/item/clothing/gloves/color/latex/nitrile
 	name = "nitrile gloves"
 	desc = "Pricy sterile gloves that are stronger than latex."
 	icon_state = "nitrile"
 	item_state = "nitrilegloves"
+	item_color = "cmo"
 	transfer_prints = FALSE
 
 /obj/item/clothing/gloves/color/white

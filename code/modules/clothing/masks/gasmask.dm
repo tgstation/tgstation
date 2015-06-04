@@ -222,11 +222,11 @@
 /obj/item/clothing/mask/gas/clown_hat
 	name = "clown wig and mask"
 	desc = "A true prankster's facial attire. A clown is incomplete without his wig and mask."
-	alloweat = 1
+	flags = MASKCOVERSEYES | BLOCK_GAS_SMOKE_EFFECT | MASKINTERNALS
 	icon_state = "clown"
 	item_state = "clown_hat"
 
-obj/item/clothing/mask/gas/clown_hat/attack_self(mob/user)
+/obj/item/clothing/mask/gas/clown_hat/attack_self(mob/user)
 
 	var/mob/M = usr
 	var/list/options = list()
@@ -245,28 +245,28 @@ obj/item/clothing/mask/gas/clown_hat/attack_self(mob/user)
 /obj/item/clothing/mask/gas/sexyclown
 	name = "sexy-clown wig and mask"
 	desc = "A feminine clown mask for the dabbling crossdressers or female entertainers."
-	alloweat = 1
+	flags = MASKCOVERSEYES | BLOCK_GAS_SMOKE_EFFECT | MASKINTERNALS
 	icon_state = "sexyclown"
 	item_state = "sexyclown"
 
 /obj/item/clothing/mask/gas/mime
 	name = "mime mask"
 	desc = "The traditional mime's mask. It has an eerie facial posture."
-	alloweat = 1
+	flags = MASKCOVERSEYES | BLOCK_GAS_SMOKE_EFFECT | MASKINTERNALS
 	icon_state = "mime"
 	item_state = "mime"
 
 /obj/item/clothing/mask/gas/monkeymask
 	name = "monkey mask"
 	desc = "A mask used when acting as a monkey."
-	alloweat = 1
+	flags = MASKCOVERSEYES | BLOCK_GAS_SMOKE_EFFECT | MASKINTERNALS
 	icon_state = "monkeymask"
 	item_state = "monkeymask"
 
 /obj/item/clothing/mask/gas/sexymime
 	name = "sexy mime mask"
 	desc = "A traditional female mime's mask."
-	alloweat = 1
+	flags = MASKCOVERSEYES | BLOCK_GAS_SMOKE_EFFECT | MASKINTERNALS
 	icon_state = "sexymime"
 	item_state = "sexymime"
 
@@ -283,5 +283,5 @@ obj/item/clothing/mask/gas/clown_hat/attack_self(mob/user)
 /obj/item/clothing/mask/gas/owl_mask
 	name = "owl mask"
 	desc = "Twoooo!"
-	alloweat = 1
+	flags = MASKCOVERSEYES | BLOCK_GAS_SMOKE_EFFECT | MASKINTERNALS
 	icon_state = "owl"

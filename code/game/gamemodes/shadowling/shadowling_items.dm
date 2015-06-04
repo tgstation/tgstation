@@ -46,7 +46,7 @@
 
 /obj/item/clothing/gloves/shadowling
 	name = "chitin hands"
-	desc = "An electricity-resistant yet thin covering of the hands."
+	desc = "An electricity-resistant covering of the hands."
 	icon_state = "golem"
 	item_state = null
 	origin_tech = null
@@ -75,9 +75,10 @@
 	vision_flags = SEE_MOBS
 	darkness_view = 3
 	invis_view = 2
-	flash_protect = 2
+	flash_protect = -1
 	unacidable = 1
 	flags = ABSTRACT | NODROP
+
 
 /obj/structure/shadow_vortex
 	name = "vortex"

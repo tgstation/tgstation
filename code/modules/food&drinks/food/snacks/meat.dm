@@ -183,12 +183,16 @@
 /obj/item/weapon/reagent_containers/food/snacks/meat/steak/plain/human
 
 /obj/item/weapon/reagent_containers/food/snacks/meat/steak/killertomato
+	name = "killer tomato steak"
 
 /obj/item/weapon/reagent_containers/food/snacks/meat/steak/bear
+	name = "bear steak"
 
 /obj/item/weapon/reagent_containers/food/snacks/meat/steak/xeno
+	name = "xeno steak"
 
 /obj/item/weapon/reagent_containers/food/snacks/meat/steak/spider
+	name = "spider steak"
 
 
 
@@ -224,12 +228,20 @@
 		S.name = "[subjectjob] [initial(S.name)]"
 
 /obj/item/weapon/reagent_containers/food/snacks/meat/rawcutlet/killertomato
+	name = "raw killer tomato cutlet"
+	cooked_type = /obj/item/weapon/reagent_containers/food/snacks/meat/cutlet/killertomato
 
 /obj/item/weapon/reagent_containers/food/snacks/meat/rawcutlet/bear
+	name = "raw bear cutlet"
+	cooked_type = /obj/item/weapon/reagent_containers/food/snacks/meat/cutlet/bear
 
 /obj/item/weapon/reagent_containers/food/snacks/meat/rawcutlet/xeno
+	name = "raw xeno cutlet"
+	cooked_type = /obj/item/weapon/reagent_containers/food/snacks/meat/cutlet/xeno
 
 /obj/item/weapon/reagent_containers/food/snacks/meat/rawcutlet/spider
+	name = "raw spider cutlet"
+	cooked_type = /obj/item/weapon/reagent_containers/food/snacks/meat/cutlet/spider
 
 
 //Cooked cutlets
@@ -248,9 +260,14 @@
 /obj/item/weapon/reagent_containers/food/snacks/meat/cutlet/plain/human
 
 /obj/item/weapon/reagent_containers/food/snacks/meat/cutlet/killertomato
+	name = "killer tomato cutlet"
 
 /obj/item/weapon/reagent_containers/food/snacks/meat/cutlet/bear
+	name = "bear cutlet"
 
 /obj/item/weapon/reagent_containers/food/snacks/meat/cutlet/xeno
+	name = "xeno cutlet"
 
 /obj/item/weapon/reagent_containers/food/snacks/meat/cutlet/spider
+	name = "spider cutlet"
+

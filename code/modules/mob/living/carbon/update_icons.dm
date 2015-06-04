@@ -11,15 +11,19 @@
 		changed++
 		ntransform.TurnTo(lying_prev,lying)
 		if(lying == 0) //Lying to standing
-			final_pixel_y = initial(pixel_y)
+			final_pixel_y = get_standard_pixel_y_offset()
 		else //if(lying != 0)
 			if(lying_prev == 0) //Standing to lying
-				pixel_y = initial(pixel_y)
-				final_pixel_y = lying_pixel_offset
+				pixel_y = get_standard_pixel_y_offset()
+				final_pixel_y = get_standard_pixel_y_offset(lying)
 				if(dir & (EAST|WEST)) //Facing east or west
 					final_dir = pick(NORTH, SOUTH) //So you fall on your side rather than your face or ass
 
 		lying_prev = lying	//so we don't try to animate until there's been another change.
+	if(resize != RESIZE_DEFAULT_SIZE)
+		changed++
+		ntransform.Scale(resize)
+		resize = RESIZE_DEFAULT_SIZE
 
 	if(changed)
 		animate(src, transform = ntransform, time = 2, pixel_y = final_pixel_y, dir = final_dir, easing = EASE_IN|EASE_OUT)

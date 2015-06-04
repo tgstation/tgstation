@@ -30,7 +30,7 @@
 	if(usr.stat || !usr.canmove || usr.restrained())
 		return
 	if (src.anchored)
-		usr << "It is fastened to the floor!"
+		usr << "<span class='warning'>It is fastened to the floor!</span>"
 		return 0
 	src.dir = turn(src.dir, 90)
 	return 1
@@ -58,26 +58,26 @@
 	src.add_fingerprint(user)
 	if(state == 2)
 		if(!powernet)
-			user << "The emitter isn't connected to a wire."
+			user << "<span class='warning'>The emitter isn't connected to a wire!</span>"
 			return 1
 		if(!src.locked)
 			if(src.active==1)
 				src.active = 0
-				user << "You turn off \the [src]."
+				user << "<span class='notice'>You turn off \the [src].</span>"
 				message_admins("Emitter turned off by [key_name(user, user.client)](<A HREF='?_src_=holder;adminmoreinfo=\ref[user]'>?</A>) in ([x],[y],[z] - <A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[x];Y=[y];Z=[z]'>JMP</a>)",0,1)
 				log_game("Emitter turned off by [user.ckey]([user]) in ([x],[y],[z])")
 				investigate_log("turned <font color='red'>off</font> by [user.key]","singulo")
 			else
 				src.active = 1
-				user << "You turn on \the [src]."
+				user << "<span class='notice'>You turn on \the [src].</span>"
 				src.shot_number = 0
 				src.fire_delay = 100
 				investigate_log("turned <font color='green'>on</font> by [user.key]","singulo")
 			update_icon()
 		else
-			user << "<span class='danger'>The controls are locked!</span>"
+			user << "<span class='warning'>The controls are locked!</span>"
 	else
-		user << "<span class='danger'>The [src] needs to be firmly secured to the floor first.</span>"
+		user << "<span class='warning'>The [src] needs to be firmly secured to the floor first!</span>"
 		return 1
 
 
@@ -145,6 +145,7 @@
 			else // Any other
 				A.yo = -20
 				A.xo = 0
+		A.starting = loc
 		A.fire()
 
 
@@ -152,25 +153,25 @@
 
 	if(istype(W, /obj/item/weapon/wrench))
 		if(active)
-			user << "Turn off \the [src] first."
+			user << "<span class='warning'>Turn off \the [src] first!</span>"
 			return
 		switch(state)
 			if(0 && !isinspace())
 				state = 1
 				playsound(src.loc, 'sound/items/Ratchet.ogg', 75, 1)
 				user.visible_message("[user.name] secures [src.name] to the floor.", \
-					"You secure the external reinforcing bolts to the floor.", \
-					"You hear a ratchet")
+					"<span class='notice'>You secure the external reinforcing bolts to the floor.</span>", \
+					"<span class='italics'>You hear a ratchet</span>")
 				src.anchored = 1
 			if(1)
 				state = 0
 				playsound(src.loc, 'sound/items/Ratchet.ogg', 75, 1)
 				user.visible_message("[user.name] unsecures [src.name] reinforcing bolts from the floor.", \
-					"You undo the external reinforcing bolts.", \
-					"You hear a ratchet")
+					"<span class='notice'>You undo the external reinforcing bolts.</span>", \
+					"<span class='italics'>You hear a ratchet.</span>")
 				src.anchored = 0
 			if(2)
-				user << "<span class='danger'>The [src.name] needs to be unwelded from the floor.</span>"
+				user << "<span class='warning'>The [src.name] needs to be unwelded from the floor!</span>"
 		return
 
 	if(istype(W, /obj/item/weapon/weldingtool))
@@ -180,42 +181,42 @@
 			return
 		switch(state)
 			if(0)
-				user << "<span class='danger'>The [src.name] needs to be wrenched to the floor.</span>"
+				user << "<span class='warning'>The [src.name] needs to be wrenched to the floor!</span>"
 			if(1)
 				if (WT.remove_fuel(0,user))
 					playsound(src.loc, 'sound/items/Welder2.ogg', 50, 1)
 					user.visible_message("[user.name] starts to weld the [src.name] to the floor.", \
-						"You start to weld \the [src] to the floor.", \
-						"You hear welding")
+						"<span class='notice'>You start to weld \the [src] to the floor...</span>", \
+						"<span class='italics'>You hear welding.</span>")
 					if (do_after(user,20))
 						if(!src || !WT.isOn()) return
 						state = 2
-						user << "You weld \the [src] to the floor."
+						user << "<span class='notice'>You weld \the [src] to the floor.</span>"
 						connect_to_network()
 			if(2)
 				if (WT.remove_fuel(0,user))
 					playsound(src.loc, 'sound/items/Welder2.ogg', 50, 1)
 					user.visible_message("[user.name] starts to cut the [src.name] free from the floor.", \
-						"You start to cut \the [src] free from the floor.", \
-						"You hear welding")
+						"<span class='notice'>You start to cut \the [src] free from the floor...</span>", \
+						"<span class='italics'>You hear welding.</span>")
 					if (do_after(user,20))
 						if(!src || !WT.isOn()) return
 						state = 1
-						user << "You cut \the [src] free from the floor."
+						user << "<span class='notice'>You cut \the [src] free from the floor.</span>"
 						disconnect_from_network()
 		return
 
 	if(istype(W, /obj/item/weapon/card/id) || istype(W, /obj/item/device/pda))
 		if(emagged)
-			user << "<span class='danger'>The lock seems to be broken.</span>"
+			user << "<span class='warning'>The lock seems to be broken!</span>"
 			return
 		if(src.allowed(user))
 			if(active)
 				src.locked = !src.locked
-				user << "The controls are now [src.locked ? "locked." : "unlocked."]"
+				user << "<span class='notice'>You [src.locked ? "lock" : "unlock"] the controls.</span>"
 			else
 				src.locked = 0 //just in case it somehow gets locked
-				user << "<span class='danger'>The controls can only be locked when \the [src] is online.</span>"
+				user << "<span class='warning'>The controls can only be locked when \the [src] is online!</span>"
 		else
 			user << "<span class='danger'>Access denied.</span>"
 		return
@@ -227,4 +228,4 @@
 	if(!emagged)
 		locked = 0
 		emagged = 1
-		user.visible_message("[user.name] emags the [src.name].","<span class='danger'>You short out the lock.</span>")
+		user.visible_message("[user.name] emags the [src.name].","<span class='notice'>You short out the lock.</span>")

@@ -29,6 +29,8 @@
 	desc = "Produce an interal egg sac capable of spawning children. Only one queen can exist at a time."
 	plasma_cost = 500
 
+	action_icon_state = "alien_evolve_drone"
+
 /obj/effect/proc_holder/alien/evolve/fire(var/mob/living/carbon/alien/user)
 	var/no_queen = 1
 	for(var/mob/living/carbon/alien/humanoid/queen/Q in living_mob_list)

@@ -31,6 +31,11 @@
 /mob/camera/aiEye/Move()
 	return 0
 
+/mob/camera/aiEye/proc/GetViewerClient()
+	if(ai)
+		return ai.client
+	return null
+
 
 // AI MOVEMENT
 
@@ -54,6 +59,7 @@
 /mob/living/silicon/ai/Destroy()
 	eyeobj.ai = null
 	qdel(eyeobj) // No AI, no Eye
+	eyeobj = null
 	..()
 
 /atom/proc/move_camera_by_click()
@@ -124,3 +130,6 @@
 
 	acceleration = !acceleration
 	usr << "Camera acceleration has been toggled [acceleration ? "on" : "off"]."
+
+
+

@@ -287,6 +287,9 @@
 		unEquip(I,TRUE)
 	update_hands = 1
 
+/mob/living/carbon/human/interactive/proc/targetRange(var/towhere)
+	return get_dist(get_turf(towhere), get_turf(src))
+
 /mob/living/carbon/human/interactive/Life()
 	..()
 	if(isnotfunc()) return
@@ -470,7 +473,7 @@
 /mob/living/carbon/human/interactive/proc/target_filter(var/target)
 	var/list/L = target
 	for(var/atom/A in target)
-		if(istype(A,/area) || istype(A,/turf/unsimulated) || istype(A,/turf/space))
+		if(istype(A,/area) || istype(A,/turf/space))
 			L -= A
 	return L
 
@@ -579,7 +582,7 @@
 	if((TARGET && (doing & FIGHTING)) || graytide) // this is a redundancy check
 		var/mob/living/M = TARGET
 		if(istype(M,/mob/living))
-			if(M in range(FUZZY_CHANCE_LOW,src))
+			if(targetRange(M) <= FUZZY_CHANCE_LOW)
 				if(M.health > 1)
 					if(main_hand)
 						if(main_hand.force != 0)
@@ -609,14 +612,14 @@
 										W.attack(TARGET,src)
 							sleep(1)
 					else
-						if(get_dist(src,TARGET) > 2)
+						if(targetRange(TARGET) > 2)
 							tryWalk(TARGET)
 						else
 							if(Adjacent(TARGET))
 								M.attack_hand(src)
 								sleep(1)
 				timeout++
-			else if(timeout >= 10 || M.health <= 1 || !(M in range(14,src)))
+			else if(timeout >= 10 || M.health <= 1 || !(targetRange(M) > 14))
 				doing = doing & ~FIGHTING
 				timeout = 0
 				TARGET = null

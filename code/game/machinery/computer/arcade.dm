@@ -31,7 +31,8 @@
 							/obj/item/toy/foamblade									= 2,
 							/obj/item/toy/redbutton									= 2,
 							/obj/item/toy/owl										= 2,
-							/obj/item/toy/griffin									= 2
+							/obj/item/toy/griffin									= 2,
+							/obj/item/weapon/coin/antagtoken						= 2,
 							)
 
 /obj/machinery/computer/arcade/New()
@@ -486,7 +487,7 @@
 						playsound(src.loc, 'sound/effects/bang.ogg', 100, 1)
 						var/turf/simulated/floor/F
 						for(F in orange(1, src))
-							F.ChangeTurf(/turf/space)
+							F.ChangeTurf(F.baseturf)
 						src.visible_message("<span class='userdanger'>Something slams into the floor around [src], exposing it to space!</span>")
 						if(hull)
 							sleep(10)

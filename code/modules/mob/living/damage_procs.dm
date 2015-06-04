@@ -51,7 +51,7 @@
 		if(PARALYZE)
 			Paralyse(effect * blocked)
 		if(IRRADIATE)
-			radiation += max(effect * ((100-run_armor_check(null, "rad", "Your clothes feel warm.", "Your clothes feel warm."))/100),0)//Rads auto check armor
+			radiation += max(effect * blocked, 0)
 		if(SLUR)
 			slurring = max(slurring,(effect * blocked))
 		if(STUTTER)

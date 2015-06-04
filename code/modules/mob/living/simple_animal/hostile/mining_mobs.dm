@@ -66,6 +66,7 @@
 	melee_damage_upper = 12
 	attacktext = "bites into"
 	a_intent = "harm"
+	speak_emote = list("chitters")
 	attack_sound = 'sound/weapons/bladeslice.ogg'
 	ranged_cooldown_cap = 4
 	aggro_vision_range = 9
@@ -88,8 +89,8 @@
 		stance = HOSTILE_STANCE_ATTACK
 		if(isliving(target))
 			var/mob/living/L = target
-			if(L.bodytemperature > 261)
-				L.bodytemperature = 261
+			if(L.bodytemperature > 200)
+				L.bodytemperature = 200
 				visible_message("<span class='danger'>The [src.name]'s stare chills [L.name] to the bone!</span>")
 	return
 
@@ -131,6 +132,7 @@
 	attacktext = "barrels into"
 	attack_sound = 'sound/weapons/punch1.ogg'
 	a_intent = "help"
+	speak_emote = list("screeches")
 	throw_message = "sinks in slowly, before being pushed out of "
 	status_flags = CANPUSH
 	search_objects = 1
@@ -230,6 +232,7 @@
 	melee_damage_lower = 0
 	melee_damage_upper = 0
 	attacktext = "lashes out at"
+	speak_emote = list("telepathically cries")
 	attack_sound = 'sound/weapons/pierce.ogg'
 	throw_message = "falls right through the strange body of the"
 	ranged_cooldown = 0
@@ -277,7 +280,7 @@
 				user << "<span class='notice'>[src] are useless on the dead.</span>"
 				return
 			if(H != user)
-				H.visible_message("<span class='notice'>[user] forces [H] to eat [src]... they quickly regenerate all injuries!</span>")
+				H.visible_message("[user] forces [H] to eat [src]... they quickly regenerate all injuries!")
 			else
 				user << "<span class='notice'>You chomp into [src], barely managing to hold it down, but feel amazingly refreshed in mere moments.</span>"
 			playsound(src.loc,'sound/items/eatfood.ogg', rand(10,50), 1)
@@ -305,6 +308,7 @@
 	melee_damage_lower = 2
 	melee_damage_upper = 2
 	attacktext = "slashes"
+	speak_emote = list("telepathically cries")
 	attack_sound = 'sound/weapons/pierce.ogg'
 	throw_message = "falls right through the strange body of the"
 	environment_smash = 0
@@ -334,6 +338,7 @@
 	ranged_cooldown = 2 //By default, start the Goliath with his cooldown off so that people can run away quickly on first sight
 	ranged_cooldown_cap = 8
 	friendly = "wails at"
+	speak_emote = list("bellows")
 	vision_range = 4
 	speed = 3
 	maxHealth = 300
@@ -456,7 +461,7 @@
 				user << "<span class='info'>You strengthen [target], improving its resistance against melee attacks.</span>"
 				qdel(src)
 			else
-				user << "<span class='info'>You can't improve [C] any further.</span>"
+				user << "<span class='warning'>You can't improve [C] any further!</span>"
 				return
 		if(istype(target, /obj/mecha/working/ripley))
 			var/obj/mecha/D = target
@@ -478,9 +483,9 @@
 						D.overlays += image("icon"="mecha.dmi", "icon_state"="ripley-g-full-open")
 						D.desc = "Autonomous Power Loader Unit. It's wearing a fearsome carapace entirely composed of goliath hide plates - the pilot must be an experienced monster hunter."
 					else
-						user << "<span class='info'>You can't add armour onto the mech while someone is inside!</span>"
+						user << "<span class='warning'>You can't add armour onto the mech while someone is inside!</span>"
 			else
-				user << "<span class='info'>You can't improve [D] any further.</span>"
+				user << "<span class='warning'>You can't improve [D] any further!</span>"
 				return
 
 /mob/living/simple_animal/hostile/asteroid/handle_temperature_damage()

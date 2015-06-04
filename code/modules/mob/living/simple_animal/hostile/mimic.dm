@@ -5,7 +5,7 @@
 /mob/living/simple_animal/hostile/mimic
 	name = "crate"
 	desc = "A rectangular steel crate."
-	icon = 'icons/obj/storage.dmi'
+	icon = 'icons/obj/crates.dmi'
 	icon_state = "crate"
 	icon_living = "crate"
 
@@ -22,6 +22,7 @@
 	attacktext = "attacks"
 	attack_sound = 'sound/weapons/punch1.ogg'
 	var/Attackemote = "growls at"
+	speak_emote = list("creaks")
 
 	atmos_requirements = list("min_oxy" = 0, "max_oxy" = 0, "min_tox" = 0, "max_tox" = 0, "min_co2" = 0, "max_co2" = 0, "min_n2" = 0, "max_n2" = 0)
 	minbodytemp = 0
@@ -36,7 +37,7 @@
 
 /mob/living/simple_animal/hostile/mimic/death()
 	..(1)
-	visible_message("<span class='danger'>[src] stops moving!</span>")
+	visible_message("[src] stops moving!")
 	ghostize()
 	qdel(src)
 
@@ -51,6 +52,7 @@
 /mob/living/simple_animal/hostile/mimic/crate
 
 	attacktext = "bites"
+	speak_emote = list("clatters")
 
 	stop_automated_movement = 1
 	wander = 0
@@ -112,10 +114,12 @@
 /mob/living/simple_animal/hostile/mimic/crate/AttackingTarget()
 	. =..()
 	var/mob/living/L = .
-	if(istype(L))
+	if(iscarbon(L))
+		var/mob/living/carbon/C = L
 		if(prob(15))
-			L.Weaken(2)
-			L.visible_message("<span class='danger'>\the [src] knocks down \the [L]!</span>")
+			C.Weaken(2)
+			C.visible_message("<span class='danger'>\The [src] knocks down \the [C]!</span>", \
+					"<span class='userdanger'>\The [src] knocks you down!</span>")
 
 //
 // Copy Mimic
@@ -172,6 +176,7 @@ var/global/list/protected_objects = list(/obj/structure/table, /obj/structure/ca
 		icon = O.icon
 		icon_state = O.icon_state
 		icon_living = icon_state
+		overlays = O.overlays
 
 		if(istype(O, /obj/structure) || istype(O, /obj/machinery))
 			health = (anchored * 50) + 50
@@ -203,11 +208,12 @@ var/global/list/protected_objects = list(/obj/structure/table, /obj/structure/ca
 /mob/living/simple_animal/hostile/mimic/copy/AttackingTarget()
 	..()
 	if(knockdown_people)
-		if(isliving(target))
-			var/mob/living/L = target
+		if(iscarbon(target))
+			var/mob/living/carbon/C = target
 			if(prob(15))
-				L.Weaken(1)
-				L.visible_message("<span class='danger'>\The [src] knocks down \the [L]!</span>")
+				C.Weaken(2)
+				C.visible_message("<span class='danger'>\The [src] knocks down \the [C]!</span>", \
+						"<span class='userdanger'>\The [src] knocks you down!</span>")
 
 //
 // Machine Mimics (Made by Malf AI)

@@ -8,9 +8,8 @@
 	required_players = 25
 	required_enemies = 1
 	recommended_enemies = 1
-	pre_setup_before_jobs = 1
 	enemy_minimum_age = 30 //Same as AI minimum age
-
+	round_ends_with_antag_death = 1
 
 	var/AI_win_timeleft = 5400 //started at 5400, in case I change this for testing round end.
 	var/malf_mode_declared = 0
@@ -49,7 +48,7 @@
 	if (malf_ai.len < required_enemies)
 		return 0
 	for(var/datum/mind/ai_mind in malf_ai)
-		ai_mind.assigned_role = "MODE"
+		ai_mind.assigned_role = "malfunctioning AI"
 		ai_mind.special_role = "malfunctioning AI"//So they actually have a special role/N
 		log_game("[ai_mind.key] (ckey) has been selected as a malf AI")
 	return 1
@@ -170,10 +169,6 @@
 
 
 /datum/game_mode/malfunction/check_finished()
-	if(replacementmode && round_converted == 2)
-		return replacementmode.check_finished()
-	if((config.continuous["malfunction"] && !config.midround_antag["malfunction"]) || round_converted == 1) //No reason to waste resources
-		return ..() //Check for evacuation/nuke
 	if (station_captured && !to_nuke_or_not_to_nuke)
 		return 1
 	if (is_malf_ai_dead() || !check_ai_loc())
@@ -184,9 +179,10 @@
 				priority_announce("Hostile enviroment resolved. You have 3 minutes to board the Emergency Shuttle.", null, 'sound/AI/shuttledock.ogg', "Priority")
 			SSshuttle.emergencyNoEscape = 0
 			malf_mode_declared = 0
+			continuous_sanity_checked = 1
 			if(get_security_level() == "delta")
 				set_security_level("red")
-			round_converted = convert_roundtype()
+			return ..()
 		else
 			return 1
 	return ..() //check for shuttle and nuke

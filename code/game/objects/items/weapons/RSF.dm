@@ -23,7 +23,7 @@ RSF
 	..()
 	if (istype(W, /obj/item/weapon/rcd_ammo))
 		if ((matter + 10) > 30)
-			user << "The RSF cant hold any more matter."
+			user << "The RSF can't hold any more matter."
 			return
 		qdel(W)
 		matter += 10

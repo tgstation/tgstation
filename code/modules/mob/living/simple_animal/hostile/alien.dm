@@ -10,15 +10,15 @@
 	response_disarm = "shoves"
 	response_harm = "hits"
 	speed = 0
-	meat_type = /obj/item/weapon/reagent_containers/food/snacks/meat/slab/xeno
-	skin_type = /obj/item/stack/sheet/animalhide/xeno
-	meat_amount = 3
+	butcher_results = list(/obj/item/weapon/reagent_containers/food/snacks/meat/slab/xeno = 4,
+							/obj/item/stack/sheet/animalhide/xeno = 1)
 	maxHealth = 100
 	health = 100
 	harm_intent_damage = 5
 	melee_damage_lower = 25
 	melee_damage_upper = 25
 	attacktext = "slashes"
+	speak_emote = list("hisses")
 	a_intent = "harm"
 	attack_sound = 'sound/weapons/bladeslice.ogg'
 	atmos_requirements = list("min_oxy" = 0, "max_oxy" = 0, "min_tox" = 0, "max_tox" = 0, "min_co2" = 0, "max_co2" = 0, "min_n2" = 0, "max_n2" = 0)
@@ -77,6 +77,8 @@
 	retreat_distance = 5
 	minimum_distance = 5
 	move_to_delay = 4
+	butcher_results = list(/obj/item/weapon/reagent_containers/food/snacks/meat/slab/xeno = 4,
+							/obj/item/stack/sheet/animalhide/xeno = 1)
 	projectiletype = /obj/item/projectile/neurotox
 	projectilesound = 'sound/weapons/pierce.ogg'
 	status_flags = 0
@@ -123,6 +125,8 @@
 	move_to_delay = 4
 	maxHealth = 400
 	health = 400
+	butcher_results = list(/obj/item/weapon/reagent_containers/food/snacks/meat/slab/xeno = 10,
+							/obj/item/stack/sheet/animalhide/xeno = 2)
 	mob_size = MOB_SIZE_LARGE
 
 /obj/item/projectile/neurotox

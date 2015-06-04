@@ -98,7 +98,7 @@
 		..()
 		return
 
-obj/machinery/hydroponics/process()
+/obj/machinery/hydroponics/process()
 
 	var/needs_update = 0 // Checks if the icon needs updating so we don't redraw empty trays every time
 
@@ -205,7 +205,7 @@ obj/machinery/hydroponics/process()
 			update_icon()
 	return
 
-obj/machinery/hydroponics/proc/nutrimentMutation()
+/obj/machinery/hydroponics/proc/nutrimentMutation()
 	if (mutmod == 0)
 		return
 	if (mutmod == 1)
@@ -224,7 +224,7 @@ obj/machinery/hydroponics/proc/nutrimentMutation()
 		return
 	return
 
-obj/machinery/hydroponics/update_icon()
+/obj/machinery/hydroponics/update_icon()
 
 	//Refreshes the icon and sets the luminosity
 	overlays.Cut()
@@ -277,7 +277,7 @@ obj/machinery/hydroponics/update_icon()
 
 	return
 
-obj/machinery/hydroponics/proc/UpdateDescription()
+/obj/machinery/hydroponics/proc/UpdateDescription()
 	desc = null
 	if (planted)
 		desc = "[src] has <span class='info'>[myseed.plantname]</span> planted."
@@ -286,7 +286,7 @@ obj/machinery/hydroponics/proc/UpdateDescription()
 		else if (harvest)
 			desc += " It's ready to harvest."
 
-obj/machinery/hydroponics/proc/weedinvasion() // If a weed growth is sufficient, this happens.
+/obj/machinery/hydroponics/proc/weedinvasion() // If a weed growth is sufficient, this happens.
 	dead = 0
 	var/oldPlantName
 	if(myseed) // In case there's nothing in the tray beforehand
@@ -322,7 +322,7 @@ obj/machinery/hydroponics/proc/weedinvasion() // If a weed growth is sufficient,
 	visible_message("<span class='info'>[oldPlantName] overtaken by [myseed.plantname].</span>")
 
 
-obj/machinery/hydroponics/proc/mutate(var/lifemut = 2, var/endmut = 5, var/productmut = 1, var/yieldmut = 2, var/potmut = 25) // Mutates the current seed
+/obj/machinery/hydroponics/proc/mutate(var/lifemut = 2, var/endmut = 5, var/productmut = 1, var/yieldmut = 2, var/potmut = 25) // Mutates the current seed
 	if(!planted)
 		return
 	adjustSLife(rand(-lifemut,lifemut))
@@ -332,11 +332,11 @@ obj/machinery/hydroponics/proc/mutate(var/lifemut = 2, var/endmut = 5, var/produ
 	adjustSPot(rand(-potmut,potmut))
 
 
-obj/machinery/hydroponics/proc/hardmutate()
+/obj/machinery/hydroponics/proc/hardmutate()
 	mutate(4, 10, 2, 4, 50)
 
 
-obj/machinery/hydroponics/proc/mutatespecie() // Mutagent produced a new plant!
+/obj/machinery/hydroponics/proc/mutatespecie() // Mutagent produced a new plant!
 	if(!planted || dead)
 		return
 
@@ -363,7 +363,7 @@ obj/machinery/hydroponics/proc/mutatespecie() // Mutagent produced a new plant!
 	visible_message("<span class='warning'>[oldPlantName] suddenly mutated into [myseed.plantname]!</span>")
 
 
-obj/machinery/hydroponics/proc/mutateweed() // If the weeds gets the mutagent instead. Mind you, this pretty much destroys the old plant
+/obj/machinery/hydroponics/proc/mutateweed() // If the weeds gets the mutagent instead. Mind you, this pretty much destroys the old plant
 	if( weedlevel > 5 )
 		if(myseed)
 			qdel(myseed)
@@ -385,7 +385,7 @@ obj/machinery/hydroponics/proc/mutateweed() // If the weeds gets the mutagent in
 		usr << "The few weeds in [src] seem to react, but only for a moment..."
 
 
-obj/machinery/hydroponics/proc/plantdies() // OH NOES!!!!! I put this all in one function to make things easier
+/obj/machinery/hydroponics/proc/plantdies() // OH NOES!!!!! I put this all in one function to make things easier
 	health = 0
 	harvest = 0
 	pestlevel = 0 // Pests die
@@ -394,7 +394,7 @@ obj/machinery/hydroponics/proc/plantdies() // OH NOES!!!!! I put this all in one
 		dead = 1
 
 
-obj/machinery/hydroponics/proc/mutatepest()
+/obj/machinery/hydroponics/proc/mutatepest()
 	if(pestlevel > 5)
 		visible_message("The pests seem to behave oddly...")
 		for(var/i=0, i<3, i++)
@@ -403,7 +403,7 @@ obj/machinery/hydroponics/proc/mutatepest()
 	else
 		usr << "The pests seem to behave oddly, but quickly settle down..."
 
-obj/machinery/hydroponics/proc/applyChemicals(var/datum/reagents/S)
+/obj/machinery/hydroponics/proc/applyChemicals(var/datum/reagents/S)
 
 	if(myseed)
 		myseed.on_chem_reaction(S) //In case seeds have some special interactions with special chems, currently only used by vines
@@ -577,7 +577,7 @@ obj/machinery/hydroponics/proc/applyChemicals(var/datum/reagents/S)
 			if(1   to 32)	mutatepest()
 			else 			usr << "Nothing happens..."
 
-obj/machinery/hydroponics/attackby(var/obj/item/O as obj, var/mob/user as mob, params)
+/obj/machinery/hydroponics/attackby(var/obj/item/O as obj, var/mob/user as mob, params)
 
 	//Called when mob user "attacks" it with object O
 	if(istype(O, /obj/item/weapon/reagent_containers) )  // Syringe stuff (and other reagent containers now too)
@@ -586,7 +586,7 @@ obj/machinery/hydroponics/attackby(var/obj/item/O as obj, var/mob/user as mob, p
 		if(istype(reagent_source, /obj/item/weapon/reagent_containers/syringe))
 			var/obj/item/weapon/reagent_containers/syringe/syr = reagent_source
 			if(syr.mode != 1)
-				user << "You can't get any extract out of this plant."		//That. Gives me an idea...
+				user << "<span class='warning'>You can't get any extract out of this plant.</span>"		//That. Gives me an idea...
 				return
 
 		if(!reagent_source.reagents.total_volume)
@@ -649,8 +649,10 @@ obj/machinery/hydroponics/attackby(var/obj/item/O as obj, var/mob/user as mob, p
 
 	else if(istype(O, /obj/item/seeds/))
 		if(!planted)
+			if(/obj/item/seeds/kudzuseed)
+				investigate_log("had Kudzu planted in it by [user.ckey]([user]) at ([x],[y],[z])","kudzu")
 			user.unEquip(O)
-			user << "You plant [O]."
+			user << "<span class='notice'>You plant [O].</span>"
 			dead = 0
 			myseed = O
 			planted = 1
@@ -690,13 +692,13 @@ obj/machinery/hydroponics/attackby(var/obj/item/O as obj, var/mob/user as mob, p
 		user << "-Nutrition level: <span class='notice'> [nutrilevel] / [maxnutri]</span>"
 		user << ""
 
-	else if(istype(O, /obj/item/weapon/minihoe))
+	else if(istype(O, /obj/item/weapon/cultivator))
 		if(weedlevel > 0)
-			user.visible_message("<span class='notice'>[user] uproots the weeds.</span>", "<span class='notice'>You remove the weeds from [src].</span>")
+			user.visible_message("[user] uproots the weeds.", "<span class='notice'>You remove the weeds from [src].</span>")
 			weedlevel = 0
 			update_icon()
 		else
-			user << "<span class='notice'>This plot is completely devoid of weeds. It doesn't need uprooting.</span>"
+			user << "<span class='warning'>This plot is completely devoid of weeds! It doesn't need uprooting.</span>"
 
 	else if(istype(O, /obj/item/weapon/storage/bag/plants))
 		attack_hand(user)
@@ -708,28 +710,28 @@ obj/machinery/hydroponics/attackby(var/obj/item/O as obj, var/mob/user as mob, p
 
 	else if(istype(O, /obj/item/weapon/wrench) && unwrenchable)
 		if(anchored == 2)
-			user << "Unscrew the hoses first!"
+			user << "<span class='warning'>Unscrew the hoses first!</span>"
 			return
 
 		if(!anchored && !isinspace())
-			user.visible_message("<span class='notice'>[user] begins to wrench [src] into place.</span>", \
-								"<span class='notice'>You begin to wrench [src] in place.</span>")
+			user.visible_message("[user] begins to wrench [src] into place.", \
+								"<span class='notice'>You begin to wrench [src] in place...</span>")
 			playsound(loc, 'sound/items/Ratchet.ogg', 50, 1)
 			if (do_after(user, 20))
 				if(anchored)
 					return
 				anchored = 1
-				user.visible_message("<span class='notice'>[user] wrenches [src] into place.</span>", \
+				user.visible_message("[user] wrenches [src] into place.", \
 									"<span class='notice'>You wrench [src] in place.</span>")
 		else if(anchored)
-			user.visible_message("<span class='notice'>[user] begins to unwrench [src].</span>", \
-								"<span class='notice'>You begin to unwrench [src].</span>")
+			user.visible_message("[user] begins to unwrench [src].", \
+								"<span class='notice'>You begin to unwrench [src]...</span>")
 			playsound(loc, 'sound/items/Ratchet.ogg', 50, 1)
 			if (do_after(user, 20))
 				if(!anchored)
 					return
 				anchored = 0
-				user.visible_message("<span class='notice'>[user] unwrenches [src].</span>", \
+				user.visible_message("[user] unwrenches [src].", \
 									"<span class='notice'>You unwrench [src].</span>")
 
 	else if(istype(O, /obj/item/weapon/screwdriver) && unwrenchable) //THIS NEED TO BE DONE DIFFERENTLY, SOMEONE REFACTOR THE TRAY CODE ALREADY
@@ -737,12 +739,12 @@ obj/machinery/hydroponics/attackby(var/obj/item/O as obj, var/mob/user as mob, p
 			if(anchored == 2)
 				playsound(src.loc, 'sound/items/Screwdriver.ogg', 50, 1)
 				anchored = 1
-				user << "You unscrew \the [src]'s hoses."
+				user << "<span class='notice'>You unscrew \the [src]'s hoses.</span>"
 
 			else if(anchored == 1)
 				playsound(src.loc, 'sound/items/Screwdriver.ogg', 50, 1)
 				anchored = 2
-				user << "You screw in \the [src]'s hoses."
+				user << "<span class='notice'>You screw in \the [src]'s hoses.</span>"
 
 			for(var/obj/machinery/hydroponics/h in range(1,src))
 				spawn()
@@ -758,7 +760,7 @@ obj/machinery/hydroponics/attackby(var/obj/item/O as obj, var/mob/user as mob, p
 	else if(dead)
 		planted = 0
 		dead = 0
-		user << "You remove the dead plant from [src]."
+		user << "<span class='notice'>You remove the dead plant from [src].</span>"
 		qdel(myseed)
 		update_icon()
 	else
@@ -824,7 +826,7 @@ obj/machinery/hydroponics/attackby(var/obj/item/O as obj, var/mob/user as mob, p
 						break
 		else //If the player has ghosted from his corpse before blood was drawn, his ckey is no longer attached to the mob, so we need to match up the cloned player through the mind key
 			for(var/mob/M in player_list)
-				if(ckey(M.mind.key) == ckey(mind.key) && M.ckey && M.client && M.stat == 2 && !M.suiciding)
+				if(mind && M.mind && ckey(M.mind.key) == ckey(mind.key) && M.ckey && M.client && M.stat == 2 && !M.suiciding)
 					if(istype(M, /mob/dead/observer))
 						var/mob/dead/observer/O = M
 						if(!O.can_reenter_corpse)
@@ -870,11 +872,11 @@ obj/machinery/hydroponics/attackby(var/obj/item/O as obj, var/mob/user as mob, p
 	harvest = 0
 	lastproduce = age
 	if(istype(myseed,/obj/item/seeds/replicapod/))
-		user << "You harvest from the [myseed.plantname]."
+		user << "<span class='notice'>You harvest from the [myseed.plantname].</span>"
 	else if(myseed.getYield() <= 0)
-		user << "<span class='warning'>You fail to harvest anything useful.</span>"
+		user << "<span class='warning'>You fail to harvest anything useful!</span>"
 	else
-		user << "You harvest [myseed.getYield()] items from the [myseed.plantname]."
+		user << "<span class='notice'>You harvest [myseed.getYield()] items from the [myseed.plantname].</span>"
 	if(myseed.oneharvest)
 		qdel(myseed)
 		planted = 0
@@ -986,5 +988,5 @@ obj/machinery/hydroponics/attackby(var/obj/item/O as obj, var/mob/user as mob, p
 /obj/machinery/hydroponics/soil/attackby(var/obj/item/O as obj, var/mob/user as mob, params)
 	..()
 	if(istype(O, /obj/item/weapon/shovel))
-		user << "You clear up [src]!"
+		user << "<span class='notice'>You clear up [src]!</span>"
 		qdel(src)

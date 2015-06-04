@@ -12,6 +12,7 @@ var/datum/atom_hud/huds = list( \
 	ANTAG_HUD_GANG_A = new/datum/atom_hud/antag(), \
 	ANTAG_HUD_GANG_B = new/datum/atom_hud/antag(), \
 	ANTAG_HUD_WIZ = new/datum/atom_hud/antag(), \
+	ANTAG_HUD_SHADOW = new/datum/atom_hud/antag(), \
 	)
 
 /datum/atom_hud

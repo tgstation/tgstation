@@ -141,7 +141,7 @@
 			var/obj/machinery/atmospherics/unary/vent_pump/exit_vent = pick(vents)
 			if(prob(50))
 				visible_message("<B>[src] scrambles into the ventillation ducts!</B>", \
-								"<span class='notice'>You hear something squeezing through the ventilation ducts.</span>")
+								"<span class='italics'>You hear something scampering through the ventilation ducts.</span>")
 
 			spawn(rand(20,60))
 				loc = exit_vent
@@ -154,7 +154,7 @@
 						return
 
 					if(prob(50))
-						audible_message("<span class='notice'>You hear something squeezing through the ventilation ducts.</span>")
+						audible_message("<span class='italics'>You hear something scampering through the ventilation ducts.</span>")
 					sleep(travel_time)
 
 					if(!exit_vent || exit_vent.welded)
@@ -190,12 +190,34 @@
 			var/mob/living/simple_animal/hostile/poison/giant_spider/S = new grow_as(src.loc)
 			if(player_spiders)
 				var/list/candidates = get_candidates(BE_ALIEN, ALIEN_AFK_BRACKET)
-				var/client/C = null
 
-				if(candidates.len)
-					C = pick(candidates)
+				shuffle(candidates)
+
+				var/time_passed = world.time
+				var/list/consenting_candidates = list()
+
+				for(var/candidate in candidates)
+
+					spawn(0)
+						switch(alert(candidate, "Would you like to play as [S.name]? Please choose quickly!","Confirmation","Yes","No"))
+							if("Yes")
+								if((world.time-time_passed)>=50 || !src)
+									return
+								consenting_candidates += candidate
+
+				sleep(50)
+
+				if(!src)
+					return
+
+				if(consenting_candidates.len)
+					var/client/C = null
+					C = pick(consenting_candidates)
 					S.key = C.key
 			qdel(src)
+
+
+
 
 /obj/effect/spider/cocoon
 	name = "cocoon"
@@ -211,7 +233,7 @@
 	var/breakout_time = 2
 	user.changeNext_move(CLICK_CD_BREAKOUT)
 	user.last_special = world.time + CLICK_CD_BREAKOUT
-	user << "<span class='notice'>You struggle against the tight bonds! (This will take about [breakout_time] minutes.)</span>"
+	user << "<span class='notice'>You struggle against the tight bonds... (This will take about [breakout_time] minutes.)</span>"
 	visible_message("You see something struggling and writhing in \the [src]!")
 	if(do_after(user,(breakout_time*60*10)))
 		if(!user || user.stat != CONSCIOUS || user.loc != src)
@@ -221,7 +243,7 @@
 
 
 /obj/effect/spider/cocoon/Destroy()
-	src.visible_message("<span class='danger'>\The [src] splits open.</span>")
+	src.visible_message("<span class='warning'>\The [src] splits open.</span>")
 	for(var/atom/movable/A in contents)
 		A.loc = src.loc
 	..()

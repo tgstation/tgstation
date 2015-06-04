@@ -16,8 +16,7 @@
 	see_in_dark = 6
 	species = /mob/living/simple_animal/pet/cat
 	childtype = /mob/living/simple_animal/pet/cat/kitten
-	meat_type = /obj/item/weapon/reagent_containers/food/snacks/meat
-	meat_amount = 3
+	butcher_results = list(/obj/item/weapon/reagent_containers/food/snacks/meat/slab = 2)
 	response_help  = "pets"
 	response_disarm = "gently pushes aside"
 	response_harm   = "kicks"
@@ -32,7 +31,6 @@
 	gender = FEMALE
 	var/turns_since_scan = 0
 	var/mob/living/simple_animal/mouse/movement_target
-	pcollar = /obj/item/clothing/tie/petcollar
 
 /mob/living/simple_animal/pet/cat/Runtime/Life()
 	//MICE!

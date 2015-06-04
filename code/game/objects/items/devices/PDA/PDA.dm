@@ -160,6 +160,7 @@ var/global/list/obj/item/device/pda/PDAs = list()
 
 /obj/item/device/pda/roboticist
 	icon_state = "pda-roboticist"
+	default_cartridge = /obj/item/weapon/cartridge/roboticist
 
 /obj/item/device/pda/librarian
 	icon_state = "pda-library"
@@ -195,6 +196,7 @@ var/global/list/obj/item/device/pda/PDAs = list()
 /obj/item/device/pda/ai
 	icon_state = "NONE"
 	ttone = "data"
+	fon = 0
 	mode = 5
 	noreturn = 1
 	detonate = 0
@@ -223,6 +225,12 @@ var/global/list/obj/item/device/pda/PDAs = list()
 
 /obj/item/device/pda/New()
 	..()
+	if(fon)
+		if(!isturf(loc))
+			loc.AddLuminosity(f_lum)
+			SetLuminosity(0)
+		else
+			SetLuminosity(f_lum)
 	PDAs += src
 	if(default_cartridge)
 		cartridge = new default_cartridge(src)
@@ -311,42 +319,32 @@ var/global/list/obj/item/device/pda/PDAs = list()
 						dat += "<h4>Engineering Functions</h4>"
 						dat += "<ul>"
 						dat += "<li><a href='byond://?src=\ref[src];choice=43'><img src=pda_power.png> Power Monitor</a></li>"
-						if(istype(cartridge.radio, /obj/item/radio/integrated/floorbot))
-							dat += "<li><a href='byond://?src=\ref[src];choice=51'><img src=pda_floorbot.png> Floorbot Access</a></li>"
 						dat += "</ul>"
 					if (cartridge.access_medical)
 						dat += "<h4>Medical Functions</h4>"
 						dat += "<ul>"
 						dat += "<li><a href='byond://?src=\ref[src];choice=44'><img src=pda_medical.png> Medical Records</a></li>"
 						dat += "<li><a href='byond://?src=\ref[src];choice=Medical Scan'><img src=pda_scanner.png> [scanmode == 1 ? "Disable" : "Enable"] Medical Scanner</a></li>"
-					if(istype(cartridge.radio, /obj/item/radio/integrated/medbot))
-						dat += "<li><a href='byond://?src=\ref[src];choice=52'><img src=pda_medbot.png> Medibot Access</a></li>"
-						dat += "</ul>"
-					else
 						dat += "</ul>"
 					if (cartridge.access_security)
 						dat += "<h4>Security Functions</h4>"
 						dat += "<ul>"
 						dat += "<li><a href='byond://?src=\ref[src];choice=45'><img src=pda_cuffs.png> Security Records</A></li>"
-					if(istype(cartridge.radio, /obj/item/radio/integrated/beepsky))
-						dat += "<li><a href='byond://?src=\ref[src];choice=46'><img src=pda_cuffs.png> Security Bot Access</a></li>"
 						dat += "</ul>"
-					else	dat += "</ul>"
 					if(cartridge.access_quartermaster)
 						dat += "<h4>Quartermaster Functions:</h4>"
 						dat += "<ul>"
 						dat += "<li><a href='byond://?src=\ref[src];choice=47'><img src=pda_crate.png> Supply Records</A></li>"
-						dat += "<li><a href='byond://?src=\ref[src];choice=48'><img src=pda_mule.png> Delivery Bot Control</A></li>"
 						dat += "</ul>"
 				dat += "</ul>"
 
 				dat += "<h4>Utilities</h4>"
 				dat += "<ul>"
 				if (cartridge)
+					if(cartridge.bot_access_flags)
+						dat += "<li><a href='byond://?src=\ref[src];choice=54'><img src=pda_medbot.png> Bots Access</a></li>"
 					if (cartridge.access_janitor)
 						dat += "<li><a href='byond://?src=\ref[src];choice=49'><img src=pda_bucket.png> Custodial Locator</a></li>"
-						if(istype(cartridge.radio, /obj/item/radio/integrated/cleanbot))
-							dat += "<li><a href='byond://?src=\ref[src];choice=50'><img src=pda_cleanbot.png> Cleanbot Access</a></li>"
 					if (istype(cartridge.radio, /obj/item/radio/integrated/signal))
 						dat += "<li><a href='byond://?src=\ref[src];choice=40'><img src=pda_signaler.png> Signaler System</a></li>"
 					if (cartridge.access_newscaster)
@@ -855,9 +853,9 @@ var/global/list/obj/item/device/pda/PDAs = list()
 		if(id)
 			remove_id()
 		else
-			usr << "<span class='notice'>This PDA does not have an ID in it.</span>"
+			usr << "<span class='warning'>This PDA does not have an ID in it!</span>"
 	else
-		usr << "<span class='notice'>You cannot do this while restrained.</span>"
+		usr << "<span class='warning'>You cannot do that while restrained!</span>"
 
 /obj/item/device/pda/verb/verb_remove_id()
 	set category = "Object"
@@ -871,9 +869,9 @@ var/global/list/obj/item/device/pda/PDAs = list()
 		if(id)
 			remove_id()
 		else
-			usr << "<span class='notice'>This PDA does not have an ID in it.</span>"
+			usr << "<span class='warning'>This PDA does not have an ID in it!</span>"
 	else
-		usr << "<span class='notice'>You cannot do this while restrained.</span>"
+		usr << "<span class='warning'>You cannot do that while restrained!</span>"
 
 
 /obj/item/device/pda/verb/verb_remove_pen()
@@ -895,9 +893,9 @@ var/global/list/obj/item/device/pda/PDAs = list()
 					return
 			O.loc = get_turf(src)
 		else
-			usr << "<span class='notice'>This PDA does not have a pen in it.</span>"
+			usr << "<span class='warning'>This PDA does not have a pen in it!</span>"
 	else
-		usr << "<span class='notice'>You cannot do this while restrained.</span>"
+		usr << "<span class='warning'>You cannot do that while restrained!</span>"
 
 /obj/item/device/pda/proc/id_check(mob/user as mob, choice as num)//To check for IDs; 1 for in-pda use, 2 for out of pda use.
 	if(choice == 1)
@@ -933,7 +931,7 @@ var/global/list/obj/item/device/pda/PDAs = list()
 	else if(istype(C, /obj/item/weapon/card/id))
 		var/obj/item/weapon/card/id/idcard = C
 		if(!idcard.registered_name)
-			user << "<span class='notice'>\The [src] rejects the ID.</span>"
+			user << "<span class='warning'>\The [src] rejects the ID!</span>"
 			return
 		if(!owner)
 			owner = idcard.registered_name
@@ -958,7 +956,7 @@ var/global/list/obj/item/device/pda/PDAs = list()
 	else if(istype(C, /obj/item/weapon/pen))
 		var/obj/item/weapon/pen/O = locate() in src
 		if(O)
-			user << "<span class='notice'>There is already a pen in \the [src].</span>"
+			user << "<span class='warning'>There is already a pen in \the [src]!</span>"
 		else
 			user.drop_item()
 			C.loc = src
@@ -1021,7 +1019,7 @@ var/global/list/obj/item/device/pda/PDAs = list()
 
 	if (!scanmode && istype(A, /obj/item/weapon/paper) && owner)
 		if (!A:info)
-			user << "<span class='notice'>Unable to scan. Paper is blank.</span>"
+			user << "<span class='warning'>Unable to scan! Paper is blank.</span>"
 			return
 		notehtml = A:info
 		note = replacetext(notehtml, "<BR>", "\[br\]")
@@ -1051,8 +1049,6 @@ var/global/list/obj/item/device/pda/PDAs = list()
 
 /obj/item/device/pda/Destroy()
 	PDAs -= src
-	if (src.id)
-		src.id.loc = get_turf(src.loc)
 	..()
 
 /obj/item/device/pda/clown/Crossed(AM as mob|obj) //Clown PDA is slippery.

@@ -1,45 +1,4 @@
 //Corgi
-/mob/living/simple_animal/pet
-	icon = 'icons/mob/pets.dmi'
-	mob_size = MOB_SIZE_SMALL
-	var/obj/item/clothing/tie/petcollar/pcollar = null
-	var/image/collar = null
-	var/image/pettag = null
-
-/mob/living/simple_animal/pet/attackby(var/obj/item/O as obj, var/mob/user as mob, params)
-	if(istype(O, /obj/item/clothing/tie/petcollar) && !pcollar)
-		var/obj/item/clothing/tie/petcollar/P = O
-		pcollar = P
-		update_collar()
-		if(P.tagname)
-			name = P.tagname
-		user << "<span class='notice'>You put the [P] around [src]'s neck.</span>"
-		qdel(P)
-	else
-		..()
-
-/mob/living/simple_animal/pet/New()
-	..()
-	if(pcollar)
-		pcollar = new(src)
-		update_collar()
-
-/mob/living/simple_animal/pet/revive()
-	..()
-	update_collar()
-
-/mob/living/simple_animal/pet/death(gibbed)
-	..(gibbed)
-	update_collar()
-
-/mob/living/simple_animal/pet/proc/update_collar()
-	overlays.Cut()
-	collar = image('icons/mob/pets.dmi', src, "[icon_state]collar")
-	pettag = image('icons/mob/pets.dmi', src, "[icon_state]tag")
-	overlays += collar
-	overlays += pettag
-
-
 /mob/living/simple_animal/pet/corgi
 	name = "\improper corgi"
 	real_name = "corgi"
@@ -54,8 +13,7 @@
 	emote_see = list("shakes its head.", "shivers.")
 	speak_chance = 1
 	turns_per_move = 10
-	meat_type = /obj/item/weapon/reagent_containers/food/snacks/meat/slab/corgi
-	meat_amount = 3
+	butcher_results = list(/obj/item/weapon/reagent_containers/food/snacks/meat/slab/corgi = 3)
 	response_help  = "pets"
 	response_disarm = "bops"
 	response_harm   = "kicks"
@@ -109,35 +67,30 @@
 		//helmet and armor = 100% protection
 		if( istype(inventory_head,/obj/item/clothing/head/helmet) && istype(inventory_back,/obj/item/clothing/suit/armor) )
 			if( O.force )
-				user << "<span class='warning'>[src] is wearing too much armor. You can't cause \him any damage.</span>"
+				user << "<span class='warning'>[src] is wearing too much armor! You can't cause \him any damage.</span>"
 				visible_message("<span class='danger'> [user] hits [src] with [O], however [src] is too armored.</span>")
 			else
-				user << "<span class='warning'>[src] is wearing too much armor. You can't reach \his skin.<span>"
-				visible_message("<span class='notice'>[user] gently taps [src] with [O].</span>")
+				user << "<span class='warning'>[src] is wearing too much armor! You can't reach \his skin.<span>"
+				visible_message("[user] gently taps [src] with [O].")
 			if(health>0 && prob(15))
 				emote("me", 1, "looks at [user] with [pick("an amused","an annoyed","a confused","a resentful", "a happy", "an excited")] expression.")
 			return
 
-	if(istype(O, /obj/item/weapon/newspaper))
-		if(!stat)
-			user.visible_message("<span class='notice'>[user] baps [name] on the nose with the rolled up [O]</span>")
-			spawn(0)
-				for(var/i in list(1,2,4,8,4,2,1,2))
-					dir = i
-					sleep(1)
-
 	if (istype(O, /obj/item/weapon/razor))
 		if (shaved)
-			user << "<span class='warning'>You can't shave this corgi, it's already been shaved.</span>"
+			user << "<span class='warning'>You can't shave this corgi, it's already been shaved!</span>"
 			return
-		user.visible_message("<span class='notice'>[user] starts to shave [src] using \the [O].</span>")
+		user.visible_message("[user] starts to shave [src] using \the [O].", "<span class='notice'>You start to shave [src] using \the [O]...</span>")
 		if(do_after(user, 50))
-			user.visible_message("<span class='notice'>[user] shaves [src]'s hair using \the [O]. </span>")
+			user.visible_message("[user] shaves [src]'s hair using \the [O].")
 			playsound(loc, 'sound/items/Welder2.ogg', 20, 1)
 			shaved = 1
-			icon_state = "[initial(icon_living)]_shaved"
 			icon_living = "[initial(icon_living)]_shaved"
 			icon_dead = "[initial(icon_living)]_shaved_dead"
+			if(stat == CONSCIOUS)
+				icon_state = icon_living
+			else
+				icon_state = icon_dead
 		return
 	..()
 
@@ -191,13 +144,13 @@
 
 			if("back")
 				if(inventory_back)
-					usr << "<span class='danger'>It's already wearing something.</span>"
+					usr << "<span class='warning'>It's already wearing something!</span>"
 					return
 				else
 					var/obj/item/item_to_add = usr.get_active_hand()
 
 					if(!item_to_add)
-						usr.visible_message("<span class='notice'>[usr] pets [src]</span>","<span class='notice'>You rest your hand on [src]'s back for a moment.</span>")
+						usr.visible_message("[usr] pets [src].","<span class='notice'>You rest your hand on [src]'s back for a moment.</span>")
 						return
 					if(istype(item_to_add,/obj/item/weapon/c4)) // last thing he ever wears, I guess
 						item_to_add.afterattack(src,usr,1)
@@ -206,7 +159,7 @@
 					//The objects that corgis can wear on their backs.
 					var/list/allowed_types = list(
 						/obj/item/clothing/suit/armor/vest,
-						/obj/item/clothing/suit/space/deathsquad,
+						/obj/item/clothing/suit/space/hardsuit/deathsquad,
 						/obj/item/device/radio,
 						/obj/item/device/radio/off,
 						/obj/item/clothing/suit/cardborg,
@@ -216,9 +169,9 @@
 					)
 
 					if( ! ( item_to_add.type in allowed_types ) )
-						usr << "You set [item_to_add] on [src]'s back, but \he shakes it off!"
+						usr << "<span class='warning'>You set [item_to_add] on [src]'s back, but \he shakes it off!</span>"
 						if(!usr.drop_item())
-							usr << "<span class='notice'>\The [item_to_add] is stuck to your hand, you cannot put it on [src]'s back!</span>"
+							usr << "<span class='warning'>\The [item_to_add] is stuck to your hand, you cannot put it on [src]'s back!</span>"
 							return
 						item_to_add.loc = loc
 						if(prob(25))
@@ -247,10 +200,10 @@
 		return
 
 	if(inventory_head)
-		if(user)	user << "<span class='danger'>You can't put more than one hat on [src]!</span>"
+		if(user)	user << "<span class='warning'>You can't put more than one hat on [src]!</span>"
 		return
 	if(!item_to_add)
-		user.visible_message("<span class='notice'>[user] pets [src]</span>","<span class='notice'>You rest your hand on [src]'s head for a moment.</span>")
+		user.visible_message("[user] pets [src].","<span class='notice'>You rest your hand on [src]'s head for a moment.</span>")
 		return
 
 
@@ -382,30 +335,30 @@
 				desc = "Can actually be trusted to not run off on his own."
 				valid = 1
 
-			if(/obj/item/clothing/head/helmet/space/deathsquad)
+			if(/obj/item/clothing/head/helmet/space/hardsuit/deathsquad)
 				name = "Trooper [real_name]"
 				desc = "That's not red paint. That's real corgi blood."
 				valid = 1
 
 	if(valid)
 		if(user && !user.drop_item())
-			user << "<span class='notice'>\The [item_to_add] is stuck to your hand, you cannot put it on [src]'s head!</span>"
+			user << "<span class='warning'>\The [item_to_add] is stuck to your hand, you cannot put it on [src]'s head!</span>"
 			return 0
 		if(health <= 0)
 			user << "<span class ='notice'>There is merely a dull, lifeless look in [real_name]'s eyes as you put the [item_to_add] on \him.</span>"
 		else if(user)
 			user.visible_message("[user] puts [item_to_add] on [real_name]'s head.  [src] looks at [user] and barks once.",
-				"You put [item_to_add] on [real_name]'s head.  [src] gives you a peculiar look, then wags \his tail once and barks.",
-				"You hear a friendly-sounding bark.")
+				"<span class='notice'>You put [item_to_add] on [real_name]'s head.  [src] gives you a peculiar look, then wags \his tail once and barks.</span>",
+				"<span class='italics'>You hear a friendly-sounding bark.</span>")
 		item_to_add.loc = src
 		src.inventory_head = item_to_add
 		regenerate_icons()
 
 	else
 		if(user && !user.drop_item())
-			user << "<span class='notice'>\The [item_to_add] is stuck to your hand, you cannot put it on [src]'s head!</span>"
+			user << "<span class='warning'>\The [item_to_add] is stuck to your hand, you cannot put it on [src]'s head!</span>"
 			return 0
-		user << "You set [item_to_add] on [src]'s head, but \he shakes it off!"
+		user << "<span class='warning'>You set [item_to_add] on [src]'s head, but \he shakes it off!</span>"
 		item_to_add.loc = loc
 		if(prob(25))
 			step_rand(item_to_add)
@@ -486,7 +439,6 @@
 
 /mob/living/simple_animal/pet/corgi/regenerate_icons()
 	overlays.Cut()
-
 	if(inventory_head)
 		var/image/head_icon
 		if(health <= 0)
@@ -496,7 +448,6 @@
 		else
 			head_icon = image('icons/mob/corgi_head.dmi', icon_state = inventory_head.icon_state)
 		overlays += head_icon
-
 	if(inventory_back)
 		var/image/back_icon
 		if(health <= 0)
@@ -506,12 +457,14 @@
 		else
 			back_icon = image('icons/mob/corgi_back.dmi', icon_state = inventory_back.icon_state)
 		overlays += back_icon
-
 	if(facehugger)
 		if(istype(src, /mob/living/simple_animal/pet/corgi/puppy))
 			overlays += image('icons/mob/mask.dmi',"facehugger_corgipuppy")
 		else
 			overlays += image('icons/mob/mask.dmi',"facehugger_corgi")
+	if(pcollar)
+		overlays += collar
+		overlays += pettag
 
 	return
 
@@ -532,7 +485,7 @@
 //puppies cannot wear anything.
 /mob/living/simple_animal/pet/corgi/puppy/Topic(href, href_list)
 	if(href_list["remove_inv"] || href_list["add_inv"])
-		usr << "<span class='danger'>You can't fit this on [src]</span>"
+		usr << "<span class='warning'>You can't fit this on [src]!</span>"
 		return
 	..()
 

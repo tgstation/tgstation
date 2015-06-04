@@ -104,7 +104,7 @@
 
 /mob/living/simple_animal/drone/proc/pickVisualAppearence()
 	picked = FALSE
-	var/appearence = input("Choose your appearence!", "Appearence", "Maintenance Drone") in list("Maintenance Drone", "Repair Drone")
+	var/appearence = input("Choose your appearence!", "Appearence", "Maintenance Drone") in list("Maintenance Drone", "Repair Drone", "Scout Drone")
 	switch(appearence)
 		if("Maintenance Drone")
 			visualAppearence = MAINTDRONE
@@ -115,6 +115,12 @@
 
 		if("Repair Drone")
 			visualAppearence = REPAIRDRONE
+			icon_state = visualAppearence
+			icon_living = visualAppearence
+			icon_dead = "[visualAppearence]_dead"
+
+		if("Scout Drone")
+			visualAppearence = SCOUTDRONE
 			icon_state = visualAppearence
 			icon_living = visualAppearence
 			icon_dead = "[visualAppearence]_dead"
@@ -131,6 +137,8 @@
 		if(MAINTDRONE)
 			. = 0
 		if(REPAIRDRONE)
+			. = -6
+		if(SCOUTDRONE)
 			. = -6
 
 /mob/living/simple_animal/drone/proc/updateSeeStaticMobs()

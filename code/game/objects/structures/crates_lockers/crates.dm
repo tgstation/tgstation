@@ -5,46 +5,61 @@
 	desc = "A rectangular steel crate."
 	icon = 'icons/obj/crates.dmi'
 	var/icon_crate = "crate"
+	icon_state = "crate"
 	req_access = null
-//	mouse_drag_pointer = MOUSE_ACTIVE_POINTER	//???
 	var/rigged = 0
 	var/sound_effect_open = 'sound/machines/click.ogg'
 	var/sound_effect_close = 'sound/machines/click.ogg'
+	var/obj/item/weapon/paper/manifest/manifest
 
 /obj/structure/closet/crate/New()
 	..()
 	update_icon()
 
+
 /obj/structure/closet/crate/update_icon()
+	overlays.Cut()
 	if(opened)
 		icon_state = "[icon_crate]open"
 	else
 		icon_state = icon_crate
+	if(manifest)
+		overlays += "manifest"
 
 /obj/structure/closet/crate/internals
 	desc = "A internals crate."
 	name = "internals crate"
 	icon_crate = "o2crate"
+	icon_state = "o2crate"
 
 /obj/structure/closet/crate/trashcart
 	desc = "A heavy, metal trashcart with wheels."
 	name = "trash cart"
 	icon_crate = "trashcart"
+	icon_state = "trashcart"
 
 /obj/structure/closet/crate/medical
 	desc = "A medical crate."
 	name = "medical crate"
 	icon_crate = "medicalcrate"
+	icon_state = "medicalcrate"
 
 /obj/structure/closet/crate/rcd
 	desc = "A crate for the storage of the RCD."
 	name = "\improper RCD crate"
-	icon_crate = "crate"
+
+/obj/structure/closet/crate/rcd/New()
+	..()
+	new /obj/item/weapon/rcd_ammo(src)
+	new /obj/item/weapon/rcd_ammo(src)
+	new /obj/item/weapon/rcd_ammo(src)
+	new /obj/item/weapon/rcd(src)
 
 /obj/structure/closet/crate/freezer
 	desc = "A freezer."
 	name = "freezer"
 	icon_crate = "freezer"
+	icon_state = "freezer"
 	var/target_temp = T0C - 40
 	var/cooling_power = 40
 
@@ -71,6 +86,7 @@
 	desc = "A crate with a radiation sign on it."
 	name = "radioactive gear crate"
 	icon_crate = "radiation"
+	icon_state = "radiation"
 
 /obj/structure/closet/crate/radiation/New()
 	..()
@@ -86,8 +102,8 @@
 /obj/structure/closet/crate/hydroponics
 	name = "hydroponics crate"
 	desc = "All you need to destroy those pesky weeds and pests."
-	icon = 'icons/obj/storage.dmi'
 	icon_crate = "hydrocrate"
+	icon_state = "hydrocrate"
 
 /obj/structure/closet/crate/hydroponics/prespawned
 
@@ -95,12 +111,13 @@
 	..()
 	new /obj/item/weapon/reagent_containers/spray/plantbgone(src)
 	new /obj/item/weapon/reagent_containers/spray/plantbgone(src)
-	new /obj/item/weapon/minihoe(src)
+	new /obj/item/weapon/cultivator(src)
 
 /obj/structure/closet/crate/secure
 	desc = "A secure crate."
 	name = "secure crate"
 	icon_crate = "securecrate"
+	icon_state = "securecrate"
 	var/redlight = "securecrater"
 	var/greenlight = "securecrateg"
 	var/sparks = "securecratesparks"
@@ -112,36 +129,34 @@
 	desc = "A secure weapons crate."
 	name = "weapons crate"
 	icon_crate = "weaponcrate"
+	icon_state = "weaponcrate"
 
 /obj/structure/closet/crate/secure/plasma
 	desc = "A secure plasma crate."
 	name = "plasma crate"
 	icon_crate = "plasmacrate"
+	icon_state = "plasmacrate"
 
 /obj/structure/closet/crate/secure/gear
 	desc = "A secure gear crate."
 	name = "gear crate"
 	icon_crate = "secgearcrate"
+	icon_state = "secgearcrate"
 
 /obj/structure/closet/crate/secure/hydrosec
 	desc = "A crate with a lock on it, painted in the scheme of the station's botanists."
 	name = "secure hydroponics crate"
 	icon_crate = "hydrosecurecrate"
+	icon_state = "hydrosecurecrate"
 
-/obj/structure/closet/crate/secure/New()
+/obj/structure/closet/crate/secure/update_icon()
 	..()
-	overlays.Cut()
 	if(locked)
 		overlays += redlight
+	else if(broken)
+		overlays += emag
 	else
 		overlays += greenlight
-
-/obj/structure/closet/crate/rcd/New()
-	..()
-	new /obj/item/weapon/rcd_ammo(src)
-	new /obj/item/weapon/rcd_ammo(src)
-	new /obj/item/weapon/rcd_ammo(src)
-	new /obj/item/weapon/rcd(src)
 
 /obj/structure/closet/crate/open()
 	playsound(src.loc, sound_effect_open, 15, 1, -3)
@@ -179,7 +194,19 @@
 	AM.loc = src
 	return 1
 
+/obj/structure/closet/crate/proc/tear_manifest(mob/user as mob)
+	user << "<span class='notice'>You tear the manifest off of the crate.</span>"
+	playsound(src.loc, 'sound/items/poster_ripped.ogg', 75, 1)
+	manifest.loc = loc
+	if(ishuman(user))
+		user.put_in_hands(manifest)
+	manifest = null
+	overlays-="manifest"
+
 /obj/structure/closet/crate/attack_hand(mob/user as mob)
+	if(manifest)
+		tear_manifest(user)
+		return
 	if(opened)
 		close()
 	else
@@ -195,12 +222,14 @@
 	return
 
 /obj/structure/closet/crate/secure/attack_hand(mob/user as mob)
+	if(manifest)
+		tear_manifest(user)
+		return
 	if(locked && !broken)
 		if (allowed(user))
 			user << "<span class='notice'>You unlock [src].</span>"
 			src.locked = 0
-			overlays.Cut()
-			overlays += greenlight
+			update_icon()
 			add_fingerprint(user)
 			return
 		else
@@ -213,8 +242,7 @@
 	if(istype(W, /obj/item/weapon/card) && src.allowed(user) && !locked && !opened && !broken)
 		user << "<span class='notice'>You lock \the [src].</span>"
 		src.locked = 1
-		overlays.Cut()
-		overlays += redlight
+		update_icon()
 		add_fingerprint(user)
 		return
 
@@ -222,13 +250,12 @@
 
 /obj/structure/closet/crate/secure/emag_act(mob/user as mob)
 	if(locked && !broken)
-		overlays.Cut()
-		overlays += emag
+		src.locked = 0
+		src.broken = 1
+		update_icon()
 		overlays += sparks
 		spawn(6) overlays -= sparks //Tried lots of stuff but nothing works right. so i have to use this *sadface*
 		playsound(src.loc, "sparks", 60, 1)
-		src.locked = 0
-		src.broken = 1
 		user << "<span class='notice'>You unlock \the [src].</span>"
 		add_fingerprint(user)
 
@@ -240,7 +267,7 @@
 		if(isrobot(user))
 			return
 		if(!user.drop_item()) //couldn't drop the item
-			user << "<span class='notice'>\The [W] is stuck to your hand, you cannot put it in \the [src]!</span>"
+			user << "<span class='warning'>\The [W] is stuck to your hand, you cannot put it in \the [src]!</span>"
 			return
 		if(W)
 			W.loc = src.loc
@@ -248,14 +275,14 @@
 		return
 	else if(istype(W, /obj/item/stack/cable_coil))
 		if(rigged)
-			user << "<span class='notice'>[src] is already rigged!</span>"
+			user << "<span class='warning'>[src] is already rigged!</span>"
 			return
 		var/obj/item/stack/cable_coil/C = W
 		if (C.use(5))
 			user << "<span class='notice'>You rig [src].</span>"
 			rigged = 1
 		else
-			user << "<span class='warning'>You need 5 lengths of cable to rig [src].</span>"
+			user << "<span class='warning'>You need 5 lengths of cable to rig [src]!</span>"
 		return
 	else if(istype(W, /obj/item/device/electropack))
 		if(rigged)
@@ -278,15 +305,14 @@
 	if(!broken && !opened  && prob(50/severity))
 		if(!locked)
 			src.locked = 1
-			overlays.Cut()
-			overlays += redlight
+			update_icon()
 		else
-			overlays.Cut()
-			overlays += emag
+			src.locked = 0
+			src.broken = 1
+			update_icon()
 			overlays += sparks
 			spawn(6) overlays -= sparks //Tried lots of stuff but nothing works right. so i have to use this *sadface*
 			playsound(src.loc, 'sound/effects/sparks4.ogg', 75, 1)
-			src.locked = 0
 	if(!opened && prob(20/severity))
 		if(!locked)
 			open()

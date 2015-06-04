@@ -82,9 +82,12 @@ Class Procs:
       Called by machine to assign a value to the uid variable.
 
    process()                  'game/machinery/machine.dm'
-      Called by the 'master_controller' once per game tick for each machine that is listed in the 'machines' list.
+      Called by the 'machinery subsystem' once per machinery tick for each machine that is listed in its 'machines' list.
 
-	is_operational()
+   process_atmos()
+      Called by the 'air subsystem' once per atmos tick for each machine that is listed in its 'atmos_machines' list.
+
+   is_operational()
 		Returns 0 if the machine is unpowered, broken or undergoing maintenance, something else if not
 
 	Compiled by Aygar
@@ -130,6 +133,9 @@ Class Procs:
 	return
 
 /obj/machinery/process()//If you dont use process or power why are you here
+	return PROCESS_KILL
+
+/obj/machinery/proc/process_atmos()//If you dont use process why are you here
 	return PROCESS_KILL
 
 /obj/machinery/emp_act(severity)
@@ -227,7 +233,7 @@ Class Procs:
 		if(be_close && in_range(M, src))
 			return 1
 	else
-		src << "<span class='notice'>You don't have the dexterity to do this!</span>"
+		src << "<span class='warning'>You don't have the dexterity to do this!</span>"
 	return
 
 /mob/living/carbon/human/canUseTopic(atom/movable/M, be_close = 0)
@@ -275,31 +281,28 @@ Class Procs:
 
 //set_machine must be 0 if clicking the machinery doesn't bring up a dialog
 /obj/machinery/attack_hand(mob/user as mob, var/check_power = 1, var/set_machine = 1)
-	if(check_power && stat & NOPOWER)
-		user << "<span class='danger'>\The [src] seems unpowered.</span>"
-		return 1
-	if(!interact_offline && stat & (BROKEN|MAINT))
-		user << "<span class='danger'>\The [src] seems broken.</span>"
-		return 1
 	if(user.lying || user.stat)
 		return 1
 	if(!user.IsAdvancedToolUser())
-		usr << "<span class='danger'>You don't have the dexterity to do this!</span>"
+		usr << "<span class='warning'>You don't have the dexterity to do this!</span>"
 		return 1
-/*
-	//distance checks are made by atom/proc/DblClick
-	if ((get_dist(src, user) > 1 || !istype(src.loc, /turf)) && !istype(user, /mob/living/silicon))
-		return 1
-*/
 	if (ishuman(user))
 		var/mob/living/carbon/human/H = user
 		if(H.getBrainLoss() >= 60)
 			visible_message("<span class='danger'>[H] stares cluelessly at [src] and drools.</span>")
 			return 1
 		else if(prob(H.getBrainLoss()))
-			user << "<span class='danger'>You momentarily forget how to use [src].</span>"
+			user << "<span class='warning'>You momentarily forget how to use [src]!</span>"
 			return 1
-
+	if(panel_open)
+		src.add_fingerprint(user)
+		return 0
+	if(check_power && stat & NOPOWER)
+		user << "<span class='danger'>\The [src] seems unpowered.</span>"
+		return 1
+	if(!interact_offline && stat & (BROKEN|MAINT))
+		user << "<span class='danger'>\The [src] seems broken.</span>"
+		return 1
 	src.add_fingerprint(user)
 	if(set_machine)
 		user.set_machine(src)
@@ -361,10 +364,10 @@ Class Procs:
 
 /obj/machinery/proc/default_unfasten_wrench(mob/user, obj/item/weapon/wrench/W, time = 20)
 	if(istype(W))
-		user << "<span class='notice'>Now [anchored ? "un" : ""]securing [name].</span>"
+		user << "<span class='notice'>You begin [anchored ? "un" : ""]securing [name]...</span>"
 		playsound(src.loc, 'sound/items/Ratchet.ogg', 50, 1)
 		if(do_after(user, time))
-			user << "<span class='notice'>You've [anchored ? "un" : ""]secured [name].</span>"
+			user << "<span class='notice'>You [anchored ? "un" : ""]secure [name].</span>"
 			anchored = !anchored
 			playsound(src.loc, 'sound/items/Deconstruct.ogg', 50, 1)
 		return 1
@@ -405,3 +408,6 @@ Class Procs:
 //called on machinery construction (i.e from frame to machinery) but not on initialization
 /obj/machinery/proc/construction()
 	return
+
+/obj/machinery/allow_drop()
+	return 0

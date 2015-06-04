@@ -41,6 +41,10 @@
 	// 1 to pass solid objects, 2 to pass solid turfs (results in bugs, bugs and tons of bugs)
 	var/range = 0
 
+/obj/item/projectile/New()
+	permutated = list()
+	return ..()
+
 /obj/item/projectile/proc/Range()
 	if(range)
 		range--
@@ -62,7 +66,7 @@
 		organ_hit_text = " in \the [parse_zone(def_zone)]"
 	if(suppressed)
 		playsound(loc, hitsound, 5, 1, -1)
-		L << "<span class='userdanger'>You've been shot by \a [src][organ_hit_text]!</span>"
+		L << "<span class='userdanger'>You're shot by \a [src][organ_hit_text]!</span>"
 	else
 		if(hitsound)
 			var/volume = vol_by_damage()

@@ -55,31 +55,57 @@
 
 /obj/machinery/constructable_frame/machine_frame/attackby(obj/item/P as obj, mob/user as mob, params)
 	if(P.crit_fail)
-		user << "<span class='danger'>This part is faulty, you cannot add this to the machine!</span>"
+		user << "<span class='warning'>This part is faulty, you cannot add this to the machine!</span>"
 		return
 	switch(state)
 		if(1)
+			if(istype(P, /obj/item/weapon/circuitboard))
+				user << "<span class='warning'>The frame needs wiring first!</span>"
+				return
 			if(istype(P, /obj/item/stack/cable_coil))
 				var/obj/item/stack/cable_coil/C = P
 				if(C.get_amount() >= 5)
 					playsound(src.loc, 'sound/items/Deconstruct.ogg', 50, 1)
-					user << "<span class='notice'>You start to add cables to the frame.</span>"
-					if(do_after(user, 20))
+					user << "<span class='notice'>You start to add cables to the frame...</span>"
+					if(do_after(user, 20, target = src))
 						if(C.get_amount() >= 5 && state == 1)
 							C.use(5)
 							user << "<span class='notice'>You add cables to the frame.</span>"
 							state = 2
 							icon_state = "box_1"
 				else
-					user << "<span class='warning'>You need five length of cable to wire the frame.</span>"
+					user << "<span class='warning'>You need five length of cable to wire the frame!</span>"
 					return
+			if(istype(P, /obj/item/weapon/screwdriver) && !anchored)
+				playsound(src.loc, 'sound/items/Screwdriver.ogg', 50, 1)
+				user.visible_message("<span class='warning'>[user] disassembles the frame.</span>", \
+									"<span class='notice'>You start to disassemble the frame...</span>", "You hear banging and clanking.")
+				if(do_after(user, 40, target = src))
+					if(state == 1)
+						user << "<span class='notice'>You disassemble the frame.</span>"
+						var/obj/item/stack/sheet/metal/M = new (loc, 5)
+						M.add_fingerprint(user)
+						qdel(src)
 			if(istype(P, /obj/item/weapon/wrench))
+				user << "<span class='notice'>You start [anchored ? "un" : ""]securing [name]...</span>"
 				playsound(src.loc, 'sound/items/Ratchet.ogg', 75, 1)
-				user << "<span class='notice'>You dismantle the frame.</span>"
-				new /obj/item/stack/sheet/metal(src.loc, 5)
-				qdel(src)
+				if(do_after(user, 40, target = src))
+					if(state == 1)
+						user << "<span class='notice'>You [anchored ? "un" : ""]secure [name].</span>"
+						anchored = !anchored
+
 		if(2)
+			if(istype(P, /obj/item/weapon/wrench))
+				user << "<span class='notice'>You start [anchored ? "un" : ""]securing [name]...</span>"
+				playsound(src.loc, 'sound/items/Ratchet.ogg', 75, 1)
+				if(do_after(user, 40, target = src))
+					user << "<span class='notice'>You [anchored ? "un" : ""]secure [name].</span>"
+					anchored = !anchored
+
 			if(istype(P, /obj/item/weapon/circuitboard))
+				if(!anchored)
+					user << "<span class='warning'>The frame needs to be secured first!</span>"
+					return
 				var/obj/item/weapon/circuitboard/B = P
 				if(B.board_type == "machine")
 					playsound(src.loc, 'sound/items/Deconstruct.ogg', 50, 1)
@@ -94,7 +120,7 @@
 					update_namelist()
 					update_req_desc()
 				else
-					user << "<span class='danger'>This frame does not accept circuit boards of this type!</span>"
+					user << "<span class='warning'>This frame does not accept circuit boards of this type!</span>"
 			if(istype(P, /obj/item/weapon/wirecutters))
 				playsound(src.loc, 'sound/items/Wirecutter.ogg', 50, 1)
 				user << "<span class='notice'>You remove the cables.</span>"
@@ -177,7 +203,7 @@
 						if(istype(P, /obj/item/stack/cable_coil))
 							var/obj/item/stack/cable_coil/CP = P
 							if (CP.get_amount() < 1)
-								user << "You need more cable!"
+								user << "<span class='warning'>You need more cable!</span>"
 								return
 							var/obj/item/stack/cable_coil/CC = new /obj/item/stack/cable_coil(src, 1, CP.item_color)
 							if(CP.use(1))
@@ -192,7 +218,7 @@
 						update_req_desc()
 						return 1
 				if(!success)
-					user << "<span class='danger'>You cannot add that to the machine!</span>"
+					user << "<span class='warning'>You cannot add that to the machine!</span>"
 					return 0
 
 
@@ -381,7 +407,7 @@ to destroy them and players will be able to make replacements.
 							/obj/item/weapon/stock_parts/manipulator = 1,
 							/obj/item/weapon/stock_parts/console_screen = 1,
 							/obj/item/weapon/stock_parts/cell = 1)
-							
+
 /obj/item/weapon/circuitboard/chem_master
 	name = "circuit board (Chem Master 2999)"
 	build_path = /obj/machinery/chem_master/constructable

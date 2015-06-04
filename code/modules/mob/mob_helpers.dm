@@ -105,27 +105,27 @@
 		return 1
 	return 0
 
-proc/isobserver(A)
+/proc/isobserver(A)
 	if(istype(A, /mob/dead/observer))
 		return 1
 	return 0
 
-proc/isnewplayer(A)
+/proc/isnewplayer(A)
 	if(istype(A, /mob/new_player))
 		return 1
 	return 0
 
-proc/isovermind(A)
+/proc/isovermind(A)
 	if(istype(A, /mob/camera/blob))
 		return 1
 	return 0
 
-proc/isdrone(A)
+/proc/isdrone(A)
 	if(istype(A, /mob/living/simple_animal/drone))
 		return 1
 	return 0
 
-proc/isorgan(A)
+/proc/isorgan(A)
 	if(istype(A, /obj/item/organ/limb))
 		return 1
 	return 0
@@ -203,7 +203,7 @@ proc/isorgan(A)
 		p++
 	return sanitize(t)
 
-proc/slur(n)
+/proc/slur(n)
 	var/phrase = html_decode(n)
 	var/leng = lentext(phrase)
 	var/counter=lentext(phrase)
@@ -268,7 +268,7 @@ proc/slur(n)
 	return message
 
 
-proc/Gibberish(t, p)//t is the inputted message, and any value higher than 70 for p will cause letters to be replaced instead of added
+/proc/Gibberish(t, p)//t is the inputted message, and any value higher than 70 for p will cause letters to be replaced instead of added
 	/* Turn text into complete gibberish! */
 	var/returntext = ""
 	for(var/i = 1, i <= length(t), i++)
@@ -393,13 +393,13 @@ It's fairly easy to fix if dealing with single letters but not so much with comp
 			else
 				hud_used.action_intent.icon_state = "help"
 
-proc/is_blind(A)
+/proc/is_blind(A)
 	if(ismob(A))
 		var/mob/B = A
 		return	B.eye_blind
 	return 0
 
-proc/is_special_character(mob/M) // returns 1 for special characters and 2 for heroes of gamemode //moved out of admins.dm because things other than admin procs were calling this.
+/proc/is_special_character(mob/M) // returns 1 for special characters and 2 for heroes of gamemode //moved out of admins.dm because things other than admin procs were calling this.
 	if(!ticker || !ticker.mode)
 		return 0
 	if(!istype(M))
@@ -442,6 +442,9 @@ proc/is_special_character(mob/M) // returns 1 for special characters and 2 for h
 			if("monkey")
 				if(M.viruses && (locate(/datum/disease/transformation/jungle_fever) in M.viruses))
 					return 2
+			if("abductor")
+				if(M.mind in ticker.mode.abductors)
+					return 2
 		return 1
 	return 0
 
@@ -477,10 +480,10 @@ proc/is_special_character(mob/M) // returns 1 for special characters and 2 for h
 			affecting.heal_damage(brute,burn,1)
 			H.update_damage_overlays(0)
 			H.updatehealth()
-			user.visible_message("<span class='notice'>[user] has fixed some of the [dam ? "dents on" : "burnt wires in"] [H]'s [affecting.getDisplayName()]!</span>")
+			user.visible_message("[user] has fixed some of the [dam ? "dents on" : "burnt wires in"] [H]'s [affecting.getDisplayName()].", "<span class='notice'>You fix some of the [dam ? "dents on" : "burnt wires in"] [H]'s [affecting.getDisplayName()].</span>")
 			return
 		else
-			user << "<span class='notice'>[H]'s [affecting.getDisplayName()] is already in good condition</span>"
+			user << "<span class='warning'>[H]'s [affecting.getDisplayName()] is already in good condition!</span>"
 			return
 	else
 		return

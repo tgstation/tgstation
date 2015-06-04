@@ -10,6 +10,7 @@ var/list/spells = typesof(/obj/effect/proc_holder/spell) //needed for the badmin
 	name = "Spell"
 	desc = "A wizard spell"
 	panel = "Spells"
+	var/sound = "sound/weapons/badZap.ogg"
 	anchored = 1 // Crap like fireball projectiles are proc_holders, this is needed so fireballs don't get blown back into your face via atmos etc.
 	pass_flags = PASSTABLE
 	density = 0
@@ -52,6 +53,11 @@ var/list/spells = typesof(/obj/effect/proc_holder/spell) //needed for the badmin
 
 	var/critfailchance = 0
 	var/centcom_cancast = 1 //Whether or not the spell should be allowed on z2
+
+	var/datum/action/spell_action/action = null
+	var/action_icon = 'icons/mob/actions.dmi'
+	var/action_icon_state = "spell_default"
+	var/action_background_icon_state = "bg_spell"
 
 /obj/effect/proc_holder/spell/proc/cast_check(skipcharge = 0,mob/user = usr) //checks if the spell can be cast based on its settings; skipcharge is used when an additional cast_check is called inside the spell
 
@@ -130,6 +136,9 @@ var/list/spells = typesof(/obj/effect/proc_holder/spell) //needed for the badmin
 				user.whisper(replacetext(invocation," ","`"))
 		if("emote")
 			user.visible_message(invocation, invocation_emote_self) //same style as in mob/living/emote.dm
+
+/obj/effect/proc_holder/spell/proc/playMagSound()
+	playsound(get_turf(usr), sound,50,1)
 
 /obj/effect/proc_holder/spell/New()
 	..()
@@ -251,6 +260,7 @@ var/list/spells = typesof(/obj/effect/proc_holder/spell) //needed for the badmin
 	var/random_target = 0 // chooses random viable target instead of asking the caster
 	var/random_target_priority = TARGET_CLOSEST // if random_target is enabled how it will pick the target
 
+
 /obj/effect/proc_holder/spell/aoe_turf //affects all turfs in view or range (depends)
 	var/inner_radius = -1 //for all your ring spell needs
 
@@ -347,4 +357,45 @@ var/list/spells = typesof(/obj/effect/proc_holder/spell) //needed for the badmin
 				qdel(dummy)
 				return 0
 	qdel(dummy)
+	return 1
+
+/obj/effect/proc_holder/spell/proc/can_cast(mob/user = usr)
+	if(((!user.mind) || !(src in user.mind.spell_list)) && !(src in user.mob_spell_list))
+		return 0
+
+	if(user.z == ZLEVEL_CENTCOM && !centcom_cancast) //Certain spells are not allowed on the centcom zlevel
+		return 0
+	if(user.z == ZLEVEL_CENTCOM && ticker.mode.name == "ragin' mages")
+		return 0
+
+	switch(charge_type)
+		if("recharge")
+			if(charge_counter < charge_max)
+				return 0
+		if("charges")
+			if(!charge_counter)
+				return 0
+
+	if(user.stat && !stat_allowed)
+		return 0
+
+	if(ishuman(user))
+
+		var/mob/living/carbon/human/H = user
+
+		if((invocation_type == "whisper" || invocation_type == "shout") && H.is_muzzled())
+			return 0
+
+		if(clothes_req) //clothes check
+			if(!istype(H.wear_suit, /obj/item/clothing/suit/wizrobe) && !istype(H.wear_suit, /obj/item/clothing/suit/space/hardsuit/wizard))
+				return 0
+			if(!istype(H.shoes, /obj/item/clothing/shoes/sandal))
+				return 0
+			if(!istype(H.head, /obj/item/clothing/head/wizard) && !istype(H.head, /obj/item/clothing/head/helmet/space/hardsuit/wizard))
+				return 0
+	else
+		if(clothes_req || human_req)
+			return 0
+		if(nonabstract_req && (isbrain(user) || ispAI(user)))
+			return 0
 	return 1

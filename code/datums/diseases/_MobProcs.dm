@@ -38,6 +38,7 @@
 	DD.holder = src
 	if(DD.disease_flags & CAN_CARRY && prob(5))
 		DD.carrier = 1
+	DD.strain_data = D.strain_data.Copy()
 	DD.affected_mob.med_hud_set_status()
 
 
@@ -127,3 +128,9 @@
 	if(!CanContractDisease(D))
 		return 0
 	AddDisease(D)
+
+
+/mob/living/carbon/human/CanContractDisease(var/datum/disease/D)
+	if(dna && VIRUSIMMUNE in dna.species.specflags)
+		return 0
+	return ..()

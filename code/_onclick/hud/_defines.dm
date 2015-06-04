@@ -17,38 +17,6 @@
 	Therefore, the top right corner (except during admin shenanigans) is at "15,15"
 */
 
-//Upper left action buttons, displayed when you pick up an item that has this enabled.
-#define ui_action_slot1  "WEST  	:0,	NORTH:0"
-#define ui_action_slot2  "WEST+1	:0,	NORTH:0"
-#define ui_action_slot3  "WEST+2	:0,	NORTH:0"
-#define ui_action_slot4  "WEST+3	:0,	NORTH:0"
-#define ui_action_slot5  "WEST+4	:0,	NORTH:0"
-#define ui_action_slot6  "WEST+5	:0,	NORTH:0"
-#define ui_action_slot7  "WEST+6	:0,	NORTH:0"
-#define ui_action_slot8  "WEST+7	:0,	NORTH:0"
-#define ui_action_slot9  "WEST+8	:0,	NORTH:0"
-#define ui_action_slot10 "WEST+9	:0,	NORTH:0"
-#define ui_action_slot11 "WEST+10	:0,	NORTH:0"
-#define ui_action_slot12 "WEST+11	:0,	NORTH:0"
-#define ui_action_slot13 "WEST+12	:0,	NORTH:0"
-#define ui_action_slot14 "WEST+13	:0,	NORTH:0"
-#define ui_action_slot15 "WEST+14	:0,	NORTH:0"
-#define ui_action_slot16 "WEST  	:0,	NORTH-1:0"
-#define ui_action_slot17 "WEST+1	:0,	NORTH-1:0"
-#define ui_action_slot18 "WEST+2	:0,	NORTH-1:0"
-#define ui_action_slot19 "WEST+3	:0,	NORTH-1:0"
-#define ui_action_slot20 "WEST+4	:0,	NORTH-1:0"
-#define ui_action_slot21 "WEST+5	:0,	NORTH-1:0"
-#define ui_action_slot22 "WEST+6	:0,	NORTH-1:0"
-#define ui_action_slot23 "WEST+7	:0,	NORTH-1:0"
-#define ui_action_slot24 "WEST+8	:0,	NORTH-1:0"
-#define ui_action_slot25 "WEST+9	:0,	NORTH-1:0"
-#define ui_action_slot26 "WEST+10	:0,	NORTH-1:0"
-#define ui_action_slot27 "WEST+11	:0,	NORTH-1:0"
-#define ui_action_slot28 "WEST+12	:0,	NORTH-1:0"
-#define ui_action_slot29 "WEST+13	:0,	NORTH-1:0"
-#define ui_action_slot30 "WEST+14	:0,	NORTH-1:0"
-
 //Lower left, persistant menu
 #define ui_inventory "WEST:6,SOUTH:5"
 
@@ -153,6 +121,5 @@
 #define ui_ears "WEST+2:10,SOUTH+2:9"
 
 #define ui_head "WEST+1:8,SOUTH+3:11"
-
 
 

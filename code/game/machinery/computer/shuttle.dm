@@ -87,7 +87,7 @@
 		return prob(60)
 
 	var/obj/structure/stool/bed/B = A
-	if (istype(A, /obj/structure/stool/bed) && B.buckled_mob)//if it's a bed/chair and someone is buckled, it will not pass
+	if (istype(A, /obj/structure/stool/bed) && (B.buckled_mob || B.density))//if it's a bed/chair and is dense or someone is buckled, it will not pass
 		return 0
 
 	else if(istype(A, /mob/living)) // You Shall Not Pass!
@@ -159,3 +159,10 @@
 	var/temp = null
 	var/reqtime = 0 //Cooldown for requisitions - Quarxink
 	var/last_viewed_group = "categories"
+
+/obj/machinery/computer/shuttle/white_ship
+	name = "White Ship Console"
+	desc = "Used to control the White Ship."
+	circuit = /obj/item/weapon/circuitboard/white_ship
+	shuttleId = "whiteship"
+	possible_destinations = "whiteship_ss13;whiteship_home;whiteship_z4"

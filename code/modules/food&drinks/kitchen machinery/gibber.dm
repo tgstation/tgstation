@@ -78,9 +78,6 @@
 		src.startgibbing(user)
 
 /obj/machinery/gibber/attackby(obj/item/weapon/grab/G as obj, mob/user as mob, params)
-	if(src.occupant)
-		user << "<span class='danger'>The gibber is full, empty it first!</span>"
-		return
 	if(default_unfasten_wrench(user, G))
 		return
 
@@ -124,10 +121,10 @@
 	if(src.operating)
 		return
 	if(!src.occupant)
-		visible_message("<span class='danger'>You hear a loud metallic grinding sound.</span>")
+		visible_message("<span class='italics'>You hear a loud metallic grinding sound.</span>")
 		return
 	use_power(1000)
-	visible_message("<span class='danger'>You hear a loud squelchy grinding sound.</span>")
+	visible_message("<span class='italics'>You hear a loud squelchy grinding sound.</span>")
 	src.operating = 1
 	update_icon()
 	var/sourcename = src.occupant.real_name

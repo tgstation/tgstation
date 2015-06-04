@@ -19,27 +19,27 @@
 			IC = I
 			break
 	if(tool)
-		user.visible_message("<span class='notice'>[user] begins to insert [tool] into [target]'s [target_zone].</span>")
+		user.visible_message("[user] begins to insert [tool] into [target]'s [target_zone].", "<span class='notice'>You begin to insert [tool] into [target]'s [target_zone]...</span>")
 	else
-		user.visible_message("<span class='notice'>[user] checks for items in [target]'s [target_zone].</span>")
+		user.visible_message("[user] checks for items in [target]'s [target_zone].", "<span class='notice'>You check for items in [target]'s [target_zone]...</span>")
 
 /datum/surgery_step/handle_cavity/success(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)
 	if(tool)
-		if(IC || tool.w_class > 3 || NODROP in tool.flags || tool.GetTypeInAllContents(/obj/item/weapon/disk/nuclear) || istype(tool, /obj/item/weapon/disk/nuclear) || istype(tool, /obj/item/organ))
-			user.visible_message("<span class='notice'>[user] can't seem to fit [tool] in [target]'s [target_zone].</span>")
+		if(IC || tool.w_class > 3 || (tool.flags & NODROP) || tool.GetTypeInAllContents(/obj/item/weapon/disk/nuclear) || istype(tool, /obj/item/weapon/disk/nuclear) || istype(tool, /obj/item/organ))
+			user << "<span class='warning'>You can't seem to fit [tool] in [target]'s [target_zone]!</span>"
 			return 0
 		else
-			user.visible_message("<span class='notice'>[user] stuffs [tool] into [target]'s [target_zone]!</span>")
+			user.visible_message("[user] stuffs [tool] into [target]'s [target_zone]!", "<span class='notice'>You stuff [tool] into [target]'s [target_zone].</span>")
 			user.drop_item()
 			target.internal_organs += tool
 			tool.loc = target
 			return 1
 	else
 		if(IC)
-			user.visible_message("<span class='notice'>[user] pulls [IC] out of [target]'s [target_zone]!</span>")
+			user.visible_message("[user] pulls [IC] out of [target]'s [target_zone]!", "<span class='notice'>You pull [IC] out of [target]'s [target_zone].</span>")
 			user.put_in_hands(IC)
 			target.internal_organs -= IC
 			return 1
 		else
-			user.visible_message("<span class='notice'>[user] doesn't find anything in [target]'s [target_zone].</span>")
+			user << "<span class='warning'>You don't find anything in [target]'s [target_zone].</span>"
 			return 0

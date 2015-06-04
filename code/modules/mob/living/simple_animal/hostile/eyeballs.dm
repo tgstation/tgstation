@@ -6,13 +6,12 @@
 	icon_state = "eyeball"
 	icon_living = "eyeball"
 	icon_gib = ""
-	meat_type = null
-	meat_amount = 0
 	response_help = "pets"
 	response_disarm = "gently pushes aside"
 	response_harm = "hits"
 	maxHealth = 45
 	health = 45
+	speak_emote = list("telepathically cries")
 
 	harm_intent_damage = 15
 	melee_damage_lower = 20

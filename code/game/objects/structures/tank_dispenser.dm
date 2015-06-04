@@ -36,7 +36,7 @@
 
 /obj/structure/dispenser/attack_hand(mob/user as mob)
 	if(!user.IsAdvancedToolUser())
-		user << "<span class='danger'>You don't have the dexterity to do this!</span>"
+		user << "<span class='warning'>You don't have the dexterity to do this!</span>"
 		return 1
 	user.set_machine(src)
 	var/dat = "[src]<br><br>"

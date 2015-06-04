@@ -46,7 +46,7 @@
 
 /obj/item/weapon/dnainjector/attack(mob/target, mob/user)
 	if(!user.IsAdvancedToolUser())
-		user << "<span class='notice'>You don't have the dexterity to do this!</span>"
+		user << "<span class='warning'>You don't have the dexterity to do this!</span>"
 		return
 	if(ishuman(target))
 		var/mob/living/carbon/human/humantarget = target

@@ -16,7 +16,7 @@
 /obj/item/device/transfer_valve/attackby(obj/item/item, mob/user, params)
 	if(istype(item, /obj/item/weapon/tank))
 		if(tank_one && tank_two)
-			user << "<span class='warning'>There are already two tanks attached, remove one first.</span>"
+			user << "<span class='warning'>There are already two tanks attached, remove one first!</span>"
 			return
 
 		if(!tank_one)
@@ -42,7 +42,7 @@
 			user << "<span class='notice'>The device is secured.</span>"
 			return
 		if(attached_device)
-			user << "<span class='warning'>There is already a device attached to the valve, remove it first.</span>"
+			user << "<span class='warning'>There is already a device attached to the valve, remove it first!</span>"
 			return
 		user.remove_from_mob(item)
 		attached_device = A
@@ -192,10 +192,11 @@
 
 		var/bomb_message = "[log_str1] <A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[bombturf.x];Y=[bombturf.y];Z=[bombturf.z]'>[A.name]</a>  [log_str2][log_attacher] [log_str3][last_touch_info]"
 
-		bombers += bomb_message
+		if(tank_one.volume != tank_two.volume) //Equivilent volume prior to mixing means the bomb has probably been fouled by a valve opening already
+			bombers += bomb_message
 
-		message_admins(bomb_message, 0, 1)
-		log_game("[log_str1] [A.name]([A.x],[A.y],[A.z]) [log_str2] [log_str3]")
+			message_admins(bomb_message, 0, 1)
+			log_game("[log_str1] [A.name]([A.x],[A.y],[A.z]) [log_str2] [log_str3]")
 		merge_gases()
 		spawn(20) // In case one tank bursts
 			for (var/i=0,i<5,i++)

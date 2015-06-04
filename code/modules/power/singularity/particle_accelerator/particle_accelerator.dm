@@ -218,7 +218,7 @@ So, hopefully this is helpful if any more icons are to be added/changed/wonderin
 						"You add some wires.")
 					temp_state++
 				else
-					user << "<span class='warning'>You need one length of cable to wire the [src.name].</span>"
+					user << "<span class='warning'>You need one length of cable to wire the [src.name]!</span>"
 					return
 		if(2)
 			if(istype(O, /obj/item/weapon/wirecutters))//TODO:Shock user if its on?

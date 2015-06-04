@@ -344,13 +344,10 @@
 	..()
 
 /obj/machinery/mineral/equipment_vendor/proc/RedeemVoucher(obj/item/weapon/mining_voucher/voucher, mob/redeemer)
-	var/selection = input(redeemer, "Pick your equipment", "Mining Voucher Redemption") as null|anything in list("Mining Drill", "Kinetic Accelerator", "Resonator", "Mining Drone", "Advanced Scanner")
+	var/selection = input(redeemer, "Pick your equipment", "Mining Voucher Redemption") as null|anything in list("Kinetic Accelerator", "Resonator", "Mining Drone", "Advanced Scanner")
 	if(!selection || !Adjacent(redeemer) || voucher.gc_destroyed || voucher.loc != redeemer)
 		return
 	switch(selection)
-		if("Mining Drill")
-			new /obj/item/weapon/pickaxe/drill(src.loc)
-			new /obj/item/weapon/stock_parts/cell/high(src.loc)
 		if("Kinetic Accelerator")
 			new /obj/item/weapon/gun/energy/kinetic_accelerator(src.loc)
 		if("Resonator")
@@ -586,6 +583,7 @@
 	ranged_cooldown_cap = 3
 	projectiletype = /obj/item/projectile/kinetic
 	projectilesound = 'sound/weapons/Gunshot4.ogg'
+	speak_emote = list("states")
 	wanted_objects = list(/obj/item/weapon/ore/diamond, /obj/item/weapon/ore/gold, /obj/item/weapon/ore/silver,
 						  /obj/item/weapon/ore/plasma,  /obj/item/weapon/ore/uranium,    /obj/item/weapon/ore/iron,
 						  /obj/item/weapon/ore/bananium)
@@ -756,23 +754,10 @@
 		cooldown = 1
 		spawn(40)
 			cooldown = 0
-		var/client/C = user.client
-		var/list/L = list()
-		var/turf/simulated/mineral/M
-		for(M in range(7, user))
-			if(M.scan_state)
-				L += M
-		if(!L.len)
-			user << "<span class='info'>[src] reports that nothing was detected nearby.</span>"
-			return
-		else
-			for(M in L)
-				var/turf/T = get_turf(M)
-				var/image/I = image('icons/turf/mining.dmi', loc = T, icon_state = M.scan_state, layer = 18)
-				C.images += I
-				spawn(30)
-					if(C)
-						C.images -= I
+		var/list/mobs = list()
+		mobs |= user
+		mineral_scan_pulse(mobs, get_turf(user))
+
 
 //Debug item to identify all ore spread quickly
 /obj/item/device/mining_scanner/admin
@@ -802,22 +787,24 @@
 		var/list/mobs = recursive_mob_check(t, 1,0,0)
 		if(!mobs.len)
 			return
-		var/list/L = list()
-		var/turf/simulated/mineral/M
-		for(M in range(7, t))
-			if(M.scan_state)
-				L += M
-		if(L.len)
-			for(var/mob/user in mobs)
-				if(user.client)
-					var/client/C = user.client
-					for(M in L)
-						var/turf/T = get_turf(M)
-						var/image/I = image('icons/turf/mining.dmi', loc = T, icon_state = M.scan_state, layer = 18)
-						C.images += I
-						spawn(30)
-							if(C)
-								C.images -= I
+		mineral_scan_pulse(mobs, t)
+
+/proc/mineral_scan_pulse(list/mobs, turf/T, range = world.view)
+	var/list/minerals = list()
+	for(var/turf/simulated/mineral/M in range(range, T))
+		if(M.scan_state)
+			minerals += M
+	if(minerals.len)
+		for(var/mob/user in mobs)
+			if(user.client)
+				var/client/C = user.client
+				for(var/turf/simulated/mineral/M in minerals)
+					var/turf/F = get_turf(M)
+					var/image/I = image('icons/turf/mining.dmi', loc = F, icon_state = M.scan_state, layer = 18)
+					C.images += I
+					spawn(30)
+						if(C)
+							C.images -= I
 
 /**********************Xeno Warning Sign**********************/
 /obj/structure/sign/xeno_warning_mining

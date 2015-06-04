@@ -69,6 +69,7 @@ var/list/admin_verbs_ban = list(
 var/list/admin_verbs_sounds = list(
 	/client/proc/play_local_sound,
 	/client/proc/play_sound,
+	/client/proc/set_round_end_sound,
 	)
 var/list/admin_verbs_fun = list(
 	/client/proc/cmd_admin_dress,
@@ -82,6 +83,7 @@ var/list/admin_verbs_fun = list(
 	/client/proc/object_say,
 	/client/proc/toggle_random_events,
 	/client/proc/set_ooc,
+	/client/proc/reset_ooc,
 	/client/proc/forceEvent,
 	/client/proc/bluespace_artillery
 	)
@@ -135,6 +137,7 @@ var/list/admin_verbs_rejuv = list(
 //verbs which can be hidden - needs work
 var/list/admin_verbs_hideable = list(
 	/client/proc/set_ooc,
+	/client/proc/reset_ooc,
 	/client/proc/deadmin_self,
 	/client/proc/deadchat,
 	/client/proc/toggleprayers,
@@ -158,6 +161,7 @@ var/list/admin_verbs_hideable = list(
 	/client/proc/check_words,
 	/client/proc/play_local_sound,
 	/client/proc/play_sound,
+	/client/proc/set_round_end_sound,
 	/client/proc/cmd_admin_dress,
 	/client/proc/cmd_admin_gib_self,
 	/client/proc/drop_bomb,
@@ -379,6 +383,26 @@ var/list/admin_verbs_hideable = list(
 	feedback_add_details("admin_verb","S") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 	return
 
+
+/client/proc/findStealthKey(txt)
+	if(txt)
+		for(var/P in stealthminID)
+			if(stealthminID[P] == txt)
+				return P
+	txt = stealthminID[ckey]
+	return txt
+
+/client/proc/createStealthKey()
+	var/num = (rand(0,1000))
+	var/i = 0
+	while(i == 0)
+		i = 1
+		for(var/P in stealthminID)
+			if(num == stealthminID[P])
+				num++
+				i = 0
+	stealthminID["[ckey]"] = "@[num2text(num)]"
+
 /client/proc/stealth()
 	set category = "Admin"
 	set name = "Stealth Mode"
@@ -391,6 +415,7 @@ var/list/admin_verbs_hideable = list(
 			if(length(new_key) >= 26)
 				new_key = copytext(new_key, 1, 26)
 			holder.fakekey = new_key
+			createStealthKey()
 		log_admin("[key_name(usr)] has turned stealth mode [holder.fakekey ? "ON" : "OFF"]")
 		message_admins("[key_name_admin(usr)] has turned stealth mode [holder.fakekey ? "ON" : "OFF"]")
 	feedback_add_details("admin_verb","SM") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
@@ -441,9 +466,9 @@ var/list/admin_verbs_hideable = list(
 	message_admins("<span class='adminnotice'>[key_name_admin(usr)] gave [key_name(T)] the spell [S].</span>")
 
 	if(T.mind)
-		T.mind.spell_list += new S
+		T.mind.AddSpell(new S)
 	else
-		T.mob_spell_list += new S
+		T.AddSpell(new S)
 		message_admins("<span class='danger'>Spells given to mindless mobs will not be transferred in mindswap or cloning!</span>")
 
 

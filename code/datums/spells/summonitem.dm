@@ -13,6 +13,8 @@
 
 	var/obj/marked_item
 
+	action_icon_state = "summons"
+
 /obj/effect/proc_holder/spell/targeted/summonitem/cast(list/targets)
 	for(var/mob/living/user in targets)
 		var/list/hand_items = list(user.get_active_hand(),user.get_inactive_hand())
@@ -102,8 +104,11 @@
 			if(butterfingers)
 				item_to_retrive.loc = user.loc
 				item_to_retrive.loc.visible_message("<span class='caution'>The [item_to_retrive.name] suddenly appears!</span>")
+				playsound(get_turf(user),"sound/magic/SummonItems_generic.ogg",50,1)
 			else
 				item_to_retrive.loc.visible_message("<span class='caution'>The [item_to_retrive.name] suddenly appears in [user]'s hand!</span>")
+				playsound(get_turf(user),"sound/magic/SummonItems_generic.ogg",50,1)
+
 
 		if(message)
 			user << message

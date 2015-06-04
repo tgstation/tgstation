@@ -30,7 +30,6 @@
 	//BREATH TEMPERATURE
 	handle_breath_temperature(breath)
 
-
 /mob/living/carbon/alien/handle_status_effects()
 	..()
 	//natural reduction of movement delay due to stun.
@@ -63,3 +62,6 @@
 	handle_hud_icons_health()
 
 	return 1
+
+/mob/living/carbon/alien/CheckStamina()
+	return

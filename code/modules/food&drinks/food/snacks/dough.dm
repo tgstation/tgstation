@@ -20,7 +20,7 @@
 			user << "<span class='notice'>You flatten [src].</span>"
 			qdel(src)
 		else
-			user << "<span class='notice'>You need to put [src] on a surface to roll it out!</span>"
+			user << "<span class='warning'>You need to put [src] on a surface to roll it out!</span>"
 	else
 		..()
 
@@ -82,7 +82,7 @@
 			user << "<span class='notice'>You flatten [src].</span>"
 			qdel(src)
 		else
-			user << "<span class='notice'>You need to put [src] on a surface to roll it out!</span>"
+			user << "<span class='warning'>You need to put [src] on a surface to roll it out!</span>"
 	else
 		..()
 

@@ -16,6 +16,14 @@
 	var/sheet_type = /obj/item/stack/sheet/metal
 	var/obj/item/stack/sheet/builtin_sheet = null
 
+
+	var/del_suppress_resmoothing = 0 // Do not resmooth neighbors on Destroy. (smoothwall.dm)
+	canSmoothWith = list(
+	/turf/simulated/wall,
+	/obj/structure/falsewall,
+	/obj/structure/falsewall/reinforced  // WHY DO WE SMOOTH WITH FALSE R-WALLS WHEN WE DON'T SMOOTH WITH REAL R-WALLS.
+	)
+
 /turf/simulated/wall/New()
 	..()
 	builtin_sheet = new sheet_type
@@ -57,7 +65,7 @@
 	switch(severity)
 		if(1.0)
 			//SN src = null
-			src.ChangeTurf(/turf/space)
+			src.ChangeTurf(src.baseturf)
 			return
 		if(2.0)
 			if (prob(50))
@@ -144,7 +152,7 @@
 	if(try_wallmount(W,user,T) || try_decon(W,user,T) || try_destroy(W,user,T))
 		return
 
-	return attack_hand(user)
+	return
 
 
 /turf/simulated/wall/proc/try_wallmount(obj/item/weapon/W as obj, mob/user as mob, turf/T as turf)
@@ -181,7 +189,7 @@
 	if( istype(W, /obj/item/weapon/weldingtool) )
 		var/obj/item/weapon/weldingtool/WT = W
 		if( WT.remove_fuel(0,user) )
-			user << "<span class='notice'>You begin slicing through the outer plating.</span>"
+			user << "<span class='notice'>You begin slicing through the outer plating...</span>"
 			playsound(src, 'sound/items/Welder.ogg', 100, 1)
 			if(do_after(user, slicing_duration))
 				if( !istype(src, /turf/simulated/wall) || !user || !WT || !WT.isOn() || !T )
@@ -191,7 +199,7 @@
 					dismantle_wall()
 					return 1
 	else if( istype(W, /obj/item/weapon/gun/energy/plasmacutter) )
-		user << "<span class='notice'>You begin slicing through the outer plating.</span>"
+		user << "<span class='notice'>You begin slicing through the outer plating...</span>"
 		playsound(src, 'sound/items/Welder.ogg', 100, 1)
 		if(do_after(user, slicing_duration*0.6))  // plasma cutter is faster than welding tool
 			if( !istype(src, /turf/simulated/wall) || !user || !W || !T )
@@ -199,7 +207,7 @@
 			if( user.loc == T && user.get_active_hand() == W )
 				user << "<span class='notice'>You remove the outer plating.</span>"
 				dismantle_wall()
-				visible_message("<span class='warning'>The wall was sliced apart by [user]!</span>", "<span class='warning'>You hear metal being sliced apart.</span>")
+				visible_message("The wall was sliced apart by [user]!", "<span class='italics'>You hear metal being sliced apart.</span>")
 				return 1
 	return 0
 
@@ -207,16 +215,12 @@
 /turf/simulated/wall/proc/try_destroy(obj/item/weapon/W as obj, mob/user as mob, turf/T as turf)
 	if(istype(W, /obj/item/weapon/pickaxe/drill/jackhammer))
 		var/obj/item/weapon/pickaxe/drill/jackhammer/D = W
-		if(!D.bcell.use(400))
-			user << "<span class='notice'>Your [D.name] doesn't have enough power to break through the [name].</span>"
-			return
-		D.update_icon()
 		if( !istype(src, /turf/simulated/wall) || !user || !W || !T )
 			return 1
 		if( user.loc == T && user.get_active_hand() == W )
 			D.playDigSound()
 			dismantle_wall()
-			visible_message("<span class='warning'>[user] smashes through the [name] with the [W.name]!</span>", "<span class='warning'>You hear the grinding of metal.</span>")
+			visible_message("<span class='warning'>[user] smashes through the [name] with the [W.name]!</span>", "<span class='italics'>You hear the grinding of metal.</span>")
 			return 1
 	return 0
 

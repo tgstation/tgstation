@@ -20,7 +20,7 @@
 
 /obj/item/weaponcrafting/reciever/attackby(obj/item/W as obj, mob/user as mob, params)
 	if(istype(W,/obj/item/pipe))
-		user << "You attach the shotgun barrel to the receiver. The pins seem loose."
+		user << "<span class='notice'>You attach the shotgun barrel to the receiver. The pins seem loose.</span>"
 		var/obj/item/weaponcrafting/ishotgunconstruction/I = new /obj/item/weaponcrafting/ishotgunconstruction
 		user.unEquip(src)
 		user.put_in_hands(I)
@@ -53,7 +53,7 @@
 
 /obj/item/weaponcrafting/ishotgunconstruction2/attackby(obj/item/W as obj, mob/user as mob, params)
 	if(istype(W,/obj/item/weaponcrafting/stock))
-		user << "You attach the stock to the receiver-barrel assembly."
+		user << "<span class='notice'>You attach the stock to the receiver-barrel assembly.</span>"
 		var/obj/item/weaponcrafting/ishotgunconstruction3/I = new /obj/item/weaponcrafting/ishotgunconstruction3
 		user.unEquip(src)
 		user.put_in_hands(I)
@@ -78,6 +78,6 @@
 			user << "<span class='notice'>You tie the wrapping paper around the stock and the barrel to secure it.</span>"
 			qdel(src)
 		else
-			user << "<span class='warning'>You need at least five feet of wrapping paper to secure the stock.</span>"
+			user << "<span class='warning'>You need at least five feet of wrapping paper to secure the stock!</span>"
 			return
 

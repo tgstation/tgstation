@@ -38,14 +38,13 @@
 
 /turf/simulated/floor/fancy/grass
 	name = "Grass patch"
-	icon_state = "grass1"
+	icon_state = "grass"
 	floor_tile = /obj/item/stack/tile/grass
-	broken_states = list("sand1", "sand2", "sand3")
+	broken_states = list("sand")
 	ignoredirt = 1
 
 /turf/simulated/floor/fancy/grass/New()
 	..()
-	icon_state = "grass[pick("1","2","3","4")]"
 	spawn(1)
 		update_icon()
 		fancy_update(type)

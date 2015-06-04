@@ -65,7 +65,6 @@
 		master_controller.setup()
 
 	process_teleport_locs()			//Sets up the wizard teleport locations
-	process_ghost_teleport_locs()	//Sets up ghost teleport locations.
 	SortAreas()						//Build the list of all existing areas and sort it alphabetically
 
 	#ifdef MAP_NAME
@@ -146,7 +145,10 @@
 			log << "#[count]\t[index]"
 #endif
 	spawn(0)
-		world << sound(pick('sound/AI/newroundsexy.ogg','sound/misc/apcdestroyed.ogg','sound/misc/bangindonk.ogg','sound/misc/leavingtg.ogg')) // random end sounds!! - LastyBatsy
+		if(ticker && ticker.round_end_sound)
+			world << sound(ticker.round_end_sound)
+		else
+			world << sound(pick('sound/AI/newroundsexy.ogg','sound/misc/apcdestroyed.ogg','sound/misc/bangindonk.ogg','sound/misc/leavingtg.ogg')) // random end sounds!! - LastyBatsy
 
 	for(var/client/C in clients)
 		if(config.server)	//if you set a server location in config.txt, it sends you there instead of trying to reconnect to the same world address. -- NeoFite
@@ -243,7 +245,7 @@
 #define FAILED_DB_CONNECTION_CUTOFF 5
 var/failed_db_connections = 0
 
-proc/setup_database_connection()
+/proc/setup_database_connection()
 
 	if(failed_db_connections >= FAILED_DB_CONNECTION_CUTOFF)	//If it failed to establish a connection more than 5 times in a row, don't bother attempting to connect anymore.
 		return 0
@@ -269,7 +271,7 @@ proc/setup_database_connection()
 	return .
 
 //This proc ensures that the connection to the feedback database (global variable dbcon) is established
-proc/establish_db_connection()
+/proc/establish_db_connection()
 	if(failed_db_connections > FAILED_DB_CONNECTION_CUTOFF)
 		return 0
 

@@ -78,6 +78,8 @@
 	if (tr_flags & TR_DEFAULTMSG)
 		O << "<B>You are now a monkey.</B>"
 
+	O.update_pipe_vision()
+
 	for(var/A in loc.vars)
 		if(loc.vars[A] == src)
 			loc.vars[A] = O
@@ -145,9 +147,9 @@
 			domutcheck(O)
 
 	if(!dna.species)
-		O.dna.species = new /datum/species/human()
+		hardset_dna(O, null, null, null, null, /datum/species/human)
 	else
-		O.dna.species = new dna.species.type()
+		hardset_dna(O, null, null, null, null, dna.species.type)
 
 	dna = null
 	if(newname) //if there's a name as an argument, always take that one over the current name
@@ -191,6 +193,8 @@
 	if (tr_flags & TR_DEFAULTMSG)
 		O << "<B>You are now a human.</B>"
 
+	O.update_pipe_vision()
+
 	updateappearance(O)
 	. = O
 
@@ -228,7 +232,7 @@
 
 /mob/proc/AIize()
 	if(client)
-		src << sound(null, repeat = 0, wait = 0, volume = 85, channel = 1) // stop the jams for AIs
+		stopLobbySound()
 	var/mob/living/silicon/ai/O = new (loc,,,1)//No MMI but safety is in effect.
 	O.invisibility = 0
 	O.aiRestorePowerRoutine = 0
@@ -237,6 +241,8 @@
 		mind.transfer_to(O)
 	else
 		O.key = key
+
+	O.update_pipe_vision()
 
 	var/obj/loc_landmark
 	for(var/obj/effect/landmark/start/sloc in landmarks_list)
@@ -302,9 +308,6 @@
 
 	var/mob/living/silicon/robot/O = new /mob/living/silicon/robot( loc )
 
-	if (config.rename_cyborg)
-		O.rename_self("cyborg", 1)
-
 	// cyborgs produced by Robotize get an automatic power cell
 	O.cell = new(O)
 	O.cell.maxcharge = 7500
@@ -321,6 +324,11 @@
 			O.mind.store_memory("In case you look at this after being borged, the objectives are only here until I find a way to make them not show up for you, as I can't simply delete them without screwing up round-end reporting. --NeoFite")
 	else
 		O.key = key
+
+	O.update_pipe_vision()
+
+	if (config.rename_cyborg)
+		O.rename_self("cyborg", 1)
 
 	O.loc = loc
 	O.job = "Cyborg"
@@ -357,6 +365,7 @@
 	new_xeno.key = key
 
 	new_xeno << "<B>You are now an alien.</B>"
+	new_xeno.update_pipe_vision()
 	. = new_xeno
 	qdel(src)
 
@@ -389,6 +398,7 @@
 	new_slime.key = key
 
 	new_slime << "<B>You are now a slime. Skreee!</B>"
+	new_slime.update_pipe_vision()
 	. = new_slime
 	qdel(src)
 
@@ -425,6 +435,7 @@
 	new_corgi.key = key
 
 	new_corgi << "<B>You are now a Corgi. Yap Yap!</B>"
+	new_corgi.update_pipe_vision()
 	. = new_corgi
 	qdel(src)
 
@@ -458,6 +469,7 @@
 
 
 	new_mob << "You suddenly feel more... animalistic."
+	new_mob.update_pipe_vision()
 	. = new_mob
 	qdel(src)
 
@@ -475,6 +487,7 @@
 	new_mob.key = key
 	new_mob.a_intent = "harm"
 	new_mob << "You feel more... animalistic"
+	new_mob.update_pipe_vision()
 
 	. = new_mob
 	qdel(src)

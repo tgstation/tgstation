@@ -38,7 +38,7 @@
 		name = "[name] (ID [id])"
 
 	attack_hand(var/mob/user as mob)
-		usr << "<span class='notice'>You can't directly interact with this machine. Use the area atmos computer.</span>"
+		usr << "<span class='warning'>You can't directly interact with this machine! Use the area atmos computer.</span>"
 
 	update_icon()
 		src.overlays = 0
@@ -51,7 +51,7 @@
 	attackby(var/obj/item/weapon/W as obj, var/mob/user as mob)
 		if(istype(W, /obj/item/weapon/wrench))
 			if(on)
-				user << "<span class='notice'>Turn it off first!</span>"
+				user << "<span class='warning'>Turn it off first!</span>"
 				return
 
 			anchored = !anchored
@@ -67,7 +67,7 @@
 
 	attackby(var/obj/item/weapon/W as obj, var/mob/user as mob)
 		if(istype(W, /obj/item/weapon/wrench))
-			user << "<span class='notice'>The bolts are too tight for you to unscrew!</span>"
+			user << "<span class='warning'>The bolts are too tight for you to unscrew!</span>"
 			return
 
 		..()
@@ -89,7 +89,7 @@
 
 	return
 
-/obj/machinery/portable_atmospherics/scrubber/process()
+/obj/machinery/portable_atmospherics/scrubber/process_atmos()
 	..()
 
 	if(on)
@@ -139,9 +139,14 @@
 				environment.merge(removed)
 			else
 				loc.assume_air(removed)
-		//src.update_icon()
+
+/obj/machinery/portable_atmospherics/scrubber/process_atmos()
+	..()
 	src.updateDialog()
 	return
+
+
+
 
 /obj/machinery/portable_atmospherics/scrubber/return_air()
 	return air_contents

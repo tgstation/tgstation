@@ -40,9 +40,9 @@
 	if(istype(I,/obj/item/weapon/reagent_containers/food/snacks))
 		var/obj/item/weapon/reagent_containers/food/snacks/S = I
 		if(I.w_class > 2)
-			user << "<span class='warning'>The ingredient is too big for [src].</span>"
+			user << "<span class='warning'>The ingredient is too big for [src]!</span>"
 		else if((ingredients.len >= ingMax) || (reagents.total_volume >= volume))
-			user << "<span class='warning'>You can't add more ingredients to [src].</span>"
+			user << "<span class='warning'>You can't add more ingredients to [src]!</span>"
 		else
 			user.drop_item()
 			if(S.trash)
@@ -309,9 +309,9 @@
 	if(istype(I,/obj/item/weapon/reagent_containers/food/snacks))
 		var/obj/item/weapon/reagent_containers/food/snacks/S = I
 		if(I.w_class > 2)
-			user << "<span class='warning'>The ingredient is too big for [src].</span>"
+			user << "<span class='warning'>The ingredient is too big for [src]!</span>"
 		else if(contents.len >= 20)
-			user << "<span class='warning'>You can't add more ingredients to [src].</span>"
+			user << "<span class='warning'>You can't add more ingredients to [src]!</span>"
 		else
 			if(reagents.has_reagent("water", 10)) //are we starting a soup or a salad?
 				var/obj/item/weapon/reagent_containers/food/snacks/customizable/A = new/obj/item/weapon/reagent_containers/food/snacks/customizable/soup(get_turf(src))
@@ -328,7 +328,7 @@
 
 /obj/item/weapon/reagent_containers/glass/bowl/update_icon()
 	overlays.Cut()
-	if(reagents.total_volume)
+	if(reagents && reagents.total_volume)
 		var/image/filling = image('icons/obj/food/soupsalad.dmi', "fullbowl")
 		filling.color = mix_color_from_reagents(reagents.reagent_list)
 		overlays += filling

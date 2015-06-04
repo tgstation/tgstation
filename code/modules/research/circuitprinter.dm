@@ -15,7 +15,7 @@ using metal and glass, it uses glass and reagents (usually sulfuric acis).
 	var/diamond_amount = 0
 	var/max_material_amount = 75000.0
 	var/efficiency_coeff
-	reagents = new()
+	reagents = new(0)
 
 	var/list/categories = list(
 								"AI Modules",
@@ -44,6 +44,7 @@ using metal and glass, it uses glass and reagents (usually sulfuric acis).
 /obj/machinery/r_n_d/circuit_imprinter/RefreshParts()
 	var/T = 0
 	for(var/obj/item/weapon/reagent_containers/glass/G in component_parts)
+		reagents.maximum_volume += G.volume
 		G.reagents.trans_to(src, G.reagents.total_volume)
 	for(var/obj/item/weapon/stock_parts/matter_bin/M in component_parts)
 		T += M.rating
@@ -101,7 +102,7 @@ using metal and glass, it uses glass and reagents (usually sulfuric acis).
 			default_deconstruction_crowbar(O)
 			return
 		else
-			user << "<span class='warning'>You can't load the [src.name] while it's opened.</span>"
+			user << "<span class='warning'>You can't load the [src.name] while it's opened!</span>"
 			return
 	if (disabled)
 		return
@@ -116,11 +117,11 @@ using metal and glass, it uses glass and reagents (usually sulfuric acis).
 	if (stat)
 		return
 	if (busy)
-		user << "<span class='warning'>The [name] is busy. Please wait for completion of previous operation.</span>"
+		user << "<span class='warning'>The [name] is busy! Please wait for completion of previous operation.</span>"
 		return
 	var/obj/item/stack/sheet/stack = O
 	if ((TotalMaterials() + stack.perunit) > max_material_amount)
-		user << "<span class='warning'>The [name] is full. Please remove glass from the protolathe in order to insert more.</span>"
+		user << "<span class='warning'>The [name] is full! Please remove glass from the protolathe in order to insert more.</span>"
 		return
 
 	var/amount = round(input("How many sheets do you want to add?") as num)

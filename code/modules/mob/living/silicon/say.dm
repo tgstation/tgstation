@@ -15,7 +15,7 @@
 	for(var/mob/M in player_list)
 		if(M.binarycheck() || (M in dead_mob_list))
 			if(istype(M, /mob/living/silicon/ai))
-				var/renderedAI = "<i><span class='game say'>Robotic Talk, <a href='byond://?src=\ref[M];track2=\ref[M];track=\ref[src]'><span class='name'>[name] ([desig])</span></a> <span class='message'>[message_a]</span></span></i>"
+				var/renderedAI = "<i><span class='game say'>Robotic Talk, <a href='?src=\ref[M];track=[name]'><span class='name'>[name] ([desig])</span></a> <span class='message'>[message_a]</span></span></i>"
 				M << renderedAI
 			else
 				M << rendered

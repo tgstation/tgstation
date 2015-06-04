@@ -143,7 +143,7 @@
 			for(var/mob/M in range(mob, 1))
 				if(M.pulling == mob)
 					if(!M.incapacitated() && mob.Adjacent(M))
-						src << "<span class='notice'>You're restrained! You can't move!</span>"
+						src << "<span class='warning'>You're restrained! You can't move!</span>"
 						move_delay += 10
 						return 0
 					else

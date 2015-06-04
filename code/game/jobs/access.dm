@@ -194,13 +194,13 @@
 		if("Centcom Commander")
 			return get_all_centcom_access()
 		if("Emergency Response Team Commander")
-			return list(access_cent_general)
+			return get_ert_access("commander")
 		if("Security Response Officer")
-			return list(access_cent_general)
+			return get_ert_access("sec")
 		if("Engineer Response Officer")
-			return list(access_cent_general)
+			return get_ert_access("eng")
 		if("Medical Response Officer")
-			return list(access_cent_general)
+			return get_ert_access("med")
 
 /proc/get_all_accesses()
 	return list(access_security, access_sec_doors, access_brig, access_armory, access_forensics_lockers, access_court,
@@ -223,11 +223,11 @@
 		if("commander")
 			return get_all_centcom_access()
 		if("sec")
-			return list(access_cent_general, access_cent_specops)
+			return list(access_cent_general, access_cent_specops, access_cent_living)
 		if("eng")
-			return list(access_cent_general, access_cent_storage)
+			return list(access_cent_general, access_cent_specops, access_cent_living, access_cent_storage)
 		if("med")
-			return list(access_cent_general, access_cent_medical)
+			return list(access_cent_general, access_cent_specops, access_cent_medical, access_cent_living)
 
 /proc/get_all_syndicate_access()
 	return list(access_syndicate, access_syndicate)
@@ -426,7 +426,7 @@
 				"Atmospheric Technician", "Chief Medical Officer", "Medical Doctor", "Chemist", "Geneticist", "Virologist",
 				"Research Director", "Scientist", "Roboticist", "Head of Security", "Warden", "Detective", "Security Officer")
 
-proc/get_all_job_icons() //For all existing HUD icons
+/proc/get_all_job_icons() //For all existing HUD icons
 	return get_all_jobs() + list("Prisoner")
 
 /proc/get_all_centcom_jobs()

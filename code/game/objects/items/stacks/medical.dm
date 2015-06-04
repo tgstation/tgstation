@@ -2,8 +2,8 @@
 	name = "medical pack"
 	singular_name = "medical pack"
 	icon = 'icons/obj/items.dmi'
-	amount = 5
-	max_amount = 5
+	amount = 6
+	max_amount = 6
 	w_class = 1
 	throw_speed = 3
 	throw_range = 7
@@ -28,17 +28,17 @@
 		return 1
 
 	if(!user.IsAdvancedToolUser())
-		user << "<span class='danger'>You don't have the dexterity to do this!</span>"
+		user << "<span class='warning'>You don't have the dexterity to do this!</span>"
 		return 1
 
 	if(ishuman(M))
 		var/mob/living/carbon/human/H = M
 		if(stop_bleeding)
 			if(H.bleedsuppress)
-				user << "[H]'s bleeding is already bandaged."
+				user << "<span class='warning'>[H]'s bleeding is already bandaged!</span>"
 				return
 			else if(!H.blood_max)
-				user << "[H] isn't bleeding."
+				user << "<span class='warning'>[H] isn't bleeding!</span>"
 				return
 
 	if(isliving(M))

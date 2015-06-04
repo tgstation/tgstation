@@ -238,15 +238,8 @@
 	if(reagents)
 		reagents.metabolize(src)
 
-/mob/living/carbon/handle_blood()
-	return
-
-/mob/living/carbon/handle_random_events()
-	return
-
 /mob/living/carbon/proc/handle_heart()
 	return
-/mob/living/carbon/handle_environment(var/datum/gas_mixture/environment)	return
 
 /mob/living/carbon/handle_stomach()
 	spawn(0)
@@ -281,12 +274,23 @@
 		if(sleeping)
 			stat = UNCONSCIOUS
 
-		CheckStamina()
 		return 1
+
+/mob/living/carbon/proc/CheckStamina()
+	if(staminaloss)
+		var/total_health = (health - staminaloss)
+		if(total_health <= config.health_threshold_crit && !stat)
+			src << "<span class='notice'>You're too exhausted to keep going...</span>"
+			Weaken(5)
+			setStaminaLoss(health - 2)
+			return
+		setStaminaLoss(max((staminaloss - 2), 0))
 
 //this updates all special effects: stunned, sleeping, weakened, druggy, stuttering, etc..
 /mob/living/carbon/handle_status_effects()
 	..()
+
+	CheckStamina()
 
 	if(sleeping)
 		handle_dreams()
@@ -374,8 +378,6 @@
 //this handles hud updates. Calls update_vision() and handle_hud_icons()
 /mob/living/carbon/handle_regular_hud_updates()
 	if(!client)	return 0
-
-	update_action_buttons()
 
 	if(damageoverlay)
 		if(damageoverlay.overlays)
@@ -472,7 +474,10 @@
 			sight &= ~SEE_MOBS
 		if(!(SEE_OBJS & permanent_sight_flags))
 			sight &= ~SEE_OBJS
-
+		if(remote_view)
+			sight |= SEE_TURFS
+			sight |= SEE_MOBS
+			sight |= SEE_OBJS
 		see_in_dark = (sight == SEE_TURFS|SEE_MOBS|SEE_OBJS) ? 8 : 2  //Xray flag combo
 		see_invisible = SEE_INVISIBLE_LIVING
 		if(see_override)
@@ -502,3 +507,21 @@
 					healths.icon_state = "health6"
 		else
 			healths.icon_state = "health7"
+
+
+//used in human and monkey handle_environment()
+/mob/living/carbon/proc/natural_bodytemperature_stabilization()
+	var/body_temperature_difference = 310.15 - bodytemperature
+	switch(bodytemperature)
+		if(-INFINITY to 260.15) //260.15 is 310.15 - 50, the temperature where you start to feel effects.
+			if(nutrition >= 2) //If we are very, very cold we'll use up quite a bit of nutriment to heat us up.
+				nutrition -= 2
+			bodytemperature += max((body_temperature_difference * metabolism_efficiency / BODYTEMP_AUTORECOVERY_DIVISOR), BODYTEMP_AUTORECOVERY_MINIMUM)
+		if(260.15 to 310.15)
+			bodytemperature += max(body_temperature_difference * metabolism_efficiency / BODYTEMP_AUTORECOVERY_DIVISOR, min(body_temperature_difference, BODYTEMP_AUTORECOVERY_MINIMUM/4))
+		if(310.15 to 360.15)
+			bodytemperature += min(body_temperature_difference * metabolism_efficiency / BODYTEMP_AUTORECOVERY_DIVISOR, max(body_temperature_difference, -BODYTEMP_AUTORECOVERY_MINIMUM/4))
+		if(360.15 to INFINITY) //360.15 is 310.15 + 50, the temperature where you start to feel effects.
+			//We totally need a sweat system cause it totally makes sense...~
+			bodytemperature += min((body_temperature_difference / BODYTEMP_AUTORECOVERY_DIVISOR), -BODYTEMP_AUTORECOVERY_MINIMUM)	//We're dealing with negative numbers
+

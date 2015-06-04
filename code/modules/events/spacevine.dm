@@ -88,16 +88,16 @@
 
 /turf/simulated/floor/vines/ex_act(severity, target)
 	if(severity < 3 || target == src)
-		ChangeTurf(/turf/space)
+		ChangeTurf(src.baseturf)
 
 /turf/simulated/floor/vines/narsie_act()
 	if(prob(20))
-		ChangeTurf(/turf/space) //nar sie eats this shit
+		ChangeTurf(src.baseturf) //nar sie eats this shit
 
 /turf/simulated/floor/vines/singularity_pull(S, current_size)
 	if(current_size >= STAGE_FIVE)
 		if(prob(50))
-			ChangeTurf(/turf/space)
+			ChangeTurf(src.baseturf)
 
 /turf/simulated/floor/vines/ChangeTurf(turf/simulated/floor/T)
 	for(var/obj/effect/spacevine/SV in src)
@@ -137,7 +137,7 @@
 
 /datum/spacevine_mutation/light/on_grow(obj/effect/spacevine/holder)
 	if(prob(10*severity))
-		holder.luminosity = 4
+		holder.SetLuminosity(4)
 
 /datum/spacevine_mutation/toxicity
 	name = "toxic"
@@ -344,7 +344,8 @@
 		qdel(src)
 
 /obj/effect/spacevine/attackby(obj/item/weapon/W as obj, mob/user as mob, params)
-	if (!W || !user || !W.type) return
+	if (!W || !user || !W.type)
+		return
 	user.changeNext_move(CLICK_CD_MELEE)
 
 	var/override = 0
@@ -356,33 +357,22 @@
 		..()
 		return
 
-	switch(W.type)
-		if(/obj/item/weapon/circular_saw) qdel(src)
-		if(/obj/item/weapon/kitchen/utensil/knife) qdel(src)
-		if(/obj/item/weapon/scalpel) qdel(src)
-		if(/obj/item/weapon/twohanded/fireaxe) qdel(src)
-		if(/obj/item/weapon/hatchet) qdel(src)
-		if(/obj/item/weapon/melee/energy) qdel(src)
-		if(/obj/item/weapon/scythe)
-			for(var/obj/effect/spacevine/B in orange(src,1))
-				if(prob(80))
-					qdel(B)
+	if(istype(W, /obj/item/weapon/scythe))
+		for(var/obj/effect/spacevine/B in orange(src,1))
+			if(prob(80))
+				qdel(B)
+		qdel(src)
+
+	else if(is_sharp(W))
+		qdel(src)
+
+	else if(istype(W, /obj/item/weapon/weldingtool))
+		var/obj/item/weapon/weldingtool/WT = W
+		if(WT.remove_fuel(0, user))
 			qdel(src)
-
-		//less effective weapons
-		if(/obj/item/weapon/wirecutters)
-			if(prob(25)) qdel(src)
-		if(/obj/item/weapon/shard)
-			if(prob(25)) qdel(src)
-
-		else //weapons with subtypes
-			if(istype(W, /obj/item/weapon/melee/energy/sword)) qdel(src)
-			else if(istype(W, /obj/item/weapon/weldingtool))
-				var/obj/item/weapon/weldingtool/WT = W
-				if(WT.remove_fuel(0, user)) qdel(src)
-			else
-				user_unbuckle_mob(user,user)
-				return
+		else
+			user_unbuckle_mob(user,user)
+			return
 		//Plant-b-gone damage is handled in its entry in chemistry-reagents.dm
 	..()
 

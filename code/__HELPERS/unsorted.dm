@@ -138,96 +138,6 @@ Turf and target are seperate in case you want to teleport some distance from a t
 
 	return destination
 
-///////////////////
-//A* helpers procs
-///////////////////
-
-// Returns true if a link between A and B is blocked
-// Movement through doors allowed if ID has access
-/proc/LinkBlockedWithAccess(turf/A, turf/B, obj/item/weapon/card/id/ID)
-
-	if(A == null || B == null) return 1
-	var/adir = get_dir(A,B)
-	var/rdir = get_dir(B,A)
-	if(adir & (adir-1))	//	diagonal
-		var/turf/iStep = get_step(A,adir&(NORTH|SOUTH))
-		if(!iStep.density && !LinkBlockedWithAccess(A,iStep, ID) && !LinkBlockedWithAccess(iStep,B,ID))
-			return 0
-
-		var/turf/pStep = get_step(A,adir&(EAST|WEST))
-		if(!pStep.density && !LinkBlockedWithAccess(A,pStep,ID) && !LinkBlockedWithAccess(pStep,B,ID))
-			return 0
-
-		return 1
-
-	if(DirBlockedWithAccess(A,adir, ID))
-		return 1
-
-	if(DirBlockedWithAccess(B,rdir, ID))
-		return 1
-
-	for(var/obj/O in B)
-		if(O.density && !istype(O, /obj/machinery/door) && !(O.flags & ON_BORDER))
-			return 1
-
-	return 0
-
-// Returns true if direction is blocked from loc
-// Checks doors against access with given ID
-/proc/DirBlockedWithAccess(turf/loc,var/dir,var/obj/item/weapon/card/id/ID)
-	for(var/obj/structure/window/D in loc)
-		if(!D.density)			continue
-		if(D.dir == SOUTHWEST)	return 1 //full-tile window
-		if(D.dir == dir)		return 1 //matching border window
-
-	for(var/obj/machinery/door/D in loc)
-		if(!D.CanAStarPass(ID,dir))
-			return 1
-	return 0
-
-// Returns true if a link between A and B is blocked
-// Movement through doors allowed if door is open
-/proc/LinkBlocked(turf/A, turf/B)
-	if(A == null || B == null)
-		return 1
-	var/adir = get_dir(A,B)
-	var/rdir = get_dir(B,A)
-	if(adir & (adir-1)) //diagonal
-		var/turf/iStep = get_step(A,adir & (NORTH|SOUTH)) //check the north/south component
-		if(!iStep.density && !LinkBlocked(A,iStep) && !LinkBlocked(iStep,B))
-			return 0
-
-		var/turf/pStep = get_step(A,adir & (EAST|WEST)) //check the east/west component
-		if(!pStep.density && !LinkBlocked(A,pStep) && !LinkBlocked(pStep,B))
-			return 0
-
-		return 1
-
-	if(DirBlocked(A,adir)) return 1
-	if(DirBlocked(B,rdir)) return 1
-
-	for(var/obj/O in B)
-		if(O.density && !istype(O, /obj/machinery/door) && !(O.flags & ON_BORDER))
-			return 1
-
-	return 0
-
-// Returns true if direction is blocked from loc
-// Checks if doors are open
-/proc/DirBlocked(turf/loc,var/dir)
-	for(var/obj/structure/window/D in loc)
-		if(!D.density)			continue
-		if(D.dir == SOUTHWEST)	return 1 //full-tile window
-		if(D.dir == dir)		return 1 //matching border window
-
-	for(var/obj/machinery/door/D in loc)
-		if(!D.density)//if the door is open
-			continue
-		else return 1	// if closed, it's a real, air blocking door
-	return 0
-
-/////////////////////////////////////////////////////////////////////////
-
 /proc/getline(atom/M,atom/N)//Ultra-Fast Bresenham Line-Drawing Algorithm
 	var/px=M.x		//starting x
 	var/py=M.y
@@ -362,44 +272,44 @@ Turf and target are seperate in case you want to teleport some distance from a t
 
 
 //Generalised helper proc for letting mobs rename themselves. Used to be clname() and ainame()
-//Last modified by Carn
+
 /mob/proc/rename_self(var/role, var/allow_numbers=0)
-	spawn(0)
-		var/oldname = real_name
+	var/oldname = real_name
+	var/newname
+	var/loop = 1
+	var/safety = 0
 
-		var/time_passed = world.time
-		var/newname
+	while(loop && safety < 5)
+		if(client && client.prefs.custom_names[role] && !safety)
+			newname = client.prefs.custom_names[role]
+		else
+			switch(role)
+				if("clown")
+					newname = pick(clown_names)
+				if("mime")
+					newname = pick(mime_names)
+				if("ai")
+					newname = pick(ai_names)
+				else
+					return
 
-		for(var/i=1,i<=3,i++)	//we get 3 attempts to pick a suitable name.
-			newname = input(src,"You are a [role]. Would you like to change your name to something else?", "Name change",oldname) as text
-			if((world.time-time_passed)>300)
-				return	//took too long
-			newname = reject_bad_name(newname,allow_numbers)	//returns null if the name doesn't meet some basic requirements. Tidies up a few other things like bad-characters.
+		for(var/mob/living/M in player_list)
+			if(M == src)
+				continue
+			if(!newname || M.real_name == newname)
+				newname = null
+				loop++ // name is already taken so we roll again
+				break
+		loop--
+		safety++
 
-			for(var/mob/living/M in player_list)
-				if(M == src)
-					continue
-				if(!newname || M.real_name == newname)
-					newname = null
-					break
-			if(newname)
-				break	//That's a suitable name!
-			src << "Sorry, that [role]-name wasn't appropriate, please try another. It's possibly too long/short, has bad characters or is already taken."
-
-		if(!newname)	//we'll stick with the oldname then
-			return
-
-		if(cmptext("ai",role))
-			if(isAI(src))
-				oldname = null//don't bother with the records update crap
-
-		if(cmptext("cyborg",role))
-			if(isrobot(src))
-				var/mob/living/silicon/robot/A = src
-				A.custom_name = newname
-
+	if(isAI(src))
+		oldname = null//don't bother with the records update crap
+	if(newname)
 		fully_replace_character_name(oldname,newname)
-
+		if(isrobot(src))
+			var/mob/living/silicon/robot/A = src
+			A.custom_name = newname
 
 
 //Picks a string of symbols to display as the law number for hacked or ion laws
@@ -558,12 +468,13 @@ Turf and target are seperate in case you want to teleport some distance from a t
 		include_link = 0
 
 	if(key)
-		if(include_link)
-			. += "<a href='?priv_msg=[ckey]'>"
-
 		if(C && C.holder && C.holder.fakekey && !include_name)
+			if(include_link)
+				. += "<a href='?priv_msg=[C.findStealthKey()]'>"
 			. += "Administrator"
 		else
+			if(include_link)
+				. += "<a href='?priv_msg=[ckey]'>"
 			. += key
 		if(!C)
 			. += "\[DC\]"
@@ -810,7 +721,7 @@ Turf and target are seperate in case you want to teleport some distance from a t
 		if(needhand)
 			//This might seem like an odd check, but you can still need a hand even when it's empty
 			//i.e the hand is used to insert some item/tool into the construction
-			if(!holdingnull) 
+			if(!holdingnull)
 				if(!holding)
 					return 0
 			if(user.get_active_hand() != holding)
@@ -828,8 +739,6 @@ Turf and target are seperate in case you want to teleport some distance from a t
 //else populates the list first before returning it
 /proc/SortAreas()
 	for(var/area/A in world)
-		if(A.lighting_subarea)
-			continue
 		sortedAreas.Add(A)
 
 	sortTim(sortedAreas, /proc/cmp_name_asc)
@@ -887,152 +796,6 @@ Turf and target are seperate in case you want to teleport some distance from a t
 	var/x_pos = null
 	var/y_pos = null
 	var/z_pos = null
-
-/area/proc/move_contents_to(var/area/A, var/turftoleave=null, var/direction = null)
-	//Takes: Area. Optional: turf type to leave behind.
-	//Returns: Nothing.
-	//Notes: Attempts to move the contents of one area to another area.
-	//       Movement based on lower left corner. Tiles that do not fit
-	//		 into the new area will not be moved.
-
-	if(!A || !src) return 0
-
-	var/list/turfs_src = get_area_turfs(src.type)
-	var/list/turfs_trg = get_area_turfs(A.type)
-
-	var/src_min_x = 0
-	var/src_min_y = 0
-	for (var/turf/T in turfs_src)
-		if(T.x < src_min_x || !src_min_x) src_min_x	= T.x
-		if(T.y < src_min_y || !src_min_y) src_min_y	= T.y
-
-	var/trg_min_x = 0
-	var/trg_min_y = 0
-	for (var/turf/T in turfs_trg)
-		if(T.x < trg_min_x || !trg_min_x) trg_min_x	= T.x
-		if(T.y < trg_min_y || !trg_min_y) trg_min_y	= T.y
-
-	var/list/refined_src = new/list()
-	for(var/turf/T in turfs_src)
-		refined_src += T
-		refined_src[T] = new/datum/coords
-		var/datum/coords/C = refined_src[T]
-		C.x_pos = (T.x - src_min_x)
-		C.y_pos = (T.y - src_min_y)
-
-	var/list/refined_trg = new/list()
-	for(var/turf/T in turfs_trg)
-		refined_trg += T
-		refined_trg[T] = new/datum/coords
-		var/datum/coords/C = refined_trg[T]
-		C.x_pos = (T.x - trg_min_x)
-		C.y_pos = (T.y - trg_min_y)
-
-	var/list/fromupdate = new/list()
-	var/list/toupdate = new/list()
-
-	moving:
-		for (var/turf/T in refined_src)
-			var/datum/coords/C_src = refined_src[T]
-			for (var/turf/B in refined_trg)
-				var/datum/coords/C_trg = refined_trg[B]
-				if(C_src.x_pos == C_trg.x_pos && C_src.y_pos == C_trg.y_pos)
-
-					var/old_dir1 = T.dir
-					var/old_icon_state1 = T.icon_state
-					var/old_icon1 = T.icon
-
-					var/turf/X = new T.type(B)
-					X.dir = old_dir1
-					X.icon_state = old_icon_state1
-					X.icon = old_icon1 //Shuttle floors are in shuttle.dmi while the defaults are floors.dmi
-
-
-					// Give the new turf our air, if simulated
-					if(istype(X, /turf/simulated) && istype(T, /turf/simulated))
-						var/turf/simulated/sim = X
-						sim.copy_air_with_tile(T)
-
-					/* Quick visual fix for some weird shuttle corner artefacts when on transit space tiles */
-					if(direction && findtext(X.icon_state, "swall_s"))
-
-						// Spawn a new shuttle corner object
-						var/obj/corner = new()
-						corner.loc = X
-						corner.density = 1
-						corner.anchored = 1
-						corner.icon = X.icon
-						corner.icon_state = replacetext(X.icon_state, "_s", "_f")
-						corner.tag = "delete me"
-						corner.name = "wall"
-
-						// Find a new turf to take on the property of
-						var/turf/nextturf = get_step(corner, direction)
-						if(!nextturf || !istype(nextturf, /turf/space))
-							nextturf = get_step(corner, turn(direction, 180))
-
-
-						// Take on the icon of a neighboring scrolling space icon
-						X.icon = nextturf.icon
-						X.icon_state = nextturf.icon_state
-
-
-					for(var/obj/O in T)
-
-						// Reset the shuttle corners
-						if(O.tag == "delete me")
-							X.icon = 'icons/turf/shuttle.dmi'
-							X.icon_state = replacetext(O.icon_state, "_f", "_s") // revert the turf to the old icon_state
-							X.name = "wall"
-							qdel(O) // prevents multiple shuttle corners from stacking
-							continue
-						if(!istype(O,/obj)) continue
-						O.loc = X
-					for(var/mob/M in T)
-						if(!M.move_on_shuttle)
-							continue
-						M.loc = X
-
-//					var/area/AR = X.loc
-
-//					if(AR.lighting_use_dynamic)							//TODO: rewrite this code so it's not messed by lighting ~Carn
-//						X.opacity = !X.opacity
-//						X.SetOpacity(!X.opacity)
-
-					toupdate += X
-
-					if(turftoleave)
-						var/turf/ttl = new turftoleave(T)
-
-//						var/area/AR2 = ttl.loc
-
-//						if(AR2.lighting_use_dynamic)						//TODO: rewrite this code so it's not messed by lighting ~Carn
-//							ttl.opacity = !ttl.opacity
-//							ttl.sd_SetOpacity(!ttl.opacity)
-
-						fromupdate += ttl
-
-					else
-						T.ChangeTurf(/turf/space)
-
-					refined_src -= T
-					refined_trg -= B
-					continue moving
-
-
-	if(toupdate.len)
-		for(var/turf/simulated/T1 in toupdate)
-			SSair.remove_from_active(T1)
-			T1.CalculateAdjacentTurfs()
-			SSair.add_to_active(T1,1)
-
-	if(fromupdate.len)
-		for(var/turf/simulated/T2 in fromupdate)
-			SSair.remove_from_active(T2)
-			T2.CalculateAdjacentTurfs()
-			SSair.add_to_active(T2,1)
-
-
 
 /proc/DuplicateObject(obj/original, var/perfectcopy = 0 , var/sameloc = 0)
 	if(!original)
@@ -1220,11 +983,30 @@ Turf and target are seperate in case you want to teleport some distance from a t
 
 
 //Gets the turf this atom inhabits
-/proc/get_turf(atom/movable/AM)
-	if(istype(AM))
-		return locate(/turf) in AM.locs
-	else if(isturf(AM))
-		return AM
+
+/proc/get_turf(atom/A)
+	if (!istype(A))
+		return
+	if (isturf(A))
+		return A
+
+	var/list/atom/checked_turf_candidates = list() //prevent recursion from badmins being dumbasses
+	var/atom/turf_candidate = A.loc
+
+	while (!isturf(turf_candidate))
+		if (!turf_candidate || turf_candidate in checked_turf_candidates)
+			return
+		checked_turf_candidates += turf_candidate
+
+		//SO I BET YOU MIGHT BE WONDERING WHY I'M CHECKING THIS AGAIN.
+		//I'LL FUCKING TELL YOU WAY, ITS BECAUSE FOR SOME GOD DAMN REASON, WHEN THIS IS CALLED
+		//IN AN OBJECT'S NEW() PROC, THE FIRST CHECK WILL FUCKING PASS, BUT FUCKING RUNTIME HERE
+		//BITCHING ABOUT HOW IT CAN'T READ NULL.LOC, SO FUCK IT, WE CHECK THIS TWICE.
+		if (!turf_candidate)
+			return
+		turf_candidate = turf_candidate.loc
+	return turf_candidate
+
 
 //Gets the turf this atom's *ICON* appears to inhabit
 //Uses half the width/height respectively to work out
@@ -1264,49 +1046,28 @@ Turf and target are seperate in case you want to teleport some distance from a t
 		var/n_height = (world.icon_size - (i_height/2))
 
 		//DY and DX
-		rough_x = round(AM.pixel_x/n_width)
-		rough_y = round(AM.pixel_y/n_height)
+		if(n_width)
+			rough_x = round(AM.pixel_x/n_width)
+		if(n_height)
+			rough_y = round(AM.pixel_y/n_height)
 
 		//Find coordinates
 		final_x = AM.x + rough_x
 		final_y = AM.y + rough_y
 
 		if(final_x || final_y)
-			var/turf/T = locate(final_x, final_y, AM.z)
-			if(T)
-				return T
+			return locate(final_x, final_y, AM.z)
 
 //Finds the distance between two atoms, in pixels
-/proc/getPixelDistance(var/atom/A, var/atom/B)
+//centered = 0 counts from turf edge to edge
+//centered = 1 counts from turf center to turf center
+//of course mathematically this is just adding world.icon_size on again
+/proc/getPixelDistance(var/atom/A, var/atom/B, var/centered = 1)
 	if(!istype(A)||!istype(B))
 		return 0
-
-	var/_x1 = A.x
-	var/_x2 = B.x
-	var/_y1 = A.y
-	var/_y2 = B.y
-
-	//Ensure _x1 is bigger, simplicity
-	if(_x2 > _x1)
-		var/tx = _x1
-		_x1 = _x2
-		_x2 = tx
-
-	//Ensure _y1 is bigger, simplicity
-	if(_y2 > _y1)
-		var/ty = _y1
-		_y1 = _y2
-		_y2 = ty
-
-	//DY/DX
-	var/dx = _x1 - _x2 + A.pixel_x + B.pixel_x
-	var/dy = _y1 - _y2 + A.pixel_y + B.pixel_y
-
-	//Distance check
-	if(dx == 0 && dy == 0) //No distance, don't bother calculating
-		return 0
-
-	. = sqrt(((dx**2) + (dy**2)))
+	. = bounds_dist(A, B) + sqrt((((A.pixel_x+B.pixel_x)**2) + ((A.pixel_y+B.pixel_y)**2)))
+	if(centered)
+		. += world.icon_size
 
 /proc/get(atom/loc, type)
 	while(loc)
@@ -1398,9 +1159,8 @@ var/global/list/common_tools = list(
 
 	//Because is_sharp is used for food or something.
 	var/list/sharp_things_2 = list(\
-	/obj/item/weapon/kitchenknife,\
-	/obj/item/weapon/scalpel,\
-	/obj/item/weapon/kitchen/utensil/knife)
+	/obj/item/weapon/kitchen/knife,\
+	/obj/item/weapon/scalpel)
 
 	if(is_type_in_list(W,sharp_things_1))
 		return 1
@@ -1422,7 +1182,7 @@ var/global/list/common_tools = list(
 		return 1
 	if(istype(W, /obj/item/weapon/reagent_containers/syringe))
 		return 1
-	if(istype(W, /obj/item/weapon/kitchen/utensil/fork))
+	if(istype(W, /obj/item/weapon/kitchen/fork))
 		return 1
 	else
 		return 0
@@ -1480,7 +1240,7 @@ var/list/WALLITEMS = list(
 
 /obj/proc/atmosanalyzer_scan(var/datum/gas_mixture/air_contents, mob/user, var/obj/target = src)
 	var/obj/icon = target
-	user.visible_message("<span class='danger'>[user] has used the analyzer on \icon[icon] [target].</span>")
+	user.visible_message("[user] has used the analyzer on \icon[icon] [target].", "<span class='notice'>You use the analyzer on \icon[icon] [target].</span>")
 	var/pressure = air_contents.return_pressure()
 	var/total_moles = air_contents.total_moles()
 
@@ -1494,13 +1254,13 @@ var/list/WALLITEMS = list(
 		var/unknown_concentration =  1-(o2_concentration+n2_concentration+co2_concentration+plasma_concentration)
 
 		user << "<span class='notice'>Pressure: [round(pressure,0.1)] kPa</span>"
-		user << "<span class='notice'>Nitrogen: [round(n2_concentration*100)]</span>%"
-		user << "<span class='notice'>Oxygen: [round(o2_concentration*100)]%</span>"
-		user << "<span class='notice'>CO2: [round(co2_concentration*100)]%</span>"
-		user << "<span class='notice'>Plasma: [round(plasma_concentration*100)]%</span>"
+		user << "<span class='notice'>Nitrogen: [round(n2_concentration*100)] %</span>"
+		user << "<span class='notice'>Oxygen: [round(o2_concentration*100)] %</span>"
+		user << "<span class='notice'>CO2: [round(co2_concentration*100)] %</span>"
+		user << "<span class='notice'>Plasma: [round(plasma_concentration*100)] %</span>"
 		if(unknown_concentration>0.01)
-			user << "<span class='danger'>Unknown: [round(unknown_concentration*100)]%</span>"
-		user << "<span class='notice'>Temperature: [round(air_contents.temperature-T0C)]&deg;C</span>"
+			user << "<span class='danger'>Unknown: [round(unknown_concentration*100)] %</span>"
+		user << "<span class='notice'>Temperature: [round(air_contents.temperature-T0C)] &deg;C</span>"
 	else
 		user << "<span class='notice'>[target] is empty!</span>"
 	return

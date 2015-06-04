@@ -419,7 +419,7 @@
 /obj/machinery/gun_turret/attack_alien(mob/living/user as mob)
 	user.changeNext_move(CLICK_CD_MELEE)
 	user.do_attack_animation(src)
-	user.visible_message("<span class='danger'>[user] slashes at [src]</span>", "<span class='danger'>You slash at [src]</span>")
+	user.visible_message("<span class='danger'>[user] slashes at [src]!</span>", "<span class='danger'>You slash at [src]!</span>")
 	take_damage(15)
 	return
 
