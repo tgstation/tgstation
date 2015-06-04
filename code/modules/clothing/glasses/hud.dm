@@ -26,8 +26,6 @@
 		user << "<span class='warning'>PZZTTPFFFT</span>"
 		desc = desc + " The display flickers slightly."
 
-
-
 /obj/item/clothing/glasses/hud/health
 	name = "Health Scanner HUD"
 	desc = "A heads-up display that scans the humans in view and provides accurate data about their health status."
@@ -67,18 +65,6 @@
 	icon_state = "securityhudnight"
 	darkness_view = 8
 	invis_view = SEE_INVISIBLE_MINIMUM
-
-/obj/item/clothing/glasses/hud/security/sunglasses/emp_act(severity)
-	if(emagged == 0)
-		emagged = 1
-		desc = desc + " The display flickers slightly."
-
-/obj/item/clothing/glasses/hud/security/sunglasses/emag_act(mob/user)
-	if(emagged == 0)
-		emagged = 1
-		user << "<span class='warning'>PZZTTPFFFT</span>"
-		desc = desc + " The display flickers slightly."
-
 
 /obj/item/clothing/glasses/hud/security/sunglasses/gars
 	name = "HUD gar glasses"
