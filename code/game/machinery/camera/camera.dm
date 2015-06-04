@@ -28,6 +28,7 @@
 	var/alarm_on = 0
 	var/busy = 0
 	var/emped = 0  //Number of consecutive EMP's on this camera
+	var/inborg = 0 //Is the camera inside a borg and therefore not eligble for random failure?
 
 /obj/machinery/camera/New()
 	wires = new(src)
