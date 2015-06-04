@@ -796,7 +796,7 @@ datum/reagent/medicine/antitoxin
 	color = "#C8A5DC"
 	overdose_threshold = 30
 
-datum/reagent/medicine/antitoxin/on_mob_life(var/mob/living/M as m+ob)
+datum/reagent/medicine/antitoxin/on_mob_life(var/mob/living/M as mob)
 	M.adjustToxLoss(-2*REM)
 	for(var/datum/reagent/toxin/R in M.reagents.reagent_list)
 		if(R != src)
