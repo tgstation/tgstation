@@ -1,0 +1,97 @@
+<!--
+Title: Solar Control Computer
+Used In File(s): \code\modules\power\solar.dm
+ -->
+
+<h1>Status :</h1>
+<div class='statusDisplay'>
+	<div class="line">
+		<div class='statusLabel' style='font-weight:bold'>
+			Generated power :
+		</div>
+		<div class='statusValue'>
+			{{:generated)}} W
+		</div>
+	</div>
+
+	<div class='line'>
+		<div class='statusLabel' style='font-weight:bold'>
+			Orientation :
+		</div>
+
+		<div class='statusValue'>
+		{{:angle)}}&deg ({{:direction}})&nbsp;
+		</div>
+
+		{{:~link('15&deg', 'minus' ,{'rate_control' : '1', 'cdir' : '-15'})}}
+		{{:~link('1&deg', 'minus' , { 'rate_control' : '1', 'cdir' : '-1'})}}
+		{{:~link('1&deg', 'plus' , { 'rate_control' : '1', 'cdir' : '1'})}}
+		{{:~link('15&deg', 'plus' , { 'rate_control' : '1', 'cdir' : '15'})}}
+	</div>
+</div>
+
+<h1>Tracking :</h1>
+
+<div class='statusDisplay'>
+	<div class="line">
+		<div class='statusLabel' style='font-weight:bold'>
+			Tracker status :&nbsp;
+		</div>
+
+		{{:~link('Off', 'close' ,{'track' : '0'}, (tracking_state == 0)?'selected':'')}}
+		{{:~link('Timed', 'clock' ,{'track' : '1'}, (tracking_state == 1)?'selected':'')}}
+		{{if connected_tracker}}
+			{{:~link('Auto', 'signal-diag' ,{'track' : '2'}, (tracking_state == 2)?'selected':'')}}
+		{{else}}
+			{{:~link('Auto', 'signal-diag' ,null, 'disabled')}}
+		{{/if}}
+	</div>
+
+	<div class="line">
+		<div class='statusLabel' style='font-weight:bold'>
+			Tracking rate :
+		</div>
+
+		<div class='statusValue'>
+			 {{:tracking_rate)}} deg/h ({{:rotating_way}})
+		</div>
+	</div>
+
+	<div class='line'>
+		{{:~link('180&deg', 'minus' ,{'rate_control' : '1', 'tdir' : '-180'})}}
+		{{:~link('30&deg', 'minus' ,{'rate_control' : '1', 'tdir' : '-30'})}}
+		{{:~link('1&deg', 'minus' , { 'rate_control' : '1', 'tdir' : '-1'})}}
+		{{:~link('1&deg', 'plus' , { 'rate_control' : '1', 'tdir' : '1'})}}
+		{{:~link('30&deg', 'plus' , { 'rate_control' : '1', 'tdir' : '30'})}}
+		{{:~link('180&deg', 'plus' , { 'rate_control' : '1', 'tdir' : '180'})}}
+	</div>
+</div>
+
+<h1>Connected devices :</h1>
+<div class='statusDisplay'>
+	<div class="line">
+		<div class='statusLabel' style='font-weight:bold'>
+			Solars panels :
+		</div>
+		<div class='statusValue'>
+			{{:connected_panels)}} connected
+		</div>
+	</div>
+
+	<div class='line'>
+		<div class='statusLabel' style='font-weight:bold'>
+			Solar tracker :
+		</div>
+
+		<div class='statusValue'>
+			{{if connected_tracker}}
+				<span class='good'>Found</span>&nbsp;
+			{{else}}
+				<span class='bad'>Not found</span>&nbsp;
+			{{/if}}
+		</div>
+	</div>
+</div>
+<div class='line'>
+	{{:~link('Search for devices', 'refresh' ,{'search_connected' : '1'})}}
+</div>

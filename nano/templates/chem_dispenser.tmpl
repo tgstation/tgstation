@@ -1,0 +1,63 @@
+<!-- 
+Title: Chem Dispenser 5000 UI 
+Used In File(s): \code\modules\reagents\Chemistry-Machinery.dm
+ -->
+<div class="item">
+	<div class="itemLabel">
+		Energy:
+	</div>
+	<div class="itemContent">
+		{{:~displayBar(energy, 0, maxEnergy, 'good', energy + ' Units')}}
+	</div>
+</div>
+
+<div class="item">
+	<div class="itemLabel">
+		Dispense:
+	</div>
+	<div class="itemContent">
+		{{:~link('5', 'gear', {'amount' : 5}, (amount == 5) ? 'selected' : null)}}
+		{{:~link('10', 'gear', {'amount' : 10}, (amount == 10) ? 'selected' : null)}}
+		{{:~link('20', 'gear', {'amount' : 20}, (amount == 20) ? 'selected' : null)}}
+		{{:~link('30', 'gear', {'amount' : 30}, (amount == 30) ? 'selected' : null)}}
+		{{:~link('50', 'gear', {'amount' : 50}, (amount == 50) ? 'selected' : null)}}
+	</div>
+</div>
+<div class="item">&nbsp;</div>
+<div class="item">
+	<div class="itemLabel" style="width: 100%;">
+		Chemical Dispenser
+	</div>
+</div>
+<div class="item">
+	<div class="itemContent" style="width: 100%;">
+		{{for chemicals}}
+			{{:~link(title, 'circle-arrow-s', commands, null, 'fixedLeft')}}
+		{{/for}}
+	</div>
+</div>
+<div class="item">&nbsp;</div>
+<div class="item">
+	<div class="itemLabel">
+		Beaker Contents
+	</div>
+	<div class="itemContent">
+		{{:~link('Eject Beaker', 'eject', {'ejectBeaker' : 1}, isBeakerLoaded ? null : 'disabled', 'floatRight')}}
+	</div>
+</div>
+<div class="statusDisplay" style="height: 225px; overflow: auto;">
+	<div class="item">
+		<div class="itemContent" style="width: 100%;">
+			{{if isBeakerLoaded}}
+				<b>Volume:&nbsp;{{:beakerCurrentVolume}}&nbsp;/&nbsp;{{:beakerMaxVolume}}</b><br>
+				{{for beakerContents}}
+					<span class="highlight">{{:volume}} units of {{:name}}</span><br>
+				{{else}}
+					<span class="bad">Beaker is empty</span>
+				{{/for}}
+			{{else}}
+				<span class="average"><i>No beaker loaded</i></span>
+			{{/if}}
+		</div>
+	</div>
+</div>

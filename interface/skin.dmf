@@ -1,0 +1,2229 @@
+macro "borghotkeymode"
+	elem 
+		name = "TAB"
+		command = ".winset \"mainwindow.macro=borgmacro hotkey_toggle.is-checked=false input.focus=true input.background-color=#D3B5B5\""
+		is-disabled = false
+	elem 
+		name = "CENTER+REP"
+		command = ".center"
+		is-disabled = false
+	elem 
+		name = "NORTHEAST"
+		command = ".northeast"
+		is-disabled = false
+	elem 
+		name = "SOUTHEAST"
+		command = ".southeast"
+		is-disabled = false
+	elem 
+		name = "NORTHWEST"
+		command = "unequip-module"
+		is-disabled = false
+	elem 
+		name = "CTRL+WEST"
+		command = "westface"
+		is-disabled = false
+	elem 
+		name = "WEST+REP"
+		command = ".west"
+		is-disabled = false
+	elem 
+		name = "CTRL+NORTH"
+		command = "northface"
+		is-disabled = false
+	elem 
+		name = "NORTH+REP"
+		command = ".north"
+		is-disabled = false
+	elem 
+		name = "CTRL+EAST"
+		command = "eastface"
+		is-disabled = false
+	elem 
+		name = "EAST+REP"
+		command = ".east"
+		is-disabled = false
+	elem 
+		name = "CTRL+SOUTH"
+		command = "southface"
+		is-disabled = false
+	elem 
+		name = "SOUTH+REP"
+		command = ".south"
+		is-disabled = false
+	elem 
+		name = "INSERT"
+		command = "a-intent right"
+		is-disabled = false
+	elem 
+		name = "DELETE"
+		command = "delete-key-pressed"
+		is-disabled = false
+	elem 
+		name = "1"
+		command = "toggle-module 1"
+		is-disabled = false
+	elem 
+		name = "CTRL+1"
+		command = "toggle-module 1"
+		is-disabled = false
+	elem 
+		name = "2"
+		command = "toggle-module 2"
+		is-disabled = false
+	elem 
+		name = "CTRL+2"
+		command = "toggle-module 2"
+		is-disabled = false
+	elem 
+		name = "3"
+		command = "toggle-module 3"
+		is-disabled = false
+	elem 
+		name = "CTRL+3"
+		command = "toggle-module 3"
+		is-disabled = false
+	elem 
+		name = "4"
+		command = "a-intent left"
+		is-disabled = false
+	elem 
+		name = "CTRL+4"
+		command = "a-intent left"
+		is-disabled = false
+	elem 
+		name = "A+REP"
+		command = ".west"
+		is-disabled = false
+	elem 
+		name = "CTRL+A+REP"
+		command = ".west"
+		is-disabled = false
+	elem 
+		name = "D+REP"
+		command = ".east"
+		is-disabled = false
+	elem 
+		name = "CTRL+D+REP"
+		command = ".east"
+		is-disabled = false
+	elem 
+		name = "F"
+		command = "a-intent left"
+		is-disabled = false
+	elem 
+		name = "CTRL+F"
+		command = "a-intent left"
+		is-disabled = false
+	elem 
+		name = "G"
+		command = "a-intent right"
+		is-disabled = false
+	elem 
+		name = "CTRL+G"
+		command = "a-intent right"
+		is-disabled = false
+	elem 
+		name = "Q"
+		command = "unequip-module"
+		is-disabled = false
+	elem 
+		name = "CTRL+Q"
+		command = "unequip-module"
+		is-disabled = false
+	elem "s_key"
+		name = "S+REP"
+		command = ".south"
+		is-disabled = false
+	elem 
+		name = "CTRL+S+REP"
+		command = ".south"
+		is-disabled = false
+	elem 
+		name = "T"
+		command = "say"
+		is-disabled = false
+	elem "w_key"
+		name = "W+REP"
+		command = ".north"
+		is-disabled = false
+	elem 
+		name = "CTRL+W+REP"
+		command = ".north"
+		is-disabled = false
+	elem 
+		name = "X"
+		command = ".northeast"
+		is-disabled = false
+	elem 
+		name = "CTRL+X"
+		command = ".northeast"
+		is-disabled = false
+	elem 
+		name = "Y"
+		command = "Activate-Held-Object"
+		is-disabled = false
+	elem 
+		name = "CTRL+Y"
+		command = "Activate-Held-Object"
+		is-disabled = false
+	elem 
+		name = "Z"
+		command = "Activate-Held-Object"
+		is-disabled = false
+	elem 
+		name = "CTRL+Z"
+		command = "Activate-Held-Object"
+		is-disabled = false
+	elem 
+		name = "F1"
+		command = "adminhelp"
+		is-disabled = false
+	elem 
+		name = "CTRL+SHIFT+F1+REP"
+		command = ".options"
+		is-disabled = false
+	elem 
+		name = "F2+REP"
+		command = ".screenshot auto"
+		is-disabled = false
+	elem 
+		name = "SHIFT+F2+REP"
+		command = ".screenshot"
+		is-disabled = false
+	elem 
+		name = "F5"
+		command = "Aghost"
+		is-disabled = false
+	elem 
+		name = "F6"
+		command = "Player-Panel"
+		is-disabled = false
+	elem 
+		name = "F7"
+		command = "Admin-PM"
+		is-disabled = false
+	elem 
+		name = "F8"
+		command = "Invisimin"
+		is-disabled = false
+	elem 
+		name = "F12"
+		command = "F12"
+		is-disabled = false
+
+macro "macro"
+	elem 
+		name = "TAB"
+		command = ".winset \"mainwindow.macro=hotkeymode hotkey_toggle.is-checked=true mapwindow.map.focus=true input.background-color=#F0F0F0\""
+		is-disabled = false
+	elem 
+		name = "CENTER+REP"
+		command = ".center"
+		is-disabled = false
+	elem 
+		name = "NORTHEAST"
+		command = ".northeast"
+		is-disabled = false
+	elem 
+		name = "SOUTHEAST"
+		command = ".southeast"
+		is-disabled = false
+	elem 
+		name = "SOUTHWEST"
+		command = ".southwest"
+		is-disabled = false
+	elem 
+		name = "NORTHWEST"
+		command = ".northwest"
+		is-disabled = false
+	elem 
+		name = "CTRL+WEST"
+		command = "westface"
+		is-disabled = false
+	elem 
+		name = "WEST+REP"
+		command = ".west"
+		is-disabled = false
+	elem 
+		name = "CTRL+NORTH"
+		command = "northface"
+		is-disabled = false
+	elem 
+		name = "NORTH+REP"
+		command = ".north"
+		is-disabled = false
+	elem 
+		name = "CTRL+EAST"
+		command = "eastface"
+		is-disabled = false
+	elem 
+		name = "EAST+REP"
+		command = ".east"
+		is-disabled = false
+	elem 
+		name = "CTRL+SOUTH"
+		command = "southface"
+		is-disabled = false
+	elem 
+		name = "SOUTH+REP"
+		command = ".south"
+		is-disabled = false
+	elem 
+		name = "INSERT"
+		command = "a-intent right"
+		is-disabled = false
+	elem 
+		name = "DELETE"
+		command = "delete-key-pressed"
+		is-disabled = false
+	elem 
+		name = "CTRL+1"
+		command = "a-intent help"
+		is-disabled = false
+	elem 
+		name = "CTRL+2"
+		command = "a-intent disarm"
+		is-disabled = false
+	elem 
+		name = "CTRL+3"
+		command = "a-intent grab"
+		is-disabled = false
+	elem 
+		name = "CTRL+4"
+		command = "a-intent harm"
+		is-disabled = false
+	elem 
+		name = "CTRL+A+REP"
+		command = ".west"
+		is-disabled = false
+	elem 
+		name = "CTRL+D+REP"
+		command = ".east"
+		is-disabled = false
+	elem 
+		name = "CTRL+E"
+		command = "quick-equip"
+		is-disabled = false
+	elem 
+		name = "CTRL+F"
+		command = "a-intent left"
+		is-disabled = false
+	elem 
+		name = "CTRL+G"
+		command = "a-intent right"
+		is-disabled = false
+	elem 
+		name = "CTRL+Q"
+		command = ".northwest"
+		is-disabled = false
+	elem 
+		name = "CTRL+R"
+		command = ".southwest"
+		is-disabled = false
+	elem 
+		name = "CTRL+S+REP"
+		command = ".south"
+		is-disabled = false
+	elem 
+		name = "CTRL+W+REP"
+		command = ".north"
+		is-disabled = false
+	elem 
+		name = "CTRL+X"
+		command = ".northeast"
+		is-disabled = false
+	elem 
+		name = "CTRL+Y"
+		command = "Activate-Held-Object"
+		is-disabled = false
+	elem 
+		name = "CTRL+Z"
+		command = "Activate-Held-Object"
+		is-disabled = false
+	elem 
+		name = "F1"
+		command = "adminhelp"
+		is-disabled = false
+	elem 
+		name = "CTRL+SHIFT+F1+REP"
+		command = ".options"
+		is-disabled = false
+	elem 
+		name = "F2+REP"
+		command = ".screenshot auto"
+		is-disabled = false
+	elem 
+		name = "SHIFT+F2+REP"
+		command = ".screenshot"
+		is-disabled = false
+	elem 
+		name = "F5"
+		command = "Aghost"
+		is-disabled = false
+	elem 
+		name = "F6"
+		command = "Player-Panel"
+		is-disabled = false
+	elem 
+		name = "F7"
+		command = "Admin-PM"
+		is-disabled = false
+	elem 
+		name = "F8"
+		command = "Invisimin"
+		is-disabled = false
+	elem 
+		name = "F12"
+		command = "F12"
+		is-disabled = false
+
+macro "hotkeymode"
+	elem 
+		name = "TAB"
+		command = ".winset \"mainwindow.macro=macro hotkey_toggle.is-checked=false input.focus=true input.background-color=#D3B5B5\""
+		is-disabled = false
+	elem 
+		name = "CENTER+REP"
+		command = ".center"
+		is-disabled = false
+	elem 
+		name = "NORTHEAST"
+		command = ".northeast"
+		is-disabled = false
+	elem 
+		name = "SOUTHEAST"
+		command = ".southeast"
+		is-disabled = false
+	elem 
+		name = "SOUTHWEST"
+		command = ".southwest"
+		is-disabled = false
+	elem 
+		name = "NORTHWEST"
+		command = ".northwest"
+		is-disabled = false
+	elem 
+		name = "CTRL+WEST"
+		command = "westface"
+		is-disabled = false
+	elem 
+		name = "WEST+REP"
+		command = ".west"
+		is-disabled = false
+	elem 
+		name = "CTRL+NORTH"
+		command = "northface"
+		is-disabled = false
+	elem 
+		name = "NORTH+REP"
+		command = ".north"
+		is-disabled = false
+	elem 
+		name = "CTRL+EAST"
+		command = "eastface"
+		is-disabled = false
+	elem 
+		name = "EAST+REP"
+		command = ".east"
+		is-disabled = false
+	elem 
+		name = "CTRL+SOUTH"
+		command = "southface"
+		is-disabled = false
+	elem 
+		name = "SOUTH+REP"
+		command = ".south"
+		is-disabled = false
+	elem 
+		name = "INSERT"
+		command = "a-intent right"
+		is-disabled = false
+	elem 
+		name = "DELETE"
+		command = "delete-key-pressed"
+		is-disabled = false
+	elem 
+		name = "1"
+		command = "a-intent help"
+		is-disabled = false
+	elem 
+		name = "CTRL+1"
+		command = "a-intent help"
+		is-disabled = false
+	elem 
+		name = "2"
+		command = "a-intent disarm"
+		is-disabled = false
+	elem 
+		name = "CTRL+2"
+		command = "a-intent disarm"
+		is-disabled = false
+	elem 
+		name = "3"
+		command = "a-intent grab"
+		is-disabled = false
+	elem 
+		name = "CTRL+3"
+		command = "a-intent grab"
+		is-disabled = false
+	elem 
+		name = "4"
+		command = "a-intent harm"
+		is-disabled = false
+	elem 
+		name = "CTRL+4"
+		command = "a-intent harm"
+		is-disabled = false
+	elem 
+		name = "A+REP"
+		command = ".west"
+		is-disabled = false
+	elem 
+		name = "CTRL+A+REP"
+		command = ".west"
+		is-disabled = false
+	elem 
+		name = "D+REP"
+		command = ".east"
+		is-disabled = false
+	elem 
+		name = "CTRL+D+REP"
+		command = ".east"
+		is-disabled = false
+	elem 
+		name = "E"
+		command = "quick-equip"
+		is-disabled = false
+	elem 
+		name = "CTRL+E"
+		command = "quick-equip"
+		is-disabled = false
+	elem 
+		name = "F"
+		command = "a-intent left"
+		is-disabled = false
+	elem 
+		name = "CTRL+F"
+		command = "a-intent left"
+		is-disabled = false
+	elem 
+		name = "G"
+		command = "a-intent right"
+		is-disabled = false
+	elem 
+		name = "CTRL+G"
+		command = "a-intent right"
+		is-disabled = false
+	elem 
+		name = "M"
+		command = "me"
+		is-disabled = false
+	elem 
+		name = "O"
+		command = "ooc"
+		is-disabled = false
+	elem 
+		name = "Q"
+		command = ".northwest"
+		is-disabled = false
+	elem 
+		name = "CTRL+Q"
+		command = ".northwest"
+		is-disabled = false
+	elem 
+		name = "R"
+		command = ".southwest"
+		is-disabled = false
+	elem 
+		name = "CTRL+R"
+		command = ".southwest"
+		is-disabled = false
+	elem "s_key"
+		name = "S+REP"
+		command = ".south"
+		is-disabled = false
+	elem 
+		name = "CTRL+S+REP"
+		command = ".south"
+		is-disabled = false
+	elem 
+		name = "T"
+		command = "say"
+		is-disabled = false
+	elem "w_key"
+		name = "W+REP"
+		command = ".north"
+		is-disabled = false
+	elem 
+		name = "CTRL+W+REP"
+		command = ".north"
+		is-disabled = false
+	elem 
+		name = "X"
+		command = ".northeast"
+		is-disabled = false
+	elem 
+		name = "CTRL+X"
+		command = ".northeast"
+		is-disabled = false
+	elem 
+		name = "Y"
+		command = "Activate-Held-Object"
+		is-disabled = false
+	elem 
+		name = "CTRL+Y"
+		command = "Activate-Held-Object"
+		is-disabled = false
+	elem 
+		name = "Z"
+		command = "Activate-Held-Object"
+		is-disabled = false
+	elem 
+		name = "CTRL+Z"
+		command = "Activate-Held-Object"
+		is-disabled = false
+	elem 
+		name = "F1"
+		command = "adminhelp"
+		is-disabled = false
+	elem 
+		name = "CTRL+SHIFT+F1+REP"
+		command = ".options"
+		is-disabled = false
+	elem 
+		name = "F2+REP"
+		command = ".screenshot auto"
+		is-disabled = false
+	elem 
+		name = "SHIFT+F2+REP"
+		command = ".screenshot"
+		is-disabled = false
+	elem 
+		name = "F5"
+		command = "Aghost"
+		is-disabled = false
+	elem 
+		name = "F6"
+		command = "Player-Panel"
+		is-disabled = false
+	elem 
+		name = "F7"
+		command = "Admin-PM"
+		is-disabled = false
+	elem 
+		name = "F8"
+		command = "Invisimin"
+		is-disabled = false
+	elem 
+		name = "F12"
+		command = "F12"
+		is-disabled = false
+
+macro "borgmacro"
+	elem 
+		name = "TAB"
+		command = ".winset \"mainwindow.macro=borghotkeymode hotkey_toggle.is-checked=true mapwindow.map.focus=true input.background-color=#F0F0F0\""
+		is-disabled = false
+	elem 
+		name = "CENTER+REP"
+		command = ".center"
+		is-disabled = false
+	elem 
+		name = "NORTHEAST"
+		command = ".northeast"
+		is-disabled = false
+	elem 
+		name = "SOUTHEAST"
+		command = ".southeast"
+		is-disabled = false
+	elem 
+		name = "NORTHWEST"
+		command = "unequip-module"
+		is-disabled = false
+	elem 
+		name = "CTRL+WEST"
+		command = "westface"
+		is-disabled = false
+	elem 
+		name = "WEST+REP"
+		command = ".west"
+		is-disabled = false
+	elem 
+		name = "CTRL+NORTH"
+		command = "northface"
+		is-disabled = false
+	elem 
+		name = "NORTH+REP"
+		command = ".north"
+		is-disabled = false
+	elem 
+		name = "CTRL+EAST"
+		command = "eastface"
+		is-disabled = false
+	elem 
+		name = "EAST+REP"
+		command = ".east"
+		is-disabled = false
+	elem 
+		name = "CTRL+SOUTH"
+		command = "southface"
+		is-disabled = false
+	elem 
+		name = "SOUTH+REP"
+		command = ".south"
+		is-disabled = false
+	elem 
+		name = "INSERT"
+		command = "a-intent right"
+		is-disabled = false
+	elem 
+		name = "DELETE"
+		command = "delete-key-pressed"
+		is-disabled = false
+	elem 
+		name = "CTRL+1"
+		command = "toggle-module 1"
+		is-disabled = false
+	elem 
+		name = "CTRL+2"
+		command = "toggle-module 2"
+		is-disabled = false
+	elem 
+		name = "CTRL+3"
+		command = "toggle-module 3"
+		is-disabled = false
+	elem 
+		name = "CTRL+4"
+		command = "a-intent left"
+		is-disabled = false
+	elem 
+		name = "CTRL+A+REP"
+		command = ".west"
+		is-disabled = false
+	elem 
+		name = "CTRL+D+REP"
+		command = ".east"
+		is-disabled = false
+	elem 
+		name = "CTRL+F"
+		command = "a-intent left"
+		is-disabled = false
+	elem 
+		name = "CTRL+G"
+		command = "a-intent right"
+		is-disabled = false
+	elem 
+		name = "CTRL+Q"
+		command = "unequip-module"
+		is-disabled = false
+	elem 
+		name = "CTRL+S+REP"
+		command = ".south"
+		is-disabled = false
+	elem 
+		name = "CTRL+W+REP"
+		command = ".north"
+		is-disabled = false
+	elem 
+		name = "CTRL+X"
+		command = ".northeast"
+		is-disabled = false
+	elem 
+		name = "CTRL+Y"
+		command = "Activate-Held-Object"
+		is-disabled = false
+	elem 
+		name = "CTRL+Z"
+		command = "Activate-Held-Object"
+		is-disabled = false
+	elem 
+		name = "F1"
+		command = "adminhelp"
+		is-disabled = false
+	elem 
+		name = "CTRL+SHIFT+F1+REP"
+		command = ".options"
+		is-disabled = false
+	elem 
+		name = "F2+REP"
+		command = ".screenshot auto"
+		is-disabled = false
+	elem 
+		name = "SHIFT+F2+REP"
+		command = ".screenshot"
+		is-disabled = false
+	elem 
+		name = "F5"
+		command = "Aghost"
+		is-disabled = false
+	elem 
+		name = "F6"
+		command = "Player-Panel"
+		is-disabled = false
+	elem 
+		name = "F7"
+		command = "Admin-PM"
+		is-disabled = false
+	elem 
+		name = "F8"
+		command = "Invisimin"
+		is-disabled = false
+	elem 
+		name = "F12"
+		command = "F12"
+		is-disabled = false
+
+
+menu "menu"
+	elem 
+		name = "&File"
+		command = ""
+		category = ""
+		is-checked = false
+		can-check = false
+		group = ""
+		is-disabled = false
+		saved-params = "is-checked"
+	elem 
+		name = "&Quick screenshot\tF2"
+		command = ".screenshot auto"
+		category = "&File"
+		is-checked = false
+		can-check = false
+		group = ""
+		is-disabled = false
+		saved-params = "is-checked"
+	elem 
+		name = "&Save screenshot as...\tShift+F2"
+		command = ".screenshot"
+		category = "&File"
+		is-checked = false
+		can-check = false
+		group = ""
+		is-disabled = false
+		saved-params = "is-checked"
+	elem 
+		name = ""
+		command = ""
+		category = "&File"
+		is-checked = false
+		can-check = false
+		group = ""
+		is-disabled = false
+		saved-params = "is-checked"
+	elem 
+		name = "&Quit"
+		command = ".quit"
+		category = "&File"
+		is-checked = false
+		can-check = false
+		group = ""
+		is-disabled = false
+		saved-params = "is-checked"
+	elem 
+		name = "&Icons"
+		command = ""
+		category = ""
+		is-checked = false
+		can-check = false
+		group = ""
+		is-disabled = false
+		saved-params = "is-checked"
+	elem "stretch"
+		name = "&Stretch to fit"
+		command = ".winset \"mapwindow.map.icon-size=0\""
+		category = "&Icons"
+		is-checked = true
+		can-check = true
+		group = "size"
+		is-disabled = false
+		saved-params = "is-checked"
+	elem "icon64"
+		name = "&64x64 (2x)"
+		command = ".winset \"mapwindow.map.icon-size=64\""
+		category = "&Icons"
+		is-checked = false
+		can-check = true
+		group = "size"
+		is-disabled = false
+		saved-params = "is-checked"
+	elem "icon32"
+		name = "&32x32"
+		command = ".winset \"mapwindow.map.icon-size=32\""
+		category = "&Icons"
+		is-checked = false
+		can-check = true
+		group = "size"
+		is-disabled = false
+		saved-params = "is-checked"
+	elem 
+		name = ""
+		command = ""
+		category = "&Icons"
+		is-checked = false
+		can-check = false
+		group = ""
+		is-disabled = false
+		saved-params = "is-checked"
+	elem "textmode"
+		name = "&Text"
+		command = ".winset \"menu.textmode.is-checked=true?mapwindow.map.text-mode=true:mapwindow.map.text-mode=false\""
+		category = "&Icons"
+		is-checked = false
+		can-check = true
+		group = ""
+		is-disabled = false
+		saved-params = "is-checked"
+	elem 
+		name = "&Help"
+		command = ""
+		category = ""
+		is-checked = false
+		can-check = false
+		group = ""
+		is-disabled = false
+		saved-params = "is-checked"
+	elem 
+		name = "&Admin help\tF1"
+		command = "adminhelp"
+		category = "&Help"
+		is-checked = false
+		can-check = false
+		group = ""
+		is-disabled = false
+		saved-params = "is-checked"
+	elem 
+		name = "&Hotkeys"
+		command = "hotkeys-help"
+		category = "&Help"
+		is-checked = false
+		can-check = false
+		group = ""
+		is-disabled = false
+		saved-params = "is-checked"
+
+
+window "Telecomms IDE"
+	elem "Telecomms IDE"
+		type = MAIN
+		pos = 281,0
+		size = 569x582
+		anchor1 = none
+		anchor2 = none
+		font-family = ""
+		font-size = 0
+		font-style = ""
+		text-color = #000000
+		background-color = #ffffff
+		is-visible = false
+		is-disabled = false
+		is-transparent = false
+		is-default = false
+		border = none
+		drop-zone = false
+		right-click = false
+		saved-params = "pos;size;is-minimized;is-maximized"
+		on-size = ""
+		title = "TCS IDE"
+		titlebar = true
+		statusbar = false
+		can-close = true
+		can-minimize = true
+		can-resize = true
+		is-pane = false
+		is-minimized = false
+		is-maximized = false
+		can-scroll = none
+		icon = ""
+		image = ""
+		image-mode = stretch
+		keep-aspect = false
+		transparent-color = none
+		alpha = 255
+		macro = ""
+		menu = ""
+		on-close = "exittcs"
+	elem "button5"
+		type = BUTTON
+		pos = 209,464
+		size = 70x20
+		anchor1 = 37,80
+		anchor2 = 49,83
+		font-family = ""
+		font-size = 0
+		font-style = ""
+		text-color = #000000
+		background-color = none
+		is-visible = true
+		is-disabled = false
+		is-transparent = false
+		is-default = false
+		border = none
+		drop-zone = false
+		right-click = false
+		saved-params = "is-checked"
+		on-size = ""
+		text = "Clear Memory"
+		image = ""
+		command = "tcsclearmem"
+		is-flat = false
+		stretch = false
+		is-checked = false
+		group = ""
+		button-type = pushbutton
+	elem "button4"
+		type = BUTTON
+		pos = 157,464
+		size = 52x20
+		anchor1 = 28,80
+		anchor2 = 37,83
+		font-family = ""
+		font-size = 0
+		font-style = ""
+		text-color = #000000
+		background-color = none
+		is-visible = true
+		is-disabled = false
+		is-transparent = false
+		is-default = false
+		border = none
+		drop-zone = false
+		right-click = false
+		saved-params = "is-checked"
+		on-size = ""
+		text = "Revert"
+		image = ""
+		command = "tcsrevert"
+		is-flat = false
+		stretch = false
+		is-checked = false
+		group = ""
+		button-type = pushbutton
+	elem "button3"
+		type = BUTTON
+		pos = 105,464
+		size = 52x20
+		anchor1 = 18,80
+		anchor2 = 28,83
+		font-family = ""
+		font-size = 0
+		font-style = ""
+		text-color = #000000
+		background-color = none
+		is-visible = true
+		is-disabled = false
+		is-transparent = false
+		is-default = false
+		border = none
+		drop-zone = false
+		right-click = false
+		saved-params = "is-checked"
+		on-size = ""
+		text = "Execute"
+		image = ""
+		command = "tcsrun"
+		is-flat = false
+		stretch = false
+		is-checked = false
+		group = ""
+		button-type = pushbutton
+	elem "tcserror"
+		type = OUTPUT
+		pos = 0,488
+		size = 566x94
+		anchor1 = 0,84
+		anchor2 = 99,100
+		font-family = "sans-serif"
+		font-size = 9
+		font-style = ""
+		text-color = #000000
+		background-color = #ffffff
+		is-visible = true
+		is-disabled = false
+		is-transparent = false
+		is-default = false
+		border = none
+		drop-zone = false
+		right-click = false
+		saved-params = "max-lines"
+		on-size = ""
+		link-color = #0000ff
+		visited-color = #ff00ff
+		style = ""
+		enable-http-images = false
+		max-lines = 1000
+		image = ""
+	elem "button2"
+		type = BUTTON
+		pos = 53,464
+		size = 52x20
+		anchor1 = 9,80
+		anchor2 = 18,83
+		font-family = ""
+		font-size = 0
+		font-style = ""
+		text-color = #000000
+		background-color = none
+		is-visible = true
+		is-disabled = false
+		is-transparent = false
+		is-default = false
+		border = none
+		drop-zone = false
+		right-click = false
+		saved-params = "is-checked"
+		on-size = ""
+		text = "Compile"
+		image = ""
+		command = "tcscompile"
+		is-flat = false
+		stretch = false
+		is-checked = false
+		group = ""
+		button-type = pushbutton
+	elem "button1"
+		type = BUTTON
+		pos = 0,464
+		size = 53x20
+		anchor1 = 0,80
+		anchor2 = 9,83
+		font-family = ""
+		font-size = 0
+		font-style = ""
+		text-color = #000000
+		background-color = none
+		is-visible = true
+		is-disabled = false
+		is-transparent = false
+		is-default = false
+		border = none
+		drop-zone = false
+		right-click = false
+		saved-params = "is-checked"
+		on-size = ""
+		text = "Save"
+		image = ""
+		command = "tcssave"
+		is-flat = false
+		stretch = false
+		is-checked = false
+		group = ""
+		button-type = pushbutton
+	elem "tcscode"
+		type = INPUT
+		pos = 0,0
+		size = 569x464
+		anchor1 = 0,0
+		anchor2 = 100,80
+		font-family = "Courier"
+		font-size = 10
+		font-style = ""
+		text-color = #000000
+		background-color = #ffffff
+		is-visible = true
+		is-disabled = false
+		is-transparent = false
+		is-default = false
+		border = none
+		drop-zone = false
+		right-click = false
+		saved-params = ""
+		on-size = ""
+		command = "cancel"
+		multi-line = true
+		is-password = false
+		no-command = true
+
+window "chemdispenser"
+	elem "chemdispenser"
+		type = MAIN
+		pos = 281,0
+		size = 340x480
+		anchor1 = none
+		anchor2 = none
+		font-family = ""
+		font-size = 0
+		font-style = ""
+		text-color = #000000
+		background-color = none
+		is-visible = false
+		is-disabled = false
+		is-transparent = false
+		is-default = false
+		border = none
+		drop-zone = false
+		right-click = false
+		saved-params = "pos;size;is-minimized;is-maximized"
+		on-size = ""
+		title = "Chem Dispenser"
+		titlebar = true
+		statusbar = false
+		can-close = true
+		can-minimize = true
+		can-resize = true
+		is-pane = false
+		is-minimized = false
+		is-maximized = false
+		can-scroll = none
+		icon = ""
+		image = ""
+		image-mode = stretch
+		keep-aspect = false
+		transparent-color = none
+		alpha = 255
+		macro = ""
+		menu = ""
+		on-close = ""
+	elem "energy"
+		type = LABEL
+		pos = 8,24
+		size = 56x16
+		anchor1 = none
+		anchor2 = none
+		font-family = ""
+		font-size = 0
+		font-style = ""
+		text-color = #000000
+		background-color = none
+		is-visible = true
+		is-disabled = false
+		is-transparent = false
+		is-default = false
+		border = none
+		drop-zone = false
+		right-click = false
+		saved-params = ""
+		on-size = ""
+		text = "Energy: 25"
+		image = ""
+		image-mode = center
+		keep-aspect = false
+		align = center
+		text-wrap = false
+	elem "eject"
+		type = BUTTON
+		pos = 264,4
+		size = 72x20
+		anchor1 = none
+		anchor2 = none
+		font-family = ""
+		font-size = 0
+		font-style = ""
+		text-color = #000000
+		background-color = none
+		is-visible = true
+		is-disabled = false
+		is-transparent = false
+		is-default = false
+		border = none
+		drop-zone = false
+		right-click = false
+		saved-params = "is-checked"
+		on-size = ""
+		text = "[Insert beaker]"
+		image = ""
+		command = "skincmd \"chemdispenser;eject\""
+		is-flat = false
+		stretch = false
+		is-checked = false
+		group = ""
+		button-type = pushbutton
+	elem "amountc"
+		type = BUTTON
+		pos = 208,4
+		size = 48x20
+		anchor1 = none
+		anchor2 = none
+		font-family = ""
+		font-size = 0
+		font-style = ""
+		text-color = #000000
+		background-color = none
+		is-visible = true
+		is-disabled = false
+		is-transparent = false
+		is-default = false
+		border = none
+		drop-zone = false
+		right-click = false
+		saved-params = "is-checked"
+		on-size = ""
+		text = "[Other]"
+		image = ""
+		command = "skincmd \"chemdispenser;amountc\""
+		is-flat = false
+		stretch = false
+		is-checked = false
+		group = ""
+		button-type = pushbutton
+	elem "amount3"
+		type = BUTTON
+		pos = 176,4
+		size = 24x20
+		anchor1 = none
+		anchor2 = none
+		font-family = ""
+		font-size = 0
+		font-style = ""
+		text-color = #000000
+		background-color = none
+		is-visible = true
+		is-disabled = false
+		is-transparent = false
+		is-default = false
+		border = none
+		drop-zone = false
+		right-click = false
+		saved-params = "is-checked"
+		on-size = ""
+		text = "[30]"
+		image = ""
+		command = "skincmd \"chemdispenser;amount30\""
+		is-flat = false
+		stretch = false
+		is-checked = false
+		group = ""
+		button-type = pushbutton
+	elem "amount2"
+		type = BUTTON
+		pos = 144,4
+		size = 24x20
+		anchor1 = none
+		anchor2 = none
+		font-family = ""
+		font-size = 0
+		font-style = ""
+		text-color = #000000
+		background-color = none
+		is-visible = true
+		is-disabled = false
+		is-transparent = false
+		is-default = false
+		border = none
+		drop-zone = false
+		right-click = false
+		saved-params = "is-checked"
+		on-size = ""
+		text = "[20]"
+		image = ""
+		command = "skincmd \"chemdispenser;amount20\""
+		is-flat = false
+		stretch = false
+		is-checked = false
+		group = ""
+		button-type = pushbutton
+	elem "amount1"
+		type = BUTTON
+		pos = 112,4
+		size = 24x20
+		anchor1 = none
+		anchor2 = none
+		font-family = ""
+		font-size = 0
+		font-style = ""
+		text-color = #000000
+		background-color = none
+		is-visible = true
+		is-disabled = false
+		is-transparent = false
+		is-default = false
+		border = none
+		drop-zone = false
+		right-click = false
+		saved-params = "is-checked"
+		on-size = ""
+		text = "[10]"
+		image = ""
+		command = "skincmd \"chemdispenser;amount10\""
+		is-flat = false
+		stretch = false
+		is-checked = false
+		group = ""
+		button-type = pushbutton
+	elem "amount"
+		type = LABEL
+		pos = 4,4
+		size = 100x20
+		anchor1 = none
+		anchor2 = none
+		font-family = ""
+		font-size = 12
+		font-style = ""
+		text-color = #000000
+		background-color = none
+		is-visible = true
+		is-disabled = false
+		is-transparent = false
+		is-default = false
+		border = none
+		drop-zone = false
+		right-click = false
+		saved-params = ""
+		on-size = ""
+		text = "Amount: 30"
+		image = ""
+		image-mode = center
+		keep-aspect = false
+		align = center
+		text-wrap = false
+	elem "child1"
+		type = CHILD
+		pos = 0,40
+		size = 340x440
+		anchor1 = none
+		anchor2 = none
+		font-family = ""
+		font-size = 0
+		font-style = ""
+		text-color = #000000
+		background-color = none
+		is-visible = true
+		is-disabled = false
+		is-transparent = false
+		is-default = false
+		border = none
+		drop-zone = false
+		right-click = false
+		saved-params = "splitter"
+		on-size = ""
+		left = "chemdispenser_reagents"
+		right = ""
+		is-vert = false
+		splitter = 50
+		show-splitter = true
+		lock = none
+
+window "chemdispenser_reagents"
+	elem "chemdispenser_reagents"
+		type = MAIN
+		pos = 281,0
+		size = 340x448
+		anchor1 = none
+		anchor2 = none
+		font-family = ""
+		font-size = 0
+		font-style = ""
+		text-color = #000000
+		background-color = none
+		is-visible = true
+		is-disabled = false
+		is-transparent = false
+		is-default = false
+		border = none
+		drop-zone = false
+		right-click = false
+		saved-params = "pos;size;is-minimized;is-maximized"
+		on-size = ""
+		title = ""
+		titlebar = false
+		statusbar = false
+		can-close = false
+		can-minimize = false
+		can-resize = false
+		is-pane = true
+		is-minimized = false
+		is-maximized = false
+		can-scroll = vertical
+		icon = ""
+		image = ""
+		image-mode = stretch
+		keep-aspect = false
+		transparent-color = none
+		alpha = 255
+		macro = ""
+		menu = ""
+		on-close = ""
+	elem "template_dispense"
+		type = BUTTON
+		pos = 256,8
+		size = 64x32
+		anchor1 = none
+		anchor2 = none
+		font-family = ""
+		font-size = 0
+		font-style = ""
+		text-color = #000000
+		background-color = none
+		is-visible = false
+		is-disabled = false
+		is-transparent = false
+		is-default = false
+		border = none
+		drop-zone = false
+		right-click = false
+		saved-params = "is-checked"
+		on-size = ""
+		text = "Dispense"
+		image = 'icons\\dispensebutton_bg.png'
+		command = ""
+		is-flat = true
+		stretch = false
+		is-checked = false
+		group = ""
+		button-type = pushbutton
+	elem "template_name"
+		type = LABEL
+		pos = 18,8
+		size = 230x32
+		anchor1 = none
+		anchor2 = none
+		font-family = ""
+		font-size = 15
+		font-style = ""
+		text-color = #000000
+		background-color = none
+		is-visible = false
+		is-disabled = false
+		is-transparent = false
+		is-default = false
+		border = none
+		drop-zone = false
+		right-click = false
+		saved-params = ""
+		on-size = ""
+		text = "Chloral Hydrate"
+		image = 'icons\\reagentname_bg.png'
+		image-mode = stretch
+		keep-aspect = false
+		align = center
+		text-wrap = false
+
+window "mainwindow"
+	elem "mainwindow"
+		type = MAIN
+		pos = 281,0
+		size = 640x440
+		anchor1 = none
+		anchor2 = none
+		font-family = ""
+		font-size = 0
+		font-style = ""
+		text-color = #000000
+		background-color = none
+		is-visible = true
+		is-disabled = false
+		is-transparent = false
+		is-default = true
+		border = none
+		drop-zone = false
+		right-click = false
+		saved-params = "pos;size;is-minimized;is-maximized"
+		on-size = ""
+		title = "Space Station 13"
+		titlebar = true
+		statusbar = true
+		can-close = true
+		can-minimize = true
+		can-resize = true
+		is-pane = false
+		is-minimized = false
+		is-maximized = true
+		can-scroll = none
+		icon = 'icons\\ss13_64.png'
+		image = ""
+		image-mode = stretch
+		keep-aspect = false
+		transparent-color = none
+		alpha = 255
+		macro = "macro"
+		menu = "menu"
+		on-close = ""
+	elem "hotkey_toggle"
+		type = BUTTON
+		pos = 560,420
+		size = 80x20
+		anchor1 = 100,100
+		anchor2 = none
+		font-family = ""
+		font-size = 0
+		font-style = ""
+		text-color = #000000
+		background-color = none
+		is-visible = true
+		is-disabled = false
+		is-transparent = false
+		is-default = false
+		border = none
+		drop-zone = false
+		right-click = false
+		saved-params = ""
+		on-size = ""
+		text = "Hotkey Toggle"
+		image = ""
+		command = ".winset \"mainwindow.macro!=macro ? mainwindow.macro=macro hotkey_toggle.is-checked=false input.background-color=#D3B5B5 : mainwindow.macro=hotkeymode hotkey_toggle.is-checked=true mapwindow.map.focus=true input.background-color=#F0F0F0\""
+		is-flat = false
+		stretch = false
+		is-checked = false
+		group = ""
+		button-type = pushbox
+	elem "mainvsplit"
+		type = CHILD
+		pos = 3,0
+		size = 634x416
+		anchor1 = 0,0
+		anchor2 = 100,100
+		font-family = ""
+		font-size = 0
+		font-style = ""
+		text-color = #000000
+		background-color = none
+		is-visible = true
+		is-disabled = false
+		is-transparent = false
+		is-default = false
+		border = none
+		drop-zone = false
+		right-click = false
+		saved-params = "splitter"
+		on-size = ""
+		left = ""
+		right = "rpane"
+		is-vert = true
+		splitter = 50
+		show-splitter = true
+		lock = none
+	elem "input"
+		type = INPUT
+		pos = 3,420
+		size = 517x20
+		anchor1 = 0,100
+		anchor2 = 100,100
+		font-family = ""
+		font-size = 0
+		font-style = ""
+		text-color = #000000
+		background-color = #d3b5b5
+		is-visible = true
+		is-disabled = false
+		is-transparent = false
+		is-default = true
+		border = sunken
+		drop-zone = false
+		right-click = false
+		saved-params = "command"
+		on-size = ""
+		command = ""
+		multi-line = false
+		is-password = false
+		no-command = false
+	elem "saybutton"
+		type = BUTTON
+		pos = 520,420
+		size = 40x20
+		anchor1 = 100,100
+		anchor2 = none
+		font-family = ""
+		font-size = 0
+		font-style = ""
+		text-color = #000000
+		background-color = none
+		is-visible = true
+		is-disabled = false
+		is-transparent = false
+		is-default = false
+		border = none
+		drop-zone = false
+		right-click = false
+		saved-params = "is-checked"
+		on-size = ""
+		text = "Chat"
+		image = ""
+		command = ".winset \"saybutton.is-checked=true?input.command=\"!say \\\"\" macrobutton.is-checked=false:input.command=\""
+		is-flat = false
+		stretch = false
+		is-checked = false
+		group = ""
+		button-type = pushbox
+
+window "mapwindow"
+	elem "mapwindow"
+		type = MAIN
+		pos = 281,0
+		size = 640x480
+		anchor1 = none
+		anchor2 = none
+		font-family = ""
+		font-size = 0
+		font-style = ""
+		text-color = #000000
+		background-color = none
+		is-visible = true
+		is-disabled = false
+		is-transparent = false
+		is-default = false
+		border = none
+		drop-zone = false
+		right-click = false
+		saved-params = "pos;size;is-minimized;is-maximized"
+		on-size = ""
+		title = ""
+		titlebar = false
+		statusbar = false
+		can-close = false
+		can-minimize = false
+		can-resize = false
+		is-pane = true
+		is-minimized = false
+		is-maximized = false
+		can-scroll = none
+		icon = ""
+		image = ""
+		image-mode = stretch
+		keep-aspect = false
+		transparent-color = none
+		alpha = 255
+		macro = ""
+		menu = ""
+		on-close = ""
+	elem "map"
+		type = MAP
+		pos = 0,0
+		size = 640x480
+		anchor1 = 0,0
+		anchor2 = 100,100
+		font-family = "Arial"
+		font-size = 7
+		font-style = ""
+		text-color = none
+		background-color = none
+		is-visible = true
+		is-disabled = false
+		is-transparent = false
+		is-default = true
+		border = none
+		drop-zone = true
+		right-click = false
+		saved-params = "icon-size"
+		on-size = ""
+		icon-size = 0
+		text-mode = false
+		on-show = ".winset\"mainwindow.mainvsplit.left=mapwindow\""
+		on-hide = ".winset\"mainwindow.mainvsplit.left=\""
+		style = ""
+
+window "outputwindow"
+	elem "outputwindow"
+		type = MAIN
+		pos = 281,0
+		size = 640x480
+		anchor1 = none
+		anchor2 = none
+		font-family = ""
+		font-size = 0
+		font-style = ""
+		text-color = #000000
+		background-color = none
+		is-visible = true
+		is-disabled = false
+		is-transparent = false
+		is-default = false
+		border = none
+		drop-zone = false
+		right-click = false
+		saved-params = "pos;size;is-minimized;is-maximized"
+		on-size = ""
+		title = ""
+		titlebar = false
+		statusbar = false
+		can-close = false
+		can-minimize = false
+		can-resize = false
+		is-pane = true
+		is-minimized = false
+		is-maximized = false
+		can-scroll = none
+		icon = ""
+		image = ""
+		image-mode = stretch
+		keep-aspect = false
+		transparent-color = none
+		alpha = 255
+		macro = ""
+		menu = ""
+		on-close = ""
+	elem "output"
+		type = OUTPUT
+		pos = 0,0
+		size = 640x480
+		anchor1 = 0,0
+		anchor2 = 100,100
+		font-family = ""
+		font-size = 0
+		font-style = ""
+		text-color = #000000
+		background-color = #ffffff
+		is-visible = true
+		is-disabled = false
+		is-transparent = false
+		is-default = true
+		border = none
+		drop-zone = false
+		right-click = false
+		saved-params = "max-lines"
+		on-size = ""
+		link-color = #0000ff
+		visited-color = #ff00ff
+		style = ".system {color:#ff0000;}"
+		enable-http-images = false
+		max-lines = 1000
+		image = ""
+
+window "rpane"
+	elem "rpane"
+		type = MAIN
+		pos = 281,0
+		size = 640x480
+		anchor1 = none
+		anchor2 = none
+		font-family = ""
+		font-size = 0
+		font-style = ""
+		text-color = #000000
+		background-color = none
+		is-visible = true
+		is-disabled = false
+		is-transparent = false
+		is-default = false
+		border = none
+		drop-zone = false
+		right-click = false
+		saved-params = "pos;size;is-minimized;is-maximized"
+		on-size = ""
+		title = ""
+		titlebar = true
+		statusbar = true
+		can-close = true
+		can-minimize = true
+		can-resize = true
+		is-pane = true
+		is-minimized = false
+		is-maximized = false
+		can-scroll = none
+		icon = ""
+		image = ""
+		image-mode = stretch
+		keep-aspect = false
+		transparent-color = none
+		alpha = 255
+		macro = ""
+		menu = ""
+		on-close = ""
+	elem "rpanewindow"
+		type = CHILD
+		pos = 0,0
+		size = 640x499
+		anchor1 = 0,0
+		anchor2 = 100,100
+		font-family = ""
+		font-size = 0
+		font-style = ""
+		text-color = #000000
+		background-color = none
+		is-visible = true
+		is-disabled = false
+		is-transparent = false
+		is-default = false
+		border = none
+		drop-zone = false
+		right-click = false
+		saved-params = "splitter"
+		on-size = ""
+		left = ""
+		right = "outputwindow"
+		is-vert = false
+		splitter = 50
+		show-splitter = true
+		lock = none
+	elem "reportissueb"
+		type = BUTTON
+		pos = 480,0
+		size = 67x16
+		anchor1 = none
+		anchor2 = none
+		font-family = ""
+		font-size = 0
+		font-style = ""
+		text-color = #000000
+		background-color = none
+		is-visible = true
+		is-disabled = false
+		is-transparent = false
+		is-default = false
+		border = none
+		drop-zone = false
+		right-click = false
+		saved-params = "is-checked"
+		on-size = ""
+		text = "Report Issue"
+		image = ""
+		command = "report-issue"
+		is-flat = false
+		stretch = false
+		is-checked = false
+		group = "rpanemode"
+		button-type = pushbutton
+	elem "changelogb"
+		type = BUTTON
+		pos = 336,0
+		size = 67x16
+		anchor1 = none
+		anchor2 = none
+		font-family = ""
+		font-size = 0
+		font-style = ""
+		text-color = #000000
+		background-color = none
+		is-visible = true
+		is-disabled = false
+		is-transparent = false
+		is-default = false
+		border = none
+		drop-zone = false
+		right-click = false
+		saved-params = "is-checked"
+		on-size = ""
+		text = "Changelog"
+		image = ""
+		command = "Changelog"
+		is-flat = false
+		stretch = false
+		is-checked = false
+		group = "rpanemode"
+		button-type = pushbutton
+	elem "rulesb"
+		type = BUTTON
+		pos = 272,0
+		size = 60x16
+		anchor1 = none
+		anchor2 = none
+		font-family = ""
+		font-size = 0
+		font-style = ""
+		text-color = #000000
+		background-color = none
+		is-visible = true
+		is-disabled = false
+		is-transparent = false
+		is-default = false
+		border = none
+		drop-zone = false
+		right-click = false
+		saved-params = "is-checked"
+		on-size = ""
+		text = "Rules"
+		image = ""
+		command = "rules"
+		is-flat = false
+		stretch = false
+		is-checked = false
+		group = "rpanemode"
+		button-type = pushbutton
+	elem "githubb"
+		type = BUTTON
+		pos = 408,0
+		size = 67x16
+		anchor1 = none
+		anchor2 = none
+		font-family = ""
+		font-size = 0
+		font-style = ""
+		text-color = #000000
+		background-color = none
+		is-visible = true
+		is-disabled = false
+		is-transparent = false
+		is-default = false
+		border = none
+		drop-zone = false
+		right-click = false
+		saved-params = "is-checked"
+		on-size = ""
+		text = "Github"
+		image = ""
+		command = "github"
+		is-flat = false
+		stretch = false
+		is-checked = false
+		group = "rpanemode"
+		button-type = pushbutton
+	elem "forumb"
+		type = BUTTON
+		pos = 208,0
+		size = 60x16
+		anchor1 = none
+		anchor2 = none
+		font-family = ""
+		font-size = 0
+		font-style = ""
+		text-color = #000000
+		background-color = none
+		is-visible = true
+		is-disabled = false
+		is-transparent = false
+		is-default = false
+		border = none
+		drop-zone = false
+		right-click = false
+		saved-params = "is-checked"
+		on-size = ""
+		text = "Forum"
+		image = ""
+		command = "forum"
+		is-flat = false
+		stretch = false
+		is-checked = false
+		group = "rpanemode"
+		button-type = pushbutton
+	elem "wikib"
+		type = BUTTON
+		pos = 144,0
+		size = 60x16
+		anchor1 = none
+		anchor2 = none
+		font-family = ""
+		font-size = 0
+		font-style = ""
+		text-color = #000000
+		background-color = none
+		is-visible = true
+		is-disabled = false
+		is-transparent = false
+		is-default = false
+		border = none
+		drop-zone = false
+		right-click = false
+		saved-params = "is-checked"
+		on-size = ""
+		text = "Wiki"
+		image = ""
+		command = "wiki"
+		is-flat = false
+		stretch = false
+		is-checked = false
+		group = "rpanemode"
+		button-type = pushbutton
+	elem "textb"
+		type = BUTTON
+		pos = 0,0
+		size = 60x16
+		anchor1 = none
+		anchor2 = none
+		font-family = ""
+		font-size = 0
+		font-style = ""
+		text-color = #000000
+		background-color = none
+		is-visible = false
+		is-disabled = false
+		is-transparent = false
+		is-default = false
+		border = none
+		drop-zone = false
+		right-click = false
+		saved-params = "is-checked"
+		on-size = ""
+		text = "Text"
+		image = ""
+		command = ".winset \"rpanewindow.left=;\""
+		is-flat = false
+		stretch = false
+		is-checked = true
+		group = "rpanemode"
+		button-type = pushbox
+	elem "browseb"
+		type = BUTTON
+		pos = 552,0
+		size = 60x16
+		anchor1 = none
+		anchor2 = none
+		font-family = ""
+		font-size = 0
+		font-style = ""
+		text-color = #000000
+		background-color = none
+		is-visible = false
+		is-disabled = false
+		is-transparent = false
+		is-default = false
+		border = none
+		drop-zone = false
+		right-click = false
+		saved-params = "is-checked"
+		on-size = ""
+		text = "Browser"
+		image = ""
+		command = ".winset \"rpanewindow.left=browserwindow\""
+		is-flat = false
+		stretch = false
+		is-checked = false
+		group = "rpanemode"
+		button-type = pushbox
+	elem "infob"
+		type = BUTTON
+		pos = 64,0
+		size = 60x16
+		anchor1 = none
+		anchor2 = none
+		font-family = ""
+		font-size = 0
+		font-style = ""
+		text-color = #000000
+		background-color = none
+		is-visible = false
+		is-disabled = false
+		is-transparent = false
+		is-default = false
+		border = none
+		drop-zone = false
+		right-click = false
+		saved-params = "is-checked"
+		on-size = ""
+		text = "Info"
+		image = ""
+		command = ".winset \"rpanewindow.left=infowindow\""
+		is-flat = false
+		stretch = false
+		is-checked = false
+		group = "rpanemode"
+		button-type = pushbox
+
+window "browserwindow"
+	elem "browserwindow"
+		type = MAIN
+		pos = 281,0
+		size = 640x480
+		anchor1 = none
+		anchor2 = none
+		font-family = ""
+		font-size = 0
+		font-style = ""
+		text-color = #000000
+		background-color = none
+		is-visible = true
+		is-disabled = false
+		is-transparent = false
+		is-default = false
+		border = none
+		drop-zone = false
+		right-click = false
+		saved-params = "pos;size;is-minimized;is-maximized"
+		on-size = ""
+		title = "Browser"
+		titlebar = true
+		statusbar = true
+		can-close = true
+		can-minimize = true
+		can-resize = true
+		is-pane = true
+		is-minimized = false
+		is-maximized = false
+		can-scroll = none
+		icon = ""
+		image = ""
+		image-mode = stretch
+		keep-aspect = false
+		transparent-color = none
+		alpha = 255
+		macro = ""
+		menu = ""
+		on-close = ""
+	elem "browser"
+		type = BROWSER
+		pos = 0,0
+		size = 640x499
+		anchor1 = 0,0
+		anchor2 = 100,100
+		font-family = ""
+		font-size = 0
+		font-style = ""
+		text-color = #000000
+		background-color = #ffffff
+		is-visible = true
+		is-disabled = false
+		is-transparent = false
+		is-default = true
+		border = none
+		drop-zone = false
+		right-click = false
+		saved-params = ""
+		on-size = ""
+		show-history = false
+		show-url = false
+		auto-format = true
+		use-title = false
+		on-show = ".winset\"rpane.infob.is-visible=true?rpane.infob.pos=130,0;rpane.textb.is-visible=true;rpane.browseb.is-visible=true;rpane.browseb.is-checked=true;rpane.rpanewindow.pos=0,30;rpane.rpanewindow.size=0x0;rpane.rpanewindow.left=browserwindow\""
+		on-hide = ".winset\"rpane.infob.is-visible=true?rpane.infob.is-checked=true rpane.infob.pos=65,0 rpane.rpanewindow.left=infowindow:rpane.rpanewindow.left=textwindow rpane.textb.is-visible=true rpane.rpanewindow.pos=0,30 rpane.rpanewindow.size=0x0\""
+
+window "infowindow"
+	elem "infowindow"
+		type = MAIN
+		pos = 281,0
+		size = 640x480
+		anchor1 = none
+		anchor2 = none
+		font-family = ""
+		font-size = 0
+		font-style = ""
+		text-color = #000000
+		background-color = none
+		is-visible = true
+		is-disabled = false
+		is-transparent = false
+		is-default = false
+		border = none
+		drop-zone = false
+		right-click = false
+		saved-params = "pos;size;is-minimized;is-maximized"
+		on-size = ""
+		title = "Info"
+		titlebar = true
+		statusbar = true
+		can-close = true
+		can-minimize = true
+		can-resize = true
+		is-pane = true
+		is-minimized = false
+		is-maximized = false
+		can-scroll = none
+		icon = ""
+		image = ""
+		image-mode = stretch
+		keep-aspect = false
+		transparent-color = none
+		alpha = 255
+		macro = ""
+		menu = ""
+		on-close = ""
+	elem "info"
+		type = INFO
+		pos = 0,0
+		size = 638x475
+		anchor1 = 0,0
+		anchor2 = 100,100
+		font-family = ""
+		font-size = 0
+		font-style = ""
+		text-color = #000000
+		background-color = #ffffff
+		is-visible = true
+		is-disabled = false
+		is-transparent = false
+		is-default = true
+		border = none
+		drop-zone = true
+		right-click = false
+		saved-params = ""
+		on-size = ""
+		highlight-color = #00aa00
+		tab-text-color = #000000
+		tab-background-color = none
+		tab-font-family = ""
+		tab-font-size = 0
+		tab-font-style = ""
+		allow-html = false
+		multi-line = true
+		on-show = ".winset\"rpane.infob.is-visible=true;rpane.browseb.is-visible=true?rpane.infob.pos=130,0:rpane.infob.pos=65,0 rpane.textb.is-visible=true rpane.infob.is-checked=true rpane.rpanewindow.pos=0,30 rpane.rpanewindow.size=0x0 rpane.rpanewindow.left=infowindow\""
+		on-hide = ".winset\"rpane.infob.is-visible=false;rpane.browseb.is-visible=true?rpane.browseb.is-checked=true rpane.rpanewindow.left=browserwindow:rpane.textb.is-visible=true rpane.rpanewindow.pos=0,30 rpane.rpanewindow.size=0x0 rpane.rpanewindow.left=\""
+		on-tab = ""
+

@@ -1,0 +1,190 @@
+Note: The proc name, source file, src and usr are all from the FIRST of the identical runtimes. Everything else is cropped.
+
+Total unique runtimes: 25
+Total runtimes: 767
+
+** Runtimes **
+
+The following runtime has occured 269 time(s).
+runtime error: Cannot read null.viruses
+proc name: cure (/datum/disease/proc/cure)
+  source file: disease.dm,156
+  usr: null
+  src: Space Retrovirus (/datum/disease/dnaspread)
+
+
+The following runtime has occured 199 time(s).
+runtime error: Cannot read null.has_gravity
+proc name: throw at (/atom/movable/proc/throw_at)
+  source file: throwing.dm,194
+  usr: Reese Marcotte (/mob/living/carbon/human)
+  src: Reese Marcotte (/mob/living/carbon/human)
+
+
+The following runtime has occured 165 time(s).
+runtime error: Cannot read null.slot_flags
+proc name: db click (/mob/living/carbon/human/db_click)
+  source file: inventory.dm,1083
+  usr: Puke Chunks (/mob/living/carbon/human)
+  src: Puke Chunks (/mob/living/carbon/human)
+
+
+The following runtime has occured 25 time(s).
+runtime error: Cannot read null.flags
+proc name: relaymove (/obj/effect/dummy/spell_jaunt/relaymove)
+
+
+The following runtime has occured 24 time(s).
+runtime error: Cannot read null.len
+proc name: mergeRecordLists (/proc/mergeRecordLists)
+  source file: helpers.dm,260
+  usr: Wintermute (/mob/living/silicon/ai)
+  src: null
+
+
+The following runtime has occured 20 time(s).
+runtime error: Cannot read null.total_volume
+proc name: attackby (/obj/machinery/reagentgrinder/attackby)
+  source file: Chemistry-Machinery.dm,751
+  usr: Reese Marcotte (/mob/living/carbon/human)
+  src: All-In-One Grinder (/obj/machinery/reagentgrinder)
+
+
+The following runtime has occured 16 time(s).
+runtime error: Cannot read null.broadcasting
+proc name: radio menu (/mob/living/silicon/robot/proc/radio_menu)
+  source file: robot.dm,857
+  usr: Engineering Cyborg -432 (/mob/living/silicon/robot)
+  src: Engineering Cyborg -432 (/mob/living/silicon/robot)
+
+
+The following runtime has occured 7 time(s).
+runtime error: unexpected stat
+proc name: Stat (/mob/living/silicon/robot/Stat)
+  source file: robot.dm,227
+  usr: Michigan Slim (/mob/living/carbon/human)
+  src: Engineering Cyborg -133 (/mob/living/silicon/robot)
+
+
+The following runtime has occured 7 time(s).
+runtime error: Cannot read null.current
+proc name: check completion (/datum/objective/download/check_completion)
+  source file: objective.dm,411
+  usr: null
+  src: /datum/objective/download (/datum/objective/download)
+
+
+The following runtime has occured 6 time(s).
+runtime error: Cannot create objects of type null.
+proc name: Topic (/obj/machinery/computer/rdconsole/Topic)
+  source file: rdconsole.dm,381
+  usr: Matthew Hoff (/mob/living/carbon/human)
+  src: Core R&D Console (/obj/machinery/computer/rdconsole/core)
+
+
+The following runtime has occured 6 time(s).
+runtime error: Cannot read null.fields
+proc name: mergeRecordLists (/proc/mergeRecordLists)
+  source file: helpers.dm,263
+  usr: Wintermute (/mob/living/silicon/ai)
+  src: null
+
+
+The following runtime has occured 3 time(s).
+runtime error: undefined variable /client/var/loc
+proc name: get turf (/proc/get_turf)
+  source file: helper_procs.dm,38
+  usr: the ghost (/mob/dead/observer)
+  src: null
+
+
+The following runtime has occured 3 time(s).
+runtime error: Cannot read null.nodes
+proc name: merge powernets (/datum/powernet/proc/merge_powernets)
+  source file: power.dm,401
+  usr: Darin Keppel (/mob/living/carbon/human)
+  src: /datum/powernet (/datum/powernet)
+
+
+The following runtime has occured 3 time(s).
+runtime error: Cannot read null.reagents
+proc name: fire syringe (/obj/item/weapon/gun/syringe/proc/fire_syringe)
+
+
+The following runtime has occured 2 time(s).
+runtime error: undefined proc or verb /obj/machinery/space_heater/attack().
+
+
+
+The following runtime has occured 2 time(s).
+runtime error: list index out of bounds
+proc name: mergeConnectedNetworksOnTurf (/obj/structure/cable/proc/mergeConnectedNetworksOnTurf)
+  source file: cable.dm,520
+  usr: Josue Sandford (/mob/living/carbon/human)
+  src: the power cable (/obj/structure/cable)
+
+
+The following runtime has occured 2 time(s).
+runtime error: Cannot read null.loc
+proc name: Life (/mob/living/simple_animal/corgi/Ian/Life)
+  source file: corgi.dm,304
+  usr: null
+  src: Captain Ian (/mob/living/simple_animal/corgi/Ian)
+
+
+The following runtime has occured 1 time(s).
+runtime error: undefined proc or verb /obj/machinery/portable_atmospherics/canister/toxins/attack().
+
+
+
+The following runtime has occured 1 time(s).
+runtime error: undefined variable /datum/preferences/var/fields
+proc name: Topic (/obj/machinery/computer/cloning/Topic)
+  source file: cloning.dm,370
+  usr: Logan Graves (/mob/living/carbon/human)
+  src: Cloning console (/obj/machinery/computer/cloning)
+
+
+The following runtime has occured 1 time(s).
+runtime error: undefined variable /turf/simulated/floor/plating/var/mineral
+proc name: attackby (/turf/simulated/wall/attackby)
+  source file: turf.dm,600
+  usr: Monte Smail (/mob/living/carbon/human)
+  src: the plating (176,172,5) (/turf/simulated/floor/plating)
+
+
+The following runtime has occured 1 time(s).
+runtime error: Cannot read null.blood_DNA
+proc name: update inv w uniform (/mob/living/carbon/human/update_inv_w_uniform)
+  source file: update_icons.dm,372
+  usr: null
+  src: Chip Harshman (/mob/living/carbon/human)
+
+
+The following runtime has occured 1 time(s).
+runtime error: Cannot execute null.dropped().
+proc name: drop l hand (/mob/proc/drop_l_hand)
+  source file: inventory.dm,104
+  usr: Jeb Stone (/mob/living/carbon/human)
+  src: Jeb Stone (/mob/living/carbon/human)
+
+
+The following runtime has occured 1 time(s).
+runtime error: Cannot read null.w_class
+proc name: attackby (/obj/item/weapon/storage/attackby)
+  source file: storage.dm,187
+  usr: Samuel York (/mob/living/carbon/human)
+  src: the backpack (/obj/item/weapon/storage/backpack)
+
+
+The following runtime has occured 1 time(s).
+runtime error: Cannot read null.amount
+proc name: attackby (/obj/machinery/constructable_frame/machine_frame/attackby)
+  source file: constructable_frame.dm,27
+  usr: Quinton Bould (/mob/living/carbon/human)
+  src: the machine frame (/obj/machinery/constructable_frame/machine_frame)
+
+
+The following runtime has occured 1 time(s).
+runtime error: Cannot modify null.status.
+proc name: death (/mob/living/silicon/robot/death)

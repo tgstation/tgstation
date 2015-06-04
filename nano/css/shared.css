@@ -1,0 +1,445 @@
+body 
+{ 
+	padding: 0;
+	margin: 0;
+	font-size: 12px;
+	color: #ffffff;
+	line-height: 170%;
+	font-family: Verdana, Geneva, sans-serif;	
+    background: #272727 url(uiBackground.png) 50% 0 repeat-x;
+	overflow-x: hidden;
+}
+
+hr
+{
+	background-color: #40628a;
+	height: 1px;
+}
+
+a, a:link, a:visited, a:active, .link, .linkOn, .linkOff, .selected, .disabled
+{ 
+	color: #ffffff; 
+	text-decoration: none;
+	background: #40628a;
+	border: 1px solid #161616;
+	padding: 0px 4px 4px 0px;
+	margin: 0 2px 2px 0;
+	cursor:default;
+}
+
+.link
+{
+    float: left;
+    min-width: 15px;
+    height: 16px;
+    text-align: center;
+    color: #ffffff;
+    text-decoration: none;
+    background: #40628a;
+    border: 1px solid #161616;
+    padding: 0px 4px 4px 4px;
+    margin: 0 2px 2px 0;
+    cursor: default;
+    white-space: nowrap;
+}
+
+a:hover, .linkActive:hover
+{ 
+	background: #507aac;
+}
+
+.linkPending, .linkPending:hover
+{
+	color: #ffffff; 
+	background: #507aac;
+}
+
+a.white, a.white:link, a.white:visited, a.white:active
+{ 
+	color: #40628a; 
+	text-decoration: none;
+	background: #ffffff;
+	border: 1px solid #161616;
+	padding: 1px 4px 1px 4px;
+	margin: 0 2px 0 0;
+	cursor:default;
+}
+
+a.white:hover 
+{ 
+	color: #ffffff;
+	background: #40628a;
+}
+
+.linkOn, a.linkOn:link, a.linkOn:visited, a.linkOn:active, a.linkOn:hover, .selected, a.selected:link, a.selected:visited, a.selected:active, a.selected:hover
+{ 
+	color: #ffffff; 
+	background: #2f943c;
+}
+
+.linkOff, a.linkOff:link, a.linkOff:visited, a.linkOff:active, a.linkOff:hover, .disabled, a.disabled:link, a.disabled:visited, a.disabled:active, a.disabled:hover
+{ 
+	color: #ffffff; 
+	background: #999999;
+	border-color: #666666;
+}
+
+a.icon, .linkOn.icon, .linkOff.icon, .selected.icon, .disabled.icon
+{
+	position: relative;
+	padding: 1px 4px 2px 20px;
+}
+
+a.icon img, .linkOn.icon img, .linkOff.icon img, .selected.icon img, .disabled.icon img
+{
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 18px;
+	height: 18px;
+}
+
+ul
+{
+	padding: 4px 0 0 10px;
+	margin: 0;
+	list-style-type: none;
+}
+
+li
+{
+	padding: 0 0 2px 0;
+}
+
+img, a img 
+{ 
+	border-style:none; 
+}
+
+h1, h2, h3, h4, h5, h6
+{
+	margin: 0;
+	padding: 16px 0 8px 0; 
+	color: #517087;
+	clear: both;
+}
+
+h1
+{
+	font-size: 15px;
+}
+
+h2
+{
+	font-size: 14px;
+}
+
+h3
+{
+	font-size: 13px;
+}
+
+h4
+{
+	font-size: 12px;
+}
+
+#uiWrapper
+{
+    width: 100%;
+	height: 100%;
+}
+
+#uiTitleWrapper
+{
+	position: relative;
+    height: 30px;
+}
+
+#uiTitle
+{
+	position: absolute;
+    top: 6px;
+	left: 44px;
+	width: 66%;
+    overflow: hidden;	
+	color: #E9C183;
+	font-size: 16px;
+}
+
+#uiTitle.icon
+{
+	padding: 6px 8px 6px 42px;
+	background-position: 2px 50%;
+	background-repeat: no-repeat;
+}
+
+#uiTitleFluff
+{
+	position: absolute;
+	top: 4px;
+	right: 12px;
+	width: 42px;
+	height: 24px;
+	background: url(uiTitleFluff.png) 50% 50% no-repeat;
+}
+
+#uiStatusIcon
+{
+	position: absolute;
+	top: 4px;
+	left: 12px;
+	width: 24px;
+	height: 24px;	
+}
+
+#uiContent
+{	
+	clear: both;
+	padding: 8px;
+}
+#uiNoJavaScript {
+    position: relative;
+    background: url(uiNoticeBackground.jpg) 50% 50%;
+    color: #000000;
+    font-size: 14px;
+    font-style: italic;
+    font-weight: bold;
+    padding: 3px 4px 3px 4px;
+    margin: 4px 0 4px 0;
+}
+
+.good
+{
+	color: #79B33F; /*#4f7529;*/
+	font-weight: bold;
+}
+
+.average
+{
+	color: #cd6500;
+	font-weight: bold;
+}
+
+.bad
+{
+	color: #ee0000;
+	font-weight: bold;
+}
+
+.redButton {
+    background: #ea0000;
+}
+
+.highlight
+{
+	color: #8BA5C4;
+}
+
+.dark
+{
+	color: #272727;
+}
+
+.noticePlaceholder {
+    position: relative;
+    font-size: 12px;
+    font-style: italic;
+    font-weight: bold;
+    padding: 3px 4px 3px 4px;
+    margin: 4px 0 4px 0;
+}
+
+.notice
+{
+	background: url(uiNoticeBackground.jpg) 0 0 repeat;
+	color: #15345A;
+	font-size: 12px;
+	font-style: italic;
+	font-weight: bold;
+	padding: 3px 8px 2px 8px;
+	margin: 4px;
+}
+
+.notice.icon
+{	
+	padding: 2px 4px 0 20px;
+}
+
+.notice img
+{
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 16px;
+	height: 16px;
+}
+
+div.notice
+{
+	clear: both;
+}
+
+.item
+{
+	width: 100%;
+	min-height: 22px;
+	clear: both;
+}
+
+.itemLabel
+{
+	float: left;
+	width: 30%;
+	color: #e9c183;
+}
+
+.itemContentFull
+{
+	float: left;
+}
+.itemContent
+{
+	float: left;
+	width: 69%;
+}
+.itemContentSmall
+{
+	float: left;
+	width: 30%;
+}
+
+.statusDisplay
+{
+	background: #000000;
+	color: #ffffff;
+	border: 1px solid #40628a;
+	padding: 4px;
+	margin: 3px 0;
+}
+
+.statusLabel
+{
+	width: 138px;
+	float: left;
+	overflow: hidden;
+	color: #98B0C3;
+}
+
+.statusValue
+{
+	float: left;
+}
+
+.block
+{
+	padding: 8px;
+	margin: 10px 4px 4px 4px;
+	border: 1px solid #40628a;
+	background-color: #202020;
+}
+
+.block h3
+{
+	padding: 0;
+}
+
+.displayBar
+{
+	position: relative;
+	width: 236px;
+	height: 16px;
+	border: 1px solid #666666;
+	float: left;
+	margin: 0 5px 0 0;
+	overflow: hidden;
+	background: #000000;
+}
+
+.displayBarText
+{
+	position: absolute;
+	top: -2px;
+	left: 5px;
+	width: 100%;
+	height: 100%;
+	color: #ffffff;
+	font-weight: normal;
+}
+
+.displayBarFill
+{
+	width: 0%;
+	height: 100%;
+	background: #40628a;
+	overflow: hidden;
+	float: left;
+}
+
+.displayBarFill.alignRight
+{
+	float: right;
+}
+
+.displayBarFill.good
+{
+	color: #ffffff;
+	background: #4f7529;
+}
+
+.displayBarFill.average
+{
+	color: #ffffff;
+	background: #cd6500;
+}
+
+.displayBarFill.bad
+{
+	color: #ffffff;
+	background: #ee0000;
+}
+
+.displayBarFill.highlight
+{
+	color: #ffffff;
+	background: #8BA5C4;
+}
+
+.clearBoth
+{
+	clear: both;
+}
+
+.clearLeft
+{
+	clear: left;
+}
+
+.clearRight
+{
+	clear: right;
+}
+
+.line
+{
+	width: 100%;
+	clear: both;
+}
+
+.inactive, , a.inactive:link, a.inactive:visited, a.inactive:active, a.inactive:hover
+{
+	color: #ffffff; 
+	background: #999999;
+	border-color: #666666;
+}
+
+.fixedLeft
+{
+	width: 110px;
+	float: left;
+}
+
+.floatRight
+{
+	float: right;
+}
