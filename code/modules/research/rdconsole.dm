@@ -561,7 +561,7 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 	else if(href_list["toggleAllCategories"]) //Filter all categories, if all are filtered, clear filter.
 		var/machine = href_list["machine"]
 		var/list/tempfilter = filtered[machine] //t-thanks BYOND
-		if(tempfilter.len == linked_lathe.part_sets.len)
+		if(tempfilter.len == (machine == "protolathe" ? linked_lathe.part_sets.len : linked_imprinter.part_sets.len))
 			filtered[machine] = list()
 		else
 			filtered[machine] = list()
