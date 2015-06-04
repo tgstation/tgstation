@@ -739,9 +739,15 @@ datum/reagent/medicine/bicaridine
 	description = "Heals brute damage."
 	reagent_state = LIQUID
 	color = "#C8A5DC"
+	overdose_threshold = 30
 
 datum/reagent/medicine/bicaridine/on_mob_life(var/mob/living/M as mob)
 	M.adjustBruteLoss(-2*REM)
+	..()
+	return
+
+datum/reagent/medicine/bicaridine/overdose_process(var/mob/living/M as mob)
+	M.adjustBruteLoss(4*REM) // End result is 2 oxygen loss taken, because it heals 2 and then removes 4.
 	..()
 	return
 
@@ -751,9 +757,15 @@ datum/reagent/medicine/dexalin
 	description = "Heals oxygen damage."
 	reagent_state = LIQUID
 	color = "#C8A5DC"
+	overdose_threshold = 30
 
 datum/reagent/medicine/dexalin/on_mob_life(var/mob/living/M as mob)
 	M.adjustOxyLoss(-2*REM)
+	..()
+	return
+
+datum/reagent/medicine/dexalin/overdose_process(var/mob/living/M as mob)
+	M.adjustOxyLoss(4*REM) // End result is 2 oxygen loss taken, because it heals 2 and then removes 4.
 	..()
 	return
 
@@ -763,11 +775,18 @@ datum/reagent/medicine/kelotane
 	description = "Heals burn damage."
 	reagent_state = LIQUID
 	color = "#C8A5DC"
+	overdose_threshold = 30
 
 datum/reagent/medicine/kelotane/on_mob_life(var/mob/living/M as mob)
 	M.adjustFireLoss(-2*REM)
 	..()
 	return
+
+datum/reagent/medicine/kelotane/overdose_process(var/mob/living/M as mob)
+	M.adjustFireLoss(4*REM) // End result is 2 burn loss taken, because it heals 2 and then removes 4.
+	..()
+	return
+
 
 datum/reagent/medicine/antitoxin
 	name = "Anti-toxin"
@@ -775,11 +794,21 @@ datum/reagent/medicine/antitoxin
 	description = "Heals toxin damage."
 	reagent_state = LIQUID
 	color = "#C8A5DC"
+	overdose_threshold = 30
 
-datum/reagent/medicine/antitoxin/on_mob_life(var/mob/living/M as mob)
+datum/reagent/medicine/antitoxin/on_mob_life(var/mob/living/M as m+ob)
 	M.adjustToxLoss(-2*REM)
+	for(var/datum/reagent/toxin/R in M.reagents.reagent_list)
+		if(R != src)
+			M.reagents.remove_reagent(R.id,1)
 	..()
 	return
+
+datum/reagent/medicine/antitoxin/overdose_process(var/mob/living/M as mob)
+	M.adjustToxLoss(4*REM) // End result is 2 toxin loss taken, because it heals 2 and then removes 4.
+	..()
+	return
+
 
 datum/reagent/medicine/inaprovaline
 	name = "Inaprovaline"
@@ -800,6 +829,7 @@ datum/reagent/medicine/tricordrazine
 	description = "Chance to heal 1 of each damage type."
 	reagent_state = LIQUID
 	color = "#C8A5DC"
+	overdose_threshold = 30
 
 datum/reagent/medicine/tricordrazine/on_mob_life(var/mob/living/M as mob)
 	if(prob(80))
@@ -810,4 +840,10 @@ datum/reagent/medicine/tricordrazine/on_mob_life(var/mob/living/M as mob)
 	..()
 	return
 
-
+datum/reagent/medicine/tricordrazine/overdose_process(var/mob/living/M as mob)
+	M.adjustToxLoss(2*REM)
+	M.adjustOxyLoss(2*REM)
+	M.adjustBruteLoss(2*REM)
+	M.adjustFireLoss(2*REM)
+	..()
+	return
