@@ -1,2 +1,2 @@
 #!/bin/bash -ex
-DreamMaker baystation12.dme
+DreamMaker vgstation13.dme
