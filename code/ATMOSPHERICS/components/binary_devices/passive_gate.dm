@@ -28,9 +28,12 @@ Passive gate is similar to the regular pump except:
 	..()
 
 /obj/machinery/atmospherics/binary/passive_gate/update_icon_nopipes()
-	overlays.Cut()
-	if(on & !(stat & NOPOWER))
-		overlays += getpipeimage('icons/obj/atmospherics/binary_devices.dmi', "passgate_on")
+	if(!on)
+		icon_state = "passgate_off"
+		overlays.Cut()
+		return
+
+	overlays += getpipeimage('icons/obj/atmospherics/binary_devices.dmi', "passgate_on")
 
 /obj/machinery/atmospherics/binary/passive_gate/process_atmos()
 	..()

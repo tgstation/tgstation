@@ -355,14 +355,14 @@
 			S.start()
 		qdel(B)
 
-datum/reagent/shadowling_blindness_smoke //Blinds non-shadowlings, heals shadowlings/thralls
+/datum/reagent/shadowling_blindness_smoke //Blinds non-shadowlings, heals shadowlings/thralls
 	name = "!(%@ ERROR )!@$"
 	id = "blindness_smoke"
 	description = "<::ERROR::> CANNOT ANALYZE REAGENT <::ERROR::>"
 	color = "#000000" //Complete black (RGB: 0, 0, 0)
 	metabolization_rate = 100 //lel
 
-datum/reagent/shadowling_blindness_smoke/on_mob_life(var/mob/living/M as mob)
+/datum/reagent/shadowling_blindness_smoke/on_mob_life(var/mob/living/M as mob)
 	if(!M) M = holder.my_atom
 	if(!is_shadow_or_thrall(M))
 		M << "<span class='warning'><b>You breathe in the black smoke, and your eyes burn horribly!</b></span>"

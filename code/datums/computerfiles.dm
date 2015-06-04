@@ -1,4 +1,4 @@
-datum
+/datum
 	computer
 		var/name
 		folder

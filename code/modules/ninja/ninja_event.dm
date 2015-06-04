@@ -175,7 +175,7 @@ Contents:
 	return new_ninja
 
 
-proc/create_ninja_mind(key)
+/proc/create_ninja_mind(key)
 	var/datum/mind/Mind = new /datum/mind(key)
 	Mind.assigned_role = "Space Ninja"
 	Mind.special_role = "Space Ninja"

@@ -1049,8 +1049,6 @@ var/global/list/obj/item/device/pda/PDAs = list()
 
 /obj/item/device/pda/Destroy()
 	PDAs -= src
-	if (src.id)
-		src.id.loc = get_turf(src.loc)
 	..()
 
 /obj/item/device/pda/clown/Crossed(AM as mob|obj) //Clown PDA is slippery.

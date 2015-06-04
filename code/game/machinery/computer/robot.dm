@@ -111,7 +111,7 @@
 					R.SetLockdown(!R.lockcharge)
 					R << "[!R.lockcharge ? "<span class='notice'>Your lockdown has been lifted!" : "<span class='alert'>You have been locked down!"]</span>"
 					if(R.connected_ai)
-						R.connected_ai << "[!R.lockcharge ? "<span class='notice'>NOTICE - Cyborg lockdown lifted" : "<span class='alert'>ALERT - Cyborg lockdown detected"]: <a href='?src=\ref[R.connected_ai];track=[R.name]'>[R.name]</a></span><br>"
+						R.connected_ai << "[!R.lockcharge ? "<span class='notice'>NOTICE - Cyborg lockdown lifted" : "<span class='alert'>ALERT - Cyborg lockdown detected"]: <a href='?src=\ref[R.connected_ai];track=[html_encode(R.name)]'>[R.name]</a></span><br>"
 
 		else
 			usr << "<span class='danger'>Access Denied.</span>"

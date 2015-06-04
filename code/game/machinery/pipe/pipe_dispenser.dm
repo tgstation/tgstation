@@ -17,27 +17,24 @@
 <A href='?src=\ref[src];make=0;dir=1'>Pipe</A><BR>
 <A href='?src=\ref[src];make=1;dir=5'>Bent Pipe</A><BR>
 <A href='?src=\ref[src];make=5;dir=1'>Manifold</A><BR>
-<A href='?src=\ref[src];make=19;dir=1'>4-Way Manifold</A><BR>
+<A href='?src=\ref[src];make=17;dir=1'>4-Way Manifold</A><BR>
 <A href='?src=\ref[src];make=8;dir=1'>Manual Valve</A><BR>
-<A href='?src=\ref[src];make=18;dir=1'>Digital Valve</A><BR>
+<A href='?src=\ref[src];make=16;dir=1'>Digital Valve</A><BR>
 <b>Devices:</b><BR>
 <A href='?src=\ref[src];make=4;dir=1'>Connector</A><BR>
 <A href='?src=\ref[src];make=7;dir=1'>Vent</A><BR>
 <A href='?src=\ref[src];make=9;dir=1'>Gas Pump</A><BR>
-<A href='?src=\ref[src];make=15;dir=1'>Passive Gate</A><BR>
-<A href='?src=\ref[src];make=16;dir=1'>Volume Pump</A><BR>
+<A href='?src=\ref[src];make=13;dir=1'>Passive Gate</A><BR>
+<A href='?src=\ref[src];make=14;dir=1'>Volume Pump</A><BR>
 <A href='?src=\ref[src];make=10;dir=1'>Scrubber</A><BR>
 <A href='?src=\ref[src];makemeter=1'>Meter</A><BR>
-<A href='?src=\ref[src];make=13;dir=1'>Gas Filter</A><BR>
-<A href='?src=\ref[src];make=14;dir=1'>Gas Mixer</A><BR>
+<A href='?src=\ref[src];make=11;dir=1'>Gas Filter</A><BR>
+<A href='?src=\ref[src];make=12;dir=1'>Gas Mixer</A><BR>
 <b>Heat exchange:</b><BR>
 <A href='?src=\ref[src];make=2;dir=1'>Pipe</A><BR>
 <A href='?src=\ref[src];make=3;dir=5'>Bent Pipe</A><BR>
 <A href='?src=\ref[src];make=6;dir=1'>Junction</A><BR>
-<A href='?src=\ref[src];make=17;dir=1'>Heat Exchanger</A><BR>
-<b>Insulated pipes:</b><BR>
-<A href='?src=\ref[src];make=11;dir=1'>Pipe</A><BR>
-<A href='?src=\ref[src];make=12;dir=5'>Bent Pipe</A><BR>
+<A href='?src=\ref[src];make=15;dir=1'>Heat Exchanger</A><BR>
 "}
 
 

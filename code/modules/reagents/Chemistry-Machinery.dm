@@ -654,7 +654,7 @@
 	var/wait = null
 	var/obj/item/weapon/reagent_containers/glass/beaker = null
 
-obj/machinery/computer/pandemic/New()
+/obj/machinery/computer/pandemic/New()
 	..()
 	update_icon()
 
@@ -689,7 +689,7 @@ obj/machinery/computer/pandemic/New()
 		return D.GetDiseaseID()
 	return null
 
-obj/machinery/computer/pandemic/proc/replicator_cooldown(var/waittime)
+/obj/machinery/computer/pandemic/proc/replicator_cooldown(var/waittime)
 	wait = 1
 	update_icon()
 	spawn(waittime)

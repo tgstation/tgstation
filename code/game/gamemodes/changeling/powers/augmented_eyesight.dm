@@ -16,9 +16,13 @@
 		user.weakeyes = 1
 		user.sight |= SEE_MOBS
 		user.permanent_sight_flags |= SEE_MOBS
+		user.see_in_dark = 8
+		user.see_invisible = SEE_INVISIBLE_MINIMUM
 	else
 		user << "<span class='notice'>Our vision dulls. Shadows gather.</span>"
 		user.weakeyes = 0
 		user.sight -= SEE_MOBS
 		user.permanent_sight_flags -= SEE_MOBS
+		user.see_in_dark = 0
+		user.see_invisible = SEE_INVISIBLE_LIVING
 	return 1

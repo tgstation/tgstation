@@ -185,7 +185,7 @@ research holder datum.
 **	Includes all the various technoliges and what they make.  **
 ***************************************************************/
 
-datum/tech	//Datum of individual technologies.
+/datum/tech	//Datum of individual technologies.
 	var/name = "name"					//Name of the technology.
 	var/desc = "description"			//General description of what it does and what it makes.
 	var/id = "id"						//An easily referenced ID. Must be alphanumeric, lower-case, and no symbols.
@@ -195,77 +195,77 @@ datum/tech	//Datum of individual technologies.
 
 //Trunk Technologies (don't require any other techs and you start knowning them).
 
-datum/tech/materials
+/datum/tech/materials
 	name = "Materials Research"
 	desc = "Development of new and improved materials."
 	id = "materials"
 
-datum/tech/engineering
+/datum/tech/engineering
 	name = "Engineering Research"
 	desc = "Development of new and improved engineering parts and."
 	id = "engineering"
 
-datum/tech/plasmatech
+/datum/tech/plasmatech
 	name = "Plasma Research"
 	desc = "Research into the mysterious substance colloqually known as 'plasma'."
 	id = "plasmatech"
 
-datum/tech/powerstorage
+/datum/tech/powerstorage
 	name = "Power Manipulation Technology"
 	desc = "The various technologies behind the storage and generation of electicity."
 	id = "powerstorage"
 
-datum/tech/bluespace
+/datum/tech/bluespace
 	name = "'Blue-space' Research"
 	desc = "Research into the sub-reality known as 'blue-space'"
 	id = "bluespace"
 
-datum/tech/biotech
+/datum/tech/biotech
 	name = "Biological Technology"
 	desc = "Research into the deeper mysteries of life and organic substances."
 	id = "biotech"
 
-datum/tech/combat
+/datum/tech/combat
 	name = "Combat Systems Research"
 	desc = "The development of offensive and defensive systems."
 	id = "combat"
 
-datum/tech/magnets
+/datum/tech/magnets
 	name = "Electromagnetic Spectrum Research"
 	desc = "Research into the electromagnetic spectrum. No clue how they actually work, though."
 	id = "magnets"
 
-datum/tech/programming
+/datum/tech/programming
 	name = "Data Theory Research"
 	desc = "The development of new computer and artificial intelligence and data storage systems."
 	id = "programming"
 
-datum/tech/syndicate
+/datum/tech/syndicate
 	name = "Illegal Technologies Research"
 	desc = "The study of technologies that violate Nanotrassen regulations."
 	id = "syndicate"
 
 /*
-datum/tech/arcane
+/datum/tech/arcane
 	name = "Arcane Research"
 	desc = "Research into the occult and arcane field for use in practical science"
 	id = "arcane"
 	level = 0 //It didn't become "secret" as advertised.
 
 //Branch Techs
-datum/tech/explosives
+/datum/tech/explosives
 	name = "Explosives Research"
 	desc = "The creation and application of explosive materials."
 	id = "explosives"
 	req_tech = list("materials" = 3)
 
-datum/tech/generators
+/datum/tech/generators
 	name = "Power Generation Technology"
 	desc = "Research into more powerful and more reliable sources."
 	id = "generators"
 	req_tech = list("powerstorage" = 2)
 
-datum/tech/robotics
+/datum/tech/robotics
 	name = "Robotics Technology"
 	desc = "The development of advanced automated, autonomous machines."
 	id = "robotics"
