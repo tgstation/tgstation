@@ -608,19 +608,6 @@ datum/reagent/cryptobiolin/on_mob_life(var/mob/living/M as mob)
 	..()
 	return
 
-datum/reagent/impedrezene
-	name = "Impedrezene"
-	id = "impedrezene"
-	description = "Impedrezene is a narcotic that impedes one's ability by slowing down the higher brain cell functions."
-	color = "#C8A5DC" // rgb: 200, 165, 220
-
-datum/reagent/impedrezene/on_mob_life(var/mob/living/M as mob)
-	M.jitteriness = max(M.jitteriness-5,0)
-	if(prob(80)) M.adjustBrainLoss(1*REM)
-	if(prob(50)) M.drowsyness = max(M.drowsyness, 3)
-	if(prob(10)) M.emote("drool")
-	..()
-	return
 
 datum/reagent/nanites
 	name = "Nanomachines"
