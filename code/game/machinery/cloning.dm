@@ -158,10 +158,9 @@
 			setblock(H.dna.struc_enzymes, A, construct_block(0,2))
 	if(efficiency > 5 && prob(20))
 		randmutg(H)
-	if(efficiency < 3 && prob(50))
-		var/mob/M = randmutb(H)
-		if(ismob(M))
-			H = M
+	if(efficiency < 3)
+		randmutb(H)
+
 
 	H.silent = 20 //Prevents an extreme edge case where clones could speak if they said something at exactly the right moment.
 	occupant = H
@@ -219,7 +218,7 @@
 
 			//So clones don't die of oxyloss in a running pod.
 			if (src.occupant.reagents.get_reagent_amount("dexalin") < 30)
-				src.occupant.reagents.add_reagent("dexalin", 60)
+				src.occupant.reagents.add_reagent("dexalin", 25)
 
 			use_power(7500) //This might need tweaking.
 			return
