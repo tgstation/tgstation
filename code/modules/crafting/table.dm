@@ -115,16 +115,18 @@
 			item_loop:
 				for(var/B in table_contents)
 					if(ispath(B, A))
-						while(amt > 0)
-							if(I)
-								I = locate(B) in loc
-								Deletion.Add(I)
-								I.loc = null //remove it from the table loc so that we don't locate the same item every time (will be relocated inside the crafted item in construct_item())
-								amt--
-								if(reagenttransfer && istype(I,/obj/item/weapon/reagent_containers))
-									var/obj/item/weapon/reagent_containers/RC = I
-									RC.reagents.trans_to(resultobject, RC.reagents.total_volume)
-						break item_loop
+						var/item_amount = table_contents[B]
+						while(item_amount > 0)
+							I = locate(B) in loc
+							Deletion.Add(I)
+							I.loc = null //remove it from the table loc so that we don't locate the same item every time (will be relocated inside the crafted item in construct_item())
+							amt--
+							item_amount--
+							if(reagenttransfer && istype(I,/obj/item/weapon/reagent_containers))
+								var/obj/item/weapon/reagent_containers/RC = I
+								RC.reagents.trans_to(resultobject, RC.reagents.total_volume)
+							if(amt <= 0)
+								break item_loop
 		else
 			var/datum/reagent/RG = new A
 			reagent_loop:
