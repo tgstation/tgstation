@@ -188,7 +188,7 @@
 	for(var/i=1, i<L.len, ++i)
 		L.Swap(i,rand(i,L.len))
 
-	return L
+	. = L
 
 //Return a list with no duplicate entries
 /proc/uniqueList(var/list/L)
