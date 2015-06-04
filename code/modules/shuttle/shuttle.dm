@@ -302,8 +302,6 @@
 
 	for(var/i=1, i<=L0.len, ++i)
 		var/turf/T0 = L0[i]
-		if(!istype(T0, /turf/simulated/shuttle))	//only move shuttle turfs!
-			continue
 
 		var/turf/T1 = L1[i]
 		if(!T1)

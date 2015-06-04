@@ -1,18 +1,18 @@
 
 
-datum/reagent/drug
+/datum/reagent/drug
 	name = "Drug"
 	id = "drug"
 	metabolization_rate = 0.5 * REAGENTS_METABOLISM
 
-datum/reagent/drug/space_drugs
+/datum/reagent/drug/space_drugs
 	name = "Space drugs"
 	id = "space_drugs"
 	description = "An illegal chemical compound used as drug."
 	color = "#60A584" // rgb: 96, 165, 132
 	overdose_threshold = 25
 
-datum/reagent/drug/space_drugs/on_mob_life(var/mob/living/M as mob)
+/datum/reagent/drug/space_drugs/on_mob_life(var/mob/living/M as mob)
 	M.druggy = max(M.druggy, 15)
 	if(isturf(M.loc) && !istype(M.loc, /turf/space))
 		if(M.canmove)
@@ -22,7 +22,7 @@ datum/reagent/drug/space_drugs/on_mob_life(var/mob/living/M as mob)
 	..()
 	return
 
-datum/reagent/drug/space_drugs/overdose_process(var/mob/living/M as mob)
+/datum/reagent/drug/space_drugs/overdose_process(var/mob/living/M as mob)
 	if(prob(20))
 		M.hallucination = max(M.hallucination, 5)
 	M.adjustBrainLoss(0.25*REM)
@@ -30,7 +30,7 @@ datum/reagent/drug/space_drugs/overdose_process(var/mob/living/M as mob)
 	..()
 	return
 
-datum/reagent/drug/nicotine
+/datum/reagent/drug/nicotine
 	name = "Nicotine"
 	id = "nicotine"
 	description = "Slightly reduces stun times. If overdosed it will deal toxin and oxygen damage."
@@ -38,7 +38,7 @@ datum/reagent/drug/nicotine
 	color = "#60A584" // rgb: 96, 165, 132
 	addiction_threshold = 30
 
-datum/reagent/drug/nicotine/on_mob_life(var/mob/living/M as mob)
+/datum/reagent/drug/nicotine/on_mob_life(var/mob/living/M as mob)
 	var/smoke_message = pick("You can just feel your lungs dying!", "You feel relaxed.", "You feel calmed.", "You feel the lung cancer forming.", "You feel the money you wasted.", "You feel like a space cowboy.", "You feel rugged.")
 	if(prob(5))
 		M << "<span class='notice'>[smoke_message]</span>"
@@ -46,7 +46,7 @@ datum/reagent/drug/nicotine/on_mob_life(var/mob/living/M as mob)
 	M.adjustStaminaLoss(-0.5*REM)
 	..()
 
-datum/reagent/drug/crank
+/datum/reagent/drug/crank
 	name = "Crank"
 	id = "crank"
 	description = "Reduces stun times by about 200%. If overdosed or addicted it will deal significant Toxin, Brute and Brain damage."
@@ -55,7 +55,7 @@ datum/reagent/drug/crank
 	overdose_threshold = 20
 	addiction_threshold = 10
 
-datum/reagent/drug/crank/on_mob_life(var/mob/living/M as mob)
+/datum/reagent/drug/crank/on_mob_life(var/mob/living/M as mob)
 	var/high_message = pick("You feel jittery.", "You feel like you gotta go fast.", "You feel like you need to step it up.")
 	if(prob(5))
 		M << "<span class='notice'>[high_message]</span>"
@@ -64,25 +64,25 @@ datum/reagent/drug/crank/on_mob_life(var/mob/living/M as mob)
 	M.AdjustWeakened(-1)
 	..()
 
-datum/reagent/drug/crank/overdose_process(var/mob/living/M as mob)
+/datum/reagent/drug/crank/overdose_process(var/mob/living/M as mob)
 	M.adjustBrainLoss(2*REM)
 	M.adjustToxLoss(2*REM)
 	M.adjustBruteLoss(2*REM)
 	..()
 
-datum/reagent/drug/crank/addiction_act_stage1(var/mob/living/M as mob)
+/datum/reagent/drug/crank/addiction_act_stage1(var/mob/living/M as mob)
 	M.adjustBrainLoss(5*REM)
 	..()
 
-datum/reagent/drug/crank/addiction_act_stage2(var/mob/living/M as mob)
+/datum/reagent/drug/crank/addiction_act_stage2(var/mob/living/M as mob)
 	M.adjustToxLoss(5*REM)
 	..()
 
-datum/reagent/drug/crank/addiction_act_stage3(var/mob/living/M as mob)
+/datum/reagent/drug/crank/addiction_act_stage3(var/mob/living/M as mob)
 	M.adjustBruteLoss(5*REM)
 	..()
 
-datum/reagent/drug/crank/addiction_act_stage4(var/mob/living/M as mob)
+/datum/reagent/drug/crank/addiction_act_stage4(var/mob/living/M as mob)
 	M.adjustBrainLoss(5*REM)
 	M.adjustToxLoss(5*REM)
 	M.adjustBruteLoss(5*REM)
