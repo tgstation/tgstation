@@ -18,6 +18,10 @@
 	var/custom_food_type = null  //for food customizing. path of the custom food to create
 	var/junkiness = 0  //for junk food. used to lower human satiety.
 
+/obj/item/weapon/reagent_containers/food/snacks/New()
+	if (!reagents)
+		reagents = list()
+	..()
 
 	//Placeholder for effect that trigger on eating that aren't tied to reagents.
 /obj/item/weapon/reagent_containers/food/snacks/proc/On_Consume()
