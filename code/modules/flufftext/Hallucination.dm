@@ -618,6 +618,29 @@ var/list/non_fakeattack_weapons = list(/obj/item/weapon/gun/projectile, /obj/ite
 	/obj/item/clothing/shoes/magboots, /obj/item/areaeditor/blueprints, /obj/item/weapon/disk/nuclear,\
 	/obj/item/clothing/suit/space/nasavoid, /obj/item/weapon/tank)
 
+/obj/effect/hallucination/bolts
+	var/list/doors = list()
+
+/obj/effect/hallucination/bolts/New(loc,var/mob/living/carbon/T,var/door_number=-1) //-1 for sever 1-2 for subtle
+	target = T
+	var/image/I = null
+	var/count = 0
+	for(var/obj/machinery/door/airlock/A in range(target,7))
+		if(count>door_number && door_number>0)
+			break
+		count++
+		I = image(A.icon,A,"door_locked",layer=A.layer+0.1)
+		doors += I
+		if(target.client)
+			target.client.images |= I
+		sleep(2)
+	sleep(100)
+	for(var/image/B in doors)
+		if(target.client)
+			target.client.images.Remove(B)
+	qdel(src)
+
+
 /mob/living/carbon/proc/hallucinate(var/hal_type) // Todo -> proc / defines
 	switch(hal_type)
 		if("xeno")
@@ -632,3 +655,5 @@ var/list/non_fakeattack_weapons = list(/obj/item/weapon/gun/projectile, /obj/ite
 			new /obj/effect/hallucination/delusion(src.loc,src)
 		if("fake")
 			new /obj/effect/hallucination/fakeattacker(src.loc,src)
+		if("bolts")
+			new /obj/effect/hallucination/bolts(src.loc,src)
