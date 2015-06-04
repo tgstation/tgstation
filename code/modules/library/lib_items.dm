@@ -160,6 +160,8 @@
 	name = "book"
 	icon = 'icons/obj/library.dmi'
 	icon_state ="book"
+	force = 3
+	throwforce = 3
 	throw_speed = 1
 	throw_range = 5
 	w_class = 3		 //upped to three because books are, y'know, pretty big. (and you could hide them inside eachother recursively forever)

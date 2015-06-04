@@ -20,6 +20,7 @@
 	desc = "A pair of snazzy goggles used to protect against chemical spills."
 	icon_state = "purple"
 	item_state = "glasses"
+	unacidable = 1
 
 /obj/item/clothing/glasses/night
 	name = "Night Vision Goggles"
