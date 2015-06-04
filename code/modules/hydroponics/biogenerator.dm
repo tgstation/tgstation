@@ -155,6 +155,7 @@
 			dat += "Book bag: <A href='?src=\ref[src];create=bkbag;amount=1'>Make</A> ([200/efficiency])<BR>"
 			dat += "Plant bag: <A href='?src=\ref[src];create=ptbag;amount=1'>Make</A> ([200/efficiency])<BR>"
 			dat += "Mining satchel: <A href='?src=\ref[src];create=mnbag;amount=1'>Make</A> ([200/efficiency])<BR>"
+			dat += "Chemistry bag: <A href='?src=\ref[src];create=chbag;amount=1'>Make</A> ([200/efficiency])<BR>"
 			dat += "Botanical gloves: <A href='?src=\ref[src];create=gloves;amount=1'>Make</A> ([250/efficiency])<BR>"
 			dat += "Utility belt: <A href='?src=\ref[src];create=tbelt;amount=1'>Make</A> ([300/efficiency])<BR>"
 			dat += "Security belt: <A href='?src=\ref[src];create=sbelt;amount=1'>Make</A> ([300/efficiency])<BR>"
@@ -266,6 +267,9 @@
 		if("mnbag")
 			if (check_cost(200/efficiency)) return 0
 			else new/obj/item/weapon/storage/bag/ore(src.loc)
+		if("chbag")
+			if (check_cost(200/efficiency)) return 0
+			else new/obj/item/weapon/storage/bag/chemistry(src.loc)
 		if("gloves")
 			if (check_cost(250/efficiency)) return 0
 			else new/obj/item/clothing/gloves/botanic_leather(src.loc)

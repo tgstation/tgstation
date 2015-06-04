@@ -341,8 +341,8 @@
 
 /obj/item/weapon/storage/bag/chemistry
 	name = "chemistry bag"
-	icon = 'icons/obj/mining.dmi'
-	icon_state = "satchel"
+	icon = 'icons/obj/chemical.dmi'
+	icon_state = "bag"
 	desc = "A bag for storing pills, patches, and bottles."
 	storage_slots = 50
 	max_combined_w_class = 200
