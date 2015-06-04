@@ -21,7 +21,7 @@
 
 /obj/item/weapon/chisel/attack(mob/M as mob, mob/user as mob)
 	if(istype(M, /mob/living/simple_animal/sculpture))
-		var/engraving = sanitize(input(usr, "What do you want to write on the [M.real_name]?"))
+		var/engraving = sanitize(input(usr, "What do you want to write on the [M.real_name]?") as text)
 		var/turf/ST = user.loc
 
 		sleep( 10 + length(engraving) * 10)
@@ -37,8 +37,8 @@
 		var/turf/simulated/wall/W = target
 		W.add_fingerprint(user)
 		if(!W.engraving)
-			var/engraving_name = sanitize(input(usr, "Depicted on the wall is an image of ...","Engraving"))
-			var/engraving = sanitize(input(usr, "Enter the details of your engraving.","Engraving"))
+			var/engraving_name = sanitize(input(usr, "Depicted on the wall is an image of ...","Basic engraving") as text)
+			var/engraving = sanitize(input(usr, "Depicted on the wall is an image of [engraving_name]. ...","Details of the engraving") as text)
 
 			user.visible_message("<span class='notice'>[user.name] starts engraving something on the [W.name].</span>", "<span class='notice'>You start engraving an image of [engraving_name] on the [W.name].</span>")
 			if(do_after(user, 60))
@@ -58,7 +58,7 @@
 					if(8 to 9)
 						W.engraving_quality = "an exceptionally designed"
 					if(10)
-						W.engraving_quality = "a masterfully designed"
+						W.engraving_quality = "a <span class='notice'>masterfully designed</span>"
 						user << "<span class='warning'>It's a masterpiece!</span>"
 
 				engraving = {"Depicted on the wall is [W.engraving_quality] image of [engraving_name][(use_name ? " by [user.real_name]" : "")]. [engraving]"}
