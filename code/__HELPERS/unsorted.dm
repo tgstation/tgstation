@@ -1312,6 +1312,6 @@ var/list/WALLITEMS = list(
 	tY = tY[1]
 	tX = text2list(tX[1], ":")
 	tX = tX[1]
-	tX = max(1, min(256, origin.x + (text2num(tX) - (world.view + 1))))
-	tY = max(1, min(256, origin.y + (text2num(tY) - (world.view + 1))))
+	tX = max(1, min(world.maxx, origin.x + (text2num(tX) - (world.view + 1))))
+	tY = max(1, min(world.maxy, origin.y + (text2num(tY) - (world.view + 1))))
 	return locate(tX, tY, tZ)
