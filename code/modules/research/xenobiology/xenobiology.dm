@@ -418,3 +418,53 @@
 	G.key = ghost.key
 	G << "You are an adamantine golem. You move slowly, but are highly resistant to heat and cold as well as blunt trauma. You are unable to wear clothes, but can still use most tools. Serve [user], and assist them in completing their goals at any cost."
 	qdel(src)
+
+
+
+
+/obj/effect/timestop
+	anchored = 1
+	name = "chronofield"
+	desc = "ZA WARUDO"
+	icon = 'icons/effects/160x160.dmi'
+	icon_state = "time"
+	layer = FLY_LAYER
+	pixel_x = -64
+	pixel_y = -64
+	unacidable = 1
+	var/mob/living/immune = null // the one who creates the timestop is immune
+	var/freezerange = 2
+	var/duration = 140
+	New()
+		..()
+		timestop()
+
+
+/obj/effect/timestop/proc/timestop()
+	while(loc)
+		if(duration>0)
+			for(var/mob/living/M in orange (freezerange, src.loc))
+				if(M == immune) continue
+				M.stunned = 10
+				M.anchored = 1
+				if(istype(M, /mob/living/simple_animal/hostile))
+					var/mob/living/simple_animal/hostile/H = M
+					H.AIStatus = AI_OFF
+					H.LoseTarget()
+					continue
+			for(var/obj/item/projectile/P in orange (freezerange, src.loc))
+				P.paused = TRUE
+			duration --
+		else
+			for(var/mob/living/M in orange (freezerange+2, src.loc)) //longer range incase they lag out of it or something
+				M.stunned = 0
+				M.anchored = 0
+				if(istype(M, /mob/living/simple_animal/hostile))
+					var/mob/living/simple_animal/hostile/H = M
+					H.AIStatus = AI_ON
+					continue
+			for(var/obj/item/projectile/P in orange(freezerange+2, src.loc))
+				P.paused = FALSE
+			qdel(src)
+			return
+		sleep(1)
