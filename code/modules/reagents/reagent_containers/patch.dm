@@ -24,9 +24,11 @@
 /obj/item/weapon/reagent_containers/pill/patch/bicaridine
 	name = "brute patch"
 	desc = "Helps with brute injuries."
+	volume = 50
 	list_reagents = list("styptic_powder" = 50)
 
 /obj/item/weapon/reagent_containers/pill/patch/kelotane
 	name = "burn patch"
 	desc = "Helps with burn injuries."
+	volume = 50
 	list_reagents = list("silver_sulfadiazine" = 50)
