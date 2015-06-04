@@ -48,6 +48,7 @@ datum/reagent/medicine/hyperzine
 	description = "Hyperzine is a highly effective, long lasting, muscle stimulant."
 	color = "#C8A5DC" // rgb: 200, 165, 220
 	metabolization_rate = 0.5 * REAGENTS_METABOLISM
+	overdose_threshold = 60
 
 datum/reagent/medicine/hyperzine/on_mob_life(var/mob/living/M as mob)
 	if(M.stat != DEAD)
@@ -55,6 +56,13 @@ datum/reagent/medicine/hyperzine/on_mob_life(var/mob/living/M as mob)
 			M.emote(pick("twitch","blink_r","shiver"))
 		M.status_flags |= GOTTAGOFAST
 	..()
+
+datum/reagent/medicine/hyperzine/overdose_process(var/mob/living/M as mob)
+	if(prob(33))
+		M.adjustToxLoss(0.5*REM)
+		M.losebreath++
+	..()
+	return
 
 datum/reagent/medicine/inaprovaline
 	name = "Inaprovaline"
