@@ -16,7 +16,7 @@
 	var/atom/original = null // the original target clicked
 	var/turf/starting = null // the projectile's starting turf
 	var/list/permutated = list() // we've passed through these atoms, don't try to hit them again
-
+	var/paused = FALSE //for suspending the projectile midair
 	var/p_x = 16
 	var/p_y = 16 // the pixel location of the tile that the player clicked. Default is the center
 
@@ -130,16 +130,18 @@
 			if(kill_count < 1)
 				qdel(src)
 				return
-			kill_count--
-			if((!( current ) || loc == current))
-				current = locate(Clamp(x+xo,1,world.maxx),Clamp(y+yo,1,world.maxy),z)
-			step_towards(src, current)
-			if((original && original.layer>=2.75) || ismob(original))
-				if(loc == get_turf(original))
-					if(!(original in permutated))
-						Bump(original, 1)
+			if(!paused)
+				kill_count--
+				if((!( current ) || loc == current))
+					current = locate(Clamp(x+xo,1,world.maxx),Clamp(y+yo,1,world.maxy),z)
+				step_towards(src, current)
+				if((original && original.layer>=2.75) || ismob(original))
+					if(loc == get_turf(original))
+						if(!(original in permutated))
+							Bump(original, 1)
 			Range()
 			sleep(1)
+
 
 /obj/item/projectile/Crossed(atom/movable/AM as mob) //A mob moving on a tile with a projectile is hit by it.
 	..()
