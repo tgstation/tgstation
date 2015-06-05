@@ -235,6 +235,8 @@
 /obj/item/device/mmi/emp_act(severity)
 	if(!brainmob)
 		return
+	if(istype(src.loc, /mob/living/silicon) || istype(src.loc, /obj/mecha)) //don't emp MMIs if they're inside a robot or mech, that's just stupid
+		return
 	else
 		switch(severity)
 			if(1)
