@@ -47,8 +47,8 @@ Medical Doctor
 	department_head = list("Chief Medical Officer")
 	department_flag = MEDSCI
 	faction = "Station"
-	total_positions = 5
-	spawn_positions = 3
+	total_positions = 10 // 5 medical doctors, 2 chemists, 2 geneticists, 1 virologist
+	spawn_positions = 10
 	supervisors = "the chief medical officer"
 	selection_color = "#ffeef0"
 
@@ -58,7 +58,7 @@ Medical Doctor
 	default_satchel = /obj/item/weapon/storage/backpack/satchel_med
 
 	access = list(access_medical, access_morgue, access_surgery, access_chemistry, access_virology, access_genetics, access_mineral_storeroom)
-	minimal_access = list(access_medical, access_morgue, access_surgery)
+	minimal_access = list(access_medical, access_morgue, access_surgery, access_chemistry, access_virology, access_genetics, )
 
 /datum/job/doctor/equip_items(var/mob/living/carbon/human/H)
 	H.equip_to_slot_or_del(new /obj/item/clothing/under/rank/medical(H), slot_w_uniform)
@@ -66,84 +66,3 @@ Medical Doctor
 	H.equip_to_slot_or_del(new /obj/item/clothing/suit/toggle/labcoat(H), slot_wear_suit)
 	H.equip_to_slot_or_del(new /obj/item/weapon/storage/firstaid/regular(H), slot_l_hand)
 	H.equip_to_slot_or_del(new /obj/item/device/flashlight/pen(H), slot_s_store)
-
-/*
-Chemist
-*/
-/datum/job/chemist
-	title = "Chemist"
-	flag = CHEMIST
-	department_head = list("Chief Medical Officer")
-	department_flag = MEDSCI
-	faction = "Station"
-	total_positions = 2
-	spawn_positions = 2
-	supervisors = "the chief medical officer"
-	selection_color = "#ffeef0"
-
-	default_pda = /obj/item/device/pda/chemist
-	default_headset = /obj/item/device/radio/headset/headset_med
-
-	access = list(access_medical, access_morgue, access_surgery, access_chemistry, access_virology, access_genetics, access_mineral_storeroom)
-	minimal_access = list(access_medical, access_chemistry, access_mineral_storeroom)
-
-/datum/job/chemist/equip_items(var/mob/living/carbon/human/H)
-	H.equip_to_slot_or_del(new /obj/item/clothing/under/rank/chemist(H), slot_w_uniform)
-	H.equip_to_slot_or_del(new /obj/item/clothing/shoes/sneakers/white(H), slot_shoes)
-	H.equip_to_slot_or_del(new /obj/item/clothing/suit/toggle/labcoat/chemist(H), slot_wear_suit)
-
-/*
-Geneticist
-*/
-/datum/job/geneticist
-	title = "Geneticist"
-	flag = GENETICIST
-	department_head = list("Chief Medical Officer", "Research Director")
-	department_flag = MEDSCI
-	faction = "Station"
-	total_positions = 2
-	spawn_positions = 2
-	supervisors = "the chief medical officer and research director"
-	selection_color = "#ffeef0"
-
-	default_pda = /obj/item/device/pda/geneticist
-	default_headset = /obj/item/device/radio/headset/headset_medsci
-
-	access = list(access_medical, access_morgue, access_chemistry, access_virology, access_genetics, access_research, access_xenobiology, access_robotics, access_mineral_storeroom, access_tech_storage)
-	minimal_access = list(access_medical, access_morgue, access_genetics, access_research)
-
-/datum/job/geneticist/equip_items(var/mob/living/carbon/human/H)
-	H.equip_to_slot_or_del(new /obj/item/clothing/under/rank/geneticist(H), slot_w_uniform)
-	H.equip_to_slot_or_del(new /obj/item/clothing/shoes/sneakers/white(H), slot_shoes)
-	H.equip_to_slot_or_del(new /obj/item/clothing/suit/toggle/labcoat/genetics(H), slot_wear_suit)
-	H.equip_to_slot_or_del(new /obj/item/device/flashlight/pen(H), slot_s_store)
-
-/*
-Virologist
-*/
-/datum/job/virologist
-	title = "Virologist"
-	flag = VIROLOGIST
-	department_head = list("Chief Medical Officer")
-	department_flag = MEDSCI
-	faction = "Station"
-	total_positions = 1
-	spawn_positions = 1
-	supervisors = "the chief medical officer"
-	selection_color = "#ffeef0"
-
-	default_pda = /obj/item/device/pda/viro
-	default_headset = /obj/item/device/radio/headset/headset_med
-	default_backpack = /obj/item/weapon/storage/backpack/medic
-	default_satchel = /obj/item/weapon/storage/backpack/satchel_med
-
-	access = list(access_medical, access_morgue, access_surgery, access_chemistry, access_virology, access_genetics, access_mineral_storeroom)
-	minimal_access = list(access_medical, access_virology, access_mineral_storeroom)
-
-/datum/job/virologist/equip_items(var/mob/living/carbon/human/H)
-	H.equip_to_slot_or_del(new /obj/item/clothing/under/rank/virologist(H), slot_w_uniform)
-	H.equip_to_slot_or_del(new /obj/item/clothing/mask/surgical(H), slot_wear_mask)
-	H.equip_to_slot_or_del(new /obj/item/clothing/shoes/sneakers/white(H), slot_shoes)
-	H.equip_to_slot_or_del(new /obj/item/clothing/suit/toggle/labcoat/virologist(H), slot_wear_suit)
-	H.equip_to_slot_or_del(new /obj/item/device/flashlight/pen(H), slot_s_store)
-
