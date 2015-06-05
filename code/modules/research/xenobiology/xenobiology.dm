@@ -435,16 +435,18 @@
 	var/mob/living/immune = null // the one who creates the timestop is immune
 	var/freezerange = 2
 	var/duration = 140
-	New()
+	
+	/obj/effect/timestop/New()
 		..()
 		timestop()
 
 
 /obj/effect/timestop/proc/timestop()
 	while(loc)
-		if(duration>0)
+		if(duration)
 			for(var/mob/living/M in orange (freezerange, src.loc))
-				if(M == immune) continue
+				if(M == immune) 
+					continue
 				M.stunned = 10
 				M.anchored = 1
 				if(istype(M, /mob/living/simple_animal/hostile))
@@ -461,7 +463,7 @@
 				M.anchored = 0
 				if(istype(M, /mob/living/simple_animal/hostile))
 					var/mob/living/simple_animal/hostile/H = M
-					H.AIStatus = AI_ON
+					H.AIStatus = initial(H.AIStatus)
 					continue
 			for(var/obj/item/projectile/P in orange(freezerange+2, src.loc))
 				P.paused = FALSE
