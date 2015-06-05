@@ -23,7 +23,7 @@ install:
   - cd ..
 
 script:
-  - bash dm.sh -M${DM_MAPFILE} baystation12.dme
+  - bash dm.sh -M${DM_MAPFILE} vgstation12.dme
 
 notifications:
   irc:
