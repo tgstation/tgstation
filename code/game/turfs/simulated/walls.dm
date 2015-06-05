@@ -27,7 +27,8 @@
 
 /turf/simulated/wall/New()
 	..()
-	builtin_sheet = new sheet_type
+	if (sheet_type)
+		builtin_sheet = new sheet_type
 
 /turf/simulated/wall/attack_tk()
 	return
