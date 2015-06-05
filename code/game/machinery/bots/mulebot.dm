@@ -59,7 +59,7 @@ var/global/mulebot_count = 0
 /obj/machinery/bot/mulebot/New()
 	..()
 	wires = new(src)
-	var/datum/job/cargo_tech/J = new/datum/job/cargo_tech
+	var/datum/job/qm/J = new/datum/job/qm
 	botcard.access = J.get_access()
 	prev_access = botcard.access
 //	botcard.access += access_robotics //Why --Ikki

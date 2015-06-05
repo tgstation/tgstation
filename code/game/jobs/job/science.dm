@@ -49,45 +49,18 @@ Scientist
 	department_head = list("Research Director")
 	department_flag = MEDSCI
 	faction = "Station"
-	total_positions = 5
-	spawn_positions = 3
+	total_positions = 7 // 2 roboticists, 5 scientists
+	spawn_positions = 7
 	supervisors = "the research director"
 	selection_color = "#ffeeff"
 
 	default_pda = /obj/item/device/pda/toxins
 	default_headset = /obj/item/device/radio/headset/headset_sci
 
-	access = list(access_robotics, access_tox, access_tox_storage, access_research, access_xenobiology, access_mineral_storeroom, access_tech_storage, access_genetics)
-	minimal_access = list(access_tox, access_tox_storage, access_research, access_xenobiology, access_mineral_storeroom)
+	access = list(access_robotics, access_tox, access_tox_storage, access_research, access_xenobiology, access_mineral_storeroom, access_tech_storage, access_genetics, access_morgue)
+	minimal_access = list(access_tox, access_tox_storage, access_research, access_xenobiology, access_mineral_storeroom, access_morgue, access_robotics )
 
 /datum/job/scientist/equip_items(var/mob/living/carbon/human/H)
 	H.equip_to_slot_or_del(new /obj/item/clothing/under/rank/scientist(H), slot_w_uniform)
 	H.equip_to_slot_or_del(new /obj/item/clothing/shoes/sneakers/white(H), slot_shoes)
 	H.equip_to_slot_or_del(new /obj/item/clothing/suit/toggle/labcoat/science(H), slot_wear_suit)
-
-/*
-Roboticist
-*/
-/datum/job/roboticist
-	title = "Roboticist"
-	flag = ROBOTICIST
-	department_head = list("Research Director")
-	department_flag = MEDSCI
-	faction = "Station"
-	total_positions = 2
-	spawn_positions = 2
-	supervisors = "research director"
-	selection_color = "#ffeeff"
-
-	default_pda = /obj/item/device/pda/roboticist
-	default_headset = /obj/item/device/radio/headset/headset_sci
-	default_pda_slot = slot_l_store
-
-	access = list(access_robotics, access_tox, access_tox_storage, access_tech_storage, access_morgue, access_research, access_mineral_storeroom, access_xenobiology, access_genetics)
-	minimal_access = list(access_robotics, access_tech_storage, access_morgue, access_research, access_mineral_storeroom)
-
-/datum/job/roboticist/equip_items(var/mob/living/carbon/human/H)
-		H.equip_to_slot_or_del(new /obj/item/clothing/under/rank/roboticist(H), slot_w_uniform)
-		H.equip_to_slot_or_del(new /obj/item/clothing/shoes/sneakers/black(H), slot_shoes)
-		H.equip_to_slot_or_del(new /obj/item/clothing/suit/toggle/labcoat(H), slot_wear_suit)
-		H.equip_to_slot_or_del(new /obj/item/weapon/storage/belt/utility/full(H), slot_belt)
