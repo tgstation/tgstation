@@ -113,6 +113,21 @@
 	new /obj/item/weapon/grenade/flashbang(src)
 	new /obj/item/weapon/storage/belt/security/full(src)
 	new /obj/item/clothing/glasses/hud/security/sunglasses(src)
+	
+/obj/structure/closet/secure_closet/deptmartal_security
+	name = "departmental security officer's locker"
+	req_access = list(access_security)
+	icon_state = "sec"
+
+/obj/structure/closet/secure_closet/deptmartal_security/New()
+	..()
+	new /obj/item/clothing/suit/armor/vest(src)
+	new /obj/item/device/radio/headset/headset_sec(src)
+	new /obj/item/device/radio/headset/headset_sec/alt(src)
+	new /obj/item/clothing/head/soft/sec(src)
+	new /obj/item/weapon/reagent_containers/spray/pepper(src)
+	new /obj/item/weapon/storage/belt/security/full(src)
+	new /obj/item/clothing/glasses/hud/security/sunglasses(src)
 
 /obj/structure/closet/secure_closet/security/sec
 
@@ -120,30 +135,30 @@
 	..()
 	new /obj/item/weapon/melee/baton/loaded(src)
 
-/obj/structure/closet/secure_closet/security/cargo
+/obj/structure/closet/secure_closet/deptmartal_security/cargo
 
-/obj/structure/closet/secure_closet/security/cargo/New()
+/obj/structure/closet/secure_closet/deptmartal_security/cargo/New()
 	..()
 	new /obj/item/clothing/tie/armband/cargo(src)
 	new /obj/item/device/encryptionkey/headset_cargo(src)
 
-/obj/structure/closet/secure_closet/security/engine
+/obj/structure/closet/secure_closet/deptmartal_security/engine
 
-/obj/structure/closet/secure_closet/security/engine/New()
+/obj/structure/closet/secure_closet/deptmartal_security/engine/New()
 	..()
 	new /obj/item/clothing/tie/armband/engine(src)
 	new /obj/item/device/encryptionkey/headset_eng(src)
 
-/obj/structure/closet/secure_closet/security/science
+/obj/structure/closet/secure_closet/deptmartal_security/science
 
-/obj/structure/closet/secure_closet/security/science/New()
+/obj/structure/closet/secure_closet/deptmartal_security/science/New()
 	..()
 	new /obj/item/clothing/tie/armband/science(src)
 	new /obj/item/device/encryptionkey/headset_sci(src)
 
-/obj/structure/closet/secure_closet/security/med
+/obj/structure/closet/secure_closet/deptmartal_security/med
 
-/obj/structure/closet/secure_closet/security/med/New()
+/obj/structure/closet/secure_closet/deptmartal_security/med/New()
 	..()
 	new /obj/item/clothing/tie/armband/medblue(src)
 	new /obj/item/device/encryptionkey/headset_med(src)
