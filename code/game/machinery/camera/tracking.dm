@@ -60,7 +60,7 @@
 			continue
 		if(M == usr)
 			continue
-		if(M.invisibility)//cloaked
+		if(M.invisibility || M.alpha == 0)//cloaked
 			continue
 		if(M.digitalcamo)
 			continue
@@ -112,11 +112,15 @@
 /mob/living/silicon/ai/proc/ai_actual_track(mob/living/target as mob)
 	if(!istype(target))	return
 	var/mob/living/silicon/ai/U = usr
+
+	U << "<span class='notice'>Attempting to track [target.get_visible_name()]...</span>"
+	sleep(min(40, get_dist(target, U) / 3))
+	if(!target || !(target in U.trackable_mobs()))
+		U << "<span class='warning'>Target is not near any active cameras.</span>"
+		return
+
 	U.cameraFollow = target
-	//U << text("Now tracking [] on camera.", target.name)
-	//if (U.machine == null)
-	//	U.machine = U
-	U << "Now tracking [target.get_visible_name()] on camera."
+	U << "<span class='notice'>Now tracking [target.get_visible_name()] on camera.</span>"
 
 	spawn (0)
 		while (U.cameraFollow == target)
@@ -145,9 +149,8 @@
 				return
 
 			if (!near_camera(target))
-				U << "Target is not near any active cameras."
-				sleep(100)
-				continue
+				U << "<span class='warning'>Target is not near any active cameras.</span>"
+				break
 
 			if(U.eyeobj)
 				U.eyeobj.setLoc(get_turf(target))

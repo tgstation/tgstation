@@ -8,6 +8,7 @@
 	active_power_usage = 10
 	layer = 5
 
+	var/health = 50
 	var/datum/wires/camera/wires = null // Wires datum
 	var/list/network = list("SS13")
 	var/c_tag = null
@@ -65,14 +66,13 @@
 
 /obj/machinery/camera/emp_act(severity)
 	if(!isEmpProof())
-		if(prob(100/severity))
+		if(prob(150/severity))
 			icon_state = "[initial(icon_state)]emp"
 			var/list/previous_network = network
 			network = list()
 			cameranet.removeCamera(src)
 			stat |= EMPED
 			SetLuminosity(0)
-			triggerCameraAlarm()
 			emped = emped+1  //Increase the number of consecutive EMP's
 			var/thisemp = emped //Take note of which EMP this proc is for
 			spawn(900)
@@ -85,6 +85,7 @@
 						if(can_use())
 							cameranet.addCamera(src)
 						emped = 0 //Resets the consecutive EMP count
+						triggerCameraAlarm()
 			for(var/mob/O in mob_list)
 				if (O.client && O.client.eye == src)
 					O.unset_machine()
@@ -124,7 +125,7 @@
 	add_hiddenprint(user)
 	deactivate(user,0)
 
-/obj/machinery/camera/attackby(W as obj, mob/living/user as mob, params)
+/obj/machinery/camera/attackby(obj/W, mob/living/user, params)
 	var/msg = "<span class='notice'>You attach [W] into the assembly inner circuits.</span>"
 	var/msg2 = "<span class='notice'>The camera already has that upgrade!</span>"
 
@@ -220,19 +221,22 @@
 		var/obj/item/device/laser_pointer/L = W
 		L.laser_act(src, user)
 	else
-		..()
+		if(W.force > 10) //fairly simplistic, but will do for now.
+			visible_message("<span class='warning'>[user] hits [src] with [W]!</span>", "<span class='warning'>You hit [src] with [W]!</span>")
+			health = min(0, health - W.force)
+			if(!health)
+				deactivate(user, 1)
 	return
 
-/obj/machinery/camera/proc/deactivate(user as mob, var/choice = 1)
-	if(choice==1)
-		status = !( src.status )
-		if (!(src.status))
+/obj/machinery/camera/proc/deactivate(mob/user, displaymessage = 1)
+	if(displaymessage)
+		status = !status
+		if(!status)
 			if(user)
 				visible_message("<span class='danger'>[user] deactivates [src]!</span>")
 				add_hiddenprint(user)
 			else
 				visible_message("<span class='danger'>\The [src] deactivates!</span>")
-			playsound(src.loc, 'sound/items/Wirecutter.ogg', 100, 1)
 			icon_state = "[initial(icon_state)]1"
 
 		else
@@ -241,8 +245,8 @@
 				add_hiddenprint(user)
 			else
 				visible_message("<span class='danger'>\The [src] reactivates!</span>")
-			playsound(src.loc, 'sound/items/Wirecutter.ogg', 100, 1)
 			icon_state = initial(icon_state)
+		playsound(src.loc, 'sound/items/Wirecutter.ogg', 100, 1)
 
 	// now disconnect anyone using the camera
 	//Apparently, this will disconnect anyone even if the camera was re-activated.
