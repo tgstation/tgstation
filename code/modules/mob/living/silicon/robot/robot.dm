@@ -1077,21 +1077,33 @@
 	var/sensor_type = input("Please select sensor type.", "Sensor Integration", null) in src.get_sensor_augmentations()
 	sight_mode = 0
 	remove_med_sec_hud()
-	switch(sensor_type)
+	switch(sensor_type) //NB: copypasta is there to stop faggotry
 		if ("Security")
+			sight_mode = 0
+			remove_med_sec_hud()
 			add_sec_hud()
 			src << "<span class='notice'>Security records overlay enabled.</span>"
 		if ("Medical")
+			sight_mode = 0
+			remove_med_sec_hud()
 			add_med_hud()
 			src << "<span class='notice'>Life signs monitor overlay enabled.</span>"
 		if ("Meson")
+			sight_mode = 0
+			remove_med_sec_hud()
 			sight_mode |= BORGMESON
 			src << "<span class='notice'>Meson overlay enabled.</span>"
 		if ("Thermal")
+			sight_mode = 0
+			remove_med_sec_hud()
 			sight_mode |= BORGTHERM
 			src << "<span class='notice'>Thermal overlay enabled.</span>"
 		if ("Night Vision")
+			sight_mode = 0
+			remove_med_sec_hud()
 			sight_mode |= BORGNV
 			src << "<span class='notice'>Night Vision enabled.</span>"
 		if ("Disable")
+			sight_mode = 0
+			remove_med_sec_hud()
 			src << "Sensor augmentations disabled."
