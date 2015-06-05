@@ -579,6 +579,17 @@ var/list/slot_equipment_priority = list( \
 				namecounts[name] = 1
 			creatures[name] = O
 
+		if(istype(O, /obj/machinery/power/supermatter))
+			var/name = "[O.name]"
+			if (names.Find(name))
+				namecounts[name]++
+				name = "[name] ([namecounts[name]])"
+			else
+				names.Add(name)
+				namecounts[name] = 1
+			creatures[name] = O
+
+
 		if(istype(O, /obj/machinery/bot))
 			var/name = "BOT: [O.name]"
 			if (names.Find(name))

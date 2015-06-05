@@ -21,10 +21,17 @@
 /obj/singularity/narsie/large/exit/update_icon()
 	overlays = 0
 
+/obj/singularity/narsie/large/exit/eat()
+	set background = BACKGROUND_ENABLED
+	for(var/atom/X in orange(grav_pull,src))
+		var/dist = get_dist(X, src)
+		var/obj/singularity/S = src
+		if(dist <= consume_range)
+			consume(X)
+	return
+
+
 /obj/singularity/narsie/large/exit/process()
-//	for(var/mob/M in player_list)
-//		if(M.client)
-//			M.see_rift(src)
 	eat()
 
 /obj/singularity/narsie/large/exit/acquire(var/mob/food)
@@ -37,10 +44,17 @@
 	A.rift_act(src)
 	return
 
-/obj/singularity/narsie/large/exit/consume(const/atom/A)
-	A.rift_act(src)
+///obj/singularity/narsie/large/exit/consume(const/atom/A)
+//	A.rift_act(src)
 
-/*
+
+/obj/singularity/narsie/large/exit/event()
+	return
+
+/obj/singularity/narsie/large/exit/toxmob()
+	return
+
+/obj/singularity/narsie/large/exit/consume(const/atom/A)
 	if (istype(A, /mob/living/))
 		var/mob/living/L = A
 		if(L.buckled && istype(L.buckled,/obj/structure/stool/bed/))
@@ -67,15 +81,13 @@
 				consume(AM)
 				continue
 
-			if (dist > consume_range && canPull(AM))
-				if(!(AM.singuloCanEat()))
-					continue
-
+			if (dist > consume_range && !AM.anchored)
 				if (101 == AM.invisibility)
 					continue
 
 				spawn (0)
 					step_towards(AM, src)
-*/
+
 
 /obj/singularity/narsie/large/exit/admin_investigate_setup()
+	return
