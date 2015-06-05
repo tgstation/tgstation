@@ -5,6 +5,9 @@
 /mob/living/emote(var/act, var/m_type=1, var/message = null)
 	var/param = null
 
+	if(stat)
+		return
+
 	if (findtext(act, "-", 1, null))
 		var/t1 = findtext(act, "-", 1, null)
 		param = copytext(act, t1 + 1, length(act) + 1)

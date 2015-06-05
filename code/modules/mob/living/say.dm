@@ -59,7 +59,7 @@ var/list/department_radio_keys = list(
 	  ":V" = "Service",		"#V" = "Service",		".V" = "Service",
 	  ":O" = "AI Private",	"#O" = "AI Private",	".O" = "AI Private",
 	  ":G" = "changeling",	"#G" = "changeling",	".G" = "changeling",
-	  ":y" = "ancientchat",	"#y" = "ancientchat",	".y" = "ancientchat",
+	  ":Y" = "ancientchat",	"#Y" = "ancientchat",	".Y" = "ancientchat",
 
 		//fugg
 	  //kinda localization -- rastaf0
@@ -81,6 +81,8 @@ var/list/department_radio_keys = list(
 	  ":ï" = "changeling",	"#ï" = "changeling",	".ï" = "changeling"
 )
 
+var/list/crit_allowed_modes = list(MODE_WHISPER)
+
 /mob/proc/binarycheck()
 	return 0
 
@@ -89,9 +91,6 @@ var/list/department_radio_keys = list(
 
 	if(stat == DEAD)
 		say_dead(message)
-		return
-
-	if(stat)
 		return
 
 	if(check_emote(message))
@@ -103,6 +102,9 @@ var/list/department_radio_keys = list(
 		return
 
 	var/message_mode = get_message_mode(message)
+
+	if(stat && !(message_mode in crit_allowed_modes))
+		return
 
 	if(message_mode == MODE_HEADSET || message_mode == MODE_ROBOT)
 		message = copytext(message, 2)
