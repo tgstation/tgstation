@@ -1,0 +1,6 @@
+author: CorruptComputer
+
+delete-after: True
+
+changes: 
+  - rscadd: "Re-added AdteroidStation, has an updated layout for science and medical and general bugfixes."

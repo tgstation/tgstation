@@ -9,6 +9,7 @@ env:
     - DM_MAPFILE="tgstation2"
     - DM_MAPFILE="metastation"
     - DM_MAPFILE="ministation"
+    - DM_MAPFILE="asteroidstation"
 
 before_install:
   - sudo apt-get update -qq
