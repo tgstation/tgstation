@@ -146,7 +146,7 @@
 			var/obj/item/stack/new_item = O
 			new_item.amount = R.res_amount*multiplier
 			//new_item.add_to_stacks(usr)
-		src.amount-=R.req_amount*multiplier
+		src.use(R.req_amount*multiplier)
 		if (src.amount<=0)
 			var/oldsrc = src
 			//src = null //dont kill proc after del()
@@ -172,13 +172,31 @@
 
 /obj/item/stack/proc/use(var/amount)
 	ASSERT(isnum(src.amount))
+
 	if(src.amount>=amount)
 		src.amount-=amount
 	else
 		return 0
 	. = 1
-	if (src.amount<=0)
+	if (src.amount<=0) //If the stack is empty after removing the required amount of items!
 		if(usr)
+			if(istype(usr,/mob/living/silicon/robot))
+				var/mob/living/silicon/robot/R=usr
+				if(R.module)
+					R.module.modules -= src
+				if(R.module_active == src) R.module_active = null
+				if(R.module_state_1 == src)
+					R.uneq_module(R.module_state_1)
+					R.module_state_1 = null
+					R.inv1.icon_state = "inv1"
+				else if(R.module_state_2 == src)
+					R.uneq_module(R.module_state_2)
+					R.module_state_2 = null
+					R.inv2.icon_state = "inv2"
+				else if(R.module_state_3 == src)
+					R.uneq_module(R.module_state_3)
+					R.module_state_3 = null
+					R.inv3.icon_state = "inv3"
 			usr.before_take_item(src)
 		spawn returnToPool(src)
 
