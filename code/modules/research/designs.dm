@@ -392,3 +392,17 @@ datum/design/proc/CalcReliability(var/list/temp_techs)
 	materials = list("$metal" = 2000, "$glass" = 1000)
 	build_path = /obj/item/weapon/holosign_creator
 	category = list("Equipment")
+
+/////////////////////////////////////////
+////////////Tools//////////////
+/////////////////////////////////////////
+
+/datum/design/exwelder
+	name = "Experimental Welding Tool"
+	desc = "An experimental welder capable of self-fuel generation."
+	id = "exwelder"
+	req_tech = list("materials" = 4, "engineering" = 4, "bluespace" = 3, "plasmatech" = 3)
+	build_type = PROTOLATHE
+	materials = list("$metal" = 1000, "$glass" = 500, "$plasma" = 1500, "$uranium" = 200)
+	build_path = /obj/item/weapon/weldingtool/experimental
+	category = list("Equipment")

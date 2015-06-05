@@ -144,6 +144,7 @@
  */
 /obj/item/weapon/weldingtool
 	name = "welding tool"
+	desc = "A standard edition welder provided by NanoTrasen."
 	icon = 'icons/obj/items.dmi'
 	icon_state = "welder"
 	item_state = "welder"
@@ -368,6 +369,7 @@
 
 /obj/item/weapon/weldingtool/largetank
 	name = "industrial welding tool"
+	desc = "A slightly larger welder with a larger tank."
 	icon_state = "indwelder"
 	max_fuel = 40
 	g_amt = 60
@@ -381,6 +383,7 @@
 
 /obj/item/weapon/weldingtool/mini
 	name = "emergency welding tool"
+	desc = "A miniature welder used during emergencies."
 	icon_state = "miniwelder"
 	max_fuel = 10
 	w_class = 1
@@ -394,6 +397,7 @@
 
 /obj/item/weapon/weldingtool/hugetank
 	name = "upgraded industrial welding tool"
+	desc = "An upgraded welder based of the industrial welder."
 	icon_state = "upindwelder"
 	item_state = "upindwelder"
 	max_fuel = 80
@@ -403,13 +407,15 @@
 
 /obj/item/weapon/weldingtool/experimental
 	name = "experimental welding tool"
+	desc = "An experimental welder capable of self-fuel generation."
 	icon_state = "exwelder"
 	item_state = "exwelder"
 	max_fuel = 40
 	m_amt = 70
 	g_amt = 120
-	origin_tech = "engineering=4;plasmatech=3"
+	origin_tech = "materials=4;engineering=4;bluespace=3;plasmatech=3"
 	var/last_gen = 0
+	change_icons = 0
 
 
 //Proc to make the experimental welder generate fuel, optimized as fuck -Sieve
