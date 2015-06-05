@@ -399,9 +399,9 @@
 	metabolization_rate = 0.5 * REAGENTS_METABOLISM
 	overdose_threshold = 45
 	addiction_threshold = 30
+	speed_modifier = -1
 
 /datum/reagent/medicine/ephedrine/on_mob_life(var/mob/living/M as mob)
-	M.status_flags |= GOTTAGOFAST
 	M.AdjustParalysis(-1)
 	M.AdjustStunned(-1)
 	M.AdjustWeakened(-1)
@@ -696,9 +696,9 @@
 	color = "#C8A5DC"
 	metabolization_rate = 0.5 * REAGENTS_METABOLISM
 	overdose_threshold = 60
+	speed_modifier = -1
 
 /datum/reagent/medicine/stimulants/on_mob_life(var/mob/living/M as mob)
-	M.status_flags |= GOTTAGOFAST
 	if(M.health < 50 && M.health > 0)
 		M.adjustOxyLoss(-1*REM)
 		M.adjustToxLoss(-1*REM)

@@ -148,6 +148,7 @@
 	overdose_threshold = 20
 	addiction_threshold = 10
 	metabolization_rate = 0.75 * REAGENTS_METABOLISM
+	speed_modifier = -2
 
 /datum/reagent/drug/methamphetamine/on_mob_life(var/mob/living/M as mob)
 	var/high_message = pick("You feel hyper.", "You feel like you need to go faster.", "You feel like you can run the world.")
@@ -157,7 +158,6 @@
 	M.AdjustStunned(-2)
 	M.AdjustWeakened(-2)
 	M.adjustStaminaLoss(-2)
-	M.status_flags |= GOTTAGOREALLYFAST
 	M.Jitter(2)
 	M.adjustBrainLoss(0.25)
 	if(prob(5))

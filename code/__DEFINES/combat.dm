@@ -29,16 +29,16 @@
 #define CANPARALYSE	4
 #define CANPUSH		8
 #define IGNORESLOWDOWN	16
-#define GOTTAGOFAST	32
-#define GOTTAGOREALLYFAST	64
+#define INCREASEDAMAGE	32
+#define DECREASEDAMAGE	64
+#define RESISTBURN	128
+#define RESISTBRUTE	256
+#define RESISTTOX
+#define RESISTOXY
 #define GODMODE		4096
 #define FAKEDEATH	8192	//Replaces stuff like changeling.changeling_fakedeath
 #define DISFIGURED	16384	//I'll probably move this elsewhere if I ever get wround to writing a bitflag mob-damage system
 #define XENO_HOST	32768	//Tracks whether we're gonna be a baby alien's mummy.
-
-// Alchemy effect flags.
-#define INCREASEDAMAGE 1
-#define SLOWDOWN 2
 
 //Grab levels
 #define GRAB_PASSIVE	1

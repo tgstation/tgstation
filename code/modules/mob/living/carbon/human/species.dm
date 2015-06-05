@@ -706,14 +706,8 @@
 				mspeed += (BODYTEMP_COLD_DAMAGE_LIMIT - H.bodytemperature) / COLD_SLOWDOWN_FACTOR
 			mspeed += speedmod
 
-	if(H.status_flags & GOTTAGOFAST)
-		mspeed -= 1
-
-	if(H.status_flags & GOTTAGOREALLYFAST)
-		mspeed -= 2
-
-	if(H.status_flags & SLOWDOWN)
-		mspeed += 4
+	if(H.reagents)
+		mspeed += H.reagents.speed_modifier
 
 	return mspeed
 
@@ -763,10 +757,10 @@
 
 				var/damage = rand(0, 9)
 				if(M.dna)
-					if(M.status_flags & INCREASEDAMAGE)
-						damage += 5
 					damage += M.dna.species.punchmod
-
+				if(M.reagents)
+					for(var/datum/reagent/R in M.reagents.reagent_list)
+						damage += R.damage_modifier
 				if(!damage)
 					if(M.dna)
 						playsound(H.loc, M.dna.species.miss_sound, 25, 1, -1)

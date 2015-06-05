@@ -1,10 +1,10 @@
-//Strained Muscles: Temporary speed boost at the cost of rapid damage
+//Strained Muscles: Ignore slowdowns at the cost of rapid damage
 //Limited because of hardsuits and such; ideally, used for a quick getaway
 
 /obj/effect/proc_holder/changeling/strained_muscles
 	name = "Strained Muscles"
-	desc = "We evolve the ability to reduce the acid buildup in our muscles, allowing us to move much faster."
-	helptext = "The strain will make us tired, and we will rapidly become fatigued. Standard weight restrictions, like hardsuits, still apply. Cannot be used in lesser form."
+	desc = "We evolve the ability to reduce the acid buildup in our muscles, allowing us to move at a normal speed regardless of weight and injuries."
+	helptext = "The strain will make us tired, and we will rapidly become fatigued. Cannot be used in lesser form."
 	chemical_cost = 0
 	dna_cost = 1
 	req_human = 1
@@ -16,7 +16,7 @@
 	if(active)
 		user << "<span class='notice'>Our muscles tense and strengthen.</span>"
 	else
-		user.status_flags -= GOTTAGOFAST
+		user.status_flags -= IGNORESLOWDOWN
 		user << "<span class='notice'>Our muscles relax.</span>"
 		if(stacks >= 10)
 			user << "<span class='danger'>We collapse in exhaustion.</span>"
@@ -24,12 +24,12 @@
 			user.emote("gasp")
 
 	while(active)
-		user.status_flags |= GOTTAGOFAST
+		user.status_flags |= IGNORESLOWDOWN
 		if(user.stat != CONSCIOUS || user.staminaloss >= 90)
 			active = !active
 			user << "<span class='notice'>Our muscles relax without the energy to strengthen them.</span>"
 			user.Weaken(2)
-			user.status_flags -= GOTTAGOFAST
+			user.status_flags -= IGNORESLOWDOWN
 			break
 
 		stacks++
