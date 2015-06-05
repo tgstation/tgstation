@@ -203,10 +203,11 @@ obj/item/ammo_box/magazine/tommygunm45
 	icon_state = "a762-[round(ammo_count(),10)]"
 
 
+
 /obj/item/ammo_box/magazine/m12g
-	name = "shotgun magazine (12g buckshot)"
+	name = "shotgun magazine (12g slugs)"
 	icon_state = "m12gb"
-	ammo_type = /obj/item/ammo_casing/shotgun/buckshot
+	ammo_type = /obj/item/ammo_casing/shotgun
 	origin_tech = "combat=3;syndicate=1"
 	caliber = "shotgun"
 	max_ammo = 8
@@ -214,6 +215,11 @@ obj/item/ammo_box/magazine/tommygunm45
 /obj/item/ammo_box/magazine/m12g/update_icon()
 	..()
 	icon_state = "[initial(icon_state)]-[Ceiling(ammo_count(0)/8)*8]"
+
+/obj/item/ammo_box/magazine/m12g/buckshot
+	name = "shotgun magazine (12g buckshot slugs)"
+	icon_state = "m12gb"
+	ammo_type = /obj/item/ammo_casing/shotgun/buckshot
 
 /obj/item/ammo_box/magazine/m12g/stun
 	name = "shotgun magazine (12g taser slugs)"

@@ -31,7 +31,7 @@
 	new /obj/item/weapon/storage/box/flashbangs(src)
 	new /obj/item/weapon/storage/box/teargas(src)
 	new /obj/item/weapon/storage/backpack/dufflebag/syndiemed(src)
-	new /obj/item/weapon/storage/backpack/dufflebag/syndieammo(src)
+	new /obj/item/weapon/storage/backpack/dufflebag/syndieammo/loaded(src)
 	new /obj/item/weapon/gun/projectile/automatic/shotgun/bulldog(src)
 	new /obj/item/weapon/gun/projectile/automatic/shotgun/bulldog(src)
 	new /obj/item/weapon/gun/projectile/automatic/shotgun/bulldog(src)
