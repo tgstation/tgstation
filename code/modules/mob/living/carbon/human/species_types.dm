@@ -43,6 +43,11 @@
 
 	return message
 
+//I wag in death
+/datum/species/lizard/spec_death(var/gibbed, var/mob/living/carbon/human/H)
+	if(H)
+		H.endTailWag()
+
 /*
  PLANTPEOPLE
 */
