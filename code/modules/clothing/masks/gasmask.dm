@@ -226,7 +226,7 @@
 	icon_state = "clown"
 	item_state = "clown_hat"
 
-obj/item/clothing/mask/gas/clown_hat/attack_self(mob/user)
+/obj/item/clothing/mask/gas/clown_hat/attack_self(mob/user)
 
 	var/mob/M = usr
 	var/list/options = list()

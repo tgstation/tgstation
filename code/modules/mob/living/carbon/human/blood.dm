@@ -130,7 +130,8 @@ var/const/BLOOD_VOLUME_SURVIVE = 122
 		return
 
 	vessel.remove_reagent("blood",amt)
-	blood_splatter(src,src)
+	if (isturf(src.loc)) //Blood loss still happens in locker, floor stays clean
+		blood_splatter(src,src)
 
 /****************************************************
 				BLOOD TRANSFERS
@@ -237,7 +238,7 @@ var/const/BLOOD_VOLUME_SURVIVE = 122
 					return D
 	return res
 
-proc/blood_incompatible(donor,receiver,donor_species,receiver_species)
+/proc/blood_incompatible(donor,receiver,donor_species,receiver_species)
 	if(!donor || !receiver) return 0
 
 	if(donor_species && receiver_species)
@@ -260,7 +261,7 @@ proc/blood_incompatible(donor,receiver,donor_species,receiver_species)
 		//AB is a universal receiver.
 	return 0
 
-proc/blood_splatter(var/target,var/datum/reagent/blood/source,var/large)
+/proc/blood_splatter(var/target,var/datum/reagent/blood/source,var/large)
 
 	var/obj/effect/decal/cleanable/blood/B
 	var/decal_type = /obj/effect/decal/cleanable/blood/splatter

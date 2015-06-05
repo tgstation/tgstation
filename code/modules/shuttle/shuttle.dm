@@ -169,6 +169,10 @@
 	..()
 	SSshuttle.mobile += src
 
+	var/area/A = get_area(src)
+	if(istype(A, /area/shuttle))
+		areaInstance = A
+
 	if(!id)
 		id = "[SSshuttle.mobile.len]"
 	if(name == "shuttle")
@@ -298,8 +302,6 @@
 
 	for(var/i=1, i<=L0.len, ++i)
 		var/turf/T0 = L0[i]
-		if(!istype(T0, /turf/simulated/shuttle))	//only move shuttle turfs!
-			continue
 
 		var/turf/T1 = L1[i]
 		if(!T1)

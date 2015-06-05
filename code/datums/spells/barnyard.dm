@@ -31,7 +31,12 @@
 		user << "<span class='notice'>They are too far away!</span>"
 		return
 
-	var/choice = pick(/obj/item/clothing/mask/spig, /obj/item/clothing/mask/cowmask, /obj/item/clothing/mask/horsehead)
+	var/list/masks = list(/obj/item/clothing/mask/spig, /obj/item/clothing/mask/cowmask, /obj/item/clothing/mask/horsehead)
+	var/list/mSounds = list("sound/magic/PigHead_curse.ogg", "sound/magic/CowHead_Curse.ogg", "sound/magic/HorseHead_curse.ogg")
+	var/randM = rand(1,3)
+
+
+	var/choice = masks[randM]
 	var/obj/item/clothing/mask/magichead = new choice
 	magichead.flags |=NODROP
 	magichead.flags_inv = null
@@ -40,5 +45,6 @@
 	if(!target.unEquip(target.wear_mask))
 		qdel(target.wear_mask)
 	target.equip_to_slot_if_possible(magichead, slot_wear_mask, 1, 1)
+	playsound(get_turf(target), mSounds[randM], 50, 1)
 
 	flick("e_flash", target.flash)

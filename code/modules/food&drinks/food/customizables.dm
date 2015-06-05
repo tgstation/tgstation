@@ -328,7 +328,7 @@
 
 /obj/item/weapon/reagent_containers/glass/bowl/update_icon()
 	overlays.Cut()
-	if(reagents.total_volume)
+	if(reagents && reagents.total_volume)
 		var/image/filling = image('icons/obj/food/soupsalad.dmi', "fullbowl")
 		filling.color = mix_color_from_reagents(reagents.reagent_list)
 		overlays += filling

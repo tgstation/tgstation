@@ -253,7 +253,7 @@ var/list/allowed_custom_spans = list(SPAN_ROBOT,SPAN_YELL,SPAN_ITALICS,SPAN_SANS
 
 var/const/SIGNAL_COOLDOWN = 20 // 2 seconds
 
-datum/signal
+/datum/signal
 
 	proc/mem(var/address, var/value)
 
@@ -331,7 +331,6 @@ datum/signal
 		var/atom/movable/virtualspeaker/virt = PoolOrNew(/atom/movable/virtualspeaker,null)
 		virt.name = source
 		virt.job = job
-		virt.faketrack = 1
 		virt.languages = HUMAN
 		//END SAY REWRITE RELATED CODE.
 

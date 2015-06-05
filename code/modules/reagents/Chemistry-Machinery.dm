@@ -328,18 +328,18 @@
 		mode = !mode
 
 	else if(href_list["createbottle"])
-		if(!condi)
-			var/name = stripped_input(usr, "Name:","Name your bottle!", (reagents.total_volume ? reagents.get_master_reagent_name() : " "), MAX_NAME_LEN)
-			if(!name)
-				return
-			var/obj/item/weapon/reagent_containers/glass/bottle/P = new/obj/item/weapon/reagent_containers/glass/bottle(src.loc)
-			P.name = trim("[name] bottle")
+		var/name = stripped_input(usr, "Name:","Name your bottle!", (reagents.total_volume ? reagents.get_master_reagent_name() : " "), MAX_NAME_LEN)
+		if(!name)
+			return
+		var/obj/item/weapon/reagent_containers/P
+		if(condi)
+			P = new/obj/item/weapon/reagent_containers/food/condiment(src.loc)
+		else
+			P = new/obj/item/weapon/reagent_containers/glass/bottle(src.loc)
 			P.pixel_x = rand(-7, 7) //random position
 			P.pixel_y = rand(-7, 7)
-			reagents.trans_to(P, 30)
-		else
-			var/obj/item/weapon/reagent_containers/food/condiment/P = new/obj/item/weapon/reagent_containers/food/condiment(src.loc)
-			reagents.trans_to(P, 50)
+		P.name = trim("[name] bottle")
+		reagents.trans_to(P, P.volume)
 
 	if(beaker)
 
@@ -654,7 +654,7 @@
 	var/wait = null
 	var/obj/item/weapon/reagent_containers/glass/beaker = null
 
-obj/machinery/computer/pandemic/New()
+/obj/machinery/computer/pandemic/New()
 	..()
 	update_icon()
 
@@ -689,7 +689,7 @@ obj/machinery/computer/pandemic/New()
 		return D.GetDiseaseID()
 	return null
 
-obj/machinery/computer/pandemic/proc/replicator_cooldown(var/waittime)
+/obj/machinery/computer/pandemic/proc/replicator_cooldown(var/waittime)
 	wait = 1
 	update_icon()
 	spawn(waittime)

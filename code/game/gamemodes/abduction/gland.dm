@@ -50,7 +50,7 @@
 	uses = -1
 	icon_state = "health"
 
-obj/item/gland/heals/activate()
+/obj/item/gland/heals/activate()
 	host << "<span class='notice'>You feel weird.</span>"
 	host.adjustBruteLoss(-20)
 	host.adjustOxyLoss(-20)
@@ -62,7 +62,7 @@ obj/item/gland/heals/activate()
 	uses = -1
 	icon_state = "slime"
 
-obj/item/gland/slime/activate()
+/obj/item/gland/slime/activate()
 	host << "<span class='notice'>You feel weird.</span>"
 
 	host.visible_message("<span class='danger'>[host] vomits on the floor!</span>", \

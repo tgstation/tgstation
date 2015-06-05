@@ -25,7 +25,7 @@
 		apply_damage(P.damage, P.damage_type, def_zone, armor)
 	return P.on_hit(src, armor, def_zone)
 
-proc/vol_by_throwforce_and_or_w_class(var/obj/item/I)
+/proc/vol_by_throwforce_and_or_w_class(var/obj/item/I)
 		if(!I)
 				return 0
 		if(I.throwforce && I.w_class)

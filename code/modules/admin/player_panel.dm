@@ -493,6 +493,17 @@
 				else
 					dat += "<tr><td><i>Abductor not found!</i></td></tr>"
 			dat += "</table>"
+			dat += "<br><table cellspacing=5><tr><td><B>Abductees</B></td><td></td><td></td></tr>"
+			for(var/obj/machinery/abductor/experiment/E in machines)
+				for(var/datum/mind/abductee in E.abductee_minds)
+					var/mob/M = abductee.current
+					if(M)
+						dat += "<tr><td><a href='?_src_=holder;adminplayeropts=\ref[M]'>[M.real_name]</a>[M.client ? "" : " <i>(ghost)</i>"][M.stat == 2 ? " <b><font color=red>(DEAD)</font></b>" : ""]</td>"
+						dat += "<td><A href='?priv_msg=[M.ckey]'>PM</A></td>"
+						dat += "<td><A HREF='?_src_=holder;traitor=\ref[M]'>Show Objective</A></td></tr>"
+					else
+						dat += "<tr><td><i>Abductee not found!</i></td></tr>"
+			dat += "</table>"
 
 		if(istype(ticker.mode, /datum/game_mode/blob))
 			var/datum/game_mode/blob/mode = ticker.mode

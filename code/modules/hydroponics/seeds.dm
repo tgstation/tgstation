@@ -405,7 +405,7 @@
 	plant_type = 0
 	oneharvest = 1
 	growthstages = 3
-	mutatelist = list(/obj/item/seeds/bluetomatoseed, /obj/item/seeds/bloodtomatoseed)
+	mutatelist = list(/obj/item/seeds/geraniumseed, /obj/item/seeds/lilyseed)
 
 /obj/item/seeds/geraniumseed
 	name = "pack of geranium seeds"

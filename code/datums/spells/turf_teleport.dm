@@ -8,8 +8,11 @@
 
 	var/include_space = 0 //whether it includes space tiles in possible teleport locations
 	var/include_dense = 0 //whether it includes dense tiles in possible teleport locations
+	var/sound1 = "sound/weapons/ZapBang.ogg"
+	var/sound2 = "sound/weapons/ZapBang.ogg"
 
 /obj/effect/proc_holder/spell/targeted/turf_teleport/cast(list/targets)
+	playsound(get_turf(usr), sound1, 50,1)
 	for(var/mob/living/target in targets)
 		var/list/turfs = new/list()
 		for(var/turf/T in range(target,outer_tele_radius))
@@ -34,3 +37,4 @@
 
 		if(!target.Move(picked))
 			target.loc = picked
+			playsound(get_turf(usr), sound2, 50,1)

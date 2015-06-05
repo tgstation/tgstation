@@ -240,6 +240,12 @@
 		if(H.wear_suit && (H.wear_suit.flags_inv & HIDEJUMPSUIT))
 			bodyparts_to_add -= "tail"
 
+	if("waggingtail" in mutant_bodyparts)
+		if(H.wear_suit && (H.wear_suit.flags_inv & HIDEJUMPSUIT))
+			bodyparts_to_add -= "waggingtail"
+		else if ("tail" in mutant_bodyparts)
+			bodyparts_to_add -= "waggingtail"
+
 	if("snout" in mutant_bodyparts) //Take a closer look at that snout!
 		if(H.wear_mask && (H.wear_mask.flags_inv & HIDEFACE))
 			bodyparts_to_add -= "snout"
@@ -855,7 +861,7 @@
 	// Allows you to put in item-specific reactions based on species
 	if(user != src)
 		user.do_attack_animation(H)
-	if((user != H) && H.check_shields(I.force, "the [I.name]"))
+	if((user != H) && H.check_shields(I.force, "the [I.name]", I))
 		return 0
 
 	if(I.attack_verb && I.attack_verb.len)

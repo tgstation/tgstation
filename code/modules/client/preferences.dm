@@ -22,7 +22,7 @@ var/global/list/special_roles = list( //keep synced with the defines BE_* in set
 )
 
 
-datum/preferences
+/datum/preferences
 	//doohickeys for savefiles
 	var/path
 	var/default_slot = 1				//Holder so it doesn't default to slot 1, rather the last one used
@@ -854,7 +854,7 @@ datum/preferences
 						if(toggles & SOUND_LOBBY)
 							user << sound(ticker.login_music, repeat = 0, wait = 0, volume = 85, channel = 1)
 						else
-							user << sound(null, repeat = 0, wait = 0, volume = 85, channel = 1)
+							user.stopLobbySound()
 
 					if("ghost_ears")
 						chat_toggles ^= CHAT_GHOSTEARS

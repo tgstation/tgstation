@@ -71,7 +71,10 @@
 		/obj/structure/closet,
 		/obj/item/weapon/storage,
 		/obj/structure/safe,
-		/obj/machinery/disposal
+		/obj/machinery/disposal,
+		/obj/machinery/r_n_d/destructive_analyzer,
+		/obj/machinery/r_n_d/experimentor,
+		/obj/machinery/autolathe
 	)
 /obj/item/proc/check_allowed_items(atom/target, not_inside)
 	if((src in target) || ((!istype(target.loc, /turf)) && (!istype(target, /turf)) && (not_inside)) || is_type_in_list(target, can_be_placed_into))
@@ -439,7 +442,7 @@
 		if(istype(A, /mob/living/carbon/human))
 			var/mob/living/carbon/human/H = A
 			if(can_embed(src))
-				if(prob(embed_chance))
+				if(prob(embed_chance) && !(PIERCEIMMUNE in H.dna.species.specflags))
 					var/obj/item/organ/limb/L = pick(H.organs)
 					L.embedded_objects |= src
 					add_blood(H)//it embedded itself in you, of course it's bloody!
@@ -451,3 +454,12 @@
 	//Reset regardless of if we hit a human.
 	throw_speed = initial(throw_speed) //explosions change this.
 	..()
+
+/obj/item/proc/remove_item_from_storage(atom/newLoc) //please use this if you're going to snowflake an item out of a obj/item/weapon/storage
+	if(!newLoc)
+		return 0
+	if(istype(loc,/obj/item/weapon/storage))
+		var/obj/item/weapon/storage/S = loc
+		S.remove_from_storage(src,newLoc)
+		return 1
+	return 0

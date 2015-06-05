@@ -228,14 +228,14 @@
 	required_reagents = list("toxin" = 1, "water" = 4)
 	result_amount = 5
 
-datum/chemical_reaction/weedkiller
+/datum/chemical_reaction/weedkiller
 	name = "Weed Killer"
 	id = "weedkiller"
 	result = "weedkiller"
 	required_reagents = list("toxin" = 1, "ammonia" = 4)
 	result_amount = 5
 
-datum/chemical_reaction/pestkiller
+/datum/chemical_reaction/pestkiller
 	name = "Pest Killer"
 	id = "pestkiller"
 	result = "pestkiller"

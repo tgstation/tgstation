@@ -16,13 +16,10 @@
 	var/cast_sound = 'sound/items/welder.ogg'
 
 /obj/effect/proc_holder/spell/aoe_turf/conjure/cast(list/targets)
-
+	playsound(get_turf(usr), cast_sound, 50,1)
 	for(var/turf/T in targets)
 		if(T.density && !summon_ignore_density)
 			targets -= T
-
-	if(cast_sound)
-		playsound(src.loc, cast_sound, 50, 1)
 
 	for(var/i=0,i<summon_amt,i++)
 		if(!targets.len)
@@ -32,9 +29,6 @@
 		if(summon_ignore_prev_spawn_points)
 			targets -= spawn_place
 		if(ispath(summoned_object_type,/turf))
-			if(istype(get_turf(usr),/turf/simulated/shuttle))
-				usr << "<span class='danger'>You can't build things on shuttles!</span>"
-				break
 			var/turf/O = spawn_place
 			var/N = summoned_object_type
 			O.ChangeTurf(N)
