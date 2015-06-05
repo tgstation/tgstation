@@ -56,14 +56,13 @@ var/list/department_radio_keys = list(
 	  ":ï" = "changeling",	"#ï" = "changeling",	".ï" = "changeling"
 )
 
+var/list/crit_allowed_modes = list(MODE_WHISPER,MODE_CHANGELING,MODE_ALIEN)
+
 /mob/living/say(message, bubble_type,)
 	message = trim(copytext(sanitize(message), 1, MAX_MESSAGE_LEN))
 
 	if(stat == DEAD)
 		say_dead(message)
-		return
-
-	if(stat)
 		return
 
 	if(check_emote(message))
@@ -74,6 +73,9 @@ var/list/department_radio_keys = list(
 		return
 
 	var/message_mode = get_message_mode(message)
+
+	if(stat && !(message_mode in crit_allowed_modes))
+		return
 
 	if(message_mode == MODE_HEADSET || message_mode == MODE_ROBOT)
 		message = copytext(message, 2)

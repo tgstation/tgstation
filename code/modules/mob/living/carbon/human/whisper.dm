@@ -66,13 +66,17 @@
 	var/spans = list(SPAN_ITALICS)
 	rendered = "<span class='game say'><span class='name'>[GetVoice()]</span>[alt_name] [whispers], <span class='message'>\"[attach_spans(message, spans)]\"</span></span>"
 
-	for(var/mob/M in listening)
-		M.Hear(rendered, src, languages, message, , spans)
+	for(var/atom/movable/AM in listening)
+		if(istype(AM,/obj/item/device/radio))
+			continue
+		AM.Hear(rendered, src, languages, message, , spans)
 
 	message = stars(message)
 	rendered = "<span class='game say'><span class='name'>[GetVoice()]</span>[alt_name] [whispers], <span class='message'>\"[attach_spans(message, spans)]\"</span></span>"
-	for(var/mob/M in eavesdropping)
-		M.Hear(rendered, src, languages, message, , spans)
+	for(var/atom/movable/AM in eavesdropping)
+		if(istype(AM,/obj/item/device/radio))
+			continue
+		AM.Hear(rendered, src, languages, message, , spans)
 
 	if(critical) //Dying words.
 		succumb(1)
