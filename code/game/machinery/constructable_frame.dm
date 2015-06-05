@@ -372,8 +372,10 @@ to destroy them and players will be able to make replacements.
 
 /obj/item/weapon/circuitboard/chem_dispenser
 	name = "circuit board (Portable Chem Dispenser)"
+	desc = "Use screwdriver to switch between dispenser modes."
 	build_path = /obj/machinery/chem_dispenser/constructable
 	board_type = "machine"
+	var/finish_type = "chemical dispenser"
 	origin_tech = "materials=4;engineering=4;programming=4;plasmatech=3;biotech=3"
 	req_components = list(
 							/obj/item/weapon/stock_parts/matter_bin = 2,
@@ -381,6 +383,54 @@ to destroy them and players will be able to make replacements.
 							/obj/item/weapon/stock_parts/manipulator = 1,
 							/obj/item/weapon/stock_parts/console_screen = 1,
 							/obj/item/weapon/stock_parts/cell = 1)
+
+/obj/item/weapon/circuitboard/chem_dispenser/attackby(obj/item/I as obj, mob/user as mob, params)
+	if(istype(I,/obj/item/weapon/screwdriver))
+		switch( alert("Current mode is set to: [finish_type]","Circuitboard interface","Chemical dispenser", "Booze dispenser", "Soda dispenser", "Cancel") )
+			if("Chemical dispenser")
+				name = "circuit board (Portable Chem Dispenser)"
+				build_path = /obj/machinery/chem_dispenser/constructable
+				finish_type = "chemical dispenser"
+
+			if("Booze dispenser")
+				name = "circuit board (Portable Booze Dispenser)"
+				build_path = /obj/machinery/chem_dispenser/constructable/booze
+				finish_type = "booze dispenser"
+
+			if("Soda dispenser")
+				name = "circuit board (Portable Soda Dispenser)"
+				build_path = /obj/machinery/chem_dispenser/constructable/drinks
+				finish_type = "soda dispenser"
+
+			if("Cancel")
+				return
+			else
+				user << "Invalid input, try again"
+	return
+
+
+
+/obj/item/weapon/circuitboard/chem_master
+	name = "circuit board (Chem Master 2999)"
+	desc = "Use screwdriver to switch between chemical and condiment modes."
+	build_path = /obj/machinery/chem_master/constructable
+	board_type = "machine"
+	origin_tech = "materials=2;programming=2;biotech=1"
+	req_components = list(
+							/obj/item/weapon/reagent_containers/glass/beaker = 2,
+							/obj/item/weapon/stock_parts/manipulator = 1,
+							/obj/item/weapon/stock_parts/console_screen = 1)
+
+/obj/item/weapon/circuitboard/chem_master/attackby(obj/item/I, mob/user, params)
+	if(istype(I, /obj/item/weapon/screwdriver))
+		if(build_path == /obj/machinery/chem_master/constructable)
+			build_path = /obj/machinery/chem_master/constructable/condimaster
+			name = "circuit board (Condi Master 2999)"
+			user << "<span class='notice'>You set the board to condiment.</span>"
+		else
+			build_path = /obj/machinery/chem_master/constructable
+			name = "circuit board (Chem Master 2999)"
+			user << "<span class='notice'>You set the board to chemical.</span>"
 
 /obj/item/weapon/circuitboard/chem_heater
 	name = "circuit board (Chemical Heater)"
@@ -391,7 +441,17 @@ to destroy them and players will be able to make replacements.
 							/obj/item/weapon/stock_parts/micro_laser = 1,
 							/obj/item/weapon/stock_parts/console_screen = 1)
 
+/obj/item/weapon/circuitboard/grinder
+	name = "circuit board (All-In-One Grinder)"
+	build_path = /obj/machinery/reagentgrinder
+	board_type = "machine"
+	origin_tech = "materials=2;engineering=2;biotech=2"
+	req_components = list(
+							/obj/item/weapon/reagent_containers/glass/beaker = 1,
+							/obj/item/weapon/stock_parts/manipulator = 1,)
+
 //Almost the same recipe as destructive analyzer to give people choices.
+//implying
 /obj/item/weapon/circuitboard/experimentor
 	name = "circuit board (E.X.P.E.R.I-MENTOR)"
 	build_path = /obj/machinery/r_n_d/experimentor

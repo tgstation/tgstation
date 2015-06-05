@@ -112,6 +112,16 @@
 	build_path = /obj/item/weapon/circuitboard/chem_dispenser
 	category = list ("Medical Machinery")
 
+/datum/design/chem_master
+	name = "Machine Design (Chem Master Board)"
+	desc = "The circuit board for a Chem Master 2999."
+	id = "chem_master"
+	req_tech = list("biotech" = 1, "materials" = 2, "programming" = 2)
+	build_type = IMPRINTER
+	materials = list("$glass" = 1000, "sacid" = 20)
+	build_path = /obj/item/weapon/circuitboard/chem_master
+	category = list ("Medical Machinery")
+
 /datum/design/chem_heater
 	name = "Machine Design (Chemical Heater Board)"
 	desc = "The circuit board for a chemical heater."
@@ -120,6 +130,16 @@
 	build_type = IMPRINTER
 	materials = list("$glass" = 1000, "sacid" = 20)
 	build_path = /obj/item/weapon/circuitboard/chem_heater
+	category = list ("Medical Machinery")
+
+/datum/design/grinder
+	name = "Machine Design (All-In-One Grinder)"
+	desc = "The circuit board for a reagent grinder."
+	id = "grinder"
+	req_tech = list("biotech" = 2, "materials" = 2, "programming" = 2)
+	build_type = IMPRINTER
+	materials = list("$glass" = 1000, "sacid" = 20)
+	build_path = /obj/item/weapon/circuitboard/grinder
 	category = list ("Medical Machinery")
 
 /datum/design/biogenerator
