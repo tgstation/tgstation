@@ -155,7 +155,7 @@
 
 	var/T = src.loc
 
-	if(health <= 0)
+	if(!stat)
 		return 0
 	if(busy != SPINNING_WEB)
 		busy = SPINNING_WEB
@@ -173,7 +173,7 @@
 	set category = "Spider"
 	set desc = "Wrap up prey to feast upon and objects for safe keeping."
 
-	if(health <= 0)
+	if(!stat)
 		return 0
 	if(!cocoon_target)
 		var/list/choices = list()
@@ -232,7 +232,7 @@
 	set desc = "Lay a clutch of eggs, but you must wrap a creature for feeding first."
 
 	var/obj/effect/spider/eggcluster/E = locate() in get_turf(src)
-	if(health <= 0)
+	if(!stat)
 		return 0
 	if(E)
 		src << "<span class='warning'>There is already a cluster of eggs here!</span>"
