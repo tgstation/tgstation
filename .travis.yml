@@ -23,7 +23,7 @@ install:
   - cd ..
 
 script:
-  - bash dm.sh -M${DM_MAPFILE} vgstation12.dme
+  - bash dm.sh -M${DM_MAPFILE} vgstation13.dme
 
 notifications:
   irc:
