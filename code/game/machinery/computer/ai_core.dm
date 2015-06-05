@@ -297,6 +297,7 @@ atom/proc/transfer_ai(var/choice as text, var/interaction as text, var/target, v
 				M.occupant << sound('sound/mecha/nominal.ogg',volume=50)
 			AI.cancel_camera()
 			AI.controlled_mech = M
+			AI.remote_control = M
 			AI.canmove = 1 //Much easier than adding AI checks! Be sure to set this back to 0 if you decide to allow an AI to leave a mech somehow.
 			AI.can_shunt = 0 //ONE AI ENTERS. NO AI LEAVES.
 			AI << "[interaction == "HACK" ? "<span class='announce'>Takeover of [M.name] complete! You are now permanently loaded onto the onboard computer. Do not attempt to leave the station sector!</span>" \

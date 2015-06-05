@@ -103,8 +103,6 @@
 	if(mob.stat == DEAD)
 		mob.ghostize()
 		return 0
-	if(isAI(mob))
-		return AIMove(n,direct,mob)
 	if(moving)
 		return 0
 	if(isliving(mob))
@@ -120,6 +118,9 @@
 
 	if(mob.remote_control)					//we're controlling something, our movement is relayed to it
 		return mob.remote_control.relaymove(mob, direct)
+
+	if(isAI(mob))
+		return AIMove(n,direct,mob)
 
 	if(!mob.canmove)
 		return 0

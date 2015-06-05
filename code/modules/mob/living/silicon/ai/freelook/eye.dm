@@ -75,10 +75,6 @@
 
 /client/proc/AIMove(n, direct, var/mob/living/silicon/ai/user)
 
-	if(user.controlled_mech) //The AI is a mech pilot!
-		user.controlled_mech.relaymove(user, direct)
-
-
 	var/initial = initial(user.sprint)
 	var/max_sprint = 50
 
