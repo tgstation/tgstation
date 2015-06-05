@@ -551,6 +551,7 @@
 #include "code\game\objects\effects\spawners\bombspawner.dm"
 #include "code\game\objects\effects\spawners\gibspawner.dm"
 #include "code\game\objects\effects\spawners\lootdrop.dm"
+#include "code\game\objects\effects\spawners\structure.dm"
 #include "code\game\objects\effects\spawners\vaultspawner.dm"
 #include "code\game\objects\items\apc_frame.dm"
 #include "code\game\objects\items\blueprints.dm"
