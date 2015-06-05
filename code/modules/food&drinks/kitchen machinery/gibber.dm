@@ -127,6 +127,7 @@
 	visible_message("<span class='italics'>You hear a loud squelchy grinding sound.</span>")
 	src.operating = 1
 	update_icon()
+	animate(src, pixel_x = pixel_x + 2, time = 1, loop = 40) //start shaking
 	var/sourcename = src.occupant.real_name
 	var/sourcejob = src.occupant.job
 	var/sourcenutriment = src.occupant.nutrition / 15
@@ -154,6 +155,7 @@
 	src.occupant.death(1)
 	src.occupant.ghostize()
 	qdel(src.occupant)
+
 	spawn(src.gibtime)
 		playsound(src.loc, 'sound/effects/splat.ogg', 50, 1)
 		operating = 0
@@ -164,6 +166,7 @@
 			meatslab.throw_at(Tx,i,3)
 			if (!Tx.density)
 				new /obj/effect/decal/cleanable/blood/gibs(Tx,i)
+		animate(src, pixel_x = initial(pixel_x), time = 1) //return to its spot after shaking
 		src.operating = 0
 		update_icon()
 

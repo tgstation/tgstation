@@ -1279,9 +1279,11 @@
 		if (!beaker || (beaker && beaker.reagents.total_volume >= beaker.reagents.maximum_volume))
 				return
 		playsound(src.loc, 'sound/machines/blender.ogg', 50, 1)
+		animate(src, pixel_x = pixel_x + 2, time = 1, loop = 50) //start shaking
 		operating = 1
 		updateUsrDialog()
 		spawn(60)
+				animate(src, pixel_x = initial(pixel_x), time = 1) //return to its spot after shaking
 				operating = 0
 				updateUsrDialog()
 
