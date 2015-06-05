@@ -539,7 +539,7 @@
 		// now everything inside the disposal gets put into the holder
 		// note AM since can contain mobs or objs
 		for(var/atom/movable/AM in D)
-			AM.loc = src
+			AM.forceMove(src)
 			if(istype(AM, /mob/living/carbon/human))
 				var/mob/living/carbon/human/H = AM
 				if((M_FAT in H.mutations) && (H.species && H.species.flags & CAN_BE_FAT))		// is a human and fat?
@@ -559,7 +559,7 @@
 			D.expel(src)	// no trunk connected, so expel immediately
 			return
 
-		loc = D.trunk
+		forceMove(D.trunk)
 		active = 1
 		dir = DOWN
 		spawn(1)
@@ -585,7 +585,7 @@
 				break
 			sleep(1)		// was 1
 			if(!loc || isnull(loc))
-				del(src)
+				qdel(src)
 			var/obj/structure/disposalpipe/curr = loc
 			last = curr
 			curr = curr.transfer(src)
@@ -620,7 +620,7 @@
 	// used when a a holder meets a stuck holder
 	proc/merge(var/obj/structure/disposalholder/other)
 		for(var/atom/movable/AM in other)
-			AM.loc = src		// move everything in other holder to this one
+			AM.forceMove(src)		// move everything in other holder to this one
 			if(ismob(AM))
 				var/mob/M = AM
 				if(M.client)	// if a client mob, update eye to follow this holder
@@ -682,7 +682,7 @@
 				// this is unlikely, but just dump out everything into the turf in case
 
 				for(var/atom/movable/AM in H)
-					AM.loc = T
+					AM.forceMove(T)
 					AM.pipe_eject(0)
 				qdel(H)
 				..()
@@ -713,9 +713,9 @@
 			if(H2 && !H2.active)
 				H.merge(H2)
 
-			H.loc = P
+			H.forceMove(P)
 		else			// if wasn't a pipe, then set loc to turf
-			H.loc = T
+			H.forceMove(T)
 			return null
 
 		return P
@@ -755,7 +755,7 @@
 			T = loc
 		if(T.density)		// dense ouput turf, so stop holder
 			H.active = 0
-			H.loc = src.
+			H.forceMove(src)
 			return
 		if(T.intact && istype(T,/turf/simulated/floor)) //intact floor, pop the tile
 			var/turf/simulated/floor/F = T
@@ -775,7 +775,7 @@
 			playsound(src, 'sound/machines/hiss.ogg', 50, 0, 0)
 			if(H)
 				for(var/atom/movable/AM in H)
-					AM.loc = T
+					AM.forceMove(T)
 					AM.pipe_eject(direction)
 					spawn(1)
 						if(AM)
@@ -790,7 +790,7 @@
 				for(var/atom/movable/AM in H)
 					target = get_offset_target_turf(T, rand(5)-rand(5), rand(5)-rand(5))
 
-					AM.loc = T
+					AM.forceMove(T)
 					AM.pipe_eject(0)
 					spawn(1)
 						if(AM)
@@ -823,7 +823,7 @@
 				// this is unlikely, but just dump out everything into the turf in case
 
 				for(var/atom/movable/AM in H)
-					AM.loc = T
+					AM.forceMove(T)
 					AM.pipe_eject(0)
 				qdel(H)
 				return
@@ -1062,9 +1062,9 @@
 			if(H2 && !H2.active)
 				H.merge(H2)
 
-			H.loc = P
+			H.forceMove(P)
 		else			// if wasn't a pipe, then set loc to turf
-			H.loc = T
+			H.forceMove(T)
 			return null
 
 		return P
@@ -1124,9 +1124,9 @@
 			if(H2 && !H2.active)
 				H.merge(H2)
 
-			H.loc = P
+			H.forceMove(P)
 		else			// if wasn't a pipe, then set loc to turf
-			H.loc = T
+			H.forceMove(T)
 			return null
 
 		return P
@@ -1332,7 +1332,7 @@
 
 		if(H)
 			for(var/atom/movable/AM in H)
-				AM.loc = src.loc
+				AM.forceMove(src.loc)
 				AM.pipe_eject(dir)
 				spawn(5)
 					if(AM)

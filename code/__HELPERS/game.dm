@@ -25,8 +25,8 @@
 /proc/get_area_master(const/O)
 	var/area/A = get_area(O)
 
-	if (isarea(A))
-		return A.master
+	if(isarea(A))
+		return A
 
 /proc/get_area_name(N) //get area by its name
 	for(var/area/A in areas)

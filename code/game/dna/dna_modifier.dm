@@ -50,13 +50,10 @@
 	var/obj/item/weapon/reagent_containers/glass/beaker = null
 	machine_flags = SCREWTOGGLE | CROWDESTROY
 
-	l_color = "#7BF9FF"
-	power_change()
-		..()
-		if(!(stat & (BROKEN|NOPOWER)) && src.occupant)
-			SetLuminosity(2)
-		else
-			SetLuminosity(0)
+	light_color = LIGHT_COLOR_CYAN
+	use_auto_lights = 1
+	light_range_on = 3
+	light_power_on = 2
 
 /obj/machinery/dna_scannernew/New()
 	. = ..()
@@ -345,7 +342,7 @@
 	// Fix for #274 (Mash create block injector without answering dialog to make unlimited injectors) - N3X.
 	var/waiting_for_user_input = 0
 
-	l_color = "#0000FF"
+	light_color = LIGHT_COLOR_BLUE
 
 /obj/machinery/computer/scan_consolenew/attackby(obj/O as obj, mob/user as mob)
 	..()
@@ -376,17 +373,6 @@
 
 	if(prob(75))
 		qdel(src)
-
-/obj/machinery/computer/scan_consolenew/power_change()
-	if(stat & BROKEN)
-		icon_state = "broken"
-	else if(powered())
-		icon_state = initial(icon_state)
-		stat &= ~NOPOWER
-	else
-		spawn(rand(0, 15))
-			src.icon_state = "c_unpowered"
-			stat |= NOPOWER
 
 /obj/machinery/computer/scan_consolenew/New()
 	..()

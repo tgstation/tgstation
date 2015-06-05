@@ -299,15 +299,13 @@
 	//'	update_connected_network()
 
 	// Handle light requirements.
-	var/area/A = T.loc
-	if(A)
-		var/light_available
-		if(A.lighting_use_dynamic)
-			light_available = max(0,min(10,T.lighting_lumcount)-5)
-		else
-			light_available =  5
-		if(abs(light_available - seed.ideal_light) > seed.light_tolerance)
-			health -= healthmod
+
+	var/light_available = 5
+	if(T.dynamic_lighting)
+		light_available = T.get_lumcount(0.5) * 10
+
+	if(abs(light_available - seed.ideal_light) > seed.light_tolerance)
+		health -= healthmod
 
 	// Toxin levels beyond the plant's tolerance cause damage, but
 	// toxins are sucked up each tick and slowly reduce over time.
@@ -507,14 +505,14 @@
 	// Update bioluminescence.
 	if(seed)
 		if(seed.biolum)
-			SetLuminosity(round(seed.potency/10))
+			set_light(round(seed.potency/10))
 			if(seed.biolum_colour)
-				l_color = seed.biolum_colour
+				light_color = seed.biolum_colour
 			else
-				l_color = null
+				light_color = null
 			return
 
-	SetLuminosity(0)
+	set_light(0)
 	return
 
  // If a weed growth is sufficient, this proc is called.
@@ -822,13 +820,9 @@
 				else //Somewhere we shouldn't be, panic
 					return
 
-			var/area/A = get_area(T)
-			var/light_available
-			if(A)
-				if(A.lighting_use_dynamic)
-					light_available = max(0,min(10,T.lighting_lumcount))
-				else
-					light_available =  5
+			var/light_available = 5
+			if(T.dynamic_lighting)
+				light_available = T.get_lumcount() * 10
 
 			user << "The tray's sensor suite is reporting a light level of [light_available] lumens and a temperature of [environment.temperature]K."
 

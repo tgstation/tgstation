@@ -29,7 +29,7 @@
 	if(!src.lit)
 		src.lit = 1
 		visible_message(flavor_text)
-		SetLuminosity(CANDLE_LUM)
+		set_light(CANDLE_LUM)
 		processing_objects.Add(src)
 
 /obj/item/candle/process()
@@ -50,18 +50,7 @@
 	if(lit)
 		lit = 0
 		update_icon()
-		SetLuminosity(0)
-		user.SetLuminosity(user.luminosity - CANDLE_LUM)
-
-/obj/item/candle/pickup(mob/user)
-	if(lit)
-		SetLuminosity(0)
-		user.SetLuminosity(user.luminosity + CANDLE_LUM)
-
-/obj/item/candle/dropped(mob/user)
-	if(lit && !luminosity)
-		user.SetLuminosity(user.luminosity - CANDLE_LUM)
-		SetLuminosity(CANDLE_LUM)
+		set_light(0)
 
 /obj/item/candle/is_hot()
 	if(lit)

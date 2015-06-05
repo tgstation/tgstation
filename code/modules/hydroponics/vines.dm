@@ -185,14 +185,14 @@
 
 	// Update bioluminescence.
 	if(seed.biolum)
-		SetLuminosity(1+round(seed.potency/10))
+		set_light(1+round(seed.potency/10))
 		if(seed.biolum_colour)
-			l_color = seed.biolum_colour
+			light_color = seed.biolum_colour
 		else
-			l_color = null
+			light_color = null
 		return
 	else
-		SetLuminosity(0)
+		set_light(0)
 
 	// Update flower/product overlay.
 	overlays.len = 0
@@ -289,16 +289,11 @@
 		die()
 		return
 
-	var/area/A = T.loc
-	if(A)
-		var/light_available
-		if(A.lighting_use_dynamic)
-			light_available = max(0,min(10,T.lighting_lumcount)-5)
-		else
-			light_available =  5
-		if(abs(light_available - seed.ideal_light) > seed.light_tolerance)
-			die()
-			return
+	var/light_available = T.get_lumcount(0.5) * 10
+
+	if(abs(light_available - seed.ideal_light) > seed.light_tolerance)
+		die()
+		return
 
 /obj/effect/plant_controller
 

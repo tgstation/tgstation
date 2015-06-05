@@ -31,10 +31,6 @@
 	areaMaster = get_area_master(src)
 
 /atom/movable/Destroy()
-	if(opacity)
-		if(isturf(loc))
-			if(loc:lighting_lumcount > 1)
-				UpdateAffectingLights()
 	gcDestroyed = "Bye, world!"
 	tag = null
 	loc = null

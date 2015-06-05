@@ -143,7 +143,9 @@ var/global/list/obj/machinery/light/alllights = list()
 	var/on = 0					// 1 if on, 0 if off
 	var/on_gs = 0
 	var/static_power_used = 0
-	var/brightness = 8			// luminosity when on, also used in power calculation
+	var/brightness_range = 8	// luminosity when on, also used in power calculation
+	var/brightness_power = 4
+	var/brightness_color = null
 	var/status = LIGHT_OK		// LIGHT_OK, _EMPTY, _BURNED or _BROKEN
 	var/flickering = 0
 	var/light_type = /obj/item/weapon/light/tube		// the type of light item
@@ -169,7 +171,9 @@ var/global/list/obj/machinery/light/alllights = list()
 	icon_state = "bulb1"
 	base_state = "bulb"
 	fitting = "bulb"
-	brightness = 4
+	brightness_range = 4
+	brightness_power = 2
+	brightness_color = LIGHT_COLOR_BULB
 	cost = 4
 	desc = "A small lighting fixture."
 	light_type = /obj/item/weapon/light/bulb
@@ -179,7 +183,8 @@ var/global/list/obj/machinery/light/alllights = list()
 	name = "spotlight"
 	fitting = "large tube"
 	light_type = /obj/item/weapon/light/tube/large
-	brightness = 8
+	brightness_range = 8
+	brightness_power = 3
 	cost = 8
 
 /obj/machinery/light/built/New()
@@ -198,6 +203,10 @@ var/global/list/obj/machinery/light/alllights = list()
 	alllights += src
 
 	spawn(2)
+		var/area/A = get_area(src)
+		if(A && !A.requires_power)
+			on = 1
+
 		switch(fitting)
 			if("tube")
 				if(prob(2))
@@ -234,7 +243,7 @@ var/global/list/obj/machinery/light/alllights = list()
 
 	update_icon()
 	if(on)
-		if(luminosity != brightness)
+		if(light_range != brightness_range || light_power != brightness_power || light_color != brightness_color)
 			switchcount++
 			if(rigged)
 				if(status == LIGHT_OK && trigger)
@@ -248,13 +257,13 @@ var/global/list/obj/machinery/light/alllights = list()
 					status = LIGHT_BURNED
 					icon_state = "l[base_state]-burned"
 					on = 0
-					SetLuminosity(0)
+					set_light(0)
 			else
 				use_power = 2
-				SetLuminosity(brightness)
+				set_light(brightness_range, brightness_power, brightness_color)
 	else
 		use_power = 1
-		SetLuminosity(0)
+		set_light(0)
 
 	active_power_usage = (cost * 10)
 	if(on != on_gs)
@@ -313,7 +322,9 @@ var/global/list/obj/machinery/light/alllights = list()
 				user << "You insert the [L.name]."
 				switchcount = L.switchcount
 				rigged = L.rigged
-				brightness = L.brightness
+				brightness_range = L.brightness_range
+				brightness_power = L.brightness_power
+				brightness_color = L.brightness_color
 				cost = L.cost
 				base_state = L.base_state
 				light_type = L.type
@@ -489,7 +500,9 @@ var/global/list/obj/machinery/light/alllights = list()
 	var/obj/item/weapon/light/L = new light_type()
 	L.status = status
 	L.rigged = rigged
-	L.brightness = src.brightness
+	L.brightness_range = brightness_range
+	L.brightness_power = brightness_power
+	L.brightness_color = brightness_color
 
 	// light item inherits the switchcount, then zero it
 	L.switchcount = switchcount
@@ -523,7 +536,6 @@ var/global/list/obj/machinery/light/alllights = list()
 	if(status == LIGHT_OK)
 		return
 	status = LIGHT_OK
-	brightness = initial(brightness)
 	on = 1
 	update()
 
@@ -587,7 +599,9 @@ var/global/list/obj/machinery/light/alllights = list()
 	var/switchcount = 0	// number of times switched
 	m_amt = 60
 	var/rigged = 0		// true if rigged to explode
-	var/brightness = 2 //how much light it gives off
+	var/brightness_range = 2 //how much light it gives off
+	var/brightness_power = 1
+	var/brightness_color = null
 	var/cost = 2 //How much power does it consume in an idle state?
 	var/fitting = "tube"
 
@@ -599,7 +613,8 @@ var/global/list/obj/machinery/light/alllights = list()
 	item_state = "c_tube"
 	g_amt = 100
 	w_type = RECYK_GLASS
-	brightness = 8
+	brightness_range = 8
+	brightness_power = 3
 	cost = 8
 
 /obj/item/weapon/light/tube/he
@@ -611,7 +626,8 @@ var/global/list/obj/machinery/light/alllights = list()
 /obj/item/weapon/light/tube/large
 	w_class = 2
 	name = "large light tube"
-	brightness = 15
+	brightness_range = 15
+	brightness_power = 4
 	cost = 15
 
 /obj/item/weapon/light/bulb
@@ -622,7 +638,9 @@ var/global/list/obj/machinery/light/alllights = list()
 	item_state = "contvapour"
 	fitting = "bulb"
 	g_amt = 100
-	brightness = 5
+	brightness_range = 5
+	brightness_power = 2
+	brightness_color = "#a0a080"
 	cost = 5
 	w_type = RECYK_GLASS
 
@@ -631,6 +649,7 @@ var/global/list/obj/machinery/light/alllights = list()
 	desc = "An efficient light used to reduce strain on the station's power grid."
 	base_state = "hebulb"
 	cost = 1
+	brightness_color = null//These should be white
 
 /obj/item/weapon/light/throw_impact(atom/hit_atom)
 	..()
@@ -643,7 +662,8 @@ var/global/list/obj/machinery/light/alllights = list()
 	base_state = "fbulb"
 	item_state = "egg4"
 	g_amt = 100
-	brightness = 5
+	brightness_range = 5
+	brightness_power = 2
 
 // update the icon state and description of the light
 
@@ -664,9 +684,9 @@ var/global/list/obj/machinery/light/alllights = list()
 	..()
 	switch(name)
 		if("light tube")
-			brightness = rand(6,9)
+			brightness_range = rand(6,9)
 		if("light bulb")
-			brightness = rand(4,6)
+			brightness_range = rand(4,6)
 	update()
 
 

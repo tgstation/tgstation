@@ -184,7 +184,7 @@ var/list/obj/machinery/requests_console/allConsoles = list()
 					if (Console.department == department)
 						Console.newmessagepriority = 0
 						Console.icon_state = "req_comp0"
-						Console.SetLuminosity(1)
+						Console.set_light(1)
 				newmessagepriority = 0
 				icon_state = "req_comp0"
 				for(var/msg in messages)
@@ -331,7 +331,7 @@ var/list/obj/machinery/requests_console/allConsoles = list()
 								Console.messages += "<B>Message from <A href='?src=\ref[Console];write=[ckey(department)]'>[department]</A></FONT></B><BR>[message]"
 
 						screen = 6
-						Console.SetLuminosity(2)
+						Console.set_light(2)
 				messages += "<B>Message sent to [dpt]</B><BR>[message]"
 			else
 				say(text("\icon[src] *The Requests Console beeps: 'NOTICE: No server detected!'"))

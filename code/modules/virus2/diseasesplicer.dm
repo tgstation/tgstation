@@ -12,7 +12,7 @@
 	var/splicing = 0
 	var/scanning = 0
 
-	l_color = "#0000FF"
+	light_color = LIGHT_COLOR_GREEN
 
 /obj/machinery/computer/diseasesplicer/attackby(var/obj/I as obj, var/mob/user as mob)
 	if(!(istype(I,/obj/item/weapon/virusdish) || istype(I,/obj/item/weapon/diseasedisk)))

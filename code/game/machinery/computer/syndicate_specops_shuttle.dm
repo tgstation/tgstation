@@ -19,7 +19,7 @@ var/syndicate_elite_shuttle_timeleft = 0
 	var/hacked = 0
 	var/allowedtocall = 0
 
-	l_color = "#B40000"
+	light_color = LIGHT_COLOR_RED
 
 /proc/syndicate_elite_process()
 	var/area/syndicate_mothership/control/syndicate_ship = locate()//To find announcer. This area should exist for this proc to work.
@@ -237,8 +237,6 @@ var/syndicate_elite_shuttle_timeleft = 0
 
 		var/area/syndicate_mothership/elite_squad/elite_squad = locate()
 		if(elite_squad)
-			if(elite_squad.master)
-				elite_squad=elite_squad.master
 			elite_squad.readyalert()//Trigger alarm for the spec ops area.
 		syndicate_elite_shuttle_moving_to_station = 1
 

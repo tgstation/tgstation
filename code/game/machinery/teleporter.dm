@@ -10,7 +10,7 @@
 	ghost_read=0 // #430
 	ghost_write=0
 
-	l_color = "#0000FF"
+	light_color = LIGHT_COLOR_BLUE
 
 /obj/machinery/computer/teleporter/New()
 	. = ..()

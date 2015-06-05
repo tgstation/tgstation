@@ -26,5 +26,5 @@
 
 /obj/structure/cable/heavyduty/cableColor(var/colorC)
 	_color = "red"
-	l_color = "red"
+	light_color = LIGHT_COLOR_RED
 	return

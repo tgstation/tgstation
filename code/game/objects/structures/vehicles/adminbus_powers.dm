@@ -16,7 +16,7 @@
 			freed(L)
 		else if(isbot(A))
 			var/obj/machinery/bot/B = A
-			B.loc = get_step(src,turn(src.dir,-90))
+			B.forceMove(get_step(src,turn(src.dir,-90)))
 			B.turn_on()
 			B.flags &= ~INVULNERABLE
 			B.anchored = 0
@@ -29,7 +29,7 @@
 	return
 
 /obj/structure/stool/bed/chair/vehicle/adminbus/proc/freed(var/mob/living/L)
-	L.loc = get_step(src,turn(src.dir,-90))
+	L.forceMove(get_step(src, turn(src.dir, -90)))
 	L.buckled = null
 	L.anchored = 0
 	L.flags &= ~INVULNERABLE
@@ -156,18 +156,18 @@
 		bususer.gui_icons.adminbus_hook.icon_state = "icon_hook-push"
 		var/obj/structure/singulo_chain/anchor/A = locate(/obj/structure/singulo_chain/anchor) in chain
 		if(A)
-			del(A)//so we don't drag the singulo back to us along with the rest of the chain.
+			qdel(A)//so we don't drag the singulo back to us along with the rest of the chain.
 		singulo.on_release()
 		singulo = null
 		while(chain_base)
 			var/obj/structure/singulo_chain/C = chain_base
 			C.move_child(get_turf(src))
 			chain_base = C.child
-			del(C)
+			qdel(C)
 			sleep(2)
 
 		for(var/obj/structure/singulo_chain/N in chain)//Just in case some bits of the chain were detached from the bus for whatever reason
-			del(N)
+			qdel(N)
 		chain.len = 0
 
 		if(!singulo)
@@ -212,25 +212,25 @@
 			bususer.gui_icons.adminbus_roadlights_0.icon_state = "icon_lights_0-on"
 			bususer.gui_icons.adminbus_roadlights_1.icon_state = "icon_lights_1-off"
 			bususer.gui_icons.adminbus_roadlights_2.icon_state = "icon_lights_2-off"
-			lightsource.SetLuminosity(0)
+			lightsource.set_light(0)
 			if(roadlights == 1 || roadlights == 2)
-				overlays -= image(icon,"roadlights",LIGHTING_LAYER+1)
+				overlays -= image(icon,"roadlights", LIGHTING_LAYER + 1)
 			roadlights = 0
 		if(1)
 			bususer.gui_icons.adminbus_roadlights_0.icon_state = "icon_lights_0-off"
 			bususer.gui_icons.adminbus_roadlights_1.icon_state = "icon_lights_1-on"
 			bususer.gui_icons.adminbus_roadlights_2.icon_state = "icon_lights_2-off"
-			lightsource.SetLuminosity(2)
+			lightsource.set_light(2)
 			if(roadlights == 0)
-				overlays += image(icon,"roadlights",LIGHTING_LAYER+1)
+				overlays += image(icon,"roadlights", LIGHTING_LAYER + 1)
 			roadlights = 1
 		if(2)
 			bususer.gui_icons.adminbus_roadlights_0.icon_state = "icon_lights_0-off"
 			bususer.gui_icons.adminbus_roadlights_1.icon_state = "icon_lights_1-off"
 			bususer.gui_icons.adminbus_roadlights_2.icon_state = "icon_lights_2-on"
-			lightsource.SetLuminosity(3)
+			lightsource.set_light(3)
 			if(roadlights == 0)
-				overlays += image(icon,"roadlights",LIGHTING_LAYER+1)
+				overlays += image(icon,"roadlights", LIGHTING_LAYER + 1)
 			roadlights = 2
 
 	update_lightsource()
@@ -572,17 +572,17 @@
 
 */
 
-			M.loc = pick(tdomeobserve)
+			M.forceMove(pick(tdomeobserve))
 			M << "<span class='notice'>You have been sent to the Thunderdome. Thank you for riding with us and enjoy your games.</span>"
 
 		else if(isbot(A))
 			var/obj/machinery/bot/B = A
-			B.loc = get_step(src,turn(src.dir,-90))
+			B.forceMove(get_step(src,turn(src.dir,-90)))
 			B.turn_on()
 			B.flags &= ~INVULNERABLE
 			B.anchored = 0
 			passengers -= B
-			B.loc = pick(tdomeobserve)
+			B.forceMove(pick(tdomeobserve))
 
 		var/turf/TD = get_turf(A)
 		if(TD)
@@ -786,7 +786,7 @@
 
 	else if(isbot(A))
 		var/obj/machinery/bot/B = A
-		B.loc = get_step(src,turn(src.dir,-90))
+		B.forceMove(get_step(src,turn(src.dir,-90)))
 		B.turn_on()
 		B.flags &= ~INVULNERABLE
 		B.anchored = 0

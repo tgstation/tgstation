@@ -19,7 +19,7 @@ var/prison_shuttle_timeleft = 0
 	var/temp = null
 	var/allowedtocall = 0
 	var/prison_break = 0
-
+	light_color = LIGHT_COLOR_CYAN
 
 	attackby(I as obj, user as mob)
 		if(!..())
@@ -67,7 +67,7 @@ var/prison_shuttle_timeleft = 0
 		if(..())
 			return 1
 
-		else 
+		else
 			usr.set_machine(src)
 
 		if (href_list["sendtodock"])

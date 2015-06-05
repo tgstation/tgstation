@@ -251,13 +251,13 @@ var/list/all_doors = list()
 	if(!operating)		operating = 1
 
 	door_animate("opening")
-	src.SetOpacity(0)
+	src.set_opacity(0)
 	sleep(10)
 	src.layer = base_layer
 	src.density = 0
 	explosion_resistance = 0
 	update_icon()
-	SetOpacity(0)
+	set_opacity(0)
 	update_nearby_tiles()
 	//update_freelook_sight()
 
@@ -285,7 +285,7 @@ var/list/all_doors = list()
 	update_icon()
 
 	if (!glass)
-		src.SetOpacity(1)
+		src.set_opacity(1)
 		// Copypasta!!!
 		var/obj/effect/beam/B = locate() in loc
 		if(B)

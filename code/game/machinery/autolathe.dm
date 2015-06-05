@@ -111,14 +111,14 @@ var/global/list/autolathe_recipes_hidden = list( \
 
 	machine_flags = SCREWTOGGLE | CROWDESTROY | EMAGGABLE | WRENCHMOVE | FIXED2WORK
 
-	l_color = "#7BF9FF"
+	light_color = LIGHT_COLOR_CYAN
 
 /obj/machinery/autolathe/power_change()
 	..()
 	if(!(stat & (BROKEN|NOPOWER)))
-		SetLuminosity(2)
+		set_light(2)
 	else
-		SetLuminosity(0)
+		set_light(0)
 
 /obj/machinery/autolathe/proc/wires_win(mob/user as mob)
 	var/dat as text

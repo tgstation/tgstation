@@ -236,7 +236,7 @@ var/global/list/datum/stack_recipe/cable_recipes = list ( \
 
 			if (NC.shock(user, 50))
 				if (prob(50)) //fail
-					new/obj/item/stack/cable_coil(NC.loc, 1, NC.l_color)
+					new/obj/item/stack/cable_coil(NC.loc, 1, NC.light_color)
 					returnToPool(NC)
 
 			return
@@ -281,7 +281,7 @@ var/global/list/datum/stack_recipe/cable_recipes = list ( \
 
 		if(C.shock(user, 50))
 			if(prob(50)) //fail
-				getFromPool(/obj/item/stack/cable_coil, C.loc, 1, C.l_color)
+				getFromPool(/obj/item/stack/cable_coil, C.loc, 1, C.light_color)
 				returnToPool(C)
 				return
 

@@ -143,13 +143,15 @@
 		/obj/item/weapon/stock_parts/manipulator,
 		/obj/item/weapon/stock_parts/manipulator
 	)
-	l_color = "#7BF9FF"
+	light_color = LIGHT_COLOR_CYAN
+	light_range_on = 3
+	light_power_on = 2
 	power_change()
 		..()
 		if(!(stat & (BROKEN|NOPOWER)) && occupant)
-			SetLuminosity(2)
+			set_light(light_range_on, light_power_on)
 		else
-			SetLuminosity(0)
+			set_light(0)
 
 /obj/machinery/sleeper/New()
 	..()
@@ -263,6 +265,8 @@
 		src.add_fingerprint(user)
 		if(user.pulling == L)
 			user.stop_pulling()
+		if(!(stat & (BROKEN|NOPOWER)))
+			set_light(light_range_on, light_power_on)
 		return
 	return
 
@@ -310,7 +314,7 @@
 		for(var/atom/movable/A as mob|obj in src)
 			A.loc = src.loc
 			A.blob_act()
-		del(src)
+		qdel(src)
 	return
 
 /obj/machinery/sleeper/crowbarDestroy(mob/user)
@@ -371,7 +375,9 @@
 		for(var/obj/O in src)
 			O.loc = src.loc
 		src.add_fingerprint(user)
-		del(G)
+		qdel(G)
+		if(!(stat & (BROKEN|NOPOWER)))
+			set_light(light_range_on, light_power_on)
 		return
 	return
 
@@ -480,6 +486,7 @@
 		return
 	src.go_out()
 	add_fingerprint(usr)
+	set_light(0)
 	return
 
 
@@ -515,7 +522,9 @@
 		update_icon()
 
 		for(var/obj/O in src)
-			del(O)
+			qdel(O)
 		src.add_fingerprint(usr)
+		if(!(stat & (BROKEN|NOPOWER)))
+			set_light(light_range_on, light_power_on)
 		return
 	return

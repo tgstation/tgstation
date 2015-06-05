@@ -151,20 +151,6 @@
 	icon_state = "glowberrypile"
 	plantname = "glowberries"
 
-/obj/item/weapon/reagent_containers/food/snacks/grown/glowberries/Del()
-	if(istype(loc,/mob))
-		loc.SetLuminosity(round(loc.luminosity - potency/5, 1))
-	..()
-
-/obj/item/weapon/reagent_containers/food/snacks/grown/glowberries/pickup(mob/user)
-	src.SetLuminosity(0)
-	user.SetLuminosity(round(user.luminosity + (potency/5), 1))
-
-/obj/item/weapon/reagent_containers/food/snacks/grown/glowberries/dropped(mob/user)
-	if(!luminosity)
-		user.SetLuminosity(round(user.luminosity - (potency/5), 1))
-		src.SetLuminosity(round(potency/5, 1))
-
 /obj/item/weapon/reagent_containers/food/snacks/grown/cocoapod
 	name = "cocoa pod"
 	desc = "Can be ground into cocoa powder."
@@ -234,7 +220,7 @@
 		user << "<span class='notice'>You roll a godly blunt.</span>"
 		var/obj/item/clothing/mask/cigarette/blunt/deus/rolled/B = new/obj/item/clothing/mask/cigarette/blunt/deus/rolled(src.loc)
 		reagents.trans_to(B, (reagents.total_volume))
-		B.l_color = filling_color
+		B.light_color = filling_color
 		user.put_in_hands(B)
 		user.drop_from_inventory(src)
 		qdel(src)
@@ -540,21 +526,6 @@
 	qdel(src)
 
 	user << "<span class='notice'>You plant the glowshroom.</span>"
-
-/obj/item/weapon/reagent_containers/food/snacks/grown/mushroom/glowshroom/Del()
-	if(istype(loc,/mob))
-		loc.SetLuminosity(round(loc.luminosity - potency/10, 1))
-	..()
-
-/obj/item/weapon/reagent_containers/food/snacks/grown/mushroom/glowshroom/pickup(mob/user)
-	SetLuminosity(0)
-	user.SetLuminosity(round(user.luminosity + (potency/10), 1))
-
-/obj/item/weapon/reagent_containers/food/snacks/grown/mushroom/glowshroom/dropped(mob/user)
-	if(!luminosity)
-		user.SetLuminosity(round(user.luminosity - (potency/10), 1))
-		SetLuminosity(round(potency/10,1))
-
 
 // *************************************
 // Complex Grown Object Defines -

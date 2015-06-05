@@ -81,7 +81,7 @@ proc/move_research_shuttle()
 	circuit = "/obj/item/weapon/circuitboard/research_shuttle"
 	var/location = 0 //0 = station, 1 = research base
 	machine_flags = EMAGGABLE | SCREWTOGGLE
-	l_color = "#7BF9FF"
+	light_color = LIGHT_COLOR_CYAN
 
 /obj/machinery/computer/research_shuttle/attack_hand(user as mob)
 	if(..(user))

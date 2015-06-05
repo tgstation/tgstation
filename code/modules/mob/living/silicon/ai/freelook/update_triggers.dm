@@ -83,7 +83,7 @@
 	if(src.can_use())
 		cameranet.addCamera(src)
 	else
-		src.SetLuminosity(0)
+		src.set_light(0)
 		cameranet.removeCamera(src)
 
 /obj/machinery/camera/New()

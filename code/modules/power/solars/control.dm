@@ -15,7 +15,7 @@
 	var/trackdir = 1		//-1 = CCW, 1 = CW
 	var/nexttime = 0		//Next clock time that manual tracking will move the array
 
-	l_color = "#FF9933"
+	light_color = LIGHT_COLOR_YELLOW
 
 /obj/machinery/power/solar/control/initialize()
 	..()

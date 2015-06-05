@@ -6,7 +6,7 @@
 	var/mob/living/silicon/ai/occupant = null
 	var/active = 0
 
-	l_color = "#CD00CD"
+	light_color = LIGHT_COLOR_PINK
 
 /obj/machinery/computer/aifixer/New()
 	..()

@@ -6,8 +6,8 @@
 	var/embed = 1
 	var/obj/shotloc = null //Where the flare was shot from (stored to  be retrieved when the projectile dies)
 	flag = "bullet"
-	l_color = "#AA0033"
-	luminosity = 5
+	light_color = LIGHT_COLOR_FLARE
+	light_range = 5
 
 
 /obj/item/projectile/flare/New()

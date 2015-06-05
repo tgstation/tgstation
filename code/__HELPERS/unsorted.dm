@@ -724,8 +724,6 @@ proc/anim(turf/location as turf,target as mob|obj,a_icon,a_icon_state as text,fl
 //else populates the list first before returning it
 /proc/SortAreas()
 	for(var/area/A in areas)
-		if(A.lighting_subarea)
-			continue
 		sortedAreas.Add(A)
 
 	sortTim(sortedAreas, /proc/cmp_name_asc)
@@ -1353,3 +1351,19 @@ proc/find_holder_of_type(var/atom/reference,var/typepath) //Returns the first ob
 		dest_x = max(0, dest_x-distance)
 
 	return locate(dest_x,dest_y,dest_z)
+
+//Version of view() which ignores darkness, because BYOND doesn't have it (I actually suggested it but it was tagged redundant, BUT HEARERS IS A T- /rant).
+/proc/dview(var/range = world.view, var/center, var/invis_flags = 0)
+	if(!center)
+		return
+
+	var/mob/dview/DV = getFromPool(/mob/dview, center) //Yes, pooling, honk
+	DV.see_in_dark = range
+	DV.see_invisible = invis_flags
+
+	. = view(range, DV)
+	returnToPool(DV)
+
+/mob/dview
+	invisibility = 101
+	density = 0

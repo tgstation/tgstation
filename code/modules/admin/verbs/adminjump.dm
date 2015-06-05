@@ -11,11 +11,10 @@
 			return
 
 		var/list/turfs = list()
-		for(var/area/Ar in A.related)
-			for(var/turf/T in Ar)
-				if(T.density)
-					continue
-				turfs.Add(T)
+		for(var/turf/T in A)
+			if(T.density)
+				continue
+			turfs.Add(T)
 
 		var/turf/T = pick_n_take(turfs)
 		if(!T)

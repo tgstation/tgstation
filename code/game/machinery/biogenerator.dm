@@ -220,14 +220,10 @@
 
 	machine_flags = SCREWTOGGLE | CROWDESTROY | WRENCHMOVE | FIXED2WORK
 
-	l_color = "#7BF9FF"
-
-/obj/machinery/biogenerator/power_change()
-	..()
-	if(!(stat & (BROKEN|NOPOWER)))
-		SetLuminosity(2)
-	else
-		SetLuminosity(0)
+	light_color = LIGHT_COLOR_CYAN
+	light_range_on = 3
+	light_power_on = 2
+	use_auto_lights = 1
 
 /obj/machinery/biogenerator/on_reagent_change()			//When the reagents change, change the icon as well.
 	update_icon()

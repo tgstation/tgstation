@@ -608,8 +608,8 @@ proc/populate_seed_list()
 
 			if(biolum)
 				if(biolum_colour)
-					product.l_color = biolum_colour
-				product.SetLuminosity(biolum)
+					product.light_color = biolum_colour
+				product.set_light(biolum)
 
 			//Handle spawning in living, mobile products (like dionaea).
 			if(istype(product,/mob/living))

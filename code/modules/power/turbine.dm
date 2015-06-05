@@ -37,7 +37,7 @@
 	var/id_tag = 0
 	var/door_status = 0
 
-	l_color = "#0000FF"
+	light_color = LIGHT_COLOR_BLUE
 
 // the inlet stage of the gas turbine electricity generator
 
