@@ -48,7 +48,7 @@
 		var/datum/material/mat = materials.getMaterial(O.material)
 		mat.stored += processed_sheet.amount //Stack the sheets
 		credits += mat.value * processed_sheet.amount // Gimme my fucking credits
-	qdel(O)
+	returnToPool(O)
 
 /obj/machinery/mineral/ore_redemption/process()
 	var/turf/T = get_turf(input)
@@ -77,7 +77,7 @@
 /obj/machinery/mineral/ore_redemption/proc/SmeltMineral(var/obj/item/weapon/ore/O)
 	if(O.material)
 		var/datum/material/mat = materials.getMaterial(O.material)
-		var/obj/item/stack/sheet/M = new mat.sheettype(src)
+		var/obj/item/stack/sheet/M = getFromPool(mat.sheettype, (src))
 		M.redeemed = 1
 		//credits += mat.value // Old behavior
 		return M

@@ -365,6 +365,9 @@ its easier to just keep the beam vertical.
 /atom/proc/ex_act(var/severity, var/child=null)
 	return
 
+/atom/proc/mech_drill_act(var/severity, var/child=null)
+	return ex_act(severity, child)
+
 /atom/proc/blob_act()
 	return
 

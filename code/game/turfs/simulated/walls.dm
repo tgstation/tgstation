@@ -94,6 +94,9 @@
 			return
 	return
 
+/turf/simulated/wall/mech_drill_act(severity)
+	return dismantle_wall()
+
 /turf/simulated/wall/blob_act()
 	if(prob(50) || rotting)
 		dismantle_wall()

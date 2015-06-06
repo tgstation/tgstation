@@ -17,8 +17,8 @@
 	var/salvageable = 1
 
 
-/obj/item/mecha_parts/mecha_equipment/proc/do_after_cooldown(target=1)
-	sleep(equip_cooldown)
+/obj/item/mecha_parts/mecha_equipment/proc/do_after_cooldown(target=1, delay_mult=1)
+	sleep(equip_cooldown * delay_mult)
 	set_ready_state(1)
 	if(target && chassis)
 		return 1

@@ -50,7 +50,7 @@
 		"<span class='notice'>You start [PK.drill_verb] \the [src] with \the [PK]</span>")
 		if(do_after(user, 30))
 			user.visible_message("<span class='warning'>[user] destroys \the [src]!</span>", \
-			"<span class='notice'>You start [PK.drill_verb] \the [src] with \the [PK]</span>")
+			"<span class='notice'>Your [PK] tears through the last of \the [src]!</span>")
 			getFromPool(/obj/item/stack/sheet/metal, get_turf(src))
 			qdel(src)
 
@@ -289,6 +289,11 @@
 			return
 	return
 
+/obj/structure/girder/mech_drill_act(severity)
+	getFromPool(/obj/item/stack/sheet/metal, get_turf(src))
+	qdel(src)
+	return
+
 /obj/structure/girder/update_icon()
 	//Names really shouldn't be set here, but it's the only proc that checks where needed
 	if(anchored)
@@ -377,7 +382,7 @@
 							"<span class='notice'>You start [PK.drill_verb] \the [src] with \the [PK]</span>")
 		if(do_after(user,30))
 			user.visible_message("<span class='warning'>[user] destroys \the [src]!</span>",
-								"<span class='notice'>You start [PK.drill_verb] \the [src] with \the [PK]</span>")
+								"<span class='notice'>Your [PK] tears through the last of \the [src]!</span>")
 			new /obj/effect/decal/remains/human(loc)
 			del(src)
 
@@ -401,3 +406,9 @@
 				qdel(src)
 			return
 	return
+
+/obj/structure/cultgirder/mech_drill_act(severity)
+	new /obj/effect/decal/remains/human(loc)
+	qdel(src)
+	return
+

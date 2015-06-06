@@ -19,7 +19,7 @@
 		if(O.material)
 			materials.addAmount(O.material, 1)
 			user.u_equip(W,0)
-			qdel(W)
+			returnToPool(W)
 	if (istype(W, /obj/item/weapon/storage))
 		var/turf/T=get_turf(src)
 		var/obj/item/weapon/storage/S = W
@@ -28,7 +28,7 @@
 			if(O.material)
 				S.remove_from_storage(O,T) //This will remove the item.
 				materials.addAmount(O.material, 1)
-				qdel(O)
+				returnToPool(O)
 		user << "<span class='notice'>You empty \the [W] into the box.</span>"
 	return
 
@@ -52,7 +52,7 @@
 		for(var/ore_id in materials.storage)
 			var/datum/material/mat = materials.getMaterial(ore_id)
 			for(var/i=0;i<mat.stored;i++)
-				new mat.oretype(get_turf(src))
+				getFromPool(mat.oretype, get_turf(src))
 			mat.stored=0
 		usr << "<span class='notice'>You empty the box</span>"
 	src.updateUsrDialog()

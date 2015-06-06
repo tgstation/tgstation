@@ -2,7 +2,7 @@
 	desc = "Autonomous Power Loader Unit. The workhorse of the exosuit world."
 	name = "APLU \"Ripley\""
 	icon_state = "ripley"
-	step_in = 6
+	step_in = 4
 	max_temperature = 20000
 	health = 200
 	wreckage = /obj/effect/decal/mecha_wreckage/ripley
@@ -16,7 +16,7 @@
 */
 
 /obj/mecha/working/ripley/firefighter
-	desc = "Standart APLU chassis was refitted with additional thermal protection and cistern."
+	desc = "Standard APLU chassis, refitted with additional thermal protection and cistern."
 	name = "APLU \"Firefighter\""
 	icon_state = "firefighter"
 	max_temperature = 65000
@@ -30,7 +30,7 @@
 	name = "DEATH-RIPLEY"
 	icon_state = "deathripley"
 	step_in = 2
-	opacity=0
+	opacity = 0
 	lights_power = 60
 	wreckage = /obj/effect/decal/mecha_wreckage/ripley/deathripley
 	step_energy_drain = 0
@@ -92,6 +92,14 @@
 		output += "Nothing"
 	output += "</div>"
 	return output
+
+/obj/mecha/working/ripley/empty_bad_contents()
+	for(var/obj/O in src)
+		if(O in cargo) //mom's spaghetti
+			continue
+		if(!is_type_in_list(O,mech_parts))
+			O.loc = src.loc
+	return
 
 /obj/mecha/working/ripley/Destroy()
 	for(var/mob/M in src)
