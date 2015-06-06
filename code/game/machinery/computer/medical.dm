@@ -496,7 +496,7 @@
 					src.active2.fields[text("com_[]", href_list["del_c"])] = "<B>Deleted</B>"
 
 			else if(href_list["search"])
-				var/t1 = stripped_input(usr, "Search String: (Name, DNA, or ID)", "Med. records")
+				var/t1 = copytext(sanitize(input("Search String: (Name, DNA, or ID)", "Med. records", null, null)  as text),1,MAX_MESSAGE_LEN)
 				if(!canUseMedicalRecordsConsole(usr, t1))
 					return
 				src.active1 = null
