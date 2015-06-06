@@ -477,6 +477,7 @@ obj/structure/cable/proc/avail()
 	slot_flags = SLOT_BELT
 	attack_verb = list("whipped", "lashed", "disciplined", "flogged")
 	singular_name = "cable piece"
+	var/self_delay = 50
 
 /obj/item/stack/cable_coil/cyborg
 	is_cyborg = 1
@@ -515,6 +516,21 @@ obj/structure/cable/proc/avail()
 		return ..()
 
 	var/obj/item/organ/limb/affecting = H.get_organ(check_zone(user.zone_sel.selecting))
+
+	if(user)
+		if(H != user)
+			user.visible_message("<span class='green'>[user] fixes some of the burnt wires on [H].</span>", "<span class='green'>You fix some of the burnt wires on [H].</span>")
+		else
+			var/t_himself = "itself"
+			if(user.gender == MALE)
+				t_himself = "himself"
+			else if(user.gender == FEMALE)
+				t_himself = "herself"
+			user.visible_message("<span class='notice'>[user] starts to fix burnt wires on [t_himself]...</span>", "<span class='notice'>You begin fixing burnt wires [src] on yourself...</span>")
+			if(!do_mob(user, H, self_delay))
+				return
+			user.visible_message("<span class='green'>[user] fixes some of the burnt wires on [t_himself].</span>", "<span class='green'>You fixed some of the burnt wires on yourself.</span>")
+
 	if(affecting.status == ORGAN_ROBOTIC)
 		item_heal_robotic(H, user, 0, 30)
 		src.use(1)
