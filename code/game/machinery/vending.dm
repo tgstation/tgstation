@@ -70,10 +70,7 @@
 	var/obj/item/weapon/storage/lockbox/coinbox/coinbox
 	var/cardboard = 0 //1 if sheets of cardboard are added
 
-	machine_flags = SCREWTOGGLE | WRENCHMOVE | FIXED2WORK | CROWDESTROY | EJECTNOTDEL
-
-	var/obj/machinery/account_database/linked_db
-	var/datum/money_account/linked_account
+	machine_flags = SCREWTOGGLE | WRENCHMOVE | FIXED2WORK | CROWDESTROY | EJECTNOTDEL | PURCHASER
 
 /obj/machinery/vending/cultify()
 	new /obj/structure/cult/forge(loc)
@@ -108,10 +105,10 @@
 			src.build_inventory(premium, 0, 1)
 		power_change()
 
-		reconnect_database()
-		linked_account = vendor_account
-
 	coinbox = new(src)
+
+	if(ticker)
+		initialize()
 
 	return
 
@@ -196,14 +193,6 @@
 						src.attack_hand(user)
 			else
 				user << "<span class='warning'>This recharge pack isn't meant for this kind of vending machines.</span>"
-
-/obj/machinery/vending/proc/reconnect_database()
-	for(var/obj/machinery/account_database/DB in account_DBs)
-		//Checks for a database on its Z-level, else it checks for a database at the main Station.
-		if((DB.z == src.z) || (DB.z == STATION_Z))
-			if((DB.stat == 0))//If the database if damaged or not powered, people won't be able to use the vending machines anymore.
-				linked_db = DB
-				break
 
 /obj/machinery/vending/ex_act(severity)
 	switch(severity)
@@ -353,23 +342,8 @@
 			usr << "\icon[src]<span class='warning'>Unable to connect to accounts database.</span>"*/
 
 //H.wear_id
-/obj/machinery/vending/proc/connect_account(var/obj/item/W)
-	if(istype(W, /obj/item/device/pda))
-		W=W:id // Cheating, but it'll work.  Hopefully.
-	if(istype(W, /obj/item/weapon/card) && currently_vending)
-		//attempt to connect to a new db, and if that doesn't work then fail
-		if(!linked_db)
-			reconnect_database()
-		if(linked_db)
-			if(linked_account)
-				var/obj/item/weapon/card/I = W
-				scan_card(I)
-			else
-				usr << "\icon[src]<span class='warning'>Unable to connect to linked account.</span>"
-		else
-			usr << "\icon[src]<span class='warning'>Unable to connect to accounts database.</span>"
 
-/obj/machinery/vending/proc/scan_card(var/obj/item/weapon/card/I)
+/obj/machinery/vending/scan_card(var/obj/item/weapon/card/I)
 	if(!currently_vending) return
 	if (istype(I, /obj/item/weapon/card/id))
 		var/obj/item/weapon/card/id/C = I
@@ -594,24 +568,9 @@
 		return
 
 	else if (href_list["buy"])
-		if(istype(usr, /mob/living/carbon/human))
-			var/mob/living/carbon/human/H=usr
-			var/obj/item/weapon/card/card = null
-			var/obj/item/device/pda/pda = null
-			if(istype(H.wear_id,/obj/item/weapon/card))
-				card=H.wear_id
-			else if(istype(H.get_active_hand(),/obj/item/weapon/card))
-				card=H.get_active_hand()
-			else if(istype(H.wear_id,/obj/item/device/pda))
-				pda=H.wear_id
-				if(pda.id)
-					card=pda.id
-			else if(istype(H.get_active_hand(),/obj/item/device/pda))
-				pda=H.get_active_hand()
-				if(pda.id)
-					card=pda.id
-			if(card)
-				connect_account(card)
+		var/obj/item/weapon/card/card = usr.get_id_card()
+		if(card)
+			connect_account(usr, card)
 		src.updateUsrDialog()
 		return
 

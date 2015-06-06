@@ -2253,13 +2253,11 @@
 
 						H.Paralyse(5)
 
-						if (H.wear_id)
-							var/obj/item/weapon/card/id/id = H.get_idcard()
+						var/obj/item/weapon/card/id/id = H.get_id_card()
 
-							for (var/A in id.access)
-								if (A == access_security)
-									security = TRUE
-									break
+						if(id)
+							if (access_security in id.access)
+								security = TRUE
 
 						if (!security)
 							// strip their stuff before they teleport into a cell :downs:

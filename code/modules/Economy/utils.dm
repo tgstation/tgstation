@@ -29,8 +29,7 @@
 
 /mob/proc/get_worn_id_account(var/require_pin=0, var/mob/user=null)
 	if(ishuman(src))
-		var/mob/living/carbon/human/H=src
-		var/obj/item/weapon/card/id/I=H.get_idcard()
+		var/obj/item/weapon/card/id/I = get_id_card()
 		var/attempt_pin=0
 		if(!istype(I))
 			return null

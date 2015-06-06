@@ -179,7 +179,6 @@ var/global/loopModeNames=list(
 	var/credits_needed = 0 // Credits needed to complete purchase.
 	var/change_cost    = 10 // Current cost to change songs.
 	var/list/change_access  = list() // Access required to change songs
-	var/datum/money_account/linked_account
 	var/department // Department that gets the money
 
 	var/state_base = "jukebox2"

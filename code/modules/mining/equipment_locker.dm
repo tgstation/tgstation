@@ -202,7 +202,17 @@
 		new /datum/data/mining_equipment("Kinetic accelerator", /obj/item/weapon/gun/energy/kinetic_accelerator,                  1000),
 		new /datum/data/mining_equipment("Jetpack",             /obj/item/weapon/tank/jetpack/carbondioxide,                      2000),
 	)
-	var/datum/money_account/linked_account // Department account.
+
+	machine_flags = PURCHASER
+
+/obj/machinery/mineral/equipment_locker/New()
+	..()
+	if(ticker)
+		initialize()
+
+/obj/machinery/mineral/equipment_locker/initialize()
+	..()
+	linked_account = department_accounts["Cargo"]
 
 /datum/data/mining_equipment/
 	var/equipment_name = "generic"

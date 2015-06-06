@@ -493,11 +493,10 @@ var/list/mechtoys = list(
 		var/idrank = "*None Provided*"
 		var/datum/money_account/account
 		if(ishuman(usr))
-			var/mob/living/carbon/human/H = usr
-			idname = H.get_authentification_name()
-			idrank = H.get_assignment()
-			var/obj/item/weapon/card/id/I=H.get_idcard()
+			var/obj/item/weapon/card/id/I = usr.get_id_card()
 			if(I)
+				idname = I.registered_name
+				idrank = I.GetJobName()
 				account = get_card_account(I)
 			else
 				usr << "<span class='warning'>Please wear an ID with an associated bank account.</span>"
@@ -715,11 +714,10 @@ var/list/mechtoys = list(
 		var/idrank = "*None Provided*"
 		var/datum/money_account/account
 		if(ishuman(usr))
-			var/mob/living/carbon/human/H = usr
-			idname = H.get_authentification_name()
-			idrank = H.get_assignment()
-			var/obj/item/weapon/card/id/I=H.get_idcard()
+			var/obj/item/weapon/card/id/I = usr.get_id_card()
 			if(I)
+				idname = I.registered_name
+				idrank = I.GetJobName()
 				account = get_card_account(I)
 			else
 				usr << "<span class='warning'>Please wear an ID with an associated bank account.</span>"

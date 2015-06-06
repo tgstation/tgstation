@@ -28,14 +28,27 @@ var/global/datum/store/centcomm_store=new
 	for(var/itempath in typesof(/datum/storeitem) - /datum/storeitem/)
 		items += new itempath()
 
-/datum/store/proc/charge(var/datum/mind/mind,var/amount,var/datum/storeitem/item)
-	if(!mind.initial_account)
+/datum/store/proc/charge(var/mob/user,var/amount,var/datum/storeitem/item)
+	if(!user)
 		//testing("No initial_account")
 		return 0
-	if(mind.initial_account.money < amount)
+	var/obj/item/weapon/card/id/card = user.get_id_card()
+	if(!card)
+		return 0
+
+	reconnect_database()
+	if(!linked_db)
+		return 0
+
+	var/datum/money_account/D = linked_db.attempt_account_access(card.associated_account_number, 0, 2, 0)
+
+	if(!D)
+		return 0
+
+	if(D.money < amount)
 		//testing("Not enough cash")
 		return 0
-	mind.initial_account.money -= amount
+	D.money -= amount
 	var/datum/transaction/T = new()
 	T.target_name = "[command_name()] Merchandising"
 	T.purpose = "Purchase of [item.name]"
@@ -43,7 +56,18 @@ var/global/datum/store/centcomm_store=new
 	T.date = current_date_string
 	T.time = worldtime2text()
 	T.source_terminal = "\[CLASSIFIED\] Terminal #[rand(111,333)]"
-	mind.initial_account.transaction_log.Add(T)
+	D.transaction_log.Add(T)
+
+	if(vendor_account)
+		T = new()
+		T.target_name = "[command_name()] Merchandising"
+		T.purpose = "Purchase of [item.name]"
+		T.amount = amount
+		T.date = current_date_string
+		T.time = worldtime2text()
+		T.source_terminal = "\[CLASSIFIED\] Terminal #[rand(111,333)]"
+		vendor_account.transaction_log.Add(T)
+
 	return 1
 
 /datum/store/proc/reconnect_database()
@@ -60,7 +84,7 @@ var/global/datum/store/centcomm_store=new
 	if(!item)
 		return 0
 	// Try to deduct funds.
-	if(!charge(usr.mind,item.cost,item))
+	if(!charge(usr,item.cost,item))
 		return 0
 	// Give them the item.
 	item.deliver(usr)

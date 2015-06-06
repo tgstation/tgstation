@@ -158,6 +158,11 @@ Class Procs:
 	//if(ticker) initialize()
 	return ..()
 
+/obj/machinery/initialize()
+	if(machine_flags & PURCHASER)
+		reconnect_database()
+		linked_account = vendor_account
+
 /obj/machinery/examine(mob/user)
 	..()
 	if(panel_open)
