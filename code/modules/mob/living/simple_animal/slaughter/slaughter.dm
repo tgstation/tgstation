@@ -108,33 +108,30 @@
 
 /obj/effect/decal/cleanable/blood/CtrlClick(var/mob/user)
 	..()
-	var/obj/effect/decal/cleanable/B = src
 	if(istype(user, /mob/living/simple_animal/slaughter))
 		var/mob/living/simple_animal/slaughter/S = user
 		if(S.phased)
-			S.phasein(B)
+			S.phasein(src)
 		else
-			S.phaseout(B)
+			S.phaseout(src)
 
 
 /obj/effect/decal/cleanable/trail_holder/CtrlClick(var/mob/user)
 	..()
-	var/obj/effect/decal/cleanable/B = src
 	if(istype(user, /mob/living/simple_animal/slaughter))
 		var/mob/living/simple_animal/slaughter/S = user
 		if(S.phased)
-			S.phasein(B)
+			S.phasein(src)
 		else
-			S.phaseout(B)
+			S.phaseout(src)
 
 
 
 /turf/CtrlClick(var/mob/user)
 	..()
-	var/turf/T = src
 	if(istype(user, /mob/living/simple_animal/slaughter))
 		var/mob/living/simple_animal/slaughter/S = user
-		for(var/obj/effect/decal/cleanable/B in T.contents)
+		for(var/obj/effect/decal/cleanable/B in src.contents)
 			if(istype(B, /obj/effect/decal/cleanable/blood) || istype(B, /obj/effect/decal/cleanable/trail_holder))
 				if(S.phased)
 					S.phasein(B)
