@@ -111,7 +111,7 @@
 	materials = list("$glass" = 1000, "sacid" = 20)
 	build_path = /obj/item/weapon/circuitboard/chem_dispenser
 	category = list ("Medical Machinery")
-	
+
 /datum/design/chem_master
 	name = "Machine Design (Chem Master Board)"
 	desc = "The circuit board for a Chem Master 2999."
@@ -250,6 +250,16 @@
 	build_type = IMPRINTER
 	materials = list("$glass" = 1000, "sacid" = 20)
 	build_path = /obj/item/weapon/circuitboard/microwave
+	category = list ("Misc. Machinery")
+
+/datum/design/microwave
+	name = "Machine Design (Gibber Board)"
+	desc = "The circuit board for a gibber."
+	id = "gibber"
+	req_tech = list("programming" = 1)
+	build_type = IMPRINTER
+	materials = list("$glass" = 1000, "sacid" = 20)
+	build_path = /obj/item/weapon/circuitboard/gibber
 	category = list ("Misc. Machinery")
 
 /datum/design/autolathe

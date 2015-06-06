@@ -172,6 +172,51 @@
 	rating = 3
 	m_amt = 80
 
+//Rating 4
+
+/obj/item/weapon/stock_parts/capacitor/quadratic
+	name = "quadratic capacitor"
+	desc = "An capacity capacitor used in the construction of a variety of devices."
+	icon_state = "quadratic_capacitor"
+	origin_tech = "powerstorage=6;materials=5"
+	rating = 4
+	m_amt = 50
+	g_amt = 50
+
+/obj/item/weapon/stock_parts/scanning_module/triphasic
+	name = "triphasic scanning module"
+	desc = "A compact, ultra resolution triphasic scanning module used in the construction of certain devices."
+	icon_state = "triphasic_scan_module"
+	origin_tech = "magnets=6"
+	rating = 4
+	m_amt = 50
+	g_amt = 20
+
+/obj/item/weapon/stock_parts/manipulator/femto
+	name = "femto-manipulator"
+	desc = "A tiny little manipulator used in the construction of certain devices."
+	icon_state = "femto_mani"
+	origin_tech = "materials=6;programming=3"
+	rating = 4
+	m_amt = 30
+
+/obj/item/weapon/stock_parts/micro_laser/quadultra
+	name = "quad-ultra micro-laser"
+	icon_state = "quadultra_micro_laser"
+	desc = "A tiny laser used in certain devices."
+	origin_tech = "magnets=6"
+	rating = 4
+	m_amt = 10
+	g_amt = 20
+
+/obj/item/weapon/stock_parts/matter_bin/bluespace
+	name = "bluespace matter bin"
+	desc = "A container for hold compressed matter awaiting re-construction."
+	icon_state = "bluespace_matter_bin"
+	origin_tech = "materials=6"
+	rating = 4
+	m_amt = 80
+
 // Subspace stock parts
 
 /obj/item/weapon/stock_parts/subspace/ansible

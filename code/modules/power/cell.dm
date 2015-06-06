@@ -217,6 +217,19 @@
 	..()
 	charge = 0
 
+/obj/item/weapon/stock_parts/cell/bluespace
+	name = "bluespace power cell"
+	origin_tech = "powerstorage=7"
+	icon_state = "bscell"
+	maxcharge = 40000
+	g_amt = 80
+	rating = 6
+	chargerate = 4000
+
+/obj/item/weapon/stock_parts/cell/bluespace/empty/New()
+	..()
+	charge = 0
+
 /obj/item/weapon/stock_parts/cell/infinite
 	name = "infinite-capacity power cell!"
 	icon_state = "icell"

@@ -10,6 +10,8 @@
 	var/dirty = 0 // Does it need cleaning?
 	var/gibtime = 40 // Time from starting until meat appears
 	var/typeofmeat = /obj/item/weapon/reagent_containers/food/snacks/meat/
+	var/meat_produced = 0
+	var/ignore_clothing = 0
 	use_power = 1
 	idle_power_usage = 2
 	active_power_usage = 500
@@ -47,6 +49,21 @@
 /obj/machinery/gibber/New()
 	..()
 	src.overlays += image('icons/obj/kitchen.dmi', "grjam")
+	component_parts = list()
+	component_parts += new /obj/item/weapon/circuitboard/gibber(null)
+	component_parts += new /obj/item/weapon/stock_parts/matter_bin(null)
+	component_parts += new /obj/item/weapon/stock_parts/manipulator(null)
+	RefreshParts()
+
+/obj/machinery/gibber/RefreshParts()
+	var/gib_time = 40
+	for(var/obj/item/weapon/stock_parts/matter_bin/B in component_parts)
+		meat_produced += 3 * B.rating
+	for(var/obj/item/weapon/stock_parts/manipulator/M in component_parts)
+		gib_time -= 5 * M.rating
+		gibtime = gib_time
+		if(M.rating >= 2)
+			ignore_clothing = 1
 
 /obj/machinery/gibber/update_icon()
 	overlays.Cut()
@@ -77,29 +94,43 @@
 	else
 		src.startgibbing(user)
 
-/obj/machinery/gibber/attackby(obj/item/weapon/grab/G as obj, mob/user as mob, params)
-	if(default_unfasten_wrench(user, G))
+/obj/machinery/gibber/attackby(obj/item/P as obj, mob/user as mob, params)
+	if (istype(P, /obj/item/weapon/grab))
+		var/obj/item/weapon/grab/G = P
+		if(!istype(G.affecting, /mob/living/carbon/human))
+			user << "<span class='danger'>This item is not suitable for the gibber!</span>"
+			return
+		if(G.affecting.abiotic(1) && !ignore_clothing)
+			user << "<span class='danger'>Subject may not have abiotic items on.</span>"
+			return
+
+		user.visible_message("<span class='danger'>[user] starts to put [G.affecting] into the gibber!</span>")
+		src.add_fingerprint(user)
+		if(do_after(user, 30) && G && G.affecting && !occupant)
+			user.visible_message("<span class='danger'>[user] stuffs [G.affecting] into the gibber!</span>")
+			var/mob/M = G.affecting
+			if(M.client)
+				M.client.perspective = EYE_PERSPECTIVE
+				M.client.eye = src
+			M.loc = src
+			src.occupant = M
+			qdel(G)
+			update_icon()
+
+	if(default_deconstruction_screwdriver(user, "grinder", "grinder", P))
 		return
 
-	if (!( istype(G, /obj/item/weapon/grab)) || !(istype(G.affecting, /mob/living/carbon/human)))
-		user << "<span class='danger'>This item is not suitable for the gibber!</span>"
-		return
-	if(G.affecting.abiotic(1))
-		user << "<span class='danger'>Subject may not have abiotic items on.</span>"
+	if(exchange_parts(user, P))
 		return
 
-	user.visible_message("<span class='danger'>[user] starts to put [G.affecting] into the gibber!</span>")
-	src.add_fingerprint(user)
-	if(do_after(user, 30) && G && G.affecting && !occupant)
-		user.visible_message("<span class='danger'>[user] stuffs [G.affecting] into the gibber!</span>")
-		var/mob/M = G.affecting
-		if(M.client)
-			M.client.perspective = EYE_PERSPECTIVE
-			M.client.eye = src
-		M.loc = src
-		src.occupant = M
-		qdel(G)
-		update_icon()
+	if(default_pry_open(P))
+		return
+
+	if(default_unfasten_wrench(user, P))
+		return
+
+	default_deconstruction_crowbar(P)
+
 
 
 /obj/machinery/gibber/verb/eject()
@@ -131,9 +162,8 @@
 	var/sourcejob = src.occupant.job
 	var/sourcenutriment = src.occupant.nutrition / 15
 	var/sourcetotalreagents = src.occupant.reagents.total_volume
-	var/totalslabs = 3
 
-	var/obj/item/weapon/reagent_containers/food/snacks/meat/slab/human/allmeat[totalslabs]
+	var/obj/item/weapon/reagent_containers/food/snacks/meat/slab/human/allmeat[meat_produced]
 
 	if(ishuman(occupant))
 		var/mob/living/carbon/human/gibee = occupant
@@ -141,13 +171,13 @@
 			typeofmeat = gibee.dna.species.meat
 		else
 			typeofmeat = /obj/item/weapon/reagent_containers/food/snacks/meat/slab/human
-	for (var/i=1 to totalslabs)
+	for (var/i=1 to meat_produced)
 		var/obj/item/weapon/reagent_containers/food/snacks/meat/slab/human/newmeat = new typeofmeat
 		newmeat.name = sourcename + newmeat.name
 		newmeat.subjectname = sourcename
 		newmeat.subjectjob = sourcejob
-		newmeat.reagents.add_reagent ("nutriment", sourcenutriment / totalslabs) // Thehehe. Fat guys go first
-		src.occupant.reagents.trans_to (newmeat, round (sourcetotalreagents / totalslabs, 1)) // Transfer all the reagents from the
+		newmeat.reagents.add_reagent ("nutriment", sourcenutriment / meat_produced) // Thehehe. Fat guys go first
+		src.occupant.reagents.trans_to (newmeat, round (sourcetotalreagents / meat_produced, 1)) // Transfer all the reagents from the
 		allmeat[i] = newmeat
 
 	add_logs(user, occupant, "gibbed")
@@ -157,7 +187,7 @@
 	spawn(src.gibtime)
 		playsound(src.loc, 'sound/effects/splat.ogg', 50, 1)
 		operating = 0
-		for (var/i=1 to totalslabs)
+		for (var/i=1 to meat_produced)
 			var/obj/item/meatslab = allmeat[i]
 			var/turf/Tx = locate(src.x - i, src.y, src.z)
 			meatslab.loc = src.loc
