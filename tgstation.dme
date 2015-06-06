@@ -569,6 +569,7 @@
 #include "code\game\objects\items\devices\aicard.dm"
 #include "code\game\objects\items\devices\camera_bug.dm"
 #include "code\game\objects\items\devices\chameleonproj.dm"
+#include "code\game\objects\items\devices\doorCharge.dm"
 #include "code\game\objects\items\devices\flash.dm"
 #include "code\game\objects\items\devices\flashlight.dm"
 #include "code\game\objects\items\devices\instruments.dm"

@@ -45,6 +45,9 @@
 	var/obj/item/weapon/airlock_electronics/electronics = null
 	var/hasShocked = 0 //Prevents multiple shocks from happening
 	var/autoclose = 1
+	var/sabotaged = 0 //Used by Syndicate door charges for boom boom
+	var/turf/sabotageTurf = null //The turf that will go boom
+	var/detonated = 0
 
 /obj/machinery/door/airlock/command
 	icon = 'icons/obj/doors/Doorcom.dmi'
@@ -472,6 +475,11 @@ About the new airlock wires panel:
 		if("deny")
 			flick("door_deny", src)
 	return
+
+/obj/machinery/door/airlock/examine(mob/user)
+	..()
+	if(sabotaged && !p_open)
+		user << "The maintenance panel is bulging slightly."
 
 /obj/machinery/door/airlock/attack_ai(mob/user as mob)
 	if(!src.canAIControl())
@@ -920,6 +928,9 @@ About the new airlock wires panel:
 					update_icon()
 		return
 	else if(istype(C, /obj/item/weapon/screwdriver))
+		if(p_open && detonated)
+			user << "<span class='warning'>[src] has no maintenance panel!</span>"
+			return
 		src.p_open = !( src.p_open )
 		user << "<span class='notice'>You [p_open ? "open":"close"] the maintenance panel of the airlock.</span>"
 		src.update_icon()
@@ -995,6 +1006,18 @@ About the new airlock wires panel:
 
 	else if(istype(C, /obj/item/weapon/airlock_painter))
 		change_paintjob(C, user)
+	else if(istype(C, /obj/item/device/doorCharge) && p_open)
+		if(emagged)
+			return
+		user << "<span class='warning'>You apply [C]. Next time someone opens the door, it will explode.</span>"
+		user.drop_item()
+		qdel(C)
+		sabotageTurf = get_turf(user)
+		p_open = 0
+		update_icon()
+		spawn(50)
+			sabotaged = 1
+			return
 	else
 		..()
 	return
@@ -1013,6 +1036,24 @@ About the new airlock wires panel:
 	if(!forced)
 		if( !hasPower() || isWireCut(AIRLOCK_WIRE_OPEN_DOOR) )
 			return 0
+	if(sabotaged && sabotageTurf)
+		p_open = 1
+		update_icon()
+		visible_message("<span class='warning'>[src]'s panel is blown off in a spray of deadly shrapnel!</span>")
+		explosion(sabotageTurf,-1,1,1)
+		detonated = 1
+		for(var/mob/living/M in sabotageTurf)
+			if(issilicon(M))
+				M.visible_message("<span class='warning'>Shrapnel bounces off of [M]'s hard exoskeleton!</span>", \
+								  "<span class='warning'><b>Shards of metal bounce harmlessly off of your exoskeleton.</b></span>")
+				continue
+			M.visible_message("<span class='warning'>Shrapnel cuts into [M]'s flesh!</span>", \
+							  "<span class='userdanger'>Jagged shards of metal fly into your body!</span>")
+			M.emote("scream")
+			continue
+		sabotaged = 0
+		sabotageTurf = null
+		return
 	if(forced < 2)
 		if(emagged)
 			return 0

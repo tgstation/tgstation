@@ -389,6 +389,14 @@ var/list/uplink_items = list()
 	item = /obj/item/toy/carpplushie/dehy_carp
 	cost = 3
 
+/datum/uplink_item/stealthy_weapons/door_charge
+	name = "Syndicate Door Charge"
+	desc = "A small, easily concealable device. It can be applied to an open airlock panel to cause the next person to open the door to take massive amounts of damage in an explosion. Only explodes in the direction applied from."
+	item = /obj/item/device/doorCharge
+	cost = 5
+	surplus = 6
+	excludefrom = list(/datum/game_mode/nuclear)
+
 // STEALTHY TOOLS
 
 /datum/uplink_item/stealthy_tools
