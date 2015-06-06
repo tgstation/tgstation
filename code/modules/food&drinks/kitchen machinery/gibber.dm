@@ -127,7 +127,9 @@
 	visible_message("<span class='italics'>You hear a loud squelchy grinding sound.</span>")
 	src.operating = 1
 	update_icon()
-	animate(src, pixel_x = pixel_x + 2, time = 0.2, loop = 200) //start shaking
+	var/offset
+	offset = prob(50) ? -2 : 2
+	animate(src, pixel_x = pixel_x + offset, time = 0.2, loop = 200) //start shaking
 	playsound(src.loc, 'sound/machines/juicer.ogg', 50, 1)
 	var/sourcename = src.occupant.real_name
 	var/sourcejob = src.occupant.job
@@ -167,7 +169,7 @@
 			meatslab.throw_at(Tx,i,3)
 			if (!Tx.density)
 				new /obj/effect/decal/cleanable/blood/gibs(Tx,i)
-		animate(src, pixel_x = initial(pixel_x), time = 1) //return to its spot after shaking
+		pixel_x = initial(pixel_x) //return to its spot after shaking
 		src.operating = 0
 		update_icon()
 

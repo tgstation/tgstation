@@ -161,10 +161,12 @@
 			"<span class='notice'>You turn on \a [src].</span>", \
 			"<span class='italics'>You hear a food processor.</span>")
 		playsound(src.loc, 'sound/machines/blender.ogg', 50, 1)
-		animate(src, pixel_x = pixel_x + 2, time = 0.2, loop = P.time*5) //start shaking
+		var/offset
+		offset = prob(50) ? -2 : 2
+		animate(src, pixel_x = pixel_x + offset, time = 0.2, loop = P.time*5) //start shaking
 		use_power(500)
 		sleep(P.time)
-		animate(src, pixel_x = initial(pixel_x), time = 1) //return to its spot after shaking
+		pixel_x = initial(pixel_x) //return to its spot after shaking
 		P.process_food(src.loc, O)
 		src.processing = 0
 	src.visible_message("\the [src] finishes processing.")
