@@ -112,7 +112,7 @@ mob/living/carbon/proc/handle_hallucinations()
 				//Strange audio
 				//src << "Strange Audio"
 				if(client)
-					switch(rand(1,12))
+					switch(rand(1,16))
 						if(1) src << 'sound/machines/airlock.ogg'
 						if(2)
 							if(prob(50))src << 'sound/effects/Explosion1.ogg'
@@ -143,6 +143,22 @@ mob/living/carbon/proc/handle_hallucinations()
 								'sound/hallucinations/look_up1.ogg', 'sound/hallucinations/look_up2.ogg', 'sound/hallucinations/over_here1.ogg', 'sound/hallucinations/over_here2.ogg', 'sound/hallucinations/over_here3.ogg',\
 								'sound/hallucinations/turn_around1.ogg', 'sound/hallucinations/turn_around2.ogg', 'sound/hallucinations/veryfar_noise.ogg', 'sound/hallucinations/wail.ogg')
 							src << pick(creepyasssounds)
+						if(13)
+							if(rand(0,1)==0)
+								src << 'sound/items/Welder.ogg'
+							else
+								src << 'sound/items/Welder2.ogg'
+						if(14)
+							if(rand(0,1)==0)
+								src << 'sound/items/Screwdriver.ogg'
+							else
+								src << 'sound/items/Screwdriver2.ogg'
+						if(15)
+							src << "<span class='warning'>You feel a tiny prick!</span>"
+						if(16)
+							src << "<h1 class='alert'>Priority Announcement</h1>"
+							src << "<span class='alert'>The Emergency Shuttle has docked with the station. You have 3 minutes to board the Emergency Shuttle.</span>"
+							src << sound('sound/AI/shuttledock.ogg')
 			if(66 to 70)
 				//Flashes of danger
 				//src << "Danger Flash"
