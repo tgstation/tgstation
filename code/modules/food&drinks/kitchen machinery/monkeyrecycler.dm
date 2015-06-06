@@ -32,8 +32,7 @@
 				qdel(target)
 				user << "<span class='notice'>You stuff the monkey in the machine.</span>"
 				playsound(src.loc, 'sound/machines/juicer.ogg', 50, 1)
-				var/offset
-				offset = prob(50) ? -2 : 2
+				var/offset = prob(50) ? -2 : 2
 				animate(src, pixel_x = pixel_x + offset, time = 0.2, loop = 200) //start shaking
 				use_power(500)
 				src.grinded++

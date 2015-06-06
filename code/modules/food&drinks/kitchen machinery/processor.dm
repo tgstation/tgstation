@@ -161,8 +161,7 @@
 			"<span class='notice'>You turn on \a [src].</span>", \
 			"<span class='italics'>You hear a food processor.</span>")
 		playsound(src.loc, 'sound/machines/blender.ogg', 50, 1)
-		var/offset
-		offset = prob(50) ? -2 : 2
+		var/offset = prob(50) ? -2 : 2
 		animate(src, pixel_x = pixel_x + offset, time = 0.2, loop = P.time*5) //start shaking
 		use_power(500)
 		sleep(P.time)
