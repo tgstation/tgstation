@@ -65,7 +65,8 @@
 
 /mob/living/simple_animal/Login()
 	if(src && src.client)
-		src.client.screen = null
+		src.client.screen = list()
+		client.screen += client.void
 	..()
 
 /mob/living/simple_animal/updatehealth()
@@ -494,11 +495,11 @@
 /mob/living/simple_animal/update_transform()
 	var/matrix/ntransform = matrix(transform) //aka transform.Copy()
 	var/changed = 0
-	
+
 	if(resize != RESIZE_DEFAULT_SIZE)
 		changed++
 		ntransform.Scale(resize)
 		resize = RESIZE_DEFAULT_SIZE
-	
+
 	if(changed)
 		animate(src, transform = ntransform, time = 2, easing = EASE_IN|EASE_OUT)

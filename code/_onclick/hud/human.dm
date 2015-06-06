@@ -282,7 +282,7 @@
 	mymob.blind.icon_state = "blackimageoverlay"
 	mymob.blind.name = " "
 	mymob.blind.screen_loc = "CENTER-7,CENTER-7"
-	mymob.blind.mouse_opacity = 1
+	mymob.blind.mouse_opacity = 0
 	mymob.blind.layer = 0
 
 	mymob.damageoverlay = new /obj/screen()
@@ -305,10 +305,11 @@
 	mymob.zone_sel.icon = ui_style
 	mymob.zone_sel.update_icon()
 
-	mymob.client.screen = null
+	mymob.client.screen = list()
 
 	mymob.client.screen += list( mymob.throw_icon, mymob.zone_sel, mymob.internals, mymob.healths, mymob.healthdoll, mymob.pullin, mymob.blind, mymob.flash, mymob.damageoverlay, lingchemdisplay, lingstingdisplay) //, mymob.hands, mymob.rest, mymob.sleep) //, mymob.mach )
 	mymob.client.screen += adding + hotkeybuttons
+	mymob.client.screen += mymob.client.void
 	inventory_shown = 0;
 
 

@@ -274,17 +274,6 @@
 	overlays.Cut()
 	overlays += image('icons/mob/screen_gen.dmi', "[selecting]")
 
-
-/obj/screen/Click(location, control, params)
-	var/list/modifiers = params2list(params)
-	if(modifiers["middle"] && istype(usr, /mob/living/carbon))
-		var/mob/living/carbon/C = usr
-		C.swap_hand()
-	else
-		var/turf/T = screen_loc2turf(modifiers["screen-loc"], get_turf(usr))
-		T.Click(location, control, params)
-	return 1
-
 /obj/screen/inventory/Click()
 	// At this point in client Click() code we have passed the 1/10 sec check and little else
 	// We don't even know if it's a middle click
