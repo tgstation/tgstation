@@ -550,6 +550,15 @@
 			if (opened==2)
 				opened = 1
 			update_icon()
+	else if(istype(W, /obj/item/weapon/glowCore))
+		user.visible_message("<span class='warning'>[user] zaps [src] with [W]!</span>", \
+							 "<span class='danger'>You recharge [src] with [W]!</span>")
+		user.drop_item()
+		cell.charge = cell.maxcharge
+		update_icon()
+		playsound(get_turf(user), 'sound/machines/defib_zap.ogg', 50, 1, -1)
+		qdel(W)
+		return
 	else
 		if (	((stat & BROKEN) || malfhack) \
 				&& !opened \

@@ -136,12 +136,12 @@
 	new /obj/item/weapon/reagent_containers/hypospray/medipen( src )
 	new /obj/item/weapon/reagent_containers/hypospray/medipen( src )
 
-/obj/item/weapon/storage/box/medipens/utility
+/obj/item/weapon/storage/box/stimpacks
 	name = "stimpack value kit"
 	desc = "A box with several stimpack medipens for the economical miner."
 	icon_state = "syringe"
 
-/obj/item/weapon/storage/box/medipens/utility/New()
+/obj/item/weapon/storage/box/stimpacks/New()
 	..()
 	new /obj/item/weapon/reagent_containers/hypospray/medipen/stimpack(src)
 	new /obj/item/weapon/reagent_containers/hypospray/medipen/stimpack(src)

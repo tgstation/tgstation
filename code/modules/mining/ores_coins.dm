@@ -21,7 +21,7 @@
 	name = "uranium ore"
 	icon_state = "Uranium ore"
 	origin_tech = "materials=5"
-	points = 18
+	points = 20
 	refined_type = /obj/item/stack/sheet/mineral/uranium
 
 /obj/item/weapon/ore/iron
@@ -61,7 +61,7 @@
 	name = "plasma ore"
 	icon_state = "Plasma ore"
 	origin_tech = "materials=2"
-	points = 36
+	points = 40
 	refined_type = /obj/item/stack/sheet/mineral/plasma
 
 /obj/item/weapon/ore/plasma/attackby(obj/item/I as obj, mob/user as mob, params)
@@ -77,29 +77,36 @@
 	name = "silver ore"
 	icon_state = "Silver ore"
 	origin_tech = "materials=3"
-	points = 18
+	points = 20
 	refined_type = /obj/item/stack/sheet/mineral/silver
 
 /obj/item/weapon/ore/gold
 	name = "gold ore"
 	icon_state = "Gold ore"
 	origin_tech = "materials=4"
-	points = 18
+	points = 20
 	refined_type = /obj/item/stack/sheet/mineral/gold
 
 /obj/item/weapon/ore/diamond
 	name = "diamond ore"
 	icon_state = "Diamond ore"
 	origin_tech = "materials=6"
-	points = 36
+	points = 40
 	refined_type = /obj/item/stack/sheet/mineral/diamond
 
 /obj/item/weapon/ore/bananium
 	name = "bananium ore"
 	icon_state = "Clown ore"
 	origin_tech = "materials=4"
-	points = 27
+	points = 30
 	refined_type = /obj/item/stack/sheet/mineral/bananium
+
+/obj/item/weapon/ore/mythril
+	name = "mythril ore"
+	icon_state = "Mythril ore"
+	origin_tech = "materials=5"
+	points = 25
+	refined_type = /obj/item/stack/sheet/mineral/mythril
 
 /obj/item/weapon/ore/slag
 	name = "slag"
@@ -262,11 +269,6 @@
 	cmineral = "bananium"
 	icon_state = "coin_bananium_heads"
 	value = 600 //makes the clown cri
-
-/obj/item/weapon/coin/adamantine
-	cmineral = "adamantine"
-	icon_state = "coin_adamantine_heads"
-	value = 400
 
 /obj/item/weapon/coin/mythril
 	cmineral = "mythril"

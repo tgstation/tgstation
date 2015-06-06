@@ -1,5 +1,5 @@
 /obj/item/clothing/glasses/meson
-	name = "Optical Meson Scanner"
+	name = "optical meson scanner"
 	desc = "Used by engineering and mining staff to see basic structural and terrain layouts through walls, regardless of lighting condition."
 	icon_state = "meson"
 	item_state = "meson"
@@ -9,8 +9,8 @@
 	invis_view = SEE_INVISIBLE_MINIMUM
 
 /obj/item/clothing/glasses/meson/night
-	name = "Night Vision Optical Meson Scanner"
-	desc = "An Optical Meson Scanner fitted with an amplified visible light spectrum overlay, providing greater visual clarity in darkness."
+	name = "nv-optical meson scanner"
+	desc = "An optical meson scanner fitted with an amplified visible light spectrum overlay, providing greater visual clarity in darkness."
 	icon_state = "nvgmeson"
 	item_state = "nvgmeson"
 	darkness_view = 8
@@ -27,13 +27,13 @@
 	hitsound = 'sound/weapons/bladeslice.ogg'
 
 /obj/item/clothing/glasses/science
-	name = "Science Goggles"
+	name = "science goggles"
 	desc = "A pair of snazzy goggles used to protect against chemical spills."
 	icon_state = "purple"
 	item_state = "glasses"
 
 /obj/item/clothing/glasses/night
-	name = "Night Vision Goggles"
+	name = "night vision goggles"
 	desc = "You can totally see in the dark now!"
 	icon_state = "night"
 	item_state = "glasses"
@@ -54,7 +54,7 @@
 	item_state = "headset" // lol
 
 /obj/item/clothing/glasses/material
-	name = "Optical Material Scanner"
+	name = "optical material scanner"
 	desc = "Very confusing glasses."
 	icon_state = "material"
 	item_state = "glasses"
@@ -63,19 +63,17 @@
 	invis_view = SEE_INVISIBLE_MINIMUM
 
 /obj/item/clothing/glasses/regular
-	name = "Prescription Glasses"
-	desc = "Made by Nerd. Co."
+	name = "prescription glasses"
+	desc = "Given to people as a temporary fix for eyesight issues."
 	icon_state = "glasses"
 	item_state = "glasses"
 
 /obj/item/clothing/glasses/regular/hipster
-	name = "Prescription Glasses"
-	desc = "Made by Uncool. Co."
 	icon_state = "hipster_glasses"
 	item_state = "hipster_glasses"
 
 /obj/item/clothing/glasses/gglasses
-	name = "Green Glasses"
+	name = "green glasses"
 	desc = "Forest green glasses, like the kind you'd wear when hatching a nasty scheme."
 	icon_state = "gglasses"
 	item_state = "gglasses"
@@ -166,8 +164,8 @@
 	item_state = "bigsunglasses"
 
 /obj/item/clothing/glasses/thermal
-	name = "Optical Thermal Scanner"
-	desc = "Thermals in the shape of glasses."
+	name = "optical thermal scanner"
+	desc = "Scans heat signatures through solid objects, allowing you to see living things through them."
 	icon_state = "thermal"
 	item_state = "glasses"
 	origin_tech = "magnets=3"
@@ -179,7 +177,7 @@
 		if(istype(src.loc, /mob/living/carbon/human))
 			var/mob/living/carbon/human/M = src.loc
 			if(M.glasses == src)
-				M << "<span class='danger'>The Optical Thermal Scanner overloads and blinds you!</span>"
+				M << "<span class='danger'>[src] overloads and blinds you!</span>"
 				M.eye_blind = 3
 				M.eye_blurry = 5
 				M.disabilities |= NEARSIGHT
@@ -187,21 +185,22 @@
 					M.disabilities &= ~NEARSIGHT
 		..()
 
-/obj/item/clothing/glasses/thermal/syndi	//These are now a traitor item, concealed as mesons.	-Pete
-	name = "Optical Meson Scanner"
+/obj/item/clothing/glasses/thermal/syndi //Thermal glasses disguised as mesons. Have a unique examine description.
+	name = "optical meson scanner"
 	desc = "Used by engineering and mining staff to see basic structural and terrain layouts through walls, regardless of lighting condition."
 	icon_state = "meson"
 	origin_tech = "magnets=3;syndicate=4"
+	item_state = "meson"
 	flash_protect = -1
 
 /obj/item/clothing/glasses/thermal/monocle
-	name = "Thermoncle"
-	desc = "A monocle thermal."
+	name = "thermoncle"
+	desc = "A very dapper thermal scanner. Used by true gentlemen in the field of assassination."
 	icon_state = "thermoncle"
 	flags = null //doesn't protect eyes because it's a monocle, duh
 
 /obj/item/clothing/glasses/thermal/eyepatch
-	name = "Optical Thermal Eyepatch"
+	name = "optical thermal eyepatch"
 	desc = "An eyepatch with built-in thermal optics."
 	icon_state = "eyepatch"
 	item_state = "eyepatch"

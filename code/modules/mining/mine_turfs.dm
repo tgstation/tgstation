@@ -91,8 +91,7 @@ var/global/list/rockTurfEdgeCache
 		"Uranium" = 5, "Diamond" = 1, "Gold" = 10,
 		"Silver" = 12, "Plasma" = 20, "Iron" = 40,
 		"Gibtonite" = 4, "Cave" = 2, "BScrystal" = 1,
-		/*, "Adamantine" =5*/)
-		//Currently, Adamantine won't spawn as it has no uses. -Durandan
+		"Mythril" = 3)
 	var/mineralChance = 13
 
 /turf/simulated/mineral/random/New()
@@ -123,8 +122,8 @@ var/global/list/rockTurfEdgeCache
 					M = new/turf/simulated/mineral/clown(src)
 				if("BScrystal")
 					M = new/turf/simulated/mineral/bscrystal(src)
-				/*if("Adamantine")
-					M = new/turf/simulated/mineral/adamantine(src)*/
+				if("Mythril")
+					M = new/turf/simulated/mineral/mythril(src)
 			if(M)
 				src = M
 				M.levelupdate()
@@ -136,7 +135,7 @@ var/global/list/rockTurfEdgeCache
 	mineralSpawnChanceList = list(
 		"Uranium" = 35, "Diamond" = 30,
 		"Gold" = 45, "Silver" = 50, "Plasma" = 50,
-		"BScrystal" = 20)
+		"BScrystal" = 20, "Mythril" = 25)
 
 /turf/simulated/mineral/random/high_chance/New()
 	icon_state = "rock"
@@ -148,7 +147,7 @@ var/global/list/rockTurfEdgeCache
 	mineralSpawnChanceList = list(
 		"Uranium" = 2, "Diamond" = 1, "Gold" = 4,
 		"Silver" = 6, "Plasma" = 15, "Iron" = 40,
-		"Gibtonite" = 2, "BScrystal" = 1)
+		"Gibtonite" = 2, "BScrystal" = 1, "Mythril" = 3)
 
 /turf/simulated/mineral/random/low_chance/New()
 	icon_state = "rock"
@@ -221,6 +220,14 @@ var/global/list/rockTurfEdgeCache
 	spread = 0
 	hidden = 1
 	scan_state = "rock_BScrystal"
+
+/turf/simulated/mineral/mythril
+	name = "mythril deposit"
+	icon_state = "rock_mythril"
+	mineralType = /obj/item/weapon/ore/mythril
+	spreadChance = 10
+	spread = 1
+	hidden = 0 //Not hidden
 
 ////////////////////////////////Gibtonite
 /turf/simulated/mineral/gibtonite
@@ -323,7 +330,7 @@ var/global/list/rockTurfEdgeCache
 
 /turf/simulated/floor/plating/asteroid/airless/cave
 	var/length = 100
-	var/mob_spawn_list = list("Goldgrub" = 1, "Goliath" = 5, "Basilisk" = 4, "Hivelord" = 3)
+	var/mob_spawn_list = list("Goldgrub" = 1, "Goliath" = 5, "Basilisk" = 4, "Hivelord" = 3, "Will O' The Wisp" = 2)
 	var/sanity = 1
 
 /turf/simulated/floor/plating/asteroid/airless/cave/New(loc, var/length, var/go_backwards = 1, var/exclude_dir = -1)
@@ -415,6 +422,8 @@ var/global/list/rockTurfEdgeCache
 				new /mob/living/simple_animal/hostile/asteroid/basilisk(T)
 			if("Hivelord")
 				new /mob/living/simple_animal/hostile/asteroid/hivelord(T)
+			if("Will O' The Wisp")
+				new /mob/living/simple_animal/hostile/asteroid/willothewisp(T)
 	return
 
 /turf/simulated/mineral/attackby(var/obj/item/weapon/pickaxe/P as obj, mob/user as mob, params)
