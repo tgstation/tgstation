@@ -15,6 +15,10 @@
 	var/list/A_territory_lost = list()
 	var/list/B_territory_new = list()
 	var/list/B_territory_lost = list()
+	var/gang_A_style
+	var/gang_A_headgear
+	var/gang_B_style
+	var/gang_B_headgear
 
 /datum/game_mode/gang
 	name = "gang war"
@@ -26,14 +30,15 @@
 	recommended_enemies = 2
 	enemy_minimum_age = 14
 	var/finished = 0
-	var/goal_scalar = 0.5 //Goal = Total territories x goal_scalar
-
+	// Victory timers
+	var/A_timer = "OFFLINE"
+	var/B_timer = "OFFLINE"
 ///////////////////////////
 //Announces the game type//
 ///////////////////////////
 /datum/game_mode/gang/announce()
 	world << "<B>The current game mode is - Gang War!</B>"
-	world << "<B>A violent turf war has erupted on the station!<BR>Gangsters -  Take over the station by claiming more than [round(100*goal_scalar,1)]% of the station! <BR>Crew - The gangs will try to keep you on the station. Successfully evacuate the station to win!</B>"
+	world << "<B>A violent turf war has erupted on the station!<BR>Gangsters -  Take over the station by activating and defending a Dominator! <BR>Crew - The gangs will try to keep you on the station. Successfully evacuate the station to win!</B>"
 
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -73,6 +78,15 @@
 	modePlayer += B_bosses
 	..()
 
+/datum/game_mode/gang/process(seconds)
+	if(!finished)
+		if(isnum(A_timer))
+			A_timer -= seconds
+		if(isnum(B_timer))
+			B_timer -= seconds
+
+		ticker.mode.check_win()
+
 /datum/game_mode/gang/proc/assign_bosses()
 	var/datum/mind/boss = pick(antag_candidates)
 	A_bosses += boss
@@ -91,7 +105,7 @@
 /datum/game_mode/proc/forge_gang_objectives(var/datum/mind/boss_mind)
 	var/datum/objective/rival_obj = new
 	rival_obj.owner = boss_mind
-	rival_obj.explanation_text = "Claim more than 50% the station before the [(boss_mind in A_bosses) ? gang_name("B") : gang_name("A")] Gang does."
+	rival_obj.explanation_text = "Preform a hostile takeover of the station with a Dominator."
 	boss_mind.objectives += rival_obj
 
 
@@ -102,6 +116,17 @@
 	for(var/datum/objective/objective in boss_mind.objectives)
 		boss_mind.current << "<B>Objective #[obj_count]</B>: [objective.explanation_text]"
 		obj_count++
+
+/datum/game_mode/gang/proc/domination(var/gang,var/modifier=1,var/dominatorloc)
+	if(gang=="A")
+		A_timer = max(180,900 - ((round((ticker.mode.A_territory.len/start_state.num_territories)*200, 1) - 60) * 15)) * modifier
+	if(gang=="B")
+		B_timer = max(180,900 - ((round((ticker.mode.B_territory.len/start_state.num_territories)*200, 1) - 60) * 15)) * modifier
+	if(gang && dominatorloc)
+		priority_announce("Hostile runtimes detected in all station systems. A network breach by the [gang_name(gang)] Gang has been traced to [dominatorloc].","Network Alert")
+		if(get_security_level() != "delta")
+			set_security_level("red")
+		SSshuttle.emergencyNoEscape = 1
 
 ///////////////////////////////////////////////////////////////////////////
 //This equips the bosses with their gear, and makes the clown not clumsy//
@@ -134,7 +159,7 @@
 		mob << "Your Syndicate benefactors were unfortunately unable to get you a Gangtool."
 	else
 		gangtool.register_device(mob)
-		mob << "The <b>Gangtool</b> in your [where] will allow you to use your influence to purchase items and prevent the station from evacuating before you can take over. Use it to recall the emergency shuttle from anywhere on the station."
+		mob << "The <b>Gangtool</b> in your [where] will allow you to purchase items, send messages to your gangsters and to recall the emergency shuttle from anywhere on the station."
 		mob << "You can also promote your gang members to <b>lieutenant</b> by giving them an unregistered gangtool. Lieutenants cannot be deconverted and are able to use recruitment pens and gangtools."
 		. += 1
 
@@ -155,14 +180,84 @@
 
 	return .
 
+//Used by recallers when purchasing a gang outfit. First time a gang outfit is purchased the buyer decides a gang style which is stored so gang outfits are uniform
+/datum/game_mode/proc/gang_outfit(mob/user,var/obj/item/device/gangtool/gangtool,var/gang)
+	if(!user || !gangtool || !gang)
+		return 0
+	if(!gangtool.can_use(user))
+		return 0
+
+	var/gang_style_list = list("Gang Colors","Leather Jackets","Fine Suits")
+	var/style
+	var/headgear
+	if(gang == "A")
+		if(!gang_A_style)
+			gang_A_style = input("Pick an outfit style.", "Pick Style") as null|anything in gang_style_list
+			if(gang_A_style && (alert(user,"Include headgear?","Option","Yes","No") == "Yes"))
+				gang_A_headgear = 1
+		style = gang_A_style
+		headgear = gang_A_headgear
+
+	if(gang == "B")
+		if(!gang_B_style)
+			gang_B_style = input("Pick an outfit style.", "Pick Style") as null|anything in gang_style_list
+			if(gang_B_style && (alert(user,"Include headgear?","Option","Yes","No") == "Yes"))
+				gang_B_headgear = 1
+		style = gang_B_style
+		headgear = gang_B_headgear
+
+	if(!style)
+		return 0
+
+	if(gangtool.can_use(user) && (((gang == "A") ? gang_points.A : gang_points.B) >= 1))
+		switch(style)
+			if("Gang Colors")
+				if(gang == "A")
+					new /obj/item/clothing/under/color/blue(user.loc)
+					if(headgear)
+						new /obj/item/clothing/mask/bandana/blue(user.loc)
+				if(gang == "B")
+					new /obj/item/clothing/under/color/red(user.loc)
+					if(headgear)
+						new /obj/item/clothing/mask/bandana/red(user.loc)
+			if("Leather Jackets")
+				new /obj/item/clothing/suit/jacket/leather(user.loc)
+				if(headgear)
+					if(gang == "A")
+						new /obj/item/clothing/mask/bandana/blue(user.loc)
+					if(gang == "B")
+						new /obj/item/clothing/mask/bandana/red(user.loc)
+			if("Fine Suits")
+				new /obj/item/clothing/under/suit_jacket/really_black(user.loc)
+				if(headgear)
+					new /obj/item/clothing/head/fedora(user.loc)
+
+		return 1
+
+	return 0
+
 /////////////////////////////////////////////
 //Checks if the either gang have won or not//
 /////////////////////////////////////////////
 /datum/game_mode/gang/check_win()
-	if(A_territory.len > (start_state.num_territories * goal_scalar))
-		finished = "A" //Gang A wins
-	else if(B_territory.len > (start_state.num_territories * goal_scalar))
-		finished = "B" //Gang B wins
+	var/winner = 0
+
+	if(isnum(A_timer))
+		if(A_timer < 0)
+			winner += 1
+	if(isnum(B_timer))
+		if(B_timer < 0)
+			winner += 2
+
+	if(winner)
+		if(winner == 3) //Edge Case: If both dominators activate at the same time
+			domination("A",0.5)
+			domination("B",0.5)
+			priority_announce("Multiple station takeover attempts have made simultaneously. Conflicting hostile runtimes have delayed both attempts.","Network Alert")
+		else if(winner == 1)
+			finished = "A" //Gang A wins
+		else if(winner == 2)
+			finished = "B" //Gang B wins
 
 ///////////////////////////////
 //Checks if the round is over//
@@ -282,7 +377,7 @@
 	if(!finished)
 		world << "<FONT size=3 color=red><B>The station was [station_was_nuked ? "destroyed!" : "evacuated before either gang could claim it!"]</B></FONT>"
 	else
-		world << "<FONT size=3 color=red><B>The [finished=="A" ? gang_name("A") : gang_name("B")] Gang has claimed over [round(100*goal_scalar,1)]% of the station and has assumed control!</B></FONT>"
+		world << "<FONT size=3 color=red><B>The [finished=="A" ? gang_name("A") : gang_name("B")] Gang successfully preformed a hostile takeover of the station!!</B></FONT>"
 	..()
 	return 1
 
@@ -429,12 +524,9 @@
 	var/A_control = round((ticker.mode.A_territory.len/start_state.num_territories)*100, 1)
 	var/B_control = round((ticker.mode.B_territory.len/start_state.num_territories)*100, 1)
 	ticker.mode.message_gangtools((ticker.mode.A_tools),"Your gang now has <b>[A_control]% control</b> of the station.",0)
-	ticker.mode.message_gangtools((ticker.mode.A_tools),"The [gang_name("B")] Gang has <b>[B_control]% control</b> of the station.",0,1)
+	//ticker.mode.message_gangtools((ticker.mode.A_tools),"The [gang_name("B")] Gang has <b>[B_control]% control</b> of the station.",0,1)
 	ticker.mode.message_gangtools((ticker.mode.B_tools),"Your gang now has <b>[B_control]% control</b> of the station.",0)
-	ticker.mode.message_gangtools((ticker.mode.B_tools),"The [gang_name("A")] Gang has <b>[A_control]% control</b> of the station.",0,1)
-
-	//Victory check
-	ticker.mode.check_win()
+	//ticker.mode.message_gangtools((ticker.mode.B_tools),"The [gang_name("A")] Gang has <b>[A_control]% control</b> of the station.",0,1)
 
 	//Restart the counter
 	start()

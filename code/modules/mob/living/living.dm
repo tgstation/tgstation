@@ -816,3 +816,15 @@ Sorry Giacom. Please don't be mad :(
 
 /mob/living/proc/get_standard_pixel_y_offset(lying = 0)
 	return initial(pixel_y)
+
+/mob/living/Stat()
+	..()
+	if(statpanel("Status"))
+		if(ticker)
+			if(ticker.mode)
+				if(istype(ticker.mode, /datum/game_mode/gang))
+					var/datum/game_mode/gang/mode = ticker.mode
+					if(isnum(mode.A_timer))
+						stat(null, "[gang_name("A")] Gang Takeover: [max(mode.A_timer, 0)]")
+					if(isnum(mode.B_timer))
+						stat(null, "[gang_name("B")] Gang Takeover: [max(mode.B_timer, 0)]")
