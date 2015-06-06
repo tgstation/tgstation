@@ -461,14 +461,13 @@ var/global/list/alert_overlays_global = list()
 	return !density
 
 
-/*
 /obj/machinery/door/firedoor/border_only/CheckExit(atom/movable/mover as mob|obj, turf/target as turf)
 	if(istype(mover) && mover.checkpass(PASSGLASS))
 		return 1
-	/*if(get_dir(loc, target) == dir)
-		return !density*/
+	if(get_dir(loc, target) == dir)
+		return !density
 	else
-		return !density*/
+		return 1
 
 /obj/machinery/door/firedoor/multi_tile
 	icon = 'icons/obj/doors/DoorHazard2x1.dmi'
