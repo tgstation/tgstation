@@ -1236,15 +1236,15 @@ var/list/slot_equipment_priority = list( \
 
 		if(spell_list && spell_list.len)
 			for(var/spell/S in spell_list)
-				if(istype(S, /spell/noclothes) || !statpanel(S.panel))
+				if((!S.connected_button) || !statpanel(S.panel))
 					continue //Not showing the noclothes spell
 				switch(S.charge_type)
 					if(Sp_RECHARGE)
-						statpanel(S.panel,"[S.charge_counter/10.0]/[S.charge_max/10]",S)
+						statpanel(S.panel,"[S.charge_counter/10.0]/[S.charge_max/10]",S.connected_button)
 					if(Sp_CHARGES)
-						statpanel(S.panel,"[S.charge_counter]/[S.charge_max]",S)
+						statpanel(S.panel,"[S.charge_counter]/[S.charge_max]",S.connected_button)
 					if(Sp_HOLDVAR)
-						statpanel(S.panel,"[S.holder_var_type] [S.holder_var_amount]",S)
+						statpanel(S.panel,"[S.holder_var_type] [S.holder_var_amount]",S.connected_button)
 	sleep(4) //Prevent updating the stat panel for the next .4 seconds, prevents clientside latency from updates
 
 
