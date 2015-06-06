@@ -32,6 +32,7 @@ var/global/list/narsie_list = list()
 	..()
 	if(narnar)
 		narsie_list.Add(src)
+		narsie_spawn_animation()
 	if(announce)
 		world << "<font size='15' color='red'><b>NAR-SIE HAS RISEN</b></font>"
 		world << pick(sound('sound/hallucinations/im_here1.ogg'), sound('sound/hallucinations/im_here2.ogg'))
@@ -40,7 +41,6 @@ var/global/list/narsie_list = list()
 		if(A)
 			notify_ghosts("Nar-Sie has risen in \the [A.name]. Reach out to the Geometer to be given a new shell for your soul.")
 
-	narsie_spawn_animation()
 
 	if(!narsie_cometh && narnar)
 		sleep(70)

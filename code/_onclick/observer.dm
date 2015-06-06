@@ -20,7 +20,7 @@
 			return									// seems legit.
 
 	// Things you might plausibly want to follow
-	if((ismob(A) && A != src) || istype(A,/obj/machinery/bot) || istype(A,/obj/singularity))
+	if((ismob(A) && A != src) || istype(A,/obj/machinery/bot) || istype(A,/obj/singularity)|| istype(A, /obj/machinery/power/supermatter)) //why isn't this OOP
 		ManualFollow(A)
 
 	// Otherwise jump

@@ -97,7 +97,7 @@
 	name = "synthmeat"
 	id = "synthmeat"
 	result = null
-	required_reagents = list("blood" = 5, "cryoxadone" = 1)
+	required_reagents = list("blood" = 5, "clonexadone" = 1)
 	result_amount = 1
 	mob_react = 1
 

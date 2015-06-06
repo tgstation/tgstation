@@ -39,7 +39,7 @@
 			add_logs(user, M, "injected", object="[src.name]", addition="([contained])")
 
 /obj/item/weapon/reagent_containers/hypospray/CMO
-	list_reagents = list("tricordrazine" = 30)
+	list_reagents = list("doctorsdelight" = 30)
 
 /obj/item/weapon/reagent_containers/hypospray/combat
 	name = "combat stimulant injector"

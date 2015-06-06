@@ -48,7 +48,7 @@ var/global/posibrain_notif_cooldown = 0
 
 //Two ways to activate a positronic brain. A clickable link in the ghost notif, or simply clicking the object itself.
 /obj/item/device/mmi/posibrain/proc/activate(mob/user)
-	if((brainmob && brainmob.key) || jobban_isbanned(user,"posibrain"))
+	if((brainmob && brainmob.key) || jobban_isbanned(user,"posibrain") || istype(src.loc, /mob/living/silicon))
 		return
 
 	var/posi_ask = alert("Become a positronic brain? (Warning, You can no longer be cloned, and all past lives will be forgotten!)","Are you positive?","Yes","No")
@@ -78,12 +78,13 @@ var/global/posibrain_notif_cooldown = 0
 	return
 
 /obj/item/device/mmi/posibrain/proc/transfer_personality(var/mob/candidate)
-	if(brainmob && brainmob.key) //Prevents hostile takeover if two ghosts get the prompt for the same brain.
+	if(brainmob && brainmob.key || istype(src.loc, /mob/living/silicon)) //Prevents hostile takeover if two ghosts get the prompt for the same brain.
 		candidate << "This brain has already been taken! Please try your possesion again later!"
 		return
 	notified = 0
 	brainmob.mind = candidate.mind
 	brainmob.ckey = candidate.ckey
+	brainmob.name = "[pick(list("PBU","HIU","SINA","ARMA","OSI","HBL","MSO","RR"))]-[rand(100, 999)]" //Re-initialize the name so it doesn't repeat
 	name = "positronic brain ([brainmob.name])"
 
 	brainmob.mind.remove_all_antag()
