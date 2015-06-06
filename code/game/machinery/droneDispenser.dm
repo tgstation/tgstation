@@ -12,7 +12,7 @@
 
 /obj/machinery/droneDispenser/New()
 	..()
-	SSmachine.processing += src
+	SSmachine.processing |= src
 
 /obj/machinery/droneDispenser/Destroy()
 	SSmachine.processing -= src
