@@ -102,13 +102,6 @@ var/const/SAFETY_COOLDOWN = 100
 		return
 	if(safety_mode)
 		return
-	// If we're not already grinding something.
-	if(!grinding)
-		grinding = 1
-		spawn(1)
-			grinding = 0
-	else
-		return
 
 	var/move_dir = get_dir(loc, AM.loc)
 	if(move_dir == eat_dir)
