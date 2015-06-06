@@ -111,7 +111,7 @@ mob/living/carbon/proc/handle_hallucinations()
 				//Strange audio
 				//src << "Strange Audio"
 				if(client)
-					switch(rand(1,16))
+					switch(rand(1,14))
 						if(1) src << 'sound/machines/airlock.ogg'
 						if(2)
 							if(prob(50))src << 'sound/effects/Explosion1.ogg'
@@ -152,12 +152,6 @@ mob/living/carbon/proc/handle_hallucinations()
 								src << 'sound/items/Screwdriver.ogg'
 							else
 								src << 'sound/items/Screwdriver2.ogg'
-						if(15)
-							src << "<span class='warning'>You feel a tiny prick!</span>"
-						if(16)
-							src << "<h1 class='alert'>Priority Announcement</h1>"
-							src << "<span class='alert'>The Emergency Shuttle has docked with the station. You have 3 minutes to board the Emergency Shuttle.</span>"
-							src << sound('sound/AI/shuttledock.ogg')
 			if(66 to 70)
 				//Flashes of danger
 				//src << "Danger Flash"
@@ -192,6 +186,16 @@ mob/living/carbon/proc/handle_hallucinations()
 					src.sleeping = 0
 					hal_crit = 0
 					hal_screwyhud = 0
+			if(73 to 78)
+				//Fake changeling/parapen
+				if(prob(1) && prob(1))
+					src << "<span class='warning'>You feel a <b>HUGE</b> prick!</span>"
+				else
+					src << "<span class='warning'>You feel a tiny prick!</span>"
+			if(78 to 80)
+				src << "<h1 class='alert'>Priority Announcement</h1>"
+				src << "<span class='alert'>The Emergency Shuttle has docked with the station. You have 3 minutes to board the Emergency Shuttle.</span>"
+				src << sound('sound/AI/shuttledock.ogg')
 	handling_hal = 0
 
 
