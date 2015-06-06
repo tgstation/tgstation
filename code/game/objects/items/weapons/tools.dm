@@ -163,6 +163,7 @@
 	var/status = 1 		//Whether the welder is secured or unsecured (able to attach rods to it to make a flamethrower)
 	var/max_fuel = 20 	//The max amount of fuel the welder can hold
 	var/change_icons = 1
+	var/can_off_process = 0
 
 /obj/item/weapon/weldingtool/New()
 	..()
@@ -224,7 +225,8 @@
 			force = 3
 			damtype = "brute"
 			update_icon()
-			SSobj.processing.Remove(src)
+			if(!can_off_process)
+				SSobj.processing.Remove(src)
 			return
 	//Welders left on now use up fuel, but lets not have them run out quite that fast
 		if(1)
@@ -416,12 +418,13 @@
 	origin_tech = "materials=4;engineering=4;bluespace=3;plasmatech=3"
 	var/last_gen = 0
 	change_icons = 0
+	can_off_process = 1
 
 
 //Proc to make the experimental welder generate fuel, optimized as fuck -Sieve
 //i don't think this is actually used, yaaaaay -Pete
 /obj/item/weapon/weldingtool/experimental/proc/fuel_gen()
-	if(!last_gen)
+	if(!welding && !last_gen)
 		last_gen = 1
 		reagents.add_reagent("welding_fuel",1)
 		spawn(10)
