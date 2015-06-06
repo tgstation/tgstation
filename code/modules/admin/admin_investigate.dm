@@ -20,7 +20,7 @@ var/global/list/investigations=list(
 	"notes"   = new /datum/log_controller("notes"),
 	"ntsl"    = new /datum/log_controller("ntsl"),
 	"singulo" = new /datum/log_controller("singulo"),
-	"atmos"   = new /datum/log_controller("atmos"),
+	"atmos"   = null, //new /datum/log_controller("atmos",filename="data/logs/[date_string] atmos.htm", persist=TRUE),
 )
 
 // Handles appending shit to log.

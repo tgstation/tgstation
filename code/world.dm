@@ -30,6 +30,7 @@
 	var/date_string = time2text(world.realtime, "YYYY/MM-Month/DD-Day")
 
 	investigations["hrefs"] = new /datum/log_controller("hrefs", filename="data/logs/[date_string] hrefs.htm", persist=TRUE)
+	investigations["atmos"] = new /datum/log_controller("atmos", filename="data/logs/[date_string] atmos.htm", persist=TRUE)
 
 	diary = file("data/logs/[date_string].log")
 	diaryofmeanpeople = file("data/logs/[date_string] Attack.log")

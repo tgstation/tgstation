@@ -141,6 +141,7 @@
 		on = !on
 		updateUsrDialog()
 		update_icon()
+		investigation_log(I_ATMOS,"was turned [on ? "on" : "off"] by [key_name(usr)]")
 		return 1
 
 	if(href_list["add"])
@@ -163,6 +164,7 @@
 
 	if(href_list["reset"])
 		if(href_list["reset"]=="*")
+			investigation_log(I_ATMOS,"had all automations reset by [key_name(usr)]")
 			for(var/datum/automation/A in automations)
 				if(!A) continue
 				A.OnReset()
@@ -170,11 +172,13 @@
 			var/datum/automation/A=locate(href_list["reset"])
 			if(!A) return 1
 			A.OnReset()
+			investigation_log(I_ATMOS,"had the [A.name]/[A.desc] automation reset by [key_name(usr)]")
 		updateUsrDialog()
 		return 1
 
 	if(href_list["remove"])
 		if(href_list["remove"]=="*")
+			investigation_log(I_ATMOS,"had all automations removed by [key_name(usr)]")
 			var/confirm=alert("Are you sure you want to remove ALL automations?","Automations","Yes","No")
 			if(confirm == "No") return 0
 			for(var/datum/automation/A in automations)
@@ -186,14 +190,16 @@
 			if(!A) return 1
 			A.OnRemove()
 			automations.Remove(A)
+			investigation_log(I_ATMOS,"had the [A.name]/[A.desc] automation removed by [key_name(usr)]")
 		updateUsrDialog()
 		return 1
 
 	if(href_list["read"])
 		var/code = input("Input exported AAC code.","Automations","") as message|null
-		if(!code) return 0
+		if(!code || !Adjacent(usr)) return 0
 		ReadCode(code)
 		updateUsrDialog()
+		investigation_log(I_ATMOS,"had an automations list imported by [key_name(usr)]: [code]")
 		return 1
 
 	if(href_list["dump"])
@@ -207,7 +213,9 @@
 		if(!registerid)//Something wasn't sane.
 			return 1
 
+		var/oldreg = registers[registerid]
 		registers[registerid] = input("Input register value:", "Register [registerid]", registers[registerid]) as num//Ask the user.
+		investigation_log(I_ATMOS,"had the [registerid]\th registerID changed from [oldreg] to [registers[registerid]] by [key_name(usr)]")
 		updateUsrDialog()
 		return 1
 
