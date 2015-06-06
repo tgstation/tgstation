@@ -554,6 +554,8 @@
 			for(var/obj/item/I in gather_location)
 				if(I.type in rejections) // To limit bag spamming: any given type only complains once
 					continue
+				if(I.anchored)
+					continue
 				if(!can_be_inserted(I))	// Note can_be_inserted still makes noise when the answer is no
 					rejections += I.type	// therefore full bags are still a little spammy
 					failure = 1
