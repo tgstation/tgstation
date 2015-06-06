@@ -177,6 +177,7 @@
 	name = "portable chem dispenser"
 	icon = 'icons/obj/chemical.dmi'
 	icon_state = "minidispenser"
+	var/baseicon = "minidispenser"
 	energy = 5
 	max_energy = 5
 	amount = 5
@@ -217,7 +218,11 @@
 
 /obj/machinery/chem_dispenser/constructable/attackby(var/obj/item/I, var/mob/user, params)
 	..()
-	if(default_deconstruction_screwdriver(user, "minidispenser-o", "minidispenser", I))
+
+	if(default_unfasten_wrench(user, I))
+		return
+
+	if(default_deconstruction_screwdriver(user, "[baseicon]-o", "[baseicon]", I))
 		return
 
 	if(exchange_parts(user, I))
@@ -231,6 +236,28 @@
 				beaker = null
 			default_deconstruction_crowbar(I)
 			return 1
+
+/obj/machinery/chem_dispenser/constructable/booze
+	name = "portable booze dispenser"
+	icon = 'icons/obj/chemical.dmi'
+	icon_state = "booze_dispenser"
+	baseicon = "booze_dispenser"
+	dispensable_reagents = list()
+	uiname = "Booze Dispenser"
+	special_reagents = list(list("lemon_lime","sugar","orangejuice","limejuice","sodawater","tonic","beer","kahlua","whiskey","wine","vodka","gin","rum","tequila","vermouth","cognac","ale"),
+						 		list(),
+								list())
+
+/obj/machinery/chem_dispenser/constructable/drinks
+	name = "portable soda dispenser"
+	icon = 'icons/obj/chemical.dmi'
+	icon_state = "soda_dispenser"
+	baseicon = "soda_dispenser"
+	dispensable_reagents = list()
+	uiname = "Soda Dispenser"
+	special_reagents = list(list("water","ice","coffee","cream","tea","icetea","cola","spacemountainwind","dr_gibb","space_up","tonic","sodawater","lemon_lime","sugar","orangejuice","limejuice","tomatojuice"),
+						 		list(),
+								list())
 
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -569,6 +596,72 @@
 	desc = "Used to create condiments and other cooking supplies."
 	condi = 1
 
+
+
+/obj/machinery/chem_master/constructable
+	name = "ChemMaster 2999"
+	desc = "Used to seperate chemicals and distribute them in a variety of forms."
+
+/obj/machinery/chem_master/constructable/New()
+	..()
+	component_parts = list()
+	component_parts += new /obj/item/weapon/circuitboard/chem_master(null)
+	component_parts += new /obj/item/weapon/stock_parts/manipulator(null)
+	component_parts += new /obj/item/weapon/stock_parts/console_screen(null)
+	component_parts += new /obj/item/weapon/reagent_containers/glass/beaker(null)
+	component_parts += new /obj/item/weapon/reagent_containers/glass/beaker(null)
+
+/obj/machinery/chem_master/constructable/attackby(var/obj/item/B as obj, var/mob/user as mob, params)
+
+	if(default_deconstruction_screwdriver(user, "mixer0_nopower", "mixer0", B))
+		if(beaker)
+			beaker.loc = src.loc
+			beaker = null
+			reagents.clear_reagents()
+		if(loaded_pill_bottle)
+			loaded_pill_bottle.loc = src.loc
+			loaded_pill_bottle = null
+		return
+
+	if(exchange_parts(user, B))
+		return
+
+	if(panel_open)
+		if(istype(B, /obj/item/weapon/crowbar))
+			default_deconstruction_crowbar(B)
+			return 1
+		else
+			user << "<span class='warning'>You can't use the [src.name] while it's panel is opened!</span>"
+			return 1
+
+	if(istype(B, /obj/item/weapon/reagent_containers/glass))
+		if(src.beaker)
+			user << "<span class='warning'>A beaker is already loaded into the machine!</span>"
+			return
+		src.beaker = B
+		user.drop_item()
+		B.loc = src
+		user << "<span class='notice'>You add the beaker to the machine.</span>"
+		src.updateUsrDialog()
+		icon_state = "mixer1"
+
+	else if(!condi && istype(B, /obj/item/weapon/storage/pill_bottle))
+		if(src.loaded_pill_bottle)
+			user << "<span class='warning'>A pill bottle is already loaded into the machine!</span>"
+			return
+		src.loaded_pill_bottle = B
+		user.drop_item()
+		B.loc = src
+		user << "<span class='notice'>You add the pill bottle into the dispenser slot.</span>"
+		src.updateUsrDialog()
+
+	return
+
+/obj/machinery/chem_master/constructable/condimaster
+	name = "CondiMaster 2999"
+	desc = "Used to create condiments and other cooking supplies."
+	condi = 1
+
 ////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////
 
@@ -693,7 +786,7 @@ obj/machinery/computer/pandemic/proc/replicator_cooldown(var/waittime)
 			if(!D)
 				return
 			var/name = stripped_input(usr,"Name:","Name the culture",D.name,MAX_NAME_LEN)
-			if(name == null)
+			if(name == null || wait)
 				return
 			var/obj/item/weapon/reagent_containers/glass/bottle/B = new/obj/item/weapon/reagent_containers/glass/bottle(src.loc)
 			B.icon_state = "bottle3"
@@ -965,6 +1058,10 @@ obj/machinery/computer/pandemic/proc/replicator_cooldown(var/waittime)
 /obj/machinery/reagentgrinder/New()
 		..()
 		beaker = new /obj/item/weapon/reagent_containers/glass/beaker/large(src)
+		component_parts = list()
+		component_parts += new /obj/item/weapon/circuitboard/grinder(null)
+		component_parts += new /obj/item/weapon/stock_parts/manipulator(null)
+		component_parts += new /obj/item/weapon/reagent_containers/glass/beaker(null)
 		return
 
 /obj/machinery/reagentgrinder/update_icon()
@@ -973,9 +1070,26 @@ obj/machinery/computer/pandemic/proc/replicator_cooldown(var/waittime)
 
 
 /obj/machinery/reagentgrinder/attackby(var/obj/item/O as obj, var/mob/user as mob, params)
-
 		if(default_unfasten_wrench(user, O))
 				return
+
+		if(default_deconstruction_screwdriver(user, "juicer-o", "juicer0", O))
+				if(beaker)
+						beaker.loc = src.loc
+						beaker = null
+				return
+
+		if(exchange_parts(user, O))
+				return
+
+		if(panel_open)
+				if(istype(O, /obj/item/weapon/crowbar))
+						default_deconstruction_crowbar(O)
+						return 1
+				else
+						user << "<span class='warning'>You can't use the [src.name] while it's panel is opened!</span>"
+						return 1
+
 
 		if (istype(O,/obj/item/weapon/reagent_containers/glass) || \
 				istype(O,/obj/item/weapon/reagent_containers/food/drinks/drinkingglass) || \
@@ -1020,6 +1134,7 @@ obj/machinery/computer/pandemic/proc/replicator_cooldown(var/waittime)
 				return 0
 
 		if (!is_type_in_list(O, blend_items) && !is_type_in_list(O, juice_items))
+				..()
 				user << "Cannot refine into a reagent."
 				return 1
 
