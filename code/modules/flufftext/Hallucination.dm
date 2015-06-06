@@ -144,12 +144,12 @@ mob/living/carbon/proc/handle_hallucinations()
 								'sound/hallucinations/turn_around1.ogg', 'sound/hallucinations/turn_around2.ogg', 'sound/hallucinations/veryfar_noise.ogg', 'sound/hallucinations/wail.ogg')
 							src << pick(creepyasssounds)
 						if(13)
-							if(rand(0,1)==0)
+							if(prob(50))
 								src << 'sound/items/Welder.ogg'
 							else
 								src << 'sound/items/Welder2.ogg'
 						if(14)
-							if(rand(0,1)==0)
+							if(prob(50))
 								src << 'sound/items/Screwdriver.ogg'
 							else
 								src << 'sound/items/Screwdriver2.ogg'
