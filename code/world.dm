@@ -134,8 +134,26 @@
 						C << "<span class='announce'>PR: [input["announce"]]</span>"
 #undef CHAT_PULLR
 
-/world/Reboot(var/reason)
-#ifdef dellogging
+/world/Reboot(var/reason, var/feedback_c, var/feedback_r, var/time)
+	var/delay
+	if(time)
+		delay = time
+	else
+		delay = ticker.restart_timeout
+	if(ticker.delay_end)
+		world << "<span class='boldannounce'>An admin has delayed the round end.</span>"
+		return
+	world << "<span class='boldannounce'>Rebooting World in [delay/10] [delay > 10 ? "seconds" : "second"]. [reason]</span>"
+	sleep(delay)
+	if(blackbox)
+		blackbox.save_all_data_to_sql()
+	if(ticker.delay_end)
+		world << "<span class='boldannounce'>Reboot was cancelled by an admin.</span>"
+		return
+	feedback_set_details("[feedback_c]","[feedback_r]")
+	log_game("<span class='boldannounce'>Rebooting World. [reason]</span>")
+	kick_clients_in_lobby("<span class='boldannounce'>The round came to an end with you in the lobby.</span>", 1) //second parameter ensures only afk clients are kicked
+	#ifdef dellogging
 	var/log = file("data/logs/del.log")
 	log << time2text(world.realtime)
 	//mergeSort(del_counter, /proc/cmp_descending_associative)	//still testing the sorting procs. Use notepad++ to sort the resultant logfile for now.
@@ -149,14 +167,11 @@
 			world << sound(ticker.round_end_sound)
 		else
 			world << sound(pick('sound/AI/newroundsexy.ogg','sound/misc/apcdestroyed.ogg','sound/misc/bangindonk.ogg','sound/misc/leavingtg.ogg')) // random end sounds!! - LastyBatsy
-
 	for(var/client/C in clients)
 		if(config.server)	//if you set a server location in config.txt, it sends you there instead of trying to reconnect to the same world address. -- NeoFite
 			C << link("byond://[config.server]")
-
 	// Note: all clients automatically connect to the world after it restarts
-
-	..(reason)
+	..(0)
 
 
 /world/proc/load_mode()
