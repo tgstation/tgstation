@@ -90,16 +90,15 @@ mob/living/carbon/proc/handle_hallucinations()
 					if(possible_points.len)
 						var/turf/simulated/floor/target = pick(possible_points)
 
-						switch(rand(1,3))
-							if(1)
-								//src << "Space"
+						switch(rand(1,4))
+							if(1) //Space
 								halimage = image('icons/turf/space.dmi',target,"[rand(1,25)]",TURF_LAYER)
-							if(2)
-								//src << "Fire"
+							if(2) //Fire
 								halimage = image('icons/effects/fire.dmi',target,"1",TURF_LAYER)
-							if(3)
-								//src << "C4"
+							if(3) //C4
 								halimage = image('icons/obj/assemblies.dmi',target,"plastic-explosive2",OBJ_LAYER+0.01)
+							if(4) //Flashbang
+								halimage = image('icons/obj/grenade.dmi',target,"flashbang_active",OBJ_LAYER)
 
 
 						if(client) client.images += halimage
