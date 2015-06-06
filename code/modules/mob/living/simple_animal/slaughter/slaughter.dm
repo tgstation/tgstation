@@ -93,7 +93,6 @@
 			src.notransform = 0
 
 /mob/living/simple_animal/slaughter/proc/phasein(var/obj/effect/decal/cleanable/B)
-	var/mob/living/simple_animal/slaughter/S = src
 	if(src.eating)
 		src << "<B>Finish eating first!</B>"
 	else
@@ -104,7 +103,7 @@
 		playsound(get_turf(src), pick(voice),50, 1, -1)
 		src.visible_message("<span class='warning'><B>The [src] rises out of the pool of blood!</B>")
 		playsound(get_turf(src), 'sound/effects/slosh.ogg', 50, 1, -1)
-		qdel(S.holder)
+		qdel(src.holder)
 
 /obj/effect/decal/cleanable/blood/CtrlClick(var/mob/user)
 	..()
