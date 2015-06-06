@@ -14,8 +14,16 @@
 	hair_color = random_short_color()
 	facial_hair_color = hair_color
 	eye_color = random_eye_color()
-	pref_species = new /datum/species/human()
+	if(!pref_species)
+		pref_species = new /datum/species/human()
 	backbag = 2
+	var/list/lizbiz = random_lizard_features()
+	lizard_tail 			= lizbiz[1]
+	lizard_snout 			= lizbiz[2]
+	lizard_horns 			= lizbiz[3]
+	lizard_frills			= lizbiz[4]
+	lizard_spines	 		= lizbiz[5]
+	lizard_body_markings 	= lizbiz[6]
 	age = rand(AGE_MIN,AGE_MAX)
 
 /datum/preferences/proc/update_preview_icon()		//seriously. This is horrendous.
@@ -48,21 +56,6 @@
 		preview_icon.Blend("#[mutant_color]", ICON_MULTIPLY)
 
 	var/datum/sprite_accessory/S
-	if(underwear)
-		S = underwear_list[underwear]
-		if(S)
-			preview_icon.Blend(new /icon(S.icon, "[S.icon_state]_s"), ICON_OVERLAY)
-
-	if(undershirt)
-		S = undershirt_list[undershirt]
-		if(S)
-			preview_icon.Blend(new /icon(S.icon, "[S.icon_state]_s"), ICON_OVERLAY)
-
-	if(socks)
-		S = socks_list[socks]
-		if(S)
-			preview_icon.Blend(new /icon(S.icon, "[S.icon_state]_s"), ICON_OVERLAY)
-
 	var/icon/eyes_s = new/icon()
 	if(EYECOLOR in pref_species.specflags)
 		eyes_s = new/icon("icon" = 'icons/mob/human_face.dmi', "icon_state" = "[pref_species.eyes]_s")
@@ -90,9 +83,46 @@
 
 	for(var/layer in relevent_layers)
 		for(var/bodypart in pref_species.mutant_bodyparts)
-			var/icon/part = new/icon("icon" = 'icons/mob/mutant_bodyparts.dmi', "icon_state" = "[icon_state_string]_[bodypart]_[layer]")
+			switch(bodypart)
+				if("tail")
+					S = tails_list[lizard_tail]
+				if("spines")
+					S = spines_list[lizard_spines]
+				if("snout")
+					S = snouts_list[lizard_snout]
+				if("frills")
+					S = frills_list[lizard_frills]
+				if("horns")
+					S = horns_list[lizard_horns]
+				if("body_markings")
+					S = body_markings_list[lizard_body_markings]
+
+			if(S.icon_state == "none")
+				continue
+			var/icon_string
+			if(S.gender_specific)
+				icon_string = "[pref_species.id]_[g]_[bodypart]_[S.icon_state]_[layer]"
+			else
+				icon_string = "[pref_species.id]_m_[bodypart]_[S.icon_state]_[layer]"
+			var/icon/part = new/icon("icon" = 'icons/mob/mutant_bodyparts.dmi', "icon_state" = icon_string)
+
 			part.Blend("#[mutant_color]", ICON_MULTIPLY)
 			preview_icon.Blend(part, ICON_OVERLAY)
+
+	if(underwear)
+		S = underwear_list[underwear]
+		if(S)
+			preview_icon.Blend(new /icon(S.icon, "[S.icon_state]_s"), ICON_OVERLAY)
+
+	if(undershirt)
+		S = undershirt_list[undershirt]
+		if(S)
+			preview_icon.Blend(new /icon(S.icon, "[S.icon_state]_s"), ICON_OVERLAY)
+
+	if(socks)
+		S = socks_list[socks]
+		if(S)
+			preview_icon.Blend(new /icon(S.icon, "[S.icon_state]_s"), ICON_OVERLAY)
 
 	var/icon/clothes_s = null
 	if(job_civilian_low & ASSISTANT)//This gives the preview icon clothes depending on which job(if any) is set to 'high'

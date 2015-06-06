@@ -240,25 +240,56 @@
 		if(H.wear_suit && (H.wear_suit.flags_inv & HIDEJUMPSUIT))
 			bodyparts_to_add -= "tail"
 
+	if("spines" in mutant_bodyparts)
+		if(!H.lizard_spines || H.lizard_spines == "None" || H.wear_suit && (H.wear_suit.flags_inv & HIDEJUMPSUIT))
+			bodyparts_to_add -= "spines"
+
 	if("snout" in mutant_bodyparts) //Take a closer look at that snout!
 		if(H.wear_mask && (H.wear_mask.flags_inv & HIDEFACE))
 			bodyparts_to_add -= "snout"
 
+	if("frills" in mutant_bodyparts)
+		if(!H.lizard_frills || H.lizard_frills == "None" || H.head && (H.head.flags_inv & HIDEEARS))
+			bodyparts_to_add -= "frills"
+
+	if("horns" in mutant_bodyparts)
+		if(!H.lizard_horns || H.lizard_horns == "None" || H.head && (H.head.flags & BLOCKHAIR) || (H.wear_mask && (H.wear_mask.flags & BLOCKHAIR)))
+			bodyparts_to_add -= "horns"
+
 	if(!bodyparts_to_add)
 		return
 
-	var/icon_state_string = "[id]_"
 	var/g = (H.gender == FEMALE) ? "f" : "m"
-	var/image/I
 
-	if(sexes)
-		icon_state_string += "[g]_s"
-	else
-		icon_state_string += "_s"
+	var/image/I
 
 	for(var/layer in relevent_layers)
 		for(var/bodypart in bodyparts_to_add)
-			I = image("icon" = 'icons/mob/mutant_bodyparts.dmi', "icon_state" = "[icon_state_string]_[bodypart]_[layer]", "layer" =- layer)
+			var/datum/sprite_accessory/S
+			switch(bodypart)
+				if("tail")
+					S = tails_list[H.lizard_tail]
+				if("spines")
+					S = spines_list[H.lizard_spines]
+				if("snout")
+					S = snouts_list[H.lizard_snout]
+				if("frills")
+					S = frills_list[H.lizard_frills]
+				if("horns")
+					S = horns_list[H.lizard_horns]
+				if("body_markings")
+					S = body_markings_list[H.lizard_body_markings]
+
+			if(S.icon_state == "none")
+				continue
+			var/icon_string
+			if(S.gender_specific)
+				icon_string = "[id]_[g]_[bodypart]_[S.icon_state]_[layer]"
+			else
+				icon_string = "[id]_m_[bodypart]_[S.icon_state]_[layer]"
+
+			I = image("icon" = 'icons/mob/mutant_bodyparts.dmi', "icon_state" = icon_string, "layer" =- layer)
+
 			if(!(H.disabilities & HUSK))
 				I.color = "#[H.dna.mutant_color]"
 			standing += I

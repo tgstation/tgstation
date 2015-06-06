@@ -36,6 +36,22 @@
 		if(FEMALE)	return pick(socks_f)
 		else		return pick(socks_list)
 
+/proc/random_lizard_features()
+	if(!tails_list.len)
+		init_sprite_accessory_subtypes(/datum/sprite_accessory/tails, tails_list)
+	if(!snouts_list.len)
+		init_sprite_accessory_subtypes(/datum/sprite_accessory/snouts, snouts_list)
+	if(!horns_list.len)
+		init_sprite_accessory_subtypes(/datum/sprite_accessory/horns, horns_list)
+	if(!frills_list.len)
+		init_sprite_accessory_subtypes(/datum/sprite_accessory/frills, frills_list)
+	if(!spines_list.len)
+		init_sprite_accessory_subtypes(/datum/sprite_accessory/spines, spines_list)
+	if(!body_markings_list.len)
+		init_sprite_accessory_subtypes(/datum/sprite_accessory/body_markings, body_markings_list)
+
+	return(list(pick(tails_list),pick(snouts_list),pick(horns_list),pick(frills_list),pick(spines_list),pick(body_markings_list)))
+
 /proc/random_hair_style(gender)
 	switch(gender)
 		if(MALE)	return pick(hair_styles_male_list)

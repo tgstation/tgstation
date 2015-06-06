@@ -41,6 +41,7 @@
 	var/icon_state		//the icon_state of the accessory
 	var/name			//the preview name of the accessory
 	var/gender = NEUTER	//Determines if the accessory will be skipped or included in random hair generations
+	var/gender_specific //Something that can be worn by either gender, but looks different on each
 
 //////////////////////
 // Hair Definitions //
@@ -1046,3 +1047,171 @@
 	name = "Pantyhose"
 	icon_state = "pantyhose"
 	gender = FEMALE
+
+//////////.//////////////////
+// MutantParts Definitions //
+/////////////////////////////
+
+/datum/sprite_accessory/body_markings
+	icon = 'icons/mob/mutant_bodyparts.dmi'
+
+/datum/sprite_accessory/body_markings/none
+	name = "None"
+	icon_state = "none"
+
+/datum/sprite_accessory/body_markings/dstripe
+	name = "Dark Stripe"
+	icon_state = "dstripe"
+
+/datum/sprite_accessory/body_markings/lstripe
+	name = "Light Stripe"
+	icon_state = "lstripe"
+
+/datum/sprite_accessory/body_markings/dtiger
+	name = "Dark Tiger Body"
+	icon_state = "dtiger"
+
+/datum/sprite_accessory/body_markings/dtigerhead
+	name = "Dark Tiger Body + Head"
+	icon_state = "dtigerhead"
+
+/datum/sprite_accessory/body_markings/ltiger
+	name = "Light Tiger Body"
+	icon_state = "ltiger"
+
+/datum/sprite_accessory/body_markings/ltigerhead
+	name = "Light Tiger Body + Head"
+	icon_state = "ltigerhead"
+
+/datum/sprite_accessory/body_markings/lbelly
+	name = "Light Belly"
+	icon_state = "lbelly"
+	gender_specific = 1
+
+/datum/sprite_accessory/tails
+	icon = 'icons/mob/mutant_bodyparts.dmi'
+
+/datum/sprite_accessory/tails/smooth
+	name = "Smooth"
+	icon_state = "smooth"
+
+/datum/sprite_accessory/tails/light
+	name = "Light"
+	icon_state = "light"
+
+/datum/sprite_accessory/tails/dstripe
+	name = "Dark Stripe"
+	icon_state = "dstripe"
+
+/datum/sprite_accessory/tails/lstripe
+	name = "Light Stripe"
+	icon_state = "lstripe"
+
+/datum/sprite_accessory/tails/dtiger
+	name = "Dark Tiger"
+	icon_state = "dtiger"
+
+/datum/sprite_accessory/tails/ltiger
+	name = "Light Tiger"
+	icon_state = "ltiger"
+
+/datum/sprite_accessory/tails/club
+	name = "Club"
+	icon_state = "club"
+
+/datum/sprite_accessory/tails/aqua
+	name = "Aquatic"
+	icon_state = "aqua"
+
+/datum/sprite_accessory/snouts
+	icon = 'icons/mob/mutant_bodyparts.dmi'
+
+/datum/sprite_accessory/snouts/sharp
+	name = "Sharp"
+	icon_state = "sharp"
+
+/datum/sprite_accessory/snouts/round
+	name = "Round"
+	icon_state = "round"
+
+/datum/sprite_accessory/snouts/sharplight
+	name = "Sharp + Light"
+	icon_state = "sharplight"
+
+/datum/sprite_accessory/snouts/roundlight
+	name = "Round + Light"
+	icon_state = "roundlight"
+
+/datum/sprite_accessory/horns
+	icon = 'icons/mob/mutant_bodyparts.dmi'
+
+/datum/sprite_accessory/horns/none
+	name = "None"
+	icon_state = "none"
+
+/datum/sprite_accessory/horns/simple
+	name = "Simple"
+	icon_state = "simple"
+
+/datum/sprite_accessory/horns/short
+	name = "Short"
+	icon_state = "short"
+
+/datum/sprite_accessory/horns/curled
+	name = "Curled"
+	icon_state = "curled"
+
+/datum/sprite_accessory/horns/ram
+	name = "Ram"
+	icon_state = "ram"
+
+/datum/sprite_accessory/horns/angler
+	name = "Angeler"
+	icon_state = "angler"
+
+/datum/sprite_accessory/frills
+	icon = 'icons/mob/mutant_bodyparts.dmi'
+
+/datum/sprite_accessory/frills/none
+	name = "None"
+	icon_state = "none"
+
+/datum/sprite_accessory/frills/simple
+	name = "Simple"
+	icon_state = "simple"
+
+/datum/sprite_accessory/frills/short
+	name = "Short"
+	icon_state = "short"
+
+/datum/sprite_accessory/frills/aquatic
+	name = "Aquatic"
+	icon_state = "aqua"
+
+/datum/sprite_accessory/spines
+	icon = 'icons/mob/mutant_bodyparts.dmi'
+
+/datum/sprite_accessory/spines/none
+	name = "None"
+	icon_state = "none"
+
+/datum/sprite_accessory/spines/short
+	name = "Short"
+	icon_state = "short"
+
+/datum/sprite_accessory/spines/shortmeme
+	name = "Short + Membrane"
+	icon_state = "shortmeme"
+
+/datum/sprite_accessory/spines/long
+	name = "Long"
+	icon_state = "long"
+
+/datum/sprite_accessory/spines/longmeme
+	name = "Long + Membrane"
+	icon_state = "longmeme"
+
+/datum/sprite_accessory/spines/aqautic
+	name = "Aquatic"
+	icon_state = "aqua"
+
