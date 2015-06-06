@@ -16,6 +16,9 @@
 	var/stack_list[0] //Key: Type.  Value: Instance of type.
 	var/obj/item/weapon/card/id/inserted_id
 	var/points = 0
+	var/ore_pickup_rate = 15
+	var/sheet_per_ore = 1
+	var/point_upgrade = 1
 	var/list/ore_values = list(("sand" = 1), ("iron" = 1), ("gold" = 20), ("silver" = 20), ("uranium" = 20), ("bananium" = 30), ("diamond" = 40), ("plasma" = 40))
 
 /obj/machinery/mineral/ore_redemption/New()
@@ -23,9 +26,25 @@
 	component_parts = list()
 	component_parts += new /obj/item/weapon/circuitboard/ore_redemption(null)
 	component_parts += new /obj/item/weapon/stock_parts/matter_bin(null)
+	component_parts += new /obj/item/weapon/stock_parts/manipulator(null)
+	component_parts += new /obj/item/weapon/stock_parts/micro_laser(null)
 	component_parts += new /obj/item/device/assembly/igniter(null)
 	component_parts += new /obj/item/weapon/stock_parts/console_screen(null)
 	RefreshParts()
+
+/obj/machinery/mineral/ore_redemption/RefreshParts()
+	var/ore_pickup_rate_temp = 15
+	var/point_upgrade_temp = 1
+	var/sheet_per_ore_temp = 1
+	for(var/obj/item/weapon/stock_parts/matter_bin/B in component_parts)
+		sheet_per_ore_temp = B.rating
+	for(var/obj/item/weapon/stock_parts/manipulator/M in component_parts)
+		ore_pickup_rate_temp = 15 * M.rating
+	for(var/obj/item/weapon/stock_parts/micro_laser/L in component_parts)
+		point_upgrade_temp = L.rating
+	ore_pickup_rate = ore_pickup_rate_temp
+	point_upgrade = point_upgrade_temp
+	sheet_per_ore = sheet_per_ore_temp
 
 /obj/machinery/mineral/ore_redemption/proc/process_sheet(obj/item/weapon/ore/O)
 	var/obj/item/stack/sheet/processed_sheet = SmeltMineral(O)
@@ -40,7 +59,7 @@
 					if(D.department == "Science" || D.department == "Robotics" || D.department == "Research Director's Desk" || (D.department == "Chemistry" && (s.name == "uranium" || s.name == "solid plasma")))
 						D.createmessage("Ore Redemption Machine", "New minerals available!", msg, 1, 0)
 		var/obj/item/stack/sheet/storage = stack_list[processed_sheet]
-		storage.amount += 1 //Stack the sheets
+		storage.amount += sheet_per_ore //Stack the sheets
 		O.loc = null //Let the old sheet...
 		qdel(O) //... garbage collect
 
@@ -50,7 +69,7 @@
 		var/i
 		if(T)
 			if(locate(/obj/item/weapon/ore) in T)
-				for (i = 0; i < 10; i++)
+				for (i = 0; i < ore_pickup_rate; i++)
 					var/obj/item/weapon/ore/O = locate() in T
 					if(O)
 						process_sheet(O)
@@ -59,7 +78,7 @@
 			else
 				var/obj/structure/ore_box/B = locate() in T
 				if(B)
-					for (i = 0; i < 10; i++)
+					for (i = 0; i < ore_pickup_rate; i++)
 						var/obj/item/weapon/ore/O = locate() in B.contents
 						if(O)
 							process_sheet(O)
@@ -88,7 +107,7 @@
 /obj/machinery/mineral/ore_redemption/proc/SmeltMineral(var/obj/item/weapon/ore/O)
 	if(O.refined_type)
 		var/obj/item/stack/sheet/M = O.refined_type
-		points += O.points
+		points += O.points * point_upgrade
 		return M
 	qdel(O)//No refined type? Purge it.
 	return
@@ -135,7 +154,7 @@
 	var/dat = "<table border='0' width='300'>"
 	for(var/ore in ore_values)
 		var/value = ore_values[ore]
-		dat += "<tr><td>[capitalize(ore)]</td><td>[value]</td></tr>"
+		dat += "<tr><td>[capitalize(ore)]</td><td>[value * point_upgrade]</td></tr>"
 	dat += "</table>"
 	return dat
 

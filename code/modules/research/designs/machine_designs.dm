@@ -262,8 +262,38 @@
 	build_path = /obj/item/weapon/circuitboard/gibber
 	category = list ("Misc. Machinery")
 
+/datum/design/smartfridge
+	name = "Machine Design (Smartfridge Board)"
+	desc = "The circuit board for a smartfridge."
+	id = "smartfridge"
+	req_tech = list("programming" = 1)
+	build_type = IMPRINTER
+	materials = list("$glass" = 1000, "sacid" = 20)
+	build_path = /obj/item/weapon/circuitboard/smartfridge
+	category = list ("Misc. Machinery")
+
+/datum/design/monkey_recycler
+	name = "Machine Design (Monkey Recycler Board)"
+	desc = "The circuit board for a monkey recycler."
+	id = "smartfridge"
+	req_tech = list("programming" = 1)
+	build_type = IMPRINTER
+	materials = list("$glass" = 1000, "sacid" = 20)
+	build_path = /obj/item/weapon/circuitboard/monkey_recycler
+	category = list ("Misc. Machinery")
+
+/datum/design/seed_extractor
+	name = "Machine Design (Seed Extractor Board)"
+	desc = "The circuit board for a seed extractor."
+	id = "seed_extractor"
+	req_tech = list("programming" = 1)
+	build_type = IMPRINTER
+	materials = list("$glass" = 1000, "sacid" = 20)
+	build_path = /obj/item/weapon/circuitboard/seed_extractor
+	category = list ("Misc. Machinery")
+
 /datum/design/processor
-	name = "Machine Design (Food Processor Board)"
+	name = "Machine Design (Processor Board)"
 	desc = "The circuit board for a processor."
 	id = "processor"
 	req_tech = list("programming" = 1)
