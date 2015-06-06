@@ -1,7 +1,7 @@
 /mob/living/New()
 	. = ..()
 	generate_static_overlay()
-	if(static_overlays.len)
+	if(static_overlays && static_overlays.len)
 		for(var/mob/living/silicon/robot/mommi/MoMMI in player_list)
 			if(MoMMI.can_see_static())
 				if(MoMMI.static_choice in static_overlays)
@@ -17,7 +17,8 @@
 			MoMMI.static_overlays.Remove(I) //no checks, since it's either there or its not
 			MoMMI.client.images.Remove(I)
 			del(I)
-	static_overlays.len = 0
+	if(static_overlays)
+		static_overlays = null
 	. = ..()
 
 /mob/living/Life()

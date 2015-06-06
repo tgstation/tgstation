@@ -55,6 +55,8 @@
 			usr << "You push the [src] up out of your face."
 		usr.update_inv_head()	//so our mob-overlays update
 		usr.update_inv_wear_mask()
+		usr.update_inv_glasses()
+		usr.update_inv_ears()
 
 
 /*

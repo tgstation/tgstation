@@ -68,7 +68,8 @@
 	if(stat & BROKEN)
 		return
 
-	..()
+	if(..())
+		return 1
 	if(istype(W, /obj/item/weapon/cell) && anchored)
 		if(charging)
 			user << "<span class='warning'>There is already a cell in [src].</span>"
@@ -83,7 +84,9 @@
 			user.visible_message("<span class='notice'>[user] inserts a cell into [src].</span>", "<span class='notice'>You insert a cell into [src].</span>")
 			chargelevel = -1
 		updateicon()
-	if(istype(W, /obj/item/weapon/card/emag) && !emagged)
+
+/obj/machinery/cell_charger/emag(mob/user)
+	if(!emagged)
 		emagged = 1 //Congratulations, you've done it
 		user.visible_message("<span class='warning'>[user] swipes a card into \the [src]'s charging port.</span>", \
 		"<span class='warning'>You hear fizzling coming from \the [src] and a wire turns red hot as you swipe the electromagnetic card. Better not use it anymore.</span>")
