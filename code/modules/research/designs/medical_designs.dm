@@ -2,7 +2,7 @@
 ////////////Medical Tools////////////////
 /////////////////////////////////////////
 
-datum/design/mass_spectrometer
+/datum/design/mass_spectrometer
 	name = "Mass-Spectrometer"
 	desc = "A device for analyzing chemicals in the blood."
 	id = "mass_spectrometer"
@@ -13,7 +13,7 @@ datum/design/mass_spectrometer
 	build_path = /obj/item/device/mass_spectrometer
 	category = list("Medical Designs")
 
-datum/design/adv_mass_spectrometer
+/datum/design/adv_mass_spectrometer
 	name = "Advanced Mass-Spectrometer"
 	desc = "A device for analyzing chemicals in the blood and their quantities."
 	id = "adv_mass_spectrometer"
@@ -24,7 +24,7 @@ datum/design/adv_mass_spectrometer
 	build_path = /obj/item/device/mass_spectrometer/adv
 	category = list("Medical Designs")
 
-datum/design/mmi
+/datum/design/mmi
 	name = "Man-Machine Interface"
 	desc = "The Warrior's bland acronym, MMI, obscures the true horror of this monstrosity."
 	id = "mmi"
@@ -36,7 +36,7 @@ datum/design/mmi
 	build_path = /obj/item/device/mmi
 	category = list("Misc","Medical Designs")
 
-datum/design/mmi_radio
+/datum/design/mmi_radio
 	name = "Radio-enabled Man-Machine Interface"
 	desc = "The Warrior's bland acronym, MMI, obscures the true horror of this monstrosity. This one comes with a built-in radio."
 	id = "mmi_radio"
@@ -48,7 +48,7 @@ datum/design/mmi_radio
 	build_path = /obj/item/device/mmi/radio_enabled
 	category = list("Misc","Medical Designs")
 
-datum/design/posibrain
+/datum/design/posibrain
 	name = "Positronic Brain"
 	desc = "The latest in Artificial Intelligences."
 	id = "mmi_posi"
@@ -61,7 +61,7 @@ datum/design/posibrain
 	category = list("Misc", "Medical Designs")
 
 
-datum/design/synthetic_flash
+/datum/design/synthetic_flash
 	name = "Flash"
 	desc = "When a problem arises, SCIENCE is the solution."
 	id = "sflash"
@@ -73,7 +73,7 @@ datum/design/synthetic_flash
 	build_path = /obj/item/device/flash/handheld
 	category = list("Misc")
 
-datum/design/bluespacebeaker
+/datum/design/bluespacebeaker
 	name = "Bluespace Beaker"
 	desc = "A bluespace beaker, powered by experimental bluespace technology and Element Cuban combined with the Compound Pete. Can hold up to 300 units."
 	id = "bluespacebeaker"
@@ -84,7 +84,7 @@ datum/design/bluespacebeaker
 	build_path = /obj/item/weapon/reagent_containers/glass/beaker/bluespace
 	category = list("Misc","Medical Designs")
 
-datum/design/noreactbeaker
+/datum/design/noreactbeaker
 	name = "Cryostasis Beaker"
 	desc = "A cryostasis beaker that allows for chemical storage without reactions. Can hold up to 50 units."
 	id = "splitbeaker"
@@ -95,7 +95,7 @@ datum/design/noreactbeaker
 	build_path = /obj/item/weapon/reagent_containers/glass/beaker/noreact
 	category = list("Medical Designs")
 
-datum/design/bluespacebodybag
+/datum/design/bluespacebodybag
 	name = "Bluespace body bag"
 	desc = "A bluespace body bag, powered by experimental bluespace technology. It can hold loads of bodies and the largest of creatures."
 	id = "bluespacebodybag"

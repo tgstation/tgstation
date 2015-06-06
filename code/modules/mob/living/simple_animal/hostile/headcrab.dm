@@ -61,7 +61,7 @@
 	if(time >= EGG_INCUBATION_TIME)
 		Pop()
 
-obj/item/body_egg/changeling_egg/proc/Pop()
+/obj/item/body_egg/changeling_egg/proc/Pop()
 	if(!used)
 		var/mob/living/carbon/monkey/M = new(affected_mob.loc)
 		if(owner)

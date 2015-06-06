@@ -9,7 +9,7 @@
  */
 
 
-obj/structure/windoor_assembly
+/obj/structure/windoor_assembly
 	icon = 'icons/obj/doors/windoor.dmi'
 
 	name = "windoor Assembly"
@@ -27,12 +27,12 @@ obj/structure/windoor_assembly
 	var/secure = 0		//Whether or not this creates a secure windoor
 	var/state = "01"	//How far the door assembly has progressed
 
-obj/structure/windoor_assembly/New(dir=NORTH)
+/obj/structure/windoor_assembly/New(dir=NORTH)
 	..()
 	src.ini_dir = src.dir
 	air_update_turf(1)
 
-obj/structure/windoor_assembly/Destroy()
+/obj/structure/windoor_assembly/Destroy()
 	density = 0
 	air_update_turf(1)
 	..()

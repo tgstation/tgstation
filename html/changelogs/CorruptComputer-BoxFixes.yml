@@ -1,0 +1,11 @@
+author: CorruptComputer
+
+delete-after: True
+
+changes: 
+  - bugfix: "Security lockers no longer spawn in front of each other on Box."
+  - bugfix: "Hooked up the scrubbers in QM's office on Box."
+  - bugfix: "Fixed bar disposals on Box"
+  - bugfix: "Fixed the stacked heater+freezer in expirementor maint on Box"
+  - tweak: "Made the turbine into Atmos and Engineering access only, and renamed the doors to Turbine on Box."
+

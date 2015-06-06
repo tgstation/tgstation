@@ -1,0 +1,8 @@
+author: Incoming5643
+
+delete-after: True
+
+changes: 
+  - rscadd: "Antagonists with escape alone can now escape with others on the shuttle, so long as they are also antagonists."
+  - rscadd: "Antagonists with escape alone can also win if non-antagonists are on the shuttle provided they are locked in the brig."
+  - rscadd: "Escaping to syndicate space on board the nuke op shuttle is now a valid way to escape the station."

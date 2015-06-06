@@ -96,7 +96,7 @@
 	feedback_add_details("changeling_powers","TS")
 	return 1
 
-obj/effect/proc_holder/changeling/sting/extract_dna
+/obj/effect/proc_holder/changeling/sting/extract_dna
 	name = "Extract DNA Sting"
 	desc = "We stealthily sting a target and extract their DNA."
 	helptext = "Will give you the DNA of your target, allowing you to transform into them."
@@ -115,7 +115,7 @@ obj/effect/proc_holder/changeling/sting/extract_dna
 	feedback_add_details("changeling_powers","ED")
 	return 1
 
-obj/effect/proc_holder/changeling/sting/mute
+/obj/effect/proc_holder/changeling/sting/mute
 	name = "Mute Sting"
 	desc = "We silently sting a human, completely silencing them for a short time."
 	helptext = "Does not provide a warning to the victim that they have been stung, until they try to speak and cannot."
@@ -129,7 +129,7 @@ obj/effect/proc_holder/changeling/sting/mute
 	feedback_add_details("changeling_powers","MS")
 	return 1
 
-obj/effect/proc_holder/changeling/sting/blind
+/obj/effect/proc_holder/changeling/sting/blind
 	name = "Blind Sting"
 	desc = "Temporarily blinds the target."
 	helptext = "This sting completely blinds a target for a short time."
@@ -146,7 +146,7 @@ obj/effect/proc_holder/changeling/sting/blind
 	feedback_add_details("changeling_powers","BS")
 	return 1
 
-obj/effect/proc_holder/changeling/sting/LSD
+/obj/effect/proc_holder/changeling/sting/LSD
 	name = "Hallucination Sting"
 	desc = "Causes terror in the target."
 	helptext = "We evolve the ability to sting a target with a powerful hallucinogenic chemical. The target does not notice they have been stung, and the effect occurs after 30 to 60 seconds."
@@ -162,7 +162,7 @@ obj/effect/proc_holder/changeling/sting/LSD
 	feedback_add_details("changeling_powers","HS")
 	return 1
 
-obj/effect/proc_holder/changeling/sting/cryo
+/obj/effect/proc_holder/changeling/sting/cryo
 	name = "Cryogenic Sting"
 	desc = "We silently sting a human with a cocktail of chemicals that freeze them."
 	helptext = "Does not provide a warning to the victim, though they will likely realize they are suddenly freezing."

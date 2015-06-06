@@ -16,6 +16,14 @@
 	var/sheet_type = /obj/item/stack/sheet/metal
 	var/obj/item/stack/sheet/builtin_sheet = null
 
+
+	var/del_suppress_resmoothing = 0 // Do not resmooth neighbors on Destroy. (smoothwall.dm)
+	canSmoothWith = list(
+	/turf/simulated/wall,
+	/obj/structure/falsewall,
+	/obj/structure/falsewall/reinforced  // WHY DO WE SMOOTH WITH FALSE R-WALLS WHEN WE DON'T SMOOTH WITH REAL R-WALLS.
+	)
+
 /turf/simulated/wall/New()
 	..()
 	builtin_sheet = new sheet_type
@@ -57,7 +65,7 @@
 	switch(severity)
 		if(1.0)
 			//SN src = null
-			src.ChangeTurf(/turf/space)
+			src.ChangeTurf(src.baseturf)
 			return
 		if(2.0)
 			if (prob(50))

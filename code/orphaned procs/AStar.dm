@@ -162,7 +162,7 @@ length to avoid portals or something i guess?? Not that they're counted right no
 	return path
 
 //the actual algorithm
-proc/AStar(start, end, atom, dist, maxnodes, maxnodedepth = 30, mintargetdist, minnodedist, id=null, var/turf/exclude=null)
+/proc/AStar(start, end, atom, dist, maxnodes, maxnodedepth = 30, mintargetdist, minnodedist, id=null, var/turf/exclude=null)
 	var/PriorityQueue/open = new /PriorityQueue(/proc/PathWeightCompare) //the open list, ordered using the PathWeightCompare proc, from lower f to higher
 	var/list/closed = new() //the closed list
 	var/list/path = null //the returned path, if any

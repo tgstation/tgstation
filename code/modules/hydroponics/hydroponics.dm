@@ -98,7 +98,7 @@
 		..()
 		return
 
-obj/machinery/hydroponics/process()
+/obj/machinery/hydroponics/process()
 
 	var/needs_update = 0 // Checks if the icon needs updating so we don't redraw empty trays every time
 
@@ -205,7 +205,7 @@ obj/machinery/hydroponics/process()
 			update_icon()
 	return
 
-obj/machinery/hydroponics/proc/nutrimentMutation()
+/obj/machinery/hydroponics/proc/nutrimentMutation()
 	if (mutmod == 0)
 		return
 	if (mutmod == 1)
@@ -224,7 +224,7 @@ obj/machinery/hydroponics/proc/nutrimentMutation()
 		return
 	return
 
-obj/machinery/hydroponics/update_icon()
+/obj/machinery/hydroponics/update_icon()
 
 	//Refreshes the icon and sets the luminosity
 	overlays.Cut()
@@ -277,7 +277,7 @@ obj/machinery/hydroponics/update_icon()
 
 	return
 
-obj/machinery/hydroponics/proc/UpdateDescription()
+/obj/machinery/hydroponics/proc/UpdateDescription()
 	desc = null
 	if (planted)
 		desc = "[src] has <span class='info'>[myseed.plantname]</span> planted."
@@ -286,7 +286,7 @@ obj/machinery/hydroponics/proc/UpdateDescription()
 		else if (harvest)
 			desc += " It's ready to harvest."
 
-obj/machinery/hydroponics/proc/weedinvasion() // If a weed growth is sufficient, this happens.
+/obj/machinery/hydroponics/proc/weedinvasion() // If a weed growth is sufficient, this happens.
 	dead = 0
 	var/oldPlantName
 	if(myseed) // In case there's nothing in the tray beforehand
@@ -322,7 +322,7 @@ obj/machinery/hydroponics/proc/weedinvasion() // If a weed growth is sufficient,
 	visible_message("<span class='info'>[oldPlantName] overtaken by [myseed.plantname].</span>")
 
 
-obj/machinery/hydroponics/proc/mutate(var/lifemut = 2, var/endmut = 5, var/productmut = 1, var/yieldmut = 2, var/potmut = 25) // Mutates the current seed
+/obj/machinery/hydroponics/proc/mutate(var/lifemut = 2, var/endmut = 5, var/productmut = 1, var/yieldmut = 2, var/potmut = 25) // Mutates the current seed
 	if(!planted)
 		return
 	adjustSLife(rand(-lifemut,lifemut))
@@ -332,11 +332,11 @@ obj/machinery/hydroponics/proc/mutate(var/lifemut = 2, var/endmut = 5, var/produ
 	adjustSPot(rand(-potmut,potmut))
 
 
-obj/machinery/hydroponics/proc/hardmutate()
+/obj/machinery/hydroponics/proc/hardmutate()
 	mutate(4, 10, 2, 4, 50)
 
 
-obj/machinery/hydroponics/proc/mutatespecie() // Mutagent produced a new plant!
+/obj/machinery/hydroponics/proc/mutatespecie() // Mutagent produced a new plant!
 	if(!planted || dead)
 		return
 
@@ -363,7 +363,7 @@ obj/machinery/hydroponics/proc/mutatespecie() // Mutagent produced a new plant!
 	visible_message("<span class='warning'>[oldPlantName] suddenly mutated into [myseed.plantname]!</span>")
 
 
-obj/machinery/hydroponics/proc/mutateweed() // If the weeds gets the mutagent instead. Mind you, this pretty much destroys the old plant
+/obj/machinery/hydroponics/proc/mutateweed() // If the weeds gets the mutagent instead. Mind you, this pretty much destroys the old plant
 	if( weedlevel > 5 )
 		if(myseed)
 			qdel(myseed)
@@ -385,7 +385,7 @@ obj/machinery/hydroponics/proc/mutateweed() // If the weeds gets the mutagent in
 		usr << "The few weeds in [src] seem to react, but only for a moment..."
 
 
-obj/machinery/hydroponics/proc/plantdies() // OH NOES!!!!! I put this all in one function to make things easier
+/obj/machinery/hydroponics/proc/plantdies() // OH NOES!!!!! I put this all in one function to make things easier
 	health = 0
 	harvest = 0
 	pestlevel = 0 // Pests die
@@ -394,7 +394,7 @@ obj/machinery/hydroponics/proc/plantdies() // OH NOES!!!!! I put this all in one
 		dead = 1
 
 
-obj/machinery/hydroponics/proc/mutatepest()
+/obj/machinery/hydroponics/proc/mutatepest()
 	if(pestlevel > 5)
 		visible_message("The pests seem to behave oddly...")
 		for(var/i=0, i<3, i++)
@@ -403,7 +403,7 @@ obj/machinery/hydroponics/proc/mutatepest()
 	else
 		usr << "The pests seem to behave oddly, but quickly settle down..."
 
-obj/machinery/hydroponics/proc/applyChemicals(var/datum/reagents/S)
+/obj/machinery/hydroponics/proc/applyChemicals(var/datum/reagents/S)
 
 	if(myseed)
 		myseed.on_chem_reaction(S) //In case seeds have some special interactions with special chems, currently only used by vines
@@ -577,7 +577,7 @@ obj/machinery/hydroponics/proc/applyChemicals(var/datum/reagents/S)
 			if(1   to 32)	mutatepest()
 			else 			usr << "Nothing happens..."
 
-obj/machinery/hydroponics/attackby(var/obj/item/O as obj, var/mob/user as mob, params)
+/obj/machinery/hydroponics/attackby(var/obj/item/O as obj, var/mob/user as mob, params)
 
 	//Called when mob user "attacks" it with object O
 	if(istype(O, /obj/item/weapon/reagent_containers) )  // Syringe stuff (and other reagent containers now too)

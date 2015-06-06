@@ -346,9 +346,9 @@ var/datum/subsystem/job/SSjob
 			if(locate(/mob/living) in sloc.loc)	continue
 			S = sloc
 			break
-		if(!S)
-			S = locate("start*[rank]") // use old stype
-		if(istype(S, /obj/effect/landmark/start) && istype(S.loc, /turf))
+		if(!S) //if there isn't a spawnpoint send them to latejoin, if there's no latejoin go yell at your mapper
+			S = pick(latejoin)
+		if(istype(S, /obj/effect/landmark) && istype(S.loc, /turf))
 			H.loc = S.loc
 
 	if(H.mind)
