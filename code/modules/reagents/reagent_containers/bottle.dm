@@ -81,7 +81,7 @@
 	list_reagents = list("diethylamine" = 30)
 
 /obj/item/weapon/reagent_containers/glass/bottle/pacid
-	name = "Fluorosulfuric Acid Bottle"
+	name = "Polytrinic Acid Bottle"
 	desc = "A small bottle. Contains a small amount of Polytrinic Acid"
 	icon_state = "bottle17"
 	list_reagents = list("pacid" = 30)
