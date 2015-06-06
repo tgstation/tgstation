@@ -12,6 +12,7 @@
 /datum/surgery_step/ribcage/saw_ribcage
 	allowed_tools = list(
 	/obj/item/weapon/circular_saw = 100, \
+	/obj/item/weapon/kitchen/utensil/knife/large/butch = 75,
 	/obj/item/weapon/hatchet = 75
 	)
 
@@ -186,6 +187,11 @@
 //////////////////////////////////////////////////////////////////
 //				CHEST INTERNAL ORGAN SURGERY					//
 //////////////////////////////////////////////////////////////////
+/datum/surgery_step/ribcage/fix_chest_internal/tool_quality(obj/item/tool)
+	. = ..()
+	if(!tool.is_sharp())
+		return 0
+
 /datum/surgery_step/ribcage/fix_chest_internal
 	allowed_tools = list(
 	/obj/item/weapon/scalpel = 100,		\

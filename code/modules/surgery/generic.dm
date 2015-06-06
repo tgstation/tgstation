@@ -34,13 +34,12 @@
 //////CUT WITH LASER(cut+clamp)//////////
 /datum/surgery_step/generic/cut_with_laser
 	allowed_tools = list(
-		/obj/item/weapon/scalpel/laser3 = 100,
-		/obj/item/weapon/scalpel/laser2 = 85,
-		/obj/item/weapon/scalpel/laser1 = 75,
-		/obj/item/weapon/melee/energy/sword = 5//haha, oh god what
+		/obj/item/weapon/scalpel/laser/tier2 = 100,
+		/obj/item/weapon/scalpel/laser/tier1 = 100,
+		/obj/item/weapon/melee/energy/sword = 5 //haha, oh god what
 		)
 
-	priority = 0.1//so the tool checks for this step before /generic/cut_open
+	priority = 0.1 //so the tool checks for this step before /generic/cut_open
 
 	min_duration = 90
 	max_duration = 110
@@ -55,11 +54,6 @@
 	user.visible_message("[user] starts the bloodless incision on [target]'s [affected.display_name] with \the [tool].", \
 	"You start the bloodless incision on [target]'s [affected.display_name] with \the [tool].")
 	target.custom_pain("You feel a horrible, searing pain in your [affected.display_name]!",1)
-	if(istype(tool,/obj/item/weapon/scalpel))
-		var/obj/item/weapon/scalpel/S = tool
-		S.icon_state = "[initial(S.icon_state)]_on"
-		spawn(max_duration)//in case the player doesn't go all the way through the step (if he moves away, puts the tool away,...)
-			S.icon_state = "[initial(S.icon_state)]_off"
 	..()
 
 /datum/surgery_step/generic/cut_with_laser/end_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
@@ -71,10 +65,7 @@
 	affected.status |= ORGAN_BLEEDING
 	affected.createwound(CUT, 1)
 	affected.clamp()
-	if(istype(tool,/obj/item/weapon/scalpel))
-		var/obj/item/weapon/scalpel/S = tool
-		S.icon_state = "[initial(S.icon_state)]_off"
-	//spread_germs_to_organ(affected, user)//a laser scalpel shouldn't spread germs.
+	//spread_germs_to_organ(affected, user) //a laser scalpel shouldn't spread germs.
 
 /datum/surgery_step/generic/cut_with_laser/fail_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 	var/datum/organ/external/affected = target.get_organ(target_zone)
@@ -91,10 +82,10 @@
 //////INCISION MANAGER(cut+clamp+retract)//////////
 /datum/surgery_step/generic/incision_manager
 	allowed_tools = list(
-		/obj/item/weapon/scalpel/manager = 100
+		/obj/item/weapon/retractor/manager = 100
 		)
 
-	priority = 0.1//so the tool checks for this step before /generic/cut_open
+	priority = 0.1 //so the tool checks for this step before /generic/cut_open
 
 	min_duration = 80
 	max_duration = 120
@@ -136,6 +127,11 @@
 
 
 ////////CUT OPEN/////////
+/datum/surgery_step/generic/cut_open/tool_quality(obj/item/tool)
+	. = ..()
+	if(!tool.is_sharp())
+		return 0
+
 /datum/surgery_step/generic/cut_open
 	allowed_tools = list(
 		/obj/item/weapon/scalpel = 100,
@@ -284,6 +280,7 @@
 /datum/surgery_step/generic/cauterize
 	allowed_tools = list(
 	/obj/item/weapon/cautery = 100,
+	/obj/item/weapon/scalpel/laser = 100,
 	/obj/item/clothing/mask/cigarette = 75,
 	/obj/item/weapon/lighter = 50,
 	/obj/item/weapon/weldingtool = 25,
@@ -324,6 +321,7 @@
 /datum/surgery_step/generic/cut_limb
 	allowed_tools = list(
 		/obj/item/weapon/circular_saw = 100,
+		/obj/item/weapon/kitchen/utensil/knife/large/butch = 75,
 		/obj/item/weapon/hatchet = 75,
 		)
 

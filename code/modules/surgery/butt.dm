@@ -17,6 +17,7 @@
 /datum/surgery_step/butt/slice_cheek
 	allowed_tools = list(
 		/obj/item/weapon/circular_saw = 100,
+		/obj/item/weapon/kitchen/utensil/knife/large/butch = 75, \
 		/obj/item/weapon/hatchet = 75,
 		)
 
@@ -49,6 +50,11 @@
 
 
 ///////SEPARATE ANUS///////
+/datum/surgery_step/butt/seperate_anus/tool_quality(obj/item/tool)
+	. = ..()
+	if(!tool.is_sharp())
+		return 0
+
 /datum/surgery_step/butt/seperate_anus
 	allowed_tools = list(
 		/obj/item/weapon/scalpel = 100,
@@ -87,6 +93,7 @@
 /datum/surgery_step/butt/saw_hip
 	allowed_tools = list(
 		/obj/item/weapon/circular_saw = 100,
+		/obj/item/weapon/kitchen/utensil/knife/large/butch = 75,
 		/obj/item/weapon/hatchet = 75,
 		)
 
@@ -124,6 +131,7 @@
 /datum/surgery_step/butt/cauterize_butt
 	allowed_tools = list(
 		/obj/item/weapon/cautery = 100,
+		/obj/item/weapon/scalpel/laser = 100,
 		/obj/item/clothing/mask/cigarette = 75,
 		/obj/item/weapon/lighter = 50,
 		/obj/item/weapon/weldingtool = 25,

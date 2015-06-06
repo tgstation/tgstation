@@ -17,6 +17,11 @@
 			return 0
 		return 1
 
+/datum/surgery_step/appendectomy/cut_appendix/tool_quality(obj/item/tool)
+	. = ..()
+	if(!tool.is_sharp())
+		return 0
+
 /datum/surgery_step/appendectomy/cut_appendix
 	allowed_tools = list(
 	/obj/item/weapon/scalpel = 100,		\

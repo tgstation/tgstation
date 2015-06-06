@@ -227,8 +227,12 @@
 
 
 //////DETACH ORGAN////
-/datum/surgery_step/internal/detatch_organ
+/datum/surgery_step/internal/detatch_organ/tool_quality(obj/item/tool)
+	. = ..()
+	if(!tool.is_sharp())
+		return 0
 
+/datum/surgery_step/internal/detatch_organ
 	allowed_tools = list(
 		/obj/item/weapon/scalpel = 100,
 		/obj/item/weapon/kitchen/utensil/knife/large = 75,

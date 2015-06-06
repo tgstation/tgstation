@@ -68,10 +68,16 @@
 			H.bloody_hands(target,0)
 		if (blood_level > 1)
 			H.bloody_body(target,0)
+	if(istype(tool,/obj/item/weapon/scalpel/laser) || istype(tool,/obj/item/weapon/retractor/manager))
+		tool.icon_state = "[initial(tool.icon_state)]_on"
+		spawn(max_duration * tool.surgery_speed)//in case the player doesn't go all the way through the step (if he moves away, puts the tool away,...)
+			tool.icon_state = "[initial(tool.icon_state)]_off"
 	return
 
 	// does stuff to end the step, which is normally print a message + do whatever this step changes
 /datum/surgery_step/proc/end_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
+	if(istype(tool,/obj/item/weapon/scalpel/laser) || istype(tool,/obj/item/weapon/retractor/manager))
+		tool.icon_state = "[initial(tool.icon_state)]_off"
 	return
 
 	// stuff that happens when the step fails
@@ -100,7 +106,7 @@ proc/do_surgery(mob/living/M, mob/living/user, obj/item/tool)
 	for(var/datum/surgery_step/S in surgery_steps)
 		//check if tool is right or close enough and if this step is possible
 		sleep_fail = 0
-		if( S.tool_quality(tool))
+		if(S.tool_quality(tool))
 			var/canuse = S.can_use(user, M, user.zone_sel.selecting, tool)
 			if(canuse == -1) sleep_fail = 1
 			if(canuse && S.is_valid_mutantrace(M) && !(M in S.doing_surgery))
@@ -108,7 +114,7 @@ proc/do_surgery(mob/living/M, mob/living/user, obj/item/tool)
 				S.begin_step(user, M, user.zone_sel.selecting, tool)		//start on it
 				var/selection = user.zone_sel.selecting
 				//We had proper tools! (or RNG smiled.) and user did not move or change hands.
-				if(do_mob(user, M, rand(S.min_duration, S.max_duration)) && (prob(S.tool_quality(tool) / (sleep_fail + clumsy + 1))) && selection == user.zone_sel.selecting)
+				if(do_mob(user, M, rand(S.min_duration, S.max_duration) * tool.surgery_speed) && (prob(S.tool_quality(tool) / (sleep_fail + clumsy + 1))) && selection == user.zone_sel.selecting)
 					S.end_step(user, M, user.zone_sel.selecting, tool)		//finish successfully
 				else
 					if ((tool in user.contents) && (user.Adjacent(M)))											//or
