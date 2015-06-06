@@ -409,9 +409,10 @@
 	max_fuel = 40
 	m_amt = 70
 	g_amt = 120
-	origin_tech = "engineering=4;plasmatech=3"
-	change_icons = 0
+	origin_tech = "materials=4;engineering=4;bluespace=3;plasmatech=3"
 	var/last_gen = 0
+	change_icons = 0
+
 
 
 //Proc to make the experimental welder generate fuel, optimized as fuck -Sieve
