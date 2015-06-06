@@ -410,4 +410,4 @@ datum/design/proc/CalcReliability(var/list/temp_techs)
 	build_type = PROTOLATHE
 	materials = list("$metal" = 1000, "$glass" = 500, "$plasma" = 1500, "$uranium" = 200)
 	build_path = /obj/item/weapon/weldingtool/experimental
-	category = list("Equipment")
+	category = list("Equipement")  //fuck you tg
