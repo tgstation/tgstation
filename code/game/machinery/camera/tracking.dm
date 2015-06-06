@@ -113,13 +113,14 @@
 	if(!istype(target))	return
 	var/mob/living/silicon/ai/U = usr
 
+	U.cameraFollow = target
+
 	U << "<span class='notice'>Attempting to track [target.get_visible_name()]...</span>"
-	sleep(min(40, get_dist(target, U) / 3))
+	sleep(min(40, get_dist(target, U.eyeobj) / 3))
 	if(!target || !(target in U.trackable_mobs()))
 		U << "<span class='warning'>Target is not near any active cameras.</span>"
 		return
 
-	U.cameraFollow = target
 	U << "<span class='notice'>Now tracking [target.get_visible_name()] on camera.</span>"
 
 	spawn (0)

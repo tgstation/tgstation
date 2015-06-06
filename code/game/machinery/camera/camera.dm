@@ -9,12 +9,11 @@
 	layer = 5
 
 	var/health = 50
-	var/datum/wires/camera/wires = null // Wires datum
 	var/list/network = list("SS13")
 	var/c_tag = null
 	var/c_tag_order = 999
-	var/status = 1.0
-	anchored = 1.0
+	var/status = 1
+	anchored = 1
 	var/start_active = 0 //If it ignores the random chance to start broken on round start
 	var/invuln = null
 	var/obj/item/device/camera_bug/bug = null
@@ -31,8 +30,6 @@
 	var/emped = 0  //Number of consecutive EMP's on this camera
 
 /obj/machinery/camera/New()
-	wires = new(src)
-
 	assembly = new(src)
 	assembly.state = 4
 	assembly.anchored = 1
@@ -60,7 +57,6 @@
 		if(bug.current == src)
 			bug.current = null
 		bug = null
-	qdel(wires)
 	cameranet.removeCamera(src) //Will handle removal from the camera network and the chunks, so we don't need to worry about that
 	..()
 
@@ -81,7 +77,6 @@
 						network = previous_network
 						icon_state = initial(icon_state)
 						stat &= ~EMPED
-						cancelCameraAlarm()
 						if(can_use())
 							cameranet.addCamera(src)
 						emped = 0 //Resets the consecutive EMP count
@@ -118,66 +113,71 @@
 	if(!istype(user))
 		return
 	user.do_attack_animation(src)
-	status = 0
+	add_hiddenprint(user)
 	visible_message("<span class='warning'>\The [user] slashes at [src]!</span>")
 	playsound(src.loc, 'sound/weapons/slash.ogg', 100, 1)
-	icon_state = "[initial(icon_state)]1"
-	add_hiddenprint(user)
-	deactivate(user,0)
+	health = max(0, health - 30)
+	if(!health && status)
+		deactivate(user, 0)
 
 /obj/machinery/camera/attackby(obj/W, mob/living/user, params)
-	var/msg = "<span class='notice'>You attach [W] into the assembly inner circuits.</span>"
-	var/msg2 = "<span class='notice'>The camera already has that upgrade!</span>"
+	var/msg = "<span class='notice'>You attach [W] into the assembly's inner circuits.</span>"
+	var/msg2 = "<span class='notice'>[src] already has that upgrade!</span>"
 
 	// DECONSTRUCTION
 	if(istype(W, /obj/item/weapon/screwdriver))
-		//user << "<span class='notice'>You start to [panel_open ? "close" : "open"] the camera's panel.</span>"
-		//if(toggle_panel(user)) // No delay because no one likes screwdrivers trying to be hip and have a duration cooldown
 		panel_open = !panel_open
-		user.visible_message("[user] screws the camera's panel [panel_open ? "open" : "closed"]!",
-		"<span class='notice'>You screw the camera's panel [panel_open ? "open" : "closed"].</span>")
+		user << "<span class='notice'>You screw the camera's panel [panel_open ? "open" : "closed"].</span>"
 		playsound(src.loc, 'sound/items/Screwdriver.ogg', 50, 1)
+		return
 
-	else if((istype(W, /obj/item/weapon/wirecutters) || istype(W, /obj/item/device/multitool)) && panel_open)
-		wires.Interact(user)
+	if(panel_open)
+		if(istype(W, /obj/item/weapon/wirecutters)) //enable/disable the camera
+			deactivate(user, 1)
+			health = initial(health) //this is a pretty simplistic way to heal the camera, but there's no reason for this to be complex.
 
-	else if(istype(W, /obj/item/weapon/weldingtool) && wires.CanDeconstruct())
-		if(weld(W, user))
-			user << "<span class='notice'>You unweld the camera leaving it as just a frame screwed to the wall.</span>"
-			if(!assembly)
-				assembly = new()
-			assembly.loc = src.loc
-			assembly.state = 1
-			assembly.dir = src.dir
-			assembly.update_icon()
-			assembly = null
-			qdel(src)
-			return
-	else if(istype(W, /obj/item/device/analyzer) && panel_open) //XRay
-		if(!isXRay())
-			upgradeXRay()
-			qdel(W)
-			user << "[msg]"
-		else
-			user << "[msg2]"
+		else if(istype(W, /obj/item/device/multitool)) //change focus
+			setViewRange((view_range == initial(view_range)) ? short_range : initial(view_range))
+			user << "<span class='notice'>You [(view_range == initial(view_range)) ? "restore" : "mess up"] the camera's focus.</span>"
 
-	else if(istype(W, /obj/item/stack/sheet/mineral/plasma) && panel_open)
-		if(!isEmpProof())
-			upgradeEmpProof()
-			user << "[msg]"
-			qdel(W)
-		else
-			user << "[msg2]"
-	else if(istype(W, /obj/item/device/assembly/prox_sensor) && panel_open)
-		if(!isMotion())
-			upgradeMotion()
-			user << "[msg]"
-			qdel(W)
-		else
-			user << "[msg2]"
+		else if(istype(W, /obj/item/weapon/weldingtool))
+			if(weld(W, user))
+				visible_message("<span class='warning'>[user] unwelds [src], leaving it as just a frame screwed to the wall.</span>", "<span class='warning'>You unweld [src], leaving it as just a frame screwed to the wall</span>")
+				if(!assembly)
+					assembly = new()
+				assembly.loc = src.loc
+				assembly.state = 1
+				assembly.dir = src.dir
+				assembly.update_icon()
+				assembly = null
+				qdel(src)
+				return
+
+		else if(istype(W, /obj/item/device/analyzer))
+			if(!isXRay())
+				upgradeXRay()
+				qdel(W)
+				user << "[msg]"
+			else
+				user << "[msg2]"
+
+		else if(istype(W, /obj/item/stack/sheet/mineral/plasma))
+			if(!isEmpProof())
+				upgradeEmpProof()
+				user << "[msg]"
+				qdel(W)
+			else
+				user << "[msg2]"
+		else if(istype(W, /obj/item/device/assembly/prox_sensor))
+			if(!isMotion())
+				upgradeMotion()
+				user << "[msg]"
+				qdel(W)
+			else
+				user << "[msg2]"
 
 	// OTHER
-	else if ((istype(W, /obj/item/weapon/paper) || istype(W, /obj/item/device/pda)) && isliving(user))
+	if((istype(W, /obj/item/weapon/paper) || istype(W, /obj/item/device/pda)) && isliving(user))
 		var/mob/living/U = user
 		var/obj/item/weapon/paper/X = null
 		var/obj/item/device/pda/P = null
@@ -205,6 +205,7 @@
 			else if (O.client && O.client.eye == src)
 				O << "[U] holds \a [itemname] up to one of the cameras ..."
 				O << browse(text("<HTML><HEAD><TITLE>[]</TITLE></HEAD><BODY><TT>[]</TT></BODY></HTML>", itemname, info), text("window=[]", itemname))
+
 	else if (istype(W, /obj/item/device/camera_bug))
 		if (!src.can_use())
 			user << "<span class='notice'>Camera non-functional.</span>"
@@ -217,18 +218,20 @@
 			user << "<span class='notice'>Camera bugged.</span>"
 			src.bug = W
 			src.bug.bugged_cameras[src.c_tag] = src
+
 	else if(istype(W, /obj/item/device/laser_pointer))
 		var/obj/item/device/laser_pointer/L = W
 		L.laser_act(src, user)
+
 	else
 		if(W.force > 10) //fairly simplistic, but will do for now.
 			visible_message("<span class='warning'>[user] hits [src] with [W]!</span>", "<span class='warning'>You hit [src] with [W]!</span>")
-			health = min(0, health - W.force)
-			if(!health)
+			health = max(0, health - W.force)
+			if(!health && status)
 				deactivate(user, 1)
 	return
 
-/obj/machinery/camera/proc/deactivate(mob/user, displaymessage = 1)
+/obj/machinery/camera/proc/deactivate(mob/user, displaymessage = 1) //this should be called toggle() but doing a find and replace for this would be ass
 	if(displaymessage)
 		status = !status
 		if(!status)
@@ -312,7 +315,6 @@
 	return null
 
 /proc/near_range_camera(var/mob/M)
-
 	for(var/obj/machinery/camera/C in range(4, M))
 		if(C.can_use())	// check if camera disabled
 			return C
@@ -321,7 +323,6 @@
 	return null
 
 /obj/machinery/camera/proc/weld(var/obj/item/weapon/weldingtool/WT, var/mob/living/user)
-
 	if(busy)
 		return 0
 	if(!WT.remove_fuel(0, user))
