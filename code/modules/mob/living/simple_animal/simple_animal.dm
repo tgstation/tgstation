@@ -471,6 +471,12 @@
 			tally = 1
 		tally *= purge
 
+	if(istype(loc,/turf/simulated/floor))
+		var/turf/simulated/floor/T = loc
+
+		if(T.material=="phazon")
+			return -1 // Phazon floors make us go fast
+
 	return tally+config.animal_delay
 
 /mob/living/simple_animal/Stat()

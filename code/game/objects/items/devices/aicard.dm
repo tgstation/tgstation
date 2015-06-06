@@ -75,7 +75,7 @@
 		return
 
 	Topic(href, href_list)
-		var/mob/U = usr
+		var/mob/living/U = usr
 		if (!in_range(src, U)||U.machine!=src)//If they are not in range of 1 or less or their machine is not the card (ie, clicked on something else).
 			U << browse(null, "window=aicard")
 			U.unset_machine()
@@ -102,6 +102,10 @@
 						for(var/mob/living/silicon/ai/A in src)
 							A.suiciding = 1
 							A << "Your core files are being wiped!"
+							A.attack_log += text("\[[time_stamp()]\] <font color='orange'>Has been wiped with an [src.name] by [U.name] ([U.ckey])</font>")
+							U.attack_log += text("\[[time_stamp()]\] <font color='red'>Used an [src.name] to wipe [A.name] ([A.ckey])</font>")
+							log_attack("[key_name(U)] Used an [src.name] to wipe [key_name(A)]")
+
 							while (A.stat != 2)
 								A.adjustOxyLoss(2)
 								A.updatehealth()

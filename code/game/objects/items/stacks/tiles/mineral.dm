@@ -28,6 +28,40 @@
 
 	material = "uranium"
 
+/obj/item/stack/tile/mineral/uranium/safe
+	name = "isolated uranium tile"
+	singular_name = "isolated uranium floor tile"
+	desc = "A tile made out of uranium, with an added layer of reinforced glass on top of it."
+	icon_state = "tile_uraniumsafe"
+
+	material = "uranium_safe"
+
+/obj/item/stack/tile/mineral/uranium/safe/attackby(obj/item/W as obj, mob/user as mob)
+	if(iscrowbar(W))
+		user << "You pry off the layer of reinforced glass from [src]."
+		use(1)
+		var/obj/item/stack/tile/mineral/uranium/U = locate(/obj/item/stack/tile/mineral/uranium) in user.loc
+		if(U && U.type==/obj/item/stack/tile/mineral/uranium && U.amount<U.max_amount)
+			U.amount++
+			user << "You add a uranium tile to the stack. It now has [U.amount] tiles."
+			return
+		U = new(user.loc)
+		return
+
+/obj/item/stack/tile/mineral/uranium/attackby(obj/item/W as obj, mob/user as mob)
+	if(istype(W,/obj/item/stack/sheet/glass/rglass))
+		var/obj/item/stack/sheet/glass/rglass/G = W
+		user << "You add a layer of reinforced glass to [src]."
+		G.use(1)
+		src.use(1)
+		var/obj/item/stack/tile/mineral/uranium/safe/U = locate(/obj/item/stack/tile/mineral/uranium/safe) in user.loc
+		if(U && U.amount<U.max_amount)
+			U.amount++
+			user << "You add an isolated uranium tile to the stack. It now has [U.amount] tiles."
+			return
+		U = new(user.loc)
+		return
+
 /obj/item/stack/tile/mineral/gold
 	name = "gold tile"
 	singular_name = "gold floor tile"

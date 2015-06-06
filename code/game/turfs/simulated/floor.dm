@@ -575,7 +575,7 @@ turf/simulated/floor/proc/update_icon()
 /turf/simulated/floor/Enter(mob/AM)
 	.=..()
 
-	if(AM)
+	if(AM && istype(AM,/mob/living))
 		switch(material)
 			if("bananium")
 				if(!spam_flag)
@@ -583,6 +583,19 @@ turf/simulated/floor/proc/update_icon()
 					playsound(get_turf(src), "clownstep", 50, 1)
 					spawn(20)
 						spam_flag = 0
+			if("uranium")
+				if(!spam_flag)
+					spam_flag = 1
+					set_light(3)
+					icon_state = "uranium_inactive"
+					for(var/mob/living/L in range(2,src)) //Weak radiation
+						L.apply_effect(3,IRRADIATE,0)
+					flick("uranium_active",src)
+					spawn(20)
+						set_light(0)
+					spawn(200)
+						spam_flag = 0
+						update_icon()
 
 /turf/simulated/proc/wet(delay = 800)
 	if(wet >= 1) return
