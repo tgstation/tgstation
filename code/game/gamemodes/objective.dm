@@ -209,7 +209,7 @@
 					if(/mob/living/silicon/ai, /mob/living/silicon/pai)
 						continue
 				if(get_area(player) == A)
-					if(!player.mind.special_role && !istype(get_turf(player.mind.current), /turf/simulated/shuttle/floor4))
+					if(!player.mind.special_role && !istype(get_turf(player.mind.current), /turf/simulated/floor/plasteel/shuttle/red))
 						return 0
 	return 1
 
