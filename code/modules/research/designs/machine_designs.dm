@@ -272,6 +272,26 @@
 	build_path = /obj/item/weapon/circuitboard/processor
 	category = list ("Misc. Machinery")
 
+/datum/design/recycler
+	name = "Machine Design (Recycler Board)"
+	desc = "The circuit board for a recycler."
+	id = "recycler"
+	req_tech = list("programming" = 1)
+	build_type = IMPRINTER
+	materials = list("$glass" = 1000, "sacid" = 20)
+	build_path = /obj/item/weapon/circuitboard/recycler
+	category = list ("Misc. Machinery")
+
+/datum/design/holopad
+	name = "Machine Design (AI Holopad Board)"
+	desc = "The circuit board for a holopad."
+	id = "holopad"
+	req_tech = list("programming" = 1)
+	build_type = IMPRINTER
+	materials = list("$glass" = 1000, "sacid" = 20)
+	build_path = /obj/item/weapon/circuitboard/holopad
+	category = list ("Misc. Machinery")
+
 /datum/design/autolathe
 	name = "Machine Design (Autolathe Board)"
 	desc = "The circuit board for an autolathe."
