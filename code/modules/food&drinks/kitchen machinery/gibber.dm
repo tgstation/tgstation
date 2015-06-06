@@ -127,7 +127,8 @@
 	visible_message("<span class='italics'>You hear a loud squelchy grinding sound.</span>")
 	src.operating = 1
 	update_icon()
-	animate(src, pixel_x = pixel_x + 2, time = 1, loop = 40) //start shaking
+	animate(src, pixel_x = pixel_x + 2, time = 0.2, loop = 200) //start shaking
+	playsound(src.loc, 'sound/machines/juicer.ogg', 50, 1)
 	var/sourcename = src.occupant.real_name
 	var/sourcejob = src.occupant.job
 	var/sourcenutriment = src.occupant.nutrition / 15
