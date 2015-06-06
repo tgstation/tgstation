@@ -110,7 +110,7 @@ Gunshots/explosions/opening doors/less rare audio (done)
 			if(41 to 65)
 				//Strange audio
 				//src << "Strange Audio"
-				switch(rand(1,14))
+				switch(rand(1,15))
 					if(1) src << 'sound/machines/airlock.ogg'
 					if(2)
 						if(prob(50))src << 'sound/effects/Explosion1.ogg'
@@ -147,6 +147,14 @@ Gunshots/explosions/opening doors/less rare audio (done)
 						src << "<h1 class='alert'>Priority Announcement</h1>"
 						src << "<br><br><span class='alert'>The Emergency Shuttle has docked with the station. You have 3 minutes to board the Emergency Shuttle.</span><br><br>"
 						src << sound('sound/AI/shuttledock.ogg')
+					if(15)
+						src << 'sound/items/Welder.ogg'
+					if(16)
+						src << 'sound/items/Screwdriver.ogg'
+					if(17)
+						src << 'sound/weapons/saberon.ogg'
+					if(18)
+						src << 'sound/weapons/saberoff.ogg'
 			if(66 to 70)
 				//Flashes of danger
 				if(!halbody)
@@ -408,24 +416,30 @@ Gunshots/explosions/opening doors/less rare audio (done)
 
 /obj/effect/hallucination/battle/New(loc,var/mob/living/carbon/T)
 	target = T
-	var/hits = rand(3,5)
-	switch(rand(1,3))
+	var/hits = rand(3,6)
+	switch(rand(1,4))
 		if(1) //Laser fight
 			for(var/i=0,i<hits,i++)
 				target << sound('sound/weapons/Laser.ogg',0,1,0,25)
 				sleep(rand(1,5))
 			target << sound(get_sfx("bodyfall"),0,1,0,25)
 		if(2) //Esword fight
-			target << sound('sound/weapons/saberon.ogg',,0,1,0,15)
+			target << sound('sound/weapons/saberon.ogg',0,1,0,15)
 			for(var/i=0,i<hits,i++)
 				target << sound('sound/weapons/blade1.ogg',,0,1,0,25)
 				sleep(rand(1,5))
 			target << sound(get_sfx("bodyfall"),0,1,0,25)
+			target << sound('sound/weapons/saberoff.ogg',0,1,0,15)
 		if(3) //Gun fight
 			for(var/i=0,i<hits,i++)
 				target << sound(get_sfx("gunshot"),0,1,0,25)
 				sleep(rand(1,5))
 			target << sound(get_sfx("bodyfall"),0,1,0,25)
+		if(4) //Stunprod + cablecuff
+			target << sound('sound/weapons/Egloves.ogg',0,1,40)
+			target << sound(get_sfx("bodyfall"),0,1,0,25)
+			sleep(30)
+			target << sound('sound/weapons/cablecuff.ogg',0,1,0,15)
 	qdel(src)
 
 
@@ -640,7 +654,30 @@ var/list/non_fakeattack_weapons = list(/obj/item/weapon/gun/projectile, /obj/ite
 			target.client.images.Remove(B)
 	qdel(src)
 
+/obj/effect/hallucination/whispers
 
+/obj/effect/hallucination/whispers/New(loc,var/mob/living/carbon/T)
+	target = T
+	var/speak_messages = list("I'm watching you...","[target.name]!","Go away!","Kchck-Chkck? Kchchck!","Did you hear that?")
+	var/radio_messages = list("Xenos!","Singularity loose!","They are arming the nuke!","They butchered Ian!","H-help!","[pick(teleportlocs)]!!")
+
+	var/list/mob/living/carbon/people = list()
+	var/list/mob/living/carbon/person = null
+	for(var/mob/living/carbon/H in view(target))
+		if(H == target)
+			continue
+		if(!person)
+			person = H
+		else
+			if(get_dist(target,H)<get_dist(target,person))
+				person = H
+		people += H
+	if(person) //Basic talk
+		target << target.compose_message(person,person.languages,pick(speak_messages),null,person.get_spans())
+	else // Radio talk
+		person = pick(living_mob_list) //use humans only ?
+		target << target.compose_message(person,person.languages,pick(radio_messages),"1459",person.get_spans())
+	qdel(src)
 /mob/living/carbon/proc/hallucinate(var/hal_type) // Todo -> proc / defines
 	switch(hal_type)
 		if("xeno")
@@ -657,3 +694,5 @@ var/list/non_fakeattack_weapons = list(/obj/item/weapon/gun/projectile, /obj/ite
 			new /obj/effect/hallucination/fakeattacker(src.loc,src)
 		if("bolts")
 			new /obj/effect/hallucination/bolts(src.loc,src)
+		if("whispers")
+			new /obj/effect/hallucination/whispers(src.loc,src)
