@@ -4,7 +4,7 @@
 	traitors_possible = 3 //hard limit on traitors if scaling is turned off
 	restricted_jobs = list("AI", "Cyborg", "Mobile MMI")
 	required_players = 1
-	required_players_secret = 10
+	required_players_secret = 15
 	required_enemies = 2
 	recommended_enemies = 3
 

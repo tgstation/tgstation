@@ -2,7 +2,7 @@
 	name = "double agents"
 	config_tag = "double_agents"
 	restricted_jobs = list("Cyborg", "AI", "Captain", "Head of Personnel", "Chief Medical Officer", "Research Director", "Chief Engineer", "Head of Security", "Mobile MMI") // Human / Minor roles only.
-	required_players = 25
+	required_players = 15
 	required_enemies = 2 //we only need 2 - the agent, and the other agent
 	recommended_enemies = 6
 
@@ -22,6 +22,46 @@
 			i = 0
 		target_list[traitor] = traitors[i + 1]
 	..()
+
+/datum/game_mode/traitor/double_agents/pre_setup()
+
+	if(config.protect_roles_from_antagonist)
+		restricted_jobs += protected_jobs
+
+	var/list/possible_traitors = get_players_for_role(ROLE_TRAITOR)
+
+	// stop setup if no possible traitors
+	if(!possible_traitors.len)
+		return 0
+
+	var/num_traitors = 1
+
+	if(config.traitor_scaling)
+		num_traitors = max(required_enemies, round((num_players())/(traitor_scaling_coeff)))
+	else
+		num_traitors = Clamp(num_players(), required_enemies, traitors_possible)
+
+	for(var/datum/mind/player in possible_traitors)
+		for(var/job in restricted_jobs)
+			if(player.assigned_role == job)
+				possible_traitors -= player
+
+	if(possible_traitors.len < required_enemies) //fixes double agent starting with 1 traitor
+		return 0
+
+	for(var/j = 0, j < num_traitors, j++)
+		if (!possible_traitors.len)
+			break
+		var/datum/mind/traitor = pick(possible_traitors)
+		traitors += traitor
+		traitor.special_role = "traitor"
+		possible_traitors.Remove(traitor)
+
+	if(!traitors.len)
+		return 0
+	if(traitors.len < required_enemies)
+		return 0
+	return 1
 
 /datum/game_mode/traitor/double_agents/forge_traitor_objectives(var/datum/mind/traitor)
 
