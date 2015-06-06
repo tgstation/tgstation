@@ -11,12 +11,11 @@
 	SSobj.processing |= src
 	if(istype(C, /mob/living/carbon/human))
 		if(check_suit(C))
-			C.visible_message("<span class='warning'>Your reinforced suit protects you from [src]! </span>")
-			return
+			continue
 
 	apply_lava_damage(C)
 	C.emote("scream")
-	C.visible_message("<span class='warning'>[C] falls into[src]!   </span>", "<span class='userdanger'>You fall into [src]!   </span>", "<span class='warning'>You hear a splash followed   by a scream! </span>")
+	C.visible_message("<span class='warning'>[C] falls into [src]!   </span>", "<span class='userdanger'>You fall into [src]!   </span>", "<span class='warning'>You hear a splash followed by a scream! </span>")
 
 /turf/simulated/floor/lava_pool/process()
 	var/mobpresent = 0
@@ -24,7 +23,7 @@
 	for(var/mob/living/carbon/human/H in src)
 		mobpresent = 1
 		if(check_suit(H))
-			return
+			continue
 
 		apply_lava_damage(H)//Defaults to 0 for message
 
