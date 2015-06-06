@@ -252,7 +252,7 @@
 	build_path = /obj/item/weapon/circuitboard/microwave
 	category = list ("Misc. Machinery")
 
-/datum/design/microwave
+/datum/design/gibber
 	name = "Machine Design (Gibber Board)"
 	desc = "The circuit board for a gibber."
 	id = "gibber"
@@ -260,6 +260,16 @@
 	build_type = IMPRINTER
 	materials = list("$glass" = 1000, "sacid" = 20)
 	build_path = /obj/item/weapon/circuitboard/gibber
+	category = list ("Misc. Machinery")
+
+/datum/design/processor
+	name = "Machine Design (Food Processor Board)"
+	desc = "The circuit board for a processor."
+	id = "processor"
+	req_tech = list("programming" = 1)
+	build_type = IMPRINTER
+	materials = list("$glass" = 1000, "sacid" = 20)
+	build_path = /obj/item/weapon/circuitboard/processor
 	category = list ("Misc. Machinery")
 
 /datum/design/autolathe
