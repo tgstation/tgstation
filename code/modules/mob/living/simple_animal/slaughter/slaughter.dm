@@ -41,7 +41,7 @@
 	..(1)
 	new /obj/effect/decal/cleanable/blood (src.loc)
 	new /obj/item/weapon/demonheart (src.loc)
-	visible_message("<span class='danger'>The [src] screams in anger as it's form collapes into a pool of viscera.</span>")
+	visible_message("<span class='danger'>The [src] screams in anger as its form collapes into a pool of viscera.</span>")
 	ghostize()
 	qdel(src)
 	return
