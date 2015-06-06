@@ -438,7 +438,7 @@
 
 			if (href_list["search"])
 				var/norange = (usr.mutations && usr.mutations.len && (M_TK in usr.mutations))
-				var/t1 = input("Search String: (Name, DNA, or ID)", "Med. records", null, null)  as text
+				var/t1 = copytext(sanitize(input("Search String: (Name, DNA, or ID)", "Med. records", null, null)  as text),1,MAX_MESSAGE_LEN)
 				if ((!( t1 ) || usr.stat || !( src.authenticated ) || usr.restrained() || ((!in_range(src, usr)) && (!istype(usr, /mob/living/silicon)) && !norange)))
 					return
 				src.active1 = null
@@ -450,7 +450,7 @@
 					else
 						//Foreach continue //goto(3229)
 				if (!( src.active2 ))
-					src.temp = text("Could not locate record [].", t1)
+					src.temp = text("Could not locate record [].", sanitize(t1))
 				else
 					for(var/datum/data/record/E in data_core.general)
 						if ((E.fields["name"] == src.active2.fields["name"] || E.fields["id"] == src.active2.fields["id"]))
