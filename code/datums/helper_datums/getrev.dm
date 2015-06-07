@@ -38,7 +38,6 @@ var/global/datum/getrev/revdata = new()
 	src << "Protect Assistant Role From Traitor: [config.protect_assistant_from_antagonist]"
 	src << "Enforce Human Authority: [config.enforce_human_authority]"
 	src << "Allow Latejoin Antagonists: [config.allow_latejoin_antagonists]"
-	src << "Protect Assistant From Antagonist: [config.protect_assistant_from_antagonist]"
 	src << "Enforce Continuous Rounds: [config.continuous.len] of [config.modes.len] roundtypes"
 	src << "Allow Midround Antagonists: [config.midround_antag.len] of [config.modes.len] roundtypes"
 	if(config.show_game_type_odds)
