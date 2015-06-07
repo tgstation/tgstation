@@ -1009,15 +1009,20 @@ About the new airlock wires panel:
 	else if(istype(C, /obj/item/device/doorCharge) && p_open)
 		if(emagged)
 			return
+		if(sabotaged && !detonated)
+			user << "<span class='warning'>There's already a charge hooked up to this door!</span>"
+			return
+		if(detonated)
+			user << "<span class='warning'>The maintenance panel is destroyed!</span>"
+			return
 		user << "<span class='warning'>You apply [C]. Next time someone opens the door, it will explode.</span>"
 		user.drop_item()
 		qdel(C)
 		sabotageTurf = get_turf(user)
 		p_open = 0
 		update_icon()
-		spawn(50)
-			sabotaged = 1
-			return
+		sabotaged = 1
+		return
 	else
 		..()
 	return
