@@ -73,7 +73,7 @@
 
 /obj/machinery/seed_extractor/attackby(var/obj/item/O as obj, var/mob/user as mob, params)
 
-	if(default_deconstruction_screwdriver(user, "sextractor", "sextractor", O))
+	if(default_deconstruction_screwdriver(user, "sextractor_open", "sextractor", O))
 		return
 
 	if(exchange_parts(user, O))

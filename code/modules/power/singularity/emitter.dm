@@ -246,7 +246,7 @@
 			user << "<span class='danger'>Access denied.</span>"
 		return
 
-	if(default_deconstruction_screwdriver(user, "emitter", "emitter", W))
+	if(default_deconstruction_screwdriver(user, "emitter_open", "emitter", W))
 		return
 
 	if(exchange_parts(user, W))

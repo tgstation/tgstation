@@ -117,7 +117,7 @@
 			qdel(G)
 			update_icon()
 
-	if(default_deconstruction_screwdriver(user, "grinder", "grinder", P))
+	if(default_deconstruction_screwdriver(user, "grinder_open", "grinder", P))
 		return
 
 	if(exchange_parts(user, P))

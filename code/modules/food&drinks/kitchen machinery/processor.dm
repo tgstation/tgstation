@@ -138,7 +138,7 @@
 	if(src.processing)
 		user << "<span class='warning'>The processor is in the process of processing!</span>"
 		return 1
-	if(default_deconstruction_screwdriver(user, "processor", "processor", O))
+	if(default_deconstruction_screwdriver(user, "processor1", "processor", O))
 		return
 
 	if(exchange_parts(user, O))

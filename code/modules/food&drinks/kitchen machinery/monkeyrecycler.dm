@@ -33,7 +33,7 @@
 	required_grind = req_grind
 
 /obj/machinery/monkey_recycler/attackby(var/obj/item/O as obj, var/mob/user as mob, params)
-	if(default_deconstruction_screwdriver(user, "grinder", "grinder", O))
+	if(default_deconstruction_screwdriver(user, "grinder_open", "grinder", O))
 		return
 
 	if(exchange_parts(user, O))

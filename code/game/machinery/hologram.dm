@@ -56,7 +56,7 @@ var/const/HOLOPAD_MODE = RANGE_BASED
 	holo_range = holograph_range
 
 /obj/machinery/hologram/holopad/attackby(obj/item/P as obj, mob/user as mob, params)
-	if(default_deconstruction_screwdriver(user, "holopad0", "holopad0", P))
+	if(default_deconstruction_screwdriver(user, "holopad_open", "holopad0", P))
 		return
 
 	if(exchange_parts(user, P))

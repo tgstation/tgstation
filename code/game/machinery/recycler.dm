@@ -57,7 +57,7 @@ var/const/SAFETY_COOLDOWN = 100
 
 
 /obj/machinery/recycler/attackby(var/obj/item/I, var/mob/user, params)
-	if(default_deconstruction_screwdriver(user, "grinder-o0", "grinder-o0", I))
+	if(default_deconstruction_screwdriver(user, "grinder-oOpen", "grinder-o0", I))
 		return
 
 	if(exchange_parts(user, I))
