@@ -16,7 +16,6 @@
 
 
 /turf/simulated/floor/plasteel/green
-	shuttle = 1
 	icon_state = "greenfull"
 /turf/simulated/floor/plasteel/green/side
 	icon_state = "green"
@@ -24,7 +23,6 @@
 	icon_state = "greencorner"
 
 /turf/simulated/floor/plasteel/darkgreen
-	shuttle = 1
 	icon_state = "darkgreenfull"
 /turf/simulated/floor/plasteel/darkgreen/side
 	icon_state = "darkgreen"
@@ -33,14 +31,12 @@
 
 
 /turf/simulated/floor/plasteel/brown
-	shuttle = 1
 	icon_state = "brown"
 /turf/simulated/floor/plasteel/brown/corner
 	icon_state = "browncorner"
 
 
 /turf/simulated/floor/plasteel/red
-	shuttle = 1
 	icon_state = "redfull"
 /turf/simulated/floor/plasteel/red/side
 	icon_state = "red"
@@ -49,7 +45,6 @@
 
 
 /turf/simulated/floor/plasteel/darkred
-	shuttle = 1
 	icon_state = "darkredfull"
 /turf/simulated/floor/plasteel/darkred/side
 	icon_state = "darkred"
@@ -58,7 +53,6 @@
 
 
 /turf/simulated/floor/plasteel/neutral
-	shuttle = 1
 	icon_state = "neutralfull"
 /turf/simulated/floor/plasteel/neutral/side
 	icon_state = "neutral"
@@ -67,42 +61,36 @@
 
 
 /turf/simulated/floor/plasteel/warning
-	shuttle = 1
 	icon_state = "warning"
 /turf/simulated/floor/plasteel/warning/corner
 	icon_state = "warningcorner"
 
 
 /turf/simulated/floor/plasteel/redyellow
-	shuttle = 1
 	icon_state = "redyellowfull"
 /turf/simulated/floor/plasteel/redyellow/side
 	icon_state = "redyellow"
 
 
 /turf/simulated/floor/plasteel/redblue
-	shuttle = 1
 	icon_state = "redbluefull"
 /turf/simulated/floor/plasteel/redblue/side
 	icon_state = "redblue"
 
 
 /turf/simulated/floor/plasteel/darkwarning
-	shuttle = 1
 	icon_state = "warndark"
 /turf/simulated/floor/plasteel/darkwarning/corner
 	icon_state = "warndarkcorners"
 
 
 /turf/simulated/floor/plasteel/yellowsiding
-	shuttle = 1
 	icon_state = "yellowsiding"
 /turf/simulated/floor/plasteel/yellowsiding/corner
 	icon_state = "yellowcornersiding"
 
 
 /turf/simulated/floor/plasteel/podhatch
-	shuttle = 1
 	icon_state = "podhatch"
 /turf/simulated/floor/plasteel/podhatch/corner
 	icon_state = "podhatchcorner"

@@ -170,3 +170,6 @@
 /turf/simulated/floor/plating/abductor/New()
 	..()
 	icon_state = "alienpod[rand(1,9)]"
+
+/turf/simulated/floor/plating/shuttle
+	shuttle = 1
