@@ -348,3 +348,5 @@
 //Convenience
 /mob/living/simple_animal/hostile/proc/AIShouldSleep()
 	. = !(AIShouldWake())
+	if(. && stance != HOSTILE_STANCE_IDLE) //This proc was called before LoseTarget().
+		LostTarget()
