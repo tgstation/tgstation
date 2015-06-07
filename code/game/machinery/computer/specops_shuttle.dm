@@ -21,7 +21,7 @@ var/specops_shuttle_timeleft = 0
 	var/allowedtocall = 0
 	var/specops_shuttle_timereset = 0
 
-	l_color = "#7BF9FF"
+	light_color = LIGHT_COLOR_CYAN
 
 /proc/specops_return()
 	var/obj/item/device/radio/intercom/announcer = announcement_intercom
@@ -317,8 +317,6 @@ var/specops_shuttle_timeleft = 0
 
 		var/area/centcom/specops/special_ops = locate()
 		if(special_ops)
-			if(special_ops.master)
-				special_ops=special_ops.master
 			special_ops.readyalert()//Trigger alarm for the spec ops area.
 		specops_shuttle_moving_to_station = 1
 

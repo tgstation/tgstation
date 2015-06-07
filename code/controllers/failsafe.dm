@@ -58,21 +58,4 @@ var/global/datum/controller/failsafe/failsafe
 						masterControllerAlertLevel = 0
 						masterControllerIteration = master_controller.iteration
 
-				if(lighting_controller.processing)
-					if(lightingControllerIteration == lighting_controller.iteration) // Lighting controller hasn't finished processing in the defined interval.
-						switch(lightingControllerAlertLevel)
-							if(0 to 3)
-								lightingControllerAlertLevel++
-							if(4)
-								admins << "<font color='red' size='2'><b>Warning. The lighting_controller controller has not fired in the last [lightingControllerAlertLevel * processing_interval] ticks. Automatic restart in [processing_interval] ticks.</b></font>"
-								lightingControllerAlertLevel = 5
-							if(5)
-								admins << "<font color='red' size='2'><b>Warning. The lighting_controller controller has still not fired within the last [lightingControllerAlertLevel * processing_interval] ticks. Killing and restarting...</b></font>"
-								new /datum/controller/lighting() // Replace the old lighting_controller (hence killing the old one's process).
-								lighting_controller.process() // Start it rolling again.
-								lightingControllerAlertLevel = 0
-					else
-						lightingControllerAlertLevel = 0
-						lightingControllerIteration = lighting_controller.iteration
-
 			sleep(processing_interval)

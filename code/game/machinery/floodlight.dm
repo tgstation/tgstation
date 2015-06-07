@@ -26,14 +26,14 @@
 			if(cell.charge < powercost)
 				on = 0
 				update_icon()
-				SetLuminosity(0)
+				set_light(0)
 				visible_message("<span class='warning'>\The [src] shuts down!</span>")
 				return
 
 		else
 			on = 0
 			update_icon()
-			SetLuminosity(0)
+			set_light(0)
 			visible_message("<span class='warning'>\The [src] shuts down!</span>")
 			return
 
@@ -58,12 +58,12 @@
 
 	if(on)
 		on = 0
-		SetLuminosity(0)
+		set_light(0)
 	else
 		if(!cell || !cell.charge > powercost)
 			return
 		on = 1
-		SetLuminosity(brightness_on)
+		set_light(brightness_on)
 
 	user.visible_message("<span class='notice'>[user] turns \the [src] [on ? "on":"off"]</span>", \
 	"<span class='notice'>You turn \the [src] [on ? "on":"off"]</span>")

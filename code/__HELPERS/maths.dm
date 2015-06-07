@@ -5,11 +5,13 @@
 var/const/E		= 2.71828183
 var/const/Sqrt2	= 1.41421356
 
+/* //All point fingers and laugh at this joke of a list, I even heard using sqrt() is faster than this list lookup, honk.
 // List of square roots for the numbers 1-100.
 var/list/sqrtTable = list(1, 1, 1, 2, 2, 2, 2, 2, 3, 3, 3, 3, 3, 3, 3, 4, 4, 4, 4, 4, 4, 4, 4, 4, 5,
                           5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 7, 7,
                           7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8,
                           8, 8, 8, 8, 8, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 10)
+*/
 
 /proc/Atan2(x, y)
 	if (!x && !y)
@@ -171,3 +173,7 @@ proc/arctan(x)
 //Thanks to wwjnc for this.
 /proc/test_bitflag(var/bitflag)
 	return bitflag != 0 && !(bitflag & (bitflag - 1))
+
+
+//Some thing for lighting code
+#define CLAMP01(x) Clamp(x, 0, 1)

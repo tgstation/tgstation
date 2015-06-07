@@ -31,12 +31,12 @@
 /obj/machinery/bot/proc/turn_on()
 	if(stat)	return 0
 	on = 1
-	SetLuminosity(initial(luminosity))
+	set_light(initial(luminosity))
 	return 1
 
 /obj/machinery/bot/proc/turn_off()
 	on = 0
-	SetLuminosity(0)
+	set_light(0)
 
 /obj/machinery/bot/proc/explode()
 	qdel(src)

@@ -23,7 +23,7 @@
 	var/teleport_cell_usage=1000 // 100% of a standard cell
 	processing=1
 
-	l_color = "#0000FF"
+	light_color = LIGHT_COLOR_BLUE
 
 /obj/machinery/computer/telescience/New()
 	..()

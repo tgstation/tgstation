@@ -338,7 +338,7 @@
 ////////////////Glow//////////////////
 /mob/living/simple_animal/construct/proc/updateicon()
 	overlays = 0
-	var/overlay_layer = LIGHTING_LAYER+1
+	var/overlay_layer = LIGHTING_LAYER + 1
 	if(layer != MOB_LAYER)
 		overlay_layer=TURF_LAYER+0.2
 

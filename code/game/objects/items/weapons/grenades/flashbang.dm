@@ -104,7 +104,7 @@
 
 /obj/effect/effect/smoke/flashbang/New()
 	..()
-	SetLuminosity(15)
+	set_light(15)
 
 /obj/item/weapon/grenade/flashbang/clusterbang//Created by Polymorph, fixed by Sieve
 	desc = "Use of this weapon may constiute a war crime in your area, consult your local captain."

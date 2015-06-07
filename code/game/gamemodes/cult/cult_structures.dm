@@ -22,8 +22,8 @@
 	desc = "A floating crystal that hums with an unearthly energy"
 	icon_state = "pylon"
 	var/isbroken = 0
-	luminosity = 5
-	l_color = "#3e0000"
+	light_range = 5
+	light_color = LIGHT_COLOR_RED
 	var/obj/item/wepon = null
 
 /obj/structure/cult/pylon/attack_hand(mob/M as mob)
@@ -47,7 +47,7 @@
 			isbroken = 1
 			density = 0
 			icon_state = "pylon-broken"
-			SetLuminosity(0)
+			set_light(0)
 		else
 			user << "You hit the pylon!"
 			playsound(get_turf(src), 'sound/effects/Glasshit.ogg', 75, 1)
@@ -66,14 +66,14 @@
 		isbroken = 0
 		density = 1
 		icon_state = "pylon"
-		SetLuminosity(5)
+		set_light(5)
 
 /obj/structure/cult/tome
 	name = "Desk"
 	desc = "A desk covered in arcane manuscripts and tomes in unknown languages. Looking at the text makes your skin crawl"
 	icon_state = "tomealtar"
-	luminosity = 2
-	l_color = "#3e0000"
+	light_range = 2
+	light_color = LIGHT_COLOR_RED
 
 /obj/structure/cult/tome/attackby(obj/item/weapon/W as obj, mob/user as mob)
 	user.drop_item(W, src.loc)
@@ -111,7 +111,7 @@
 
 /obj/effect/gateway/active
 	luminosity=5
-	l_color="#ff0000"
+	light_color = LIGHT_COLOR_RED
 	spawnable=list(
 		/mob/living/simple_animal/hostile/scarybat,
 		/mob/living/simple_animal/hostile/creature,
@@ -120,7 +120,7 @@
 
 /obj/effect/gateway/active/cult
 	luminosity=5
-	l_color="#ff0000"
+	light_color = LIGHT_COLOR_RED
 	spawnable=list(
 		/mob/living/simple_animal/hostile/scarybat/cult,
 		/mob/living/simple_animal/hostile/creature/cult,

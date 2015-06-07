@@ -130,9 +130,18 @@
 /obj/machinery/proc/power_change()
 	if(powered(power_channel))
 		stat &= ~NOPOWER
-	else
 
+		if(!use_auto_lights)
+			return
+		set_light(light_range_on, light_power_on)
+
+	else
 		stat |= NOPOWER
+
+		if(!use_auto_lights)
+			return
+		set_light(0)
+
 
 // connect the machine to a powernet if a node cable is present on the turf
 /obj/machinery/power/proc/connect_to_network()

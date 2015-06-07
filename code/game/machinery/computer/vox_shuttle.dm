@@ -12,7 +12,7 @@ var/global/vox_shuttle_location
 	var/moving = FALSE
 	var/lastMove = 0
 
-	l_color = "#B40000"
+	light_color = LIGHT_COLOR_RED
 
 /obj/machinery/computer/vox_station/proc/vox_move_to(var/destination)
 	if(moving)

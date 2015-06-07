@@ -814,7 +814,7 @@ var/list/compatible_mobs = list(/mob/living/carbon/human, /mob/living/carbon/mon
 	name = "Lantern Syndrome"
 	stage = 2
 /datum/disease2/effect/lantern/activate(var/mob/living/carbon/mob,var/multiplier)
-	mob.SetLuminosity(4)
+	mob.set_light(4)
 	mob << "<span class = 'notice'>You are glowing!</span>"
 
 

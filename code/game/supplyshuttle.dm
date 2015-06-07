@@ -20,18 +20,14 @@ var/list/mechtoys = list(
 	/obj/item/toy/prize/phazon
 )
 
-/area/supply/station //DO NOT TURN THE lighting_use_dynamic STUFF ON FOR SHUTTLES. IT BREAKS THINGS.
+/area/supply/station
 	name = "supply shuttle"
 	icon_state = "shuttle3"
-	luminosity = 1
-	lighting_use_dynamic = 0
 	requires_power = 0
 
-/area/supply/dock //DO NOT TURN THE lighting_use_dynamic STUFF ON FOR SHUTTLES. IT BREAKS THINGS.
+/area/supply/dock
 	name = "supply shuttle"
 	icon_state = "shuttle3"
-	luminosity = 1
-	lighting_use_dynamic = 0
 	requires_power = 0
 
 //SUPPLY PACKS MOVED TO /code/defines/obj/supplypacks.dm
@@ -123,7 +119,7 @@ var/list/mechtoys = list(
 	var/last_viewed_group = "categories"
 	var/datum/money_account/current_acct
 
-	l_color = "#87421F"
+	light_color = LIGHT_COLOR_BROWN
 
 /obj/machinery/computer/ordercomp
 	name = "Supply ordering console"
@@ -135,7 +131,7 @@ var/list/mechtoys = list(
 	var/last_viewed_group = "categories"
 	var/datum/money_account/current_acct
 
-	l_color = "#87421F"
+	light_color = LIGHT_COLOR_BROWN
 
 /*
 /obj/effect/marker/supplymarker

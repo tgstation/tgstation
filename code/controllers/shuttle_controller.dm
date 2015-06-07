@@ -49,7 +49,7 @@ datum/shuttle_controller/proc/incall(coeff = 1)
 	//turning on the red lights in hallways
 	if(alert == 0)
 		for(var/area/A in areas)
-			if(istype(A, /area/hallway) && !A.lighting_subarea)
+			if(istype(A, /area/hallway))
 				A.readyalert()
 
 datum/shuttle_controller/proc/shuttlealert(var/X)
@@ -76,7 +76,7 @@ datum/shuttle_controller/proc/recall()
 			setdirection(-1)
 			online = 1
 			for(var/area/A in areas)
-				if(istype(A, /area/hallway) && !A.lighting_subarea)
+				if(istype(A, /area/hallway))
 					A.readyreset()
 			return
 		else //makes it possible to send shuttle back.
@@ -232,6 +232,8 @@ datum/shuttle_controller/emergency_shuttle/process()
 					var/turf/D = locate(T.x, throwy - 1, 1)
 					//var/turf/E = get_step(D, SOUTH)
 					for(var/atom/A as mob|obj in T)
+						if(istype(A, /atom/movable/lighting_overlay)) //This'd be a whole nother level of dumb
+							continue
 						if(ismob(A))
 							var/mob/M=A
 							M.gib()

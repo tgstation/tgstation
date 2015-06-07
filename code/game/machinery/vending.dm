@@ -1397,7 +1397,7 @@
 		src.build_inventory(contraband, 1)
 		emagged = 1
 		overlays = 0
-		var/image/dangerlay = image(icon,"[icon_state]-dangermode",LIGHTING_LAYER+1)
+		var/image/dangerlay = image(icon,"[icon_state]-dangermode", LIGHTING_LAYER + 1)
 		overlays_vending[2] = dangerlay
 		update_icon()
 		return 1
@@ -1414,7 +1414,7 @@
 	..()
 	emagged = 1
 	overlays = 0
-	var/image/dangerlay = image(icon,"[icon_state]-dangermode",LIGHTING_LAYER+1)
+	var/image/dangerlay = image(icon,"[icon_state]-dangermode", LIGHTING_LAYER + 1)
 	overlays_vending[2] = dangerlay
 	update_icon()
 
@@ -1444,7 +1444,7 @@
 		src.build_inventory(contraband, 1)
 		emagged = 1
 		overlays = 0
-		var/image/dangerlay = image(icon,"[icon_state]-dangermode",LIGHTING_LAYER+1)
+		var/image/dangerlay = image(icon,"[icon_state]-dangermode", LIGHTING_LAYER + 1)
 		overlays_vending[2] = dangerlay
 		update_icon()
 		return 1
@@ -1461,7 +1461,7 @@
 	..()
 	emagged = 1
 	overlays = 0
-	var/image/dangerlay = image(icon,"[icon_state]-dangermode",LIGHTING_LAYER+1)
+	var/image/dangerlay = image(icon,"[icon_state]-dangermode", LIGHTING_LAYER + 1)
 	overlays_vending[2] = dangerlay
 	update_icon()
 

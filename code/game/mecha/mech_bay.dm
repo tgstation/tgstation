@@ -155,7 +155,7 @@
 	var/obj/machinery/mech_bay_recharge_floor/recharge_floor
 	var/obj/machinery/mech_bay_recharge_port/recharge_port
 
-	l_color = "#CD00CD"
+	light_color = LIGHT_COLOR_PINK
 
 /obj/machinery/computer/mech_bay_power_console/proc/mecha_in(var/obj/mecha/mecha)
 	if(stat&(NOPOWER|BROKEN))

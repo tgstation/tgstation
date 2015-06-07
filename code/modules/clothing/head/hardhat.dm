@@ -4,7 +4,8 @@
 	icon_state = "hardhat0_yellow"
 	flags = FPRINT
 	item_state = "hardhat0_yellow"
-	var/brightness_on = 4 //luminosity when on
+	light_power = 1.5
+	var/brightness_on = 5 //luminosity when on
 	var/on = 0
 	_color = "yellow" //Determines used sprites: hardhat[on]_[_color] and hardhat[on]_[_color]2 (lying down sprite)
 	armor = list(melee = 30, bullet = 5, laser = 20,energy = 10, bomb = 20, bio = 10, rad = 20)
@@ -12,29 +13,15 @@
 	action_button_name = "Toggle Helmet Light"
 	siemens_coefficient = 0.9
 
-	attack_self(mob/user)
-		if(!isturf(user.loc))
-			user << "You cannot turn the light on while in this [user.loc]" //To prevent some lighting anomalities.
-			return
-		on = !on
-		icon_state = "hardhat[on]_[_color]"
-		item_state = "hardhat[on]_[_color]"
+/obj/item/clothing/head/hardhat/attack_self(mob/user)
+	on = !on
+	icon_state = "hardhat[on]_[_color]"
+	item_state = "hardhat[on]_[_color]"
 
-		if(on)	user.SetLuminosity(user.luminosity + brightness_on)
-		else	user.SetLuminosity(user.luminosity - brightness_on)
-
-	pickup(mob/user)
-		if(on)
-			user.SetLuminosity(user.luminosity + brightness_on)
-//			user.UpdateLuminosity()	//TODO: Carn
-			SetLuminosity(0)
-
-	dropped(mob/user)
-		if(on && !luminosity)
-			user.SetLuminosity(user.luminosity - brightness_on)
-//			user.UpdateLuminosity()
-			SetLuminosity(brightness_on)
-
+	if(on)
+		set_light(brightness_on)
+	else
+		set_light(0)
 
 /obj/item/clothing/head/hardhat/orange
 	icon_state = "hardhat0_orange"

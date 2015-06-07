@@ -1241,11 +1241,10 @@ obj/machinery/power/apc/proc/autoset(var/val, var/on)
 	if( cell && cell.charge>=20)
 		cell.use(20);
 		spawn(0)
-			for(var/area/A in areaMaster.related)
-				for(var/obj/machinery/light/L in A)
-					L.on = 1
-					L.broken()
-					sleep(1)
+			for(var/obj/machinery/light/L in areaMaster)
+				L.on = 1
+				L.broken()
+				sleep(1)
 
 /obj/machinery/power/apc/Destroy()
 	areaMaster.remove_apc(src)

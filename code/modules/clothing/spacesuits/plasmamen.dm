@@ -53,30 +53,13 @@
 	action_button_name = "Toggle Helmet Light"
 
 /obj/item/clothing/head/helmet/space/plasmaman/attack_self(mob/user)
-	if(!isturf(user.loc))
-		user << "You cannot turn the light on while in this [user.loc]" //To prevent some lighting anomalities.
-		return
 	if(no_light)
 		return
 	on = !on
 	icon_state = "[base_state][on]"
-	if(on)	user.SetLuminosity(user.luminosity + brightness_on)
-	else	user.SetLuminosity(user.luminosity - brightness_on)
+	if(on)	set_light(brightness_on)
+	else	set_light(0)
 	user.update_inv_head()
-
-/obj/item/clothing/head/helmet/space/plasmaman/pickup(mob/user)
-	if(on)
-		user.SetLuminosity(user.luminosity + brightness_on)
-//		user.UpdateLuminosity()
-		SetLuminosity(0)
-
-/obj/item/clothing/head/helmet/space/plasmaman/dropped(mob/user)
-	if(on && !luminosity)
-		user.SetLuminosity(user.luminosity - brightness_on)
-//		user.UpdateLuminosity()
-		SetLuminosity(brightness_on)
-
-
 
 // ENGINEERING
 /obj/item/clothing/suit/space/plasmaman/assistant

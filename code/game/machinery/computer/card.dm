@@ -43,7 +43,7 @@
 		"ERT_medical",
 	)
 
-	l_color = "#0000FF"
+	light_color = LIGHT_COLOR_BLUE
 
 	proc/is_centcom()
 		return istype(src, /obj/machinery/computer/card/centcom)

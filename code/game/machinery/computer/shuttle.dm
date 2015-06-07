@@ -5,7 +5,7 @@
 	var/auth_need = 3.0
 	var/list/authorized = list(  )
 
-	l_color = "#7BF9FF"
+	light_color = LIGHT_COLOR_CYAN
 
 	attackby(var/obj/item/weapon/card/W as obj, var/mob/user as mob)
 		if(stat & (BROKEN|NOPOWER))	return

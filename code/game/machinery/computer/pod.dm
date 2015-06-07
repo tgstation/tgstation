@@ -14,7 +14,7 @@
 	var/list/powers = list()
 	var/list/loopings = list()
 
-	l_color = "#555555"
+	light_color = LIGHT_COLOR_CYAN
 
 /obj/machinery/computer/pod/New()
 	..()
@@ -285,7 +285,7 @@
 	desc = "The Syndicate operate on a tight budget. Operates external airlocks."
 	req_access = list(access_syndicate)
 	circuit = /obj/item/weapon/circuitboard/syndicatedoor
-	l_color = "#000000"
+	light_color = null
 
 /obj/machinery/computer/pod/old/syndicate/attack_hand(var/mob/user as mob)
 	if(!allowed(user))

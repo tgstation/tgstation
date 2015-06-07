@@ -27,11 +27,10 @@
 	return
 
 /obj/item/blueprints/Topic(href, href_list)
-	..()
-	if ((usr.restrained() || usr.stat || usr.get_active_hand() != src))
+	. = ..()
+	if(.)
 		return
-	if (!href_list["action"])
-		return
+
 	switch(href_list["action"])
 		if ("create_area")
 			if (get_area_type()!=AREA_SPACE)
@@ -121,9 +120,8 @@ move an amendment</a> to the drawing.</p>
 		return
 	var/area/A = new
 	A.name = str
-	A.tagbase = "[A.type]_[md5(str)]" // without this dynamic light system ruin everithing
+//	A.tagbase = "[A.type]_[md5(str)]" // without this dynamic light system ruin everithing
 	A.tag = "[A.type]/[md5(str)]"
-	A.master = A
 	//var/ma
 	//ma = A.master ? "[A.master]" : "(null)"
 	//world << "DEBUG: create_area: <br>A.name=[A.name]<br>A.tag=[A.tag]<br>A.master=[ma]"
@@ -135,7 +133,6 @@ move an amendment</a> to the drawing.</p>
 
 	spawn(0)
 		move_turfs_to_area(turfs, A)
-		A.SetDynamicLighting()
 
 	spawn(5)
 		//ma = A.master ? "[A.master]" : "(null)"
@@ -164,8 +161,7 @@ move an amendment</a> to the drawing.</p>
 		usr << "<span class='warning'>Text too long.</span>"
 		return
 	set_area_machinery_title(A,str,prevname)
-	for(var/area/RA in A.related)
-		RA.name = str
+	A.name = str
 	usr << "<span class='notice'>You set the area '[prevname]' title to '[str]'.</span>"
 	interact()
 	return
@@ -175,17 +171,16 @@ move an amendment</a> to the drawing.</p>
 /obj/item/blueprints/proc/set_area_machinery_title(var/area/A,var/title,var/oldtitle)
 	if (!oldtitle) // or replacetext goes to infinite loop
 		return
-	for(var/area/RA in A.related)
-		for(var/obj/machinery/alarm/M in RA)
-			M.name = replacetext(M.name,oldtitle,title)
-		for(var/obj/machinery/power/apc/M in RA)
-			M.name = replacetext(M.name,oldtitle,title)
-		for(var/obj/machinery/atmospherics/unary/vent_scrubber/M in RA)
-			M.name = replacetext(M.name,oldtitle,title)
-		for(var/obj/machinery/atmospherics/unary/vent_pump/M in RA)
-			M.name = replacetext(M.name,oldtitle,title)
-		for(var/obj/machinery/door/M in RA)
-			M.name = replacetext(M.name,oldtitle,title)
+	for(var/obj/machinery/alarm/M in A)
+		M.name = replacetext(M.name,oldtitle,title)
+	for(var/obj/machinery/power/apc/M in A)
+		M.name = replacetext(M.name,oldtitle,title)
+	for(var/obj/machinery/atmospherics/unary/vent_scrubber/M in A)
+		M.name = replacetext(M.name,oldtitle,title)
+	for(var/obj/machinery/atmospherics/unary/vent_pump/M in A)
+		M.name = replacetext(M.name,oldtitle,title)
+	for(var/obj/machinery/door/M in A)
+		M.name = replacetext(M.name,oldtitle,title)
 	//TODO: much much more. Unnamed airlocks, cameras, etc.
 
 /obj/item/blueprints/proc/check_tile_is_border(var/turf/T2,var/dir)

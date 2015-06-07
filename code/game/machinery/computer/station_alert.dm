@@ -4,7 +4,7 @@
 	desc = "Used to access the station's automated alert system."
 	icon_state = "alert:0"
 	circuit = "/obj/item/weapon/circuitboard/stationalert"
-	l_color = "#7BF9FF"
+	light_color = LIGHT_COLOR_CYAN
 
 	var/alarms = list("Fire"=list(), "Atmosphere"=list(), "Power"=list())
 

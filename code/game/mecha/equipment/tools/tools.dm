@@ -880,7 +880,7 @@
 	var/pow_chan
 	if(A)
 		for(var/c in use_channels)
-			if(A.master && A.master.powered(c))
+			if(A.powered(c))
 				pow_chan = c
 				break
 	return pow_chan
@@ -925,13 +925,13 @@
 		if(A)
 			var/pow_chan
 			for(var/c in list(EQUIP,ENVIRON,LIGHT))
-				if(A.master.powered(c))
+				if(A.powered(c))
 					pow_chan = c
 					break
 			if(pow_chan)
 				var/delta = min(12, ER.chassis.cell.maxcharge-cur_charge)
 				ER.chassis.give_power(delta)
-				A.master.use_power(delta*ER.coeff, pow_chan)
+				A.use_power(delta*ER.coeff, pow_chan)
 	return
 
 

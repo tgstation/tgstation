@@ -9,13 +9,8 @@
 	var/list/tracked = list(  )
 	var/track_special_role
 
-	l_color = "#0000FF"
-	power_change()
-		..()
-		if(!(stat & (BROKEN|NOPOWER)))
-			SetLuminosity(2)
-		else
-			SetLuminosity(0)
+	light_color = LIGHT_COLOR_BLUE
+	light_range_on = 2
 
 
 /obj/machinery/computer/crew/New()

@@ -290,7 +290,7 @@ obj/effect/bmode/buildholder/New()
 							A.maptext = holder.buildmode.copycat.maptext
 							A.maptext_height = holder.buildmode.copycat.maptext_height
 							A.maptext_width = holder.buildmode.copycat.maptext_width
-							A.l_color = holder.buildmode.copycat.l_color
+							A.light_color = holder.buildmode.copycat.light_color
 							A.luminosity = holder.buildmode.copycat.luminosity
 							A.molten = holder.buildmode.copycat.molten
 							A.pixel_x = holder.buildmode.copycat.pixel_x

@@ -593,9 +593,10 @@ You are weak to holy things and starlight. Don't go into space and avoid the Cha
 		if(VAMP_MATURE in mind.vampire.powers)
 			smitetemp -= 1
 		if(VAMP_SHADOW in mind.vampire.powers)
-			var/turf/simulated/T = get_turf(src)
-			if(T.lighting_lumcount < 2)
+			var/turf/T = get_turf(src)
+			if((T.get_lumcount() * 10) < 2)
 				smitetemp -= 1
+
 		if(VAMP_UNDYING in mind.vampire.powers)
 			smitetemp -= 1
 

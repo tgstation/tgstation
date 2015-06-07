@@ -179,7 +179,7 @@
 	var/list/consoles = list()
 	var/badmin = 0
 
-	l_color = "#CD00CD"
+	light_color = LIGHT_COLOR_PINK
 
 /obj/machinery/computer/rdservercontrol/Topic(href, href_list)
 	if(..())

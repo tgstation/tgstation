@@ -147,12 +147,16 @@ var/global/list/reagents_to_log = list("fuel"  =  "welder fuel", "plasma"=  "pla
 	return
 
 /obj/singularity_act()
+	if(!simulated)
+		return 0
 	ex_act(1)
 	if(src)
 		qdel(src)
 	return 2
 
 /obj/singularity_pull(S, current_size)
+	if(!simulated)
+		return 0
 	if(anchored)
 		if(current_size >= STAGE_FIVE)
 			anchored = 0

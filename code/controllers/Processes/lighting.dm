@@ -1,28 +1,29 @@
-/datum/controller/process/lighting
-	schedule_interval = 5 // every .5 second
-
 /datum/controller/process/lighting/setup()
 	name = "lighting"
-	lighting_controller.Initialize()
+	schedule_interval = LIGHTING_INTERVAL
+
+	create_lighting_overlays()
 
 /datum/controller/process/lighting/doWork()
-	lighting_controller.lights_workload_max = \
-		max(lighting_controller.lights_workload_max, lighting_controller.lights.len)
-
-	for(var/datum/light_source/L in lighting_controller.lights)
-		if(L && L.check())
-			lighting_controller.lights.Remove(L)
-
-		scheck()
-
-	lighting_controller.changed_turfs_workload_max = \
-		max(lighting_controller.changed_turfs_workload_max, lighting_controller.changed_turfs.len)
-
-	for(var/turf/T in lighting_controller.changed_turfs)
-		if(T && T.lighting_changed)
-			T.shift_to_subarea()
+	for(var/datum/light_source/L in lighting_update_lights)
+		if(L.needs_update)
+			if(L.destroyed)
+				L.remove_lum()
+			else if(L.check() || L.force_update)
+				L.remove_lum()
+				L.apply_lum()
+				L.force_update = 0
+			L.needs_update = 0
 
 		scheck()
 
-	if(lighting_controller.changed_turfs && lighting_controller.changed_turfs.len)
-		lighting_controller.changed_turfs.len = 0 // reset the changed list
+	lighting_update_lights.Cut()
+
+	for(var/atom/movable/lighting_overlay/O in lighting_update_overlays)
+		if(O.needs_update)
+			O.update_overlay()
+			O.needs_update = 0
+
+		scheck()
+
+	lighting_update_overlays.Cut()
