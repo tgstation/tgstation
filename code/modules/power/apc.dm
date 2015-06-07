@@ -1301,4 +1301,10 @@ obj/machinery/power/apc/proc/autoset(var/val, var/on)
 	..()
 	name = replacetext(name,oldarea,newarea)
 
+/obj/machinery/power/apc/wirejack(var/mob/living/silicon/pai/P)
+	..()
+	locked = !locked
+	update_icon()
+	return
+
 #undef APC_UPDATE_ICON_COOLDOWN

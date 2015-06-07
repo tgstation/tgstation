@@ -74,7 +74,7 @@
 	var/list/categories = list()
 	var/list/allowed_inputs = list()	//items that we can directly slot into the vending machine
 
-	machine_flags = SCREWTOGGLE | WRENCHMOVE | FIXED2WORK | CROWDESTROY | EJECTNOTDEL | PURCHASER
+	machine_flags = SCREWTOGGLE | WRENCHMOVE | FIXED2WORK | CROWDESTROY | EJECTNOTDEL | PURCHASER | WIREJACK
 
 /obj/machinery/vending/cultify()
 	new /obj/structure/cult/forge(loc)
@@ -818,6 +818,12 @@
 	overlays -= overlays_vending[2]
 	if(emagged)
 		overlays += overlays_vending[2]
+
+/obj/machinery/vending/wirejack(var/mob/living/silicon/pai/P)
+	..()
+	extended_inventory = !extended_inventory
+	scan_id = !scan_id
+	return
 
 
 /*

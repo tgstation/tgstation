@@ -9,16 +9,13 @@
 	var/obj/machinery/camera/current = null
 
 	var/ram = 100	// Used as currency to purchase different abilities
-	var/list/software = list()
+	var/list/software = list("crew manifest","digital messenger")
 	var/userDNA		// The DNA string of our assigned user
 	var/obj/item/device/paicard/card	// The card we inhabit
 
 	var/speakStatement = "states"
 	var/speakExclamation = "declares"
 	var/speakQuery = "queries"
-
-
-	var/obj/item/weapon/pai_cable/cable		// The cable we produce and use when door or camera jacking
 
 	var/master				// Name of the one who commands us
 	var/master_dna			// DNA string for owner verification
@@ -38,6 +35,7 @@
 
 	var/secHUD = 0			// Toggles whether the Security HUD is active or not
 	var/medHUD = 0			// Toggles whether the Medical  HUD is active or not
+	var/lighted = 0			// Toggles whether light is active or not
 
 	var/datum/data/record/medicalActive1		// Datacore record declarations for record software
 	var/datum/data/record/medicalActive2
@@ -45,8 +43,9 @@
 	var/datum/data/record/securityActive1		// Could probably just combine all these into one
 	var/datum/data/record/securityActive2
 
-	var/obj/machinery/door/hackdoor		// The airlock being hacked
+	var/obj/machinery/hacktarget		// The machine being hacked
 	var/hackprogress = 0				// Possible values: 0 - 100, >= 100 means the hack is complete and will be reset upon next check
+	var/charge = 0						// 0 - 15, used for charging up the chem synth and food synth
 
 	var/obj/item/radio/integrated/signal/sradio // AI's signaller
 
@@ -125,9 +124,19 @@
 		// 33% chance to change prime directive (based on severity)
 		// 33% chance of no additional effect
 
-	src.silence_time = world.timeofday + 120 * 10		// Silence for 2 minutes
+	// Shielded: Silence for 15 seconds
+	// 0% chance to kill
+		// 33% chance to unbind
+		// 66% chance no effect
+
 	src << "<font color=green><b>Communication circuit overload. Shutting down and reloading communication circuits - speech and messaging functionality will be unavailable until the reboot is complete.</b></font>"
-	if(prob(20))
+	if(!software.Find("redundant threading"))
+		src.silence_time = world.timeofday + 120 * 10		// Silence for 2 minutes
+	else
+		src << "<font color=green>Your redundant threading begins pipelining new processes... communication circuit restored in one quarter minute.</font>"
+		src.silence_time = world.timeofday + 15 * 10
+
+	if(prob(20) && !software.Find("redundant threading"))
 		var/turf/T = get_turf(src.loc)
 		for (var/mob/M in viewers(T))
 			M.show_message("<span class='warning'>A shower of sparks spray from [src]'s inner workings.</span>", 3, "<span class='warning'>You hear and smell the ozone hiss of electrical sparks being expelled violently.</span>", 2)
@@ -139,6 +148,9 @@
 			src.master_dna = null
 			src << "<font color=green>You feel unbound.</font>"
 		if(2)
+			if(software.Find("redundant threading"))
+				src << "<font color=green>Your redundant threading picks up your intelligence simulator without missing a beat.</font>"
+				return
 			var/command
 			if(severity  == 1)
 				command = pick("Serve", "Love", "Fool", "Entice", "Observe", "Judge", "Respect", "Educate", "Amuse", "Entertain", "Glorify", "Memorialize", "Analyze")

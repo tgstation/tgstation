@@ -56,6 +56,7 @@
 	explosion_block = 1
 
 	emag_cost = 1 // in MJ
+	machine_flags = WIREJACK
 
 /obj/machinery/door/airlock/Destroy()
 	if(wires)
@@ -1255,4 +1256,9 @@ About the new airlock wires panel:
 	locked = 0
 	open()
 	locked = 1
+	return
+
+/obj/machinery/door/airlock/wirejack(var/mob/living/silicon/pai/P)
+	..()
+	attack_ai(P)
 	return

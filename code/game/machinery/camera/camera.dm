@@ -20,7 +20,7 @@ var/list/camera_names=list()
 	var/obj/item/weapon/camera_assembly/assembly = null
 	var/light_on = 0
 
-	machine_flags = SCREWTOGGLE
+	machine_flags = SCREWTOGGLE | WIREJACK
 
 	//OTHER
 
@@ -372,3 +372,10 @@ var/list/camera_names=list()
 	busy = 0
 	return 0
 
+/obj/machinery/camera/wirejack(var/mob/living/silicon/pai/P)
+	..()
+	P.set_machine(src)
+	if(alert("Cancel camera view", "Cameras", "Cancel") == "Cancel")
+		P.unset_machine()
+		P.reset_view(null)
+	return
