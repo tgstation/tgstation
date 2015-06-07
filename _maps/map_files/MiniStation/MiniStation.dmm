@@ -928,6 +928,7 @@
 "rR" = (/obj/structure/cable{d1 = 4; d2 = 8; icon_state = "4-8"; pixel_x = 0},/turf/simulated/floor/plasteel{icon_state = "L10"; dir = 4},/area/hallway/secondary/exit)
 "rS" = (/obj/structure/cable{d1 = 4; d2 = 8; icon_state = "4-8"; pixel_x = 0},/turf/simulated/floor/plasteel{icon_state = "L12"; dir = 4},/area/hallway/secondary/exit)
 "rT" = (/obj/structure/cable{d1 = 4; d2 = 8; icon_state = "4-8"; pixel_x = 0},/turf/simulated/floor/plasteel{icon_state = "L14"; dir = 4},/area/hallway/secondary/exit)
+"rU" = (/mob/living/simple_animal/pet/drone/tincan,/turf/simulated/floor/plasteel{icon_state = "white"},/area/medical/research{name = "Research Division"})
 "rU" = (/obj/machinery/light/small{dir = 1},/obj/machinery/telecomms/bus/preset_one/ministation,/turf/simulated/floor/bluegrid{icon_state = "dark"; name = "Mainframe Floor"; nitrogen = 100; oxygen = 0; temperature = 80},/area/tcommsat/computer)
 "rV" = (/obj/machinery/light,/turf/simulated/floor/plasteel,/area/hallway/primary/central)
 "rW" = (/obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden{dir = 8},/turf/simulated/floor/plasteel,/area/hallway/primary/central)
