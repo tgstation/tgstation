@@ -24,7 +24,11 @@
 			src.max_uses++
 			src.uses++
 			qdel(O)
-
+	if(istype(O, /obj/item/weapon/antag_spawner/slaughter_demon))
+		user << "<span class='notice'>On second thought, maybe summoning a demon is a bad idea. You refund your points.</span>"
+		src.max_uses++
+		src.uses++
+		qdel(O)
 
 
 
@@ -184,6 +188,10 @@
 
 		dat += "<A href='byond://?src=\ref[src];spell_choice=scrying'>Scrying Orb</A><BR>"
 		dat += "<I>An incandescent orb of crackling energy, using it will allow you to ghost while alive, allowing you to spy upon the station with ease. In addition, buying it will permanently grant you x-ray vision.</I><BR>"
+		dat += "<HR>"
+
+		dat += "<A href='byond://?src=\ref[src];spell_choice=blood'>Bottle of Blood</A><BR>"
+		dat += "<I>A vial of magically infused blood, the smell of which will attract extradimensional beings when broken. Be careful though, the kinds of creatures summoned by blood magic are indiscriminate in their killing, and you yourself may become a victim.</I><BR>"
 
 		dat += "<HR>"
 
@@ -405,6 +413,11 @@
 							if (!(H.dna.check_mutation(XRAY)))
 								H.dna.add_mutation(XRAY)
 							temp = "You have purchased a scrying orb, and gained x-ray vision."
+							max_uses--
+						if("blood")
+							feedback_add_details("wizard_spell_learned","BB")
+							temp = "You have purchased a bottle of blood."
+							new /obj/item/weapon/antag_spawner/slaughter_demon(get_turf(H))
 							max_uses--
 		else
 			if(href_list["temp"])
