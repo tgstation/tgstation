@@ -44,6 +44,9 @@
 				SSair.add_to_active(T)
 	..()
 
+/turf/Destroy()
+	return QDEL_HINT_HARDDEL_NOW
+
 /turf/attack_hand(mob/user as mob)
 	user.Move_Pulled(src)
 

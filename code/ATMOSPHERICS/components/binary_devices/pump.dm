@@ -41,7 +41,7 @@ Thus, the two variables affect pump operation are set in New():
 
 	icon_state = "pump_[on?"on":"off"]"
 
-/obj/machinery/atmospherics/binary/pump/process()
+/obj/machinery/atmospherics/binary/pump/process_atmos()
 //	..()
 	if(stat & (NOPOWER|BROKEN))
 		return 0
@@ -110,7 +110,7 @@ Thus, the two variables affect pump operation are set in New():
 	data["max_pressure"] = MAX_OUTPUT_PRESSURE
 	return data
 
-/obj/machinery/atmospherics/binary/pump/initialize()
+/obj/machinery/atmospherics/binary/pump/atmosinit()
 	..()
 	if(frequency)
 		set_frequency(frequency)

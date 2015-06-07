@@ -4,7 +4,7 @@
 
 	name = "gas mixer"
 
-	req_access = list(access_atmospherics)
+	req_access = list()
 
 	can_unwrench = 1
 
@@ -40,7 +40,7 @@
 	..()
 	air3.volume = 300
 
-/obj/machinery/atmospherics/trinary/mixer/process()
+/obj/machinery/atmospherics/trinary/mixer/process_atmos()
 	..()
 	if(!on)
 		return 0

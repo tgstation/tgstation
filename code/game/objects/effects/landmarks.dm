@@ -100,6 +100,10 @@
 
 	return 1
 
+/obj/effect/landmark/start/Destroy()
+	..()
+	start_landmarks_list -= src
+
 /obj/effect/landmark/clown/New()
 	..()
 	tag = text("landmark*[]", name)

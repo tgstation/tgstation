@@ -9,27 +9,29 @@
 	var/volume = 0
 	var/destroyed = 0
 
+	var/lastupdate = 0
 	var/maximum_pressure = 90*ONE_ATMOSPHERE
 
 /obj/machinery/portable_atmospherics/New()
 	..()
-
+	SSair.atmos_machinery += src
 	air_contents.volume = volume
 	air_contents.temperature = T20C
 
 	return 1
 
-/obj/machinery/portable_atmospherics/process()
-	if(!connected_port) //only react when pipe_network will ont it do it for you
+/obj/machinery/portable_atmospherics/process_atmos()
+	//if(!connected_port) //only react when pipe_network will not it do it for you
 		//Allow for reactions
-		if(air_contents)
-			air_contents.react()
-	else
-		update_icon()
+	if(air_contents)  //implying pipe_network
+		air_contents.react()
+	update_icon()
 
+/obj/machinery/portable_atmospherics/process()
+	return
 /obj/machinery/portable_atmospherics/Destroy()
-	del(air_contents)
-
+	qdel(air_contents)
+	SSair.atmos_machinery -= src
 	..()
 
 /obj/machinery/portable_atmospherics/update_icon()

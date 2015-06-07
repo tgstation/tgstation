@@ -39,7 +39,9 @@ var/datum/subsystem/shuttle/SSshuttle
 	NEW_SS_GLOBAL(SSshuttle)
 
 
-/datum/subsystem/shuttle/Initialize()
+/datum/subsystem/shuttle/Initialize(timeofday, zlevel)
+	if (zlevel)
+		return ..()
 	if(!emergency)
 		WARNING("No /obj/docking_port/mobile/emergency placed on the map!")
 	if(!supply)
@@ -84,9 +86,6 @@ var/datum/subsystem/shuttle/SSshuttle
 /datum/subsystem/shuttle/proc/requestEvac(mob/user, call_reason)
 	if(!emergency)
 		ERROR("There is no emergency shuttle! The game will be unresolvable. This is likely due to a mapping error")
-		return
-
-	if(!universe.OnShuttleCall(user))
 		return
 
 	if(world.time - round_start_time < config.shuttle_refuel_delay)
@@ -145,7 +144,6 @@ var/datum/subsystem/shuttle/SSshuttle
 	log_game("[key_name(user)] has recalled the shuttle.")
 	message_admins("[key_name_admin(user)] has recalled the shuttle.")
 	return 1
-
 
 /datum/subsystem/shuttle/proc/autoEvac()
 	var/callShuttle = 1
@@ -300,6 +298,14 @@ var/datum/subsystem/shuttle/SSshuttle
 	slip.info += "</ul><br>"
 	slip.info += "CHECK CONTENTS AND STAMP BELOW THE LINE TO CONFIRM RECEIPT OF GOODS<hr>" // And now this is actually meaningful.
 	slip.loc = Crate
+	if(istype(Crate, /obj/structure/closet/crate))
+		var/obj/structure/closet/crate/CR = Crate
+		CR.manifest = slip
+		CR.update_icon()
+	if(istype(Crate, /obj/structure/largecrate))
+		var/obj/structure/largecrate/LC = Crate
+		LC.manifest = slip
+		LC.update_icon()
 
 	return Crate
 

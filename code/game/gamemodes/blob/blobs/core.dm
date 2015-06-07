@@ -35,6 +35,7 @@
 	blob_cores -= src
 	if(overmind)
 		qdel(overmind)
+	overmind = null
 	SSobj.processing.Remove(src)
 	..()
 

@@ -23,6 +23,7 @@
 
 /obj/mecha/combat/marauder/Destroy()
 	qdel(smoke_system)
+	smoke_system = null
 	..()
 
 /obj/mecha/combat/marauder/seraph

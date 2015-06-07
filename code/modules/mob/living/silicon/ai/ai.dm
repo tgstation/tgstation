@@ -134,6 +134,7 @@ var/list/ai_list = list()
 /mob/living/silicon/ai/Destroy()
 	ai_list -= src
 	shuttle_caller_list -= src
+	eyeobj = null
 	SSshuttle.autoEvac()
 	..()
 

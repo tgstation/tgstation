@@ -53,7 +53,7 @@ The regular pipe you see everywhere, including bent ones.
 		if(SOUTHWEST)
 			initialize_directions = SOUTH|WEST
 
-/obj/machinery/atmospherics/pipe/simple/initialize()
+/obj/machinery/atmospherics/pipe/simple/atmosinit()
 	normalize_dir()
 	var/N = 2
 	for(var/D in cardinal)
@@ -70,6 +70,7 @@ The regular pipe you see everywhere, including bent ones.
 	var/turf/T = loc			// hide if turf is not intact
 	hide(T.intact)
 	update_icon()
+	..()
 
 /obj/machinery/atmospherics/pipe/simple/Destroy()
 	if(node1)

@@ -74,7 +74,7 @@
 		nullifyPipenet(parent2)
 	..()
 
-/obj/machinery/atmospherics/binary/initialize()
+/obj/machinery/atmospherics/binary/atmosinit()
 
 	var/node2_connect = dir
 	var/node1_connect = turn(dir, 180)
@@ -93,6 +93,7 @@
 		showpipe = 1
 
 	update_icon()
+	..()
 
 /obj/machinery/atmospherics/binary/construction()
 	..()

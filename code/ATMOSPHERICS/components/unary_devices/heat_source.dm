@@ -1,18 +1,20 @@
-/obj/machinery/atmospherics/unary/cold_sink
+/obj/machinery/atmospherics/unary/heat_reservoir
+//currently the same code as cold_sink but anticipating process_atmos() changes
+
 	icon = 'icons/obj/atmospherics/cold_sink.dmi'
 	icon_state = "intact_off"
 	density = 1
 	use_power = 1
 
-	name = "cold sink"
-	desc = "Cools gas when connected to pipe network"
+	name = "heat reservoir"
+	desc = "Heats gas when connected to pipe network"
 
 	var/on = 0
 
 	var/current_temperature = T20C
 	var/current_heat_capacity = 50000 //totally random
 
-/obj/machinery/atmospherics/unary/cold_sink/update_icon()
+/obj/machinery/atmospherics/unary/heat_reservoir/update_icon()
 	if(node)
 		icon_state = "intact_[on?("on"):("off")]"
 	else
@@ -22,7 +24,7 @@
 
 	return
 
-/obj/machinery/atmospherics/unary/cold_sink/process()
+/obj/machinery/atmospherics/unary/heat_reservoir/process_atmos()
 	..()
 	if(!on)
 		return 0
@@ -34,7 +36,7 @@
 		var/combined_energy = current_temperature*current_heat_capacity + air_heat_capacity*air_contents.temperature
 		air_contents.temperature = combined_energy/combined_heat_capacity
 
-	//todo: have current temperature affected. require power to bring down current temperature again
+	//todo: have current temperature affected. require power to bring up current temperature again
 
 	if(abs(old_temperature-air_contents.temperature) > 1)
 		parent.update = 1

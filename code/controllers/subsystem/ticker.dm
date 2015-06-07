@@ -17,6 +17,7 @@ var/datum/subsystem/ticker/ticker
 	var/event = 0
 
 	var/login_music							//music played in pregame lobby
+	var/round_end_sound						//music/jingle played when the world reboots
 
 	var/list/datum/mind/minds = list()		//The characters in the game. Used for objective tracking.
 
@@ -46,11 +47,13 @@ var/datum/subsystem/ticker/ticker
 /datum/subsystem/ticker/New()
 	NEW_SS_GLOBAL(ticker)
 
-	login_music = pickweight(list('sound/ambience/title2.ogg' = 49, 'sound/ambience/title1.ogg' = 49, 'sound/ambience/clown.ogg' = 2)) // choose title music!
-	if(SSevent.holiday == "April Fool's Day")
+	login_music = pickweight(list('sound/ambience/title2.ogg' = 31, 'sound/ambience/title1.ogg' = 31, 'sound/ambience/clown.ogg' = 7)) // choose title music!
+	if(SSevent.holidays && SSevent.holidays[APRIL_FOOLS])
 		login_music = 'sound/ambience/clown.ogg'
 
-/datum/subsystem/ticker/Initialize()
+/datum/subsystem/ticker/Initialize(timeofday, zlevel)
+	if (zlevel)
+		return ..()
 	if(!syndicate_code_phrase)		syndicate_code_phrase	= generate_code_phrase()
 	if(!syndicate_code_response)	syndicate_code_response	= generate_code_phrase()
 	setupGenetics()
@@ -75,9 +78,11 @@ var/datum/subsystem/ticker/ticker
 					++totalPlayersReady
 
 			//countdown
+			if(timeLeft < 0)
+				return
 			timeLeft -= wait
 
-			if(timeLeft <= 30 && !tipped)
+			if(timeLeft <= 300 && !tipped)
 				send_random_tip()
 				tipped = 1
 
@@ -115,11 +120,6 @@ var/datum/subsystem/ticker/ticker
 					else
 						sleep(restart_timeout)
 						kick_clients_in_lobby("\red The round came to an end with you in the lobby.", 1) //second parameter ensures only afk clients are kicked
-
-						if(config.hook_round_end == 1)
-							world.log << "SHELL CALL: ROUND END"
-							shell("cd hooks/onRoundEnd/ && python onRoundEnd.py >> shell.log 2>&1")
-
 						world.Reboot()
 
 
@@ -157,13 +157,10 @@ var/datum/subsystem/ticker/ticker
 	can_continue = src.mode.pre_setup()		//Choose antagonists
 	SSjob.DivideOccupations() 				//Distribute jobs
 
-
 	if(!Debug2)
 		if(!can_continue)
-			world << "<B>Error setting up [master_mode].</B> Reverting to pre-game lobby."
-			log_admin("The gamemode setup for [mode.name] errored out.")
-			world.log << "The gamemode setup for [mode.name] errored out."
 			del(mode)
+			world << "<B>Error setting up [master_mode].</B> Reverting to pre-game lobby."
 			SSjob.ResetOccupations()
 			return 0
 	else
@@ -193,11 +190,13 @@ var/datum/subsystem/ticker/ticker
 
 
 	world << "<FONT color='blue'><B>Welcome to [station_name()], enjoy your stay!</B></FONT>"
-	world << sound('sound/AI/welcome.ogg') // Skie
-	//Holiday Round-start stuff	~Carn
-	if(SSevent.holiday)
+	world << sound('sound/AI/welcome.ogg')
+
+	if(SSevent.holidays)
 		world << "<font color='blue'>and...</font>"
-		world << "<h4>Happy [SSevent.holiday] Everybody!</h4>"
+		for(var/holidayname in SSevent.holidays)
+			var/datum/holiday/holiday = SSevent.holidays[holidayname]
+			world << "<h4>[holiday.greet()]</h4>"
 
 
 	spawn(0)//Forking here so we dont have to wait for this to finish
@@ -330,7 +329,7 @@ var/datum/subsystem/ticker/ticker
 		if(player && player.mind && player.mind.assigned_role)
 			if(player.mind.assigned_role == "Captain")
 				captainless=0
-			if(player.mind.assigned_role != "MODE")
+			if(player.mind.assigned_role != player.mind.special_role)
 				SSjob.EquipRank(player, player.mind.assigned_role, 0)
 	if(captainless)
 		for(var/mob/M in player_list)
@@ -367,7 +366,7 @@ var/datum/subsystem/ticker/ticker
 	//Round statistics report
 	var/datum/station_state/end_state = new /datum/station_state()
 	end_state.count()
-	var/station_integrity = round( 100.0 *  start_state.score(end_state), 0.1)
+	var/station_integrity = min(round( 100.0 *  start_state.score(end_state), 0.1), 100.0)
 
 	world << "<BR>[TAB]Shift Duration: <B>[round(world.time / 36000)]:[add_zero("[world.time / 600 % 60]", 2)]:[world.time / 100 % 6][world.time / 100 % 10]</B>"
 	world << "<BR>[TAB]Station Integrity: <B>[mode.station_was_nuked ? "<font color='red'>Destroyed</font>" : "[station_integrity]%"]</B>"
@@ -388,6 +387,8 @@ var/datum/subsystem/ticker/ticker
 			world << "<b>[aiPlayer.name] (Played by: [aiPlayer.mind.key])'s laws when it was deactivated were:</b>"
 			aiPlayer.show_laws(1)
 
+//		world << "<b>Total law changes: [aiPlayer.law_change_counter]</b>"
+
 		if (aiPlayer.connected_robots.len)
 			var/robolist = "<b>[aiPlayer.real_name]'s minions were:</b> "
 			for(var/mob/living/silicon/robot/robo in aiPlayer.connected_robots)
@@ -396,8 +397,8 @@ var/datum/subsystem/ticker/ticker
 				robolist += "[robo.name][robo.stat?" (Deactivated) (Played by: [robo.mind.key]), ":" (Played by: [robo.mind.key]), "]"
 			world << "[robolist]"
 	for (var/mob/living/silicon/robot/robo in mob_list)
-		if (!robo.connected_ai && robo.mind)
-			if(!robo || !robo.mind)
+		if (robo && !robo.connected_ai && robo.mind)
+			if (!robo || !robo.mind)
 				continue
 			if (robo.stat != 2)
 				world << "<b>[robo.name] (Played by: [robo.mind.key]) survived as an AI-less [ismommi(robo)?"MoMMI":"borg"]! Its laws were:</b>"
@@ -437,4 +438,3 @@ var/datum/subsystem/ticker/ticker
 	var/list/randomtips = file2list("config/tips.txt")
 	if(randomtips.len)
 		world << "<font color='purple'><b>Tip of the round: </b>[strip_html_properly(pick(randomtips))]</font>"
-

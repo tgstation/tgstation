@@ -33,6 +33,7 @@
 	else if(istype(creator, /obj/item/weapon/gun/energy/wormhole_projector))
 		var/obj/item/weapon/gun/energy/wormhole_projector/P = creator
 		P.portal_destroyed(src)
+	creator = null
 	return ..()
 
 /obj/effect/portal/proc/teleport(atom/movable/M as mob|obj)

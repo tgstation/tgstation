@@ -63,8 +63,7 @@
 	return //don't want the emitters to miss
 
 obj/item/projectile/beam/emitter/Destroy()
-	PlaceInPool(src)
-	return 1 //cancels the GCing
+	return QDEL_HINT_PUTINPOOL
 
 /obj/item/projectile/lasertag
 	name = "laser tag beam"

@@ -104,7 +104,7 @@ var/list/wireColours = list("red", "blue", "green", "black", "orange", "brown", 
 
 /datum/wires/Topic(href, href_list)
 	..()
-	if(in_range(holder, usr) && isliving(usr))
+	if(usr.Adjacent(holder) && isliving(usr))
 
 		var/mob/living/L = usr
 		if (!L.IsAdvancedToolUser())
