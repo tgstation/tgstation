@@ -39,7 +39,8 @@
 		"/obj/item/device/t_scanner",
 		"/obj/item/device/analyzer",
 		"/obj/item/taperoll/engineering",
-		"/obj/item/weapon/extinguisher")
+		"/obj/item/weapon/extinguisher",
+		"/obj/item/weapon/rcd_ammo")
 
 /obj/item/weapon/storage/belt/utility/complete/New()
 	..()
