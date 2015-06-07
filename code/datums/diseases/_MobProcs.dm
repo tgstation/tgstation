@@ -38,7 +38,25 @@
 	DD.holder = src
 	if(DD.disease_flags & CAN_CARRY && prob(5))
 		DD.carrier = 1
+	
+	//Copy properties over. This is so edited diseases persist.
+	DD.visibility_flags = D.visibility_flags
+	DD.disease_flags = D.disease_flags
+	DD.spread_flags = D.spread_flags
 	DD.strain_data = D.strain_data.Copy()
+	DD.form = D.form
+	DD.name = D.name
+	DD.desc = D.desc
+	DD.agent = D.agent
+	DD.spread_text = D.spread_text
+	DD.longevity= D.longevity
+	DD.cure_text = D.cure_text
+	DD.cures = D.cures
+	DD.cure_chance = D.cure_chance
+	DD.infectivity = D.infectivity
+	DD.permeability_mod = D.permeability_mod
+	DD.stage_prob = D.stage_prob
+	
 	DD.affected_mob.med_hud_set_status()
 
 
