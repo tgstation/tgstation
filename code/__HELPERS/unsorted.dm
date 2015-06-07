@@ -1189,7 +1189,7 @@ proc/get_mob_with_client_list()
 			return zone
 
 /proc/get_turf(const/atom/O)
-	if (isnull(O) || isarea(O))
+	if (isnull(O) || isarea(O) || !istype(O))
 		return
 	var/atom/A
 	for(A=O, A && !isturf(A), A=A.loc);  // semicolon is for the empty statement
