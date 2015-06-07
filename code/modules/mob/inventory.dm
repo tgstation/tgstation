@@ -312,3 +312,9 @@
 				W.loc=get_turf(src) // I think.
 	return equipped
 
+/mob/proc/get_id_card()
+	for(var/obj/item/I in src.get_all_slots())
+		. = I.GetID()
+		if(.)
+			break
+

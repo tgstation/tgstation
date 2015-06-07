@@ -130,7 +130,6 @@ var/const/POS_HEADER = {"<html>
 	var/sales = 0
 	var/department
 	var/mob/logged_in
-	var/datum/money_account/linked_account
 
 	var/credits_held = 0
 	var/credits_needed = 0
@@ -140,14 +139,21 @@ var/const/POS_HEADER = {"<html>
 
 	var/screen=POS_SCREEN_LOGIN
 
+	machine_flags = PURCHASER
+
 /obj/machinery/pos/New()
 	..()
 	id = current_pos_id++
+	if(ticker)
+		initialize()
+	update_icon()
+
+/obj/machinery/pos/initialize()
+	..()
 	if(department)
 		linked_account = department_accounts[department]
 	else
 		linked_account = station_account
-	update_icon()
 
 /obj/machinery/pos/proc/AddToOrder(var/name, var/units)
 	if(!(name in products))

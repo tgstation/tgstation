@@ -212,7 +212,7 @@
 		amt = "$[num2septext(amt)]"
 	return amt
 
-/obj/item/weapon/card/id/GetJobName()
+/obj/item/weapon/card/id/proc/GetJobName()
 	var/jobName = src.assignment //what the card's job is called
 	var/alt_jobName = src.rank   //what the card's job ACTUALLY IS: determines access, etc.
 
@@ -223,6 +223,15 @@
 	if(jobName in get_all_centcom_jobs() || alt_jobName in get_all_centcom_jobs()) //Return with the NT logo if it is a Centcom job
 		return "Centcom"
 	return "Unknown" //Return unknown if none of the above apply
+
+/obj/item/weapon/card/id/proc/GetJobRealName()
+	if( rank in get_all_jobs() )
+		return rank
+
+	if( assignment in get_all_jobs() )
+		return assignment
+
+	return "Unknown"
 
 // vgedit: We have different wallets.
 /*

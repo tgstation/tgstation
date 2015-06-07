@@ -458,47 +458,6 @@ var/global/list/all_jobs
 /proc/get_all_centcom_jobs()
 	return list("VIP Guest","Custodian","Thunderdome Overseer","Intel Officer","Medical Officer","Death Commando","Research Officer","BlackOps Commander","Supreme Commander")
 
-//gets the actual job rank (ignoring alt titles)
-//this is used solely for sechuds
-/obj/proc/GetJobRealName()
-	if (!istype(src, /obj/item/device/pda) && !istype(src,/obj/item/weapon/card/id))
-		return
-
-	var/rank
-	var/assignment
-	if(istype(src, /obj/item/device/pda))
-		if(src:id)
-			rank = src:id:rank
-			assignment = src:id:assignment
-	else if(istype(src, /obj/item/weapon/card/id))
-		rank = src:rank
-		assignment = src:assignment
-
-	if( rank in get_all_jobs() )
-		return rank
-
-	if( assignment in get_all_jobs() )
-		return assignment
-
-	return "Unknown"
-
-//gets the alt title, failing that the actual job rank
-//this is unused
-/obj/proc/sdsdsd()	//GetJobDisplayName
-	if (!istype(src, /obj/item/device/pda) && !istype(src,/obj/item/weapon/card/id))
-		return
-
-	var/assignment
-	if(istype(src, /obj/item/device/pda))
-		if(src:id)
-			assignment = src:id:assignment
-	else if(istype(src, /obj/item/weapon/card/id))
-		assignment = src:assignment
-
-	if(assignment)
-		return assignment
-
-	return "Unknown"
 
 proc/FindNameFromID(var/mob/living/carbon/human/H)
 	ASSERT(istype(H))
@@ -531,7 +490,3 @@ proc/FindNameFromID(var/mob/living/carbon/human/H)
 
 proc/get_all_job_icons() //For all existing HUD icons
 	return get_all_jobs() + list("Prisoner")
-
-/obj/proc/GetJobName() //Used in secHUD icon generation
-	return
-

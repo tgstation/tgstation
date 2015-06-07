@@ -77,8 +77,9 @@ proc/process_sec_hud(var/mob/M, var/advanced_mode,var/mob/eye)
 		if(!holder)
 			continue
 		holder.icon_state = "hudno_id"
-		if(perp.wear_id)
-			holder.icon_state = "hud[ckey(perp.wear_id.GetJobName())]"
+		var/obj/item/weapon/card/id/card = perp.get_id_card()
+		if(card)
+			holder.icon_state = "hud[ckey(card.GetJobName())]"
 		C.images += holder
 
 		if(advanced_mode) //If set, the SecHUD will display the implants a person has.

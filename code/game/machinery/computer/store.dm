@@ -10,8 +10,8 @@
 	name = "\improper Merchandise Computer Circuitboard"
 	build_path = /obj/machinery/computer/merch
 
-/obj/machinery/computer/merch/New()
-	..()
+/obj/machinery/computer/merch
+	machine_flags = EMAGGABLE | SCREWTOGGLE | WRENCHMOVE | FIXED2WORK | MULTITOOL_MENU | PURCHASER
 
 /obj/machinery/computer/merch/attack_paw(mob/user as mob)
 	return attack_hand(user)
@@ -27,10 +27,12 @@
 	if(stat & (BROKEN|NOPOWER))
 		return
 
+	var/obj/item/weapon/card/id/card = user.get_id_card()
+
 	var/balance=0
-	if(user.mind)
-		if(user.mind.initial_account)
-			balance = user.mind.initial_account.money
+
+	if(card)
+		balance = card.GetBalance()
 
 	var/dat = {"
 <html>
