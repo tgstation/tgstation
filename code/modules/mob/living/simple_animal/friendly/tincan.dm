@@ -33,9 +33,3 @@
 		if(change < 1)
 			emote("me", -1, "buzzes angrily.")
 
-
-/mob/living/simple_animal/pet/drone/tincan/movement_delay()
-	if(client && stat == CONSCIOUS && icon_state != "drone_tincan_move")
-		icon_state = "drone_tincan_move"
-	..()
-
