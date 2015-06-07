@@ -44,7 +44,7 @@
 		return 2
 
 	var/list/emptyTurfs = list()
-	for(var/turf/simulated/shuttle/T in areaInstance)
+	for(var/turf/simulated/floor/T in areaInstance)
 		if(T.density || T.contents.len)	continue
 		emptyTurfs += T
 

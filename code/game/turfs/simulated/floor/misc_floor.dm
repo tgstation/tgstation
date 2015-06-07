@@ -33,56 +33,7 @@
 	icon_state = "gcircuit"
 	floor_tile = /obj/item/stack/tile/plasteel
 
-/turf/simulated/shuttle
-	name = "shuttle"
-	icon = 'icons/turf/shuttle.dmi'
-	thermal_conductivity = 0.05
-	heat_capacity = 0
-	layer = 2
-
-/turf/simulated/shuttle/wall
-	name = "wall"
-	icon_state = "wall1"
-	opacity = 1
-	density = 1
-	blocks_air = 1
-
-//sub-type to be used for interior shuttle walls
-//won't get an underlay of the destination turf on shuttle move
-/turf/simulated/shuttle/wall/interior/copyTurf(turf/T)
-	if(T.type != type)
-		T = new type(T)
-		if(underlays.len)
-			T.underlays = underlays
-	if(T.icon_state != icon_state)
-		T.icon_state = icon_state
-	if(T.icon != icon)
-		T.icon = icon
-	if(T.color != color)
-		T.color = color
-	if(T.dir != dir)
-		T.dir = dir
-	return T
-
-/turf/simulated/shuttle/floor
-	name = "floor"
-	icon_state = "floor"
-
-/turf/simulated/shuttle/plating
-	name = "plating"
-	icon = 'icons/turf/floors.dmi'
-	icon_state = "plating"
-
-/turf/simulated/shuttle/plating/airless
-	oxygen = 0.01
-	nitrogen = 0.01
-	temperature = TCMB
-
-/turf/simulated/shuttle/floor4 // Added this floor tile so that I have a seperate turf to check in the shuttle -- Polymorph
-	name = "Brig floor"        // Also added it into the 2x3 brig area of the shuttle.
-	icon_state = "floor4"
-
-/turf/simulated/floor/beach
+/turf/simulated/floor/plating/beach
 	name = "Beach"
 	icon = 'icons/misc/beach.dmi'
 	ignoredirt = 1
@@ -90,16 +41,16 @@
 /turf/simulated/floor/beach/ex_act(severity, target)
 	contents_explosion(severity, target)
 
-/turf/simulated/floor/beach/sand
+/turf/simulated/floor/plating/beach/sand
 	name = "Sand"
 	icon_state = "sand"
 
-/turf/simulated/floor/beach/coastline
+/turf/simulated/floor/plating/beach/coastline
 	name = "Coastline"
 	icon = 'icons/misc/beach2.dmi'
 	icon_state = "sandwater"
 
-/turf/simulated/floor/beach/water
+/turf/simulated/floor/plating/beach/water
 	name = "Water"
 	icon_state = "water"
 
@@ -118,6 +69,15 @@
 /turf/simulated/floor/plating/snow/ex_act(severity, target)
 	contents_explosion(severity, target)
 
+/turf/simulated/floor/plating/snow/gravsnow
+	icon_state = "gravsnow"
+
+/turf/simulated/floor/plating/snow/gravsnow/corner
+	icon_state = "gravsnow_corner"
+
+/turf/simulated/floor/plating/snow/gravsnow/surround
+	icon_state = "gravsnow_surround"
+
 /turf/simulated/floor/noslip
 	name = "high-traction floor"
 	icon_state = "noslip"
@@ -127,3 +87,25 @@
 
 /turf/simulated/floor/noslip/MakeSlippery()
 	return
+
+
+/turf/simulated/floor/plating/sand
+	name = "sand"
+	icon = 'icons/misc/beach.dmi'
+	icon_state = "sand"
+
+/turf/simulated/floor/plating/maze
+	name = "maze floor"
+	heat_capacity = 6000000 // it's like another shoah
+	icon = 'icons/misc/beach.dmi'
+	icon_state= "sand"
+	toxins = 229.8
+	oxygen = 0
+	carbon_dioxide = 173.4
+	nitrogen = 135.1
+	temperature = 363.9
+
+/turf/simulated/floor/plating/dust
+	name = "dust"
+	icon = 'icons/turf/floors.dmi'
+	icon_state = "asteroid"

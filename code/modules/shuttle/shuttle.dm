@@ -1,6 +1,11 @@
 //use this define to highlight docking port bounding boxes (ONLY FOR DEBUG USE)
 //#define DOCKING_PORT_HIGHLIGHT
 
+#define ALLTURFS 0
+#define NONSPACE 1
+#define SHUTTLEONLY 2
+
+
 //NORTH default dir
 /obj/docking_port
 	invisibility = 101
@@ -17,6 +22,7 @@
 	var/height = 0	//size of covered area, paralell to dir
 	var/dwidth = 0	//position relative to covered area, perpendicular to dir
 	var/dheight = 0	//position relative to covered area, parallel to dir
+	var/turfcheck = NONSPACE
 
 	//these objects are indestructable
 /obj/docking_port/Destroy()
@@ -302,6 +308,14 @@
 
 	for(var/i=1, i<=L0.len, ++i)
 		var/turf/T0 = L0[i]
+
+		if(src.turfcheck)
+			if (turfcheck == NONSPACE) //only move non-space turfs!
+				if(istype(T0, /turf/space))
+					continue
+			if (turfcheck == SHUTTLEONLY)
+				if(!T0.shuttle)
+					continue
 
 		var/turf/T1 = L1[i]
 		if(!T1)

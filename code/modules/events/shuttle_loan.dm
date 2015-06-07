@@ -71,7 +71,7 @@
 		SSshuttle.shuttle_loan = null
 
 		var/list/empty_shuttle_turfs = list()
-		for(var/turf/simulated/shuttle/T in SSshuttle.supply.areaInstance)
+		for(var/turf/simulated/floor/T in SSshuttle.supply.areaInstance)
 			if(T.density || T.contents.len)	continue
 			empty_shuttle_turfs += T
 		if(!empty_shuttle_turfs.len)

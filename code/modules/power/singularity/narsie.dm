@@ -89,8 +89,7 @@ var/global/list/narsie_list = list()
 
 	else if(isturf(A))
 		var/turf/T = A
-		T.ChangeTurf(/turf/simulated/floor/engine/cult)
-
+		T.ChangeTurf(/turf/simulated/floor/plasteel/cult)
 
 /obj/singularity/narsie/mezzer()
 	for(var/mob/living/carbon/M in oviewers(8, src))
