@@ -3,9 +3,9 @@ BS12 object based lighting system
 */
 
 /*
-Changes from tg DAL:
+Changes from TG DAL:
   -	Lighting is done using objects instead of subareas.
-  - Animated transitions. (newer tg DAL has this)
+  - Animated transitions. (newer TG DAL has this)
   - Full colours with mixing.
   - Support for lights on shuttles.
 
@@ -47,7 +47,8 @@ atom: (lighting_atom.dm)
 
 turf: (lighting_turf.dm)
   - var/list/affecting_lights; list of light sources that are shining onto this turf
-  - var/list/lighting_overlays; list of lighting overlays in the turf.
+  - var/list/lighting_overlays; list of lighting overlays in the turf. (only used if higher resolutions
+  - var/lighting_overlay; ref to the lighting overlay (only used if resolution is 1)
 
   - proc/reconsider_lights():
 	  - Force all light sources shining onto this turf to update

@@ -1,7 +1,6 @@
 /atom/movable/lighting_overlay
 	name = ""
 	mouse_opacity = 0
-	simulated = 0
 	anchored = 1
 
 	icon = LIGHTING_ICON
@@ -47,22 +46,55 @@
 	color = rgb(lum_r * 255 * ., lum_g * 255 * ., lum_b * 255 * .)
 	#endif
 
-	var/turf/T = loc //If this isn't the turf, holy shit that just deserves a crash.
+	var/turf/T = loc
 
-	if(round(max(lum_r, lum_g, lum_b, 0), 0.1))
-		T.luminosity = 1
-	else  //No light, set the turf's luminosity to 0 to remove it from view()
-		#if LIGHTING_TRANSITIONS == 1
-		spawn(LIGHTING_INTERVAL - 1)
+	if(istype(T)) //Incase we're not on a turf, pool ourselves, something happened.
+		if(round(max(lum_r, lum_g, lum_b, 0), 0.1))
+			T.luminosity = 1
+		else  //No light, set the turf's luminosity to 0 to remove it from view()
+			#if LIGHTING_TRANSITIONS == 1
+			spawn(LIGHTING_INTERVAL - 1)
+				T.luminosity = 0
+			#else
 			T.luminosity = 0
-		#else
-		T.luminosity = 0
-		#endif
+			#endif
 
-	universe.OnTurfTick(T)
+		universe.OnTurfTick(T)
+	else
+		warning("A lighting overlay realised it had no loc in update_overlay() and got pooled!")
+		returnToPool(src)
+
+/atom/movable/lighting_overlay/resetVariables()
+//	testing("Lighting_overlays: resetvars called")
+	loc = null
+
+	lum_r = null
+	lum_g = null
+	lum_b = null
+
+	color = "#000000"
+
+	#if LIGHTING_RESOLUTION != 1
+	xoffset = null
+	yoffset = null
+	#endif
+
+	needs_update = null
 
 /atom/movable/lighting_overlay/Destroy()
-	CRASH("Welp, a lighting overlay just got qdel()/pooled'd")
+	all_lighting_overlays -= src
+	lighting_update_overlays -= src
 
-/atom/movable/lighting_overlay/Del()
-	CRASH("Welp, a lighting overlay just got del()'d")
+	var/turf/T = loc
+	if(istype(T))
+		#if LIGHTING_RESOLUTION == 1
+		T.lighting_overlay = null
+		#else
+		T.lighting_overlays -= src
+		#endif
+
+/atom/movable/lighting_overlay/singuloCanEat()
+	return 0
+
+/atom/movable/lighting_overlay/ex_act(severity)
+	return 0

@@ -69,7 +69,7 @@
 	lighting_update_lights += src
 
 /datum/light_source/proc/check()
-	if(!source_atom)
+	if(!source_atom || !light_range || !light_power)
 		destroy()
 		return 1
 
@@ -142,26 +142,56 @@
 /datum/light_source/proc/apply_lum()
 	applied = 1
 	if(istype(source_turf))
-		for(var/atom/movable/lighting_overlay/O in dview(light_range, source_turf, INVISIBILITY_LIGHTING))
-			var/strength = light_power * falloff(O)
-
-			effect_r[O] = lum_r * strength
-			effect_g[O] = lum_g * strength
-			effect_b[O] = lum_b * strength
-
-			O.update_lumcount(lum_r * strength, lum_g * strength, lum_b * strength)
+		#if LIGHTING_RESOLUTION == 1
 		for(var/turf/T in dview(light_range, source_turf, INVISIBILITY_LIGHTING))
-			if(!T.affecting_lights) T.affecting_lights = list()
+			if(T.dynamic_lighting && T.lighting_overlay)
+				var/strength = light_power * falloff(T.lighting_overlay)
+
+				effect_r[T.lighting_overlay] = lum_r * strength
+				effect_g[T.lighting_overlay] = lum_g * strength
+				effect_b[T.lighting_overlay] = lum_b * strength
+
+				T.lighting_overlay.update_lumcount(lum_r * strength, lum_g * strength, lum_b * strength)
+
+			if(!T.affecting_lights)
+				T.affecting_lights = list()
+
 			T.affecting_lights += src
 			effect_turf += T
 
+		#else
+		for(var/turf/T in dview(light_range, source_turf, INVISIBILITY_LIGHTING))
+			for(var/atom/movable/lighting_overlay/L in T.lighting_overlays)
+				var/strength = light_power * falloff(L)
+
+				effect_r[L] = lum_r * strength
+				effect_g[L] = lum_g * strength
+				effect_b[L] = lum_b * strength
+
+				L.update_lumcount(lum_r * strength, lum_g * strength, lum_b * strength)
+
+			if(!T.affecting_lights)
+				T.affecting_lights = list()
+
+			T.affecting_lights += src
+			effect_turf += T
+		#endif
+
 /datum/light_source/proc/remove_lum()
 	applied = 0
-	for(var/atom/movable/lighting_overlay/O in effect_r)
-		O.update_lumcount(-effect_r[O], -effect_g[O], -effect_b[O])
 
 	for(var/turf/T in effect_turf)
-		if(T.affecting_lights) T.affecting_lights -= src
+		if(T.affecting_lights)
+			T.affecting_lights -= src
+
+		#if LIGHTING_RESOLUTION == 1
+		if(T.dynamic_lighting)
+			T.lighting_overlay.update_lumcount(-effect_r[T.lighting_overlay], -effect_g[T.lighting_overlay], -effect_b[T.lighting_overlay])
+		#else
+		for(var/atom/movable/lighting_overlay/L in T.lighting_overlays)
+			L.lighting_overlay.update_lumcount(-effect_r[L], -effect_g[L], -effect_b[L])
+		#endif
+
 
 	effect_r.Cut()
 	effect_g.Cut()

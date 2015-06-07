@@ -68,6 +68,6 @@
 /atom/Entered(atom/movable/Obj, atom/OldLoc) //Implemented here because forceMove() doesn't call Move()
 	. = ..()
 
-	if(OldLoc != src)
+	if(Obj && OldLoc != src)
 		for(var/datum/light_source/L in Obj.light_sources)
 			L.source_atom.update_light()

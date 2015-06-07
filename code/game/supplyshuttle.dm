@@ -327,7 +327,7 @@ var/list/mechtoys = list(
 			if(T.density)	continue
 			var/contcount
 			for(var/atom/A in T.contents)
-				if(!A.simulated)
+				if(islightingoverlay(A))
 					continue
 				contcount++
 			if(contcount)
