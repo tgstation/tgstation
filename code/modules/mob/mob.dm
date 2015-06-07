@@ -965,3 +965,10 @@ var/list/slot_equipment_priority = list( \
 	if(isliving(src))
 		spell.action.Grant(src)
 	return
+
+/mob/proc/fakevomit() //for aesthetic vomits that need to be instant and do not stun. -Fox // stolen from paracode
+	src.visible_message("<span class='warning'>[src] pukes all over \himself!</span>","<span class='warning'>You puke all over yourself!</span>")
+	playsound(loc, 'sound/effects/splat.ogg', 50, 1)
+	var/turf/location = loc
+	if (istype(location, /turf/simulated))
+		location.add_vomit_floor(src, 1)

@@ -18,6 +18,10 @@
 	if(!..())	return 0//Cooldown check
 	var/turf/location = get_turf(loc)
 	if(location)	location.hotspot_expose(1000,1000)
+	if(istype(loc.loc, /obj/item/weapon/reagent_containers/glass/beaker/))
+		var/obj/item/weapon/reagent_containers/glass/beaker/beakerbomb = loc.loc
+		if(beakerbomb)
+			beakerbomb.ignite()
 	sparks.start()
 	return 1
 

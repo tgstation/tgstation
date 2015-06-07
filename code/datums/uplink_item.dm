@@ -212,6 +212,24 @@ var/list/uplink_items = list()
 	gamemodes = list(/datum/game_mode/nuclear,/datum/game_mode/gang)
 	surplus = 0
 
+/datum/uplink_item/dangerous/sarin_gas
+	name = "Sarin Gas Grenade"
+	desc = "A Smoke grenade containing Sarin, an incredibly dangerous neurotoxin often used by bioterrorists. \
+	Use with extreme caution, to prevent exposure to yourself and your fellow operatives."
+	item = /obj/item/weapon/grenade/chem_grenade/large/sarin_gas
+	cost = 5
+	gamemodes = list(/datum/game_mode/nuclear)
+	surplus = 0
+
+/datum/uplink_item/dangerous/sarin_foam
+	name = "Sarin Foam Grenade"
+	desc = "A Foam grenade containing Sarin, an incredibly dangerous neurotoxin often used by bioterrorists. \
+	Use with extreme caution, to prevent exposure to yourself and your fellow operatives."
+	item = /obj/item/weapon/grenade/chem_grenade/large/sarin_foam
+	cost = 5
+	gamemodes = list(/datum/game_mode/nuclear)
+	surplus = 0
+
 /datum/uplink_item/dangerous/gygax
 	name = "Gygax Exosuit"
 	desc = "A lightweight exosuit, painted in a dark scheme. Its speed and equipment selection make it excellent for hit-and-run style attacks. \

@@ -16,6 +16,7 @@
 
 	var/required_temp = 0
 	var/mix_message = "The solution begins to bubble."
+	var/mix_sound = 'sound/effects/bubbles.ogg'
 
 /datum/chemical_reaction/proc/on_reaction(var/datum/reagents/holder, var/created_volume)
 	return
