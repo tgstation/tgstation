@@ -14,14 +14,14 @@
 				A = T.loc
 				if(A.lighting_use_dynamic)
 					#if LIGHTING_RESOLUTION == 1
-					var/atom/movable/lighting_overlay/O = new(T)
+					var/atom/movable/lighting_overlay/O = getFromPool(/atom/movable/lighting_overlay, T)
 					O.icon_state = state
 					all_lighting_overlays |= O
-					T.lighting_overlays |= O
+					T.lighting_overlay = O
 					#else
 					for(var/i = 0; i < LIGHTING_RESOLUTION; i++)
 						for(var/j = 0; j < LIGHTING_RESOLUTION; j++)
-							var/atom/movable/lighting_overlay/O = new(T)
+							var/atom/movable/lighting_overlay/O = getFromPool(/atom/movable/lighting_overlay, T)
 							O.pixel_x = i * (32 / LIGHTING_RESOLUTION)
 							O.pixel_y = j * (32 / LIGHTING_RESOLUTION)
 							O.xoffset = (((2*i + 1) / (LIGHTING_RESOLUTION * 2)) - 0.5)
@@ -38,14 +38,14 @@
 					A = T.loc
 					if(A.lighting_use_dynamic)
 						#if LIGHTING_RESOLUTION == 1
-						var/atom/movable/lighting_overlay/O = new(T)
+						var/atom/movable/lighting_overlay/O = getFromPool(/atom/movable/lighting_overlay, T)
 						O.icon_state = state
 						all_lighting_overlays |= O
-						T.lighting_overlays |= O
+						T.lighting_overlay = O
 						#else
 						for(var/i = 0; i < LIGHTING_RESOLUTION; i++)
 							for(var/j = 0; j < LIGHTING_RESOLUTION; j++)
-								var/atom/movable/lighting_overlay/O = new(T)
+								var/atom/movable/lighting_overlay/O = getFromPool(/atom/movable/lighting_overlay, T)
 								O.pixel_x = i * (32 / LIGHTING_RESOLUTION)
 								O.pixel_y = j * (32 / LIGHTING_RESOLUTION)
 								O.xoffset = (((2*i + 1) / (LIGHTING_RESOLUTION * 2)) - 0.5)

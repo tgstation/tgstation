@@ -1,21 +1,30 @@
 /turf
 	var/list/affecting_lights
-	var/list/lighting_overlays[0]
+	#if LIGHTING_RESOLUTION == 1
+	var/atom/movable/lighting_overlay/lighting_overlay
+	#else
+	var/list/lighting_overlays[LIGHTING_RESOLUTION ** 2]
+	#endif
 
 /turf/proc/reconsider_lights()
 	for(var/datum/light_source/L in affecting_lights)
 		L.force_update()
 
 /turf/proc/lighting_clear_overlays()
+//	testing("Clearing lighting overlays on \the [src]")
+	#if LIGHTING_RESOLUTION == 1
+	returnToPool(lighting_overlay)
+	#else
 	for(var/atom/movable/lighting_overlay/L in lighting_overlays)
-		lighting_overlays -= L
-		all_lighting_overlays -= L
-		lighting_update_overlays -= L //Incase the overlay gets deleted after being queued up for updating.
-		L.needs_update = 0
-		L.loc = null
+		returnToPool(L)
+	#endif
 
 /turf/proc/lighting_build_overlays()
-	if(lighting_overlays.len)//The lighting_overlays list exists, which means there should have already been built overlays.
+	#if LIGHTING_RESOLUTION == 1
+	if(lighting_overlay)
+	#else
+	if(lighting_overlays.len)
+	#endif
 		return
 
 	var/state = "light[LIGHTING_RESOLUTION]"
@@ -24,7 +33,7 @@
 		#if LIGHTING_RESOLUTION == 1
 		var/atom/movable/lighting_overlay/O = new(src)
 		O.icon_state = state
-		lighting_overlays |= O
+		lighting_overlay = O
 		all_lighting_overlays |= O
 		#else
 		for(var/i = 0; i < LIGHTING_RESOLUTION; i++)
@@ -43,14 +52,22 @@
 	if(!dynamic_lighting) //We're not dynamic, whatever, return 50% lighting.
 		return 0.5
 
+	var/totallums = 0
+	#if LIGHTING_RESOLUTION == 1
+
+	totallums = (lighting_overlay.lum_r + lighting_overlay.lum_b + lighting_overlay.lum_g) / 3
+
+	#else
+
 	if(!lighting_overlays.len) //Ya wot.
 		return
 
-	var/totallums = 0
 	for(var/atom/movable/lighting_overlay/L in lighting_overlays)
 		totallums += (L.lum_r + L.lum_g + L.lum_b) / 3
 
 	totallums /= lighting_overlays.len //Get the average, used for higher resolutions of lighting.
+
+	#endif
 
 	totallums = (totallums - minlum) / (maxlum - minlum)
 
@@ -58,17 +75,21 @@
 
 //Proc I made to dick around with update lumcount
 /turf/proc/update_lumcount(delta_r, delta_g, delta_b)
+	#if LIGHTING_RESOLUTION == 1
+	lighting_overlay.update_lumcount(delta_r, delta_g, delta_b)
+	#else
 	for(var/atom/movable/lighting_overlay/L in lighting_overlays)
 		L.update_lumcount(delta_r, delta_g, delta_b)
+	#endif
 
 /turf/Entered(atom/movable/Obj, atom/OldLoc)
 	. = ..()
 
-	if(Obj.opacity)
+	if(Obj && Obj.opacity)
 		reconsider_lights()
 
 /turf/Exited(atom/movable/Obj, atom/newloc)
 	. = ..()
 
-	if(Obj.opacity)
+	if(Obj && Obj.opacity)
 		reconsider_lights()

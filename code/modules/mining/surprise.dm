@@ -325,7 +325,7 @@ var/global/list/mining_surprises = typesof(/mining_surprise)-/mining_surprise
 
 				if(clean)
 					for(var/O in cur_loc)
-						if(istype(O, /atom/movable/lighting_overlay)) //Don't want lighting overlays to be deleted.
+						if(islightingoverlay(O)) //Don't want lighting overlays to be deleted.
 							continue
 						qdel(O)
 

@@ -8,6 +8,7 @@
 	thermal_conductivity = OPEN_HEAT_TRANSFER_COEFFICIENT
 	heat_capacity = 700000
 	intact = 0 //No seriously, that's not a joke. Allows cable to be laid PROPERLY on catwalks
+	dynamic_lighting = 0
 
 /turf/space/New()
 	turfs |= src
