@@ -1532,7 +1532,7 @@ k
 	build_type = MECHFAB
 	req_tech = list("materials" = 5, "magnets" = 4, "engineering" = 5)
 	build_path = /obj/item/mecha_parts/mecha_equipment/jetpack
-	category = "Exosuit_Equipment"
+	category = "Exosuit_Modules"
 	materials = list("$iron"=25000,"$plasma"=25000,"$uranium"=7500)
 
 ////////////////////////////////////////
