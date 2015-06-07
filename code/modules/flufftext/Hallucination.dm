@@ -90,16 +90,15 @@ mob/living/carbon/proc/handle_hallucinations()
 					if(possible_points.len)
 						var/turf/simulated/floor/target = pick(possible_points)
 
-						switch(rand(1,3))
-							if(1)
-								//src << "Space"
+						switch(rand(1,4))
+							if(1) //Space
 								halimage = image('icons/turf/space.dmi',target,"[rand(1,25)]",TURF_LAYER)
-							if(2)
-								//src << "Fire"
+							if(2) //Fire
 								halimage = image('icons/effects/fire.dmi',target,"1",TURF_LAYER)
-							if(3)
-								//src << "C4"
+							if(3) //C4
 								halimage = image('icons/obj/assemblies.dmi',target,"plastic-explosive2",OBJ_LAYER+0.01)
+							if(4) //Flashbang
+								halimage = image('icons/obj/grenade.dmi',target,"flashbang_active",OBJ_LAYER)
 
 
 						if(client) client.images += halimage
@@ -112,7 +111,7 @@ mob/living/carbon/proc/handle_hallucinations()
 				//Strange audio
 				//src << "Strange Audio"
 				if(client)
-					switch(rand(1,12))
+					switch(rand(1,14))
 						if(1) src << 'sound/machines/airlock.ogg'
 						if(2)
 							if(prob(50))src << 'sound/effects/Explosion1.ogg'
@@ -143,6 +142,16 @@ mob/living/carbon/proc/handle_hallucinations()
 								'sound/hallucinations/look_up1.ogg', 'sound/hallucinations/look_up2.ogg', 'sound/hallucinations/over_here1.ogg', 'sound/hallucinations/over_here2.ogg', 'sound/hallucinations/over_here3.ogg',\
 								'sound/hallucinations/turn_around1.ogg', 'sound/hallucinations/turn_around2.ogg', 'sound/hallucinations/veryfar_noise.ogg', 'sound/hallucinations/wail.ogg')
 							src << pick(creepyasssounds)
+						if(13)
+							if(prob(50))
+								src << 'sound/items/Welder.ogg'
+							else
+								src << 'sound/items/Welder2.ogg'
+						if(14)
+							if(prob(50))
+								src << 'sound/items/Screwdriver.ogg'
+							else
+								src << 'sound/items/Screwdriver2.ogg'
 			if(66 to 70)
 				//Flashes of danger
 				//src << "Danger Flash"
@@ -177,6 +186,16 @@ mob/living/carbon/proc/handle_hallucinations()
 					src.sleeping = 0
 					hal_crit = 0
 					hal_screwyhud = 0
+			if(73 to 78)
+				//Fake changeling/parapen
+				if(prob(1) && prob(1))
+					src << "<span class='warning'>You feel a <b>HUGE</b> prick!</span>"
+				else
+					src << "<span class='warning'>You feel a tiny prick!</span>"
+			if(78 to 80)
+				src << "<h1 class='alert'>Priority Announcement</h1>"
+				src << "<span class='alert'>The Emergency Shuttle has docked with the station. You have 3 minutes to board the Emergency Shuttle.</span>"
+				src << sound('sound/AI/shuttledock.ogg')
 	handling_hal = 0
 
 
