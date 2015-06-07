@@ -40,12 +40,17 @@
 		dat += "Registration: <B>[(gang == "A")? gang_name("A") : gang_name("B")] Gang [boss ? "Administrator" : "Lieutenant"]</B><br>"
 		dat += "Organization Size: <B>[gang_size]</B><br>"
 		dat += "Station Control: <B>[round((gang_territory/start_state.num_territories)*100, 1)]%</B><br>"
-		dat += "<a href='?src=\ref[src];choice=ping'>Rally Your Gang</a><br>"
 		dat += "<a href='?src=\ref[src];choice=recall'>Recall Emergency Shuttle</a><br>"
 		dat += "<br>"
 		dat += "Influence: <B>[points]</B><br>"
 		dat += "Time until Influence grows: <B>[(points >= 100) ? ("--:--") : (time2text(ticker.mode.gang_points.next_point_time - world.time, "mm:ss"))]</B><br>"
 		dat += "<B>Purchase Items:</B><br>"
+
+		dat += "(5 Influence) "
+		if(points >= 5)
+			dat += "<a href='?src=\ref[src];choice=ping'>Send Gang-wide Message</a><br>"
+		else
+			dat += "Send Gang-wide Message<br>"
 
 		dat += "(10 Influence) "
 		if(points >= 10)
@@ -159,19 +164,27 @@
 /obj/item/device/gangtool/proc/ping_gang(var/mob/user)
 	if(!user)
 		return
-	var/area/location = get_area(user)
-	if(location && location.z != 1)
-		user << "<span class='info'>\icon[src]Error: Signal out of range of station.</span>"
+	var/message = stripped_input(user,"Discreetly send a gang-wide message.","Send Message") as null|text
+	if(!message || (message == "") || !can_use(user))
+		return
+	if(user.z > 2)
+		user << "<span class='info'>\icon[src]Error: Station out of range.</span>"
 		return
 	var/list/members = list()
 	if(gang == "A")
-		members += ticker.mode.A_bosses | ticker.mode.A_gang
+		if(ticker.mode.gang_points.A >= 5)
+			members += ticker.mode.A_bosses | ticker.mode.A_gang
+			ticker.mode.gang_points.A -= 5
 	else if(gang == "B")
-		members += ticker.mode.B_bosses | ticker.mode.B_gang
+		if(ticker.mode.gang_points.B >= 5)
+			members += ticker.mode.B_bosses | ticker.mode.B_gang
+			ticker.mode.gang_points.B -= 5
 	if(members.len)
 		for(var/datum/mind/ganger in members)
-			ganger.current << "<span class='danger'>A powerful thought invades your mind... The gang is rallying at <b>[location]</b>!</span>"
-		log_game("[key_name(user)] summoned the [gang_name(gang)] Gang ([gang]) to [location].")
+			if(ganger.current.z <= 2)
+				ganger.current << "<span class='danger'><b>BOSS:</b> [message]</span>"
+		message_admins("[key_name_admin(user)] sent a global message to the [gang_name(gang)] Gang ([gang]): [message].")
+		log_game("[key_name(user)] sent a global message to the [gang_name(gang)] Gang ([gang]): [message].")
 
 
 /obj/item/device/gangtool/proc/register_device(var/mob/user)
