@@ -6487,6 +6487,7 @@
 "cuM" = (/turf/space,/turf/simulated/wall/shuttle{icon_state = "swall_f9"; dir = 2},/area/shuttle/pod_4)
 "cuN" = (/turf/space,/turf/simulated/wall/shuttle{dir = 2; icon_state = "swall_f10"; layer = 2},/area/shuttle/pod_4)
 "cuO" = (/turf/simulated/floor/plating,/obj/structure/shuttle/engine/propulsion/burst{dir = 4},/turf/simulated/wall/shuttle{icon_state = "swall_f6"; dir = 2},/area/shuttle/pod_4)
+"cuP" = (/mob/living/simple_animal/pet/drone/tincan,/turf/simulated/floor/plasteel,/area/assembly/robotics)
 "cuR" = (/obj/structure/sink{icon_state = "sink"; dir = 8; pixel_x = -12; pixel_y = 2},/obj/machinery/atmospherics/unary/vent_pump{dir = 4; on = 1},/obj/machinery/doorButtons/access_button{idSelf = "virology_airlock_control"; idDoor = "virology_airlock_interior"; name = "Virology Access Button"; pixel_x = 8; pixel_y = -28},/turf/simulated/floor/plasteel{dir = 10; icon_state = "warnwhite"},/area/medical/virology)
 "cuS" = (/obj/machinery/atmospherics/binary/pump{dir = 1; on = 1},/obj/structure/sign/fire{pixel_x = 32; pixel_y = 0},/obj/machinery/doorButtons/access_button{idSelf = "incinerator_access_control"; idDoor = "incinerator_airlock_interior"; name = "Incinerator airlock control"; pixel_x = -8; pixel_y = 24},/obj/machinery/light/small{dir = 4},/turf/simulated/floor/engine,/area/maintenance/incinerator)
 "cuT" = (/obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden{tag = "icon-manifold-r-f (NORTH)"; dir = 1},/turf/simulated/floor/plasteel,/area/quartermaster/storage)

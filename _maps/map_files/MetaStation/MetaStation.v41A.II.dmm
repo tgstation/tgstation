@@ -5980,6 +5980,7 @@
 "ckZ" = (/obj/structure/closet,/obj/item/stack/sheet/metal{amount = 34},/obj/item/weapon/extinguisher/mini,/obj/effect/spawner/lootdrop/maintenance,/turf/simulated/floor/plating,/area/maintenance/aft{name = "Aft Maintenance"})
 "cla" = (/obj/structure/reagent_dispensers/fueltank,/obj/item/weapon/storage/toolbox/emergency,/obj/item/device/radio/intercom{name = "Station Intercom (General)"; pixel_y = -29},/turf/simulated/floor/plating,/area/maintenance/incinerator)
 "clb" = (/obj/structure/reagent_dispensers/watertank,/obj/item/weapon/extinguisher,/obj/machinery/light/small,/obj/structure/extinguisher_cabinet{pixel_x = 0; pixel_y = -31},/turf/simulated/floor/plating,/area/maintenance/incinerator)
+"clc" = (/mob/living/simple_animal/pet/drone/tincan,/turf/simulated/floor/plasteel,/area/assembly/robotics)
 "cld" = (/obj/machinery/door/airlock/glass{autoclose = 0; frequency = 1449; heat_proof = 1; icon_state = "door_locked"; id_tag = "incinerator_airlock_exterior"; locked = 1; name = "Incinerator Exterior Airlock"; req_access_txt = "12"},/obj/structure/cable{d1 = 1; d2 = 2; icon_state = "1-2"; pixel_y = 0; tag = ""},/turf/simulated/floor/engine,/area/maintenance/incinerator)
 "clf" = (/obj/machinery/microwave{pixel_x = -3; pixel_y = 6},/obj/structure/table/glass,/turf/simulated/floor/plasteel{tag = "icon-cafeteria (NORTHEAST)"; icon_state = "cafeteria"; dir = 5},/area/medical/medbay3{name = "Medbay Aft"})
 "clg" = (/obj/structure/bodycontainer/morgue,/turf/simulated/floor/plasteel{icon_state = "dark"},/area/medical/morgue)
