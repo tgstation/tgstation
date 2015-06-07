@@ -269,7 +269,7 @@ Gunshots/explosions/opening doors/less rare audio (done)
 
 /obj/effect/hallucination/fake_flood/process()
 	if(next_expand <= world.time)
-		radius += 1
+		radius++
 		if(radius > FAKE_FLOOD_MAX_RADIUS)
 			qdel(src)
 		Expand()
@@ -417,7 +417,7 @@ Gunshots/explosions/opening doors/less rare audio (done)
 /obj/effect/hallucination/battle/New(loc,var/mob/living/carbon/T)
 	target = T
 	var/hits = rand(3,6)
-	switch(rand(1,4))
+	switch(rand(1,5))
 		if(1) //Laser fight
 			for(var/i=0,i<hits,i++)
 				target << sound('sound/weapons/Laser.ogg',0,1,0,25)
@@ -440,6 +440,10 @@ Gunshots/explosions/opening doors/less rare audio (done)
 			target << sound(get_sfx("bodyfall"),0,1,0,25)
 			sleep(30)
 			target << sound('sound/weapons/cablecuff.ogg',0,1,0,15)
+		if(5) // Tick Tock
+			for(var/i=0,i<hits,i++)
+				target << sound('sound/items/timer.ogg',0,1,0,25)
+				sleep(10)
 	qdel(src)
 
 
