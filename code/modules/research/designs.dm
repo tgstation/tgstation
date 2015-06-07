@@ -1088,7 +1088,7 @@ k
 	req_tech = list("bluespace" = 10, "programming" = 4)
 	build_type = MECHFAB
 	materials = list("$iron" = 5000, "$phazon" = 2000)
-	category = "Exosuit_Equipment"
+	category = "Exosuit_Modules"
 	build_path = /obj/item/mecha_parts/part/phazon_phase_array
 
 /datum/design/gygax_main
@@ -1202,7 +1202,7 @@ k
 	build_type = MECHFAB
 	req_tech = list("combat" = 4)
 	build_path = /obj/item/mecha_parts/mecha_equipment/weapon/ballistic/scattershot
-	category = "Exosuit_Equipment"
+	category = "Exosuit_Weapons"
 	locked = 1
 	materials = list("$iron"=10000)
 
@@ -1213,7 +1213,7 @@ k
 	build_type = MECHFAB
 	req_tech = list("combat" = 1)
 	build_path = /obj/item/mecha_parts/mecha_equipment/weapon/ballistic/lmg
-	category = "Exosuit_Equipment"
+	category = "Exosuit_Weapons"
 	locked = 1
 	materials = list("$iron"=10000)
 
@@ -1224,7 +1224,7 @@ k
 	build_type = MECHFAB
 	req_tech = list("combat" = 1)
 	build_path = /obj/item/mecha_parts/mecha_equipment/weapon/energy/taser
-	category = "Exosuit_Equipment"
+	category = "Exosuit_Weapons"
 	locked = 1
 	materials = list("$iron"=10000)
 
@@ -1235,7 +1235,7 @@ k
 	build_type = MECHFAB
 	req_tech = list("combat" = 1)
 	build_path = /obj/item/mecha_parts/mecha_equipment/weapon/honker
-	category = "Exosuit_Equipment"
+	category = "Exosuit_Weapons"
 	materials = list("$iron"=20000,"$clown"=10000)
 
 /datum/design/mech_mousetrap
@@ -1245,7 +1245,7 @@ k
 	build_type = MECHFAB
 	req_tech = list("combat" = 1)
 	build_path = /obj/item/mecha_parts/mecha_equipment/weapon/ballistic/missile_rack/mousetrap_mortar
-	category = "Exosuit_Equipment"
+	category = "Exosuit_Weapons"
 	materials = list("$iron"=20000,"$clown"=5000)
 
 /datum/design/mech_banana
@@ -1255,7 +1255,7 @@ k
 	build_type = MECHFAB
 	req_tech = list("combat" = 1)
 	build_path = /obj/item/mecha_parts/mecha_equipment/weapon/ballistic/missile_rack/banana_mortar
-	category = "Exosuit_Equipment"
+	category = "Exosuit_Weapons"
 	materials = list("$iron"=20000,"$clown"=5000)
 
 /datum/design/mech_bolas
@@ -1265,7 +1265,7 @@ k
 	build_type = MECHFAB
 	req_tech = list("combat" = 3)
 	build_path = /obj/item/mecha_parts/mecha_equipment/weapon/ballistic/missile_rack/bolas
-	category = "Exosuit_Equipment"
+	category = "Exosuit_Weapons"
 	locked = 1
 	materials = list("$iron"=20000)
 
@@ -1276,7 +1276,7 @@ k
 	build_type = MECHFAB
 	req_tech = list("combat" = 3, "magnets" = 3)
 	build_path = /obj/item/mecha_parts/mecha_equipment/weapon/energy/laser
-	category = "Exosuit_Equipment"
+	category = "Exosuit_Weapons"
 	locked = 1
 	materials = list("$iron"=10000)
 
@@ -1287,7 +1287,7 @@ k
 	build_type = MECHFAB
 	req_tech = list("combat" = 4, "magnets" = 4)
 	build_path = /obj/item/mecha_parts/mecha_equipment/weapon/energy/laser/heavy
-	category = "Exosuit_Equipment"
+	category = "Exosuit_Weapons"
 	locked = 1
 	materials = list("$iron"=10000)
 
@@ -1298,7 +1298,7 @@ k
 	build_type = MECHFAB
 	req_tech = list("combat" = 3)
 	build_path = /obj/item/mecha_parts/mecha_equipment/weapon/ballistic/missile_rack/flashbang
-	category = "Exosuit_Equipment"
+	category = "Exosuit_Weapons"
 	locked = 1
 	materials = list("$iron"=10000)
 
@@ -1309,7 +1309,7 @@ k
 	build_type = MECHFAB
 	req_tech = list("combat"= 5, "materials" = 5, "syndicate" = 3)
 	build_path = /obj/item/mecha_parts/mecha_equipment/weapon/ballistic/missile_rack/flashbang/clusterbang/limited
-	category = "Exosuit_Equipment"
+	category = "Exosuit_Weapons"
 	locked = 1
 	materials = list("$iron"=20000,"$gold"=6000,"$uranium"=6000)
 
@@ -1320,7 +1320,7 @@ k
 	build_type = MECHFAB
 	req_tech = list("bluespace" = 3, "magnets" = 2)
 	build_path = /obj/item/mecha_parts/mecha_equipment/wormhole_generator
-	category = "Exosuit_Equipment"
+	category = "Exosuit_Tools"
 	materials = list("$iron"=10000)
 
 /datum/design/mech_teleporter
@@ -1330,7 +1330,7 @@ k
 	build_type = MECHFAB
 	req_tech = list("bluespace" = 10, "magnets" = 5)
 	build_path = /obj/item/mecha_parts/mecha_equipment/teleporter
-	category = "Exosuit_Equipment"
+	category = "Exosuit_Tools"
 	materials = list("$iron"=10000)
 
 /datum/design/mech_rcd
@@ -1340,7 +1340,7 @@ k
 	build_type = MECHFAB
 	req_tech = list("materials" = 4, "bluespace" = 3, "magnets" = 4, "powerstorage"=4, "engineering" = 4)
 	build_path = /obj/item/mecha_parts/mecha_equipment/tool/rcd
-	category = "Exosuit_Equipment"
+	category = "Exosuit_Tools"
 	materials = list("$iron"=30000,"$plasma"=25000,"$silver"=20000,"$gold"=20000)
 
 /datum/design/mech_gravcatapult
@@ -1350,7 +1350,7 @@ k
 	build_type = MECHFAB
 	req_tech = list("bluespace" = 2, "magnets" = 3, "engineering" = 3)
 	build_path = /obj/item/mecha_parts/mecha_equipment/gravcatapult
-	category = "Exosuit_Equipment"
+	category = "Exosuit_Tools"
 	materials = list("$iron"=10000)
 
 /datum/design/mech_repair_droid
@@ -1360,7 +1360,7 @@ k
 	build_type = MECHFAB
 	req_tech = list("magnets" = 3, "programming" = 3, "engineering" = 3)
 	build_path = /obj/item/mecha_parts/mecha_equipment/repair_droid
-	category = "Exosuit_Equipment"
+	category = "Exosuit_Modules"
 	materials = list("$iron"=10000,"$gold"=1000,"$silver"=2000,"$glass"=5000)
 
 /* MISSING
@@ -1371,7 +1371,7 @@ k
 	build_type = MECHFAB
 	req_tech = list("plasmatech" = 2, "powerstorage"= 2, "engineering" = 2)
 	build_path = /obj/item/mecha_parts/mecha_equipment/plasma_generator
-	category = "Exosuit_Equipment"
+	category = "Exosuit_Modules"
 */
 
 /datum/design/mech_energy_relay
@@ -1381,7 +1381,7 @@ k
 	build_type = MECHFAB
 	req_tech = list("magnets" = 4, "powerstorage" = 3)
 	build_path = /obj/item/mecha_parts/mecha_equipment/tesla_energy_relay
-	category = "Exosuit_Equipment"
+	category = "Exosuit_Modules"
 	materials = list("$iron"=10000,"$gold"=2000,"$silver"=3000,"$glass"=2000)
 
 /datum/design/mech_ccw_armor
@@ -1391,7 +1391,7 @@ k
 	build_type = MECHFAB
 	req_tech = list("materials" = 5, "combat" = 4)
 	build_path = /obj/item/mecha_parts/mecha_equipment/anticcw_armor_booster
-	category = "Exosuit_Equipment"
+	category = "Exosuit_Modules"
 	materials = list("$iron"=20000,"$silver"=5000)
 
 /datum/design/mech_proj_armor
@@ -1401,17 +1401,17 @@ k
 	build_type = MECHFAB
 	req_tech = list("materials" = 5, "combat" = 5, "engineering"=3)
 	build_path = /obj/item/mecha_parts/mecha_equipment/antiproj_armor_booster
-	category = "Exosuit_Equipment"
+	category = "Exosuit_Modules"
 	materials = list("$iron"=20000,"$gold"=5000)
 
 /datum/design/mech_syringe_gun
-	name = "Module Design(Syringe Gun)"
+	name = "Module Design (Syringe Gun)"
 	desc = "Exosuit-mounted syringe gun and chemical synthesizer."
 	id = "mech_syringe_gun"
 	build_type = MECHFAB
 	req_tech = list("materials" = 3, "biotech"=4, "magnets"=4, "programming"=3)
 	build_path = /obj/item/mecha_parts/mecha_equipment/tool/syringe_gun
-	category = "Exosuit_Equipment"
+	category = "Exosuit_Tools" //as if it weren't actually a weapon
 	materials = list("$iron"=3000,"$glass"=2000)
 
 /datum/design/mech_drill
@@ -1421,7 +1421,7 @@ k
 	build_type = MECHFAB
 	req_tech = list("materials" = 1, "engineering" = 1)
 	build_path = /obj/item/mecha_parts/mecha_equipment/tool/drill
-	category = "Exosuit_Equipment"
+	category = "Exosuit_Tools"
 	materials = list("$iron"=10000)
 
 /datum/design/mech_diamond_drill
@@ -1431,7 +1431,7 @@ k
 	build_type = MECHFAB
 	req_tech = list("materials" = 4, "engineering" = 3)
 	build_path = /obj/item/mecha_parts/mecha_equipment/tool/drill/diamonddrill
-	category = "Exosuit_Equipment"
+	category = "Exosuit_Tools"
 	materials = list("$iron"=10000,"$diamond"=6500)
 
 /datum/design/mech_hydro_clamp
@@ -1441,7 +1441,7 @@ k
 	build_type = MECHFAB
 	req_tech = list("materials" = 1, "engineering" = 1)
 	build_path = /obj/item/mecha_parts/mecha_equipment/tool/hydraulic_clamp
-	category = "Exosuit_Equipment"
+	category = "Exosuit_Tools"
 	materials = list("$iron"=10000)
 
 /datum/design/mech_cable
@@ -1451,7 +1451,7 @@ k
 	build_type = MECHFAB
 	req_tech = list("engineering" = 1)
 	build_path = /obj/item/mecha_parts/mecha_equipment/tool/cable_layer
-	category = "Exosuit_Equipment"
+	category = "Exosuit_Tools"
 	materials = list("$iron"=10000)
 
 /datum/design/mech_extinguisher
@@ -1461,7 +1461,7 @@ k
 	build_type = MECHFAB
 	req_tech = list("materials" = 1, "engineering" = 2)
 	build_path = /obj/item/mecha_parts/mecha_equipment/tool/extinguisher
-	category = "Exosuit_Equipment"
+	category = "Exosuit_Tools"
 	materials = list("$iron"=10000)
 
 /datum/design/mech_generator_plasma
@@ -1471,7 +1471,7 @@ k
 	build_type = MECHFAB
 	req_tech = list("engineering" = 1)
 	build_path = /obj/item/mecha_parts/mecha_equipment/generator
-	category = "Exosuit_Equipment"
+	category = "Exosuit_Modules"
 	materials = list("$iron"=10000,"$silver"=500,"$glass"=1000)
 
 /datum/design/mech_sleeper
@@ -1481,7 +1481,7 @@ k
 	build_type = MECHFAB
 	req_tech = list("biotech" = 1)
 	build_path = /obj/item/mecha_parts/mecha_equipment/tool/sleeper
-	category = "Exosuit_Equipment"
+	category = "Exosuit_Tools"
 	materials = list("$iron"=5000,"$glass"=10000)
 
 /datum/design/mech_generator_nuclear
@@ -1491,7 +1491,7 @@ k
 	build_type = MECHFAB
 	req_tech = list("powerstorage"= 3, "engineering" = 3, "materials" = 3)
 	build_path = /obj/item/mecha_parts/mecha_equipment/generator/nuclear
-	category = "Exosuit_Equipment"
+	category = "Exosuit_Modules"
 	materials = list("$iron"=10000,"$silver"=500,"$glass"=1000)
 
 /datum/design/firefighter_chassis
@@ -1501,7 +1501,7 @@ k
 	req_tech = list("engineering" = 1)
 	build_type = MECHFAB
 	build_path = /obj/item/mecha_parts/chassis/firefighter
-	category = "Exosuit_Equipment"
+	category = "Exosuit_Modules"
 	materials = list("$iron"=25000)
 
 
@@ -1512,7 +1512,7 @@ k
 	build_type = MECHFAB
 	req_tech = list("biotech" = 2, "combat" = 4)
 	build_path = /obj/item/mecha_parts/mecha_equipment/tool/jail
-	category = "Exosuit_Equipment"
+	category = "Exosuit_Tools"
 	materials = list("$iron"=7500,"$glass"=10000)
 
 /datum/design/mech_tracker

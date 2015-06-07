@@ -2,22 +2,24 @@
 ///// Part Fabricator ///////
 /////////////////////////////
 
-#define MECH_SCREEN_MAIN		1
-#define	MECH_SCREEN_QUEUE		2
+#define MECH_SCREEN_MAIN		01
 
-#define	MECH_SCREEN_ROBOT		3
-#define	MECH_SCREEN_RIPLEY		4
-#define	MECH_SCREEN_ODYSSEUS	5
-#define	MECH_SCREEN_GYGAX		6
-#define	MECH_SCREEN_DURAND		7
-#define	MECH_SCREEN_HONK		8
-#define	MECH_SCREEN_PHAZON		9
+#define	MECH_SCREEN_ROBOT			11
+#define MECH_SCREEN_ROBOT_PARTS		12
+#define	MECH_SCREEN_ROBOT_UPGRADES	13
 
-#define	MECH_SCREEN_EXOSUIT		10
-#define	MECH_SCREEN_UPGRADE		11
-#define	MECH_SCREEN_SPACE_POD	12
-#define	MECH_SCREEN_MISC		13
-#define MECH_SCREEN_ROBOT		16
+#define	MECH_SCREEN_EXOSUIT_TOOLS	21
+#define	MECH_SCREEN_EXOSUIT_MODULES	22
+#define	MECH_SCREEN_EXOSUIT_WEAPONS	23
+
+#define	MECH_SCREEN_RIPLEY		31
+#define	MECH_SCREEN_ODYSSEUS	32
+#define	MECH_SCREEN_GYGAX		33
+#define	MECH_SCREEN_DURAND		34
+#define	MECH_SCREEN_HONK		35
+#define	MECH_SCREEN_PHAZON		36
+
+#define	MECH_SCREEN_MISC		41
 
 #define MECH_BUILD_TIME 1
 
@@ -55,15 +57,16 @@
 		),
 		"Phazon"=list(
 		),
-		"Exosuit_Equipment"=list(
+		"Exosuit_Tools"=list(
 			/obj/item/mecha_parts/mecha_equipment/tool/sleeper,
 			/obj/item/mecha_parts/mecha_equipment/tool/syringe_gun,
+		),
+		"Exosuit_Modules"=list(
 			/obj/item/mecha_parts/part/phazon_phase_array
 		),
-		"Robotic_Upgrade_Modules" = list(
+		"Exosuit_Weapons"=list(
 		),
-		"Space_Pod" = list(
-			/obj/item/pod_parts/core
+		"Robotic_Upgrade_Modules" = list(
 		),
 		"Misc"=list(
 		)
