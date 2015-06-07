@@ -244,7 +244,7 @@
 	item_path = /obj/item/weapon/scrying
 	log_name = "SO"
 
-/datum/spellbook_entry/item/scryingorb
+/datum/spellbook_entry/item/bloodbottle
 	name = "Bottle of Blood"
 	desc = "A bottle of magically infused blood, the smell of which will attract extradimensional beings when broken. Be careful though, the kinds of creatures summoned by blood magic are indiscriminate in their killing, and you yourself may become a victim."
 	item_path = /obj/item/weapon/antag_spawner/slaughter_demon
