@@ -16,6 +16,7 @@ var/const/SAFETY_COOLDOWN = 100
 	var/amount_produced = 1
 	var/probability_mod = 1
 	var/extra_materials = 0
+	var/list/blacklist = list(/obj/item/pipe, /obj/item/pipe_meter, /obj/structure/disposalconstruct, /obj/item/weapon/reagent_containers, /obj/item/weapon/paper, /obj/item/stack/, /obj/item/weapon/pen, /obj/item/weapon/storage/, /obj/item/clothing/mask/cigarette) // Don't allow us to grind things we can poop out at 200 a second for free.
 
 /obj/machinery/recycler/New()
 	// On us
@@ -118,6 +119,11 @@ var/const/SAFETY_COOLDOWN = 100
 
 /obj/machinery/recycler/proc/recycle(var/obj/item/I, var/sound = 1)
 	I.loc = src.loc
+	if(is_type_in_list(I, blacklist))
+		qdel(I)
+		if(sound)
+			playsound(src.loc, 'sound/items/Welder.ogg', 50, 1)
+		return
 	qdel(I)
 	if(prob(15 + probability_mod))
 		var/obj/item/stack/sheet/metal/M = new /obj/item/stack/sheet/metal(loc)

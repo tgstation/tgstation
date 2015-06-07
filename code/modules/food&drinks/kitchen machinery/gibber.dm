@@ -9,7 +9,7 @@
 	var/operating = 0 //Is it on?
 	var/dirty = 0 // Does it need cleaning?
 	var/gibtime = 40 // Time from starting until meat appears
-	var/typeofmeat = /obj/item/weapon/reagent_containers/food/snacks/meat/
+	var/typeofmeat = /obj/item/weapon/reagent_containers/food/snacks/meat/slab/human
 	var/meat_produced = 0
 	var/ignore_clothing = 0
 	use_power = 1
@@ -97,7 +97,7 @@
 /obj/machinery/gibber/attackby(obj/item/P as obj, mob/user as mob, params)
 	if (istype(P, /obj/item/weapon/grab))
 		var/obj/item/weapon/grab/G = P
-		if(!istype(G.affecting, /mob/living/carbon/human))
+		if(!istype(G.affecting, /mob/living/carbon/))
 			user << "<span class='danger'>This item is not suitable for the gibber!</span>"
 			return
 		if(G.affecting.abiotic(1) && !ignore_clothing)
@@ -159,11 +159,15 @@
 	src.operating = 1
 	update_icon()
 	var/sourcename = src.occupant.real_name
-	var/sourcejob = src.occupant.job
+	var/sourcejob
+	if(ishuman(occupant))
+		var/mob/living/carbon/human/gibee = occupant
+		sourcejob = gibee.job
 	var/sourcenutriment = src.occupant.nutrition / 15
 	var/sourcetotalreagents = src.occupant.reagents.total_volume
+	var/gibtype = /obj/effect/decal/cleanable/blood/gibs
 
-	var/obj/item/weapon/reagent_containers/food/snacks/meat/slab/human/allmeat[meat_produced]
+	var/obj/item/weapon/reagent_containers/food/snacks/meat/slab/allmeat[meat_produced]
 
 	if(ishuman(occupant))
 		var/mob/living/carbon/human/gibee = occupant
@@ -171,11 +175,17 @@
 			typeofmeat = gibee.dna.species.meat
 		else
 			typeofmeat = /obj/item/weapon/reagent_containers/food/snacks/meat/slab/human
+	else
+		if(iscarbon(occupant))
+			var/mob/living/carbon/C = occupant
+			typeofmeat = C.type_of_meat
+			gibtype = C.gib_type
 	for (var/i=1 to meat_produced)
-		var/obj/item/weapon/reagent_containers/food/snacks/meat/slab/human/newmeat = new typeofmeat
+		var/obj/item/weapon/reagent_containers/food/snacks/meat/slab/newmeat = new typeofmeat
 		newmeat.name = sourcename + newmeat.name
 		newmeat.subjectname = sourcename
-		newmeat.subjectjob = sourcejob
+		if(sourcejob)
+			newmeat.subjectjob = sourcejob
 		newmeat.reagents.add_reagent ("nutriment", sourcenutriment / meat_produced) // Thehehe. Fat guys go first
 		src.occupant.reagents.trans_to (newmeat, round (sourcetotalreagents / meat_produced, 1)) // Transfer all the reagents from the
 		allmeat[i] = newmeat
@@ -188,12 +198,15 @@
 		playsound(src.loc, 'sound/effects/splat.ogg', 50, 1)
 		operating = 0
 		for (var/i=1 to meat_produced)
+			var/list/nearby_turfs = orange(3, get_turf(src))
 			var/obj/item/meatslab = allmeat[i]
-			var/turf/Tx = locate(src.x - i, src.y, src.z)
 			meatslab.loc = src.loc
-			meatslab.throw_at(Tx,i,3)
-			if (!Tx.density)
-				new /obj/effect/decal/cleanable/blood/gibs(Tx,i)
+			meatslab.throw_at(pick(nearby_turfs),i,3)
+			for (var/turfs=1 to meat_produced*3)
+				var/turf/gibturf = pick(nearby_turfs)
+				if (!gibturf.density && src in viewers(gibturf))
+					new gibtype(gibturf,i)
+
 		src.operating = 0
 		update_icon()
 

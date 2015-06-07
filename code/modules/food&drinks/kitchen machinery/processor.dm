@@ -86,7 +86,7 @@
 		S.loc = loc
 		S.visible_message("<span class='notice'>[C] crawls free of the processor!</span>")
 		return
-	for(var/i = 1, i <= C * processor.rating_amount, i++)
+	for(var/i = 1, i <= C + processor.rating_amount, i++)
 		new S.coretype(loc)
 		feedback_add_details("slime_core_harvested","[replacetext(S.colour," ","_")]")
 	..()
