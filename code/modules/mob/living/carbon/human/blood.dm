@@ -107,6 +107,8 @@ var/const/BLOOD_VOLUME_SURVIVE = 122
 		//Bleeding out
 		blood_max = 0
 		for(var/obj/item/organ/limb/org in organs)
+			if(org.status == ORGAN_ROBOTIC) //robots don't bleed!
+				continue
 			var/brutedamage = org.brute_dam
 
 			//We want an accurate reading of .len

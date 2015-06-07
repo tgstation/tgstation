@@ -46,7 +46,8 @@
 	var/max_damage = 0
 	var/status = ORGAN_ORGANIC
 	var/list/embedded_objects = list()
-
+	var/augment_icon = 'icons/mob/augments.dmi'
+	var/augment_icon_state = ""
 
 
 /obj/item/organ/limb/chest
@@ -160,7 +161,7 @@
 //Updates an organ's brute/burn states for use by update_damage_overlays()
 //Returns 1 if we need to update overlays. 0 otherwise.
 /obj/item/organ/limb/proc/update_organ_icon()
-	if(status == ORGAN_ORGANIC) //Robotic limbs show no damage - RR
+	if(status == ORGAN_ORGANIC)
 		var/tbrute	= round( (brute_dam/max_damage)*3, 1 )
 		var/tburn	= round( (burn_dam/max_damage)*3, 1 )
 		if((tbrute != brutestate) || (tburn != burnstate))
@@ -189,3 +190,21 @@
 		for(var/obj/item/I in L.embedded_objects)
 			L.embedded_objects -= I
 			I.loc = T
+
+
+
+/obj/item/organ/limb/proc/copy_organ(var/obj/item/organ/limb/L)
+	//Part info
+	name = L.name
+	owner = L.owner
+	body_part = L.body_part
+	desc = L.desc
+	status = L.status
+
+	//Damage
+	brutestate = L.brutestate
+	burnstate = L.burnstate
+	brute_dam = L.brute_dam
+	burn_dam = L.burn_dam
+	max_damage = L.max_damage
+	embedded_objects = L.embedded_objects.Copy()

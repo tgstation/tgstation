@@ -129,10 +129,11 @@ Please contact me on #coderbus IRC. ~Carnie x
 	overlays_standing[DAMAGE_LAYER]	= standing
 
 	for(var/obj/item/organ/limb/O in organs)
-		if(O.brutestate)
-			standing.overlays	+= "[O.icon_state]_[O.brutestate]0"	//we're adding icon_states of the base image as overlays
-		if(O.burnstate)
-			standing.overlays	+= "[O.icon_state]_0[O.burnstate]"
+		if(O.status == ORGAN_ORGANIC)
+			if(O.brutestate)
+				standing.overlays	+= "[O.icon_state]_[O.brutestate]0"	//we're adding icon_states of the base image as overlays
+			if(O.burnstate)
+				standing.overlays	+= "[O.icon_state]_0[O.burnstate]"
 
 	apply_overlay(DAMAGE_LAYER)
 
@@ -186,23 +187,10 @@ Please contact me on #coderbus IRC. ~Carnie x
 	remove_overlay(AUGMENTS_LAYER)
 
 	var/list/standing	= list()
-	var/g = (gender == FEMALE) ? "f" : "m"
 
-
-	if(getlimb(/obj/item/organ/limb/robot/r_arm))
-		standing	+= image("icon"='icons/mob/augments.dmi', "icon_state"="r_arm_s", "layer"=-AUGMENTS_LAYER)
-	if(getlimb(/obj/item/organ/limb/robot/l_arm))
-		standing	+= image("icon"='icons/mob/augments.dmi', "icon_state"="l_arm_s", "layer"=-AUGMENTS_LAYER)
-
-	if(getlimb(/obj/item/organ/limb/robot/r_leg))
-		standing	+= image("icon"='icons/mob/augments.dmi', "icon_state"="r_leg_s", "layer"=-AUGMENTS_LAYER)
-	if(getlimb(/obj/item/organ/limb/robot/l_leg))
-		standing	+= image("icon"='icons/mob/augments.dmi', "icon_state"="l_leg_s", "layer"=-AUGMENTS_LAYER)
-
-	if(getlimb(/obj/item/organ/limb/robot/chest))
-		standing	+= image("icon"='icons/mob/augments.dmi', "icon_state"="chest_[g]_s", "layer"=-AUGMENTS_LAYER)
-	if(getlimb(/obj/item/organ/limb/robot/head))
-		standing	+= image("icon"='icons/mob/augments.dmi', "icon_state"="head_s", "layer"=-AUGMENTS_LAYER)
+	for(var/obj/item/organ/limb/L in organs)
+		if(L.status == ORGAN_ROBOTIC)
+			standing += image("icon"=L.augment_icon,"icon_state"=L.augment_icon_state, "layer"=-AUGMENTS_LAYER)
 
 	if(standing.len)
 		overlays_standing[AUGMENTS_LAYER]	= standing
