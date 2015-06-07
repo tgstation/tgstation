@@ -15,7 +15,7 @@
 	throw_range = 1
 	throw_speed = 1
 	layer = 3
-	pressure_resistance = 1
+	pressure_resistance = 0
 	slot_flags = SLOT_HEAD
 	body_parts_covered = HEAD
 
