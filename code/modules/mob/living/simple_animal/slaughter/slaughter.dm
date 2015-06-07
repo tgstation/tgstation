@@ -41,7 +41,7 @@
 	..(1)
 	new /obj/effect/decal/cleanable/blood (src.loc)
 	new /obj/item/weapon/demonheart (src.loc)
-	visible_message("<span class='danger'>The [src] screams in anger as it's form collapes into a pool of viscera.</span>")
+	visible_message("<span class='danger'>The [src] screams in anger as its form collapes into a pool of viscera.</span>")
 	ghostize()
 	qdel(src)
 	return
@@ -93,7 +93,6 @@
 			src.notransform = 0
 
 /mob/living/simple_animal/slaughter/proc/phasein(var/obj/effect/decal/cleanable/B)
-	var/mob/living/simple_animal/slaughter/S = src
 	if(src.eating)
 		src << "<B>Finish eating first!</B>"
 	else
@@ -104,37 +103,34 @@
 		playsound(get_turf(src), pick(voice),50, 1, -1)
 		src.visible_message("<span class='warning'><B>The [src] rises out of the pool of blood!</B>")
 		playsound(get_turf(src), 'sound/effects/slosh.ogg', 50, 1, -1)
-		qdel(S.holder)
+		qdel(src.holder)
 
 /obj/effect/decal/cleanable/blood/CtrlClick(var/mob/user)
 	..()
-	var/obj/effect/decal/cleanable/B = src
 	if(istype(user, /mob/living/simple_animal/slaughter))
 		var/mob/living/simple_animal/slaughter/S = user
 		if(S.phased)
-			S.phasein(B)
+			S.phasein(src)
 		else
-			S.phaseout(B)
+			S.phaseout(src)
 
 
 /obj/effect/decal/cleanable/trail_holder/CtrlClick(var/mob/user)
 	..()
-	var/obj/effect/decal/cleanable/B = src
 	if(istype(user, /mob/living/simple_animal/slaughter))
 		var/mob/living/simple_animal/slaughter/S = user
 		if(S.phased)
-			S.phasein(B)
+			S.phasein(src)
 		else
-			S.phaseout(B)
+			S.phaseout(src)
 
 
 
 /turf/CtrlClick(var/mob/user)
 	..()
-	var/turf/T = src
 	if(istype(user, /mob/living/simple_animal/slaughter))
 		var/mob/living/simple_animal/slaughter/S = user
-		for(var/obj/effect/decal/cleanable/B in T.contents)
+		for(var/obj/effect/decal/cleanable/B in src.contents)
 			if(istype(B, /obj/effect/decal/cleanable/blood) || istype(B, /obj/effect/decal/cleanable/trail_holder))
 				if(S.phased)
 					S.phasein(B)
