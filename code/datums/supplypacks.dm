@@ -650,6 +650,18 @@ var/list/all_supply_groups = list(supply_emergency,supply_security,supply_engine
 	name = "HEADER"
 	group = supply_science
 
+/datum/supply_packs/science/robotics/droneshells
+	name = "Drone Shell Crate"
+	contains = list(/obj/item/drone_shell,
+		/obj/item/drone_shell,
+		/obj/item/drone_shell,
+		/obj/item/drone_shell,
+		/obj/item/drone_shell,
+		/obj/item/drone_shell)
+	cost = 20
+	containertype = /obj/structure/closet/crate/secure
+	containername = "Drone Shell Crate"
+	access = access_robotics
 
 /datum/supply_packs/science/robotics
 	name = "Robotics Assembly Crate"
