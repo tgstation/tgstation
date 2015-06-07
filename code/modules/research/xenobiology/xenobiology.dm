@@ -436,9 +436,9 @@
 	var/freezerange = 2
 	var/duration = 140
 	
-	/obj/effect/timestop/New()
-		..()
-		timestop()
+/obj/effect/timestop/New()
+	..()
+	timestop()
 
 
 /obj/effect/timestop/proc/timestop()
