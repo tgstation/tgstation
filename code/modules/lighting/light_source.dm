@@ -185,7 +185,7 @@
 			T.affecting_lights -= src
 
 		#if LIGHTING_RESOLUTION == 1
-		if(T.dynamic_lighting)
+		if(T.dynamic_lighting && T.lighting_overlay)
 			T.lighting_overlay.update_lumcount(-effect_r[T.lighting_overlay], -effect_g[T.lighting_overlay], -effect_b[T.lighting_overlay])
 		#else
 		for(var/atom/movable/lighting_overlay/L in T.lighting_overlays)
