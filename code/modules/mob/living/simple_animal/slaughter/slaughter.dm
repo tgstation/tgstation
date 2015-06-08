@@ -172,13 +172,3 @@ obj/effect/dummy/slaughter/relaymove(var/mob/user, direction)
 	icon = 'icons/obj/surgery.dmi'
 	icon_state = "heart-on"
 	origin_tech = "combat=5;biotech=8"
-
-
-
-
-
-
-
-
-//Event
-
