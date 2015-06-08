@@ -12,9 +12,9 @@
 	if(!pulse)
 		pulse = 1
 		for(var/mob/living/L in range(8,get_turf(src)))
-			var/rads = 100 - get_dist(L,src)*4
+			var/rads = 100 - get_dist(L,src)*7
 			L.irradiate(rads)
-		spawn(30)
+		spawn(40)
 			pulse = 0
 
 //nuke core box, for carrying the core

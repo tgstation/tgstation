@@ -49,8 +49,8 @@ var/bomb_set
 
 /obj/machinery/nuclearbomb/selfdestruct/New()
 	core = new /obj/item/nuke_core(src)
-	lights = new /image(icon,"lights-off")
-	panel = new /image(icon,"panel-overlay")
+	lights = image(icon,"lights-off")
+	panel = image(icon,"panel-overlay")
 	overlays += lights
 	overlays += panel
 	..()
@@ -152,16 +152,16 @@ var/bomb_set
 	switch(deconstruction_state)
 		if(NUKESTATE_OPEN_TRAP,NUKESTATE_OPEN)
 			glow = null
-			interior = new /image(icon,"panel-removed")
+			interior = image(icon,"panel-removed")
 		if(NUKESTATE_CORE_REMOVED,NUKESTATE_CUT_LINES,NUKESTATE_WIRES_TIED)
 			glow = null
-			interior = new /image(icon,"wires-sorted")
+			interior = image(icon,"wires-sorted")
 		if(NUKESTATE_CORE_EXPOSED)
-			glow = new /image(icon,"core-exposed")
-			interior = new /image(icon,"wires-sorted")
+			glow = image(icon,"core-exposed")
+			interior = image(icon,"wires-sorted")
 		if(NUKESTATE_INTACT)
 			glow = null
-			interior = new /image(icon,"panel-overlay")
+			interior = image(icon,"panel-overlay")
 	overlays += interior
 	overlays += glow
 
@@ -171,21 +171,21 @@ var/bomb_set
 	panel = null
 	switch(get_nuke_state())
 		if(NUKE_OFF_LOCKED)
-			lights = new /image(icon,"lights-off")
+			lights = image(icon,"lights-off")
 			if(deconstruction_state != NUKESTATE_INTACT)
-				panel = new /image(icon,"panel-removed-blue")
+				panel = image(icon,"panel-removed-blue")
 		if(NUKE_OFF_UNLOCKED)
-			lights = new /image(icon,"lights-safety")
+			lights = image(icon,"lights-safety")
 			if(deconstruction_state != NUKESTATE_INTACT)
-				panel = new /image(icon,"panel-removed-blue")
+				panel = image(icon,"panel-removed-blue")
 		if(NUKE_ON_TIMING)
-			lights = new /image(icon,"lights-timing")
+			lights = image(icon,"lights-timing")
 			if(deconstruction_state != NUKESTATE_INTACT)
-				panel = new /image(icon,"panel-removed-timing")
+				panel = image(icon,"panel-removed-timing")
 		if(NUKE_ON_EXPLODING)
-			lights = new /image(icon,"lights-exploding")
+			lights = image(icon,"lights-exploding")
 			if(deconstruction_state != NUKESTATE_INTACT)
-				panel = new /image(icon,"panel-removed-exploding")
+				panel = image(icon,"panel-removed-exploding")
 	overlays += lights
 	overlays += panel
 
