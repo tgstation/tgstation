@@ -36,7 +36,7 @@
 	return
 
 /obj/machinery/sleep_console/update_icon()
-	icon_state = "sleeperconsole[stat & NOPOWER? null : "-p"][orient == "LEFT" ? null : "-r"]"
+	icon_state = "sleeperconsole[stat & NOPOWER ? "-p" : null][orient == "LEFT" ? null : "-r"]"
 
 /obj/machinery/sleep_console/attack_ai(mob/user as mob)
 	src.add_hiddenprint(user)

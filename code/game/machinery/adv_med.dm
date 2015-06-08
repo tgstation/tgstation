@@ -140,7 +140,7 @@
 	if(!ishuman(usr) && !isrobot(usr))
 		return
 	if(!occupant)
-		usr << "<span class='warning'>The sleeper is unoccupied!</span>"
+		usr << "<span class='warning'>The scanner is unoccupied!</span>"
 		return
 	if(isrobot(usr))
 		var/mob/living/silicon/robot/robit = usr
@@ -221,13 +221,13 @@
 	set_light(0)
 	return
 
-/obj/machinery/sleeper/crowbarDestroy(mob/user)
+/obj/machinery/bodyscanner/crowbarDestroy(mob/user)
 	if (occupant)
 		user << "<span class='warning'>You cannot disassemble this [src], it's occupado.</span>"
 		return
 	return..()
 
-/obj/machinery/sleeper/attackby(obj/item/weapon/W as obj, user as mob)
+/obj/machinery/bodyscanner/attackby(obj/item/weapon/W as obj, user as mob)
 	if(iswrench(W) && !occupant)
 		playsound(get_turf(src), 'sound/items/Ratchet.ogg', 50, 1)
 		if(orient == "RIGHT")
@@ -328,8 +328,7 @@
 	return
 
 /obj/machinery/body_scanconsole/update_icon()
-	icon_state = "body_scannerconsole[stat & NOPOWER? null : "-p"][orient == "LEFT" ? null : "-r"]"
-
+	icon_state = "body_scannerconsole[stat & NOPOWER ? "-p" : null][orient == "LEFT" ? null : "-r"]"
 
 /obj/machinery/body_scanconsole/ex_act(severity)
 	switch(severity)
