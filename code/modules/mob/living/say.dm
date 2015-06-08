@@ -162,9 +162,6 @@ var/list/department_radio_keys = list(
 		return 1
 
 /mob/living/proc/can_speak_basic(message) //Check BEFORE handling of xeno and ling channels
-	if(!message || message == "")
-		return 0
-
 	if(client)
 		if(client.prefs.muted & MUTE_IC)
 			src << "<span class='danger'>You cannot speak in IC (muted).</span>"
