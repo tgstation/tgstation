@@ -91,7 +91,7 @@
 	var/datum/dna/NewDNA = selected_dna
 	if(ismonkey(target))
 		user << "<span class='notice'>We stealthily sting [target.name].</span>"
-	hardset_dna(target, NewDNA.uni_identity, NewDNA.struc_enzymes, NewDNA.real_name, NewDNA.blood_type, NewDNA.species.type, NewDNA.mutant_color)
+	hardset_dna(target, NewDNA.uni_identity, NewDNA.struc_enzymes, NewDNA.real_name, NewDNA.blood_type, NewDNA.species.type, NewDNA.mutant_color, NewDNA.lizard_parts)
 	updateappearance(target)
 	feedback_add_details("changeling_powers","TS")
 	return 1

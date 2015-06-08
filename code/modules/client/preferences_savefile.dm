@@ -187,12 +187,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	S["socks"]				>> socks
 	S["backbag"]			>> backbag
 	S["mutant_color"]		>> mutant_color
-	S["lizard_tail"]		>> lizard_tail
-	S["lizard_snout"]		>> lizard_snout
-	S["lizard_horns"]		>> lizard_horns
-	S["lizard_frills"]		>> lizard_frills
-	S["lizard_spines"]		>> lizard_spines
-	S["lizard_body_markings"] >> lizard_body_markings
+	S["lizard_parts"]		>> lizard_parts
 	S["clown_name"]			>> custom_names["clown"]
 	S["mime_name"]			>> custom_names["mime"]
 	S["ai_name"]			>> custom_names["ai"]
@@ -245,12 +240,12 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	skin_tone		= sanitize_inlist(skin_tone, skin_tones)
 	backbag			= sanitize_integer(backbag, 1, backbaglist.len, initial(backbag))
 	mutant_color	= sanitize_hexcolor(mutant_color, 3, 0)
-	lizard_tail 	= sanitize_inlist(lizard_tail, tails_list)
-	lizard_snout	= sanitize_inlist(lizard_snout, snouts_list)
-	lizard_horns 	= sanitize_inlist(lizard_horns, horns_list)
-	lizard_frills 	= sanitize_inlist(lizard_frills, frills_list)
-	lizard_spines 	= sanitize_inlist(lizard_spines, spines_list)
-	lizard_body_markings 	= sanitize_inlist(lizard_body_markings, body_markings_list)
+	lizard_parts["tail"]	= sanitize_inlist(lizard_parts["tail"], tails_list)
+	lizard_parts["snout"]	= sanitize_inlist(lizard_parts["snout"], snouts_list)
+	lizard_parts["horns"] 	= sanitize_inlist(lizard_parts["horns"], horns_list)
+	lizard_parts["frills"] 	= sanitize_inlist(lizard_parts["frills"], frills_list)
+	lizard_parts["spines"] 	= sanitize_inlist(lizard_parts["spines"], spines_list)
+	lizard_parts["body_markings"] 	= sanitize_inlist(lizard_parts["body_markings"], body_markings_list)
 
 	userandomjob	= sanitize_integer(userandomjob, 0, 1, initial(userandomjob))
 	job_civilian_high = sanitize_integer(job_civilian_high, 0, 65535, initial(job_civilian_high))
@@ -292,12 +287,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	S["backbag"]			<< backbag
 	S["species"]			<< pref_species.name
 	S["mutant_color"]		<< mutant_color
-	S["lizard_tail"]		<< lizard_tail
-	S["lizard_snout"]		<< lizard_snout
-	S["lizard_horns"]		<< lizard_horns
-	S["lizard_frills"]		<< lizard_frills
-	S["lizard_spines"]		<< lizard_spines
-	S["lizard_body_markings"] << lizard_body_markings
+	S["lizard_parts"]		<< lizard_parts
 	S["clown_name"]			<< custom_names["clown"]
 	S["mime_name"]			<< custom_names["mime"]
 	S["ai_name"]			<< custom_names["ai"]

@@ -50,7 +50,7 @@
 	if(!body_markings_list.len)
 		init_sprite_accessory_subtypes(/datum/sprite_accessory/body_markings, body_markings_list)
 
-	return(list(pick(tails_list),pick(snouts_list),pick(horns_list),pick(frills_list),pick(spines_list),pick(body_markings_list)))
+	return(list("tail" = pick(tails_list), "snout" = pick(snouts_list), "horns" = pick(horns_list), "frills" = pick(frills_list), "spines" = pick(spines_list), "body_markings" = pick(body_markings_list)))
 
 /proc/random_hair_style(gender)
 	switch(gender)

@@ -241,7 +241,7 @@
 			bodyparts_to_add -= "tail"
 
 	if("spines" in mutant_bodyparts)
-		if(!H.lizard_spines || H.lizard_spines == "None" || H.wear_suit && (H.wear_suit.flags_inv & HIDEJUMPSUIT))
+		if(!H.lizard_parts["spines"] || H.lizard_parts["spines"] == "None" || H.wear_suit && (H.wear_suit.flags_inv & HIDEJUMPSUIT))
 			bodyparts_to_add -= "spines"
 
 	if("snout" in mutant_bodyparts) //Take a closer look at that snout!
@@ -249,11 +249,11 @@
 			bodyparts_to_add -= "snout"
 
 	if("frills" in mutant_bodyparts)
-		if(!H.lizard_frills || H.lizard_frills == "None" || H.head && (H.head.flags_inv & HIDEEARS))
+		if(!H.lizard_parts["frills"] || H.lizard_parts["frills"] == "None" || H.head && (H.head.flags_inv & HIDEEARS))
 			bodyparts_to_add -= "frills"
 
 	if("horns" in mutant_bodyparts)
-		if(!H.lizard_horns || H.lizard_horns == "None" || H.head && (H.head.flags & BLOCKHAIR) || (H.wear_mask && (H.wear_mask.flags & BLOCKHAIR)))
+		if(!H.lizard_parts["horns"] || H.lizard_parts["horns"] == "None" || H.head && (H.head.flags & BLOCKHAIR) || (H.wear_mask && (H.wear_mask.flags & BLOCKHAIR)))
 			bodyparts_to_add -= "horns"
 
 	if(!bodyparts_to_add)
@@ -268,17 +268,17 @@
 			var/datum/sprite_accessory/S
 			switch(bodypart)
 				if("tail")
-					S = tails_list[H.lizard_tail]
+					S = tails_list[H.lizard_parts["tail"]]
 				if("spines")
-					S = spines_list[H.lizard_spines]
+					S = spines_list[H.lizard_parts["spines"]]
 				if("snout")
-					S = snouts_list[H.lizard_snout]
+					S = snouts_list[H.lizard_parts["snout"]]
 				if("frills")
-					S = frills_list[H.lizard_frills]
+					S = frills_list[H.lizard_parts["frills"]]
 				if("horns")
-					S = horns_list[H.lizard_horns]
+					S = horns_list[H.lizard_parts["horns"]]
 				if("body_markings")
-					S = body_markings_list[H.lizard_body_markings]
+					S = body_markings_list[H.lizard_parts["body_markings"]]
 
 			if(S.icon_state == "none")
 				continue

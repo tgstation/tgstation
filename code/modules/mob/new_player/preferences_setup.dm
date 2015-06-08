@@ -17,13 +17,7 @@
 	if(!pref_species)
 		pref_species = new /datum/species/human()
 	backbag = 2
-	var/list/lizbiz = random_lizard_features()
-	lizard_tail 			= lizbiz[1]
-	lizard_snout 			= lizbiz[2]
-	lizard_horns 			= lizbiz[3]
-	lizard_frills			= lizbiz[4]
-	lizard_spines	 		= lizbiz[5]
-	lizard_body_markings 	= lizbiz[6]
+	lizard_parts = random_lizard_features()
 	age = rand(AGE_MIN,AGE_MAX)
 
 /datum/preferences/proc/update_preview_icon()		//seriously. This is horrendous.
@@ -85,17 +79,17 @@
 		for(var/bodypart in pref_species.mutant_bodyparts)
 			switch(bodypart)
 				if("tail")
-					S = tails_list[lizard_tail]
+					S = tails_list[lizard_parts["tail"]]
 				if("spines")
-					S = spines_list[lizard_spines]
+					S = spines_list[lizard_parts["spines"]]
 				if("snout")
-					S = snouts_list[lizard_snout]
+					S = snouts_list[lizard_parts["snout"]]
 				if("frills")
-					S = frills_list[lizard_frills]
+					S = frills_list[lizard_parts["frills"]]
 				if("horns")
-					S = horns_list[lizard_horns]
+					S = horns_list[lizard_parts["horns"]]
 				if("body_markings")
-					S = body_markings_list[lizard_body_markings]
+					S = body_markings_list[lizard_parts["body_markings"]]
 
 			if(S.icon_state == "none")
 				continue

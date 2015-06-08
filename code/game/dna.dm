@@ -22,6 +22,7 @@
 	var/blood_type
 	var/datum/species/species = new /datum/species/human() //The type of mutant race the player is if applicable (i.e. potato-man)
 	var/mutant_color = "FFF"		 // What color you are if you have certain speciess
+	var/list/lizard_parts = list()
 	var/real_name //Stores the real name of the person who originally got this dna datum. Used primarely for changelings,
 	var/list/mutations = list()   //All mutations are from now on here
 	var/mob/living/carbon/holder
@@ -37,6 +38,7 @@
 		destination.dna.blood_type = blood_type
 		hardset_dna(destination, null, null, null, null, species)
 		destination.dna.mutant_color = mutant_color
+		destination.dna.lizard_parts = lizard_parts
 		destination.dna.real_name = real_name
 		destination.dna.mutations = mutations
 
@@ -47,6 +49,7 @@
 	new_dna.blood_type = blood_type
 	new_dna.species = new species.type
 	new_dna.mutant_color = mutant_color
+	new_dna.lizard_parts = lizard_parts
 	new_dna.real_name = real_name
 	new_dna.mutations = mutations
 
@@ -131,7 +134,7 @@
 		spans |= M.get_spans()
 	return spans
 
-/proc/hardset_dna(mob/living/carbon/owner, ui, se, real_name, blood_type, datum/species/mrace, mcolor)
+/proc/hardset_dna(mob/living/carbon/owner, ui, se, real_name, blood_type, datum/species/mrace, mcolor, lizard_parts)
 	if(!ismonkey(owner) && !ishuman(owner))
 		return
 	if(!owner.dna)
@@ -145,6 +148,13 @@
 
 	if(mcolor)
 		owner.dna.mutant_color = mcolor
+
+	if(lizard_parts)
+		owner.dna.lizard_parts = lizard_parts
+		if(ishuman(owner))
+			var/mob/living/carbon/human/H = owner
+			H.lizard_parts = lizard_parts
+
 
 	if(real_name)
 		owner.real_name = real_name
@@ -193,6 +203,9 @@
 	character.dna.uni_identity = character.dna.generate_uni_identity(character)
 	character.dna.struc_enzymes = character.dna.generate_struc_enzymes(character)
 	character.dna.unique_enzymes = character.dna.generate_unique_enzymes(character)
+	if(istype(character, /mob/living/carbon/human))
+		var/mob/living/carbon/human/H = character
+		H.dna.lizard_parts =  H.lizard_parts
 	return character.dna
 
 /proc/create_dna(mob/living/carbon/C, datum/species/S) //don't use this unless you're about to use hardset_dna or ready_dna
@@ -972,7 +985,7 @@
 
 /datum/dna/proc/is_same_as(var/datum/dna/D)
 	if(uni_identity == D.uni_identity && struc_enzymes == D.struc_enzymes && real_name == D.real_name)
-		if(species == D.species && mutant_color == D.mutant_color && blood_type == D.blood_type)
+		if(species == D.species && mutant_color == D.mutant_color && blood_type == D.blood_type && D.lizard_parts == lizard_parts)
 			return 1
 	return 0
 

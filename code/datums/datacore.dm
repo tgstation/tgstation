@@ -261,6 +261,7 @@ var/record_id_num = 1001
 		L.fields["identity"]	= H.dna.uni_identity
 		L.fields["species"]		= H.dna.species.type
 		L.fields["mcolor"]		= H.dna.mutant_color
+		L.fields["lizard_parts"]= H.dna.lizard_parts
 		L.fields["image"]		= image
 		locked += L
 	return

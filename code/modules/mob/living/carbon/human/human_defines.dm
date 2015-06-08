@@ -25,13 +25,8 @@
 	var/socks = "Nude" //Which socks the player wants
 	var/backbag = 2		//Which backpack type the player has chosen. Nothing, Satchel or Backpack.
 
-	//Mutant Parts (currently used only by lizards)
-	var/lizard_tail	= "Smooth"
-	var/lizard_snout = "Round"
-	var/lizard_horns = "None"
-	var/lizard_frills = "None"
-	var/lizard_spines = "None"
-	var/lizard_body_markings = "None"
+	//Mutant Parts
+	var/list/lizard_parts = list("tail"	= "Smooth", "snout" = "Round", "horns" = "None", "frills" = "None", "spines" = "None", "body_markings" = "None")
 
 	//Equipment slots
 	var/obj/item/wear_suit = null

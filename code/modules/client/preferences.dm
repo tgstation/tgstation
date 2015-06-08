@@ -62,12 +62,7 @@ var/global/list/special_roles = list( //keep synced with the defines BE_* in set
 	var/eye_color = "000"				//Eye color
 	var/datum/species/pref_species = new /datum/species/human()	//Mutant race
 	var/mutant_color = "FFF"			//Mutant race skin color
-	var/lizard_tail	= "Smooth"			//Mutant bodypart prefs (currently just liz-biz)
-	var/lizard_snout = "Round"
-	var/lizard_horns = "None"
-	var/lizard_frills = "None"
-	var/lizard_spines = "None"
-	var/lizard_body_markings = "None"
+	var/list/lizard_parts = list("tail"	= "Smooth", "snout" = "Round", "horns" = "None", "frills" = "None", "spines" = "None", "body_markings" = "None")
 
 	var/list/custom_names = list("clown", "mime", "ai", "cyborg", "religion", "deity")
 
@@ -259,7 +254,7 @@ var/global/list/special_roles = list( //keep synced with the defines BE_* in set
 
 					dat += "<h3>Tail</h3>"
 
-					dat += "<a href='?_src_=prefs;preference=tail;task=input'>[lizard_tail]</a><BR>"
+					dat += "<a href='?_src_=prefs;preference=tail;task=input'>[lizard_parts["tail"]]</a><BR>"
 
 					dat += "</td>"
 
@@ -268,7 +263,7 @@ var/global/list/special_roles = list( //keep synced with the defines BE_* in set
 
 					dat += "<h3>Snout</h3>"
 
-					dat += "<a href='?_src_=prefs;preference=snout;task=input'>[lizard_snout]</a><BR>"
+					dat += "<a href='?_src_=prefs;preference=snout;task=input'>[lizard_parts["snout"]]</a><BR>"
 
 					dat += "</td>"
 
@@ -277,7 +272,7 @@ var/global/list/special_roles = list( //keep synced with the defines BE_* in set
 
 					dat += "<h3>Horns</h3>"
 
-					dat += "<a href='?_src_=prefs;preference=horns;task=input'>[lizard_horns]</a><BR>"
+					dat += "<a href='?_src_=prefs;preference=horns;task=input'>[lizard_parts["horns"]]</a><BR>"
 
 					dat += "</td>"
 
@@ -286,7 +281,7 @@ var/global/list/special_roles = list( //keep synced with the defines BE_* in set
 
 					dat += "<h3>Frills</h3>"
 
-					dat += "<a href='?_src_=prefs;preference=frills;task=input'>[lizard_frills]</a><BR>"
+					dat += "<a href='?_src_=prefs;preference=frills;task=input'>[lizard_parts["frills"]]</a><BR>"
 
 					dat += "</td>"
 
@@ -295,7 +290,7 @@ var/global/list/special_roles = list( //keep synced with the defines BE_* in set
 
 					dat += "<h3>Spines</h3>"
 
-					dat += "<a href='?_src_=prefs;preference=spines;task=input'>[lizard_spines]</a><BR>"
+					dat += "<a href='?_src_=prefs;preference=spines;task=input'>[lizard_parts["spines"]]</a><BR>"
 
 					dat += "</td>"
 
@@ -304,7 +299,7 @@ var/global/list/special_roles = list( //keep synced with the defines BE_* in set
 
 					dat += "<h3>Body Markings</h3>"
 
-					dat += "<a href='?_src_=prefs;preference=body_markings;task=input'>[lizard_body_markings]</a><BR>"
+					dat += "<a href='?_src_=prefs;preference=body_markings;task=input'>[lizard_parts["body_markings"]]</a><BR>"
 
 					dat += "</td>"
 
@@ -814,37 +809,37 @@ var/global/list/special_roles = list( //keep synced with the defines BE_* in set
 						var/new_tail
 						new_tail = input(user, "Choose your character's tail:", "Character Preference") as null|anything in tails_list
 						if(new_tail)
-							lizard_tail = new_tail
+							lizard_parts["tail"] = new_tail
 
 					if("snout")
 						var/new_snout
 						new_snout = input(user, "Choose your character's snout:", "Character Preference") as null|anything in snouts_list
 						if(new_snout)
-							lizard_snout = new_snout
+							lizard_parts["snout"] = new_snout
 
 					if("horns")
 						var/new_horns
 						new_horns = input(user, "Choose your character's horns:", "Character Preference") as null|anything in horns_list
 						if(new_horns)
-							lizard_horns = new_horns
+							lizard_parts["horns"] = new_horns
 
 					if("frills")
 						var/new_frills
 						new_frills = input(user, "Choose your character's frills:", "Character Preference") as null|anything in frills_list
 						if(new_frills)
-							lizard_frills = new_frills
+							lizard_parts["frills"] = new_frills
 
 					if("spines")
 						var/new_spines
 						new_spines = input(user, "Choose your character's spines:", "Character Preference") as null|anything in spines_list
 						if(new_spines)
-							lizard_spines = new_spines
+							lizard_parts["spines"] = new_spines
 
 					if("body_markings")
 						var/new_body_markings
 						new_body_markings = input(user, "Choose your character's body markings:", "Character Preference") as null|anything in body_markings_list
 						if(new_body_markings)
-							lizard_body_markings = new_body_markings
+							lizard_parts["body_markings"] = new_body_markings
 
 					if("s_tone")
 						var/new_s_tone = input(user, "Choose your character's skin-tone:", "Character Preference")  as null|anything in skin_tones
@@ -1036,12 +1031,7 @@ var/global/list/special_roles = list( //keep synced with the defines BE_* in set
 		character.undershirt = undershirt
 		character.socks = socks
 
-		character.lizard_body_markings = lizard_body_markings
-		character.lizard_tail	= lizard_tail
-		character.lizard_snout = lizard_snout
-		character.lizard_horns = lizard_horns
-		character.lizard_frills = lizard_frills
-		character.lizard_spines = lizard_spines
+		character.lizard_parts = lizard_parts
 
 		if(backbag > 3 || backbag < 1)
 			backbag = 1 //Same as above
