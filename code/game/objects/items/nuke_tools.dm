@@ -11,10 +11,9 @@
 /obj/item/nuke_core/process()
 	if(!pulse)
 		pulse = 1
-		for(var/mob/living/L in range(8,loc))
-			L.irradiate(50)
-		for(var/mob/living/L in range(3,loc))
-			L.irradiate(50)
+		for(var/mob/living/L in range(8,get_turf(src)))
+			var/rads = 100 - get_dist(L,src)*4
+			L.irradiate(rads)
 		spawn(30)
 			pulse = 0
 
@@ -38,11 +37,11 @@
 	desc = "A screwdriver with an ultra thin tip."
 
 /obj/item/weapon/paper/nuke_instructions
-	info = "How to break into a Nanotrasen self-destruct terminal and remove the dirty payload:<br>\
+	info = "How to break into a Nanotrasen self-destruct terminal and remove it's plutonium core:<br>\
 	<ul>\
 	<li>Use a screwdriver with a very thin tip (provided) to unscrew the terminal's front panel;</li>\
 	<li>The insides of the terminal should be mostly hollow and you should have a clear way to the warhead's weak spot;</li>\
-	<li>Use something to write cut lines on the warhead, according to the provided plans;</li>\
+	<li>Use something to draw cut lines on the warhead, according to the provided plans;</li>\
 	<li>With a welding tool, cut a hole in the warhead, following the previously drawn cut lines;</li>\
 	<li>After you breach the warhead, you may notice the very subtle glow of the plutonium core;</li>\
 	<li>Place the provided core container in the hole and poke the core until it falls into the container;</li>\

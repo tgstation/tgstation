@@ -89,7 +89,7 @@
 	difficulty = 5
 
 /datum/objective_item/steal/nuke_core
-	name = "a plutonium core"
+	name = "the plutonium core from the onboard self-destruct"
 	targetitem = /obj/item/nuke_core
 	difficulty = 15
 
