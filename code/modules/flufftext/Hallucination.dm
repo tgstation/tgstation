@@ -157,7 +157,7 @@ mob/living/carbon/proc/handle_hallucinations()
 							src << pick(hisses)
 						if(16) //rip pomf
 							src << 'sound/machines/ya_dun_clucked.ogg'
-							spawn(rand(1,15)
+							spawn(rand(1,15))
 								src << "<i>You are filled with a great sadness.</i>"
 
 			if(66 to 70)
