@@ -1,8 +1,8 @@
 //ayy lmao
 #define NITROGEN_RETARDATION_FACTOR 4        //Higher == N2 slows reaction more
 #define THERMAL_RELEASE_MODIFIER 40                //Higher == less heat released during reaction
-#define PLASMA_RELEASE_MODIFIER 1500                //Higher == less plasma released by reaction
-#define OXYGEN_RELEASE_MODIFIER 800        //Higher == less oxygen released at high temperature/power
+#define PLASMA_RELEASE_MODIFIER 1000                //Higher == less plasma released by reaction
+#define OXYGEN_RELEASE_MODIFIER 500        //Higher == less oxygen released at high temperature/power
 #define REACTION_POWER_MODIFIER 1.1                //Higher == more overall power
 
 //These would be what you would get at point blank, decreases with distance
@@ -309,6 +309,8 @@
 
 
 	SetLuminosity(Clamp(round(Clamp(power/max_power,0,1)*max_luminosity),0,max_luminosity))
+
+	air_update_turf(1)
 
 	return 1
 
