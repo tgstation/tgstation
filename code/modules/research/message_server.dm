@@ -17,8 +17,9 @@ var/global/list/obj/machinery/message_server/message_servers = list()
 	var/recipient = "Unspecified" //name of the person
 	var/sender = "Unspecified" //name of the sender
 	var/message = "Blank" //transferred message
+	var/image/photo = null //Attached photo
 
-/datum/data_pda_msg/New(var/param_rec = "",var/param_sender = "",var/param_message = "")
+/datum/data_pda_msg/New(var/param_rec = "",var/param_sender = "",var/param_message = "",var/param_photo=null)
 
 	if(param_rec)
 		recipient = param_rec
@@ -26,6 +27,19 @@ var/global/list/obj/machinery/message_server/message_servers = list()
 		sender = param_sender
 	if(param_message)
 		message = param_message
+	if(param_photo)
+		photo = param_photo
+
+/datum/data_pda_msg/Topic(href,href_list)
+	..()
+	if(href_list["photo"])
+		var/mob/M = usr
+		M << browse_rsc(photo, "pda_photo.png")
+		M << browse("<html><head><title>PDA Photo</title></head>" \
+		+ "<body style='overflow:hidden;margin:0;text-align:center'>" \
+		+ "<img src='pda_photo.png' width='192' style='-ms-interpolation-mode:nearest-neighbor' />" \
+		+ "</body></html>", "window=book;size=192x192")
+		onclose(M, "PDA Photo")
 
 /datum/data_rc_msg
 	var/rec_dpt = "Unspecified" //name of the person
@@ -105,8 +119,9 @@ var/global/list/obj/machinery/message_server/message_servers = list()
 /obj/machinery/message_server/proc/send_chat_message(var/sender = "", var/channel = "", var/message = "")
 	chat_msgs += new/datum/data_chat_msg(sender,channel,message)
 
-/obj/machinery/message_server/proc/send_pda_message(var/recipient = "",var/sender = "",var/message = "")
-	pda_msgs += new/datum/data_pda_msg(recipient,sender,message)
+/obj/machinery/message_server/proc/send_pda_message(var/recipient = "",var/sender = "",var/message = "",var/photo=null)
+	. = new/datum/data_pda_msg(recipient,sender,message,photo)
+	pda_msgs += .
 
 /obj/machinery/message_server/proc/send_rc_message(var/recipient = "",var/sender = "",var/message = "",var/stamp = "", var/id_auth = "", var/priority = 1)
 	rc_msgs += new/datum/data_rc_msg(recipient,sender,message,stamp,id_auth)
