@@ -20,6 +20,7 @@
 	var/temperature = T20C
 
 	var/holy = 0 //Will be probably used for supernatural shit
+	var/shuttle = 0 //If it counts as a shuttle tile for specific shuttles
 
 	var/blocks_air = 0
 
@@ -43,6 +44,9 @@
 			if(istype(T))
 				SSair.add_to_active(T)
 	..()
+
+/turf/Destroy()
+	return QDEL_HINT_HARDDEL_NOW
 
 /turf/attack_hand(mob/user as mob)
 	user.Move_Pulled(src)
@@ -287,3 +291,34 @@
 		if (dist <= R.consume_range)
 			R.consume(AM)
 			continue
+
+
+/turf/indestructible
+	name = "wall"
+	icon = 'icons/turf/walls.dmi'
+	density = 1
+	blocks_air = 1
+	opacity = 1
+
+/turf/indestructible/splashscreen
+	name = "Space Station 13"
+	icon = 'icons/misc/fullscreen.dmi'
+	icon_state = "title"
+	layer = FLY_LAYER
+
+/turf/indestructible/riveted
+	icon_state = "riveted"
+
+/turf/indestructible/abductor
+	icon_state = "alien1"
+	shuttle = 1
+
+/turf/indestructible/fakeglass
+	name = "window"
+	icon_state = "fakewindows"
+	opacity = 0
+
+/turf/indestructible/fakedoor
+	name = "Centcom Access"
+	icon = 'icons/obj/doors/Doorele.dmi'
+	icon_state = "door_closed"

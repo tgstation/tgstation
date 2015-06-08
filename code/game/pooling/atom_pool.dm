@@ -20,7 +20,19 @@ and reset all of its vars to their default
 You can override your object's destroy to return QDEL_HINT_PLACEINPOOL
 to ensure its always placed in this pool (this will only be acted on if qdel calls destroy, and destroy will not get called twice)
 
+Usage:
+
+To get a object, just called PoolOrNew(type, list of args to pass to New)
+
+To put a object back in the pool, call place in pool.
+This will call destroy on the object, set its loc to null,
+and reset all of its vars to their default
+
+You can override your object's destroy to return QDEL_HINT_PLACEINPOOL
+to ensure its always placed in this pool (this will only be acted on if qdel calls destroy, and destroy will not get called twice)
+
 */
+
 
 var/global/list/GlobalPool = list()
 

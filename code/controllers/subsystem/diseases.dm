@@ -9,6 +9,8 @@ var/datum/subsystem/diseases/SSdisease
 /datum/subsystem/diseases/New()
 	NEW_SS_GLOBAL(SSdisease)
 
+/datum/subsystem/diseases/stat_entry(msg)
+	..("P:[processing.len]")
 
 /datum/subsystem/diseases/fire()
 	var/i=1

@@ -50,6 +50,7 @@
 /mob/living/carbon/human/Destroy()
 	for(var/atom/movable/organelle in organs)
 		qdel(organelle)
+	organs = list()
 	return ..()
 
 /mob/living/carbon/human/Stat()

@@ -9,7 +9,7 @@
 	var/on = 0
 	var/volume_rate = 800
 
-/obj/machinery/zvent/process()
+/obj/machinery/zvent/process_atmos()
 
 	//all this object does, is make its turf share air with the ones above and below it, if they have a vent too.
 	if (istype(loc,/turf/simulated)) //if we're not on a valid turf, forget it

@@ -1,5 +1,26 @@
 #define MIDNIGHT_ROLLOVER		864000	//number of deciseconds in a day
 
+#define JANUARY		1
+#define FEBRUARY	2
+#define MARCH		3
+#define APRIL		4
+#define MAY			5
+#define JUNE		6
+#define JULY		7
+#define AUGUST		8
+#define SEPTEMBER	9
+#define OCTOBER		10
+#define NOVEMBER	11
+#define DECEMBER	12
+
+//Select holiday names -- If you test for a holiday in the code, make the holiday's name a define and test for that instead
+#define NEW_YEAR				"New Year"
+#define VALENTINES				"Valentine's Day"
+#define APRIL_FOOLS				"April Fool's Day"
+#define EASTER					"Easter"
+#define HALLOWEEN				"Halloween"
+#define CHRISTMAS				"Christmas"
+#define FRIDAY_13TH				"Friday the 13th"
 
 //Human Overlays Indexes/////////
 #define SPECIES_LAYER			26		// mutantrace colors... these are on a seperate layer in order to prvent

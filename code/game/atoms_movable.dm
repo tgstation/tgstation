@@ -71,6 +71,10 @@
 	tag = null
 	loc = null
 	invisibility = 101
+	if (pulledby)
+		if (pulledby.pulling == src)
+			pulledby.pulling = null
+		pulledby = null
 	// Do not call ..()
 
 // Previously known as HasEntered()

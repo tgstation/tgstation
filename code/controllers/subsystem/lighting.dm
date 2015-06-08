@@ -6,6 +6,7 @@ var/datum/subsystem/lighting/SSlighting
 	name = "Lighting"
 	wait = 5
 	priority = 1
+	dynamic_wait = 1
 
 	var/list/lighting_images = list()		//replaces lighting_states (use lighting_images.len) ~carn
 	var/list/lights = list()				//list of all datum/light_source
@@ -27,7 +28,7 @@ var/datum/subsystem/lighting/SSlighting
 
 
 /datum/subsystem/lighting/stat_entry()
-	stat(name, "[round(cost,0.001)]ds (CPU:[round(cpu,1)]%) L:[round(lights_workload,1)]/T:[round(changed_turfs_workload,1)]")
+	stat(name, "[round(cost,0.001)]ds L:[round(lights_workload,1)]/T:[round(changed_turfs_workload,1)]")
 
 
 //Workhorse of lighting. It cycles through each light to see which ones need their effects updating. It updates their

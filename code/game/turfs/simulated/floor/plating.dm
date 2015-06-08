@@ -157,3 +157,19 @@
 	nitrogen = 0
 	temperature = TCMB
 
+
+
+/turf/simulated/floor/plating/lava
+	icon_state = "lava"
+
+/turf/simulated/floor/plating/abductor
+	name = "alien floor"
+	icon_state = "alienpod1"
+	shuttle = 1
+
+/turf/simulated/floor/plating/abductor/New()
+	..()
+	icon_state = "alienpod[rand(1,9)]"
+
+/turf/simulated/floor/plating/shuttle
+	shuttle = 1

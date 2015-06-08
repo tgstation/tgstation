@@ -85,11 +85,9 @@
 
 /turf/simulated/wall/Destroy()
 
-	var/temploc = src.loc
-
 	if(!del_suppress_resmoothing)
 		spawn(10)
-			relativewall_neighbours(at=temploc)
+			relativewall_neighbours()
 
 	// JESUS WHY
 	for(var/direction in cardinal)

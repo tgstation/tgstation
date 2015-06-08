@@ -56,8 +56,9 @@
 	reagents.add_reagent("oil", 30)
 
 /obj/effect/decal/cleanable/oil/Destroy()
-	for(var/datum/disease/D in viruses)
+	for(var/datum/disease/D in viruses) //u wot m80
 		D.cure(0)
+	viruses = null
 	..()
 
 /obj/effect/decal/cleanable/oil/streak

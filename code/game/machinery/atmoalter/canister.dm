@@ -123,6 +123,7 @@ update_flag
 	if (src.health <= 10)
 		var/atom/location = src.loc
 		location.assume_air(air_contents)
+		air_update_turf()
 
 		src.destroyed = 1
 		playsound(src.loc, 'sound/effects/spray.ogg', 10, 1, -3)
@@ -138,9 +139,9 @@ update_flag
 	else
 		return 1
 
-/obj/machinery/portable_atmospherics/canister/process()
+/obj/machinery/portable_atmospherics/canister/process_atmos()
 	if (destroyed)
-		return
+		return PROCESS_KILL
 
 	..()
 
@@ -176,8 +177,9 @@ update_flag
 	else
 		can_label = 0
 
+/obj/machinery/portable_atmospherics/canister/process()
 	src.updateDialog()
-	return
+	return ..()
 
 /obj/machinery/portable_atmospherics/canister/return_air()
 	return air_contents

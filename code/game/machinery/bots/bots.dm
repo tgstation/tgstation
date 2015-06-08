@@ -108,6 +108,8 @@
 		radio_controller.remove_object(src,beacon_freq)
 		if(bot_filter)
 			radio_controller.remove_object(src,control_freq)
+	qdel(Radio)
+	qdel(botcard)
 	..()
 
 /obj/machinery/bot/proc/add_to_beacons(bot_filter) //Master filter control for bots. Must be placed in the bot's local New() to support map spawned bots.

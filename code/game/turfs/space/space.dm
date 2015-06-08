@@ -20,7 +20,8 @@
 		if(config.starlight)
 			update_starlight()
 
-
+/turf/space/Destroy()
+	return QDEL_HINT_LETMELIVE
 
 /turf/space/proc/update_starlight()
 /*	if(config)

@@ -11,7 +11,7 @@
 
 	name = "gas filter"
 
-	req_access = list(access_atmospherics)
+	req_access = list()
 
 	can_unwrench = 1
 
@@ -44,11 +44,6 @@ Filter types:
 	if(frequency)
 		radio_connection = radio_controller.add_object(src, frequency, RADIO_ATMOSIA)
 
-/obj/machinery/atmospherics/trinary/filter/New()
-	..()
-	if(radio_controller)
-		initialize()
-
 /obj/machinery/atmospherics/trinary/filter/Destroy()
 	if(radio_controller)
 		radio_controller.remove_object(src,frequency)
@@ -69,7 +64,7 @@ Filter types:
 	if(old_stat != stat)
 		update_icon()
 
-/obj/machinery/atmospherics/trinary/filter/process()
+/obj/machinery/atmospherics/trinary/filter/process_atmos()
 	..()
 	if(!on)
 		return 0
@@ -143,7 +138,7 @@ Filter types:
 
 	return 1
 
-/obj/machinery/atmospherics/trinary/filter/initialize()
+/obj/machinery/atmospherics/trinary/filter/atmosinit()
 	set_frequency(frequency)
 	return ..()
 

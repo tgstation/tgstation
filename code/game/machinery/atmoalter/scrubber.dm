@@ -89,7 +89,7 @@
 
 	return
 
-/obj/machinery/portable_atmospherics/scrubber/process()
+/obj/machinery/portable_atmospherics/scrubber/process_atmos()
 	..()
 
 	if(on)
@@ -140,6 +140,8 @@
 			else
 				loc.assume_air(removed)
 		//src.update_icon()
+/obj/machinery/portable_atmospherics/scrubber/process()
+	..()
 	src.updateDialog()
 	return
 
