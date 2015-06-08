@@ -251,7 +251,7 @@ datum/design/proc/CalcReliability(var/list/temp_techs)
 	build_type = PROTOLATHE
 	materials = list("$metal" = 50, "$glass" = 50)
 	build_path = /obj/item/clothing/glasses/hud/health
-	category = list("Equipement")
+	category = list("Equipment")
 
 /datum/design/health_hud_night
 	name = "Night Vision Health Scanner HUD"
@@ -261,7 +261,7 @@ datum/design/proc/CalcReliability(var/list/temp_techs)
 	build_type = PROTOLATHE
 	materials = list("$metal" = 200, "$glass" = 200, "$uranium" = 1000, "$silver" = 250)
 	build_path = /obj/item/clothing/glasses/hud/health/night
-	category = list("Equipement")
+	category = list("Equipment")
 
 /datum/design/security_hud
 	name = "Security HUD"
@@ -271,7 +271,7 @@ datum/design/proc/CalcReliability(var/list/temp_techs)
 	build_type = PROTOLATHE
 	materials = list("$metal" = 50, "$glass" = 50)
 	build_path = /obj/item/clothing/glasses/hud/security
-	category = list("Equipement")
+	category = list("Equipment")
 
 /datum/design/security_hud_night
 	name = "Night Vision Security HUD"
@@ -281,7 +281,7 @@ datum/design/proc/CalcReliability(var/list/temp_techs)
 	build_type = PROTOLATHE
 	materials = list("$metal" = 200, "$glass" = 200, "$uranium" = 1000, "$gold" = 350)
 	build_path = /obj/item/clothing/glasses/hud/security/night
-	category = list("Equipement")
+	category = list("Equipment")
 
 /////////////////////////////////////////
 //////////////////Test///////////////////
@@ -309,7 +309,7 @@ datum/design/proc/CalcReliability(var/list/temp_techs)
 	build_type = PROTOLATHE
 	materials = list("$metal" = 4000, "$glass" = 1000)
 	build_path = /obj/item/clothing/mask/gas/welding
-	category = list("Equipement")
+	category = list("Equipment")
 
 /datum/design/air_horn
 	name = "Air Horn"
@@ -319,7 +319,7 @@ datum/design/proc/CalcReliability(var/list/temp_techs)
 	build_type = PROTOLATHE
 	materials = list("$metal" = 4000, "$bananium" = 1000)
 	build_path = /obj/item/weapon/bikehorn/airhorn
-	category = list("Equipement")
+	category = list("Equipment")
 
 /datum/design/mesons
 	name = "Optical Meson Scanners"
@@ -329,7 +329,7 @@ datum/design/proc/CalcReliability(var/list/temp_techs)
 	build_type = PROTOLATHE
 	materials = list("$metal" = 200, "$glass" = 300, "$plasma" = 100)
 	build_path = /obj/item/clothing/glasses/meson
-	category = list("Equipement")
+	category = list("Equipment")
 
 /datum/design/engine_goggles
 	name = "Engineering Scanner Goggles"
@@ -339,7 +339,7 @@ datum/design/proc/CalcReliability(var/list/temp_techs)
 	build_type = PROTOLATHE
 	materials = list("$metal" = 200, "$glass" = 300, "$plasma" = 100)
 	build_path = /obj/item/clothing/glasses/meson/engine
-	category = list("Equipement")
+	category = list("Equipment")
 
 /datum/design/nvgmesons
 	name = "Night Vision Optical Meson Scanners"
@@ -349,7 +349,7 @@ datum/design/proc/CalcReliability(var/list/temp_techs)
 	build_type = PROTOLATHE
 	materials = list("$metal" = 300, "$glass" = 400, "$plasma" = 250, "$uranium" = 1000)
 	build_path = /obj/item/clothing/glasses/meson/night
-	category = list("Equipement")
+	category = list("Equipment")
 
 /datum/design/night_vision_goggles
 	name = "Night Vision Goggles"
@@ -359,7 +359,7 @@ datum/design/proc/CalcReliability(var/list/temp_techs)
 	build_type = PROTOLATHE
 	materials = list("$metal" = 100, "$glass" = 100, "$uranium" = 1000)
 	build_path = /obj/item/clothing/glasses/night
-	category = list("Equipement")
+	category = list("Equipment")
 
 /datum/design/magboots
 	name = "Magnetic Boots"
@@ -369,7 +369,7 @@ datum/design/proc/CalcReliability(var/list/temp_techs)
 	build_type = PROTOLATHE
 	materials = list("$metal" = 4500, "$silver" = 1500, "$gold" = 2500)
 	build_path = /obj/item/clothing/shoes/magboots
-	category = list("Equipement")
+	category = list("Equipment")
 
 // remove shit below later
 
@@ -385,7 +385,7 @@ datum/design/proc/CalcReliability(var/list/temp_techs)
 	build_type = PROTOLATHE
 	materials = list("$metal" = 3000, "$glass" = 200)
 	build_path = /obj/item/janiupgrade
-	category = list("Equipement")
+	category = list("Equipment")
 
 /datum/design/holosign
 	name = "Holographic Sign Projector"
@@ -395,7 +395,7 @@ datum/design/proc/CalcReliability(var/list/temp_techs)
 	build_type = PROTOLATHE
 	materials = list("$metal" = 2000, "$glass" = 1000)
 	build_path = /obj/item/weapon/holosign_creator
-	category = list("Equipement")
+	category = list("Equipment")
 
 
 /////////////////////////////////////////
@@ -410,4 +410,4 @@ datum/design/proc/CalcReliability(var/list/temp_techs)
 	build_type = PROTOLATHE
 	materials = list("$metal" = 1000, "$glass" = 500, "$plasma" = 1500, "$uranium" = 200)
 	build_path = /obj/item/weapon/weldingtool/experimental
-	category = list("Equipment")
+	category = list("Equipment")  //fuck you tg

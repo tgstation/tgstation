@@ -32,7 +32,7 @@ Note: Must be placed west/left of and R&D console to function.
 /*
 				soon			"Service Designs",
 */
-								"Equipement", // god dammit tg
+								"Equipment", // at last!
 								"Mining Designs",
 								"Electronics",
 								"Weapons",
