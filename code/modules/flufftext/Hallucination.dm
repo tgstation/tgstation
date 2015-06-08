@@ -24,7 +24,7 @@ mob/living/carbon/proc/handle_hallucinations()
 	handling_hal = 1
 	while(hallucination > 20)
 		sleep(rand(200,500)/(hallucination/25))
-		var/halpick = rand(1,100)
+		var/halpick = rand(1,110)
 		switch(halpick)
 			if(0 to 15)
 				//Screwy HUD
@@ -111,7 +111,7 @@ mob/living/carbon/proc/handle_hallucinations()
 				//Strange audio
 				//src << "Strange Audio"
 				if(client)
-					switch(rand(1,14))
+					switch(rand(1,16))
 						if(1) src << 'sound/machines/airlock.ogg'
 						if(2)
 							if(prob(50))src << 'sound/effects/Explosion1.ogg'
@@ -152,6 +152,14 @@ mob/living/carbon/proc/handle_hallucinations()
 								src << 'sound/items/Screwdriver.ogg'
 							else
 								src << 'sound/items/Screwdriver2.ogg'
+						if(15) //Alien hiss
+							var/list/hisses = list('sound/voice/hiss1.ogg','sound/voice/hiss2.ogg','sound/voice/hiss3.ogg','sound/voice/hiss4.ogg','sound/voice/hiss5.ogg')
+							src << pick(hisses)
+						if(16) //rip pomf
+							src << 'sound/machines/ya_dun_clucked.ogg'
+							spawn(rand(1,15)
+								src << "<i>You are filled with a great sadness.</i>"
+
 			if(66 to 70)
 				//Flashes of danger
 				//src << "Danger Flash"
@@ -186,7 +194,7 @@ mob/living/carbon/proc/handle_hallucinations()
 					src.sleeping = 0
 					hal_crit = 0
 					hal_screwyhud = 0
-			if(73 to 78)
+			if(73 to 77)
 				//Fake changeling/parapen
 				if(prob(1) && prob(1))
 					src << "<span class='warning'>You feel a <b>HUGE</b> prick!</span>"
@@ -196,6 +204,21 @@ mob/living/carbon/proc/handle_hallucinations()
 				src << "<h1 class='alert'>Priority Announcement</h1>"
 				src << "<span class='alert'>The Emergency Shuttle has docked with the station. You have 3 minutes to board the Emergency Shuttle.</span>"
 				src << sound('sound/AI/shuttledock.ogg')
+			if(81) //Fake malf AI
+				if(prob(10))
+					src << "<font size=4 color='red'>Attention! Delta security level reached!</font>"
+					src << "<font color='red'>[config.alert_desc_delta]</font>"
+					src << sound('sound/AI/aimalf.ogg')
+			if(82 to 85) //Fake ghosts
+				src << "<i>[pick(boo_phrases)]</i>"
+			if(86) //Fake flash
+				src << sound('sound/weapons/flash.ogg')
+				src.Weaken(10)
+				flick("e_flash", src.flash)
+			if(86 to 90) //Clown
+				src << get_sfx("clownstep")
+				spawn(rand(16,28))
+					src << get_sfx("clownstep")
 	handling_hal = 0
 
 
