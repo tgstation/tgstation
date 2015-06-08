@@ -9,9 +9,9 @@
 		if(L.needs_update)
 			if(L.destroyed || L.check() || L.force_update)
 				L.remove_lum()
-				if(!L.destroyed)
-					L.apply_lum()
-				L.force_update = 0
+			if(!L.destroyed)
+				L.apply_lum()
+			L.force_update = 0
 			L.needs_update = 0
 
 		scheck()
