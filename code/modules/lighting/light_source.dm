@@ -144,7 +144,7 @@
 	if(istype(source_turf))
 		#if LIGHTING_RESOLUTION == 1
 		for(var/turf/T in dview(light_range, source_turf, INVISIBILITY_LIGHTING))
-			if(T.dynamic_lighting && T.lighting_overlay)
+			if(T.lighting_overlay)
 				var/strength = light_power * falloff(T.lighting_overlay)
 
 				effect_r[T.lighting_overlay] = lum_r * strength
@@ -185,7 +185,7 @@
 			T.affecting_lights -= src
 
 		#if LIGHTING_RESOLUTION == 1
-		if(T.dynamic_lighting && T.lighting_overlay)
+		if(T.lighting_overlay)
 			T.lighting_overlay.update_lumcount(-effect_r[T.lighting_overlay], -effect_g[T.lighting_overlay], -effect_b[T.lighting_overlay])
 		#else
 		for(var/atom/movable/lighting_overlay/L in T.lighting_overlays)

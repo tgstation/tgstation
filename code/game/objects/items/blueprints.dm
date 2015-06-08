@@ -78,7 +78,7 @@ move an amendment</a> to the drawing.</p>
 	return A
 
 /obj/item/blueprints/proc/get_area_type(var/area/A = get_area())
-	if (A.name == "Space" && A.tag)
+	if (A.name == "Space")
 		return AREA_SPACE
 	var/list/SPECIALS = list(
 		/area/shuttle,
