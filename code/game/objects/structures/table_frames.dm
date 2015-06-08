@@ -24,7 +24,7 @@
 	if(istype(I, /obj/item/weapon/wrench))
 		user << "<span class='notice'>Now disassembling [src].</span>"
 		playsound(src.loc, 'sound/items/Ratchet.ogg', 50, 1)
-		if(do_after(user, 30))
+		if(do_after(user, 20))
 			playsound(src.loc, 'sound/items/Deconstruct.ogg', 50, 1)
 			for(var/i = 1, i <= framestackamount, i++)
 				new framestack(get_turf(src))
@@ -33,7 +33,7 @@
 	if(istype(I, /obj/item/stack/sheet/plasteel))
 		var/obj/item/stack/sheet/plasteel/P = I
 		user << "<span class='notice'>Now adding [P] to [src].</span>"
-		if(do_after(user, 50))
+		if(do_after(user, 40))
 			new /obj/structure/table/reinforced(src.loc)
 			qdel(src)
 			P.use(1)
