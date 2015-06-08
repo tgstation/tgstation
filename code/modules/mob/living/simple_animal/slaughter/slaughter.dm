@@ -56,7 +56,7 @@
 	if(Adjacent(bloodloc))
 		src.notransform = TRUE
 		spawn(0)
-			src.visible_message("The [src] sinks into the pool of blood, and out of existence.")
+			src.visible_message("The [src] sinks into the pool of blood.")
 			playsound(get_turf(src), 'sound/effects/slosh.ogg', 50, 1, -1)
 			var/obj/effect/dummy/slaughter/holder = new /obj/effect/dummy/slaughter( mobloc )
 			src.ExtinguishMob()
