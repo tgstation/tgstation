@@ -1659,15 +1659,15 @@
 				user << "The securing bolts are now exposed."
 				log_message("Maintenance protocols engaged.")
 				if(occupant)
-					M.occupant_message("<font color='red'>Maintenance protocols engaged.</font>")
-					M.occupant << sound('sound/mecha/mechlockdown.ogg',wait=0)
+					occupant_message("<font color='red'>Maintenance protocols engaged.</font>")
+					occupant << sound('sound/mecha/mechlockdown.ogg',wait=0)
 			else if(state==STATE_BOLTSEXPOSED)
 				state = STATE_BOLTSHIDDEN
 				user << "The securing bolts are now hidden."
 				log_message("Maintenance protocols terminated.")
 				if(occupant)
-					M.occupant_message("Maintenance protocols terminated.")
-					M.occupant << sound('sound/mecha/mechentry.ogg',wait=0)
+					occupant_message("Maintenance protocols terminated.")
+					occupant << sound('sound/mecha/mechentry.ogg',wait=0)
 			else
 				user << "You can't toggle maintenance mode with the securing bolts unfastened."
 			output_maintenance_dialog(filter.getObj("id_card"),user)
