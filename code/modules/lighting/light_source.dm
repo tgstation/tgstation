@@ -25,11 +25,11 @@
 /datum/light_source/New(atom/owner, atom/top)
 	source_atom = owner
 	if(!source_atom.light_sources) source_atom.light_sources = list()
-	source_atom.light_sources += src
+	source_atom.light_sources |= src
 	top_atom = top
 	if(top_atom != source_atom)
 		if(!top.light_sources) top.light_sources = list()
-		top_atom.light_sources += src
+		top_atom.light_sources |= src
 
 	source_turf = top_atom
 	light_power = source_atom.light_power
@@ -59,14 +59,14 @@
 		top_atom = new_top_atom
 		if(top_atom != source_atom)
 			if(!top_atom.light_sources) top_atom.light_sources = list()
-			top_atom.light_sources += src
-	lighting_update_lights += src
+			top_atom.light_sources |= src
+	lighting_update_lights |= src
 	needs_update = 1
 
 /datum/light_source/proc/force_update()
 	needs_update = 1
 	force_update = 1
-	lighting_update_lights += src
+	lighting_update_lights |= src
 
 /datum/light_source/proc/check()
 	if(!source_atom || !light_range || !light_power)
@@ -156,8 +156,8 @@
 			if(!T.affecting_lights)
 				T.affecting_lights = list()
 
-			T.affecting_lights += src
-			effect_turf += T
+			T.affecting_lights |= src
+			effect_turf |= T
 
 		#else
 		for(var/turf/T in dview(light_range, source_turf, INVISIBILITY_LIGHTING))
@@ -173,8 +173,8 @@
 			if(!T.affecting_lights)
 				T.affecting_lights = list()
 
-			T.affecting_lights += src
-			effect_turf += T
+			T.affecting_lights |= src
+			effect_turf |= T
 		#endif
 
 /datum/light_source/proc/remove_lum()
@@ -193,7 +193,7 @@
 		#endif
 
 
-	effect_r.Cut()
-	effect_g.Cut()
-	effect_b.Cut()
-	effect_turf.Cut()
+	effect_r.len = 0
+	effect_g.len = 0
+	effect_b.len = 0
+	effect_turf.len = 0

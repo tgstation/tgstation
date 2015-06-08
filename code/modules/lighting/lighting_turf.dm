@@ -13,7 +13,8 @@
 /turf/proc/lighting_clear_overlays()
 //	testing("Clearing lighting overlays on \the [src]")
 	#if LIGHTING_RESOLUTION == 1
-	returnToPool(lighting_overlay)
+	if(lighting_overlay)
+		returnToPool(lighting_overlay)
 	#else
 	for(var/atom/movable/lighting_overlay/L in lighting_overlays)
 		returnToPool(L)
@@ -76,7 +77,8 @@
 //Proc I made to dick around with update lumcount
 /turf/proc/update_lumcount(delta_r, delta_g, delta_b)
 	#if LIGHTING_RESOLUTION == 1
-	lighting_overlay.update_lumcount(delta_r, delta_g, delta_b)
+	if(lighting_overlay)
+		lighting_overlay.update_lumcount(delta_r, delta_g, delta_b)
 	#else
 	for(var/atom/movable/lighting_overlay/L in lighting_overlays)
 		L.update_lumcount(delta_r, delta_g, delta_b)

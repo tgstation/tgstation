@@ -30,7 +30,7 @@
 	lum_b += delta_b
 
 	needs_update = 1
-	lighting_update_overlays += src
+	lighting_update_overlays |= src
 
 /atom/movable/lighting_overlay/proc/update_overlay()
 	var/mx = max(lum_r, lum_g, lum_b)
@@ -68,9 +68,9 @@
 //	testing("Lighting_overlays: resetvars called")
 	loc = null
 
-	lum_r = null
-	lum_g = null
-	lum_b = null
+	lum_r = 0
+	lum_g = 0
+	lum_b = 0
 
 	color = "#000000"
 
@@ -79,7 +79,7 @@
 	yoffset = null
 	#endif
 
-	needs_update = null
+	needs_update = 0
 
 /atom/movable/lighting_overlay/Destroy()
 	all_lighting_overlays -= src
@@ -92,6 +92,10 @@
 		#else
 		T.lighting_overlays -= src
 		#endif
+		for(var/datum/light_source/D in T.affecting_lights) //Remove references to us on the light sources affecting us.
+			D.effect_r -= src
+			D.effect_g -= src
+			D.effect_b -= src
 
 /atom/movable/lighting_overlay/singuloCanEat()
 	return 0

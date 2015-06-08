@@ -351,7 +351,9 @@
 			if(A.name && A.name==control_area)
 				control_area = A
 				break
-	//don't have to check if control_area is path, since get_area_all_atoms can take path.
+	else if(ispath(control_area))
+		control_area = locate(control_area)
+
 	return
 
 /obj/machinery/turretid/emag(mob/user)
@@ -472,8 +474,7 @@
 /obj/machinery/turretid/proc/updateTurrets()
 	if(control_area)
 		//ASSERT(istype(control_area))
-		var/area/turret_protected/BYOND_is_dumb = locate(control_area)
-		for(var/obj/machinery/turret/aTurret in BYOND_is_dumb.contents)
+		for(var/obj/machinery/turret/aTurret in control_area.contents)
 			aTurret.setState(enabled, lethal)
 	src.update_icons()
 
