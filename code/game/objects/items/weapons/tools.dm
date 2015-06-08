@@ -670,3 +670,19 @@
 	else
 		user << "<span class='warn'>The tool does not have enough acid!</span>"
 		return 0
+
+/*
+* Fuel Can
+* A special, large container that fits on the belt
+*/
+/obj/item/weapon/reagent_containers/glass/fuelcan
+	name = "fuel can"
+	desc = "A large container employed by engineers too busy to find a fuel tank."
+	icon_state = "beakerlarge"
+	m_amt = 500
+	volume = 100
+	possible_transfer_amounts = list(5,10,20)
+
+/obj/item/weapon/reagent_containers/glass/fuelcan/New()
+	..()
+	reagents.add_reagent("fuel", 100)
