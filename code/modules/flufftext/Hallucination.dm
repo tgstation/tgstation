@@ -215,7 +215,7 @@ mob/living/carbon/proc/handle_hallucinations()
 				src << sound('sound/weapons/flash.ogg')
 				src.Weaken(10)
 				flick("e_flash", src.flash)
-			if(86 to 90) //Clown
+			if(87 to 90) //Clown
 				src << get_sfx("clownstep")
 				spawn(rand(16,28))
 					src << get_sfx("clownstep")
