@@ -11,7 +11,7 @@
 	return 0
 
 /datum/universal_state/supermatter_cascade/OnTurfChange(var/turf/T)
-	if(T.name == "space")
+	if(istype(T, /turf/space))
 		T.overlays += "end01"
 		T.underlays -= "end01"
 	else

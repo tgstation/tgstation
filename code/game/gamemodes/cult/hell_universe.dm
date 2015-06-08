@@ -34,7 +34,7 @@ In short:
 
 
 /datum/universal_state/hell/OnTurfChange(var/turf/T)
-	if(T.name == "space")
+	if(istype(T, /turf/space))
 		T.overlays += "hell01"
 		T.underlays -= "hell01"
 	else
