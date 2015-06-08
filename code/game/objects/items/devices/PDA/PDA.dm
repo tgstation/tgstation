@@ -1113,6 +1113,12 @@ var/global/list/obj/item/device/pda/PDAs = list()
 		return
 
 	var/selected = plist[c]
+
+	if(aicamera.aipictures.len>0)
+		var/add_photo = input(user,"Do you want to attach a photo?","Photo","No") as null|anything in list("Yes","No")
+		if(add_photo=="Yes")
+			var/datum/picture/Pic = aicamera.selectpicture(aicamera)
+			src.aiPDA.photo = Pic.fields["img"]
 	src.aiPDA.create_message(src, selected)
 
 
