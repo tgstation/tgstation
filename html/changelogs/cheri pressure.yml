@@ -1,7 +1,0 @@
-author: Cheridan
-
-delete-after: True
-
-changes: 
-  - tweak: "Push-force from Atmospherics now depends on an entity's weight, heavier objects are less prone to being pushed."
-  - rscadd: "Magboots and No-Slip shoes now prevent pushing from spacewind."

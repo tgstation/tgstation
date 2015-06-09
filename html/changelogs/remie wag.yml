@@ -1,6 +1,0 @@
-author: RemieRichards
-
-delete-after: True
-
-changes: 
-  - rscadd: "Lizards can now wag their tails, emote *wag to start and *stopwag to stop."
