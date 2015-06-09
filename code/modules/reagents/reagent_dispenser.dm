@@ -83,6 +83,16 @@
 		PoolOrNew(/obj/effect/effect/water, loc)
 		qdel(src)
 
+/obj/structure/reagent_dispensers/watertank/high
+	name = "high-capacity watertank"
+	desc = "A specialised high-pressure water tank for holding large amounts of water."
+	icon = 'icons/obj/objects.dmi'
+	icon_state = "hightank"
+	amount_per_transfer_from_this = 10
+	New()
+		..()
+		reagents.add_reagent("water",100000)
+
 /obj/structure/reagent_dispensers/fueltank
 	name = "fueltank"
 	desc = "A fueltank"
@@ -92,7 +102,6 @@
 	New()
 		..()
 		reagents.add_reagent("welding_fuel",1000)
-
 
 /obj/structure/reagent_dispensers/fueltank/bullet_act(var/obj/item/projectile/Proj)
 	..()
@@ -104,20 +113,59 @@
 			log_game("[key_name(Proj.firer)] triggered a fueltank explosion.")
 			explosion(src.loc,-1,0,2, flame_range = 2)
 
-
 /obj/structure/reagent_dispensers/fueltank/blob_act()
 	explosion(src.loc,0,1,5,7,10, flame_range = 5)
-
 
 /obj/structure/reagent_dispensers/fueltank/ex_act()
 	explosion(src.loc,-1,0,2, flame_range = 2)
 	if(src)
 		qdel(src)
 
-
 /obj/structure/reagent_dispensers/fueltank/fire_act()
 	blob_act() //saving a few lines of copypasta
 
+/obj/structure/reagent_dispensers/compostbin
+	name = "compost tank"
+	desc = "A device that mulches up unwanted produce into usable fertiliser."
+	icon = 'icons/obj/objects.dmi'
+	icon_state = "comptank"
+	amount_per_transfer_from_this = 30
+	var/list/validCompostTypepaths = list(/obj/item/weapon/reagent_containers/food/snacks/grown, /obj/item/seeds)
+
+/obj/structure/reagent_dispensers/compostbin/attackby(obj/item/weapon/W as obj, mob/user as mob)
+	var/load = 1
+	var/obj/item/I = W
+	if(I.compost_value > 0) //If the amount of compost in an item is above zero,
+		reagents.add_reagent("compost",I.compost_value) //create the amount of defined compost.
+	else
+		load = 0
+
+	if(load)
+		user << "<span class='notice'>[src] mulches up [W].</span>"
+		playsound(src.loc, 'sound/effects/blobattack.ogg', 50, 1)
+		user.unEquip(W)
+		qdel(W) //Item is sucked into the machine and deleted.
+		return
+	else
+		..()
+
+/obj/structure/reagent_dispensers/compostbin/MouseDrop_T(atom/movable/O as mob|obj, mob/user as mob)
+	if(is_type_in_list(O, validCompostTypepaths))
+		user.visible_message("<span class='notice'>[user] begins quickly stuffing items into [src]!</span>")
+		var/turf/itemTurf = get_turf(O)
+		for(var/obj/item/P in itemTurf)
+			playsound(src.loc, 'sound/effects/blobattack.ogg', 50, 1)
+			if(reagents.total_volume >= reagents.maximum_volume)
+				user << "<span class='danger'>[src] is full!</span>"
+				break
+			if(!do_after(user,3, 1, 0))
+				break
+			if(P.compost_value > 0)
+				reagents.add_reagent("compost",P.compost_value)
+			qdel(P)
+		user << "<span class='notice'>You finish stuffing items into [src]!</span>"
+	else
+		..()
 
 /obj/structure/reagent_dispensers/peppertank
 	name = "Pepper Spray Refiller"

@@ -419,7 +419,8 @@
 /obj/machinery/hydroponics/proc/applyChemicals(var/datum/reagents/S)
 
 	if(myseed)
-		myseed.on_chem_reaction(S) //In case seeds have some special interactions with special chems, currently only used by vines
+		return
+	myseed.on_chem_reaction(S) //In case seeds have some special interactions with special chems, currently only used by vines
 
 	// Requires 5 mutagen to possibly change species.// Poor man's mutagen.
 	if(S.has_reagent("mutagen", 5) || S.has_reagent("radium", 10) || S.has_reagent("uranium", 10))
@@ -571,10 +572,10 @@
 		adjustSYield(round(S.get_reagent_amount("diethylamine") * 0.02))
 		adjustPests(-rand(1,2))
 
-	// Compost, effectively
-	if(S.has_reagent("nutriment", 1))
-		adjustHealth(round(S.get_reagent_amount("nutriment") * 0.5))
-		adjustNutri(round(S.get_reagent_amount("nutriment") * 1))
+	// Compost
+	if(S.has_reagent("compost", 1))
+		adjustHealth(round(S.get_reagent_amount("compost") * COMPOST_HEALTH_MULTI))
+		adjustNutri(round(S.get_reagent_amount("compost") * COMPOST_NUTRI_MULTI))
 
 	// The best stuff there is. For testing/debugging.
 	if(S.has_reagent("adminordrazine", 1))
@@ -611,24 +612,21 @@
 		var/visi_msg = ""
 		var/irrigate = 0	//How am I supposed to irrigate pill contents?
 
-		if(istype(reagent_source, /obj/item/weapon/reagent_containers/food/snacks) || istype(reagent_source, /obj/item/weapon/reagent_containers/pill))
-			visi_msg="[user] composts [reagent_source], spreading it through [target]"
-		else
-			if(istype(reagent_source, /obj/item/weapon/reagent_containers/syringe/))
-				var/obj/item/weapon/reagent_containers/syringe/syr = reagent_source
-				visi_msg="[user] injects [target] with [syr]"
-				if(syr.reagents.total_volume <= syr.amount_per_transfer_from_this)
-					syr.mode = 0
-			else if(istype(reagent_source, /obj/item/weapon/reagent_containers/spray/))
-				visi_msg="[user] sprays [target] with [reagent_source]"
-				playsound(loc, 'sound/effects/spray3.ogg', 50, 1, -6)
-				irrigate = 1
-			else if(reagent_source.amount_per_transfer_from_this) // Droppers, cans, beakers, what have you.
-				visi_msg="[user] uses [reagent_source] on [target]"
-				irrigate = 1
-			// Beakers, bottles, buckets, etc.  Can't use is_open_container though.
-			if(istype(reagent_source, /obj/item/weapon/reagent_containers/glass/))
-				playsound(loc, 'sound/effects/slosh.ogg', 25, 1)
+		if(istype(reagent_source, /obj/item/weapon/reagent_containers/syringe/))
+			var/obj/item/weapon/reagent_containers/syringe/syr = reagent_source
+			visi_msg="[user] injects [target] with [syr]"
+			if(syr.reagents.total_volume <= syr.amount_per_transfer_from_this)
+				syr.mode = 0
+		else if(istype(reagent_source, /obj/item/weapon/reagent_containers/spray/))
+			visi_msg="[user] sprays [target] with [reagent_source]"
+			playsound(loc, 'sound/effects/spray3.ogg', 50, 1, -6)
+			irrigate = 1
+		else if(reagent_source.amount_per_transfer_from_this) // Droppers, cans, beakers, what have you.
+			visi_msg="[user] uses [reagent_source] on [target]"
+			irrigate = 1
+		// Beakers, bottles, buckets, etc.  Can't use is_open_container though.
+		if(istype(reagent_source, /obj/item/weapon/reagent_containers/glass/))
+			playsound(loc, 'sound/effects/slosh.ogg', 25, 1)
 
 		// anchored == 2 means the hoses are screwed in place
 		if(irrigate && reagent_source.amount_per_transfer_from_this > 30 && reagent_source.reagents.total_volume >= 30 && anchored == 2)
