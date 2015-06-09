@@ -11,13 +11,13 @@
 	SSobj.processing |= src
 	if(istype(C, /mob/living/carbon/human))
 		if(check_suit(C))
-			continue
+			return
 
 	apply_lava_damage(C)
 	C.emote("scream")
-	C.visible_message("<span class='warning'>[C] falls into [src]!   </span>", "<span class='userdanger'>You fall into [src]!   </span>", "<span class='warning'>You hear a splash followed by a scream! </span>")
+	C.visible_message("<span class='warning'>[C] falls into [src]!   </span>", "<span class='userdanger'>You fall into [src]!   </span>", "<span class='warning'>You hear a splash followed by a howling scream! </span>")
 
-/turf/simulated/floor/lava_pool/process()
+/turf/simulated/floor/lava_pool/proc/process()
 	var/mobpresent = 0
 
 	for(var/mob/living/carbon/human/H in src)
