@@ -69,7 +69,7 @@
 	icon_state = active_state
 	update_icon()
 	detonating = 1
-	luminosity = 1
+	light_range = 2
 	for(var/i = 0, i < timer, i++)
 		sleep(10)
 		playsound(get_turf(src), 'sound/machines/defib_saftyOff.ogg', 50, 1)

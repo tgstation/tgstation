@@ -110,7 +110,7 @@
 	var/turf/T = get_turf(loc)
 	if(T && destination)
 		// Don't check it twice if our destination is the tile we are on or we can't even get to our destination
-		if(T.lighting_lumcount<1 && destination.lighting_lumcount<1) // No one can see us in the darkness, right?
+		if((T.get_lumcount() * 10) < 1 && destination.get_lumcount() * 10 < 1) // No one can see us in the darkness, right?
 			return null
 		if(T == destination)
 			destination = null

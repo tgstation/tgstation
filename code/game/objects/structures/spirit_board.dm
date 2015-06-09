@@ -59,7 +59,7 @@
 
 	if(A)
 		if(A.lighting_use_dynamic)
-			light_amount = T.lighting_lumcount
+			light_amount = T.get_lumcount() * 10
 		else
 			light_amount =  10
 

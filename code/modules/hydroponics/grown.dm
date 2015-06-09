@@ -292,28 +292,18 @@
 	name = "bunch of glow-berries"
 	desc = "Nutritious!"
 	var/on = 1
-	var/brightness_on = 2 //luminosity when on
+	var/brightness_on = 3 //luminosity when on
 	icon_state = "glowberrypile"
 	filling_color = "#7CFC00"
+
+/obj/item/weapon/reagent_containers/food/snacks/grown/berries/glow/New()
+	set_light(round(potency / 5,1))
+	..()
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/berries/glow/add_juice()
 	..()
 	reagents.add_reagent("uranium", 3 + round(potency / 5, 1))
 	bitesize = 1 + round(reagents.total_volume / 2, 1)
-
-/obj/item/weapon/reagent_containers/food/snacks/grown/berries/glow/Destroy()
-	if(istype(loc,/mob))
-		loc.AddLuminosity(round(-potency / 5,1))
-	..()
-
-/obj/item/weapon/reagent_containers/food/snacks/grown/berries/glow/pickup(mob/user)
-	src.SetLuminosity(0)
-	user.AddLuminosity(round(potency / 5,1))
-
-/obj/item/weapon/reagent_containers/food/snacks/grown/berries/glow/dropped(mob/user)
-	user.AddLuminosity(round(-potency / 5,1))
-	src.SetLuminosity(round(potency / 5,1))
-
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/cocoapod
 	seed = /obj/item/seeds/cocoapodseed
@@ -1179,10 +1169,7 @@ obj/item/weapon/reagent_containers/food/snacks/grown/shell/eggy/add_juice()
 		yield = 3
 		potency = 30
 		plant_type = 2
-	if(istype(src.loc,/mob))
-		pickup(src.loc)//adjusts the lighting on the mob
-	else
-		src.SetLuminosity(round(potency / 10,1))
+	src.set_light(round(potency / 10,1))
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/mushroom/glowshroom/add_juice()
 	..()
@@ -1201,18 +1188,6 @@ obj/item/weapon/reagent_containers/food/snacks/grown/shell/eggy/add_juice()
 	qdel(src)
 	user << "<span class='notice'>You plant the glowshroom.</span>"
 
-/obj/item/weapon/reagent_containers/food/snacks/grown/mushroom/glowshroom/Destroy()
-	if(istype(loc,/mob))
-		loc.AddLuminosity(round(-potency / 10,1))
-	..()
-
-/obj/item/weapon/reagent_containers/food/snacks/grown/mushroom/glowshroom/pickup(mob/user)
-	SetLuminosity(0)
-	user.AddLuminosity(round(potency / 10,1))
-
-/obj/item/weapon/reagent_containers/food/snacks/grown/mushroom/glowshroom/dropped(mob/user)
-	user.AddLuminosity(round(-potency / 10,1))
-	SetLuminosity(round(potency / 10,1))
 
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/shell/moneyfruit

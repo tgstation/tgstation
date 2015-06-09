@@ -725,7 +725,7 @@ var/list/ai_list = list()
 		src << "Camera lights deactivated."
 
 		for (var/obj/machinery/camera/C in lit_cameras)
-			C.SetLuminosity(0)
+			C.set_light(0)
 			lit_cameras = list()
 
 		return
@@ -751,10 +751,10 @@ var/list/ai_list = list()
 	remove = lit_cameras - visible
 
 	for (var/obj/machinery/camera/C in remove)
-		C.SetLuminosity(0)
+		C.set_light(0)
 		lit_cameras -= C
 	for (var/obj/machinery/camera/C in add)
-		C.SetLuminosity(AI_CAMERA_LUMINOSITY)
+		C.set_light(AI_CAMERA_LUMINOSITY)
 		lit_cameras |= C
 
 /mob/living/silicon/ai/proc/control_integrated_radio()

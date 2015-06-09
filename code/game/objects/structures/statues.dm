@@ -140,7 +140,7 @@
 
 /obj/structure/statue/uranium
 	hardness = 3
-	luminosity = 2
+	light_range = 3
 	mineralType = "uranium"
 	var/last_event = 0
 	var/active = null

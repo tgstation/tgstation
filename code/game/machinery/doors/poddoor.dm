@@ -46,7 +46,7 @@
 	operating = 1
 	flick("opening", src)
 	icon_state = "open"
-	SetOpacity(0)
+	src.set_opacity(0)
 	sleep(5)
 	density = 0
 	sleep(5)
@@ -73,7 +73,7 @@
 	operating = 1
 	flick("closing", src)
 	icon_state = "closed"
-	SetOpacity(1)
+	src.set_opacity(1)
 	air_update_turf(1)
 	update_freelook_sight()
 	sleep(5)

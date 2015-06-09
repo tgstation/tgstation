@@ -335,11 +335,13 @@
 
 		//move all objects
 		for(var/obj/O in T0)
+		//	areaInstance.contents += O
 			if(O.invisibility >= 101)
 				continue
 		//	if(O == T0.lighting_object)
 		//		continue
 			O.loc = T1
+			O.update_all_lights()
 
 			//close open doors
 			if(istype(O, /obj/machinery/door))
@@ -363,21 +365,26 @@
 			if(istype(M, /mob/living/carbon))
 				if(!M.buckled)
 					M.Weaken(3)
+		if(!istype(T0, /turf/space))
+			T0.ChangeTurf(turf_type)
 
-		T0.ChangeTurf(turf_type)
+
+
 
 	//air system updates
 	for(var/turf/T1 in L1)
-		T1.shift_to_subarea()
+//		T1.shift_to_subarea()
 		SSair.remove_from_active(T1)
 		T1.CalculateAdjacentTurfs()
 		SSair.add_to_active(T1,1)
+		T1.update_overlay()
 
 	for(var/turf/T0 in L0)
-		T0.shift_to_subarea()
+//		T0.shift_to_subarea()
 		SSair.remove_from_active(T0)
 		T0.CalculateAdjacentTurfs()
 		SSair.add_to_active(T0,1)
+		T0.update_overlay()
 
 /*
 	if(istype(S1, /obj/docking_port/stationary/transit))
@@ -413,6 +420,8 @@
 /obj/docking_port/mobile/proc/roadkill(list/L, dir, x, y)
 	for(var/turf/T in L)
 		for(var/atom/movable/AM in T)
+			if(istype(AM, /atom/movable/lighting_overlay)) //This'd be a whole nother level of dumb
+				continue
 			if(ismob(AM))
 				if(istype(AM, /mob/living))
 					var/mob/living/M = AM
@@ -426,6 +435,9 @@
 				step(AM, dir)
 			else
 				qdel(AM)
+		T.reconsider_lights()
+		if(!istype(T,/turf/space))
+			T.ChangeTurf(T.baseturf)
 /*
 //used to check if atom/A is within the shuttle's bounding box
 /obj/docking_port/mobile/proc/onShuttleCheck(atom/A)
@@ -592,6 +604,10 @@
 			T.underlays = O.underlays
 	if(T.icon_state != icon_state)
 		T.icon_state = icon_state
+	if(T.lighting_overlay != lighting_overlay)
+		T.lighting_overlay = lighting_overlay
+		T.contents += lighting_overlay
+		T.update_overlay()
 	if(T.icon != icon)
 		T.icon = icon
 	if(T.color != color)

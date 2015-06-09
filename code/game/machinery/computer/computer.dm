@@ -8,7 +8,9 @@
 	active_power_usage = 300
 	var/obj/item/weapon/circuitboard/circuit = null //if circuit==null, computer can't disassembly
 	var/processing = 0
-	var/brightness_on = 2
+	use_auto_lights = 1
+	light_power_on = 2
+	light_range_on = 3
 
 /obj/machinery/computer/New(location, obj/item/weapon/circuitboard/C)
 	..(location)
@@ -70,7 +72,7 @@
 /obj/machinery/computer/update_icon()
 	..()
 	icon_state = initial(icon_state)
-	SetLuminosity(brightness_on)
+	set_light(light_range_on, light_power_on)
 	// Broken
 	if(stat & BROKEN)
 		icon_state += "b"
@@ -79,7 +81,7 @@
 	else if(stat & NOPOWER)
 		icon_state = initial(icon_state)
 		icon_state += "0"
-		SetLuminosity(0)
+		set_light(0)
 
 
 

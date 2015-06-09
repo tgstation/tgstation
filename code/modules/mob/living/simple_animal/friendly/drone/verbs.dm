@@ -17,9 +17,9 @@
 	set category = "Drone"
 	set name = "Toggle drone light"
 	if(light_on)
-		AddLuminosity(-4)
+		set_light(0)
 	else
-		AddLuminosity(4)
+		set_light(4)
 
 	light_on = !light_on
 

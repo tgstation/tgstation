@@ -2,7 +2,7 @@
 /obj/effect/blob
 	name = "blob"
 	icon = 'icons/mob/blob.dmi'
-	luminosity = 3
+	light_range = 3
 	desc = "Some blob creature thingy"
 	density = 0
 	opacity = 0
@@ -202,7 +202,7 @@
 
 /obj/effect/blob/normal
 	icon_state = "blob"
-	luminosity = 0
+	light_range = 0
 	health = 21
 
 /obj/effect/blob/normal/update_icon()

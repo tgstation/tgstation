@@ -26,7 +26,8 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 	icon_state = "unknown"
 	layer = 10
 	mouse_opacity = 0
-	invisibility = INVISIBILITY_LIGHTING
+//	invisibility = INVISIBILITY_LIGHTING
+	luminosity = 0
 	var/lightswitch = 1
 
 	var/eject = null
@@ -48,9 +49,9 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 	var/has_gravity = 0
 
 	var/no_air = null
-	var/area/master				// master area used for power calcluations
+//	var/area/master				// master area used for power calcluations
 								// (original area before splitting due to sd_DAL)
-	var/list/related			// the other areas of the same type as this
+//	var/list/related			// the other areas of the same type as this
 //	var/list/lights				// list of all lights on this area
 
 /*Adding a wizard area teleport list because motherfucking lag -- Urist*/
@@ -120,8 +121,8 @@ proc/process_ghost_teleport_locs()
 /area/shuttle
 	name = "\improper Shuttle"
 	requires_power = 0
-	luminosity = 1
-	lighting_use_dynamic = 1
+//	luminosity = 1
+//	lighting_use_dynamic = 1
 	has_gravity = 1
 
 
@@ -139,6 +140,7 @@ proc/process_ghost_teleport_locs()
 	name = "\improper Centcom"
 	icon_state = "centcom"
 	requires_power = 0
+	lighting_use_dynamic = 0
 	has_gravity = 1
 
 /area/centcom/control
@@ -192,10 +194,10 @@ proc/process_ghost_teleport_locs()
 	name = "\improper Asteroid - Artifact"
 	icon_state = "cave"
 
-/area/asteroid/artifactroom/New()
-	..()
-	lighting_use_dynamic = 1
-	InitializeLighting()
+///area/asteroid/artifactroom/New()
+//	..()
+//	lighting_use_dynamic = 1
+//	InitializeLighting()
 
 /area/planet/clown
 	name = "\improper Clown Planet"
@@ -249,6 +251,8 @@ proc/process_ghost_teleport_locs()
 	icon_state = "yellow"
 	requires_power = 0
 	has_gravity = 1
+	luminosity = 1
+	lighting_use_dynamic = 0
 
 /area/tdome/arena
 	name = "\improper Thunderdome Arena"

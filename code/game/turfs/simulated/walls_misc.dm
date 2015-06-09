@@ -53,6 +53,10 @@
 			T.underlays = underlays
 	if(T.icon_state != icon_state)
 		T.icon_state = icon_state
+	if(T.lighting_overlay != lighting_overlay)
+		T.lighting_overlay = lighting_overlay
+		T.contents += lighting_overlay
+		T.reconsider_lights()
 	if(T.icon != icon)
 		T.icon = icon
 	if(T.color != color)

@@ -1,5 +1,5 @@
 // QUALITY COPYPASTA
-/turf/unsimulated/wall/supermatter
+/turf/simulated/wall/supermatter
 	name = "Bluespace"
 	desc = "THE END IS right now actually."
 
@@ -13,17 +13,18 @@
 	var/spawned=0 // DIR mask
 	var/next_check=0
 	var/list/avail_dirs = list(NORTH,SOUTH,EAST,WEST)
+	dynamic_lighting = 0
 
-/turf/unsimulated/wall/supermatter/New()
+/turf/simulated/wall/supermatter/New()
 	..()
 	SSobj.processing |= src
 	next_check = world.time+50
 
-/turf/unsimulated/wall/supermatter/Destroy()
+/turf/simulated/wall/supermatter/Destroy()
 	SSobj.processing.Remove(src)
 	..()
 
-/turf/unsimulated/wall/supermatter/process()
+/turf/simulated/wall/supermatter/process()
 	// Only check infrequently.
 	if(next_check>world.time) return
 
@@ -59,10 +60,10 @@
 		SSobj.processing.Remove(src)
 		return
 
-/turf/unsimulated/wall/supermatter/attack_paw(mob/user as mob)
+/turf/simulated/wall/supermatter/attack_paw(mob/user as mob)
 	return attack_hand(user)
 
-/turf/unsimulated/wall/supermatter/attack_robot(mob/user as mob)
+/turf/simulated/wall/supermatter/attack_robot(mob/user as mob)
 	if(Adjacent(user))
 		return attack_hand(user)
 	else
@@ -71,7 +72,7 @@
 
 
 
-/turf/unsimulated/wall/supermatter/attack_hand(mob/user as mob)
+/turf/simulated/wall/supermatter/attack_hand(mob/user as mob)
 	user.visible_message("<span class=\"warning\">\The [user] reaches out and touches \the [src]... And then blinks out of existance.</span>",\
 		"<span class=\"danger\">You reach out and touch \the [src]. Everything immediately goes quiet. Your last thought is \"That was not a wise decision.\"</span>",\
 		"<span class=\"warning\">You hear an unearthly noise.</span>")
@@ -80,7 +81,7 @@
 
 	Consume(user)
 
-/turf/unsimulated/wall/supermatter/attackby(obj/item/weapon/W as obj, mob/living/user as mob)
+/turf/simulated/wall/supermatter/attackby(obj/item/weapon/W as obj, mob/living/user as mob)
 	user.visible_message("<span class=\"warning\">\The [user] touches \a [W] to \the [src] as a silence fills the room...</span>",\
 		"<span class=\"danger\">You touch \the [W] to \the [src] when everything suddenly goes silent.\"</span>\n<span class=\"notice\">\The [W] flashes into dust as you flinch away from \the [src].</span>",\
 		"<span class=\"warning\">Everything suddenly goes silent.</span>")
@@ -91,7 +92,7 @@
 	Consume(W)
 
 
-/turf/unsimulated/wall/supermatter/Bumped(atom/AM as mob|obj)
+/turf/simulated/wall/supermatter/Bumped(atom/AM as mob|obj)
 	if(istype(AM, /mob/living))
 		AM.visible_message("<span class=\"warning\">\The [AM] slams into \the [src] inducing a resonance... \his body starts to glow and catch flame before flashing into ash.</span>",\
 		"<span class=\"danger\">You slam into \the [src] as your ears are filled with unearthly ringing. Your last thought is \"Oh, fuck.\"</span>",\
@@ -105,7 +106,7 @@
 	Consume(AM)
 
 
-/turf/unsimulated/wall/supermatter/proc/Consume(var/mob/living/user)
+/turf/simulated/wall/supermatter/proc/Consume(var/mob/living/user)
 	if(istype(user,/mob/dead/observer))
 		return
 

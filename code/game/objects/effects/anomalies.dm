@@ -8,11 +8,11 @@
 	unacidable = 1
 	density = 0
 	anchored = 1
-	luminosity = 3
+	light_range = 3
 	var/obj/item/device/assembly/signaler/anomaly/aSignal = null
 
 /obj/effect/anomaly/New()
-	SetLuminosity(initial(luminosity))
+	set_light(initial(light_range))
 	aSignal = new(src)
 	aSignal.code = rand(1,100)
 

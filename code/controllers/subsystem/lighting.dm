@@ -4,31 +4,31 @@ var/datum/subsystem/lighting/SSlighting
 
 /datum/subsystem/lighting
 	name = "Lighting"
-	wait = 5
+	wait = LIGHTING_INTERVAL
 	priority = 1
 	dynamic_wait = 1
 
-	var/list/lighting_images = list()		//replaces lighting_states (use lighting_images.len) ~carn
-	var/list/lights = list()				//list of all datum/light_source
+//	var/list/lighting_images = list()		//replaces lighting_states (use lighting_images.len) ~carn
+//	var/list/lights = list()				//list of all datum/light_source
 	var/lights_workload = 0					//stats on the largest number of lights (max lights.len)
-	var/lighting_states = 6
-	var/list/changed_turfs = list()			//list of all turfs which need moving to a new lighting subarea
-	var/changed_turfs_workload = 0			//stats on the largest number of turfs changed (max changed_turfs.len)
+//	var/lighting_states = 6
+//	var/list/changed_turfs = list()			//list of all turfs which need moving to a new lighting subarea
+//	var/changed_turfs_workload = 0			//stats on the largest number of turfs changed (max changed_turfs.len)
 
 
 /datum/subsystem/lighting/New()
 	NEW_SS_GLOBAL(SSlighting)
 
 	//cache lighting images
-	if(!lighting_images.len)
-		for(var/icon_state in icon_states(LIGHTING_ICON))
-			lighting_images += image(LIGHTING_ICON, null, icon_state, LIGHTING_LAYER)
+//	if(!lighting_images.len)
+//		for(var/icon_state in icon_states(LIGHTING_ICON))
+//			lighting_images += image(LIGHTING_ICON, null, icon_state, LIGHTING_LAYER)
 
 	return ..()
 
 
 /datum/subsystem/lighting/stat_entry()
-	stat(name, "[round(cost,0.001)]ds L:[round(lights_workload,1)]/T:[round(changed_turfs_workload,1)]")
+	stat(name, "[round(cost,0.001)]ds L:[round(lights_workload,1)]")
 
 
 //Workhorse of lighting. It cycles through each light to see which ones need their effects updating. It updates their
@@ -37,7 +37,32 @@ var/datum/subsystem/lighting/SSlighting
 //than deleting them).
 //By using queues we are ensuring we don't perform more updates than are necessary
 /datum/subsystem/lighting/fire()
-	lights_workload = MC_AVERAGE(lights_workload, lights.len)
+
+	lights_workload = MC_AVERAGE(lights_workload, lighting_update_lights.len)
+	for(var/datum/light_source/L in lighting_update_lights)
+		if(L.needs_update)
+			if(L.destroyed || L.check() || L.force_update)
+				L.remove_lum()
+			if(!L.destroyed)
+				L.apply_lum()
+			L.force_update = 0
+			L.needs_update = 0
+
+//		scheck()
+
+	lighting_update_lights.len = 0
+
+	for(var/atom/movable/lighting_overlay/O in lighting_update_overlays)
+		if(O.needs_update)
+			O.update_overlay()
+			O.needs_update = 0
+
+//		scheck()
+
+	lighting_update_overlays.len = 0
+
+/*
+	lights_workload = MC_AVERAGE(lights_workload, lighting_update_lights.len)
 	var/i=1
 	for(var/thing in lights)
 		if(thing && !thing:check())	//yes, cry that I'm using the : operator, it's much faster looping like this. And this gets called a lot. Dealwithit.
@@ -51,46 +76,19 @@ var/datum/subsystem/lighting/SSlighting
 			thing:shift_to_subarea()
 	changed_turfs.Cut()
 
-
+*/
 //same as above except it attempts to shift ALL turfs in the world regardless of lighting_changed status
 //Does not loop. Should be run prior to process() being called for the first time.
 //Note: if we get additional z-levels at runtime (e.g. if the gateway thin ever gets finished) we can initialize specific
 //z-levels with the z_level argument
 /datum/subsystem/lighting/Initialize(timeofday, z_level)
 
-	var/i=1
-	for(var/thing in lights)
-		if(thing && !thing:check())
-			++i
-			continue
-		lights.Cut(i, i+1)
-
-	var/z_start = 1
-	var/z_finish = world.maxz
-	if(1 <= z_level && z_level <= world.maxz)
-		z_level = round(z_level)
-		z_start = z_level
-		z_finish = z_level
-
-	for(var/z=z_start, z<=z_finish, ++z)
-		for(var/x=1, x<=world.maxx, ++x)
-			for(var/y=1, y<=world.maxy, ++y)
-				var/turf/T = locate(x,y,z)
-				if(T)
-					T.shift_to_subarea()
+	create_lighting_overlays()
 
 	if(z_level)
-		//we need to loop through to clear only shifted turfs from the list. or we will cause errors
-		i=1
-		for(var/thing in changed_turfs)
-			if(thing && thing:z < z_start && z_finish < thing:z)
-				++i
-				continue
-			changed_turfs.Cut(i, i+1)
-	else
-		changed_turfs.Cut()
+		create_lighting_overlays(z_level)
 
-	if(config.starlight)
+	if(config.starlight)  //As if!
 		set background = 1
 		for(var/turf/space/S in world)
 			S.update_starlight()
@@ -101,24 +99,6 @@ var/datum/subsystem/lighting/SSlighting
 //It works by using spawn(-1) to transfer the data, if there is a runtime the data does not get transfered but the loop
 //does not crash
 /datum/subsystem/lighting/Recover()
-	if(!istype(SSlighting.changed_turfs))
-		SSlighting.changed_turfs = list()
-	if(!istype(SSlighting.lights))
-		SSlighting.lights = list()
-
-	if(istype(SSlighting.lighting_images))
-		lighting_images = SSlighting.lighting_images
-
-	for(var/datum/light_source/L in SSlighting.lights)
-		spawn(-1)			//so we don't crash the loop (inefficient)
-			L.check()
-			lights += L		//If we didn't runtime then this will get transferred over
-
-	for(var/turf/T in changed_turfs)
-		if(T.lighting_changed)
-			spawn(-1)
-				T.shift_to_subarea()
-
 	var/msg = "## DEBUG: [time2text(world.timeofday)] [name] subsystem restarted. Reports:\n"
 	for(var/varname in SSlighting.vars)
 		switch(varname)

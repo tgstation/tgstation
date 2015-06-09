@@ -231,7 +231,7 @@ Made by Xhuis
 		var/turf/T = H.loc
 		var/area/A = T.loc
 		if(A)
-			if(A.lighting_use_dynamic)	light_amount = T.lighting_lumcount
+			if(A.lighting_use_dynamic)	light_amount = T.get_lumcount() * 10
 			else						light_amount =  10
 		if(light_amount > LIGHT_DAM_THRESHOLD) //Not complete blackness - they can live in very small light levels plus starlight
 			H.take_overall_damage(0, LIGHT_DAMAGE_TAKEN)

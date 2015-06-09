@@ -3,7 +3,8 @@
 	desc = "A piece of headgear used in dangerous working conditions to protect the head. Comes with a built-in flashlight."
 	icon_state = "hardhat0_yellow"
 	item_state = "hardhat0_yellow"
-	var/brightness_on = 4 //luminosity when on
+	var/brightness_on = 6 //luminosity when on
+	light_power = 2
 	var/on = 0
 	item_color = "yellow" //Determines used sprites: hardhat[on]_[item_color] and hardhat[on]_[item_color]2 (lying down sprite)
 	armor = list(melee = 30, bullet = 5, laser = 20,energy = 10, bomb = 20, bio = 10, rad = 20)
@@ -19,20 +20,9 @@
 		item_state = "hardhat[on]_[item_color]"
 		user.update_inv_head()	//so our mob-overlays update
 
-		if(on)	user.AddLuminosity(brightness_on)
-		else	user.AddLuminosity(-brightness_on)
+		if(on)	set_light(brightness_on)
+		else	set_light(0)
 
-	pickup(mob/user)
-		if(on)
-			user.AddLuminosity(brightness_on)
-//			user.UpdateLuminosity()	//TODO: Carn
-			SetLuminosity(0)
-
-	dropped(mob/user)
-		if(on)
-			user.AddLuminosity(-brightness_on)
-//			user.UpdateLuminosity()
-			SetLuminosity(brightness_on)
 
 
 /obj/item/clothing/head/hardhat/orange

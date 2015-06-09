@@ -11,6 +11,7 @@
 	var/transition //These is used in transistions as a way to tell where on the "cube" of space you're transitioning from/to
 	var/destination_x
 	var/destination_y
+	dynamic_lighting = 0
 
 /turf/space/New()
 	turfs.Add(src)
@@ -24,13 +25,13 @@
 	return QDEL_HINT_LETMELIVE
 
 /turf/space/proc/update_starlight()
-/*	if(config)
+	if(config)
 		if(config.starlight)
 			for(var/turf/T in orange(src,1))
 				if(istype(T,/turf/simulated))
-					SetLuminosity(3)
+					set_light(3,2)
 					return
-			SetLuminosity(0) */
+			set_light(0)
 	return
 
 /turf/space/attack_paw(mob/user as mob)

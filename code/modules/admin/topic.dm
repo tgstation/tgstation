@@ -2061,7 +2061,7 @@
 				if(choice == "NO TIME TO EXPLAIN")
 					message_admins("[key_name_admin(usr)] has managed to destroy the universe with a supermatter cascade. Good job, [key_name_admin(usr)]")
 					explosion(get_turf(usr), 8, 16, 24, 32, 1)
-					new /turf/unsimulated/wall/supermatter(get_turf(usr))
+					new /turf/simulated/wall/supermatter(get_turf(usr))
 					SetUniversalState(/datum/universal_state/supermatter_cascade)
 
 			if("guns")

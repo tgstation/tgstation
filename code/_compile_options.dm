@@ -42,7 +42,7 @@
 #define MAX_STACK_AMOUNT_RODS	60
 
 // AI Toggles
-#define AI_CAMERA_LUMINOSITY	5
+#define AI_CAMERA_LUMINOSITY	7
 #define AI_VOX 1 // Comment out if you don't want VOX to be enabled and have players download the voice sounds.
 
 //Additional code for the above flags.

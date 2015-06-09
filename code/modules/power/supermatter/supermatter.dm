@@ -23,7 +23,7 @@
 	icon_state = "darkmatter"
 	density = 1
 	anchored = 0
-	l_color = "#ffcc00"
+	light_color = LIGHT_COLOR_YELLOW
 
 	var/max_luminosity = 8 // Now varies based on power.
 
@@ -125,7 +125,7 @@
 
 	explosion_power = 8 // WAS 3 - N3X
 
-	max_luminosity = 5
+	max_luminosity = 6
 	max_power=3000
 
 /obj/machinery/power/supermatter/New()
@@ -143,7 +143,7 @@
 /obj/machinery/power/supermatter/proc/explode()
 		exploding = 1
 		explosion(get_turf(src), explosion_power, explosion_power * 2, explosion_power * 3, explosion_power * 4, 1)
-		new /turf/unsimulated/wall/supermatter(get_turf(src))
+		new /turf/simulated/wall/supermatter(get_turf(src))
 		SetUniversalState(/datum/universal_state/supermatter_cascade)
 		qdel(src)
 
@@ -308,7 +308,8 @@
 	power -= (power/500)**3
 
 
-	SetLuminosity(Clamp(round(Clamp(power/max_power,0,1)*max_luminosity),0,max_luminosity))
+	var/light_value = Clamp(round(Clamp(power / max_power, 0, 1) * max_luminosity), 0, max_luminosity)
+	set_light(light_value, light_value)
 
 	air_update_turf(1)
 

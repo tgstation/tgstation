@@ -7,7 +7,7 @@
 
 /obj/structure/Destroy()
 	if(opacity)
-		UpdateAffectingLights()
+		set_opacity(0)
 	..()
 
 /obj/structure/mech_melee_attack(obj/mecha/M)

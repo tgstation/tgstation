@@ -16,8 +16,6 @@
 		T.underlays -= "end01"
 	else
 		T.overlays -= "end01"
-		if(!T.color_lighting_lumcount)
-			T.update_lumcount(1, 160, 255, 0, 0)
 
 /datum/universal_state/supermatter_cascade/DecayTurf(var/turf/T)
 	if(istype(T,/turf/simulated/wall))
@@ -103,8 +101,7 @@ The access requirements on the Asteroid Shuttles' consoles have now been revoked
 			return
 
 /datum/universal_state/supermatter_cascade/proc/AreaSet()
-	for(var/area/ca in areas)
-		var/area/A=get_area_master(ca)
+	for(var/area/A in areas)
 		if(!istype(A,/area) || A.name=="Space")
 			continue
 
@@ -138,9 +135,12 @@ The access requirements on the Asteroid Shuttles' consoles have now been revoked
 		if(istype(T, /turf/space))
 			T.overlays += "end01"
 		else
-			if(T.z != ZLEVEL_CENTCOM)
+			if(T.z != 8)
 				T.underlays += "end01"
-				T.update_lumcount(1, 160, 255, 0, 0)
+	for(var/atom/movable/lighting_overlay/L in all_lighting_overlays)
+		if(L.z != 8)
+			spawn (0)
+				L.update_lumcount(0.15, 0.5, 0)
 
 /datum/universal_state/supermatter_cascade/proc/MiscSet()
 	for (var/obj/machinery/firealarm/alm in machines)
@@ -154,6 +154,7 @@ The access requirements on the Asteroid Shuttles' consoles have now been revoked
 			if(APC.cell)
 				APC.cell.charge = 0
 			APC.emagged = 1
+			APC.locked = 0
 			APC.queue_icon_update()
 
 /datum/universal_state/supermatter_cascade/proc/PlayerSet()

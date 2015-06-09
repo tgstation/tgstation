@@ -906,8 +906,8 @@ obj/mecha/proc/can_use(mob/user)
 		return
 
 	lights = !lights
-	if(lights)	AddLuminosity(lights_power)
-	else		AddLuminosity(-lights_power)
+	if(lights)	set_light(luminosity + lights_power)
+	else		set_light(luminosity - lights_power)
 	src.occupant_message("Toggled lights [lights?"on":"off"].")
 	log_message("Toggled lights [lights?"on":"off"].")
 	return

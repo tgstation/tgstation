@@ -114,6 +114,10 @@ Class Procs:
 	var/mob/living/occupant = null
 	var/unsecuring_tool = /obj/item/weapon/wrench
 	var/interact_offline = 0 // Can the machine be interacted with while de-powered.
+	//These are some values to automatically set the light power/range on machines if they have power
+	var/light_range_on = 0
+	var/light_power_on = 0
+	var/use_auto_lights = 0//Incase you want to use it, set this to 0, defaulting to 1 so machinery with no lights doesn't call set_light()
 
 /obj/machinery/New()
 	..()

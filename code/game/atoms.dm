@@ -435,3 +435,6 @@ var/list/blood_splatter_icons = list()
 	return
 /atom/proc/rift_act()
 	return 0
+
+/atom/proc/SinguloCanEat()
+	return 1

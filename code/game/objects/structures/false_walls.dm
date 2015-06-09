@@ -55,7 +55,7 @@
 		do_the_flick()
 		sleep(4)
 		density = 0
-		SetOpacity(0)
+		set_opacity(0)
 		update_icon(0)
 	else
 		var/srcturf = get_turf(src)
@@ -65,7 +65,7 @@
 		do_the_flick()
 		density = 1
 		sleep(4)
-		SetOpacity(1)
+		set_opacity(1)
 		update_icon()
 	opening = 0
 

@@ -135,8 +135,6 @@
 		pixel_y = (dir & 3)? (dir ==1 ? -24 : 24) : 0
 
 	alarm_area = get_area(loc)
-	if (alarm_area.master)
-		alarm_area = alarm_area.master
 	area_uid = alarm_area.uid
 	if (name == "alarm")
 		name = "[alarm_area.name] Air Alarm"
@@ -159,11 +157,11 @@
 	return alarm_area.master_air_alarm && !(alarm_area.master_air_alarm.stat & (NOPOWER|BROKEN))
 
 /obj/machinery/alarm/proc/elect_master()
-	for (var/area/A in alarm_area.related)
-		for (var/obj/machinery/alarm/AA in A)
-			if (!(AA.stat & (NOPOWER|BROKEN)))
-				alarm_area.master_air_alarm = AA
-				return 1
+	var/area/A = alarm_area
+	for (var/obj/machinery/alarm/AA in A)
+		if (!(AA.stat & (NOPOWER|BROKEN)))
+			alarm_area.master_air_alarm = AA
+			return 1
 	return 0
 
 /obj/machinery/alarm/attack_hand(mob/user)
@@ -653,10 +651,10 @@
 
 /obj/machinery/alarm/proc/apply_danger_level()
 	var/new_area_danger_level = 0
-	for (var/area/A in alarm_area.related)
-		for (var/obj/machinery/alarm/AA in A)
-			if (!(AA.stat & (NOPOWER|BROKEN)) && !AA.shorted)
-				new_area_danger_level = max(new_area_danger_level,AA.danger_level)
+	var/area/A = alarm_area
+	for (var/obj/machinery/alarm/AA in A)
+		if (!(AA.stat & (NOPOWER|BROKEN)) && !AA.shorted)
+			new_area_danger_level = max(new_area_danger_level,AA.danger_level)
 	if (alarm_area.atmosalert(new_area_danger_level,src)) //if area was in normal state or if area was in alert state
 		post_alert(new_area_danger_level)
 	update_icon()
@@ -1234,8 +1232,7 @@ Code shamelessly copied from apc_frame
 	A = A.loc
 	if (!( istype(A, /area) ))
 		return
-	for(var/area/RA in A.related)
-		RA.partyreset()
+	A.partyreset()
 	return
 
 /obj/machinery/firealarm/partyalarm/alarm()
@@ -1245,6 +1242,5 @@ Code shamelessly copied from apc_frame
 	A = A.loc
 	if (!( istype(A, /area) ))
 		return
-	for(var/area/RA in A.related)
-		RA.partyalert()
+	A.partyalert()
 	return

@@ -102,7 +102,6 @@
 /obj/item/areaeditor/proc/get_area()
 	var/turf/T = get_turf(usr)
 	var/area/A = T.loc
-	A = A.master
 	return A
 
 
@@ -147,7 +146,7 @@
 		return
 	var/area/A = new
 	A.name = str
-	A.tagbase="[A.type]_[md5(str)]" // without this dynamic light system ruin everithing
+	//A.tagbase="[A.type]_[md5(str)]" // without this dynamic light system ruin everithing
 	//var/ma
 	//ma = A.master ? "[A.master]" : "(null)"
 	//world << "DEBUG: create_area: <br>A.name=[A.name]<br>A.tag=[A.tag]<br>A.master=[ma]"
@@ -156,7 +155,7 @@
 	A.power_environ = 0
 	A.always_unpowered = 0
 	move_turfs_to_area(turfs, A)
-	A.SetDynamicLighting()
+	//A.SetDynamicLighting()
 
 	A.addSorted()
 
@@ -178,8 +177,6 @@
 		usr << "<span class='warning'>The given name is too long.  The area's name is unchanged.</span>"
 		return
 	set_area_machinery_title(A,str,prevname)
-	for(var/area/RA in A.related)
-		RA.name = str
 	usr << "<span class='notice'>You rename the '[prevname]' to '[str]'.</span>"
 	interact()
 	return
@@ -188,17 +185,16 @@
 /obj/item/areaeditor/proc/set_area_machinery_title(var/area/A,var/title,var/oldtitle)
 	if (!oldtitle) // or replacetext goes to infinite loop
 		return
-	for(var/area/RA in A.related)
-		for(var/obj/machinery/alarm/M in RA)
-			M.name = replacetext(M.name,oldtitle,title)
-		for(var/obj/machinery/power/apc/M in RA)
-			M.name = replacetext(M.name,oldtitle,title)
-		for(var/obj/machinery/atmospherics/unary/vent_scrubber/M in RA)
-			M.name = replacetext(M.name,oldtitle,title)
-		for(var/obj/machinery/atmospherics/unary/vent_pump/M in RA)
-			M.name = replacetext(M.name,oldtitle,title)
-		for(var/obj/machinery/door/M in RA)
-			M.name = replacetext(M.name,oldtitle,title)
+	for(var/obj/machinery/alarm/M in A)
+		M.name = replacetext(M.name,oldtitle,title)
+	for(var/obj/machinery/power/apc/M in A)
+		M.name = replacetext(M.name,oldtitle,title)
+	for(var/obj/machinery/atmospherics/unary/vent_scrubber/M in A)
+		M.name = replacetext(M.name,oldtitle,title)
+	for(var/obj/machinery/atmospherics/unary/vent_pump/M in A)
+		M.name = replacetext(M.name,oldtitle,title)
+	for(var/obj/machinery/door/M in A)
+		M.name = replacetext(M.name,oldtitle,title)
 	//TODO: much much more. Unnamed airlocks, cameras, etc.
 
 

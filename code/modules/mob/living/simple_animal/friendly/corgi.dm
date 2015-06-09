@@ -104,7 +104,7 @@
 					emote_hear = list("barks", "woofs", "yaps","pants")
 					emote_see = list("shakes its head", "shivers")
 					desc = "It's a corgi."
-					SetLuminosity(0)
+					set_light(0)
 					inventory_head.loc = src.loc
 					inventory_head = null
 					regenerate_icons()
@@ -313,7 +313,7 @@
 				name = "[real_name] the red-nosed Corgi"
 				emote_hear = list("lights the way!", "illuminates.", "yaps!")
 				desc = "He has a very shiny nose."
-				SetLuminosity(1)
+				set_light(2)
 				valid = 1
 
 			if(/obj/item/clothing/head/sombrero)

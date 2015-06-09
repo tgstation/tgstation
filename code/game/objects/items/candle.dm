@@ -1,4 +1,4 @@
-#define CANDLE_LUMINOSITY	2
+#define CANDLE_LUMINOSITY	3
 /obj/item/candle
 	name = "red candle"
 	desc = "a candle"
@@ -53,7 +53,7 @@
 		//src.damtype = "fire"
 		for(var/mob/O in viewers(usr, null))
 			O.show_message(flavor_text, 1)
-		SetLuminosity(CANDLE_LUMINOSITY)
+		set_light(CANDLE_LUMINOSITY)
 		SSobj.processing |= src
 
 
@@ -77,19 +77,6 @@
 	if(lit)
 		lit = 0
 		update_icon()
-		SetLuminosity(0)
-		user.AddLuminosity(-CANDLE_LUMINOSITY)
-
-
-/obj/item/candle/pickup(mob/user)
-	if(lit)
-		SetLuminosity(0)
-		user.AddLuminosity(CANDLE_LUMINOSITY)
-
-
-/obj/item/candle/dropped(mob/user)
-	if(lit)
-		user.AddLuminosity(-CANDLE_LUMINOSITY)
-		SetLuminosity(CANDLE_LUMINOSITY)
+		set_light(0)
 
 #undef CANDLE_LUMINOSITY

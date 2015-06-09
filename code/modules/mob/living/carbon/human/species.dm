@@ -1281,14 +1281,14 @@
 /datum/species/proc/IgniteMob(var/mob/living/carbon/human/H)
 	if(H.fire_stacks > 0 && !H.on_fire && !(HEATRES in specflags) && !(NOFIRE in specflags))
 		H.on_fire = 1
-		H.AddLuminosity(3)
+		H.set_light(3)
 		H.update_fire()
 
 /datum/species/proc/ExtinguishMob(var/mob/living/carbon/human/H)
 	if(H.on_fire)
 		H.on_fire = 0
 		H.fire_stacks = 0
-		H.AddLuminosity(-3)
+		H.set_light(0)
 		H.update_fire()
 
 #undef HUMAN_MAX_OXYLOSS

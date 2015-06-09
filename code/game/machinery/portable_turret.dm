@@ -1029,9 +1029,7 @@ Status: []<BR>"},
 	..()
 	if(!control_area)
 		var/area/CA = get_area(src)
-		if(CA.master && CA.master != CA)
-			control_area = CA.master
-		else
+		if(CA)
 			control_area = CA
 	else if(istext(control_area))
 		for(var/area/A in world)

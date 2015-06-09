@@ -54,7 +54,7 @@ var/list/obj/machinery/requests_console/allConsoles = list()
 	var/message = "";
 	var/dpt = ""; //the department which will be receiving the message
 	var/priority = -1 ; //Priority of the message being sent
-	luminosity = 0
+	light_range = 0
 
 /obj/machinery/requests_console/power_change()
 	..()
@@ -181,7 +181,7 @@ var/list/obj/machinery/requests_console/allConsoles = list()
 					if (Console.department == department)
 						Console.newmessagepriority = 0
 						Console.update_icon()
-						Console.luminosity = 1
+						Console.light_range = 1
 				newmessagepriority = 0
 				update_icon()
 				var/messageComposite = ""
@@ -317,7 +317,7 @@ var/list/obj/machinery/requests_console/allConsoles = list()
 							else		// Normal priority
 								Console.createmessage(src, "Message from [department]", sending, 1, 1)
 						screen = 6
-						Console.luminosity = 2
+						Console.light_range = 2
 
 				switch(priority)
 					if(2)
@@ -431,7 +431,7 @@ var/list/obj/machinery/requests_console/allConsoles = list()
 				var/obj/item/weapon/paper/slip = new /obj/item/weapon/paper(src.loc)
 				slip.info = "<b>From:</b> [unlinkedsender]<BR>[message]"
 				slip.name = "Message - [unlinkedsender]"
-	src.luminosity = 2
+	src.light_range = 2
 
 /obj/machinery/requests_console/attackby(var/obj/item/weapon/O as obj, var/mob/user as mob, params)
 	if (istype(O, /obj/item/weapon/crowbar))

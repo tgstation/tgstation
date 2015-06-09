@@ -127,7 +127,7 @@ obj/machinery/hydroponics/process()
 			// Lack of light hurts non-mushrooms
 			if(isturf(loc))
 				var/turf/currentTurf = loc
-				var/lightAmt = currentTurf.lighting_lumcount
+				var/lightAmt = (currentTurf.get_lumcount() * 10)
 				if(myseed.plant_type == 2) // Mushroom
 					if(lightAmt < 2)
 						adjustHealth(-1)
@@ -314,9 +314,9 @@ obj/machinery/hydroponics/update_icon()
 			overlays += image('icons/obj/hydroponics/equipment.dmi', icon_state = "over_harvest3")
 
 	if(istype(myseed,/obj/item/seeds/glowshroom))
-		SetLuminosity(round(myseed.potency / 10))
+		set_light(round(myseed.potency / 10))
 	else
-		SetLuminosity(0)
+		set_light(0)
 
 	return
 
@@ -1030,9 +1030,9 @@ obj/machinery/hydroponics/attackby(var/obj/item/O as obj, var/mob/user as mob, p
 			overlays += image('icons/obj/hydroponics/growing.dmi', icon_state= "[myseed.species]-grow[myseed.growthstages]")
 
 	if(istype(myseed,/obj/item/seeds/glowshroom))
-		SetLuminosity(round(myseed.potency/10))
+		set_light(round(myseed.potency/10))
 	else
-		SetLuminosity(0)
+		set_light(0)
 	return
 
 /obj/machinery/hydroponics/soil/attackby(var/obj/item/O as obj, var/mob/user as mob, params)

@@ -52,7 +52,7 @@
 
 	mode = value
 	update_icon()
-	SetLuminosity(0)
+	set_light(0)
 
 /obj/item/device/powersink/attackby(var/obj/item/I, var/mob/user, params)
 	if(istype(I, /obj/item/weapon/screwdriver))
@@ -113,7 +113,7 @@
 
 	var/datum/powernet/PN = attached.powernet
 	if(PN)
-		SetLuminosity(5)
+		set_light(12)
 
 		// found a powernet, so drain up to max power from it
 

@@ -8,7 +8,7 @@
 	anchored = 1
 	density = 1
 	layer = 6
-	luminosity = 6
+	light_range = 6
 	unacidable = 1 //Don't comment this out.
 	var/current_size = 1
 	var/allowed_size = 1
@@ -219,6 +219,8 @@
 /obj/singularity/proc/eat()
 	set background = BACKGROUND_ENABLED
 	for(var/atom/X in orange(grav_pull,src))
+		if(!X.SinguloCanEat())
+			continue
 		var/dist = get_dist(X, src)
 		var/obj/singularity/S = src
 		if(dist > consume_range)

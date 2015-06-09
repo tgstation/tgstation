@@ -13,8 +13,6 @@
 
 /area/turret_protected/Entered(O)
 	..()
-	if( master && master != src )
-		return master.Entered(O)
 
 	if( iscarbon(O) )
 		turretTargets |= O
@@ -27,8 +25,6 @@
 	return 1
 
 /area/turret_protected/Exited(O)
-	if( master && master != src )
-		return master.Exited(O)
 
 	if( ismob(O) && !issilicon(O) )
 		turretTargets -= O
@@ -121,8 +117,6 @@
 /obj/machinery/turret/proc/get_protected_area()
 	var/area/turret_protected/TP = get_area(src)
 	if(istype(TP))
-		if(TP.master && TP.master != TP)
-			TP = TP.master
 		return TP
 	return
 
@@ -513,11 +507,7 @@
 /obj/machinery/areaturretid/New()
 	..()
 	if(!control_area)
-		var/area/CA = get_area(src)
-		if(CA.master && CA.master != CA)
-			control_area = CA.master
-		else
-			control_area = CA
+		control_area = get_area(src)
 	else if(istext(control_area))
 		for(var/area/A in world)
 			if(A.name && A.name==control_area)
@@ -613,8 +603,9 @@
 	src.attack_hand(usr)
 
 /obj/machinery/areaturretid/proc/updateTurrets()
-	if(control_area)
-		for (var/obj/machinery/turret/aTurret in get_area_all_atoms(control_area))
+	var/area/A = control_area
+	if(A)
+		for (var/obj/machinery/turret/aTurret in A.contents)
 			aTurret.setState(enabled, lethal)
 	src.update_icon()
 

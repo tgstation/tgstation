@@ -14,9 +14,8 @@
 
 /proc/get_area_master(O)
 	var/area/A = get_area(O)
-	if(A && A.master)
-		A = A.master
-	return A
+	if(isarea(A))
+		return A
 
 /proc/get_area_name(N) //get area by its name
 	for(var/area/A in world)

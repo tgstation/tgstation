@@ -21,7 +21,7 @@
 
 /obj/effect/glowshroom/New()
 	..()
-	SetLuminosity(round(potency/10))
+	set_light(round(potency/10))
 	dir = CalcDir()
 	if(!floor)
 		switch(dir) //offset to make it be on the wall rather than on the floor

@@ -750,8 +750,6 @@ Turf and target are seperate in case you want to teleport some distance from a t
 //else populates the list first before returning it
 /proc/SortAreas()
 	for(var/area/A in world)
-		if(A.lighting_subarea)
-			continue
 		sortedAreas.Add(A)
 
 	sortTim(sortedAreas, /proc/cmp_name_asc)
@@ -1440,3 +1438,24 @@ proc/find_holder_of_type(var/atom/reference,var/typepath) //Returns the first ob
 			return location
 		location = location.loc
 	return 0
+
+//Version of view() which ignores darkness, because BYOND doesn't have it (I actually suggested it but it was tagged redundant, BUT HEARERS IS A T- /rant).
+/proc/dview(var/range = world.view, var/center, var/invis_flags = 0)
+	if(!center)
+		return
+
+	var/mob/dview/DV = PoolOrNew(/mob/dview, center) //Yes, pooling, honk
+	DV.see_in_dark = range
+	DV.see_invisible = invis_flags
+
+	. = view(range, DV)
+	qdel(DV)
+
+/mob/dview
+	invisibility = 101
+	density = 0
+
+
+#define islightingoverlay(A) (istype(A, /atom/movable/lighting_overlay))
+
+

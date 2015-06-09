@@ -164,3 +164,6 @@ var/gaussian_next
 		gaussian_next = R2 * working
 	return (mean + stddev * R1)
 #undef ACCURACY
+
+
+#define CLAMP01(x) Clamp(x, 0, 1)

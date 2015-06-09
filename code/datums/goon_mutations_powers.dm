@@ -11,7 +11,7 @@
 	var/turf/simulated/T = get_turf(owner)
 	if(!istype(T))
 		return
-	if(T.lighting_lumcount <= 2)
+	if((T.get_lumcount() * 10) <= 2)
 		owner.alpha -= 25
 	else
 		owner.alpha = round(255 * 0.80)
