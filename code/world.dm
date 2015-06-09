@@ -98,7 +98,7 @@
 		world.log << "Your server failed to establish a connection with the feedback database."
 	else
 		world.log << "Feedback database connection established."
-		migration_controller = new
+	migration_controller = new
 
 	if(!setup_old_database_connection())
 		world.log << "Your server failed to establish a connection with the tgstation database."
