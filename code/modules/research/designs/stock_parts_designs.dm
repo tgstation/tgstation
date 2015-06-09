@@ -19,7 +19,7 @@
 	id = "bs_rped"
 	req_tech = list("engineering" = 3, "materials" = 5, "programming" = 3, "bluespace" = 3)
 	build_type = PROTOLATHE
-	materials = list("$metal" = 15000, "$glass" = 5000, "$diamond" = 5000) //hardcore
+	materials = list("$metal" = 15000, "$glass" = 5000, "$silver" = 2500) //hardcore
 	build_path = /obj/item/weapon/storage/part_replacer/bluespace
 	category = list("Stock Parts")
 

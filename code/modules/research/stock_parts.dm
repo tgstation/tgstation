@@ -15,6 +15,8 @@
 	max_w_class = 3
 	max_combined_w_class = 100
 	var/works_from_distance = 0
+	var/pshoom_or_beepboopblorpzingshadashwoosh = 'sound/items/rped.ogg'
+	var/alt_sound = null
 
 /obj/item/weapon/storage/part_replacer/afterattack(obj/machinery/T as obj, mob/living/carbon/human/user as mob, flag, params)
 	if(flag)
@@ -37,11 +39,16 @@
 	max_w_class = 3
 	max_combined_w_class = 800
 	works_from_distance = 1
+	pshoom_or_beepboopblorpzingshadashwoosh = 'sound/items/PSHOOM.ogg'
+	alt_sound = 'sound/items/PSHOOM_2.ogg'
 
 
 /obj/item/weapon/storage/part_replacer/proc/play_rped_sound()
 	//Plays the sound for RPED exhanging or installing parts.
-	playsound(src, 'sound/items/rped.ogg', 40, 1)
+	if(alt_sound && prob(1))
+		playsound(src, alt_sound, 40, 1)
+	else
+		playsound(src, pshoom_or_beepboopblorpzingshadashwoosh, 40, 1)
 
 //Sorts stock parts inside an RPED by their rating.
 //Only use /obj/item/weapon/stock_parts/ with this sort proc!
