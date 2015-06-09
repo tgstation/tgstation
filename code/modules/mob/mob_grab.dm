@@ -47,7 +47,7 @@
 	..()
 
 //Used by throw code to hand over the mob, instead of throwing the grab. The grab is then deleted by the throw code.
-/obj/item/weapon/grab/proc/throw()
+/obj/item/weapon/grab/proc/throwAffecting()
 	if(affecting)
 		if(affecting.buckled)
 			return null
