@@ -1,0 +1,20 @@
+author: Iamgoofball
+
+delete-after: True
+
+changes: 
+  - rscadd: "Adds the Bluespace Rapid Part Exchange Device: holds up to 400 stock parts and can be used to upgrade machines at range without needing to open their maintenance panel."
+  - rscadd: "A new tier of stock parts have been added, they're very expensive to produce but provide ample improvements."
+  - experiment: "Many machines can now also be upgraded."
+  - tweak: "Emitter: Lasers decrease firing delay and Capacitors decrease power consumption."
+  - tweak: "Gibber: Matter Bins increase yield of meat and Manipulators speed up operation time, at high level can gib creatures with clothes."
+  - tweak: "Seed Extractor: Matter Bins increase storage and Manipulators multiply seed production."
+  - tweak: "Monkey Recycler: Matter Bins increase the amount of monkey cubes produced and Manipulators reduce the monkey-to-cubes ratio to a minimum of 1-to-1."
+  - tweak: "Crusher: Matter Bins increase material yield and Manipulators increase chance to yield materials, at high level there is a chance for rarer materials."
+  - tweak: "Holopad: Capacitors increase an AI's traversal range from the holopad."
+  - tweak: "Smartfridge: Matter Bins increase storage."
+  - tweak: "Processor: Matter Bins increase yield and Manipulators speed up operation time."
+  - tweak: "Microwave: Matter Bins increase storage."
+  - tweak: "Ore Redemption Machine: Matter Bins increase yield per ore, Lasers increase points per ore and Manipulators speed up operation time."
+  - tweak: "Hydroponics Tray: Manipulators improve water and nutrients efficiency."
+  - tweak: "Biogenerator: Matter Bins increase storage."

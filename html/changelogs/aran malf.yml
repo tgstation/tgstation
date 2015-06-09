@@ -1,0 +1,6 @@
+author: Aranclanos
+
+delete-after: True
+
+changes: 
+  - rscadd: "Malfunctioning AIs can preview placement of a Robotic Factory."
