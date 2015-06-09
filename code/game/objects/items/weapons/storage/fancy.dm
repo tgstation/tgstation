@@ -143,13 +143,13 @@
 	name = "\improper Space Cigarettes packet"
 	desc = "The most popular brand of cigarettes, sponsors of the Space Olympics."
 	icon = 'icons/obj/cigarettes.dmi'
-	icon_state = "cigpacket"
+	icon_state = "cig"
 	item_state = "cigpacket"
 	w_class = 1
 	throwforce = 0
 	slot_flags = SLOT_BELT
 	storage_slots = 6
-	can_hold = list(/obj/item/clothing/mask/cigarette,/obj/item/weapon/lighter)
+	can_hold = list(/obj/item/clothing/mask/cigarette)
 	icon_type = "cigarette"
 
 /obj/item/weapon/storage/fancy/cigarettes/New()
@@ -160,7 +160,14 @@
 	create_reagents(15 * storage_slots)//so people can inject cigarettes without opening a packet, now with being able to inject the whole one
 
 /obj/item/weapon/storage/fancy/cigarettes/update_icon()
-	icon_state = "[initial(icon_state)][contents.len]"
+	overlays.Cut()
+	icon_state = initial(icon_state)
+	if(!contents.len)
+		icon_state += "_empty"
+	else
+		overlays += "[icon_state]_open"
+		for(var/c = contents.len, c >= 1, c--)
+			overlays += image(icon = src.icon, icon_state = "cigarette", pixel_x = 1 * (c -1))
 	return
 
 /obj/item/weapon/storage/fancy/cigarettes/remove_from_storage(obj/item/W, atom/new_location)
