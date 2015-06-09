@@ -22,170 +22,37 @@ Gunshots/explosions/opening doors/less rare audio (done)
 /mob/living/carbon/proc/handle_hallucinations()
 	if(handling_hal)
 		return
+	
+	//Least obvious
+	var/list/minor = list("sounds"=25,"bolts_minor"=10,"whispers"=15)
+	//Something's wrong here
+	var/list/medium = list("hudscrew"=15,"items"=15,"dangerflash"=15,"bolts"=10,"flood"=10,"husks"=10,"battle"=10)
+	//AAAAH
+	var/list/major = list("fake"=10,"death"=5,"xeno"=10,"singulo"=10,"delusion"=10)
+	
+	var/grade = 0
+	var/current = list()
+	var/trip_length = 0
+
 	handling_hal = 1
 	while(hallucination > 20)
 		sleep(rand(200,500)/(hallucination/25))
-		var/halpick = rand(1,100)
-		switch(halpick)
-			if(0 to 15)
-				//Screwy HUD
-				//src << "Screwy HUD"
-				hal_screwyhud = pick(1,2,3,3,4,4)
-				spawn(rand(100,250))
-					hal_screwyhud = 0
-			if(16 to 25)
-				//Strange items
-				//src << "Traitor Items"
-				if(!halitem)
-					halitem = new
-					var/list/slots_free = list(ui_lhand,ui_rhand)
-					if(l_hand) slots_free -= ui_lhand
-					if(r_hand) slots_free -= ui_rhand
-					if(istype(src,/mob/living/carbon/human))
-						var/mob/living/carbon/human/H = src
-						if(!H.belt) slots_free += ui_belt
-						if(!H.l_store) slots_free += ui_storage1
-						if(!H.r_store) slots_free += ui_storage2
-					if(slots_free.len)
-						halitem.screen_loc = pick(slots_free)
-						halitem.layer = 50
-						switch(rand(1,6))
-							if(1) //revolver
-								halitem.icon = 'icons/obj/guns/projectile.dmi'
-								halitem.icon_state = "revolver"
-								halitem.name = "Revolver"
-							if(2) //c4
-								halitem.icon = 'icons/obj/assemblies.dmi'
-								halitem.icon_state = "plastic-explosive0"
-								halitem.name = "Mysterious Package"
-								if(prob(25))
-									halitem.icon_state = "c4small_1"
-							if(3) //sword
-								halitem.icon = 'icons/obj/weapons.dmi'
-								halitem.icon_state = "sword1"
-								halitem.name = "Sword"
-							if(4) //stun baton
-								halitem.icon = 'icons/obj/weapons.dmi'
-								halitem.icon_state = "stunbaton"
-								halitem.name = "Stun Baton"
-							if(5) //emag
-								halitem.icon = 'icons/obj/card.dmi'
-								halitem.icon_state = "emag"
-								halitem.name = "Cryptographic Sequencer"
-							if(6) //flashbang
-								halitem.icon = 'icons/obj/grenade.dmi'
-								halitem.icon_state = "flashbang1"
-								halitem.name = "Flashbang"
-						if(client) client.screen += halitem
-						spawn(rand(100,250))
-							qdel(halitem)
-			if(26 to 40)
-				//Flashes of danger
-				//src << "Danger Flash"
-				if(!halimage)
-					var/list/possible_points = list()
-					for(var/turf/simulated/floor/F in view(src,world.view))
-						possible_points += F
-					if(possible_points.len)
-						var/turf/simulated/floor/target = pick(possible_points)
+		trip_length += 1
+		if(prob(min(20,trip_length*2)))
+			grade = min(3,grade+1)
+		if(prob(20))
+			continue
+		current = list()
+		for(var/a in minor)
+			current[a] = minor[a] * (grade==0?2:1)
+		for(var/b in medium)
+			current[b] = medium[b] * (grade==1?2:1)
+		for(var/c in major)
+			current[c] = major[c] * (grade==2?2:1)
 
-						switch(rand(1,3))
-							if(1)
-								//src << "Space"
-								halimage = image('icons/turf/space.dmi',target,"[rand(1,25)]",TURF_LAYER)
-							if(2)
-								//src << "Fire"
-								halimage = image('icons/effects/fire.dmi',target,"1",TURF_LAYER)
-							if(3)
-								//src << "C4"
-								halimage = image('icons/obj/assemblies.dmi',target,"plastic-explosive2",OBJ_LAYER+0.01)
+		var/halpick = pickweight(current)
 
-
-						if(client) client.images += halimage
-						spawn(rand(10,50)) //Only seen for a brief moment.
-							if(client) client.images -= halimage
-							halimage = null
-
-
-			if(41 to 65)
-				//Strange audio
-				//src << "Strange Audio"
-				switch(rand(1,15))
-					if(1) src << 'sound/machines/airlock.ogg'
-					if(2)
-						if(prob(50))src << 'sound/effects/Explosion1.ogg'
-						else src << 'sound/effects/Explosion2.ogg'
-					if(3) src << 'sound/effects/explosionfar.ogg'
-					if(4) src << 'sound/effects/Glassbr1.ogg'
-					if(5) src << 'sound/effects/Glassbr2.ogg'
-					if(6) src << 'sound/effects/Glassbr3.ogg'
-					if(7) src << 'sound/machines/twobeep.ogg'
-					if(8) src << 'sound/machines/windowdoor.ogg'
-					if(9)
-						//To make it more realistic, I added two gunshots (enough to kill)
-						src << 'sound/weapons/Gunshot.ogg'
-						spawn(rand(10,30))
-							src << 'sound/weapons/Gunshot.ogg'
-					if(10) src << 'sound/weapons/smash.ogg'
-					if(11)
-						//Same as above, but with tasers.
-						src << 'sound/weapons/Taser.ogg'
-						spawn(rand(10,30))
-							src << 'sound/weapons/Taser.ogg'
-				//Rare audio
-					if(12)
-//These sounds are (mostly) taken from Hidden: Source
-						var/list/creepyasssounds = list('sound/effects/ghost.ogg', 'sound/effects/ghost2.ogg', 'sound/effects/Heart Beat.ogg', 'sound/effects/screech.ogg',\
-							'sound/hallucinations/behind_you1.ogg', 'sound/hallucinations/behind_you2.ogg', 'sound/hallucinations/far_noise.ogg', 'sound/hallucinations/growl1.ogg', 'sound/hallucinations/growl2.ogg',\
-							'sound/hallucinations/growl3.ogg', 'sound/hallucinations/im_here1.ogg', 'sound/hallucinations/im_here2.ogg', 'sound/hallucinations/i_see_you1.ogg', 'sound/hallucinations/i_see_you2.ogg',\
-							'sound/hallucinations/look_up1.ogg', 'sound/hallucinations/look_up2.ogg', 'sound/hallucinations/over_here1.ogg', 'sound/hallucinations/over_here2.ogg', 'sound/hallucinations/over_here3.ogg',\
-							'sound/hallucinations/turn_around1.ogg', 'sound/hallucinations/turn_around2.ogg', 'sound/hallucinations/veryfar_noise.ogg', 'sound/hallucinations/wail.ogg')
-						src << pick(creepyasssounds)
-					if(13)
-						src << "<span class='warning'>You feel a tiny prick!</span>"
-					if(14)
-						src << "<h1 class='alert'>Priority Announcement</h1>"
-						src << "<br><br><span class='alert'>The Emergency Shuttle has docked with the station. You have 3 minutes to board the Emergency Shuttle.</span><br><br>"
-						src << sound('sound/AI/shuttledock.ogg')
-					if(15)
-						src << 'sound/items/Welder.ogg'
-					if(16)
-						src << 'sound/items/Screwdriver.ogg'
-					if(17)
-						src << 'sound/weapons/saberon.ogg'
-					if(18)
-						src << 'sound/weapons/saberoff.ogg'
-			if(66 to 70)
-				//Flashes of danger
-				if(!halbody)
-					var/list/possible_points = list()
-					for(var/turf/simulated/floor/F in view(src,world.view))
-						possible_points += F
-					if(possible_points.len)
-						var/turf/simulated/floor/target = pick(possible_points)
-						switch(rand(1,4))
-							if(1)
-								halbody = image('icons/mob/human.dmi',target,"husk_l",TURF_LAYER)
-							if(2,3)
-								halbody = image('icons/mob/human.dmi',target,"husk_s",TURF_LAYER)
-							if(4)
-								halbody = image('icons/mob/alien.dmi',target,"alienother",TURF_LAYER)
-
-						if(client) client.images += halbody
-						spawn(rand(50,80)) //Only seen for a brief moment.
-							if(client) client.images -= halbody
-							halbody = null
-			if(71 to 72)
-				//Fake death
-				src.sleeping = 20
-				hal_crit = 1
-				hal_screwyhud = 1
-				spawn(rand(50,100))
-					src.sleeping = 0
-					hal_crit = 0
-					hal_screwyhud = 0
-			if(73 to 75) //severe hallucinations
-				hallucinate(pick("fake","flood","xeno","singulo","delusion","battle"))
+		hallucinate(halpick)
 	handling_hal = 0
 
 /obj/effect/hallucination
@@ -262,7 +129,7 @@ Gunshots/explosions/opening doors/less rare audio (done)
 			break
 	image_state = pick("plasma","sleeping_agent")
 	flood_images += image(image_icon,src,image_state,MOB_LAYER)
-	flood_turfs += get_turf(loc)
+	flood_turfs += get_turf(src.loc)
 	if(target.client) target.client.images |= flood_images
 	next_expand = world.time + FAKE_FLOOD_EXPAND_TIME
 	SSobj.processing |= src
@@ -277,7 +144,9 @@ Gunshots/explosions/opening doors/less rare audio (done)
 	return
 
 /obj/effect/hallucination/fake_flood/proc/Expand()
-	for(var/turf/T in circlerangeturfs(loc,radius)) //Todo : Make it do actual flood
+	if(!flood_turfs) //for qdel
+		return
+	for(var/turf/T in circlerangeturfs(loc,radius))
 		if((T in flood_turfs)|| T.blocks_air)
 			continue
 		flood_images += image(image_icon,T,image_state,MOB_LAYER)
@@ -443,7 +312,7 @@ Gunshots/explosions/opening doors/less rare audio (done)
 		if(5) // Tick Tock
 			for(var/i=0,i<hits,i++)
 				target << sound('sound/items/timer.ogg',0,1,0,25)
-				sleep(10)
+				sleep(15)
 	qdel(src)
 
 
@@ -662,8 +531,8 @@ var/list/non_fakeattack_weapons = list(/obj/item/weapon/gun/projectile, /obj/ite
 
 /obj/effect/hallucination/whispers/New(loc,var/mob/living/carbon/T)
 	target = T
-	var/speak_messages = list("I'm watching you...","[target.name]!","Go away!","Kchck-Chkck? Kchchck!","Did you hear that?")
-	var/radio_messages = list("Xenos!","Singularity loose!","They are arming the nuke!","They butchered Ian!","H-help!","[pick(teleportlocs)]!!")
+	var/speak_messages = list("I'm watching you...","[target.name]!","Go away!","Kchck-Chkck? Kchchck!","Did you hear that?","What did you do ?","Why?","Give me that!","Honk!","HELP!!")
+	var/radio_messages = list("Xenos!","Singularity loose!","They are arming the nuke!","They butchered Ian!","H-help!","[pick(teleportlocs)]!!","Where's [target.name]?","Call the shuttle!")
 
 	var/list/mob/living/carbon/people = list()
 	var/list/mob/living/carbon/person = null
@@ -679,9 +548,13 @@ var/list/non_fakeattack_weapons = list(/obj/item/weapon/gun/projectile, /obj/ite
 	if(person) //Basic talk
 		target << target.compose_message(person,person.languages,pick(speak_messages),null,person.get_spans())
 	else // Radio talk
-		person = pick(living_mob_list) //use humans only ?
+		var/list/humans = list()
+		for(var/mob/living/carbon/human/H in living_mob_list)
+			humans += H
+		person = pick(humans)
 		target << target.compose_message(person,person.languages,pick(radio_messages),"1459",person.get_spans())
 	qdel(src)
+
 /mob/living/carbon/proc/hallucinate(var/hal_type) // Todo -> proc / defines
 	switch(hal_type)
 		if("xeno")
@@ -698,5 +571,161 @@ var/list/non_fakeattack_weapons = list(/obj/item/weapon/gun/projectile, /obj/ite
 			new /obj/effect/hallucination/fakeattacker(src.loc,src)
 		if("bolts")
 			new /obj/effect/hallucination/bolts(src.loc,src)
+		if("bolts_minor")
+			new /obj/effect/hallucination/bolts(src.loc,src,rand(1,2))
 		if("whispers")
 			new /obj/effect/hallucination/whispers(src.loc,src)
+		if("sounds")
+			//Strange audio
+			//src << "Strange Audio"
+			switch(rand(1,18))
+				if(1) src << 'sound/machines/airlock.ogg'
+				if(2)
+					if(prob(50))src << 'sound/effects/Explosion1.ogg'
+					else src << 'sound/effects/Explosion2.ogg'
+				if(3) src << 'sound/effects/explosionfar.ogg'
+				if(4) src << 'sound/effects/Glassbr1.ogg'
+				if(5) src << 'sound/effects/Glassbr2.ogg'
+				if(6) src << 'sound/effects/Glassbr3.ogg'
+				if(7) src << 'sound/machines/twobeep.ogg'
+				if(8) src << 'sound/machines/windowdoor.ogg'
+				if(9)
+					//To make it more realistic, I added two gunshots (enough to kill)
+					src << 'sound/weapons/Gunshot.ogg'
+					spawn(rand(10,30))
+						src << 'sound/weapons/Gunshot.ogg'
+				if(10) src << 'sound/weapons/smash.ogg'
+				if(11)
+					//Same as above, but with tasers.
+					src << 'sound/weapons/Taser.ogg'
+					spawn(rand(10,30))
+						src << 'sound/weapons/Taser.ogg'
+			//Rare audio
+				if(12)
+			//These sounds are (mostly) taken from Hidden: Source
+					var/list/creepyasssounds = list('sound/effects/ghost.ogg', 'sound/effects/ghost2.ogg', 'sound/effects/Heart Beat.ogg', 'sound/effects/screech.ogg',\
+						'sound/hallucinations/behind_you1.ogg', 'sound/hallucinations/behind_you2.ogg', 'sound/hallucinations/far_noise.ogg', 'sound/hallucinations/growl1.ogg', 'sound/hallucinations/growl2.ogg',\
+						'sound/hallucinations/growl3.ogg', 'sound/hallucinations/im_here1.ogg', 'sound/hallucinations/im_here2.ogg', 'sound/hallucinations/i_see_you1.ogg', 'sound/hallucinations/i_see_you2.ogg',\
+						'sound/hallucinations/look_up1.ogg', 'sound/hallucinations/look_up2.ogg', 'sound/hallucinations/over_here1.ogg', 'sound/hallucinations/over_here2.ogg', 'sound/hallucinations/over_here3.ogg',\
+						'sound/hallucinations/turn_around1.ogg', 'sound/hallucinations/turn_around2.ogg', 'sound/hallucinations/veryfar_noise.ogg', 'sound/hallucinations/wail.ogg')
+					src << pick(creepyasssounds)
+				if(13)
+					src << "<span class='warning'>You feel a tiny prick!</span>"
+				if(14)
+					src << "<h1 class='alert'>Priority Announcement</h1>"
+					src << "<br><br><span class='alert'>The Emergency Shuttle has docked with the station. You have 3 minutes to board the Emergency Shuttle.</span><br><br>"
+					src << sound('sound/AI/shuttledock.ogg')
+				if(15)
+					src << 'sound/items/Welder.ogg'
+				if(16)
+					src << 'sound/items/Screwdriver.ogg'
+				if(17)
+					src << 'sound/weapons/saberon.ogg'
+				if(18)
+					src << 'sound/weapons/saberoff.ogg'
+		if("hudscrew")
+			//Screwy HUD
+			//src << "Screwy HUD"
+			hal_screwyhud = pick(1,2,3,3,4,4)
+			spawn(rand(100,250))
+				hal_screwyhud = 0
+		if("items")
+			//Strange items
+			//src << "Traitor Items"
+			if(!halitem)
+				halitem = new
+				var/list/slots_free = list(ui_lhand,ui_rhand)
+				if(l_hand) slots_free -= ui_lhand
+				if(r_hand) slots_free -= ui_rhand
+				if(istype(src,/mob/living/carbon/human))
+					var/mob/living/carbon/human/H = src
+					if(!H.belt) slots_free += ui_belt
+					if(!H.l_store) slots_free += ui_storage1
+					if(!H.r_store) slots_free += ui_storage2
+				if(slots_free.len)
+					halitem.screen_loc = pick(slots_free)
+					halitem.layer = 50
+					switch(rand(1,6))
+						if(1) //revolver
+							halitem.icon = 'icons/obj/guns/projectile.dmi'
+							halitem.icon_state = "revolver"
+							halitem.name = "Revolver"
+						if(2) //c4
+							halitem.icon = 'icons/obj/assemblies.dmi'
+							halitem.icon_state = "plastic-explosive0"
+							halitem.name = "Mysterious Package"
+							if(prob(25))
+								halitem.icon_state = "c4small_1"
+						if(3) //sword
+							halitem.icon = 'icons/obj/weapons.dmi'
+							halitem.icon_state = "sword1"
+							halitem.name = "Sword"
+						if(4) //stun baton
+							halitem.icon = 'icons/obj/weapons.dmi'
+							halitem.icon_state = "stunbaton"
+							halitem.name = "Stun Baton"
+						if(5) //emag
+							halitem.icon = 'icons/obj/card.dmi'
+							halitem.icon_state = "emag"
+							halitem.name = "Cryptographic Sequencer"
+						if(6) //flashbang
+							halitem.icon = 'icons/obj/grenade.dmi'
+							halitem.icon_state = "flashbang1"
+							halitem.name = "Flashbang"
+					if(client) client.screen += halitem
+					spawn(rand(100,250))
+						qdel(halitem)
+		if("dangerflash")
+			//Flashes of danger
+			//src << "Danger Flash"
+			if(!halimage)
+				var/list/possible_points = list()
+				for(var/turf/simulated/floor/F in view(src,world.view))
+					possible_points += F
+				if(possible_points.len)
+					var/turf/simulated/floor/target = pick(possible_points)
+
+					switch(rand(1,3))
+						if(1)
+							//src << "Space"
+							halimage = image('icons/turf/space.dmi',target,"[rand(1,25)]",TURF_LAYER)
+						if(2)
+							//src << "Fire"
+							halimage = image('icons/effects/fire.dmi',target,"1",TURF_LAYER)
+						if(3)
+							//src << "C4"
+							halimage = image('icons/obj/assemblies.dmi',target,"plastic-explosive2",OBJ_LAYER+0.01)
+
+
+					if(client) client.images += halimage
+					spawn(rand(10,50)) //Only seen for a brief moment.
+						if(client) client.images -= halimage
+						halimage = null
+		if("death")
+			//Fake death
+			src.sleeping = 20
+			hal_crit = 1
+			hal_screwyhud = 1
+			spawn(rand(50,100))
+				src.sleeping = 0
+				hal_crit = 0
+				hal_screwyhud = 0
+		if("husks")
+			if(!halbody)
+				var/list/possible_points = list()
+				for(var/turf/simulated/floor/F in view(src,world.view))
+					possible_points += F
+				if(possible_points.len)
+					var/turf/simulated/floor/target = pick(possible_points)
+					switch(rand(1,4))
+						if(1)
+							halbody = image('icons/mob/human.dmi',target,"husk_l",TURF_LAYER)
+						if(2,3)
+							halbody = image('icons/mob/human.dmi',target,"husk_s",TURF_LAYER)
+						if(4)
+							halbody = image('icons/mob/alien.dmi',target,"alienother",TURF_LAYER)
+
+					if(client) client.images += halbody
+					spawn(rand(50,80)) //Only seen for a brief moment.
+						if(client) client.images -= halbody
+						halbody = null
