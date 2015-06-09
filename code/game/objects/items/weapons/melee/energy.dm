@@ -185,8 +185,5 @@
 /obj/item/weapon/melee/energy/blade/dropped()
 	qdel(src)
 
-/obj/item/weapon/melee/energy/blade/proc/throw()
-	qdel(src)
-
 /obj/item/weapon/melee/energy/blade/attack_self(mob/user)
 	return
