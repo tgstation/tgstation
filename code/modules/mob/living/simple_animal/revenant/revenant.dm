@@ -31,7 +31,7 @@
 	var/essence_regen_cap = 25 //The regeneration cap of essence (go figure); regenerates every Life() tick up to this amount.
 	var/essence_regen = 1 //If the revenant regenerates essence or not; 1 for yes, 0 for no
 	var/essence_min = 1 //The minimum amount of essence a revenant can have; by default, it never drops below one
-	var/strikes = 3 //How many times a revenant can die before dying for good
+	var/strikes = 0 //How many times a revenant can die before dying for good
 	var/revealed = 0 //If the revenant can take damage from normal sources.
 	var/inhibited = 0 //If the revenant's abilities are blocked by a chaplain's power.
 
@@ -43,15 +43,7 @@
 			strikes--
 			src << "<span class='boldannounce'>Your essence has dropped below critical levels. You barely manage to save yourself - [strikes ? "you can't keep this up!" : "next time, it's death."]</span>"
 		else if(strikes <= 0)
-			src << "<span class='userdanger'><b>NO! No... it's too late, you can feel yourself fading...</b></span>"
-			src.notransform = 1
-			src.revealed = 1
-			src.invisibility = 0
-			playsound(src, 'sound/effects/screech.ogg', 100, 1)
-			src.visible_message("<b>The revenant</b> lets out a waning screech as violet mist swirls around its dissolving body!")
-			src.icon_state = "revenant_draining"
-			sleep(30)
-			src.death()
+			death()
 	maxHealth = essence * 2
 	if(!revealed)
 		health = maxHealth //Heals to full when not revealed
@@ -102,12 +94,12 @@
 			src << 'sound/effects/ghost.ogg'
 			src.store_memory("<span class='deadsay'>I am a revenant. My spectral form has been empowered. My only goal is to gather essence from the humans of [world.name].</span>")
 			src << "<br>"
-			src << "<span class='deadsay'><font size=3><b>You are a revenant!</b></font></span>"
+			src << "<span class='deadsay'><font size=3><b>You are a revenant.</b></font></span>"
 			src << "<b>Your formerly mundane spirit has been infused with alien energies and empowered into a revenant.</b>"
-			src << "<b>You are not dead, not alive, but somewhere in between. You are capable of very limited interaction with both worlds.</b>"
+			src << "<b>You are not dead, not alive, but somewhere in between. You are capable of limited interaction with both worlds.</b>"
 			src << "<b>You are invincible and invisible to everyone but other ghosts. Some abilities may change this.</b>"
-			src << "<b>Your goal is to gather essence from humans. Your essence passively regenerates up to 25E over time. You can use the Harvest abilities to gather more from corpses.</b>"
-			src << "<b>Be sure to read the wiki page at https://tgstation13.org/wiki/Revenant !</b>"
+			src << "<b>You are an animancer - to function, you are to drain the life essence from humans. This essence is a resource and will power all of your abilities.</b>"
+			src << "<b>Be sure to read the wiki page at https://tgstation13.org/wiki/Revenant to learn more.</b>"
 			src << "<br>"
 		if(!src.giveSpells())
 			message_admins("Revenant was created but has no mind. Trying again in five seconds.")
@@ -128,11 +120,30 @@
 	if(!strikes)
 		return 0 //Impossible to die with strikes still active
 	..(1)
-	reveal(10, 1)
-	visible_message("<span class='danger'>[src] pulses with an eldritch purple light as its form unwinds into smoke.</span>")
+	src << "<span class='userdanger'><b>NO! No... it's too late, you can feel yourself fading...</b></span>"
+	notransform = 1
+	revealed = 1
+	invisibility = 0
+	playsound(src, 'sound/effects/screech.ogg', 100, 1)
+	visible_message("<span class='warning'>[src] lets out a waning screech as violet mist swirls around its dissolving body!</span>")
+	icon_state = "revenant_draining"
+	for(var/i = alpha, i > 0, i--)
+		sleep(0.1)
+		alpha = i
+	visible_message("<span class='danger'>[src]'s body breaks apart into blue dust.</span>")
+	new /obj/item/weapon/ectoplasm/revenant(get_turf(src))
 	ghostize()
 	qdel(src)
 	return
+
+
+/obj/item/weapon/ectoplasm/revenant
+	name = "glimmering residue"
+	desc = "A pile of fine blue dust. Small tendrils of violet mist swirl around it."
+	icon = 'icons/effects/effects.dmi'
+	icon_state = "revenantEctoplasm"
+	w_class = 2
+
 
 /mob/living/simple_animal/revenant/attackby(obj/item/W, mob/living/user, params)
 	..()
@@ -163,7 +174,7 @@
 	var/turf/T = get_turf(usr)
 	if(!istype(T, /turf/simulated/wall))
 		return 1
-	usr << "<span class='warning'>You can't use abilities from a wall. What did you expect?</span>"
+	usr << "<span class='warning'>[T] is solid and is blocking your abilities' effects.</span>"
 	return 0
 
 
