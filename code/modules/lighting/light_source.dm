@@ -147,11 +147,11 @@
 			if(T.lighting_overlay)
 				var/strength = light_power * falloff(T.lighting_overlay)
 
-				effect_r[T.lighting_overlay] = lum_r * strength
-				effect_g[T.lighting_overlay] = lum_g * strength
-				effect_b[T.lighting_overlay] = lum_b * strength
+				effect_r[T.lighting_overlay] = round(lum_r * strength, LIGHTING_ROUND_VALUE)
+				effect_g[T.lighting_overlay] = round(lum_g * strength, LIGHTING_ROUND_VALUE)
+				effect_b[T.lighting_overlay] = round(lum_b * strength, LIGHTING_ROUND_VALUE)
 
-				T.lighting_overlay.update_lumcount(lum_r * strength, lum_g * strength, lum_b * strength)
+				T.lighting_overlay.update_lumcount(effect_r[T.lighting_overlay], effect_g[T.lighting_overlay], effect_b[T.lighting_overlay])
 
 			if(!T.affecting_lights)
 				T.affecting_lights = list()
@@ -164,11 +164,11 @@
 			for(var/atom/movable/lighting_overlay/L in T.lighting_overlays)
 				var/strength = light_power * falloff(L)
 
-				effect_r[L] = lum_r * strength
-				effect_g[L] = lum_g * strength
-				effect_b[L] = lum_b * strength
+				effect_r[L] = round(lum_r * strength, LIGHTING_ROUND_VALUE)
+				effect_g[L] = round(lum_g * strength, LIGHTING_ROUND_VALUE)
+				effect_b[L] = round(lum_b * strength, LIGHTING_ROUND_VALUE)
 
-				L.update_lumcount(lum_r * strength, lum_g * strength, lum_b * strength)
+				L.update_lumcount(effect_r[L], effect_g[L], effect_b[L])
 
 			if(!T.affecting_lights)
 				T.affecting_lights = list()

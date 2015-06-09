@@ -95,3 +95,12 @@
 
 	if(Obj && Obj.opacity)
 		reconsider_lights()
+
+//Testing proc like update_lumcount.
+/turf/proc/update_overlay()
+	#if LIGHTING_RESOLUTION == 1
+	lighting_overlay.update_overlay()
+	#else
+	for(var/atom/movable/lighting_overlay/L in lighting_overlays)
+		L.update_overlay()
+	#endif

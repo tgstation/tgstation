@@ -25,12 +25,31 @@
 	verbs.Cut()
 
 /atom/movable/lighting_overlay/proc/update_lumcount(delta_r, delta_g, delta_b)
+	if(!delta_r && !delta_g && !delta_b) //Nothing is being changed all together.
+		return
+
+	var/should_update = 0
+
+	if(max(lum_r, lum_g, lum_b) < 1) //Any change that could happen WILL change appearance.
+		should_update = 1
+
+	else if(max(lum_r + delta_r, lum_g + delta_g, lum_b + delta_b) < 1) //The change would bring us under 1 max lum, again, guaranteed to change appearance.
+		should_update = 1
+
+	else //We need to make sure that the colour ratios won't change in this code block.
+		var/mx1 = max(lum_r, lum_g, lum_b)
+		var/mx2 = max(lum_r + delta_r, lum_g + delta_g, lum_b + delta_b)
+
+		if(lum_r * mx1 != lum_r + delta_r * mx2 || lum_g * mx1 != lum_g + delta_g * mx2 || lum_b * mx1 != lum_b + delta_b * mx2) //Stuff would change.
+			should_update = 1
+
 	lum_r += delta_r
 	lum_g += delta_g
 	lum_b += delta_b
 
-	needs_update = 1
-	lighting_update_overlays |= src
+	if(should_update)
+		needs_update = 1
+		lighting_update_overlays |= src
 
 /atom/movable/lighting_overlay/proc/update_overlay()
 	var/mx = max(lum_r, lum_g, lum_b)
@@ -49,7 +68,7 @@
 	var/turf/T = loc
 
 	if(istype(T)) //Incase we're not on a turf, pool ourselves, something happened.
-		if(round(max(lum_r, lum_g, lum_b, 0), 0.1))
+		if(color != "#000000")
 			T.luminosity = 1
 		else  //No light, set the turf's luminosity to 0 to remove it from view()
 			#if LIGHTING_TRANSITIONS == 1
@@ -61,7 +80,7 @@
 
 		universe.OnTurfTick(T)
 	else
-		warning("A lighting overlay realised it had no loc in update_overlay() and got pooled!")
+		warning("A lighting overlay realised it's loc was NOT a turf (actual loc: [loc], [loc.type]) in update_overlay() and got pooled!")
 		returnToPool(src)
 
 /atom/movable/lighting_overlay/resetVariables()
