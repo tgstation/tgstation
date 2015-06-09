@@ -25,7 +25,7 @@
 		apply_damage(P.damage, P.damage_type, def_zone, armor)
 	return P.on_hit(src, armor, def_zone)
 
-proc/vol_by_throwforce_and_or_w_class(var/obj/item/I)
+/proc/vol_by_throwforce_and_or_w_class(var/obj/item/I)
 		if(!I)
 				return 0
 		if(I.throwforce && I.w_class)
@@ -168,7 +168,7 @@ proc/vol_by_throwforce_and_or_w_class(var/obj/item/I)
 
 	var/obj/item/weapon/grab/G = new /obj/item/weapon/grab(user, src)
 	if(buckled)
-		user << "<span class='notice'>You cannot grab [src], \he is buckled in!</span>"
+		user << "<span class='warning'>You cannot grab [src], \he is buckled in!</span>"
 	if(!G)	//the grab will delete itself in New if src is anchored
 		return 0
 	user.put_in_active_hand(G)
@@ -278,3 +278,8 @@ proc/vol_by_throwforce_and_or_w_class(var/obj/item/I)
 /mob/living/incapacitated()
 	if(stat || paralysis || stunned || weakened || restrained())
 		return 1
+
+/mob/living/proc/irradiate(amount)
+	if(amount)
+		var/blocked = run_armor_check(null, "rad", "Your clothes feel warm", "Your clothes feel warm")
+		apply_effect(amount, IRRADIATE, blocked)

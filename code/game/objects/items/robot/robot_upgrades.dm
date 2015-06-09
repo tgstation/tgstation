@@ -59,14 +59,14 @@
 	return 1
 
 /obj/item/borg/upgrade/restart
-	name = "cyborg emergency restart module"
-	desc = "Used to force a restart of a disabled-but-repaired cyborg, bringing it back online."
+	name = "cyborg emergency reboot module"
+	desc = "Used to force a reboot of a disabled-but-repaired cyborg, bringing it back online."
 	icon_state = "cyborg_upgrade1"
 
 
 /obj/item/borg/upgrade/restart/action(var/mob/living/silicon/robot/R)
 	if(R.health < 0)
-		usr << "You have to repair the cyborg before using this module!"
+		usr << "<span class='warning'>You have to repair the cyborg before using this module!</span>"
 		return 0
 
 	if(!R.key)
@@ -171,7 +171,7 @@
 			qdel(D)
 		for(var/obj/item/weapon/shovel/S in R.module.modules)
 			qdel(S)
-		R.module.modules += new /obj/item/weapon/pickaxe/drill/diamonddrill(R.module)
+		R.module.modules += new /obj/item/weapon/pickaxe/drill/cyborg/diamond(R.module)
 		R.module.rebuild()
 		return 1
 

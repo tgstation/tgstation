@@ -42,24 +42,24 @@
 	if(!istype(target))
 		return
 	if(target.buckled)
-		occupant_message("[target] will not fit into the sleeper because they are buckled to [target.buckled].")
+		occupant_message("<span class='warning'>[target] will not fit into the sleeper because they are buckled to [target.buckled]!</span>")
 		return
 	if(occupant)
-		occupant_message("The sleeper is already occupied")
+		occupant_message("<span class='warning'>The sleeper is already occupied!</span>")
 		return
 	for(var/mob/living/simple_animal/slime/M in range(1,target))
 		if(M.Victim == target)
-			occupant_message("[target] will not fit into the sleeper because they have a slime latched onto their head.")
+			occupant_message("<span class='warning'>[target] will not fit into the sleeper because they have a slime latched onto their head!</span>")
 			return
-	occupant_message("You start putting [target] into [src].")
-	chassis.visible_message("[chassis] starts putting [target] into \the [src].")
+	occupant_message("<span class='notice'>You start putting [target] into [src]...</span>")
+	chassis.visible_message("<span class='warning'>[chassis] starts putting [target] into \the [src].</span>")
 	var/C = chassis.loc
 	var/T = target.loc
 	if(do_after_cooldown(target))
 		if(chassis.loc!=C || target.loc!=T)
 			return
 		if(occupant)
-			occupant_message("<span class='boldannounce'>The sleeper is already occupied!</span>")
+			occupant_message("<span class='warning'>The sleeper is already occupied!</span>")
 			return
 		target.forceMove(src)
 		occupant = target
@@ -72,7 +72,7 @@
 		set_ready_state(0)
 		pr_mech_sleeper.start()
 		occupant_message("<span class='notice'>[target] successfully loaded into [src]. Life support functions engaged.</span>")
-		chassis.visible_message("[chassis] loads [target] into [src].")
+		chassis.visible_message("<span class='warning'>[chassis] loads [target] into [src].</span>")
 		log_message("[target] loaded. Life support functions engaged.")
 	return
 
@@ -95,7 +95,7 @@
 
 /obj/item/mecha_parts/mecha_equipment/tool/sleeper/detach()
 	if(occupant)
-		occupant_message("Unable to detach [src] - equipment occupied.")
+		occupant_message("<span class='warning'>Unable to detach [src] - equipment occupied!</span>")
 		return
 	pr_mech_sleeper.stop()
 	return ..()
@@ -306,47 +306,48 @@
 	set_ready_state(0)
 	chassis.use_power(energy_drain)
 	var/turf/trg = get_turf(target)
-	var/obj/item/weapon/reagent_containers/syringe/S = syringes[1]
-	S.forceMove(get_turf(chassis))
-	reagents.trans_to(S, min(S.volume, reagents.total_volume))
-	syringes -= S
-	S.icon = 'icons/obj/chemical.dmi'
-	S.icon_state = "syringeproj"
+	var/obj/item/weapon/reagent_containers/syringe/mechsyringe = syringes[1]
+	mechsyringe.forceMove(get_turf(chassis))
+	reagents.trans_to(mechsyringe, min(mechsyringe.volume, reagents.total_volume))
+	syringes -= mechsyringe
+	mechsyringe.icon = 'icons/obj/chemical.dmi'
+	mechsyringe.icon_state = "syringeproj"
 	playsound(chassis, 'sound/items/syringeproj.ogg', 50, 1)
-	log_message("Launched [S] from [src], targeting [target].")
+	log_message("Launched [mechsyringe] from [src], targeting [target].")
 	var/mob/originaloccupant = chassis.occupant
 	spawn(-1)
 		src = null //if src is deleted, still process the syringe
 		for(var/i=0, i<6, i++)
-			if(!S)
+			if(!mechsyringe)
 				break
-			if(step_towards(S,trg))
+			if(step_towards(mechsyringe,trg))
 				var/list/mobs = new
-				for(var/mob/living/carbon/M in S.loc)
+				for(var/mob/living/carbon/M in mechsyringe.loc)
 					mobs += M
 				var/mob/living/carbon/M = safepick(mobs)
 				if(M)
 					var/R
-					if(S.reagents)
-						for(var/datum/reagent/A in S.reagents.reagent_list)
-							R += A.id + " ("
-							R += num2text(A.volume) + "),"
-					S.icon_state = initial(S.icon_state)
-					S.icon = initial(S.icon)
-					S.reagents.trans_to(M, S.reagents.total_volume)
-					M.take_organ_damage(2)
-					S.visible_message("<span class=\"attack\"> [M] was hit by the syringe!</span>")
+					mechsyringe.visible_message("<span class=\"attack\"> [M] was hit by the syringe!</span>")
 					add_logs(originaloccupant, M, "shot", object="syringegun")
+					if(M.can_inject(null, 1))
+						if(mechsyringe.reagents)
+							for(var/datum/reagent/A in mechsyringe.reagents.reagent_list)
+								R += A.id + " ("
+								R += num2text(A.volume) + "),"
+						mechsyringe.icon_state = initial(mechsyringe.icon_state)
+						mechsyringe.icon = initial(mechsyringe.icon)
+						mechsyringe.reagents.trans_to(M, mechsyringe.reagents.total_volume)
+						M.take_organ_damage(2)
 					break
-				else if(S.loc == trg)
-					S.icon_state = initial(S.icon_state)
-					S.icon = initial(S.icon)
-					S.update_icon()
+				else if(mechsyringe.loc == trg)
+					mechsyringe.icon_state = initial(mechsyringe.icon_state)
+					mechsyringe.icon = initial(mechsyringe.icon)
+					mechsyringe.update_icon()
 					break
 			else
-				S.icon_state = initial(S.icon_state)
-				S.icon = initial(S.icon)
-				S.update_icon()
+				mechsyringe.icon_state = initial(mechsyringe.icon_state)
+				mechsyringe.icon = initial(mechsyringe.icon)
+				mechsyringe.update_icon()
 				break
 			sleep(1)
 	do_after_cooldown()

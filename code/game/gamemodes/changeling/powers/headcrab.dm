@@ -1,6 +1,6 @@
 /obj/effect/proc_holder/changeling/headcrab
 	name = "Last Resort"
-	desc = "We sacrifce our current body in a moment of need, stunning and damaging everyone nearby. If a dead body is nearby we infect it to raise again."
+	desc = "We sacrifice our current body in a moment of need, stunning and damaging everyone nearby. If a dead body is nearby we infect it to raise again."
 	chemical_cost = 20
 	dna_cost = 1
 	req_human = 1
@@ -11,6 +11,9 @@
 	spawn(5) // So it's not killed in explosion
 		var/mob/living/simple_animal/hostile/headcrab/crab = new(turf)
 		crab.origin = user.mind
+		if(user.mind)
+			user.mind.transfer_to(crab)
+			crab << "<span class='warning'>You burst out of the remains of your former body in a shower of gore!</span>"
 	user.gib()
 	feedback_add_details("changeling_powers","LR")
 	return 1

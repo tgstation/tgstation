@@ -14,7 +14,6 @@
 	for(var/image/I in overlays_standing)
 		overlays += I
 
-
 	if(stat == DEAD)
 		//If we mostly took damage from fire
 		if(fireloss > 125)
@@ -35,9 +34,10 @@
 		icon_state = "alien[caste]_s"
 
 	if(leaping)
-		var/old_icon = icon
-		icon = alt_icon
-		alt_icon = old_icon
+		if(alt_icon == initial(alt_icon))
+			var/old_icon = icon
+			icon = alt_icon
+			alt_icon = old_icon
 		icon_state = "alien[caste]_leap"
 		pixel_x = -32
 		pixel_y = -32
@@ -46,9 +46,8 @@
 			var/old_icon = icon
 			icon = alt_icon
 			alt_icon = old_icon
-		pixel_x = initial(pixel_x)
-		pixel_y = initial(pixel_y)
-
+		pixel_x = get_standard_pixel_x_offset(lying)
+		pixel_y = get_standard_pixel_y_offset(lying)
 
 /mob/living/carbon/alien/humanoid/regenerate_icons()
 	..()

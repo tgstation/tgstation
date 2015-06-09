@@ -44,7 +44,7 @@
 	else
 		heal_overall_damage(0, -amount)
 
-mob/living/carbon/human/proc/hat_fall_prob()
+/mob/living/carbon/human/proc/hat_fall_prob()
 	var/multiplier = 1
 	var/obj/item/clothing/head/H = head
 	var/loose = 40
@@ -124,12 +124,14 @@ mob/living/carbon/human/proc/hat_fall_prob()
 	var/update = 0
 	while(parts.len && (brute>0 || burn>0) )
 		var/obj/item/organ/limb/picked = pick(parts)
+		var/brute_per_part = brute/parts.len
+		var/burn_per_part = burn/parts.len
 
 		var/brute_was = picked.brute_dam
 		var/burn_was = picked.burn_dam
 
 
-		update |= picked.take_damage(brute,burn)
+		update |= picked.take_damage(brute_per_part,burn_per_part)
 
 		brute	-= (picked.brute_dam - brute_was)
 		burn	-= (picked.burn_dam - burn_was)

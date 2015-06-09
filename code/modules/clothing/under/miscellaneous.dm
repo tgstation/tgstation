@@ -146,14 +146,6 @@
 	item_color = "griffin"
 	can_adjust = 0
 
-/obj/item/clothing/under/rainbow
-	name = "rainbow"
-	desc = "rainbow"
-	icon_state = "rainbow"
-	item_state = "rainbow"
-	item_color = "rainbow"
-	can_adjust = 0
-
 /obj/item/clothing/under/cloud
 	name = "cloud"
 	desc = "cloud"

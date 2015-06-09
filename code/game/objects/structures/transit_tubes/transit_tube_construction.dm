@@ -83,7 +83,7 @@
 		src.add_fingerprint(user)
 		if(do_after(user, 40))
 			if(!src) return
-			user << "<span class='notice'>You attach the [name]!</span>"
+			user << "<span class='notice'>You attach the [name].</span>"
 			var/obj/structure/transit_tube/R = src.buildtube()
 			src.transfer_fingerprints_to(R)
 			qdel(src)

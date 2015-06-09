@@ -40,23 +40,23 @@
 /obj/machinery/flasher/attackby(obj/item/weapon/W, mob/user, params)
 	if (istype(W, /obj/item/weapon/wirecutters))
 		if (bulb)
-			user.visible_message("<span class='warning'>[user] begins to disconnect [src]'s flashbulb.</span>", "<span class='warning'>You begin to disconnect [src]'s flashbulb.</span>")
+			user.visible_message("[user] begins to disconnect [src]'s flashbulb.", "<span class='notice'>You begin to disconnect [src]'s flashbulb...</span>")
 			playsound(src.loc, 'sound/items/Wirecutter.ogg', 100, 1)
 			if(do_after(user, 30) && bulb)
-				user.visible_message("<span class='warning'>[user] has disconnected [src]'s flashbulb!</span>", "<span class='notice'>You disconnect [src]'s flashbulb!</span>")
+				user.visible_message("[user] has disconnected [src]'s flashbulb!", "<span class='notice'>You disconnect [src]'s flashbulb.</span>")
 				bulb.loc = src.loc
 				bulb = null
 				power_change()
 
 	else if (istype(W, /obj/item/device/flash/handheld))
 		if (!bulb)
-			user.visible_message("<span class='notice'>[user] installs [W] into [src].</span>", "<span class='notice'>You install [W] into [src].</span>")
+			user.visible_message("[user] installs [W] into [src].", "<span class='notice'>You install [W] into [src].</span>")
 			user.drop_item()
 			W.loc = src
 			bulb = W
 			power_change()
 		else
-			user << "<span class='notice'>A flashbulb is already installed in [src].</span>"
+			user << "<span class='warning'>A flashbulb is already installed in [src]!</span>"
 	add_fingerprint(user)
 
 //Let the AI trigger them directly.

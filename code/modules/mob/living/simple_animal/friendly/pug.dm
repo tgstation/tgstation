@@ -12,8 +12,7 @@
 	emote_see = list("shakes its head.", "chases its tail.","shivers.")
 	speak_chance = 1
 	turns_per_move = 10
-	meat_type = /obj/item/weapon/reagent_containers/food/snacks/meat/slab/pug
-	meat_amount = 3
+	butcher_results = list(/obj/item/weapon/reagent_containers/food/snacks/meat/slab/pug = 3)
 	response_help  = "pets"
 	response_disarm = "bops"
 	response_harm   = "kicks"
@@ -29,14 +28,3 @@
 				for(var/i in list(1,2,4,8,4,2,1,2,4,8,4,2,1,2,4,8,4,2))
 					dir = i
 					sleep(1)
-
-/mob/living/simple_animal/pet/pug/attackby(var/obj/item/O as obj, var/mob/user as mob, params)  //Marker -Agouri
-	if(istype(O, /obj/item/weapon/newspaper))
-		if(!stat)
-			user.visible_message("<span class='notice'>[user] baps [name] on the nose with the rolled up [O]</span>")
-			spawn(0)
-				for(var/i in list(1,2,4,8,4,2,1,2))
-					dir = i
-					sleep(1)
-	else
-		..()

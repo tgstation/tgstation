@@ -11,7 +11,7 @@ Gunshots/explosions/opening doors/less rare audio (done)
 
 */
 
-mob/living/carbon/
+/mob/living/carbon/
 	var/image/halimage
 	var/image/halbody
 	var/obj/halitem
@@ -19,7 +19,7 @@ mob/living/carbon/
 	var/handling_hal = 0
 	var/hal_crit = 0
 
-mob/living/carbon/proc/handle_hallucinations()
+/mob/living/carbon/proc/handle_hallucinations()
 	if(handling_hal)
 		return
 	handling_hal = 1
@@ -345,7 +345,7 @@ var/list/non_fakeattack_weapons = list(/obj/item/weapon/gun/projectile, /obj/ite
 	/obj/item/weapon/gun/energy/kinetic_accelerator/crossbow, /obj/item/weapon/melee/energy/sword/saber,\
 	/obj/item/weapon/storage/box/syndicate, /obj/item/weapon/storage/box/emps,\
 	/obj/item/weapon/cartridge/syndicate, /obj/item/clothing/under/chameleon,\
-	/obj/item/clothing/shoes/syndigaloshes, /obj/item/weapon/card/id/syndicate,\
+	/obj/item/clothing/shoes/sneakers/syndigaloshes, /obj/item/weapon/card/id/syndicate,\
 	/obj/item/clothing/mask/gas/voice, /obj/item/clothing/glasses/thermal,\
 	/obj/item/device/chameleon, /obj/item/weapon/card/emag,\
 	/obj/item/weapon/storage/toolbox/syndicate, /obj/item/weapon/aiModule,\

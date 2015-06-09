@@ -188,7 +188,7 @@
 
 var/record_id_num = 1001
 /datum/datacore/proc/manifest_inject(var/mob/living/carbon/human/H)
-	if(H.mind && (H.mind.assigned_role != "MODE"))
+	if(H.mind && (H.mind.assigned_role != H.mind.special_role))
 		var/assignment
 		if(H.mind.assigned_role)
 			assignment = H.mind.assigned_role
@@ -259,6 +259,8 @@ var/record_id_num = 1001
 		L.fields["b_dna"]		= H.dna.unique_enzymes
 		L.fields["enzymes"]		= H.dna.struc_enzymes
 		L.fields["identity"]	= H.dna.uni_identity
+		L.fields["species"]		= H.dna.species.type
+		L.fields["mcolor"]		= H.dna.mutant_color
 		L.fields["image"]		= image
 		locked += L
 	return
@@ -370,7 +372,7 @@ var/record_id_num = 1001
 		if("Bartender")
 			clothes_s = icon('icons/mob/uniform.dmi', "ba_suit_s")
 			clothes_s.Blend(icon('icons/mob/feet.dmi', "black"), ICON_UNDERLAY)
-			clothes_s.Blend(icon('icons/mob/suit.dmi', "armoralt"), ICON_OVERLAY)
+			clothes_s.Blend(icon('icons/mob/suit.dmi', "armor"), ICON_OVERLAY)
 		if("Quartermaster")
 			clothes_s = icon('icons/mob/uniform.dmi', "qm_s")
 			clothes_s.Blend(icon('icons/mob/feet.dmi', "brown"), ICON_UNDERLAY)

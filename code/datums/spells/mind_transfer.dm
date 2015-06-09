@@ -22,29 +22,29 @@ Also, you never added distance checking after target is selected. I've went ahea
 */
 /obj/effect/proc_holder/spell/targeted/mind_transfer/cast(list/targets,mob/user = usr, distanceoverride)
 	if(!targets.len)
-		user << "No mind found."
+		user << "<span class='warning'>No mind found!</span>"
 		return
 
 	if(targets.len > 1)
-		user << "Too many minds! You're not a hive damnit!"//Whaa...aat?
+		user << "<span class='warning'>Too many minds! You're not a hive damnit!</span>"//Whaa...aat?
 		return
 
 	var/mob/living/target = targets[1]
 
 	if(!(target in oview(range)) && !distanceoverride)//If they are not in overview after selection. Do note that !() is necessary for in to work because ! takes precedence over it.
-		user << "They are too far away!"
+		user << "<span class='warning'>They are too far away!</span>"
 		return
 
 	if(target.stat == DEAD)
-		user << "You don't particularly want to be dead."
+		user << "<span class='warning'>You don't particularly want to be dead!</span>"
 		return
 
 	if(!target.key || !target.mind)
-		user << "They appear to be catatonic. Not even magic can affect their vacant mind."
+		user << "<span class='warning'>They appear to be catatonic! Not even magic can affect their vacant mind.</span>"
 		return
 
 	if(target.mind.special_role in protected_roles)
-		user << "Their mind is resisting your spell."
+		user << "<span class='warning'>Their mind is resisting your spell!</span>"
 		return
 
 	var/mob/living/victim = target//The target of the spell whos body will be transferred to.
@@ -77,3 +77,5 @@ Also, you never added distance checking after target is selected. I've went ahea
 	//Here we paralyze both mobs and knock them out for a time.
 	caster.Paralyse(paralysis_amount_caster)
 	victim.Paralyse(paralysis_amount_victim)
+	caster << sound('sound/magic/MandSwap.ogg')
+	victim << sound('sound/magic/MandSwap.ogg')// only the caster and victim hear the sounds, that way no one knows for sure if the swap happened

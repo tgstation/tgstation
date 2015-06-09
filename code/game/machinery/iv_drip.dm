@@ -53,35 +53,35 @@
 		return
 
 	if(attached)
-		visible_message("[attached] is detached from \the [src]")
+		visible_message("<span class='warning'>[attached] is detached from \the [src].</span>")
 		attached = null
 		update_icon()
 		return
 
 	if(!ishuman(target))
-		usr << "<span class='warning'>The drip beeps: Warning, human patients only!</span>"
+		usr << "<span class='danger'>The drip beeps: Warning, human patients only!</span>"
 		return
 
 	if(Adjacent(target) && usr.Adjacent(target))
 		if(beaker)
-			visible_message("[usr] attaches \the [src] to \the [target].")
+			usr.visible_message("<span class='warning'>[usr] attaches \the [src] to \the [target].</span>", "<span class='notice'>You attach \the [src] to \the [target].</span>")
 			attached = target
 			SSmachine.processing.Add(src)
 			update_icon()
 		else
-			usr << "There's nothing attached to the IV drip!"
+			usr << "<span class='warning'>There's nothing attached to the IV drip!</span>"
 
 
 /obj/machinery/iv_drip/attackby(obj/item/weapon/W as obj, mob/user as mob, params)
 	if (istype(W, /obj/item/weapon/reagent_containers))
 		if(!isnull(beaker))
-			user << "There is already a reagent container loaded!"
+			user << "<span class='warning'>There is already a reagent container loaded!</span>"
 			return
 
 		user.drop_item()
 		W.loc = src
 		beaker = W
-		user << "You attach \the [W] to \the [src]."
+		user << "<span class='notice'>You attach \the [W] to \the [src].</span>"
 		update_icon()
 		return
 	else
@@ -107,7 +107,7 @@
 				if(istype(beaker, /obj/item/weapon/reagent_containers/blood))
 					// speed up transfer on blood packs
 					transfer_amount = 4
-				beaker.reagents.reaction(attached, INGEST, 0,0) //make reagents reacts, but don't spam messages
+				beaker.reagents.reaction(attached, INGEST, 1,0) //make reagents reacts, but don't spam messages
 				beaker.reagents.trans_to(attached, transfer_amount)
 				update_icon()
 
@@ -163,7 +163,7 @@
 	set src in view(1)
 
 	if(!istype(usr, /mob/living))
-		usr << "<span class='notice'>You can't do that.</span>"
+		usr << "<span class='warning'>You can't do that!</span>"
 		return
 
 	if(usr.stat)
@@ -180,7 +180,7 @@
 	set src in view(1)
 
 	if(!istype(usr, /mob/living))
-		usr << "<span class='notice'>You can't do that.</span>"
+		usr << "<span class='warning'>You can't do that!</span>"
 		return
 
 	if(usr.stat)

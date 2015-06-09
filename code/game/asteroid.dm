@@ -2,7 +2,7 @@ var/global/list/possiblethemes = list("organharvest","cult","wizden","cavein","x
 
 var/global/max_secret_rooms = 6
 
-proc/spawn_room(var/atom/start_loc, var/x_size, var/y_size, var/list/walltypes, var/floor, var/name)
+/proc/spawn_room(var/atom/start_loc, var/x_size, var/y_size, var/list/walltypes, var/floor, var/name)
 	var/list/room_turfs = list("walls"=list(),"floors"=list())
 
 	for(var/x = 0, x < x_size, x++)		//sets the size of the room on the x axis
@@ -36,7 +36,7 @@ proc/spawn_room(var/atom/start_loc, var/x_size, var/y_size, var/list/walltypes, 
 
 //////////////
 
-proc/make_mining_asteroid_secret()
+/proc/make_mining_asteroid_secret()
 	var/valid = 0
 	var/turf/T = null
 	var/sanity = 0
@@ -68,7 +68,7 @@ proc/make_mining_asteroid_secret()
 		if("cult")
 			theme = "cult"
 			walltypes = list(/turf/simulated/wall/cult=3,/turf/simulated/mineral/random/high_chance=1)
-			floortypes = list(/turf/simulated/floor/engine/cult)
+			floortypes = list(/turf/simulated/floor/plasteel/cult)
 			treasureitems = list(/obj/item/device/soulstone=1, /obj/item/clothing/suit/space/cult=1, /obj/item/weapon/bedsheet/cult=2,
 								 /obj/item/clothing/suit/cultrobes=2, /mob/living/simple_animal/hostile/creature=3)
 			fluffitems = list(/obj/effect/gateway=1,/obj/effect/gibspawner=1,/obj/structure/cult/talisman=1,/obj/item/toy/crayon/red=2,
@@ -87,7 +87,7 @@ proc/make_mining_asteroid_secret()
 		if("cavein")
 			theme = "cavein"
 			walltypes = list(/turf/simulated/mineral/random/high_chance=1)
-			floortypes = list(/turf/simulated/floor/plating/asteroid/airless, /turf/simulated/floor/beach/sand)
+			floortypes = list(/turf/simulated/floor/plating/asteroid/airless, /turf/simulated/floor/plating/beach/sand)
 			treasureitems = list(/obj/mecha/working/ripley/mining=1, /obj/item/weapon/pickaxe/drill/diamonddrill=2,/obj/item/weapon/gun/energy/kinetic_accelerator=1,
 							/obj/item/weapon/resonator=1, /obj/item/weapon/pickaxe/drill/jackhammer=5)
 			fluffitems = list(/obj/effect/decal/cleanable/blood=3,/obj/effect/decal/remains/human=1,/obj/item/clothing/under/overalls=1,
@@ -96,7 +96,7 @@ proc/make_mining_asteroid_secret()
 		if("xenoden")
 			theme = "xenoden"
 			walltypes = list(/turf/simulated/mineral/random/high_chance=1)
-			floortypes = list(/turf/simulated/floor/plating/asteroid/airless, /turf/simulated/floor/beach/sand)
+			floortypes = list(/turf/simulated/floor/plating/asteroid/airless, /turf/simulated/floor/plating/beach/sand)
 			treasureitems = list(/obj/item/clothing/mask/facehugger=1)
 			fluffitems = list(/obj/effect/decal/remains/human=1,/obj/effect/decal/cleanable/xenoblood/xsplatter=5)
 

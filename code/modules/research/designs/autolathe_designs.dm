@@ -106,6 +106,14 @@
 	build_path = /obj/item/weapon/stock_parts/console_screen
 	category = list("initial", "Electronics")
 
+/datum/design/apc_board
+	name = "APC Power Control Module"
+	id = "power control"
+	build_type = AUTOLATHE
+	materials = list("$metal" = 100, "$glass" = 100)
+	build_path = /obj/item/weapon/module/power_control
+	category = list("initial", "Electronics")
+
 /datum/design/airlock_board
 	name = "Airlock electronics"
 	id = "airlock_board"
@@ -183,7 +191,7 @@
 	id = "kitchen_knife"
 	build_type = AUTOLATHE
 	materials = list("$metal" = 12000)
-	build_path = /obj/item/weapon/kitchenknife
+	build_path = /obj/item/weapon/kitchen/knife
 	category = list("initial","Misc")
 
 /datum/design/scalpel
@@ -514,3 +522,19 @@
 	materials = list("$metal" = 100, "$glass" = 100)
 	build_path = /obj/item/toy/crayon/spraycan
 	category = list("initial", "Tools")
+
+/datum/design/desttagger
+	name = "Destination tagger"
+	id = "desttagger"
+	build_type = AUTOLATHE
+	materials = list("$metal" = 250, "$glass" = 125)
+	build_path = /obj/item/device/destTagger
+	category = list("initial", "Electronics")
+
+/datum/design/handlabeler
+	name = "Hand labeler"
+	id = "handlabel"
+	build_type = AUTOLATHE
+	materials = list("$metal" = 150, "$glass" = 125)
+	build_path = /obj/item/weapon/hand_labeler
+	category = list("initial", "Electronics")

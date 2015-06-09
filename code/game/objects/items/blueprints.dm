@@ -155,6 +155,7 @@
 	A.power_light = 0
 	A.power_environ = 0
 	A.always_unpowered = 0
+	A.valid_territory = 0
 	move_turfs_to_area(turfs, A)
 	A.SetDynamicLighting()
 
@@ -205,8 +206,6 @@
 /obj/item/areaeditor/proc/check_tile_is_border(var/turf/T2,var/dir)
 	if (istype(T2, /turf/space))
 		return BORDER_SPACE //omg hull breach we all going to die here
-	if (istype(T2, /turf/simulated/shuttle))
-		return BORDER_SPACE
 	if (get_area_type(T2.loc)!=AREA_SPACE)
 		return BORDER_BETWEEN
 	if (istype(T2, /turf/simulated/wall))

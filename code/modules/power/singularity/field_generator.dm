@@ -79,24 +79,24 @@ field_generator power level display
 	if(state == 2)
 		if(get_dist(src, user) <= 1)//Need to actually touch the thing to turn it on
 			if(src.active >= 1)
-				user << "You are unable to turn off the [src.name] once it is online."
+				user << "<span class='warning'>You are unable to turn off the [src.name] once it is online!</span>"
 				return 1
 			else
-				user.visible_message("[user.name] turns on the [src.name]", \
-					"You turn on the [src.name].", \
-					"You hear heavy droning")
+				user.visible_message("[user.name] turns on the [src.name].", \
+					"<span class='notice'>You turn on the [src.name].</span>", \
+					"<span class='italics'>You hear heavy droning.</span>")
 				turn_on()
 				investigate_log("<font color='green'>activated</font> by [user.key].","singulo")
 
 				src.add_fingerprint(user)
 	else
-		user << "The [src] needs to be firmly secured to the floor first."
+		user << "<span class='warning'>The [src] needs to be firmly secured to the floor first!</span>"
 		return
 
 
 /obj/machinery/field/generator/attackby(obj/item/W, mob/user, params)
 	if(active)
-		user << "The [src] needs to be off."
+		user << "<span class='warning'>The [src] needs to be off!</span>"
 		return
 	else if(istype(W, /obj/item/weapon/wrench))
 		switch(state)
@@ -104,47 +104,47 @@ field_generator power level display
 				state = 1
 				playsound(src.loc, 'sound/items/Ratchet.ogg', 75, 1)
 				user.visible_message("[user.name] secures [src.name] to the floor.", \
-					"You secure the external reinforcing bolts to the floor.", \
-					"You hear ratchet")
+					"<span class='notice'>You secure the external reinforcing bolts to the floor.</span>", \
+					"<span class='italics'>You hear ratchet.</span>")
 				src.anchored = 1
 			if(1)
 				state = 0
 				playsound(src.loc, 'sound/items/Ratchet.ogg', 75, 1)
 				user.visible_message("[user.name] unsecures [src.name] reinforcing bolts from the floor.", \
-					"You undo the external reinforcing bolts.", \
-					"You hear ratchet")
+					"<span class='notice'>You undo the external reinforcing bolts.</span>", \
+					"<span class='italics'>You hear ratchet.</span>")
 				src.anchored = 0
 			if(2)
-				user << "<span class='danger'>The [src.name] needs to be unwelded from the floor.</span>"
+				user << "<span class='warning'>The [src.name] needs to be unwelded from the floor!</span>"
 				return
 	else if(istype(W, /obj/item/weapon/weldingtool))
 		var/obj/item/weapon/weldingtool/WT = W
 		switch(state)
 			if(0)
-				user << "<span class='danger'>The [src.name] needs to be wrenched to the floor.</span>"
+				user << "<span class='warning'>The [src.name] needs to be wrenched to the floor!</span>"
 				return
 			if(1)
 				if (WT.remove_fuel(0,user))
 					playsound(src.loc, 'sound/items/Welder2.ogg', 50, 1)
 					user.visible_message("[user.name] starts to weld the [src.name] to the floor.", \
-						"You start to weld \the [src] to the floor.", \
-						"You hear welding")
+						"<span class='notice'>You start to weld \the [src] to the floor...</span>", \
+						"<span class='italics'>You hear welding.</span>")
 					if (do_after(user,20))
 						if(!src || !WT.isOn()) return
 						state = 2
-						user << "You weld the field generator to the floor."
+						user << "<span class='notice'>You weld the field generator to the floor.</span>"
 				else
 					return
 			if(2)
 				if (WT.remove_fuel(0,user))
 					playsound(src.loc, 'sound/items/Welder2.ogg', 50, 1)
 					user.visible_message("[user.name] starts to cut the [src.name] free from the floor.", \
-						"You start to cut \the [src] free from the floor.", \
-						"You hear welding")
+						"<span class='notice'>You start to cut \the [src] free from the floor...</span>", \
+						"<span class='italics'>You hear welding.</span>")
 					if (do_after(user,20))
 						if(!src || !WT.isOn()) return
 						state = 1
-						user << "You cut \the [src] free from the floor."
+						user << "<span class='notice'>You cut \the [src] free from the floor.</span>"
 				else
 					return
 	else
@@ -211,7 +211,7 @@ field_generator power level display
 	if(draw_power(round(power_draw/2,1)))
 		return 1
 	else
-		visible_message("<span class='danger'>The [src.name] shuts down!</span>", "You hear something shutting down")
+		visible_message("<span class='danger'>The [src.name] shuts down!</span>", "<span class='italics'>You hear something shutting down.</span>")
 		turn_off()
 		investigate_log("ran out of power and <font color='red'>deactivated</font>","singulo")
 		src.power = 0

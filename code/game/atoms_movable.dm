@@ -15,6 +15,7 @@
 	var/pass_flags = 0
 	glide_size = 8
 
+
 /atom/movable/Move(atom/newloc, direct = 0)
 	if(!loc || !newloc) return 0
 	var/atom/oldloc = loc
@@ -81,6 +82,11 @@
 		qdel(AM)
 	loc = null
 	invisibility = 101
+	if (pulledby)
+		if (pulledby.pulling == src)
+			pulledby.pulling = null
+		pulledby = null
+
 
 // Previously known as HasEntered()
 // This is automatically called when something enters your square
@@ -167,7 +173,8 @@
 	//use a modified version of Bresenham's algorithm to get from the atom's current position to that of the target
 
 	src.throwing = 1
-	SpinAnimation(5, 1)
+	if(target.allow_spin) // turns out 1000+ spinning objects being thrown at the singularity creates lag - Iamgoofball
+		SpinAnimation(5, 1)
 	var/dist_x = abs(target.x - src.x)
 	var/dist_y = abs(target.y - src.y)
 	var/dx = (target.x > src.x) ? EAST : WEST

@@ -9,6 +9,17 @@ Creation/Deletion is laggy, so let's reduce reuse and recycle!
 Locked to /atom/movable and it's subtypes due to Loc being a const var on /atom
 but being read&write on /movable due to how they... move.
 
+Usage:
+
+To get a object, just called PoolOrNew(type, list of args to pass to New)
+
+To put a object back in the pool, call place in pool.
+This will call destroy on the object, set its loc to null,
+and reset all of its vars to their default
+
+You can override your object's destroy to return QDEL_HINT_PLACEINPOOL
+to ensure its always placed in this pool (this will only be acted on if qdel calls destroy, and destroy will not get called twice)
+
 */
 
 var/global/list/GlobalPool = list()
@@ -67,7 +78,7 @@ var/global/list/GlobalPool = list()
 
 
 
-/proc/PlaceInPool(var/atom/movable/AM)
+/proc/PlaceInPool(var/atom/movable/AM, destroy = 1)
 	if(!istype(AM))
 		return
 
@@ -79,7 +90,9 @@ var/global/list/GlobalPool = list()
 
 	GlobalPool[AM.type] |= AM
 
-	AM.Destroy()
+	if (destroy)
+		AM.Destroy()
+
 	AM.ResetVars()
 
 

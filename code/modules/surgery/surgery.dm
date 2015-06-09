@@ -1,5 +1,5 @@
 /datum/surgery
-	var/name = "surgery"
+	var/name = null
 	var/status = 1
 	var/list/steps = list()										//Steps in a surgery
 	var/step_in_progress = 0									//Actively performing a Surgery
@@ -9,7 +9,9 @@
 	var/target_must_be_fat = 0									//Needs to be fat
 	var/requires_organic_chest = 0								//Prevents you from performing an operation on Robotic chests***
 	var/has_multi_loc = 0 										//Multiple locations - RR
-
+	var/user_species_restricted = 0 							//Surgery only performable BY species
+	var/list/user_species_ids
+	var/ignore_clothes = 0										//This surgery ignores clothes
 
 /datum/surgery/proc/next_step(mob/user, mob/living/carbon/target)
 	if(step_in_progress)	return

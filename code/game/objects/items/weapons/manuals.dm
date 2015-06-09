@@ -287,6 +287,7 @@
 	name = "Mentoring your Experiments"
 	icon_state = "rdbook"
 	author = "Dr. H.P. Kritz"
+	title = "Mentoring your Experiments"
 	dat = {"<html>
 		<head>
 		<style>

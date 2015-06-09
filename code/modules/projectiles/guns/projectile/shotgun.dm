@@ -175,7 +175,7 @@
 	if (num_unloaded)
 		user << "<span class = 'notice'>You break open \the [src] and unload [num_unloaded] shell\s.</span>"
 	else
-		user << "<span class='notice'>[src] is empty.</span>"
+		user << "<span class='warning'>[src] is empty!</span>"
 
 
 // IMPROVISED SHOTGUN //
@@ -204,7 +204,7 @@
 			user << "<span class='notice'>You tie the lengths of cable to the shotgun, making a sling.</span>"
 			update_icon()
 		else
-			user << "<span class='warning'>You need at least ten lengths of cable if you want to make a sling.</span>"
+			user << "<span class='warning'>You need at least ten lengths of cable if you want to make a sling!</span>"
 			return
 
 // Sawing guns related procs //
@@ -224,13 +224,13 @@
 
 /obj/item/weapon/gun/projectile/proc/sawoff(mob/user as mob)
 	if(sawn_state == SAWN_OFF)
-		user << "<span class='notice'>\The [src] is already shortened.</span>"
+		user << "<span class='warning'>\The [src] is already shortened!</span>"
 		return
 
 	if(sawn_state == SAWN_SAWING)
 		return
 
-	user.visible_message("<span class='notice'>[user] begins to shorten \the [src].</span>", "<span class='notice'>You begin to shorten \the [src].</span>")
+	user.visible_message("[user] begins to shorten \the [src].", "<span class='notice'>You begin to shorten \the [src]...</span>")
 
 	//if there's any live ammo inside the gun, makes it go off
 	if(blow_up(user))
@@ -240,7 +240,7 @@
 	sawn_state = SAWN_SAWING
 
 	if(do_after(user, 30))
-		user.visible_message("<span class='warning'>[user] shortens \the [src]!</span>", "<span class='warning'>You shorten \the [src]!</span>")
+		user.visible_message("[user] shortens \the [src]!", "<span class='notice'>You shorten \the [src].</span>")
 		name = "sawn-off [src.name]"
 		desc = sawn_desc
 		icon_state = "[icon_state]-sawn"

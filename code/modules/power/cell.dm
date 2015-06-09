@@ -1,17 +1,31 @@
-// the power cell
-// charge from 0 to 100%
-// fits in APC to provide backup power
+/obj/item/weapon/stock_parts/cell
+	name = "power cell"
+	desc = "A rechargable electrochemical power cell."
+	icon = 'icons/obj/power.dmi'
+	icon_state = "cell"
+	item_state = "cell"
+	origin_tech = "powerstorage=1"
+	force = 5.0
+	throwforce = 5.0
+	throw_speed = 2
+	throw_range = 5
+	w_class = 3.0
+	var/charge = 0	// note %age conveted to actual charge in New
+	var/maxcharge = 1000
+	m_amt = 700
+	g_amt = 50
+	var/rigged = 0		// true if rigged to explode
+	var/minor_fault = 0 //If not 100% reliable, it will build up faults.
+	var/chargerate = 100 //how much power is given every tick in a recharger
 
 /obj/item/weapon/stock_parts/cell/New()
 	..()
 	charge = maxcharge
 	desc = "This cell has a power rating of [maxcharge], and you should not swallow it."
-
 	updateicon()
 
 /obj/item/weapon/stock_parts/cell/proc/updateicon()
 	overlays.Cut()
-
 	if(charge < 0.01)
 		return
 	else if(charge/maxcharge >=0.995)
@@ -27,7 +41,6 @@
 	if(rigged && amount > 0)
 		explode()
 		return 0
-
 	if(charge < amount)	return 0
 	charge = (charge - amount)
 	return 1
@@ -37,8 +50,8 @@
 	if(rigged && amount > 0)
 		explode()
 		return 0
-
-	if(maxcharge < amount)	return 0
+	if(maxcharge < amount)
+		amount = maxcharge
 	var/power_used = min(maxcharge-charge,amount)
 	if(crit_fail)	return 0
 	if(!prob(reliability))
@@ -49,7 +62,6 @@
 	charge += power_used
 	return power_used
 
-
 /obj/item/weapon/stock_parts/cell/examine(mob/user)
 	..()
 	if(crit_fail || rigged)
@@ -57,18 +69,17 @@
 	else
 		user << "The charge meter reads [round(src.percent() )]%."
 
+/obj/item/weapon/stock_parts/cell/suicide_act(mob/user)
+	user.visible_message("<span class='suicide'>[user] is licking the electrodes of the [src.name]! It looks like \he's trying to commit suicide.</span>")
+	return (FIRELOSS)
 
 /obj/item/weapon/stock_parts/cell/attackby(obj/item/W, mob/user, params)
 	..()
 	if(istype(W, /obj/item/weapon/reagent_containers/syringe))
 		var/obj/item/weapon/reagent_containers/syringe/S = W
-
-		user << "You inject the solution into the power cell."
-
+		user << "<span class='notice'>You inject the solution into the power cell.</span>"
 		if(S.reagents.has_reagent("plasma", 5))
-
 			rigged = 1
-
 		S.reagents.clear_reagents()
 
 
@@ -92,12 +103,11 @@
 		return
 	//explosion(T, 0, 1, 2, 2)
 	explosion(T, devastation_range, heavy_impact_range, light_impact_range, flash_range)
-
 	qdel(src)
 
 /obj/item/weapon/stock_parts/cell/proc/corrupt()
 	charge /= 2
-	maxcharge /= 2
+	maxcharge = max(maxcharge/2, chargerate)
 	if (prob(10))
 		rigged = 1 //broken batterys are dangerous
 
@@ -125,30 +135,146 @@
 	ex_act(1)
 
 /obj/item/weapon/stock_parts/cell/proc/get_electrocute_damage()
-	switch (charge)
-/*		if (9000 to INFINITY)
-			return min(rand(90,150),rand(90,150))
-		if (2500 to 9000-1)
-			return min(rand(70,145),rand(70,145))
-		if (1750 to 2500-1)
-			return min(rand(35,110),rand(35,110))
-		if (1500 to 1750-1)
-			return min(rand(30,100),rand(30,100))
-		if (750 to 1500-1)
-			return min(rand(25,90),rand(25,90))
-		if (250 to 750-1)
-			return min(rand(20,80),rand(20,80))
-		if (100 to 250-1)
-			return min(rand(20,65),rand(20,65))*/
-		if (1000000 to INFINITY)
-			return min(rand(50,160),rand(50,160))
-		if (200000 to 1000000-1)
-			return min(rand(25,80),rand(25,80))
-		if (100000 to 200000-1)//Ave powernet
-			return min(rand(20,60),rand(20,60))
-		if (50000 to 100000-1)
-			return min(rand(15,40),rand(15,40))
-		if (1000 to 50000-1)
-			return min(rand(10,20),rand(10,20))
-		else
-			return 0
+	if(charge >= 1000)
+		return Clamp(round(charge/10000), 10, 90) + rand(-5,5)
+	else
+		return 0
+
+/* Cell variants*/
+/obj/item/weapon/stock_parts/cell/crap
+	name = "\improper Nanotrasen brand rechargable AA battery"
+	desc = "You can't top the plasma top." //TOTALLY TRADEMARK INFRINGEMENT
+	origin_tech = "powerstorage=0"
+	maxcharge = 500
+	g_amt = 40
+	rating = 2
+
+/obj/item/weapon/stock_parts/cell/crap/empty/New()
+	..()
+	charge = 0
+
+/obj/item/weapon/stock_parts/cell/secborg
+	name = "security borg rechargable D battery"
+	origin_tech = "powerstorage=0"
+	maxcharge = 600	//600 max charge / 100 charge per shot = six shots
+	g_amt = 40
+	rating = 2.5
+
+/obj/item/weapon/stock_parts/cell/secborg/empty/New()
+	..()
+	charge = 0
+
+/obj/item/weapon/stock_parts/cell/pulse //80 pulse shots
+	name = "pulse rifle power cell"
+	maxcharge = 16000
+	rating = 3
+	chargerate = 1500
+
+/obj/item/weapon/stock_parts/cell/pulse/carbine //25 pulse shots
+	name = "pulse carbine power cell"
+	maxcharge = 5000
+
+/obj/item/weapon/stock_parts/cell/pulse/pistol //10 pulse shots
+	name = "pulse pistol power cell"
+	maxcharge = 2000
+
+/obj/item/weapon/stock_parts/cell/high
+	name = "high-capacity power cell"
+	origin_tech = "powerstorage=2"
+	icon_state = "hcell"
+	maxcharge = 10000
+	g_amt = 60
+	rating = 3
+	chargerate = 1500
+
+/obj/item/weapon/stock_parts/cell/high/empty/New()
+	..()
+	charge = 0
+
+/obj/item/weapon/stock_parts/cell/super
+	name = "super-capacity power cell"
+	origin_tech = "powerstorage=5"
+	icon_state = "scell"
+	maxcharge = 20000
+	g_amt = 70
+	rating = 4
+	chargerate = 2000
+
+/obj/item/weapon/stock_parts/cell/super/empty/New()
+	..()
+	charge = 0
+
+/obj/item/weapon/stock_parts/cell/hyper
+	name = "hyper-capacity power cell"
+	origin_tech = "powerstorage=6"
+	icon_state = "hpcell"
+	maxcharge = 30000
+	g_amt = 80
+	rating = 5
+	chargerate = 3000
+
+/obj/item/weapon/stock_parts/cell/hyper/empty/New()
+	..()
+	charge = 0
+
+/obj/item/weapon/stock_parts/cell/bluespace
+	name = "bluespace power cell"
+	origin_tech = "powerstorage=7"
+	icon_state = "bscell"
+	maxcharge = 40000
+	g_amt = 80
+	rating = 6
+	chargerate = 4000
+
+/obj/item/weapon/stock_parts/cell/bluespace/empty/New()
+	..()
+	charge = 0
+
+/obj/item/weapon/stock_parts/cell/infinite
+	name = "infinite-capacity power cell!"
+	icon_state = "icell"
+	origin_tech =  null
+	maxcharge = 30000
+	g_amt = 80
+	rating = 6
+	chargerate = 30000
+	use()
+		return 1
+
+/obj/item/weapon/stock_parts/cell/potato
+	name = "potato battery"
+	desc = "A rechargable starch based power cell."
+	origin_tech = "powerstorage=1"
+	icon = 'icons/obj/power.dmi' //'icons/obj/hydroponics/harvest.dmi'
+	icon_state = "potato_cell" //"potato_battery"
+	charge = 100
+	maxcharge = 300
+	m_amt = 0
+	g_amt = 0
+	minor_fault = 1
+	rating = 1
+
+/obj/item/weapon/stock_parts/cell/high/slime
+	name = "charged slime core"
+	desc = "A yellow slime core infused with plasma, it crackles with power."
+	origin_tech = "powerstorage=2;biotech=4"
+	icon = 'icons/mob/slimes.dmi'
+	icon_state = "yellow slime extract"
+	m_amt = 0
+	g_amt = 0
+
+/obj/item/weapon/stock_parts/cell/emproof
+	name = "\improper EMP-proof cell"
+	desc = "An EMP-proof cell."
+	maxcharge = 500
+	rating = 2
+
+/obj/item/weapon/stock_parts/cell/emproof/empty/New()
+	..()
+	charge = 0
+
+/obj/item/weapon/stock_parts/cell/emproof/emp_act(severity)
+	return
+
+/obj/item/weapon/stock_parts/cell/emproof/corrupt()
+	return

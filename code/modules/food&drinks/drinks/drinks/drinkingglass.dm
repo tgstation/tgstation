@@ -1,7 +1,7 @@
 
 
 /obj/item/weapon/reagent_containers/food/drinks/drinkingglass
-	name = "glass"
+	name = "drinking glass"
 	desc = "Your standard drinking glass."
 	icon_state = "glass_empty"
 	amount_per_transfer_from_this = 10
@@ -14,11 +14,11 @@
 			if("beer")
 				icon_state = "beerglass"
 				name = "glass of beer"
-				desc = "A freezing pint of beer"
+				desc = "A freezing pint of beer."
 			if("beer2")
 				icon_state = "beerglass"
 				name = "glass of beer"
-				desc = "A freezing pint of beer"
+				desc = "A freezing pint of beer."
 			if("greenbeer")
 				icon_state = "greenbeerglass"
 				name = "glass of green beer"
@@ -26,7 +26,7 @@
 			if("ale")
 				icon_state = "aleglass"
 				name = "glass of ale"
-				desc = "A freezing pint of delicious Ale"
+				desc = "A freezing pint of delicious Ale."
 			if("milk")
 				icon_state = "glass_white"
 				name = "glass of milk"
@@ -38,7 +38,7 @@
 			if("hot_coco")
 				icon_state  = "chocolateglass"
 				name = "glass of chocolate"
-				desc = "Tasty"
+				desc = "Tasty."
 			if("lemonjuice")
 				icon_state  = "lemonglass"
 				name = "glass of lemon juice"
@@ -58,11 +58,11 @@
 			if("cola")
 				icon_state  = "glass_brown"
 				name = "glass of space Cola"
-				desc = "A glass of refreshing Space Cola"
+				desc = "A glass of refreshing Space Cola."
 			if("nuka_cola")
 				icon_state = "nuka_colaglass"
 				name = "Nuka Cola"
-				desc = "Don't cry, Don't raise your eye, It's only nuclear wasteland"
+				desc = "Don't cry, Don't raise your eye, It's only nuclear wasteland."
 			if("orangejuice")
 				icon_state = "glass_orange"
 				name = "glass of orange juice"
@@ -94,7 +94,7 @@
 			if("goldschlager")
 				icon_state = "goldschlagerglass"
 				name = "glass of Goldschlager"
-				desc = "100 proof that teen girls will drink anything with gold in it."
+				desc = "100% proof that teen girls will drink anything with gold in it."
 			if("wine")
 				icon_state = "wineglass"
 				name = "glass of wine"
@@ -106,7 +106,7 @@
 			if ("kahlua")
 				icon_state = "kahluaglass"
 				name = "glass of RR Coffee Liquor"
-				desc = "DAMN, THIS THING LOOKS ROBUST"
+				desc = "DAMN, THIS THING LOOKS ROBUST!"
 			if("vermouth")
 				icon_state = "vermouthglass"
 				name = "glass of vermouth"
@@ -158,7 +158,7 @@
 			if("bravebull")
 				icon_state = "bravebullglass"
 				name = "Brave Bull"
-				desc = "tequila and Coffee liquor, brought together in a mouthwatering mixture. Drink up."
+				desc = "Tequila and Coffee liqueur, brought together in a mouthwatering mixture. Drink up."
 			if("tequilasunrise")
 				icon_state = "tequilasunriseglass"
 				name = "tequila Sunrise"
@@ -174,7 +174,7 @@
 			if("manlydorf")
 				icon_state = "manlydorfglass"
 				name = "The Manly Dorf"
-				desc = "A manly concotion made from Ale and Beer. Intended for true men only."
+				desc = "A manly concoction made from Ale and Beer. Intended for true men only."
 			if("irishcream")
 				icon_state = "irishcreamglass"
 				name = "Irish Cream"
@@ -214,7 +214,7 @@
 			if("manhattan_proj")
 				icon_state = "proj_manhattanglass"
 				name = "Manhattan Project"
-				desc = "A scientist drink of choice, for thinking how to blow up the station."
+				desc = "A scientist's drink of choice, for thinking how to blow up the station."
 			if("ginfizz")
 				icon_state = "ginfizzglass"
 				name = "Gin Fizz"
@@ -233,35 +233,35 @@
 				desc = "Ultimate refreshment."
 			if("tonic")
 				icon_state = "glass_clear"
-				name = "Glass of Tonic Water"
+				name = "glass of Tonic Water"
 				desc = "Quinine tastes funny, but at least it'll keep that Space Malaria away."
 			if("sodawater")
 				icon_state = "glass_clear"
-				name = "Glass of Soda Water"
+				name = "glass of Soda Water"
 				desc = "Soda water. Why not make a scotch and soda?"
 			if("water")
 				icon_state = "glass_clear"
-				name = "Glass of Water"
+				name = "glass of Water"
 				desc = "The father of all refreshments."
 			if("spacemountainwind")
 				icon_state = "Space_mountain_wind_glass"
-				name = "Glass of Space Mountain Wind"
+				name = "glass of Space Mountain Wind"
 				desc = "Space Mountain Wind. As you know, there are no mountains in space, only wind."
 			if("thirteenloko")
 				icon_state = "thirteen_loko_glass"
-				name = "Glass of Thirteen Loko"
-				desc = "This is a glass of Thirteen Loko, it appears to be of the highest quality. The drink, not the glass"
+				name = "glass of Thirteen Loko"
+				desc = "This is a glass of Thirteen Loko, it appears to be of the highest quality. The drink, not the glass."
 			if("dr_gibb")
 				icon_state = "dr_gibb_glass"
-				name = "Glass of Dr. Gibb"
+				name = "glass of Dr. Gibb"
 				desc = "Dr. Gibb. Not as dangerous as the name might imply."
 			if("space_up")
 				icon_state = "space-up_glass"
-				name = "Glass of Space-up"
-				desc = "Space-up. It helps keep your cool."
+				name = "glass of Space-up"
+				desc = "Space-up. It helps you keep your cool."
 			if("lemon_lime")
 				icon_state = "glass_yellow"
-				name = "Glass of Lemon-Lime"
+				name = "glass of Lemon-Lime"
 				desc = "You're pretty certain a real fruit has never actually touched this."
 			if("moonshine")
 				icon_state = "glass_clear"
@@ -269,28 +269,28 @@
 				desc = "You've really hit rock bottom now... your liver packed its bags and left last night."
 			if("soymilk")
 				icon_state = "glass_white"
-				name = "Glass of soy milk"
+				name = "glass of soy milk"
 				desc = "White and nutritious soy goodness!"
 			if("berryjuice")
 				icon_state = "berryjuice"
-				name = "Glass of berry juice"
+				name = "glass of berry juice"
 				desc = "Berry juice. Or maybe it's jam. Who cares?"
 			if("poisonberryjuice")
 				icon_state = "poisonberryjuice"
-				name = "Glass of berry juice"
+				name = "glass of berry juice"
 				desc = "Berry juice. Or maybe it's poison. Who cares?"
 			if("carrotjuice")
 				icon_state = "carrotjuice"
-				name = "Glass of  carrot juice"
-				desc = "It is just like a carrot but without crunching."
+				name = "glass of  carrot juice"
+				desc = "It's just like a carrot but without crunching."
 			if("banana")
 				icon_state = "banana"
-				name = "Glass of banana juice"
-				desc = "The raw essence of a banana. HONK"
+				name = "glass of banana juice"
+				desc = "The raw essence of a banana. HONK."
 			if("bahama_mama")
 				icon_state = "bahama_mama"
 				name = "Bahama Mama"
-				desc = "Tropic cocktail"
+				desc = "Tropical cocktail."
 			if("singulo")
 				icon_state = "singulo"
 				name = "Singulo"
@@ -306,7 +306,7 @@
 			if("barefoot")
 				icon_state = "b&p"
 				name = "Barefoot"
-				desc = "Barefoot and pregnant"
+				desc = "Barefoot and pregnant."
 			if("demonsblood")
 				icon_state = "demonsblood"
 				name = "Demons Blood"
@@ -350,11 +350,11 @@
 			if("soy_latte")
 				icon_state = "soy_latte"
 				name = "Soy Latte"
-				desc = "A nice and refrshing beverage while you are reading."
+				desc = "A nice and refreshing beverage while you're reading."
 			if("cafe_latte")
 				icon_state = "cafe_latte"
 				name = "Cafe Latte"
-				desc = "A nice, strong and refreshing beverage while you are reading."
+				desc = "A nice, strong and refreshing beverage while you're reading."
 			if("acidspit")
 				icon_state = "acidspitglass"
 				name = "Acid Spit"
@@ -378,7 +378,7 @@
 			if("silencer")
 				icon_state = "silencerglass"
 				name = "Silencer"
-				desc = "A drink from mime Heaven."
+				desc = "A drink from Mime Heaven."
 			if("nothing")
 				icon_state = "nothing"
 				name = "Nothing"
@@ -394,7 +394,7 @@
 			if("irishcarbomb")
 				icon_state = "irishcarbomb"
 				name = "Irish Car Bomb"
-				desc = "An irish car bomb."
+				desc = "An Irish car bomb."
 			if("syndicatebomb")
 				icon_state = "syndicatebomb"
 				name = "Syndicate Bomb"
@@ -409,7 +409,7 @@
 				desc = "Only for the experienced. You think you see sand floating in the glass."
 			if("ice")
 				icon_state = "iceglass"
-				name = "Glass of ice"
+				name = "glass of ice"
 				desc = "Generally, you're supposed to put something else in there too..."
 			if("icecoffee")
 				icon_state = "icedcoffeeglass"
@@ -421,20 +421,20 @@
 				desc = "All natural, antioxidant-rich flavour sensation."
 			if("coffee")
 				icon_state = "glass_brown"
-				name = "Glass of coffee"
+				name = "glass of coffee"
 				desc = "Don't drop it, or you'll send scalding liquid and glass shards everywhere."
 			if("tea")
 				icon_state = "teaglass"
-				name = "Glass of tea"
+				name = "glass of tea"
 				desc = "Drinking it from here would not seem right."
 			if("bilk")
 				icon_state = "glass_brown"
-				name = "Glass of bilk"
+				name = "glass of bilk"
 				desc = "A brew of milk and beer. For those alcoholics who fear osteoporosis."
-			if("fuel")
+			if("welding_fuel")
 				icon_state = "dr_gibb_glass"
-				name = "Glass of welder fuel"
-				desc = "Unless you are an industrial tool, this is probably not safe for consumption."
+				name = "glass of welder fuel"
+				desc = "Unless you're an industrial tool, this is probably not safe for consumption."
 			if("b52")
 				icon_state = "b52glass"
 				name = "B-52"
@@ -442,7 +442,7 @@
 			if("toxinsspecial")
 				icon_state = "toxinsspecialglass"
 				name = "Toxins Special"
-				desc = "Whoah, this thing is on FIRE"
+				desc = "Whoah, this thing is on FIRE!"
 			if("chocolatepudding")
 				icon_state = "chocolatepudding"
 				name = "Chocolate Pudding"
@@ -450,7 +450,7 @@
 			if("vanillapudding")
 				icon_state = "vanillapudding"
 				name = "Vanilla Pudding"
-				desc = "Whoah, this thing is on FIRE"
+				desc = "Tasty."
 			if("cherryshake")
 				icon_state = "cherryshake"
 				name = "Cherry Shake"
@@ -476,12 +476,12 @@
 				var/image/I = image(icon, "glassoverlay")
 				I.color = mix_color_from_reagents(reagents.reagent_list)
 				overlays += I
-				name = "Glass of ..what?"
+				name = "glass of ..what?"
 				desc = "You can't really tell what this is."
 	else
 		icon_state = "glass_empty"
-		name = "Drinking glass"
-		desc = "Your standard drinking glass"
+		name = "drinking glass"
+		desc = "Your standard drinking glass."
 		return
 
 //Shot glasses!//
@@ -528,7 +528,7 @@
 			if("toxinsspecial")
 				icon_state = "toxinsspecialglass"
 				name = "Toxins Special"
-				desc = "Whoah, this thing is on FIRE"
+				desc = "Whoah, this thing is on FIRE!"
 			if ("vermouth")
 				icon_state = "shotglassclear"
 				name = "shot of vermouth"

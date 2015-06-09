@@ -160,6 +160,7 @@ var/global/list/obj/item/device/pda/PDAs = list()
 
 /obj/item/device/pda/roboticist
 	icon_state = "pda-roboticist"
+	default_cartridge = /obj/item/weapon/cartridge/roboticist
 
 /obj/item/device/pda/librarian
 	icon_state = "pda-library"
@@ -318,42 +319,32 @@ var/global/list/obj/item/device/pda/PDAs = list()
 						dat += "<h4>Engineering Functions</h4>"
 						dat += "<ul>"
 						dat += "<li><a href='byond://?src=\ref[src];choice=43'><img src=pda_power.png> Power Monitor</a></li>"
-						if(istype(cartridge.radio, /obj/item/radio/integrated/floorbot))
-							dat += "<li><a href='byond://?src=\ref[src];choice=51'><img src=pda_floorbot.png> Floorbot Access</a></li>"
 						dat += "</ul>"
 					if (cartridge.access_medical)
 						dat += "<h4>Medical Functions</h4>"
 						dat += "<ul>"
 						dat += "<li><a href='byond://?src=\ref[src];choice=44'><img src=pda_medical.png> Medical Records</a></li>"
 						dat += "<li><a href='byond://?src=\ref[src];choice=Medical Scan'><img src=pda_scanner.png> [scanmode == 1 ? "Disable" : "Enable"] Medical Scanner</a></li>"
-					if(istype(cartridge.radio, /obj/item/radio/integrated/medbot))
-						dat += "<li><a href='byond://?src=\ref[src];choice=52'><img src=pda_medbot.png> Medibot Access</a></li>"
-						dat += "</ul>"
-					else
 						dat += "</ul>"
 					if (cartridge.access_security)
 						dat += "<h4>Security Functions</h4>"
 						dat += "<ul>"
 						dat += "<li><a href='byond://?src=\ref[src];choice=45'><img src=pda_cuffs.png> Security Records</A></li>"
-					if(istype(cartridge.radio, /obj/item/radio/integrated/beepsky))
-						dat += "<li><a href='byond://?src=\ref[src];choice=46'><img src=pda_cuffs.png> Security Bot Access</a></li>"
 						dat += "</ul>"
-					else	dat += "</ul>"
 					if(cartridge.access_quartermaster)
 						dat += "<h4>Quartermaster Functions:</h4>"
 						dat += "<ul>"
 						dat += "<li><a href='byond://?src=\ref[src];choice=47'><img src=pda_crate.png> Supply Records</A></li>"
-						dat += "<li><a href='byond://?src=\ref[src];choice=48'><img src=pda_mule.png> Delivery Bot Control</A></li>"
 						dat += "</ul>"
 				dat += "</ul>"
 
 				dat += "<h4>Utilities</h4>"
 				dat += "<ul>"
 				if (cartridge)
+					if(cartridge.bot_access_flags)
+						dat += "<li><a href='byond://?src=\ref[src];choice=54'><img src=pda_medbot.png> Bots Access</a></li>"
 					if (cartridge.access_janitor)
 						dat += "<li><a href='byond://?src=\ref[src];choice=49'><img src=pda_bucket.png> Custodial Locator</a></li>"
-						if(istype(cartridge.radio, /obj/item/radio/integrated/cleanbot))
-							dat += "<li><a href='byond://?src=\ref[src];choice=50'><img src=pda_cleanbot.png> Cleanbot Access</a></li>"
 					if (istype(cartridge.radio, /obj/item/radio/integrated/signal))
 						dat += "<li><a href='byond://?src=\ref[src];choice=40'><img src=pda_signaler.png> Signaler System</a></li>"
 					if (cartridge.access_newscaster)
@@ -862,9 +853,9 @@ var/global/list/obj/item/device/pda/PDAs = list()
 		if(id)
 			remove_id()
 		else
-			usr << "<span class='notice'>This PDA does not have an ID in it.</span>"
+			usr << "<span class='warning'>This PDA does not have an ID in it!</span>"
 	else
-		usr << "<span class='notice'>You cannot do this while restrained.</span>"
+		usr << "<span class='warning'>You cannot do that while restrained!</span>"
 
 /obj/item/device/pda/verb/verb_remove_id()
 	set category = "Object"
@@ -878,9 +869,9 @@ var/global/list/obj/item/device/pda/PDAs = list()
 		if(id)
 			remove_id()
 		else
-			usr << "<span class='notice'>This PDA does not have an ID in it.</span>"
+			usr << "<span class='warning'>This PDA does not have an ID in it!</span>"
 	else
-		usr << "<span class='notice'>You cannot do this while restrained.</span>"
+		usr << "<span class='warning'>You cannot do that while restrained!</span>"
 
 
 /obj/item/device/pda/verb/verb_remove_pen()
@@ -902,9 +893,9 @@ var/global/list/obj/item/device/pda/PDAs = list()
 					return
 			O.loc = get_turf(src)
 		else
-			usr << "<span class='notice'>This PDA does not have a pen in it.</span>"
+			usr << "<span class='warning'>This PDA does not have a pen in it!</span>"
 	else
-		usr << "<span class='notice'>You cannot do this while restrained.</span>"
+		usr << "<span class='warning'>You cannot do that while restrained!</span>"
 
 /obj/item/device/pda/proc/id_check(mob/user as mob, choice as num)//To check for IDs; 1 for in-pda use, 2 for out of pda use.
 	if(choice == 1)
@@ -913,25 +904,28 @@ var/global/list/obj/item/device/pda/PDAs = list()
 		else
 			var/obj/item/I = user.get_active_hand()
 			if (istype(I, /obj/item/weapon/card/id))
-				user.drop_item()
+				if(!user.unEquip(I))
+					return 0
 				I.loc = src
 				id = I
 	else
 		var/obj/item/weapon/card/I = user.get_active_hand()
 		if (istype(I, /obj/item/weapon/card/id) && I:registered_name)
+			if(!user.unEquip(I))
+				return 0
 			var/obj/old_id = id
-			user.drop_item()
 			I.loc = src
 			id = I
 			user.put_in_hands(old_id)
-	return
+	return 1
 
 // access to status display signals
 /obj/item/device/pda/attackby(obj/item/C as obj, mob/user as mob, params)
 	..()
 	if(istype(C, /obj/item/weapon/cartridge) && !cartridge)
 		cartridge = C
-		user.drop_item()
+		if(!user.unEquip(C))
+			return
 		cartridge.loc = src
 		user << "<span class='notice'>You insert [cartridge] into [src].</span>"
 		if(cartridge.radio)
@@ -940,7 +934,7 @@ var/global/list/obj/item/device/pda/PDAs = list()
 	else if(istype(C, /obj/item/weapon/card/id))
 		var/obj/item/weapon/card/id/idcard = C
 		if(!idcard.registered_name)
-			user << "<span class='notice'>\The [src] rejects the ID.</span>"
+			user << "<span class='warning'>\The [src] rejects the ID!</span>"
 			return
 		if(!owner)
 			owner = idcard.registered_name
@@ -951,13 +945,15 @@ var/global/list/obj/item/device/pda/PDAs = list()
 			//Basic safety check. If either both objects are held by user or PDA is on ground and card is in hand.
 			if(((src in user.contents) && (C in user.contents)) || (istype(loc, /turf) && in_range(src, user) && (C in user.contents)) )
 				if( can_use(user) )//If they can still act.
-					id_check(user, 2)
+					if(!id_check(user, 2))
+						return
 					user << "<span class='notice'>You put the ID into \the [src]'s slot.</span>"
 					updateSelfDialog()//Update self dialog on success.
 			return	//Return in case of failed check or when successful.
 		updateSelfDialog()//For the non-input related code.
 	else if(istype(C, /obj/item/device/paicard) && !src.pai)
-		user.drop_item()
+		if(!user.unEquip(C))
+			return
 		C.loc = src
 		pai = C
 		user << "<span class='notice'>You slot \the [C] into [src].</span>"
@@ -965,9 +961,10 @@ var/global/list/obj/item/device/pda/PDAs = list()
 	else if(istype(C, /obj/item/weapon/pen))
 		var/obj/item/weapon/pen/O = locate() in src
 		if(O)
-			user << "<span class='notice'>There is already a pen in \the [src].</span>"
+			user << "<span class='warning'>There is already a pen in \the [src]!</span>"
 		else
-			user.drop_item()
+			if(!user.unEquip(C))
+				return
 			C.loc = src
 			user << "<span class='notice'>You slide \the [C] into \the [src].</span>"
 	return
@@ -1028,7 +1025,7 @@ var/global/list/obj/item/device/pda/PDAs = list()
 
 	if (!scanmode && istype(A, /obj/item/weapon/paper) && owner)
 		if (!A:info)
-			user << "<span class='notice'>Unable to scan. Paper is blank.</span>"
+			user << "<span class='warning'>Unable to scan! Paper is blank.</span>"
 			return
 		notehtml = A:info
 		note = replacetext(notehtml, "<BR>", "\[br\]")
@@ -1058,8 +1055,6 @@ var/global/list/obj/item/device/pda/PDAs = list()
 
 /obj/item/device/pda/Destroy()
 	PDAs -= src
-	if (src.id)
-		src.id.loc = get_turf(src.loc)
 	..()
 
 /obj/item/device/pda/clown/Crossed(AM as mob|obj) //Clown PDA is slippery.

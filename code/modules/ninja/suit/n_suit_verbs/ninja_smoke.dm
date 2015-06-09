@@ -9,11 +9,11 @@
 
 	if(!ninjacost(0,N_SMOKE_BOMB))
 		var/mob/living/carbon/human/H = affecting
-		H << "<span class='notice'>There are <B>[s_bombs]</B> smoke bombs remaining.</span>"
 		var/datum/effect/effect/system/bad_smoke_spread/smoke = new /datum/effect/effect/system/bad_smoke_spread()
 		smoke.set_up(10, 0, H.loc)
 		smoke.start()
 		playsound(H.loc, 'sound/effects/bamf.ogg', 50, 2)
 		s_bombs--
+		H << "<span class='notice'>There are <B>[s_bombs]</B> smoke bombs remaining.</span>"
 		s_coold = 1
 	return

@@ -13,6 +13,7 @@
 	var/menustat = "menu"
 	var/efficiency = 0
 	var/productivity = 0
+	var/max_items = 40
 
 /obj/machinery/biogenerator/New()
 		..()
@@ -28,12 +29,15 @@
 /obj/machinery/biogenerator/RefreshParts()
 	var/E = 0
 	var/P = 0
+	var/max_storage = 40
 	for(var/obj/item/weapon/stock_parts/matter_bin/B in component_parts)
 		P += B.rating
+		max_storage = 40 * B.rating
 	for(var/obj/item/weapon/stock_parts/manipulator/M in component_parts)
 		E += M.rating
 	efficiency = E
 	productivity = P
+	max_items = max_storage
 
 /obj/machinery/biogenerator/on_reagent_change()			//When the reagents change, change the icon as well.
 	update_icon()
@@ -65,15 +69,15 @@
 		var/i = 0
 		for(var/obj/item/weapon/reagent_containers/food/snacks/grown/G in contents)
 			i++
-		if(i >= 10)
+		if(i >= max_items)
 			user << "<span class='warning'>The biogenerator is already full! Activate it.</span>"
 		else
 			for(var/obj/item/weapon/reagent_containers/food/snacks/grown/G in O.contents)
-				if(i >= 10)
+				if(i >= max_items)
 					break
 				G.loc = src
 				i++
-			if(i<10)
+			if(i<max_items)
 				user << "<span class='info'>You empty the plant bag into the biogenerator.</span>"
 			else if(O.contents.len == 0)
 				user << "<span class='info'>You empty the plant bag into the biogenerator, filling it to its capacity.</span>"
@@ -82,12 +86,12 @@
 
 
 	else if(!istype(O, /obj/item/weapon/reagent_containers/food/snacks/grown))
-		user << "<span class='warning'>You cannot put this in [src.name]</span>"
+		user << "<span class='warning'>You cannot put this in [src.name]!</span>"
 	else
 		var/i = 0
 		for(var/obj/item/weapon/reagent_containers/food/snacks/grown/G in contents)
 			i++
-		if(i >= 10)
+		if(i >= max_items)
 			user << "<span class='warning'>The biogenerator is full! Activate it.</span>"
 		else
 			user.unEquip(O)

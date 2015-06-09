@@ -20,7 +20,7 @@
 	attack_sound = 'sound/weapons/punch1.ogg'
 	a_intent = "harm"
 	var/corpse = /obj/effect/landmark/mobcorpse/russian
-	var/weapon1 = /obj/item/weapon/kitchenknife
+	var/weapon1 = /obj/item/weapon/kitchen/knife
 	atmos_requirements = list("min_oxy" = 5, "max_oxy" = 0, "min_tox" = 0, "max_tox" = 1, "min_co2" = 0, "max_co2" = 5, "min_n2" = 0, "max_n2" = 0)
 	unsuitable_atmos_damage = 15
 	faction = list("russian")
@@ -43,10 +43,11 @@
 	if(prob(50) && ispath(weapon1,/obj/item/weapon/gun/projectile/revolver/mateba)) //to preserve varedits
 		weapon1 = /obj/item/weapon/gun/projectile/shotgun/boltaction
 		casingtype = /obj/item/ammo_casing/a762
+	..()
 
 /mob/living/simple_animal/hostile/russian/death(gibbed)
 	..(1)
-	visible_message("<span class='notice'>[src] stops moving.</span>")
+	visible_message("[src] stops moving.")
 	if(corpse)
 		new corpse (src.loc)
 	if(weapon1)

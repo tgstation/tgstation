@@ -32,13 +32,13 @@
 	if(!R)
 		return 1
 
-atom/movable/proc/CanAtmosPass()
+/atom/movable/proc/CanAtmosPass()
 	return 1
 
-atom/proc/CanPass(atom/movable/mover, turf/target, height=1.5)
+/atom/proc/CanPass(atom/movable/mover, turf/target, height=1.5)
 	return (!density || !height)
 
-turf/CanPass(atom/movable/mover, turf/target, height=1.5)
+/turf/CanPass(atom/movable/mover, turf/target, height=1.5)
 	if(!target) return 0
 
 	if(istype(mover)) // turf/Enter(...) will perform more advanced checks
@@ -82,8 +82,8 @@ turf/CanPass(atom/movable/mover, turf/target, height=1.5)
 /atom/movable/proc/air_update_turf(var/command = 0)
 	if(!istype(loc,/turf) && command)
 		return
-	for(var/turf/T in locs) // used by double wide doors and other nonexistant multitile structures
-		T.air_update_turf(command)
+	var/turf/T = get_turf(loc)
+	T.air_update_turf(command)
 
 /turf/proc/air_update_turf(var/command = 0)
 	if(command)

@@ -22,7 +22,7 @@
 
 /obj/structure/janitorialcart/proc/wet_mop(obj/item/weapon/mop, mob/user)
 	if(reagents.total_volume < 1)
-		user << "[src] is out of water!</span>"
+		user << "<span class='warning'>[src] is out of water!</span>"
 	else
 		reagents.trans_to(mop, 5)	//
 		user << "<span class='notice'>You wet [mop] in [src].</span>"
@@ -37,7 +37,7 @@
 
 
 /obj/structure/janitorialcart/attackby(obj/item/I, mob/user, params)
-	var/fail_msg = "<span class='notice'>There is already one of those in [src].</span>"
+	var/fail_msg = "<span class='warning'>There is already one of those in [src]!</span>"
 
 	if(istype(I, /obj/item/weapon/mop))
 		var/obj/item/weapon/mop/m=I
@@ -74,11 +74,11 @@
 			signs++
 			update_icon()
 		else
-			user << "<span class='notice'>[src] can't hold any more signs.</span>"
+			user << "<span class='warning'>[src] can't hold any more signs!</span>"
 	else if(mybag)
 		mybag.attackby(I, user)
 	else if(istype(I, /obj/item/weapon/crowbar))
-		user.visible_message("<span class='warning'>[user] begins to empty the contents of [src].</span>")
+		user.visible_message("[user] begins to empty the contents of [src].", "<span class='notice'>You begin to empty the contents of [src]...</span>")
 		if(do_after(user, 30))
 			usr << "<span class='notice'>You empty the contents of [src]'s bucket onto the floor.</span>"
 			reagents.reaction(src.loc)
@@ -185,7 +185,7 @@
 				F.dirt = 0
 			for(var/A in tile)
 				if(istype(A, /obj/effect))
-					if(istype(A, /obj/effect/rune) || istype(A, /obj/effect/decal/cleanable) || istype(A, /obj/effect/overlay))
+					if(is_cleanable(A))
 						qdel(A)
 
 /obj/structure/stool/bed/chair/janicart/examine(mob/user)

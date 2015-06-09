@@ -790,7 +790,7 @@ body
 
 			if(result)
 				var/newtype = species_list[result]
-				H.dna.species = new newtype()
+				hardset_dna(H, null, null, null, null, newtype)
 				H.regenerate_icons()
 
 		else if(href_list["adjustDamage"] && href_list["mobToDamage"])

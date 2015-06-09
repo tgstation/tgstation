@@ -224,7 +224,7 @@
 	anchored = 1
 
 /atom/movable/light/Destroy()
-	return 1
+	return QDEL_HINT_LETMELIVE
 
 /atom/movable/light/Move()
 	return 0
@@ -239,10 +239,14 @@
 	if(!path || path == type) //Sucks this is here but it would cause problems otherwise.
 		return ..()
 
+	for(var/obj/effect/decal/cleanable/decal in src.contents)
+		qdel(decal)
+
 	if(light)
 		qdel(light)
 
 	var/old_lumcount = lighting_lumcount - initial(lighting_lumcount)
+	var/oldbaseturf = baseturf
 
 	var/list/our_lights //reset affecting_lights if needed
 	if(opacity != initial(path:opacity) && old_lumcount)
@@ -257,11 +261,13 @@
 
 	lighting_changed = 1 //Don't add ourself to SSlighting.changed_turfs
 	update_lumcount(old_lumcount)
+	baseturf = oldbaseturf
 	lighting_object = locate() in src
 	init_lighting()
 
 	for(var/turf/space/S in orange(src,1))
 		S.update_starlight()
+
 
 /turf/proc/update_lumcount(amount)
 	lighting_lumcount += amount

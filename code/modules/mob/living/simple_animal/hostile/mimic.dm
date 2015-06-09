@@ -5,7 +5,7 @@
 /mob/living/simple_animal/hostile/mimic
 	name = "crate"
 	desc = "A rectangular steel crate."
-	icon = 'icons/obj/storage.dmi'
+	icon = 'icons/obj/crates.dmi'
 	icon_state = "crate"
 	icon_living = "crate"
 
@@ -37,7 +37,7 @@
 
 /mob/living/simple_animal/hostile/mimic/death()
 	..(1)
-	visible_message("<span class='danger'>[src] stops moving!</span>")
+	visible_message("[src] stops moving!")
 	ghostize()
 	qdel(src)
 
@@ -114,10 +114,12 @@
 /mob/living/simple_animal/hostile/mimic/crate/AttackingTarget()
 	. =..()
 	var/mob/living/L = .
-	if(istype(L))
+	if(iscarbon(L))
+		var/mob/living/carbon/C = L
 		if(prob(15))
-			L.Weaken(2)
-			L.visible_message("<span class='danger'>\the [src] knocks down \the [L]!</span>")
+			C.Weaken(2)
+			C.visible_message("<span class='danger'>\The [src] knocks down \the [C]!</span>", \
+					"<span class='userdanger'>\The [src] knocks you down!</span>")
 
 //
 // Copy Mimic
@@ -174,6 +176,7 @@ var/global/list/protected_objects = list(/obj/structure/table, /obj/structure/ca
 		icon = O.icon
 		icon_state = O.icon_state
 		icon_living = icon_state
+		overlays = O.overlays
 
 		if(istype(O, /obj/structure) || istype(O, /obj/machinery))
 			health = (anchored * 50) + 50
@@ -205,11 +208,12 @@ var/global/list/protected_objects = list(/obj/structure/table, /obj/structure/ca
 /mob/living/simple_animal/hostile/mimic/copy/AttackingTarget()
 	..()
 	if(knockdown_people)
-		if(isliving(target))
-			var/mob/living/L = target
+		if(iscarbon(target))
+			var/mob/living/carbon/C = target
 			if(prob(15))
-				L.Weaken(1)
-				L.visible_message("<span class='danger'>\The [src] knocks down \the [L]!</span>")
+				C.Weaken(2)
+				C.visible_message("<span class='danger'>\The [src] knocks down \the [C]!</span>", \
+						"<span class='userdanger'>\The [src] knocks you down!</span>")
 
 //
 // Machine Mimics (Made by Malf AI)

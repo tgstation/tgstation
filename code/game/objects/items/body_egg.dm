@@ -26,6 +26,7 @@
 			H.med_hud_set_status()
 		spawn(0)
 			RemoveInfectionImages(affected_mob)
+		affected_mob = null
 	..()
 
 /obj/item/body_egg/process()

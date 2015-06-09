@@ -3,12 +3,14 @@
 	level = 1.0
 
 	var/intact = 1
+	var/baseturf = /turf/space
 
 	//Properties for open tiles (/floor)
 	var/oxygen = 0
 	var/carbon_dioxide = 0
 	var/nitrogen = 0
 	var/toxins = 0
+
 
 	//Properties for airtight tiles (/wall)
 	var/thermal_conductivity = 0.05
@@ -28,6 +30,8 @@
 	for(var/atom/movable/AM in src)
 		Entered(AM)
 	return
+/turf/Destroy()
+	return QDEL_HINT_HARDDEL_NOW
 
 // Adds the adjacent turfs to the current atmos processing
 /turf/Del()
@@ -130,11 +134,9 @@
 	SSair.remove_from_active(src)
 
 	var/turf/W = new path(src)
-
 	if(istype(W, /turf/simulated))
 		W:Assimilate_Air()
 		W.RemoveLattice()
-
 	W.levelupdate()
 	W.CalculateAdjacentTurfs()
 	return W
@@ -171,11 +173,11 @@
 		SSair.add_to_active(src)
 
 /turf/proc/ReplaceWithLattice()
-	src.ChangeTurf(/turf/space)
+	src.ChangeTurf(src.baseturf)
 	new /obj/structure/lattice(locate(src.x, src.y, src.z) )
 
 /turf/proc/ReplaceWithCatwalk()
-	src.ChangeTurf(/turf/space)
+	src.ChangeTurf(src.baseturf)
 	new /obj/structure/lattice/catwalk(locate(src.x, src.y, src.z) )
 
 /turf/proc/phase_damage_creatures(damage,mob/U = null)//>Ninja Code. Hurts and knocks out creatures on this turf //NINJACODE
@@ -189,89 +191,6 @@
 
 /turf/proc/Bless()
 	flags |= NOJAUNT
-
-/////////////////////////////////////////////////////////////////////////
-// Navigation procs
-// Used for A-star pathfinding
-////////////////////////////////////////////////////////////////////////
-
-///////////////////////////
-//Cardinal only movements
-///////////////////////////
-
-// Returns the surrounding cardinal turfs with open links
-// Including through doors openable with the ID
-/turf/proc/CardinalTurfsWithAccess(var/obj/item/weapon/card/id/ID)
-	var/list/L = new()
-	var/turf/simulated/T
-
-	for(var/dir in cardinal)
-		T = get_step(src, dir)
-		if(istype(T) && !T.density)
-			if(!LinkBlockedWithAccess(src, T, ID))
-				L.Add(T)
-	return L
-
-// Returns the surrounding cardinal turfs with open links
-// Don't check for ID, doors passable only if open
-/turf/proc/CardinalTurfs()
-	var/list/L = new()
-	var/turf/simulated/T
-
-	for(var/dir in cardinal)
-		T = get_step(src, dir)
-		if(istype(T) && !T.density)
-			if(!LinkBlocked(src, T))
-				L.Add(T)
-	return L
-
-///////////////////////////
-//All directions movements
-///////////////////////////
-
-// Returns the surrounding simulated turfs with open links
-// Including through doors openable with the ID
-/turf/proc/AdjacentTurfsWithAccess(var/obj/item/weapon/card/id/ID = null,var/list/closed)//check access if one is passed
-	var/list/L = new()
-	var/turf/simulated/T
-	for(var/dir in list(NORTHWEST,NORTHEAST,SOUTHEAST,SOUTHWEST,NORTH,EAST,SOUTH,WEST)) //arbitrarily ordered list to favor non-diagonal moves in case of ties
-		T = get_step(src,dir)
-		if(T in closed) //turf already proceeded in A*
-			continue
-		if(istype(T) && !T.density)
-			if(!LinkBlockedWithAccess(src, T, ID))
-				L.Add(T)
-	return L
-
-//Idem, but don't check for ID and goes through open doors
-/turf/proc/AdjacentTurfs(var/list/closed)
-	var/list/L = new()
-	var/turf/simulated/T
-	for(var/dir in list(NORTHWEST,NORTHEAST,SOUTHEAST,SOUTHWEST,NORTH,EAST,SOUTH,WEST)) //arbitrarily ordered list to favor non-diagonal moves in case of ties
-		T = get_step(src,dir)
-		if(T in closed) //turf already proceeded by A*
-			continue
-		if(istype(T) && !T.density)
-			if(!LinkBlocked(src, T))
-				L.Add(T)
-	return L
-
-// check for all turfs, including unsimulated ones
-/turf/proc/AdjacentTurfsSpace(var/obj/item/weapon/card/id/ID = null, var/list/closed)//check access if one is passed
-	var/list/L = new()
-	var/turf/T
-	for(var/dir in list(NORTHWEST,NORTHEAST,SOUTHEAST,SOUTHWEST,NORTH,EAST,SOUTH,WEST)) //arbitrarily ordered list to favor non-diagonal moves in case of ties
-		T = get_step(src,dir)
-		if(T in closed) //turf already proceeded by A*
-			continue
-		if(istype(T) && !T.density)
-			if(!ID)
-				if(!LinkBlocked(src, T))
-					L.Add(T)
-			else
-				if(!LinkBlockedWithAccess(src, T, ID))
-					L.Add(T)
-	return L
 
 //////////////////////////////
 //Distance procs
@@ -329,7 +248,7 @@
 				continue
 			if(O.invisibility == 101)
 				O.singularity_act()
-	ChangeTurf(/turf/space)
+	ChangeTurf(src.baseturf)
 	return(2)
 
 /turf/proc/can_have_cabling()
@@ -337,3 +256,33 @@
 
 /turf/proc/can_lay_cable()
 	return can_have_cabling() & !intact
+
+
+/turf/indestructible
+	name = "wall"
+	icon = 'icons/turf/walls.dmi'
+	density = 1
+	blocks_air = 1
+	opacity = 1
+
+/turf/indestructible/splashscreen
+	name = "Space Station 13"
+	icon = 'icons/misc/fullscreen.dmi'
+	icon_state = "title"
+	layer = FLY_LAYER
+
+/turf/indestructible/riveted
+	icon_state = "riveted"
+
+/turf/indestructible/abductor
+	icon_state = "alien1"
+
+/turf/indestructible/fakeglass
+	name = "window"
+	icon_state = "fakewindows"
+	opacity = 0
+
+/turf/indestructible/fakedoor
+	name = "Centcom Access"
+	icon = 'icons/obj/doors/Doorele.dmi'
+	icon_state = "door_closed"

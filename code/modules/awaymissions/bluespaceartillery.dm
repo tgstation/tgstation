@@ -49,7 +49,7 @@
 		explosion(loc,2,5,11)
 		reload = 0
 
-/*mob/proc/openfire()
+/*/mob/proc/openfire()
 	var/A
 	A = input("Area to jump bombard", "Open Fire", A) in teleportlocs
 	var/area/thearea = teleportlocs[A]

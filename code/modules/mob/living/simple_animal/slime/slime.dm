@@ -61,6 +61,7 @@
 	var/list/speech_buffer = list() // Last phrase said near it and person who said it
 
 	var/mood = "" // To show its face
+	var/mutator_used = FALSE //So you can't shove a dozen mutators into a single slime
 
 	///////////TIME FOR SUBSPECIES
 
@@ -80,7 +81,6 @@
 		icon_dead = "[icon_state] dead"
 		real_name = name
 		slime_mutation = mutation_table(colour)
-		mutation_chance = rand(25, 35)
 		var/sanitizedcolour = replacetext(colour, " ", "")
 		coretype = text2path("/obj/item/slime_extract/[sanitizedcolour]")
 	..()
@@ -140,13 +140,6 @@
 						Atkcool = 1
 						spawn(45)
 							Atkcool = 0
-
-/mob/living/simple_animal/slime/MobBump(mob/M)
-	if(istype(M, /mob/living/carbon/human)) //pushing humans
-		if(is_adult && prob(10)) //only if we're adult, and 10% of the time
-			return 0
-		else
-			return 1
 
 /mob/living/simple_animal/slime/Process_Spacemove(var/movement_dir = 0)
 	return 2
@@ -284,7 +277,7 @@
 			++Friends[user]
 		else
 			Friends[user] = 1
-		user << "You feed the slime the plasma. It chirps happily."
+		user << "<span class='notice'>You feed the slime the plasma. It chirps happily.</span>"
 		var/obj/item/stack/sheet/mineral/plasma/S = W
 		S.use(1)
 		return

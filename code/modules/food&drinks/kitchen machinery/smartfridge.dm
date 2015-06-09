@@ -13,10 +13,21 @@
 	idle_power_usage = 5
 	active_power_usage = 100
 	flags = NOREACT
-	var/global/max_n_of_items = 999 // Sorry but the BYOND infinite loop detector doesn't like things over 1000.
+	var/max_n_of_items = 1500
 	var/icon_on = "smartfridge"
 	var/icon_off = "smartfridge-off"
 	var/item_quants = list()
+
+/obj/machinery/smartfridge/New()
+	..()
+	component_parts = list()
+	component_parts += new /obj/item/weapon/circuitboard/smartfridge(null)
+	component_parts += new /obj/item/weapon/stock_parts/matter_bin(null)
+	RefreshParts()
+
+/obj/machinery/smartfridge/RefreshParts()
+	for(var/obj/item/weapon/stock_parts/matter_bin/B in component_parts)
+		max_n_of_items = 1500 * B.rating
 
 /obj/machinery/smartfridge/power_change()
 	..()
@@ -35,19 +46,31 @@
 ********************/
 
 /obj/machinery/smartfridge/attackby(var/obj/item/O as obj, var/mob/user as mob, params)
+	if(default_deconstruction_screwdriver(user, "smartfridge_open", "smartfridge", O))
+		return
+
+	if(exchange_parts(user, O))
+		return
+
+	if(default_pry_open(O))
+		return
+
 	if(default_unfasten_wrench(user, O))
 		power_change()
 		return
+
+	default_deconstruction_crowbar(O)
+
 	if(stat)
 		return 0
 
 	if(contents.len >= max_n_of_items)
-		user << "<span class='notice'>\The [src] is full.</span>"
+		user << "<span class='warning'>\The [src] is full!</span>"
 		return 0
 
 	if(accept_check(O))
 		load(O)
-		user.visible_message("<span class='notice'>[user] has added \the [O] to \the [src].", "<span class='notice'>You add \the [O] to \the [src].")
+		user.visible_message("[user] has added \the [O] to \the [src].", "<span class='notice'>You add \the [O] to \the [src].</span>")
 		updateUsrDialog()
 		return 1
 
@@ -62,7 +85,7 @@
 				load(G)
 				loaded++
 	else
-		user << "<span class='notice'>\The [src] smartly refuses [O].</span>"
+		user << "<span class='warning'>\The [src] smartly refuses [O].</span>"
 		updateUsrDialog()
 		return 0
 
@@ -70,15 +93,15 @@
 	// this code follows storage items and trays only.
 	if(loaded)
 		if(contents.len >= max_n_of_items)
-			user.visible_message("<span class='notice'>[user] loads \the [src] with \the [O].</span>", \
+			user.visible_message("[user] loads \the [src] with \the [O].", \
 							 "<span class='notice'>You fill \the [src] with \the [O].</span>")
 		else
-			user.visible_message("<span class='notice'>[user] loads \the [src] with \the [O].</span>", \
+			user.visible_message("[user] loads \the [src] with \the [O].", \
 								 "<span class='notice'>You load \the [src] with \the [O].</span>")
 		if(O.contents.len > 0)
-			user << "<span class='notice'>Some items are refused.</span>"
+			user << "<span class='warning'>Some items are refused.</span>"
 	else
-		user << "There is nothing in [O] to put in [src]."
+		user << "<span class='warning'>There is nothing in [O] to put in [src]!</span>"
 		return 0
 
 	updateUsrDialog()
@@ -95,7 +118,7 @@
 	if(istype(O.loc,/mob))
 		var/mob/M = O.loc
 		if(!M.unEquip(O))
-			usr << "<span class='notice'>\the [O] is stuck to your hand, you cannot put it in \the [src]</span>"
+			usr << "<span class='warning'>\the [O] is stuck to your hand, you cannot put it in \the [src]!</span>"
 			return
 	else if(istype(O.loc,/obj/item/weapon/storage))
 		var/obj/item/weapon/storage/S = O.loc
@@ -217,7 +240,7 @@
 		toggle_drying(1)
 	update_icon()
 
-obj/machinery/smartfridge/drying_rack/load() //For updating the filled overlay
+/obj/machinery/smartfridge/drying_rack/load() //For updating the filled overlay
 	..()
 	update_icon()
 

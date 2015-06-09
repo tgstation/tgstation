@@ -136,7 +136,7 @@
 
 /obj/item/weapon/gun/projectile/automatic/l6_saw/afterattack(atom/target as mob|obj|turf, mob/living/user as mob|obj, flag, params) //what I tried to do here is just add a check to see if the cover is open or not and add an icon_state change because I can't figure out how c-20rs do it with overlays
 	if(cover_open)
-		user << "<span class='notice'>[src]'s cover is open! Close it before firing!</span>"
+		user << "<span class='warning'>[src]'s cover is open! Close it before firing!</span>"
 	else
 		..()
 		update_icon()
@@ -160,7 +160,7 @@
 
 /obj/item/weapon/gun/projectile/automatic/l6_saw/attackby(var/obj/item/A as obj, mob/user as mob, params)
 	if(!cover_open)
-		user << "<span class='notice'>[src]'s cover is closed! You can't insert a new mag!</span>"
+		user << "<span class='warning'>[src]'s cover is closed! You can't insert a new mag.</span>"
 		return
 	..()
 
@@ -177,23 +177,19 @@
 	burst_size = 3
 	fire_delay = 2
 	pin = /obj/item/device/firing_pin/implant/pindicate
-
 /obj/item/weapon/gun/projectile/automatic/m90/unrestricted
 	pin = /obj/item/device/firing_pin
-
 /obj/item/weapon/gun/projectile/automatic/m90/New()
 	..()
 	underbarrel = new /obj/item/weapon/gun/projectile/revolver/grenadelauncher(src)
 	update_icon()
 	return
-
 /obj/item/weapon/gun/projectile/automatic/m90/afterattack(var/atom/target, var/mob/living/user, flag, params)
 	if(select == 2)
 		underbarrel.afterattack(target, user, flag, params)
 	else
 		..()
 		return
-
 /obj/item/weapon/gun/projectile/automatic/m90/attackby(var/obj/item/A, mob/user, params)
 	if(istype(A, /obj/item/ammo_casing))
 		if(istype(A, underbarrel.magazine.ammo_type))
@@ -201,7 +197,6 @@
 			underbarrel.attackby(A, user, params)
 	else
 		..()
-
 /obj/item/weapon/gun/projectile/automatic/m90/update_icon()
 	..()
 	overlays.Cut()
@@ -214,7 +209,6 @@
 			overlays += "[initial(icon_state)]gren"
 	icon_state = "[initial(icon_state)][magazine ? "" : "-e"]"
 	return
-
 /obj/item/weapon/gun/projectile/automatic/m90/burst_select()
 	var/mob/living/carbon/human/user = usr
 	switch(select)
@@ -246,4 +240,17 @@
 	fire_sound = 'sound/weapons/Gunshot_smg.ogg'
 	can_suppress = 0
 	burst_size = 4
+	fire_delay = 1
+
+/obj/item/weapon/gun/projectile/automatic/ar
+	name = "ARG"
+	desc = "A robust assault rile used by Nanotrasen fighting forces."
+	icon_state = "arg"
+	item_state = "arg"
+	slot_flags = 0
+	origin_tech = "combat=5;materials=1"
+	mag_type = /obj/item/ammo_box/magazine/m556
+	fire_sound = 'sound/weapons/Gunshot_smg.ogg'
+	can_suppress = 0
+	burst_size = 3
 	fire_delay = 1

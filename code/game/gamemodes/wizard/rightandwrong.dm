@@ -1,9 +1,9 @@
 //In this file: Summon Magic/Summon Guns/Summon Events
 
 /proc/rightandwrong(var/summon_type, var/mob/user, var/survivor_probability) //0 = Summon Guns, 1 = Summon Magic
-	var/list/gunslist 			= list("taser","egun","laser","revolver","detective","c20r","nuclear","deagle","gyrojet","pulse","suppressed","cannon","doublebarrel","shotgun","combatshotgun","bulldog","mateba","sabr","crossbow","saw","car","boltaction","speargun")
-	var/list/magiclist 			= list("fireball","smoke","blind","mindswap","forcewall","knock","horsemask","charge", "summonitem", "wandnothing", "wanddeath", "wandresurrection", "wandpolymorph", "wandteleport", "wanddoor", "wandfireball", "staffchange", "staffhealing", "armor", "scrying", "necromantic","staffdoor", "special")
-	var/list/magicspeciallist	= list("staffchange","staffanimation", "wandbelt", "contract", "staffchaos")
+	var/list/gunslist 			= list("taser","egun","laser","revolver","detective","c20r","nuclear","deagle","gyrojet","pulse","suppressed","cannon","doublebarrel","shotgun","combatshotgun","bulldog","mateba","sabr","crossbow","saw","car","boltaction","speargun","arg")
+	var/list/magiclist 			= list("fireball","smoke","blind","mindswap","forcewall","knock","horsemask","charge", "summonitem", "wandnothing", "wanddeath", "wandresurrection", "wandpolymorph", "wandteleport", "wanddoor", "wandfireball", "staffchange", "staffhealing", "armor", "scrying","staffdoor", "special")
+	var/list/magicspeciallist	= list("staffchange","staffanimation", "wandbelt", "contract", "staffchaos", "necromantic")
 
 	if(user) //in this case either someone holding a spellbook or a badmin
 		user << "<B>You summoned [summon_type ? "magic" : "guns"]!</B>"
@@ -55,6 +55,8 @@
 					new /obj/item/weapon/gun/projectile/shotgun(get_turf(H))
 				if("combatshotgun")
 					new /obj/item/weapon/gun/projectile/shotgun/combat(get_turf(H))
+				if("arg")
+					new /obj/item/weapon/gun/projectile/automatic/ar(get_turf(H))
 				if("mateba")
 					new /obj/item/weapon/gun/projectile/revolver/mateba(get_turf(H))
 				if("boltaction")
@@ -85,6 +87,8 @@
 				if("car")
 					var/obj/item/weapon/gun/projectile/automatic/m90/gat  = new(get_turf(H))
 					gat.pin = new /obj/item/device/firing_pin
+			playsound(get_turf(H),'sound/magic/Summon_guns.ogg', 50, 1)
+
 		else
 			switch (randomizemagic)
 				if("fireball")
@@ -130,8 +134,6 @@
 					if (!(H.dna.check_mutation(XRAY)))
 						H.dna.add_mutation(XRAY)
 						H << "<span class='notice'>The walls suddenly disappear.</span>"
-				if("necromantic")
-					new /obj/item/device/necromantic_stone(get_turf(H))
 				if("special")
 					magiclist -= "special" //only one super OP item per summoning max
 					switch (randomizemagicspecial)
@@ -145,7 +147,11 @@
 							new /obj/item/weapon/antag_spawner/contract(get_turf(H))
 						if("staffchaos")
 							new /obj/item/weapon/gun/magic/staff/chaos(get_turf(H))
+						if("necromantic")
+							new /obj/item/device/necromantic_stone(get_turf(H))
 					H << "<span class='notice'>You suddenly feel lucky.</span>"
+			playsound(get_turf(H),'sound/magic/Summon_Magic.ogg', 50, 1)
+
 
 /proc/summonevents()
 	if(!SSevent.wizardmode)

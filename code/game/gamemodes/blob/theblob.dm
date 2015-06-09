@@ -171,7 +171,7 @@
 	return
 
 /obj/effect/blob/proc/take_damage(damage, damage_type)
-	if(!damage) // Avoid divide by zero errors
+	if(!damage || damage_type == STAMINA) // Avoid divide by zero errors
 		return
 	switch(damage_type)
 		if(BRUTE)

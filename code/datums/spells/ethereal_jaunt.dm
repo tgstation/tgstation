@@ -16,10 +16,11 @@
 	action_icon_state = "jaunt"
 
 /obj/effect/proc_holder/spell/targeted/ethereal_jaunt/cast(list/targets) //magnets, so mostly hardcoded
+	playsound(get_turf(usr), 'sound/magic/Ethereal_Enter.ogg', 50, 1, -1)
 	for(var/mob/living/target in targets)
 		target.notransform = 1 //protects the mob from being transformed (replaced) midjaunt and getting stuck in bluespace
 		spawn(0)
-			var/mobloc = get_turf(target.loc)
+			var/turf/mobloc = get_turf(target.loc)
 			var/obj/effect/dummy/spell_jaunt/holder = new /obj/effect/dummy/spell_jaunt( mobloc )
 			var/atom/movable/overlay/animation = new /atom/movable/overlay( mobloc )
 			animation.name = "water"
@@ -36,15 +37,19 @@
 			target.notransform=0 //mob is safely inside holder now, no need for protection.
 			jaunt_steam(mobloc)
 			sleep(jaunt_duration)
+			if(target.loc != holder) //mob warped out of the warp
+				qdel(holder)
+				return
 			mobloc = get_turf(target.loc)
 			animation.loc = mobloc
 			jaunt_steam(mobloc)
 			target.canmove = 0
 			holder.reappearing = 1
+			playsound(get_turf(usr), 'sound/magic/Ethereal_Exit.ogg', 50, 1, -1)
 			sleep(20)
 			jaunt_reappear(animation, target)
 			sleep(5)
-			if(!target.Move(mobloc))
+			if(mobloc.density)
 				for(var/direction in list(1,2,4,8,5,6,9,10))
 					var/turf/T = get_step(mobloc, direction)
 					if(T)
@@ -59,8 +64,10 @@
 	animation.icon_state = "liquify"
 	flick("liquify",animation)
 
+
 /obj/effect/proc_holder/spell/targeted/ethereal_jaunt/proc/jaunt_reappear(var/atom/movable/overlay/animation, var/mob/living/target)
 	flick("reappear",animation)
+
 
 /obj/effect/proc_holder/spell/targeted/ethereal_jaunt/proc/jaunt_steam(var/mobloc)
 	var/datum/effect/effect/system/steam_spread/steam = new /datum/effect/effect/system/steam_spread()

@@ -105,10 +105,7 @@
 
 /obj/item/projectile/magic/door/proc/CreateDoor(var/turf/T)
 	new /obj/structure/mineral_door/wood(T)
-	if(istype(T,/turf/simulated/shuttle/wall))
-		T.ChangeTurf(/turf/simulated/shuttle/plating)
-	else
-		T.ChangeTurf(/turf/simulated/floor/plating)
+	T.ChangeTurf(/turf/simulated/floor/plating)
 
 
 /obj/item/projectile/magic/change
@@ -123,7 +120,7 @@
 	. = ..()
 	wabbajack(change)
 
-proc/wabbajack(mob/living/M)
+/proc/wabbajack(mob/living/M)
 	if(istype(M))
 		if(istype(M, /mob/living) && M.stat != DEAD)
 			if(M.notransform)	return
@@ -229,8 +226,11 @@ proc/wabbajack(mob/living/M)
 					var/mob/living/carbon/human/H = new_mob
 					ready_dna(H)
 					if(H.dna && prob(50))
-						var/new_species = pick(typesof(/datum/species) - /datum/species)
-						H.dna.species = new new_species()
+						var/list/all_species = list()
+						for(var/datum/species/S in typesof(/datum/species) - /datum/species)
+							if(!S.dangerous_existence)
+								all_species += S
+						hardset_dna(H, null, null, null, null, pick(all_species))
 					H.update_icons()
 				else
 					return
@@ -268,7 +268,7 @@ proc/wabbajack(mob/living/M)
 				S.icon = change.icon
 				if(H.mind)
 					H.mind.transfer_to(S)
-					S << "You are an animate statue. You cannot move when monitored, but are nearly invincible and deadly when unobserved! Do not harm [firer.name], your creator."
+					S << "<span class = 'userdanger'>You are an animate statue. You cannot move when monitored, but are nearly invincible and deadly when unobserved! Do not harm [firer.name], your creator.</span>"
 				H = change
 				H.loc = S
 				qdel(src)

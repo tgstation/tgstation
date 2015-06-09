@@ -393,6 +393,9 @@ var/list/sting_paths
 			for(var/obj/effect/proc_holder/changeling/p in mind.changeling.purchasedpowers)
 				if(!(p.dna_cost == 0 && keep_free_powers))
 					mind.changeling.purchasedpowers -= p
+				if(istype(p,/obj/effect/proc_holder/changeling/augmented_eyesight))
+					permanent_sight_flags -= SEE_MOBS
+					sight -= SEE_MOBS
 		if(hud_used)
 			hud_used.lingstingdisplay.icon_state = null
 			hud_used.lingstingdisplay.invisibility = 101

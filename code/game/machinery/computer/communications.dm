@@ -103,11 +103,11 @@ var/const/CALL_SHUTTLE_REASON_LENGTH = 12
 								feedback_inc("alert_comms_blue",1)
 					tmp_alertlevel = 0
 				else:
-					usr << "You are not authorized to do this."
+					usr << "<span class='warning'>You are not authorized to do this!</span>"
 					tmp_alertlevel = 0
 				state = STATE_DEFAULT
 			else
-				usr << "You need to swipe your ID."
+				usr << "<span class='warning'>You need to swipe your ID!</span>"
 
 		if("announce")
 			if(src.authenticated==2 && !message_cooldown)
@@ -333,7 +333,7 @@ var/const/CALL_SHUTTLE_REASON_LENGTH = 12
 		src.emagged = 1
 		if(authenticated == 1)
 			authenticated = 2
-		user << "You scramble the communication routing circuits!"
+		user << "<span class='notice'>You scramble the communication routing circuits.</span>"
 
 /obj/machinery/computer/communications/attack_hand(var/mob/user as mob)
 	if(..())

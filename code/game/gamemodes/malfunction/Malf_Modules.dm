@@ -227,7 +227,7 @@
 		for(var/datum/AI_Module/small/overload_machine/overload in current_modules)
 			if(overload.uses > 0)
 				overload.uses --
-				audible_message("<span class='notice'>You hear a loud electrical buzzing sound!</span>")
+				audible_message("<span class='italics'>You hear a loud electrical buzzing sound!</span>")
 				src << "<span class='warning'>Overloading machine circuitry...</span>"
 				spawn(50)
 					if(M)
@@ -257,7 +257,7 @@
 		for(var/datum/AI_Module/small/override_machine/override in current_modules)
 			if(override.uses > 0)
 				override.uses --
-				audible_message("<span class='notice'>You hear a loud electrical buzzing sound!</span>")
+				audible_message("<span class='italics'>You hear a loud electrical buzzing sound!</span>")
 				src << "<span class='warning'>Reprogramming machine behaviour...</span>"
 				spawn(50)
 					if(M && !M.gc_destroyed)
@@ -270,65 +270,71 @@
 	mod_pick_name = "cyborgtransformer"
 	description = "Build a machine anywhere, using expensive nanomachines, that can convert a living human into a loyal cyborg slave when placed inside."
 	cost = 100
-
 	power_type = /mob/living/silicon/ai/proc/place_transformer
+	var/list/turfOverlays = list()
+
+/datum/AI_Module/large/place_cyborg_transformer/New()
+	for(var/i=0;i<3;i++)
+		var/image/I = image("icon"='icons/turf/overlays.dmi')
+		turfOverlays += I
+	..()
 
 /mob/living/silicon/ai/proc/place_transformer()
 	set name = "Place Robotic Factory"
 	set category = "Malfunction"
-
-	if(!eyeobj)
+	if(!canPlaceTransformer())
 		return
-
-	if(!isturf(src.loc)) // AI must be in it's core.
-		return
-
-	var/datum/AI_Module/large/place_cyborg_transformer/PCT = locate() in src.current_modules
-	if(!PCT)
-		return
-
-	if(PCT.uses < 1)
-		src << "Out of uses."
-		return
-
-	if(!canUseTopic())
-		return
-
-	var/sure = alert(src, "Make sure the room it is in is big enough, there is camera vision and that there is a 1x3 area for the machine. Are you sure you want to place the machine here?", "Are you sure?", "Yes", "No")
-	if(sure != "Yes")
-		return
-
-	// Make sure there is enough room.
-	var/turf/middle = get_turf(eyeobj.loc)
-	var/list/turfs = list(middle, locate(middle.x - 1, middle.y, middle.z), locate(middle.x + 1, middle.y, middle.z))
-
-	var/alert_msg = "There isn't enough room. Make sure you are placing the machine in a clear area and on a floor."
-
-	var/datum/camerachunk/C = cameranet.getCameraChunk(middle.x, middle.y, middle.z)
-	if(!C.visibleTurfs[middle])
-		alert(src, "We cannot get camera vision of this location.")
-		return
-
-	for(var/T in turfs)
-
-		// Make sure the turfs are clear and the correct type.
-		if(!istype(T, /turf/simulated/floor))
-			alert(src, alert_msg)
+	var/sure = alert(src, "Are you sure you want to place the machine here?", "Are you sure?", "Yes", "No")
+	if(sure == "Yes")
+		if(!canPlaceTransformer())
 			return
+		var/turf/T = get_turf(eyeobj)
+		new /obj/machinery/transformer/conveyor(T)
+		playsound(T, 'sound/effects/phasein.ogg', 100, 1)
+		var/datum/AI_Module/large/place_cyborg_transformer/PCT = locate() in current_modules
+		PCT.uses --
+		can_shunt = 0
+		src << "<span class='warning'>You cannot shunt anymore.</span>"
 
-		var/turf/simulated/floor/F = T
-		for(var/atom/movable/AM in F.contents)
-			if(AM.density)
-				alert(src, alert_msg)
-				return
-
-	// All clear, place the transformer
-	new /obj/machinery/transformer/conveyor(middle)
-	playsound(middle, 'sound/effects/phasein.ogg', 100, 1)
-	src.can_shunt = 0
-	PCT.uses -= 1
-	src << "<span class='warning'>You cannot shunt anymore.</span>"
-
+/mob/living/silicon/ai/proc/canPlaceTransformer()
+	if(!eyeobj || !isturf(src.loc) || !canUseTopic())
+		return
+	var/datum/AI_Module/large/place_cyborg_transformer/PCT = locate() in current_modules
+	if(!PCT || PCT.uses < 1)
+		alert(src, "Out of uses.")
+		return
+	var/turf/middle = get_turf(eyeobj)
+	var/list/turfs = list(middle, locate(middle.x - 1, middle.y, middle.z), locate(middle.x + 1, middle.y, middle.z))
+	var/alert_msg = "There isn't enough room. Make sure you are placing the machine in a clear area and on a floor."
+	var/success = 1
+	if(turfs.len == 3)
+		for(var/n=1;n<4,n++)
+			var/fail
+			var/turf/T = turfs[n]
+			if(!istype(T, /turf/simulated/floor))
+				fail = 1
+			var/datum/camerachunk/C = cameranet.getCameraChunk(T.x, T.y, T.z)
+			if(!C.visibleTurfs[T])
+				alert_msg = "We cannot get camera vision of this location."
+				fail = 1
+			for(var/atom/movable/AM in T.contents)
+				if(AM.density)
+					fail = 1
+			var/image/I = PCT.turfOverlays[n]
+			I.loc = T
+			client.images += I
+			if(fail)
+				success = 0
+				I.icon_state = "redOverlay"
+			else
+				I.icon_state = "greenOverlay"
+			spawn(30)
+				if(client && (I.loc == T))
+					client.images -= I
+	if(success)
+		return 1
+	alert(src, alert_msg)
+	return
 
 /datum/AI_Module/small/blackout
 	module_name = "Blackout"
@@ -426,11 +432,11 @@
 					if(upgraded)
 						UC.uses --
 						C.visible_message("<span class='notice'>\icon[C] *beep*</span>")
-						src << "<span class='notice'>Camera successully upgraded!</span>"
+						src << "<span class='notice'>You successully upgrade the camera.</span>"
 					else
-						src << "<span class='notice'>This camera is already upgraded!</span>"
+						src << "<span class='warning'>This camera is already upgraded!</span>"
 			else
-				src << "<span class='notice'>Out of uses.</span>"
+				src << "<span class='warning'>Out of uses!</span>"
 
 /datum/module_picker
 	var/temp = null

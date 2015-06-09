@@ -143,24 +143,24 @@
 		if(!anchored)
 			playsound(src.loc, 'sound/items/Ratchet.ogg', 75, 1)
 			user.visible_message("[user.name] secures the [src.name] to the floor.", \
-				"You secure the anchor bolts to the floor.", \
-				"You hear a ratchet")
+				"<span class='notice'>You secure the anchor bolts to the floor.</span>", \
+				"<span class='italics'>You hear a ratchet.</span>")
 			src.anchored = 1
 			connect_to_network()
 		else if(!linked_shielding.len > 0)
 			playsound(src.loc, 'sound/items/Ratchet.ogg', 75, 1)
 			user.visible_message("[user.name] unsecures the [src.name].", \
-				"You remove the anchor bolts.", \
-				"You hear a ratchet")
+				"Y<span class='notice'>You remove the anchor bolts.</span>", \
+				"<span class='italics'>You hear a ratchet.</span>")
 			src.anchored = 0
 			disconnect_from_network()
 		else
-			user << "<span class='danger'>Once bolted and linked to a shielding unit it the [src.name] is unable to be moved!</span>"
+			user << "<span class='warning'>Once bolted and linked to a shielding unit it the [src.name] is unable to be moved!</span>"
 		return
 
 	if(istype(W, /obj/item/weapon/am_containment))
 		if(fueljar)
-			user << "<span class='danger'>There is already a [fueljar] inside!</span>"
+			user << "<span class='warning'>There is already a [fueljar] inside!</span>"
 			return
 		fueljar = W
 		W.loc = src
@@ -169,8 +169,8 @@
 		user.unEquip(W)
 		user.update_icons()
 		user.visible_message("[user.name] loads an [W.name] into the [src.name].", \
-				"You load an [W.name].", \
-				"You hear a thunk.")
+				"<span class='notice'>You load an [W.name].</span>", \
+				"<span class='italics'>You hear a thunk.</span>")
 		return
 
 	if(W.force >= 20)

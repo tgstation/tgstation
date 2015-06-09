@@ -71,7 +71,7 @@
 					Victim.adjustToxLoss(rand(2,4))
 
 				if(prob(15) && Victim.client)
-					Victim << "<span class='danger'>[pick("You can feel your body becoming weak!", \
+					Victim << "<span class='userdanger'>[pick("You can feel your body becoming weak!", \
 					"You feel like you're about to die!", \
 					"You feel every part of your body screaming in agony!", \
 					"A low, rolling pain passes through your body!", \
@@ -89,7 +89,7 @@
 				src << "<span class='warning'>[pick("This subject is incompatible", \
 				"This subject does not have a life energy", "This subject is empty", \
 				"I am not satisified", "I can not feed from this subject", \
-				"I do not feel nourished", "This subject is not food")]...</span>"
+				"I do not feel nourished", "This subject is not food")]!</span>"
 
 			if(fed_succesfully)
 				add_nutrition(rand(15,30), lastnut)
@@ -191,6 +191,7 @@
 				if(i != 1) step_away(M,src)
 				M.Friends = Friends.Copy()
 				babies += M
+				M.mutation_chance = Clamp(mutation_chance+(rand(5,-5)),0,100)
 				feedback_add_details("slime_babies_born","slimebirth_[replacetext(M.colour," ","_")]")
 
 			var/mob/living/simple_animal/slime/new_slime = pick(babies)

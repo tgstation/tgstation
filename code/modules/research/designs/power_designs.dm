@@ -2,7 +2,7 @@
 //////////////////Power/////////////////
 ////////////////////////////////////////
 
-datum/design/basic_cell
+/datum/design/basic_cell
 	name = "Basic Power Cell"
 	desc = "A basic power cell that holds 1000 units of energy."
 	id = "basic_cell"
@@ -13,7 +13,7 @@ datum/design/basic_cell
 	build_path = /obj/item/weapon/stock_parts/cell
 	category = list("Misc","Power Designs")
 
-datum/design/high_cell
+/datum/design/high_cell
 	name = "High-Capacity Power Cell"
 	desc = "A power cell that holds 10000 units of energy."
 	id = "high_cell"
@@ -24,7 +24,7 @@ datum/design/high_cell
 	build_path = /obj/item/weapon/stock_parts/cell/high
 	category = list("Misc","Power Designs")
 
-datum/design/super_cell
+/datum/design/super_cell
 	name = "Super-Capacity Power Cell"
 	desc = "A power cell that holds 20000 units of energy."
 	id = "super_cell"
@@ -36,7 +36,7 @@ datum/design/super_cell
 	build_path = /obj/item/weapon/stock_parts/cell/super
 	category = list("Misc","Power Designs")
 
-datum/design/hyper_cell
+/datum/design/hyper_cell
 	name = "Hyper-Capacity Power Cell"
 	desc = "A power cell that holds 30000 units of energy."
 	id = "hyper_cell"
@@ -48,7 +48,20 @@ datum/design/hyper_cell
 	build_path = /obj/item/weapon/stock_parts/cell/hyper
 	category = list("Misc","Power Designs")
 
-datum/design/light_replacer
+/datum/design/bluespace_cell
+	name = "Bluespace Power Cell"
+	desc = "A power cell that holds 40000 units of energy."
+	id = "bluespace_cell"
+	req_tech = list("powerstorage" = 6, "materials" = 5)
+	reliability = 70
+	build_type = PROTOLATHE | MECHFAB
+	materials = list("$metal" = 800, "$gold" = 300, "$silver" = 300, "$glass" = 160, "$diamond" = 160)
+	construction_time=100
+	build_path = /obj/item/weapon/stock_parts/cell/bluespace
+	category = list("Misc","Power Designs")
+
+
+/datum/design/light_replacer
 	name = "Light Replacer"
 	desc = "A device to automatically replace lights. Refill with working lightbulbs."
 	id = "light_replacer"
@@ -58,7 +71,7 @@ datum/design/light_replacer
 	build_path = /obj/item/device/lightreplacer
 	category = list("Power Designs")
 
-datum/design/pacman
+/datum/design/pacman
 	name = "Machine Design (PACMAN-type Generator Board)"
 	desc = "The circuit board that for a PACMAN-type portable generator."
 	id = "pacman"
@@ -69,7 +82,7 @@ datum/design/pacman
 	build_path = /obj/item/weapon/circuitboard/pacman
 	category = list("Engineering Machinery")
 
-datum/design/superpacman
+/datum/design/superpacman
 	name = "Machine Design (SUPERPACMAN-type Generator Board)"
 	desc = "The circuit board that for a SUPERPACMAN-type portable generator."
 	id = "superpacman"
@@ -80,7 +93,7 @@ datum/design/superpacman
 	build_path = /obj/item/weapon/circuitboard/pacman/super
 	category = list("Engineering Machinery")
 
-datum/design/mrspacman
+/datum/design/mrspacman
 	name = "Machine Design (MRSPACMAN-type Generator Board)"
 	desc = "The circuit board that for a MRSPACMAN-type portable generator."
 	id = "mrspacman"

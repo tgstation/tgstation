@@ -44,7 +44,7 @@
 
 /mob/living/simple_animal/hostile/pirate/death()
 	..(1)
-	visible_message("<span class='notice'>[src] stops moving.</span>")
+	visible_message("[src] stops moving.")
 	if(corpse)
 		new corpse (src.loc)
 	if(weapon1)

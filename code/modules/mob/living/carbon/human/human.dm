@@ -49,6 +49,7 @@
 /mob/living/carbon/human/Destroy()
 	for(var/atom/movable/organelle in organs)
 		qdel(organelle)
+	organs = list()
 	return ..()
 
 /mob/living/carbon/human/Stat()
@@ -282,14 +283,14 @@
 			if(!I || !L || I.loc != src) //no item, no limb, or item is not in limb (the person atleast) anymore
 				return
 			var/time_taken = I.embedded_unsafe_removal_time*I.w_class
-			usr.visible_message("<span class='notice'>[usr] attempts to remove [I] from their [L.getDisplayName()]!</span>","<span class='notice'>You attempt to remove [I] from your [L.getDisplayName()], it will take [time_taken/10] seconds.</span>")
+			usr.visible_message("<span class='warning'>[usr] attempts to remove [I] from their [L.getDisplayName()].</span>","<span class='notice'>You attempt to remove [I] from your [L.getDisplayName()]... (It will take [time_taken/10] seconds.)</span>")
 			if(do_after(usr, time_taken, needhand = 1))
 				L.embedded_objects -= I
 				L.take_damage(I.embedded_unsafe_removal_pain_multiplier*I.w_class)//It hurts to rip it out, get surgery you dingus.
 				I.loc = get_turf(src)
 				usr.put_in_hands(I)
 				usr.emote("scream")
-				usr.visible_message("<span class='danger'>[usr] successfully rips [I] out of their [L.getDisplayName()]!</span>","<span class='userdanger'>You successfully remove [I] from your [L.getDisplayName()]!</span>")
+				usr.visible_message("[usr] successfully rips [I] out of their [L.getDisplayName()]!","<span class='notice'>You successfully remove [I] from your [L.getDisplayName()].</span>")
 				if(!has_embedded_objects())
 					clear_alert("embeddedobject")
 			return
@@ -297,7 +298,7 @@
 		if(href_list["item"])
 			var/slot = text2num(href_list["item"])
 			if(slot in check_obscured_slots())
-				usr << "<span class='warning'>You can't reach that. Something is covering it.</span>"
+				usr << "<span class='warning'>You can't reach that! Something is covering it.</span>"
 				return
 
 		if(href_list["pockets"])
@@ -311,7 +312,7 @@
 			var/delay_denominator = 1
 			if(pocket_item && !(pocket_item.flags&ABSTRACT))
 				if(pocket_item.flags & NODROP)
-					usr << "<span class='notice'>You try to empty [src]'s [pocket_side] pocket, it seems to be stuck!</span>"
+					usr << "<span class='warning'>You try to empty [src]'s [pocket_side] pocket, it seems to be stuck!</span>"
 				usr << "<span class='notice'>You try to empty [src]'s [pocket_side] pocket.</span>"
 			else if(place_item && place_item.mob_can_equip(src, pocket_id, 1) && !(place_item.flags&ABSTRACT))
 				usr << "<span class='notice'>You try to place [place_item] into [src]'s [pocket_side] pocket.</span>"
@@ -530,6 +531,8 @@
 	. = 1 // Default to returning true.
 	if(user && !target_zone)
 		target_zone = user.zone_sel.selecting
+	if(dna && PIERCEIMMUNE in dna.species.specflags)
+		. = 0
 	// If targeting the head, see if the head item is thin enough.
 	// If targeting anything else, see if the wear suit is thin enough.
 	if(above_neck(target_zone))
@@ -667,7 +670,7 @@
 			if(prob(current_size * 5) && hand.w_class >= ((11-current_size)/2)  && unEquip(hand))
 				step_towards(hand, src)
 				src << "<span class='warning'>\The [S] pulls \the [hand] from your grip!</span>"
-	apply_effect(current_size * 3, IRRADIATE)
+	irradiate(current_size * 3)
 	if(mob_negates_gravity())
 		return
 	..()
@@ -680,7 +683,7 @@
 	if(health >= 0)
 		if(src == M)
 			visible_message( \
-				"<span class='notice'>[src] examines \himself.", \
+				"[src] examines \himself.", \
 				"<span class='notice'>You check yourself for injuries.</span>")
 
 			for(var/obj/item/organ/limb/org in organs)
@@ -696,7 +699,7 @@
 				if(brutedamage > 0)
 					status = "bruised"
 				if(brutedamage > 20)
-					status = "bleeding"
+					status = "battered"
 				if(brutedamage > 40)
 					status = "mangled"
 				if(brutedamage > 0 && burndamage > 0)
@@ -710,7 +713,7 @@
 					status += "numb"
 				if(status == "")
 					status = "OK"
-				src << "\t [status == "OK" ? "\blue" : "\red"] My [org.getDisplayName()] is [status]."
+				src << "\t [status == "OK" ? "\blue" : "\red"] Your [org.getDisplayName()] is [status]."
 
 				for(var/obj/item/I in org.embedded_objects)
 					src << "\t <a href='byond://?src=\ref[src];embedded_object=\ref[I];embedded_limb=\ref[org]'>\red There is \a [I] embedded in your [org.getDisplayName()]!</a>"
@@ -736,16 +739,16 @@
 		src << "<span class='warning'>[C.name] is dead!</span>"
 		return
 	if(is_mouth_covered())
-		src << "<span class='notice'>Remove your mask!</span>"
+		src << "<span class='warning'>Remove your mask first!</span>"
 		return 0
 	if(C.is_mouth_covered())
-		src << "<span class='notice'>Remove their mask!</span>"
+		src << "<span class='warning'>Remove their mask first!</span>"
 		return 0
 
 	if(C.cpr_time < world.time + 30)
 		add_logs(src, C, "CPRed")
 		visible_message("<span class='notice'>[src] is trying to perform CPR on [C.name]!</span>", \
-						"<span class='notice'>You try to perform CPR on [C.name]. Hold still!</span>")
+						"<span class='notice'>You try to perform CPR on [C.name]... Hold still!</span>")
 		if(!do_mob(src, C))
 			src << "<span class='warning'>You fail to perform CPR on [C]!</span>"
 			return 0
@@ -755,8 +758,8 @@
 			var/suff = min(C.getOxyLoss(), 7)
 			C.adjustOxyLoss(-suff)
 			C.updatehealth()
-			visible_message("<span class='notice'>[src] performs CPR on [C.name]!</span>")
-			C << "<span class='unconscious'>You feel a breath of fresh air enter your lungs. It feels good.</span>"
+			src.visible_message("[src] performs CPR on [C.name]!", "<span class='notice'>You perform CPR on [C.name].</span>")
+			C << "<span class='unconscious'>You feel a breath of fresh air enter your lungs... It feels good...</span>"
 
 
 /mob/living/carbon/human/generateStaticOverlay()

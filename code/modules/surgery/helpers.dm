@@ -8,6 +8,12 @@
 
 				if(locate(S.type) in M.surgeries)
 					continue
+				if(S.user_species_restricted)
+					if(!istype(user, /mob/living/carbon/human))
+						continue
+					var/mob/living/carbon/human/doc = user
+					if(!(doc.dna.species.id in S.user_species_ids))
+						continue
 				if(S.target_must_be_dead && M.stat != DEAD)
 					continue
 				if(S.target_must_be_fat && !(M.disabilities & FAT))
@@ -35,16 +41,16 @@
 				var/datum/surgery/S = available_surgeries[P]
 				var/datum/surgery/procedure = new S.type
 				if(procedure)
-					if(get_location_accessible(M, procedure.location))
+					if(get_location_accessible(M, procedure.location) || procedure.ignore_clothes)
 						if(procedure.location == "anywhere") // if location == "anywhere" change location to the surgeon's target, otherwise leave location as is.
 							procedure.location = user.zone_sel.selecting
 						M.surgeries += procedure
-						user.visible_message("<span class='notice'>[user] drapes [I] over [M]'s [parse_zone(procedure.location)] to prepare for \an [procedure.name].</span>")
+						user.visible_message("[user] drapes [I] over [M]'s [parse_zone(procedure.location)] to prepare for \an [procedure.name].", "<span class='notice'>You drape [I] over [M]'s [parse_zone(procedure.location)] to prepare for \an [procedure.name].</span>")
 
 						add_logs(user, M, "operated", addition="Operation type: [procedure.name]")
 						return 1
 					else
-						user << "<span class='notice'>You need to expose [M]'s [procedure.location] first.</span>"
+						user << "<span class='warning'>You need to expose [M]'s [procedure.location] first!</span>"
 						return 1	//return 1 so we don't slap the guy in the dick with the drapes.
 			else
 				return 1	//once the input menu comes up, cancelling it shouldn't hit the guy with the drapes either.
@@ -52,7 +58,7 @@
 
 
 
-proc/get_location_modifier(mob/M)
+/proc/get_location_modifier(mob/M)
 	var/turf/T = get_turf(M)
 	if(locate(/obj/structure/optable, T))
 		return 1

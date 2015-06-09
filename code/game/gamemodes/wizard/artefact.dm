@@ -13,16 +13,17 @@
 	throwforce = 10
 	w_class = 3
 	hitsound = 'sound/weapons/bladeslice.ogg'
-	var/charged = 1
+	var/charges = 1
 	var/spawn_type = /obj/singularity/narsie/wizard
 	var/spawn_amt = 1
 	var/activate_descriptor = "reality"
 	var/rend_desc = "You should run now."
+	var/spawn_fast = 0 //if 1, ignores checking for mobs on loc before spawning
 
 /obj/item/weapon/veilrender/attack_self(mob/user as mob)
-	if(charged)
-		new /obj/effect/rend(get_turf(usr), spawn_type, spawn_amt, rend_desc)
-		charged = 0
+	if(charges > 0)
+		new /obj/effect/rend(get_turf(usr), spawn_type, spawn_amt, rend_desc, spawn_fast)
+		charges--
 		user.visible_message("<span class='boldannounce'>[src] hums with power as [usr] deals a blow to [activate_descriptor] itself!</span>")
 	else
 		user << "<span class='danger'>The unearthly energies that powered the blade are now dormant.</span>"
@@ -37,17 +38,20 @@
 	anchored = 1.0
 	var/spawn_path = /mob/living/simple_animal/cow //defaulty cows to prevent unintentional narsies
 	var/spawn_amt_left = 20
+	var/spawn_fast = 0
 
-/obj/effect/rend/New(loc, var/spawn_type, var/spawn_amt, var/desc)
+/obj/effect/rend/New(loc, var/spawn_type, var/spawn_amt, var/desc, var/spawn_fast)
 	src.spawn_path = spawn_type
 	src.spawn_amt_left = spawn_amt
 	src.desc = desc
+	src.spawn_fast = spawn_fast
 	SSobj.processing |= src
 	return
 
 /obj/effect/rend/process()
-	if(locate(/mob) in loc)
-		return
+	if(!spawn_fast)
+		if(locate(/mob) in loc)
+			return
 	new spawn_path(loc)
 	spawn_amt_left--
 	if(spawn_amt_left <= 0)
@@ -136,21 +140,10 @@
 	hardset_dna(M, null, null, null, null, /datum/species/skeleton)
 	M.revive()
 	spooky_scaries |= M
-	M << "<span class='notice'>You have been revived by </span><B>[user.real_name]!</B>"
-	M << "<span class='notice'>They are your master now, assist them even if it costs you your new life!</span>"
+	M << "<span class='userdanger'>You have been revived by </span><B>[user.real_name]!</B>"
+	M << "<span class='userdanger'>They are your master now, assist them even if it costs you your new life!</span>"
 
-	if(prob(33))
-		equip_roman_skeleton(M)
-
-	var/mob/living/carbon/human/master = user
-
-	var/datum/objective/protect/protect_master = new /datum/objective/protect
-	protect_master.owner = M.mind
-	protect_master.target = master.mind
-	protect_master.explanation_text = "Protect [master.real_name], your master."
-	M.mind.objectives += protect_master
-	ticker.mode.traitors += M.mind
-	M.mind.special_role = "skeleton-thrall"
+	equip_roman_skeleton(M)
 
 	desc = "A shard capable of resurrecting humans as skeleton thralls[unlimited ? "." : ", [spooky_scaries.len]/3 active thralls."]"
 
@@ -163,7 +156,7 @@
 			spooky_scaries.Remove(X)
 			continue
 		var/mob/living/carbon/human/H = X
-		if(H.stat)
+		if(H.stat == DEAD)
 			spooky_scaries.Remove(X)
 			continue
 	listclearnulls(spooky_scaries)

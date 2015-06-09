@@ -104,6 +104,41 @@
 	src.air_contents.toxins = (10*ONE_ATMOSPHERE)*volume/(R_IDEAL_GAS_EQUATION*T20C)
 	return
 
+
+/*
+ * Plasmaman Plasma Tank
+ */
+
+/obj/item/weapon/tank/internals/plasmaman
+	icon_state = "plasmaman_tank"
+	item_state = "plasmaman_tank"
+
+/obj/item/weapon/tank/internals/plasmaman/New()
+	..()
+
+	src.air_contents.toxins = (3*ONE_ATMOSPHERE)*volume/(R_IDEAL_GAS_EQUATION*T20C)
+	return
+
+/obj/item/weapon/tank/internals/plasmaman/full/New()
+	..()
+
+	src.air_contents.toxins = (10*ONE_ATMOSPHERE)*volume/(R_IDEAL_GAS_EQUATION*T20C)
+	return
+
+
+/obj/item/weapon/tank/internals/plasmaman/belt
+	icon_state = "plasmaman_tank_belt"
+	item_state = "plasmaman_tank_belt"
+	slot_flags = SLOT_BELT
+
+/obj/item/weapon/tank/internals/plasmaman/belt/full/New()
+	..()
+
+	src.air_contents.toxins = (10*ONE_ATMOSPHERE)*volume/(R_IDEAL_GAS_EQUATION*T20C)
+	return
+
+
+
 /*
  * Emergency Oxygen
  */

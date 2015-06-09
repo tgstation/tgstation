@@ -83,7 +83,7 @@
 
 /obj/item/weapon/disk/data/attack_self(mob/user as mob)
 	read_only = !read_only
-	user << "You flip the write-protect tab to [src.read_only ? "protected" : "unprotected"]."
+	user << "<span class='notice'>You flip the write-protect tab to [src.read_only ? "protected" : "unprotected"].</span>"
 
 /obj/item/weapon/disk/data/examine(mob/user)
 	..()
@@ -224,7 +224,7 @@
 			use_power(7500) //This might need tweaking.
 			return
 
-		else if((src.occupant.cloneloss <= (100 - src.heal_level)) && (!src.eject_wait))
+		else if((src.occupant.cloneloss <= (100 - src.heal_level)) && (!src.eject_wait) || src.occupant.health >= 100)
 			src.connected_message("Cloning Process Complete.")
 			src.locked = 0
 			src.go_out()
@@ -270,7 +270,7 @@
 /obj/machinery/clonepod/emag_act(user as mob)
 	if (isnull(src.occupant))
 		return
-	user << "You force an emergency ejection."
+	user << "<span class='notice'>You force an emergency ejection.</span>"
 	src.locked = 0
 	src.go_out()
 

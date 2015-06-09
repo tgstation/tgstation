@@ -28,10 +28,14 @@
 	var/unwieldsound = null
 
 /obj/item/weapon/twohanded/proc/unwield(mob/living/carbon/user)
-	if(!wielded) return
+	if(!wielded || !user) return
 	wielded = 0
 	force = force_unwielded
-	name = "[initial(name)]"
+	var/sf = findtext(name," (Wielded)")
+	if(sf)
+		name = copytext(name,1,sf)
+	else //something wrong
+		name = "[initial(name)]"
 	update_icon()
 	user << "<span class='notice'>You are now carrying the [name] with one hand.</span>"
 	if(unwieldsound)
@@ -47,25 +51,25 @@
 		user << "<span class='warning'>It's too heavy for you to wield fully.</span>"
 		return
 	if(user.get_inactive_hand())
-		user << "<span class='warning'>You need your other hand to be empty</span>"
+		user << "<span class='warning'>You need your other hand to be empty!</span>"
 		return
 	wielded = 1
 	force = force_wielded
-	name = "[initial(name)] (Wielded)"
+	name = "[name] (Wielded)"
 	update_icon()
-	user << "<span class='notice'>You grab the [initial(name)] with both hands.</span>"
+	user << "<span class='notice'>You grab the [name] with both hands.</span>"
 	if (wieldsound)
 		playsound(loc, wieldsound, 50, 1)
 	var/obj/item/weapon/twohanded/offhand/O = new(user) ////Let's reserve his other hand~
-	O.name = "[initial(name)] - offhand"
-	O.desc = "Your second grip on the [initial(name)]"
+	O.name = "[name] - offhand"
+	O.desc = "Your second grip on the [name]"
 	user.put_in_inactive_hand(O)
 	return
 
 /obj/item/weapon/twohanded/mob_can_equip(M as mob, slot)
 	//Cannot equip wielded items.
 	if(wielded)
-		M << "<span class='warning'>Unwield the [initial(name)] first!</span>"
+		M << "<span class='warning'>Unwield the [name] first!</span>"
 		return 0
 	return ..()
 
@@ -133,7 +137,7 @@
 	wielded = 1
 
 
-obj/item/weapon/twohanded/
+/obj/item/weapon/twohanded/
 
 /*
  * Fireaxe
@@ -230,13 +234,13 @@ obj/item/weapon/twohanded/
 
 /obj/item/weapon/twohanded/dualsaber/attack_hulk(mob/living/carbon/human/user)  //In case thats just so happens that it is still activated on the groud, prevents hulk from picking it up
 	if(wielded)
-		user << "<span class='warning'>You cant pick up such dangerous item with your meaty hands without losing fingers, better not to.</span>"
+		user << "<span class='warning'>You can't pick up such dangerous item with your meaty hands without losing fingers, better not to!</span>"
 		return 1
 
 /obj/item/weapon/twohanded/dualsaber/wield(mob/living/carbon/M) //Specific wield () hulk checks due to reflection chance for balance issues and switches hitsounds.
 	if(istype(M))
 		if(M.dna.check_mutation(HULK))
-			M << "<span class='warning'>You lack the grace to wield this.</span>"
+			M << "<span class='warning'>You lack the grace to wield this!</span>"
 			return
 	..()
 	hitsound = 'sound/weapons/blade1.ogg'

@@ -50,7 +50,7 @@
 		else
 			dat += "No personality is installed.<br>"
 			dat += "<A href='byond://?src=\ref[src];request=1'>\[Request personal AI personality\]</a><br>"
-			dat += "Each time this button is pressed, a request will be sent out to any available personalities. Check back often and alot time for personalities to respond. This process could take anywhere from 15 seconds to several minutes, depending on the available personalities' timeliness."
+			dat += "Each time this button is pressed, a request will be sent out to any available personalities. Check back often and give a lot of time for personalities to respond. This process could take anywhere from 15 seconds to several minutes, depending on the available personalities' timeliness."
 	user << browse(dat, "window=paicard")
 	onclose(user, "paicard")
 	return
@@ -69,7 +69,7 @@
 			if(pai.master_dna)
 				return
 			if(!istype(usr, /mob/living/carbon))
-				usr << "<span class='notice'>You don't have any DNA, or your DNA is incompatible with this device.</span>"
+				usr << "<span class='warning'>You don't have any DNA, or your DNA is incompatible with this device!</span>"
 			else
 				var/mob/living/carbon/M = usr
 				pai.master = M.real_name

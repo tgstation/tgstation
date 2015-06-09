@@ -20,7 +20,7 @@
 
 
 	//Death squad armored space suits, not hardsuits!
-/obj/item/clothing/head/helmet/space/deathsquad
+/obj/item/clothing/head/helmet/space/hardsuit/deathsquad
 	name = "deathsquad helmet"
 	desc = "That's not red paint. That's real blood."
 	icon_state = "deathsquad"
@@ -29,8 +29,12 @@
 	strip_delay = 130
 	max_heat_protection_temperature = FIRE_IMMUNITY_HELM_MAX_TEMP_PROTECT
 	unacidable = 1
+	action_button_name = null
 
-/obj/item/clothing/suit/space/deathsquad
+/obj/item/clothing/head/helmet/space/hardsuit/deathsquad/attack_self(mob/user)
+	return
+
+/obj/item/clothing/suit/space/hardsuit/deathsquad
 	name = "deathsquad suit"
 	desc = "A heavily armored, advanced space suit that protects against most forms of damage."
 	icon_state = "deathsquad"
@@ -41,15 +45,20 @@
 	strip_delay = 130
 	max_heat_protection_temperature = FIRE_IMMUNITY_HELM_MAX_TEMP_PROTECT
 	unacidable = 1
+	helmettype = /obj/item/clothing/head/helmet/space/hardsuit/deathsquad
 
-/obj/item/clothing/head/helmet/space/deathsquad/beret
+/obj/item/clothing/head/helmet/space/beret
 	name = "officer's beret"
 	desc = "An armored beret commonly used by special operations officers. Uses advanced force field technology to protect the head from space."
 	icon_state = "beret_badge"
 	flags = STOPSPRESSUREDMAGE
 	flags_inv = 0
+	armor = list(melee = 80, bullet = 80, laser = 50, energy = 50, bomb = 100, bio = 100, rad = 100)
+	strip_delay = 130
+	max_heat_protection_temperature = FIRE_IMMUNITY_HELM_MAX_TEMP_PROTECT
+	unacidable = 1
 
-/obj/item/clothing/suit/space/deathsquad/officer
+/obj/item/clothing/suit/space/officer
 	name = "officer's jacket"
 	desc = "An armored, space-proof jacket used in special operations."
 	icon_state = "detective"
@@ -58,6 +67,12 @@
 	slowdown = 0
 	flags_inv = 0
 	w_class = 3
+	allowed = list(/obj/item/weapon/gun,/obj/item/ammo_box,/obj/item/ammo_casing,/obj/item/weapon/melee/baton,/obj/item/weapon/restraints/handcuffs,/obj/item/weapon/tank/internals)
+	armor = list(melee = 80, bullet = 80, laser = 50,energy = 50, bomb = 100, bio = 100, rad = 100)
+	slowdown = 1
+	strip_delay = 130
+	max_heat_protection_temperature = FIRE_IMMUNITY_HELM_MAX_TEMP_PROTECT
+	unacidable = 1
 
 
 	//NASA Voidsuit

@@ -50,3 +50,5 @@
 	var/list/organs = list() //Gets filled up in the constructor (human.dm, New() proc.
 
 	var/datum/martial_art/martial_art = null
+
+	var/name_override //For temporary visible name changes
