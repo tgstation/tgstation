@@ -9,14 +9,14 @@
 		if(L.needs_update)
 			if(L.destroyed || L.check() || L.force_update)
 				L.remove_lum()
-			if(!L.destroyed)
-				L.apply_lum()
+				if(!L.destroyed)
+					L.apply_lum()
 			L.force_update = 0
 			L.needs_update = 0
 
 		scheck()
 
-	lighting_update_lights.Cut()
+	lighting_update_lights.len = 0
 
 	for(var/atom/movable/lighting_overlay/O in lighting_update_overlays)
 		if(O.needs_update)
@@ -25,4 +25,4 @@
 
 		scheck()
 
-	lighting_update_overlays.Cut()
+	lighting_update_overlays.len = 0

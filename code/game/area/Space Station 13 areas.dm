@@ -274,6 +274,8 @@ proc/process_adminbus_teleport_locs()
 	name = "\improper Syndicate Elite Shuttle"
 	icon_state = "shuttlered2"
 
+/area/shuttle/administration/lighting_use_dynamic = 0
+
 /area/shuttle/administration/centcom
 	name = "\improper Administration Shuttle Centcom"
 	icon_state = "shuttlered"
@@ -538,6 +540,7 @@ proc/process_adminbus_teleport_locs()
 	name = "\improper Thunderdome"
 	icon_state = "thunder"
 	requires_power = 0
+	lighting_use_dynamic = 0
 
 /area/tdome/tdome1
 	name = "\improper Thunderdome (Team 1)"
@@ -562,6 +565,7 @@ proc/process_adminbus_teleport_locs()
 	name = "\improper Syndicate Station"
 	icon_state = "yellow"
 	requires_power = 0
+	lighting_use_dynamic = 0
 
 /area/syndicate_station/start
 	name = "\improper Syndicate Forward Operating Base"
@@ -607,6 +611,9 @@ proc/process_adminbus_teleport_locs()
 	name = "\improper Wizard's Den"
 	icon_state = "yellow"
 	requires_power = 0
+	lighting_use_dynamic = 0
+
+/area/vox_station/lighting_use_dynamic = 0
 
 /area/vox_station/transit
 	name = "\improper hyperspace"
