@@ -42,6 +42,35 @@ var/const/HOLOPAD_MODE = RANGE_BASED
 	var/holo_range = 5 // Change to change how far the AI can move away from the holopad before deactivating.
 	var/temp = ""
 
+/obj/machinery/hologram/holopad/New()
+	..()
+	component_parts = list()
+	component_parts += new /obj/item/weapon/circuitboard/holopad(null)
+	component_parts += new /obj/item/weapon/stock_parts/capacitor(null)
+	RefreshParts()
+
+/obj/machinery/hologram/holopad/RefreshParts()
+	var/holograph_range = 4
+	for(var/obj/item/weapon/stock_parts/capacitor/B in component_parts)
+		holograph_range += 1 * B.rating
+	holo_range = holograph_range
+
+/obj/machinery/hologram/holopad/attackby(obj/item/P as obj, mob/user as mob, params)
+	if(default_deconstruction_screwdriver(user, "holopad_open", "holopad0", P))
+		return
+
+	if(exchange_parts(user, P))
+		return
+
+	if(default_pry_open(P))
+		return
+
+	if(default_unfasten_wrench(user, P))
+		return
+
+	default_deconstruction_crowbar(P)
+
+
 /obj/machinery/hologram/holopad/attack_hand(var/mob/living/carbon/human/user) //Carn: Hologram requests.
 	if(!istype(user))
 		return
