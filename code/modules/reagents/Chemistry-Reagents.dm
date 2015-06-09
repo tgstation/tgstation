@@ -4750,7 +4750,7 @@ var/global/list/tonio_doesnt_remove=list(
 	adj_sleepy = -2
 
 
-/datum/reagent/quantum/on_mob_life(var/mob/living/M as mob)
+/datum/reagent/drink/cold/quantum/on_mob_life(var/mob/living/M as mob)
 
 	if(!holder) return
 	if(!M) M = holder.my_atom
