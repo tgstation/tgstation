@@ -425,7 +425,7 @@
 		/obj/item/weapon/reagent_containers/food/snacks/cheesewedge,
 		)
 	result = /obj/item/weapon/reagent_containers/food/snacks/sliceable/meatbread
-	
+
 /datum/recipe/bananabread
 	reagents = list("milk" = 5, "flour" = 15)
 	items = list(
@@ -1286,6 +1286,20 @@
 
 
 // Misc ////////////////////////////////////////////////////////
+
+/datum/recipe/ramen
+	reagents = list("flour" = 5)
+	items = list(/obj/item/stack/sheet/cardboard)
+	result = /obj/item/weapon/reagent_containers/food/drinks/dry_ramen
+
+/datum/recipe/sundaeramen
+	reagents = list("dry_ramen" = 30, "sprinkles" = 1, "blackcolor" = 1, "bustanut" = 6)
+	items = list(/obj/item/weapon/reagent_containers/food/snacks/chocolatebar,/obj/item/weapon/reagent_containers/food/snacks/grown/banana)
+	result = /obj/item/weapon/reagent_containers/food/snacks/sundaeramen
+
+/datum/recipe/sweetsundaeramen
+	items = list(/obj/item/weapon/reagent_containers/food/snacks/sundaeramen,/obj/item/weapon/reagent_containers/food/snacks/ricepudding,/obj/item/weapon/reagent_containers/food/snacks/gigapuddi,/obj/item/weapon/reagent_containers/food/snacks/donkpocket)
+	result = /obj/item/weapon/reagent_containers/food/snacks/sweetsundaeramen
 
 /datum/recipe/cracker
 	reagents = list("flour" = 5, "sodiumchloride" = 1)
