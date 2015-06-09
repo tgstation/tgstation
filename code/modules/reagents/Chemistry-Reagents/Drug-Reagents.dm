@@ -363,9 +363,9 @@ datum/reagent/drug/hotline/on_mob_life(var/mob/living/M as mob)
 	return
 
 datum/reagent/drug/hotline/overdose_process(var/mob/living/M as mob)
-	M.adjustBrainLoss(5*REM)
-	M.adjustToxLoss(5*REM)
-	M.adjustBruteLoss(5*REM)
+	M.adjustBrainLoss(2*REM)
+	M.adjustToxLoss(2*REM)
+	M.adjustBruteLoss(2*REM)
 	M.druggy = max(M.druggy, 30)
 	M.hallucination += 30
 	if(prob(5))
