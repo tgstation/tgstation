@@ -17,10 +17,10 @@
 		return
 	var/mob/living/silicon/ai/AI = locate(/mob/living/silicon/ai) in src
 	if(AI) //AI is on the card, implies user wants to upload it.
-		target.transfer_ai("FROMCARD", user, AI, src)
+		target.transfer_ai(AI_TRANS_FROM_CARD, user, AI, src)
 		add_logs(user, AI, "carded", object="[name]")
 	else //No AI on the card, therefore the user wants to download one.
-		target.transfer_ai("TOCARD", user, null, src)
+		target.transfer_ai(AI_TRANS_TO_CARD, user, null, src)
 	update_state() //Whatever happened, update the card's state (icon, name) to match.
 
 

@@ -147,7 +147,7 @@
 	if(!..())
 		return
 	//Downloading AI from card to terminal.
-	if(interaction == "FROMCARD")
+	if(interaction == AI_TRANS_FROM_CARD)
 		AI.loc = src
 		occupier = AI
 		AI.control_disabled = 1

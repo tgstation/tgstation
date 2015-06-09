@@ -218,7 +218,13 @@ This is a good place for AI-related object verbs so I'm sticking it here.
 If adding stuff to this, don't forget that an AI need to cancel_camera() whenever it physically moves to a different location.
 That prevents a few funky behaviors.
 */
-//What operation to perform based on target, what ineraction to perform based on object used, target itself, user. The object used is src and calls this proc.
+//The type of interaction, the player performing the operation, the AI itself, and the card object, if any.
+
+#define AI_TRANS_TO_CARD	1 //Downloading AI to InteliCard
+#define AI_TRANS_FROM_CARD	2 //Uploading AI from InteliCard
+#define AI_MECH_HACK		3 //Malfunctioning AI hijacking mecha
+
+
 atom/proc/transfer_ai(var/interaction, var/mob/user, var/mob/living/silicon/ai/AI, var/obj/item/device/aicard/card)
 	if(istype(card))
 		if(card.flush)
@@ -231,7 +237,7 @@ atom/proc/transfer_ai(var/interaction, var/mob/user, var/mob/living/silicon/ai/A
 	if(!..())
 		return
  //Transferring a carded AI to a core.
-	if(interaction == "FROMCARD")
+	if(interaction == AI_TRANS_FROM_CARD)
 		AI.control_disabled = 0
 		AI.radio_enabled = 1
 		AI.loc = loc//To replace the terminal.

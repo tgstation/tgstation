@@ -441,7 +441,7 @@ var/list/ai_list = list()
 			src << "You are already loaded into an onboard computer!"
 			return
 		if(M)
-			M.transfer_ai("HACK",src, usr) //Called om the mech itself.
+			M.transfer_ai(AI_MECH_HACK,src, usr) //Called om the mech itself.
 
 /mob/living/silicon/ai/bullet_act(var/obj/item/projectile/Proj)
 	..(Proj)
@@ -788,7 +788,7 @@ var/list/ai_list = list()
 /mob/living/silicon/ai/transfer_ai(var/interaction, var/mob/user, var/mob/living/silicon/ai/AI, var/obj/item/device/aicard/card)
 	if(!..())
 		return
-	if(interaction == "TOCARD")//The only possible interaction. Upload AI mob to a card.
+	if(interaction == AI_TRANS_TO_CARD)//The only possible interaction. Upload AI mob to a card.
 		if(!mind)
 			user << "<span class='warning'>No intelligence patterns detected.</span>"    //No more magical carding of empty cores, AI RETURN TO BODY!!!11
 			return

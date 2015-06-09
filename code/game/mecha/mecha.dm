@@ -806,7 +806,7 @@
 
  //Transfer from core or card to mech. Proc is called by mech.
 	switch(interaction)
-		if("TOCARD") //Upload AI from mech to AI card.
+		if(AI_TRANS_TO_CARD) //Upload AI from mech to AI card.
 			if(!state) //Mech must be in maint mode to allow carding.
 				user << "<span class='warning'>[name] must have maintenance protocols active in order to allow a transfer.</span>"
 				return
@@ -828,7 +828,7 @@
 			AI << "You have been downloaded to a mobile storage device. Wireless connection offline."
 			user << "<span class='boldnotice'>Transfer successful</span>: [AI.name] ([rand(1000,9999)].exe) removed from [name] and stored within local memory."
 
-		if("HACK") //Called by Malf AI mob on the mech.
+		if(AI_MECH_HACK) //Called by Malf AI mob on the mech.
 			new /obj/structure/AIcore/deactivated(AI.loc)
 			if(occupant) //Oh, I am sorry, were you using that?
 				AI << "<span class='warning'>Pilot detected! Forced ejection initiated!"
@@ -836,7 +836,7 @@
 				go_out(1) //IT IS MINE, NOW. SUCK IT, RD!
 			ai_enter_mech(AI, interaction)
 
-		if("FROMCARD") //Using an AI card to upload to a mech.
+		if(AI_TRANS_FROM_CARD) //Using an AI card to upload to a mech.
 			AI = locate(/mob/living/silicon/ai) in card
 			if(!AI)
 				user << "<span class='warning'>There is no AI currently installed on this device.</span>"
@@ -866,7 +866,7 @@
 	AI.remote_control = src
 	AI.canmove = 1 //Much easier than adding AI checks! Be sure to set this back to 0 if you decide to allow an AI to leave a mech somehow.
 	AI.can_shunt = 0 //ONE AI ENTERS. NO AI LEAVES.
-	AI << "[interaction == "HACK" ? "<span class='announce'>Takeover of [name] complete! You are now permanently loaded onto the onboard computer. Do not attempt to leave the station sector!</span>" \
+	AI << "[interaction == AI_MECH_HACK ? "<span class='announce'>Takeover of [name] complete! You are now permanently loaded onto the onboard computer. Do not attempt to leave the station sector!</span>" \
 	: "<span class='notice'>You have been uploaded to a mech's onboard computer."]"
 	AI << "<span class='boldnotice'>Use Middle-Mouse to activate mech functions and equipment. Click normally for AI interactions.</span>"
 
@@ -1600,13 +1600,13 @@ var/year_integer = text2num(year) // = 2013???
 		user << browse(null,"window=exosuit_add_access")
 		return
 	if(href_list["dna_lock"])
-		if(usr != src.occupant)	return
-		if(src.occupant && occupant.dna)
-			if(!occupant.dna.unique_enzymes)
-				occupant << "<span class='danger'> You do noth ave any DNA!</span>"
-				return
-			src.dna = src.occupant.dna.unique_enzymes
-			src.occupant_message("You feel a prick as the needle takes your DNA sample.")
+		if(usr != src.occupant)
+			return
+		if(src.occupant && !iscarbon(src.occupant))
+			src.occupant << "<span class='danger'> You do not have any DNA!</span>"
+			return
+		src.dna = src.occupant.dna.unique_enzymes
+		src.occupant_message("You feel a prick as the needle takes your DNA sample.")
 		return
 	if(href_list["reset_dna"])
 		if(usr != src.occupant)	return
