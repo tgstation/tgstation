@@ -219,151 +219,24 @@ If adding stuff to this, don't forget that an AI need to cancel_camera() wheneve
 That prevents a few funky behaviors.
 */
 //What operation to perform based on target, what ineraction to perform based on object used, target itself, user. The object used is src and calls this proc.
-atom/proc/transfer_ai(var/choice as text, var/interaction as text, var/target, var/mob/U as mob)
-	if(istype(src, /obj/item/device/aicard))
-		var/obj/item/device/aicard/icard = src
-		if(icard.flush)
-			U << "<span class='boldannounce'>ERROR</span>: AI flush is in progress, cannot execute transfer protocol."
-			return
+atom/proc/transfer_ai(var/interaction, var/mob/user, var/mob/living/silicon/ai/AI, var/obj/item/device/aicard/card)
+	if(istype(card))
+		if(card.flush)
+			user << "<span class='boldannounce'>ERROR</span>: AI flush is in progress, cannot execute transfer protocol."
+			return 0
+	return 1
 
-	switch(choice)
-		if("AICORE")//AI mob.
-			var/mob/living/silicon/ai/T = target
-			if(!T.mind)
-				U << "<span class='warning'>No intelligence patterns detected.</span>"    //No more magical carding of empty cores, AI RETURN TO BODY!!!11
-				return
-			switch(interaction)
-				if("AICARD")
-					var/obj/item/device/aicard/C = src
-					if(C.contents.len)//If there is an AI on card.
-						U << "<span class='boldannounce'>Transfer failed</span>: Existing AI found on this terminal. Remove existing AI to install a new one."
-					else
-						if (ticker.mode.name == "AI malfunction")
-							var/datum/game_mode/malfunction/malf = ticker.mode
-							for (var/datum/mind/malfai in malf.malf_ai)
-								if (T.mind == malfai)
-									U << "<span class='boldannounce'>ERROR</span>: Remote transfer interface disabled."//Do ho ho ho~
-									return
-						new /obj/structure/AIcore/deactivated(T.loc)//Spawns a deactivated terminal at AI location.
-						T.aiRestorePowerRoutine = 0//So the AI initially has power.
-						T.control_disabled = 1//Can't control things remotely if you're stuck in a card!
-						T.radio_enabled = 0 	//No talking on the built-in radio for you either!
-						T.loc = C//Throw AI into the card.
-						C.name = "intelliCard - [T.name]"
-						if (T.stat == 2)
-							C.icon_state = "aicard-404"
-						else
-							C.icon_state = "aicard-full"
-						T.cancel_camera()
-						T << "You have been downloaded to a mobile storage device. Remote device connection severed."
-						U << "<span class='boldnotice'>Transfer successful</span>: [T.name] ([rand(1000,9999)].exe) removed from host terminal and stored within local memory."
 
-		if("MECHA") //Transfer from core or card to mech. Proc is called by mech.
-			var/obj/mecha/M = target
-			var/mob/living/silicon/ai/AI
-			switch(interaction)
-				if("HACK") //Called by Malf AI mob on the mech.
-					AI = src
-					new /obj/structure/AIcore/deactivated(AI.loc)
-					if(M.occupant) //Oh, I am sorry, were you using that?
-						AI << "<span class='warning'>Pilot detected! Forced ejection initiated!"
-						M.occupant << "<span class='danger'>You have been forcibly ejected!</span>"
-						M.go_out(1) //IT IS MINE, NOW. SUCK IT, RD!
-				if("AICARD") //Using an AI card on a mech.
-					var/obj/item/device/aicard/C = src
-					AI = locate(/mob/living/silicon/ai) in C
-					if(!AI)
-						U << "<span class='warning'>There is no AI currently installed on this device.</span>"
-						return
-					else
-						if(AI.stat || !AI.client)
-							U << "<span class='warning'>[AI.name] is currently unresponsive, and cannot be uploaded.</span>"
-							return
-						else if(M.occupant || M.dna) //Normal AIs cannot steal mechs!
-							U << "<span class='warning'>Access denied. [M.name] is [M.occupant ? "currently occupied" : "secured with a DNA lock"]."
-							return
-						AI.control_disabled = 0
-						AI.radio_enabled = 1
-						C.icon_state = "aicard"
-						C.name = "intelliCard"
-						C.overlays.Cut()
-						U << "<span class='boldnotice'>Permament transfer successful</span>: [AI.name] ([rand(1000,9999)].exe) installed and executed successfully. Local copy has been removed."
-			AI.aiRestorePowerRoutine = 0
-			AI.loc = M
-			M.occupant = AI
-			M.icon_state = initial(M.icon_state)
-			playsound(M, 'sound/machines/windowdoor.ogg', 50, 1)
-			if(!M.hasInternalDamage())
-				M.occupant << sound('sound/mecha/nominal.ogg',volume=50)
-			AI.cancel_camera()
-			AI.controlled_mech = M
-			AI.remote_control = M
-			AI.canmove = 1 //Much easier than adding AI checks! Be sure to set this back to 0 if you decide to allow an AI to leave a mech somehow.
-			AI.can_shunt = 0 //ONE AI ENTERS. NO AI LEAVES.
-			AI << "[interaction == "HACK" ? "<span class='announce'>Takeover of [M.name] complete! You are now permanently loaded onto the onboard computer. Do not attempt to leave the station sector!</span>" \
-			: "<span class='notice'>You have been permanently uploaded to a mech's onboard computer."]"
-			AI << "<span class='boldnotice'>Use Middle-Mouse to interact with the station electronics. Clicking normally now activates the mech's functions and equipment.</span>"
-
-		if("INACTIVE")//Inactive AI object.
-			var/obj/structure/AIcore/deactivated/T = target
-			switch(interaction)
-				if("AICARD")
-					var/obj/item/device/aicard/C = src
-					var/mob/living/silicon/ai/A = locate() in C//I love locate(). Best proc ever.
-					if(A)//If AI exists on the card. Else nothing since both are empty.
-						A.control_disabled = 0
-						A.radio_enabled = 1
-						A.loc = T.loc//To replace the terminal.
-						C.icon_state = "aicard"
-						C.name = "intelliCard"
-						C.overlays.Cut()
-						A.cancel_camera()
-						A << "You have been uploaded to a stationary terminal. Remote device connection restored."
-						U << "<span class='boldnotice'>Transfer successful</span>: [A.name] ([rand(1000,9999)].exe) installed and executed successfully. Local copy has been removed."
-						qdel(T)
-
-		if("AIFIXER")//AI Fixer terminal.
-			var/obj/machinery/computer/aifixer/T = target
-			switch(interaction)
-				if("AICARD")
-					var/obj/item/device/aicard/C = src
-					if(!T.contents.len)
-						if (!C.contents.len)
-							U << "No AI to copy over!"//Well duh
-						else for(var/mob/living/silicon/ai/A in C)
-							C.icon_state = "aicard"
-							C.name = "intelliCard"
-							C.overlays.Cut()
-							A.loc = T
-							T.occupier = A
-							A.control_disabled = 1
-							A.radio_enabled = 0
-							if (A.stat == 2)
-								T.overlays += image('icons/obj/computer.dmi', "ai-fixer-404")
-							else
-								T.overlays += image('icons/obj/computer.dmi', "ai-fixer-full")
-							T.overlays -= image('icons/obj/computer.dmi', "ai-fixer-empty")
-							A.cancel_camera()
-							A << "You have been uploaded to a stationary terminal. Sadly, there is no remote access from here."
-							U << "<span class='boldnotice'>Transfer successful</span>: [A.name] ([rand(1000,9999)].exe) installed and executed successfully. Local copy has been removed."
-					else
-						if(!C.contents.len && T.occupier && !T.active)
-							C.name = "intelliCard - [T.occupier.name]"
-							T.overlays += image('icons/obj/computer.dmi', "ai-fixer-empty")
-							if (T.occupier.stat == 2)
-								C.icon_state = "aicard-404"
-								T.overlays -= image('icons/obj/computer.dmi', "ai-fixer-404")
-							else
-								C.icon_state = "aicard-full"
-								T.overlays -= image('icons/obj/computer.dmi', "ai-fixer-full")
-							T.occupier << "You have been downloaded to a mobile storage device. Still no remote access."
-							U << "<span class='boldnotice'>Transfer successful</span>: [T.occupier.name] ([rand(1000,9999)].exe) removed from host terminal and stored within local memory."
-							T.occupier.loc = C
-							T.occupier.cancel_camera()
-							T.occupier = null
-						else if (C.contents.len)
-							U << "<span class='boldannounce'>ERROR</span>: Artificial intelligence detected on terminal."
-						else if (T.active)
-							U << "<span class='boldannounce'>ERROR</span>: Reconstruction in progress."
-						else if (!T.occupier)
-							U << "<span class='boldannounce'>ERROR</span>: Unable to locate artificial intelligence."
+/obj/structure/AIcore/deactivated/transfer_ai(var/interaction, var/mob/user, var/mob/living/silicon/ai/AI, var/obj/item/device/aicard/card)
+	if(!..())
+		return
+ //Transferring a carded AI to a core.
+	if(interaction == "FROMCARD")
+		AI.control_disabled = 0
+		AI.radio_enabled = 1
+		AI.loc = loc//To replace the terminal.
+		AI << "You have been uploaded to a stationary terminal. Remote device connection restored."
+		user << "<span class='boldnotice'>Transfer successful</span>: [AI.name] ([rand(1000,9999)].exe) installed and executed successfully. Local copy has been removed."
+		qdel(src)
+	else //If for some reason you use an empty card on an empty AI terminal.
+		user << "There is no AI loaded on this terminal!"

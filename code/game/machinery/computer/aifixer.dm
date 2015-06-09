@@ -142,3 +142,36 @@
 					overlays += image('icons/obj/computer.dmi', "ai-fixer-404")
 		else
 			overlays += image('icons/obj/computer.dmi', "ai-fixer-empty")
+
+/obj/machinery/computer/aifixer/transfer_ai(var/interaction, var/mob/user, var/mob/living/silicon/ai/AI, var/obj/item/device/aicard/card)
+	if(!..())
+		return
+	//Downloading AI from card to terminal.
+	if(interaction == "FROMCARD")
+		AI.loc = src
+		occupier = AI
+		AI.control_disabled = 1
+		AI.radio_enabled = 0
+		if (AI.stat == DEAD)
+			overlays += image('icons/obj/computer.dmi', "ai-fixer-404")
+		else
+			overlays += image('icons/obj/computer.dmi', "ai-fixer-full")
+		overlays -= image('icons/obj/computer.dmi', "ai-fixer-empty")
+		AI << "You have been uploaded to a stationary terminal. Sadly, there is no remote access from here."
+		user << "<span class='boldnotice'>Transfer successful</span>: [AI.name] ([rand(1000,9999)].exe) installed and executed successfully. Local copy has been removed."
+
+	else //Uploading AI from terminal to card
+		if(occupier && !active)
+			overlays += image('icons/obj/computer.dmi', "ai-fixer-empty")
+			if (occupier.stat == DEAD)
+				overlays -= image('icons/obj/computer.dmi', "ai-fixer-404")
+			else
+				overlays -= image('icons/obj/computer.dmi', "ai-fixer-full")
+			occupier << "You have been downloaded to a mobile storage device. Still no remote access."
+			user << "<span class='boldnotice'>Transfer successful</span>: [occupier.name] ([rand(1000,9999)].exe) removed from host terminal and stored within local memory."
+			occupier.loc = card
+			occupier = null
+		else if (active)
+			user << "<span class='boldannounce'>ERROR</span>: Reconstruction in progress."
+		else if (!occupier)
+			user << "<span class='boldannounce'>ERROR</span>: Unable to locate artificial intelligence."

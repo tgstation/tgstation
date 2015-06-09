@@ -779,12 +779,13 @@
 		user.visible_message("[user] attaches [W] to [src].", "<span class='notice'>You attach [W] to [src].</span>")
 		return
 
-	else if(istype(W, /obj/item/device/aicard))
-		W.transfer_ai("MECHA","AICARD",src,user) //Continued in ai_core.dm
-
 	else if(!(W.flags&NOBLUDGEON))
 		call((proc_res["dynattackby"]||src), "dynattackby")(W,user)
 	return
+
+/////////////////////////////////////
+//////////// AI piloting ////////////
+/////////////////////////////////////
 
 /obj/mecha/attack_ai(var/mob/living/silicon/ai/user as mob)
 	if(!isAI(user))
@@ -798,6 +799,77 @@
 			user << "[B.get_mecha_info()]"
 		//Nothing like a big, red link to make the player feel powerful!
 		user << "<a href='?src=\ref[user];ai_take_control=\ref[src]'><span class='userdanger'>ASSUME DIRECT CONTROL?</span></a><br>"
+
+/obj/mecha/transfer_ai(var/interaction, mob/user, var/mob/living/silicon/ai/AI, var/obj/item/device/aicard/card)
+	if(!..())
+		return
+
+ //Transfer from core or card to mech. Proc is called by mech.
+	switch(interaction)
+		if("TOCARD") //Upload AI from mech to AI card.
+			if(!state) //Mech must be in maint mode to allow carding.
+				user << "<span class='warning'>[name] must have maintenance protocols active in order to allow a transfer.</span>"
+				return
+			if (AI.mind.special_role == "malfunction") //Malf AIs cannot leave mechs. Ever.
+				user << "<span class='boldannounce'>ACCESS DENIED.</span>"
+				return
+			AI = occupant
+			if(!AI || !isAI(occupant)) //Mech does not have an AI for a pilot
+				user << "<span class='warning'>No AI detected in the [name] onboard computer.</span>"
+				return
+			AI.aiRestorePowerRoutine = 0//So the AI initially has power.
+			AI.control_disabled = 1
+			AI.radio_enabled = 0
+			AI.loc = card
+			occupant = null
+			AI.controlled_mech = null
+			AI.remote_control = null
+			icon_state = initial(icon_state)+"-open"
+			AI << "You have been downloaded to a mobile storage device. Wireless connection offline."
+			user << "<span class='boldnotice'>Transfer successful</span>: [AI.name] ([rand(1000,9999)].exe) removed from [name] and stored within local memory."
+
+		if("HACK") //Called by Malf AI mob on the mech.
+			new /obj/structure/AIcore/deactivated(AI.loc)
+			if(occupant) //Oh, I am sorry, were you using that?
+				AI << "<span class='warning'>Pilot detected! Forced ejection initiated!"
+				occupant << "<span class='danger'>You have been forcibly ejected!</span>"
+				go_out(1) //IT IS MINE, NOW. SUCK IT, RD!
+			ai_enter_mech(AI, interaction)
+
+		if("FROMCARD") //Using an AI card to upload to a mech.
+			AI = locate(/mob/living/silicon/ai) in card
+			if(!AI)
+				user << "<span class='warning'>There is no AI currently installed on this device.</span>"
+				return
+			else if(AI.stat || !AI.client)
+				user << "<span class='warning'>[AI.name] is currently unresponsive, and cannot be uploaded.</span>"
+				return
+			else if(occupant || dna) //Normal AIs cannot steal mechs!
+				user << "<span class='warning'>Access denied. [name] is [occupant ? "currently occupied" : "secured with a DNA lock"]."
+				return
+			AI.control_disabled = 0
+			AI.radio_enabled = 1
+			user << "<span class='boldnotice'>Transfer successful</span>: [AI.name] ([rand(1000,9999)].exe) installed and executed successfully. Local copy has been removed."
+			ai_enter_mech(AI, interaction)
+
+//Hack and From Card interactions share some code, so leave that here for both to use.
+/obj/mecha/proc/ai_enter_mech(var/mob/living/silicon/ai/AI, var/interaction)
+	AI.aiRestorePowerRoutine = 0
+	AI.loc = src
+	occupant = AI
+	icon_state = initial(icon_state)
+	playsound(src, 'sound/machines/windowdoor.ogg', 50, 1)
+	if(!hasInternalDamage())
+		occupant << sound('sound/mecha/nominal.ogg',volume=50)
+	AI.cancel_camera()
+	AI.controlled_mech = src
+	AI.remote_control = src
+	AI.canmove = 1 //Much easier than adding AI checks! Be sure to set this back to 0 if you decide to allow an AI to leave a mech somehow.
+	AI.can_shunt = 0 //ONE AI ENTERS. NO AI LEAVES.
+	AI << "[interaction == "HACK" ? "<span class='announce'>Takeover of [name] complete! You are now permanently loaded onto the onboard computer. Do not attempt to leave the station sector!</span>" \
+	: "<span class='notice'>You have been uploaded to a mech's onboard computer."]"
+	AI << "<span class='boldnotice'>Use Middle-Mouse to activate mech functions and equipment. Click normally for AI interactions.</span>"
+
 
 /////////////////////////////////////
 ////////  Atmospheric stuff  ////////

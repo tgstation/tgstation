@@ -6,18 +6,37 @@
 	item_state = "electronic"
 	w_class = 2.0
 	slot_flags = SLOT_BELT
+	flags = NOBLUDGEON
 	var/flush = null
 	origin_tech = "programming=4;materials=4"
 
 
-/obj/item/device/aicard/attack(mob/living/silicon/ai/M as mob, mob/user as mob)
-	if(!istype(M, /mob/living/silicon/ai))//If target is not an AI.
-		return ..()
+/obj/item/device/aicard/afterattack(atom/target, mob/user, proximity)
+	..()
+	if(!proximity || !target)
+		return
+	var/mob/living/silicon/ai/AI = locate(/mob/living/silicon/ai) in src
+	if(AI) //AI is on the card, implies user wants to upload it.
+		target.transfer_ai("FROMCARD", user, AI, src)
+		add_logs(user, AI, "carded", object="[name]")
+	else //No AI on the card, therefore the user wants to download one.
+		target.transfer_ai("TOCARD", user, null, src)
+	update_state() //Whatever happened, update the card's state (icon, name) to match.
 
-	add_logs(user, M, "carded", object="[src.name]")
 
-	transfer_ai("AICORE", "AICARD", M, user)
-	return
+/obj/item/device/aicard/proc/update_state()
+	var/mob/living/silicon/ai/AI = locate(/mob/living/silicon/ai) in src //AI is inside.
+	if(AI)
+		name = "intelliCard - [AI.name]"
+		if (AI.stat == DEAD)
+			icon_state = "aicard-404"
+		else
+			icon_state = "aicard-full"
+		AI.cancel_camera() //AI are forced to move when transferred, so do this whenver one is downloaded.
+	else
+		icon_state = "aicard"
+		name = "intelliCard"
+		overlays.Cut()
 
 /obj/item/device/aicard/attack_self(mob/user)
 	if (!in_range(src, user))
