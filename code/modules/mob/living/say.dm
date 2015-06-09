@@ -92,7 +92,7 @@ var/list/department_radio_keys = list(
 	var/spans = list()
 	spans += get_spans()
 
-	if(!message || message == "")
+	if(!message)
 		return
 
 	var/message_range = 7
@@ -172,9 +172,6 @@ var/list/department_radio_keys = list(
 	return 1
 
 /mob/living/proc/can_speak_vocal(message) //Check AFTER handling of xeno and ling channels
-	if(!message)
-		return 0
-
 	if(disabilities & MUTE)
 		return 0
 
