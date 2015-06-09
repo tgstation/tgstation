@@ -750,12 +750,12 @@
 	else if(istype(O, /obj/item/weapon/wirecutters) && unwrenchable) //THIS NEED TO BE DONE DIFFERENTLY, SOMEONE REFACTOR THE TRAY CODE ALREADY
 		if(anchored)
 			if(anchored == 2)
-				playsound(src.loc, 'sound/items/Screwdriver.ogg', 50, 1)
+				playsound(src.loc, 'sound/items/Wirecutter.ogg', 50, 1)
 				anchored = 1
 				user << "<span class='notice'>You snip \the [src]'s hoses.</span>"
 
 			else if(anchored == 1)
-				playsound(src.loc, 'sound/items/Screwdriver.ogg', 50, 1)
+				playsound(src.loc, 'sound/items/Wirecutter.ogg', 50, 1)
 				anchored = 2
 				user << "<span class='notice'>You reconnect \the [src]'s hoses.</span>"
 
