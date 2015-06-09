@@ -136,6 +136,8 @@ var/const/MAX_SAVE_SLOTS = 8
 
 	var/list/roles=list() // "role" => ROLEPREF_*
 
+	var/usenanoui = 1//Wether or not this client will use nanoUI, this doesn't do anything other than objects being able to check this.
+
 	var/client/client
 
 /datum/preferences/New(client/C)

@@ -104,7 +104,9 @@ CREATE TABLE client (
     volume         INTEGER,
     special        INTEGER,
     warns          INTEGER,
-    warnbans       INTEGER 
+    warnbans       INTEGER,
+	usewmp         INTEGER,
+	usenanoui      INTEGER 
 );
 
 

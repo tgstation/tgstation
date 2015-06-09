@@ -213,3 +213,17 @@
 	set desc = "Toggle hearing streaming media (radios, jukeboxes, etc)"
 
 	prefs.configure_special_roles(usr)
+
+/client/verb/toggle_nanoui()
+	set name = "Toggle nanoUI"
+	set category = "Preferences"
+	set desc = "Toggle using nanoUI or retro style UIs for objects that support both."
+	prefs.usenanoui = !prefs.usenanoui
+	
+	prefs.save_preferences_sqlite(src, ckey)
+	
+	if(!prefs.usenanoui)
+		usr << "You will no longer use nanoUI on cross compatible UIs."
+	else
+		usr << "You will now use nanoUI on cross compatible UIs."
+	

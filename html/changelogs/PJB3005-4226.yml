@@ -1,0 +1,5 @@
+author: PJB005
+delete-after: true
+changes:
+  - rcdadd: Adds a system allowing players to choose between NanoUI and RetroUIs (switch using a verb in your preferences tab).
+  - rscadd: Don't get your hopes up yet though because only the telescience console is supported right now.

@@ -84,6 +84,7 @@
 	usewmp			=	text2num(preference_list_client["usewmp"])
 	special_popup	=	text2num(preference_list_client["special"])
 	randomslot		=	text2num(preference_list_client["randomslot"])
+	usenanoui		=	text2num(preference_list_client["usenanoui"])
 
 	ooccolor		= 	sanitize_hexcolor(ooccolor, initial(ooccolor))
 	lastchangelog	= 	sanitize_text(lastchangelog, initial(lastchangelog))
@@ -97,6 +98,7 @@
 	volume			= 	sanitize_integer(volume, 0, 100, initial(volume))
 	usewmp			=	sanitize_integer(usewmp, 0, 1, initial(usewmp))
 	special_popup	= 	sanitize_integer(special_popup, 0, 1, initial(special_popup))
+	usenanoui		=	sanitize_integer(usenanoui, 0, 1, initial(usenanoui))
 
 	return 1
 
@@ -156,15 +158,15 @@
 	check.Add("SELECT ckey FROM client WHERE ckey = ?", ckey)
 	if(check.Execute(db))
 		if(!check.NextRow())
-			q.Add("INSERT into client (ckey, ooc_color, lastchangelog, UI_style, default_slot, toggles, UI_style_color, UI_style_alpha, warns, warnbans, randomslot, volume, usewmp, special) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?)",\
-			ckey, ooccolor, lastchangelog, UI_style, default_slot, toggles, UI_style_color, UI_style_alpha, warns, warnbans, randomslot, volume, usewmp, special_popup)
+			q.Add("INSERT into client (ckey, ooc_color, lastchangelog, UI_style, default_slot, toggles, UI_style_color, UI_style_alpha, warns, warnbans, randomslot, volume, usewmp, special, usenanoui) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)",\
+			ckey, ooccolor, lastchangelog, UI_style, default_slot, toggles, UI_style_color, UI_style_alpha, warns, warnbans, randomslot, volume, usewmp, special_popup, usenanoui)
 			if(!q.Execute(db))
 				message_admins("Error #: [q.Error()] - [q.ErrorMsg()]")
 				warning("Error #:[q.Error()] - [q.ErrorMsg()]")
 				return 0
 		else
-			q.Add("UPDATE client SET ooc_color=?,lastchangelog=?,UI_style=?,default_slot=?,toggles=?,UI_style_color=?,UI_style_alpha=?,warns=?,warnbans=?,randomslot=?,volume=?,usewmp=?,special=? WHERE ckey = ?",\
-			ooccolor, lastchangelog, UI_style, default_slot, toggles, UI_style_color, UI_style_alpha, warns, warnbans, randomslot, volume, usewmp, special_popup, ckey)
+			q.Add("UPDATE client SET ooc_color=?,lastchangelog=?,UI_style=?,default_slot=?,toggles=?,UI_style_color=?,UI_style_alpha=?,warns=?,warnbans=?,randomslot=?,volume=?,usewmp=?,special=?,usenanoui=? WHERE ckey = ?",\
+			ooccolor, lastchangelog, UI_style, default_slot, toggles, UI_style_color, UI_style_alpha, warns, warnbans, randomslot, volume, usewmp, special_popup, usenanoui, ckey)
 			if(!q.Execute(db))
 				message_admins("Error #: [q.Error()] - [q.ErrorMsg()]")
 				warning("Error #:[q.Error()] - [q.ErrorMsg()]")
