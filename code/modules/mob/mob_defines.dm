@@ -4,6 +4,7 @@
 	animate_movement = 2
 	flags = HEAR
 	hud_possible = list(ANTAG_HUD)
+	pressure_resistance = 8
 	var/datum/mind/mind
 
 	var/stat = 0 //Whether a mob is alive or dead. TODO: Move this to living - Nodrak

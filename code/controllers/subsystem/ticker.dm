@@ -103,25 +103,9 @@ var/datum/subsystem/ticker/ticker
 				declare_completion()
 				spawn(50)
 					if(mode.station_was_nuked)
-						feedback_set_details("end_proper","nuke")
-						if(!delay_end)
-							world << "\blue <B>Rebooting due to destruction of station in [restart_timeout/10] seconds</B>"
+						world.Reboot("Station destroyed by Nuclear Device.", "end_proper", "nuke")
 					else
-						feedback_set_details("end_proper","proper completion")
-						if(!delay_end)
-							world << "\blue <B>Restarting in [restart_timeout/10] seconds</B>"
-
-
-					if(blackbox)
-						blackbox.save_all_data_to_sql()
-
-					if(delay_end)
-						world << "\blue <B>An admin has delayed the round end</B>"
-					else
-						sleep(restart_timeout)
-						kick_clients_in_lobby("\red The round came to an end with you in the lobby.", 1) //second parameter ensures only afk clients are kicked
-						world.Reboot()
-
+						world.Reboot("Round ended.", "end_proper", "proper completion")
 
 /datum/subsystem/ticker/proc/setup()
 		//Create and announce mode
@@ -353,7 +337,7 @@ var/datum/subsystem/ticker/ticker
 			if(Player.stat != DEAD && !isbrain(Player))
 				num_survivors++
 				if(station_evacuated) //If the shuttle has already left the station
-					if(!Player.onCentcom())
+					if(!Player.onCentcom() && !Player.onSyndieBase())
 						Player << "<font color='blue'><b>You managed to survive, but were marooned on [station_name()]...</b></FONT>"
 					else
 						num_escapees++

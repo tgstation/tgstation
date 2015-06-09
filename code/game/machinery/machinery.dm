@@ -97,6 +97,7 @@ Class Procs:
 	name = "machinery"
 	icon = 'icons/obj/stationobjs.dmi'
 	verb_yell = "blares"
+	pressure_resistance = 10
 	var/stat = 0
 	var/emagged = 0
 	var/use_power = 1
@@ -376,9 +377,13 @@ Class Procs:
 /obj/machinery/proc/exchange_parts(mob/user, obj/item/weapon/storage/part_replacer/W)
 	var/shouldplaysound = 0
 	if(istype(W) && component_parts)
-		if(panel_open)
+		if(panel_open || W.works_from_distance)
 			var/obj/item/weapon/circuitboard/CB = locate(/obj/item/weapon/circuitboard) in component_parts
 			var/P
+			if(W.works_from_distance)
+				user << "<span class='notice'>Following parts detected in the machine:</span>"
+				for(var/var/obj/item/C in component_parts)
+					user << "<span class='notice'>    [C.name]</span>"
 			for(var/obj/item/weapon/stock_parts/A in component_parts)
 				for(var/D in CB.req_components)
 					if(ispath(A.type, D))

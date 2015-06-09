@@ -1716,28 +1716,13 @@
 			dirty_paths = href_list["object_list"]
 
 		var/paths = list()
-		var/removed_paths = list()
 
 		for(var/dirty_path in dirty_paths)
 			var/path = text2path(dirty_path)
 			if(!path)
-				removed_paths += dirty_path
 				continue
 			else if(!ispath(path, /obj) && !ispath(path, /turf) && !ispath(path, /mob))
-				removed_paths += dirty_path
 				continue
-			else if(ispath(path, /obj/item/weapon/gun/energy/pulse))
-				if(!check_rights(R_FUN,0))
-					removed_paths += dirty_path
-					continue
-			else if(ispath(path, /obj/item/weapon/melee/energy/blade))//Not an item one should be able to spawn./N
-				if(!check_rights(R_FUN,0))
-					removed_paths += dirty_path
-					continue
-			else if(ispath(path, /obj/effect/anomaly/bhole))
-				if(!check_rights(R_FUN,0))
-					removed_paths += dirty_path
-					continue
 			paths += path
 
 		if(!paths)
@@ -1746,8 +1731,6 @@
 		if(length(paths) > 5)
 			alert("Select fewer object types, (max 5)")
 			return
-		else if(length(removed_paths))
-			alert("Removed:\n" + list2text(removed_paths, "\n"))
 
 		var/list/offset = text2list(href_list["offset"],",")
 		var/number = dd_range(1, 100, text2num(href_list["object_count"]))
