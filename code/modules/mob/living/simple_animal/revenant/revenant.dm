@@ -121,17 +121,14 @@
 		src.mind.spell_list += new /obj/effect/proc_holder/spell/targeted/revenant_harvest
 		src.mind.spell_list += new /obj/effect/proc_holder/spell/targeted/revenant_transmit
 		src.mind.spell_list += new /obj/effect/proc_holder/spell/aoe_turf/revenant_light
-		src.mind.spell_list += new /obj/effect/proc_holder/spell/targeted/revenant_life_tap
-		src.mind.spell_list += new /obj/effect/proc_holder/spell/targeted/revenant_seed_drain
-		src.mind.spell_list += new /obj/effect/proc_holder/spell/targeted/revenant_mindspike
 		return 1
 	return 0
 
 /mob/living/simple_animal/revenant/death()
-	if(!src.strikes)
+	if(!strikes)
 		return 0 //Impossible to die with strikes still active
 	..(1)
-	src.invisibility = 0
+	reveal(10, 1)
 	visible_message("<span class='danger'>[src] pulses with an eldritch purple light as its form unwinds into smoke.</span>")
 	ghostize()
 	qdel(src)
@@ -151,6 +148,8 @@
 
 /obj/effect/proc_holder/spell/proc/essence_check(var/essence_cost, var/silent = 0)
 	var/mob/living/simple_animal/revenant/W = usr
+	if(!istype(usr) || !usr)
+		return
 	if(W.essence < essence_cost)
 		if(!silent)
 			W << "<span class='warning'>You need [essence_cost]E to use [name] but you only have [W.essence]E available. Harvest some more things.</span>"
@@ -160,7 +159,19 @@
 
 
 
-/mob/living/simple_animal/revenant/proc/change_essence_amount(var/essence_amt, var/silent = 0, var/source = null, var/mob/living/simple_animal/revenant/user = usr)
+/mob/living/simple_animal/revenant/proc/wallcheck()
+	var/turf/T = get_turf(usr)
+	if(!istype(T, /turf/simulated/wall))
+		return 1
+	usr << "<span class='warning'>You can't use abilities from a wall. What did you expect?</span>"
+	return 0
+
+
+
+/mob/living/simple_animal/revenant/proc/change_essence_amount(var/essence_amt, var/silent = 0, var/source = null)
+	var/mob/living/simple_animal/revenant/user = usr
+	if(!istype(usr) || !usr)
+		return
 	if(!essence_amt)
 		return
 	user.essence += essence_amt
@@ -168,5 +179,21 @@
 		if(essence_amt >= 0)
 			user << "<span class='info'>Gained [essence_amt]E from [source].</span>"
 		else
-			user << "<span class='info'>Lost [essence_amt]E.</span>"
+			user << "<span class='info'>Lost [essence_amt]E from [source].</span>"
 	return 1
+
+
+
+/mob/living/simple_animal/revenant/proc/reveal(var/time, var/stun)
+	var/mob/living/simple_animal/revenant/R = usr
+	if(!istype(usr) || !usr)
+		return
+	R.revealed = 1
+	R.invisibility = 0
+	if(stun)
+		R.notransform = 1
+	spawn(time)
+		R.revealed = 0
+		R.invisibility = INVISIBILITY_OBSERVER
+		if(stun)
+			R.notransform = 0
