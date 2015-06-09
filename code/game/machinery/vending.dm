@@ -1450,3 +1450,16 @@
 	contraband = list(/obj/item/weapon/reagent_containers/food/drinks/groansbanned = 10)
 
 	pack = /obj/structure/vendomatpack/groans
+
+/obj/machinery/vending/nuka
+	name = "Nuka Cola Machine"
+	desc = "A machine filled to the brim with ice cold Nuka Cola!"
+	product_slogans = "A refreshing burst of atomic energy!;Drink like there's no tomorrow!;Take the leap... enjoy a Quantum!"
+	product_ads = "Wouldn't you enjoy an ice cold Nuka Cola right about now?"
+	vend_reply = "Enjoy a Nuka break!"
+	icon_state = "nuka"
+	products = list(/obj/item/weapon/reagent_containers/food/drinks/soda_cans/nuka = 15)
+	prices = list(/obj/item/weapon/reagent_containers/food/drinks/soda_cans/nuka = 20, /obj/item/weapon/reagent_containers/food/drinks/soda_cans/quantum = 50)
+	contraband = list(/obj/item/weapon/reagent_containers/food/drinks/soda_cans/quantum = 5)
+
+	pack = /obj/structure/vendomatpack/nuka
