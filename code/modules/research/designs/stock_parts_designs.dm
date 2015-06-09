@@ -13,6 +13,16 @@
 	build_path = /obj/item/weapon/storage/part_replacer
 	category = list("Stock Parts")
 
+/datum/design/BS_RPED
+	name = "Bluespace RPED"
+	desc = "Powered by bluespace technology, this RPED variant can upgrade buildings from a distance, without needing to remove the panel first."
+	id = "bs_rped"
+	req_tech = list("engineering" = 3, "materials" = 5)
+	build_type = PROTOLATHE
+	materials = list("$metal" = 15000, "$glass" = 5000, "$diamond" = 5000) //hardcore
+	build_path = /obj/item/weapon/storage/part_replacer/bluespace
+	category = list("Stock Parts")
+
 //Capacitors
 /datum/design/basic_capacitor
 	name = "Basic Capacitor"

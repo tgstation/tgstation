@@ -14,6 +14,29 @@
 	display_contents_with_number = 1
 	max_w_class = 3
 	max_combined_w_class = 100
+	var/works_from_distance = 0
+
+/obj/item/weapon/storage/part_replacer/afterattack(obj/machinery/T as obj, mob/living/carbon/human/user as mob, flag, params)
+	if(flag)
+		return
+	else
+		if(works_from_distance)
+			if(istype(T))
+				if(T.component_parts)
+					T.exchange_parts(user, src)
+	return
+
+/obj/item/weapon/storage/part_replacer/bluespace
+	name = "bluespace rapid part exchange device"
+	desc = "A version of the RPED that allows for replacement of parts and scanning from a distance, along with higher capacity for parts."
+	icon_state = "BS_RPED"
+	item_state = "BS_RPED"
+	w_class = 3
+	storage_slots = 400
+	max_w_class = 3
+	max_combined_w_class = 800
+	works_from_distance = 1
+
 
 /obj/item/weapon/storage/part_replacer/proc/play_rped_sound()
 	//Plays the sound for RPED exhanging or installing parts.
