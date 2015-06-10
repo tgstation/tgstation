@@ -32,4 +32,4 @@ delete-after: True
 # Also, this gets changed to [] after reading.  Just remove the brackets when you add new shit.
 changes: 
   - tweak: You can now open locked firelocks with the Ripley's hydraulic clamp (firefighting ripleys ahoy!)
-  - bugfix: Fixed not being able to open locked firelocks with dual-wielded fireaxes.
+  - bugfix: Fixed not being able to open locked firelocks with two-handed fireaxes.
