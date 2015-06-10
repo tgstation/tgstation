@@ -3,8 +3,10 @@
 		name = "lava pool"
 		desc = "A deadly pool of molten rock that incinerates almost anything on contact."
 		luminosity = 3
+		var/list/blacklist = list(/obj/item/clothing/suit/space/hardsuit/mining, /obj/item/asteroid/goliath_hide)
 
 /turf/simulated/floor/lava_pool/Entered(var/mob/living/carbon/C)
+	Incinerate(C) //To catch items before other things get processed
 	if(!istype(C))
 		return
 
@@ -30,7 +32,7 @@
 	if(!mobpresent)
 		SSobj.processing.Remove(src)
 
-/turf/simulated/floor/lava_pool/proc/check_suit(mob/living/carbon/human/H) // Check for goliath plated suit
+/turf/simulated/floor/lava_pool/proc/check_suit(mob/living/carbon/human/H) // Checks for goliath plated suit
 	if(istype(H.wear_suit, /obj/item/clothing/suit/space/hardsuit/mining))
 		var/obj/item/clothing/suit/space/hardsuit/mining/M = H.wear_suit
 		if(M.armor["melee"] >= 80)
@@ -42,3 +44,14 @@
 	C.adjust_fire_stacks(5)
 	C.Weaken(3)
 	C.IgniteMob()
+	Incinerate(C) //To delete mobs burning up on the tile
+
+/turf/simulated/floor/lava_pool/proc/Incinerate()
+	for(var/mob/living/C in src)
+		if(C)
+			if(C.getFireLoss() > 400)
+				del(C)
+
+	for(var/obj/I in src)
+		if(istype(I,/obj/item))
+			del(I)
