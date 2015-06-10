@@ -29,7 +29,7 @@ other types of metals and chemistry for reagents).
 - Add the AUTOLATHE tag to
 */
 
-datum/design						//Datum for object designs, used in construction
+/datum/design						//Datum for object designs, used in construction
 	var/name = "Name"					//Name of the created object.
 	var/desc = "Desc"					//Description of the created object.
 	var/id = "id"						//ID of the created object for easy refernece. Alphanumeric, lower-case, no symbols
@@ -44,7 +44,7 @@ datum/design						//Datum for object designs, used in construction
 
 //A proc to calculate the reliability of a design based on tech levels and innate modifiers.
 //Input: A list of /datum/tech; Output: The new reliabilty.
-datum/design/proc/CalcReliability(var/list/temp_techs)
+/datum/design/proc/CalcReliability(var/list/temp_techs)
 	var/new_reliability
 	for(var/datum/tech/T in temp_techs)
 		if(T.id in req_tech)
@@ -391,4 +391,18 @@ datum/design/proc/CalcReliability(var/list/temp_techs)
 	build_type = PROTOLATHE
 	materials = list("$metal" = 2000, "$glass" = 1000)
 	build_path = /obj/item/weapon/holosign_creator
+	category = list("Equipment")
+
+/////////////////////////////////////////
+////////////Tools//////////////
+/////////////////////////////////////////
+
+/datum/design/exwelder
+	name = "Experimental Welding Tool"
+	desc = "An experimental welder capable of self-fuel generation."
+	id = "exwelder"
+	req_tech = list("materials" = 4, "engineering" = 4, "bluespace" = 3, "plasmatech" = 3)
+	build_type = PROTOLATHE
+	materials = list("$metal" = 1000, "$glass" = 500, "$plasma" = 1500, "$uranium" = 200)
+	build_path = /obj/item/weapon/weldingtool/experimental
 	category = list("Equipment")

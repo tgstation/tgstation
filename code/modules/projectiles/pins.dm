@@ -59,7 +59,7 @@
 	user.show_message(fail_message, 1)
 	if(selfdestruct)
 		user.show_message("<span class='danger'>SELF-DESTRUCTING...</span><br>", 1)
-		user << "<span class='userdanger'>Your [gun] explodes!</span>"
+		user << "<span class='userdanger'>[gun] explodes!</span>"
 		explosion(get_turf(gun), -1, 0, 2, 3)
 		if(gun)
 			qdel(gun)
@@ -99,7 +99,7 @@
 
 /obj/item/device/firing_pin/implant/loyalty
 	name = "loyalty firing pin"
-	desc = "This is a security firing pin which only authorizes users who are loyalty-implanted."
+	desc = "This Security firing pin authorizes the weapon for only loyalty-implanted users."
 	icon_state = "firing_pin_loyalty"
 	req_implant = /obj/item/weapon/implant/loyalty
 
@@ -149,7 +149,7 @@
 // When you want to keep your toys for youself.
 /obj/item/device/firing_pin/dna
 	name = "DNA-keyed firing pin"
-	desc = "This is a DNA-locked firing pin which only authorizes one user."
+	desc = "This is a DNA-locked firing pin which only authorizes one user. Attempt to fire once to DNA-link."
 	icon_state = "firing_pin_dna"
 	fail_message = "<span class='warning'>DNA CHECK FAILED.</span>"
 	var/unique_enzymes = null
@@ -178,7 +178,7 @@
 		..()
 
 /obj/item/device/firing_pin/dna/dredd
-	desc = "This is a DNA-locked firing pin which only authorizes one user. It has a small explosive charge on it."
+	desc = "This is a DNA-locked firing pin which only authorizes one user. Attempt to fire once to DNA-link. It has a small explosive charge on it."
 	selfdestruct = 1
 
 
@@ -188,21 +188,24 @@
 	desc = "A recreational firing pin, used in laser tag units to ensure users have their vests on."
 	fail_message = "<span class='warning'>SUIT CHECK FAILED.</span>"
 	var/obj/item/clothing/suit/suit_requirement = null
+	var/tagcolor = ""
 
 /obj/item/device/firing_pin/tag/pin_auth(mob/living/user)
 	if(ishuman(user))
 		var/mob/living/carbon/human/M = user
 		if(istype(M.wear_suit, suit_requirement))
 			return 1
-	user << "<span class='warning'>You need to be wearing [suit_requirement.name]!</span>"
+	user << "<span class='warning'>You need to be wearing [tagcolor] laser tag armor!</span>"
 	return 0
 
 /obj/item/device/firing_pin/tag/red
 	name = "red laser tag firing pin"
 	icon_state = "firing_pin_red"
 	suit_requirement = /obj/item/clothing/suit/redtag
+	tagcolor = "red"
 
 /obj/item/device/firing_pin/tag/blue
 	name = "blue laser tag firing pin"
 	icon_state = "firing_pin_blue"
 	suit_requirement = /obj/item/clothing/suit/bluetag
+	tagcolor = "blue"

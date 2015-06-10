@@ -128,9 +128,10 @@
 							"<span class='warning'>[user] has prodded you with [src]. Luckily it was off</span>")
 			return
 	else
-		..()
 		if(status)
 			baton_stun(L, user)
+		..()
+
 
 
 /obj/item/weapon/melee/baton/proc/baton_stun(mob/living/L, mob/user)

@@ -92,7 +92,7 @@
 	name = "Pentetic Acid"
 	id = "pen_acid"
 	result = "pen_acid"
-	required_reagents = list("fuel" = 1, "chlorine" = 1, "ammonia" = 1, "formaldehyde" = 1, "sodium" = 1, "cyanide" = 1)
+	required_reagents = list("welding_fuel" = 1, "chlorine" = 1, "ammonia" = 1, "formaldehyde" = 1, "sodium" = 1, "cyanide" = 1)
 	result_amount = 6
 
 /datum/chemical_reaction/sal_acid

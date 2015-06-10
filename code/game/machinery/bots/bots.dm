@@ -371,7 +371,7 @@ Example usage: patient = scan(/mob/living/carbon/human, oldpatient, 1)
 The proc would return a human next to the bot to be set to the patient var.
 Pass the desired type path itself, declaring a temporary var beforehand is not required.
 */
-obj/machinery/bot/proc/scan(var/scan_type, var/old_target, var/scan_range = DEFAULT_SCAN_RANGE)
+/obj/machinery/bot/proc/scan(var/scan_type, var/old_target, var/scan_range = DEFAULT_SCAN_RANGE)
 	var/final_result
 	for (var/scan in view (scan_range, src) ) //Search for something in range!
 		if(!istype(scan, scan_type)) //Check that the thing we found is the type we want!
@@ -386,7 +386,7 @@ obj/machinery/bot/proc/scan(var/scan_type, var/old_target, var/scan_range = DEFA
 		return final_result
 
 //When the scan finds a target, run bot specific processing to select it for the next step. Empty by default.
-obj/machinery/bot/proc/process_scan(var/scan_target)
+/obj/machinery/bot/proc/process_scan(var/scan_target)
 	return scan_target
 
 
@@ -401,7 +401,7 @@ obj/machinery/bot/proc/process_scan(var/scan_target)
 Movement proc for stepping a bot through a path generated through A-star.
 Pass a positive integer as an argument to override a bot's default speed.
 */
-obj/machinery/bot/proc/bot_move(var/dest, var/move_speed)
+/obj/machinery/bot/proc/bot_move(var/dest, var/move_speed)
 
 	if(!dest || !path || path.len == 0) //A-star failed or a path/destination was not set.
 		path = list()
@@ -429,7 +429,7 @@ obj/machinery/bot/proc/bot_move(var/dest, var/move_speed)
 	return 1
 
 
-obj/machinery/bot/proc/bot_step(var/dest)
+/obj/machinery/bot/proc/bot_step(var/dest)
 	if(path && path.len > 1)
 		step_towards(src, path[1])
 		if(get_turf(src) == path[1]) //Successful move
@@ -455,7 +455,7 @@ obj/machinery/bot/proc/bot_step(var/dest)
 	var/datum/job/captain/All = new/datum/job/captain
 	all_access.access = All.get_access()
 
-	path = get_path_to(src, waypoint, /turf/proc/CardinalTurfsWithAccess, /turf/proc/Distance_cardinal, 0, 200, id=all_access)
+	path = get_path_to(src, waypoint, src, /turf/proc/Distance_cardinal, 0, 200, id=all_access)
 	calling_ai = caller //Link the AI to the bot!
 	ai_waypoint = waypoint
 
@@ -509,7 +509,7 @@ obj/machinery/bot/proc/bot_reset()
 			patrol_step()
 	return
 
-obj/machinery/bot/proc/start_patrol()
+/obj/machinery/bot/proc/start_patrol()
 
 	if(tries >= 4) //Bot is trapped, so stop trying to patrol.
 		auto_patrol = 0
@@ -648,7 +648,7 @@ obj/machinery/bot/proc/start_patrol()
 	return
 
 
-obj/machinery/bot/proc/bot_summon()
+/obj/machinery/bot/proc/bot_summon()
 		// summoned to PDA
 	summon_step()
 	return
@@ -657,12 +657,12 @@ obj/machinery/bot/proc/bot_summon()
 // given an optional turf to avoid
 /obj/machinery/bot/proc/calc_path(var/turf/avoid)
 	check_bot_access()
-	path = get_path_to(loc, patrol_target, /turf/proc/CardinalTurfsWithAccess, /turf/proc/Distance_cardinal, 0, 120, id=botcard, exclude=avoid)
+	path = get_path_to(loc, patrol_target, src, /turf/proc/Distance_cardinal, 0, 120, id=botcard, exclude=avoid)
 
 /obj/machinery/bot/proc/calc_summon_path(var/turf/avoid)
 	check_bot_access()
 	spawn()
-		path = get_path_to(loc, summon_target, /turf/proc/CardinalTurfsWithAccess, /turf/proc/Distance_cardinal, 0, 150, id=botcard, exclude=avoid)
+		path = get_path_to(loc, summon_target, src, /turf/proc/Distance_cardinal, 0, 150, id=botcard, exclude=avoid)
 		if(!path.len || tries >= 5) //Cannot reach target. Give up and announce the issue.
 			speak("Summon command failed, destination unreachable.",radio_frequency)
 			bot_reset()

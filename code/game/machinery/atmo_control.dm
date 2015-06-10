@@ -2,7 +2,7 @@
 // AIR SENSOR (found in gaz tanks)
 /////////////////////////////////////////////////////////////
 
-obj/machinery/air_sensor
+/obj/machinery/air_sensor
 	icon = 'icons/obj/stationobjs.dmi'
 	icon_state = "gsensor1"
 	name = "gas sensor"
@@ -26,10 +26,10 @@ obj/machinery/air_sensor
 
 	var/datum/radio_frequency/radio_connection
 
-obj/machinery/air_sensor/update_icon()
+/obj/machinery/air_sensor/update_icon()
 		icon_state = "gsensor[on]"
 
-obj/machinery/air_sensor/process_atmos()
+/obj/machinery/air_sensor/process_atmos()
 	if(on)
 		var/datum/signal/signal = new
 		signal.transmission_method = 1 //radio signal
@@ -63,21 +63,21 @@ obj/machinery/air_sensor/process_atmos()
 		radio_connection.post_signal(src, signal, filter = RADIO_ATMOSIA)
 
 
-obj/machinery/air_sensor/proc/set_frequency(new_frequency)
+/obj/machinery/air_sensor/proc/set_frequency(new_frequency)
 	radio_controller.remove_object(src, frequency)
 	frequency = new_frequency
 	radio_connection = radio_controller.add_object(src, frequency, RADIO_ATMOSIA)
 
-obj/machinery/air_sensor/initialize()
+/obj/machinery/air_sensor/initialize()
 	set_frequency(frequency)
 
-obj/machinery/air_sensor/New()
+/obj/machinery/air_sensor/New()
 	..()
 	SSair.atmos_machinery += src
 	if(radio_controller)
 		set_frequency(frequency)
 
-obj/machinery/air_sensor/Destroy()
+/obj/machinery/air_sensor/Destroy()
 	if(radio_controller)
 		radio_controller.remove_object(src,frequency)
 	..()
@@ -86,7 +86,7 @@ obj/machinery/air_sensor/Destroy()
 // GENERAL AIR CONTROL (a.k.a atmos computer)
 /////////////////////////////////////////////////////////////
 
-obj/machinery/computer/general_air_control
+/obj/machinery/computer/general_air_control
 	icon = 'icons/obj/computer.dmi'
 	icon_state = "tank"
 
@@ -99,29 +99,29 @@ obj/machinery/computer/general_air_control
 	var/list/sensor_information = list()
 	var/datum/radio_frequency/radio_connection
 
-obj/machinery/computer/general_air_control/New()
+/obj/machinery/computer/general_air_control/New()
 	..()
 
 	if(radio_controller)
 		set_frequency(frequency)
 
-obj/machinery/computer/general_air_control/attack_hand(mob/user)
+/obj/machinery/computer/general_air_control/attack_hand(mob/user)
 	if(..(user))
 		return
 	interact(user) //UpdateDialog() is calling /interact each tick, not attack_hand()
 
 
-obj/machinery/computer/general_air_control/interact(mob/user)
+/obj/machinery/computer/general_air_control/interact(mob/user)
 	var/datum/browser/popup = new(user, "computer", name, 480, 490) //update the content every tick
 	popup.set_content(return_text())
 	popup.set_title_image(user.browse_rsc_icon(src.icon, src.icon_state))
 	popup.open()
 
-obj/machinery/computer/general_air_control/process()
+/obj/machinery/computer/general_air_control/process()
 	if(..())	//if the computer is not broken or unpowered
 		src.updateDialog()
 
-obj/machinery/computer/general_air_control/receive_signal(datum/signal/signal)
+/obj/machinery/computer/general_air_control/receive_signal(datum/signal/signal)
 	if(!signal || signal.encryption) return
 
 	var/id_tag = signal.data["tag"]
@@ -129,7 +129,7 @@ obj/machinery/computer/general_air_control/receive_signal(datum/signal/signal)
 
 	sensor_information[id_tag] = signal.data
 
-obj/machinery/computer/general_air_control/proc/return_text()
+/obj/machinery/computer/general_air_control/proc/return_text()
 	var/sensor_data
 	var/count = 0
 	if(sensors.len)
@@ -177,20 +177,20 @@ obj/machinery/computer/general_air_control/proc/return_text()
 
 	return output
 
-obj/machinery/computer/general_air_control/Destroy()
+/obj/machinery/computer/general_air_control/Destroy()
 	if(radio_controller)
 		radio_controller.remove_object(src, frequency)
 	..()
 
-obj/machinery/computer/general_air_control/proc/set_frequency(new_frequency)
+/obj/machinery/computer/general_air_control/proc/set_frequency(new_frequency)
 	radio_controller.remove_object(src, frequency)
 	frequency = new_frequency
 	radio_connection = radio_controller.add_object(src, frequency, RADIO_ATMOSIA)
 
-obj/machinery/computer/general_air_control/initialize()
+/obj/machinery/computer/general_air_control/initialize()
 	set_frequency(frequency)
 
-obj/machinery/computer/general_air_control/Topic(href, href_list)
+/obj/machinery/computer/general_air_control/Topic(href, href_list)
 	if(..())
 		return
 
@@ -209,7 +209,7 @@ obj/machinery/computer/general_air_control/Topic(href, href_list)
 // LARGE TANK CONTROL
 /////////////////////////////////////////////////////////////
 
-obj/machinery/computer/general_air_control/large_tank_control
+/obj/machinery/computer/general_air_control/large_tank_control
 	icon = 'icons/obj/computer.dmi'
 	icon_state = "tank"
 
@@ -223,7 +223,7 @@ obj/machinery/computer/general_air_control/large_tank_control
 
 	var/pressure_setting = ONE_ATMOSPHERE * 45
 
-obj/machinery/computer/general_air_control/large_tank_control/proc/reconnect(mob/user)    //This hacky madness is the evidence of the fact that a lot of machines were never meant to be constructable, im so sorry you had to see this
+/obj/machinery/computer/general_air_control/large_tank_control/proc/reconnect(mob/user)    //This hacky madness is the evidence of the fact that a lot of machines were never meant to be constructable, im so sorry you had to see this
 	var/list/IO = list()
 	var/datum/radio_frequency/air_freq = radio_controller.return_frequency(1443)
 	var/datum/radio_frequency/gas_freq = radio_controller.return_frequency(1441)
@@ -263,7 +263,7 @@ obj/machinery/computer/general_air_control/large_tank_control/proc/reconnect(mob
 	for(var/obj/machinery/atmospherics/unary/vent_pump/U in devices)
 		U.broadcast_status()
 
-obj/machinery/computer/general_air_control/large_tank_control/return_text()
+/obj/machinery/computer/general_air_control/large_tank_control/return_text()
 	var/output = "<A href='?src=\ref[src];reconnect=1'>Reconnect</A><BR>"
 	if(sensors.len) //if recieving signals from nearby sensors...
 		output += ..() //... get the data.
@@ -296,7 +296,7 @@ Rate: [volume_rate] L/sec<BR>"}
 
 	return output
 
-obj/machinery/computer/general_air_control/large_tank_control/receive_signal(datum/signal/signal)
+/obj/machinery/computer/general_air_control/large_tank_control/receive_signal(datum/signal/signal)
 	if(!signal || signal.encryption) return
 
 	var/id_tag = signal.data["tag"]
@@ -308,7 +308,7 @@ obj/machinery/computer/general_air_control/large_tank_control/receive_signal(dat
 	else
 		..(signal)
 
-obj/machinery/computer/general_air_control/large_tank_control/Topic(href, href_list)
+/obj/machinery/computer/general_air_control/large_tank_control/Topic(href, href_list)
 	if(..())
 		return
 
@@ -352,7 +352,7 @@ obj/machinery/computer/general_air_control/large_tank_control/Topic(href, href_l
 // FUEL INJECTION
 /////////////////////////////////////////////////////////////
 
-obj/machinery/computer/general_air_control/fuel_injection
+/obj/machinery/computer/general_air_control/fuel_injection
 	icon = 'icons/obj/computer.dmi'
 	icon_state = "atmos"
 
@@ -364,7 +364,7 @@ obj/machinery/computer/general_air_control/fuel_injection
 	var/cutoff_temperature = 2000
 	var/on_temperature = 1200
 
-obj/machinery/computer/general_air_control/fuel_injection/process()
+/obj/machinery/computer/general_air_control/fuel_injection/process()
 	if(automation)
 		if(!radio_connection)
 			return 0
@@ -393,7 +393,7 @@ obj/machinery/computer/general_air_control/fuel_injection/process()
 
 	..()
 
-obj/machinery/computer/general_air_control/fuel_injection/return_text()
+/obj/machinery/computer/general_air_control/fuel_injection/return_text()
 	var/output = ..()
 
 	output += "<B>Fuel Injection System</B><BR>"
@@ -415,7 +415,7 @@ Rate: [volume_rate] L/sec<BR>"}
 
 	return output
 
-obj/machinery/computer/general_air_control/fuel_injection/receive_signal(datum/signal/signal)
+/obj/machinery/computer/general_air_control/fuel_injection/receive_signal(datum/signal/signal)
 	if(!signal || signal.encryption) return
 
 	var/id_tag = signal.data["tag"]
@@ -425,7 +425,7 @@ obj/machinery/computer/general_air_control/fuel_injection/receive_signal(datum/s
 	else
 		..(signal)
 
-obj/machinery/computer/general_air_control/fuel_injection/Topic(href, href_list)
+/obj/machinery/computer/general_air_control/fuel_injection/Topic(href, href_list)
 	if(..())
 		return
 

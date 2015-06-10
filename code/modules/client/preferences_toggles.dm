@@ -113,7 +113,7 @@
 	else
 		src << "You will no longer hear music in the game lobby."
 		if(istype(mob, /mob/new_player))
-			src << sound(null, repeat = 0, wait = 0, volume = 85, channel = 1) // stop the jamsz
+			mob.stopLobbySound()
 	feedback_add_details("admin_verb","TLobby") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
 /client/verb/togglemidis()
@@ -208,7 +208,8 @@
 var/list/ghost_forms = list("ghost","ghostking","ghostian2","skeleghost","ghost_red","ghost_black", \
 							"ghost_blue","ghost_yellow","ghost_green","ghost_pink", \
 							"ghost_cyan","ghost_dblue","ghost_dred","ghost_dgreen", \
-							"ghost_dcyan","ghost_grey","ghost_dyellow","ghost_dpink")
+							"ghost_dcyan","ghost_grey","ghost_dyellow","ghost_dpink", "ghost_purpleswirl","ghost_funkypurp","ghost_pinksherbert","ghost_blazeit",\
+							"ghost_mellow","ghost_rainbow","ghost_camo","ghost_fire")
 /client/verb/pick_form()
 	set name = "Choose Ghost Form"
 	set category = "Preferences"

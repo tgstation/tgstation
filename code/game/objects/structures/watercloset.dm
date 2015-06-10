@@ -386,7 +386,7 @@
 		user << "<span class='notice'>You fill [RG] from [src].</span>"
 		return
 
-	else if(istype(O, /obj/item/weapon/melee/baton))
+	if(istype(O, /obj/item/weapon/melee/baton))
 		var/obj/item/weapon/melee/baton/B = O
 		if(B.bcell)
 			if(B.bcell.charge > 0 && B.status == 1)
@@ -403,6 +403,11 @@
 					"<span class='danger'>[user] was stunned by \his wet [O]!</span>", \
 					"<span class='userdanger'>[user] was stunned by \his wet [O]!</span>")
 				return
+
+	if(istype(O, /obj/item/weapon/mop))
+		O.reagents.add_reagent("water", 5)
+		user << "<span class='notice'>You wet [O] in [src].</span>"
+		playsound(loc, 'sound/effects/slosh.ogg', 25, 1)
 
 	var/turf/location = user.loc
 	if(!isturf(location)) return

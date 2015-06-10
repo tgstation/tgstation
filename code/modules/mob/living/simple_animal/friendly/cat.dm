@@ -31,7 +31,6 @@
 	gender = FEMALE
 	var/turns_since_scan = 0
 	var/mob/living/simple_animal/mouse/movement_target
-	pcollar = /obj/item/clothing/tie/petcollar
 
 /mob/living/simple_animal/pet/cat/Runtime/Life()
 	//MICE!

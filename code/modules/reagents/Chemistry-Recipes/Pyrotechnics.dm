@@ -325,7 +325,7 @@
 	name = "Napalm"
 	id = "napalm"
 	result = "napalm"
-	required_reagents = list("sugar" = 1, "fuel" = 1, "ethanol" = 1 )
+	required_reagents = list("sugar" = 1, "welding_fuel" = 1, "ethanol" = 1 )
 	result_amount = 3
 
 

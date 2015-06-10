@@ -238,7 +238,7 @@
 		if(secure && broken)
 			user << "<span class='notice'>The locker appears to be broken.</span>"
 			return
-		if(!place(user, W))
+		if(!place(user, W) && !isnull(W))
 			src.attack_hand(user)
 
 /obj/structure/closet/proc/place(var/mob/user, var/obj/item/I)
@@ -351,8 +351,8 @@
 
 /obj/structure/closet/AltClick(var/mob/user)
 	..()
-	if(user.stat || !user.canmove || user.restrained() || broken)
-		user << "<span class='notice'>You can't do that right now.</span>"
+	if(!user.canUseTopic(user) || broken)
+		user << "<span class='warning'>You can't do that right now!</span>"
 		return
 	if(src.opened || !secure || !in_range(src, user))
 		return

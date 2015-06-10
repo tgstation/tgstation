@@ -188,7 +188,7 @@
 
 var/record_id_num = 1001
 /datum/datacore/proc/manifest_inject(var/mob/living/carbon/human/H)
-	if(H.mind && (H.mind.assigned_role != "MODE"))
+	if(H.mind && (H.mind.assigned_role != H.mind.special_role))
 		var/assignment
 		if(H.mind.assigned_role)
 			assignment = H.mind.assigned_role
@@ -259,6 +259,8 @@ var/record_id_num = 1001
 		L.fields["b_dna"]		= H.dna.unique_enzymes
 		L.fields["enzymes"]		= H.dna.struc_enzymes
 		L.fields["identity"]	= H.dna.uni_identity
+		L.fields["species"]		= H.dna.species.type
+		L.fields["mcolor"]		= H.dna.mutant_color
 		L.fields["image"]		= image
 		locked += L
 	return

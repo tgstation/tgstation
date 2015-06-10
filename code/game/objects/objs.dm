@@ -150,3 +150,6 @@
 
 /obj/proc/Deconstruct()
 	qdel(src)
+
+/obj/get_spans()
+	return ..() | SPAN_ROBOT

@@ -27,7 +27,7 @@
 	name = "Itching Powder"
 	id = "itching_powder"
 	result = "itching_powder"
-	required_reagents = list("fuel" = 1, "ammonia" = 1, "charcoal" = 1)
+	required_reagents = list("welding_fuel" = 1, "ammonia" = 1, "charcoal" = 1)
 	result_amount = 3
 
 /datum/chemical_reaction/facid

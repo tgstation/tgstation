@@ -405,7 +405,7 @@
 	plant_type = 0
 	oneharvest = 1
 	growthstages = 3
-	mutatelist = list(/obj/item/seeds/bluetomatoseed, /obj/item/seeds/bloodtomatoseed)
+	mutatelist = list(/obj/item/seeds/geraniumseed, /obj/item/seeds/lilyseed)
 
 /obj/item/seeds/geraniumseed
 	name = "pack of geranium seeds"
@@ -1372,7 +1372,7 @@
 		if(prob(20))
 			mutations.Remove(pick(temp_mut_list))
 		temp_mut_list.Cut()
-	if(S.has_reagent("fuel", 5))
+	if(S.has_reagent("welding_fuel", 5))
 		for(var/datum/spacevine_mutation/SM in mutations)
 			if(SM.quality == POSITIVE)
 				temp_mut_list += SM

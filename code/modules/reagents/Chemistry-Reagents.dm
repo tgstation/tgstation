@@ -12,7 +12,7 @@
 //Toxin & acid reagents
 //Hydroponics stuff
 
-datum/reagent
+/datum/reagent
 	var/name = "Reagent"
 	var/id = "reagent"
 	var/description = ""
@@ -30,11 +30,11 @@ datum/reagent
 	var/addiction_stage = 0
 	var/overdosed = 0 // You fucked up and this is now triggering it's overdose effects, purge that shit quick.
 
-datum/reagent/Destroy() // This should only be called by the holder, so it's already handled clearing its references
+/datum/reagent/Destroy() // This should only be called by the holder, so it's already handled clearing its references
 	..()
 	holder = null
 
-datum/reagent/proc/reaction_mob(var/mob/M, var/method=TOUCH, var/volume, var/show_message = 1) //By default we have a chance to transfer some
+/datum/reagent/proc/reaction_mob(var/mob/M, var/method=TOUCH, var/volume, var/show_message = 1) //By default we have a chance to transfer some
 	if(!istype(M, /mob/living))
 		return 0
 	var/datum/reagent/self = src
@@ -67,17 +67,17 @@ datum/reagent/proc/reaction_mob(var/mob/M, var/method=TOUCH, var/volume, var/sho
 					M.reagents.add_reagent(self.id,self.volume/2)
 	return 1
 
-datum/reagent/proc/reaction_obj(var/obj/O, var/volume) //By default we transfer a small part of the reagent to the object
+/datum/reagent/proc/reaction_obj(var/obj/O, var/volume) //By default we transfer a small part of the reagent to the object
 	src = null						//if it can hold reagents. nope!
 	//if(O.reagents)
 	//	O.reagents.add_reagent(id,volume/3)
 	return
 
-datum/reagent/proc/reaction_turf(var/turf/T, var/volume)
+/datum/reagent/proc/reaction_turf(var/turf/T, var/volume)
 	src = null
 	return
 
-datum/reagent/proc/on_mob_life(var/mob/living/M as mob)
+/datum/reagent/proc/on_mob_life(var/mob/living/M as mob)
 	current_cycle++
 	if(!istype(M, /mob/living))
 		return //Noticed runtime errors from facid trying to damage ghosts, this should fix. --NEO
@@ -85,55 +85,55 @@ datum/reagent/proc/on_mob_life(var/mob/living/M as mob)
 	return
 
 // Called when this reagent is removed while inside a mob
-datum/reagent/proc/on_mob_delete(mob/M)
+/datum/reagent/proc/on_mob_delete(mob/M)
 	return
 
-datum/reagent/proc/on_move(var/mob/M)
+/datum/reagent/proc/on_move(var/mob/M)
 	return
 
 // Called after add_reagents creates a new reagent.
-datum/reagent/proc/on_new(var/data)
+/datum/reagent/proc/on_new(var/data)
 	return
 
 // Called when two reagents of the same are mixing.
-datum/reagent/proc/on_merge(var/data)
+/datum/reagent/proc/on_merge(var/data)
 	return
 
-datum/reagent/proc/on_update(var/atom/A)
+/datum/reagent/proc/on_update(var/atom/A)
 	return
 
 // Called every time reagent containers process.
-datum/reagent/proc/on_tick(var/data)
+/datum/reagent/proc/on_tick(var/data)
 	return
 
 // Called when the reagent container is hit by an explosion
-datum/reagent/proc/on_ex_act(var/severity)
+/datum/reagent/proc/on_ex_act(var/severity)
 	return
 
 // Called if the reagent has passed the overdose threshold and is set to be triggering overdose effects
-datum/reagent/proc/overdose_process(var/mob/living/M as mob)
+/datum/reagent/proc/overdose_process(var/mob/living/M as mob)
 	return
 
-datum/reagent/proc/overdose_start(var/mob/living/M as mob)
+/datum/reagent/proc/overdose_start(var/mob/living/M as mob)
 	M << "<span class = 'userdanger'>You feel like you took too much of [name]!</span>"
 	return
 
-datum/reagent/proc/addiction_act_stage1(var/mob/living/M as mob)
+/datum/reagent/proc/addiction_act_stage1(var/mob/living/M as mob)
 	if(prob(30))
 		M << "<span class = 'notice'>You feel like some [name] right about now.</span>"
 	return
 
-datum/reagent/proc/addiction_act_stage2(var/mob/living/M as mob)
+/datum/reagent/proc/addiction_act_stage2(var/mob/living/M as mob)
 	if(prob(30))
 		M << "<span class = 'notice'>You feel like you need [name]. You just can't get enough.</span>"
 	return
 
-datum/reagent/proc/addiction_act_stage3(var/mob/living/M as mob)
+/datum/reagent/proc/addiction_act_stage3(var/mob/living/M as mob)
 	if(prob(30))
 		M << "<span class = 'danger'>You have an intense craving for [name].</span>"
 	return
 
-datum/reagent/proc/addiction_act_stage4(var/mob/living/M as mob)
+/datum/reagent/proc/addiction_act_stage4(var/mob/living/M as mob)
 	if(prob(30))
 		M << "<span class = 'boldannounce'>You're not feeling good at all! You really need some [name].</span>"
 	return

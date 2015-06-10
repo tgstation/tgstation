@@ -3,6 +3,17 @@
 
 #define SMESRATE 0.05			// rate of internal charge to external power
 
+//Cache defines
+#define SMES_CLEVEL_1		1
+#define SMES_CLEVEL_2		2
+#define SMES_CLEVEL_3		3
+#define SMES_CLEVEL_4		4
+#define SMES_CLEVEL_5		5
+#define SMES_OUTPUTTING		6
+#define SMES_NOT_OUTPUTTING 7
+#define SMES_INPUTTING		8
+#define SMES_INPUT_ATTEMPT	9
+
 /obj/machinery/power/smes
 	name = "power storage unit"
 	desc = "A high-capacity superconducting magnetic energy storage (SMES) unit."
@@ -26,6 +37,8 @@
 	var/output_used = 0 // amount of power actually outputted. may be less than output_level if the powernet returns excess power
 
 	var/obj/machinery/power/terminal/terminal = null
+
+	var/static/list/smesImageCache
 
 
 /obj/machinery/power/smes/New()
@@ -177,18 +190,35 @@
 	if(panel_open)
 		return
 
+	if(!smesImageCache || !smesImageCache.len)
+		smesImageCache = list()
+		smesImageCache.len = 9
 
-	overlays += image('icons/obj/power.dmi', "smes-op[outputting]")
+		smesImageCache[SMES_CLEVEL_1] = image('icons/obj/power.dmi',"smes-og1")
+		smesImageCache[SMES_CLEVEL_2] = image('icons/obj/power.dmi',"smes-og2")
+		smesImageCache[SMES_CLEVEL_3] = image('icons/obj/power.dmi',"smes-og3")
+		smesImageCache[SMES_CLEVEL_4] = image('icons/obj/power.dmi',"smes-og4")
+		smesImageCache[SMES_CLEVEL_5] = image('icons/obj/power.dmi',"smes-og5")
+
+		smesImageCache[SMES_OUTPUTTING] = image('icons/obj/power.dmi', "smes-op1")
+		smesImageCache[SMES_NOT_OUTPUTTING] = image('icons/obj/power.dmi',"smes-op0")
+		smesImageCache[SMES_INPUTTING] = image('icons/obj/power.dmi', "smes-oc1")
+		smesImageCache[SMES_INPUT_ATTEMPT] = image('icons/obj/power.dmi', "smes-oc0")
+
+	if(outputting)
+		overlays += smesImageCache[SMES_OUTPUTTING]
+	else
+		overlays += smesImageCache[SMES_NOT_OUTPUTTING]
 
 	if(inputting)
-		overlays += image('icons/obj/power.dmi', "smes-oc1")
+		overlays += smesImageCache[SMES_INPUTTING]
 	else
 		if(input_attempt)
-			overlays += image('icons/obj/power.dmi', "smes-oc0")
+			overlays += smesImageCache[SMES_INPUT_ATTEMPT]
 
 	var/clevel = chargedisplay()
 	if(clevel>0)
-		overlays += image('icons/obj/power.dmi', "smes-og[clevel]")
+		overlays += smesImageCache[clevel]
 	return
 
 
@@ -421,3 +451,13 @@
 
 
 #undef SMESRATE
+
+#undef SMES_CLEVEL_1
+#undef SMES_CLEVEL_2
+#undef SMES_CLEVEL_3
+#undef SMES_CLEVEL_4
+#undef SMES_CLEVEL_5
+#undef SMES_OUTPUTTING
+#undef SMES_NOT_OUTPUTTING
+#undef SMES_INPUTTING
+#undef SMES_INPUT_ATTEMPT

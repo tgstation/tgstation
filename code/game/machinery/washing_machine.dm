@@ -64,6 +64,7 @@
 			var/new_jumpsuit_icon_state = ""
 			var/new_jumpsuit_item_state = ""
 			var/new_jumpsuit_name = ""
+			var/new_can_adjust
 			var/new_glove_icon_state = ""
 			var/new_glove_item_state = ""
 			var/new_glove_name = ""
@@ -81,6 +82,7 @@
 					new_jumpsuit_icon_state = J.icon_state
 					new_jumpsuit_item_state = J.item_state
 					new_jumpsuit_name = J.name
+					new_can_adjust = J.can_adjust
 					qdel(J)
 					break
 				qdel(J)
@@ -125,6 +127,7 @@
 					J.name = new_jumpsuit_name
 					J.desc = new_desc
 					J.suit_color = wash_color
+					J.can_adjust = new_can_adjust
 			if(new_glove_icon_state && new_glove_item_state && new_glove_name)
 				for(var/obj/item/clothing/gloves/color/G in contents)
 					G.item_state = new_glove_item_state

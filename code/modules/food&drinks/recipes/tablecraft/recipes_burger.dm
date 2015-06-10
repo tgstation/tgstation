@@ -45,7 +45,7 @@
 	)
 	result = /obj/item/weapon/reagent_containers/food/snacks/burger/xeno
 
-datum/table_recipe/bearger
+/datum/table_recipe/bearger
 	name = "Bearger"
 	reqs = list(
 		/obj/item/weapon/reagent_containers/food/snacks/meat/steak/bear = 1,

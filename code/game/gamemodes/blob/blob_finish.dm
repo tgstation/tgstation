@@ -40,7 +40,7 @@
 	..()
 	return 1
 
-datum/game_mode/proc/auto_declare_completion_blob()
+/datum/game_mode/proc/auto_declare_completion_blob()
 	if(istype(ticker.mode,/datum/game_mode/blob) )
 		var/datum/game_mode/blob/blob_mode = src
 		if(blob_mode.infected_crew.len)

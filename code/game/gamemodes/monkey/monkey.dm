@@ -71,6 +71,7 @@
 
 	if(!round_converted)
 		for(var/datum/mind/monkey_mind in ape_infectees)
+			continuous_sanity_checked = 1
 			if(monkey_mind.current && monkey_mind.current.stat != DEAD)
 				return 0
 
@@ -88,7 +89,7 @@
 	var/datum/disease/D = new /datum/disease/transformation/jungle_fever()
 	for(var/mob/living/carbon/monkey/M in living_mob_list)
 		if (M.HasDisease(D))
-			if(M.onCentcom())
+			if(M.onCentcom() || M.onSyndieBase())
 				escaped_monkeys++
 	if(escaped_monkeys >= monkeys_to_win)
 		return 1

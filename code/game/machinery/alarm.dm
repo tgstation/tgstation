@@ -272,6 +272,8 @@
 
 /obj/machinery/alarm/proc/populate_status(var/list/data)
 	var/turf/location = get_turf(src)
+	if(!location)
+		return
 	var/datum/gas_mixture/environment = location.return_air()
 	var/total = environment.oxygen + environment.carbon_dioxide + environment.toxins + environment.nitrogen
 

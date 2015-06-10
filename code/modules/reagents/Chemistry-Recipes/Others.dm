@@ -228,14 +228,14 @@
 	required_reagents = list("toxin" = 1, "water" = 4)
 	result_amount = 5
 
-datum/chemical_reaction/weedkiller
+/datum/chemical_reaction/weedkiller
 	name = "Weed Killer"
 	id = "weedkiller"
 	result = "weedkiller"
 	required_reagents = list("toxin" = 1, "ammonia" = 4)
 	result_amount = 5
 
-datum/chemical_reaction/pestkiller
+/datum/chemical_reaction/pestkiller
 	name = "Pest Killer"
 	id = "pestkiller"
 	result = "pestkiller"
@@ -249,7 +249,7 @@ datum/chemical_reaction/pestkiller
 	name = "acetone"
 	id = "acetone"
 	result = "acetone"
-	required_reagents = list("oil" = 1, "fuel" = 1, "oxygen" = 1)
+	required_reagents = list("oil" = 1, "welding_fuel" = 1, "oxygen" = 1)
 	result_amount = 3
 
 /datum/chemical_reaction/carpet
@@ -264,7 +264,7 @@ datum/chemical_reaction/pestkiller
 	name = "Oil"
 	id = "oil"
 	result = "oil"
-	required_reagents = list("fuel" = 1, "carbon" = 1, "hydrogen" = 1)
+	required_reagents = list("welding_fuel" = 1, "carbon" = 1, "hydrogen" = 1)
 	result_amount = 3
 
 /datum/chemical_reaction/phenol
