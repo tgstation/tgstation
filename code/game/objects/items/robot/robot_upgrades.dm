@@ -209,3 +209,28 @@
 
 	R.SetEmagged(1)
 	return 1
+
+/obj/item/borg/upgrade/plasteel
+	name = "plasteel module"
+	desc = "A plasteel synthesizing module."
+	icon_state = "cyborg_upgrade5"
+	require_module = 1
+
+/obj/item/borg/upgrade/plasteel/action(var/mob/living/silicon/robot/R)
+	if(..()) return 0
+
+	if(!istype(R.module, /obj/item/weapon/robot_module/engineering))
+		R << "Upgrade mounting error!  No suitable hardpoint detected!"
+		usr << "There's no mounting point for the module!"
+		return 0
+	else if(locate(/obj/item/stack/sheet/plasteel/cyborg) in R.module.modules)
+		usr << "There is no room for more of these."
+		return 0
+	else
+		var/datum/robot_energy_storage/plasteel/plastore = new /datum/robot_energy_storage/plasteel(R.module)
+		R.module.storages |= plastore
+		var/obj/item/stack/sheet/plasteel/cyborg/P = new(R.module)
+		P.source = plastore
+		R.module.modules += P
+		R.module.rebuild()
+		return 1
