@@ -992,6 +992,13 @@ var/list/all_supply_groups = list(supply_emergency,supply_security,supply_engine
 	containertype = /obj/structure/largecrate/mule
 	containername = "\improper MULEbot Crate"
 
+/datum/supply_packs/misc/exercise_bike
+	name = "Exercise bike Crate"
+	contains = list(/obj/machinery/power/exercise_bike/orderable)
+	cost = 25
+	containertype = /obj/structure/largecrate
+	containername = "exercise bike crate"
+
 /datum/supply_packs/misc/conveyor
 	name = "Conveyor Assembly Crate"
 	contains = list(/obj/item/conveyor_construct,
