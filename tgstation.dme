@@ -767,6 +767,7 @@
 #include "code\game\turfs\simulated\walls_misc.dm"
 #include "code\game\turfs\simulated\walls_reinforced.dm"
 #include "code\game\turfs\simulated\floor\fancy_floor.dm"
+#include "code\game\turfs\simulated\floor\lava_pool.dm"
 #include "code\game\turfs\simulated\floor\light_floor.dm"
 #include "code\game\turfs\simulated\floor\mineral_floor.dm"
 #include "code\game\turfs\simulated\floor\misc_floor.dm"
