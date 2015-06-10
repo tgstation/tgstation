@@ -226,6 +226,10 @@ var/global/list/alert_overlays_global = list()
 			update_icon()
 			return
 
+	if( istype(C, /obj/item/weapon/crowbar) || ( istype(C,/obj/item/weapon/fireaxe) && C.wielded ) )
+		force_open(user, C)
+		return
+
 	if(blocked)
 		user << "<span class='warning'>\The [src] is welded solid!</span>"
 		return
@@ -234,28 +238,6 @@ var/global/list/alert_overlays_global = list()
 	ASSERT(istype(A)) // This worries me.
 	var/alarmed = A.doors_down || A.fire
 
-	if( istype(C, /obj/item/weapon/crowbar) || ( istype(C,/obj/item/weapon/fireaxe) && C.wielded == 1 ) )
-		if(operating)
-			return
-		if( blocked )
-			user.visible_message("<span class='attack'>\The [user] pries at \the [src] with \a [C], but \the [src] is welded in place!</span>",\
-			"You try to pry \the [src] [density ? "open" : "closed"], but it is welded in place!",\
-			"You hear someone struggle and metal straining.")
-
-		user.visible_message("<span class='attack'>\The [user] forces \the [src] [density ? "open" : "closed"] with \a [C]!</span>",\
-			"You force \the [src] [density ? "open" : "closed"] with \the [C]!",\
-			"You hear metal strain, and a door [density ? "open" : "close"].")
-
-
-		if(density)
-			spawn(0)
-				open()
-		else
-			spawn(0)
-				close()
-		log_admin("[user]/([user.ckey]) [density ? "closed the open" : "opened the closed"] [alarmed ? "and alarming" : ""] firelock at [formatJumpTo(get_turf(src))]")
-
-		return
 	var/access_granted = 0
 	var/users_name
 	if(!istype(C, /obj)) //If someone hit it with their hand.  We need to see if they are allowed.
@@ -337,6 +319,29 @@ var/global/list/alert_overlays_global = list()
 	if(alarmed)
 		spawn(50)
 			close()
+/obj/machinery/door/firedoor/proc/force_open(mob/user, var/obj/C) //used in mecha/equipment/tools/tools.dm
+	var/area/A = get_area_master(src)
+	ASSERT(istype(A)) // This worries me.
+	var/alarmed = A.doors_down || A.fire
+
+	if( blocked )
+		user.visible_message("<span class='attack'>\The [user] pries at \the [src] with \a [C], but \the [src] is welded in place!</span>",\
+		"You try to pry \the [src] [density ? "open" : "closed"], but it is welded in place!",\
+		"You hear someone struggle and metal straining.")
+		return
+
+	user.visible_message("<span class='attack'>\The [user] forces \the [src] [density ? "open" : "closed"] with \a [C]!</span>",\
+		"You force \the [src] [density ? "open" : "closed"] with \the [C]!",\
+		"You hear metal strain, and a door [density ? "open" : "close"].")
+
+	if(density)
+		spawn(0)
+			open()
+	else
+		spawn(0)
+			close()
+	log_admin("[user]/([user.ckey]) [density ? "closed the open" : "opened the closed"] [alarmed ? "and alarming" : ""] firelock at [formatJumpTo(get_turf(src))]")
+	return
 
 /obj/machinery/door/firedoor/close()
 	if(blocked || !loc)

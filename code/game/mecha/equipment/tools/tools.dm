@@ -27,6 +27,11 @@
 
 	if(istype(target,/obj))
 		var/obj/O = target
+		if (istype(O, /obj/machinery/door/firedoor))
+			var/obj/machinery/door/firedoor/FD = O
+			if (!FD.operating)
+				FD.force_open(chassis.occupant, src)
+			return
 		if(!O.anchored)
 			var/obj/structure/ore_box/ore_box = locate(/obj/structure/ore_box) in cargo_holder.cargo
 			if(ore_box && istype(O, /obj/item/weapon/ore))
