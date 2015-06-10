@@ -134,12 +134,12 @@ They can only use one tool at a time, they can't choose modules, and they have 1
 	set name = "Change appearance"
 	set desc = "Changes your look"
 	if (client)
-		var/icontype = input("Select an icon!", "Mobile MMI", null) in list("Basic", "Hover", "Keeper", "Replicator", "Prime")
+		var/icontype = input("Select an icon!", "Mobile MMI", null) in list("Basic", "Hover", "RepairBot", "Scout", "Keeper", "Replicator", "Prime")
 		switch(icontype)
 			if("Replicator") subtype = "replicator"
 			if("Keeper")	 subtype = "keeper"
-		//	if("RepairBot")	 subtype = "repairbot"
-		//	if("Scout")	 	 subtype = "scout"
+			if("RepairBot")	 subtype = "repairbot"
+			if("Scout")	 	 subtype = "scout"
 			if("Hover")	     subtype = "hovermommi"
 			if("Prime")	     subtype = "mommiprime"
 			else			 subtype = "mommi"

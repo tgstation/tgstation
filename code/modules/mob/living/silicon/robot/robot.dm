@@ -498,6 +498,9 @@
 
 	else if(istype(W, /obj/item/weapon/aiModule))
 		var/obj/item/weapon/aiModule/MOD = W
+		if(ismommi(src))
+			user << "You cannot use this module with a MoMMI"
+			return
 		if(!opened)
 			user << "You need access to the robot's insides to do that."
 			return
@@ -533,6 +536,9 @@
 				user << "<span class='danger'>Access denied.</span>"
 
 	else if(istype(W, /obj/item/borg/upgrade/))
+		if(ismommi(src))
+			user << "You cannot use this upgrade with a MoMMI"
+			return
 		var/obj/item/borg/upgrade/U = W
 		if(!opened)
 			usr << "You must access the borgs internals!"

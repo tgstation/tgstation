@@ -22,6 +22,7 @@ var/list/icons_to_ignore_at_floor_init = list("damaged1","damaged2","damaged3","
 
 	var/icon_regular_floor = "floor" //used to remember what icon the tile should have by default
 	var/icon_plating = "plating"
+	icon_state = "floor" //fuck it
 	thermal_conductivity = 0.040
 	heat_capacity = 10000
 	intact = 1
