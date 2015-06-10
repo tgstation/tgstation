@@ -10,7 +10,7 @@ var/list/world_uplinks = list()
 
 /obj/item/device/uplink
 	var/welcome = "Syndicate Uplink Console:"	// Welcoming menu message
-	var/uses = 20								// Numbers of crystals
+	var/uses = 40								// Numbers of crystals
 	// List of items not to shove in their hands.
 	var/purchase_log = ""
 	var/show_description = null
