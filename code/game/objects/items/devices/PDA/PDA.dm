@@ -974,7 +974,7 @@ var/global/list/obj/item/device/pda/PDAs = list()
 		switch(scanmode)
 
 			if(1)
-				user.visible_message(text("<span class='alert'>[] has analyzed []'s vitals!</span>", user, C))
+				user.visible_message("<span class='alert'>[user] has analyzed [C]'s vitals!</span>")
 				healthscan(user, C, 1)
 				src.add_fingerprint(user)
 
@@ -995,16 +995,9 @@ var/global/list/obj/item/device/pda/PDAs = list()
 	switch(scanmode)
 
 		if(3)
-			if(!isnull(A.reagents))
-				if(A.reagents.reagent_list.len > 0)
-					var/reagents_length = A.reagents.reagent_list.len
-					user << "<span class='notice'>[reagents_length] chemical agent[reagents_length > 1 ? "s" : ""] found.</span>"
-					for (var/re in A.reagents.reagent_list)
-						user << "<span class='notice'>\t [re]</span>"
-				else
-					user << "<span class='notice'>No active chemical agents found in [A].</span>"
-			else
-				user << "<span class='notice'>No significant chemical agents found in [A].</span>"
+			user.visible_message("<span class='alert'>[user] has analyzed [A]'s chemical compons!</span>")
+			reagentscan(A, user)
+			src.add_fingerprint(user)
 
 		if(5)
 			if (istype(A, /obj/item/weapon/tank))

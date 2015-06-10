@@ -1,13 +1,13 @@
-
 /*
 CONTAINS:
-T-RAY
+T-RAY SCANNER
 DETECTIVE SCANNER
 HEALTH ANALYZER
 GAS ANALYZER
 MASS SPECTROMETER
-
+REAGENT ANALYZER
 */
+
 /obj/item/device/t_scanner
 	name = "\improper T-ray scanner"
 	desc = "A terahertz-ray emitter and scanner used to detect underfloor objects such as cables and pipes."
@@ -409,3 +409,62 @@ MASS SPECTROMETER
 	if (T.cores > 1)
 		user.show_message("Anomalious slime core amount detected", 1)
 	user.show_message("Growth progress: [T.amount_grown]/10", 1)
+
+
+/obj/item/device/reagentanalyzer
+	name = "reagent analyzer"
+	icon_state = "health"
+	item_state = "analyzer"
+	desc = "A hand-held reagent analyzer able to distinguish chemicals and their basic effect."
+	flags = CONDUCT
+	slot_flags = SLOT_BELT
+	throwforce = 3
+	w_class = 1.0
+	throw_speed = 3
+	throw_range = 7
+	m_amt = 200
+	origin_tech = "magnets=1;biotech=1"
+
+/obj/item/device/healthanalyzer/attack(atom/A as mob|obj|turf|area, mob/living/carbon/human/user as mob)
+	return
+
+/obj/item/device/reagentanalyzer/afterattack(atom/A as mob|obj|turf|area, mob/living/carbon/human/user, proximity)
+	if(!proximity) return
+
+	/*// Clumsiness/brain damage check
+	if ((user.disabilities & CLUMSY || user.getBrainLoss() >= 60) && prob(50))
+		user << "<span class='notice'>You stupidly try to analyze the floor's vitals!</span>"
+		user.visible_message("<span class='warning'>[user] has analyzed the floor's vitals!</span>")
+		user.show_message("<span class='notice'>Analyzing Results for The floor:\n\t Overall Status: Healthy", 1)
+		user.show_message("<span class='notice'>\t Damage Specifics: <font color='blue'>0</font>-<font color='green'>0</font>-<font color='#FF8000'>0</font>-<font color='red'>0</font></span>", 1)
+		user.show_message("<span class='notice'>Key: <font color='blue'>Suffocation</font>/<font color='green'>Toxin</font>/<font color='#FF8000'>Burn</font>/<font color='red'>Brute</font></span>", 1)
+		user.show_message("<span class='notice'>Body Temperature: ???</span>", 1)
+		return*/
+	user.visible_message("<span class='alert'>[user] has analyzed [A]'s chemical compounds!</span>")
+	reagentscan(A, user)
+	src.add_fingerprint(user)
+	return
+
+// Used by the PDA reagent scanner too
+/proc/reagentscan(atom/A as mob|obj|turf|area, mob/user as mob)
+	if(A.reagents)
+		if(A.reagents.reagent_list.len > 0)
+			var/reagents_length = A.reagents.reagent_list.len
+			user.show_message("<span class='notice'>[reagents_length] chemical agent[(reagents_length > 1) ? "s" : ""] found.</span>")
+			for (var/datum/reagent/R in A.reagents.reagent_list)
+				var/resultline = "- [R.name], [round(R.volume, 0.01)] unit[(R.volume > 1) ? "s" : ""]"
+				if(istype(A, /mob/living/))
+					var/const/P  = 3 //The number of seconds between life ticks
+					var/T  = (R.volume / (R.metabolization_rate / P))
+					resultline += " - Dissipate: [round(T/60, 0.01)] minutes"
+				if(R.overdosed)
+					resultline += " - <font color='red'>Overdosed</font>"
+				else if(initial(R.overdose_threshold) && R.volume >= initial(R.overdose_threshold))
+					resultline += " - <font color='#FF8000'>Overdosage</font>"
+				if(initial(R.addiction_threshold) && R.volume >= initial(R.addiction_threshold))
+					resultline += " - <font color='#FF8000'>Addictive</font>"
+				user.show_message("<span class='notice'>[resultline]</span>")
+		else
+			user << "<span class='notice'>No active chemical agents found in [A].</span>"
+	else
+		user << "<span class='notice'>No significant chemical agents found in [A].</span>"
