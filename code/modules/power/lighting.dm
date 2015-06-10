@@ -250,6 +250,7 @@
 				if(prob(5))
 					broken(1)
 		spawn(1)
+			seton(1)
 			update(0)
 
 /obj/machinery/light/Destroy()
@@ -357,7 +358,7 @@
 				brightness_range = L.brightness_range
 				brightness_power = L.brightness_power
 				brightness_color = L.brightness_color
-				base_state = L.base_state
+				//base_state = L.base_state
 				light_type = L.type
 				on = has_power()
 				update()

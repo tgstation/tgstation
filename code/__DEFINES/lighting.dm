@@ -10,6 +10,10 @@
 #define LIGHTING_LAYER 10 // drawing layer for lighting overlays
 #define LIGHTING_ICON 'icons/effects/lighting_overlay.dmi' // icon used for lighting shading effects
 
+#ifdef LIGHTING_TRANSITIONS
+#define LIGHTING_TRANSITION_SPEED (LIGHTING_INTERVAL - 2)
+#endif
+
 //Some defines to generalise colours used in lighting.
 #define LIGHT_COLOR_RED "#A96666"
 #define LIGHT_COLOR_GREEN "#66AA66"

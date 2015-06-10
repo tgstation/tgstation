@@ -43,7 +43,7 @@
 		var/mx1 = max(lum_r, lum_g, lum_b)
 		var/mx2 = max(lum_r + delta_r, lum_g + delta_g, lum_b + delta_b)
 
-		if(lum_r * mx1 != lum_r + delta_r * mx2 || lum_g * mx1 != lum_g + delta_g * mx2 || lum_b * mx1 != lum_b + delta_b * mx2) //Stuff would change.
+		if(lum_r * mx1 != (lum_r + delta_r) * mx2 || lum_g * mx1 != (lum_g + delta_g) * mx2 || lum_b * mx1 != (lum_b + delta_b) * mx2) //Stuff would change.
 			should_update = 1
 
 	lum_r += delta_r
@@ -62,7 +62,7 @@
 	#if LIGHTING_TRANSITIONS == 1
 	animate(src,
 		color = rgb(lum_r * 255 * ., lum_g * 255 * ., lum_b * 255 * .),
-		LIGHTING_INTERVAL - 1
+		LIGHTING_TRANSITION_SPEED
 	)
 	#else
 	color = rgb(lum_r * 255 * ., lum_g * 255 * ., lum_b * 255 * .)
@@ -75,7 +75,7 @@
 			T.luminosity = 1
 		else  //No light, set the turf's luminosity to 0 to remove it from view()
 			#if LIGHTING_TRANSITIONS == 1
-			spawn(LIGHTING_INTERVAL - 1)
+			spawn(LIGHTING_TRANSITION_SPEED)
 				T.luminosity = 0
 			#else
 			T.luminosity = 0

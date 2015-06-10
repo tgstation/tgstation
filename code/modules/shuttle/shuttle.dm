@@ -4,6 +4,7 @@
 #define ALLTURFS 0
 #define NONSPACE 1
 #define SHUTTLEONLY 2
+#define AREAONLY 3
 
 
 //NORTH default dir
@@ -62,7 +63,7 @@
 
 //returns turfs within our projected rectangle in a specific order.
 //this ensures that turfs are copied over in the same order, regardless of any rotation
-/obj/docking_port/proc/return_ordered_turfs(_x, _y, _z, _dir)
+/obj/docking_port/proc/return_ordered_turfs(_x, _y, _z, _dir, area/A)
 	if(!_dir)
 		_dir = dir
 	if(!_x)
@@ -92,7 +93,14 @@
 		for(var/dy=0, dy<height, ++dy)
 			xi = _x + (dx-dwidth)*cos - (dy-dheight)*sin
 			yi = _y + (dy-dheight)*cos + (dx-dwidth)*sin
-			. += locate(xi, yi, _z)
+			var/turf/T = locate(xi, yi, _z)
+			if(A)
+				if(get_area(T) == A)
+					. += T
+				else
+					. += null
+			else
+				. += T
 
 #ifdef DOCKING_PORT_HIGHLIGHT
 //Debug proc used to highlight bounding area
@@ -187,7 +195,7 @@
 	if(!areaInstance)
 		areaInstance = new()
 		areaInstance.name = name
-	areaInstance.contents += return_ordered_turfs()
+		areaInstance.contents += return_ordered_turfs()
 
 	#ifdef DOCKING_PORT_HIGHLIGHT
 	highlight("#0f0")
@@ -291,8 +299,11 @@
 			turf_type = S0.turf_type
 		if(S0.area_type)
 			area_type = S0.area_type
-
-	var/list/L0 = return_ordered_turfs()
+	var/list/L0
+	if(turfcheck == AREAONLY)
+		L0 = return_ordered_turfs(x, y, z, dir, areaInstance)
+	else
+		L0 = return_ordered_turfs()
 	var/list/L1 = return_ordered_turfs(S1.x, S1.y, S1.z, S1.dir)
 
 	//remove area surrounding docking port
@@ -308,14 +319,19 @@
 
 	for(var/i=1, i<=L0.len, ++i)
 		var/turf/T0 = L0[i]
-
+		if(!T0)
+			continue
 		if(src.turfcheck)
-			if (turfcheck == NONSPACE) //only move non-space turfs!
-				if(istype(T0, /turf/space))
-					continue
-			if (turfcheck == SHUTTLEONLY)
-				if(!T0.shuttle)
-					continue
+			switch(turfcheck)
+				if (NONSPACE) //only move non-space turfs!
+					if(istype(T0, /turf/space))
+						continue
+				if (SHUTTLEONLY)
+					if(!T0.shuttle)
+						continue
+				else
+					if(!T0)
+						continue
 
 		var/turf/T1 = L1[i]
 		if(!T1)
@@ -365,7 +381,7 @@
 			if(istype(M, /mob/living/carbon))
 				if(!M.buckled)
 					M.Weaken(3)
-		if(!istype(T0, /turf/space))
+		if(!istype(T0, /turf/space) && (turfcheck == NONSPACE || turfcheck == ALLTURFS))
 			T0.ChangeTurf(turf_type)
 
 
@@ -434,9 +450,10 @@
 			if(!AM.anchored)
 				step(AM, dir)
 			else
-				qdel(AM)
+				if((turfcheck == NONSPACE || turfcheck == ALLTURFS))
+					qdel(AM)
 		T.reconsider_lights()
-		if(!istype(T,/turf/space))
+		if(!istype(T,/turf/space) && (turfcheck == NONSPACE || turfcheck == ALLTURFS))
 			T.ChangeTurf(T.baseturf)
 /*
 //used to check if atom/A is within the shuttle's bounding box

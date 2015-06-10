@@ -37,7 +37,7 @@ What are the archived variables for?
 
 	var/volume = CELL_VOLUME
 
-	var/temperature = 0 //in Kelvin, use calculate_temperature() to modify
+	var/temperature = 0 //in Kelvin, use calculate_temperature() to modify //thus proc doesn't even exists anymore
 
 	var/last_share
 
@@ -89,6 +89,16 @@ What are the archived variables for?
 		return total_moles()*R_IDEAL_GAS_EQUATION*temperature/volume
 	return 0
 
+/datum/gas_mixture/proc/sanitize_values()
+	if(toxins < 0) toxins = 0
+	if(nitrogen < 0) nitrogen = 0
+	if(temperature < 0) temperature = 0
+	if(oxygen < 0) oxygen = 0
+	if(carbon_dioxide < 0) carbon_dioxide = 0
+	if(trace_gases.len)
+		for(var/datum/gas/trace_gas in trace_gases)
+			if(trace_gas.moles < 0) trace_gas.moles = 0
+	return
 
 /datum/gas_mixture/proc/return_temperature()
 	return temperature
@@ -119,6 +129,8 @@ What are the archived variables for?
 
 /datum/gas_mixture/proc/react(atom/dump_location)
 	var/reacting = 0 //set to 1 if a notable reaction occured (used by pipe_network)
+
+	sanitize_values() //stops values that shouldn't be under 0 from being under 0
 
 	if(trace_gases.len > 0)
 		if(temperature > 900)

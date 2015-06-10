@@ -262,33 +262,39 @@ MASS SPECTROMETER
 		user.show_message("<span class='info'> Pressure: [round(pressure,0.1)] kPa</span>", 1)
 	else
 		user.show_message("<span class='warning'> Pressure: [round(pressure,0.1)] kPa</span>", 1)
+	user.show_message("<span class='info'> Total Moles: [round(total_moles,0.01)] mol</span>", 1)
 	if(total_moles)
 		var/o2_concentration = environment.oxygen/total_moles
 		var/n2_concentration = environment.nitrogen/total_moles
 		var/co2_concentration = environment.carbon_dioxide/total_moles
 		var/plasma_concentration = environment.toxins/total_moles
+		var/o2_moles = environment.oxygen
+		var/n2_moles = environment.nitrogen
+		var/co2_moles = environment.carbon_dioxide
+		var/plasma_moles = environment.toxins
 
+		var/unknown_moles = total_moles-(o2_moles+n2_moles+co2_moles+plasma_moles)
 		var/unknown_concentration =  1-(o2_concentration+n2_concentration+co2_concentration+plasma_concentration)
 		if(abs(n2_concentration - N2STANDARD) < 20)
-			user.show_message("<span class='info'> Nitrogen: [round(n2_concentration*100,0.1)]%</span>", 1)
+			user.show_message("<span class='info'> Nitrogen: [round(n2_concentration*100,0.1)]% [round(n2_moles,0.01)] mol</span>", 1)
 		else
-			user.show_message("<span class='warning'> Nitrogen: [round(n2_concentration*100,0.1)]%</span>", 1)
+			user.show_message("<span class='warning'> Nitrogen: [round(n2_concentration*100,0.1)]% [round(n2_moles,0.01)] mol</span>", 1)
 
 		if(abs(o2_concentration - O2STANDARD) < 2)
-			user.show_message("<span class='info'> Oxygen: [round(o2_concentration*100,0.1)]%</span>", 1)
+			user.show_message("<span class='info'> Oxygen: [round(o2_concentration*100,0.1)]% [round(o2_moles,0.01)] mol</span>", 1)
 		else
-			user.show_message("<span class='warning'> Oxygen: [round(o2_concentration*100,0.1)]%</span>", 1)
+			user.show_message("<span class='warning'> Oxygen: [round(o2_concentration*100,0.1)]% [round(o2_moles,0.01)] mol</span>", 1)
 
 		if(co2_concentration > 0.01)
-			user.show_message("<span class='warning'> CO2: [round(co2_concentration*100,0.1)]%</span>", 1)
+			user.show_message("<span class='warning'> CO2: [round(co2_concentration*100,0.1)]% [round(co2_moles,0.01)] mol</span>", 1)
 		else
-			user.show_message("<span class='info'> CO2: [round(co2_concentration*100,0.1)]%</span>", 1)
+			user.show_message("<span class='info'> CO2: [round(co2_concentration*100,0.1)]% [round(co2_moles,0.01)] mol</span>", 1)
 
 		if(plasma_concentration > 0.01)
-			user.show_message("<span class='info'> Plasma: [round(plasma_concentration*100,0.1)]%</span>", 1)
+			user.show_message("<span class='info'> Plasma: [round(plasma_concentration*100,0.1)]% [round(plasma_moles,0.01)] mol</span>", 1)
 
 		if(unknown_concentration > 0.01)
-			user.show_message("<span class='warning'> Unknown: [round(unknown_concentration*100,0.1)]%</span>", 1)
+			user.show_message("<span class='warning'> Unknown: [round(unknown_concentration*100,0.1)]% [round(unknown_moles,0.01)] mol</span>", 1)
 
 		user.show_message("<span class='info'> Temperature: [round(environment.temperature-T0C,0.1)]&deg;C</span>", 1)
 

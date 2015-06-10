@@ -124,6 +124,47 @@ proc/process_ghost_teleport_locs()
 //	luminosity = 1
 //	lighting_use_dynamic = 1
 	has_gravity = 1
+	icon_state = "shuttle"
+
+/area/shuttle/arrival
+	name = "\improper Arrival Shuttle"
+
+/area/shuttle/pod_1
+	name = "\improper Escape Pod One"
+
+/area/shuttle/pod_2
+	name = "\improper Escape Pod Two"
+
+/area/shuttle/pod_3
+	name = "\improper Escape Pod Three"
+
+/area/shuttle/pod_4
+	name = "\improper Escape Pod Four"
+
+/area/shuttle/mining
+	name = "\improper Mining Shuttle"
+
+/area/shuttle/research
+	name = "\improper Research Shuttle"
+
+/area/shuttle/labor
+	name = "\improper Labor Camp Shuttle"
+
+/area/shuttle/supply
+	name = "\improper Supply Shuttle"
+
+/area/shuttle/escape
+	name = "\improper Emergency Shuttle"
+
+/area/shuttle/transport
+	name = "\improper Transport Shuttle"
+
+/area/shuttle/syndicate
+	name = "\improper Syndicate Infiltrator"
+
+/area/shuttle/abandoned
+	name = "\improper Abandoned Ship"
+
 
 
 /area/start
@@ -141,6 +182,7 @@ proc/process_ghost_teleport_locs()
 	icon_state = "centcom"
 	requires_power = 0
 	lighting_use_dynamic = 0
+	luminosity = 1
 	has_gravity = 1
 
 /area/centcom/control
@@ -167,6 +209,8 @@ proc/process_ghost_teleport_locs()
 	name = "\improper Syndicate Mothership"
 	icon_state = "syndie-ship"
 	requires_power = 0
+	luminosity = 1
+	lighting_use_dynamic = 0
 	has_gravity = 1
 
 /area/syndicate_mothership/control
@@ -285,12 +329,16 @@ proc/process_ghost_teleport_locs()
 	icon_state = "yellow"
 	requires_power = 0
 	has_gravity = 1
+	luminosity = 1
+	lighting_use_dynamic = 0
 
 /area/wizard_station
 	name = "\improper Wizard's Den"
 	icon_state = "yellow"
 	requires_power = 0
 	has_gravity = 1
+	luminosity = 1
+	lighting_use_dynamic = 0
 
 //Abductors
 /area/abductor_ship
@@ -298,6 +346,8 @@ proc/process_ghost_teleport_locs()
 	icon_state = "yellow"
 	requires_power = 0
 	has_gravity = 1
+	luminosity = 1
+	lighting_use_dynamic = 0
 
 //PRISON
 /area/prison
