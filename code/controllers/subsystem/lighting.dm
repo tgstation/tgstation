@@ -7,6 +7,7 @@ var/datum/subsystem/lighting/SSlighting
 	wait = LIGHTING_INTERVAL
 	priority = 1
 	dynamic_wait = 1
+	dwait_delta = 1
 
 //	var/list/lighting_images = list()		//replaces lighting_states (use lighting_images.len) ~carn
 //	var/list/lights = list()				//list of all datum/light_source

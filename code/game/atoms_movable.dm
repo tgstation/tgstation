@@ -9,6 +9,7 @@
 	var/languages = 0 //For say() and Hear()
 	var/inertia_dir = 0
 	var/pass_flags = 0
+	var/paused = FALSE //for suspending the projectile midair
 	glide_size = 8
 
 /atom/movable/Move(atom/newloc, direct = 0)
@@ -186,6 +187,9 @@
 		// only stop when we've gone the whole distance (or max throw range) and are on a non-space tile, or hit something, or hit the end of the map, or someone picks it up
 		if(!src.throwing) break
 		if(!istype(src.loc, /turf)) break
+		if(paused)
+			sleep(1)
+			continue
 
 		var/atom/step = get_step(src, (error < 0) ? tdy : tdx)
 		if(!step) // going off the edge of the map makes get_step return null, don't let things go off the edge

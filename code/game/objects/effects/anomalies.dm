@@ -177,3 +177,58 @@
 	if( T && istype(T,/turf/simulated) && prob(turf_removal_chance) )
 		T.ex_act(ex_act_force)
 	return
+
+
+
+/obj/effect/timestop
+	anchored = 1
+	name = "chronofield"
+	desc = "ZA WARUDO"
+	icon = 'icons/effects/160x160.dmi'
+	icon_state = "time"
+	layer = FLY_LAYER
+	pixel_x = -64
+	pixel_y = -64
+	unacidable = 1
+	var/mob/living/immune = null // the one who creates the timestop is immune
+	var/freezerange = 2
+	var/duration = 140
+
+/obj/effect/timestop/New()
+	..()
+	timestop()
+
+
+/obj/effect/timestop/proc/timestop()
+	while(loc)
+		if(duration)
+			for(var/mob/living/M in orange (freezerange, src.loc))
+				if(M == immune)
+					continue
+				M.stunned = 10
+				M.anchored = 1
+				if(istype(M, /mob/living/simple_animal/hostile))
+					var/mob/living/simple_animal/hostile/H = M
+					H.AIStatus = AI_OFF
+					H.LoseTarget()
+					H.stop_automated_movement = 1
+					continue
+			for(var/atom/movable/P in orange (freezerange, src.loc))
+				if(P == immune)
+					continue
+				P.paused = TRUE
+			duration --
+		else
+			for(var/mob/living/M in orange (freezerange+2, src.loc)) //longer range incase they lag out of it or something
+				M.stunned = 0
+				M.anchored = 0
+				if(istype(M, /mob/living/simple_animal/hostile))
+					var/mob/living/simple_animal/hostile/H = M
+					H.AIStatus = initial(H.AIStatus)
+					H.stop_automated_movement = initial(H.stop_automated_movement)
+					continue
+			for(var/atom/movable/P in orange(freezerange+2, src.loc))
+				P.paused = FALSE
+			qdel(src)
+			return
+		sleep(1)
