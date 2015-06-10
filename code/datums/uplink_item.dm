@@ -103,13 +103,13 @@ var/list/uplink_items = list()
 	name = "Syndicate Pistol"
 	desc = "A small, easily concealable handgun that uses 10mm auto rounds in 8-round magazines and is compatible with suppressors."
 	item = /obj/item/weapon/gun/projectile/automatic/pistol
-	cost = 9
+	cost = 10
 
 /datum/uplink_item/dangerous/revolver
 	name = "Syndicate Revolver"
 	desc = "A brutally simple syndicate revolver that fires .357 Magnum cartridges and has 7 chambers."
 	item = /obj/item/weapon/gun/projectile/revolver
-	cost = 13
+	cost = 15
 	surplus = 50
 
 /datum/uplink_item/dangerous/smg
@@ -165,7 +165,7 @@ var/list/uplink_items = list()
 	name = "Energy Sword"
 	desc = "The energy sword is an edged weapon with a blade of pure energy. The sword is small enough to be pocketed when inactive. Activating it produces a loud, distinctive noise."
 	item = /obj/item/weapon/melee/energy/sword/saber
-	cost = 8
+	cost = 10
 
 /datum/uplink_item/dangerous/emp
 	name = "EMP Kit"
@@ -177,7 +177,7 @@ var/list/uplink_items = list()
 	name = "Syndicate Minibomb"
 	desc = "The Minibomb is a grenade with a five-second fuse."
 	item = /obj/item/weapon/grenade/syndieminibomb
-	cost = 6
+	cost = 8
 
 /datum/uplink_item/dangerous/foamsmg
 	name = "Toy Submachine Gun"
@@ -398,7 +398,7 @@ var/list/uplink_items = list()
 	name = "Chameleon Jumpsuit"
 	desc = "A jumpsuit used to imitate the uniforms of Nanotrasen crewmembers."
 	item = /obj/item/clothing/under/chameleon
-	cost = 4
+	cost = 1
 
 /datum/uplink_item/stealthy_tools/chameleon_stamp
 	name = "Chameleon Stamp"
@@ -418,7 +418,7 @@ var/list/uplink_items = list()
 	name = "Agent Identification card"
 	desc = "Agent cards prevent artificial intelligences from tracking the wearer, and can copy access from other identification cards. The access is cumulative, so scanning one card does not erase the access gained from another."
 	item = /obj/item/weapon/card/id/syndicate
-	cost = 3
+	cost = 5
 
 /datum/uplink_item/stealthy_tools/voice_changer
 	name = "Voice Changer"
@@ -477,7 +477,7 @@ var/list/uplink_items = list()
 	desc = "The syndicate medkit is a suspicious black and red. Included is a combat stimulant injector for rapid healing, a medical hud for quick identification of injured comrades, \
 	and other medical supplies helpful for a medical field operative."
 	item = /obj/item/weapon/storage/firstaid/tactical
-	cost = 9
+	cost = 5
 	gamemodes = list(/datum/game_mode/nuclear,/datum/game_mode/gang)
 
 /datum/uplink_item/badass/syndiecigs
@@ -535,7 +535,7 @@ var/list/uplink_items = list()
 	name = "Hacked AI Law Upload Module"
 	desc = "When used with an upload console, this module allows you to upload priority laws to an artificial intelligence. Be careful with their wording, as artificial intelligences may look for loopholes to exploit."
 	item = /obj/item/weapon/aiModule/syndicate
-	cost = 14
+	cost = 30
 
 /datum/uplink_item/device_tools/magboots
 	name = "Blood-Red Magboots"
@@ -565,7 +565,7 @@ var/list/uplink_items = list()
 	Does not work when the singularity is still in containment. A singularity beacon can cause catastrophic damage to a space station, \
 	leading to an emergency evacuation. Because of its size, it cannot be carried. Ordering this sends you a small beacon that will teleport the larger beacon to your location on activation."
 	item = /obj/item/device/sbeacondrop
-	cost = 14
+	cost = 30
 	excludefrom = list(/datum/game_mode/gang)
 
 /datum/uplink_item/device_tools/syndicate_bomb
@@ -573,7 +573,7 @@ var/list/uplink_items = list()
 	desc = "The Syndicate Bomb has an adjustable timer with a minimum setting of 60 seconds. Ordering the bomb sends you a small beacon, which will teleport the explosive to your location when you activate it. \
 	You can wrench the bomb down to prevent removal. The crew may attempt to defuse the bomb."
 	item = /obj/item/device/sbeacondrop/bomb
-	cost = 11
+	cost = 15
 	excludefrom = list(/datum/game_mode/traitor/double_agents)
 
 /datum/uplink_item/device_tools/rad_laser
@@ -631,7 +631,7 @@ var/list/uplink_items = list()
 	name = "Adrenal Implant"
 	desc = "An implant injected into the body, and later activated using a bodily gesture to inject a chemical cocktail, which has a mild healing effect along with removing all stuns and increasing his speed."
 	item = /obj/item/weapon/storage/box/syndie_kit/imp_adrenal
-	cost = 8
+	cost = 10
 
 /datum/uplink_item/implants/explosive
 	name = "Explosive Implant"
@@ -672,7 +672,7 @@ var/list/uplink_items = list()
 	name = "For showing that you are The Boss"
 	desc = "A useless red balloon with the syndicate logo on it, which can blow the deepest of covers."
 	item = /obj/item/toy/syndicateballoon
-	cost = 20
+	cost = 40
 
 /datum/uplink_item/badass/random
 	name = "Random Item"
@@ -702,7 +702,7 @@ var/list/uplink_items = list()
 /datum/uplink_item/badass/surplus_crate
 	name = "Syndicate Surplus Crate"
 	desc = "A crate containing 50 telecrystals worth of random syndicate leftovers."
-	cost = 20
+	cost = 40
 	item = /obj/item/weapon/storage/box/syndicate
 	excludefrom = list(/datum/game_mode/nuclear)
 
@@ -714,7 +714,7 @@ var/list/uplink_items = list()
 		buyable_items += temp_uplink_list[category]
 	var/list/bought_items = list()
 	U.uses -= cost
-	U.used_TC = 20
+	U.used_TC = 40
 	var/remaining_TC = 50
 
 	var/datum/uplink_item/I
