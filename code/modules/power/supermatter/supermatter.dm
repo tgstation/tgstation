@@ -143,7 +143,7 @@
 /obj/machinery/power/supermatter/proc/explode()
 		exploding = 1
 		explosion(get_turf(src), explosion_power, explosion_power * 2, explosion_power * 3, explosion_power * 4, 1)
-		new /turf/simulated/wall/supermatter(get_turf(src))
+		new /turf/simulated/supermatter(get_turf(src))
 		SetUniversalState(/datum/universal_state/supermatter_cascade)
 		qdel(src)
 
