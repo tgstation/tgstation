@@ -179,7 +179,7 @@
 
 		if(href_list["make"])
 
-			var/turf/T = get_step(src.loc, get_dir(src,usr))
+			var/turf/T = loc
 
 			/////////////////
 			//href protection

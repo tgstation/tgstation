@@ -169,7 +169,7 @@
 	overlays -= "fab-active"
 	desc = initial(desc)
 
-	var/location = get_step(src,SOUTH)
+	var/location = loc
 	var/obj/item/I = new D.build_path(location)
 	I.m_amt = get_resource_cost_w_coeff(D,"$metal")
 	I.g_amt = get_resource_cost_w_coeff(D,"$glass")
