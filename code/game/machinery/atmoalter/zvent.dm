@@ -9,6 +9,14 @@
 	var/on = 0
 	var/volume_rate = 800
 
+/obj/machinery/zvent/New()
+	..()
+	SSair.atmos_machinery += src
+
+/obj/machinery/zvent/Destroy()
+	SSair.atmos_machinery -= src
+	..()
+
 /obj/machinery/zvent/process_atmos()
 
 	//all this object does, is make its turf share air with the ones above and below it, if they have a vent too.
