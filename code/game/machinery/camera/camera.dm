@@ -225,6 +225,7 @@
 
 	else
 		if(W.force > 10) //fairly simplistic, but will do for now.
+			user.changeNext_move(CLICK_CD_MELEE)
 			visible_message("<span class='warning'>[user] hits [src] with [W]!</span>", "<span class='warning'>You hit [src] with [W]!</span>")
 			health = max(0, health - W.force)
 			if(!health && status)
