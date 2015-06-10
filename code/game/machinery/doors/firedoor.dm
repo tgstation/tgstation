@@ -46,7 +46,7 @@
 		if(density)
 			open()
 			return
-		else	//close it up again	//fucking 10/10 commenting here einstein
+		else	//close it up again	//fucking 10/10 commenting here einstein //bravo nolan
 			close()
 			return
 	return

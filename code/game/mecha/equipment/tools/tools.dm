@@ -32,6 +32,14 @@
 		return
 	if(istype(target,/obj))
 		var/obj/O = target
+		if(istype(O, /obj/machinery/door/firedoor))
+			var/obj/machinery/door/firedoor/F = O
+			if(F.blocked || F.operating)	return
+			if(F.density)
+				F.open()
+			else
+				F.close()
+			return
 		if(!O.anchored)
 			if(cargo_holder.cargo.len < cargo_holder.cargo_capacity)
 				chassis.visible_message("[chassis] lifts [target] and starts to load it into cargo compartment.")
