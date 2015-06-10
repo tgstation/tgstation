@@ -1,3 +1,5 @@
+#define SPIDERWEB_BRUTE_DIVISOR 4
+
 //generic procs copied from obj/effect/alien
 /obj/effect/spider
 	name = "web"
@@ -28,14 +30,15 @@
 	else
 		visible_message("<span class='warning'><B>\The [src] have been attacked with \the [W][(user ? " by [user]." : ".")]</span>")
 
-	var/damage = W.force / 3
+	var/damage = (W.is_hot() || W.is_sharp()) ? (W.force) : (W.force / SPIDERWEB_BRUTE_DIVISOR)
 
 	if(istype(W, /obj/item/weapon/weldingtool))
 		var/obj/item/weapon/weldingtool/WT = W
-
 		if(WT.remove_fuel(0, user))
 			damage = 15
 			playsound(loc, 'sound/items/Welder.ogg', 100, 1)
+		else
+			damage = W.force / SPIDERWEB_BRUTE_DIVISOR
 
 	health -= damage
 	healthcheck()
@@ -153,3 +156,5 @@
 	for(var/atom/movable/A in contents)
 		A.loc = src.loc
 	..()
+
+#undef SPIDERWEB_BRUTE_DIVISOR
