@@ -33,7 +33,7 @@
 	radio_frequency = MED_FREQ //Medical frequency
 	//Setting which reagents to use to treat what by default. By id.
 	var/treatment_brute = "bicaridine"
-	var/treatment_oxy = "dexaline"
+	var/treatment_oxy = "dexalin"
 	var/treatment_fire = "kelotane"
 	var/treatment_tox = "anti_toxin"
 	var/treatment_virus = "spaceacillin"

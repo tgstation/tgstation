@@ -73,11 +73,14 @@
 /obj/machinery/artifact_harvester/process()
 	if(stat & (NOPOWER|BROKEN))
 		return
+	if(!cur_artifact)
+		return
 
 	if(harvesting > 0)
 		//chargerate is chargemaxlevel/effectrange
 		//creates variable charging rates, with the minimum being 0.5
 		inserted_battery.stored_charge += chargerate
+		cur_artifact.being_used = 1
 
 		//check if we've finished
 		if(inserted_battery.stored_charge >= inserted_battery.capacity)
@@ -92,6 +95,7 @@
 	else if(harvesting < 0)
 		//dump some charge
 		inserted_battery.stored_charge -= 2
+		cur_artifact.being_used = 1
 
 		//do the effect
 		if(inserted_battery.battery_effect)
@@ -114,6 +118,9 @@
 				inserted_battery.battery_effect.ToggleActivate()
 			src.visible_message("<b>[name]</b> states, \"Battery dump completed.\"")
 			icon_state = "incubator"
+	if(!harvesting && cur_artifact)
+		cur_artifact.anchored = 0
+		cur_artifact.being_used = 0
 
 /obj/machinery/artifact_harvester/Topic(href, href_list)
 
@@ -148,6 +155,8 @@
 			src.visible_message(message)
 		else if(articount == 1 && !mundane)
 			cur_artifact = analysed
+			if(!cur_artifact)
+				return
 			//there should already be a battery inserted, but this is just in case
 			if(inserted_battery)
 				//see if we can clear out an old effect
@@ -198,6 +207,8 @@
 			src.visible_message(message)
 
 	if (href_list["stopharvest"])
+		if(!cur_artifact)
+			return
 		if(harvesting)
 			if(harvesting < 0 && inserted_battery.battery_effect && inserted_battery.battery_effect.activated)
 				inserted_battery.battery_effect.ToggleActivate()
@@ -214,6 +225,8 @@
 
 	if (href_list["drainbattery"])
 		if(inserted_battery)
+			if(!cur_artifact)
+				return
 			if(inserted_battery.battery_effect && inserted_battery.stored_charge > 0)
 				if(alert("This action will dump all charge, safety gear is recommended before proceeding","Warning","Continue","Cancel"))
 					if(!inserted_battery.battery_effect.activated)

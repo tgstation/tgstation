@@ -476,7 +476,8 @@
 	flick("popup", cover)
 	sleep(10)
 	raising = 0
-	cover.icon_state = "openTurretCover"
+	if(cover)
+		cover.icon_state = "openTurretCover"
 	raised = 1
 	layer = 4
 

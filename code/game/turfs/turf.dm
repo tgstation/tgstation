@@ -35,6 +35,7 @@
 	turfs.Add(src)
 	for(var/atom/movable/AM in src)
 		Entered(AM)
+	set_opacity(src.opacity)
 	return
 
 // Adds the adjacent turfs to the current atmos processing
@@ -146,13 +147,13 @@
 	var/old_lighting_overlays = lighting_overlays
 	#endif
 
-	var/old_opacity = opacity
+//	var/old_opacity = opacity
 	var/old_baseturf = baseturf
 	SSair.remove_from_active(src)
 
 	var/turf/W = new path(src)
 	W.baseturf = old_baseturf
-	W.opacity = old_opacity
+//	W.opacity = old_opacity
 	W.dynamic_lighting = old_dynamic_lighting
 	W.affecting_lights = old_affecting_lights
 	#if LIGHTING_RESOLUTION == 1

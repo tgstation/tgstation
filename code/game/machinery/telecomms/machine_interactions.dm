@@ -79,12 +79,13 @@
 						for(var/I in C.req_components)
 							for(var/i = 1, i <= C.req_components[I], i++)
 								newpath = text2path(I)
-								var/obj/item/s = new newpath
-								s.loc = src.loc
-								if(istype(s, /obj/item/stack/cable_coil))
-									var/obj/item/stack/cable_coil/A = s
-									A.amount = 1
-									A.update_icon()
+								if(newpath)
+									var/obj/item/s = new newpath
+									s.loc = src.loc
+									if(istype(s, /obj/item/stack/cable_coil))
+										var/obj/item/stack/cable_coil/A = s
+										A.amount = 1
+										A.update_icon()
 
 						// Drop a circuit board too
 						C.loc = src.loc

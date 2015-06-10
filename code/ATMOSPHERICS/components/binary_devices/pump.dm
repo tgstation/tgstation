@@ -45,6 +45,8 @@ Thus, the two variables affect pump operation are set in New():
 //	..()
 	if(stat & (NOPOWER|BROKEN))
 		return 0
+	if(!parent1 || !parent2)
+		return
 	if(!on)
 		return 0
 

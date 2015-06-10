@@ -138,6 +138,8 @@
 /obj/item/cybernetic_implant/brain/emp_act(severity)
 	if(!owner)
 		return
+	if(!istype(owner))
+		return
 	var/stun_amount = 5 + (severity-1 ? 0 : 5)
 	owner.Stun(stun_amount)
 	owner << "<span class='warning'>Your body seizes up!</span>"
@@ -246,6 +248,8 @@
 /obj/item/cybernetic_implant/brain/anti_stun/emp_act(severity)
 	if(!owner)
 		return
+	if(!istype(owner))
+		return
 	SSobj.processing.Remove(src)
 	spawn(..() * 10)
 		SSobj.processing |= src
@@ -307,6 +311,8 @@
 
 /obj/item/cybernetic_implant/chest/nutriment/emp_act(severity)
 	if(!owner)
+		return
+	if(!istype(owner))
 		return
 	owner.reagents.add_reagent("????",poison_amount / severity) //food poisoning
 	owner << "<span class='notice'>You feel like your insides are burning.</span>"

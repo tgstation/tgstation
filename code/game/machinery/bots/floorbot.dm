@@ -291,7 +291,8 @@
 			target = null
 			mode = BOT_IDLE
 			return
-
+		if(!target)
+			return
 		if(loc == target || loc == target.loc)
 			if(istype(target, /obj/item/stack/tile/plasteel))
 				eattile(target)
@@ -378,6 +379,8 @@ obj/machinery/bot/floorbot/process_scan(var/scan_target)
 		visible_message("<span class='notice'>[targetdirection ? "[src] begins installing a bridge plating." : "[src] begins to repair the hole."] </span>")
 		mode = BOT_REPAIRING
 		spawn(50)
+			if(!istype(target_turf))
+				return
 			if(mode == BOT_REPAIRING)
 				if(autotile) //Build the floor and include a tile.
 					target_turf.ChangeTurf(/turf/simulated/floor/plasteel)
@@ -393,6 +396,8 @@ obj/machinery/bot/floorbot/process_scan(var/scan_target)
 		mode = BOT_REPAIRING
 		visible_message("<span class='notice'>[src] begins repairing the floor.</span>")
 		spawn(50)
+			if(!istype(F))
+				return
 			if(mode == BOT_REPAIRING)
 				F.broken = 0
 				F.burnt = 0

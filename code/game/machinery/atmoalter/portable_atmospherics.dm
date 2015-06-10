@@ -49,7 +49,8 @@
 	//Perform the connection
 	connected_port = new_port
 	connected_port.connected_device = src
-	connected_port.parent.reconcile_air()
+	if(connected_port.parent)
+		connected_port.parent.reconcile_air()
 
 	anchored = 1 //Prevent movement
 	return 1

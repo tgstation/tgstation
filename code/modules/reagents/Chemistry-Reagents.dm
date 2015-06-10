@@ -81,6 +81,8 @@ datum/reagent/proc/on_mob_life(var/mob/living/M as mob)
 	current_cycle++
 	if(!istype(M, /mob/living))
 		return //Noticed runtime errors from pacid trying to damage ghosts, this should fix. --NEO
+	if(!holder)
+		return
 	holder.remove_reagent(src.id, metabolization_rate * M.metabolism_efficiency) //By default it slowly disappears.
 	return
 

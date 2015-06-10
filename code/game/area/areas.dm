@@ -11,7 +11,6 @@
 	return A.contents
 
 
-// ===
 /area
 	var/global/global_uid = 0
 	var/uid

@@ -110,9 +110,13 @@
 	if(mind)
 		if(mind.changeling)
 			mind.changeling.regenerate()
+			if(!hud_used)
+				return
 			hud_used.lingchemdisplay.invisibility = 0
 			hud_used.lingchemdisplay.maptext = "<div align='center' valign='middle' style='position:relative; top:0px; left:6px'> <font color='#dd66dd'>[mind.changeling.chem_charges]</font></div>"
 		else
+			if(!hud_used)
+				return
 			hud_used.lingchemdisplay.invisibility = 101
 
 /mob/living/carbon/monkey/has_smoke_protection()

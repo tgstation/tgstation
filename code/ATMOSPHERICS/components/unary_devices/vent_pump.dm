@@ -88,6 +88,8 @@
 
 /obj/machinery/atmospherics/unary/vent_pump/process_atmos()
 	..()
+	if(!parent)
+		return
 	if(stat & (NOPOWER|BROKEN))
 		return
 	if (!node)
@@ -343,6 +345,8 @@
 			return
 
 	var/list/vents = list()
+	if(!parent)
+		return
 	for(var/obj/machinery/atmospherics/unary/vent_pump/temp_vent in parent.other_atmosmch)
 		if(temp_vent.welded)
 			continue

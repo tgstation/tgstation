@@ -467,6 +467,8 @@
 
 	else if (istype(W, /obj/item/weapon/wirecutters) || istype(W, /obj/item/device/multitool) || istype(W, /obj/item/device/assembly/signaler))
 		if (wiresexposed)
+			if(!wires)
+				return
 			wires.Interact(user)
 		else
 			user << "You can't reach the wiring."

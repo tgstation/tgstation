@@ -512,30 +512,30 @@
 						archaeo_overlay = "overlay_archaeo[rand(1,3)]"
 						overlays += archaeo_overlay
 
-			var/update_excav_overlay = 0
+				var/update_excav_overlay = 0
 
-			var/subtractions = 0
-			while(excavation_level - 25*(subtractions + 1) >= 0 && subtractions < 3)
-				subtractions++
-			if(excavation_level - P.excavation_amount < subtractions * 25)
-				update_excav_overlay = 1
+				var/subtractions = 0
+				while(excavation_level - 25*(subtractions + 1) >= 0 && subtractions < 3)
+					subtractions++
+				if(excavation_level - P.excavation_amount < subtractions * 25)
+					update_excav_overlay = 1
 
-			//update overlays displaying excavation level
-			if( !(excav_overlay && excavation_level > 0) || update_excav_overlay )
-				var/excav_quadrant = round(excavation_level / 25) + 1
-				excav_overlay = "overlay_excv[excav_quadrant]_[rand(1,3)]"
-				overlays += excav_overlay
+				//update overlays displaying excavation level
+				if( !(excav_overlay && excavation_level > 0) || update_excav_overlay )
+					var/excav_quadrant = round(excavation_level / 25) + 1
+					excav_overlay = "overlay_excv[excav_quadrant]_[rand(1,3)]"
+					overlays += excav_overlay
 
 			//drop some rocks
-			next_rock += P.excavation_amount * 10
-			while(next_rock > 100)
-				next_rock -= 100
-				var/obj/item/weapon/ore/O = new(src)
-				if(!geologic_data)
-					geologic_data = new/datum/geosample(src)
-				geologic_data.UpdateNearbyArtifactInfo(src)
-				O.geologic_data = geologic_data
-				P.update_icon()
+				next_rock += P.excavation_amount * 10
+				while(next_rock > 100)
+					next_rock -= 100
+					var/obj/item/weapon/ore/O = new(src)
+					if(!geologic_data)
+						geologic_data = new/datum/geosample(src)
+					geologic_data.UpdateNearbyArtifactInfo(src)
+					O.geologic_data = geologic_data
+					P.update_icon()
 	else
 		return attack_hand(user)
 	return
@@ -761,6 +761,8 @@
 		playsound(src, 'sound/effects/shovel_dig.ogg', 50, 1) //FUCK YO RUSTLE I GOT'S THE DIGS SOUND HERE
 
 		sleep(P.digspeed)
+		if (!user)
+			return
 		if ((user.loc == T && user.get_active_hand() == W))
 			user << "<span class='notice'>You dug a hole.</span>"
 			gets_dug()

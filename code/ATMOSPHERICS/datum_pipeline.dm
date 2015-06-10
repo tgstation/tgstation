@@ -112,6 +112,8 @@ var/pipenetwarnings = 10
 		addMachineryMember(A)
 
 /datum/pipeline/proc/merge(datum/pipeline/E)
+	if(!E)
+		return
 	air.volume += E.air.volume
 	members.Add(E.members)
 	for(var/obj/machinery/atmospherics/pipe/S in E.members)
@@ -127,9 +129,13 @@ var/pipenetwarnings = 10
 
 /obj/machinery/atmospherics/proc/addMember(obj/machinery/atmospherics/A)
 	var/datum/pipeline/P = returnPipenet(A)
+	if(!P || !istype(P))
+		return
 	P.addMember(A, src)
 
 /obj/machinery/atmospherics/pipe/addMember(obj/machinery/atmospherics/A)
+	if(!parent || !istype(parent))
+		return
 	parent.addMember(A, src)
 
 

@@ -30,6 +30,9 @@
 	if(top_atom != source_atom)
 		if(!top.light_sources) top.light_sources = list()
 		top_atom.light_sources += src
+	if(!needs_update)
+		lighting_update_lights += src
+		needs_update = 1
 
 	source_turf = top_atom
 	light_power = source_atom.light_power
@@ -60,13 +63,15 @@
 		if(top_atom != source_atom)
 			if(!top_atom.light_sources) top_atom.light_sources = list()
 			top_atom.light_sources += src
-	lighting_update_lights += src
-	needs_update = 1
+	if(!needs_update)
+		lighting_update_lights += src
+		needs_update = 1
 
 /datum/light_source/proc/force_update()
-	needs_update = 1
 	force_update = 1
-	lighting_update_lights += src
+	if(!needs_update)
+		lighting_update_lights += src
+		needs_update = 1
 
 /datum/light_source/proc/check()
 	if(!source_atom || !light_range || !light_power)

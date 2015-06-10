@@ -37,6 +37,8 @@ MASS SPECTROMETER
 /obj/item/device/t_scanner/proc/scan()
 
 	for(var/turf/T in range(2, src.loc.loc) )
+		if(!T)
+			continue
 
 		if(!T.intact)
 			continue

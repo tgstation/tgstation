@@ -58,6 +58,8 @@
 
 /obj/item/weapon/reagent_containers/food/drinks/afterattack(obj/target, mob/user , proximity)
 	if(!proximity) return
+	if(!reagents)
+		return
 	if(istype(target, /obj/structure/reagent_dispensers)) //A dispenser. Transfer FROM it TO us.
 
 		if(!target.reagents.total_volume)

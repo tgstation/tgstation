@@ -548,6 +548,7 @@
 			var/x_distance = TO.x - FROM.x
 			for (var/atom/movable/A in range(5, FROM )) // iterate thru list of mobs in the area
 				if(istype(A, /obj/item/device/radio/beacon)) continue // don't teleport beacons because that's just insanely stupid
+				if(istype(A, /atom/movable/lighting_overlay)) continue //don't move the lighting while at it!
 				if(A.anchored) continue
 
 

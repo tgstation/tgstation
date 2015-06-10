@@ -51,6 +51,8 @@
 		last_pressure_delta = 0
 
 /obj/machinery/atmospherics/binary/circulator/process_atmos()
+	if(!parent1 || !parent2)
+		return
 	..()
 	update_icon()
 

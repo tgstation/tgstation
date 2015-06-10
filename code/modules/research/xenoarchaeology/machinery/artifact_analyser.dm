@@ -31,6 +31,8 @@
 	interact(user)
 
 /obj/machinery/artifact_analyser/interact(mob/user)
+	if(!owned_scanner)
+		reconnect_scanner()
 	if(..()) return
 	if(stat & (NOPOWER|BROKEN) || get_dist(src, user) > 1)
 		user.unset_machine(src)

@@ -723,6 +723,8 @@ They can only use one tool at a time, they can't choose modules, and they have 1
 	..(AM)
 
 /mob/living/silicon/robot/mommi/proc/can_interfere(var/mob/AN)
+	if(!istype(AN))
+		return 1 //Not a mob
 	if(src.keeper)
 		if(AN.client || AN.ckey || (iscarbon(AN) && (!ismonkey(AN) && !isslime(AN))) || issilicon(AN))	//If it's a non-monkey/slime carbon, silicon or other sentient it's not ok => animals are fair game!
 			if(!ismommi(AN) || (ismommi(AN) && !AN:keeper))	//Keeper MoMMIs can be interfered with

@@ -311,6 +311,8 @@
 	var/light_value = Clamp(round(Clamp(power / max_power, 0, 1) * max_luminosity), 0, max_luminosity)
 	set_light(light_value, light_value)
 
+	update_light()
+
 	air_update_turf(1)
 
 	return 1

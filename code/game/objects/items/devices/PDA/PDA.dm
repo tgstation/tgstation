@@ -798,6 +798,8 @@ var/global/list/obj/item/device/pda/PDAs = list()
 		if(signal.data["done"])
 			useTC = 1
 			var/turf/pos = get_turf(P)
+			if(!pos)
+				return
 			if(pos.z in signal.data["level"])
 				useTC = 2
 				//Let's make this barely readable

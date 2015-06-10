@@ -73,6 +73,8 @@
 			volume = location.air.fuel_burnt*FIRE_GROWTH_RATE
 			temperature = location.air.temperature
 	else
+		if(!location || !location.air)
+			return
 		var/datum/gas_mixture/affected = location.air.remove_ratio(volume/location.air.volume)
 		affected.temperature = temperature
 		affected.react()

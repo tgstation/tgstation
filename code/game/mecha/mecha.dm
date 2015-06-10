@@ -274,6 +274,8 @@ obj/mecha/proc/can_use(mob/user)
 	if(!src.occupant || src.occupant != user ) return
 	if(user.stat || !user.canmove)
 		return
+	if(isarea(target)) //what the fuck mechcode
+		return
 	if(state)
 		occupant_message("<span class='warning'>Maintenance protocols in effect.</span>")
 		return

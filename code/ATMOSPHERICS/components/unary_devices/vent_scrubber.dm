@@ -105,6 +105,8 @@
 
 /obj/machinery/atmospherics/unary/vent_scrubber/process_atmos()
 	..()
+	if(!parent)
+		return
 	if(stat & (NOPOWER|BROKEN))
 		return
 	if (!node)

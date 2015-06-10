@@ -58,6 +58,8 @@
 
 	if(!on)
 		return 0
+	if(!parent1 || !parent2)
+		return
 
 	var/datum/gas_mixture/environment = loc.return_air()
 	var/environment_pressure = environment.return_pressure()

@@ -14,6 +14,7 @@
 	var/next_check=0
 	var/list/avail_dirs = list(NORTH,SOUTH,EAST,WEST)
 	dynamic_lighting = 0
+	luminosity = 1
 
 /turf/simulated/wall/supermatter/New()
 	..()

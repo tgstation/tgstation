@@ -39,6 +39,8 @@ Passive gate is similar to the regular pump except:
 	..()
 	if(!on)
 		return 0
+	if(!parent1 || !parent2)
+		return
 
 	var/output_starting_pressure = air2.return_pressure()
 	var/input_starting_pressure = air1.return_pressure()
