@@ -289,9 +289,9 @@ var/list/uplink_items = list()
 	cost = 3
 	gamemodes = list(/datum/game_mode/nuclear)
 
-/datum/uplink_item/ammo/bulldragon
+/datum/uplink_item/ammo/bulltoxin
 	name = "Drum Magazine - 12g Bioterror"
-	desc = "An alternative 8-round dragon's breath magazine for use in the Bulldog shotgun. Contains debilitating toxins to make your target die an agonizing death."
+	desc = "An alternative 8-round toxic magazine for use in the Bulldog shotgun. Contains debilitating toxins to make your target die an agonizing death."
 	item = /obj/item/ammo_box/magazine/m12g/bioterror
 	cost = 3
 	gamemodes = list(/datum/game_mode/nuclear)
