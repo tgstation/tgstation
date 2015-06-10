@@ -11,6 +11,7 @@
 		new /obj/item/weapon/storage/backpack/industrial(src)
 	else
 		new /obj/item/weapon/storage/backpack/satchel_eng(src)
+	new /obj/item/clothing/cloak/ce(src)
 	new /obj/item/weapon/storage/backpack/dufflebag/engineering(src)
 	new /obj/item/clothing/under/rank/chief_engineer(src)
 	new /obj/item/clothing/head/hardhat/white(src)
