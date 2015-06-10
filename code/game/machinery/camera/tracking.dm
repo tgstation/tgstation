@@ -114,9 +114,11 @@
 	var/mob/living/silicon/ai/U = usr
 
 	U.cameraFollow = target
+	U.tracking = 1
 
 	U << "<span class='notice'>Attempting to track [target.get_visible_name()]...</span>"
 	sleep(min(40, get_dist(target, U.eyeobj) / 3))
+	U.tracking = 0
 	if(!target || !(target in U.trackable_mobs()))
 		U << "<span class='warning'>Target is not near any active cameras.</span>"
 		return
@@ -127,37 +129,43 @@
 		while (U.cameraFollow == target)
 			if (U.cameraFollow == null)
 				return
+
 			if (istype(target, /mob/living/carbon/human))
 				var/mob/living/carbon/human/H = target
 				if(H.wear_id && istype(H.wear_id.GetID(), /obj/item/weapon/card/id/syndicate))
-					U << "Follow camera mode terminated."
+					U << "<span class='warning'>Target is not near any active cameras.</span>"
 					U.cameraFollow = null
 					return
+
 				if(istype(H.head, /obj/item/clothing/head))
 					var/obj/item/clothing/head/hat = H.head
 					if(hat.blockTracking)
-						U << "Follow camera mode terminated."
+						U << "<span class='warning'>Target is not near any active cameras.</span>"
 						U.cameraFollow = null
 						return
+
 				if(H.digitalcamo)
-					U << "Follow camera mode terminated."
+					U << "<span class='warning'>Target is not near any active cameras.</span>"
 					U.cameraFollow = null
 					return
 
 			if(istype(target.loc,/obj/effect/dummy))
-				U << "Follow camera mode ended."
+				U << "<span class='warning'>Target is not near any active cameras.</span>"
 				U.cameraFollow = null
 				return
 
 			if (!near_camera(target))
 				U << "<span class='warning'>Target is not near any active cameras.</span>"
-				break
+				U.cameraFollow = null
+				return
 
 			if(U.eyeobj)
 				U.eyeobj.setLoc(get_turf(target))
+
 			else
 				view_core()
 				return
+
 			sleep(10)
 
 /proc/near_camera(var/mob/living/M)

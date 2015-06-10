@@ -816,3 +816,7 @@ Sorry Giacom. Please don't be mad :(
 
 /mob/living/proc/get_standard_pixel_y_offset(lying = 0)
 	return initial(pixel_y)
+
+/mob/living/cancel_camera()
+	..()
+	cameraFollow = null

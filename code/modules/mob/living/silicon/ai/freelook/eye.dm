@@ -92,7 +92,8 @@
 	else
 		user.sprint = initial
 
-	user.cameraFollow = null
+	if(!user.tracking)
+		user.cameraFollow = null
 
 	//user.unset_machine() //Uncomment this if it causes problems.
 	//user.lightNearbyCamera()
