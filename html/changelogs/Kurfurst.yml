@@ -1,5 +1,8 @@
 author: Kurfurst
 delete-after: True
 changes:
- - tweak: Central Command has removed redundancies in the toolbelt, expanding its storage space by 100% and allowing it to hold emergency fire extinguishers, as well as compressed matter cartridges.
- - rscadd: Anthroarcheologists have recently discovered the belt of Many-APCs-Charging, and made it available to our Chief Engineer. It can hold many useful tools, including the RCD, RPD, and RMCE. Because it holds larger objects, it can hold full size extinguihsers (including foam) and large welders as well.
+ - tweak: The advanced toolbelt now can hold compressed matter cartridges, like the normal toolbelt.
+ - tweak: The advanced toolbelt can now carry the chief engineer's blueprints.
+ - tweak: The normal toolbelt now informs you what fits on it.
+ - tweak: Normal and advanced toolbelts can now carry the light replacer.
+ - rscadd: Engineers can find a new fuel can available at the Engi-Vend. It fits on your toolbelt and switches between two partitions.
