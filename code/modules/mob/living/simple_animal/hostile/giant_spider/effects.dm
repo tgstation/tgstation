@@ -28,7 +28,7 @@
 	else
 		visible_message("<span class='warning'><B>\The [src] have been attacked with \the [W][(user ? " by [user]." : ".")]</span>")
 
-	var/damage = W.force / 4.0
+	var/damage = W.force / 3
 
 	if(istype(W, /obj/item/weapon/weldingtool))
 		var/obj/item/weapon/weldingtool/WT = W
@@ -142,7 +142,7 @@
 	name = "cocoon"
 	desc = "Something wrapped in silky spider web"
 	icon_state = "cocoon1"
-	health = 60
+	health = 30
 
 	New()
 		..()
