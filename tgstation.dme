@@ -869,6 +869,7 @@
 #include "code\modules\client\preferences.dm"
 #include "code\modules\client\preferences_savefile.dm"
 #include "code\modules\client\preferences_toggles.dm"
+#include "code\modules\clothing\cloaks.dm"
 #include "code\modules\clothing\clothing.dm"
 #include "code\modules\clothing\glasses\engine_goggles.dm"
 #include "code\modules\clothing\glasses\glasses.dm"
