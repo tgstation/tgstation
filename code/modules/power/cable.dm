@@ -182,6 +182,9 @@ By design, d1 is the smallest direction and d2 is the highest
 	else if(istype(W, /obj/item/stack/cable_coil))
 		var/obj/item/stack/cable_coil/coil = W
 		coil.cable_join(src, user)
+	else if(istype(W, /obj/item/weapon/rcl))
+		var/obj/item/weapon/rcl/R = W
+		R.cable_join(src, user)
 	else if(istype(W, /obj/item/device/multitool))
 		if((powernet) && (powernet.avail > 0))		// is it powered?
 			user << "<SPAN CLASS='warning'>[powernet.avail]W in power network.</SPAN>"
