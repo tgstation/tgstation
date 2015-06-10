@@ -1,6 +1,6 @@
 /obj/machinery/abductor/experiment
-	name = "Experimental machinery"
-	desc = "A human-sized coffin sporting wide array of automatic surgery tools"
+	name = "experimentation machine"
+	desc = "A large man-sized tube sporting a complex array of surgical apparatus."
 	icon = 'icons/obj/abductor.dmi'
 	icon_state = "experiment-open"
 	density = 0
@@ -99,7 +99,7 @@
 			if(1)
 				dat += "<span class='average'>Unconscious</span>"
 			else
-				dat += "<span class='bad'>DEAD</span>"
+				dat += "<span class='bad'>Deceased</span>"
 	dat += "<br>"
 	dat += "[flash]"
 	dat += "<br>"
@@ -133,10 +133,10 @@
 	var/mob/living/carbon/human/H = occupant
 	var/point_reward = 0
 	if(H in history)
-		return "<span class='bad'>Specimen already in the database</span>"
+		return "<span class='bad'>Specimen already in database.</span>"
 	if(H.stat == DEAD)
 		say("Specimen deceased - please provide fresh sample.")
-		return "<span class='bad'>Specimen Deceased</span>"
+		return "<span class='bad'>Specimen deceased.</span>"
 	var/obj/item/gland/GlandTest = locate() in H
 	if(!GlandTest)
 		say("Experimental dissection not detected!")
@@ -144,19 +144,20 @@
 	if(H.mind != null && H.ckey != null)
 		history += H
 		abductee_minds += H.mind
-		say("Processing Specimen...")
+		say("Processing specimen...")
 		sleep(5)
 		switch(text2num(type))
 			if(1)
 				H << "<span class='warning'>You feel violated.</span>"
 			if(2)
-				H << "<span class='warning'>You feel being sliced and put back together.</span>"
+				H << "<span class='warning'>You feel yourself being sliced apart and put back together.</span>"
 			if(3)
-				H << "<span class='warning'>You feel under intense scrutiny.</span>"
+				H << "<span class='warning'>You feel intensely watched.</span>"
 		sleep(5)
-		H << "<span class='warning'>Your mind snaps!</span>"
+		H << "<span class='warning'><b>Your mind snaps!</b></span>"
 		var/objtype = pick(typesof(/datum/objective/abductee/) - /datum/objective/abductee/)
 		var/datum/objective/abductee/O = new objtype()
+		ticker.mode.abductees += H.mind
 		H.mind.objectives += O
 		var/obj_count = 1
 		H << "<span class='notice'>Your current objectives:</span>"
@@ -172,15 +173,15 @@
 			SendBack(H)
 			playsound(src.loc, 'sound/machines/ding.ogg', 50, 1)
 			points += point_reward
-			return "<span class='good'>Experiment Successfull! [point_reward] new data-points collected.</span>"
+			return "<span class='good'>Experiment successful! [point_reward] new data-points collected.</span>"
 		else
 			playsound(src.loc, 'sound/machines/buzz-sigh.ogg', 50, 1)
-			return "<span class='bad'>Experiment Failed! No replacement organ detected.</span>"
+			return "<span class='bad'>Experiment failed! No replacement organ detected.</span>"
 	else
-		say("Brain Activity Nonexistant - Disposing Sample...")
+		say("Brain activity nonexistant - disposing sample...")
 		open_machine()
 		SendBack(H)
-		return "<span class='bad'>Specimen Braindead - Disposed</span>"
+		return "<span class='bad'>Specimen braindead - disposed.</span>"
 	return "<span class='bad'>ERROR</span>"
 
 
