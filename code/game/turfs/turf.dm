@@ -36,11 +36,14 @@
 	for(var/atom/movable/AM in src)
 		Entered(AM)
 	set_opacity(src.opacity)
+	reconsider_lights()
 	return
 
 // Adds the adjacent turfs to the current atmos processing
 /turf/Del()
 	turfs.Remove(src)
+	set_opacity(0)
+	reconsider_lights()
 	for(var/direction in cardinal)
 		if(atmos_adjacent_turfs & direction)
 			var/turf/simulated/T = get_step(src, direction)

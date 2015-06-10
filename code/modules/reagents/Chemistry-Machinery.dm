@@ -1527,7 +1527,8 @@ obj/machinery/computer/pandemic/proc/replicator_cooldown(var/waittime)
 		if(isnum(val))
 			desired_temp = Clamp(desired_temp+val, 0, 1000)
 		else if(val == "input")
-			desired_temp = Clamp(input("Please input the target temperature", name) as num, 0, 1000)
+			var/temp = input("Please input the target temperature", name) as num
+			desired_temp = Clamp(temp, 0, 1000)
 		else
 			return 0
 		. = 1
