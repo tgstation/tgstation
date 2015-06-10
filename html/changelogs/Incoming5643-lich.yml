@@ -1,0 +1,10 @@
+author: Incoming5643
+
+delete-after: True
+
+changes: 
+  - rscadd: "Growing tired of reports of slain members, the Wizard Federation has cautiously sactioned the dark path of lichdom. Beware of the powerful lich who hides his phylactery well, for he is immortal!"
+
+  - rscadd: "The trick to defeating liches is to destroy either their body or their phylactery item before they can ressurect to it. The more a lich is slain the longer it will take him to make use of his phylactery and the more likely the crew is to catch him during a vunerable moment."
+
+  - rscremove: "Due to the addition of proper liching, skeletons as a choosable race from magic mirrors has been discontinued. My apologies to the powergamers. A special admin version of the mirror that allows for skeletons has also been added to the code."
