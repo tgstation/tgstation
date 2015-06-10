@@ -251,6 +251,7 @@
 			if(F.cooked_type)
 				var/obj/item/weapon/reagent_containers/food/snacks/S = new F.cooked_type (get_turf(src))
 				F.initialize_cooked_food(S, efficiency)
+				feedback_add_details("food_made","[F.name]")
 			else
 				new /obj/item/weapon/reagent_containers/food/snacks/badrecipe(src)
 				if(dirty < 100)
