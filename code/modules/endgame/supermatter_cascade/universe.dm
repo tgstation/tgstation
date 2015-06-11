@@ -86,18 +86,7 @@ The access requirements on the Asteroid Shuttles' consoles have now been revoked
 		sleep(5 * 10 * 60) // 5 minutes
 		if(!ticker.mode.check_finished())
 			ticker.station_explosion_cinematic(0,null) // TODO: Custom cinematic
-
-			world << "<B>Resetting in 30 seconds!</B>"
-
-			feedback_set_details("end_error","Universe ended")
-
-			if(blackbox)
-				blackbox.save_all_data_to_sql()
-			sleep(300)
-			log_game("Rebooting due to universal collapse")
-
-
-			world.Reboot()
+			world.Reboot("Rebooting due to universal collapse", "end_error","Universe ended")
 			return
 
 /datum/universal_state/supermatter_cascade/proc/AreaSet()

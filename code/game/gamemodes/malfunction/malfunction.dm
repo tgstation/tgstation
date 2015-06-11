@@ -57,16 +57,7 @@
 /datum/game_mode/malfunction/post_setup()
 	for(var/datum/mind/AI_mind in malf_ai)
 		if(malf_ai.len < 1)
-			world << "Uh oh, its malfunction and there is no AI! Please report this."
-			world << "Rebooting world in 5 seconds."
-
-			feedback_set_details("end_error","malf - no AI")
-
-			if(blackbox)
-				blackbox.save_all_data_to_sql()
-			sleep(50)
-			world.Reboot()
-			return
+			world.Reboot("No AI during Malfunction.", "end_error", "malf - no AI", 50)
 		AI_mind.current.verbs += /mob/living/silicon/ai/proc/choose_modules
 		AI_mind.current:laws = new /datum/ai_laws/malfunction
 		AI_mind.current:malf_picker = new /datum/module_picker

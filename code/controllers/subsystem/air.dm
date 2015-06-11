@@ -55,9 +55,11 @@ var/datum/subsystem/air/SSair
 
 
 /datum/subsystem/air/Initialize(timeofday, zlevel)
-	setup_allturfs(zlevel)
 	setup_atmos_machinery(zlevel)
 	..()
+
+/datum/subsystem/air/AfterInitialize(zlevel)
+	setup_allturfs(zlevel)
 
 #define MC_AVERAGE(average, current) (0.8*(average) + 0.2*(current))
 /datum/subsystem/air/fire()
@@ -166,6 +168,7 @@ var/datum/subsystem/air/SSair
 			EG.dismantle()
 
 /datum/subsystem/air/proc/setup_allturfs(z_level)
+	active_turfs.Cut()
 	var/z_start = 1
 	var/z_finish = world.maxz
 	if(1 <= z_level && z_level <= world.maxz)
@@ -194,6 +197,8 @@ var/datum/subsystem/air/SSair
 					if(!T.air.check_turf_total(enemy_tile))
 						T.excited = 1
 						active_turfs |= T
+	if(active_turfs.len)
+		warning("There are [active_turfs.len] active turfs at roundstart, this is a mapping error caused by a difference of the air between the adjacent turfs.")
 
 /datum/subsystem/air/proc/setup_atmos_machinery(z_level)
 	for (var/obj/machinery/atmospherics/AM in atmos_machinery)
