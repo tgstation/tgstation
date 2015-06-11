@@ -12,9 +12,16 @@
 	density = 1
 	opacity = 1
 
+	canSmoothWith = list(
+	/turf/simulated/wall,
+	/obj/structure/falsewall,
+	/obj/structure/falsewall/reinforced  // WHY DO WE SMOOTH WITH FALSE R-WALLS WHEN WE DON'T SMOOTH WITH REAL R-WALLS.
+	)
+
+
 /obj/structure/falsewall/New()
-	relativewall_neighbours()
 	..()
+	relativewall_neighbours()
 
 /obj/structure/falsewall/Destroy()
 
@@ -35,16 +42,7 @@
 		icon_state = "[walltype]fwall_open"
 		return
 
-	var/junction = 0 //will be used to determine from which side the wall is connected to other walls
-
-	for(var/turf/simulated/wall/W in orange(src,1))
-		if(abs(src.x-W.x)-abs(src.y-W.y)) //doesn't count diagonal walls
-			if(walltype == W.walltype)//Only 'like' walls connect -Sieve
-				junction |= get_dir(src,W)
-	for(var/obj/structure/falsewall/W in orange(src,1))
-		if(abs(src.x-W.x)-abs(src.y-W.y)) //doesn't count diagonal walls
-			if(walltype == W.walltype)
-				junction |= get_dir(src,W)
+	var/junction = findSmoothingNeighbors()
 	icon_state = "[walltype][junction]"
 	return
 
@@ -123,10 +121,6 @@
 
 	if(istype(W, /obj/item/weapon/pickaxe/drill/jackhammer))
 		var/obj/item/weapon/pickaxe/drill/jackhammer/D = W
-		if(!D.bcell.use(300))
-			user << "<span class='notice'>Your [D.name] doesn't have enough power to break through the [name].</span>"
-			return
-		D.update_icon()
 		D.playDigSound()
 		dismantle(user)
 
@@ -155,6 +149,7 @@
 	name = "reinforced wall"
 	desc = "A huge chunk of reinforced metal used to seperate rooms."
 	icon_state = "r_wall"
+	walltype = "rwall"
 
 /obj/structure/falsewall/reinforced/ChangeToWall(delete = 1)
 	var/turf/T = get_turf(src)
@@ -175,25 +170,6 @@
 		src.relativewall()
 	else
 		icon_state = "frwall_open"
-
-/obj/structure/falsewall/reinforced/relativewall()
-
-	if(!density)
-		icon_state = "frwall_open"
-		return
-
-	var/junction = 0 //will be used to determine from which side the wall is connected to other walls
-
-	for(var/turf/simulated/wall/W in orange(src,1))
-		if(abs(src.x-W.x)-abs(src.y-W.y)) //doesn't count diagonal walls
-			if(src.walltype == W.walltype)//Only 'like' walls connect -Sieve
-				junction |= get_dir(src,W)
-	for(var/obj/structure/falsewall/W in orange(src,1))
-		if(abs(src.x-W.x)-abs(src.y-W.y)) //doesn't count diagonal walls
-			if(src.walltype == W.walltype)
-				junction |= get_dir(src,W)
-	icon_state = "rwall[junction]"
-	return
 
 /*
  * Uranium Falsewalls

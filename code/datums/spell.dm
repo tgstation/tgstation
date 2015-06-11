@@ -10,6 +10,7 @@ var/list/spells = typesof(/obj/effect/proc_holder/spell) //needed for the badmin
 	name = "Spell"
 	desc = "A wizard spell"
 	panel = "Spells"
+	var/sound = "sound/weapons/badZap.ogg"
 	anchored = 1 // Crap like fireball projectiles are proc_holders, this is needed so fireballs don't get blown back into your face via atmos etc.
 	pass_flags = PASSTABLE
 	density = 0
@@ -136,6 +137,9 @@ var/list/spells = typesof(/obj/effect/proc_holder/spell) //needed for the badmin
 		if("emote")
 			user.visible_message(invocation, invocation_emote_self) //same style as in mob/living/emote.dm
 
+/obj/effect/proc_holder/spell/proc/playMagSound()
+	playsound(get_turf(usr), sound,50,1)
+
 /obj/effect/proc_holder/spell/New()
 	..()
 
@@ -255,6 +259,7 @@ var/list/spells = typesof(/obj/effect/proc_holder/spell) //needed for the badmin
 	var/include_user = 0 //if it includes usr in the target list
 	var/random_target = 0 // chooses random viable target instead of asking the caster
 	var/random_target_priority = TARGET_CLOSEST // if random_target is enabled how it will pick the target
+
 
 /obj/effect/proc_holder/spell/aoe_turf //affects all turfs in view or range (depends)
 	var/inner_radius = -1 //for all your ring spell needs

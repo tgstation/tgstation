@@ -34,7 +34,11 @@
 	if(!can_buckle || !istype(M) || (M.loc != loc) || M.buckled || (buckle_requires_restraints && !M.restrained()))
 		return 0
 
-	if (isslime(M))
+	if (isslime(M) || isAI(M))
+		if(M == usr)
+			M << "<span class='warning'>You are unable to buckle yourself to the [src]!</span>"
+		else
+			usr << "<span class='warning'>You are unable to buckle [M] to the [src]!</span>"
 		return 0
 
 	M.buckled = src

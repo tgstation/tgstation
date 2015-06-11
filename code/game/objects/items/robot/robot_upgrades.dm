@@ -171,7 +171,7 @@
 			qdel(D)
 		for(var/obj/item/weapon/shovel/S in R.module.modules)
 			qdel(S)
-		R.module.modules += new /obj/item/weapon/pickaxe/drill/diamonddrill(R.module)
+		R.module.modules += new /obj/item/weapon/pickaxe/drill/cyborg/diamond(R.module)
 		R.module.rebuild()
 		return 1
 

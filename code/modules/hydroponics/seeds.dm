@@ -3,7 +3,7 @@
 // ********************************************************
 
 /obj/item/seeds
-	name = "pack of seeds"
+	name = "A pack of seeds."
 	icon = 'icons/obj/hydroponics/seeds.dmi'
 	icon_state = "seed"				//Unknown plant seed - these shouldn't exist in-game.
 	w_class = 1						//Pocketable.
@@ -405,7 +405,7 @@
 	plant_type = 0
 	oneharvest = 1
 	growthstages = 3
-	mutatelist = list(/obj/item/seeds/bluetomatoseed, /obj/item/seeds/bloodtomatoseed)
+	mutatelist = list(/obj/item/seeds/geraniumseed, /obj/item/seeds/lilyseed)
 
 /obj/item/seeds/geraniumseed
 	name = "pack of geranium seeds"
@@ -1346,7 +1346,10 @@
 /obj/item/seeds/kudzuseed/attack_self(mob/user as mob)
 	if(istype(user.loc,/turf/space))
 		return
+	var/turf/T = get_turf(src)
 	user << "<span class='notice'>You plant the kudzu. You monster.</span>"
+	message_admins("Kudzu planted by [key_name(user, user.client)](<A HREF='?_src_=holder;adminmoreinfo=\ref[user]'>?</A>) at ([T.x],[T.y],[T.z] - <A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[T.x];Y=[T.y];Z=[T.z]'>(JMP)</a>)",0,1)
+	investigate_log("was planted by [user.ckey]([user]) at ([T.x],[T.y],[T.z])","kudzu")
 	new /obj/effect/spacevine_controller(user.loc, mutations, potency, production)
 	qdel(src)
 
@@ -1369,7 +1372,7 @@
 		if(prob(20))
 			mutations.Remove(pick(temp_mut_list))
 		temp_mut_list.Cut()
-	if(S.has_reagent("fuel", 5))
+	if(S.has_reagent("welding_fuel", 5))
 		for(var/datum/spacevine_mutation/SM in mutations)
 			if(SM.quality == POSITIVE)
 				temp_mut_list += SM

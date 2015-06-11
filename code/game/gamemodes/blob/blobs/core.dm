@@ -106,6 +106,8 @@
 		B.blob_core = src
 		src.overmind = B
 		color = overmind.blob_reagent_datum.color
+		if(B.mind && !B.mind.special_role)
+			B.mind.special_role = "Blob Overmind"
 		spawn(0)
 			if(is_offspring)
 				B.verbs -= /mob/camera/blob/verb/split_consciousness

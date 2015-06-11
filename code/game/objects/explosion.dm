@@ -6,7 +6,7 @@
 	if(dx>=dy)	return dx + (0.5*dy)	//The longest side add half the shortest side approximates the hypotenuse
 	else		return dy + (0.5*dx)
 
-proc/trange(var/Dist=0,var/turf/Center=null)//alternative to range (ONLY processes turfs and thus less intensive)
+/proc/trange(var/Dist=0,var/turf/Center=null)//alternative to range (ONLY processes turfs and thus less intensive)
 	if(Center==null) return
 
 	//var/x1=((Center.x-Dist)<1 ? 1 : Center.x-Dist)
@@ -19,7 +19,7 @@ proc/trange(var/Dist=0,var/turf/Center=null)//alternative to range (ONLY process
 	return block(x1y1,x2y2)
 
 
-proc/explosion(turf/epicenter, devastation_range, heavy_impact_range, light_impact_range, flash_range, adminlog = 1, ignorecap = 0, flame_range = 0 ,silent = 0)
+/proc/explosion(turf/epicenter, devastation_range, heavy_impact_range, light_impact_range, flash_range, adminlog = 1, ignorecap = 0, flame_range = 0 ,silent = 0)
 	src = null	//so we don't abort once src is deleted
 	epicenter = get_turf(epicenter)
 
@@ -76,7 +76,7 @@ proc/explosion(turf/epicenter, devastation_range, heavy_impact_range, light_impa
 		//postpone processing for a bit
 		var/postponeCycles = max(round(devastation_range/8),1)
 		SSlighting.postpone(postponeCycles)
-		SSpower.postpone(postponeCycles)
+		SSmachine.postpone(postponeCycles)
 
 		if(heavy_impact_range > 1)
 			var/datum/effect/system/explosion/E = new/datum/effect/system/explosion()
@@ -147,7 +147,7 @@ proc/explosion(turf/epicenter, devastation_range, heavy_impact_range, light_impa
 
 
 
-proc/secondaryexplosion(turf/epicenter, range)
+/proc/secondaryexplosion(turf/epicenter, range)
 	for(var/turf/tile in trange(range, epicenter))
 		tile.ex_act(2)
 

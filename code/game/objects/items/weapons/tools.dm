@@ -144,6 +144,7 @@
  */
 /obj/item/weapon/weldingtool
 	name = "welding tool"
+	desc = "A standard edition welder provided by NanoTrasen."
 	icon = 'icons/obj/items.dmi'
 	icon_state = "welder"
 	item_state = "welder"
@@ -162,11 +163,12 @@
 	var/status = 1 		//Whether the welder is secured or unsecured (able to attach rods to it to make a flamethrower)
 	var/max_fuel = 20 	//The max amount of fuel the welder can hold
 	var/change_icons = 1
+	var/can_off_process = 0
 
 /obj/item/weapon/weldingtool/New()
 	..()
 	create_reagents(max_fuel)
-	reagents.add_reagent("fuel", max_fuel)
+	reagents.add_reagent("welding_fuel", max_fuel)
 	update_icon()
 	return
 
@@ -174,9 +176,9 @@
 	overlays.Cut()
 	if(welding)
 		overlays += "[initial(icon_state)]-on"
-		item_state = "welder1"
+		item_state = "[initial(item_state)]1"
 	else
-		item_state = "welder"
+		item_state = "[initial(item_state)]"
 
 /obj/item/weapon/weldingtool/update_icon()
 	if(change_icons)
@@ -223,7 +225,8 @@
 			force = 3
 			damtype = "brute"
 			update_icon()
-			SSobj.processing.Remove(src)
+			if(!can_off_process)
+				SSobj.processing.Remove(src)
 			return
 	//Welders left on now use up fuel, but lets not have them run out quite that fast
 		if(1)
@@ -274,7 +277,7 @@
 
 //Returns the amount of fuel in the welder
 /obj/item/weapon/weldingtool/proc/get_fuel()
-	return reagents.get_reagent_amount("fuel")
+	return reagents.get_reagent_amount("welding_fuel")
 
 
 //Removes fuel from the welding tool. If a mob is passed, it will try to flash the mob's eyes. This should probably be renamed to use()
@@ -282,7 +285,7 @@
 	if(!welding || !check_fuel())
 		return 0
 	if(get_fuel() >= amount)
-		reagents.remove_reagent("fuel", amount)
+		reagents.remove_reagent("welding_fuel", amount)
 		check_fuel()
 		if(M)
 			M.flash_eyes(2)
@@ -356,8 +359,9 @@
 		var/obj/item/stack/rods/R = I
 		if (R.use(1))
 			var/obj/item/weapon/flamethrower/F = new /obj/item/weapon/flamethrower(user.loc)
-			user.unEquip(src)
-			loc = F
+			if(!remove_item_from_storage(F))
+				user.unEquip(src)
+				loc = F
 			F.weldtool = src
 			add_fingerprint(user)
 			user << "<span class='notice'>You add a rod to a welder, starting to build a flamethrower.</span>"
@@ -368,6 +372,7 @@
 
 /obj/item/weapon/weldingtool/largetank
 	name = "industrial welding tool"
+	desc = "A slightly larger welder with a larger tank."
 	icon_state = "indwelder"
 	max_fuel = 40
 	g_amt = 60
@@ -381,8 +386,10 @@
 
 /obj/item/weapon/weldingtool/mini
 	name = "emergency welding tool"
+	desc = "A miniature welder used during emergencies."
 	icon_state = "miniwelder"
 	max_fuel = 10
+	w_class = 1
 	m_amt = 30
 	g_amt = 10
 	change_icons = 0
@@ -392,30 +399,43 @@
 
 
 /obj/item/weapon/weldingtool/hugetank
-	name = "upgraded welding tool"
+	name = "upgraded industrial welding tool"
+	desc = "An upgraded welder based of the industrial welder."
+	icon_state = "upindwelder"
+	item_state = "upindwelder"
 	max_fuel = 80
-	w_class = 3.0
 	m_amt = 70
 	g_amt = 120
 	origin_tech = "engineering=3"
 
 /obj/item/weapon/weldingtool/experimental
 	name = "experimental welding tool"
+	desc = "An experimental welder capable of self-fuel generation."
+	icon_state = "exwelder"
+	item_state = "exwelder"
 	max_fuel = 40
-	w_class = 3.0
 	m_amt = 70
 	g_amt = 120
-	origin_tech = "engineering=4;plasmatech=3"
+	origin_tech = "materials=4;engineering=4;bluespace=3;plasmatech=3"
 	var/last_gen = 0
+	change_icons = 0
+	can_off_process = 1
 
 
 //Proc to make the experimental welder generate fuel, optimized as fuck -Sieve
 //i don't think this is actually used, yaaaaay -Pete
 /obj/item/weapon/weldingtool/experimental/proc/fuel_gen()
-	var/gen_amount = (world.time - last_gen) / 25
-	reagents += gen_amount
-	if(reagents > max_fuel)
-		reagents = max_fuel
+	if(!welding && !last_gen)
+		last_gen = 1
+		reagents.add_reagent("welding_fuel",1)
+		spawn(10)
+			last_gen = 0
+
+/obj/item/weapon/weldingtool/experimental/process()
+	..()
+	if(reagents.total_volume < max_fuel)
+		fuel_gen()
+
 
 
 /*

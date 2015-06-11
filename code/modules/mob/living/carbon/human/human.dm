@@ -529,6 +529,8 @@
 	. = 1 // Default to returning true.
 	if(user && !target_zone)
 		target_zone = user.zone_sel.selecting
+	if(dna && PIERCEIMMUNE in dna.species.specflags)
+		. = 0
 	// If targeting the head, see if the head item is thin enough.
 	// If targeting anything else, see if the wear suit is thin enough.
 	if(above_neck(target_zone))
@@ -695,7 +697,7 @@
 				if(brutedamage > 0)
 					status = "bruised"
 				if(brutedamage > 20)
-					status = "bleeding"
+					status = "battered"
 				if(brutedamage > 40)
 					status = "mangled"
 				if(brutedamage > 0 && burndamage > 0)
@@ -709,7 +711,7 @@
 					status += "numb"
 				if(status == "")
 					status = "OK"
-				src << "\t [status == "OK" ? "\blue" : "\red"] My [org.getDisplayName()] is [status]."
+				src << "\t [status == "OK" ? "\blue" : "\red"] Your [org.getDisplayName()] is [status]."
 
 				for(var/obj/item/I in org.embedded_objects)
 					src << "\t <a href='byond://?src=\ref[src];embedded_object=\ref[I];embedded_limb=\ref[org]'>\red There is \a [I] embedded in your [org.getDisplayName()]!</a>"

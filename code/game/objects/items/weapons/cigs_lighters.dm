@@ -122,21 +122,11 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 
 /obj/item/clothing/mask/cigarette/attackby(obj/item/weapon/W as obj, mob/user as mob, params)
 	..()
-	var/lighting_text = "<span class='notice'>[user] lights their [name] with [W].</span>"
-	if(istype(W, /obj/item/weapon/weldingtool))
-		lighting_text = "<span class='notice'>[user] casually lights the [name] with [W], what a badass.</span>"
-	else if(istype(W, /obj/item/weapon/lighter/zippo))
-		lighting_text = "<span class='rose'>With a single flick of their wrist, [user] smoothly lights their [name] with [W]. Damn they're cool.</span>"
-	else if(istype(W, /obj/item/weapon/lighter))
-		lighting_text = "<span class='notice'>After some fiddling, [user] manages to light their [name] with [W].</span>"
-	else if(istype(W, /obj/item/weapon/melee/energy))
-		lighting_text = "<span class='warning'>[user] swings their [W], barely missing their nose. They light their [name] in the process.</span>"
-	else if(istype(W, /obj/item/device/assembly/igniter))
-		lighting_text = "<span class='notice'>[user] fiddles with [W], and manages to light their [name].</span>"
-	else if(istype(W, /obj/item/device/flashlight/flare))
-		lighting_text = "<span class='notice'>[user] lights their [name] with [W] like a real badass.</span>"
-	if(is_hot(W))
-		light(lighting_text)
+	if(!lit && smoketime > 0)
+		var/lighting_text = is_lighter(W,user)
+		if(lighting_text)
+			light(lighting_text)
+			return
 	return
 
 /obj/item/clothing/mask/cigarette/afterattack(obj/item/weapon/reagent_containers/glass/glass, mob/user as mob, proximity)
@@ -151,6 +141,23 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 			else
 				user << "<span class='notice'>[src] is full.</span>"
 
+/obj/item/clothing/mask/cigarette/proc/is_lighter(obj/O, mob/user)
+	var/lighting_text = null
+	if(istype(O, /obj/item/weapon/weldingtool))
+		lighting_text = "<span class='notice'>[user] casually lights the [name] with [O], what a badass.</span>"
+	else if(istype(O, /obj/item/weapon/lighter/zippo))
+		lighting_text = "<span class='rose'>With a single flick of their wrist, [user] smoothly lights their [name] with [O]. Damn they're cool.</span>"
+	else if(istype(O, /obj/item/weapon/lighter))
+		lighting_text = "<span class='notice'>After some fiddling, [user] manages to light their [name] with [O].</span>"
+	else if(istype(O, /obj/item/weapon/melee/energy))
+		lighting_text = "<span class='warning'>[user] swings their [O], barely missing their nose. They light their [name] in the process.</span>"
+	else if(istype(O, /obj/item/device/assembly/igniter))
+		lighting_text = "<span class='notice'>[user] fiddles with [O], and manages to light their [name].</span>"
+	else if(istype(O, /obj/item/device/flashlight/flare))
+		lighting_text = "<span class='notice'>[user] lights their [name] with [O] like a real badass.</span>"
+	else if(is_hot(O))
+		lighting_text = "<span class='notice'>[user] lights their [name] with [O].</span>"
+	return lighting_text
 
 /obj/item/clothing/mask/cigarette/proc/light(var/flavor_text = null)
 	if(!src.lit)
@@ -169,9 +176,9 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 				M.unEquip(src, 1)
 			qdel(src)
 			return
-		if(reagents.get_reagent_amount("fuel")) // the fuel explodes, too, but much less violently
+		if(reagents.get_reagent_amount("welding_fuel")) // the fuel explodes, too, but much less violently
 			var/datum/effect/effect/system/reagents_explosion/e = new()
-			e.set_up(round(reagents.get_reagent_amount("fuel") / 5, 1), get_turf(src), 0, 0)
+			e.set_up(round(reagents.get_reagent_amount("welding_fuel") / 5, 1), get_turf(src), 0, 0)
 			e.start()
 			if(ismob(loc))
 				var/mob/M = loc
@@ -230,9 +237,8 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 /obj/item/clothing/mask/cigarette/attack_self(mob/user as mob)
 	if(lit == 1)
 		user.visible_message("<span class='notice'>[user] calmly drops and treads on \the [src], putting it out instantly.</span>")
-		var/turf/T = get_turf(src)
-		new type_butt(T)
-		new /obj/effect/decal/cleanable/ash(T)
+		new type_butt(user.loc)
+		new /obj/effect/decal/cleanable/ash(user.loc)
 		SSobj.processing.Remove(src)
 		qdel(src)
 	return ..()
@@ -385,7 +391,14 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 		else
 			user << "<span class='warning'>It is already packed!</span>"
 	else
-		user << "<span class='warning'>You can't put that in the pipe!</span>"
+		var/lighting_text = is_lighter(O,user)
+		if(lighting_text)
+			if(smoketime > 0)
+				light(lighting_text)
+			else
+				user << "<span class='warning'>There is nothing to smoke!</span>"
+		else
+			user << "<span class='warning'>You can't put that in the pipe!</span>"
 	..()
 
 
@@ -479,7 +492,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 			force = 5
 			damtype = "fire"
 			hitsound = 'sound/items/welder.ogg'
-			attack_verb = list("burnt", "signed")
+			attack_verb = list("burnt", "singed")
 			if(istype(src, /obj/item/weapon/lighter/zippo) )
 				user.visible_message("Without even breaking stride, [user] flips open and lights [src] in one smooth movement.", "<span class='notice'>Without even breaking stride, you flip open and lights [src] in one smooth movement.</span>")
 			else
@@ -539,7 +552,8 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 
 /obj/item/weapon/lighter/dropped(mob/user)
 	if(lit)
-		user.AddLuminosity(-1)
+		if(user)
+			user.AddLuminosity(-1)
 		SetLuminosity(1)
 	return
 

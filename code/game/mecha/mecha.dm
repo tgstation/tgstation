@@ -204,7 +204,7 @@
 
 	return 1
 
-obj/mecha/proc/can_use(mob/user)
+/obj/mecha/proc/can_use(mob/user)
 	if(user != src.occupant)
 		return 0
 	if(user && ismob(user))
@@ -1627,6 +1627,9 @@ var/year_integer = text2num(year) // = 2013???
 	if(!isnull(get_charge()))
 		cell.give(amount)
 		return 1
+	return 0
+
+/obj/mecha/allow_drop()
 	return 0
 
 

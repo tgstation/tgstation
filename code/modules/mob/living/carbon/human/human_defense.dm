@@ -62,7 +62,7 @@ emp_act
 
 			return -1 // complete projectile permutation
 
-	if(check_shields(P.damage, "the [P.name]"))
+	if(check_shields(P.damage, "the [P.name]", P))
 		P.on_hit(src, 100, def_zone)
 		return 2
 	return (..(P , def_zone))
@@ -85,7 +85,10 @@ emp_act
 
 //End Here
 
-/mob/living/carbon/human/proc/check_shields(var/damage = 0, var/attack_text = "the attack")
+/mob/living/carbon/human/proc/check_shields(var/damage = 0, var/attack_text = "the attack", var/obj/item/O)
+	if(O)
+		if(O.flags & NOSHIELD) //weapon ignores shields altogether
+			return 0
 	if(l_hand && istype(l_hand, /obj/item/weapon))//Current base is the prob(50-d/3)
 		var/obj/item/weapon/I = l_hand
 		if(I.IsShield() && (prob(50 - round(damage / 3))))
@@ -127,6 +130,8 @@ emp_act
 	var/obj/item/organ/limb/affecting = get_organ(ran_zone(user.zone_sel.selecting))
 	var/hit_area = parse_zone(affecting.name)
 	var/target_area = parse_zone(target_limb.name)
+	feedback_add_details("item_used_for_combat","[I.name]|[I.force]")
+	feedback_add_details("zone_targeted","[def_zone]")
 
 	if(dna)	// allows your species to affect the attacked_by code
 		return dna.species.spec_attacked_by(I,user,def_zone,affecting,hit_area,src.a_intent,target_limb,target_area,src)
@@ -134,7 +139,7 @@ emp_act
 	else
 		if(user != src)
 			user.do_attack_animation(src)
-			if(check_shields(I.force, "the [I.name]"))
+			if(check_shields(I.force, "the [I.name]", I))
 				return 0
 
 		if(I.attack_verb && I.attack_verb.len)
@@ -151,7 +156,6 @@ emp_act
 		var/Iforce = I.force //to avoid runtimes on the forcesay checks at the bottom. Some items might delete themselves if you drop them. (stunning yourself, ninja swords)
 
 		apply_damage(I.force, I.damtype, affecting, armor , I)
-
 		var/bloody = 0
 		if(((I.damtype == BRUTE) && I.force && prob(25 + (I.force * 2))))
 			if(affecting.status == ORGAN_ORGANIC)

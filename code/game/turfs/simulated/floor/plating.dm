@@ -48,12 +48,13 @@
 	else if(istype(C, /obj/item/stack/tile))
 		if(!broken && !burnt)
 			var/obj/item/stack/tile/W = C
+			if(!W.use(1))
+				return
 			var/turf/simulated/floor/T = ChangeTurf(W.turf_type)
 			if(istype(W,/obj/item/stack/tile/light)) //TODO: get rid of this ugly check somehow
 				var/obj/item/stack/tile/light/L = W
 				var/turf/simulated/floor/light/F = T
 				F.state = L.state
-			W.use(1)
 			playsound(src, 'sound/weapons/Genhit.ogg', 50, 1)
 		else
 			user << "<span class='warning'>This section is too damaged to support a tile! Use a welder to fix the damage.</span>"
@@ -98,6 +99,8 @@
 		user << "<span class='notice'>You begin removing rods...</span>"
 		playsound(src, 'sound/items/Ratchet.ogg', 80, 1)
 		if(do_after(user, 30))
+			if(!istype(src, /turf/simulated/floor/engine))
+				return
 			new /obj/item/stack/rods(src, 2)
 			ChangeTurf(/turf/simulated/floor/plating)
 			return
@@ -156,3 +159,13 @@
 	nitrogen = 0
 	temperature = TCMB
 
+/turf/simulated/floor/plating/lava
+	icon_state = "lava"
+
+/turf/simulated/floor/plating/abductor
+	name = "alien floor"
+	icon_state = "alienpod1"
+
+/turf/simulated/floor/plating/abductor/New()
+	..()
+	icon_state = "alienpod[rand(1,9)]"

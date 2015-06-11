@@ -11,6 +11,9 @@
 		/obj/machinery/chem_heater/,
 		/obj/machinery/reagentgrinder,
 		/obj/machinery/biogenerator,
+		/obj/machinery/r_n_d/destructive_analyzer,
+		/obj/machinery/r_n_d/experimentor,
+		/obj/machinery/autolathe,
 		/obj/structure/table,
 		/obj/structure/rack,
 		/obj/structure/closet,
@@ -234,12 +237,19 @@
 	volume = 70
 	flags = OPENCONTAINER
 
-/obj/item/weapon/reagent_containers/glass/bucket/attackby(var/obj/D, mob/user as mob, params)
-	if(isprox(D))
-		user << "<span class='notice'>You add [D] to [src].</span>"
-		qdel(D)
-		user.put_in_hands(new /obj/item/weapon/bucket_sensor)
+/obj/item/weapon/reagent_containers/glass/bucket/attackby(var/obj/O, mob/user as mob, params)
+	if(istype(O, /obj/item/weapon/mop))
+		if(reagents.total_volume < 1)
+			user << "<span class='warning'>[src] is out of water!</span>"
+		else
+			reagents.trans_to(O, 5)
+			user << "<span class='notice'>You wet [O] in [src].</span>"
+			playsound(loc, 'sound/effects/slosh.ogg', 25, 1)
+	else if(isprox(O))
+		user << "<span class='notice'>You add [O] to [src].</span>"
+		qdel(O)
 		user.unEquip(src)
 		qdel(src)
+		user.put_in_hands(new /obj/item/weapon/bucket_sensor)
 	else
 		..()

@@ -48,7 +48,7 @@
 	if (malf_ai.len < required_enemies)
 		return 0
 	for(var/datum/mind/ai_mind in malf_ai)
-		ai_mind.assigned_role = "MODE"
+		ai_mind.assigned_role = "malfunctioning AI"
 		ai_mind.special_role = "malfunctioning AI"//So they actually have a special role/N
 		log_game("[ai_mind.key] (ckey) has been selected as a malf AI")
 	return 1
@@ -57,33 +57,16 @@
 /datum/game_mode/malfunction/post_setup()
 	for(var/datum/mind/AI_mind in malf_ai)
 		if(malf_ai.len < 1)
-			world << "Uh oh, its malfunction and there is no AI! Please report this."
-			world << "Rebooting world in 5 seconds."
-
-			feedback_set_details("end_error","malf - no AI")
-
-			if(blackbox)
-				blackbox.save_all_data_to_sql()
-			sleep(50)
-			world.Reboot()
+			world.Reboot("No AI during Malfunction.", "end_error", "malf - no AI", 50)
 			return
 		AI_mind.current.verbs += /mob/living/silicon/ai/proc/choose_modules
 		AI_mind.current:laws = new /datum/ai_laws/malfunction
 		AI_mind.current:malf_picker = new /datum/module_picker
 		AI_mind.current:show_laws()
-
 		greet_malf(AI_mind)
-
 		AI_mind.special_role = "malfunction"
-
 		AI_mind.current.verbs += /datum/game_mode/malfunction/proc/takeover
 		AI_mind.current.verbs += /mob/living/silicon/ai/proc/ai_cancel_call
-
-/*		AI_mind.current.icon_state = "ai-malf"
-		spawn(10)
-			if(alert(AI_mind.current,"Do you want to use an alternative sprite for your real core?",,"Yes","No")=="Yes")
-				AI_mind.current.icon_state = "ai-malf2"
-*/
 	SSshuttle.emergencyNoEscape = 1
 	..()
 
@@ -179,6 +162,7 @@
 				priority_announce("Hostile enviroment resolved. You have 3 minutes to board the Emergency Shuttle.", null, 'sound/AI/shuttledock.ogg', "Priority")
 			SSshuttle.emergencyNoEscape = 0
 			malf_mode_declared = 0
+			continuous_sanity_checked = 1
 			if(get_security_level() == "delta")
 				set_security_level("red")
 			return ..()

@@ -348,9 +348,9 @@
 
 	var/obj/item/weapon/folder/syndicate/folder
 	if(owner == exchange_red)
-		folder = new/obj/item/weapon/folder/syndicate/red(mob.locs)
+		folder = new/obj/item/weapon/folder/syndicate/red(mob.loc)
 	else
-		folder = new/obj/item/weapon/folder/syndicate/blue(mob.locs)
+		folder = new/obj/item/weapon/folder/syndicate/blue(mob.loc)
 
 	var/list/slots = list (
 		"backpack" = slot_in_backpack,

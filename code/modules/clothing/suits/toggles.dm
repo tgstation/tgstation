@@ -53,9 +53,15 @@
 
 //Toggle exosuits for different aesthetic styles (hoodies, suit jacket buttons, etc)
 
-/obj/item/clothing/suit/toggle/AltClick()
+/obj/item/clothing/suit/toggle/AltClick(var/mob/user)
 	..()
-	suit_toggle()
+	if(!user.canUseTopic(user))
+		user << "<span class='warning'>You can't do that right now!</span>"
+		return
+	if(!in_range(src, user))
+		return
+	else
+		suit_toggle(user)
 
 /obj/item/clothing/suit/toggle/ui_action_click()
 	suit_toggle()

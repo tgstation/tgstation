@@ -919,6 +919,10 @@
 						usr << "<span class='danger'>Spawning tome failed!</span>"
 					else
 						H << "A tome, a message from your new master, appears in your [where]."
+						if(where == "backpack")
+							var/obj/item/weapon/storage/B = H.back
+							B.orient2hud(H)
+							B.show_to(H)
 
 			if("amulet")
 				if (!ticker.mode.equip_cultist(current))
@@ -993,7 +997,7 @@
 					else
 						current.real_name = "[syndicate_name()] Operative #[ticker.mode.syndicates.len-1]"
 					special_role = "Syndicate"
-					assigned_role = "MODE"
+					assigned_role = "Syndicate"
 					current << "<span class='notice'>You are a [syndicate_name()] agent!</span>"
 					ticker.mode.forge_syndicate_objectives(src)
 					ticker.mode.greet_syndicate(src)
@@ -1302,7 +1306,7 @@
 	if(!(src in ticker.mode.wizards))
 		ticker.mode.wizards += src
 		special_role = "Wizard"
-		assigned_role = "MODE"
+		assigned_role = "Wizard"
 		//ticker.mode.learn_basic_spells(current)
 		if(!wizardstart.len)
 			current.loc = pick(latejoin)
@@ -1383,7 +1387,11 @@
 
 
 /datum/mind/proc/make_Gang(var/gang)
-	special_role = "[(gang=="A") ? "[gang_name("A")] Gang (A)" : "[gang_name("B")] Gang (B)"] Boss"
+	special_role = "[gang_name(gang)] Gang ([gang]) Boss"
+	if(gang=="A")
+		ticker.mode.A_bosses += src
+	else if(gang=="B")
+		ticker.mode.B_bosses += src
 	ticker.mode.update_gang_icons_added(src, gang)
 	ticker.mode.forge_gang_objectives(src, gang)
 	ticker.mode.greet_gang(src)

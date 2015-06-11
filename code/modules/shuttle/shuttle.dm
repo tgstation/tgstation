@@ -56,7 +56,7 @@
 
 //returns turfs within our projected rectangle in a specific order.
 //this ensures that turfs are copied over in the same order, regardless of any rotation
-/obj/docking_port/proc/return_ordered_turfs(_x, _y, _z, _dir)
+/obj/docking_port/proc/return_ordered_turfs(_x, _y, _z, _dir, area/A)
 	if(!_dir)
 		_dir = dir
 	if(!_x)
@@ -86,7 +86,14 @@
 		for(var/dy=0, dy<height, ++dy)
 			xi = _x + (dx-dwidth)*cos - (dy-dheight)*sin
 			yi = _y + (dy-dheight)*cos + (dx-dwidth)*sin
-			. += locate(xi, yi, _z)
+			var/turf/T = locate(xi, yi, _z)
+			if(A)
+				if(get_area(T) == A)
+					. += T
+				else
+					. += null
+			else
+				. += T
 
 #ifdef DOCKING_PORT_HIGHLIGHT
 //Debug proc used to highlight bounding area
@@ -169,6 +176,10 @@
 	..()
 	SSshuttle.mobile += src
 
+	var/area/A = get_area(src)
+	if(istype(A, /area/shuttle))
+		areaInstance = A
+
 	if(!id)
 		id = "[SSshuttle.mobile.len]"
 	if(name == "shuttle")
@@ -177,7 +188,7 @@
 	if(!areaInstance)
 		areaInstance = new()
 		areaInstance.name = name
-	areaInstance.contents += return_ordered_turfs()
+		areaInstance.contents += return_ordered_turfs()
 
 	#ifdef DOCKING_PORT_HIGHLIGHT
 	highlight("#0f0")
@@ -282,7 +293,7 @@
 		if(S0.area_type)
 			area_type = S0.area_type
 
-	var/list/L0 = return_ordered_turfs()
+	var/list/L0 = return_ordered_turfs(x, y, z, dir, areaInstance)
 	var/list/L1 = return_ordered_turfs(S1.x, S1.y, S1.z, S1.dir)
 
 	//remove area surrounding docking port
@@ -298,9 +309,8 @@
 
 	for(var/i=1, i<=L0.len, ++i)
 		var/turf/T0 = L0[i]
-		if(!istype(T0, /turf/simulated/shuttle))	//only move shuttle turfs!
+		if(!T0)
 			continue
-
 		var/turf/T1 = L1[i]
 		if(!T1)
 			continue

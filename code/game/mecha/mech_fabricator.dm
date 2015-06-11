@@ -169,8 +169,8 @@
 	overlays -= "fab-active"
 	desc = initial(desc)
 
-	var/obj/item/I = new D.build_path
-	I.loc = get_step(src,SOUTH)
+	var/location = get_step(src,SOUTH)
+	var/obj/item/I = new D.build_path(location)
 	I.m_amt = get_resource_cost_w_coeff(D,"$metal")
 	I.g_amt = get_resource_cost_w_coeff(D,"$glass")
 	visible_message("\icon[src] <b>\The [src]</b> beeps, \"\The [I] is complete.\"")

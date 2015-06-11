@@ -25,6 +25,7 @@
 	var/arrest_type = 0 //If true, don't handcuff
 	radio_frequency = SEC_FREQ //Security channel
 	bot_type = SEC_BOT
+	model = "Securitron"
 
 /obj/machinery/bot/secbot/beepsky
 	name = "Officer Beep O'sky"
@@ -55,7 +56,7 @@
 	spawn(3)
 
 		var/datum/job/detective/J = new/datum/job/detective
-		botcard.access = J.get_access()
+		botcard.access += J.get_access()
 		prev_access = botcard.access
 
 

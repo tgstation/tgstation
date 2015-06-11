@@ -177,6 +177,7 @@ var/global/list/obj/machinery/message_server/message_servers = list()
 
 /datum/feedback_variable/proc/add_details(var/text)
 	if (istext(text))
+		text = replacetext(text, " ", "_")
 		if (!details)
 			details = text
 		else
@@ -324,7 +325,7 @@ var/obj/machinery/blackbox_recorder/blackbox
 	query_insert.Execute()
 
 
-proc/feedback_set(var/variable,var/value)
+/proc/feedback_set(var/variable,var/value)
 	if (!blackbox) return
 
 	var/datum/feedback_variable/FV = blackbox.find_feedback_datum(variable)
@@ -333,7 +334,7 @@ proc/feedback_set(var/variable,var/value)
 
 	FV.set_value(value)
 
-proc/feedback_inc(var/variable,var/value)
+/proc/feedback_inc(var/variable,var/value)
 	if (!blackbox) return
 
 	var/datum/feedback_variable/FV = blackbox.find_feedback_datum(variable)
@@ -342,7 +343,7 @@ proc/feedback_inc(var/variable,var/value)
 
 	FV.inc(value)
 
-proc/feedback_dec(var/variable,var/value)
+/proc/feedback_dec(var/variable,var/value)
 	if (!blackbox) return
 
 	var/datum/feedback_variable/FV = blackbox.find_feedback_datum(variable)
@@ -351,7 +352,7 @@ proc/feedback_dec(var/variable,var/value)
 
 	FV.dec(value)
 
-proc/feedback_set_details(var/variable,var/details)
+/proc/feedback_set_details(var/variable,var/details)
 	if (!blackbox) return
 
 	var/datum/feedback_variable/FV = blackbox.find_feedback_datum(variable)
@@ -360,7 +361,7 @@ proc/feedback_set_details(var/variable,var/details)
 
 	FV.set_details(details)
 
-proc/feedback_add_details(var/variable,var/details)
+/proc/feedback_add_details(var/variable,var/details)
 	if (!blackbox) return
 
 	var/datum/feedback_variable/FV = blackbox.find_feedback_datum(variable)

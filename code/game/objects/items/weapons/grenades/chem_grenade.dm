@@ -87,7 +87,7 @@
 		assemblyattacher = user.ckey
 
 		stage_change(WIRED)
-		user << "<span class='notice'>You add [A] to the [initial(name)] assembly./span>"
+		user << "<span class='notice'>You add [A] to the [initial(name)] assembly.</span>"
 
 	else if(stage == EMPTY && istype(I, /obj/item/stack/cable_coil))
 		var/obj/item/stack/cable_coil/C = I
@@ -195,7 +195,10 @@
 			if(A in mycontents) continue
 			if(!(A in viewable)) continue
 			reactable |= A
-	var/fraction = (reagents.total_volume/reactable.len) - reagents.total_volume
+	if(!reactable.len) //Nothing to react with. Probably means we're in nullspace.
+		qdel(src)
+		return
+	var/fraction = 1/reactable.len
 	for(var/atom/A in reactable)
 		reagents.reaction(A, TOUCH, fraction)
 

@@ -39,6 +39,7 @@
 	var/next_dest_loc
 	radio_frequency = SERV_FREQ //Service
 	bot_type = CLEAN_BOT
+	model = "Cleanbot"
 
 /obj/machinery/bot/cleanbot/New()
 	..()
@@ -46,7 +47,7 @@
 	icon_state = "cleanbot[on]"
 
 	var/datum/job/janitor/J = new/datum/job/janitor
-	botcard.access = J.get_access()
+	botcard.access += J.get_access()
 	prev_access = botcard.access
 
 /obj/machinery/bot/cleanbot/turn_on()
@@ -103,10 +104,6 @@ text("<A href='?src=\ref[src];power=1'>[on ? "On" : "Off"]</A>"))
 			blood =!blood
 			get_targets()
 			updateUsrDialog()
-		if("freq")
-			var/freq = text2num(input("Select frequency for  navigation beacons", "Frequency", num2text(beacon_freq / 10))) * 10
-			if (freq > 0)
-				beacon_freq = freq
 			updateUsrDialog()
 
 /obj/machinery/bot/cleanbot/attackby(obj/item/weapon/W, mob/user as mob, params)
@@ -169,7 +166,7 @@ text("<A href='?src=\ref[src];power=1'>[on ? "On" : "Off"]</A>"))
 	if(target)
 		if(!path || path.len == 0) //No path, need a new one
 			//Try to produce a path to the target, and ignore airlocks to which it has access.
-			path = get_path_to(loc, target.loc, /turf/proc/AdjacentTurfsWithAccess, /turf/proc/Distance, 0, 30, id=botcard)
+			path = get_path_to(loc, target.loc, src, /turf/proc/Distance, 0, 30, id=botcard)
 			if (!bot_move(target))
 				add_to_ignore(target)
 				target = null

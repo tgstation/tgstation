@@ -161,7 +161,7 @@
   Note that all maps except F are oriented with north towards A. A and F are oriented with north towards D.
   The characters on the second cube should be upside down in this illustration, but aren't because of a lack of unicode support.
 */
-proc/setup_map_transitions() //listamania
+/proc/setup_map_transitions() //listamania
 
 	var/list/unplaced_z_levels = 			accessable_z_levels
 	var/list/free_zones = 					list("A", "B", "C", "D", "E", "F")

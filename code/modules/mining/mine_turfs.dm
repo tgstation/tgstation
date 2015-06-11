@@ -1,16 +1,23 @@
 /**********************Mineral deposits**************************/
 
+var/global/list/rockTurfEdgeCache
+#define NORTH_EDGING	"north"
+#define SOUTH_EDGING	"south"
+#define EAST_EDGING		"east"
+#define WEST_EDGING		"west"
+
 /turf/simulated/mineral //wall piece
 	name = "rock"
 	icon = 'icons/turf/mining.dmi'
 	icon_state = "rock_nochance"
+	baseturf = /turf/simulated/floor/plating/asteroid
 	oxygen = 0
 	nitrogen = 0
 	opacity = 1
 	density = 1
 	blocks_air = 1
 	temperature = TCMB
-	var/mineralType = null
+	var/obj/mineralType = null
 	var/mineralAmt = 3
 	var/spread = 0 //will the seam spread?
 	var/spreadChance = 0 //the percentual chance of an ore spreading to the neighbouring tiles
@@ -32,25 +39,32 @@
 	return
 
 /turf/simulated/mineral/New()
+	if(!rockTurfEdgeCache || !rockTurfEdgeCache.len)
+		rockTurfEdgeCache = list()
+		rockTurfEdgeCache.len = 4
+		rockTurfEdgeCache[NORTH_EDGING] = image('icons/turf/mining.dmi', "rock_side_n", layer = 6)
+		rockTurfEdgeCache[SOUTH_EDGING] = image('icons/turf/mining.dmi', "rock_side_s")
+		rockTurfEdgeCache[EAST_EDGING] = image('icons/turf/mining.dmi', "rock_side_e", layer = 6)
+		rockTurfEdgeCache[WEST_EDGING] = image('icons/turf/mining.dmi', "rock_side_w", layer = 6)
 
 	spawn(1)
 		var/turf/T
-		if((istype(get_step(src, NORTH), /turf/simulated/floor)) || (istype(get_step(src, NORTH), /turf/space)) || (istype(get_step(src, NORTH), /turf/simulated/shuttle/floor)))
+		if((istype(get_step(src, NORTH), /turf/simulated/floor)) || (istype(get_step(src, NORTH), /turf/space)))
 			T = get_step(src, NORTH)
 			if (T)
-				T.overlays += image('icons/turf/mining.dmi', "rock_side_s")
-		if((istype(get_step(src, SOUTH), /turf/simulated/floor)) || (istype(get_step(src, SOUTH), /turf/space)) || (istype(get_step(src, SOUTH), /turf/simulated/shuttle/floor)))
+				T.overlays += rockTurfEdgeCache[SOUTH_EDGING]
+		if((istype(get_step(src, SOUTH), /turf/simulated/floor)) || (istype(get_step(src, SOUTH), /turf/space)))
 			T = get_step(src, SOUTH)
 			if (T)
-				T.overlays += image('icons/turf/mining.dmi', "rock_side_n", layer=6)
-		if((istype(get_step(src, EAST), /turf/simulated/floor)) || (istype(get_step(src, EAST), /turf/space)) || (istype(get_step(src, EAST), /turf/simulated/shuttle/floor)))
+				T.overlays += rockTurfEdgeCache[NORTH_EDGING]
+		if((istype(get_step(src, EAST), /turf/simulated/floor)) || (istype(get_step(src, EAST), /turf/space)))
 			T = get_step(src, EAST)
 			if (T)
-				T.overlays += image('icons/turf/mining.dmi', "rock_side_w", layer=6)
-		if((istype(get_step(src, WEST), /turf/simulated/floor)) || (istype(get_step(src, WEST), /turf/space)) || (istype(get_step(src, WEST), /turf/simulated/shuttle/floor)))
+				T.overlays += rockTurfEdgeCache[WEST_EDGING]
+		if((istype(get_step(src, WEST), /turf/simulated/floor)) || (istype(get_step(src, WEST), /turf/space)))
 			T = get_step(src, WEST)
 			if (T)
-				T.overlays += image('icons/turf/mining.dmi', "rock_side_e", layer=6)
+				T.overlays += rockTurfEdgeCache[EAST_EDGING]
 
 	if (mineralType && mineralAmt && spread && spreadChance)
 		for(var/dir in cardinal)
@@ -414,16 +428,6 @@
 		if (!( istype(T, /turf) ))
 			return
 
-		if(istype(P, /obj/item/weapon/pickaxe/drill))
-			var/obj/item/weapon/pickaxe/drill/D = P
-			if(isrobot(user))
-				var/obj/item/weapon/pickaxe/drill/cyborg/RD = D
-				if(!RD.use_robot_power(user))
-					return
-			else if(!D.bcell.use(D.drillcost))
-				user << "<span class='warning'>Your [D.name] doesn't have enough charge!</span>"
-				return
-
 		if(last_act+P.digspeed > world.time)//prevents message spam
 			return
 		last_act = world.time
@@ -435,6 +439,7 @@
 				user << "<span class='notice'>You finish cutting into the rock.</span>"
 				P.update_icon()
 				gets_drilled(user)
+				feedback_add_details("pick_used_mining","[P.name]")
 	else
 		return attack_hand(user)
 	return
@@ -444,6 +449,7 @@
 		var/i
 		for (i=0;i<mineralAmt;i++)
 			new mineralType(src)
+		feedback_add_details("ore_mined","[mineralType.name]|[mineralAmt]")
 	var/turf/simulated/floor/plating/asteroid/airless/N = ChangeTurf(/turf/simulated/floor/plating/asteroid/airless)
 	playsound(src, 'sound/effects/break_stone.ogg', 50, 1) //beautiful destruction
 	N.fullUpdateMineralOverlays()
@@ -495,6 +501,7 @@
 
 /turf/simulated/floor/plating/asteroid //floor piece
 	name = "Asteroid"
+	baseturf = /turf/simulated/floor/plating/asteroid
 	icon = 'icons/turf/floors.dmi'
 	icon_state = "asteroid"
 	icon_plating = "asteroid"
@@ -582,6 +589,17 @@
 				O.attackby(W,user)
 				return
 
+	if(istype(W, /obj/item/stack/tile))
+		var/obj/item/stack/tile/Z = W
+		if(!Z.use(1))
+			return
+		var/turf/simulated/floor/T = ChangeTurf(Z.turf_type)
+		if(istype(Z,/obj/item/stack/tile/light)) //TODO: get rid of this ugly check somehow
+			var/obj/item/stack/tile/light/L = Z
+			var/turf/simulated/floor/light/F = T
+			F.state = L.state
+		playsound(src, 'sound/weapons/Genhit.ogg', 50, 1)
+
 /turf/simulated/floor/plating/asteroid/proc/gets_dug()
 	if(dug)
 		return
@@ -599,13 +617,13 @@
 	src.overlays.Cut()
 
 	if(istype(get_step(src, NORTH), /turf/simulated/mineral))
-		src.overlays += image('icons/turf/mining.dmi', "rock_side_n")
+		src.overlays += rockTurfEdgeCache[NORTH_EDGING]
 	if(istype(get_step(src, SOUTH), /turf/simulated/mineral))
-		src.overlays += image('icons/turf/mining.dmi', "rock_side_s", layer=6)
+		src.overlays += rockTurfEdgeCache[SOUTH_EDGING]
 	if(istype(get_step(src, EAST), /turf/simulated/mineral))
-		src.overlays += image('icons/turf/mining.dmi', "rock_side_e", layer=6)
+		src.overlays += rockTurfEdgeCache[EAST_EDGING]
 	if(istype(get_step(src, WEST), /turf/simulated/mineral))
-		src.overlays += image('icons/turf/mining.dmi', "rock_side_w", layer=6)
+		src.overlays += rockTurfEdgeCache[WEST_EDGING]
 
 /turf/simulated/mineral/updateMineralOverlays()
 	return
@@ -613,3 +631,9 @@
 /turf/proc/fullUpdateMineralOverlays()
 	for (var/turf/t in range(1,src))
 		t.updateMineralOverlays()
+
+
+#undef NORTH_EDGING
+#undef SOUTH_EDGING
+#undef EAST_EDGING
+#undef WEST_EDGING

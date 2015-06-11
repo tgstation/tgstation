@@ -15,6 +15,7 @@
  *		Carp plushie
  *		Foam armblade
  *		Toy big red button
+ 		Beach ball
  */
 
 
@@ -398,7 +399,7 @@
 	update_window(usr)
 
 /obj/item/toy/crayon/afterattack(atom/target, mob/user as mob, proximity)
-	if(!proximity) return
+	if(!proximity || !check_allowed_items(target)) return
 	if(!uses)
 		user << "<span class='warning'>There is no more of [src.name] left!</span>"
 		if(!instant)
@@ -708,7 +709,7 @@
 
 
 
-obj/item/toy/cards
+/obj/item/toy/cards
 	var/parentdeck = null
 	var/deckstyle = "nanotrasen"
 	var/card_hitsound = null
@@ -718,14 +719,14 @@ obj/item/toy/cards
 	var/card_throw_range = 7
 	var/list/card_attack_verb = list("attacked")
 
-obj/item/toy/cards/New()
+/obj/item/toy/cards/New()
 	..()
 
-obj/item/toy/cards/proc/apply_card_vars(obj/item/toy/cards/newobj, obj/item/toy/cards/sourceobj) // Applies variables for supporting multiple types of card deck
+/obj/item/toy/cards/proc/apply_card_vars(obj/item/toy/cards/newobj, obj/item/toy/cards/sourceobj) // Applies variables for supporting multiple types of card deck
 	if(!istype(sourceobj))
 		return
 
-obj/item/toy/cards/deck
+/obj/item/toy/cards/deck
 	name = "deck of cards"
 	desc = "A deck of space-grade playing cards."
 	icon = 'icons/obj/toy.dmi'
@@ -735,7 +736,7 @@ obj/item/toy/cards/deck
 	var/cooldown = 0
 	var/list/cards = list()
 
-obj/item/toy/cards/deck/New()
+/obj/item/toy/cards/deck/New()
 	..()
 	icon_state = "deck_[deckstyle]_full"
 	for(var/i = 2; i <= 10; i++)
@@ -761,7 +762,7 @@ obj/item/toy/cards/deck/New()
 	cards += "Ace of Diamonds"
 
 
-obj/item/toy/cards/deck/attack_hand(mob/user as mob)
+/obj/item/toy/cards/deck/attack_hand(mob/user as mob)
 	if(user.lying)
 		return
 	var/choice = null
@@ -786,14 +787,14 @@ obj/item/toy/cards/deck/attack_hand(mob/user as mob)
 	else if(cards.len > 1)
 		src.icon_state = "deck_[deckstyle]_low"
 
-obj/item/toy/cards/deck/attack_self(mob/user as mob)
+/obj/item/toy/cards/deck/attack_self(mob/user as mob)
 	if(cooldown < world.time - 50)
 		cards = shuffle(cards)
 		playsound(user, 'sound/items/cardshuffle.ogg', 50, 1)
 		user.visible_message("[user] shuffles the deck.", "<span class='notice'>You shuffle the deck.</span>")
 		cooldown = world.time
 
-obj/item/toy/cards/deck/attackby(obj/item/toy/cards/singlecard/C, mob/living/user, params)
+/obj/item/toy/cards/deck/attackby(obj/item/toy/cards/singlecard/C, mob/living/user, params)
 	..()
 	if(istype(C))
 		if(C.parentdeck == src)
@@ -813,7 +814,7 @@ obj/item/toy/cards/deck/attackby(obj/item/toy/cards/singlecard/C, mob/living/use
 			src.icon_state = "deck_[deckstyle]_low"
 
 
-obj/item/toy/cards/deck/attackby(obj/item/toy/cards/cardhand/C, mob/living/user, params)
+/obj/item/toy/cards/deck/attackby(obj/item/toy/cards/cardhand/C, mob/living/user, params)
 	..()
 	if(istype(C))
 		if(C.parentdeck == src)
@@ -844,8 +845,12 @@ obj/item/toy/cards/deck/attackby(obj/item/toy/cards/cardhand/C, mob/living/user,
 		else if(istype(over_object, /obj/screen))
 			switch(over_object.name)
 				if("l_hand")
+					if(!remove_item_from_storage(M))
+						M.unEquip(src)
 					M.put_in_l_hand(src)
 				else if("r_hand")
+					if(!remove_item_from_storage(M))
+						M.unEquip(src)
 					M.put_in_r_hand(src)
 				usr << "<span class='notice'>You pick up the deck.</span>"
 	else
@@ -853,7 +858,7 @@ obj/item/toy/cards/deck/attackby(obj/item/toy/cards/cardhand/C, mob/living/user,
 
 
 
-obj/item/toy/cards/cardhand
+/obj/item/toy/cards/cardhand
 	name = "hand of cards"
 	desc = "A number of cards not in a deck, customarily held in ones hand."
 	icon = 'icons/obj/toy.dmi'
@@ -863,11 +868,11 @@ obj/item/toy/cards/cardhand
 	var/choice = null
 
 
-obj/item/toy/cards/cardhand/attack_self(mob/user as mob)
+/obj/item/toy/cards/cardhand/attack_self(mob/user as mob)
 	user.set_machine(src)
 	interact(user)
 
-obj/item/toy/cards/cardhand/interact(mob/user)
+/obj/item/toy/cards/cardhand/interact(mob/user)
 	var/dat = "You have:<BR>"
 	for(var/t in currenthand)
 		dat += "<A href='?src=\ref[src];pick=[t]'>A [t].</A><BR>"
@@ -878,7 +883,7 @@ obj/item/toy/cards/cardhand/interact(mob/user)
 	popup.open()
 
 
-obj/item/toy/cards/cardhand/Topic(href, href_list)
+/obj/item/toy/cards/cardhand/Topic(href, href_list)
 	if(..())
 		return
 	if(usr.stat || !ishuman(usr) || !usr.canmove)
@@ -917,7 +922,7 @@ obj/item/toy/cards/cardhand/Topic(href, href_list)
 				qdel(src)
 		return
 
-obj/item/toy/cards/cardhand/attackby(obj/item/toy/cards/singlecard/C, mob/living/user, params)
+/obj/item/toy/cards/cardhand/attackby(obj/item/toy/cards/singlecard/C, mob/living/user, params)
 	if(istype(C))
 		if(C.parentdeck == src.parentdeck)
 			src.currenthand += C.cardname
@@ -934,7 +939,7 @@ obj/item/toy/cards/cardhand/attackby(obj/item/toy/cards/singlecard/C, mob/living
 		else
 			user << "<span class='warning'>You can't mix cards from other decks!</span>"
 
-obj/item/toy/cards/cardhand/apply_card_vars(obj/item/toy/cards/newobj,obj/item/toy/cards/sourceobj)
+/obj/item/toy/cards/cardhand/apply_card_vars(obj/item/toy/cards/newobj,obj/item/toy/cards/sourceobj)
 	..()
 	newobj.deckstyle = sourceobj.deckstyle
 	newobj.icon_state = "[deckstyle]_hand2" // Another dumb hack, without this the hand is invisible (or has the default deckstyle) until another card is added.
@@ -946,7 +951,7 @@ obj/item/toy/cards/cardhand/apply_card_vars(obj/item/toy/cards/newobj,obj/item/t
 	newobj.card_attack_verb = sourceobj.card_attack_verb
 
 
-obj/item/toy/cards/singlecard
+/obj/item/toy/cards/singlecard
 	name = "card"
 	desc = "a card"
 	icon = 'icons/obj/toy.dmi'
@@ -957,7 +962,7 @@ obj/item/toy/cards/singlecard
 	pixel_x = -5
 
 
-obj/item/toy/cards/singlecard/examine(mob/user)
+/obj/item/toy/cards/singlecard/examine(mob/user)
 	if(ishuman(user))
 		var/mob/living/carbon/human/cardUser = user
 		if(cardUser.get_item_by_slot(slot_l_hand) == src || cardUser.get_item_by_slot(slot_r_hand) == src)
@@ -966,7 +971,7 @@ obj/item/toy/cards/singlecard/examine(mob/user)
 			cardUser << "<span class='warning'>You need to have the card in your hand to check it!</span>"
 
 
-obj/item/toy/cards/singlecard/verb/Flip()
+/obj/item/toy/cards/singlecard/verb/Flip()
 	set name = "Flip Card"
 	set category = "Object"
 	set src in range(1)
@@ -987,7 +992,7 @@ obj/item/toy/cards/singlecard/verb/Flip()
 		src.name = "card"
 		src.pixel_x = -5
 
-obj/item/toy/cards/singlecard/attackby(obj/item/I, mob/living/user, params)
+/obj/item/toy/cards/singlecard/attackby(obj/item/I, mob/living/user, params)
 	if(istype(I, /obj/item/toy/cards/singlecard/))
 		var/obj/item/toy/cards/singlecard/C = I
 		if(C.parentdeck == src.parentdeck)
@@ -1023,12 +1028,12 @@ obj/item/toy/cards/singlecard/attackby(obj/item/I, mob/living/user, params)
 			user << "<span class='warning'>You can't mix cards from other decks!</span>"
 
 
-obj/item/toy/cards/singlecard/attack_self(mob/user)
+/obj/item/toy/cards/singlecard/attack_self(mob/user)
 	if(usr.stat || !ishuman(usr) || !usr.canmove || usr.restrained())
 		return
 	Flip()
 
-obj/item/toy/cards/singlecard/apply_card_vars(obj/item/toy/cards/singlecard/newobj,obj/item/toy/cards/sourceobj)
+/obj/item/toy/cards/singlecard/apply_card_vars(obj/item/toy/cards/singlecard/newobj,obj/item/toy/cards/sourceobj)
 	..()
 	newobj.deckstyle = sourceobj.deckstyle
 	newobj.icon_state = "singlecard_down_[deckstyle]" // Without this the card is invisible until flipped. It's an ugly hack, but it works.
@@ -1050,7 +1055,7 @@ obj/item/toy/cards/singlecard/apply_card_vars(obj/item/toy/cards/singlecard/newo
 || Syndicate playing cards, for pretending you're Gambit and playing poker for the nuke disk. ||
 */
 
-obj/item/toy/cards/deck/syndicate
+/obj/item/toy/cards/deck/syndicate
 	name = "suspicious looking deck of cards"
 	desc = "A deck of space-grade playing cards. They seem unusually rigid."
 	deckstyle = "syndicate"
@@ -1153,3 +1158,17 @@ obj/item/toy/cards/deck/syndicate
 
 	else
 		user << "<span class='alert'>Nothing happens.</span>"
+
+/*
+ * Beach ball
+ */
+/obj/item/toy/beach_ball
+	icon = 'icons/misc/beach.dmi'
+	icon_state = "ball"
+	name = "beach ball"
+	item_state = "beachball"
+	w_class = 4 //Stops people from hiding it in their bags/pockets
+
+/obj/item/toy/beach_ball/afterattack(atom/target as mob|obj|turf|area, mob/user as mob)
+	user.drop_item()
+	src.throw_at(target, throw_range, throw_speed)

@@ -50,7 +50,6 @@
 	if(air_contents)
 		temperature_archived = air_contents.temperature
 		heat_gas_contents()
-		expel_gas()
 	if(abs(temperature_archived-air_contents.temperature) > 1)
 		parent.update = 1
 
@@ -68,8 +67,10 @@
 		updateDialog()
 		return
 
-	if(air_contents && occupant)
-		process_occupant()
+	if(air_contents)
+		if (occupant)
+			process_occupant()
+		expel_gas()
 
 	updateDialog()
 	return 1
@@ -78,9 +79,6 @@
 	if(user.stat || user.lying || !Adjacent(user) || !target.Adjacent(user) || !iscarbon(target))
 		return
 	close_machine(target)
-
-/obj/machinery/atmospherics/unary/cryo_cell/allow_drop()
-	return 0
 
 /obj/machinery/atmospherics/unary/cryo_cell/relaymove(var/mob/user)
 	open_machine()
@@ -104,6 +102,9 @@
 		open_machine()
 		add_fingerprint(usr)
 	else
+		if(!istype(usr, /mob/living) || usr.stat)
+			usr << "<span class='warning'>You can't do that!</span>"
+			return
 		open_machine()
 
 /obj/machinery/atmospherics/unary/cryo_cell/examine(mob/user)
@@ -231,6 +232,8 @@
 
 /obj/machinery/atmospherics/unary/cryo_cell/attackby(obj/item/I, mob/user, params)
 	if(istype(I, /obj/item/weapon/reagent_containers/glass))
+		if(isrobot(user))
+			return
 		if(beaker)
 			user << "<span class='warning'>A beaker is already loaded into [src]!</span>"
 			return

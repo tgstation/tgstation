@@ -20,6 +20,10 @@
 					final_dir = pick(NORTH, SOUTH) //So you fall on your side rather than your face or ass
 
 		lying_prev = lying	//so we don't try to animate until there's been another change.
+	if(resize != RESIZE_DEFAULT_SIZE)
+		changed++
+		ntransform.Scale(resize)
+		resize = RESIZE_DEFAULT_SIZE
 
 	if(changed)
 		animate(src, transform = ntransform, time = 2, pixel_y = final_pixel_y, dir = final_dir, easing = EASE_IN|EASE_OUT)

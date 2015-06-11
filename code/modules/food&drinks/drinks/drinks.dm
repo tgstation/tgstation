@@ -154,7 +154,7 @@
 
 /obj/item/weapon/reagent_containers/food/drinks/dry_ramen
 	name = "Cup Ramen"
-	desc = "Just add 10ml water, self heats! A taste that reminds you of your school years."
+	desc = "Just add 10ml of water, self heats! A taste that reminds you of your school years."
 	icon_state = "ramen"
 	list_reagents = list("dry_ramen" = 30)
 
@@ -200,7 +200,7 @@
 
 /obj/item/weapon/reagent_containers/food/drinks/flask
 	name = "captain's flask"
-	desc = "A silver flask belonging to the captain"
+	desc = "A silver flask belonging to the captain."
 	icon_state = "flask"
 	volume = 60
 
@@ -279,7 +279,7 @@
 
 /obj/item/weapon/reagent_containers/food/drinks/soda_cans/thirteenloko
 	name = "Thirteen Loko"
-	desc = "The CMO has advised crew members that consumption of Thirteen Loko may result in seizures, blindness, drunkeness, or even death. Please Drink Responsably."
+	desc = "The CMO has advised crew members that consumption of Thirteen Loko may result in seizures, blindness, drunkeness, or even death. Please Drink Responsibly."
 	icon_state = "thirteen_loko"
 	list_reagents = list("thirteenloko" = 30)
 

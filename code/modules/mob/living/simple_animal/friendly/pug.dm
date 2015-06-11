@@ -28,14 +28,3 @@
 				for(var/i in list(1,2,4,8,4,2,1,2,4,8,4,2,1,2,4,8,4,2))
 					dir = i
 					sleep(1)
-
-/mob/living/simple_animal/pet/pug/attackby(var/obj/item/O as obj, var/mob/user as mob, params)  //Marker -Agouri
-	if(istype(O, /obj/item/weapon/newspaper))
-		if(!stat)
-			user.visible_message("[user] baps [name] on the nose with the rolled up [O].")
-			spawn(0)
-				for(var/i in list(1,2,4,8,4,2,1,2))
-					dir = i
-					sleep(1)
-	else
-		..()

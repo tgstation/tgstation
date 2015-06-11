@@ -35,6 +35,7 @@
 	var/shoot_sound = 'sound/weapons/Taser.ogg'
 	radio_frequency = SEC_FREQ
 	bot_type = SEC_BOT
+	model = "ED-209"
 
 
 /obj/item/weapon/ed209_assembly
@@ -58,7 +59,7 @@
 	set_weapon() //giving it the right projectile and firing sound.
 	spawn(3)
 		var/datum/job/detective/J = new/datum/job/detective
-		botcard.access = J.get_access()
+		botcard.access += J.get_access()
 		prev_access = botcard.access
 
 		if(lasercolor)

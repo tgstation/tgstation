@@ -22,7 +22,7 @@
 	var/datum/mind/wizard = pick(antag_candidates)
 	wizards += wizard
 	modePlayer += wizard
-	wizard.assigned_role = "MODE"
+	wizard.assigned_role = "Wizard"
 	wizard.special_role = "Wizard"
 	if(wizardstart.len == 0)
 		wizard.current << "<span class='boldannounce'>A starting location for you could not be found, please report this bug!</span>"
@@ -172,9 +172,7 @@
 /datum/game_mode/wizard/check_finished()
 
 	for(var/datum/mind/wizard in wizards)
-		if(!wizard.current)
-			continue
-		if(wizard.current.stat != DEAD)
+		if(isliving(wizard.current) && wizard.current.stat!=DEAD)
 			return ..()
 
 	if(SSevent.wizardmode) //If summon events was active, turn it off

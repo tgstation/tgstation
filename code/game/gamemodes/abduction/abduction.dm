@@ -13,6 +13,7 @@
 	var/list/datum/mind/agents = list()
 	var/list/datum/objective/team_objectives = list()
 	var/list/team_names = list()
+	var/finished = 0
 
 /datum/game_mode/abduction/announce()
 	world << "<B>The current game mode is - Abduction!</B>"
@@ -63,11 +64,11 @@
 		agent = preset_agent
 
 
-	scientist.assigned_role = "MODE"
+	scientist.assigned_role = "Abductor"
 	scientist.special_role = "Abductor"
 	log_game("[scientist.key] (ckey) has been selected as an abductor team [team_number] scientist.")
 
-	agent.assigned_role = "MODE"
+	agent.assigned_role = "Abductor"
 	agent.special_role = "Abductor"
 	log_game("[agent.key] (ckey) has been selected as an abductor team [team_number] agent.")
 
@@ -258,11 +259,14 @@
 
 
 /datum/game_mode/abduction/check_finished()
-	for(var/team_number=1,team_number<=teams,team_number++)
-		var/obj/machinery/abductor/console/con = get_team_console(team_number)
-		var/datum/objective/objective = team_objectives[team_number]
-		if (con.experiment.points > objective.target_amount)
-			return 1
+	if(!finished)
+		for(var/team_number=1,team_number<=teams,team_number++)
+			var/obj/machinery/abductor/console/con = get_team_console(team_number)
+			var/datum/objective/objective = team_objectives[team_number]
+			if (con.experiment.points > objective.target_amount)
+				SSshuttle.emergency.request(null, 0.5)
+				finished = 1
+				return ..()
 	return ..()
 
 /datum/game_mode/abduction/declare_completion()
@@ -297,7 +301,7 @@
 		world << printobjectives(abductee.mind)
 
 /datum/game_mode/proc/auto_declare_completion_abduction()
-	if(abductors.len)
+	if(abductors.len && ticker.mode.config_tag != "abduction") // no repeating for the gamemode
 		world << "<br><font size=3><b>The Abductors were:</b></font>"
 		for(var/datum/mind/M in abductors)
 			world << "<font size = 2><b>Abductor [M.current ? M.current.name : "Abductor"]([M.key])</b></font>"
@@ -332,15 +336,15 @@
 
 
 // OBJECTIVES
-datum/objective/experiment
+/datum/objective/experiment
 	dangerrating = 10
 	target_amount = 6
 	var/team
 
-datum/objective/experiment/New()
+/datum/objective/experiment/New()
 	explanation_text = "Experiment on [target_amount] humans"
 
-datum/objective/experiment/check_completion()
+/datum/objective/experiment/check_completion()
 	if(!owner.current || !ishuman(owner.current))
 		return 0
 	var/mob/living/carbon/human/H = owner.current
@@ -356,21 +360,21 @@ datum/objective/experiment/check_completion()
 				return 0
 	return 0
 
-datum/objective/abductee
+/datum/objective/abductee
 	dangerrating = 5
 	completed = 1
 
-datum/objective/abductee/steal
+/datum/objective/abductee/steal
 	explanation_text = "Steal all"
 
-datum/objective/abductee/steal/New()
+/datum/objective/abductee/steal/New()
 	var/target = pick(list("Pets","Lights","Monkeys","Fruits","Shoes","Soap Bars"))
 	explanation_text+=" [target]"
 
-datum/objective/abductee/capture
+/datum/objective/abductee/capture
 	explanation_text = "Capture"
 
-datum/objective/abductee/capture/New()
+/datum/objective/abductee/capture/New()
 	var/list/jobs = SSjob.occupations
 	for(var/datum/job/J in jobs)
 		if(J.current_positions < 1)
@@ -381,8 +385,8 @@ datum/objective/abductee/capture/New()
 	else
 		explanation_text += " someone."
 
-datum/objective/abductee/shuttle
+/datum/objective/abductee/shuttle
 	explanation_text = "You must escape the station! Get the shuttle called!"
 
-datum/objective/abductee/noclone
+/datum/objective/abductee/noclone
 	explanation_text = "Don't allow anyone to be cloned."

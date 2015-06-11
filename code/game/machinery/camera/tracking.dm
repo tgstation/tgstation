@@ -98,7 +98,7 @@
 
 	return targets
 
-/mob/living/silicon/ai/verb/ai_camera_track(var/target_name as null|anything in trackable_mobs())
+/mob/living/silicon/ai/verb/ai_camera_track(var/target_name in trackable_mobs())
 	set name = "track"
 	set hidden = 1 //Don't display it on the verb lists. This verb exists purely so you can type "track Oldman Robustin" and follow his ass
 
@@ -112,7 +112,6 @@
 /mob/living/silicon/ai/proc/ai_actual_track(mob/living/target as mob)
 	if(!istype(target))	return
 	var/mob/living/silicon/ai/U = usr
-
 	U.cameraFollow = target
 	//U << text("Now tracking [] on camera.", target.name)
 	//if (U.machine == null)

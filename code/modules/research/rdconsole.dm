@@ -276,6 +276,7 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 							if(linked_lathe) //Also sends salvaged materials to a linked protolathe, if any.
 								linked_lathe.m_amount += min((linked_lathe.max_material_storage - linked_lathe.TotalMaterials()), (linked_destroy.loaded_item.m_amt*(linked_destroy.decon_mod/10)))
 								linked_lathe.g_amount += min((linked_lathe.max_material_storage - linked_lathe.TotalMaterials()), (linked_destroy.loaded_item.g_amt*(linked_destroy.decon_mod/10)))
+								feedback_add_details("item_deconstructed","[linked_destroy.loaded_item.name]")
 							linked_destroy.loaded_item = null
 						else
 							screen = 1.0
@@ -406,6 +407,7 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 					var/R = being_built.reliability
 					spawn(32*amount/coeff)
 						if(g2g) //And if we only fail the material requirements, we still spend time and power
+							var/already_logged = 0
 							for(var/i = 0, i<amount, i++)
 								var/obj/item/new_item = new P(src)
 								if( new_item.type == /obj/item/weapon/storage/backpack/holding )
@@ -416,6 +418,9 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 								if(linked_lathe.hacked)
 									R = max((new_item.reliability/2), 0)
 								new_item.loc = linked_lathe.loc
+								if(!already_logged)
+									feedback_add_details("item_printed","[new_item.name]|[amount]")
+									already_logged = 1
 						linked_lathe.busy = 0
 						screen = old_screen
 						updateUsrDialog()
@@ -469,6 +474,7 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 							var/obj/item/new_item = new P(src)
 							new_item.reliability = R
 							new_item.loc = linked_imprinter.loc
+							feedback_add_details("circuit_printed","[new_item.name]")
 						linked_imprinter.busy = 0
 						screen = old_screen
 						updateUsrDialog()

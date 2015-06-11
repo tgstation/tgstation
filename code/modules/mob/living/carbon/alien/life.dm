@@ -62,3 +62,6 @@
 	handle_hud_icons_health()
 
 	return 1
+
+/mob/living/carbon/alien/CheckStamina()
+	return

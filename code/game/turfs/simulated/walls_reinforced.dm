@@ -32,15 +32,11 @@
 /turf/simulated/wall/r_wall/try_destroy(obj/item/weapon/W as obj, mob/user as mob, turf/T as turf)
 	if(istype(W, /obj/item/weapon/pickaxe/drill/jackhammer))
 		var/obj/item/weapon/pickaxe/drill/jackhammer/D = W
-		if(!D.bcell.use(800))
-			user << "<span class='notice'>Your [D.name] doesn't have enough power to break through the [name].</span>"
-			return 1
 		user << "<span class='notice'>You begin to smash though the [name]...</span>"
 		if(do_after(user, 50))
 			if( !istype(src, /turf/simulated/wall/r_wall) || !user || !W || !T )
 				return 1
 			if( user.loc == T && user.get_active_hand() == W )
-				D.update_icon()
 				D.playDigSound()
 				visible_message("<span class='warning'>[user] smashes through the [name] with the [D.name]!</span>", "<span class='italics'>You hear the grinding of metal.</span>")
 				dismantle_wall()
@@ -70,7 +66,6 @@
 				playsound(src, 'sound/items/Wirecutter.ogg', 100, 1)
 				src.d_state = 1
 				src.icon_state = "r_wall-1"
-				new /obj/item/stack/rods( src )
 				user << "<span class='notice'>You cut the outer grille.</span>"
 				return 1
 
@@ -90,15 +85,15 @@
 				return 1
 
 			//REPAIRING (replacing the outer grille for cosmetic damage)
-			else if(istype(W, /obj/item/stack/rods))
-				var/obj/item/stack/rods/O = W
+			else if(istype(W, /obj/item/stack/sheet/metal))
+				var/obj/item/stack/sheet/metal/O = W
 				if (O.use(1))
 					src.d_state = 0
 					src.icon_state = "r_wall"
 					relativewall_neighbours()	//call smoothwall stuff
 					user << "<span class='notice'>You replace the outer grille.</span>"
 				else
-					user << "<span class='warning'>You need one rod to repair the wall!</span>"
+					user << "<span class='warning'>Report this to a coder: metal stack had less than one sheet in it when trying to repair wall</span>"
 					return 1
 				return 1
 
@@ -182,8 +177,7 @@
 						if( d_state == 5 && user.loc == T && user.get_active_hand() == WT )
 							src.d_state = 6
 							src.icon_state = "r_wall-6"
-							new /obj/item/stack/rods( src )
-							user << "<span class='notice'>The support rods drop out as you cut them loose from the frame.</span>"
+							user << "<span class='notice'>You slice through the support rods.</span>"
 				return 1
 
 			if( istype(W, /obj/item/weapon/gun/energy/plasmacutter) )
@@ -198,8 +192,7 @@
 					if( d_state == 5 && user.loc == T && user.get_active_hand() == W )
 						src.d_state = 6
 						src.icon_state = "r_wall-6"
-						new /obj/item/stack/rods( src )
-						user << "<span class='notice'>The support rods drop out as you cut them loose from the frame.</span>"
+						user << "<span class='notice'>You slice through the support rods.</span>"
 				return 1
 
 		if(6)

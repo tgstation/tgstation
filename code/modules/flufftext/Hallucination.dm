@@ -11,7 +11,7 @@ Gunshots/explosions/opening doors/less rare audio (done)
 
 */
 
-mob/living/carbon/
+/mob/living/carbon/
 	var/image/halimage
 	var/image/halbody
 	var/obj/halitem
@@ -19,7 +19,7 @@ mob/living/carbon/
 	var/handling_hal = 0
 	var/hal_crit = 0
 
-mob/living/carbon/proc/handle_hallucinations()
+/mob/living/carbon/proc/handle_hallucinations()
 	if(handling_hal)
 		return
 	handling_hal = 1

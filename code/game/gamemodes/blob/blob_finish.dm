@@ -13,9 +13,7 @@
 				priority_announce("Hostile enviroment resolved. You have 3 minutes to board the Emergency Shuttle.", null, 'sound/AI/shuttledock.ogg', "Priority")
 			return ..()
 		return 1
-	if(station_was_nuked)//Nuke went off
-		return 1
-	return 0
+	return ..()
 
 
 /datum/game_mode/blob/declare_completion()
@@ -42,7 +40,7 @@
 	..()
 	return 1
 
-datum/game_mode/proc/auto_declare_completion_blob()
+/datum/game_mode/proc/auto_declare_completion_blob()
 	if(istype(ticker.mode,/datum/game_mode/blob) )
 		var/datum/game_mode/blob/blob_mode = src
 		if(blob_mode.infected_crew.len)

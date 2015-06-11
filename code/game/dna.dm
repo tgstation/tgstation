@@ -548,7 +548,7 @@
 
 /obj/machinery/computer/scan_consolenew/proc/ShowInterface(mob/user, last_change)
 	if(!user) return
-	var/datum/browser/popup = new(user, "scannernew", "DNA Modifier Console", 880, 600) // Set up the popup browser window
+	var/datum/browser/popup = new(user, "scannernew", "DNA Modifier Console", 800, 630) // Set up the popup browser window
 	if(!( in_range(src, user) || istype(user, /mob/living/silicon) ))
 		popup.close()
 		return
@@ -568,8 +568,8 @@
 					if(UNCONSCIOUS)	occupant_status += "<span class='average'>Unconscious</span>"
 					else			occupant_status += "<span class='bad'>DEAD - Cannot Operate</span>"
 				occupant_status += "</div></div>"
-				occupant_status += "<div class='line'><div class='statusLabel'>Health:</div><div class='progressBar'><div style='width: [viable_occupant.health]%;' class='progressFill good'></div></div><div class='statusValue'>[viable_occupant.health]%</div></div>"
-				occupant_status += "<div class='line'><div class='statusLabel'>Radiation Level:</div><div class='progressBar'><div style='width: [viable_occupant.radiation]%;' class='progressFill bad'></div></div><div class='statusValue'>[viable_occupant.radiation]%</div></div>"
+				occupant_status += "<div class='line'><div class='statusLabel'>Health:</div><div class='progressBar'><div style='width: [viable_occupant.health]%;' class='progressFill good'></div></div><div class='statusValue'>[viable_occupant.health] %</div></div>"
+				occupant_status += "<div class='line'><div class='statusLabel'>Radiation Level:</div><div class='progressBar'><div style='width: [viable_occupant.radiation]%;' class='progressFill bad'></div></div><div class='statusValue'>[viable_occupant.radiation] %</div></div>"
 				var/rejuvenators = viable_occupant.reagents.get_reagent_amount("epinephrine")
 				occupant_status += "<div class='line'><div class='statusLabel'>Rejuvenators:</div><div class='progressBar'><div style='width: [round((rejuvenators / REJUVENATORS_MAX) * 100)]%;' class='progressFill highlight'></div></div><div class='statusValue'>[rejuvenators] units</div></div>"
 				occupant_status += "<div class='line'><div class='statusLabel'>Unique Enzymes :</div><div class='statusValue'><span class='highlight'>[viable_occupant.dna.unique_enzymes]</span></div></div>"
@@ -601,23 +601,23 @@
 	status += "[occupant_status]"
 
 
-	status += "<h3>Radiation Emitter Status</h3>"
+	status += "<div class='line'><h3>Radiation Emitter Status</h3></div>"
 	var/stddev = radstrength*RADIATION_STRENGTH_MULTIPLIER
 	status += "<div class='line'><div class='statusLabel'>Output Level:</div><div class='statusValue'>[radstrength]</div></div>"
-	status += "<div class='line'><div class='statusLabel'>&nbsp;&nbsp;\> Mutation:</div><div class='statusValue'>(-[stddev] to +[stddev] = 68%) (-[2*stddev] to +[2*stddev] = 95%)</div></div>"
+	status += "<div class='line'><div class='statusLabel'>&nbsp;&nbsp;\> Mutation:</div><div class='statusValue'>(-[stddev] to +[stddev] = 68 %) (-[2*stddev] to +[2*stddev] = 95 %)</div></div>"
 	if(connected)
 		stddev = RADIATION_ACCURACY_MULTIPLIER/(radduration + (connected.precision_coeff ** 2))
 	else
 		stddev = RADIATION_ACCURACY_MULTIPLIER/radduration
 	var/chance_to_hit
 	switch(stddev)	//hardcoded values from a z-table for a normal distribution
-		if(0 to 0.25)			chance_to_hit = ">95%"
-		if(0.25 to 0.5)			chance_to_hit = "68-95%"
-		if(0.5 to 0.75)			chance_to_hit = "55-68%"
-		else					chance_to_hit = "<38%"
+		if(0 to 0.25)			chance_to_hit = ">95 %"
+		if(0.25 to 0.5)			chance_to_hit = "68-95 %"
+		if(0.5 to 0.75)			chance_to_hit = "55-68 %"
+		else					chance_to_hit = "<38 %"
 	status += "<div class='line'><div class='statusLabel'>Pulse Duration:</div><div class='statusValue'>[radduration]</div></div>"
 	status += "<div class='line'><div class='statusLabel'>&nbsp;&nbsp;\> Accuracy:</div><div class='statusValue'>[chance_to_hit]</div></div>"
-	status += "</div>" // Close statusDisplay div
+	status += "<br></div>" // Close statusDisplay div
 	var/buttons = "<a href='?src=\ref[src];'>Scan</a> "
 	if(connected)
 		buttons += " <a href='?src=\ref[src];task=toggleopen;'>[connected.state_open ? "Close" : "Open"] Scanner</a> "
@@ -684,10 +684,10 @@
 							temp_html += "<br>\tUI: No Data"
 						if(se)
 							temp_html += "<br>\tSE: [se] "
-							if(viable_occupant)	temp_html += "<a href='?src=\ref[src];task=transferbuffer;num=[i];text=se'>Occupant</a> "
-							else				temp_html += "<span class='linkOff'>Occupant</span> "
-							if(injectorready)	temp_html += "<a href='?src=\ref[src];task=injector;num=[i];text=se'>Injector</a>"
-							else				temp_html += "<span class='linkOff'>Injector</span>"
+							if(viable_occupant && viable_occupant.stat != DEAD)	temp_html += "<a href='?src=\ref[src];task=transferbuffer;num=[i];text=se'>Occupant</a> "
+							else												temp_html += "<span class='linkOff'>Occupant</span> "
+							if(injectorready)									temp_html += "<a href='?src=\ref[src];task=injector;num=[i];text=se'>Injector</a>"
+							else												temp_html += "<span class='linkOff'>Injector</span>"
 						else
 							temp_html += "<br>\tSE: No Data"
 						if(viable_occupant)	temp_html += "<br><a href='?src=\ref[src];task=setbuffer;num=[i];'>Save to Buffer</a> "
@@ -722,7 +722,7 @@
 				temp_html += "----"
 			temp_html += "</div></div></div><br>"
 
-			temp_html += "<div class='line'><div class='statusLabel'>Structural Enzymes:</div><div class='statusValue'><div class='clearBoth'>"
+			temp_html += "<br><div class='line'><div class='statusLabel'>Structural Enzymes:</div><div class='statusValue'><div class='clearBoth'>"
 			if(viable_occupant)
 				temp_html += "<div class='dnaBlockNumber'>1</div>"
 				var/len = length(viable_occupant.dna.struc_enzymes)
@@ -809,7 +809,7 @@
 				if(istype(buffer_slot))
 					buffer_slot.Cut()
 		if("transferbuffer")
-			if(num && viable_occupant)
+			if(num && viable_occupant && viable_occupant.stat != DEAD)
 				num = Clamp(num, 1, NUMBER_OF_BUFFERS)
 				var/list/buffer_slot = buffer[num]
 				if(istype(buffer_slot))                                                                                  //15 and 40 are just magic numbers that were here before so i didnt touch them, they are initial boundaries of damage
@@ -954,7 +954,7 @@
 
 //value in range 1 to values. values must be greater than 0
 //all arguments assumed to be positive integers
-proc/construct_block(value, values, blocksize=DNA_BLOCK_SIZE)
+/proc/construct_block(value, values, blocksize=DNA_BLOCK_SIZE)
 	var/width = round((16**blocksize)/values)
 	if(value < 1)
 		value = 1
@@ -962,7 +962,7 @@ proc/construct_block(value, values, blocksize=DNA_BLOCK_SIZE)
 	return num2hex(value, blocksize)
 
 //value is hex
-proc/deconstruct_block(value, values, blocksize=DNA_BLOCK_SIZE)
+/proc/deconstruct_block(value, values, blocksize=DNA_BLOCK_SIZE)
 	var/width = round((16**blocksize)/values)
 	value = round(hex2num(value) / width) + 1
 	if(value > values)

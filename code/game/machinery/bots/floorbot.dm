@@ -50,6 +50,7 @@
 	var/targetdirection
 	radio_frequency = ENG_FREQ //Engineering channel
 	bot_type = FLOOR_BOT
+	model = "Floorbot"
 	var/process_type //Determines what to do when process_scan() recieves a target. See process_scan() for details.
 	#define HULL_BREACH		1
 	#define BRIDGE_MODE		2
@@ -62,7 +63,7 @@
 	..()
 	updateicon()
 	var/datum/job/engineer/J = new/datum/job/engineer
-	botcard.access = J.get_access()
+	botcard.access += J.get_access()
 	prev_access = botcard.access
 
 /obj/machinery/bot/floorbot/turn_on()
@@ -259,9 +260,9 @@
 		if(path.len == 0)
 			if(!istype(target, /turf/))
 				var/turf/TL = get_turf(target)
-				path = get_path_to(loc, TL, /turf/proc/AdjacentTurfsSpace, /turf/proc/Distance, 0, 30, id=botcard)
+				path = get_path_to(loc, TL, src, /turf/proc/Distance, 0, 30, id=botcard)
 			else
-				path = get_path_to(loc, target, /turf/proc/AdjacentTurfsSpace, /turf/proc/Distance, 0, 30, id=botcard)
+				path = get_path_to(loc, target, src, /turf/proc/Distance, 0, 30, id=botcard)
 
 			if(!bot_move(target))
 				add_to_ignore(target)

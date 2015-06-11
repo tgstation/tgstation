@@ -7,7 +7,8 @@
 	anchored = 1
 	state_open = 1
 	var/points = 0
-	var/list/history = new
+	var/list/history = list()
+	var/list/abductee_minds = list()
 	var/flash = " - || - "
 	var/obj/machinery/abductor/console/console
 
@@ -17,9 +18,6 @@
 	if(IsAbductor(target))
 		return
 	close_machine(target)
-
-/obj/machinery/abductor/experiment/allow_drop()
-	return 0
 
 /obj/machinery/abductor/experiment/attack_hand(mob/user)
 	if(..())
@@ -143,8 +141,9 @@
 	if(!GlandTest)
 		say("Experimental dissection not detected!")
 		return "<span class='bad'>No glands detected!</span>"
-	if(H.mind != null || H.ckey != null)
+	if(H.mind != null && H.ckey != null)
 		history += H
+		abductee_minds += H.mind
 		say("Processing Specimen...")
 		sleep(5)
 		switch(text2num(type))
@@ -190,15 +189,14 @@
 	var/area/A
 	if(console && console.pad && console.pad.teleport_target)
 		A = console.pad.teleport_target
-	else
-		A = teleportlocs[pick(teleportlocs)]
-	TeleportToArea(H,A)
+		if(A.safe) // right now crew areas are safe - being locked behind closed doors is not fun
+			TeleportToArea(H,A)
+	//Area not chosen / It's not safe area - teleport to arrivals
+	H.forceMove(pick(latejoin))
+
 
 /obj/machinery/abductor/experiment/update_icon()
 	if(state_open)
 		icon_state = "experiment-open"
 	else
 		icon_state = "experiment"
-
-/obj/machinery/abductor/experiment/say_quote(text)
-	return "beeps, \"[text]\""

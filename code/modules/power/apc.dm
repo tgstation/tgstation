@@ -1136,7 +1136,7 @@
 // val 0=off, 1=off(auto) 2=on 3=on(auto)
 // on 0=off, 1=on, 2=autooff
 
-obj/machinery/power/apc/proc/autoset(var/val, var/on)
+/obj/machinery/power/apc/proc/autoset(var/val, var/on)
 	if(on==0)
 		if(val==2)			// if on, return off
 			return 0
@@ -1238,3 +1238,17 @@ obj/machinery/power/apc/proc/autoset(var/val, var/on)
 		return 0
 
 #undef APC_UPDATE_ICON_COOLDOWN
+
+/*Power module, used for APC construction*/
+/obj/item/weapon/module
+	icon = 'icons/obj/module.dmi'
+	icon_state = "std_module"
+	w_class = 2.0
+	item_state = "electronic"
+	flags = CONDUCT
+
+
+/obj/item/weapon/module/power_control
+	name = "power control module"
+	icon_state = "power_mod"
+	desc = "Heavy-duty switching circuits for power control."

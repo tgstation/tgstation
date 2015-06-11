@@ -57,7 +57,7 @@
 	return
 
 
-obj/item/proc/get_clamped_volume()
+/obj/item/proc/get_clamped_volume()
 	if(src.force && src.w_class)
 		return Clamp((src.force + src.w_class) * 4, 30, 100)// Add the item's force to its weight class and multiply by 4, then clamp the value between 30 and 100
 	else if(!src.force && src.w_class)

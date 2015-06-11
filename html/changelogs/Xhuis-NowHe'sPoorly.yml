@@ -1,6 +1,0 @@
-author: Xhuis
-delete-after: True
-
-changes: 
-  - rscadd: "Emagged defibrillators will now do burn damage and stop the patient's heart if used in harm intent."
-  - tweak: "The previous stunning functionality of the emagged defibrillator has been moved to disarm intent."

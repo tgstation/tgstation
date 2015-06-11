@@ -313,12 +313,10 @@ Sorry Giacom. Please don't be mad :(
 /mob/living/proc/adjustStaminaLoss(var/amount)
 	if(status_flags & GODMODE)	return 0
 	staminaloss = min(max(staminaloss + amount, 0),(maxHealth*2))
-	handle_regular_status_updates() //we update our health right away.
 
 /mob/living/proc/setStaminaLoss(var/amount)
 	if(status_flags & GODMODE)	return 0
 	staminaloss = amount
-	handle_regular_status_updates() //we update our health right away.
 
 /mob/living/proc/getMaxHealth()
 	return maxHealth
@@ -363,6 +361,8 @@ Sorry Giacom. Please don't be mad :(
 			L += get_contents(S)
 		for(var/obj/item/clothing/under/U in src.contents)	//Check for jumpsuit accessories
 			L += U.contents
+		for(var/obj/item/weapon/folder/F in src.contents)	//Check for folders
+			L += F.contents
 		return L
 
 /mob/living/proc/check_contents_for(A)
@@ -454,6 +454,8 @@ Sorry Giacom. Please don't be mad :(
 	if(iscarbon(src))
 		var/mob/living/carbon/C = src
 		C.handcuffed = initial(C.handcuffed)
+		for(var/obj/item/weapon/restraints/R in C.contents) //actually remove cuffs from inventory
+			qdel(R)
 		if(C.reagents)
 			for(var/datum/reagent/R in C.reagents.reagent_list)
 				C.reagents.clear_reagents()
@@ -471,7 +473,6 @@ Sorry Giacom. Please don't be mad :(
 
 	update_fire()
 	regenerate_icons()
-
 
 /mob/living/proc/update_damage_overlays()
 	return
@@ -659,19 +660,6 @@ Sorry Giacom. Please don't be mad :(
 
 /mob/living/proc/get_visible_name()
 	return name
-
-/mob/living/proc/CheckStamina()
-	if(staminaloss)
-		var/total_health = (health - staminaloss)
-		if(total_health <= config.health_threshold_crit && !stat)
-			Exhaust()
-			setStaminaLoss(health - 2)
-			return
-		setStaminaLoss(max((staminaloss - 2), 0))
-
-/mob/living/proc/Exhaust()
-	src << "<span class='notice'>You're too exhausted to keep going...</span>"
-	Weaken(5)
 
 /mob/living/update_gravity(has_gravity)
 	if(!ticker)

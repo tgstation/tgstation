@@ -22,7 +22,7 @@
 
 /obj/structure/janitorialcart/proc/wet_mop(obj/item/weapon/mop, mob/user)
 	if(reagents.total_volume < 1)
-		user << "[src] is out of water!</span>"
+		user << "<span class='warning'>[src] is out of water!</span>"
 	else
 		reagents.trans_to(mop, 5)	//
 		user << "<span class='notice'>You wet [mop] in [src].</span>"
@@ -185,7 +185,7 @@
 				F.dirt = 0
 			for(var/A in tile)
 				if(istype(A, /obj/effect))
-					if(istype(A, /obj/effect/rune) || istype(A, /obj/effect/decal/cleanable) || istype(A, /obj/effect/overlay))
+					if(is_cleanable(A))
 						qdel(A)
 
 /obj/structure/stool/bed/chair/janicart/examine(mob/user)

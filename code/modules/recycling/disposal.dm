@@ -589,6 +589,9 @@
 	air_update_turf()
 	return
 
+/obj/structure/disposalholder/allow_drop()
+	return 1
+
 // Disposal pipes
 
 /obj/structure/disposalpipe

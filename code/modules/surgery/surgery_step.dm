@@ -73,6 +73,7 @@
 
 /datum/surgery_step/proc/success(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)
 	user.visible_message("[user] succeeds!", "<span class='notice'>You succeed.</span>")
+	feedback_add_details("surgery_step_success","[src.type]")
 	return 1
 
 /datum/surgery_step/saw/success(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)
@@ -80,10 +81,12 @@
 		var/mob/living/carbon/human/H = target
 		H.apply_damage(75,"brute","[target_zone]")
 		user.visible_message("[user] saws [target]'s [parse_zone(target_zone)] open!", "<span class='notice'>You saw [target]'s [parse_zone(target_zone)] open.</span>")
+		feedback_add_details("surgery_step_success","[src.type]")
 	return 1
 
 /datum/surgery_step/proc/failure(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)
 	user.visible_message("<span class='warning'>[user] screws up!</span>", "<span class='warning'>You screw up!</span>")
+	feedback_add_details("surgery_step_failed","[src.type]")
 	return 0
 
 /datum/surgery_step/close/success(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)

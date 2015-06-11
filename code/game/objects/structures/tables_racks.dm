@@ -606,6 +606,14 @@
  * Rack Parts
  */
 
+/obj/item/weapon/rack_parts
+	name = "rack parts"
+	desc = "Parts of a rack."
+	icon = 'icons/obj/items.dmi'
+	icon_state = "rack_parts"
+	flags = CONDUCT
+	m_amt = 3750
+
 /obj/item/weapon/rack_parts/attackby(obj/item/weapon/W as obj, mob/user as mob, params)
 	..()
 	if (istype(W, /obj/item/weapon/wrench))

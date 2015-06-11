@@ -10,6 +10,7 @@ var/list/admin_verbs_default = list(
 	/client/proc/deadchat,				/*toggles deadchat on/off*/
 	/client/proc/dsay,					/*talk in deadchat using our ckey/fakekey*/
 	/client/proc/toggleprayers,			/*toggles prayers on/off*/
+	/client/verb/toggleprayersounds,	/*Toggles prayer sounds (HALLELUJAH!)*/
 	/client/proc/toggle_hear_radio,		/*toggles whether we hear the radio*/
 	/client/proc/investigate_show,		/*various admintools for investigation. Such as a singulo grief-log*/
 	/client/proc/secrets,
@@ -83,6 +84,7 @@ var/list/admin_verbs_fun = list(
 	/client/proc/object_say,
 	/client/proc/toggle_random_events,
 	/client/proc/set_ooc,
+	/client/proc/reset_ooc,
 	/client/proc/forceEvent,
 	/client/proc/bluespace_artillery
 	)
@@ -96,7 +98,6 @@ var/list/admin_verbs_server = list(
 	/datum/admins/proc/delay,
 	/datum/admins/proc/toggleaban,
 	/client/proc/toggle_log_hrefs,
-	/datum/admins/proc/immreboot,
 	/client/proc/everyone_random,
 	/datum/admins/proc/toggleAI,
 	/client/proc/cmd_admin_delete,		/*delete an instance/object/mob/etc*/
@@ -121,7 +122,8 @@ var/list/admin_verbs_debug = list(
 	/client/proc/test_movable_UI,
 	/client/proc/test_snap_UI,
 	/client/proc/debugNatureMapGenerator,
-	/client/proc/check_bomb_impacts
+	/client/proc/check_bomb_impacts,
+	/proc/machine_upgrade
 	)
 var/list/admin_verbs_possess = list(
 	/proc/possess,
@@ -137,6 +139,7 @@ var/list/admin_verbs_rejuv = list(
 //verbs which can be hidden - needs work
 var/list/admin_verbs_hideable = list(
 	/client/proc/set_ooc,
+	/client/proc/reset_ooc,
 	/client/proc/deadmin_self,
 	/client/proc/deadchat,
 	/client/proc/toggleprayers,
@@ -177,7 +180,6 @@ var/list/admin_verbs_hideable = list(
 	/datum/admins/proc/delay,
 	/datum/admins/proc/toggleaban,
 	/client/proc/toggle_log_hrefs,
-	/datum/admins/proc/immreboot,
 	/client/proc/everyone_random,
 	/datum/admins/proc/toggleAI,
 	/client/proc/restart_controller,
@@ -382,6 +384,26 @@ var/list/admin_verbs_hideable = list(
 	feedback_add_details("admin_verb","S") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 	return
 
+
+/client/proc/findStealthKey(txt)
+	if(txt)
+		for(var/P in stealthminID)
+			if(stealthminID[P] == txt)
+				return P
+	txt = stealthminID[ckey]
+	return txt
+
+/client/proc/createStealthKey()
+	var/num = (rand(0,1000))
+	var/i = 0
+	while(i == 0)
+		i = 1
+		for(var/P in stealthminID)
+			if(num == stealthminID[P])
+				num++
+				i = 0
+	stealthminID["[ckey]"] = "@[num2text(num)]"
+
 /client/proc/stealth()
 	set category = "Admin"
 	set name = "Stealth Mode"
@@ -394,6 +416,7 @@ var/list/admin_verbs_hideable = list(
 			if(length(new_key) >= 26)
 				new_key = copytext(new_key, 1, 26)
 			holder.fakekey = new_key
+			createStealthKey()
 		log_admin("[key_name(usr)] has turned stealth mode [holder.fakekey ? "ON" : "OFF"]")
 		message_admins("[key_name_admin(usr)] has turned stealth mode [holder.fakekey ? "ON" : "OFF"]")
 	feedback_add_details("admin_verb","SM") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
@@ -527,7 +550,7 @@ var/list/admin_verbs_hideable = list(
 		var/list/Lines = file2list("config/admins.txt")
 		for(var/line in Lines)
 			var/list/splitline = text2list(line, " = ")
-			if(splitline[1] == ckey)
+			if(lowertext(splitline[1]) == ckey)
 				if(splitline.len >= 2)
 					rank = ckeyEx(splitline[2])
 				break

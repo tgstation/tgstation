@@ -7,6 +7,10 @@
  *		effect/acid
  */
 
+#define WEED_NORTH_EDGING "north"
+#define WEED_SOUTH_EDGING "south"
+#define WEED_EAST_EDGING "east"
+#define WEED_WEST_EDGING "west"
 
 /obj/structure/alien
 	icon = 'icons/mob/alien.dmi'
@@ -21,8 +25,11 @@
 	density = 1
 	opacity = 1
 	anchored = 1
+	canSmoothWith = list(/obj/structure/alien/resin)
 	var/health = 200
 	var/resintype = null
+
+
 /obj/structure/alien/resin/New(location)
 	relativewall_neighbours()
 	..()
@@ -50,8 +57,8 @@
 	resintype = "wall"
 
 /obj/structure/alien/resin/wall/New()
-	relativewall_neighbours()
 	..()
+	relativewall_neighbours()
 
 /obj/structure/alien/resin/wall/BlockSuperconductivity()
 	return 1
@@ -167,6 +174,7 @@
 	layer = 2
 	var/health = 15
 	var/obj/structure/alien/weeds/node/linked_node = null
+	var/static/list/weedImageCache
 
 
 /obj/structure/alien/weeds/New(pos, node)
@@ -251,22 +259,31 @@
 /obj/structure/alien/weeds/proc/updateWeedOverlays()
 
 	overlays.Cut()
+
+	if(!weedImageCache || !weedImageCache.len)
+		weedImageCache = list()
+		weedImageCache.len = 4
+		weedImageCache[WEED_NORTH_EDGING] = image('icons/mob/alien.dmi', "weeds_side_n", layer=2.11, pixel_y = -32)
+		weedImageCache[WEED_SOUTH_EDGING] = image('icons/mob/alien.dmi', "weeds_side_s", layer=2.11, pixel_y = 32)
+		weedImageCache[WEED_EAST_EDGING] = image('icons/mob/alien.dmi', "weeds_side_e", layer=2.11, pixel_x = -32)
+		weedImageCache[WEED_WEST_EDGING] = image('icons/mob/alien.dmi', "weeds_side_w", layer=2.11, pixel_x = 32)
+
 	var/turf/N = get_step(src, NORTH)
 	var/turf/S = get_step(src, SOUTH)
 	var/turf/E = get_step(src, EAST)
 	var/turf/W = get_step(src, WEST)
 	if(!locate(/obj/structure/alien) in N.contents)
 		if(istype(N, /turf/simulated/floor))
-			src.overlays += image('icons/mob/alien.dmi', "weeds_side_s", layer=2.11, pixel_y = 32)
+			overlays += weedImageCache[WEED_SOUTH_EDGING]
 	if(!locate(/obj/structure/alien) in S.contents)
 		if(istype(S, /turf/simulated/floor))
-			src.overlays += image('icons/mob/alien.dmi', "weeds_side_n", layer=2.11, pixel_y = -32)
+			overlays += weedImageCache[WEED_NORTH_EDGING]
 	if(!locate(/obj/structure/alien) in E.contents)
 		if(istype(E, /turf/simulated/floor))
-			src.overlays += image('icons/mob/alien.dmi', "weeds_side_w", layer=2.11, pixel_x = 32)
+			overlays += weedImageCache[WEED_WEST_EDGING]
 	if(!locate(/obj/structure/alien) in W.contents)
 		if(istype(W, /turf/simulated/floor))
-			src.overlays += image('icons/mob/alien.dmi', "weeds_side_e", layer=2.11, pixel_x = -32)
+			overlays += weedImageCache[WEED_EAST_EDGING]
 
 
 /obj/structure/alien/weeds/proc/fullUpdateWeedOverlays()
@@ -495,3 +512,8 @@
 	spawn(1)
 		if(src)
 			tick()
+
+#undef WEED_NORTH_EDGING
+#undef WEED_SOUTH_EDGING
+#undef WEED_EAST_EDGING
+#undef WEED_WEST_EDGING

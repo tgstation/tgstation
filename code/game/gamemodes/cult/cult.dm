@@ -33,9 +33,9 @@
 		user.whisper(message)
 	for(var/mob/M in mob_list)
 		if(iscultist(M) || (M in dead_mob_list))
-			if(clear)
-				M << "<span class='boldannounce'><i>Acolyte [user]:</i> [message]</span>"
-			else
+			if(clear || !ishuman(user))
+				M << "<span class='boldannounce'><i>[(ishuman(user) ? "Acolyte" : "Construct")] [user]:</i> [message]</span>"
+			else //Emergency comms
 				M << "<span class='ghostalert'><i>Acolyte ???:</i> [message]</span>"
 
 
@@ -174,6 +174,10 @@
 	else
 		mob << "You have a talisman in your [where], one that will help you start the cult on this station. Use it well and remember - there are others."
 		mob.update_icons()
+		if(where == "backpack")
+			var/obj/item/weapon/storage/B = mob.back
+			B.orient2hud(mob)
+			B.show_to(mob)
 		return 1
 
 
@@ -296,7 +300,7 @@
 	acolytes_survived = 0
 	for(var/datum/mind/cult_mind in cult)
 		if (cult_mind.current && cult_mind.current.stat != DEAD)
-			if(cult_mind.current.onCentcom())
+			if(cult_mind.current.onCentcom() || cult_mind.current.onSyndieBase())
 				acolytes_survived++
 	if(acolytes_survived>=acolytes_needed)
 		return 0

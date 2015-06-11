@@ -45,6 +45,32 @@
 /datum/surgery_step/add_limb/success(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)
 	if(L)
 		if(ishuman(target))
+			switch(L.body_part)
+				if(CHEST)
+					if(!istype(tool,/obj/item/robot_parts/chest))
+						user << "<span class='warning'>That is the wrong robotic limb for this body part.</span>"
+						return 0
+				if(HEAD)
+					if(!istype(tool,/obj/item/robot_parts/head))
+						user << "<span class='warning'>That is the wrong robotic limb for this body part.</span>"
+						return 0
+				if(ARM_LEFT)
+					if(!istype(tool,/obj/item/robot_parts/l_arm))
+						user << "<span class='warning'>That is the wrong robotic limb for this body part.</span>"
+						return 0
+				if(ARM_RIGHT)
+					if(!istype(tool,/obj/item/robot_parts/r_arm))
+						user << "<span class='warning'>That is the wrong robotic limb for this body part.</span>"
+						return 0
+				if(LEG_LEFT)
+					if(!istype(tool,/obj/item/robot_parts/l_leg))
+						user << "<span class='warning'>That is the wrong robotic limb for this body part.</span>"
+						return 0
+				if(LEG_RIGHT)
+					if(!istype(tool,/obj/item/robot_parts/r_leg))
+						user << "<span class='warning'>That is the wrong robotic limb for this body part.</span>"
+						return 0
+
 			var/mob/living/carbon/human/H = target
 			user.visible_message("[user] successfully augments [target]'s [parse_zone(target_zone)]!", "<span class='notice'>You successfully augment [target]'s [parse_zone(target_zone)].</span>")
 			L.loc = get_turf(target)

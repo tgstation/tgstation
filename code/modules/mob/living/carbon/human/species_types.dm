@@ -43,6 +43,11 @@
 
 	return message
 
+//I wag in death
+/datum/species/lizard/spec_death(var/gibbed, var/mob/living/carbon/human/H)
+	if(H)
+		H.endTailWag()
+
 /*
  PLANTPEOPLE
 */
@@ -128,6 +133,7 @@
 	ignored_by = list(/mob/living/simple_animal/hostile/faithless)
 	meat = /obj/item/weapon/reagent_containers/food/snacks/meat/slab/human/mutant/shadow
 	specflags = list(NOBREATH,NOBLOOD,RADIMMUNE)
+	dangerous_existence = 1
 
 /datum/species/shadow/spec_life(mob/living/carbon/human/H)
 	var/light_amount = 0
@@ -232,7 +238,7 @@
 	// Animated beings of stone. They have increased defenses, and do not need to breathe. They're also slow as fuuuck.
 	name = "Golem"
 	id = "golem"
-	specflags = list(NOBREATH,HEATRES,COLDRES,NOGUNS,NOBLOOD,RADIMMUNE,VIRUSIMMUNE)
+	specflags = list(NOBREATH,HEATRES,COLDRES,NOGUNS,NOBLOOD,RADIMMUNE,VIRUSIMMUNE,PIERCEIMMUNE)
 	speedmod = 3
 	armor = 55
 	punchmod = 5
@@ -281,7 +287,7 @@
 	say_mod = "rattles"
 	sexes = 0
 	meat = /obj/item/weapon/reagent_containers/food/snacks/meat/slab/human/mutant/skeleton
-	specflags = list(NOBREATH,HEATRES,COLDRES,NOBLOOD,RADIMMUNE,VIRUSIMMUNE)
+	specflags = list(NOBREATH,HEATRES,COLDRES,NOBLOOD,RADIMMUNE,VIRUSIMMUNE,PIERCEIMMUNE)
 /*
  ZOMBIES
 */
@@ -358,6 +364,7 @@ var/global/image/plasmaman_on_fire = image("icon"='icons/mob/OnFire.dmi', "icon_
 	safe_oxygen_min = 0 //We don't breath this
 	safe_toxins_min = 16 //We breath THIS!
 	safe_toxins_max = 0
+	dangerous_existence = 1 //So so much
 	var/skin = 0
 
 /datum/species/plasmaman/skin
@@ -375,11 +382,13 @@ var/global/image/plasmaman_on_fire = image("icon"='icons/mob/OnFire.dmi', "icon_
 
 	if(!istype(H.wear_suit, /obj/item/clothing/suit/space/eva/plasmaman) || !istype(H.head, /obj/item/clothing/head/helmet/space/hardsuit/plasmaman))
 		if(environment)
-			if((environment.oxygen /environment.total_moles()) >= 0.01)
-				if(!H.on_fire)
-					H.visible_message("<span class='danger'>[H]'s body reacts with the atmosphere and bursts into flames!</span>","<span class='userdanger'>Your body reacts with the atmosphere and bursts into flame!</span>")
-				H.adjust_fire_stacks(0.5)
-				H.IgniteMob()
+			var/total_moles = environment.total_moles()
+			if(total_moles)
+				if((environment.oxygen /total_moles) >= 0.01)
+					if(!H.on_fire)
+						H.visible_message("<span class='danger'>[H]'s body reacts with the atmosphere and bursts into flames!</span>","<span class='userdanger'>Your body reacts with the atmosphere and bursts into flame!</span>")
+					H.adjust_fire_stacks(0.5)
+					H.IgniteMob()
 	else
 		if(H.fire_stacks)
 			var/obj/item/clothing/suit/space/eva/plasmaman/P = H.wear_suit
