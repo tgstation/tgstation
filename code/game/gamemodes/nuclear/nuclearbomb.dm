@@ -190,7 +190,7 @@ var/bomb_set
 	overlays += panel
 
 /obj/machinery/nuclearbomb/process()
-	if (timing)
+	if (timing > 0)
 		bomb_set = 1 //So long as there is one nuke timing, it means one nuke is armed.
 		timeleft--
 		if (timeleft <= 0)
@@ -388,6 +388,13 @@ var/bomb_set
 		yes_code = 0
 		safety = 1
 		update_icon()
+		for(var/mob/M in player_list)
+			M << 'sound/machines/Alarm.ogg'
+		if(ticker && ticker.mode)
+			ticker.mode.explosion_in_progress = 1
+			sleep(100)
+			ticker.station_explosion_cinematic(3,"no_core")
+			ticker.mode.explosion_in_progress = 0
 
 /*
 This is here to make the tiles around the station mininuke change when it's armed.

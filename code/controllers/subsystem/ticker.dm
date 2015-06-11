@@ -271,6 +271,15 @@ var/datum/subsystem/ticker/ticker
 					flick("station_explode_fade_red",cinematic)
 					world << sound('sound/effects/explosionfar.ogg')
 					cinematic.icon_state = "summary_selfdes"
+				if("no_core") //Nuke failed to detonate as it had no core
+					flick("intro_nuke",cinematic)
+					sleep(35)
+					flick("station_intact",cinematic)
+					world << sound('sound/ambience/signal.ogg')
+					sleep(100)
+					if(cinematic)	del(cinematic)
+					if(temp_buckle)	del(temp_buckle)
+					return	//Faster exit, since nothing happened
 				else //Station nuked (nuke,explosion,summary)
 					flick("intro_nuke",cinematic)
 					sleep(35)
