@@ -268,6 +268,16 @@
 	icon = "thealenath"
 	desc = "All right, buddy. I think you've had EI NATH. Time to get a cab."
 
+/datum/barsign/thealohasnackbar
+	name = "The Aloha Snackbar"
+	icon = "alohasnackbar"
+	desc = "A tasteful, inoffensive tiki bar sign."
+
+/datum/barsign/thenet
+	name = "The Net"
+	icon = "thenet"
+	desc = "The sea of drinkformation." //you couldn't come up with something better?
+
 
 
 /datum/barsign/hiddensigns
