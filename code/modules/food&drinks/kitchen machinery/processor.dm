@@ -191,6 +191,8 @@
 			log_admin("DEBUG: [O] in processor havent suitable recipe. How do you put it in?") //-rastaf0 // DEAR GOD THIS BURNS MY EYES HAVE YOU EVER LOOKED IN AN ENGLISH DICTONARY BEFORE IN YOUR LIFE AAAAAAAAAAAAAAAAAAAAA - Iamgoofball
 			continue
 		total_time += P.time
+	var/offset = prob(50) ? -2 : 2
+	animate(src, pixel_x = pixel_x + offset, time = 0.2, loop = (total_time / rating_speed)*5) //start shaking
 	sleep(total_time / rating_speed)
 	for(var/O in src.contents)
 		var/datum/food_processor_process/P = select_recipe(O)
@@ -198,6 +200,7 @@
 			log_admin("DEBUG: [O] in processor havent suitable recipe. How do you put it in?") //-rastaf0
 			continue
 		P.process_food(src.loc, O, src)
+	pixel_x = initial(pixel_x) //return to its spot after shaking
 	src.processing = 0
 	src.visible_message("\the [src] finishes processing.")
 
