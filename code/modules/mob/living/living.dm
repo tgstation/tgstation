@@ -820,3 +820,25 @@ Sorry Giacom. Please don't be mad :(
 /mob/living/cancel_camera()
 	..()
 	cameraFollow = null
+
+/mob/living/proc/can_track(mob/living/user)
+	//basic fast checks go first. When overriding this proc, I recommend calling ..() at the end.
+	var/turf/T = get_turf(src)
+	if(!T)
+		return 0
+	if(T.z == ZLEVEL_CENTCOM) //dont detect mobs on centcomm
+		return 0
+	if(T.z >= ZLEVEL_SPACEMAX)
+		return 0
+	if(src == user)
+		return 0
+	if(invisibility || alpha == 0)//cloaked
+		return 0
+	if(digitalcamo)
+		return 0
+
+	// Now, are they viewable by a camera? (This is last because it's the most intensive check)
+	if(!near_camera(src))
+		return 0
+	
+	return 1

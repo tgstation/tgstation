@@ -49,38 +49,13 @@
 		return list()
 
 	for(var/mob/living/M in mob_list)
-		// Easy checks first.
-		// Don't detect mobs on Centcom. Since the wizard den is on Centcom, we only need this.
-		var/turf/T = get_turf(M)
-		if(!T)
-			continue
-		if(T.z == ZLEVEL_CENTCOM)
-			continue
-		if(T.z >= ZLEVEL_SPACEMAX)
-			continue
-		if(M == usr)
-			continue
-		if(M.invisibility || M.alpha == 0)//cloaked
-			continue
-		if(M.digitalcamo)
+		if(!M.can_track(usr))
 			continue
 
 		// Human check
 		var/human = 0
 		if(istype(M, /mob/living/carbon/human))
 			human = 1
-			var/mob/living/carbon/human/H = M
-			//Cameras can't track people wearing an agent card or a ninja hood.
-			if(H.wear_id && istype(H.wear_id.GetID(), /obj/item/weapon/card/id/syndicate))
-				continue
-			if(istype(H.head, /obj/item/clothing/head))
-				var/obj/item/clothing/head/hat = H.head
-				if(hat.blockTracking)
-					continue
-
-		 // Now, are they viewable by a camera? (This is last because it's the most intensive check)
-		if(!near_camera(M))
-			continue
 
 		var/name = M.name
 		if (name in track.names)
@@ -109,7 +84,7 @@
 
 	ai_actual_track(target)
 
-/mob/living/silicon/ai/proc/ai_actual_track(mob/living/target as mob)
+/mob/living/silicon/ai/proc/ai_actual_track(mob/living/target)
 	if(!istype(target))	return
 	var/mob/living/silicon/ai/U = usr
 
@@ -119,7 +94,8 @@
 	U << "<span class='notice'>Attempting to track [target.get_visible_name()]...</span>"
 	sleep(min(40, get_dist(target, U.eyeobj) / 3))
 	U.tracking = 0
-	if(!target || !(target in U.trackable_mobs()))
+
+	if(!target || !target.can_track(usr))
 		U << "<span class='warning'>Target is not near any active cameras.</span>"
 		return
 
@@ -154,7 +130,7 @@
 				U.cameraFollow = null
 				return
 
-			if (!near_camera(target))
+			if (!target.can_track(usr))
 				U << "<span class='warning'>Target is not near any active cameras.</span>"
 				U.cameraFollow = null
 				return
