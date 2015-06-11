@@ -40,6 +40,7 @@ var/list/department_radio_keys = list(
 	  ":o" = "AI Private",	"#o" = "AI Private",	".o" = "AI Private",
 	  ":g" = "changeling",	"#g" = "changeling",	".g" = "changeling",
 	  ":y" = "ancientchat",	"#y" = "ancientchat",	".y" = "ancientchat",
+	  ":x" = "Centcom",		"#x" = "Centcom",		".x" = "Centcom",
 
 	  ":R" = "right hand",	"#R" = "right hand",	".R" = "right hand",
 	  ":L" = "left hand",	"#L" = "left hand",		".L" = "left hand",
@@ -60,6 +61,7 @@ var/list/department_radio_keys = list(
 	  ":O" = "AI Private",	"#O" = "AI Private",	".O" = "AI Private",
 	  ":G" = "changeling",	"#G" = "changeling",	".G" = "changeling",
 	  ":Y" = "ancientchat",	"#Y" = "ancientchat",	".Y" = "ancientchat",
+	  ":X" = "Centcom",		"#X" = "Centcom",		".X" = "Centcom",
 
 		//fugg
 	  //kinda localization -- rastaf0

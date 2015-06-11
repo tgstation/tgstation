@@ -176,7 +176,7 @@
 "dt" = (/obj/machinery/door/window/southright,/obj/effect/decal/cleanable/blood/old,/turf/simulated/floor/fancy/carpet,/area/awaymission)
 "du" = (/obj/machinery/vending/dinnerware,/turf/simulated/floor/plasteel,/area/awaymission)
 "dv" = (/obj/structure/sink{icon_state = "sink"; dir = 8; pixel_x = -12; pixel_y = 2},/obj/structure/alien/weeds,/turf/simulated/floor/plasteel{icon_state = "freezerfloor"},/area/awaymission)
-"dw" = (/obj/structure/toilet{dir = 1},/obj/structure/alien/weeds{icon_state = "weeds2"},/obj/item/alien_embryo,/turf/simulated/floor/plasteel{icon_state = "freezerfloor"},/area/awaymission)
+"dw" = (/obj/structure/toilet{dir = 1},/obj/structure/alien/weeds{icon_state = "weeds2"},/obj/item/body_egg/alien_embryo,/turf/simulated/floor/plasteel{icon_state = "freezerfloor"},/area/awaymission)
 "dx" = (/obj/machinery/door/window/eastleft,/obj/structure/alien/weeds,/turf/simulated/floor/plasteel{icon_state = "freezerfloor"},/area/awaymission)
 "dy" = (/obj/machinery/shower{dir = 8},/obj/structure/alien/weeds{icon_state = "weeds1"},/obj/item/clothing/mask/facehugger,/turf/simulated/floor/plasteel{icon_state = "freezerfloor"},/area/awaymission)
 "dz" = (/obj/machinery/light,/turf/simulated/floor/plasteel,/area/awaymission)

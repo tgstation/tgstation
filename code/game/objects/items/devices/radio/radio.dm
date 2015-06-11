@@ -23,7 +23,9 @@
 	var/obj/item/device/encryptionkey/keyslot //To allow the radio to accept encryption keys.
 	var/subspace_transmission = 0
 	var/syndie = 0//Holder to see if it's a syndicate encrpyed radio
+	var/centcom = 0
 	var/maxf = 1499
+	var/freqlock = 0 //Frequency lock to stop the user from untuning specialist radios.
 	var/emped = 0	//Highjacked to track the number of consecutive EMPs on the radio, allowing consecutive EMP's to stack properly.
 //			"Example" = FREQ_LISTENING|FREQ_BROADCASTING
 	flags = CONDUCT | HEAR
@@ -58,6 +60,7 @@
 	translate_binary = 0
 	translate_hive = 0
 	syndie = 0
+	centcom = 0
 
 	if(keyslot)
 		for(var/ch_name in keyslot.channels)
@@ -74,6 +77,9 @@
 
 		if(keyslot.syndie)
 			syndie = 1
+
+		if(keyslot.centcom)
+			centcom = 1
 
 	for(var/ch_name in channels)
 		secure_radio_connections[ch_name] = add_radio(src, radiochannels[ch_name])
@@ -132,6 +138,8 @@
 				"}
 	else	//Headsets dont get a mic button, speaker controls both
 		dat += "<b>Power:</b> [listening ? "<A href='byond://?src=\ref[src];listen=0'>Engaged</A>" : "<A href='byond://?src=\ref[src];listen=1'>Disengaged</A>"]<BR>"
+	if (freqlock)
+		dat += "<b>Frequency:</b> <span class='bad'>LOCKED</span><BR>"
 	dat += {"
 				<b>Frequency:</b>
 				<A href='byond://?src=\ref[src];freq=-10'>-</A>
@@ -174,14 +182,15 @@
 		return
 	usr.set_machine(src)
 	if (href_list["freq"])
-		var/new_frequency = (frequency + text2num(href_list["freq"]))
-		if (!freerange || (frequency < 1200 || frequency > 1600))
-			new_frequency = sanitize_frequency(new_frequency, maxf)
-		set_frequency(new_frequency)
-		if(hidden_uplink)
-			if(hidden_uplink.check_trigger(usr, frequency, traitor_frequency))
-				usr << browse(null, "window=radio")
-				return
+		if (!freqlock)
+			var/new_frequency = (frequency + text2num(href_list["freq"]))
+			if (!freerange || (frequency < 1200 || frequency > 1600))
+				new_frequency = sanitize_frequency(new_frequency, maxf)
+			set_frequency(new_frequency)
+			if(hidden_uplink)
+				if(hidden_uplink.check_trigger(usr, frequency, traitor_frequency))
+					usr << browse(null, "window=radio")
+					return
 
 	else if (href_list["talk"])
 		broadcasting = text2num(href_list["talk"])
@@ -249,6 +258,7 @@
 		freq = frequency
 		channel = null
 
+	var/freqnum = text2num(freq) //Why should we call text2num three times when we can just do it here?
 	var/turf/position = get_turf(src)
 
 	//#### Tagging the signal with all appropriate identity values ####//
@@ -306,6 +316,38 @@
 	// --- Unidentifiable mob ---
 	else
 		jobname = "Unknown"
+
+
+	/* ###### Centcom channel bypasses all comms relays. ###### */
+
+	if (freqnum == CENTCOM_FREQ && centcom)
+		var/datum/signal/signal = new
+		signal.transmission_method = 2
+		signal.data = list(
+			"mob" = M, 				// store a reference to the mob
+			"mobtype" = M.type, 	// the mob's type
+			"realname" = real_name, // the mob's real name
+			"name" = voice,			// the mob's voice name
+			"job" = jobname,		// the mob's job
+			"key" = mobkey,			// the mob's key
+			"vmask" = voicemask,	// 1 if the mob is using a voice gas mas
+
+			"compression" = 0,		// uncompressed radio signal
+			"message" = message, 	// the actual sent message
+			"radio" = src, 			// stores the radio used for transmission
+			"slow" = 0,
+			"traffic" = 0,
+			"type" = 0,
+			"server" = null,
+			"reject" = 0,
+			"level" = 0,
+			"languages" = languages,
+			)
+		signal.frequency = freqnum // Quick frequency set
+		Broadcast_Message(M, voicemask,
+				  src, message, voice, jobname, real_name,
+				  5, signal.data["compression"], list(position.z, 0), freq)
+		return
 
 	/* ###### Radio headsets can only broadcast through subspace ###### */
 
@@ -435,6 +477,9 @@
 			return -1
 	if(freq == SYND_FREQ)
 		if(!(src.syndie)) //Checks to see if it's allowed on that frequency, based on the encryption keys
+			return -1
+	if(freq == CENTCOM_FREQ)
+		if(!(src.centcom)) //Checks to see if it's allowed on that frequency, based on the encryption keys
 			return -1
 	if (!on)
 		return -1
