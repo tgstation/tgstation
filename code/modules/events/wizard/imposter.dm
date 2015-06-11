@@ -11,7 +11,7 @@
 		if(!ishuman(M.current))	continue
 		var/mob/living/carbon/human/W = M.current
 		var/list/candidates = get_candidates(BE_WIZARD)
-		if(!candidates)	return //Sad Trombone
+		if(!candidates || !candidates.len)	return //Sad Trombone
 		var/client/C = pick(candidates)
 
 		new /obj/effect/effect/harmless_smoke(W.loc)
