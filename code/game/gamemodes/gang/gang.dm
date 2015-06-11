@@ -157,25 +157,25 @@
 	var/where = mob.equip_in_one_of_slots(gangtool, slots)
 	if (!where)
 		mob << "Your Syndicate benefactors were unfortunately unable to get you a Gangtool."
+		. += 1
 	else
 		gangtool.register_device(mob)
 		mob << "The <b>Gangtool</b> in your [where] will allow you to purchase items, send messages to your gangsters and to recall the emergency shuttle from anywhere on the station."
 		mob << "You can also promote your gang members to <b>lieutenant</b> by giving them an unregistered gangtool. Lieutenants cannot be deconverted and are able to use recruitment pens and gangtools."
-		. += 1
 
 	var/where2 = mob.equip_in_one_of_slots(T, slots)
 	if (!where2)
 		mob << "Your Syndicate benefactors were unfortunately unable to get you a recruitment pen to start."
+		. += 1
 	else
 		mob << "The <b>recruitment pen</b> in your [where2] will help you get your gang started. Use it on unsuspecting crew members to recruit them."
-		. += 1
 
 	var/where3 = mob.equip_in_one_of_slots(SC, slots)
 	if (!where3)
 		mob << "Your Syndicate benefactors were unfortunately unable to get you a territory spraycan to start."
+		. += 1
 	else
 		mob << "The <b>territory spraycan</b> in your [where3] can be used to claim areas of the station for your gang. The more territory your gang controls, the more influence you get. Distribute these to your gangsters to grow your influence faster."
-		. += 1
 	mob.update_icons()
 
 	return .
@@ -433,8 +433,8 @@
 //////////////////////////////////////////////////////////
 
 /datum/gang_points
-	var/A = 30
-	var/B = 30
+	var/A = 25
+	var/B = 25
 	var/next_point_interval = 1800
 	var/next_point_time
 

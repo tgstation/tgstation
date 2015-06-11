@@ -44,7 +44,7 @@
 		if(gangmode)
 			timer = ((gang == "A") ? gangmode.A_timer : gangmode.B_timer)
 			if(isnum(timer))
-				dat += "<hr><center><font color='red'>Takeover In Progress:<br><B>[timer] seconds remain</B></font></center><hr>"
+				dat += "<center><font color='red'>Takeover In Progress:<br><B>[timer] seconds remain</B></font></center><hr>"
 
 		dat += "Registration: <B>[(gang == "A")? gang_name("A") : gang_name("B")] Gang [boss ? "Administrator" : "Lieutenant"]</B><br>"
 		dat += "Organization Size: <B>[gang_size]</B> | Station Control: <B>[round((gang_territory/start_state.num_territories)*100, 1)]%</B><br>"
@@ -94,6 +94,12 @@
 			dat += "<a href='?src=\ref[src];purchase=outfit'>Gang Outfit</a><br>"
 		else
 			dat += "<b>Gang Outfit</b><br>"
+
+		dat += "(10 Influence) "
+		if(points >= 10)
+			dat += "<a href='?src=\ref[src];purchase=vest'>Bulletproof Vest</a><br>"
+		else
+			dat += "<b>Bulletproof Vest</b><br>"
 
 		dat += "(30 Influence) "
 		if(points >= 30)
@@ -167,6 +173,10 @@
 				if(points >= 50)
 					item_type = /obj/item/weapon/gun/projectile/automatic/tommygun
 					points = 50
+			if("vest")
+				if(points >= 10)
+					item_type = /obj/item/clothing/suit/armor/bulletproof
+					points = 10
 			if("pen")
 				if(points >= 30)
 					item_type = /obj/item/weapon/pen/gang
@@ -235,7 +245,7 @@
 	if(members.len)
 		for(var/datum/mind/ganger in members)
 			if(ganger.current.z <= 2)
-				ganger.current << "<span class='danger'><b>GANG BOSS:</b> [message]</span>"
+				ganger.current << "<span class='danger'><b>[boss ? "GANG BOSS" : "Gang Lieutenant"]:</b> [message]</span>"
 		message_admins("[key_name_admin(user)] sent a global message to the [gang_name(gang)] Gang ([gang]): [message].")
 		log_game("[key_name(user)] sent a global message to the [gang_name(gang)] Gang ([gang]): [message].")
 

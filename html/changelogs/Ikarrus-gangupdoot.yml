@@ -40,7 +40,8 @@ changes:
   * Gangs no longer win by capturing territories"
   - rscadd: "A choice of gang outfits are now purchasable for 1 influence each"
   - rscadd: "Thompson SMGs aka \"tommy guns\" are now purchasable for 50 influence"
-  - tweak: Gang messages are now free to send
-  - tweak: Prices of pistols and pens reduced to 20 and 30, respectively
-  - tweak: Gang spraycans have been made a lot less obvious. They look nearly identical to regular ones, now.
-  - rscdel: Gangs will no longer be notified how much territory the enemy controls
+  - rscadd: "Bulletproof armor vests are now purchasable for 10 influence"
+  - tweak: "Gang messages are now free to send"
+  - tweak: "Prices of pistols and pens reduced to 20 and 30, respectively"
+  - tweak: "Gang spraycans have been made a lot less obvious. They look nearly identical to regular ones, now."
+  - rscdel: "Gangs will no longer be notified how much territory the enemy controls"

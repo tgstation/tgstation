@@ -70,6 +70,8 @@
 		qdel(src)
 
 /obj/machinery/dominator/proc/set_broken()
+	if(!gang)
+		return
 	var/datum/game_mode/gang/mode = ticker.mode
 	if(gang == "A")
 		mode.A_timer = "OFFLINE"
@@ -88,7 +90,8 @@
 	broken = 1
 
 /obj/machinery/dominator/Destroy()
-	set_broken()
+	if(!broken)
+		set_broken()
 	..()
 
 /obj/machinery/dominator/emp_act(severity)
