@@ -3,7 +3,7 @@
 	#if LIGHTING_RESOLUTION == 1
 	var/atom/movable/lighting_overlay/lighting_overlay
 	#else
-	var/list/lighting_overlays[LIGHTING_RESOLUTION ** 2]
+	var/list/lighting_overlays[0]
 	#endif
 
 /turf/proc/reconsider_lights()
@@ -50,7 +50,11 @@
 		#endif
 
 /turf/proc/get_lumcount(var/minlum = 0, var/maxlum = 1)
-	if(!dynamic_lighting) //We're not dynamic, whatever, return 50% lighting.
+	#if LIGHTING_RESOLUTION == 1
+	if(!lighting_overlay) //We're not dynamic, whatever, return 50% lighting.
+	#else
+	if(!lighting_overlays.len)
+	#endif
 		return 0.5
 
 	var/totallums = 0
@@ -74,7 +78,7 @@
 
 	return Clamp(totallums, 0, 1)
 
-//Proc I made to dick around with update lumcount
+//Proc I made to dick around with update lumcount.
 /turf/proc/update_lumcount(delta_r, delta_g, delta_b)
 	#if LIGHTING_RESOLUTION == 1
 	if(lighting_overlay)

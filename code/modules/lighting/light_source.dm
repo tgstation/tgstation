@@ -25,11 +25,11 @@
 /datum/light_source/New(atom/owner, atom/top)
 	source_atom = owner
 	if(!source_atom.light_sources) source_atom.light_sources = list()
-	source_atom.light_sources |= src
+	source_atom.light_sources += src
 	top_atom = top
 	if(top_atom != source_atom)
 		if(!top.light_sources) top.light_sources = list()
-		top_atom.light_sources |= src
+		top_atom.light_sources += src
 
 	source_turf = top_atom
 	light_power = source_atom.light_power
@@ -59,14 +59,16 @@
 		top_atom = new_top_atom
 		if(top_atom != source_atom)
 			if(!top_atom.light_sources) top_atom.light_sources = list()
-			top_atom.light_sources |= src
-	lighting_update_lights |= src
-	needs_update = 1
+			top_atom.light_sources += src
+	if(!needs_update)
+		lighting_update_lights += src
+		needs_update = 1
 
 /datum/light_source/proc/force_update()
-	needs_update = 1
 	force_update = 1
-	lighting_update_lights |= src
+	if(!needs_update)
+		needs_update = 1
+		lighting_update_lights += src
 
 /datum/light_source/proc/check()
 	if(!source_atom || !light_range || !light_power)
@@ -146,6 +148,8 @@
 		for(var/turf/T in dview(light_range, source_turf, INVISIBILITY_LIGHTING))
 			if(T.lighting_overlay)
 				var/strength = light_power * falloff(T.lighting_overlay)
+				if(!strength) //Don't add turfs that aren't affected to the affected turfs.
+					continue
 
 				effect_r[T.lighting_overlay] = round(lum_r * strength, LIGHTING_ROUND_VALUE)
 				effect_g[T.lighting_overlay] = round(lum_g * strength, LIGHTING_ROUND_VALUE)
@@ -156,8 +160,8 @@
 			if(!T.affecting_lights)
 				T.affecting_lights = list()
 
-			T.affecting_lights |= src
-			effect_turf |= T
+			T.affecting_lights += src
+			effect_turf += T
 
 		#else
 		for(var/turf/T in dview(light_range, source_turf, INVISIBILITY_LIGHTING))
@@ -173,8 +177,8 @@
 			if(!T.affecting_lights)
 				T.affecting_lights = list()
 
-			T.affecting_lights |= src
-			effect_turf |= T
+			T.affecting_lights += src
+			effect_turf += T
 		#endif
 
 /datum/light_source/proc/remove_lum()

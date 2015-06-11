@@ -25,7 +25,7 @@
 	var/frequency = 0
 	var/id_tag = null
 	var/datum/radio_frequency/radio_connection
-	
+
 	machine_flags = MULTITOOL_MENU
 
 /obj/machinery/atmospherics/binary/dp_vent_pump/high_volume
@@ -186,28 +186,16 @@
 		handled=1
 
 	if("set_input_pressure" in signal.data)
-		input_pressure_min = Clamp(
-			text2num(signal.data["set_input_pressure"]),
-			0,
-			ONE_ATMOSPHERE*50
-		)
-		handled=1
+		input_pressure_min = Clamp(text2num(signal.data["set_input_pressure"]), 0, ONE_ATMOSPHERE * 50)
+		handled = 1
 
 	if("set_output_pressure" in signal.data)
-		output_pressure_max = Clamp(
-			text2num(signal.data["set_output_pressure"]),
-			0,
-			ONE_ATMOSPHERE*50
-		)
-		handled=1
+		output_pressure_max = Clamp(text2num(signal.data["set_output_pressure"]), 0, ONE_ATMOSPHERE * 50)
+		handled = 1
 
 	if("set_external_pressure" in signal.data)
-		external_pressure_bound = Clamp(
-			text2num(signal.data["set_external_pressure"]),
-			0,
-			ONE_ATMOSPHERE*50
-		)
-		handled=1
+		external_pressure_bound = Clamp(text2num(signal.data["set_external_pressure"]), 0, ONE_ATMOSPHERE * 50)
+		handled = 1
 
 	if("status" in signal.data)
 		spawn(2)

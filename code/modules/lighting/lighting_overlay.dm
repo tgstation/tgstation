@@ -30,24 +30,25 @@
 
 	var/should_update = 0
 
-	if(max(lum_r, lum_g, lum_b) < 1) //Any change that could happen WILL change appearance.
-		should_update = 1
-
-	else if(max(lum_r + delta_r, lum_g + delta_g, lum_b + delta_b) < 1) //The change would bring us under 1 max lum, again, guaranteed to change appearance.
-		should_update = 1
-
-	else //We need to make sure that the colour ratios won't change in this code block.
-		var/mx1 = max(lum_r, lum_g, lum_b)
-		var/mx2 = max(lum_r + delta_r, lum_g + delta_g, lum_b + delta_b)
-
-		if(lum_r * mx1 != lum_r + delta_r * mx2 || lum_g * mx1 != lum_g + delta_g * mx2 || lum_b * mx1 != lum_b + delta_b * mx2) //Stuff would change.
+	if(!needs_update) //If this isn't true, we're already updating anyways.
+		if(max(lum_r, lum_g, lum_b) < 1) //Any change that could happen WILL change appearance.
 			should_update = 1
+
+		else if(max(lum_r + delta_r, lum_g + delta_g, lum_b + delta_b) < 1) //The change would bring us under 1 max lum, again, guaranteed to change appearance.
+			should_update = 1
+
+		else //We need to make sure that the colour ratios won't change in this code block.
+			var/mx1 = max(lum_r, lum_g, lum_b)
+			var/mx2 = max(lum_r + delta_r, lum_g + delta_g, lum_b + delta_b)
+
+			if(lum_r / mx1 != (lum_r + delta_r) / mx2 || lum_g / mx1 != (lum_g + delta_g) / mx2 || lum_b / mx1 != (lum_b + delta_b) / mx2) //Stuff would change.
+				should_update = 1
 
 	lum_r += delta_r
 	lum_g += delta_g
 	lum_b += delta_b
 
-	if(should_update)
+	if(!needs_update && should_update)
 		needs_update = 1
 		lighting_update_overlays |= src
 
@@ -59,7 +60,7 @@
 	#if LIGHTING_TRANSITIONS == 1
 	animate(src,
 		color = rgb(lum_r * 255 * ., lum_g * 255 * ., lum_b * 255 * .),
-		LIGHTING_INTERVAL - 1
+		LIGHTING_TRANSITION_SPEED
 	)
 	#else
 	color = rgb(lum_r * 255 * ., lum_g * 255 * ., lum_b * 255 * .)
@@ -72,7 +73,7 @@
 			T.luminosity = 1
 		else  //No light, set the turf's luminosity to 0 to remove it from view()
 			#if LIGHTING_TRANSITIONS == 1
-			spawn(LIGHTING_INTERVAL - 1)
+			spawn(LIGHTING_TRANSITION_SPEED)
 				T.luminosity = 0
 			#else
 			T.luminosity = 0
@@ -121,3 +122,8 @@
 
 /atom/movable/lighting_overlay/ex_act(severity)
 	return 0
+
+//Override here to prevent things accidentally moving around overlays.
+/atom/movable/lighting_overlay/forceMove(atom/destination, var/harderforce = 0)
+	if(harderforce)
+		.= ..()

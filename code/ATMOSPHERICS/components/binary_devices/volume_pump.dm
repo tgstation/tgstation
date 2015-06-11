@@ -123,11 +123,7 @@ Thus, the two variables affect pump operation are set in New():
 		on = !on
 
 	if("set_transfer_rate" in signal.data)
-		transfer_rate = Clamp(
-			text2num(signal.data["set_transfer_rate"]),
-			0,
-			air1.volume
-		)
+		transfer_rate = Clamp(text2num(signal.data["set_transfer_rate"]), 0, air1.volume)
 
 	if("status" in signal.data)
 		spawn(2)
