@@ -1,0 +1,12 @@
+author: Miauw
+
+delete-after: True
+
+changes: 
+  - tweak: "AIs have received several minor nerfs in order to increase antagonist counterplay:"
+  - tweak: "AI tracking is no longer instant, it takes an amount of time that increases with distance from the AI eye, up to 4 seconds. The AI detector item will light up when an AI begins tracking."
+  - tweak: "A random camera failure event has been added, which will break one or two random cameras."
+  - tweak: "You can no longer keep tracking people that are outside of your camera vision."
+  - tweak: "Camera wires have been removed. Screwdriver a camera to open the panel, then use wirecutters to disable it or a multitool to change the focus."
+  - tweak: "You can now hit cameras with items to break them. To repair a camera, simply open the panel and use wirecutters on it."
+  - tweak: "Camera alerts now only happen after a camera is reactivated."
