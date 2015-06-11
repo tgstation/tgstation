@@ -125,7 +125,7 @@ var/global/list/datum/stack_recipe/cable_recipes = list ( \
 //////////////////////////////////////////////
 
 // called when cable_coil is clicked on a turf/simulated/floor
-/obj/item/stack/cable_coil/proc/turf_place(turf/simulated/floor/F, mob/user)
+/obj/item/stack/cable_coil/proc/turf_place(turf/simulated/floor/F, mob/user, var/dirnew)
 	if(!isturf(user.loc))
 		return
 
@@ -136,44 +136,46 @@ var/global/list/datum/stack_recipe/cable_recipes = list ( \
 	if(F.intact)					// if floor is intact, complain
 		user << "You can't lay cable there unless the floor tiles are removed."
 		return
-	else
-		var/dirn
-
+	var/dirn = null
+	if(!dirnew) //If we weren't given a direction, come up with one! (Called as null from catwalk.dm and floor.dm)
 		if(user.loc == F)
 			dirn = user.dir			// if laying on the tile we're on, lay in the direction we're facing
 		else
 			dirn = get_dir(F, user)
+	else
+		dirn = dirnew
+	for(var/obj/structure/cable/LC in F)
+		if(LC.d2 == dirn && LC.d1 == 0)
+			user << "There's already a cable at that position."
+			return
 
-		for(var/obj/structure/cable/LC in F)
-			if(LC.d2 == dirn && LC.d1 == 0)
-				user << "There's already a cable at that position."
-				return
+	var/obj/structure/cable/C = getFromPool(/obj/structure/cable, F)
+	C.cableColor(_color)
 
-		var/obj/structure/cable/C = getFromPool(/obj/structure/cable, F)
-		C.cableColor(_color)
+	// set up the new cable
+	C.d1 = 0 // it's a O-X node cable
+	C.d2 = dirn
+	C.add_fingerprint(user)
+	C.update_icon()
 
-		// set up the new cable
-		C.d1 = 0 // it's a O-X node cable
-		C.d2 = dirn
-		C.add_fingerprint(user)
-		C.update_icon()
+	//create a new powernet with the cable, if needed it will be merged later
+	var/datum/powernet/PN = getFromDPool(/datum/powernet)
+	PN.add_cable(C)
 
-		//create a new powernet with the cable, if needed it will be merged later
-		var/datum/powernet/PN = getFromDPool(/datum/powernet)
-		PN.add_cable(C)
+	C.mergeConnectedNetworks(C.d2)		// merge the powernet with adjacents powernets
+	C.mergeConnectedNetworksOnTurf()	// merge the powernet with on turf powernets
 
-		C.mergeConnectedNetworks(C.d2)		// merge the powernet with adjacents powernets
-		C.mergeConnectedNetworksOnTurf()	// merge the powernet with on turf powernets
+	if(C.d2 & (C.d2 - 1)) // if the cable is layed diagonally, check the others 2 possible directions
+		C.mergeDiagonalsNetworks(C.d2)
 
-		if(C.d2 & (C.d2 - 1)) // if the cable is layed diagonally, check the others 2 possible directions
-			C.mergeDiagonalsNetworks(C.d2)
+	use(1)
 
-		use(1)
+	if(C.shock(user, 50))
+		if(prob(50)) // fail
+			getFromPool(/obj/item/stack/cable_coil, C.loc)
+			returnToPool(C)
 
-		if(C.shock(user, 50))
-			if(prob(50)) // fail
-				getFromPool(/obj/item/stack/cable_coil, C.loc)
-				returnToPool(C)
+	return C //What was our last known position?
 
 // called when cable_coil is click on an installed obj/cable
 // or click on a turf that already contains a "node" cable
@@ -207,39 +209,7 @@ var/global/list/datum/stack_recipe/cable_recipes = list ( \
 			// cable is pointing at us, we're standing on an open tile
 			// so create a stub pointing at the clicked cable on our tile
 
-			var/fdirn = turn(dirn, 180)		// the opposite direction
-
-			for(var/obj/structure/cable/LC in U)		// check to make sure there's not a cable there already
-				if(LC.d1 == fdirn || LC.d2 == fdirn)
-					user << "There's already a cable at that position."
-					return
-
-			var/obj/structure/cable/NC = getFromPool(/obj/structure/cable, U)
-			NC.cableColor(_color)
-
-			NC.d1 = 0
-			NC.d2 = fdirn
-			NC.add_fingerprint()
-			NC.update_icon()
-
-			//create a new powernet with the cable, if needed it will be merged later
-			var/datum/powernet/newPN = new()
-			newPN.add_cable(NC)
-
-			NC.mergeConnectedNetworks(NC.d2) // merge the powernet with adjacents powernets
-			NC.mergeConnectedNetworksOnTurf() // merge the powernet with on turf powernets
-
-			if(NC.d2 & (NC.d2 - 1)) // if the cable is layed diagonally, check the others 2 possible directions
-				NC.mergeDiagonalsNetworks(NC.d2)
-
-			use(1)
-
-			if (NC.shock(user, 50))
-				if (prob(50)) //fail
-					new/obj/item/stack/cable_coil(NC.loc, 1, NC.light_color)
-					returnToPool(NC)
-
-			return
+			turf_place(T,user,turn(dirn,180))
 
 	// exisiting cable doesn't point at our position, so see if it's a stub
 	else if(C.d1 == 0)
