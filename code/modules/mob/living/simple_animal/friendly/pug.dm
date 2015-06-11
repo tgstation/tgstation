@@ -12,7 +12,7 @@
 	emote_see = list("shakes its head.", "chases its tail.","shivers.")
 	speak_chance = 1
 	turns_per_move = 10
-	meat_type = /obj/item/weapon/reagent_containers/food/snacks/meat/pug
+	meat_type = /obj/item/weapon/reagent_containers/food/snacks/meat/slab/pug
 	meat_amount = 3
 	response_help  = "pets"
 	response_disarm = "bops"

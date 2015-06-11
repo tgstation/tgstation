@@ -18,7 +18,8 @@
 	var/list/injection_chems = list() //list of injectable chems except ephedrine, coz ephedrine is always avalible
 	var/list/possible_chems = list(list("morphine", "dexalin", "bicaridine", "kelotane"),
 								   list("morphine", "dexalin", "bicaridine", "kelotane", "imidazoline"),
-								   list("morphine", "dexalin", "bicaridine", "kelotane", "imidazoline", "anti_toxin", "ryetalyn", "alkysine", "pen_acid"))
+								   list("morphine", "dexalin", "bicaridine", "kelotane", "imidazoline", "anti_toxin", "ryetalyn", "alkysine", "pen_acid"),
+								   list("morphine", "dexalin", "bicaridine", "kelotane", "imidazoline", "anti_toxin", "ryetalyn", "alkysine", "pen_acid", "tricordrazine"))
 /obj/machinery/sleeper/New()
 	..()
 	component_parts = list()

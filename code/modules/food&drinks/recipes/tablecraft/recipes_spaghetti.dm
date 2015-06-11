@@ -40,7 +40,7 @@
 	reqs = list(
 		/obj/item/weapon/reagent_containers/glass/bowl = 1,
 		/obj/item/weapon/reagent_containers/food/snacks/boiledspaghetti = 1,
-		/obj/item/weapon/reagent_containers/food/snacks/cutlet = 2,
+		/obj/item/weapon/reagent_containers/food/snacks/meat/cutlet = 2,
 		/obj/item/weapon/reagent_containers/food/snacks/grown/cabbage = 1
 	)
 	result = /obj/item/weapon/reagent_containers/food/snacks/beefnoodle
@@ -49,7 +49,7 @@
 	name = "Chowmein"
 	reqs = list(
 		/obj/item/weapon/reagent_containers/food/snacks/boiledspaghetti = 1,
-		/obj/item/weapon/reagent_containers/food/snacks/cutlet = 1,
+		/obj/item/weapon/reagent_containers/food/snacks/meat/cutlet = 1,
 		/obj/item/weapon/reagent_containers/food/snacks/grown/cabbage = 2,
 		/obj/item/weapon/reagent_containers/food/snacks/grown/carrot = 1
 	)

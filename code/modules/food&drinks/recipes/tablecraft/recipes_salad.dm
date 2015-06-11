@@ -91,7 +91,7 @@
 	name = "Rice and pork"
 	reqs = list(
 		/obj/item/weapon/reagent_containers/food/snacks/salad/boiledrice = 1,
-		/obj/item/weapon/reagent_containers/food/snacks/cutlet = 2
+		/obj/item/weapon/reagent_containers/food/snacks/meat/cutlet = 2
 	)
 	result = /obj/item/weapon/reagent_containers/food/snacks/salad/ricepork
 

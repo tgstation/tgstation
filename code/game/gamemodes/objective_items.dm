@@ -49,7 +49,7 @@ datum/objective_item/steal/magboots
 
 datum/objective_item/steal/corgimeat
 	name = "a piece of corgi meat"
-	targetitem = /obj/item/weapon/reagent_containers/food/snacks/meat/corgi
+	targetitem = /obj/item/weapon/reagent_containers/food/snacks/meat/slab/corgi
 	difficulty = 5
 	excludefromjob = list("Head of Personnel", "Quartermaster", "Cargo Technician") //>hurting your little buddy ever
 

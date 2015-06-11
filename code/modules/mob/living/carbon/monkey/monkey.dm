@@ -8,6 +8,7 @@
 	pass_flags = PASSTABLE
 	languages = MONKEY
 	ventcrawler = 2
+	type_of_meat = /obj/item/weapon/reagent_containers/food/snacks/meat/slab/monkey
 
 /mob/living/carbon/monkey/New()
 	create_reagents(1000)

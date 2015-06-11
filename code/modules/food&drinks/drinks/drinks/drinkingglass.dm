@@ -8,16 +8,17 @@
 	volume = 50
 
 /obj/item/weapon/reagent_containers/food/drinks/drinkingglass/on_reagent_change()
+	overlays.Cut()
 	if (reagents.reagent_list.len > 0)
 		switch(reagents.get_master_reagent_id())
 			if("beer")
 				icon_state = "beerglass"
 				name = "glass of beer"
-				desc = "A freezing pint of beer"
+				desc = "A freezing pint of beer."
 			if("beer2")
 				icon_state = "beerglass"
 				name = "glass of beer"
-				desc = "A freezing pint of beer"
+				desc = "A freezing pint of beer."
 			if("greenbeer")
 				icon_state = "greenbeerglass"
 				name = "glass of green beer"
@@ -25,7 +26,7 @@
 			if("ale")
 				icon_state = "aleglass"
 				name = "glass of ale"
-				desc = "A freezing pint of delicious Ale"
+				desc = "A freezing pint of delicious Ale."
 			if("milk")
 				icon_state = "glass_white"
 				name = "glass of milk"
@@ -37,7 +38,7 @@
 			if("hot_coco")
 				icon_state  = "chocolateglass"
 				name = "glass of chocolate"
-				desc = "Tasty"
+				desc = "Tasty!"
 			if("lemonjuice")
 				icon_state  = "lemonglass"
 				name = "glass of lemon juice"
@@ -57,11 +58,11 @@
 			if("cola")
 				icon_state  = "glass_brown"
 				name = "glass of space Cola"
-				desc = "A glass of refreshing Space Cola"
+				desc = "A glass of refreshing Space Cola."
 			if("nuka_cola")
 				icon_state = "nuka_colaglass"
 				name = "Nuka Cola"
-				desc = "Don't cry, Don't raise your eye, It's only nuclear wasteland"
+				desc = "Don't cry, Don't raise your eye, It's only nuclear wasteland."
 			if("orangejuice")
 				icon_state = "glass_orange"
 				name = "glass of orange juice"
@@ -579,3 +580,17 @@
 /obj/item/weapon/reagent_containers/food/drinks/drinkingglass/filled/cola
 	list_reagents = list("cola" = 50)
 
+
+/obj/item/weapon/reagent_containers/food/drinks/drinkingglass/attackby(var/obj/item/I, mob/user as mob, params)
+	if(istype(I,/obj/item/weapon/reagent_containers/food/snacks/egg)) //breaking eggs
+		var/obj/item/weapon/reagent_containers/food/snacks/egg/E = I
+		if(reagents)
+			if(reagents.total_volume >= reagents.maximum_volume)
+				user << "<span class='notice'>[src] is full.</span>"
+			else
+				user << "<span class='notice'>You break [E] in [src].</span>"
+				reagents.add_reagent("eggyolk", 5)
+				qdel(E)
+			return
+	else
+		..()

@@ -15,7 +15,7 @@
 /obj/item/weapon/reagent_containers/food/snacks/customizable
 	bitesize = 4
 	w_class = 3
-	volume = 60
+	volume = 80
 
 	var/ingMax = 12
 	var/list/ingredients = list()
@@ -50,7 +50,7 @@
 				S.trash = null  //we remove the plate before adding the ingredient
 			ingredients += S
 			S.loc = src
-			filling_color = S.filling_color
+			mix_filling_color(S)
 			S.reagents.trans_to(src,min(S.reagents.total_volume, 15)) //limit of 15, we don't want our custom food to be completely filled by just one ingredient with large reagent volume.
 			update_overlays(S)
 			user << "<span class='notice'>You add the [I.name] to the [name].</span>"
@@ -77,23 +77,42 @@
 			customname = "custom"
 			break
 	if(ingredients.len == 1) //first ingredient
-		if(istype(S, /obj/item/weapon/reagent_containers/food/snacks/meat/human))
-			var/obj/item/weapon/reagent_containers/food/snacks/meat/human/H = S
-			if(H.subjectname)
-				customname = "[H.subjectname]"
-			else if(H.subjectjob)
-				customname = "[H.subjectjob]"
+		if(istype(S, /obj/item/weapon/reagent_containers/food/snacks/meat))
+			var/obj/item/weapon/reagent_containers/food/snacks/meat/M = S
+			if(M.subjectname)
+				customname = "[M.subjectname]"
+			else if(M.subjectjob)
+				customname = "[M.subjectjob]"
+			else
+				customname = S.name
 		else
-			customname = "[initial(S.name)]"
+			customname = S.name
 	name = "[customname] [initial(name)]"
 
 /obj/item/weapon/reagent_containers/food/snacks/customizable/proc/initialize_custom_food(obj/item/BASE, obj/item/I, mob/user)
 	if(istype(BASE,/obj/item/weapon/reagent_containers))
 		var/obj/item/weapon/reagent_containers/RC = BASE
 		RC.reagents.trans_to(src,RC.reagents.total_volume)
+	for(var/obj/O in BASE.contents)
+		contents += O
 	if(I && user)
 		attackby(I, user)
+	user.unEquip(BASE)
 	qdel(BASE)
+
+/obj/item/weapon/reagent_containers/food/snacks/customizable/proc/mix_filling_color(obj/item/weapon/reagent_containers/food/snacks/S)
+
+	if(ingredients.len == 1)
+		filling_color = S.filling_color
+	else
+		var/list/rgbcolor = list(0,0,0,0)
+		var/customcolor = GetColors(filling_color)
+		var/ingcolor =  GetColors(S.filling_color)
+		rgbcolor[1] = (customcolor[1]+ingcolor[1])/2
+		rgbcolor[2] = (customcolor[2]+ingcolor[2])/2
+		rgbcolor[3] = (customcolor[3]+ingcolor[3])/2
+		rgbcolor[4] = (customcolor[4]+ingcolor[4])/2
+		filling_color = rgb(rgbcolor[1], rgbcolor[2], rgbcolor[3], rgbcolor[4])
 
 /obj/item/weapon/reagent_containers/food/snacks/customizable/update_overlays(obj/item/weapon/reagent_containers/food/snacks/S)
 
@@ -122,6 +141,7 @@
 			return
 		if(INGREDIENTS_FILL)
 			overlays.Cut()
+			I.color = filling_color
 		if(INGREDIENTS_LINE)
 			I.pixel_y = rand(-8,3)
 			I.pixel_x = I.pixel_y
@@ -129,7 +149,8 @@
 	overlays += I
 
 
-/obj/item/weapon/reagent_containers/food/snacks/customizable/initialize_slice(obj/item/weapon/reagent_containers/food/snacks/slice)
+/obj/item/weapon/reagent_containers/food/snacks/customizable/initialize_slice(obj/item/weapon/reagent_containers/food/snacks/slice, reagents_per_slice)
+	..()
 	slice.name = "[customname] [initial(slice.name)]"
 	slice.filling_color = filling_color
 	slice.update_overlays(src)

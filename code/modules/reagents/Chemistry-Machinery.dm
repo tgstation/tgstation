@@ -185,7 +185,8 @@
 	dispensable_reagents = list()
 	var/list/special_reagents = list(list("hydrogen", "oxygen", "silicon", "phosphorus", "sulfur", "carbon", "nitrogen", "water"),
 						 		list("lithium", "sugar", "sacid", "copper", "mercury", "sodium","iodine","bromine","tungsten"),
-								list("ethanol", "chlorine", "potassium", "aluminium", "radium", "fluorine", "iron", "fuel","silver","stable_plasma"))
+								list("ethanol", "chlorine", "potassium", "aluminium", "radium", "fluorine", "iron", "fuel","silver","stable_plasma"),
+								list("oil", "phenol", "acetone", "ammonia", "diethylamine"))
 
 /obj/machinery/chem_dispenser/constructable/New()
 	..()
@@ -245,7 +246,8 @@
 	dispensable_reagents = list()
 	uiname = "Booze Dispenser"
 	special_reagents = list(list("lemon_lime","sugar","orangejuice","limejuice","sodawater","tonic","beer","kahlua","whiskey","wine","vodka","gin","rum","tequila","vermouth","cognac","ale"),
-						 		list(),
+						 		list(),  //Ideas for higher tier reagents?
+								list(),
 								list())
 
 /obj/machinery/chem_dispenser/constructable/drinks
@@ -257,6 +259,7 @@
 	uiname = "Soda Dispenser"
 	special_reagents = list(list("water","ice","coffee","cream","tea","icetea","cola","spacemountainwind","dr_gibb","space_up","tonic","sodawater","lemon_lime","sugar","orangejuice","limejuice","tomatojuice"),
 						 		list(),
+								list(),
 								list())
 
 

@@ -248,7 +248,7 @@
 	hits = 2
 	heavy = 1
 	meteorsound = 'sound/effects/blobattack.ogg'
-	meteordrop = /obj/item/weapon/reagent_containers/food/snacks/meat
+	meteordrop = /obj/item/weapon/reagent_containers/food/snacks/meat/slab
 	var/meteorgibs = /obj/effect/gibspawner/generic
 
 /obj/effect/meteor/meaty/make_debris()
@@ -267,7 +267,7 @@
 //Meaty Ore Xeno edition
 /obj/effect/meteor/meaty/xeno
 	color = "#5EFF00"
-	meteordrop = /obj/item/weapon/reagent_containers/food/snacks/meat/xeno
+	meteordrop = /obj/item/weapon/reagent_containers/food/snacks/meat/slab/xeno
 	meteorgibs = /obj/effect/gibspawner/xeno
 
 /obj/effect/meteor/meaty/xeno/ram_turf(var/turf/T)

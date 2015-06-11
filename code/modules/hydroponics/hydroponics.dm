@@ -22,9 +22,9 @@
 	var/planted = 0			//Is it occupied?
 	var/harvest = 0			//Ready to harvest?
 	var/obj/item/seeds/myseed = null	//The currently planted seed
+	var/rating = 1
 	var/unwrenchable = 1
-
-	var/co2mod = 1	//Carbon dioxide effect on yield, currently varies between 0.75 and 1.25. Only checked aty
+	var/co2mod = 1
 
 	pixel_y=8
 
@@ -39,20 +39,32 @@
 	component_parts += new /obj/item/weapon/circuitboard/hydroponics(null)
 	component_parts += new /obj/item/weapon/stock_parts/matter_bin(null)
 	component_parts += new /obj/item/weapon/stock_parts/matter_bin(null)
+	component_parts += new /obj/item/weapon/stock_parts/manipulator(null)
 	component_parts += new /obj/item/weapon/stock_parts/console_screen(null)
 	RefreshParts()
 
 /obj/machinery/hydroponics/constructable/RefreshParts()
-	var tmp_capacity = 0
+	var/tmp_capacity = 0
 	for (var/obj/item/weapon/stock_parts/matter_bin/M in component_parts)
 		tmp_capacity += M.rating
+	for (var/obj/item/weapon/stock_parts/manipulator/M in component_parts)
+		rating = M.rating
 	maxwater = tmp_capacity * 50 // Up to 300
 	maxnutri = tmp_capacity * 5 // Up to 30
 	waterlevel = maxwater
 	nutrilevel = 3
 
 /obj/machinery/hydroponics/constructable/attackby(obj/item/I, mob/user, params)
+	if(default_deconstruction_screwdriver(user, "hydrotray3", "hydrotray3", I))
+		return
+
 	if(exchange_parts(user, I))
+		return
+
+	if(default_pry_open(I))
+		return
+
+	if(default_unfasten_wrench(user, I))
 		return
 
 	if(istype(I, /obj/item/weapon/crowbar))
@@ -61,6 +73,7 @@
 			return
 		default_deconstruction_crowbar(I, 1)
 	..()
+
 
 /obj/machinery/hydroponics/proc/FindConnected()
 
@@ -91,10 +104,10 @@
 		mutate()
 	else if(istype(Proj ,/obj/item/projectile/energy/florayield))
 		if(myseed.yield == 0)//Oh god don't divide by zero you'll doom us all.
-			adjustSYield(1)
+			adjustSYield(1 * rating)
 			//world << "Yield increased by 1, from 0, to a total of [myseed.yield]"
 		else if(prob(1/(myseed.yield * myseed.yield) * 100))//This formula gives you diminishing returns based on yield. 100% with 1 yield, decreasing to 25%, 11%, 6, 4, 2...
-			adjustSYield(1)
+			adjustSYield(1 * rating)
 			//world << "Yield increased by 1, to a total of [myseed.yield]"
 	else
 		..()
@@ -117,7 +130,7 @@ obj/machinery/hydroponics/process()
 //Nutrients//////////////////////////////////////////////////////////////
 			// Nutrients deplete slowly
 			if(prob(50))
-				adjustNutri(-1)
+				adjustNutri(-1 / rating)
 
 			// Lack of nutrients hurts non-weeds
 			if(nutrilevel <= 0 && myseed.plant_type != 1)
@@ -130,10 +143,10 @@ obj/machinery/hydroponics/process()
 				var/lightAmt = (currentTurf.get_lumcount() * 10)
 				if(myseed.plant_type == 2) // Mushroom
 					if(lightAmt < 2)
-						adjustHealth(-1)
+						adjustHealth(-1 / rating)
 				else // Non-mushroom
 					if(lightAmt < 4)
-						adjustHealth(-2)
+						adjustHealth(-2 / rating)
 
 //Breathing//////////////////////////////////////////////////////////////
 			//Non-mushrooms consume CO2 and produce O2
@@ -176,51 +189,53 @@ obj/machinery/hydroponics/process()
 				if(breath)
 					loc.assume_air(breath)
 
+			//asd pls the above code only alters atmos and doesn't touch the actual plant at all
+
 //Water//////////////////////////////////////////////////////////////////
 			// Drink random amount of water
-			adjustWater(-rand(1,6))
+			adjustWater(-rand(1,6) / rating)
 
 			// If the plant is dry, it loses health pretty fast, unless mushroom
 			if(waterlevel <= 10 && myseed.plant_type != 2)	//Add CO2 check here?
-				adjustHealth(-rand(0,1))
+				adjustHealth(-rand(0,1) / rating)
 				if(waterlevel <= 0)
-					adjustHealth(-rand(0,2))
+					adjustHealth(-rand(0,2) / rating)
 
 			// Sufficient water level and nutrient level = plant healthy
 			else if(waterlevel > 10 && nutrilevel > 0)
-				adjustHealth(rand(1,2))
+				adjustHealth(rand(1,2) / rating)
 				if(prob(5))  //5 percent chance the weed population will increase
-					adjustWeeds(1)
+					adjustWeeds(1 / rating)
 
 //Toxins/////////////////////////////////////////////////////////////////
 
 			// Too much toxins cause harm, but when the plant drinks the contaiminated water, the toxins disappear slowly
 			if(toxic >= 40 && toxic < 80)
-				adjustHealth(-1)
-				adjustToxic(-rand(1,10))
+				adjustHealth(-1 / rating)
+				adjustToxic(-rand(1,10) / rating)
 			else if(toxic >= 80) // I don't think it ever gets here tbh unless above is commented out
 				adjustHealth(-3)
-				adjustToxic(-rand(1,10))
+				adjustToxic(-rand(1,10) / rating)
 
 //Pests & Weeds//////////////////////////////////////////////////////////
 
 			else if(pestlevel >= 5)
-				adjustHealth(-1)
+				adjustHealth(-1 / rating)
 
 			// If it's a weed, it doesn't stunt the growth
 			if(weedlevel >= 5 && myseed.plant_type != 1 )
-				adjustHealth(-1)
+				adjustHealth(-1 / rating)
 
 //Health & Age///////////////////////////////////////////////////////////
 
 			// Plant dies if health <= 0
 			if(health <= 0)
 				plantdies()
-				adjustWeeds(1) // Weeds flourish
+				adjustWeeds(1 / rating) // Weeds flourish
 
 			// If the plant is too old, lose health fast
 			if(age > myseed.lifespan)
-				adjustHealth(-rand(1,5))
+				adjustHealth(-rand(1,5) / rating)
 
 			// Harvest code
 			if(age > myseed.production && (age - lastproduce) > myseed.production && (!harvest && !dead))
@@ -230,10 +245,10 @@ obj/machinery/hydroponics/process()
 				else
 					lastproduce = age
 			if(prob(5))  // On each tick, there's a 5 percent chance the pest population will increase
-				adjustPests(1)
+				adjustPests(1 / rating)
 		else
 			if(waterlevel > 10 && nutrilevel > 0 && prob(10))  // If there's no plant, the percentage chance is 10%
-				adjustWeeds(1)
+				adjustWeeds(1 / rating)
 
 		// Weeeeeeeeeeeeeeedddssss
 
@@ -478,7 +493,7 @@ obj/machinery/hydroponics/proc/applyChemicals(var/datum/reagents/S)
 		adjustHealth(-round(S.get_reagent_amount("radium") * 1))
 		adjustToxic(round(S.get_reagent_amount("radium") * 3)) // Radium is harsher (OOC: also easier to produce)
 
-	// Nutriments
+	// Nutriments  //Don't touch these nutrient values, they're used in comparisons
 	if(S.has_reagent("eznutriment", 1))
 		yieldmod = 1
 		mutmod = 1
@@ -776,23 +791,24 @@ obj/machinery/hydroponics/attackby(var/obj/item/O as obj, var/mob/user as mob, p
 				user.visible_message("<span class='notice'>[user] unwrenches [src].</span>", \
 									"<span class='notice'>You unwrench [src].</span>")
 
-	else if(istype(O, /obj/item/weapon/screwdriver) && unwrenchable) //THIS NEED TO BE DONE DIFFERENTLY, SOMEONE REFACTOR THE TRAY CODE ALREADY
+	else if(istype(O, /obj/item/weapon/wirecutters) && unwrenchable) //THIS NEED TO BE DONE DIFFERENTLY, SOMEONE REFACTOR THE TRAY CODE ALREADY
 		if(anchored)
 			if(anchored == 2)
-				playsound(src.loc, 'sound/items/Screwdriver.ogg', 50, 1)
+				playsound(src.loc, 'sound/items/Wirecutter.ogg', 50, 1)
 				anchored = 1
-				user << "You unscrew \the [src]'s hoses."
+				user << "<span class='notice'>You snip \the [src]'s hoses.</span>"
 
 			else if(anchored == 1)
-				playsound(src.loc, 'sound/items/Screwdriver.ogg', 50, 1)
+				playsound(src.loc, 'sound/items/Wirecutter.ogg', 50, 1)
 				anchored = 2
-				user << "You screw in \the [src]'s hoses."
+				user << "<span class='notice'>You reconnect \the [src]'s hoses.</span>"
 
 			for(var/obj/machinery/hydroponics/h in range(1,src))
 				spawn()
 					h.update_icon()
 
 	return
+
 
 /obj/machinery/hydroponics/attack_hand(mob/user as mob)
 	if(istype(user, /mob/living/silicon) && !ismommi(user))		//How does AI know what plant is? //why the fuck didn't this nig use issilicon()

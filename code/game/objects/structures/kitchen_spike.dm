@@ -91,11 +91,11 @@
 				user << "You remove the hide from the monkey!"
 			else if(src.meat > 1)
 				src.meat--
-				new /obj/item/weapon/reagent_containers/food/snacks/meat/monkey(src.loc )
+				new /obj/item/weapon/reagent_containers/food/snacks/meat/slab/monkey(src.loc )
 				usr << "You remove some meat from the monkey."
 			else if(src.meat == 1)
 				src.meat--
-				new /obj/item/weapon/reagent_containers/food/snacks/meat/monkey(src.loc)
+				new /obj/item/weapon/reagent_containers/food/snacks/meat/slab/monkey(src.loc)
 				usr << "You remove the last piece of meat from the monkey!"
 				src.icon_state = "spike"
 				src.occupied = 0
@@ -106,11 +106,11 @@
 				user << "You remove the hide from the alien!"
 			else if(src.meat > 1)
 				src.meat--
-				new /obj/item/weapon/reagent_containers/food/snacks/meat/xeno(src.loc )
+				new /obj/item/weapon/reagent_containers/food/snacks/meat/slab/xeno(src.loc )
 				usr << "You remove some meat from the alien."
 			else if(src.meat == 1)
 				src.meat--
-				new /obj/item/weapon/reagent_containers/food/snacks/meat/xeno(src.loc)
+				new /obj/item/weapon/reagent_containers/food/snacks/meat/slab/xeno(src.loc)
 				usr << "You remove the last piece of meat from the alien!"
 				src.icon_state = "spike"
 				src.occupied = 0
@@ -121,11 +121,11 @@
 				user << "You remove the hide from the bear!"
 			else if(src.meat > 1)
 				src.meat--
-				new /obj/item/weapon/reagent_containers/food/snacks/meat/bear(src.loc )
+				new /obj/item/weapon/reagent_containers/food/snacks/meat/slab/bear(src.loc )
 				usr << "You remove some meat from the bear."
 			else if(src.meat == 1)
 				src.meat--
-				new /obj/item/weapon/reagent_containers/food/snacks/meat/bear(src.loc)
+				new /obj/item/weapon/reagent_containers/food/snacks/meat/slab/bear(src.loc)
 				usr << "You remove the last piece of meat from the bear!"
 				src.icon_state = "spike"
 				src.occupied = 0

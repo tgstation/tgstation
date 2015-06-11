@@ -43,14 +43,14 @@
 		efficiency += S.rating
 	for(var/obj/item/weapon/stock_parts/manipulator/P in component_parts)
 		speed_coeff += P.rating
-	heal_level = (efficiency * 15) + 10
+	heal_level = min((efficiency * 15) + 10, 100)
 
 //The return of data disks?? Just for transferring between genetics machine/cloning machine.
 //TO-DO: Make the genetics machine accept them.
 /obj/item/weapon/disk/data
 	name = "cloning data disk"
 	icon = 'icons/obj/cloning.dmi'
-	icon_state = "datadisk0" //Gosh I hope syndies don't mistake them for the nuke disk.
+	icon_state = "datadisk0" //Gosh I hope syndies don't mistake them for the nuke disk. //I hope they do
 	item_state = "card-id"
 	w_class = 1.0
 	var/list/fields = list()
@@ -223,7 +223,7 @@
 			use_power(7500) //This might need tweaking.
 			return
 
-		else if((src.occupant.cloneloss <= (100 - src.heal_level)) && (!src.eject_wait))
+		else if((src.occupant.cloneloss <= (100 - src.heal_level)) && (!src.eject_wait || src.occupant.health >= 100))
 			src.connected_message("Cloning Process Complete.")
 			src.locked = 0
 			src.go_out()

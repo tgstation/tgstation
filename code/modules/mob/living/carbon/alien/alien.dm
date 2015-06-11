@@ -20,6 +20,8 @@
 	var/has_fine_manipulation = 0
 
 	var/move_delay_add = 0 // movement delay to add
+	type_of_meat = /obj/item/weapon/reagent_containers/food/snacks/meat/slab/xeno
+	gib_type = /obj/effect/decal/cleanable/xenoblood/xgibs
 
 	status_flags = CANPARALYSE|CANPUSH
 	var/heal_rate = 5
