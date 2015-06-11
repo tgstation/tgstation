@@ -59,7 +59,6 @@ var/list/image/ghost_darkness_images = list() //this is a list of images for thi
 	real_name = name
 
 	if(!fun_verbs)
-		verbs -= /mob/dead/observer/verb/boo
 		verbs -= /mob/dead/observer/verb/possess
 
 	animate(src, pixel_y = 2, time = 10, loop = -1)

@@ -35,6 +35,9 @@
 
 	originMachine = pick(vendingMachines)
 	vendingMachines.Remove(originMachine)
+	if(!originMachine)
+		kill()
+		return
 	originMachine.shut_up = 0
 	originMachine.shoot_inventory = 1
 

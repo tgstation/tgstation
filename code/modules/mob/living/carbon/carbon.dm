@@ -514,3 +514,8 @@ var/const/GALOSHES_DONT_HELP = 8
 	else
 		src << "You do not have enough chemicals stored to reproduce."
 		return
+
+
+/mob/living/carbon/proc/is_mouth_covered(head_only = 0, mask_only = 0)
+	if( (!mask_only && head && (head.flags & HEADCOVERSMOUTH)) || (!head_only && wear_mask && (wear_mask.flags & MASKCOVERSMOUTH)) )
+		return 1

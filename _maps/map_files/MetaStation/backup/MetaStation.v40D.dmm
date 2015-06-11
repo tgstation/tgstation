@@ -7889,7 +7889,7 @@
 "cVK" = (/obj/structure/sign/securearea{desc = "A warning sign which reads 'HIGH VOLTAGE'"; icon_state = "shock"; name = "HIGH VOLTAGE"},/turf/simulated/wall/r_wall,/area/toxins/xenobiology)
 "cVL" = (/obj/machinery/atmospherics/pipe/simple/general/visible,/turf/simulated/floor/engine,/area/toxins/xenobiology)
 "cVM" = (/obj/structure/disposaloutlet{dir = 2},/turf/simulated/floor/engine,/area/toxins/xenobiology)
-"cVN" = (/obj/item/body_egg/alien_embryo,/turf/simulated/floor/engine,/area/toxins/xenobiology)
+"cVN" = (/obj/item/alien_embryo,/turf/simulated/floor/engine,/area/toxins/xenobiology)
 "cVO" = (/obj/structure/table,/obj/item/stack/sheet/metal{amount = 10},/obj/item/device/electropack,/turf/simulated/floor/engine,/area/toxins/xenobiology)
 "cVP" = (/obj/machinery/sparker{id = "Xenobio"; pixel_x = -25},/turf/simulated/floor/engine,/area/toxins/xenobiology)
 "cVQ" = (/obj/machinery/atmospherics/unary/outlet_injector/on{dir = 1; unacidable = 1},/turf/simulated/floor/engine,/area/toxins/xenobiology)
