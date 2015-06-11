@@ -92,54 +92,44 @@
 	U.tracking = 1
 
 	U << "<span class='notice'>Attempting to track [target.get_visible_name()]...</span>"
-	sleep(min(40, get_dist(target, U.eyeobj) / 3))
-	U.tracking = 0
+	sleep(min(30, get_dist(target, U.eyeobj) / 4))
+	spawn(15) //give the AI a grace period to stop moving.
+		U.tracking = 0
 
 	if(!target || !target.can_track(usr))
 		U << "<span class='warning'>Target is not near any active cameras.</span>"
+		U.cameraFollow = null
 		return
 
 	U << "<span class='notice'>Now tracking [target.get_visible_name()] on camera.</span>"
 
-	spawn (0)
+	var/cameraticks = 0
+	spawn(0)
 		while (U.cameraFollow == target)
 			if (U.cameraFollow == null)
 				return
 
-			if (istype(target, /mob/living/carbon/human))
-				var/mob/living/carbon/human/H = target
-				if(H.wear_id && istype(H.wear_id.GetID(), /obj/item/weapon/card/id/syndicate))
-					U << "<span class='warning'>Target is not near any active cameras.</span>"
-					U.cameraFollow = null
-					return
-
-				if(istype(H.head, /obj/item/clothing/head))
-					var/obj/item/clothing/head/hat = H.head
-					if(hat.blockTracking)
-						U << "<span class='warning'>Target is not near any active cameras.</span>"
-						U.cameraFollow = null
-						return
-
-				if(H.digitalcamo)
-					U << "<span class='warning'>Target is not near any active cameras.</span>"
-					U.cameraFollow = null
-					return
-
-			if(istype(target.loc,/obj/effect/dummy))
-				U << "<span class='warning'>Target is not near any active cameras.</span>"
-				U.cameraFollow = null
-				return
-
 			if (!target.can_track(usr))
+				U.tracking = 1
 				U << "<span class='warning'>Target is not near any active cameras.</span>"
-				U.cameraFollow = null
-				return
+				cameraticks++
+				if(cameraticks > 9)
+					U.cameraFollow = null
+					tracking = 0
+					return
+				else
+					continue
+			
+			else
+				cameraticks = 0
+				U.tracking = 0
 
 			if(U.eyeobj)
 				U.eyeobj.setLoc(get_turf(target))
 
 			else
 				view_core()
+				U.cameraFollow = null
 				return
 
 			sleep(10)
