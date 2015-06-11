@@ -1032,7 +1032,7 @@ var/global/list/obj/item/device/pda/PDAs = list()
 		note = replacetext(note, "<li>", "\[*\]")
 		note = replacetext(note, "<ul>", "\[list\]")
 		note = replacetext(note, "</ul>", "\[/list\]")
-		note = strip_html_properly(note)
+		note = html_encode(note)
 		notescanned = 1
 		user << "<span class='notice'>Paper scanned. Saved to PDA's notekeeper.</span>" //concept of scanning paper copyright brainoblivion 2009
 
@@ -1186,7 +1186,7 @@ var/global/list/obj/item/device/pda/PDAs = list()
 
 //ntrc handler proc
 /obj/item/device/pda/proc/msg_chat(channel as text, sender as text, message as text)
-	var/msg = "<b>[strip_html_properly(sender)]</b>| [strip_html_properly(message)]<br>"
+	var/msg = "<b>[html_encode(sender)]</b>| [html_encode(message)]<br>"
 	if(!channel)
 		for(var/C in ntrclog)
 			ntrclog[C] = msg + ntrclog[C]
