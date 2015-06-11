@@ -84,7 +84,7 @@
 /turf/simulated/mineral/random
 	name = "mineral deposit"
 	icon_state = "rock"
-	var/mineralSpawnChanceList = list("Uranium" = 5, "Diamond" = 1, "Gold" = 10, "Silver" = 12, "Plasma" = 20, "Iron" = 40, "Gibtonite" = 4/*, "Adamantine" =5*/, "Cave" = 2)//Currently, Adamantine won't spawn as it has no uses. -Durandan
+	var/mineralSpawnChanceList = list("Uranium" = 5, "Diamond" = 2, "Gold" = 10, "Silver" = 12, "Plasma" = 20, "Iron" = 40, "Gibtonite" = 4/*, "Adamantine" =5*/, "Cave" = 2)//Currently, Adamantine won't spawn as it has no uses. -Durandan
 	var/mineralChance = 13
 
 /turf/simulated/mineral/random/New()

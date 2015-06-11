@@ -13,6 +13,7 @@
 	cast_sound = null
 	action_icon_state = "mime"
 	action_background_icon_state = "bg_mime"
+	human_req = 1
 
 
 /obj/effect/proc_holder/spell/aoe_turf/conjure/mime_wall/Click()

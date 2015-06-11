@@ -174,6 +174,9 @@
 
 	var/T = src.loc
 
+	if(!stat)
+		return 0
+
 	if(busy != SPINNING_WEB)
 		busy = SPINNING_WEB
 		src.visible_message("<span class='notice'>\the [src] begins to secrete a sticky substance.</span>")
@@ -189,6 +192,8 @@
 	set name = "Wrap"
 	set category = "Spider"
 	set desc = "Wrap up prey to feast upon and objects for safe keeping."
+	if(!stat)
+		return 0
 
 	if(!cocoon_target)
 		var/list/choices = list()
@@ -245,6 +250,9 @@
 	set name = "Lay Eggs"
 	set category = "Spider"
 	set desc = "Lay a clutch of eggs, but you must wrap a creature for feeding first."
+
+	if(!stat)
+		return 0
 
 	var/obj/effect/spider/eggcluster/E = locate() in get_turf(src)
 	if(E)

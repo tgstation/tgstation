@@ -59,6 +59,7 @@
 /obj/effect/hotspot/New()
 	..()
 	SSair.hotspots += src
+	update_light()
 	perform_exposure()
 
 /obj/effect/hotspot/proc/perform_exposure()
@@ -152,6 +153,7 @@
 
 /obj/effect/hotspot/Destroy()
 	SSair.hotspots -= src
+	update_light()
 	DestroyTurf()
 	if(istype(loc, /turf/simulated))
 		var/turf/simulated/T = loc

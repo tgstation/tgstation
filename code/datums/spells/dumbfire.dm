@@ -31,7 +31,7 @@
 	perform(list(T))
 
 /obj/effect/proc_holder/spell/dumbfire/cast(list/targets, mob/user = usr)
-
+	playMagSound()
 	for(var/turf/target in targets)
 		spawn(0)
 			var/obj/effect/proc_holder/spell/targeted/projectile

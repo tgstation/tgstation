@@ -16,7 +16,7 @@
 	*/
 
 /obj/effect/proc_holder/spell/targeted/genetic/cast(list/targets)
-
+	playMagSound()
 	for(var/mob/living/carbon/target in targets)
 		for(var/A in mutations)
 			target.dna.add_mutation(A)
