@@ -81,6 +81,8 @@
 							cameranet.addCamera(src)
 						emped = 0 //Resets the consecutive EMP count
 						triggerCameraAlarm()
+						spawn(100)
+							cancelCameraAlarm()
 			for(var/mob/O in mob_list)
 				if (O.client && O.client.eye == src)
 					O.unset_machine()
@@ -249,7 +251,10 @@
 				add_hiddenprint(user)
 			else
 				visible_message("<span class='danger'>\The [src] reactivates!</span>")
+			triggerCameraAlarm()
 			icon_state = initial(icon_state)
+			spawn(100)
+				cancelCameraAlarm()
 		playsound(src.loc, 'sound/items/Wirecutter.ogg', 100, 1)
 
 	// now disconnect anyone using the camera
