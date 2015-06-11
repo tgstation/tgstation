@@ -59,8 +59,11 @@
 /obj/effect/hotspot/New()
 	..()
 	SSair.hotspots += src
-	update_light()
 	perform_exposure()
+	dir = pick(cardinal)
+	air_update_turf()
+	update_light()
+	return
 
 /obj/effect/hotspot/proc/perform_exposure()
 	var/turf/simulated/location = loc
@@ -153,13 +156,13 @@
 
 /obj/effect/hotspot/Destroy()
 	SSair.hotspots -= src
-	update_light()
 	DestroyTurf()
 	if(istype(loc, /turf/simulated))
 		var/turf/simulated/T = loc
 		if(T.active_hotspot == src)
 			T.active_hotspot = null
 	loc = null
+	update_light()
 	return QDEL_HINT_PUTINPOOL
 
 /obj/effect/hotspot/proc/DestroyTurf()
@@ -178,11 +181,6 @@
 				T.to_be_destroyed = 0
 				T.max_fire_temperature_sustained = 0
 
-/obj/effect/hotspot/New()
-	..()
-	dir = pick(cardinal)
-	air_update_turf()
-	return
 
 /obj/effect/hotspot/Crossed(mob/living/L)
 	..()

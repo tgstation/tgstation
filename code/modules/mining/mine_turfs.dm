@@ -43,6 +43,7 @@
 	return
 
 /turf/simulated/mineral/New()
+	..()
 
 	spawn(1)
 		var/turf/T
@@ -570,6 +571,7 @@
 			if (src.mineralName == "Bananium")
 				new /obj/item/weapon/ore/bananium(src)
 	var/turf/simulated/floor/plating/asteroid/airless/N = ChangeTurf(/turf/simulated/floor/plating/asteroid/airless)
+	reconsider_lights()
 	playsound(src, 'sound/effects/break_stone.ogg', 50, 1) //beautiful destruction
 	N.fullUpdateMineralOverlays()
 	return
