@@ -935,3 +935,8 @@
 	reagent_state = LIQUID
 	color = "#60A584" // rgb: 96, 165, 132
 
+datum/reagent/compost
+	name = "compost"
+	id = "compost"
+	description = "Raw fertilizer used for gardening."
+	color = "#A0522D" // rgb: 160, 82, 45

@@ -338,5 +338,5 @@
 	name = "saltpetre"
 	id = "saltpetre"
 	result = "saltpetre"
-	required_reagents = list("potassium" = 1, "nitrogen" = 1, "oxygen" = 3)
+	required_reagents = list("potassium" = 1, "nitrogen" = 1, "compost" = 1)
 	result_amount = 3

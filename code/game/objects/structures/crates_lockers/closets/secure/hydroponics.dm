@@ -18,6 +18,7 @@
 	new /obj/item/clothing/mask/bandana(src)
 	new /obj/item/weapon/cultivator(src)
 	new /obj/item/weapon/hatchet(src)
+	new /obj/item/weapon/reagent_containers/glass/compost(src)
 	new /obj/item/weapon/storage/backpack/botany(src)
 	new /obj/item/weapon/storage/backpack/botany(src)
 	new /obj/item/weapon/storage/backpack/satchel_hyd(src)

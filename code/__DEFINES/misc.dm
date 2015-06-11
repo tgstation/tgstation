@@ -136,6 +136,9 @@
 #define CRAYON_FONT "Comic Sans MS"
 #define SIGNFONT "Times New Roman"
 
+//COMPOSTING
+#define COMPOST_HEALTH_MULTI 0.5
+#define COMPOST_NUTRI_MULTI 1
 
 //NPC DEFINES
 #define INTERACTING 2

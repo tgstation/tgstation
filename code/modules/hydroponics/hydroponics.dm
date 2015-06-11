@@ -571,10 +571,16 @@
 		adjustSYield(round(S.get_reagent_amount("diethylamine") * 0.02))
 		adjustPests(-rand(1,2))
 
-	// Compost, effectively
+	// Old composting
 	if(S.has_reagent("nutriment", 1))
-		adjustHealth(round(S.get_reagent_amount("nutriment") * 0.5))
-		adjustNutri(round(S.get_reagent_amount("nutriment") * 1))
+		adjustNutri(round(S.get_reagent_amount("nutriment") * 0.5))
+
+	//Composting
+	if (S.has_reagent("compost", 1))
+		adjustHealth(round(S.get_reagent_amount("compost") * COMPOST_HEALTH_MULTI))
+		adjustNutri(round(S.get_reagent_amount("compost") * COMPOST_NUTRI_MULTI))
+		if (S.has_reagent("water") && prob(10))
+			reagents.remove_reagent("water", 1)
 
 	// The best stuff there is. For testing/debugging.
 	if(S.has_reagent("adminordrazine", 1))
@@ -612,7 +618,7 @@
 		var/irrigate = 0	//How am I supposed to irrigate pill contents?
 
 		if(istype(reagent_source, /obj/item/weapon/reagent_containers/food/snacks) || istype(reagent_source, /obj/item/weapon/reagent_containers/pill))
-			visi_msg="[user] composts [reagent_source], spreading it through [target]"
+			visi_msg="[user] breaks up [reagent_source], spreading it through [target]"
 		else
 			if(istype(reagent_source, /obj/item/weapon/reagent_containers/syringe/))
 				var/obj/item/weapon/reagent_containers/syringe/syr = reagent_source
@@ -626,9 +632,10 @@
 			else if(reagent_source.amount_per_transfer_from_this) // Droppers, cans, beakers, what have you.
 				visi_msg="[user] uses [reagent_source] on [target]"
 				irrigate = 1
-			// Beakers, bottles, buckets, etc.  Can't use is_open_container though.
-			if(istype(reagent_source, /obj/item/weapon/reagent_containers/glass/))
-				playsound(loc, 'sound/effects/slosh.ogg', 25, 1)
+
+		// Beakers, bottles, buckets, etc.  Can't use is_open_container though.
+		if(istype(reagent_source, /obj/item/weapon/reagent_containers/glass/))
+			playsound(loc, 'sound/effects/slosh.ogg', 25, 1)
 
 		// anchored == 2 means the hoses are screwed in place
 		if(irrigate && reagent_source.amount_per_transfer_from_this > 30 && reagent_source.reagents.total_volume >= 30 && anchored == 2)

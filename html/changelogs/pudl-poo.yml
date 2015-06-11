@@ -1,0 +1,11 @@
+author: pudl
+
+delete-after: True
+
+changes: 
+  - rscadd: "Compost is now a reagent, used to increase the health and nutriment of a plant."
+  - rscadd: "Adds the compost tank, which creates compost when given seeds or grown plants."
+  - rscadd: "Botany lockers now come stocked with bags of compost, which are refillable."
+  - rscadd: "Botany also comes with a new high-capacity watertank, which holds 100000 units of water."
+  - rscadd: "Both the compost tank and high-capacity watertankcan be purchased at cargo for 15 points."
+  - rscadd: "Saltpetre's recipe now includes compost."
