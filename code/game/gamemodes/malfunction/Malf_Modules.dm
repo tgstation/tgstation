@@ -97,16 +97,13 @@
 
 	verbs -= /mob/living/silicon/ai/proc/lockdown
 	minor_announce("Hostile runtime detected in door controllers. Isolation Lockdown protocols are now in effect. Please remain calm.","Network Alert:", 1)
-	src << "<span class = 'warning'>Lockdown Initiated. Network reset in 60 seconds.</span>"
-	spawn(600) //1 minute.
-		disablelockdown() //Reset the lockdown after one minute.
+	src << "<span class = 'warning'>Lockdown Initiated. Network reset in 90 seconds.</span>"
+	spawn(900) //90 Seconds.
+		disablelockdown() //Reset the lockdown after 90 seconds.
 
 /mob/living/silicon/ai/proc/disablelockdown()
 	set category = "Malfunction"
 	set name = "Disable Lockdown"
-
-	if(!canUseTopic())
-		return
 
 	var/obj/machinery/door/airlock/AL
 	for(var/obj/machinery/door/D in airlocks)
