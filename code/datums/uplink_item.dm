@@ -177,7 +177,7 @@ var/list/uplink_items = list()
 	name = "Syndicate Minibomb"
 	desc = "The Minibomb is a grenade with a five-second fuse."
 	item = /obj/item/weapon/grenade/syndieminibomb
-	cost = 6
+	cost = 12
 
 /datum/uplink_item/dangerous/foamsmg
 	name = "Toy Submachine Gun"
@@ -535,7 +535,7 @@ var/list/uplink_items = list()
 	name = "Hacked AI Law Upload Module"
 	desc = "When used with an upload console, this module allows you to upload priority laws to an artificial intelligence. Be careful with their wording, as artificial intelligences may look for loopholes to exploit."
 	item = /obj/item/weapon/aiModule/syndicate
-	cost = 14
+	cost = 25
 
 /datum/uplink_item/device_tools/magboots
 	name = "Blood-Red Magboots"
@@ -565,7 +565,7 @@ var/list/uplink_items = list()
 	Does not work when the singularity is still in containment. A singularity beacon can cause catastrophic damage to a space station, \
 	leading to an emergency evacuation. Because of its size, it cannot be carried. Ordering this sends you a small beacon that will teleport the larger beacon to your location on activation."
 	item = /obj/item/device/sbeacondrop
-	cost = 14
+	cost = 25
 	excludefrom = list(/datum/game_mode/gang)
 
 /datum/uplink_item/device_tools/syndicate_bomb
@@ -573,7 +573,7 @@ var/list/uplink_items = list()
 	desc = "The Syndicate Bomb has an adjustable timer with a minimum setting of 60 seconds. Ordering the bomb sends you a small beacon, which will teleport the explosive to your location when you activate it. \
 	You can wrench the bomb down to prevent removal. The crew may attempt to defuse the bomb."
 	item = /obj/item/device/sbeacondrop/bomb
-	cost = 11
+	cost = 25
 	excludefrom = list(/datum/game_mode/traitor/double_agents)
 
 /datum/uplink_item/device_tools/rad_laser
@@ -672,7 +672,7 @@ var/list/uplink_items = list()
 	name = "For showing that you are The Boss"
 	desc = "A useless red balloon with the syndicate logo on it, which can blow the deepest of covers."
 	item = /obj/item/toy/syndicateballoon
-	cost = 20
+	cost = 40
 
 /datum/uplink_item/badass/random
 	name = "Random Item"
@@ -702,7 +702,7 @@ var/list/uplink_items = list()
 /datum/uplink_item/badass/surplus_crate
 	name = "Syndicate Surplus Crate"
 	desc = "A crate containing 50 telecrystals worth of random syndicate leftovers."
-	cost = 20
+	cost = 40
 	item = /obj/item/weapon/storage/box/syndicate
 	excludefrom = list(/datum/game_mode/nuclear)
 
@@ -714,7 +714,7 @@ var/list/uplink_items = list()
 		buyable_items += temp_uplink_list[category]
 	var/list/bought_items = list()
 	U.uses -= cost
-	U.used_TC = 20
+	U.used_TC = 40
 	var/remaining_TC = 50
 
 	var/datum/uplink_item/I
