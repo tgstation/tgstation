@@ -4,13 +4,15 @@
 		desc = "A deadly pool of molten rock that incinerates almost anything on contact."
 		luminosity = 3
 		var/list/blacklist = list(/obj/item/clothing/suit/space/hardsuit/mining, /obj/item/asteroid/goliath_hide)
+		var/processing = 0
 
 /turf/simulated/floor/lava_pool/Entered(var/mob/living/carbon/C)
 	Incinerate(C) //To catch items before other things get processed
 	if(!istype(C))
 		return
-
-	SSobj.processing |= src
+	if(!processing)
+		SSobj.processing |= src
+		processing = 1
 	if(istype(C, /mob/living/carbon/human))
 		if(check_suit(C))
 			return
@@ -21,16 +23,15 @@
 
 /turf/simulated/floor/lava_pool/proc/process()
 	var/mobpresent = 0
-
 	for(var/mob/living/carbon/human/H in src)
 		mobpresent = 1
 		if(check_suit(H))
 			continue
 
 		apply_lava_damage(H)//Defaults to 0 for message
-
 	if(!mobpresent)
 		SSobj.processing.Remove(src)
+		processing = 0
 
 /turf/simulated/floor/lava_pool/proc/check_suit(mob/living/carbon/human/H) // Checks for goliath plated suit
 	if(istype(H.wear_suit, /obj/item/clothing/suit/space/hardsuit/mining))
@@ -51,6 +52,7 @@
 		if(C)
 			if(C.getFireLoss() > 400)
 				del(C)
+				processing = 0
 
 	for(var/obj/I in src)
 		if(istype(I,/obj/item))
