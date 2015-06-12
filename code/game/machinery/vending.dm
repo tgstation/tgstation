@@ -225,7 +225,7 @@
 		var/price = prices[typepath]
 		if(isnull(amount)) amount = 1
 
-		var/atom/temp = new typepath(null)
+		var/obj/item/temp = new typepath(null)
 		var/datum/data/vending_product/R = new /datum/data/vending_product()
 		R.product_path = typepath
 		R.amount = amount
@@ -338,23 +338,19 @@
 		var/obj/item/weapon/storage/bag/bag = W
 		var/objects_loaded = 0
 		for(var/obj/G in bag.contents)
-			for(var/typepath in allowed_inputs)
-				if(ispath(G.type,typepath))
-					bag.remove_from_storage(G,src)
-					add_item(G)
-					objects_loaded++
-					break
+			if(is_type_in_list(G, allowed_inputs))
+				bag.remove_from_storage(G,src)
+				add_item(G)
+				objects_loaded++
 		if(objects_loaded)
 			user.visible_message("<span class='notice'>[user] loads \the [src] with \the [bag].</span>", \
 								 "<span class='notice'>You load \the [src] with \the [bag].</span>")
 			if(bag.contents.len > 0)
 				user << "<span class='notice'>Some items are refused.</span>"
 	else
-		for(var/typepath in allowed_inputs)
-			if(ispath(W.type,typepath))
-				user.drop_item(W, src)
-				add_item(W)
-				break
+		if(is_type_in_list(W, allowed_inputs))
+			user.drop_item(W, src)
+			add_item(W)
 	/*else if(istype(W, /obj/item/weapon/card) && currently_vending)
 		//attempt to connect to a new db, and if that doesn't work then fail
 		if(!linked_db)
@@ -422,6 +418,20 @@
 /obj/machinery/vending/attack_ai(mob/user as mob)
 	src.add_hiddenprint(user)
 	return attack_hand(user)
+
+/obj/machinery/vending/proc/GetProductLine(var/datum/data/vending_product/P)
+	var/dat = {"<FONT color = '[P.display_color]'><B>[P.product_name]</B>:
+		<b>[P.amount]</b> </font>"}
+	if(P.price)
+		dat += " <b>($[P.price])</b>"
+	if (P.amount > 0)
+		var/idx=GetProductIndex(P)
+		dat += " <a href='byond://?src=\ref[src];vend=[idx];cat=[P.category]'>(Vend)</A>"
+	else
+		dat += " <font color = 'red'>SOLD OUT</font>"
+	dat += "<br>"
+
+	return dat
 
 /obj/machinery/vending/proc/GetProductIndex(var/datum/data/vending_product/P)
 	var/list/plist
@@ -508,61 +518,25 @@
 				categories["default"] += R
 
 		for (var/datum/data/vending_product/R in categories["default"])
-			dat += {"<FONT color = '[R.display_color]'><B>[R.product_name]</B>:
-				<b>[R.amount]</b> </font>"}
-			if(R.price)
-				dat += " <b>($[R.price])</b>"
-			if (R.amount > 0)
-				var/idx=GetProductIndex(R)
-				dat += " <a href='byond://?src=\ref[src];vend=[idx];cat=[R.category]'>(Vend)</A>"
-			else
-				dat += " <font color = 'red'>SOLD OUT</font>"
-			dat += "<br>"
+			dat += GetProductLine(R)
 		dat += "<br>"
 
 		for(var/cat_name in category_names)
 			dat += {"<B>&nbsp;&nbsp;[cat_name]</B>:<br>"}
 			for (var/datum/data/vending_product/R in categories[cat_name])
-				dat += {"<FONT color = '[R.display_color]'><B>[R.product_name]</B>:
-					<b>[R.amount]</b> </font>"}
-				if(R.price)
-					dat += " <b>($[R.price])</b>"
-				if (R.amount > 0)
-					var/idx=GetProductIndex(R)
-					dat += " <a href='byond://?src=\ref[src];vend=[idx];cat=[R.category]'>(Vend)</A>"
-				else
-					dat += " <font color = 'red'>SOLD OUT</font>"
-				dat += "<br>"
+				dat += GetProductLine(R)
 			dat += "<br>"
 
 		if(src.extended_inventory)
 			dat += {"<B>&nbsp;&nbsp;contraband</B>:<br>"}
 			for (var/datum/data/vending_product/R in hidden_records)
-				dat += {"<FONT color = '[R.display_color]'><B>[R.product_name]</B>:
-					<b>[R.amount]</b> </font>"}
-				if(R.price)
-					dat += " <b>($[R.price])</b>"
-				if (R.amount > 0)
-					var/idx=GetProductIndex(R)
-					dat += " <a href='byond://?src=\ref[src];vend=[idx];cat=[R.category]'>(Vend)</A>"
-				else
-					dat += " <font color = 'red'>SOLD OUT</font>"
-				dat += "<br>"
+				dat += GetProductLine(R)
 			dat += "<br>"
 
 		if(src.coin)
 			dat += {"<B>&nbsp;&nbsp;premium</B>:<br>"}
 			for (var/datum/data/vending_product/R in coin_records)
-				dat += {"<FONT color = '[R.display_color]'><B>[R.product_name]</B>:
-					<b>[R.amount]</b> </font>"}
-				if(R.price)
-					dat += " <b>($[R.price])</b>"
-				if (R.amount > 0)
-					var/idx=GetProductIndex(R)
-					dat += " <a href='byond://?src=\ref[src];vend=[idx];cat=[R.category]'>(Vend)</A>"
-				else
-					dat += " <font color = 'red'>SOLD OUT</font>"
-				dat += "<br>"
+				dat += GetProductLine(R)
 			dat += "<br>"
 
 		dat += "</TT>"
@@ -576,7 +550,6 @@
 	user << browse(dat, "window=vending;size=400x[vertical]")
 	onclose(user, "vending")
 	return
-
 
 // returns the wire panel text
 /obj/machinery/vending/proc/wires()

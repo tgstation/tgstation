@@ -45,6 +45,8 @@
 
 	var/list/attack_verb // used in attack() to say how something was attacked "[x] has been [z.attack_verb] by [y] with [z]"
 
+	var/vending_cat = null// subcategory for vending machines.
+
 /obj/item/Destroy()
 	if(istype(src.loc, /mob))
 		var/mob/H = src.loc
