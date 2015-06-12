@@ -27,6 +27,8 @@ proc/arctan(x)
 /proc/Ceiling(x)
 	return -round(-x)
 
+//Moved to macros.dm to reduce pure calling overhead, this was being called shitloads, like, most calls of all procs.
+/*
 /proc/Clamp(const/val, const/min, const/max)
 	if (val <= min)
 		return min
@@ -35,6 +37,7 @@ proc/arctan(x)
 		return max
 
 	return val
+*/
 
 // cotangent
 /proc/Cot(x)
@@ -173,7 +176,3 @@ proc/arctan(x)
 //Thanks to wwjnc for this.
 /proc/test_bitflag(var/bitflag)
 	return bitflag != 0 && !(bitflag & (bitflag - 1))
-
-
-//Some thing for lighting code
-#define CLAMP01(x) Clamp(x, 0, 1)

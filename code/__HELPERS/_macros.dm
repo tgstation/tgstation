@@ -120,3 +120,8 @@
 #define isbadmonkey(H) ((/datum/disease/jungle_fever in H.viruses) || H.mind in ticker.mode.infected_monkeys)
 
 #define isdeathsquad(H) (H.mind in ticker.mode.deathsquads)
+
+//1 line helper procs compressed into defines.
+#define Clamp(x, y, z) 	(x <= y ? y : (x >= z ? z : x))
+
+#define CLAMP01(x) 		(Clamp(x, 0, 1))
