@@ -260,8 +260,7 @@ var/record_id_num = 1001
 		L.fields["enzymes"]		= H.dna.struc_enzymes
 		L.fields["identity"]	= H.dna.uni_identity
 		L.fields["species"]		= H.dna.species.type
-		L.fields["mcolor"]		= H.dna.mutant_color
-		L.fields["lizard_parts"]= H.dna.lizard_parts
+		L.fields["features"]	= H.dna.features
 		L.fields["image"]		= image
 		locked += L
 	return
@@ -273,7 +272,7 @@ var/record_id_num = 1001
 		photo = icon("icon" = 'icons/mob/human.dmi', "icon_state" = "[H.skin_tone]_[g]_s")
 	else
 		photo = icon("icon" = 'icons/mob/human.dmi', "icon_state" = "[H.dna.species.id]_[g]_s")
-		photo.Blend("#[H.dna.mutant_color]", ICON_MULTIPLY)
+		photo.Blend("#[H.dna.features["mcolor"]]", ICON_MULTIPLY)
 
 	var/icon/eyes_s
 	if(EYECOLOR in H.dna.species.specflags)

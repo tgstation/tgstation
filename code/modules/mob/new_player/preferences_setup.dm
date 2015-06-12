@@ -17,7 +17,7 @@
 	if(!pref_species)
 		pref_species = new /datum/species/human()
 	backbag = 2
-	lizard_parts = random_lizard_features()
+	features = random_features()
 	age = rand(AGE_MIN,AGE_MAX)
 
 /datum/preferences/proc/update_preview_icon()		//seriously. This is horrendous.
@@ -47,7 +47,7 @@
 		preview_icon = new /icon('icons/mob/human.dmi', "[skin_tone]_[g]_s")
 	else
 		preview_icon = new /icon('icons/mob/human.dmi', "[pref_species.id]_[g]_s")
-		preview_icon.Blend("#[mutant_color]", ICON_MULTIPLY)
+		preview_icon.Blend("#[features["mcolor"]]", ICON_MULTIPLY)
 
 	var/datum/sprite_accessory/S
 	var/icon/eyes_s = new/icon()
@@ -79,17 +79,17 @@
 		for(var/bodypart in pref_species.mutant_bodyparts)
 			switch(bodypart)
 				if("tail")
-					S = tails_list[lizard_parts["tail"]]
+					S = tails_list[features["tail"]]
 				if("spines")
-					S = spines_list[lizard_parts["spines"]]
+					S = spines_list[features["spines"]]
 				if("snout")
-					S = snouts_list[lizard_parts["snout"]]
+					S = snouts_list[features["snout"]]
 				if("frills")
-					S = frills_list[lizard_parts["frills"]]
+					S = frills_list[features["frills"]]
 				if("horns")
-					S = horns_list[lizard_parts["horns"]]
+					S = horns_list[features["horns"]]
 				if("body_markings")
-					S = body_markings_list[lizard_parts["body_markings"]]
+					S = body_markings_list[features["body_markings"]]
 
 			if(S.icon_state == "none")
 				continue
@@ -100,7 +100,7 @@
 				icon_string = "[pref_species.id]_m_[bodypart]_[S.icon_state]_[layer]"
 			var/icon/part = new/icon("icon" = 'icons/mob/mutant_bodyparts.dmi', "icon_state" = icon_string)
 
-			part.Blend("#[mutant_color]", ICON_MULTIPLY)
+			part.Blend("#[features["mcolor"]]", ICON_MULTIPLY)
 			preview_icon.Blend(part, ICON_OVERLAY)
 
 	if(underwear)

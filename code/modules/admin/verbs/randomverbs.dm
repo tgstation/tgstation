@@ -298,7 +298,7 @@ Traitors and the like can also be revived with the previous role mostly intact.
 
 	//DNA
 	if(record_found)//Pull up their name from database records if they did have a mind.
-		hardset_dna(new_character, record_found.fields["identity"], record_found.fields["enzymes"], record_found.fields["name"], record_found.fields["blood_type"], record_found.fields["species"], record_found.fields["mcolor"], record_found.fields["lizard_parts"])
+		hardset_dna(new_character, record_found.fields["identity"], record_found.fields["enzymes"], record_found.fields["name"], record_found.fields["blood_type"], record_found.fields["species"], record_found.fields["features"])
 	else//If they have no records, we just do a random DNA for them, based on their random appearance/savefile.
 		ready_dna(new_character)
 

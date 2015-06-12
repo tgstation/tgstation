@@ -113,7 +113,7 @@
 
 		spec_base = image("icon" = 'icons/mob/human.dmi', "icon_state" = icon_state_string, "layer" = -SPECIES_LAYER)
 
-		spec_base.color = "#[H.dna.mutant_color]"
+		spec_base.color = "#[H.dna.features["mcolor"]]"
 		standing = spec_base
 
 	if(standing)
@@ -136,7 +136,7 @@
 
 			if(hair_color)
 				if(hair_color == "mutcolor")
-					img_facial_s.color = "#" + H.dna.mutant_color
+					img_facial_s.color = "#" + H.dna.features["mcolor"]
 				else
 					img_facial_s.color = "#" + hair_color
 			else
@@ -164,7 +164,7 @@
 
 			if(hair_color)
 				if(hair_color == "mutcolor")
-					img_hair_s.color = "#" + H.dna.mutant_color
+					img_hair_s.color = "#" + H.dna.features["mcolor"]
 				else
 					img_hair_s.color = "#" + hair_color
 			else
@@ -241,7 +241,7 @@
 			bodyparts_to_add -= "tail"
 
 	if("spines" in mutant_bodyparts)
-		if(!H.lizard_parts["spines"] || H.lizard_parts["spines"] == "None" || H.wear_suit && (H.wear_suit.flags_inv & HIDEJUMPSUIT))
+		if(!H.dna.features["spines"] || H.dna.features["spines"] == "None" || H.wear_suit && (H.wear_suit.flags_inv & HIDEJUMPSUIT))
 			bodyparts_to_add -= "spines"
 
 	if("snout" in mutant_bodyparts) //Take a closer look at that snout!
@@ -249,11 +249,11 @@
 			bodyparts_to_add -= "snout"
 
 	if("frills" in mutant_bodyparts)
-		if(!H.lizard_parts["frills"] || H.lizard_parts["frills"] == "None" || H.head && (H.head.flags_inv & HIDEEARS))
+		if(!H.dna.features["frills"] || H.dna.features["frills"] == "None" || H.head && (H.head.flags_inv & HIDEEARS))
 			bodyparts_to_add -= "frills"
 
 	if("horns" in mutant_bodyparts)
-		if(!H.lizard_parts["horns"] || H.lizard_parts["horns"] == "None" || H.head && (H.head.flags & BLOCKHAIR) || (H.wear_mask && (H.wear_mask.flags & BLOCKHAIR)))
+		if(!H.dna.features["horns"] || H.dna.features["horns"] == "None" || H.head && (H.head.flags & BLOCKHAIR) || (H.wear_mask && (H.wear_mask.flags & BLOCKHAIR)))
 			bodyparts_to_add -= "horns"
 
 	if(!bodyparts_to_add)
@@ -268,19 +268,19 @@
 			var/datum/sprite_accessory/S
 			switch(bodypart)
 				if("tail")
-					S = tails_list[H.lizard_parts["tail"]]
+					S = tails_list[H.dna.features["tail"]]
 				if("spines")
-					S = spines_list[H.lizard_parts["spines"]]
+					S = spines_list[H.dna.features["spines"]]
 				if("snout")
-					S = snouts_list[H.lizard_parts["snout"]]
+					S = snouts_list[H.dna.features["snout"]]
 				if("frills")
-					S = frills_list[H.lizard_parts["frills"]]
+					S = frills_list[H.dna.features["frills"]]
 				if("horns")
-					S = horns_list[H.lizard_parts["horns"]]
+					S = horns_list[H.dna.features["horns"]]
 				if("body_markings")
-					S = body_markings_list[H.lizard_parts["body_markings"]]
+					S = body_markings_list[H.dna.features["body_markings"]]
 
-			if(S.icon_state == "none")
+			if(!S || S.icon_state == "none")
 				continue
 			var/icon_string
 			if(S.gender_specific)
@@ -291,7 +291,7 @@
 			I = image("icon" = 'icons/mob/mutant_bodyparts.dmi', "icon_state" = icon_string, "layer" =- layer)
 
 			if(!(H.disabilities & HUSK))
-				I.color = "#[H.dna.mutant_color]"
+				I.color = "#[H.dna.features["mcolor"]]"
 			standing += I
 		H.overlays_standing[layer] = standing.Copy()
 		standing = list()

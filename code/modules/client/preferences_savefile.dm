@@ -166,8 +166,8 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	else
 		pref_species = new /datum/species/human()
 
-	if(!S["mutant_color"] || S["mutant_color"] == "#000")
-		S["mutant_color"]	<< "#FFF"
+	if(!S["features["mcolor"]"] || S["features["mcolor"]"] == "#000")
+		S["features["mcolor"]"]	<< "#FFF"
 
 	//Character
 	S["OOC_Notes"]			>> metadata
@@ -186,8 +186,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	S["undershirt"]			>> undershirt
 	S["socks"]				>> socks
 	S["backbag"]			>> backbag
-	S["mutant_color"]		>> mutant_color
-	S["lizard_parts"]		>> lizard_parts
+	S["features"]			>> features
 	S["clown_name"]			>> custom_names["clown"]
 	S["mime_name"]			>> custom_names["mime"]
 	S["ai_name"]			>> custom_names["ai"]
@@ -214,8 +213,8 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	//Sanitize
 	metadata		= sanitize_text(metadata, initial(metadata))
 	real_name		= reject_bad_name(real_name)
-	if(!mutant_color || mutant_color == "#000")
-		mutant_color = "#FFF"
+	if(!features["mcolor"] || features["mcolor"] == "#000")
+		features["mcolor"] = "#FFF"
 	if(!real_name)	real_name = random_name(gender)
 	be_random_name	= sanitize_integer(be_random_name, 0, 1, initial(be_random_name))
 	be_random_body	= sanitize_integer(be_random_body, 0, 1, initial(be_random_body))
@@ -239,13 +238,13 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	eye_color		= sanitize_hexcolor(eye_color, 3, 0)
 	skin_tone		= sanitize_inlist(skin_tone, skin_tones)
 	backbag			= sanitize_integer(backbag, 1, backbaglist.len, initial(backbag))
-	mutant_color	= sanitize_hexcolor(mutant_color, 3, 0)
-	lizard_parts["tail"]	= sanitize_inlist(lizard_parts["tail"], tails_list)
-	lizard_parts["snout"]	= sanitize_inlist(lizard_parts["snout"], snouts_list)
-	lizard_parts["horns"] 	= sanitize_inlist(lizard_parts["horns"], horns_list)
-	lizard_parts["frills"] 	= sanitize_inlist(lizard_parts["frills"], frills_list)
-	lizard_parts["spines"] 	= sanitize_inlist(lizard_parts["spines"], spines_list)
-	lizard_parts["body_markings"] 	= sanitize_inlist(lizard_parts["body_markings"], body_markings_list)
+	features["mcolor"]	= sanitize_hexcolor(features["mcolor"], 3, 0)
+	features["tail"]	= sanitize_inlist(features["tail"], tails_list)
+	features["snout"]	= sanitize_inlist(features["snout"], snouts_list)
+	features["horns"] 	= sanitize_inlist(features["horns"], horns_list)
+	features["frills"] 	= sanitize_inlist(features["frills"], frills_list)
+	features["spines"] 	= sanitize_inlist(features["spines"], spines_list)
+	features["body_markings"] 	= sanitize_inlist(features["body_markings"], body_markings_list)
 
 	userandomjob	= sanitize_integer(userandomjob, 0, 1, initial(userandomjob))
 	job_civilian_high = sanitize_integer(job_civilian_high, 0, 65535, initial(job_civilian_high))
@@ -286,8 +285,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	S["socks"]				<< socks
 	S["backbag"]			<< backbag
 	S["species"]			<< pref_species.name
-	S["mutant_color"]		<< mutant_color
-	S["lizard_parts"]		<< lizard_parts
+	S["features"]			<< features
 	S["clown_name"]			<< custom_names["clown"]
 	S["mime_name"]			<< custom_names["mime"]
 	S["ai_name"]			<< custom_names["ai"]
