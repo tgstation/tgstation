@@ -11,6 +11,7 @@
  * 		Crowbar
  * 		Revolver Conversion Kit(made sense)
  *		Soldering Tool
+ *		Fuel Can
  */
 
 /* Used for fancy tool subtypes that are faster or slower than the standard tool.
@@ -670,3 +671,50 @@
 	else
 		user << "<span class='warn'>The tool does not have enough acid!</span>"
 		return 0
+
+/*
+* Fuel Can
+* A special, large container that fits on the belt
+*/
+/obj/item/weapon/reagent_containers/glass/fuelcan
+	name = "fuel can"
+	desc = "A special container named Furst in its class by engineers. It has partitioned containment to allow engineers to separate different chemicals, such as welding fuel, sulphuric acid, or water. It also bears a clip to fit on a standard toolbelt."
+	icon = 'icons/obj/items.dmi'
+	icon_state = "fueljar0"
+	m_amt = 500
+	volume = 50
+	possible_transfer_amounts = list(5,10,20)
+	var/slot = 0 //This dictates which side is open
+	var/datum/reagents/slotzero = null
+	var/datum/reagents/slotone = null
+
+/obj/item/weapon/reagent_containers/glass/fuelcan/New()
+	..()
+	slotzero = reagents
+	slotone = new/datum/reagents(volume)
+	slotone.my_atom = src
+	reagents.add_reagent("fuel", 50)
+
+/obj/item/weapon/reagent_containers/glass/fuelcan/attack_self(mob/user as mob)
+	if(!slot)
+		slotzero = reagents
+		reagents = slotone
+	else
+		slotone = reagents
+		reagents = slotzero
+	slot = !slot
+	update_icon()
+	user << "<span class='notice'>You switch the stopper to the other side.</span>"
+
+/obj/item/weapon/reagent_containers/glass/fuelcan/examine(mob/user)
+	..()
+	user << "The alternate partition contains:"
+	var/datum/reagents/alternate = (slot ? slotzero : slotone)
+	if(alternate.reagent_list.len) //Copied from atom/examine
+		for(var/datum/reagent/R in alternate.reagent_list)
+			user << "<span class='info'>[R.volume] units of [R.name]</span>"
+	else
+		user << "<span class='info'>Nothing.</span>"
+
+/obj/item/weapon/reagent_containers/glass/fuelcan/update_icon()
+	icon_state = "fueljar[slot]"
