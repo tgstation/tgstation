@@ -34,6 +34,7 @@ em						{font-style: normal;	font-weight: bold;}
 .servradio				{color: #6eaa2c;}
 .syndradio				{color: #6d3f40;}
 .dsquadradio			{color: #686868;}
+.centcomradio			{color: #686868;}
 .aiprivradio			{color: #ff00ff;}
 
 .yell					{					font-weight: bold;}

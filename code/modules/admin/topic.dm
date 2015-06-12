@@ -643,7 +643,7 @@
 			jobs += "<td width='20%'><a href='?src=\ref[src];jobban3=posibrain;jobban4=\ref[M]'><font color=red>[replacetext("Posibrain", " ", "&nbsp")]</font></a></td>"
 		else
 			jobs += "<td width='20%'><a href='?src=\ref[src];jobban3=posibrain;jobban4=\ref[M]'>[replacetext("Posibrain", " ", "&nbsp")]</a></td>"
-/* Soon
+
 
 		//Deathsquad
 		if(jobban_isbanned(M, "deathsquad"))
@@ -652,7 +652,7 @@
 			jobs += "<td width='20%'><a href='?src=\ref[src];jobban3=deathsquad;jobban4=\ref[M]'>[replacetext("Deathsquad", " ", "&nbsp")]</a></td>"
 
 		jobs += "</tr></table>"
-*/
+
 
 	//Antagonist (Orange)
 		var/isbanned_dept = jobban_isbanned(M, "Syndicate")

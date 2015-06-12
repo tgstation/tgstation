@@ -459,6 +459,8 @@ var/message_delay = 0 // To make sure restarting the recentmessages list is kept
 			part_a = "<span class='suppradio'><span class='name'>"
 		else if (display_freq==AIPRIV_FREQ)
 			part_a = "<span class='aiprivradio'><span class='name'>"
+		else if (display_freq==CENTCOM_FREQ)
+			part_a = "<span class='centcomradio'><span class='name'>"
 
 		// --- This following recording is intended for research and feedback in the use of department radio channels ---
 
