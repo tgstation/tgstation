@@ -151,6 +151,7 @@
 											large_cocoon = 1
 									if(large_cocoon)
 										C.icon_state = pick("cocoon_large1","cocoon_large2","cocoon_large3")
+										C.health = initial(C.health)*2
 							busy = 0
 							stop_automated_movement = 0
 
