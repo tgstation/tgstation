@@ -49,15 +49,18 @@ var/list/mechtoys = list(
 		if(anchored == 1)
 			user.visible_message("[user] pops loose the flaps.", "You pop loose the flaps.")
 			anchored = 0
+			playsound(get_turf(src), 'sound/items/Crowbar.ogg', 50, 1)
 			var/turf/T = get_turf(loc)
 			if(T)
 				T.blocks_air = 0
 		else
 			user.visible_message("[user] pops in the flaps.", "You pop in the flaps.")
 			anchored = 1
+			playsound(get_turf(src), 'sound/items/Deconstruct.ogg', 50, 1)
 			var/turf/T = get_turf(loc)
 			if(T)
 				T.blocks_air = 1
+		return 1
 	else if (iswelder(I) && anchored == 0)
 		var/obj/item/weapon/weldingtool/WT = I
 		if(WT.remove_fuel(0, user))
