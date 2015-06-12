@@ -97,10 +97,7 @@
 
 /obj/item/toy/crayon/spraycan/New()
 	..()
-	if(gang)
-		name = "off-brand Rapid Paint Applicator"
-	else
-		name = "NanoTrasen-brand Rapid Paint Applicator"
+	name = "spray can"
 	update_icon()
 
 /obj/item/toy/crayon/spraycan/examine(mob/user)
@@ -155,7 +152,7 @@
 	overlays += I
 
 /obj/item/toy/crayon/spraycan/gang
-	desc = "A metallic container containing suspicious paint."
+	desc = "A modified container containing suspicious paint."
 	gang = 1
 	uses = 20
 	instant = -1
