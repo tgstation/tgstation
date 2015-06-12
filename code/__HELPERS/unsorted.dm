@@ -709,13 +709,17 @@ Turf and target are seperate in case you want to teleport some distance from a t
 	var/holdingnull = 1 //User is not holding anything
 	if(holding)
 		holdingnull = 0 //User is holding a tool of some kind
-
+	var/image/img = new('icons/effects/doafter_icon.dmi', "default_icon")
+	img.pixel_y = 32
+	user.overlays += img
 	for(var/i = 0, i<numticks, i++)
 		sleep(delayfraction)
 		if(!user || user.stat || user.weakened || user.stunned  || !(user.loc == Uloc))
+			user.overlays -= img
 			return 0
 
 		if(Tloc && (!target || Tloc != target.loc)) //Tloc not set when we don't want to track target
+			user.overlays -= img
 			return 0 // Target no longer exists or has moved
 
 		if(needhand)
@@ -723,10 +727,12 @@ Turf and target are seperate in case you want to teleport some distance from a t
 			//i.e the hand is used to insert some item/tool into the construction
 			if(!holdingnull)
 				if(!holding)
+					user.overlays -= img
 					return 0
 			if(user.get_active_hand() != holding)
+				user.overlays -= img
 				return 0
-
+	user.overlays -= img
 	return 1
 
 //Takes: Anything that could possibly have variables and a varname to check.
