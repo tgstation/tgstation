@@ -175,11 +175,11 @@
 	return
 
 /obj/item/weapon/melee/energy/blade/dropped()
-	del(src)
+	qdel(src)
 	return
 
-/obj/item/weapon/melee/energy/blade/proc/throw()
-	del(src)
+/obj/item/weapon/melee/energy/blade/proc/toss()
+	qdel(src)
 	return
 
 /*
