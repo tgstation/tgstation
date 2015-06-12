@@ -230,6 +230,17 @@ var/message_delay = 0 // To make sure restarting the recentmessages list is kept
 			if(R.receive_range(freq, level) > -1)
 				radios += R
 
+	// --- Centcomm radio wizardry
+
+	else if(data == 5)
+
+		for(var/obj/item/device/radio/R in all_radios["[freq]"])
+			if(!R.centcom)
+				continue
+
+			if(R.receive_range(freq, level) > -1)
+				radios += R
+
 	// --- Broadcast only to intercoms and station-bounced radios ---
 
 	else if(data == 2)
@@ -346,6 +357,13 @@ var/message_delay = 0 // To make sure restarting the recentmessages list is kept
 			if(position && position.z == level)
 				receive |= R.send_hear(SYND_FREQ)
 
+	// --- Broadcast to centcomm radio ---
+	else if(data == 5)
+
+		for(var/obj/item/device/radio/R in all_radios["[RADIO_CHAT]"])
+			if(R.centcom)
+				receive |= R.send_hear(CENTCOM_FREQ)
+
 
 	// --- Broadcast to ALL radio devices ---
 
@@ -405,6 +423,8 @@ var/message_delay = 0 // To make sure restarting the recentmessages list is kept
 
 			if(SYND_FREQ)
 				freq_text = "#unkn"
+			if(CENTCOM_FREQ)
+				freq_text = "Centcom"
 			if(COMM_FREQ)
 				freq_text = "Command"
 			if(SCI_FREQ)

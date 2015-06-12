@@ -4,6 +4,7 @@
 	And the base of the send_speech() proc, which is the core of saycode.
 */
 var/list/freqtospan = list(
+	"1337" = "centcomradio",
 	"1351" = "sciradio",
 	"1355" = "medradio",
 	"1357" = "engradio",

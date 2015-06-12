@@ -84,6 +84,7 @@
 	for(var/ch_name in channels)
 		secure_radio_connections[ch_name] = add_radio(src, radiochannels[ch_name])
 
+
 /obj/item/device/radio/proc/make_syndie() //Turns normal radios into Syndicate radios!
 	qdel(keyslot)
 	keyslot = new /obj/item/device/encryptionkey/syndicate
