@@ -690,8 +690,7 @@
 
 /obj/item/weapon/reagent_containers/glass/fuelcan/New()
 	..()
-	slotzero = new/datum/reagents(volume)
-	slotzero.my_atom = src
+	slotzero = reagents
 	slotone = new/datum/reagents(volume)
 	slotone.my_atom = src
 	reagents.add_reagent("fuel", 50)
