@@ -9,7 +9,8 @@
 	var/amount = 0
 	var/price = 0
 	var/display_color = "blue"
-	var/category = CAT_NORMAL
+	var/category = CAT_NORMAL//available by default, contraband, or premium (requires a coin)
+	var/subcategory = null
 
 /* TODO: Add this to deconstruction for vending machines
 /obj/item/compressed_vend
@@ -69,6 +70,9 @@
 	var/list/vouchers
 	var/obj/item/weapon/storage/lockbox/coinbox/coinbox
 	var/cardboard = 0 //1 if sheets of cardboard are added
+
+	var/list/categories = list()
+	var/list/allowed_inputs = list()	//items that we can directly slot into the vending machine
 
 	machine_flags = SCREWTOGGLE | WRENCHMOVE | FIXED2WORK | CROWDESTROY | EJECTNOTDEL | PURCHASER
 
@@ -242,8 +246,10 @@
 		if(delay_product_spawn)
 			sleep(1)
 			R.product_name = temp.name
+			R.subcategory = temp.vending_cat
 		else
 			R.product_name = temp.name
+			R.subcategory = temp.vending_cat
 
 /obj/machinery/vending/proc/get_item_by_type(var/this_type)
 	var/list/datum_products = list()
@@ -328,6 +334,27 @@
 		else
 			user << "<span class='notice'>\The [src] refuses to take [W].</span>"
 			return 1
+	else if(istype(W, /obj/item/weapon/storage/bag))
+		var/obj/item/weapon/storage/bag/bag = W
+		var/objects_loaded = 0
+		for(var/obj/G in bag.contents)
+			for(var/typepath in allowed_inputs)
+				if(ispath(G.type,typepath))
+					bag.remove_from_storage(G,src)
+					add_item(G)
+					objects_loaded++
+					break
+		if(objects_loaded)
+			user.visible_message("<span class='notice'>[user] loads \the [src] with \the [bag].</span>", \
+								 "<span class='notice'>You load \the [src] with \the [bag].</span>")
+			if(bag.contents.len > 0)
+				user << "<span class='notice'>Some items are refused.</span>"
+	else
+		for(var/typepath in allowed_inputs)
+			if(ispath(W.type,typepath))
+				user.drop_item(W, src)
+				add_item(W)
+				break
 	/*else if(istype(W, /obj/item/weapon/card) && currently_vending)
 		//attempt to connect to a new db, and if that doesn't work then fail
 		if(!linked_db)
@@ -435,6 +462,8 @@
 
 	var/vendorname = (src.name)  //import the machine's name
 
+	var/vertical = 400
+
 	if(src.currently_vending)
 		var/dat = "<TT><center><b>[vendorname]</b></center><hr /><br>" //display the name, and added a horizontal rule
 
@@ -464,13 +493,23 @@
 		if(src.coin)
 			display_records += src.coin_records
 
-		for (var/datum/data/vending_product/R in display_records)
+		if(display_records.len > 12)
+			vertical = min(400 + (16 * (display_records.len - 12)),840)
 
-			// AUTOFIXED BY fix_string_idiocy.py
-			// C:\Users\Rob\Documents\Projects\vgstation13\code\game\machinery\vending.dm:285: dat += "<FONT color = '[R.display_color]'><B>[R.product_name]</B>:"
+		categories["default"] = list()
+		var/list/category_names = list()
+		for (var/datum/data/vending_product/R in product_records)
+			if(R.subcategory)
+				if(!(R.subcategory in category_names))
+					category_names += R.subcategory
+					categories[R.subcategory] = list()
+				categories[R.subcategory] += R
+			else
+				categories["default"] += R
+
+		for (var/datum/data/vending_product/R in categories["default"])
 			dat += {"<FONT color = '[R.display_color]'><B>[R.product_name]</B>:
 				<b>[R.amount]</b> </font>"}
-			// END AUTOFIX
 			if(R.price)
 				dat += " <b>($[R.price])</b>"
 			if (R.amount > 0)
@@ -478,6 +517,52 @@
 				dat += " <a href='byond://?src=\ref[src];vend=[idx];cat=[R.category]'>(Vend)</A>"
 			else
 				dat += " <font color = 'red'>SOLD OUT</font>"
+			dat += "<br>"
+		dat += "<br>"
+
+		for(var/cat_name in category_names)
+			dat += {"<B>&nbsp;&nbsp;[cat_name]</B>:<br>"}
+			for (var/datum/data/vending_product/R in categories[cat_name])
+				dat += {"<FONT color = '[R.display_color]'><B>[R.product_name]</B>:
+					<b>[R.amount]</b> </font>"}
+				if(R.price)
+					dat += " <b>($[R.price])</b>"
+				if (R.amount > 0)
+					var/idx=GetProductIndex(R)
+					dat += " <a href='byond://?src=\ref[src];vend=[idx];cat=[R.category]'>(Vend)</A>"
+				else
+					dat += " <font color = 'red'>SOLD OUT</font>"
+				dat += "<br>"
+			dat += "<br>"
+
+		if(src.extended_inventory)
+			dat += {"<B>&nbsp;&nbsp;contraband</B>:<br>"}
+			for (var/datum/data/vending_product/R in hidden_records)
+				dat += {"<FONT color = '[R.display_color]'><B>[R.product_name]</B>:
+					<b>[R.amount]</b> </font>"}
+				if(R.price)
+					dat += " <b>($[R.price])</b>"
+				if (R.amount > 0)
+					var/idx=GetProductIndex(R)
+					dat += " <a href='byond://?src=\ref[src];vend=[idx];cat=[R.category]'>(Vend)</A>"
+				else
+					dat += " <font color = 'red'>SOLD OUT</font>"
+				dat += "<br>"
+			dat += "<br>"
+
+		if(src.coin)
+			dat += {"<B>&nbsp;&nbsp;premium</B>:<br>"}
+			for (var/datum/data/vending_product/R in coin_records)
+				dat += {"<FONT color = '[R.display_color]'><B>[R.product_name]</B>:
+					<b>[R.amount]</b> </font>"}
+				if(R.price)
+					dat += " <b>($[R.price])</b>"
+				if (R.amount > 0)
+					var/idx=GetProductIndex(R)
+					dat += " <a href='byond://?src=\ref[src];vend=[idx];cat=[R.category]'>(Vend)</A>"
+				else
+					dat += " <font color = 'red'>SOLD OUT</font>"
+				dat += "<br>"
 			dat += "<br>"
 
 		dat += "</TT>"
@@ -488,7 +573,7 @@
 		if(product_slogans != "")
 			dat += "The speaker switch is [shut_up ? "off" : "on"]. <a href='?src=\ref[src];togglevoice=[1]'>Toggle</a>"
 
-	user << browse(dat, "window=vending")
+	user << browse(dat, "window=vending;size=400x[vertical]")
 	onclose(user, "vending")
 	return
 
@@ -581,6 +666,34 @@
 	src.updateUsrDialog()
 
 	return
+
+/obj/machinery/vending/proc/add_item(var/obj/item/I)
+	var/found = 0
+	for (var/datum/data/vending_product/D in product_records)
+		if(D.product_path == I.type)
+			D.amount++
+			found = 1
+
+	if(!found)
+		var/datum/data/vending_product/R = new /datum/data/vending_product()
+		R.product_path = I.type
+		R.amount = 1
+		R.original_amount = 0
+		R.price = 0
+		R.display_color = pick("red","blue","green")
+
+		R.category=CAT_NORMAL
+		product_records += R
+
+		if(delay_product_spawn)
+			sleep(1)
+			R.product_name = I.name
+			R.subcategory = I.vending_cat
+		else
+			R.product_name = I.name
+			R.subcategory = I.vending_cat
+
+	qdel(I)
 
 /obj/machinery/vending/proc/vend(datum/data/vending_product/R, mob/user, by_voucher = 0)
 	if (!allowed(user) && !emagged && wires.IsIndexCut(VENDING_WIRE_IDSCAN)) //For SECURE VENDING MACHINES YEAH
@@ -1308,6 +1421,9 @@
 		/obj/item/toy/waterflower = 1,
 		)
 
+	allowed_inputs = list(
+		/obj/item/seeds,
+		)
 	pack = /obj/structure/vendomatpack/hydroseeds
 
 /obj/machinery/vending/magivend

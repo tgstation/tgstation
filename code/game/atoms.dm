@@ -52,6 +52,8 @@ var/global/list/ghdel_profiling = list()
 	//var/harm_label_icon_state //Makes sense to have this, but I can't sprite. May be added later.
 	var/list/last_beamchecks // timings for beam checks.
 
+	var/vending_cat = null// subcategory for vending machines.
+
 /atom/proc/beam_connect(var/obj/effect/beam/B)
 	if(!last_beamchecks) last_beamchecks = list()
 	if(!beams) beams = list()
