@@ -41,5 +41,5 @@
 
 /obj/item/weapon/fishing_bait/good/midas_touch/bait_effects(var/obj/item/weapon/fish/F)
 	if(F && istype(F))
-		F.harvest_drops += /obj/item/weapon/ore/gold/fish
+		F.harvest_drops += new /obj/item/weapon/ore/gold/fish()
 	return

@@ -3,7 +3,7 @@
 	icon = 'icons/obj/fishing.dmi'
 	icon_state = "fishing_pole"
 	desc = "A fish."
-	var/fishing_time = 500
+	var/fishing_time = 300
 	var/obj/item/weapon/fishing_bait/bait
 	var/fishing = 0
 
@@ -35,8 +35,9 @@
 			user << "You begin to fish."
 			if(do_after(user, fishing_time/bait.rating))
 				var/picked_fish = pick(types_of_fish)
-				var/obj/item/weapon/fish = new picked_fish(S)
+				var/obj/item/weapon/fish/fish = new picked_fish(S)
 				bait.uses--
+				bait.bait_effects(fish)
 				if(bait.uses == 0)
 					qdel(bait)
 				var/fish_size = rand(11,40)
