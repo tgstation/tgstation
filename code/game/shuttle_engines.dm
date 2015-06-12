@@ -3,6 +3,8 @@
 	name = "shuttle"
 	icon = 'icons/turf/shuttle.dmi'
 
+/obj/structure/shuttle/CanAtmosPass(turf/T)
+	return 0
 /obj/structure/shuttle/engine
 	name = "engine"
 	density = 1

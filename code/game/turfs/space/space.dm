@@ -7,6 +7,7 @@
 	temperature = TCMB
 	thermal_conductivity = OPEN_HEAT_TRANSFER_COEFFICIENT
 	heat_capacity = 700000
+	luminosity = 1
 
 	var/transition //These is used in transistions as a way to tell where on the "cube" of space you're transitioning from/to
 	var/destination_x

@@ -36,6 +36,14 @@
 	buy()
 	sell()
 
+/proc/check_open_turf(var/turf/T)
+	if(T.density)
+		return 0
+	for (var/atom/movable/C in T.contents)
+		if(C.density)
+			return 0
+	return 1
+
 /obj/docking_port/mobile/supply/proc/buy()
 	if(z != ZLEVEL_STATION)		//we only buy when we are -at- the station
 		return 1
@@ -45,8 +53,8 @@
 
 	var/list/emptyTurfs = list()
 	for(var/turf/simulated/floor/T in areaInstance)
-		if(T.density || T.contents.len)	continue
-		emptyTurfs += T
+		if(check_open_turf(T))
+			emptyTurfs += T
 
 	for(var/datum/supply_order/SO in SSshuttle.shoppinglist)
 		if(!SO.object) continue

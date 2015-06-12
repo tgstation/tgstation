@@ -654,6 +654,7 @@
 	item_state = "c_tube"
 	g_amt = 100
 	brightness_range = 8
+	brightness_power = 4
 
 /obj/item/weapon/light/bulb
 	name = "light bulb"
@@ -663,6 +664,7 @@
 	item_state = "contvapour"
 	g_amt = 100
 	brightness_range = 6
+	brightness_power = 2
 
 /obj/item/weapon/light/throw_impact(atom/hit_atom)
 	..()

@@ -164,6 +164,7 @@
 	#else
 	W.lighting_overlays = old_lighting_overlays
 	#endif
+	W.reconsider_lights()
 
 
 	if(istype(W, /turf/simulated))
