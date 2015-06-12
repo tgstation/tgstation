@@ -1258,6 +1258,16 @@ k
 	category = "Exosuit_Weapons"
 	materials = list("$iron"=20000,"$clown"=5000)
 
+/datum/design/mech_creampie
+	name = "Weapon Design (Rapid-Fire Cream Pie Mortar)"
+	desc = "Allows for the construction of Rapid-Fire Cream Pie Mortar."
+	id = "mech_creampie"
+	build_type = MECHFAB
+	req_tech = list("combat" = 1)
+	build_path = /obj/item/mecha_parts/mecha_equipment/weapon/ballistic/missile_rack/creampie_mortar
+	category = "Exosuit_Weapons"
+	materials = list("$iron"=20000,"$clown"=5000)
+
 /datum/design/mech_bolas
 	name = "Weapon Design (PCMK-6 Bolas Launcher)"
 	desc = "Allows for the construction of PCMK-6 Bolas Launcher."

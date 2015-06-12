@@ -808,6 +808,12 @@
 	new/obj/effect/decal/cleanable/pie_smudge(src.loc)
 	del(src)
 
+/obj/item/weapon/reagent_containers/food/snacks/pie/empty //so the H.O.N.K. cream pie mortar can't generate free nutriment
+	trash = null
+	New()
+		..()
+		reagents.clear_reagents()
+
 /obj/item/weapon/reagent_containers/food/snacks/berryclafoutis
 	name = "berry clafoutis"
 	desc = "No black birds, this is a good sign."
