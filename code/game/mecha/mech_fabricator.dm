@@ -169,7 +169,7 @@
 	overlays -= "fab-active"
 	desc = initial(desc)
 
-	var/location = loc
+	var/location = get_step(src,(dir))
 	var/obj/item/I = new D.build_path(location)
 	I.m_amt = get_resource_cost_w_coeff(D,"$metal")
 	I.g_amt = get_resource_cost_w_coeff(D,"$glass")
@@ -305,7 +305,7 @@
 	if (..())
 		return
 	user.set_machine(src)
-	var/turf/exit = get_step(src,SOUTH)
+	var/turf/exit = get_step(src,(dir))
 	if(exit.density)
 		visible_message("\icon[src] <b>\The [src]</b> beeps, \"Error! Part outlet is obstructed.\"")
 		return
