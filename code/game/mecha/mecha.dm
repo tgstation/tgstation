@@ -810,12 +810,12 @@
 			if(!state) //Mech must be in maint mode to allow carding.
 				user << "<span class='warning'>[name] must have maintenance protocols active in order to allow a transfer.</span>"
 				return
-			if (AI.mind.special_role == "malfunction") //Malf AIs cannot leave mechs. Ever.
-				user << "<span class='boldannounce'>ACCESS DENIED.</span>"
-				return
 			AI = occupant
 			if(!AI || !isAI(occupant)) //Mech does not have an AI for a pilot
 				user << "<span class='warning'>No AI detected in the [name] onboard computer.</span>"
+				return
+			if (AI.mind.special_role == "malfunction") //Malf AIs cannot leave mechs. Except through death.
+				user << "<span class='boldannounce'>ACCESS DENIED.</span>"
 				return
 			AI.aiRestorePowerRoutine = 0//So the AI initially has power.
 			AI.control_disabled = 1
