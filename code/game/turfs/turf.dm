@@ -165,6 +165,7 @@
 	W.lighting_overlays = old_lighting_overlays
 	#endif
 	W.reconsider_lights()
+	W.set_opacity(W.opacity)
 
 
 	if(istype(W, /turf/simulated))
