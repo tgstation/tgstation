@@ -143,19 +143,34 @@
 	src << "You will [(prefs.chat_toggles & CHAT_OOC) ? "now" : "no longer"] see messages on the OOC channel."
 	feedback_add_details("admin_verb","TOOC") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
-/client/verb/Toggle_Soundscape() //All new ambience should be added here so it works with this verb until someone better at things comes up with a fix that isn't awful
-	set name = "Hear/Silence Ambience"
+// This needs a toggle because you people are awful and spammed terrible music
+/client/verb/toggle_instruments()
+	set name = "Hear/Silence Instruments"
 	set category = "Preferences"
-	set desc = "Toggles hearing ambient sound effects"
-	prefs.toggles ^= SOUND_AMBIENCE
+	set desc = "Toggles hearing musical instruments like the violin and piano"
+	prefs.toggles ^= SOUND_INSTRUMENTS
 	prefs.save_preferences()
-	if(prefs.toggles & SOUND_AMBIENCE)
-		src << "You will now hear ambient sounds."
+	if(prefs.toggles & SOUND_INSTRUMENTS)
+		src << "You will now hear people playing musical instruments."
 	else
-		src << "You will no longer hear ambient sounds."
-		src << sound(null, repeat = 0, wait = 0, volume = 0, channel = 1)
+		src << "You will no longer hear musical instruments."
+	feedback_add_details("admin_verb","TInstru") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
+
+//Lots of people get headaches from the normal ship ambience, this is to prevent that
+/client/verb/toggle_ship_ambience()
+	set name = "Hear/Silence Ship Ambience"
+	set category = "Preferences"
+	set desc = "Toggles hearing generalized ship ambience, no matter your area."
+	prefs.toggles ^= SOUND_SHIP_AMBIENCE
+	prefs.save_preferences()
+	if(prefs.toggles & SOUND_SHIP_AMBIENCE)
+		src << "You will now hear ship ambience."
+	else
+		src << "You will no longer hear ship ambience."
 		src << sound(null, repeat = 0, wait = 0, volume = 0, channel = 2)
-	feedback_add_details("admin_verb","TAmbi") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
+		src.ambience_playing = 0
+	feedback_add_details("admin_verb", "SAmbi") //If you are copy-pasting this, I bet you read this comment expecting to see the same thing :^)
+
 
 //be special
 /client/verb/toggle_be_special(role in be_special_flags)

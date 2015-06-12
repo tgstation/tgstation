@@ -29,6 +29,7 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 //	invisibility = INVISIBILITY_LIGHTING
 	luminosity = 0
 	var/lightswitch = 1
+	var/valid_territory = 1 //If it's a valid territory for gangs to claim
 
 	var/eject = null
 
@@ -110,6 +111,7 @@ proc/process_ghost_teleport_locs()
 	power_light = 0
 	power_equip = 0
 	power_environ = 0
+	valid_territory = 0
 	ambientsounds = list('sound/ambience/ambispace.ogg','sound/ambience/title2.ogg',)
 
 
@@ -124,6 +126,7 @@ proc/process_ghost_teleport_locs()
 //	luminosity = 1
 //	lighting_use_dynamic = 1
 	has_gravity = 1
+	valid_territory = 0
 	icon_state = "shuttle"
 
 /area/shuttle/arrival
@@ -174,6 +177,7 @@ proc/process_ghost_teleport_locs()
 	luminosity = 1
 	lighting_use_dynamic = 0
 	has_gravity = 1
+	valid_territory = 0
 
 // CENTCOM
 
@@ -184,6 +188,7 @@ proc/process_ghost_teleport_locs()
 	lighting_use_dynamic = 0
 	luminosity = 1
 	has_gravity = 1
+	valid_territory = 0
 
 /area/centcom/control
 	name = "\improper Centcom Docks"
@@ -212,6 +217,7 @@ proc/process_ghost_teleport_locs()
 	luminosity = 1
 	lighting_use_dynamic = 0
 	has_gravity = 1
+	valid_territory = 0
 
 /area/syndicate_mothership/control
 	name = "\improper Syndicate Control Room"
@@ -228,6 +234,7 @@ proc/process_ghost_teleport_locs()
 	icon_state = "asteroid"
 	requires_power = 0
 	has_gravity = 1
+	valid_territory = 0
 
 /area/asteroid/cave
 	name = "\improper Asteroid - Underground"
@@ -248,6 +255,7 @@ proc/process_ghost_teleport_locs()
 	icon_state = "honk"
 	requires_power = 1
 	has_gravity = 1
+	valid_territory = 0 //no honk allowed
 
 /area/planet/clown/village
 	name = "Clown Village"
@@ -331,6 +339,7 @@ proc/process_ghost_teleport_locs()
 	has_gravity = 1
 	luminosity = 1
 	lighting_use_dynamic = 0
+	valid_territory = 0
 
 /area/wizard_station
 	name = "\improper Wizard's Den"
@@ -339,6 +348,7 @@ proc/process_ghost_teleport_locs()
 	has_gravity = 1
 	luminosity = 1
 	lighting_use_dynamic = 0
+	valid_territory = 0
 
 //Abductors
 /area/abductor_ship
@@ -348,6 +358,7 @@ proc/process_ghost_teleport_locs()
 	has_gravity = 1
 	luminosity = 1
 	lighting_use_dynamic = 0
+	valid_territory = 0
 
 //PRISON
 /area/prison
@@ -442,6 +453,7 @@ proc/process_ghost_teleport_locs()
 //Maintenance
 /area/maintenance
 	ambientsounds = list('sound/ambience/ambimaint1.ogg', 'sound/ambience/ambimaint2.ogg', 'sound/ambience/ambimaint3.ogg', 'sound/ambience/ambimaint4.ogg', 'sound/ambience/ambimaint5.ogg')
+	valid_territory = 0
 
 /area/maintenance/atmos_control
 	name = "Atmospherics Maintenance"
@@ -739,6 +751,7 @@ proc/process_ghost_teleport_locs()
 	requires_power = 0
 	luminosity = 1
 	lighting_use_dynamic = 0
+	valid_territory = 0
 
 	auxport
 		name = "\improper Fore Port Solar Array"
@@ -1048,6 +1061,7 @@ proc/process_ghost_teleport_locs()
 /area/toxins/test_area
 	name = "\improper Toxins Test Area"
 	icon_state = "toxtest"
+	valid_territory = 0
 
 /area/toxins/mixing
 	name = "\improper Toxins Mixing Room"
@@ -1109,6 +1123,7 @@ proc/process_ghost_teleport_locs()
 
 /area/storage/testroom
 	requires_power = 0
+	valid_territory = 0
 	name = "\improper Test Room"
 	icon_state = "storage"
 
@@ -1423,6 +1438,7 @@ proc/process_ghost_teleport_locs()
 	name = "\improper Strange Location"
 	icon_state = "away"
 	has_gravity = 1
+	valid_territory = 0
 
 /area/awaymission/example
 	name = "\improper Strange Station"

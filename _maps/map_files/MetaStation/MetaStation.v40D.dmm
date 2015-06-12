@@ -4589,7 +4589,7 @@
 "bKm" = (/obj/machinery/light_switch{pixel_y = -28},/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{dir = 5},/obj/machinery/light,/turf/simulated/floor/fancy/carpet,/area/crew_quarters/theatre)
 "bKn" = (/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{dir = 10},/turf/simulated/floor/fancy/carpet,/area/crew_quarters/theatre)
 "bKo" = (/obj/structure/table/wood,/obj/machinery/light/small,/obj/item/clothing/glasses/regular/hipster{name = "Hipster Glasses"},/turf/simulated/floor/wood,/area/crew_quarters/theatre)
-"bKp" = (/obj/item/device/violin,/obj/structure/table/wood,/turf/simulated/floor/wood,/area/crew_quarters/theatre)
+"bKp" = (/obj/item/device/instrument/violin,/obj/structure/table/wood,/obj/item/device/instrument/guitar,/turf/simulated/floor/wood,/area/crew_quarters/theatre)
 "bKq" = (/obj/structure/disposalpipe/segment,/obj/structure/cable/yellow{d1 = 1; d2 = 2; icon_state = "1-2"},/obj/machinery/atmospherics/pipe/simple/supply/hidden{req_access_txt = 1},/turf/simulated/floor/plating{tag = "icon-platingdmg2"; icon_state = "platingdmg2"},/area/maintenance/starboard)
 "bKr" = (/obj/machinery/atmospherics/pipe/simple/supply/hidden,/turf/simulated/floor/plasteel{dir = 10; icon_state = "yellow"},/area/hallway/primary/starboard)
 "bKs" = (/obj/structure/cable/yellow{d1 = 1; d2 = 2; icon_state = "1-2"},/obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden{dir = 8; initialize_directions = 11},/turf/simulated/floor/plasteel{dir = 2; icon_state = "yellow"},/area/hallway/primary/starboard)

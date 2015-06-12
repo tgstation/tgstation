@@ -8,7 +8,7 @@
 "ah" = (/obj/item/stack/cable_coil/random,/obj/effect/decal/remains/human,/turf/simulated/floor/plating,/area/awaymission)
 "ai" = (/turf/simulated/floor/plating,/area/awaymission)
 "aj" = (/obj/structure/cable{d1 = 1; d2 = 2; icon_state = "1-2"},/turf/simulated/floor/plating,/area/awaymission)
-"ak" = (/obj/machinery/power/smes/magical,/turf/simulated/floor/plating,/area/awaymission)
+"ak" = (/obj/machinery/power/smes/magical,/obj/structure/cable{icon_state = "0-4"; d2 = 4},/turf/simulated/floor/plating,/area/awaymission)
 "al" = (/obj/structure/cable{d1 = 4; d2 = 8; icon_state = "4-8"; pixel_x = 0},/obj/structure/cable,/turf/simulated/floor/plating,/area/awaymission)
 "am" = (/obj/structure/cable{d1 = 4; d2 = 8; icon_state = "4-8"; pixel_x = 0},/turf/simulated/floor/plating,/area/awaymission)
 "an" = (/obj/structure/cable{d1 = 1; d2 = 8; icon_state = "1-8"},/turf/simulated/floor/plating,/area/awaymission)
