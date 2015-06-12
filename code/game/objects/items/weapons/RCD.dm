@@ -120,6 +120,12 @@ RCD
 		playsound(get_turf(src), 'sound/machines/click.ogg', 20, 1)
 		user << "<span class='notice'>The RCD now holds [matter]/[max_matter] matter-units.</span>"
 		return
+	if(isscrewdriver(W))
+		user << "<span class='notice'>You unscrew the access panel and release the cartridge chamber.</span>"
+		while(matter>=10)
+			new /obj/item/weapon/rcd_ammo(user.loc)
+			matter -= 10
+		return
 
 
 /obj/item/weapon/rcd/attack_self(mob/user)

@@ -19,7 +19,7 @@
 
 /obj/item/weapon/storage/belt/utility
 	name = "tool-belt" //Carn: utility belt is nicer, but it bamboozles the text parsing.
-	desc = "It has a tag that rates it for compatibility with standard tools, device analyzers, flashlights, cables, engineering tape, small fire extinguishers, compressed matter cartridges, and fuel cans."
+	desc = "It has a tag that rates it for compatibility with standard tools, device analyzers, flashlights, cables, engineering tape, small fire extinguishers, compressed matter cartridges, light replacers, and fuel cans."
 	icon_state = "utilitybelt"
 	item_state = "utility"
 	w_class = 4
@@ -42,7 +42,9 @@
 		"/obj/item/weapon/extinguisher",
 		"/obj/item/weapon/rcd_ammo",
 		"/obj/item/weapon/reagent_containers/glass/fuelcan",
-		"/obj/item/device/lightreplacer")
+		"/obj/item/device/lightreplacer",
+		"/obj/item/device/device_analyser"
+		)
 
 /obj/item/weapon/storage/belt/utility/complete/New()
 	..()
@@ -102,7 +104,9 @@
 		"/obj/item/weapon/rcd_ammo",
 		"/obj/item/weapon/reagent_containers/glass/fuelcan",
 		"/obj/item/blueprints",
-		"/obj/item/device/lightreplacer"
+		"/obj/item/device/lightreplacer",
+		"/obj/item/device/device_analyser",
+		"/obj/item/weapon/rcl"
 		)
 
 /obj/item/weapon/storage/belt/utility/chief/New()

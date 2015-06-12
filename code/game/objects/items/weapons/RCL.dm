@@ -1,8 +1,6 @@
-#define RCLMAX 30
-
 /obj/item/weapon/rcl
 	name = "rapid cable layer (RCL)"
-	desc = "A device used to rapidly deploy cables."
+	desc = "A device used to rapidly deploy cables. It has a message engraved into the side, but it's chicken scratch."
 	icon = 'icons/obj/items.dmi'
 	icon_state = "rcl-0"
 	item_state = "rcl-0"
@@ -68,10 +66,6 @@
 	..()
 	active = 0*/
 
-/obj/item/weapon/rcl/attack_ai(mob/user as mob)
-	user << "<span class='warning'>\The [src] slips out of your utility claw!<span class='warning'>"
-	return //MoMMIs can't hold this
-
 /obj/item/weapon/rcl/attack_self(mob/user as mob)
 	if(!loaded)
 		user << "<span class='warning'>The [src] is empty!</span>"
@@ -92,12 +86,12 @@
 	is_empty(user) //If we've run out, display message
 
 
-/obj/item/weapon/rcl/verb/eject()
-	set name = "Eject wires"
-	set category = "Object"
-	set src in view(0)
-	usr << "<span class='notice'>You pull out the wires.</span>"
-	loaded.loc = usr.loc
-	usr.put_in_hands(loaded)
-	loaded = null
-	update_icon()
+/obj/item/weapon/rcl/attackby(obj/item/weapon/W, mob/user)
+	if(isscrewdriver(W))
+		user << "<span class='notice'>You loosen the securing screws on the side, allowing you to lower it and retrieve the wires.</span>"
+		loaded.loc = usr.loc
+		usr.put_in_hands(loaded)
+		loaded = null
+		update_icon()
+	else
+		..()
