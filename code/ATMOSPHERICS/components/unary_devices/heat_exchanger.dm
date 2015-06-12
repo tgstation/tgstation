@@ -36,6 +36,8 @@
 	..()
 	if(!partner)
 		return 0
+	if(!parent)
+		return
 
 	if(SSair.times_fired <= update_cycle)
 		return 0

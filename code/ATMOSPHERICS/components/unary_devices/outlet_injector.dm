@@ -42,6 +42,9 @@
 	..()
 	injecting = 0
 
+	if(!parent)
+		return
+
 	if(!on || stat & NOPOWER)
 		return 0
 

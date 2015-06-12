@@ -26,6 +26,8 @@
 	..()
 	if(!on)
 		return 0
+	if(!parent)
+		return
 	var/air_heat_capacity = air_contents.heat_capacity()
 	var/combined_heat_capacity = current_heat_capacity + air_heat_capacity
 	var/old_temperature = air_contents.temperature

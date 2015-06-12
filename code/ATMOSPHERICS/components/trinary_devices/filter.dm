@@ -66,7 +66,7 @@ Filter types:
 
 /obj/machinery/atmospherics/trinary/filter/process_atmos()
 	..()
-	if(!parent1 || parent2 || parent3)
+	if(!parent1 || !parent2 || !parent3)
 		return
 	if(!on)
 		return 0
