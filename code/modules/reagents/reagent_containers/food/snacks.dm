@@ -3369,3 +3369,56 @@
 		..()
 		reagents.add_reagent("nutriment", 10)
 		bitesize = 2
+
+/obj/item/weapon/reagent_containers/food/snacks/sundaeramen
+	name = "Sundae Ramen"
+	desc = "This is... sundae (?) flavored (?) ramen (?). You just don't know."
+	icon_state = "sundaeramen"
+	New()
+		..()
+		reagents.add_reagent("nutriment", 10)
+		reagents.add_reagent("discount", 2)
+		bitesize = 2
+
+/obj/item/weapon/reagent_containers/food/snacks/sweetsundaeramen
+	name = "Sweet Sundae Ramen"
+	desc = "It's a delicious ramen recipe that can soothe the soul of a savage spaceman."
+	icon_state = "sweetsundaeramen"
+	New()
+		..()
+		bitesize = 4
+		while(reagents.total_volume<70)
+			generatecontents()
+
+/obj/item/weapon/reagent_containers/food/snacks/sweetsundaeramen/proc/generatecontents()
+	switch(pick(1,2,3,4,5,6,7,8,9,10))
+		if(1)
+			desc += " It has peppermint flavoring! But just a few drops."
+			reagents.add_reagent("zombiepowder", 10)
+		if(2)
+			desc += " This may not be everyone's cup of tea, but it's great, I promise."
+			reagents.add_reagent("oxycodone", 10)
+		if(3)
+			desc += " This has the cook's favorite ingredient -- and a lot of it!"
+			reagents.add_reagent("mindbreaker", 10)
+		if(4)
+			desc += " It has TONS of flavor!"
+			reagents.add_reagent("minttoxin", 10)
+		if(5)
+			desc += " The recipe for this thing got lost somewhere..."
+			reagents.add_reagent("nutriment", 10)
+		if(6)
+			desc += " It has extra sweetness and a little bit of crumble!"
+			reagents.add_reagent("tricordrazine", 10)
+		if(7)
+			desc += " It may be thick, but the noodles slip around easily."
+			reagents.add_reagent("nutriment", 10)
+		if(8)
+			desc += " It has a nice crunch!"
+			reagents.add_reagent("nutriment", 10)
+		if(9)
+			desc += " Yummy, but with all the sweets, your chest starts to hurt."
+			reagents.add_reagent("nutriment", 10)
+		if(10)
+			desc += " Just a dollop of garnishes."
+			reagents.add_reagent("nutriment", 10)
