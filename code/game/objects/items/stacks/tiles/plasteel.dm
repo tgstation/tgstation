@@ -15,19 +15,6 @@
 	siemens_coefficient = 1
 	max_amount = 60
 
-/obj/item/stack/tile/use(var/amount)
-	ASSERT(isnum(src.amount))
-	if(src.amount>=amount)
-		src.amount-=amount
-	else
-		return 0
-	. = 1
-	if (src.amount<=0)
-		if(usr)
-			usr.before_take_item(src)
-		spawn
-			returnToPool(src)
-
 /obj/item/stack/tile/plasteel/New(var/loc, var/amount=null)
 	. = ..()
 	pixel_x = rand(1, 14)

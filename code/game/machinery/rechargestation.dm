@@ -243,46 +243,53 @@
 				var/list/um = R.contents|R.module.modules
 				// ^ makes single list of active (R.contents) and inactive modules (R.module.modules)
 				for(var/obj/O in um)
-					// Engineering
-					if(istype(O,/obj/item/stack/cable_coil))
-						if(O:amount < 50)
-							O:amount += 2
-						if(O:amount > 50)
-							O:amount = 50
+					// Stacks
+					if(istype(O,/obj/item/stack))
+						var/obj/item/stack/S=O
+						if(!istype(S,/obj/item/stack/cable_coil) || !istype(S,/obj/item/stack/medical))
+							continue //Only recharge cable coils and medical stacks
+
+						if(S.amount < S.max_amount)
+							S.amount += 2
+						if(S.amount > S.max_amount)
+							S.amount = S.max_amount
 					// Security
 					if(istype(O,/obj/item/device/flash))
-						if(O:broken)
-							O:broken = 0
-							O:times_used = 0
-							O:icon_state = "flash"
+						var/obj/item/device/flash/F=O
+						if(F.broken)
+							F.broken = 0
+							F.times_used = 0
+							F.icon_state = "flash"
 					if(istype(O,/obj/item/weapon/gun/energy/taser/cyborg))
-						if(O:power_supply.charge < O:power_supply.maxcharge)
-							O:power_supply.give(O:charge_cost)
-							O:update_icon()
+						var/obj/item/weapon/gun/energy/taser/cyborg/C=O
+						if(C.power_supply.charge < C.power_supply.maxcharge)
+							C.power_supply.give(C.charge_cost)
+							C.update_icon()
 						else
-							O:charge_tick = 0
+							C.charge_tick = 0
 					if(istype(O,/obj/item/weapon/melee/baton))
 						var/obj/item/weapon/melee/baton/B = O
 						if(B.bcell)
 							B.bcell.charge = B.bcell.maxcharge
 					//Combat
 					if(istype(O,/obj/item/weapon/gun/energy/laser/cyborg))
-						if(O:power_supply.charge < O:power_supply.maxcharge)
-							O:power_supply.give(O:charge_cost)
-							O:update_icon()
+						var/obj/item/weapon/gun/energy/laser/cyborg/C=O
+						if(C.power_supply.charge < C.power_supply.maxcharge)
+							C.power_supply.give(C.charge_cost)
+							C.update_icon()
 						else
-							O:charge_tick = 0
+							C.charge_tick = 0
 					if(istype(O,/obj/item/weapon/gun/energy/lasercannon/cyborg))
-						if(O:power_supply.charge < O:power_supply.maxcharge)
-							O:power_supply.give(O:charge_cost)
-							O:update_icon()
-						else
-							O:charge_tick = 0
+						var/obj/item/weapon/gun/energy/lasercannon/cyborg/C=O
+						if(C.power_supply.charge < C.power_supply.maxcharge)
+							C.power_supply.give(C.charge_cost)
+							C.update_icon()
 					//Mining
 					if(istype(O,/obj/item/weapon/gun/energy/kinetic_accelerator/cyborg))
-						if(O:power_supply.charge < O:power_supply.maxcharge)
-							O:power_supply.give(O:charge_cost)
-							O:update_icon()
+						var/obj/item/weapon/gun/energy/kinetic_accelerator/cyborg/C=O
+						if(C.power_supply.charge < C.power_supply.maxcharge)
+							C.power_supply.give(C.charge_cost)
+							C.update_icon()
 						else
 							O:charge_tick = 0
 					//Service
@@ -294,11 +301,6 @@
 						var/obj/item/weapon/reagent_containers/glass/bottle/robot/B = O
 						if(B.reagent && (B.reagents.get_reagent_amount(B.reagent) < B.volume))
 							B.reagents.add_reagent(B.reagent, 2)
-					if(istype(O,/obj/item/stack/medical/bruise_pack) || istype(O,/obj/item/stack/medical/ointment) || istype(O,/obj/item/stack/medical/advanced/bruise_pack) || istype(O,/obj/item/stack/medical/advanced/ointment) || istype(O,/obj/item/stack/medical/splint))
-						if(O:amount < O:max_amount)
-							O:amount += 2
-						if(O:amount > O:max_amount)
-							O:amount = O:max_amount
 					if(istype(O,/obj/item/weapon/melee/defibrillator))
 						var/obj/item/weapon/melee/defibrillator/D = O
 						D.charges = initial(D.charges)

@@ -539,16 +539,11 @@
 	else
 		stat(null, text("No Cell Inserted!"))
 
-
+/*
 /mob/living/silicon/robot/proc/show_cable_lengths()
 	var/obj/item/stack/cable_coil/coil = installed_module(/obj/item/stack/cable_coil)
 	if(coil)
 		stat(null, text("Cable Lengths: [coil.amount]/[coil.max_amount]"))
-
-/mob/living/silicon/robot/proc/show_welder_fuel()
-	var/obj/item/weapon/weldingtool/WT = installed_module(/obj/item/weapon/weldingtool)
-	if(WT)
-		stat(null, text("Welder Fuel: [WT.get_fuel()]/[WT.max_fuel]"))
 
 /mob/living/silicon/robot/proc/show_metal_sheets()
 	var/obj/item/stack/sheet/metal/cyborg/M = installed_module(/obj/item/stack/sheet/metal/cyborg)
@@ -564,7 +559,16 @@
 	var/obj/item/stack/sheet/glass/rglass/G = installed_module(/obj/item/stack/sheet/glass/rglass)
 	if(G)
 		stat(null, text("Reinforced Glass Sheets: [G.amount]/50"))
+*/
+/mob/living/silicon/robot/proc/show_welder_fuel()
+	var/obj/item/weapon/weldingtool/WT = installed_module(/obj/item/weapon/weldingtool)
+	if(WT)
+		stat(null, text("Welder Fuel: [WT.get_fuel()]/[WT.max_fuel]"))
 
+/mob/living/silicon/robot/proc/show_stacks()
+	if(!module) return
+	for(var/obj/item/stack/S in module.modules)
+		stat(null, text("[S.name]: [S.amount]/[S.max_amount]"))
 
 // update the status screen display
 /mob/living/silicon/robot/Stat()
@@ -572,11 +576,14 @@
 	if(statpanel("Status"))
 		show_cell_power()
 		show_jetpack_pressure()
+		/*
 		show_cable_lengths()
-		show_welder_fuel()
 		show_metal_sheets()
 		show_glass_sheets()
-		show_rglass_sheets()
+		show_rglass_sheets()*/
+		show_welder_fuel()
+		show_stacks()
+
 
 /mob/living/silicon/robot/restrained()
 	return 0
