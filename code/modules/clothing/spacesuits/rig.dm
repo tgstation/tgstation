@@ -417,3 +417,19 @@
 	icon_state = "rig-solaire"
 	item_state = "rig-solaire"
 	armor = list(melee = 60, bullet = 65, laser = 90,energy = 30, bomb = 60, bio = 100, rad = 100)
+
+
+/obj/item/clothing/suit/space/rig/t51b
+	name = "T-51b Power Armor"
+	desc = "Relic of a bygone era, the T-51b is powered by a TX-28 MicroFusion Pack, which holds enough fuel to power its internal hydraulics for a century!"
+	icon_state = "rig-t51b"
+	item_state = "rig-t51b"
+	armor = list(melee = 35, bullet = 35, laser = 40, energy = 40, bomb = 80, bio = 100, rad = 100)
+
+/obj/item/clothing/head/helmet/space/rig/t51b
+	name = "T-51b Power Armor Helmet"
+	desc = "Relic of a bygone era, the T-51b is powered by a TX-28 MicroFusion Pack, which holds enough fuel to power its internal hydraulics for a century!"
+	icon_state = "rig0-t51b"
+	item_state = "rig0-t51b"
+	armor = list(melee = 35, bullet = 35, laser = 40, energy = 40, bomb = 80, bio = 100, rad = 100)
+	_color="t51b"
