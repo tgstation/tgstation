@@ -167,7 +167,7 @@
 /obj/machinery/bodyscanner/relaymove(mob/user as mob)
 	if(user.stat)
 		return
-	src.go_out()
+	go_out()
 	return
 
 /obj/machinery/bodyscanner/verb/eject()
@@ -177,7 +177,7 @@
 
 	if(usr.stat != 0 || (usr.status_flags & FAKEDEATH))
 		return
-	src.go_out()
+	go_out()
 	add_fingerprint(usr)
 	return
 
@@ -209,14 +209,14 @@
 	return
 
 /obj/machinery/bodyscanner/proc/go_out(var/exit = loc)
-	if((!(occupant) || locked))
+	if((!(src.occupant) || locked))
 		return
 	for(var/obj/O in src)
 		O.loc = src.loc
 
-	occupant.forceMove(exit)
-	occupant.reset_view()
-	occupant = null
+	src.occupant.forceMove(exit)
+	src.occupant.reset_view()
+	src.occupant = null
 	update_icon()
 	set_light(0)
 	return
