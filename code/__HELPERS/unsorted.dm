@@ -687,7 +687,7 @@ Turf and target are seperate in case you want to teleport some distance from a t
 	for(var/i = 1 to numticks)
 		if(user.client)
 			if(!progbar)
-				progbar = image("icon" = 'icons/effects/doafter_icon.dmi', "loc" = user, "icon_state" = "prog_bar_0")
+				progbar = image("icon" = 'icons/effects/doafter_icon.dmi', "loc" = target, "icon_state" = "prog_bar_0")
 			switch(round(((i / numticks) * 100)))
 				if(-INFINITY to 10)
 					progbar.icon_state = "prog_bar_0"
@@ -747,7 +747,7 @@ Turf and target are seperate in case you want to teleport some distance from a t
 	for (var/i = 1 to numticks)
 		if(user.client)
 			if(!progbar)
-				progbar = image("icon" = 'icons/effects/doafter_icon.dmi', "loc" = user, "icon_state" = "prog_bar_0")
+				progbar = image("icon" = 'icons/effects/doafter_icon.dmi', "loc" = target, "icon_state" = "prog_bar_0")
 			switch(round(((i / numticks) * 100)))
 				if(-INFINITY to 10)
 					progbar.icon_state = "prog_bar_0"

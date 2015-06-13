@@ -909,7 +909,7 @@ About the new airlock wires panel:
 							"<span class='notice'>You begin [welded ? "unwelding":"welding"] the airlock...</span>", \
 							"<span class='italics'>You hear welding.</span>")
 			playsound(loc, 'sound/items/Welder.ogg', 40, 1)
-			if(do_after(user,40,5,1))
+			if(do_after(user,40,5,1, target = src))
 				if(density && !operating)//Door must be closed to weld.
 					if( !istype(src, /obj/machinery/door/airlock) || !user || !W || !W.isOn() || !user.loc )
 						return
@@ -942,7 +942,7 @@ About the new airlock wires panel:
 			playsound(src.loc, 'sound/items/Crowbar.ogg', 100, 1)
 			user.visible_message("[user] removes the electronics from the airlock assembly.", \
 								 "<span class='notice'>You start to remove electronics from the airlock assembly...</span>")
-			if(do_after(user,40))
+			if(do_after(user,40, target = src))
 				if(src.loc)
 					if(src.doortype)
 						var/obj/structure/door_assembly/A = new src.doortype(src.loc)

@@ -218,7 +218,7 @@
 		user << "<span class='warning'>You need to be next to the specimen to prepare it for transport!</span>"
 		return
 	user << "<span class='notice'>You start preparing the specimen for transport...</span>"
-	if(do_after(user, 100))
+	if(do_after(user, 100, target = target))
 		marked = target
 		user << "<span class='notice'>You finish preparing the specimen for transport.</span>"
 

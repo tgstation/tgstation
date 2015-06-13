@@ -449,7 +449,7 @@
 		var/breakout_time = 2
 		user << "<span class='notice'>You start kicking against the doors to escape... (This will take about [breakout_time] minutes.)</span>"
 		visible_message("You see [user] kicking against the doors of \the [src]!")
-		if(do_after(user,(breakout_time*60*10)))
+		if(do_after(user,(breakout_time*60*10), target = src))
 			if(!user || user.stat != CONSCIOUS || user.loc != src || isopen || !islocked)
 				return
 			else

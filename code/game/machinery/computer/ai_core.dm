@@ -16,7 +16,7 @@
 			if(istype(P, /obj/item/weapon/wrench))
 				playsound(loc, 'sound/items/Ratchet.ogg', 50, 1)
 				user << "<span class='notice'>You start wrenching the frame into place...</span>"
-				if(do_after(user, 20))
+				if(do_after(user, 20, target = src))
 					user << "<span class='notice'>You wrench the frame into place.</span>"
 					anchored = 1
 					state = 1
@@ -27,7 +27,7 @@
 					return
 				playsound(loc, 'sound/items/Welder.ogg', 50, 1)
 				user << "<span class='notice'>You start to deconstruct the frame...</span>"
-				if(do_after(user, 20))
+				if(do_after(user, 20, target = src))
 					if(!src || !WT.remove_fuel(0, user)) return
 					user << "<span class='notice'>You deconstruct the frame.</span>"
 					new /obj/item/stack/sheet/plasteel( loc, 4)
@@ -36,7 +36,7 @@
 			if(istype(P, /obj/item/weapon/wrench))
 				playsound(loc, 'sound/items/Ratchet.ogg', 50, 1)
 				user << "<span class='notice'>You start to unfasten the frame...</span>"
-				if(do_after(user, 20))
+				if(do_after(user, 20, target = src))
 					user << "<span class='notice'>You unfasten the frame.</span>"
 					anchored = 0
 					state = 0
@@ -70,7 +70,7 @@
 				if(C.get_amount() >= 5)
 					playsound(loc, 'sound/items/Deconstruct.ogg', 50, 1)
 					user << "<span class='notice'>You start to add cables to the frame...</span>"
-					if(do_after(user, 20))
+					if(do_after(user, 20, target = src))
 						if (C.get_amount() >= 5 && state == 2)
 							C.use(5)
 							user << "<span class='notice'>You add cables to the frame.</span>"
@@ -96,7 +96,7 @@
 				if(G.get_amount() >= 2)
 					playsound(loc, 'sound/items/Deconstruct.ogg', 50, 1)
 					user << "<span class='notice'>You start to put in the glass panel...</span>"
-					if(do_after(user, 20))
+					if(do_after(user, 20, target = src))
 						if (G.get_amount() >= 2 && state == 3)
 							G.use(2)
 							user << "<span class='notice'>You put in the glass panel.</span>"
@@ -204,11 +204,11 @@
 					 "<span class='notice'>You start to [anchored ? "fasten [src] to" : "unfasten [src] from"] the floor...</span>")
 		switch(anchored)
 			if(0)
-				if(do_after(user, 20))
+				if(do_after(user, 20, target = src))
 					user << "<span class='notice'>You fasten the core into place.</span>"
 					anchored = 1
 			if(1)
-				if(do_after(user, 20))
+				if(do_after(user, 20, target = src))
 					user << "<span class='notice'>You unfasten the core.</span>"
 					anchored = 0
 	return

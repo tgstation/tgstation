@@ -434,7 +434,7 @@ var/global/list/rockTurfEdgeCache
 		user << "<span class='notice'>You start picking...</span>"
 		P.playDigSound()
 
-		if(do_after(user,P.digspeed))
+		if(do_after(user,P.digspeed, target = src))
 			if(istype(src, /turf/simulated/mineral)) //sanity check against turf being deleted during digspeed delay
 				user << "<span class='notice'>You finish cutting into the rock.</span>"
 				P.update_icon()

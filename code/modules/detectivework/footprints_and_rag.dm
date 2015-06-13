@@ -30,7 +30,7 @@
 		user.visible_message("<span class='danger'>[user] has smothered \the [A] with \the [src]!</span>", "<span class='danger'>You smother \the [A] with \the [src]!</span>", "<span class='italics'>You hear some struggling and muffled cries of surprise.</span>")
 	else if(istype(A) && src in user)
 		user.visible_message("[user] starts to wipe down [A] with [src]!", "<span class='notice'>You start to wipe down [A] with [src]...</span>")
-		if(do_after(user,30))
+		if(do_after(user,30, target = A))
 			user.visible_message("[user] finishes wiping off the [A]!", "<span class='notice'>You finish wiping off the [A].</span>")
 			A.clean_blood()
 	return

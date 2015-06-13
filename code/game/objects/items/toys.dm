@@ -464,7 +464,7 @@
 		user << "<span class='notice'>You start [instant ? "spraying" : "drawing"] a [temp] on the [target.name]...</span>"
 		if(instant)
 			playsound(user.loc, 'sound/effects/spray.ogg', 5, 1, 5)
-		if((instant>0) || do_after(user, 50))
+		if((instant>0) || do_after(user, 50, target = target))
 
 			//Gang functions
 			if(gangID)

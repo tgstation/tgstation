@@ -81,7 +81,7 @@
 	if(istype(I, /obj/item/weapon/wrench))
 		user << "<span class='notice'>You start attaching the [name]...</span>"
 		src.add_fingerprint(user)
-		if(do_after(user, 40))
+		if(do_after(user, 40, target = src))
 			if(!src) return
 			user << "<span class='notice'>You attach the [name].</span>"
 			var/obj/structure/transit_tube/R = src.buildtube()
