@@ -15,6 +15,18 @@ Pipelines + Other Objects -> Pipe network
 
 //Pipe bitflags
 #define IS_MIRROR	1
+#define ALL_LAYER	2 //if the pipe can connect at any layer, instead of just the specific one
+
+#define PIPING_LAYER_DEFAULT	3 //starting value - this is the "central" pipe
+#define PIPING_LAYER_INCREMENT	1 //how much the smallest step in piping_layer is
+
+#define PIPING_LAYER_MIN	1
+#define PIPING_LAYER_MAX	5
+
+#define PIPING_LAYER_P_X		5 //each positive increment of piping_layer changes the pixel_x by this amount
+#define PIPING_LAYER_P_Y		-5 //same, but negative because they form a diagonal
+#define PIPING_LAYER_LCHANGE	0.05 //how much the layer var changes per increment
+
 
 /obj/machinery/atmospherics
 	anchored = 1
@@ -27,8 +39,6 @@ Pipelines + Other Objects -> Pipe network
 	// Which directions can we connect with?
 	var/initialize_directions = 0
 
-	var/obj/machinery/atmospherics/mirror //not actually an object reference, but a type. The reflection of the current pipe
-
 	// Pipe painter color setting.
 	var/_color
 
@@ -38,8 +48,11 @@ Pipelines + Other Objects -> Pipe network
 	var/log
 
 	var/pipe_flags = 0
+	var/obj/machinery/atmospherics/mirror //not actually an object reference, but a type. The reflection of the current pipe
 
 	var/image/pipe_image
+
+	var/piping_layer = PIPING_LAYER_DEFAULT //used in multi-pipe-on-tile - pipes only connect if they're on the same pipe layer
 
 /obj/machinery/atmospherics/New()
 	..()
@@ -55,19 +68,32 @@ Pipelines + Other Objects -> Pipe network
 	atmos_machines -= src
 	..()
 
+/obj/machinery/atmospherics/proc/setPipingLayer(new_layer = PIPING_LAYER_DEFAULT)
+	piping_layer = new_layer
+	pixel_x = (piping_layer - PIPING_LAYER_DEFAULT) * PIPING_LAYER_P_X
+	pixel_y = (piping_layer - PIPING_LAYER_DEFAULT) * PIPING_LAYER_P_Y
+	layer = initial(layer) + ((piping_layer - PIPING_LAYER_DEFAULT) * PIPING_LAYER_LCHANGE)
+
 // Find a connecting /obj/machinery/atmospherics in specified direction.
-/obj/machinery/atmospherics/proc/findConnecting(var/direction)
+/obj/machinery/atmospherics/proc/findConnecting(var/direction, var/given_layer = src.piping_layer)
 	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/atmospherics/proc/findConnecting() called tick#: [world.time]")
 	for(var/obj/machinery/atmospherics/target in get_step(src,direction))
 		if(target.initialize_directions & get_dir(target,src))
-			return target
+			if(isConnectable(target, direction, given_layer) && target.isConnectable(src, turn(direction, 180), given_layer))
+				return target
 
 // Ditto, but for heat-exchanging pipes.
-/obj/machinery/atmospherics/proc/findConnectingHE(var/direction)
+/obj/machinery/atmospherics/proc/findConnectingHE(var/direction, var/given_layer = src.piping_layer)
 	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/atmospherics/proc/findConnectingHE() called tick#: [world.time]")
 	for(var/obj/machinery/atmospherics/pipe/simple/heat_exchanging/target in get_step(src,direction))
 		if(target.initialize_directions_he & get_dir(target,src))
-			return target
+			if(isConnectable(target, direction, given_layer) && target.isConnectable(src, turn(direction, 180), given_layer))
+				return target
+
+//Called when checking connectability in findConnecting()
+//This is checked for both pipes in establishing a connection - the base behaviour will work fine nearly every time
+/obj/machinery/atmospherics/proc/isConnectable(var/obj/machinery/atmospherics/target, var/direction, var/given_layer)
+	return (target.piping_layer == given_layer || target.pipe_flags & ALL_LAYER)
 
 /obj/machinery/atmospherics/proc/getNodeType(var/node_id)
 	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/atmospherics/proc/getNodeType() called tick#: [world.time]")
@@ -156,6 +182,11 @@ Pipelines + Other Objects -> Pipe network
 
 
 /obj/machinery/atmospherics/attackby(var/obj/item/W, mob/user)
+	if(istype(W, /obj/item/pipe)) //lets you autodrop
+		var/obj/item/pipe/pipe = W
+		user.drop_item(pipe)
+		pipe.setPipingLayer(src.piping_layer) //align it with us
+		return 1
 	if (!istype(W, /obj/item/weapon/wrench))
 		return ..()
 	if(src.machine_flags & WRENCHMOVE)

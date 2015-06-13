@@ -107,6 +107,7 @@
 #include "code\ATMOSPHERICS\hvac\spaceheater.dm"
 #include "code\ATMOSPHERICS\pipe\construction.dm"
 #include "code\ATMOSPHERICS\pipe\pipe_dispenser.dm"
+#include "code\ATMOSPHERICS\pipe\pipe_planner.dm"
 #include "code\controllers\configuration.dm"
 #include "code\controllers\failsafe.dm"
 #include "code\controllers\garbage.dm"

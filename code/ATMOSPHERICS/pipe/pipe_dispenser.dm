@@ -7,6 +7,8 @@
 	var/wait = 0
 	machine_flags = WRENCHMOVE | FIXED2WORK
 
+	var/layer_to_make = PIPING_LAYER_DEFAULT
+
 /********************************************************************
 **   Adding Stock Parts to VV so preconstructed shit has its candy **
 ********************************************************************/
@@ -32,6 +34,9 @@
 /obj/machinery/pipedispenser/attack_hand(user as mob)
 	if(..())
 		return
+	interact(user)
+
+/obj/machinery/pipedispenser/interact(mob/user)
 	var/dat = {"
 <b>Regular pipes:</b>
 <ul>
@@ -46,6 +51,7 @@
 	<li><a href='?src=\ref[src];make=[PIPE_MTVALVE];dir=9'>Manual T-Valve \[M]</a></li>
 	<li><a href='?src=\ref[src];make=[PIPE_DTVALVE];dir=1'>Digital T-Valve</a></li>
 	<li><a href='?src=\ref[src];make=[PIPE_DTVALVE];dir=9'>Digital T-Valve \[M]</a></li>
+	<li><a href='?src=\ref[src];make=[PIPE_LAYER_MANIFOLD];dir=1'>Layer Manifold</a></li>
 </ul>
 <b>Devices:</b>
 <ul>
@@ -80,6 +86,7 @@
 	<li><a href='?src=\ref[src];make=[PIPE_INSUL_MANIFOLD];dir=1'>Manifold</a></li>
 	<li><a href='?src=\ref[src];make=[PIPE_INSUL_MANIFOLD4W];dir=1'>4-Way Manifold</a></li>
 </ul>
+<b> Currently aligned at: [layer_to_make] \[ <a href='?src=\ref[src];editlayer=1'>EDIT</a> \]</b></li>
 "}
 //What number the make points to is in the define # at the top of construction.dm in same folder
 
@@ -90,11 +97,10 @@
 /obj/machinery/pipedispenser/Topic(href, href_list)
 	if(..())
 		usr << browse(null, "window=pipedispenser")
-		return
-		return
+		return 1
 	if(!anchored)
 		usr << browse(null, "window=pipedispenser")
-		return
+		return 1
 
 	usr.set_machine(src)
 	src.add_fingerprint(usr)
@@ -104,6 +110,7 @@
 			var/p_dir = text2num(href_list["dir"])
 			var/obj/item/pipe/P = getFromPool(/obj/item/pipe, get_turf(src)) //new (/*usr.loc*/ src.loc, pipe_type=p_type, dir=p_dir)
 			P.New(P.loc, pipe_type=p_type, dir=p_dir)
+			P.setPipingLayer(layer_to_make)
 			P.update()
 			P.add_fingerprint(usr)
 			wait = 1
@@ -121,6 +128,12 @@
 			wait = 1
 			spawn(15)
 				wait = 0
+	if(href_list["editlayer"])
+		if(!wait)
+			var/num_input = input(usr, "Alignment", "Calibrate Dispenser", "") as num
+			num_input = Clamp(round(num_input, PIPING_LAYER_INCREMENT), PIPING_LAYER_MIN, PIPING_LAYER_MAX)
+			layer_to_make = num_input
+			interact(usr)
 	return
 
 /obj/machinery/pipedispenser/attackby(var/obj/item/W as obj, var/mob/user as mob)

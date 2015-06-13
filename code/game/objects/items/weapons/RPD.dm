@@ -88,6 +88,7 @@ var/global/list/RPD_recipes=list(
 		"4-Way Manifold" = new /datum/pipe_info(PIPE_MANIFOLD4W,		1, PIPE_BINARY),
 		"Manual T-Valve" = new /datum/pipe_info(PIPE_MTVALVE,			2, PIPE_TRIN_M),
 		"Digital T-Valve" = new /datum/pipe_info(PIPE_DTVALVE,			2, PIPE_TRIN_M),
+		"Layer Manifold" = new /datum/pipe_info(PIPE_LAYER_MANIFOLD,	2, PIPE_UNARY),
 	),
 	"Devices"=list(
 		"Connector"      = new /datum/pipe_info(PIPE_CONNECTOR,			1, PIPE_UNARY),
@@ -521,6 +522,11 @@ var/global/list/RPD_recipes=list(
 			user << "The [src]'s error light flickers.  Perhaps you need to only use it on pipes and pipe meters?"
 			return 0
 		if(0)
+			var/pipelayer_to_lay = PIPING_LAYER_DEFAULT
+			if(istype(A, /obj/machinery/atmospherics))
+				var/obj/machinery/atmospherics/AM = A
+				pipelayer_to_lay = AM.piping_layer
+				A = get_turf(user)
 			if(!(istype(A, /turf)))
 				user << "The [src]'s error light flickers."
 				return 0
@@ -530,6 +536,7 @@ var/global/list/RPD_recipes=list(
 				activate()
 				var/obj/item/pipe/P = getFromPool(/obj/item/pipe, A)
 				P.New(A,pipe_type=p_type,dir=p_dir) //new (A, pipe_type=p_type, dir=p_dir)
+				P.setPipingLayer(pipelayer_to_lay)
 				P.update()
 				P.add_fingerprint(usr)
 				return 1

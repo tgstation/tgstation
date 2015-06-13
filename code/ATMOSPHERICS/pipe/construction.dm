@@ -33,6 +33,7 @@ Buildable meters
 #define PIPE_DTVALVE			26
 #define PIPE_INSUL_MANIFOLD		27
 #define PIPE_INSUL_MANIFOLD4W	28
+#define PIPE_LAYER_MANIFOLD		29
 
 //Disposal piping numbers - do NOT hardcode these, use the defines
 #define DISP_PIPE_STRAIGHT		0
@@ -45,6 +46,8 @@ Buildable meters
 #define DISP_END_CHUTE			7
 #define DISP_SORT_JUNCTION		8
 #define DISP_SORT_WRAP_JUNCTION	9
+
+var/global/list/unstackable_pipes = list(PIPE_LAYER_MANIFOLD)
 
 /obj/item/pipe_spawner
 	name = "Pipe Spawner"
@@ -87,6 +90,8 @@ Buildable meters
 	w_class = 3
 	level = 2
 
+	var/piping_layer = PIPING_LAYER_DEFAULT
+
 /obj/item/pipe/ex_act(severity)
 	switch(severity)
 		if(1)
@@ -97,6 +102,11 @@ Buildable meters
 		if(3)
 			if(prob(10))
 				returnToPool(src)
+
+/obj/item/pipe/dropped()
+	..()
+	if(loc)
+		setPipingLayer(piping_layer) //realign us, captain!
 
 /obj/item/pipe/blob_act()
 	returnToPool(src)
@@ -130,6 +140,8 @@ Buildable meters
 				src.pipe_type = PIPE_INSUL_MANIFOLD
 			else
 				src.pipe_type = PIPE_MANIFOLD
+		else if(istype(make_from, /obj/machinery/atmospherics/pipe/layer_manifold))
+			src.pipe_type = PIPE_LAYER_MANIFOLD
 		else if(istype(make_from, /obj/machinery/atmospherics/unary/vent_pump))
 			src.pipe_type = PIPE_UVENT
 		else if(istype(make_from, /obj/machinery/atmospherics/binary/valve/digital))
@@ -176,13 +188,22 @@ Buildable meters
 			src.pipe_type = PIPE_DP_VENT
 		else if(istype(make_from, /obj/machinery/atmospherics/unary/vent))
 			src.pipe_type = PIPE_PASV_VENT
+		setPipingLayer(make_from.piping_layer)
+
 	else
 		src.pipe_type = pipe_type
 		src.dir = dir
 	//src.pipe_dir = get_pipe_dir()
 	update()
-	src.pixel_x = rand(-5, 5)
-	src.pixel_y = rand(-5, 5)
+//	src.pixel_x = rand(-5, 5)
+//	src.pixel_y = rand(-5, 5)
+
+/obj/item/pipe/proc/setPipingLayer(new_layer = PIPING_LAYER_DEFAULT)
+	piping_layer = new_layer
+	if(pipe_type != PIPE_LAYER_MANIFOLD)
+		pixel_x = (piping_layer - PIPING_LAYER_DEFAULT) * PIPING_LAYER_P_X
+		pixel_y = (piping_layer - PIPING_LAYER_DEFAULT) * PIPING_LAYER_P_Y
+		layer = initial(layer) + ((piping_layer - PIPING_LAYER_DEFAULT) * PIPING_LAYER_LCHANGE)
 
 //update the name and icon of the pipe item depending on the type
 
@@ -215,7 +236,8 @@ var/global/list/pipeID2State = list(
 	"passive vent",
 	"dtvalve",
 	"insulated_manifold",
-	"insulated_manifold4w"
+	"insulated_manifold4w",
+	"manifoldlayer"
 )
 var/global/list/nlist = list( \
 	"pipe", \
@@ -246,7 +268,8 @@ var/global/list/nlist = list( \
 	"passive vent", \
 	"digital t-valve", \
 	"insulated manifold", \
-	"insulated 4-way manifold"
+	"insulated 4-way manifold", \
+	"pipe alignment converter"
 )
 /obj/item/pipe/proc/update()
 
@@ -308,7 +331,8 @@ var/global/list/nlist = list( \
 			PIPE_PASSIVE_GATE ,\
 			PIPE_MVALVE, \
 			PIPE_DVALVE, \
-			PIPE_DP_VENT \
+			PIPE_DP_VENT, \
+			PIPE_LAYER_MANIFOLD
 		)
 			return dir|flip
 		if(PIPE_SIMPLE_BENT, PIPE_INSULATED_BENT, PIPE_HE_BENT)
@@ -377,6 +401,8 @@ var/global/list/nlist = list( \
 	var/pipe_dir = get_pipe_dir()
 
 	for(var/obj/machinery/atmospherics/M in src.loc)
+		if(M.piping_layer != src.piping_layer && !((M.pipe_flags & ALL_LAYER) || (pipe_type in unstackable_pipes)))
+			continue
 		if(M.initialize_directions & pipe_dir)	// matches at least one direction on either type of pipe
 			user << "<span class='warning'>There is already a pipe at that location.</span>"
 			return 1
@@ -462,6 +488,10 @@ var/global/list/nlist = list( \
 		if(PIPE_INSUL_MANIFOLD4W)
 			P=new /obj/machinery/atmospherics/pipe/manifold4w/insulated(src.loc)
 
+		if(PIPE_LAYER_MANIFOLD)
+			P =new /obj/machinery/atmospherics/pipe/layer_manifold(src.loc)
+
+	P.setPipingLayer(src.piping_layer)
 	if(P.buildFrom(usr,src))
 		playsound(get_turf(src), 'sound/items/Ratchet.ogg', 50, 1)
 		user.visible_message( \

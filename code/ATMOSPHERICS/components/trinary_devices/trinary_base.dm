@@ -45,6 +45,7 @@ obj/machinery/atmospherics/trinary/buildFrom(var/mob/usr,var/obj/item/pipe/pipe)
 		var/obj/machinery/atmospherics/trinary/mirrored_pipe = new mirror(src.loc)
 		pipe.dir = turn(pipe.dir, -45)
 		qdel(src)
+		mirrored_pipe.setPipingLayer(pipe.piping_layer)
 		return mirrored_pipe.buildFrom(usr, pipe)
 	dir = pipe.dir
 	initialize_directions = pipe.get_pipe_dir()

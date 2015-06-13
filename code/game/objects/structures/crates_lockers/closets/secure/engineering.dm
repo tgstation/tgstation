@@ -147,6 +147,7 @@
 		new /obj/item/clothing/suit/storage/hazardvest(src)
 		new /obj/item/clothing/mask/gas(src)
 		new /obj/item/taperoll/atmos(src)
+		new /obj/item/pipe_planner(src)
 		new /obj/item/weapon/wrench/socket(src)
 		new /obj/item/weapon/gun/projectile/flare(src) //yay for emergency lighting
 		new /obj/item/ammo_storage/box/flare(src)
