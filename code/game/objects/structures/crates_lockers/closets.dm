@@ -289,7 +289,7 @@
 		return
 
 	if(!toggle())
-		user << "<span class='notice'>You cannot close the locker!</span>"
+		togglelock(user)
 		return
 
 // tk grab then use on self
