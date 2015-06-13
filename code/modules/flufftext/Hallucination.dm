@@ -216,7 +216,7 @@ Gunshots/explosions/opening doors/less rare audio (done)
 	update_icon("alienh_pounce")
 	if(A == target)
 		target.Weaken(5)
-		target << "<span class ='userdanger'>[name] pounces on you!</span>" //Todo : make this flailing for observers ?
+		target.visible_message("<span class='danger'>[target] flails around wildly.</span>","<span class ='userdanger'>[name] pounces on you!</span>")
 
 /obj/effect/hallucination/xeno_attack
 	//Xeno crawls from nearby vent,jumps at you, and goes back in
@@ -322,12 +322,21 @@ Gunshots/explosions/opening doors/less rare audio (done)
 /obj/effect/hallucination/delusion/New(loc,var/mob/living/carbon/T)
 	target = T
 	var/image/A = null
+	var/kind = rand(1,3)
 	for(var/mob/living/carbon/human/H in living_mob_list)
 		if(H == target)
 			continue
 		if(H in view(target))
 			continue
-		A = image('icons/mob/animal.dmi',H,"clown") //Todo : pick from diffrent stuff. Aliens/Lings/Clowns/Carp
+		switch(kind)
+			if(1)//Clown
+				A = image('icons/mob/animal.dmi',H,"clown")
+			if(2)//Carp
+				A = image('icons/mob/animal.dmi',H,"carp")
+			if(3)//Corgi
+				A = image('icons/mob/pets.dmi',H,"corgi")
+			if(4)//Skeletons
+				A = image('icons/mob/human.dmi',H,"skeleton_s")
 		A.override = 1
 		if(target.client)
 			delusions |= A
@@ -719,7 +728,11 @@ var/list/non_fakeattack_weapons = list(/obj/item/weapon/gun/projectile, /obj/ite
 					var/turf/simulated/floor/target = pick(possible_points)
 					switch(rand(1,4))
 						if(1)
-							halbody = image('icons/mob/human.dmi',target,"husk_l",TURF_LAYER)
+							var/image/body = image('icons/mob/human.dmi',target,"husk_s",TURF_LAYER)
+							var/matrix/M = matrix()
+							M.Turn(90)
+							body.transform = M
+							halbody = body
 						if(2,3)
 							halbody = image('icons/mob/human.dmi',target,"husk_s",TURF_LAYER)
 						if(4)
