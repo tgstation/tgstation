@@ -210,7 +210,7 @@ RCD
 
 		if(3)
 			if(istype(A, /turf/simulated/wall))
-				var/turf/simulated/wall/W
+				var/turf/simulated/wall/W = A
 				if(istype(W, /turf/simulated/wall/r_wall) && !canRwall)
 					return 0
 				if(checkResource(5, user))
