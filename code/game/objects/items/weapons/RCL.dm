@@ -33,7 +33,8 @@
 
 /obj/item/weapon/rcl/examine(mob/user)
 	..()
-	user << "<span class='info'>It contains [loaded.amount]/30 cables.</span>"
+	if(loaded)
+		user << "<span class='info'>It contains [loaded.amount]/30 cables.</span>"
 
 /obj/item/weapon/rcl/update_icon()
 	if(!loaded)
@@ -57,7 +58,8 @@
 /obj/item/weapon/rcl/proc/is_empty(mob/user)
 	update_icon()
 	if(!loaded.amount)
-		user << "<span class='notice'>The last of the cables unreel from the [src].</span>"
+		user << "<span class='notice'>The last of the cables unreel from \the [src].</span>"
+		returnToPool(loaded)
 		loaded = null
 		return 1
 	return 0
@@ -90,7 +92,7 @@
 	if(isscrewdriver(W))
 		user << "<span class='notice'>You loosen the securing screws on the side, allowing you to lower it and retrieve the wires.</span>"
 		loaded.loc = usr.loc
-		usr.put_in_hands(loaded)
+		user.put_in_hands(loaded)
 		loaded = null
 		update_icon()
 	else
