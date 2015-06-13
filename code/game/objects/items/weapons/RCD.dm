@@ -141,7 +141,7 @@ RCD
             matter += value*(S.amount)
             playsound(src.loc, 'sound/machines/click.ogg', 50, 1)
             user << "<span class='notice'>You insert [S.amount] [S.name] sheets into the RCD. </span>"
-            user.drop_item()
+            user.unEquip()
             qdel(S)
         return 1
     user << "<span class='warning'>You can't insert any more [S.name] sheets into the RCD!"
@@ -167,7 +167,6 @@ RCD
 	if(prob(20))
 		src.spark_system.start()
 	return
-
 
 /obj/item/weapon/rcd/proc/activate()
 	playsound(src.loc, 'sound/items/Deconstruct.ogg', 50, 1)
