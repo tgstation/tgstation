@@ -674,7 +674,7 @@ Turf and target are seperate in case you want to teleport some distance from a t
 
 	else return get_step(ref, base_dir)
 
-/proc/do_mob(var/mob/user , var/mob/target, var/time = 30, numticks = 5) //This is quite an ugly solution but i refuse to use the old request system.
+/proc/do_mob(var/mob/user , var/mob/target, var/time = 30, numticks = 5, var/stealth = 0) //This is quite an ugly solution but i refuse to use the old request system.
 	if(!user || !target)
 		return 0
 	if(numticks == 0)
@@ -683,13 +683,47 @@ Turf and target are seperate in case you want to teleport some distance from a t
 	var/target_loc = target.loc
 	var/holding = user.get_active_hand()
 	var/timefraction = round(time/numticks)
-	for(var/i = 0, i<numticks, i++)
+	var/image/progbar
+	for(var/i = 1 to numticks)
+		if(user.client)
+			if(!progbar)
+				progbar = image("icon" = 'icons/effects/doafter_icon.dmi', "loc" = user, "icon_state" = "prog_bar_0")
+			switch(round(((i / numticks) * 100)))
+				if(-INFINITY to 10)
+					progbar.icon_state = "prog_bar_0"
+				if(11 to 20)
+					progbar.icon_state = "prog_bar_10"
+				if(21 to 30)
+					progbar.icon_state = "prog_bar_20"
+				if(31 to 40)
+					progbar.icon_state = "prog_bar_30"
+				if(41 to 50)
+					progbar.icon_state = "prog_bar_40"
+				if(51 to 60)
+					progbar.icon_state = "prog_bar_50"
+				if(61 to 70)
+					progbar.icon_state = "prog_bar_60"
+				if(71 to 80)
+					progbar.icon_state = "prog_bar_70"
+				if(81 to 90)
+					progbar.icon_state = "prog_bar_80"
+				if(91 to INFINITY)
+					progbar.icon_state = "prog_bar_90"
+			progbar.pixel_y = 32
+			user.client.images |= progbar
 		sleep(timefraction)
 		if(!user || !target)
+			if(user && user.client)
+				user.client.images -= progbar
 			return 0
 		if ( user.loc != user_loc || target.loc != target_loc || user.get_active_hand() != holding || user.incapacitated() || user.lying )
+			if(user && user.client)
+				user.client.images -= progbar
 			return 0
-
+		if(user && user.client)
+			user.client.images -= progbar
+	if(user && user.client)
+		user.client.images -= progbar
 	return 1
 
 /proc/do_after(mob/user, delay, numticks = 5, needhand = 1, atom/target = null)
@@ -709,45 +743,43 @@ Turf and target are seperate in case you want to teleport some distance from a t
 	var/holdingnull = 1 //User is not holding anything
 	if(holding)
 		holdingnull = 0 //User is holding a tool of some kind
-	var/image/img = new('icons/effects/doafter_icon.dmi', "default_icon")
-	img.pixel_y = 32
-	user.overlays += img
-	for(var/i = 0, i<numticks, i++)
-		var/image/img2
-		var/percent = round(((i / numticks) * 100))
-		switch(percent)
-			if(-INFINITY to 10)
-				img2 = new('icons/effects/doafter_icon.dmi', "prog_bar_0")
-			if(11 to 20)
-				img2 = new('icons/effects/doafter_icon.dmi', "prog_bar_10")
-			if(21 to 30)
-				img2 = new('icons/effects/doafter_icon.dmi', "prog_bar_20")
-			if(31 to 40)
-				img2 = new('icons/effects/doafter_icon.dmi', "prog_bar_30")
-			if(41 to 50)
-				img2 = new('icons/effects/doafter_icon.dmi', "prog_bar_40")
-			if(51 to 60)
-				img2 = new('icons/effects/doafter_icon.dmi', "prog_bar_50")
-			if(61 to 70)
-				img2 = new('icons/effects/doafter_icon.dmi', "prog_bar_60")
-			if(71 to 80)
-				img2 = new('icons/effects/doafter_icon.dmi', "prog_bar_70")
-			if(81 to 90)
-				img2 = new('icons/effects/doafter_icon.dmi', "prog_bar_80")
-			if(91 to 100)
-				img2 = new('icons/effects/doafter_icon.dmi', "prog_bar_90")
-		if(img2)
-			img2.pixel_y = 32
-			user.overlays += img2
+	var/image/progbar
+	for (var/i = 1 to numticks)
+		if(user.client)
+			if(!progbar)
+				progbar = image("icon" = 'icons/effects/doafter_icon.dmi', "loc" = user, "icon_state" = "prog_bar_0")
+			switch(round(((i / numticks) * 100)))
+				if(-INFINITY to 10)
+					progbar.icon_state = "prog_bar_0"
+				if(11 to 20)
+					progbar.icon_state = "prog_bar_10"
+				if(21 to 30)
+					progbar.icon_state = "prog_bar_20"
+				if(31 to 40)
+					progbar.icon_state = "prog_bar_30"
+				if(41 to 50)
+					progbar.icon_state = "prog_bar_40"
+				if(51 to 60)
+					progbar.icon_state = "prog_bar_50"
+				if(61 to 70)
+					progbar.icon_state = "prog_bar_60"
+				if(71 to 80)
+					progbar.icon_state = "prog_bar_70"
+				if(81 to 90)
+					progbar.icon_state = "prog_bar_80"
+				if(91 to INFINITY)
+					progbar.icon_state = "prog_bar_90"
+			progbar.pixel_y = 32
+			user.client.images |= progbar
 		sleep(delayfraction)
 		if(!user || user.stat || user.weakened || user.stunned  || !(user.loc == Uloc))
-			user.overlays -= img
-			user.overlays -= img2
+			if(user && user.client)
+				user.client.images -= progbar
 			return 0
 
 		if(Tloc && (!target || Tloc != target.loc)) //Tloc not set when we don't want to track target
-			user.overlays -= img
-			user.overlays -= img2
+			if(user && user.client)
+				user.client.images -= progbar
 			return 0 // Target no longer exists or has moved
 
 		if(needhand)
@@ -755,15 +787,17 @@ Turf and target are seperate in case you want to teleport some distance from a t
 			//i.e the hand is used to insert some item/tool into the construction
 			if(!holdingnull)
 				if(!holding)
-					user.overlays -= img
-					user.overlays -= img2
+					if(user && user.client)
+						user.client.images -= progbar
 					return 0
 			if(user.get_active_hand() != holding)
-				user.overlays -= img
-				user.overlays -= img2
+				if(user && user.client)
+					user.client.images -= progbar
 				return 0
-		user.overlays -= img2
-	user.overlays -= img
+			if(user && user.client)
+				user.client.images -= progbar
+	if(user && user.client)
+		user.client.images -= progbar
 	return 1
 
 //Takes: Anything that could possibly have variables and a varname to check.
