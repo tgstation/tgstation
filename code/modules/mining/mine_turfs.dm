@@ -44,7 +44,6 @@
 
 /turf/simulated/mineral/New()
 	..()
-
 	spawn(1)
 		var/turf/T
 		if((istype(get_step(src, NORTH), /turf/simulated/floor)) || (istype(get_step(src, NORTH), /turf/space)))
@@ -72,7 +71,6 @@
 					Spread(T)
 
 	HideRock()
-	return
 
 /turf/simulated/mineral/proc/HideRock()
 	if(hidden)
@@ -80,7 +78,9 @@
 	return
 
 /turf/simulated/mineral/proc/Spread(var/turf/T)
-	new src.type(T)
+	T.ChangeTurf(src.type)
+	spawn(10)
+		T.lighting_fix_overlays()
 
 /turf/simulated/mineral/random
 	name = "mineral deposit"
@@ -94,31 +94,31 @@
 		var/mName = pickweight(mineralSpawnChanceList) //temp mineral name
 
 		if (mName)
-			var/turf/simulated/mineral/M
+			var/M
 			switch(mName)
 				if("Uranium")
-					M = new/turf/simulated/mineral/uranium(src)
+					M = /turf/simulated/mineral/uranium
 				if("Iron")
-					M = new/turf/simulated/mineral/iron(src)
+					M = /turf/simulated/mineral/iron
 				if("Diamond")
-					M = new/turf/simulated/mineral/diamond(src)
+					M = /turf/simulated/mineral/diamond
 				if("Gold")
-					M = new/turf/simulated/mineral/gold(src)
+					M = /turf/simulated/mineral/gold
 				if("Silver")
-					M = new/turf/simulated/mineral/silver(src)
+					M = /turf/simulated/mineral/silver
 				if("Plasma")
-					M = new/turf/simulated/mineral/plasma(src)
+					M = /turf/simulated/mineral/plasma
 				if("Cave")
-					new/turf/simulated/floor/plating/asteroid/airless/cave(src)
+					M = /turf/simulated/floor/plating/asteroid/airless/cave
 				if("Gibtonite")
-					M = new/turf/simulated/mineral/gibtonite(src)
+					M = /turf/simulated/mineral/gibtonite
 				if("Bananium")
-					M = new/turf/simulated/mineral/clown(src)
+					M = /turf/simulated/mineral/clown
 				/*if("Adamantine")
 					M = new/turf/simulated/mineral/adamantine(src)*/
 			if(M)
-				src = M
-				M.levelupdate()
+				src.ChangeTurf(M)
+				src.levelupdate()
 	return
 
 /turf/simulated/mineral/random/high_chance
@@ -391,7 +391,9 @@
 		return
 
 	SpawnMonster(T)
-	var/turf/simulated/floor/t = new /turf/simulated/floor/plating/asteroid/airless(T)
+	var/turf/simulated/floor/t = T.ChangeTurf(/turf/simulated/floor/plating/asteroid/airless)
+	spawn (10)
+		T.lighting_fix_overlays()
 	spawn(2)
 		t.fullUpdateMineralOverlays()
 
@@ -571,7 +573,6 @@
 			if (src.mineralName == "Bananium")
 				new /obj/item/weapon/ore/bananium(src)
 	var/turf/simulated/floor/plating/asteroid/airless/N = ChangeTurf(/turf/simulated/floor/plating/asteroid/airless)
-	reconsider_lights()
 	playsound(src, 'sound/effects/break_stone.ogg', 50, 1) //beautiful destruction
 	N.fullUpdateMineralOverlays()
 	return
@@ -691,7 +692,6 @@
 	icon_plating = "asteroid"
 	baseturf = /turf/simulated/floor/plating/asteroid
 	var/dug = 0       //0 = has not yet been dug, 1 = has already been dug
-	var/archaeo_overlay = ""
 	ignoredirt = 1
 
 /turf/simulated/floor/plating/asteroid/airless

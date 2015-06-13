@@ -21,12 +21,14 @@
 /obj/structure/falsewall/New()
 	..()
 	relativewall_neighbours()
+	set_opacity(opacity)
 
 /obj/structure/falsewall/Destroy()
 
 	var/temploc = loc
 	loc = null
 
+	set_opacity(0)
 	for(var/turf/simulated/wall/W in range(temploc,1))
 		W.relativewall()
 

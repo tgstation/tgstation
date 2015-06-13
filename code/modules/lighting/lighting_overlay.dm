@@ -23,9 +23,10 @@
 /atom/movable/lighting_overlay/New()
 	. = ..()
 	verbs.Cut()
-
+/*
 /atom/movable/lighting_overlay/Destroy()
 	return QDEL_HINT_PUTINPOOL
+*/
 
 /atom/movable/lighting_overlay/proc/update_lumcount(delta_r, delta_g, delta_b)
 	if(!delta_r && !delta_g && !delta_b) //Nothing is being changed all together.
@@ -118,6 +119,7 @@
 			D.effect_r -= src
 			D.effect_g -= src
 			D.effect_b -= src
+	..()
 
 /atom/movable/lighting_overlay/SinguloCanEat()
 	return 0

@@ -142,7 +142,6 @@
 /turf/proc/ChangeTurf(var/path)
 	if(!path)			return
 	if(path == type)	return src
-	var/old_dynamic_lighting = dynamic_lighting
 	var/list/old_affecting_lights = affecting_lights
 	#if LIGHTING_RESOLUTION == 1
 	var/old_lighting_overlay = lighting_overlay
@@ -157,15 +156,14 @@
 	var/turf/W = new path(src)
 	W.baseturf = old_baseturf
 //	W.opacity = old_opacity
-	W.dynamic_lighting = old_dynamic_lighting
+//	W.dynamic_lighting = old_dynamic_lighting
 	W.affecting_lights = old_affecting_lights
 	#if LIGHTING_RESOLUTION == 1
 	W.lighting_overlay = old_lighting_overlay
 	#else
 	W.lighting_overlays = old_lighting_overlays
 	#endif
-	W.reconsider_lights()
-	W.set_opacity(W.opacity)
+	W.update_overlay()
 
 
 	if(istype(W, /turf/simulated))

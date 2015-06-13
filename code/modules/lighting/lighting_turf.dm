@@ -53,6 +53,13 @@
 	lighting_clear_overlays()
 	lighting_build_overlays()
 
+/turf/proc/lighting_fix_overlays()	 //Purge all overlays and rebuild them
+	lighting_clear_overlays()
+	for(var/atom/movable/lighting_overlay/L in src.contents)
+		qdel(L)
+	lighting_build_overlays()
+	return
+
 /turf/proc/get_lumcount(var/minlum = 0, var/maxlum = 1)
 	if(!dynamic_lighting) //We're not dynamic, whatever, return 50% lighting.
 		return 0.5
