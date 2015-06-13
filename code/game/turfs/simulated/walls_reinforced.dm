@@ -10,6 +10,7 @@
 	var/d_state = 0
 	hardness = 10
 	sheet_type = /obj/item/stack/sheet/plasteel
+	explosion_block = 2
 
 /turf/simulated/wall/r_wall/break_wall()
 	builtin_sheet.loc = src
