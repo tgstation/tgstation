@@ -8,7 +8,7 @@
 	active_power_usage = 10
 	layer = 5
 
-	var/health = 50
+	var/health = 30
 	var/list/network = list("SS13")
 	var/c_tag = null
 	var/c_tag_order = 999
@@ -231,6 +231,7 @@
 			visible_message("<span class='warning'>[user] hits [src] with [W]!</span>", "<span class='warning'>You hit [src] with [W]!</span>")
 			health = max(0, health - W.force)
 			if(!health && status)
+				triggerCameraAlarm()
 				deactivate(user, 1)
 	return
 
@@ -270,7 +271,6 @@
 	alarm_on = 1
 	for(var/mob/living/silicon/S in mob_list)
 		S.triggerAlarm("Camera", get_area(src), list(src), src)
-
 
 /obj/machinery/camera/proc/cancelCameraAlarm()
 	alarm_on = 0
@@ -349,7 +349,8 @@
 	if(proj.damage_type == BRUTE)
 		health = max(0, health - proj.damage)
 		if(!health && status)
-			deactivate(user, 1)
+			triggerCameraAlarm()
+			deactivate(null, 1)
 
 /obj/machinery/camera/portable //Cameras which are placed inside of things, such as helmets.
 	var/turf/prev_turf
