@@ -106,7 +106,7 @@
 //HE Junctions
 ////////////////
 /obj/machinery/atmospherics/pipe/simple/heat_exchanging/junction
-	icon = 'icons/obj/pipes/junction.dmi'
+	icon = 'icons/obj/atmospherics/pipes/junction.dmi'
 	icon_state = "intact"
 	level = 2
 	minimum_temperature_difference = 300

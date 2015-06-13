@@ -112,16 +112,16 @@
 
 	//Add non-broken pieces
 	if(node1)
-		overlays += getpipeimage('icons/obj/atmospherics/pipe_manifold.dmi', "manifold_full[invis]", NORTH)
+		overlays += getpipeimage('icons/obj/atmospherics/pipes/manifold.dmi', "manifold_full[invis]", NORTH)
 
 	if(node2)
-		overlays += getpipeimage('icons/obj/atmospherics/pipe_manifold.dmi', "manifold_full[invis]", SOUTH)
+		overlays += getpipeimage('icons/obj/atmospherics/pipes/manifold.dmi', "manifold_full[invis]", SOUTH)
 
 	if(node3)
-		overlays += getpipeimage('icons/obj/atmospherics/pipe_manifold.dmi', "manifold_full[invis]", EAST)
+		overlays += getpipeimage('icons/obj/atmospherics/pipes/manifold.dmi', "manifold_full[invis]", EAST)
 
 	if(node4)
-		overlays += getpipeimage('icons/obj/atmospherics/pipe_manifold.dmi', "manifold_full[invis]", WEST)
+		overlays += getpipeimage('icons/obj/atmospherics/pipes/manifold.dmi', "manifold_full[invis]", WEST)
 
 /obj/machinery/atmospherics/pipe/manifold4w/update_node_icon()
 	..()
