@@ -1,0 +1,7 @@
+author: RemieRichards
+
+delete-after: True
+
+changes: 
+  - rscadd: "New optional explosion effect ported from /vg/'s DeityLink, Explosions that are affected by Walls and Doors"
+
