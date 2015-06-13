@@ -22,13 +22,14 @@ RCD
 	origin_tech = "engineering=4;materials=2"
 	var/datum/effect/effect/system/spark_spread/spark_system
 	var/matter = 0
-	var/max_matter = 100
+	var/max_matter = 160
 	var/working = 0
 	var/mode = 1
 	var/canRwall = 0
 	var/disabled = 0
 	var/airlock_type = /obj/machinery/door/airlock
 	var/advanced_airlock_setting = 1 //Set to 1 if you want more paintjobs available
+	var/sheetmultiplier	= 4			 //Controls the amount of matter added for each glass/metal sheet, triple for plasteel
 
 /obj/item/weapon/rcd/verb/change_airlock_setting()
 	set name = "Change Airlock Setting"
@@ -107,6 +108,7 @@ RCD
 
 /obj/item/weapon/rcd/attackby(obj/item/weapon/W, mob/user, params)
 	..()
+	var/loaded = 0
 	if(istype(W, /obj/item/weapon/rcd_ammo))
 		var/obj/item/weapon/rcd_ammo/R = W
 		if((matter + R.ammoamt) > max_matter)
@@ -116,10 +118,34 @@ RCD
 		qdel(W)
 		matter += R.ammoamt
 		playsound(src.loc, 'sound/machines/click.ogg', 50, 1)
+		loaded = 1
+	else if(istype(W, /obj/item/stack/sheet/metal) || istype(W, /obj/item/stack/sheet/glass))
+		loaded = loadwithsheets(W, sheetmultiplier, user)
+	else if(istype(W, /obj/item/stack/sheet/plasteel))
+		loaded = loadwithsheets(W, 3*sheetmultiplier, user) //Plasteel is worth 3 times more than glass or metal
+	if(loaded)
 		user << "<span class='notice'>The RCD now holds [matter]/[max_matter] matter-units.</span>"
 		desc = "A RCD. It currently holds [matter]/[max_matter] matter-units."
-		return
+	return
 
+/obj/item/weapon/rcd/proc/loadwithsheets(obj/item/stack/sheet/S, var/value, mob/user)
+    var/maxsheets = round((max_matter-matter)/value)    //calculate the max number of sheets that will fit in RCD
+    if(maxsheets > 0)
+        if(S.amount > maxsheets)
+            //S.amount -= maxsheets
+            S.use(maxsheets)
+            matter += value*maxsheets
+            playsound(src.loc, 'sound/machines/click.ogg', 50, 1)
+            user << "<span class='notice'>You insert [maxsheets] [S.name] sheets into the RCD. </span>"
+        else
+            matter += value*(S.amount)
+            playsound(src.loc, 'sound/machines/click.ogg', 50, 1)
+            user << "<span class='notice'>You insert [S.amount] [S.name] sheets into the RCD. </span>"
+            user.drop_item()
+            qdel(S)
+        return 1
+    user << "<span class='warning'>You can't insert any more [S.name] sheets into the RCD!"
+    return 0
 
 /obj/item/weapon/rcd/attack_self(mob/user)
 	//Change the mode
@@ -128,21 +154,20 @@ RCD
 		if(1)
 			mode = 2
 			user << "<span class='notice'>You change RCD's mode to 'Airlock'.</span>"
-			if(prob(20))
-				src.spark_system.start()
-			return
 		if(2)
 			mode = 3
 			user << "<span class='notice'>You change RCD's mode to 'Deconstruct'.</span>"
-			if(prob(20))
-				src.spark_system.start()
-			return
 		if(3)
+			mode = 4
+			user << "<span class='notice'>You change RCD's mode to 'Grilles & Windows'.</span>"
+		if(4)
 			mode = 1
 			user << "<span class='notice'>You change RCD's mode to 'Floor & Walls'.</span>"
-			if(prob(20))
-				src.spark_system.start()
-			return
+
+	if(prob(20))
+		src.spark_system.start()
+	return
+
 
 /obj/item/weapon/rcd/proc/activate()
 	playsound(src.loc, 'sound/items/Deconstruct.ogg', 50, 1)
@@ -154,7 +179,7 @@ RCD
 		return 0
 	if(istype(A,/area/shuttle)||istype(A,/turf/space/transit))
 		return 0
-	if(!(istype(A, /turf) || istype(A, /obj/machinery/door/airlock)))
+	if(!(istype(A, /turf) || istype(A, /obj/machinery/door/airlock) || istype(A, /obj/structure/grille) || istype(A, /obj/structure/window)))
 		return 0
 
 	switch(mode)
@@ -210,7 +235,7 @@ RCD
 
 		if(3)
 			if(istype(A, /turf/simulated/wall))
-				var/turf/simulated/wall/W
+				var/turf/simulated/wall/W = A
 				if(istype(W, /turf/simulated/wall/r_wall) && !canRwall)
 					return 0
 				if(checkResource(5, user))
@@ -248,7 +273,61 @@ RCD
 						qdel(A)
 						return 1
 				return	0
+
+			if(istype(A, /obj/structure/window))
+				user << "clicked on window"
+				if(checkResource(5, user))
+					user << "<span class='notice'>You start deconstructing the window...</span>"
+					playsound(src.loc, 'sound/machines/click.ogg', 50, 1)
+					if(do_after(user, 50))
+						if(!useResource(5, user)) return 0
+						activate()
+						qdel(A)
+						return 1
+				return	0
+
+			if(istype(A, /obj/structure/grille))
+				user << "clicked on grille"
+				if(checkResource(5, user))
+					user << "<span class='notice'>You start deconstructing the grille...</span>"
+					playsound(src.loc, 'sound/machines/click.ogg', 50, 1)
+					if(do_after(user, 50))
+						if(!useResource(5, user)) return 0
+						activate()
+						qdel(A)
+						return 1
+				return	0
 			return 0
+
+		if (4)
+			if(istype(A, /turf/simulated/floor))
+				if(checkResource(5, user))
+					for(var/obj/structure/grille/GRILLE in A)
+						user << "<span class='warning'>There is already a grille there!</span>"
+						return 0
+					user << "<span class='notice'>You start building a grille...</span>"
+					playsound(src.loc, 'sound/machines/click.ogg', 50, 1)
+					if(do_after(user, 40))
+						if(!useResource(5, user)) return 0
+						activate()
+						var/obj/structure/grille/G = new/obj/structure/grille(A)
+						G.anchored = 1
+						return 1
+					return 0
+				return 0
+			if(istype(A, /obj/structure/grille))
+				if(checkResource(5, user))
+					user << "<span class='notice'>You start building a window...</span>"
+					playsound(src.loc, 'sound/machines/click.ogg', 50, 1)
+					if(do_after(user, 40))
+						if(!useResource(5, user)) return 0
+						activate()
+						var/obj/structure/window/WD = new/obj/structure/window/fulltile(A.loc)
+						WD.anchored = 1
+						return 1
+					return 0
+				return 0
+
 		else
 			user << "ERROR: RCD in MODE: [mode] attempted use by [user]. Send this text #coderbus or an admin."
 			return 0
@@ -279,7 +358,7 @@ RCD
 	canRwall = 1
 
 /obj/item/weapon/rcd/loaded
-	matter = 100
+	matter = 160
 
 /obj/item/weapon/rcd/combat
 	name = "combat RCD"
