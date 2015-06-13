@@ -9,6 +9,7 @@ var/global/datum/controller/game_controller/master_controller = new()
 	var/processing_interval = 1	//The minimum length of time between MC ticks (in deciseconds). The highest this can be without affecting schedules, is the GCD of all subsystem var/wait. Set to 0 to disable all processing.
 	var/iteration = 0
 	var/cost = 0
+	var/SSCostPerSecond = 0
 	var/last_thing_processed
 
 	var/list/subsystems = list()
@@ -90,10 +91,11 @@ calculate the longest number of ticks the MC can wait between each cycle without
 				++iteration
 
 				start_time = world.timeofday
-
+				var/SubSystemRan = 0
 				for(var/datum/subsystem/SS in subsystems)
 					if(SS.can_fire > 0)
 						if(SS.next_fire <= world.time)
+							SubSystemRan = 1
 							timer = world.timeofday
 							last_thing_processed = SS.type
 							SS.last_fire = world.time
@@ -101,7 +103,9 @@ calculate the longest number of ticks the MC can wait between each cycle without
 							SS.cost = MC_AVERAGE(SS.cost, world.timeofday - timer)
 							if (SS.dynamic_wait)
 								var/oldwait = SS.wait
-								SS.wait = min(max(round(SS.cost*SS.dwait_delta, 0.1),SS.dwait_lower),SS.dwait_upper)
+								var/GlobalCostDelta = (SSCostPerSecond-(SS.cost/SS.wait))/(SS.wait/10)-1
+								var/NewWait = MC_AVERAGE(oldwait,(SS.cost-1.5+GlobalCostDelta)*SS.dwait_delta)
+								SS.wait = Clamp(round(NewWait,0.1),SS.dwait_lower,SS.dwait_upper)
 								if (oldwait != SS.wait)
 									calculateGCD()
 							SS.next_fire += SS.wait
@@ -110,10 +114,19 @@ calculate the longest number of ticks the MC can wait between each cycle without
 							sleep(-1)
 
 				cost = MC_AVERAGE(cost, world.timeofday - start_time)
-
+				if (SubSystemRan)
+					calculateSScost()
 				sleep(processing_interval)
 			else
 				sleep(50)
+
+/datum/controller/game_controller/proc/calculateSScost()
+	var/newcost = 0
+	for(var/datum/subsystem/SS in subsystems)
+		if (!SS.can_fire)
+			continue
+		newcost += SS.cost/(SS.wait/10)
+	SSCostPerSecond = MC_AVERAGE(SSCostPerSecond,newcost)
 
 #undef MC_AVERAGE
 

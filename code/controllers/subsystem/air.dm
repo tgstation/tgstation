@@ -3,7 +3,6 @@ var/datum/subsystem/air/SSair
 /datum/subsystem/air
 	name = "Air"
 	priority = 20
-	cost = 5
 	wait = 5
 	dynamic_wait = 1
 	dwait_lower = 5
