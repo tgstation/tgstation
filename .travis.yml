@@ -28,3 +28,12 @@ install:
 script:
   - bash dm.sh -M${DM_MAPFILE} tgstation.dme
   - python tools/ss13_genchangelog.py html/changelog.html html/changelogs
+  
+notifications:
+  irc:
+    channels:
+      - "irc.rizon.net#coderbus"
+    template:
+      - "%{repository} #%{build_number} (%{branch} - %{commit} : %{author}): %{message}"
+      - "Change view : %{compare_url}"
+      - "Build details : %{build_url}"
