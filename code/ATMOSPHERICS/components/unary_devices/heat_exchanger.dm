@@ -1,7 +1,6 @@
 /obj/machinery/atmospherics/unary/heat_exchanger
 
 	icon_state = "he_intact"
-	density = 1
 
 	name = "heat exchanger"
 	desc = "Exchanges heat between two input gases. Setup for fast heat transfer"
@@ -14,6 +13,7 @@
 /obj/machinery/atmospherics/unary/heat_exchanger/update_icon()
 	if(node)
 		icon_state = "he_intact"
+		color = node.color
 	else
 		icon_state = "he_exposed"
 

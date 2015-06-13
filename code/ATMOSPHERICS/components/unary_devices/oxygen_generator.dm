@@ -1,10 +1,9 @@
 /obj/machinery/atmospherics/unary/oxygen_generator
 
-	icon_state = "o2gen_off"
-	density = 1
+	icon_state = "o2gen_map"
 
 	name = "oxygen generator"
-	desc = ""
+	desc = "Generates oxygen"
 
 	dir = SOUTH
 	initialize_directions = SOUTH
@@ -13,15 +12,18 @@
 
 	var/oxygen_content = 10
 
-/obj/machinery/atmospherics/unary/oxygen_generator/update_icon()
-	if(node)
-		icon_state = "o2gen_[on?("on"):("off")]"
+/obj/machinery/atmospherics/unary/oxygen_generator/update_icon_nopipes()
+
+	overlays.Cut()
+	if(showpipe)
+		overlays += getpipeimage('icons/obj/atmospherics/unary_devices.dmi', "scrub_cap", initialize_directions) //it works for now
+
+	if(!node || !on || stat & BROKEN)
+		icon_state = "o2gen_off"
+		return
+
 	else
-		icon_state = "o2gen_exposed"
-
-		on = 0
-
-	return
+		icon_state = "o2gen_on"
 
 /obj/machinery/atmospherics/unary/oxygen_generator/New()
 	..()
