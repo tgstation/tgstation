@@ -1,9 +1,10 @@
 //use this define to highlight docking port bounding boxes (ONLY FOR DEBUG USE)
 //#define DOCKING_PORT_HIGHLIGHT
-
+/*
 #define ALLTURFS 0
 #define NONSPACE 1
 #define SHUTTLEONLY 2
+*/
 #define AREAONLY 3
 
 
@@ -23,7 +24,6 @@
 	var/height = 0	//size of covered area, paralell to dir
 	var/dwidth = 0	//position relative to covered area, perpendicular to dir
 	var/dheight = 0	//position relative to covered area, parallel to dir
-	var/turfcheck = NONSPACE
 
 	//these objects are indestructable
 /obj/docking_port/Destroy()
@@ -301,11 +301,7 @@
 			turf_type = S0.turf_type
 		if(S0.area_type)
 			area_type = S0.area_type
-	var/list/L0
-	if(turfcheck == AREAONLY)
-		L0 = return_ordered_turfs(x, y, z, dir, areaInstance)
-	else
-		L0 = return_ordered_turfs()
+	var/list/L0 = return_ordered_turfs(x, y, z, dir, areaInstance)
 	var/list/L1 = return_ordered_turfs(S1.x, S1.y, S1.z, S1.dir)
 
 	//remove area surrounding docking port
@@ -323,18 +319,6 @@
 		var/turf/T0 = L0[i]
 		if(!T0)
 			continue
-		if(src.turfcheck)
-			switch(turfcheck)
-				if (NONSPACE) //only move non-space turfs!
-					if(istype(T0, /turf/space))
-						continue
-				if (SHUTTLEONLY)
-					if(!T0.shuttle)
-						continue
-				else
-					if(!T0)
-						continue
-
 		var/turf/T1 = L1[i]
 		if(!T1)
 			continue
@@ -383,8 +367,9 @@
 			if(istype(M, /mob/living/carbon))
 				if(!M.buckled)
 					M.Weaken(3)
-		if(!istype(T0, /turf/space) && (turfcheck == NONSPACE || turfcheck == ALLTURFS))
-			T0.ChangeTurf(turf_type)
+
+		T0.ChangeTurf(turf_type)
+
 
 
 
@@ -404,7 +389,11 @@
 		SSair.add_to_active(T0,1)
 
 	spawn(5)
-		for(var/turf/T in areaInstance)
+		for(var/turf/T in L1)
+			if(!T)
+				continue
+//			if(!T.lighting_overlay)
+//				T.lighting_build_overlays()
 			T.update_overlay()
 			T.reconsider_lights()
 
@@ -457,11 +446,7 @@
 			if(!AM.anchored)
 				step(AM, dir)
 			else
-				if((turfcheck == NONSPACE || turfcheck == ALLTURFS))
-					qdel(AM)
-		T.reconsider_lights()
-		if(!istype(T,/turf/space) && (turfcheck == NONSPACE || turfcheck == ALLTURFS))
-			T.ChangeTurf(T.baseturf)
+				qdel(AM)
 /*
 //used to check if atom/A is within the shuttle's bounding box
 /obj/docking_port/mobile/proc/onShuttleCheck(atom/A)
@@ -634,6 +619,13 @@
 		T.color = color
 	if(T.dir != dir)
 		T.dir = dir
-	T.lighting_build_overlays()
-	T.update_overlay()
+
+	#if LIGHTING_RESOLUTION == 1
+	if(T.lighting_overlay != lighting_overlay)
+	#else
+	if(T.lighting_overlays.len != lighting_overlays.len)
+	#endif
+		T.lighting_fix_overlays()
+//	T.lighting_build_overlays()
+//
 	return T

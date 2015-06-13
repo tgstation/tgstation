@@ -1090,7 +1090,6 @@
 #include "code\modules\lighting\lighting_overlay.dm"
 #include "code\modules\lighting\lighting_system.dm"
 #include "code\modules\lighting\lighting_turf.dm"
-#include "code\modules\lighting\~lighting_undefs.dm"
 #include "code\modules\makeshift\armor.dm"
 #include "code\modules\makeshift\trayshield.dm"
 #include "code\modules\mining\bug_bait.dm"

@@ -148,7 +148,8 @@
 /atom/movable/lighting_overlay/narsie_act()
 	return 0
 
-
+/atom/movable/lighting_overlay/acid_act()
+	return 0
 /atom/movable/lighting_overlay/singularity_pull()
 	return 0
 /atom/movable/lighting_overlay/ex_act(severity)
