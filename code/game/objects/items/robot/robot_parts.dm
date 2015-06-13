@@ -5,31 +5,46 @@
 	icon_state = "blank"
 	flags = CONDUCT
 	slot_flags = SLOT_BELT
+	var/body_part = 0
+	var/usecyborgs = TRUE //can it be used for cyborg(/mob/living/silicon/robot)s?
+	//information that gets passed onto organs during limb augmentation
+	var/augment_icon = 'icons/mob/augments.dmi'
+	var/augment_icon_state = ""
 
 /obj/item/robot_parts/l_arm
 	name = "cyborg left arm"
 	desc = "A skeletal limb wrapped in pseudomuscles, with a low-conductivity case."
 	icon_state = "l_arm"
+	body_part = ARM_LEFT
+	augment_icon_state = "l_arm"
 
 /obj/item/robot_parts/r_arm
 	name = "cyborg right arm"
 	desc = "A skeletal limb wrapped in pseudomuscles, with a low-conductivity case."
 	icon_state = "r_arm"
+	body_part = ARM_RIGHT
+	augment_icon_state = "r_arm"
 
 /obj/item/robot_parts/l_leg
 	name = "cyborg left leg"
 	desc = "A skeletal limb wrapped in pseudomuscles, with a low-conductivity case."
 	icon_state = "l_leg"
+	body_part = LEG_LEFT
+	augment_icon_state = "l_leg"
 
 /obj/item/robot_parts/r_leg
 	name = "cyborg right leg"
 	desc = "A skeletal limb wrapped in pseudomuscles, with a low-conductivity case."
 	icon_state = "r_leg"
+	body_part = LEG_RIGHT
+	augment_icon_state = "r_leg"
 
 /obj/item/robot_parts/chest
 	name = "cyborg torso"
 	desc = "A heavily reinforced case containing cyborg logic boards, with space for a standard power cell."
 	icon_state = "chest"
+	body_part = CHEST
+	augment_icon_state = "chest"
 	var/wires = 0.0
 	var/obj/item/weapon/stock_parts/cell/cell = null
 
@@ -37,6 +52,8 @@
 	name = "cyborg head"
 	desc = "A standard reinforced braincase, with spine-plugged neural socket and sensor gimbals."
 	icon_state = "head"
+	body_part = HEAD
+	augment_icon_state = "head"
 	var/obj/item/device/flash/handheld/flash1 = null
 	var/obj/item/device/flash/handheld/flash2 = null
 
@@ -100,55 +117,63 @@
 		else
 			user << "<span class='warning'>You need one sheet of metal to start building ED-209!</span>"
 			return
-	if(istype(W, /obj/item/robot_parts/l_leg))
-		if(src.l_leg)	return
-		user.drop_item()
-		W.loc = src
-		src.l_leg = W
-		src.updateicon()
 
-	if(istype(W, /obj/item/robot_parts/r_leg))
-		if(src.r_leg)	return
-		user.drop_item()
-		W.loc = src
-		src.r_leg = W
-		src.updateicon()
+	if(istype(W, /obj/item/robot_parts))
+		var/obj/item/robot_parts/RP = W
+		if(!RP.usecyborgs)
+			return
 
-	if(istype(W, /obj/item/robot_parts/l_arm))
-		if(src.l_arm)	return
-		user.drop_item()
-		W.loc = src
-		src.l_arm = W
-		src.updateicon()
-
-	if(istype(W, /obj/item/robot_parts/r_arm))
-		if(src.r_arm)	return
-		user.drop_item()
-		W.loc = src
-		src.r_arm = W
-		src.updateicon()
-
-	if(istype(W, /obj/item/robot_parts/chest))
-		if(src.chest)	return
-		if(W:wires && W:cell)
+		if(istype(W, /obj/item/robot_parts/l_leg))
+			if(src.l_leg)	return
 			user.drop_item()
 			W.loc = src
-			src.chest = W
+			src.l_leg = W
 			src.updateicon()
-		else if(!W:wires)
-			user << "<span class='warning'>You need to attach wires to it first!</span>"
-		else
-			user << "<span class='warning'>You need to attach a cell to it first!</span>"
 
-	if(istype(W, /obj/item/robot_parts/head))
-		if(src.head)	return
-		if(W:flash2 && W:flash1)
+		if(istype(W, /obj/item/robot_parts/r_leg))
+			if(src.r_leg)	return
 			user.drop_item()
 			W.loc = src
-			src.head = W
+			src.r_leg = W
 			src.updateicon()
-		else
-			user << "<span class='warning'>You need to attach a flash to it first!</span>"
+
+		if(istype(W, /obj/item/robot_parts/l_arm))
+			if(src.l_arm)	return
+			user.drop_item()
+			W.loc = src
+			src.l_arm = W
+			src.updateicon()
+
+		if(istype(W, /obj/item/robot_parts/r_arm))
+			if(src.r_arm)	return
+			user.drop_item()
+			W.loc = src
+			src.r_arm = W
+			src.updateicon()
+
+		if(istype(W, /obj/item/robot_parts/chest))
+			var/obj/item/robot_parts/chest/CH = W
+			if(src.chest)	return
+			if(CH.wires && CH.cell)
+				user.drop_item()
+				CH.loc = src
+				src.chest = CH
+				src.updateicon()
+			else if(!CH.wires)
+				user << "<span class='warning'>You need to attach wires to it first!</span>"
+			else
+				user << "<span class='warning'>You need to attach a cell to it first!</span>"
+
+		if(istype(W, /obj/item/robot_parts/head))
+			var/obj/item/robot_parts/head/HE = W
+			if(src.head)	return
+			if(HE.flash2 && HE.flash1)
+				user.drop_item()
+				HE.loc = src
+				src.head = HE
+				src.updateicon()
+			else
+				user << "<span class='warning'>You need to attach a flash to it first!</span>"
 
 	if (istype(W, /obj/item/device/multitool))
 		if(check_completion())

@@ -44,58 +44,42 @@
 
 /datum/surgery_step/add_limb/success(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)
 	if(L)
-		if(ishuman(target))
-			switch(L.body_part)
-				if(CHEST)
-					if(!istype(tool,/obj/item/robot_parts/chest))
-						user << "<span class='warning'>That is the wrong robotic limb for this body part.</span>"
-						return 0
-				if(HEAD)
-					if(!istype(tool,/obj/item/robot_parts/head))
-						user << "<span class='warning'>That is the wrong robotic limb for this body part.</span>"
-						return 0
-				if(ARM_LEFT)
-					if(!istype(tool,/obj/item/robot_parts/l_arm))
-						user << "<span class='warning'>That is the wrong robotic limb for this body part.</span>"
-						return 0
-				if(ARM_RIGHT)
-					if(!istype(tool,/obj/item/robot_parts/r_arm))
-						user << "<span class='warning'>That is the wrong robotic limb for this body part.</span>"
-						return 0
-				if(LEG_LEFT)
-					if(!istype(tool,/obj/item/robot_parts/l_leg))
-						user << "<span class='warning'>That is the wrong robotic limb for this body part.</span>"
-						return 0
-				if(LEG_RIGHT)
-					if(!istype(tool,/obj/item/robot_parts/r_leg))
-						user << "<span class='warning'>That is the wrong robotic limb for this body part.</span>"
-						return 0
+		var/obj/item/robot_parts/RP = tool
+		if(!istype(RP))
+			user << "<span class='warning'>That's not a robotic limb!</span>"
+			return 0
+		if(RP.body_part != L.body_part)
+			user << "<span class='warning'>That is the wrong robotic limb for this body part!</span>"
+			return 0
 
+		if(ishuman(target))
 			var/mob/living/carbon/human/H = target
+			var/turf/Hloc = get_turf(H)
 			user.visible_message("[user] successfully augments [target]'s [parse_zone(target_zone)]!", "<span class='notice'>You successfully augment [target]'s [parse_zone(target_zone)].</span>")
-			L.loc = get_turf(target)
-			H.organs -= L
-			switch(target_zone)
-				if("r_leg")
-					H.organs += new /obj/item/organ/limb/robot/r_leg(src)
-				if("l_leg")
-					H.organs += new /obj/item/organ/limb/robot/l_leg(src)
-				if("r_arm")
-					H.organs += new /obj/item/organ/limb/robot/r_arm(src)
-				if("l_arm")
-					H.organs += new /obj/item/organ/limb/robot/l_arm(src)
-				if("head")
-					H.organs += new /obj/item/organ/limb/robot/head(src)
-				if("chest")
-					var/datum/surgery_step/xenomorph_removal/xeno_removal = new
-					xeno_removal.remove_xeno(user, target) // remove an alien if there is one
-					H.organs += new /obj/item/organ/limb/robot/chest(src)
-					for(var/datum/disease/appendicitis/A in H.viruses) //If they already have Appendicitis, Remove it
-						A.cure(1)
+			var/obj/item/organ/limb/dummy = new L.type (Hloc)
+			dummy.copy_organ(L)
+			dummy.embedded_objects.Cut()
+
+			//Deliberately after the copy_organ call, so flesh limbs don't drop robot ones
+			L.status = ORGAN_ROBOTIC
+			L.augment_icon = RP.augment_icon
+			L.augment_icon_state = RP.augment_icon_state
+			//It's a "new" limb, so heal it
+			L.heal_damage(999, 999, 1)
+			for(var/obj/item/I in L.embedded_objects)
+				L.embedded_objects -= I
+				I.loc = Hloc
+
+			if(L.body_part == CHEST)
+				var/datum/surgery_step/xenomorph_removal/xeno_removal = new
+				xeno_removal.remove_xeno(user, target)
+				for(var/datum/disease/appendicitis/A in H.viruses)
+					A.cure(1)
+
 			user.drop_item()
 			qdel(tool)
 			H.update_damage_overlays(0)
-			H.update_augments() //Gives them the Cyber limb overlay
+			H.update_augments()
 			add_logs(user, target, "augmented", addition="by giving him new [parse_zone(target_zone)] INTENT: [uppertext(user.a_intent)]")
 	else
 		user << "<span class='warning'>[target] has no organic [parse_zone(target_zone)] there!</span>"

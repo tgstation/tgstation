@@ -558,3 +558,55 @@ Congratulations! You are now trained for xenobiology research!"}
 	desc = "Contains secrets of the universe"
 	icon_state = "abductor"
 	icon_door = "abductor"
+
+
+
+//Abductor augs
+
+/obj/item/robot_parts/abductor
+	name = "aliem robotic part"
+	usecyborgs = FALSE // ayyliens only
+	augment_icon = 'icons/mob/augments.dmi'
+	augment_icon_state = ""
+
+/obj/item/robot_parts/abductor/l_arm
+	name = "alien robotic left arm"
+	icon_state = "abductor_l_arm"
+	item_state = "abductor_arm"
+	augment_icon_state = "abductor_l_arm"
+	body_part = ARM_LEFT
+
+/obj/item/robot_parts/abductor/r_arm
+	name = "alien robotic right arm"
+	icon_state = "abductor_r_arm"
+	item_state = "abductor_arm"
+	augment_icon_state = "abductor_r_arm"
+	body_part = ARM_RIGHT
+
+/obj/item/robot_parts/abductor/l_leg
+	name = "alien robotic left leg"
+	icon_state = "abductor_l_leg"
+	item_state = "abductor_leg"
+	augment_icon_state = "abductor_l_leg"
+	body_part = LEG_LEFT
+
+/obj/item/robot_parts/abductor/r_leg
+	name = "alien robotic right leg"
+	icon_state = "abductor_r_leg"
+	item_state = "abductor_leg"
+	augment_icon_state = "abductor_r_leg"
+	body_part = LEG_RIGHT
+
+/obj/item/robot_parts/abductor/chest
+	name = "alien robotic chest"
+	icon_state = "abductor_chest"
+	item_state = "abductor_chest"
+	augment_icon_state = "abductor_chest"
+	body_part = CHEST
+
+/obj/item/robot_parts/abductor/head
+	name = "alien robotic head"
+	icon_state = "abductor_head"
+	item_state = "abductor_head"
+	augment_icon_state = "abductor_head"
+	body_part = HEAD
