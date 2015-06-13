@@ -1091,6 +1091,8 @@ var/global/list/g_fancy_list_of_types = null
 
 	usr << browse(dat, "window=dellog")
 
+
+
 //Deathsquad
 /proc/equip_deathsquad(var/mob/living/carbon/human/M, var/officer)
 	var/obj/item/device/radio/R = new /obj/item/device/radio/headset/headset_cent/alt(M)

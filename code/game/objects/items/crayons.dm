@@ -136,10 +136,7 @@
 
 /obj/item/toy/crayon/spraycan/New()
 	..()
-	if(gang)
-		name = "Modified Paint Applicator"
-	else
-		name = "NanoTrasen-brand Rapid Paint Applicator"
+	name = "spray can"
 	update_icon()
 
 /obj/item/toy/crayon/spraycan/examine(mob/user)
@@ -155,7 +152,7 @@
 		if("Toggle Cap")
 			user << "<span class='notice'>You [capped ? "Remove" : "Replace"] the cap of the [src]</span>"
 			capped = capped ? 0 : 1
-			icon_state = "spraycan[gang ? "_gang" : ""][capped ? "_cap" : ""]"
+			icon_state = "spraycan[capped ? "_cap" : ""]"
 			update_icon()
 		if("Change Drawing")
 			..()
@@ -194,8 +191,7 @@
 	overlays += I
 
 /obj/item/toy/crayon/spraycan/gang
-	desc = "A suspicious-looking spraycan modified to use special paint used by gangsters to mark territory."
-	icon_state = "spraycan_gang_cap"
+	desc = "A modified container containing suspicious paint."
 	gang = 1
 	uses = 20
 	instant = -1
