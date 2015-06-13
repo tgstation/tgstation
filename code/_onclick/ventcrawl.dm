@@ -122,7 +122,7 @@ var/list/ventcrawl_machinery = list(/obj/machinery/atmospherics/unary/vent_pump,
 
 					visible_message("<B>[src] scrambles into the ventilation ducts!</B>", "You climb into the ventilation system.")
 
-					loc = vent_found
+					forceMove(vent_found)
 					add_ventcrawl(vent_found)
 
 				else

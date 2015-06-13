@@ -17,17 +17,6 @@ Pipelines + Other Objects -> Pipe network
 #define IS_MIRROR	1
 #define ALL_LAYER	2 //if the pipe can connect at any layer, instead of just the specific one
 
-#define PIPING_LAYER_DEFAULT	3 //starting value - this is the "central" pipe
-#define PIPING_LAYER_INCREMENT	1 //how much the smallest step in piping_layer is
-
-#define PIPING_LAYER_MIN	1
-#define PIPING_LAYER_MAX	5
-
-#define PIPING_LAYER_P_X		5 //each positive increment of piping_layer changes the pixel_x by this amount
-#define PIPING_LAYER_P_Y		-5 //same, but negative because they form a diagonal
-#define PIPING_LAYER_LCHANGE	0.05 //how much the layer var changes per increment
-
-
 /obj/machinery/atmospherics
 	anchored = 1
 	idle_power_usage = 0
@@ -232,11 +221,16 @@ Pipelines + Other Objects -> Pipe network
 
 #define VENT_SOUND_DELAY 30
 
+/obj/machinery/atmospherics/Entered(atom/movable/Obj)
+	if(istype(Obj, /mob/living))
+		var/mob/living/L = Obj
+		L.ventcrawl_layer = src.piping_layer
+
 /obj/machinery/atmospherics/relaymove(mob/living/user, direction)
 	if(!(direction & initialize_directions)) //can't go in a way we aren't connecting to
 		return
 
-	var/obj/machinery/atmospherics/target_move = findConnecting(direction)
+	var/obj/machinery/atmospherics/target_move = findConnecting(direction, user.ventcrawl_layer)
 	if(target_move)
 		if(is_type_in_list(target_move, ventcrawl_machinery) && target_move.can_crawl_through())
 			user.remove_ventcrawl()
@@ -246,7 +240,7 @@ Pipelines + Other Objects -> Pipe network
 			if(target_move.return_network(target_move) != return_network(src))
 				user.remove_ventcrawl()
 				user.add_ventcrawl(target_move)
-			user.loc = target_move
+			user.forceMove(target_move)
 			user.client.eye = target_move //if we don't do this, Byond only updates the eye every tick - required for smooth movement
 			if(world.time - user.last_played_vent > VENT_SOUND_DELAY)
 				user.last_played_vent = world.time

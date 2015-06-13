@@ -517,19 +517,35 @@ var/global/list/nlist = list( \
 	flags = FPRINT
 	w_class = 4
 
+	var/layer_to_make = PIPING_LAYER_DEFAULT
+
 /obj/item/pipe_meter/attackby(var/obj/item/weapon/W as obj, var/mob/user as mob)
 	..()
 
 	if (!istype(W, /obj/item/weapon/wrench))
 		return ..()
-	if(!locate(/obj/machinery/atmospherics/pipe, src.loc))
+	var/obj/machinery/atmospherics/pipe/pipe
+	for(var/obj/machinery/atmospherics/pipe/P in src.loc)
+		if(P.piping_layer == layer_to_make)
+			pipe = P
+			break
+	if(!pipe)
 		user << "<span class='warning'>You need to fasten it to a pipe</span>"
 		return 1
-	new/obj/machinery/meter( src.loc )
+	new/obj/machinery/meter(src.loc, pipe)
 	playsound(get_turf(src), 'sound/items/Ratchet.ogg', 50, 1)
 	user << "<span class='notice'>You have fastened the meter to the pipe</span>"
 	del(src)
 
+/obj/item/pipe_meter/dropped()
+	..()
+	if(loc)
+		setAttachLayer(layer_to_make)
+
+/obj/item/pipe_meter/proc/setAttachLayer(var/new_layer = PIPING_LAYER_DEFAULT)
+	layer_to_make = new_layer
+	src.pixel_x = (new_layer - PIPING_LAYER_DEFAULT) * PIPING_LAYER_P_X
+	src.pixel_y = (new_layer - PIPING_LAYER_DEFAULT) * PIPING_LAYER_P_Y
 
 /obj/item/pipe_gsensor
 	name = "gas sensor"

@@ -20,6 +20,16 @@ var/global/disable_vents     = 0
 #define CHECK_DISABLED(TYPE) /* DO NOTHINK */
 #endif
 
+#define PIPING_LAYER_DEFAULT	3 //starting value - this is the "central" pipe
+#define PIPING_LAYER_INCREMENT	1 //how much the smallest step in piping_layer is
+
+#define PIPING_LAYER_MIN	1
+#define PIPING_LAYER_MAX	5
+
+#define PIPING_LAYER_P_X		5 //each positive increment of piping_layer changes the pixel_x by this amount
+#define PIPING_LAYER_P_Y		-5 //same, but negative because they form a diagonal
+#define PIPING_LAYER_LCHANGE	0.05 //how much the layer var changes per increment
+
 #define PI 3.1415
 
 #define R_IDEAL_GAS_EQUATION	8.314 //kPa*L/(K*mol)

@@ -943,10 +943,17 @@
 		user << "<span class='notice'>You paint the pipe yellow.</span>"
 		update_icon()
 		return 1
+
+	if(istype(W, /obj/item/pipe_meter))
+		var/obj/item/pipe_meter/meter = W
+		user.drop_item(meter, src.loc)
+		meter.setAttachLayer(src.piping_layer)
+
 	if(istype(W,/obj/item/device/analyzer))
 		var/obj/item/device/analyzer/A = W
 		var/datum/gas_mixture/environment = src.return_air()
 		user.show_message(A.output_gas_scan(environment,src,1))
+
 	return ..()
 
 
@@ -1108,3 +1115,28 @@
 
 /obj/machinery/atmospherics/pipe/layer_manifold/getNodeType()
 	return PIPE_TYPE_STANDARD
+
+//We would normally set layer here, but I don't want to
+/obj/machinery/atmospherics/pipe/layer_manifold/Entered()
+	return
+
+/obj/machinery/atmospherics/pipe/layer_manifold/relaymove(mob/living/user, direction)
+	if(!(direction & initialize_directions)) //can't go in a way we aren't connecting to
+		var/layer_mod = 0
+
+		if(dir & (NORTH|SOUTH))
+			if(direction == EAST) //Going up in layers
+				layer_mod = 1
+			else
+				layer_mod = -1
+		else
+			if(direction == SOUTH) //
+				layer_mod = 1
+			else
+				layer_mod = -1
+
+		user.ventcrawl_layer = Clamp(user.ventcrawl_layer + layer_mod, PIPING_LAYER_MIN, PIPING_LAYER_MAX)
+		user << "You align yourself with the [user.ventcrawl_layer]\th output."
+		return 1
+	else
+		return ..()
