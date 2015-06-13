@@ -100,6 +100,15 @@
 		L.update_lumcount(delta_r, delta_g, delta_b)
 	#endif
 
+
+/turf/proc/set_lumcount(red, green, blue)
+	#if LIGHTING_RESOLUTION == 1
+	lighting_overlay.set_lumcount(red, green, blue)
+	#else
+	for(var/atom/movable/lighting_overlay/L in lighting_overlays)
+		L.set_lumcount(red, green, blue)
+	#endif
+
 //Used for shuttles
 /turf/proc/update_overlay()
 	#if LIGHTING_RESOLUTION == 1

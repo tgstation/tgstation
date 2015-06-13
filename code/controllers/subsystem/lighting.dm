@@ -89,7 +89,7 @@ var/datum/subsystem/lighting/SSlighting
 	if(z_level)
 		create_lighting_overlays(z_level)
 
-	if(config.starlight)  //As if!
+	if(config.starlight)
 		set background = 1
 		for(var/turf/space/S in world)
 			S.update_starlight()

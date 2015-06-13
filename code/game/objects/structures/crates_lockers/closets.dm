@@ -294,7 +294,8 @@
 		return
 
 	if(!src.toggle())
-		return src.attackby(null, user)
+		togglelock(user)
+		return
 
 // tk grab then use on self
 /obj/structure/closet/attack_self_tk(mob/user as mob)

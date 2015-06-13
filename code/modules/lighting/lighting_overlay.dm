@@ -55,23 +55,41 @@
 		needs_update = 1
 		lighting_update_overlays += src
 
+
+/atom/movable/lighting_overlay/proc/set_lumcount(red, green, blue)
+	lum_r = red
+	lum_g = green
+	lum_b = blue
+
+	if(!needs_update)
+		needs_update = 1
+		lighting_update_overlays += src
+
+
+
 /atom/movable/lighting_overlay/proc/update_overlay()
-	var/mx = max(lum_r, lum_g, lum_b)
-	. = 1 // factor
-	if(mx > 1)
-		. = 1/mx
-	#if LIGHTING_TRANSITIONS == 1
-	animate(src,
-		color = rgb(lum_r * 255 * ., lum_g * 255 * ., lum_b * 255 * .),
-		LIGHTING_TRANSITION_SPEED
-	)
-	#else
-	color = rgb(lum_r * 255 * ., lum_g * 255 * ., lum_b * 255 * .)
-	#endif
 
 	var/turf/T = loc
 
 	if(istype(T)) //Incase we're not on a turf, pool ourselves, something happened.
+	/*	if(!T.dynamic_lighting)  //Do not calculate if lighting shouldn't be dynamic
+			color ="#FFFFFF"
+			T.luminosity = 1
+
+			return
+			*/
+		var/mx = max(lum_r, lum_g, lum_b)
+		. = 1 // factor
+		if(mx > 1)
+			. = 1/mx
+		#if LIGHTING_TRANSITIONS == 1
+		animate(src,
+			color = rgb(lum_r * 255 * ., lum_g * 255 * ., lum_b * 255 * .),
+			LIGHTING_TRANSITION_SPEED
+			)
+		#else
+		color = rgb(lum_r * 255 * ., lum_g * 255 * ., lum_b * 255 * .)
+		#endif
 		if(color != "#000000")
 			T.luminosity = 1
 		else  //No light, set the turf's luminosity to 0 to remove it from view()
@@ -84,7 +102,8 @@
 
 		universe.OnTurfTick(T)
 	else
-		warning("A lighting overlay realised it's loc was NOT a turf (actual loc: [loc], [loc.type]) in update_overlay() and got pooled!")
+		if(loc)
+			warning("A lighting overlay realised it's loc was NOT a turf (actual loc: [loc], [loc.type]) in update_overlay() and got pooled!")
 		qdel(src)
 
 /atom/movable/lighting_overlay/ResetVars()

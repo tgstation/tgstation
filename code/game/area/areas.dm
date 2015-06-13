@@ -23,7 +23,7 @@
 
 /area/New()
 	icon_state = ""
-	layer = 10
+	layer = LIGHTING_LAYER
 //	master = src //moved outside the spawn(1) to avoid runtimes in lighting.dm when it references src.loc.loc.master ~Carn
 	uid = ++global_uid
 	areas.Add(src)

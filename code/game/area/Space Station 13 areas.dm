@@ -26,7 +26,7 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 	icon_state = "unknown"
 	layer = 10
 	mouse_opacity = 0
-//	invisibility = INVISIBILITY_LIGHTING
+	invisibility = INVISIBILITY_LIGHTING //Why did I comment this out earlier? -zaers
 	luminosity = 0
 	var/lightswitch = 1
 	var/valid_territory = 1 //If it's a valid territory for gangs to claim

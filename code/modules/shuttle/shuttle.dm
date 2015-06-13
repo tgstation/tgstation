@@ -396,6 +396,7 @@
 		T1.CalculateAdjacentTurfs()
 		SSair.add_to_active(T1,1)
 		T1.update_overlay()
+		T1.reconsider_lights()
 
 	for(var/turf/T0 in L0)
 //		T0.shift_to_subarea()
@@ -403,7 +404,9 @@
 		T0.CalculateAdjacentTurfs()
 		SSair.add_to_active(T0,1)
 		T0.update_overlay()
-)
+		T0.reconsider_lights()
+
+
 
 /*
 	if(istype(S1, /obj/docking_port/stationary/transit))
@@ -634,4 +637,5 @@
 		T.color = color
 	if(T.dir != dir)
 		T.dir = dir
+	T.set_light(initial(T.light_range), initial(T.light_power)) //Null out starlight
 	return T

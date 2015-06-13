@@ -102,6 +102,11 @@ var/datum/subsystem/ticker/ticker
 				auto_toggle_ooc(1) // Turn it on
 				declare_completion()
 				spawn(50)
+
+/*					if(config.hook_round_end == 1) //Can be used to execute updates etc.
+							world.log << "SHELL CALL: ROUND END"
+							shell("cd hooks/onRoundEnd/ && python2 onRoundEnd.py >> shell.log 2>&1")
+*/
 					if(mode.station_was_nuked)
 						world.Reboot("Station destroyed by Nuclear Device.", "end_proper", "nuke")
 

@@ -330,8 +330,9 @@
 		throwtarget = get_edge_target_turf(user, get_dir(user, get_step_away(AM, user)))
 		distfromcaster = get_dist(user, AM)
 		spawn(10)
-			AM.overlays -= targeteffect
-			qdel(targeteffect)
+			if(AM)
+				AM.overlays -= targeteffect
+				qdel(targeteffect)
 		if(distfromcaster == 0)
 			if(istype(AM, /mob/living))
 				var/mob/living/M = AM

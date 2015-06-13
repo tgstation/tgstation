@@ -16,7 +16,7 @@
 					#if LIGHTING_RESOLUTION == 1
 					var/atom/movable/lighting_overlay/O = PoolOrNew(/atom/movable/lighting_overlay, T)
 					O.icon_state = state
-					all_lighting_overlays |= O
+					all_lighting_overlays += O
 					T.lighting_overlay = O
 					#else
 					for(var/i = 0; i < LIGHTING_RESOLUTION; i++)
@@ -27,8 +27,8 @@
 							O.xoffset = (((2*i + 1) / (LIGHTING_RESOLUTION * 2)) - 0.5)
 							O.yoffset = (((2*j + 1) / (LIGHTING_RESOLUTION * 2)) - 0.5)
 							O.icon_state = state
-							all_lighting_overlays |= O
-							T.lighting_overlays |= O
+							all_lighting_overlays += O
+							T.lighting_overlays += O
 					#endif
 	else
 		for(var/x = 1; x <= world.maxx; x++)
@@ -40,7 +40,7 @@
 						#if LIGHTING_RESOLUTION == 1
 						var/atom/movable/lighting_overlay/O = PoolOrNew(/atom/movable/lighting_overlay, T)
 						O.icon_state = state
-						all_lighting_overlays |= O
+						all_lighting_overlays += O
 						T.lighting_overlay = O
 						#else
 						for(var/i = 0; i < LIGHTING_RESOLUTION; i++)
@@ -51,6 +51,6 @@
 								O.xoffset = (((2*i + 1) / (LIGHTING_RESOLUTION * 2)) - 0.5)
 								O.yoffset = (((2*j + 1) / (LIGHTING_RESOLUTION * 2)) - 0.5)
 								O.icon_state = state
-								all_lighting_overlays |= O
-								T.lighting_overlays |= O
+								all_lighting_overlays += O
+								T.lighting_overlays += O
 						#endif

@@ -152,6 +152,9 @@
 // Garbage collect itself by nulling reference to it
 
 /obj/effect/hotspot/proc/Kill()
+	if(light) //This shit doesn't call ..() so it needs this copypasta
+		light.destroy()
+		light = null
 	PlaceInPool(src)
 
 /obj/effect/hotspot/Destroy()
@@ -162,7 +165,9 @@
 		if(T.active_hotspot == src)
 			T.active_hotspot = null
 	loc = null
-	update_light()
+	if(light)
+		light.destroy()
+		light = null
 	return QDEL_HINT_PUTINPOOL
 
 /obj/effect/hotspot/proc/DestroyTurf()

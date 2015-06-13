@@ -155,16 +155,17 @@
 
 	var/turf/W = new path(src)
 	W.baseturf = old_baseturf
-//	W.opacity = old_opacity
-//	W.dynamic_lighting = old_dynamic_lighting
 	W.affecting_lights = old_affecting_lights
 	#if LIGHTING_RESOLUTION == 1
 	W.lighting_overlay = old_lighting_overlay
 	#else
 	W.lighting_overlays = old_lighting_overlays
 	#endif
-	W.update_overlay()
-
+	if(!istype(W, /turf/space))
+		W.lighting_build_overlays()
+		W.update_overlay()
+	else
+		W.lighting_clear_overlays()
 
 	if(istype(W, /turf/simulated))
 		W:Assimilate_Air()
@@ -184,6 +185,7 @@
 
 	W.levelupdate()
 	W.CalculateAdjacentTurfs()
+
 	universe.OnTurfChange(W)
 	return W
 

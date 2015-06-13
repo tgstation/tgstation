@@ -51,14 +51,17 @@
 	ChangeTurf(/turf/simulated/floor/plating)
 
 /turf/simulated/wall/proc/break_wall()
+	if(builtin_sheet)
 		builtin_sheet.amount = 2
 		builtin_sheet.loc = src
-		return (new /obj/structure/girder(src))
+	return (new /obj/structure/girder(src))
 
 /turf/simulated/wall/proc/devastate_wall()
-		builtin_sheet.amount = 2
-		builtin_sheet.loc = src
-		new /obj/item/stack/sheet/metal(src)
+	if(!builtin_sheet)
+		return
+	builtin_sheet.amount = 2
+	builtin_sheet.loc = src
+	new /obj/item/stack/sheet/metal(src)
 
 /turf/simulated/wall/ex_act(severity, target)
 	if(target == src)
