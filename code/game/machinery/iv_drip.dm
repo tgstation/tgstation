@@ -53,16 +53,6 @@
 		src.attached = over_object
 		src.update_icon()
 
-/obj/machinery/iv_drip/Click()
-	if(attached)
-		visible_message("[src.attached] is detached from \the [src]")
-		src.attached = null
-		src.update_icon()
-		return
-	else
-		..()
-
-
 /obj/machinery/iv_drip/attackby(obj/item/weapon/W as obj, mob/user as mob)
 	if(isobserver(user)) return
 	if(user.stat)
@@ -143,9 +133,13 @@
 				update_icon()
 
 /obj/machinery/iv_drip/attack_hand(mob/user as mob)
-	if(isobserver(usr)) return
-	if(user.stat) return
-	if(src.beaker)
+	if(isobserver(usr) || user.stat)
+		return
+	if(attached)
+		visible_message("[src.attached] is detached from \the [src].")
+		src.attached = null
+		src.update_icon()
+	else if(src.beaker)
 		src.beaker.loc = get_turf(src)
 		src.beaker = null
 		update_icon()
