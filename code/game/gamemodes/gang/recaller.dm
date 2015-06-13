@@ -49,7 +49,8 @@
 		dat += "Registration: <B>[(gang == "A")? gang_name("A") : gang_name("B")] Gang [boss ? "Administrator" : "Lieutenant"]</B><br>"
 		dat += "Organization Size: <B>[gang_size]</B> | Station Control: <B>[round((gang_territory/start_state.num_territories)*100, 1)]%</B><br>"
 		dat += "<a href='?src=\ref[src];choice=ping'>Send Gang-wide Message</a><br>"
-		dat += "<a href='?src=\ref[src];choice=recall'>Recall Emergency Shuttle</a><br>"
+		if(gangmode)
+			dat += "<a href='?src=\ref[src];choice=recall'>Recall Emergency Shuttle</a><br>"
 		dat += "<br>"
 		dat += "Influence: <B>[points]</B><br>"
 		dat += "Time until Influence grows: <B>[(points >= 999) ? ("--:--") : (time2text(ticker.mode.gang_points.next_point_time - world.time, "mm:ss"))]</B><br>"
@@ -243,13 +244,13 @@
 	else if(gang == "B")
 		members += ticker.mode.B_bosses | ticker.mode.B_gang
 	if(members.len)
-		var/ping = "<b>[boss ? "Gang Boss" : "Gang Lieutenant"]:</b> [message]"
+		var/ping = "[boss ? "Gang Boss" : "Gang Lieutenant"]: [message]"
 		for(var/datum/mind/ganger in members)
 			if(ganger.current.z <= 2)
-				ganger.current << "<span class='danger'>[ping]</span>"
+				ganger.current << "<span class='danger'><b>[ping]</B></span>"
 		for(var/mob/M in dead_mob_list)
-			M << "<span class='danger'><B>[gang_name(gang)]</B> [ping]</span>"
-		log_game("[key_name(user)] sent a global message to the [gang_name(gang)] Gang ([gang]): [message].")
+			M << "<span class='danger'><B>[gang_name(gang)] [ping]</B></span>"
+		log_game("[key_name(user)] Messaged [gang_name(gang)] Gang ([gang]): [message].")
 
 
 /obj/item/device/gangtool/proc/register_device(var/mob/user)
@@ -292,6 +293,9 @@
 
 /obj/item/device/gangtool/proc/recall(mob/user)
 	if(recalling || !can_use(user))
+		return
+
+	if(!istype(ticker.mode, /datum/game_mode/gang))
 		return
 
 	recalling = 1

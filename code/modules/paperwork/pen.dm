@@ -112,7 +112,7 @@
 		return
 	cooldown = 1
 	icon_state = "pen_blink"
-	spawn(600)
+	spawn(1200)
 		cooldown = 0
 		icon_state = "pen"
 		var/mob/M = get(src, /mob)
