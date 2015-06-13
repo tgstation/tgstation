@@ -56,9 +56,11 @@ var/datum/subsystem/air/SSair
 
 
 /datum/subsystem/air/Initialize(timeofday, zlevel)
-	setup_allturfs(zlevel)
 	setup_atmos_machinery(zlevel)
 	..()
+
+/datum/subsystem/air/AfterInitialize(zlevel)
+	setup_allturfs(zlevel)
 
 #define MC_AVERAGE(average, current) (0.8*(average) + 0.2*(current))
 /datum/subsystem/air/fire()
@@ -167,15 +169,14 @@ var/datum/subsystem/air/SSair
 			EG.dismantle()
 
 /datum/subsystem/air/proc/setup_allturfs(z_level)
+	active_turfs.Cut()
 	var/z_start = 1
 	var/z_finish = world.maxz
 	if(1 <= z_level && z_level <= world.maxz)
 		z_level = round(z_level)
 		z_start = z_level
 		z_finish = z_level
-
 	var/list/turfs_to_init = block(locate(1, 1, z_start), locate(world.maxx, world.maxy, z_finish))
-
 	for(var/turf/simulated/T in turfs_to_init)
 		T.CalculateAdjacentTurfs()
 		if(!T.blocks_air)
