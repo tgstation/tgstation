@@ -307,7 +307,7 @@
 		if(ratio)
 			config.midround_antag_life_check = ratio/100
 
-		message_admins("<span class='adminnotice'>[key_name_admin(usr)] edited the midround antagonist living crew ratio to [ratio * 100]% alive.</span>")
+		message_admins("<span class='adminnotice'>[key_name_admin(usr)] edited the midround antagonist living crew ratio to [ratio]% alive.</span>")
 		check_antagonists()
 
 	else if(href_list["toggle_noncontinuous_behavior"])
