@@ -395,17 +395,18 @@
 		SSair.remove_from_active(T1)
 		T1.CalculateAdjacentTurfs()
 		SSair.add_to_active(T1,1)
-		T1.update_overlay()
-		T1.reconsider_lights()
+
 
 	for(var/turf/T0 in L0)
 //		T0.shift_to_subarea()
 		SSair.remove_from_active(T0)
 		T0.CalculateAdjacentTurfs()
 		SSair.add_to_active(T0,1)
-		T0.update_overlay()
-		T0.reconsider_lights()
 
+	spawn(5)
+		for(var/turf/T in areaInstance)
+			T.update_overlay()
+			T.reconsider_lights()
 
 
 /*
@@ -627,14 +628,12 @@
 			T.underlays = O.underlays
 	if(T.icon_state != icon_state)
 		T.icon_state = icon_state
-	if(T.lighting_overlay != lighting_overlay)
-		T.lighting_overlay = lighting_overlay
-		T.contents += lighting_overlay
-		T.update_overlay()
 	if(T.icon != icon)
 		T.icon = icon
 	if(T.color != color)
 		T.color = color
 	if(T.dir != dir)
 		T.dir = dir
+	T.lighting_build_overlays()
+	T.update_overlay()
 	return T
