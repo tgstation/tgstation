@@ -108,6 +108,8 @@ RCD
 
 /obj/item/weapon/rcd/attackby(obj/item/weapon/W, mob/user, params)
 	..()
+	if(isrobot(user))	//Make sure cyborgs can't load their RCDs
+		return
 	var/loaded = 0
 	if(istype(W, /obj/item/weapon/rcd_ammo))
 		var/obj/item/weapon/rcd_ammo/R = W
