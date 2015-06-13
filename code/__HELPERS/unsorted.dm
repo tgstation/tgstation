@@ -713,13 +713,41 @@ Turf and target are seperate in case you want to teleport some distance from a t
 	img.pixel_y = 32
 	user.overlays += img
 	for(var/i = 0, i<numticks, i++)
+		var/image/img2
+		var/percent = (i / numticks) * 100
+		switch(percent)
+			if(-INFINITY to 10)
+				img2 = new('icons/effects/doafter_icon.dmi', "prog_bar_0")
+			if(10 to 20)
+				img2 = new('icons/effects/doafter_icon.dmi', "prog_bar_10")
+			if(20 to 30)
+				img2 = new('icons/effects/doafter_icon.dmi', "prog_bar_20")
+			if(30 to 40)
+				img2 = new('icons/effects/doafter_icon.dmi', "prog_bar_30")
+			if(40 to 50)
+				img2 = new('icons/effects/doafter_icon.dmi', "prog_bar_40")
+			if(50 to 60)
+				img2 = new('icons/effects/doafter_icon.dmi', "prog_bar_50")
+			if(60 to 70)
+				img2 = new('icons/effects/doafter_icon.dmi', "prog_bar_60")
+			if(70 to 80)
+				img2 = new('icons/effects/doafter_icon.dmi', "prog_bar_70")
+			if(80 to 90)
+				img2 = new('icons/effects/doafter_icon.dmi', "prog_bar_80")
+			if(90 to 100)
+				img2 = new('icons/effects/doafter_icon.dmi', "prog_bar_90")
+		if(img2)
+			img2.pixel_y = 32
+			user.overlays += img2
 		sleep(delayfraction)
 		if(!user || user.stat || user.weakened || user.stunned  || !(user.loc == Uloc))
 			user.overlays -= img
+			user.overlays -= img2
 			return 0
 
 		if(Tloc && (!target || Tloc != target.loc)) //Tloc not set when we don't want to track target
 			user.overlays -= img
+			user.overlays -= img2
 			return 0 // Target no longer exists or has moved
 
 		if(needhand)
@@ -728,10 +756,13 @@ Turf and target are seperate in case you want to teleport some distance from a t
 			if(!holdingnull)
 				if(!holding)
 					user.overlays -= img
+					user.overlays -= img2
 					return 0
 			if(user.get_active_hand() != holding)
 				user.overlays -= img
+				user.overlays -= img2
 				return 0
+		user.overlays -= img2
 	user.overlays -= img
 	return 1
 
