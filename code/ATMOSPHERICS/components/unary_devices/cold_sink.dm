@@ -1,6 +1,6 @@
 /obj/machinery/atmospherics/unary/cold_sink
-	icon = 'icons/obj/atmospherics/cold_sink.dmi'
-	icon_state = "intact_off"
+
+	icon_state = "cold_off"
 	density = 1
 	use_power = 1
 
@@ -14,9 +14,9 @@
 
 /obj/machinery/atmospherics/unary/cold_sink/update_icon()
 	if(node)
-		icon_state = "intact_[on?("on"):("off")]"
+		icon_state = "cold_[on?("on"):("off")]"
 	else
-		icon_state = "exposed"
+		icon_state = "cold_exposed"
 
 		on = 0
 

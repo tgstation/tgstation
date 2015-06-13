@@ -1,7 +1,6 @@
 /obj/machinery/atmospherics/unary/heat_exchanger
 
-	icon = 'icons/obj/atmospherics/heat_exchanger.dmi'
-	icon_state = "intact"
+	icon_state = "he_intact"
 	density = 1
 
 	name = "heat exchanger"
@@ -14,9 +13,9 @@
 
 /obj/machinery/atmospherics/unary/heat_exchanger/update_icon()
 	if(node)
-		icon_state = "intact"
+		icon_state = "he_intact"
 	else
-		icon_state = "exposed"
+		icon_state = "he_exposed"
 
 	return
 

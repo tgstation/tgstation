@@ -4,7 +4,7 @@
 */
 
 /obj/machinery/atmospherics/pipe/manifold
-	icon = 'icons/obj/atmospherics/pipe_manifold.dmi'
+	icon = 'icons/obj/atmospherics/pipes/manifold.dmi'
 	icon_state = "manifold"
 
 	name = "pipe manifold"
