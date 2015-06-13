@@ -453,7 +453,9 @@ By design, d1 is the smallest direction and d2 is the highest
 // Definitions
 ////////////////////////////////
 
-
+var/global/list/datum/stack_recipe/cable_coil_recipes = list ( \
+	new/datum/stack_recipe("cable restraints", /obj/item/weapon/restraints/handcuffs/cable, 15), \
+	)
 
 /obj/item/stack/cable_coil
 	name = "cable coil"
@@ -501,6 +503,7 @@ By design, d1 is the smallest direction and d2 is the highest
 	pixel_x = rand(-2,2)
 	pixel_y = rand(-2,2)
 	update_icon()
+	recipes = cable_coil_recipes
 
 ///////////////////////////////////
 // General procedures
@@ -533,38 +536,12 @@ By design, d1 is the smallest direction and d2 is the highest
 		icon_state = "coil_[item_color]"
 		name = "cable coil"
 
-/obj/item/stack/cable_coil/verb/make_restraint()
-	set name = "Make Cable Restraints"
-	set category = "Object"
-	var/mob/M = usr
-
-	if(ishuman(M) && !M.restrained() && !M.stat && M.canmove)
-		if(!istype(usr.loc,/turf))
-			return
-		if(src.amount <= 14)
-			usr << "<span class='warning'>You need at least 15 lengths to make restraints!</span>"
-			return
-		var/obj/item/weapon/restraints/handcuffs/cable/B = new /obj/item/weapon/restraints/handcuffs/cable(usr.loc)
-		B.icon_state = "cuff_[item_color]"
-		usr << "<span class='notice'>You wind some cable together to make some restraints.</span>"
-		src.use(15)
-	else
-		usr << "<span class='warning'>You cannot do that!</span>"
-	..()
 
 // Items usable on a cable coil :
-//   - Wirecutters : cut them duh !
 //   - Cable coil : merge cables
 /obj/item/stack/cable_coil/attackby(obj/item/weapon/W, mob/user, params)
 	..()
-	if( istype(W, /obj/item/weapon/wirecutters) && src.amount > 1)
-		src.amount--
-		new /obj/item/stack/cable_coil(user.loc, 1,item_color)
-		user << "<span class='notice'>You cut a piece off the cable coil.</span>"
-		src.update_icon()
-		return
-
-	else if(istype(W, /obj/item/stack/cable_coil/cyborg))
+	if(istype(W, /obj/item/stack/cable_coil/cyborg))
 		var/obj/item/stack/cable_coil/cyborg/C = W
 		var/to_transfer = min(src.amount, round((C.source.max_energy - C.source.energy) / C.cost))
 		C.add(to_transfer)
@@ -588,22 +565,6 @@ By design, d1 is the smallest direction and d2 is the highest
 			src.use(amt)
 			return
 
-//remove cables from the stack
-/* This is probably reduntant
-/obj/item/stack/cable_coil/use(var/used)
-	if(src.amount < used)
-		return 0
-	else if (src.amount == used)
-		if(ismob(loc)) //handle mob icon update
-			var/mob/M = loc
-			M.unEquip(src)
-		qdel(src)
-		return 1
-	else
-		amount -= used
-		update_icon()
-		return 1
-*/
 /obj/item/stack/cable_coil/use(var/used)
 	. = ..()
 	update_icon()

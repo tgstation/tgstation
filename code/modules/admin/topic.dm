@@ -307,7 +307,7 @@
 		if(ratio)
 			config.midround_antag_life_check = ratio/100
 
-		message_admins("<span class='adminnotice'>[key_name_admin(usr)] edited the midround antagonist living crew ratio to [ratio * 100]% alive.</span>")
+		message_admins("<span class='adminnotice'>[key_name_admin(usr)] edited the midround antagonist living crew ratio to [ratio]% alive.</span>")
 		check_antagonists()
 
 	else if(href_list["toggle_noncontinuous_behavior"])
@@ -1605,6 +1605,7 @@
 		message_admins("[key_name(H)] got their cookie, spawned by [key_name(src.owner)]")
 		feedback_inc("admin_cookies_spawned",1)
 		H << "<span class='adminnotice'>Your prayers have been answered!! You received the <b>best cookie</b>!</span>"
+		H << 'sound/effects/pray_chaplain.ogg'
 
 	else if(href_list["BlueSpaceArtillery"])
 		var/mob/living/M = locate(href_list["BlueSpaceArtillery"])
@@ -1716,28 +1717,13 @@
 			dirty_paths = href_list["object_list"]
 
 		var/paths = list()
-		var/removed_paths = list()
 
 		for(var/dirty_path in dirty_paths)
 			var/path = text2path(dirty_path)
 			if(!path)
-				removed_paths += dirty_path
 				continue
 			else if(!ispath(path, /obj) && !ispath(path, /turf) && !ispath(path, /mob))
-				removed_paths += dirty_path
 				continue
-			else if(ispath(path, /obj/item/weapon/gun/energy/pulse))
-				if(!check_rights(R_FUN,0))
-					removed_paths += dirty_path
-					continue
-			else if(ispath(path, /obj/item/weapon/melee/energy/blade))//Not an item one should be able to spawn./N
-				if(!check_rights(R_FUN,0))
-					removed_paths += dirty_path
-					continue
-			else if(ispath(path, /obj/effect/anomaly/bhole))
-				if(!check_rights(R_FUN,0))
-					removed_paths += dirty_path
-					continue
 			paths += path
 
 		if(!paths)
@@ -1746,8 +1732,6 @@
 		if(length(paths) > 5)
 			alert("Select fewer object types, (max 5)")
 			return
-		else if(length(removed_paths))
-			alert("Removed:\n" + list2text(removed_paths, "\n"))
 
 		var/list/offset = text2list(href_list["offset"],",")
 		var/number = dd_range(1, 100, text2num(href_list["object_count"]))

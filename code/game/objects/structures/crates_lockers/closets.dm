@@ -68,7 +68,7 @@
 	return (!density)
 
 /obj/structure/closet/proc/can_open()
-	if(src.welded || src.locked)
+	if(welded || locked)
 		return 0
 	return 1
 
@@ -81,32 +81,32 @@
 /obj/structure/closet/proc/dump_contents()
 
 	for(var/obj/O in src)
-		O.loc = src.loc
+		O.loc = loc
 
 	for(var/mob/M in src)
-		M.loc = src.loc
+		M.loc = loc
 		if(M.client)
 			M.client.eye = M.client.mob
 			M.client.perspective = MOB_PERSPECTIVE
 
 /obj/structure/closet/proc/take_contents()
 
-	for(var/atom/movable/AM in src.loc)
+	for(var/atom/movable/AM in loc)
 		if(insert(AM) == -1) // limit reached
 			break
 
 /obj/structure/closet/proc/open()
-	if(src.opened)
+	if(opened)
 		return 0
-	if(!src.can_open())
+	if(!can_open())
 		return 0
-	src.dump_contents()
+	dump_contents()
 
-	src.opened = 1
+	opened = 1
 	if(istype(src, /obj/structure/closet/body_bag))
-		playsound(src.loc, 'sound/items/zip.ogg', 15, 1, -3)
+		playsound(loc, 'sound/items/zip.ogg', 15, 1, -3)
 	else
-		playsound(src.loc, 'sound/machines/click.ogg', 15, 1, -3)
+		playsound(loc, 'sound/machines/click.ogg', 15, 1, -3)
 	density = 0
 	update_icon()
 	return 1
@@ -139,25 +139,25 @@
 	return 1
 
 /obj/structure/closet/proc/close()
-	if(!src.opened)
+	if(!opened)
 		return 0
-	if(!src.can_close())
+	if(!can_close())
 		return 0
 	take_contents()
 
-	src.opened = 0
+	opened = 0
 	if(istype(src, /obj/structure/closet/body_bag))
-		playsound(src.loc, 'sound/items/zip.ogg', 15, 1, -3)
+		playsound(loc, 'sound/items/zip.ogg', 15, 1, -3)
 	else
-		playsound(src.loc, 'sound/machines/click.ogg', 15, 1, -3)
+		playsound(loc, 'sound/machines/click.ogg', 15, 1, -3)
 	density = 1
 	update_icon()
 	return 1
 
 /obj/structure/closet/proc/toggle()
-	if(src.opened)
-		return src.close()
-	return src.open()
+	if(opened)
+		return close()
+	return open()
 
 /obj/structure/closet/ex_act(severity, target)
 	contents_explosion(severity, target)
@@ -192,9 +192,9 @@
 		return
 	if(opened)
 		if(istype(W, /obj/item/weapon/grab))
-			if(src.large)
+			if(large)
 				var/obj/item/weapon/grab/G = W
-				src.MouseDrop_T(G.affecting, user)	//act like they were dragged onto the closet
+				MouseDrop_T(G.affecting, user)	//act like they were dragged onto the closet
 				user.drop_item()
 			else
 				user << "<span class='notice'>The locker is too small to stuff [W] into!</span>"
@@ -210,7 +210,7 @@
 					if( !opened || !istype(src, /obj/structure/closet) || !user || !WT || !WT.isOn() || !user.loc )
 						return
 					playsound(loc, 'sound/items/Welder2.ogg', 50, 1)
-					new /obj/item/stack/sheet/metal(src.loc)
+					new /obj/item/stack/sheet/metal(loc)
 					visible_message("[user] has cut \the [src] apart with \the [WT].", "<span class='italics'>You hear welding.</span>")
 					qdel(src)
 				return
@@ -239,10 +239,10 @@
 			user << "<span class='notice'>The locker appears to be broken.</span>"
 			return
 		if(!place(user, W) && !isnull(W))
-			src.attack_hand(user)
+			attack_hand(user)
 
 /obj/structure/closet/proc/place(var/mob/user, var/obj/item/I)
-	if(!src.opened && secure)
+	if(!opened && secure)
 		togglelock(user)
 		return 1
 	return 0
@@ -258,21 +258,21 @@
 		return 0
 	if(!istype(user.loc, /turf)) // are you in a container/closet/pod/etc? Will also check for null loc
 		return 0
-	if(needs_opened && !src.opened)
+	if(needs_opened && !opened)
 		return 0
 	if(istype(O, /obj/structure/closet))
 		return 0
 	if(move_them)
-		step_towards(O, src.loc)
+		step_towards(O, loc)
 	if(show_message && user != O)
 		user.show_viewers("<span class='danger'>[user] stuffs [O] into [src]!</span>")
-	src.add_fingerprint(user)
+	add_fingerprint(user)
 	return 1
 
 /obj/structure/closet/relaymove(mob/user as mob)
-	if(user.stat || !isturf(src.loc))
+	if(user.stat || !isturf(loc))
 		return
-	if(!src.open())
+	if(!open())
 		user << "<span class='notice'>It won't budge!</span>"
 		if(world.time > lastbang+5)
 			lastbang = world.time
@@ -281,19 +281,20 @@
 
 
 /obj/structure/closet/attack_paw(mob/user as mob)
-	return src.attack_hand(user)
+	return attack_hand(user)
 
 /obj/structure/closet/attack_hand(mob/user as mob)
-	src.add_fingerprint(user)
+	add_fingerprint(user)
 	if(user.lying && get_dist(src, user) > 0)
 		return
 
-	if(!src.toggle())
-		return src.attackby(null, user)
+	if(!toggle())
+		user << "<span class='notice'>You cannot close the locker!</span>"
+		return
 
 // tk grab then use on self
 /obj/structure/closet/attack_self_tk(mob/user as mob)
-	return src.attack_hand(user)
+	return attack_hand(user)
 
 /obj/structure/closet/verb/verb_toggleopen()
 	set src in oview(1)
@@ -304,7 +305,7 @@
 		return
 
 	if(iscarbon(usr) || issilicon(usr))
-		src.attack_hand(usr)
+		attack_hand(usr)
 	else
 		usr << "<span class='warning'>This mob type can't use this verb.</span>"
 
@@ -322,7 +323,7 @@
 	if(istype(user.loc, /obj/structure/closet/critter) && !welded)
 		breakout_time = 0.75 //45 seconds if it's an unwelded critter crate
 
-	if( opened || (!welded && !locked && !istype(src.loc, /obj/mecha)) )
+	if( opened || (!welded && !locked && !istype(loc, /obj/mecha)) )
 		return  //Door's open, not locked or welded or inside a mech, no point in resisting.
 
 	//okay, so the closet is either welded or locked... resist!!!
@@ -332,7 +333,7 @@
 	for(var/mob/O in viewers(src))
 		O << "<span class='warning'>[src] begins to shake violently!</span>"
 	if(do_after(user,(breakout_time*60*10))) //minutes * 60seconds * 10deciseconds
-		if(!user || user.stat != CONSCIOUS || user.loc != src || opened || (!locked && !welded && !istype(src.loc, /obj/mecha)) )
+		if(!user || user.stat != CONSCIOUS || user.loc != src || opened || (!locked && !welded && !istype(loc, /obj/mecha)) )
 			return
 		//we check after a while whether there is a point of resisting anymore and whether the user is capable of resisting
 
@@ -340,11 +341,11 @@
 		locked = 0 //applies to critter crates and secure lockers only
 		broken = 1 //applies to secure lockers only
 		user.visible_message("<span class='danger'>[user] successfully broke out of [src]!</span>", "<span class='notice'>You successfully break out of [src]!</span>")
-		if(istype( src.loc, /obj/structure/bigDelivery))
-			var/obj/structure/bigDelivery/D = src.loc
+		if(istype( loc, /obj/structure/bigDelivery))
+			var/obj/structure/bigDelivery/D = loc
 			qdel(D)
-		else if(istype( src.loc, /obj/mecha))
-			src.loc = get_turf(src.loc)
+		else if(istype( loc, /obj/mecha))
+			loc = get_turf(loc)
 		open()
 	else
 		user << "<span class='warning'>You fail to break out of [src]!</span>"
@@ -354,7 +355,7 @@
 	if(!user.canUseTopic(user) || broken)
 		user << "<span class='warning'>You can't do that right now!</span>"
 		return
-	if(src.opened || !secure || !in_range(src, user))
+	if(opened || !secure || !in_range(src, user))
 		return
 	else
 		togglelock(user)
@@ -364,20 +365,20 @@
 		O.emp_act(severity)
 	if(secure && !broken)
 		if(prob(50/severity))
-			src.locked = !src.locked
-			src.update_icon()
+			locked = !locked
+			update_icon()
 		if(prob(20/severity) && !opened)
 			if(!locked)
 				open()
 			else
-				src.req_access = list()
-				src.req_access += pick(get_all_accesses())
+				req_access = list()
+				req_access += pick(get_all_accesses())
 	..()
 
 /obj/structure/closet/proc/togglelock(mob/user as mob)
 	if(secure)
-		if(src.allowed(user))
-			src.locked = !src.locked
+		if(allowed(user))
+			locked = !locked
 			add_fingerprint(user)
 			for(var/mob/O in viewers(user, 3))
 				if((O.client && !( O.eye_blind )))
