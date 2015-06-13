@@ -637,5 +637,4 @@
 		T.color = color
 	if(T.dir != dir)
 		T.dir = dir
-	T.set_light(initial(T.light_range), initial(T.light_power)) //Null out starlight
 	return T
