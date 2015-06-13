@@ -261,7 +261,7 @@ var/const/BLOOD_VOLUME_SURVIVE = 122
 		//AB is a universal receiver.
 	return 0
 
-/proc/blood_splatter(var/target,var/datum/reagent/blood/source,var/large)
+/proc/blood_splatter(var/target,var/datum/reagent/blood/source,var/large, var/directional)
 
 	var/obj/effect/decal/cleanable/blood/B
 	var/decal_type = /obj/effect/decal/cleanable/blood/splatter
@@ -289,7 +289,10 @@ var/const/BLOOD_VOLUME_SURVIVE = 122
 	// Find a blood decal or create a new one.
 	B = locate(decal_type) in T
 	if(!B)
+		if(directional)
+			decal_type = /obj/effect/decal/cleanable/blood/splatter/directional
 		B = new decal_type(T)
+		B.dir = directional
 
 	var/obj/effect/decal/cleanable/blood/drip/drop = B
 	if(istype(drop) && drips && drips.len && !large)

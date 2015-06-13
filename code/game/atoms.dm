@@ -301,7 +301,7 @@ var/list/blood_splatter_icons = list()
 	return 1
 
 //returns 1 if made bloody, returns 0 otherwise
-/atom/proc/add_blood(mob/living/carbon/M)
+/atom/proc/add_blood(mob/living/carbon/M, var/directional)
 	if(ishuman(M) && M.dna)
 		var/mob/living/carbon/human/H = M
 		if(NOBLOOD in H.dna.species.specflags)
@@ -314,12 +314,12 @@ var/list/blood_splatter_icons = list()
 		return 0					//no dna!
 	return 1
 
-/obj/add_blood(mob/living/carbon/M)
+/obj/add_blood(mob/living/carbon/M, var/directional)
 	if(..() == 0)
 		return 0
 	return add_blood_list(M)
 
-/obj/item/add_blood(mob/living/carbon/M)
+/obj/item/add_blood(mob/living/carbon/M, var/directional)
 	var/blood_count = blood_DNA == null ? 0 : blood_DNA.len
 	if(..() == 0)
 		return 0
@@ -337,25 +337,25 @@ var/list/blood_splatter_icons = list()
 		overlays += blood_splatter_icon
 	return 1 //we applied blood to the item
 
-/obj/item/clothing/gloves/add_blood(mob/living/carbon/M)
+/obj/item/clothing/gloves/add_blood(mob/living/carbon/M, var/directional)
 	if(..() == 0)
 		return 0
 	transfer_blood = rand(2, 4)
 	bloody_hands_mob = M
 	return 1
 
-/turf/simulated/add_blood(mob/living/carbon/human/M)
+/turf/simulated/add_blood(mob/living/carbon/human/M, var/directional)
 	if(..() == 0)
 		return 0
 
 	var/obj/effect/decal/cleanable/blood/B = locate() in contents	//check for existing blood splatter
 	if(!B)
-		blood_splatter(src,M.get_blood(M.vessel),1)
+		blood_splatter(src,M.get_blood(M.vessel),1,directional)
 		B = locate(/obj/effect/decal/cleanable/blood) in contents
 	B.add_blood_list(M)
 	return 1 //we bloodied the floor
 
-/mob/living/carbon/human/add_blood(mob/living/carbon/M)
+/mob/living/carbon/human/add_blood(mob/living/carbon/M, var/directional)
 	if(..() == 0)
 		return 0
 	add_blood_list(M)

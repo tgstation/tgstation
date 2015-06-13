@@ -181,6 +181,30 @@
 		else			return name
 
 
+
+//Embed an item in a human
+/obj/item/proc/embed_in(var/mob/living/carbon/human/H, var/def_zone, var/message = 1, var/forced = 0)
+	if(!istype(H)) //Can't force this one
+		return 0
+
+	if(forced || can_embed(src))
+		if(forced || prob(embed_chance))
+			var/obj/item/organ/limb/L = H.get_organ(check_zone(def_zone))
+			if(!L)//Only pick a random organ if we've not been specified one.
+				L = pick(H.organs)
+			L.embedded_objects |= src
+			add_blood(H)
+			loc = H
+			L.take_damage(w_class*embedded_impact_pain_multiplier)
+			if(message)
+				H.visible_message("<span class='danger'>\the [name] embeds itself in [H]'s [L.getDisplayName()]!</span>","<span class='userdanger'>\the [name] embeds itself in your [L.getDisplayName()]!</span>")
+			return 1
+	return 0
+
+//What we do when removed
+/obj/item/proc/embed_removal_act()
+	return
+
 //Remove all embedded objects from all limbs on the human mob
 /mob/living/carbon/human/proc/remove_all_embedded_objects()
 	var/turf/T = get_turf(src)
@@ -189,3 +213,4 @@
 		for(var/obj/item/I in L.embedded_objects)
 			L.embedded_objects -= I
 			I.loc = T
+			I.embed_removal_act()

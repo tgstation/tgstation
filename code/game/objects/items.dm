@@ -63,7 +63,7 @@
 	var/embedded_fall_pain_multiplier = EMBEDDED_FALL_PAIN_MULTIPLIER //The coefficient of multiplication for the damage this item does when falling out of a limb (this*w_class)
 	var/embedded_impact_pain_multiplier = EMBEDDED_IMPACT_PAIN_MULTIPLIER //The coefficient of multiplication for the damage this item does when first embedded (this*w_class)
 	var/embedded_unsafe_removal_pain_multiplier = EMBEDDED_UNSAFE_REMOVAL_PAIN_MULTIPLIER //The coefficient of multiplication for the damage removing this without surgery causes (this*w_class)
-	var/embedded_unsafe_removal_time = EMBEDDED_UNSAFE_REMOVAL_TIME //A time in ticks, multiplied by the w_class.
+	var/embedded_unsafe_removal_time = EMBEDDED_UNSAFE_REMOVAL_TIME //A time in ticks, multiplied by the w_class, if 0 it can't be removed unsafely
 
 	var/list/can_be_placed_into = list(
 		/obj/structure/table,
@@ -438,22 +438,19 @@
 
 
 /obj/item/throw_impact(A)
-	if(throw_speed >= EMBED_THROWSPEED_THRESHOLD)
+	var/archivedSpeed = throw_speed
+	//Reset regardless of if we hit anything
+	throw_speed = initial(throw_speed) //explosions change this.
+
+	if(archivedSpeed >= EMBED_THROWSPEED_THRESHOLD)
 		if(istype(A, /mob/living/carbon/human))
 			var/mob/living/carbon/human/H = A
-			if(can_embed(src))
-				if(prob(embed_chance) && !(PIERCEIMMUNE in H.dna.species.specflags))
-					var/obj/item/organ/limb/L = pick(H.organs)
-					L.embedded_objects |= src
-					add_blood(H)//it embedded itself in you, of course it's bloody!
-					loc = H
-					L.take_damage(w_class*embedded_impact_pain_multiplier)
-					H.visible_message("<span class='danger'>\the [name] embeds itself in [H]'s [L.getDisplayName()]!</span>","<span class='userdanger'>\the [name] embeds itself in your [L.getDisplayName()]!</span>")
-					return
+			if(embed_in(H,message = 1,forced = 0))
+				return
 
-	//Reset regardless of if we hit a human.
-	throw_speed = initial(throw_speed) //explosions change this.
+
 	..()
+
 
 /obj/item/proc/remove_item_from_storage(atom/newLoc) //please use this if you're going to snowflake an item out of a obj/item/weapon/storage
 	if(!newLoc)

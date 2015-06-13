@@ -31,6 +31,7 @@
 			for(var/obj/item/I in L.embedded_objects)
 				objects++
 				I.loc = get_turf(H)
+				I.embed_removal_act()
 				L.embedded_objects -= I
 
 			if(objects > 0)

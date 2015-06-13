@@ -1180,6 +1180,7 @@ var/global/list/common_tools = list(
 
 	var/list/embed_items = list(\
 	/obj/item/stack/rods,\
+	/obj/item/dummy_projectile,\
 	)
 
 	if(is_type_in_list(W, embed_items))

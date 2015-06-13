@@ -30,6 +30,10 @@
 /obj/effect/decal/cleanable/blood/splatter
 	random_icon_states = list("gibbl1", "gibbl2", "gibbl3", "gibbl4", "gibbl5")
 
+
+/obj/effect/decal/cleanable/blood/splatter/directional
+	random_icon_states = list("splatter1","splatter2","splatter3","splatter4","splatter5","splatter6")
+
 /obj/effect/decal/cleanable/blood/tracks
 	icon_state = "tracks"
 	desc = "They look like tracks left by wheels."
