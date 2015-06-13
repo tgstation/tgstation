@@ -39,7 +39,7 @@
 	icon_state = "plasmaman_helmet0-plasma"
 	item_color = "plasma" //needed for the helmet lighting
 	item_state = "plasmaman_helmet0"
-	flags = HEADCOVERSEYES | BLOCKHAIR | HEADCOVERSMOUTH | STOPSPRESSUREDMAGE | THICKMATERIAL
+	flags = HEADCOVERSEYES | BLOCKHAIR | HEADCOVERSMOUTH | STOPSPRESSUREDMAGE | THICKMATERIAL | CANNOTFACEHUG
 	//Removed the NODROP from /helmet/space/hardsuit.
 	flags_inv = HIDEMASK|HIDEEARS|HIDEEYES
 	//Removed the HIDEFACE from /helmet/space/hardsuit

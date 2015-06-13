@@ -496,6 +496,10 @@ var/const/GALOSHES_DONT_HELP = 8
 	if( (!mask_only && head && (head.flags & HEADCOVERSMOUTH)) || (!head_only && wear_mask && (wear_mask.flags & MASKCOVERSMOUTH)) )
 		return 1
 
+/mob/living/carbon/proc/cannot_facehug(head_only = 0)
+	if(head && (head.flags & CANNOTFACEHUG))
+		return 1
+
 /mob/living/carbon/get_standard_pixel_y_offset(lying = 0)
 	if(lying)
 		return -6

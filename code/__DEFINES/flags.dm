@@ -25,6 +25,8 @@
 #define MASKCOVERSMOUTH		2048		// on other items, these are just for mask/head
 #define HEADCOVERSMOUTH		2048
 
+#define CANNOTFACEHUG		16384		//Protects you from being facehugged.
+
 #define HEADBANGPROTECT		4096
 #define EARBANGPROTECT		1024
 

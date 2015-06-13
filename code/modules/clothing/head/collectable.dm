@@ -19,6 +19,7 @@
 	name = "collectable xenomorph helmet!"
 	desc = "Hiss hiss hiss!"
 	icon_state = "xenom"
+	flags = HEADCOVERSMOUTH | BLOCKHAIR
 
 /obj/item/clothing/head/collectable/chef
 	name = "collectable chef's hat"
@@ -58,6 +59,7 @@
 	desc = "A collectable welding helmet. Now with 80% less lead! Not for actual welding. Any welding done while wearing this helmet is done so at the owner's own risk!"
 	icon_state = "welding"
 	item_state = "welding"
+	flags = HEADCOVERSMOUTH
 
 /obj/item/clothing/head/collectable/slime
 	name = "collectable slime hat"
