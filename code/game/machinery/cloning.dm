@@ -44,6 +44,8 @@
 	for(var/obj/item/weapon/stock_parts/manipulator/P in component_parts)
 		speed_coeff += P.rating
 	heal_level = (efficiency * 15) + 10
+	if(heal_level > 100)
+		heal_level = 100
 
 //The return of data disks?? Just for transferring between genetics machine/cloning machine.
 //TO-DO: Make the genetics machine accept them.
@@ -224,7 +226,7 @@
 			use_power(7500) //This might need tweaking.
 			return
 
-		else if((src.occupant.cloneloss <= (100 - src.heal_level)) && (!src.eject_wait) || src.occupant.health >= 100)
+		else if((src.occupant.cloneloss <= (100 - src.heal_level)) && (!src.eject_wait))
 			src.connected_message("Cloning Process Complete.")
 			src.locked = 0
 			src.go_out()
