@@ -227,6 +227,8 @@
 
 //call the shuttle to destination S
 /obj/docking_port/mobile/proc/request(obj/docking_port/stationary/S)
+	if(src.get_docked() == S) //Already there!
+		return 1
 	if(canDock(S))
 		ERROR("[type](\"[name]\") cannot dock at [S]\")")
 		return 1	//we can't dock at S
@@ -401,6 +403,7 @@
 		T0.CalculateAdjacentTurfs()
 		SSair.add_to_active(T0,1)
 		T0.update_overlay()
+)
 
 /*
 	if(istype(S1, /obj/docking_port/stationary/transit))
