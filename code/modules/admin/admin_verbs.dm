@@ -10,6 +10,7 @@ var/list/admin_verbs_default = list(
 	/client/proc/deadchat,				/*toggles deadchat on/off*/
 	/client/proc/dsay,					/*talk in deadchat using our ckey/fakekey*/
 	/client/proc/toggleprayers,			/*toggles prayers on/off*/
+	/client/verb/toggleprayersounds,	/*Toggles prayer sounds (HALLELUJAH!)*/
 	/client/proc/toggle_hear_radio,		/*toggles whether we hear the radio*/
 	/client/proc/investigate_show,		/*various admintools for investigation. Such as a singulo grief-log*/
 	/client/proc/secrets,
@@ -121,6 +122,7 @@ var/list/admin_verbs_debug = list(
 	/client/proc/test_movable_UI,
 	/client/proc/test_snap_UI,
 	/client/proc/debugNatureMapGenerator,
+	/client/proc/check_bomb_impacts,
 	/proc/machine_upgrade
 	)
 var/list/admin_verbs_possess = list(
@@ -548,7 +550,7 @@ var/list/admin_verbs_hideable = list(
 		var/list/Lines = file2list("config/admins.txt")
 		for(var/line in Lines)
 			var/list/splitline = text2list(line, " = ")
-			if(splitline[1] == ckey)
+			if(lowertext(splitline[1]) == ckey)
 				if(splitline.len >= 2)
 					rank = ckeyEx(splitline[2])
 				break
