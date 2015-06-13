@@ -73,6 +73,7 @@
 			var/thisemp = emped //Take note of which EMP this proc is for
 			spawn(900)
 				if(loc) //qdel limbo
+					triggerCameraAlarm() //camera alarm triggers even if multiple EMPs are in effect.
 					if(emped == thisemp) //Only fix it if the camera hasn't been EMP'd again
 						network = previous_network
 						icon_state = initial(icon_state)
@@ -80,7 +81,6 @@
 						if(can_use())
 							cameranet.addCamera(src)
 						emped = 0 //Resets the consecutive EMP count
-						triggerCameraAlarm()
 						spawn(100)
 							cancelCameraAlarm()
 			for(var/mob/O in mob_list)
@@ -226,7 +226,7 @@
 		L.laser_act(src, user)
 
 	else
-		if(W.force > 10) //fairly simplistic, but will do for now.
+		if(W.force >= 10) //fairly simplistic, but will do for now.
 			user.changeNext_move(CLICK_CD_MELEE)
 			visible_message("<span class='warning'>[user] hits [src] with [W]!</span>", "<span class='warning'>You hit [src] with [W]!</span>")
 			health = max(0, health - W.force)
@@ -345,6 +345,11 @@
 	busy = 0
 	return 0
 
+/obj/machinery/camera/bullet_act(var/obj/item/projectile/proj)
+	if(proj.damage_type == BRUTE)
+		health = max(0, health - proj.damage)
+		if(!health && status)
+			deactivate(user, 1)
 
 /obj/machinery/camera/portable //Cameras which are placed inside of things, such as helmets.
 	var/turf/prev_turf
