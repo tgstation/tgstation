@@ -769,7 +769,7 @@ What are the archived variables for?
 			if(border_multiplier)
 				temperature = (old_self_heat_capacity*temperature - heat_capacity_transferred*border_multiplier*temperature_archived)/new_self_heat_capacity
 			else
-				temperature = (old_self_heat_capacity*temperature - heat_capacity_transferred*border_multiplier*temperature_archived)/new_self_heat_capacity
+				temperature = (old_self_heat_capacity*temperature - heat_capacity_transferred*temperature_archived)/new_self_heat_capacity
 
 		temperature_mimic(model, model.thermal_conductivity, border_multiplier)
 
