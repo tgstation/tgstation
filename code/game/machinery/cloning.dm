@@ -124,7 +124,7 @@
 //Clonepod
 
 //Start growing a human clone in the pod!
-/obj/machinery/clonepod/proc/growclone(var/ckey, var/clonename, var/ui, var/se, var/mindref, var/datum/species/mrace, var/mcolor, var/factions)
+/obj/machinery/clonepod/proc/growclone(var/ckey, var/clonename, var/ui, var/se, var/mindref, var/datum/species/mrace, var/list/features, var/factions)
 	if(panel_open)
 		return 0
 	if(mess || attempting)
@@ -185,7 +185,7 @@
 	H.ckey = ckey
 	H << "<span class='notice'><b>Consciousness slowly creeps over you as your body regenerates.</b><br><i>So this is what cloning feels like?</i></span>"
 
-	hardset_dna(H, ui, se, null, null, mrace, mcolor)
+	hardset_dna(H, ui, se, null, null, mrace, features)
 	H.faction |= factions
 
 	H.set_cloned_appearance()

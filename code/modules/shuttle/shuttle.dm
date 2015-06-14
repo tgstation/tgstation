@@ -482,8 +482,8 @@
 
 /obj/machinery/computer/shuttle
 	name = "Shuttle Console"
-	icon = 'icons/obj/computer.dmi'
-	icon_state = "shuttle"
+	icon_screen = "shuttle"
+	icon_keyboard = "tech_key"
 	req_access = list( )
 	circuit = /obj/item/weapon/circuitboard/shuttle
 	var/shuttleId

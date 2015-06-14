@@ -1,0 +1,5 @@
+author: spasticVerbalizer
+delete-after: True
+
+changes: 
+  - rscfix: "Drones can now properly quick-equip."

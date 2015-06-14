@@ -1,17 +1,12 @@
 /obj/machinery/computer/aifixer
 	name = "\improper AI system integrity restorer"
 	desc = "Used with intelliCards containing nonfunctioning AIs to restore them to working order."
-	icon = 'icons/obj/computer.dmi'
-	icon_state = "ai-fixer"
 	req_access = list(access_captain, access_robotics, access_heads)
 	var/mob/living/silicon/ai/occupier = null
 	var/active = 0
 	circuit = /obj/item/weapon/circuitboard/aifixer
-
-/obj/machinery/computer/aifixer/New()
-	src.overlays += image('icons/obj/computer.dmi', "ai-fixer-empty")
-	..()
-
+	icon_keyboard = "tech_key"
+	icon_screen = "ai-fixer"
 
 /obj/machinery/computer/aifixer/attackby(I as obj, user as mob, params)
 	if(occupier && istype(I, /obj/item/weapon/screwdriver))
@@ -101,7 +96,6 @@
 		return
 	if (href_list["fix"])
 		src.active = 1
-		src.overlays += image('icons/obj/computer.dmi', "ai-fixer-on")
 		while (src.occupier.health < 100)
 			src.occupier.adjustOxyLoss(-1)
 			src.occupier.adjustFireLoss(-1)
@@ -113,32 +107,28 @@
 				src.occupier.lying = 0
 				dead_mob_list -= src.occupier
 				living_mob_list += src.occupier
-				src.overlays -= image('icons/obj/computer.dmi', "ai-fixer-404")
-				src.overlays += image('icons/obj/computer.dmi', "ai-fixer-full")
 			src.updateUsrDialog()
+			update_icon()
 			sleep(10)
 		src.active = 0
-		src.overlays -= image('icons/obj/computer.dmi', "ai-fixer-on")
-
-
 		src.add_fingerprint(usr)
 	src.updateUsrDialog()
+	update_icon()
 	return
 
 
 /obj/machinery/computer/aifixer/update_icon()
 	..()
-	// Broken / Unpowered
 	if((stat & BROKEN) || (stat & NOPOWER))
-		overlays.Cut()
-
-	// Working / Powered
+		return
 	else
+		if(active)
+			overlays += "ai-fixer-on"
 		if (occupier)
 			switch (occupier.stat)
 				if (0)
-					overlays += image('icons/obj/computer.dmi', "ai-fixer-full")
+					overlays += "ai-fixer-full"
 				if (2)
-					overlays += image('icons/obj/computer.dmi', "ai-fixer-404")
+					overlays += "ai-fixer-404"
 		else
-			overlays += image('icons/obj/computer.dmi', "ai-fixer-empty")
+			overlays += "ai-fixer-empty"
