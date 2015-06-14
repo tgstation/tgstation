@@ -310,7 +310,8 @@
 	mymob.client.screen += list( mymob.throw_icon, mymob.zone_sel, mymob.internals, mymob.healths, mymob.healthdoll, mymob.pullin, mymob.blind, mymob.flash, mymob.damageoverlay, lingchemdisplay, lingstingdisplay) //, mymob.hands, mymob.rest, mymob.sleep) //, mymob.mach )
 	mymob.client.screen += adding + hotkeybuttons
 	inventory_shown = 0;
-
+	if(mymob.client.prefs.custom_pointer)
+		mymob.client.mouse_pointer_icon = ui_style
 
 /mob/living/carbon/human/verb/toggle_hotkey_verbs()
 	set category = "OOC"

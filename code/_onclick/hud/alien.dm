@@ -21,7 +21,7 @@
 		T.fire(A)
 
 
-/datum/hud/proc/alien_hud()
+/datum/hud/proc/alien_hud(ui_style = 'icons/mob/screen_midnight.dmi')
 	adding = list()
 	other = list()
 
@@ -150,4 +150,5 @@
 
 	mymob.client.screen += list( mymob.throw_icon, mymob.zone_sel, mymob.healths, nightvisionicon, alien_plasma_display, mymob.pullin, mymob.blind, mymob.flash) //, mymob.hands, mymob.rest, mymob.sleep, mymob.mach )
 	mymob.client.screen += adding + other
-
+	if(mymob.client.prefs.custom_pointer)
+		mymob.client.mouse_pointer_icon = ui_style

@@ -1,4 +1,4 @@
-/datum/hud/proc/larva_hud()
+/datum/hud/proc/larva_hud(ui_style = 'icons/mob/screen_midnight.dmi')
 	adding = list()
 	other = list()
 
@@ -54,3 +54,5 @@
 
 	mymob.client.screen += list( mymob.zone_sel, mymob.healths, nightvisionicon, mymob.pullin, mymob.blind, mymob.flash) //, mymob.rest, mymob.sleep, mymob.mach )
 	mymob.client.screen += adding + other
+	if(mymob.client.prefs.custom_pointer)
+		mymob.client.mouse_pointer_icon = ui_style

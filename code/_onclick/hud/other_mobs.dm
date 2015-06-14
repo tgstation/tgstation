@@ -15,7 +15,8 @@
 
 	mymob.client.screen = null
 	mymob.client.screen += list(mymob.blind)
-
+	if(mymob.client.prefs.custom_pointer)
+		mymob.client.mouse_pointer_icon = ui_style
 /datum/hud/proc/blob_hud(ui_style = 'icons/mob/screen_midnight.dmi')
 
 	blobpwrdisplay = new /obj/screen()
@@ -32,4 +33,5 @@
 
 	mymob.client.screen = null
 	mymob.client.screen += list(blobpwrdisplay, blobhealthdisplay)
-
+	if(mymob.client.prefs.custom_pointer)
+		mymob.client.mouse_pointer_icon = ui_style
