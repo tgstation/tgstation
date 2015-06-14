@@ -802,6 +802,7 @@
 #include "code\modules\admin\newbanjob.dm"
 #include "code\modules\admin\player_notes.dm"
 #include "code\modules\admin\player_panel.dm"
+#include "code\modules\admin\secrets.dm"
 #include "code\modules\admin\topic.dm"
 #include "code\modules\admin\DB ban\functions.dm"
 #include "code\modules\admin\permissionverbs\permissionedit.dm"
