@@ -7,6 +7,7 @@
 	w_class = 2
 	var/w_class_on = 4
 
+
 /obj/item/weapon/melee/energy/suicide_act(mob/user)
 	user.visible_message(pick("<span class='suicide'>[user] is slitting \his stomach open with the [src.name]! It looks like \he's trying to commit seppuku.</span>", \
 						"<span class='suicide'>[user] is falling on the [src.name]! It looks like \he's trying to commit suicide.</span>"))
@@ -48,6 +49,7 @@
 	throw_range = 5
 	flags = NOSHIELD
 	attack_verb = null
+	block_chance = 50
 	origin_tech = "magnets=3;syndicate=4"
 	var/hacked = 0
 

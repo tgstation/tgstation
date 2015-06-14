@@ -1,12 +1,13 @@
 /obj/machinery/computer/aifixer
 	name = "\improper AI system integrity restorer"
 	desc = "Used with intelliCards containing nonfunctioning AIs to restore them to working order."
-	icon = 'icons/obj/computer.dmi'
-	icon_state = "ai-fixer"
 	req_access = list(access_captain, access_robotics, access_heads)
 	var/mob/living/silicon/ai/occupier = null
 	var/active = 0
 	circuit = /obj/item/weapon/circuitboard/aifixer
+	icon_keyboard = "tech_key"
+	icon_screen = "ai-fixer"
+
 
 /obj/machinery/computer/aifixer/New()
 	src.overlays += image('icons/obj/computer.dmi', "ai-fixer-empty")

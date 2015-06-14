@@ -10,10 +10,12 @@
 	throw_range = 3
 	w_class = 4
 	origin_tech = "materials=2"
+	block_chance = 35
+	var/break_chance = 5
 	attack_verb = list("shoved", "bashed")
 
 /obj/item/weapon/shield/riot/trayshield/IsShield()
-	if(prob(30))
+	if(prob(break_chance))
 		if(ishuman(loc))
 			var/mob/living/carbon/human/H = loc
 			visible_message("<span class='warning'>[H]'s shield breaks!</span>", "<span class='warning'>Your shield breaks!</span>")

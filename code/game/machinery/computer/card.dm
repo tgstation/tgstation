@@ -7,7 +7,8 @@ var/time_last_changed_position = 0
 /obj/machinery/computer/card
 	name = "identification console"
 	desc = "You can use this to change ID's."
-	icon_state = "id"
+	icon_screen = "id"
+	icon_keyboard = "id_key"
 	req_one_access = list(access_heads, access_change_ids)
 	circuit = /obj/item/weapon/circuitboard/card
 	var/obj/item/weapon/card/id/scan = null

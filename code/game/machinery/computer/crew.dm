@@ -1,7 +1,8 @@
 /obj/machinery/computer/crew
 	name = "crew monitoring console"
 	desc = "Used to monitor active health sensors built into most of the crew's uniforms."
-	icon_state = "crew"
+	icon_screen = "crew"
+	icon_keyboard = "med_key"
 	use_power = 1
 	idle_power_usage = 250
 	active_power_usage = 500

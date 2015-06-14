@@ -392,10 +392,10 @@ Auto Patrol[]"},
 			continue
 
 /obj/machinery/bot/ed209/proc/check_for_weapons(var/obj/item/slot_item)
-	if(istype(slot_item, /obj/item/weapon/gun) || istype(slot_item, /obj/item/weapon/melee))
-		if(!(slot_item.type in safe_weapons))
-			return 1
+	if(slot_item && slot_item.needs_permit)
+		return 1
 	return 0
+
 
 /* terrible
 /obj/machinery/bot/ed209/Bumped(atom/movable/M as mob|obj)

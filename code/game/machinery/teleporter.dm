@@ -1,7 +1,8 @@
 /obj/machinery/computer/teleporter
 	name = "Teleporter Control Console"
 	desc = "Used to control a linked teleportation Hub and Station."
-	icon_state = "teleport"
+	icon_screen = "teleport"
+	icon_keyboard = "teleport_key"
 	circuit = "/obj/item/weapon/circuitboard/teleporter"
 	var/obj/item/device/gps/locked = null
 	var/regime_set = "Teleporter"

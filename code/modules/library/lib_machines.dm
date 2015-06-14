@@ -16,8 +16,9 @@
  */
 /obj/machinery/computer/libraryconsole
 	name = "library visitor console"
-	icon = 'icons/obj/computer.dmi'
-	icon_state = "library"
+	icon_state = "oldcomp"
+	icon_screen = "library"
+	icon_keyboard = null
 	circuit = /obj/item/weapon/circuitboard/libraryconsole
 	var/screenstate = 0
 	var/title

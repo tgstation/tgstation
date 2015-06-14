@@ -9,6 +9,7 @@
 	var/custom_name = ""
 	designation = "Default" //used for displaying the prefix & getting the current module of cyborg
 	var/braintype = "Cyborg"
+	has_limbs = 1
 
 //Hud stuff
 

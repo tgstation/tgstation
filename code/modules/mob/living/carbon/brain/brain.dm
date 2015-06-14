@@ -2,6 +2,7 @@
 
 /mob/living/carbon/brain
 	languages = HUMAN
+	has_limbs = 0
 	var/obj/item/container = null
 	var/timeofhostdeath = 0
 	var/emp_damage = 0//Handles a type of MMI damage

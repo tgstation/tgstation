@@ -37,6 +37,13 @@
 	name = "Beach"
 	icon = 'icons/misc/beach.dmi'
 	ignoredirt = 1
+	baseturf = /turf/simulated/floor/plating/beach/sand
+
+/turf/simulated/floor/plating/beach/burn_tile()
+	return //unburnable
+
+/turf/simulated/floor/plating/beach/break_tile()
+	return //unbreakable
 
 /turf/simulated/floor/beach/ex_act(severity, target)
 	contents_explosion(severity, target)
@@ -71,6 +78,7 @@
 
 /turf/simulated/floor/plating/snow/break_tile()
 	return //unbreakable
+
 /turf/simulated/floor/plating/snow/airless
 	oxygen = 0
 	nitrogen = 0

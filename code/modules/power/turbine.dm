@@ -56,10 +56,8 @@
 /obj/machinery/computer/turbine_computer
 	name = "gas turbine control computer"
 	desc = "A computer to remotely control a gas turbine"
-	icon = 'icons/obj/computer.dmi'
-	icon_state = "turbinecomp"
-	anchored = 1
-	density = 1
+	icon_screen = "turbinecomp"
+	icon_keyboard = "tech_key"
 	circuit = /obj/item/weapon/circuitboard/turbine_computer
 	var/obj/machinery/power/compressor/compressor
 	var/id = 0

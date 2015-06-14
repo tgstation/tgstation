@@ -16,6 +16,7 @@
 	m_amt = 1000
 	origin_tech = "materials=2"
 	attack_verb = list("shoved", "bashed")
+	block_chance = 50
 	var/cooldown = 0 //shield bash cooldown. based on world.time
 
 /obj/item/weapon/shield/riot/IsShield()

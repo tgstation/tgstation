@@ -141,3 +141,15 @@
 /obj/item/ammo_casing/energy/bolt/large
 	projectile_type = /obj/item/projectile/energy/bolt/large
 	select_name = "heavy bolt"
+
+/obj/item/ammo_casing/energy/plasma
+	projectile_type = /obj/item/projectile/plasma
+	select_name = "plasma burst"
+	fire_sound = 'sound/weapons/Laser.ogg'
+	delay = 10
+	e_cost = 25
+
+/obj/item/ammo_casing/energy/plasma/adv
+	projectile_type = /obj/item/projectile/plasma/adv
+	delay = 8
+	e_cost = 10

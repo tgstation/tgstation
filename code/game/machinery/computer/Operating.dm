@@ -1,7 +1,8 @@
 /obj/machinery/computer/operating
 	name = "operating computer"
 	desc = "Used to monitor the vitals of a patient during surgery."
-	icon_state = "operating"
+	icon_screen = "crew"
+	icon_keyboard = "med_key"
 	density = 1
 	anchored = 1.0
 	circuit = /obj/item/weapon/circuitboard/operating

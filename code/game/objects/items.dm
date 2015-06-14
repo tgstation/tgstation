@@ -51,6 +51,7 @@
 	var/suittoggled = 0
 	var/hooded = 0
 	var/sharp = 0 //Not sharp/Sharp/Very sharp
+	var/needs_permit = 0			//Used by security bots to determine if this item is safe for public use.
 
 	//So items can have custom embedd values
 	//Because customisation is king
@@ -62,6 +63,7 @@
 	var/embedded_impact_pain_multiplier = EMBEDDED_IMPACT_PAIN_MULTIPLIER //The coefficient of multiplication for the damage this item does when first embedded (this*w_class)
 	var/embedded_unsafe_removal_pain_multiplier = EMBEDDED_UNSAFE_REMOVAL_PAIN_MULTIPLIER //The coefficient of multiplication for the damage removing this without surgery causes (this*w_class)
 	var/embedded_unsafe_removal_time = EMBEDDED_UNSAFE_REMOVAL_TIME //A time in ticks, multiplied by the w_class.
+	var/block_chance = 0
 
 	var/list/can_be_placed_into = list(
 		/obj/structure/table,

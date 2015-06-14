@@ -177,7 +177,8 @@
 /obj/machinery/computer/rdservercontrol
 	name = "R&D Server Controller"
 	desc = "Used to manage access to research and manufacturing databases."
-	icon_state = "rdcomp"
+	icon_screen = "rdcomp"
+	icon_keyboard = "rd_key"
 	var/screen = 0
 	var/obj/machinery/r_n_d/server/temp_server
 	var/list/servers = list()

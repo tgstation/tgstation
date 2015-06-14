@@ -187,7 +187,7 @@ obj/item/projectile/kinetic/New()
 	name ="explosive slug"
 	damage = 25
 	weaken = 5
-
+/*
 /obj/item/projectile/bullet/magspear
 	name = "magnetic spear"
 	desc = "WHITE WHALE, HOLY GRAIL"
@@ -204,3 +204,37 @@ obj/item/projectile/kinetic/New()
 	if(!proj_hit)
 		new /obj/item/ammo_casing/caseless/magspear(src.loc)
 		..()
+*/
+
+
+/obj/item/projectile/plasma
+	name = "plasma blast"
+	icon_state = "plasmacutter"
+	damage_type = BRUTE
+	damage = 5
+	range = 1
+
+/obj/item/projectile/plasma/New()
+	var/turf/proj_turf = get_turf(src)
+	if(!istype(proj_turf, /turf))
+		return
+	var/datum/gas_mixture/environment = proj_turf.return_air()
+	var/pressure = environment.return_pressure()
+	if(pressure < 30)
+		name = "full strength plasma blast"
+		damage *= 3
+		range += 3
+	..()
+
+/obj/item/projectile/plasma/on_hit(var/atom/target)
+	if(istype(target, /turf/simulated/mineral))
+		var/turf/simulated/mineral/M = target
+		M.gets_drilled(firer)
+	return ..()
+
+/obj/item/projectile/plasma/adv
+	range = 2
+
+/obj/item/projectile/plasma/adv/mech
+	damage = 10
+	range = 3

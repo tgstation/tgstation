@@ -63,8 +63,7 @@ emp_act
 			return -1 // complete projectile permutation
 
 	if(check_shields(P.damage, "the [P.name]"))
-		P.on_hit(src, 100, def_zone)
-		return 2
+		return 0
 	return (..(P , def_zone))
 
 /mob/living/carbon/human/proc/check_reflect(var/def_zone) //Reflection checks for anything in your l_hand, r_hand, or wear_suit based on the reflection chance of the object
@@ -86,21 +85,21 @@ emp_act
 //End Here
 
 /mob/living/carbon/human/proc/check_shields(var/damage = 0, var/attack_text = "the attack")
-	if(l_hand && istype(l_hand, /obj/item/weapon))//Current base is the prob(50-d/3)
+	if(l_hand && istype(l_hand, /obj/item/weapon)) //Current base is the prob(I.block_chance-d/3) // block_chance is found on items with the IsShield() proc.
 		var/obj/item/weapon/I = l_hand
-		if(I.IsShield() && (prob(50 - round(damage / 3))))
+		if(I.IsShield() && (prob(I.block_chance - round(damage / 3))))
 			visible_message("<span class='danger'>[src] blocks [attack_text] with [l_hand]!</span>", \
 							"<span class='userdanger'>[src] blocks [attack_text] with [l_hand]!</span>")
 			return 1
 	if(r_hand && istype(r_hand, /obj/item/weapon))
 		var/obj/item/weapon/I = r_hand
-		if(I.IsShield() && (prob(50 - round(damage / 3))))
+		if(I.IsShield() && (prob(I.block_chance - round(damage / 3))))
 			visible_message("<span class='danger'>[src] blocks [attack_text] with [r_hand]!</span>", \
 							"<span class='userdanger'>[src] blocks [attack_text] with [r_hand]!</span>")
 			return 1
 	if(wear_suit && istype(wear_suit, /obj/item/))
 		var/obj/item/I = wear_suit
-		if(I.IsShield() && (prob(35)))
+		if(I.IsShield() && (prob(I.block_chance)))
 			visible_message("<span class='danger'>The reactive teleport system flings [src] clear of [attack_text]!</span>", \
 							"<span class='userdanger'>The reactive teleport system flings [src] clear of [attack_text]!</span>")
 			var/list/turfs = new/list()

@@ -1,7 +1,8 @@
 /obj/machinery/computer/camera_advanced
 	name = "advanced camera console"
 	desc = "Used to access the various cameras on the station."
-	icon_state = "cameras"
+	icon_screen = "cameras"
+	icon_keyboard = "security_key"
 	//circuit = /obj/item/weapon/circuitboard/security
 	var/mob/camera/aiEye/remote/eyeobj
 	var/mob/living/carbon/human/current_user = null

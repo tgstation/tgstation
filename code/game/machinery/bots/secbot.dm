@@ -352,9 +352,8 @@ Auto Patrol: []"},
 		else
 			continue
 /obj/machinery/bot/secbot/proc/check_for_weapons(var/obj/item/slot_item)
-	if(istype(slot_item, /obj/item/weapon/gun) || istype(slot_item, /obj/item/weapon/melee))
-		if(!(slot_item.type in safe_weapons))
-			return 1
+	if(slot_item && slot_item.needs_permit)
+		return 1
 	return 0
 
 /obj/machinery/bot/secbot/explode()
