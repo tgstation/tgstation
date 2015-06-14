@@ -127,6 +127,11 @@
 	icon_state = "floor"
 	shuttle = 1
 
+/turf/simulated/floor/plasteel/shuttle/airless
+	oxygen = 0
+	nitrogen = 0
+	temperature = TCMB
+
 /turf/simulated/floor/plasteel/shuttle/red
 	name = "Brig floor"
 	icon_state = "floor4"

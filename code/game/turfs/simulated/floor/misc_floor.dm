@@ -66,6 +66,16 @@
 	icon_state = "snow"
 	ignoredirt = 1
 
+/turf/simulated/floor/plating/snow/burn_tile()
+	return //unburnable
+
+/turf/simulated/floor/plating/snow/break_tile()
+	return //unbreakable
+/turf/simulated/floor/plating/snow/airless
+	oxygen = 0
+	nitrogen = 0
+	temperature = TCMB
+
 /turf/simulated/floor/plating/snow/ex_act(severity, target)
 	contents_explosion(severity, target)
 
@@ -93,6 +103,15 @@
 	name = "sand"
 	icon = 'icons/misc/beach.dmi'
 	icon_state = "sand"
+	baseturf = /turf/simulated/floor/plating/sand
+
+
+/turf/simulated/floor/plating/sand/burn_tile()
+	return //unburnable
+
+/turf/simulated/floor/plating/sand/break_tile()
+	return //unbreakable
+
 
 /turf/simulated/floor/plating/maze
 	name = "maze floor"
@@ -104,8 +123,32 @@
 	carbon_dioxide = 173.4
 	nitrogen = 135.1
 	temperature = 363.9
+	baseturf = /turf/simulated/floor/plating/maze
+
+/turf/simulated/floor/plating/maze/burn_tile()
+	return //unburnable
+/turf/simulated/floor/plating/maze/break_tile()
+	return //unbreakable
 
 /turf/simulated/floor/plating/dust
 	name = "dust"
 	icon = 'icons/turf/floors.dmi'
 	icon_state = "asteroid"
+	baseturf = /turf/simulated/floor/plating/dust
+
+/turf/simulated/floor/plating/dust/burn_tile()
+	return //unburnable
+
+/turf/simulated/floor/plating/dust/break_tile()
+	return //unbreakable
+
+/turf/simulated/floor/plating/dust/airless
+	oxygen = 0
+	nitrogen = 0
+	temperature = TCMB
+
+/turf/simulated/floor/plating/sand/airless
+
+	oxygen = 0
+	nitrogen = 0
+	temperature = TCMB

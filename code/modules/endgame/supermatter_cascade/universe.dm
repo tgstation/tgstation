@@ -132,8 +132,12 @@ The access requirements on the Asteroid Shuttles' consoles have now been revoked
 
 /datum/universal_state/supermatter_cascade/proc/MiscSet()
 	for (var/obj/machinery/firealarm/alm in machines)
+		if (istype(alm, /obj/machinery/firealarm/partyalarm))
+			continue
 		if (!(alm.stat & BROKEN))
 			alm.ex_act(2)
+	for (var/obj/machinery/computer/teleporter/T in machines)
+		T.stat |= BROKEN
 
 /datum/universal_state/supermatter_cascade/proc/APCSet()
 	for (var/obj/machinery/power/apc/APC in machines)
