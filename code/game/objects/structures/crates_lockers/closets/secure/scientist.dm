@@ -16,6 +16,8 @@
 	new /obj/item/weapon/storage/backpack/science(src)
 	new /obj/item/weapon/storage/backpack/satchel_tox(src)
 	new /obj/item/weapon/storage/backpack/satchel_tox(src)
+	new /obj/item/clothing/suit/toggle/labcoat/oldfashioned(src)
+	new /obj/item/clothing/suit/hooded/wintercoat/science(src)
 
 /obj/structure/closet/secure_closet/RD
 	name = "\proper research director's locker"
