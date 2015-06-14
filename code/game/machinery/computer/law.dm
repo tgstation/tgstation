@@ -93,7 +93,7 @@
 				var/obj/item/weapon/planning_frame/frame=O
 				if(frame.modules.len>0)
 					user << "<span class='notice'>You load \the [frame] into \the [src]...</span>"
-					if(do_after(user,50))
+					if(do_after(user, src,50))
 						var/failed=0
 						for(var/i=1;i<=frame.modules.len;i++)
 							var/obj/item/weapon/aiModule/M = frame.modules[i]
@@ -209,7 +209,7 @@
 				var/obj/item/weapon/planning_frame/frame=W
 				if(frame.modules.len>0)
 					user << "<span class='notice'>You load \the [frame] into \the [src]...</span>"
-					if(do_after(user,50))
+					if(do_after(user, src,50))
 						var/failed=0
 						for(var/i=1;i<=frame.modules.len;i++)
 							var/obj/item/weapon/aiModule/M = frame.modules[i]

@@ -173,7 +173,7 @@
 		if (WT.remove_fuel(0,user))
 			playsound(get_turf(src), 'sound/items/Welder2.ogg', 50, 1)
 			user << "<span class='notice'>You begin to weld \the [src] to the floor...</span>"
-			if (do_after(user, 40))
+			if (do_after(user, src, 40))
 				var/obj/machinery/igniter/igniter=new(src.loc)
 				igniter.assembly=src
 				src.loc=igniter

@@ -144,7 +144,7 @@ var/global/ingredientLimit = 10
 	set src in oview(1)
 
 	if(cooks_in_reagents)
-		if(do_after(usr, src.reagents.total_volume / 10))
+		if(do_after(usr, src, src.reagents.total_volume / 10))
 			src.reagents.clear_reagents()
 			if(usr)
 				usr << "You clean \the [src] of any ingredients."

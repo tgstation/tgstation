@@ -20,7 +20,7 @@
 											"sec_record" = "TEXT","gen_record" = "TEXT", "player_alt_titles" = "TEXT", "be_special" = "TEXT", "disabilities" = "INTEGER", "nanotrasen_relation" = "TEXT"),\
 							"client" = list("ID" = "INTEGER PRIMARY KEY AUTOINCREMENT", "ckey" = "INTEGER UNIQUE", "ooc_color" = "TEXT", "lastchangelog" = "TEXT", "UI_style" = "TEXT", "default_slot" = "INTEGER",\
 											"toggles" = "INTEGER", "UI_style_color" = "TEXT", "UI_style_alpha" = "INTEGER", "randomslot" = "INTEGER", "volume" = "INTEGER", "special" = "INTEGER", "warns" = "INTEGER",\
-											"warnbans" = "INTEGER", "usewmp" = "INTEGER", "usenanoui" = "INTEGER"),\
+											"warnbans" = "INTEGER", "usewmp" = "INTEGER", "usenanoui" = "INTEGER", "progress_bars" = "INTEGER"),\
 							"client_roles" = list("ckey" = "TEXT NOT NULL", "slot" = "INTEGER NOT NULL", "role" = "TEXT NOT NULL", "preference" = "INTEGERNOT NULL"))
 	if(tables && tables.len)
 		var/database/query/check = new
@@ -55,4 +55,3 @@
 					insert.Execute(sqlitedb)
 					if(insert.Error()) warning("Error inserting column [column], [insert.Error()] - [insert.ErrorMsg()]")
 					insert.Clear()*/
-		

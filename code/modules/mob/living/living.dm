@@ -685,7 +685,7 @@
 				C.visible_message("<span class='warning'>[C] attempts to unbuckle themself!</span>",
 								  "<span class='warning'>You attempt to unbuckle yourself. (This will take around two minutes and you need to stand still).</span>")
 				spawn(0)
-					if(do_after(usr, 1200))
+					if(do_after(usr, usr, 1200))
 						if(!C.buckled)
 							return
 						C.visible_message("<span class='danger'>[C] manages to unbuckle themself!</span>",
@@ -718,7 +718,7 @@
 		L.visible_message("<span class='danger'>The [C] begins to shake violenty!</span>",
 						  "<span class='warning'>You lean on the back of [C] and start pushing the door open (this will take about [breakout_time] minutes).</span>")
 		spawn(0)
-			if(do_after(usr,breakout_time * 60 * 10)) //minutes * 60seconds * 10deciseconds
+			if(do_after(usr,src,breakout_time * 60 * 10)) //minutes * 60seconds * 10deciseconds
 				if(!C || !L || L.stat != CONSCIOUS || L.loc != C || C.opened) //closet/user destroyed OR user dead/unconcious OR user no longer in closet OR closet opened
 					return
 
@@ -777,7 +777,7 @@
 				CM.visible_message("<span class='danger'>[CM] is trying to break the handcuffs!</span>",
 								   "<span class='warning'>You attempt to break your handcuffs. (This will take around five seconds and you will need to stand still).</span>")
 				spawn(0)
-					if(do_after(CM, 50))
+					if(do_after(CM, CM, 50))
 						if(!CM.handcuffed || CM.buckled)
 							return
 						CM.visible_message("<span class='danger'>[CM] manages to break the handcuffs!</span>",
@@ -798,7 +798,7 @@
 				CM.visible_message("<span class='danger'>[CM] attempts to remove [HC]!</span>",
 								   "<span class='warning'>You attempt to remove [HC]. (This will take around [(breakouttime)/600] minutes and you need to stand still).</span>")
 				spawn(0)
-					if(do_after(CM, breakouttime))
+					if(do_after(CM,CM, breakouttime))
 						if(!CM.handcuffed || CM.buckled)
 							return // time leniency for lag which also might make this whole thing pointless but the server
 						CM.visible_message("<span class='danger'>[CM] manages to remove [HC]!</span>",
@@ -815,7 +815,7 @@
 				CM.visible_message("<span class='danger'>[CM] is trying to break the legcuffs!</span>",
 								   "<span class='warning'>You attempt to break your legcuffs. (This will take around five seconds and you need to stand still).</span>")
 				spawn(0)
-					if(do_after(CM, 50))
+					if(do_after(CM, CM, 50))
 						if(!CM.legcuffed || CM.buckled)
 							return
 						CM.visible_message("<span class='danger'>[CM] manages to break the legcuffs!</span>",
@@ -834,7 +834,7 @@
 				CM.visible_message("<span class='danger'>[CM] attempts to remove [HC]!</span>",
 								   "<span class='warning'>You attempt to remove [HC]. (This will take around [(breakouttime)/600] minutes and you need to stand still).</span>")
 				spawn(0)
-					if(do_after(CM, breakouttime))
+					if(do_after(CM, CM, breakouttime))
 						if(!CM.legcuffed || CM.buckled)
 							return // time leniency for lag which also might make this whole thing pointless but the server
 						CM.visible_message("<span class='danger'>[CM] manages to remove [HC]!</span>",

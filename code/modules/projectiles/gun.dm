@@ -195,7 +195,7 @@
 			return
 		mouthshoot = 1
 		M.visible_message("<span class='warning'>[user] sticks their gun in their mouth, ready to pull the trigger...</span>")
-		if(!do_after(user, 40))
+		if(!do_after(user,src, 40))
 			M.visible_message("<span class='notice'>[user] decided life was worth living</span>")
 			mouthshoot = 0
 			return

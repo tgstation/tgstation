@@ -382,7 +382,7 @@
 		return .
 	if(istype(W, /obj/item/weapon/wrench))
 		user << "<span class='notice'>Deconstructing \the [src]...</span>"
-		if(do_after(user,50))
+		if(do_after(user, src,50))
 			playsound(get_turf(src), 'sound/items/Ratchet.ogg', 100, 1)
 			user << "<span class='notice'>You disassemble \the [src].</span>"
 			var/turf/T=get_turf(src)

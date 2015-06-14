@@ -48,7 +48,7 @@
 			if(has_electronics & 1)
 				playsound(get_turf(src), 'sound/items/Crowbar.ogg', 50, 1)
 				user << "You begin removing the circuitboard" //lpeters - fixed grammar issues
-				if(do_after(user, 50))
+				if(do_after(user, src, 50))
 					user.visible_message(\
 						"<span class='warning'>[user.name] has removed the circuitboard from [src.name]!</span>",\
 						"<span class='notice'>You remove the circuitboard board.</span>")
@@ -85,7 +85,7 @@
 			user << "You must close the cover to swipe an ID card."
 		else
 			flick("apc-spark", src)
-			if (do_after(user,6))
+			if (do_after(user, src,6))
 				if(prob(50))
 					emagged = 1
 					locked = 0
@@ -101,7 +101,7 @@
 			return
 		user << "You start adding cables to the compressor frame..."
 		playsound(get_turf(src), 'sound/items/Deconstruct.ogg', 50, 1)
-		if(do_after(user, 20) && C.amount >= 10)
+		if(do_after(user, src, 20) && C.amount >= 10)
 			C.use(10)
 			user.visible_message(\
 				"<span class='warning'>[user.name] has added cables to the compressor frame!</span>",\
@@ -112,7 +112,7 @@
 	else if (istype(W, /obj/item/weapon/wirecutters) && opened && (has_electronics & 2))
 		user << "You begin to cut the cables..."
 		playsound(get_turf(src), 'sound/items/Deconstruct.ogg', 50, 1)
-		if(do_after(user, 50))
+		if(do_after(user, src, 50))
 			new /obj/item/stack/cable_coil(loc,10)
 			user.visible_message(\
 				"<span class='warning'>[user.name] cut the cabling inside the compressor.</span>",\
@@ -123,7 +123,7 @@
 	else if (istype(W, /obj/item/weapon/module/rust_fuel_compressor) && opened && !(has_electronics & 1))
 		user << "You trying to insert the circuitboard into the frame..."
 		playsound(get_turf(src), 'sound/items/Deconstruct.ogg', 50, 1)
-		if(do_after(user, 10))
+		if(do_after(user, src, 10))
 			has_electronics &= 1
 			user << "You place the circuitboard inside the frame."
 			del(W)
@@ -136,7 +136,7 @@
 			return
 		user << "You start welding the compressor frame..."
 		playsound(get_turf(src), 'sound/items/Welder.ogg', 50, 1)
-		if(do_after(user, 50))
+		if(do_after(user, src, 50))
 			if(!src || !WT.remove_fuel(3, user)) return
 			new /obj/item/mounted/frame/rust_fuel_assembly_port(loc)
 			user.visible_message(\

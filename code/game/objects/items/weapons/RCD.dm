@@ -173,7 +173,7 @@ RCD
 				if(checkResource(wall_cost, user))
 					user << "Building Wall ..."
 					playsound(get_turf(src), 'sound/machines/click.ogg', 50, 1)
-					if(do_after(user, 20))
+					if(do_after(user,A, 20))
 						if(!useResource(wall_cost, user)) return 0
 						activate()
 						A:ChangeTurf(/turf/simulated/wall)
@@ -184,7 +184,7 @@ RCD
 			if(checkResource(airlock_cost, user))
 				user << "Building Airlock..."
 				playsound(get_turf(src), 'sound/machines/click.ogg', 50, 1)
-				if(do_after(user, 50))
+				if(do_after(user,A, 50))
 					if(!useResource(airlock_cost, user)) return 0
 					if(locate(/obj/machinery/door/airlock) in A) return 0
 					activate()
@@ -201,7 +201,7 @@ RCD
 				if(checkResource(decon_cost, user))
 					user << "Deconstructing Wall..."
 					playsound(get_turf(src), 'sound/machines/click.ogg', 50, 1)
-					if(do_after(user, 40))
+					if(do_after(user,A, 40))
 						if(!useResource(decon_cost, user)) return 0
 						activate()
 						A:ChangeTurf(/turf/simulated/floor/plating)
@@ -212,7 +212,7 @@ RCD
 				if(checkResource(decon_cost, user))
 					user << "Deconstructing Floor..."
 					playsound(get_turf(src), 'sound/machines/click.ogg', 50, 1)
-					if(do_after(user, 50))
+					if(do_after(user,A, 50))
 						if(!useResource(decon_cost, user)) return 0
 						activate()
 						A:ChangeTurf(A:under_turf)
@@ -223,7 +223,7 @@ RCD
 				if(checkResource((decon_cost * 2), user))
 					user << "Deconstructing Airlock..."
 					playsound(get_turf(src), 'sound/machines/click.ogg', 50, 1)
-					if(do_after(user, 50))
+					if(do_after(user,A, 50))
 						if(!useResource((decon_cost * 2), user)) return 0
 						activate()
 						del(A)

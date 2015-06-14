@@ -784,7 +784,7 @@ spideros = text2num(return_to)//Maximum length here is 6. Use (return_to, X) to 
 				U << "<span class='warning'>Warning: no exposed cable available.</span>"
 			else
 				U << "<span class='notice'>Connecting to wire, stand still...</span>"
-				if(do_after(U,50)&&!isnull(attached))
+				if(do_after(U, src,50)&&!isnull(attached))
 					drain("WIRE",attached,U:wear_suit,src)
 				else
 					U << "<span class='warning'>Procedure interrupted. Protocol terminated.</span>"

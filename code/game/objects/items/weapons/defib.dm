@@ -130,7 +130,7 @@
 /obj/item/weapon/melee/defibrillator/proc/attemptDefib(mob/living/carbon/human/target,mob/user)
 	user.visible_message("<span class='notice'>[user] starts setting up the paddles on [target]'s chest</span>", \
 	"<span class='notice'>You start setting up the paddles on [target]'s chest</span>")
-	if(do_after(user,30))
+	if(do_after(user,target,30))
 		sparks.start()
 		playsound(get_turf(src),'sound/items/defib.ogg',50,1)
 		charges--

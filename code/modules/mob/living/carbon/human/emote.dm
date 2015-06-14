@@ -669,7 +669,7 @@
 						message=""
 						playsound(location, 'sound/effects/smoke.ogg', 50, 1, -3)
 						visible_message("<span class = 'warning'><b>[name]</b> hunches down and grits their teeth!</span>")
-						if(do_after(usr,30))
+						if(do_after(usr,usr,30))
 							visible_message("<span class = 'warning'><b>[name]</b> unleashes a [pick("tremendous","gigantic","colossal")] fart!</span>","<span class = 'warning'>You hear a [pick("tremendous","gigantic","colossal")] fart.</span>")
 							playsound(location, 'sound/effects/superfart.ogg', 50, 0)
 							if(!wearing_suit)

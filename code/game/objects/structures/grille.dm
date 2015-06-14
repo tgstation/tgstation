@@ -175,7 +175,7 @@
 				return
 		user.visible_message("<span class='notice'>[user] starts placing a window on \the [src].</span>", \
 		"<span class='notice'>You start placing a window on \the [src].</span>")
-		if(do_after(user, 20))
+		if(do_after(user, src, 20))
 			for(var/obj/structure/window/P in loc)
 				if(P.dir == dir_to_set)//checking this for a 2nd time to check if a window was made while we were waiting.
 					user << "<span class='warning'>There's already a window here.</span>"

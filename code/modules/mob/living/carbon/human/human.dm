@@ -1385,7 +1385,7 @@
 
 	if(istype(U,/mob/living/carbon/human/)) U.bloody_hands(S)
 
-	if(!do_after(U, 80))
+	if(!do_after(U, src, 80))
 		return
 
 	if(!selection || !affected || !S || !U)

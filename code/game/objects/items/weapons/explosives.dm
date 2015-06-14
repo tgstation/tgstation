@@ -73,7 +73,7 @@
 
 		user.visible_message("<span class='warning'>[user.name] is trying to plant some kind of explosive on [target.name]!</span>")
 
-	if(do_after(user, 50) && in_range(user, target))
+	if(do_after(user, target, 50) && in_range(user, target))
 		user.drop_item(src)
 		src.target = target
 		loc = null

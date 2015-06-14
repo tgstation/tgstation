@@ -69,7 +69,7 @@
 	if(istype(I, /obj/item/weapon/crowbar))
 		user << "<span class='notice'>You start to [cistern ? "replace the lid on the cistern" : "lift the lid off the cistern"].</span>"
 		playsound(loc, 'sound/effects/stonedoor_openclose.ogg', 50, 1)
-		if(do_after(user, 30))
+		if(do_after(user, src, 30))
 			user.visible_message("<span class='notice'>[user] [cistern ? "replaces the lid on the cistern" : "lifts the lid off the cistern"]!</span>", "<span class='notice'>You [cistern ? "replace the lid on the cistern" : "lift the lid off the cistern"]!</span>", "You hear grinding porcelain.")
 			cistern = !cistern
 			update_icon()
@@ -191,7 +191,7 @@
 		user << "<span class='notice'>The water temperature seems to be [watertemp].</span>"
 	if(istype(I, /obj/item/weapon/wrench))
 		user << "<span class='notice'>You begin to adjust the temperature valve with the [I].</span>"
-		if(do_after(user, 50))
+		if(do_after(user, src, 50))
 			switch(watertemp)
 				if("normal")
 					watertemp = "freezing"
@@ -454,7 +454,7 @@
 		user << "<span class='notice'>You start washing \the [O].</span>"
 		busy = TRUE
 
-		if (do_after(user, 40))
+		if (do_after(user,src, 40))
 			O.clean_blood()
 			user.visible_message( \
 				"<span class='notice'>[user] washes \a [O] using \the [src].</span>", \

@@ -208,7 +208,7 @@
 	else if(istype(W,/obj/item/weapon/wrench))
 		var/un = !anchored ? "" : "un"
 		user.visible_message("<span class='notice'>[user.name] begins [un]locking \the [src.name]'s casters.</span>","<span class='notice'>You begin [un]locking \the [src.name]'s casters.</span>")
-		if(do_after(user,30))
+		if(do_after(user, src,30))
 			playsound(get_turf(src), 'sound/items/Ratchet.ogg', 50, 1)
 			anchored = !anchored
 			user.visible_message("<span class='notice'>[user.name] [un]locks \the [src.name]'s casters.</span>","<span class='warning'>You [un]lock \the [src.name]'s casters.</span>")

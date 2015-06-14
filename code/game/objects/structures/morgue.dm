@@ -97,7 +97,7 @@
 
 /obj/structure/morgue/attackby(P as obj, mob/user as mob)
 	if(iscrowbar(P)&&!contents.len)
-		if(do_after(user,50))
+		if(do_after(user, src,50))
 			playsound(get_turf(src), 'sound/items/Deconstruct.ogg', 50, 1)
 			new /obj/structure/closet/body_bag(src.loc)
 			new /obj/item/stack/sheet/metal(src.loc,5)

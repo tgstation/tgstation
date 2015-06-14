@@ -185,7 +185,7 @@
 	if (!src.density && src.operating != 1 && istype(I, /obj/item/weapon/crowbar))
 		user.visible_message("[user] removes the electronics from the windoor assembly.", "You start to remove the electronics from the windoor assembly.")
 		playsound(get_turf(src), 'sound/items/Crowbar.ogg', 100, 1)
-		if (do_after(user, 40) && src && !src.density && src.operating != 1)
+		if (do_after(user, src, 40) && src && !src.density && src.operating != 1)
 			user << "<span class='notice'>You removed the windoor electronics!</span>"
 			make_assembly(user)
 			src.dismantled = 1 // Don't play the glass shatter sound

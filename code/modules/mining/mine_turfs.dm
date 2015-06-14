@@ -208,7 +208,7 @@
 	if (istype(W, /obj/item/device/measuring_tape))
 		var/obj/item/device/measuring_tape/P = W
 		user.visible_message("<span class='notice'>[user] extends [P] towards [src].</span>","<span class='notice'>You extend [P] towards [src].</span>")
-		if(do_after(user,25))
+		if(do_after(user, src,25))
 			user << "<span class='notice'>\icon[P] [src] has been excavated to a depth of [2*excavation_level]cm.</span>"
 		return
 
@@ -248,7 +248,7 @@
 				if(prob(50))
 					artifact_debris()
 
-		if(do_after(user,P.digspeed) && user)
+		if(do_after(user, src, P.digspeed) && user)
 			user << "<span class='notice'>You finish [P.drill_verb] the rock.</span>"
 
 			if(finds && finds.len)

@@ -75,7 +75,7 @@
 		return
 	playsound(get_turf(src), "rustle", 50, 1)
 	user << "<span class='notice'>You start digging the snow with your hands.</span>"
-	if(do_after(user,30))
+	if(do_after(user, src, 30))
 		snow_amount = SNOWCOVERING_MEDIUM
 		user << "<span class='notice'>You form a snowball in your hands.</span>"
 		user.put_in_hands(new /obj/item/stack/sheet/snow())
@@ -318,7 +318,7 @@ var/global/list/datum/stack_recipe/snow_recipes = list (
 	if (istype(W, /obj/item/stack/sheet/snow))
 		if (src.health < src.maxhealth)
 			visible_message("<span class='warning'>[user] begins to repair the [src]!</span>")
-			if(do_after(user,20))
+			if(do_after(user, src, 20))
 				src.health = src.maxhealth
 				W:use(1)
 				visible_message("<span class='warning'>[user] repairs the [src]</span>")

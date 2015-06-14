@@ -66,7 +66,7 @@ var/list/genetics_computers = list()
 /obj/machinery/computer/genetics/attackby(obj/item/W as obj, mob/user as mob)
 	if((istype(W, /obj/item/screwdriver)) && ((src.stat & BROKEN) || !src.scanner))
 		playsound(src.loc, 'Screwdriver.ogg', 50, 1)
-		if(do_after(user, 20))
+		if(do_after(user, src, 20))
 			user << "<span class='notice'>The broken glass falls out.</span>"
 			var/obj/computerframe/A = new /obj/computerframe( src.loc )
 			new /obj/item/shard( src.loc )

@@ -22,7 +22,7 @@
 		return
 	user << "<span class='notice'>You start building a barricade using [src].</span>"
 	user.visible_message("<span class='warning'>[user] starts building a barricade.</span>")
-	if(do_after(user,50))
+	if(do_after(user, src,50))
 		user << "<span class='notice'>You finish the barricade.</span>"
 		new /obj/structure/barricade/wooden(usr.loc)
 		del(src) //Used up everything
@@ -38,7 +38,7 @@
 				return
 		var/obj/structure/barricade/wooden/door/B = new /obj/structure/barricade/wooden/door
 		user << "<span class='warning'>You start installing [src].</span>"
-		if(do_after(user,30))
+		if(do_after(user,T,30))
 			B.loc = locate(T.x,T.y,T.z)
 			B.layer = 4 //Higher than doors and windows
 			user << "<span class='notice'>You finish installing [src].</span>"
@@ -57,7 +57,7 @@
 			if(istype(S,/obj/structure/grille))
 				var/obj/structure/barricade/wooden/door/B = new /obj/structure/barricade/wooden/door
 				user << "<span class='warning'>You start installing [src].</span>"
-				if(do_after(user,30))
+				if(do_after(user,T,30))
 					B.loc = locate(S.x,S.y,S.z)
 					B.layer = 4
 					user << "<span class='notice'>You finish installing [src].</span>"

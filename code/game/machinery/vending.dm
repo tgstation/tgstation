@@ -931,7 +931,7 @@
 /obj/machinery/vending/wallmed1/crowbarDestroy(mob/user)
 	user.visible_message(	"[user] begins to pry out the NanoMed from the wall.",
 							"You begin to pry out the NanoMed from the wall...")
-	if(do_after(user, 40))
+	if(do_after(user, src, 40))
 		user.visible_message(	"[user] detaches the NanoMed from the wall.",
 								"You detach the NanoMed from the wall.")
 		playsound(get_turf(src), 'sound/items/Crowbar.ogg', 50, 1)
@@ -949,7 +949,7 @@
 /obj/machinery/vending/wallmed2/crowbarDestroy(mob/user)
 	user.visible_message(	"[user] begins to pry out the NanoMed from the wall.",
 							"You begin to pry out the NanoMed from the wall...")
-	if(do_after(user, 40))
+	if(do_after(user, src, 40))
 		user.visible_message(	"[user] detaches the NanoMed from the wall.",
 								"You detach the NanoMed from the wall.")
 		playsound(get_turf(src), 'sound/items/Crowbar.ogg', 50, 1)
@@ -993,7 +993,7 @@
 		if(0) // Empty hull
 			if(istype(W, /obj/item/weapon/screwdriver))
 				usr << "You begin removing screws from \the [src] backplate..."
-				if(do_after(user, 50))
+				if(do_after(user, src, 50))
 					usr << "<span class='notice'>You unscrew \the [src] from the wall.</span>"
 					playsound(get_turf(src), 'sound/items/Screwdriver.ogg', 50, 1)
 					new /obj/item/mounted/frame/wallmed(get_turf(src))
@@ -1005,7 +1005,7 @@
 					user << "<span class='warning'>You cannot install this type of board into a NanoMed frame.</span>"
 					return
 				usr << "You begin to insert \the [C] into \the [src]."
-				if(do_after(user, 10))
+				if(do_after(user, src, 10))
 					usr << "<span class='notice'>You secure \the [C]!</span>"
 					user.drop_item(C, src)
 					_circuitboard=C
@@ -1016,7 +1016,7 @@
 		if(1) // Circuitboard installed
 			if(istype(W, /obj/item/weapon/crowbar))
 				usr << "You begin to pry out \the [W] into \the [src]."
-				if(do_after(user, 10))
+				if(do_after(user, src, 10))
 					playsound(get_turf(src), 'sound/effects/pop.ogg', 50, 0)
 					build--
 					update_icon()
@@ -1035,7 +1035,7 @@
 				var/obj/item/stack/cable_coil/C=W
 				user << "You start adding cables to \the [src]..."
 				playsound(get_turf(src), 'sound/items/Deconstruct.ogg', 50, 1)
-				if(do_after(user, 20) && C.amount >= 5)
+				if(do_after(user, src, 20) && C.amount >= 5)
 					C.use(5)
 					build++
 					update_icon()
@@ -1045,7 +1045,7 @@
 		if(2) // Circuitboard installed, wired.
 			if(istype(W, /obj/item/weapon/wirecutters))
 				usr << "You begin to remove the wiring from \the [src]."
-				if(do_after(user, 50))
+				if(do_after(user, src, 50))
 					new /obj/item/stack/cable_coil(loc,5)
 					user.visible_message(\
 						"<span class='warning'>[user.name] cut the cables.</span>",\
@@ -1056,7 +1056,7 @@
 			if(istype(W, /obj/item/weapon/screwdriver))
 				user << "You begin to complete \the [src]..."
 				playsound(get_turf(src), 'sound/items/Screwdriver.ogg', 50, 1)
-				if(do_after(user, 20))
+				if(do_after(user, src, 20))
 					if(!_circuitboard)
 						_circuitboard=new boardtype(src)
 					build++
@@ -1069,7 +1069,7 @@
 			if(istype(W, /obj/item/weapon/screwdriver))
 				user << "You begin to unscrew \the [src]..."
 				playsound(get_turf(src), 'sound/items/Screwdriver.ogg', 50, 1)
-				if(do_after(user, 30))
+				if(do_after(user, src, 30))
 					build--
 					update_icon()
 				return 1

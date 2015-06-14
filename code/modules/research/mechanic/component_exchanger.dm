@@ -62,7 +62,7 @@
 		user.visible_message("<span class='notice'>[user] starts setting up \the [src] in \the [M]'s maintenance hatch</span>", \
 		"<span class='notice'>You carefully insert \the [src] through \the [M]'s maintenance hatch, it starts scanning the machine's components.</span>")
 
-		if(do_after(user, 20)) //2 seconds to obtain a complete reading of the machine's components
+		if(do_after(user, A, 20)) //2 seconds to obtain a complete reading of the machine's components
 
 			if(!Adjacent(user))
 				user << "<span class='warning'>An error message flashes on \the [src]'s HUD, stating its scan was disrupted.</span>"

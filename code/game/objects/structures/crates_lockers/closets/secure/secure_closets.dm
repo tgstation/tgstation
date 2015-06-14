@@ -65,7 +65,7 @@
 			if(!S.remove_fuel(4,user))
 				return
 			playsound(loc, 'sound/items/Welder.ogg', 100, 1)
-			if(do_after(user,40))
+			if(do_after(user, src,40))
 				playsound(loc, 'sound/items/Welder.ogg', 100, 1)
 				broken = 0
 				user << "<span class='notice'>You repair the electronics inside the locking mechanism!</span>"

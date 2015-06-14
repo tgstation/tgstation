@@ -350,7 +350,7 @@
 		if(W.remove_fuel(0,user))
 			playsound(get_turf(src), 'sound/items/Welder2.ogg', 100, 1)
 			user << "You start slicing the floorweld off the delivery chute."
-			if(do_after(user,20))
+			if(do_after(user, src,20))
 				if(!src || !W.isOn()) return
 				user << "You sliced the floorweld off the delivery chute."
 				var/obj/structure/disposalconstruct/C = new (src.loc)

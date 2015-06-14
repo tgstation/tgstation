@@ -529,7 +529,7 @@
 		usr << "<font color='red'>It's too cluttered inside for you to fit in!</font>"
 		return
 	visible_message("[usr] starts squeezing into the suit storage unit!", 3)
-	if(do_after(usr, 10))
+	if(do_after(usr, src, 10))
 		usr.stop_pulling()
 		usr.client.perspective = EYE_PERSPECTIVE
 		usr.client.eye = src
@@ -557,7 +557,7 @@
 	if((stat & NOPOWER) && iscrowbar(I) && !islocked)
 		playsound(get_turf(src), 'sound/items/Deconstruct.ogg', 50, 1)
 		user << "<span class='notice'>You begin prying the equipment out of the suit storage unit</span>"
-		if(do_after(user,20))
+		if(do_after(user, src,20))
 			dump_everything()
 			update_icon()
 	if(stat & NOPOWER)
@@ -578,7 +578,7 @@
 			user << "<font color='red'>The unit's storage area is too cluttered.</font>"
 			return
 		visible_message("[user] starts putting [G.affecting.name] into the Suit Storage Unit.", 3)
-		if(do_after(user, 20))
+		if(do_after(user, src, 20))
 			if(!G || !G.affecting) return //derpcheck
 			var/mob/M = G.affecting
 			if (M.client)

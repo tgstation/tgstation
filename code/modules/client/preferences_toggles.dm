@@ -219,11 +219,23 @@
 	set category = "Preferences"
 	set desc = "Toggle using nanoUI or retro style UIs for objects that support both."
 	prefs.usenanoui = !prefs.usenanoui
-	
+
 	prefs.save_preferences_sqlite(src, ckey)
-	
+
 	if(!prefs.usenanoui)
 		usr << "You will no longer use nanoUI on cross compatible UIs."
 	else
 		usr << "You will now use nanoUI on cross compatible UIs."
-	
+
+/client/verb/toggle_progress_bars()
+	set name = "Toggle Progress Bars"
+	set category = "Preferences"
+	set desc = "Toggle the display of a progress bar above the target of action."
+	prefs.progress_bars = !prefs.progress_bars
+
+	prefs.save_preferences_sqlite(src,ckey)
+
+	if(!prefs.progress_bars)
+		usr << "You will no longer see progress bars when doing delayed actions."
+	else
+		usr << "You will now see progress bars when doing delayed actions"

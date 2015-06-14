@@ -48,7 +48,7 @@
 	else if(istype(O, /obj/item/weapon/wrench))
 		user << "<span class='notice'> Now disassembling bookcase</span>"
 		playsound(get_turf(src), 'sound/items/Ratchet.ogg', 50, 1)
-		if(do_after(user,50))
+		if(do_after(user, src,50))
 			new /obj/item/stack/sheet/wood(get_turf(src))
 			new /obj/item/stack/sheet/wood(get_turf(src))
 			new /obj/item/stack/sheet/wood(get_turf(src))
@@ -285,7 +285,7 @@
 	else if(istype(W, /obj/item/weapon/kitchen/utensil/knife/large) || istype(W, /obj/item/weapon/wirecutters))
 		if(carved)	return
 		user << "<span class='notice'>You begin to carve out [title].</span>"
-		if(do_after(user, 30))
+		if(do_after(user, src, 30))
 			user << "<span class='notice'>You carve out the pages from [title]! You didn't want to read it anyway.</span>"
 			carved = 1
 			return

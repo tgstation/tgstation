@@ -1485,7 +1485,7 @@ var/list/slot_equipment_priority = list( \
 	else
 		U << "<span class='warning'>You attempt to get a good grip on the [selection] in [S]'s body.</span>"
 
-	if(!do_after(U, 80))
+	if(!do_after(U, src, 80))
 		return
 	if(!selection || !S || !U)
 		return

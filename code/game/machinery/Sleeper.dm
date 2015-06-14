@@ -250,7 +250,7 @@
 	else
 		visible_message("[user] starts putting [L.name] into \the [src].", 3)
 
-	if(do_after(user, 20))
+	if(do_after(user, src, 20))
 		if(src.occupant)
 			user << "<span class='notice'><B>The sleeper is already occupied!</B></span>"
 			return
@@ -297,7 +297,7 @@
 		visible_message("[usr] starts climbing out of \the [src].", 3)
 	else
 		visible_message("[usr] starts removing [occupant.name] from \the [src].", 3)
-	if(do_after(usr, 20) && occupant)
+	if(do_after(usr, src, 20) && occupant)
 		go_out(over_location)
 
 /obj/machinery/sleeper/allow_drop()
@@ -357,7 +357,7 @@
 
 	visible_message("[user] starts putting [G.affecting.name] into the sleeper.", 3)
 
-	if(do_after(user, 20))
+	if(do_after(user, src, 20))
 		if(src.occupant)
 			user << "<span class='notice'><B>The sleeper is already occupied!</B></span>"
 			return
@@ -509,7 +509,7 @@
 	if(usr.buckled)
 		return
 	visible_message("[usr] starts climbing into the sleeper.", 3)
-	if(do_after(usr, 20))
+	if(do_after(usr, src, 20))
 		if(src.occupant)
 			usr << "<span class='notice'><B>The sleeper is already occupied!</B></span>"
 			return

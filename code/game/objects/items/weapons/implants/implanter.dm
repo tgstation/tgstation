@@ -27,7 +27,7 @@
 			O.show_message("<span class='warning'>[user] is attemping to implant [M].</span>", 1)
 
 		var/turf/T1 = get_turf(M)
-		if (T1 && ((M == user) || do_after(user, 50)))
+		if (T1 && ((M == user) || do_after(user,M, 50)))
 			if(user && M && (get_turf(M) == T1) && src && src.imp)
 				for (var/mob/O in viewers(M, null))
 					O.show_message("<span class='warning'>[M] has been implanted by [user].</span>", 1)

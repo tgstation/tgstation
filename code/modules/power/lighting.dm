@@ -44,7 +44,7 @@
 		if (src.stage == 1)
 			playsound(get_turf(src), 'sound/items/Ratchet.ogg', 75, 1)
 			usr << "You begin deconstructing [src]."
-			if (!do_after(usr, 30))
+			if (!do_after(usr, src, 30))
 				return
 			var/obj/item/stack/sheet/metal/M = getFromPool(/obj/item/stack/sheet/metal, get_turf(src))
 			M.amount = sheets_refunded

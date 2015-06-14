@@ -85,6 +85,7 @@
 	special_popup	=	text2num(preference_list_client["special"])
 	randomslot		=	text2num(preference_list_client["randomslot"])
 	usenanoui		=	text2num(preference_list_client["usenanoui"])
+	progress_bars	=	text2num(preference_list_client["progress_bars"])
 
 	ooccolor		= 	sanitize_hexcolor(ooccolor, initial(ooccolor))
 	lastchangelog	= 	sanitize_text(lastchangelog, initial(lastchangelog))
@@ -96,10 +97,10 @@
 	UI_style_alpha	= 	sanitize_integer(UI_style_alpha, 0, 255, initial(UI_style_alpha))
 	randomslot		= 	sanitize_integer(randomslot, 0, 1, initial(randomslot))
 	volume			= 	sanitize_integer(volume, 0, 100, initial(volume))
-	usewmp			=	sanitize_integer(usewmp, 0, 1, initial(usewmp))
+	usewmp			= 	sanitize_integer(usewmp, 0, 1, initial(usewmp))
 	special_popup	= 	sanitize_integer(special_popup, 0, 1, initial(special_popup))
-	usenanoui		=	sanitize_integer(usenanoui, 0, 1, initial(usenanoui))
-
+	usenanoui		= 	sanitize_integer(usenanoui, 0, 1, initial(usenanoui))
+	progress_bars	= 	sanitize_integer(progress_bars, 0, 1, initial(progress_bars))
 	return 1
 
 
@@ -158,15 +159,15 @@
 	check.Add("SELECT ckey FROM client WHERE ckey = ?", ckey)
 	if(check.Execute(db))
 		if(!check.NextRow())
-			q.Add("INSERT into client (ckey, ooc_color, lastchangelog, UI_style, default_slot, toggles, UI_style_color, UI_style_alpha, warns, warnbans, randomslot, volume, usewmp, special, usenanoui) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)",\
-			ckey, ooccolor, lastchangelog, UI_style, default_slot, toggles, UI_style_color, UI_style_alpha, warns, warnbans, randomslot, volume, usewmp, special_popup, usenanoui)
+			q.Add("INSERT into client (ckey, ooc_color, lastchangelog, UI_style, default_slot, toggles, UI_style_color, UI_style_alpha, warns, warnbans, randomslot, volume, usewmp, special, usenanoui, progress_bars) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)",\
+			ckey, ooccolor, lastchangelog, UI_style, default_slot, toggles, UI_style_color, UI_style_alpha, warns, warnbans, randomslot, volume, usewmp, special_popup, usenanoui, progress_bars)
 			if(!q.Execute(db))
 				message_admins("Error #: [q.Error()] - [q.ErrorMsg()]")
 				warning("Error #:[q.Error()] - [q.ErrorMsg()]")
 				return 0
 		else
-			q.Add("UPDATE client SET ooc_color=?,lastchangelog=?,UI_style=?,default_slot=?,toggles=?,UI_style_color=?,UI_style_alpha=?,warns=?,warnbans=?,randomslot=?,volume=?,usewmp=?,special=?,usenanoui=? WHERE ckey = ?",\
-			ooccolor, lastchangelog, UI_style, default_slot, toggles, UI_style_color, UI_style_alpha, warns, warnbans, randomslot, volume, usewmp, special_popup, usenanoui, ckey)
+			q.Add("UPDATE client SET ooc_color=?,lastchangelog=?,UI_style=?,default_slot=?,toggles=?,UI_style_color=?,UI_style_alpha=?,warns=?,warnbans=?,randomslot=?,volume=?,usewmp=?,special=?,usenanoui=?,progress_bars=? WHERE ckey = ?",\
+			ooccolor, lastchangelog, UI_style, default_slot, toggles, UI_style_color, UI_style_alpha, warns, warnbans, randomslot, volume, usewmp, special_popup, usenanoui, progress_bars, ckey)
 			if(!q.Execute(db))
 				message_admins("Error #: [q.Error()] - [q.ErrorMsg()]")
 				warning("Error #:[q.Error()] - [q.ErrorMsg()]")

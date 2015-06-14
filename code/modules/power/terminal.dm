@@ -55,7 +55,7 @@
 
 	user << "<span class='notice'>You start adding cable to \the [src].</span>"
 	playsound(get_turf(src), 'sound/items/zip.ogg', 100, 1)
-	if (do_after(user, 100) && !T.intact && can_attach_terminal(user))
+	if (do_after(user, src, 100) && !T.intact && can_attach_terminal(user))
 
 		//Shock chance
 		var/obj/structure/cable/N = T.get_cable_node()

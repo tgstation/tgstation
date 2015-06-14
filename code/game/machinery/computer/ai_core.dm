@@ -18,7 +18,7 @@
 		if(0)
 			if(istype(P, /obj/item/weapon/wrench))
 				playsound(loc, 'sound/items/Ratchet.ogg', 50, 1)
-				if(do_after(user, 20))
+				if(do_after(user, src, 20))
 					user << "<span class='notice'>You wrench the frame into place.</span>"
 					anchored = 1
 					state = 1
@@ -28,7 +28,7 @@
 					user << "The welder must be on for this task."
 					return
 				playsound(loc, 'sound/items/Welder.ogg', 50, 1)
-				if(do_after(user, 20))
+				if(do_after(user, src, 20))
 					if(!src || !WT.remove_fuel(0, user)) return
 					user << "<span class='notice'>You deconstruct the frame.</span>"
 					new /obj/item/stack/sheet/plasteel( loc, 4)
@@ -36,7 +36,7 @@
 		if(1)
 			if(istype(P, /obj/item/weapon/wrench))
 				playsound(loc, 'sound/items/Ratchet.ogg', 50, 1)
-				if(do_after(user, 20))
+				if(do_after(user, src, 20))
 					user << "<span class='notice'>You unfasten the frame.</span>"
 					anchored = 0
 					state = 0
@@ -67,7 +67,7 @@
 			if(istype(P, /obj/item/stack/cable_coil))
 				if(P:amount >= 5)
 					playsound(loc, 'sound/items/Deconstruct.ogg', 50, 1)
-					if(do_after(user, 20))
+					if(do_after(user, src, 20))
 						P:amount -= 5
 						if(!P:amount) del(P)
 						user << "<span class='notice'>You add cables to the frame.</span>"
@@ -88,7 +88,7 @@
 			if(istype(P, /obj/item/stack/sheet/glass/rglass))
 				if(P:amount >= 2)
 					playsound(loc, 'sound/items/Deconstruct.ogg', 50, 1)
-					if(do_after(user, 20))
+					if(do_after(user, src, 20))
 						if (P)
 							P:amount -= 2
 							if(!P:amount) del(P)

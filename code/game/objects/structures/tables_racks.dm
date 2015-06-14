@@ -361,7 +361,7 @@
 		//if(!params_list.len || text2num(params_list["icon-y"]) < 8) //8 above the bottom of the icon
 		user << "<span class='notice'>Now disassembling table</span>"
 		playsound(get_turf(src), 'sound/items/Ratchet.ogg', 50, 1)
-		if(do_after(user,50))
+		if(do_after(user, src,50))
 			destroy()
 		return
 
@@ -555,14 +555,14 @@
 			if(src.status == 2)
 				user << "<span class='notice'>Now weakening the reinforced table</span>"
 				playsound(get_turf(src), 'sound/items/Welder.ogg', 50, 1)
-				if (do_after(user, 50))
+				if (do_after(user, src, 50))
 					if(!src || !WT.isOn()) return
 					user << "<span class='notice'>Table weakened</span>"
 					src.status = 1
 			else
 				user << "<span class='notice'>Now strengthening the reinforced table</span>"
 				playsound(get_turf(src), 'sound/items/Welder.ogg', 50, 1)
-				if (do_after(user, 50))
+				if (do_after(user, src, 50))
 					if(!src || !WT.isOn()) return
 					user << "<span class='notice'>Table strengthened</span>"
 					src.status = 2

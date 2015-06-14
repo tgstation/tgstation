@@ -143,7 +143,7 @@
 
 	if(istype(W, /obj/item/weapon/wrench))
 		playsound(get_turf(src), 'sound/items/Ratchet.ogg', 50, 1)
-		if(do_after(user, 30))
+		if(do_after(user, src, 30))
 			user << "<span class='notice'>You detach \the [src] from the wall.</span>"
 			new/obj/item/mounted/frame/driver_button(get_turf(src))
 			del(src)

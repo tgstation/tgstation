@@ -97,7 +97,7 @@ var/list/ventcrawl_machinery = list(/obj/machinery/atmospherics/unary/vent_pump,
 							if(HAZARD_HIGH_PRESSURE to INFINITY)
 								src << "<span class='danger'>You feel a roaring wind pushing you away from the vent!</span>"
 
-					if(!do_after(src, 45,,0))
+					if(!do_after(src,vent_found, 45,,0))
 						return
 
 					if(!client)

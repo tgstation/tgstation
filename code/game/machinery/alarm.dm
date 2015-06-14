@@ -824,7 +824,7 @@
 			else if(iscrowbar(W))
 				user << "You start prying out the circuit..."
 				playsound(get_turf(src), 'sound/items/Crowbar.ogg', 50, 1)
-				if(do_after(user,20) && buildstage == 1)
+				if(do_after(user, src, 20) && buildstage == 1)
 					user << "You pry out the circuit!"
 					new /obj/item/weapon/circuitboard/air_alarm(get_turf(user))
 					buildstage = 0
@@ -945,7 +945,7 @@ FIRE ALARM
 				if(iswirecutter(W))
 					user << "You begin to cut the wiring..."
 					playsound(get_turf(src), 'sound/items/Wirecutter.ogg', 50, 1)
-					if (do_after(user, 50) && buildstage == 2 && wiresexposed)
+					if (do_after(user, src,  50) && buildstage == 2 && wiresexposed)
 						buildstage=1
 						user.visible_message("<span class='attack'>[user] has cut the wiring from \the [src]!</span>", "You have cut the last of the wiring from \the [src].")
 						update_icon()
@@ -965,7 +965,7 @@ FIRE ALARM
 				else if(istype(W, /obj/item/weapon/crowbar))
 					user << "You start prying out the circuit..."
 					playsound(get_turf(src), 'sound/items/Crowbar.ogg', 50, 1)
-					if (do_after(user, 20) && buildstage == 1)
+					if (do_after(user, src,  20) && buildstage == 1)
 						user << "You pry out the circuit!"
 						new /obj/item/weapon/circuitboard/fire_alarm(get_turf(user))
 						buildstage = 0

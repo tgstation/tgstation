@@ -94,7 +94,7 @@
 		if(!bottom_open && !busy_hunting)
 			user << "You begin to hunt around the rim of \the [src]..."
 			busy_hunting = 1
-			if(do_after(user, 20))
+			if(do_after(user, src, 20))
 				if(user)
 					user << "You pry open the false bottom!"
 				bottom_open = 1

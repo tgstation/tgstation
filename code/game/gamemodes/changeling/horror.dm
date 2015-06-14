@@ -58,7 +58,7 @@
 	for(var/obj/machinery/door/D in T)
 		if(D.density)
 			D.visible_message("<span class='warning'>\The [D]'s motors whine as several great tendrils begin trying to force it open!</span>")
-			if(do_after(H,50) && prob(50))
+			if(do_after(H, D, 50) && prob(50))
 				D.open(1)
 				D.visible_message("<span class='warning'>[H.name] forces \the [D] open!</span>")
 

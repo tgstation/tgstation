@@ -197,7 +197,7 @@
 		if(W.is_hot()) //HEY CAN THIS SET THE THERMITE ON FIRE ?
 			user.visible_message("<span class='warning'>[user] applies \the [W] to the thermite coating \the [src] and waits</span>", \
 			"<span class='warning'>You apply \the [W] to the thermite coating \the [src] and wait</span>")
-			if(do_after(user, 100) && W.is_hot()) //Thermite is hard to light up
+			if(do_after(user, src, 100) && W.is_hot()) //Thermite is hard to light up
 				thermitemelt(user) //There, I just saved you fifty lines of redundant typechecks and awful snowflake coding
 				user.visible_message("<span class='warning'>[user] sets \the [src] ablaze with \the [W]</span>", \
 				"<span class='warning'>You set \the [src] ablaze with \the [W]</span>")
@@ -212,7 +212,7 @@
 			"<span class='warning'>You hear welding noises.</span>")
 			playsound(src, 'sound/items/Welder.ogg', 100, 1)
 
-			if(do_after(user, 100))
+			if(do_after(user, src, 100))
 				if(!istype(src)) return
 				playsound(src, 'sound/items/Welder.ogg', 100, 1)
 				user.visible_message("<span class='warning'>[user] slices through \the [src]'s outer plating.</span>", \
@@ -237,7 +237,7 @@
 		user.visible_message("<span class='warning'>[user] begins [PK.drill_verb] straight into \the [src].</span>", \
 		"<span class='notice'>You begin [PK.drill_verb] straight into \the [src].</span>")
 		playsound(src, PK.drill_sound, 100, 1)
-		if(do_after(user, PK.digspeed * 10))
+		if(do_after(user, src, PK.digspeed * 10))
 			user.visible_message("<span class='notice'>[user]'s [PK] tears though the last of \the [src], leaving nothing but a girder.</span>", \
 			"<span class='notice'>Your [PK] tears though the last of \the [src], leaving nothing but a girder.</span>")
 			dismantle_wall()
@@ -259,7 +259,7 @@
 		"<span class='notice'>You stab your [EB] into \the [src] and begin to slice it apart.</span>")
 		playsound(src, "sparks", 50, 1)
 
-		if(do_after(user, 70))
+		if(do_after(user, src, 70))
 			EB.spark_system.start()
 			playsound(src, "sparks", 50, 1)
 			playsound(src, 'sound/weapons/blade1.ogg', 50, 1)

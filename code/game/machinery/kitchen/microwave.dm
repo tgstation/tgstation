@@ -91,7 +91,7 @@
 				"<span class='notice'>[user] starts to fix part of the microwave.</span>", \
 				"<span class='notice'>You start to fix part of the microwave.</span>" \
 			)
-			if (do_after(user,20))
+			if (do_after(user, src,20))
 				user.visible_message( \
 					"<span class='notice'>[user] fixes part of the microwave.</span>", \
 					"<span class='notice'>You have fixed part of the microwave.</span>" \
@@ -102,7 +102,7 @@
 				"<span class='notice'>[user] starts to fix part of the microwave.</span>", \
 				"<span class='notice'>You start to fix part of the microwave.</span>" \
 			)
-			if (do_after(user,20))
+			if (do_after(user, src,20))
 				user.visible_message( \
 					"<span class='notice'>[user] fixes the microwave.</span>", \
 					"<span class='notice'>You have fixed the microwave.</span>" \
@@ -122,7 +122,7 @@
 					"<span class='notice'>[user] starts to clean the microwave.</span>", \
 					"<span class='notice'>You start to clean the microwave.</span>" \
 				)
-				if (do_after(user,20))
+				if (do_after(user, src,20))
 					R.reagents.remove_reagent("cleaner",5)
 					user.visible_message( \
 						"<span class='notice'>[user]  has cleaned  the microwave.</span>", \

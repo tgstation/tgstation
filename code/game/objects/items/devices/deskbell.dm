@@ -37,7 +37,7 @@
 
 		if(wrenching)	return
 		wrenching = 1
-		if(do_after(user, 30))
+		if(do_after(user, src, 30))
 			if(src)
 				anchored = !anchored
 				user.visible_message(
@@ -135,7 +135,7 @@
 
 		if(wrenching)	return
 		wrenching = 1
-		if(do_after(user, 30))
+		if(do_after(user, src, 30))
 			if(src)
 				anchored = !anchored
 				user.visible_message(

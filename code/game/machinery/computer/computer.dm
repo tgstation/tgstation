@@ -104,7 +104,7 @@
 	playsound(get_turf(src), 'sound/items/Screwdriver.ogg', 50, 1)
 	user.visible_message(	"[user] begins to unscrew \the [src]'s monitor.",
 							"You begin to unscrew the monitor...")
-	if (do_after(user, 20) && circuit)
+	if (do_after(user, src, 20) && circuit)
 		var/obj/structure/computerframe/A = new /obj/structure/computerframe( src.loc )
 		var/obj/item/weapon/circuitboard/M = new circuit( A )
 		A.circuit = M

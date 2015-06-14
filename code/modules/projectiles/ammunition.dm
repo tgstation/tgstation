@@ -127,7 +127,7 @@
 		trying_to_load = min(AS.max_ammo - AS.stored_ammo.len, bullets_from.stored_ammo.len) //either we fill to max, or we fill as much as possible
 	if(usr && trying_to_load)
 		usr << "You begin loading \the [target]..."
-	if(trying_to_load && do_after(usr, trying_to_load * 5)) //bit of a wait, but that's why it's SLOW
+	if(trying_to_load && do_after(usr,target,trying_to_load * 5)) //bit of a wait, but that's why it's SLOW
 		return 1
 	else if(trying_to_load)
 		var/dropped_bullets = 0

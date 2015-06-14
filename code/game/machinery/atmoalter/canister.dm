@@ -471,7 +471,7 @@
 	playsound(get_turf(src), 'sound/items/Welder.ogg', 50, 1)
 	WT.eyecheck(user)
 	busy = 1
-	if(do_after(user, 50))
+	if(do_after(user, src, 50))
 		busy = 0
 		if(!WT.isOn())
 			return 0

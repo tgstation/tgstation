@@ -250,7 +250,7 @@
 			user.visible_message("<span class='warning'>[user] starts to apply \the [src] to their [limb].</span>", \
 								"<span class='warning'>You start to apply \the [src] to your [limb].</span>", \
 								"<span class='warning'>You hear something being wrapped.</span>")
-		if(do_after(user, 50))
+		if(do_mob(user, M, 50))
 			if (M != user)
 				user.visible_message("<span class='warning'>[user] finishes applying \the [src] to [M]'s [limb].</span>", \
 									"<span class='warning'>You finish applying \the [src] to [M]'s [limb].</span>", \

@@ -74,7 +74,7 @@
 /obj/machinery/power/solar/control/attackby(I as obj, user as mob)
 	if(istype(I, /obj/item/weapon/screwdriver))
 		playsound(get_turf(src), 'sound/items/Screwdriver.ogg', 50, 1)
-		if(do_after(user, 20))
+		if(do_after(user, src, 20))
 			if(src.stat & BROKEN)
 				visible_message("<span class='notice'>[user] clears the broken monitor off of [src].</span>", \
 				"You clear the broken monitor off of [src]")

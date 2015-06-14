@@ -46,7 +46,7 @@
 				if(C.amount >= 5)
 					playsound(get_turf(src), 'sound/items/Deconstruct.ogg', 50, 1)
 					user << "<span class='notice'>You start to add cables to the frame.</span>"
-					if(do_after(user, 20))
+					if(do_after(user, src, 20))
 						if(C && C.amount >= 5) // Check again
 							C.use(5)
 							user << "<span class='notice'>You add cables to the frame.</span>"

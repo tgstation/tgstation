@@ -133,7 +133,7 @@
 			return
 		if (R.time)
 			usr << "<span class='notice'>Building [R.title] ...</span>"
-			if (!do_after(usr, R.time))
+			if (!do_after(usr, src, R.time))
 				return
 		if (src.amount < R.req_amount*multiplier)
 			return

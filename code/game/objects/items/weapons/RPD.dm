@@ -501,7 +501,7 @@ var/global/list/RPD_recipes=list(
 			if(istype(A,/obj/item/pipe) || istype(A,/obj/item/pipe_meter) || istype(A,/obj/structure/disposalconstruct) || istype(A,/obj/item/pipe_gsensor))
 				user << "Destroying Pipe..."
 				playsound(get_turf(src), 'sound/machines/click.ogg', 50, 1)
-				if(do_after(user, 5))
+				if(do_after(user,A, 5))
 					if(A)
 						activate()
 						if(istype(A, /obj/item/pipe))
@@ -520,7 +520,7 @@ var/global/list/RPD_recipes=list(
 				return 0
 			user << "Building Pipes ..."
 			playsound(get_turf(src), 'sound/machines/click.ogg', 50, 1)
-			if(do_after(user, 20))
+			if(do_after(user,A, 20))
 				activate()
 				var/obj/item/pipe/P = getFromPool(/obj/item/pipe, A)
 				P.New(A,pipe_type=p_type,dir=p_dir) //new (A, pipe_type=p_type, dir=p_dir)
@@ -535,7 +535,7 @@ var/global/list/RPD_recipes=list(
 				return 0
 			user << "Building Meter..."
 			playsound(get_turf(src), 'sound/machines/click.ogg', 50, 1)
-			if(do_after(user, 20))
+			if(do_after(user,A, 20))
 				activate()
 				new /obj/item/pipe_meter(A)
 				return 1
@@ -547,7 +547,7 @@ var/global/list/RPD_recipes=list(
 				return 0
 			user << "Building Pipes..."
 			playsound(get_turf(src), 'sound/machines/click.ogg', 50, 1)
-			if(do_after(user, 20))
+			if(do_after(user,A, 20))
 				activate()
 				var/obj/structure/disposalconstruct/C = new (A)
 				// This may still produce runtimes, but I checked and /obj/structure/disposalconstruct
@@ -583,7 +583,7 @@ var/global/list/RPD_recipes=list(
 				return 0
 			user << "Building Sensor..."
 			playsound(get_turf(src), 'sound/machines/click.ogg', 50, 1)
-			if(do_after(user, 20))
+			if(do_after(user,A, 20))
 				activate()
 				new /obj/item/pipe_gsensor(A)
 				return 1

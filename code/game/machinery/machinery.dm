@@ -458,7 +458,7 @@ Class Procs:
 /obj/machinery/proc/crowbarDestroy(mob/user)
 	user.visible_message(	"[user] begins to pry out the circuitboard from \the [src].",
 							"You begin to pry out the circuitboard from \the [src]...")
-	if(do_after(user, 40))
+	if(do_after(user, src, 40))
 		playsound(get_turf(src), 'sound/items/Crowbar.ogg', 50, 1)
 		dropFrame()
 		for(var/obj/I in component_parts)
@@ -502,7 +502,7 @@ Class Procs:
 	user.visible_message(	"[user] begins to [anchored ? "undo" : "wrench"] \the [src]'s securing bolts.",
 							"You begin to [anchored ? "undo" : "wrench"] \the [src]'s securing bolts...")
 	playsound(loc, 'sound/items/Ratchet.ogg', 50, 1)
-	if(do_after(user, 30))
+	if(do_after(user, src, 30))
 		anchored = !anchored
 		if(machine_flags & FIXED2WORK)
 			power_change() //updates us to turn on or off as necessary
@@ -523,7 +523,7 @@ Class Procs:
 		user.visible_message("[user.name] starts to [state - 1 ? "unweld": "weld" ] the [src] [state - 1 ? "from" : "to"] the floor.", \
 				"You start to [state - 1 ? "unweld": "weld" ] the [src] [state - 1 ? "from" : "to"] the floor.", \
 				"You hear welding.")
-		if (do_after(user,20))
+		if (do_after(user, src,20))
 			if(!src || !WT.isOn())
 				return -1
 			switch(state)

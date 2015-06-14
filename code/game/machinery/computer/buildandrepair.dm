@@ -299,7 +299,7 @@
 		if(0)
 			if(istype(P, /obj/item/weapon/wrench))
 				playsound(get_turf(src), 'sound/items/Ratchet.ogg', 50, 1)
-				if(do_after(user, 5) && state == 0)
+				if(do_after(user, src, 5) && state == 0)
 					user << "<span class='notice'>You wrench the frame into place.</span>"
 					src.anchored = 1
 					src.state = 1
@@ -310,7 +310,7 @@
 					user << "The welding tool must be on to complete this task."
 					return 1
 				playsound(get_turf(src), 'sound/items/Welder.ogg', 50, 1)
-				if(do_after(user, 10) && state == 0)
+				if(do_after(user, src, 10) && state == 0)
 					if(!src || !WT.isOn()) return
 					user << "<span class='notice'>You deconstruct the frame.</span>"
 					var/obj/item/stack/sheet/metal/M = getFromPool(/obj/item/stack/sheet/metal, src.loc)
@@ -321,7 +321,7 @@
 		if(1)
 			if(istype(P, /obj/item/weapon/wrench))
 				playsound(get_turf(src), 'sound/items/Ratchet.ogg', 50, 1)
-				if(do_after(user, 20) && state == 1)
+				if(do_after(user, src, 20) && state == 1)
 					user << "<span class='notice'>You unfasten the frame.</span>"
 					src.anchored = 0
 					src.state = 0
@@ -365,7 +365,7 @@
 					return 1
 
 				playsound(get_turf(src), 'sound/items/Deconstruct.ogg', 50, 1)
-				if (do_after(user, 20) && state == 2 && C.amount >= 5)
+				if (do_after(user, src, 20) && state == 2 && C.amount >= 5)
 					C.use(5)
 					user << "<span class='notice'>You add cables to the frame.</span>"
 					src.state = 3
@@ -388,7 +388,7 @@
 					return 1
 
 				playsound(get_turf(src), 'sound/items/Deconstruct.ogg', 50, 1)
-				if(do_after(user, 20) && state == 3 && G.amount >= 2)
+				if(do_after(user, src, 20) && state == 3 && G.amount >= 2)
 					G.use(2)
 					user << "<span class='notice'>You put in the glass panel.</span>"
 					src.state = 4

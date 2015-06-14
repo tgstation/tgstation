@@ -436,7 +436,7 @@
 		if (anchored)
 			playsound(get_turf(src), 'sound/items/Ratchet.ogg', 50, 1)
 			user << "<span class='notice'>You begin to loosen \the [src]'s casters...</span>"
-			if (do_after(user, 40))
+			if (do_after(user, src, 40))
 				user.visible_message( \
 					"[user] loosens \the [src]'s casters.", \
 					"<span class='notice'>You have loosened \the [src]. Now it can be pulled somewhere else.</span>", \
@@ -445,7 +445,7 @@
 		else
 			playsound(get_turf(src), 'sound/items/Ratchet.ogg', 50, 1)
 			user << "<span class='notice'>You begin to tighten \the [src] to the floor...</span>"
-			if (do_after(user, 20))
+			if (do_after(user, src, 20))
 				user.visible_message( \
 					"[user] tightens \the [src]'s casters.", \
 					"<span class='notice'>You have tightened \the [src]'s casters. Now it can be played again.</span>", \

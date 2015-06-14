@@ -52,14 +52,14 @@
 			return
 
 		if (istype(W, /obj/item/weapon/screwdriver))
-			if (do_after(user, 20))
+			if (do_after(user, src, 20))
 				src.open =! src.open
 				user.show_message(text("<span class='notice'>You [] the service panel.</span>", (src.open ? "open" : "close")))
 			return
 		if ((istype(W, /obj/item/device/multitool)) && (src.open == 1)&& (!src.l_hacking))
 			user.show_message(text("<span class='warning'>Now attempting to reset internal memory, please hold.</span>"), 1)
 			src.l_hacking = 1
-			if (do_after(usr, 100))
+			if (do_after(usr, src, 100))
 				if (prob(40))
 					src.l_setshort = 1
 					src.l_set = 0

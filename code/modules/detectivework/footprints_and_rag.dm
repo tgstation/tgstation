@@ -47,7 +47,7 @@
 		user << "<span class='notice'>Your rag is dry!</span>"
 		return
 	user.visible_message("<span class='warning'>[user] begins to wipe down \the [target].</span>", "<span class='notice'>You begin to wipe down \the [target].</span>")
-	if(do_after(user, 50))
+	if(do_after(user,target, 50))
 		if(target)
 			target.clean_blood()
 			if(isturf(target))

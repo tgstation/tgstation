@@ -13,7 +13,7 @@
 /obj/structure/mirror_frame/attackby(var/obj/item/W,var/mob/user)
 	if(istype(W, /obj/item/weapon/wrench))
 		user << "<span class='info'>You begin to unfasten \the [src]'s bolts.</span>"
-		if(do_after(user,20))
+		if(do_after(user, src,20))
 			anchored=!anchored
 			user.visible_message("<span class='info'>You unfasten \the [src]'s bolts.</span>", "[user] unfastens the [src]'s bolts.","You hear a ratchet.")
 			playsound(get_turf(src), 'sound/items/Ratchet.ogg', 50, 1)
@@ -22,7 +22,7 @@
 		var/obj/item/weapon/weldingtool/WT = W
 		if (WT.remove_fuel(0,user))
 			user << "Now welding the [src]..."
-			if(do_after(user, 20))
+			if(do_after(user, src, 20))
 				if(!src || !WT.isOn()) return
 				playsound(get_turf(src), 'sound/items/Welder2.ogg', 50, 1)
 				user.visible_message("<span class='warning'>[user] cuts the [src] apart.</span>", "<span class='warning'>You cut the [src] apart.</span>", "You hear welding.")
@@ -40,7 +40,7 @@
 		if(stack.amount < 5)
 			user << "<span class='warning'>You need at least 5 [stack] to build a beamsplitter.</span>"
 			return
-		if(do_after(user,10))
+		if(do_after(user, src,10))
 			if(stack.amount < 5)
 				user << "<span class='warning'>You need at least 5 [stack] to build a beamsplitter.</span>"
 				return
@@ -55,7 +55,7 @@
 		if(stack.amount < 5)
 			user << "<span class='warning'>You need at least 5 [stack] to build a beamsplitter.</span>"
 			return
-		if(do_after(user,10))
+		if(do_after(user, src,10))
 			if(stack.amount < 5)
 				user << "<span class='warning'>You need at least 5 [stack] to build a beamsplitter.</span>"
 				return

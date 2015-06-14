@@ -106,7 +106,7 @@
 				playsound(get_turf(src), 'sound/items/Welder2.ogg', 100, 1)
 				user << "You start slicing the floorweld off the disposal unit."
 
-				if(do_after(user,20))
+				if(do_after(user, src,20))
 					if(!src || !W.isOn()) return
 					user << "You sliced the floorweld off the disposal unit."
 					var/obj/structure/disposalconstruct/C = new (src.loc)
@@ -145,7 +145,7 @@
 			user.attack_log += "<span class='warning'> [user]([user.ckey]) has attempted to put [GM]([GM.ckey]) in disposals.</span>"
 			GM.attack_log += "<span class='warning'> [user]([user.ckey]) has attempted to put [GM]([GM.ckey]) in disposals.</span>"
 			user.visible_message("[usr] starts putting [GM.name] into the [src].", "You start putting the [GM.name] into the [src].", "You hear some clunking.")
-			if(do_after(usr, 20))
+			if(do_after(usr, src, 20))
 				if (GM.client)
 					GM.client.perspective = EYE_PERSPECTIVE
 					GM.client.eye = src
@@ -470,7 +470,7 @@
 		else
 			return
 
-	if(!do_after(user, 20))
+	if(!do_after(user, src, 20))
 		return
 
 	if(locHolder != target.loc)
@@ -1362,7 +1362,7 @@
 			if(W.remove_fuel(0,user))
 				playsound(get_turf(src), 'sound/items/Welder2.ogg', 100, 1)
 				user << "You start slicing the floorweld off the disposal outlet."
-				if(do_after(user,20))
+				if(do_after(user, src,20))
 					if(!src || !W.isOn()) return
 					user << "You sliced the floorweld off the disposal outlet."
 					var/obj/structure/disposalconstruct/C = new (src.loc)

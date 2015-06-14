@@ -55,7 +55,7 @@
 					playsound(user, fire_sound, 50, 1)
 					user.visible_message("<span class='danger'>[src] goes off!</span>", "<span class='danger'>[src] goes off in your face!</span>")
 					return
-				if(do_after(user, 30))
+				if(do_after(user, src, 30))
 					if(getAmmo())
 						user << "<span class='notice'>You can't modify it!</span>"
 						return
@@ -71,7 +71,7 @@
 					playsound(user, fire_sound, 50, 1)
 					user.visible_message("<span class='danger'>[src] goes off!</span>", "<span class='danger'>[src] goes off in your face!</span>")
 					return
-				if(do_after(user, 30))
+				if(do_after(user, src, 30))
 					if(getAmmo())
 						user << "<span class='notice'>You can't modify it!</span>"
 						return

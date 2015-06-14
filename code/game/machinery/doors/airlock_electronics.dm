@@ -31,7 +31,7 @@
 			if(!S.remove_fuel(4,user))
 				return
 			playsound(loc, 'sound/items/Welder.ogg', 100, 1)
-			if(do_after(user,40))
+			if(do_after(user, src,40))
 				playsound(loc, 'sound/items/Welder.ogg', 100, 1)
 				icon_state = "door_electronics"
 				user << "<span class='notice'>You repair the blown fuses on the circuitboard.</span>"

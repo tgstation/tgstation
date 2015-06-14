@@ -68,7 +68,7 @@ var/global/list/igniters = list()
 		if (WT.remove_fuel(0,user))
 			playsound(get_turf(src), 'sound/items/Welder2.ogg', 50, 1)
 			user << "<span class='notice'>You begin to cut \the [src] off the floor...</span>"
-			if (do_after(user, 40))
+			if (do_after(user, src, 40))
 				user.visible_message( \
 					"[user] disassembles \the [src].", \
 					"<span class='notice'>You have disassembled \the [src].</span>", \

@@ -41,7 +41,7 @@
 			var/engraving = sanitize(input(usr, "Depicted on the wall is an image of [engraving_name]. ...","Details of the engraving") as text)
 
 			user.visible_message("<span class='notice'>[user.name] starts engraving something on the [W.name].</span>", "<span class='notice'>You start engraving an image of [engraving_name] on the [W.name].</span>")
-			if(do_after(user, 60))
+			if(do_after(user, target, 60))
 				if( !istype(W, /turf/simulated/wall) || !user || !src || !W ) return
 				if( W.rotting )
 					user.visible_message("<span class='warning'>The [W.name] crumbles under [user.name]'s touch!</span>", "<span class='warning'>The [W.name] crumbles under your touch!</span>")

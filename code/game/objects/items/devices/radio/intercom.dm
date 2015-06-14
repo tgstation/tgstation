@@ -74,7 +74,7 @@
 			if(iswirecutter(W) && b_stat && wires.IsAllCut())
 				user << "<span class='notice'>You cut out the intercoms wiring and disconnect its electronics.</span>"
 				playsound(get_turf(src), 'sound/items/Wirecutter.ogg', 50, 1)
-				if(do_after(user, 10))
+				if(do_after(user, src, 10))
 					new /obj/item/stack/cable_coil(get_turf(src),5)
 					on = 0
 					b_stat = 1
@@ -86,7 +86,7 @@
 		if(2)
 			if(isscrewdriver(W))
 				playsound(get_turf(src), 'sound/items/Screwdriver.ogg', 50, 1)
-				if(do_after(user, 10))
+				if(do_after(user, src, 10))
 					update_icon()
 					on = 1
 					b_stat = 0
@@ -103,7 +103,7 @@
 				if(coil.amount < 5)
 					user << "<span class='warning'>You need more cable for this!</span>"
 					return
-				if(do_after(user, 10))
+				if(do_after(user, src, 10))
 					coil.use(5)
 					user << "<span class='notice'>You wire \the [src]!</span>"
 					buildstage = 2
@@ -111,7 +111,7 @@
 			if(iscrowbar(W))
 				user << "<span class='notice'>You begin removing the electronics...</span>"
 				playsound(get_turf(src), 'sound/items/Deconstruct.ogg', 50, 1)
-				if(do_after(user, 10))
+				if(do_after(user, src, 10))
 					new /obj/item/weapon/intercom_electronics(get_turf(src))
 					user << "<span class='notice'>The circuitboard pops out!</span>"
 					buildstage = 0
@@ -119,7 +119,7 @@
 		if(0)
 			if(istype(W,/obj/item/weapon/intercom_electronics))
 				playsound(get_turf(src), 'sound/items/Deconstruct.ogg', 50, 1)
-				if(do_after(user, 10))
+				if(do_after(user, src, 10))
 					qdel(W)
 					user << "<span class='notice'>You insert \the [W] into \the [src]!</span>"
 					buildstage = 1
@@ -130,7 +130,7 @@
 				if(!WT.remove_fuel(3, user))
 					user << "<span class='warning'>You're out of welding fuel.</span>"
 					return 1
-				if(do_after(user, 10))
+				if(do_after(user, src, 10))
 					user << "<span class='notice'>You cut the intercom frame from the wall!</span>"
 					new /obj/item/mounted/frame/intercom(get_turf(src))
 					qdel(src)

@@ -77,7 +77,7 @@
 				user << "You start drawing graffiti on the [target.name]."
 			if("rune")
 				user << "You start drawing a rune on the [target.name]."
-		if(instant || do_after(user, 50))
+		if(instant || do_after(user,target, 50))
 			new /obj/effect/decal/cleanable/crayon(target,colour,shadeColour,drawtype)
 			user << "You finish drawing."
 			target.add_fingerprint(user)		// Adds their fingerprints to the floor the crayon is drawn on.

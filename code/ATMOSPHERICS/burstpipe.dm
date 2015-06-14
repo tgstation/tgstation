@@ -44,7 +44,7 @@
 	var/turf/T = get_turf(src)
 	playsound(T, 'sound/items/Ratchet.ogg', 50, 1)
 	user << "<span class='notice'>You begin to remove \the [src]...</span>"
-	if (do_after(user, 40))
+	if (do_after(user, src, 40))
 		user.visible_message( \
 			"[user] removes \the [src].", \
 			"<span class='notice'>You have removed \the [src].</span>", \

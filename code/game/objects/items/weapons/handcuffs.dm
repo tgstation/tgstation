@@ -168,7 +168,7 @@
 			playsound(loc, 'sound/weapons/handcuffs.ogg', 30, 1, -2)
 			C.visible_message("<span class='danger'>[user] is trying to put handcuffs on [C]!</span>", \
 								"<span class='userdanger'>[user] is trying to put handcuffs on [C]!</span>")
-			if(do_after(user, 30))
+			if(do_after(user, C, 30))
 				if(!C || C.handcuffed)
 					return
 				if(user_loc == user.loc && C_loc == C.loc)

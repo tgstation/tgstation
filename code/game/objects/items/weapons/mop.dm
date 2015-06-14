@@ -44,7 +44,7 @@
 			user << "<span class='notice'>Your mop is dry!</span>"
 			return
 		user.visible_message("<span class='warning'>[user] begins to clean \the [get_turf(A)].</span>")
-		if(do_after(user, 30))
+		if(do_after(user,A, 30))
 			if(A)
 				clean(get_turf(A))
 				reagents.remove_any(1) //Might be a tad wonky with "special mop mixes", but fuck it

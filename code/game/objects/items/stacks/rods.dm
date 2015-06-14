@@ -35,7 +35,7 @@
 					return
 				user << "<span class='notice'>You begin to build a catwalk.</span>"
 				busy = 1
-				if(do_after(user, 30))
+				if(do_after(user, Target, 30))
 					busy = 0
 					if(R.amount < 2)
 						user << "<span class='warning'>You ran out of rods!</span>"
@@ -104,7 +104,7 @@
 
 		user << "<span class='notice'>Assembling grille...</span>"
 
-		if(!do_after(user, 10))
+		if(!do_after(user, src, 10))
 			return
 
 		var/obj/structure/grille/Grille = getFromPool(/obj/structure/grille, user.loc)

@@ -125,7 +125,7 @@
 			playsound(user, fire_sound, 50, 1)
 			user.visible_message("<span class='danger'>The shotgun goes off!</span>", "<span class='danger'>The shotgun goes off in your face!</span>")
 			return
-		if(do_after(user, 30))	//SHIT IS STEALTHY EYYYYY
+		if(do_after(user, src, 30))	//SHIT IS STEALTHY EYYYYY
 			icon_state = "sawnshotgun"
 			w_class = 3.0
 			item_state = "gun"

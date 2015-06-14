@@ -304,7 +304,7 @@
 		var/obj/item/weapon/weldingtool/WT = W
 		if (WT.remove_fuel(0,user))
 			user << "<span class='notice'>Now welding the scrubber.</span>"
-			if(do_after(user, 20))
+			if(do_after(user, src, 20))
 				if(!src || !WT.isOn()) return
 				playsound(get_turf(src), 'sound/items/Welder2.ogg', 50, 1)
 				if(!welded)

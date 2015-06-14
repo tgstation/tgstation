@@ -364,7 +364,7 @@
 				return
 			playsound(get_turf(src), 'sound/items/Crowbar.ogg', 50, 1)
 			user << "You are trying to remove the power control board..." //lpeters - fixed grammar issues
-			if (do_after(user, 50) && opened && !terminal && has_electronics == 1)
+			if (do_after(user, src, 50) && opened && !terminal && has_electronics == 1)
 				has_electronics = 0
 				if ((stat & BROKEN) || malfhack)
 					user.visible_message(\
@@ -454,7 +454,7 @@
 			user << "Nothing happens."
 		else
 			flick("apc-spark", src)
-			if (do_after(user, 6) && !opened && !wiresexposed && !(stat & (BROKEN|MAINT)) && !emagged)
+			if (do_after(user, src, 6) && !opened && !wiresexposed && !(stat & (BROKEN|MAINT)) && !emagged)
 				if(prob(50))
 					emagged = 1
 					locked = 0
@@ -479,7 +479,7 @@
 			return
 		user << "You begin to cut the cables..."
 		playsound(get_turf(src), 'sound/items/Deconstruct.ogg', 50, 1)
-		if (do_after(user, 50) && opened && terminal && has_electronics != 2 && !T.intact)
+		if (do_after(user, src, 50) && opened && terminal && has_electronics != 2 && !T.intact)
 			if (prob(50) && electrocute_mob(usr, terminal.get_powernet(), terminal))
 				var/datum/effect/effect/system/spark_spread/s = new /datum/effect/effect/system/spark_spread
 				s.set_up(5, 1, src)
@@ -493,7 +493,7 @@
 	else if (istype(W, /obj/item/weapon/circuitboard/power_control) && opened && has_electronics==0 && !((stat & BROKEN) || malfhack))
 		user << "You trying to insert the power control board into the frame..."
 		playsound(get_turf(src), 'sound/items/Deconstruct.ogg', 50, 1)
-		if (do_after(user, 10) && opened && has_electronics == 0 && !((stat & BROKEN) || malfhack))
+		if (do_after(user, src, 10) && opened && has_electronics == 0 && !((stat & BROKEN) || malfhack))
 			has_electronics = 1
 			user << "You place the power control board inside the frame."
 			del(W)
@@ -507,7 +507,7 @@
 			return
 		user << "You start welding the APC frame..."
 		playsound(get_turf(src), 'sound/items/Welder.ogg', 50, 1)
-		if (do_after(user, 50))
+		if (do_after(user, src, 50))
 			if(!src || !WT.remove_fuel(3, user)) return
 			if (emagged || malfhack || (stat & BROKEN) || opened==2)
 				getFromPool(/obj/item/stack/sheet/metal, get_turf(src), 1)
@@ -537,7 +537,7 @@
 			user << "You cannot repair this APC until you remove the electronics still inside."
 			return
 		user << "You begin to replace the damaged APC frame..."
-		if(do_after(user, 50))
+		if(do_after(user, src, 50))
 			user.visible_message(\
 				"<span class='warning'>[user.name] has replaced the damaged APC frame with new one.</span>",\
 				"You replace the damaged APC frame with new one.")

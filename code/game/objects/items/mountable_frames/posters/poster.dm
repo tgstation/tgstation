@@ -33,7 +33,7 @@
 
 	if(!D)	return
 
-	if(do_after(user, 17))//Let's check if everything is still there
+	if(do_after(user, on_wall, 17))//Let's check if everything is still there
 		user << "<span class='notice'>You place the poster!</span>"
 	else
 		D.roll_and_drop(temp_loc)

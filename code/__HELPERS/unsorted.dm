@@ -682,19 +682,66 @@ proc/anim(turf/location as turf,target as mob|obj,a_icon,a_icon_state as text,fl
 
 	else return get_step(ref, base_dir)
 
-/proc/do_mob(var/mob/user , var/mob/target, var/time = 30) //This is quite an ugly solution but i refuse to use the old request system.
+/proc/do_mob(var/mob/user , var/mob/target, var/delay = 30, var/numticks = 10) //This is quite an ugly solution but i refuse to use the old request system.
 	if(!user || !target) return 0
 	var/user_loc = user.loc
 	var/target_loc = target.loc
 	var/holding = user.get_active_hand()
-	sleep(time)
-	if(!user || !target) return 0
-	if ( user.loc == user_loc && target.loc == target_loc && user.get_active_hand() == holding && !( user.stat ) && ( !user.stunned && !user.weakened && !user.paralysis && !user.lying ) )
-		return 1
-	else
-		return 0
+	var/delayfraction = round(delay/numticks)
+	var/image/progbar
+	if(user && user.client && user.client.prefs.progress_bars)
+		if(!progbar)
+			progbar = image("icon" = 'icons/effects/doafter_icon.dmi', "loc" = target, "icon_state" = "prog_bar_0")
+			progbar.pixel_y = 32
+		//if(!barbar)
+			//barbar = image("icon" = 'icons/effects/doafter_icon.dmi', "loc" = user, "icon_state" = "none")
+			//barbar.pixel_y = 36
+	//var/oldstate
+	for (var/i = 1 to numticks)
+		if(user && user.client && user.client.prefs.progress_bars && progbar)
+			//oldstate = progbar.icon_state
+			switch(round(((i / numticks) * 100)))
+				if(-INFINITY to 10)
+					progbar.icon_state = "prog_bar_0"
+				if(11 to 20)
+					progbar.icon_state = "prog_bar_10"
+				if(21 to 30)
+					progbar.icon_state = "prog_bar_20"
+				if(31 to 40)
+					progbar.icon_state = "prog_bar_30"
+				if(41 to 50)
+					progbar.icon_state = "prog_bar_40"
+				if(51 to 60)
+					progbar.icon_state = "prog_bar_50"
+				if(61 to 70)
+					progbar.icon_state = "prog_bar_60"
+				if(71 to 80)
+					progbar.icon_state = "prog_bar_70"
+				if(81 to 90)
+					progbar.icon_state = "prog_bar_80"
+				if(91 to INFINITY)
+					progbar.icon_state = "prog_bar_90"
+			user.client.images |= progbar
+		sleep(delayfraction)
+		if(!user || !target)
+			if(progbar)
+				progbar.icon_state = "prog_bar_stopped"
+				spawn(2)
+					if(user && user.client) user.client.images -= progbar
+					if(progbar) progbar.loc = null
+			return 0
+		if ( user.loc != user_loc || target.loc != target_loc || user.get_active_hand() != holding || ( user.stat ) || ( user.stunned || user.weakened || user.paralysis || user.lying ) )
+			if(progbar)
+				progbar.icon_state = "prog_bar_stopped"
+				spawn(2)
+					if(user && user.client) user.client.images -= progbar
+					if(progbar) progbar.loc = null
+			return 0
+	if(user && user.client) user.client.images -= progbar
+	if(progbar) progbar.loc = null
+	return 1
 
-/proc/do_after(var/mob/user as mob, delay as num, var/numticks = 5, var/needhand = TRUE)
+/proc/do_after(var/mob/user as mob, var/atom/target, var/delay as num, var/numticks = 10, var/needhand = TRUE)
 	if(!user || isnull(user))
 		return 0
 	if(numticks == 0)
@@ -703,15 +750,62 @@ proc/anim(turf/location as turf,target as mob|obj,a_icon,a_icon_state as text,fl
 	var/delayfraction = round(delay/numticks)
 	var/Location = user.loc
 	var/holding = user.get_active_hand()
-
+	var/image/progbar
+	//var/image/barbar
+	if(user && user.client && user.client.prefs.progress_bars && target)
+		if(!progbar)
+			progbar = image("icon" = 'icons/effects/doafter_icon.dmi', "loc" = target, "icon_state" = "prog_bar_0")
+			progbar.pixel_y = 32
+		//if(!barbar)
+			//barbar = image("icon" = 'icons/effects/doafter_icon.dmi', "loc" = target, "icon_state" = "none")
+			//barbar.pixel_y = 36
+	//var/oldstate
 	for (var/i = 1 to numticks)
+		if(user && user.client && user.client.prefs.progress_bars && target)
+			if(!progbar)
+				progbar = image("icon" = 'icons/effects/doafter_icon.dmi', "loc" = target, "icon_state" = "prog_bar_0")
+			//oldstate = progbar.icon_state
+			switch(round(((i / numticks) * 100)))
+				if(-INFINITY to 10)
+					progbar.icon_state = "prog_bar_0"
+				if(11 to 20)
+					progbar.icon_state = "prog_bar_10"
+				if(21 to 30)
+					progbar.icon_state = "prog_bar_20"
+				if(31 to 40)
+					progbar.icon_state = "prog_bar_30"
+				if(41 to 50)
+					progbar.icon_state = "prog_bar_40"
+				if(51 to 60)
+					progbar.icon_state = "prog_bar_50"
+				if(61 to 70)
+					progbar.icon_state = "prog_bar_60"
+				if(71 to 80)
+					progbar.icon_state = "prog_bar_70"
+				if(81 to 90)
+					progbar.icon_state = "prog_bar_80"
+				if(91 to INFINITY)
+					progbar.icon_state = "prog_bar_90"
+			user.client.images |= progbar
 		sleep(delayfraction)
-
+		//if(user.client && progbar.icon_state != oldstate)
+			//user.client.images.Remove(progbar)
 		if(!user || user.stat || user.weakened || user.stunned || !(user.loc == Location))
+			if(progbar)
+				progbar.icon_state = "prog_bar_stopped"
+				spawn(2)
+					if(user && user.client) user.client.images -= progbar
+					if(progbar) progbar.loc = null
 			return 0
 		if(needhand && !(user.get_active_hand() == holding))	//Sometimes you don't want the user to have to keep their active hand
+			if(progbar)
+				progbar.icon_state = "prog_bar_stopped"
+				spawn(2)
+					if(user && user.client) user.client.images -= progbar
+					if(progbar) progbar.loc = null
 			return 0
-
+	if(user && user.client) user.client.images -= progbar
+	if(progbar) progbar.loc = null
 	return 1
 
 //Takes: Anything that could possibly have variables and a varname to check.
@@ -1368,7 +1462,7 @@ proc/find_holder_of_type(var/atom/reference,var/typepath) //Returns the first ob
 
 	. = view(range, DV)
 	DV.loc = null
-	
+
 /mob/dview
 	invisibility = 101
 	density = 0

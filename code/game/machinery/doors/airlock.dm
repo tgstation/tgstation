@@ -997,12 +997,12 @@ About the new airlock wires panel:
 			breaktime += 30 //Welding buys you a little time
 		src.visible_message("<span class='warning'>[user] is battering down [src]!</span>", "<span class='warning'>You begin to batter [src].</span>")
 		playsound(get_turf(src), 'sound/effects/shieldbash.ogg', 50, 1)
-		if(do_after(user, breaktime))
+		if(do_after(user,src, breaktime))
 			//Calculate bolts separtely, in case they dropped in the last 6-9 seconds.
 			if(src.locked == 1)
 				playsound(get_turf(src), 'sound/effects/shieldbash.ogg', 50, 1)
 				src.visible_message("<span class='warning'>[user] is battering the bolts!</span>", "<span class='warning'>You begin to smash the bolts...</span>")
-				if(!do_after(user,190)) //Same amount as drilling an R-wall, longer if it was welded
+				if(!do_after(user, src,190)) //Same amount as drilling an R-wall, longer if it was welded
 					return //If they moved, cancel us out
 				playsound(get_turf(src), 'sound/items/Deconstruct.ogg', 50, 1)
 			src.visible_message("<span class='warning'>[user] broke down the door!</span>", "<span class='warning'>You broke the door!</span>")
@@ -1053,7 +1053,7 @@ About the new airlock wires panel:
 			playsound(src.loc, 'sound/items/Crowbar.ogg', 100, 1)
 			user.visible_message("[user] removes the electronics from the airlock assembly.", "You start to remove electronics from the airlock assembly.")
 			// TODO: refactor the called proc
-			if (do_after(user, 40))
+			if (do_after(user, src, 40))
 				user << "<span class='notice'>You removed the airlock electronics!</span>"
 				revert(user,null)
 				qdel(src)

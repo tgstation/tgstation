@@ -45,7 +45,7 @@
 	for(var/mob/O in viewers(user))
 		O.show_message(text("<span class='warning'>[user] started pulling the [src].</span>"), 1)
 
-	if(do_after(user, 50))
+	if(do_after(user, src, 50))
 		set_state(!on)
 		for(var/mob/O in viewers(user))
 			O.show_message(text("<span class='warning'>[user] flipped the [src] into the [on ? "on": "off"] position.</span>"), 1)

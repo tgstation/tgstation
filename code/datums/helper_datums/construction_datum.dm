@@ -149,7 +149,7 @@
 			delay = given_step[Co_DELAY]
 	if(delay > 0)
 		start_construct_message(given_step, user, used_atom)
-		if(!do_after(user, delay, needhand = 1))
+		if(!do_after(user, src.holder, delay, needhand = 1))
 			return 0
 
 	var/amount = 0
@@ -320,7 +320,7 @@
 			delay = given_step[Co_DELAY]
 	if(delay > 0)
 		start_construct_message(given_step, user, used_atom)
-		if(!do_after(user, delay, needhand = 1))
+		if(!do_after(user, src.holder, delay, needhand = 1))
 			return 0
 
 	var/amount = 0

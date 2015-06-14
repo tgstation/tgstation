@@ -194,7 +194,7 @@
 	else if(istype(W, /obj/item/toy/waterflower)) //Water flower
 		user << "<span class='notice'>You plug [W] into [src]!</span>"//Using it on the clown cart will transfer anything in the fuel tank (other than banana juice) into the flower
 		if(max_health >= HEALTH_FOR_FLOWER_RECHARGE)
-			if(do_after(user, 5))
+			if(do_after(user, src, 5))
 				W.reagents.remove_any(10)
 				var/tmp/bananas = reagents.get_reagent_amount("banana")
 				reagents.remove_reagent("banana", bananas) //removing banan so it doesn't get transferred into the water flower

@@ -30,7 +30,7 @@ LINEN BINS
 		cut_time=160
 	if(cut_time)
 		user << "<span  class='notice'>You begin cutting the [src].</span>"
-		if(do_after(user, cut_time))
+		if(do_after(user, src, cut_time))
 			if(!src) return
 			user << "<span  class='notice'>You have cut the [src] into rags.</span>"
 			var/turf/location = get_turf(src)

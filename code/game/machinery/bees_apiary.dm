@@ -73,7 +73,7 @@
 			angry_swarm(user)
 		else
 			user << "<span class='notice'>You begin to dislodge the dead apiary from the tray.</span>"
-		if(do_after(user, 50))
+		if(do_after(user, src, 50))
 			var/obj/machinery/created_tray = new hydrotray_type(src.loc)
 			created_tray.component_parts = list()
 			for(var/obj/I in src.component_parts)
@@ -102,7 +102,7 @@
 				angry_swarm(user)
 			else
 				user << "<span class='notice'>You begin to harvest the honey.</span>"
-			if(do_after(user,50))
+			if(do_after(user, src, 50))
 				G.reagents.add_reagent("honey",harvestable_honey)
 				harvestable_honey = 0
 				user << "<span class='notice'>You successfully harvest the honey.</span>"
