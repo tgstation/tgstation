@@ -20,9 +20,9 @@ def YTCV4(youtube_url,cache=1,debug=0):
     first_two = cut_down[0:2]
     try:
         if no_absolute_paths:
-            tiedosto = open("YTCache/"+first_two+".tcc","r")
+            tiedosto = open("YTCache/"+first_two+".tcc","rb")
         else:
-            tiedosto = open(directory+"YTCache/"+first_two+".tcc","r")
+            tiedosto = open(directory+"YTCache/"+first_two+".tcc","rb")
     except:
         prev_dict = {}
     else:
@@ -39,13 +39,13 @@ def YTCV4(youtube_url,cache=1,debug=0):
             pass
     try:
         if no_absolute_paths:
-            tiedosto = open("YTCache/"+first_two+".tcc","w")
+            tiedosto = open("YTCache/"+first_two+".tcc","wb")
         else:
-            tiedosto = open(directory+"YTCache/"+first_two+".tcc","w")
+            tiedosto = open(directory+"YTCache/"+first_two+".tcc","wb")
     except IOError,error:
         if len(prev_dict.keys()) > 0:
             try:
-                tiedosto = open(directory+"YTCache/"+first_two+".tcc","w") #This is a Just In Case
+                tiedosto = open(directory+"YTCache/"+first_two+".tcc","wb") #This is a Just In Case
             except IOError:
                 if did_tell == False:
                     did_tell = True
@@ -64,7 +64,7 @@ def YTCV4(youtube_url,cache=1,debug=0):
     if youtube_url.count("/") + youtube_url.count("\\") < 3:
         if len(prev_dict.keys()) > 0:
             if Do_not_open == True:   
-                tiedosto = open(directory+"YTCache/"+first_two+".tcc","w") #This is a Just In Case
+                tiedosto = open(directory+"YTCache/"+first_two+".tcc","wb") #This is a Just In Case
                 pickle.dump(prev_dict,tiedosto)
                 tiedosto.close()
         else:
@@ -80,7 +80,7 @@ def YTCV4(youtube_url,cache=1,debug=0):
     except:
         if len(prev_dict.keys()) > 0:
             if Do_not_open == True:
-                tiedosto = open(directory+"YTCache/"+first_two+".tcc","w") #This is a Just In Case
+                tiedosto = open(directory+"YTCache/"+first_two+".tcc","wb") #This is a Just In Case
                 pickle.dump(prev_dict,tiedosto)
                 tiedosto.close()
         else:
@@ -90,7 +90,7 @@ def YTCV4(youtube_url,cache=1,debug=0):
         if i.count('<meta name="title" content') == 1:
             if type(i[30:-3]) != str:
                 if Do_not_open == True:
-                    tiedosto = open(directory+"YTCache/"+first_two+".tcc","w") #This is a Just In Case
+                    tiedosto = open(directory+"YTCache/"+first_two+".tcc","wb") #This is a Just In Case
                     prev_dict[cut_down] = "No title for video"
                     pickle.dump(prev_dict,tiedosto)
                     tiedosto.close()
@@ -112,13 +112,13 @@ def YTCV4(youtube_url,cache=1,debug=0):
                 else:
                     pass
                 if Do_not_open == True:
-                    tiedosto = open(directory+"YTCache/"+first_two+".tcc","w") #This is a Just In Case
+                    tiedosto = open(directory+"YTCache/"+first_two+".tcc","wb") #This is a Just In Case
                     prev_dict[cut_down] = result
                     pickle.dump(prev_dict,tiedosto)
                     tiedosto.close()
                 return result
     if Do_not_open == True:
-        tiedosto = open(directory+"YTCache/"+first_two+".tcc","w") #This is a Just In Case
+        tiedosto = open(directory+"YTCache/"+first_two+".tcc","wb") #This is a Just In Case
         prev_dict[cut_down] = "No title for video, Removed / Needs Age verification / Does not exist"
         pickle.dump(prev_dict,tiedosto)
         tiedosto.close()

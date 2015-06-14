@@ -30,7 +30,7 @@ for i in tiedostot:
   else:
     listaus.append(i)
 for i in listaus:
-  tiedosto = open("Marakov/"+i,"r")
+  tiedosto = open("Marakov/"+i,"rb")
   old_size = len(full_data.keys())
   if i != "Marakov.Cache":
     imported_data = merge(imported_data,pickle.load(tiedosto))
@@ -64,7 +64,7 @@ def give_data(data):
             full_data[a] = []
             full_data[a].append(b)
   if state == True:
-    tiedosto = open("Marakov/Marakov.Cache","w")
+    tiedosto = open("Marakov/Marakov.Cache","wb")
     pickle.dump(full_data,tiedosto)
     tiedosto.close()
 def form_sentence(argument=None):
@@ -117,7 +117,7 @@ def remdata(arg):
   except:
     print "There is no such data"
   else:
-    tiedosto = open("Marakov/Marakov.Cache","w")
+    tiedosto = open("Marakov/Marakov.Cache","wb")
     pickle.dump(full_data,tiedosto)
     tiedosto.close()
 def remobject(arg1,arg2):
@@ -128,12 +128,12 @@ def remobject(arg1,arg2):
   except KeyError:
     print "No such data"
   else:
-    tiedosto = open("Marakov/Marakov.Cache","w")
+    tiedosto = open("Marakov/Marakov.Cache","wb")
     pickle.dump(full_data,tiedosto)
     tiedosto.close()
 def convert(filename_from,filename_to):
   try:
-    tiedosto = open(filename_from,"r")
+    tiedosto = open(filename_from,"rb")
     data = pickle.load(tiedosto)
     tiedosto.close()
   except:
@@ -199,5 +199,5 @@ def convert(filename_from,filename_to):
           except IndexError: #If it has no letters.. well.. yeah.
             data[a].pop(data[a].index(b))
             print "Removed a NULL object"
-    tiedosto = open(filename_to,"w")
+    tiedosto = open(filename_to,"wb")
     pickle.dump(data,tiedosto)

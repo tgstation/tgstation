@@ -2,13 +2,13 @@ import pickle
 def save(filename,data,dnrw=0):
   if dnrw == 1:
     try:
-      tiedosto = open(filename,"r")
+      tiedosto = open(filename,"rb")
     except:
-      tiedosto = open(filename,"w")
+      tiedosto = open(filename,"wb")
     else:
       return False
   else:
-    tiedosto = open(filename,"w")
+    tiedosto = open(filename,"wb")
     
   if "http//" in data:
     data = data.replace("http//","http://")
@@ -16,7 +16,7 @@ def save(filename,data,dnrw=0):
   tiedosto.close()
 def load(filename):
   try:
-    tiedosto = open(filename,"r")
+    tiedosto = open(filename,"rb")
   except IOError:
     return "ERROR ERROR ERROR ERR"
   a = pickle.load(tiedosto)

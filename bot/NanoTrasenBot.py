@@ -33,9 +33,9 @@ except ImportError:
    psyco_exists = False
    if write_to_a_file:
       try:
-         tiedosto = open("psycodownload.txt","r")
+         tiedosto = open("psycodownload.txt","rb")
       except:
-         tiedosto = open("psycodownload.txt","w")
+         tiedosto = open("psycodownload.txt","wb")
          tiedosto.write("http://www.voidspace.org.uk/python/modules.shtml#psyco")
          tiedosto.write("\nhttp://psyco.sourceforge.net/download.html")
          tiedosto.close()
@@ -190,13 +190,13 @@ tell_list = {}
 if CORE_DATA.DISABLE_ALL_NON_MANDATORY_SOCKET_CONNECTIONS:
    nudgeable = False
 try:
-   tiedosto = open("replacenames.cache","r")
+   tiedosto = open("replacenames.cache","rb")
    replacenames = pickle.load(tiedosto)
    tiedosto.close()
    for i in replacenames.values():
       if len(i) > call_me_max_length:
          replacenames[replacenames.keys()[replacenames.values().index(i)]] = i[:call_me_max_length]
-         tiedosto = open("replacenames.cache","w")
+         tiedosto = open("replacenames.cache","wb")
          pickle.dump(replacenames,tiedosto)
          tiedosto.close()
       if "[\0x01]" in i.lower() or "[\\0x01]" in i.lower():
@@ -211,12 +211,12 @@ except EOFError: #Cache corrupt
    replacenames = {}
    print "replacenames.cache is corrupt and couldn't be loaded."
 try:
-   tiedosto = open("peopleheknows.cache","r")
+   tiedosto = open("peopleheknows.cache","rb")
    peopleheknows = pickle.load(tiedosto)
    tiedosto.close()
 except IOError:
    peopleheknows = [[],[]]
-   tiedosto = open("peopleheknows.cache","w")
+   tiedosto = open("peopleheknows.cache","wb")
    tiedosto.close()
 except EOFError:
    peopleheknows = [[],[]]
@@ -257,7 +257,7 @@ def RegExpCheckerForWebPages(regexp,data,mode):
       return False
 if nudgeable:
    try:
-      nudgeexists = open("nudge.py","r")
+      nudgeexists = open("nudge.py","rb")
    except IOError:
       nudgeexists = False #No usage asof 12.2.2010.
    else:
@@ -285,7 +285,7 @@ if nudgeable:
                else:
                   conn.privmsg(channel,"AUTOMATIC ANNOUNCEMENT : "+str(truedata["ip"])+" | "+str(" ".join(truedata["data"])))
          thread.start_new_thread(nudgereceiver,())
-tiedosto = open(targetdirectory+"NanoTrasenBot.py","r")
+tiedosto = open(targetdirectory+"NanoTrasenBot.py","rb")
 commands = []
 fragment = "if cocheck"
 fragment2 = '(prefix+"'
@@ -401,7 +401,7 @@ def target(who,how_long):
       if debug:
          print "Banned",who,"For",how_long,"seconds"
       if logbans:
-         tiedosto = open(targetdirectory+"banlog/"+str(int(start))+"-"+str(int(end))+".txt","w")
+         tiedosto = open(targetdirectory+"banlog/"+str(int(start))+"-"+str(int(end))+".txt","wb")
          tiedosto.write("Start of ban on "+who+":"+str(int(start)))
          tiedosto.write("\n")
          tiedosto.write("End of ban on "+who+":"+str(int(end)))
@@ -633,7 +633,7 @@ while True:
                      arg = influx.lower()[8+len(prefix):]
                      if debug:
                         print truesender+":"+prefix+"suggest "+arg
-                     tiedosto = open(targetdirectory+"suggestions/suggestions_"+str(int(time.time()))+".txt","a")
+                     tiedosto = open(targetdirectory+"suggestions/suggestions_"+str(int(time.time()))+".txt","ab")
                      tiedosto.write(arg)
                      tiedosto.close()
                      conn.privmsg(targetchannel,"Suggestion received")
@@ -1008,7 +1008,7 @@ while True:
                      pass
                   else:
                      replacenames[truesender] = arg3
-                     with open("replacenames.cache","w") as pickle_save:
+                     with open("replacenames.cache","wb") as pickle_save:
                         pickle.dump(replacenames,pickle_save)
                      conn.privmsg(targetchannel,sender+" : Calling you "+arg3+" From now on")
                else:
@@ -1291,7 +1291,7 @@ while True:
                      else:
                         conn.privmsg(targetchannel,checkers[1]+" : I have detected a collision with a name I call you and %s who joined" %(sender))
                         del(replacenames[checkers[1]])
-                        with open("replacenames.cache","w") as pickle_save:
+                        with open("replacenames.cache","wb") as pickle_save:
                            pickle.dump(replacenames,pickle_save)
                   except AttributeError:
                      #conn.privmsg(channel,"NAME COLLISION CHECK ERROR, RELATED TO %s" %(sender))
@@ -1313,7 +1313,7 @@ while True:
                   conn.privmsg(data[1][1],"Hello! Haven't seen you here before! Happy to meet you! %s" %(appendion))
                peopleheknows[0].append(sender.lower())
                peopleheknows[1].append(data[0].split("!")[1])
-               with open("peopleheknows.cache","w") as peoplehecache:
+               with open("peopleheknows.cache","wb") as peoplehecache:
                   pickle.dump(peopleheknows,peoplehecache)
                   
          elif data[1][0] == "MODE" and data[1][2] == "+o":

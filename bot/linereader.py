@@ -13,13 +13,13 @@ lista = []
 for ob in extract:
     count3 = 0
     if directory == "":
-        tiedosto = open(ob,"r")
-        tiedosto2 = open(ob,"r")
+        tiedosto = open(ob,"rb")
+        tiedosto2 = open(ob,"rb")
         count3 += os.path.getsize(ob)
         toc3 += count3
     else:
-        tiedosto = open(directory+"/"+ob,"r")
-        tiedosto2 = open(directory+"/"+ob,"r")
+        tiedosto = open(directory+"/"+ob,"rb")
+        tiedosto2 = open(directory+"/"+ob,"rb")
         count3 += os.path.getsize(directory+"/"+ob)
         toc3 += count3
     count = 0

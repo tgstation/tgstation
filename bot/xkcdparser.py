@@ -6,22 +6,22 @@ def xkcd(link):
     try:
         filename = link[link.find("xkcd.com")+9:].replace("/","").replace("\\","")
         if no_absolute_paths:
-            tiedosto = open("xkcdcache/"+filename,"r")
+            tiedosto = open("xkcdcache/"+filename,"rb")
         else:
-            tiedosto = open(directory+"xkcdcache/"+filename,"r")
+            tiedosto = open(directory+"xkcdcache/"+filename,"rb")
     except:
         try:
             if no_absolute_paths:
-                tiedosto = open("xkcdcache/"+filename,"w")
+                tiedosto = open("xkcdcache/"+filename,"wb")
             else:
-                tiedosto = open(directory+"xkcdcache/"+filename,"w")
+                tiedosto = open(directory+"xkcdcache/"+filename,"wb")
         except IOError:
             return "NOTHING"
     else:
         try:
             return load(tiedosto)
         except EOFError:
-            tiedosto = open("xkcdcache/"+filename,"w")
+            tiedosto = open("xkcdcache/"+filename,"wb")
             pass #Corrupt cache, moving on.
     if link[-1] == "/" or link[-1] == "\\": #Ending is fine.
         link += "info.0.json"
