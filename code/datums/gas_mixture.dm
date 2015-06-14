@@ -12,21 +12,22 @@ What are the archived variables for?
 
 #define MINIMUM_HEAT_CAPACITY	0.0003
 #define QUANTIZE(variable)		(round(variable,0.0001))
-
-/datum/gas
-	sleeping_agent
-		specific_heat = 40
-
-	oxygen_agent_b
-		specific_heat = 300
-
-	volatile_fuel
-		specific_heat = 30
-
+/datum/gas/
 	var/moles = 0
 	var/specific_heat = 0
 
 	var/moles_archived = 0
+
+
+/datum/gas/sleeping_agent
+	specific_heat = 40
+
+/datum/gas/oxygen_agent_b
+	specific_heat = 300
+
+/datum/gas/volatile_fuel
+	specific_heat = 30
+
 
 
 /datum/gas_mixture
@@ -162,6 +163,7 @@ What are the archived variables for?
 	var/old_heat_capacity = heat_capacity()
 
 	var/datum/gas/volatile_fuel/fuel_store = locate(/datum/gas/volatile_fuel/) in trace_gases
+	var/datum/gas/sleeping_agent/oxidizer = locate(/datum/gas/sleeping_agent) in trace_gases
 	if(fuel_store) //General volatile gas burn
 		var/burned_fuel = 0
 
@@ -181,8 +183,12 @@ What are the archived variables for?
 
 	//Handle plasma burning
 	if(toxins > MINIMUM_HEAT_CAPACITY)
+		var/oxidizer_burn_rate = 0
 		var/plasma_burn_rate = 0
 		var/oxygen_burn_rate = 0
+		var/n2o_moles = 0 //Not always present
+		if (oxidizer)
+			n2o_moles = oxidizer.moles
 		//more plasma released at higher temperatures
 		var/temperature_scale
 		if(temperature > PLASMA_UPPER_TEMPERATURE)
@@ -190,14 +196,17 @@ What are the archived variables for?
 		else
 			temperature_scale = (temperature-PLASMA_MINIMUM_BURN_TEMPERATURE)/(PLASMA_UPPER_TEMPERATURE-PLASMA_MINIMUM_BURN_TEMPERATURE)
 		if(temperature_scale > 0)
+			oxidizer_burn_rate = (n2o_moles*temperature_scale)/2 //Burns slower than plasma but faster than oxygen
 			oxygen_burn_rate = 1.4 - temperature_scale
-			if(oxygen > toxins*PLASMA_OXYGEN_FULLBURN)
-				plasma_burn_rate = (toxins*temperature_scale)/4
+			if(oxygen + n2o_moles > toxins*PLASMA_OXYGEN_FULLBURN)
+				plasma_burn_rate = ((toxins*temperature_scale)+n2o_moles)/4
 			else
-				plasma_burn_rate = (temperature_scale*(oxygen/PLASMA_OXYGEN_FULLBURN))/4
+				plasma_burn_rate = (temperature_scale*(oxygen/PLASMA_OXYGEN_FULLBURN)+n2o_moles)/4
 			if(plasma_burn_rate > MINIMUM_HEAT_CAPACITY)
 				toxins -= plasma_burn_rate
 				oxygen -= plasma_burn_rate*oxygen_burn_rate
+				if(oxidizer)
+					oxidizer.moles -= plasma_burn_rate*oxidizer_burn_rate
 				carbon_dioxide += plasma_burn_rate
 
 				energy_released += FIRE_PLASMA_ENERGY_RELEASED * (plasma_burn_rate)
