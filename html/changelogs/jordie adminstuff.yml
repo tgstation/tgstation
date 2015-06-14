@@ -1,0 +1,7 @@
+author: N3X15
+
+delete-after: True
+
+changes: 
+  - tweak: "For Admins: Jump-to-Mob (JMP) notification command replaced with Follow (FLW)."
+  - rscadd: "Message and Follow links added to many notifications."
