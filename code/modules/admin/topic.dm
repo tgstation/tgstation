@@ -1926,31 +1926,20 @@
 			if("togglebombcap")
 				feedback_inc("admin_secrets_fun_used",1)
 				feedback_add_details("admin_secrets_fun_used","BC")
-				switch(MAX_EX_LIGHT_RANGE)
-					if(14)
-						MAX_EX_LIGHT_RANGE = 16
-						MAX_EX_HEAVY_RANGE = 8
-						MAX_EX_DEVESTATION_RANGE = 4
-					if(16)
-						MAX_EX_LIGHT_RANGE = 20
-						MAX_EX_HEAVY_RANGE = 10
-						MAX_EX_DEVESTATION_RANGE = 5
-					if(20)
-						MAX_EX_LIGHT_RANGE = 28
-						MAX_EX_HEAVY_RANGE = 14
-						MAX_EX_DEVESTATION_RANGE = 7
-					if(28)
-						MAX_EX_LIGHT_RANGE = 56
-						MAX_EX_HEAVY_RANGE = 28
-						MAX_EX_DEVESTATION_RANGE = 14
-					if(56)
-						MAX_EX_LIGHT_RANGE = 128
-						MAX_EX_HEAVY_RANGE = 64
-						MAX_EX_DEVESTATION_RANGE = 32
-					if(128)
-						MAX_EX_LIGHT_RANGE = 14
-						MAX_EX_HEAVY_RANGE = 7
-						MAX_EX_DEVESTATION_RANGE = 3
+
+				var/newBombCap = input(usr,"New Bomb Cap","What would you like the new bomb cap to be. (entered as the light damage range, or the 3rd number in common (1,2,3) notation. Must be between 4 and 128)", MAX_EX_LIGHT_RANGE) as num|null
+				if (newBombCap < 4)
+					return
+				if (newBombCap > 128)
+					newBombCap = 128
+
+				var/MAX_EX_DEVESTATION_RANGE = round(newBombCap/4)
+				var/MAX_EX_HEAVY_RANGE = round(newBombCap/2)
+				var/MAX_EX_LIGHT_RANGE = newBombCap
+				//I don't know why these are their own variables, but fuck it, they are.
+				var/MAX_EX_FLASH_RANGE = newBombCap
+				var/MAX_EX_FLAME_RANGE = newBombCap
+
 				message_admins("<span class='boldannounce'>[key_name_admin(usr)] changed the bomb cap to [MAX_EX_DEVESTATION_RANGE], [MAX_EX_HEAVY_RANGE], [MAX_EX_LIGHT_RANGE]</span>")
 				log_admin("[key_name(usr)] changed the bomb cap to [MAX_EX_DEVESTATION_RANGE], [MAX_EX_HEAVY_RANGE], [MAX_EX_LIGHT_RANGE]")
 
