@@ -6,7 +6,7 @@
 /datum/round_event_control/shuttle_loan
 	name = "Shuttle loan"
 	typepath = /datum/round_event/shuttle_loan
-	max_occurrences = 0
+	max_occurrences = 5
 	earliest_start = 0
 
 /datum/round_event/shuttle_loan
@@ -42,8 +42,7 @@
 	endWhen = activeFor + 1
 
 	SSshuttle.supply.sell()
-	SSshuttle.supply.enterTransit()
-	SSshuttle.supply.mode = SHUTTLE_RECALL
+	SSshuttle.sendTo("supply", "supply_home", "supply_away", 1)
 	SSshuttle.supply.setTimer(3000)
 
 	switch(dispatch_type)
@@ -72,7 +71,8 @@
 
 		var/list/empty_shuttle_turfs = list()
 		for(var/turf/simulated/floor/T in SSshuttle.supply.areaInstance)
-			if(T.density || T.contents.len)	continue
+			if(!check_open_turf(T))
+				continue
 			empty_shuttle_turfs += T
 		if(!empty_shuttle_turfs.len)
 			return
@@ -80,7 +80,7 @@
 		var/list/shuttle_spawns = list()
 		switch(dispatch_type)
 			if(HIJACK_SYNDIE)
-				SSshuttle.generateSupplyOrder(/datum/supply_packs/emergency/specialops, "Syndicate")
+				SSshuttle.forceSupplyOrder(/datum/supply_packs/emergency/specialops, "Syndicate")
 
 				shuttle_spawns.Add(/mob/living/simple_animal/hostile/syndicate)
 				shuttle_spawns.Add(/mob/living/simple_animal/hostile/syndicate)
@@ -90,7 +90,7 @@
 					shuttle_spawns.Add(/mob/living/simple_animal/hostile/syndicate)
 
 			if(RUSKY_PARTY)
-				SSshuttle.generateSupplyOrder(/datum/supply_packs/organic/party, "Russian Confederation")
+				SSshuttle.forceSupplyOrder(/datum/supply_packs/organic/party, "Russian Confederation")
 
 				shuttle_spawns.Add(/mob/living/simple_animal/hostile/russian)
 				shuttle_spawns.Add(/mob/living/simple_animal/hostile/russian/ranged)	//drops a mateba
@@ -101,7 +101,7 @@
 					shuttle_spawns.Add(/mob/living/simple_animal/hostile/bear)
 
 			if(SPIDER_GIFT)
-				SSshuttle.generateSupplyOrder(/datum/supply_packs/emergency/specialops, "Spider Clan")
+				SSshuttle.forceSupplyOrder(/datum/supply_packs/emergency/specialops, "Spider Clan")
 
 				shuttle_spawns.Add(/mob/living/simple_animal/hostile/poison/giant_spider)
 				shuttle_spawns.Add(/mob/living/simple_animal/hostile/poison/giant_spider)
@@ -141,7 +141,7 @@
 					)
 
 				for(var/spawn_type in crate_types)
-					SSshuttle.generateSupplyOrder(spawn_type, "Centcom")
+					SSshuttle.forceSupplyOrder(spawn_type, "Centcom")
 
 				for(var/i=0,i<3,i++)
 					var/turf/T = pick(empty_shuttle_turfs)
@@ -157,6 +157,7 @@
 
 			var/spawn_type = pick_n_take(shuttle_spawns)
 			new spawn_type(T)
+		SSshuttle.supply.buy()
 
 
 #undef HIJACK_SYNDIE

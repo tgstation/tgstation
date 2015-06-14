@@ -187,6 +187,22 @@ var/datum/subsystem/shuttle/SSshuttle
 	return 0	//dock successful
 
 
+/datum/subsystem/shuttle/proc/sendTo(shuttleId, endDock, startDock, timed)
+	var/obj/docking_port/mobile/M = getShuttle(shuttleId)
+	if(!M)
+		return 1
+	var/obj/docking_port/stationary/dockedAt = M.get_docked()
+	if(dockedAt && dockedAt.id == endDock)
+		M.dock(getDock(startDock))
+	if(timed)
+		if(M.request(getDock(endDock)))
+			return 2
+	else
+		if(M.dock(getDock(endDock)))
+			return 2
+	return 0	//dock successful
+
+
 /datum/subsystem/shuttle/proc/moveShuttle(shuttleId, dockId, timed)
 	var/obj/docking_port/mobile/M = getShuttle(shuttleId)
 	if(!M)
@@ -326,6 +342,25 @@ var/datum/subsystem/shuttle/SSshuttle
 	requestlist += O
 
 	return O
+
+/datum/subsystem/shuttle/proc/forceSupplyOrder(packId, _orderedby, _orderedbyRank, _comment)
+	if(!packId)
+		return
+	var/datum/supply_packs/P = supply_packs["[packId]"]
+	if(!P)
+		return
+
+	var/datum/supply_order/O = new()
+	O.ordernum = ordernum++
+	O.object = P
+	O.orderedby = _orderedby
+	O.orderedbyRank = _orderedbyRank
+	O.comment = _comment
+
+	shoppinglist += O
+
+	return O
+
 
 /*
 /datum/subsystem/shuttle/proc/getShuttleFromArea(area/A)
