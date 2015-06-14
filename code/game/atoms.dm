@@ -24,6 +24,7 @@
 
 	//Value used to increment ex_act() if reactionary_explosions is on
 	var/explosion_block = 0
+	mouse_over_pointer = MOUSE_ACTIVE_POINTER
 
 /atom/proc/onCentcom()
 	var/turf/T = get_turf(src)
