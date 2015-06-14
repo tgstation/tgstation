@@ -1,5 +1,6 @@
 /obj/item/weapon/shield
 	name = "shield"
+	block_chance = 50
 
 /obj/item/weapon/shield/riot
 	name = "riot shield"
@@ -115,3 +116,17 @@
 		slot_flags = null
 		user << "<span class='notice'>[src] can now be concealed.</span>"
 	add_fingerprint(user)
+
+/obj/item/weapon/shield/riot/improvised
+	name = "improved riot shield"
+	desc = "This appears to be a hastily build object meant to mimic a riot shield."
+	icon_state = "riot_improvised"
+	icon_state = "riot_improvised"
+	slot_flags = SLOT_BACK
+	force = 6
+	throwforce = 4
+	throw_speed = 1
+	throw_range = 2
+	m_amt = 1500
+	origin_tech = "materials=1"
+	block_chance = 20
