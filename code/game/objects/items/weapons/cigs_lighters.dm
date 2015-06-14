@@ -452,9 +452,9 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	icon_state = "lighter"
 
 /obj/item/weapon/lighter/greyscale/New()
-	var/icon/overlay = new /icon('icons/obj/cigarettes.dmi',"lighter-overlay")
-	overlay.ColorTone(color2hex(randomColor(1)))
-	overlays += overlay
+	var/image/I = image(icon,"lighter-overlay")
+	I.color = color2hex(randomColor(1))
+	overlays += I
 
 /obj/item/weapon/lighter/update_icon()
 	icon_state = lit ? "[icon_state]_on" : "[initial(icon_state)]"
