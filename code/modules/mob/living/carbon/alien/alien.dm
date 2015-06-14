@@ -12,6 +12,7 @@
 	ventcrawler = 2
 	languages = ALIEN
 	verb_say = "hisses"
+	type_of_meat = /obj/item/weapon/reagent_containers/food/snacks/meat/slab/xeno
 	var/nightvision = 1
 	var/storedPlasma = 250
 	var/max_plasma = 500
@@ -28,6 +29,7 @@
 	var/heat_protection = 0.5
 	var/leaping = 0
 	var/list/obj/effect/proc_holder/alien/abilities = list()
+	gib_type = /obj/effect/decal/cleanable/xenoblood/xgibs
 
 /mob/living/carbon/alien/New()
 	verbs += /mob/living/proc/mob_sleep

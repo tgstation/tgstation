@@ -57,7 +57,6 @@
 	new /obj/item/clothing/gloves/color/latex/nitrile(src)
 	new /obj/item/weapon/storage/belt/medical(src)
 	new /obj/item/clothing/glasses/hud/health(src)
-	new /obj/item/clothing/suit/hooded/wintercoat/medical(src)
 	return
 
 /obj/structure/closet/secure_closet/CMO

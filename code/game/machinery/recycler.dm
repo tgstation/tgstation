@@ -13,11 +13,37 @@ var/const/SAFETY_COOLDOWN = 100
 	var/icon_name = "grinder-o"
 	var/blood = 0
 	var/eat_dir = WEST
+	var/amount_produced = 1
+	var/probability_mod = 1
+	var/extra_materials = 0
+	var/list/blacklist = list(/obj/item/pipe, /obj/item/pipe_meter, /obj/structure/disposalconstruct, /obj/item/weapon/reagent_containers, /obj/item/weapon/paper, /obj/item/stack/, /obj/item/weapon/pen, /obj/item/weapon/storage/, /obj/item/clothing/mask/cigarette) // Don't allow us to grind things we can poop out at 200 a second for free.
 
 /obj/machinery/recycler/New()
 	// On us
 	..()
+	component_parts = list()
+	component_parts += new /obj/item/weapon/circuitboard/recycler(null)
+	component_parts += new /obj/item/weapon/stock_parts/matter_bin(null)
+	component_parts += new /obj/item/weapon/stock_parts/manipulator(null)
+	RefreshParts()
 	update_icon()
+
+/obj/machinery/recycler/RefreshParts()
+	var/amt_made = 0
+	var/prob_mod = 0
+	for(var/obj/item/weapon/stock_parts/matter_bin/B in component_parts)
+		amt_made = 1 * B.rating
+	for(var/obj/item/weapon/stock_parts/manipulator/M in component_parts)
+		if(M.rating > 1)
+			prob_mod = 2 * M.rating
+		else
+			prob_mod = 1 * M.rating
+		if(M.rating >= 3)
+			extra_materials = 1
+		else
+			extra_materials = 0
+	probability_mod = prob_mod
+	amount_produced = amt_made
 
 /obj/machinery/recycler/examine(mob/user)
 	..()
@@ -31,15 +57,22 @@ var/const/SAFETY_COOLDOWN = 100
 
 
 /obj/machinery/recycler/attackby(var/obj/item/I, var/mob/user, params)
-	if(istype(I, /obj/item/weapon/screwdriver))
-		if(emagged)
-			emagged = 0
-			update_icon()
-			user << "<span class='notice'>You reset the crusher to its default factory settings.</span>"
-	else
-		..()
+	if(default_deconstruction_screwdriver(user, "grinder-oOpen", "grinder-o0", I))
 		return
+
+	if(exchange_parts(user, I))
+		return
+
+	if(default_pry_open(I))
+		return
+
+	if(default_unfasten_wrench(user, I))
+		return
+
+	default_deconstruction_crowbar(I)
+	..()
 	add_fingerprint(user)
+	return
 
 /obj/machinery/recycler/emag_act(user as mob)
 	if(!emagged)
@@ -70,13 +103,6 @@ var/const/SAFETY_COOLDOWN = 100
 		return
 	if(safety_mode)
 		return
-	// If we're not already grinding something.
-	if(!grinding)
-		grinding = 1
-		spawn(1)
-			grinding = 0
-	else
-		return
 
 	var/move_dir = get_dir(loc, AM.loc)
 	if(move_dir == eat_dir)
@@ -93,15 +119,40 @@ var/const/SAFETY_COOLDOWN = 100
 
 /obj/machinery/recycler/proc/recycle(var/obj/item/I, var/sound = 1)
 	I.loc = src.loc
+	if(is_type_in_list(I, blacklist))
+		qdel(I)
+		if(sound)
+			playsound(src.loc, 'sound/items/Welder.ogg', 50, 1)
+		return
 	qdel(I)
-	if(prob(15))
-		new /obj/item/stack/sheet/metal(loc)
-	if(prob(10))
-		new /obj/item/stack/sheet/glass(loc)
-	if(prob(2))
-		new /obj/item/stack/sheet/plasteel(loc)
-	if(prob(1))
-		new /obj/item/stack/sheet/rglass(loc)
+	if(prob(15 + probability_mod))
+		var/obj/item/stack/sheet/metal/M = new /obj/item/stack/sheet/metal(loc)
+		M.amount = amount_produced
+	if(prob(10 + probability_mod))
+		var/obj/item/stack/sheet/glass/G = new /obj/item/stack/sheet/glass(loc)
+		G.amount = amount_produced
+	if(prob(2 + probability_mod))
+		var/obj/item/stack/sheet/plasteel/P = new /obj/item/stack/sheet/plasteel(loc)
+		P.amount = amount_produced
+	if(prob(1 + probability_mod))
+		var/obj/item/stack/sheet/rglass/R = new /obj/item/stack/sheet/rglass(loc)
+		R.amount = amount_produced
+	if(extra_materials)
+		if(prob(4 + probability_mod))
+			var/obj/item/stack/sheet/mineral/plasma/PS = new /obj/item/stack/sheet/mineral/plasma(loc)
+			PS.amount = amount_produced
+		if(prob(3 + probability_mod))
+			var/obj/item/stack/sheet/mineral/gold/GS = new /obj/item/stack/sheet/mineral/gold(loc)
+			GS.amount = amount_produced
+		if(prob(2 + probability_mod))
+			var/obj/item/stack/sheet/mineral/silver/S = new /obj/item/stack/sheet/mineral/silver(loc)
+			S.amount = amount_produced
+		if(prob(1 + probability_mod))
+			var/obj/item/stack/sheet/mineral/bananium/B = new /obj/item/stack/sheet/mineral/bananium(loc)
+			B.amount = amount_produced
+		if(prob(1 + probability_mod))
+			var/obj/item/stack/sheet/mineral/diamond/D = new /obj/item/stack/sheet/mineral/diamond(loc)
+			D.amount = amount_produced
 	if(sound)
 		playsound(src.loc, 'sound/items/Welder.ogg', 50, 1)
 
