@@ -435,7 +435,8 @@
 	var/mob/living/immune = null // the one who creates the timestop is immune
 	var/freezerange = 2
 	var/duration = 140
-	
+	alpha = 125
+
 /obj/effect/timestop/New()
 	..()
 	timestop()
@@ -445,7 +446,7 @@
 	while(loc)
 		if(duration)
 			for(var/mob/living/M in orange (freezerange, src.loc))
-				if(M == immune) 
+				if(M == immune)
 					continue
 				M.stunned = 10
 				M.anchored = 1
