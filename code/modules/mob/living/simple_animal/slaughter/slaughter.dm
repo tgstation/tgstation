@@ -101,7 +101,7 @@
 		src.phased = FALSE
 		src.client.eye = src
 		src.visible_message("<span class='warning'><B>The [src] rises out of the pool of blood!</B>")
-		playsound(get_turf(src), 'sound/effects/exit_blood.ogg', 100, 1, -1)
+		playsound(get_turf(src), 'sound/magic/exit_blood.ogg', 100, 1, -1)
 		qdel(src.holder)
 
 /obj/effect/decal/cleanable/blood/CtrlClick(var/mob/user)
