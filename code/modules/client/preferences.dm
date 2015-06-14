@@ -216,7 +216,7 @@ var/const/MAX_SAVE_SLOTS = 8
 	<b>Play lobby music:</b> <a href='?_src_=prefs;preference=lobby_music'><b>[(toggles & SOUND_LOBBY) ? "Yes" : "No"]</b></a><br>
 	<b>Hear streamed media:</b> <a href='?_src_=prefs;preference=jukebox'><b>[(toggles & SOUND_STREAMING) ? "Yes" : "No"]</b></a><br>
 	<b>Use WMP:</b> <a href='?_src_=prefs;preference=wmp'><b>[(usewmp) ? "Yes" : "No"]</b></a><br>
-	<b>Use NanoUI:</b> <a href='?_src_=prefs;preference=nanoui'><b>[(nanoui) ? "Yes" : "No"]</b></a><br>
+	<b>Use NanoUI:</b> <a href='?_src_=prefs;preference=nanoui'><b>[(usenanoui) ? "Yes" : "No"]</b></a><br>
 	<b>Progress Bars:</b> <a href='?_src_=prefs;preference=progbar'><b>[(progress_bars) ? "Yes" : "No"]</b></a><br>
 	<b>Randomized Character Slot:</b> <a href='?_src_=prefs;preference=randomslot'><b>[randomslot ? "Yes" : "No"]</b></a><br>
 	<b>Ghost ears:</b> <a href='?_src_=prefs;preference=ghost_ears'><b>[(toggles & CHAT_GHOSTEARS) ? "Nearest Creatures" : "All Speech"]</b></a><br>
@@ -1215,7 +1215,7 @@ NOTE:  The change will take effect AFTER any current recruiting periods."}
 				if("wmp")
 					usewmp = !usewmp
 				if("nanoui")
-					nanoui = !nanoui
+					usenanoui = !usenanoui
 				if("progbar")
 					progress_bars = !progress_bars
 				if("ghost_ears")
