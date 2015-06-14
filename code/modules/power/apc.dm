@@ -413,7 +413,8 @@
 			if (stat & MAINT)
 				user << "<span class='warning'>There is no connector for your power cell!</span>"
 				return
-			user.drop_item()
+			if(!user.drop_item())
+				return
 			W.loc = src
 			cell = W
 			user.visible_message(\

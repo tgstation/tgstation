@@ -379,8 +379,8 @@
 			M << "<span class='danger'>Your eyes start to bleed profusely!</span>"
 		if(prob(50))
 			if(M.stat != 2)
-				M << "<span class='danger'>You drop what you're holding and clutch at your eyes!</span>"
-				M.drop_item()
+				if(M.drop_item())
+					M << "<span class='danger'>You drop what you're holding and clutch at your eyes!</span>"
 			M.eye_blurry += 10
 			M.Paralyse(1)
 			M.Weaken(2)

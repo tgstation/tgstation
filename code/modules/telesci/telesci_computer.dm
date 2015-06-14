@@ -58,7 +58,8 @@
 		if(crystals.len >= max_crystals)
 			user << "<span class='warning'>There are not enough crystal slots.</span>"
 			return
-		user.drop_item()
+		if(!user.drop_item())
+			return
 		crystals += W
 		W.loc = null
 		user.visible_message("[user] inserts [W] into \the [src]'s crystal slot.", "<span class='notice'>You insert [W] into \the [src]'s crystal slot.</span>")

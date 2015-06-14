@@ -28,7 +28,8 @@
 
 /obj/item/weapon/clipboard/attackby(obj/item/weapon/W, mob/user, params)
 	if(istype(W, /obj/item/weapon/paper))
-		user.drop_item()
+		if(!user.unEquip(W))
+			return
 		W.loc = src
 		toppaper = W
 		user << "<span class='notice'>You clip the paper onto \the [src].</span>"
@@ -76,7 +77,8 @@
 			if(!haspen)
 				if(istype(usr.get_active_hand(), /obj/item/weapon/pen))
 					var/obj/item/weapon/pen/W = usr.get_active_hand()
-					usr.drop_item()
+					if(!usr.unEquip(W))
+						return
 					W.loc = src
 					haspen = W
 					usr << "<span class='notice'>You slot [W] into [src].</span>"

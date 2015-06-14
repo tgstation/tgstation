@@ -20,15 +20,17 @@
 			return
 
 		if(!tank_one)
+			if(!user.unEquip(item))
+				return
 			tank_one = item
-			user.drop_item()
 			item.loc = src
 			user << "<span class='notice'>You attach the tank to the transfer valve.</span>"
 			if(item.w_class > w_class)
 				w_class = item.w_class
 		else if(!tank_two)
+			if(!user.unEquip(item))
+				return
 			tank_two = item
-			user.drop_item()
 			item.loc = src
 			user << "<span class='notice'>You attach the tank to the transfer valve.</span>"
 			if(item.w_class > w_class)

@@ -518,7 +518,8 @@
 /obj/machinery/computer/scan_consolenew/attackby(obj/item/I as obj, mob/user as mob, params)
 	if (istype(I, /obj/item/weapon/disk/data)) //INSERT SOME DISKETTES
 		if (!src.diskette)
-			user.drop_item()
+			if(!user.drop_item())
+				return
 			I.loc = src
 			src.diskette = I
 			user << "<span class='notice'>You insert [I].</span>"

@@ -152,9 +152,10 @@
 		if(O.reliability < 90 && O.crit_fail == 0)
 			usr << "<span class='warning'>Item is neither reliable enough or broken enough to learn from.</span>"
 			return
+		if(!user.drop_item())
+			return
 		busy = 1
 		loaded_item = O
-		user.drop_item()
 		O.loc = src
 		user << "<span class='notice'>You add the [O.name] to the machine.</span>"
 		flick("h_lathe_load", src)

@@ -244,8 +244,9 @@
 		if(!isnull(reagent_glass))
 			user << "<span class='warning'>There is already a beaker loaded!</span>"
 			return
+		if(!user.drop_item())
+			return
 
-		user.drop_item()
 		W.loc = src
 		reagent_glass = W
 		user << "<span class='notice'>You insert [W].</span>"
@@ -585,7 +586,8 @@
 		switch(build_step)
 			if(0)
 				if(istype(W, /obj/item/device/healthanalyzer))
-					user.drop_item()
+					if(!user.unEquip(W))
+						return
 					qdel(W)
 					build_step++
 					user << "<span class='notice'>You add the health sensor to [src].</span>"
@@ -594,7 +596,8 @@
 
 			if(1)
 				if(isprox(W))
-					user.drop_item()
+					if(!user.unEquip(W))
+						return
 					qdel(W)
 					build_step++
 					user << "<span class='notice'>You complete the Medibot. Beep boop!</span>"

@@ -157,7 +157,8 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 		else
 			user << "<span class='danger'> Machine cannot accept disks in that format.</span>"
 			return
-		user.drop_item()
+		if(!user.drop_item())
+			return
 		D.loc = src
 		user << "<span class='notice'> You add the disk to the machine!</span>"
 	else

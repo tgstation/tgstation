@@ -196,7 +196,8 @@
 		var/obj/item/device/flashlight/seclite/S = A
 		if(can_flashlight)
 			if(!F)
-				user.drop_item()
+				if(!user.unEquip(A))
+					return
 				user << "<span class='notice'>You click [S] into place on [src].</span>"
 				if(S.on)
 					SetLuminosity(0)
@@ -228,7 +229,8 @@
 		if(helmetCam)
 			user << "<span class='notice'>[src] already has a mounted camera.</span>"
 			return
-		user.drop_item()
+		if(!user.unEquip(A))
+			return
 		helmetCam = new /obj/machinery/camera/portable(src)
 		helmetCam.assembly = A
 		A.loc = helmetCam

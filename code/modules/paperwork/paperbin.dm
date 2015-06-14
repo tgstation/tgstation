@@ -71,7 +71,8 @@
 	if(!istype(i))
 		return ..()
 
-	user.drop_item()
+	if(!user.unEquip(i))
+		return
 	i.loc = src
 	user << "<span class='notice'>You put [i] in [src].</span>"
 	papers.Add(i)

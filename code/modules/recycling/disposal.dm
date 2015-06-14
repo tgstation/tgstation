@@ -123,9 +123,9 @@
 			stuff_mob_in(G.affecting, user)
 		return
 
-	if(!I || I.flags & NODROP)	return
+	if(!user.drop_item())
+		return
 
-	user.drop_item()
 	I.loc = src
 	user.visible_message("[user.name] places \the [I] into \the [src].", \
 						"<span class='notice'>You place \the [I] into \the [src].</span>")

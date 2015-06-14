@@ -41,11 +41,12 @@
 					anchored = 0
 					state = 0
 			if(istype(P, /obj/item/weapon/circuitboard/aicore) && !circuit)
+				if(!user.drop_item())
+					return
 				playsound(loc, 'sound/items/Deconstruct.ogg', 50, 1)
 				user << "<span class='notice'>You place the circuit board inside the frame.</span>"
 				icon_state = "1"
 				circuit = P
-				user.drop_item()
 				P.loc = src
 			if(istype(P, /obj/item/weapon/screwdriver) && circuit)
 				playsound(loc, 'sound/items/Screwdriver.ogg', 50, 1)
@@ -150,11 +151,13 @@
 					user << "<span class='warning'>This MMI is mindless!</span>"
 					return
 
+				if(!user.drop_item())
+					return
+
 				ticker.mode.remove_cultist(M.brainmob.mind, 1)
 				ticker.mode.remove_revolutionary(M.brainmob.mind, 1)
 				ticker.mode.remove_gangster(M.brainmob.mind, 1)
 
-				user.drop_item()
 				M.loc = src
 				brain = M
 				usr << "<span class='notice'>Added a brain.</span>"

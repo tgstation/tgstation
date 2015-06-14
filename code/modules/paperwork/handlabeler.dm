@@ -56,7 +56,8 @@
 	..()
 	if(istype(I, /obj/item/hand_labeler_refill))
 		user << "<span class='notice'>You insert [I] into [src].</span>"
-		user.drop_item()
+		if(!user.unEquip(I))
+			return
 		qdel(I)
 		labels_left = initial(labels_left)
 		return

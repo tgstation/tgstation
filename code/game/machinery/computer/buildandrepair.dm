@@ -336,11 +336,12 @@
 			if(istype(P, /obj/item/weapon/circuitboard) && !circuit)
 				var/obj/item/weapon/circuitboard/B = P
 				if(B.board_type == "computer")
+					if(!user.drop_item())
+						return
 					playsound(src.loc, 'sound/items/Deconstruct.ogg', 50, 1)
 					user << "<span class='notice'>You place the circuit board inside the frame.</span>"
 					icon_state = "1"
 					circuit = P
-					user.drop_item()
 					circuit.add_fingerprint(user)
 					P.loc = null
 				else

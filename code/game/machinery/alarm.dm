@@ -738,7 +738,7 @@
 				user << "<span class='notice'>You insert the circuit.</span>"
 				buildstage = 1
 				update_icon()
-				user.drop_item()
+				user.unEquip(W)
 				qdel(W)
 				return
 

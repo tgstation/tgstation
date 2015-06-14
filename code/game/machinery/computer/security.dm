@@ -24,9 +24,10 @@
 	var/order = 1 // -1 = Descending - 1 = Ascending
 
 
-/obj/machinery/computer/secure_data/attackby(obj/item/O as obj, user as mob, params)
+/obj/machinery/computer/secure_data/attackby(obj/item/O as obj, mob/user as mob, params)
 	if(istype(O, /obj/item/weapon/card/id) && !scan)
-		usr.drop_item()
+		if(!user.drop_item())
+			return
 		O.loc = src
 		scan = O
 		user << "<span class='notice'>You insert [O].</span>"
@@ -299,7 +300,8 @@ What a mess.*/
 				else
 					var/obj/item/I = usr.get_active_hand()
 					if(istype(I, /obj/item/weapon/card/id))
-						usr.drop_item()
+						if(!usr.drop_item())
+							return
 						I.loc = src
 						scan = I
 

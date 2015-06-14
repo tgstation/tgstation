@@ -532,8 +532,9 @@
 		if(do_after(user, 40))
 			if( src.state != 1 )
 				return
+			if(!user.drop_item())
+				return
 
-			user.drop_item()
 			W.loc = src
 			user << "<span class='notice'> You install the airlock electronics.</span>"
 			src.state = 2
