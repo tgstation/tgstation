@@ -7,7 +7,8 @@ var/time_last_changed_position = 0
 /obj/machinery/computer/card
 	name = "identification console"
 	desc = "You can use this to manage jobs and ID access."
-	icon_state = "id"
+	icon_screen = "id"
+	icon_keyboard = "id_key"
 	req_one_access = list(access_heads, access_change_ids)
 	circuit = /obj/item/weapon/circuitboard/card
 	var/obj/item/weapon/card/id/scan = null
@@ -482,7 +483,7 @@ var/time_last_changed_position = 0
 /obj/machinery/computer/card/minor
 	name = "department management console"
 	desc = "You can use this to change ID's for specific departments."
-	icon_state = "idminor"
+	icon_screen = "idminor"
 	circuit = /obj/item/weapon/circuitboard/card/minor
 
 /obj/machinery/computer/card/minor/New()
@@ -494,10 +495,6 @@ var/time_last_changed_position = 0
 		target_dept = typed_circuit.target_dept
 	var/list/dept_list = list("general","security","medical","science","engineering")
 	name = "[dept_list[target_dept]] department console"
-
-/obj/machinery/computer/card/minor/update_icon()
-	icon_state = "id"
-	..()
 
 /obj/machinery/computer/card/minor/hos
 	target_dept = 2
