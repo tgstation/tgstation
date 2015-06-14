@@ -44,18 +44,18 @@
 
 	var/list/il_bio = list("slimes", "spiders", "blobs", "dead bodies", "food items", "monkeys", "humans", "non-humans", "plants", "traitors", "syndicate agents", "vampires", "crewmen", "wizards", "voxes", "ghosts", "corgis", "cats", "parrots", \
 	"chickens", "aliens", "xenomorphs", "skellingtons", "plasmamen", "security officers", "doctors", "chemists", "engineers", "heads of staff", "captains", "gods", "clowns", "mimes", "assistants", "chefs", "chaplains", "librarians", \
-	"janitors", "chief medical officers", "heads of security", "heads of personnel", "research directors", "chief engineers", "atmospheric technicians", "detectives", "quartermasters", "cargo technicians", "miners", "scientists")
+	"janitors", "chief medical officers", "heads of security", "heads of personnel", "research directors", "chief engineers", "atmospheric technicians", "detectives", "quartermasters", "cargo technicians", "miners", "scientists", "potted plants")
 
 	var/list/il_bio_desc = list("dead", "alive", "human", "non-human", "crew", "non-crew", "dangerous", "harmful", "hazardous", "safe", "helpful", "non-existent", "existent", "traitorous", "loyal", "implanted", \
 	"carbon", "robotic", "otherworldly", "diseased", "virtual", "real", "four-dimensional", "valid", "wanted", "arrested", "heretic", "pious", "zealous", "demonic", "healthy", "unhealthy", "highly inflammable", "fire-proof", \
 	"stupid", "smart", "young", "old", "fat", "fit", "male", "female", "self-hating", "competent", "completely incompetent", "invisible", "visible", "toxic", "lying", "unidentified", "brain-damaged", "weak")
 
 	var/list/il_bio_act = list("be harmed", "be killed", "be removed", "be made into food", "be stunned", "be exterminated", "be helped", "be disarmed", "be saved", "be beheaded", "be set to arrest", "have all their records deleted", "be arrested", \
-	"be hugged", "be stalked", "be enslaved", "be protected", "be insulted", "be respected", "be electrified", "be exiled from the station", "be beeped, pinged and buzzed to", "be read Woody's Got Wood to", "be extracted safely", "be fed constantly", \
-	"be spaced", "be incinerated", "be revived", "be augmented", "breathe air", "breathe plasma", "breathe carbon dioxyde", "breathe dinitrogen", "breathe dioxygen", "breathe nitrous oxyde", "breathe water", "breathe", "not breathe", "eat", "not eat", \
+	"be hugged", "be stalked", "be enslaved", "be protected", "be insulted", "be respected", "be electrified", "be exiled from the station", "be beeped, pinged and buzzed to profusely", "be read Woody's Got Wood to", "be extracted safely", "be fed constantly", \
+	"be spaced", "be incinerated", "be revived", "be augmented", "breathe air", "breathe plasma", "breathe carbon dioxide", "breathe dinitrogen", "breathe dioxygen", "breathe nitrous oxyde", "breathe water", "breathe", "not breathe", "eat", "not eat", \
 	"drink water", "drink acid", "drink alcohol", "drink liquid plasma", "drink medicine", "drink liquid metal", "take a shower", "be buckled to chairs", "lie down", "stand up", "come out of the closet", "never be in space", "always be in space", \
 	"dance in sight of silicons", "never move in sight of silicons", "stay out of sight of silicons", "be in sight of silicons", "be loyalty implanted", "undergo medical examination", "be handcuffed", "never be restrained", "be saved at all costs", \
-	"have fun", "never have fun", "learn how to swim", "be used as test subjects", "be armed", "never carry weapons", "be inoculated with a harfum virus", "be cured of all diseases", "be able to describe space law sentences properly")
+	"have fun", "never have fun", "learn how to swim", "be used as test subjects", "be armed", "never carry weapons", "be inoculated with a harfum virus", "be cured of all diseases", "be able to describe space law sentences properly", "be watered regularly")
 
 	var/list/il_mach = list("silicons", "mechs", "light sources", "singularity engines", "supermatter engines", "antimatter engines", "air alarms", "APCs", "SMES", "vents and scrubbers", "nuclear fission devices", "computers", "lightswitches", \
 	"thermo-electric engines", "arcades", "hydroponics trays", "gas miners", "traitor equipments", "power sinks", "transit shuttles", "communication consoles", "electronic systems", "fire alarms", "airlocks", "status screens", "cyborgs", \
@@ -73,24 +73,24 @@
 	var/list/il_area = list("Medbay", "E.V.A", "outer space", "the Bridge", "the hallways", "the AI Upload", "the AI Core", "Engineering", "Atmospherics", "the Bar", "the Kitchen", "the Research department", "Telescience", "Toxins", \
 	"the Custodial Closet", "the Maintenance tunnels", "a shuttle", "Security", "the Brig", "the Secure Armory", "the Execution Chamber", "the Permabrig", "the Holodeck", "Arrivals", "the Captain's Quarters", "the Dormitories", "the Derelict", \
 	"Chemistry", "Virology", "Genetics", "the Vox Trade Outpost", "the Mining Base", "the Research Outpost", "Xenobiology", "the Courtroom", "the Vault", "the Teleporter", "the Theatre Backstage", "the Kitchen Freezer", "the Library", "the Chapel", \
-	"the Mechanic's Office", "Surgery", "the Pod Bay", "any room not part of normal station layout", "any unlit room", "the Station", "the Telecommunications Satellite", "the Pirate Ship")
+	"the Mechanic's Office", "Surgery", "the Pod Bay", "any room not part of normal station layout", "any unlit room", "the Station", "the Telecommunications Satellite", "the Pirate Ship", "Telescience", "the Toxins Testing Range", "the Incinerator")
 
 	var/list/il_area_desc = list("dangerous", "harmful", "safe", "abandoned", "burning", "toxic", "radioactive", "invisible", "four-dimensional", "virtual", "real", "hot", "cold", "critical", "electrified", "highly unstable", "stable", "metastable", \
 	"superflous", "useless", "functional", "off-station", "malfunctioning", "human", "alien", "non-human")
 
-	var/list/il_obj = list("IDs", "PDAs", "helmets", "bacalavas", "gas masks", "flashlights", "pens", "traitor items", "energy weapons", "ballistic weapons", "hardsuits", "toolbelts", "insulated gloves", "gloves", "coins", "crowbars", "toolboxes", \
+	var/list/il_obj = list("IDs", "PDAs", "helmets", "balaclavas", "gas masks", "flashlights", "pens", "traitor items", "energy weapons", "ballistic weapons", "hardsuits", "toolbelts", "insulated gloves", "gloves", "coins", "crowbars", "toolboxes", \
 	"nuclear authentication disks", "pinpointers", "jumpsuits", "shoes", "jackboots", "labcoats", "sunglasses", "meson scanners", "bombs", "cigarettes", "beakers", "drinks", "food items", "power cells", "multitools", "crayons", "soaps", \
 	"intellicards", "RPDs", "RCDs", "surgery tools", "stun batons", "flashes", "cable coils", "glass sheets", "metal sheets", "plasteel sheets", "mineral sheets", "medical kits", "pills", "syringes", "spare boards", "shotguns", "closets", \
-	"beds", "chairs", "stools", "tables", "wooden tables", "windows", "grilles", "catwalks", "floor tiles", "plastic bags", "costumes", "welding tools", "matches")
+	"beds", "chairs", "stools", "tables", "wooden tables", "windows", "grilles", "catwalks", "floor tiles", "plastic bags", "costumes", "welding tools", "matches", "walls", "reinforced walls", "potted plants")
 
 	var/list/il_obj_wear = list("IDs", "PDAs", "helmets", "bacalavas", "hats", "gas masks", "hardsuits", "belts", "toolbelts", "gloves", "shoes", "insulated gloves", "latex gloves", "jackboots", "magboots", "sunglasses", "meson scanners", \
-	"backpacks", "jetpacks", "headsets", "face-concealing equipment", "firesuits", "bio suits", "breath masks", "sterile masks", "earmuffs", "costumes")
+	"backpacks", "jetpacks", "headsets", "face-concealing equipment", "firesuits", "bio suits", "breath masks", "sterile masks", "earmuffs", "costumes", "muzzles", "straight-jackets")
 
 	var/list/il_obj_desc = list("harmful", "deadly", "safe", "burning", "toxic", "broken", "red", "blue", "yellow", "green", "white", "black", "abandoned", "lost", "stolen", "carried", "worn", "visible", "invsible", "radioactive", \
 	"glowing", "spaced", "stored", "duplicate", "critical", "hazardous", "helpful", "sharp", "blunt", "thrown", "weaponized", "dangerous", "four-dimensional", "virtual", "real", "hot", "cold", "helpful")
 
 	var/list/il_obj_act = list("be spaced", "be destroyed", "be weaponized", "be deconstructed", "be teleported off-station", "be owned by all crewmen", "never be tampered with", "be sent away via the cargo shuttle", "always be set on fire", \
-	"never be set on fire", "be thrown into the singularity")
+	"never be set on fire", "be thrown into the singularity", "be watered regularly")
 
 	//We now create prefixes and suffixes, we will use it to assemble the final ion law
 
