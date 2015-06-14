@@ -186,9 +186,11 @@ What are the archived variables for?
 		var/oxidizer_burn_rate = 0
 		var/plasma_burn_rate = 0
 		var/oxygen_burn_rate = 0
-		var/n2o_moles = 0 //Not always present
+		var/n2o_moles //Not always present
 		if (oxidizer)
 			n2o_moles = oxidizer.moles
+		else
+			n2o_moles = 0
 		//more plasma released at higher temperatures
 		var/temperature_scale
 		if(temperature > PLASMA_UPPER_TEMPERATURE)
@@ -211,7 +213,7 @@ What are the archived variables for?
 
 				energy_released += FIRE_PLASMA_ENERGY_RELEASED * (plasma_burn_rate)
 
-				fuel_burnt += (plasma_burn_rate)*(1+oxygen_burn_rate)
+				fuel_burnt += (plasma_burn_rate)*(1+oxygen_burn_rate+oxidizer_burn_rate)
 
 	if(energy_released > 0)
 		var/new_heat_capacity = heat_capacity()

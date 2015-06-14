@@ -46,6 +46,7 @@
 
 /mob/living/carbon/human/experience_pressure_difference()
 	playsound(src, 'sound/effects/space_wind.ogg', 50, 1)
-	if(shoes.flags&NOSLIP)
-		return 0
+	if(shoes)
+		if(shoes.flags&NOSLIP)
+			return 0
 	. = ..()
