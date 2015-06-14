@@ -24,7 +24,7 @@ Gunshots/explosions/opening doors/less rare audio (done)
 		return
 	
 	//Least obvious
-	var/list/minor = list("sounds"=25,"bolts_minor"=10,"whispers"=15)
+	var/list/minor = list("sounds"=20,"bolts_minor"=10,"whispers"=15,"message"=5)
 	//Something's wrong here
 	var/list/medium = list("hudscrew"=15,"items"=15,"dangerflash"=15,"bolts"=10,"flood"=10,"husks"=10,"battle"=10)
 	//AAAAH
@@ -564,6 +564,23 @@ var/list/non_fakeattack_weapons = list(/obj/item/weapon/gun/projectile, /obj/ite
 		target << target.compose_message(person,person.languages,pick(radio_messages),"1459",person.get_spans())
 	qdel(src)
 
+/obj/effect/hallucination/message
+
+/obj/effect/hallucination/message/New(loc,var/mob/living/carbon/T)
+	target = T
+	var/chosen = pick("<span class='userdanger'>The light burns you!</span>", \
+		"<span class='danger'>You don't feel like yourself.</span>", \
+		"<span class='userdanger'>Unknown has punched [target]!</span>", \
+		"<span class='notice'>You hear something squeezing through the ducts...</span>", \
+		"<span class='notice'>You hear a distant scream.</span>", \
+		"<span class='notice'>Your </span>", \
+		"<B>[target]</B> sneezes.", \
+		"<span class='warning'>You feel faint.</span>", \
+		"<span class='noticealien'>You hear a strange, alien voice in your head...</span>[pick("Hiss","Ssss")]", \
+		"<span class='notice'>You can see...everything!</span>")
+	target << chosen
+	qdel(src)
+
 /mob/living/carbon/proc/hallucinate(var/hal_type) // Todo -> proc / defines
 	switch(hal_type)
 		if("xeno")
@@ -584,6 +601,8 @@ var/list/non_fakeattack_weapons = list(/obj/item/weapon/gun/projectile, /obj/ite
 			new /obj/effect/hallucination/bolts(src.loc,src,rand(1,2))
 		if("whispers")
 			new /obj/effect/hallucination/whispers(src.loc,src)
+		if("message")
+			new /obj/effect/hallucination/message(src.loc,src)
 		if("sounds")
 			//Strange audio
 			//src << "Strange Audio"
