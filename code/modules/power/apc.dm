@@ -130,6 +130,8 @@
 	else
 		area = src.loc.loc
 		opened = 1
+		locked = 0
+		coverlocked = 0
 		operating = 0
 		name = "[area.name] APC"
 		stat |= MAINT
@@ -546,6 +548,8 @@
 			qdel(W)
 			stat &= ~BROKEN
 			malfai = null
+			coverlocked = 0
+			locked = 0
 			malfhack = 0
 			if (opened==2)
 				opened = 1

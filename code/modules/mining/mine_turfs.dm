@@ -79,7 +79,7 @@
 
 /turf/simulated/mineral/proc/Spread(var/turf/T)
 	T.ChangeTurf(src.type)
-	spawn(10)
+	spawn(20)
 		T.lighting_fix_overlays()
 
 /turf/simulated/mineral/random
