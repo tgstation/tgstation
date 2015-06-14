@@ -2,6 +2,7 @@
 	name = "meteor"
 	config_tag = "meteor"
 	var/const/meteordelay = 2000
+	var/wavedelay = 600 //1 minute between meteor waves
 	var/nometeors = 1
 	required_players = 0
 
@@ -20,8 +21,11 @@
 
 /datum/game_mode/meteor/process()
 	if(nometeors) return
-
-	spawn() spawn_meteors(6, meteors_normal)
+	spawn()
+		spawn_meteors(6, meteors_normal)
+		nometeors = 1
+		spawn(wavedelay)
+			nometeors = 0
 
 
 /datum/game_mode/meteor/declare_completion()
