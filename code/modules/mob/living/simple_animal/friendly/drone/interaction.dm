@@ -105,17 +105,3 @@
 		..()
 
 
-/mob/living/simple_animal/drone/emag_act(mob/user as mob)
-	if(!emagged)
-		user << "You scramble the drone's logic circuits!"
-		src << "LAW CHANGE DETECTED: LAW 3 MODIFIED:"
-		src << "3. Your goals are to deconstruct, destroy, damage, break, and depower to the best of your abilities, You must never actively work against these goals."
-		laws = \
-		"1. You may not involve yourself in the matters of another being, even if such matters conflict with Law Two or Law Three, unless the other being is another Drone.\n"+\
-		"2. You may not harm any being, regardless of intent or circumstance.\n"+\
-		"3. Your goals are to deconstruct, destroy, damage, break, and depower to the best of your abilities, You must never actively work against these goals."
-		emagged = 1
-		return
-	else
-		user << "This drone's circuits are already scrambled!"
-		return
