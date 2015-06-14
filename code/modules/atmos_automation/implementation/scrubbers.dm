@@ -21,7 +21,7 @@
 
 /datum/automation/set_scrubber_mode/process()
 	if(scrubber)
-		parent.send_signal(list ("tag" = scrubber, "sigtype"="command", "scrubbing"=mode), RADIO_FROM_AIRALARM)
+		parent.send_signal(list ("tag" = scrubber, "sigtype"="command", "scrubbing" = mode), RADIO_FROM_AIRALARM)
 	return 0
 
 /datum/automation/set_scrubber_mode/GetText()
@@ -64,7 +64,7 @@
 
 /datum/automation/set_scrubber_power/process()
 	if(scrubber)
-		parent.send_signal(list ("tag" = scrubber, "sigtype"="command", "power"=state), RADIO_FROM_AIRALARM)
+		parent.send_signal(list ("tag" = scrubber, "sigtype"="command", "power" = state, "type" = "scrubber"), RADIO_FROM_AIRALARM)
 
 /datum/automation/set_scrubber_power/GetText()
 	return  "Set Scrubber <a href=\"?src=\ref[src];set_scrubber=1\">[fmtString(scrubber)]</a> power to <a href=\"?src=\ref[src];set_power=1\">[state ? "on" : "off"]</a>."

@@ -86,7 +86,7 @@
 
 /datum/automation/set_vent_pump_power/process()
 	if(vent_pump)
-		parent.send_signal(list ("tag" = vent_pump, "power"=state), filter = (mode ? RADIO_ATMOSIA : RADIO_FROM_AIRALARM))
+		parent.send_signal(list ("tag" = vent_pump, "power" = state, "type" = "vent"), filter = (mode ? RADIO_ATMOSIA : RADIO_FROM_AIRALARM))
 
 /datum/automation/set_vent_pump_power/GetText()
 	return "Set <a href=\"?src=\ref[src];toggle_mode=1\">[mode ? "Dual-Port" : "Unary"]</a> vent pump <a href=\"?src=\ref[src];set_vent_pump=1\">[fmtString(vent_pump)]</a> power to <a href=\"?src=\ref[src];set_power=1\">[state ? "on" : "off"]</a>."

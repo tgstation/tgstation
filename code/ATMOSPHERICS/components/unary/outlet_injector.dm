@@ -17,7 +17,7 @@
 	var/datum/radio_frequency/radio_connection
 
 	level = 1
-	
+
 	machine_flags = MULTITOOL_MENU
 
 /obj/machinery/atmospherics/unary/outlet_injector/update_icon()
@@ -109,7 +109,7 @@
 	set_frequency(frequency)
 
 /obj/machinery/atmospherics/unary/outlet_injector/receive_signal(datum/signal/signal)
-	if(!signal.data["tag"] || (signal.data["tag"] != id_tag) || (signal.data["sigtype"]!="command"))
+	if(!signal.data["tag"] || (signal.data["tag"] != id_tag) || (signal.data["sigtype"]!="command") || (signal.data["type"] && signal.data["type"] != "injector"))
 		return 0
 
 	if("power" in signal.data)
