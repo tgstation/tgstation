@@ -245,12 +245,12 @@
 	else if(gang == "B")
 		members += ticker.mode.B_bosses | ticker.mode.B_gang
 	if(members.len)
-		var/ping = "[boss ? "Gang Boss" : "Gang Lieutenant"]: [message]"
+		var/ping = "<span class='danger'><B><i>[gang_name(gang)] [boss ? "Gang Boss" : "Gang Lieutenant"]</i>: [message]</B></span>"
 		for(var/datum/mind/ganger in members)
 			if(ganger.current.z <= 2)
-				ganger.current << "<span class='danger'><b>[ping]</B></span>"
+				ganger.current << ping
 		for(var/mob/M in dead_mob_list)
-			M << "<span class='danger'><B>[gang_name(gang)] [ping]</B></span>"
+			M << ping
 		log_game("[key_name(user)] Messaged [gang_name(gang)] Gang ([gang]): [message].")
 
 
