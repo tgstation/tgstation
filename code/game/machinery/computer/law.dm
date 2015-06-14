@@ -2,7 +2,7 @@
 
 /obj/machinery/computer/upload
 	var/mob/living/silicon/current = null //The target of future law uploads
-	icon_state = null //To make sure mappers understand THIS ISN'T A VALID TYPE
+	icon_screen = "command"
 
 /obj/machinery/computer/upload/attackby(obj/item/O as obj, mob/user as mob, params)
 	if(istype(O, /obj/item/weapon/aiModule))
@@ -33,7 +33,6 @@
 /obj/machinery/computer/upload/ai
 	name = "\improper AI upload console"
 	desc = "Used to upload laws to the AI."
-	icon_state = "command"
 	circuit = /obj/item/weapon/circuitboard/aiupload
 
 /obj/machinery/computer/upload/ai/attack_hand(var/mob/user as mob)
@@ -58,7 +57,6 @@
 /obj/machinery/computer/upload/borg
 	name = "cyborg upload console"
 	desc = "Used to upload laws to Cyborgs."
-	icon_state = "command"
 	circuit = /obj/item/weapon/circuitboard/borgupload
 
 /obj/machinery/computer/upload/borg/attack_hand(var/mob/user as mob)
