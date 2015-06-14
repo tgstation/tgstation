@@ -335,6 +335,8 @@
 				L.embedded_objects -= I
 				I.loc = get_turf(src)
 				visible_message("<span class='danger'>\the [I] falls out of [name]'s [L.getDisplayName()]!</span>","<span class='userdanger'>\the [I] falls out of your [L.getDisplayName()]!</span>")
+				if(!has_embedded_objects())
+					clear_alert("embeddedobject")
 
 /mob/living/carbon/human/handle_heart()
 	if(!heart_attack)

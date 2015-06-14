@@ -600,8 +600,12 @@
 					H.client.screen += global_hud.darkMask
 
 		if(H.blind)
-			if(H.eye_blind)		H.blind.layer = 18
-			else			H.blind.layer = 0
+			if(H.eye_blind)
+				H.throw_alert("blind")
+				H.blind.layer = 18
+			else
+				H.clear_alert("blind")
+				H.blind.layer = 0
 
 		if(!H.client)//no client, no screen to update
 			return 1
@@ -609,7 +613,11 @@
 		if( H.disabilities & NEARSIGHT && !istype(H.glasses, /obj/item/clothing/glasses/regular) )
 			H.client.screen += global_hud.vimpaired
 		if(H.eye_blurry)			H.client.screen += global_hud.blurry
-		if(H.druggy)				H.client.screen += global_hud.druggy
+		if(H.druggy)
+			H.client.screen += global_hud.druggy
+			H.throw_alert("high")
+		else
+			H.clear_alert("high")
 
 
 		if(H.eye_stat > 20)
