@@ -130,6 +130,8 @@ emp_act
 	var/obj/item/organ/limb/affecting = get_organ(ran_zone(user.zone_sel.selecting))
 	var/hit_area = parse_zone(affecting.name)
 	var/target_area = parse_zone(target_limb.name)
+	feedback_add_details("item_used_for_combat","[I.name]|[I.force]")
+	feedback_add_details("zone_targeted","[def_zone]")
 
 	if(dna)	// allows your species to affect the attacked_by code
 		return dna.species.spec_attacked_by(I,user,def_zone,affecting,hit_area,src.a_intent,target_limb,target_area,src)
@@ -154,7 +156,6 @@ emp_act
 		var/Iforce = I.force //to avoid runtimes on the forcesay checks at the bottom. Some items might delete themselves if you drop them. (stunning yourself, ninja swords)
 
 		apply_damage(I.force, I.damtype, affecting, armor , I)
-
 		var/bloody = 0
 		if(((I.damtype == BRUTE) && I.force && prob(25 + (I.force * 2))))
 			if(affecting.status == ORGAN_ORGANIC)

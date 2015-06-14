@@ -22,6 +22,7 @@
 	var/planted = 0			//Is it occupied?
 	var/harvest = 0			//Ready to harvest?
 	var/obj/item/seeds/myseed = null	//The currently planted seed
+	var/rating = 1
 	var/unwrenchable = 1
 
 	pixel_y=8
@@ -37,20 +38,32 @@
 	component_parts += new /obj/item/weapon/circuitboard/hydroponics(null)
 	component_parts += new /obj/item/weapon/stock_parts/matter_bin(null)
 	component_parts += new /obj/item/weapon/stock_parts/matter_bin(null)
+	component_parts += new /obj/item/weapon/stock_parts/manipulator(null)
 	component_parts += new /obj/item/weapon/stock_parts/console_screen(null)
 	RefreshParts()
 
 /obj/machinery/hydroponics/constructable/RefreshParts()
-	var tmp_capacity = 0
+	var/tmp_capacity = 0
 	for (var/obj/item/weapon/stock_parts/matter_bin/M in component_parts)
 		tmp_capacity += M.rating
+	for (var/obj/item/weapon/stock_parts/manipulator/M in component_parts)
+		rating = M.rating
 	maxwater = tmp_capacity * 50 // Up to 300
 	maxnutri = tmp_capacity * 5 // Up to 30
 	waterlevel = maxwater
 	nutrilevel = 3
 
 /obj/machinery/hydroponics/constructable/attackby(obj/item/I, mob/user, params)
+	if(default_deconstruction_screwdriver(user, "hydrotray3", "hydrotray3", I))
+		return
+
 	if(exchange_parts(user, I))
+		return
+
+	if(default_pry_open(I))
+		return
+
+	if(default_unfasten_wrench(user, I))
 		return
 
 	if(istype(I, /obj/item/weapon/crowbar))
@@ -89,10 +102,10 @@
 		mutate()
 	else if(istype(Proj ,/obj/item/projectile/energy/florayield))
 		if(myseed.yield == 0)//Oh god don't divide by zero you'll doom us all.
-			adjustSYield(1)
+			adjustSYield(1 * rating)
 			//world << "Yield increased by 1, from 0, to a total of [myseed.yield]"
 		else if(prob(1/(myseed.yield * myseed.yield) * 100))//This formula gives you diminishing returns based on yield. 100% with 1 yield, decreasing to 25%, 11%, 6, 4, 2...
-			adjustSYield(1)
+			adjustSYield(1 * rating)
 			//world << "Yield increased by 1, to a total of [myseed.yield]"
 	else
 		..()
@@ -115,7 +128,7 @@
 //Nutrients//////////////////////////////////////////////////////////////
 			// Nutrients deplete slowly
 			if(prob(50))
-				adjustNutri(-1)
+				adjustNutri(-1 / rating)
 
 			// Lack of nutrients hurts non-weeds
 			if(nutrilevel <= 0 && myseed.plant_type != 1)
@@ -128,56 +141,56 @@
 				var/lightAmt = currentTurf.lighting_lumcount
 				if(myseed.plant_type == 2) // Mushroom
 					if(lightAmt < 2)
-						adjustHealth(-1)
+						adjustHealth(-1 / rating)
 				else // Non-mushroom
 					if(lightAmt < 4)
-						adjustHealth(-2)
+						adjustHealth(-2 / rating)
 
 //Water//////////////////////////////////////////////////////////////////
 			// Drink random amount of water
-			adjustWater(-rand(1,6))
+			adjustWater(-rand(1,6) / rating)
 
 			// If the plant is dry, it loses health pretty fast, unless mushroom
 			if(waterlevel <= 10 && myseed.plant_type != 2)
-				adjustHealth(-rand(0,1))
+				adjustHealth(-rand(0,1) / rating)
 				if(waterlevel <= 0)
-					adjustHealth(-rand(0,2))
+					adjustHealth(-rand(0,2) / rating)
 
 			// Sufficient water level and nutrient level = plant healthy
 			else if(waterlevel > 10 && nutrilevel > 0)
-				adjustHealth(rand(1,2))
+				adjustHealth(rand(1,2) / rating)
 				if(prob(5))  //5 percent chance the weed population will increase
-					adjustWeeds(1)
+					adjustWeeds(1 / rating)
 
 //Toxins/////////////////////////////////////////////////////////////////
 
 			// Too much toxins cause harm, but when the plant drinks the contaiminated water, the toxins disappear slowly
 			if(toxic >= 40 && toxic < 80)
-				adjustHealth(-1)
-				adjustToxic(-rand(1,10))
+				adjustHealth(-1 / rating)
+				adjustToxic(-rand(1,10) / rating)
 			else if(toxic >= 80) // I don't think it ever gets here tbh unless above is commented out
 				adjustHealth(-3)
-				adjustToxic(-rand(1,10))
+				adjustToxic(-rand(1,10) / rating)
 
 //Pests & Weeds//////////////////////////////////////////////////////////
 
 			else if(pestlevel >= 5)
-				adjustHealth(-1)
+				adjustHealth(-1 / rating)
 
 			// If it's a weed, it doesn't stunt the growth
 			if(weedlevel >= 5 && myseed.plant_type != 1 )
-				adjustHealth(-1)
+				adjustHealth(-1 / rating)
 
 //Health & Age///////////////////////////////////////////////////////////
 
 			// Plant dies if health <= 0
 			if(health <= 0)
 				plantdies()
-				adjustWeeds(1) // Weeds flourish
+				adjustWeeds(1 / rating) // Weeds flourish
 
 			// If the plant is too old, lose health fast
 			if(age > myseed.lifespan)
-				adjustHealth(-rand(1,5))
+				adjustHealth(-rand(1,5) / rating)
 
 			// Harvest code
 			if(age > myseed.production && (age - lastproduce) > myseed.production && (!harvest && !dead))
@@ -187,10 +200,10 @@
 				else
 					lastproduce = age
 			if(prob(5))  // On each tick, there's a 5 percent chance the pest population will increase
-				adjustPests(1)
+				adjustPests(1 / rating)
 		else
 			if(waterlevel > 10 && nutrilevel > 0 && prob(10))  // If there's no plant, the percentage chance is 10%
-				adjustWeeds(1)
+				adjustWeeds(1 / rating)
 
 		// Weeeeeeeeeeeeeeedddssss
 
@@ -436,18 +449,18 @@
 
 	// Nutriments
 	if(S.has_reagent("eznutriment", 1))
-		yieldmod = 1
-		mutmod = 1
+		yieldmod = 1 * rating
+		mutmod = 1 * rating
 		adjustNutri(round(S.get_reagent_amount("eznutriment") * 1))
 
 	if(S.has_reagent("left4zednutriment", 1))
-		yieldmod = 0
-		mutmod = 2
+		yieldmod = 0 * rating
+		mutmod = 2 * rating
 		adjustNutri(round(S.get_reagent_amount("left4zednutriment") * 1))
 
 	if(S.has_reagent("robustharvestnutriment", 1))
-		yieldmod = 2
-		mutmod = 0
+		yieldmod = 2 * rating
+		mutmod = 0 * rating
 		adjustNutri(round(S.get_reagent_amount("robustharvestnutriment") *1 ))
 
 	// Antitoxin binds shit pretty well. So the tox goes significantly down
@@ -734,17 +747,17 @@
 				user.visible_message("[user] unwrenches [src].", \
 									"<span class='notice'>You unwrench [src].</span>")
 
-	else if(istype(O, /obj/item/weapon/screwdriver) && unwrenchable) //THIS NEED TO BE DONE DIFFERENTLY, SOMEONE REFACTOR THE TRAY CODE ALREADY
+	else if(istype(O, /obj/item/weapon/wirecutters) && unwrenchable) //THIS NEED TO BE DONE DIFFERENTLY, SOMEONE REFACTOR THE TRAY CODE ALREADY
 		if(anchored)
 			if(anchored == 2)
-				playsound(src.loc, 'sound/items/Screwdriver.ogg', 50, 1)
+				playsound(src.loc, 'sound/items/Wirecutter.ogg', 50, 1)
 				anchored = 1
-				user << "<span class='notice'>You unscrew \the [src]'s hoses.</span>"
+				user << "<span class='notice'>You snip \the [src]'s hoses.</span>"
 
 			else if(anchored == 1)
-				playsound(src.loc, 'sound/items/Screwdriver.ogg', 50, 1)
+				playsound(src.loc, 'sound/items/Wirecutter.ogg', 50, 1)
 				anchored = 2
-				user << "<span class='notice'>You screw in \the [src]'s hoses.</span>"
+				user << "<span class='notice'>You reconnect \the [src]'s hoses.</span>"
 
 			for(var/obj/machinery/hydroponics/h in range(1,src))
 				spawn()
@@ -789,7 +802,7 @@
 	var/t_amount = 0
 	var/list/result = list()
 	var/output_loc = parent.Adjacent(user) ? user.loc : parent.loc //needed for TK
-
+	var/product_name
 	while(t_amount < getYield())
 		var/obj/item/weapon/reagent_containers/food/snacks/grown/t_prod = new product(output_loc, potency)
 		result.Add(t_prod) // User gets a consumable
@@ -802,7 +815,9 @@
 		t_prod.potency = potency
 		t_prod.plant_type = plant_type
 		t_amount++
-
+		product_name = t_prod.name
+	if(getYield() >= 1)
+		feedback_add_details("food_harvested","[product_name]|[getYield()]")
 	parent.update_tray()
 
 	return result
