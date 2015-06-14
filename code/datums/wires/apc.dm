@@ -1,16 +1,17 @@
 /datum/wires/apc
 	holder_type = /obj/machinery/power/apc
-	wire_count = 4
+	wire_count = 5
 
 var/const/APC_WIRE_IDSCAN = 1
 var/const/APC_WIRE_MAIN_POWER1 = 2
 var/const/APC_WIRE_MAIN_POWER2 = 4
 var/const/APC_WIRE_AI_CONTROL = 8
+var/const/APC_WIRE_COVERLOCK = 16
 
 /datum/wires/apc/GetInteractWindow()
 	var/obj/machinery/power/apc/A = holder
 	. += ..()
-	. += text("<br>\n[(A.locked ? "The APC is locked." : "The APC is unlocked.")]<br>\n[(A.shorted ? "The APCs power has been shorted." : "The APC is working properly!")]<br>\n[(A.aidisabled ? "The 'AI control allowed' light is off." : "The 'AI control allowed' light is on.")]")
+	. += text("<br>\n[(A.locked ? "The APC is locked." : "The APC is unlocked.")]<br>\n[(A.shorted ? "The APCs power has been shorted." : "The APC is working properly!")]<br>\n[(A.aidisabled ? "The 'AI control allowed' light is off." : "The 'AI control allowed' light is on.")]<br>\n[(A.coverlocked ? "The APC's cover is locked." : "The APC's cover is unlocked.")]")
 
 
 /datum/wires/apc/CanUse(var/mob/living/L)
@@ -26,12 +27,10 @@ var/const/APC_WIRE_AI_CONTROL = 8
 	switch(index)
 
 		if(APC_WIRE_IDSCAN)
-			A.locked = 0
-
-			spawn(300)
-				if(A)
-					A.locked = 1
-					A.updateDialog()
+			if(A.locked)
+				A.locked = 0
+			else
+				A.locked = 1
 
 		if (APC_WIRE_MAIN_POWER1, APC_WIRE_MAIN_POWER2)
 			if(A.shorted == 0)
@@ -51,12 +50,21 @@ var/const/APC_WIRE_AI_CONTROL = 8
 						A.aidisabled = 0
 						A.updateDialog()
 
+		if(APC_WIRE_COVERLOCK)
+			if(A.coverlocked)
+				A.coverlocked = 0
+			else
+				A.coverlocked = 1
+
 	A.updateDialog()
 
 /datum/wires/apc/UpdateCut(var/index, var/mended)
 	var/obj/machinery/power/apc/A = holder
 
 	switch(index)
+		if(APC_WIRE_IDSCAN)
+			A.locked = 0
+
 		if(APC_WIRE_MAIN_POWER1, APC_WIRE_MAIN_POWER2)
 
 			if(!mended)
@@ -75,4 +83,8 @@ var/const/APC_WIRE_AI_CONTROL = 8
 			else
 				if (A.aidisabled == 1)
 					A.aidisabled = 0
+
+		if(APC_WIRE_COVERLOCK)
+			A.coverlocked = 0
+
 	A.updateDialog()
