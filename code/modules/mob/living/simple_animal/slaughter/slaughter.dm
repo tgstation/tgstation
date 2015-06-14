@@ -10,12 +10,12 @@
 	response_disarm = "flails at"
 	response_harm   = "punches"
 	icon = 'icons/mob/mob.dmi'
-	icon_state = "horror"
+	icon_state = "daemon"
 	speed = 0
 	a_intent = "harm"
 	stop_automated_movement = 1
 	status_flags = CANPUSH
-	attack_sound = 'sound/hallucinations/growl1.ogg'
+	attack_sound = 'sound/magic/demon_attack1.ogg'
 	atmos_requirements = list("min_oxy" = 0, "max_oxy" = 0, "min_tox" = 0, "max_tox" = 0, "min_co2" = 0, "max_co2" = 0, "min_n2" = 0, "max_n2" = 0)
 	minbodytemp = 0
 	faction = list("slaughter")
@@ -41,6 +41,7 @@
 	..(1)
 	new /obj/effect/decal/cleanable/blood (src.loc)
 	new /obj/item/weapon/demonheart (src.loc)
+	playsound(get_turf(src),'sound/magic/demon_dies.ogg', 200, 1)
 	visible_message("<span class='danger'>The [src] screams in anger as its form collapes into a pool of viscera.</span>")
 	ghostize()
 	qdel(src)
@@ -57,7 +58,7 @@
 		src.notransform = TRUE
 		spawn(0)
 			src.visible_message("The [src] sinks into the pool of blood.")
-			playsound(get_turf(src), 'sound/effects/slosh.ogg', 50, 1, -1)
+			playsound(get_turf(src), 'sound/magic/enter_blood.ogg', 100, 1, -1)
 			var/obj/effect/dummy/slaughter/holder = new /obj/effect/dummy/slaughter( mobloc )
 			src.ExtinguishMob()
 			if(src.buckled)
@@ -77,11 +78,11 @@
 			if(src.kidnapped)
 				src << "<B>You being to feast on [kidnapped]. You can not move while you are doing this.</B>"
 				src.eating = TRUE
-				playsound(get_turf(src),'sound/items/eatfood.ogg', rand(10,50), 1)
+				playsound(get_turf(src),'sound/magic/Demon_consume.ogg', 100, 1)
 				sleep(30)
-				playsound(get_turf(src),'sound/items/eatfood.ogg', rand(10,50), 1)
+				playsound(get_turf(src),'sound/magic/Demon_consume.ogg', 100, 1)
 				sleep(30)
-				playsound(get_turf(src),'sound/items/eatfood.ogg', rand(10,50), 1)
+				playsound(get_turf(src),'sound/magic/Demon_consume.ogg', 100, 1)
 				sleep(30)
 				src << "<B>You devour [kidnapped]. Your health is fully restored.</B>"
 				src.adjustBruteLoss(-1000)
@@ -99,10 +100,8 @@
 		src.loc = B.loc
 		src.phased = FALSE
 		src.client.eye = src
-		var/list/voice = list('sound/hallucinations/behind_you1.ogg','sound/hallucinations/im_here1.ogg','sound/hallucinations/turn_around1.ogg','sound/hallucinations/i_see_you1.ogg')
-		playsound(get_turf(src), pick(voice),50, 1, -1)
 		src.visible_message("<span class='warning'><B>The [src] rises out of the pool of blood!</B>")
-		playsound(get_turf(src), 'sound/effects/slosh.ogg', 50, 1, -1)
+		playsound(get_turf(src), 'sound/effects/exit_blood.ogg', 100, 1, -1)
 		qdel(src.holder)
 
 /obj/effect/decal/cleanable/blood/CtrlClick(var/mob/user)
