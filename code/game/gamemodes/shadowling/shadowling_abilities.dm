@@ -4,6 +4,7 @@
 	panel = "Shadowling Abilities"
 	charge_max = 300
 	clothes_req = 0
+	shadowling_req = 1
 
 /obj/effect/proc_holder/spell/targeted/glare/cast(list/targets)
 	for(var/mob/living/carbon/human/target in targets)
@@ -36,6 +37,7 @@
 	panel = "Shadowling Abilities"
 	charge_max = 250 //Short cooldown because people can just turn the lights back on
 	clothes_req = 0
+	shadowling_req = 1
 	range = 5
 
 /obj/effect/proc_holder/spell/aoe_turf/veil/cast(list/targets)
@@ -83,6 +85,7 @@
 	charge_max = 600
 	clothes_req = 0
 	range = -1
+	shadowling_req = 1
 	include_user = 1
 
 /obj/effect/proc_holder/spell/targeted/shadow_walk/cast(list/targets)
@@ -108,6 +111,7 @@
 	panel = "Shadowling Abilities"
 	range = 5
 	charge_max = 1200
+	shadowling_req = 1
 	clothes_req = 0
 
 /obj/effect/proc_holder/spell/aoe_turf/flashfreeze/cast(list/targets)
@@ -139,6 +143,7 @@
 	charge_max = 450
 	clothes_req = 0
 	range = 1 //Adjacent to user
+	shadowling_req = 1
 	var/enthralling = 0
 
 /obj/effect/proc_holder/spell/targeted/enthrall/cast(list/targets)
@@ -222,6 +227,7 @@
 	charge_max = 25
 	clothes_req = 0
 	range = -1
+	shadowling_req = 1
 	include_user = 1
 
 /obj/effect/proc_holder/spell/targeted/shadowling_hivemind/cast(list/targets)
@@ -242,6 +248,7 @@
 	charge_max = 600
 	clothes_req = 0
 	range = -1
+	shadowling_req = 1
 	include_user = 1
 
 /obj/effect/proc_holder/spell/targeted/shadowling_regenarmor/cast(list/targets)
@@ -267,6 +274,7 @@
 	clothes_req = 0
 	range = -1
 	include_user = 1
+	shadowling_req = 1
 	var/blind_smoke_acquired
 	var/screech_acquired
 	var/drain_thrall_acquired
@@ -335,6 +343,7 @@
 	charge_max = 600
 	clothes_req = 0
 	range = -1
+	shadowling_req = 1
 	include_user = 1
 
 /obj/effect/proc_holder/spell/targeted/blindness_smoke/cast(list/targets) //Extremely hacky
@@ -386,6 +395,7 @@ datum/reagent/shadowling_blindness_smoke/on_mob_life(var/mob/living/M as mob)
 	panel = "Shadowling Abilities"
 	range = 7
 	charge_max = 300
+	shadowling_req = 1
 	clothes_req = 0
 
 /obj/effect/proc_holder/spell/aoe_turf/unearthly_screech/cast(list/targets)
@@ -425,6 +435,7 @@ datum/reagent/shadowling_blindness_smoke/on_mob_life(var/mob/living/M as mob)
 	range = 3
 	charge_max = 100
 	clothes_req = 0
+	shadowling_req = 1
 	var/thralls_drained = 0
 	var/list/nearby_thralls = list()
 
@@ -457,6 +468,7 @@ datum/reagent/shadowling_blindness_smoke/on_mob_life(var/mob/living/M as mob)
 	range = -1
 	charge_max = 3000
 	clothes_req = 0
+	shadowling_req = 1
 	include_user = 1
 	var/list/thralls_in_world = list()
 

@@ -179,11 +179,15 @@
 	w_class = 3.0
 	origin_tech = "syndicate=6;combat=5"
 	var/adminlog = null
+	var/exploding = 0
 
 /obj/item/weapon/bombcore/ex_act(severity, target) //Little boom can chain a big boom
+	if(exploding)
+		return
 	src.detonate()
 
 /obj/item/weapon/bombcore/proc/detonate()
+	exploding = 1
 	if(adminlog)
 		message_admins(adminlog)
 		log_game(adminlog)
@@ -247,6 +251,7 @@
 	var/amt_summon = 1
 
 /obj/item/weapon/bombcore/badmin/summon/detonate()
+	exploding = 1
 	var/obj/machinery/syndicatebomb/B = src.loc
 	for(var/i = 0; i < amt_summon; i++)
 		var/atom/movable/X = new summon_path
@@ -272,6 +277,7 @@
 	var/Flames = 11
 
 /obj/item/weapon/bombcore/badmin/explosion/detonate()
+	exploding = 1
 	explosion(get_turf(src),HeavyExplosion,MediumExplosion,LightExplosion, flame_range = Flames)
 
 ///Syndicate Detonator (aka the big red button)///

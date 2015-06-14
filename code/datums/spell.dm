@@ -45,6 +45,7 @@ var/list/spells = typesof(/obj/effect/proc_holder/spell) //needed for the badmin
 	var/overlay_icon = 'icons/obj/wizard.dmi'
 	var/overlay_icon_state = "spell"
 	var/overlay_lifespan = 0
+	var/shadowling_req = 0 //If user needs to be a shadowling or thrall
 
 	var/sparks_spread = 0
 	var/sparks_amt = 0 //cropped at 10
@@ -93,6 +94,11 @@ var/list/spells = typesof(/obj/effect/proc_holder/spell) //needed for the badmin
 			user << "<span class='notice'>You can't get the words out!</span>"
 			return 0
 
+		if(shadowling_req)
+			if(!is_shadow_or_thrall(H))
+				user << "<span class='notice'>This spell can only be cast by shadowlings!</span>"
+				return 0
+
 		if(clothes_req) //clothes check
 			if(!istype(H.wear_suit, /obj/item/clothing/suit/wizrobe) && !istype(H.wear_suit, /obj/item/clothing/suit/space/hardsuit/wizard))
 				H << "<span class='notice'>I don't feel strong enough without my robe.</span>"
@@ -104,7 +110,7 @@ var/list/spells = typesof(/obj/effect/proc_holder/spell) //needed for the badmin
 				H << "<span class='notice'>I don't feel strong enough without my hat.</span>"
 				return 0
 	else
-		if(clothes_req || human_req)
+		if(clothes_req || human_req || shadowling_req)
 			user << "<span class='notice'>This spell can only be cast by humans!</span>"
 			return 0
 		if(nonabstract_req && (isbrain(user) || ispAI(user)))

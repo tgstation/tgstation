@@ -198,6 +198,26 @@
 	remove_objectives()
 	remove_antag_equip()
 
+/datum/mind/proc/remove_shadowling()
+	if(!ticker || !ticker.mode)
+		return
+	if(src in ticker.mode.shadows)
+		ticker.mode.shadows -= src
+		current.remove_shadowling_powers()
+	special_role = null
+	remove_objectives()
+	remove_antag_equip()
+
+/datum/mind/proc/remove_thrall()
+	if(!ticker || !ticker.mode)
+		return
+	if(src in ticker.mode.thralls)
+		ticker.mode.thralls -= src
+		current.remove_shadowling_powers()
+	special_role = null
+	remove_objectives()
+	remove_antag_equip()
+
 /datum/mind/proc/remove_antag_equip()
 	var/list/Mob_Contents = current.get_contents()
 	for(var/obj/item/I in Mob_Contents)
@@ -218,6 +238,8 @@
 	remove_rev()
 	remove_malf()
 	remove_gang()
+	remove_shadowling()
+	remove_thrall()
 
 /datum/mind/proc/show_memory(mob/recipient, window=1)
 	if(!recipient)

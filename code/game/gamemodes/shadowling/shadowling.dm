@@ -155,6 +155,11 @@ Made by Xhuis
 		return 1
 
 
+/mob/proc/remove_shadowling_powers()
+	for(var/obj/effect/proc_holder/spell/S in mind.spell_list)
+		if(S.shadowling_req)
+			mind.spell_list -= S
+
 
 /*
 	GAME FINISH CHECKS
