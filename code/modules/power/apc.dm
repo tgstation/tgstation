@@ -128,7 +128,7 @@
 	if (building==0)
 		init()
 	else
-		area = src.loc.loc:master
+		area = src.loc.loc
 		opened = 1
 		operating = 0
 		name = "[area.name] APC"

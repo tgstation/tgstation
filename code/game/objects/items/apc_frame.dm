@@ -28,7 +28,7 @@
 		usr << "<span class='danger'>APC cannot be placed in this area.</span>"
 		return
 	if (A.get_apc())
-		usr << "<span class='danger'>This area already has APC.</span>"
+		usr << "<span class='danger'>This area already has an APC.</span>"
 		return //only one APC per area
 	for(var/obj/machinery/power/terminal/T in loc)
 		if (T.master)

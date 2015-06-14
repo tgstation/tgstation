@@ -30,3 +30,4 @@
 #define LIGHT_COLOR_FLARE "#AA0033"
 #define LIGHT_COLOR_SLIME_LAMP "#333300"
 #define LIGHT_COLOR_BULB "#A0A080" //Colour of light bulbs and stuff like candles & mining lanterns.
+#define LIGHT_COLOR_TUNGSTEN "#FED892" //Colour of light bulbs and stuff like candles & mining lanterns. Based on values for a tungsten bulb

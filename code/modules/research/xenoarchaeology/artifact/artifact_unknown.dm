@@ -64,6 +64,7 @@ var/list/valid_secondary_effect_types = list(\
 	icon_state = "ano00"
 	var/icon_num = 0
 	density = 1
+	pressure_resistance = 50
 	var/datum/artifact_effect/my_effect
 	var/datum/artifact_effect/secondary_effect
 	var/being_used = 0

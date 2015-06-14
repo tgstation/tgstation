@@ -1,5 +1,6 @@
 /obj/structure
 	icon = 'icons/obj/structures.dmi'
+	pressure_resistance = 8
 
 /obj/structure/blob_act()
 	if(prob(50))

@@ -13,7 +13,7 @@
 	var/w_class = 3.0
 	var/slot_flags = 0		//This is used to determine on which slots an item can fit.
 	pass_flags = PASSTABLE
-	pressure_resistance = 5
+	pressure_resistance = 3
 	var/obj/item/master = null
 
 	var/heat_protection = 0 //flags which determine which body parts are protected from heat. Use the HEAD, CHEST, GROIN, etc. flags. See setup.dm

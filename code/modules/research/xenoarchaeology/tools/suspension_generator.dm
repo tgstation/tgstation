@@ -12,6 +12,7 @@
 	var/screwed = 1
 	var/field_type = ""
 	var/power_use = 25
+	pressure_resistance = 50
 	var/obj/effect/suspension_field/suspension_field
 	var/list/secured_mobs = list()
 
