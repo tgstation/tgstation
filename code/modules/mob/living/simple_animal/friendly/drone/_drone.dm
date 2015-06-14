@@ -52,6 +52,7 @@
 	var/obj/item/default_hatmask //If this exists, it will spawn in the hat/mask slot if it can fit
 	var/seeStatic = 1 //Whether we see static instead of mobs
 	var/visualAppearence = MAINTDRONE //What we appear as
+	var/emagged = 0
 
 
 /mob/living/simple_animal/drone/New()

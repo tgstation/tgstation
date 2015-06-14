@@ -200,7 +200,7 @@
 
 /obj/item/weapon/phone
 	name = "red phone"
-	desc = "Should anything ever go wrong..."
+	desc = "There's a number on the side of the phone, 8675-309. Below it, it says 'Should anything ever go wrong...'"
 	icon = 'icons/obj/items.dmi'
 	icon_state = "red_phone"
 	force = 3
@@ -210,6 +210,56 @@
 	w_class = 2
 	attack_verb = list("called", "rang")
 	hitsound = 'sound/weapons/ring.ogg'
+	var/being_used = 0
+
+/obj/item/weapon/phone/attack_self(mob/user)
+	if(being_used)
+		return
+	being_used = 1
+	var/input = stripped_input(user, "Please choose a message to transmit to Centcom via quantum entanglement.  Please be aware that this process is very expensive, and abuse will lead to... termination.  Transmission does not guarantee a response.", "Send a message to Centcomm.", "")
+	if(!input || !(user in view(1,src)))
+		return
+	user << "You dial the number on the side of the phone."
+	sleep(20)
+	user << "Ring..."
+	playsound(src, 'sound/weapons/ring.ogg', 40, 1)
+	sleep(20)
+	user << "Ring..."
+	playsound(src, 'sound/weapons/ring.ogg', 40, 1)
+	sleep(20)
+	user << "Ring..."
+	playsound(src, 'sound/weapons/ring.ogg', 40, 1)
+	sleep(20)
+	say("Nanotrasen Incorporated, this is [pick("Jenny", "John", "Debbie", "Debra", "Peggy")], how may we assist you today?")
+	sleep(20)
+	user.say("This is [user.name], the [user.job] of [station_name()]. I have a maximum priority message for Central Command. Please reroute me to them.")
+	sleep(20)
+	say("Please hold while we transfer your call.")
+	sleep(20)
+	user << "*click*"
+	sleep(20)
+	user << "Ring..."
+	playsound(src, 'sound/weapons/ring.ogg', 40, 1)
+	sleep(20)
+	user << "Ring..."
+	playsound(src, 'sound/weapons/ring.ogg', 40, 1)
+	sleep(20)
+	user << "Ring..."
+	playsound(src, 'sound/weapons/ring.ogg', 40, 1)
+	sleep(20)
+	say("Central Command Headquarters, this is [pick("Captain", "Ensign", "Lieutenant", "Commander", "Rear Admiral", "Vice Admiral", "Admiral", "Fleet Admiral")] [pick("Bob","Jebediah","Bill")] speaking. What is the situation?")
+	sleep(20)
+	user.say("This is [user.name], the [user.job] of [station_name()]. I have the following maximum priority message for Central Command.")
+	sleep(20)
+	user.say(input)
+	sleep(20)
+	say("Thank you, I will forward this to the CEO immediately.")
+	sleep(20)
+	user << "*click*"
+	playsound(src, 'sound/items/syringeproj.ogg', 40, 1) // needed a click sound
+	sleep(20)
+	user << "You hang up the phone."
+	Centcomm_announce(input, user)
 
 /obj/item/weapon/phone/suicide_act(mob/user)
 	if(locate(/obj/structure/stool) in user.loc)
