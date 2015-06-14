@@ -1164,6 +1164,9 @@ var/list/RESTRICTED_CAMERA_NETWORKS = list( //Those networks can only be accesse
 #define LIGHTING_LAMBERTIAN 1 // use lambertian shading for light sources
 #define LIGHTING_HEIGHT 1 // height off the ground of light sources on the pseudo-z-axis, you should probably leave this alone
 #define LIGHTING_TRANSITIONS 0 // smooth, animated transitions, similar to TG station
+#ifdef LIGHTING_TRANSITIONS
+#define LIGHTING_TRANSITION_SPEED (LIGHTING_INTERVAL - 2)
+#endif
 #define LIGHTING_ROUND_VALUE 1 / 128 //Value used to round lumcounts, values smaller than 1/255 don't matter (if they do, thanks sinking points), greater values will make lighting less precise, but in turn increase performance, VERY SLIGHTLY.
 
 #define LIGHTING_RESOLUTION 1 // resolution of the lighting overlays, powers of 2 only, max of 32
