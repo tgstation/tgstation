@@ -246,8 +246,14 @@
 /datum/spellbook_entry/item/scryingorb
 	name = "Scrying Orb"
 	desc = "An incandescent orb of crackling energy, using it will allow you to ghost while alive, allowing you to spy upon the station with ease. In addition, buying it will permanently grant you x-ray vision."
-	item_path = /obj/item/weapon/gun/magic/staff/chaos
+	item_path = /obj/item/weapon/scrying
 	log_name = "SO"
+
+/datum/spellbook_entry/item/bloodbottle
+	name = "Bottle of Blood"
+	desc = "A bottle of magically infused blood, the smell of which will attract extradimensional beings when broken. Be careful though, the kinds of creatures summoned by blood magic are indiscriminate in their killing, and you yourself may become a victim."
+	item_path = /obj/item/weapon/antag_spawner/slaughter_demon
+	log_name = "BB"
 
 /datum/spellbook_entry/item/scryingorb/Buy(var/mob/living/carbon/human/user,var/obj/item/weapon/spellbook/book)
 	if(..())
@@ -422,6 +428,11 @@
 			src.uses++
 			qdel(O)
 
+	if(istype(O, /obj/item/weapon/antag_spawner/slaughter_demon))
+		user << "<span class='notice'>On second thought, maybe summoning a demon is a bad idea. You refund your points.</span>"
+		src.uses++
+		qdel(O)
+
 /obj/item/weapon/spellbook/proc/GetCategoryHeader(var/category)
 	var/dat = ""
 	switch(category)
@@ -482,7 +493,7 @@
 
 	dat += "<li><a><b>Uses remaining : [uses]</b></a></li>"
 	dat += "</ul>"
-	
+
 	var/datum/spellbook_entry/E
 	for(var/i=1,i<=entries.len,i++)
 		var/spell_info = ""
