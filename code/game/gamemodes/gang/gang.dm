@@ -455,10 +455,10 @@
 		gangmode = ticker.mode
 
 	//Calculate and report influence growth
-	ticker.mode.message_gangtools(ticker.mode.A_tools,"<b>[gang_name("A")] Gang Status Report:</b>")
+	ticker.mode.message_gangtools(ticker.mode.A_tools,"*---------*<br><b>[gang_name("A")] Gang Status Report:</b>")
 	var/A_message = ""
 	if(gangmode && isnum(gangmode.A_timer))
-		var/new_time = min(180,gangmode.A_timer - (ticker.mode.A_territory.len * 2))
+		var/new_time = max(180,gangmode.A_timer - (ticker.mode.A_territory.len * 2))
 		if(new_time < gangmode.A_timer)
 			A_message += "Your takeover has been rushed by [gangmode.A_timer - new_time] seconds for holding on to [ticker.mode.A_territory.len] territories. "
 			gangmode.A_timer = new_time
@@ -475,7 +475,7 @@
 	ticker.mode.message_gangtools(ticker.mode.B_tools,"<b>[gang_name("B")] Gang Status Report:</b>")
 	var/B_message = ""
 	if(gangmode && isnum(gangmode.B_timer))
-		var/new_time = min(180,gangmode.B_timer - (ticker.mode.B_territory.len * 2))
+		var/new_time = max(180,gangmode.B_timer - (ticker.mode.B_territory.len * 2))
 		if(new_time < gangmode.B_timer)
 			B_message += "Your takeover has been rushed by [gangmode.B_timer - new_time] seconds for holding on to [ticker.mode.B_territory.len] territories. "
 			gangmode.B_timer = new_time
@@ -525,8 +525,8 @@
 
 	var/A_control = round((ticker.mode.A_territory.len/start_state.num_territories)*100, 1)
 	var/B_control = round((ticker.mode.B_territory.len/start_state.num_territories)*100, 1)
-	ticker.mode.message_gangtools((ticker.mode.A_tools),"Your gang now has <b>[A_control]% control</b> of the station.",0)
-	ticker.mode.message_gangtools((ticker.mode.B_tools),"Your gang now has <b>[B_control]% control</b> of the station.",0)
+	ticker.mode.message_gangtools((ticker.mode.A_tools),"Your gang now has <b>[A_control]% control</b> of the station.<BR>*---------*",0)
+	ticker.mode.message_gangtools((ticker.mode.B_tools),"Your gang now has <b>[B_control]% control</b> of the station.<BR>*---------*",0)
 
 	//Increase outfit stock
 	for(var/obj/item/device/gangtool/tool in (ticker.mode.A_tools | ticker.mode.B_tools))
