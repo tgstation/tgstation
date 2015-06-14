@@ -113,14 +113,14 @@
 			if(promotions >= 3)
 				dat += "(Out of stock) Promote a Gangster<br>"
 			else
-				dat += "([(promotions*20)+10] Influence, [3-promotions] left) "
-				if(points >= (promotions*20)+10)
+				dat += "([(promotions*10)+10] Influence, [3-promotions] left) "
+				if(points >= (promotions*10)+10)
 					dat += "<a href='?src=\ref[src];purchase=gangtool'>Promote a Gangster</a><br>"
 				else
 					dat += "Promote a Gangster<br>"
 		if(gangmode)
-			dat += "(50 Influence) "
-			if(points >= 50)
+			dat += "(30 Influence) "
+			if(points >= 30)
 				dat += "<a href='?src=\ref[src];purchase=dominator'><b>Station Dominator</b></a><br>"
 			else
 				dat += "Station Dominator<br>"
@@ -180,9 +180,9 @@
 					item_type = /obj/item/weapon/pen/gang
 					points = 30
 			if("gangtool")
-				if((promotions < 3) && (points >= (promotions*20)+10))
+				if((promotions < 3) && (points >= (promotions*10)+10))
 					item_type = /obj/item/device/gangtool/lt
-					points = (promotions*20)+10
+					points = (promotions*10)+10
 					promotions++
 			if("dominator")
 				if(istype(ticker.mode, /datum/game_mode/gang))
@@ -201,9 +201,9 @@
 							usr << "<span class='warning'>There's not enough room here!</span>"
 							return
 
-					if(points >= 50)
+					if(points >= 30)
 						item_type = /obj/machinery/dominator
-						points = 50
+						points = 30
 
 		if(item_type)
 			if(gang == "A")
