@@ -3,7 +3,6 @@
 	desc = ""
 	icon_state = "bee_1"
 	icon_living = "bee"
-	icon_dead = ""
 	speak_emote = list("buzzes")
 	emote_hear = list("buzzes")
 	turns_per_move = 0
@@ -13,24 +12,18 @@
 	response_help  = "shoos"
 	response_disarm = "swats away"
 	response_harm   = "squashes"
-	stop_automated_movement_when_pulled = 0
 	maxHealth = 10
 	health = 10
 	faction = list("hostile")
 	move_to_delay = 0
 	environment_smash = 0
 	mouse_opacity = 2
-	pass_flags = PASSTABLE
+	pass_flags = PASSTABLE | PASSGRILLE | PASSMOB
+	mob_size = MOB_SIZE_SMALL
+	flying = 1
 
 	//Spaceborn beings don't get hurt by space
-	min_oxy = 0
-	max_oxy = 0
-	min_tox = 0
-	max_tox = 0
-	min_co2 = 0
-	max_co2 = 0
-	min_n2 = 0
-	max_n2 = 0
+	atmos_requirements = list("min_oxy" = 0, "max_oxy" = 0, "min_tox" = 0, "max_tox" = 0, "min_co2" = 0, "max_co2" = 0, "min_n2" = 0, "max_n2" = 0)
 	minbodytemp = 0
 
 /mob/living/simple_animal/hostile/poison/bees/Process_Spacemove(var/movement_dir = 0)
@@ -40,8 +33,9 @@
 	..()
 	update_bees()
 
-/mob/living/simple_animal/hostile/poison/bees/Die()
-	..()
+/mob/living/simple_animal/hostile/poison/bees/death(gibbed)
+	..(1)
+	ghostize()
 	qdel(src)
 	return
 

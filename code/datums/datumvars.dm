@@ -184,6 +184,7 @@
 			OXY:<font size='1'><a href='?_src_=vars;mobToDamage=\ref[D];adjustDamage=oxygen'>[M.getOxyLoss()]</a>
 			CLONE:<font size='1'><a href='?_src_=vars;mobToDamage=\ref[D];adjustDamage=clone'>[M.getCloneLoss()]</a>
 			BRAIN:<font size='1'><a href='?_src_=vars;mobToDamage=\ref[D];adjustDamage=brain'>[M.getBrainLoss()]</a>
+			STAMINA:<font size='1'><a href='?_src_=vars;mobToDamage=\ref[D];adjustDamage=stamina'>[M.getStaminaLoss()]</a>
 			</font>
 
 
@@ -789,7 +790,7 @@ body
 
 			if(result)
 				var/newtype = species_list[result]
-				H.dna.species = new newtype()
+				hardset_dna(H, null, null, null, null, newtype)
 				H.regenerate_icons()
 
 		else if(href_list["adjustDamage"] && href_list["mobToDamage"])
@@ -813,6 +814,7 @@ body
 				if("oxygen")L.adjustOxyLoss(amount)
 				if("brain")	L.adjustBrainLoss(amount)
 				if("clone")	L.adjustCloneLoss(amount)
+				if("stamina") L.adjustStaminaLoss(amount)
 				else
 					usr << "You caused an error. DEBUG: Text:[Text] Mob:[L]"
 					return

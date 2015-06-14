@@ -61,11 +61,13 @@
 		src.updateDialog()
 
 /obj/machinery/computer/atmos_alert/update_icon()
+	SetLuminosity(brightness_on)
 	if(stat & BROKEN)
 		icon_state = "alert:b"
 		return
 	else if (stat & NOPOWER)
 		icon_state = "alert:O"
+		SetLuminosity(0)
 		return
 	else if(priority_alarms.len)
 		icon_state = "alert:2"

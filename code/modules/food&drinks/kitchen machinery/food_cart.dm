@@ -59,7 +59,7 @@
 /obj/machinery/food_cart/proc/isFull()
 	return food_stored >= STORAGE_CAPACITY
 
-/obj/machinery/food_cart/attackby(var/obj/item/O as obj, var/mob/user as mob)
+/obj/machinery/food_cart/attackby(var/obj/item/O as obj, var/mob/user as mob, params)
 	if(istype(O, /obj/item/weapon/reagent_containers/food/drinks/drinkingglass))
 		var/obj/item/weapon/reagent_containers/food/drinks/drinkingglass/DG = O
 		if(!DG.reagents.total_volume) //glass is empty

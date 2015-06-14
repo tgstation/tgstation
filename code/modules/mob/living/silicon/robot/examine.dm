@@ -27,6 +27,9 @@
 	else
 		msg += "Its cover is closed[locked ? "" : ", and looks unlocked"].\n"
 
+	if(cell && cell.charge <= 0)
+		msg += "<span class='warning'>Its battery indicator is blinking red!</span>\n"
+
 	switch(src.stat)
 		if(CONSCIOUS)
 			if(!src.client)	msg += "It appears to be in stand-by mode.\n" //afk

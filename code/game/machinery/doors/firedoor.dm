@@ -13,7 +13,7 @@
 	var/blocked = 0
 	var/nextstate = null
 	sub_door = 1
-
+	closingLayer = 3.11
 
 /obj/machinery/door/firedoor/Bumped(atom/AM)
 	if(p_open || operating)	return
@@ -30,7 +30,7 @@
 	return
 
 
-/obj/machinery/door/firedoor/attackby(obj/item/weapon/C as obj, mob/user as mob)
+/obj/machinery/door/firedoor/attackby(obj/item/weapon/C as obj, mob/user as mob, params)
 	add_fingerprint(user)
 	if(operating)	return//Already doing something.
 	if(istype(C, /obj/item/weapon/weldingtool))

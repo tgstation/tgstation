@@ -122,11 +122,11 @@ var/list/diseases = typesof(/datum/disease) - /datum/disease
 	if(isturf(source.loc))
 		for(var/mob/living/carbon/C in oview(spread_range, source))
 			if(isturf(C.loc))
-				if(AStar(source.loc, C.loc, /turf/proc/AdjacentTurfs, /turf/proc/Distance, spread_range))
+				if(AStar(source.loc, C.loc, null, /turf/proc/Distance, spread_range))
 					C.ContractDisease(src)
 
 
-/datum/disease/proc/process()
+/datum/disease/process()
 	if(!holder)
 		SSdisease.processing -= src
 		return
@@ -179,7 +179,9 @@ var/list/diseases = typesof(/datum/disease) - /datum/disease
 
 
 /datum/disease/proc/Copy()
-	return new type()
+	var/datum/disease/D = new type()
+	D.strain_data = strain_data.Copy()
+	return D
 
 
 /datum/disease/proc/GetDiseaseID()

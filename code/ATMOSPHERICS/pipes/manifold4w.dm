@@ -28,7 +28,7 @@
 /obj/machinery/atmospherics/pipe/manifold4w/SetInitDirections()
 	return
 
-/obj/machinery/atmospherics/pipe/manifold4w/initialize()
+/obj/machinery/atmospherics/pipe/manifold4w/atmosinit()
 	for(var/D in cardinal)
 		for(var/obj/machinery/atmospherics/target in get_step(src, D))
 			if(target.initialize_directions & get_dir(target,src))
@@ -45,6 +45,7 @@
 	var/turf/T = src.loc			// hide if turf is not intact
 	hide(T.intact)
 	update_icon()
+	..()
 
 /obj/machinery/atmospherics/pipe/manifold4w/hide(var/i)
 	if(level == 1 && istype(loc, /turf/simulated))

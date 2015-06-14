@@ -37,12 +37,12 @@
 	return t
 
 //Removes a few problematic characters
-/proc/sanitize_simple(var/t,var/list/repl_chars = list("\n"="#","\t"="#","�"="�"))
+/proc/sanitize_simple(var/t,var/list/repl_chars = list("\n"="#","\t"="#"))
 	for(var/char in repl_chars)
 		var/index = findtext(t, char)
 		while(index)
 			t = copytext(t, 1, index) + repl_chars[char] + copytext(t, index+1)
-			index = findtext(t, char)
+			index = findtext(t, char, index+1)
 	return t
 
 //Runs byond's sanitization proc along-side sanitize_simple
@@ -76,12 +76,12 @@
 // Used to get a properly sanitized input, of max_length
 /proc/stripped_input(var/mob/user, var/message = "", var/title = "", var/default = "", var/max_length=MAX_MESSAGE_LEN)
 	var/name = input(user, message, title, default) as text|null
-	return strip_html_properly(name, max_length)
+	return html_encode(trim(name, max_length)) //trim is "inside" because html_encode can expand single symbols into multiple symbols (such as turning < into &lt;)
 
 // Used to get a properly sanitized multiline input, of max_length
 /proc/stripped_multiline_input(var/mob/user, var/message = "", var/title = "", var/default = "", var/max_length=MAX_MESSAGE_LEN)
 	var/name = input(user, message, title, default) as message|null
-	return strip_html_properly(name, max_length)
+	return html_encode(trim(name, max_length))
 
 //Filters out undesirable characters from names
 /proc/reject_bad_name(var/t_in, var/allow_numbers=0, var/max_length=MAX_NAME_LEN)
@@ -147,32 +147,14 @@
 
 	return t_out
 
-//this proc strips html properly, but it's not lazy like the other procs.
-//this means that it doesn't just remove < and > and call it a day. seriously, who the fuck thought that would be useful.
-//also limit the size of the input, if specified to
-/proc/strip_html_properly(var/input,var/max_length=MAX_MESSAGE_LEN)
-	if(!input)
-		return
-	var/opentag = 1 //These store the position of < and > respectively.
-	var/closetag = 1
-	while(1)
-		opentag = findtext(input, "<")
-		closetag = findtext(input, ">")
-		if(closetag && opentag)
-			if(closetag < opentag)
-				input = copytext(input, (closetag + 1))
-			else
-				input = copytext(input, 1, opentag) + copytext(input, (closetag + 1))
-		else if(closetag || opentag)
-			if(opentag)
-				input = copytext(input, 1, opentag)
-			else
-				input = copytext(input, (closetag + 1))
-		else
-			break
-	if(max_length)
-		input = copytext(input,1,max_length)
-	return input
+//html_encode helper proc that returns the smallest non null of two numbers
+//or 0 if they're both null (needed because of findtext returning 0 when a value is not present)
+/proc/non_zero_min(var/a, var/b)
+	if(!a)
+		return b
+	if(!b)
+		return a
+	return (a < b ? a : b)
 
 /*
  * Text searches

@@ -287,6 +287,7 @@
 	name = "Mentoring your Experiments"
 	icon_state = "rdbook"
 	author = "Dr. H.P. Kritz"
+	title = "Mentoring your Experiments"
 	dat = {"<html>
 		<head>
 		<style>
@@ -677,33 +678,60 @@
 				<h1>Food for Dummies</h1>
 				Here is a guide on basic food recipes and also how to not poison your customers accidentally.
 
-				<h2>Burger:<h2>
-				Put 1 meat and 1 flour into the microwave and turn it on. Then wait.
 
-				<h2>Bread:<h2>
-				Put 3 flour into the microwave and then wait.
+				<h2>Basic ingredients preparation:</h2>
 
-				<h2>Waffles:<h2>
-				Add 2 flour and 2 egg to the microwave and then wait.
+				<b>Dough:</b> 10u water + 15u flour for simple dough.<br>
+				15u egg yolk + 15u flour + 5u sugar for cake batter.<br>
+				Doughs can be transformed by using a knife and rolling pin.<br>
+				All doughs can be microwaved.<br>
+				<b>Bowl:</b> Add water to it for soup preparation.<br>
+				<b>Meat:</b> Microwave it, process it, slice it into microwavable cutlets with your knife, or use it raw.<br>
+				<b>Cheese:</b> Add 5u universal enzyme (catalyst) to milk and soy milk to prepare cheese (sliceable) and tofu.<br>
+				<b>Rice:</b> Mix 10u rice with 10u water in a bowl then microwave it.
 
-				<h2>Popcorn:<h2>
-				Add 1 corn to the microwave and wait.
+				<h2>Custom food:</h2>
+				Add ingredients to a base item to prepare a custom meal.<br>
+				The bases are:<br>
+				- bun (burger)<br>
+				- breadslices(sandwich)<br>
+				- plain bread<br>
+				- plain pie<br>
+				- vanilla cake<br>
+				- empty bowl (salad)<br>
+				- bowl with 10u water (soup)<br>
+				- boiled spaghetti<br>
+				- pizza bread<br>
+				- metal rod (kebab)
 
-				<h2>Meat Steak:<h2>
-				Put 1 meat, 1 unit of salt and 1 unit of pepper into the microwave and wait.
+				<h2>Table Craft:</h2>
+				Put ingredients on table, then click and drag the table onto yourself to see what recipes you can prepare.
 
-				<h2>Meat Pie:<h2>
-				Put 1 meat and 2 flour into the microwave and wait.
+				<h2>Microwave:</h2>
+				Use it to cook or boil food ingredients (meats, doughs, egg, spaghetti, donkpocket, etc...).
+				It can cook multiple items at once. Use the higher power settings for faster (and riskier) cooking.
 
-				<h2>Boiled Spagetti:<h2>
-				Put 1 spagetti and 5 units of water into the microwave and wait.
+				<h2>Processor:</h2>
+				Use it to process certain ingredients (meat into faggot, doughslice into spaghetti, potato into fries,etc...)
 
-				<h2>Donuts:<h2>
-				Add 1 egg and 1 flour to the microwave and wait.
+				<h2>Gibber:</h2>
+				Stuff an animal in it to grind it into meat.
 
-				<h2>Fries:<h2>
-				Add one potato to the processor and wait.
+				<h2>Meat spike:</h2>
+				Stick an animal on it then begin collecting its meat.
 
+
+				<h2>Example recipes:</h2>
+				<b>Vanilla Cake</b>: Microwave cake batter.<br>
+				<b>Burger:</b> 1 bun + 1 meat steak<br>
+				<b>Bread:</b> Microwave dough.<br>
+				<b>Waffles:</b> 2 pastry base<br>
+				<b>Popcorn:</b> Microwave corn.<br>
+				<b>Meat Steak:</b> Microwave meat.<br>
+				<b>Meat Pie:</b> 1 plain pie + 1u black pepper + 1u salt + 2 meat cutlets<br>
+				<b>Boiled Spagetti:</b> Microwave spaghetti.<br>
+				<b>Donuts:</b> 1u sugar + 1 pastry base<br>
+				<b>Fries:</b> Process potato.
 
 				</body>
 				</html>

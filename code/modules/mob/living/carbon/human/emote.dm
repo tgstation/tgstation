@@ -82,6 +82,9 @@
 			else if(copytext(input,1,9) == "exclaims")
 				src << "<span class='danger'>Invalid emote.</span>"
 				return
+			else if(copytext(input,1,6) == "yells")
+				src << "<span class='danger'>Invalid emote.</span>"
+				return
 			else if(copytext(input,1,5) == "asks")
 				src << "<span class='danger'>Invalid emote.</span>"
 				return
@@ -203,6 +206,9 @@
 			else if(copytext(message,1,9) == "exclaims")
 				src << "<span class='danger'>Invalid emote.</span>"
 				return
+			else if(copytext(message,1,6) == "yells")
+				src << "<span class='danger'>Invalid emote.</span>"
+				return
 			else if(copytext(message,1,5) == "asks")
 				src << "<span class='danger'>Invalid emote.</span>"
 				return
@@ -302,8 +308,18 @@
 				message = "<B>[src]</B> yawns."
 				m_type = 2
 
+		if("wag")
+			if(dna && dna.species && ("tail" in dna.species.mutant_bodyparts))
+				message = "<B>[src]</B> wags \his tail."
+				startTailWag()
+
+		if("stopwag")
+			if(dna && dna.species && ("waggingtail" in dna.species.mutant_bodyparts))
+				message = "<B>[src]</B> stops wagging \his tail."
+				endTailWag()
+
 		if ("help") //This can stay at the bottom.
-			src << "Help for human emotes. You can use these emotes with say \"*emote\":\n\naflap, airguitar, blink, blink_r, blush, bow-(none)/mob, burp, choke, chuckle, clap, collapse, cough, cry, custom, dance, dap, deathgasp, drool, eyebrow, faint, flap, frown, gasp, giggle, glare-(none)/mob, grin, groan, grumble, handshake, hug-(none)/mob, jump, laugh, look-(none)/mob, me, moan, mumble, nod, pale, point-(atom), raise, salute, scream, shake, shiver, shrug, sigh, signal-#1-10, sit, smile, sneeze, sniff, snore, stare-(none)/mob, sulk, sway, tremble, twitch, twitch_s, wave, whimper, wink, yawn"
+			src << "Help for human emotes. You can use these emotes with say \"*emote\":\n\naflap, airguitar, blink, blink_r, blush, bow-(none)/mob, burp, choke, chuckle, clap, collapse, cough, cry, custom, dance, dap, deathgasp, drool, eyebrow, faint, flap, frown, gasp, giggle, glare-(none)/mob, grin, groan, grumble, handshake, hug-(none)/mob, jump, laugh, look-(none)/mob, me, moan, mumble, nod, pale, point-(atom), raise, salute, scream, shake, shiver, shrug, sigh, signal-#1-10, sit, smile, sneeze, sniff, snore, stare-(none)/mob, sulk, sway, stopwag, tremble, twitch, twitch_s, wave, whimper, wink, wag, yawn"
 
 		else
 			..(act)
@@ -322,7 +338,7 @@
 		for(var/mob/M in dead_mob_list)
 			if(!M.client || istype(M, /mob/new_player))
 				continue //skip monkeys, leavers and new players
-			if(M.stat == DEAD && (M.client.prefs.toggles & CHAT_GHOSTSIGHT) && !(M in viewers(src,null)))
+			if(M.stat == DEAD && M.client && (M.client.prefs.chat_toggles & CHAT_GHOSTSIGHT) && !(M in viewers(src,null)))
 				M.show_message(message)
 
 
@@ -331,3 +347,22 @@
 		else if (m_type & 2)
 			audible_message(message)
 
+
+
+//Don't know where else to put this, it's basically an emote
+/mob/living/carbon/human/proc/startTailWag()
+	if(!dna || !dna.species)
+		return
+	if("tail" in dna.species.mutant_bodyparts)
+		dna.species.mutant_bodyparts -= "tail"
+		dna.species.mutant_bodyparts |= "waggingtail"
+	update_body()
+
+
+/mob/living/carbon/human/proc/endTailWag()
+	if(!dna || !dna.species)
+		return
+	if("waggingtail" in dna.species.mutant_bodyparts)
+		dna.species.mutant_bodyparts -= "waggingtail"
+		dna.species.mutant_bodyparts |= "tail"
+	update_body()

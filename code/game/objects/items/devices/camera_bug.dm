@@ -49,7 +49,8 @@
 		qdel(expansion)
 		expansion = null
 	del(src)
-/* Easier to just call del() than this nonsense
+//Easier to just call del() than this nonsense
+// ya no, del() takes 0.8ds to run on avg. this takes less than 0.01
 	get_cameras()
 	for(var/cam_tag in bugged_cameras)
 		var/obj/machinery/camera/camera = bugged_cameras[cam_tag]
@@ -59,7 +60,7 @@
 	if(tracking)
 		tracking = null
 	..()
-*/
+
 
 /obj/item/device/camera_bug/interact(var/mob/user = usr)
 	var/datum/browser/popup = new(user, "camerabug","Camera Bug",nref=src)
@@ -249,11 +250,11 @@
 		var/obj/machinery/camera/C = locate(href_list["view"])
 		if(istype(C))
 			if(!C.can_use())
-				usr << "<span class='danger'>Something's wrong with that camera.  You can't get a feed.</span>"
+				usr << "<span class='warning'>Something's wrong with that camera!  You can't get a feed.</span>"
 				return
 			var/turf/T = get_turf(loc)
 			if(!T || C.z != T.z)
-				usr << "<span class='danger'>You can't get a signal.</span>"
+				usr << "<span class='warning'>You can't get a signal!</span>"
 				return
 			current = C
 			spawn(6)
@@ -308,10 +309,10 @@
 				break
 	src.updateSelfDialog()
 
-/obj/item/device/camera_bug/attackby(var/obj/item/W as obj,var/mob/living/user as mob)
+/obj/item/device/camera_bug/attackby(var/obj/item/W as obj,var/mob/living/user as mob, params)
 	if(istype(W,/obj/item/weapon/screwdriver) && expansion)
 		expansion.loc = get_turf(loc)
-		user << "You unscrew [expansion]."
+		user << "<span class='notice'>You unscrew [expansion].</span>"
 		user.put_in_inactive_hand(expansion)
 		expansion = null
 		bugtype = VANILLA_BUG
@@ -352,7 +353,7 @@
 			user.drop_item()
 			W.loc = src
 			expansion = W
-			user << "You add [W] to [src]."
+			user << "<span class='notice'>You add [W] to [src].</span>"
 			get_cameras() // the tracking code will want to know the new camera list
 			if(bugtype in list(UNIVERSAL_BUG,NETWORK_BUG,ADMIN_BUG))
 				skip_bugcheck = 1

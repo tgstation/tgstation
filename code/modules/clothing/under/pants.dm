@@ -1,7 +1,7 @@
 /obj/item/clothing/under/pants
 	gender = PLURAL
 	body_parts_covered = GROIN|LEGS
-	fitted = 0
+	fitted = NO_FEMALE_UNIFORM
 	can_adjust = 0
 
 /obj/item/clothing/under/pants/classicjeans

@@ -1,22 +1,12 @@
-/mob/living/carbon/human/say_quote(text)
-	if(!text)
-		return "says, \"...\"";	//not the best solution, but it will stop a large number of runtimes. The cause is somewhere in the Tcomms code
-	var/ending = copytext(text, length(text))
-	if (src.stuttering)
-		return "stammers, \"[text]\"";
-	if(isliving(src))
-		var/mob/living/L = src
-		if (L.getBrainLoss() >= 60)
-			return "gibbers, \"[text]\"";
-	if (ending == "?")
-		return "asks, \"[text]\"";
-	if (ending == "!")
-		return "exclaims, \"[text]\"";
+/mob/living/carbon/human/say_quote(input, spans)
+	if(!input)
+		return "says, \"...\""	//not the best solution, but it will stop a large number of runtimes. The cause is somewhere in the Tcomms code
+	verb_say = dna.species.say_mod
+	if(src.slurring)
+		input = attach_spans(input, spans)
+		return "slurs, \"[input]\""
 
-	if(dna)
-		return "[dna.species.say_mod], \"[text]\"";
-
-	return "says, \"[text]\"";
+	return ..()
 
 /mob/living/carbon/human/treat_message(message)
 	if(dna)
@@ -38,6 +28,9 @@
 	if(dna)
 		message = dna.mutations_say_mods(message)
 	return message
+
+/mob/living/carbon/human/get_spans()
+	return ..() | dna.mutations_get_spans()
 
 /mob/living/carbon/human/GetVoice()
 	if(istype(wear_mask, /obj/item/clothing/mask/gas/voice))
@@ -79,7 +72,7 @@
 		if(!istype(dongle)) return 0
 		if(dongle.translate_binary) return 1
 
-/mob/living/carbon/human/radio(message, message_mode)
+/mob/living/carbon/human/radio(message, message_mode, list/spans)
 	. = ..()
 	if(. != 0)
 		return .
@@ -87,22 +80,22 @@
 	switch(message_mode)
 		if(MODE_HEADSET)
 			if (ears)
-				ears.talk_into(src, message)
+				ears.talk_into(src, message, , spans)
 			return ITALICS | REDUCE_RANGE
 
 		if(MODE_SECURE_HEADSET)
 			if (ears)
-				ears.talk_into(src, message, 1)
+				ears.talk_into(src, message, 1, spans)
 			return ITALICS | REDUCE_RANGE
 
 		if(MODE_DEPARTMENT)
 			if (ears)
-				ears.talk_into(src, message, message_mode)
+				ears.talk_into(src, message, message_mode, spans)
 			return ITALICS | REDUCE_RANGE
 
 	if(message_mode in radiochannels)
 		if(ears)
-			ears.talk_into(src, message, message_mode)
+			ears.talk_into(src, message, message_mode, spans)
 			return ITALICS | REDUCE_RANGE
 
 	return 0

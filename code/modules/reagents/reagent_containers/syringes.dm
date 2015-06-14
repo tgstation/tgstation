@@ -43,7 +43,7 @@
 /obj/item/weapon/reagent_containers/syringe/attack_paw()
 	return attack_hand()
 
-/obj/item/weapon/reagent_containers/syringe/attackby(obj/item/I, mob/user)
+/obj/item/weapon/reagent_containers/syringe/attackby(obj/item/I, mob/user, params)
 	return
 
 /obj/item/weapon/reagent_containers/syringe/afterattack(obj/target, mob/user , proximity)
@@ -68,21 +68,20 @@
 				if(ishuman(target))
 					var/mob/living/carbon/human/H = target
 					if(H.dna)
-						if(NOBLOOD in H.dna.species.specflags)
-							user << "<span class='notice'>You are unable to locate any blood.</span>"
+						if(NOBLOOD in H.dna.species.specflags && !H.dna.species.exotic_blood)
+							user << "<span class='warning'>You are unable to locate any blood!</span>"
 							return
 				if(reagents.has_reagent("blood"))
-					user << "<span class='notice'>There is already a blood sample in this syringe.</span>"
+					user << "<span class='warning'>There is already a blood sample in this syringe!</span>"
 					return
 				if(istype(target, /mob/living/carbon))	//maybe just add a blood reagent to all mobs. Then you can suck them dry...With hundreds of syringes. Jolly good idea.
 					var/amount = src.reagents.maximum_volume - src.reagents.total_volume
 					var/mob/living/carbon/T = target
-					var/datum/reagent/B = new /datum/reagent/blood
 					if(!check_dna_integrity(T))
-						user << "<span class='notice'>You are unable to locate any blood.</span>"
+						user << "<span class='warning'>You are unable to locate any blood!</span>"
 						return
-					if(NOCLONE in T.mutations)	//target done been et, no more blood in him
-						user << "<span class='notice'>You are unable to locate any blood.</span>"
+					if(NOCLONE in T.mutations)	//target done been eat, no more blood in him
+						user << "<span class='warning'>You are unable to locate any blood!</span>"
 						return
 					if(target != user)
 						target.visible_message("<span class='danger'>[user] is trying to take a blood sample from [target]!</span>", \
@@ -92,55 +91,30 @@
 							busy = 0
 							return
 					busy = 0
-					B.holder = src
-					B.volume = amount
-					//set reagent data
-					B.data["donor"] = T
+					var/datum/reagent/B
+					B = T.take_blood(src,amount)
 
-					/*
-					if(T.virus && T.virus.spread_type != SPECIAL)
-						B.data["virus"] = new T.virus.type(0)
-					*/
-
-					for(var/datum/disease/D in T.viruses)
-						if(!B.data["viruses"])
-							B.data["viruses"] = list()
-
-						B.data["viruses"] += new D.type(0, D, 1)
-
-					B.data["blood_DNA"] = copytext(T.dna.unique_enzymes,1,0)
-					if(T.resistances&&T.resistances.len)
-						B.data["resistances"] = T.resistances.Copy()
-					if(istype(target, /mob/living/carbon/human))//I wish there was some hasproperty operation...
-						var/mob/living/carbon/human/HT = target
-						B.data["blood_type"] = copytext(HT.dna.blood_type,1,0)
-					var/list/temp_chem = list()
-					for(var/datum/reagent/R in target.reagents.reagent_list)
-						temp_chem += R.name
-						temp_chem[R.name] = R.volume
-					B.data["trace_chem"] = list2params(temp_chem)
-					if(T.mind)
-						B.data["mind"] = T.mind
-					if(T.ckey)
-						B.data["ckey"] = T.ckey
-					if(!T.suiciding)
-						B.data["cloneable"] = 1
-					B.data["gender"] = T.gender
-					B.data["real_name"] = T.real_name
-					B.data["factions"] = T.faction
-					reagents.reagent_list += B
-					reagents.update_total()
-					on_reagent_change()
-					reagents.handle_reactions()
-					user.visible_message("<span class='notice'>[user] takes a blood sample from [target].</span>")
+					if(!B && ishuman(target))
+						var/mob/living/carbon/human/H = target
+						if(H.dna && H.dna.species.exotic_blood && H.reagents.total_volume)
+							target.reagents.trans_to(src, amount)
+						else
+							user << "<span class='warning'>You are unable to locate any blood!</span>"
+							return
+					if (B)
+						src.reagents.reagent_list += B
+						src.reagents.update_total()
+						src.on_reagent_change()
+						src.reagents.handle_reactions()
+					user.visible_message("[user] takes a blood sample from [target].")
 
 			else //if not mob
 				if(!target.reagents.total_volume)
-					user << "<span class='notice'>[target] is empty.</span>"
+					user << "<span class='warning'>[target] is empty!</span>"
 					return
 
 				if(!target.is_open_container() && !istype(target,/obj/structure/reagent_dispensers) && !istype(target,/obj/item/slime_extract))
-					user << "<span class='notice'>You cannot directly remove reagents from [target].</span>"
+					user << "<span class='warning'>You cannot directly remove reagents from [target]!</span>"
 					return
 
 				var/trans = target.reagents.trans_to(src, amount_per_transfer_from_this) // transfer from, transfer to - who cares?
@@ -158,7 +132,7 @@
 				return
 
 			if(!target.is_open_container() && !ismob(target) && !istype(target, /obj/item/weapon/reagent_containers/food) && !istype(target, /obj/item/slime_extract) && !istype(target, /obj/item/clothing/mask/cigarette) && !istype(target, /obj/item/weapon/storage/fancy/cigarettes))
-				user << "<span class='notice'>You cannot directly fill [target].</span>"
+				user << "<span class='warning'>You cannot directly fill [target]!</span>"
 				return
 			if(target.reagents.total_volume >= target.reagents.maximum_volume)
 				user << "<span class='notice'>[target] is full.</span>"
@@ -190,10 +164,17 @@
 
 				reagents.reaction(target, INGEST)
 			spawn(5)
-				target.add_fingerprint(user)
-				var/trans = src.reagents.trans_to(target, amount_per_transfer_from_this)
-				user << "<span class='notice'>You inject [trans] unit\s of the solution. [src] now contains [reagents.total_volume] unit\s.</span>"
-				if(reagents.total_volume <= 0 && mode == SYRINGE_INJECT)
+				var/datum/reagent/blood/B
+				for(var/datum/reagent/blood/d in src.reagents.reagent_list)
+					B = d
+					break
+				if(B && istype(target,/mob/living/carbon))
+					var/mob/living/carbon/C = target
+					C.inject_blood(src,5)
+				else
+					src.reagents.trans_to(target, amount_per_transfer_from_this)
+				user << "<span class='notice'>You inject 5 units of the solution. The syringe now contains [src.reagents.total_volume] units.</span>"
+				if (reagents.total_volume <= 0 && mode==SYRINGE_INJECT)
 					mode = SYRINGE_DRAW
 					update_icon()
 

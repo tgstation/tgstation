@@ -34,7 +34,7 @@
 	min_temperature = T0C - (170 + (T*15))
 	current_heat_capacity = 1000 * ((H - 1) ** 2)
 
-/obj/machinery/atmospherics/unary/cold_sink/freezer/attackby(obj/item/I, mob/user)
+/obj/machinery/atmospherics/unary/cold_sink/freezer/attackby(obj/item/I, mob/user, params)
 	if(default_deconstruction_screwdriver(user, "freezer-o", "freezer", I))
 		on = 0
 		update_icon()
@@ -113,6 +113,7 @@
 	..()
 	src.updateUsrDialog()
 
+
 /obj/machinery/atmospherics/unary/cold_sink/freezer/power_change()
 	..()
 	if(stat & NOPOWER)
@@ -159,7 +160,7 @@
 	max_temperature = T20C + (140 * T)
 	current_heat_capacity = 1000 * ((H - 1) ** 2)
 
-/obj/machinery/atmospherics/unary/heat_reservoir/heater/attackby(obj/item/I, mob/user)
+/obj/machinery/atmospherics/unary/heat_reservoir/heater/attackby(obj/item/I, mob/user, params)
 	if(default_deconstruction_screwdriver(user, "heater-o", "heater", I))
 		on = 0
 		update_icon()

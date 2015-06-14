@@ -37,26 +37,26 @@
 		icon_state = "[base_state]1-p"
 
 //Don't want to render prison breaks impossible
-/obj/machinery/flasher/attackby(obj/item/weapon/W, mob/user)
+/obj/machinery/flasher/attackby(obj/item/weapon/W, mob/user, params)
 	if (istype(W, /obj/item/weapon/wirecutters))
 		if (bulb)
-			user.visible_message("<span class='warning'>[user] begins to disconnect [src]'s flashbulb.</span>", "<span class='warning'>You begin to disconnect [src]'s flashbulb.</span>")
+			user.visible_message("[user] begins to disconnect [src]'s flashbulb.", "<span class='notice'>You begin to disconnect [src]'s flashbulb...</span>")
 			playsound(src.loc, 'sound/items/Wirecutter.ogg', 100, 1)
 			if(do_after(user, 30) && bulb)
-				user.visible_message("<span class='warning'>[user] has disconnected [src]'s flashbulb!</span>", "<span class='notice'>You disconnect [src]'s flashbulb!</span>")
+				user.visible_message("[user] has disconnected [src]'s flashbulb!", "<span class='notice'>You disconnect [src]'s flashbulb.</span>")
 				bulb.loc = src.loc
 				bulb = null
 				power_change()
 
 	else if (istype(W, /obj/item/device/flash/handheld))
 		if (!bulb)
-			user.visible_message("<span class='notice'>[user] installs [W] into [src].</span>", "<span class='notice'>You install [W] into [src].</span>")
+			user.visible_message("[user] installs [W] into [src].", "<span class='notice'>You install [W] into [src].</span>")
 			user.drop_item()
 			W.loc = src
 			bulb = W
 			power_change()
 		else
-			user << "<span class='notice'>A flashbulb is already installed in [src].</span>"
+			user << "<span class='warning'>A flashbulb is already installed in [src]!</span>"
 	add_fingerprint(user)
 
 //Let the AI trigger them directly.
@@ -78,26 +78,16 @@
 	last_flash = world.time
 	use_power(1000)
 
-	for (var/mob/O in viewers(src, null))
-		if (get_dist(src, O) > src.range)
+	for (var/mob/living/L in viewers(src, null))
+		if (get_dist(src, L) > range)
 			continue
 
-		if (istype(O, /mob/living/carbon/human))
-			var/mob/living/carbon/human/H = O
-			if(!H.eyecheck() <= 0)
-				continue
+		if(L.flash_eyes())
+			L.Weaken(strength)
+			if(L.weakeyes)
+				L.Weaken(strength * 1.5)
+				L.visible_message("<span class='disarm'><b>[L]</b> gasps and shields their eyes!</span>")
 
-		if (istype(O, /mob/living/carbon/alien))//So aliens don't get flashed (they have no external eyes)/N
-			continue
-
-		O.Weaken(strength)
-		if ((O.eye_stat > 15 && prob(O.eye_stat + 50)))
-			flick("e_flash", O:flash)
-			O.eye_stat += rand(1, 2)
-		else
-			if(!O.eye_blind)
-				flick("flash", O:flash)
-				O.eye_stat += rand(0, 2)
 	return 1
 
 
@@ -127,7 +117,7 @@
 		bulb.burn_out()
 		power_change()
 
-/obj/machinery/flasher/portable/attackby(obj/item/weapon/W, mob/user)
+/obj/machinery/flasher/portable/attackby(obj/item/weapon/W, mob/user, params)
 	if (istype(W, /obj/item/weapon/wrench))
 		playsound(src.loc, 'sound/items/Ratchet.ogg', 100, 1)
 
@@ -151,7 +141,7 @@
 /obj/machinery/flasher_button/attack_paw(mob/user)
 	return attack_hand(user)
 
-/obj/machinery/flasher_button/attackby(obj/item/weapon/W, mob/user)
+/obj/machinery/flasher_button/attackby(obj/item/weapon/W, mob/user, params)
 	return attack_hand(user)
 
 /obj/machinery/flasher_button/attack_hand(mob/user)

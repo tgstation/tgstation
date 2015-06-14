@@ -56,18 +56,20 @@
 
 //flags for species
 
-#define MUTCOLORS	1
-#define HAIR		2
-#define FACEHAIR	4
-#define EYECOLOR	8
-#define LIPS		16
-#define COLDRES		32
-#define HEATRES		64
-#define RADIMMUNE	128
-#define NOBREATH	256
-#define NOGUNS		512
-#define NOBLOOD		1024
-#define NOFIRE		2048
+#define MUTCOLORS		1
+#define HAIR			2
+#define FACEHAIR		4
+#define EYECOLOR		8
+#define LIPS			16
+#define COLDRES			32
+#define HEATRES			64
+#define RADIMMUNE		128
+#define NOBREATH		256
+#define NOGUNS			512
+#define NOBLOOD			1024
+#define NOFIRE			2048
+#define VIRUSIMMUNE		4096
+#define PIERCEIMMUNE	8192
 
 /*
 	These defines are used specifically with the atom/movable/languages bitmask.

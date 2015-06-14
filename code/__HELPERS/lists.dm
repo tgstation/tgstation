@@ -185,18 +185,16 @@
 		return
 	L = L.Copy()
 
-	for(var/i=1, i<=L.len, ++i)
-		L.Swap(i,rand(1,L.len))
+	for(var/i=1, i<L.len, ++i)
+		L.Swap(i,rand(i,L.len))
 
 	return L
 
 //Return a list with no duplicate entries
-/proc/uniquelist(var/list/L)
-	var/list/K = list()
-	for(var/item in L)
-		if(!(item in K))
-			K += item
-	return K
+/proc/uniqueList(var/list/L)
+	. = list()
+	for(var/i in L)
+		. |= i
 
 //for sorting clients or mobs by ckey
 /proc/sortKey(list/L, order=1)

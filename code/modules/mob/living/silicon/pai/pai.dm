@@ -3,7 +3,7 @@
 	icon = 'icons/obj/status_display.dmi' //invisibility!
 	mouse_opacity = 0
 	density = 0
-	mob_size = 0
+	mob_size = MOB_SIZE_TINY
 
 	var/network = "SS13"
 	var/obj/machinery/camera/current = null
@@ -15,6 +15,7 @@
 
 	var/speakStatement = "states"
 	var/speakExclamation = "declares"
+	var/speakDoubleExclamation = "alarms"
 	var/speakQuery = "queries"
 
 	var/obj/item/weapon/pai_cable/cable		// The cable we produce and use when door or camera jacking
@@ -107,7 +108,7 @@
 		// 33% chance of no additional effect
 
 	if(prob(20))
-		visible_message("<span class='danger'>A shower of sparks spray from [src]'s inner workings.</span>", 3, "<span class='danger'>You hear and smell the ozone hiss of electrical sparks being expelled violently.</span>", 2)
+		visible_message("<span class='warning'>A shower of sparks spray from [src]'s inner workings.</span>", 3, "<span class='italics'>You hear and smell the ozone hiss of electrical sparks being expelled violently.</span>", 2)
 		return src.death(0)
 
 	silence_time = world.timeofday + 120 * 10		// Silence for 2 minutes
@@ -162,9 +163,9 @@
 
 	// ok, we're alive, camera is good and in our network...
 
-	src.set_machine(src)
-	src:current = C
-	src.reset_view(C)
+	set_machine(src)
+	current = C
+	reset_view(C)
 	return 1
 
 
@@ -178,12 +179,11 @@
 /mob/living/silicon/pai/UnarmedAttack(var/atom/A)//Stops runtimes due to attack_animal being the default
 	return
 
-/mob/living/silicon/pai/Move(var/atom/newloc)
+/mob/living/silicon/pai/on_forcemove(var/atom/newloc)
 	if(card)
-		card.Move(newloc)
+		card.loc = newloc
 	else //something went very wrong.
 		CRASH("pAI without card")
-	. = ..()
 	loc = card
 
 //Addition by Mord_Sith to define AI's network change ability

@@ -113,7 +113,7 @@
 		if(A.Adjacent(src)) // see adjacent.dm
 			if(W)
 				// Return 1 in attackby() to prevent afterattack() effects (when safely moving items for example)
-				var/resolved = A.attackby(W,src)
+				var/resolved = A.attackby(W,src,params)
 				if(!resolved && A && W)
 					W.afterattack(A,src,1,params) // 1: clicking something Adjacent
 			else
@@ -126,8 +126,6 @@
 				W.afterattack(A,src,0,params) // 0: not Adjacent
 			else
 				RangedAttack(A, params)
-	last_movement=world.time
-	return
 
 /mob/proc/changeNext_move(num)
 	next_move = world.time + num
@@ -184,6 +182,9 @@
 	else
 		swap_hand()
 
+/mob/living/simple_animal/drone/MiddleClickOn(var/atom/A)
+	swap_hand()
+
 // In case of use break glass
 /*
 /atom/proc/MiddleClick(var/mob/M as mob)
@@ -199,7 +200,7 @@
 	A.ShiftClick(src)
 	return
 /atom/proc/ShiftClick(var/mob/user)
-	if(user.client && user.client.eye == user)
+	if(user.client && user.client.eye == user || user.client.eye == user.loc)
 		user.examinate(src)
 	return
 
@@ -287,7 +288,6 @@
 	if(nutrition>0)
 		..()
 		nutrition = max(nutrition - rand(1,5),0)
-		handle_regular_hud_updates()
 	else
 		src << "<span class='danger'>You're out of energy!  You need food!</span>"
 

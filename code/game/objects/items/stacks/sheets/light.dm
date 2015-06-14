@@ -11,7 +11,7 @@
 	flags = CONDUCT
 	max_amount = 60
 
-/obj/item/stack/light_w/attackby(var/obj/item/O as obj, var/mob/user as mob)
+/obj/item/stack/light_w/attackby(var/obj/item/O as obj, var/mob/user as mob, params)
 	..()
 	if(istype(O,/obj/item/weapon/wirecutters))
 		var/obj/item/stack/cable_coil/CC = new (user.loc)
@@ -32,5 +32,5 @@
 			user << "<span class='notice'>You make a light tile.</span>"
 			L.add_fingerprint(user)
 		else
-			user << "<span class='warning'>You need one metal sheet to finish the light tile.</span>"
+			user << "<span class='warning'>You need one metal sheet to finish the light tile!</span>"
 			return

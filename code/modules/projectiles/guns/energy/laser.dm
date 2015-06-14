@@ -14,8 +14,9 @@
 	desc = "A modified version of the basic laser gun, this one fires less concentrated energy bolts designed for target practice."
 	ammo_type = list(/obj/item/ammo_casing/energy/laser/practice)
 	clumsy_check = 0
+	needs_permit = 0
 
-obj/item/weapon/gun/energy/laser/retro
+/obj/item/weapon/gun/energy/laser/retro
 	name ="retro laser"
 	icon_state = "retro"
 	desc = "An older model of the basic lasergun, no longer used by Nanotrasen's private security or military forces. Nevertheless, it is still quite deadly and easy to maintain, making it a favorite amongst pirates and other outlaws."
@@ -31,7 +32,7 @@ obj/item/weapon/gun/energy/laser/retro
 
 /obj/item/weapon/gun/energy/laser/captain/New()
 	..()
-	SSobj.processing.Add(src)
+	SSobj.processing |= src
 
 
 /obj/item/weapon/gun/energy/laser/captain/Destroy()
@@ -105,12 +106,13 @@ obj/item/weapon/gun/energy/laser/retro
 	ammo_type = list(/obj/item/ammo_casing/energy/laser/bluetag)
 	origin_tech = "combat=1;magnets=2"
 	clumsy_check = 0
+	needs_permit = 0
 	var/charge_tick = 0
 	pin = /obj/item/device/firing_pin/tag/blue
 
 /obj/item/weapon/gun/energy/laser/bluetag/New()
 	..()
-	SSobj.processing.Add(src)
+	SSobj.processing |= src
 
 /obj/item/weapon/gun/energy/laser/bluetag/Destroy()
 	SSobj.processing.Remove(src)
@@ -135,12 +137,13 @@ obj/item/weapon/gun/energy/laser/retro
 	ammo_type = list(/obj/item/ammo_casing/energy/laser/redtag)
 	origin_tech = "combat=1;magnets=2"
 	clumsy_check = 0
+	needs_permit = 0
 	var/charge_tick = 0
 	pin = /obj/item/device/firing_pin/tag/red
 
 /obj/item/weapon/gun/energy/laser/redtag/New()
 	..()
-	SSobj.processing.Add(src)
+	SSobj.processing |= src
 
 /obj/item/weapon/gun/energy/laser/redtag/Destroy()
 	SSobj.processing.Remove(src)

@@ -22,7 +22,7 @@
 	return
 
 
-/obj/item/clothing/under/chameleon/attackby(obj/item/clothing/under/U as obj, mob/user as mob)
+/obj/item/clothing/under/chameleon/attackby(obj/item/clothing/under/U as obj, mob/user as mob, params)
 	..()
 	if(istype(U, /obj/item/clothing/under/chameleon))
 		user << "\<span class='notice'>Nothing happens.</span>"
@@ -80,6 +80,7 @@
 	icon_state = A.icon_state
 	item_state = A.item_state
 	item_color = A.item_color
+	suit_color = A.suit_color
 	usr.update_inv_w_uniform()	//so our overlays update.
 
 

@@ -38,7 +38,7 @@
 		if(WEST)
 			initialize_directions = NORTH|EAST|SOUTH
 
-/obj/machinery/atmospherics/pipe/manifold/initialize()
+/obj/machinery/atmospherics/pipe/manifold/atmosinit()
 	for(var/D in cardinal)
 		if(D == dir)
 			continue
@@ -54,6 +54,7 @@
 	var/turf/T = src.loc			// hide if turf is not intact
 	hide(T.intact)
 	update_icon()
+	..()
 
 /obj/machinery/atmospherics/pipe/manifold/Destroy()
 	if(node1)

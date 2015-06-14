@@ -100,10 +100,10 @@
 				if(user == M)
 					user << "<span class='notice'>You attach [src] to [U].</span>"
 				else
-					user.visible_message("<span class='notice'>[user] pins \the [src] on [M]'s chest.</span>", \
+					user.visible_message("[user] pins \the [src] on [M]'s chest.", \
 										 "<span class='notice'>You pin \the [src] on [M]'s chest.</span>")
 
-		else user << "<span class='warning'>Medals can only be pinned on jumpsuits.</span>"
+		else user << "<span class='warning'>Medals can only be pinned on jumpsuits!</span>"
 	else ..()
 
 /obj/item/clothing/tie/medal/conduct
@@ -145,7 +145,7 @@
 
 /obj/item/clothing/tie/medal/gold/heroism
 	name = "medal of exceptional heroism"
-	desc = "An extremely rare golden medal awarded only by Centcom. To recieve such a medal is the highest honor and as such, very few exist. This medal is almost never awarded to anybody but commanders."
+	desc = "An extremely rare golden medal awarded only by Centcom. To receive such a medal is the highest honor and as such, very few exist. This medal is almost never awarded to anybody but commanders."
 
 ////////////
 //Armbands//
@@ -277,3 +277,14 @@
 	name = "striped blue scarf"
 	icon_state = "stripedbluescarf"
 	item_color = "stripedbluescarf"
+
+/obj/item/clothing/tie/petcollar //don't really wear this though please c'mon seriously guys
+	name = "pet collar"
+	desc = "It's for pets. Though you probably could wear it yourself, you'd doubtless be the subject of ridicule."
+	icon_state = "petcollar"
+	item_color = "petcollar"
+	var/tagname = null
+
+/obj/item/clothing/tie/petcollar/attack_self(mob/user as mob)
+	tagname = copytext(sanitize(input(user, "Would you like to change the name on the tag?", "Name your new pet", "Spot") as null|text),1,MAX_NAME_LEN)
+	name = "[initial(name)] - [tagname]"

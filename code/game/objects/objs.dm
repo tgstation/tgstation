@@ -1,6 +1,5 @@
 /obj
 	languages = HUMAN
-	//var/datum/module/mod		//not used
 	var/crit_fail = 0
 	var/unacidable = 0 //universal "unacidabliness" var, here so you can use it in any obj.
 	animate_movement = 2
@@ -9,10 +8,6 @@
 
 	var/damtype = "brute"
 	var/force = 0
-
-/obj/proc/process()
-	SSobj.processing.Remove(src)
-	return 0
 
 /obj/Destroy()
 	if(!istype(src, /obj/machinery))
@@ -154,3 +149,6 @@
 
 /obj/proc/Deconstruct()
 	qdel(src)
+
+/obj/get_spans()
+	return ..() | SPAN_ROBOT

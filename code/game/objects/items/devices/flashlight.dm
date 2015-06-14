@@ -38,7 +38,7 @@
 
 /obj/item/device/flashlight/attack_self(mob/user)
 	if(!isturf(user.loc))
-		user << "You cannot turn the light on while in this [user.loc]." //To prevent some lighting anomalities.
+		user << "<span class='warning'>You cannot turn the light on while in this [user.loc]!</span>" //To prevent some lighting anomalities.
 		return 0
 	on = !on
 	update_brightness(user)
@@ -53,7 +53,7 @@
 			return ..()	//just hit them in the head
 
 		if(!user.IsAdvancedToolUser())
-			user << "<span class='notice'>You don't have the dexterity to do this!</span>"
+			user << "<span class='warning'>You don't have the dexterity to do this!</span>"
 			return
 
 		var/mob/living/carbon/human/H = M	//mob has protective eyewear
@@ -64,21 +64,22 @@
 		if(M == user)	//they're using it on themselves
 			if(!M.eye_blind)
 				flick("flash", M.flash)
-				M.visible_message("<span class='notice'>[M] directs [src] to \his eyes.</span>", \
+				M.visible_message("[M] directs [src] to \his eyes.", \
 									 "<span class='notice'>You wave the light in front of your eyes! Trippy!</span>")
 			else
-				M.visible_message("<span class='notice'>[M] directs [src] to \his eyes.</span>", \
+				M.visible_message("[M] directs [src] to \his eyes.", \
 									 "<span class='notice'>You wave the light in front of your eyes.</span>")
 			return
 
-		user.visible_message("<span class='notice'>[user] directs [src] to [M]'s eyes.</span>", \
-							 "<span class='notice'>You direct [src] to [M]'s eyes.</span>")
+		user.visible_message("<span class='warning'>[user] directs [src] to [M]'s eyes.</span>", \
+							 "<span class='danger'>You direct [src] to [M]'s eyes.</span>")
+		M << "<span class='danger'>[user] directs [src] to your eyes.</span>"
 
 		if(istype(M, /mob/living/carbon/human) || istype(M, /mob/living/carbon/monkey))	//robots and aliens are unaffected
 			if(M.stat == DEAD || M.disabilities & BLIND)	//mob is dead or fully blind
-				user << "<span class='notice'>[M] pupils does not react to the light!</span>"
+				user << "<span class='warning'>[M] pupils don't react to the light!</span>"
 			else if(M.dna.check_mutation(XRAY))	//mob has X-RAY vision
-				user << "<span class='notice'>[M] pupils give an eerie glow!</span>"
+				user << "<span class='danger'>[M] pupils give an eerie glow!</span>"
 			else	//they're okay!
 				if(!M.eye_blind)
 					flick("flash", M.flash)	//flash the affected mob
@@ -111,7 +112,7 @@
 /obj/item/device/flashlight/pen/afterattack(atom/target, mob/user, proximity_flag)
 	if(!proximity_flag)
 		if(holo_cooldown)
-			user << "<span class='warning'>[src] is not ready yet.</span>"
+			user << "<span class='warning'>[src] is not ready yet!</span>"
 			return
 		var/T = get_turf(target)
 		if(locate(/mob/living) in T)
@@ -237,7 +238,7 @@ obj/item/device/flashlight/lamp/bananalamp
 
 	// Usual checks
 	if(!fuel)
-		user << "<span class='notice'>It's out of fuel.</span>"
+		user << "<span class='warning'>It's out of fuel!</span>"
 		return
 	if(on)
 		return
@@ -258,6 +259,12 @@ obj/item/device/flashlight/lamp/bananalamp
 	icon_state = "torch"
 	item_state = "torch"
 	on_damage = 10
+
+/obj/item/device/flashlight/lantern
+	name = "lantern"
+	icon_state = "lantern"
+	desc = "A mining lantern."
+	brightness_on = 6			// luminosity when on
 
 
 /obj/item/device/flashlight/slime
@@ -283,7 +290,7 @@ obj/item/device/flashlight/lamp/bananalamp
 
 /obj/item/device/flashlight/emp/New()
 		..()
-		SSobj.processing.Add(src)
+		SSobj.processing |= src
 
 /obj/item/device/flashlight/emp/Destroy()
 		SSobj.processing.Remove(src)

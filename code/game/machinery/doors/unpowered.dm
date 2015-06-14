@@ -8,8 +8,7 @@
 	return
 
 
-/obj/machinery/door/unpowered/attackby(obj/item/I as obj, mob/user as mob)
-	if(istype(I, /obj/item/weapon/melee/energy/blade))	return
+/obj/machinery/door/unpowered/attackby(obj/item/I as obj, mob/user as mob, params)
 	if(src.locked)	return
 	..()
 	return
@@ -23,3 +22,4 @@
 	icon_state = "door1"
 	opacity = 1
 	density = 1
+	explosion_block = 1

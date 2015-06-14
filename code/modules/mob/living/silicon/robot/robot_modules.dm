@@ -87,7 +87,15 @@
 	modules += new /obj/item/weapon/reagent_containers/glass/beaker/large(src)
 	modules += new /obj/item/weapon/reagent_containers/dropper(src)
 	modules += new /obj/item/weapon/reagent_containers/syringe(src)
+	modules += new /obj/item/weapon/surgical_drapes(src)
+	modules += new /obj/item/weapon/retractor(src)
+	modules += new /obj/item/weapon/hemostat(src)
+	modules += new /obj/item/weapon/cautery(src)
+	modules += new /obj/item/weapon/surgicaldrill(src)
+	modules += new /obj/item/weapon/scalpel(src)
+	modules += new /obj/item/weapon/circular_saw(src)
 	modules += new /obj/item/weapon/extinguisher/mini(src)
+	modules += new /obj/item/roller/robo(src)
 	emag = new /obj/item/weapon/reagent_containers/spray(src)
 
 	emag.reagents.add_reagent("facid", 250)
@@ -95,6 +103,14 @@
 
 	var/obj/item/weapon/reagent_containers/spray/S = emag
 	S.banned_reagents = list()
+
+	var/datum/robot_energy_storage/gauze/gauzestore = new /datum/robot_energy_storage/gauze(src)
+
+	var/obj/item/stack/medical/gauze/cyborg/G = new /obj/item/stack/medical/gauze/cyborg(src)
+	G.source = gauzestore
+	modules += G
+
+	storages += gauzestore
 
 	fix_modules()
 
@@ -141,7 +157,7 @@
 	R.source = metstore
 	modules += R
 
-	var/obj/item/stack/cable_coil/cyborg/W = new /obj/item/stack/cable_coil/cyborg(src)
+	var/obj/item/stack/cable_coil/cyborg/W = new /obj/item/stack/cable_coil/cyborg(src,MAXCOIL,pick("red","yellow","green","blue","pink","orange","cyan","white"))
 	W.source = wirestore
 	modules += W
 
@@ -162,7 +178,7 @@
 	modules += new /obj/item/device/flashlight/seclite(src)
 	modules += new /obj/item/weapon/restraints/handcuffs/cable/zipties/cyborg(src)
 	modules += new /obj/item/weapon/melee/baton/loaded(src)
-	modules += new /obj/item/weapon/gun/energy/gun/advtaser/cyborg(src)
+	modules += new /obj/item/weapon/gun/energy/disabler/cyborg(src)
 	modules += new /obj/item/clothing/mask/gas/sechailer/cyborg(src)
 	emag = new /obj/item/weapon/gun/energy/laser/cyborg(src)
 	fix_modules()
@@ -196,7 +212,8 @@
 	modules += new /obj/item/weapon/reagent_containers/food/condiment/enzyme(src)
 	modules += new /obj/item/weapon/pen(src)
 	modules += new /obj/item/weapon/razor(src)
-	modules += new /obj/item/device/violin(src)
+	modules += new /obj/item/device/instrument/violin(src)
+	modules += new /obj/item/device/instrument/guitar(src)
 
 	var/obj/item/weapon/rsf/M = new /obj/item/weapon/rsf(src)
 	M.matter = 30
@@ -219,26 +236,16 @@
 
 /obj/item/weapon/robot_module/miner/New()
 	..()
-	var/mob/living/silicon/robot/R = loc
 	modules += new /obj/item/borg/sight/meson(src)
 	emag = new /obj/item/borg/stun(src)
-	modules += new /obj/item/weapon/storage/bag/ore(src)
-	if(R.emagged)
-		modules += new /obj/item/weapon/pickaxe/drill/diamonddrill(src)
-	else
-		modules += new /obj/item/weapon/pickaxe/jackhammer/borgdrill(src)
+	modules += new /obj/item/weapon/storage/bag/ore/cyborg(src)
+	modules += new /obj/item/weapon/pickaxe/drill/cyborg(src)
+	modules += new /obj/item/weapon/shovel(src)
 	modules += new /obj/item/device/flashlight/lantern(src)
 	modules += new /obj/item/weapon/storage/bag/sheetsnatcher/borg(src)
 	modules += new /obj/item/device/t_scanner/adv_mining_scanner(src)
 	modules += new /obj/item/weapon/gun/energy/kinetic_accelerator(src)
 	fix_modules()
-
-/obj/item/weapon/robot_module/miner/on_emag()
-	..()
-	for(var/obj/item/weapon/pickaxe/jackhammer/borgdrill/D in modules)
-		qdel(D)
-	modules += new /obj/item/weapon/pickaxe/drill/diamonddrill(src)
-	rebuild()
 
 
 /obj/item/weapon/robot_module/syndicate
@@ -289,3 +296,8 @@
 	max_energy = 50
 	recharge_rate = 2
 	name = "Wire Synthesizer"
+
+/datum/robot_energy_storage/gauze
+	max_energy = 2500
+	recharge_rate = 250
+	name = "Gauze Synthesizer"

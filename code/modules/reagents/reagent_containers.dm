@@ -54,26 +54,27 @@
 	else return "No reagents"
 
 /obj/item/weapon/reagent_containers/proc/canconsume(mob/eater, mob/user)
-	if(!eater.SpeciesCanConsume())
+	if(!iscarbon(eater))
 		return 0
-	//Check for covering mask
-	var/obj/item/clothing/cover = eater.get_item_by_slot(slot_wear_mask)
-
-	if(isnull(cover)) // No mask, do we have any helmet?
-		cover = eater.get_item_by_slot(slot_head)
-	else
-		var/obj/item/clothing/mask/covermask = cover
-		if(covermask.alloweat) // Specific cases, clownmask for example.
-			return 1
-
-	if(!isnull(cover))
-		if((cover.flags & HEADCOVERSMOUTH) || (cover.flags & MASKCOVERSMOUTH))
-			var/who = (isnull(user) || eater == user) ? "your" : "their"
-
-			if(istype(cover, /obj/item/clothing/mask/))
-				user << "<span class='warning'>You have to remove [who] mask first!</span>"
-			else
-				user << "<span class='warning'>You have to remove [who] helmet first!</span>"
-
-			return 0
+	var/mob/living/carbon/C = eater
+	var/covered = ""
+	if(C.is_mouth_covered(head_only = 1))
+		covered = "headgear"
+	else if(C.is_mouth_covered(mask_only = 1))
+		covered = "mask"
+	if(covered)
+		var/who = (isnull(user) || eater == user) ? "your" : "their"
+		user << "<span class='warning'>You have to remove [who] [covered] first!</span>"
+		return 0
 	return 1
+
+/obj/item/weapon/reagent_containers/ex_act()
+	if(reagents)
+		for(var/datum/reagent/R in reagents.reagent_list)
+			R.on_ex_act()
+	..()
+
+/obj/item/weapon/reagent_containers/fire_act()
+	reagents.chem_temp += 30
+	reagents.handle_reactions()
+	..()

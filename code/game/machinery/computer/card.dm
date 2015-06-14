@@ -42,7 +42,7 @@ var/time_last_changed_position = 0
 	//Assoc array: "JobName" = (int)<Opened Positions>
 	var/list/opened_positions = list();
 
-/obj/machinery/computer/card/attackby(O as obj, user as mob)//TODO:SANITY
+/obj/machinery/computer/card/attackby(O as obj, user as mob, params)//TODO:SANITY
 	if(istype(O, /obj/item/weapon/card/id))
 		var/obj/item/weapon/card/id/idcard = O
 		if(check_access(idcard))
@@ -354,7 +354,7 @@ var/time_last_changed_position = 0
 						if(region_access)
 							authenticated = 1
 			else if ((!( authenticated ) && (istype(usr, /mob/living/silicon))) && (!modify))
-				usr << "You can't modify an ID without an ID inserted to modify. Once one is in the modify slot on the computer, you can log in."
+				usr << "<span class='warning'>You can't modify an ID without an ID inserted to modify! Once one is in the modify slot on the computer, you can log in.</span>"
 		if ("logout")
 			region_access = null
 			head_subordinates = null

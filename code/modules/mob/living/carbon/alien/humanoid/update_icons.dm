@@ -14,23 +14,19 @@
 	for(var/image/I in overlays_standing)
 		overlays += I
 
-
 	if(stat == DEAD)
 		//If we mostly took damage from fire
 		if(fireloss > 125)
 			icon_state = "alien[caste]_husked"
-			pixel_y = 0
 		else
 			icon_state = "alien[caste]_dead"
-			pixel_y = 0
 
-	else if(stat == UNCONSCIOUS || weakened)
+	else if((stat == UNCONSCIOUS && !sleeping) || weakened)
 		icon_state = "alien[caste]_unconscious"
-		pixel_y = 0
 	else if(leap_on_click)
 		icon_state = "alien[caste]_pounce"
 
-	else if(lying || resting)
+	else if(lying || resting || sleeping)
 		icon_state = "alien[caste]_sleep"
 	else if(m_intent == "run")
 		icon_state = "alien[caste]_running"
@@ -38,16 +34,20 @@
 		icon_state = "alien[caste]_s"
 
 	if(leaping)
-		icon = 'icons/mob/alienleap.dmi'
+		if(alt_icon == initial(alt_icon))
+			var/old_icon = icon
+			icon = alt_icon
+			alt_icon = old_icon
 		icon_state = "alien[caste]_leap"
 		pixel_x = -32
 		pixel_y = -32
 	else
-		icon = initial(icon)
-		pixel_x = initial(pixel_x)
-		pixel_y = initial(pixel_y)
-
-
+		if(alt_icon != initial(alt_icon))
+			var/old_icon = icon
+			icon = alt_icon
+			alt_icon = old_icon
+		pixel_x = get_standard_pixel_x_offset(lying)
+		pixel_y = get_standard_pixel_y_offset(lying)
 
 /mob/living/carbon/alien/humanoid/regenerate_icons()
 	..()
@@ -63,8 +63,9 @@
 /mob/living/carbon/alien/humanoid/update_transform() //The old method of updating lying/standing was update_icons(). Aliens still expect that.
 	if(lying > 0)
 		lying = 90 //Anything else looks retarded
-	update_icons()
 	..()
+	update_icons()
+
 
 
 /mob/living/carbon/alien/humanoid/update_hud()

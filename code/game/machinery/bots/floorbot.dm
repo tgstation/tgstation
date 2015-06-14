@@ -45,13 +45,12 @@
 	var/nagged = 0 //Prevents the Floorbot nagging more than once per refill.
 	var/max_targets = 50
 	var/turf/target
-	var/turf/oldtarget
 	var/oldloc = null
 	req_one_access = list(access_construction, access_robotics)
 	var/targetdirection
 	radio_frequency = ENG_FREQ //Engineering channel
 	bot_type = FLOOR_BOT
-	bot_filter = RADIO_FLOORBOT
+	model = "Floorbot"
 	var/process_type //Determines what to do when process_scan() recieves a target. See process_scan() for details.
 	#define HULL_BREACH		1
 	#define BRIDGE_MODE		2
@@ -64,11 +63,8 @@
 	..()
 	updateicon()
 	var/datum/job/engineer/J = new/datum/job/engineer
-	botcard.access = J.get_access()
+	botcard.access += J.get_access()
 	prev_access = botcard.access
-
-	spawn(5)
-		add_to_beacons(bot_filter)
 
 /obj/machinery/bot/floorbot/turn_on()
 	. = ..()
@@ -83,7 +79,6 @@
 /obj/machinery/bot/floorbot/bot_reset()
 	..()
 	target = null
-	oldtarget = null
 	oldloc = null
 	ignore_list = list()
 	nagged = 0
@@ -132,7 +127,7 @@
 	return
 
 
-/obj/machinery/bot/floorbot/attackby(var/obj/item/W , mob/user as mob)
+/obj/machinery/bot/floorbot/attackby(var/obj/item/W , mob/user as mob, params)
 	if(istype(W, /obj/item/stack/tile/plasteel))
 		var/obj/item/stack/tile/plasteel/T = W
 		if(amount >= 50)
@@ -145,7 +140,7 @@
 			nagged = 0
 			updateicon()
 		else
-			user << "<span class='warning'>You need at least one floor tile to put into [src]</span>"
+			user << "<span class='warning'>You need at least one floor tile to put into [src]!</span>"
 	else if(istype(W, /obj/item/weapon/card/id)||istype(W, /obj/item/device/pda))
 		if(allowed(user) && !open && !emagged)
 			locked = !locked
@@ -209,11 +204,11 @@
 
 	if(amount <= 0 && !target) //Out of tiles! We must refill!
 		if(eattiles) //Configured to find and consume floortiles!
-			target = scan(/obj/item/stack/tile/plasteel, oldtarget)
+			target = scan(/obj/item/stack/tile/plasteel)
 			process_type = null
 
 		if(!target && maketiles) //We did not manage to find any floor tiles! Scan for metal stacks and make our own!
-			target = scan(/obj/item/stack/sheet/metal, oldtarget)
+			target = scan(/obj/item/stack/sheet/metal)
 			process_type = null
 			return
 		else
@@ -232,24 +227,24 @@
 				target = T
 
 			else //Find a space tile farther way!
-				target = scan(/turf/space, oldtarget)
+				target = scan(/turf/space)
 			process_type = BRIDGE_MODE
 
 		if(!target)
 			process_type = HULL_BREACH //Ensures the floorbot does not try to "fix" space areas or shuttle docking zones.
-			target = scan(/turf/space, oldtarget)
+			target = scan(/turf/space)
 
 		if(!target && replacetiles) //Finds a floor without a tile and gives it one.
 			process_type = REPLACE_TILE //The target must be the floor and not a tile. The floor must not already have a floortile.
-			target = scan(/turf/simulated/floor, oldtarget)
+			target = scan(/turf/simulated/floor)
 
 		if(!target && fixfloors) //Repairs damaged floors and tiles.
 			process_type = FIX_TILE
-			target = scan(/turf/simulated/floor, oldtarget)
+			target = scan(/turf/simulated/floor)
 
 	if(!target && emagged == 2) //We are emagged! Time to rip up the floors!
 		process_type = TILE_EMAG
-		target = scan(/turf/simulated/floor, oldtarget)
+		target = scan(/turf/simulated/floor)
 
 
 	if(!target)
@@ -261,27 +256,20 @@
 			if(mode == BOT_PATROL)
 				bot_patrol()
 
-	if(!target)
-		if(loc != oldloc)
-			oldtarget = null
-		return
-
 	if(target)
 		if(path.len == 0)
 			if(!istype(target, /turf/))
 				var/turf/TL = get_turf(target)
-				path = get_path_to(loc, TL, /turf/proc/AdjacentTurfsSpace, /turf/proc/Distance, 0, 30, id=botcard)
+				path = get_path_to(loc, TL, src, /turf/proc/Distance, 0, 30, id=botcard)
 			else
-				path = get_path_to(loc, target, /turf/proc/AdjacentTurfsSpace, /turf/proc/Distance, 0, 30, id=botcard)
+				path = get_path_to(loc, target, src, /turf/proc/Distance, 0, 30, id=botcard)
 
 			if(!bot_move(target))
 				add_to_ignore(target)
-				oldtarget = target
 				target = null
 				mode = BOT_IDLE
 				return
 		else if( !bot_move(target) )
-			oldtarget = target
 			target = null
 			mode = BOT_IDLE
 			return
@@ -446,7 +434,7 @@ obj/machinery/bot/floorbot/process_scan(var/scan_target)
 
 /obj/machinery/bot/floorbot/explode()
 	on = 0
-	visible_message("<span class='userdanger'>[src] blows apart!</span>")
+	visible_message("<span class='boldannounce'>[src] blows apart!</span>")
 	var/turf/Tsec = get_turf(src)
 
 	var/obj/item/weapon/storage/toolbox/mechanical/N = new /obj/item/weapon/storage/toolbox/mechanical(Tsec)
@@ -474,12 +462,12 @@ obj/machinery/bot/floorbot/process_scan(var/scan_target)
 	return
 
 
-/obj/item/weapon/storage/toolbox/mechanical/attackby(var/obj/item/stack/tile/plasteel/T, mob/user as mob)
+/obj/item/weapon/storage/toolbox/mechanical/attackby(var/obj/item/stack/tile/plasteel/T, mob/user as mob, params)
 	if(!istype(T, /obj/item/stack/tile/plasteel))
 		..()
 		return
 	if(contents.len >= 1)
-		user << "<span class='alert'>They won't fit in, as there is already stuff inside.</span>"
+		user << "<span class='warning'>They won't fit in, as there is already stuff inside!</span>"
 		return
 	if(T.use(10))
 		if(user.s_active)
@@ -490,17 +478,17 @@ obj/machinery/bot/floorbot/process_scan(var/scan_target)
 		user.unEquip(src, 1)
 		qdel(src)
 	else
-		user << "<span class='alert'>You need 10 floor tiles to start building a floorbot.</span>"
+		user << "<span class='warning'>You need 10 floor tiles to start building a floorbot!</span>"
 		return
 
-/obj/item/weapon/toolbox_tiles/attackby(var/obj/item/W, mob/user as mob)
+/obj/item/weapon/toolbox_tiles/attackby(var/obj/item/W, mob/user as mob, params)
 	..()
 	if(isprox(W))
 		qdel(W)
 		var/obj/item/weapon/toolbox_tiles_sensor/B = new /obj/item/weapon/toolbox_tiles_sensor()
 		B.created_name = created_name
 		user.put_in_hands(B)
-		user << "<span class='notice'>You add the sensor to the toolbox and tiles!</span>"
+		user << "<span class='notice'>You add the sensor to the toolbox and tiles.</span>"
 		user.unEquip(src, 1)
 		qdel(src)
 
@@ -513,14 +501,14 @@ obj/machinery/bot/floorbot/process_scan(var/scan_target)
 
 		created_name = t
 
-/obj/item/weapon/toolbox_tiles_sensor/attackby(var/obj/item/W, mob/user as mob)
+/obj/item/weapon/toolbox_tiles_sensor/attackby(var/obj/item/W, mob/user as mob, params)
 	..()
 	if(istype(W, /obj/item/robot_parts/l_arm) || istype(W, /obj/item/robot_parts/r_arm))
 		qdel(W)
 		var/turf/T = get_turf(user.loc)
 		var/obj/machinery/bot/floorbot/A = new /obj/machinery/bot/floorbot(T)
 		A.name = created_name
-		user << "<span class='notice'>You add the robot arm to the odd looking toolbox assembly! Boop beep!</span>"
+		user << "<span class='notice'>You add the robot arm to the odd looking toolbox assembly. Boop beep!</span>"
 		user.unEquip(src, 1)
 		qdel(src)
 	else if (istype(W, /obj/item/weapon/pen))

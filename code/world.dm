@@ -58,14 +58,13 @@
 			world.log << "Database connection established."
 
 
-	data_core = new /obj/effect/datacore()
+	data_core = new /datum/datacore()
 
 
 	spawn(-1)
 		master_controller.setup()
 
 	process_teleport_locs()			//Sets up the wizard teleport locations
-	process_ghost_teleport_locs()	//Sets up ghost teleport locations.
 	SortAreas()						//Build the list of all existing areas and sort it alphabetically
 
 	#ifdef MAP_NAME
@@ -129,14 +128,32 @@
 			if(input["key"] != global.comms_key)
 				return "Bad Key"
 			else
-				#define CHAT_PULLR 2048
+#define CHAT_PULLR	64 //for some reason this has to be here, not sure why. Look in preferences.dm for the "proper" definition.
 				for(var/client/C in clients)
-					if(C.prefs && (C.prefs.toggles & CHAT_PULLR))
+					if(C.prefs && (C.prefs.chat_toggles & CHAT_PULLR))
 						C << "<span class='announce'>PR: [input["announce"]]</span>"
-				#undef CHAT_PULLR
+#undef CHAT_PULLR
 
-/world/Reboot(var/reason)
-#ifdef dellogging
+/world/Reboot(var/reason, var/feedback_c, var/feedback_r, var/time)
+	var/delay
+	if(time)
+		delay = time
+	else
+		delay = ticker.restart_timeout
+	if(ticker.delay_end)
+		world << "<span class='boldannounce'>An admin has delayed the round end.</span>"
+		return
+	world << "<span class='boldannounce'>Rebooting World in [delay/10] [delay > 10 ? "seconds" : "second"]. [reason]</span>"
+	sleep(delay)
+	if(blackbox)
+		blackbox.save_all_data_to_sql()
+	if(ticker.delay_end)
+		world << "<span class='boldannounce'>Reboot was cancelled by an admin.</span>"
+		return
+	feedback_set_details("[feedback_c]","[feedback_r]")
+	log_game("<span class='boldannounce'>Rebooting World. [reason]</span>")
+	kick_clients_in_lobby("<span class='boldannounce'>The round came to an end with you in the lobby.</span>", 1) //second parameter ensures only afk clients are kicked
+	#ifdef dellogging
 	var/log = file("data/logs/del.log")
 	log << time2text(world.realtime)
 	//mergeSort(del_counter, /proc/cmp_descending_associative)	//still testing the sorting procs. Use notepad++ to sort the resultant logfile for now.
@@ -146,15 +163,15 @@
 			log << "#[count]\t[index]"
 #endif
 	spawn(0)
-		world << sound(pick('sound/AI/newroundsexy.ogg','sound/misc/apcdestroyed.ogg','sound/misc/bangindonk.ogg','sound/misc/leavingtg.ogg')) // random end sounds!! - LastyBatsy
-
+		if(ticker && ticker.round_end_sound)
+			world << sound(ticker.round_end_sound)
+		else
+			world << sound(pick('sound/AI/newroundsexy.ogg','sound/misc/apcdestroyed.ogg','sound/misc/bangindonk.ogg','sound/misc/leavingtg.ogg')) // random end sounds!! - LastyBatsy
 	for(var/client/C in clients)
 		if(config.server)	//if you set a server location in config.txt, it sends you there instead of trying to reconnect to the same world address. -- NeoFite
 			C << link("byond://[config.server]")
-
 	// Note: all clients automatically connect to the world after it restarts
-
-	..(reason)
+	..(0)
 
 
 /world/proc/load_mode()
@@ -243,7 +260,7 @@
 #define FAILED_DB_CONNECTION_CUTOFF 5
 var/failed_db_connections = 0
 
-proc/setup_database_connection()
+/proc/setup_database_connection()
 
 	if(failed_db_connections >= FAILED_DB_CONNECTION_CUTOFF)	//If it failed to establish a connection more than 5 times in a row, don't bother attempting to connect anymore.
 		return 0
@@ -269,7 +286,7 @@ proc/setup_database_connection()
 	return .
 
 //This proc ensures that the connection to the feedback database (global variable dbcon) is established
-proc/establish_db_connection()
+/proc/establish_db_connection()
 	if(failed_db_connections > FAILED_DB_CONNECTION_CUTOFF)
 		return 0
 

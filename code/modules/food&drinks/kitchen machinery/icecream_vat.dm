@@ -22,7 +22,7 @@
 /obj/machinery/icecream_vat/proc/get_ingredient_list(var/type)
 	switch(type)
 		if(ICECREAM_CHOCOLATE)
-			return list("milk", "ice", "coco")
+			return list("milk", "ice", "cocoa")
 		if(ICECREAM_STRAWBERRY)
 			return list("milk", "ice", "berryjuice")
 		if(ICECREAM_BLUE)
@@ -30,7 +30,7 @@
 		if(CONE_WAFFLE)
 			return list("flour", "sugar")
 		if(CONE_CHOC)
-			return list("flour", "sugar", "coco")
+			return list("flour", "sugar", "cocoa")
 		else
 			return list("milk", "ice")
 
@@ -87,7 +87,7 @@
 	popup.set_content(dat)
 	popup.open()
 
-/obj/machinery/icecream_vat/attackby(var/obj/item/O as obj, var/mob/user as mob)
+/obj/machinery/icecream_vat/attackby(var/obj/item/O as obj, var/mob/user as mob, params)
 	if(istype(O, /obj/item/weapon/reagent_containers/food/snacks/icecream))
 		var/obj/item/weapon/reagent_containers/food/snacks/icecream/I = O
 		if(!I.ice_creamed)
@@ -126,7 +126,7 @@
 		else
 			src.visible_message("<span class='info'>[user] whips up some [flavour] icecream.</span>")
 	else
-		user << "<span class='warning'>You don't have the ingredients to make this.</span>"
+		user << "<span class='warning'>You don't have the ingredients to make this!</span>"
 
 /obj/machinery/icecream_vat/Topic(href, href_list)
 	if(..())
@@ -188,8 +188,8 @@
 	ice_creamed = 1
 
 #undef ICECREAM_VANILLA
-#undef FLAVOUR_CHOCOLATE
-#undef FLAVOUR_STRAWBERRY
-#undef FLAVOUR_BLUE
+#undef ICECREAM_CHOCOLATE
+#undef ICECREAM_STRAWBERRY
+#undef ICECREAM_BLUE
 #undef CONE_WAFFLE
 #undef CONE_CHOC

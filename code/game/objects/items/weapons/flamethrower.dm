@@ -18,7 +18,7 @@
 	var/operating = 0//cooldown
 	var/obj/item/weapon/weldingtool/weldtool = null
 	var/obj/item/device/assembly/igniter/igniter = null
-	var/obj/item/weapon/tank/plasma/ptank = null
+	var/obj/item/weapon/tank/internals/plasma/ptank = null
 
 
 /obj/item/weapon/flamethrower/Destroy()
@@ -67,7 +67,7 @@
 			var/turflist = getline(user, target_turf)
 			flame_turf(turflist)
 
-/obj/item/weapon/flamethrower/attackby(obj/item/W as obj, mob/user as mob)
+/obj/item/weapon/flamethrower/attackby(obj/item/W as obj, mob/user as mob, params)
 	if(user.stat || user.restrained() || user.lying)	return
 	if(istype(W, /obj/item/weapon/wrench) && !status)//Taking this apart
 		var/turf/T = get_turf(src)
@@ -100,7 +100,7 @@
 		update_icon()
 		return
 
-	if(istype(W,/obj/item/weapon/tank/plasma))
+	if(istype(W,/obj/item/weapon/tank/internals/plasma))
 		if(ptank)
 			user << "<span class='notice'>There appears to already be a plasma tank loaded in [src]!</span>"
 			return
@@ -140,7 +140,7 @@
 		if(!status)	return
 		lit = !lit
 		if(lit)
-			SSobj.processing.Add(src)
+			SSobj.processing |= src
 	if(href_list["amount"])
 		throw_amount = throw_amount + text2num(href_list["amount"])
 		throw_amount = max(50, min(5000, throw_amount))
@@ -157,6 +157,13 @@
 	update_icon()
 	return
 
+/obj/item/weapon/flamethrower/CheckParts()
+	weldtool = locate(/obj/item/weapon/weldingtool) in contents
+	igniter = locate(/obj/item/device/assembly/igniter) in contents
+	weldtool.status = 0
+	igniter.secured = 0
+	status = 1
+	update_icon()
 
 //Called from turf.dm turf/dblclick
 /obj/item/weapon/flamethrower/proc/flame_turf(turflist)
@@ -195,14 +202,16 @@
 
 /obj/item/weapon/flamethrower/full/New(var/loc)
 	..()
-	weldtool = new /obj/item/weapon/weldingtool(src)
+	if(!weldtool)
+		weldtool = new /obj/item/weapon/weldingtool(src)
 	weldtool.status = 0
-	igniter = new /obj/item/device/assembly/igniter(src)
+	if(!igniter)
+		igniter = new /obj/item/device/assembly/igniter(src)
 	igniter.secured = 0
 	status = 1
 	update_icon()
 
 /obj/item/weapon/flamethrower/full/tank/New(var/loc)
 	..()
-	ptank = new /obj/item/weapon/tank/plasma/full(src)
+	ptank = new /obj/item/weapon/tank/internals/plasma/full(src)
 	update_icon()

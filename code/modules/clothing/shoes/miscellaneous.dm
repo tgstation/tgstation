@@ -1,7 +1,7 @@
 /obj/item/clothing/shoes/proc/step_action() //this was made to rewrite clown shoes squeaking
 
-/obj/item/clothing/shoes/syndigaloshes
-	desc = "A pair of brown shoes. They seem to have extra grip."
+/obj/item/clothing/shoes/sneakers/syndigaloshes
+	desc = "A pair of brown shoes."
 	name = "brown shoes"
 	icon_state = "brown"
 	item_state = "brown"
@@ -28,20 +28,6 @@
 	permeability_coefficient = 0.01
 	flags = NOSLIP
 	armor = list(melee = 80, bullet = 60, laser = 50, energy = 50, bomb = 50, bio = 30, rad = 30)
-
-/obj/item/clothing/shoes/space_ninja
-	name = "ninja shoes"
-	desc = "A pair of running shoes. Excellent for running and even better for smashing skulls."
-	icon_state = "s-ninja"
-	item_state = "secshoes"
-	permeability_coefficient = 0.01
-	flags = NOSLIP
-	armor = list(melee = 60, bullet = 50, laser = 30,energy = 15, bomb = 30, bio = 30, rad = 30)
-	strip_delay = 120
-	cold_protection = FEET
-	min_cold_protection_temperature = SHOES_MIN_TEMP_PROTECT
-	heat_protection = FEET
-	max_heat_protection_temperature = SHOES_MAX_TEMP_PROTECT
 
 /obj/item/clothing/shoes/sandal
 	desc = "A pair of rather plain, wooden sandals."
@@ -101,6 +87,14 @@
 	heat_protection = FEET|LEGS
 	max_heat_protection_temperature = SHOES_MAX_TEMP_PROTECT
 
+/obj/item/clothing/shoes/workboots
+	name = "work boots"
+	desc = "Nanotrasen-issue Engineering lace-up work boots for the especially blue-collar."
+	icon_state = "workboots"
+	item_state = "jackboots"
+	strip_delay = 40
+	put_on_delay = 40
+
 /obj/item/clothing/shoes/cult
 	name = "cultist boots"
 	desc = "A pair of boots worn by the followers of Nar-Sie."
@@ -130,3 +124,9 @@
 	item_state = "roman"
 	strip_delay = 100
 	put_on_delay = 100
+
+/obj/item/clothing/shoes/griffin
+	name = "griffon boots"
+	desc = "A pair of costume boots fashioned after bird talons."
+	icon_state = "griffinboots"
+	item_state = "griffinboots"

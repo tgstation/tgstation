@@ -11,8 +11,8 @@
 	mag_type = /obj/item/ammo_box/magazine/internal/shot
 	var/recentpump = 0 // to prevent spammage
 
-/obj/item/weapon/gun/projectile/shotgun/attackby(var/obj/item/A as obj, mob/user as mob)
-	var/num_loaded = magazine.attackby(A, user, 1)
+/obj/item/weapon/gun/projectile/shotgun/attackby(var/obj/item/A as obj, mob/user as mob, params)
+	var/num_loaded = magazine.attackby(A, user, params, 1)
 	if(num_loaded)
 		user << "<span class='notice'>You load [num_loaded] shell\s into \the [src]!</span>"
 		A.update_icon()
@@ -81,9 +81,9 @@
 	mag_type = /obj/item/ammo_box/magazine/internal/shotriot
 	sawn_desc = "Come with me if you want to live."
 
-/obj/item/weapon/gun/projectile/shotgun/riot/attackby(var/obj/item/A as obj, mob/user as mob)
+/obj/item/weapon/gun/projectile/shotgun/riot/attackby(var/obj/item/A as obj, mob/user as mob, params)
 	..()
-	if(istype(A, /obj/item/weapon/circular_saw) || istype(A, /obj/item/weapon/pickaxe/plasmacutter))
+	if(istype(A, /obj/item/weapon/circular_saw) || istype(A, /obj/item/weapon/gun/energy/plasmacutter))
 		sawoff(user)
 	if(istype(A, /obj/item/weapon/melee/energy))
 		var/obj/item/weapon/melee/energy/W = A
@@ -113,7 +113,7 @@
 	update_icon()	//I.E. fix the desc
 	return 1
 
-/obj/item/weapon/gun/projectile/shotgun/boltaction/attackby(var/obj/item/A as obj, mob/user as mob)
+/obj/item/weapon/gun/projectile/shotgun/boltaction/attackby(var/obj/item/A as obj, mob/user as mob, params)
 	if(!bolt_open)
 		user << "<span class='notice'>The bolt is closed!</span>"
 		return
@@ -134,13 +134,25 @@
 	item_state = "shotgun"
 	w_class = 4.0
 	force = 10
-	flags =  CONDUCT
+	flags = CONDUCT
 	slot_flags = SLOT_BACK
 	origin_tech = "combat=3;materials=1"
 	mag_type = /obj/item/ammo_box/magazine/internal/cylinder/dualshot
 	sawn_desc = "Omar's coming!"
+	unique_rename = 1
+	unique_reskin = 1
 
-/obj/item/weapon/gun/projectile/revolver/doublebarrel/attackby(var/obj/item/A as obj, mob/user as mob)
+/obj/item/weapon/gun/projectile/revolver/doublebarrel/New()
+	..()
+	options["Default"] = "dshotgun"
+	options["Dark Red Finish"] = "dshotgun-d"
+	options["Ash"] = "dshotgun-f"
+	options["Faded Grey"] = "dshotgun-g"
+	options["Maple"] = "dshotgun-l"
+	options["Rosewood"] = "dshotgun-p"
+	options["Cancel"] = null
+
+/obj/item/weapon/gun/projectile/revolver/doublebarrel/attackby(var/obj/item/A as obj, mob/user as mob, params)
 	..()
 	if(istype(A, /obj/item/ammo_box) || istype(A, /obj/item/ammo_casing))
 		chamber_round()
@@ -148,7 +160,7 @@
 		var/obj/item/weapon/melee/energy/W = A
 		if(W.active)
 			sawoff(user)
-	if(istype(A, /obj/item/weapon/circular_saw) || istype(A, /obj/item/weapon/pickaxe/plasmacutter))
+	if(istype(A, /obj/item/weapon/circular_saw) || istype(A, /obj/item/weapon/gun/energy/plasmacutter))
 		sawoff(user)
 
 /obj/item/weapon/gun/projectile/revolver/doublebarrel/attack_self(mob/living/user as mob)
@@ -163,7 +175,7 @@
 	if (num_unloaded)
 		user << "<span class = 'notice'>You break open \the [src] and unload [num_unloaded] shell\s.</span>"
 	else
-		user << "<span class='notice'>[src] is empty.</span>"
+		user << "<span class='warning'>[src] is empty!</span>"
 
 
 // IMPROVISED SHOTGUN //
@@ -175,25 +187,28 @@
 	item_state = "shotgun"
 	w_class = 4.0
 	force = 10
+	slot_flags = null
 	origin_tech = "combat=2;materials=2"
 	mag_type = /obj/item/ammo_box/magazine/internal/cylinder/improvised
 	sawn_desc = "I'm just here for the gasoline."
+	unique_rename = 0
+	unique_reskin = 0
 
-/obj/item/weapon/gun/projectile/revolver/doublebarrel/improvised/attackby(var/obj/item/A as obj, mob/user as mob)
+/obj/item/weapon/gun/projectile/revolver/doublebarrel/improvised/attackby(var/obj/item/A as obj, mob/user as mob, params)
 	..()
 	if(istype(A, /obj/item/stack/cable_coil) && !sawn_state)
 		var/obj/item/stack/cable_coil/C = A
 		if(C.use(10))
-			flags =  CONDUCT
 			slot_flags = SLOT_BACK
 			icon_state = "ishotgunsling"
 			user << "<span class='notice'>You tie the lengths of cable to the shotgun, making a sling.</span>"
 			update_icon()
 		else
-			user << "<span class='warning'>You need at least ten lengths of cable if you want to make a sling.</span>"
+			user << "<span class='warning'>You need at least ten lengths of cable if you want to make a sling!</span>"
 			return
 
-//Sawing guns related procs
+// Sawing guns related procs //
+
 /obj/item/weapon/gun/projectile/proc/blow_up(mob/user as mob)
 	. = 0
 	for(var/obj/item/ammo_casing/AC in magazine.stored_ammo)
@@ -209,13 +224,13 @@
 
 /obj/item/weapon/gun/projectile/proc/sawoff(mob/user as mob)
 	if(sawn_state == SAWN_OFF)
-		user << "<span class='notice'>\The [src] is already shortened.</span>"
+		user << "<span class='warning'>\The [src] is already shortened!</span>"
 		return
 
 	if(sawn_state == SAWN_SAWING)
 		return
 
-	user.visible_message("<span class='notice'>[user] begins to shorten \the [src].</span>", "<span class='notice'>You begin to shorten \the [src].</span>")
+	user.visible_message("[user] begins to shorten \the [src].", "<span class='notice'>You begin to shorten \the [src]...</span>")
 
 	//if there's any live ammo inside the gun, makes it go off
 	if(blow_up(user))
@@ -225,10 +240,10 @@
 	sawn_state = SAWN_SAWING
 
 	if(do_after(user, 30))
-		user.visible_message("<span class='warning'>[user] shortens \the [src]!</span>", "<span class='warning'>You shorten \the [src]!</span>")
+		user.visible_message("[user] shortens \the [src]!", "<span class='notice'>You shorten \the [src].</span>")
 		name = "sawn-off [src.name]"
 		desc = sawn_desc
-		icon_state = initial(icon_state) + "-sawn"
+		icon_state = "[icon_state]-sawn"
 		w_class = 3.0
 		item_state = "gun"
 		slot_flags &= ~SLOT_BACK	//you can't sling it on your back
@@ -239,6 +254,8 @@
 	else
 		sawn_state = SAWN_INTACT
 
+
+// Bulldog shotgun //
 
 /obj/item/weapon/gun/projectile/automatic/shotgun/bulldog
 	name = "syndicate shotgun"

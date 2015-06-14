@@ -89,7 +89,7 @@
 		src.icon_state = "orange"
 	return
 
-/obj/item/clothing/shoes/sneakers/orange/attackby(H as obj, loc)
+/obj/item/clothing/shoes/sneakers/orange/attackby(H as obj, loc, params)
 	..()
 	if ((istype(H, /obj/item/weapon/restraints/handcuffs) && !( src.chained )))
 		//H = null
@@ -106,6 +106,6 @@
 	if(ishuman(user))
 		var/mob/living/carbon/human/C = user
 		if(C.shoes == src && src.chained == 1)
-			user << "<span class='notice'>You need help taking these off!</span>"
+			user << "<span class='warning'>You need help taking these off!</span>"
 			return
 	..()

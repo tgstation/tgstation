@@ -2,51 +2,6 @@
 	name = "armory closet"
 	desc = "Why is this here?"
 	icon_state = "syndicate"
-	icon_closed = "syndicate"
-	icon_opened = "syndicateopen"
-
-/obj/structure/closet/syndicate/ertCom/New()
-	name = "commanders closet"
-	desc = "Emergency Response Team equipment locker"
-	icon_state = "capsecureoff"
-	icon_closed = "capsecureoff"
-	icon_opened = "capsecureopen"
-//	new /obj/item/weapon/card/id/ert(src)
-	new /obj/item/weapon/storage/backpack/captain(src)
-	return
-
-/obj/structure/closet/syndicate/ertSec/New()
-	name = "security closet"
-	desc = "Emergency Response Team equipment locker"
-	icon_state = "secoff"
-	icon_closed = "secoff"
-	icon_opened = "secopen"
-	new /obj/item/weapon/gun/energy/pulse_rifle/pulse_pistol/loyalpin(src)
-	new /obj/item/weapon/card/id/ert/Security(src)
-	new /obj/item/weapon/storage/backpack/security(src)
-	return
-
-/obj/structure/closet/syndicate/ertMed/New()
-	name = "medical closet"
-	desc = "Emergency Response Team equipment locker"
-	icon_state = "securemedoff"
-	icon_closed = "securemedoff"
-	icon_opened = "securemedopen"
-	new /obj/item/weapon/gun/energy/pulse_rifle/pulse_pistol/loyalpin(src)
-	new /obj/item/weapon/card/id/ert/Medical(src)
-	new /obj/item/weapon/storage/backpack/medic(src)
-	return
-
-/obj/structure/closet/syndicate/ertEngi/New()
-	name = "engineer closet"
-	desc = "Emergency Response Team equipment locker"
-	icon_state = "secureengoff"
-	icon_closed = "secureengoff"
-	icon_opened = "secureengopen"
-	new /obj/item/weapon/gun/energy/pulse_rifle/pulse_pistol/loyalpin(src)
-	new /obj/item/weapon/card/id/ert/Engineer(src)
-	new /obj/item/weapon/storage/backpack/industrial(src)
-	return
 
 /obj/structure/closet/syndicate/personal
 	desc = "It's a personal storage unit for operative gear."
@@ -67,6 +22,7 @@
 
 /obj/structure/closet/syndicate/nuclear/New()
 	..()
+	contents = list()
 	new /obj/item/ammo_box/magazine/m10mm(src)
 	new /obj/item/ammo_box/magazine/m10mm(src)
 	new /obj/item/ammo_box/magazine/m10mm(src)
@@ -150,6 +106,8 @@
 	desc = "It's an emergency storage closet for repairs."
 
 /obj/structure/closet/syndicate/resources/everything/New()
+	..()
+	contents = list()
 	var/list/resources = list(
 	/obj/item/stack/sheet/metal,
 	/obj/item/stack/sheet/glass,

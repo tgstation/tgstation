@@ -54,7 +54,7 @@
 	T.add_fingerprint(user)
 	T.loc = src.loc
 	T.dir = turn(src.dir, -90)
-	user.visible_message("<span class='notice'>[user] inserts the [R].</span>", "<span class='notice'>You insert the [R].</span>")
+	user.visible_message("[user] inserts the [R].", "<span class='notice'>You insert the [R].</span>")
 	qdel(R)
 
 
@@ -67,7 +67,7 @@
 
 				else if(icon_state == "open")
 					if(pod.contents.len && user.loc != pod)
-						user.visible_message("<span class='warning'>[user] starts emptying [pod]'s contents onto the floor!</span>")
+						user.visible_message("[user] starts emptying [pod]'s contents onto the floor.", "<span class='notice'>You start emptying [pod]'s contents onto the floor...</span>")
 						if(do_after(user, 10)) //So it doesn't default to close_animation() on fail
 							if(pod.loc == loc)
 								for(var/atom/movable/AM in pod)
@@ -81,7 +81,7 @@
 			break
 
 
-/obj/structure/transit_tube/station/attackby(obj/item/W, mob/user)
+/obj/structure/transit_tube/station/attackby(obj/item/W, mob/user, params)
 	if(istype(W, /obj/item/weapon/grab) && icon_state == "open")
 		var/obj/item/weapon/grab/G = W
 		if(ismob(G.affecting) && G.state >= GRAB_AGGRESSIVE)
@@ -96,9 +96,9 @@
 	if(istype(W, /obj/item/weapon/crowbar))
 		for(var/obj/structure/transit_tube_pod/pod in loc)
 			if(pod.contents)
-				user << "<span class='notice'>Empty the pod first.</span>"
+				user << "<span class='warning'>Empty the pod first!</span>"
 				return
-			user.visible_message("<span class='notice'>[user] removes the [pod].</span>", "<span class='notice'>You remove the [pod].</span>")
+			user.visible_message("[user] removes the [pod].", "<span class='notice'>You remove the [pod].</span>")
 			var/obj/structure/c_transit_tube_pod/R = new/obj/structure/c_transit_tube_pod(src.loc)
 			pod.transfer_fingerprints_to(R)
 			R.add_fingerprint(user)

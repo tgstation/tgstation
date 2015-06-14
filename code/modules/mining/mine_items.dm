@@ -11,12 +11,7 @@
 
 /obj/structure/closet/secure_closet/miner
 	name = "miner's equipment"
-	icon_state = "miningsec1"
-	icon_closed = "miningsec"
-	icon_locked = "miningsec1"
-	icon_opened = "miningsecopen"
-	icon_broken = "miningsecbroken"
-	icon_off = "miningsecoff"
+	icon_state = "mining"
 	req_access = list(access_mining)
 
 /obj/structure/closet/secure_closet/miner/New()
@@ -31,14 +26,12 @@
 	new /obj/item/clothing/shoes/sneakers/black(src)
 	new /obj/item/device/mining_scanner(src)
 	new /obj/item/weapon/storage/bag/ore(src)
-	new /obj/item/device/flashlight/lantern(src)
 	new /obj/item/weapon/shovel(src)
 	new /obj/item/weapon/pickaxe(src)
 	new /obj/item/clothing/glasses/meson(src)
 
 
 /**********************Shuttle Computer**************************/
-
 
 /obj/machinery/computer/shuttle/mining
 	name = "Mining Shuttle Console"
@@ -48,112 +41,78 @@
 	shuttleId = "mining"
 	possible_destinations = "mining_home;mining_away"
 
-/******************************Lantern*******************************/
-
-/obj/item/device/flashlight/lantern
-	name = "lantern"
-	icon_state = "lantern"
-	desc = "A mining lantern."
-	brightness_on = 6			// luminosity when on
-
-/*****************************Pickaxe********************************/
+/*********************Pickaxe & Drills**************************/
 
 /obj/item/weapon/pickaxe
 	name = "pickaxe"
-	icon = 'icons/obj/items.dmi'
+	icon = 'icons/obj/mining.dmi'
 	icon_state = "pickaxe"
 	flags = CONDUCT
 	slot_flags = SLOT_BELT
-	force = 15.0
+	force = 15
 	throwforce = 10.0
 	item_state = "pickaxe"
 	w_class = 4.0
 	m_amt = 3750 //one sheet, but where can you make them?
-	var/digspeed = 40 //moving the delay to an item var so R&D can make improved picks. --NEO
+	var/digspeed = 40
 	var/list/digsound = list('sound/effects/picaxe1.ogg','sound/effects/picaxe2.ogg','sound/effects/picaxe3.ogg')
 	origin_tech = "materials=1;engineering=1"
 	attack_verb = list("hit", "pierced", "sliced", "attacked")
 
 /obj/item/weapon/pickaxe/proc/playDigSound()
-	playsound(src, pick(digsound),20,1)
+	playsound(src, pick(digsound),50,1)
 
-/obj/item/weapon/pickaxe/silver
-	name = "silver pickaxe"
-	icon_state = "spickaxe"
-	item_state = "spickaxe"
-	digspeed = 30
-	origin_tech = "materials=3"
-	desc = "This makes no metallurgic sense."
+/obj/item/weapon/pickaxe/diamond
+	name = "diamond-tipped pickaxe"
+	icon_state = "dpickaxe"
+	item_state = "dpickaxe"
+	digspeed = 20 //mines twice as fast as a normal pickaxe, bought from mining vendor
+	origin_tech = "materials=4;engineering=3"
+	desc = "A pickaxe with a diamond pick head. Extremely robust at cracking rock walls and digging up dirt."
 
 /obj/item/weapon/pickaxe/drill
-	name = "mining drill" // Can dig sand as well!
+	name = "mining drill"
 	icon_state = "handdrill"
 	item_state = "jackhammer"
-	digspeed = 30
+	digspeed = 25 //available from roundstart, faster than a pickaxe.
 	digsound = list('sound/weapons/drill.ogg')
 	hitsound = 'sound/weapons/drill.ogg'
 	origin_tech = "materials=2;powerstorage=3;engineering=2"
-	desc = "Yours is the drill that will pierce through the rock walls."
+	desc = "An electric mining drill for the especially scrawny."
 
-/obj/item/weapon/pickaxe/drill/diamonddrill //When people ask about the badass leader of the mining tools, they are talking about ME! making it a child of drill to stop copypasta
-	name = "diamond mining drill"
+/obj/item/weapon/pickaxe/drill/cyborg
+	name = "cyborg mining drill"
+	desc = "An integrated electric mining drill."
+	flags = NODROP
+
+/obj/item/weapon/pickaxe/drill/diamonddrill
+	name = "diamond-tipped mining drill"
 	icon_state = "diamonddrill"
-	digspeed = 5 //Digs through walls, girders, and can dig up sand
+	digspeed = 10
 	origin_tech = "materials=6;powerstorage=4;engineering=5"
 	desc = "Yours is the drill that will pierce the heavens!"
 
-/obj/item/weapon/pickaxe/jackhammer
+/obj/item/weapon/pickaxe/drill/cyborg/diamond //This is the BORG version!
+	name = "diamond-tipped cyborg mining drill" //To inherit the NODROP flag, and easier to change borg specific drill mechanics.
+	icon_state = "diamonddrill"
+	digspeed = 10
+
+/obj/item/weapon/pickaxe/drill/jackhammer
 	name = "sonic jackhammer"
 	icon_state = "jackhammer"
 	item_state = "jackhammer"
-	digspeed = 15 //faster than drill, but cannot dig
+	digspeed = 5 //the epitome of powertools. extremely fast mining, laughs at puny walls
 	origin_tech = "materials=3;powerstorage=2;engineering=2"
 	digsound = list('sound/weapons/sonic_jackhammer.ogg')
 	hitsound = 'sound/weapons/sonic_jackhammer.ogg'
-	desc = "Cracks rocks with sonic blasts, perfect for clearing large areas of rock."
-
-/obj/item/weapon/pickaxe/jackhammer/borgdrill // making it a parrent of jackhammer to prevent copypasta
-	name = "cyborg mining drill"
-	desc = ""
-
-/obj/item/weapon/pickaxe/gold
-	name = "golden pickaxe"
-	icon_state = "gpickaxe"
-	item_state = "gpickaxe"
-	digspeed = 20
-	origin_tech = "materials=4"
-	desc = "This makes no metallurgic sense."
-
-/obj/item/weapon/pickaxe/plasmacutter
-	name = "plasma cutter"
-	icon_state = "plasmacutter"
-	item_state = "gun"
-	w_class = 3.0 //it is smaller than the pickaxe
-	damtype = "fire"
-	digspeed = 20 //Can slice though normal walls, all girders, or be used in reinforced wall deconstruction/ light thermite on fire
-	digsound = list('sound/weapons/plasma_cutter.ogg')
-	hitsound = 'sound/weapons/plasma_cutter.ogg'
-	origin_tech = "materials=4;plasmatech=3;engineering=3"
-	desc = "A rock cutter that uses bursts of hot plasma. You could use it to cut limbs off of xenos! Or, you know, mine stuff."
-
-/obj/item/weapon/pickaxe/diamond
-	name = "diamond pickaxe"
-	icon_state = "dpickaxe"
-	item_state = "dpickaxe"
-	digspeed = 10
-	origin_tech = "materials=6;engineering=4"
-	desc = "A pickaxe with a diamond pick head, this is just like minecraft."
-
-
-
-
+	desc = "Cracks rocks with sonic blasts, and doubles as a demolition power tool for smashing walls."
 
 /*****************************Shovel********************************/
 
 /obj/item/weapon/shovel
 	name = "shovel"
 	desc = "A large tool for digging and moving dirt."
-	icon = 'icons/obj/items.dmi'
+	icon = 'icons/obj/mining.dmi'
 	icon_state = "shovel"
 	flags = CONDUCT
 	slot_flags = SLOT_BELT
@@ -180,12 +139,5 @@
 /obj/structure/closet/crate/miningcar
 	desc = "A mining car. This one doesn't work on rails, but has to be dragged."
 	name = "Mining car (not for rails)"
-	icon = 'icons/obj/storage.dmi'
+	icon_crate = "miningcar"
 	icon_state = "miningcar"
-	density = 1
-	icon_opened = "miningcaropen"
-	icon_closed = "miningcar"
-
-
-
-

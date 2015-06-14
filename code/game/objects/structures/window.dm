@@ -16,20 +16,25 @@
 	var/disassembled = 0
 	var/wtype = "glass"
 	var/fulltile = 0
-	var/obj/item/stack/rods/storedrods
-	var/obj/item/weapon/shard/storedshard
+	var/list/storeditems = list()
 //	var/silicate = 0 // number of units of silicate
 //	var/icon/silicateIcon = null // the silicated icon
 
 /obj/structure/window/New(Loc,re=0)
 	..()
 	health = maxhealth
-	if(re)	reinf = re
-	storedshard = new/obj/item/weapon/shard(src)
+	if(re)
+		reinf = re
+	storeditems.Add(new/obj/item/weapon/shard(src))
+	if(fulltile)
+		storeditems.Add(new/obj/item/weapon/shard(src))
 	ini_dir = dir
 	if(reinf)
 		state = 2*anchored
-		storedrods = new/obj/item/stack/rods(src)
+		var/obj/item/stack/rods/R = new/obj/item/stack/rods(src)
+		storeditems.Add(R)
+		if(fulltile)
+			R.add(1)
 
 	air_update_turf(1)
 	update_nearby_icons()
@@ -123,9 +128,7 @@
 	..(user, 1)
 	user.say(pick(";RAAAAAAAARGH!", ";HNNNNNNNNNGGGGGGH!", ";GWAAAAAAAARRRHHH!", "NNNNNNNNGGGGGGGGHH!", ";AAAAAAARRRGH!"))
 	user.visible_message("<span class='danger'>[user] smashes through [src]!</span>")
-	storedshard.add_fingerprint(user)
-	if(storedrods)
-		storedrods.add_fingerprint(user)
+	add_fingerprint(user)
 	hit(50)
 	return 1
 
@@ -133,7 +136,7 @@
 	if(!can_be_reached(user))
 		return
 	user.changeNext_move(CLICK_CD_MELEE)
-	user.visible_message("<span class='notice'>[user] knocks on [src].</span>")
+	user.visible_message("[user] knocks on [src].")
 	add_fingerprint(user)
 	playsound(loc, 'sound/effects/Glassknock.ogg', 50, 1)
 
@@ -172,7 +175,7 @@
 	attack_generic(M, M.melee_damage_upper)
 	update_nearby_icons()
 
-/obj/structure/window/attack_slime(mob/living/carbon/slime/user as mob)
+/obj/structure/window/attack_slime(mob/living/simple_animal/slime/user as mob)
 	user.do_attack_animation(src)
 	if(!user.is_adult)
 		return
@@ -180,7 +183,7 @@
 	attack_generic(user, rand(10, 15))
 	update_nearby_icons()
 
-/obj/structure/window/attackby(obj/item/I, mob/living/user)
+/obj/structure/window/attackby(obj/item/I, mob/living/user, params)
 	if(!can_be_reached(user))
 		return 1 //skip the afterattack
 
@@ -188,51 +191,51 @@
 	if(istype(I, /obj/item/weapon/screwdriver))
 		playsound(loc, 'sound/items/Screwdriver.ogg', 75, 1)
 		if(reinf && (state == 2 || state == 1))
-			user << (state == 2 ? "<span class='notice'>You begin to unscrew the window from the frame.</span>" : "<span class='notice'>You begin to screw the window to the frame.</span>")
+			user << (state == 2 ? "<span class='notice'>You begin to unscrew the window from the frame...</span>" : "<span class='notice'>You begin to screw the window to the frame...</span>")
 		else if(reinf && state == 0)
-			user << (anchored ? "<span class='notice'>You begin to unscrew the frame from the floor.</span>" : "<span class='notice'>You begin to screw the frame to the floor.</span>")
+			user << (anchored ? "<span class='notice'>You begin to unscrew the frame from the floor...</span>" : "<span class='notice'>You begin to screw the frame to the floor...</span>")
 		else if(!reinf)
-			user << (anchored ? "<span class='notice'>You begin to unscrew the window from the floor.</span>" : "<span class='notice'>You begin to screw the window to the floor.</span>")
+			user << (anchored ? "<span class='notice'>You begin to unscrew the window from the floor...</span>" : "<span class='notice'>You begin to screw the window to the floor...</span>")
 
 		if(do_after(user, 40))
 			if(reinf && (state == 1 || state == 2))
 				//If state was unfastened, fasten it, else do the reverse
 				state = (state == 1 ? 2 : 1)
-				user << (state == 1 ? "<span class='notice'>You have unfastened the window from the frame.</span>" : "<span class='notice'>You have fastened the window to the frame.</span>")
+				user << (state == 1 ? "<span class='notice'>You unfasten the window from the frame.</span>" : "<span class='notice'>You fasten the window to the frame.</span>")
 			else if(reinf && state == 0)
 				anchored = !anchored
 				update_nearby_icons()
-				user << (anchored ? "<span class='notice'>You have fastened the frame to the floor.</span>" : "<span class='notice'>You have unfastened the frame from the floor.</span>")
+				user << (anchored ? "<span class='notice'>You fasten the frame to the floor.</span>" : "<span class='notice'>You unfasten the frame from the floor.</span>")
 			else if(!reinf)
 				anchored = !anchored
 				update_nearby_icons()
-				user << (anchored ? "<span class='notice'>You have fastened the window to the floor.</span>" : "<span class='notice'>You have unfastened the window.</span>")
+				user << (anchored ? "<span class='notice'>You fasten the window to the floor.</span>" : "<span class='notice'>You unfasten the window.</span>")
 
 	else if (istype(I, /obj/item/weapon/crowbar) && reinf && (state == 0 || state == 1))
-		user << (state == 0 ? "<span class='notice'>You begin to lever the window into the frame.</span>" : "<span class='notice'>You begin to lever the window out of the frame.</span>")
+		user << (state == 0 ? "<span class='notice'>You begin to lever the window into the frame...</span>" : "<span class='notice'>You begin to lever the window out of the frame...</span>")
 		playsound(loc, 'sound/items/Crowbar.ogg', 75, 1)
 		if(do_after(user, 40))
 			//If state was out of frame, put into frame, else do the reverse
 			state = (state == 0 ? 1 : 0)
-			user << (state == 1 ? "<span class='notice'>You have pried the window into the frame.</span>" : "<span class='notice'>You have pried the window out of the frame.</span>")
+			user << (state == 1 ? "<span class='notice'>You pry the window into the frame.</span>" : "<span class='notice'>You pry the window out of the frame.</span>")
 
 	else if(istype(I, /obj/item/weapon/weldingtool))
 		var/obj/item/weapon/weldingtool/WT = I
 		if(user.a_intent == "help") //so you can still break windows with welding tools
 			if(health < maxhealth)
 				if(WT.remove_fuel(0,user))
-					user << "<span class='notice'>You begin repairing [src].</span>"
+					user << "<span class='notice'>You begin repairing [src]...</span>"
 					playsound(loc, 'sound/items/Welder.ogg', 40, 1)
 					if(do_after(user, 40))
 						health = maxhealth
 						playsound(loc, 'sound/items/Welder2.ogg', 50, 1)
 			else
-				user << "<span class='notice'>[src] is already in good condition.</span>"
+				user << "<span class='warning'>[src] is already in good condition!</span>"
 		update_nearby_icons()
 
 	else if(istype(I, /obj/item/weapon/wrench) && !anchored)
 		playsound(loc, 'sound/items/Ratchet.ogg', 75, 1)
-		user << "<span class='notice'> You begin to disassemble [src].</span>"
+		user << "<span class='notice'> You begin to disassemble [src]...</span>"
 		if(do_after(user, 40))
 			if(disassembled)
 				return //Prevents multiple deconstruction attempts
@@ -279,29 +282,23 @@
 	return 1
 
 /obj/structure/window/proc/hit(var/damage, var/sound_effect = 1)
-	if(reinf) damage *= 0.5
+	if(reinf)
+		damage *= 0.5
 	health = max(0, health - damage)
 	update_nearby_icons()
 	if(sound_effect)
 		playsound(loc, 'sound/effects/Glasshit.ogg', 75, 1)
 	if(health <= 0)
-		if(dir == SOUTHWEST)
-			var/index = null
-			index = 0
-			while(index < 2)
-				spawnfragments()
-				index++
-		else
-			spawnfragments()
+		spawnfragments()
 		return
 
 /obj/structure/window/proc/spawnfragments()
+	if(!loc) //if already qdel'd somehow, we do nothing
+		return
 	var/turf/T = loc
-	storedshard.loc = T
-	transfer_fingerprints_to(storedshard)
-	if(storedrods)
-		storedrods.loc = T
-		transfer_fingerprints_to(storedrods)
+	for(var/obj/item/I in storeditems)
+		I.loc = T
+		transfer_fingerprints_to(I)
 	qdel(src)
 	update_nearby_icons()
 
@@ -314,7 +311,7 @@
 		return
 
 	if(anchored)
-		usr << "It is fastened to the floor therefore you can't rotate it!"
+		usr << "<span class='warning'>It is fastened to the floor therefore you can't rotate it!</span>"
 		return 0
 
 	dir = turn(dir, 90)
@@ -334,7 +331,7 @@
 		return
 
 	if(anchored)
-		usr << "It is fastened to the floor therefore you can't rotate it!"
+		usr << "<span class='warning'>It is fastened to the floor therefore you can't rotate it!</span>"
 		return 0
 
 	dir = turn(dir, 270)

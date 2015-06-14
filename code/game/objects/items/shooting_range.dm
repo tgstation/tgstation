@@ -1,4 +1,3 @@
-// Targets, the things that actually get shot!
 /obj/item/target
 	name = "shooting target"
 	desc = "A shooting target."
@@ -6,175 +5,77 @@
 	icon_state = "target_h"
 	density = 0
 	var/hp = 1800
-	var/icon/virtualIcon
-	var/list/bulletholes = list()
+	var/obj/structure/target_stake/pinnedLoc
 
 /obj/item/target/Destroy()
-	// if a target is deleted and associated with a stake, force stake to forget
-	for(var/obj/structure/target_stake/T in view(3,src))
-		if(T.pinned_target == src)
-			T.pinned_target = null
-			T.density = 1
-			break
-	..() // delete target
+	removeOverlays()
+	if(pinnedLoc)
+		pinnedLoc.nullPinnedTarget()
+	..()
+
+/obj/item/target/proc/nullPinnedLoc()
+	pinnedLoc = null
+	density = 0
+
+/obj/item/target/proc/removeOverlays()
+	overlays.Cut()
 
 /obj/item/target/Move()
 	..()
-	// After target moves, check for nearby stakes. If associated, move to target
-	for(var/obj/structure/target_stake/M in view(3,src))
-		if(M.density == 0 && M.pinned_target == src)
-			M.loc = loc
+	if(pinnedLoc)
+		pinnedLoc.loc = loc
 
-	// This may seem a little counter-intuitive but I assure you that's for a purpose.
-	// Stakes are the ones that carry targets, yes, but in the stake code we set
-	// a stake's density to 0 meaning it can't be pushed anymore. Instead of pushing
-	// the stake now, we have to push the target.
-
-
-
-/obj/item/target/attackby(obj/item/W as obj, mob/user as mob)
-	if (istype(W, /obj/item/weapon/weldingtool))
+/obj/item/target/attackby(obj/item/W, mob/user, params)
+	if(istype(W, /obj/item/weapon/weldingtool))
 		var/obj/item/weapon/weldingtool/WT = W
 		if(WT.remove_fuel(0, user))
-			overlays.Cut()
-			usr << "You slice off [src]'s uneven chunks of aluminium and scorch marks."
-			return
+			removeOverlays()
+			usr << "<span class='notice'>You slice off [src]'s uneven chunks of aluminium and scorch marks.</span>"
 
-
-/obj/item/target/attack_hand(mob/user as mob)
-	// taking pinned targets off!
-	var/obj/structure/target_stake/stake
-	for(var/obj/structure/target_stake/T in view(3,src))
-		if(T.pinned_target == src)
-			stake = T
-			break
-
-	if(stake)
-		if(stake.pinned_target)
-			stake.density = 1
-			density = 0
-			layer = OBJ_LAYER
-
-			loc = user.loc
-			if(ishuman(user))
-				if(!user.get_active_hand())
-					user.put_in_hands(src)
-					user << "You take the target out of the stake."
-			else
-				src.loc = get_turf(user)
-				user << "You take the target out of the stake."
-
-			stake.pinned_target = null
-			return
-
-	else
-		..()
+/obj/item/target/attack_hand(mob/user)
+	if(pinnedLoc)
+		pinnedLoc.removeTarget(user)
+	..()
 
 /obj/item/target/syndicate
 	icon_state = "target_s"
 	desc = "A shooting target that looks like a syndicate scum."
-	hp = 2600 // i guess syndie targets are sturdier?
+	hp = 2600
 
 /obj/item/target/alien
 	icon_state = "target_q"
 	desc = "A shooting target that looks like a xenomorphic alien."
-	hp = 2350 // alium onest too kinda
+	hp = 2350
 
-/obj/item/target/bullet_act(var/obj/item/projectile/Proj)
-	var/p_x = Proj.p_x + pick(0,0,0,0,0,-1,1) // really ugly way of coding "sometimes offset Proj.p_x!"
-	var/p_y = Proj.p_y + pick(0,0,0,0,0,-1,1)
-	var/decaltype = 1 // 1 - scorch, 2 - bullet
+#define DECALTYPE_SCORCH 1
+#define DECALTYPE_BULLET 2
 
-	if(istype(/obj/item/projectile/bullet, Proj))
-		decaltype = 2
-
-
-	virtualIcon = new(icon, icon_state)
-
-	if( virtualIcon.GetPixel(p_x, p_y) ) // if the located pixel isn't blank (null)
-
-		hp -= Proj.damage
+/obj/item/target/bullet_act(obj/item/projectile/P)
+	var/p_x = P.p_x + pick(0,0,0,0,0,-1,1) // really ugly way of coding "sometimes offset P.p_x!"
+	var/p_y = P.p_y + pick(0,0,0,0,0,-1,1)
+	var/decaltype = DECALTYPE_SCORCH
+	if(istype(/obj/item/projectile/bullet, P))
+		decaltype = DECALTYPE_BULLET
+	var/icon/C = icon(icon,icon_state)
+	if(C.GetPixel(p_x, p_y) && P.original == src && overlays.len <= 35) // if the located pixel isn't blank (null)
+		hp -= P.damage
 		if(hp <= 0)
-			visible_message("<span class='warning'>[src] breaks into tiny pieces and collapses!</span>")
+			visible_message("<span class='danger'>[src] breaks into tiny pieces and collapses!</span>")
 			qdel(src)
-
-		// Create a temporary object to represent the damage
-		var/obj/bmark = new
-		bmark.pixel_x = p_x
-		bmark.pixel_y = p_y
-		bmark.icon = 'icons/effects/effects.dmi'
-		bmark.layer = 3.5
-		bmark.icon_state = "scorch"
-
-		if(decaltype == 1)
-			// Energy weapons are hot. they scorch!
-
-			// offset correction
-			bmark.pixel_x--
-			bmark.pixel_y--
-
-			if(Proj.damage >= 20 || istype(Proj, /obj/item/projectile/beam/practice))
-				bmark.icon_state = "scorch"
-				bmark.dir = pick(NORTH,SOUTH,EAST,WEST) // random scorch design
-
-
+		var/image/I = image("icon"='icons/effects/effects.dmi', "icon_state"="scorch", "layer"=OBJ_LAYER+0.5)
+		I.pixel_x = p_x - 1 //offset correction
+		I.pixel_y = p_y - 1
+		if(decaltype == DECALTYPE_SCORCH)
+			I.dir = pick(NORTH,SOUTH,EAST,WEST)// random scorch design
+			if(P.damage >= 20 || istype(P, /obj/item/projectile/beam/practice))
+				I.dir = pick(NORTH,SOUTH,EAST,WEST)
 			else
-				bmark.icon_state = "light_scorch"
+				I.icon_state = "light_scorch"
 		else
-
-			// Bullets are hard. They make dents!
-			bmark.icon_state = "dent"
-
-		if(Proj.damage >= 10 && bulletholes.len <= 35) // maximum of 35 bullet holes
-			if(decaltype == 2) // bullet
-				if(prob(Proj.damage+30)) // bullets make holes more commonly!
-					new/datum/bullethole(src, bmark.pixel_x, bmark.pixel_y) // create new bullet hole
-			else // Lasers!
-				if(prob(Proj.damage-10)) // lasers make holes less commonly
-					new/datum/bullethole(src, bmark.pixel_x, bmark.pixel_y) // create new bullet hole
-
-		// draw bullet holes
-		for(var/datum/bullethole/B in bulletholes)
-
-			virtualIcon.DrawBox(null, B.b1x1, B.b1y,  B.b1x2, B.b1y) // horizontal line, left to right
-			virtualIcon.DrawBox(null, B.b2x, B.b2y1,  B.b2x, B.b2y2) // vertical line, top to bottom
-
-		overlays += bmark // add the decal
-
-		icon = virtualIcon // apply bulletholes over decals
-
+			I.icon_state = "dent"
+		overlays += I
 		return
+	return -1
 
-	return -1 // the bullet/projectile goes through the target! Ie, you missed
-
-
-// Small memory holder entity for transparent bullet holes
-/datum/bullethole
-	// First box
-	var/b1x1 = 0
-	var/b1x2 = 0
-	var/b1y = 0
-
-	// Second box
-	var/b2x = 0
-	var/b2y1 = 0
-	var/b2y2 = 0
-
-/datum/bullethole/New(var/obj/item/target/Target, var/pixel_x = 0, var/pixel_y = 0)
-	if(!Target) return
-
-	// Randomize the first box
-	b1x1 = pixel_x - pick(1,1,1,1,2,2,3,3,4)
-	b1x2 = pixel_x + pick(1,1,1,1,2,2,3,3,4)
-	b1y = pixel_y
-	if(prob(35))
-		b1y += rand(-4,4)
-
-	// Randomize the second box
-	b2x = pixel_x
-	if(prob(35))
-		b2x += rand(-4,4)
-	b2y1 = pixel_y + pick(1,1,1,1,2,2,3,3,4)
-	b2y2 = pixel_y - pick(1,1,1,1,2,2,3,3,4)
-
-	Target.bulletholes.Add(src)
+#undef DECALTYPE_SCORCH
+#undef DECALTYPE_BULLET

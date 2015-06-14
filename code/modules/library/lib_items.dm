@@ -31,7 +31,7 @@
 	update_icon()
 
 
-/obj/structure/bookcase/attackby(obj/item/I, mob/user)
+/obj/structure/bookcase/attackby(obj/item/I, mob/user, params)
 	switch(state)
 		if(0)
 			if(istype(I, /obj/item/weapon/wrench))
@@ -81,7 +81,7 @@
 					name = ("bookcase ([sanitize(newname)])")
 			else if(istype(I, /obj/item/weapon/crowbar))
 				if(contents.len)
-					user << "<span class='notice'>You need to remove the books first.</span>"
+					user << "<span class='warning'>You need to remove the books first!</span>"
 				else
 					playsound(loc, 'sound/items/Crowbar.ogg', 100, 1)
 					user << "<span class='notice'>You pry the shelf out.</span>"
@@ -186,12 +186,12 @@
 		user << "<span class='notice'>This book is completely blank!</span>"
 
 
-/obj/item/weapon/book/attackby(obj/item/I, mob/user)
+/obj/item/weapon/book/attackby(obj/item/I, mob/user, params)
 	if(istype(I, /obj/item/weapon/pen))
 		if(is_blind(user))
 			return
 		if(unique)
-			user << "<span class='notice'>These pages don't seem to take the ink well. Looks like you can't modify it.</span>"
+			user << "<span class='warning'>These pages don't seem to take the ink well! Looks like you can't modify it.</span>"
 			return
 		var/choice = input("What would you like to change?") in list("Title", "Contents", "Author", "Cancel")
 		switch(choice)
@@ -250,8 +250,8 @@
 					scanner.computer.inventory.Add(src)
 					user << "[I]'s screen flashes: 'Book stored in buffer. Title added to general inventory.'"
 
-	else if(istype(I, /obj/item/weapon/kitchenknife) || istype(I, /obj/item/weapon/wirecutters))
-		user << "<span class='notice'>You begin to carve out [title].</span>"
+	else if(istype(I, /obj/item/weapon/kitchen/knife) || istype(I, /obj/item/weapon/wirecutters))
+		user << "<span class='notice'>You begin to carve out [title]...</span>"
 		if(do_after(user, 30))
 			user << "<span class='notice'>You carve out the pages from [title]! You didn't want to read it anyway.</span>"
 			var/obj/item/weapon/storage/book/B = new

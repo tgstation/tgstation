@@ -2,7 +2,7 @@ var/bomb_set
 
 /obj/machinery/nuclearbomb
 	name = "nuclear fission explosive"
-	desc = "Uh oh. RUN!!!!"
+	desc = "You probably shouldn't stick around to see if this is armed."
 	icon = 'icons/obj/stationobjs.dmi'
 	icon_state = "nuclearbomb0"
 	density = 1
@@ -17,6 +17,15 @@ var/bomb_set
 	use_power = 0
 	var/previous_level = ""
 	var/lastentered = ""
+	var/immobile = 0 //Not all nukes should be moved
+
+/obj/machinery/nuclearbomb/selfdestruct
+	name = "station self-destruct terminal"
+	desc = "For when it all gets too much to bear. Do not taunt."
+	icon = 'icons/obj/machines/bignuke.dmi'
+	anchored = 1 //stops it being moved
+	immobile = 1 //prevents it from ever being moved
+	layer = 4
 
 /obj/machinery/nuclearbomb/process()
 	if (src.timing)
@@ -32,7 +41,7 @@ var/bomb_set
 				src.attack_hand(M)
 	return
 
-/obj/machinery/nuclearbomb/attackby(obj/item/weapon/I as obj, mob/user as mob)
+/obj/machinery/nuclearbomb/attackby(obj/item/weapon/I as obj, mob/user as mob, params)
 	if (istype(I, /obj/item/weapon/disk/nuclear))
 		usr.drop_item()
 		I.loc = src
@@ -140,14 +149,17 @@ var/bomb_set
 					src.timing = 0
 					bomb_set = 0
 			if (href_list["anchor"])
-				if(!isinspace())
+				if(!isinspace()&&(!immobile))
 					src.anchored = !( src.anchored )
+				else if(immobile)
+					usr << "<span class='warning'>This device is immovable!</span>"
 				else
 					usr << "<span class='warning'>There is nothing to anchor to!</span>"
 	src.add_fingerprint(usr)
 	for(var/mob/M in viewers(1, src))
 		if ((M.client && M.machine == src))
 			src.attack_hand(M)
+
 
 /obj/machinery/nuclearbomb/ex_act(severity, target)
 	return
@@ -196,42 +208,47 @@ var/bomb_set
 			ticker.mode:nukes_left --
 		else
 			world << "<B>The station was destoyed by the nuclear blast!</B>"
-
 		ticker.mode.station_was_nuked = (off_station<2)	//offstation==1 is a draw. the station becomes irradiated and needs to be evacuated.
 														//kinda shit but I couldn't  get permission to do what I wanted to do.
-
 		if(!ticker.mode.check_finished())//If the mode does not deal with the nuke going off so just reboot because everyone is stuck as is
-			world << "<B>Resetting in 30 seconds!</B>"
-
-			feedback_set_details("end_error","nuke - unhandled ending")
-
-			if(blackbox)
-				blackbox.save_all_data_to_sql()
-			sleep(300)
-			log_game("Rebooting due to nuclear detonation")
-			kick_clients_in_lobby("<span class='danger'>The round came to an end with you in the lobby.</span>", 1) //second parameter ensures only afk clients are kicked
-			world.Reboot()
+			world.Reboot("Station destroyed by Nuclear Device.", "end_error", "nuke - unhandled ending")
 			return
 	return
+
+/*
+This is here to make the tiles around the station mininuke change when it's armed.
+*/
+
+/obj/machinery/nuclearbomb/selfdestruct/proc/SetTurfs()
+	if(loc == initial(loc))
+		var/text_icon_state = "[timing ? "rcircuitanim" : "gcircuit"]"
+		for(var/turf/simulated/floor/bluegrid/T in orange(src, 1))
+			T.icon_state = text_icon_state
+
+/obj/machinery/nuclearbomb/selfdestruct/Topic()
+        ..()
+        SetTurfs()
+
 
 
 //==========DAT FUKKEN DISK===============
 /obj/item/weapon/disk/nuclear
 	name = "nuclear authentication disk"
 	desc = "Better keep this safe."
+	icon = 'icons/obj/items.dmi'
 	icon_state = "nucleardisk"
 	item_state = "card-id"
 	w_class = 1.0
 
 /obj/item/weapon/disk/nuclear/New()
 	..()
-	SSobj.processing.Add(src)
+	SSobj.processing |= src
 
 /obj/item/weapon/disk/nuclear/process()
 	var/turf/disk_loc = get_turf(src)
 	if(disk_loc.z > ZLEVEL_CENTCOM)
 		get(src, /mob) << "<span class='danger'>You can't help but feel that you just lost something back there...</span>"
-		Destroy()
+		qdel(src)
 
 /obj/item/weapon/disk/nuclear/Destroy()
 	if(blobstart.len > 0)
@@ -240,7 +257,7 @@ var/bomb_set
 		var/turf/diskturf = get_turf(src)
 		message_admins("[src] has been destroyed in ([diskturf.x], [diskturf.y] ,[diskturf.z] - <A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[diskturf.x];Y=[diskturf.y];Z=[diskturf.z]'>JMP</a>). Moving it to ([NEWDISK.x], [NEWDISK.y], [NEWDISK.z] - <A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[NEWDISK.x];Y=[NEWDISK.y];Z=[NEWDISK.z]'>JMP</a>).")
 		log_game("[src] has been destroyed in ([diskturf.x], [diskturf.y] ,[diskturf.z]). Moving it to ([NEWDISK.x], [NEWDISK.y], [NEWDISK.z]).")
-		del(src) //Needed to clear all references to it
+		return QDEL_HINT_HARDDEL_NOW
 	else
 		ERROR("[src] was supposed to be destroyed, but we were unable to locate a blobstart landmark to spawn a new one.")
-	return 1 // Cancel destruction.
+	return QDEL_HINT_LETMELIVE // Cancel destruction.

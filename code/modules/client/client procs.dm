@@ -90,7 +90,9 @@ var/list/external_rsc_urls
 var/next_external_rsc = 0
 #endif
 
+
 /client/New(TopicData)
+
 	TopicData = null							//Prevent calls to client.Topic from connect
 
 	if(connection != "seeker")					//Invalid connection type.
@@ -136,6 +138,25 @@ var/next_external_rsc = 0
 	add_verbs_from_config()
 	set_client_age_from_db()
 
+	if (isnum(player_age) && player_age == -1) //first connection
+		if (config.panic_bunker && !holder && !(ckey in deadmins))
+			log_access("Failed Login: [key] - New account attempting to connect during panic bunker")
+			message_admins("<span class='adminnotice'>Failed Login: [key] - New account attempting to connect during panic bunker</span>")
+			src << "Sorry but the server is currently not accepting connections from never before seen players."
+			del(src)
+			return 0
+
+		if (config.notify_new_player_age >= 0)
+			message_admins("New user: [key_name_admin(src)] is connecting here for the first time.")
+			if (config.irc_first_connection_alert)
+				send2irc_adminless_only("New-user", "[key_name(src)] is connecting for the first time!")
+
+		player_age = 0 // set it from -1 to 0 so the job selection code doesn't have a panic attack
+
+	else if (isnum(player_age) && player_age < config.notify_new_player_age)
+		message_admins("New user: [key_name_admin(src)] just connected with an age of [player_age] day[(player_age==1?"":"s")]")
+
+
 	if (!ticker || ticker.current_state == GAME_STATE_PREGAME)
 		spawn (rand(10,150))
 			if (src)
@@ -146,8 +167,11 @@ var/next_external_rsc = 0
 	send_resources()
 
 	if(prefs.lastchangelog != changelog_hash) //bolds the changelog button on the interface so we know there are updates.
-		winset(src, "rpane.changelog", "background-color=#eaeaea;font-style=bold")
-
+		src << "<span class='info'>You have unread updates in the changelog.</span>"
+		if(config.aggressive_changelog)
+			src.changes()
+		else
+			winset(src, "rpane.changelogb", "background-color=#eaeaea;font-style=bold")
 
 	//////////////
 	//DISCONNECT//
@@ -172,11 +196,15 @@ var/next_external_rsc = 0
 	var/sql_ckey = sanitizeSQL(src.ckey)
 
 	var/DBQuery/query = dbcon.NewQuery("SELECT id, datediff(Now(),firstseen) as age FROM [format_table_name("player")] WHERE ckey = '[sql_ckey]'")
-	query.Execute()
+	if (!query.Execute())
+		return
 
 	while (query.NextRow())
 		player_age = text2num(query.item[2])
-		break
+		return
+
+	//no match mark it as a first connection for use in client/New()
+	player_age = -1
 
 
 /client/proc/sync_client_with_db()
@@ -236,24 +264,9 @@ var/next_external_rsc = 0
 
 //send resources to the client. It's here in its own proc so we can move it around easiliy if need be
 /client/proc/send_resources()
+	//Send nanoui files to client
+	SSnano.send_resources(src)
 	getFiles(
-		'nano/js/libraries.min.js',
-		'nano/js/nano_update.js',
-		'nano/js/nano_config.js',
-		'nano/js/nano_base_helpers.js',
-		'nano/css/shared.css',
-		'nano/css/icons.css',
-		'nano/templates/chem_dispenser.tmpl',
-		'nano/templates/chem_heater.tmpl',
-		'nano/templates/smes.tmpl',
-		'nano/templates/apc.tmpl',
-		'nano/templates/cryo.tmpl',
-		'nano/images/uiBackground.png',
-		'nano/images/uiIcons16.png',
-		'nano/images/uiIcons24.png',
-		'nano/images/uiLinkPendingIcon.gif',
-		'nano/images/uiNoticeBackground.jpg',
-		'nano/images/uiTitleFluff.png',
 		'html/search.js',
 		'html/panels.css',
 		'html/browser/common.css',

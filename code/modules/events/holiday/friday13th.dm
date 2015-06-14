@@ -2,7 +2,7 @@
 
 /datum/round_event_control/fridaythethirteen
 	name = "Friday the 13th"
-	holidayID = "Friday the 13th"
+	holidayID = FRIDAY_13TH
 	typepath = /datum/round_event/fridaythethirteen
 	weight = -1
 	max_occurrences = 1

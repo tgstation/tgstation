@@ -44,6 +44,8 @@
 	for(var/obj/item/weapon/stock_parts/manipulator/P in component_parts)
 		speed_coeff += P.rating
 	heal_level = (efficiency * 15) + 10
+	if(heal_level > 100)
+		heal_level = 100
 
 //The return of data disks?? Just for transferring between genetics machine/cloning machine.
 //TO-DO: Make the genetics machine accept them.
@@ -83,7 +85,7 @@
 
 /obj/item/weapon/disk/data/attack_self(mob/user as mob)
 	read_only = !read_only
-	user << "You flip the write-protect tab to [src.read_only ? "protected" : "unprotected"]."
+	user << "<span class='notice'>You flip the write-protect tab to [src.read_only ? "protected" : "unprotected"].</span>"
 
 /obj/item/weapon/disk/data/examine(mob/user)
 	..()
@@ -242,7 +244,7 @@
 	return
 
 //Let's unlock this early I guess.  Might be too early, needs tweaking.
-/obj/machinery/clonepod/attackby(obj/item/weapon/W as obj, mob/user as mob)
+/obj/machinery/clonepod/attackby(obj/item/weapon/W as obj, mob/user as mob, params)
 	if(!(occupant || mess || locked))
 		if(default_deconstruction_screwdriver(user, "[icon_state]_maintenance", "[initial(icon_state)]",W))
 			return
@@ -270,7 +272,7 @@
 /obj/machinery/clonepod/emag_act(user as mob)
 	if (isnull(src.occupant))
 		return
-	user << "You force an emergency ejection."
+	user << "<span class='notice'>You force an emergency ejection.</span>"
 	src.locked = 0
 	src.go_out()
 

@@ -31,10 +31,10 @@ Bonus
 		var/mob/living/M = A.affected_mob
 		switch(A.stage)
 			if(3, 4)
-				M << "<span class='notice'>[pick("You hear a ringing in your ear.", "Your ears pop.")]</span>"
+				M << "<span class='italics'>[pick("You hear a ringing in your ear.", "Your ears pop.")]</span>"
 			if(5)
 				if(!(M.ear_deaf))
-					M << "<span class='danger'>Your ears pop and begin ringing loudly!</span>"
+					M << "<span class='userdanger'>Your ears pop and begin ringing loudly!</span>"
 					M.setEarDamage(-1,INFINITY) //Shall be enough
 					spawn(200)
 						if(M)

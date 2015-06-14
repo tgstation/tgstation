@@ -62,17 +62,11 @@
 /*
 	Adjacency (to anything else):
 	* Must be on a turf
-	* In the case of a multiple-tile object, all valid locations are checked for adjacency.
-
-	Note: Multiple-tile objects are created when the bound_width and bound_height are creater than the tile size.
-	This is not used in stock /tg/station currently.
 */
 /atom/movable/Adjacent(var/atom/neighbor)
 	if(neighbor == loc) return 1
 	if(!isturf(loc)) return 0
-	for(var/turf/T in locs)
-		if(isnull(T)) continue
-		if(T.Adjacent(neighbor,src)) return 1
+	if(loc.Adjacent(neighbor,src)) return 1
 	return 0
 
 // This is necessary for storage items not on your person.
@@ -83,23 +77,6 @@
 			return loc.Adjacent(neighbor,recurse - 1)
 		return 0
 	return ..()
-/*
-	Special case: This allows you to reach a door when it is visally on top of,
-	but technically behind, a fire door
-
-	You could try to rewrite this to be faster, but I'm not sure anything would be.
-	This can be safely removed if border firedoors are ever moved to be on top of doors
-	so they can be interacted with without opening the door.
-*/
-/obj/machinery/door/Adjacent(var/atom/neighbor)
-	var/obj/machinery/door/firedoor/border_only/BOD = locate() in loc
-	if(BOD)
-		BOD.throwpass = 1 // allow click to pass
-		. = ..()
-		BOD.throwpass = 0
-		return .
-	return ..()
-
 
 /*
 	This checks if you there is uninterrupted airspace between that turf and this one.

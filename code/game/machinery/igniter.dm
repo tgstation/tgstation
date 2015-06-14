@@ -69,17 +69,17 @@
 		icon_state = "[base_state]-p"
 //		src.sd_SetLuminosity(0)
 
-/obj/machinery/sparker/attackby(obj/item/weapon/W as obj, mob/user as mob)
+/obj/machinery/sparker/attackby(obj/item/weapon/W as obj, mob/user as mob, params)
 	if(istype(W, /obj/item/device/detective_scanner))
 		return
 	if (istype(W, /obj/item/weapon/screwdriver))
 		add_fingerprint(user)
 		src.disable = !src.disable
 		if (src.disable)
-			user.visible_message("<span class='danger'>[user] has disabled \the [src]!</span>", "<span class='danger'>You disable the connection to \the [src].</span>")
+			user.visible_message("[user] has disabled \the [src]!", "<span class='notice'>You disable the connection to \the [src].</span>")
 			icon_state = "[base_state]-d"
 		if (!src.disable)
-			user.visible_message("<span class='danger'>[user] has reconnected \the [src]!</span>", "<span class='danger'>You fix the connection to \the [src].</span>")
+			user.visible_message("[user] has reconnected \the [src]!", "<span class='notice'>You fix the connection to \the [src].</span>")
 			if(src.powered())
 				icon_state = "[base_state]"
 			else
@@ -123,7 +123,7 @@
 /obj/machinery/ignition_switch/attack_paw(mob/user as mob)
 	return src.attack_hand(user)
 
-/obj/machinery/ignition_switch/attackby(obj/item/weapon/W, mob/user as mob)
+/obj/machinery/ignition_switch/attackby(obj/item/weapon/W, mob/user as mob, params)
 	return src.attack_hand(user)
 
 /obj/machinery/ignition_switch/attack_hand(mob/user as mob)

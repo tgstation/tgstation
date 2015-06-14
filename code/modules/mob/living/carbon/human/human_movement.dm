@@ -15,6 +15,11 @@
 		var/obj/item/weapon/tank/jetpack/J = back
 		if((movement_dir || J.stabilization_on) && J.allow_thrust(0.01, src))
 			return 1
+	if(istype(wear_suit, /obj/item/clothing/suit/space/hardsuit) && isturf(loc)) //Second check is so you can't use a jetpack in a mech
+		var/obj/item/clothing/suit/space/hardsuit/C = wear_suit
+		if(C.jetpack)
+			if((movement_dir || C.jetpack.stabilization_on) && C.jetpack.allow_thrust(0.01, src))
+				return 1
 
 	return 0
 
@@ -23,6 +28,12 @@
 	if(isobj(shoes) && (shoes.flags&NOSLIP) && !(lube&GALOSHES_DONT_HELP))
 		return 0
 	.=..()
+
+/mob/living/carbon/human/experience_pressure_difference()
+	playsound(src, 'sound/effects/space_wind.ogg', 50, 1)
+	if(shoes && shoes.flags&NOSLIP)
+		return 0
+	. = ..()
 
 /mob/living/carbon/human/mob_has_gravity()
 	. = ..()

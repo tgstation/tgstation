@@ -1,74 +1,27 @@
-/mob/living/carbon/brain/Life()
-	set invisibility = 0
-	set background = BACKGROUND_ENABLED
-	..()
 
-	if(stat != DEAD)
-		//Mutations and radiation
-		handle_mutations_and_radiation()
+/mob/living/carbon/brain/handle_breathing()
+	return
 
-		//Chemicals in the body
-		handle_chemicals_in_body()
-
-	var/datum/gas_mixture/environment // Added to prevent null location errors
-	if(loc)
-		environment = loc.return_air()
-
-	//Apparently, the person who wrote this code designed it so that
-	//blinded get reset each cycle and then get activated later in the
-	//code. Very ugly. I dont care. Moving this stuff here so its easy
-	//to find it.
-
-	//Handle temperature/pressure differences between body and environment
-	if(environment)	// More error checking
-		handle_environment(environment)
-
-	//Status updates, death etc.
-	handle_regular_status_updates()
-	update_canmove()
-
-	if(client)
-		handle_regular_hud_updates()
-
-
-/mob/living/carbon/brain/proc/handle_mutations_and_radiation()
+/mob/living/carbon/brain/handle_mutations_and_radiation()
 
 	if (radiation)
 		if (radiation > 100)
-			radiation = 100
 			if(!container)//If it's not in an MMI
 				src << "<span class='danger'>You feel weak.</span>"
 			else//Fluff-wise, since the brain can't detect anything itself, the MMI handles thing like that
 				src << "<span class='danger'>STATUS: CRITICAL AMOUNTS OF RADIATION DETECTED.</span>"
 
-		if (radiation < 0)
-			radiation = 0
-
 		switch(radiation)
-			if(0 to 50)
-				radiation--
-				if(prob(25))
-					adjustToxLoss(1)
-					updatehealth()
 
 			if(50 to 75)
-				radiation -= 2
-				adjustToxLoss(1)
 				if(prob(5))
-					radiation -= 5
 					if(!container)
 						src << "<span class='danger'>You feel weak.</span>"
 					else
 						src << "<span class='danger'>STATUS: DANGEROUS LEVELS OF RADIATION DETECTED.</span>"
-				updatehealth()
+		..()
 
-			if(75 to 100)
-				radiation -= 3
-				adjustToxLoss(3)
-				updatehealth()
-
-
-/mob/living/carbon/brain/proc/handle_environment(datum/gas_mixture/environment)
+/mob/living/carbon/brain/handle_environment(datum/gas_mixture/environment)
 	if(!environment)
 		return
 	var/environment_heat_capacity = environment.heat_capacity()
@@ -93,193 +46,105 @@
 
 	if(exposed_temperature > bodytemperature)
 		var/discomfort = min( abs(exposed_temperature - bodytemperature)*(exposed_intensity)/2000000, 1.0)
-		//adjustFireLoss(2.5*discomfort)
-		//adjustFireLoss(5.0*discomfort)
 		adjustFireLoss(20.0*discomfort)
 
 	else
 		var/discomfort = min( abs(exposed_temperature - bodytemperature)*(exposed_intensity)/2000000, 1.0)
-		//adjustFireLoss(2.5*discomfort)
 		adjustFireLoss(5.0*discomfort)
 
 
+/mob/living/carbon/brain/handle_regular_status_updates()	//TODO: comment out the unused bits >_>
 
-/mob/living/carbon/brain/proc/handle_chemicals_in_body()
-
-	if(reagents) reagents.metabolize(src)
-
-	confused = max(0, confused - 1)
-	// decrement dizziness counter, clamped to 0
-	if(resting)
-		dizziness = max(0, dizziness - 5)
-	else
-		dizziness = max(0, dizziness - 1)
-
-	updatehealth()
-
-	return //TODO: DEFERRED
-
-
-/mob/living/carbon/brain/proc/handle_regular_status_updates()	//TODO: comment out the unused bits >_>
-	updatehealth()
-
-	if(stat == DEAD)	//DEAD. BROWN BREAD. SWIMMING WITH THE SPESS CARP
+	if(stat == DEAD)
 		eye_blind = max(eye_blind, 1)
 		silent = 0
-	else				//ALIVE. LIGHTS ARE ON
+	else
+		updatehealth()
 		if( !container && (health < config.health_threshold_dead || ((world.time - timeofhostdeath) > config.revival_brain_life)) )
 			death()
 			eye_blind = max(eye_blind, 1)
 			silent = 0
-			return 1
+			return
+		else
+			stat = CONSCIOUS
 
-		//Handling EMP effect in the Life(), it's made VERY simply, and has some additional effects handled elsewhere
-		if(emp_damage)			//This is pretty much a damage type only used by MMIs, dished out by the emp_act
-			if(!(container && istype(container, /obj/item/device/mmi)))
-				emp_damage = 0
-			else
-				emp_damage = round(emp_damage,1)//Let's have some nice numbers to work with
-			switch(emp_damage)
-				if(31 to INFINITY)
-					emp_damage = 30//Let's not overdo it
-				if(21 to 30)//High level of EMP damage, unable to see, hear, or speak
-					eye_blind = max(eye_blind, 1)
-					setEarDamage(-1,1)
-					silent = 1
-					if(!alert)//Sounds an alarm, but only once per 'level'
-						emote("alarm")
-						src << "<span class='danger'>Major electrical distruption detected: System rebooting.</span>"
-						alert = 1
-					if(prob(75))
-						emp_damage -= 1
-				if(20)
-					alert = 0
-					eye_blind = 0
-					setEarDamage(-1,0)
-					silent = 0
-					emp_damage -= 1
-				if(11 to 19)//Moderate level of EMP damage, resulting in nearsightedness and ear damage
-					eye_blurry = 1
-					setEarDamage(1,-1)
-					if(!alert)
-						emote("alert")
-						src << "<span class='danger'>Primary systems are now online.</span>"
-						alert = 1
-					if(prob(50))
-						emp_damage -= 1
-				if(10)
-					alert = 0
-					eye_blurry = 0
-					setEarDamage(0,-1)
-					emp_damage -= 1
-				if(2 to 9)//Low level of EMP damage, has few effects(handled elsewhere)
-					if(!alert)
-						emote("notice")
-						src << "<span class='danger'>System reboot nearly complete.</span>"
-						alert = 1
-					if(prob(25))
-						emp_damage -= 1
-				if(1)
-					alert = 0
-					src << "<span class='danger'>All systems restored.</span>"
-					emp_damage -= 1
-
-		//Other
-		/* commented out because none of these should happen
-		if(stunned)
-			AdjustStunned(-1)
-
-		if(weakened)
-			weakened = max(weakened-1,0)
-
-		if(stuttering)
-			stuttering = max(stuttering-1, 0)
-
-		if(silent)
-			silent = max(silent-1, 0)
-
-		if(druggy)
-			druggy = max(druggy-1, 0)
-		*/
-	return 1
-
-
-/mob/living/carbon/brain/proc/handle_regular_hud_updates()
-
-	if (stat == 2)
-		sight |= SEE_TURFS
-		sight |= SEE_MOBS
-		sight |= SEE_OBJS
-		see_in_dark = 8
-		see_invisible = SEE_INVISIBLE_LEVEL_TWO
-	else if (stat != 2)
-		sight &= ~SEE_TURFS
-		sight &= ~SEE_MOBS
-		sight &= ~SEE_OBJS
-		see_in_dark = 2
-		see_invisible = SEE_INVISIBLE_LIVING
-		if(see_override)
-			see_invisible = see_override
-
-	if (healths)
-		if (stat != 2)
-			switch(health)
-				if(100 to INFINITY)
-					healths.icon_state = "health0"
-				if(80 to 100)
-					healths.icon_state = "health1"
-				if(60 to 80)
-					healths.icon_state = "health2"
-				if(40 to 60)
-					healths.icon_state = "health3"
-				if(20 to 40)
-					healths.icon_state = "health4"
-				if(0 to 20)
-					healths.icon_state = "health5"
+			//Handling EMP effect in the Life(), it's made VERY simply, and has some additional effects handled elsewhere
+			if(emp_damage)			//This is pretty much a damage type only used by MMIs, dished out by the emp_act
+				if(!(container && istype(container, /obj/item/device/mmi)))
+					emp_damage = 0
 				else
-					healths.icon_state = "health6"
-		else
-			healths.icon_state = "health7"
+					emp_damage = round(emp_damage,1)//Let's have some nice numbers to work with
+				switch(emp_damage)
+					if(31 to INFINITY)
+						emp_damage = 30//Let's not overdo it
+					if(21 to 30)//High level of EMP damage, unable to see, hear, or speak
+						eye_blind = max(eye_blind, 1)
+						setEarDamage(-1,1)
+						silent = 1
+						if(!alert)//Sounds an alarm, but only once per 'level'
+							emote("alarm")
+							src << "<span class='danger'>Major electrical distruption detected: System rebooting.</span>"
+							alert = 1
+						if(prob(75))
+							emp_damage -= 1
+					if(20)
+						alert = 0
+						eye_blind = 0
+						setEarDamage(-1,0)
+						silent = 0
+						emp_damage -= 1
+					if(11 to 19)//Moderate level of EMP damage, resulting in nearsightedness and ear damage
+						eye_blurry = 1
+						setEarDamage(1,-1)
+						if(!alert)
+							emote("alert")
+							src << "<span class='danger'>Primary systems are now online.</span>"
+							alert = 1
+						if(prob(50))
+							emp_damage -= 1
+					if(10)
+						alert = 0
+						eye_blurry = 0
+						setEarDamage(0,-1)
+						emp_damage -= 1
+					if(2 to 9)//Low level of EMP damage, has few effects(handled elsewhere)
+						if(!alert)
+							emote("notice")
+							src << "<span class='danger'>System reboot nearly complete.</span>"
+							alert = 1
+						if(prob(25))
+							emp_damage -= 1
+					if(1)
+						alert = 0
+						src << "<span class='danger'>All systems restored.</span>"
+						emp_damage -= 1
+			else
+				eye_blind = 0
 
-	if(pullin)	pullin.icon_state = "pull[pulling ? 1 : 0]"
+		return 1
 
-	client.screen.Remove(global_hud.blurry,global_hud.druggy,global_hud.vimpaired)
-
-	if ((blind && stat != 2))
-		if (eye_blind)
-			blind.layer = 18
-		else
-			blind.layer = 0
-
-			if (disabilities & NEARSIGHT)
-				client.screen += global_hud.vimpaired
-
-			if (eye_blurry)
-				client.screen += global_hud.blurry
-
-			if (druggy)
-				client.screen += global_hud.druggy
-
-	if (stat != 2)
-		if (machine)
-			if (!( machine.check_eye(src) ))
-				reset_view(null)
-		else
-			if(!client.adminobs)
-				reset_view(null)
-
-	return 1
-
-
-/*/mob/living/carbon/brain/emp_act(severity)
-	if(!(container && istype(container, /obj/item/device/mmi)))
-		return
+/mob/living/carbon/brain/handle_disabilities()
+	//Eyes
+	if(disabilities & BLIND || stat)
+		eye_blind = max(eye_blind, 1)
 	else
-		switch(severity)
-			if(1)
-				emp_damage += rand(20,30)
-			if(2)
-				emp_damage += rand(10,20)
-			if(3)
-				emp_damage += rand(0,10)
-	..()*/
+		if(eye_blind)
+			eye_blind = 0
+		if(eye_blurry)
+			eye_blurry = 0
+		if(eye_stat)
+			eye_stat = 0
+
+	//Ears
+	if(disabilities & DEAF)
+		setEarDamage(-1, max(ear_deaf, 1))
+	else if(ear_damage < 100)
+		setEarDamage(0, 0)
+
+/mob/living/carbon/brain/handle_status_effects()
+	return
+
+/mob/living/carbon/brain/handle_regular_hud_updates()
+	handle_vision()
+	handle_hud_icons_health()
+	return 1

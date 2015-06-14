@@ -31,7 +31,7 @@
 /obj/item/device/assembly/prox_sensor/toggle_secure()
 	secured = !secured
 	if(secured)
-		SSobj.processing.Add(src)
+		SSobj.processing |= src
 	else
 		scanning = 0
 		timing = 0
@@ -42,8 +42,7 @@
 
 /obj/item/device/assembly/prox_sensor/HasProximity(atom/movable/AM as mob|obj)
 	if (istype(AM, /obj/effect/beam))	return
-	if (AM.move_speed < 12)	sense()
-	return
+	sense()
 
 
 /obj/item/device/assembly/prox_sensor/sense()

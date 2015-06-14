@@ -76,9 +76,9 @@
 			if (!src.restrained())
 				message = text("<span class='name'>[src]</span> signs[].", (text2num(param) ? text(" the number []", text2num(param)) : null))
 				m_type = 1
-//		if ("sit")
-//			message = "<span class='name'>[src]</span> sits down." //Larvan can't sit down, /N
-//			m_type = 1
+		if ("snore")
+			message = "<B>[src]</B> snores."
+			m_type = 2
 		if ("sulk")
 			message = "<span class='name'>[src]</span> sulks down sadly."
 			m_type = 1

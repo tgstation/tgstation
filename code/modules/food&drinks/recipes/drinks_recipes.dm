@@ -12,7 +12,7 @@
 	name = "Patron"
 	id = "patron"
 	result = "patron"
-	required_reagents = list("tequilla" = 10, "silver" = 1)
+	required_reagents = list("tequila" = 10, "silver" = 1)
 	result_amount = 10
 
 /datum/chemical_reaction/bilk
@@ -150,14 +150,14 @@
 	name = "Brave Bull"
 	id = "bravebull"
 	result = "bravebull"
-	required_reagents = list("tequilla" = 2, "kahlua" = 1)
+	required_reagents = list("tequila" = 2, "kahlua" = 1)
 	result_amount = 3
 
-/datum/chemical_reaction/tequilla_sunrise
-	name = "Tequilla Sunrise"
-	id = "tequillasunrise"
-	result = "tequillasunrise"
-	required_reagents = list("tequilla" = 2, "orangejuice" = 1)
+/datum/chemical_reaction/tequila_sunrise
+	name = "tequila Sunrise"
+	id = "tequilasunrise"
+	result = "tequilasunrise"
+	required_reagents = list("tequila" = 2, "orangejuice" = 1)
 	result_amount = 3
 
 /datum/chemical_reaction/toxins_special
@@ -206,7 +206,8 @@
 	name = "Hooch"
 	id = "hooch"
 	result = "hooch"
-	required_reagents = list ("sugar" = 1, "ethanol" = 2, "fuel" = 1)
+	required_reagents = list ("ethanol" = 2, "welding_fuel" = 1)
+	required_catalysts = list("enzyme" = 1)
 	result_amount = 3
 
 /datum/chemical_reaction/irish_coffee
@@ -234,14 +235,14 @@
 	name = "Margarita"
 	id = "margarita"
 	result = "margarita"
-	required_reagents = list("tequilla" = 2, "limejuice" = 1)
+	required_reagents = list("tequila" = 2, "limejuice" = 1)
 	result_amount = 3
 
 /datum/chemical_reaction/longislandicedtea
 	name = "Long Island Iced Tea"
 	id = "longislandicedtea"
 	result = "longislandicedtea"
-	required_reagents = list("vodka" = 1, "gin" = 1, "tequilla" = 1, "cubalibre" = 1)
+	required_reagents = list("vodka" = 1, "gin" = 1, "tequila" = 1, "cubalibre" = 1)
 	result_amount = 4
 
 /datum/chemical_reaction/threemileisland
@@ -368,13 +369,6 @@
 	result_amount = 2
 
 /datum/chemical_reaction/iced_beer
-	name = "Iced Beer"
-	id = "iced_beer"
-	result = "iced_beer"
-	required_reagents = list("beer" = 10, "frostoil" = 1)
-	result_amount = 10
-
-/datum/chemical_reaction/iced_beer2
 	name = "Iced Beer"
 	id = "iced_beer"
 	result = "iced_beer"
@@ -513,3 +507,59 @@
 	result = "thirteenloko"
 	required_reagents = list("vodka" = 1, "coffee" = 1, "limejuice" = 1)
 	result_amount = 3
+
+/datum/chemical_reaction/chocolatepudding
+	name = "Chocolate Pudding"
+	id = "chocolatepudding"
+	result = "chocolatepudding"
+	required_reagents = list("cocoa" = 5, "milk" = 5, "eggyolk" = 5)
+	result_amount = 20
+
+/datum/chemical_reaction/vanillapudding
+	name = "Vanilla Pudding"
+	id = "vanillapudding"
+	result = "vanillapudding"
+	required_reagents = list("vanilla" = 5, "milk" = 5, "eggyolk" = 5)
+	result_amount = 20
+
+/datum/chemical_reaction/cherryshake
+	name = "Cherry Shake"
+	id = "cherryshake"
+	result = "cherryshake"
+	required_reagents = list("cherryjelly" = 1, "ice" = 1, "cream" = 1)
+	result_amount = 3
+
+/datum/chemical_reaction/bluecherryshake
+	name = "Blue Cherry Shake"
+	id = "bluecherryshake"
+	result = "bluecherryshake"
+	required_reagents = list("bluecherryjelly" = 1, "ice" = 1, "cream" = 1)
+	result_amount = 3
+
+/datum/chemical_reaction/drunkenblumpkin
+	name = "Drunken Blumpkin"
+	id = "drunkenblumpkin"
+	result = "drunkenblumpkin"
+	required_reagents = list("blumpkinjuice" = 1, "irishcream" = 2, "ice" = 1)
+	result_amount = 4
+
+/datum/chemical_reaction/pumpkin_latte
+	name = "Pumpkin latte"
+	id = "pumpkin_latte"
+	result = "pumpkin_latte"
+	required_reagents = list("pumpkinjuice" = 5, "coffee" = 5, "cream" = 5)
+	result_amount = 15
+
+/datum/chemical_reaction/gibbfloats
+	name = "Gibb Floats"
+	id = "gibbfloats"
+	result = "gibbfloats"
+	required_reagents = list("dr_gibb" = 5, "ice" = 5, "cream" = 5)
+	result_amount = 15
+
+/datum/chemical_reaction/triple_citrus
+	name = "triple_citrus"
+	id = "triple_citrus"
+	result = "triple_citrus"
+	required_reagents = list("lemonjuice" = 1, "limejuice" = 1, "orangejuice" = 1)
+	result_amount = 5

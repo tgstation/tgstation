@@ -105,10 +105,10 @@
 	icon_state = "grey baby slime" //sets the icon in the map editor
 
 /obj/effect/landmark/corpse/slimeCorpse/createCorpse() //proc creates a dead slime
-	var/A = locate(/mob/living/carbon/slime/) in loc //variable A looks for a slime at the location of the landmark
+	var/A = locate(/mob/living/simple_animal/slime/) in loc //variable A looks for a slime at the location of the landmark
 	if(A) //if variable A is true
 		return //stop executing the proc
-	var/mob/living/carbon/slime/M = new(src.loc) //variable M is a new slime at the location of the landmark
+	var/mob/living/simple_animal/slime/M = new(src.loc) //variable M is a new slime at the location of the landmark
 	M.colour = src.mobcolour //slime colour is set by landmark's mobcolour var
 	M.adjustToxLoss(9001) //kills the slime, death() doesn't update its icon correctly
 	qdel(src)
@@ -148,7 +148,7 @@
 	corpsemask = /obj/item/clothing/mask/gas/syndicate
 	corpsehelmet = /obj/item/clothing/head/helmet/space/hardsuit/syndi
 	corpseback = /obj/item/weapon/tank/jetpack/oxygen
-	corpsepocket1 = /obj/item/weapon/tank/emergency_oxygen
+	corpsepocket1 = /obj/item/weapon/tank/internals/emergency_oxygen
 	corpseid = 1
 	corpseidjob = "Operative"
 	corpseidaccess = "Syndicate"
@@ -196,7 +196,7 @@
 	corpseidaccess = "Station Engineer"
 
 /obj/effect/landmark/corpse/engineer/rig
-	corpsesuit = /obj/item/clothing/suit/space/hardsuit
+	corpsesuit = /obj/item/clothing/suit/space/hardsuit/engine
 	corpsemask = /obj/item/clothing/mask/breath
 
 /obj/effect/landmark/corpse/clown

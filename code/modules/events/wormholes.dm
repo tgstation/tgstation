@@ -52,7 +52,7 @@
 /obj/effect/portal/wormhole/attack_hand(mob/user)
 	teleport(user)
 
-/obj/effect/portal/wormhole/attackby(obj/item/I, mob/user)
+/obj/effect/portal/wormhole/attackby(obj/item/I, mob/user, params)
 	teleport(user)
 
 /obj/effect/portal/wormhole/teleport(atom/movable/M)

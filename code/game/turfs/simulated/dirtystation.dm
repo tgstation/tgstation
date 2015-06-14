@@ -10,6 +10,7 @@
 /obj/effect/decal/cleanable/blood/old/New()
 	..()
 	icon_state += "-old"
+	blood_DNA["Non-human DNA"] = "A+"
 
 /obj/effect/decal/cleanable/blood/gibs/old
 	name = "old rotting gibs"
@@ -19,6 +20,7 @@
 	..()
 	icon_state += "-old"
 	dir = pick(1,2,4,8)
+	blood_DNA["Non-human DNA"] = "A+"
 
 /obj/effect/decal/cleanable/vomit/old
 	name = "crusty dried vomit"
@@ -40,7 +42,7 @@
 		return
 
 	// These look weird if you make them dirty
-	if(istype(src, /turf/simulated/floor/fancy/carpet) || istype(src, /turf/simulated/floor/fancy/grass) || istype(src, /turf/simulated/floor/beach) || istype(src, /turf/simulated/floor/holofloor) || istype(src, /turf/simulated/floor/plating/snow) || istype(src, /turf/simulated/floor/plating/ironsand))
+	if(istype(src, /turf/simulated/floor/fancy/carpet) || istype(src, /turf/simulated/floor/fancy/grass) || istype(src, /turf/simulated/floor/plating/beach) || istype(src, /turf/simulated/floor/holofloor) || istype(src, /turf/simulated/floor/plating/snow) || istype(src, /turf/simulated/floor/plating/ironsand))
 		return
 
 	if(locate(/obj/structure/grille) in contents)

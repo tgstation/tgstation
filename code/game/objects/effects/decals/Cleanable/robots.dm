@@ -51,9 +51,14 @@
 	var/viruses = list()
 	random_icon_states = list("floor1", "floor2", "floor3", "floor4", "floor5", "floor6", "floor7")
 
+/obj/effect/decal/cleanable/oil/New()
+	..()
+	reagents.add_reagent("oil", 30)
+
 /obj/effect/decal/cleanable/oil/Destroy()
 	for(var/datum/disease/D in viruses)
 		D.cure(0)
+	viruses = null
 	..()
 
 /obj/effect/decal/cleanable/oil/streak

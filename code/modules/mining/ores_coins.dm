@@ -7,7 +7,7 @@
 	var/points = 0 //How many points this ore gets you from the ore redemption machine
 	var/refined_type = null //What this ore defaults to being refined into
 
-/obj/item/weapon/ore/attackby(obj/item/I as obj, mob/user as mob)
+/obj/item/weapon/ore/attackby(obj/item/I as obj, mob/user as mob, params)
 	if(istype(I, /obj/item/weapon/weldingtool))
 		var/obj/item/weapon/weldingtool/W = I
 		if(W.remove_fuel(15))
@@ -38,17 +38,22 @@
 	points = 1
 	refined_type = /obj/item/stack/sheet/glass
 
-/obj/item/weapon/ore/glass/attack_self(mob/living/user as mob) //It's magic I ain't gonna explain how instant conversion with no tool works. -- Urist
+/obj/item/weapon/ore/glass/attack_self(mob/living/user as mob)
 	user << "<span class='notice'>You use the sand to make sandstone.</span>"
-	for(var/i = 0,i < 1,i++)
-		var/obj/item/stack/sheet/mineral/sandstone/S = new (user.loc)
-		for (var/obj/item/weapon/ore/glass/G in user.loc)
-			if(S.amount < S.max_amount)
-				S.amount++
-				qdel(G)
-			else
-				i--
-				break
+	var/sandAmt = 1
+	for(var/obj/item/weapon/ore/glass/G in user.loc) // The sand on the floor
+		sandAmt += 1
+		qdel(G)
+	while(sandAmt > 0)
+		var/obj/item/stack/sheet/mineral/sandstone/SS = new /obj/item/stack/sheet/mineral/sandstone(user.loc)
+		if(sandAmt >= SS.max_amount)
+			SS.amount = SS.max_amount
+		else
+			SS.amount = sandAmt
+			for(var/obj/item/stack/sheet/mineral/sandstone/SA in user.loc)
+				if(SA != SS && SA.amount < SA.max_amount)
+					SA.attackby(SS, user) //we try to transfer all old unfinished stacks to the new stack we created.
+		sandAmt -= SS.max_amount
 	qdel(src)
 	return
 
@@ -59,11 +64,11 @@
 	points = 36
 	refined_type = /obj/item/stack/sheet/mineral/plasma
 
-/obj/item/weapon/ore/plasma/attackby(obj/item/I as obj, mob/user as mob)
+/obj/item/weapon/ore/plasma/attackby(obj/item/I as obj, mob/user as mob, params)
 	if(istype(I, /obj/item/weapon/weldingtool))
 		var/obj/item/weapon/weldingtool/W = I
 		if(W.welding)
-			user << "<span class='info'>You can't hit a high enough temperature to smelt [src] properly.</span>"
+			user << "<span class='warning'>You can't hit a high enough temperature to smelt [src] properly!</span>"
 	else
 		..()
 
@@ -113,28 +118,51 @@
 	var/primed = 0
 	var/det_time = 100
 	var/quality = 1 //How pure this gibtonite is, determines the explosion produced by it and is derived from the det_time of the rock wall it was taken from, higher value = better
+	var/attacher = "UNKNOWN"
+	var/datum/wires/explosive/gibtonite/wires
 
-/obj/item/weapon/twohanded/required/gibtonite/attackby(obj/item/I, mob/user)
-	if(istype(I, /obj/item/weapon/pickaxe) || istype(I, /obj/item/weapon/resonator))
+/obj/item/weapon/twohanded/required/gibtonite/attackby(obj/item/I, mob/user, params)
+	if(!wires && istype(I, /obj/item/device/assembly/igniter))
+		user.visible_message("[user] attaches [I] to [src].", "<span class='notice'>You attach [I] to [src].</span>")
+		wires = new(src)
+		attacher = key_name(user)
+		qdel(I)
+		overlays += "Gibtonite_igniter"
+		return
+
+	if(wires && !primed)
+		if(istype(I, /obj/item/weapon/wirecutters) || istype(I, /obj/item/device/multitool) || istype(I, /obj/item/device/assembly/signaler))
+			wires.Interact(user)
+			return
+
+	if(istype(I, /obj/item/weapon/pickaxe) || istype(I, /obj/item/weapon/resonator) || I.force >= 10)
 		GibtoniteReaction(user)
 		return
-	if(istype(I, /obj/item/device/mining_scanner) || istype(I, /obj/item/device/t_scanner/adv_mining_scanner) && primed)
-		primed = 0
-		user.visible_message("<span class='notice'>The chain reaction was stopped! ...The ore's quality went down.</span>")
-		icon_state = "Gibtonite ore"
-		quality = 1
-		return
+	if(primed)
+		if(istype(I, /obj/item/device/mining_scanner) || istype(I, /obj/item/device/t_scanner/adv_mining_scanner) || istype(I, /obj/item/device/multitool))
+			primed = 0
+			user.visible_message("The chain reaction was stopped! ...The ore's quality looks diminished.", "<span class='notice'>You stopped the chain reaction. ...The ore's quality looks diminished.</span>")
+			icon_state = "Gibtonite ore"
+			quality = 1
+			return
 	..()
 
+/obj/item/weapon/twohanded/required/gibtonite/attack_self(user)
+	if(wires)
+		wires.Interact(user)
+	else
+		..()
+
 /obj/item/weapon/twohanded/required/gibtonite/bullet_act(var/obj/item/projectile/P)
-	if(istype(P, /obj/item/projectile/kinetic))
-		GibtoniteReaction(P.firer)
+	GibtoniteReaction(P.firer)
 	..()
 
 /obj/item/weapon/twohanded/required/gibtonite/ex_act()
 	GibtoniteReaction(null, 1)
 
-/obj/item/weapon/twohanded/required/gibtonite/proc/GibtoniteReaction(mob/user, triggered_by_explosive = 0)
+
+
+/obj/item/weapon/twohanded/required/gibtonite/proc/GibtoniteReaction(mob/user, triggered_by = 0)
 	if(!primed)
 		playsound(src,'sound/effects/hit_on_shattered_glass.ogg',50,1)
 		primed = 1
@@ -144,15 +172,20 @@
 		var/notify_admins = 0
 		if(z != 5)//Only annoy the admins ingame if we're triggered off the mining zlevel
 			notify_admins = 1
+
 		if(notify_admins)
-			if(triggered_by_explosive)
+			if(triggered_by == 1)
 				message_admins("An explosion has triggered a [name] to detonate at <A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[bombturf.x];Y=[bombturf.y];Z=[bombturf.z]'>[A.name] (JMP)</a>.")
+			else if(triggered_by == 2)
+				message_admins("A signal has triggered a [name] to detonate at <A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[bombturf.x];Y=[bombturf.y];Z=[bombturf.z]'>[A.name] (JMP)</a>. Igniter attacher: [attacher]")
 			else
 				message_admins("[key_name(user)]<A HREF='?_src_=holder;adminmoreinfo=\ref[user]'>?</A> has triggered a [name] to detonate at <A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[bombturf.x];Y=[bombturf.y];Z=[bombturf.z]'>[A.name] (JMP)</a>.")
-		if(triggered_by_explosive)
+		if(triggered_by == 1)
 			log_game("An explosion has primed a [name] for detonation at [A.name]([bombturf.x],[bombturf.y],[bombturf.z])")
+		else if(triggered_by == 2)
+			log_game("A signal has primed a [name] for detonation at [A.name]([bombturf.x],[bombturf.y],[bombturf.z]). Igniter attacher: [attacher].")
 		else
-			user.visible_message("<span class='warning'>[user] strikes \the [src], causing a chain reaction!</span>")
+			user.visible_message("<span class='warning'>[user] strikes \the [src], causing a chain reaction!</span>", "<span class='danger'>You strike \the [src], causing a chain reaction.</span>")
 			log_game("[key_name(user)] has primed a [name] for detonation at [A.name]([bombturf.x],[bombturf.y],[bombturf.z])")
 		spawn(det_time)
 		if(primed)
@@ -247,12 +280,22 @@
 	sideslist = list("heads")
 	value = 20
 
+/obj/item/weapon/coin/antagtoken
+	name = "antag token"
+	icon_state = "coin_valid_valid"
+	cmineral = "valid"
+	desc = "A novelty coin that helps the heart know what hard evidence cannot prove."
+	sideslist = list("valid", "salad")
+	value = 20
 
-/obj/item/weapon/coin/attackby(obj/item/weapon/W as obj, mob/user as mob)
+/obj/item/weapon/coin/antagtoken/New()
+	return
+
+/obj/item/weapon/coin/attackby(obj/item/weapon/W as obj, mob/user as mob, params)
 	if(istype(W, /obj/item/stack/cable_coil))
 		var/obj/item/stack/cable_coil/CC = W
 		if(string_attached)
-			user << "<span class='notice'>There already is a string attached to this coin.</span>"
+			user << "<span class='warning'>There already is a string attached to this coin!</span>"
 			return
 
 		if (CC.use(1))
@@ -260,7 +303,7 @@
 			string_attached = 1
 			user << "<span class='notice'>You attach a string to the coin.</span>"
 		else
-			user << "<span class='warning'>You need one length of cable to attach a string to the coin.</span>"
+			user << "<span class='warning'>You need one length of cable to attach a string to the coin!</span>"
 			return
 
 	else if(istype(W,/obj/item/weapon/wirecutters))
@@ -284,6 +327,6 @@
 		icon_state = "coin_[cmineral]_[coinflip]"
 		playsound(user.loc, 'sound/items/coinflip.ogg', 50, 1)
 		if(do_after(user, 15))
-			user.visible_message("<span class='notice'>[user] has flipped [src]. It lands on [coinflip].</span>", \
+			user.visible_message("[user] has flipped [src]. It lands on [coinflip].", \
 								 "<span class='notice'>You flip [src]. It lands on [coinflip].</span>", \
-								 "<span class='notice'>You hear the clattering of loose change.</span>")
+								 "<span class='italics'>You hear the clattering of loose change.</span>")

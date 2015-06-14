@@ -76,7 +76,6 @@
 /////////////////////////////////
 /obj/item/weapon/grenade/flashbang/cluster
 	icon_state = "flashbang_active"
-	banglet = 1
 
 /obj/item/weapon/grenade/clusterbuster/emp
 	name = "Electromagnetic Storm"

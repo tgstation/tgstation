@@ -207,3 +207,26 @@
 	name = "RD's potted plant"
 	desc = "A gift from the botanical staff, presented after the RD's reassignment. There's a tag on it that says \"Y'all come back now, y'hear?\"\nIt doesn't look very healthy..."
 	icon_state = "plant-25"
+
+
+//a rock is flora according to where the icon file is
+//and now these defines
+/obj/structure/flora/rock
+	name = "rock"
+	desc = "a rock"
+	icon_state = "rock1"
+	icon = 'icons/obj/flora/rocks.dmi'
+	anchored = 1
+
+/obj/structure/flora/rock/New()
+	..()
+	icon_state = "rock[rand(1,5)]"
+
+/obj/structure/flora/rock/pile
+	name = "rocks"
+	desc = "some rocks"
+	icon_state = "rockpile1"
+
+/obj/structure/flora/rock/pile/New()
+	..()
+	icon_state = "rockpile[rand(1,5)]"

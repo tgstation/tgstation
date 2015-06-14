@@ -115,7 +115,7 @@
 				break
 
 // attack with item, place item on conveyor
-/obj/machinery/conveyor/attackby(var/obj/item/I, mob/user)
+/obj/machinery/conveyor/attackby(var/obj/item/I, mob/user, params)
 	if(istype(I, /obj/item/weapon/crowbar))
 		if(!(stat & BROKEN))
 			var/obj/item/conveyor_construct/C = new/obj/item/conveyor_construct(src.loc)
@@ -126,7 +126,7 @@
 		return
 	if(isrobot(user))	return //Carn: fix for borgs dropping their modules on conveyor belts
 	if(!user.drop_item())
-		user << "<span class='notice'>\The [I] is stuck to your hand, you cannot place it on the conveyor!</span>"
+		user << "<span class='warning'>\The [I] is stuck to your hand, you cannot place it on the conveyor!</span>"
 		return
 	if(I && I.loc)	I.loc = src.loc
 	return
@@ -257,7 +257,7 @@
 			S.position = position
 			S.update()
 
-/obj/machinery/conveyor_switch/attackby(var/obj/item/I, mob/user)
+/obj/machinery/conveyor_switch/attackby(var/obj/item/I, mob/user, params)
 	if(istype(I, /obj/item/weapon/crowbar))
 		var/obj/item/conveyor_switch_construct/C = new/obj/item/conveyor_switch_construct(src.loc)
 		C.id = id
@@ -281,7 +281,7 @@
 	w_class = 4
 	var/id = "" //inherited by the belt
 
-/obj/item/conveyor_construct/attackby(obj/item/I, mob/user)
+/obj/item/conveyor_construct/attackby(obj/item/I, mob/user, params)
 	..()
 	if(istype(I, /obj/item/conveyor_switch_construct))
 		user << "<span class='notice'>You link the switch to the conveyor belt assembly.</span>"
