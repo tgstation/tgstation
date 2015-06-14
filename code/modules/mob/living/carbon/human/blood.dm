@@ -30,7 +30,7 @@ var/const/BLOOD_VOLUME_SURVIVE = 122
 /mob/living/carbon/human/proc/fixblood()
 	for(var/datum/reagent/blood/B in vessel.reagent_list)
 		if(B.id == "blood")
-			B.data = list("donor"=src,"viruses"=null,"blood_DNA"=dna.unique_enzymes,"blood_type"=dna.blood_type,"resistances"=null,"trace_chem"=null,"mind"=null,"ckey"=null,"gender"=null,"real_name"=null,"cloneable"=null,"mutant_color"=null, "factions"=null)
+			B.data = list("donor"=src,"viruses"=null,"blood_DNA"=dna.unique_enzymes,"blood_type"=dna.blood_type,"resistances"=null,"trace_chem"=null,"mind"=null,"ckey"=null,"gender"=null,"real_name"=null,"cloneable"=null,"features"=null, "factions"=null)
 
 /mob/living/carbon/human/proc/suppress_bloodloss(var/amount)
 	if(bleedsuppress)
@@ -172,7 +172,7 @@ var/const/BLOOD_VOLUME_SURVIVE = 122
 	B.data["blood_type"] = copytext(src.dna.blood_type,1,0)
 	B.data["gender"] = src.gender
 	B.data["real_name"] = src.real_name
-	B.data["mutant_color"] = src.dna.mutant_color
+	B.data["features"] = src.dna.features
 	B.data["factions"] = src.faction
 	return B
 
