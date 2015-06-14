@@ -18,7 +18,7 @@
 
 /obj/machinery/power/supermatter_shard
 	name = "supermatter shard"
-	desc = "A strangely translucent and iridescent crystal that looks like it used to be part of a larger structure. <span class='danger'> You get headaches just from looking at it.</span>"
+	desc = "A strangely translucent and iridescent crystal that looks like it used to be part of a larger structure. <span class='danger'>You get headaches just from looking at it.</span>"
 	icon = 'icons/obj/supermatter.dmi'
 	icon_state = "darkmatter_shard"
 	density = 1
@@ -214,11 +214,11 @@
 	if(Adjacent(user))
 		return attack_hand(user)
 	else
-		user << "<span class = 'warning'>You attempt to interface with the control circuits but find they are not connected to your network. Maybe in a future firmware update.</span>"
+		user << "<span class='warning'>You attempt to interface with the control circuits but find they are not connected to your network. Maybe in a future firmware update.</span>"
 	return
 
 /obj/machinery/power/supermatter_shard/attack_ai(mob/user as mob)
-	user << "<span class = 'warning'>You attempt to interface with the control circuits but find they are not connected to your network. Maybe in a future firmware update.</span>"
+	user << "<span class='warning'>You attempt to interface with the control circuits but find they are not connected to your network. Maybe in a future firmware update.</span>"
 
 /obj/machinery/power/supermatter_shard/attack_hand(mob/living/user as mob)
 	if(!istype(user))

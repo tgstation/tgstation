@@ -86,7 +86,7 @@
 		dat += "<a href='?src=\ref[src];experiment=3'>Analyze</a><br>"
 		dat += "</td></tr></table>"
 	else
-		dat += "<span class='linkOff'> Experiment </span>"
+		dat += "<span class='linkOff'>Experiment </span>"
 
 	if(!occupant)
 		dat += "<h3>Machine Unoccupied</h3>"

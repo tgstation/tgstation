@@ -684,25 +684,25 @@
 	else if(istype(O, /obj/item/device/analyzer/plant_analyzer))
 		if(planted && myseed)
 			user << "*** <B>[myseed.plantname]</B> ***" //Carn: now reports the plants growing, not the seeds.
-			user << "-Plant Age: <span class='notice'> [age]</span>"
-			user << "-Plant Endurance: <span class='notice'> [myseed.endurance]</span>"
-			user << "-Plant Lifespan: <span class='notice'> [myseed.lifespan]</span>"
+			user << "-Plant Age: <span class='notice'>[age]</span>"
+			user << "-Plant Endurance: <span class='notice'>[myseed.endurance]</span>"
+			user << "-Plant Lifespan: <span class='notice'>[myseed.lifespan]</span>"
 			if(myseed.yield != -1)
-				user << "-Plant Yield: <span class='notice'> [myseed.yield]</span>"
-			user << "-Plant Production: <span class='notice'> [myseed.production]</span>"
+				user << "-Plant Yield: <span class='notice'>[myseed.yield]</span>"
+			user << "-Plant Production: <span class='notice'>[myseed.production]</span>"
 			if(myseed.potency != -1)
-				user << "-Plant Potency: <span class='notice'> [myseed.potency]</span>"
+				user << "-Plant Potency: <span class='notice'>[myseed.potency]</span>"
 			var/list/text_strings = myseed.get_analyzer_text()
 			if(text_strings)
 				for(var/string in text_strings)
 					user << string
 		else
 			user << "<B>No plant found.</B>"
-		user << "-Weed level: <span class='notice'> [weedlevel] / 10</span>"
-		user << "-Pest level: <span class='notice'> [pestlevel] / 10</span>"
-		user << "-Toxicity level: <span class='notice'> [toxic] / 100</span>"
-		user << "-Water level: <span class='notice'> [waterlevel] / [maxwater]</span>"
-		user << "-Nutrition level: <span class='notice'> [nutrilevel] / [maxnutri]</span>"
+		user << "-Weed level: <span class='notice'>[weedlevel] / 10</span>"
+		user << "-Pest level: <span class='notice'>[pestlevel] / 10</span>"
+		user << "-Toxicity level: <span class='notice'>[toxic] / 100</span>"
+		user << "-Water level: <span class='notice'>[waterlevel] / [maxwater]</span>"
+		user << "-Nutrition level: <span class='notice'>[nutrilevel] / [maxnutri]</span>"
 		user << ""
 
 	else if(istype(O, /obj/item/weapon/cultivator))

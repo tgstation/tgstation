@@ -50,7 +50,7 @@
 
 /obj/structure/sign/barsign/attack_hand(mob/user as mob)
 	if (!src.allowed(user))
-		user << "<span class = 'info'>Access denied.</span>"
+		user << "<span class='info'>Access denied.</span>"
 		return
 	if (broken)
 		user << "<span class ='danger'>The controls seem unresponsive.</span>"
@@ -62,7 +62,7 @@
 
 /obj/structure/sign/barsign/attackby(var/obj/item/I, var/mob/user)
 	if(!allowed(user))
-		user << "<span class = 'info'>Access denied.</span>"
+		user << "<span class='info'>Access denied.</span>"
 		return
 	if( istype(I, /obj/item/weapon/screwdriver))
 		if(!panel_open)

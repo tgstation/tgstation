@@ -36,14 +36,14 @@
 /obj/item/seeds/attackby(var/obj/item/O as obj, var/mob/user as mob, params)
 	if (istype(O, /obj/item/device/analyzer/plant_analyzer))
 		user << "*** <B>[plantname]</B> ***"
-		user << "-Plant Endurance: <span class='notice'> [endurance]</span>"
-		user << "-Plant Lifespan: <span class='notice'> [lifespan]</span>"
-		user << "-Species Discovery Value: <span class='notice'> [rarity]</span>"
+		user << "-Plant Endurance: <span class='notice'>[endurance]</span>"
+		user << "-Plant Lifespan: <span class='notice'>[lifespan]</span>"
+		user << "-Species Discovery Value: <span class='notice'>[rarity]</span>"
 		if(yield != -1)
-			user << "-Plant Yield: <span class='notice'> [yield]</span>"
-		user << "-Plant Production: <span class='notice'> [production]</span>"
+			user << "-Plant Yield: <span class='notice'>[yield]</span>"
+		user << "-Plant Production: <span class='notice'>[production]</span>"
 		if(potency != -1)
-			user << "-Plant Potency: <span class='notice'> [potency]</span>"
+			user << "-Plant Potency: <span class='notice'>[potency]</span>"
 		var/list/text_strings = get_analyzer_text()
 		if(text_strings)
 			for(var/string in text_strings)

@@ -110,7 +110,7 @@
 
 	if(istype(I, /obj/item/weapon/storage/bag/trash))
 		var/obj/item/weapon/storage/bag/trash/T = I
-		user << "<span class='warning'> You empty the bag.</span>"
+		user << "<span class='warning'>You empty the bag.</span>"
 		for(var/obj/item/O in T.contents)
 			T.remove_from_storage(O,src)
 		T.update_icon()
@@ -979,7 +979,7 @@
 			sortType = O.currTag
 			playsound(src.loc, 'sound/machines/twobeep.ogg', 100, 1)
 			var/tag = uppertext(TAGGERLOCATIONS[O.currTag])
-			user << "<span class='warning'> Changed filter to [tag].</span>"
+			user << "<span class='warning'>Changed filter to [tag].</span>"
 			updatedesc()
 
 
