@@ -13,6 +13,7 @@
 	var/boss = 1 //If it has the power to promote gang members
 	var/recalling = 0
 	var/promotions = 0
+	var/outfits = 5
 
 /obj/item/device/gangtool/New() //Initialize supply point income if it hasn't already been started
 	if(!ticker.mode.gang_points)
@@ -48,9 +49,16 @@
 
 		dat += "Registration: <B>[(gang == "A")? gang_name("A") : gang_name("B")] Gang [boss ? "Administrator" : "Lieutenant"]</B><br>"
 		dat += "Organization Size: <B>[gang_size]</B> | Station Control: <B>[round((gang_territory/start_state.num_territories)*100, 1)]%</B><br>"
+		if(outfits > 0)
+			dat += "<a href='?src=\ref[src];choice=outfit'>Create Gang Outfit</a><br>"
+		else
+			dat += "<b>Create Gang Outfit</b> (Restocking)<br>"
 		dat += "<a href='?src=\ref[src];choice=ping'>Send Gang-wide Message</a><br>"
-		dat += "<a href='?src=\ref[src];choice=recall'>Recall Emergency Shuttle</a><br>"
+		if(gangmode)
+			dat += "<a href='?src=\ref[src];choice=recall'>Recall Emergency Shuttle</a><br>"
+
 		dat += "<br>"
+
 		dat += "Influence: <B>[points]</B><br>"
 		dat += "Time until Influence grows: <B>[(points >= 999) ? ("--:--") : (time2text(ticker.mode.gang_points.next_point_time - world.time, "mm:ss"))]</B><br>"
 		dat += "<hr>"
@@ -83,23 +91,17 @@
 		dat += "<br>"
 		dat += "<B>Purchase Utilities:</B><br>"
 
-		dat += "(10 Influence) "
-		if(points >= 10)
+		dat += "(5 Influence) "
+		if(points >= 5)
 			dat += "<a href='?src=\ref[src];purchase=spraycan'><b>Territory Spraycan</b></a><br>"
 		else
 			dat += "<b>Territory Spraycan</b><br>"
-
-		dat += "(1 Influence) "
-		if(points >= 1)
-			dat += "<a href='?src=\ref[src];purchase=outfit'>Gang Outfit</a><br>"
-		else
-			dat += "<b>Gang Outfit</b><br>"
 
 		dat += "(10 Influence) "
 		if(points >= 10)
 			dat += "<a href='?src=\ref[src];purchase=vest'>Bulletproof Vest</a><br>"
 		else
-			dat += "<b>Bulletproof Vest</b><br>"
+			dat += "Bulletproof Vest<br>"
 
 		dat += "(30 Influence) "
 		if(points >= 30)
@@ -120,14 +122,14 @@
 			dat += "(50 Influence) "
 			if(points >= 50)
 				dat += "<a href='?src=\ref[src];purchase=dominator'><b>Station Dominator</b></a><br>"
-				dat += "<i>(Estimated Takeover Time: [round(max(180,900 - ((round((gang_territory/start_state.num_territories)*200, 10) - 60) * 15))/60,1)] minutes)</i><br>"
 			else
 				dat += "Station Dominator<br>"
+			dat += "<i>(Estimated Takeover Time: [round(max(180,900 - ((round((gang_territory/start_state.num_territories)*200, 10) - 60) * 15))/60,1)] minutes)</i><br>"
 
 	dat += "<br>"
 	dat += "<a href='?src=\ref[src];choice=refresh'>Refresh</a><br>"
 
-	var/datum/browser/popup = new(user, "gangtool", "Welcome to GangTool v0.4", 350, 550)
+	var/datum/browser/popup = new(user, "gangtool", "Welcome to GangTool v0.4", 340, 600)
 	popup.set_content(dat)
 	popup.open()
 
@@ -149,14 +151,10 @@
 		var/points = ((gang == "A") ? ticker.mode.gang_points.A : ticker.mode.gang_points.B)
 		var/item_type
 		switch(href_list["purchase"])
-			if("outfit")
-				if(points >= 1)
-					item_type = ticker.mode.gang_outfit(usr,src,gang)
-					points = 1
 			if("spraycan")
-				if(points >= 10)
+				if(points >= 5)
 					item_type = /obj/item/toy/crayon/spraycan/gang
-					points = 10
+					points = 5
 			if("switchblade")
 				if(points >= 10)
 					item_type = /obj/item/weapon/switchblade
@@ -192,18 +190,18 @@
 					if(isnum((gang == "A") ? mode.A_timer : mode.B_timer))
 						return
 
-					var/fail = 0
 					var/usrarea = get_area(usr.loc)
 					var/usrturf = get_turf(usr.loc)
 					if(istype(usrarea,/area/space) || istype(usrturf,/turf/space) || usr.z != 1)
 						usr << "<span class='warning'>You can only use this on the station!</span>"
-						fail = 1
+						return
+
 					for(var/obj/obj in usrturf)
 						if(obj.density)
 							usr << "<span class='warning'>There's not enough room here!</span>"
-							fail = 1
-							break
-					if(!fail && points >= 50)
+							return
+
+					if(points >= 50)
 						item_type = /obj/machinery/dominator
 						points = 50
 
@@ -221,6 +219,10 @@
 
 	else if(href_list["choice"])
 		switch(href_list["choice"])
+			if("outfit")
+				if(outfits > 0)
+					ticker.mode.gang_outfit(usr,src,gang)
+					outfits -= 1
 			if("recall")
 				recall(usr)
 			if("ping")
@@ -243,13 +245,13 @@
 	else if(gang == "B")
 		members += ticker.mode.B_bosses | ticker.mode.B_gang
 	if(members.len)
-		var/ping = "<b>[boss ? "Gang Boss" : "Gang Lieutenant"]:</b> [message]"
+		var/ping = "<span class='danger'><B><i>[gang_name(gang)] [boss ? "Gang Boss" : "Gang Lieutenant"]</i>: [message]</B></span>"
 		for(var/datum/mind/ganger in members)
 			if(ganger.current.z <= 2)
-				ganger.current << "<span class='danger'>[ping]</span>"
+				ganger.current << ping
 		for(var/mob/M in dead_mob_list)
-			M << "<span class='danger'><B>[gang_name(gang)]</B> [ping]</span>"
-		log_game("[key_name(user)] sent a global message to the [gang_name(gang)] Gang ([gang]): [message].")
+			M << ping
+		log_game("[key_name(user)] Messaged [gang_name(gang)] Gang ([gang]): [message].")
 
 
 /obj/item/device/gangtool/proc/register_device(var/mob/user)
@@ -292,6 +294,9 @@
 
 /obj/item/device/gangtool/proc/recall(mob/user)
 	if(recalling || !can_use(user))
+		return
+
+	if(!istype(ticker.mode, /datum/game_mode/gang))
 		return
 
 	recalling = 1
