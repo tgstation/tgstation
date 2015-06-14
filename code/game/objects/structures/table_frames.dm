@@ -32,37 +32,28 @@
 			return
 	if(istype(I, /obj/item/stack/sheet/plasteel))
 		var/obj/item/stack/sheet/plasteel/P = I
-		if(P.get_amount() < 1)
-			user << "<span class='warning'>You need one plasteel sheet to do this!</span>"
-			return
 		user << "<span class='notice'>You start adding [P] to [src]...</span>"
 		if(do_after(user, 50))
-			P.use(1)
 			new /obj/structure/table/reinforced(src.loc)
 			qdel(src)
-		return
+			P.use(1)
+			return
 	if(istype(I, /obj/item/stack/sheet/metal))
 		var/obj/item/stack/sheet/metal/M = I
-		if(M.get_amount() < 1)
-			user << "<span class='warning'>You need one metal sheet to do this!</span>"
-			return
 		user << "<span class='notice'>You start adding [M] to [src]...</span>"
 		if(do_after(user, 20))
-			M.use(1)
 			new /obj/structure/table(src.loc)
 			qdel(src)
-		return
+			M.use(1)
+			return
 	if(istype(I, /obj/item/stack/sheet/glass))
 		var/obj/item/stack/sheet/glass/G = I
-		if(G.get_amount() < 1)
-			user << "<span class='warning'>You need one glass sheet to do this!</span>"
-			return
 		user << "<span class='notice'>You start adding [G] to [src]...</span>"
 		if(do_after(user, 20))
-			G.use(1)
 			new /obj/structure/table/glass(src.loc)
 			qdel(src)
-		return
+			G.use(1)
+			return
 
 /*
  * Wooden Frames
@@ -80,23 +71,17 @@
 		..()
 	if(istype(I, /obj/item/stack/sheet/mineral/wood))
 		var/obj/item/stack/sheet/mineral/wood/W = I
-		if(W.get_amount() < 1)
-			user << "<span class='warning'>You need one wood sheet to do this!</span>"
-			return
 		user << "<span class='notice'>You start adding [W] to [src]...</span>"
 		if(do_after(user, 20))
-			W.use(1)
 			new /obj/structure/table/wood(src.loc)
 			qdel(src)
-		return
+			W.use(1)
+			return
 	if(istype(I, /obj/item/stack/tile/carpet))
 		var/obj/item/stack/tile/carpet/C = I
-		if(C.get_amount() < 1)
-			user << "<span class='warning'>You need one carpet sheet to do this!</span>"
-			return
 		user << "<span class='notice'>You start adding [C] to [src]...</span>"
 		if(do_after(user, 20))
-			C.use(1)
 			new /obj/structure/table/wood/poker(src.loc)
 			qdel(src)
-		return
+			C.use(1)
+			return

@@ -17,7 +17,6 @@
 	mineral = "gold"
 	//var/electro = 1
 	//var/shocked = null
-	explosion_block = 0 //gold is a soft metal you dingus.
 
 /turf/simulated/wall/mineral/silver
 	name = "silver wall"
@@ -35,7 +34,6 @@
 	walltype = "diamond"
 	mineral = "diamond"
 	slicing_duration = 200   //diamond wall takes twice as much time to slice
-	explosion_block = 3
 
 /turf/simulated/wall/mineral/diamond/thermitemelt(mob/user as mob)
 	return
@@ -53,7 +51,6 @@
 	icon_state = "sandstone0"
 	walltype = "sandstone"
 	mineral = "sandstone"
-	explosion_block = 0
 
 /turf/simulated/wall/mineral/uranium
 	name = "uranium wall"
@@ -146,4 +143,3 @@
 	walltype = "wood"
 	mineral = "wood"
 	hardness = 70
-	explosion_block = 0

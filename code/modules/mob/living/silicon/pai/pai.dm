@@ -163,9 +163,9 @@
 
 	// ok, we're alive, camera is good and in our network...
 
-	set_machine(src)
-	current = C
-	reset_view(C)
+	src.set_machine(src)
+	src:current = C
+	src.reset_view(C)
 	return 1
 
 

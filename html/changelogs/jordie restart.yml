@@ -1,0 +1,6 @@
+author: Jordie0608
+
+delete-after: True
+
+changes: 
+  - rscadd: "Admin-delaying the round now works once it has finished."

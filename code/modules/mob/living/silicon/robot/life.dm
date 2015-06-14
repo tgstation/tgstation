@@ -12,6 +12,7 @@
 		use_power()
 
 /mob/living/silicon/robot/proc/clamp_values()
+
 	SetStunned(min(stunned, 30))
 	SetParalysis(min(paralysis, 30))
 	SetWeakened(min(weakened, 20))
@@ -22,16 +23,29 @@
 	adjustFireLoss(0)
 
 /mob/living/silicon/robot/proc/use_power()
-	if(cell && cell.charge)
-		if(cell.charge <= 100)
+
+	if(cell)
+		if(cell.charge <= 0)
 			uneq_all()
-		cell.use(1)
+			stat = UNCONSCIOUS
+		else if (cell.charge <= 100)
+			uneq_all()
+			cell.use(1)
+		else
+			if(module_state_1)
+				cell.use(5)
+			if(module_state_2)
+				cell.use(5)
+			if(module_state_3)
+				cell.use(5)
+			cell.use(1)
 	else
 		uneq_all()
 		stat = UNCONSCIOUS
 
 
 /mob/living/silicon/robot/handle_regular_status_updates()
+
 	if(camera && !scrambledcodes)
 		if(stat == DEAD || wires.IsCameraCut())
 			camera.status = 0

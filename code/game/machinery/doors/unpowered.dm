@@ -22,4 +22,3 @@
 	icon_state = "door1"
 	opacity = 1
 	density = 1
-	explosion_block = 1

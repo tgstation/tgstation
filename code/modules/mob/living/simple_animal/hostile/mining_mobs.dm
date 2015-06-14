@@ -41,10 +41,6 @@
 			return
 	..()
 
-/mob/living/simple_animal/hostile/asteroid/death(gibbed)
-	feedback_add_details("mobs_killed_mining","[src.name]")
-	..(gibbed)
-
 /mob/living/simple_animal/hostile/asteroid/basilisk
 	name = "basilisk"
 	desc = "A territorial beast, covered in a thick shell that absorbs energy. Its stare causes victims to freeze from the inside."
@@ -113,7 +109,6 @@
 		var/obj/item/weapon/ore/diamond/D = new /obj/item/weapon/ore/diamond(src.loc)
 		D.layer = 4.1
 	..(gibbed)
-
 
 /mob/living/simple_animal/hostile/asteroid/goldgrub
 	name = "goldgrub"
