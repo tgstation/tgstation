@@ -21,10 +21,12 @@ var/global/list/socks_f = list()	 //stores only socks name
 	//Lizard Bits (all datum lists indexed by name)
 var/global/list/body_markings_list = list()
 var/global/list/tails_list = list()
+var/global/list/animated_tails_list = list()
 var/global/list/snouts_list = list()
 var/global/list/horns_list = list()
 var/global/list/frills_list = list()
 var/global/list/spines_list = list()
+var/global/list/animated_spines_list = list()
 	//Backpacks
 var/global/list/backbaglist = list("Nothing", "Backpack", "Satchel")
 	//Female Uniforms

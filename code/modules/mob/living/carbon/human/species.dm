@@ -240,9 +240,22 @@
 		if(H.wear_suit && (H.wear_suit.flags_inv & HIDEJUMPSUIT))
 			bodyparts_to_add -= "tail"
 
+
+	if("waggingtail" in mutant_bodyparts)
+		if(H.wear_suit && (H.wear_suit.flags_inv & HIDEJUMPSUIT))
+			bodyparts_to_add -= "waggingtail"
+		else if ("tail" in mutant_bodyparts)
+			bodyparts_to_add -= "waggingtail"
+
 	if("spines" in mutant_bodyparts)
 		if(!H.dna.features["spines"] || H.dna.features["spines"] == "None" || H.wear_suit && (H.wear_suit.flags_inv & HIDEJUMPSUIT))
 			bodyparts_to_add -= "spines"
+
+	if("waggingspines" in mutant_bodyparts)
+		if(!H.dna.features["spines"] || H.dna.features["spines"] == "None" || H.wear_suit && (H.wear_suit.flags_inv & HIDEJUMPSUIT))
+			bodyparts_to_add -= "waggingspines"
+		else if ("tail" in mutant_bodyparts)
+			bodyparts_to_add -= "waggingspines"
 
 	if("snout" in mutant_bodyparts) //Take a closer look at that snout!
 		if(H.wear_mask && (H.wear_mask.flags_inv & HIDEFACE))
@@ -269,8 +282,12 @@
 			switch(bodypart)
 				if("tail")
 					S = tails_list[H.dna.features["tail"]]
+				if("waggingtail")
+					S.= animated_tails_list[H.dna.features["tail"]]
 				if("spines")
 					S = spines_list[H.dna.features["spines"]]
+				if("waggingspines")
+					S.= animated_spines_list[H.dna.features["spines"]]
 				if("snout")
 					S = snouts_list[H.dna.features["snout"]]
 				if("frills")

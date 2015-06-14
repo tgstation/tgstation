@@ -91,7 +91,7 @@
 				if("body_markings")
 					S = body_markings_list[features["body_markings"]]
 
-			if(S.icon_state == "none")
+			if(!S || S.icon_state == "none")
 				continue
 			var/icon_string
 			if(S.gender_specific)

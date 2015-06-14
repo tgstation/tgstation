@@ -16,10 +16,12 @@
 	//lizard bodyparts (blizzard intensifies)
 	init_sprite_accessory_subtypes(/datum/sprite_accessory/body_markings, body_markings_list)
 	init_sprite_accessory_subtypes(/datum/sprite_accessory/tails, tails_list)
+	init_sprite_accessory_subtypes(/datum/sprite_accessory/tails_animated, animated_tails_list)
 	init_sprite_accessory_subtypes(/datum/sprite_accessory/snouts, snouts_list)
 	init_sprite_accessory_subtypes(/datum/sprite_accessory/horns, horns_list)
 	init_sprite_accessory_subtypes(/datum/sprite_accessory/frills, frills_list)
 	init_sprite_accessory_subtypes(/datum/sprite_accessory/spines, spines_list)
+	init_sprite_accessory_subtypes(/datum/sprite_accessory/spines_animated, animated_spines_list)
 
 
 	//Species
