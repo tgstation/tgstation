@@ -17,7 +17,7 @@ var/global/list/rockTurfEdgeCache
 	density = 1
 	blocks_air = 1
 	temperature = TCMB
-	var/obj/mineralType = null
+	var/mineralType = null
 	var/mineralAmt = 3
 	var/spread = 0 //will the seam spread?
 	var/spreadChance = 0 //the percentual chance of an ore spreading to the neighbouring tiles
@@ -449,7 +449,7 @@ var/global/list/rockTurfEdgeCache
 		var/i
 		for (i=0;i<mineralAmt;i++)
 			new mineralType(src)
-		feedback_add_details("ore_mined","[mineralType.name]|[mineralAmt]")
+		feedback_add_details("ore_mined","[mineralType]|[mineralAmt]")
 	var/turf/simulated/floor/plating/asteroid/airless/N = ChangeTurf(/turf/simulated/floor/plating/asteroid/airless)
 	playsound(src, 'sound/effects/break_stone.ogg', 50, 1) //beautiful destruction
 	N.fullUpdateMineralOverlays()

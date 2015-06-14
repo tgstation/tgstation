@@ -106,7 +106,20 @@
 	name = "magic mirror"
 	desc = "Turn and face the strange... face."
 	icon_state = "magic_mirror"
+	var/list/races_blacklist = list("skeleton")
+	var/list/choosable_races = list()
 
+/obj/structure/mirror/magic/New()
+	if(!choosable_races.len)
+		for(var/datum/species/S in typesof(/datum/species) - /datum/species)
+			if(!(S.id in races_blacklist))
+				choosable_races += S
+	..()
+
+/obj/structure/mirror/magic/badmin/New()
+	for(var/datum/species/S in typesof(/datum/species) - /datum/species)
+		choosable_races += S
+	..()
 
 /obj/structure/mirror/magic/attack_hand(mob/user as mob)
 	if(!ishuman(user))
@@ -130,7 +143,7 @@
 
 		if("race")
 			var/newrace
-			var/racechoice = input(H, "What are we again?", "Race change") as null|anything in species_list
+			var/racechoice = input(H, "What are we again?", "Race change") as null|anything in choosable_races
 			newrace = species_list[racechoice]
 
 			if(!newrace || !H.dna)
