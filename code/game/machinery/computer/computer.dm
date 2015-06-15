@@ -100,7 +100,7 @@
 /obj/machinery/computer/attackby(I as obj, user as mob, params)
 	if(istype(I, /obj/item/weapon/screwdriver) && circuit)
 		playsound(src.loc, 'sound/items/Screwdriver.ogg', 50, 1)
-		user << "<span class='notice'> You start to disconnect the monitor...</span>"
+		user << "<span class='notice'>You start to disconnect the monitor...</span>"
 		if(do_after(user, 20))
 			var/obj/structure/computerframe/A = new /obj/structure/computerframe( src.loc )
 			A.circuit = circuit
@@ -109,12 +109,12 @@
 			for (var/obj/C in src)
 				C.loc = src.loc
 			if (src.stat & BROKEN)
-				user << "<span class='notice'> The broken glass falls out.</span>"
+				user << "<span class='notice'>The broken glass falls out.</span>"
 				new /obj/item/weapon/shard( src.loc )
 				A.state = 3
 				A.icon_state = "3"
 			else
-				user << "<span class='notice'> You disconnect the monitor.</span>"
+				user << "<span class='notice'>You disconnect the monitor.</span>"
 				A.state = 4
 				A.icon_state = "4"
 			qdel(src)

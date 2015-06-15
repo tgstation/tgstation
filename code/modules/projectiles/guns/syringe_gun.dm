@@ -56,7 +56,7 @@
 	S.loc = user.loc
 
 	syringes.Remove(S)
-	user << "<span class = 'notice'>You unload [S] from \the [src].</span>"
+	user << "<span class='notice'>You unload [S] from \the [src].</span>"
 
 	return 1
 

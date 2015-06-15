@@ -544,7 +544,7 @@
 	if(!emagged)
 		src.req_access = list()
 		emagged = 1
-		user << "<span class='notice'> You fried the consoles ID checking system.</span>"
+		user << "<span class='notice'>You fried the consoles ID checking system.</span>"
 
 /obj/machinery/computer/shuttle/ferry
 	name = "transport ferry console"

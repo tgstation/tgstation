@@ -1242,6 +1242,8 @@
 #include "code\modules\mob\living\simple_animal\revenant\revenant.dm"
 #include "code\modules\mob\living\simple_animal\revenant\revenant_abilities.dm"
 #include "code\modules\mob\living\simple_animal\revenant\revenant_spawn_event.dm"
+#include "code\modules\mob\living\simple_animal\slaughter\slaughter.dm"
+#include "code\modules\mob\living\simple_animal\slaughter\slaughterevent.dm"
 #include "code\modules\mob\living\simple_animal\slime\death.dm"
 #include "code\modules\mob\living\simple_animal\slime\emote.dm"
 #include "code\modules\mob\living\simple_animal\slime\life.dm"

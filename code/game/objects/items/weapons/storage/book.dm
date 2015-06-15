@@ -202,7 +202,7 @@ var/global/list/bibleitemstates =	list("bible", "koran", "scrapbook", "bible", "
 			A.reagents.del_reagent("water")
 			A.reagents.add_reagent("holywater",water2holy)
 		if(A.reagents && A.reagents.has_reagent("unholywater")) //yeah yeah, copy pasted code - sue me
-			user << "<span class='notice'> You purify [A].</span>"
+			user << "<span class='notice'>You purify [A].</span>"
 			var/unholy2clean = A.reagents.get_reagent_amount("unholywater")
 			A.reagents.del_reagent("unholywater")
 			A.reagents.add_reagent("holywater",unholy2clean)
