@@ -140,8 +140,8 @@
 					user << "<span class='notice'>You remove the circuit board.</span>"
 				else
 					user << "<span class='notice'>You remove the circuit board and other components.</span>"
-					for(var/obj/item/I in components)
-						I.loc = src.loc
+					for(var/atom/movable/A in components)
+						A.loc = src.loc
 				desc = initial(desc)
 				req_components = null
 				components = null
