@@ -735,11 +735,11 @@
 				return
 		if(0)
 			if(istype(W, /obj/item/weapon/airalarm_electronics))
-				user << "<span class='notice'>You insert the circuit.</span>"
-				buildstage = 1
-				update_icon()
-				user.unEquip(W)
-				qdel(W)
+				if(user.unEquip(W))
+					user << "<span class='notice'>You insert the circuit.</span>"
+					buildstage = 1
+					update_icon()
+					qdel(W)
 				return
 
 			if(istype(W, /obj/item/weapon/wrench))
