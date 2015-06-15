@@ -20,6 +20,7 @@
 	stop_automated_movement_when_pulled = 0
 	maxHealth = 60
 	health = 60
+	attacktext = "mauls"
 	melee_damage_lower = 20
 	melee_damage_upper = 30
 
@@ -128,7 +129,7 @@
 	..(5)
 
 /mob/living/simple_animal/hostile/bear/AttackingTarget()
-	emote( pick( list("slashes at [target]", "bites [target]") ) )
+	. = ..()
 
 	var/damage = rand(20,30)
 
