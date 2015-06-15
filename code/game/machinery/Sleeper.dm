@@ -1,4 +1,4 @@
-#define SLEEPER_SOPORIFIC_DELAY 40
+#define SLEEPER_SOPORIFIC_DELAY 30
 
 /////////////////////////////////////////
 // SLEEPER CONSOLE
@@ -539,3 +539,5 @@
 			set_light(light_range_on, light_power_on)
 		return
 	return
+
+#undef SLEEPER_SOPORIFIC_DELAY
