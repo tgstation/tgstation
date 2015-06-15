@@ -236,9 +236,10 @@
 
 /obj/item/weapon/gun/attack(mob/M as mob, mob/user)
 	if (M == user && user.zone_sel.selecting == "mouth" && !mouthshoot && ishuman(user)) //Handle gun suicide
-	/*	if(istype(M.wear_mask, /obj/item/clothing/mask/happy)) No happy mask in tg (yet)
-			M << "<span class='sinister'>BUT WHY? I'M SO HAPPY!</span>"
-			return */
+		var/mob/living/carbon/human/H = M
+		if(istype(H.wear_mask, /obj/item/clothing/mask/happy))
+			H << "<span class='sinister'>BUT WHY? I'M SO HAPPY!</span>"
+			return
 		if(src.can_trigger_gun(M)) //fug firing pins
 			mouthshoot = 1
 			M.visible_message("<span class='warning'>[user] sticks their gun in their mouth, ready to pull the trigger...</span>")
