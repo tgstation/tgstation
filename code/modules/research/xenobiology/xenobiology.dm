@@ -443,6 +443,7 @@
 
 
 /obj/effect/timestop/proc/timestop()
+	playsound(get_turf(src), 'sound/magic/TIMEPARADOX2.ogg', 100, 1, -1)
 	while(loc)
 		if(duration)
 			for(var/mob/living/M in orange (freezerange, src.loc))
