@@ -132,6 +132,7 @@
 	process_fire(target,user,1,params)
 
 
+
 /obj/item/weapon/gun/proc/can_trigger_gun(mob/living/carbon/user)
 	if (!user.IsAdvancedToolUser())
 		user << "<span class='warning'>You don't have the dexterity to do this!</span>"
@@ -218,7 +219,7 @@
 		user.update_inv_l_hand(0)
 	else
 		user.update_inv_r_hand(0)
-
+	feedback_add_details("gun_fired","[src.name]")
 
 /obj/item/weapon/gun/attack(mob/M as mob, mob/user)
 	if(user.a_intent == "harm") //Flogging

@@ -61,7 +61,8 @@ var/global/list/special_roles = list( //keep synced with the defines BE_* in set
 	var/skin_tone = "caucasian1"		//Skin color
 	var/eye_color = "000"				//Eye color
 	var/datum/species/pref_species = new /datum/species/human()	//Mutant race
-	var/mutant_color = "FFF"			//Mutant race skin color
+	var/list/features = list("mcolor" = "FFF", "tail" = "Smooth", "snout" = "Round", "horns" = "None", "frills" = "None", "spines" = "None", "body_markings" = "None")
+
 	var/list/custom_names = list("clown", "mime", "ai", "cyborg", "religion", "deity")
 
 		//Mob preview
@@ -243,7 +244,61 @@ var/global/list/special_roles = list( //keep synced with the defines BE_* in set
 
 					dat += "<h3>Alien Color</h3>"
 
-					dat += "<span style='border: 1px solid #161616; background-color: #[mutant_color];'>&nbsp;&nbsp;&nbsp;</span> <a href='?_src_=prefs;preference=mutant_color;task=input'>Change</a><BR>"
+					dat += "<span style='border: 1px solid #161616; background-color: #[features["mcolor"]];'>&nbsp;&nbsp;&nbsp;</span> <a href='?_src_=prefs;preference=mutant_color;task=input'>Change</a><BR>"
+
+					dat += "</td>"
+
+				if("tail" in pref_species.mutant_bodyparts)
+					dat += "<td valign='top' width='7%'>"
+
+					dat += "<h3>Tail</h3>"
+
+					dat += "<a href='?_src_=prefs;preference=tail;task=input'>[features["tail"]]</a><BR>"
+
+					dat += "</td>"
+
+				if("snout" in pref_species.mutant_bodyparts)
+					dat += "<td valign='top' width='7%'>"
+
+					dat += "<h3>Snout</h3>"
+
+					dat += "<a href='?_src_=prefs;preference=snout;task=input'>[features["snout"]]</a><BR>"
+
+					dat += "</td>"
+
+				if("horns" in pref_species.mutant_bodyparts)
+					dat += "<td valign='top' width='7%'>"
+
+					dat += "<h3>Horns</h3>"
+
+					dat += "<a href='?_src_=prefs;preference=horns;task=input'>[features["horns"]]</a><BR>"
+
+					dat += "</td>"
+
+				if("frills" in pref_species.mutant_bodyparts)
+					dat += "<td valign='top' width='7%'>"
+
+					dat += "<h3>Frills</h3>"
+
+					dat += "<a href='?_src_=prefs;preference=frills;task=input'>[features["frills"]]</a><BR>"
+
+					dat += "</td>"
+
+				if("spines" in pref_species.mutant_bodyparts)
+					dat += "<td valign='top' width='7%'>"
+
+					dat += "<h3>Spines</h3>"
+
+					dat += "<a href='?_src_=prefs;preference=spines;task=input'>[features["spines"]]</a><BR>"
+
+					dat += "</td>"
+
+				if("body_markings" in pref_species.mutant_bodyparts)
+					dat += "<td valign='top' width='7%'>"
+
+					dat += "<h3>Body Markings</h3>"
+
+					dat += "<a href='?_src_=prefs;preference=body_markings;task=input'>[features["body_markings"]]</a><BR>"
 
 					dat += "</td>"
 
@@ -736,19 +791,54 @@ var/global/list/special_roles = list( //keep synced with the defines BE_* in set
 						if(result)
 							var/newtype = roundstart_species[result]
 							pref_species = new newtype()
-							if(mutant_color == "#000")
-								mutant_color = pref_species.default_color
+							if(features["mcolor"] == "#000")
+								features["mcolor"] = pref_species.default_color
 
 					if("mutant_color")
 						var/new_mutantcolor = input(user, "Choose your character's alien skin color:", "Character Preference") as color|null
 						if(new_mutantcolor)
 							var/temp_hsv = RGBtoHSV(new_mutantcolor)
 							if(new_mutantcolor == "#000000")
-								mutant_color = pref_species.default_color
+								features["mcolor"] = pref_species.default_color
 							else if(ReadHSV(temp_hsv)[3] >= ReadHSV("#7F7F7F")[3]) // mutantcolors must be bright
-								mutant_color = sanitize_hexcolor(new_mutantcolor)
+								features["mcolor"] = sanitize_hexcolor(new_mutantcolor)
 							else
 								user << "<span class='danger'>Invalid color. Your color is not bright enough.</span>"
+					if("tail")
+						var/new_tail
+						new_tail = input(user, "Choose your character's tail:", "Character Preference") as null|anything in tails_list
+						if(new_tail)
+							features["tail"] = new_tail
+
+					if("snout")
+						var/new_snout
+						new_snout = input(user, "Choose your character's snout:", "Character Preference") as null|anything in snouts_list
+						if(new_snout)
+							features["snout"] = new_snout
+
+					if("horns")
+						var/new_horns
+						new_horns = input(user, "Choose your character's horns:", "Character Preference") as null|anything in horns_list
+						if(new_horns)
+							features["horns"] = new_horns
+
+					if("frills")
+						var/new_frills
+						new_frills = input(user, "Choose your character's frills:", "Character Preference") as null|anything in frills_list
+						if(new_frills)
+							features["frills"] = new_frills
+
+					if("spines")
+						var/new_spines
+						new_spines = input(user, "Choose your character's spines:", "Character Preference") as null|anything in spines_list
+						if(new_spines)
+							features["spines"] = new_spines
+
+					if("body_markings")
+						var/new_body_markings
+						new_body_markings = input(user, "Choose your character's body markings:", "Character Preference") as null|anything in body_markings_list
+						if(new_body_markings)
+							features["body_markings"] = new_body_markings
 
 					if("s_tone")
 						var/new_s_tone = input(user, "Choose your character's skin-tone:", "Character Preference")  as null|anything in skin_tones
@@ -919,10 +1009,9 @@ var/global/list/special_roles = list( //keep synced with the defines BE_* in set
 		if(character.dna)
 			character.dna.real_name = character.real_name
 			if(pref_species != /datum/species/human && config.mutant_races)
-				hardset_dna(character, null, null, null, null, pref_species.type)
+				hardset_dna(character, null, null, null, null, pref_species.type, features)
 			else
-				hardset_dna(character, null, null, null, null, /datum/species/human)
-			character.dna.mutant_color = mutant_color
+				hardset_dna(character, null, null, null, null, /datum/species/human, features)
 			character.update_mutcolor()
 
 		character.gender = gender
@@ -939,6 +1028,8 @@ var/global/list/special_roles = list( //keep synced with the defines BE_* in set
 		character.underwear = underwear
 		character.undershirt = undershirt
 		character.socks = socks
+
+		character.features = features
 
 		if(backbag > 3 || backbag < 1)
 			backbag = 1 //Same as above

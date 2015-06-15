@@ -114,7 +114,7 @@
 		var/turf/t = turf
 		if(obscuredTurfs[t])
 			if(!t.obscured)
-				t.obscured = image('icons/effects/cameravis.dmi', t, "black", 15)
+				t.obscured = image('icons/effects/cameravis.dmi', t, "black", 16)
 
 			obscured += t.obscured
 			for(var/eye in seenby)
@@ -169,7 +169,7 @@
 	for(var/turf in obscuredTurfs)
 		var/turf/t = turf
 		if(!t.obscured)
-			t.obscured = image('icons/effects/cameravis.dmi', t, "black", 15)
+			t.obscured = image('icons/effects/cameravis.dmi', t, "black", 16)
 		obscured += t.obscured
 
 #undef UPDATE_BUFFER

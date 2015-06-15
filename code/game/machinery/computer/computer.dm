@@ -1,6 +1,7 @@
 /obj/machinery/computer
 	name = "computer"
 	icon = 'icons/obj/computer.dmi'
+	icon_state = "computer"
 	density = 1
 	anchored = 1.0
 	use_power = 1
@@ -9,6 +10,8 @@
 	var/obj/item/weapon/circuitboard/circuit = null //if circuit==null, computer can't disassembly
 	var/processing = 0
 	var/brightness_on = 2
+	var/icon_keyboard = "generic_key"
+	var/icon_screen = "generic"
 
 /obj/machinery/computer/New(location, obj/item/weapon/circuitboard/C)
 	..(location)
@@ -18,6 +21,7 @@
 		if(circuit)
 			circuit = new circuit(null)
 	power_change()
+	update_icon()
 
 /obj/machinery/computer/initialize()
 	power_change()
@@ -68,23 +72,22 @@
 		density = 0
 
 /obj/machinery/computer/update_icon()
-	..()
-	icon_state = initial(icon_state)
-	SetLuminosity(brightness_on)
-	// Broken
+	overlays.Cut()
+	if(stat & NOPOWER)
+		overlays += "[icon_keyboard]_off"
+		return
+	overlays += icon_keyboard
 	if(stat & BROKEN)
-		icon_state += "b"
-
-	// Unpowered
-	else if(stat & NOPOWER)
-		icon_state = initial(icon_state)
-		icon_state += "0"
-		SetLuminosity(0)
-
-
+		overlays += "[icon_state]_broken"
+	else
+		overlays += icon_screen
 
 /obj/machinery/computer/power_change()
 	..()
+	if(stat & NOPOWER)
+		SetLuminosity(0)
+	else
+		SetLuminosity(brightness_on)
 	update_icon()
 	return
 

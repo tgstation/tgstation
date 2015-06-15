@@ -307,7 +307,7 @@
 		if(ratio)
 			config.midround_antag_life_check = ratio/100
 
-		message_admins("<span class='adminnotice'>[key_name_admin(usr)] edited the midround antagonist living crew ratio to [ratio * 100]% alive.</span>")
+		message_admins("<span class='adminnotice'>[key_name_admin(usr)] edited the midround antagonist living crew ratio to [ratio]% alive.</span>")
 		check_antagonists()
 
 	else if(href_list["toggle_noncontinuous_behavior"])
@@ -1605,6 +1605,7 @@
 		message_admins("[key_name(H)] got their cookie, spawned by [key_name(src.owner)]")
 		feedback_inc("admin_cookies_spawned",1)
 		H << "<span class='adminnotice'>Your prayers have been answered!! You received the <b>best cookie</b>!</span>"
+		H << 'sound/effects/pray_chaplain.ogg'
 
 	else if(href_list["BlueSpaceArtillery"])
 		var/mob/living/M = locate(href_list["BlueSpaceArtillery"])
