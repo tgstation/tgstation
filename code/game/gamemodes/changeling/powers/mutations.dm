@@ -303,7 +303,6 @@
 	icon_state = "lingarmor"
 	flags = NODROP
 	body_parts_covered = CHEST|GROIN|LEGS|FEET|ARMS|HANDS
-	slowdown = 2
 	armor = list(melee = 40, bullet = 20, laser = 30, energy = 13, bomb = 0, bio = 0, rad = 0)
 	flags_inv = HIDEJUMPSUIT
 	cold_protection = 0
