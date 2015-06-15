@@ -106,7 +106,11 @@
 							"<span class='warning'>This guy just got jammed into the machine, give them a breath before trying to pump them full of drugs.</span>", \
 							"<span class='warning'>Give it a rest.</span>", \
 							"<span class='warning'>Aren't you going to tuck them in before putting them to sleep?</span>", \
-							"<span class='warning'>But it's not sleepytime yet!</span>")]"
+							"<span class='warning'>Slow down just a second, they aren't going anywhere... right?</span>", \
+							"<span class='warning'>Just got to make sure you're not tripping the fuck out of an innocent bystander, stay tight.</span>", \
+							"<span class='warning'>The occupant is still moving around!</span>", \
+							"<span class='warning'>Sorry pal, safety procedures.</span>", \
+							"<span class='warning'>But it's not bedtime yet!</span>")]"
 						src.connected.sedativeblock++
 					else if(src.connected.occupant.health < 0 && href_list["chemical"] != "inaprovaline")
 						usr << "<span class='danger'>This person is not in good enough condition for sleepers to be effective! Use another means of treatment, such as cryogenics!</span>"
