@@ -160,6 +160,8 @@
 
 	var/aggressive_changelog = 0
 
+	var/reactionary_explosions = 0 //If we use reactionary explosions, explosions that react to walls and doors
+
 /datum/configuration/New()
 	var/list/L = typesof(/datum/game_mode) - /datum/game_mode
 	for(var/T in L)
@@ -485,6 +487,8 @@
 					config.no_summon_magic			= 1
 				if("no_summon_events")
 					config.no_summon_events			= 1
+				if("reactionary_explosions")
+					config.reactionary_explosions	= 1
 				else
 					diary << "Unknown setting in configuration: '[name]'"
 
@@ -560,7 +564,7 @@
 			//world << "DEBUG: runnable_mode\[[runnable_modes.len]\] = [M.config_tag]"
 	return runnable_modes
 
-datum/configuration/proc/get_runnable_midround_modes(crew)
+/datum/configuration/proc/get_runnable_midround_modes(crew)
 	var/list/datum/game_mode/runnable_modes = new
 	for(var/T in (typesof(/datum/game_mode) - /datum/game_mode - ticker.mode.type))
 		var/datum/game_mode/M = new T()

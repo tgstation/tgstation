@@ -144,6 +144,7 @@
  */
 /obj/item/weapon/weldingtool
 	name = "welding tool"
+	desc = "A standard edition welder provided by NanoTrasen."
 	icon = 'icons/obj/items.dmi'
 	icon_state = "welder"
 	item_state = "welder"
@@ -162,6 +163,7 @@
 	var/status = 1 		//Whether the welder is secured or unsecured (able to attach rods to it to make a flamethrower)
 	var/max_fuel = 20 	//The max amount of fuel the welder can hold
 	var/change_icons = 1
+	var/can_off_process = 0
 
 /obj/item/weapon/weldingtool/New()
 	..()
@@ -223,7 +225,8 @@
 			force = 3
 			damtype = "brute"
 			update_icon()
-			SSobj.processing.Remove(src)
+			if(!can_off_process)
+				SSobj.processing.Remove(src)
 			return
 	//Welders left on now use up fuel, but lets not have them run out quite that fast
 		if(1)
@@ -356,8 +359,9 @@
 		var/obj/item/stack/rods/R = I
 		if (R.use(1))
 			var/obj/item/weapon/flamethrower/F = new /obj/item/weapon/flamethrower(user.loc)
-			user.unEquip(src)
-			loc = F
+			if(!remove_item_from_storage(F))
+				user.unEquip(src)
+				loc = F
 			F.weldtool = src
 			add_fingerprint(user)
 			user << "<span class='notice'>You add a rod to a welder, starting to build a flamethrower.</span>"
@@ -368,6 +372,7 @@
 
 /obj/item/weapon/weldingtool/largetank
 	name = "industrial welding tool"
+	desc = "A slightly larger welder with a larger tank."
 	icon_state = "indwelder"
 	max_fuel = 40
 	g_amt = 60
@@ -381,6 +386,7 @@
 
 /obj/item/weapon/weldingtool/mini
 	name = "emergency welding tool"
+	desc = "A miniature welder used during emergencies."
 	icon_state = "miniwelder"
 	max_fuel = 10
 	w_class = 1
@@ -394,6 +400,7 @@
 
 /obj/item/weapon/weldingtool/hugetank
 	name = "upgraded industrial welding tool"
+	desc = "An upgraded welder based of the industrial welder."
 	icon_state = "upindwelder"
 	item_state = "upindwelder"
 	max_fuel = 80
@@ -403,19 +410,22 @@
 
 /obj/item/weapon/weldingtool/experimental
 	name = "experimental welding tool"
+	desc = "An experimental welder capable of self-fuel generation."
 	icon_state = "exwelder"
 	item_state = "exwelder"
 	max_fuel = 40
 	m_amt = 70
 	g_amt = 120
-	origin_tech = "engineering=4;plasmatech=3"
+	origin_tech = "materials=4;engineering=4;bluespace=3;plasmatech=3"
 	var/last_gen = 0
+	change_icons = 0
+	can_off_process = 1
 
 
 //Proc to make the experimental welder generate fuel, optimized as fuck -Sieve
 //i don't think this is actually used, yaaaaay -Pete
 /obj/item/weapon/weldingtool/experimental/proc/fuel_gen()
-	if(!last_gen)
+	if(!welding && !last_gen)
 		last_gen = 1
 		reagents.add_reagent("welding_fuel",1)
 		spawn(10)

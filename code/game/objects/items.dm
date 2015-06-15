@@ -13,7 +13,7 @@
 	var/w_class = 3.0
 	var/slot_flags = 0		//This is used to determine on which slots an item can fit.
 	pass_flags = PASSTABLE
-	pressure_resistance = 5
+	pressure_resistance = 3
 	var/obj/item/master = null
 
 	var/heat_protection = 0 //flags which determine which body parts are protected from heat. Use the HEAD, CHEST, GROIN, etc. flags. See setup.dm
@@ -442,7 +442,8 @@
 		if(istype(A, /mob/living/carbon/human))
 			var/mob/living/carbon/human/H = A
 			if(can_embed(src))
-				if(prob(embed_chance))
+				if(prob(embed_chance) && !(PIERCEIMMUNE in H.dna.species.specflags))
+					H.throw_alert("embeddedobject")
 					var/obj/item/organ/limb/L = pick(H.organs)
 					L.embedded_objects |= src
 					add_blood(H)//it embedded itself in you, of course it's bloody!
@@ -454,3 +455,12 @@
 	//Reset regardless of if we hit a human.
 	throw_speed = initial(throw_speed) //explosions change this.
 	..()
+
+/obj/item/proc/remove_item_from_storage(atom/newLoc) //please use this if you're going to snowflake an item out of a obj/item/weapon/storage
+	if(!newLoc)
+		return 0
+	if(istype(loc,/obj/item/weapon/storage))
+		var/obj/item/weapon/storage/S = loc
+		S.remove_from_storage(src,newLoc)
+		return 1
+	return 0

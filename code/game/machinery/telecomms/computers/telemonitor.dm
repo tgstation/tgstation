@@ -7,7 +7,7 @@
 
 /obj/machinery/computer/telecomms/monitor
 	name = "telecommunications monitoring console"
-	icon_state = "comm_monitor"
+	icon_screen = "comm_monitor"
 
 	var/screen = 0				// the screen number:
 	var/list/machinelist = list()	// the machines located by the computer

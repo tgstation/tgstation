@@ -48,6 +48,7 @@
 						user.visible_message("[user] drapes [I] over [M]'s [parse_zone(procedure.location)] to prepare for \an [procedure.name].", "<span class='notice'>You drape [I] over [M]'s [parse_zone(procedure.location)] to prepare for \an [procedure.name].</span>")
 
 						add_logs(user, M, "operated", addition="Operation type: [procedure.name]")
+						feedback_add_details("surgery_initiated","[procedure.name]")
 						return 1
 					else
 						user << "<span class='warning'>You need to expose [M]'s [procedure.location] first!</span>"
@@ -58,7 +59,7 @@
 
 
 
-proc/get_location_modifier(mob/M)
+/proc/get_location_modifier(mob/M)
 	var/turf/T = get_turf(M)
 	if(locate(/obj/structure/optable, T))
 		return 1

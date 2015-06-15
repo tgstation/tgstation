@@ -111,7 +111,7 @@
 	materials = list("$glass" = 1000, "sacid" = 20)
 	build_path = /obj/item/weapon/circuitboard/chem_dispenser
 	category = list ("Medical Machinery")
-	
+
 /datum/design/chem_master
 	name = "Machine Design (Chem Master Board)"
 	desc = "The circuit board for a Chem Master 2999."
@@ -250,6 +250,76 @@
 	build_type = IMPRINTER
 	materials = list("$glass" = 1000, "sacid" = 20)
 	build_path = /obj/item/weapon/circuitboard/microwave
+	category = list ("Misc. Machinery")
+
+/datum/design/gibber
+	name = "Machine Design (Gibber Board)"
+	desc = "The circuit board for a gibber."
+	id = "gibber"
+	req_tech = list("programming" = 1)
+	build_type = IMPRINTER
+	materials = list("$glass" = 1000, "sacid" = 20)
+	build_path = /obj/item/weapon/circuitboard/gibber
+	category = list ("Misc. Machinery")
+
+/datum/design/smartfridge
+	name = "Machine Design (Smartfridge Board)"
+	desc = "The circuit board for a smartfridge."
+	id = "smartfridge"
+	req_tech = list("programming" = 1)
+	build_type = IMPRINTER
+	materials = list("$glass" = 1000, "sacid" = 20)
+	build_path = /obj/item/weapon/circuitboard/smartfridge
+	category = list ("Misc. Machinery")
+
+/datum/design/monkey_recycler
+	name = "Machine Design (Monkey Recycler Board)"
+	desc = "The circuit board for a monkey recycler."
+	id = "smartfridge"
+	req_tech = list("programming" = 1)
+	build_type = IMPRINTER
+	materials = list("$glass" = 1000, "sacid" = 20)
+	build_path = /obj/item/weapon/circuitboard/monkey_recycler
+	category = list ("Misc. Machinery")
+
+/datum/design/seed_extractor
+	name = "Machine Design (Seed Extractor Board)"
+	desc = "The circuit board for a seed extractor."
+	id = "seed_extractor"
+	req_tech = list("programming" = 1)
+	build_type = IMPRINTER
+	materials = list("$glass" = 1000, "sacid" = 20)
+	build_path = /obj/item/weapon/circuitboard/seed_extractor
+	category = list ("Misc. Machinery")
+
+/datum/design/processor
+	name = "Machine Design (Processor Board)"
+	desc = "The circuit board for a processor."
+	id = "processor"
+	req_tech = list("programming" = 1)
+	build_type = IMPRINTER
+	materials = list("$glass" = 1000, "sacid" = 20)
+	build_path = /obj/item/weapon/circuitboard/processor
+	category = list ("Misc. Machinery")
+
+/datum/design/recycler
+	name = "Machine Design (Recycler Board)"
+	desc = "The circuit board for a recycler."
+	id = "recycler"
+	req_tech = list("programming" = 1)
+	build_type = IMPRINTER
+	materials = list("$glass" = 1000, "sacid" = 20)
+	build_path = /obj/item/weapon/circuitboard/recycler
+	category = list ("Misc. Machinery")
+
+/datum/design/holopad
+	name = "Machine Design (AI Holopad Board)"
+	desc = "The circuit board for a holopad."
+	id = "holopad"
+	req_tech = list("programming" = 1)
+	build_type = IMPRINTER
+	materials = list("$glass" = 1000, "sacid" = 20)
+	build_path = /obj/item/weapon/circuitboard/holopad
 	category = list ("Misc. Machinery")
 
 /datum/design/autolathe

@@ -300,7 +300,7 @@
 	acolytes_survived = 0
 	for(var/datum/mind/cult_mind in cult)
 		if (cult_mind.current && cult_mind.current.stat != DEAD)
-			if(cult_mind.current.onCentcom())
+			if(cult_mind.current.onCentcom() || cult_mind.current.onSyndieBase())
 				acolytes_survived++
 	if(acolytes_survived>=acolytes_needed)
 		return 0

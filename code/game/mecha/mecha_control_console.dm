@@ -1,8 +1,8 @@
 /obj/machinery/computer/mecha
 	name = "exosuit control console"
 	desc = "Used to remotely locate or lockdown exosuits."
-	icon = 'icons/obj/computer.dmi'
-	icon_state = "mecha"
+	icon_screen = "mecha"
+	icon_keyboard = "tech_key"
 	req_access = list(access_robotics)
 	circuit = "/obj/item/weapon/circuitboard/mecha_control"
 	var/list/located = list()
@@ -57,16 +57,6 @@
 		screen = 0
 	updateUsrDialog()
 	return
-
-
-/obj/machinery/computer/mecha/update_icon()
-	if(stat & NOPOWER)
-		icon_state = "mecha0"
-		return
-	if(stat & BROKEN)
-		icon_state = "mechab"
-		return
-	icon_state = "mecha"
 
 /obj/item/mecha_parts/mecha_tracking
 	name = "exosuit tracking beacon"

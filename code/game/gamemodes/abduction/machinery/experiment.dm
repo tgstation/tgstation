@@ -43,7 +43,7 @@
 		photo = icon("icon" = 'icons/mob/human.dmi', "icon_state" = "[H.skin_tone]_[g]_s")
 	else
 		photo = icon("icon" = 'icons/mob/human.dmi', "icon_state" = "[H.dna.species.id]_[g]_s")
-		photo.Blend("#[H.dna.mutant_color]", ICON_MULTIPLY)
+		photo.Blend("#[H.dna.features["mcolor"]]", ICON_MULTIPLY)
 
 	var/icon/eyes_s
 	if(EYECOLOR in H.dna.species.specflags)

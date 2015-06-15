@@ -58,7 +58,7 @@
 	. = ..()
 	var/area/A = get_area()
 	if(get_area_type() == AREA_STATION)
-		. += "<p>According to \the [src], you are now in <b>\"[strip_html_properly(A.name)]\"</b>.</p>"
+		. += "<p>According to \the [src], you are now in <b>\"[html_encode(A.name)]\"</b>.</p>"
 	var/datum/browser/popup = new(user, "blueprints", "[src]", 700, 500)
 	popup.set_content(.)
 	popup.open()
@@ -83,7 +83,7 @@
 	. = ..()
 	var/area/A = get_area()
 	if(get_area_type() == AREA_STATION)
-		. += "<p>According to \the [src], you are now in <b>\"[strip_html_properly(A.name)]\"</b>.</p>"
+		. += "<p>According to \the [src], you are now in <b>\"[html_encode(A.name)]\"</b>.</p>"
 		. += "<p>You may <a href='?src=\ref[src];edit_area=1'> move an amendment</a> to the drawing.</p>"
 	var/datum/browser/popup = new(user, "blueprints", "[src]", 700, 500)
 	popup.set_content(.)
@@ -206,8 +206,6 @@
 /obj/item/areaeditor/proc/check_tile_is_border(var/turf/T2,var/dir)
 	if (istype(T2, /turf/space))
 		return BORDER_SPACE //omg hull breach we all going to die here
-	if (istype(T2, /turf/simulated/shuttle))
-		return BORDER_SPACE
 	if (get_area_type(T2.loc)!=AREA_SPACE)
 		return BORDER_BETWEEN
 	if (istype(T2, /turf/simulated/wall))

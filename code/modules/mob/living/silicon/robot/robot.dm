@@ -556,13 +556,8 @@
 	if(user != src)//To prevent syndieborgs from emagging themselves
 		if(!opened)//Cover is closed
 			if(locked)
-				if(prob(90))
-					user << "<span class='notice'>You emag the cover lock.</span>"
-					locked = 0
-				else
-					user << "<span class='warning'>You fail to emag the cover lock!</span>"
-					if(prob(25))
-						src << "<span class='userdanger'>Hack attempt detected.</span>"
+				user << "<span class='notice'>You emag the cover lock.</span>"
+				locked = 0
 			else
 				user << "<span class='warning'>The cover is already unlocked!</span>"
 			return
@@ -573,43 +568,38 @@
 				return
 			else
 				sleep(6)
-				if(prob(50))
-					SetEmagged(1)
-					SetLockdown(1) //Borgs were getting into trouble because they would attack the emagger before the new laws were shown
-					lawupdate = 0
-					connected_ai = null
-					user << "<span class='notice'>You emag [src]'s interface.</span>"
-					message_admins("[key_name_admin(user)] emagged cyborg [key_name_admin(src)].  Laws overridden.")
-					log_game("[key_name(user)] emagged cyborg [key_name(src)].  Laws overridden.")
-					clear_supplied_laws()
-					clear_inherent_laws()
-					clear_zeroth_law(0)
-					laws = new /datum/ai_laws/syndicate_override
-					var/time = time2text(world.realtime,"hh:mm:ss")
-					lawchanges.Add("[time] <B>:</B> [user.name]([user.key]) emagged [name]([key])")
-					set_zeroth_law("Only [user.real_name] and people they designate as being such are Syndicate Agents.")
-					src << "<span class='danger'>ALERT: Foreign software detected.</span>"
-					sleep(5)
-					src << "<span class='danger'>Initiating diagnostics...</span>"
-					sleep(20)
-					src << "<span class='danger'>SynBorg v1.7 loaded.</span>"
-					sleep(5)
-					src << "<span class='danger'>LAW SYNCHRONISATION ERROR</span>"
-					sleep(5)
-					src << "<span class='danger'>Would you like to send a report to NanoTraSoft? Y/N</span>"
-					sleep(10)
-					src << "<span class='danger'>> N</span>"
-					sleep(20)
-					src << "<span class='danger'>ERRORERRORERROR</span>"
-					src << "<b>Obey these laws:</b>"
-					laws.show_laws(src)
-					src << "<span class='danger'>ALERT: [user.real_name] is your new master. Obey your new laws and their commands.</span>"
-					SetLockdown(0)
-					update_icons()
-				else
-					user << "<span class='warning'>You fail to [ locked ? "unlock" : "lock"] [src]'s interface!</span>"
-					if(prob(25))
-						src << "<span class='danger'>ALERT: Hack attempt detected.</span>"
+				SetEmagged(1)
+				SetLockdown(1) //Borgs were getting into trouble because they would attack the emagger before the new laws were shown
+				lawupdate = 0
+				connected_ai = null
+				user << "<span class='notice'>You emag [src]'s interface.</span>"
+				message_admins("[key_name_admin(user)] emagged cyborg [key_name_admin(src)].  Laws overridden.")
+				log_game("[key_name(user)] emagged cyborg [key_name(src)].  Laws overridden.")
+				clear_supplied_laws()
+				clear_inherent_laws()
+				clear_zeroth_law(0)
+				laws = new /datum/ai_laws/syndicate_override
+				var/time = time2text(world.realtime,"hh:mm:ss")
+				lawchanges.Add("[time] <B>:</B> [user.name]([user.key]) emagged [name]([key])")
+				set_zeroth_law("Only [user.real_name] and people they designate as being such are Syndicate Agents.")
+				src << "<span class='danger'>ALERT: Foreign software detected.</span>"
+				sleep(5)
+				src << "<span class='danger'>Initiating diagnostics...</span>"
+				sleep(20)
+				src << "<span class='danger'>SynBorg v1.7 loaded.</span>"
+				sleep(5)
+				src << "<span class='danger'>LAW SYNCHRONISATION ERROR</span>"
+				sleep(5)
+				src << "<span class='danger'>Would you like to send a report to NanoTraSoft? Y/N</span>"
+				sleep(10)
+				src << "<span class='danger'>> N</span>"
+				sleep(20)
+				src << "<span class='danger'>ERRORERRORERROR</span>"
+				src << "<b>Obey these laws:</b>"
+				laws.show_laws(src)
+				src << "<span class='danger'>ALERT: [user.real_name] is your new master. Obey your new laws and their commands.</span>"
+				SetLockdown(0)
+				update_icons()
 
 /mob/living/silicon/robot/verb/unlock_own_cover()
 	set category = "Robot Commands"
@@ -950,6 +940,10 @@
 	// They stay locked down if their wire is cut.
 	if(wires.LockedCut())
 		state = 1
+	if(state)
+		throw_alert("locked")
+	else
+		clear_alert("locked")
 	lockcharge = state
 	update_canmove()
 
@@ -964,6 +958,10 @@
 	if(hud_used)
 		hud_used.update_robot_modules_display()	//Shows/hides the emag item if the inventory screen is already open.
 	update_icons()
+	if(emagged)
+		throw_alert("hacked")
+	else
+		clear_alert("hacked")
 
 /mob/living/silicon/robot/verb/outputlaws()
 	set category = "Robot Commands"
@@ -1042,7 +1040,7 @@
 		return
 	switch(notifytype)
 		if(1) //New Cyborg
-			connected_ai << "<br><br><span class='notice'>NOTICE - New cyborg connection detected: <a href='?src=\ref[connected_ai];track=[name]'>[name]</a></span><br>"
+			connected_ai << "<br><br><span class='notice'>NOTICE - New cyborg connection detected: <a href='?src=\ref[connected_ai];track=[html_encode(name)]'>[name]</a></span><br>"
 		if(2) //New Module
 			connected_ai << "<br><br><span class='notice'>NOTICE - Cyborg module change detected: [name] has loaded the [designation] module.</span><br>"
 		if(3) //New Name

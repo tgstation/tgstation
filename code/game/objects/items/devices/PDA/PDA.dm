@@ -904,25 +904,28 @@ var/global/list/obj/item/device/pda/PDAs = list()
 		else
 			var/obj/item/I = user.get_active_hand()
 			if (istype(I, /obj/item/weapon/card/id))
-				user.drop_item()
+				if(!user.unEquip(I))
+					return 0
 				I.loc = src
 				id = I
 	else
 		var/obj/item/weapon/card/I = user.get_active_hand()
 		if (istype(I, /obj/item/weapon/card/id) && I:registered_name)
+			if(!user.unEquip(I))
+				return 0
 			var/obj/old_id = id
-			user.drop_item()
 			I.loc = src
 			id = I
 			user.put_in_hands(old_id)
-	return
+	return 1
 
 // access to status display signals
 /obj/item/device/pda/attackby(obj/item/C as obj, mob/user as mob, params)
 	..()
 	if(istype(C, /obj/item/weapon/cartridge) && !cartridge)
 		cartridge = C
-		user.drop_item()
+		if(!user.unEquip(C))
+			return
 		cartridge.loc = src
 		user << "<span class='notice'>You insert [cartridge] into [src].</span>"
 		if(cartridge.radio)
@@ -942,13 +945,15 @@ var/global/list/obj/item/device/pda/PDAs = list()
 			//Basic safety check. If either both objects are held by user or PDA is on ground and card is in hand.
 			if(((src in user.contents) && (C in user.contents)) || (istype(loc, /turf) && in_range(src, user) && (C in user.contents)) )
 				if( can_use(user) )//If they can still act.
-					id_check(user, 2)
+					if(!id_check(user, 2))
+						return
 					user << "<span class='notice'>You put the ID into \the [src]'s slot.</span>"
 					updateSelfDialog()//Update self dialog on success.
 			return	//Return in case of failed check or when successful.
 		updateSelfDialog()//For the non-input related code.
 	else if(istype(C, /obj/item/device/paicard) && !src.pai)
-		user.drop_item()
+		if(!user.unEquip(C))
+			return
 		C.loc = src
 		pai = C
 		user << "<span class='notice'>You slot \the [C] into [src].</span>"
@@ -958,7 +963,8 @@ var/global/list/obj/item/device/pda/PDAs = list()
 		if(O)
 			user << "<span class='warning'>There is already a pen in \the [src]!</span>"
 		else
-			user.drop_item()
+			if(!user.unEquip(C))
+				return
 			C.loc = src
 			user << "<span class='notice'>You slide \the [C] into \the [src].</span>"
 	return
@@ -1026,7 +1032,7 @@ var/global/list/obj/item/device/pda/PDAs = list()
 		note = replacetext(note, "<li>", "\[*\]")
 		note = replacetext(note, "<ul>", "\[list\]")
 		note = replacetext(note, "</ul>", "\[/list\]")
-		note = strip_html_properly(note)
+		note = html_encode(note)
 		notescanned = 1
 		user << "<span class='notice'>Paper scanned. Saved to PDA's notekeeper.</span>" //concept of scanning paper copyright brainoblivion 2009
 
@@ -1049,8 +1055,6 @@ var/global/list/obj/item/device/pda/PDAs = list()
 
 /obj/item/device/pda/Destroy()
 	PDAs -= src
-	if (src.id)
-		src.id.loc = get_turf(src.loc)
 	..()
 
 /obj/item/device/pda/clown/Crossed(AM as mob|obj) //Clown PDA is slippery.
@@ -1182,7 +1186,7 @@ var/global/list/obj/item/device/pda/PDAs = list()
 
 //ntrc handler proc
 /obj/item/device/pda/proc/msg_chat(channel as text, sender as text, message as text)
-	var/msg = "<b>[strip_html_properly(sender)]</b>| [strip_html_properly(message)]<br>"
+	var/msg = "<b>[html_encode(sender)]</b>| [html_encode(message)]<br>"
 	if(!channel)
 		for(var/C in ntrclog)
 			ntrclog[C] = msg + ntrclog[C]

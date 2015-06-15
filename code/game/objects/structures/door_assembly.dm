@@ -1,4 +1,4 @@
-obj/structure/door_assembly
+/obj/structure/door_assembly
 	icon = 'icons/obj/doors/door_assembly.dmi'
 
 	name = "airlock assembly"
@@ -17,7 +17,7 @@ obj/structure/door_assembly
 	var/created_name = null
 	var/heat_proof_finished = 0 //whether to heat-proof the finished airlock
 
-obj/structure/door_assembly/New()
+/obj/structure/door_assembly/New()
 	base_icon_state = copytext(icon_state,1,lentext(icon_state))
 
 /obj/structure/door_assembly/door_assembly_0
@@ -563,7 +563,7 @@ obj/structure/door_assembly/New()
 		var/obj/item/stack/sheet/G = W
 		if(G)
 			if(G.get_amount() >= 1)
-				if(istype(G, /obj/item/stack/sheet/rglass) || istype(G, /obj/item/stack/sheet/glass)) 
+				if(istype(G, /obj/item/stack/sheet/rglass) || istype(G, /obj/item/stack/sheet/glass))
 					playsound(src.loc, 'sound/items/Crowbar.ogg', 100, 1)
 					user.visible_message("[user] adds [G.name] to the airlock assembly.", \
 										"<span class='notice'>You start to install [G.name] into the airlock assembly...</span>")

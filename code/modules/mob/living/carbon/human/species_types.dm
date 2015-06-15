@@ -30,7 +30,7 @@
 	default_color = "00FF00"
 	roundstart = 1
 	specflags = list(MUTCOLORS,EYECOLOR,LIPS)
-	mutant_bodyparts = list("tail", "snout")
+	mutant_bodyparts = list("tail", "snout", "spines", "horns", "frills", "body_markings")
 	attack_verb = "slash"
 	attack_sound = 'sound/weapons/slash.ogg'
 	miss_sound = 'sound/weapons/slashmiss.ogg'
@@ -42,6 +42,11 @@
 		message = replacetext(message, "s", "sss")
 
 	return message
+
+//I wag in death
+/datum/species/lizard/spec_death(var/gibbed, var/mob/living/carbon/human/H)
+	if(H)
+		H.endTailWag()
 
 /*
  PLANTPEOPLE
@@ -233,7 +238,7 @@
 	// Animated beings of stone. They have increased defenses, and do not need to breathe. They're also slow as fuuuck.
 	name = "Golem"
 	id = "golem"
-	specflags = list(NOBREATH,HEATRES,COLDRES,NOGUNS,NOBLOOD,RADIMMUNE,VIRUSIMMUNE,HARDFEET)
+	specflags = list(NOBREATH,HEATRES,COLDRES,NOGUNS,NOBLOOD,RADIMMUNE,VIRUSIMMUNE,PIERCEIMMUNE)
 	speedmod = 3
 	armor = 55
 	punchmod = 5
@@ -282,7 +287,7 @@
 	say_mod = "rattles"
 	sexes = 0
 	meat = /obj/item/weapon/reagent_containers/food/snacks/meat/slab/human/mutant/skeleton
-	specflags = list(NOBREATH,HEATRES,COLDRES,NOBLOOD,RADIMMUNE,VIRUSIMMUNE,HARDFEET)
+	specflags = list(NOBREATH,HEATRES,COLDRES,NOBLOOD,RADIMMUNE,VIRUSIMMUNE,PIERCEIMMUNE)
 /*
  ZOMBIES
 */

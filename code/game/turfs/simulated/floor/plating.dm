@@ -105,6 +105,21 @@
 			ChangeTurf(/turf/simulated/floor/plating)
 			return
 
+
+/turf/simulated/floor/engine/ex_act(severity,target)
+	switch(severity)
+		if(1.0)
+			if(prob(80))
+				ReplaceWithLattice()
+			else if(prob(50))
+				qdel(src)
+			else
+				make_plating(1)
+		if(2.0)
+			if(prob(50))
+				make_plating(1)
+
+
 /turf/simulated/floor/engine/cult
 	name = "engraved floor"
 	icon_state = "cult"
@@ -144,3 +159,13 @@
 	nitrogen = 0
 	temperature = TCMB
 
+/turf/simulated/floor/plating/lava
+	icon_state = "lava"
+
+/turf/simulated/floor/plating/abductor
+	name = "alien floor"
+	icon_state = "alienpod1"
+
+/turf/simulated/floor/plating/abductor/New()
+	..()
+	icon_state = "alienpod[rand(1,9)]"

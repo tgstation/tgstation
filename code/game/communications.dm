@@ -182,7 +182,7 @@ var/const/RADIO_MAGNETS = "9"
 
 //If range > 0, only post to devices on the same z_level and within range
 //Use range = -1, to restrain to the same z_level without limiting range
-datum/radio_frequency/proc/post_signal(obj/source as obj|null, datum/signal/signal, var/filter = null as text|null, var/range = null as num|null)
+/datum/radio_frequency/proc/post_signal(obj/source as obj|null, datum/signal/signal, var/filter = null as text|null, var/range = null as num|null)
 
 	//Apply filter to the signal. If none supply, broadcast to every devices
 	//_default channel is always checked
@@ -213,7 +213,7 @@ datum/radio_frequency/proc/post_signal(obj/source as obj|null, datum/signal/sign
 					continue
 			device.receive_signal(signal, TRANSMISSION_RADIO, frequency)
 
-datum/radio_frequency/proc/add_listener(obj/device as obj, var/filter as text|null)
+/datum/radio_frequency/proc/add_listener(obj/device as obj, var/filter as text|null)
 	if (!filter)
 		filter = "_default"
 
@@ -224,7 +224,7 @@ datum/radio_frequency/proc/add_listener(obj/device as obj, var/filter as text|nu
 	devices_line += device
 
 
-datum/radio_frequency/proc/remove_listener(obj/device)
+/datum/radio_frequency/proc/remove_listener(obj/device)
 	for(var/devices_filter in devices)
 		var/list/devices_line = devices[devices_filter]
 		if(!devices_line)
@@ -299,4 +299,4 @@ var/list/pointers = list()
 	for(var/d in data)
 		var/val = data[d]
 		if(istext(val))
-			data[d] = strip_html_properly(val)
+			data[d] = html_encode(val)

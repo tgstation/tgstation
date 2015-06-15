@@ -1,4 +1,4 @@
-mob
+/mob
 	var/expression = "\\S+"
 	var/format = "*"
 

@@ -987,25 +987,8 @@ Turf and target are seperate in case you want to teleport some distance from a t
 /proc/get_turf(atom/A)
 	if (!istype(A))
 		return
-	if (isturf(A))
-		return A
-
-	var/list/atom/checked_turf_candidates = list() //prevent recursion from badmins being dumbasses
-	var/atom/turf_candidate = A.loc
-
-	while (!isturf(turf_candidate))
-		if (!turf_candidate || turf_candidate in checked_turf_candidates)
-			return
-		checked_turf_candidates += turf_candidate
-
-		//SO I BET YOU MIGHT BE WONDERING WHY I'M CHECKING THIS AGAIN.
-		//I'LL FUCKING TELL YOU WAY, ITS BECAUSE FOR SOME GOD DAMN REASON, WHEN THIS IS CALLED
-		//IN AN OBJECT'S NEW() PROC, THE FIRST CHECK WILL FUCKING PASS, BUT FUCKING RUNTIME HERE
-		//BITCHING ABOUT HOW IT CAN'T READ NULL.LOC, SO FUCK IT, WE CHECK THIS TWICE.
-		if (!turf_candidate)
-			return
-		turf_candidate = turf_candidate.loc
-	return turf_candidate
+	for(A, A && !isturf(A), A=A.loc); //semicolon is for the empty statement
+	return A
 
 
 //Gets the turf this atom's *ICON* appears to inhabit
@@ -1059,36 +1042,15 @@ Turf and target are seperate in case you want to teleport some distance from a t
 			return locate(final_x, final_y, AM.z)
 
 //Finds the distance between two atoms, in pixels
-/proc/getPixelDistance(var/atom/A, var/atom/B)
+//centered = 0 counts from turf edge to edge
+//centered = 1 counts from turf center to turf center
+//of course mathematically this is just adding world.icon_size on again
+/proc/getPixelDistance(var/atom/A, var/atom/B, var/centered = 1)
 	if(!istype(A)||!istype(B))
 		return 0
-
-	var/_x1 = A.x
-	var/_x2 = B.x
-	var/_y1 = A.y
-	var/_y2 = B.y
-
-	//Ensure _x1 is bigger, simplicity
-	if(_x2 > _x1)
-		var/tx = _x1
-		_x1 = _x2
-		_x2 = tx
-
-	//Ensure _y1 is bigger, simplicity
-	if(_y2 > _y1)
-		var/ty = _y1
-		_y1 = _y2
-		_y2 = ty
-
-	//DY/DX
-	var/dx = _x1 - _x2 + A.pixel_x + B.pixel_x
-	var/dy = _y1 - _y2 + A.pixel_y + B.pixel_y
-
-	//Distance check
-	if(dx == 0 && dy == 0) //No distance, don't bother calculating
-		return 0
-
-	. = sqrt(((dx**2) + (dy**2)))
+	. = bounds_dist(A, B) + sqrt((((A.pixel_x+B.pixel_x)**2) + ((A.pixel_y+B.pixel_y)**2)))
+	if(centered)
+		. += world.icon_size
 
 /proc/get(atom/loc, type)
 	while(loc)
@@ -1275,13 +1237,13 @@ var/list/WALLITEMS = list(
 		var/unknown_concentration =  1-(o2_concentration+n2_concentration+co2_concentration+plasma_concentration)
 
 		user << "<span class='notice'>Pressure: [round(pressure,0.1)] kPa</span>"
-		user << "<span class='notice'>Nitrogen: [round(n2_concentration*100)]</span>%"
-		user << "<span class='notice'>Oxygen: [round(o2_concentration*100)]%</span>"
-		user << "<span class='notice'>CO2: [round(co2_concentration*100)]%</span>"
-		user << "<span class='notice'>Plasma: [round(plasma_concentration*100)]%</span>"
+		user << "<span class='notice'>Nitrogen: [round(n2_concentration*100)] %</span>"
+		user << "<span class='notice'>Oxygen: [round(o2_concentration*100)] %</span>"
+		user << "<span class='notice'>CO2: [round(co2_concentration*100)] %</span>"
+		user << "<span class='notice'>Plasma: [round(plasma_concentration*100)] %</span>"
 		if(unknown_concentration>0.01)
-			user << "<span class='danger'>Unknown: [round(unknown_concentration*100)]%</span>"
-		user << "<span class='notice'>Temperature: [round(air_contents.temperature-T0C)]&deg;C</span>"
+			user << "<span class='danger'>Unknown: [round(unknown_concentration*100)] %</span>"
+		user << "<span class='notice'>Temperature: [round(air_contents.temperature-T0C)] &deg;C</span>"
 	else
 		user << "<span class='notice'>[target] is empty!</span>"
 	return

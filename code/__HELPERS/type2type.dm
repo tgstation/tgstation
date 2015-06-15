@@ -150,7 +150,7 @@
 
 
 //slower then list2text, but correctly processes associative lists.
-proc/tg_list2text(list/list, glue=",")
+/proc/tg_list2text(list/list, glue=",")
 	if(!istype(list) || !list.len)
 		return
 	var/output
