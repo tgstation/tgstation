@@ -246,7 +246,7 @@
 					// Stacks
 					if(istype(O,/obj/item/stack))
 						var/obj/item/stack/S=O
-						if(!istype(S,/obj/item/stack/cable_coil) || !istype(S,/obj/item/stack/medical))
+						if(!istype(S,/obj/item/stack/cable_coil) && !istype(S,/obj/item/stack/medical))
 							continue //Only recharge cable coils and medical stacks
 
 						if(S.amount < S.max_amount)
