@@ -137,7 +137,11 @@
 
 	if(isturf(mob.loc))
 
+
+		var/turf/T = mob.loc
 		move_delay = world.time//set move delay
+
+		move_delay += T.slowdown
 
 		if(mob.restrained())	//Why being pulled while cuffed prevents you from moving
 			for(var/mob/M in range(mob, 1))
@@ -175,7 +179,6 @@
 					var/mob/M = L[1]
 					if(M)
 						if ((get_dist(mob, M) <= 1 || M.loc == mob.loc))
-							var/turf/T = mob.loc
 							. = ..()
 							if (isturf(M.loc))
 								var/diag = get_dir(mob, M)
