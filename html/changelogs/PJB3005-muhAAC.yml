@@ -1,0 +1,5 @@
+author: PJB3005
+delete-after: true
+changes:
+  - bugfix: The AAC's vent pump mode & power automations can now interact with DP vents again.
+  - bugfix: The AAC's scrubber power automation will no longer toggle the power of vents with the same ID and frequency.

@@ -217,7 +217,7 @@
 /obj/machinery/atmospherics/unary/vent_scrubber/receive_signal(datum/signal/signal)
 	if(stat & (NOPOWER|BROKEN))
 		return
-	if(!signal.data["tag"] || (signal.data["tag"] != id_tag) || (signal.data["sigtype"]!="command"))
+	if(!signal.data["tag"] || (signal.data["tag"] != id_tag) || (signal.data["sigtype"]!="command") || (signal.data["type"] && signal.data["type"] != "scrubber"))
 		return 0
 
 	if(signal.data["power"] != null)
