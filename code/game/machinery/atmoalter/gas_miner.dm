@@ -45,9 +45,6 @@
 	..()
 	update_icon()
 
-/obj/machinery/atmospherics/miner/attack_ghost(var/mob/user)
-	return
-
 /obj/machinery/atmospherics/miner/attack_hand(var/mob/user)
 	..()
 	if(anchored)
