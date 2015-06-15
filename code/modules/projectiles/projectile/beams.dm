@@ -30,7 +30,13 @@
 	icon_state = "xray"
 	damage = 15
 	irradiate = 30
+	range = 15
 	forcedodge = 1
+
+/obj/item/projectile/beam/xray/on_hit(var/atom/target)
+	. = ..()
+	var/absorption = 1 + 6 * target.explosion_block
+	range = max(range-absorption,1) //hitting something reduces the range.
 
 /obj/item/projectile/beam/disabler
 	name = "disabler beam"

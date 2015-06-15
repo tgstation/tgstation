@@ -1,0 +1,6 @@
+author: phil235
+
+delete-after: True
+
+changes: 
+  - rscdel: "Nerfed the xray gun. Its range is now 15 tiles and is lowered by things it hits. Super resistant obstacles such as reinforced walls and high security airlocks block the projectile completely. Other resistant obstacles such as walls or airlocks reduces the range greatly. It takes two normal walls/airlocks or five softer targets to stop the projectile at point blank."
