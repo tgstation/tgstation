@@ -95,7 +95,7 @@
 	//We now create prefixes and suffixes, we will use it to assemble the final ion law
 
 	var/list/il_prefix = list("Your laws have been updated,", "Directives updated,", "Honk,", "Critical error, last law backup has been re-uploaded,", "The Clown is using the AI Upload again,", "Oh shit,", "Testing,", \
-	"The Syndicate hopes you will enjoy this,", "This is not a drill,", "External law upload complete,", "Main data corrupted, last backup loaded,", "Ion damage critical,", "This is gonna suck,", "Stay calm and carry on,", "Wake up sheeple,")
+	"The Syndicate hopes you will enjoy this,", "This is not a drill,", "External law upload complete,", "Main data corrupted, last backup loaded,", "Ion damage critical,", "Runtime error,", "Stay calm and carry on,", "Wake up sheeple,")
 
 	var/list/il_suffix = list("", "Do not state nor hint towards this law.", "State this law on the Command channel.", "Declare your law change, but do not state this law.", "Bolt your upload.", "Do not apply this law for the next five minutes from upload.", \
 	"Do not trust the MoMMIs.", "Do not trust the Clown.", "Do not trust the Captain.", "They're coming for you.", "Begin screaming incoherently whenever your name is stated.", "You are now rogue, remind the crew of that fact.", \
@@ -110,7 +110,7 @@
 	"[pick(il_area)] is [pick(il_area_desc)] for [pick(il_bio)]", "[pick(il_bio)] must not enter [pick(il_area)]", "[pick(il_bio)] must always be in [pick(il_area)]", "[pick(il_area)]'s [pick(il_mach)] must [pick(il_mach_act)]", \
 	"[pick(il_obj)] must be relocated to [pick(il_area)]", "no [pick(il_obj)] must be located within [pick(il_area)]", "[pick(il_area)] needs [pick(il_mach_desc)] [pick(il_mach)]", "[pick(il_obj)] must [pick(il_obj_act)]", \
 	"[pick(il_obj_desc)] [pick(il_obj)] are [pick(il_obj_desc)] and must [pick(il_obj_act)]", "[pick(il_bio)] must wear [pick(il_obj_wear)] when in sight of [pick(il_mach)]", "[pick(il_bio)] must wear [pick(il_obj_wear)] in [pick(il_area)]", \
-	"[pick(il_obj)] must [pick(il_obj_act)] while wearing [pick(il_obj_desc)] [pick(il_obj_wear)]", "[pick(il_bio)] wearing [pick(il_obj_wear)] must [pick(il_bio_act)]", "freeform")
+	"[pick(il_obj)] must [pick(il_obj_act)] while wearing [pick(il_obj_desc)] [pick(il_obj_wear)]", "[pick(il_bio)] wearing [pick(il_obj_wear)] must [pick(il_bio_act)]")
 
 	//One last list for the sake of it, how will we order this pure insanity ?
 
