@@ -12,6 +12,7 @@
 	var/datum/gas_mixture/air_contents = return_air()
 	if(!air_contents)
 		return 0
+
 	if(active_hotspot)
 		if(soh)
 			if(air_contents.toxins > 0.5 && air_contents.oxygen > 0.5)
