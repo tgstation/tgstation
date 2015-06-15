@@ -227,9 +227,10 @@
 					ready_dna(H)
 					if(H.dna && prob(50))
 						var/list/all_species = list()
-						for(var/datum/species/S in typesof(/datum/species) - /datum/species)
+						for(var/speciestype in typesof(/datum/species) - /datum/species)
+							var/datum/species/S = new speciestype()
 							if(!S.dangerous_existence)
-								all_species += S
+								all_species += speciestype
 						hardset_dna(H, null, null, null, null, pick(all_species))
 					H.update_icons()
 				else
