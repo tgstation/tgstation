@@ -56,6 +56,29 @@
 						return
 					M.put_in_l_hand(src)
 			add_fingerprint(usr)
+
+			if(Adjacent(over_object) && Adjacent(M))
+				if( istype(over_object, /obj/item/weapon/storage) ) //Check if storage item
+					var/obj/item/weapon/storage/S = over_object
+					for(var/obj/item/I in src)
+						if(S.can_be_inserted(I,0,M))
+							remove_from_storage(I, S)
+					return
+
+				if( istype(over_object, /obj/structure/closet/crate/bin) ) //Check if it's a bin
+					for(var/obj/item/I in src)
+						remove_from_storage(I, over_object) //No check needed, put everything inside
+					return
+
+				var/turf/T = get_turf(over_object) //Get_turf, and check if the turf isn't a wall
+				if( istype(T, /turf/simulated/wall) )
+					return
+
+				for(var/obj/item/I in src)
+					remove_from_storage(I, T)
+
+				return
+
 			return
 
 
