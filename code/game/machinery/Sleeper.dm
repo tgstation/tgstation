@@ -264,7 +264,7 @@
 	else
 		visible_message("[user] places [L.name] into \the [src].", 3)
 
-	L.loc = src
+	L.forceMove(src)
 	L.reset_view()
 	src.occupant = L
 	update_icon()
@@ -370,8 +370,8 @@
 	var/mob/M = G.affecting
 	if(!isliving(M) || M.buckled)
 		return
+	M.forceMove(src)
 	M.reset_view()
-	M.loc = src
 	src.occupant = M
 	update_icon()
 
