@@ -36,6 +36,7 @@ var/list/ai_list = list()
 	var/obj/item/device/pda/ai/aiPDA = null
 	var/obj/item/device/multitool/aiMulti = null
 	var/obj/machinery/bot/Bot
+	var/tracking = 0 //this is 1 if the AI is currently tracking somebody, but the track has not yet been completed.
 
 	//MALFUNCTION
 	var/datum/module_picker/malf_picker
@@ -63,6 +64,13 @@ var/list/ai_list = list()
 	var/turf/waypoint //Holds the turf of the currently selected waypoint.
 	var/waypoint_mode = 0 //Waypoint mode is for selecting a turf via clicking.
 	var/apc_override = 0 //hack for letting the AI use its APC even when visionless
+
+	var/mob/camera/aiEye/eyeobj = new()
+	var/sprint = 10
+	var/cooldown = 0
+	var/acceleration = 1
+
+	var/obj/machinery/camera/portable/builtInCamera
 
 /mob/living/silicon/ai/New(loc, var/datum/ai_laws/L, var/obj/item/device/mmi/B, var/safety = 0)
 	rename_self("ai", 1)
@@ -120,6 +128,13 @@ var/list/ai_list = list()
 			job = "AI"
 	ai_list += src
 	shuttle_caller_list += src
+
+	eyeobj.ai = src
+	eyeobj.name = "[src.name] (AI Eye)" // Give it a name
+	eyeobj.loc = src.loc
+
+	builtInCamera = new /obj/machinery/camera/portable(src)
+	builtInCamera.network = list("SS13")
 	..()
 	return
 
@@ -127,6 +142,7 @@ var/list/ai_list = list()
 	ai_list -= src
 	shuttle_caller_list -= src
 	SSshuttle.autoEvac()
+	qdel(eyeobj) // No AI, no Eye
 	..()
 
 
@@ -467,7 +483,8 @@ var/list/ai_list = list()
 
 /mob/living/silicon/ai/proc/switchCamera(var/obj/machinery/camera/C)
 
-	src.cameraFollow = null
+	if(!tracking)
+		cameraFollow = null
 
 	if (!C || stat == 2) //C.can_use())
 		return 0
@@ -599,7 +616,7 @@ var/list/ai_list = list()
 	set category = "AI Commands"
 	set name = "Jump To Network"
 	unset_machine()
-	src.cameraFollow = null
+	cameraFollow = null
 	var/cameralist[0]
 
 	if(usr.stat == 2)

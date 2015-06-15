@@ -155,6 +155,8 @@
 
 	var/T = src.loc
 
+	if(stat == DEAD)
+		return
 	if(busy != SPINNING_WEB)
 		busy = SPINNING_WEB
 		src.visible_message("<span class='notice'>\the [src] begins to secrete a sticky substance.</span>")
@@ -171,6 +173,8 @@
 	set category = "Spider"
 	set desc = "Wrap up prey to feast upon and objects for safe keeping."
 
+	if(stat == DEAD)
+		return
 	if(!cocoon_target)
 		var/list/choices = list()
 		for(var/mob/living/L in view(1,src))
@@ -228,6 +232,8 @@
 	set desc = "Lay a clutch of eggs, but you must wrap a creature for feeding first."
 
 	var/obj/effect/spider/eggcluster/E = locate() in get_turf(src)
+	if(stat == DEAD)
+		return
 	if(E)
 		src << "<span class='warning'>There is already a cluster of eggs here!</span>"
 	else if(!fed)

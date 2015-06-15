@@ -30,7 +30,7 @@
 	default_color = "00FF00"
 	roundstart = 1
 	specflags = list(MUTCOLORS,EYECOLOR,LIPS)
-	mutant_bodyparts = list("tail", "snout")
+	mutant_bodyparts = list("tail", "snout", "spines", "horns", "frills", "body_markings")
 	attack_verb = "slash"
 	attack_sound = 'sound/weapons/slash.ogg'
 	miss_sound = 'sound/weapons/slashmiss.ogg'
@@ -42,6 +42,11 @@
 		message = replacetext(message, "s", "sss")
 
 	return message
+
+//I wag in death
+/datum/species/lizard/spec_death(var/gibbed, var/mob/living/carbon/human/H)
+	if(H)
+		H.endTailWag()
 
 /*
  PLANTPEOPLE

@@ -987,25 +987,8 @@ Turf and target are seperate in case you want to teleport some distance from a t
 /proc/get_turf(atom/A)
 	if (!istype(A))
 		return
-	if (isturf(A))
-		return A
-
-	var/list/atom/checked_turf_candidates = list() //prevent recursion from badmins being dumbasses
-	var/atom/turf_candidate = A.loc
-
-	while (!isturf(turf_candidate))
-		if (!turf_candidate || turf_candidate in checked_turf_candidates)
-			return
-		checked_turf_candidates += turf_candidate
-
-		//SO I BET YOU MIGHT BE WONDERING WHY I'M CHECKING THIS AGAIN.
-		//I'LL FUCKING TELL YOU WAY, ITS BECAUSE FOR SOME GOD DAMN REASON, WHEN THIS IS CALLED
-		//IN AN OBJECT'S NEW() PROC, THE FIRST CHECK WILL FUCKING PASS, BUT FUCKING RUNTIME HERE
-		//BITCHING ABOUT HOW IT CAN'T READ NULL.LOC, SO FUCK IT, WE CHECK THIS TWICE.
-		if (!turf_candidate)
-			return
-		turf_candidate = turf_candidate.loc
-	return turf_candidate
+	for(A, A && !isturf(A), A=A.loc); //semicolon is for the empty statement
+	return A
 
 
 //Gets the turf this atom's *ICON* appears to inhabit

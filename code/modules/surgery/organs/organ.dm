@@ -189,3 +189,11 @@
 		for(var/obj/item/I in L.embedded_objects)
 			L.embedded_objects -= I
 			I.loc = T
+
+	clear_alert("embeddedobject")
+
+/mob/living/carbon/human/proc/has_embedded_objects()
+	. = 0
+	for(var/obj/item/organ/limb/L in organs)
+		for(var/obj/item/I in L.embedded_objects)
+			return 1
