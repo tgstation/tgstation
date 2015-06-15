@@ -28,7 +28,7 @@
 
 	//First of all, we acquire a comprehensive list of all crewmen
 	for(var/mob/living/carbon/human/player in mob_list)
-		if(player.client)
+		if(player.client && player.z != CENTCOMM_Z)
 			players += player.real_name //We make a list with the obvious intent of picking through it if needed
 
 	if(!players.len)
