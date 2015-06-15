@@ -700,27 +700,7 @@ proc/anim(turf/location as turf,target as mob|obj,a_icon,a_icon_state as text,fl
 	for (var/i = 1 to numticks)
 		if(user && user.client && user.client.prefs.progress_bars && progbar)
 			//oldstate = progbar.icon_state
-			switch(round(((i / numticks) * 100)))
-				if(-INFINITY to 10)
-					progbar.icon_state = "prog_bar_0"
-				if(11 to 20)
-					progbar.icon_state = "prog_bar_10"
-				if(21 to 30)
-					progbar.icon_state = "prog_bar_20"
-				if(31 to 40)
-					progbar.icon_state = "prog_bar_30"
-				if(41 to 50)
-					progbar.icon_state = "prog_bar_40"
-				if(51 to 60)
-					progbar.icon_state = "prog_bar_50"
-				if(61 to 70)
-					progbar.icon_state = "prog_bar_60"
-				if(71 to 80)
-					progbar.icon_state = "prog_bar_70"
-				if(81 to 90)
-					progbar.icon_state = "prog_bar_80"
-				if(91 to INFINITY)
-					progbar.icon_state = "prog_bar_90"
+			progbar.icon_state = "prog_bar_[round(((i / numticks) * 100), 10)]"
 			user.client.images |= progbar
 		sleep(delayfraction)
 		if(!user || !target)
@@ -765,27 +745,7 @@ proc/anim(turf/location as turf,target as mob|obj,a_icon,a_icon_state as text,fl
 			if(!progbar)
 				progbar = image("icon" = 'icons/effects/doafter_icon.dmi', "loc" = target, "icon_state" = "prog_bar_0")
 			//oldstate = progbar.icon_state
-			switch(round(((i / numticks) * 100)))
-				if(-INFINITY to 10)
-					progbar.icon_state = "prog_bar_0"
-				if(11 to 20)
-					progbar.icon_state = "prog_bar_10"
-				if(21 to 30)
-					progbar.icon_state = "prog_bar_20"
-				if(31 to 40)
-					progbar.icon_state = "prog_bar_30"
-				if(41 to 50)
-					progbar.icon_state = "prog_bar_40"
-				if(51 to 60)
-					progbar.icon_state = "prog_bar_50"
-				if(61 to 70)
-					progbar.icon_state = "prog_bar_60"
-				if(71 to 80)
-					progbar.icon_state = "prog_bar_70"
-				if(81 to 90)
-					progbar.icon_state = "prog_bar_80"
-				if(91 to INFINITY)
-					progbar.icon_state = "prog_bar_90"
+			progbar.icon_state = "prog_bar_[round(((i / numticks) * 100), 10)]"
 			user.client.images |= progbar
 		sleep(delayfraction)
 		//if(user.client && progbar.icon_state != oldstate)
