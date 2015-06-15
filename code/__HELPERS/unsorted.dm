@@ -686,10 +686,7 @@ Turf and target are seperate in case you want to teleport some distance from a t
 	var/image/progbar
 	for(var/i = 1 to numticks)
 		if(user.client)
-			if(!progbar)
-				progbar = image("icon" = 'icons/effects/doafter_icon.dmi', "loc" = target, "icon_state" = "prog_bar_0")
-			progbar.icon_state = "prog_bar_[round(((i / numticks) * 100), 10)]"
-			progbar.pixel_y = 32
+			progbar = make_progress_bar(i, numticks, target)
 			user.client.images |= progbar
 		sleep(timefraction)
 		if(!user || !target)
@@ -705,6 +702,14 @@ Turf and target are seperate in case you want to teleport some distance from a t
 	if(user && user.client)
 		user.client.images -= progbar
 	return 1
+
+/proc/make_progress_bar(var/current_number, var/goal_number, var/atom/target)
+	if(current_number && goal_number && target)
+		var/image/progbar
+		progbar = image("icon" = 'icons/effects/doafter_icon.dmi', "loc" = target, "icon_state" = "prog_bar_0")
+		progbar.icon_state = "prog_bar_[round(((current_number / goal_number) * 100), 10)]"
+		progbar.pixel_y = 32
+		return progbar
 
 /proc/do_after(mob/user, delay, numticks = 5, needhand = 1, atom/target = null)
 	if(!user)
@@ -726,10 +731,7 @@ Turf and target are seperate in case you want to teleport some distance from a t
 	var/image/progbar
 	for (var/i = 1 to numticks)
 		if(user.client)
-			if(!progbar)
-				progbar = image("icon" = 'icons/effects/doafter_icon.dmi', "loc" = target, "icon_state" = "prog_bar_0")
-			progbar.icon_state = "prog_bar_[round(((i / numticks) * 100), 10)]"
-			progbar.pixel_y = 32
+			progbar = make_progress_bar(i, numticks, target)
 			user.client.images |= progbar
 		sleep(delayfraction)
 		if(!user || user.stat || user.weakened || user.stunned  || !(user.loc == Uloc))
@@ -756,6 +758,8 @@ Turf and target are seperate in case you want to teleport some distance from a t
 				return 0
 			if(user && user.client)
 				user.client.images -= progbar
+		if(user && user.client)
+			user.client.images -= progbar
 	if(user && user.client)
 		user.client.images -= progbar
 	return 1
