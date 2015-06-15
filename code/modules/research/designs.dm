@@ -471,16 +471,16 @@ k
 /datum/design/fbs
 	name = "Circuit Design (Body Scanner)"
 	desc = "Allows for the construction of circuit boards used to build a body scanner."
-	id = "clonescanner"
+	id = "bodyscanner"
 	req_tech = list("biotech" = 2)
 	build_type = IMPRINTER
 	materials = list("$glass" = 2000, "sacid" = 20)
 	build_path = /obj/item/weapon/circuitboard/fullbodyscanner
 
-/datum/design/fbs
+/datum/design/sleeper
 	name = "Circuit Design (Sleeper)"
 	desc = "Allows for the construction of circuit boards used to build a sleeper."
-	id = "clonescanner"
+	id = "sleeper"
 	req_tech = list("biotech" = 2)
 	build_type = IMPRINTER
 	materials = list("$glass" = 2000, "sacid" = 20)
