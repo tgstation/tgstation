@@ -269,7 +269,7 @@ var/global/list/wizard_cards_normal = list(
 /obj/item/toy/cards/wizard/generate_cards()
 	return
 
-/obj/item/toy/cards/update_icon()
+/obj/item/toy/cards/wizard/update_icon()
 	if(cards.len > 15)
 		src.icon_state = "wizdeck_full"
 	else if(cards.len > 8)
