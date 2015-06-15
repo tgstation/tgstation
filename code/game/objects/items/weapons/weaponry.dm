@@ -200,7 +200,7 @@
 
 /obj/item/weapon/phone
 	name = "red phone"
-	desc = "There's a number on the side of the phone, 8675-309. Below it, it says 'Should anything ever go wrong...'"
+	desc = "Should anything ever go wrong..."
 	icon = 'icons/obj/items.dmi'
 	icon_state = "red_phone"
 	force = 3
@@ -216,21 +216,21 @@
 	if(being_used)
 		return
 	being_used = 1
-	var/input = stripped_input(user, "Please choose a message to transmit to Centcom via quantum entanglement.  Please be aware that this process is very expensive, and abuse will lead to... termination.  Transmission does not guarantee a response.", "Send a message to Centcomm.", "")
+	var/input = stripped_input(user, "What do you want to say?", "Use the hotline.", "")
 	if(!input || !(user in view(1,src)))
 		return
-	user << "You dial the number on the side of the phone."
+	user << "You hit the button and put the phone to your ear."
 	sleep(20)
-	user << "Ring..."
+	user << "[src] rings..."
 	playsound(src, 'sound/weapons/ring.ogg', 40, 1)
 	sleep(20)
-	user << "Ring..."
+	user << "[src] rings..."
 	playsound(src, 'sound/weapons/ring.ogg', 40, 1)
 	sleep(20)
-	user << "Ring..."
+	user << "[src] rings..."
 	playsound(src, 'sound/weapons/ring.ogg', 40, 1)
 	sleep(20)
-	say("Nanotrasen Incorporated, this is [pick("Jenny", "John", "Debbie", "Debra", "Peggy")], how may we assist you today?")
+	say("Nanotrasen Emergency Hotline, this is [pick("Jenny", "John", "Debbie", "Debra", "Peggy")], what is the emergency?")
 	sleep(20)
 	user.say("This is [user.name], the [user.job] of [station_name()]. I have a maximum priority message for Central Command. Please reroute me to them.")
 	sleep(20)
@@ -238,13 +238,13 @@
 	sleep(20)
 	user << "*click*"
 	sleep(20)
-	user << "Ring..."
+	user << "[src] rings..."
 	playsound(src, 'sound/weapons/ring.ogg', 40, 1)
 	sleep(20)
-	user << "Ring..."
+	user << "[src] rings..."
 	playsound(src, 'sound/weapons/ring.ogg', 40, 1)
 	sleep(20)
-	user << "Ring..."
+	user << "[src] rings..."
 	playsound(src, 'sound/weapons/ring.ogg', 40, 1)
 	sleep(20)
 	say("Central Command Headquarters, this is [pick("Captain", "Ensign", "Lieutenant", "Commander", "Rear Admiral", "Vice Admiral", "Admiral", "Fleet Admiral")] [pick("Bob","Jebediah","Bill")] speaking. What is the situation?")
