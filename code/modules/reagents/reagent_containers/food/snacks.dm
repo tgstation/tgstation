@@ -3428,3 +3428,47 @@
 		if(10)
 			desc += " Just a dollop of garnishes."
 			reagents.add_reagent("nutriment", 10)
+
+/obj/item/weapon/reagent_containers/food/snacks/chocofrog
+	name = "chocolate frog"
+	desc = "An exotic snack originating from the Space Wizard Federation. Very slippery!"
+	icon = 'icons/obj/wiz_cards.dmi'
+	icon_state = "frog"
+
+	var/jump_cd
+	New()
+		..()
+		reagents.add_reagent("nutriment",2)
+		reagents.add_reagent("hyperzine",1)
+
+/obj/item/weapon/reagent_containers/food/snacks/chocofrog/HasProximity(atom/movable/AM as mob|obj)
+	if(!jump_cd)
+		jump()
+	return ..()
+
+/obj/item/weapon/reagent_containers/food/snacks/chocofrog/proc/jump()
+	if(!istype(src.loc,/turf)) return
+	jump_cd=1
+	spawn(50)
+		jump_cd=0
+
+	var/list/escape_paths=list()
+
+	for(var/turf/T in view(7,src))
+		escape_paths |= T
+
+	var/turf/T = pick(escape_paths)
+	src.throw_at(T, 10, 2)
+	return 1
+
+/obj/item/weapon/reagent_containers/food/snacks/chocofrog/pickup(mob/living/user as mob)
+	var/mob/living/carbon/human/H = user
+	if(!H) return 1
+
+	spawn(0)
+		if(((M_CLUMSY in H.mutations)) || prob(25))
+			user.visible_message("<span class='warning'>[src] escapes from [H]'s hands!</span>","<span class='warning'>[src] escapes from your grasp!</span>")
+			H.drop_item()
+
+			jump()
+	return 1

@@ -115,12 +115,12 @@
 	max_w_class = 3
 	w_class = 3
 	can_hold = list("/obj/item/weapon/reagent_containers/food/snacks")
-	
+
 /obj/item/weapon/storage/bag/food/update_icon()
 	if(contents.len < 1)
 		icon_state = "foodbag0"
 	else icon_state = "foodbag1"
-	
+
 // -----------------------------
 //          Pill Collector
 // -----------------------------
@@ -135,7 +135,6 @@
 	max_w_class = 3
 	w_class = 1
 	can_hold = list("/obj/item/weapon/reagent_containers/glass/bottle","/obj/item/weapon/reagent_containers/pill","/obj/item/weapon/reagent_containers/syringe")
-
 
 // -----------------------------
 //        Sheet Snatcher

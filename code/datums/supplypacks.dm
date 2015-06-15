@@ -258,7 +258,8 @@ var/list/all_supply_groups = list("Supplies","Clothing","Security","Hospitality"
 	contains = list(/obj/item/seeds/bloodtomatoseed,
 					/obj/item/weapon/storage/pill_bottle/zoom,
 					/obj/item/weapon/storage/pill_bottle/happy,
-					/obj/item/weapon/reagent_containers/food/drinks/bottle/absinthe)
+					/obj/item/weapon/reagent_containers/food/drinks/bottle/absinthe,
+					/obj/item/weapon/storage/bag/wiz_cards/frog)
 
 	name = "Contraband crate"
 	cost = 30

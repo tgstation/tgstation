@@ -1167,7 +1167,8 @@
 		/obj/item/clothing/suit/wizrobe/clown = 1,
 		/obj/item/clothing/mask/gas/clown_hat/wiz = 1,
 		/obj/item/clothing/shoes/sandal = 1,
-		/obj/item/weapon/staff = 2)
+		/obj/item/weapon/staff = 2,
+		/obj/item/weapon/storage/bag/wiz_cards/full = 1)
 	contraband = list(/obj/item/weapon/reagent_containers/glass/bottle/wizarditis = 1)	//No one can get to the machine to hack it anyways; for the lulz - Microwave
 
 	pack = /obj/structure/vendomatpack/magivend											//Who's laughing now? - Deity Link
