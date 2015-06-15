@@ -178,8 +178,8 @@
 /datum/table_recipe/impriotshield
 	name = "Improvised Riot Shield"
 	result = /obj/item/weapon/shield/riot/improvised
-	reqs = list(/obj/item/stack/sheet/metal = 1,
-				/obj/item/stack/cable_coil = 10,
+	reqs = list(/obj/item/stack/sheet/plasteel = 2,
+				/obj/item/stack/cable_coil = 1,
 				/obj/item/weapon/restraints/handcuffs/cable = 2)
 	tools = list(/obj/item/weapon/weldingtool,
 				/obj/item/weapon/wirecutters)
