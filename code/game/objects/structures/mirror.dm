@@ -111,14 +111,16 @@
 
 /obj/structure/mirror/magic/New()
 	if(!choosable_races.len)
-		for(var/datum/species/S in typesof(/datum/species) - /datum/species)
+		for(var/speciestype in typesof(/datum/species) - /datum/species)
+			var/datum/species/S = new speciestype()
 			if(!(S.id in races_blacklist))
-				choosable_races += S
+				choosable_races += S.id
 	..()
 
 /obj/structure/mirror/magic/badmin/New()
-	for(var/datum/species/S in typesof(/datum/species) - /datum/species)
-		choosable_races += S
+	for(var/speciestype in typesof(/datum/species) - /datum/species)
+		var/datum/species/S = new speciestype()
+		choosable_races += S.id
 	..()
 
 /obj/structure/mirror/magic/attack_hand(mob/user as mob)
