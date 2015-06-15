@@ -1,7 +1,8 @@
 /obj/machinery/computer/area_atmos
 	name = "area air control computer"
 	desc = "A computer used to control the stationary scrubbers and pumps in the area."
-	icon_state = "area_atmos"
+	icon_screen = "area_atmos"
+	icon_keyboard= "atmos_key"
 	circuit = "/obj/item/weapon/circuitboard/area_atmos"
 
 	var/list/connectedscrubbers = new()
@@ -154,7 +155,7 @@
 	var/turf/T = get_turf(src)
 	if(!T.loc) return
 	var/area/A = T.loc
-	for(var/obj/machinery/portable_atmospherics/scrubber/huge/scrubber in world ) //fugg
+	for(var/obj/machinery/portable_atmospherics/scrubber/huge/scrubber in machines)
 		var/turf/T2 = get_turf(scrubber)
 		if(T2 && T2.loc)
 			var/area/A2 = T2.loc

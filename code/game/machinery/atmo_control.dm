@@ -89,7 +89,8 @@ obj/machinery/air_sensor/Destroy()
 
 obj/machinery/computer/general_air_control
 	icon = 'icons/obj/computer.dmi'
-	icon_state = "tank"
+	icon_screen = "tank"
+	icon_keyboard= "atmos_key"
 
 	circuit = /obj/item/weapon/circuitboard/air_management
 	name = "computer"
@@ -355,7 +356,8 @@ obj/machinery/computer/general_air_control/large_tank_control/Topic(href, href_l
 
 obj/machinery/computer/general_air_control/fuel_injection
 	icon = 'icons/obj/computer.dmi'
-	icon_state = "atmos"
+	icon_screen = "atmos"
+	icon_keyboard = "atmos_key"
 
 	var/device_tag
 	var/list/device_info
