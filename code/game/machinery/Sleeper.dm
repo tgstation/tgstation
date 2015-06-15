@@ -1,3 +1,5 @@
+#define SLEEPER_SOPORIFIC_DELAY 40
+
 /////////////////////////////////////////
 // SLEEPER CONSOLE
 /////////////////////////////////////////
@@ -96,10 +98,20 @@
 				if (src.connected.occupant)
 					if (src.connected.occupant.stat == DEAD)
 						usr << "<span class='danger'>This person has no life for to preserve anymore. Take them to a department capable of reanimating them.</span>"
-					else if(src.connected.occupant.health > 0 || href_list["chemical"] == "inaprovaline")
-						src.connected.inject_chemical(usr,href_list["chemical"],text2num(href_list["amount"]))
-					else
+					else if(href_list["chemical"] == "stoxin" && src.connected.sedativeblock)
+						if(src.connected.sedativeblock < 3)
+							usr << "<span class='warning'>Sedative injections not yet ready. Please try again in a few seconds.</span>"
+						else //if this guy is seriously just mashing the soporific button...
+							usr << "[pick( \
+							"<span class='warning'>This guy just got jammed into the machine, give them a breath before trying to pump them full of drugs.</span>", \
+							"<span class='warning'>Give it a rest.</span>", \
+							"<span class='warning'>Aren't you going to tuck them in before putting them to sleep?</span>", \
+							"<span class='warning'>But it's not sleepytime yet!</span>")]"
+						src.connected.sedativeblock++
+					else if(src.connected.occupant.health < 0 && href_list["chemical"] != "inaprovaline")
 						usr << "<span class='danger'>This person is not in good enough condition for sleepers to be effective! Use another means of treatment, such as cryogenics!</span>"
+					else
+						src.connected.inject_chemical(usr,href_list["chemical"],text2num(href_list["amount"]))
 		if (href_list["refresh"])
 			src.updateUsrDialog()
 		src.add_fingerprint(usr)
@@ -136,6 +148,7 @@
 	var/available_chemicals = list("inaprovaline" = "Inaprovaline", "stoxin" = "Soporific", "dermaline" = "Dermaline", "bicaridine" = "Bicaridine", "dexalin" = "Dexalin")
 	var/amounts = list(5, 10)
 	var/obj/machinery/sleep_console/connected = null
+	var/sedativeblock = 0 //To prevent people from being surprisesoporific'd
 	machine_flags = SCREWTOGGLE | CROWDESTROY
 	component_parts = newlist(
 		/obj/item/weapon/circuitboard/sleeper,
@@ -263,6 +276,9 @@
 		user.stop_pulling()
 	if(!(stat & (BROKEN|NOPOWER)))
 		set_light(light_range_on, light_power_on)
+	sedativeblock = 1
+	spawn(SLEEPER_SOPORIFIC_DELAY)
+	sedativeblock = 0
 	return
 
 
@@ -367,6 +383,9 @@
 	qdel(G)
 	if(!(stat & (BROKEN|NOPOWER)))
 		set_light(light_range_on, light_power_on)
+	sedativeblock = 1
+	spawn(SLEEPER_SOPORIFIC_DELAY)
+	sedativeblock = 0
 	return
 
 /obj/machinery/sleeper/ex_act(severity)
@@ -432,12 +451,17 @@
 
 
 /obj/machinery/sleeper/proc/inject_chemical(mob/living/user as mob, chemical, amount)
-	if(src.occupant && src.occupant.reagents)
-		if(src.occupant.reagents.get_reagent_amount(chemical) + amount <= 20)
-			src.occupant.reagents.add_reagent(chemical, amount)
-			user << "Occupant now has [src.occupant.reagents.get_reagent_amount(chemical)] units of [available_chemicals[chemical]] in his/her bloodstream."
-			return
-	user << "There's no occupant in the sleeper or the subject has too many chemicals!"
+	if(!src.occupant)
+		user << "<span class='warning'>There's no occupant in the sleeper!</span>"
+		return
+	if(isnull(src.occupant.reagents))
+		user << "<span class='warning'>The occupant appears to somehow lack a bloodstream. Please consult a shrink.</span>"
+		return
+	if(src.occupant.reagents.get_reagent_amount(chemical) + amount > 20)
+		user << "<span class='warning'>Overdose Prevention System: The occupant already has enough [available_chemicals[chemical]] in their system.</span>"
+		return
+	src.occupant.reagents.add_reagent(chemical, amount)
+	user << "<span class='notice'>Occupant now has [src.occupant.reagents.get_reagent_amount(chemical)] units of [available_chemicals[chemical]] in their bloodstream.</span>"
 	return
 
 /obj/machinery/sleeper/proc/check(mob/living/user as mob)
