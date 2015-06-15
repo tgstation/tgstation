@@ -193,7 +193,7 @@
 "dK" = (/obj/item/target/syndicate,/turf/simulated/floor/fancy/carpet,/area/awaymission)
 "dL" = (/obj/item/trash/candy,/turf/simulated/floor/fancy/carpet,/area/awaymission)
 "dM" = (/obj/item/toy/spinningtoy,/turf/simulated/floor/fancy/carpet,/area/awaymission)
-"dN" = (/obj/item/toy/crossbow,/turf/simulated/floor/fancy/carpet,/area/awaymission)
+"dN" = (/obj/item/weapon/gun/projectile/shotgun/toy/crossbow,/turf/simulated/floor/fancy/carpet,/area/awaymission)
 "dO" = (/obj/structure/barricade/wooden,/obj/structure/barricade/wooden,/turf/simulated/floor/fancy/carpet,/area/awaymission)
 "dP" = (/obj/machinery/door/airlock,/turf/simulated/floor/fancy/carpet,/area/awaymission)
 "dQ" = (/obj/effect/decal/cleanable/blood/old,/turf/simulated/wall,/area/awaymission)
