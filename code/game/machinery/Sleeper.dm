@@ -245,29 +245,24 @@
 		if(M.Victim == L)
 			usr << "[L.name] will not fit into the sleeper because they have a slime latched onto their head."
 			return
-	if(L == user)
-		visible_message("[user] starts climbing into \the [src].", 3)
-	else
-		visible_message("[user] starts putting [L.name] into \the [src].", 3)
 
-	if(do_after(user, src, 20))
-		if(src.occupant)
-			user << "<span class='notice'><B>The sleeper is already occupied!</B></span>"
-			return
-		if(!L || L.buckled) return
-		L.loc = src
-		L.reset_view()
-		src.occupant = L
-		update_icon()
-		L << "<span class='notice'><b>You feel cool air surround you. You go numb as your senses turn inward.</b></span>"
-		for(var/obj/OO in src)
-			OO.loc = src.loc
-		src.add_fingerprint(user)
-		if(user.pulling == L)
-			user.stop_pulling()
-		if(!(stat & (BROKEN|NOPOWER)))
-			set_light(light_range_on, light_power_on)
-		return
+	if(L == user)
+		visible_message("[user] climbs into \the [src].", 3)
+	else
+		visible_message("[user] places [L.name] into \the [src].", 3)
+
+	L.loc = src
+	L.reset_view()
+	src.occupant = L
+	update_icon()
+	L << "<span class='notice'><b>You feel cool air surround you. You go numb as your senses turn inward.</b></span>"
+	for(var/obj/OO in src)
+		OO.loc = src.loc
+	src.add_fingerprint(user)
+	if(user.pulling == L)
+		user.stop_pulling()
+	if(!(stat & (BROKEN|NOPOWER)))
+		set_light(light_range_on, light_power_on)
 	return
 
 
@@ -294,11 +289,10 @@
 				continue
 			return
 	if(occupant == usr)
-		visible_message("[usr] starts climbing out of \the [src].", 3)
+		visible_message("[usr] climbs out of \the [src].", 3)
 	else
-		visible_message("[usr] starts removing [occupant.name] from \the [src].", 3)
-	if(do_after(usr, src, 20) && occupant)
-		go_out(over_location)
+		visible_message("[usr] removes [occupant.name] from \the [src].", 3)
+	go_out(over_location)
 
 /obj/machinery/sleeper/allow_drop()
 	return 0
@@ -355,32 +349,25 @@
 			usr << "[G.affecting.name] will not fit into the sleeper because they have a slime latched onto their head."
 			return
 
-	visible_message("[user] starts putting [G.affecting.name] into the sleeper.", 3)
+	visible_message("[user] places [G.affecting.name] into the sleeper.", 3)
 
-	if(do_after(user, src, 20))
-		if(src.occupant)
-			user << "<span class='notice'><B>The sleeper is already occupied!</B></span>"
-			return
-		if(!G || !G.affecting) return
-		var/mob/M = G.affecting
-		if(!isliving(M) || M.buckled)
-			return
-		M.reset_view()
-		M.loc = src
-		src.occupant = M
-		update_icon()
-
-		M << "<span class='notice'><b>You feel cool air surround you. You go numb as your senses turn inward.</b></span>"
-
-		for(var/obj/O in src)
-			O.loc = src.loc
-		src.add_fingerprint(user)
-		qdel(G)
-		if(!(stat & (BROKEN|NOPOWER)))
-			set_light(light_range_on, light_power_on)
+	var/mob/M = G.affecting
+	if(!isliving(M) || M.buckled)
 		return
-	return
+	M.reset_view()
+	M.loc = src
+	src.occupant = M
+	update_icon()
 
+	M << "<span class='notice'><b>You feel cool air surround you. You go numb as your senses turn inward.</b></span>"
+
+	for(var/obj/O in src)
+		O.loc = src.loc
+	src.add_fingerprint(user)
+	qdel(G)
+	if(!(stat & (BROKEN|NOPOWER)))
+		set_light(light_range_on, light_power_on)
+	return
 
 /obj/machinery/sleeper/ex_act(severity)
 	switch(severity)
