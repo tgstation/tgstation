@@ -3504,7 +3504,7 @@
 	color = "#100800" // rgb: 16, 8, 0
 	adj_sleepy = -2
 
-/datum/reagent/drink/cold/nuke_cola/on_mob_life(var/mob/living/M as mob)
+/datum/reagent/drink/cold/nuka_cola/on_mob_life(var/mob/living/M as mob)
 
 	if(!holder) return
 	M.Jitter(20)
