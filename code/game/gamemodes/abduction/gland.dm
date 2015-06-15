@@ -3,10 +3,9 @@
 	desc = "Eww"
 	icon = 'icons/obj/abductor.dmi'
 	icon_state = "gland"
-	var/cooldown_low = 30
-	var/cooldown_high = 30
-	var/cooldown_current = 0
-	var/cooldown = 0
+	var/cooldown_low = 300
+	var/cooldown_high = 300
+	var/next_activation = 0
 	var/uses // -1 For inifinite
 	var/active = 0
 	var/mob/living/carbon/human/host
@@ -19,6 +18,7 @@
 
 /obj/item/gland/proc/Start()
 	active = 1
+	next_activation  = world.time + rand(cooldown_low,cooldown_high)
 	SSobj.processing |= src
 
 /obj/item/gland/proc/Inject(var/mob/living/carbon/human/target)
@@ -30,16 +30,14 @@
 	if(!active)
 		SSobj.processing.Remove(src)
 		return
-	cooldown++
-	if(cooldown >= cooldown_current)
+	if(next_activation <= world.time)
 		//This gives a chance to transplant the gland active into someone else if you're fast
 		if(!HostCheck())
 			active = 0
 			return
 		activate()
 		uses--
-		cooldown = 0
-		cooldown_current = rand(cooldown_low,cooldown_high)
+		next_activation  = world.time + rand(cooldown_low,cooldown_high)
 	if(uses == 0)
 	 active = 0
 
@@ -47,20 +45,43 @@
 	return
 
 /obj/item/gland/heals
-	cooldown_low = 20
-	cooldown_high = 40
+	cooldown_low = 200
+	cooldown_high = 400
 	uses = -1
 	icon_state = "health"
 
-obj/item/gland/heals/activate()
+/obj/item/gland/heals/activate()
 	host << "<span class='notice'>You feel weird.</span>"
 	host.adjustBruteLoss(-20)
 	host.adjustOxyLoss(-20)
 	host.adjustFireLoss(-20)
 
+/obj/item/gland/slime
+	cooldown_low = 600
+	cooldown_high = 1200
+	uses = -1
+	icon_state = "slime"
+
+/obj/item/gland/slime/activate()
+	host << "<span class='notice'>You feel weird.</span>"
+
+	host.visible_message("<span class='danger'>[host] vomits on the floor!</span>", \
+					"<span class='userdanger'>You throw up on the floor!</span>")
+
+	host.nutrition -= 20
+	host.adjustToxLoss(-3)
+
+	var/turf/pos = get_turf(host)
+	pos.add_vomit_floor(host)
+	playsound(pos, 'sound/effects/splat.ogg', 50, 1)
+
+	var/mob/living/carbon/slime/Slime = new/mob/living/carbon/slime(pos)
+	Slime.Friends = list(host)
+	Slime.Leader = host
+
 /obj/item/gland/mindshock
-	cooldown_low = 30
-	cooldown_high = 30
+	cooldown_low = 300
+	cooldown_high = 300
 	uses = -1
 	icon_state = "mindshock"
 
@@ -71,13 +92,13 @@ obj/item/gland/heals/activate()
 	for(var/mob/living/carbon/human/H in orange(4,T))
 		if(H == host)
 			continue
-		H << "<span class='alien'> You hear a buzz in your head </span>"
+		H << "<span class='alien'>You hear a buzz in your head </span>"
 		H.confused += 20
 
 /obj/item/gland/pop
-	cooldown_low = 120
-	cooldown_high = 180
-	uses = 5
+	cooldown_low = 900
+	cooldown_high = 1800
+	uses = 6
 	icon_state = "species"
 
 /obj/item/gland/pop/activate()
@@ -88,8 +109,8 @@ obj/item/gland/heals/activate()
 	return
 
 /obj/item/gland/ventcrawling
-	cooldown_low = 180
-	cooldown_high = 240
+	cooldown_low = 1800
+	cooldown_high = 2400
 	uses = 1
 	icon_state = "vent"
 
@@ -101,8 +122,8 @@ obj/item/gland/heals/activate()
 
 
 /obj/item/gland/viral
-	cooldown_low = 180
-	cooldown_high = 240
+	cooldown_low = 1800
+	cooldown_high = 2400
 	uses = 1
 	icon_state = "viral"
 
@@ -117,18 +138,17 @@ obj/item/gland/heals/activate()
 
 
 /obj/item/gland/emp //TODO : Replace with something more interesting
-	cooldown_low = 90
-	cooldown_high = 160
-	uses = 5
+	cooldown_low = 900
+	cooldown_high = 1600
+	uses = 10
 	icon_state = "emp"
 
 /obj/item/gland/emp/activate()
 	empulse(get_turf(host), 2, 5, 1)
 
-
 /obj/item/gland/spiderman
-	cooldown_low = 90
-	cooldown_high = 160
+	cooldown_low = 450
+	cooldown_high = 900
 	uses = 10
 	icon_state = "spider"
 
@@ -138,8 +158,8 @@ obj/item/gland/heals/activate()
 	new /obj/effect/spider/spiderling(host.loc)
 
 /obj/item/gland/egg
-	cooldown_low = 60
-	cooldown_high = 90
+	cooldown_low = 300
+	cooldown_high = 600
 	uses = -1
 	icon_state = "egg"
 
@@ -147,7 +167,6 @@ obj/item/gland/heals/activate()
 	var/obj/item/weapon/reagent_containers/food/snacks/egg/egg = new(host.loc)
 	egg.reagents.add_reagent("sacid",20)
 	egg.desc += " It smells bad."
-
 
 /obj/item/gland/bloody
 	cooldown_low = 200
@@ -231,6 +250,6 @@ obj/item/gland/heals/activate()
 	host.visible_message("<span class='danger'>[host] explodes in a cloud of plasma!</span>")
 	var/turf/simulated/T = get_turf(host)
 	if(istype(T))
-		T.atmos_spawn_air(SPAWN_TOXINS|SPAWN_20C,6665)
+		T.atmos_spawn_air(SPAWN_TOXINS|SPAWN_20C,666)
 	host.gib()
 	return

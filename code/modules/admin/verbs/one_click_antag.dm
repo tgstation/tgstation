@@ -415,7 +415,7 @@ client/proc/one_click_antag()
 
 
 /datum/admins/proc/makeOfficial()
-	var/mission = input("Assign a task for the official", "Assign Task", "Conduct a routine preformance review of [station_name()] and its Captain.")
+	var/mission = input("Assign a task for the official", "Assign Task", "Conduct a routine performance review of [station_name()] and its Captain.")
 	var/list/mob/dead/observer/candidates = getCandidates("Do you wish to be considered to be a Centcom Official?", "pAI")
 
 	if(candidates.len)

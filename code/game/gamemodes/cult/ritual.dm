@@ -42,28 +42,23 @@ var/engwords = list("travel", "blood", "join", "hell", "destroy", "technology", 
 		return
 
 	if(ishuman(usr) || ismonkey(usr))	//Damage only applies to humans and monkeys, to allow constructs to communicate
-		usr.visible_message("<span class='warning'>[usr.name] starts clawing at his arms like a mad man!")
-		apply_damage(25,BRUTE, "l_arm")
-		apply_damage(25,BRUTE, "r_arm")
+		usr.visible_message("<span class='warning'>[usr.name] starts clawing at \his arms with \his fingernails!</span>", "<span class='warning'>You begin slicing open your arms with your fingers!</span>")
+		apply_damage(10,BRUTE, "l_arm")
+		apply_damage(10,BRUTE, "r_arm")
 		sleep(50)
 		if(usr.incapacitated())
 			return	//Hard to drawn intrinsic symbols when you're bleeding out in your cell.
 		var/turf/location = loc
 		if(istype(location, /turf/simulated))	// tearing your arms apart is going to spill a bit of blood, in fact thats the idea
 			location.add_blood(usr)				// TO-DO change this to a badly drawn rune
-		apply_damage(15,BRUTE, "l_arm")		// does a metric fuck ton of damage because this meant to be an emergency method of communication.
-		apply_damage(15,BRUTE, "r_arm")
+		apply_damage(10,BRUTE, "l_arm")		// does a metric fuck ton of damage because this meant to be an emergency method of communication.
+		apply_damage(10,BRUTE, "r_arm")
 		if(usr.incapacitated())
 			return
-		usr.visible_message("<span class='warning'>[usr.name] paints strange symbols with their own blood")
+		usr.visible_message("<span class='warning'>[usr.name] paints strange symbols with their own blood.</span>", "<span class='warning'>You paint a messy rune with your own blood.</span>")
 		sleep(20)
 
-	usr.say("O bidai nabora se[pick("'","`")]sma!")
-	sleep(10)
-	usr.say("[input]")
-	for(var/mob/M in mob_list)
-		if((M.mind && (M.mind in ticker.mode.cult)) || (M in dead_mob_list))
-			M << "<span class='userdanger'>[input]</span>"
+	cultist_commune(usr, 0, 1, input)
 	return
 
 
@@ -521,9 +516,8 @@ update_tome()
 			M.reagents.add_reagent("unholywater",holy2unholy)
 		return
 	M.take_organ_damage(0,rand(5,20)) //really lucky - 5 hits for a crit
-	for(var/mob/O in viewers(M, null))
-		O.show_message(text("<span class='userdanger'>[] beats [] with the arcane tome!</span>", user, M), 1)
-	M << "<span class='danger'>You feel searing heat inside!</span>"
+	M.visible_message("<span class='danger'>[user] beats [M] with the arcane tome!</span>", \
+					"<span class='userdanger'>[user] beats you with the tome, and you feel a searing heat inside you!</span>")
 
 
 /obj/item/weapon/tome/attack_self(mob/living/user as mob)
@@ -549,11 +543,7 @@ update_tome()
 				var/input = stripped_input(usr, "Please choose a message to tell to the other acolytes.", "Voice of Blood", "")
 				if(!input)
 					return
-				usr.whisper("O bidai nabora se[pick("'","`")]sma!")
-				usr.whisper("[input]")
-				for(var/datum/mind/H in ticker.mode.cult)
-					if (H.current)
-						H.current << "<span class='userdanger'>[input]</span>"
+				cultist_commune(user, 1, 0, input)
 				return
 			if("Notes")
 				if(usr.get_active_hand() != src)

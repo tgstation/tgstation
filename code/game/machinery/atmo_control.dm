@@ -212,9 +212,6 @@ obj/machinery/computer/general_air_control/Topic(href, href_list)
 /////////////////////////////////////////////////////////////
 
 obj/machinery/computer/general_air_control/large_tank_control
-	icon = 'icons/obj/computer.dmi'
-	icon_state = "tank"
-
 	var/input_tag
 	var/output_tag
 	frequency = 1441

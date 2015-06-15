@@ -161,25 +161,6 @@ Made by Xhuis
 			mind.spell_list -= S
 
 
-/*
-	GAME FINISH CHECKS
-*/
-
-
-/datum/game_mode/shadowling/check_finished()
-	var/shadows_alive = 0 //and then shadowling was kill
-	for(var/datum/mind/shadow in shadows) //but what if shadowling was not kill?
-		if(!istype(shadow.current,/mob/living/carbon/human) && !istype(shadow.current,/mob/living/simple_animal/ascendant_shadowling))
-			continue
-		if(shadow.current.stat == DEAD)
-			continue
-		shadows_alive++
-	if(shadows_alive)
-		return ..()
-	else
-		shadowling_dead = 1 //but shadowling was kill :(
-		return 1
-
 
 /datum/game_mode/shadowling/proc/check_shadow_victory()
 	var/success = 0 //Did they win?
@@ -195,8 +176,11 @@ Made by Xhuis
 		world << "<span class='redtext'><b>The shadowlings have been killed by the crew!</b></span>"
 	else if(!check_shadow_victory() && SSshuttle.emergency.mode >= SHUTTLE_ESCAPE)
 		world << "<span class='redtext'><b>The crew has escaped the station before the shadowlings could ascend!</b></span>"
+	else
+		world << "<span class='redtext'><b>The shadowlings have failed!</b></span>"
 	..()
 	return 1
+
 
 
 /datum/game_mode/proc/auto_declare_completion_shadowling()

@@ -6,6 +6,7 @@
 	required_players = 0
 	required_enemies = 1	// how many of each type are required
 	recommended_enemies = 3
+	reroll_friendly = 1
 
 	var/list/possible_changelings = list()
 	var/const/changeling_amount = 1 //hard limit on changelings if scaling is turned off
@@ -61,13 +62,13 @@
 
 /datum/game_mode/traitor/changeling/make_antag_chance(var/mob/living/carbon/human/character) //Assigns changeling to latejoiners
 	var/changelingcap = min( round(joined_player_list.len/(config.changeling_scaling_coeff*4))+2, round(joined_player_list.len/(config.changeling_scaling_coeff*2)) )
-	if(changelings.len >= changelingcap) //Caps number of latejoin antagonists
+	if(ticker.mode.changelings.len >= changelingcap) //Caps number of latejoin antagonists
 		..()
 		return
-	if(changelings.len <= (changelingcap - 2) || prob(100 / (config.changeling_scaling_coeff * 4)))
+	if(ticker.mode.changelings.len <= (changelingcap - 2) || prob(100 / (config.changeling_scaling_coeff * 4)))
 		if(character.client.prefs.be_special & BE_CHANGELING)
 			if(!jobban_isbanned(character.client, "changeling") && !jobban_isbanned(character.client, "Syndicate"))
 				if(age_check(character.client))
-					if(!(character.job in ticker.mode.restricted_jobs))
+					if(!(character.job in restricted_jobs))
 						character.mind.make_Changling()
 	..()

@@ -365,6 +365,10 @@
 	if(cdir > -1)
 		overlays += image('icons/obj/computer.dmi', "solcon-o", FLY_LAYER, angle2dir(cdir))
 
+/obj/machinery/power/solar_control/attack_hand(mob/user)
+	if(!..())
+		ui_interact(user)
+
 /obj/machinery/power/solar_control/ui_interact(mob/user, ui_key = "main", var/datum/nanoui/ui = null)
 	ui = SSnano.push_open_or_new_ui(user, src, ui_key, ui, "solar_control.tmpl", name, 490, 420, 1)
 

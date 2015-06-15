@@ -593,18 +593,7 @@ proc/set_runecults( setELDERGOD_CULTS = null, setCONVERT_CULTS = null, setSACRIF
 			return 0
 		else
 			return 0
-	if(istype(src,/obj/effect/rune))
-		usr.say("O bidai nabora se[pick("'","`")]sma!")
-	else
-		usr.whisper("O bidai nabora se[pick("'","`")]sma!")
-
-	if(istype(src,/obj/effect/rune))
-		usr.say("[input]")
-	else
-		usr.whisper("[input]")
-	for(var/mob/M in mob_list)
-		if((M.mind && (M.mind in ticker.mode.cult)) || (M in dead_mob_list))
-			M << "<span class='userdanger'>[input]</span>"
+	cultist_commune(usr , 1, 1, input)
 	return 1
 
 /////////////////////////////////////////FIFTEENTH RUNE

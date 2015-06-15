@@ -1,7 +1,7 @@
 //In this file: Summon Magic/Summon Guns/Summon Events
 
 /proc/rightandwrong(var/summon_type, var/mob/user, var/survivor_probability) //0 = Summon Guns, 1 = Summon Magic
-	var/list/gunslist 			= list("taser","egun","laser","revolver","detective","c20r","nuclear","deagle","gyrojet","pulse","suppressed","cannon","doublebarrel","shotgun","combatshotgun","bulldog","mateba","sabr","crossbow","saw","car","boltaction","speargun")
+	var/list/gunslist 			= list("taser","egun","laser","revolver","detective","c20r","nuclear","deagle","gyrojet","pulse","suppressed","cannon","doublebarrel","shotgun","combatshotgun","bulldog","mateba","sabr","crossbow","saw","car","boltaction","speargun","arg")
 	var/list/magiclist 			= list("fireball","smoke","blind","mindswap","forcewall","knock","horsemask","charge", "summonitem", "wandnothing", "wanddeath", "wandresurrection", "wandpolymorph", "wandteleport", "wanddoor", "wandfireball", "staffchange", "staffhealing", "armor", "scrying", "necromantic","staffdoor", "special")
 	var/list/magicspeciallist	= list("staffchange","staffanimation", "wandbelt", "contract", "staffchaos")
 
@@ -55,6 +55,8 @@
 					new /obj/item/weapon/gun/projectile/shotgun(get_turf(H))
 				if("combatshotgun")
 					new /obj/item/weapon/gun/projectile/shotgun/combat(get_turf(H))
+				if("arg")
+					new /obj/item/weapon/gun/projectile/automatic/ar(get_turf(H))
 				if("mateba")
 					new /obj/item/weapon/gun/projectile/revolver/mateba(get_turf(H))
 				if("boltaction")
@@ -85,6 +87,7 @@
 				if("car")
 					var/obj/item/weapon/gun/projectile/automatic/m90/gat  = new(get_turf(H))
 					gat.pin = new /obj/item/device/firing_pin
+			playsound(get_turf(H),'sound/magic/Summon_guns.ogg', 50, 1)
 		else
 			switch (randomizemagic)
 				if("fireball")
@@ -146,6 +149,7 @@
 						if("staffchaos")
 							new /obj/item/weapon/gun/magic/staff/chaos(get_turf(H))
 					H << "<span class='notice'>You suddenly feel lucky.</span>"
+			playsound(get_turf(H),'sound/magic/Summon_Magic.ogg', 50, 1)
 
 /proc/summonevents()
 	if(!SSevent.wizardmode)
@@ -155,10 +159,9 @@
 		SSevent.reschedule()
 
 	else 																//Speed it up
-		SSevent.frequency_lower = round(SSevent.frequency_lower * 0.8)	//1 minute | 48 seconds | 34.8 seconds | 30.7 seconds | 24.6 seconds
-		SSevent.frequency_upper = round(SSevent.frequency_upper * 0.6)	//5 minutes | 3 minutes | 1 minute 48 seconds | 1 minute 4.8 seconds | 38.9 seconds
-		if(SSevent.frequency_upper < SSevent.frequency_lower)
-			SSevent.frequency_upper = SSevent.frequency_lower				//this can't happen unless somehow multiple spellbooks are used, but just in case
+		SSevent.frequency_upper -= 600	//The upper bound falls a minute each time, making the AVERAGE time between events lessen
+		if(SSevent.frequency_upper < SSevent.frequency_lower) //Sanity
+			SSevent.frequency_upper = SSevent.frequency_lower
 
 		SSevent.reschedule()
 		message_admins("Summon Events intensifies, events will now occur every [SSevent.frequency_lower / 600] to [SSevent.frequency_upper / 600] minutes.")

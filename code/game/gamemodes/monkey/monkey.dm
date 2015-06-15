@@ -21,6 +21,7 @@
 	var/players_per_carrier = 30
 
 
+
 /datum/game_mode/monkey/pre_setup()
 	carriers_to_make = max(round(num_players()/players_per_carrier, 1), 1)
 
@@ -46,7 +47,7 @@
 
 
 /datum/game_mode/monkey/proc/greet_carrier(var/datum/mind/carrier)
-	carrier.current << "<B><span class = 'notice'>You are the Jungle Fever patient zero!!</B>"
+	carrier.current << "<B><span class='notice'>You are the Jungle Fever patient zero!!</B>"
 	carrier.current << "<b>You have been planted onto this station by the Animal Rights Consortium.</b>"
 	carrier.current << "<b>Soon the disease will transform you into an ape. Afterwards, you will be able spread the infection to others with a bite.</b>"
 	carrier.current << "<b>While your infection strain is undetectable by scanners, any other infectees will show up on medical equipment.</b>"
@@ -65,15 +66,36 @@
 		carriermind.current.viruses += D
 	..()
 
+/datum/game_mode/monkey/check_finished()
+	if(SSshuttle.emergency.mode >= SHUTTLE_ENDGAME || station_was_nuked)
+		return 1
+
+	if(!round_converted)
+		for(var/datum/mind/monkey_mind in ape_infectees)
+			continuous_sanity_checked = 1
+			if(monkey_mind.current && monkey_mind.current.stat != DEAD)
+				return 0
+
+		var/datum/disease/D = new /datum/disease/transformation/jungle_fever() //ugly but unfortunately needed
+		for(var/mob/living/carbon/human/H in living_mob_list)
+			if(H.mind && H.stat != DEAD)
+				if(H.HasDisease(D))
+					return 0
+
+	..()
+
 /datum/game_mode/monkey/proc/check_monkey_victory()
+	if(SSshuttle.emergency.mode != SHUTTLE_ENDGAME)
+		return 0
+	var/datum/disease/D = new /datum/disease/transformation/jungle_fever()
 	for(var/mob/living/carbon/monkey/M in living_mob_list)
-		if (M.HasDisease(/datum/disease/transformation/jungle_fever))
-			if(M.onCentcom())
+		if (M.HasDisease(D))
+			if(M.onCentcom() || M.onSyndieBase())
 				escaped_monkeys++
 	if(escaped_monkeys >= monkeys_to_win)
-		return 0
-	else
 		return 1
+	else
+		return 0
 
 /datum/game_mode/proc/add_monkey(datum/mind/monkey_mind)
 	ape_infectees |= monkey_mind
@@ -85,11 +107,11 @@
 
 
 /datum/game_mode/monkey/declare_completion()
-	if(!check_monkey_victory())
+	if(check_monkey_victory())
 		feedback_set_details("round_end_result","win - monkey win")
 		feedback_set("round_end_result",escaped_monkeys)
-		world << "<span class='userdanger'><FONT size = 3>The monkeys have overthrown their captors! Eeek eeeek!!</FONT></span>"
+		world << "<span class='userdanger'>The monkeys have overthrown their captors! Eeek eeeek!!</span>"
 	else
 		feedback_set_details("round_end_result","loss - staff stopped the monkeys")
 		feedback_set("round_end_result",escaped_monkeys)
-		world << "<span class='userdanger'><FONT size = 3>The staff managed to contain the monkey infestation!</FONT></span>"
+		world << "<span class='userdanger'>The staff managed to contain the monkey infestation!</span>"

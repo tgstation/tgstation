@@ -7,7 +7,7 @@
 	invocation = "GAR YOK"
 	invocation_type = "whisper"
 	range = -1
-	level_max = 1 //cannot be improved
+	level_max = 0 //cannot be improved
 	cooldown_min = 100
 	include_user = 1
 

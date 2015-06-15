@@ -8,8 +8,9 @@
 	var/overmind_get_delay = 0 // we don't want to constantly try to find an overmind, do it every 30 seconds
 	var/resource_delay = 0
 	var/point_rate = 2
+	var/is_offspring = null
 
-/obj/effect/blob/core/New(loc, var/h = 200, var/client/new_overmind = null, var/new_rate = 2)
+/obj/effect/blob/core/New(loc, var/h = 200, var/client/new_overmind = null, var/new_rate = 2, offspring)
 	blob_cores += src
 	SSobj.processing |= src
 	adjustcolors(color) //so it atleast appears
@@ -17,6 +18,8 @@
 		create_overmind(new_overmind)
 	if(overmind)
 		adjustcolors(overmind.blob_reagent_datum.color)
+	if(offspring)
+		is_offspring = 1
 	point_rate = new_rate
 	..(loc, h)
 
@@ -34,7 +37,7 @@
 /obj/effect/blob/core/Destroy()
 	blob_cores -= src
 	if(overmind)
-		qdel(overmind)
+		overmind.blob_core = null
 	overmind = null
 	SSobj.processing.Remove(src)
 	..()
@@ -64,15 +67,15 @@
 	health = min(initial(health), health + 1)
 	if(overmind)
 		overmind.update_health()
-		for(var/i = 1; i < 8; i += i)
-			Pulse(0, i, overmind.blob_reagent_datum.color)
-		for(var/b_dir in alldirs)
-			if(!prob(5))
-				continue
-			var/obj/effect/blob/normal/B = locate() in get_step(src, b_dir)
-			if(B)
-				B.change_to(/obj/effect/blob/shield)
-				B.color = overmind.blob_reagent_datum.color
+	for(var/i = 1; i < 8; i += i)
+		Pulse(0, i, overmind.blob_reagent_datum.color)
+	for(var/b_dir in alldirs)
+		if(!prob(5))
+			continue
+		var/obj/effect/blob/normal/B = locate() in get_step(src, b_dir)
+		if(B)
+			B.change_to(/obj/effect/blob/shield)
+			B.color = overmind.blob_reagent_datum.color
 	color = null
 	..()
 
@@ -103,6 +106,11 @@
 		B.blob_core = src
 		src.overmind = B
 		color = overmind.blob_reagent_datum.color
+		if(B.mind && !B.mind.special_role)
+			B.mind.special_role = "Blob Overmind"
+		spawn(0)
+			if(is_offspring)
+				B.verbs -= /mob/camera/blob/verb/split_consciousness
 		return 1
 	return 0
 

@@ -230,14 +230,29 @@
 	return
 
 /obj/item/weapon/gun/projectile/automatic/tommygun
-	name = "tommy gun"
-	desc = "A genuine 'Chicago Typewriter'."
+	name = "thompson SMG"
+	desc = "Based on the classic 'Chicago Typewriter'."
 	icon_state = "tommygun"
 	item_state = "shotgun"
+	w_class = 5
 	slot_flags = 0
 	origin_tech = "combat=5;materials=1;syndicate=2"
-	mag_type = /obj/item/ammo_box/magazine/tommygunm45
+	mag_type = /obj/item/ammo_box/magazine/tommygunm9mm
 	fire_sound = 'sound/weapons/Gunshot_smg.ogg'
 	can_suppress = 0
 	burst_size = 4
+	fire_delay = 1
+
+
+/obj/item/weapon/gun/projectile/automatic/ar
+	name = "ARG"
+	desc = "A robust assault rile used by Nanotrasen fighting forces."
+	icon_state = "arg"
+	item_state = "arg"
+	slot_flags = 0
+	origin_tech = "combat=5;materials=1"
+	mag_type = /obj/item/ammo_box/magazine/m556
+	fire_sound = 'sound/weapons/Gunshot_smg.ogg'
+	can_suppress = 0
+	burst_size = 3
 	fire_delay = 1

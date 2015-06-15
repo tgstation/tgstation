@@ -38,6 +38,8 @@
 
 			if(player.onCentcom())
 				text += "<br><b><font size=2>[player.real_name] escaped to the safety of Centcom.</font></b>"
+			else if(player.onSyndieBase())
+				text += "<br><b><font size=2>[player.real_name] escaped to the (relative) safety of Syndicate Space.</font></b>"
 			else
 				text += "<br><font size=1>[player.real_name] survived but is stranded without any hope of rescue.</font>"
 
@@ -52,3 +54,4 @@
 
 	..()
 	return 1
+

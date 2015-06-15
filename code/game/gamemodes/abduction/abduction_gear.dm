@@ -23,6 +23,8 @@
 	var/stealth_armor = list(melee = 15, bullet = 15, laser = 15, energy = 15, bomb = 15, bio = 15, rad = 15)
 	var/combat_armor = list(melee = 50, bullet = 50, laser = 50, energy = 50, bomb = 50, bio = 50, rad = 50)
 
+
+
 /obj/item/clothing/suit/armor/abductor/vest/proc/flip_mode()
 	switch(mode)
 		if(VEST_STEALTH)

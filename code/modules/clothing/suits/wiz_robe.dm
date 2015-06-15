@@ -19,6 +19,11 @@
 	desc = "Strange-looking yellow hat-wear that most certainly belongs to a powerful magic user."
 	icon_state = "yellowwizard"
 
+/obj/item/clothing/head/wizard/black
+	name = "black wizard hat"
+	desc = "Strange-looking black hat-wear that most certainly belongs to a real skeleton. Spooky."
+	icon_state = "blackwizard"
+
 /obj/item/clothing/head/wizard/fake
 	name = "wizard hat"
 	desc = "It has WIZZARD written across it in sequins. Comes with a cool beard."
@@ -71,6 +76,12 @@
 	desc = "A magnificant yellow gem-lined robe that seems to radiate power."
 	icon_state = "yellowwizard"
 	item_state = "yellowwizrobe"
+
+/obj/item/clothing/suit/wizrobe/black
+	name = "black wizard robe"
+	desc = "An unnerving black gem-lined robe that reeks of death and decay."
+	icon_state = "blackwizard"
+	item_state = "blackwizrobe"
 
 /obj/item/clothing/suit/wizrobe/marisa
 	name = "witch robe"

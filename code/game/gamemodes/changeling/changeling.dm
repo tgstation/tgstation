@@ -79,13 +79,13 @@ var/list/possible_changeling_IDs = list("Alpha","Beta","Gamma","Delta","Epsilon"
 
 /datum/game_mode/changeling/make_antag_chance(var/mob/living/carbon/human/character) //Assigns changeling to latejoiners
 	var/changelingcap = min( round(joined_player_list.len/(config.changeling_scaling_coeff*2))+2, round(joined_player_list.len/config.changeling_scaling_coeff) )
-	if(changelings.len >= changelingcap) //Caps number of latejoin antagonists
+	if(ticker.mode.changelings.len >= changelingcap) //Caps number of latejoin antagonists
 		return
-	if(changelings.len <= (changelingcap - 2) || prob(100 - (config.changeling_scaling_coeff*2)))
+	if(ticker.mode.changelings.len <= (changelingcap - 2) || prob(100 - (config.changeling_scaling_coeff*2)))
 		if(character.client.prefs.be_special & BE_CHANGELING)
 			if(!jobban_isbanned(character.client, "changeling") && !jobban_isbanned(character.client, "Syndicate"))
 				if(age_check(character.client))
-					if(!(character.job in ticker.mode.restricted_jobs))
+					if(!(character.job in restricted_jobs))
 						character.mind.make_Changling()
 	..()
 
@@ -151,8 +151,8 @@ var/list/possible_changeling_IDs = list("Alpha","Beta","Gamma","Delta","Epsilon"
 
 /datum/game_mode/proc/greet_changeling(var/datum/mind/changeling, var/you_are=1)
 	if (you_are)
-		changeling.current << "<span class='userdanger'>You are [changeling.changeling.changelingID], a changeling! You have absorbed and taken the form of a human.</span>"
-	changeling.current << "<span class='userdanger'>Use say \":g message\" to communicate with your fellow changelings.</span>"
+		changeling.current << "<span class='boldannounce'>You are [changeling.changeling.changelingID], a changeling! You have absorbed and taken the form of a human.</span>"
+	changeling.current << "<span class='boldannounce'>Use say \":g message\" to communicate with your fellow changelings.</span>"
 	changeling.current << "<b>You must complete the following tasks:</b>"
 
 	if (changeling.current.mind)

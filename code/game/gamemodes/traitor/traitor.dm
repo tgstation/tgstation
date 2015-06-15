@@ -21,7 +21,7 @@
 	var/num_modifier = 0 // Used for gamemodes, that are a child of traitor, that need more than the usual.
 
 
-/datum/game_mode/traitor/announce()
+datum/game_mode/traitor/announce()
 	world << "<B>The current game mode is - Traitor!</B>"
 	world << "<B>There are syndicate traitors on the station. Do not let the traitors succeed!</B>"
 
@@ -71,15 +71,14 @@
 
 /datum/game_mode/traitor/make_antag_chance(var/mob/living/carbon/human/character) //Assigns traitor to latejoiners
 	var/traitorcap = min(round(joined_player_list.len / (config.traitor_scaling_coeff * 2)) + 2 + num_modifier, round(joined_player_list.len/config.traitor_scaling_coeff) + num_modifier )
-	if(traitors.len >= traitorcap) //Upper cap for number of latejoin antagonists
+	if(ticker.mode.traitors.len >= traitorcap) //Upper cap for number of latejoin antagonists
 		return
-	if(traitors.len <= (traitorcap - 2) || prob(100 / (config.traitor_scaling_coeff * 2)))
+	if(ticker.mode.traitors.len <= (traitorcap - 2) || prob(100 / (config.traitor_scaling_coeff * 2)))
 		if(character.client.prefs.be_special & BE_TRAITOR)
 			if(!jobban_isbanned(character.client, "traitor") && !jobban_isbanned(character.client, "Syndicate"))
 				if(age_check(character.client))
-					if(!(character.job in ticker.mode.restricted_jobs))
+					if(!(character.job in restricted_jobs))
 						add_latejoin_traitor(character.mind)
-	..()
 
 /datum/game_mode/traitor/proc/add_latejoin_traitor(var/datum/mind/character)
 	character.make_Traitor()
@@ -107,6 +106,7 @@
 
 	else
 		var/is_hijacker = prob(10)
+		var/martyr_chance = prob(20)
 		var/objective_count = is_hijacker 			//Hijacking counts towards number of objectives
 		if(!exchange_blue && traitors.len >= 5) 	//Set up an exchange if there are enough traitors
 			if(!exchange_red)
@@ -145,13 +145,28 @@
 				var/datum/objective/hijack/hijack_objective = new
 				hijack_objective.owner = traitor
 				traitor.objectives += hijack_objective
+				return
+
+
+		var/martyr_compatibility = 1 //You can't succeed in stealing if you're dead.
+		for(var/datum/objective/O in traitor.objectives)
+			if(!O.martyr_compatible)
+				martyr_compatibility = 0
+				break
+
+		if(martyr_compatibility && martyr_chance)
+			var/datum/objective/martyr/martyr_objective = new
+			martyr_objective.owner = traitor
+			traitor.objectives += martyr_objective
+			return
+
 		else
-			if (!(locate(/datum/objective/escape) in traitor.objectives))
+			if(!(locate(/datum/objective/escape) in traitor.objectives))
 				var/datum/objective/escape/escape_objective = new
 				escape_objective.owner = traitor
 				traitor.objectives += escape_objective
+				return
 
-	return
 
 
 /datum/game_mode/proc/greet_traitor(var/datum/mind/traitor)
@@ -164,7 +179,7 @@
 
 
 /datum/game_mode/proc/finalize_traitor(var/datum/mind/traitor)
-	if (istype(traitor.current, /mob/living/silicon) && !ismommi(traitor))
+	if (istype(traitor.current, /mob/living/silicon))
 		add_law_zero(traitor.current)
 	else
 		equip_traitor(traitor.current)
