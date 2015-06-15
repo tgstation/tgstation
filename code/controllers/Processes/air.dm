@@ -22,3 +22,4 @@
 
 				air_processing_killed = TRUE
 				air_master.failed_ticks = 0
+		scheck()

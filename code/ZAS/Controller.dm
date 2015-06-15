@@ -156,6 +156,7 @@ Total Unsimulated Turfs: [world.maxx*world.maxy*world.maxz - simulated_turf_coun
 			updated++
 			#endif
 			//sleep(1)
+			tcheck(85,1)
 
 		#ifdef ZASDBG
 		if(updated != updating.len)
@@ -170,6 +171,8 @@ Total Unsimulated Turfs: [world.maxx*world.maxy*world.maxz - simulated_turf_coun
 
 	for(var/connection_edge/edge in edges)
 		edge.tick()
+		tcheck(85,1)
+
 
 	//Process fires.
 	if(.)
@@ -177,6 +180,7 @@ Total Unsimulated Turfs: [world.maxx*world.maxy*world.maxz - simulated_turf_coun
 
 	for(var/obj/fire/fire in active_hotspots)
 		fire.process()
+		tcheck(85,1)
 
 	//Process zones.
 	if(.)
@@ -188,6 +192,7 @@ Total Unsimulated Turfs: [world.maxx*world.maxy*world.maxz - simulated_turf_coun
 		zones_to_update = list()
 		for(var/zone/zone in updating)
 			zone.tick()
+			tcheck(85,1)
 			zone.needs_update = 0
 
 	if(.)

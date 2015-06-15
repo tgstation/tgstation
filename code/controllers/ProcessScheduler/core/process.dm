@@ -196,7 +196,7 @@ datum/controller/process/proc/scheck(var/tickId = 0)
 	// For each tick the process defers, it increments the cpu_defer_count so we don't
 	// defer indefinitely
 	if (world.cpu >= cpu_threshold + cpu_defer_count * 10)
-		sleep(1)
+		sleep(calculateticks(1))
 		cpu_defer_count++
 		last_slept = world.timeofday
 	else
@@ -206,7 +206,7 @@ datum/controller/process/proc/scheck(var/tickId = 0)
 
 		if (world.timeofday > last_slept + sleep_interval)
 			// If we haven't slept in sleep_interval ticks, sleep to allow other work to proceed.
-			sleep(0)
+			sleep(calculateticks(1))
 			last_slept = world.timeofday
 
 datum/controller/process/proc/update()

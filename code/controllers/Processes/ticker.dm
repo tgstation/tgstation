@@ -20,6 +20,7 @@ var/global/datum/controller/process/ticker/tickerProcess
 			ticker.pregame()
 
 /datum/controller/process/ticker/doWork()
+	scheck()
 	var/currentTime = world.timeofday
 
 	if(currentTime < lastTickerTime) // check for midnight rollover

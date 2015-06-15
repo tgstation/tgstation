@@ -63,6 +63,11 @@ var/soft_dels = 0
 
 			hard_dels++
 			remainingForceDelPerTick--
+			if(world.cpu > 80)
+				#ifdef GG_DEBUG
+				WARNING("GC process sleeping due to high CPU usage!")
+				#endif
+				sleep(calculateticks(2))
 
 #ifdef GC_DEBUG
 #undef GC_DEBUG

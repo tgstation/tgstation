@@ -46,7 +46,7 @@ datum/updateQueueWorker/proc/doWork()
 		// in the next tick.
 		uq_dbg("tick went into overtime with world.cpu = [world.cpu], deferred next update to next tick [1+(world.time / world.tick_lag)]")
 
-		spawn(1)
+		spawn(calculateticks(1))
 			doWork()
 	else
 		spawn(0) // Execute anonymous function immediately as if we were in a while loop...
