@@ -24,6 +24,9 @@
 	pressure_resistance = 2
 	var/colour = "black"	//what colour the ink is!
 
+/obj/item/weapon/pen/suicide_act(mob/user)
+	user.visible_message("<span class='suicide'>[user] is scribbling numbers all over themself with [src]! It looks like they're trying to commit sudoku!</span>")
+	return(BRUTELOSS)
 
 /obj/item/weapon/pen/blue
 	desc = "It's a normal blue ink pen."
