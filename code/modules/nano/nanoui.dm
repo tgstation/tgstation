@@ -261,7 +261,7 @@ nanoui is used to open and update nano browser uis
 		head_content += "<script type='text/javascript' src='[filename]'></script> "
 
 	for (var/filename in stylesheets)
-		head_content += "<link rel='stylesheet' type='text/css' href='[filename]'> "
+		head_content += "<link rel='stylesheet' type='text/css' href='[filename]'>"
 
 	var/templatel_data[0]
 	for (var/key in templates)

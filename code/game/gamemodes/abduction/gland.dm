@@ -92,7 +92,7 @@
 	for(var/mob/living/carbon/human/H in orange(4,T))
 		if(H == host)
 			continue
-		H << "<span class='alien'> You hear a buzz in your head </span>"
+		H << "<span class='alien'>You hear a buzz in your head </span>"
 		H.confused += 20
 
 /obj/item/gland/pop

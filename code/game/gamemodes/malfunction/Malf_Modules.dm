@@ -99,7 +99,7 @@
 		C.post_status("alert", "lockdown")
 
 	src.verbs += /mob/living/silicon/ai/proc/disablelockdown
-	src << "<span class = 'warning'>Lockdown Initiated.</span>"
+	src << "<span class='warning'>Lockdown Initiated.</span>"
 	malf_cooldown = 1
 	spawn(30)
 	malf_cooldown = 0
@@ -127,7 +127,7 @@
 			else if(!D.stat) //Opens only powered doors.
 				D.open() //Open everything!
 
-	src << "<span class = 'notice'>Lockdown Lifted.</span>"
+	src << "<span class='notice'>Lockdown Lifted.</span>"
 	malf_cooldown = 1
 	spawn(30)
 	malf_cooldown = 0

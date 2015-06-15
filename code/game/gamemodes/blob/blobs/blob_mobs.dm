@@ -86,7 +86,7 @@
 	if(overmind && overmind.blob_reagent_datum)
 		adjustcolors(overmind.blob_reagent_datum.color)
 	H.loc = src
-	loc.visible_message("<span class='warning'> The corpse of [H.name] suddenly rises!</span>")
+	loc.visible_message("<span class='warning'>The corpse of [H.name] suddenly rises!</span>")
 
 /mob/living/simple_animal/hostile/blob/blobspore/death(gibbed)
 	..(1)
