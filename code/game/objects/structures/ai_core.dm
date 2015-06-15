@@ -222,10 +222,6 @@ That prevents a few funky behaviors.
 */
 //The type of interaction, the player performing the operation, the AI itself, and the card object, if any.
 
-#define AI_TRANS_TO_CARD	1 //Downloading AI to InteliCard
-#define AI_TRANS_FROM_CARD	2 //Uploading AI from InteliCard
-#define AI_MECH_HACK		3 //Malfunctioning AI hijacking mecha
-
 
 atom/proc/transfer_ai(var/interaction, var/mob/user, var/mob/living/silicon/ai/AI, var/obj/item/device/aicard/card)
 	if(istype(card))
