@@ -137,46 +137,6 @@
 	can_hold = list("/obj/item/weapon/reagent_containers/glass/bottle","/obj/item/weapon/reagent_containers/pill","/obj/item/weapon/reagent_containers/syringe")
 
 // -----------------------------
-//        Wizard Card Pack
-// -----------------------------
-
-/obj/item/weapon/storage/bag/wiz_cards
-	icon = 'icons/obj/wiz_cards.dmi'
-	icon_state = "cardpack"
-	name = "Wizard Card Pack"
-	storage_slots = 50
-	max_combined_w_class = 200
-	max_w_class = 3
-	w_class = 1
-	can_hold = list("/obj/item/toy/wizard_card","/obj/item/weapon/reagent_containers/food/snacks/chocofrog")
-
-/obj/item/weapon/storage/bag/wiz_cards/full/New()
-	..()
-	for(var/card in wizard_cards_normal)
-		contents |= new card
-	for(var/card in wizard_cards_rare)
-		contents |= new card
-
-/obj/item/weapon/storage/bag/wiz_cards/attack_self(mob/user)
-	icon_state = "cardpack_open"
-	.=..()
-
-/obj/item/weapon/storage/bag/wiz_cards/show_to(mob/user as mob)
-	icon_state = "cardpack_open"
-	.=..()
-
-/obj/item/weapon/storage/bag/wiz_cards/frog/New()
-	..()
-	contents += new /obj/item/weapon/reagent_containers/food/snacks/chocofrog
-	var/card
-	if(prob(80)) //80% chance for a classic card, 20% for a legendary
-		card=pick(wizard_cards_normal)
-		contents += new card
-	else
-		card=pick(wizard_cards_rare)
-		contents += new card
-
-// -----------------------------
 //        Sheet Snatcher
 // -----------------------------
 // Because it stacks stacks, this doesn't operate normally.
