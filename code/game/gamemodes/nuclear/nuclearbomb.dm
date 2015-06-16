@@ -19,6 +19,10 @@ var/bomb_set
 	var/lastentered = ""
 	var/immobile = 0 //Not all nukes should be moved
 
+/obj/machinery/nuclearbomb/New()
+	..()
+	nuke_list += src
+
 /obj/machinery/nuclearbomb/selfdestruct
 	name = "station self-destruct terminal"
 	desc = "For when it all gets too much to bear. Do not taunt."

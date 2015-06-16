@@ -86,7 +86,9 @@ var/list/admin_verbs_fun = list(
 	/client/proc/set_ooc,
 	/client/proc/reset_ooc,
 	/client/proc/forceEvent,
-	/client/proc/bluespace_artillery
+	/client/proc/bluespace_artillery,
+	/client/proc/admin_change_sec_level,
+	/client/proc/toggle_nuke
 	)
 var/list/admin_verbs_spawn = list(
 	/datum/admins/proc/spawn_atom,		/*allows us to spawn instances*/
@@ -198,7 +200,9 @@ var/list/admin_verbs_hideable = list(
 	/proc/release,
 	/client/proc/reload_admins,
 	/client/proc/reset_all_tcs,
-	/client/proc/panicbunker
+	/client/proc/panicbunker,
+	/client/proc/admin_change_sec_level,
+	/client/proc/toggle_nuke
 	)
 
 /client/proc/add_admin_verbs()
