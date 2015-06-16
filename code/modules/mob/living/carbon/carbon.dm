@@ -466,6 +466,7 @@ var/const/GALOSHES_DONT_HELP = 8
 				return
 			if(legcuffed)
 				legcuffed.loc = loc
+				legcuffed.dropped()
 				legcuffed = null
 				update_inv_legcuffed(0)
 		else

@@ -157,9 +157,14 @@
 	name = "bear trap"
 	throw_speed = 1
 	throw_range = 1
-	icon_state = "beartrap0"
+	icon_state = "beartrap"
 	desc = "A trap used to catch bears and other legged creatures."
 	var/armed = 0
+	var/trap_damage = 20
+
+/obj/item/weapon/restraints/legcuffs/beartrap/New()
+	..()
+	icon_state = "[initial(icon_state)][armed]"
 
 /obj/item/weapon/restraints/legcuffs/beartrap/suicide_act(mob/user)
 	user.visible_message("<span class='suicide'>[user] is sticking \his head in the [src.name]! It looks like \he's trying to commit suicide.</span>")
@@ -170,9 +175,8 @@
 	..()
 	if(ishuman(user) && !user.stat && !user.restrained())
 		armed = !armed
-		icon_state = "beartrap[armed]"
+		icon_state = "[initial(icon_state)][armed]"
 		user << "<span class='notice'>[src] is now [armed ? "armed" : "disarmed"]</span>"
-
 
 /obj/item/weapon/restraints/legcuffs/beartrap/Crossed(AM as mob|obj)
 	if(armed && isturf(src.loc))
@@ -196,9 +200,31 @@
 					snap = 1
 			if(snap)
 				armed = 0
-				icon_state = "beartrap0"
+				icon_state = "[initial(icon_state)][armed]"
 				playsound(src.loc, 'sound/effects/snap.ogg', 50, 1)
 				L.visible_message("<span class='danger'>[L] triggers \the [src].</span>", \
 						"<span class='userdanger'>You trigger \the [src]!</span>")
-				L.apply_damage(20,BRUTE, def_zone)
+				L.apply_damage(trap_damage,BRUTE, def_zone)
 	..()
+
+/obj/item/weapon/restraints/legcuffs/beartrap/energy
+	name = "energy snare"
+	armed = 1
+	icon_state = "e_snare"
+	trap_damage = 0
+
+/obj/item/weapon/restraints/legcuffs/beartrap/energy/New()
+	..()
+	spawn(100)
+		if(!istype(loc, /mob))
+			var/datum/effect/effect/system/spark_spread/sparks = new /datum/effect/effect/system/spark_spread
+			sparks.set_up(1, 1, src)
+			sparks.start()
+			qdel(src)
+
+/obj/item/weapon/restraints/legcuffs/beartrap/energy/dropped()
+	..()
+	qdel(src)
+
+/obj/item/weapon/restraints/legcuffs/beartrap/energy/attack_hand(mob/user)
+	Crossed(user) //honk
