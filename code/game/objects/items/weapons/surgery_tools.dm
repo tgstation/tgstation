@@ -30,12 +30,13 @@
 		return (BRUTELOSS)
 
 /obj/item/weapon/retractor/manager
-	name = "incision management system"
+	name = "surgical incision manager"
 	desc = "A true extension of the surgeon's body, this marvel instantly cuts the organ, clamps any bleeding, and retract the skin, allowing for the immediate commencement of therapeutic steps."
 	icon_state = "incisionmanager"
 	item_state = "incisionmanager"
 	force = 7.5
 	surgery_speed = 0.75
+	origin_tech = "materials=5;biotech=5;engineering=4"
 
 /obj/item/weapon/retractor/manager/New()
 	..()

@@ -2166,7 +2166,7 @@ proc/getScanDesign(var/obj/O)
 	build_path = /obj/item/weapon/scalpel/laser/tier2
 
 /datum/design/incisionmanager
-	name = "Incision Management System"
+	name = "Surgical Incision Manager"
 	desc = "A true extension of the surgeon's body, this marvel instantly cuts the organ, clamp any bleeding, and retract the skin, allowing for the immediate commencement of therapeutic steps."
 	id = "incisionmanager"
 	req_tech = list("materials" = 5, "engineering" = 4, "biotech" = 5)
