@@ -293,14 +293,14 @@
 
 	return amount
 
-/obj/machinery/computer/slot_machine/proc/dispense(amount = 0, cointype = /obj/item/weapon/coin/silver, mob/living/target, throw = 0)
+/obj/machinery/computer/slot_machine/proc/dispense(amount = 0, cointype = /obj/item/weapon/coin/silver, mob/living/target, throwit = 0)
 	var/value = coinvalues["[cointype]"]
 
 
 	while(amount >= value)
 		var/obj/item/weapon/coin/C = new cointype(loc) //DOUBLE THE PAIN
 		amount -= value
-		if(throw && target)
+		if(throwit && target)
 			C.throw_at(target, 3, 10)
 		else
 			random_step(C, 2, 40)

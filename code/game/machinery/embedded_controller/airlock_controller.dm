@@ -283,10 +283,10 @@
 <div class='statusDisplay'>
 <div class='line'><div class='statusLabel'>Current Status:</div><div class='statusValue'>[current_status]</div></div>
 <div class='line'>&nbsp;</div>
-<div class='line'><div class='statusLabel'> \> Chamber Pressure:</div><div class='statusValue'>[sensor_pressure] kPa</div></div>
-<div class='line'><div class='statusLabel'> \> Control Pump:</div><div class='statusValue'>[pump_status]</div></div>
-<div class='line'><div class='statusLabel'> \> Interior Door:</div><div class='statusValue'>[interior_status]</div></div>
-<div class='line'><div class='statusLabel'> \> Exterior Door:</div><div class='statusValue'>[exterior_status]</div></div>
+<div class='line'><div class='statusLabel'>\> Chamber Pressure:</div><div class='statusValue'>[sensor_pressure] kPa</div></div>
+<div class='line'><div class='statusLabel'>\> Control Pump:</div><div class='statusValue'>[pump_status]</div></div>
+<div class='line'><div class='statusLabel'>\> Interior Door:</div><div class='statusValue'>[interior_status]</div></div>
+<div class='line'><div class='statusLabel'>\> Exterior Door:</div><div class='statusValue'>[exterior_status]</div></div>
 </div>
 [state_options]"}
 

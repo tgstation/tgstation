@@ -482,8 +482,8 @@
 
 /obj/machinery/computer/shuttle
 	name = "Shuttle Console"
-	icon = 'icons/obj/computer.dmi'
-	icon_state = "shuttle"
+	icon_screen = "shuttle"
+	icon_keyboard = "tech_key"
 	req_access = list( )
 	circuit = /obj/item/weapon/circuitboard/shuttle
 	var/shuttleId
@@ -544,7 +544,7 @@
 	if(!emagged)
 		src.req_access = list()
 		emagged = 1
-		user << "<span class='notice'> You fried the consoles ID checking system.</span>"
+		user << "<span class='notice'>You fried the consoles ID checking system.</span>"
 
 /obj/machinery/computer/shuttle/ferry
 	name = "transport ferry console"

@@ -260,7 +260,7 @@ var/const/INGEST = 2
 					R.addiction_act_stage4(M)
 					R.addiction_stage++
 				if(R.addiction_stage > 40)
-					M << "<span class = 'notice'>You feel like you've gotten over your need for [R.name].</span>"
+					M << "<span class='notice'>You feel like you've gotten over your need for [R.name].</span>"
 					addiction_list.Remove(R)
 	addiction_tick++
 	update_total()

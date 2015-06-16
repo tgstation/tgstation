@@ -308,7 +308,7 @@
 		if(mind.changeling)
 			mind.changeling.regenerate()
 			hud_used.lingchemdisplay.invisibility = 0
-			hud_used.lingchemdisplay.maptext = "<div align='center' valign='middle' style='position:relative; top:0px; left:6px'> <font color='#dd66dd'>[round(mind.changeling.chem_charges)]</font></div>"
+			hud_used.lingchemdisplay.maptext = "<div align='center' valign='middle' style='position:relative; top:0px; left:6px'><font color='#dd66dd'>[round(mind.changeling.chem_charges)]</font></div>"
 		else
 			hud_used.lingchemdisplay.invisibility = 101
 
@@ -335,6 +335,8 @@
 				L.embedded_objects -= I
 				I.loc = get_turf(src)
 				visible_message("<span class='danger'>\the [I] falls out of [name]'s [L.getDisplayName()]!</span>","<span class='userdanger'>\the [I] falls out of your [L.getDisplayName()]!</span>")
+				if(!has_embedded_objects())
+					clear_alert("embeddedobject")
 
 /mob/living/carbon/human/handle_heart()
 	if(!heart_attack)
