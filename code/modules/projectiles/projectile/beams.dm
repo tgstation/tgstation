@@ -35,8 +35,10 @@
 
 /obj/item/projectile/beam/xray/on_hit(var/atom/target)
 	. = ..()
-	var/absorption = 1 + 6 * target.explosion_block
-	range = max(range-absorption,1) //hitting something reduces the range.
+	var/absorption = 1 + 2 * target.explosion_block
+	damage = max(damage - absorption,5) //hitting something reduces the damage.
+	irradiate = max(irradiate - 2*absorption,10)
+
 
 /obj/item/projectile/beam/disabler
 	name = "disabler beam"
