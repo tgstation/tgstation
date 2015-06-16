@@ -62,7 +62,7 @@
 		dat += "Influence: <B>[points]</B><br>"
 		dat += "Time until Influence grows: <B>[(points >= 999) ? ("--:--") : (time2text(ticker.mode.gang_points.next_point_time - world.time, "mm:ss"))]</B><br>"
 		dat += "<hr>"
-		dat += "<B>Purchase Weapons:</B><br>"
+		dat += "<B>Purchase Combat Equipment:</B><br>"
 
 		dat += "(10 Influence) "
 		if(points >= 10)
@@ -83,7 +83,7 @@
 			dat += "10mm Ammo<br>"
 
 		dat += "(50 Influence) "
-		if(points >= 50)
+/*		if(points >= 50)
 			dat += "<a href='?src=\ref[src];purchase=SMG'>Thompson SMG</a><br>"
 		else
 			dat += "Thompson SMG<br>"
@@ -92,22 +92,22 @@
 		if(points >= 25)
 			dat += "<a href='?src=\ref[src];purchase=SMGammo'>9mm Drum</a><br>"
 		else
-			dat += "9mm Drum<br>"
-
-		dat += "<br>"
-		dat += "<B>Purchase Utilities:</B><br>"
-
-		dat += "(5 Influence) "
-		if(points >= 5)
-			dat += "<a href='?src=\ref[src];purchase=spraycan'><b>Territory Spraycan</b></a><br>"
-		else
-			dat += "<b>Territory Spraycan</b><br>"
+			dat += "9mm Drum<br>"	*/
 
 		dat += "(10 Influence) "
 		if(points >= 10)
 			dat += "<a href='?src=\ref[src];purchase=vest'>Bulletproof Vest</a><br>"
 		else
 			dat += "Bulletproof Vest<br>"
+
+		dat += "<br>"
+		dat += "<B>Purchase Support Equipment:</B><br>"
+
+		dat += "(5 Influence) "
+		if(points >= 5)
+			dat += "<a href='?src=\ref[src];purchase=spraycan'><b>Territory Spraycan</b></a><br>"
+		else
+			dat += "<b>Territory Spraycan</b><br>"
 
 		dat += "(30 Influence) "
 		if(points >= 30)
@@ -173,14 +173,14 @@
 				if(points >= 10)
 					item_type = /obj/item/ammo_box/magazine/m10mm
 					points = 10
-			if("SMG")
+/*			if("SMG")
 				if(points >= 50)
 					item_type = /obj/item/weapon/gun/projectile/automatic/tommygun
 					points = 50
-			if("SMG")
+			if("SMGammo")
 				if(points >= 25)
 					item_type = /obj/item/ammo_box/magazine/tommygunm9mm
-					points = 25
+					points = 25  */
 			if("vest")
 				if(points >= 10)
 					item_type = /obj/item/clothing/suit/armor/bulletproof

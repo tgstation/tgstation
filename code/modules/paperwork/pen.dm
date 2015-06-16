@@ -82,7 +82,6 @@
 /obj/item/weapon/pen/gang
 	origin_tech = "materials=2;syndicate=5"
 	var/cooldown
-
 /obj/item/weapon/pen/gang/attack(mob/living/M, mob/user)
 	if(!istype(M))	return
 	if(..())
@@ -94,26 +93,29 @@
 				if(M.client)
 					M.mind_initialize()		//give them a mind datum if they don't have one.
 					if(user.mind in ticker.mode.A_bosses)
-						if(ticker.mode.add_gangster(M.mind,"A"))
-							M.Paralyse(5)
-							cooldown(ticker.mode.A_gang.len, )
-						else
-							user << "<span class='warning'>This mind is resistant to recruitment!</span>"
+						var/recruitable = ticker.mode.add_gangster(M.mind,"A")
+						switch(recruitable)
+							if(2)
+								M.Paralyse(5)
+								cooldown(max(0,ticker.mode.B_gang.len - ticker.mode.A_gang.len))
+							if(1)
+								user << "<span class='warning'>This mind has already been recruited by another gang!</span>"
+							else
+								user << "<span class='warning'>This mind is resistant to recruitment!</span>"
 					else if(user.mind in ticker.mode.B_bosses)
-						if(ticker.mode.add_gangster(M.mind,"B"))
-							M.Paralyse(5)
-							cooldown(ticker.mode.B_gang.len)
-						else
-							user << "<span class='warning'>This mind is resistant to recruitment!</span>"
-				else
-					user << "<span class='warning'>This mind is so vacant that it is not susceptible to influence!</span>"
-
+						var/recruitable = ticker.mode.add_gangster(M.mind,"B")
+						switch(recruitable)
+							if(2)
+								M.Paralyse(5)
+								cooldown(max(0,ticker.mode.A_gang.len - ticker.mode.B_gang.len))
+							if(1)
+								user << "<span class='warning'>This mind has already been recruited by another gang!</span>"
+							else
+								user << "<span class='warning'>This mind is resistant to recruitment!</span>"
 /obj/item/weapon/pen/gang/proc/cooldown(modifier)
-	if(!modifier)
-		return
 	cooldown = 1
 	icon_state = "pen_blink"
-	spawn(600)
+	spawn(max(50,1200-(modifier*100)))
 		cooldown = 0
 		icon_state = "pen"
 		var/mob/M = get(src, /mob)
