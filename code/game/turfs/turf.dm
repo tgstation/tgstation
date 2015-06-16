@@ -26,6 +26,8 @@
 
 	var/PathNode/PNode = null //associated PathNode in the A* algorithm
 
+	var/slowdown = 0 //negative for faster, positive for slower
+
 	flags = 0
 
 	var/dynamic_lighting = 1

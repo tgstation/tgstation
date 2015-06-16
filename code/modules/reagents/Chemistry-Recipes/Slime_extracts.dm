@@ -571,6 +571,22 @@
 							M.client.screen -= blueeffect
 							qdel(blueeffect)
 
+/datum/chemical_reaction/slimefloor2
+	name = "Bluespace Floor"
+	id = "m_floor2"
+	result = null
+	required_reagents = list("water" = 1)
+	result_amount = 1
+	required_container = /obj/item/slime_extract/bluespace
+	required_other = 1
+
+/datum/chemical_reaction/slimefloor2/on_reaction(var/datum/reagents/holder, var/created_volume)
+	feedback_add_details("slime_cores_used","[replacetext(name," ","_")]")
+	var/obj/item/stack/tile/bluespace/P = new /obj/item/stack/tile/bluespace
+	P.amount = 25
+	P.loc = get_turf(holder.my_atom)
+
+
 //Cerulean
 /datum/chemical_reaction/slimepsteroid2
 	name = "Slime Steroid 2"
@@ -617,20 +633,24 @@
 	feedback_add_details("slime_cores_used","[replacetext(name," ","_")]")
 	var/obj/item/device/camera/P = new /obj/item/device/camera
 	P.loc = get_turf(holder.my_atom)
+	var/obj/item/device/camera_film/Z = new /obj/item/device/camera_film
+	Z.loc = get_turf(holder.my_atom)
 
-/datum/chemical_reaction/slimefilm
-	name = "Slime Film"
-	id = "m_film"
+/datum/chemical_reaction/slimefloor
+	name = "Sepia Floor"
+	id = "m_floor"
 	result = null
 	required_reagents = list("water" = 1)
 	result_amount = 1
 	required_container = /obj/item/slime_extract/sepia
 	required_other = 1
 
-/datum/chemical_reaction/slimefilm/on_reaction(var/datum/reagents/holder)
+/datum/chemical_reaction/slimefloor/on_reaction(var/datum/reagents/holder)
 	feedback_add_details("slime_cores_used","[replacetext(name," ","_")]")
-	var/obj/item/device/camera_film/P = new /obj/item/device/camera_film
+	var/obj/item/stack/tile/sepia/P = new /obj/item/stack/tile/sepia
+	P.amount = 25
 	P.loc = get_turf(holder.my_atom)
+
 
 //Pyrite
 /datum/chemical_reaction/slimepaint
@@ -649,3 +669,5 @@
 	var/obj/P = new chosen
 	if(P)
 		P.loc = get_turf(holder.my_atom)
+
+
