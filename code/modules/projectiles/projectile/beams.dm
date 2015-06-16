@@ -33,13 +33,6 @@
 	range = 15
 	forcedodge = 1
 
-/obj/item/projectile/beam/xray/on_hit(var/atom/target)
-	. = ..()
-	var/absorption = 1 + 2 * target.explosion_block
-	damage = max(damage - absorption,5) //hitting something reduces the damage.
-	irradiate = max(irradiate - 2*absorption,10)
-
-
 /obj/item/projectile/beam/disabler
 	name = "disabler beam"
 	icon_state = "omnilaser"

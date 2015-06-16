@@ -3,4 +3,4 @@ author: phil235
 delete-after: True
 
 changes: 
-  - rscdel: "Nerfed the xray gun. Its range is now 15 tiles. Its damage is reduced when it pass through solid things (mobs, airlocks, walls) but can never go below 33% of its original damage."
+  - rscdel: "Nerfed the xray gun. Its range is now 15 tiles."
