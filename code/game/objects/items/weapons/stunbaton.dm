@@ -13,7 +13,7 @@
 	var/status = 0
 	var/obj/item/weapon/stock_parts/cell/high/bcell = null
 	var/hitcost = 1000
-	var/losspertick = 5
+	var/losspertick = 0
 
 /obj/item/weapon/melee/baton/suicide_act(mob/user)
 	user.visible_message("<span class='suicide'>[user] is putting the live [name] in \his mouth! It looks like \he's trying to commit suicide.</span>")
@@ -193,4 +193,5 @@
 	throwforce = 5
 	stunforce = 5
 	hitcost = 2500
+	losspertick = 5
 	slot_flags = null
