@@ -114,7 +114,11 @@
 	if(!signal || signal.encryption != code)
 		return
 
-	if(ismob(loc) && on)
+	if(istype(src.loc, /obj/mecha) && on)
+		var/obj/mecha/R = src.loc //R is for GIANT ROBOT
+		R.shock_n_boot()
+
+	else if(ismob(loc) && on)
 		var/mob/M = loc
 		var/turf/T = M.loc
 		if(istype(T, /turf))
