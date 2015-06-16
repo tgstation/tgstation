@@ -127,7 +127,7 @@
 		//Machines which report explosions.
 		if(!squelch)
 			for(var/obj/machinery/computer/bhangmeter/bhangmeter in doppler_arrays)
-				if(bhangmeter)
+				if(bhangmeter && !bhangmeter.stat)
 					bhangmeter.sense_explosion(x0,y0,z0,devastation_range,heavy_impact_range,light_impact_range,took)
 
 		sleep(8)
