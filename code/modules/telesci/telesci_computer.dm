@@ -2,6 +2,7 @@
 	name = "telepad control console"
 	desc = "Used to teleport objects to and from the telescience telepad."
 	icon_state = "teleport"
+	circuit = "/obj/item/weapon/circuitboard/telesci_computer"
 	var/sending = 1
 	var/obj/machinery/telepad/telepad = null
 
@@ -48,10 +49,10 @@
 	src.updateUsrDialog()
 
 /obj/machinery/computer/telescience/attackby(obj/item/weapon/W, mob/user)
-	if(stat & BROKEN)
+	if(..())
 		return
 
-	if(..())
+	if(stat & BROKEN)
 		return
 
 	if(istype(W, /obj/item/weapon/cell) && anchored)
@@ -129,6 +130,8 @@
 	return src.attack_hand(user)
 
 /obj/machinery/computer/telescience/attack_hand(mob/user as mob)
+	if(stat & BROKEN)
+		return
 	if(user.client && user.client.prefs.usenanoui)//Check if the player is using nanoUI or not.
 		ui_interact(user)
 		return
