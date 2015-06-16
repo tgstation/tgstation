@@ -132,7 +132,7 @@
 	S.sensor_mode()
 
 
-/datum/hud/proc/ai_hud()
+/datum/hud/proc/ai_hud(ui_style = 'icons/mob/screen_midnight.dmi')
 	adding = list()
 	other = list()
 
@@ -215,4 +215,6 @@
 	adding += using
 
 	mymob.client.screen += adding + other
+	if(mymob.client.prefs.custom_pointer)
+		mymob.client.mouse_pointer_icon = ui_style
 	return

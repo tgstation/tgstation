@@ -54,7 +54,7 @@
 	R.uneq_active()
 
 
-/datum/hud/proc/robot_hud()
+/datum/hud/proc/robot_hud(ui_style = 'icons/mob/screen_midnight.dmi')
 	adding = list()
 	other = list()
 
@@ -136,6 +136,7 @@
 	mymob.blind.name = " "
 	mymob.blind.screen_loc = "CENTER-7,CENTER-7"
 	mymob.blind.layer = 0
+	mymob.blind.mouse_opacity = 0
 
 	mymob.flash = new /obj/screen()
 	mymob.flash.icon = 'icons/mob/screen_gen.dmi'
@@ -148,11 +149,13 @@
 	mymob.zone_sel.icon = 'icons/mob/screen_cyborg.dmi'
 	mymob.zone_sel.update_icon()
 
-	mymob.client.screen = null
+	mymob.client.screen = list()
 
 	mymob.client.screen += list(mymob.zone_sel, mymob.hands, mymob.healths, mymob.pullin, mymob.blind, mymob.flash) //, mymob.rest, mymob.sleep, mymob.mach )
 	mymob.client.screen += adding + other
-
+	mymob.client.screen += mymob.client.void
+	if(mymob.client.prefs.custom_pointer)
+		mymob.client.mouse_pointer_icon = ui_style
 	return
 
 

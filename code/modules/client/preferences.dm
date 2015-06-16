@@ -38,6 +38,7 @@ var/global/list/special_roles = list( //keep synced with the defines BE_* in set
 	var/ooccolor = null
 	var/be_special = 0					//Special role selection
 	var/UI_style = "Midnight"
+	var/custom_pointer = 0
 	var/toggles = TOGGLES_DEFAULT
 	var/chat_toggles = TOGGLES_DEFAULT_CHAT
 	var/ghost_form = "ghost"
@@ -309,6 +310,7 @@ var/global/list/special_roles = list( //keep synced with the defines BE_* in set
 				dat += "<table><tr><td width='340px' height='300px' valign='top'>"
 				dat += "<h2>General Settings</h2>"
 				dat += "<b>UI Style:</b> <a href='?_src_=prefs;preference=ui'>[UI_style]</a><br>"
+				dat += "<b>Use Custom Pointers:</b> <a href='?_src_=prefs;preference=pointer'>[custom_pointer ? "Yes" : "No"]</a><br>"
 				dat += "<b>Play admin midis:</b> <a href='?_src_=prefs;preference=hear_midis'>[(toggles & SOUND_MIDI) ? "Yes" : "No"]</a><br>"
 				dat += "<b>Play lobby music:</b> <a href='?_src_=prefs;preference=lobby_music'>[(toggles & SOUND_LOBBY) ? "Yes" : "No"]</a><br>"
 				dat += "<b>Ghost ears:</b> <a href='?_src_=prefs;preference=ghost_ears'>[(chat_toggles & CHAT_GHOSTEARS) ? "Nearest Creatures" : "All Speech"]</a><br>"
@@ -925,7 +927,8 @@ var/global/list/special_roles = list( //keep synced with the defines BE_* in set
 								UI_style = "Retro"
 							else
 								UI_style = "Midnight"
-
+					if("pointer")
+						custom_pointer = !custom_pointer
 					if("be_special")
 						var/num = text2num(href_list["num"])
 						be_special ^= (1<<num)
