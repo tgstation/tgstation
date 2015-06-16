@@ -20,6 +20,9 @@
 	siemens_coefficient = 1
 	max_amount = 60
 	attack_verb = list("bashed", "battered", "bludgeoned", "thrashed", "smashed")
+
+	material = "glass"
+
 	var/on = 1
 	var/state = LIGHTFLOOR_ON
 

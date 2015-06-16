@@ -15,6 +15,12 @@
 	if(module_active && istype(module_active,/obj/item/borg/combat/mobility))
 		tally-=3 // JESUS FUCKING CHRIST WHY
 
+	if(istype(loc,/turf/simulated/floor))
+		var/turf/simulated/floor/T = loc
+
+		if(T.material=="phazon")
+			return -1 // Phazon floors make us go fast
+
 	return tally+config.robot_delay
 
 /mob/living/silicon/robot/Move(atom/newloc)
