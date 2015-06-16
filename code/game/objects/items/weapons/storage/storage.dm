@@ -39,33 +39,10 @@
 			show_to(M)
 			return
 
-		if(!( M.restrained() ) && !( M.stat )) // I'M PRETTY SURE THIS IS ALREADY HANDLED SOMEWHERE ELSE
+		if(!( M.restrained() ) && !( M.stat ))
 			if(!( istype(over_object, /obj/screen) ))
 				if(Adjacent(M) && over_object.Adjacent(M))
-					playsound(loc, "rustle", 50, 1, -5)
-					if( istype(over_object, /obj/item/weapon/storage) ) //Check if storage item
-						var/obj/item/weapon/storage/S = over_object
-						orient2hud(M)
-						if(M.s_active) //refresh the HUD
-							M.s_active.close(M)
-							show_to(M)
-						for(var/obj/item/I in src)
-							if(S.can_be_inserted(I,0,M))
-								remove_from_storage(I, S)
-						return
-
-					if( istype(over_object, /obj/machinery/disposal) ) //Check if it's a bin
-						for(var/obj/item/I in src)
-							remove_from_storage(I, over_object) //No check needed, put everything inside
-						return
-
-					var/turf/T = get_turf(over_object) //Get_turf, and check if the turf isn't a wall
-					if( istype(T, /turf/simulated/wall) )
-						return
-
-					for(var/obj/item/I in src)
-						remove_from_storage(I, T)
-					return
+					contentto(over_object, M)
 
 			if(!(loc == usr) || (loc && loc.loc == usr))
 				return
@@ -81,6 +58,32 @@
 						return
 					M.put_in_l_hand(src)
 			add_fingerprint(usr)
+
+//Case by case proc for Contents transfer to other containers, bins, turf, and more possible additions.
+/obj/item/weapon/storage/proc/contentto(obj/dest_object, mob/user)
+	playsound(loc, "rustle", 50, 1, -5)
+	if( istype(dest_object, /obj/item/weapon/storage) ) //Check if storage item
+		var/obj/item/weapon/storage/S = dest_object
+		orient2hud(user)
+		if(user.s_active) //close the HUD
+			user.s_active.close(user)
+		for(var/obj/item/I in src)
+			if(S.can_be_inserted(I,0,user))
+				remove_from_storage(I, S)
+		return
+
+	if( istype(dest_object, /obj/machinery/disposal) ) //Check if it's a bin
+		for(var/obj/item/I in src)
+			remove_from_storage(I, dest_object) //No check needed, put everything inside
+		return
+
+	var/turf/T = get_turf(dest_object) //Get_turf, and check if the turf isn't a wall
+	if( istype(T, /turf/simulated/wall) )
+		return
+
+	for(var/obj/item/I in src)
+		remove_from_storage(I, T)
+	return
 
 /obj/item/weapon/storage/proc/return_inv()
 	var/list/L = list()
