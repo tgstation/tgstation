@@ -12,11 +12,21 @@
 	var/list/cargo = new
 	var/cargo_capacity = 15
 
-/*
+/* why
 /obj/mecha/working/ripley/New()
 	..()
 	return
 */
+
+/obj/mecha/working/ripley/Move()
+	. = ..()
+	if(. && (locate(/obj/item/mecha_parts/mecha_equipment/tool/hydraulic_clamp) in equipment))
+		var/obj/structure/ore_box/ore_box = locate(/obj/structure/ore_box) in cargo
+		if(ore_box)
+			for(var/obj/item/weapon/ore/ore in get_turf(src))
+				ore.Move(ore_box)
+	update_pressure()
+
 
 /obj/mecha/working/ripley/Destroy()
 	while(src.damage_absorption.["brute"] < 0.6)
@@ -100,6 +110,9 @@
 	HC.attach(src)
 	for(var/obj/item/mecha_parts/mecha_tracking/B in src.contents)//Deletes the beacon so it can't be found easily
 		qdel(B)
+	var/obj/item/mecha_parts/mecha_equipment/tool/mining_scanner/scanner = new /obj/item/mecha_parts/mecha_equipment/tool/mining_scanner
+	scanner.attach(src)
+
 
 /obj/mecha/working/ripley/Exit(atom/movable/O)
 	if(O in cargo)
@@ -131,3 +144,17 @@
 	return output
 
 
+
+/obj/mecha/working/ripley/proc/update_pressure()
+	var/turf/T = get_turf(loc)
+	var/datum/gas_mixture/environment = T.return_air()
+	var/pressure = environment.return_pressure()
+
+	if(pressure < 20)
+		step_in = 3
+		for(var/obj/item/mecha_parts/mecha_equipment/tool/drill/drill in equipment)
+			drill.equip_cooldown = initial(drill.equip_cooldown)/2
+	else
+		step_in = 5
+		for(var/obj/item/mecha_parts/mecha_equipment/tool/drill/drill in equipment)
+			drill.equip_cooldown = initial(drill.equip_cooldown)

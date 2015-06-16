@@ -4,7 +4,7 @@
 
 /turf/simulated/mineral //wall piece
 	name = "rock"
-	icon = 'icons/turf/walls.dmi'
+	icon = 'icons/turf/mining.dmi'
 	icon_state = "rock_nochance"
 	baseturf = /turf/simulated/floor/plating/asteroid
 	oxygen = 0
@@ -49,19 +49,19 @@
 		if((istype(get_step(src, NORTH), /turf/simulated/floor)) || (istype(get_step(src, NORTH), /turf/space)))
 			T = get_step(src, NORTH)
 			if (T)
-				T.overlays += image('icons/turf/walls.dmi', "rock_side_s")
+				T.overlays += image('icons/turf/mining.dmi', "rock_side_s")
 		if((istype(get_step(src, SOUTH), /turf/simulated/floor)) || (istype(get_step(src, SOUTH), /turf/space)))
 			T = get_step(src, SOUTH)
 			if (T)
-				T.overlays += image('icons/turf/walls.dmi', "rock_side_n", layer=6)
+				T.overlays += image('icons/turf/mining.dmi', "rock_side_n", layer=6)
 		if((istype(get_step(src, EAST), /turf/simulated/floor)) || (istype(get_step(src, EAST), /turf/space)))
 			T = get_step(src, EAST)
 			if (T)
-				T.overlays += image('icons/turf/walls.dmi', "rock_side_w", layer=6)
+				T.overlays += image('icons/turf/mining.dmi', "rock_side_w", layer=6)
 		if((istype(get_step(src, WEST), /turf/simulated/floor)) || (istype(get_step(src, WEST), /turf/space)))
 			T = get_step(src, WEST)
 			if (T)
-				T.overlays += image('icons/turf/walls.dmi', "rock_side_e", layer=6)
+				T.overlays += image('icons/turf/mining.dmi', "rock_side_e", layer=6)
 
 	if (mineralName && mineralAmt && spread && spreadChance)
 		for(var/dir in cardinal)
@@ -79,7 +79,7 @@
 
 /turf/simulated/mineral/proc/Spread(var/turf/T)
 	T.ChangeTurf(src.type)
-	spawn(20)
+	spawn(100)
 		T.lighting_fix_overlays()
 
 /turf/simulated/mineral/random
@@ -801,13 +801,13 @@
 	src.overlays.Cut()
 
 	if(istype(get_step(src, NORTH), /turf/simulated/mineral))
-		src.overlays += image('icons/turf/walls.dmi', "rock_side_n")
+		src.overlays += image('icons/turf/mining.dmi', "rock_side_n")
 	if(istype(get_step(src, SOUTH), /turf/simulated/mineral))
-		src.overlays += image('icons/turf/walls.dmi', "rock_side_s", layer=6)
+		src.overlays += image('icons/turf/mining.dmi', "rock_side_s", layer=6)
 	if(istype(get_step(src, EAST), /turf/simulated/mineral))
-		src.overlays += image('icons/turf/walls.dmi', "rock_side_e", layer=6)
+		src.overlays += image('icons/turf/mining.dmi', "rock_side_e", layer=6)
 	if(istype(get_step(src, WEST), /turf/simulated/mineral))
-		src.overlays += image('icons/turf/walls.dmi', "rock_side_w", layer=6)
+		src.overlays += image('icons/turf/mining.dmi', "rock_side_w", layer=6)
 
 /turf/simulated/mineral/updateMineralOverlays()
 	return
