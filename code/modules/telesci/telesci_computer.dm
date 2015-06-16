@@ -2,6 +2,7 @@
 	name = "telepad control console"
 	desc = "Used to teleport objects to and from the telescience telepad."
 	icon_state = "teleport"
+	circuit = "/obj/item/weapon/circuitboard/telesci_computer"
 	var/sending = 1
 	var/obj/machinery/telepad/telepad = null
 
@@ -48,10 +49,10 @@
 	src.updateUsrDialog()
 
 /obj/machinery/computer/telescience/attackby(obj/item/weapon/W, mob/user)
-	if(stat & BROKEN)
-		return
-
 	if(..())
+		return 1
+
+	if(stat & BROKEN)
 		return
 
 	if(istype(W, /obj/item/weapon/cell) && anchored)

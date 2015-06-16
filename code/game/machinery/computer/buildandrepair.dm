@@ -251,6 +251,10 @@
 	name = "Circuit board (Bhangmeter)"
 	build_path = "/obj/machinery/computer/bhangmeter"
 	origin_tech = "programming=2"
+/obj/item/weapon/circuitboard/telesci_computer
+	name = "Circuit board (Telepad Control Console)"
+	build_path = "/obj/machinery/computer/telescience"
+	origin_tech = "programming=3;bluespace=2"
 /obj/item/weapon/circuitboard/pda_terminal
 	name = "Circuit board (PDA Terminal)"
 	build_path = "/obj/machinery/computer/pda_terminal"
