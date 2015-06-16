@@ -236,7 +236,7 @@ display round(lastgen) and plasmatank amount
 		if(amount < 1)
 			user << "<span class='notice'>The [src.name] is full!</span>"
 			return
-		user << "<span class='notice'>You add [amount] sheets to the [src.name].</span"
+		user << "<span class='notice'>You add [amount] sheets to the [src.name].</span>"
 		sheets += amount
 		addstack.use(amount)
 		updateUsrDialog()

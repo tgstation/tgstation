@@ -84,7 +84,7 @@
 					if(src.z == mommi.locked_to_z)
 						locked_to_current_z = 1
 					else
-						mommi << "<span class='warning'>You find your way back.</span"
+						mommi << "<span class='warning'>You find your way back.</span>"
 						move_to_z = mommi.locked_to_z
 
 			var/safety = 1
