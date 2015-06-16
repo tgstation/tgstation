@@ -64,12 +64,14 @@
 	playsound(loc, "rustle", 50, 1, -5)
 	if( istype(dest_object, /obj/item/weapon/storage) ) //Check if storage item
 		var/obj/item/weapon/storage/S = dest_object
-		orient2hud(user)
-		if(user.s_active) //close the HUD
-			user.s_active.close(user)
 		for(var/obj/item/I in src)
 			if(S.can_be_inserted(I,0,user))
 				remove_from_storage(I, S)
+		orient2hud(user)
+		S.orient2hud(user)
+		if(user.s_active) //refresh the HUD to show the transfered contents
+			user.s_active.close(user)
+			user.s_active.show_to(user)
 		return
 
 	if( istype(dest_object, /obj/machinery/disposal) ) //Check if it's a bin
