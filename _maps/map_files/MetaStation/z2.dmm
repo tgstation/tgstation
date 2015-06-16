@@ -321,7 +321,7 @@
 "gi" = (/obj/structure/stool/bed/chair{dir = 8},/turf/simulated/floor/plasteel/shuttle{icon_state = "floor3"},/area/shuttle/escape)
 "gj" = (/obj/structure/stool/bed/chair{dir = 4},/turf/simulated/floor/plasteel/shuttle{icon_state = "floor3"},/area/shuttle/escape)
 "gk" = (/obj/item/weapon/cigbutt,/turf/simulated/floor/plating{icon_state = "floorgrime"},/area/shuttle/escape)
-"gl" = (/obj/machinery/bot/medbot{name = "\improper emergency medibot"; pixel_x = -3; pixel_y = 2},/obj/structure/closet/crate/medical{name = "medical crate"},/obj/item/weapon/storage/firstaid/regular,/obj/item/weapon/storage/firstaid/o2{pixel_x = 3; pixel_y = 3},/obj/item/weapon/storage/firstaid/toxin{pixel_x = -4; pixel_y = 3},/obj/item/device/healthanalyzer{pixel_x = 3; pixel_y = 3},/obj/item/weapon/lazarus_injector,/turf/simulated/floor/plating{icon_state = "bot"},/area/shuttle/escape)
+"gl" = (/obj/machinery/bot/medbot{name = "\improper emergency medibot"; pixel_x = -3; pixel_y = 2},/obj/structure/closet/crate/medical{name = "medical crate"},/obj/item/weapon/storage/firstaid/regular,/obj/item/weapon/storage/firstaid/o2{pixel_x = 3; pixel_y = 3},/obj/item/weapon/storage/firstaid/toxin{pixel_x = -4; pixel_y = 3},/obj/item/device/healthanalyzer{pixel_x = 3; pixel_y = 3},/obj/item/weapon/lazarus_injector,/obj/item/weapon/defibrillator/loaded,/turf/simulated/floor/plating{icon_state = "bot"},/area/shuttle/escape)
 "gm" = (/turf/simulated/floor/plasteel{dir = 2; icon_state = "warningcorner"; tag = "icon-warningcorner (EAST)"},/area/centcom/ferry)
 "gn" = (/turf/simulated/floor/plasteel{icon_state = "warning"},/area/centcom/ferry)
 "go" = (/turf/simulated/floor/plasteel{icon_state = "warningcorner"; dir = 1},/area/centcom/ferry)
