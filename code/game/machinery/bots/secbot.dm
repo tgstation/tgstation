@@ -73,6 +73,7 @@
 	idcheck = 0
 	auto_patrol = 1
 	weapons_check = 0
+	declare_arrests = 1
 
 /obj/item/weapon/secbot_assembly
 	name = "helmet/signaler assembly"
