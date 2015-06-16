@@ -1,7 +1,8 @@
 /obj/machinery/computer/emergency_shuttle
 	name = "emergency shuttle console"
 	desc = "For shuttle control."
-	icon_state = "shuttle"
+	icon_screen = "shuttle"
+	icon_keyboard = "tech_key"
 	var/auth_need = 3.0
 	var/list/authorized = list()
 
@@ -128,8 +129,7 @@
 /obj/machinery/computer/supplycomp
 	name = "supply shuttle console"
 	desc = "Used to order supplies."
-	icon = 'icons/obj/computer.dmi'
-	icon_state = "supply"
+	icon_screen = "supply"
 	req_access = list(access_cargo)
 	circuit = /obj/item/weapon/circuitboard/supplycomp
 	verb_say = "flashes"
@@ -150,8 +150,7 @@
 /obj/machinery/computer/ordercomp
 	name = "supply ordering console"
 	desc = "Used to order supplies from cargo staff."
-	icon = 'icons/obj/computer.dmi'
-	icon_state = "request"
+	icon_screen = "request"
 	circuit = /obj/item/weapon/circuitboard/ordercomp
 	verb_say = "flashes"
 	verb_ask = "flashes"

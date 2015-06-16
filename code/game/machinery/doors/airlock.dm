@@ -565,16 +565,16 @@ About the new airlock wires panel:
 	if(src.isWireCut(AIRLOCK_WIRE_SAFETY))
 		t1 += text("Door force sensors not responding.</a><br>\n")
 	else if(src.safe)
-		t1 += text("Door safeties operating normally.  <A href='?src=\ref[];aiDisable=8'> Override?</a><br>\n",src)
+		t1 += text("Door safeties operating normally.  <A href='?src=\ref[];aiDisable=8'>Override?</a><br>\n",src)
 	else
-		t1 += text("Danger.  Door safeties disabled.  <A href='?src=\ref[];aiEnable=8'> Restore?</a><br>\n",src)
+		t1 += text("Danger.  Door safeties disabled.  <A href='?src=\ref[];aiEnable=8'>Restore?</a><br>\n",src)
 
 	if(src.isWireCut(AIRLOCK_WIRE_SPEED))
 		t1 += text("Door timing circuitry not responding.</a><br>\n")
 	else if(src.normalspeed)
-		t1 += text("Door timing circuitry operating normally.  <A href='?src=\ref[];aiDisable=9'> Override?</a><br>\n",src)
+		t1 += text("Door timing circuitry operating normally.  <A href='?src=\ref[];aiDisable=9'>Override?</a><br>\n",src)
 	else
-		t1 += text("Warning.  Door timing circuitry operating abnormally.  <A href='?src=\ref[];aiEnable=9'> Restore?</a><br>\n",src)
+		t1 += text("Warning.  Door timing circuitry operating abnormally.  <A href='?src=\ref[];aiEnable=9'>Restore?</a><br>\n",src)
 
 
 
@@ -973,9 +973,9 @@ About the new airlock wires panel:
 					qdel(src)
 					return
 		else if(hasPower())
-			user << "<span class='warning'> The airlock's motors resist your efforts to force it!</span>"
+			user << "<span class='warning'>The airlock's motors resist your efforts to force it!</span>"
 		else if(locked)
-			user << "<span class='warning'> The airlock's bolts prevent it from being forced!</span>"
+			user << "<span class='warning'>The airlock's bolts prevent it from being forced!</span>"
 		else if( !welded && !operating)
 			if(density)
 				if(beingcrowbarred == 0) //being fireaxe'd

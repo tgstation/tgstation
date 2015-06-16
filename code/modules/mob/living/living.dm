@@ -664,6 +664,10 @@ Sorry Giacom. Please don't be mad :(
 /mob/living/update_gravity(has_gravity)
 	if(!ticker)
 		return
+	if(has_gravity)
+		clear_alert("weightless")
+	else
+		throw_alert("weightless")
 	float(!has_gravity)
 
 /mob/living/proc/float(on)

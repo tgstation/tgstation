@@ -18,10 +18,10 @@
 /obj/item/slime_extract/attackby(obj/item/O as obj, mob/user as mob)
 	if(istype(O, /obj/item/weapon/slimesteroid2))
 		if(enhanced == 1)
-			user << "<span class='warning'> This extract has already been enhanced!</span>"
+			user << "<span class='warning'>This extract has already been enhanced!</span>"
 			return ..()
 		if(Uses == 0)
-			user << "<span class='warning'> You can't enhance a used extract!</span>"
+			user << "<span class='warning'>You can't enhance a used extract!</span>"
 			return ..()
 		user <<"<span class='notice'>You apply the enhancer. It now has triple the amount of uses.</span>"
 		Uses = 3
@@ -138,8 +138,8 @@
 
 	M.docile = 1
 	M.nutrition = 700
-	M <<"<span class='warning'> You absorb the potion and feel your intense desire to feed melt away.</span>"
-	user <<"<span class='notice'> You feed the slime the potion, removing it's hunger and calming it.</span>"
+	M <<"<span class='warning'>You absorb the potion and feel your intense desire to feed melt away.</span>"
+	user <<"<span class='notice'>You feed the slime the potion, removing it's hunger and calming it.</span>"
 	var/newname = copytext(sanitize(input(user, "Would you like to give the slime a name?", "Name your new pet", "pet slime") as null|text),1,MAX_NAME_LEN)
 
 	if (!newname)
@@ -220,16 +220,16 @@
 
 /obj/item/weapon/slimesteroid/attack(mob/living/simple_animal/slime/M as mob, mob/user as mob)
 	if(!isslime(M))//If target is not a slime.
-		user << "<span class='warning'> The steroid only works on baby slimes!</span>"
+		user << "<span class='warning'>The steroid only works on baby slimes!</span>"
 		return ..()
 	if(M.is_adult) //Can't tame adults
-		user << "<span class='warning'> Only baby slimes can use the steroid!</span>"
+		user << "<span class='warning'>Only baby slimes can use the steroid!</span>"
 		return..()
 	if(M.stat)
-		user << "<span class='warning'> The slime is dead!</span>"
+		user << "<span class='warning'>The slime is dead!</span>"
 		return..()
 	if(M.cores == 3)
-		user <<"<span class='warning'> The slime already has the maximum amount of extract!</span>"
+		user <<"<span class='warning'>The slime already has the maximum amount of extract!</span>"
 		return..()
 
 	user <<"<span class='notice'>You feed the slime the steroid. It now has triple the amount of extract.</span>"
@@ -252,10 +252,10 @@
 	/*afterattack(obj/target, mob/user , flag)
 		if(istype(target, /obj/item/slime_extract))
 			if(target.enhanced == 1)
-				user << "<span class='warning'> This extract has already been enhanced!</span>"
+				user << "<span class='warning'>This extract has already been enhanced!</span>"
 				return ..()
 			if(target.Uses == 0)
-				user << "<span class='warning'> You can't enhance a used extract!</span>"
+				user << "<span class='warning'>You can't enhance a used extract!</span>"
 				return ..()
 			user <<"You apply the enhancer. It now has triple the amount of uses."
 			target.Uses = 3
@@ -271,13 +271,13 @@
 
 /obj/item/weapon/slimestabilizer/attack(mob/living/simple_animal/slime/M as mob, mob/user as mob)
 	if(!isslime(M))
-		user << "<span class='warning'> The stabilizer only works on slimes!</span>"
+		user << "<span class='warning'>The stabilizer only works on slimes!</span>"
 		return ..()
 	if(M.stat)
-		user << "<span class='warning'> The slime is dead!</span>"
+		user << "<span class='warning'>The slime is dead!</span>"
 		return..()
 	if(M.mutation_chance == 0)
-		user <<"<span class='warning'> The slime already has no chance of mutating!</span>"
+		user <<"<span class='warning'>The slime already has no chance of mutating!</span>"
 		return..()
 
 	user <<"<span class='notice'>You feed the slime the stabilizer. It is now less likely to mutate.</span>"
@@ -292,16 +292,16 @@
 
 /obj/item/weapon/slimemutator/attack(mob/living/simple_animal/slime/M as mob, mob/user as mob)
 	if(!isslime(M))
-		user << "<span class='warning'> The mutator only works on slimes!</span>"
+		user << "<span class='warning'>The mutator only works on slimes!</span>"
 		return ..()
 	if(M.stat)
-		user << "<span class='warning'> The slime is dead!</span>"
+		user << "<span class='warning'>The slime is dead!</span>"
 		return..()
 	if(M.mutator_used)
-		user << "<span class='warning'> This slime has already consumed a mutator, any more would be far too unstable!</span>"
+		user << "<span class='warning'>This slime has already consumed a mutator, any more would be far too unstable!</span>"
 		return..()
 	if(M.mutation_chance == 100)
-		user <<"<span class='warning'> The slime is already guaranteed to mutate!</span>"
+		user <<"<span class='warning'>The slime is already guaranteed to mutate!</span>"
 		return..()
 
 	user <<"<span class='notice'>You feed the slime the mutator. It is now more likely to mutate.</span>"
@@ -418,3 +418,57 @@
 	G.key = ghost.key
 	G << "You are an adamantine golem. You move slowly, but are highly resistant to heat and cold as well as blunt trauma. You are unable to wear clothes, but can still use most tools. Serve [user], and assist them in completing their goals at any cost."
 	qdel(src)
+
+
+
+
+/obj/effect/timestop
+	anchored = 1
+	name = "chronofield"
+	desc = "ZA WARUDO"
+	icon = 'icons/effects/160x160.dmi'
+	icon_state = "time"
+	layer = FLY_LAYER
+	pixel_x = -64
+	pixel_y = -64
+	unacidable = 1
+	var/mob/living/immune = null // the one who creates the timestop is immune
+	var/freezerange = 2
+	var/duration = 140
+	alpha = 125
+
+/obj/effect/timestop/New()
+	..()
+	timestop()
+
+
+/obj/effect/timestop/proc/timestop()
+	playsound(get_turf(src), 'sound/magic/TIMEPARADOX2.ogg', 100, 1, -1)
+	while(loc)
+		if(duration)
+			for(var/mob/living/M in orange (freezerange, src.loc))
+				if(M == immune)
+					continue
+				M.stunned = 10
+				M.anchored = 1
+				if(istype(M, /mob/living/simple_animal/hostile))
+					var/mob/living/simple_animal/hostile/H = M
+					H.AIStatus = AI_OFF
+					H.LoseTarget()
+					continue
+			for(var/obj/item/projectile/P in orange (freezerange, src.loc))
+				P.paused = TRUE
+			duration --
+		else
+			for(var/mob/living/M in orange (freezerange+2, src.loc)) //longer range incase they lag out of it or something
+				M.stunned = 0
+				M.anchored = 0
+				if(istype(M, /mob/living/simple_animal/hostile))
+					var/mob/living/simple_animal/hostile/H = M
+					H.AIStatus = initial(H.AIStatus)
+					continue
+			for(var/obj/item/projectile/P in orange(freezerange+2, src.loc))
+				P.paused = FALSE
+			qdel(src)
+			return
+		sleep(1)

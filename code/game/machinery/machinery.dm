@@ -324,7 +324,7 @@ Class Procs:
 	. = !(state_open || panel_open || is_operational()) && istype(C)
 	if(.)
 		playsound(src.loc, 'sound/items/Crowbar.ogg', 50, 1)
-		visible_message("<span class = 'notice'>[usr] pry open \the [src].</span>", "<span class = 'notice'>You pry open \the [src].</span>")
+		visible_message("<span class='notice'>[usr] pry open \the [src].</span>", "<span class='notice'>You pry open \the [src].</span>")
 		open_machine()
 		return 1
 
@@ -383,7 +383,7 @@ Class Procs:
 			if(W.works_from_distance)
 				user << "<span class='notice'>Following parts detected in the machine:</span>"
 				for(var/var/obj/item/C in component_parts)
-					user << "<span class='notice'>    [C.name]</span>"
+					user << "<span class='notice'>   [C.name]</span>"
 			for(var/obj/item/weapon/stock_parts/A in component_parts)
 				for(var/D in CB.req_components)
 					if(ispath(A.type, D))
@@ -404,7 +404,7 @@ Class Procs:
 		else
 			user << "<span class='notice'>Following parts detected in the machine:</span>"
 			for(var/var/obj/item/C in component_parts)
-				user << "<span class='notice'>    [C.name]</span>"
+				user << "<span class='notice'>   [C.name]</span>"
 		if(shouldplaysound)
 			W.play_rped_sound()
 		return 1

@@ -168,7 +168,7 @@
 	src.bullets--
 	user.visible_message("<span class='danger'>[user] fires [src] at [target]!</span>", \
 						"<span class='danger'>You fire [src] at [target]!</span>", \
-						 "<span class='italics'> You hear a gunshot!</span>")
+						 "<span class='italics'>You hear a gunshot!</span>")
 
 /obj/item/toy/ammo/gun
 	name = "capgun ammo"
@@ -533,7 +533,7 @@
 	s.set_up(3, 1, src)
 	s.start()
 	new /obj/effect/decal/cleanable/ash(src.loc)
-	src.visible_message("<span class='suicide'> The [src.name] explodes!</span>","<span class='italics'>You hear a snap!</span>")
+	src.visible_message("<span class='suicide'>The [src.name] explodes!</span>","<span class='italics'>You hear a snap!</span>")
 	playsound(src, 'sound/effects/snap.ogg', 50, 1)
 	qdel(src)
 

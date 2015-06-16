@@ -92,7 +92,7 @@
 	new_dna.struc_enzymes = T.dna.struc_enzymes
 	new_dna.real_name = T.dna.real_name
 	new_dna.species = T.dna.species
-	new_dna.mutant_color = T.dna.mutant_color
+	new_dna.features = T.dna.features
 	new_dna.blood_type = T.dna.blood_type
 	absorbedcount++
 	store_dna(new_dna, user)

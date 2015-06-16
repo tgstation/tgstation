@@ -6,7 +6,8 @@ var/const/CALL_SHUTTLE_REASON_LENGTH = 12
 /obj/machinery/computer/communications
 	name = "communications console"
 	desc = "This can be used for various important functions. Still under developement."
-	icon_state = "comm"
+	icon_screen = "comm"
+	icon_keyboard = "tech_key"
 	req_access = list(access_heads)
 	circuit = /obj/item/weapon/circuitboard/communications
 	var/authenticated = 0
