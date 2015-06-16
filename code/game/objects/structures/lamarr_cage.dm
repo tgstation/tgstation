@@ -6,7 +6,7 @@
 	density = 1
 	anchored = 1
 	unacidable = 1//Dissolving the case would also delete Lamarr
-	var/health = 30
+	health = 30
 	var/occupied = 1
 	var/destroyed = 0
 

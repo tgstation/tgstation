@@ -11,6 +11,7 @@
  * Metal
  */
 var/global/list/datum/stack_recipe/metal_recipes = list ( \
+	new/datum/stack_recipe("toolbox", /obj/item/weapon/storage/toolbox/material, 1), \
 	new/datum/stack_recipe("stool", /obj/structure/stool, one_per_turf = 1, on_floor = 1), \
 	new/datum/stack_recipe("chair", /obj/structure/stool/bed/chair, one_per_turf = 1, on_floor = 1), \
 	new/datum/stack_recipe("swivel chair", /obj/structure/stool/bed/chair/office/dark, 5, one_per_turf = 1, on_floor = 1), \
@@ -51,6 +52,7 @@ var/global/list/datum/stack_recipe/metal_recipes = list ( \
 	throwforce = 10.0
 	flags = CONDUCT
 	origin_tech = "materials=1"
+	material = new/datum/material/iron()
 
 /obj/item/stack/sheet/metal/cyborg
 	m_amt = 0
@@ -66,6 +68,7 @@ var/global/list/datum/stack_recipe/metal_recipes = list ( \
  * Plasteel
  */
 var/global/list/datum/stack_recipe/plasteel_recipes = list ( \
+	new/datum/stack_recipe("toolbox", /obj/item/weapon/storage/toolbox/material, 1), \
 	new/datum/stack_recipe("AI core", /obj/structure/AIcore, 4, time = 50, one_per_turf = 1), \
 	)
 
@@ -79,6 +82,7 @@ var/global/list/datum/stack_recipe/plasteel_recipes = list ( \
 	throwforce = 10.0
 	flags = CONDUCT
 	origin_tech = "materials=2"
+	material = new/datum/material/plasteel()
 
 /obj/item/stack/sheet/plasteel/New(var/loc, var/amount=null)
 		recipes = plasteel_recipes
@@ -88,6 +92,7 @@ var/global/list/datum/stack_recipe/plasteel_recipes = list ( \
  * Wood
  */
 var/global/list/datum/stack_recipe/wood_recipes = list ( \
+	new/datum/stack_recipe("toolbox", /obj/item/weapon/storage/toolbox/material, 1), \
 	new/datum/stack_recipe("wooden sandals", /obj/item/clothing/shoes/sandal, 1), \
 	new/datum/stack_recipe("wood floor tile", /obj/item/stack/tile/wood, 1, 4, 20), \
 	new/datum/stack_recipe("wood table frame", /obj/structure/table_frame/wood, 2, time = 10), \
@@ -108,6 +113,7 @@ var/global/list/datum/stack_recipe/wood_recipes = list ( \
 	icon = 'icons/obj/items.dmi'
 	origin_tech = "materials=1;biotech=1"
 	sheettype = "wood"
+	material = new/datum/material/wood()
 
 /obj/item/stack/sheet/mineral/wood/New(var/loc, var/amount=null)
 	recipes = wood_recipes
@@ -122,12 +128,13 @@ var/global/list/datum/stack_recipe/wood_recipes = list ( \
 	singular_name = "cloth roll"
 	icon_state = "sheet-cloth"
 	origin_tech = "materials=2"
-
+	material = new/datum/material/cloth()
 /*
  * Cardboard
  */
 var/global/list/datum/stack_recipe/cardboard_recipes = list ( \
-	new/datum/stack_recipe("box", /obj/item/weapon/storage/box), \
+	new/datum/stack_recipe("box", /obj/item/weapon/storage/box, 1), \
+	new/datum/stack_recipe("toolbox", /obj/item/weapon/storage/toolbox/material, 1), \
 	new/datum/stack_recipe("light tubes", /obj/item/weapon/storage/box/lights/tubes), \
 	new/datum/stack_recipe("light bulbs", /obj/item/weapon/storage/box/lights/bulbs), \
 	new/datum/stack_recipe("mouse traps", /obj/item/weapon/storage/box/mousetraps), \
@@ -143,6 +150,7 @@ var/global/list/datum/stack_recipe/cardboard_recipes = list ( \
 	singular_name = "cardboard sheet"
 	icon_state = "sheet-card"
 	origin_tech = "materials=1"
+	material = new/datum/material/cardboard()
 
 /obj/item/stack/sheet/cardboard/New(var/loc, var/amount=null)
 		recipes = cardboard_recipes

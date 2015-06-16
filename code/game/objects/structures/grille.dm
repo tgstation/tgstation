@@ -8,12 +8,15 @@
 	flags = CONDUCT
 	pressure_resistance = 5*ONE_ATMOSPHERE
 	layer = 2.9
-	var/health = 10
+	health = 10
 	var/destroyed = 0
 	var/obj/item/stack/rods/stored
 
 /obj/structure/grille/New()
 	stored = new/obj/item/stack/rods(src)
+	if(material)
+		stored.material = material
+		stored.init_material()
 	stored.amount = 2
 
 /obj/structure/grille/ex_act(severity, target)
@@ -131,6 +134,9 @@
 	destroyed = 1
 	stored.amount = 1
 	var/obj/item/stack/rods/newrods = new(loc)
+	if(material)
+		newrods.material = material
+		newrods.init_material()
 	transfer_fingerprints_to(newrods)
 
 /obj/structure/grille/attackby(obj/item/weapon/W as obj, mob/user as mob, params)

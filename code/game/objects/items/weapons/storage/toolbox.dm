@@ -17,6 +17,32 @@
 /obj/item/weapon/storage/toolbox/New()
 	..()
 
+/obj/item/weapon/storage/toolbox/material
+	name = "toolbox"
+	icon_state = "toolbox"
+	has_greyscale = 1
+/obj/item/weapon/storage/toolbox/material/New()
+	..()
+	if(material)
+		init_material()
+
+/obj/item/weapon/storage/toolbox/material/iron
+	material = new/datum/material/iron()
+/obj/item/weapon/storage/toolbox/material/silver
+	material = new/datum/material/silver()
+/obj/item/weapon/storage/toolbox/material/gold
+	material = new/datum/material/gold()
+/obj/item/weapon/storage/toolbox/material/diamond
+	material = new/datum/material/diamond()
+/obj/item/weapon/storage/toolbox/material/plasma
+	material = new/datum/material/plasma()
+/obj/item/weapon/storage/toolbox/material/uranium
+	material = new/datum/material/uranium()
+/obj/item/weapon/storage/toolbox/material/bananium
+	material = new/datum/material/bananium()
+/obj/item/weapon/storage/toolbox/material/glass
+	material = new/datum/material/glass()
+
 /obj/item/weapon/storage/toolbox/emergency
 	name = "emergency toolbox"
 	icon_state = "red"

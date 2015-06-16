@@ -1033,6 +1033,7 @@
 #include "code\modules\library\lib_machines.dm"
 #include "code\modules\library\lib_readme.dm"
 #include "code\modules\lighting\lighting_system.dm"
+#include "code\modules\materials\materials.dm"
 #include "code\modules\mining\equipment_locker.dm"
 #include "code\modules\mining\machine_input_output_plates.dm"
 #include "code\modules\mining\machine_processing.dm"

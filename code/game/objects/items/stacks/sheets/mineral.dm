@@ -30,8 +30,10 @@ Mineral Sheets
 	throw_range = 5
 	origin_tech = "materials=1"
 	sheettype = "sandstone"
+	material = new/datum/material/sandstone()
 
 var/global/list/datum/stack_recipe/sandstone_recipes = list ( \
+	new/datum/stack_recipe("toolbox", /obj/item/weapon/storage/toolbox/material, 1), \
 	new/datum/stack_recipe("pile of dirt", /obj/machinery/hydroponics/soil, 3, time = 10, one_per_turf = 1, on_floor = 1), \
 	new/datum/stack_recipe("sandstone door", /obj/structure/mineral_door/sandstone, 10, one_per_turf = 1, on_floor = 1), \
 	new/datum/stack_recipe("Assistant Statue", /obj/structure/statue/sandstone/assistant, 5, one_per_turf = 1, on_floor = 1), \
@@ -58,8 +60,10 @@ var/global/list/datum/stack_recipe/sandstone_recipes = list ( \
 	throw_range = 3
 	origin_tech = "materials=6"
 	sheettype = "diamond"
+	material = new/datum/material/diamond()
 
 var/global/list/datum/stack_recipe/diamond_recipes = list ( \
+	new/datum/stack_recipe("toolbox", /obj/item/weapon/storage/toolbox/material, 1), \
 	new/datum/stack_recipe("diamond door", /obj/structure/mineral_door/transparent/diamond, 10, one_per_turf = 1, on_floor = 1), \
 	new/datum/stack_recipe("diamond tile", /obj/item/stack/tile/mineral/diamond, 1, 4, 20),  \
 	new/datum/stack_recipe("Captain Statue", /obj/structure/statue/diamond/captain, 5, one_per_turf = 1, on_floor = 1), \
@@ -87,8 +91,10 @@ var/global/list/datum/stack_recipe/diamond_recipes = list ( \
 	throw_range = 3
 	origin_tech = "materials=5"
 	sheettype = "uranium"
+	material = new/datum/material/uranium()
 
 var/global/list/datum/stack_recipe/uranium_recipes = list ( \
+	new/datum/stack_recipe("toolbox", /obj/item/weapon/storage/toolbox/material, 1), \
 	new/datum/stack_recipe("uranium door", /obj/structure/mineral_door/uranium, 10, one_per_turf = 1, on_floor = 1), \
 	new/datum/stack_recipe("uranium tile", /obj/item/stack/tile/mineral/uranium, 1, 4, 20), \
 	new/datum/stack_recipe("Nuke Statue", /obj/structure/statue/uranium/nuke, 5, one_per_turf = 1, on_floor = 1), \
@@ -115,8 +121,10 @@ var/global/list/datum/stack_recipe/uranium_recipes = list ( \
 	throw_range = 3
 	origin_tech = "plasmatech=2;materials=2"
 	sheettype = "plasma"
+	material = new/datum/material/plasma()
 
 var/global/list/datum/stack_recipe/plasma_recipes = list ( \
+	new/datum/stack_recipe("toolbox", /obj/item/weapon/storage/toolbox/material, 1), \
 	new/datum/stack_recipe("plasma door", /obj/structure/mineral_door/transparent/plasma, 10, one_per_turf = 1, on_floor = 1), \
 	new/datum/stack_recipe("plasma tile", /obj/item/stack/tile/mineral/plasma, 1, 4, 20), \
 	new/datum/stack_recipe("Scientist Statue", /obj/structure/statue/plasma/scientist, 5, one_per_turf = 1, on_floor = 1), \
@@ -142,8 +150,10 @@ var/global/list/datum/stack_recipe/plasma_recipes = list ( \
 	throw_range = 3
 	origin_tech = "materials=4"
 	sheettype = "gold"
+	material = new/datum/material/gold()
 
 var/global/list/datum/stack_recipe/gold_recipes = list ( \
+	new/datum/stack_recipe("toolbox", /obj/item/weapon/storage/toolbox/material, 1), \
 	new/datum/stack_recipe("golden door", /obj/structure/mineral_door/gold, 10, one_per_turf = 1, on_floor = 1), \
 	new/datum/stack_recipe("gold tile", /obj/item/stack/tile/mineral/gold, 1, 4, 20), \
 	new/datum/stack_recipe("HoS Statue", /obj/structure/statue/gold/hos, 5, one_per_turf = 1, on_floor = 1), \
@@ -173,8 +183,11 @@ var/global/list/datum/stack_recipe/gold_recipes = list ( \
 	throw_range = 3
 	origin_tech = "materials=3"
 	sheettype = "silver"
+	material = new/datum/material/silver()
+
 
 var/global/list/datum/stack_recipe/silver_recipes = list ( \
+	new/datum/stack_recipe("toolbox", /obj/item/weapon/storage/toolbox/material, 1), \
 	new/datum/stack_recipe("silver door", /obj/structure/mineral_door/silver, 10, one_per_turf = 1, on_floor = 1), \
 	new/datum/stack_recipe("silver tile", /obj/item/stack/tile/mineral/silver, 1, 4, 20), \
 	new/datum/stack_recipe("Med Officer Statue", /obj/structure/statue/silver/md, 5, one_per_turf = 1, on_floor = 1), \
@@ -204,8 +217,10 @@ var/global/list/datum/stack_recipe/silver_recipes = list ( \
 	throw_range = 3
 	origin_tech = "materials=4"
 	sheettype = "clown"
+	material = new/datum/material/bananium()
 
 var/global/list/datum/stack_recipe/clown_recipes = list ( \
+	new/datum/stack_recipe("toolbox", /obj/item/weapon/storage/toolbox/material, 1), \
 	new/datum/stack_recipe("bananium tile", /obj/item/stack/tile/mineral/bananium, 1, 4, 20), \
 	new/datum/stack_recipe("Clown Statue", /obj/structure/statue/bananium/clown, 5, one_per_turf = 1, on_floor = 1), \
 	)

@@ -60,7 +60,7 @@ for reference:
 	icon_state = "woodenbarricade"
 	anchored = 1.0
 	density = 1.0
-	var/health = 100.0
+	health = 100.0
 	var/maxhealth = 100.0
 
 /obj/structure/barricade/wooden/attackby(obj/item/W as obj, mob/user as mob, params)

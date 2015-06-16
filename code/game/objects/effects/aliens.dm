@@ -26,7 +26,7 @@
 	opacity = 1
 	anchored = 1
 	canSmoothWith = list(/obj/structure/alien/resin)
-	var/health = 200
+	health = 200
 	var/resintype = null
 
 
@@ -172,7 +172,7 @@
 	anchored = 1
 	density = 0
 	layer = 2
-	var/health = 15
+	health = 15
 	var/obj/structure/alien/weeds/node/linked_node = null
 	var/static/list/weedImageCache
 
@@ -323,7 +323,7 @@
 	icon_state = "egg_growing"
 	density = 0
 	anchored = 1
-	var/health = 100
+	health = 100
 	var/status = GROWING	//can be GROWING, GROWN or BURST; all mutually exclusive
 
 

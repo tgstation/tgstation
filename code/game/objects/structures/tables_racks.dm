@@ -496,7 +496,7 @@
 	density = 1
 	anchored = 1.0
 	throwpass = 1	//You can throw objects over this, despite it's density.
-	var/health = 5
+	health = 5
 
 /obj/structure/rack/ex_act(severity, target)
 	switch(severity)
