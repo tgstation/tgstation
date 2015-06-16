@@ -169,7 +169,7 @@ datum/reagent/medicine/dexalinp
 
 datum/reagent/medicine/dexalinp/on_mob_life(var/mob/living/M as mob)
 	if(M.stat != DEAD)
-		M.adjustOxyLoss(-M.getOxyLoss())
+		M.adjustOxyLoss(-12)
 		if(M.losebreath > 0)
 			M.losebreath -= 2
 		if(M.losebreath < 0)
