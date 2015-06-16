@@ -51,7 +51,7 @@ In my current plan for it, 'solid' will be defined as anything with density == 1
 	playsound(src, 'sound/effects/bang.ogg', 50, 1)
 	audible_message("CLANG")
 
-	if(clong && prob(25))
+	if(clong)
 		x = clong.x
 		y = clong.y
 
@@ -59,8 +59,9 @@ In my current plan for it, 'solid' will be defined as anything with density == 1
 		if(clong.density)
 			clong.ex_act(2)
 
-	else if (istype(clong, /mob))
-		if(clong.density || prob(10))
+	else if (istype(clong, /mob) && prob(25))
+		if(clong.density)
 			clong.ex_act(2)
-	else
-		qdel(src)
+
+/obj/effect/immovablerod/ex_act()
+	return
