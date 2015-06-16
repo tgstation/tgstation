@@ -50,7 +50,7 @@
 
 /obj/machinery/computer/telescience/attackby(obj/item/weapon/W, mob/user)
 	if(..())
-		return
+		return 1
 
 	if(stat & BROKEN)
 		return
@@ -130,8 +130,6 @@
 	return src.attack_hand(user)
 
 /obj/machinery/computer/telescience/attack_hand(mob/user as mob)
-	if(stat & BROKEN)
-		return
 	if(user.client && user.client.prefs.usenanoui)//Check if the player is using nanoUI or not.
 		ui_interact(user)
 		return
