@@ -156,7 +156,7 @@ Auto Patrol: []"},
 			if(open)
 				user << "<span class='danger'>Please close the access panel before locking it.</span>"
 			else
-				user << "<span class='danger'> Access denied.</span>"
+				user << "<span class='danger'>Access denied.</span>"
 	else
 		..()
 		if(istype(W, /obj/item/weapon/weldingtool) && user.a_intent != "harm") // Any intent but harm will heal, so we shouldn't get angry.
@@ -173,7 +173,7 @@ Auto Patrol: []"},
 
 	if(emagged == 2)
 		if(user)
-			user << "<span class='danger'> You short out [src]'s target assessment circuits.</span>"
+			user << "<span class='danger'>You short out [src]'s target assessment circuits.</span>"
 			oldtarget_name = user.name
 		audible_message("<span class='danger'>[src] buzzes oddly!</span>")
 		declare_arrests = 0

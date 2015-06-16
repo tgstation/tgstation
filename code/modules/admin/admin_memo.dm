@@ -37,7 +37,7 @@
 		var/savefile/F = new(MEMOFILE)
 		if(F)
 			for(var/ckey in F.dir)
-				src << "<center><span class='motd'><span class='prefix'>Admin Memo</span><span class='emote'> by [F[ckey]]</span></span></center>"
+				src << "<center><span class='motd'><span class='prefix'>Admin Memo</span><span class='emote'>by [F[ckey]]</span></span></center>"
 
 //delete your own or somebody else's memo
 /client/proc/admin_memo_delete()

@@ -331,7 +331,7 @@ Code:
 				var/count = 0
 				for(var/obj/machinery/computer/monitor/pMon in powermonitors)
 					count++
-					menu += "<a href='byond://?src=\ref[src];choice=Power Select;target=[count]'> [pMon] </a><BR>"
+					menu += "<a href='byond://?src=\ref[src];choice=Power Select;target=[count]'>[pMon] </a><BR>"
 
 				menu += "</FONT>"
 

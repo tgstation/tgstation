@@ -533,11 +533,29 @@
 	P.loc = get_turf(holder.my_atom)
 
 //Sepia
+/datum/chemical_reaction/slimestop
+	name = "Slime Stop"
+	id = "m_stop"
+	result = null
+	required_reagents = list("plasma" = 1)
+	result_amount = 1
+	required_container = /obj/item/slime_extract/sepia
+	required_other = 1
+
+/datum/chemical_reaction/slimestop/on_reaction(var/datum/reagents/holder)
+	feedback_add_details("slime_cores_used","[replacetext(name," ","_")]")
+	var/mob/mob = get_mob_by_key(holder.my_atom.fingerprintslast)
+	var/obj/effect/timestop/T = new /obj/effect/timestop
+	T.loc = get_turf(holder.my_atom)
+	T.immune = mob
+	T.timestop()
+
+
 /datum/chemical_reaction/slimecamera
 	name = "Slime Camera"
 	id = "m_camera"
 	result = null
-	required_reagents = list("plasma" = 1)
+	required_reagents = list("blood" = 1)
 	result_amount = 1
 	required_container = /obj/item/slime_extract/sepia
 	required_other = 1
@@ -551,7 +569,7 @@
 	name = "Slime Film"
 	id = "m_film"
 	result = null
-	required_reagents = list("blood" = 1)
+	required_reagents = list("water" = 1)
 	result_amount = 1
 	required_container = /obj/item/slime_extract/sepia
 	required_other = 1
@@ -561,7 +579,10 @@
 	var/obj/item/device/camera_film/P = new /obj/item/device/camera_film
 	P.loc = get_turf(holder.my_atom)
 
+
 //Pyrite
+
+
 /datum/chemical_reaction/slimepaint
 	name = "Slime Paint"
 	id = "s_paint"

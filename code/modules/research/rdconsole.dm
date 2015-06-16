@@ -31,7 +31,8 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 
 /obj/machinery/computer/rdconsole
 	name = "R&D Console"
-	icon_state = "rdcomp"
+	icon_screen = "rdcomp"
+	icon_keyboard = "rd_key"
 	circuit = /obj/item/weapon/circuitboard/rdconsole
 	var/datum/research/files							//Stores all the collected research data.
 	var/obj/item/weapon/disk/tech_disk/t_disk = null	//Stores the technology disk.
@@ -154,11 +155,11 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 		if(istype(D, /obj/item/weapon/disk/tech_disk)) t_disk = D
 		else if (istype(D, /obj/item/weapon/disk/design_disk)) d_disk = D
 		else
-			user << "<span class='danger'> Machine cannot accept disks in that format.</span>"
+			user << "<span class='danger'>Machine cannot accept disks in that format.</span>"
 			return
 		user.drop_item()
 		D.loc = src
-		user << "<span class='notice'> You add the disk to the machine!</span>"
+		user << "<span class='notice'>You add the disk to the machine!</span>"
 	else
 		..()
 	src.updateUsrDialog()
@@ -168,7 +169,7 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 	if(!emagged)
 		playsound(src.loc, 'sound/effects/sparks4.ogg', 75, 1)
 		emagged = 1
-		user << "<span class='notice'> You disable the security protocols</span>"
+		user << "<span class='notice'>You disable the security protocols</span>"
 
 /obj/machinery/computer/rdconsole/Topic(href, href_list)
 	if(..())
@@ -237,7 +238,7 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 	else if(href_list["eject_item"]) //Eject the item inside the destructive analyzer.
 		if(linked_destroy)
 			if(linked_destroy.busy)
-				usr << "<span class='danger'> The destructive analyzer is busy at the moment.</span>"
+				usr << "<span class='danger'>The destructive analyzer is busy at the moment.</span>"
 
 			else if(linked_destroy.loaded_item)
 				linked_destroy.loaded_item.loc = linked_destroy.loc
@@ -248,7 +249,7 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 	else if(href_list["deconstruct"]) //Deconstruct the item in the destructive analyzer and update the research holder.
 		if(linked_destroy)
 			if(linked_destroy.busy)
-				usr << "<span class='danger'> The destructive analyzer is busy at the moment.</span>"
+				usr << "<span class='danger'>The destructive analyzer is busy at the moment.</span>"
 			else
 				var/choice = input("Proceeding will destroy loaded item.") in list("Proceed", "Cancel")
 				if(choice == "Cancel" || !linked_destroy) return
@@ -261,7 +262,7 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 						linked_destroy.busy = 0
 						if(!linked_destroy.hacked)
 							if(!linked_destroy.loaded_item)
-								usr <<"<span class='danger'> The destructive analyzer appears to be empty.</span>"
+								usr <<"<span class='danger'>The destructive analyzer appears to be empty.</span>"
 								screen = 1.0
 								return
 							if((linked_destroy.loaded_item.reliability >= 99 - (linked_destroy.decon_mod * 3)) || linked_destroy.loaded_item.crit_fail)
@@ -276,6 +277,7 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 							if(linked_lathe) //Also sends salvaged materials to a linked protolathe, if any.
 								linked_lathe.m_amount += min((linked_lathe.max_material_storage - linked_lathe.TotalMaterials()), (linked_destroy.loaded_item.m_amt*(linked_destroy.decon_mod/10)))
 								linked_lathe.g_amount += min((linked_lathe.max_material_storage - linked_lathe.TotalMaterials()), (linked_destroy.loaded_item.g_amt*(linked_destroy.decon_mod/10)))
+								feedback_add_details("item_deconstructed","[linked_destroy.loaded_item.name]")
 							linked_destroy.loaded_item = null
 						else
 							screen = 1.0
@@ -306,7 +308,7 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 	else if(href_list["sync"]) //Sync the research holder with all the R&D consoles in the game that aren't sync protected.
 		screen = 0.0
 		if(!sync)
-			usr << "<span class='danger'> You must connect to the network first!</span>"
+			usr << "<span class='danger'>You must connect to the network first!</span>"
 		else
 			griefProtection() //Putting this here because I dont trust the sync process
 			spawn(30)
@@ -406,6 +408,7 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 					var/R = being_built.reliability
 					spawn(32*amount/coeff)
 						if(g2g) //And if we only fail the material requirements, we still spend time and power
+							var/already_logged = 0
 							for(var/i = 0, i<amount, i++)
 								var/obj/item/new_item = new P(src)
 								if( new_item.type == /obj/item/weapon/storage/backpack/holding )
@@ -416,6 +419,9 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 								if(linked_lathe.hacked)
 									R = max((new_item.reliability/2), 0)
 								new_item.loc = linked_lathe.loc
+								if(!already_logged)
+									feedback_add_details("item_printed","[new_item.name]|[amount]")
+									already_logged = 1
 						linked_lathe.busy = 0
 						screen = old_screen
 						updateUsrDialog()
@@ -469,6 +475,7 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 							var/obj/item/new_item = new P(src)
 							new_item.reliability = R
 							new_item.loc = linked_imprinter.loc
+							feedback_add_details("circuit_printed","[new_item.name]")
 						linked_imprinter.busy = 0
 						screen = old_screen
 						updateUsrDialog()
@@ -747,7 +754,7 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 
 		if(1.7) //R&D device linkage
 			dat += "<A href='?src=\ref[src];menu=1.0'>Main Menu</A>"
-			dat += "<A href='?src=\ref[src];menu=1.6'>Settings Menu</A><div class='statusDisplay'> "
+			dat += "<A href='?src=\ref[src];menu=1.6'>Settings Menu</A><div class='statusDisplay'>"
 			dat += "<h3>R&D Console Device Linkage Menu:</h3><BR>"
 			dat += "<A href='?src=\ref[src];find_device=1'>Re-sync with Nearby Devices</A><BR><BR>"
 			dat += "<h3>Linked Devices:</h3><BR>"
@@ -803,12 +810,12 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 			dat += "<B>Material Amount:</B> [linked_lathe.TotalMaterials()] / [linked_lathe.max_material_storage]<BR>"
 			dat += "<B>Chemical Volume:</B> [linked_lathe.reagents.total_volume] / [linked_lathe.reagents.maximum_volume]<BR>"
 
-			dat += "<form name='search' action='?src=\ref[src]'> \
-			<input type='hidden' name='src' value='\ref[src]'> \
-			<input type='hidden' name='search' value='to_search'> \
-			<input type='hidden' name='type' value='proto'> \
-			<input type='text' name='to_search'> \
-			<input type='submit' value='Search'> \
+			dat += "<form name='search' action='?src=\ref[src]'>\
+			<input type='hidden' name='src' value='\ref[src]'>\
+			<input type='hidden' name='search' value='to_search'>\
+			<input type='hidden' name='type' value='proto'>\
+			<input type='text' name='to_search'>\
+			<input type='submit' value='Search'>\
 			</form><HR>"
 
 			dat += list_categories(linked_lathe.categories, 3.15)
@@ -957,12 +964,12 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 			dat += "Material Amount: [linked_imprinter.TotalMaterials()]<BR>"
 			dat += "Chemical Volume: [linked_imprinter.reagents.total_volume]<HR>"
 
-			dat += "<form name='search' action='?src=\ref[src]'> \
-			<input type='hidden' name='src' value='\ref[src]'> \
-			<input type='hidden' name='search' value='to_search'> \
-			<input type='hidden' name='type' value='imprint'> \
-			<input type='text' name='to_search'> \
-			<input type='submit' value='Search'> \
+			dat += "<form name='search' action='?src=\ref[src]'>\
+			<input type='hidden' name='src' value='\ref[src]'>\
+			<input type='hidden' name='search' value='to_search'>\
+			<input type='hidden' name='type' value='imprint'>\
+			<input type='text' name='to_search'>\
+			<input type='submit' value='Search'>\
 			</form><HR>"
 
 			dat += list_categories(linked_imprinter.categories, 4.15)

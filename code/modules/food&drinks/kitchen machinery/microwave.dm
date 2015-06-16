@@ -12,7 +12,7 @@
 	var/operating = 0 // Is it on?
 	var/dirty = 0 // = {0..100} Does it need cleaning?
 	var/broken = 0 // ={0,1,2} How broken is it???
-	var/global/max_n_of_items = 10
+	var/max_n_of_items = 10 // whatever fat fuck made this a global var needs to look at themselves in the mirror sometime
 	var/efficiency = 0
 	var/microwavepower = 1
 
@@ -28,15 +28,20 @@
 	component_parts = list()
 	component_parts += new /obj/item/weapon/circuitboard/microwave(null)
 	component_parts += new /obj/item/weapon/stock_parts/micro_laser(null)
+	component_parts += new /obj/item/weapon/stock_parts/matter_bin(null)
 	component_parts += new /obj/item/weapon/stock_parts/console_screen(null)
 	component_parts += new /obj/item/stack/cable_coil(null, 2)
 	RefreshParts()
 
 /obj/machinery/microwave/RefreshParts()
 	var/E
+	var/max_items = 10
 	for(var/obj/item/weapon/stock_parts/micro_laser/M in component_parts)
 		E += M.rating
+	for(var/obj/item/weapon/stock_parts/matter_bin/M in component_parts)
+		max_items = 10 * M.rating
 	efficiency = E
+	max_n_of_items = max_items
 
 /*******************
 *   Item Adding
@@ -246,6 +251,7 @@
 			if(F.cooked_type)
 				var/obj/item/weapon/reagent_containers/food/snacks/S = new F.cooked_type (get_turf(src))
 				F.initialize_cooked_food(S, efficiency)
+				feedback_add_details("food_made","[F.name]")
 			else
 				new /obj/item/weapon/reagent_containers/food/snacks/badrecipe(src)
 				if(dirty < 100)

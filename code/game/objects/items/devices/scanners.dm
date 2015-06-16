@@ -80,10 +80,10 @@ MASS SPECTROMETER
 
 /obj/item/device/healthanalyzer/attack_self(mob/user)
 	if(!scanchems)
-		user << "<span class = 'notice'>You switch the health analyzer to scan chemical contents.</span>"
+		user << "<span class='notice'>You switch the health analyzer to scan chemical contents.</span>"
 		scanchems = 1
 	else
-		user << "<span class = 'notice'>You switch the health analyzer to check physical health.</span>"
+		user << "<span class='notice'>You switch the health analyzer to check physical health.</span>"
 		scanchems = 0
 	return
 /obj/item/device/healthanalyzer/attack(mob/living/M as mob, mob/living/carbon/human/user as mob)
@@ -198,9 +198,9 @@ MASS SPECTROMETER
 			if(H.reagents.reagent_list.len)
 				user << "<span class='notice'>Subject contains the following reagents:</span>"
 				for(var/datum/reagent/R in H.reagents.reagent_list)
-					user << "<span class='notice'>[R.volume] units of [R.name][R.overdosed == 1 ? "</span> - <span class = 'boldannounce'>OVERDOSING</span>" : ".</span>"]"
+					user << "<span class='notice'>[R.volume] units of [R.name][R.overdosed == 1 ? "</span> - <span class='boldannounce'>OVERDOSING</span>" : ".</span>"]"
 			else
-				user << "<span class = 'notice'>Subject contains no reagents.</span>"
+				user << "<span class='notice'>Subject contains no reagents.</span>"
 			if(H.reagents.addiction_list.len)
 				user << "<span class='boldannounce'>Subject is addicted to the following reagents:</span>"
 				for(var/datum/reagent/R in H.reagents.addiction_list)
