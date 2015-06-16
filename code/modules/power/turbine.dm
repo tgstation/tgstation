@@ -97,8 +97,8 @@
 // 		return !density
 
 /obj/machinery/power/compressor/locate_machinery()
-	if(turbine)
-		return
+//	if(turbine)
+//		return
 	turbine = locate() in get_step(src, get_dir(inturf, src))
 	if(turbine)
 		turbine.locate_machinery()
@@ -136,6 +136,8 @@
 /obj/machinery/power/compressor/process()
 	if(!turbine)
 		stat = BROKEN
+	if (turbine && (stat & BROKEN))
+		stat &= ~BROKEN
 	if(stat & BROKEN || panel_open)
 		return
 	if(!starter)
@@ -224,11 +226,11 @@
 	productivity = P / 6
 
 /obj/machinery/power/turbine/locate_machinery()
-	if(compressor)
-		return
+//	if(compressor)
+//		return
 	compressor = locate() in get_step(src, get_dir(outturf, src))
-	if(compressor)
-		compressor.locate_machinery()
+//	if(compressor)
+//		compressor.locate_machinery()
 
 /obj/machinery/power/turbine/CanAtmosPass(var/turf/T)
 	return !density
@@ -237,7 +239,8 @@
 
 	if(!compressor)
 		stat = BROKEN
-
+	if (compressor && (stat & BROKEN))
+		stat &= ~BROKEN
 	if((stat & BROKEN) || panel_open)
 		return
 	if(!compressor.starter)
@@ -357,6 +360,8 @@
 
 /obj/machinery/computer/turbine_computer/locate_machinery()
 	compressor = locate(/obj/machinery/power/compressor) in range(5)
+	if(compressor)
+		compressor.locate_machinery()
 
 /obj/machinery/computer/turbine_computer/attack_hand(var/mob/user as mob)
 	if(..())
