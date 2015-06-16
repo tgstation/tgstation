@@ -18,7 +18,8 @@
 
 
 /obj/machinery/atmospherics/binary/circulator/proc/return_transfer_air()
-
+	if (!air1 || !air2)
+		return
 
 	var/output_starting_pressure = air1.return_pressure()
 	var/input_starting_pressure = air2.return_pressure()
