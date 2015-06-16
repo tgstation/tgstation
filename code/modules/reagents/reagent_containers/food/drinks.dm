@@ -670,21 +670,22 @@
 	name = "Nuka Cola"
 	desc = "Cool, refreshing, Nuka Cola."
 	icon_state = "nuka"
-	New()
-		..()
-		reagents.add_reagent("nuka_cola", 30)
-		src.pixel_x = rand(-10.0, 10)
-		src.pixel_y = rand(-10.0, 10)
+
+ /obj/item/weapon/reagent_containers/food/drinks/soda_cans/nuka/New()
+	..()
+	reagents.add_reagent("nuka_cola", 30)
+	src.pixel_x = rand(-10.0, 10)
+	src.pixel_y = rand(-10.0, 10)
 
 /obj/item/weapon/reagent_containers/food/drinks/soda_cans/quantum
 	name = "Nuka Cola Quantum"
 	desc = "Take the leap... enjoy a Quantum!"
 	icon_state = "quantum"
-	New()
-		..()
-		reagents.add_reagent("quantum", 30)
-		src.pixel_x = rand(-10.0, 10)
-		src.pixel_y = rand(-10.0, 10)
+ /obj/item/weapon/reagent_containers/food/drinks/soda_cans/quantum/New()
+	..()
+	reagents.add_reagent("quantum", 30)
+	src.pixel_x = rand(-10.0, 10)
+	src.pixel_y = rand(-10.0, 10)
 
 
 /obj/item/weapon/reagent_containers/food/drinks/coloring
