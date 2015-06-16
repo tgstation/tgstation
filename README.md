@@ -3,7 +3,7 @@
 [![Build Status](https://travis-ci.org/tgstation/-tg-station.png)](https://travis-ci.org/tgstation/-tg-station)
 
 
-**Website:** singulo.io <BR>
+**Website:** http://wiki.baystation12.net/Tajaran_Culture <BR>
 **Code:** https://github.com/tgstation/-tg-station <BR>
 **Wiki** http://tgstation13.org/wiki/Main_Page<BR>
 **IRC:** irc://irc.rizon.net/coderbus <BR>
