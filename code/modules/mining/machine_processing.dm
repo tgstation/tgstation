@@ -82,16 +82,16 @@ a.notsmelting {
 				</tr>"}
 	for(var/ore_id in machine.ore.storage)
 		var/datum/material/ore_info=machine.ore.getMaterial(ore_id)
-		if(ore_info.stored)
+		if(machine.ore.storage[ore_id])
 			// Can't do squat unless we have at least one.
-			if(ore_info.stored<1)
+			if(machine.ore.storage[ore_id]<1)
 				if(ore_id in machine.selected)
 					machine.on=0
 					machine.selected -= ore_id
 			dat += {"
 			<tr>
 				<td class="clmName">[ore_info.name]</td>
-				<td>[ore_info.stored]</td>
+				<td>[machine.ore.storage[ore_id]]</td>
 				<td>
 					<a href="?src=\ref[src];toggle_select=[ore_id]" "}
 			if(ore_id in machine.selected)
@@ -230,7 +230,7 @@ a.notsmelting {
 
 					// Take one of every ore selected and give it to the slag.
 					for(var/ore_id in ore.storage)
-						if(ore.getAmount(ore_id)>0 && ore_id in selected)
+						if(ore.getAmount(ore_id)>0 && (ore_id in selected))
 							ore.removeAmount(ore_id,1)
 							slag.mats.addAmount(ore_id,1)
 
@@ -244,7 +244,7 @@ a.notsmelting {
 				var/datum/material/po = ore.getMaterial(O.material)
 				score["oremined"] += 1
 				if(po && po.oretype && istype(O, po.oretype))
-					po.stored++
+					ore.addAmount(O.material, 1)
 					returnToPool(O)
 					continue
 			if(I)
@@ -387,16 +387,16 @@ a.notsmelting {
 			</tr>"}
 	for(var/ore_id in machine.ore.storage)
 		var/datum/material/ore_info=machine.ore.getMaterial(ore_id)
-		if(ore_info.stored)
+		if(machine.ore.storage[ore_id])
 			// Can't do squat unless we have at least one.
-			if(ore_info.stored<1)
+			if(machine.ore.storage[ore_id]<1)
 				if(ore_id in machine.selected)
 					machine.on=0
 					machine.selected -= ore_id
 			html += {"
 			<tr>
 				<td class="clmName">[ore_info.name]</td>
-				<td>[ore_info.stored]</td>
+				<td>[machine.ore.storage[ore_id]]</td>
 				<td>
 					<a href="?src=\ref[src];toggle_select=[ore_id]" "}
 			if (ore_id in machine.selected)

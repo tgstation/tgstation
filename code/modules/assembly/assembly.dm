@@ -6,8 +6,7 @@
 	flags = FPRINT
 	siemens_coefficient = 1
 	w_class = 2.0
-	m_amt = 100
-	g_amt = 0
+	starting_materials = list(MAT_IRON = 100)
 	w_type = RECYK_ELECTRONIC
 	throwforce = 2
 	throw_speed = 3

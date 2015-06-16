@@ -6,8 +6,7 @@
 	w_class = 2
 	anchored = 0
 
-	m_amt = 700
-	g_amt = 300
+	starting_materials = list(MAT_IRON = 700, MAT_GLASS = 300)
 	w_type = RECYK_ELECTRONIC
 	melt_temperature = MELTPOINT_STEEL
 

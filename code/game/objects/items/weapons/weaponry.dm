@@ -174,7 +174,7 @@ obj/item/weapon/wirerod
 	force = 9
 	throwforce = 10
 	w_class = 3
-	m_amt = 1875
+	starting_materials = list(MAT_IRON = 1875)
 	w_type = RECYK_METAL
 	attack_verb = list("hit", "bludgeoned", "whacked", "bonked")
 

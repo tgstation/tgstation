@@ -42,7 +42,7 @@
 	force = 5.0
 	throwforce = 7.0
 	w_class = 2.0
-	m_amt = 150
+	starting_materials = list(MAT_IRON = 150)
 	w_type = RECYK_METAL
 	melt_temperature = MELTPOINT_STEEL
 	origin_tech = "materials=1;engineering=1"
@@ -73,8 +73,7 @@
 	throwforce = 5.0
 	throw_speed = 3
 	throw_range = 5
-	g_amt = 0
-	m_amt = 75
+	starting_materials = list(MAT_IRON = 75)
 	w_type = RECYK_METAL
 	melt_temperature = MELTPOINT_STEEL
 	attack_verb = list("stabbed")
@@ -159,7 +158,7 @@
 	throw_speed = 2
 	throw_range = 9
 	w_class = 2.0
-	m_amt = 80
+	starting_materials = list(MAT_IRON = 80)
 	w_type = RECYK_METAL
 	melt_temperature = MELTPOINT_STEEL
 	origin_tech = "materials=1;engineering=1"
@@ -205,8 +204,7 @@
 	heat_production = 3800
 
 	//Cost to make in the autolathe
-	m_amt = 70
-	g_amt = 30
+	starting_materials = list(MAT_IRON = 70, MAT_GLASS = 30)
 	w_type = RECYK_MISC
 	melt_temperature = MELTPOINT_PLASTIC
 
@@ -479,24 +477,21 @@
 /obj/item/weapon/weldingtool/largetank
 	name = "Industrial Welding Tool"
 	max_fuel = 40
-	m_amt = 70
-	g_amt = 60
+	starting_materials = list(MAT_IRON = 70, MAT_GLASS = 60)
 	origin_tech = "engineering=2"
 
 /obj/item/weapon/weldingtool/hugetank
 	name = "Upgraded Welding Tool"
 	max_fuel = 80
 	w_class = 3.0
-	m_amt = 70
-	g_amt = 120
+	starting_materials = list(MAT_IRON = 70, MAT_GLASS = 120)
 	origin_tech = "engineering=3"
 
 /obj/item/weapon/weldingtool/experimental
 	name = "Experimental Welding Tool"
 	max_fuel = 40
 	w_class = 3.0
-	m_amt = 70
-	g_amt = 120
+	starting_materials = list(MAT_IRON = 70, MAT_GLASS = 120)
 	origin_tech = "engineering=4;plasmatech=3"
 	icon_state = "ewelder"
 	var/last_gen = 0
@@ -526,7 +521,7 @@
 	throwforce = 7.0
 	item_state = "crowbar"
 	w_class = 2.0
-	m_amt = 50
+	starting_materials = list(MAT_IRON = 50)
 	w_type = RECYK_METAL
 	melt_temperature = MELTPOINT_STEEL
 	origin_tech = "engineering=1"
@@ -612,8 +607,7 @@
 	throw_speed = 1
 	throw_range = 5
 	w_class = 2.0
-	m_amt = 70
-	g_amt = 30
+	starting_materials = list(MAT_IRON = 70, MAT_GLASS = 30)
 	w_type = RECYK_MISC
 	melt_temperature = MELTPOINT_STEEL
 	origin_tech = "engineering=1"
@@ -681,7 +675,7 @@
 	desc = "A special container named Furst in its class by engineers. It has partitioned containment to allow engineers to separate different chemicals, such as welding fuel, sulphuric acid, or water. It also bears a clip to fit on a standard toolbelt."
 	icon = 'icons/obj/items.dmi'
 	icon_state = "fueljar0"
-	m_amt = 500
+	starting_materials = list(MAT_IRON = 500)
 	volume = 50
 	possible_transfer_amounts = list(5,10,20)
 	var/slot = 0 //This dictates which side is open

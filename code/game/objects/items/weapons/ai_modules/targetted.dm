@@ -67,8 +67,7 @@
 	action   = "protect"
 
 	// Recycling
-	g_amt=2000/CC_PER_SHEET_GLASS  // Glass
-	gold_amt=100/CC_PER_SHEET_MISC // Gold
+	starting_materials = list(MAT_GLASS = 2000/CC_PER_SHEET_GLASS, MAT_GOLD = 100/CC_PER_SHEET_MISC)
 
 /******************** OneHuman ********************/
 
@@ -76,8 +75,7 @@
 	origin_tech = "programming=3;materials=6" //made with diamonds!
 
 	// Recycling
-	g_amt=2000/CC_PER_SHEET_GLASS  // Glass
-	gold_amt=100/CC_PER_SHEET_MISC // Gold
+	starting_materials = list(MAT_GLASS = 2000/CC_PER_SHEET_GLASS, MAT_GOLD = 100/CC_PER_SHEET_MISC)
 
 	modname  = "OneHuman"
 	law      = "Only <name> is human."

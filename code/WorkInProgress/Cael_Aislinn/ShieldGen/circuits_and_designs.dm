@@ -22,7 +22,7 @@ datum/design/shield_gen_ex
 	id = "shield_gen"
 	req_tech = list("bluespace" = 4, "plasmatech" = 3)
 	build_type = IMPRINTER
-	materials = list("$glass" = 2000, "sacid" = 20, "$plasma" = 10000, "$diamond" = 5000, "$gold" = 10000)
+	materials = list(MAT_GLASS = 2000, "sacid" = 20, MAT_PLASMA = 10000, MAT_DIAMOND = 5000, MAT_GOLD = 10000)
 	build_path = "/obj/machinery/shield_gen/external"
 
 ////////////////////////////////////////
@@ -48,7 +48,7 @@ datum/design/shield_gen
 	id = "shield_gen"
 	req_tech = list("bluespace" = 4, "plasmatech" = 3)
 	build_type = IMPRINTER
-	materials = list("$glass" = 2000, "sacid" = 20, "$plasma" = 10000, "$diamond" = 5000, "$gold" = 10000)
+	materials = list(MAT_GLASS = 2000, "sacid" = 20, MAT_PLASMA = 10000, MAT_DIAMOND = 5000, MAT_GOLD = 10000)
 	build_path = "/obj/machinery/shield_gen/external"
 
 ////////////////////////////////////////
@@ -74,5 +74,5 @@ datum/design/shield_cap
 	id = "shield_cap"
 	req_tech = list("magnets" = 3, "powerstorage" = 4)
 	build_type = IMPRINTER
-	materials = list("$glass" = 2000, "sacid" = 20, "$plasma" = 10000, "$diamond" = 5000, "$silver" = 10000)
+	materials = list(MAT_GLASS = 2000, "sacid" = 20, MAT_PLASMA = 10000, MAT_DIAMOND = 5000, MAT_SILVER = 10000)
 	build_path = "/obj/machinery/shield_gen/external"

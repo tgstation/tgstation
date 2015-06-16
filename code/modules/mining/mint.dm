@@ -8,7 +8,8 @@
 	anchored = 1
 	var/obj/machinery/mineral/input = null
 	var/obj/machinery/mineral/output = null
-	var/list/ore = list()
+
+	starting_materials = list() //makes the new empty datum
 
 	var/newCoins = 0   //how many coins the machine made in it's last load
 	var/processing = 0
@@ -26,12 +27,6 @@
 			src.output = locate(/obj/machinery/mineral/output, get_step(src, dir))
 			if(src.output) break
 
-		for(var/oredata in typesof(/datum/material) - /datum/material)
-			var/datum/material/ore_datum = new oredata
-			// Only add ores that can be run through the minter.
-			if(ore_datum.cointype)
-				ore[ore_datum.id]=ore_datum
-
 		return
 	return
 
@@ -41,10 +36,10 @@
 		var/obj/item/stack/sheet/O
 		O = locate(/obj/item/stack/sheet, input.loc)
 		if(O)
-			for(var/ore_id in ore)
-				var/datum/material/po =ore[ore_id]
+			for(var/ore_id in materials.storage)
+				var/datum/material/po = materials.getMaterial(ore_id)
 				if (po.cointype && istype(O,po.sheettype))
-					po.stored += 5 * O.amount // 100/20 = 5 coins per sheet.
+					materials.addAmount(ore_id, 5 * O.amount) // 100/20 = 5 coins per sheet.
 					qdel(O)
 					break
 
@@ -110,13 +105,13 @@ a.notsmelting {
 			</tr>"}
 
 	var/nloaded=0
-	for(var/ore_id in ore)
-		var/datum/material/ore_info=ore[ore_id]
-		if(ore_info.stored && ore_info.cointype)
+	for(var/ore_id in materials.storage)
+		var/datum/material/ore_info = materials.getMaterial(ore_id)
+		if(materials.storage[ore_id] && ore_info.cointype)
 			html += {"
 			<tr>
 				<td class="clmName">[ore_info.processed_name]</td>
-				<td>[ore_info.stored]</td>
+				<td>[materials.storage[ore_id]]</td>
 				<td>
 					<a href="?src=\ref[src];choose=[ore_id]" "}
 			if (chosen==ore_id)
@@ -171,19 +166,18 @@ a.notsmelting {
 			processing = 1
 			icon_state = "coinpress1"
 			var/obj/item/weapon/moneybag/M
-			var/datum/material/po=ore[chosen]
+			var/datum/material/po=materials.getMaterial(chosen)
 			if(!po)
 				chosen=null
 				processing=0
 				return
-			while(po.stored > 0 && coinsToProduce > 0)
+			while(materials.storage[chosen] > 0 && coinsToProduce > 0)
 				if (locate(/obj/item/weapon/moneybag,output.loc))
 					M = locate(/obj/item/weapon/moneybag,output.loc)
 				else
 					M = new/obj/item/weapon/moneybag(output.loc)
 				new po.cointype(M)
-				po.stored--
-				ore[chosen]=po
+				materials.removeAmount(chosen, 1)
 				coinsToProduce--
 				newCoins++
 				src.updateUsrDialog()

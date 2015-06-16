@@ -13,8 +13,7 @@
 	w_class = 3.0
 	var/charge = 0	// note %age conveted to actual charge in New
 	var/maxcharge = 1000
-	m_amt = 700
-	g_amt = 50
+	starting_materials = list(MAT_IRON = 700, MAT_GLASS = 50)
 	w_type = RECYK_ELECTRONIC
 	melt_temperature = MELTPOINT_STEEL // Rugged
 	var/rigged = 0		// true if rigged to explode
@@ -29,7 +28,7 @@
 	desc = "You can't top the plasma top." //TOTALLY TRADEMARK INFRINGEMENT
 	origin_tech = "powerstorage=0"
 	maxcharge = 500
-	g_amt = 40
+	starting_materials = list(MAT_IRON = 700, MAT_GLASS = 40)
 
 /obj/item/weapon/cell/crap/empty/New()
 	..()
@@ -39,7 +38,7 @@
 	name = "\improper Security borg rechargeable D battery"
 	origin_tech = "powerstorage=0"
 	maxcharge = 600	//600 max charge / 100 charge per shot = six shots
-	g_amt = 40
+	starting_materials = list(MAT_IRON = 700, MAT_GLASS = 40)
 
 
 /obj/item/weapon/cell/secborg/empty/New()
@@ -50,7 +49,7 @@
 	name = "\improper Mining borg rechargeable D battery"
 	origin_tech = "powerstorage=0"
 	maxcharge = 600	//600 max charge / 100 charge per shot = six shots
-	g_amt = 40
+	starting_materials = list(MAT_IRON = 700, MAT_GLASS = 40)
 
 
 /obj/item/weapon/cell/miningborg/empty/New()
@@ -63,7 +62,7 @@
 	origin_tech = "powerstorage=2"
 	icon_state = "hcell"
 	maxcharge = 10000
-	g_amt = 60
+	starting_materials = list(MAT_IRON = 700, MAT_GLASS = 60)
 
 /obj/item/weapon/cell/high/empty/New()
 	..()
@@ -74,7 +73,7 @@
 	origin_tech = "powerstorage=5"
 	icon_state = "scell"
 	maxcharge = 20000
-	g_amt = 70
+	starting_materials = list(MAT_IRON = 700, MAT_GLASS = 70)
 /obj/item/weapon/cell/super/empty/New()
 	..()
 	charge = 0
@@ -84,7 +83,7 @@
 	origin_tech = "powerstorage=6"
 	icon_state = "hpcell"
 	maxcharge = 30000
-	g_amt = 80
+	starting_materials = list(MAT_IRON = 700, MAT_GLASS = 80)
 
 /obj/item/weapon/cell/hyper/empty/New()
 	..()
@@ -95,7 +94,7 @@
 	icon_state = "icell"
 	origin_tech =  null
 	maxcharge = 30000
-	g_amt = 80
+	starting_materials = list(MAT_IRON = 700, MAT_GLASS = 80)
 	use()
 		return 1
 
@@ -107,8 +106,7 @@
 	icon_state = "potato_cell" //"potato_battery"
 	charge = 100
 	maxcharge = 300
-	m_amt = 0
-	g_amt = 0
+	starting_materials = null
 	w_type = RECYK_BIOLOGICAL
 	minor_fault = 1
 
@@ -120,8 +118,7 @@
 	icon = 'icons/mob/slimes.dmi' //'icons/obj/harvest.dmi'
 	icon_state = "yellow slime extract" //"potato_battery"
 	maxcharge = 10000
-	m_amt = 0
-	g_amt = 0
+	starting_materials =  null
 	w_type = RECYK_BIOLOGICAL
 
 

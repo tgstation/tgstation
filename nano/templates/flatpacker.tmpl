@@ -20,26 +20,18 @@ Used In File(s): code\modules\research\mechanic\flatpacker.dm
 		<div class="itemLabel">
 			Computer Designs
 		</div>
-		<div class="itemContentWide">
+		<div class="line">
 			<div class="statusDisplay">
 				<div class="line">
 							{{for data.parts.Computers}}
 							<div class="line">
-								<div class="line">
-										<div class="statusValue">
-											{{:helper.link(value.name, 'gear', null, null, null, 'misc')}}
-											{{:helper.link(value.cost, null, null, null, null, 'cost')}}
-										</div>
-								</div>
-								<div class="line">
-										<div class="statusValue">
-											{{:helper.link("Build Flatpack", 'gear', value.command2, null, 'fixedLeftWide')}}
-											{{:helper.link("Add to Queue", 'gear', value.command1, null, 'fixedLeftWide')}}
-											{{:helper.link("Remove", 'circle-arrow-s', value.command3, null, 'fixedLeftWide')}}
-											{{if value.uses >= 0}}
-												{{:helper.link("Uses: " + value.uses, null, null, null, 'fixedLeft')}}
-											{{/if}}
-										</div>
+								<div class="statusValue">
+									{{:helper.link(value.name, 'gear', value.command2, null, null, 'misc')}}
+									{{:helper.link(value.cost, null, null, null, null, 'cost')}}
+									{{:helper.link("Queue", 'gear', value.command1, null, 'fixedLeft')}}
+									{{if data.removableDesigns}}
+										{{:helper.link("Remove", 'circle-arrow-s', value.command3, null, 'fixedLeft')}}
+									{{/if}}
 								</div>
 							</div>
 							{{empty}}
@@ -51,26 +43,18 @@ Used In File(s): code\modules\research\mechanic\flatpacker.dm
 		<div class="itemLabel">
 			Machine Designs
 		</div>
-		<div class="itemContentWide">
+		<div class="line">
 			<div class="statusDisplay">
 				<div class="line">
 							{{for data.parts.Machines}}
 							<div class="line">
-								<div class="line">
-										<div class="statusValue">
-											{{:helper.link(value.name, 'gear', null, null, null, 'misc')}}
-											{{:helper.link(value.cost, null, null, null, null, 'cost')}}
-										</div>
-								</div>
-								<div class="line">
-										<div class="statusValue">
-											{{:helper.link("Build Flatpack", 'gear', value.command2, null, 'fixedLeftWide')}}
-											{{:helper.link("Add to Queue", 'gear', value.command1, null, 'fixedLeftWide')}}
-											{{:helper.link("Remove", 'circle-arrow-s', value.command3, null, 'fixedLeftWide')}}
-											{{if value.uses >= 0}}
-												{{:helper.link("Uses: " + value.uses, null, null, null, 'fixedLeft')}}
-											{{/if}}
-										</div>
+								<div class="statusValue">
+									{{:helper.link(value.name, 'gear', value.command2, null, null, 'misc')}}
+									{{:helper.link(value.cost, null, null, null, null, 'cost')}}
+									{{:helper.link("Queue", 'gear', value.command1, null, 'fixedLeft')}}
+									{{if data.removableDesigns}}
+										{{:helper.link("Remove", 'circle-arrow-s', value.command3, null, 'fixedLeft')}}
+									{{/if}}
 								</div>
 							</div>
 							{{empty}}
@@ -87,21 +71,13 @@ Used In File(s): code\modules\research\mechanic\flatpacker.dm
 				<div class="line">
 							{{for data.parts.Misc}}
 							<div class="line">
-								<div class="line">
-										<div class="statusValue">
-											{{:helper.link(value.name, 'gear', null, null, null, 'misc')}}
-											{{:helper.link(value.cost, null, null, null, null, 'cost')}}
-										</div>
-								</div>
-								<div class="line">
-										<div class="statusValue">
-											{{:helper.link("Build Flatpack", 'gear', value.command2, null, 'fixedLeftWide')}}
-											{{:helper.link("Add to Queue", 'gear', value.command1, null, 'fixedLeftWide')}}
-											{{:helper.link("Remove", 'circle-arrow-s', value.command3, null, 'fixedLeftWide')}}
-											{{if value.uses >= 0}}
-												{{:helper.link("Uses: " + value.uses, null, null, null, 'fixedLeft')}}
-											{{/if}}
-										</div>
+								<div class="statusValue">
+									{{:helper.link(value.name, 'gear', value.command2, null, null, 'misc')}}
+									{{:helper.link(value.cost, null, null, null, null, 'cost')}}
+									{{:helper.link("Queue", 'gear', value.command1, null, 'fixedLeft')}}
+									{{if data.removableDesigns}}
+										{{:helper.link("Remove", 'circle-arrow-s', value.command3, null, 'fixedLeft')}}
+									{{/if}}
 								</div>
 							</div>
 							{{empty}}
@@ -110,7 +86,7 @@ Used In File(s): code\modules\research\mechanic\flatpacker.dm
 				</div>
 			</div>
 		</div>
-		<div class="itemContentWide">
+		<div class="line">
 			<div class="statusDisplay">
 				<div class="line">
 							{{for data.queue}}
@@ -118,8 +94,8 @@ Used In File(s): code\modules\research\mechanic\flatpacker.dm
 								<div class="line">
 										<div class="statusValue">
 											{{:helper.link(value.name, 'gear', null, null, null, 'misc')}}
-											{{:helper.link(value.cost, null, null, null, 'fixedLeftWide')}}
-											{{:helper.link("Remove", 'circle-arrow-s', value.commands, null, 'fixedLeftWide')}}
+											{{:helper.link(value.cost, null, null, null, 'cost')}}
+											{{:helper.link("Remove", 'circle-arrow-s', value.commands, null, 'fixedLeft')}}
 										</div>
 								</div>
 							</div>
@@ -136,7 +112,7 @@ Used In File(s): code\modules\research\mechanic\flatpacker.dm
 		<div class="itemLabel">
 			Materials
 		</div>
-		<div class="itemContentWide">
+		<div class="line">
 			<div class="statusDisplay">
 				<div class="line">
 					{{for data.materials}}

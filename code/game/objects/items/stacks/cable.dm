@@ -25,7 +25,7 @@ var/global/list/datum/stack_recipe/cable_recipes = list ( \
 	w_class = 2.0
 	throw_speed = 2
 	throw_range = 5
-	m_amt = CC_PER_SHEET_METAL
+	starting_materials = list(MAT_IRON = CC_PER_SHEET_METAL)
 	w_type = RECYK_METAL
 	flags =  FPRINT
 	siemens_coefficient = 1.5 //extra conducting

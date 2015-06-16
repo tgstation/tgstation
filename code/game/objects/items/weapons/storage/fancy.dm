@@ -352,7 +352,6 @@
 	icon_type = "flare"
 	name = "box of flares"
 	storage_slots = 6
-	m_amt = 15000
 	can_hold = list("/obj/item/device/flashlight/flare")
 
 	foldable = /obj/item/stack/sheet/cardboard
@@ -376,7 +375,6 @@
 
 /obj/item/weapon/storage/fancy/flares/update_icon()
 	..()
-	m_amt = contents.len * 2500
 
 /obj/item/weapon/storage/fancy/food_box/chicken_bucket
 	name = "chicken bucket"

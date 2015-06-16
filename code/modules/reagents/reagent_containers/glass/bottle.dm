@@ -11,7 +11,7 @@
 	possible_transfer_amounts = list(5,10,15,25,30)
 	flags = FPRINT  | OPENCONTAINER
 	volume = 30
-	g_amt = 1000 // Half of a circuit board
+	starting_materials = list(MAT_GLASS = 1000)
 	w_type = RECYK_GLASS
 	melt_temperature = MELTPOINT_GLASS
 

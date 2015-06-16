@@ -67,10 +67,12 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 
 	req_access = list(access_tox)	//Data and setting manipulation requires scientist access.
 
+	starting_materials = list()
+
 	light_color = LIGHT_COLOR_PINK
 
 /obj/machinery/computer/rdconsole/proc/Maximize()
-	files.known_tech=files.possible_tech
+	files.known_tech = tech_list.Copy()
 	for(var/datum/tech/KT in files.known_tech)
 		if(KT.level < KT.max_level)
 			KT.level=KT.max_level
@@ -92,24 +94,8 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 /obj/machinery/computer/rdconsole/proc/CallMaterialName(var/ID)
 	var/return_name = null
 	if (copytext(ID, 1, 2) == "$")
-		return_name = copytext(ID, 2)
-		switch(return_name)
-			if("metal")
-				return_name = "Metal"
-			if("glass")
-				return_name = "Glass"
-			if("gold")
-				return_name = "Gold"
-			if("silver")
-				return_name = "Silver"
-			if("plasma")
-				return_name = "Solid Plasma"
-			if("uranium")
-				return_name = "Uranium"
-			if("diamond")
-				return_name = "Diamond"
-			if("clown")
-				return_name = "Bananium"
+		var/datum/material/mat = materials.getMaterial(ID)
+		return mat.processed_name
 	else
 		for(var/R in typesof(/datum/reagent) - /datum/reagent)
 			var/datum/reagent/T = new R()
@@ -304,13 +290,9 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 									files.UpdateTech(T, temp_tech[T])
 							if(linked_destroy.loaded_item.reliability < 100 && linked_destroy.loaded_item.crit_fail)
 								files.UpdateDesign(linked_destroy.loaded_item.type)
-							if(linked_lathe) //Also sends salvaged materials to a linked protolathe, if any.
-								var/datum/material/metal = linked_lathe.materials.getMaterial("iron")
-								var/datum/material/glass = linked_lathe.materials.getMaterial("glass")
-								metal.stored += min((linked_lathe.max_material_storage - linked_lathe.TotalMaterials()), (linked_destroy.loaded_item.m_amt*linked_destroy.decon_mod))
-								glass.stored += min((linked_lathe.max_material_storage - linked_lathe.TotalMaterials()), (linked_destroy.loaded_item.g_amt*linked_destroy.decon_mod))
-								/*linked_lathe.materials["iron"]=metal
-								linked_lathe.materials["glass"]=glass*/
+							if(linked_lathe && linked_destroy.loaded_item.materials) //Also sends salvaged materials to a linked protolathe, if any.
+								for(var/matID in linked_destroy.loaded_item.materials.storage) //Transfers by ID
+									linked_lathe.materials.addAmount(matID, linked_destroy.loaded_item.materials.storage[matID])
 							linked_destroy.loaded_item = null
 						for(var/obj/I in linked_destroy.contents)
 							for(var/mob/M in I.contents)
@@ -492,10 +474,10 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 			warning("PROTOLATHE: Unknown material [matID]! ([href])")
 		else
 			var/obj/item/stack/sheet/sheet = new M.sheettype(linked_lathe.output.loc)
-			var/available_num_sheets = round(M.stored/sheet.perunit)
+			var/available_num_sheets = round(linked_lathe.materials.storage[matID]/sheet.perunit)
 			if(available_num_sheets>0)
 				sheet.amount = min(available_num_sheets, desired_num_sheets)
-				M.stored = max(0, (M.stored-sheet.amount * sheet.perunit))
+				linked_lathe.materials.removeAmount(matID, sheet.amount * sheet.perunit)
 			else
 				del sheet
 	else if(href_list["imprinter_ejectsheet"] && linked_imprinter) //Causes the protolathe to eject a sheet of material
@@ -510,10 +492,10 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 			warning("IMPRINTER: Unknown material [matID]! ([href])")
 		else
 			var/obj/item/stack/sheet/sheet = new M.sheettype(linked_imprinter.output.loc)
-			var/available_num_sheets = round(M.stored/sheet.perunit)
+			var/available_num_sheets = round(linked_imprinter.materials.storage[matID]/sheet.perunit)
 			if(available_num_sheets>0)
 				sheet.amount = min(available_num_sheets, desired_num_sheets)
-				M.stored = max(0, (M.stored-sheet.amount * sheet.perunit))
+				linked_imprinter.materials.removeAmount(matID, sheet.amount * sheet.perunit)
 			else
 				del sheet
 
@@ -918,10 +900,10 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 
 			for(var/matID in linked_lathe.materials.storage)
 				var/datum/material/M=linked_lathe.materials.getMaterial(matID)
-				dat += "<li>[M.stored] cm<sup>3</sup> of [M.processed_name]"
-				if(M.stored >= M.cc_per_sheet)
+				dat += "<li>[linked_lathe.materials.storage[matID]] cm<sup>3</sup> of [M.processed_name]"
+				if(linked_lathe.materials.storage[matID] >= M.cc_per_sheet)
 					dat += " - <A href='?src=\ref[src];lathe_ejectsheet=[matID];lathe_ejectsheet_amt=1'>(1 Sheet)</A> "
-					if(M.stored >= (M.cc_per_sheet*5))
+					if(linked_lathe.materials.storage[matID] >= (M.cc_per_sheet*5))
 						dat += "<A href='?src=\ref[src];lathe_ejectsheet=[matID];lathe_ejectsheet_amt=5'>(5 Sheets)</A> "
 					dat += "<A href='?src=\ref[src];lathe_ejectsheet=[matID];lathe_ejectsheet_amt=50'>(Max Sheets)</A>"
 				else
@@ -1036,12 +1018,12 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 
 			for(var/matID in linked_imprinter.materials.storage)
 				var/datum/material/M=linked_imprinter.materials.getMaterial(matID)
-				if(!(M.id in linked_imprinter.allowed_materials))
+				if(!(matID in linked_imprinter.allowed_materials))
 					continue
-				dat += "<li>[M.stored] cm<sup>3</sup> of [M.processed_name]"
-				if(M.stored >= M.cc_per_sheet)
+				dat += "<li>[linked_imprinter.materials.storage[matID]] cm<sup>3</sup> of [M.processed_name]"
+				if(linked_imprinter.materials.storage[matID] >= M.cc_per_sheet)
 					dat += " - <A href='?src=\ref[src];imprinter_ejectsheet=[matID];imprinter_ejectsheet_amt=1'>(1 Sheet)</A> "
-					if(M.stored >= (M.cc_per_sheet*5))
+					if(linked_imprinter.materials.storage[matID] >= (M.cc_per_sheet*5))
 						dat += "<A href='?src=\ref[src];imprinter_ejectsheet=[matID];imprinter_ejectsheet_amt=5'>(5 Sheets)</A> "
 					dat += "<A href='?src=\ref[src];imprinter_ejectsheet=[matID];imprinter_ejectsheet_amt=50'>(Max Sheets)</A>"
 				else

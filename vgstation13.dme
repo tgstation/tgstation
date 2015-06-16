@@ -210,6 +210,7 @@
 #include "code\datums\wires\mulebot.dm"
 #include "code\datums\wires\particle_accelerator.dm"
 #include "code\datums\wires\radio.dm"
+#include "code\datums\wires\rnd_wires.dm"
 #include "code\datums\wires\robot.dm"
 #include "code\datums\wires\vending.dm"
 #include "code\datums\wires\wires.dm"

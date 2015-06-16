@@ -6,7 +6,7 @@
 	item_state = "rpg"
 	max_shells = 1
 	w_class = 4.0
-	m_amt = 5000
+	starting_materials = list(MAT_IRON = 5000)
 	w_type = RECYK_METAL
 	force = 10
 	recoil = 5

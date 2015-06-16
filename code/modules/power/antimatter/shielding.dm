@@ -242,7 +242,7 @@ proc/cardinalrange(var/center)
 	throwforce = 5
 	throw_speed = 1
 	throw_range = 2
-	m_amt = CC_PER_SHEET_METAL*2
+	starting_materials = list(MAT_IRON = CC_PER_SHEET_METAL*2)
 	w_type = RECYK_METAL
 
 /obj/item/device/am_shielding_container/attackby(var/obj/item/I, var/mob/user)

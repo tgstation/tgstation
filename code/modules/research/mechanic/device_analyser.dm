@@ -16,10 +16,11 @@
 	slot_flags = SLOT_BELT
 	w_class = 2
 	item_state = "electronic"
-	m_amt = 0 //so the autolathe doesn't try to eat it
-	g_amt = 0
+	starting_materials = null
 	w_type = RECYK_ELECTRONIC
 	origin_tech = "magnets=3;engineering=4;materials=4;programming=3"
+
+	mech_flags = MECH_SCAN_FAIL
 
 /obj/item/device/device_analyser/attack_self()
 	..()
@@ -44,7 +45,7 @@
 			switch(CanCreateDesign(O, user)) //this proc. Checks to see if there's anything illegal or bad in the thing before scanning it
 				if(1)
 					if(max_designs && !(max_designs <= loaded_designs.len))
-						loaded_designs += new /datum/design/mechanic_design(O)
+						loaded_designs += getScanDesign(O)
 						user.visible_message("[user] scans \the [O].", "<span class='notice'>You successfully scan \the [O].</span>")
 						return 1
 					else
@@ -109,3 +110,4 @@
 		if((techlist && techlist["syndicate"]) || (O.mech_flags & MECH_SCAN_ILLEGAL))
 			return -1 //special negative return case
 	return 1
+

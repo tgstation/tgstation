@@ -13,7 +13,7 @@
 	throw_speed = 2
 	throw_range = 10
 	force = 10.0
-	m_amt = 90 // TODO: Check against autolathe.
+	starting_materials = list(MAT_IRON = 90) // TODO: Check against autolathe.
 	w_type = RECYK_METAL
 	melt_temperature = MELTPOINT_STEEL
 	attack_verb = list("slammed", "whacked", "bashed", "thunked", "battered", "bludgeoned", "thrashed")
@@ -37,7 +37,7 @@
 	throwforce = 2
 	w_class = 2.0
 	force = 3.0
-	m_amt = 0
+	starting_materials = null
 	max_water = 30
 	sprite_name = "miniFE"
 

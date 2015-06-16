@@ -8,8 +8,7 @@ var/global/list/cached_icons = list()
 	icon = 'icons/obj/items.dmi'
 	icon_state = "paint_neutral"
 	item_state = "paintcan"
-	m_amt = 200
-	g_amt = 0
+	starting_materials = list(MAT_IRON = 200)
 	w_type = RECYK_METAL
 	w_class = 3.0
 	melt_temperature = MELTPOINT_STEEL

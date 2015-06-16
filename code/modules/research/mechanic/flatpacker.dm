@@ -1,6 +1,3 @@
-#define FLA_FAB_WIDTH 1000
-#define FLA_FAB_HEIGHT 600
-
 #define FLA_FAB_BASETIME 0.5
 
 /obj/machinery/r_n_d/fabricator/mechanic_fab/flatpacker
@@ -13,7 +10,7 @@
 
 	build_time = FLA_FAB_BASETIME
 
-	design_types = list("machine" = 1, "item" = 0)
+	design_types = list("machine")
 
 	var/build_parts =  list(
 		/obj/item/weapon/stock_parts/micro_laser = 1,
@@ -74,17 +71,12 @@
 		src.visible_message("\icon [src] \The [src] beeps: \"Succesfully completed \the [being_built.name].\"")
 		src.being_built = null
 
-		//blueprint stuff
-		if(uses_list[part] > 0)
-			uses_list[part]--
-			if(uses_list[part] == 0)
-				uses_list -= part
-				remove_part_from_set(part.category, part)
 	src.updateUsrDialog()
 	src.busy = 0
 	return 1
 
 /obj/machinery/r_n_d/fabricator/mechanic_fab/flatpacker/attackby(var/obj/item/O as obj, var/mob/user as mob)
-	..()
+	if(..())
+		return 1
 	if (O.is_open_container())
 		return 1

@@ -118,11 +118,9 @@
 	var/techdifference = 0
 	if(techlist.len && linked_console)
 		//message_admins("We have a techlist and a linked_console")
-		var/obj/machinery/computer/rdconsole/console = src.linked_console
-		var/list/possible_tech = console.files.possible_tech
 		for(var/checktech in techlist)
 			//message_admins("Looking at [checktech] with value of [techlist[checktech]]")
-			for(var/datum/tech/pointed_tech in possible_tech) //if we find that technology
+			for(var/datum/tech/pointed_tech in tech_list) //if we find that technology
 				if(pointed_tech.id == checktech)
 					if(techlist[checktech] > pointed_tech.level) //if the machine board's research level is higher than the one on the console
 						//message_admins("Found a difference of [techlist[checktech] - pointed_tech.level]")

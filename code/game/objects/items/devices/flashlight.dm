@@ -8,8 +8,7 @@
 	flags = FPRINT
 	siemens_coefficient = 1
 	slot_flags = SLOT_BELT
-	m_amt = 50
-	g_amt = 20
+	starting_materials = list(MAT_IRON = 50, MAT_GLASS = 20)
 	w_type = RECYK_ELECTRONIC
 	melt_temperature = MELTPOINT_STEEL // Assuming big beefy fucking maglite.
 	action_button_name = "Toggle Light"
@@ -106,8 +105,7 @@
 	w_class = 4
 	flags = FPRINT
 	siemens_coefficient = 1
-	m_amt = 0
-	g_amt = 0
+	starting_materials = null
 	on = 1
 
 /obj/item/device/flashlight/lamp/cultify()

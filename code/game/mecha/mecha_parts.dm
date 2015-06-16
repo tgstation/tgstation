@@ -320,7 +320,7 @@
 	icon_state = "odysseus_armour"
 	origin_tech = "materials=3;engineering=3"
 	construction_time = 200
-	materials = list("$iron"=15000)*/
+	materials = list(MAT_IRON=15000)*/
 
 
 ///////// Circuitboards

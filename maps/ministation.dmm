@@ -287,7 +287,7 @@
 "fA" = (/obj/machinery/atmospherics/pipe/simple/supply/hidden{dir = 4},/turf/simulated/floor,/area/supply/storage)
 "fB" = (/obj/machinery/atmospherics/pipe/simple/supply/hidden{dir = 4},/obj/structure/closet/secure_closet/cargotech,/obj/machinery/light{icon_state = "tube1"; dir = 4},/turf/simulated/floor{dir = 4; icon_state = "yellow"},/area/supply/storage)
 "fC" = (/obj/machinery/atmospherics/pipe/simple/supply/hidden{dir = 4},/turf/simulated/wall,/area/supply/storage)
-"fD" = (/obj/machinery/atmospherics/pipe/simple/supply/hidden{dir = 4},/obj/machinery/autolathe,/obj/machinery/light{icon_state = "tube1"; dir = 8},/turf/simulated/floor,/area/supply/storage)
+"fD" = (/obj/machinery/atmospherics/pipe/simple/supply/hidden{dir = 4},/obj/machinery/r_n_d/fabricator/mechanic_fab/autolathe,/obj/machinery/light{icon_state = "tube1"; dir = 8},/turf/simulated/floor,/area/supply/storage)
 "fE" = (/obj/machinery/atmospherics/pipe/manifold/supply/hidden{dir = 4},/turf/simulated/floor,/area/supply/storage)
 "fF" = (/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,/obj/structure/stool/bed/chair{dir = 4},/obj/effect/landmark/start{name = "Cargo Technician"},/turf/simulated/floor{dir = 4; icon_state = "yellow"},/area/supply/storage)
 "fG" = (/obj/structure/table/reinforced,/obj/machinery/door/window{dir = 8; name = "Cargo Desk"; req_access_txt = "50"},/obj/item/weapon/folder/yellow,/turf/simulated/floor,/area/supply/storage)

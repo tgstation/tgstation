@@ -9,7 +9,7 @@
 	w_class = 1.0
 	throw_speed = 7
 	throw_range = 15
-	m_amt = 60
+	starting_materials = list(MAT_IRON = 60)
 	w_type = RECYK_MISC
 	_color = "cargo"
 	pressure_resistance = 2

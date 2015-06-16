@@ -132,7 +132,7 @@
 	force = 5.0
 	throwforce = 7.0
 	w_class = 2.0
-	m_amt = 50
+	starting_materials = list(MAT_IRON = 50)
 	w_type = RECYK_MISC
 	melt_temperature = MELTPOINT_STEEL
 	attack_verb = list("bludgeoned", "whacked", "disciplined", "thrashed")
@@ -578,7 +578,7 @@
 	icon_state = "rack_parts"
 	flags = FPRINT
 	siemens_coefficient = 1
-	m_amt = 3750
+	starting_materials = list(MAT_IRON = 3750)
 	w_type = RECYK_METAL
 	melt_temperature=MELTPOINT_STEEL
 
@@ -600,7 +600,7 @@
 	w_class = 2.0
 	throw_speed = 4
 	throw_range = 20
-	m_amt = 100
+	starting_materials = list(MAT_IRON = 100)
 	w_type = RECYK_ELECTRONIC
 	melt_temperature=MELTPOINT_SILICON
 	origin_tech = "magnets=1"
@@ -691,7 +691,7 @@
 	gender = PLURAL
 	icon = 'icons/obj/items.dmi'
 	icon_state = "table_parts"
-	m_amt = 3750
+	starting_materials = list(MAT_IRON = 3750)
 	w_type = RECYK_METAL
 	melt_temperature=MELTPOINT_STEEL
 	flags = FPRINT
@@ -707,7 +707,7 @@
 	desc = "Hard table parts. Well...harder..."
 	icon = 'icons/obj/items.dmi'
 	icon_state = "reinf_tableparts"
-	m_amt = 7500
+	starting_materials = list(MAT_IRON = 7500)
 	w_type = RECYK_METAL
 	melt_temperature=MELTPOINT_STEEL
 	flags = FPRINT
@@ -730,7 +730,7 @@
 	var/amount = 1.0
 	var/laying = 0.0
 	var/old_lay = null
-	m_amt = 40
+	starting_materials = list(MAT_IRON = 70)
 	w_type = RECYK_METAL
 	melt_temperature=MELTPOINT_STEEL
 	attack_verb = list("whipped", "lashed", "disciplined", "tickled")
@@ -796,7 +796,7 @@
 	throwforce = 15.0
 	throw_speed = 4
 	throw_range = 4
-	m_amt = 15000
+	starting_materials = list(MAT_IRON = 15000)
 	w_type = RECYK_METAL
 	melt_temperature=MELTPOINT_STEEL
 	origin_tech = "materials=2;combat=1"
@@ -822,7 +822,7 @@
 	throw_speed = 1
 	throw_range = 3
 	w_class = 4.0
-	m_amt = 15000
+	starting_materials = list(MAT_IRON = 15000)
 	w_type = RECYK_METAL
 	flags = FPRINT
 	slot_flags = SLOT_BACK
@@ -879,7 +879,7 @@
 	desc = "Used in the construction of computers and other devices with a interactive console."
 	icon_state = "screen"
 	origin_tech = "materials=1"
-	g_amt = 200
+	starting_materials = list(MAT_GLASS = 200)
 	w_type = RECYK_GLASS
 
 /obj/item/weapon/stock_parts/capacitor
@@ -887,8 +887,7 @@
 	desc = "A basic capacitor used in the construction of a variety of devices."
 	icon_state = "capacitor2_basic"
 	origin_tech = "powerstorage=1"
-	m_amt = 50
-	g_amt = 50
+	starting_materials = list(MAT_IRON = 50, MAT_GLASS = 50)
 	w_type = RECYK_ELECTRONIC
 
 /obj/item/weapon/stock_parts/scanning_module
@@ -896,8 +895,7 @@
 	desc = "A compact, high resolution scanning module used in the construction of certain devices."
 	icon_state = "scan_module"
 	origin_tech = "magnets=1"
-	m_amt = 50
-	g_amt = 20
+	starting_materials = list(MAT_IRON = 50, MAT_GLASS = 20)
 	w_type = RECYK_ELECTRONIC
 
 /obj/item/weapon/stock_parts/manipulator
@@ -905,7 +903,7 @@
 	desc = "A tiny little manipulator used in the construction of certain devices."
 	icon_state = "micro_mani"
 	origin_tech = "materials=1;programming=1"
-	m_amt = 30
+	starting_materials = list(MAT_IRON = 30)
 	w_type = RECYK_ELECTRONIC
 
 /obj/item/weapon/stock_parts/micro_laser
@@ -913,8 +911,7 @@
 	desc = "A tiny laser used in certain devices."
 	icon_state = "micro_laser"
 	origin_tech = "magnets=1"
-	m_amt = 10
-	g_amt = 20
+	starting_materials = list(MAT_IRON = 10, MAT_GLASS = 20)
 	w_type = RECYK_ELECTRONIC
 
 /obj/item/weapon/stock_parts/matter_bin
@@ -922,7 +919,7 @@
 	desc = "A container for hold compressed matter awaiting re-construction."
 	icon_state = "matter_bin"
 	origin_tech = "materials=1"
-	m_amt = 80
+	starting_materials = list(MAT_IRON = 80)
 	w_type = RECYK_ELECTRONIC
 
 //Rank 2
@@ -933,8 +930,7 @@
 	icon_state = "capacitor2_adv"
 	origin_tech = "powerstorage=3"
 	rating = 2
-	m_amt = 50
-	g_amt = 50
+	starting_materials = list(MAT_IRON = 50, MAT_GLASS = 50)
 
 /obj/item/weapon/stock_parts/scanning_module/adv
 	name = "advanced scanning module"
@@ -942,8 +938,7 @@
 	icon_state = "scan_module"
 	origin_tech = "magnets=3"
 	rating = 2
-	m_amt = 50
-	g_amt = 20
+	starting_materials = list(MAT_IRON = 50, MAT_GLASS = 20)
 
 /obj/item/weapon/stock_parts/manipulator/nano
 	name = "nano-manipulator"
@@ -951,7 +946,7 @@
 	icon_state = "nano_mani"
 	origin_tech = "materials=3;programming=2"
 	rating = 2
-	m_amt = 30
+	starting_materials = list(MAT_IRON = 30)
 
 /obj/item/weapon/stock_parts/micro_laser/high
 	name = "high-power micro-laser"
@@ -959,8 +954,7 @@
 	icon_state = "high_micro_laser"
 	origin_tech = "magnets=3"
 	rating = 2
-	m_amt = 10
-	g_amt = 20
+	starting_materials = list(MAT_IRON = 10, MAT_GLASS = 20)
 
 /obj/item/weapon/stock_parts/matter_bin/adv
 	name = "advanced matter bin"
@@ -968,7 +962,7 @@
 	icon_state = "advanced_matter_bin"
 	origin_tech = "materials=3"
 	rating = 2
-	m_amt = 80
+	starting_materials = list(MAT_IRON = 80)
 
 //Rating 3
 
@@ -978,16 +972,14 @@
 	icon_state = "capacitor2_super"
 	origin_tech = "powerstorage=5;materials=4"
 	rating = 3
-	m_amt = 50
-	g_amt = 50
+	starting_materials = list(MAT_IRON = 50, MAT_GLASS = 50)
 
 /obj/item/weapon/stock_parts/scanning_module/phasic
 	name = "phasic scanning module"
 	desc = "A compact, high resolution phasic scanning module used in the construction of certain devices."
 	origin_tech = "magnets=5"
 	rating = 3
-	m_amt = 50
-	g_amt = 20
+	starting_materials = list(MAT_IRON = 50, MAT_GLASS = 20)
 
 /obj/item/weapon/stock_parts/manipulator/pico
 	name = "pico-manipulator"
@@ -995,7 +987,6 @@
 	icon_state = "pico_mani"
 	origin_tech = "materials=5;programming=2"
 	rating = 3
-	m_amt = 30
 
 /obj/item/weapon/stock_parts/micro_laser/ultra
 	name = "ultra-high-power micro-laser"
@@ -1003,8 +994,7 @@
 	desc = "A tiny laser used in certain devices."
 	origin_tech = "magnets=5"
 	rating = 3
-	m_amt = 10
-	g_amt = 20
+	starting_materials = list(MAT_IRON = 10, MAT_GLASS = 20)
 
 /obj/item/weapon/stock_parts/matter_bin/super
 	name = "super matter bin"
@@ -1012,7 +1002,7 @@
 	icon_state = "super_matter_bin"
 	origin_tech = "materials=5"
 	rating = 3
-	m_amt = 80
+	starting_materials = list(MAT_IRON = 80)
 
 // Subspace stock parts
 
@@ -1021,54 +1011,49 @@
 	icon_state = "subspace_ansible"
 	desc = "A compact module capable of sensing extradimensional activity."
 	origin_tech = "programming=3;magnets=5;materials=4;bluespace=2"
-	m_amt = 30
-	g_amt = 10
+	starting_materials = list(MAT_IRON = 30, MAT_GLASS = 10)
 
 /obj/item/weapon/stock_parts/subspace/filter
 	name = "hyperwave filter"
 	icon_state = "hyperwave_filter"
 	desc = "A tiny device capable of filtering and converting super-intense radiowaves."
 	origin_tech = "programming=4;magnets=2"
-	m_amt = 30
-	g_amt = 10
+	starting_materials = list(MAT_IRON = 30, MAT_GLASS = 10)
 
 /obj/item/weapon/stock_parts/subspace/amplifier
 	name = "subspace amplifier"
 	icon_state = "subspace_amplifier"
 	desc = "A compact micro-machine capable of amplifying weak subspace transmissions."
 	origin_tech = "programming=3;magnets=4;materials=4;bluespace=2"
-	m_amt = 30
-	g_amt = 10
+	starting_materials = list(MAT_IRON = 30, MAT_GLASS = 10)
 
 /obj/item/weapon/stock_parts/subspace/treatment
 	name = "subspace treatment disk"
 	icon_state = "treatment_disk"
 	desc = "A compact micro-machine capable of stretching out hyper-compressed radio waves."
 	origin_tech = "programming=3;magnets=2;materials=5;bluespace=2"
-	m_amt = 30
-	g_amt = 10
+	starting_materials = list(MAT_IRON = 30, MAT_GLASS = 10)
 
 /obj/item/weapon/stock_parts/subspace/analyzer
 	name = "subspace wavelength analyzer"
 	icon_state = "wavelength_analyzer"
 	desc = "A sophisticated analyzer capable of analyzing cryptic subspace wavelengths."
 	origin_tech = "programming=3;magnets=4;materials=4;bluespace=2"
-	m_amt = 30
-	g_amt = 10
+	starting_materials = list(MAT_IRON = 30, MAT_GLASS = 10)
 
 /obj/item/weapon/stock_parts/subspace/crystal
 	name = "ansible crystal"
 	icon_state = "ansible_crystal"
 	desc = "A crystal made from pure glass used to transmit laser databursts to subspace."
 	origin_tech = "magnets=4;materials=4;bluespace=2"
-	g_amt = 50
+	starting_materials = list(MAT_GLASS = 50)
 
 /obj/item/weapon/stock_parts/subspace/transmitter
 	name = "subspace transmitter"
 	icon_state = "subspace_transmitter"
 	desc = "A large piece of equipment used to open a window into the subspace dimension."
 	origin_tech = "magnets=5;materials=5;bluespace=3"
-	m_amt = 50
+	starting_materials = list(MAT_IRON = 50)
 
 /obj/item/weapon/ectoplasm
 	name = "ectoplasm"

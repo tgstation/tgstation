@@ -6,7 +6,6 @@
 	build_path = null //used to store the type of the design itself (not to be confused with design type, this is the class of the thing)
 
 	req_tech = list() //the origin tech of either the item, or the board in the machine
-	var/obj/item/weapon/circuitboard/connected_circuit //used to store the type of the circuit in a scanned machine. Empty for items
 	category = ""
 
 /datum/design/mechanic_design/New(var/obj/O) //sets the name, type, design, origin_tech, and circuit, all by itself
@@ -15,107 +14,83 @@
 	name = O.name
 	desc = initial(O.desc) //we use initial because some things edit the description
 	build_path = O.type
+	design_list += src //puts us in the design list to be found later, possibly
+
 	if(istype(O, /obj/machinery))
 		var/obj/machinery/M = O
 		design_type = "machine"
+		materials += list(MAT_IRON = 5 * CC_PER_SHEET_METAL) //cost of the frame
 		if(M.component_parts && M.component_parts.len)
 			category = "Machines"
-			for(var/obj/item/weapon/circuitboard/CB in M.component_parts) //fetching the circuit by looking in the parts
-				if(istype(CB))
-					connected_circuit = CB.type
-					break
+			for(var/obj/item/I in M.component_parts) //fetching the circuit by looking in the parts
+				if(istype(I, /obj/item/weapon/circuitboard))
+					var/obj/item/weapon/circuitboard/CB = I
+					req_tech = ConvertReqString2List(CB.origin_tech) //our tech is the circuit's requirement
+
+				var/datum/design/part_design = FindDesign(I)
+				if(part_design)
+					copyCost(part_design, filter_chems = 1) //copy those materials requirements
+
 		else if(istype(M, /obj/machinery/computer))
 			category = "Computers"
 			var/obj/machinery/computer/C = M
 			if(C.circuit)
-				connected_circuit = text2path(C.circuit)
-		if(connected_circuit) //our tech is the circuit's requirement
-			req_tech = ConvertReqString2List(initial(connected_circuit.origin_tech))
-		Gen_Mach_Reqs()
-		Gen_Tech_Mats(1.5)//consider using M.component_parts.len for this in the future
+				var/obj/item/weapon/circuitboard/CB = text2path(C.circuit)
+				req_tech = ConvertReqString2List(initial(CB.origin_tech)) //have to use initial because it's a path
+				var/datum/design/circuit_design = FindTypeDesign(CB)
+				if(circuit_design)
+					copyCost(circuit_design, filter_chems = 1)
+
 	else if(istype(O, /obj/item))
 		var/obj/item/I = O
-		var/found_design = FindDesign(I)
 		category = "Items"
 		design_type = "item"
-		if(found_design)
-			var/datum/design/D = found_design
-			//message_admins("Found the [D]")
-			req_tech = D.req_tech //our tech is simply the item requirement
-			materials = D.materials
-			materials["$plastic"] += round(0.1 * src.MatTotal()) //plastic reqs
-			del(D)
-		else
-			req_tech = ConvertReqString2List(I.origin_tech)
-			Gen_Tech_Mats(1)
+		req_tech = ConvertReqString2List(I.origin_tech)
+		if(I.materials)
+			for(var/matID in I.materials.storage)
+				if(I.materials.storage[matID] > 0)
+					materials += list("[matID]" = I.materials.storage[matID])
+
 	if(!category)
 		category = "Misc"
 
 	return src
 
+//Takes the materials of a design, and adds them to this one
+/datum/design/mechanic_design/proc/copyCost(var/datum/design/D, filter_mats = 0, filter_chems = 0)
+	for(var/matID in D.materials)
+		if(copytext(matID, 1, 2) == "$")
+			if(filter_mats)
+				continue
+		else
+			if(filter_chems)
+				continue
+
+		if(!(matID in materials))
+			materials += list("[matID]" = 0)
+
+		materials[matID] += D.materials[matID]
+
+/* Saved for use maybe some other time - used to generate random additional costs
 /datum/design/mechanic_design/proc/Gen_Tech_Mats(var/modifier = 1)
 	if(modifier < 0) //fuck off
 		return
 	var/techtotal = src.TechTotal() / 2
-	materials["$iron"] += techtotal * round(rand(300, 1500), 100) * modifier
-	materials["$glass"] += techtotal * round(rand(150, 300), 50) * modifier
+	materials[MAT_IRON] += techtotal * round(rand(300, 1500), 100) * modifier
+	materials[MAT_GLASS] += techtotal * round(rand(150, 300), 50) * modifier
 	if(src.design_type == "item")
 		if(prob(techtotal * 15)) //let's add an extra cost of some medium-rare material - sure a lot of items
-			materials[pick("$plasma", "$uranium", "$gold", "$silver")] += techtotal * round(rand(50, 250), 10) * modifier
+			materials[pick(MAT_PLASMA, MAT_URANIUM, MAT_GOLD, MAT_SILVER)] += techtotal * round(rand(50, 250), 10) * modifier
 		if(prob(techtotal * 8))//and another cost, because we can - can proc for some items
-			materials[pick("$plasma", "$uranium", "$gold", "$silver")] += techtotal * round(rand(50, 250), 10) * modifier
+			materials[pick(MAT_PLASMA, MAT_URANIUM, MAT_GOLD, MAT_SILVER)] += techtotal * round(rand(50, 250), 10) * modifier
 		if(techtotal >= 7) //let's add something REALLY rare - bananium and phazon removed for now
-			materials[/*pick(*/"$diamond"/*, "$clown", "$phazon")*/] += techtotal * round(rand(10, 150), 10) * modifier
+			materials[/*pick(*/MAT_DIAMOND/*, MAT_CLOWN, MAT_PHAZON)*/] += techtotal * round(rand(10, 150), 10) * modifier
 
 	for(var/matID in materials)
 		materials[matID] -= (materials[matID] % 10) //clean up the numbers
 
-	materials["$plastic"] += 0.1 * src.MatTotal() * modifier //100% materials, extra 10% plastic cost
-
-//returns the required materials for the parts of a machine design
-/datum/design/mechanic_design/proc/Gen_Mach_Reqs()
-
-	materials["$iron"] += 20000 //base costs, the best costs
-	materials["$glass"] += 2000
-
-	if(istype(build_path, /obj/machinery/computer))
-		var/datum/design/circuit_design = FindDesign(connected_circuit)
-		if(circuit_design)
-			//message_admins("Found the circuit design")
-			circuit_design = new circuit_design
-			for(var/matID in circuit_design.materials)
-				if(copytext(matID,1,2) == "$")
-					materials[matID] += circuit_design.materials[matID]
-			del(circuit_design)
-		else
-			materials["$glass"] += 2000
-			//message_admins("Couldn't find the board")
-		return 1
-
-	else
-
-		var/obj/machinery/test_machine = new build_path
-		//why do we instance?
-		//because components are generated in New()
-
-		for(var/obj/item/thispart in test_machine.component_parts)
-			//message_admins("We're trying to find the design for [thispart]")
-			var/datum/design/part_design = FindDesign(thispart)
-			if(!part_design)
-				materials["$iron"] += round(rand(50, 500), 10)
-				materials["$glass"] += round(rand(20, 300), 10)
-				continue
-			//message_admins("We found the design!")
-			part_design = part_design
-			var/list/fetched_materials = part_design.materials
-			for(var/matID in fetched_materials)
-				if(copytext(matID,1,2) == "$")
-					materials[matID] += fetched_materials[matID]
-			del(part_design)
-
-		//gets rid of the instancing
-		qdel(test_machine)
-		return 1
+	materials[MAT_PLASTIC] += 0.1 * src.MatTotal() * modifier //100% materials, extra 10% plastic cost
+*/
 
 proc/ConvertReqString2List(var/list/source_list) //shamelessly ripped from the code for research machines. Shoot me - Comic
 	var/list/temp_list = params2list(source_list)

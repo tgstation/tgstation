@@ -194,12 +194,12 @@
 	desc = "HOLY SHEET! That is a lot of glass."
 	singular_name = "glass sheet"
 	icon_state = "sheet-glass"
-	g_amt = 3750
+	starting_materials = list(MAT_GLASS = 3750)
 	origin_tech = "materials=1"
 	rglass = /obj/item/stack/sheet/glass/rglass
 
 /obj/item/stack/sheet/glass/glass/cyborg
-	g_amt = 0
+	starting_materials = null
 
 /obj/item/stack/sheet/glass/glass/recycle(var/datum/materials/rec)
 	rec.addAmount("glass", 1*src.amount)
@@ -235,8 +235,7 @@
 	singular_name = "reinforced glass sheet"
 	sname = "glass_ref"
 	icon_state = "sheet-rglass"
-	g_amt = 3750
-	m_amt = 1875
+	starting_materials = list(MAT_IRON = 1875, MAT_GLASS = 3750)
 	created_window = /obj/structure/window/reinforced
 	full_window = /obj/structure/window/full/reinforced
 	windoor = /obj/structure/windoor_assembly/
@@ -246,12 +245,11 @@
 	shealth = 10
 
 /obj/item/stack/sheet/glass/rglass/cyborg
-	g_amt = 0
-	m_amt = 0
+	starting_materials = null
 
 /obj/item/stack/sheet/glass/rglass/recycle(var/datum/materials/rec)
-	rec.addAmount("glass", 1*src.amount)
-	rec.addAmount("iron",  0.5*src.amount)
+	rec.addAmount(MAT_GLASS, 1*src.amount)
+	rec.addAmount(MAT_IRON,  0.5*src.amount)
 	return 1
 
 /*
@@ -264,7 +262,7 @@
 	singular_name = "glass sheet"
 	icon_state = "sheet-plasmaglass"
 	sname = "plasma"
-	g_amt=CC_PER_SHEET_GLASS
+	starting_materials = list(MAT_GLASS = CC_PER_SHEET_GLASS)
 	origin_tech = "materials=3;plasmatech=2"
 	created_window = /obj/structure/window/plasma
 	full_window = /obj/structure/window/full/plasma
@@ -276,8 +274,8 @@
 	shard_type = /obj/item/weapon/shard/plasma
 
 /obj/item/stack/sheet/glass/plasmaglass/recycle(var/datum/materials/rec)
-	rec.addAmount("plasma",1*src.amount)
-	rec.addAmount("glass", 1*src.amount)
+	rec.addAmount(MAT_PLASMA,1*src.amount)
+	rec.addAmount(MAT_GLASS, 1*src.amount)
 	return RECYK_GLASS
 
 /*
@@ -289,8 +287,7 @@
 	singular_name = "reinforced plasma glass sheet"
 	icon_state = "sheet-plasmarglass"
 	sname = "plasma_ref"
-	g_amt=CC_PER_SHEET_GLASS
-	m_amt = 1875
+	starting_materials = list(MAT_IRON = 1875, MAT_GLASS = CC_PER_SHEET_GLASS)
 	melt_temperature = MELTPOINT_STEEL+500 // I guess...?
 	origin_tech = "materials=4;plasmatech=2"
 	created_window = /obj/structure/window/reinforced/plasma

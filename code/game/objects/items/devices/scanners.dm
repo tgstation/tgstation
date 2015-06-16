@@ -17,7 +17,7 @@ REAGENT SCANNER
 	slot_flags = SLOT_BELT
 	w_class = 2
 	item_state = "electronic"
-	m_amt = 150
+	starting_materials = list(MAT_IRON = 150)
 	w_type = RECYK_ELECTRONIC
 	melt_temperature = MELTPOINT_PLASTIC
 	origin_tech = "magnets=1;engineering=1"
@@ -85,8 +85,7 @@ REAGENT SCANNER
 	throwforce = 3
 	w_class = 1.0
 	throw_speed = 5
-	throw_range = 10
-	m_amt = 200
+	starting_materials = list(MAT_IRON = 200)
 	w_type = RECYK_ELECTRONIC
 	melt_temperature = MELTPOINT_PLASTIC
 	origin_tech = "magnets=1;biotech=1"
@@ -242,8 +241,7 @@ proc/healthanalyze(mob/living/M as mob, mob/living/user as mob, var/mode = 0)
 	throwforce = 5
 	throw_speed = 4
 	throw_range = 20
-	m_amt = 30
-	g_amt = 20
+	starting_materials = list(MAT_IRON = 30, MAT_GLASS = 20)
 	w_type = RECYK_ELECTRONIC
 	melt_temperature = MELTPOINT_PLASTIC
 	origin_tech = "magnets=1;engineering=1"
@@ -315,8 +313,7 @@ proc/healthanalyze(mob/living/M as mob, mob/living/user as mob, var/mode = 0)
 	throwforce = 5
 	throw_speed = 4
 	throw_range = 20
-	m_amt = 30
-	g_amt = 20
+	starting_materials = list(MAT_IRON = 30, MAT_GLASS = 20)
 	w_type = RECYK_ELECTRONIC
 	origin_tech = "magnets=2;biotech=2"
 	var/details = 0
@@ -421,8 +418,7 @@ proc/healthanalyze(mob/living/M as mob, mob/living/user as mob, var/mode = 0)
 	throwforce = 5
 	throw_speed = 4
 	throw_range = 20
-	m_amt = 30
-	g_amt = 20
+	starting_materials = list(MAT_IRON = 30, MAT_GLASS = 20)
 	w_type = RECYK_ELECTRONIC
 	origin_tech = "magnets=2;biotech=2"
 	var/details = 0

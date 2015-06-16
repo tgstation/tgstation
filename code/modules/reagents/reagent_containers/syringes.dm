@@ -18,7 +18,7 @@
 	sharpness = 1
 	possible_transfer_amounts = null //list(5,10,15)
 	volume = 15
-	g_amt = 1000
+	starting_materials = list(MAT_GLASS = 1000)
 	w_type = RECYK_GLASS
 
 	var/mode = SYRINGE_DRAW

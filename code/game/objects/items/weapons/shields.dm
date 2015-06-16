@@ -14,8 +14,7 @@
 	throw_speed = 1
 	throw_range = 4
 	w_class = 4.0
-	g_amt = 7500
-	m_amt = 1000
+	starting_materials = list(MAT_IRON = 1000, MAT_GLASS = 7500)
 	melt_temperature = MELTPOINT_GLASS
 	origin_tech = "materials=2"
 	attack_verb = list("shoved", "bashed")

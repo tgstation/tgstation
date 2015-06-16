@@ -11,7 +11,7 @@
 	throwforce = 10.0
 	throw_speed = 1
 	throw_range = 7
-	m_amt = 5000
+	starting_materials = list(MAT_IRON = 5000)
 	w_type = RECYK_METAL
 	w_class = 4.0
 	melt_temperature = MELTPOINT_STEEL

@@ -22,9 +22,7 @@ Refactored AI modules by N3X15
 	origin_tech = "programming=3"
 
 	//Recycling
-	g_amt=2000 // Glass
-	var/gold_amt=0
-	var/diamond_amt=0
+	starting_materials = list(MAT_GLASS = 2000)
 	w_type=RECYK_ELECTRONIC
 	melt_temperature = MELTPOINT_SILICON
 	// Don't specify sulfuric, as that's renewable and is used up in the etching process anyway.
@@ -38,12 +36,6 @@ Refactored AI modules by N3X15
 	. = ..()
 	name = "'[modname]' [modtype]"
 	updateLaw()
-
-/obj/item/weapon/aiModule/recycle(var/datum/materials/rec)
-	rec.addAmount("glass",  g_amt)
-	rec.addAmount("gold",   gold_amt)
-	rec.addAmount("diamond",diamond_amt)
-	return 1
 
 /obj/item/weapon/aiModule/attack_ai(mob/user as mob)
 	// Keep MoMMIs from picking them up.
@@ -106,8 +98,7 @@ Refactored AI modules by N3X15
 	origin_tech = "programming=3;materials=4"
 
 	// Recycling
-	g_amt   =2000/CC_PER_SHEET_GLASS // Glass
-	gold_amt=100/CC_PER_SHEET_MISC
+	starting_materials = list(MAT_GLASS = 2000/CC_PER_SHEET_GLASS, MAT_GOLD = 100/CC_PER_SHEET_MISC)
 	// Don't specify sulfuric, as that's renewable and is used up in the etching process anyway.
 
 /obj/item/weapon/aiModule/reset/updateLaw()
@@ -132,8 +123,7 @@ Refactored AI modules by N3X15
 	origin_tech = "programming=3;materials=6"
 
 	// Recycling
-	g_amt=2000/CC_PER_SHEET_GLASS // Glass
-	diamond_amt=100/CC_PER_SHEET_MISC
+	starting_materials = list(MAT_GLASS = 2000/CC_PER_SHEET_GLASS, MAT_DIAMOND = 100/CC_PER_SHEET_MISC)
 	// Don't specify sulfuric, as that's renewable and is used up in the etching process anyway.
 
 /obj/item/weapon/aiModule/purge/updateLaw()

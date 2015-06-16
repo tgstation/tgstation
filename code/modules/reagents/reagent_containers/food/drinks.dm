@@ -743,7 +743,7 @@
 /obj/item/weapon/reagent_containers/food/drinks/bottle
 	amount_per_transfer_from_this = 10
 	volume = 100
-	g_amt = 500
+	starting_materials = list(MAT_GLASS = 500)
 	bottleheight = 31
 	melt_temperature = MELTPOINT_GLASS
 	w_type=RECYK_GLASS
@@ -764,7 +764,7 @@
 	item_state = "beer"
 	attack_verb = list("stabbed", "slashed", "attacked")
 	var/icon/broken_outline = icon('icons/obj/drinks.dmi', "broken")
-	g_amt=500
+	starting_materials = list(MAT_GLASS = 500)
 	melt_temperature = MELTPOINT_GLASS
 	w_type=RECYK_GLASS
 
@@ -940,7 +940,7 @@
 	desc = "Full of vitamins and deliciousness!"
 	icon_state = "orangejuice"
 	item_state = "carton"
-	g_amt=0
+	starting_materials = null
 	New()
 		..()
 		reagents.add_reagent("orangejuice", 100)
@@ -950,7 +950,7 @@
 	desc = "It's cream. Made from milk. What else did you think you'd find in there?"
 	icon_state = "cream"
 	item_state = "carton"
-	g_amt=0
+	starting_materials = null
 	New()
 		..()
 		reagents.add_reagent("cream", 100)
@@ -960,7 +960,7 @@
 	desc = "Well, at least it LOOKS like tomato juice. You can't tell with all that redness."
 	icon_state = "tomatojuice"
 	item_state = "carton"
-	g_amt=0
+	starting_materials = null
 	New()
 		..()
 		reagents.add_reagent("tomatojuice", 100)
@@ -970,7 +970,7 @@
 	desc = "Sweet-sour goodness."
 	icon_state = "limejuice"
 	item_state = "carton"
-	g_amt=0
+	starting_materials = null
 	New()
 		..()
 		reagents.add_reagent("limejuice", 100)
