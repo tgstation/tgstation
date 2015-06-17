@@ -7,7 +7,7 @@
 	build_path = "/obj/machinery/computer/rust_core_control"
 	origin_tech = "programming=4;engineering=4"
 
-datum/design/rust_core_control
+/datum/design/rust_core_control
 	name = "Circuit Design (RUST core controller)"
 	desc = "Allows for the construction of circuit boards used to build a core control console for the RUST fusion engine."
 	id = "rust_core_control"
@@ -25,7 +25,7 @@ datum/design/rust_core_control
 	build_path = "/obj/machinery/computer/rust_fuel_control"
 	origin_tech = "programming=4;engineering=4"
 
-datum/design/rust_fuel_control
+/datum/design/rust_fuel_control
 	name = "Circuit Design (RUST fuel controller)"
 	desc = "Allows for the construction of circuit boards used to build a fuel injector control console for the RUST fusion engine."
 	id = "rust_fuel_control"
@@ -43,7 +43,7 @@ datum/design/rust_fuel_control
 	icon_state = "card_mod"
 	origin_tech = "engineering=4;materials=5"
 
-datum/design/rust_fuel_port
+/datum/design/rust_fuel_port
 	name = "Internal circuitry (RUST fuel port)"
 	desc = "Allows for the construction of circuit boards used to build a fuel injection port for the RUST fusion engine."
 	id = "rust_fuel_port"
@@ -61,7 +61,7 @@ datum/design/rust_fuel_port
 	icon_state = "card_mod"
 	origin_tech = "materials=6;plasmatech=4"
 
-datum/design/rust_fuel_compressor
+/datum/design/rust_fuel_compressor
 	name = "Circuit Design (RUST fuel compressor)"
 	desc = "Allows for the construction of circuit boards used to build a fuel compressor of the RUST fusion engine."
 	id = "rust_fuel_compressor"
@@ -87,7 +87,7 @@ datum/design/rust_fuel_compressor
 							"/obj/item/weapon/stock_parts/console_screen" = 1,
 							"/obj/item/stack/cable_coil" = 5)
 
-datum/design/rust_core
+/datum/design/rust_core
 	name = "Internal circuitry (RUST tokamak core)"
 	desc = "The circuit board that for a RUST-pattern tokamak fusion core."
 	id = "pacman"
@@ -114,7 +114,7 @@ datum/design/rust_core
 							"/obj/item/weapon/stock_parts/console_screen" = 1,
 							"/obj/item/stack/cable_coil" = 5)
 
-datum/design/rust_injector
+/datum/design/rust_injector
 	name = "Internal circuitry (RUST tokamak core)"
 	desc = "The circuit board that for a RUST-pattern particle accelerator."
 	id = "pacman"
@@ -124,3 +124,20 @@ datum/design/rust_injector
 	materials = list(MAT_GLASS = 2000, "sacid" = 20, MAT_PLASMA = 3000, MAT_URANIUM = 2000)
 	category = "Misc"
 	build_path = "/obj/item/weapon/circuitboard/rust_core"
+
+//Gyrotron controller board.
+/obj/item/weapon/circuitboard/rust_gyrotron_control
+	name = "Circuit board (RUST gyrotron controller)"
+	build_path = "/obj/machinery/computer/rust_gyrotron_controller"
+	origin_tech = "programming=4;engineering=4"
+
+/datum/design/rust_gyrotron_control
+	name = "Circuit Design (RUST gyrotron controller)"
+	desc = "Allows for the construction of circuit boards used to build a gyrotron control console for the RUST fusion engine."
+	id = "rust_gyrotron_control"
+	req_tech = list("programming" = 4, "engineering" = 4)
+	build_type = IMPRINTER
+	materials = list("$glass" = 2000, "sacid" = 20)
+	category = "Misc"
+	build_path = "/obj/item/weapon/circuitboard/rust_gyrotron_control"
+

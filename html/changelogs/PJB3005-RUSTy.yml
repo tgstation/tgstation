@@ -1,0 +1,6 @@
+author: PJB3005
+delete-after: true
+changes:
+  - bugfix: Fixed the R-UST Mk. 7 Gyrotrons and fuel injectors.
+  - rscadd: Gyrotron control computers can now be built.
+  - tweak: Gyrotrons now need to be linked to the computer with a multitool.

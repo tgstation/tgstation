@@ -294,9 +294,6 @@ Class Procs:
 			var/obj/O = getLink(idx)
 			if(!O)
 				return 1
-			if(!canLink(O))
-				usr << "<span class='warning'>You can't link with that device.</span>"
-				return 1
 
 			if(unlinkFrom(usr, O))
 				usr << "<span class='confirm'>A green light flashes on \the [P], confirming the link was removed.</span>"
@@ -443,7 +440,6 @@ Class Procs:
 
 /obj/machinery/proc/RefreshParts() //Placeholder proc for machines that are built using frames.
 	return
-	return 0
 
 /obj/machinery/proc/assign_uid()
 	uid = gl_uid
