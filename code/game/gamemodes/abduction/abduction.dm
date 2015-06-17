@@ -59,6 +59,7 @@
 
 	if(!preset_agent)
 		agent = pick(antag_candidates)
+		agent.objectives = list(team_objective)
 		antag_candidates -= agent
 	else
 		agent = preset_agent
@@ -298,13 +299,13 @@
 /datum/game_mode/abduction/proc/display_abductees(var/obj/machinery/abductor/console/console)
 	var/list/mob/living/abductees = console.experiment.history
 	for(var/mob/living/abductee in abductees)
-		if(!abductee.mind)
+		if(!abductee || !abductee.mind)
 			continue
 		world << printplayer(abductee.mind)
 		world << printobjectives(abductee.mind)
 
 /datum/game_mode/proc/auto_declare_completion_abduction()
-	if(abductors.len && ticker.mode.config_tag != "abduction") // no repeating for the gamemode
+	if(abductors.len && ticker.mode.config_tag != "abduction") // no repeating for the gamemode5
 		world << "<br><font size=3><b>The Abductors were:</b></font>"
 		for(var/datum/mind/M in abductors)
 			world << "<font size = 2><b>Abductor [M.current ? M.current.name : "Abductor"]([M.key])</b></font>"
@@ -348,13 +349,13 @@
 	explanation_text = "Experiment on [target_amount] humans"
 
 /datum/objective/experiment/check_completion()
-	if(!owner.current || !ishuman(owner.current))
-		return 0
-	var/mob/living/carbon/human/H = owner.current
-	if(!H.dna || !H.dna.species || !(H.dna.species.id == "abductor"))
-		return 0
-	var/datum/species/abductor/S = H.dna.species
-	var/ab_team = S.team
+//	if(!owner || !owner.current || !ishuman(owner.current))
+//		return 0
+//	var/mob/living/carbon/human/H = owner.current
+//	if(!H.dna || !H.dna.species || !(H.dna.species.id == "abductor"))
+//		return 0
+//	var/datum/species/abductor/S = H.dna.species
+	var/ab_team = src.team
 	for(var/obj/machinery/abductor/experiment/E in machines)
 		if(E.team == ab_team)
 			if(E.abductee_minds.len >= target_amount)

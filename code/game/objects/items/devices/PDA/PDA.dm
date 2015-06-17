@@ -780,7 +780,7 @@ var/global/list/obj/item/device/pda/PDAs = list()
 	if (last_text && world.time < last_text + 5)
 		return
 
-	if (isnull(P) || P.toff || !istype(P))
+	if (isnull(P) ||  !istype(P) || P.toff)
 		return
 
 	last_text = world.time

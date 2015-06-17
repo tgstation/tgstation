@@ -689,6 +689,7 @@ The _flatIcons list is a cache for generated icon files.
 	while(TRUE)
 		if(curIndex<=process.len)
 			current = process[curIndex]
+			curIndex++
 			if(!current)	continue
 			currentLayer = current:layer
 			if(currentLayer<0) // Special case for FLY_LAYER
@@ -708,7 +709,7 @@ The _flatIcons list is a cache for generated icon files.
 			if(cmpIndex>layers.len) // Reached end of list without inserting
 				layers[current]=currentLayer // Place at end
 
-			curIndex++
+
 
 		if(curIndex>process.len)
 			if(pSet == 0) // Switch to overlays
