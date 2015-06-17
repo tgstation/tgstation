@@ -128,8 +128,7 @@
 			user.drop_item(I, src)
 			return
 		user << "<span class='notice'> You empty the [B].</span>"
-		for(var/obj/item/O in B.contents)
-			B.remove_from_storage(O,src)
+		B.mass_remove(src)
 		B.update_icon()
 		update_icon()
 		return
