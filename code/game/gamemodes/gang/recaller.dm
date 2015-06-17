@@ -62,7 +62,7 @@
 		dat += "Influence: <B>[points]</B><br>"
 		dat += "Time until Influence grows: <B>[(points >= 999) ? ("--:--") : (time2text(ticker.mode.gang_points.next_point_time - world.time, "mm:ss"))]</B><br>"
 		dat += "<hr>"
-		dat += "<B>Purchase Combat Equipment:</B><br>"
+		dat += "<B>Purchase Weapons:</B><br>"
 
 		dat += "(10 Influence) "
 		if(points >= 10)
@@ -78,24 +78,36 @@
 
 		dat += "(10 Influence) "
 		if(points >= 10)
-			dat += "<a href='?src=\ref[src];purchase=ammo'>10mm Ammo</a><br>"
+			dat += "<a href='?src=\ref[src];purchase=10mmammo'>10mm Ammo</a><br>"
 		else
 			dat += "10mm Ammo<br>"
 
-		dat += "(10 Influence) "
-		if(points >= 10)
-			dat += "<a href='?src=\ref[src];purchase=vest'>Bulletproof Vest</a><br>"
+		dat += "(40 Influence) "
+		if(points >= 40)
+			dat += "<a href='?src=\ref[src];purchase=uzi'>Mini Uzi</a><br>"
 		else
-			dat += "Bulletproof Vest<br>"
+			dat += "Mini Uzi<br>"
+
+		dat += "(30 Influence) "
+		if(points >= 30)
+			dat += "<a href='?src=\ref[src];purchase=9mmammo'>Uzi Ammo</a><br>"
+		else
+			dat += "Uzi Magazine<br>"
 
 		dat += "<br>"
-		dat += "<B>Purchase Support Equipment:</B><br>"
+		dat += "<B>Purchase Equipment:</B><br>"
 
 		dat += "(5 Influence) "
 		if(points >= 5)
 			dat += "<a href='?src=\ref[src];purchase=spraycan'><b>Territory Spraycan</b></a><br>"
 		else
 			dat += "<b>Territory Spraycan</b><br>"
+
+		dat += "(10 Influence) "
+		if(points >= 10)
+			dat += "<a href='?src=\ref[src];purchase=vest'>Bulletproof Vest</a><br>"
+		else
+			dat += "Bulletproof Vest<br>"
 
 		dat += "(30 Influence) "
 		if(points >= 30)
@@ -157,10 +169,18 @@
 				if(points >= 20)
 					item_type = /obj/item/weapon/gun/projectile/automatic/pistol
 					points = 20
-			if("ammo")
+			if("10mmammo")
 				if(points >= 10)
 					item_type = /obj/item/ammo_box/magazine/m10mm
 					points = 10
+			if("uzi")
+				if(points >= 40)
+					item_type = /obj/item/weapon/gun/projectile/automatic/mini_uzi
+					points = 40
+			if("9mmammo")
+				if(points >= 30)
+					item_type = /obj/item/ammo_box/magazine/uzim9mm
+					points = 30
 			if("vest")
 				if(points >= 10)
 					item_type = /obj/item/clothing/suit/armor/bulletproof

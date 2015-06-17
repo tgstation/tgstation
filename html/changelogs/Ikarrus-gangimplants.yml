@@ -34,4 +34,4 @@ delete-after: True
 # Please surround your changes in  double quotes ("). It works without them, but if you use certain characters it screws up compiling. The quotes will not show up in the changelog.
 changes: 
   - rscdel: "Loyalty implants now treat gangs as it treats cultis. Implants can no longer deconvert gangsters, but it can still prevent recruitments."
-  - rscdel: "Removed tommy guns from gang mode."
+  - tweak: "Replaced tommy guns with 9mm 2-burst 32 mag uzis that costs 40 influence. Unlike tommy guns gangs will be able to purchase ammo for uzis."
