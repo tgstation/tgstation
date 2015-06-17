@@ -362,7 +362,7 @@
 		overlays += "[icon_state]_broken"
 	else
 		overlays += icon_screen
-	if(cdir > -1)
+	if(cdir > -1 && !stat)
 		overlays += image('icons/obj/computer.dmi', "solcon-o", FLY_LAYER, angle2dir(cdir))
 
 /obj/machinery/power/solar_control/attack_hand(mob/user)

@@ -102,6 +102,8 @@
 
 /obj/machinery/computer/station_alert/update_icon()
 	..()
+	if(stat)
+		return
 	var/active_alarms = 0
 	for (var/cat in src.alarms)
 		var/list/L = src.alarms[cat]
