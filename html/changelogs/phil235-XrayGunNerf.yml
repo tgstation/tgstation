@@ -1,0 +1,6 @@
+author: phil235
+
+delete-after: True
+
+changes: 
+  - rscdel: "Nerfed the xray gun. Its range is now 15 tiles."
