@@ -16,6 +16,16 @@
 	power_light = 0
 	ambientsounds = list('sound/ambience/ambimine.ogg')
 
+/area/mine/explored/one
+	icon_state = "anosample"
+
+/area/mine/explored/two
+	icon_state = "anolab"
+
+/area/mine/explored/three
+	icon_state = "iso2"
+
+
 /area/mine/unexplored
 	name = "Mine"
 	icon_state = "unexplored"
@@ -27,6 +37,20 @@
 	power_equip = 0
 	power_light = 0
 	ambientsounds = list('sound/ambience/ambimine.ogg')
+
+//Subdivisions to prevent hanging when APC placed
+/area/mine/unexplored/one
+	icon_state = "iso1"
+
+/area/mine/unexplored/two
+	icon_state = "anospectro"
+
+/area/mine/unexplored/three
+	icon_state = "iso3"
+
+/area/mine/unexplored/four
+	icon_state = "anomaly"
+
 
 /area/mine/lobby
 	name = "Mining station"
