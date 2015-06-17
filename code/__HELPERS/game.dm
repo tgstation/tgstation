@@ -227,8 +227,8 @@
 		return hear
 
 	var/list/range = get_hear(R, T)
-	for(var/turf/A in range)
-		hear += recursive_hear_check(A)
+	for(var/atom/movable/A in range)
+		hear |= recursive_hear_check(A)
 
 	return hear
 

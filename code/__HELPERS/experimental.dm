@@ -17,7 +17,6 @@
 #define MAINTAINING_OBJECT_POOL_COUNT 500
 
 var/global/list/masterPool = new
-var/global/list/variables = new
 
 // Read-only or compile-time vars and special exceptions.
 var/list/exclude = list("inhand_states", "loc", "locs", "parent_type", "vars", "verbs", "type", "x", "y", "z","group", "animate_movement")
@@ -83,7 +82,6 @@ var/list/exclude = list("inhand_states", "loc", "locs", "parent_type", "vars", "
 
 	if(isnull(masterPool["[AM.type]"]))
 		masterPool["[AM.type]"] = list()
-		createvariables(AM)
 
 	AM.Destroy()
 	AM.resetVariables()
@@ -98,14 +96,6 @@ var/list/exclude = list("inhand_states", "loc", "locs", "parent_type", "vars", "
 #ifdef DEBUG_OBJECT_POOL
 #undef DEBUG_OBJECT_POOL
 #endif
-
-
-
-/proc/createvariables(var/datum/AM)
-	variables["[AM.type]"] = new/list()
-
-	for(var/key in AM.vars)
-		variables["[AM.type]"]["[key]"] = initial(key)
 
 /*
  * if you have a variable that needed to be preserve, override this and call ..
@@ -125,19 +115,20 @@ var/list/exclude = list("inhand_states", "loc", "locs", "parent_type", "vars", "
  * 	..("var4")
  */
 
-//RETURNS NULL WHEN INITIALIZED AS A LIST() AND POSSIBLY WITH OTHER TYPES OF VALUES BEYOND REGULAR VARS
-//IF YOU ARE USING SPECIAL VARIABLES SUCH A LIST() INITIALIZE THEM USING THE RESET VARIABLES EXCEPTION
+//RETURNS NULL WHEN INITIALIZED AS A LIST() AND POSSIBLY OTHER DISCRIMINATORS
+//IF YOU ARE USING SPECIAL VARIABLES SUCH A LIST() INITIALIZE THEM USING RESET VARIABLES
 //SEE http://www.byond.com/forum/?post=76850 AS A REFERENCE ON THIS
 
 /atom/movable/resetVariables()
+	loc = null
+
 	var/list/exclude = global.exclude + args // explicit var exclusion
 
-	var/list/reset = variables["[src.type]"]
+	for(var/key in vars)
+		if(key in exclude)
+			continue
 
-	for(var/key in vars-exclude)
-		vars["[key]"] = reset["[key]"]
-
-	loc = null
+		vars[key] = initial(vars[key])
 
 /proc/isInTypes(atom/Object, types)
 	if(!Object)
