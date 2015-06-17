@@ -287,6 +287,7 @@
 	desc = "It's milk. White and nutritious goodness!"
 	icon_state = "milk"
 	item_state = "carton"
+	vending_cat = "dairy products"
 	New()
 		..()
 		reagents.add_reagent("milk", 50)
@@ -310,6 +311,7 @@
 	desc = "It's soy milk. White and nutritious goodness!"
 	icon_state = "soymilk"
 	item_state = "carton"
+	vending_cat = "dairy products"//it's not a dairy product but oh come on who cares
 	New()
 		..()
 		reagents.add_reagent("soymilk", 50)
@@ -558,6 +560,7 @@
 	name = "Space Beer"
 	desc = "Beer. In space."
 	icon_state = "beer"
+	vending_cat = "fermented"
 	molotov = -1 //can become a molotov
 	isGlass = 1
 	New()
@@ -571,6 +574,7 @@
 	desc = "A true dorf's drink of choice."
 	icon_state = "alebottle"
 	item_state = "beer"
+	vending_cat = "fermented"
 	molotov = -1 //can become a molotov
 	isGlass = 1
 	New()
@@ -578,6 +582,9 @@
 		reagents.add_reagent("ale", 30)
 		src.pixel_x = rand(-10.0, 10)
 		src.pixel_y = rand(-10.0, 10)
+
+/obj/item/weapon/reagent_containers/food/drinks/soda_cans
+	vending_cat = "carbonated drinks"
 
 /obj/item/weapon/reagent_containers/food/drinks/soda_cans/cola
 	name = "Space Cola"
@@ -777,6 +784,7 @@
 	name = "Griffeater Gin"
 	desc = "A bottle of high quality gin, produced in the New London Space Station."
 	icon_state = "ginbottle"
+	vending_cat = "spirits"
 	bottleheight = 30
 	isGlass = 1
 	molotov = -1
@@ -788,6 +796,7 @@
 	name = "Uncle Git's Special Reserve"
 	desc = "A premium single-malt whiskey, gently matured inside the tunnels of a nuclear shelter. TUNNEL WHISKEY RULES."
 	icon_state = "whiskeybottle"
+	vending_cat = "spirits"
 	isGlass = 1
 	molotov = -1
 	New()
@@ -798,6 +807,7 @@
 	name = "Tunguska Triple Distilled"
 	desc = "Aah, vodka. Prime choice of drink AND fuel by Russians worldwide."
 	icon_state = "vodkabottle"
+	vending_cat = "spirits"
 	isGlass = 1
 	molotov = -1
 	New()
@@ -808,6 +818,7 @@
 	name = "Caccavo Guaranteed Quality Tequila"
 	desc = "Made from premium petroleum distillates, pure thalidomide and other fine quality ingredients!"
 	icon_state = "tequilabottle"
+	vending_cat = "spirits"
 	isGlass = 1
 	molotov = -1
 	New()
@@ -840,6 +851,7 @@
 	name = "Captain Pete's Cuban Spiced Rum"
 	desc = "This isn't just rum, oh no. It's practically GRIFF in a bottle."
 	icon_state = "rumbottle"
+	vending_cat = "spirits"
 	molotov = -1
 	isGlass = 1
 	New()
@@ -875,6 +887,7 @@
 	name = "Goldeneye Vermouth"
 	desc = "Sweet, sweet dryness~"
 	icon_state = "vermouthbottle"
+	vending_cat = "fermented"
 	molotov = -1
 	isGlass = 1
 	New()
@@ -885,6 +898,7 @@
 	name = "Robert Robust's Coffee Liqueur"
 	desc = "A widely known, Mexican coffee-flavoured liqueur. In production since 1936, HONK"
 	icon_state = "kahluabottle"
+	vending_cat = "fermented"
 	molotov = -1
 	isGlass = 1
 	New()
@@ -905,6 +919,7 @@
 	name = "Chateau De Baton Premium Cognac"
 	desc = "A sweet and strongly alchoholic drink, made after numerous distillations and years of maturing. You might as well not scream 'SHITCURITY' this time."
 	icon_state = "cognacbottle"
+	vending_cat = "spirits"
 	molotov = -1
 	isGlass = 1
 	New()
@@ -915,6 +930,7 @@
 	name = "Doublebeard Bearded Special Wine"
 	desc = "A faint aura of unease and asspainery surrounds the bottle."
 	icon_state = "winebottle"
+	vending_cat = "fermented"
 	bottleheight = 30
 	molotov = -1
 	isGlass = 1
@@ -940,6 +956,7 @@
 	desc = "Full of vitamins and deliciousness!"
 	icon_state = "orangejuice"
 	item_state = "carton"
+	vending_cat = "fruit juices"
 	starting_materials = null
 	New()
 		..()
@@ -950,6 +967,7 @@
 	desc = "It's cream. Made from milk. What else did you think you'd find in there?"
 	icon_state = "cream"
 	item_state = "carton"
+	vending_cat = "dairy products"
 	starting_materials = null
 	New()
 		..()
@@ -960,6 +978,7 @@
 	desc = "Well, at least it LOOKS like tomato juice. You can't tell with all that redness."
 	icon_state = "tomatojuice"
 	item_state = "carton"
+	vending_cat = "fruit juices"
 	starting_materials = null
 	New()
 		..()
@@ -970,6 +989,7 @@
 	desc = "Sweet-sour goodness."
 	icon_state = "limejuice"
 	item_state = "carton"
+	vending_cat = "fruit juices"
 	starting_materials = null
 	New()
 		..()

@@ -225,7 +225,7 @@
 		var/price = prices[typepath]
 		if(isnull(amount)) amount = 1
 
-		var/obj/item/temp = new typepath(null)
+		var/obj/item/temp = typepath
 		var/datum/data/vending_product/R = new /datum/data/vending_product()
 		R.product_path = typepath
 		R.amount = amount
@@ -245,11 +245,11 @@
 
 		if(delay_product_spawn)
 			sleep(1)
-			R.product_name = temp.name
-			R.subcategory = temp.vending_cat
+			R.product_name = initial(temp.name)
+			R.subcategory = initial(temp.vending_cat)
 		else
-			R.product_name = temp.name
-			R.subcategory = temp.vending_cat
+			R.product_name = initial(temp.name)
+			R.subcategory = initial(temp.vending_cat)
 
 /obj/machinery/vending/proc/get_item_by_type(var/this_type)
 	var/list/datum_products = list()
@@ -428,7 +428,7 @@
 		var/idx=GetProductIndex(P)
 		dat += " <a href='byond://?src=\ref[src];vend=[idx];cat=[P.category]'>(Vend)</A>"
 	else
-		dat += " <font color = 'red'>SOLD OUT</font>"
+		dat += " <span class='warning'>SOLD OUT</span>"
 	dat += "<br>"
 
 	return dat
