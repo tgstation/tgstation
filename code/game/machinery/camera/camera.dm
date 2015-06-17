@@ -8,7 +8,7 @@
 	active_power_usage = 10
 	layer = 5
 
-	var/health = 30
+	var/health = 50
 	var/list/network = list("SS13")
 	var/c_tag = null
 	var/c_tag_order = 999
@@ -230,6 +230,7 @@
 			user.changeNext_move(CLICK_CD_MELEE)
 			visible_message("<span class='warning'>[user] hits [src] with [W]!</span>", "<span class='warning'>You hit [src] with [W]!</span>")
 			health = max(0, health - W.force)
+			user.do_attack_animation(src)
 			if(!health && status)
 				triggerCameraAlarm()
 				deactivate(user, 1)
@@ -245,7 +246,6 @@
 			else
 				visible_message("<span class='danger'>\The [src] deactivates!</span>")
 			icon_state = "[initial(icon_state)]1"
-
 		else
 			if(user)
 				visible_message("<span class='danger'>[user] reactivates [src]!</span>")
@@ -257,6 +257,7 @@
 			spawn(100)
 				cancelCameraAlarm()
 		playsound(src.loc, 'sound/items/Wirecutter.ogg', 100, 1)
+		cameranet.updateChunk(x, y, z)
 
 	// now disconnect anyone using the camera
 	//Apparently, this will disconnect anyone even if the camera was re-activated.

@@ -120,6 +120,7 @@
 					tracking = 0
 					return
 				else
+					sleep(10)
 					continue
 			
 			else
