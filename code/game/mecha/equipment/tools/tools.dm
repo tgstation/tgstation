@@ -1,3 +1,6 @@
+#define THE_NUMBER_WHICH_THE_SLEEP_TIME_OF_DO_AFTER_COOLDOWN_IS_TO_BE_DIVIDED_BY_WHEN_USING_AN_EXOSUIT_MOUNTED_DRILL_TO_DIG_SAND 2
+#define MECHDRILL_ROCK_SPEED 3
+
 /obj/item/mecha_parts/mecha_equipment/tool/hydraulic_clamp
 	name = "Hydraulic Clamp"
 	icon_state = "mecha_clamp"
@@ -31,10 +34,12 @@
 	var/obj/mecha/working/ripley/R = chassis
 
 	if(istype(target, /obj/structure/stool))
+		occupant_message("<span class='warning'>Safety features prevent this action.</span>")
 		return //no picking up rollerbeds
-	for(var/M in target.contents)
-		if(istype(M, /mob/living)) //no picking up lockers with people in them
-			return
+	var/list/living_in_target = target.search_contents_for(/mob/living)
+	if(living_in_target.len) //no picking up lockers with people in them
+		occupant_message("<span class='warning'>Safety features prevent this action.</span>")
+		return
 
 	if(istype(target,/obj))
 		var/obj/O = target
@@ -141,7 +146,7 @@
 			target.mech_drill_act(2)
 
 	else if(istype(target, /turf/unsimulated/mineral))
-		if(do_after_cooldown(target, 1/3) && C == chassis.loc && src == chassis.selected)
+		if(do_after_cooldown(target, 1/MECHDRILL_ROCK_SPEED) && C == chassis.loc && src == chassis.selected)
 			for(var/turf/unsimulated/mineral/M in range(chassis,1))
 				if(get_dir(chassis,M)&chassis.dir)
 					M.GetDrilled()
@@ -159,7 +164,7 @@
 						occupant_message("<font color='blue'>[count] ore successfully loaded into cargo compartment.</font>")
 
 	else if(istype(target, /turf/unsimulated/floor/asteroid)) //Digging for sand
-		if(do_after_cooldown(target, 1/2) && C == chassis.loc && src == chassis.selected)
+		if(do_after_cooldown(target, 1/THE_NUMBER_WHICH_THE_SLEEP_TIME_OF_DO_AFTER_COOLDOWN_IS_TO_BE_DIVIDED_BY_WHEN_USING_AN_EXOSUIT_MOUNTED_DRILL_TO_DIG_SAND) && C == chassis.loc && src == chassis.selected)
 			var/count = 0
 			var/obj/structure/ore_box/ore_box
 			var/obj/item/mecha_parts/mecha_equipment/tool/hydraulic_clamp/hydraulic_clamp
@@ -1158,6 +1163,7 @@
 	return
 
 /obj/item/mecha_parts/mecha_equipment/tool/safety_clamp/action(atom/target)
+	//this whole thing is seriously fucking stupid and should be a child of the clamp
 	if(!action_checks(target)) return
 	if(!cargo_holder) return
 	if(istype(target,/obj))
@@ -1202,3 +1208,6 @@
 		chassis.use_power(energy_drain)
 		do_after_cooldown()
 	return 1
+
+#undef THE_NUMBER_WHICH_THE_SLEEP_TIME_OF_DO_AFTER_COOLDOWN_IS_TO_BE_DIVIDED_BY_WHEN_USING_AN_EXOSUIT_MOUNTED_DRILL_TO_DIG_SAND
+#undef MECHDRILL_ROCK_SPEED
