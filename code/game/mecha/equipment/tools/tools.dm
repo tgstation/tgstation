@@ -147,10 +147,20 @@
 
 	else if(istype(target, /turf/unsimulated/floor/asteroid)) //Digging for sand
 		if(do_after_cooldown(target, 1/3) && C == chassis.loc && src == chassis.selected)
+			var/count = 0
+			var/obj/structure/ore_box/ore_box = locate(/obj/structure/ore_box) in chassis:cargo
+			var/obj/clamp = locate(/obj/item/mecha_parts/mecha_equipment/tool/hydraulic_clamp) in chassis.equipment
 			for(var/turf/unsimulated/floor/asteroid/M in range(chassis,1)) //Get a 3x3 area around the mech
 				if(get_dir(chassis,M)&chassis.dir || istype(src, /obj/item/mecha_parts/mecha_equipment/tool/drill/diamonddrill)) //Only dig frontmost 1x3 unless the drill is diamond
 					M.gets_dug()
+					if(clamp && ore_box)
+						for(var/obj/item/weapon/ore/glass/sandore in get_turf(M))
+							ore_box.materials.addAmount(sandore.material,1)
+							qdel(sandore)
+							count++
 			log_message("Drilled through [target]")
+			if(count)
+				occupant_message("<font color='blue'>[count] sand successfully loaded into cargo compartment.</font>")
 
 	else
 		if(do_after_cooldown(target, 1) && C == chassis.loc && src == chassis.selected && target.loc == T) //also check that our target hasn't moved
