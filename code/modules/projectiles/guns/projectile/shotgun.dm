@@ -292,7 +292,7 @@
 
 /obj/item/weapon/gun/projectile/shotgun/automatic/combat
 	name = "combat shotgun"
-	desc = "A self pumping shotgun with tactical furniture and an six-shell capacity underneath."
+	desc = "A semi automatic shotgun with tactical furniture and an six-shell capacity underneath."
 	icon_state = "cshotgun"
 	origin_tech = "combat=5;materials=2"
 	mag_type = /obj/item/ammo_box/magazine/internal/shotcom
