@@ -1,0 +1,75 @@
+<h3>Portable scrubber</h3>
+
+<div class="item">
+	<div class="itemLabel">
+		Scrubber Pressure:
+	</div>
+	<div class="itemContent">
+		{{:scrubberPressure}} kPa
+	</div>
+</div>
+
+<div class="item">
+	<div class="itemLabel">
+		Port Status:
+	</div>
+	<div class="itemContent">
+		{{:portConnected ? '<span class="good">Connected</span>' : '<span class="average">Disconnected</span>'}}
+	</div>
+</div>
+
+<h3>Holding Tank Status</h3>
+{{if hasHoldingTank}}
+	<div class="item">
+		<div class="itemLabel">
+			Tank Label:
+		</div>
+		<div class="itemContent">
+			<div style="float: left; width: 180px;">{{:holdingTank.name}}</div> {{:~link('Eject', 'eject', {'remove_tank' : 1})}}
+		</div>
+	</div>
+
+	<div class="item">
+		<div class="itemLabel">
+			Tank Pressure:
+		</div>
+		<div class="itemContent">
+			{{:holdingTank.tankPressure}} kPa
+		</div>
+	</div>
+{{else}}
+	<div class="item"><span class="average"><i>No holding tank inserted.</i></span></div>
+	<div class="item">&nbsp;</div>
+{{/if}}
+
+
+<h3>Scrubber Status</h3>
+<div class="item">
+	<div class="itemLabel">
+		Volume Rate:
+	</div>
+	<div class="itemContent">
+		{{:~displayBar(volumeRate, minVolumeRate, maxVolumeRate)}}
+		<div style="clear: both; padding-top: 4px;">
+			{{:~link('-', null, {'volume_adj' : -1000}, (volumeRate > minVolumeRate) ? null : 'disabled')}}
+			{{:~link('-', null, {'volume_adj' : -100}, (volumeRate > minVolumeRate) ? null : 'disabled')}}
+			{{:~link('-', null, {'volume_adj' : -10}, (volumeRate > minVolumeRate) ? null : 'disabled')}}
+			{{:~link('-', null, {'volume_adj' : -1}, (volumeRate > minVolumeRate) ? null : 'disabled')}}
+            <div style="float: left; width: 80px; text-align: center;">&nbsp;{{:volumeRate}}&nbsp;</div>
+			{{:~link('+', null, {'volume_adj' : 1}, (volumeRate < maxVolumeRate) ? null : 'disabled')}}
+			{{:~link('+', null, {'volume_adj' : 10}, (volumeRate < maxVolumeRate) ? null : 'disabled')}}
+			{{:~link('+', null, {'volume_adj' : 100}, (volumeRate < maxVolumeRate) ? null : 'disabled')}}
+			{{:~link('+', null, {'volume_adj' : 1000}, (volumeRate < maxVolumeRate) ? null : 'disabled')}}
+		</div>
+	</div>
+</div>
+
+<div class="item">
+	<div class="itemLabel">
+		Scrubbing:
+	</div>
+	<div class="itemContent">
+		{{:~link('Enable', 'unlocked', {'power' : 1}, scrubOn ? 'selected' : null)}}{{:~link('Disable', 'locked', {'power' : 1}, scrubOn ? null : 'selected')}}
+	</div>
+</div>
+

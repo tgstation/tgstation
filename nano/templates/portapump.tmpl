@@ -1,0 +1,82 @@
+<h3>Portable Air Pump Status</h3>
+
+<div class="item">
+	<div class="itemLabel">
+		Pump Pressure:
+	</div>
+	<div class="itemContent">
+		{{:pumpPressure}} kPa
+	</div>
+</div>
+
+<div class="item">
+	<div class="itemLabel">
+		Port Status:
+	</div>
+	<div class="itemContent">
+		{{:portConnected ? '<span class="good">Connected</span>' : '<span class="average">Disconnected</span>'}}
+	</div>
+</div>
+
+<h3>Holding Tank Status</h3>
+{{if hasHoldingTank}}
+	<div class="item">
+		<div class="itemLabel">
+			Tank Label:
+		</div>
+		<div class="itemContent">
+			<div style="float: left; width: 180px;">{{:holdingTank.name}}</div> {{:~link('Eject', 'eject', {'remove_tank' : 1})}}
+		</div>
+	</div>
+
+	<div class="item">
+		<div class="itemLabel">
+			Tank Pressure:
+		</div>
+		<div class="itemContent">
+			{{:holdingTank.tankPressure}} kPa
+		</div>
+	</div>
+{{else}}
+	<div class="item"><span class="average"><i>No holding tank inserted.</i></span></div>
+	<div class="item">&nbsp;</div>
+{{/if}}
+
+
+<h3>Release Valve Status</h3>
+<div class="item">
+	<div class="itemLabel">
+		Release Pressure:
+	</div>
+	<div class="itemContent">
+		{{:~displayBar(targetPressure, minTargetPressure, maxTargetPressure)}}
+		<div style="clear: both; padding-top: 4px;">
+			{{:~link('-', null, {'pressure_adj' : -1000}, (targetPressure > minTargetPressure) ? null : 'disabled')}}
+			{{:~link('-', null, {'pressure_adj' : -100}, (targetPressure > minTargetPressure) ? null : 'disabled')}}
+			{{:~link('-', null, {'pressure_adj' : -10}, (targetPressure > minTargetPressure) ? null : 'disabled')}}
+			{{:~link('-', null, {'pressure_adj' : -1}, (targetPressure > minTargetPressure) ? null : 'disabled')}}
+			<div style="float: left; width: 80px; text-align: center;">&nbsp;{{:targetPressure}} kPa&nbsp;</div>
+			{{:~link('+', null, {'pressure_adj' : 1}, (targetPressure < maxTargetPressure) ? null : 'disabled')}}
+			{{:~link('+', null, {'pressure_adj' : 10}, (targetPressure < maxTargetPressure) ? null : 'disabled')}}
+			{{:~link('+', null, {'pressure_adj' : 100}, (targetPressure < maxTargetPressure) ? null : 'disabled')}}
+			{{:~link('+', null, {'pressure_adj' : 1000}, (targetPressure < maxTargetPressure) ? null : 'disabled')}}
+		</div>
+	</div>
+</div>
+
+<div class="item">
+	<div class="itemLabel">
+		Pump Direction:
+	</div>
+	<div class="itemContent">
+		{{:~link('Release', 'unlocked', {'direction' : 1}, direction ? 'selected' : null)}}{{:~link('Siphon', 'locked', {'direction' : 1}, direction ? null : 'selected')}}
+	</div>
+<div class="item">
+	<div class="itemLabel">
+		Release Valve:
+	</div>
+	<div class="itemContent">
+		{{:~link('On', 'unlocked', {'power' : 1}, status ? 'selected' : null)}}{{:~link('Off', 'locked', {'power' : 1}, status ? null : 'selected')}}
+	</div>
+</div>
+

@@ -100,30 +100,28 @@
 	return src.attack_hand(user)
 
 /obj/machinery/portable_atmospherics/pump/attack_hand(var/mob/user as mob)
+	return src.ui_interact(user)
 
-	user.set_machine(src)
-	var/holding_text
 
-	if(holding)
-		holding_text = {"<BR><B>Tank Pressure</B>: [holding.air_contents.return_pressure()] KPa<BR>
-<A href='?src=\ref[src];remove_tank=1'>Remove Tank</A><BR>
-"}
-	var/output_text = {"<TT><B>[name]</B><BR>
-Pressure: [air_contents.return_pressure()] KPa<BR>
-Port Status: [(connected_port)?("Connected"):("Disconnected")]
-[holding_text]
-<BR>
-Power Switch: <A href='?src=\ref[src];power=1'>[on?("On"):("Off")]</A><BR>
-Pump Direction: <A href='?src=\ref[src];direction=1'>[direction_out?("Out"):("In")]</A><BR>
-Target Pressure: <A href='?src=\ref[src];pressure_adj=-1000'>-</A> <A href='?src=\ref[src];pressure_adj=-100'>-</A> <A href='?src=\ref[src];pressure_adj=-10'>-</A> <A href='?src=\ref[src];pressure_adj=-1'>-</A> [target_pressure] <A href='?src=\ref[src];pressure_adj=1'>+</A> <A href='?src=\ref[src];pressure_adj=10'>+</A> <A href='?src=\ref[src];pressure_adj=100'>+</A> <A href='?src=\ref[src];pressure_adj=1000'>+</A><BR>
-<HR>
-<A href='?src=\ref[user];mach_close=pump'>Close</A><BR>
-"}
+/obj/machinery/portable_atmospherics/pump/ui_interact(mob/user, ui_key = "main", var/datum/nanoui/ui = null)
+	ui = SSnano.push_open_or_new_ui(user, src, ui_key, ui, "portapump.tmpl", "Portable Air Pump", 480, 400, 0)
 
-	user << browse(output_text, "window=pump;size=600x300")
-	onclose(user, "pump")
+/obj/machinery/portable_atmospherics/pump/get_ui_data()
+	var/data = list()
+	data["name"] = src.name
+	data["portConnected"] = src.connected_port ? 1 : 0
+	data["pumpPressure"] = round(src.air_contents.return_pressure() ? src.air_contents.return_pressure() : 0)
+	data["targetPressure"] = round(src.target_pressure ? src.target_pressure : 0)
+	data["minTargetPressure"] = round(ONE_ATMOSPHERE/10)
+	data["maxTargetPressure"] = round(10*ONE_ATMOSPHERE)
+	data["direction"] = src.direction_out ? 1 : 0
+	data["status"] = src.on ? 1 : 0
 
-	return
+	data["hasHoldingTank"] = src.holding ? 1 : 0
+	if (holding)
+		data["holdingTank"] = list("name" = src.holding.name, "tankPressure" = round(src.holding.air_contents.return_pressure()))
+
+	return data
 
 /obj/machinery/portable_atmospherics/pump/Topic(href, href_list)
 	..()

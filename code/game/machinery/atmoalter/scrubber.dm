@@ -155,29 +155,28 @@
 	return src.attack_hand(user)
 
 /obj/machinery/portable_atmospherics/scrubber/attack_hand(var/mob/user as mob)
+	ui_interact(user)
 
-	user.set_machine(src)
-	var/holding_text
 
-	if(holding)
-		holding_text = {"<BR><B>Tank Pressure</B>: [holding.air_contents.return_pressure()] KPa<BR>
-<A href='?src=\ref[src];remove_tank=1'>Remove Tank</A><BR>
-"}
-	var/output_text = {"<TT><B>[name]</B><BR>
-Pressure: [air_contents.return_pressure()] KPa<BR>
-Port Status: [(connected_port)?("Connected"):("Disconnected")]
-[holding_text]
-<BR>
-Power Switch: <A href='?src=\ref[src];power=1'>[on?("On"):("Off")]</A><BR>
-Power regulator: <A href='?src=\ref[src];volume_adj=-1000'>-</A> <A href='?src=\ref[src];volume_adj=-100'>-</A> <A href='?src=\ref[src];volume_adj=-10'>-</A> <A href='?src=\ref[src];volume_adj=-1'>-</A> [volume_rate] <A href='?src=\ref[src];volume_adj=1'>+</A> <A href='?src=\ref[src];volume_adj=10'>+</A> <A href='?src=\ref[src];volume_adj=100'>+</A> <A href='?src=\ref[src];volume_adj=1000'>+</A><BR>
 
-<HR>
-<A href='?src=\ref[user];mach_close=scrubber'>Close</A><BR>
-"}
+/obj/machinery/portable_atmospherics/scrubber/ui_interact(mob/user, ui_key = "main", var/datum/nanoui/ui = null)
+	ui = SSnano.push_open_or_new_ui(user, src, ui_key, ui, "scrubber.tmpl", "Scrubber", 480, 400, 0)
 
-	user << browse(output_text, "window=scrubber;size=600x300")
-	onclose(user, "scrubber")
-	return
+/obj/machinery/portable_atmospherics/scrubber/get_ui_data()
+	var/data = list()
+	data["name"] = src.name
+	data["portConnected"] = src.connected_port ? 1 : 0
+	data["scrubberPressure"] = round(src.air_contents.return_pressure() ? src.air_contents.return_pressure() : 0)
+	data["volumeRate"] = round(src.volume_rate ? src.volume_rate : 0)
+	data["minVolumeRate"] = round(ONE_ATMOSPHERE/10)
+	data["maxVolumeRate"] = round(10*ONE_ATMOSPHERE)
+	data["scrubOn"] = src.on ? 1 : 0
+
+	data["hasHoldingTank"] = src.holding ? 1 : 0
+	if (holding)
+		data["holdingTank"] = list("name" = src.holding.name, "tankPressure" = round(src.holding.air_contents.return_pressure()))
+
+	return data
 
 /obj/machinery/portable_atmospherics/scrubber/Topic(href, href_list)
 	..()
