@@ -153,8 +153,6 @@
 					return
 				if (src.client.handle_spam_prevention(message,MUTE_IC))
 					return
-			if (stat)
-				return
 			if(!(message))
 				return
 			else
