@@ -16,7 +16,7 @@
 	if(isloyal(mind.current))
 		return 0
 	if (ticker.mode.name == "cult")		//redundent?
-		if(mind.current == ticker.mode.sacrifice_target)	return 0
+		if(mind == ticker.mode.sacrifice_target)	return 0
 	return 1
 
 

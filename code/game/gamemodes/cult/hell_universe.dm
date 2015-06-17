@@ -110,15 +110,21 @@ In short:
 
 /datum/universal_state/hell/proc/MiscSet()
 	for(var/turf/simulated/floor/T in turfs)
+		if(T.z != 1)
+			return
 		if(prob(1))
 			new /obj/effect/gateway/active/cult(T)
 
 	for (var/obj/machinery/firealarm/alm in machines)
+		if(alm.z != 1)
+			return
 		if (!(alm.stat & BROKEN))
 			alm.ex_act(2)
 
 /datum/universal_state/hell/proc/APCSet()
 	for (var/obj/machinery/power/apc/APC in machines)
+		if(APC.z != 1)
+			return
 		if (!(APC.stat & BROKEN) && !istype(APC.area,/area/turret_protected/ai))
 			APC.chargemode = 0
 			if(APC.cell)
