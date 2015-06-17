@@ -1,0 +1,7 @@
+author: Deity Link
+delete-after: true
+changes:
+  - rscadd: Vending machines articles can now be given a "category". Items of the same category will show together in the vending machine's menu.
+  - rscadd: Contraband and premium items will still appear at the bottom of the window, in their own category.
+  - rscadd: Added categories for most seeds. Categories are made from a culinary standpoint, thus tomatoes and pumpkins are among vegetables.
+  - rscadd: YOU CAN FINALLY ADD SEEDS TO THE MEGASEED VENDOR, WOO!! You can load a bunch of them at once by using a plant bag.
