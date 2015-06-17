@@ -568,13 +568,15 @@ Auto Patrol[]"},
 					icon_state = "ed209_legs"
 
 		if(2)
+			var/newcolor = ""
 			if(istype(W, /obj/item/clothing/suit/redtag))
-				lasercolor = "r"
+				newcolor = "r"
 			else if(istype(W, /obj/item/clothing/suit/bluetag))
-				lasercolor = "b"
-			if(lasercolor || istype(W, /obj/item/clothing/suit/armor/vest))
+				newcolor = "b"
+			if(newcolor || istype(W, /obj/item/clothing/suit/armor/vest))
 				if(!user.unEquip(W))
 					return
+				lasercolor = newcolor
 				qdel(W)
 				build_step++
 				user << "<span class='notice'>You add the armor to [src].</span>"
@@ -638,23 +640,25 @@ Auto Patrol[]"},
 						name = "wired ED-209 assembly"
 
 		if(7)
+			var/newname = ""
 			switch(lasercolor)
 				if("b")
 					if(!istype(W, /obj/item/weapon/gun/energy/laser/bluetag))
 						return
-					name = "bluetag ED-209 assembly"
+					newname = "bluetag ED-209 assembly"
 				if("r")
 					if(!istype(W, /obj/item/weapon/gun/energy/laser/redtag))
 						return
-					name = "redtag ED-209 assembly"
+					newname = "redtag ED-209 assembly"
 				if("")
 					if(!istype(W, /obj/item/weapon/gun/energy/gun/advtaser))
 						return
-					name = "taser ED-209 assembly"
+					newname = "taser ED-209 assembly"
 				else
 					return
 			if(!user.unEquip(W))
 				return
+			name = newname
 			build_step++
 			user << "<span class='notice'>You add [W] to [src].</span>"
 			item_state = "[lasercolor]ed209_taser"

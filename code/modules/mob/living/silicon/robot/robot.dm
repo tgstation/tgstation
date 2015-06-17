@@ -532,9 +532,9 @@
 		else if(U.locked)
 			user << "<span class='warning'>The upgrade is locked and cannot be used yet!</span>"
 		else
+			if(!user.drop_item())
+				return
 			if(U.action(src))
-				if(!user.drop_item())
-					return
 				user << "<span class='notice'>You apply the upgrade to [src].</span>"
 				U.loc = src
 			else

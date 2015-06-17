@@ -55,9 +55,9 @@
 /obj/item/weapon/hand_labeler/attackby(obj/item/I as obj, mob/user as mob, params)
 	..()
 	if(istype(I, /obj/item/hand_labeler_refill))
-		user << "<span class='notice'>You insert [I] into [src].</span>"
 		if(!user.unEquip(I))
 			return
+		user << "<span class='notice'>You insert [I] into [src].</span>"
 		qdel(I)
 		labels_left = initial(labels_left)
 		return
