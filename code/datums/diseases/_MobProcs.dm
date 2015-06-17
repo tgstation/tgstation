@@ -40,22 +40,15 @@
 		DD.carrier = 1
 	
 	//Copy properties over. This is so edited diseases persist.
-	DD.visibility_flags = D.visibility_flags
-	DD.disease_flags = D.disease_flags
-	DD.spread_flags = D.spread_flags
-	DD.strain_data = D.strain_data.Copy()
-	DD.form = D.form
-	DD.name = D.name
-	DD.desc = D.desc
-	DD.agent = D.agent
-	DD.spread_text = D.spread_text
-	DD.longevity= D.longevity
-	DD.cure_text = D.cure_text
-	DD.cures = D.cures
-	DD.cure_chance = D.cure_chance
-	DD.infectivity = D.infectivity
-	DD.permeability_mod = D.permeability_mod
-	DD.stage_prob = D.stage_prob
+	var/list/skipped = list("affected_mob","holder","carrier","stage","type","parent_type","vars")
+	for(var/V in DD.vars)
+		if(V in skipped)
+			continue
+		if(istype(DD.vars[V],/list))
+			var/list/L = D.vars[V]
+			DD.vars[V] = L.Copy()
+		else
+			DD.vars[V] = D.vars[V]
 	
 	DD.affected_mob.med_hud_set_status()
 
