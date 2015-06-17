@@ -681,6 +681,7 @@
 	name = "Nuka Cola Quantum"
 	desc = "Take the leap... enjoy a Quantum!"
 	icon_state = "quantum"
+
  /obj/item/weapon/reagent_containers/food/drinks/soda_cans/quantum/New()
 	..()
 	reagents.add_reagent("quantum", 30)
