@@ -573,7 +573,7 @@ var/list/non_fakeattack_weapons = list(/obj/item/weapon/gun/projectile, /obj/ite
 		"<span class='userdanger'>Unknown has punched [target]!</span>", \
 		"<span class='notice'>You hear something squeezing through the ducts...</span>", \
 		"<span class='notice'>You hear a distant scream.</span>", \
-		"<span class='notice'>Your </span>", \
+		"<span class='notice'>You feel invincible, nothing can hurt you!</span>", \
 		"<B>[target]</B> sneezes.", \
 		"<span class='warning'>You feel faint.</span>", \
 		"<span class='noticealien'>You hear a strange, alien voice in your head...</span>[pick("Hiss","Ssss")]", \
