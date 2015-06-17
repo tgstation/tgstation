@@ -205,6 +205,7 @@
 #include "code\datums\goon_mutations_disabilities.dm"
 #include "code\datums\goon_mutations_powers.dm"
 #include "code\datums\hud.dm"
+#include "code\datums\martial.dm"
 #include "code\datums\mind.dm"
 #include "code\datums\mixed.dm"
 #include "code\datums\modules.dm"

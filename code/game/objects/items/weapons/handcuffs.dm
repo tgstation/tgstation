@@ -1,3 +1,9 @@
+
+/obj/item/weapon/restraints
+	var/breakouttime = 600
+
+
+
 //Handcuffs
 
 /obj/item/weapon/restraints/handcuffs
@@ -14,7 +20,6 @@
 	throw_range = 5
 	m_amt = 500
 	origin_tech = "materials=1"
-	var/breakouttime = 600 //Deciseconds = 60s = 1 minute
 	var/cuffsound = 'sound/weapons/handcuffs.ogg'
 	var/trashtype = null //for disposable cuffs
 
@@ -144,12 +149,11 @@
 	w_class = 3.0
 	origin_tech = "materials=1"
 	slowdown = 7
-	var/breakouttime = 300	//Deciseconds = 30s = 0.5 minute
+	breakouttime = 300	//Deciseconds = 30s = 0.5 minute
 
 /obj/item/weapon/restraints/legcuffs/beartrap
 	name = "bear trap"
 	throw_speed = 1
-	throw_range = 1
 	icon_state = "beartrap0"
 	desc = "A trap used to catch bears and other legged creatures."
 	var/armed = 0

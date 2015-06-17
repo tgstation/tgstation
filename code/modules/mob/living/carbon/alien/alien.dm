@@ -212,6 +212,9 @@ Des: Removes all infected images from the alien.
 				qdel(I)
 	return
 
+/mob/living/carbon/alien/get_standard_pixel_y_offset(lying = 0)
+	return initial(pixel_y)
+
 /mob/living/carbon/alien/canBeHandcuffed()
 	return 1
 
