@@ -54,7 +54,7 @@
 		if(R.use(1))
 			user << "<span class='notice'>Constructing support lattice...</span>"
 			playsound(src, 'sound/weapons/Genhit.ogg', 50, 1)
-			ReplaceWithLattice()
+			ReplaceWithLattice(R)
 		else
 			user << "<span class='warning'>You need one rod to build a lattice.</span>"
 		return
@@ -66,7 +66,7 @@
 				qdel(L)
 				playsound(src, 'sound/weapons/Genhit.ogg', 50, 1)
 				user << "<span class='notice'>You build a floor.</span>"
-				ChangeTurf(/turf/simulated/floor/plating)
+				ChangeTurf(/turf/simulated/floor/plating, S)
 			else
 				user << "<span class='warning'>You need one floor tile to build a floor!</span>"
 		else

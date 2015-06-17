@@ -9,6 +9,7 @@
 	pressure_resistance = 5*ONE_ATMOSPHERE
 	layer = 2.9
 	health = 10
+	has_greyscale = 1
 	var/destroyed = 0
 	var/obj/item/stack/rods/stored
 
@@ -129,7 +130,10 @@
 	..()
 
 /obj/structure/grille/proc/Break()
-	icon_state = "brokengrille"
+	if(material)
+		icon_state = "brokengrille_greyscale"
+	else
+		icon_state = "brokengrille"
 	density = 0
 	destroyed = 1
 	stored.amount = 1

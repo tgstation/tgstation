@@ -1,5 +1,3 @@
-/obj/item/stack/tile
-
 /obj/item/stack/tile/plasteel
 	name = "floor tile"
 	singular_name = "floor tile"

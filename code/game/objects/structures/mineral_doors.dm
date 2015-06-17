@@ -2,7 +2,7 @@
 //machineryness
 
 /obj/structure/mineral_door
-	name = "mineral door"
+	name = "door"
 	density = 1
 	anchored = 1
 	opacity = 1
@@ -18,7 +18,12 @@
 	var/oreAmount = 7
 	var/openSound = 'sound/effects/stonedoor_openclose.ogg'
 	var/closeSound = 'sound/effects/stonedoor_openclose.ogg'
+	has_greyscale = 1
 
+/obj/structure/mineral_door/init_material()
+	..()
+	if(material)
+		icon_state = "mineraldoor_greyscale"
 /obj/structure/mineral_door/New(location)
 	..()
 	icon_state = mineralType
@@ -87,7 +92,10 @@
 /obj/structure/mineral_door/proc/Open()
 	isSwitchingStates = 1
 	playsound(loc, openSound, 100, 1)
-	flick("[mineralType]opening",src)
+	if(material)
+		flick("mineraldooropening_greyscale",src)
+	else
+		flick("[mineralType]opening",src)
 	sleep(10)
 	density = 0
 	opacity = 0
@@ -107,7 +115,10 @@
 		return
 	isSwitchingStates = 1
 	playsound(loc, closeSound, 100, 1)
-	flick("[mineralType]closing",src)
+	if(material)
+		flick("mineraldoorclosing_greyscale",src)
+	else
+		flick("[mineralType]closing",src)
 	sleep(10)
 	density = 1
 	opacity = 1
@@ -117,11 +128,16 @@
 	isSwitchingStates = 0
 
 /obj/structure/mineral_door/update_icon()
-	if(state)
-		icon_state = "[mineralType]open"
+	if(material)
+		if(state)
+			icon_state = "mineraldooropen_greyscale"
+		else
+			icon_state = "mineraldoor_greyscale"
 	else
-		icon_state = mineralType
-
+		if(state)
+			icon_state = "[mineralType]open"
+		else
+			icon_state = mineralType
 /obj/structure/mineral_door/attackby(obj/item/weapon/W, mob/user, params)
 	if(istype(W,/obj/item/weapon/pickaxe))
 		var/obj/item/weapon/pickaxe/digTool = W

@@ -40,7 +40,7 @@
 			user << "<span class='notice'>You begin reinforcing the floor...</span>"
 			if(do_after(user, 30))
 				if (R.get_amount() >= 2)
-					ChangeTurf(/turf/simulated/floor/engine)
+					ChangeTurf(/turf/simulated/floor/engine, R)
 					playsound(src, 'sound/items/Deconstruct.ogg', 80, 1)
 					R.use(2)
 					user << "<span class='notice'>You reinforce the floor.</span>"
@@ -50,7 +50,7 @@
 			var/obj/item/stack/tile/W = C
 			if(!W.use(1))
 				return
-			var/turf/simulated/floor/T = ChangeTurf(W.turf_type)
+			var/turf/simulated/floor/T = ChangeTurf(W.turf_type, W)
 			if(istype(W,/obj/item/stack/tile/light)) //TODO: get rid of this ugly check somehow
 				var/obj/item/stack/tile/light/L = W
 				var/turf/simulated/floor/light/F = T
@@ -102,7 +102,10 @@
 			if(!istype(src, /turf/simulated/floor/engine))
 				return
 			new /obj/item/stack/rods(src, 2)
-			ChangeTurf(/turf/simulated/floor/plating)
+			var/turf/simulated/floor/plating/P = ChangeTurf(/turf/simulated/floor/plating)
+			if(material)
+				P.material = material
+				P.init_material()
 			return
 
 

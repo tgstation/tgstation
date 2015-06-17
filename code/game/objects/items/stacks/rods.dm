@@ -19,6 +19,12 @@ var/global/list/datum/stack_recipe/rod_recipes = list ( \
 	max_amount = 50
 	attack_verb = list("hit", "bludgeoned", "whacked")
 	hitsound = 'sound/weapons/grenadelaunch.ogg'
+	has_greyscale = 1
+
+/obj/item/stack/rods/init_material()
+	if(material)
+		update_icon()
+	..()
 
 /obj/item/stack/rods/New(var/loc, var/amount=null)
 	..()
@@ -28,11 +34,16 @@ var/global/list/datum/stack_recipe/rod_recipes = list ( \
 
 /obj/item/stack/rods/update_icon()
 	var/amount = get_amount()
-	if((amount <= 5) && (amount > 0))
-		icon_state = "rods-[amount]"
+	if(!material)
+		if((amount <= 5) && (amount > 0))
+			icon_state = "rods-[amount]"
+		else
+			icon_state = "rods"
 	else
-		icon_state = "rods"
-
+		if((amount <= 5) && (amount > 0))
+			icon_state = "rods-[amount]_greyscale"
+		else
+			icon_state = "rods_greyscale"
 /obj/item/stack/rods/attackby(obj/item/W as obj, mob/user as mob, params)
 	if (istype(W, /obj/item/weapon/weldingtool))
 		var/obj/item/weapon/weldingtool/WT = W

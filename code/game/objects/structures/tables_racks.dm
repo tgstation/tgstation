@@ -178,6 +178,10 @@
 				icon_state = "[initial(icon_state)]_dir2"
 			if(6)
 				icon_state = "[initial(icon_state)]_dir3"
+		if(material)
+			var/temp_state = icon_state
+			icon = 'icons/obj/greyscale.dmi'
+			icon_state = "[temp_state]_greyscale"
 		if (dir_sum in list(1,2,4,8,5,6,9,10))
 			dir = dir_sum
 		else
@@ -336,11 +340,22 @@
 
 /obj/structure/table/proc/table_destroy(var/destroy_type, var/mob/user)
 
+	var/framestack = /obj/item/stack/rods
+	var/buildstack = /obj/item/stack/sheet/metal
+
 	if(destroy_type == TBL_DESTROY)
-		for(var/i = 1, i <= framestackamount, i++)
-			new framestack(get_turf(src))
-		for(var/i = 1, i <= buildstackamount, i++)
-			new buildstack(get_turf(src))
+		if(material)
+			for(var/i = 1, i <= framestackamount, i++)
+				var/obj/item/stack/rods/R = new /obj/item/stack/rods(get_turf(src))
+				R.material = material
+				R.init_material()
+			for(var/i = 1, i <= buildstackamount, i++)
+				new material.default_stack(get_turf(src))
+		else
+			for(var/i = 1, i <= framestackamount, i++)
+				new framestack(get_turf(src))
+			for(var/i = 1, i <= buildstackamount, i++)
+				new buildstack(get_turf(src))
 		qdel(src)
 		return
 
@@ -348,9 +363,17 @@
 		user << "<span class='notice'>You start disassembling [src]...</span>"
 		playsound(src.loc, 'sound/items/Screwdriver.ogg', 50, 1)
 		if(do_after(user, 20))
-			new frame(src.loc)
+			if(material)
+				var/obj/structure/table_frame/F = new /obj/structure/table_frame(src.loc)
+				F.material = material
+				F.init_material()
+			else
+				new frame(src.loc)
 			for(var/i = 1, i <= buildstackamount, i++)
-				new buildstack(get_turf(src))
+				if(material)
+					new material.default_stack(get_turf(src))
+				else
+					new buildstack(get_turf(src))
 			qdel(src)
 			return
 
@@ -358,10 +381,18 @@
 		user << "<span class='notice'>You start deconstructing [src]...</span>"
 		playsound(src.loc, 'sound/items/Ratchet.ogg', 50, 1)
 		if(do_after(user, 40))
-			for(var/i = 1, i <= framestackamount, i++)
-				new framestack(get_turf(src))
-			for(var/i = 1, i <= buildstackamount, i++)
-				new buildstack(get_turf(src))
+			if(material)
+				for(var/i = 1, i <= framestackamount, i++)
+					var/obj/item/stack/rods/R = new /obj/item/stack/rods(get_turf(src))
+					R.material = material
+					R.init_material()
+				for(var/i = 1, i <= buildstackamount, i++)
+					new material.default_stack(get_turf(src))
+			else
+				for(var/i = 1, i <= framestackamount, i++)
+					new framestack(get_turf(src))
+				for(var/i = 1, i <= buildstackamount, i++)
+					new buildstack(get_turf(src))
 			playsound(src.loc, 'sound/items/Deconstruct.ogg', 50, 1)
 			qdel(src)
 			return
@@ -429,7 +460,7 @@
 	name = "wooden table"
 	desc = "Do not apply fire to this. Rumour says it burns easily."
 	icon_state = "woodtable"
-	frame = /obj/structure/table_frame/wood
+	frame = /obj/structure/table_frame
 	framestack = /obj/item/stack/sheet/mineral/wood
 	buildstack = /obj/item/stack/sheet/mineral/wood
 
@@ -617,7 +648,10 @@
 /obj/item/weapon/rack_parts/attackby(obj/item/weapon/W as obj, mob/user as mob, params)
 	..()
 	if (istype(W, /obj/item/weapon/wrench))
-		new /obj/item/stack/sheet/metal( user.loc )
+		if(material)
+			new material.default_stack(user.loc)
+		else
+			new /obj/item/stack/sheet/metal( user.loc )
 		qdel(src)
 		return
 	return
@@ -627,6 +661,9 @@
 	if (do_after(user, 50))
 		var/obj/structure/rack/R = new /obj/structure/rack( user.loc )
 		R.add_fingerprint(user)
+		if(material)
+			R.material = material
+			R.init_material()
 		user.drop_item()
 		qdel(src)
 		return

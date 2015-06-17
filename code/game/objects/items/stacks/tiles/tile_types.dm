@@ -117,6 +117,7 @@
 	throw_range = 7
 	max_amount = 60
 	turf_type = /turf/simulated/floor/fancy/carpet
+	material = new/datum/material/carpet()
 
 /*
  * High-traction

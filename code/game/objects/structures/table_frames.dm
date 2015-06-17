@@ -27,76 +27,62 @@
 		if(do_after(user, 30))
 			playsound(src.loc, 'sound/items/Deconstruct.ogg', 50, 1)
 			for(var/i = 1, i <= framestackamount, i++)
-				new framestack(get_turf(src))
+				var/obj/item/stack/rods/R = new framestack(get_turf(src))
+				if(material)
+					R.material = material
+					R.init_material()
 			qdel(src)
 			return
-	if(istype(I, /obj/item/stack/sheet/plasteel))
-		var/obj/item/stack/sheet/plasteel/P = I
-		if(P.get_amount() < 1)
-			user << "<span class='warning'>You need one plasteel sheet to do this!</span>"
+	if(istype(I, /obj/item/stack/sheet))
+		var/obj/item/stack/sheet/S = I
+		if(!S.material)
 			return
-		user << "<span class='notice'>You start adding [P] to [src]...</span>"
-		if(do_after(user, 50))
-			P.use(1)
-			new /obj/structure/table/reinforced(src.loc)
-			qdel(src)
-		return
-	if(istype(I, /obj/item/stack/sheet/metal))
-		var/obj/item/stack/sheet/metal/M = I
-		if(M.get_amount() < 1)
-			user << "<span class='warning'>You need one metal sheet to do this!</span>"
+		if(S.get_amount() < 1)
+			user << "<span class='warning'>You need one [S] sheet to do this!</span>"
 			return
-		user << "<span class='notice'>You start adding [M] to [src]...</span>"
+		user << "<span class='notice'>You start adding [S] to [src]...</span>"
 		if(do_after(user, 20))
-			M.use(1)
-			new /obj/structure/table(src.loc)
-			qdel(src)
-		return
-	if(istype(I, /obj/item/stack/sheet/glass))
-		var/obj/item/stack/sheet/glass/G = I
-		if(G.get_amount() < 1)
-			user << "<span class='warning'>You need one glass sheet to do this!</span>"
+			S.use(1)
+			if(istype(S.material, /datum/material/plasteel))
+				new /obj/structure/table/reinforced(src.loc)
+				qdel(src)
+				return
+			if(istype(S.material, /datum/material/iron))
+				new /obj/structure/table(src.loc)
+				qdel(src)
+				return
+			if(istype(S.material, /datum/material/glass))
+				new /obj/structure/table/glass(src.loc)
+				qdel(src)
+				return
+			if(istype(S.material, /datum/material/wood))
+				new /obj/structure/table/wood(src.loc)
+				qdel(src)
+				return
+			else
+				var/obj/structure/table/T = new /obj/structure/table(src.loc)
+				T.material = S.material
+				T.init_material()
+				T.icon = 'icons/obj/greyscale.dmi'
+				qdel(src)
+				return
+	if(istype(I, /obj/item/stack/tile))
+		var/obj/item/stack/tile/L = I
+		if(!L.material)
 			return
-		user << "<span class='notice'>You start adding [G] to [src]...</span>"
-		if(do_after(user, 20))
-			G.use(1)
-			new /obj/structure/table/glass(src.loc)
-			qdel(src)
-		return
-
-/*
- * Wooden Frames
- */
-
-/obj/structure/table_frame/wood
-	name = "wooden table frame"
-	desc = "Four wooden legs with four framing wooden rods for a wooden table. You could easily pass through this."
-	icon_state = "wood_frame"
-	framestack = /obj/item/stack/sheet/mineral/wood
-	framestackamount = 2
-
-/obj/structure/table_frame/wood/attackby(var/obj/item/I, mob/user, params)
-	if(istype(I, /obj/item/weapon/wrench))
-		..()
-	if(istype(I, /obj/item/stack/sheet/mineral/wood))
-		var/obj/item/stack/sheet/mineral/wood/W = I
-		if(W.get_amount() < 1)
-			user << "<span class='warning'>You need one wood sheet to do this!</span>"
+		if(L.get_amount() < 1)
+			user << "<span class='warning'>You need one [L] tile to do this!</span>"
 			return
-		user << "<span class='notice'>You start adding [W] to [src]...</span>"
+		user << "<span class='notice'>You start adding [L] to [src]...</span>"
 		if(do_after(user, 20))
-			W.use(1)
-			new /obj/structure/table/wood(src.loc)
-			qdel(src)
-		return
-	if(istype(I, /obj/item/stack/tile/carpet))
-		var/obj/item/stack/tile/carpet/C = I
-		if(C.get_amount() < 1)
-			user << "<span class='warning'>You need one carpet sheet to do this!</span>"
-			return
-		user << "<span class='notice'>You start adding [C] to [src]...</span>"
-		if(do_after(user, 20))
-			C.use(1)
-			new /obj/structure/table/wood/poker(src.loc)
-			qdel(src)
-		return
+			L.use(1)
+			if(istype(L.material, /datum/material/carpet))
+				new /obj/structure/table/wood/poker(src.loc)
+				qdel(src)
+				return
+			else
+				var/obj/structure/table/T = new /obj/structure/table(src.loc)
+				T.material = L.material
+				T.init_material()
+				qdel(src)
+				return
