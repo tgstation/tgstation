@@ -78,7 +78,6 @@
 		return
 	..()
 
-
 /obj/item/weapon/storage/secure/attack_self(mob/user as mob)
 	user.set_machine(src)
 	var/dat = text("<TT><B>[]</B><BR>\n\nLock Status: []",src, (src.locked ? "LOCKED" : "UNLOCKED"))
@@ -127,6 +126,11 @@
 				src.attack_self(M)
 			return
 	return
+
+/obj/item/weapon/storage/secure/storage_contents_dump_act(obj/dest_object)
+	if(locked)
+		return 0
+	return ..()
 
 /obj/item/weapon/storage/secure/can_be_inserted(obj/item/W, stop_messages = 0)
 	if(locked)

@@ -57,6 +57,12 @@
 		..()
 	return
 
+//Check the destination item type for contentto.
+/obj/item/weapon/storage/lockbox/storage_contents_dump_act(obj/dest_object)
+	if(locked)
+		return 0
+	return ..()
+
 /obj/item/weapon/storage/lockbox/can_be_inserted(obj/item/W, stop_messages = 0)
 	if(locked)
 		return 0
