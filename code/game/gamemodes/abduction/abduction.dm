@@ -263,7 +263,7 @@
 		for(var/team_number=1,team_number<=teams,team_number++)
 			var/obj/machinery/abductor/console/con = get_team_console(team_number)
 			var/datum/objective/objective = team_objectives[team_number]
-			if (con.experiment.points > objective.target_amount)
+			if (con.experiment.points >= objective.target_amount)
 				SSshuttle.emergency.request(null, 0.5)
 				finished = 1
 				return ..()
@@ -279,7 +279,7 @@
 		var/datum/mind/smind = scientists[team_number]
 		var/mob/living/carbon/human/agent = amind.current
 		var/mob/living/carbon/human/scientist = smind.current
-		if (console.experiment.points > objective.target_amount)
+		if (console.experiment.points >= objective.target_amount)
 			world << "<font size = 3 color='green'><b>[team_name] team fullfilled its mission! </b></font>"
 			world << "<b>Team Members : [agent.name]([agent.ckey]),[scientist.name]([scientist.ckey])</b>"
 		else
