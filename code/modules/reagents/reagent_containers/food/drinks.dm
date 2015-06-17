@@ -674,8 +674,8 @@
  /obj/item/weapon/reagent_containers/food/drinks/soda_cans/nuka/New()
 	..()
 	reagents.add_reagent("nuka_cola", 30)
-	src.pixel_x = rand(-10.0, 10)
-	src.pixel_y = rand(-10.0, 10)
+	src.pixel_x = rand(-10, 10)
+	src.pixel_y = rand(-10, 10)
 
 /obj/item/weapon/reagent_containers/food/drinks/soda_cans/quantum
 	name = "Nuka Cola Quantum"
@@ -685,8 +685,8 @@
  /obj/item/weapon/reagent_containers/food/drinks/soda_cans/quantum/New()
 	..()
 	reagents.add_reagent("quantum", 30)
-	src.pixel_x = rand(-10.0, 10)
-	src.pixel_y = rand(-10.0, 10)
+	src.pixel_x = rand(-10, 10)
+	src.pixel_y = rand(-10, 10)
 
 
 /obj/item/weapon/reagent_containers/food/drinks/coloring
