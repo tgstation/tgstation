@@ -509,7 +509,7 @@
 					else
 						//Foreach continue //goto(3229)
 				if(!( src.active2 ))
-					src.temp = text("Could not locate record [].", t1)
+					src.temp = text("Could not locate record [].", sanitize(t1))
 				else
 					for(var/datum/data/record/E in data_core.general)
 						if((E.fields["name"] == src.active2.fields["name"] || E.fields["id"] == src.active2.fields["id"]))
