@@ -127,6 +127,7 @@
 	smoke_spread = 3
 	smoke_amt = 10
 
+
 /obj/effect/proc_holder/spell/aoe_turf/knock/harvester
 	name = "Disintegrate Doors"
 	desc = "No door shall stop you."

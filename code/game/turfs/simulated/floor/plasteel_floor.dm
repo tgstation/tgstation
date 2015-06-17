@@ -117,6 +117,10 @@
 /turf/simulated/floor/plasteel/cult
 	icon_state = "cult"
 	name = "engraved floor"
+	icon_state = "cult"
+	broken_states = list("cultdamage", "cultdamage2", "cultdamage3", "cultdamage4", "cultdamage")
+	burnt_states = list("cultdamage6", "cultdamage7")
+
 
 /turf/simulated/floor/plasteel/cult/narsie_act()
 	return

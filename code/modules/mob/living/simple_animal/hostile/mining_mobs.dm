@@ -20,7 +20,7 @@
 	a_intent = "harm"
 	var/throw_message = "bounces off of"
 	var/icon_aggro = null // for swapping to when we get aggressive
-	see_invisible = SEE_INVISIBLE_OBSERVER_NOLIGHTING
+	see_invisible = SEE_INVISIBLE_MINIMUM
 	see_in_dark = 14
 
 /mob/living/simple_animal/hostile/asteroid/Aggro()
