@@ -83,7 +83,7 @@
 	add_logs(firer, L, "shot", object="[src]", addition=reagent_note)
 
 	L.on_hit(type)
-	return L.apply_effects(stun, weaken, paralyze, irradiate, stutter, slur, eyeblur, drowsy, blocked, stamina, jitter)
+	return L.apply_effects(stun, weaken, paralyze, irradiate, slur, stutter, eyeblur, drowsy, blocked, stamina, jitter)
 
 /obj/item/projectile/proc/vol_by_damage()
 	if(src.damage)

@@ -157,7 +157,7 @@
 
 	L.Stun(stunforce)
 	L.Weaken(stunforce)
-	L.apply_effect(STUTTER, stunforce)
+	L.apply_effect(stunforce, STUTTER)
 
 	L.visible_message("<span class='danger'>[user] has stunned [L] with [src]!</span>", \
 							"<span class='userdanger'>[user] has stunned you with [src]!</span>")
