@@ -357,7 +357,7 @@
 	var/ab_team = S.team
 	for(var/obj/machinery/abductor/experiment/E in machines)
 		if(E.team == ab_team)
-			if(E.points >= target_amount)
+			if(E.abductee_minds.len >= target_amount)
 				return 1
 			else
 				return 0
