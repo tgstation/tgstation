@@ -127,6 +127,14 @@
 	using.layer = 19
 	src.adding += using
 
+	using = getFromPool(/obj/screen)
+	using.name = "resist"
+	using.icon = ui_style
+	using.icon_state = "act_resist"
+	using.screen_loc = ui_pull_resist
+	using.layer = 19
+	src.adding += using
+
 	mymob.m_suitclothesbg = getFromPool(/obj/screen)
 	mymob.m_suitclothesbg.icon = ui_style
 	mymob.m_suitclothesbg.icon_state = "center"
