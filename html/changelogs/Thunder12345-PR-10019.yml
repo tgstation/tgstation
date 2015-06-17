@@ -1,0 +1,6 @@
+author: Thunder12345
+
+delete-after: True
+
+  - rscadd: "Combat shotguns are now semi automatic, and will be pumped automatically after firing."
+  - tweak: "Combat shotgun capacity has been reduced to six shells."
