@@ -229,7 +229,7 @@ obj/item/projectile/kinetic/New()
 /obj/item/projectile/plasma/on_hit(var/atom/target)
 	if(istype(target, /turf/simulated/mineral))
 		var/turf/simulated/mineral/M = target
-		M.gets_drilled(firer)
+		M.gets_drilled(firer, artifact_fail = 1)
 	return ..()
 
 /obj/item/projectile/plasma/adv

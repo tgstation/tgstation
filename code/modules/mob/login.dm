@@ -58,7 +58,7 @@
 // Calling it in the overriden Login, such as /mob/living/Login() doesn't cause this.
 /mob/proc/update_interface()
 	if(client)
-		if(winget(src, "mainwindow.hotkey_toggle", "is-checked") == "true")
+		if(winget(client, "mainwindow.hotkey_toggle", "is-checked") == "true")
 			update_hotkey_mode()
 		else
 			update_normal_mode()
