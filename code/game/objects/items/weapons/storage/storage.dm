@@ -25,7 +25,7 @@
 	var/preposition = "in" // You put things 'in' a bag, but trays need 'on'.
 
 
-/obj/item/weapon/storage/MouseDrop(obj/over_object)
+/obj/item/weapon/storage/MouseDrop(atom/over_object)
 	if(iscarbon(usr) || isdrone(usr)) //all the check for item manipulation are in other places, you can safely open any storages as anything and its not buggy, i checked
 		var/mob/M = usr
 
@@ -44,8 +44,7 @@
 
 		if(!( M.restrained() ) && !( M.stat ))
 			if(!( istype(over_object, /obj/screen) ))
-				if(Adjacent(M) && over_object.Adjacent(M))
-					return contentto(over_object, M)
+				return content_can_dump(over_object, M)
 
 			if(!(loc == usr) || (loc && loc.loc == usr))
 				return
@@ -62,46 +61,22 @@
 					M.put_in_l_hand(src)
 			add_fingerprint(usr)
 
-//Proc for Contents transfer to other containers, bins, turf, and more possible additions.
-/obj/item/weapon/storage/proc/contentto(obj/dest_object, mob/user)
-	playsound(loc, "rustle", 50, 1, -5)
-	switch( storage_contents_dump_act(dest_object) )
-		if(1) // turf
-			var/turf/T = get_turf(dest_object)
-			for(var/obj/item/I in src)
-				remove_from_storage(I, T)
-			return 1
-
-		if(2) //storage item
-			var/obj/item/weapon/storage/S = dest_object
-			for(var/obj/item/I in src)
-				if(S.can_be_inserted(I,0,user))
-					remove_from_storage(I, S)
-			orient2hud(user)
-			S.orient2hud(user)
-			if(user.s_active) //refresh the HUD to show the transfered contents
-				user.s_active.close(user)
-				user.s_active.show_to(user)
-			return 2
-
-		if(3) //bin
-			for(var/obj/item/I in src)
-				remove_from_storage(I, dest_object) //No check needed, put everything inside
-			return 3
-
+//Check if this storage can dump the items
+/obj/item/weapon/storage/proc/content_can_dump(atom/dest_object, mob/user)
+	if(Adjacent(user) && dest_object.Adjacent(user))
+		return dest_object.storage_contents_dump_act(src, user)
 	return 0
 
-//Check the destination item type for contentto.
-/obj/item/weapon/storage/proc/storage_contents_dump_act(obj/dest_object)
-	if( istype(dest_object, /obj/item/weapon/storage) ) //Check if storage item
-		return 2
-	if( istype(dest_object, /obj/machinery/disposal) ) //Check if Bin
-		return 3
-
-	var/turf/T = get_turf(dest_object)
-	if( istype(T, /turf/simulated/wall) ) //check if the turf isn't a wall
-		return 0
-
+//Object behaviour on storage dump
+/obj/item/weapon/storage/storage_contents_dump_act(obj/item/weapon/storage/src_object, mob/user)
+	for(var/obj/item/I in src_object)
+		if(can_be_inserted(I,0,user))
+			src_object.remove_from_storage(I, src)
+	orient2hud(user)
+	src_object.orient2hud(user)
+	if(user.s_active) //refresh the HUD to show the transfered contents
+		user.s_active.close(user)
+		user.s_active.show_to(user)
 	return 1
 
 /obj/item/weapon/storage/proc/return_inv()

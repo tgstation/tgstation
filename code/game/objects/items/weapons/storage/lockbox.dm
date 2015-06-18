@@ -58,8 +58,9 @@
 	return
 
 //Check the destination item type for contentto.
-/obj/item/weapon/storage/lockbox/storage_contents_dump_act(obj/dest_object)
+/obj/item/weapon/storage/lockbox/storage_contents_dump_act(obj/item/weapon/storage/src_object, mob/user)
 	if(locked)
+		user << "<span class='warning'>It's locked!</span>"
 		return 0
 	return ..()
 

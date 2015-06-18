@@ -192,6 +192,11 @@
 /turf/proc/Bless()
 	flags |= NOJAUNT
 
+/turf/storage_contents_dump_act(obj/item/weapon/storage/src_object, mob/user)
+	for(var/obj/item/I in src_object)
+		src_object.remove_from_storage(I, src)
+	return 1
+
 //////////////////////////////
 //Distance procs
 //////////////////////////////
@@ -286,3 +291,4 @@
 	name = "Centcom Access"
 	icon = 'icons/obj/doors/Doorele.dmi'
 	icon_state = "door_closed"
+

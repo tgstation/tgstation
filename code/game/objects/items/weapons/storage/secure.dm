@@ -75,6 +75,7 @@
 /obj/item/weapon/storage/secure/MouseDrop(over_object, src_location, over_location)
 	if (locked)
 		src.add_fingerprint(usr)
+		usr << "<span class='warning'>It's locked!</span>"
 		return
 	..()
 
@@ -127,8 +128,9 @@
 			return
 	return
 
-/obj/item/weapon/storage/secure/storage_contents_dump_act(obj/dest_object)
+/obj/item/weapon/storage/secure/storage_contents_dump_act(obj/item/weapon/storage/src_object, mob/user)
 	if(locked)
+		user << "<span class='warning'>It's locked!</span>"
 		return 0
 	return ..()
 
