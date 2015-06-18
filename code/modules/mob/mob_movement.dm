@@ -297,6 +297,16 @@
 					anim(mobloc,mob,'icons/mob/mob.dmi',,"shadow",,L.dir)
 				L.loc = get_step(L, direct)
 			L.dir = direct
+		if(3) //Incorporeal move, but blocked by holy-watered tiles
+			var/turf/simulated/floor/stepTurf = get_step(L, direct)
+			if(stepTurf.flags & NODROP)
+				L << "<span class='warning'>Holy energies block your path.</span>"
+				L.notransform = 1
+				spawn(2)
+					L.notransform = 0
+			else
+				L.loc = get_step(L, direct)
+				L.dir = direct
 	return 1
 
 

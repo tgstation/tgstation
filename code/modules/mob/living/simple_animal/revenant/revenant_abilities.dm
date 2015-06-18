@@ -11,11 +11,7 @@
 	var/list/drained_mobs = list() //Cannot harvest the same mob twice
 
 /obj/effect/proc_holder/spell/targeted/revenant_harvest/cast(list/targets, var/mob/living/simple_animal/revenant/user = usr)
-	if(user.inhibited)
-		user << "<span class='warning'>Something is blocking the use of [src]!</span>"
-		charge_counter = charge_max
-		return
-	if(!user.wallcheck())
+	if(!user.castcheck(0))
 		charge_counter = charge_max
 		return
 	for(var/mob/living/carbon/human/target in targets)
@@ -87,26 +83,16 @@
 	var/locked = 1
 
 /obj/effect/proc_holder/spell/targeted/revenant_transmit/cast(list/targets, var/mob/living/simple_animal/revenant/user = usr)
-	if(user.inhibited)
-		user << "<span class='warning'>Something is blocking the use of [src]!</span>"
+	if(!user.castcheck(-5))
 		charge_counter = charge_max
 		return
-	if(locked && essence_check(5, 1))
+	if(locked)
 		usr << "<span class='info'>You have unlocked Transmit!</span>"
 		locked = 0
 		charge_counter = charge_max
 		panel = "Revenant Abilities"
 		range = 7
 		include_user = 0
-		return
-	if(locked)
-		charge_counter = charge_max
-		return
-	if(!user.wallcheck())
-		charge_counter = charge_max
-		return
-	if(!essence_check(5))
-		charge_counter = charge_max
 		return
 	for(var/mob/living/M in targets)
 		spawn(0)
@@ -129,25 +115,14 @@
 	var/locked = 1
 
 /obj/effect/proc_holder/spell/aoe_turf/revenant_light/cast(list/targets, var/mob/living/simple_animal/revenant/user = usr)
-	if(user.inhibited)
-		user << "<span class='warning'>Something is blocking the use of [src]!</span>"
-		charge_counter = charge_max
-		return
-	if(locked && essence_check(25, 1))
-		user << "<span class='info'>You have unlocked Overload Light!</span>"
-		name = "Overload Light (25E)"
-		panel = "Revenant Abilities"
-		locked = 0
-		range = 5
+	if(!user.castcheck(-25))
 		charge_counter = charge_max
 		return
 	if(locked)
-		charge_counter = charge_max
-		return
-	if(!user.wallcheck())
-		charge_counter = charge_max
-		return
-	if(!essence_check(25))
+		user << "<span class='info'>You have unlocked Overload Light!</span>"
+		panel = "Revenant Abilities"
+		locked = 0
+		range = 5
 		charge_counter = charge_max
 		return
 	for(var/turf/T in targets)
@@ -165,3 +140,44 @@
 						M.electrocute_act(25, "[L.name]")
 						playsound(M, 'sound/machines/defib_zap.ogg', 50, 1, -1)
 	user.reveal(50, 1)
+
+
+//Defile: Corrupts nearby stuff, unblesses floor tiles.
+/obj/effect/proc_holder/spell/aoe_turf/revenantDefile
+	name = "Defile (30E)"
+	desc = "Twists and corrupts certain nearby objects."
+	panel = "Revenant Abilities (Locked)"
+	charge_max = 300
+	clothes_req = 0
+	range = 1
+	var/locked = 1
+
+/obj/effect/proc_holder/spell/aoe_turf/revenantDefile/cast(list/targets, var/mob/living/simple_animal/revenant/user = usr)
+	if(!user.castcheck(-30))
+		charge_counter = charge_max
+		return
+	if(locked)
+		user << "<span class='info'>You have unlocked Defile!</span>"
+		panel = "Revenant Abilities"
+		locked = 0
+		range = 4
+		charge_counter = charge_max
+		return
+	for(var/turf/T in targets)
+		spawn(0)
+			if(T.flags & NOJAUNT)
+				T.flags -= NOJAUNT
+			for(var/obj/machinery/bot/bot in T.contents)
+				bot.emag_act()
+				bot.visible_message("<span class='warning'>[bot] [pick("shudders", "buzzes", "clunks")] [pick("oddly", "strangely", "loudly")]!</span>")
+			for(var/mob/living/carbon/human/human in T.contents)
+				human << "<span class='warning'>You suddenly feel tired.</span>"
+				human.adjustStaminaLoss(25)
+			for(var/mob/living/silicon/robot/robot in T.contents)
+				robot.visible_message("<span class='warning'>[robot] lets out an alarm!</span>", \
+									  "<span class='boldannounce'>01001111 01010110 01000101 01010010 01001100 01001111 01000001 01000100</span>")
+				robot << 'sound/misc/interference.ogg'
+				playsound(robot, 'sound/machines/warning-buzzer.ogg', 50, 1)
+			for(var/obj/structure/window/window in T.contents)
+				window.hit(rand(10,50))
+	user.reveal(30, 1)
