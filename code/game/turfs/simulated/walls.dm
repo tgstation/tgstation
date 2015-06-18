@@ -154,7 +154,7 @@
 	var/turf/T = user.loc	//get user's location for delay checks
 
 	//the istype cascade has been spread among various procs for easy overriding
-	if(try_wallmount(W,user,T) || try_decon(W,user,T) || try_destroy(W,user,T))
+	if(try_wallmount(W,user,T) || try_decon(W,user,T) || (istype(src) && try_destroy(W,user,T)))
 		return
 
 	return attack_hand(user)

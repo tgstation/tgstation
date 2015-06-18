@@ -271,7 +271,7 @@ field_generator power level display
 		return
 	for(var/dist = 0, dist <= 9, dist += 1) // checks out to 8 tiles away for another generator
 		T = get_step(T, NSEW)
-		if(T.density)//We cant shoot a field though this
+		if(T && T.density)//We cant shoot a field though this
 			return 0
 		for(var/atom/A in T.contents)
 			if(ismob(A))
