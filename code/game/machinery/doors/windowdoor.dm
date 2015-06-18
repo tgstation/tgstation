@@ -183,6 +183,11 @@
 			take_damage(round(Proj.damage / 2))
 	..()
 
+/obj/machinery/door/window/temperature_expose(datum/gas_mixture/air, exposed_temperature, exposed_volume)
+	if(exposed_temperature > T0C + 800)
+		take_damage(round(exposed_volume / 200))
+	..()
+
 //When an object is thrown at the window
 /obj/machinery/door/window/hitby(AM as mob|obj)
 

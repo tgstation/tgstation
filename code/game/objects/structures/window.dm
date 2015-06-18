@@ -219,18 +219,17 @@
 			state = (state == 0 ? 1 : 0)
 			user << (state == 1 ? "<span class='notice'>You pry the window into the frame.</span>" : "<span class='notice'>You pry the window out of the frame.</span>")
 
-	else if(istype(I, /obj/item/weapon/weldingtool))
+	else if(istype(I, /obj/item/weapon/weldingtool) && user.a_intent == "help")
 		var/obj/item/weapon/weldingtool/WT = I
-		if(user.a_intent == "help") //so you can still break windows with welding tools
-			if(health < maxhealth)
-				if(WT.remove_fuel(0,user))
-					user << "<span class='notice'>You begin repairing [src]...</span>"
-					playsound(loc, 'sound/items/Welder.ogg', 40, 1)
-					if(do_after(user, 40))
-						health = maxhealth
-						playsound(loc, 'sound/items/Welder2.ogg', 50, 1)
-			else
-				user << "<span class='warning'>[src] is already in good condition!</span>"
+		if(health < maxhealth)
+			if(WT.remove_fuel(0,user))
+				user << "<span class='notice'>You begin repairing [src]...</span>"
+				playsound(loc, 'sound/items/Welder.ogg', 40, 1)
+				if(do_after(user, 40))
+					health = maxhealth
+					playsound(loc, 'sound/items/Welder2.ogg', 50, 1)
+		else
+			user << "<span class='warning'>[src] is already in good condition!</span>"
 		update_nearby_icons()
 
 	else if(istype(I, /obj/item/weapon/wrench) && !anchored)
