@@ -76,7 +76,8 @@
 /obj/machinery/computer/cloning/attackby(obj/item/W as obj, mob/user as mob, params)
 	if (istype(W, /obj/item/weapon/disk/data)) //INSERT SOME DISKETTES
 		if (!src.diskette)
-			user.drop_item()
+			if(!user.drop_item())
+				return ..()
 			W.loc = src
 			src.diskette = W
 			user << "<span class='notice'>You insert [W].</span>"

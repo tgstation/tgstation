@@ -429,7 +429,8 @@ Auto Patrol: []"},
 				user << "<span class='notice'>You weld the hole in [src] shut!</span>"
 
 	else if(isprox(I) && (build_step == 1))
-		user.drop_item()
+		if(!user.unEquip(I))
+			return
 		build_step++
 		user << "<span class='notice'>You add the prox sensor to [src]!</span>"
 		overlays += "hs_eye"
@@ -437,7 +438,8 @@ Auto Patrol: []"},
 		qdel(I)
 
 	else if(((istype(I, /obj/item/robot_parts/l_arm)) || (istype(I, /obj/item/robot_parts/r_arm))) && (build_step == 2))
-		user.drop_item()
+		if(!user.unEquip(I))
+			return
 		build_step++
 		user << "<span class='notice'>You add the robot arm to [src]!</span>"
 		name = "helmet/signaler/prox sensor/robot arm assembly"
@@ -445,7 +447,8 @@ Auto Patrol: []"},
 		qdel(I)
 
 	else if((istype(I, /obj/item/weapon/melee/baton)) && (build_step >= 3))
-		user.drop_item()
+		if(!user.unEquip(I))
+			return
 		build_step++
 		user << "<span class='notice'>You complete the Securitron! Beep boop.</span>"
 		var/obj/machinery/bot/secbot/S = new /obj/machinery/bot/secbot

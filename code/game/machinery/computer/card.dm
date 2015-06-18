@@ -49,16 +49,19 @@ var/time_last_changed_position = 0
 		var/obj/item/weapon/card/id/idcard = O
 		if(check_access(idcard))
 			if(!scan)
-				usr.drop_item()
+				if(!usr.drop_item())
+					return
 				idcard.loc = src
 				scan = idcard
 			else if(!modify)
-				usr.drop_item()
+				if(!usr.drop_item())
+					return
 				idcard.loc = src
 				modify = idcard
 		else
 			if(!modify)
-				usr.drop_item()
+				if(!usr.drop_item())
+					return
 				idcard.loc = src
 				modify = idcard
 	else
@@ -313,7 +316,8 @@ var/time_last_changed_position = 0
 			else
 				var/obj/item/I = usr.get_active_hand()
 				if (istype(I, /obj/item/weapon/card/id))
-					usr.drop_item()
+					if(!usr.drop_item())
+						return
 					I.loc = src
 					modify = I
 			authenticated = 0
@@ -326,7 +330,8 @@ var/time_last_changed_position = 0
 			else
 				var/obj/item/I = usr.get_active_hand()
 				if (istype(I, /obj/item/weapon/card/id))
-					usr.drop_item()
+					if(!usr.drop_item())
+						return
 					I.loc = src
 					scan = I
 			authenticated = 0

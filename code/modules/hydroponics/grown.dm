@@ -897,7 +897,7 @@ obj/item/weapon/reagent_containers/food/snacks/grown/shell/eggy/add_juice()
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/tomato/blue/bluespace/attack_self(var/mob/user)
 	squish(user)
-	user.drop_item()
+	user.unEquip(src)
 	src.visible_message("[user] squashes the [src.name].","<span class='italics'>You hear a smack.</span>")
 	qdel(src)
 

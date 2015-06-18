@@ -108,10 +108,11 @@
 					return
 				var/obj/item/weapon/circuitboard/B = P
 				if(B.board_type == "machine")
+					if(!user.drop_item())
+						return
 					playsound(src.loc, 'sound/items/Deconstruct.ogg', 50, 1)
 					user << "<span class='notice'>You add the circuit board to the frame.</span>"
 					circuit = P
-					user.drop_item()
 					P.loc = src
 					icon_state = "box_2"
 					state = 3
@@ -199,6 +200,8 @@
 				var/success
 				for(var/I in req_components)
 					if(istype(P, I) && (req_components[I] > 0))
+						if(!user.drop_item())
+							return
 						success=1
 						if(istype(P, /obj/item/stack/cable_coil))
 							var/obj/item/stack/cable_coil/CP = P
@@ -211,7 +214,6 @@
 								req_components[I]--
 								update_req_desc()
 							break
-						user.drop_item()
 						P.loc = src
 						components += P
 						req_components[I]--

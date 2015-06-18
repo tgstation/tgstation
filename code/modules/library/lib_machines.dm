@@ -447,7 +447,8 @@ var/global/list/datum/cachedbook/cachedbooks // List of our cached book datums
 
 /obj/machinery/libraryscanner/attackby(var/obj/O as obj, var/mob/user as mob, params)
 	if(istype(O, /obj/item/weapon/book))
-		user.drop_item()
+		if(!user.drop_item())
+			return
 		O.loc = src
 
 /obj/machinery/libraryscanner/attack_hand(var/mob/user as mob)
@@ -505,7 +506,8 @@ var/global/list/datum/cachedbook/cachedbooks // List of our cached book datums
 		if(busy)
 			user << "<span class='warning'>The book binder is busy. Please wait for completion of previous operation.</span>"
 			return
-		user.drop_item()
+		if(!user.drop_item())
+			return
 		O.loc = src
 		user.visible_message("[user] loads some paper into [src].", "You load some paper into [src].")
 		src.visible_message("[src] begins to hum as it warms up its printing drums.")

@@ -58,8 +58,9 @@
 			if(O:wielded)
 				user << "<span class='warning'>Unwield the axe first.</span>"
 				return
+			if(!user.drop_item())
+				return
 			fireaxe = O
-			user.drop_item()
 			src.contents += O
 			user << "<span class='caution'>You place the fire axe back in the [src.name].</span>"
 			update_icon()

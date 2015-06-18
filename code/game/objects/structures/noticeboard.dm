@@ -19,9 +19,10 @@
 /obj/structure/noticeboard/attackby(var/obj/item/weapon/O as obj, var/mob/user as mob, params)
 	if(istype(O, /obj/item/weapon/paper))
 		if(notices < 5)
+			if(!user.drop_item())
+				return
 			O.add_fingerprint(user)
 			add_fingerprint(user)
-			user.drop_item()
 			O.loc = src
 			notices++
 			icon_state = "nboard0[notices]"	//update sprite
