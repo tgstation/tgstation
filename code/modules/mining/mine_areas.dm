@@ -4,52 +4,25 @@
 	icon_state = "mining"
 	has_gravity = 1
 
-/area/mine/explored
+
+/area/space/mine
+	has_gravity = 1
+
+/area/space/mine/explored
 	name = "Mine"
 	icon_state = "explored"
 	music = null
-	always_unpowered = 1
-	requires_power = 1
-	poweralm = 0
-	power_environ = 0
-	power_equip = 0
-	power_light = 0
+	has_gravity = 1
 	ambientsounds = list('sound/ambience/ambimine.ogg')
 
-/area/mine/explored/one
-	icon_state = "anosample"
-
-/area/mine/explored/two
-	icon_state = "anolab"
-
-/area/mine/explored/three
-	icon_state = "iso2"
 
 
-/area/mine/unexplored
+/area/space/mine/unexplored
 	name = "Mine"
 	icon_state = "unexplored"
 	music = null
-	always_unpowered = 1
-	requires_power = 1
-	poweralm = 0
-	power_environ = 0
-	power_equip = 0
-	power_light = 0
+	has_gravity = 1
 	ambientsounds = list('sound/ambience/ambimine.ogg')
-
-//Subdivisions to prevent hanging when APC placed
-/area/mine/unexplored/one
-	icon_state = "iso1"
-
-/area/mine/unexplored/two
-	icon_state = "anospectro"
-
-/area/mine/unexplored/three
-	icon_state = "iso3"
-
-/area/mine/unexplored/four
-	icon_state = "anomaly"
 
 
 /area/mine/lobby

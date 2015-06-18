@@ -65,8 +65,8 @@
 
 
 /obj/item/areaeditor/permit/create_area()
-	..()
-	qdel(src)
+	if (..())
+		qdel(src)
 
 
 //Station blueprints!!!
@@ -125,25 +125,27 @@
 
 
 /obj/item/areaeditor/proc/create_area()
-	var/res = detect_room(get_turf(usr))
+	var/turf/T = get_turf(usr)
+	var/res = detect_room(T)
+	var/area/oldarea = T.loc
 	if(!istype(res,/list))
 		switch(res)
 			if(ROOM_ERR_SPACE)
 				usr << "<span class='warning'>The new area must be completely airtight.</span>"
-				return
+				return 0
 			if(ROOM_ERR_TOOLARGE)
 				usr << "<span class='warning'>The new area is too large.</span>"
-				return
+				return 0
 			else
 				usr << "<span class='warning'>Error! Please notify administration.</span>"
-				return
+				return 0
 	var/list/turf/turfs = res
 	var/str = trim(stripped_input(usr,"New area name:", "Blueprint Editing", "", MAX_NAME_LEN))
 	if(!str || !length(str)) //cancel
-		return
+		return 0
 	if(length(str) > 50)
 		usr << "<span class='warning'>The given name is too long.  The area remains undefined.</span>"
-		return
+		return 0
 	var/area/A = new
 	A.name = str
 	//A.tagbase="[A.type]_[md5(str)]" // without this dynamic light system ruin everithing
@@ -153,6 +155,7 @@
 	A.power_equip = 0
 	A.power_light = 0
 	A.power_environ = 0
+	A.has_gravity = oldarea.has_gravity
 	A.always_unpowered = 0
 	move_turfs_to_area(turfs, A)
 	//A.SetDynamicLighting()
@@ -160,7 +163,7 @@
 	A.addSorted()
 
 	interact()
-	return
+	return 1
 
 
 /obj/item/areaeditor/proc/move_turfs_to_area(var/list/turf/turfs, var/area/A)
@@ -204,6 +207,8 @@
 	if (get_area_type(T2.loc)!=AREA_SPACE)
 		return BORDER_BETWEEN
 	if (istype(T2, /turf/simulated/wall))
+		return BORDER_2NDTILE
+	if (istype(T2, /turf/simulated/mineral))
 		return BORDER_2NDTILE
 	if (!istype(T2, /turf/simulated))
 		return BORDER_BETWEEN

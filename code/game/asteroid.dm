@@ -138,7 +138,7 @@ proc/make_mining_asteroid_secret()
 	possiblethemes -= theme //once a theme is selected, it's out of the running!
 	var/floor = pick(floortypes)
 
-	turfs = get_area_turfs(/area/mine/unexplored)
+	turfs = get_area_turfs(/area/space/mine/unexplored)
 
 	if(!turfs.len)
 		return 0
@@ -160,7 +160,7 @@ proc/make_mining_asteroid_secret()
 		surroundings += range(7, locate(T.x,T.y+y_size,T.z))
 		surroundings += range(7, locate(T.x+x_size,T.y+y_size,T.z))
 
-		if(locate(/area/mine/explored) in surroundings)
+		if(locate(/area/space/mine/explored) in surroundings)
 			valid = 0
 			continue
 

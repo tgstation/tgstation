@@ -371,6 +371,8 @@
 	new /obj/item/areaeditor/permit(src)
 	new /obj/item/areaeditor/permit(src)
 	new /obj/item/areaeditor/permit(src)
+	new /obj/item/areaeditor/permit(src)
+	new /obj/item/areaeditor/permit(src)
 
 
 /obj/item/weapon/storage/box/ids

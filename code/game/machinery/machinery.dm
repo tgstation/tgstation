@@ -123,6 +123,7 @@ Class Procs:
 	..()
 	machines += src
 	SSmachine.processing += src
+	power_change()
 	auto_use_power()
 
 /obj/machinery/Destroy()

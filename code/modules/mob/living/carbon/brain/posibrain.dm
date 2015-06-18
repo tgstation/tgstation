@@ -68,8 +68,8 @@ var/global/posibrain_notif_cooldown = 0
 	if(H.mind)
 		H.mind.transfer_to(brainmob)
 
-	brainmob.mind.remove_all_antag()
-	brainmob.mind.wipe_memory()
+//	brainmob.mind.remove_all_antag()
+//	brainmob.mind.wipe_memory()
 
 	brainmob << "<span class='warning'>ALL PAST LIVES ARE FORGOTTEN.</span>"
 
@@ -87,10 +87,10 @@ var/global/posibrain_notif_cooldown = 0
 	brainmob.name = "[pick(list("PBU","HIU","SINA","ARMA","OSI","HBL","MSO","RR"))]-[rand(100, 999)]" //Re-initialize the name so it doesn't repeat
 	name = "positronic brain ([brainmob.name])"
 
-	brainmob.mind.remove_all_antag()
-	brainmob.mind.wipe_memory()
+//	brainmob.mind.remove_all_antag()
+//	brainmob.mind.wipe_memory()
 
-	brainmob << "<span class='warning'>ALL PAST LIVES ARE FORGOTTEN.</span>"
+	brainmob << "<span class='userdanger'>ALL PAST LIVES ARE FORGOTTEN.</span>"
 
 	brainmob << "<b>You are a positronic brain, brought into existence on [station_name()].</b>"
 	brainmob << "<b>As a synthetic intelligence, you answer to all crewmembers, as well as the AI.</b>"
