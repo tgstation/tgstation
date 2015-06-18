@@ -108,7 +108,7 @@
 
 /obj/item/device/flash/proc/terrible_conversion_proc(var/mob/M, var/mob/user)
 	if(ishuman(M) && ishuman(user) && M.stat != DEAD)
-		if(user.mind && ((user.mind in ticker.mode.head_revolutionaries)))
+		if(user.mind && (user.mind in ticker.mode.head_revolutionaries))
 			if(M.client)
 				if(M.stat == CONSCIOUS)
 					M.mind_initialize() //give them a mind datum if they don't have one.
