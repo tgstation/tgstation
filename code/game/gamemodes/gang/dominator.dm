@@ -77,7 +77,7 @@
 		mode.A_timer = "OFFLINE"
 	if(gang == "B")
 		mode.B_timer = "OFFLINE"
-	if(!isnum(mode.A_timer) && !isnum(mode.B_timer))
+	if(gang && !isnum(mode.A_timer) && !isnum(mode.B_timer))
 		SSshuttle.emergencyNoEscape = 0
 		if(SSshuttle.emergency.mode == SHUTTLE_STRANDED)
 			SSshuttle.emergency.mode = SHUTTLE_DOCKED
@@ -85,7 +85,6 @@
 			priority_announce("Hostile enviroment resolved. You have 3 minutes to board the Emergency Shuttle.", null, 'sound/AI/shuttledock.ogg', "Priority")
 		else
 			priority_announce("All hostile activity within station systems have ceased.","Network Alert")
-	if(gang)
 		ticker.mode.message_gangtools(((gang=="A") ? ticker.mode.A_tools : ticker.mode.B_tools),"Hostile takeover cancelled: Dominator is no longer operational.",1,1)
 	SetLuminosity(0)
 	icon_state = "dominator-broken"
