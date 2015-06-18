@@ -43,6 +43,7 @@
 	return
 
 /turf/simulated/mineral/New()
+	mining_turfs += src
 	..()
 	spawn(1)
 		var/turf/T
@@ -71,10 +72,11 @@
 					Spread(T)
 
 	HideRock()
-	spawn (300)
-		lighting_fix_overlays()
-		update_overlay()
 
+
+/turf/simulated/mineral/Destroy()
+	mining_turfs -= src
+	..()
 
 /turf/simulated/mineral/proc/HideRock()
 	if(hidden)
@@ -702,6 +704,7 @@
 
 /turf/simulated/floor/plating/asteroid/New()
 	var/proper_name = name
+	mining_turfs += src
 	..()
 	name = proper_name
 	//if (prob(50))
@@ -711,6 +714,10 @@
 		icon_state = "asteroid[rand(0,12)]"
 //	spawn(2)
 //O		updateMineralOverlays()
+
+/turf/simulated/floor/plating/Destroy()
+	mining_turfs -= src
+	..()
 
 /turf/simulated/floor/plating/asteroid/burn_tile()
 	return

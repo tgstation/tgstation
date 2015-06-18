@@ -137,6 +137,14 @@ Calculate the longest number of ticks the MC can wait between each cycle without
 		SS.can_fire = 1
 		SS.next_fire = world.time + rand(0,SS.wait)
 
+	for(var/turf/simulated/T in mining_turfs)
+		set background = TRUE
+		if(!T)
+			continue
+		if(T.lighting_test_overlays())
+			T.lighting_fix_overlays()
+
+
 /datum/controller/game_controller/proc/Recover()
 	var/msg = "## DEBUG: [time2text(world.timeofday)] MC restarted. Reports:\n"
 	for(var/varname in master_controller.vars)

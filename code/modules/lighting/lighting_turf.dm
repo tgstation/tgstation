@@ -60,6 +60,15 @@
 	lighting_build_overlays()
 	return
 
+turf/proc/lighting_test_overlays()
+	var/count
+	for(var/atom/movable/lighting_overlay/L in src.contents)
+		count++
+	if (count > 1)
+		return 1
+	return 0
+
+
 /turf/proc/get_lumcount(var/minlum = 0, var/maxlum = 1)
 	if(!dynamic_lighting) //We're not dynamic, whatever, return 50% lighting.
 		return 0.5

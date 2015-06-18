@@ -13,3 +13,4 @@ var/global/list/table_recipes = list()				//list of all table craft recipes
 var/global/list/turfs = list()						//all the turfs
 var/global/list/areas = list()						//all the areas
 
+var/global/list/mining_turfs = list()				//all mining minerals walls, used by some lighting code
