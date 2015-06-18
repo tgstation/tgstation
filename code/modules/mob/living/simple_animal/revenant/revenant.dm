@@ -145,14 +145,6 @@
 	return
 
 
-/obj/item/weapon/ectoplasm/revenant
-	name = "glimmering residue"
-	desc = "A pile of fine blue dust. Small tendrils of violet mist swirl around it."
-	icon = 'icons/effects/effects.dmi'
-	icon_state = "revenantEctoplasm"
-	w_class = 2
-
-
 /mob/living/simple_animal/revenant/attackby(obj/item/W, mob/living/user, params)
 	..()
 	if(istype(W, /obj/item/weapon/nullrod))
@@ -250,4 +242,77 @@
 	..()
 
 /datum/objective/revenantFluff/check_completion()
+	return 1
+
+
+/obj/item/weapon/ectoplasm/revenant
+	name = "glimmering residue"
+	desc = "A pile of fine blue dust. Small tendrils of violet mist swirl around it."
+	icon = 'icons/effects/effects.dmi'
+	icon_state = "revenantEctoplasm"
+	w_class = 2
+	var/reforming = 0
+	var/reformed = 0
+
+/obj/item/weapon/ectoplasm/revenant/New()
+	..()
+	reforming = 1
+	spawn(1800) //3 minutes
+		if(src && reforming)
+			return reform()
+		if(src && !reforming)
+			visible_message("<span class='warning'>[src] settles down and seems lifeless.</span>")
+			return
+
+/obj/item/weapon/ectoplasm/revenant/attack_hand(mob/user)
+	if(reformed)
+		user << "<span class='warning'>[src] keeps slipping out of your hands, you can't get a hold on it!</span>"
+		return
+	..()
+
+/obj/item/weapon/ectoplasm/revenant/attack_self(mob/user)
+	if(!reforming)
+		return ..()
+	user.visible_message("<span class='notice'>[user] scatters [src] in all directions.</span>", \
+						 "<span class='notice'>You scatter [src] across the area. The particles slowly fade away.</span>")
+	user.drop_item()
+	qdel(src)
+
+/obj/item/weapon/ectoplasm/revenant/throw_impact(atom/hit_atom)
+	..()
+	visible_message("<span class='notice'>[src] breaks into particles upon impact, which fade away to nothingness.</span>")
+	qdel(src)
+
+/obj/item/weapon/ectoplasm/revenant/examine(mob/user)
+	..()
+	if(reforming)
+		user << "<span class='warning'>It is shifting and distorted. It would be wise to destroy this.</span>"
+	else if(!reforming)
+		user << "<span class='notice'>It seems inert.</span>"
+
+/obj/item/weapon/ectoplasm/revenant/proc/reform()
+	if(!reforming || !src)
+		return
+	message_admins("Revenant ectoplasm was left undestroyed for 3 minutes and has reformed into a new revenant.")
+	loc = get_turf(src) //In case it's in a backpack or someone's hand
+	visible_message("<span class='boldannounce'>[src] suddenly rises into the air before fading away.</span>")
+	var/mob/living/simple_animal/revenant/R = new(get_turf(src))
+	qdel(src)
+	var/list/candidates = get_candidates(BE_REVENANT)
+	if(!candidates.len)
+		message_admins("No candidates were found for the new revenant. Oh well!")
+		return 0
+	var/client/C = pick(candidates)
+	var/key_of_revenant = C.key
+	if(!key_of_revenant)
+		message_admins("No ckey was found for the new revenant. Oh well!")
+		return 0
+	var/datum/mind/player_mind = new /datum/mind(key_of_revenant)
+	player_mind.active = 1
+	player_mind.transfer_to(R)
+	player_mind.assigned_role = "revenant"
+	player_mind.special_role = "Revenant"
+	ticker.mode.traitors |= player_mind
+	message_admins("[key_of_revenant] has been made into a revenant by reforming ectoplasm.")
+	log_game("[key_of_revenant] was spawned as a revenant by reforming ectoplasm.")
 	return 1

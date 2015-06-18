@@ -1,0 +1,15 @@
+author: Xhuis
+delete-after: True
+
+changes: 
+  - experimental: "Revenants have received a considerable overhaul."
+  - rscadd: "Revenants will no longer share spawn points with space carp and will spawn in locations like the morgue and prisoner transfer center."
+  - rscadd: "Revenants can no longer cross tiles covered in holy water."
+  - rscadd: "Revenants have a new ability called Defile for 30E. It will cause robots to malfunction, holy water over tiles to evaporate, and a few other effects."
+  - rscadd: "Upon death, revenants will appear and play a sound before rapidly fading away and leaving behind glimmering residue as evidence of their demise."
+  - rscadd: "	This residue lingers with the essence of the revenant. If left unattended, it may reform into a new revenant. Simply scattering it is enough to stop this, but it also has high research levels."
+  - rscadd: "Revenants now have fluff objectives as well as a set essence goal."
+  - tweak:  "Revenanants will be revealed for longer when using abilities and also receive feedback on this revealing."
+  - tweak: "Revenants can now only spawn via random event with a specific amount of dead mobs on the station. The default for this is 10."
+  - bugfix: "Revenants can no longer use abilities from inside walls."
+  - rscdel: "Directly lethal abilities have been removed from revenants. In addition, they can no longer harvest unconscious people, only the dead."
