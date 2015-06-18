@@ -1,5 +1,5 @@
-#define GEN_FAB_WIDTH 		850	//Gen fab stands for General Fabricator
-#define GEN_FAB_HEIGHT		400
+#define GEN_FAB_WIDTH 		850 //Gen fab stands for General Fabricator
+#define GEN_FAB_HEIGHT		500
 
 #define GEN_FAB_BASETIME 	5
 
@@ -119,7 +119,8 @@
 		queue_list.Add(list(list("name" = part.name, "cost" = output_part_cost(part), "commands" = list("remove_from_queue" = i))))
 
 	data["queue"] = queue_list
-	data["screen"]=screen
+	data["screen"] = screen
+	data["hacked"] = hacked
 	var/materials_list[0]
 		//Get the material names
 	for(var/matID in materials.storage)
