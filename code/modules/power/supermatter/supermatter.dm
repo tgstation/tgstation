@@ -160,6 +160,11 @@
 		prints = ", all touchers : [list2params(src.fingerprintshidden)]"
 	log_admin("New super singularity made by eating a SM crystal [prints]. Last touched by [src.fingerprintslast].")
 	message_admins("New super singularity made by eating a SM crystal [prints]. Last touched by [src.fingerprintslast].")
+	investigate_log("Supermatter shard consumed by singularity.","singulo")
+	visible_message("<span class='userdanger'>[src] is consumed by the singularity!</span>")
+	for(var/mob/M in mob_list)
+		M << 'sound/effects/supermatter.ogg' //everyone goan know bout this
+		M << "<span class='boldannounce'>A horrible screeching fills your ears, and a wave of dread washes over you...</span>"
 	qdel(src)
 	return 15000
 
@@ -171,6 +176,11 @@
 	//S.expand(STAGE_SUPER, 1)
 	log_admin("New super singularity made by eating a SM crystal [prints]. Last touched by [src.fingerprintslast].")
 	message_admins("New super singularity made by eating a SM crystal [prints]. Last touched by [src.fingerprintslast].")
+	investigate_log("Supermatter crystal consumed by singularity.","singulo")
+	visible_message("<span class='userdanger'>[src] is consumed by the singularity!</span>")
+	for(var/mob/M in mob_list)
+		M << 'sound/effects/supermatter.ogg' //everyone goan know bout this
+		M << "<span class='boldannounce'>A horrible screeching fills your ears, and a wave of dread washes over you...</span>"
 	qdel(src)
 	return 20000
 
