@@ -54,6 +54,7 @@
 					else if(istype(A,/mob)) // Observers, AI cameras.
 						continue
 					qdel(A)
+				tcheck(80,1)
 			T.ChangeTurf(type)
 
 	if((spawned & (NORTH|SOUTH|EAST|WEST)) == (NORTH|SOUTH|EAST|WEST))

@@ -50,16 +50,20 @@ In short:
 	*/
 
 	escape_list = get_area_turfs(locate(/area/hallway/secondary/exit))
-
+	tcheck(80,1)
 	suspend_alert = 1
 
 	//Separated into separate procs for profiling
 	AreaSet()
+	tcheck(80,1)
 	MiscSet()
+	tcheck(80,1)
 	APCSet()
+	tcheck(80,1)
 	KillMobs()
+	tcheck(80,1)
 	OverlayAndAmbientSet()
-
+	tcheck(80,1)
 	runedec += 9000	//basically removing the rune cap
 
 	ticker.StartThematic("endgame")
@@ -96,6 +100,7 @@ In short:
 */
 
 		A.updateicon()
+		tcheck(80,1)
 
 /datum/universal_state/hell/OverlayAndAmbientSet()
 	for(var/turf/T in turfs)
@@ -103,18 +108,22 @@ In short:
 			T.overlays += "hell01"
 		else
 			T.underlays += "hell01"
+		tcheck(85,1)
 
 	for(var/atom/movable/lighting_overlay/L in all_lighting_overlays)
 		L.update_lumcount(0.5, 0, 0)
+		tcheck(80,1)
 
 /datum/universal_state/hell/proc/MiscSet()
 	for(var/turf/simulated/floor/T in turfs)
 		if(!T.holy && prob(1))
 			new /obj/effect/gateway/active/cult(T)
+		tcheck(80,1)
 
 	for (var/obj/machinery/firealarm/alm in machines)
 		if (!(alm.stat & BROKEN))
 			alm.ex_act(2)
+		tcheck(80,1)
 
 /datum/universal_state/hell/proc/APCSet()
 	for (var/obj/machinery/power/apc/APC in power_machines)
@@ -124,8 +133,10 @@ In short:
 				APC.cell.charge = 0
 			APC.emagged = 1
 			APC.queue_icon_update()
+		tcheck(85,1)
 
 /datum/universal_state/hell/proc/KillMobs()
 	for(var/mob/living/simple_animal/M in mob_list)
 		if(M && !M.client)
 			M.stat = DEAD
+		tcheck(80,1)
