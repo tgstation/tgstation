@@ -18,7 +18,7 @@
 		access_ce,
 		access_virology
 	)
-	materials = list() //makes the new datum
+	starting_materials = list() //makes the new datum
 	var/stack_amt = 50 //amount to stack before releasing
 	var/obj/item/weapon/card/id/inserted_id
 	var/credits = 0

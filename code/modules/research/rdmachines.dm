@@ -164,6 +164,7 @@ var/global/list/rnd_machines = list()
 						del(output)
 					output=src
 					user << "<span class='notice'>Output set.</span>"
+			return 1
 		return
 	if (!linked_console && !(istype(src, /obj/machinery/r_n_d/fabricator))) //fabricators get a free pass because they aren't tied to a console
 		user << "\The [src.name] must be linked to an R&D console first!"
