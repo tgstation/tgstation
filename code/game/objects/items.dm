@@ -51,6 +51,7 @@
 
 	var/suittoggled = 0
 	var/hooded = 0
+	var/block_chance = 0
 
 	/obj/item/mouse_drag_pointer = MOUSE_ACTIVE_POINTER //the icon to indicate this object is being dragged
 

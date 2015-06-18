@@ -63,6 +63,7 @@
 	force = 40
 	throwforce = 10
 	w_class = 3
+	block_chance = 50
 	attack_verb = list("attacked", "slashed", "stabbed", "sliced", "torn", "ripped", "diced", "cut")
 
 /obj/item/weapon/claymore/IsShield()
@@ -82,6 +83,7 @@
 	force = 40
 	throwforce = 10
 	w_class = 3
+	block_chance = 50
 	hitsound = 'sound/weapons/bladeslice.ogg'
 	attack_verb = list("attacked", "slashed", "stabbed", "sliced", "torn", "ripped", "diced", "cut")
 

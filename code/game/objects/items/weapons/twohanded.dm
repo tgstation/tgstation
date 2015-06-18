@@ -197,6 +197,7 @@
 	origin_tech = "magnets=3;syndicate=4"
 	item_color = "green"
 	attack_verb = list("attacked", "slashed", "stabbed", "sliced", "torn", "ripped", "diced", "cut")
+	block_chance = 50
 	var/hacked = 0
 
 /obj/item/weapon/twohanded/dualsaber/New()
