@@ -135,7 +135,7 @@
 	icon_state = "45-[ammo_count() ? "8" : "0"]"
 
 /obj/item/ammo_box/magazine/uzim9mm
-	name = "Uzi magazine (9mm)"
+	name = "uzi magazine (9mm)"
 	icon_state = "uzi9mm-32"
 	ammo_type = /obj/item/ammo_casing/c9mm
 	caliber = "9mm"

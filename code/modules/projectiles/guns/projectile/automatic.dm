@@ -107,7 +107,7 @@
 	return
 
 /obj/item/weapon/gun/projectile/automatic/mini_uzi
-	name = "Uzi"
+	name = "uzi"
 	desc = "A lightweight, burst-fire submachine gun, for when you really want someone dead. Uses 9mm rounds."
 	icon_state = "mini-uzi"
 	origin_tech = "combat=5;materials=2;syndicate=8"

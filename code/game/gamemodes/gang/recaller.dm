@@ -88,8 +88,8 @@
 		else
 			dat += "Mini Uzi<br>"
 
-		dat += "(30 Influence) "
-		if(points >= 30)
+		dat += "(25 Influence) "
+		if(points >= 25)
 			dat += "<a href='?src=\ref[src];purchase=9mmammo'>Uzi Ammo</a><br>"
 		else
 			dat += "Uzi Magazine<br>"
@@ -178,9 +178,9 @@
 					item_type = /obj/item/weapon/gun/projectile/automatic/mini_uzi
 					points = 40
 			if("9mmammo")
-				if(points >= 30)
+				if(points >= 25)
 					item_type = /obj/item/ammo_box/magazine/uzim9mm
-					points = 30
+					points = 25
 			if("vest")
 				if(points >= 10)
 					item_type = /obj/item/clothing/suit/armor/bulletproof
