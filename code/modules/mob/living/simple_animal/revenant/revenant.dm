@@ -208,11 +208,13 @@
 	R.invisibility = 0
 	if(stun)
 		R.notransform = 1
+	R << "<span class='warning'>You have been revealed [stun ? "and cannot move" : ""].</span>"
 	spawn(time)
 		R.revealed = 0
 		R.invisibility = INVISIBILITY_OBSERVER
 		if(stun)
 			R.notransform = 0
+		R << "<span class='notice'>You are once more concealed [stun ? "and can move again" : ""].</span>"
 
 /datum/objective/revenant
 	dangerrating = 10
