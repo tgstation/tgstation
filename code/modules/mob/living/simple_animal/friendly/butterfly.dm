@@ -5,6 +5,7 @@
 	icon_living = "butterfly"
 	icon_dead = "butterfly_dead"
 	turns_per_move = 1
+	density = 0
 	emote_see = list("flutters")
 	response_help = "shoos"
 	response_disarm = "brushes aside"
