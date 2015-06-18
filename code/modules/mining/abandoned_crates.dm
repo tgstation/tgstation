@@ -158,7 +158,7 @@
 	if(locked)
 		user << "<span class='notice'>The crate is locked with a Deca-code lock.</span>"
 		var/input = input(usr, "Enter [codelen] digits.", "Deca-Code Lock", "") as text
-		if(in_range(src, user) || !user.incapacitated)
+		if(in_range(src, user) || !user.incapacitated())
 			if (input == code)
 				user << "<span class='notice'>The crate unlocks!</span>"
 				locked = 0
