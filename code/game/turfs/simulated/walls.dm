@@ -50,13 +50,24 @@
 	ChangeTurf(/turf/simulated/floor/plating)
 
 /turf/simulated/wall/proc/break_wall()
-		builtin_sheet.amount = 2
-		builtin_sheet.loc = src
-		return (new /obj/structure/girder(src))
+	builtin_sheet.amount = 2
+	builtin_sheet.loc = src
+	var/obj/structure/girder/G = new /obj/structure/girder(src)
+	if(material)
+		builtin_sheet.material = material
+		builtin_sheet.init_material()
+		G.material = material
+		G.init_material()
+	return G
 
 /turf/simulated/wall/proc/devastate_wall()
-		builtin_sheet.amount = 2
-		builtin_sheet.loc = src
+	builtin_sheet.amount = 2
+	builtin_sheet.loc = src
+	if(material)
+		builtin_sheet.material = material
+		builtin_sheet.init_material()
+		new material.default_stack(src)
+	else
 		new /obj/item/stack/sheet/metal(src)
 
 /turf/simulated/wall/ex_act(severity, target)
@@ -245,6 +256,9 @@
 		F.burn_tile()
 		F.icon_state = "wall_thermite"
 		F.add_hiddenprint(user)
+		if(material)
+			F.material = material
+			F.init_material()
 		spawn(max(100,300-thermite))
 			if(O)	qdel(O)
 	else

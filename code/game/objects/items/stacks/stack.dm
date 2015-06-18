@@ -125,8 +125,10 @@
 				return
 			if(!building_checks(R, multiplier))
 				return
-
 		var/atom/O = new R.result_type( usr.loc )
+		if(material)
+			O.material = material
+			O.init_material()
 		O.dir = usr.dir
 		use(R.req_amount * multiplier)
 

@@ -9,6 +9,12 @@
 	var/damtype = "brute"
 	var/force = 0
 
+/obj/init_material()
+	if(material)
+		force *= material.force_multiplier
+		throwforce *= material.force_multiplier
+	..()
+
 /obj/Destroy()
 	if(!istype(src, /obj/machinery))
 		SSobj.processing.Remove(src) // TODO: Have a processing bitflag to reduce on unnecessary loops through the processing lists

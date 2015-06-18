@@ -34,6 +34,8 @@ var/list/icons_to_ignore_at_floor_init = list("damaged1","damaged2","damaged3","
 	var/list/burnt_states = list()
 	var/dirt = 0
 	var/ignoredirt = 0
+	has_greyscale = 1
+
 
 /turf/simulated/floor/New()
 	..()
@@ -93,6 +95,9 @@ var/list/icons_to_ignore_at_floor_init = list("damaged1","damaged2","damaged3","
 /turf/simulated/floor/proc/break_tile_to_plating()
 	var/turf/simulated/floor/plating/T = make_plating()
 	T.break_tile()
+	if(material)
+		T.material = material
+		T.init_material()
 
 /turf/simulated/floor/proc/break_tile()
 	if(broken)
@@ -110,7 +115,7 @@ var/list/icons_to_ignore_at_floor_init = list("damaged1","damaged2","damaged3","
 	burnt = 1
 
 /turf/simulated/floor/proc/make_plating()
-	return ChangeTurf(/turf/simulated/floor/plating)
+	return ChangeTurf(/turf/simulated/floor/plating, builtin_tile)
 
 /turf/simulated/floor/ChangeTurf(turf/simulated/floor/T)
 	if(!istype(src,/turf/simulated/floor)) return ..() //fucking turfs switch the fucking src of the fucking running procs
@@ -139,6 +144,9 @@ var/list/icons_to_ignore_at_floor_init = list("damaged1","damaged2","damaged3","
 			else
 				user << "<span class='danger'>You remove the floor tile.</span>"
 				builtin_tile.loc = src
+				if(material)
+					builtin_tile.material = material
+					builtin_tile.init_material()
 		make_plating()
 		playsound(src, 'sound/items/Crowbar.ogg', 80, 1)
 		return 1

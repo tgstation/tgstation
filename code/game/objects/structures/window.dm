@@ -9,7 +9,7 @@
 	anchored = 1.0
 	flags = ON_BORDER
 	var/maxhealth = 25
-	var/health = 0
+	health = 0
 	var/ini_dir = null
 	var/state = 0
 	var/reinf = 0

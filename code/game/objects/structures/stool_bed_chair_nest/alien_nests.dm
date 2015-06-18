@@ -5,7 +5,7 @@
 	desc = "It's a gruesome pile of thick, sticky resin shaped like a nest."
 	icon = 'icons/mob/alien.dmi'
 	icon_state = "nest"
-	var/health = 100
+	health = 100
 
 /obj/structure/stool/bed/nest/user_unbuckle_mob(mob/user as mob)
 	if(buckled_mob && buckled_mob.buckled == src)

@@ -24,7 +24,8 @@
 
 	//Value used to increment ex_act() if reactionary_explosions is on
 	var/explosion_block = 0
-
+	var/datum/material/material = null
+	var/has_greyscale = 0
 /atom/proc/onCentcom()
 	var/turf/T = get_turf(src)
 	if(!T)
@@ -74,6 +75,8 @@
 			if(istype(src,/mob/living))
 				var/mob/living/M = src
 				M.take_organ_damage(20)
+	if(material)
+		material.throw_impact(hit_atom)
 
 /atom/proc/attack_hulk(mob/living/carbon/human/hulk, do_attack_animation = 0)
 	if(do_attack_animation)
@@ -283,6 +286,8 @@ its easier to just keep the beam vertical.
 	return
 
 /atom/proc/fire_act()
+	if(material)
+		material.fire_act()
 	return
 
 /atom/proc/hitby(atom/movable/AM as mob|obj)

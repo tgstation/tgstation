@@ -12,6 +12,7 @@
 	layer = 2
 	var/state = GIRDER_NORMAL
 	var/girderpasschance = 20 // percentage chance that a projectile passes through the girder.
+	has_greyscale = 1
 
 /obj/structure/girder/attackby(obj/item/W as obj, mob/user as mob, params)
 	add_fingerprint(user)
@@ -24,8 +25,12 @@
 				return
 			state = GIRDER_DISASSEMBLED
 			user << "<span class='notice'>You disassemble the girder.</span>"
-			var/obj/item/stack/sheet/metal/M = new (loc, 2)
-			M.add_fingerprint(user)
+			if(material)
+				var/obj/item/stack/sheet/M = new material.default_stack(loc, 2)
+				M.add_fingerprint(user)
+			else
+				var/obj/item/stack/sheet/metal/M = new (loc, 2)
+				M.add_fingerprint(user)
 			qdel(src)
 
 	else if(istype(W, /obj/item/weapon/wrench) && state == GIRDER_DISPLACED)
@@ -37,6 +42,9 @@
 		if(do_after(user, 40, target = src))
 			user << "<span class='notice'>You secure the girder.</span>"
 			var/obj/structure/girder/G = new (loc)
+			if(material)
+				G.material = material
+				G.init_material()
 			transfer_fingerprints_to(G)
 			qdel(src)
 
@@ -69,6 +77,9 @@
 			user << "<span class='notice'>You remove the support struts.</span>"
 			new /obj/item/stack/sheet/plasteel(get_turf(src))
 			var/obj/structure/girder/G = new (loc)
+			if(material)
+				G.material = material
+				G.init_material()
 			transfer_fingerprints_to(G)
 			qdel(src)
 
@@ -78,6 +89,9 @@
 		if(do_after(user, 40, target = src))
 			user << "<span class='notice'>You unsecure the girder.</span>"
 			var/obj/structure/girder/displaced/D = new (loc)
+			if(material)
+				D.material = material
+				D.init_material()
 			transfer_fingerprints_to(D)
 			qdel(src)
 
@@ -93,106 +107,81 @@
 			return
 
 		var/obj/item/stack/sheet/S = W
-		switch(S.type)
-
-			if(/obj/item/stack/sheet/metal, /obj/item/stack/sheet/metal/cyborg)
-				if(!anchored)
-					if(S.get_amount() < 2)
-						user << "<span class='warning'>You need two sheets of metal to create a false wall!</span>"
-						return
-					user << "<span class='notice'>You start building a false wall...</span>"
-					if(do_after(user, 20, target = src))
-						if(!src.loc || !S || S.amount < 2)
-							return
-						S.use(2)
-						user << "<span class='notice'>You create a false wall. Push on it to open or close the passage.</span>"
-						var/obj/structure/falsewall/F = new (loc)
-						transfer_fingerprints_to(F)
-						qdel(src)
-				else
-					if(S.get_amount() < 2)
-						user << "<span class='warning'>You need two sheets of metal to finish a wall!</span>"
-						return
-					user << "<span class='notice'>You start adding plating...</span>"
-					if (do_after(user, 40))
-						if(loc == null || S.get_amount() < 2)
-							return
-						S.use(2)
-						user << "<span class='notice'>You add the plating.</span>"
-						var/turf/Tsrc = get_turf(src)
-						Tsrc.ChangeTurf(/turf/simulated/wall)
-						for(var/turf/simulated/wall/X in Tsrc.loc)
-							if(X)
-								transfer_fingerprints_to(X)
-						qdel(src)
-					return
-
-			if(/obj/item/stack/sheet/plasteel)
-				if(!anchored)
-					if(S.amount < 2)
-						user << "<span class='warning'>You need at least two sheets to create a false wall!</span>"
-						return
-					user << "<span class='notice'>You start building a reinforced false wall...</span>"
-					if(do_after(user, 20, target = src))
-						if(!src.loc || !S || S.amount < 2)
-							return
-						S.use(2)
-						user << "<span class='notice'>You create a reinforced false wall. Push on it to open or close the passage.</span>"
-						var/obj/structure/falsewall/reinforced/FW = new (loc)
-						transfer_fingerprints_to(FW)
-						qdel(src)
-				else
-					if (src.icon_state == "reinforced") //I cant believe someone would actually write this line of code...
-						if(S.amount < 1) return ..()
-						user << "<span class='notice'>You start finalizing the reinforced wall...</span>"
-						if(do_after(user, 50))
-							if(!src.loc || !S || S.amount < 1)
-								return
-							S.use(1)
-							user << "<span class='notice'>You fully reinforce the wall.</span>"
-							var/turf/Tsrc = get_turf(src)
-							Tsrc.ChangeTurf(/turf/simulated/wall/r_wall)
-							for(var/turf/simulated/wall/r_wall/X in Tsrc.loc)
-								if(X)	transfer_fingerprints_to(X)
-							qdel(src)
-						return
-					else
-						if(S.amount < 1) return ..()
-						user << "<span class='notice'>You start reinforcing the girder...</span>"
-						if (do_after(user, 60))
-							if(!src.loc || !S || S.amount < 1)
-								return
-							S.use(1)
-							user << "<span class='notice'>You reinforce the girder.</span>"
-							var/obj/structure/girder/reinforced/R = new (loc)
-							transfer_fingerprints_to(R)
-							qdel(src)
-						return
-
-		if(S.sheettype)
-			var/M = S.sheettype
+		if(istype(S.material, /datum/material/plasteel))
 			if(!anchored)
 				if(S.amount < 2)
 					user << "<span class='warning'>You need at least two sheets to create a false wall!</span>"
 					return
-				S.use(2)
-				user << "<span class='notice'>You create a false wall. Push on it to open or close the passage.</span>"
-				var/F = text2path("/obj/structure/falsewall/[M]")
-				var/obj/structure/FW = new F (loc)
-				transfer_fingerprints_to(FW)
-				qdel(src)
+				user << "<span class='notice'>You start building a reinforced false wall...</span>"
+				if(do_after(user, 20, target = src))
+					if(!src.loc || !S || S.amount < 2)
+						return
+					S.use(2)
+					user << "<span class='notice'>You create a reinforced false wall. Push on it to open or close the passage.</span>"
+					var/obj/structure/falsewall/reinforced/FW = new (loc)
+					transfer_fingerprints_to(FW)
+					qdel(src)
 			else
-				if(S.amount < 2) return ..()
+				if (src.icon_state == "reinforced") //I cant believe someone would actually write this line of code...
+					if(S.amount < 1) return ..()
+					user << "<span class='notice'>You start finalizing the reinforced wall...</span>"
+					if(do_after(user, 50))
+						if(!src.loc || !S || S.amount < 1)
+							return
+						S.use(1)
+						user << "<span class='notice'>You fully reinforce the wall.</span>"
+						var/turf/Tsrc = get_turf(src)
+						Tsrc.ChangeTurf(/turf/simulated/wall/r_wall)
+						for(var/turf/simulated/wall/r_wall/X in Tsrc.loc)
+							if(X)	transfer_fingerprints_to(X)
+						qdel(src)
+					return
+				else
+					if(S.amount < 1) return ..()
+					user << "<span class='notice'>You start reinforcing the girder...</span>"
+					if (do_after(user, 60))
+						if(!src.loc || !S || S.amount < 1)
+							return
+						S.use(1)
+						user << "<span class='notice'>You reinforce the girder.</span>"
+						var/obj/structure/girder/reinforced/R = new (loc)
+						transfer_fingerprints_to(R)
+						qdel(src)
+					return
+
+		if(istype(S, /obj/item/stack/sheet/))
+			if(!anchored)
+				if(S.get_amount() < 2)
+					user << "<span class='warning'>You need two sheets of [S] to create a false wall!</span>"
+					return
+				user << "<span class='notice'>You start building a false wall...</span>"
+				if(do_after(user, 20, target = src))
+					if(!src.loc || !S || S.amount < 2)
+						return
+					S.use(2)
+					user << "<span class='notice'>You create a false wall. Push on it to open or close the passage.</span>"
+					var/obj/structure/falsewall/F = new (loc)
+					if(material)
+						F.material = material
+						F.init_material()
+					transfer_fingerprints_to(F)
+					qdel(src)
+			else
+				if(S.get_amount() < 2)
+					user << "<span class='warning'>You need two sheets of [S] to finish a wall!</span>"
+					return
 				user << "<span class='notice'>You start adding plating...</span>"
 				if (do_after(user, 40))
-					if(!src.loc || !S || S.amount < 2)
+					if(loc == null || S.get_amount() < 2)
 						return
 					S.use(2)
 					user << "<span class='notice'>You add the plating.</span>"
 					var/turf/Tsrc = get_turf(src)
-					Tsrc.ChangeTurf(text2path("/turf/simulated/wall/mineral/[M]"))
-					for(var/turf/simulated/wall/mineral/X in Tsrc.loc)
-						if(X)	transfer_fingerprints_to(X)
+					var/turf/simulated/wall/X = Tsrc.ChangeTurf(/turf/simulated/wall)
+					transfer_fingerprints_to(X)
+					if(material)
+						X.material = material
+						X.init_material()
 					qdel(src)
 				return
 

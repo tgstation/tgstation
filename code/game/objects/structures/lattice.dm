@@ -6,6 +6,7 @@
 	density = 0
 	anchored = 1.0
 	layer = 2.3 //under pipes
+	has_greyscale = 1
 	var/obj/item/stack/rods/stored
 	//	flags = CONDUCT
 
@@ -76,13 +77,18 @@
 		else
 			if(!(istype(get_step(src, direction), /turf/space)))
 				dir_sum += direction
-
-	icon_state = "[name][dir_sum]"
+	if(material)
+		icon_state = "[initial(name)][dir_sum]_greyscale"
+	else
+		icon_state = "[initial(name)][dir_sum]"
 	return
 
 /obj/structure/lattice/Deconstruct()
 	var/turf/T = loc
 	stored.loc = T
+	if(material)
+		stored.material = material
+		stored.init_material()
 	updateOverlays()
 	..()
 

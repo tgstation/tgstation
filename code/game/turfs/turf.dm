@@ -127,13 +127,17 @@
 		qdel(L)
 
 //Creates a new turf
-/turf/proc/ChangeTurf(var/path)
+/turf/proc/ChangeTurf(var/path, var/obj/item/stack/stack)
 	if(!path)			return
 	if(path == type)	return src
 
 	SSair.remove_from_active(src)
 
 	var/turf/W = new path(src)
+	if(stack)
+		if(stack.material)
+			W.material = stack.material
+			W.init_material()
 	if(istype(W, /turf/simulated))
 		W:Assimilate_Air()
 		W.RemoveLattice()
@@ -172,9 +176,12 @@
 		air.temperature = (atemp/max(turf_count,1))//Trace gases can get bant
 		SSair.add_to_active(src)
 
-/turf/proc/ReplaceWithLattice()
+/turf/proc/ReplaceWithLattice(var/obj/item/stack/rods/R)
 	src.ChangeTurf(src.baseturf)
-	new /obj/structure/lattice(locate(src.x, src.y, src.z) )
+	var/obj/structure/lattice/L = new /obj/structure/lattice(locate(src.x, src.y, src.z) )
+	if(istype(R) && R.material)
+		L.material = R.material
+		L.init_material()
 
 /turf/proc/ReplaceWithCatwalk()
 	src.ChangeTurf(src.baseturf)

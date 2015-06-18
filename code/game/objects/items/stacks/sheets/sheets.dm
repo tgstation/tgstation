@@ -9,3 +9,7 @@
 	attack_verb = list("bashed", "battered", "bludgeoned", "thrashed", "smashed")
 	var/perunit = MINERAL_MATERIAL_AMOUNT
 	var/sheettype = null //this is used for girders in the creation of walls/false walls
+
+/obj/item/stack/sheet/New()
+	recipes += all_recipes
+	..()
