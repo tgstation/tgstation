@@ -192,11 +192,24 @@
 		\[field\] : Inserts an invisible field which lets you start type from there. Useful for forms.<br>
 		<br>
 		<b><center>Pen exclusive commands</center></b><br>
-		\[small\] - \[/small\] : Decreases the <font size = \"1\">size</font> of the text.<br>
+		\[small\] - \[/small\] : Decreases the <font size = \"2\">size</font> of the text.<br>
+		\[tiny\] - \[/tiny\] : Sharply decreases the <font size = \"1\">size</font> of the text.<br>
 		\[list\] - \[/list\] : A list.<br>
 		\[*\] : A dot used for lists.<br>
 		\[hr\] : Adds a horizontal rule.<br>
-		\[img\]http://url\[/img\] : add an image
+		\[img\]http://url\[/img\] : Add an image.<br>
+		<br>
+		<center>Fonts</center><br>
+		\[agency\] - \[/agency\] : <font face=\"Agency FB\">Agency FB</font><br>
+		\[algerian\] - \[/algerian\] : <font face=\"Algerian\">Algerian</font><br>
+		\[arial\] - \[/arial\] : <font face=\"Arial\">Arial</font><br>
+		\[arialb\] - \[/arialb\] : <font face=\"Arial Black\">Arial Black</font><br>
+		\[calibri\] - \[/calibri\] : <font face=\"Calibri\">Calibri</font><br>
+		\[courier\] - \[/courier\] : <font face=\"Courier\">Courier</font><br>
+		\[helvetica\] - \[/helvetica\] : <font face=\"Helvetica\">Helvetica</font><br>
+		\[impact\] - \[/impact\] : <font face=\"Impact\">Impact</font><br>
+		\[palatino\] - \[/palatino\] : <font face=\"Palatino Linotype\">Palatino Linotype</font><br>
+		\[tnr\] - \[/tnr\] : <font face=\"Times New Roman\">Times New Roman</font>
 	</BODY></HTML>"}, "window=paper_help")
 
 
