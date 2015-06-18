@@ -41,6 +41,13 @@
 		user << "<span class='danger'>It's locked!</span>"
 	return
 
+/obj/item/weapon/storage/lockbox/MouseDrop(over_object, src_location, over_location)
+	if (locked)
+		src.add_fingerprint(usr)
+		usr << "<span class='warning'>It's locked!</span>"
+		return 0
+	..()
+
 /obj/item/weapon/storage/lockbox/emag_act(mob/user as mob)
 	if(!broken)
 		broken = 1

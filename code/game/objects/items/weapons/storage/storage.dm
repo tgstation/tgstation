@@ -64,7 +64,9 @@
 //Check if this storage can dump the items
 /obj/item/weapon/storage/proc/content_can_dump(atom/dest_object, mob/user)
 	if(Adjacent(user) && dest_object.Adjacent(user))
-		return dest_object.storage_contents_dump_act(src, user)
+		if(dest_object.storage_contents_dump_act(src, user))
+			playsound(loc, "rustle", 50, 1, -5)
+			return 1
 	return 0
 
 //Object behaviour on storage dump

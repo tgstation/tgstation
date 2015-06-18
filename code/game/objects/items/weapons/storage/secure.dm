@@ -76,7 +76,7 @@
 	if (locked)
 		src.add_fingerprint(usr)
 		usr << "<span class='warning'>It's locked!</span>"
-		return
+		return 0
 	..()
 
 /obj/item/weapon/storage/secure/attack_self(mob/user as mob)
