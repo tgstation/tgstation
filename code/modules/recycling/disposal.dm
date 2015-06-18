@@ -459,8 +459,7 @@
 
 //How disposal handles getting a storage dump from a storage object
 /obj/machinery/disposal/storage_contents_dump_act(obj/item/weapon/storage/src_object, mob/user)
-	for(var/obj/item/I in src_object)
-		src_object.remove_from_storage(I, src) //No check needed, put everything inside
+	dump_act(src_object, user)
 	return 1
 
 // virtual disposal object

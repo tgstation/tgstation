@@ -193,8 +193,7 @@
 	flags |= NOJAUNT
 
 /turf/storage_contents_dump_act(obj/item/weapon/storage/src_object, mob/user)
-	for(var/obj/item/I in src_object)
-		src_object.remove_from_storage(I, src)
+	dump_act(src_object, user)
 	return 1
 
 //////////////////////////////

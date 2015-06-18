@@ -69,15 +69,24 @@
 
 //Object behaviour on storage dump
 /obj/item/weapon/storage/storage_contents_dump_act(obj/item/weapon/storage/src_object, mob/user)
-	for(var/obj/item/I in src_object)
-		if(can_be_inserted(I,0,user))
-			src_object.remove_from_storage(I, src)
+	dump_act(src_object, user)
 	orient2hud(user)
 	src_object.orient2hud(user)
 	if(user.s_active) //refresh the HUD to show the transfered contents
 		user.s_active.close(user)
 		user.s_active.show_to(user)
 	return 1
+
+//Specific storage transfer behaviour for Storage
+/obj/item/weapon/storage/dump_act(obj/item/weapon/storage/src_object, mob/user)
+	for(var/obj/item/I in src_object)
+		if(can_be_inserted(I,0,user))
+			src_object.dump_from_storage(I, src)
+
+//dump Single item from storage, + dump item reaction
+/obj/item/weapon/storage/proc/dump_from_storage(obj/item/I, atom/dest_object)
+	remove_from_storage(I, dest_object)
+	//For item behaviour on dump : I.dump()
 
 /obj/item/weapon/storage/proc/return_inv()
 	var/list/L = list()
