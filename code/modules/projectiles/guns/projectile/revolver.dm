@@ -73,17 +73,6 @@
 	options["The Peacemaker"] = "detective_peacemaker"
 	options["Cancel"] = null
 
-/obj/item/weapon/gun/projectile/revolver/detective/process_fire(atom/target as mob|obj|turf, mob/living/user as mob|obj, var/message = 1, params)
-	if(magazine.caliber != initial(magazine.caliber))
-		if(prob(70 - (magazine.ammo_count() * 10)))	//minimum probability of 10, maximum of 60
-			playsound(user, fire_sound, 50, 1)
-			user << "<span class='userdanger'>[src] blows up in your face!</span>"
-			user.take_organ_damage(0,20)
-			user.drop_item()
-			qdel(src)
-			return 0
-	..()
-
 /obj/item/weapon/gun/projectile/revolver/detective/attackby(var/obj/item/A as obj, mob/user as mob, params)
 	..()
 	if(istype(A, /obj/item/weapon/screwdriver))
