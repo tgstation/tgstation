@@ -66,7 +66,7 @@
 
 		if(do_after(user, A, 20)) //Two seconds to obtain a complete reading of the machine's components
 
-			if(!Adjacent(user))
+			if(!M.Adjacent(user))
 				user << "<span class='warning'>An error message flashes on \the [src]'s HUD, stating its scan was disrupted.</span>"
 				working = 0
 				return
@@ -92,7 +92,7 @@
 
 /obj/item/weapon/storage/component_exchanger/proc/component_interaction(obj/machinery/M, mob/user)
 
-	if(!Adjacent(user)) //We aren't hugging the machine, so don't bother. This'll prop up often
+	if(!M.Adjacent(user)) //We aren't hugging the machine, so don't bother. This'll prop up often
 		user << "<span class='warning'>A blue screen suddenly flashes on \the [src]'s HUD. It appears the critical failure was caused by suddenly yanking it out of \the [M]'s maintenance hatch.</span>"
 		working = 0
 		return //Done, done and done, pull out
