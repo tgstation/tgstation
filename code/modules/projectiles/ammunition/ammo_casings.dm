@@ -232,7 +232,8 @@
 		desc = "Its nerf or nothing! ... Although, this one doesn't look too safe."
 		user << "<span class='notice'>You pop the safety cap off of [src].</span>"
 	else if ((istype(A, /obj/item/weapon/pen)) && modified && !BB.contents.len)
-		user.drop_item()
+		if(!user.unEquip(A))
+			return
 		A.loc = BB
 		BB.damage = 5
 		BB.nodamage = 0

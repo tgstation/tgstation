@@ -89,8 +89,9 @@ obj/machinery/bot/mulebot/bot_reset()
 			user << "<span class='notice'>Controls [(locked ? "locked" : "unlocked")].</span>"
 
 	else if(istype(I,/obj/item/weapon/stock_parts/cell) && open && !cell)
+		if(!user.drop_item())
+			return
 		var/obj/item/weapon/stock_parts/cell/C = I
-		user.drop_item()
 		C.loc = src
 		cell = C
 		updateDialog()
@@ -288,7 +289,8 @@ obj/machinery/bot/mulebot/bot_reset()
 				if(open && !cell)
 					var/obj/item/weapon/stock_parts/cell/C = usr.get_active_hand()
 					if(istype(C))
-						usr.drop_item()
+						if(!usr.drop_item())
+							return
 						cell = C
 						C.loc = src
 						C.add_fingerprint(usr)

@@ -675,7 +675,8 @@
 		var/obj/item/mecha_parts/mecha_equipment/E = W
 		spawn()
 			if(E.can_attach(src))
-				user.drop_item()
+				if(!user.drop_item())
+					return
 				E.attach(src)
 				user.visible_message("[user] attaches [W] to [src].", "<span class='notice'>You attach [W] to [src].</span>")
 			else
@@ -739,9 +740,10 @@
 	else if(istype(W, /obj/item/weapon/stock_parts/cell))
 		if(state==4)
 			if(!src.cell)
+				if(!user.drop_item())
+					return
 				var/obj/item/weapon/stock_parts/cell/C = W
 				user << "<span class='notice'>You install the powercell.</span>"
-				user.drop_item()
 				C.forceMove(src)
 				C.use(C.charge * 0.8)
 				src.cell = C

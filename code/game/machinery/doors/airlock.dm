@@ -91,6 +91,7 @@
 	icon = 'icons/obj/doors/vault.dmi'
 	opacity = 1
 	doortype = /obj/structure/door_assembly/door_assembly_vault
+	explosion_block = 2
 
 /obj/machinery/door/airlock/glass_large
 	name = "glass airlock"

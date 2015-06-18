@@ -157,7 +157,8 @@
 
 /obj/structure/reagent_dispensers/water_cooler/attackby(var/obj/item/I, var/mob/user, params)
 	if(istype(I, /obj/item/weapon/paper))
-		user.drop_item()
+		if(!user.drop_item())
+			return
 		qdel(I)
 		cups++
 		return

@@ -94,7 +94,8 @@
 		var/obj/item/device/assembly/igniter/I = W
 		if(I.secured)	return
 		if(igniter)		return
-		user.drop_item()
+		if(!user.unEquip(W))
+			return
 		I.loc = src
 		igniter = I
 		update_icon()
@@ -104,7 +105,8 @@
 		if(ptank)
 			user << "<span class='notice'>There appears to already be a plasma tank loaded in [src]!</span>"
 			return
-		user.drop_item()
+		if(!user.unEquip(W))
+			return
 		ptank = W
 		W.loc = src
 		update_icon()

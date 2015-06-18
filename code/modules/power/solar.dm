@@ -253,8 +253,9 @@
 
 	if(!tracker)
 		if(istype(W, /obj/item/weapon/tracker_electronics))
+			if(!user.drop_item())
+				return
 			tracker = 1
-			user.drop_item()
 			qdel(W)
 			user.visible_message("[user] inserts the electronics into the solar assembly.", "<span class='notice'>You insert the electronics into the solar assembly.</span>")
 			return 1

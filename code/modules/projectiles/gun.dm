@@ -98,8 +98,8 @@
 	if(heavy_weapon)
 		if(user.get_inactive_hand())
 			if(prob(15))
-				user.visible_message("<span class='danger'>[src] flies out of [user]'s hands!</span>", "<span class='userdanger'>[src] kicks out of your grip!</span>")
-				user.drop_item()
+				if(user.drop_item())
+					user.visible_message("<span class='danger'>[src] flies out of [user]'s hands!</span>", "<span class='userdanger'>[src] kicks out of your grip!</span>")
 
 /obj/item/weapon/gun/emp_act(severity)
 	for(var/obj/O in contents)
@@ -235,7 +235,8 @@
 				if(user.l_hand != src && user.r_hand != src)
 					user << "<span class='warning'>You'll need [src] in your hands to do that!</span>"
 					return
-				user.drop_item()
+				if(!user.unEquip(A))
+					return
 				user << "<span class='notice'>You click [S] into place on [src].</span>"
 				if(S.on)
 					SetLuminosity(0)

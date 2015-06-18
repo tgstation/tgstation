@@ -788,7 +788,8 @@ var/list/obj/machinery/newscaster/allCasters = list()
 		photo = null
 	if(istype(user.get_active_hand(), /obj/item/weapon/photo))
 		photo = user.get_active_hand()
-		user.drop_item()
+		if(!user.drop_item())
+			return
 		photo.loc = src
 	if(istype(user,/mob/living/silicon))
 		var/list/nametemp = list()

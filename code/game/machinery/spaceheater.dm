@@ -54,7 +54,8 @@
 				// insert cell
 				var/obj/item/weapon/stock_parts/cell/C = usr.get_active_hand()
 				if(istype(C))
-					user.drop_item()
+					if(!user.drop_item())
+						return
 					cell = C
 					C.loc = src
 					C.add_fingerprint(usr)
@@ -134,7 +135,8 @@
 			if(open && !cell)
 				var/obj/item/weapon/stock_parts/cell/C = usr.get_active_hand()
 				if(istype(C))
-					usr.drop_item()
+					if(!usr.drop_item())
+						return
 					cell = C
 					C.loc = src
 					C.add_fingerprint(usr)
