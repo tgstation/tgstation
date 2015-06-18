@@ -164,7 +164,7 @@ proc/move_mining_shuttle()
 	desc = "A mining lantern."
 	brightness_on = 6			// luminosity when on
 	light_power = 2
-	light_color = LIGHT_COLOR_BULB
+	light_color = LIGHT_COLOR_TUNGSTEN
 
 /*****************************Pickaxe********************************/
 

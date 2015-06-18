@@ -6,6 +6,7 @@
 	item_state = "candle1"
 	w_class = 1
 	heat_production = 1000
+	light_color = LIGHT_COLOR_TUNGSTEN
 
 	var/wax = 200
 	var/lit = 0
