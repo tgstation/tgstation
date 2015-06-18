@@ -28,12 +28,12 @@ using metal and glass, it uses glass and reagents (usually sulfuric acis).
 		"Misc" = list()
 	)
 
-	allowed_materials=list(
-		"glass",
-		"gold",
-		"diamond",
-		"uranium",
-		"plasma"
+	allowed_materials = list(
+						MAT_GLASS,
+						MAT_GOLD,
+						MAT_DIAMOND,
+						MAT_URANIUM,
+						MAT_PLASMA
 	)
 
 /obj/machinery/r_n_d/fabricator/circuit_imprinter/New()
