@@ -71,6 +71,9 @@
 					Spread(T)
 
 	HideRock()
+	spawn (300)
+		lighting_fix_overlays()
+		update_overlay()
 
 /turf/simulated/mineral/proc/HideRock()
 	if(hidden)
@@ -79,8 +82,6 @@
 
 /turf/simulated/mineral/proc/Spread(var/turf/T)
 	T.ChangeTurf(src.type)
-	spawn(100)
-		T.lighting_fix_overlays()
 
 /turf/simulated/mineral/random
 	name = "mineral deposit"
@@ -339,7 +340,6 @@
 		make_tunnel(backward_cave_dir)
 	// Kill ourselves by replacing ourselves with a normal floor.
 	SpawnFloor(src)
-	..()
 
 /turf/simulated/floor/plating/asteroid/airless/cave/proc/make_tunnel(var/dir)
 
@@ -389,8 +389,6 @@
 
 	SpawnMonster(T)
 	var/turf/simulated/floor/t = T.ChangeTurf(/turf/simulated/floor/plating/asteroid/airless)
-	spawn (10)
-		T.lighting_fix_overlays()
 	spawn(2)
 		t.fullUpdateMineralOverlays()
 
@@ -705,6 +703,9 @@
 	//	seedAmt = rand(1,4)
 	if(prob(20))
 		icon_state = "asteroid[rand(0,12)]"
+	spawn (300)
+		lighting_fix_overlays()
+		update_overlay()
 //	spawn(2)
 //O		updateMineralOverlays()
 

@@ -194,6 +194,7 @@ proc/make_mining_asteroid_secret()
 			surprise = pickweight(treasureitems)
 			new surprise(T)//here's the prize
 			emptyturfs -= T
+			T.lighting_fix_overlays()
 
 			while(areapoints >= 10)//lets throw in the fluff items
 				T = pick(emptyturfs)

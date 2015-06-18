@@ -12,3 +12,4 @@ var/global/list/table_recipes = list()				//list of all table craft recipes
 
 var/global/list/turfs = list()						//all the turfs
 var/global/list/areas = list()						//all the areas
+

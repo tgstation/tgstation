@@ -237,12 +237,19 @@
 	w_class = 5
 	slot_flags = 0
 	origin_tech = "combat=5;materials=1;syndicate=2"
-	mag_type = /obj/item/ammo_box/magazine/tommygunm9mm
+	mag_type = /obj/item/ammo_box/magazine/tommygunm45
 	fire_sound = 'sound/weapons/Gunshot_smg.ogg'
 	can_suppress = 0
 	burst_size = 4
 	fire_delay = 1
 
+/obj/item/weapon/gun/projectile/automatic/mini_uzi
+	name = "Uzi"
+	desc = "A lightweight, burst-fire submachine gun, for when you really want someone dead. Uses 9mm rounds."
+	icon_state = "mini-uzi"
+	origin_tech = "combat=5;materials=2;syndicate=8"
+	mag_type = /obj/item/ammo_box/magazine/uzim9mm
+	burst_size = 2
 
 /obj/item/weapon/gun/projectile/automatic/ar
 	name = "ARG"

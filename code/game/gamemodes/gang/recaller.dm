@@ -78,21 +78,21 @@
 
 		dat += "(10 Influence) "
 		if(points >= 10)
-			dat += "<a href='?src=\ref[src];purchase=ammo'>10mm Ammo</a><br>"
+			dat += "<a href='?src=\ref[src];purchase=10mmammo'>10mm Ammo</a><br>"
 		else
 			dat += "10mm Ammo<br>"
 
 		dat += "(50 Influence) "
-/*		if(points >= 50)
-			dat += "<a href='?src=\ref[src];purchase=SMG'>Thompson SMG</a><br>"
+		if(points >= 40)
+			dat += "<a href='?src=\ref[src];purchase=uzi'>Mini-Uzi</a><br>"
 		else
-			dat += "Thompson SMG<br>"
+			dat += "Mini=Uzi<br>"
 
 		dat += "(25 Influence) "
 		if(points >= 25)
-			dat += "<a href='?src=\ref[src];purchase=SMGammo'>9mm Drum</a><br>"
+			dat += "<a href='?src=\ref[src];purchase=9mmammo'>9mm Magazine</a><br>"
 		else
-			dat += "9mm Drum<br>"	*/
+			dat += "9mm Magazine<br>"
 
 		dat += "(10 Influence) "
 		if(points >= 10)
@@ -169,18 +169,18 @@
 				if(points >= 20)
 					item_type = /obj/item/weapon/gun/projectile/automatic/pistol
 					points = 20
-			if("ammo")
+			if("10mmammo")
 				if(points >= 10)
 					item_type = /obj/item/ammo_box/magazine/m10mm
 					points = 10
-/*			if("SMG")
-				if(points >= 50)
-					item_type = /obj/item/weapon/gun/projectile/automatic/tommygun
-					points = 50
-			if("SMGammo")
+			if("uzi")
+				if(points >= 40)
+					item_type = /obj/item/weapon/gun/projectile/automatic/mini_uzi
+					points = 40
+			if("9mmammo")
 				if(points >= 25)
-					item_type = /obj/item/ammo_box/magazine/tommygunm9mm
-					points = 25  */
+					item_type = /obj/item/ammo_box/magazine/uzim9mm
+					points = 25
 			if("vest")
 				if(points >= 10)
 					item_type = /obj/item/clothing/suit/armor/bulletproof
