@@ -35,17 +35,6 @@
 	var/revealed = 0 //If the revenant can take damage from normal sources.
 	var/inhibited = 0 //If the revenant's abilities are blocked by a chaplain's power.
 
-/mob/living/simple_animal/revenant/relaymove(var/mob/user, direction)
-	var/turf/newLoc = get_step(src,direction)
-	world << "memes"
-	if((newLoc.flags & NOJAUNT))
-		world << "they're dank"
-		user << "<span class='warning'>A holy aura pervades this area.</span>"
-		notransform = 0
-		spawn(2)
-			notransform = 1
-			return 0
-
 /mob/living/simple_animal/revenant/Life()
 	..()
 	if(essence < essence_min)
