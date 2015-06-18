@@ -224,7 +224,7 @@
 			state = (state == 0 ? 1 : 0)
 			user << (state == 1 ? "<span class='notice'>You have pried the window into the frame.</span>" : "<span class='notice'>You have pried the window out of the frame.</span>")
 
-	else if(istype(I, /obj/item/weapon/weldingtool))
+	else if(istype(I, /obj/item/weapon/weldingtool) && user.a_intent == "help")
 		var/obj/item/weapon/weldingtool/WT = I
 		if(user.a_intent == "help") //so you can still break windows with welding tools
 			if(health < maxhealth)
