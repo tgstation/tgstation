@@ -4,6 +4,7 @@
 	weight = 15
 	earliest_start = 6000
 	max_occurrences = 6
+	announcement = 1
 
 /datum/round_event/carp_migration
 	announceWhen	= 3

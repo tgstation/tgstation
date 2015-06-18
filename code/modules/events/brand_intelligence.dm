@@ -3,6 +3,7 @@
 	typepath = /datum/round_event/brand_intelligence
 	weight = 5
 	max_occurrences = 1
+	announcement = 1
 
 /datum/round_event/brand_intelligence
 	announceWhen	= 21
@@ -21,20 +22,14 @@
 
 
 /datum/round_event/brand_intelligence/announce()
+	if(!originMachine)
+		if(!pick_machine())
+			return
 	priority_announce("Rampant brand intelligence has been detected aboard [station_name()], please stand-by. The origin is believed to be \a [originMachine.name].", "Machine Learning Alert")
 
 
 /datum/round_event/brand_intelligence/start()
-	for(var/obj/machinery/vending/V in machines)
-		if(V.z != 1)	continue
-		vendingMachines.Add(V)
-
-	if(!vendingMachines.len)
-		kill()
-		return
-
-	originMachine = pick(vendingMachines)
-	vendingMachines.Remove(originMachine)
+	pick_machine()
 	if(!originMachine)
 		kill()
 		return
@@ -75,3 +70,17 @@
 
 		if(IsMultiple(activeFor, 8))
 			originMachine.speak(pick(rampant_speeches))
+
+
+/datum/round_event/brand_intelligence/proc/pick_machine()
+	for(var/obj/machinery/vending/V in machines)
+		if(V.z != 1)	continue
+		vendingMachines.Add(V)
+
+	if(!vendingMachines.len)
+		kill()
+		return 0
+
+	originMachine = pick(vendingMachines)
+	vendingMachines.Remove(originMachine)
+	return 1

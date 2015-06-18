@@ -3,6 +3,7 @@
 	typepath = /datum/round_event/meteor_wave/meaty
 	weight = 1
 	max_occurrences = 1
+	announcement = 1
 
 /datum/round_event/meteor_wave/meaty/announce()
 	priority_announce("Meaty ores have been detected on collision course with the station.", "Oh Crap, Get The Mop.",'sound/AI/meteors.ogg')

@@ -11,7 +11,7 @@
 /datum/round_event/falsealarm/announce()
 	var/list/events_list = list()
 	for(var/datum/round_event_control/E in SSevent.control)
-		if(!E.wizardevent && !E.holidayID) //No holiday cheer allowed during non-holidays. Not even fake holiday cheer.
+		if(!E.wizardevent && !E.holidayID && E.announcement) //No holiday cheer allowed during non-holidays. Not even fake holiday cheer. //Only pick events that actually announce!
 			events_list += E //No holiday cheer allowed during non-holidays. Not even fake holiday cheer.
 	var/datum/round_event_control/event_control = pick(events_list)
 	if(event_control)

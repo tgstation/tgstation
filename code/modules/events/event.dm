@@ -18,6 +18,7 @@
 	var/wizardevent = 0
 
 	var/alertadmins = 1			//should we let the admins know this event is firing
+	var/announcement = 0 		//If this event has an announcement, used for the false alarm event
 								//should be disabled on events that fire a lot
 
 /datum/round_event_control/wizard

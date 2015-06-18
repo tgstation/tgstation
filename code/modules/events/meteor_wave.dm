@@ -3,6 +3,7 @@
 	typepath = /datum/round_event/meteor_wave
 	weight = 5
 	max_occurrences = 3
+	announcement = 1
 
 /datum/round_event/meteor_wave
 	startWhen		= 6

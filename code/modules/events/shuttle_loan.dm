@@ -8,6 +8,7 @@
 	typepath = /datum/round_event/shuttle_loan
 	max_occurrences = 5
 	earliest_start = 0
+	announcement = 1 //Cruel!
 
 /datum/round_event/shuttle_loan
 	endWhen = 500

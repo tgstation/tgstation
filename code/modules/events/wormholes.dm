@@ -3,6 +3,7 @@
 	typepath = /datum/round_event/wormholes
 	max_occurrences = 3
 	weight = 2
+	announcement = 1
 
 
 /datum/round_event/wormholes

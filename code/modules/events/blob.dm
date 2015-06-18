@@ -3,6 +3,7 @@
 	typepath = /datum/round_event/blob
 	weight = 5
 	max_occurrences = 1
+	announcement = 1
 
 	earliest_start = 48000 // 1 hour 20 minutes
 

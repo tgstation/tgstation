@@ -4,6 +4,7 @@
 	earliest_start = 6000
 	weight = 40
 	alertadmins = 0
+	announcement = 1
 
 /datum/round_event/electrical_storm
 	var/lightsoutAmount	= 1
