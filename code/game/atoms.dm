@@ -452,7 +452,3 @@ var/list/blood_splatter_icons = list()
 
 /atom/proc/storage_contents_dump_act(obj/item/weapon/storage/src_object, mob/user)
     return 0
-
-/atom/proc/dump_act(obj/item/weapon/storage/src_object, mob/user)
-	for(var/obj/item/I in src_object)
-		src_object.dump_from_storage(I, src)
