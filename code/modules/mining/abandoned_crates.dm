@@ -21,7 +21,7 @@
 		code += dig
 		digits -= dig  //Player can enter codes with matching digits, but there are never matching digits in the answer
 
-	var/loot = rand(1,100) //100 different crates of varying chances to spawn
+	var/loot = rand(1,100) //100 different crates with varying chances of spawning
 	switch(loot)
 		if(1 to 5) //5% chance
 			new /obj/item/weapon/reagent_containers/food/drinks/bottle/rum(src)
@@ -29,10 +29,13 @@
 			new /obj/item/weapon/reagent_containers/food/drinks/bottle/whiskey(src)
 			new /obj/item/weapon/lighter/zippo(src)
 		if(6 to 10)
-			new /obj/item/weapon/pickaxe/drill(src)
-			new /obj/item/device/taperecorder(src)
-			new /obj/item/clothing/suit/space(src)
-			new /obj/item/clothing/head/helmet/space(src)
+			new /obj/item/weapon/bedsheet(src)
+			new /obj/item/weapon/kitchen/knife(src)
+			new /obj/item/weapon/wirecutters(src)
+			new /obj/item/weapon/screwdriver(src)
+			new /obj/item/weapon/weldingtool(src)
+			new /obj/item/weapon/hatchet(src)
+			new /obj/item/weapon/crowbar(src)
 		if(11 to 15)
 			new /obj/item/weapon/reagent_containers/glass/beaker/bluespace(src)
 		if(16 to 20)
@@ -65,13 +68,10 @@
 		if(57 to 58)
 			new /obj/item/toy/syndicateballoon(src)
 		if(59 to 60)
-			new /obj/item/weapon/bedsheet(src)
-			new /obj/item/weapon/kitchen/knife(src)
-			new /obj/item/weapon/wirecutters(src)
-			new /obj/item/weapon/screwdriver(src)
-			new /obj/item/weapon/weldingtool(src)
-			new /obj/item/weapon/hatchet(src)
-			new /obj/item/weapon/crowbar(src)
+			new /obj/item/weapon/pickaxe/drill(src)
+			new /obj/item/device/taperecorder(src)
+			new /obj/item/clothing/suit/space(src)
+			new /obj/item/clothing/head/helmet/space(src)
 		if(61 to 62)
 			for(var/i = 0, i < 12, ++i)
 				new /obj/item/clothing/head/kitty(src)
@@ -143,7 +143,9 @@
 		if(96)
 			new /obj/item/weapon/hand_tele(src)
 		if(97)
-			new /obj/item/seeds/gatfruit(src)
+			new /obj/item/clothing/mask/balaclava
+			new /obj/item/weapon/gun/projectile/automatic/pistol(src)
+			new /obj/item/ammo_box/magazine/m10mm(src)
 		if(98)
 			new /obj/item/weapon/katana/cursed(src)
 		if(99)
@@ -156,7 +158,7 @@
 	if(locked)
 		user << "<span class='notice'>The crate is locked with a Deca-code lock.</span>"
 		var/input = input(usr, "Enter [codelen] digits.", "Deca-Code Lock", "") as text
-		if(in_range(src, user))
+		if(in_range(src, user) || !user.incapacitated)
 			if (input == code)
 				user << "<span class='notice'>The crate unlocks!</span>"
 				locked = 0
