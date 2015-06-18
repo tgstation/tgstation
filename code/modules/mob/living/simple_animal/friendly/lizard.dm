@@ -11,8 +11,10 @@
 	attacktext = "bites"
 	melee_damage_lower = 1
 	melee_damage_upper = 2
+	density = 0
 	response_help  = "pets"
 	response_disarm = "shoos"
 	response_harm   = "stomps on"
 	ventcrawler = 2
+	pass_flags = PASSTABLE | PASSMOB
 	mob_size = MOB_SIZE_SMALL

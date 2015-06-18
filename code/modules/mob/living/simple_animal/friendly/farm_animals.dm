@@ -165,9 +165,10 @@
 	response_harm   = "kicks"
 	attacktext = "kicks"
 	health = 1
+	density = 0
 	ventcrawler = 2
 	var/amount_grown = 0
-	pass_flags = PASSTABLE | PASSGRILLE
+	pass_flags = PASSTABLE | PASSGRILLE | PASSMOB
 	mob_size = MOB_SIZE_SMALL
 
 /mob/living/simple_animal/chick/New()
@@ -199,6 +200,7 @@ var/global/chicken_count = 0
 	emote_hear = list("clucks")
 	emote_see = list("pecks at the ground","flaps its wings viciously")
 	speak_chance = 2
+	density = 0
 	turns_per_move = 3
 	meat_type = /obj/item/weapon/reagent_containers/food/snacks/meat/slab
 	meat_amount = 2
@@ -210,7 +212,8 @@ var/global/chicken_count = 0
 	ventcrawler = 2
 	var/eggsleft = 0
 	var/body_color
-	pass_flags = PASSTABLE
+	pass_flags = PASSTABLE | PASSMOB
+	mob_size = MOB_SIZE_SMALL
 
 /mob/living/simple_animal/chicken/New()
 	..()

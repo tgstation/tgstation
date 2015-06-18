@@ -8,7 +8,15 @@
 
 
 /obj/item/projectile/ion/on_hit(atom/target, blocked = 0)
+	..()
 	empulse(target, 1, 1)
+	return 1
+
+/obj/item/projectile/ion/weak
+
+/obj/item/projectile/ion/weak/on_hit(atom/target, blocked = 0)
+	..()
+	empulse(target, 0, 0)
 	return 1
 
 
@@ -19,6 +27,7 @@
 	flag = "bullet"
 
 /obj/item/projectile/bullet/gyro/on_hit(atom/target, blocked = 0)
+	..()
 	explosion(target, -1, 0, 2)
 	return 1
 
@@ -30,6 +39,7 @@
 	flag = "bullet"
 
 /obj/item/projectile/bullet/a40mm/on_hit(atom/target, blocked = 0)
+	..()
 	explosion(target, -1, 0, 2, 1, 0, flame_range = 3)
 	return 1
 
@@ -62,7 +72,9 @@
 	nodamage = 1
 	flag = "bullet"
 
-/obj/item/projectile/meteor/Bump(atom/A)
+/obj/item/projectile/meteor/Bump(atom/A, yes)
+	if(!yes) //prevents multi bumps.
+		return
 	if(A == firer)
 		loc = A.loc
 		return
@@ -93,6 +105,7 @@
 	name = "flayer ray"
 
 /obj/item/projectile/beam/mindflayer/on_hit(atom/target, blocked = 0)
+	. = ..()
 	if(ishuman(target))
 		var/mob/living/carbon/human/M = target
 		M.adjustBrainLoss(20)
@@ -128,6 +141,7 @@ obj/item/projectile/kinetic/New()
 		qdel(src)
 
 /obj/item/projectile/kinetic/on_hit(atom/target)
+	. = ..()
 	var/turf/target_turf= get_turf(target)
 	if(istype(target_turf, /turf/simulated/mineral))
 		var/turf/simulated/mineral/M = target_turf
@@ -171,14 +185,13 @@ obj/item/projectile/kinetic/New()
 
 /obj/item/projectile/beam/wormhole/on_hit(var/atom/target)
 	if(ismob(target))
-		..()
-		return
+		return ..()
 	if(!gun)
 		qdel(src)
 	gun.create_portal(src)
 
-
 /obj/item/projectile/bullet/gyro/on_hit(atom/target, blocked = 0)
+	..()
 	explosion(target, -1, 0, 2)
 	return 1
 
@@ -187,6 +200,12 @@ obj/item/projectile/kinetic/New()
 	name ="explosive slug"
 	damage = 25
 	weaken = 5
+
+/obj/item/projectile/bullet/frag12/on_hit(atom/target, blocked = 0)
+	..()
+	explosion(target, -1, 0, 1)
+	return 1
+
 /*
 /obj/item/projectile/bullet/magspear
 	name = "magnetic spear"

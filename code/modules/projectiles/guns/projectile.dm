@@ -11,7 +11,8 @@
 
 /obj/item/weapon/gun/projectile/New()
 	..()
-	magazine = new mag_type(src)
+	if (!magazine)
+		magazine = new mag_type(src)
 	chamber_round()
 	update_icon()
 	return

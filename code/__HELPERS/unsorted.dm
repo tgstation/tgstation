@@ -1256,7 +1256,7 @@ var/global/list/common_tools = list(
 			return 1000
 		else
 			return 0
-	if(istype(W, /obj/item/weapon/pickaxe/plasmacutter))
+	if(istype(W, /obj/item/weapon/gun/energy/plasmacutter))
 		return 3800
 	if(istype(W, /obj/item/weapon/melee/energy))
 		var/obj/item/weapon/melee/energy/O = W

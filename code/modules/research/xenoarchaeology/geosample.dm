@@ -57,41 +57,41 @@
 
 	age = rand(1,999)
 
-	if(container.mineralName)
-		switch(container.mineralName)
-			if("Uranium")
+	if(container.mineralType)
+		switch(container.mineralType)
+			if(/obj/item/weapon/ore/uranium)
 				age_million = rand(1, 704)
 				age_thousand = rand(1,999)
 				find_presence["potassium"] = rand(1,1000) / 100
 				source_mineral = "potassium"
-			if("Iron")
+			if(/obj/item/weapon/ore/iron)
 				age_thousand = rand(1, 999)
 				age_million = rand(1, 999)
 				find_presence["iron"] = rand(1,1000) / 100
 				source_mineral = "iron"
-			if("Diamond")
+			if(/obj/item/weapon/ore/diamond)
 				age_thousand = rand(1,999)
 				age_million = rand(1,999)
 				find_presence["nitrogen"] = rand(1,1000) / 100
 				source_mineral = "nitrogen"
-			if("Gold")
+			if(/obj/item/weapon/ore/gold)
 				age_thousand = rand(1,999)
 				age_million = rand(1,999)
 				age_billion = rand(3,4)
 				find_presence["iron"] = rand(1,1000) / 100
 				source_mineral = "iron"
-			if("Silver")
+			if(/obj/item/weapon/ore/silver)
 				age_thousand = rand(1,999)
 				age_million = rand(1,999)
 				find_presence["iron"] = rand(1,1000) / 100
 				source_mineral = "iron"
-			if("Plasma")
+			if(/obj/item/weapon/ore/plasma)
 				age_thousand = rand(1,999)
 				age_million = rand(1,999)
 				age_billion = rand(10, 13)
 				find_presence["plasma"] = rand(1,1000) / 100
 				source_mineral = "plasma"
-			if("Bananium")
+			if(/obj/item/weapon/ore/bananium)
 				age = rand(-1,-999)				//thats the joke
 				age_thousand = rand(-1,-999)
 				find_presence["plasma"] = rand(1,1000) / 100

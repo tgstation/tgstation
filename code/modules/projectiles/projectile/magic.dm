@@ -11,6 +11,7 @@
 	icon_state = "pulse1_bl"
 
 /obj/item/projectile/magic/death/on_hit(var/target)
+	. = ..()
 	if(ismob(target))
 		var/mob/M = target
 		M.death(0)
@@ -31,6 +32,7 @@
 	..()
 
 /obj/item/projectile/magic/fireball/on_hit(var/target)
+	. = ..()
 	var/turf/T = get_turf(target)
 	explosion(T, -1, 0, 2, 3, 0, flame_range = 2)
 	if(ismob(target)) //multiple flavors of pain
@@ -46,7 +48,7 @@
 	flag = "magic"
 
 /obj/item/projectile/magic/resurrection/on_hit(var/mob/living/carbon/target)
-
+	. = ..()
 	if(istype(target,/mob))
 		var/old_stat = target.stat
 		target.revive()
@@ -72,6 +74,7 @@
 	var/outer_tele_radius = 6
 
 /obj/item/projectile/magic/teleport/on_hit(var/mob/target)
+	. = ..()
 	var/teleammount = 0
 	var/teleloc = target
 	if(!isturf(target))
@@ -93,6 +96,7 @@
 	flag = "magic"
 
 /obj/item/projectile/magic/door/on_hit(var/atom/target)
+	. = ..()
 	var/atom/T = target.loc
 	if(isturf(target) && target.density)
 		CreateDoor(target)
@@ -113,6 +117,7 @@
 	flag = "magic"
 
 /obj/item/projectile/magic/change/on_hit(var/atom/change)
+	. = ..()
 	wabbajack(change)
 
 proc/wabbajack(mob/living/M)
@@ -221,8 +226,12 @@ proc/wabbajack(mob/living/M)
 					var/mob/living/carbon/human/H = new_mob
 					ready_dna(H)
 					if(H.dna && prob(50))
-						var/new_species = pick(typesof(/datum/species) - /datum/species)
-						hardset_dna(H, null, null, null, null, new_species)
+						var/list/all_species = list()
+						for(var/speciestype in typesof(/datum/species) - /datum/species)
+							var/datum/species/S = new speciestype()
+							if(!S.dangerous_existence)
+								all_species += speciestype
+						hardset_dna(H, null, null, null, null, pick(all_species))
 					H.update_icons()
 				else
 					return

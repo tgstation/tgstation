@@ -468,6 +468,8 @@
 	icon_state = "puppy"
 	icon_living = "puppy"
 	icon_dead = "puppy_dead"
+	density = 0
+	pass_flags = PASSMOB
 	mob_size = MOB_SIZE_SMALL
 
 //puppies cannot wear anything.

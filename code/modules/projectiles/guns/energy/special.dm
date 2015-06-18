@@ -205,6 +205,43 @@
 	ammo_type = list(/obj/item/ammo_casing/energy/bolt/large)
 	pin = null
 
+
+/obj/item/weapon/gun/energy/plasmacutter
+	name = "plasma cutter"
+	desc = "A mining tool capable of expelling concentrated plasma bursts. You could use it to cut limbs off of xenos! Or, you know, mine stuff."
+	icon_state = "plasmacutter"
+	item_state = "plasmacutter"
+	modifystate = -1
+	origin_tech = "combat=1;materials=3;magnets=2;plasmatech=2;engineering=1"
+	ammo_type = list(/obj/item/ammo_casing/energy/plasma)
+	flags = CONDUCT | OPENCONTAINER
+	attack_verb = list("attacked", "slashed", "cut", "sliced")
+	can_charge = 0
+
+/obj/item/weapon/gun/energy/plasmacutter/examine(mob/user)
+	..()
+	if(power_supply)
+		user <<"<span class='notice'>[src] is [round(power_supply.percent())]% charged.</span>"
+
+/obj/item/weapon/gun/energy/plasmacutter/attackby(var/obj/item/A, var/mob/user)
+	if(istype(A, /obj/item/stack/sheet/mineral/plasma))
+		var/obj/item/stack/sheet/S = A
+		S.use(1)
+		power_supply.give(1000)
+		user << "<span class='notice'>You insert [A] in [src], recharging it.</span>"
+	else if(istype(A, /obj/item/weapon/ore/plasma))
+		qdel(A)
+		power_supply.give(500)
+		user << "<span class='notice'>You insert [A] in [src], recharging it.</span>"
+	else
+		..()
+
+/obj/item/weapon/gun/energy/plasmacutter/adv
+	name = "advanced plasma cutter"
+	icon_state = "adv_plasmacutter"
+	origin_tech = "combat=3;materials=4;magnets=3;plasmatech=3;engineering=2"
+	ammo_type = list(/obj/item/ammo_casing/energy/plasma/adv)
+
 /obj/item/weapon/gun/energy/disabler
 	name = "disabler"
 	desc = "A self-defense weapon that exhausts organic targets, weakening them until they collapse."

@@ -36,6 +36,8 @@
 	return
 
 /obj/item/weapon/gun/syringe/afterattack(atom/target as mob|obj|turf, mob/living/user as mob|obj, params)
+	if(target == loc)
+		return
 	newshot()
 	..()
 

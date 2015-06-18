@@ -13,7 +13,8 @@
 	density = 1
 	blocks_air = 1
 	temperature = TCMB
-	var/mineralName = ""
+	var/mineralType = null
+	var/mineralName = "" //Used for some display purposes
 	var/mineralAmt = 3
 	var/spread = 0 //will the seam spread?
 	var/spreadChance = 0 //the percentual chance of an ore spreading to the neighbouring tiles
@@ -64,7 +65,7 @@
 			if (T)
 				T.overlays += image('icons/turf/mining.dmi', "rock_side_e", layer=6)
 
-	if (mineralName && mineralAmt && spread && spreadChance)
+	if (mineralType && mineralAmt && spread && spreadChance)
 		for(var/dir in cardinal)
 			if(prob(spreadChance))
 				var/turf/T = get_step(src, dir)
@@ -89,7 +90,7 @@
 /turf/simulated/mineral/random
 	name = "mineral deposit"
 	icon_state = "rock"
-	var/mineralSpawnChanceList = list("Uranium" = 5, "Diamond" = 2, "Gold" = 10, "Silver" = 12, "Plasma" = 20, "Iron" = 40, "Gibtonite" = 4/*, "Adamantine" =5*/, "Cave" = 2)//Currently, Adamantine won't spawn as it has no uses. -Durandan
+	var/mineralSpawnChanceList = list("Uranium" = 5, "Diamond" = 2, "Gold" = 10, "Silver" = 12, "Plasma" = 20, "Iron" = 40, "Gibtonite" = 4/*, "Adamantine" =5*/, "Cave" = 2, "BScrystal" = 1,)//Currently, Adamantine won't spawn as it has no uses. -Durandan
 	var/mineralChance = 13
 
 /turf/simulated/mineral/random/New()
@@ -118,6 +119,8 @@
 					M = /turf/simulated/mineral/gibtonite
 				if("Bananium")
 					M = /turf/simulated/mineral/clown
+				if("BScrystal")
+					M = /turf/simulated/mineral/bscrystal
 				/*if("Adamantine")
 					M = new/turf/simulated/mineral/adamantine(src)*/
 			if(M)
@@ -128,7 +131,7 @@
 /turf/simulated/mineral/random/high_chance
 	icon_state = "rock_highchance"
 	mineralChance = 25
-	mineralSpawnChanceList = list("Uranium" = 35, "Diamond" = 30, "Gold" = 45, "Silver" = 50, "Plasma" = 50)
+	mineralSpawnChanceList = list("Uranium" = 35, "Diamond" = 30, "Gold" = 45, "Silver" = 50, "Plasma" = 50, "BScrystal" = 20)
 
 /turf/simulated/mineral/random/high_chance/New()
 	icon_state = "rock"
@@ -137,30 +140,34 @@
 /turf/simulated/mineral/random/low_chance
 	icon_state = "rock_lowchance"
 	mineralChance = 6
-	mineralSpawnChanceList = list("Uranium" = 2, "Diamond" = 1, "Gold" = 4, "Silver" = 6, "Plasma" = 15, "Iron" = 40, "Gibtonite" = 2)
+	mineralSpawnChanceList = list("Uranium" = 2, "Diamond" = 1, "Gold" = 4, "Silver" = 6, "Plasma" = 15, "Iron" = 40, "Gibtonite" = 2, , "BScrystal" = 1)
 
 /turf/simulated/mineral/random/low_chance/New()
 	icon_state = "rock"
 	..()
 
+
+/turf/simulated/mineral/iron
+	name = "iron deposit"
+	icon_state = "rock_Iron"
+	mineralType = /obj/item/weapon/ore/iron
+	mineralName = "Iron"
+	spreadChance = 20
+	spread = 1
+	hidden = 0
+
 /turf/simulated/mineral/uranium
 	name = "uranium deposit"
+	mineralType = /obj/item/weapon/ore/uranium
 	mineralName = "Uranium"
 	spreadChance = 5
 	spread = 1
 	hidden = 1
 	scan_state = "rock_Uranium"
 
-/turf/simulated/mineral/iron
-	name = "iron deposit"
-	icon_state = "rock_Iron"
-	mineralName = "Iron"
-	spreadChance = 20
-	spread = 1
-	hidden = 0
-
 /turf/simulated/mineral/diamond
 	name = "diamond deposit"
+	mineralType = /obj/item/weapon/ore/diamond
 	mineralName = "Diamond"
 	spreadChance = 0
 	spread = 1
@@ -169,6 +176,7 @@
 
 /turf/simulated/mineral/gold
 	name = "gold deposit"
+	mineralType = /obj/item/weapon/ore/gold
 	mineralName = "Gold"
 	spreadChance = 5
 	spread = 1
@@ -177,6 +185,7 @@
 
 /turf/simulated/mineral/silver
 	name = "silver deposit"
+	mineralType = /obj/item/weapon/ore/silver
 	mineralName = "Silver"
 	spreadChance = 5
 	spread = 1
@@ -186,6 +195,7 @@
 /turf/simulated/mineral/plasma
 	name = "plasma deposit"
 	icon_state = "rock_Plasma"
+	mineralType = /obj/item/weapon/ore/plasma
 	mineralName = "Plasma"
 	spreadChance = 8
 	spread = 1
@@ -195,17 +205,28 @@
 /turf/simulated/mineral/clown
 	name = "bananium deposit"
 	icon_state = "rock_Clown"
+	mineralType = /obj/item/weapon/ore/bananium
 	mineralName = "Bananium"
 	mineralAmt = 3
 	spreadChance = 0
 	spread = 0
 	hidden = 0
 
+/turf/simulated/mineral/bscrystal
+	name = "bluespace crystal deposit"
+	icon_state = "rock_BScrystal"
+	mineralType = /obj/item/bluespace_crystal
+	mineralName = "Bluespace Crystal"
+	mineralAmt = 1
+	spreadChance = 0
+	spread = 0
+	hidden = 1
+	scan_state = "rock_BScrystal"
+
 ////////////////////////////////Gibtonite
 /turf/simulated/mineral/gibtonite
 	name = "gibtonite deposit"
 	icon_state = "rock_Gibtonite"
-	mineralName = "Gibtonite"
 	mineralAmt = 1
 	spreadChance = 0
 	spread = 0
@@ -558,23 +579,11 @@
 				if(prob(50))
 					M.Stun(5)
 			M.apply_effect(25, IRRADIATE)
-	if ((src.mineralName != "") && (src.mineralAmt > 0) && (src.mineralAmt < 11))
+	if (mineralType && (src.mineralAmt > 0) && (src.mineralAmt < 11))
 		var/i
 		for (i=0;i<mineralAmt;i++)
-			if (src.mineralName == "Uranium")
-				new /obj/item/weapon/ore/uranium(src)
-			if (src.mineralName == "Iron")
-				new /obj/item/weapon/ore/iron(src)
-			if (src.mineralName == "Gold")
-				new /obj/item/weapon/ore/gold(src)
-			if (src.mineralName == "Silver")
-				new /obj/item/weapon/ore/silver(src)
-			if (src.mineralName == "Plasma")
-				new /obj/item/weapon/ore/plasma(src)
-			if (src.mineralName == "Diamond")
-				new /obj/item/weapon/ore/diamond(src)
-			if (src.mineralName == "Bananium")
-				new /obj/item/weapon/ore/bananium(src)
+			new mineralType(src)
+		feedback_add_details("ore_mined","[mineralType]|[mineralAmt]")
 	var/turf/simulated/floor/plating/asteroid/airless/N = ChangeTurf(/turf/simulated/floor/plating/asteroid/airless)
 	playsound(src, 'sound/effects/break_stone.ogg', 50, 1) //beautiful destruction
 	N.fullUpdateMineralOverlays()

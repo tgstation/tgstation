@@ -7,6 +7,7 @@
 	health = 200
 	lights_power = 7
 	deflect_chance = 15
+	max_equip = 6
 	damage_absorption = list("brute"=0.6,"bomb"=0.2)
 	wreckage = /obj/structure/mecha_wreckage/ripley
 	var/list/cargo = new
@@ -66,12 +67,13 @@
 		src.overlays += image("icon" = "mecha.dmi", "icon_state" = "ripley-g-full")
 
 /obj/mecha/working/ripley/firefighter
-	desc = "Standart APLU chassis was refitted with additional thermal protection and cistern."
+	desc = "Autonomous Power Loader Unit. This model is refitted with additional thermal protection."
 	name = "\improper APLU \"Firefighter\""
 	icon_state = "firefighter"
 	max_temperature = 65000
 	health = 250
 	lights_power = 7
+	max_equip = 5
 	damage_absorption = list("brute"=1,"fire"=0.5,"bullet"=0.8,"bomb"=0.5)
 	wreckage = /obj/structure/mecha_wreckage/ripley/firefighter
 
@@ -104,6 +106,10 @@
 	else
 		var/obj/item/mecha_parts/mecha_equipment/tool/drill/D = new /obj/item/mecha_parts/mecha_equipment/tool/drill
 		D.attach(src)
+	//Possible plasma cutter
+	if(prob(25))
+		var/obj/item/mecha_parts/mecha_equipment/M = new /obj/item/mecha_parts/mecha_equipment/weapon/energy/plasma
+		M.attach(src)
 
 	//Attach hydrolic clamp
 	var/obj/item/mecha_parts/mecha_equipment/tool/hydraulic_clamp/HC = new /obj/item/mecha_parts/mecha_equipment/tool/hydraulic_clamp

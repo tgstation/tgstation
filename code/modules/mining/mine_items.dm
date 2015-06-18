@@ -110,7 +110,7 @@
 	hitsound = 'sound/weapons/sonic_jackhammer.ogg'
 	desc = "Cracks rocks with sonic blasts, and doubles as a demolition power tool for smashing walls.."
 
-
+/*
 /obj/item/weapon/pickaxe/plasmacutter
 	name = "plasma cutter"
 	icon_state = "plasmacutter"
@@ -124,7 +124,7 @@
 	origin_tech = "materials=4;plasmatech=3;engineering=3"
 	desc = "A rock cutter that uses bursts of hot plasma. You could use it to cut limbs off of xenos! Or, you know, mine stuff."
 
-
+*/
 /*****************************Shovel********************************/
 
 /obj/item/weapon/shovel

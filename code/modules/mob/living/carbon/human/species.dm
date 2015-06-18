@@ -37,6 +37,7 @@
 	var/meat = /obj/item/weapon/reagent_containers/food/snacks/meat/slab/human //What the species drops on gibbing
 	var/list/no_equip = list()	// slots the race can't equip stuff to
 	var/nojumpsuit = 0	// this is sorta... weird. it basically lets you equip stuff that usually needs jumpsuits without one, like belts and pockets and ids
+	var/dangerous_existence = null //A flag for transformation spells that tells them "hey if you turn a person into one of these without preperation, they'll probably die!"
 
 	var/say_mod = "says"	// affects the speech message
 

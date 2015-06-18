@@ -2,7 +2,7 @@
 	name = "projectile"
 	icon = 'icons/obj/projectiles.dmi'
 	icon_state = "bullet"
-	density = 1
+	density = 0
 	unacidable = 1
 	pass_flags = PASSTABLE
 	mouse_opacity = 0
@@ -107,7 +107,6 @@
 		loc = target_turf
 		if(A)
 			permutated.Add(A)
-		Range()
 		return 0
 	else
 		if(A && A.density && !ismob(A) && !(A.flags & ON_BORDER)) //if we hit a dense non-border obj or dense turf then we also hit one of the mobs on that tile.

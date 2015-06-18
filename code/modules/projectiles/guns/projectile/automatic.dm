@@ -88,6 +88,9 @@
 	burst_size = 2
 	pin = /obj/item/device/firing_pin/implant/pindicate
 
+/obj/item/weapon/gun/projectile/automatic/c20r/unrestricted
+	pin = /obj/item/device/firing_pin
+
 /obj/item/weapon/gun/projectile/automatic/c20r/New()
 	..()
 	update_icon()
@@ -120,6 +123,10 @@
 	burst_size = 5
 	fire_delay = 3
 	pin = /obj/item/device/firing_pin/implant/pindicate
+
+/obj/item/weapon/gun/projectile/automatic/l6_saw/unrestricted
+	pin = /obj/item/device/firing_pin
+
 
 /obj/item/weapon/gun/projectile/automatic/l6_saw/attack_self(mob/user as mob)
 	cover_open = !cover_open
@@ -174,6 +181,9 @@
 	burst_size = 3
 	fire_delay = 2
 	pin = /obj/item/device/firing_pin/implant/pindicate
+
+/obj/item/weapon/gun/projectile/automatic/m90/unrestricted
+	pin = /obj/item/device/firing_pin
 
 /obj/item/weapon/gun/projectile/automatic/m90/New()
 	..()

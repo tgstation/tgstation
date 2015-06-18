@@ -28,7 +28,7 @@
 	id = "lizard"
 	say_mod = "hisses"
 	default_color = "00FF00"
-	roundstart = 1
+	roundstart = 0
 	specflags = list(MUTCOLORS,EYECOLOR,LIPS)
 	mutant_bodyparts = list("tail", "snout")
 	attack_verb = "slash"
@@ -129,6 +129,7 @@
 	ignored_by = list(/mob/living/simple_animal/hostile/faithless)
 	meat = /obj/item/weapon/reagent_containers/food/snacks/meat/slab/human/mutant/shadow
 	specflags = list(NOBREATH,NOBLOOD,RADIMMUNE)
+	dangerous_existence = 1
 
 /datum/species/shadow/spec_life(mob/living/carbon/human/H)
 	var/light_amount = 0

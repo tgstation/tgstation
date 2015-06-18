@@ -3,6 +3,8 @@
 
 	if(istype(mover) && mover.checkpass(PASSMOB))
 		return 1
+	if(istype(mover, /obj/item/projectile))
+		return (!density || lying)
 	if(ismob(mover))
 		var/mob/moving_mob = mover
 		if ((other_mobs && moving_mob.other_mobs))
