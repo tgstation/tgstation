@@ -366,6 +366,7 @@
 
 */
 
+//No idea if this actually works anymore. Please handle carefully
 /obj/item/weapon/reagent_containers/glass/kettle
 	name = "Kettle"
 	desc = "A pot made for holding hot drinks. Can hold up to 75 units."
