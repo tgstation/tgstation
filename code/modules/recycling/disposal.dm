@@ -110,7 +110,7 @@
 
 	if(istype(I, /obj/item/weapon/storage/bag/trash))
 		var/obj/item/weapon/storage/bag/trash/T = I
-		user << "<span class='warning'> You empty the bag.</span>"
+		user << "<span class='warning'>You empty the bag.</span>"
 		for(var/obj/item/O in T.contents)
 			T.remove_from_storage(O,src)
 		T.update_icon()
@@ -345,7 +345,8 @@
 	src.updateDialog()
 
 	if(flush && air_contents.return_pressure() >= SEND_PRESSURE )	// flush can happen even without power
-		flush()
+		spawn(0)
+			flush()
 
 	if(stat & NOPOWER)			// won't charge if no power
 		return
@@ -378,39 +379,32 @@
 		update()
 	return
 
-// perform a flush
 /obj/machinery/disposal/proc/flush()
-
 	flushing = 1
-	flick("[icon_state]-flush", src)
-
-	var/wrapcheck = 0
-	var/obj/structure/disposalholder/H = new()	// virtual holder object which actually
-										// travels through the pipes.
-	for(var/obj/item/smallDelivery/O in src)
-		wrapcheck = 1
-
-	if(wrapcheck == 1)
-		H.tomail = 1
-
+	flushAnimation()
+	var/obj/structure/disposalholder/H = new()
+	newHolderDestination(H)
 	sleep(10)
 	if(last_sound < world.time + 1)
 		playsound(src, 'sound/machines/disposalflush.ogg', 50, 0, 0)
 		last_sound = world.time
-	sleep(5) // wait for animation to finish
-
-	H.init(src)	// copy the contents of disposer to holder
-	air_contents = new()		// new empty gas resv.
-
-	H.start(src) // start the holder processing movement
+	sleep(5)
+	H.init(src)
+	air_contents = new()
+	H.start(src)
 	flushing = 0
-	// now reset disposal state
 	flush = 0
-	if(mode == 2)	// if was ready,
-		mode = 1	// switch to charging
+	if(mode == 2)
+		mode = 1
 	update()
-	return
 
+/obj/machinery/disposal/proc/newHolderDestination(obj/structure/disposalholder/H)
+	for(var/obj/item/smallDelivery/O in src)
+		H.tomail = 1
+		return
+
+/obj/machinery/disposal/proc/flushAnimation()
+	flick("[icon_state]-flush", src)
 
 // called when area power changes
 /obj/machinery/disposal/power_change()
@@ -490,6 +484,8 @@
 	//hasmob effects whether the package goes to cargo or its tagged destination.
 	for(var/mob/living/M in D)
 		if(M && M.stat != DEAD)
+			if(M.client)
+				M.client.eye = src
 			hasmob = 1
 
 	//Checks 1 contents level deep. This means that players can be sent through disposals...
@@ -498,6 +494,8 @@
 		if(O.contents)
 			for(var/mob/living/M in O.contents)
 				if(M && M.stat != DEAD)
+					if(M.client)
+						M.client.eye = src
 					hasmob = 1
 
 	// now everything inside the disposal gets put into the holder
@@ -541,8 +539,6 @@
 		if(!(count--))
 			active = 0
 	return
-
-
 
 // find the turf which should contain the next pipe
 /obj/structure/disposalholder/proc/nextloc()
@@ -590,7 +586,7 @@
 	return
 
 /obj/structure/disposalholder/allow_drop()
-	return 0
+	return 1
 
 // Disposal pipes
 
@@ -979,7 +975,7 @@
 			sortType = O.currTag
 			playsound(src.loc, 'sound/machines/twobeep.ogg', 100, 1)
 			var/tag = uppertext(TAGGERLOCATIONS[O.currTag])
-			user << "<span class='warning'> Changed filter to [tag].</span>"
+			user << "<span class='warning'>Changed filter to [tag].</span>"
 			updatedesc()
 
 

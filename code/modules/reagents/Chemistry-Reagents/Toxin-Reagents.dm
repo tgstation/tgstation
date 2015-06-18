@@ -494,7 +494,7 @@
 			if(3)
 				var/mob/living/carbon/human/H = M
 				if(!H.heart_attack)
-					H.visible_message("<span class = 'userdanger'>[H] clutches at their chest as if their heart stopped!</span>")
+					H.visible_message("<span class='userdanger'>[H] clutches at their chest as if their heart stopped!</span>")
 					H.heart_attack = 1 // rip in pepperoni
 				else
 					H.losebreath += 10

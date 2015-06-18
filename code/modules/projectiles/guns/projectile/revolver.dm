@@ -37,7 +37,7 @@
 		CB.update_icon()
 		num_unloaded++
 	if (num_unloaded)
-		user << "<span class = 'notice'>You unload [num_unloaded] shell\s from [src].</span>"
+		user << "<span class='notice'>You unload [num_unloaded] shell\s from [src].</span>"
 	else
 		user << "<span class='warning'>[src] is empty!</span>"
 
@@ -170,7 +170,7 @@
 			CB.update_icon()
 			num_unloaded++
 		if (num_unloaded)
-			user << "<span class = 'notice'>You unload [num_unloaded] shell\s from [src].</span>"
+			user << "<span class='notice'>You unload [num_unloaded] shell\s from [src].</span>"
 		else
 			user << "<span class='notice'>[src] is empty.</span>"
 

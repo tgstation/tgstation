@@ -24,6 +24,9 @@
 	pressure_resistance = 2
 	var/colour = "black"	//what colour the ink is!
 
+/obj/item/weapon/pen/suicide_act(mob/user)
+	user.visible_message("<span class='suicide'>[user] is scribbling numbers all over themself with [src]! It looks like they're trying to commit sudoku!</span>")
+	return(BRUTELOSS)
 
 /obj/item/weapon/pen/blue
 	desc = "It's a normal blue ink pen."
@@ -95,24 +98,22 @@
 					if(user.mind in ticker.mode.A_bosses)
 						if(ticker.mode.add_gangster(M.mind,"A"))
 							M.Paralyse(5)
-							cooldown(ticker.mode.A_gang.len, )
+							cooldown(max(0,ticker.mode.B_gang.len - ticker.mode.A_gang.len))
 						else
 							user << "<span class='warning'>This mind is resistant to recruitment!</span>"
 					else if(user.mind in ticker.mode.B_bosses)
 						if(ticker.mode.add_gangster(M.mind,"B"))
 							M.Paralyse(5)
-							cooldown(ticker.mode.B_gang.len)
+							cooldown(max(0,ticker.mode.A_gang.len - ticker.mode.B_gang.len))
 						else
 							user << "<span class='warning'>This mind is resistant to recruitment!</span>"
 				else
 					user << "<span class='warning'>This mind is so vacant that it is not susceptible to influence!</span>"
 
 /obj/item/weapon/pen/gang/proc/cooldown(modifier)
-	if(!modifier)
-		return
 	cooldown = 1
 	icon_state = "pen_blink"
-	spawn(600)
+	spawn(max(50,1200-(modifier*100)))
 		cooldown = 0
 		icon_state = "pen"
 		var/mob/M = get(src, /mob)

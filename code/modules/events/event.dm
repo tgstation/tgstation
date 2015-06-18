@@ -28,6 +28,7 @@
 		return PROCESS_KILL
 	var/datum/round_event/E = new typepath()
 	E.control = src
+	feedback_add_details("event_ran","[E]")
 	occurrences++
 
 	testing("[time2text(world.time, "hh:mm:ss")] [E.type]")

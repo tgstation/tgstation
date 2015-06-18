@@ -7,9 +7,7 @@
 /obj/machinery/computer/message_monitor
 	name = "message monitor console"
 	desc = "Used to Monitor the crew's messages, that are sent via PDA. Can also be used to view Request Console messages."
-	icon_state = "comm_logs"
-	var/hack_icon = "comm_logsc"
-	var/normal_icon = "comm_logs"
+	icon_screen = "comm_logs"
 	circuit = /obj/item/weapon/circuitboard/message_monitor
 	//Server linked to.
 	var/obj/machinery/message_server/linkedServer = null
@@ -42,7 +40,6 @@
 /obj/machinery/computer/message_monitor/emag_act(user as mob)
 	if(!emagged)
 		if(!isnull(src.linkedServer))
-			icon_state = hack_icon // An error screen I made in the computers.dmi
 			emagged = 1
 			screen = 2
 			spark_system.set_up(5, 0, src)
@@ -55,15 +52,6 @@
 			message = rebootmsg
 		else
 			user << "<span class='notice'>A no server error appears on the screen.</span>"
-
-/obj/machinery/computer/message_monitor/update_icon()
-	..()
-	if(stat & (NOPOWER|BROKEN))
-		return
-	if(emagged || hacking)
-		icon_state = hack_icon
-	else
-		icon_state = normal_icon
 
 /obj/machinery/computer/message_monitor/initialize()
 	//Is the server isn't linked to a server, and there's a server available, default it to the first one in the list.
@@ -140,7 +128,7 @@
 					break
 				// Del - Sender   - Recepient - Message
 				// X   - Al Green - Your Mom  - WHAT UP!?
-				dat += "<tr><td width = '5%'><center><A href='?src=\ref[src];delete=\ref[pda]' style='color: rgb(255,0,0)'>X</a></center></td><td width='15%'>[pda.sender]</td><td width='15%'>[pda.recipient]</td><td width='300px'>[pda.message]</td></tr>"
+				dat += "<tr><td width = '5%'><center><A href='?src=\ref[src];delete=\ref[pda]' style='color: rgb(255,0,0)'>X</a></center></td><td width='15%'>[pda.sender]</td><td width='15%'>[pda.recipient]</td><td width='300px'>[pda.message][pda.photo ? "<a href='byond://?src=\ref[pda];photo=1'>(Photo)</a>":""]</td></tr>"
 			dat += "</table>"
 		//Hacking screen.
 		if(2)
@@ -263,11 +251,9 @@
 		var/currentKey = src.linkedServer.decryptkey
 		user << "<span class='warning'>Brute-force completed! The key is '[currentKey]'.</span>"
 	src.hacking = 0
-	src.icon_state = normal_icon
 	src.screen = 0 // Return the screen back to normal
 
 /obj/machinery/computer/message_monitor/proc/UnmagConsole()
-	src.icon_state = normal_icon
 	src.emagged = 0
 
 /obj/machinery/computer/message_monitor/proc/ResetMessage()
@@ -365,7 +351,6 @@
 			if(issilicon(usr) && is_special_character(usr))
 				src.hacking = 1
 				src.screen = 2
-				src.icon_state = hack_icon
 				//Time it takes to bruteforce is dependant on the password length.
 				spawn(100*length(src.linkedServer.decryptkey))
 					if(src && src.linkedServer && usr)

@@ -92,7 +92,7 @@
 	for(var/mob/living/carbon/human/H in orange(4,T))
 		if(H == host)
 			continue
-		H << "<span class='alien'> You hear a buzz in your head </span>"
+		H << "<span class='alien'>You hear a buzz in your head </span>"
 		H.confused += 20
 
 /obj/item/gland/pop
@@ -213,7 +213,7 @@
 
 /obj/effect/cocoon/abductor/proc/Copy(var/mob/living/carbon/human/H)
 	var/mob/living/carbon/human/interactive/greytide/clone = new(src)
-	hardset_dna(clone,H.dna.uni_identity,H.dna.struc_enzymes,H.real_name, H.dna.blood_type, H.dna.species.type, H.dna.mutant_color)
+	hardset_dna(clone,H.dna.uni_identity,H.dna.struc_enzymes,H.real_name, H.dna.blood_type, H.dna.species.type, H.dna.features)
 
 	//There's no define for this / get all items ?
 	var/list/slots = list(slot_back,slot_w_uniform,slot_wear_suit,\

@@ -3,10 +3,8 @@
 /obj/machinery/computer/monitor
 	name = "power monitoring console"
 	desc = "It monitors power levels across the station."
-	icon = 'icons/obj/computer.dmi'
-	icon_state = "power"
-	density = 1
-	anchored = 1
+	icon_screen = "power"
+	icon_keyboard = "power_key"
 	use_power = 2
 	idle_power_usage = 20
 	active_power_usage = 80

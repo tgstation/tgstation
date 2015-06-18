@@ -160,6 +160,8 @@
 
 	var/aggressive_changelog = 0
 
+	var/reactionary_explosions = 0 //If we use reactionary explosions, explosions that react to walls and doors
+
 /datum/configuration/New()
 	var/list/L = typesof(/datum/game_mode) - /datum/game_mode
 	for(var/T in L)
@@ -485,6 +487,22 @@
 					config.no_summon_magic			= 1
 				if("no_summon_events")
 					config.no_summon_events			= 1
+				if("reactionary_explosions")
+					config.reactionary_explosions	= 1
+				if("bombcap")
+					var/BombCap = text2num(value)
+					if (!BombCap)
+						continue
+					if (BombCap < 4)
+						BombCap = 4
+					if (BombCap > 128)
+						BombCap = 128
+
+					MAX_EX_DEVESTATION_RANGE = round(BombCap/4)
+					MAX_EX_HEAVY_RANGE = round(BombCap/2)
+					MAX_EX_LIGHT_RANGE = BombCap
+					MAX_EX_FLASH_RANGE = BombCap
+					MAX_EX_FLAME_RANGE = BombCap
 				else
 					diary << "Unknown setting in configuration: '[name]'"
 

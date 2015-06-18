@@ -1,6 +1,0 @@
-author: Cuboos
-delete-after: True
-
-changes: 
-  - rscadd: "Added casting and firing sounds for wizard spells and staves."
-  - rscadd: "A new title theme has been added."

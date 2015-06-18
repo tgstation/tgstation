@@ -3,7 +3,8 @@
 /obj/machinery/computer/med_data//TODO:SANITY
 	name = "medical records console"
 	desc = "This can be used to check medical records."
-	icon_state = "medcomp"
+	icon_screen = "medcomp"
+	icon_keyboard = "med_key"
 	req_one_access = list(access_medical, access_forensics_lockers)
 	circuit = /obj/item/weapon/circuitboard/med_data
 	var/obj/item/weapon/card/id/scan = null
@@ -508,7 +509,7 @@
 					else
 						//Foreach continue //goto(3229)
 				if(!( src.active2 ))
-					src.temp = text("Could not locate record [].", t1)
+					src.temp = text("Could not locate record [].", sanitize(t1))
 				else
 					for(var/datum/data/record/E in data_core.general)
 						if((E.fields["name"] == src.active2.fields["name"] || E.fields["id"] == src.active2.fields["id"]))
@@ -590,4 +591,6 @@
 /obj/machinery/computer/med_data/laptop
 	name = "medical laptop"
 	desc = "A cheap Nanotrasen medical laptop, it functions as a medical records computer. It's bolted to the table."
-	icon_state = "medlaptop"
+	icon_state = "laptop"
+	icon_screen = "medlaptop"
+	icon_keyboard = "laptop_key"
