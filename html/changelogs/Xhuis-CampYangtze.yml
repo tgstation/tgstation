@@ -1,0 +1,5 @@
+author: Xhuis
+delete-after: True
+
+changes: 
+  - rscadd: "Bomb collars have been added. These collars can be synced to specially-designed detonators and remotely controlled as well as locked in place."
