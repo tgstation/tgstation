@@ -1,4 +1,5 @@
 world/IsBanned(key,address,computer_id)
+	log_access("IsBanned: Checking [ckey(key)], [address], [computer_id]")
 	//Guest Checking
 	if(!guests_allowed && IsGuestKey(key))
 		log_access("Failed Login: [key] - Guests not allowed")
@@ -21,8 +22,22 @@ world/IsBanned(key,address,computer_id)
 			log_access("Failed Login: [key] [computer_id] [address] - Banned [.["reason"]]")
 			message_admins("<span class='notice'>Failed Login: [key] id:[computer_id] ip:[address] - Banned [.["reason"]]</span>")
 			return .
+		//sticky ban logging
+		. = ..()
+		var/list/what = .
+		if(istype(what,/list))
+			message_admins("Attempted stickyban login key: [what["keys"]] IP: [what["IP"]] CID: [what["computer_id"]] Admin: [what["admin"]]")
+			log_access("Attempted stickyban login key: [what["keys"]] IP: [what["IP"]] CID: [what["computer_id"]] Admin: [what["admin"]]")
+			var/desc
+			if(config.banappeals)
+				desc = "\nReason: You, or another user of this computer or connection ([ckey(key)]) is banned from playing here. The ban reason is:\n[what["message"]]\nThis ban was applied by [what["admin"]]\nBan type: Permanent \nExpires: Never \nAppeal: [config.banappeals]"
+			else
+				desc = "\nReason: You, or another user of this computer or connection ([ckey(key)]) is banned from playing here. The ban reason is:\n[what["message"]]\nThis ban was applied by [what["admin"]]\nBan type: Permanent \nExpires: Never \nAppeal: <span class='warning'>No ban appeals link set</span>"
+				what.Remove("message")
+				what["desc"] = "[desc]"
+				what["reason"] = "Permanent"
 
-		return ..()	//default pager ban stuff
+		return .	//default pager ban stuff
 
 	else
 
@@ -73,4 +88,18 @@ world/IsBanned(key,address,computer_id)
 			message_admins("[key] has logged in with a blank computer id in the ban check.")
 		if (failedip)
 			message_admins("[key] has logged in with a blank ip in the ban check.")
-		return ..()	//default pager ban stuff
+		//sticky ban logging
+		. = ..()
+		var/list/what = .
+		if(istype(what,/list))
+			message_admins("Attempted stickyban login key: [what["keys"]] IP: [what["IP"]] CID: [what["computer_id"]] Admin: [what["admin"]]")
+			log_access("Attempted stickyban login key: [what["keys"]] IP: [what["IP"]] CID: [what["computer_id"]] Admin: [what["admin"]]")
+			var/desc
+			if(config.banappeals)
+				desc = "\nReason: You, or another user of this computer or connection ([ckey(key)]) is banned from playing here. The ban reason is:\n[what["message"]]\nThis ban was applied by [what["admin"]]\nBan type: Permanent \nExpires: Never \nAppeal: [config.banappeals]"
+			else
+				desc = "\nReason: You, or another user of this computer or connection ([ckey(key)]) is banned from playing here. The ban reason is:\n[what["message"]]\nThis ban was applied by [what["admin"]]\nBan type: Permanent \nExpires: Never \nAppeal: <span class='warning'>No ban appeals link set</span>"
+				what.Remove("message")
+				what["desc"] = "[desc]"
+				what["reason"] = "Permanent"
+		return .	//default pager ban stuff

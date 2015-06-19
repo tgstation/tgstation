@@ -1002,7 +1002,7 @@
 		var/mob/M = locate(href_list["newban"])
 		if(!ismob(M)) return
 
-		if(M.client && M.client.holder)	return	//admins cannot be banned. Even if they could, the ban doesn't affect them anyway
+		// now you can! if(M.client && M.client.holder)	return	//admins cannot be banned. Even if they could, the ban doesn't affect them anyway
 
 		switch(alert("Temporary Ban?",,"Yes","No", "Cancel"))
 			if("Yes")
@@ -1039,6 +1039,11 @@
 						AddBan(M.ckey, M.computer_id, reason, usr.ckey, 0, 0, M.lastKnownIP)
 					if("No")
 						AddBan(M.ckey, M.computer_id, reason, usr.ckey, 0, 0)
+				var/sticky = alert(usr,"Sticky Ban [M.ckey]? Use this only if you never intend to unban the player.","Sticky Icky","Yes", "No") == "Yes"
+				if(sticky)
+					world.SetConfig("APP/ban",M.ckey,"type=sticky&reason=[reason]&message=[reason]&IP=[M.lastKnownIP]&computer_id=[M.computer_id]&admin=[ckey(usr.key)]")
+					message_admins("[key_name_admin(usr)] has sticky banned [key_name(M)].")
+					log_admin("[key_name(usr)] has sticky banned [key_name(M)].")
 				M << "<span class='warning'><BIG><B>You have been banned by [usr.client.ckey].\nReason: [reason].</B></BIG></span>"
 				M << "<span class='warning'>This is a permanent ban.</span>"
 				if(config.banappeals)
