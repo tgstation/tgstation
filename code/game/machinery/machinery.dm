@@ -451,9 +451,8 @@ Class Procs:
 
 /obj/machinery/proc/dropFrame()
 	var/obj/machinery/constructable_frame/machine_frame/M = new /obj/machinery/constructable_frame/machine_frame(src.loc)
-	M.build_state = 2
+	M.set_build_state(2)
 	M.state = 1
-	M.icon_state = "box_1"
 
 /obj/machinery/proc/crowbarDestroy(mob/user)
 	user.visible_message(	"[user] begins to pry out the circuitboard from \the [src].",

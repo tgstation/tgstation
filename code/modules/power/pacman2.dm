@@ -113,9 +113,8 @@
 					I.crit_fail = 1
 				I.loc = src.loc
 			new_frame.state = 1
-			new_frame.build_state = 2
-			new_frame.icon_state = "box_1"
-			del(src)
+			new_frame.set_build_state(2)
+			qdel(src)
 
 /obj/machinery/power/port_gen/pacman2/attack_hand(mob/user as mob)
 	..()

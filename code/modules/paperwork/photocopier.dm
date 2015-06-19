@@ -331,8 +331,7 @@
 			if(do_after(user, src, 50))
 				var/obj/machinery/constructable_frame/machine_frame/M = new /obj/machinery/constructable_frame/machine_frame(src.loc)
 				M.state = 1
-				M.build_state = 2
-				M.icon_state = "box_1"
+				M.set_build_state(2)
 				for(var/obj/I in component_parts)
 					if(I.reliability != 100 && crit_fail)
 						I.crit_fail = 1
