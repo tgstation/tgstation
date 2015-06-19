@@ -252,7 +252,9 @@ var/list/vox_tens=list(
 		if (number < 19) //BYOND LISTS START KEYS AT 1 NOT 0
 			words += vox_units[number+1]
 		else
-			words += vox_tens[(number / 10)+1]
+			var/indice = (number / 10)+1
+			if(indice < vox_tens.len)
+				words += vox_tens[indice]
 			if ((number % 10) > 0)
 				words.Add(vox_units[(number % 10)+1])
 
