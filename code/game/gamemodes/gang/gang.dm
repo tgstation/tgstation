@@ -273,7 +273,7 @@
 	if(check && isloyal(gangster_mind.current)) //Check to see if the potential gangster is implanted
 		return 0
 	if(gangster_mind in (A_bosses | A_gang | B_bosses | B_gang))
-		return 0
+		return 1
 	if(gang == "A")
 		A_gang += gangster_mind
 	else
@@ -290,7 +290,7 @@
 	gangster_mind.current.attack_log += "\[[time_stamp()]\] <font color='red'>Has been converted to the [gang=="A" ? "[gang_name("A")] Gang (A)" : "[gang_name("B")] Gang (B)"]!</font>"
 	gangster_mind.special_role = "[gang=="A" ? "[gang_name("A")] Gang (A)" : "[gang_name("B")] Gang (B)"]"
 	update_gang_icons_added(gangster_mind,gang)
-	return 1
+	return 2
 ////////////////////////////////////////////////////////////////////
 //Deals with players reverting to neutral (Not a gangster anymore)//
 ////////////////////////////////////////////////////////////////////

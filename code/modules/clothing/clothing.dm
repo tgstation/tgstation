@@ -235,7 +235,8 @@ BLIND     // can't see anything
 			return 0
 		else
 			if(user)
-				user.drop_item()
+				if(!user.drop_item())
+					return
 			hastie = I
 			I.loc = src
 			if(user && notifyAttach)

@@ -90,9 +90,10 @@
 			user << "<span class='warning'>The cover is screwed on, it won't pry off!</span>"
 	else if(istype(I, /obj/item/weapon/bombcore))
 		if(!payload)
+			if(!user.drop_item())
+				return
 			payload = I
 			user << "<span class='notice'>You place [payload] into [src].</span>"
-			user.drop_item()
 			payload.loc = src
 		else
 			user << "<span class='warning'>[payload] is already loaded into [src]! You'll have to remove it first.</span>"

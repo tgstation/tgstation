@@ -38,3 +38,4 @@ changes:
   - tweak: "Gang outfits are now slightly armored"
   - tweak: "Gang tags are now named 'graffiti' to make them harder to detect"
   - tweak: "Initial takeover timer is now capped at 5 minutes (50% control)"
+  - tweak: "Server Operators: The default Delta Alert texts have changed. Please check if your game_options.txt is up to date."

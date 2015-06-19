@@ -1,7 +1,0 @@
-author: Miauw
-delete-after: True
-changes:
-  - tweak: "Bullets can now damage cameras."
-  - tweak: "Camera alarms now trigger 90 seconds after the first EMP pulse, instead of when all EMP pulses run out."
-  - tweak: "Makes the force required to damage cameras greater than or equal to ten instead of greater than ten."
-  - tweak: "Camera alarms now trigger when cameras are disabled with brute force or bullets."

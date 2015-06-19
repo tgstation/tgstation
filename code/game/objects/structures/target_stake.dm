@@ -23,11 +23,10 @@
 /obj/structure/target_stake/attackby(obj/item/target/T, mob/user)
 	if(pinned_target)
 		return
-	if(istype(T))
+	if(istype(T) && user.drop_item())
 		pinned_target = T
 		T.pinnedLoc = src
 		T.density = 1
-		user.drop_item()
 		T.layer = OBJ_LAYER + 0.1
 		T.loc = loc
 		user << "<span class='notice'>You slide the target into the stake.</span>"

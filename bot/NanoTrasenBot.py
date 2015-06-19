@@ -1300,17 +1300,7 @@ while True:
             print sender+" Has now joined"
             users.append(sender)
             #####
-            if ".fi" in data[0] and sender.lower() == "skibiliano":
-               operators.append(sender)
             if sender.lower() not in peopleheknows[0]:
-               if data[0].split("!")[1] in peopleheknows[1]:
-                  appendion = "...you do seem familiar however"
-               else:
-                  appendion = ""
-               if data[1][1].lower() == channel or data[1][1].lower() == channel[1:]:
-                   conn.privmsg(data[1][1],CORE_DATA.greeting.replace("USER",sender)+" "+appendion)
-               else:
-                  conn.privmsg(data[1][1],"Hello! Haven't seen you here before! Happy to meet you! %s" %(appendion))
                peopleheknows[0].append(sender.lower())
                peopleheknows[1].append(data[0].split("!")[1])
                with open("peopleheknows.cache","w") as peoplehecache:

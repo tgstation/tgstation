@@ -134,7 +134,8 @@ var/list/wireColours = list("red", "blue", "green", "black", "orange", "brown", 
 					if(istype(I, /obj/item/device/assembly))
 						var/obj/item/device/assembly/A = I;
 						if(A.attachable)
-							L.drop_item()
+							if(!L.drop_item())
+								return
 							Attach(colour, A)
 						else
 							L << "<span class='warning'>You need a attachable assembly!</span>"

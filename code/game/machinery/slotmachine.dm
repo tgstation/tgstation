@@ -77,7 +77,8 @@
 	if(istype(I, /obj/item/weapon/coin))
 		var/obj/item/weapon/coin/C = I
 		if(prob(2))
-			user.drop_item()
+			if(!user.drop_item())
+				return
 			C.loc = loc
 			C.throw_at(user, 3, 10)
 			if(prob(10))
@@ -85,7 +86,8 @@
 			user << "<span class='warning'>[src] spits your coin back out!</span>"
 
 		else
-			user.drop_item()
+			if(!user.drop_item())
+				return
 			user << "<span class='notice'>You insert a [C.cmineral] coin into [src]'s slot!</span>"
 			balance += C.value
 			qdel(C)

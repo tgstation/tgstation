@@ -36,7 +36,8 @@
 	..()
 	if(istype(C, /obj/item/weapon/implantcase))
 		if(!case)
-			user.drop_item()
+			if(!user.unEquip(C))
+				return
 			C.loc = src
 			case = C
 	else
