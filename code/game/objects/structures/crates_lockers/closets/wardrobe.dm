@@ -412,6 +412,7 @@
 	new /obj/item/clothing/suit/armor/hos/trenchcoat(src)
 	new /obj/item/clothing/under/hosparadefem(src)
 	new /obj/item/clothing/under/hosparademale(src)
+	new /obj/item/clothing/under/rank/head_of_security(src)
 	new /obj/item/clothing/under/rank/head_of_security/alt(src)
 
 /obj/structure/closet/wardrobe/red
@@ -452,5 +453,6 @@
 	..()
 	new /obj/item/clothing/head/beret/sec/navywarden(src)
 	new /obj/item/clothing/suit/armor/vest/warden/alt(src)
+	new /obj/item/clothing/under/rank/warden(src)
 	new /obj/item/clothing/under/rank/warden/navyblue(src)
 	new /obj/item/clothing/head/warden(src)
