@@ -281,7 +281,7 @@
 	if(!(stat & (BROKEN|NOPOWER)))
 		set_light(light_range_on, light_power_on)
 	sedativeblock = 1
-	spawn(SLEEPER_SOPORIFIC_DELAY)
+	sleep(SLEEPER_SOPORIFIC_DELAY)
 	sedativeblock = 0
 	return
 
