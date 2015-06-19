@@ -153,3 +153,5 @@
 
 /obj/proc/Deconstruct()
 	qdel(src)
+
+/obj/item/mouse_drag_pointer = MOUSE_ACTIVE_POINTER

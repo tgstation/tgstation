@@ -86,7 +86,7 @@
 "bH" = (/obj/structure/window/reinforced/fulltile,/turf/simulated/floor/plasteel/shuttle{icon_state = "floor4"; nitrogen = 0; oxygen = 0; temperature = 2.7},/area/planet/clown)
 "bI" = (/obj/machinery/firealarm/partyalarm,/turf/indestructible{icon_state = "bananium0"; name = "bananium wall"},/area/planet/clown/oasis)
 "bJ" = (/mob/living/simple_animal/crab/Coffee,/turf/simulated/floor/plating/sand,/area/planet/clown/oasis)
-"bK" = (/obj/item/weapon/beach_ball,/turf/simulated/floor/plating/sand,/area/planet/clown/oasis)
+"bK" = (/obj/item/toy/beach_ball,/turf/simulated/floor/plating/sand,/area/planet/clown/oasis)
 "bL" = (/obj/item/clothing/glasses/sunglasses/big,/turf/simulated/floor/plating/sand,/area/planet/clown/oasis)
 "bM" = (/obj/effect/landmark/mobcorpse/pirate,/obj/effect/decal/cleanable/blood/old,/turf/simulated/floor/plating/dust,/area/planet/clown/motherlode)
 "bN" = (/obj/item/weapon/reagent_containers/food/drinks/golden_cup,/obj/structure/table/wood,/obj/item/weapon/paper{info = "Y'argh, congratulations for finding me booty. I hope you'll have as much fun with it as I did."},/turf/simulated/floor/plating/dust,/area/planet/clown/motherlode)

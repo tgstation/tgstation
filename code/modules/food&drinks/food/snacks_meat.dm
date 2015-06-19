@@ -216,3 +216,16 @@ R//Not only meat, actually, but also snacks that are almost meat, such as fish m
 	icon_state = "sashimi"
 	list_reagents = list("nutriment" = 1, "capsaicin" = 4, "vitamin" = 4)
 	filling_color = "#FA8072"
+
+
+
+
+/obj/item/weapon/syntiflesh  // Not really a snack
+	name = "syntiflesh"
+	desc = "Meat that appears...strange..."
+	gender = PLURAL
+	icon = 'icons/obj/food/food.dmi'
+	icon_state = "meat"
+	flags = CONDUCT
+	w_class = 1.0
+	origin_tech = "biotech=2"

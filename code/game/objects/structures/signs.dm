@@ -149,3 +149,10 @@
 	name = "escape arm"
 	desc = "A direction sign, pointing out which way the escape shuttle dock is."
 	icon_state = "direction_evac"
+
+
+/obj/structure/signpost //Well, it IS a sign
+	icon = 'icons/obj/stationobjs.dmi'
+	icon_state = "signpost"
+	anchored = 1
+	density = 1

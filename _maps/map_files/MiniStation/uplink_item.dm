@@ -1,5 +1,5 @@
 // Modified uplink items to discourage tator murderboning
-
+/*
 /datum/uplink_item/dangerous/revolver/New()
 	..()
 	cost = 10
@@ -35,3 +35,5 @@
 /datum/uplink_item/device_tools/syndicate_bomb/New()
 	..()
 	item = null // Disabled
+
+*/

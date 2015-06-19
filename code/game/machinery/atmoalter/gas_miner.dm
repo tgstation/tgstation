@@ -156,12 +156,22 @@
 		air_contents.carbon_dioxide = internal_pressure*air_contents.volume/(R_IDEAL_GAS_EQUATION*air_contents.temperature)
 
 
-/obj/machinery/atmospherics/miner/air
+/obj/machinery/atmospherics/miner/fake
 	name = "\improper Air Miner"
 	desc = "You fucking <em>cheater</em>."
 	overlay_color = "#70DBDB"
 
 	on = 0
 
-/obj/machinery/atmospherics/miner/air/AddAir()
+/obj/machinery/atmospherics/miner/fake/AddAir()
 		air_contents.carbon_dioxide = internal_pressure*air_contents.volume/(R_IDEAL_GAS_EQUATION*air_contents.temperature)
+
+
+/obj/machinery/atmospherics/miner/air
+	name = "\improper Air Miner"
+	desc = "Isn't it convenient?"
+	overlay_color = "#70DBDB"
+
+/obj/machinery/atmospherics/miner/air/AddAir()
+		air_contents.oxygen = (internal_pressure*air_contents.volume/(R_IDEAL_GAS_EQUATION*air_contents.temperature))*O2STANDARD
+		air_contents.nitrogen = (internal_pressure*air_contents.volume/(R_IDEAL_GAS_EQUATION*air_contents.temperature))*N2STANDARD

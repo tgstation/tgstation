@@ -1144,3 +1144,22 @@ obj/item/toy/cards/deck/syndicate
 
 	else
 		user << "<span class='alert'>Nothing happens.</span>"
+
+//Beach balls
+
+/obj/item/toy/beach_ball
+	icon = 'icons/misc/beach.dmi'
+	icon_state = "ball"
+	name = "beach ball"
+	item_state = "beachball"
+	density = 0
+	anchored = 0
+	w_class = 1.0
+	force = 0.0
+	throwforce = 0.0
+	throw_speed = 2
+	throw_range = 7
+
+/obj/item/toy/beach_ball/afterattack(atom/target as mob|obj|turf|area, mob/user as mob)
+	user.drop_item()
+	src.throw_at(target, throw_range, throw_speed)
