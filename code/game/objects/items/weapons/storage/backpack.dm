@@ -287,6 +287,24 @@
 	item_state = "duffle-syndieammo"
 	slowdown = 0
 
+/obj/item/weapon/storage/backpack/dufflebag/syndieammo/loaded
+	desc = "A large dufflebag, packed to the brim with Bulldog shotgun ammo."
+
+/obj/item/weapon/storage/backpack/dufflebag/syndieammo/loaded/New()
+	..()
+	contents = list()
+	new /obj/item/ammo_box/magazine/m12g(src)
+	new /obj/item/ammo_box/magazine/m12g(src)
+	new /obj/item/ammo_box/magazine/m12g(src)
+	new /obj/item/ammo_box/magazine/m12g(src)
+	new /obj/item/ammo_box/magazine/m12g(src)
+	new /obj/item/ammo_box/magazine/m12g(src)
+	new /obj/item/ammo_box/magazine/m12g/buckshot(src)
+	new /obj/item/ammo_box/magazine/m12g/stun(src)
+	new /obj/item/ammo_box/magazine/m12g/dragon(src)
+	return
+
+
 /obj/item/weapon/storage/backpack/dufflebag/captain
 	name = "captain's dufflebag"
 	desc = "A large dufflebag for holding extra captainly goods."
