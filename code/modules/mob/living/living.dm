@@ -242,18 +242,22 @@ Sorry Giacom. Please don't be mad :(
 /mob/living/proc/getBruteLoss()
 	return bruteloss
 
-/mob/living/proc/adjustBruteLoss(var/amount)
+/mob/living/proc/adjustBruteLoss(var/amount, var/show_message = 1)
 	if(status_flags & GODMODE)	return 0
 	bruteloss = min(max(bruteloss + amount, 0),(maxHealth*2))
 	handle_regular_status_updates() //we update our health right away.
+	if(show_message)
+		popup(amount, "#FF0000", 20)
 
 /mob/living/proc/getOxyLoss()
 	return oxyloss
 
-/mob/living/proc/adjustOxyLoss(var/amount)
+/mob/living/proc/adjustOxyLoss(var/amount, var/show_message = 1)
 	if(status_flags & GODMODE)	return 0
 	oxyloss = min(max(oxyloss + amount, 0),(maxHealth*2))
 	handle_regular_status_updates()
+	if(show_message)
+		popup(amount, "#9999FF", 20)
 
 /mob/living/proc/setOxyLoss(var/amount)
 	if(status_flags & GODMODE)	return 0
@@ -263,10 +267,12 @@ Sorry Giacom. Please don't be mad :(
 /mob/living/proc/getToxLoss()
 	return toxloss
 
-/mob/living/proc/adjustToxLoss(var/amount)
+/mob/living/proc/adjustToxLoss(var/amount, var/show_message = 1)
 	if(status_flags & GODMODE)	return 0
 	toxloss = min(max(toxloss + amount, 0),(maxHealth*2))
 	handle_regular_status_updates()
+	if(show_message)
+		popup(amount, "#99CC99", 20)
 
 /mob/living/proc/setToxLoss(var/amount)
 	if(status_flags & GODMODE)	return 0
@@ -276,10 +282,12 @@ Sorry Giacom. Please don't be mad :(
 /mob/living/proc/getFireLoss()
 	return fireloss
 
-/mob/living/proc/adjustFireLoss(var/amount)
+/mob/living/proc/adjustFireLoss(var/amount, var/show_message = 1)
 	if(status_flags & GODMODE)	return 0
 	fireloss = min(max(fireloss + amount, 0),(maxHealth*2))
-	handle_regular_status_updates() //we update our health right away.
+	handle_regular_status_updates() //we update our health right away
+	if(show_message).
+		src.popup(amount, "#FFA500", 20)
 
 /mob/living/proc/getCloneLoss()
 	return cloneloss
@@ -310,9 +318,11 @@ Sorry Giacom. Please don't be mad :(
 /mob/living/proc/getStaminaLoss()
 	return staminaloss
 
-/mob/living/proc/adjustStaminaLoss(var/amount)
+/mob/living/proc/adjustStaminaLoss(var/amount, var/show_message = 1)
 	if(status_flags & GODMODE)	return 0
 	staminaloss = min(max(staminaloss + amount, 0),(maxHealth*2))
+	if(show_message)
+		src.popup(amount, "#FFFF00", 20)
 
 /mob/living/proc/setStaminaLoss(var/amount)
 	if(status_flags & GODMODE)	return 0
