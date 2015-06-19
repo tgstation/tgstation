@@ -15,6 +15,7 @@
 	var/cooldown = 0
 	var/obj/item/device/flashlight/F = null
 	var/can_flashlight = 0
+	var/gang //Is this a gang outfit?
 
 //Ears: currently only used for headsets and earmuffs
 /obj/item/clothing/ears

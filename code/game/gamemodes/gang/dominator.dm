@@ -155,7 +155,7 @@
 		user << "<span class='warning'>Error: Hostile Takeover is already in progress.</span>"
 		return
 
-	var/time = max(180,900 - ((round((gang_territory/start_state.num_territories)*200, 1) - 60) * 15))
+	var/time = max(300,900 - ((round((gang_territory/start_state.num_territories)*200, 1) - 60) * 15))
 	if(alert(user,"With [round((gang_territory/start_state.num_territories)*100, 1)]% station control, a takeover will require [time] seconds.\nYour gang will be unable to gain influence while it is active.\nThe entire station will likely be alerted to it once it starts.\nAre you ready?","Confirm","Ready","Later") == "Ready")
 		if ((!in_range(src, user) || !istype(src.loc, /turf)))
 			return 0

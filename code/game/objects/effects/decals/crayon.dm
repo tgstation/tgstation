@@ -44,12 +44,14 @@
 		gang = type
 		color = "#00b4ff"
 		icon_state = gang_name("A")
+		desc = "A territory marker left by the [gang_name("A")] Gang."
 		ticker.mode.A_territory_new |= list(territory.type = territory.name)
 		ticker.mode.A_territory_lost -= territory.type
 	else if(type == "B")
 		gang = type
 		color = "#ff3232"
 		icon_state = gang_name("B")
+		desc = "A territory marker left by the [gang_name("B")] Gang."
 		ticker.mode.B_territory_new |= list(territory.type = territory.name)
 		ticker.mode.B_territory_lost -= territory.type
 
