@@ -161,7 +161,7 @@
 	return counter
 
 /obj/machinery/r_n_d/fabricator/process()
-	if(busy || stopped)
+	if(busy || stopped || being_built)
 		return
 	if(queue.len==0)
 		stopped=1
@@ -246,7 +246,7 @@
 
 
 /obj/machinery/r_n_d/fabricator/proc/build_part(var/datum/design/part)
-	if(!part)
+	if(!part || being_built) //we're in the middle of something here!
 		return
 
 	if(!remove_materials(part))
@@ -270,7 +270,7 @@
 		for(var/matID in part.materials)
 			if(copytext(matID, 1, 2) != "$") //it's not a material, let's ignore it
 				continue
-			being_built.materials.storage[matID] = 0 //remove all old materials
+			being_built.materials.storage = initial_materials.Copy()
 			being_built.materials.addAmount(matID, get_resource_cost_w_coeff(part,matID)) //slap in what we built with - matching the cost
 		if(part.locked && research_flags &LOCKBOXES)
 			var/obj/item/weapon/storage/lockbox/L

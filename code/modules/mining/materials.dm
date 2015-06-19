@@ -10,23 +10,25 @@
 * Tracks and manages material storage for an object.
 */
 
+proc/initialize_materials()
+	for(var/matdata in typesof(/datum/material) - /datum/material)
+		var/datum/material/mat = new matdata
+		material_list += list(mat.id = mat)
+		initial_materials += list(mat.id = 0)
+
 var/global/list/material_list		//Stores an instance of all the datums as an assoc with their matids
 var/global/list/initial_materials	//Stores all the matids = 0 in helping New
 
 /datum/materials
 	var/atom/holder
-	var/list/storage = list()
+	var/list/storage
 
 /datum/materials/New(atom/newholder)
 	holder = newholder
+	storage = list()
 
 	if(!material_list)
-		material_list = list()
-		initial_materials = list()
-		for(var/matdata in typesof(/datum/material) - /datum/material)
-			var/datum/material/mat = new matdata
-			material_list += list(mat.id = mat)
-			initial_materials += list(mat.id = 0)
+		initialize_materials()
 
 	if(!storage.len)
 		storage = initial_materials.Copy()
@@ -40,6 +42,9 @@ var/global/list/initial_materials	//Stores all the matids = 0 in helping New
 		newargs = args + "storage"
 	else
 		newargs = "storage"
+
+	if(!initial_materials)
+		initialize_materials()
 
 	storage = initial_materials.Copy()
 
