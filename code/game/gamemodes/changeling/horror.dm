@@ -45,7 +45,7 @@
 	set name = "Force Airlock"
 	set desc = "We will attempt to force open an airlock in front of us."
 
-	var/mob/living/carbon/human/H=eye
+	var/mob/living/carbon/human/H=mob
 	if(!istype(H))
 		return
 

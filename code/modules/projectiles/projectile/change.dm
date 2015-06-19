@@ -53,6 +53,7 @@
 		switch(randomize)
 			if("monkey")
 				new_mob = new /mob/living/carbon/monkey(M.loc)
+				new_mob.setGender(M.gender)
 				var/mob/living/carbon/monkey/Monkey = new_mob
 				Monkey.languages |= M.languages
 				if(M.default_language) Monkey.default_language = M.default_language
@@ -105,6 +106,7 @@
 
 				slimey = text2path("/mob/living/carbon/slime[slimey]")
 				new_mob = new slimey(M.loc)
+				new_mob.setGender(M.gender)
 				var/mob/living/carbon/slime/Slime = new_mob
 				Slime.languages |= M.languages
 				if(M.default_language) Slime.default_language = M.default_language

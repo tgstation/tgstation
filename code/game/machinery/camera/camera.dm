@@ -34,7 +34,9 @@ var/list/camera_names=list()
 /obj/machinery/camera/update_icon()
 	var/EMPd = stat & EMPED
 	var/deactivated = !status
-	var/camtype = isXRay() ? "xraycam" : "camera" // Thanks to Krutchen for the icons.
+	var/camtype = "camera"
+	if(assembly)
+		camtype = isXRay() ? "xraycam" : "camera" // Thanks to Krutchen for the icons.
 
 	if (deactivated)
 		icon_state = "[camtype]1"
