@@ -13,34 +13,6 @@
 	new /obj/item/clothing/shoes/sneakers/brown(src)
 	return
 
-
-/obj/structure/closet/wardrobe/red
-	name = "security wardrobe"
-	icon_door = "red"
-
-/obj/structure/closet/wardrobe/red/New()
-	..()
-	contents = list()
-	new /obj/item/weapon/storage/backpack/security(src)
-	new /obj/item/weapon/storage/backpack/satchel_sec(src)
-	new /obj/item/weapon/storage/backpack/dufflebag/sec(src)
-	new /obj/item/weapon/storage/backpack/dufflebag/sec(src)
-	new /obj/item/clothing/under/rank/security(src)
-	new /obj/item/clothing/under/rank/security(src)
-	new /obj/item/clothing/under/rank/security(src)
-	new /obj/item/clothing/shoes/jackboots(src)
-	new /obj/item/clothing/shoes/jackboots(src)
-	new /obj/item/clothing/shoes/jackboots(src)
-	new /obj/item/clothing/head/beret/sec(src)
-	new /obj/item/clothing/head/beret/sec(src)
-	new /obj/item/clothing/head/beret/sec(src)
-	new /obj/item/clothing/head/soft/sec(src)
-	new /obj/item/clothing/head/soft/sec(src)
-	new /obj/item/clothing/head/soft/sec(src)
-	new /obj/item/clothing/mask/bandana/red(src)
-	new /obj/item/clothing/mask/bandana/red(src)
-	return
-
 /obj/structure/closet/wardrobe/pink
 	name = "pink wardrobe"
 	icon_door = "pink"
@@ -428,3 +400,59 @@
 		new /obj/item/clothing/suit/hooded/wintercoat(src)
 		new /obj/item/clothing/shoes/winterboots(src)
 	return
+
+/obj/structure/closet/wardrobe/hos
+	name = "\proper head of security's wardrobe"
+	icon_door = "red"
+
+/obj/structure/closet/wardrobe/hos/New()
+	new /obj/item/clothing/head/HoS/beret(src)
+	new /obj/item/clothing/glasses/hud/security/sunglasses/eyepatch(src)
+	new /obj/item/clothing/glasses/hud/security/sunglasses/gars/supergars(src)
+	new /obj/item/clothing/suit/armor/hos/trenchcoat(src)
+	new /obj/item/clothing/under/hosparadefem(src)
+	new /obj/item/clothing/under/hosparademale(src)
+	new /obj/item/clothing/under/rank/head_of_security(src)
+	new /obj/item/clothing/under/rank/head_of_security/alt(src)
+
+/obj/structure/closet/wardrobe/red
+	name = "security wardrobe"
+	icon_door = "red"
+
+/obj/structure/closet/wardrobe/red/New()
+	..()
+	contents = list()
+	new /obj/item/weapon/storage/backpack/security(src)
+	new /obj/item/weapon/storage/backpack/satchel_sec(src)
+	new /obj/item/weapon/storage/backpack/dufflebag/sec(src)
+	new /obj/item/clothing/under/rank/security(src)
+	new /obj/item/clothing/under/rank/security(src)
+	new /obj/item/clothing/under/rank/security(src)
+	new /obj/item/clothing/shoes/jackboots(src)
+	new /obj/item/clothing/shoes/jackboots(src)
+	new /obj/item/clothing/shoes/jackboots(src)
+	new /obj/item/clothing/head/beret/sec(src)
+	new /obj/item/clothing/head/beret/sec(src)
+	new /obj/item/clothing/head/beret/sec(src)
+	new /obj/item/clothing/head/soft/sec(src)
+	new /obj/item/clothing/head/soft/sec(src)
+	new /obj/item/clothing/head/soft/sec(src)
+	new /obj/item/clothing/mask/bandana/red(src)
+	new /obj/item/clothing/mask/bandana/red(src)
+	new /obj/item/clothing/mask/bandana/red(src)
+	new /obj/item/clothing/mask/gas/sechailer(src)
+	new /obj/item/clothing/mask/gas/sechailer(src)
+	new /obj/item/clothing/mask/gas/sechailer(src)
+	return
+
+/obj/structure/closet/wardrobe/warden
+	name = "\proper warden's wardrobe"
+	icon_door = "red"
+
+/obj/structure/closet/wardrobe/warden/New()
+	..()
+	new /obj/item/clothing/head/warden(src)
+	new /obj/item/clothing/head/beret/sec/navywarden(src)
+	new /obj/item/clothing/suit/armor/vest/warden/alt(src)
+	new /obj/item/clothing/under/rank/warden(src)
+	new /obj/item/clothing/under/rank/warden/navyblue(src)

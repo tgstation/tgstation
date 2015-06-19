@@ -54,6 +54,14 @@
 
 /obj/item/clothing/mask/gas/sechailer/swat
 	name = "\improper SWAT mask"
+	desc = "A close-fitting tactical mask with a Compli-o-nator 3000."
+	action_button_name = "HALT!"
+	icon_state = "swat"
+	aggressiveness = 1
+	ignore_maskadjust = 1
+
+/obj/item/clothing/mask/gas/sechailer/swat/mean
+	name = "\improper SWAT mask"
 	desc = "A close-fitting tactical mask with an especially aggressive Compli-o-nator 3000."
 	action_button_name = "HALT!"
 	icon_state = "swat"
