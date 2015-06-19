@@ -54,7 +54,7 @@
 				if("shotgun")
 					new /obj/item/weapon/gun/projectile/shotgun(get_turf(H))
 				if("combatshotgun")
-					new /obj/item/weapon/gun/projectile/shotgun/combat(get_turf(H))
+					new /obj/item/weapon/gun/projectile/shotgun/automatic/combat(get_turf(H))
 				if("arg")
 					new /obj/item/weapon/gun/projectile/automatic/ar(get_turf(H))
 				if("mateba")
