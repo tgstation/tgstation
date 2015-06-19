@@ -586,6 +586,7 @@
 			sleep(1)		// was 1
 			if(!loc || isnull(loc))
 				qdel(src)
+				return 0
 			var/obj/structure/disposalpipe/curr = loc
 			last = curr
 			curr = curr.transfer(src)

@@ -364,7 +364,7 @@
 
 /area/Entered(atom/movable/Obj, atom/OldLoc)
 	var/area/oldArea = Obj.areaMaster
-
+	Obj.areaMaster = src
 	if (!ismob(Obj))
 		return
 
