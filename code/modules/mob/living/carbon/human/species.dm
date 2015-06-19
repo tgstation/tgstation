@@ -1037,10 +1037,12 @@
 			H.damageoverlaytemp = 20
 			if(organ.take_damage(damage*brutemod, 0))
 				H.update_damage_overlays(0)
+			H.popup(damage*brutemod, "#FF0000", 20)
 		if(BURN)
 			H.damageoverlaytemp = 20
 			if(organ.take_damage(0, damage*burnmod))
 				H.update_damage_overlays(0)
+			H.popup(damage*burnmod, "#FFA500", 20)
 		if(TOX)
 			H.adjustToxLoss(damage * blocked)
 		if(OXY)
@@ -1128,10 +1130,10 @@
 			return
 		if(H.health >= config.health_threshold_crit)
 			if(NOBREATH in specflags)	return 1
-			H.adjustOxyLoss(HUMAN_MAX_OXYLOSS)
+			H.adjustOxyLoss(HUMAN_MAX_OXYLOSS, 0)
 			H.failed_last_breath = 1
 		else
-			H.adjustOxyLoss(HUMAN_CRIT_MAX_OXYLOSS)
+			H.adjustOxyLoss(HUMAN_CRIT_MAX_OXYLOSS, 0)
 			H.failed_last_breath = 1
 
 		H.throw_alert("oxy")
@@ -1162,7 +1164,7 @@
 		H.throw_alert("oxy")
 	else
 		H.failed_last_breath = 0
-		H.adjustOxyLoss(-5)
+		H.adjustOxyLoss(-5, 0)
 		gas_breathed = breath.oxygen/6
 		H.clear_alert("oxy")
 
@@ -1197,7 +1199,7 @@
 		H.throw_alert("not_enough_co2")
 	else
 		H.failed_last_breath = 0
-		H.adjustOxyLoss(-5)
+		H.adjustOxyLoss(-5, 0)
 		gas_breathed = breath.carbon_dioxide/6
 		H.clear_alert("not_enough_co2")
 
@@ -1225,7 +1227,7 @@
 		H.throw_alert("not_enough_tox")
 	else
 		H.failed_last_breath = 0
-		H.adjustOxyLoss(-5)
+		H.adjustOxyLoss(-5, 0)
 		gas_breathed = breath.toxins/6
 		H.clear_alert("not_enough_tox")
 
@@ -1360,7 +1362,7 @@
 	switch(adjusted_pressure)
 		if(HAZARD_HIGH_PRESSURE to INFINITY)
 			if(!(HEATRES in specflags))
-				H.adjustBruteLoss( min( ( (adjusted_pressure / HAZARD_HIGH_PRESSURE) -1 )*PRESSURE_DAMAGE_COEFFICIENT , MAX_HIGH_PRESSURE_DAMAGE) )
+				H.adjustBruteLoss( min( ( (adjusted_pressure / HAZARD_HIGH_PRESSURE) -1 )*PRESSURE_DAMAGE_COEFFICIENT , MAX_HIGH_PRESSURE_DAMAGE), 0 )
 				H.throw_alert("pressure","highpressure",2)
 			else
 				H.clear_alert("pressure")
@@ -1374,7 +1376,7 @@
 			if(H.dna.check_mutation(COLDRES) || (COLDRES in specflags))
 				H.clear_alert("pressure")
 			else
-				H.adjustBruteLoss( LOW_PRESSURE_DAMAGE )
+				H.adjustBruteLoss( LOW_PRESSURE_DAMAGE, 0 )
 				H.throw_alert("pressure","lowpressure",2)
 
 //////////

@@ -138,7 +138,7 @@
 
 	else //Enough oxygen
 		failed_last_breath = 0
-		adjustOxyLoss(-5)
+		adjustOxyLoss(-5, 0)
 		oxygen_used = breath.oxygen/6
 		clear_alert("oxy")
 

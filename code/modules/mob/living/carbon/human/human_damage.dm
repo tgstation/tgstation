@@ -32,17 +32,20 @@
 	return amount
 
 
-/mob/living/carbon/human/adjustBruteLoss(var/amount)
+/mob/living/carbon/human/adjustBruteLoss(var/amount, var/show_message = 1)
 	if(amount > 0)
 		take_overall_damage(amount, 0)
 	else
 		heal_overall_damage(-amount, 0)
+	popup(amount, "#FF0000", 20)
 
-/mob/living/carbon/human/adjustFireLoss(var/amount)
+/mob/living/carbon/human/adjustFireLoss(var/amount, var/show_message = 1)
 	if(amount > 0)
 		take_overall_damage(0, amount)
 	else
 		heal_overall_damage(0, -amount)
+	popup(amount, "#FFA500", 20)
+
 
 /mob/living/carbon/human/proc/hat_fall_prob()
 	var/multiplier = 1
