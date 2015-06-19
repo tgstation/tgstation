@@ -114,23 +114,12 @@
 
 /datum/material/wood
 	name = "Wood"
-	color = ""
+	color = "#824B28"
 	force_multiplier = 1
 	health_multiplier = 0.5
 	prefix = "wood"
 	default_stack = /obj/item/stack/sheet/mineral/wood
 
-/datum/material/wood/init_material(var/atom/A)
-	var/icon/I
-	var/icon/P = new /icon
-	for(var/iconstate in icon_states(A.icon))
-		var/icon/O = new('icons/effects/material_overlays.dmi', "wood") //Oooh, shiny!
-		I = new(A.icon, iconstate)
-		O.Blend(I, ICON_MULTIPLY) //Trim the shine to the item only and add some vibrance to the item.
-		P.Insert(O, iconstate) //Build a new icon set to use with the item itself.
-
-	A.icon = P //Apply the new icon.
-	return
 /datum/material/cloth
 	name = "Cloth"
 	color = "#EAEAE1"
@@ -141,23 +130,11 @@
 
 /datum/material/carpet
 	name = "Carpet"
-	color = ""
+	color = "#7F0000"
 	force_multiplier = 0.2
 	health_multiplier = 0.2
 	prefix = "carpet"
 	default_stack = /obj/item/stack/tile/carpet
-
-/datum/material/carpet/init_material(var/atom/A)
-	var/icon/I
-	var/icon/P = new /icon
-	for(var/iconstate in icon_states(A.icon))
-		var/icon/O = new('icons/effects/material_overlays.dmi', "carpet") //Oooh, shiny!
-		I = new(A.icon, iconstate)
-		O.Blend(I, ICON_ADD) //Trim the shine to the item only and add some vibrance to the item.
-		P.Insert(O, iconstate) //Build a new icon set to use with the item itself.
-
-	A.icon = P //Apply the new icon.
-	return
 
 /datum/material/grass
 	name = "Grass"
