@@ -65,8 +65,9 @@
 
 	PlayerSet()
 	tcheck(80,1)
-
-	new /obj/machinery/singularity/narsie/large/exit(pick(endgame_exits))
+	if(!endgame_exits.len)
+		message_admins("<span class='warning'><font size=7>SOMEBODY DIDNT PUT ENDGAME EXITS FOR THIS FUCKING MAP: [map.nameLong]</span></font>")
+	else new /obj/machinery/singularity/narsie/large/exit(pick(endgame_exits))
 	spawn(rand(30,60) SECONDS)
 		var/txt = {"
 There's been a galaxy-wide electromagnetic pulse.  All of our systems are heavily damaged and many personnel are dead or dying. We are seeing increasing indications of the universe itself beginning to unravel.
