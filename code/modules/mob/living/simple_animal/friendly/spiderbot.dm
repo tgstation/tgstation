@@ -39,6 +39,7 @@
 	//pass_flags = PASSTABLE      //Maybe griefy?
 	small = 1
 	speak_emote = list("beeps","clicks","chirps")
+	canEnterVentWith = "/obj/item/device/mmi=0"
 
 /mob/living/simple_animal/spiderbot/attackby(var/obj/item/O as obj, var/mob/user as mob)
 
