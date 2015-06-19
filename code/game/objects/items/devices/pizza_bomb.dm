@@ -11,6 +11,12 @@
 	var/correct_wire
 	var/armer //Used for admin purposes
 
+/obj/item/device/pizza_bomb/suicide_act(mob/user)
+	user.visible_message("<span class='suicide'>[user] is opening [src]! It looks like \he's hungry and looking for pizza.</span>")
+	sleep(10)
+	go_boom()
+	return(BRUTELOSS)
+
 /obj/item/device/pizza_bomb/attack_self(mob/user)
 	if(disarmed)
 		user << "<span class='notice'>\The [src] is disarmed.</span>"

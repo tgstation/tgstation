@@ -303,6 +303,13 @@ var/list/uplink_items = list()
 	cost = 2
 	gamemodes = list(/datum/game_mode/nuclear)
 
+/datum/uplink_item/ammo/bulltoxin
+	name = "Drum Magazine - 12g Bioterror"
+	desc = "An alternative 8-round toxic magazine for use in the Bulldog shotgun. Contains debilitating toxins to make your target die an agonizing death."
+	item = /obj/item/ammo_box/magazine/m12g/bioterror
+	cost = 3
+	gamemodes = list(/datum/game_mode/nuclear)
+
 /datum/uplink_item/ammo/carbine
 	name = "Toploader Magazine - 5.56"
 	desc = "An additional 30-round 5.56 magazine for use in the M-90gl carbine. These bullets don't have the punch to knock most targets down, but dish out higher overall damage."
@@ -402,6 +409,14 @@ var/list/uplink_items = list()
 	desc = "Just add water to make your very own hostile to everything space carp. It looks just like a plushie."
 	item = /obj/item/toy/carpplushie/dehy_carp
 	cost = 3
+
+/datum/uplink_item/stealthy_weapons/door_charge
+	name = "Explosive Airlock Charge"
+	desc = "A small, easily concealable device. It can be applied to an open airlock panel, and the next person to open that airlock will be knocked down in an explosion. The airlock's maintenance panel will also be destroyed by this."
+	item = /obj/item/device/doorCharge
+	cost = 5
+	surplus = 6
+	excludefrom = list(/datum/game_mode/nuclear)
 
 // STEALTHY TOOLS
 

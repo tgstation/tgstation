@@ -894,6 +894,10 @@ var/list/obj/machinery/newscaster/allCasters = list()
 	var/wantedPhoto
 	var/creationTime
 
+/obj/item/weapon/newspaper/suicide_act(mob/user)
+	user.visible_message("<span class='suicide'>[user] is focusing intently on [src]! It looks like they're trying to commit sudoku.</span>")
+	return(OXYLOSS)
+
 /obj/item/weapon/newspaper/attack_self(mob/user)
 	if(ishuman(user))
 		var/mob/living/carbon/human/human_user = user
