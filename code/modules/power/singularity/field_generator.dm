@@ -26,7 +26,7 @@ field_generator power level display
 	var/Varpower = 0
 	var/active = 0
 	var/power = 20  // Current amount of power
-	var/state = 0
+//	var/state = 0
 	var/warming_up = 0
 	var/list/obj/machinery/field/containment/fields
 	var/list/obj/machinery/field/generator/connected_gens

@@ -11,7 +11,7 @@
 	var/list/components = null
 	var/list/req_components = null
 	var/list/req_component_names = null // user-friendly names of components
-	var/state = 1
+	var/status = 1
 
 // unfortunately, we have to instance the objects really quickly to get the names
 // fortunately, this is only called once when the board is added and the items are immediately GC'd
@@ -57,7 +57,7 @@
 	if(P.crit_fail)
 		user << "<span class='danger'>This part is faulty, you cannot add this to the machine!</span>"
 		return
-	switch(state)
+	switch(status)
 		if(1)
 			if(istype(P, /obj/item/stack/cable_coil))
 				var/obj/item/stack/cable_coil/C = P
@@ -65,10 +65,10 @@
 					playsound(src.loc, 'sound/items/Deconstruct.ogg', 50, 1)
 					user << "<span class='notice'>You start to add cables to the frame.</span>"
 					if(do_after(user, 20))
-						if(C.get_amount() >= 5 && state == 1)
+						if(C.get_amount() >= 5 && status == 1)
 							C.use(5)
 							user << "<span class='notice'>You add cables to the frame.</span>"
-							state = 2
+							status = 2
 							icon_state = "box_1"
 				else
 					user << "<span class='warning'>You need five length of cable to wire the frame.</span>"
@@ -88,7 +88,7 @@
 					user.drop_item()
 					P.loc = src
 					icon_state = "box_2"
-					state = 3
+					status = 3
 					components = list()
 					req_components = circuit.req_components.Copy()
 					update_namelist()
@@ -98,7 +98,7 @@
 			if(istype(P, /obj/item/weapon/wirecutters))
 				playsound(src.loc, 'sound/items/Wirecutter.ogg', 50, 1)
 				user << "<span class='notice'>You remove the cables.</span>"
-				state = 1
+				status = 1
 				icon_state = "box_0"
 				var/obj/item/stack/cable_coil/A = new /obj/item/stack/cable_coil( src.loc )
 				A.amount = 5
@@ -106,7 +106,7 @@
 		if(3)
 			if(istype(P, /obj/item/weapon/crowbar))
 				playsound(src.loc, 'sound/items/Crowbar.ogg', 50, 1)
-				state = 2
+				status = 2
 				circuit.loc = src.loc
 				components.Remove(circuit)
 				circuit = null

@@ -16,7 +16,7 @@ var/const/CALL_SHUTTLE_REASON_LENGTH = 12
 	var/list/messagetext = list()
 	var/currmsg = 0
 	var/aicurrmsg = 0
-	var/state = STATE_DEFAULT
+	var/status = STATE_DEFAULT
 	var/aistate = STATE_DEFAULT
 	var/message_cooldown = 0
 	var/ai_message_cooldown = 0
@@ -43,7 +43,7 @@ var/const/CALL_SHUTTLE_REASON_LENGTH = 12
 
 /obj/machinery/computer/communications/process()
 	if(..())
-		if(state != STATE_STATUSDISPLAY)
+		if(status != STATE_STATUSDISPLAY)
 			src.updateDialog()
 
 
@@ -61,7 +61,7 @@ var/const/CALL_SHUTTLE_REASON_LENGTH = 12
 	switch(href_list["operation"])
 		// main interface
 		if("main")
-			src.state = STATE_DEFAULT
+			src.status = STATE_DEFAULT
 		if("login")
 			var/mob/M = usr
 			var/obj/item/weapon/card/id/I = M.get_active_hand()
@@ -106,7 +106,7 @@ var/const/CALL_SHUTTLE_REASON_LENGTH = 12
 				else:
 					usr << "You are not authorized to do this."
 					tmp_alertlevel = 0
-				state = STATE_DEFAULT
+				status = STATE_DEFAULT
 			else
 				usr << "You need to swipe your ID."
 
@@ -117,35 +117,35 @@ var/const/CALL_SHUTTLE_REASON_LENGTH = 12
 				usr << "Intercomms recharging. Please stand by."
 
 		if("callshuttle")
-			src.state = STATE_DEFAULT
+			src.status = STATE_DEFAULT
 			if(src.authenticated)
-				src.state = STATE_CALLSHUTTLE
+				src.status = STATE_CALLSHUTTLE
 		if("callshuttle2")
 			if(src.authenticated)
 				SSshuttle.requestEvac(usr, href_list["call"])
 				if(SSshuttle.emergency.timer)
 					post_status("shuttle")
-			src.state = STATE_DEFAULT
+			src.status = STATE_DEFAULT
 		if("cancelshuttle")
-			src.state = STATE_DEFAULT
+			src.status = STATE_DEFAULT
 			if(src.authenticated)
-				src.state = STATE_CANCELSHUTTLE
+				src.status = STATE_CANCELSHUTTLE
 		if("cancelshuttle2")
 			if(src.authenticated)
 				SSshuttle.cancelEvac(usr)
-			src.state = STATE_DEFAULT
+			src.status = STATE_DEFAULT
 		if("messagelist")
 			src.currmsg = 0
-			src.state = STATE_MESSAGELIST
+			src.status = STATE_MESSAGELIST
 		if("viewmessage")
-			src.state = STATE_VIEWMESSAGE
+			src.status = STATE_VIEWMESSAGE
 			if (!src.currmsg)
 				if(href_list["message-num"])
 					src.currmsg = text2num(href_list["message-num"])
 				else
-					src.state = STATE_MESSAGELIST
+					src.status = STATE_MESSAGELIST
 		if("delmessage")
-			src.state = (src.currmsg) ? STATE_DELMESSAGE : STATE_MESSAGELIST
+			src.status = (src.currmsg) ? STATE_DELMESSAGE : STATE_MESSAGELIST
 		if("delmessage2")
 			if(src.authenticated)
 				if(src.currmsg)
@@ -156,31 +156,31 @@ var/const/CALL_SHUTTLE_REASON_LENGTH = 12
 					if(src.currmsg == src.aicurrmsg)
 						src.aicurrmsg = 0
 					src.currmsg = 0
-				src.state = STATE_MESSAGELIST
+				src.status = STATE_MESSAGELIST
 			else
-				src.state = STATE_VIEWMESSAGE
+				src.status = STATE_VIEWMESSAGE
 		if("status")
-			src.state = STATE_STATUSDISPLAY
+			src.status = STATE_STATUSDISPLAY
 
 		if("securitylevel")
 			src.tmp_alertlevel = text2num( href_list["newalertlevel"] )
 			if(!tmp_alertlevel) tmp_alertlevel = 0
-			state = STATE_CONFIRM_LEVEL
+			status = STATE_CONFIRM_LEVEL
 		if("changeseclevel")
-			state = STATE_ALERT_LEVEL
+			status = STATE_ALERT_LEVEL
 
 		if("emergencyaccess")
-			state = STATE_TOGGLE_EMERGENCY
+			status = STATE_TOGGLE_EMERGENCY
 		if("enableemergency")
 			make_maint_all_access()
 			log_game("[key_name(usr)] enabled emergency maintenance access.")
 			message_admins("[key_name_admin(usr)] enabled emergency maintenance access.")
-			src.state = STATE_DEFAULT
+			src.status = STATE_DEFAULT
 		if("disableemergency")
 			revoke_maint_all_access()
 			log_game("[key_name(usr)] disabled emergency maintenance access.")
 			message_admins("[key_name_admin(usr)] disabled emergency maintenance access.")
-			src.state = STATE_DEFAULT
+			src.status = STATE_DEFAULT
 
 		// Status display stuff
 		if("setstat")

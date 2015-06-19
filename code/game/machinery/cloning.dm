@@ -13,7 +13,10 @@
 	density = 1
 	icon = 'icons/obj/cloning.dmi'
 	icon_state = "pod_0"
+	icon_open = "pod_0_maintenance"
+	icon_closed = "pod_0"
 	req_access = list(access_genetics) //For premature unlocking.
+	machine_flags = CROWDESTROY | REPLACEPARTS | EMAGGABLE
 	var/heal_level = 90 //The clone is released once its health reaches this level.
 	var/locked = 0
 	var/obj/machinery/computer/cloning/connected = null //So we remember the connected clone machine.
@@ -152,6 +155,8 @@
 		src.eject_wait = 0
 
 	var/mob/living/carbon/human/H = new /mob/living/carbon/human(src)
+	if(H && H.dna)
+		H.dna.remove_all_mutations()
 
 	if(efficiency > 2)
 		for(var/A in bad_se_blocks)
@@ -243,13 +248,8 @@
 //Let's unlock this early I guess.  Might be too early, needs tweaking.
 /obj/machinery/clonepod/attackby(obj/item/weapon/W as obj, mob/user as mob, params)
 	if(!(occupant || mess || locked))
-		if(default_deconstruction_screwdriver(user, "[icon_state]_maintenance", "[initial(icon_state)]",W))
+		if(default_deconstruction_screwdriver(user, icon_open, icon_closed ,W))
 			return
-
-	if(exchange_parts(user, W))
-		return
-
-	default_deconstruction_crowbar(W)
 
 	if (istype(W, /obj/item/weapon/card/id)||istype(W, /obj/item/device/pda))
 		if (!src.check_access(W))

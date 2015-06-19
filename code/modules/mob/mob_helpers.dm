@@ -497,3 +497,20 @@ proc/is_special_character(mob/M) // returns 1 for special characters and 2 for h
 	else
 		return
 
+
+
+/proc/get_multitool(mob/user as mob)
+	// Get tool
+	var/obj/item/device/multitool/P
+	if(isrobot(user) || ishuman(user))
+		P = user.get_active_hand()
+	else if(isAI(user))
+		var/mob/living/silicon/ai/AI = user
+		P = AI.aiMulti
+//	else if(isAdminGhost(user))
+//		var/mob/dead/observer/G=user
+//		P = G.ghostMulti
+
+	if(!istype(P))
+		return null
+	return P

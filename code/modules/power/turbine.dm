@@ -29,6 +29,8 @@
 	icon_state = "compressor"
 	anchored = 1
 	density = 1
+	icon_open = "compressor"
+	icon_closed = "compressor"
 	var/obj/machinery/power/turbine/turbine
 	var/datum/gas_mixture/gas_contained
 	var/turf/simulated/inturf
@@ -38,6 +40,7 @@
 	var/capacity = 1e6
 	var/comp_id = 0
 	var/efficiency
+	machine_flags =  SCREWTOGGLE | CROWDESTROY | REPLACEPARTS
 
 
 /obj/machinery/power/turbine
@@ -47,11 +50,15 @@
 	icon_state = "turbine"
 	anchored = 1
 	density = 1
+	icon_open = "turbine"
+	icon_closed = "turbine"
 	var/opened = 0
 	var/obj/machinery/power/compressor/compressor
 	var/turf/simulated/outturf
 	var/lastgen
 	var/productivity = 1
+	machine_flags =  SCREWTOGGLE | CROWDESTROY | REPLACEPARTS
+
 
 /obj/machinery/computer/turbine_computer
 	name = "gas turbine control computer"
@@ -110,8 +117,6 @@
 	efficiency = E / 6
 
 /obj/machinery/power/compressor/attackby(obj/item/I, mob/user, params)
-	if(default_deconstruction_screwdriver(user, initial(icon_state), initial(icon_state), I))
-		return
 
 	if(default_change_direction_wrench(user, I))
 		turbine = null
@@ -125,10 +130,9 @@
 			stat |= BROKEN
 		return
 
-	if(exchange_parts(user, I))
-		return
 
-	default_deconstruction_crowbar(I)
+
+	..()
 
 /obj/machinery/power/compressor/CanAtmosPass(var/turf/T)
 	return !density
@@ -283,8 +287,6 @@
 	interact(user)
 
 /obj/machinery/power/turbine/attackby(obj/item/I, mob/user, params)
-	if(default_deconstruction_screwdriver(user, initial(icon_state), initial(icon_state), I))
-		return
 
 	if(default_change_direction_wrench(user, I))
 		compressor = null
@@ -298,10 +300,8 @@
 			stat |= BROKEN
 		return
 
-	if(exchange_parts(user, I))
-		return
 
-	default_deconstruction_crowbar(I)
+	..()
 
 /obj/machinery/power/turbine/interact(mob/user)
 

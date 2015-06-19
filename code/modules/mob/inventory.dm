@@ -174,3 +174,8 @@
 	//if(hasvar(src,"r_hand")) if(src:r_hand) items += src:r_hand
 
 	return items
+
+
+
+/mob/proc/get_multitool(var/if_active=0)
+	return null

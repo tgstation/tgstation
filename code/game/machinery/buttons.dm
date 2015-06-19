@@ -1,3 +1,5 @@
+//Should really be refactored into /obj/machinery/button
+
 /obj/machinery/driver_button
 	name = "mass driver button"
 	icon = 'icons/obj/objects.dmi'
@@ -5,6 +7,7 @@
 	desc = "A remote control switch for a mass driver."
 	var/id = null
 	var/active = 0
+	machine_flags = EMAGGABLE
 	anchored = 1.0
 	use_power = 1
 	idle_power_usage = 2

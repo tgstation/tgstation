@@ -60,6 +60,9 @@
 	var/area/A = src.loc.loc		// make sure it's in an area
 	if(!A || !isarea(A))
 		return 0					// if not, then not powered
+
+	if((machine_flags & FIXED2WORK) && !anchored) //Must be wrenched and isn't
+		return 0
 	if(chan == -1)
 		chan = power_channel
 	return A.powered(chan)	// return power status of the area
@@ -85,10 +88,11 @@
 /obj/machinery/proc/power_change()		// called whenever the power settings of the containing area change
 										// by default, check equipment channel & set flag
 										// can override if needed
+
+
 	if(powered(power_channel))
 		stat &= ~NOPOWER
 	else
-
 		stat |= NOPOWER
 	return
 

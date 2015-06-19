@@ -12,6 +12,7 @@
 	var/recharge_speed
 	var/repairs
 	state_open = 1
+	machine_flags = CROWPRY | CROWDESTROY | REPLACEPARTS
 
 /obj/machinery/recharge_station/New()
 	..()
@@ -78,13 +79,7 @@
 		if(default_deconstruction_screwdriver(user, "borgdecon2", "borgcharger0", P))
 			return
 
-	if(exchange_parts(user, P))
-		return
-
-	if(default_pry_open(P))
-		return
-
-	default_deconstruction_crowbar(P)
+	..()
 
 /obj/machinery/recharge_station/attack_hand(user as mob)
 	if(..(user,1,set_machine = 0))

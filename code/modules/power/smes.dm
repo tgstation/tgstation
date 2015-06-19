@@ -12,6 +12,8 @@
 	use_power = 0
 	var/capacity = 5e6 // maximum charge
 	var/charge = 1e6 // actual charge
+	icon_open = "smes-o"
+	icon_closed = "smes"
 
 	var/input_attempt = 0 // 1 = attempting to charge, 0 = not attempting to charge
 	var/inputting = 0 // 1 = actually inputting, 0 = not inputting
@@ -24,6 +26,7 @@
 	var/output_level = 50000 // amount of power the SMES attempts to output
 	var/output_level_max = 200000 // cap on output_level
 	var/output_used = 0 // amount of power actually outputted. may be less than output_level if the powernet returns excess power
+	machine_flags = CROWDESTROY | SCREWTOGGLE | REPLACEPARTS
 
 	var/obj/machinery/power/terminal/terminal = null
 
@@ -71,10 +74,6 @@
 	if(!user.IsAdvancedToolUser())
 		user << "<span class='warning'>You don't have the dexterity to use [src]!</span>"
 		return 0
-	//opening using screwdriver
-	if(default_deconstruction_screwdriver(user, "[initial(icon_state)]-o", initial(icon_state), I))
-		update_icon()
-		return
 
 	//changing direction using wrench
 	if(default_change_direction_wrench(user, I))
@@ -93,9 +92,6 @@
 		update_icon()
 		return
 
-	//exchanging parts using the RPE
-	if(exchange_parts(user, I))
-		return
 
 	//building and linking a terminal
 	if(istype(I, /obj/item/stack/cable_coil))
@@ -147,8 +143,7 @@
 	if(istype(I, /obj/item/weapon/wirecutters) && terminal && panel_open)
 		terminal.dismantle(user)
 
-	//crowbarring it !
-	default_deconstruction_crowbar(I)
+	..()
 
 /obj/machinery/power/smes/Destroy()
 	if(ticker && ticker.current_state == GAME_STATE_PLAYING)

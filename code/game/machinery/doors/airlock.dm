@@ -1043,20 +1043,20 @@ About the new airlock wires panel:
 
 /obj/machinery/door/airlock/close(var/forced=0)
 	if(operating || welded || locked)
-		return
+		return 0
 	if(!forced)
 		if( !hasPower() || isWireCut(AIRLOCK_WIRE_DOOR_BOLTS) )
-			return
+			return 0
 	if(safe)
 		for(var/atom/movable/M in get_turf(src))
 			if(M.density && M != src) //something is blocking the door
 				spawn (60)
 					autoclose()
-				return
+				return 0
 
 	if(forced < 2)
 		if(emagged)
-			return
+			return 0
 		use_power(50)
 		if(istype(src, /obj/machinery/door/airlock/glass))
 			playsound(src.loc, 'sound/machines/windowdoor.ogg', 30, 1)

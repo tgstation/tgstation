@@ -119,7 +119,9 @@
 
 
 /obj/machinery/computer/pod/old
-	icon_screen = "old"
+	icon_state = "oldcomp"
+	icon_screen = "library"
+	icon_keyboard = null
 	name = "\improper DoorMex control console"
 	title = "Door Controls"
 

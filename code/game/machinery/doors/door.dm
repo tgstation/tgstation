@@ -1,3 +1,4 @@
+
 /obj/machinery/door
 	name = "door"
 	desc = "It opens and closes."

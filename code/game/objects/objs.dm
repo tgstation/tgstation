@@ -144,6 +144,81 @@
 		qdel(src)
 	return 2
 
+/obj/proc/multitool_menu(var/mob/user,var/obj/item/device/multitool/P)
+	return "<b>NO MULTITOOL_MENU!</b>"
+
+/obj/proc/linkWith(var/mob/user, var/obj/buffer, var/link/context)
+	return 0
+
+/obj/proc/unlinkFrom(var/mob/user, var/obj/buffer)
+	return 0
+
+/obj/proc/canLink(var/obj/O, var/link/context)
+	return 0
+
+/obj/proc/isLinkedWith(var/obj/O)
+	return 0
+
+/obj/proc/getLink(var/idx)
+	return null
+
+/obj/proc/linkMenu(var/obj/O)
+	var/dat=""
+	if(canLink(O, list()))
+		dat += " <a href='?src=\ref[src];link=1'>\[Link\]</a> "
+	return dat
+
+
+/obj/proc/update_multitool_menu(mob/user as mob)
+	var/obj/item/device/multitool/P = get_multitool(user)
+
+	if(!istype(P))
+		return 0
+
+	var/dat = {"<html>
+	<head>
+		<title>[name] Configuration</title>
+		<style type="text/css">
+html,body {
+	font-family:courier;
+	background:#999999;
+	color:#333333;
+}
+
+a {
+	color:#000000;
+	text-decoration:none;
+	border-bottom:1px solid black;
+}
+		</style>
+	</head>
+	<body>
+		<h3>[name]</h3>
+"}
+	dat += multitool_menu(user,P)
+	if(P)
+		if(P.buffer)
+			var/id = null
+			if(istype(P.buffer, /obj/machinery/telecomms))
+				var/obj/machinery/telecomms/buffer = P.buffer//Casting is better than using colons
+				id = buffer.id
+			else if(P.buffer.vars["id_tag"])//not doing in vars here incase the var is empty, it'd show ()
+				id = P.buffer:id_tag//sadly, : is needed
+
+			dat += "<p><b>MULTITOOL BUFFER:</b> [P.buffer] [id ? "([id])" : ""]"//If you can't into the ? operator, that will make it not display () if there's no ID.
+
+			dat += linkMenu(P.buffer)
+
+			if(P.buffer)
+				dat += "<a href='?src=\ref[src];flush=1'>\[Flush\]</a>"
+			dat += "</p>"
+		else
+			dat += "<p><b>MULTITOOL BUFFER:</b> <a href='?src=\ref[src];buffer=1'>\[Add Machine\]</a></p>"
+	dat += "</body></html>"
+	user << browse(dat, "window=mtcomputer")
+	user.set_machine(src)
+	onclose(user, "mtcomputer")
+
 /obj/singularity_pull(S, current_size)
 	if(anchored)
 		if(current_size >= STAGE_FIVE)

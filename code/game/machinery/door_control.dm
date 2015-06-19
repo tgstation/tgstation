@@ -5,6 +5,7 @@
 	icon_state = "doorctrl0"
 	desc = "A remote control-switch for a door."
 	power_channel = ENVIRON
+	machine_flags = EMAGGABLE
 	var/id = null
 	var/normaldoorcontrol = 0
 	var/specialfunctions = 1
@@ -55,6 +56,7 @@
 	*/
 	if(istype(W, /obj/item/device/detective_scanner))
 		return
+	..()
 	return src.attack_hand(user)
 
 /obj/machinery/door_control/emag_act(user as mob)
@@ -77,7 +79,7 @@
 	add_fingerprint(user)
 
 	if(normaldoorcontrol)
-		for(var/obj/machinery/door/airlock/D in world)
+		for(var/obj/machinery/door/airlock/D in airlocks)
 			if(D.id_tag == src.id)
 				if(specialfunctions & OPEN)
 					spawn(0)
@@ -97,7 +99,7 @@
 					D.safe = !D.safe
 	else
 		var/openclose
-		for(var/obj/machinery/door/poddoor/M in world)
+		for(var/obj/machinery/door/poddoor/M in airlocks)
 			if(M.id == src.id)
 				if(openclose == null)
 					openclose = M.density
@@ -128,6 +130,7 @@
 
 	if(istype(W, /obj/item/device/detective_scanner))
 		return
+	..()
 	return src.attack_hand(user)
 
 /obj/machinery/driver_button/attack_hand(mob/user as mob)
@@ -144,7 +147,7 @@
 	active = 1
 	icon_state = "launcheract"
 
-	for(var/obj/machinery/door/poddoor/M in world)
+	for(var/obj/machinery/door/poddoor/M in airlocks)
 		if (M.id == src.id)
 			spawn( 0 )
 				M.open()
@@ -152,13 +155,13 @@
 
 	sleep(20)
 
-	for(var/obj/machinery/mass_driver/M in world)
+	for(var/obj/machinery/mass_driver/M in machines)
 		if(M.id == src.id)
 			M.drive()
 
 	sleep(50)
 
-	for(var/obj/machinery/door/poddoor/M in world)
+	for(var/obj/machinery/door/poddoor/M in airlocks)
 		if (M.id == src.id)
 			spawn( 0 )
 				M.close()

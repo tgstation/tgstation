@@ -343,7 +343,7 @@
 	desc = "Syndicate defense turret. It really packs a bunch."
 	density = 1
 	anchored = 1
-	var/state = 0 //Like stat on mobs, 0 is alive, 1 is damaged, 2 is dead
+	var/status = 0 //Like stat on mobs, 0 is alive, 1 is damaged, 2 is dead
 	var/faction = "syndicate"
 	var/atom/cur_target = null
 	var/scan_range = 9 //You will never see them coming
@@ -373,9 +373,9 @@
 	return
 
 /obj/machinery/gun_turret/update_icon()
-	if(state > 2 || state < 0) //someone fucked up the vars so fix them
+	if(status > 2 || status < 0) //someone fucked up the vars so fix them
 		take_damage(0)
-	icon_state = "[base_icon_state]" + "[state]"
+	icon_state = "[base_icon_state]" + "[status]"
 	return
 
 
@@ -383,14 +383,14 @@
 	health -= damage
 	switch(health)
 		if(101 to INFINITY)
-			state = 0
+			status = 0
 		if(1 to 100)
-			state = 1
+			status = 1
 		if(-INFINITY to 0)
 			if(state != 2)
 				die()
 				return
-			state = 2
+			status = 2
 	update_icon()
 	return
 
@@ -400,7 +400,7 @@
 	return
 
 /obj/machinery/gun_turret/proc/die()
-	state = 2
+	status = 2
 	update_icon()
 
 /obj/machinery/gun_turret/attack_hand(mob/user)
@@ -432,7 +432,7 @@
 
 
 /obj/machinery/gun_turret/process()
-	if(state == 2)
+	if(status == 2)
 		return
 	if(cur_target && !validate_target(cur_target))
 		cur_target = null

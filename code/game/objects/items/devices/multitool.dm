@@ -16,8 +16,13 @@
 	m_amt = 50
 	g_amt = 20
 	origin_tech = "magnets=1;engineering=1"
-	var/obj/machinery/telecomms/buffer // simple machine buffer for device linkage
 	hitsound = 'sound/weapons/tap.ogg'
+	var/obj/machinery/buffer // simple machine buffer for device linkage
+
+/obj/item/device/multitool/proc/IsBufferA(var/typepath)
+	if(!buffer)
+		return 0
+	return istype(buffer,typepath)
 
 
 // Syndicate device disguised as a multitool; it will turn red when an AI camera is nearby.

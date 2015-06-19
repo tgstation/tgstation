@@ -7,6 +7,7 @@
 	anchored = 1.0
 	use_power = 1
 	current_heat_capacity = 1000
+	machine_flags = REPLACEPARTS | WRENCHROTATE | CROWDESTROY
 
 /obj/machinery/atmospherics/unary/cold_sink/freezer/New()
 	..()
@@ -40,13 +41,7 @@
 		update_icon()
 		return
 
-	if(exchange_parts(user, I))
-		return
-
-	default_deconstruction_crowbar(I)
-
-	if(default_change_direction_wrench(user, I))
-		return
+	..()
 
 /obj/machinery/atmospherics/unary/cold_sink/freezer/update_icon()
 	if(panel_open)

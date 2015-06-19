@@ -14,8 +14,9 @@
 	var/internal_pressure=4500 // Bottleneck
 
 	var/overlay_color = "#FFFFFF"
+	wrench_time = 60
 
-//	machine_flags = WRENCHMOVE | FIXED2WORK
+	machine_flags = WRENCHMOVE | FIXED2WORK
 
 /obj/machinery/atmospherics/miner/New()
 	..()
@@ -27,11 +28,7 @@
 	update_icon()
 
 
-/obj/machinery/atmospherics/miner/attackby(obj/item/W as obj, mob/user as mob)
-	if(default_unfasten_wrench(user, W, time = 60))
-		power_change()
-		return
-	..()
+
 
 // Critical equipment.
 /obj/machinery/atmospherics/miner/ex_act(severity)
@@ -86,11 +83,6 @@
 		stat |= BROKEN
 	else
 		stat &= ~BROKEN
-	if(!anchored)
-		stat |= NOPOWER
-	else
-		stat &= NOPOWER
-
 	if(stat!=oldstat)
 		update_icon()
 	if(stat & BROKEN)

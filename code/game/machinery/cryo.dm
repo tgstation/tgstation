@@ -12,7 +12,10 @@
 	var/next_trans = 0
 	var/current_heat_capacity = 50
 	state_open = 0
+	icon_open = "cell-o"
+	icon_closed = "cell-off"
 	var/efficiency
+	machine_flags = CROWPRY | WRENCHROTATE | CROWDESTROY | REPLACEPARTS
 
 /obj/machinery/atmospherics/unary/cryo_cell/New()
 	..()
@@ -239,19 +242,10 @@
 							"<span class='notice'>You place [I] in [src].</span>")
 
 	if(!(on || occupant || state_open))
-		if(default_deconstruction_screwdriver(user, "cell-o", "cell-off", I))
+		if(default_deconstruction_screwdriver(user, icon_open, icon_closed, I))
 			return
 
-	if(default_change_direction_wrench(user, I))
-		return
-
-	if(exchange_parts(user, I))
-		return
-
-	if(default_pry_open(I))
-		return
-
-	default_deconstruction_crowbar(I)
+	..()
 
 /obj/machinery/atmospherics/unary/cryo_cell/open_machine()
 	if(!state_open && !panel_open)

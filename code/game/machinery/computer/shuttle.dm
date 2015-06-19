@@ -91,6 +91,9 @@
 	if (istype(A, /obj/structure/stool/bed) && B.buckled_mob)//if it's a bed/chair and someone is buckled, it will not pass
 		return 0
 
+	if(istype(A, /obj/mecha)) //no
+		return 0
+
 	else if(istype(A, /mob/living)) // You Shall Not Pass!
 		var/mob/living/M = A
 		if(!M.lying && !istype(M, /mob/living/carbon/monkey) && !istype(M, /mob/living/carbon/slime))	//If your not laying down, or a small creature, no pass.
@@ -113,6 +116,8 @@
 	name = "airtight plastic flaps"
 	desc = "Heavy duty, airtight, plastic flaps."
 
+
+/*
 /obj/structure/plasticflaps/mining/New() //set the turf below the flaps to block air
 	var/turf/T = get_turf(loc)
 	if(T)
@@ -125,6 +130,12 @@
 		if(istype(T, /turf/simulated/floor))
 			T.blocks_air = 0
 	..()
+*/
+
+//Code above preserved so you can see what DOING IT WRONG looks like
+/obj/structure/plasticflaps/mining/CanAtmosPass()
+	return 0
+
 
 /obj/machinery/computer/supplycomp
 	name = "supply shuttle console"

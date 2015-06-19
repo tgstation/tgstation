@@ -8,6 +8,8 @@ var/const/SAFETY_COOLDOWN = 100
 	layer = MOB_LAYER+1 // Overhead
 	anchored = 1
 	density = 1
+	icon_open = "grinder-oOpen"
+	icon_closed = "grinder-o0"
 	var/safety_mode = 0 // Temporality stops the machine if it detects a mob
 	var/grinding = 0
 	var/icon_name = "grinder-o"
@@ -17,6 +19,7 @@ var/const/SAFETY_COOLDOWN = 100
 	var/probability_mod = 1
 	var/extra_materials = 0
 	var/list/blacklist = list(/obj/item/pipe, /obj/item/pipe_meter, /obj/structure/disposalconstruct, /obj/item/weapon/reagent_containers, /obj/item/weapon/paper, /obj/item/stack/, /obj/item/weapon/pen, /obj/item/weapon/storage/, /obj/item/clothing/mask/cigarette) // Don't allow us to grind things we can poop out at 200 a second for free.
+	machine_flags = REPLACEPARTS | EMAGGABLE | CROWDESTROY | SCREWTOGGLE | WRENCHMOVE | CROWPRY
 
 /obj/machinery/recycler/New()
 	// On us

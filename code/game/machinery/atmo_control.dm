@@ -8,7 +8,7 @@ obj/machinery/air_sensor
 	name = "gas sensor"
 
 	anchored = 1
-	var/state = 0
+	var/status = 0 //Is this even used?
 
 	var/id_tag
 	var/frequency = 1439

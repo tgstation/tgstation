@@ -92,6 +92,9 @@ var/datum/subsystem/shuttle/SSshuttle
 		user << "The emergency shuttle is refueling. Please wait another [abs(round(((world.time - round_start_time) - config.shuttle_refuel_delay)/600))] minutes before trying again."
 		return
 
+	if(!universe.OnShuttleCall(user))
+		return
+
 	switch(emergency.mode)
 		if(SHUTTLE_RECALL)
 			user << "The emergency shuttle may not be called while returning to Centcom."

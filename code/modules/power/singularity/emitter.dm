@@ -21,7 +21,7 @@
 	var/minimum_fire_delay = 20
 	var/last_shot = 0
 	var/shot_number = 0
-	var/state = 0
+//	var/state = 0
 	var/locked = 0
 
 /obj/machinery/power/emitter/New()

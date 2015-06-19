@@ -37,6 +37,9 @@ var/const/HOLOPAD_MODE = RANGE_BASED
 	icon_state = "holopad0"
 	flags = HEAR
 	languages = ROBOT | HUMAN
+	machine_flags = CROWDESTROY | REPLACEPARTS | CROWPRY | WRENCHMOVE | SCREWTOGGLE
+	icon_open = "holopad_open"
+	icon_closed = "holopad0"
 	var/list/masters = list()//List of AIs that use the holopad
 	var/last_request = 0 //to prevent request spam. ~Carn
 	var/holo_range = 5 // Change to change how far the AI can move away from the holopad before deactivating.
@@ -53,22 +56,6 @@ var/const/HOLOPAD_MODE = RANGE_BASED
 	for(var/obj/item/weapon/stock_parts/capacitor/B in component_parts)
 		holograph_range += 1 * B.rating
 	holo_range = holograph_range
-
-/obj/machinery/hologram/holopad/attackby(obj/item/P as obj, mob/user as mob, params)
-	if(default_deconstruction_screwdriver(user, "holopad_open", "holopad0", P))
-		return
-
-	if(exchange_parts(user, P))
-		return
-
-	if(default_pry_open(P))
-		return
-
-	if(default_unfasten_wrench(user, P))
-		return
-
-	default_deconstruction_crowbar(P)
-
 
 
 /obj/machinery/hologram/holopad/attack_hand(var/mob/living/carbon/human/user) //Carn: Hologram requests.

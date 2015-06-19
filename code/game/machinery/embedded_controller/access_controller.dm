@@ -34,11 +34,11 @@
 	var/busy
 
 /obj/machinery/doorButtons/access_button/findObjsByTag()
-	for(var/obj/machinery/doorButtons/airlock_controller/A in world)
+	for(var/obj/machinery/doorButtons/airlock_controller/A in machines)
 		if(A.idSelf == idSelf)
 			controller = A
 			break
-	for(var/obj/machinery/door/airlock/I in world)
+	for(var/obj/machinery/door/airlock/I in airlocks)
 		if(I.id_tag == idDoor)
 			door = I
 			break
@@ -170,6 +170,7 @@
 	else
 		if(closeDoor(interiorAirlock))
 			busy = CYCLE_EXTERIOR
+	goIdle(1)
 
 /obj/machinery/doorButtons/airlock_controller/proc/cycleOpen(obj/machinery/door/airlock/A)
 	if(!A)
