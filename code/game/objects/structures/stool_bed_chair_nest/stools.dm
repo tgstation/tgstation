@@ -31,3 +31,10 @@
 		new /obj/item/stack/sheet/metal(src.loc)
 		qdel(src)
 	return
+
+/obj/structure/stool/bar
+	name = "bar stool"
+	desc = "It has some unsavory stains on it."
+	icon = 'icons/obj/objects.dmi'
+	icon_state = "barstool"
+	anchored = 1.0
