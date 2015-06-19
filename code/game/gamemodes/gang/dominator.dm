@@ -6,10 +6,10 @@
 	density = 1
 	anchored = 1.0
 	layer = 3.6
-	var/health = 200
+	var/maxhealth = 300
+	var/health = 300
 	var/gang
 	var/operating = 0
-	var/broken = 0
 
 /obj/machinery/dominator/New()
 	if(!istype(ticker.mode, /datum/game_mode/gang))
@@ -19,7 +19,7 @@
 
 /obj/machinery/dominator/examine(mob/user)
 	..()
-	if(broken)
+	if(operating == -1)
 		user << "<span class='danger'>It looks completely busted.</span>"
 		return
 
@@ -38,7 +38,7 @@
 			user << "<span class='notice'>Hostile Takeover of [station_name()] successful. Have a great day.</span>"
 	else
 		user << "<span class='notice'>System on standby.</span>"
-	user << "<span class='danger'>System Integrity: [health/2]%</span>"
+	user << "<span class='danger'>System Integrity: [round((health/maxhealth)*100,1)]%</span>"
 
 
 /obj/machinery/dominator/proc/healthcheck(var/damage)
@@ -51,23 +51,22 @@
 
 	health -= damage
 
-	switch(health)
-		if(101 to INFINITY)
-			if(prob(damage*2))
-				sparks.set_up(5, 1, src)
-				sparks.start()
-		if(1 to 100)
+	if(health > (maxhealth/2))
+		if(prob(damage*2))
 			sparks.set_up(5, 1, src)
 			sparks.start()
-			iconname += "-damaged"
+	else
+		sparks.set_up(5, 1, src)
+		sparks.start()
+		iconname += "-damaged"
 
-	if(!broken)
+	if(operating != -1)
 		if(health <= 0)
 			set_broken()
 		else
 			icon_state = iconname
 
-	if(health <= -50)
+	if(health <= -100)
 		new /obj/item/stack/sheet/plasteel(src.loc)
 		qdel(src)
 
@@ -88,13 +87,22 @@
 				priority_announce("All hostile activity within station systems have ceased.","Network Alert")
 			if(get_security_level() == "delta")
 				set_security_level("red")
+
 		ticker.mode.message_gangtools(((gang=="A") ? ticker.mode.A_tools : ticker.mode.B_tools),"Hostile takeover cancelled: Dominator is no longer operational.",1,1)
+
+		if(isnum(mode.A_timer) || isnum(mode.B_timer))
+			for(var/obj/machinery/dominator/dom in world)
+				if(dom.operating)
+					for(var/obj/item/weapon/pinpointer/point in world)
+						point.the_disk = dom //The pinpointer now tracks the dominator's location
+					break
+
 	SetLuminosity(0)
 	icon_state = "dominator-broken"
-	broken = 1
+	operating = -1
 
 /obj/machinery/dominator/Destroy()
-	if(!broken)
+	if(operating != -1)
 		set_broken()
 	..()
 
@@ -118,9 +126,12 @@
 /obj/machinery/dominator/bullet_act(var/obj/item/projectile/Proj)
 	if(Proj.damage)
 		if((Proj.damage_type == BRUTE || Proj.damage_type == BURN))
+			var/damage = Proj.damage
+			if(Proj.forcedodge)
+				damage *= 0.5
 			playsound(src, 'sound/effects/bang.ogg', 50, 1)
 			visible_message("<span class='danger'>[src] was hit by [Proj].</span>")
-			healthcheck(Proj.damage)
+			healthcheck(damage)
 	..()
 
 /obj/machinery/dominator/blob_act()
@@ -131,7 +142,7 @@
 	return
 
 /obj/machinery/dominator/attack_hand(mob/user)
-	if(operating||broken)
+	if(operating)
 		examine(user)
 		return
 
@@ -161,9 +172,8 @@
 	if(alert(user,"With [round((gang_territory/start_state.num_territories)*100, 1)]% station control, a takeover will require [time] seconds.\nYour gang will be unable to gain influence while it is active.\nThe entire station will likely be alerted to it once it starts.\nAre you ready?","Confirm","Ready","Later") == "Ready")
 		if ((!in_range(src, user) || !istype(src.loc, /turf)))
 			return 0
-		var/area/srcloc = get_area(src.loc)
 		gang = tempgang
-		mode.domination(gang,1,srcloc.name)
+		mode.domination(gang,1,src)
 		src.name = "[gang_name(gang)] Gang [src.name]"
 		healthcheck(0)
 		operating = 1

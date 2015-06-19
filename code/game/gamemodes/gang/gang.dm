@@ -115,15 +115,19 @@
 		boss_mind.current << "<B>Objective #[obj_count]</B>: [objective.explanation_text]"
 		obj_count++
 
-/datum/game_mode/gang/proc/domination(var/gang,var/modifier=1,var/dominatorloc)
+/datum/game_mode/gang/proc/domination(var/gang,var/modifier=1,var/obj/dominator)
 	if(gang=="A")
 		A_timer = max(180,900 - ((round((A_territory.len/start_state.num_territories)*200, 1) - 60) * 15)) * modifier
 	if(gang=="B")
 		B_timer = max(180,900 - ((round((B_territory.len/start_state.num_territories)*200, 1) - 60) * 15)) * modifier
-	if(gang && dominatorloc)
-		priority_announce("Hostile runtimes detected in all station systems. A network breach by the [gang_name(gang)] Gang has been located in [dominatorloc].","Network Alert")
+	if(gang && dominator)
+		var/area/domloc = get_area(dominator.loc)
+		priority_announce("Hostile runtimes detected in all station systems. A network breach by the [gang_name(gang)] Gang has been located in [domloc].","Network Alert")
 		set_security_level("delta")
 		SSshuttle.emergencyNoEscape = 1
+
+		for(var/obj/item/weapon/pinpointer/point in world)
+			point.the_disk = dominator //The pinpointer now tracks the dominator's location
 
 ///////////////////////////////////////////////////////////////////////////
 //This equips the bosses with their gear, and makes the clown not clumsy//
@@ -547,10 +551,10 @@
 		ticker.mode.B_territory += area
 
 	//Report territory changes
-	ticker.mode.message_gangtools(ticker.mode.A_tools,"<b>[ticker.mode.A_territory_new.len] new territories</b>[A_added_names]",0)
-	ticker.mode.message_gangtools(ticker.mode.B_tools,"<b>[ticker.mode.B_territory_new.len] new territories</b>[B_added_names]",0,)
-	ticker.mode.message_gangtools(ticker.mode.A_tools,"<b>[ticker.mode.A_territory_lost.len] territories lost</b>[A_lost_names]",0,1)
-	ticker.mode.message_gangtools(ticker.mode.B_tools,"<b>[ticker.mode.B_territory_lost.len] territories lost</b>[B_lost_names]",0,1)
+	ticker.mode.message_gangtools(ticker.mode.A_tools,"<b>[ticker.mode.A_territory_new.len] new territories</b><BR>[A_added_names]",0)
+	ticker.mode.message_gangtools(ticker.mode.B_tools,"<b>[ticker.mode.B_territory_new.len] new territories</b><BR>[B_added_names]",0,)
+	ticker.mode.message_gangtools(ticker.mode.A_tools,"<b>[ticker.mode.A_territory_lost.len] territories lost</b><BR>[A_lost_names]",0)
+	ticker.mode.message_gangtools(ticker.mode.B_tools,"<b>[ticker.mode.B_territory_lost.len] territories lost</b><BR>[B_lost_names]",0)
 
 	//Clear the lists
 	ticker.mode.A_territory_new = list()
