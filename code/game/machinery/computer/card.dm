@@ -28,6 +28,7 @@ var/time_last_changed_position = 0
 		"AI",
 		"Assistant",
 		"Cyborg",
+		"MoMMI",
 		"Captain",
 		"Head of Personnel",
 		"Head of Security",
