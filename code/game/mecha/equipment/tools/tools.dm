@@ -1,4 +1,4 @@
-#define THE_NUMBER_WHICH_THE_SLEEP_TIME_OF_DO_AFTER_COOLDOWN_IS_TO_BE_DIVIDED_BY_WHEN_USING_AN_EXOSUIT_MOUNTED_DRILL_TO_DIG_SAND 2
+#define MECHDRILL_SAND_SPEED 2
 #define MECHDRILL_ROCK_SPEED 3
 
 /obj/item/mecha_parts/mecha_equipment/tool/hydraulic_clamp
@@ -164,7 +164,7 @@
 						occupant_message("<font color='blue'>[count] ore successfully loaded into cargo compartment.</font>")
 
 	else if(istype(target, /turf/unsimulated/floor/asteroid)) //Digging for sand
-		if(do_after_cooldown(target, 1/THE_NUMBER_WHICH_THE_SLEEP_TIME_OF_DO_AFTER_COOLDOWN_IS_TO_BE_DIVIDED_BY_WHEN_USING_AN_EXOSUIT_MOUNTED_DRILL_TO_DIG_SAND) && C == chassis.loc && src == chassis.selected)
+		if(do_after_cooldown(target, 1/MECHDRILL_SAND_SPEED) && C == chassis.loc && src == chassis.selected)
 			var/count = 0
 			var/obj/structure/ore_box/ore_box
 			var/obj/item/mecha_parts/mecha_equipment/tool/hydraulic_clamp/hydraulic_clamp
@@ -1209,5 +1209,5 @@
 		do_after_cooldown()
 	return 1
 
-#undef THE_NUMBER_WHICH_THE_SLEEP_TIME_OF_DO_AFTER_COOLDOWN_IS_TO_BE_DIVIDED_BY_WHEN_USING_AN_EXOSUIT_MOUNTED_DRILL_TO_DIG_SAND
+#undef MECHDRILL_SAND_SPEED
 #undef MECHDRILL_ROCK_SPEED
