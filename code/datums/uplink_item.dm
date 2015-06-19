@@ -411,8 +411,8 @@ var/list/uplink_items = list()
 	cost = 3
 
 /datum/uplink_item/stealthy_weapons/door_charge
-	name = "Syndicate Door Charge"
-	desc = "A small, easily concealable device. It can be applied to an open airlock panel to cause the next person to open the door to take massive amounts of damage in an explosion. Only explodes in the direction applied from."
+	name = "Explosive Airlock Charge"
+	desc = "A small, easily concealable device. It can be applied to an open airlock panel, and the next person to open that airlock will be knocked down in an explosion. The airlock's maintenance panel will also be destroyed by this."
 	item = /obj/item/device/doorCharge
 	cost = 5
 	surplus = 6

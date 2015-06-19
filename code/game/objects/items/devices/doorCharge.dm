@@ -1,5 +1,5 @@
 /obj/item/device/doorCharge
-	name = "syndicate airlock charge"
+	name = "airlock charge"
 	desc = null //Different examine for traitors
 	item_state = "electronic"
 	icon_state = "doorCharge"
@@ -15,7 +15,7 @@
 	switch(severity)
 		if(1)
 			visible_message("<span class='warning'>[src] detonates!</span>")
-			explosion(src.loc,-1,2,4,flame_range = 2)
+			explosion(src.loc,0,2,1,flame_range = 4)
 			qdel(src)
 		if(2)
 			if(prob(50))
