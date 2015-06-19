@@ -85,17 +85,6 @@
 		getFromPool(/obj/item/stack/rods, get_turf(G.loc))
 	*/
 
-	if(istype(obstacle, /obj/structure/table))
-		var/obj/structure/table/T = obstacle
-		T.destroy()
-
-	if(istype(obstacle, /obj/structure/rack))
-		new /obj/item/weapon/rack_parts(obstacle.loc)
-		qdel(obstacle)
-
-	if(istype(obstacle, /obj/structure/reagent_dispensers/fueltank))//MWAHAHAHA
-		obstacle.ex_act(1)
-
 	..()
 
 
