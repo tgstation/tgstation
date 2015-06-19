@@ -75,12 +75,6 @@
 	if(stat & BROKEN || !I || !user)
 		return
 
-	if(isrobot(user) && !ismommi(user))
-		if(!istype(I, /obj/item/weapon/storage/bag/trash))
-			return
-	else
-		if(I.flags & NODROP)
-			return
 
 	src.add_fingerprint(user)
 	if(mode<=0) // It's off
@@ -123,6 +117,12 @@
 		T.update_icon()
 		update()
 		return
+
+	if(isrobot(user) && !ismommi(user))
+		return
+	else
+		if(I.flags & NODROP)
+			return
 
 	var/obj/item/weapon/grab/G = I
 	if(istype(G))	// handle grabbed mob
