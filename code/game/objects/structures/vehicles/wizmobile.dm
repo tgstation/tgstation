@@ -70,6 +70,25 @@
 
 	update_mob()
 
+
+/obj/structure/stool/bed/chair/vehicle/wizmobile/Bump(var/atom/obstacle)
+
+	/*												most likely a bad idea
+	if(istype(obstacle, /obj/structure/window/))
+		obstacle.Destroy(brokenup = 1)
+
+	if(istype(obstacle, /obj/structure/grille/))
+		var/obj/structure/grille/G = obstacle
+		G.health = (0.25*initial(G.health))
+		G.broken = 1
+		G.icon_state = "[initial(G.icon_state)]-b"
+		G.density = 0
+		getFromPool(/obj/item/stack/rods, get_turf(G.loc))
+	*/
+
+	..()
+
+
 /* Server vote on 16-12-2014 to disable wallmoving (10-7 Y)
 /obj/structure/stool/bed/chair/vehicle/wizmobile/Bump(var/atom/obstacle)
 	if(can_move)

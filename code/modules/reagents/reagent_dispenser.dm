@@ -172,6 +172,11 @@
 	if(exposed_temperature >= AUTOIGNITION_WELDERFUEL)
 		explode()
 
+/obj/structure/reagent_dispensers/fueltank/Bumped(atom/AM)
+	if (istype(AM, /obj/structure/stool/bed/chair/vehicle/wizmobile))
+		visible_message("<span class='danger'>\the [AM] crashes into \the [src]!!</span>")
+		explode()
+	return ..()
 
 /obj/structure/reagent_dispensers/fueltank/proc/explode()
 	if (reagents.total_volume > 500)

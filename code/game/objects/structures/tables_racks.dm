@@ -286,6 +286,11 @@
 			return 1
 	return 0
 
+/obj/structure/table/Bumped(atom/AM)
+	if (istype(AM, /obj/structure/stool/bed/chair/vehicle/wizmobile))
+		destroy()
+	return ..()
+
 //checks if projectile 'P' from turf 'from' can hit whatever is behind the table. Returns 1 if it can, 0 if bullet stops.
 /obj/structure/table/proc/check_cover(obj/item/projectile/P, turf/from)
 	var/turf/cover = flipped ? get_turf(src) : get_step(loc, get_dir(from, loc))
@@ -614,6 +619,11 @@
 		return 1
 	else
 		return 0
+
+/obj/structure/rack/Bumped(atom/AM)
+	if (istype(AM, /obj/structure/stool/bed/chair/vehicle/wizmobile))
+		destroy()
+	return ..()
 
 /obj/structure/rack/MouseDrop_T(obj/O as obj, mob/user as mob)
 	if ((!( istype(O, /obj/item/weapon) ) || user.get_active_hand() != O))
