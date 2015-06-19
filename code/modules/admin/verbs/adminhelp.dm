@@ -133,5 +133,5 @@ proc/send2irc_adminless_only(source, msg, requiredflags = R_BAN)
 
 proc/send2irc(msg,msg2)
 	if(config.useircbot)
-		shell("python nudge.py [msg] [msg2]")
+		shell("python nudge.py [msg] \"[msg2]\"")
 	return
