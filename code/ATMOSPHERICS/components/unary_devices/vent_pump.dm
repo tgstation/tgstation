@@ -343,11 +343,7 @@
 		if(!T || T.z != loc.z)
 			continue
 
-		var/i = 1
-		var/index = "[T.loc.name]\[[i]\]"
-		while(index in vents)
-			i++
-			index = "[T.loc.name]\[[i]\]"
+		var/index = temp_vent.name
 		vents[index] = temp_vent
 	if(!vents.len)
 		L << "<span class='warning'>There are no available vents to travel to, they could be welded. </span>"
