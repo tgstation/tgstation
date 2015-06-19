@@ -60,7 +60,8 @@
 
 /obj/machinery/abductor/gland_dispenser/attackby(obj/item/weapon/W, mob/user, params)
 	if(istype(W, /obj/item/gland))
-		user.drop_item()
+		if(!user.drop_item())
+			return
 		W.loc = src
 		for(var/i=1,i<=gland_colors.len,i++)
 			if(gland_types[i] == W.type)

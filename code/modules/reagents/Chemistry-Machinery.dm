@@ -155,9 +155,10 @@
 	if(src.beaker)
 		user << "<span class='warning'>A beaker is already loaded into the machine!</span>"
 		return
+	if(!user.drop_item())
+		return
 
 	src.beaker =  B
-	user.drop_item()
 	B.loc = src
 	user << "<span class='notice'>You add the beaker to the machine.</span>"
 	SSnano.update_uis(src) // update all UIs attached to src
@@ -290,8 +291,10 @@
 		if(src.beaker)
 			user << "<span class='warning'>A beaker is already loaded into the machine!</span>"
 			return
+		if(!user.drop_item())
+			return
+
 		src.beaker = B
-		user.drop_item()
 		B.loc = src
 		user << "<span class='notice'>You add the beaker to the machine.</span>"
 		src.updateUsrDialog()
@@ -301,8 +304,10 @@
 		if(src.loaded_pill_bottle)
 			user << "<span class='warning'>A pill bottle is already loaded into the machine!</span>"
 			return
+		if(!user.drop_item())
+			return
+
 		src.loaded_pill_bottle = B
-		user.drop_item()
 		B.loc = src
 		user << "<span class='notice'>You add the pill bottle into the dispenser slot.</span>"
 		src.updateUsrDialog()
@@ -619,8 +624,10 @@
 		if(src.beaker)
 			user << "<span class='warning'>A beaker is already loaded into the machine!</span>"
 			return
+		if(!user.drop_item())
+			return
+
 		src.beaker = B
-		user.drop_item()
 		B.loc = src
 		user << "<span class='notice'>You add the beaker to the machine.</span>"
 		src.updateUsrDialog()
@@ -630,8 +637,10 @@
 		if(src.loaded_pill_bottle)
 			user << "<span class='warning'>A pill bottle is already loaded into the machine!</span>"
 			return
+		if(!user.drop_item())
+			return
+
 		src.loaded_pill_bottle = B
-		user.drop_item()
 		B.loc = src
 		user << "<span class='notice'>You add the pill bottle into the dispenser slot.</span>"
 		src.updateUsrDialog()
@@ -919,9 +928,10 @@
 		if(src.beaker)
 			user << "<span class='warning'>A beaker is already loaded into the machine!</span>"
 			return
+		if(!user.drop_item())
+			return
 
 		src.beaker =  I
-		user.drop_item()
 		I.loc = src
 		user << "<span class='notice'>You add the beaker to the machine.</span>"
 		src.updateUsrDialog()
@@ -1053,8 +1063,9 @@
 				if (beaker)
 						return 1
 				else
+						if(!user.drop_item())
+								return 1
 						src.beaker =  O
-						user.drop_item()
 						O.loc = src
 						update_icon()
 						src.updateUsrDialog()
@@ -1548,8 +1559,9 @@
 				if (beaker)
 						return 1
 				else
+						if(!user.drop_item())
+								return 1
 						src.beaker =  O
-						user.drop_item()
 						O.loc = src
 						update_icon()
 						src.updateUsrDialog()

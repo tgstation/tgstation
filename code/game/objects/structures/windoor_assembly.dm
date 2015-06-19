@@ -190,9 +190,10 @@
 
 			//Adding airlock electronics for access. Step 6 complete.
 			else if(istype(W, /obj/item/weapon/airlock_electronics))
+				if(!user.drop_item())
+					return
 				playsound(loc, 'sound/items/Screwdriver.ogg', 100, 1)
 				user.visible_message("[user] installs the electronics into the airlock assembly.", "<span class='notice'>You start to install electronics into the airlock assembly...</span>")
-				user.drop_item()
 				W.loc = src
 
 				if(do_after(user, 40))

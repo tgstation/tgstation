@@ -70,9 +70,10 @@
 	if(full)
 		user << "<span class='warning'>You can't seem to implant anything else into the [target]'s [target_zone]!</span>"
 	else
+		if(!user.drop_item())
+			return
 		user.visible_message("[user] inserts [implant] into the [target]'s [target_zone == "head" ? "brain" : target_zone]!", "<span class='notice'>You insert [implant] into the [target]'s [target_zone == "head" ? "brain" : target_zone].</span>")
 		implant.owner = target
 		implant.function()
-		user.drop_item()
 		target.internal_organs |= implant
 		implant.loc = target

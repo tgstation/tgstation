@@ -6,7 +6,7 @@ var/time_last_changed_position = 0
 
 /obj/machinery/computer/card
 	name = "identification console"
-	desc = "You can use this to change ID's."
+	desc = "You can use this to manage jobs and ID access."
 	icon_screen = "id"
 	icon_keyboard = "id_key"
 	req_one_access = list(access_heads, access_change_ids)
@@ -18,6 +18,7 @@ var/time_last_changed_position = 0
 	var/printing = null
 	var/list/region_access = null
 	var/list/head_subordinates = null
+	var/target_dept = 0 //Which department this computer has access to. 0=all departments
 
 	//Cooldown for closing positions in seconds
 	//if set to -1: No cooldown... probably a bad idea
@@ -48,16 +49,19 @@ var/time_last_changed_position = 0
 		var/obj/item/weapon/card/id/idcard = O
 		if(check_access(idcard))
 			if(!scan)
-				usr.drop_item()
+				if(!usr.drop_item())
+					return
 				idcard.loc = src
 				scan = idcard
 			else if(!modify)
-				usr.drop_item()
+				if(!usr.drop_item())
+					return
 				idcard.loc = src
 				modify = idcard
 		else
 			if(!modify)
-				usr.drop_item()
+				if(!usr.drop_item())
+					return
 				idcard.loc = src
 				modify = idcard
 	else
@@ -118,7 +122,7 @@ var/time_last_changed_position = 0
 		dat += "<table>"
 		dat += "<tr><td style='width:25%'><b>Job</b></td><td style='width:25%'><b>Slots</b></td><td style='width:25%'><b>Open job</b></td><td style='width:25%'><b>Close job</b></td></tr>"
 		var/ID
-		if(scan && (access_change_ids in scan.access))
+		if(scan && (access_change_ids in scan.access) && !target_dept)
 			ID = 1
 		else
 			ID = 0
@@ -280,14 +284,15 @@ var/time_last_changed_position = 0
 		else
 			body = "<a href='?src=\ref[src];choice=auth'>{Log in}</a> <br><hr>"
 			body += "<a href='?src=\ref[src];choice=mode;mode_target=1'>Access Crew Manifest</a>"
-			body += "<br><hr><a href = '?src=\ref[src];choice=mode;mode_target=2'>Job Management</a>"
+			if(!target_dept)
+				body += "<br><hr><a href = '?src=\ref[src];choice=mode;mode_target=2'>Job Management</a>"
 
 		dat = "<tt>[header][body]<hr><br></tt>"
 
 	//user << browse(dat, "window=id_com;size=900x520")
 	//onclose(user, "id_com")
 
-	var/datum/browser/popup = new(user, "id_com", "Identification Card Modifier Console", 900, 620)
+	var/datum/browser/popup = new(user, "id_com", src.name, 900, 620)
 	popup.set_content(dat)
 	popup.set_title_image(user.browse_rsc_icon(src.icon, src.icon_state))
 	popup.open()
@@ -311,7 +316,8 @@ var/time_last_changed_position = 0
 			else
 				var/obj/item/I = usr.get_active_hand()
 				if (istype(I, /obj/item/weapon/card/id))
-					usr.drop_item()
+					if(!usr.drop_item())
+						return
 					I.loc = src
 					modify = I
 			authenticated = 0
@@ -324,34 +330,41 @@ var/time_last_changed_position = 0
 			else
 				var/obj/item/I = usr.get_active_hand()
 				if (istype(I, /obj/item/weapon/card/id))
-					usr.drop_item()
+					if(!usr.drop_item())
+						return
 					I.loc = src
 					scan = I
 			authenticated = 0
 		if ("auth")
 			if ((!( authenticated ) && (scan || (istype(usr, /mob/living/silicon))) && (modify || mode)))
 				if (check_access(scan))
+					region_access = list()
+					head_subordinates = list()
 					if(access_change_ids in scan.access)
-						authenticated = 2
+						if(target_dept)
+							head_subordinates = get_all_jobs()
+							region_access |= target_dept
+							authenticated = 1
+						else
+							authenticated = 2
+
 					else
-						region_access = list()
-						head_subordinates = list()
-						if(access_hop in scan.access)
-							region_access += 1
-							region_access += 6
+						if((access_hop in scan.access) && ((target_dept==1) || !target_dept))
+							region_access |= 1
+							region_access |= 6
 							get_subordinates("Head of Personnel")
-						if(access_rd in scan.access)
-							region_access += 4
-							get_subordinates("Research Director")
-						if(access_ce in scan.access)
-							region_access += 5
-							get_subordinates("Chief Engineer")
-						if(access_cmo in scan.access)
-							region_access += 3
-							get_subordinates("Chief Medical Officer")
-						if(access_hos in scan.access)
-							region_access += 2
+						if((access_hos in scan.access) && ((target_dept==2) || !target_dept))
+							region_access |= 2
 							get_subordinates("Head of Security")
+						if((access_cmo in scan.access) && ((target_dept==3) || !target_dept))
+							region_access |= 3
+							get_subordinates("Chief Medical Officer")
+						if((access_rd in scan.access) && ((target_dept==4) || !target_dept))
+							region_access |= 4
+							get_subordinates("Research Director")
+						if((access_ce in scan.access) && ((target_dept==5) || !target_dept))
+							region_access |= 5
+							get_subordinates("Chief Engineer")
 						if(region_access)
 							authenticated = 1
 			else if ((!( authenticated ) && (istype(usr, /mob/living/silicon))) && (!modify))
@@ -419,7 +432,7 @@ var/time_last_changed_position = 0
 
 		if("make_job_available")
 			// MAKE ANOTHER JOB POSITION AVAILABLE FOR LATE JOINERS
-			if(scan && (access_change_ids in scan.access))
+			if(scan && (access_change_ids in scan.access) && !target_dept)
 				var/edit_job_target = href_list["job"]
 				var/datum/job/j = SSjob.GetJob(edit_job_target)
 				if(!j)
@@ -433,7 +446,7 @@ var/time_last_changed_position = 0
 
 		if("make_job_unavailable")
 			// MAKE JOB POSITION UNAVAILABLE FOR LATE JOINERS
-			if(scan && (access_change_ids in scan.access))
+			if(scan && (access_change_ids in scan.access) && !target_dept)
 				var/edit_job_target = href_list["job"]
 				var/datum/job/j = SSjob.GetJob(edit_job_target)
 				if(!j)
@@ -472,3 +485,30 @@ var/time_last_changed_position = 0
 	circuit = /obj/item/weapon/circuitboard/card/centcom
 	req_access = list(access_cent_captain)
 
+/obj/machinery/computer/card/minor
+	name = "department management console"
+	desc = "You can use this to change ID's for specific departments."
+	icon_screen = "idminor"
+	circuit = /obj/item/weapon/circuitboard/card/minor
+
+/obj/machinery/computer/card/minor/New()
+	..()
+	var/obj/item/weapon/circuitboard/card/minor/typed_circuit = circuit
+	if(target_dept)
+		typed_circuit.target_dept = target_dept
+	else
+		target_dept = typed_circuit.target_dept
+	var/list/dept_list = list("general","security","medical","science","engineering")
+	name = "[dept_list[target_dept]] department console"
+
+/obj/machinery/computer/card/minor/hos
+	target_dept = 2
+
+/obj/machinery/computer/card/minor/cmo
+	target_dept = 3
+
+/obj/machinery/computer/card/minor/rd
+	target_dept = 4
+
+/obj/machinery/computer/card/minor/ce
+	target_dept = 5

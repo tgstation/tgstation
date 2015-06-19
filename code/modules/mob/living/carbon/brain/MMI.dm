@@ -41,6 +41,8 @@
 			user << "<span class='warning'>You aren't sure where this brain came from, but you're pretty sure it's a useless brain!</span>"
 			return
 
+		if(!user.unEquip(src))
+			return
 		var/mob/living/carbon/brain/B = newbrain.brainmob
 		if(!B.key)
 			var/mob/dead/observer/ghost = B.get_ghost()
@@ -58,7 +60,6 @@
 		dead_mob_list -= brainmob //Update dem lists
 		living_mob_list += brainmob
 
-		user.drop_item()
 		newbrain.loc = src //P-put your brain in it
 		brain = newbrain
 

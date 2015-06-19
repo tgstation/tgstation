@@ -625,8 +625,9 @@
 /obj/item/weapon/rack_parts/attack_self(mob/user as mob)
 	user << "<span class='notice'>You start constructing rack...</span>"
 	if (do_after(user, 50))
+		if(!user.drop_item())
+			return
 		var/obj/structure/rack/R = new /obj/structure/rack( user.loc )
 		R.add_fingerprint(user)
-		user.drop_item()
 		qdel(src)
 		return

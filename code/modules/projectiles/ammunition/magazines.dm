@@ -134,6 +134,17 @@
 	..()
 	icon_state = "45-[ammo_count() ? "8" : "0"]"
 
+/obj/item/ammo_box/magazine/uzim9mm
+	name = "uzi magazine (9mm)"
+	icon_state = "uzi9mm-32"
+	ammo_type = /obj/item/ammo_casing/c9mm
+	caliber = "9mm"
+	max_ammo = 32
+
+/obj/item/ammo_box/magazine/uzim9mm/update_icon()
+	..()
+	icon_state = "uzi9mm-[round(ammo_count(),4)]"
+
 /obj/item/ammo_box/magazine/smgm9mm
 	name = "SMG magazine (9mm)"
 	icon_state = "smg9mm-20"
@@ -157,11 +168,11 @@
 	..()
 	icon_state = "c20r45-[round(ammo_count(),2)]"
 
-obj/item/ammo_box/magazine/tommygunm9mm
-	name = "drum magazine (9mm)"
+obj/item/ammo_box/magazine/tommygunm45
+	name = "drum magazine (.45)"
 	icon_state = "drum45"
-	ammo_type = /obj/item/ammo_casing/c9mm
-	caliber = "9mm"
+	ammo_type = /obj/item/ammo_casing/c45
+	caliber = ".45"
 	max_ammo = 50
 
 /obj/item/ammo_box/magazine/m50
