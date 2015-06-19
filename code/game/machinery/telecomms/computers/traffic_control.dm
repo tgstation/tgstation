@@ -1,7 +1,3 @@
-//This file was auto-corrected by findeclaration.exe on 25.5.2012 20:42:32
-
-
-
 
 
 /obj/machinery/computer/telecomms/traffic
@@ -172,7 +168,8 @@
 				var/obj/item/weapon/card/id/I = C.get_active_hand()
 				if(istype(I))
 					if(check_access(I))
-						C.drop_item()
+						if(!C.drop_item())
+							return
 						I.loc = src
 						auth = I
 						create_log("has logged in.", usr)

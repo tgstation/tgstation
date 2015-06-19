@@ -117,7 +117,7 @@
 	..()
 	new /obj/item/weapon/reagent_containers/spray/plantbgone(src)
 	new /obj/item/weapon/reagent_containers/spray/plantbgone(src)
-	new /obj/item/weapon/minihoe(src)
+	new /obj/item/weapon/cultivator(src)
 
 /obj/structure/closet/crate/secure
 	desc = "A secure crate."

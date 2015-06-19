@@ -244,13 +244,18 @@
 	retreat_distance = 3
 	minimum_distance = 3
 	pass_flags = PASSTABLE
+	var/last_spawn = 0
+	var/spawn_cooldown = 10
 
 /mob/living/simple_animal/hostile/asteroid/hivelord/OpenFire(var/the_target)
+	if(last_spawn + spawn_cooldown > world.time)
+		return 0
 	var/mob/living/simple_animal/hostile/asteroid/hivelordbrood/A = new /mob/living/simple_animal/hostile/asteroid/hivelordbrood(src.loc)
 	A.GiveTarget(target)
 	A.friends = friends
 	A.faction = faction
-	return
+	last_spawn = world.time
+	return 1
 
 /mob/living/simple_animal/hostile/asteroid/hivelord/AttackingTarget()
 	OpenFire()

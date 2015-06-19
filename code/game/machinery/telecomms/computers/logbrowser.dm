@@ -75,7 +75,7 @@
 					var/list/humans = typesof(/mob/living/carbon/human, /mob/living/carbon/brain)
 					var/list/monkeys = typesof(/mob/living/carbon/monkey)
 					var/list/silicons = typesof(/mob/living/silicon)
-					var/list/slimes = typesof(/mob/living/carbon/slime)
+					var/list/slimes = typesof(/mob/living/simple_animal/slime)
 					var/list/animals = typesof(/mob/living/simple_animal)
 
 					if(mobtype in humans)
