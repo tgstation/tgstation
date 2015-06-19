@@ -115,7 +115,6 @@ var/global/list/ghdel_profiling = list()
 		reagents = null
 
 	if(materials)
-		materials.Destroy()
 		returnToDPool(materials)
 
 	// Idea by ChuckTheSheep to make the object even more unreferencable.

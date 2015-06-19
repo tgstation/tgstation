@@ -31,6 +31,9 @@ var/global/list/initial_materials	//Stores all the matids = 0 in helping New
 	if(!storage.len)
 		storage = initial_materials.Copy()
 
+/datum/materials/Destroy()
+	holder = null
+
 /datum/materials/resetVariables(args)
 	var/newargs
 	if(args)

@@ -9,10 +9,6 @@ var/const/RND_WIRE_HACK = 4
 
 /datum/wires/rnd/CanUse(var/mob/living/L)
 	var/obj/machinery/r_n_d/rnd = holder
-	if(!istype(L, /mob/living/silicon))
-		if(rnd.shocked)
-			if(rnd.shock(L, 100))
-				return 0
 	if(rnd.panel_open)
 		return 1
 	return 0
