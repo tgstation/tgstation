@@ -371,7 +371,7 @@ var/global/list/facial_hair_styles_female_list	= list()
 	return add_zero2(num2hex(value,1), 3)
 
 /datum/dna/proc/UpdateUI()
-	src.uni_identity=""
+	src.uni_identity=0
 	for(var/block in UI)
 		uni_identity += EncodeDNABlock(block)
 	//testing("New UI: [uni_identity]")
