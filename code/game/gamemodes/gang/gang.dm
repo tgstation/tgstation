@@ -122,8 +122,7 @@
 		B_timer = max(180,900 - ((round((B_territory.len/start_state.num_territories)*200, 1) - 60) * 15)) * modifier
 	if(gang && dominatorloc)
 		priority_announce("Hostile runtimes detected in all station systems. A network breach by the [gang_name(gang)] Gang has been located in [dominatorloc].","Network Alert")
-		if(get_security_level() != "delta")
-			set_security_level("red")
+		set_security_level("delta")
 		SSshuttle.emergencyNoEscape = 1
 
 ///////////////////////////////////////////////////////////////////////////

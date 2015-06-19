@@ -35,6 +35,6 @@ delete-after: True
 changes: 
   - rscadd: "Wearing your gang's outfit now increases influence and shortens takeover time faster."
   - rscadd: "Added several more options for gang outfits"
-  - tweak: "Gang outfits are now slightly armored (10% melee, bullet, and laser)
-  - tweak: "Gang tags are now named "graffiti" to make them harder to detect
+  - tweak: "Gang outfits are now slightly armored"
+  - tweak: "Gang tags are now named 'graffiti' to make them harder to detect"
   - tweak: "Initial takeover timer is now capped at 5 minutes (50% control)"
