@@ -364,7 +364,7 @@ var/const/CALL_SHUTTLE_REASON_LENGTH = 12
 			popup.open()
 		return
 
-	switch(src.state)
+	switch(src.status)
 		if(STATE_DEFAULT)
 			if (src.authenticated)
 				if(SSshuttle.emergencyLastCallLoc)
@@ -410,14 +410,14 @@ var/const/CALL_SHUTTLE_REASON_LENGTH = 12
 				if (src.authenticated)
 					dat += "<BR><BR>\[ <A HREF='?src=\ref[src];operation=delmessage'>Delete \]"
 			else
-				src.state = STATE_MESSAGELIST
+				src.status = STATE_MESSAGELIST
 				src.attack_hand(user)
 				return
 		if(STATE_DELMESSAGE)
 			if (src.currmsg)
 				dat += "Are you sure you want to delete this message? \[ <A HREF='?src=\ref[src];operation=delmessage2'>OK</A> | <A HREF='?src=\ref[src];operation=viewmessage'>Cancel</A> \]"
 			else
-				src.state = STATE_MESSAGELIST
+				src.status = STATE_MESSAGELIST
 				src.attack_hand(user)
 				return
 		if(STATE_STATUSDISPLAY)
@@ -450,7 +450,7 @@ var/const/CALL_SHUTTLE_REASON_LENGTH = 12
 				dat += "<b>Emergency Maintenance Access is currently <font color='green'>DISABLED</font></b>"
 				dat += "<BR>Lift access restrictions on maintenance and external airlocks? <BR>\[ <A HREF='?src=\ref[src];operation=enableemergency'>OK</A> | <A HREF='?src=\ref[src];operation=viewmessage'>Cancel</A> \]"
 
-	dat += "<BR><BR>\[ [(src.state != STATE_DEFAULT) ? "<A HREF='?src=\ref[src];operation=main'>Main Menu</A> | " : ""]<A HREF='?src=\ref[user];mach_close=communications'>Close</A> \]"
+	dat += "<BR><BR>\[ [(src.status != STATE_DEFAULT) ? "<A HREF='?src=\ref[src];operation=main'>Main Menu</A> | " : ""]<A HREF='?src=\ref[user];mach_close=communications'>Close</A> \]"
 	//user << browse(dat, "window=communications;size=400x500")
 	//onclose(user, "communications")
 	popup.set_content(dat)
