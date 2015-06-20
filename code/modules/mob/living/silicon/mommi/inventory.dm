@@ -32,6 +32,9 @@
 	//if(is_in_modules(W))
 		//src << "<span class='warning'>Picking up something that's built-in to you seems a bit silly.</span>"
 		//return 0
+	if(W.type == /obj/item/device/material_synth)
+		drop_item(W)
+		return 0
 	if(tool_state)
 		//var/obj/item/found = locate(tool_state) in src.module.modules
 		var/obj/item/TS = tool_state
