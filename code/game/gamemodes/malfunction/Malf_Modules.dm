@@ -63,7 +63,7 @@
 	module_name = "Hostile Station Lockdown"
 	mod_pick_name = "lockdown"
 	description = "Overload the airlock, blast door and fire control networks, locking them down. Caution! This command also electrifies all airlocks. The networks will automatically reset after 90 seconds."
-	cost = 40
+	cost = 30
 	one_time = 1
 
 	power_type = /mob/living/silicon/ai/proc/lockdown
