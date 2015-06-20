@@ -309,7 +309,7 @@ obj/effect/bmode/buildholder/New()
 					if(fillturfs.len)
 						if(alert("You're about to do a fill operation spanning [fillturfs.len] tiles, are you sure?","Panic","Yes","No") == "Yes")
 							if(fillturfs.len > 50)
-								if(alert("Are you completely sure about filling [fillturfs.len] tiles?","Panic!!!!","Yes","No") == "Yes")
+								if(alert("Are you completely sure about filling [fillturfs.len] tiles?","Panic!!!!","Yes","No") != "Yes")
 									holder.fillingtiles[BOTTOM_LEFT] = null
 									holder.fillingtiles[TOP_RIGHT] = null
 									usr << "<span class='notice'>Cleared filling corners.</span>"
@@ -331,6 +331,8 @@ obj/effect/bmode/buildholder/New()
 									if(istype(A))
 										A.dir = holder.builddir.dir
 								tcheck(80,1)
+								holder.fillingtiles[BOTTOM_LEFT] = null
+								holder.fillingtiles[TOP_RIGHT] = null
 				return
 			if(pa.Find("left"))
 				if(holder.buildmode.copycat)
