@@ -245,7 +245,7 @@
 			return
 		var/mob/living/carbon/H = loc
 		if(!H || !istype(H))
-			audible_message("<span class='danger'>[src] lets out two beeps chime and falls silent.</span>")
+			audible_message("<span class='danger'>[src] lets out two beeps and falls silent.</span>")
 			playsound(src, "sound/machines/defib_failed.ogg", 50, 0)
 			return
 		explosion(H, -1, -1, 1, 1)
