@@ -12,13 +12,15 @@
 		var/spell_to_add = text2path(spell)
 		new spell_to_add(src) //should result in adding to contents, needs testing
 
-/obj/effect/proc_holder/spell/targeted/trigger/Destroy() //I think this entire proc is unnecessary but ok
+/obj/effect/proc_holder/spell/targeted/trigger/Destroy()
 	for(var/spell in contents)
 		qdel(spell)
-
+	linked_spells = null
+	starting_spells = null
 	..()
 
 /obj/effect/proc_holder/spell/targeted/trigger/cast(list/targets)
+	playMagSound()
 	for(var/mob/living/target in targets)
 		for(var/obj/effect/proc_holder/spell/spell in contents)
 			spell.perform(list(target),0)

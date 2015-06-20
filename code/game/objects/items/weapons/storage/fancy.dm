@@ -246,7 +246,7 @@
 /obj/item/weapon/storage/fancy/cigarettes/cigpack_shadyjims/New()
 	..()
 	for(var/i = 1 to storage_slots)
-		reagents.add_reagent("lipozine",4)
+		reagents.add_reagent("lipolicide",4)
 		reagents.add_reagent("ammonia",2)
 		reagents.add_reagent("plantbgone",1)
 		reagents.add_reagent("toxin",1.5)

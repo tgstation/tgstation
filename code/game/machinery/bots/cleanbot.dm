@@ -27,7 +27,6 @@
 	var/blood = 1
 	var/list/target_types = list()
 	var/obj/effect/decal/cleanable/target
-	var/obj/effect/decal/cleanable/oldtarget
 	var/max_targets = 50 //Maximum number of targets a cleanbot can ignore.
 	var/oldloc = null
 	req_one_access = list(access_janitor, access_robotics)
@@ -40,7 +39,7 @@
 	var/next_dest_loc
 	radio_frequency = SERV_FREQ //Service
 	bot_type = CLEAN_BOT
-	bot_filter = RADIO_CLEANBOT
+	model = "Cleanbot"
 
 /obj/machinery/bot/cleanbot/New()
 	..()
@@ -48,11 +47,8 @@
 	icon_state = "cleanbot[on]"
 
 	var/datum/job/janitor/J = new/datum/job/janitor
-	botcard.access = J.get_access()
+	botcard.access += J.get_access()
 	prev_access = botcard.access
-
-	spawn(5)
-		add_to_beacons(bot_filter)
 
 /obj/machinery/bot/cleanbot/turn_on()
 	..()
@@ -68,7 +64,6 @@
 	..()
 	ignore_list = list() //Allows the bot to clean targets it previously ignored due to being unreachable.
 	target = null
-	oldtarget = null
 	oldloc = null
 
 /obj/machinery/bot/cleanbot/set_custom_texts()
@@ -109,10 +104,6 @@ text("<A href='?src=\ref[src];power=1'>[on ? "On" : "Off"]</A>"))
 			blood =!blood
 			get_targets()
 			updateUsrDialog()
-		if("freq")
-			var/freq = text2num(input("Select frequency for  navigation beacons", "Frequency", num2text(beacon_freq / 10))) * 10
-			if (freq > 0)
-				beacon_freq = freq
 			updateUsrDialog()
 
 /obj/machinery/bot/cleanbot/attackby(obj/item/weapon/W, mob/user as mob, params)
@@ -163,26 +154,19 @@ text("<A href='?src=\ref[src];power=1'>[on ? "On" : "Off"]</A>"))
 		visible_message("[src] makes an excited beeping booping sound!")
 
 	if(!target) //Search for cleanables it can see.
-		target = scan(/obj/effect/decal/cleanable/, oldtarget)
-		oldtarget = target
+		target = scan(/obj/effect/decal/cleanable/)
 
-	if(!target)
-		if(loc != oldloc)
-			oldtarget = null
+	if(!target && auto_patrol) //Search for cleanables it can see.
+		if(mode == BOT_IDLE || mode == BOT_START_PATROL)
+			start_patrol()
 
-		if(auto_patrol)
-			if(mode == BOT_IDLE || mode == BOT_START_PATROL)
-				start_patrol()
-
-			if(mode == BOT_PATROL)
-				bot_patrol()
-
-		return
+		if(mode == BOT_PATROL)
+			bot_patrol()
 
 	if(target)
 		if(!path || path.len == 0) //No path, need a new one
 			//Try to produce a path to the target, and ignore airlocks to which it has access.
-			path = get_path_to(loc, target.loc, /turf/proc/AdjacentTurfsWithAccess, /turf/proc/Distance, 0, 30, id=botcard)
+			path = get_path_to(loc, target.loc, src, /turf/proc/Distance, 0, 30, id=botcard)
 			if (!bot_move(target))
 				add_to_ignore(target)
 				target = null
@@ -259,7 +243,8 @@ text("<A href='?src=\ref[src];power=1'>[on ? "On" : "Off"]</A>"))
 /obj/item/weapon/bucket_sensor/attackby(var/obj/item/W, mob/user as mob, params)
 	..()
 	if(istype(W, /obj/item/robot_parts/l_arm) || istype(W, /obj/item/robot_parts/r_arm))
-		user.drop_item()
+		if(!user.unEquip(W))
+			return
 		qdel(W)
 		var/turf/T = get_turf(loc)
 		var/obj/machinery/bot/cleanbot/A = new /obj/machinery/bot/cleanbot(T)

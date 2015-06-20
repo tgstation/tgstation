@@ -16,9 +16,10 @@
 	var/name = "invalid"
 	var/config_tag = null
 	var/votable = 1
-	var/probability = 1
+	var/probability = 0
 	var/station_was_nuked = 0 //see nuclearbomb.dm and malfunction.dm
 	var/explosion_in_progress = 0 //sit back and relax
+	var/round_ends_with_antag_death = 0 //flags the "one verse the station" antags as such
 	var/list/datum/mind/modePlayer = new
 	var/list/datum/mind/antag_candidates = list()	// List of possible starting antags goes here
 	var/list/restricted_jobs = list()	// Jobs it doesn't make sense to be.  I.E chaplain or AI cultist
@@ -26,12 +27,13 @@
 	var/required_players = 0
 	var/required_enemies = 0
 	var/recommended_enemies = 0
-	var/pre_setup_before_jobs = 0
 	var/antag_flag = null //preferences flag such as BE_WIZARD that need to be turned on for players to be antag
 	var/datum/mind/sacrifice_target = null
+	var/mob/living/living_antag_player = null
 	var/list/datum/game_mode/replacementmode = null
 	var/round_converted = 0 //0: round not converted, 1: round going to convert, 2: round converted
 	var/reroll_friendly 	//During mode conversion only these are in the running
+	var/continuous_sanity_checked	//Catches some cases where config options could be used to suggest that modes without antagonists should end when all antagonists die
 	var/enemy_minimum_age = 7 //How many days must players have been playing before they can play this antagonist
 
 	var/const/waittime_l = 600
@@ -84,7 +86,7 @@
 		spawn (rand(waittime_l, waittime_h))
 			send_intercept(0)
 	start_state = new /datum/station_state()
-	start_state.count()
+	start_state.count(1)
 	return 1
 
 ///make_antag_chance()
@@ -97,24 +99,22 @@
 ///convert_roundtype()
 ///Allows rounds to basically be "rerolled" should the initial premise fall through
 /datum/game_mode/proc/convert_roundtype()
-	var/living_crew = 0
+	var/list/living_crew = list()
 
 	for(var/mob/Player in mob_list)
 		if(Player.mind && Player.stat != DEAD && !isnewplayer(Player) &&!isbrain(Player))
-			living_crew++
-	if(living_crew / joined_player_list.len <= config.midround_antag_life_check) //If a lot of the player base died, we start fresh
+			living_crew += Player
+	if(living_crew.len / joined_player_list.len <= config.midround_antag_life_check) //If a lot of the player base died, we start fresh
 		message_admins("Convert_roundtype failed due to too many dead people. Limit is [config.midround_antag_life_check * 100]% living crew")
 		return null
 
-	var/list/datum/game_mode/runnable_modes = config.get_runnable_midround_modes(living_crew)
+	var/list/datum/game_mode/runnable_modes = config.get_runnable_midround_modes(living_crew.len)
 	var/list/datum/game_mode/usable_modes = list()
 	for(var/datum/game_mode/G in runnable_modes)
 		if(G.reroll_friendly)
 			usable_modes += G
 		else
 			del(G)
-
-	SSshuttle.emergencyNoEscape = 0 //Time to get the fuck out of here
 
 	if(!usable_modes)
 		message_admins("Convert_roundtype failed due to no valid modes to convert to. Please report this error to the Coders.")
@@ -169,12 +169,86 @@
 
 
 /datum/game_mode/proc/check_finished() //to be called by ticker
+	if(replacementmode && round_converted == 2)
+		return replacementmode.check_finished()
 	if(SSshuttle.emergency.mode >= SHUTTLE_ENDGAME || station_was_nuked)
 		return 1
+	if(!round_converted && (!config.continuous[config_tag] || (config.continuous[config_tag] && config.midround_antag[config_tag]))) //Non-continuous or continous with replacement antags
+		if(!continuous_sanity_checked) //make sure we have antags to be checking in the first place
+			for(var/mob/Player in mob_list)
+				if(Player.mind)
+					if(Player.mind.special_role)
+						continuous_sanity_checked = 1
+						return 0
+			if(!continuous_sanity_checked)
+				message_admins("The roundtype ([config_tag]) has no antagonists, continuous round has been defaulted to on and midround_antag has been defaulted to off.")
+				config.continuous[config_tag] = 1
+				config.midround_antag[config_tag] = 0
+				SSshuttle.emergencyNoEscape = 0
+				return 0
+
+
+		if(living_antag_player && living_antag_player.mind && isliving(living_antag_player) && living_antag_player.stat != DEAD && !isnewplayer(living_antag_player) &&!isbrain(living_antag_player))
+			return 0 //A resource saver: once we find someone who has to die for all antags to be dead, we can just keep checking them, cycling over everyone only when we lose our mark.
+
+		for(var/mob/Player in living_mob_list)
+			if(Player.mind && Player.stat != DEAD && !isnewplayer(Player) &&!isbrain(Player))
+				if(Player.mind.special_role) //Someone's still antaging!
+					living_antag_player = Player
+					return 0
+
+		if(!config.continuous[config_tag])
+			return 1
+
+		else
+			round_converted = convert_roundtype()
+			if(!round_converted)
+				if(round_ends_with_antag_death)
+					return 1
+				else
+					config.midround_antag[config_tag] = 0
+					return 0
+
 	return 0
 
 
 /datum/game_mode/proc/declare_completion()
+	var/clients = 0
+	var/surviving_humans = 0
+	var/surviving_total = 0
+	var/ghosts = 0
+	var/escaped_humans = 0
+	var/escaped_total = 0
+
+	for(var/mob/M in player_list)
+		if(M.client)
+			clients++
+			if(ishuman(M))
+				if(!M.stat)
+					surviving_humans++
+					if(M.z == 2)
+						escaped_humans++
+			if(!M.stat)
+				surviving_total++
+				if(M.z == 2)
+					escaped_total++
+
+
+			if(isobserver(M))
+				ghosts++
+
+	if(clients > 0)
+		feedback_set("round_end_clients",clients)
+	if(ghosts > 0)
+		feedback_set("round_end_ghosts",ghosts)
+	if(surviving_humans > 0)
+		feedback_set("survived_human",surviving_humans)
+	if(surviving_total > 0)
+		feedback_set("survived_total",surviving_total)
+	if(escaped_humans > 0)
+		feedback_set("escaped_human",escaped_humans)
+	if(escaped_total > 0)
+		feedback_set("escaped_total",escaped_total)
 	send2irc("Server", "Round just ended.")
 	return 0
 
@@ -188,7 +262,7 @@
 	intercepttext += "<B> Centcom has recently been contacted by the following syndicate affiliated organisations in your area, please investigate any information you may have:</B>"
 
 	var/list/possible_modes = list()
-	possible_modes.Add("revolution", "wizard", "nuke", "traitor", "malf", "changeling", "cult")
+	possible_modes.Add("revolution", "wizard", "nuke", "traitor", "malf", "changeling", "cult", "gang")
 	possible_modes -= "[ticker.mode]" //remove current gamemode to prevent it from being randomly deleted, it will be readded later
 
 	var/number = pick(1, 2)
@@ -344,7 +418,7 @@
 //////////////////////////
 //Reports player logouts//
 //////////////////////////
-proc/display_roundstart_logout_report()
+/proc/display_roundstart_logout_report()
 	var/msg = "<span class='boldnotice'>Roundstart logout report\n\n</span>"
 	for(var/mob/living/L in mob_list)
 
@@ -411,6 +485,17 @@ proc/display_roundstart_logout_report()
 		text += "body destroyed"
 	text += ")"
 
+	return text
+
+/datum/game_mode/proc/printobjectives(var/datum/mind/ply)
+	var/text = ""
+	var/count = 1
+	for(var/datum/objective/objective in ply.objectives)
+		if(objective.check_completion())
+			text += "<br><b>Objective #[count]</b>: [objective.explanation_text] <font color='green'><b>Success!</b></font>"
+		else
+			text += "<br><b>Objective #[count]</b>: [objective.explanation_text] <span class='danger'>Fail.</span>"
+		count++
 	return text
 
 //If the configuration option is set to require players to be logged as old enough to play certain jobs, then this proc checks that they are, otherwise it just returns 1

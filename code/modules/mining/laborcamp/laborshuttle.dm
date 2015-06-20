@@ -1,8 +1,6 @@
 /obj/machinery/computer/shuttle/labor
 	name = "labor shuttle console"
 	desc = "Used to call and send the labor camp shuttle."
-	icon = 'icons/obj/computer.dmi'
-	icon_state = "shuttle"
 	circuit = /obj/item/weapon/circuitboard/labor_shuttle
 	shuttleId = "laborcamp"
 	possible_destinations = "laborcamp_home;laborcamp_away"
@@ -20,10 +18,10 @@
 	if(href_list["move"])
 		var/obj/docking_port/mobile/M = SSshuttle.getShuttle("laborcamp")
 		if(!M)
-			usr << "<span class='notice'>Cannot locate shuttle.</span>"
+			usr << "<span class='warning'>Cannot locate shuttle!</span>"
 			return 0
 		var/obj/docking_port/stationary/S = M.get_docked()
 		if(S && S.name == "laborcamp_away")
-			usr << "<span class='notice'>Shuttle is already at the outpost.</span>"
+			usr << "<span class='warning'>Shuttle is already at the outpost!</span>"
 			return 0
 	..()

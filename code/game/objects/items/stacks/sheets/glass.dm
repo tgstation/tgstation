@@ -30,7 +30,7 @@
 	if(istype(W, /obj/item/stack/cable_coil))
 		var/obj/item/stack/cable_coil/CC = W
 		if (get_amount() < 1 || CC.get_amount() < 5)
-			user << "<span class='warning>You need five lengths of coil and one sheet of glass to make wired glass.</span>"
+			user << "<span class='warning>You need five lengths of coil and one sheet of glass to make wired glass!</span>"
 			return
 		CC.use(5)
 		use(1)
@@ -51,7 +51,7 @@
 			if (!G && replace)
 				user.put_in_hands(RG)
 		else
-			user << "<span class='warning'>You need one rod and one sheet of glass to make reinforced glass.</span>"
+			user << "<span class='warning'>You need one rod and one sheet of glass to make reinforced glass!</span>"
 			return
 	else
 		return ..()
@@ -60,7 +60,7 @@
 	if(!user || !src)	return 0
 	if(!istype(user.loc,/turf)) return 0
 	if(!user.IsAdvancedToolUser())
-		user << "<span class='danger'>You don't have the dexterity to do this!</span>"
+		user << "<span class='warning'>You don't have the dexterity to do this!</span>"
 		return 0
 	if(zero_amount())	return 0
 	var/title = "Sheet-Glass"
@@ -75,7 +75,7 @@
 			for (var/obj/structure/window/win in user.loc)
 				i++
 				if(i >= 4)
-					user << "<span class='danger'>There are too many windows in this location.</span>"
+					user << "<span class='warning'>There are too many windows in this location.</span>"
 					return 1
 				directions-=win.dir
 				if(!(win.ini_dir in cardinal))
@@ -105,10 +105,10 @@
 			if(!src)	return 1
 			if(src.loc != user)	return 1
 			if(src.get_amount() < 2)
-				user << "<span class='danger'>You need more glass to do that.</span>"
+				user << "<span class='warning'>You need more glass to do that!</span>"
 				return 1
 			if(locate(/obj/structure/window) in user.loc)
-				user << "<span class='danger'>There is a window in the way.</span>"
+				user << "<span class='warning'>There is a window in the way!</span>"
 				return 1
 			var/obj/structure/window/W
 			W = new /obj/structure/window/fulltile( user.loc, 0 )
@@ -159,7 +159,7 @@
 	if(!user || !src)	return 0
 	if(!istype(user.loc,/turf)) return 0
 	if(!user.IsAdvancedToolUser())
-		user << "<span class='danger'>You don't have the dexterity to do this!</span>"
+		user << "<span class='warning'>You don't have the dexterity to do this!</span>"
 		return 0
 	var/title = "Sheet Reinf. Glass"
 	title += " ([src.get_amount()] sheet\s left)"
@@ -203,10 +203,10 @@
 			if(!src)	return 1
 			if(src.loc != user)	return 1
 			if(src.get_amount() < 2)
-				user << "<span class='warning'>You need more glass to do that.</span>"
+				user << "<span class='warning'>You need more glass to do that!</span>"
 				return 1
 			if(locate(/obj/structure/window) in user.loc)
-				user << "<span class='warning'>There is a window in the way.</span>"
+				user << "<span class='warning'>There is a window in the way!</span>"
 				return 1
 			var/obj/structure/window/W
 			W = new /obj/structure/window/reinforced/fulltile(user.loc, 1)
@@ -221,16 +221,16 @@
 
 			for(var/obj/structure/windoor_assembly/WA in user.loc)
 				if(WA.dir == user.dir)
-					user << "<span class='warning'>There is already a windoor assembly in that location.</span>"
+					user << "<span class='warning'>There is already a windoor assembly in that location!</span>"
 					return 1
 
 			for(var/obj/machinery/door/window/W in user.loc)
 				if(W.dir == user.dir)
-					user << "<span class='warning'>There is already a windoor in that location.</span>"
+					user << "<span class='warning'>There is already a windoor in that location!</span>"
 					return 1
 
 			if(src.get_amount() < 5)
-				user << "<span class='warning'>You need more glass to do that.</span>"
+				user << "<span class='warning'>You need more glass to do that!</span>"
 				return 1
 
 			var/obj/structure/windoor_assembly/WD = new(user.loc)
@@ -332,6 +332,8 @@
 		playsound(loc, 'sound/effects/glass_step.ogg', 50, 1)
 		if(ishuman(AM))
 			var/mob/living/carbon/human/H = AM
+			if(PIERCEIMMUNE in H.dna.species.specflags)
+				return 0
 			if(!H.shoes)
 				H.apply_damage(5,BRUTE,(pick("l_leg", "r_leg")))
 				H.Weaken(3)

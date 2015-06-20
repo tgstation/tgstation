@@ -41,6 +41,10 @@
 			return
 	..()
 
+/mob/living/simple_animal/hostile/asteroid/death(gibbed)
+	feedback_add_details("mobs_killed_mining","[src.name]")
+	..(gibbed)
+
 /mob/living/simple_animal/hostile/asteroid/basilisk
 	name = "basilisk"
 	desc = "A territorial beast, covered in a thick shell that absorbs energy. Its stare causes victims to freeze from the inside."
@@ -89,8 +93,8 @@
 		stance = HOSTILE_STANCE_ATTACK
 		if(isliving(target))
 			var/mob/living/L = target
-			if(L.bodytemperature > 261)
-				L.bodytemperature = 261
+			if(L.bodytemperature > 200)
+				L.bodytemperature = 200
 				visible_message("<span class='danger'>The [src.name]'s stare chills [L.name] to the bone!</span>")
 	return
 
@@ -109,6 +113,7 @@
 		var/obj/item/weapon/ore/diamond/D = new /obj/item/weapon/ore/diamond(src.loc)
 		D.layer = 4.1
 	..(gibbed)
+
 
 /mob/living/simple_animal/hostile/asteroid/goldgrub
 	name = "goldgrub"
@@ -280,7 +285,7 @@
 				user << "<span class='notice'>[src] are useless on the dead.</span>"
 				return
 			if(H != user)
-				H.visible_message("<span class='notice'>[user] forces [H] to eat [src]... they quickly regenerate all injuries!</span>")
+				H.visible_message("[user] forces [H] to eat [src]... they quickly regenerate all injuries!")
 			else
 				user << "<span class='notice'>You chomp into [src], barely managing to hold it down, but feel amazingly refreshed in mere moments.</span>"
 			playsound(src.loc,'sound/items/eatfood.ogg', rand(10,50), 1)
@@ -461,7 +466,7 @@
 				user << "<span class='info'>You strengthen [target], improving its resistance against melee attacks.</span>"
 				qdel(src)
 			else
-				user << "<span class='info'>You can't improve [C] any further.</span>"
+				user << "<span class='warning'>You can't improve [C] any further!</span>"
 				return
 		if(istype(target, /obj/mecha/working/ripley))
 			var/obj/mecha/D = target
@@ -483,9 +488,9 @@
 						D.overlays += image("icon"="mecha.dmi", "icon_state"="ripley-g-full-open")
 						D.desc = "Autonomous Power Loader Unit. It's wearing a fearsome carapace entirely composed of goliath hide plates - the pilot must be an experienced monster hunter."
 					else
-						user << "<span class='info'>You can't add armour onto the mech while someone is inside!</span>"
+						user << "<span class='warning'>You can't add armour onto the mech while someone is inside!</span>"
 			else
-				user << "<span class='info'>You can't improve [D] any further.</span>"
+				user << "<span class='warning'>You can't improve [D] any further!</span>"
 				return
 
 /mob/living/simple_animal/hostile/asteroid/handle_temperature_damage()

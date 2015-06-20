@@ -35,6 +35,15 @@
 	max_w_class = 5
 	max_combined_w_class = 35
 
+/obj/item/weapon/storage/backpack/holding/suicide_act(mob/user)
+	user.visible_message("<span class='suicide'>[user] is jumping into [src]! It looks like \he's trying to commit suicide.</span>")
+	user.drop_item()
+	user.Stun(5)
+	sleep(20)
+	playsound(src, "rustle", 50, 1, -5)
+	qdel(user)
+	return
+
 /obj/item/weapon/storage/backpack/holding/can_be_inserted(obj/item/W, stop_messages = 0, mob/user)
 	if(crit_fail)
 		user << "<span class='danger'>The Bluespace generator isn't working.</span>"
@@ -44,7 +53,7 @@
 /obj/item/weapon/storage/backpack/holding/handle_item_insertion(obj/item/W, prevent_warning = 0, mob/user)
 	if(istype(W, /obj/item/weapon/storage/backpack/holding) && !W.crit_fail)
 		var/safety = alert(user, "You feel this may not be the best idea.", "Put in [name]?", "Proceed", "Abort")
-		if(safety == "Abort" || !in_range(src, user) || !src || !W)
+		if(safety == "Abort" || !in_range(src, user) || !src || !W || user.incapacitated())
 			return
 		investigate_log("has become a singularity. Caused by [user.key]","singulo")
 		user << "<span class='danger'>The Bluespace interfaces of the two devices catastrophically malfunction!</span>"
@@ -277,6 +286,24 @@
 	icon_state = "duffle-syndieammo"
 	item_state = "duffle-syndieammo"
 	slowdown = 0
+
+/obj/item/weapon/storage/backpack/dufflebag/syndieammo/loaded
+	desc = "A large dufflebag, packed to the brim with Bulldog shotgun ammo."
+
+/obj/item/weapon/storage/backpack/dufflebag/syndieammo/loaded/New()
+	..()
+	contents = list()
+	new /obj/item/ammo_box/magazine/m12g(src)
+	new /obj/item/ammo_box/magazine/m12g(src)
+	new /obj/item/ammo_box/magazine/m12g(src)
+	new /obj/item/ammo_box/magazine/m12g(src)
+	new /obj/item/ammo_box/magazine/m12g(src)
+	new /obj/item/ammo_box/magazine/m12g(src)
+	new /obj/item/ammo_box/magazine/m12g/buckshot(src)
+	new /obj/item/ammo_box/magazine/m12g/stun(src)
+	new /obj/item/ammo_box/magazine/m12g/dragon(src)
+	return
+
 
 /obj/item/weapon/storage/backpack/dufflebag/captain
 	name = "captain's dufflebag"

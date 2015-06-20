@@ -55,10 +55,6 @@
 			secequipment += loc
 			qdel(src)
 			return
-		if("Deathsquad")
-			deathsquadspawn += loc
-			qdel(src)
-			return
 		if("Emergencyresponseteam")
 			emergencyresponseteamspawn += loc
 			qdel(src)
@@ -87,6 +83,9 @@
 	start_landmarks_list += src
 
 	return 1
+/obj/effect/landmark/start/Destroy()
+	..()
+	start_landmarks_list -= src
 
 //Costume spawner landmarks
 
@@ -235,3 +234,24 @@
 	new /obj/item/clothing/mask/gas/sexymime(src.loc)
 	new /obj/item/clothing/under/sexymime(src.loc)
 	qdel(src)
+
+//Department Security spawns
+
+/obj/effect/landmark/start/depsec
+	name = "department_sec"
+
+/obj/effect/landmark/start/depsec/New()
+	..()
+	department_security_spawns |= src
+
+/obj/effect/landmark/start/depsec/supply
+	name = "supply_sec"
+
+/obj/effect/landmark/start/depsec/medical
+	name = "medical_sec"
+
+/obj/effect/landmark/start/depsec/engineering
+	name = "engineering_sec"
+
+/obj/effect/landmark/start/depsec/science
+	name = "science_sec"

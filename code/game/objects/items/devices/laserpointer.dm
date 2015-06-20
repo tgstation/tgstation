@@ -47,7 +47,8 @@
 /obj/item/device/laser_pointer/attackby(obj/item/W, mob/user, params)
 	if(istype(W, /obj/item/weapon/stock_parts/micro_laser))
 		if(!diode)
-			user.drop_item()
+			if(!user.unEquip(W))
+				return
 			W.loc = src
 			diode = W
 			user << "<span class='notice'>You install a [diode.name] in [src].</span>"
@@ -112,7 +113,7 @@
 				if(C.weakeyes)
 					C.Stun(1)
 			else
-				outmsg = "<span class='notice'>You fail to blind [C] by shining [src] at their eyes.</span>"
+				outmsg = "<span class='warning'>You fail to blind [C] by shining [src] at their eyes!</span>"
 
 	//robots and AI
 	else if(issilicon(target))
@@ -121,11 +122,11 @@
 		if(prob(effectchance * diode.rating))
 			flick("e_flash", S.flash)
 			S.Weaken(rand(5,10))
-			S << "<span class='warning'>Your sensors were overloaded by a laser!</span>"
+			S << "<span class='danger'>Your sensors were overloaded by a laser!</span>"
 			outmsg = "<span class='notice'>You overload [S] by shining [src] at their sensors.</span>"
 			add_logs(user, S, "shone in the sensors", object="laser pointer")
 		else
-			outmsg = "<span class='notice'>You fail to overload [S] by shining [src] at their sensors.</span>"
+			outmsg = "<span class='warning'>You fail to overload [S] by shining [src] at their sensors!</span>"
 
 	//cameras
 	else if(istype(target, /obj/machinery/camera))
@@ -135,7 +136,7 @@
 			outmsg = "<span class='notice'>You hit the lens of [C] with [src], temporarily disabling the camera!</span>"
 			add_logs(user, C, "EMPed", object="laser pointer")
 		else
-			outmsg = "<span class='info'>You missed the lens of [C] with [src].</span>"
+			outmsg = "<span class='warning'>You miss the lens of [C] with [src]!</span>"
 
 	//laser pointer image
 	icon_state = "pointer_[pointer_icon_state]"
@@ -158,7 +159,7 @@
 			recharging = 1
 			SSobj.processing |= src
 		if(energy <= 0)
-			user << "<span class='warning'>You've overused the battery of [src], now it needs time to recharge!</span>"
+			user << "<span class='warning'>The [src]'s battery is overused, it needs time to recharge!</span>"
 			recharge_locked = 1
 
 	flick_overlay(I, showto, 10)

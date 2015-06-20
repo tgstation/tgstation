@@ -31,7 +31,6 @@
 	caliber = ".45"
 	projectile_type = /obj/item/projectile/bullet/midbullet
 
-
 /obj/item/ammo_casing/shotgun
 	name = "shotgun slug"
 	desc = "A 12 gauge lead slug."
@@ -161,6 +160,18 @@
 /obj/item/ammo_casing/shotgun/dart/attackby()
 	return
 
+/obj/item/ammo_casing/shotgun/dart/bioterror
+	desc = "A shotgun dart filled with deadly toxins."
+
+/obj/item/ammo_casing/shotgun/dart/bioterror/New()
+	..()
+	reagents.add_reagent("neurotoxin", 5)
+	reagents.add_reagent("morphine", 5)
+	reagents.add_reagent("spore", 5)
+	reagents.add_reagent("mutetoxin", 5) //;HELP OPS IN MAINT
+	reagents.add_reagent("initropidril", 5)
+	reagents.add_reagent("sodium_thiopental", 5)
+
 /obj/item/ammo_casing/a762
 	desc = "A 7.62mm bullet casing."
 	icon_state = "762-casing"
@@ -222,7 +233,7 @@
 	..()
 	if (modified)
 		icon_state = "foamdart_empty"
-		desc = "Its nerf or nothing! ...Although, this one doesn't look too safe."
+		desc = "Its nerf or nothing! ... Although, this one doesn't look too safe."
 
 /obj/item/ammo_casing/caseless/foam_dart/attackby(var/obj/item/A as obj, mob/user as mob, params)
 	..()
@@ -230,10 +241,11 @@
 		modified = 1
 		BB.damage_type = BRUTE
 		icon_state = "foamdart_empty"
-		desc = "Its nerf or nothing! ...Although, this one doesn't look too safe."
+		desc = "Its nerf or nothing! ... Although, this one doesn't look too safe."
 		user << "<span class='notice'>You pop the safety cap off of [src].</span>"
 	else if ((istype(A, /obj/item/weapon/pen)) && modified && !BB.contents.len)
-		user.drop_item()
+		if(!user.unEquip(A))
+			return
 		A.loc = BB
 		BB.damage = 5
 		BB.nodamage = 0
@@ -242,6 +254,6 @@
 
 /obj/item/ammo_casing/caseless/foam_dart/riot
 	name = "riot foam dart"
-	desc = "Who's smart idea was it to use toys as crowd control? Ages 18 and up."
+	desc = "Whose smart idea was it to use toys as crowd control? Ages 18 and up."
 	projectile_type = /obj/item/projectile/bullet/reusable/foam_dart/riot
 	icon_state = "foamdart_riot"

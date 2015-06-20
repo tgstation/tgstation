@@ -59,7 +59,7 @@ AI MODULES
 
 //The proc that actually changes the silicon's laws.
 /obj/item/weapon/aiModule/proc/transmitInstructions(var/mob/living/silicon/target, var/mob/sender)
-	target << "[sender] has uploaded a change to the laws you must follow using a [name]. From now on, these are your laws: "
+	target << "<span class='userdanger'>[sender] has uploaded a change to the laws you must follow using a [name]. From now on, these are your laws: </span>"
 
 
 /******************** Modules ********************/
@@ -239,11 +239,13 @@ AI MODULES
 /obj/item/weapon/aiModule/reset/purge/transmitInstructions(var/mob/living/silicon/ai/target, var/mob/sender)
 	..()
 	target.clear_inherent_laws()
+	target.clear_zeroth_law(0)
 
 /******************* Full Core Boards *******************/
 
 /obj/item/weapon/aiModule/core/full/transmitInstructions(var/mob/living/silicon/ai/target, var/mob/sender) //These boards replace inherent laws.
 	target.clear_inherent_laws()
+	target.clear_zeroth_law(0)
 	..()
 
 /******************** Asimov ********************/

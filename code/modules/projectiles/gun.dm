@@ -91,15 +91,15 @@
 		if(!message)
 			return
 		if(pointblank)
-			user.visible_message("<span class='danger'>[user] fires [src] point blank at [pbtarget]!</span>", "<span class='danger'>You fire [src] point blank at [pbtarget]!</span>", "You hear a [istype(src, /obj/item/weapon/gun/energy) ? "laser blast" : "gunshot"]!")
+			user.visible_message("<span class='danger'>[user] fires [src] point blank at [pbtarget]!</span>", "<span class='danger'>You fire [src] point blank at [pbtarget]!</span>", "<span class='italics'>You hear a [istype(src, /obj/item/weapon/gun/energy) ? "laser blast" : "gunshot"]!</span>")
 		else
 			user.visible_message("<span class='danger'>[user] fires [src]!</span>", "<span class='danger'>You fire [src]!</span>", "You hear a [istype(src, /obj/item/weapon/gun/energy) ? "laser blast" : "gunshot"]!")
 
 	if(heavy_weapon)
 		if(user.get_inactive_hand())
 			if(prob(15))
-				user.visible_message("<span class='danger'>[src] flies out of [user]'s hands!</span>", "<span class='userdanger'>[src] kicks out of your grip!</span>")
-				user.drop_item()
+				if(user.drop_item())
+					user.visible_message("<span class='danger'>[src] flies out of [user]'s hands!</span>", "<span class='userdanger'>[src] kicks out of your grip!</span>")
 
 /obj/item/weapon/gun/emp_act(severity)
 	for(var/obj/O in contents)
@@ -119,7 +119,7 @@
 		if(istype(user, /mob/living))
 			var/mob/living/M = user
 			if (M.disabilities & CLUMSY && prob(40))
-				user << "<span class='danger'>You shoot yourself in the foot with \the [src]!</span>"
+				user << "<span class='userdanger'>You shoot yourself in the foot with \the [src]!</span>"
 				process_fire(user,user,0,params)
 				M.drop_item()
 				return
@@ -132,9 +132,10 @@
 	process_fire(target,user,1,params)
 
 
+
 /obj/item/weapon/gun/proc/can_trigger_gun(mob/living/carbon/user)
 	if (!user.IsAdvancedToolUser())
-		user << "<span class='notice'>You don't have the dexterity to do this!</span>"
+		user << "<span class='warning'>You don't have the dexterity to do this!</span>"
 		return 0
 
 	if(!handle_pins(user))
@@ -143,10 +144,10 @@
 	if(trigger_guard)
 		if(istype(user) && user.dna)
 			if(user.dna.check_mutation(HULK))
-				user << "<span class='notice'>Your meaty finger is much too large for the trigger guard!</span>"
+				user << "<span class='warning'>Your meaty finger is much too large for the trigger guard!</span>"
 				return 0
 			if(NOGUNS in user.dna.species.specflags)
-				user << "<span class='notice'>Your fingers don't fit in the trigger guard!</span>"
+				user << "<span class='warning'>Your fingers don't fit in the trigger guard!</span>"
 				return 0
 	return 1
 
@@ -159,7 +160,7 @@
 			pin.auth_fail(user)
 			return 0
 	else
-		user << "<span class='notice'>\The [src]'s trigger is locked. This weapon doesn't have a firing pin installed!</span>"
+		user << "<span class='warning'>\The [src]'s trigger is locked. This weapon doesn't have a firing pin installed!</span>"
 	return 0
 
 
@@ -218,7 +219,7 @@
 		user.update_inv_l_hand(0)
 	else
 		user.update_inv_r_hand(0)
-
+	feedback_add_details("gun_fired","[src.name]")
 
 /obj/item/weapon/gun/attack(mob/M as mob, mob/user)
 	if(user.a_intent == "harm") //Flogging
@@ -232,9 +233,10 @@
 		if(can_flashlight)
 			if(!F)
 				if(user.l_hand != src && user.r_hand != src)
-					user << "<span class='notice'>You'll need [src] in your hands to do that.</span>"
+					user << "<span class='warning'>You'll need [src] in your hands to do that!</span>"
 					return
-				user.drop_item()
+				if(!user.unEquip(A))
+					return
 				user << "<span class='notice'>You click [S] into place on [src].</span>"
 				if(S.on)
 					SetLuminosity(0)
@@ -247,7 +249,7 @@
 	if(istype(A, /obj/item/weapon/screwdriver))
 		if(F)
 			if(user.l_hand != src && user.r_hand != src)
-				user << "<span class='notice'>You'll need [src] in your hands to do that.</span>"
+				user << "<span class='warning'>You'll need [src] in your hands to do that!</span>"
 				return
 			for(var/obj/item/device/flashlight/seclite/S in src)
 				user << "<span class='notice'>You unscrew the seclite from [src].</span>"
@@ -275,7 +277,7 @@
 
 	var/mob/living/carbon/human/user = usr
 	if(!isturf(user.loc))
-		user << "You cannot turn the light on while in this [user.loc]."
+		user << "<span class='warning'>You cannot turn the light on while in this [user.loc]!</span>"
 	F.on = !F.on
 	user << "<span class='notice'>You toggle the gunlight [F.on ? "on":"off"].</span>"
 

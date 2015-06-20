@@ -72,7 +72,7 @@
 
 //############################## THE ACTUAL DECALS ###########################
 
-obj/structure/sign/poster
+/obj/structure/sign/poster
 	name = "poster"
 	desc = "A large piece of space-resistant printed paper."
 	icon = 'icons/obj/contraband.dmi'
@@ -81,7 +81,7 @@ obj/structure/sign/poster
 	var/ruined = 0
 	var/subtype = 0
 
-obj/structure/sign/poster/New(serial,subtype)
+/obj/structure/sign/poster/New(serial,subtype)
 	serial_number = serial
 
 	if(serial_number == loc)
@@ -302,7 +302,7 @@ obj/structure/sign/poster/New(serial,subtype)
 				desc += " This is a bug, please report the circumstances under which you encountered this poster at https://github.com/NTStation/NTstation13/issues."
 	..()
 
-obj/structure/sign/poster/attackby(obj/item/I, mob/user, params)
+/obj/structure/sign/poster/attackby(obj/item/I, mob/user, params)
 	if(istype(I, /obj/item/weapon/wirecutters))
 		playsound(loc, 'sound/items/Wirecutter.ogg', 100, 1)
 		if(ruined)
@@ -322,7 +322,7 @@ obj/structure/sign/poster/attackby(obj/item/I, mob/user, params)
 		if("Yes")
 			if( user.loc != temp_loc || ruined )
 				return
-			visible_message("<span class='warning'>[user] rips [src] in a single, decisive motion!</span>" )
+			visible_message("[user] rips [src] in a single, decisive motion!" )
 			playsound(src.loc, 'sound/items/poster_ripped.ogg', 100, 1)
 			ruined = 1
 			icon_state = "poster_ripped"
@@ -346,11 +346,11 @@ obj/structure/sign/poster/attackby(obj/item/I, mob/user, params)
 	var/stuff_on_wall = 0
 	for(var/obj/O in contents) //Let's see if it already has a poster on it or too much stuff
 		if(istype(O,/obj/structure/sign/poster))
-			user << "<span class='notice'>The wall is far too cluttered to place a poster!</span>"
+			user << "<span class='warning'>The wall is far too cluttered to place a poster!</span>"
 			return
 		stuff_on_wall++
 		if(stuff_on_wall == 3)
-			user << "<span class='notice'>The wall is far too cluttered to place a poster!</span>"
+			user << "<span class='warning'>The wall is far too cluttered to place a poster!</span>"
 			return
 
 	user << "<span class='notice'>You start placing the poster on the wall...</span>"	//Looks like it's uncluttered enough. Place the poster.

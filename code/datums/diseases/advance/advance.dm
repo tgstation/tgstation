@@ -13,7 +13,7 @@ var/list/archive_diseases = list()
 var/list/advance_cures = 	list(
 									"nutriment", "sugar", "orangejuice",
 									"spaceacillin", "salglu_solution", "ethanol",
-									"leporazine", "synaptizine", "lipozine",
+									"leporazine", "synaptizine", "lipolicide",
 									"silver", "gold"
 								)
 

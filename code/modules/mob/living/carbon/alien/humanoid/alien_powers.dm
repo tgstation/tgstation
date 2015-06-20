@@ -129,9 +129,9 @@ Doesn't work on other aliens/AI.*/
 					M.adjustToxLoss(amount)
 					user.adjustToxLoss(-amount)
 					M << "<span class='noticealien'>[user] has transfered [amount] plasma to you.</span>"
-					user << {"<span class='noticealien'>You have trasferred [amount] plasma to [M]</span>"}
+					user << {"<span class='noticealien'>You trasfer [amount] plasma to [M]</span>"}
 				else
-					user << "<span class='noticealien'>You need to be closer.</span>"
+					user << "<span class='noticealien'>You need to be closer!</span>"
 	return
 
 /obj/effect/proc_holder/alien/acid
@@ -255,10 +255,9 @@ Doesn't work on other aliens/AI.*/
 /obj/effect/proc_holder/alien/regurgitate/fire(var/mob/living/carbon/alien/user)
 	if(user.stomach_contents.len)
 		for(var/atom/movable/A in user.stomach_contents)
-			if(A in user.stomach_contents)
-				user.stomach_contents.Remove(A)
-				A.loc = user.loc
-				//Paralyse(10)
+			user.stomach_contents.Remove(A)
+			A.loc = user.loc
+			A.update_pipe_vision()
 		user.visible_message("<span class='alertealien'>[user] hurls out the contents of their stomach!</span>")
 	return
 

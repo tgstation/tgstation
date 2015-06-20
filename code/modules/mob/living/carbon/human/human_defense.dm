@@ -62,7 +62,7 @@ emp_act
 
 			return -1 // complete projectile permutation
 
-	if(check_shields(P.damage, "the [P.name]"))
+	if(check_shields(P.damage, "the [P.name]", P))
 		P.on_hit(src, 100, def_zone)
 		return 2
 	return (..(P , def_zone))
@@ -85,7 +85,10 @@ emp_act
 
 //End Here
 
-/mob/living/carbon/human/proc/check_shields(var/damage = 0, var/attack_text = "the attack")
+/mob/living/carbon/human/proc/check_shields(var/damage = 0, var/attack_text = "the attack", var/obj/item/O)
+	if(O)
+		if(O.flags & NOSHIELD) //weapon ignores shields altogether
+			return 0
 	if(l_hand && istype(l_hand, /obj/item/weapon))//Current base is the prob(50-d/3)
 		var/obj/item/weapon/I = l_hand
 		if(I.IsShield() && (prob(50 - round(damage / 3))))
@@ -127,6 +130,8 @@ emp_act
 	var/obj/item/organ/limb/affecting = get_organ(ran_zone(user.zone_sel.selecting))
 	var/hit_area = parse_zone(affecting.name)
 	var/target_area = parse_zone(target_limb.name)
+	feedback_add_details("item_used_for_combat","[I.name]|[I.force]")
+	feedback_add_details("zone_targeted","[def_zone]")
 
 	if(dna)	// allows your species to affect the attacked_by code
 		return dna.species.spec_attacked_by(I,user,def_zone,affecting,hit_area,src.a_intent,target_limb,target_area,src)
@@ -134,7 +139,7 @@ emp_act
 	else
 		if(user != src)
 			user.do_attack_animation(src)
-			if(check_shields(I.force, "the [I.name]"))
+			if(check_shields(I.force, "the [I.name]", I))
 				return 0
 
 		if(I.attack_verb && I.attack_verb.len)
@@ -146,12 +151,11 @@ emp_act
 		else
 			return 0
 
-		var/armor = run_armor_check(affecting, "melee", "<span class='warning'>Your armor has protected your [hit_area].</span>", "<span class='warning'>Your armor has softened a hit to your [hit_area].</span>")
+		var/armor = run_armor_check(affecting, "melee", "<span class='notice'>Your armor has protected your [hit_area].</span>", "<span class='notice'>Your armor has softened a hit to your [hit_area].</span>")
 		if(armor >= 100)	return 0
 		var/Iforce = I.force //to avoid runtimes on the forcesay checks at the bottom. Some items might delete themselves if you drop them. (stunning yourself, ninja swords)
 
 		apply_damage(I.force, I.damtype, affecting, armor , I)
-
 		var/bloody = 0
 		if(((I.damtype == BRUTE) && I.force && prob(25 + (I.force * 2))))
 			if(affecting.status == ORGAN_ORGANIC)
@@ -220,7 +224,7 @@ emp_act
 	for(var/obj/item/organ/limb/L in src.organs)
 		if(L.status == ORGAN_ROBOTIC)
 			if(!informed)
-				src << "<span class='danger'>You feel a sharp pain as your robotic limbs overload.</span>"
+				src << "<span class='userdanger'>You feel a sharp pain as your robotic limbs overload.</span>"
 				informed = 1
 			switch(severity)
 				if(1)
@@ -250,7 +254,7 @@ emp_act
 			update_inv_wear_mask()
 			update_inv_head()
 		else
-			src << "<span class='warning'>Your [head_clothes.name] protects your head and face from the acid!</span>"
+			src << "<span class='notice'>Your [head_clothes.name] protects your head and face from the acid!</span>"
 	else
 		. = get_organ("head")
 		if(.)
@@ -270,7 +274,7 @@ emp_act
 			update_inv_w_uniform()
 			update_inv_wear_suit()
 		else
-			src << "<span class='warning'>Your [chest_clothes.name] protects your body from the acid!</span>"
+			src << "<span class='notice'>Your [chest_clothes.name] protects your body from the acid!</span>"
 	else
 		. = get_organ("chest")
 		if(.)
@@ -300,7 +304,7 @@ emp_act
 			update_inv_w_uniform()
 			update_inv_wear_suit()
 		else
-			src << "<span class='warning'>Your [arm_clothes.name] protects your arms and hands from the acid!</span>"
+			src << "<span class='notice'>Your [arm_clothes.name] protects your arms and hands from the acid!</span>"
 	else
 		. = get_organ("r_arm")
 		if(.)
@@ -325,7 +329,7 @@ emp_act
 			update_inv_w_uniform()
 			update_inv_wear_suit()
 		else
-			src << "<span class='warning'>Your [leg_clothes.name] protects your legs and feet from the acid!</span>"
+			src << "<span class='notice'>Your [leg_clothes.name] protects your legs and feet from the acid!</span>"
 	else
 		. = get_organ("r_leg")
 		if(.)

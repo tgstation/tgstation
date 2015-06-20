@@ -80,6 +80,7 @@
 	icon_state = A.icon_state
 	item_state = A.item_state
 	item_color = A.item_color
+	suit_color = A.suit_color
 	usr.update_inv_w_uniform()	//so our overlays update.
 
 

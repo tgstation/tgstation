@@ -24,8 +24,9 @@
 			if(F.wielded)
 				user << "<span class='warning'>Unwield the [F.name] first.</span>"
 				return
+			if(!user.drop_item())
+				return
 			fireaxe = F
-			user.drop_item()
 			src.contents += F
 			user << "<span class='caution'>You place the [F.name] back in the [name].</span>"
 			update_icon()

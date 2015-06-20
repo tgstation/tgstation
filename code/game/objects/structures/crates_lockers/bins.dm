@@ -2,6 +2,7 @@
 	desc = "A trash bin, place your trash here for the janitor to collect."
 	name = "trash bin"
 	icon_crate = "largebins"
+	icon_state = "largebins"
 	anchored = 1
 	sound_effect_open = 'sound/effects/bin_open.ogg'
 	sound_effect_close = 'sound/effects/bin_close.ogg'
@@ -46,16 +47,16 @@
 	. = ..(O, user, 0, 0, 0)
 	if(.)
 		if(O != user)
-			user.visible_message("<span class='danger'>[user] tries to stuff [O] into [src].</span>", \
+			user.visible_message("<span class='warning'>[user] tries to stuff [O] into [src].</span>", \
 							 	 "<span class='danger'>You try to stuff [O] into [src].</span>", \
-							 	 "<span class='danger'>You hear clanging.</span>")
+							 	 "<span class='italics'>You hear clanging.</span>")
 			if (!do_after(user, 40))
 				return
 			if(!..(O, user, 0, 0))
 				return
-			user.visible_message("<span class='notice'>[user] stuffs [O] into[src].</span>", \
+			user.visible_message("<span class='warning'>[user] stuffs [O] into[src].</span>", \
 							 	 "<span class='notice'>You stuff [O] into [src].</span>", \
-							 	 "<span class='notice'>You hear a loud metal bang.</span>")
+							 	 "<span class='italics'>You hear a loud metal bang.</span>")
 		insert(O, 1, !opened)
 		if(opened)
 			close()
@@ -83,8 +84,7 @@
 /obj/structure/closet/crate/bin/place(var/mob/user, var/obj/item/I)
 	if(contents.len >= storage_capacity)
 		return 1
-	if(!opened)
-		user.drop_item()
+	if(!opened && user.drop_item())
 		insert(I, 0, 1)
 		return 1
 	return 0

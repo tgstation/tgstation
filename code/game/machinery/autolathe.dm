@@ -118,13 +118,16 @@
 		return 1
 
 	if (src.m_amount + O.m_amt > max_m_amount)
-		user << "<span class=\"alert\">The autolathe is full. Please remove metal from the autolathe in order to insert more.</span>"
+		user << "<span class='warning'>The autolathe is full. Please remove metal from the autolathe in order to insert more.</span>"
 		return 1
 	if (src.g_amount + O.g_amt > max_g_amount)
-		user << "<span class=\"alert\">The autolathe is full. Please remove glass from the autolathe in order to insert more.</span>"
+		user << "<span class='warning'>The autolathe is full. Please remove glass from the autolathe in order to insert more.</span>"
 		return 1
-	if (O.m_amt == 0 && O.g_amt == 0)
-		user << "<span class=\"alert\">This object does not contain significant amounts of metal or glass, or cannot be accepted by the autolathe due to size or hazardous materials.</span>"
+	if (!O.m_amt && !O.g_amt)
+		user << "<span class='warning'>This object does not contain sufficient amounts of metal or glass to be accepted by the autolathe.</span>"
+		return 1
+	if(!user.unEquip(O))
+		user << "<span class='warning'>\The [O] is stuck to you and cannot be placed into the autolathe.</span>"
 		return 1
 
 	var/amount = 1
@@ -143,14 +146,14 @@
 		stack.use(amount)
 	else
 		if(!user.unEquip(O))
-			user << "<span class='notice'>/the [O] is stuck to your hand, you can't put it in \the [src]!</span>"
+			user << "<span class='warning'>/the [O] is stuck to your hand, you can't put it in \the [src]!</span>"
 		O.loc = src
 	icon_state = "autolathe"
 	busy = 1
 	use_power(max(1000, (m_amt+g_amt)*amount/10))
 	src.m_amount += m_amt * amount
 	src.g_amount += g_amt * amount
-	user << "You insert [amount] sheet[amount>1 ? "s" : ""] to the autolathe."
+	user << "<span class='notice'>You insert [amount] sheet[amount>1 ? "s" : ""] to the autolathe.</span>"
 	if (O && O.loc == src)
 		qdel(O)
 	busy = 0
@@ -211,8 +214,27 @@
 					if(is_stack)
 						m_amount -= metal_cost*multiplier
 						g_amount -= glass_cost*multiplier
-						var/obj/item/stack/S = new being_built.build_path(T)
-						S.amount = multiplier
+
+						for(var/obj/item/stack/S in T)
+							if(multiplier <= 0)
+								break
+							if(S.amount >= S.max_amount)
+								continue
+							var/to_transfer = S.max_amount - S.amount
+							if(to_transfer < multiplier)
+								S.amount += to_transfer
+								multiplier -= to_transfer
+								S.update_icon()
+								continue
+							else
+								S.amount += multiplier
+								multiplier = 0
+								S.update_icon()
+								break
+						if(multiplier)
+							var/obj/item/stack/N = new being_built.build_path(T)
+							N.amount = multiplier
+							N.update_icon()
 					else
 						m_amount -= metal_cost/coeff
 						g_amount -= glass_cost/coeff
@@ -255,12 +277,12 @@
 	dat += "<b>Metal amount:</b> [src.m_amount] / [max_m_amount] cm<sup>3</sup><br>"
 	dat += "<b>Glass amount:</b> [src.g_amount] / [max_g_amount] cm<sup>3</sup>"
 
-	dat += "<form name='search' action='?src=\ref[src]'> \
-	<input type='hidden' name='src' value='\ref[src]'> \
-	<input type='hidden' name='search' value='to_search'> \
-	<input type='hidden' name='menu' value='[AUTOLATHE_SEARCH_MENU]'> \
-	<input type='text' name='to_search'> \
-	<input type='submit' value='Search'> \
+	dat += "<form name='search' action='?src=\ref[src]'>\
+	<input type='hidden' name='src' value='\ref[src]'>\
+	<input type='hidden' name='search' value='to_search'>\
+	<input type='hidden' name='menu' value='[AUTOLATHE_SEARCH_MENU]'>\
+	<input type='text' name='to_search'>\
+	<input type='submit' value='Search'>\
 	</form><hr>"
 
 	var/line_length = 1

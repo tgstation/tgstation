@@ -6,7 +6,7 @@
 
 	anchored = 0
 	density = 0
-	layer = MOB_LAYER - 0.1 //so people can't hide it and it's REALLY OBVIOUS
+	layer = MOB_LAYER - 0.2 //so people can't hide it and it's REALLY OBVIOUS
 	unacidable = 1
 
 	var/datum/wires/syndicatebomb/wires = null
@@ -52,16 +52,16 @@
 	if(istype(I, /obj/item/weapon/wrench))
 		if(!anchored)
 			if(!isturf(src.loc) || istype(src.loc, /turf/space))
-				user << "<span class='notice'>The bomb must be placed on solid ground to attach it</span>"
+				user << "<span class='notice'>The bomb must be placed on solid ground to attach it.</span>"
 			else
-				user << "<span class='notice'>You firmly wrench the bomb to the floor</span>"
+				user << "<span class='notice'>You firmly wrench the bomb to the floor.</span>"
 				playsound(loc, 'sound/items/ratchet.ogg', 50, 1)
 				anchored = 1
 				if(active)
-					user << "<span class='notice'>The bolts lock in place</span>"
+					user << "<span class='notice'>The bolts lock in place.</span>"
 		else
 			if(!active)
-				user << "<span class='notice'>You wrench the bomb from the floor</span>"
+				user << "<span class='notice'>You wrench the bomb from the floor.</span>"
 				playsound(loc, 'sound/items/ratchet.ogg', 50, 1)
 				anchored = 0
 			else
@@ -83,19 +83,20 @@
 				payload.loc = user.loc
 				payload = null
 			else
-				user << "<span class='notice'>There isn't anything in here to remove!</span>"
+				user << "<span class='warning'>There isn't anything in here to remove!</span>"
 		else if (open_panel)
-			user << "<span class='notice'>The wires conneting the shell to the explosives are holding it down!</span>"
+			user << "<span class='warning'>The wires connecting the shell to the explosives are holding it down!</span>"
 		else
-			user << "<span class='notice'>The cover is screwed on, it won't pry off!</span>"
+			user << "<span class='warning'>The cover is screwed on, it won't pry off!</span>"
 	else if(istype(I, /obj/item/weapon/bombcore))
 		if(!payload)
+			if(!user.drop_item())
+				return
 			payload = I
 			user << "<span class='notice'>You place [payload] into [src].</span>"
-			user.drop_item()
 			payload.loc = src
 		else
-			user << "<span class='notice'>[payload] is already loaded into [src], you'll have to remove it first.</span>"
+			user << "<span class='warning'>[payload] is already loaded into [src]! You'll have to remove it first.</span>"
 	else
 		..()
 
@@ -114,7 +115,7 @@
 				settings(user)
 				return
 		else if(anchored)
-			user << "<span class='notice'>The bomb is bolted to the floor!</span>"
+			user << "<span class='warning'>The bomb is bolted to the floor!</span>"
 			return
 
 /obj/machinery/syndicatebomb/proc/settings(var/mob/user)
@@ -126,7 +127,7 @@
 	if(alert(user,"Would you like to start the countdown now?",,"Yes","No") == "Yes" && in_range(src, user) && isliving(user))
 		if(defused || active)
 			if(defused)
-				src.loc.visible_message("<span class='notice'>\icon[src] Device error: User intervention required.</span>")
+				src.loc.visible_message("<span class='warning'>\icon[src] Device error: User intervention required.</span>")
 			return
 		else
 			src.loc.visible_message("<span class='danger'>\icon[src] [timer] seconds until detonation, please clear the area.</span>")
@@ -138,7 +139,7 @@
 			var/turf/bombturf = get_turf(src)
 			var/area/A = get_area(bombturf)
 			if(payload && !istype(payload, /obj/item/weapon/bombcore/training))
-				message_admins("[key_name(user)]<A HREF='?_src_=holder;adminmoreinfo=\ref[user]'>?</A> has primed a [name] ([payload]) for detonation at <A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[bombturf.x];Y=[bombturf.y];Z=[bombturf.z]'>[A.name] (JMP)</a>.")
+				message_admins("[key_name_admin(user)]<A HREF='?_src_=holder;adminmoreinfo=\ref[user]'>?</A> (<A HREF='?_src_=holder;adminplayerobservefollow=\ref[user]'>FLW</A>) has primed a [name] ([payload]) for detonation at <A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[bombturf.x];Y=[bombturf.y];Z=[bombturf.z]'>[A.name] (JMP)</a>.")
 				log_game("[key_name(user)] has primed a [name] ([payload]) for detonation at [A.name]([bombturf.x],[bombturf.y],[bombturf.z])")
 				payload.adminlog = "The [src.name] that [key_name(user)] had primed detonated!"
 
@@ -188,6 +189,8 @@
 		message_admins(adminlog)
 		log_game(adminlog)
 	explosion(get_turf(src),2,5,11, flame_range = 11)
+	if(src.loc && istype(src.loc,/obj/machinery/syndicatebomb/))
+		qdel(src.loc)
 	qdel(src)
 
 /obj/item/weapon/bombcore/proc/defuse()
@@ -309,7 +312,7 @@
 			var/turf/T = get_turf(src)
 			var/area/A = get_area(T)
 			detonated--
-			var/log_str = "[key_name(user)]<A HREF='?_src_=holder;adminmoreinfo=\ref[user]'>?</A> has remotely detonated [detonated ? "syndicate bombs" : "a syndicate bomb"] using a [name] at <A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[T.x];Y=[T.y];Z=[T.z]'>[A.name] (JMP)</a>."
+			var/log_str = "[key_name_admin(user)]<A HREF='?_src_=holder;adminmoreinfo=\ref[user]'>?</A> (<A HREF='?_src_=holder;adminplayerobservefollow=\ref[user]'>FLW</A>) has remotely detonated [detonated ? "syndicate bombs" : "a syndicate bomb"] using a [name] at <A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[T.x];Y=[T.y];Z=[T.z]'>[A.name] (JMP)</a>."
 			bombers += log_str
 			message_admins(log_str)
 			log_game("[key_name(user)] has remotely detonated [detonated ? "syndicate bombs" : "a syndicate bomb"] using a [name] at [A.name]([T.x],[T.y],[T.z])")

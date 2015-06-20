@@ -124,16 +124,27 @@
 		return 1
 
 /mob/living/carbon/brain/handle_disabilities()
-	return
+	//Eyes
+	if(disabilities & BLIND || stat)
+		eye_blind = max(eye_blind, 1)
+	else
+		if(eye_blind)
+			eye_blind = 0
+		if(eye_blurry)
+			eye_blurry = 0
+		if(eye_stat)
+			eye_stat = 0
+
+	//Ears
+	if(disabilities & DEAF)
+		setEarDamage(-1, max(ear_deaf, 1))
+	else if(ear_damage < 100)
+		setEarDamage(0, 0)
 
 /mob/living/carbon/brain/handle_status_effects()
 	return
 
 /mob/living/carbon/brain/handle_regular_hud_updates()
-
 	handle_vision()
-
 	handle_hud_icons_health()
-
 	return 1
-

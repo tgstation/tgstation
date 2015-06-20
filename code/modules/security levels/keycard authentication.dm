@@ -25,7 +25,7 @@
 	return
 
 /obj/machinery/keycard_auth/attack_paw(mob/user as mob)
-	user << "You are too primitive to use this device."
+	user << "<span class='warning'>You are too primitive to use this device!</span>"
 	return
 
 /obj/machinery/keycard_auth/attackby(obj/item/weapon/W as obj, mob/user as mob, params)
@@ -53,10 +53,10 @@
 
 /obj/machinery/keycard_auth/attack_hand(mob/user as mob)
 	if(user.stat || stat & (NOPOWER|BROKEN))
-		user << "This device is not powered."
+		user << "<span class='warning'>This device is not powered!</span>"
 		return
 	if(busy)
-		user << "This device is busy."
+		user << "<span class='warning'>This device is busy!</span>"
 		return
 
 	user.set_machine(src)

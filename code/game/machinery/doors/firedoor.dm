@@ -13,7 +13,7 @@
 	var/blocked = 0
 	var/nextstate = null
 	sub_door = 1
-
+	closingLayer = 3.11
 
 /obj/machinery/door/firedoor/Bumped(atom/AM)
 	if(p_open || operating)	return

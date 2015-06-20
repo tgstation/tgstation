@@ -1,7 +1,8 @@
 /obj/machinery/computer/HolodeckControl
 	name = "holodeck control console"
 	desc = "A computer used to control a nearby holodeck."
-	icon_state = "holocontrol"
+	icon_screen = "holocontrol"
+	icon_keyboard = "tech_key"
 	var/area/linkedholodeck = null
 	var/area/target = null
 	var/active = 0
@@ -308,11 +309,11 @@
 	if (istype(W, /obj/item/weapon/grab) && get_dist(src,user)<2)
 		var/obj/item/weapon/grab/G = W
 		if(G.state < GRAB_AGGRESSIVE)
-			user << "<span class='danger'> You need a better grip to do that!</span>"
+			user << "<span class='warning'>You need a better grip to do that!</span>"
 			return
 		G.affecting.loc = src.loc
 		G.affecting.Weaken(5)
-		visible_message("<span class='danger'> [G.assailant] puts [G.affecting] on the table.</span>")
+		visible_message("<span class='danger'>[G.assailant] puts [G.affecting] on the table.</span>")
 		qdel(W)
 		return
 
@@ -390,21 +391,20 @@
 
 //BASKETBALL OBJECTS
 
-/obj/item/weapon/beach_ball/holoball
+/obj/item/toy/beach_ball/holoball
 	name = "basketball"
 	icon = 'icons/obj/basketball.dmi'
 	icon_state = "basketball"
 	item_state = "basketball"
 	desc = "Here's your chance, do your dance at the Space Jam."
-	w_class = 4 //Stops people from hiding it in their bags/pockets
 
-/obj/item/weapon/beach_ball/holoball/dodgeball
+/obj/item/toy/beach_ball/holoball/dodgeball
 	name = "dodgeball"
 	icon_state = "dodgeball"
 	item_state = "dodgeball"
 	desc = "Used for playing the most violent and degrading of childhood games."
 
-/obj/item/weapon/beach_ball/holoball/dodgeball/throw_impact(atom/hit_atom)
+/obj/item/toy/beach_ball/holoball/dodgeball/throw_impact(atom/hit_atom)
 	..()
 	if((ishuman(hit_atom)))
 		var/mob/living/carbon/M = hit_atom
@@ -427,7 +427,7 @@
 	if (istype(W, /obj/item/weapon/grab) && get_dist(src,user)<2)
 		var/obj/item/weapon/grab/G = W
 		if(G.state < GRAB_AGGRESSIVE)
-			user << "<span class='danger'>You need a better grip to do that!</span>"
+			user << "<span class='warning'>You need a better grip to do that!</span>"
 			return
 		G.affecting.loc = src.loc
 		G.affecting.Weaken(5)
@@ -436,7 +436,7 @@
 		return
 	else if (istype(W, /obj/item) && get_dist(src,user)<2)
 		user.drop_item(src)
-		visible_message("<span class='warning'> [user] dunks [W] into \the [src]!</span>", 3)
+		visible_message("<span class='warning'>[user] dunks [W] into \the [src]!</span>", 3)
 		return
 
 /obj/structure/holohoop/CanPass(atom/movable/mover, turf/target, height=0)
@@ -446,9 +446,9 @@
 			return
 		if(prob(50))
 			I.loc = src.loc
-			visible_message("<span class='warning'> Swish! \the [I] lands in \the [src].</span>", 3)
+			visible_message("<span class='warning'>Swish! \the [I] lands in \the [src].</span>", 3)
 		else
-			visible_message("<span class='danger'> \the [I] bounces off of \the [src]'s rim!</span>", 3)
+			visible_message("<span class='danger'>\the [I] bounces off of \the [src]'s rim!</span>", 3)
 		return 0
 	else
 		return ..(mover, target, height)
@@ -474,7 +474,7 @@
 	return
 
 /obj/machinery/readybutton/attack_paw(mob/user as mob)
-	user << "You are too primitive to use this device"
+	user << "<span class='warning'>You are too primitive to use this device!</span>"
 	return
 
 /obj/machinery/readybutton/New()
@@ -486,7 +486,7 @@
 
 /obj/machinery/readybutton/attack_hand(mob/user as mob)
 	if(user.stat || stat & (NOPOWER|BROKEN))
-		user << "This device is not powered."
+		user << "<span class='warning'>This device is not powered!</span>"
 		return
 
 	currentarea = get_area(src.loc)
@@ -494,7 +494,7 @@
 		qdel(src)
 
 	if(eventstarted)
-		usr << "The event has already begun!"
+		usr << "<span class='warning'>The event has already begun!</span>"
 		return
 
 	ready = !ready

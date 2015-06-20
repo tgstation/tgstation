@@ -23,7 +23,9 @@
 	var/obj/item/device/encryptionkey/keyslot //To allow the radio to accept encryption keys.
 	var/subspace_transmission = 0
 	var/syndie = 0//Holder to see if it's a syndicate encrpyed radio
+	var/centcom = 0//Bleh, more dirty booleans
 	var/maxf = 1499
+	var/freqlock = 0 //Frequency lock to stop the user from untuning specialist radios.
 	var/emped = 0	//Highjacked to track the number of consecutive EMPs on the radio, allowing consecutive EMP's to stack properly.
 //			"Example" = FREQ_LISTENING|FREQ_BROADCASTING
 	flags = CONDUCT | HEAR
@@ -58,6 +60,7 @@
 	translate_binary = 0
 	translate_hive = 0
 	syndie = 0
+	centcom = 0
 
 	if(keyslot)
 		for(var/ch_name in keyslot.channels)
@@ -74,6 +77,9 @@
 
 		if(keyslot.syndie)
 			syndie = 1
+
+		if (keyslot.centcom)
+			centcom = 1
 
 	for(var/ch_name in channels)
 		secure_radio_connections[ch_name] = add_radio(src, radiochannels[ch_name])
@@ -132,14 +138,17 @@
 				"}
 	else	//Headsets dont get a mic button, speaker controls both
 		dat += "<b>Power:</b> [listening ? "<A href='byond://?src=\ref[src];listen=0'>Engaged</A>" : "<A href='byond://?src=\ref[src];listen=1'>Disengaged</A>"]<BR>"
-	dat += {"
-				<b>Frequency:</b>
-				<A href='byond://?src=\ref[src];freq=-10'>-</A>
-				<A href='byond://?src=\ref[src];freq=-2'>-</A>
-				[format_frequency(frequency)]
-				<A href='byond://?src=\ref[src];freq=2'>+</A>
-				<A href='byond://?src=\ref[src];freq=10'>+</A><BR>
-				"}
+	if (freqlock)
+		dat += "<b>Frequency:</b> <span class='bad'>LOCKED</span><BR>"
+	else
+		dat += {"
+					<b>Frequency:</b>
+					<A href='byond://?src=\ref[src];freq=-10'>-</A>
+					<A href='byond://?src=\ref[src];freq=-2'>-</A>
+					[format_frequency(frequency)]
+					<A href='byond://?src=\ref[src];freq=2'>+</A>
+					<A href='byond://?src=\ref[src];freq=10'>+</A><BR>
+					"}
 
 	for (var/ch_name in channels)
 		dat+=text_sec_channel(ch_name, channels[ch_name])
@@ -173,39 +182,16 @@
 		usr << browse(null, "window=radio")
 		return
 	usr.set_machine(src)
-	if (href_list["track"])
-		var/mob/target = locate(href_list["track"])
-		var/mob/living/silicon/ai/A = locate(href_list["track2"])
-		if(A && target)
-			A.ai_actual_track(target)
-		return
-
-	else if (href_list["faketrack"])
-		var/mob/target = locate(href_list["track"])
-		var/mob/living/silicon/ai/A = locate(href_list["track2"])
-		if(A && target)
-
-			A:cameraFollow = target
-			A << text("Now tracking [] on camera.", target.name)
-			if (usr.machine == null)
-				usr.machine = usr
-
-			while (usr:cameraFollow == target)
-				usr << "Target is not on or near any active cameras on the station. We'll check again in 5 seconds (unless you use the cancel-camera verb)."
-				sleep(40)
-				continue
-
-		return
-
-	else if (href_list["freq"])
-		var/new_frequency = (frequency + text2num(href_list["freq"]))
-		if (!freerange || (frequency < 1200 || frequency > 1600))
-			new_frequency = sanitize_frequency(new_frequency, maxf)
-		set_frequency(new_frequency)
-		if(hidden_uplink)
-			if(hidden_uplink.check_trigger(usr, frequency, traitor_frequency))
-				usr << browse(null, "window=radio")
-				return
+	if (href_list["freq"])
+		if (!freqlock)
+			var/new_frequency = (frequency + text2num(href_list["freq"]))
+			if (!freerange || (frequency < 1200 || frequency > 1600))
+				new_frequency = sanitize_frequency(new_frequency, maxf)
+			set_frequency(new_frequency)
+			if(hidden_uplink)
+				if(hidden_uplink.check_trigger(usr, frequency, traitor_frequency))
+					usr << browse(null, "window=radio")
+					return
 
 	else if (href_list["talk"])
 		broadcasting = text2num(href_list["talk"])
@@ -273,6 +259,7 @@
 		freq = frequency
 		channel = null
 
+	var/freqnum = text2num(freq) //Why should we call text2num three times when we can just do it here?
 	var/turf/position = get_turf(src)
 
 	//#### Tagging the signal with all appropriate identity values ####//
@@ -327,6 +314,43 @@
 	// --- Unidentifiable mob ---
 	else
 		jobname = "Unknown"
+
+	/* ###### Centcom channel bypasses all comms relays. ###### */
+
+	if (freqnum == CENTCOM_FREQ && centcom)
+		var/datum/signal/signal = new
+		signal.transmission_method = 2
+		signal.data = list(
+			"mob" = M, 				// store a reference to the mob
+			"mobtype" = M.type, 	// the mob's type
+			"realname" = real_name, // the mob's real name
+			"name" = voice,			// the mob's voice name
+			"job" = jobname,		// the mob's job
+			"key" = mobkey,			// the mob's key
+			"vmask" = voicemask,	// 1 if the mob is using a voice gas mas
+
+			"compression" = 0,		// uncompressed radio signal
+			"message" = message, 	// the actual sent message
+			"radio" = src, 			// stores the radio used for transmission
+			"slow" = 0,
+			"traffic" = 0,
+			"type" = 0,
+			"server" = null,
+			"reject" = 0,
+			"level" = 0,
+			"languages" = languages,
+			"spans" = spans,
+			"verb_say" = M.verb_say,
+			"verb_ask" = M.verb_ask,
+			"verb_exclaim" = M.verb_exclaim,
+			"verb_yell" = M.verb_yell
+			)
+		signal.frequency = freqnum // Quick frequency set
+		Broadcast_Message(M, voicemask,
+				  src, message, voice, jobname, real_name,
+				  5, signal.data["compression"], list(position.z, 0), freq, spans,
+				  verb_say, verb_ask, verb_exclaim, verb_yell)
+		return
 
 	/* ###### Radio headsets can only broadcast through subspace ###### */
 
@@ -416,7 +440,7 @@
 		"verb_exclaim" = M.verb_exclaim,
 		"verb_yell" = M.verb_yell
 		)
-	signal.frequency = text2num(freq) // Quick frequency set
+	signal.frequency = freqnum // Quick frequency set
 	for(var/obj/machinery/telecomms/receiver/R in telecomms_list)
 		R.receive_signal(signal)
 
@@ -468,6 +492,9 @@
 			return -1
 	if(freq == SYND_FREQ)
 		if(!(src.syndie)) //Checks to see if it's allowed on that frequency, based on the encryption keys
+			return -1
+	if(freq == CENTCOM_FREQ)
+		if (!(src.centcom))
 			return -1
 	if (!on)
 		return -1
@@ -570,18 +597,19 @@
 					keyslot = null
 
 			recalculateChannels()
-			user << "You pop out the encryption key in the radio!"
+			user << "<span class='notice'>You pop out the encryption key in the radio.</span>"
 
 		else
-			user << "This radio doesn't have any encryption keys!"
+			user << "<span class='warning'>This radio doesn't have any encryption keys!</span>"
 
 	if(istype(W, /obj/item/device/encryptionkey/))
 		if(keyslot)
-			user << "The radio can't hold another key!"
+			user << "<span class='warning'>The radio can't hold another key!</span>"
 			return
 
 		if(!keyslot)
-			user.drop_item()
+			if(!user.unEquip(W))
+				return
 			W.loc = src
 			keyslot = W
 

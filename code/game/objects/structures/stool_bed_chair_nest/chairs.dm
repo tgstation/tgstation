@@ -17,8 +17,9 @@
 /obj/structure/stool/bed/chair/attackby(obj/item/weapon/W as obj, mob/user as mob, params)
 	..()
 	if(istype(W, /obj/item/assembly/shock_kit))
+		if(!user.drop_item())
+			return
 		var/obj/item/assembly/shock_kit/SK = W
-		user.drop_item()
 		var/obj/structure/stool/bed/chair/e_chair/E = new /obj/structure/stool/bed/chair/e_chair(src.loc)
 		playsound(src.loc, 'sound/items/Deconstruct.ogg', 50, 1)
 		E.dir = dir

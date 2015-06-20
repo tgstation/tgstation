@@ -32,5 +32,5 @@
 			user << "<span class='notice'>You make a light tile.</span>"
 			L.add_fingerprint(user)
 		else
-			user << "<span class='warning'>You need one metal sheet to finish the light tile.</span>"
+			user << "<span class='warning'>You need one metal sheet to finish the light tile!</span>"
 			return

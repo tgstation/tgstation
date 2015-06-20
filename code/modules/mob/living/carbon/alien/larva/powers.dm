@@ -16,7 +16,7 @@
 	else
 		user.layer = MOB_LAYER
 		user.visible_message("[user.] slowly peaks up from the ground...", \
-					"<span class='noticealien'>You have stopped hiding.</span>")
+					"<span class='noticealien'>You stop hiding.</span>")
 	return 1
 
 
@@ -40,9 +40,9 @@
 	if(L.amount_grown >= L.max_grown)	//TODO ~Carn
 		L << "<span class='name'>You are growing into a beautiful alien! It is time to choose a caste.</span>"
 		L << "<span class='info'>There are three to choose from:"
-		L << "<span class='name'>Hunters</span> <span class='info'> are strong and agile, able to hunt away from the hive and rapidly move through ventilation shafts. Hunters generate plasma slowly and have low reserves.</span>"
-		L << "<span class='name'>Sentinels</span> <span class='info'> are tasked with protecting the hive and are deadly up close and at a range. They are not as physically imposing nor fast as the hunters.</span>"
-		L << "<span class='name'>Drones</span> <span class='info'> are the working class, offering the largest plasma storage and generation. They are the only caste which may evolve again, turning into the dreaded alien queen.</span>"
+		L << "<span class='name'>Hunters</span> <span class='info'>are strong and agile, able to hunt away from the hive and rapidly move through ventilation shafts. Hunters generate plasma slowly and have low reserves.</span>"
+		L << "<span class='name'>Sentinels</span> <span class='info'>are tasked with protecting the hive and are deadly up close and at a range. They are not as physically imposing nor fast as the hunters.</span>"
+		L << "<span class='name'>Drones</span> <span class='info'>are the working class, offering the largest plasma storage and generation. They are the only caste which may evolve again, turning into the dreaded alien queen.</span>"
 		var/alien_caste = alert(L, "Please choose which alien caste you shall belong to.",,"Hunter","Sentinel","Drone")
 
 		var/mob/living/carbon/alien/humanoid/new_xeno

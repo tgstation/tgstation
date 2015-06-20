@@ -36,7 +36,7 @@
 
 /obj/structure/dispenser/attack_hand(mob/user as mob)
 	if(!user.IsAdvancedToolUser())
-		user << "<span class='danger'>You don't have the dexterity to do this!</span>"
+		user << "<span class='warning'>You don't have the dexterity to do this!</span>"
 		return 1
 	user.set_machine(src)
 	var/dat = "[src]<br><br>"
@@ -50,7 +50,8 @@
 /obj/structure/dispenser/attackby(obj/item/I as obj, mob/user as mob, params)
 	if(istype(I, /obj/item/weapon/tank/internals/oxygen) || istype(I, /obj/item/weapon/tank/internals/air) || istype(I, /obj/item/weapon/tank/internals/anesthetic))
 		if(oxygentanks < 10)
-			user.drop_item()
+			if(!user.drop_item())
+				return
 			I.loc = src
 			oxytanks.Add(I)
 			oxygentanks++
@@ -59,7 +60,8 @@
 			user << "<span class='notice'>[src] is full.</span>"
 	if(istype(I, /obj/item/weapon/tank/internals/plasma))
 		if(plasmatanks < 10)
-			user.drop_item()
+			if(!user.drop_item())
+				return
 			I.loc = src
 			platanks.Add(I)
 			plasmatanks++

@@ -68,7 +68,8 @@
 				if(user.l_hand != src && user.r_hand != src)
 					user << "<span class='notice'>You'll need [src] in your hands to do that.</span>"
 					return
-				user.drop_item()
+				if(!user.unEquip(A))
+					return
 				user << "<span class='notice'>You screw [S] onto [src].</span>"
 				suppressed = A
 				S.oldsound = fire_sound
@@ -79,10 +80,10 @@
 				update_icon()
 				return
 			else
-				user << "<span class='warning'>[src] already has a suppressor.</span>"
+				user << "<span class='warning'>[src] already has a suppressor!</span>"
 				return
 		else
-			user << "<span class='warning'>You can't seem to figure out how to fit [S] on [src].</span>"
+			user << "<span class='warning'>You can't seem to figure out how to fit [S] on [src]!</span>"
 			return
 	return 0
 

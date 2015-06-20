@@ -83,10 +83,9 @@
 	H.hair_style = null
 	H.update_hair()
 	human_overlays = H.overlays
-	if(overmind && overmind.blob_reagent_datum)
-		adjustcolors(overmind.blob_reagent_datum.color)
+	update_icons()
 	H.loc = src
-	loc.visible_message("<span class='warning'> The corpse of [H.name] suddenly rises!</span>")
+	loc.visible_message("<span class='warning'>The corpse of [H.name] suddenly rises!</span>")
 
 /mob/living/simple_animal/hostile/blob/blobspore/death(gibbed)
 	..(1)
@@ -113,14 +112,25 @@
 /mob/living/simple_animal/hostile/blob/blobspore/Destroy()
 	if(factory)
 		factory.spores -= src
+	factory = null
 	if(contents)
 		for(var/mob/M in contents)
 			M.loc = src.loc
 	..()
 
 
+/mob/living/simple_animal/hostile/blob/blobspore/update_icons()
+	..()
+
+	if(overmind && overmind.blob_reagent_datum)
+		adjustcolors(overmind.blob_reagent_datum.color)
+	else
+		adjustcolors(color) //to ensure zombie/other overlays update
+
+
 /mob/living/simple_animal/hostile/blob/blobspore/adjustcolors(var/a_color)
 	color = a_color
+
 	if(is_zombie)
 		overlays.Cut()
 		overlays = human_overlays
@@ -128,7 +138,6 @@
 		I.color = color
 		color = initial(color)//looks better.
 		overlays += I
-
 
 /////////////////
 // BLOBBERNAUT //

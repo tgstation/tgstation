@@ -33,7 +33,7 @@
 		else if(clown_check(user))
 			var/turf/bombturf = get_turf(src)
 			var/area/A = get_area(bombturf)
-			message_admins("[key_name(usr)]<A HREF='?_src_=holder;adminmoreinfo=\ref[usr]'>?</A> has primed a [name] for detonation at <A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[bombturf.x];Y=[bombturf.y];Z=[bombturf.z]'>[A.name] (JMP)</a>.")
+			message_admins("[key_name_admin(usr)]<A HREF='?_src_=holder;adminmoreinfo=\ref[usr]'>?</A> (<A HREF='?_src_=holder;adminplayerobservefollow=\ref[usr]'>FLW</A>) has primed a [name] for detonation at <A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[bombturf.x];Y=[bombturf.y];Z=[bombturf.z]'>[A.name] (JMP)</a>.")
 			log_game("[key_name(usr)] has primed a [name] for detonation at [A.name] ([bombturf.x],[bombturf.y],[bombturf.z]).")
 			user << "<span class='warning'>You prime the [name]! [det_time / 10] second\s!</span>"
 			playsound(user.loc, 'sound/weapons/armbomb.ogg', 60, 1)
@@ -55,39 +55,41 @@
 				user << "<span class='notice'>You lock the [initial(name)] assembly.</span>"
 				playsound(loc, 'sound/items/Screwdriver.ogg', 25, -3)
 			else
-				user << "<span class='notice'>You need to add at least one beaker before locking the [initial(name)] assembly.</span>"
+				user << "<span class='warning'>You need to add at least one beaker before locking the [initial(name)] assembly!</span>"
 		else if(stage == READY && !nadeassembly)
 			det_time = det_time == 50 ? 30 : 50	//toggle between 30 and 50
 			user << "<span class='notice'>You modify the time delay. It's set for [det_time / 10] second\s.</span>"
 		else if(stage == EMPTY)
-			user << "<span class='notice'>You need to add an activation mechanism.</span>"
+			user << "<span class='warning'>You need to add an activation mechanism!</span>"
 
 	else if(stage == WIRED && is_type_in_list(I, allowed_containers))
 		if(beakers.len == 2)
-			user << "<span class='notice'>[src] can not hold more containers.</span>"
+			user << "<span class='warning'>[src] can not hold more containers!</span>"
 			return
 		else
 			if(I.reagents.total_volume)
+				if(!user.unEquip(I))
+					return
 				user << "<span class='notice'>You add [I] to the [initial(name)] assembly.</span>"
-				user.drop_item()
 				I.loc = src
 				beakers += I
 			else
-				user << "<span class='notice'>[I] is empty.</span>"
+				user << "<span class='warning'>[I] is empty!</span>"
 
 	else if(stage == EMPTY && istype(I, /obj/item/device/assembly_holder))
 		var/obj/item/device/assembly_holder/A = I
 		if(isigniter(A.a_left) == isigniter(A.a_right))	//Check if either part of the assembly has an igniter, but if both parts are igniters, then fuck it
 			return
+		if(!user.unEquip(I))
+			return
 
-		user.drop_item()
 		nadeassembly = A
 		A.master = src
 		A.loc = src
 		assemblyattacher = user.ckey
 
 		stage_change(WIRED)
-		user << "<span class='notice'>You add [A] to the [initial(name)] assembly!</span>"
+		user << "<span class='notice'>You add [A] to the [initial(name)] assembly.</span>"
 
 	else if(stage == EMPTY && istype(I, /obj/item/stack/cable_coil))
 		var/obj/item/stack/cable_coil/C = I
@@ -96,7 +98,7 @@
 			stage_change(WIRED)
 			user << "<span class='notice'>You rig the [initial(name)] assembly.</span>"
 		else
-			user << "<span class='warning'>You need one length of coil to wire the assembly.</span>"
+			user << "<span class='warning'>You need one length of coil to wire the assembly!</span>"
 			return
 
 	else if(stage == READY && istype(I, /obj/item/weapon/wirecutters))
@@ -171,8 +173,8 @@
 		var/mob/last = get_mob_by_ckey(nadeassembly.fingerprintslast)
 		var/turf/T = get_turf(src)
 		var/area/A = get_area(T)
-		message_admins("grenade primed by an assembly, attached by [M.key]/[M]<A HREF='?_src_=holder;adminmoreinfo=\ref[M]'>(?)</A> and last touched by [last.key]/[last]<A HREF='?_src_=holder;adminmoreinfo=\ref[last]'>(?)</A> ([nadeassembly.a_left.name] and [nadeassembly.a_right.name]) at <A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[T.x];Y=[T.y];Z=[T.z]'>[A.name] (JMP)</a>.")
-		log_game("grenade primed by an assembly, attached by [M.key]/[M] and last touched by [last.key]/[last] ([nadeassembly.a_left.name] and [nadeassembly.a_right.name]) at [A.name] ([T.x], [T.y], [T.z])")
+		message_admins("grenade primed by an assembly, attached by [key_name_admin(M)]<A HREF='?_src_=holder;adminmoreinfo=\ref[M]'>(?)</A> (<A HREF='?_src_=holder;adminplayerobservefollow=\ref[M]'>FLW</A>) and last touched by [key_name_admin(last)]<A HREF='?_src_=holder;adminmoreinfo=\ref[last]'>(?)</A> (<A HREF='?_src_=holder;adminplayerobservefollow=\ref[last]'>FLW</A>) ([nadeassembly.a_left.name] and [nadeassembly.a_right.name]) at <A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[T.x];Y=[T.y];Z=[T.z]'>[A.name] (JMP)</a>.")
+		log_game("grenade primed by an assembly, attached by [key_name(M)] and last touched by [key_name(last)] ([nadeassembly.a_left.name] and [nadeassembly.a_right.name]) at [A.name] ([T.x], [T.y], [T.z])")
 
 	playsound(loc, 'sound/effects/bamf.ogg', 50, 1)
 
@@ -195,7 +197,10 @@
 			if(A in mycontents) continue
 			if(!(A in viewable)) continue
 			reactable |= A
-	var/fraction = (reagents.total_volume/reactable.len) - reagents.total_volume
+	if(!reactable.len) //Nothing to react with. Probably means we're in nullspace.
+		qdel(src)
+		return
+	var/fraction = 1/reactable.len
 	for(var/atom/A in reactable)
 		reagents.reaction(A, TOUCH, fraction)
 
@@ -211,9 +216,17 @@
 	reagents.chem_temp = total_temp
 
 /obj/item/weapon/grenade/chem_grenade/proc/can_flood_from(myloc, maxrange)
+	var/turf/myturf = get_turf(myloc)
 	var/list/reachable = list(myloc)
 	for(var/i=1; i<=maxrange; i++)
+		var/list/turflist = list()
 		for(var/turf/T in (orange(i, myloc) - orange(i-1, myloc)))
+			turflist |= T
+		for(var/turf/T in turflist)
+			if( !(get_dir(T,myloc) in cardinal) && (abs(T.x - myturf.x) == abs(T.y - myturf.y) ))
+				turflist.Remove(T)
+				turflist.Add(T) // we move the purely diagonal turfs to the end of the list.
+		for(var/turf/T in turflist)
 			if(T in reachable) continue
 			for(var/turf/NT in orange(1, T))
 				if(!(NT in reachable)) continue
@@ -252,8 +265,9 @@
 	//make a special case you might as well do it explicitly. -Sayu
 /obj/item/weapon/grenade/chem_grenade/large/attackby(obj/item/I, mob/user, params)
 	if(istype(I, /obj/item/slime_extract) && stage == WIRED)
+		if(!user.unEquip(I))
+			return
 		user << "<span class='notice'>You add [I] to the [initial(name)] assembly.</span>"
-		user.drop_item()
 		I.loc = src
 		beakers += I
 	else
@@ -288,8 +302,8 @@
 	var/obj/item/weapon/reagent_containers/glass/beaker/B1 = new(src)
 	var/obj/item/weapon/reagent_containers/glass/beaker/B2 = new(src)
 
-	B1.reagents.add_reagent("aluminium", 25)
-	B2.reagents.add_reagent("plasma", 25)
+	B1.reagents.add_reagent("phosphorus", 25)
+	B2.reagents.add_reagent("stable_plasma", 25)
 	B2.reagents.add_reagent("sacid", 25)
 
 	beakers += B1

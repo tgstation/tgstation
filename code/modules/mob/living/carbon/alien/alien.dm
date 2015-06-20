@@ -12,7 +12,7 @@
 	ventcrawler = 2
 	languages = ALIEN
 	verb_say = "hisses"
-	lying_pixel_offset = 0
+	type_of_meat = /obj/item/weapon/reagent_containers/food/snacks/meat/slab/xeno
 	var/nightvision = 1
 	var/storedPlasma = 250
 	var/max_plasma = 500
@@ -29,6 +29,7 @@
 	var/heat_protection = 0.5
 	var/leaping = 0
 	var/list/obj/effect/proc_holder/alien/abilities = list()
+	gib_type = /obj/effect/decal/cleanable/xenoblood/xgibs
 
 /mob/living/carbon/alien/New()
 	verbs += /mob/living/proc/mob_sleep
@@ -74,22 +75,18 @@
 
 	var/loc_temp = get_temperature(environment)
 
-	//world << "Loc temp: [loc_temp] - Body temp: [bodytemperature] - Fireloss: [getFireLoss()] - Fire protection: [heat_protection] - Location: [loc] - src: [src]"
-
 	// Aliens are now weak to fire.
 
 	//After then, it reacts to the surrounding atmosphere based on your thermal protection
 	if(!on_fire) // If you're on fire, ignore local air temperature
 		if(loc_temp > bodytemperature)
 			//Place is hotter than we are
-			var/thermal_protection = heat_protection //This returns a 0 - 1 value, which corresponds to the percentage of protection based on what you're wearing and what you're exposed to.
+			var/thermal_protection = heat_protection //This returns a 0 - 1 value, which corresponds to the percentage of heat protection.
 			if(thermal_protection < 1)
 				bodytemperature += (1-thermal_protection) * ((loc_temp - bodytemperature) / BODYTEMP_HEAT_DIVISOR)
 		else
 			bodytemperature += 1 * ((loc_temp - bodytemperature) / BODYTEMP_HEAT_DIVISOR)
-		//	bodytemperature -= max((loc_temp - bodytemperature / BODYTEMP_AUTORECOVERY_DIVISOR), BODYTEMP_AUTORECOVERY_MINIMUM)
 
-	// +/- 50 degrees from 310.15K is the 'safe' zone, where no damage is dealt.
 	if(bodytemperature > 360.15)
 		//Body temperature is too hot.
 		throw_alert("alien_fire")
@@ -134,6 +131,9 @@
 		return
 	bodytemperature += BODYTEMP_HEATING_MAX //If you're on fire, you heat up!
 	return
+
+/mob/living/carbon/alien/reagent_check(var/datum/reagent/R) //can metabolize all reagents
+	return 0
 
 /mob/living/carbon/alien/IsAdvancedToolUser()
 	return has_fine_manipulation
@@ -204,6 +204,10 @@ Des: Removes all infected images from the alien.
 
 /mob/living/carbon/alien/canBeHandcuffed()
 	return 1
+
+/mob/living/carbon/alien/get_standard_pixel_y_offset(lying = 0)
+	return initial(pixel_y)
+
 
 #undef HEAT_DAMAGE_LEVEL_1
 #undef HEAT_DAMAGE_LEVEL_2

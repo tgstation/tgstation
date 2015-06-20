@@ -389,7 +389,7 @@
 
 /mob/living/silicon/attack_larva(mob/living/carbon/alien/larva/L)
 	if(L.a_intent == "help")
-		visible_message("<span class='notice'>[L.name] rubs its head against [src].</span>")
+		visible_message("[L.name] rubs its head against [src].")
 	return
 
 /mob/living/silicon/attack_hulk(mob/living/carbon/human/user)
@@ -405,15 +405,15 @@
 /mob/living/silicon/attack_hand(mob/living/carbon/human/M)
 	switch(M.a_intent)
 		if ("help")
-			M.visible_message("<span class='notice'>[M] pets [src]!</span>", \
-							"<span class='notice'>You pet [src]!</span>")
+			M.visible_message("[M] pets [src].", \
+							"<span class='notice'>You pet [src].</span>")
 		if("grab")
 			grabbedby(M)
 		else
 			M.do_attack_animation(src)
 			playsound(src.loc, 'sound/effects/bang.ogg', 10, 1)
-			visible_message("<span class='danger'>[M] punches [src], but doesn't leave a dent.</span>", \
-						"<span class='userdanger'>[M] punches [src], but doesn't leave a dent.!</span>")
+			visible_message("<span class='warning'>[M] punches [src], but doesn't leave a dent.</span>", \
+						"<span class='warning'>[M] punches [src], but doesn't leave a dent.</span>")
 	return 0
 
 /mob/living/silicon/adjustEarDamage()

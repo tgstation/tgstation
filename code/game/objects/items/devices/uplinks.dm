@@ -180,7 +180,7 @@ var/list/world_uplinks = list()
 			qdel(S)
 			user << "<span class='notice'>Teleporter refunded.</span>"
 		else
-			user << "<span class='notice'>This teleporter is already used.</span>"
+			user << "<span class='warning'>This teleporter is already used!</span>"
 
 // PRESET UPLINKS
 // A collection of preset uplinks.

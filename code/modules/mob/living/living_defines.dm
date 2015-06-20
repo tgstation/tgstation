@@ -17,8 +17,6 @@
 
 
 	var/hallucination = 0 //Directly affects how long a mob will hallucinate for
-	var/list/atom/hallucinations = list() //A list of hallucinated people that try to attack the mob. See /obj/effect/fake_attacker in hallucinations.dm
-
 
 	var/last_special = 0 //Used by the resist verb, likely used to prevent players from bypassing next_move by logging in/out.
 
@@ -41,6 +39,8 @@
 	var/mob_size = MOB_SIZE_HUMAN
 	var/metabolism_efficiency = 1 //more or less efficiency to metabolize helpful/harmful reagents and regulate body temperature..
 	var/list/image/staticOverlays = list()
-	var/lying_pixel_offset = 0 //offset for pixel_y when the mob is lying down.
 	var/has_limbs = 0 //does the mob have distinct limbs?(arms,legs, chest,head)
 	var/list/datum/action/actions = list()
+
+	var/list/pipes_shown = list()
+	var/last_played_vent

@@ -38,15 +38,15 @@
 	else if(istype(W, /obj/item/weapon/pen))
 		var/str = copytext(sanitize(input(user,"Label text?","Set label","")),1,MAX_NAME_LEN)
 		if(!str || !length(str))
-			user << "<span class='notice'>Invalid text.</span>"
+			user << "<span class='warning'>Invalid text!</span>"
 			return
-		user.visible_message("<span class='notice'>[user] labels [src] as [str].</span>")
+		user.visible_message("[user] labels [src] as [str].")
 		name = "[name] ([str])"
 
 	else if(istype(W, /obj/item/stack/wrapping_paper) && !giftwrapped)
 		var/obj/item/stack/wrapping_paper/WP = W
 		if(WP.use(3))
-			user.visible_message("<span class='notice'>[user] wraps the package in festive paper!</span>")
+			user.visible_message("[user] wraps the package in festive paper!")
 			giftwrapped = 1
 			if(istype(wrapped, /obj/structure/closet/crate))
 				icon_state = "giftcrate"
@@ -55,7 +55,7 @@
 			if(WP.amount <= 0 && !WP.loc) //if we used our last wrapping paper, drop a cardboard tube
 				new /obj/item/weapon/c_tube( get_turf(user) )
 		else
-			user << "<span class='notice'>You need more paper.</span>"
+			user << "<span class='warning'>You need more paper!</span>"
 
 
 /obj/item/smallDelivery
@@ -92,9 +92,9 @@
 	else if(istype(W, /obj/item/weapon/pen))
 		var/str = copytext(sanitize(input(user,"Label text?","Set label","")),1,MAX_NAME_LEN)
 		if(!str || !length(str))
-			user << "<span class='notice'>Invalid text.</span>"
+			user << "<span class='warning'>Invalid text!</span>"
 			return
-		user.visible_message("<span class='notice'>[user] labels [src] as [str].</span>")
+		user.visible_message("[user] labels [src] as [str].")
 		name = "[name] ([str])"
 
 	else if(istype(W, /obj/item/stack/wrapping_paper) && !giftwrapped)
@@ -102,11 +102,11 @@
 		if(WP.use(1))
 			icon_state = "giftcrate[wrapped.w_class]"
 			giftwrapped = 1
-			user.visible_message("<span class='notice'>[user] wraps the package in festive paper!</span>")
+			user.visible_message("[user] wraps the package in festive paper!")
 			if(WP.amount <= 0 && !WP.loc) //if we used our last wrapping paper, drop a cardboard tube
 				new /obj/item/weapon/c_tube( get_turf(user) )
 		else
-			user << "<span class='notice'>You need more paper.</span>"
+			user << "<span class='warning'>You need more paper!</span>"
 
 
 
@@ -161,7 +161,7 @@
 			P.wrapped = O
 			O.loc = P
 		else
-			user << "<span class='notice'>You need more paper.</span>"
+			user << "<span class='warning'>You need more paper!</span>"
 			return
 	else if(istype (target, /obj/structure/closet))
 		var/obj/structure/closet/O = target
@@ -173,13 +173,13 @@
 			O.welded = 1
 			O.loc = P
 		else
-			user << "<span class='notice'>You need more paper.</span>"
+			user << "<span class='warning'>You need more paper!</span>"
 			return
 	else
-		user << "<span class='notice'>The object you are trying to wrap is unsuitable for the sorting machinery.</span>"
+		user << "<span class='warning'>The object you are trying to wrap is unsuitable for the sorting machinery!</span>"
 		return
 
-	user.visible_message("<span class='notice'>[user] wraps [target].</span>")
+	user.visible_message("[user] wraps [target].")
 	user.attack_log += text("\[[time_stamp()]\] <font color='blue'>Has used [name] on [target]</font>")
 
 	if(amount <= 0 && !src.loc) //if we used our last wrapping paper, drop a cardboard tube
@@ -234,8 +234,6 @@
 	desc = "A chute for big and small packages alike!"
 	density = 1
 	icon_state = "intake"
-
-	var/start_flush = 0
 	var/c_mode = 0
 
 /obj/machinery/disposal/deliveryChute/New(loc,var/obj/structure/disposalconstruct/make_from)
@@ -287,40 +285,11 @@
 /obj/mecha/disposalEnterTry()
 	return
 
-/obj/machinery/disposal/deliveryChute/flush()
-	flushing = 1
+/obj/machinery/disposal/deliveryChute/flushAnimation()
 	flick("intake-closing", src)
-	var/deliveryCheck = 0
-	var/obj/structure/disposalholder/H = new()	// virtual holder object which actually
-												// travels through the pipes.
-/*		for(var/obj/structure/bigDelivery/O in src)
-		deliveryCheck = 1
-		if(O.sortTag == 0)						//This auto-sorts package wrapped objects to disposals
-			O.sortTag = 1						//Cargo techs can do this themselves with their taggers
-	for(var/obj/item/smallDelivery/O in src)	//With this disabled packages will loop back round and come out the mail chute
-		deliveryCheck = 1
-		if(O.sortTag == 0)
-			O.sortTag = 1						*/
-	if(deliveryCheck == 0)
-		H.destinationTag = 1
 
-	sleep(10)
-	if((start_flush + 15) < world.time)
-		start_flush = world.time
-		playsound(src, 'sound/machines/disposalflush.ogg', 50, 0, 0)
-	sleep(5) // wait for animation to finish
-
-	H.init(src)	// copy the contents of disposer to holder
-	air_contents = new()		// new empty gas resv.
-
-	H.start(src) // start the holder processing movement
-	flushing = 0
-	// now reset disposal state
-	flush = 0
-	if(mode == 2)	// if was ready,
-		mode = 1	// switch to charging
-	update()
-	return
+/obj/machinery/disposal/deliveryChute/newHolderDestination(obj/structure/disposalholder/H)
+	H.destinationTag = 1
 
 /obj/machinery/disposal/deliveryChute/attackby(var/obj/item/I, var/mob/user, params)
 	if(!I || !user)
@@ -342,14 +311,24 @@
 
 		if(W.remove_fuel(0,user))
 			playsound(loc, 'sound/items/Welder2.ogg', 100, 1)
-			user << "<span class='notice'>You start slicing the floorweld off the delivery chute.</span>"
+			user << "<span class='notice'>You start slicing the floorweld off the delivery chute...</span>"
 			if(do_after(user,20))
 				if(!src || !W.isOn()) return
 				Deconstruct()
-				user << "<span class='notice'>You sliced the floorweld off the delivery chute.</span>"
+				user << "<span class='notice'>You slice the floorweld off the delivery chute.</span>"
 			return
 		else
 			return
 
 /obj/machinery/disposal/deliveryChute/process()
 	return PROCESS_KILL
+
+/obj/item/weapon/c_tube
+	name = "cardboard tube"
+	desc = "A tube... of cardboard."
+	icon = 'icons/obj/items.dmi'
+	icon_state = "c_tube"
+	throwforce = 0
+	w_class = 1.0
+	throw_speed = 3
+	throw_range = 5

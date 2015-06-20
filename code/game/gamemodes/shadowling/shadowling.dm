@@ -1,3 +1,7 @@
+#define LIGHT_DAM_THRESHOLD 4
+#define LIGHT_HEAL_THRESHOLD 2
+#define LIGHT_DAMAGE_TAKEN 10
+
 /*
 
 SHADOWLING: A gamemode based on previously-run events
@@ -72,7 +76,7 @@ Made by Xhuis
 
 /datum/game_mode/shadowling/announce()
 	world << "<b>The current game mode is - Shadowling!</b>"
-	world << "<b>There are alien <span class='userdanger'>shadowlings</span> on the station. Crew: Kill the shadowlings before they can eat or enthrall the crew. Shadowlings: Enthrall the crew while remaining in hiding.</b>"
+	world << "<b>There are alien <span class='deadsay'>shadowlings</span> on the station. Crew: Kill the shadowlings before they can eat or enthrall the crew. Shadowlings: Enthrall the crew while remaining in hiding.</b>"
 
 /datum/game_mode/shadowling/pre_setup()
 	if(config.protect_roles_from_antagonist)
@@ -81,12 +85,8 @@ Made by Xhuis
 	if(config.protect_assistant_from_antagonist)
 		restricted_jobs += "Assistant"
 
-	for(var/datum/mind/player in antag_candidates)
-		for(var/job in restricted_jobs)
-			if(player.assigned_role == job)
-				antag_candidates -= player
+	var/shadowlings = max(2, round(num_players()/10))
 
-	var/shadowlings = 2 //How many shadowlings there are; hardcoded to 2
 
 	while(shadowlings)
 		var/datum/mind/shadow = pick(antag_candidates)
@@ -94,6 +94,7 @@ Made by Xhuis
 		antag_candidates -= shadow
 		modePlayer += shadow
 		shadow.special_role = "Shadowling"
+		shadow.restricted_roles = restricted_jobs
 		shadowlings--
 	return 1
 
@@ -114,6 +115,7 @@ Made by Xhuis
 /datum/game_mode/proc/greet_shadow(var/datum/mind/shadow)
 	shadow.current << "<b>Currently, you are disguised as an employee aboard [world.name].</b>"
 	shadow.current << "<b>In your limited state, you have three abilities: Enthrall, Hatch, and Hivemind Commune.</b>"
+	shadow.current << "<b>Any other shadowlings are you allies. You must assist them as they shall assist you.</b>"
 	shadow.current << "<b>If you are new to shadowling, or want to read about abilities, check the wiki page at https://tgstation13.org/wiki/Shadowling</b><br>"
 
 
@@ -131,40 +133,26 @@ Made by Xhuis
 	var/mob/living/carbon/human/S = shadow_mind.current
 	shadow_mind.current.verbs += /mob/living/carbon/human/proc/shadowling_hatch
 	shadow_mind.spell_list += new /obj/effect/proc_holder/spell/targeted/enthrall
-	shadow_mind.spell_list += new /obj/effect/proc_holder/spell/targeted/shadowling_hivemind
-	if(shadow_mind.assigned_role == "Clown")
-		S << "<span class='notice'>Your alien nature has allowed you to overcome your clownishness.</span>"
-		S.dna.remove_mutation(CLOWNMUT)
+	spawn(0)
+		shadow_mind.spell_list += new /obj/effect/proc_holder/spell/targeted/shadowling_hivemind
+		update_shadow_icons_added(shadow_mind)
+		if(shadow_mind.assigned_role == "Clown")
+			S << "<span class='notice'>Your alien nature has allowed you to overcome your clownishness.</span>"
+			S.dna.remove_mutation(CLOWNMUT)
 
 /datum/game_mode/proc/add_thrall(datum/mind/new_thrall_mind)
 	if (!istype(new_thrall_mind))
 		return 0
 	if(!(new_thrall_mind in thralls))
+		update_shadow_icons_added(new_thrall_mind)
 		thralls += new_thrall_mind
 		new_thrall_mind.current.attack_log += "\[[time_stamp()]\] <span class='danger'>Became a thrall</span>"
+		new_thrall_mind.memory += "<b>The Shadowlings' Objectives:</b> Ascend to your true form by use of the Ascendance ability. \
+		This may only be used with [required_thralls] collective thralls, while hatched, and is unlocked with the Collective Mind ability."
+		new_thrall_mind.current << "<b>The objectives of your shadowlings:</b>: Ascend to your true form by use of the Ascendance ability. \
+		This may only be used with [required_thralls] collective thralls, while hatched, and is unlocked with the Collective Mind ability."
+		new_thrall_mind.spell_list += new /obj/effect/proc_holder/spell/targeted/shadowling_hivemind
 		return 1
-
-
-
-/*
-	GAME FINISH CHECKS
-*/
-
-
-/datum/game_mode/shadowling/check_finished()
-	var/shadows_alive = 0 //and then shadowling was kill
-	for(var/datum/mind/shadow in shadows) //but what if shadowling was not kill?
-		if(!istype(shadow.current,/mob/living/carbon/human) && !istype(shadow.current,/mob/living/simple_animal/ascendant_shadowling))
-			continue
-		if(shadow.current.stat == DEAD)
-			continue
-		shadows_alive++
-	if(shadows_alive)
-		return ..()
-	else
-		shadowling_dead = 1 //but shadowling was kill :(
-		return 1
-
 
 /datum/game_mode/shadowling/proc/check_shadow_victory()
 	var/success = 0 //Did they win?
@@ -175,11 +163,13 @@ Made by Xhuis
 
 /datum/game_mode/shadowling/declare_completion()
 	if(check_shadow_victory() && SSshuttle.emergency.mode >= SHUTTLE_ESCAPE) //Doesn't end instantly - this is hacky and I don't know of a better way ~X
-		world << "<font size=3 color=green><b>The shadowlings have ascended and taken over the station!</FONT></b></span>"
+		world << "<span class='greentext'><b>The shadowlings have ascended and taken over the station!</b></span>"
 	else if(shadowling_dead && !check_shadow_victory()) //If the shadowlings have ascended, they can not lose the round
-		world << "<span class='danger'><font size=3><b>The shadowlings have been killed by the crew!</b></FONT></span>"
+		world << "<span class='redtext'><b>The shadowlings have been killed by the crew!</b></span>"
 	else if(!check_shadow_victory() && SSshuttle.emergency.mode >= SHUTTLE_ESCAPE)
-		world << "<span class='danger'><font size=3><b>The crew has escaped the station before the shadowlings could ascend!</b></FONT></span>"
+		world << "<span class='redtext'><b>The crew has escaped the station before the shadowlings could ascend!</b></span>"
+	else
+		world << "<span class='redtext'><b>The shadowlings have failed!</b></span>"
 	..()
 	return 1
 
@@ -187,15 +177,14 @@ Made by Xhuis
 /datum/game_mode/proc/auto_declare_completion_shadowling()
 	var/text = ""
 	if(shadows.len)
-		text += "<br><font size=2><b>The shadowlings were:</b></font>"
+		text += "<br><span class='big'><b>The shadowlings were:</b></span>"
 		for(var/datum/mind/shadow in shadows)
 			text += printplayer(shadow)
+		text += "<br>"
 		if(thralls.len)
-			text += "<br><font size=2><b>The thralls were:</b></font>"
+			text += "<br><span class='big'><b>The thralls were:</b></span>"
 			for(var/datum/mind/thrall in thralls)
 				text += printplayer(thrall)
-	else
-		world << "<font size=3>Round-end code broke! Please report this and its circumstances on GitHub at https://github.com/tgstation/-tg-station/issues</font>"
 	text += "<br>"
 	world << text
 
@@ -224,12 +213,24 @@ Made by Xhuis
 		if(A)
 			if(A.lighting_use_dynamic)	light_amount = T.lighting_lumcount
 			else						light_amount =  10
-		if(light_amount > 2) //Rapid death while in the light, countered by...
-			H.take_overall_damage(0,6)
+		if(light_amount > LIGHT_DAM_THRESHOLD) //Not complete blackness - they can live in very small light levels plus starlight
+			H.take_overall_damage(0, LIGHT_DAMAGE_TAKEN)
 			H << "<span class='userdanger'>The light burns you!</span>"
 			H << 'sound/weapons/sear.ogg'
-		else if (light_amount < 2)  //...extreme benefits while in the dark
-			H.heal_overall_damage(5,3)
-			H.adjustToxLoss(-3)
+		else if (light_amount < LIGHT_HEAL_THRESHOLD)
+			H.heal_overall_damage(5,5)
+			H.adjustToxLoss(-5)
+			H.adjustBrainLoss(-25) //gibbering shadowlings are hilarious but also bad to have
+			H.adjustCloneLoss(-1)
 			H.SetWeakened(0)
 			H.SetStunned(0)
+
+/datum/game_mode/proc/update_shadow_icons_added(datum/mind/shadow_mind)
+	var/datum/atom_hud/antag/shadow_hud = huds[ANTAG_HUD_SHADOW]
+	shadow_hud.join_hud(shadow_mind.current)
+	set_antag_hud(shadow_mind.current, ((shadow_mind in shadows) ? "shadowling" : "thrall"))
+
+/datum/game_mode/proc/update_shadow_icons_removed(datum/mind/shadow_mind) //This should never actually occur, but it's here anyway.
+	var/datum/atom_hud/antag/shadow_hud = huds[ANTAG_HUD_SHADOW]
+	shadow_hud.leave_hud(shadow_mind.current)
+	set_antag_hud(shadow_mind.current, null)

@@ -1,7 +1,8 @@
 /obj/machinery/computer/crew
 	name = "crew monitoring console"
 	desc = "Used to monitor active health sensors built into most of the crew's uniforms."
-	icon_state = "crew"
+	icon_screen = "crew"
+	icon_keyboard = "med_key"
 	use_power = 1
 	idle_power_usage = 250
 	active_power_usage = 500
@@ -33,7 +34,7 @@
 		return
 
 
-proc/crewmonitor(mob/user,var/atom/source)
+/proc/crewmonitor(mob/user,var/atom/source)
 	var/jobs[0]
 	jobs["Captain"] = 00
 	jobs["Head of Personnel"] = 50
@@ -138,7 +139,7 @@ proc/crewmonitor(mob/user,var/atom/source)
 	popup.open()
 
 
-proc/crewscan()
+/proc/crewscan()
 	var/list/tracked = list()
 	for(var/mob/living/carbon/human/H in mob_list)
 		if(istype(H.w_uniform, /obj/item/clothing/under))

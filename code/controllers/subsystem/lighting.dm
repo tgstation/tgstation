@@ -6,6 +6,8 @@ var/datum/subsystem/lighting/SSlighting
 	name = "Lighting"
 	wait = 5
 	priority = 1
+	dynamic_wait = 1
+	dwait_delta = 1
 
 	var/list/changed_lights = list()		//list of all datum/light_source that need updating
 	var/changed_lights_workload = 0			//stats on the largest number of lights (max changed_lights.len)
@@ -20,7 +22,7 @@ var/datum/subsystem/lighting/SSlighting
 
 
 /datum/subsystem/lighting/stat_entry()
-	stat(name, "[round(cost,0.001)]ds (CPU:[round(cpu,1)]%) L:[round(changed_lights_workload,1)]/T:[round(changed_turfs_workload,1)]")
+	..("L:[round(changed_lights_workload,1)]|T:[round(changed_turfs_workload,1)]")
 
 
 //Workhorse of lighting. It cycles through each light that needs updating. It updates their

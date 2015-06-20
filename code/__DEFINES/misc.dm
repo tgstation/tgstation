@@ -108,6 +108,7 @@
 #define STAGE_THREE 5
 #define STAGE_FOUR 7
 #define STAGE_FIVE 9
+#define STAGE_SIX 11 //From supermatter shard
 
 //zlevel defines, can be overridden for different maps in the appropriate _maps file.
 #define ZLEVEL_SPACEMAX 7
@@ -158,3 +159,5 @@
 #define FUZZY_CHANCE_HIGH 85
 #define FUZZY_CHANCE_LOW 50
 #define CHANCE_TALK 15
+#define MAXCOIL 30
+#define RESIZE_DEFAULT_SIZE 1

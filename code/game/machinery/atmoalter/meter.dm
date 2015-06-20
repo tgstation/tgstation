@@ -14,14 +14,20 @@
 
 /obj/machinery/meter/New()
 	..()
+	SSair.atmos_machinery += src
 	src.target = locate(/obj/machinery/atmospherics/pipe) in loc
 	return 1
+
+/obj/machinery/meter/Destroy()
+	SSair.atmos_machinery -= src
+	src.target = null
+	..()
 
 /obj/machinery/meter/initialize()
 	if (!target)
 		src.target = locate(/obj/machinery/atmospherics/pipe) in loc
 
-/obj/machinery/meter/process()
+/obj/machinery/meter/process_atmos()
 	if(!target)
 		icon_state = "meterX"
 		return 0
@@ -92,8 +98,8 @@
 		if (do_after(user, 40))
 			user.visible_message( \
 				"[user] unfastens \the [src].", \
-				"<span class='notice'>You have unfastened \the [src].</span>", \
-				"You hear ratchet.")
+				"<span class='notice'>You unfasten \the [src].</span>", \
+				"<span class='italics'>You hear ratchet.</span>")
 			new /obj/item/pipe_meter(src.loc)
 			qdel(src)
 		return
@@ -114,6 +120,7 @@
 		return 1
 
 // TURF METER - REPORTS A TILE'S AIR CONTENTS
+//	why are you yelling?
 
 /obj/machinery/meter/turf/New()
 	..()

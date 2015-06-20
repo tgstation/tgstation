@@ -7,7 +7,7 @@
 	w_class = 3
 	throw_speed = 3
 	throw_range = 7
-	pressure_resistance = 10
+	pressure_resistance = 8
 	var/amount = 30					//How much paper is in the bin.
 	var/list/papers = new/list()	//List of papers put in the bin for reference.
 
@@ -23,10 +23,12 @@
 	else if(istype(over_object, /obj/screen))
 		switch(over_object.name)
 			if("r_hand")
-				M.unEquip(src)
+				if(!remove_item_from_storage(M))
+					M.unEquip(src)
 				M.put_in_r_hand(src)
 			if("l_hand")
-				M.unEquip(src)
+				if(!remove_item_from_storage(M))
+					M.unEquip(src)
 				M.put_in_l_hand(src)
 
 	add_fingerprint(M)
@@ -37,6 +39,9 @@
 
 
 /obj/item/weapon/paper_bin/attack_hand(mob/user)
+	if(user.lying)
+		return
+	user.changeNext_move(CLICK_CD_MELEE)
 	if(amount >= 1)
 		amount--
 		update_icon()
@@ -57,7 +62,7 @@
 		user.put_in_hands(P)
 		user << "<span class='notice'>You take [P] out of \the [src].</span>"
 	else
-		user << "<span class='notice'>[src] is empty!</span>"
+		user << "<span class='warning'>[src] is empty!</span>"
 
 	add_fingerprint(user)
 
@@ -66,7 +71,8 @@
 	if(!istype(i))
 		return ..()
 
-	user.drop_item()
+	if(!user.unEquip(i))
+		return
 	i.loc = src
 	user << "<span class='notice'>You put [i] in [src].</span>"
 	papers.Add(i)

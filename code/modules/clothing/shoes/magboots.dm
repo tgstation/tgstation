@@ -28,7 +28,7 @@
 		src.slowdown = slowdown_active
 	magpulse = !magpulse
 	icon_state = "[magboot_state][magpulse]"
-	user << "You [magpulse ? "enable" : "disable"] the mag-pulse traction system."
+	user << "<span class='notice'>You [magpulse ? "enable" : "disable"] the mag-pulse traction system.</span>"
 	user.update_inv_shoes(0)	//so our mob-overlays update
 	user.update_gravity(user.mob_has_gravity())
 

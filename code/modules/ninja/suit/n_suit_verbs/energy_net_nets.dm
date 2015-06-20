@@ -27,7 +27,7 @@ It is possible to destroy the net by the occupant or someone else.
 			var/mob/living/carbon/M = affecting
 			M.anchored = 0
 			for(var/mob/O in viewers(src, 3))
-				O.show_message("[M.name] was recovered from the energy net!", 1, "You hear a grunt.", 2)
+				O.show_message("[M.name] was recovered from the energy net!", 1, "<span class='italics'>You hear a grunt.</span>", 2)
 			if(!isnull(master))//As long as they still exist.
 				master << "<span class='userdanger'>ERROR</span>: unable to initiate transport protocol. Procedure terminated."
 		qdel(src)
@@ -82,7 +82,7 @@ It is possible to destroy the net by the occupant or someone else.
 			qdel(src)//Wait for everything to finish, delete the net. Else it will stop everything once net is deleted, including the spawn(0).
 
 		for(var/mob/O in viewers(src, 3))
-			O.show_message("[M] vanished!", 1, "You hear sparks flying!", 2)
+			O.show_message("[M] vanishes!", 1, "<span class='italics'>You hear sparks flying!</span>", 2)
 
 		if(!isnull(master))//As long as they still exist.
 			master << "<span class='notice'><b>SUCCESS</b>: transport procedure of \the [affecting] complete.</span>"
@@ -124,7 +124,6 @@ It is possible to destroy the net by the occupant or someone else.
 
 /obj/effect/energy_net/hitby(AM as mob|obj)
 	..()
-	visible_message("<span class='danger'>[src] was hit by [AM].</span>")
 	var/tforce = 0
 	if(ismob(AM))
 		tforce = 10

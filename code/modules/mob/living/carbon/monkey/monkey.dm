@@ -8,6 +8,8 @@
 	pass_flags = PASSTABLE
 	languages = MONKEY
 	ventcrawler = 1
+	type_of_meat = /obj/item/weapon/reagent_containers/food/snacks/meat/slab/monkey
+	gib_type = /obj/effect/decal/cleanable/blood/gibs
 
 /mob/living/carbon/monkey/New()
 	create_reagents(1000)
@@ -202,6 +204,9 @@
 	return
 
 /mob/living/carbon/monkey/IsAdvancedToolUser()//Unless its monkey mode monkeys cant use advanced tools
+	return 0
+
+/mob/living/carbon/monkey/reagent_check(var/datum/reagent/R) //can metabolize all reagents
 	return 0
 
 /mob/living/carbon/monkey/canBeHandcuffed()

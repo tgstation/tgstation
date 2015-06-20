@@ -82,19 +82,20 @@
 			user << "<span class='notice'>You insert a piece of glass into the [src.name]. You have [uses] lights remaining.</span>"
 			return
 		else
-			user << "<span class='warning'>You need one sheet of glass to replace lights.</span>"
+			user << "<span class='warning'>You need one sheet of glass to replace lights!</span>"
 
 	if(istype(W, /obj/item/weapon/light))
 		var/obj/item/weapon/light/L = W
 		if(L.status == 0) // LIGHT OKAY
 			if(uses < max_uses)
+				if(!user.unEquip(W))
+					return
 				AddUses(1)
-				user << "You insert the [L.name] into the [src.name]. You have [uses] lights remaining."
-				user.drop_item()
+				user << "<span class='notice'>You insert the [L.name] into the [src.name]. You have [uses] lights remaining.</span>"
 				qdel(L)
 				return
 		else
-			user << "You need a working light."
+			user << "<span class='warning'>You need a working light!</span>"
 			return
 
 /obj/item/device/lightreplacer/emag_act()
@@ -170,7 +171,7 @@
 			U << failmsg
 			return
 	else
-		U << "There is a working [target.fitting] already inserted."
+		U << "<span class='warning'>There is a working [target.fitting] already inserted!</span>"
 		return
 
 /obj/item/device/lightreplacer/proc/Emag()

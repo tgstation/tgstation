@@ -13,7 +13,7 @@
 	var/w_class = 3.0
 	var/slot_flags = 0		//This is used to determine on which slots an item can fit.
 	pass_flags = PASSTABLE
-	pressure_resistance = 5
+	pressure_resistance = 3
 	var/obj/item/master = null
 
 	var/heat_protection = 0 //flags which determine which body parts are protected from heat. Use the HEAD, CHEST, GROIN, etc. flags. See setup.dm
@@ -52,6 +52,8 @@
 	var/suittoggled = 0
 	var/hooded = 0
 
+	/obj/item/mouse_drag_pointer = MOUSE_ACTIVE_POINTER //the icon to indicate this object is being dragged
+
 	//So items can have custom embedd values
 	//Because customisation is king
 	var/embed_chance = EMBED_CHANCE
@@ -69,7 +71,10 @@
 		/obj/structure/closet,
 		/obj/item/weapon/storage,
 		/obj/structure/safe,
-		/obj/machinery/disposal
+		/obj/machinery/disposal,
+		/obj/machinery/r_n_d/destructive_analyzer,
+		/obj/machinery/r_n_d/experimentor,
+		/obj/machinery/autolathe
 	)
 /obj/item/proc/check_allowed_items(atom/target, not_inside)
 	if((src in target) || ((!istype(target.loc, /turf)) && (!istype(target, /turf)) && (not_inside)) || is_type_in_list(target, can_be_placed_into))
@@ -190,10 +195,10 @@
 /obj/item/attack_alien(mob/user as mob)
 	var/mob/living/carbon/alien/A = user
 
-	if(!A.has_fine_manipulation || w_class >= 4)
+	if(!A.has_fine_manipulation)
 		if(src in A.contents) // To stop Aliens having items stuck in their pockets
 			A.unEquip(src)
-		user << "Your claws aren't capable of such fine manipulation."
+		user << "<span class='warning'>Your claws aren't capable of such fine manipulation!</span>"
 		return
 	attack_paw(A)
 
@@ -235,7 +240,7 @@
 					else if(success)
 						user << "<span class='notice'>You put some things [S.preposition] [S].</span>"
 					else
-						user << "<span class='notice'>You fail to pick anything up with [S].</span>"
+						user << "<span class='warning'>You fail to pick anything up with [S]!</span>"
 
 			else if(S.can_be_inserted(src))
 				S.handle_item_insertion(src)
@@ -289,7 +294,7 @@
 	set category = "Object"
 	set name = "Pick up"
 
-	if(!usr.canmove || usr.stat || usr.restrained() || !Adjacent(usr))
+	if(usr.stat || usr.restrained() || !Adjacent(usr) || usr.stunned || usr.weakened || usr.lying)
 		return
 
 	if(ishuman(usr) || ismonkey(usr))
@@ -302,7 +307,7 @@
 			usr << "\red You already have something in your hand."
 		*/
 	else
-		usr << "<span class='notice'>This mob type can't use this verb.</span>"
+		usr << "<span class='warning'>This mob type can't use this verb!</span>"
 
 //This proc is executed when someone clicks the on-screen UI button. To make the UI button show, set the 'action_button_name'.
 //The default action is attack_self().
@@ -318,26 +323,30 @@
 
 /obj/item/proc/eyestab(mob/living/carbon/M as mob, mob/living/carbon/user as mob)
 
-	var/mob/living/carbon/human/H = M
-	if(istype(H) && ( \
-			(H.head && H.head.flags & HEADCOVERSEYES) || \
+	var/is_human_victim = 0
+	if(ishuman(M))
+		is_human_victim = 1
+		var/mob/living/carbon/human/H = M
+		if((H.head && H.head.flags & HEADCOVERSEYES) || \
 			(H.wear_mask && H.wear_mask.flags & MASKCOVERSEYES) || \
-			(H.glasses && H.glasses.flags & GLASSESCOVERSEYES) \
-		))
-		// you can't stab someone in the eyes wearing a mask!
-		user << "<span class='danger'>You're going to need to remove that mask/helmet/glasses first.</span>"
-		return
+			(H.glasses && H.glasses.flags & GLASSESCOVERSEYES))
+			// you can't stab someone in the eyes wearing a mask!
+			user << "<span class='danger'>You're going to need to remove that mask/helmet/glasses first!</span>"
+			return
 
-	var/mob/living/carbon/monkey/Mo = M
-	if(istype(Mo) && ( \
-			(Mo.wear_mask && Mo.wear_mask.flags & MASKCOVERSEYES) \
-		))
-		// you can't stab someone in the eyes wearing a mask!
-		user << "<span class='danger'>You're going to need to remove that mask/helmet/glasses first.</span>"
-		return
+	if(ismonkey(M))
+		var/mob/living/carbon/monkey/Mo = M
+		if(Mo.wear_mask && Mo.wear_mask.flags & MASKCOVERSEYES)
+			// you can't stab someone in the eyes wearing a mask!
+			user << "<span class='danger'>You're going to need to remove that mask/helmet/glasses first!</span>"
+			return
 
 	if(isalien(M))//Aliens don't have eyes./N     slimes also don't have eyes!
-		user << "<span class='danger'>You cannot locate any eyes on this creature!</span>"
+		user << "<span class='warning'>You cannot locate any eyes on this creature!</span>"
+		return
+
+	if(isbrain(M))
+		user << "<span class='danger'>You cannot locate any organic eyes on this brain!</span>"
 		return
 
 	add_logs(user, M, "attacked", object="[src.name]", addition="(INTENT: [uppertext(user.a_intent)])")
@@ -352,7 +361,7 @@
 			"<span class='danger'>[user] has stabbed themself in the eyes with [src]!</span>", \
 			"<span class='userdanger'>You stab yourself in the eyes with [src]!</span>" \
 		)
-	if(istype(M, /mob/living/carbon/human))
+	if(is_human_victim)
 		var/mob/living/carbon/human/U = M
 		var/obj/item/organ/limb/affecting = U.get_organ("head")
 		if(affecting.take_damage(7))
@@ -360,6 +369,7 @@
 
 	else
 		M.take_organ_damage(7)
+
 	M.eye_blurry += rand(3,4)
 	M.eye_stat += rand(2,4)
 	if (M.eye_stat >= 10)
@@ -369,8 +379,8 @@
 			M << "<span class='danger'>Your eyes start to bleed profusely!</span>"
 		if(prob(50))
 			if(M.stat != 2)
-				M << "<span class='danger'>You drop what you're holding and clutch at your eyes!</span>"
-				M.drop_item()
+				if(M.drop_item())
+					M << "<span class='danger'>You drop what you're holding and clutch at your eyes!</span>"
 			M.eye_blurry += 10
 			M.Paralyse(1)
 			M.Weaken(2)
@@ -403,6 +413,9 @@
 
 /obj/item/acid_act(var/acidpwr, var/toxpwr, var/acid_volume)
 	. = 1
+	if(unacidable)
+		return
+
 	for(var/V in armor)
 		if(armor[V] > 0)
 			.-- //it survives the acid...
@@ -429,7 +442,8 @@
 		if(istype(A, /mob/living/carbon/human))
 			var/mob/living/carbon/human/H = A
 			if(can_embed(src))
-				if(prob(embed_chance))
+				if(prob(embed_chance) && !(PIERCEIMMUNE in H.dna.species.specflags))
+					H.throw_alert("embeddedobject")
 					var/obj/item/organ/limb/L = pick(H.organs)
 					L.embedded_objects |= src
 					add_blood(H)//it embedded itself in you, of course it's bloody!
@@ -441,3 +455,12 @@
 	//Reset regardless of if we hit a human.
 	throw_speed = initial(throw_speed) //explosions change this.
 	..()
+
+/obj/item/proc/remove_item_from_storage(atom/newLoc) //please use this if you're going to snowflake an item out of a obj/item/weapon/storage
+	if(!newLoc)
+		return 0
+	if(istype(loc,/obj/item/weapon/storage))
+		var/obj/item/weapon/storage/S = loc
+		S.remove_from_storage(src,newLoc)
+		return 1
+	return 0

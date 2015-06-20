@@ -47,7 +47,7 @@
 	..()
 
 //Used by throw code to hand over the mob, instead of throwing the grab. The grab is then deleted by the throw code.
-/obj/item/weapon/grab/proc/throw()
+/obj/item/weapon/grab/proc/get_mob_if_throwable()
 	if(affecting)
 		if(affecting.buckled)
 			return null
@@ -115,6 +115,8 @@
 		affecting.Weaken(5)	//Should keep you down unless you get help.
 		affecting.losebreath = min(affecting.losebreath + 2, 3)
 
+/obj/item/weapon/grab/attack_self(mob/user)
+	s_click(hud)
 
 /obj/item/weapon/grab/proc/s_click(obj/screen/S)
 	if(!affecting)

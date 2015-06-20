@@ -223,42 +223,45 @@
 /obj/machinery/photocopier/attackby(obj/item/O, mob/user, params)
 	if(istype(O, /obj/item/weapon/paper))
 		if(copier_empty())
-			user.drop_item()
+			if(!user.drop_item())
+				return
 			copy = O
 			O.loc = src
 			user << "<span class='notice'>You insert [O] into [src].</span>"
 			flick("bigscanner1", src)
 			updateUsrDialog()
 		else
-			user << "<span class='notice'>There is already something in [src].</span>"
+			user << "<span class='warning'>There is already something in [src]!</span>"
 
 	else if(istype(O, /obj/item/weapon/photo))
 		if(copier_empty())
-			user.drop_item()
+			if(!user.drop_item())
+				return
 			photocopy = O
 			O.loc = src
 			user << "<span class='notice'>You insert [O] into [src].</span>"
 			flick("bigscanner1", src)
 			updateUsrDialog()
 		else
-			user << "<span class='notice'>There is already something in [src].</span>"
+			user << "<span class='warning'>There is already something in [src]!</span>"
 
 	else if(istype(O, /obj/item/device/toner))
 		if(toner <= 0)
-			user.drop_item()
+			if(!user.drop_item())
+				return
 			qdel(O)
 			toner = 40
 			user << "<span class='notice'>You insert [O] into [src].</span>"
 			updateUsrDialog()
 		else
-			user << "<span class='notice'>This cartridge is not yet ready for replacement! Use up the rest of the toner.</span>"
+			user << "<span class='warning'>This cartridge is not yet ready for replacement! Use up the rest of the toner.</span>"
 
 	else if(istype(O, /obj/item/weapon/wrench))
 		if(isinspace())
 			user << "<span class='warning'>There's nothing to fasten [src] to!</span>"
 			return
 		playsound(loc, 'sound/items/Ratchet.ogg', 50, 1)
-		user << "<span class='warning'>You start [anchored ? "unwrenching" : "wrenching"] [src]</span>"
+		user << "<span class='warning'>You start [anchored ? "unwrenching" : "wrenching"] [src]...</span>"
 		if(do_after(user, 20))
 			if(gc_destroyed)
 				return
@@ -302,30 +305,30 @@
 		return
 	src.add_fingerprint(user)
 	if(target == user)
-		visible_message("<span class='warning'>[user] starts climbing onto the photocopier!</span>")
+		user.visible_message("[user] starts climbing onto the photocopier!", "<span class='notice'>You start climbing onto the photocopier...</span>")
 	else
-		visible_message("<span class='warning'>[user] starts putting [target] onto the photocopier!</span>")
+		user.visible_message("<span class='warning'>[user] starts putting [target] onto the photocopier!</span>", "<span class='notice'>You start putting [target] onto the photocopier...</span>")
 
 	if(do_after(user, 20))
 		if(!target || target.gc_destroyed || gc_destroyed || !Adjacent(target)) //check if the photocopier/target still exists.
 			return
 
 		if(target == user)
-			visible_message("<span class='warning'>[user] climbs onto the photocopier!</span>")
+			user.visible_message("[user] climbs onto the photocopier!", "<span class='notice'>You climb onto the photocopier.</span>")
 		else
-			visible_message("<span class='warning'>[user] puts [target] onto the photocopier!</span>")
+			user.visible_message("<span class='warning'>[user] puts [target] onto the photocopier!</span>", "<span class='notice'>You put [target] onto the photocopier.</span>")
 
 		target.loc = get_turf(src)
 		ass = target
 
 		if(photocopy)
 			photocopy.loc = src.loc
-			visible_message("<span class='notice'>[photocopy] is shoved out of the way by [ass]!</span>")
+			visible_message("<span class='warning'>[photocopy] is shoved out of the way by [ass]!</span>")
 			photocopy = null
 
 		else if(copy)
 			copy.loc = src.loc
-			visible_message("<span class='notice'>[copy] is shoved out of the way by [ass]!</span>")
+			visible_message("<span class='warning'>[copy] is shoved out of the way by [ass]!</span>")
 			copy = null
 	updateUsrDialog()
 

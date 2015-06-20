@@ -102,8 +102,7 @@ var/list/wireColours = list("red", "blue", "green", "black", "orange", "brown", 
 
 /datum/wires/Topic(href, href_list)
 	..()
-	if(in_range(holder, usr) && isliving(usr))
-
+	if(usr.Adjacent(holder) && isliving(usr))
 		var/mob/living/L = usr
 		if(CanUse(L) && href_list["action"])
 			var/obj/item/I = L.get_active_hand()
@@ -113,14 +112,14 @@ var/list/wireColours = list("red", "blue", "green", "black", "orange", "brown", 
 					var/colour = href_list["cut"]
 					CutWireColour(colour)
 				else
-					L << "<span class='error'>You need wirecutters!</span>"
+					L << "<span class='warning'>You need wirecutters!</span>"
 
 			else if(href_list["pulse"])
 				if(istype(I, /obj/item/device/multitool))
 					var/colour = href_list["pulse"]
 					PulseColour(colour)
 				else
-					L << "<span class='error'>You need a multitool!</span>"
+					L << "<span class='warning'>You need a multitool!</span>"
 
 			else if(href_list["attach"])
 				var/colour = href_list["attach"]
@@ -135,10 +134,11 @@ var/list/wireColours = list("red", "blue", "green", "black", "orange", "brown", 
 					if(istype(I, /obj/item/device/assembly))
 						var/obj/item/device/assembly/A = I;
 						if(A.attachable)
-							L.drop_item()
+							if(!L.drop_item())
+								return
 							Attach(colour, A)
 						else
-							L << "<span class='error'>You need a attachable assembly!</span>"
+							L << "<span class='warning'>You need a attachable assembly!</span>"
 
 
 

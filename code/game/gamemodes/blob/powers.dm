@@ -2,7 +2,7 @@
 
 /mob/camera/blob/proc/can_buy(var/cost = 15)
 	if(blob_points < cost)
-		src << "<span class='warning'>You cannot afford this.</span>"
+		src << "<span class='warning'>You cannot afford this!</span>"
 		return 0
 	add_points(-cost)
 	return 1
@@ -192,7 +192,7 @@
 
 	var/mob/living/simple_animal/hostile/blob/blobbernaut/blobber = new /mob/living/simple_animal/hostile/blob/blobbernaut (get_turf(B))
 	if(blobber)
-		B.Destroy()
+		qdel(B)
 	blobber.color = blob_reagent_datum.color
 	blobber.overmind = src
 	blob_mobs.Add(blobber)
@@ -243,7 +243,7 @@
 		src << "Unable to remove this blob."
 		return
 
-	B.Destroy()
+	qdel(B)
 	return
 
 

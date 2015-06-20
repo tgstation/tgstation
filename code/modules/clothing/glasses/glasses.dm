@@ -178,8 +178,8 @@
 	emp_act(severity)
 		if(istype(src.loc, /mob/living/carbon/human))
 			var/mob/living/carbon/human/M = src.loc
-			M << "<span class='danger'>The Optical Thermal Scanner overloads and blinds you!</span>"
 			if(M.glasses == src)
+				M << "<span class='danger'>The Optical Thermal Scanner overloads and blinds you!</span>"
 				M.eye_blind = 3
 				M.eye_blurry = 5
 				M.disabilities |= NEARSIGHT
@@ -212,19 +212,19 @@
 	icon_state = "cold"
 	item_state = "cold"
 
-obj/item/clothing/glasses/heat
+/obj/item/clothing/glasses/heat
 	name = "heat goggles"
 	desc = "A pair of goggles meant for high temperatures."
 	icon_state = "heat"
 	item_state = "heat"
 
-obj/item/clothing/glasses/orange
+/obj/item/clothing/glasses/orange
 	name = "orange glasses"
 	desc = "A sweet pair of orange shades."
 	icon_state = "orangeglasses"
 	item_state = "orangeglasses"
 
-obj/item/clothing/glasses/red
+/obj/item/clothing/glasses/red
 	name = "red glasses"
 	desc = "A sweet pair of red shades."
 	icon_state = "redglasses"

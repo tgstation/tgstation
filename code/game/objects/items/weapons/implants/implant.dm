@@ -68,6 +68,7 @@
 	name = "firearms authentication implant"
 	desc = "Lets you shoot your guns"
 	icon_state = "auth"
+	activated = 0
 
 /obj/item/weapon/implant/weapons_auth/get_data()
 	var/dat = {"<b>Implant Specifications:</b><BR>
@@ -147,9 +148,9 @@
 	else
 		injectamount = cause
 	reagents.trans_to(R, injectamount)
-	R << "You hear a faint *beep*."
+	R << "<span class='italics'>You hear a faint beep.</span>"
 	if(!reagents.total_volume)
-		R << "You hear a faint click from your chest."
+		R << "<span class='italics'>You hear a faint click from your chest.</span>"
 		qdel(src)
 
 
@@ -173,13 +174,15 @@
 
 /obj/item/weapon/implant/loyalty/implanted(mob/target)
 	..()
-	if((target.mind in ticker.mode.head_revolutionaries) || (target.mind in ticker.mode.A_bosses) || (target.mind in ticker.mode.B_bosses))
+	if((target.mind in ticker.mode.head_revolutionaries) || is_shadow_or_thrall(target))
 		target.visible_message("<span class='warning'>[target] seems to resist the implant!</span>", "<span class='warning'>You feel the corporate tendrils of Nanotrasen try to invade your mind!</span>")
 		return 0
-	if((target.mind in ticker.mode.revolutionaries) || (target.mind in ticker.mode.A_gangsters) || (target.mind in ticker.mode.B_gangsters))
+	if(target.mind in ticker.mode.revolutionaries)
 		ticker.mode.remove_revolutionary(target.mind)
-		ticker.mode.remove_gangster(target.mind, exclude_bosses=0)
-	target << "<span class='notice'>You feel a surge of loyalty towards Nanotrasen.</span>"
+	if(target.mind in (ticker.mode.cult| ticker.mode.A_bosses | ticker.mode.B_bosses | ticker.mode.A_gang | ticker.mode.B_gang))
+		target << "<span class='warning'>You feel the corporate tendrils of Nanotrasen try to invade your mind!</span>"
+	else
+		target << "<span class='notice'>You feel a surge of loyalty towards Nanotrasen.</span>"
 	return 1
 
 
@@ -213,7 +216,7 @@
 
 	imp_in.reagents.add_reagent("synaptizine", 10)
 	imp_in.reagents.add_reagent("omnizine", 10)
-	imp_in.reagents.add_reagent("morphine", 10)
+	imp_in.reagents.add_reagent("stimulants", 10)
 
 
 /obj/item/weapon/implant/emp

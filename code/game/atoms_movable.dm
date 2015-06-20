@@ -82,6 +82,11 @@
 		qdel(AM)
 	loc = null
 	invisibility = 101
+	if (pulledby)
+		if (pulledby.pulling == src)
+			pulledby.pulling = null
+		pulledby = null
+
 
 // Previously known as HasEntered()
 // This is automatically called when something enters your square

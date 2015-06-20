@@ -82,6 +82,18 @@
 	src << "You will [(prefs.chat_toggles & CHAT_PRAYER) ? "now" : "no longer"] see prayerchat."
 	feedback_add_details("admin_verb","TP") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
+/client/verb/toggleprayersounds()
+	set name = "Hear/Silence Prayer Sounds"
+	set category = "Preferences"
+	set desc = "Toggles hearing pray sounds."
+	prefs.toggles ^= SOUND_PRAYERS
+	prefs.save_preferences()
+	if(prefs.toggles & SOUND_PRAYERS)
+		src << "You will now hear prayer sounds."
+	else
+		src << "You will no longer prayer sounds."
+	feedback_add_details("admin_verb", "PSounds")
+
 /client/verb/togglePRs()
 	set name = "Show/Hide Pull Request Announcements"
 	set category = "Preferences"
@@ -113,7 +125,7 @@
 	else
 		src << "You will no longer hear music in the game lobby."
 		if(istype(mob, /mob/new_player))
-			src << sound(null, repeat = 0, wait = 0, volume = 85, channel = 1) // stop the jamsz
+			mob.stopLobbySound()
 	feedback_add_details("admin_verb","TLobby") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
 /client/verb/togglemidis()
@@ -208,7 +220,8 @@
 var/list/ghost_forms = list("ghost","ghostking","ghostian2","skeleghost","ghost_red","ghost_black", \
 							"ghost_blue","ghost_yellow","ghost_green","ghost_pink", \
 							"ghost_cyan","ghost_dblue","ghost_dred","ghost_dgreen", \
-							"ghost_dcyan","ghost_grey","ghost_dyellow","ghost_dpink")
+							"ghost_dcyan","ghost_grey","ghost_dyellow","ghost_dpink", "ghost_purpleswirl","ghost_funkypurp","ghost_pinksherbert","ghost_blazeit",\
+							"ghost_mellow","ghost_rainbow","ghost_camo","ghost_fire")
 /client/verb/pick_form()
 	set name = "Choose Ghost Form"
 	set category = "Preferences"

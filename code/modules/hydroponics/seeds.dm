@@ -3,7 +3,7 @@
 // ********************************************************
 
 /obj/item/seeds
-	name = "pack of seeds"
+	name = "A pack of seeds."
 	icon = 'icons/obj/hydroponics/seeds.dmi'
 	icon_state = "seed"				//Unknown plant seed - these shouldn't exist in-game.
 	w_class = 1						//Pocketable.
@@ -36,14 +36,14 @@
 /obj/item/seeds/attackby(var/obj/item/O as obj, var/mob/user as mob, params)
 	if (istype(O, /obj/item/device/analyzer/plant_analyzer))
 		user << "*** <B>[plantname]</B> ***"
-		user << "-Plant Endurance: <span class='notice'> [endurance]</span>"
-		user << "-Plant Lifespan: <span class='notice'> [lifespan]</span>"
-		user << "-Species Discovery Value: <span class='notice'> [rarity]</span>"
+		user << "-Plant Endurance: <span class='notice'>[endurance]</span>"
+		user << "-Plant Lifespan: <span class='notice'>[lifespan]</span>"
+		user << "-Species Discovery Value: <span class='notice'>[rarity]</span>"
 		if(yield != -1)
-			user << "-Plant Yield: <span class='notice'> [yield]</span>"
-		user << "-Plant Production: <span class='notice'> [production]</span>"
+			user << "-Plant Yield: <span class='notice'>[yield]</span>"
+		user << "-Plant Production: <span class='notice'>[production]</span>"
 		if(potency != -1)
-			user << "-Plant Potency: <span class='notice'> [potency]</span>"
+			user << "-Plant Potency: <span class='notice'>[potency]</span>"
 		var/list/text_strings = get_analyzer_text()
 		if(text_strings)
 			for(var/string in text_strings)
@@ -90,7 +90,7 @@
 	var/datum/mind/mind = null
 	var/blood_gender = null
 	var/blood_type = null
-	var/mutant_color = null
+	var/list/features = null
 	var/factions = null
 	var/contains_sample = 0
 
@@ -104,15 +104,15 @@
 					realName = bloodSample.data["real_name"]
 					blood_gender = bloodSample.data["gender"]
 					blood_type = bloodSample.data["blood_type"]
-					mutant_color = bloodSample.data["mutant_color"]
+					features = bloodSample.data["features"]
 					factions = bloodSample.data["factions"]
 					W.reagents.clear_reagents()
-					user << "You inject the contents of the syringe into the seeds."
+					user << "<span class='notice'>You inject the contents of the syringe into the seeds.</span>"
 					contains_sample = 1
 				else
-					user << "The seeds reject the sample!"
+					user << "<span class='warning'>The seeds reject the sample!</span>"
 		else
-			user << "The seeds already contain a genetic sample."
+			user << "<span class='warning'>The seeds already contain a genetic sample!</span>"
 	..()
 
 
@@ -405,7 +405,7 @@
 	plant_type = 0
 	oneharvest = 1
 	growthstages = 3
-	mutatelist = list(/obj/item/seeds/bluetomatoseed, /obj/item/seeds/bloodtomatoseed)
+	mutatelist = list(/obj/item/seeds/geraniumseed, /obj/item/seeds/lilyseed)
 
 /obj/item/seeds/geraniumseed
 	name = "pack of geranium seeds"
@@ -1346,7 +1346,10 @@
 /obj/item/seeds/kudzuseed/attack_self(mob/user as mob)
 	if(istype(user.loc,/turf/space))
 		return
+	var/turf/T = get_turf(src)
 	user << "<span class='notice'>You plant the kudzu. You monster.</span>"
+	message_admins("Kudzu planted by [key_name_admin(user)](<A HREF='?_src_=holder;adminmoreinfo=\ref[user]'>?</A>) (<A HREF='?_src_=holder;adminplayerobservefollow=\ref[user]'>FLW</A>) at ([T.x],[T.y],[T.z] - <A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[T.x];Y=[T.y];Z=[T.z]'>(JMP)</a>)",0,1)
+	investigate_log("was planted by [key_name(user)] at ([T.x],[T.y],[T.z])","kudzu")
 	new /obj/effect/spacevine_controller(user.loc, mutations, potency, production)
 	qdel(src)
 
@@ -1369,7 +1372,7 @@
 		if(prob(20))
 			mutations.Remove(pick(temp_mut_list))
 		temp_mut_list.Cut()
-	if(S.has_reagent("fuel", 5))
+	if(S.has_reagent("welding_fuel", 5))
 		for(var/datum/spacevine_mutation/SM in mutations)
 			if(SM.quality == POSITIVE)
 				temp_mut_list += SM

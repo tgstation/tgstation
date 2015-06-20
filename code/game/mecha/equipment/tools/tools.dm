@@ -47,12 +47,12 @@
 						occupant_message("<span class='notice'>[target] successfully loaded.</span>")
 						log_message("Loaded [O]. Cargo compartment capacity: [cargo_holder.cargo_capacity - cargo_holder.cargo.len]")
 					else
-						occupant_message("<span class='warning'>You must hold still while handling objects.</span>")
+						occupant_message("<span class='warning'>You must hold still while handling objects!</span>")
 						O.anchored = initial(O.anchored)
 			else
-				occupant_message("<span class='warning'>Not enough room in cargo compartment.</span>")
+				occupant_message("<span class='warning'>Not enough room in cargo compartment!</span>")
 		else
-			occupant_message("<span class='warning'>[target] is firmly secured.</span>")
+			occupant_message("<span class='warning'>[target] is firmly secured!</span>")
 
 	else if(istype(target,/mob/living))
 		var/mob/living/M = target
@@ -65,7 +65,7 @@
 			M.updatehealth()
 			target.visible_message("<span class='danger'>[chassis] squeezes [target].</span>", \
 								"<span class='userdanger'>[chassis] squeezes [target].</span>",\
-								"You hear something crack")
+								"<span class='italics'>You hear something crack.</span>")
 			add_logs(chassis.occupant, M, "attacked", object="[name]", addition="(INTENT: [uppertext(chassis.occupant.a_intent)]) (DAMTYE: [uppertext(damtype)])")
 		else
 			step_away(M,chassis)
@@ -87,15 +87,17 @@
 /obj/item/mecha_parts/mecha_equipment/tool/drill/action(atom/target)
 	if(!action_checks(target))
 		return
+	if(istype(target, /turf) && !istype(target, /turf/simulated))
+		return
 	if(isobj(target))
 		var/obj/target_obj = target
 		if(target_obj.unacidable)
 			return
 	set_ready_state(0)
 	chassis.use_power(energy_drain)
-	target.visible_message("<span class='danger'>[chassis] starts to drill [target]</span>", \
-					"<span class='userdanger'>[chassis] starts to drill [target]</span>", \
-					 "You hear drilling.")
+	target.visible_message("<span class='warning'>[chassis] starts to drill [target].</span>", \
+					"<span class='userdanger'>[chassis] starts to drill [target]...</span>", \
+					 "<span class='italics'>You hear drilling.</span>")
 	var/T = chassis.loc
 	var/C = target.loc	//why are these backwards? we may never know -Pete
 	if(do_after_cooldown(target))
@@ -175,6 +177,34 @@
 		if(istype(M, /obj/mecha/working) || istype(M, /obj/mecha/combat))
 			return 1
 	return 0
+
+/obj/item/mecha_parts/mecha_equipment/tool/mining_scanner
+	name = "exosuit mining scanner"
+	desc = "Equipment for engineering and combat exosuits. It will automatically check surrounding rock for useful minerals."
+	icon_state = "mecha_analyzer"
+	origin_tech = "materials=3;engineering=2"
+	equip_cooldown = 30
+	var/scanning = 0
+
+/obj/item/mecha_parts/mecha_equipment/tool/mining_scanner/New()
+	SSobj.processing |= src
+
+/obj/item/mecha_parts/mecha_equipment/tool/mining_scanner/process()
+	if(!loc)
+		SSobj.processing.Remove(src)
+		qdel(src)
+	if(scanning)
+		return
+	if(istype(loc,/obj/mecha/working))
+		var/obj/mecha/working/mecha = loc
+		if(!mecha.occupant)
+			return
+		var/list/occupant = list()
+		occupant |= mecha.occupant
+		scanning = 1
+		mineral_scan_pulse(occupant,get_turf(loc))
+		spawn(equip_cooldown)
+			scanning = 0
 
 /obj/item/mecha_parts/mecha_equipment/tool/extinguisher
 	name = "exosuit extinguisher"
@@ -271,22 +301,24 @@
 	switch(mode)
 		if(0)
 			if (istype(target, /turf/simulated/wall))
-				occupant_message("Deconstructing [target]...")
+				var/turf/simulated/wall/W = target
+				occupant_message("Deconstructing [W]...")
 				set_ready_state(0)
-				if(do_after_cooldown(target))
+				if(do_after_cooldown(W))
 					if(disabled) return
 					chassis.spark_system.start()
-					target:ChangeTurf(/turf/simulated/floor/plating)
-					playsound(target, 'sound/items/Deconstruct.ogg', 50, 1)
+					W.ChangeTurf(/turf/simulated/floor/plating)
+					playsound(W, 'sound/items/Deconstruct.ogg', 50, 1)
 					chassis.use_power(energy_drain)
 			else if (istype(target, /turf/simulated/floor))
-				occupant_message("Deconstructing [target]...")
+				var/turf/simulated/floor/F = target
+				occupant_message("Deconstructing [F]...")
 				set_ready_state(0)
-				if(do_after_cooldown(target))
+				if(do_after_cooldown(F))
 					if(disabled) return
 					chassis.spark_system.start()
-					target:ChangeTurf(/turf/space)
-					playsound(target, 'sound/items/Deconstruct.ogg', 50, 1)
+					F.ChangeTurf(F.baseturf)
+					playsound(F, 'sound/items/Deconstruct.ogg', 50, 1)
 					chassis.use_power(energy_drain)
 			else if (istype(target, /obj/machinery/door/airlock))
 				occupant_message("Deconstructing [target]...")
@@ -299,21 +331,23 @@
 					chassis.use_power(energy_drain)
 		if(1)
 			if(istype(target, /turf/space))
+				var/turf/space/S = target
 				occupant_message("Building Floor...")
 				set_ready_state(0)
-				if(do_after_cooldown(target))
+				if(do_after_cooldown(S))
 					if(disabled) return
-					target:ChangeTurf(/turf/simulated/floor/plating)
-					playsound(target, 'sound/items/Deconstruct.ogg', 50, 1)
+					S.ChangeTurf(/turf/simulated/floor/plating)
+					playsound(S, 'sound/items/Deconstruct.ogg', 50, 1)
 					chassis.spark_system.start()
 					chassis.use_power(energy_drain*2)
 			else if(istype(target, /turf/simulated/floor))
+				var/turf/simulated/floor/F = target
 				occupant_message("Building Wall...")
 				set_ready_state(0)
 				if(do_after_cooldown(target))
 					if(disabled) return
-					target:ChangeTurf(/turf/simulated/wall)
-					playsound(target, 'sound/items/Deconstruct.ogg', 50, 1)
+					F.ChangeTurf(/turf/simulated/wall)
+					playsound(F, 'sound/items/Deconstruct.ogg', 50, 1)
 					chassis.spark_system.start()
 					chassis.use_power(energy_drain*2)
 		if(2)
@@ -561,8 +595,8 @@
 	P.icon_state = "anom"
 	P.name = "wormhole"
 	var/turf/T = get_turf(target)
-	message_admins("[key_name(chassis.occupant, chassis.occupant.client)](<A HREF='?_src_=holder;adminmoreinfo=\ref[chassis.occupant]'>?</A>) used a Wormhole Generator in ([T.x],[T.y],[T.z] - <A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[T.x];Y=[T.y];Z=[T.z]'>JMP</a>)",0,1)
-	log_game("[chassis.occupant.ckey]([chassis.occupant]) used a Wormhole Generator in ([T.x],[T.y],[T.z])")
+	message_admins("[key_name_admin(chassis.occupant, chassis.occupant.client)](<A HREF='?_src_=holder;adminmoreinfo=\ref[chassis.occupant]'>?</A>) (<A HREF='?_src_=holder;adminplayerobservefollow=\ref[chassis.occupant]'>FLW</A>) used a Wormhole Generator in ([T.x],[T.y],[T.z] - <A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[T.x];Y=[T.y];Z=[T.z]'>JMP</a>)",0,1)
+	log_game("[key_name(chassis.occupant)] used a Wormhole Generator in ([T.x],[T.y],[T.z])")
 	do_after_cooldown()
 	src = null
 	spawn(rand(150,300))
@@ -1028,7 +1062,7 @@
 		var/result = load_fuel(target)
 		var/message
 		if(isnull(result))
-			message = "<span class='danger'>[fuel] traces in target minimal. [target] cannot be used as fuel.</span>"
+			message = "<span class='warning'>[fuel] traces in target minimal! [target] cannot be used as fuel.</span>"
 		else if(!result)
 			message = "Unit is full."
 		else
@@ -1138,9 +1172,9 @@
 	if(..())
 		for(var/mob/living/carbon/M in view(EG.chassis))
 			if(istype(M,/mob/living/carbon/human))
-				M.apply_effect((EG.rad_per_cycle*3),IRRADIATE,0)
+				M.irradiate(EG.rad_per_cycle*3)
 			else
-				M.radiation += EG.rad_per_cycle
+				M.irradiate(EG.rad_per_cycle)
 	return 1
 
 
@@ -1186,12 +1220,12 @@
 						chassis.occupant_message("<span class='notice'>[target] successfully loaded.</span>")
 						chassis.log_message("Loaded [O]. Cargo compartment capacity: [cargo_holder.cargo_capacity - cargo_holder.cargo.len]")
 					else
-						chassis.occupant_message("<span class='warning'>You must hold still while handling objects.</span>")
+						chassis.occupant_message("<span class='warning'>You must hold still while handling objects!</span>")
 						O.anchored = initial(O.anchored)
 			else
-				chassis.occupant_message("<span class='warning'>Not enough room in cargo compartment.</span>")
+				chassis.occupant_message("<span class='warning'>Not enough room in cargo compartment!</span>")
 		else
-			chassis.occupant_message("<span class='warning'>[target] is firmly secured.</span>")
+			chassis.occupant_message("<span class='warning'>[target] is firmly secured!</span>")
 
 	else if(istype(target,/mob/living))
 		var/mob/living/M = target

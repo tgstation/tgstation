@@ -10,25 +10,26 @@
 	var/destroyed = 0
 
 	var/maximum_pressure = 90*ONE_ATMOSPHERE
+	var/lastupdate = 0
 
 /obj/machinery/portable_atmospherics/New()
 	..()
-
+	SSair.atmos_machinery += src
 	air_contents.volume = volume
 	air_contents.temperature = T20C
-
 	return 1
 
-/obj/machinery/portable_atmospherics/process()
-	if(!connected_port) //only react when pipe_network will ont it do it for you
+/obj/machinery/portable_atmospherics/process_atmos()
+	if(!connected_port) //only react when pipe_network will not it do it for you
 		//Allow for reactions
 		air_contents.react()
 	else
 		update_icon()
-
+/obj/machinery/portable_atmospherics/process()
+	return
 /obj/machinery/portable_atmospherics/Destroy()
-	del(air_contents)
-
+	qdel(air_contents)
+	SSair.atmos_machinery -= src
 	..()
 
 /obj/machinery/portable_atmospherics/update_icon()
@@ -66,8 +67,10 @@
 	if ((istype(W, /obj/item/weapon/tank) && !( src.destroyed )))
 		if (src.holding)
 			return
+		if(!user.drop_item())
+			return
+
 		var/obj/item/weapon/tank/T = W
-		user.drop_item()
 		T.loc = src
 		src.holding = T
 		update_icon()

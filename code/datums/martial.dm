@@ -3,6 +3,8 @@
 	var/streak = ""
 	var/max_streak_length = 6
 	var/current_target = null
+	var/temporary = 0
+	var/datum/martial_art/base = null // The permanent style
 
 /datum/martial_art/proc/disarm_act(var/mob/living/carbon/human/A, var/mob/living/carbon/human/D)
 	return 0
@@ -65,17 +67,31 @@
 		D.forcesay(hit_appends)
 	return 1
 
+/datum/martial_art/proc/teach(var/mob/living/carbon/human/H,var/make_temporary=0)
+	if(make_temporary)
+		temporary = 1
+	if(H.martial_art && H.martial_art.temporary)
+		if(temporary)
+			base = H.martial_art.base
+		else
+			H.martial_art.base = src //temporary styles have priority
+			return
+	H.martial_art = src
 
+/datum/martial_art/proc/remove(var/mob/living/carbon/human/H)
+	if(H.martial_art != src)
+		return
+	H.martial_art = base
 
 /datum/martial_art/boxing
 	name = "Boxing"
 
 /datum/martial_art/boxing/disarm_act(var/mob/living/carbon/human/A, var/mob/living/carbon/human/D)
-	A << "<span class='warning'> Can't disarm while boxing!</span>"
+	A << "<span class='warning'>Can't disarm while boxing!</span>"
 	return 1
 
 /datum/martial_art/boxing/grab_act(var/mob/living/carbon/human/A, var/mob/living/carbon/human/D)
-	A << "<span class='warning'> Can't grab while boxing!</span>"
+	A << "<span class='warning'>Can't grab while boxing!</span>"
 	return 1
 
 /datum/martial_art/boxing/harm_act(var/mob/living/carbon/human/A, var/mob/living/carbon/human/D)
@@ -135,6 +151,7 @@
 
 
 /datum/martial_art/wrestling/proc/Suplex(var/mob/living/carbon/human/A, var/mob/living/carbon/human/D)
+	add_logs(A, D, "suplexed")
 	D.visible_message("<span class='danger'>[A] suplexes [D]!</span>", \
 								"<span class='userdanger'>[A] suplexes [D]!</span>")
 	D.forceMove(A.loc)
@@ -249,43 +266,43 @@
 
 
 //ITEMS
-
 /obj/item/clothing/gloves/boxing
-	var/datum/martial_art/old = null
+	var/datum/martial_art/boxing/style = new
 
 /obj/item/clothing/gloves/boxing/equipped(mob/user, slot)
 	if(!ishuman(user))
 		return
 	if(slot == slot_gloves)
 		var/mob/living/carbon/human/H = user
-		old = H.martial_art
-		H.martial_art = new/datum/martial_art/boxing(null)
+		style.teach(H,1)
 	return
 
 /obj/item/clothing/gloves/boxing/dropped(mob/user)
 	if(!ishuman(user))
 		return
 	var/mob/living/carbon/human/H = user
-	H.martial_art = old
+	if(H.get_item_by_slot(slot_gloves) == src)
+		style.remove(H)
 	return
 
 /obj/item/weapon/storage/belt/champion/wrestling
-	var/datum/martial_art/old = null
+	name = "Wrestling Belt"
+	var/datum/martial_art/wrestling/style = new
 
 /obj/item/weapon/storage/belt/champion/wrestling/equipped(mob/user, slot)
 	if(!ishuman(user))
 		return
 	if(slot == slot_belt)
 		var/mob/living/carbon/human/H = user
-		old = H.martial_art
-		H.martial_art = new/datum/martial_art/wrestling(null)
+		style.teach(H,1)
 	return
 
 /obj/item/weapon/storage/belt/champion/wrestling/dropped(mob/user)
 	if(!ishuman(user))
 		return
 	var/mob/living/carbon/human/H = user
-	H.martial_art = old
+	if(H.get_item_by_slot(slot_belt) == src)
+		style.remove(H)
 	return
 
 /obj/item/weapon/plasma_fist_scroll
@@ -296,9 +313,12 @@
 	var/used = 0
 
 /obj/item/weapon/plasma_fist_scroll/attack_self(mob/user as mob)
-	if(!ishuman(user) || used)
+	if(!ishuman(user))
 		return
-	var/mob/living/carbon/human/H = user
-	H.martial_art = new/datum/martial_art/plasma_fist
-	used = 1
-	desc += "It looks like it's magic was used up."
+	if(!used)
+		var/mob/living/carbon/human/H = user
+		var/datum/martial_art/plasma_fist/F = new/datum/martial_art/plasma_fist(null)
+		F.teach(H)
+		H << "<span class='notice'>You learn the PLASMA FIST style</span>"
+		used = 1
+		desc += "It looks like it's magic was used up."

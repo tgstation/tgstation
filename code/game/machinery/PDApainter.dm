@@ -43,12 +43,13 @@
 /obj/machinery/pdapainter/attackby(var/obj/item/O as obj, var/mob/user as mob, params)
 	if(istype(O, /obj/item/device/pda))
 		if(storedpda)
-			user << "There is already a PDA inside."
+			user << "<span class='warning'>There is already a PDA inside!</span>"
 			return
 		else
 			var/obj/item/device/pda/P = usr.get_active_hand()
 			if(istype(P))
-				user.drop_item()
+				if(!user.drop_item())
+					return
 				storedpda = P
 				P.loc = src
 				P.add_fingerprint(usr)

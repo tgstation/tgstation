@@ -80,19 +80,19 @@
 				user.dna.add_mutation(LASEREYES)
 				user.dna.add_mutation(COLDRES)
 				user.dna.add_mutation(XRAY)
-				user.dna.species = new /datum/species/shadow()
+				hardset_dna(user, null, null, null, null, /datum/species/shadow)
 				user.regenerate_icons()
 			if("Wealth")
 				user << "<B>Your wish is granted, but at a terrible cost...</B>"
 				user << "The Wish Granter punishes you for your selfishness, claiming your soul and warping your body to match the darkness in your heart."
 				new /obj/structure/closet/syndicate/resources/everything(loc)
-				user.dna.species = new /datum/species/shadow()
+				hardset_dna(user, null, null, null, null, /datum/species/shadow)
 				user.regenerate_icons()
 			if("Immortality")
 				user << "<B>Your wish is granted, but at a terrible cost...</B>"
 				user << "The Wish Granter punishes you for your selfishness, claiming your soul and warping your body to match the darkness in your heart."
 				user.verbs += /mob/living/carbon/proc/immortality
-				user.dna.species = new /datum/species/shadow()
+				hardset_dna(user, null, null, null, null, /datum/species/shadow)
 				user.regenerate_icons()
 			if("To Kill")
 				user << "<B>Your wish is granted, but at a terrible cost...</B>"
@@ -107,7 +107,7 @@
 				for(var/datum/objective/OBJ in user.mind.objectives)
 					user << "<B>Objective #[obj_count]</B>: [OBJ.explanation_text]"
 					obj_count++
-				user.dna.species = new /datum/species/shadow()
+				hardset_dna(user, null, null, null, null, /datum/species/shadow)
 				user.regenerate_icons()
 			if("Peace")
 				user << "<B>Whatever alien sentience that the Wish Granter possesses is satisfied with your wish. There is a distant wailing as the last of the Faithless begin to die, then silence.</B>"

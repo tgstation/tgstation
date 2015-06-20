@@ -22,7 +22,7 @@
 
 /obj/structure/table_frame/attackby(var/obj/item/I, mob/user, params)
 	if(istype(I, /obj/item/weapon/wrench))
-		user << "<span class='notice'>Now disassembling [src].</span>"
+		user << "<span class='notice'>You start disassembling [src]...</span>"
 		playsound(src.loc, 'sound/items/Ratchet.ogg', 50, 1)
 		if(do_after(user, 30))
 			playsound(src.loc, 'sound/items/Deconstruct.ogg', 50, 1)
@@ -32,28 +32,37 @@
 			return
 	if(istype(I, /obj/item/stack/sheet/plasteel))
 		var/obj/item/stack/sheet/plasteel/P = I
-		user << "<span class='notice'>Now adding [P] to [src].</span>"
+		if(P.get_amount() < 1)
+			user << "<span class='warning'>You need one plasteel sheet to do this!</span>"
+			return
+		user << "<span class='notice'>You start adding [P] to [src]...</span>"
 		if(do_after(user, 50))
+			P.use(1)
 			new /obj/structure/table/reinforced(src.loc)
 			qdel(src)
-			P.use(1)
-			return
+		return
 	if(istype(I, /obj/item/stack/sheet/metal))
 		var/obj/item/stack/sheet/metal/M = I
-		user << "<span class='notice'>Now adding [M] to [src].</span>"
+		if(M.get_amount() < 1)
+			user << "<span class='warning'>You need one metal sheet to do this!</span>"
+			return
+		user << "<span class='notice'>You start adding [M] to [src]...</span>"
 		if(do_after(user, 20))
+			M.use(1)
 			new /obj/structure/table(src.loc)
 			qdel(src)
-			M.use(1)
-			return
+		return
 	if(istype(I, /obj/item/stack/sheet/glass))
 		var/obj/item/stack/sheet/glass/G = I
-		user << "<span class='notice'>Now adding [G] to [src].</span>"
+		if(G.get_amount() < 1)
+			user << "<span class='warning'>You need one glass sheet to do this!</span>"
+			return
+		user << "<span class='notice'>You start adding [G] to [src]...</span>"
 		if(do_after(user, 20))
+			G.use(1)
 			new /obj/structure/table/glass(src.loc)
 			qdel(src)
-			G.use(1)
-			return
+		return
 
 /*
  * Wooden Frames
@@ -71,17 +80,23 @@
 		..()
 	if(istype(I, /obj/item/stack/sheet/mineral/wood))
 		var/obj/item/stack/sheet/mineral/wood/W = I
-		user << "<span class='notice'>Now adding [W] to [src].</span>"
+		if(W.get_amount() < 1)
+			user << "<span class='warning'>You need one wood sheet to do this!</span>"
+			return
+		user << "<span class='notice'>You start adding [W] to [src]...</span>"
 		if(do_after(user, 20))
+			W.use(1)
 			new /obj/structure/table/wood(src.loc)
 			qdel(src)
-			W.use(1)
-			return
+		return
 	if(istype(I, /obj/item/stack/tile/carpet))
 		var/obj/item/stack/tile/carpet/C = I
-		user << "<span class='notice'>Now adding [C] to [src].</span>"
+		if(C.get_amount() < 1)
+			user << "<span class='warning'>You need one carpet sheet to do this!</span>"
+			return
+		user << "<span class='notice'>You start adding [C] to [src]...</span>"
 		if(do_after(user, 20))
+			C.use(1)
 			new /obj/structure/table/wood/poker(src.loc)
 			qdel(src)
-			C.use(1)
-			return
+		return

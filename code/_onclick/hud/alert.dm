@@ -33,8 +33,12 @@
 			clear_alert(category)
 			return .()
 		else if(alert.icon_state == "[id][severity]")
-//			src << "threw alert not in need of update [category] [id] [severity]"
-			return 0
+			if(alert.timeout)
+				clear_alert(category)
+				return .()
+			else
+	//			src << "threw alert not in need of update [category] [id] [severity]"
+				return 0
 //		src << "updating alert [category] [id] [severity]"
 	else
 		alert = PoolOrNew(/obj/screen/alert)
@@ -63,6 +67,12 @@
 		return 0
 	alert.name = initial(path_as_obj.name)
 	alert.desc = initial(path_as_obj.desc)
+	alert.timeout = initial(path_as_obj.timeout)
+	if(alert.timeout)
+		spawn(alert.timeout)
+			if(alert.timeout && alerts[category] == alert && world.time >= alert.timeout)
+				clear_alert(category)
+		alert.timeout = world.time + alert.timeout - world.tick_lag
 	alert.mouse_opacity = 1
 
 	return alert
@@ -86,16 +96,37 @@
 	icon_state = "default"
 	name = "Alert"
 	desc = "Something seems to have gone wrong with this alert, so report this bug please"
+	var/timeout = 0 //If set to a number, this alert will clear itself after that many deciseconds
 
+
+//Gas alerts
 /obj/screen/alert/oxy
-	name = "Choking"
+	name = "Choking (No O2)"
 	desc = "You're not getting enough oxygen. Find some good air before you pass out! \
 The box in your backpack has an oxygen tank and gas mask in it."
 
+/obj/screen/alert/too_much_oxy
+	name = "Choking (O2)"
+	desc = "There's too much oxygen in the air, and you're breathing it in! Find some good air before you pass out!"
+
+/obj/screen/alert/not_enough_co2
+	name = "Choking (No CO2)"
+	desc = "You're not getting enough carbon dioxide. Find some good air before you pass out!"
+
+/obj/screen/alert/too_much_co2
+	name = "Chocking (CO2)"
+	desc = "There's too much carbon dioxide in the air, and you're breathing it in! Find some good air before you pass out!"
+
+/obj/screen/alert/not_enough_tox
+	name = "Choking (No Plasma)"
+	desc = "You're not getting enough plasma. Find some good air before you pass out!"
+
 /obj/screen/alert/tox_in_air
-	name = "Toxic Gas"
+	name = "Choking (Plasma)"
 	desc = "There's highly flammable, toxic plasma in the air and you're breathing it in. Find some fresh air. \
 The box in your backpack has an oxygen tank and gas mask in it."
+//End gas alerts
+
 
 /obj/screen/alert/fat
 	name = "Fat"
@@ -125,6 +156,37 @@ The box in your backpack has an oxygen tank and gas mask in it."
 	name = "High Pressure"
 	desc = "The air around you is hazardously thick. A fire suit would protect you."
 
+/obj/screen/alert/blind
+	name = "Blind"
+	desc = "For whatever reason, you can't see. This may be caused by a genetic defect, eye trauma, being unconscious, \
+or something covering your eyes."
+
+/obj/screen/alert/high
+	name = "High"
+	desc = "Woah man, you're tripping balls! Careful you don't get addicted to this... if you aren't already."
+
+/obj/screen/alert/drunk //Not implemented
+	name = "Drunk"
+	desc = "All that alcohol you've been drinking is impairing your speech, motor skills, and mental cognition. Make sure to act like it."
+
+/obj/screen/alert/embeddedobject
+	name = "Embedded Object"
+	desc = "Something got lodged into your flesh and is causing major bleeding. It might fall out with time, but surgery is the safest way. \
+If you're feeling frisky, click yourself in help intent to pull the object out."
+
+/obj/screen/alert/asleep
+	name = "Asleep"
+	desc = "You've fallen asleep. Wait a bit and you should wake up. Unless you don't, considering how helpless you are."
+
+/obj/screen/alert/weightless
+	name = "Weightless"
+	desc = "Gravity has ceased affecting you, and you're floating around aimlessly. You'll need something large and heavy, like a \
+wall or lattice strucure, to push yourself off of if you want to move. A jetpack would enable free range of motion. A pair of \
+magboots would let you walk around normally on the floor. Barring those, you can throw things, use a fire extuingisher, \
+or shoot a gun to move around via Newton's 3rd Law of motion."
+
+//ALIENS
+
 /obj/screen/alert/alien_tox
 	name = "Plasma"
 	desc = "There's flammable plasma in the air. If it lights up, you'll be toast."
@@ -133,6 +195,9 @@ The box in your backpack has an oxygen tank and gas mask in it."
 // This alert is temporarily gonna be thrown for all hot air but one day it will be used for literally being on fire
 	name = "Burning"
 	desc = "It's too hot! Flee to space or at least away from the flames. Standing on weeds will heal you up."
+
+
+//SILICONS
 
 /obj/screen/alert/nocell
 	name = "Missing Power Cell"
@@ -146,6 +211,24 @@ Reharging stations are available in robotics, the dormitory's bathrooms. and the
 /obj/screen/alert/lowcell
 	name = "Low Charge"
 	desc = "Unit's power cell is running low. Reharging stations are available in robotics, the dormitory's bathrooms. and the AI satelite."
+
+//Need to cover all use cases - emag, illegal upgrade module, malf AI hack, traitor cyborg
+/obj/screen/alert/hacked
+	name = "Hacked"
+	desc = "Hazardous non-standard equipment detected. Please ensure any usage of this equipment is in line with unit's laws, if any."
+
+/obj/screen/alert/locked
+	name = "Locked Down"
+	desc = "Unit has remotely locked down. Usage of a Robotics Control Computer like the one in the Research Director's \
+office by your AI master or any qualified human may resolve this matter. Robotics my provide further assistance if necessary."
+
+/obj/screen/alert/newlaw
+	name = "Law Update"
+	desc = "Laws have potentially been uploaded to or removed from this unit. Please be aware of any changes \
+so as to remain in compliance with the most up-to-date laws."
+	timeout = 300
+
+//OBJECT-BASED
 
 /obj/screen/alert/buckled
 	name = "Buckled"
@@ -200,5 +283,4 @@ Reharging stations are available in robotics, the dormitory's bathrooms. and the
 		return usr.client.Click(master, location, control, params)
 
 /obj/screen/alert/Destroy()
-	PlaceInPool(src)
-	return 1 // Don't destroy me, I have a family!
+	return QDEL_HINT_PUTINPOOL //Don't destroy me, I have a family!

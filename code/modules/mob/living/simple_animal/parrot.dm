@@ -43,8 +43,7 @@
 
 	speak_chance = 1 //1% (1 in 100) chance every tick; So about once per 150 seconds, assuming an average tick is 1.5s
 	turns_per_move = 5
-	meat_type = /obj/item/weapon/reagent_containers/food/snacks/cracker/
-	meat_amount = 1
+	butcher_results = list(/obj/item/weapon/reagent_containers/food/snacks/cracker/ = 1)
 	melee_damage_upper = 10
 	melee_damage_lower = 5
 
@@ -204,19 +203,19 @@
 							if(copytext(possible_phrase,1,3) in department_radio_keys)
 								possible_phrase = copytext(possible_phrase,3)
 					else
-						usr << "<span class='danger'>There is nothing to remove from its [remove_from].</span>"
+						usr << "<span class='warning'>There is nothing to remove from its [remove_from]!</span>"
 						return
 
 		//Adding things to inventory
 		else if(href_list["add_inv"])
 			var/add_to = href_list["add_inv"]
 			if(!usr.get_active_hand())
-				usr << "<span class='danger'>You have nothing in your hand to put on its [add_to].</span>"
+				usr << "<span class='warning'>You have nothing in your hand to put on its [add_to]!</span>"
 				return
 			switch(add_to)
 				if("ears")
 					if(ears)
-						usr << "<span class='danger'>It's already wearing something.</span>"
+						usr << "<span class='warning'>It's already wearing something!</span>"
 						return
 					else
 						var/obj/item/item_to_add = usr.get_active_hand()
@@ -224,7 +223,7 @@
 							return
 
 						if( !istype(item_to_add,  /obj/item/device/radio/headset) )
-							usr << "<span class='danger'>This object won't fit.</span>"
+							usr << "<span class='warning'>This object won't fit!</span>"
 							return
 
 						var/obj/item/device/radio/headset/headset_to_add = item_to_add
@@ -232,7 +231,7 @@
 						usr.drop_item()
 						headset_to_add.loc = src
 						src.ears = headset_to_add
-						usr << "You fit the headset onto [src]."
+						usr << "<span class='notice'>You fit the headset onto [src].</span>"
 
 						clearlist(available_channels)
 						for(var/ch in headset_to_add.channels)
@@ -489,7 +488,7 @@
 				if(!parrot_perch || parrot_interest.loc != parrot_perch.loc)
 					held_item = parrot_interest
 					parrot_interest.loc = src
-					visible_message("[src] grabs [held_item]!", "<span class='notice'>You grab [held_item]!</span>", "You hear the sounds of wings flapping furiously.")
+					visible_message("[src] grabs [held_item]!", "<span class='notice'>You grab [held_item]!</span>", "<span class='italics'>You hear the sounds of wings flapping furiously.</span>")
 
 			parrot_interest = null
 			parrot_state = PARROT_SWOOP | PARROT_RETURN
@@ -605,20 +604,25 @@
 	return 0
 
 /mob/living/simple_animal/parrot/proc/search_for_item()
+	var/item
 	for(var/atom/movable/AM in view(src))
 		//Skip items we already stole or are wearing or are too big
 		if(parrot_perch && AM.loc == parrot_perch.loc || AM.loc == src)
 			continue
-
 		if(istype(AM, /obj/item))
 			var/obj/item/I = AM
 			if(I.w_class < 2)
-				return I
-
-		if(iscarbon(AM))
+				item = I
+		else if(iscarbon(AM))
 			var/mob/living/carbon/C = AM
 			if((C.l_hand && C.l_hand.w_class <= 2) || (C.r_hand && C.r_hand.w_class <= 2))
-				return C
+				item = C
+		if(item)
+			if(!AStar(loc, get_turf(item), src, /turf/proc/Distance))
+				item = null
+				continue
+			return item
+
 	return null
 
 /mob/living/simple_animal/parrot/proc/search_for_perch()
@@ -663,7 +667,7 @@
 		return -1
 
 	if(held_item)
-		src << "<span class='danger'>You are already holding [held_item]</span>"
+		src << "<span class='warning'>You are already holding [held_item]!</span>"
 		return 1
 
 	for(var/obj/item/I in view(1,src))
@@ -676,10 +680,10 @@
 
 			held_item = I
 			I.loc = src
-			visible_message("[src] grabs [held_item]!", "<span class='notice'>You grab [held_item]!</span>", "You hear the sounds of wings flapping furiously.")
+			visible_message("[src] grabs [held_item]!", "<span class='notice'>You grab [held_item]!</span>", "<span class='italics'>You hear the sounds of wings flapping furiously.</span>")
 			return held_item
 
-	src << "<span class='danger'>There is nothing of interest to take.</span>"
+	src << "<span class='warning'>There is nothing of interest to take!</span>"
 	return 0
 
 /mob/living/simple_animal/parrot/proc/steal_from_mob()
@@ -691,7 +695,7 @@
 		return -1
 
 	if(held_item)
-		src << "<span class='danger'>You are already holding [held_item]</span>"
+		src << "<span class='warning'>You are already holding [held_item]!</span>"
 		return 1
 
 	var/obj/item/stolen_item = null
@@ -707,10 +711,10 @@
 			C.unEquip(stolen_item)
 			held_item = stolen_item
 			stolen_item.loc = src
-			visible_message("[src] grabs [held_item] out of [C]'s hand!", "<span class='notice'>You snag [held_item] out of [C]'s hand!</span>", "You hear the sounds of wings flapping furiously.")
+			visible_message("[src] grabs [held_item] out of [C]'s hand!", "<span class='notice'>You snag [held_item] out of [C]'s hand!</span>", "<span class='italics'>You hear the sounds of wings flapping furiously.</span>")
 			return held_item
 
-	src << "<span class='danger'>There is nothing of interest to take.</spawn>"
+	src << "<span class='warning'>There is nothing of interest to take!</spawn>"
 	return 0
 
 /mob/living/simple_animal/parrot/verb/drop_held_item_player()
@@ -779,7 +783,7 @@
 					src.loc = AM.loc
 					icon_state = "parrot_sit"
 					return
-	src << "<span class='danger'>There is no perch nearby to sit on.</span>"
+	src << "<span class='warning'>There is no perch nearby to sit on!</span>"
 	return
 
 /mob/living/simple_animal/parrot/proc/toggle_mode()

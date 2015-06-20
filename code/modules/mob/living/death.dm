@@ -2,6 +2,9 @@
 	var/prev_lying = lying
 	death(1)
 
+	if(buckled)
+		buckled.unbuckle_mob() //to update alien nest overlay.
+
 	var/atom/movable/overlay/animate = setup_animation(animation, prev_lying)
 	if(animate)
 		gib_animation(animate)

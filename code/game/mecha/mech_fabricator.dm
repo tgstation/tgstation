@@ -139,7 +139,7 @@
 		var/amount = min(res_max_amount, resources[resource])
 		output += "<span class=\"res_name\">[material2name(resource)]: </span>[amount] cm&sup3;"
 		if(amount>0)
-			output += "<span style='font-size:80%;'> - Remove \[<a href='?src=\ref[src];remove_mat=1;material=[resource]'>1</a>\] | \[<a href='?src=\ref[src];remove_mat=10;material=[resource]'>10</a>\] | \[<a href='?src=\ref[src];remove_mat=[resources[resource] / MINERAL_MATERIAL_AMOUNT];material=[resource]'>All</a>\]</span>"
+			output += "<span style='font-size:80%;'>- Remove \[<a href='?src=\ref[src];remove_mat=1;material=[resource]'>1</a>\] | \[<a href='?src=\ref[src];remove_mat=10;material=[resource]'>10</a>\] | \[<a href='?src=\ref[src];remove_mat=[resources[resource] / MINERAL_MATERIAL_AMOUNT];material=[resource]'>All</a>\]</span>"
 		output += "<br/>"
 	return output
 
@@ -169,8 +169,8 @@
 	overlays -= "fab-active"
 	desc = initial(desc)
 
-	var/obj/item/I = new D.build_path
-	I.loc = get_step(src,SOUTH)
+	var/location = get_step(src,SOUTH)
+	var/obj/item/I = new D.build_path(location)
 	I.m_amt = get_resource_cost_w_coeff(D,"$metal")
 	I.g_amt = get_resource_cost_w_coeff(D,"$glass")
 	visible_message("\icon[src] <b>\The [src]</b> beeps, \"\The [I] is complete.\"")
@@ -500,7 +500,7 @@
 			default_deconstruction_crowbar(W)
 			return 1
 		else
-			user << "<span class='danger'>You can't load \the [name] while it's opened.</span>"
+			user << "<span class='warning'>You can't load \the [name] while it's opened!</span>"
 			return 1
 
 	if(istype(W, /obj/item/stack))
@@ -526,10 +526,10 @@
 				return ..()
 
 		if(being_built)
-			user << "\The [src] is currently processing. Please wait until completion."
+			user << "<span class='warning'>\The [src] is currently processing! Please wait until completion.</span>"
 			return
 		if(res_max_amount - resources[material] < MINERAL_MATERIAL_AMOUNT) //overstuffing the fabricator
-			user << "\The [src] [material2name(material)] storage is full."
+			user << "<span class='warning'>\The [src] [material2name(material)] storage is full!</span>"
 			return
 		var/obj/item/stack/sheet/stack = W
 		var/sname = "[stack.name]"
@@ -539,12 +539,12 @@
 			var/transfer_amount = min(stack.amount, round((res_max_amount - resources[material])/MINERAL_MATERIAL_AMOUNT,1))
 			resources[material] += transfer_amount * MINERAL_MATERIAL_AMOUNT
 			stack.use(transfer_amount)
-			user << "You insert [transfer_amount] [sname] sheet\s into \the [src]."
+			user << "<span class='notice'>You insert [transfer_amount] [sname] sheet\s into \the [src].</span>"
 			sleep(10)
 			updateUsrDialog()
 			overlays -= "fab-load-[material2name(material)]" //No matter what the overlay shall still be deleted
 		else
-			user << "\The [src] cannot hold any more [sname] sheet\s."
+			user << "<span class='warning'>\The [src] cannot hold any more [sname] sheet\s!</span>"
 		return
 
 /obj/machinery/mecha_part_fabricator/proc/material2name(var/ID)

@@ -75,7 +75,7 @@
 			if(ST != plank && istype(ST, plank_type) && ST.amount < ST.max_amount)
 				ST.attackby(plank, user) //we try to transfer all old unfinished stacks to the new stack we created.
 		if(plank.amount > old_plank_amount)
-			user << "You add the newly-formed [plank_name] to the stack. It now contains [plank.amount] [plank_name]."
+			user << "<span class='notice'>You add the newly-formed [plank_name] to the stack. It now contains [plank.amount] [plank_name].</span>"
 		qdel(src)
 
 	if(is_type_in_list(W,accepted))
@@ -89,7 +89,7 @@
 			qdel(src)
 			return
 		else
-			usr << "<span class ='warning'> You must dry this first.</span>"
+			usr << "<span class ='warning'>You must dry this first!</span>"
 
 /obj/item/weapon/grown/log/steel
 	seed = /obj/item/seeds/steelmycelium
@@ -115,7 +115,7 @@
 
 /obj/item/weapon/grown/sunflower/attack(mob/M as mob, mob/user as mob)
 	M << "<font color='green'><b> [user] smacks you with a sunflower!</font><font color='yellow'><b>FLOWER POWER<b></font>"
-	user << "<font color='green'> Your sunflower's </font><font color='yellow'><b>FLOWER POWER</b></font><font color='green'> strikes [M]</font>"
+	user << "<font color='green'>Your sunflower's </font><font color='yellow'><b>FLOWER POWER</b></font><font color='green'>strikes [M]</font>"
 
 
 /obj/item/weapon/grown/novaflower
@@ -152,7 +152,7 @@
 	if(endurance > 0)
 		endurance -= rand(1, (endurance / 3) + 1)
 	else
-		usr << "All the petals have fallen off the [name] from violent whacking."
+		usr << "<span class='warning'>All the petals have fallen off the [name] from violent whacking!</span>"
 		usr.unEquip(src)
 		qdel(src)
 
@@ -163,7 +163,7 @@
 
 
 /obj/item/weapon/grown/nettle //abstract type
-	name = "abstract nettle"
+	name = "nettle"
 	desc = "It's probably <B>not</B> wise to touch it with bare hands..."
 	icon = 'icons/obj/weapons.dmi'
 	icon_state = "nettle"
@@ -211,7 +211,6 @@
 
 /obj/item/weapon/grown/nettle/basic
 	seed = /obj/item/seeds/nettleseed
-	name = "nettle"
 
 /obj/item/weapon/grown/nettle/basic/add_juice()
 	..()

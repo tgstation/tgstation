@@ -60,7 +60,7 @@
 	else
 		if(mages_made >= max_mages)
 			finished = 1
-			return 1
+			return ..()
 		else
 			make_more_mages()
 	return ..()

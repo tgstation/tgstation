@@ -37,7 +37,7 @@
 	var/meat = /obj/item/weapon/reagent_containers/food/snacks/meat/slab/human //What the species drops on gibbing
 	var/list/no_equip = list()	// slots the race can't equip stuff to
 	var/nojumpsuit = 0	// this is sorta... weird. it basically lets you equip stuff that usually needs jumpsuits without one, like belts and pockets and ids
-
+	var/dangerous_existence = null //A flag for transformation spells that tells them "hey if you turn a person into one of these without preperation, they'll probably die!"
 	var/say_mod = "says"	// affects the speech message
 
 	var/list/mutant_bodyparts = list() 	// Parts of the body that are diferent enough from the standard human model that they cause clipping with some equipment
@@ -61,6 +61,24 @@
 	var/sound/miss_sound = 'sound/weapons/punchmiss.ogg'
 
 	var/mob/living/list/ignored_by = list()	// list of mobs that will ignore this species
+
+	//Breathing!
+	var/safe_oxygen_min = 16 // Minimum safe partial pressure of O2, in kPa
+	var/safe_oxygen_max = 0
+	var/safe_co2_min = 0
+	var/safe_co2_max = 10 // Yes it's an arbitrary value who cares?
+	var/safe_toxins_min = 0
+	var/safe_toxins_max = 0.005
+	var/SA_para_min = 1 //Sleeping agent
+	var/SA_sleep_min = 5 //Sleeping agent
+
+	//Breath damage
+	var/oxy_breath_dam_min = 1
+	var/oxy_breath_dam_max = 10
+	var/co2_breath_dam_min = 1
+	var/co2_breath_dam_max = 10
+	var/tox_breath_dam_min = MIN_PLASMA_DAMAGE
+	var/tox_breath_dam_max = MAX_PLASMA_DAMAGE
 
 	///////////
 	// PROCS //
@@ -95,7 +113,7 @@
 
 		spec_base = image("icon" = 'icons/mob/human.dmi', "icon_state" = icon_state_string, "layer" = -SPECIES_LAYER)
 
-		spec_base.color = "#[H.dna.mutant_color]"
+		spec_base.color = "#[H.dna.features["mcolor"]]"
 		standing = spec_base
 
 	if(standing)
@@ -118,7 +136,7 @@
 
 			if(hair_color)
 				if(hair_color == "mutcolor")
-					img_facial_s.color = "#" + H.dna.mutant_color
+					img_facial_s.color = "#" + H.dna.features["mcolor"]
 				else
 					img_facial_s.color = "#" + hair_color
 			else
@@ -146,7 +164,7 @@
 
 			if(hair_color)
 				if(hair_color == "mutcolor")
-					img_hair_s.color = "#" + H.dna.mutant_color
+					img_hair_s.color = "#" + H.dna.features["mcolor"]
 				else
 					img_hair_s.color = "#" + hair_color
 			else
@@ -222,26 +240,75 @@
 		if(H.wear_suit && (H.wear_suit.flags_inv & HIDEJUMPSUIT))
 			bodyparts_to_add -= "tail"
 
+
+	if("waggingtail" in mutant_bodyparts)
+		if(H.wear_suit && (H.wear_suit.flags_inv & HIDEJUMPSUIT))
+			bodyparts_to_add -= "waggingtail"
+		else if ("tail" in mutant_bodyparts)
+			bodyparts_to_add -= "waggingtail"
+
+	if("spines" in mutant_bodyparts)
+		if(!H.dna.features["spines"] || H.dna.features["spines"] == "None" || H.wear_suit && (H.wear_suit.flags_inv & HIDEJUMPSUIT))
+			bodyparts_to_add -= "spines"
+
+	if("waggingspines" in mutant_bodyparts)
+		if(!H.dna.features["spines"] || H.dna.features["spines"] == "None" || H.wear_suit && (H.wear_suit.flags_inv & HIDEJUMPSUIT))
+			bodyparts_to_add -= "waggingspines"
+		else if ("tail" in mutant_bodyparts)
+			bodyparts_to_add -= "waggingspines"
+
 	if("snout" in mutant_bodyparts) //Take a closer look at that snout!
 		if(H.wear_mask && (H.wear_mask.flags_inv & HIDEFACE))
 			bodyparts_to_add -= "snout"
 
+	if("frills" in mutant_bodyparts)
+		if(!H.dna.features["frills"] || H.dna.features["frills"] == "None" || H.head && (H.head.flags_inv & HIDEEARS))
+			bodyparts_to_add -= "frills"
+
+	if("horns" in mutant_bodyparts)
+		if(!H.dna.features["horns"] || H.dna.features["horns"] == "None" || H.head && (H.head.flags & BLOCKHAIR) || (H.wear_mask && (H.wear_mask.flags & BLOCKHAIR)))
+			bodyparts_to_add -= "horns"
+
 	if(!bodyparts_to_add)
 		return
 
-	var/icon_state_string = "[id]_"
 	var/g = (H.gender == FEMALE) ? "f" : "m"
-	var/image/I
 
-	if(sexes)
-		icon_state_string += "[g]_s"
-	else
-		icon_state_string += "_s"
+	var/image/I
 
 	for(var/layer in relevent_layers)
 		for(var/bodypart in bodyparts_to_add)
-			I = image("icon" = 'icons/mob/mutant_bodyparts.dmi', "icon_state" = "[icon_state_string]_[bodypart]_[layer]", "layer" =- layer)
-			I.color = "#[H.dna.mutant_color]"
+			var/datum/sprite_accessory/S
+			switch(bodypart)
+				if("tail")
+					S = tails_list[H.dna.features["tail"]]
+				if("waggingtail")
+					S.= animated_tails_list[H.dna.features["tail"]]
+				if("spines")
+					S = spines_list[H.dna.features["spines"]]
+				if("waggingspines")
+					S.= animated_spines_list[H.dna.features["spines"]]
+				if("snout")
+					S = snouts_list[H.dna.features["snout"]]
+				if("frills")
+					S = frills_list[H.dna.features["frills"]]
+				if("horns")
+					S = horns_list[H.dna.features["horns"]]
+				if("body_markings")
+					S = body_markings_list[H.dna.features["body_markings"]]
+
+			if(!S || S.icon_state == "none")
+				continue
+			var/icon_string
+			if(S.gender_specific)
+				icon_string = "[id]_[g]_[bodypart]_[S.icon_state]_[layer]"
+			else
+				icon_string = "[id]_m_[bodypart]_[S.icon_state]_[layer]"
+
+			I = image("icon" = 'icons/mob/mutant_bodyparts.dmi', "icon_state" = icon_string, "layer" =- layer)
+
+			if(!(H.disabilities & HUSK))
+				I.color = "#[H.dna.features["mcolor"]]"
 			standing += I
 		H.overlays_standing[layer] = standing.Copy()
 		standing = list()
@@ -309,7 +376,7 @@
 				return 0
 			if(!H.w_uniform && !nojumpsuit)
 				if(!disable_warning)
-					H << "<span class='danger'>You need a jumpsuit before you can attach this [I.name].</span>"
+					H << "<span class='warning'>You need a jumpsuit before you can attach this [I.name]!</span>"
 				return 0
 			if( !(I.slot_flags & SLOT_BELT) )
 				return
@@ -343,7 +410,7 @@
 				return 0
 			if(!H.w_uniform && !nojumpsuit)
 				if(!disable_warning)
-					H << "<span class='danger'>You need a jumpsuit before you can attach this [I.name].</span>"
+					H << "<span class='warning'>You need a jumpsuit before you can attach this [I.name]!</span>"
 				return 0
 			if( !(I.slot_flags & SLOT_ID) )
 				return 0
@@ -355,7 +422,7 @@
 				return 0
 			if(!H.w_uniform && !nojumpsuit)
 				if(!disable_warning)
-					H << "<span class='danger'>You need a jumpsuit before you can attach this [I.name].</span>"
+					H << "<span class='warning'>You need a jumpsuit before you can attach this [I.name]!</span>"
 				return 0
 			if(I.slot_flags & SLOT_DENYPOCKET)
 				return
@@ -368,7 +435,7 @@
 				return 0
 			if(!H.w_uniform && !nojumpsuit)
 				if(!disable_warning)
-					H << "<span class='danger'>You need a jumpsuit before you can attach this [I.name].</span>"
+					H << "<span class='warning'>You need a jumpsuit before you can attach this [I.name]!</span>"
 				return 0
 			if(I.slot_flags & SLOT_DENYPOCKET)
 				return 0
@@ -382,7 +449,7 @@
 				return 0
 			if(!H.wear_suit)
 				if(!disable_warning)
-					H << "<span class='danger'>You need a suit before you can attach this [I.name].</span>"
+					H << "<span class='warning'>You need a suit before you can attach this [I.name]!</span>"
 				return 0
 			if(!H.wear_suit.allowed)
 				if(!disable_warning)
@@ -500,6 +567,11 @@
 		if(!(SEE_OBJS & H.permanent_sight_flags))
 			H.sight &= ~SEE_OBJS
 
+		if(H.remote_view)
+			H.sight |= SEE_TURFS
+			H.sight |= SEE_MOBS
+			H.sight |= SEE_OBJS
+
 		H.see_in_dark = (H.sight == SEE_TURFS|SEE_MOBS|SEE_OBJS) ? 8 : darksight
 		var/see_temp = H.see_invisible
 		H.see_invisible = invis_sight
@@ -528,8 +600,12 @@
 					H.client.screen += global_hud.darkMask
 
 		if(H.blind)
-			if(H.eye_blind)		H.blind.layer = 18
-			else			H.blind.layer = 0
+			if(H.eye_blind)
+				H.throw_alert("blind")
+				H.blind.layer = 18
+			else
+				H.clear_alert("blind")
+				H.blind.layer = 0
 
 		if(!H.client)//no client, no screen to update
 			return 1
@@ -537,7 +613,11 @@
 		if( H.disabilities & NEARSIGHT && !istype(H.glasses, /obj/item/clothing/glasses/regular) )
 			H.client.screen += global_hud.vimpaired
 		if(H.eye_blurry)			H.client.screen += global_hud.blurry
-		if(H.druggy)				H.client.screen += global_hud.druggy
+		if(H.druggy)
+			H.client.screen += global_hud.druggy
+			H.throw_alert("high")
+		else
+			H.clear_alert("high")
 
 
 		if(H.eye_stat > 20)
@@ -781,10 +861,10 @@
 				var/obj/item/organ/limb/affecting = H.get_organ(ran_zone(M.zone_sel.selecting))
 				var/randn = rand(1, 100)
 				if(randn <= 25)
-					H.apply_effect(2, WEAKEN, H.run_armor_check(affecting, "melee"))
 					playsound(H, 'sound/weapons/thudswoosh.ogg', 50, 1, -1)
 					H.visible_message("<span class='danger'>[M] has pushed [H]!</span>",
 									"<span class='userdanger'>[M] has pushed [H]!</span>")
+					H.apply_effect(2, WEAKEN, H.run_armor_check(affecting, "melee", "Your armor prevents your fall!", "Your armor softens your fall!"))
 					H.forcesay(hit_appends)
 					return
 
@@ -831,7 +911,7 @@
 	// Allows you to put in item-specific reactions based on species
 	if(user != src)
 		user.do_attack_animation(H)
-	if((user != H) && H.check_shields(I.force, "the [I.name]"))
+	if((user != H) && H.check_shields(I.force, "the [I.name]", I))
 		return 0
 
 	if(I.attack_verb && I.attack_verb.len)
@@ -843,7 +923,7 @@
 	else
 		return 0
 
-	var/armor = H.run_armor_check(affecting, "melee", "<span class='warning'>Your armor has protected your [hit_area].</span>", "<span class='warning'>Your armor has softened a hit to your [hit_area].</span>")
+	var/armor = H.run_armor_check(affecting, "melee", "<span class='notice'>Your armor has protected your [hit_area].</span>", "<span class='notice'>Your armor has softened a hit to your [hit_area].</span>")
 	if(armor >= 100)	return 0
 	var/Iforce = I.force //to avoid runtimes on the forcesay checks at the bottom. Some items might delete themselves if you drop them. (stunning yourself, ninja swords)
 
@@ -1058,47 +1138,44 @@
 
 		return 0
 
-	var/safe_oxygen_min = 16 // Minimum safe partial pressure of O2, in kPa
-	//var/safe_oxygen_max = 140 // Maximum safe partial pressure of O2, in kPa (Not used for now)
-	var/safe_co2_max = 10 // Yes it's an arbitrary value who cares?
-	var/safe_toxins_max = 0.005
-	var/SA_para_min = 1
-	var/SA_sleep_min = 5
-	var/oxygen_used = 0
-	var/breath_pressure = (breath.total_moles()*R_IDEAL_GAS_EQUATION*breath.temperature)/BREATH_VOLUME
+	var/gas_breathed = 0
 
-	//Partial pressure of the O2 in our breath
-	var/O2_pp = (breath.oxygen/breath.total_moles())*breath_pressure
-	// Same, but for the toxins
-	var/Toxins_pp = (breath.toxins/breath.total_moles())*breath_pressure
-	// And CO2, lets say a PP of more than 10 will be bad (It's a little less really, but eh, being passed out all round aint no fun)
-	var/CO2_pp = (breath.carbon_dioxide/breath.total_moles())*breath_pressure // Tweaking to fit the hacky bullshit I've done with atmo -- TLE
-	//var/CO2_pp = (breath.carbon_dioxide/breath.total_moles())*0.5 // The default pressure value
+	//Partial pressures in our breath
+	var/O2_pp = breath.get_breath_partial_pressure(breath.oxygen)
+	var/Toxins_pp = breath.get_breath_partial_pressure(breath.toxins)
+	var/CO2_pp = breath.get_breath_partial_pressure(breath.carbon_dioxide)
 
-	if(O2_pp < safe_oxygen_min) // Too little oxygen
-		if(!(NOBREATH in specflags) || (H.health <= config.health_threshold_crit))
-			if(prob(20))
-				spawn(0) H.emote("gasp")
-			if(O2_pp > 0)
-				var/ratio = safe_oxygen_min/O2_pp
-				H.adjustOxyLoss(min(5*ratio, HUMAN_MAX_OXYLOSS)) // Don't fuck them up too fast (space only does HUMAN_MAX_OXYLOSS after all!)
-				H.failed_last_breath = 1
-				oxygen_used = breath.oxygen*ratio/6
-			else
-				H.adjustOxyLoss(HUMAN_MAX_OXYLOSS)
-				H.failed_last_breath = 1
-			H.throw_alert("oxy")
-	else								// We're in safe limits
+
+	//-- OXY --//
+
+	//Too much oxygen! //Yes, some species may not like it.
+	if(safe_oxygen_max && O2_pp > safe_oxygen_max && !(NOBREATH in specflags))
+		var/ratio = (breath.oxygen/safe_oxygen_max) * 10
+		H.adjustOxyLoss(Clamp(ratio,oxy_breath_dam_min,oxy_breath_dam_max))
+		H.throw_alert("too_much_oxy")
+	else
+		H.clear_alert("too_much_oxy")
+
+	//Too little oxygen!
+	if(safe_oxygen_min && O2_pp < safe_oxygen_min)
+		gas_breathed = handle_too_little_breath(H,O2_pp,safe_oxygen_min,breath.oxygen)
+		H.throw_alert("oxy")
+	else
 		H.failed_last_breath = 0
 		H.adjustOxyLoss(-5)
-		oxygen_used = breath.oxygen/6
+		gas_breathed = breath.oxygen/6
 		H.clear_alert("oxy")
 
-	breath.oxygen -= oxygen_used
-	breath.carbon_dioxide += oxygen_used
+	//Exhale
+	breath.oxygen -= gas_breathed
+	breath.carbon_dioxide += gas_breathed
+	gas_breathed = 0
+
+
+	//-- CO2 --//
 
 	//CO2 does not affect failed_last_breath. So if there was enough oxygen in the air but too much co2, this will hurt you, but only once per 4 ticks, instead of once per tick.
-	if(CO2_pp > safe_co2_max && !(NOBREATH in specflags))
+	if(safe_co2_max && CO2_pp > safe_co2_max && !(NOBREATH in specflags))
 		if(!H.co2overloadtime) // If it's the first breath with too much CO2 in it, lets start a counter, then have them pass out after 12s or so.
 			H.co2overloadtime = world.time
 		else if(world.time - H.co2overloadtime > 120)
@@ -1106,24 +1183,63 @@
 			H.adjustOxyLoss(3) // Lets hurt em a little, let them know we mean business
 			if(world.time - H.co2overloadtime > 300) // They've been in here 30s now, lets start to kill them for their own good!
 				H.adjustOxyLoss(8)
+			H.throw_alert("too_much_co2")
 		if(prob(20)) // Lets give them some chance to know somethings not right though I guess.
 			spawn(0) H.emote("cough")
 
 	else
 		H.co2overloadtime = 0
+		H.clear_alert("too_much_co2")
 
-	if(Toxins_pp > safe_toxins_max && !(NOBREATH in specflags)) // Too much toxins
+	//Too little CO2!
+	if(safe_co2_min && CO2_pp < safe_co2_min)
+		gas_breathed = handle_too_little_breath(H,CO2_pp, safe_co2_min,breath.carbon_dioxide)
+		H.throw_alert("not_enough_co2")
+	else
+		H.failed_last_breath = 0
+		H.adjustOxyLoss(-5)
+		gas_breathed = breath.carbon_dioxide/6
+		H.clear_alert("not_enough_co2")
+
+	//Exhale
+	breath.carbon_dioxide -= gas_breathed
+	breath.oxygen += gas_breathed
+	gas_breathed = 0
+
+
+	//-- TOX --//
+
+	//Too much toxins!
+	if(safe_toxins_max && Toxins_pp > safe_toxins_max && !(NOBREATH in specflags))
 		var/ratio = (breath.toxins/safe_toxins_max) * 10
-		//adjustToxLoss(Clamp(ratio, MIN_PLASMA_DAMAGE, MAX_PLASMA_DAMAGE))	//Limit amount of damage toxin exposure can do per second
 		if(H.reagents)
-			H.reagents.add_reagent("plasma", Clamp(ratio, MIN_PLASMA_DAMAGE, MAX_PLASMA_DAMAGE))
+			H.reagents.add_reagent("plasma", Clamp(ratio, tox_breath_dam_min, tox_breath_dam_max))
 		H.throw_alert("tox_in_air")
 	else
 		H.clear_alert("tox_in_air")
 
+
+	//Too little toxins!
+	if(safe_toxins_min && Toxins_pp < safe_toxins_min && !(NOBREATH in specflags))
+		gas_breathed = handle_too_little_breath(H,Toxins_pp, safe_toxins_min, breath.toxins)
+		H.throw_alert("not_enough_tox")
+	else
+		H.failed_last_breath = 0
+		H.adjustOxyLoss(-5)
+		gas_breathed = breath.toxins/6
+		H.clear_alert("not_enough_tox")
+
+	//Exhale
+	breath.toxins -= gas_breathed
+	breath.carbon_dioxide += gas_breathed
+	gas_breathed = 0
+
+
+	//-- TRACES --//
+
 	if(breath.trace_gases.len && !(NOBREATH in specflags))	// If there's some other shit in the air lets deal with it here.
 		for(var/datum/gas/sleeping_agent/SA in breath.trace_gases)
-			var/SA_pp = (SA.moles/breath.total_moles())*breath_pressure
+			var/SA_pp = breath.get_breath_partial_pressure(SA.moles)
 			if(SA_pp > SA_para_min) // Enough to make us paralysed for a bit
 				H.Paralyse(3) // 3 gives them one second to wake up and run away a bit!
 				if(SA_pp > SA_sleep_min) // Enough to make us sleep as well
@@ -1136,8 +1252,29 @@
 
 	return 1
 
+
+//Returns the amount of true_pp we breathed
+/datum/species/proc/handle_too_little_breath(var/mob/living/carbon/human/H = null,var/breath_pp = 0, var/safe_breath_min = 0, var/true_pp = 0)
+	. = 0
+	if(!H || !safe_breath_min) //the other args are either: Ok being 0 or Specifically handled.
+		return 0
+
+	if(!(NOBREATH in specflags) || (H.health <= config.health_threshold_crit))
+		if(prob(20))
+			spawn(0)
+				H.emote("gasp")
+		if(breath_pp > 0)
+			var/ratio = safe_breath_min/breath_pp
+			H.adjustOxyLoss(min(5*ratio, HUMAN_MAX_OXYLOSS)) // Don't fuck them up too fast (space only does HUMAN_MAX_OXYLOSS after all!
+			H.failed_last_breath = 1
+			. = true_pp*ratio/6
+		else
+			H.adjustOxyLoss(HUMAN_MAX_OXYLOSS)
+			H.failed_last_breath = 1
+
+
 /datum/species/proc/handle_breath_temperature(datum/gas_mixture/breath, var/mob/living/carbon/human/H) // called by human/life, handles temperatures
-	if( (abs(310.15 - breath.temperature) > 50) && !(mutations_list[COLDRES] in H.dna.mutations) && !(COLDRES in specflags)) // Hot air hurts :(
+	if(abs(310.15 - breath.temperature) > 50)
 
 		if(!(mutations_list[COLDRES] in H.dna.mutations)) // COLD DAMAGE
 			switch(breath.temperature)
@@ -1156,18 +1293,18 @@
 					H.apply_damage(HEAT_GAS_DAMAGE_LEVEL_2, BURN, "head")
 				if(1000 to INFINITY)
 					H.apply_damage(HEAT_GAS_DAMAGE_LEVEL_3, BURN, "head")
+
 /datum/species/proc/handle_environment(datum/gas_mixture/environment, var/mob/living/carbon/human/H)
 	if(!environment)
 		return
 
 	var/loc_temp = H.get_temperature(environment)
-	//world << "Loc temp: [loc_temp] - Body temp: [bodytemperature] - Fireloss: [getFireLoss()] - Thermal protection: [get_thermal_protection()] - Fire protection: [thermal_protection + add_fire_protection(loc_temp)] - Heat capacity: [environment_heat_capacity] - Location: [loc] - src: [src]"
 
-	//Body temperature is adjusted in two steps. Firstly your body tries to stabilize itself a bit.
-	if(H.stat != 2)
-		H.stabilize_temperature_from_calories()
+	//Body temperature is adjusted in two steps. First, your body tries to stabilize itself a bit.
+	if(H.stat != DEAD)
+		H.natural_bodytemperature_stabilization()
 
-	//After then, it reacts to the surrounding atmosphere based on your thermal protection
+	//Then, it reacts to the surrounding atmosphere based on your thermal protection
 	if(!H.on_fire) //If you're on fire, you do not heat up or cool down based on surrounding gases
 		if(loc_temp < H.bodytemperature)
 			//Place is colder than we are

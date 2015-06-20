@@ -13,15 +13,13 @@ Buildable meters
 #define PIPE_MVALVE				8
 #define PIPE_PUMP				9
 #define PIPE_SCRUBBER			10
-#define PIPE_INSULATED_STRAIGHT	11
-#define PIPE_INSULATED_BENT		12
-#define PIPE_GAS_FILTER			13
-#define PIPE_GAS_MIXER			14
-#define PIPE_PASSIVE_GATE       15
-#define PIPE_VOLUME_PUMP        16
-#define PIPE_HEAT_EXCHANGE      17
-#define PIPE_DVALVE             18
-#define PIPE_4WAYMANIFOLD       19
+#define PIPE_GAS_FILTER			11
+#define PIPE_GAS_MIXER			12
+#define PIPE_PASSIVE_GATE       13
+#define PIPE_VOLUME_PUMP        14
+#define PIPE_HEAT_EXCHANGE      15
+#define PIPE_DVALVE             16
+#define PIPE_4WAYMANIFOLD       17
 //Disposal piping numbers - do NOT hardcode these, use the defines
 #define DISP_PIPE_STRAIGHT		0
 #define DISP_PIPE_BENT			1
@@ -63,8 +61,6 @@ Buildable meters
 			src.pipe_type = PIPE_JUNCTION
 		else if(istype(make_from, /obj/machinery/atmospherics/pipe/simple/heat_exchanging))
 			src.pipe_type = PIPE_HE_STRAIGHT + is_bent
-		else if(istype(make_from, /obj/machinery/atmospherics/pipe/simple/insulated))
-			src.pipe_type = PIPE_INSULATED_STRAIGHT + is_bent
 		else if(istype(make_from, /obj/machinery/atmospherics/pipe/simple))
 			src.pipe_type = PIPE_SIMPLE_STRAIGHT + is_bent
 		else if(istype(make_from, /obj/machinery/atmospherics/unary/portables_connector))
@@ -120,8 +116,6 @@ var/global/list/pipeID2State = list(
 	"mvalve", \
 	"pump", \
 	"scrubber", \
-	"insulated", \
-	"insulated", \
 	"filter", \
 	"mixer", \
 	"passivegate", \
@@ -144,8 +138,6 @@ var/global/list/pipeID2State = list(
 		"manual valve", \
 		"pump", \
 		"scrubber", \
-		"insulated pipe", \
-		"bent insulated pipe", \
 		"gas filter", \
 		"gas mixer", \
 		"passive gate", \
@@ -197,12 +189,12 @@ var/global/list/pipeID2State = list(
 
 /obj/item/pipe/Move()
 	..()
-	if ((pipe_type in list (PIPE_SIMPLE_BENT, PIPE_HE_BENT, PIPE_INSULATED_BENT)) \
+	if ((pipe_type in list (PIPE_SIMPLE_BENT, PIPE_HE_BENT)) \
 		&& (src.dir in cardinal))
 		src.dir = src.dir|turn(src.dir, 90)
 	else if ((pipe_type in list(PIPE_GAS_FILTER, PIPE_GAS_MIXER)) && flipped)
 		src.dir = turn(src.dir, 45+90)
-	else if (pipe_type in list (PIPE_SIMPLE_STRAIGHT, PIPE_HE_STRAIGHT, PIPE_INSULATED_STRAIGHT, PIPE_MVALVE, PIPE_DVALVE))
+	else if (pipe_type in list (PIPE_SIMPLE_STRAIGHT, PIPE_HE_STRAIGHT, PIPE_MVALVE, PIPE_DVALVE))
 		if(dir==2)
 			dir = 1
 		else if(dir==8)
@@ -225,7 +217,6 @@ var/global/list/pipeID2State = list(
 
 	switch(pipe_type)
 		if(	PIPE_SIMPLE_STRAIGHT, \
-			PIPE_INSULATED_STRAIGHT, \
 			PIPE_HE_STRAIGHT, \
 			PIPE_JUNCTION, \
 			PIPE_PUMP, \
@@ -235,7 +226,7 @@ var/global/list/pipeID2State = list(
 			PIPE_DVALVE \
 		)
 			return direct|flip
-		if(PIPE_SIMPLE_BENT, PIPE_INSULATED_BENT, PIPE_HE_BENT)
+		if(PIPE_SIMPLE_BENT, PIPE_HE_BENT)
 			return direct //dir|acw
 		if(PIPE_CONNECTOR,PIPE_UVENT,PIPE_SCRUBBER,PIPE_HEAT_EXCHANGE)
 			return direct
@@ -287,7 +278,7 @@ var/global/list/pipeID2State = list(
 
 //Helper to clean up dir
 /obj/item/pipe/proc/fixdir()
-	if (pipe_type in list (PIPE_SIMPLE_STRAIGHT, PIPE_HE_STRAIGHT, PIPE_INSULATED_STRAIGHT, PIPE_MVALVE, PIPE_DVALVE))
+	if (pipe_type in list (PIPE_SIMPLE_STRAIGHT, PIPE_HE_STRAIGHT, PIPE_MVALVE, PIPE_DVALVE))
 		if(dir==2)
 			dir = 1
 		else if(dir==8)
@@ -310,7 +301,7 @@ var/global/list/pipeID2State = list(
 
 	for(var/obj/machinery/atmospherics/M in src.loc)
 		if(M.initialize_directions & pipe_dir)	// matches at least one direction on either type of pipe
-			user << "<span class='danger'>There is already a pipe at that location.</span>"
+			user << "<span class='warning'>There is already a pipe at that location!</span>"
 			return 1
 	// no conflicts found
 
@@ -380,10 +371,6 @@ var/global/list/pipeID2State = list(
 				S.name = pipename
 			S.construction(dir, pipe_dir, pipe_type, color)
 
-		if(PIPE_INSULATED_STRAIGHT, PIPE_INSULATED_BENT)
-			var/obj/machinery/atmospherics/pipe/simple/insulated/P = new( src.loc )
-			P.construction(dir, pipe_dir, pipe_type, color)
-
 		if(PIPE_PASSIVE_GATE)
 			var/obj/machinery/atmospherics/binary/passive_gate/P = new(src.loc)
 			if (pipename)
@@ -405,8 +392,8 @@ var/global/list/pipeID2State = list(
 	playsound(src.loc, 'sound/items/Ratchet.ogg', 50, 1)
 	user.visible_message( \
 		"[user] fastens \the [src].", \
-		"<span class='notice'>You have fastened \the [src].</span>", \
-		"You hear ratchet.")
+		"<span class='notice'>You fasten \the [src].</span>", \
+		"<span class='italics'>You hear ratchet.</span>")
 
 	qdel(src)	// remove the pipe item
 
@@ -431,9 +418,9 @@ var/global/list/pipeID2State = list(
 	if (!istype(W, /obj/item/weapon/wrench))
 		return ..()
 	if(!locate(/obj/machinery/atmospherics/pipe, src.loc))
-		user << "<span class='danger'>You need to fasten it to a pipe.</span>"
+		user << "<span class='warning'>You need to fasten it to a pipe!</span>"
 		return 1
 	new/obj/machinery/meter( src.loc )
 	playsound(src.loc, 'sound/items/Ratchet.ogg', 50, 1)
-	user << "<span class='notice'>You have fastened the meter to the pipe.</span>"
+	user << "<span class='notice'>You fasten the meter to the pipe.</span>"
 	qdel(src)

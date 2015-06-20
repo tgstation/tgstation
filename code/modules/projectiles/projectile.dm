@@ -16,7 +16,7 @@
 	var/atom/original = null // the original target clicked
 	var/turf/starting = null // the projectile's starting turf
 	var/list/permutated = list() // we've passed through these atoms, don't try to hit them again
-
+	var/paused = FALSE //for suspending the projectile midair
 	var/p_x = 16
 	var/p_y = 16 // the pixel location of the tile that the player clicked. Default is the center
 
@@ -41,6 +41,10 @@
 	// 1 to pass solid objects, 2 to pass solid turfs (results in bugs, bugs and tons of bugs)
 	var/range = 0
 
+/obj/item/projectile/New()
+	permutated = list()
+	return ..()
+
 /obj/item/projectile/proc/Range()
 	if(range)
 		range--
@@ -62,7 +66,7 @@
 		organ_hit_text = " in \the [parse_zone(def_zone)]"
 	if(suppressed)
 		playsound(loc, hitsound, 5, 1, -1)
-		L << "<span class='userdanger'>You've been shot by \a [src][organ_hit_text]!</span>"
+		L << "<span class='userdanger'>You're shot by \a [src][organ_hit_text]!</span>"
 	else
 		if(hitsound)
 			var/volume = vol_by_damage()
@@ -104,7 +108,6 @@
 		loc = target_turf
 		if(A)
 			permutated.Add(A)
-		Range()
 		return 0
 	else
 		if(A && A.density && !ismob(A) && !(A.flags & ON_BORDER)) //if we hit a dense non-border obj or dense turf then we also hit one of the mobs on that tile.
@@ -126,16 +129,18 @@
 			if(kill_count < 1)
 				qdel(src)
 				return
-			kill_count--
-			if((!( current ) || loc == current))
-				current = locate(Clamp(x+xo,1,world.maxx),Clamp(y+yo,1,world.maxy),z)
-			step_towards(src, current)
-			if((original && original.layer>=2.75) || ismob(original))
-				if(loc == get_turf(original))
-					if(!(original in permutated))
-						Bump(original, 1)
+			if(!paused)
+				kill_count--
+				if((!( current ) || loc == current))
+					current = locate(Clamp(x+xo,1,world.maxx),Clamp(y+yo,1,world.maxy),z)
+				step_towards(src, current)
+				if((original && original.layer>=2.75) || ismob(original))
+					if(loc == get_turf(original))
+						if(!(original in permutated))
+							Bump(original, 1)
 			Range()
 			sleep(1)
+
 
 /obj/item/projectile/Crossed(atom/movable/AM as mob) //A mob moving on a tile with a projectile is hit by it.
 	..()
