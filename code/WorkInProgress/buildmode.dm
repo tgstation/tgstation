@@ -63,6 +63,8 @@
 			if(SOUTHWEST)
 				dir = NORTH
 		return 1
+	DblClick(object,location,control,params)
+		return Click(object,location,control,params)
 
 /obj/effect/bmode/buildhelp
 	icon = 'icons/misc/buildmode.dmi'
@@ -101,6 +103,8 @@
 				usr << "<span class='notice'>Right Mouse Button on turf/obj/mob     = Throw</span>"
 				usr << "<span class='notice'>***********************************************************</span>"
 		return 1
+	DblClick(object,location,control,params)
+		return Click(object,location,control,params)
 
 /obj/effect/bmode/buildquit
 	icon_state = "buildquit"
@@ -109,6 +113,8 @@
 	Click()
 		togglebuildmode(master.cl.mob)
 		return 1
+	DblClick(object,location,control,params)
+		return Click(object,location,control,params)
 
 var/global/list/obj/effect/bmode/buildholder/buildmodeholders = list()
 /obj/effect/bmode/buildholder
@@ -190,6 +196,8 @@ obj/effect/bmode/buildholder/New()
 					if("turf-reference")
 						master.buildmode.valueholder = input(usr,"Enter variable value:" ,"Value") as turf in world
 	return 1
+/obj/effect/bmode/buildmode/DblClick(object,location,control,params)
+	return Click(object,location,control,params)
 
 /proc/build_click(var/mob/user, buildmode, params, var/obj/object)
 	var/obj/effect/bmode/buildholder/holder = null
