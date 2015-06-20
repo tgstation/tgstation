@@ -225,8 +225,9 @@
 			user << "<span class='notice'>\The [src] is full.</span>"
 			return 1
 		else
-			user.before_take_item(O)
-			O.loc = src
+			if(!user.drop_item(O, src))
+				return 1
+
 			var/sanitized_name = sanitize(O.name, list("\"" = "", "'" = "", "+" = "plus", ";" = "", "^" = "", "&" = "", "<" = "", ">" = ""))
 			O.name = sanitized_name
 			if(item_quants[sanitized_name])
