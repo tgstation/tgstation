@@ -63,7 +63,7 @@
 	var/obj/screen/alert/path_as_obj = text2path("/obj/screen/alert/[id]")
 	// BYOND magic-fu - we'll be storing a path in this reference and retrieving vars from it.
 	if(!path_as_obj)
-		ERROR("[src] threw alert [category] with invalid path /obj/screen/alert/[id]")
+//		ERROR("[src] threw alert [category] with invalid path /obj/screen/alert/[id]")
 		return 0
 	alert.name = initial(path_as_obj.name)
 	alert.desc = initial(path_as_obj.desc)

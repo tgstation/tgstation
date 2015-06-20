@@ -5,6 +5,8 @@
 			O.show_message(text("<span class='userdanger'>[]'s MMI flatlines!</span>", src), 1, "<span class='danger'>You hear something flatline.</span>", 2)
 		if(istype(src,/obj/item/organ/brain/alien))
 			container.icon_state = "mmi_alien_dead"
+		if(istype(container, /obj/item/device/mmi/posibrain))
+			container.icon_state = "posibrain"
 		else
 			container.icon_state = "mmi_dead"
 	stat = DEAD

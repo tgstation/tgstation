@@ -113,6 +113,8 @@ datum/reagents/proc/trans_to(var/obj/target, var/amount=1, var/multiplier=1, var
 			return
 		R = target.reagents
 	amount = min(min(amount, src.total_volume), R.maximum_volume-R.total_volume)
+	if(!total_volume) //well why are we here anyways?
+		return
 	var/part = amount / src.total_volume
 	var/trans_data = null
 	for (var/datum/reagent/current_reagent in src.reagent_list)

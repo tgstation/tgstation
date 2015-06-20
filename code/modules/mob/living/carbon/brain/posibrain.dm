@@ -51,9 +51,15 @@ var/global/posibrain_notif_cooldown = 0
 	if((brainmob && brainmob.key) || jobban_isbanned(user,"posibrain") || istype(src.loc, /mob/living/silicon))
 		return
 
+
 	var/posi_ask = alert("Become a positronic brain? (Warning, You can no longer be cloned, and all past lives will be forgotten!)","Are you positive?","Yes","No")
 	if(posi_ask == "No" || gc_destroyed)
 		return
+	if((brainmob && brainmob.key) || istype(src.loc, /mob/living/silicon)) //Prevents hostile takeover if two ghosts get the prompt for the same brain.
+		user << "This brain has already been taken! Please try your possesion again later!"
+		return
+	create_brainmob()
+
 	transfer_personality(user)
 
 /obj/item/device/mmi/posibrain/transfer_identity(var/mob/living/carbon/H)
@@ -84,7 +90,6 @@ var/global/posibrain_notif_cooldown = 0
 	notified = 0
 	brainmob.mind = candidate.mind
 	brainmob.ckey = candidate.ckey
-	brainmob.name = "[pick(list("PBU","HIU","SINA","ARMA","OSI","HBL","MSO","RR"))]-[rand(100, 999)]" //Re-initialize the name so it doesn't repeat
 	name = "positronic brain ([brainmob.name])"
 
 //	brainmob.mind.remove_all_antag()
@@ -127,14 +132,6 @@ var/global/posibrain_notif_cooldown = 0
 
 /obj/item/device/mmi/posibrain/New()
 
-	brainmob = new(src)
-	brainmob.name = "[pick(list("PBU","HIU","SINA","ARMA","OSI","HBL","MSO","RR"))]-[rand(100, 999)]" //I bet these initial are references to tg admins, we could use some new ones
-	brainmob.real_name = brainmob.name
-	brainmob.loc = src
-	brainmob.container = src
-	brainmob.stat = 0
-	brainmob.silent = 0
-	dead_mob_list -= brainmob
 	ping_ghosts("created")
 
 	..()
@@ -154,3 +151,17 @@ var/global/posibrain_notif_cooldown = 0
 		icon_state = "posibrain-occupied"
 	else
 		icon_state = "posibrain"
+
+
+/obj/item/device/mmi/posibrain/proc/create_brainmob()
+	if(brainmob)
+		qdel(brainmob)
+		brainmob = null //empty it out first
+	brainmob = new(src)
+	brainmob.name = "[pick(list("PBU","HIU","SINA","ARMA","OSI","HBL","MSO","RR"))]-[rand(100, 999)]"
+	brainmob.real_name = brainmob.name
+	brainmob.loc = src
+	brainmob.container = src
+	brainmob.stat = 0
+	brainmob.silent = 0
+	dead_mob_list -= brainmob
