@@ -20,7 +20,7 @@
 /obj/machinery/computer/rust_core_monitor/interact(var/mob/user)
 	if(linked_core)
 		. = {"
-			<b>Device ID tag:</b>[linked_core.id_tag]<br>
+			<b>Device ID tag:</b> [linked_core.id_tag]<br>
 		"}
 		if(!check_core_status())
 			. += {"
@@ -36,8 +36,7 @@
 			"}
 			if(linked_core.owned_field)
 				. += {"
-			<b>Field longer diameter (m):</b> [linked_core.owned_field.major_radius]<br>
-			<b>Field shorter diameter (m):</b> [linked_core.owned_field.minor_radius]<br>
+			<b>Approximate field diameter (m):</b> [linked_core.owned_field.size]<br>
 			<b>Field mega energy:</b> [linked_core.owned_field.mega_energy]<br>
 			<b>Field sub-mega energy:</b> [linked_core.owned_field.energy]<hr>
 			<b>Field dormant reagents:</b><br>

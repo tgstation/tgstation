@@ -4,3 +4,8 @@ changes:
   - bugfix: Fixed the R-UST Mk. 7 Gyrotrons and fuel injectors.
   - rscadd: Gyrotron control computers can now be built.
   - tweak: Gyrotrons now need to be linked to the computer with a multitool.
+  - rscdel: Removed the interface from the R-UST Mk. 7 tokamak, don't worry there's still the core control computer.
+  - tweak: R-UST Mk. 7 tokamaks now need to be linked to their control computers via multitool.
+  - tweak: Cleaned up the code for R-UST Mk. 7 core control computers.
+  - rscadd: Added the R-UST Mk. 7 tokamak core monitoring computer.
+  - rscdel: Removes substantial features from disabling the R-UST Mk. 7 EM field.

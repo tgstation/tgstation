@@ -49,13 +49,13 @@
 	for(var/obj/machinery/rust/gyrotron/gyro in linked_gyrotrons)
 		//These vars are here because muh readable HTML code.
 		var/gyro_id = linked_gyrotrons.Find(gyro)
-		var/status = ((state != 2 || gyro.stat & (NOPOWER | BROKEN)) ? "<span style='color: red'>Unresponsive</span>" : "<span style='color: green'>Operational</span>")
+		var/status = ((gyro.state != 2 || gyro.stat & (NOPOWER | BROKEN)) ? "<span style='color: red'>Unresponsive</span>" : "<span style='color: green'>Operational</span>")
 		dat += {"
 			</tr>
 				<td>[gyro.id_tag]</td>
 				<td>[status]</td>
 		"}
-		if(state != 2 || gyro.stat & (NOPOWER | BROKEN)) //Error data not found.
+		if(gyro.state != 2 || gyro.stat & (NOPOWER | BROKEN)) //Error data not found.
 			dat += {"
 				<td><span style='color: red'>ERROR</span></td>
 				<td><span style='color: red'>ERROR</span></td>
