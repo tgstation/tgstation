@@ -230,7 +230,7 @@
 	user << "[src] rings..."
 	playsound(src, 'sound/weapons/ring.ogg', 40, 1)
 	sleep(20)
-	say("Nanotrasen Emergency Hotline, this is [pick("Jenny", "John", "Debbie", "Debra", "Peggy")], what is the emergency?")
+	say("Nanotrasen Emergency Hotline, what is the emergency?")
 	sleep(20)
 	user.say("This is [user.name], the [user.job] of [station_name()]. I have a maximum priority message for Central Command. Please reroute me to them.")
 	sleep(20)
