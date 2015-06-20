@@ -54,19 +54,17 @@
 				qdel(A)
 				return
 
-			var/list/specials_list = list()
-			specials_list += A.search_contents_for(/obj/item/weapon/disk/nuclear)
-			specials_list += A.search_contents_for(/mob/living/silicon/robot/mommi)
+			var/list/contents_brought = list()
+			contents_brought += recursive_type_check(A)
 
 			if(istype(A, /obj/structure/stool/bed/chair/vehicle))
 				var/obj/structure/stool/bed/chair/vehicle/B = A
 				if(B.buckled_mob)
-					specials_list += B.search_contents_for(/obj/item/weapon/disk/nuclear)
-					specials_list += B.search_contents_for(/mob/living/silicon/robot/mommi)
+					contents_brought += recursive_type_check(B)
 
 			var/locked_to_current_z = 0//To prevent the moveable atom from leaving this Z, examples are DAT DISK and derelict MoMMIs.
 
-			for(var/obj/item/weapon/disk/nuclear in specials_list)
+			for(var/obj/item/weapon/disk/nuclear in contents_brought)
 				locked_to_current_z = 1
 				break
 
@@ -82,7 +80,7 @@
 			var/move_to_z = src.z
 
 			// Prevent MoMMIs from leaving the derelict.
-			for(var/mob/living/silicon/robot/mommi in specials_list)
+			for(var/mob/living/silicon/robot/mommi in contents_brought)
 				if(mommi.locked_to_z != 0)
 					if(src.z == mommi.locked_to_z)
 						locked_to_current_z = 1
