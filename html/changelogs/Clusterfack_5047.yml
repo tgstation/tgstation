@@ -1,0 +1,8 @@
+author: Clusterfack
+delete-after: true
+changes:
+- bugfix: Mommis once again, can no longer pick up the normal material synth, which bugs out when they try to use it
+- rscadd: Posibrains should now have their appearance turned back to the original after death, they also have a death message.
+- bugfix: Spiderbots wont be prevented from ventcrawling thanks to holding their own brain
+- bugfix: Corpses from human-like simple mobs should now spawn correctly again
+- tweak: Plastic flaps previously used both airtight mining flaps and regular station flaps. However constructable flaps were automatically airtight. Build stages have been adjusted so you can wrench down a flap to anchor it, and crowbar a normal plastic flap to make it airtight.
