@@ -17,6 +17,25 @@
 	build_path = "/obj/item/weapon/circuitboard/rust_core_control"
 
 //////////////////////////////////////
+// RUST Core Monitor computer
+
+/obj/item/weapon/circuitboard/rust_core_monitor
+	name = "Circuit board (R-UST Mk. 7 core monitor)"
+	build_path = "/obj/machinery/computer/rust_core_monitor"
+	origin_tech = "programming=4;engineering=4"
+
+/datum/design/rust_core_monitor
+	name = "Circuit Design (R-UST Mk. 7 core monitor)"
+	desc = "Allows for the construction of circuit boards used to build a core monitoring console for the R-UST Mk. 7 fusion engine."
+	id = "rust_core_monitor"
+	req_tech = list("programming" = 4, "engineering" = 4)
+	build_type = IMPRINTER
+	materials = list(MAT_GLASS = 2000, "sacid" = 20)
+	category = "Misc"
+	build_path = "/obj/item/weapon/circuitboard/rust_core_monitor"
+
+
+//////////////////////////////////////
 // RUST Fuel Control computer
 
 /obj/item/weapon/circuitboard/rust_fuel_control

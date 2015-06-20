@@ -35,13 +35,15 @@ Deuterium-tritium fusion: 4.5 x 10^7 K
 
 	var/emp_overload = 0
 
-/obj/effect/rust_em_field/New()
+/obj/effect/rust_em_field/New(loc, var/obj/machinery/power/rust_core/new_owned_core)
 	..()
 	//create radiator
 	for(var/obj/machinery/rust/rad_source/rad in range(0))
 		radiator = rad
 	if(!radiator)
 		radiator = new()
+
+	owned_core = new_owned_core
 
 	if(!owned_core)
 		qdel(src)
@@ -115,7 +117,7 @@ Deuterium-tritium fusion: 4.5 x 10^7 K
 /obj/effect/rust_em_field/process()
 	//make sure the field generator is still intact
 	if(!owned_core)
-		del(src)
+		qdel(src)
 
 	//handle radiation
 	if(!radiator)

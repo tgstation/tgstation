@@ -4,7 +4,7 @@
 	var/time_alive = 0
 	var/source_alive = 2
 
-/obj/machinery/rust/process()
+/obj/machinery/rust/rad_source/process()
 	..()
 	//fade away over time
 	if(source_alive > 0)

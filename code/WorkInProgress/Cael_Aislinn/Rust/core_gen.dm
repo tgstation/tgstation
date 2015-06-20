@@ -115,7 +115,7 @@ max volume of plasma storeable by the field = the total volume of a number of ti
 	if(owned_field)
 		return
 
-	owned_field = new(loc)
+	owned_field = new(loc, src)
 	owned_field.ChangeFieldStrength(field_strength)
 	owned_field.ChangeFieldFrequency(field_frequency)
 	set_light(light_range_on, light_power_on)
