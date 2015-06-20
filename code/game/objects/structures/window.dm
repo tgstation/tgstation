@@ -414,6 +414,8 @@
 		hit(round(exposed_volume / 100), 0)
 	..()
 
+/obj/structure/window/storage_contents_dump_act(obj/item/weapon/storage/src_object, mob/user)
+	return 0
 
 /obj/structure/window/reinforced
 	name = "reinforced window"
