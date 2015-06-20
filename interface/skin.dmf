@@ -171,6 +171,14 @@ macro "macro"
 		name = "F12"
 		command = "F12"
 		is-disabled = false
+	elem 
+		name = "CTRL+SHIFT"
+		command = ".fillmouse_down"
+		is-disabled = false
+	elem 
+		name = "CTRL+SHIFT+UP"
+		command = ".fillmouse_released"
+		is-disabled = false
 
 macro "hotkeymode"
 	elem 
@@ -420,6 +428,14 @@ macro "hotkeymode"
 	elem 
 		name = "F12"
 		command = "F12"
+		is-disabled = false
+	elem 
+		name = "CTRL+SHIFT"
+		command = ".fillmouse_down"
+		is-disabled = false
+	elem 
+		name = "CTRL+SHIFT+UP"
+		command = ".fillmouse_released"
 		is-disabled = false
 
 

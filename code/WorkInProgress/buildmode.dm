@@ -1,3 +1,5 @@
+#define BOTTOM_LEFT 1
+#define TOP_RIGHT 2
 /proc/togglebuildmode(mob/M as mob in player_list)
 	set name = "Toggle Build Mode"
 	set category = "Special Verbs"
@@ -126,6 +128,7 @@ var/global/list/obj/effect/bmode/buildholder/buildmodeholders = list()
 	var/obj/effect/bmode/buildmode/buildmode = null
 	var/obj/effect/bmode/buildquit/buildquit = null
 	var/atom/movable/throw_atom = null
+	var/list/fillingtiles[2]
 
 obj/effect/bmode/buildholder/New()
 	..()
@@ -199,6 +202,25 @@ obj/effect/bmode/buildholder/New()
 /obj/effect/bmode/buildmode/DblClick(object,location,control,params)
 	return Click(object,location,control,params)
 
+/client/verb/fillmouse_down()
+	//set instant = 1
+	set hidden = 1
+	set name = ".fillmouse_down"
+
+	usr << "fillmouse down"
+	if(src.buildmode == 2 && !src.filling)
+		filling = !filling
+		src.mouse_pointer_icon = 'icons/mouse/buildfill.dmi'
+
+/client/verb/fillmouse_released()
+	//set instant = 1
+	set hidden = 1
+	set name = ".fillmouse_released"
+
+	usr << "fillmouse up"
+	if(src.filling)
+		src.mouse_pointer_icon = initial(src.mouse_pointer_icon)
+
 /proc/build_click(var/mob/user, buildmode, params, var/obj/object)
 	var/obj/effect/bmode/buildholder/holder = null
 	for(var/obj/effect/bmode/buildholder/H in buildmodeholders)
@@ -266,6 +288,50 @@ obj/effect/bmode/buildholder/New()
 					if(SOUTHWEST)
 						new/obj/structure/window/full/reinforced(get_turf(object))
 		if(2)
+			if(pa["ctrl"] && pa["shift"])
+				if(!holder) return
+				if(pa["left"])
+					holder.fillingtiles[BOTTOM_LEFT] = RT
+					usr << "<span class='notice'>Set bottom left fill corner to ([formatJumpTo(RT)])</span>"
+				else if(pa["right"])
+					holder.fillingtiles[TOP_RIGHT] = RT
+					usr << "<span class='notice'>Set top right fill corner to ([formatJumpTo(RT)])</span>"
+				if(holder.fillingtiles[BOTTOM_LEFT] && holder.fillingtiles[TOP_RIGHT])
+					var/turf/start = holder.fillingtiles[BOTTOM_LEFT]
+					var/turf/end = holder.fillingtiles[TOP_RIGHT]
+					if(start.z != end.z)
+						usr << "<span class='warning'>You can't do a fill across zlevels you silly person.</span>"
+						holder.fillingtiles[BOTTOM_LEFT] = null
+						holder.fillingtiles[TOP_RIGHT] = null
+
+						return
+					var/list/fillturfs = block(start,end)
+					if(fillturfs.len)
+						if(alert("You're about to do a fill operation spanning [fillturfs.len] tiles, are you sure?","Panic","Yes","No") == "Yes")
+							if(fillturfs.len > 50)
+								if(alert("Are you completely sure about filling [fillturfs.len] tiles?","Panic!!!!","Yes","No") == "Yes")
+									holder.fillingtiles[BOTTOM_LEFT] = null
+									holder.fillingtiles[TOP_RIGHT] = null
+									usr << "<span class='notice'>Cleared filling corners.</span>"
+									return
+							var/deleting = alert("FILL tiles or DELETE them? Deleting will destroy EVERYTHING IN THE SELECTED AREA", "Create or destroy, your chance to be a GOD","FILL","DELETE") == "DELETE"
+							message_admins("<span class='danger'>[key_name_admin(usr)] just buildmode [deleting ? "<big>DELETED</big>" : "FILLED"] [fillturfs.len] tiles [deleting ? "" : " with [holder.buildmode.objholder] "]at ([formatJumpTo(start)] to [formatJumpTo(end)])</span>")
+							log_admin("<span class='danger'>[key_name_admin(usr)] just buildmode [deleting ? "<big>DELETED</big>" : "FILLED"] [fillturfs.len] tiles [deleting ? "" : " with [holder.buildmode.objholder] "] at ([formatJumpTo(start)] to [formatJumpTo(end)])</span>")
+							usr << "<span class='notice'>If the server is lagging the operation will periodically sleep so the fill may take longer than typical.</span>"
+							var/turf_op = ispath(holder.buildmode.objholder,/turf)
+							for(var/turf/T in fillturfs)
+								if(deleting)
+									T.ex_act(1)
+									if(!istype(T,/turf/space))
+										T.ChangeTurf(/turf/space)
+								else if(turf_op)
+									T.ChangeTurf(holder.buildmode.objholder)
+								else
+									var/obj/A = new holder.buildmode.objholder(T)
+									if(istype(A))
+										A.dir = holder.builddir.dir
+								tcheck(80,1)
+				return
 			if(pa.Find("left"))
 				if(holder.buildmode.copycat)
 					if(isturf(holder.buildmode.copycat))
@@ -361,3 +427,5 @@ obj/effect/bmode/buildholder/New()
 					holder.throw_atom.throw_at(object, 10, 1)
 					log_admin("[key_name(usr)] is throwing a [holder.throw_atom] at [object] - [formatJumpTo(RT)]")
 
+#undef BOTTOM_LEFT
+#undef TOP_RIGHT
