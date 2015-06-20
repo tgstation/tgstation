@@ -230,3 +230,7 @@ a {
 	qdel(src)
 
 /obj/item/mouse_drag_pointer = MOUSE_ACTIVE_POINTER
+
+
+/obj/get_spans()
+	return ..() | SPAN_ROBOT

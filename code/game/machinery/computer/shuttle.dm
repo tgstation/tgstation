@@ -148,6 +148,9 @@
 	var/hacked = 0
 	var/can_order_contraband = 0
 	var/last_viewed_group = "categories"
+	verb_say = "flashes"
+	verb_ask = "flashes"
+	verb_exclaim = "flashes"
 
 /obj/machinery/computer/supplycomp/New()
 	..()
@@ -163,6 +166,9 @@
 	var/temp = null
 	var/reqtime = 0 //Cooldown for requisitions - Quarxink
 	var/last_viewed_group = "categories"
+	verb_say = "flashes"
+	verb_ask = "flashes"
+	verb_exclaim = "flashes"
 
 
 /obj/machinery/computer/shuttle/white_ship

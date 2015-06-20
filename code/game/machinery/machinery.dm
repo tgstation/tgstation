@@ -637,8 +637,7 @@ Class Procs:
 			return
 
 	if(istype(O, /obj/item/weapon/crowbar) && machine_flags & CROWDESTROY)
-		if(default_deconstruction_crowbar(O, closed_panel_decon))
-			return
+		default_deconstruction_crowbar(O, closed_panel_decon)
 
 	if(istype(O, /obj/item/device/multitool) && machine_flags & MULTITOOL_MENU)
 		update_multitool_menu(user)

@@ -18,6 +18,9 @@
 	var/text_lose_indication = ""
 	var/list/visual_indicators = list()
 
+/datum/mutation/human/proc/get_spans()
+	return list()
+
 /datum/mutation/human/proc/force_give(mob/living/carbon/human/owner)
 	if(!owner)
 		return

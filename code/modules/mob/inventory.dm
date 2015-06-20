@@ -176,6 +176,5 @@
 	return items
 
 
-
 /mob/proc/get_multitool(var/if_active=0)
 	return null

@@ -115,14 +115,7 @@
 	W.layer = initial(W.layer)
 	W.dropped()
 	return 0
-/*
-/mob/living/silicon/robot/mommi/get_multitool(var/active_only=0)
-	if(istype(get_active_hand(),/obj/item/device/multitool))
-		return get_active_hand()
-	if(active_only && istype(tool_state,/obj/item/device/multitool))
-		return tool_state
-	return null
-*/
+
 /mob/living/silicon/robot/mommi/drop_item_v()		//this is dumb.
 	if(stat == CONSCIOUS && isturf(loc))
 		return drop_item()
@@ -448,3 +441,11 @@
 			M << "<span class='warning'>You are unable to equip that.</span>"
 
 */
+
+
+/mob/living/silicon/robot/mommi/get_multitool(var/active_only=0)
+	if(istype(get_active_hand(),/obj/item/device/multitool))
+		return get_active_hand()
+	if(active_only && istype(tool_state,/obj/item/device/multitool))
+		return tool_state
+	return null

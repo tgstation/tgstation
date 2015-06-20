@@ -26,17 +26,6 @@
 		mommi_talk(message)
 		return 1
 
-/mob/living/silicon/robot/say_quote(var/text)
-	var/ending = copytext(text, length(text))
-
-	if(ending == "?")
-		return "queries, \"<span class = 'robot'>[text]</span>\"";
-	else if(copytext(text, length(text) - 1) == "!!")
-		return "alarms, \"<span class = 'robot'><span class = 'yell'>[text]</span></span>\"";
-	else if(ending == "!")
-		return "declares, \"<span class = 'robot'>[text]</span>\"";
-
-	return "states, \"<span class = 'robot'>[text]</span>\"";
 
 /mob/living/silicon/robot/mommi/proc/mommi_talk(var/message)
 	log_say("[key_name(src)] : [message]")
@@ -49,7 +38,7 @@
 	var/message_a = say_quote(message)
 	var/rendered = "<i><span class='mommi game say'>Damage Control, <span class='name'>[name]</span> <span class='message'>[message_a]</span></span></i>"
 
-	for (var/mob/living/silicon/robot/mommi/S in world)
+	for (var/mob/living/silicon/robot/mommi/S in living_mob_list)
 		if(istype(S))
 			S.show_message(rendered, 2)
 

@@ -57,7 +57,8 @@
 /proc/Broadcast_Message(var/atom/movable/AM,
 						var/vmask, var/obj/item/device/radio/radio,
 						var/message, var/name, var/job, var/realname,
-						var/data, var/compression, var/list/level, var/freq)
+						var/data, var/compression, var/list/level, var/freq, var/list/spans,
+						var/verb_say, var/verb_ask, var/verb_exclaim, var/verb_yell)
 
 	message = copytext(message, 1, MAX_BROADCAST_LEN)
 
@@ -72,6 +73,10 @@
 	virt.languages = AM.languages
 	virt.source = AM
 	virt.radio = radio
+	virt.verb_say = verb_say
+	virt.verb_ask = verb_ask
+	virt.verb_exclaim = verb_exclaim
+	virt.verb_yell = verb_yell
 
 	if(compression > 0)
 		message = Gibberish(message, compression + 40)
@@ -128,9 +133,9 @@
 		if(isobserver(M) && M.client && (M.client.prefs.chat_toggles & CHAT_GHOSTRADIO))
 			receive |= M
 
-	var/rendered = virt.compose_message(virt, virt.languages, message, freq) //Always call this on the virtualspeaker to advoid issues.
+	var/rendered = virt.compose_message(virt, virt.languages, message, freq, spans) //Always call this on the virtualspeaker to advoid issues.
 	for(var/atom/movable/hearer in receive)
-		hearer.Hear(rendered, virt, AM.languages, message, freq)
+		hearer.Hear(rendered, virt, AM.languages, message, freq, spans)
 
 	if(length(receive))
 		// --- This following recording is intended for research and feedback in the use of department radio channels ---

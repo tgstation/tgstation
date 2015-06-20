@@ -396,3 +396,11 @@
 			src << "<span class='danger'>You are trying to equip this item to an unsupported inventory slot. Report this to a coder!</span>"
 			return
 
+
+
+/mob/living/carbon/human/get_multitool(var/active_only=0)
+	if(istype(get_active_hand(),/obj/item/device/multitool))
+		return get_active_hand()
+	if(active_only && istype(get_inactive_hand(),/obj/item/device/multitool))
+		return get_inactive_hand()
+	return null

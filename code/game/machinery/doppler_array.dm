@@ -5,6 +5,7 @@ var/list/doppler_arrays = list()
 	desc = "A highly precise directional sensor array which measures the release of quants from decaying tachyons. The doppler shifting of the mirror-image formed by these quants can reveal the size, location and temporal affects of energetic disturbances within a large radius ahead of the array."
 	icon = 'icons/obj/machines/research.dmi'
 	icon_state = "tdoppler"
+	verb_say = "states coldly"
 	density = 1
 	anchored = 1
 
@@ -76,8 +77,6 @@ var/list/doppler_arrays = list()
 	for(var/message in messages)
 		say(message)
 
-/obj/machinery/doppler_array/say_quote(text)
-	return "states coldly, \"[text]\""
 
 /obj/machinery/doppler_array/power_change()
 	if(stat & BROKEN)

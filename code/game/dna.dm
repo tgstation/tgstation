@@ -185,6 +185,13 @@
 	C.dna.holder = C
 	if(S)	C.dna.species = new S()	// do not remove; this is here to prevent runtimes
 
+/datum/dna/proc/mutations_get_spans()
+	var/list/spans = list()
+	for(var/datum/mutation/human/M in mutations)
+		spans |= M.get_spans()
+	return spans
+
+
 /////////////////////////// DNA DATUM
 
 /////////////////////////// DNA HELPER-PROCS

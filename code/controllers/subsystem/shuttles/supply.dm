@@ -311,8 +311,7 @@
 	updateUsrDialog()
 	return
 
-/obj/machinery/computer/ordercomp/say_quote(text)
-	return "flashes, \"[text]\""
+
 
 
 /obj/machinery/computer/supplycomp/attack_hand(var/mob/user as mob)
@@ -540,5 +539,4 @@
 	frequency.post_signal(src, status_signal)
 
 
-/obj/machinery/computer/supplycomp/say_quote(text)
-	return "flashes, \"[text]\""
+

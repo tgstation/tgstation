@@ -1,21 +1,8 @@
-//This file was auto-corrected by findeclaration.exe on 25.5.2012 20:42:32
-
-/*
-	Hello, friends, this is Doohl from sexylands. You may be wondering what this
-	monstrous code file is. Sit down, boys and girls, while I tell you the tale.
-
-
-	The machines defined in this file were designed to be compatible with any radio
-	signals, provided they use subspace transmission. Currently they are only used for
-	headsets, but they can eventually be outfitted for real COMPUTER networks. This
-	is just a skeleton, ladies and gentlemen.
-
-	Look at radio.dm for the prequel to this code.
-*/
-
+/
 var/global/list/obj/machinery/telecomms/telecomms_list = list()
 
 /obj/machinery/telecomms
+	icon = 'icons/obj/machines/telecomms.dmi'
 	var/list/links = list() // list of machines this machine is linked to
 	var/traffic = 0 // value increases as traffic increases
 	var/netspeed = 5 // how much traffic to lose per tick (50 gigabytes/second * netspeed)
@@ -28,14 +15,11 @@ var/global/list/obj/machinery/telecomms/telecomms_list = list()
 	var/machinetype = 0 // just a hacky way of preventing alike machines from pairing
 	var/toggled = 1 	// Is it toggled on
 	var/on = 1
-	/*var/integrity = 100 // basically HP, loses integrity by heat
-	var/heatgen = 20 // how much heat to transfer to the environment
-	var/delay = 10 // how many process() ticks to delay per heat
-	var/heating_power = 40000*/
 	var/long_range_link = 0	// Can you link it across Z levels or on the otherside of the map? (Relay & Hub)
 	var/circuitboard = null // string pointing to a circuitboard type
 	var/hide = 0				// Is it a hidden machine?
 	var/listening_level = 0	// 0 = auto set in New() - this is the z level that the machine is listening to.
+	machine_flags = MULTITOOL_MENU
 
 
 /obj/machinery/telecomms/proc/relay_information(datum/signal/signal, filter, copysig, amount = 20)
@@ -44,8 +28,6 @@ var/global/list/obj/machinery/telecomms/telecomms_list = list()
 	if(!on)
 		return
 	var/send_count = 0
-
-	//signal.data["slow"] == 0 // apply some lag based on integrity
 
 	// Apply some lag based on traffic rates
 	var/netlag = round(traffic / 50)
@@ -87,7 +69,12 @@ var/global/list/obj/machinery/telecomms/telecomms_list = list()
 			"type" = signal.data["type"],
 			"server" = signal.data["server"],
 			"reject" = signal.data["reject"],
-			"level" = signal.data["level"]
+			"level" = signal.data["level"],
+			"spans" = signal.data["spans"],
+			"verb_say" = signal.data["verb_say"],
+			"verb_ask" = signal.data["verb_ask"],
+			"verb_exclaim" = signal.data["verb_exclaim"],
+			"verb_yell" = signal.data["verb_yell"]
 			)
 
 			// Keep the "original" signal constant
@@ -174,9 +161,15 @@ var/global/list/obj/machinery/telecomms/telecomms_list = list()
 
 /obj/machinery/telecomms/update_icon()
 	if(on)
-		icon_state = initial(icon_state)
+		if(panel_open)
+			icon_state = "[initial(icon_state)]_o"
+		else
+			icon_state = initial(icon_state)
 	else
-		icon_state = "[initial(icon_state)]_off"
+		if(panel_open)
+			icon_state = "[initial(icon_state)]_o_off"
+		else
+			icon_state = "[initial(icon_state)]_off"
 
 /obj/machinery/telecomms/proc/update_power()
 
@@ -190,9 +183,6 @@ var/global/list/obj/machinery/telecomms/telecomms_list = list()
 
 /obj/machinery/telecomms/process()
 	update_power()
-
-	// Check heat and generate some
-	//checkheat()
 
 	// Update the icon
 	update_icon()
@@ -208,43 +198,3 @@ var/global/list/obj/machinery/telecomms/telecomms_list = list()
 			spawn(rand(duration - 20, duration + 20)) // Takes a long time for the machines to reboot.
 				stat &= ~EMPED
 	..()
-
-/*/obj/machinery/telecomms/proc/checkheat()
-	// Checks heat from the environment and applies any integrity damage
-	var/datum/gas_mixture/environment = loc.return_air()
-	switch(environment.temperature)
-		if(T0C to (T20C + 20))
-			integrity = Clamp(integrity, 0, 100)
-		if((T20C + 20) to (T0C + 70))
-			integrity = max(0, integrity - 1)
-	if(delay)
-		delay--
-	else
-		// If the machine is on, ready to produce heat, and has positive traffic, genn some heat
-		if(on && traffic > 0)
-			produce_heat(heatgen)
-			delay = initial(delay)
-
-/obj/machinery/telecomms/proc/produce_heat(heat_amt)
-	if(heatgen == 0)
-		return
-
-	if(!(stat & (NOPOWER|BROKEN))) //Blatently stolen from space heater.
-		var/turf/simulated/L = loc
-		if(istype(L))
-			var/datum/gas_mixture/env = L.return_air()
-			if(env.temperature < (heat_amt+T0C))
-
-				var/transfer_moles = 0.25 * env.total_moles()
-
-				var/datum/gas_mixture/removed = env.remove(transfer_moles)
-
-				if(removed)
-
-					var/heat_capacity = removed.heat_capacity()
-					if(heat_capacity == 0 || heat_capacity == null)
-						heat_capacity = 1
-					removed.temperature = min((removed.temperature*heat_capacity + heating_power)/heat_capacity, 1000)
-
-				env.merge(removed)
-*/

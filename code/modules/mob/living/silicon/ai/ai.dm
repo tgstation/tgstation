@@ -782,3 +782,5 @@ var/list/ai_list = list()
 /mob/living/silicon/ai/attack_slime(mob/living/carbon/slime/user)
 	return
 
+/mob/living/silicon/ai/get_multitool(var/active_only=0)
+	return aiMulti

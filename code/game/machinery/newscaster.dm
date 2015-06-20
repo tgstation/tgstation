@@ -165,6 +165,9 @@ var/list/obj/machinery/newscaster/allCasters = list() //Global list that will co
 	var/allow_comments = 1
 	light_range = 0
 	anchored = 1
+	verb_say = "beeps"
+	verb_ask = "beeps"
+	verb_yell = "beeps"
 
 
 /obj/machinery/newscaster/security_unit                   //Security unit
@@ -1084,6 +1087,3 @@ obj/item/weapon/newspaper/attackby(obj/item/weapon/W as obj, mob/user as mob, pa
 		say("Attention! Wanted issue distributed!")
 		playsound(src.loc, 'sound/machines/warning-buzzer.ogg', 75, 1)
 	return
-
-/obj/machinery/newscaster/say_quote(text)
-	return "beeps, \"[text]\""

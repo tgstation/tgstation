@@ -37,7 +37,7 @@
 	//for analysis debugging
 	/*var/obj/item/weapon/reagent_containers/glass/solution_tray/S = new(src.loc)
 	var/turf/unsimulated/mineral/diamond/D
-	for(var/turf/unsimulated/mineral/diamond/M in world)
+	for(var/turf/simulated/mineral/diamond/M in world)
 		D = M
 		break
 	S.reagents.add_reagent("analysis_sample", 1, D.geological_data)
