@@ -130,7 +130,7 @@
 				dat += "<a href='?src=\ref[src];purchase=dominator'><b>Station Dominator</b></a><br>"
 			else
 				dat += "Station Dominator<br>"
-			dat += "<i>(Estimated Takeover Time: [round(max(180,900 - ((round((gang_territory/start_state.num_territories)*200, 10) - 60) * 15))/60,1)] minutes)</i><br>"
+			dat += "<i>(Estimated Takeover Time: [round(max(300,900 - ((round((gang_territory/start_state.num_territories)*200, 10) - 60) * 15))/60,1)] minutes)</i><br>"
 
 	dat += "<br>"
 	dat += "<a href='?src=\ref[src];choice=refresh'>Refresh</a><br>"
@@ -367,3 +367,4 @@
 
 /obj/item/device/gangtool/lt
 	boss = 0
+	outfits = 1
