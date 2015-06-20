@@ -458,7 +458,7 @@
 "iP" = (/obj/structure/cable{d1 = 2; d2 = 4; icon_state = "2-4"; tag = ""},/turf/simulated/floor/wood,/area/awaymission/academy/academyaft)
 "iQ" = (/obj/effect/decal/cleanable/cobweb2,/turf/simulated/floor/engine,/area/awaymission/academy/academyaft)
 "iR" = (/obj/structure/shuttle/engine/heater,/obj/structure/window/reinforced{dir = 1},/turf/simulated/floor/plating,/area/awaymission/academy/academyaft)
-"iS" = (/obj/structure/window/reinforced{dir = 1},/obj/structure/table,/obj/item/weapon/beach_ball/holoball,/turf/simulated/floor/plasteel{icon_state = "red"; dir = 1},/area/awaymission/academy/academyaft)
+"iS" = (/obj/structure/window/reinforced{dir = 1},/obj/structure/table,/obj/item/toy/beach_ball/holoball,/turf/simulated/floor/plasteel{icon_state = "red"; dir = 1},/area/awaymission/academy/academyaft)
 "iT" = (/obj/structure/window/reinforced{dir = 1},/obj/structure/cable{d1 = 2; d2 = 4; icon_state = "2-4"; tag = ""},/turf/simulated/floor/plasteel{icon_state = "red"; dir = 5},/area/awaymission/academy/academyaft)
 "iU" = (/obj/structure/grille,/obj/structure/cable{d1 = 4; d2 = 8; icon_state = "4-8"; pixel_y = 0; tag = ""},/obj/structure/cable{icon_state = "0-2"; pixel_y = 1; d2 = 2},/obj/structure/window/reinforced{dir = 5},/turf/simulated/floor/plating,/area/awaymission/academy/academyaft)
 "iV" = (/obj/structure/cable{d1 = 2; d2 = 4; icon_state = "2-4"; tag = ""},/obj/structure/cable{d1 = 4; d2 = 8; icon_state = "4-8"; pixel_y = 0; tag = ""},/turf/simulated/floor/fancy/carpet,/area/awaymission/academy/academyaft)
