@@ -33,7 +33,7 @@ delete-after: True
 # Also, this gets changed to [] after reading.  Just remove the brackets when you add new shit.
 # Please surround your changes in  double quotes ("). It works without them, but if you use certain characters it screws up compiling. The quotes will not show up in the changelog.
 changes: 
-  - tweak: "The Hostile Lockdown ability for Malfunctioning AIs has been nerfed. It now costs 40 CPU, is much more obvious, and automatically resets in 90 seconds."
+  - tweak: "The Hostile Lockdown ability for Malfunctioning AIs has been nerfed. It now costs 30 CPU, is much more obvious, and automatically resets in 90 seconds."
   - tweak: "Buffed the Upgrade Turrets Malfunction ability. Turrets will now fire heavy lasers instead of simply shooting faster."
   - rscadd: "Nanotrasen has released an Artificial Intelligence firmware upgrade under the ID 41ST0L3MYB1K3. It contains drivers for interacting with all variants of exosuit technology, from the Ripley APLU design to even experimental Phazon units. Simply upload your AI to the exosuit's internal computer via the InteliCard device. Per safety regulations, the exosuit must have maintenance protocols enabled in order to remove an AI from it."
   - rscadd: "Malfunctioning AIs may wirelessly steal mechs via a new power, Mech Domination. For 30 CPU, a Malf AI may permanently upload itself to a mech, ejecting any pilots. Malf AIs will still lose if they leave the Z-level, and the Malf will be gibbed if the mech is destroyed - they cannot be carded out of the mech or shunt to an APC."
