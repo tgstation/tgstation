@@ -3321,7 +3321,7 @@
 "blS" = (/obj/structure/cable{d1 = 1; d2 = 2; icon_state = "1-2"},/obj/structure/cable{d1 = 1; d2 = 8; icon_state = "1-8"},/turf/simulated/floor/plasteel,/area/assembly/chargebay)
 "blT" = (/obj/machinery/hologram/holopad,/turf/simulated/floor/plasteel,/area/assembly/chargebay)
 "blU" = (/obj/structure/table,/obj/item/stack/sheet/plasteel{amount = 10},/obj/item/stack/cable_coil,/obj/item/device/flash/handheld,/obj/item/device/flash/handheld,/turf/simulated/floor/plasteel,/area/assembly/robotics)
-"blV" = (/obj/structure/stool,/turf/simulated/floor/plasteel,/area/assembly/robotics)
+"blV" = (/obj/structure/stool,/obj/effect/landmark/start{name = "Roboticist"},/turf/simulated/floor/plasteel,/area/assembly/robotics)
 "blW" = (/turf/simulated/floor/plasteel{icon_state = "bot"},/area/assembly/robotics)
 "blX" = (/turf/simulated/floor/plasteel{dir = 8; icon_state = "warnwhite"},/area/assembly/robotics)
 "blY" = (/obj/machinery/hologram/holopad,/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,/turf/simulated/floor/plasteel{icon_state = "white"},/area/assembly/robotics)
