@@ -107,7 +107,8 @@
 
 	if(confirm == "Yes")
 		suiciding = 1
-		viewers(loc) << "<span class='danger'>[src]'s brain is growing dull and lifeless. It looks like it's lost the will to live.</span>"
+		if(!container)
+			src.visible_message("<span class='danger'>[src]'s brain is growing dull and lifeless. It looks like it's lost the will to live.</span>")
 		spawn(50)
 			death(0)
 			suiciding = 0
