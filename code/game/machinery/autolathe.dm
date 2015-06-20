@@ -137,6 +137,10 @@
 /obj/machinery/r_n_d/fabricator/mechanic_fab/autolathe/get_construction_time_w_coeff(datum/design/part)
 	return min(..(), (AUTOLATHE_MAX_TIME * time_coeff)) //we have set designs, so we can make them quickly
 
+/obj/machinery/r_n_d/fabricator/mechanic_fab/autolathe/is_contraband(var/datum/design/part)
+	if(part in part_sets["Hidden_Items"])
+		return 1
+
 /obj/machinery/r_n_d/fabricator/mechanic_fab/autolathe/update_hacked()
 	if(screen == 51) screen = 11 //take the autolathe away from the contraband menu, since otherwise it can still print contraband until another category is selected
 	/*if(hacked)
