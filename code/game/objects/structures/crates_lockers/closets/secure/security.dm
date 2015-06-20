@@ -186,6 +186,21 @@
 	new /obj/item/weapon/reagent_containers/syringe/lethal/choral(src)
 	new /obj/item/weapon/reagent_containers/syringe/lethal/choral(src)
 
+/obj/structure/closet/secure_closet/collars
+	name = "bomb collars"
+	desc = "Contains bomb collars and a detonator, for keeping prisoners in line."
+	req_access = list(access_hos)
+
+/obj/structure/closet/secure_closet/collars/New()
+	..()
+	new /obj/item/clothing/head/bombCollar(src)
+	new /obj/item/clothing/head/bombCollar(src)
+	new /obj/item/clothing/head/bombCollar(src)
+	new /obj/item/clothing/head/bombCollar(src)
+	new /obj/item/clothing/head/bombCollar(src)
+	new /obj/item/device/collarDetonator(src)
+	new /obj/item/weapon/paper/bombcollars(src)
+
 /obj/structure/closet/secure_closet/brig
 	name = "brig locker"
 	req_access = list(access_brig)
