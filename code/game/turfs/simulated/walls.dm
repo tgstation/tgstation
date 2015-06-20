@@ -54,18 +54,22 @@
 			new /obj/structure/girder(src)
 			if(mineral == "metal")
 				getFromPool(/obj/item/stack/sheet/metal, get_turf(src), 2)
+			else if(mineral == "wood")
+				getFromPool(/obj/item/stack/sheet/wood, get_turf(src), 2)
 			else
 				var/M = text2path("/obj/item/stack/sheet/mineral/[mineral]")
-				new M(src)
-				new M(src)
+				if(M)
+					getFromPool(M, get_turf(src), 2)
 		else
 			if(mineral == "metal")
-				getFromPool(/obj/item/stack/sheet/metal, get_turf(src), 3)
+				getFromPool(/obj/item/stack/sheet/metal, get_turf(src), 2)
+			else if(mineral == "wood")
+				getFromPool(/obj/item/stack/sheet/wood, get_turf(src), 2)
 			else
 				var/M = text2path("/obj/item/stack/sheet/mineral/[mineral]")
-				new M(src)
-				new M(src)
-				getFromPool(/obj/item/stack/sheet/metal, get_turf(src))
+				if(M)
+					getFromPool(M, get_turf(src), 2)
+			getFromPool(/obj/item/stack/sheet/metal, get_turf(src))
 
 	for(var/obj/O in src.contents) //Eject contents!
 		if(istype(O,/obj/structure/sign/poster))
