@@ -379,8 +379,8 @@
 			M << "<span class='danger'>Your eyes start to bleed profusely!</span>"
 		if(prob(50))
 			if(M.stat != 2)
-				M << "<span class='danger'>You drop what you're holding and clutch at your eyes!</span>"
-				M.drop_item()
+				if(M.drop_item())
+					M << "<span class='danger'>You drop what you're holding and clutch at your eyes!</span>"
 			M.eye_blurry += 10
 			M.Paralyse(1)
 			M.Weaken(2)
@@ -443,6 +443,7 @@
 			var/mob/living/carbon/human/H = A
 			if(can_embed(src))
 				if(prob(embed_chance) && !(PIERCEIMMUNE in H.dna.species.specflags))
+					H.throw_alert("embeddedobject")
 					var/obj/item/organ/limb/L = pick(H.organs)
 					L.embedded_objects |= src
 					add_blood(H)//it embedded itself in you, of course it's bloody!

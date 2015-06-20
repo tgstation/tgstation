@@ -187,7 +187,6 @@
 /obj/machinery/door/window/hitby(AM as mob|obj)
 
 	..()
-	visible_message("<span class='danger'>\The [src] was hit by \the [AM].</span>")
 	var/tforce = 0
 	if(ismob(AM))
 		tforce = 40

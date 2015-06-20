@@ -272,7 +272,7 @@
 			if(perpname)
 				var/datum/data/record/R = find_record("name", perpname, data_core.general)
 				if(R)
-					msg += "<span class = 'deptradio'>Rank:</span> [R.fields["rank"]]<br>"
+					msg += "<span class='deptradio'>Rank:</span> [R.fields["rank"]]<br>"
 					msg += "<a href='?src=\ref[src];hud=1;photo_front=1'>\[Front photo\]</a> "
 					msg += "<a href='?src=\ref[src];hud=1;photo_side=1'>\[Side photo\]</a><br>"
 				if(istype(H.glasses, /obj/item/clothing/glasses/hud/health) || istype(CIH,/obj/item/cybernetic_implant/eyes/hud/medical))
@@ -300,8 +300,8 @@
 						if(R)
 							criminal = R.fields["criminal"]
 
-						msg += "<span class = 'deptradio'>Criminal status:</span> <a href='?src=\ref[src];hud=s;status=1'>\[[criminal]\]</a>\n"
-						msg += "<span class = 'deptradio'>Security record:</span> <a href='?src=\ref[src];hud=s;view=1'>\[View\]</a> "
+						msg += "<span class='deptradio'>Criminal status:</span> <a href='?src=\ref[src];hud=s;status=1'>\[[criminal]\]</a>\n"
+						msg += "<span class='deptradio'>Security record:</span> <a href='?src=\ref[src];hud=s;view=1'>\[View\]</a> "
 						msg += "<a href='?src=\ref[src];hud=s;add_crime=1'>\[Add crime\]</a> "
 						msg += "<a href='?src=\ref[src];hud=s;view_comment=1'>\[View comment log\]</a> "
 						msg += "<a href='?src=\ref[src];hud=s;add_comment=1'>\[Add comment\]</a>\n"

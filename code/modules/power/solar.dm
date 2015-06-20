@@ -253,8 +253,9 @@
 
 	if(!tracker)
 		if(istype(W, /obj/item/weapon/tracker_electronics))
+			if(!user.drop_item())
+				return
 			tracker = 1
-			user.drop_item()
 			qdel(W)
 			user.visible_message("[user] inserts the electronics into the solar assembly.", "<span class='notice'>You insert the electronics into the solar assembly.</span>")
 			return 1
@@ -274,11 +275,13 @@
 	name = "solar panel control"
 	desc = "A controller for solar panel arrays."
 	icon = 'icons/obj/computer.dmi'
-	icon_state = "solar"
+	icon_state = "computer"
 	anchored = 1
 	density = 1
 	use_power = 1
 	idle_power_usage = 250
+	var/icon_screen = "solar"
+	var/icon_keyboard = "power_key"
 	var/id = 0
 	var/cdir = 0
 	var/targetdir = 0		// target angle in manual tracking (since it updates every game minute)
@@ -351,19 +354,17 @@
 	set_panels(cdir)
 
 /obj/machinery/power/solar_control/update_icon()
-	if(stat & BROKEN)
-		icon_state = "broken"
-		overlays.Cut()
-		return
-	if(stat & NOPOWER)
-		icon_state = "c_unpowered"
-		overlays.Cut()
-		return
-	icon_state = "solar"
 	overlays.Cut()
+	if(stat & NOPOWER)
+		overlays += "[icon_keyboard]_off"
+		return
+	overlays += icon_keyboard
+	if(stat & BROKEN)
+		overlays += "[icon_state]_broken"
+	else
+		overlays += icon_screen
 	if(cdir > -1)
 		overlays += image('icons/obj/computer.dmi', "solcon-o", FLY_LAYER, angle2dir(cdir))
-	return
 
 /obj/machinery/power/solar_control/attack_hand(mob/user)
 	if(!..())

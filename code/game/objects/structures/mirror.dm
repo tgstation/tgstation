@@ -111,14 +111,16 @@
 
 /obj/structure/mirror/magic/New()
 	if(!choosable_races.len)
-		for(var/datum/species/S in typesof(/datum/species) - /datum/species)
+		for(var/speciestype in typesof(/datum/species) - /datum/species)
+			var/datum/species/S = new speciestype()
 			if(!(S.id in races_blacklist))
-				choosable_races += S
+				choosable_races += S.id
 	..()
 
 /obj/structure/mirror/magic/badmin/New()
-	for(var/datum/species/S in typesof(/datum/species) - /datum/species)
-		choosable_races += S
+	for(var/speciestype in typesof(/datum/species) - /datum/species)
+		var/datum/species/S = new speciestype()
+		choosable_races += S.id
 	..()
 
 /obj/structure/mirror/magic/attack_hand(mob/user as mob)
@@ -163,7 +165,7 @@
 					var/temp_hsv = RGBtoHSV(new_mutantcolor)
 
 					if(ReadHSV(temp_hsv)[3] >= ReadHSV("#7F7F7F")[3]) // mutantcolors must be bright
-						H.dna.mutant_color = sanitize_hexcolor(new_mutantcolor)
+						H.dna.features["mcolor"] = sanitize_hexcolor(new_mutantcolor)
 
 					else
 						H << "<span class='notice'>Invalid color. Your color is not bright enough.</span>"

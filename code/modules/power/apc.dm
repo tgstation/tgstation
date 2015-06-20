@@ -413,7 +413,8 @@
 			if (stat & MAINT)
 				user << "<span class='warning'>There is no connector for your power cell!</span>"
 				return
-			user.drop_item()
+			if(!user.drop_item())
+				return
 			W.loc = src
 			cell = W
 			user.visible_message(\
@@ -580,14 +581,10 @@
 			user << "<span class='warning'>Nothing happens!</span>"
 		else
 			flick("apc-spark", src)
-			if (do_after(user,6))
-				if(prob(50))
-					emagged = 1
-					locked = 0
-					user << "<span class='notice'>You emag the APC interface.</span>"
-					update_icon()
-				else
-					user << "<span class='warning'>You fail to [ locked ? "unlock" : "lock"] the APC interface!</span>"
+			emagged = 1
+			locked = 0
+			user << "<span class='notice'>You emag the APC interface.</span>"
+			update_icon()
 
 // attack with hand - remove cell (if cover open) or interact with the APC
 

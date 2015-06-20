@@ -2,12 +2,10 @@
 /obj/machinery/computer/station_alert
 	name = "station alert console"
 	desc = "Used to access the station's automated alert system."
-	icon_state = "alert:0"
+	icon_screen = "alert:0"
+	icon_keyboard = "atmos_key"
 	circuit = /obj/item/weapon/circuitboard/stationalert
 	var/alarms = list("Fire"=list(), "Atmosphere"=list(), "Power"=list())
-
-
-
 
 /obj/machinery/computer/station_alert/attack_hand(mob/user)
 	if(..())
@@ -99,20 +97,12 @@
 	return
 
 /obj/machinery/computer/station_alert/update_icon()
-	SetLuminosity(brightness_on)
-	if(stat & BROKEN)
-		icon_state = "alert:b"
-		return
-	else if (stat & NOPOWER)
-		icon_state = "alert:O"
-		SetLuminosity(0)
-		return
+	..()
 	var/active_alarms = 0
 	for (var/cat in src.alarms)
 		var/list/L = src.alarms[cat]
 		if(L.len) active_alarms = 1
 	if(active_alarms)
-		icon_state = "alert:2"
+		overlays += "alert:2"
 	else
-		icon_state = "alert:0"
-	return
+		overlays += "alert:0"

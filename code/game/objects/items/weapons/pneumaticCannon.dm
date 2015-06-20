@@ -61,8 +61,9 @@
 		if(IW.w_class > src.w_class)
 			user << "<span class='warning'>\The [IW] is too large to fit into \the [src]!</span>"
 			return
+		if(!user.unEquip(W))
+			return
 		user << "<span class='notice'>You load \the [IW] into \the [src].</span>"
-		user.drop_item()
 		loadedItems.Add(IW)
 		loadedWeightClass += IW.w_class
 		IW.loc = src
@@ -127,9 +128,10 @@
 		if(src.tank)
 			user << "<span class='warning'>\The [src] already has a tank.</span>"
 			return
+		if(!user.unEquip(thetank))
+			return
 		user << "<span class='notice'>You hook \the [thetank] up to \the [src].</span>"
 		src.tank = thetank
-		user.drop_item()
 		thetank.loc = src
 	src.update_icons()
 

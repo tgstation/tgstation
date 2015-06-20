@@ -1,8 +1,8 @@
 /obj/machinery/computer/prisoner
 	name = "prisoner management console"
 	desc = "Used to manage tracking implants placed inside criminals."
-	icon = 'icons/obj/computer.dmi'
-	icon_state = "explosive"
+	icon_screen = "explosive"
+	icon_keyboard = "security_key"
 	req_access = list(access_brig)
 	circuit = "/obj/item/weapon/circuitboard/prisoner"
 	var/id = 0.0
@@ -92,7 +92,8 @@
 			if(href_list["id"] =="insert" && !istype(inserted_id))
 				var/obj/item/weapon/card/id/prisoner/I = usr.get_active_hand()
 				if(istype(I))
-					usr.drop_item()
+					if(!usr.drop_item())
+						return
 					I.loc = src
 					inserted_id = I
 				else usr << "<span class='danger'>No valid ID.</span>"

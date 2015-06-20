@@ -36,14 +36,14 @@
 /obj/item/seeds/attackby(var/obj/item/O as obj, var/mob/user as mob, params)
 	if (istype(O, /obj/item/device/analyzer/plant_analyzer))
 		user << "*** <B>[plantname]</B> ***"
-		user << "-Plant Endurance: <span class='notice'> [endurance]</span>"
-		user << "-Plant Lifespan: <span class='notice'> [lifespan]</span>"
-		user << "-Species Discovery Value: <span class='notice'> [rarity]</span>"
+		user << "-Plant Endurance: <span class='notice'>[endurance]</span>"
+		user << "-Plant Lifespan: <span class='notice'>[lifespan]</span>"
+		user << "-Species Discovery Value: <span class='notice'>[rarity]</span>"
 		if(yield != -1)
-			user << "-Plant Yield: <span class='notice'> [yield]</span>"
-		user << "-Plant Production: <span class='notice'> [production]</span>"
+			user << "-Plant Yield: <span class='notice'>[yield]</span>"
+		user << "-Plant Production: <span class='notice'>[production]</span>"
 		if(potency != -1)
-			user << "-Plant Potency: <span class='notice'> [potency]</span>"
+			user << "-Plant Potency: <span class='notice'>[potency]</span>"
 		var/list/text_strings = get_analyzer_text()
 		if(text_strings)
 			for(var/string in text_strings)
@@ -90,7 +90,7 @@
 	var/datum/mind/mind = null
 	var/blood_gender = null
 	var/blood_type = null
-	var/mutant_color = null
+	var/list/features = null
 	var/factions = null
 	var/contains_sample = 0
 
@@ -104,7 +104,7 @@
 					realName = bloodSample.data["real_name"]
 					blood_gender = bloodSample.data["gender"]
 					blood_type = bloodSample.data["blood_type"]
-					mutant_color = bloodSample.data["mutant_color"]
+					features = bloodSample.data["features"]
 					factions = bloodSample.data["factions"]
 					W.reagents.clear_reagents()
 					user << "<span class='notice'>You inject the contents of the syringe into the seeds.</span>"
@@ -1348,8 +1348,8 @@
 		return
 	var/turf/T = get_turf(src)
 	user << "<span class='notice'>You plant the kudzu. You monster.</span>"
-	message_admins("Kudzu planted by [key_name(user, user.client)](<A HREF='?_src_=holder;adminmoreinfo=\ref[user]'>?</A>) at ([T.x],[T.y],[T.z] - <A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[T.x];Y=[T.y];Z=[T.z]'>(JMP)</a>)",0,1)
-	investigate_log("was planted by [user.ckey]([user]) at ([T.x],[T.y],[T.z])","kudzu")
+	message_admins("Kudzu planted by [key_name_admin(user)](<A HREF='?_src_=holder;adminmoreinfo=\ref[user]'>?</A>) (<A HREF='?_src_=holder;adminplayerobservefollow=\ref[user]'>FLW</A>) at ([T.x],[T.y],[T.z] - <A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[T.x];Y=[T.y];Z=[T.z]'>(JMP)</a>)",0,1)
+	investigate_log("was planted by [key_name(user)] at ([T.x],[T.y],[T.z])","kudzu")
 	new /obj/effect/spacevine_controller(user.loc, mutations, potency, production)
 	qdel(src)
 

@@ -1,7 +1,8 @@
 /obj/machinery/computer/emergency_shuttle
 	name = "emergency shuttle console"
 	desc = "For shuttle control."
-	icon_state = "shuttle"
+	icon_screen = "shuttle"
+	icon_keyboard = "tech_key"
 	var/auth_need = 3.0
 	var/list/authorized = list()
 
@@ -46,12 +47,12 @@
 				if(!authorized.Find(W:registered_name))
 					authorized += W:registered_name
 					if(auth_need - authorized.len > 0)
-						message_admins("[key_name(user.client)](<A HREF='?_src_=holder;adminmoreinfo=\ref[user]'>?</A>) has authorized early shuttle launch in ([x],[y],[z] - <A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[x];Y=[y];Z=[z]'>JMP</a>)",0,1)
-						log_game("[user.ckey]([user]) has authorized early shuttle launch in ([x],[y],[z])")
+						message_admins("[key_name_admin(user.client)](<A HREF='?_src_=holder;adminmoreinfo=\ref[user]'>?</A>) (<A HREF='?_src_=holder;adminplayerobservefollow=\ref[user]'>FLW</A>) has authorized early shuttle launch ",0,1)
+						log_game("[key_name(user)] has authorized early shuttle launch in ([x],[y],[z])")
 						minor_announce("[auth_need - authorized.len] more authorization(s) needed until shuttle is launched early",null,1)
 					else
-						message_admins("[key_name(user.client)](<A HREF='?_src_=holder;adminmoreinfo=\ref[user]'>?</A>) has launched the emergency shuttle in ([x],[y],[z] - <A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[x];Y=[y];Z=[z]'>JMP</a>) [seconds] seconds before launch.",0,1)
-						log_game("[user.ckey]([user]) has launched the emergency shuttle in ([x],[y],[z]) [seconds] seconds before launch.")
+						message_admins("[key_name_admin(user.client)](<A HREF='?_src_=holder;adminmoreinfo=\ref[user]'>?</A>) (<A HREF='?_src_=holder;adminplayerobservefollow=\ref[user]'>FLW</A>) has launched the emergency shuttle [seconds] seconds before launch.",0,1)
+						log_game("[key_name(user)] has launched the emergency shuttle in ([x],[y],[z]) [seconds] seconds before launch.")
 						minor_announce("The emergency shuttle will launch in 10 seconds",null,1)
 						SSshuttle.emergency.setTimer(100)
 
@@ -67,8 +68,8 @@
 /obj/machinery/computer/emergency_shuttle/emag_act(mob/user as mob)
 	if(!emagged && SSshuttle.emergency.mode == SHUTTLE_DOCKED)
 		var/time = SSshuttle.emergency.timeLeft()
-		message_admins("[key_name(user.client)](<A HREF='?_src_=holder;adminmoreinfo=\ref[user]'>?</A>) has emagged the emergency shuttle in ([x],[y],[z] - <A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[x];Y=[y];Z=[z]'>JMP</a>) [time] seconds before launch.",0,1)
-		log_game("[user.ckey]([user]) has emagged the emergency shuttle in ([x],[y],[z]) [time] seconds before launch.")
+		message_admins("[key_name_admin(user.client)](<A HREF='?_src_=holder;adminmoreinfo=\ref[user]'>?</A>) (<A HREF='?_src_=holder;adminplayerobservefollow=\ref[user]'>FLW</A>) has emagged the emergency shuttle  [time] seconds before launch.",0,1)
+		log_game("[key_name(user)] has emagged the emergency shuttle in ([x],[y],[z]) [time] seconds before launch.")
 		minor_announce("The emergency shuttle will launch in 10 seconds", "SYSTEM ERROR:",null,1)
 		SSshuttle.emergency.setTimer(100)
 		emagged = 1
@@ -128,8 +129,7 @@
 /obj/machinery/computer/supplycomp
 	name = "supply shuttle console"
 	desc = "Used to order supplies."
-	icon = 'icons/obj/computer.dmi'
-	icon_state = "supply"
+	icon_screen = "supply"
 	req_access = list(access_cargo)
 	circuit = /obj/item/weapon/circuitboard/supplycomp
 	verb_say = "flashes"
@@ -150,8 +150,7 @@
 /obj/machinery/computer/ordercomp
 	name = "supply ordering console"
 	desc = "Used to order supplies from cargo staff."
-	icon = 'icons/obj/computer.dmi'
-	icon_state = "request"
+	icon_screen = "request"
 	circuit = /obj/item/weapon/circuitboard/ordercomp
 	verb_say = "flashes"
 	verb_ask = "flashes"

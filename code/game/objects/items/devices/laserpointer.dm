@@ -47,7 +47,8 @@
 /obj/item/device/laser_pointer/attackby(obj/item/W, mob/user, params)
 	if(istype(W, /obj/item/weapon/stock_parts/micro_laser))
 		if(!diode)
-			user.drop_item()
+			if(!user.unEquip(W))
+				return
 			W.loc = src
 			diode = W
 			user << "<span class='notice'>You install a [diode.name] in [src].</span>"

@@ -251,7 +251,7 @@
 
 	if(istype(item, /obj/item/weapon/grab))
 		var/obj/item/weapon/grab/G = item
-		item = G.throw() //throw the person instead of the grab
+		item = G.get_mob_if_throwable() //throw the person instead of the grab
 		qdel(G)			//We delete the grab, as it needs to stay around until it's returned.
 		if(ismob(item))
 			var/turf/start_T = get_turf(loc) //Get the start and target tile for the descriptors
@@ -306,7 +306,7 @@
 	<BR><B>Left Hand:</B> <A href='?src=\ref[src];item=[slot_l_hand]'>		[(l_hand && !(l_hand.flags&ABSTRACT))		? l_hand	: "Nothing"]</A>
 	<BR><B>Right Hand:</B> <A href='?src=\ref[src];item=[slot_r_hand]'>		[(r_hand && !(r_hand.flags&ABSTRACT))		? r_hand	: "Nothing"]</A>"}
 
-	dat += "<BR><B>Back:</B> <A href='?src=\ref[src];item=[slot_back]'> [back ? back : "Nothing"]</A>"
+	dat += "<BR><B>Back:</B> <A href='?src=\ref[src];item=[slot_back]'>[back ? back : "Nothing"]</A>"
 
 	if(istype(wear_mask, /obj/item/clothing/mask) && istype(back, /obj/item/weapon/tank))
 		dat += "<BR><A href='?src=\ref[src];internal=1'>[internal ? "Disable Internals" : "Set Internals"]</A>"
@@ -402,7 +402,7 @@ var/const/GALOSHES_DONT_HELP = 8
 	return
 
 /mob/living/carbon/resist_buckle()
-	if(handcuffed)
+	if(restrained())
 		changeNext_move(CLICK_CD_BREAKOUT)
 		last_special = world.time + CLICK_CD_BREAKOUT
 		visible_message("<span class='warning'>[src] attempts to unbuckle themself!</span>", \

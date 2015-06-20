@@ -60,7 +60,8 @@
 			if(target.stat == 0)
 				user << "<span class='danger'>The monkey is struggling far too much to put it in the recycler.</span>"
 			else
-				user.drop_item()
+				if(!user.drop_item())
+					return
 				qdel(target)
 				user << "<span class='notice'>You stuff the monkey in the machine.</span>"
 				playsound(src.loc, 'sound/machines/juicer.ogg', 50, 1)

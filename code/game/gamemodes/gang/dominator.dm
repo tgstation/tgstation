@@ -25,10 +25,12 @@
 
 	var/datum/game_mode/gang/mode = ticker.mode
 	var/time = null
-	if(isnum(mode.A_timer))
-		time = max(mode.A_timer, 0)
-	if(isnum(mode.B_timer))
-		time = max(mode.B_timer, 0)
+	if(gang == "A")
+		if(isnum(mode.A_timer))
+			time = max(mode.A_timer, 0)
+	if(gang == "B")
+		if(isnum(mode.B_timer))
+			time = max(mode.B_timer, 0)
 	if(isnum(time))
 		if(time > 0)
 			user << "<span class='notice'>Hostile Takeover in progress. Estimated [time] seconds remain.</span>"
@@ -70,14 +72,12 @@
 		qdel(src)
 
 /obj/machinery/dominator/proc/set_broken()
-	if(!gang)
-		return
 	var/datum/game_mode/gang/mode = ticker.mode
 	if(gang == "A")
 		mode.A_timer = "OFFLINE"
 	if(gang == "B")
 		mode.B_timer = "OFFLINE"
-	if(!isnum(mode.A_timer) && !isnum(mode.B_timer))
+	if(gang && !isnum(mode.A_timer) && !isnum(mode.B_timer))
 		SSshuttle.emergencyNoEscape = 0
 		if(SSshuttle.emergency.mode == SHUTTLE_STRANDED)
 			SSshuttle.emergency.mode = SHUTTLE_DOCKED
@@ -85,6 +85,7 @@
 			priority_announce("Hostile enviroment resolved. You have 3 minutes to board the Emergency Shuttle.", null, 'sound/AI/shuttledock.ogg', "Priority")
 		else
 			priority_announce("All hostile activity within station systems have ceased.","Network Alert")
+		ticker.mode.message_gangtools(((gang=="A") ? ticker.mode.A_tools : ticker.mode.B_tools),"Hostile takeover cancelled: Dominator is no longer operational.",1,1)
 	SetLuminosity(0)
 	icon_state = "dominator-broken"
 	broken = 1
@@ -154,7 +155,7 @@
 		return
 
 	var/time = max(180,900 - ((round((gang_territory/start_state.num_territories)*200, 1) - 60) * 15))
-	if(alert(user,"With [round((gang_territory/start_state.num_territories)*100, 1)]% station control, a takeover will require [time] seconds.\nThe entire station will likely be alerted once it starts.\nYour gang must be prepared to defend this device throughout the duration.\nAre you ready?","Confirmation","Yes","No") == "Yes")
+	if(alert(user,"With [round((gang_territory/start_state.num_territories)*100, 1)]% station control, a takeover will require [time] seconds.\nYour gang will be unable to gain influence while it is active.\nThe entire station will likely be alerted to it once it starts.\nAre you ready?","Confirm","Ready","Later") == "Ready")
 		if ((!in_range(src, user) || !istype(src.loc, /turf)))
 			return 0
 		var/area/srcloc = get_area(src.loc)
@@ -163,6 +164,7 @@
 		src.name = "[gang_name(gang)] Gang [src.name]"
 		healthcheck(0)
 		operating = 1
+		ticker.mode.message_gangtools(((gang=="A") ? ticker.mode.A_tools : ticker.mode.B_tools),"Hostile takeover in progress: Estimated [time] seconds until victory.")
 
 /obj/machinery/dominator/attack_alien(mob/living/user)
 	user.do_attack_animation(src)

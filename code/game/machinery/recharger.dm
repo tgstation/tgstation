@@ -27,8 +27,9 @@
 			if(!gun.can_charge)
 				user << "<span class='notice'>Your gun has no external power connector.</span>"
 				return
+		if(!user.drop_item())
+			return
 
-		user.drop_item()
 		G.loc = src
 		charging = G
 		use_power = 2

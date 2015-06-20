@@ -239,11 +239,13 @@ AI MODULES
 /obj/item/weapon/aiModule/reset/purge/transmitInstructions(var/mob/living/silicon/ai/target, var/mob/sender)
 	..()
 	target.clear_inherent_laws()
+	target.clear_zeroth_law(0)
 
 /******************* Full Core Boards *******************/
 
 /obj/item/weapon/aiModule/core/full/transmitInstructions(var/mob/living/silicon/ai/target, var/mob/sender) //These boards replace inherent laws.
 	target.clear_inherent_laws()
+	target.clear_zeroth_law(0)
 	..()
 
 /******************** Asimov ********************/
