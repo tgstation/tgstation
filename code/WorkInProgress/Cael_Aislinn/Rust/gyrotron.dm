@@ -18,7 +18,7 @@
 
 	use_power = 1
 	idle_power_usage = 10
-	active_power_usage = 300
+	active_power_usage = 100000 //Yes that is a shitton. No you're not running this engine on an SE/AME you SE/AME scrubs.
 
 /obj/machinery/rust/gyrotron/initialize()
 	if(!id_tag)
@@ -39,7 +39,7 @@
 	update_icon()
 
 /obj/machinery/rust/gyrotron/proc/start_emitting()
-	if(stat & (NOPOWER | BROKEN) || emitting) //Sanity.
+	if(stat & (NOPOWER | BROKEN) || emitting && state == 2) //Sanity.
 		return
 
 	emitting = 1

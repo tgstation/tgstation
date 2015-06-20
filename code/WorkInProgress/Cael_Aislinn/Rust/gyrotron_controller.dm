@@ -13,6 +13,9 @@
 	if(.)
 		return
 
+/obj/machinery/computer/rust_gyrotron_controller/attack_ai(var/mob/user)
+	. = attack_hand(user)
+
 /obj/machinery/computer/rust_gyrotron_controller/attack_hand(mob/user)
 	. = ..()
 	if(.)
@@ -38,21 +41,21 @@
 				<th>ID tag</th>
 				<th>Status</th>
 				<th>Mode</th>
-				<th>Emissions rate</th>
-				<th>Power</th>
-				<th>Frequency</th>
+				<th>Emissions rate (1/10th sec)</th>
+				<th>Beam Output (TJ)</th>
+				<th>Frequency (GHz)</th>
 			</tr>
 	"}
 	for(var/obj/machinery/rust/gyrotron/gyro in linked_gyrotrons)
 		//These vars are here because muh readable HTML code.
 		var/gyro_id = linked_gyrotrons.Find(gyro)
-		var/status = (gyro.stat & (NOPOWER | BROKEN) ? "<span style='color: red'>Unresponsive</span>" : "<span style='color: green'>Operational</span>")
+		var/status = ((state != 2 || gyro.stat & (NOPOWER | BROKEN)) ? "<span style='color: red'>Unresponsive</span>" : "<span style='color: green'>Operational</span>")
 		dat += {"
 			</tr>
 				<td>[gyro.id_tag]</td>
 				<td>[status]</td>
 		"}
-		if(gyro.stat & (NOPOWER | BROKEN)) //Error data not found.
+		if(state != 2 || gyro.stat & (NOPOWER | BROKEN)) //Error data not found.
 			dat += {"
 				<td><span style='color: red'>ERROR</span></td>
 				<td><span style='color: red'>ERROR</span></td>
@@ -90,12 +93,13 @@
 		return
 
 	if(href_list["modifypower"])
-		var/new_val = input("Enter new emission power level (0.001 - 0.01)", "Modifying power level (MeV)", gyro.mega_energy) as num
+		var/new_val = input("Enter new emission power level (0.001 - 0.01)", "Modifying power level (TJ)", gyro.mega_energy) as num
 		if(!new_val)
 			usr << "<span class='warning'>That's not a valid number.</span>"
 			return 1
 
 		gyro.mega_energy = Clamp(new_val, 0.001, 0.01)
+		gyro.active_power_usage = gyro.mega_energy * 100000000 //1 MW for 0.01 TJ, 100 KW for 0.001 TJ.
 
 		updateUsrDialog()
 		return 1
