@@ -85,17 +85,21 @@
 				priority_announce("Hostile enviroment resolved. You have 3 minutes to board the Emergency Shuttle.", null, 'sound/AI/shuttledock.ogg', "Priority")
 			else
 				priority_announce("All hostile activity within station systems have ceased.","Network Alert")
+
 			if(get_security_level() == "delta")
 				set_security_level("red")
 
-		ticker.mode.message_gangtools(((gang=="A") ? ticker.mode.A_tools : ticker.mode.B_tools),"Hostile takeover cancelled: Dominator is no longer operational.",1,1)
+			for(var/obj/item/weapon/pinpointer/pointer in world)
+				pointer.scandisk() //Reset the pinpointer
 
-		if(isnum(mode.A_timer) || isnum(mode.B_timer))
+		else if(isnum(mode.A_timer) || isnum(mode.B_timer))
 			for(var/obj/machinery/dominator/dom in world)
 				if(dom.operating)
-					for(var/obj/item/weapon/pinpointer/point in world)
-						point.the_disk = dom //The pinpointer now tracks the dominator's location
+					for(var/obj/item/weapon/pinpointer/pointer in world)
+						pointer.the_disk = dom //The pinpointer now tracks the dominator's location
 					break
+
+		ticker.mode.message_gangtools(((gang=="A") ? ticker.mode.A_tools : ticker.mode.B_tools),"Hostile takeover cancelled: Dominator is no longer operational.",1,1)
 
 	SetLuminosity(0)
 	icon_state = "dominator-broken"
