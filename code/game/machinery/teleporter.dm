@@ -7,7 +7,6 @@
 	var/id = null
 	var/one_time_use = 0 //Used for one-time-use teleport cards (such as clown planet coordinates.)
 						 //Setting this to 1 will set src.locked to null after a player enters the portal and will not allow hand-teles to open portals to that location.
-	ghost_read=0 // #430
 	ghost_write=0
 
 	light_color = LIGHT_COLOR_BLUE
@@ -63,6 +62,12 @@
 			src.add_fingerprint(usr)
 	return
 
+/obj/machinery/computer/teleporter/examine(var/mob/user)
+	..()
+	if(locked)
+		var/area/locked_area = get_area(locked)
+		user << "The destination is set to \"[locked_area.name]\""
+
 /obj/machinery/computer/teleporter/attack_paw(var/mob/user)
 	src.attack_hand(user)
 
@@ -70,9 +75,62 @@
 	src.attack_hand(user)
 
 /obj/machinery/computer/teleporter/attack_hand(var/mob/user)
-	if(stat & (NOPOWER|BROKEN))
+	. = ..()
+	if(.)
+		user.unset_machine()
 		return
 
+	interact(user)
+
+/obj/machinery/computer/teleporter/interact(var/mob/user)
+	if(locked)
+		var/area/locked_area = get_area(locked)
+		. = {"
+		<b>Destination:</b> [locked_area.name]<br>
+		<a href='?src=\ref[src];clear=1'>Clear destination</a><br>
+		"}
+	else
+		. = {"
+		<b>Destination unset!</b><br>
+		"}
+
+	. += {"
+		<b>Available destinations:<b><br>
+		<lu>
+	"}
+
+	var/list/dests = get_avail_dests()
+
+	for(var/name in dests)
+		. += {"
+			<li><a href='?src=\ref[src];dest=[dests.Find(name)]'[dests[name] == locked ? " class='linkOn'" : ""]>[name]</a></li>
+		"}
+
+	. += "</lu>"
+
+	var/datum/browser/popup = new(user, "teleporter_console", name, 250, 500, src)
+	popup.set_content(.)
+	popup.open()
+	user.set_machine(src)
+
+/obj/machinery/computer/teleporter/Topic(var/href, var/list/href_list)
+	. = ..()
+	if(.)
+		return
+
+	if(href_list["clear"])
+		locked = null
+		updateUsrDialog()
+		return 1
+
+	if(href_list["dest"])
+		var/list/dests = get_avail_dests()
+		var/idx = Clamp(text2num(href_list["dest"]), 1, dests.len)
+		locked = dests[dests[idx]]
+		updateUsrDialog()
+		return 1
+
+/obj/machinery/computer/teleporter/proc/get_avail_dests()
 	var/list/L = list()
 	var/list/areaindex = list()
 
@@ -107,12 +165,7 @@
 				areaindex[tmpname] = 1
 			L[tmpname] = I
 
-	var/desc = input("Please select a location to lock in.", "Locking Computer") in L
-	src.locked = L[desc]
-	for(var/mob/O in hearers(src, null))
-		O.show_message("<span class='notice'>Locked In</span>", 2)
-	src.add_fingerprint(usr)
-	return
+	. = L
 
 /obj/machinery/computer/teleporter/verb/set_id(t as text)
 	set category = "Object"
