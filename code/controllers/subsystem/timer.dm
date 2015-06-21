@@ -1,7 +1,7 @@
 var/datum/subsystem/timer/SStimer
 
 /datum/subsystem/timer
-	name = "timer"
+	name = "Timer"
 	wait = 5
 	priority = 1
 
