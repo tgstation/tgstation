@@ -13,7 +13,7 @@
 	var/boss = 1 //If it has the power to promote gang members
 	var/recalling = 0
 	var/promotions = 0
-	var/outfits = 5
+	var/outfits = 3
 	var/free_pen = 0
 
 /obj/item/device/gangtool/New() //Initialize supply point income if it hasn't already been started
@@ -46,7 +46,7 @@
 		if(gangmode)
 			timer = ((gang == "A") ? gangmode.A_timer : gangmode.B_timer)
 			if(isnum(timer))
-				dat += "<center><font color='red'>Takeover In Progress:<br><B>[timer] seconds remain</B></font></center><hr>"
+				dat += "<center><font color='red'>Takeover In Progress:<br><B>[timer] seconds remain</B></font></center><br>"
 
 		dat += "Registration: <B>[(gang == "A")? gang_name("A") : gang_name("B")] Gang [boss ? "Administrator" : "Lieutenant"]</B><br>"
 		dat += "Organization Size: <B>[gang_size]</B> | Station Control: <B>[round((gang_territory/start_state.num_territories)*100, 1)]%</B><br>"
@@ -57,15 +57,11 @@
 
 		dat += "<a href='?src=\ref[src];choice=ping'>Send Message to Gang</a><br>"
 		if(outfits > 0)
-			dat += "<a href='?src=\ref[src];choice=outfit'>Create Gang Outfit</a><br>"
+			dat += "<a href='?src=\ref[src];choice=outfit'>Create Armored Gang Outfit</a><br>"
 		else
 			dat += "<b>Create Gang Outfit</b> (Restocking)<br>"
 		if(gangmode)
-			dat += "(5 Influence) "
-			if(points >= 5)
-				dat += "<a href='?src=\ref[src];purchase=recall'>Recall Emergency Shuttle</a><br>"
-			else
-				dat += "Recall Emergency Shuttle<br>"
+			dat += "<a href='?src=\ref[src];choice=recall'>Recall Emergency Shuttle</a><br>"
 
 		dat += "<br>"
 		dat += "<B>Purchase Weapons:</B><br>"
@@ -109,6 +105,12 @@
 		else
 			dat += "Territory Spraycan<br>"
 
+		dat += "(15 Influence) "
+		if(points >= 15)
+			dat += "<a href='?src=\ref[src];purchase=C4'>C4 Explosive</a><br>"
+		else
+			dat += "C4 Explosive<br>"
+
 		if(free_pen)
 			dat += "(ONE FREE) "
 		else
@@ -150,6 +152,10 @@
 
 	add_fingerprint(usr)
 
+	if(recalling)
+		usr << "<span class='warning'>Device is busy. Shuttle recall in progress.</span>"
+		return
+
 	if(href_list["register"])
 		register_device(usr)
 
@@ -160,11 +166,6 @@
 		var/points = ((gang == "A") ? ticker.mode.gang_points.A : ticker.mode.gang_points.B)
 		var/item_type
 		switch(href_list["purchase"])
-			if("recall")
-				if(points >= 5)
-					if(recall(usr))
-						item_type = 1
-						points = 5
 			if("spraycan")
 				if(points >= 5)
 					item_type = /obj/item/toy/crayon/spraycan/gang
@@ -189,6 +190,10 @@
 				if(points >= 25)
 					item_type = /obj/item/ammo_box/magazine/uzim9mm
 					points = 25
+			if("C4")
+				if(points >= 15)
+					item_type = /obj/item/weapon/c4
+					points = 15
 			if("pen")
 				if(free_pen)
 					item_type = /obj/item/weapon/pen/gang
@@ -208,9 +213,9 @@
 					if(isnum((gang == "A") ? mode.A_timer : mode.B_timer))
 						return
 
-					var/usrarea = get_area(usr.loc)
+					var/area/usrarea = get_area(usr.loc)
 					var/usrturf = get_turf(usr.loc)
-					if(istype(usrarea,/area/space) || istype(usrturf,/turf/space) || usr.z != 1)
+					if(initial(usrarea.name) == "Space" || istype(usrturf,/turf/space) || usr.z != 1)
 						usr << "<span class='warning'>You can only use this on the station!</span>"
 						return
 
@@ -241,6 +246,8 @@
 
 	else if(href_list["choice"])
 		switch(href_list["choice"])
+			if("recall")
+				recall(usr)
 			if("outfit")
 				if(outfits > 0)
 					ticker.mode.gang_outfit(usr,src,gang)
@@ -313,7 +320,7 @@
 		usr << "<span class='warning'>ACCESS DENIED: Unauthorized user.</span>"
 
 /obj/item/device/gangtool/proc/recall(mob/user)
-	if(recalling || !can_use(user))
+	if(!can_use(user))
 		return 0
 
 	if(!istype(ticker.mode, /datum/game_mode/gang))
@@ -322,7 +329,7 @@
 	recalling = 1
 	loc << "<span class='info'>\icon[src]Generating shuttle recall order with codes retrieved from last call signal...</span>"
 
-	sleep(rand(10,30))
+	sleep(rand(100,300))
 
 	if(SSshuttle.emergency.mode != SHUTTLE_CALL) //Shuttle can only be recalled when it's moving to the station
 		user << "<span class='info'>\icon[src]Emergency shuttle cannot be recalled at this time.</span>"
@@ -330,7 +337,7 @@
 		return 0
 	loc << "<span class='info'>\icon[src]Shuttle recall order generated. Accessing station long-range communication arrays...</span>"
 
-	sleep(rand(10,30))
+	sleep(rand(100,300))
 
 	var/turf/userturf = get_turf(user)
 	if(userturf.z != 1) //Shuttle can only be recalled while on station
@@ -345,7 +352,7 @@
 		return 0
 	loc << "<span class='info'>\icon[src]Comm arrays accessed. Broadcasting recall signal...</span>"
 
-	sleep(rand(10,30))
+	sleep(rand(100,300))
 
 	recalling = 0
 	log_game("[key_name(user)] has tried to recall the shuttle with a gangtool.")

@@ -328,6 +328,7 @@
 #include "code\game\gamemodes\extended\extended.dm"
 #include "code\game\gamemodes\gang\dominator.dm"
 #include "code\game\gamemodes\gang\gang.dm"
+#include "code\game\gamemodes\gang\gang_pen.dm"
 #include "code\game\gamemodes\gang\recaller.dm"
 #include "code\game\gamemodes\malfunction\Malf_Modules.dm"
 #include "code\game\gamemodes\malfunction\malfunction.dm"

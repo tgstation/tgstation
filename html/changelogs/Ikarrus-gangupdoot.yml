@@ -33,8 +33,14 @@ delete-after: True
 # Also, this gets changed to [] after reading.  Just remove the brackets when you add new shit.
 # Please surround your changes in  double quotes ("). It works without them, but if you use certain characters it screws up compiling. The quotes will not show up in the changelog.
 changes: 
-  - rscadd: "Dominators beep while active."
-  - rscdel: "Pinpointers no longer point at dominators."
+  - rscadd: "New gang names with tags created by Joan"
+  - rscadd: "C4 explosive can be purchased by gangs for 15 influence."
   - tweak: "Recruitment pen cost increased to 50."
   - rscadd: "Lieutenants recieve one free recruitment pen."
-  - tweak: "Recalling the shuttle via gangtool now costs 5 influence."
+  - tweak: "Recruitment pens are now stealthy and no longer give a tiny prick message."
+  - tweak: "Increased chance of deconversion with head trauma"
+  - tweak: "Recalling the shuttle now takes about a minute to work, during which you won't be able to use your gangtool."
+  - rscadd: "Pinpointers no longer point at dominators. Instead, dominators will beep while active."
+  - rscadd: "Added puffer jackets and vests."
+  - tweak: "Increased gang outfit armor. It is moderately resistant to bullets now."
+  - rscdel: "Removed bulletproof vests from gangtool menu."
