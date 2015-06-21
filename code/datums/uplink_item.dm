@@ -668,11 +668,62 @@ var/list/uplink_items = list()
 	item = /obj/item/weapon/storage/box/syndie_kit/imp_explosive
 	cost = 6
 
+
+//CYBERNETIC IMPLANTS
+
+/datum/uplink_item/cyber_implants
+	category = "Cybernetic Implants"
+	gamemodes = list(/datum/game_mode/nuclear)
+	surplus = 0
+
+/datum/uplink_item/cyber_implants/thermals
+	name = "Thermal Vision Implant"
+	desc = "These cybernetic eyes will give you thermal vision."
+	item = /obj/item/cybernetic_implant/eyes/thermals
+	cost = 8
+
+/datum/uplink_item/cyber_implants/xray
+	name = "X-Ray Vision Implant"
+	desc = "These cybernetic eyes will give you X-ray vision."
+	item = /obj/item/cybernetic_implant/eyes/xray
+	cost = 10
+
+/datum/uplink_item/cyber_implants/antistun
+	name = "CNS Rebooter Implant"
+	desc = "This implant will help you get back up on your feet faster after being stunned."
+	item = /obj/item/cybernetic_implant/brain/anti_stun
+	cost = 12
+
+/datum/uplink_item/cyber_implants/antidrop
+	name = "Anti-Drop Implant"
+	desc = "This cybernetic brain implant will allow you to force your hand muscles to contract, preventing item dropping."
+	item = /obj/item/cybernetic_implant/brain/anti_drop
+	cost = 8
+
+/datum/uplink_item/cyber_implants/reviver
+	name = "Reviver Implant"
+	desc = "This implant will attempt to revive you if you lose consciousness."
+	item = /obj/item/cybernetic_implant/chest/reviver
+	cost = 8
+
+/datum/uplink_item/cyber_implants/nutriment
+	name = "Nutriment Pump Implant PLUS"
+	desc = "This implant will pump you with nutriments and electrolytes so you don't go hungry in action."
+	item = /obj/item/cybernetic_implant/chest/nutriment/plus
+	cost = 5
+
+/datum/uplink_item/cyber_implants/bundle
+	name = "Cybernetic Implants Bundle"
+	desc = "A random selection of cybernetic implants. Guaranteed 5 high quality implants."
+	item = /obj/item/weapon/storage/box/cyber_implants
+	cost = 40
+
 // POINTLESS BADASSERY
 
 /datum/uplink_item/badass
 	category = "(Pointless) Badassery"
 	surplus = 0
+	last = 1
 
 /datum/uplink_item/badass/bundle
 	name = "Syndicate Bundle"

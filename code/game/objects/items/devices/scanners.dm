@@ -191,6 +191,13 @@ MASS SPECTROMETER
 			else
 				user << "<span class='info'>Blood level [blood_percent] %, [blood_volume] cl, type: [blood_type]</span>"
 
+		var/implant_detect
+		for(var/obj/item/cybernetic_implant/CI in H.internal_organs)
+			implant_detect += "[H.name] is modified with a [CI.name].<br>"
+		if(implant_detect)
+			user.show_message("<span class='notice'>Detected cybernetic modifications:</span>")
+			user.show_message("<span class='notice'>[implant_detect]</span>")
+
 /proc/chemscan(var/mob/living/user, var/mob/living/M)
 	if(ishuman(M))
 		var/mob/living/carbon/human/H = M

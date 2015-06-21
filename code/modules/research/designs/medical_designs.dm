@@ -117,7 +117,7 @@
 	id = "ci-medhud"
 	req_tech = list("materials" = 6, "programming" = 4, "biotech" = 4)
 	build_type = PROTOLATHE | MECHFAB
-	materials = list("$metal" = 200, "$glass" = 200, "$silver" = 200, "$gold" = 100)
+	materials = list("$metal" = 200, "$glass" = 200, "$silver" = 500, "$gold" = 500)
 	build_path = /obj/item/cybernetic_implant/eyes/hud/medical
 	category = list("Medical Designs")
 
@@ -127,7 +127,7 @@
 	id = "ci-sechud"
 	req_tech = list("materials" = 6, "programming" = 5, "biotech" = 4, "combat" = 2)
 	build_type = PROTOLATHE | MECHFAB
-	materials = list("$metal" = 200, "$glass" = 200, "$silver" = 300, "$gold" = 300)
+	materials = list("$metal" = 200, "$glass" = 200, "$silver" = 750, "$gold" = 750)
 	build_path = /obj/item/cybernetic_implant/eyes/hud/security
 	category = list("Medical Designs")
 
@@ -135,9 +135,9 @@
 	name = "X-Ray implant"
 	desc = "These cybernetic eyes will give you X-ray vision. Blinking is futile."
 	id = "ci-xray"
-	req_tech = list("materials" = 7, "programming" = 5, "biotech" = 6, "magnets" = 5, "plasmatech" = 3)
+	req_tech = list("materials" = 7, "programming" = 5, "biotech" = 6, "magnets" = 5)
 	build_type = PROTOLATHE | MECHFAB
-	materials = list("$metal" = 200, "$glass" = 200, "$silver" = 200, "$gold" = 200, "$plasma" = 200, "$uranium" = 500, "$diamond" = 1000)
+	materials = list("$metal" = 200, "$glass" = 200, "$silver" = 600, "$gold" = 600, "$plasma" = 1000, "$uranium" = 1000, "$diamond" = 2000)
 	build_path = /obj/item/cybernetic_implant/eyes/xray
 	category = list("Medical Designs")
 
@@ -145,9 +145,9 @@
 	name = "Thermals implant"
 	desc = "These cybernetic eyes will give you Thermal vision. Vertical slit pupil included."
 	id = "ci-thermals"
-	req_tech = list("materials" = 7, "programming" = 5, "biotech" = 5, "magnets" = 5, "plasmatech" = 3, "syndicate" = 4)
+	req_tech = list("materials" = 7, "programming" = 5, "biotech" = 5, "magnets" = 5, "syndicate" = 5)
 	build_type = PROTOLATHE | MECHFAB
-	materials = list("$metal" = 200, "$glass" = 200, "$silver" = 200, "$gold" = 200, "$plasma" = 200, "$diamond" = 1000)
+	materials = list("$metal" = 200, "$glass" = 200, "$silver" = 600, "$gold" = 600, "$plasma" = 1000, "$diamond" = 2000)
 	build_path = /obj/item/cybernetic_implant/eyes/thermals
 	category = list("Medical Designs")
 
@@ -171,13 +171,14 @@
 	build_path = /obj/item/cybernetic_implant/brain/anti_stun
 	category = list("Medical Designs")
 
-/*/datum/design/cyberimp_nutriment
+/datum/design/cyberimp_nutriment
 	name = "Nutriment pump implant"
 	desc = "This implant with synthesize and pump into your bloodstream a small amount of nutriment when you are starving."
 	id = "ci-nutriment"
 	req_tech = list("materials" = 6, "programming" = 4, "biotech" = 5)
 	build_type = PROTOLATHE | MECHFAB
 	materials = list("$metal" = 200, "$glass" = 200, "$gold" = 500, "$uranium" = 500)
+	build_path = /obj/item/cybernetic_implant/chest/nutriment
 	category = list("Medical Designs")
 
 /datum/design/cyberimp_nutriment_plus
@@ -187,4 +188,15 @@
 	req_tech = list("materials" = 6, "programming" = 4, "biotech" = 6)
 	build_type = PROTOLATHE | MECHFAB
 	materials = list("$metal" = 200, "$glass" = 200, "$gold" = 500, "$uranium" = 750)
-	category = list("Medical Designs")*/
+	build_path = /obj/item/cybernetic_implant/chest/nutriment/plus
+	category = list("Medical Designs")
+
+/datum/design/cyberimp_reviver
+	name = "Reviver implant"
+	desc = "This implant will attempt to revive you if you lose consciousness. For the faint of heart!"
+	id = "ci-reviver"
+	req_tech = list("materials" = 6, "programming" = 4, "biotech" = 7, "syndicate" = 4)
+	build_type = PROTOLATHE | MECHFAB
+	materials = list("$metal" = 200, "$glass" = 200, "$gold" = 500, "$uranium" = 1000, "$diamond" = 2000)
+	build_path = /obj/item/cybernetic_implant/chest/reviver
+	category = list("Medical Designs")
