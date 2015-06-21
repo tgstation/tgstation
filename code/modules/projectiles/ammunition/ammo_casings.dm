@@ -166,7 +166,7 @@
 /obj/item/ammo_casing/shotgun/dart/bioterror/New()
 	..()
 	reagents.add_reagent("neurotoxin", 5)
-	reagents.add_reagent("morphine", 5)
+	reagents.add_reagent("ether", 5)
 	reagents.add_reagent("spore", 5)
 	reagents.add_reagent("mutetoxin", 5) //;HELP OPS IN MAINT
 	reagents.add_reagent("initropidril", 5)

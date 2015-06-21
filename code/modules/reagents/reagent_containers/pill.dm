@@ -92,6 +92,12 @@
 	icon_state = "pill8"
 	list_reagents = list("morphine" = 30)
 	roundstart = 1
+/obj/item/weapon/reagent_containers/pill/ether
+	name = "ether pill"
+	desc = "Commonly used to effectively treat insomnia."
+	icon_state = "pill8"
+	list_reagents = list("ether" = 30)
+	roundstart = 1
 /obj/item/weapon/reagent_containers/pill/stimulant
 	name = "stimulant pill"
 	desc = "Often taken by overworked employees, athletes, and the inebriated. You'll snap to attention immediately!"
