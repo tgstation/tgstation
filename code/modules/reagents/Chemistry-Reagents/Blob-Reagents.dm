@@ -163,20 +163,6 @@
 			send_message(M)
 		M.reagents.add_reagent("omnizine", 11)
 
-/datum/reagent/blob/morphine
-	name = "Morphine"
-	id = "b_morphine"
-	description = ""
-	color = "#335555"
-	message = "The blob squirts something at you"
-	message_living = ", and you feel numb"
-
-/datum/reagent/blob/morphine/reaction_mob(var/mob/living/M as mob, var/method=TOUCH, var/volume, var/show_message = 1)
-	if(method == TOUCH)
-		if(show_message)
-			send_message(M)
-		M.reagents.add_reagent("morphine", 16)
-
 /datum/reagent/blob/spacedrugs
 	name = "Space drugs"
 	id = "b_space_drugs"
