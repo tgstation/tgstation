@@ -41,7 +41,7 @@
 			user << "<span class='warning'>You aren't sure where this brain came from, but you're pretty sure it's a useless brain!</span>"
 			return
 
-		if(!user.unEquip(src))
+		if(!user.unEquip(O))
 			return
 		var/mob/living/carbon/brain/B = newbrain.brainmob
 		if(!B.key)
