@@ -14,6 +14,7 @@
 	var/recalling = 0
 	var/promotions = 0
 	var/outfits = 5
+	var/free_pen = 0
 
 /obj/item/device/gangtool/New() //Initialize supply point income if it hasn't already been started
 	if(!ticker.mode.gang_points)
@@ -49,19 +50,24 @@
 
 		dat += "Registration: <B>[(gang == "A")? gang_name("A") : gang_name("B")] Gang [boss ? "Administrator" : "Lieutenant"]</B><br>"
 		dat += "Organization Size: <B>[gang_size]</B> | Station Control: <B>[round((gang_territory/start_state.num_territories)*100, 1)]%</B><br>"
+		dat += "Influence: <B>[points]</B><br>"
+		dat += "Time until Influence grows: <B>[(points >= 999) ? ("--:--") : (time2text(ticker.mode.gang_points.next_point_time - world.time, "mm:ss"))]</B><br>"
+		dat += "<hr>"
+		dat += "<B>Gangtool Functions:</B><br>"
+
+		dat += "<a href='?src=\ref[src];choice=ping'>Send Message to Gang</a><br>"
 		if(outfits > 0)
 			dat += "<a href='?src=\ref[src];choice=outfit'>Create Gang Outfit</a><br>"
 		else
 			dat += "<b>Create Gang Outfit</b> (Restocking)<br>"
-		dat += "<a href='?src=\ref[src];choice=ping'>Send Gang-wide Message</a><br>"
 		if(gangmode)
-			dat += "<a href='?src=\ref[src];choice=recall'>Recall Emergency Shuttle</a><br>"
+			dat += "(5 Influence) "
+			if(points >= 5)
+				dat += "<a href='?src=\ref[src];purchase=recall'>Recall Emergency Shuttle</a><br>"
+			else
+				dat += "Recall Emergency Shuttle<br>"
 
 		dat += "<br>"
-
-		dat += "Influence: <B>[points]</B><br>"
-		dat += "Time until Influence grows: <B>[(points >= 999) ? ("--:--") : (time2text(ticker.mode.gang_points.next_point_time - world.time, "mm:ss"))]</B><br>"
-		dat += "<hr>"
 		dat += "<B>Purchase Weapons:</B><br>"
 
 		dat += "(10 Influence) "
@@ -99,18 +105,15 @@
 
 		dat += "(5 Influence) "
 		if(points >= 5)
-			dat += "<a href='?src=\ref[src];purchase=spraycan'><b>Territory Spraycan</b></a><br>"
+			dat += "<a href='?src=\ref[src];purchase=spraycan'>Territory Spraycan</a><br>"
 		else
-			dat += "<b>Territory Spraycan</b><br>"
+			dat += "Territory Spraycan<br>"
 
-		dat += "(10 Influence) "
-		if(points >= 10)
-			dat += "<a href='?src=\ref[src];purchase=vest'>Bulletproof Vest</a><br>"
+		if(free_pen)
+			dat += "(ONE FREE) "
 		else
-			dat += "Bulletproof Vest<br>"
-
-		dat += "(30 Influence) "
-		if(points >= 30)
+			dat += "(50 Influence) "
+		if(free_pen || (points >= 50))
 			dat += "<a href='?src=\ref[src];purchase=pen'>Recruitment Pen</a><br>"
 		else
 			dat += "Recruitment Pen<br>"
@@ -129,13 +132,13 @@
 			if(points >= 30)
 				dat += "<a href='?src=\ref[src];purchase=dominator'><b>Station Dominator</b></a><br>"
 			else
-				dat += "Station Dominator<br>"
+				dat += "<b>Station Dominator</b><br>"
 			dat += "<i>(Estimated Takeover Time: [round(max(300,900 - ((round((gang_territory/start_state.num_territories)*200, 10) - 60) * 15))/60,1)] minutes)</i><br>"
 
 	dat += "<br>"
 	dat += "<a href='?src=\ref[src];choice=refresh'>Refresh</a><br>"
 
-	var/datum/browser/popup = new(user, "gangtool", "Welcome to GangTool v0.4", 340, 600)
+	var/datum/browser/popup = new(user, "gangtool", "Welcome to GangTool v2.1", 340, 600)
 	popup.set_content(dat)
 	popup.open()
 
@@ -157,6 +160,11 @@
 		var/points = ((gang == "A") ? ticker.mode.gang_points.A : ticker.mode.gang_points.B)
 		var/item_type
 		switch(href_list["purchase"])
+			if("recall")
+				if(points >= 5)
+					if(recall(usr))
+						item_type = 1
+						points = 5
 			if("spraycan")
 				if(points >= 5)
 					item_type = /obj/item/toy/crayon/spraycan/gang
@@ -181,14 +189,14 @@
 				if(points >= 25)
 					item_type = /obj/item/ammo_box/magazine/uzim9mm
 					points = 25
-			if("vest")
-				if(points >= 10)
-					item_type = /obj/item/clothing/suit/armor/bulletproof
-					points = 10
 			if("pen")
-				if(points >= 30)
+				if(free_pen)
 					item_type = /obj/item/weapon/pen/gang
-					points = 30
+					free_pen = 0
+					points = 0
+				else if(points >= 50)
+					item_type = /obj/item/weapon/pen/gang
+					points = 50
 			if("gangtool")
 				if((promotions < 3) && (points >= (promotions*10)+10))
 					item_type = /obj/item/device/gangtool/lt
@@ -224,8 +232,12 @@
 				var/obj/purchased = new item_type(get_turf(usr))
 				var/mob/living/carbon/human/H = usr
 				H.put_in_any_hand_if_possible(purchased)
-			ticker.mode.message_gangtools(((gang=="A")? ticker.mode.A_tools : ticker.mode.B_tools), "A [href_list["purchase"]] was purchased by [usr] for [points] Influence.")
+			if(points)
+				ticker.mode.message_gangtools(((gang=="A")? ticker.mode.A_tools : ticker.mode.B_tools), "A [href_list["purchase"]] was purchased by [usr] for [points] Influence.")
 			log_game("A [href_list["purchase"]] was purchased by [key_name(usr)] for [points] Influence.")
+
+		else
+			usr << "<span class='warning'>Not enough influence.</span>"
 
 	else if(href_list["choice"])
 		switch(href_list["choice"])
@@ -233,8 +245,6 @@
 				if(outfits > 0)
 					ticker.mode.gang_outfit(usr,src,gang)
 					outfits -= 1
-			if("recall")
-				recall(usr)
 			if("ping")
 				ping_gang(usr)
 	attack_self(usr)
@@ -298,16 +308,16 @@
 		ticker.mode.forge_gang_objectives(user.mind)
 		ticker.mode.greet_gang(user.mind,0)
 		user << "The <b>Gangtool</b> you registered will allow you to purchase items, send messages to your gangsters and to recall the emergency shuttle from anywhere on the station."
-		user << "You may also now use <b>recruitment pens</b> to grow your gang membership. Use them on unsuspecting crew members to recruit them."
+		user << "Unlike regular gangsters, you may use <b>recruitment pens</b> to add recruits to your gang. Use them on unsuspecting crew members to recruit them. Don't forget to get your one free pen from the gangtool."
 	if(!gang)
 		usr << "<span class='warning'>ACCESS DENIED: Unauthorized user.</span>"
 
 /obj/item/device/gangtool/proc/recall(mob/user)
 	if(recalling || !can_use(user))
-		return
+		return 0
 
 	if(!istype(ticker.mode, /datum/game_mode/gang))
-		return
+		return 0
 
 	recalling = 1
 	loc << "<span class='info'>\icon[src]Generating shuttle recall order with codes retrieved from last call signal...</span>"
@@ -317,7 +327,7 @@
 	if(SSshuttle.emergency.mode != SHUTTLE_CALL) //Shuttle can only be recalled when it's moving to the station
 		user << "<span class='info'>\icon[src]Emergency shuttle cannot be recalled at this time.</span>"
 		recalling = 0
-		return
+		return 0
 	loc << "<span class='info'>\icon[src]Shuttle recall order generated. Accessing station long-range communication arrays...</span>"
 
 	sleep(rand(10,30))
@@ -326,13 +336,13 @@
 	if(userturf.z != 1) //Shuttle can only be recalled while on station
 		user << "<span class='info'>\icon[src]Error: Device out of range of station communication arrays.</span>"
 		recalling = 0
-		return
+		return 0
 	var/datum/station_state/end_state = new /datum/station_state()
 	end_state.count()
 	if((100 *  start_state.score(end_state)) < 70) //Shuttle cannot be recalled if the station is too damaged
 		user << "<span class='info'>\icon[src]Error: Station communication systems compromised. Unable to establish connection.</span>"
 		recalling = 0
-		return
+		return 0
 	loc << "<span class='info'>\icon[src]Comm arrays accessed. Broadcasting recall signal...</span>"
 
 	sleep(rand(10,30))
@@ -342,6 +352,8 @@
 	message_admins("[key_name_admin(user)] has tried to recall the shuttle with a gangtool.", 1)
 	if(!SSshuttle.cancelEvac(user))
 		loc << "<span class='info'>\icon[src]No response recieved. Emergency shuttle cannot be recalled at this time.</span>"
+	else
+		return 1
 
 /obj/item/device/gangtool/proc/can_use(mob/living/carbon/human/user)
 	if(!istype(user))
@@ -368,3 +380,4 @@
 /obj/item/device/gangtool/lt
 	boss = 0
 	outfits = 1
+	free_pen = 1

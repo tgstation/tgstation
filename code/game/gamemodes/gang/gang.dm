@@ -122,12 +122,9 @@
 		B_timer = max(180,900 - ((round((B_territory.len/start_state.num_territories)*200, 1) - 60) * 15)) * modifier
 	if(gang && dominator)
 		var/area/domloc = get_area(dominator.loc)
-		priority_announce("Hostile runtimes detected in all station systems. A network breach by the [gang_name(gang)] Gang has been located in [domloc].","Network Alert")
+		priority_announce("Network breach detected in [domloc]. The [gang_name(gang)] Gang is attempting to seize control of the station!","Network Alert")
 		set_security_level("delta")
 		SSshuttle.emergencyNoEscape = 1
-
-		for(var/obj/item/weapon/pinpointer/point in world)
-			point.the_disk = dominator //The pinpointer now tracks the dominator's location
 
 ///////////////////////////////////////////////////////////////////////////
 //This equips the bosses with their gear, and makes the clown not clumsy//
@@ -162,7 +159,7 @@
 	else
 		gangtool.register_device(mob)
 		mob << "The <b>Gangtool</b> in your [where] will allow you to purchase items, send messages to your gangsters and recall the emergency shuttle from anywhere on the station."
-		mob << "You can also promote your gang members to <b>lieutenant</b> by giving them an unregistered gangtool. Lieutenants cannot be deconverted and are able to use recruitment pens and gangtools."
+		mob << "You can also promote your gang members to <b>lieutenant</b> by having them use an unregistered gangtool. Unlike regular gangsters, Lieutenants cannot be deconverted and are able to use recruitment pens and gangtools."
 
 	var/where2 = mob.equip_in_one_of_slots(T, slots)
 	if (!where2)
@@ -509,7 +506,7 @@
 		if(A_new != A)
 			A_message += "Gang influence has increased by [A_new - A] for defending [ticker.mode.A_territory.len] territories and [A_uniformed] uniformed gangsters.<BR>"
 		A = A_new
-		A_message += "Your gang now has [A_new] influence."
+		A_message += "Your gang now has [A] influence."
 	ticker.mode.message_gangtools(ticker.mode.A_tools,A_message,0)
 
 	ticker.mode.message_gangtools(ticker.mode.B_tools,"<b>[gang_name("B")] Gang Status Report:</b>")
@@ -525,7 +522,7 @@
 		if(B_new != B)
 			A_message += "Gang influence has increased by [B_new - B] for defending [ticker.mode.B_territory.len] territories and [B_uniformed] uniformed gangsters.<BR>"
 		B = B_new
-		B_message += "Your gang now has [B_new] influence."
+		B_message += "Your gang now has [B] influence."
 	ticker.mode.message_gangtools(ticker.mode.B_tools,B_message,0)
 
 
