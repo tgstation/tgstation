@@ -10,10 +10,10 @@
 	layer = TURF_LAYER + 0.1
 	mouse_opacity = 0
 	var/amount = 3
-	var/expand = 1
 	animate_movement = 0
 	var/metal = 0
 	var/lifetime = 6
+	var/max_lifetime = 6
 
 
 /obj/effect/effect/foam/metal/aluminium
@@ -36,16 +36,20 @@
 /obj/effect/effect/foam/Destroy()
 	SSobj.processing.Remove(src)
 	return ..()
-
+/*
 /obj/effect/effect/foam/metal/New(loc)
 	..()
 	var/obj/structure/foamedmetal/M = new(src.loc)
 	M.metal = metal
-	M.updateicon()
+	M.updateicon()*/
 
 
 /obj/effect/effect/foam/proc/kill_foam()
 	SSobj.processing.Remove(src)
+	if(metal)
+		var/obj/structure/foamedmetal/M = new(src.loc)
+		M.metal = metal
+		M.updateicon()
 	flick("[icon_state]-disolve", src)
 	spawn(5)
 		qdel(src)
@@ -55,20 +59,35 @@
 	lifetime--
 	if(lifetime < 1)
 		kill_foam()
+		return
+
+	var/fraction = 1/max_lifetime
+	for(var/obj/O in range(0,src))
+		if(O.type == src.type)
+			continue
+		reagents.reaction(O, TOUCH, fraction)
+	for(var/mob/living/L in range(0,src))
+		foam_mob(L)
+	var/T = get_turf(src)
+	reagents.reaction(T, TOUCH, fraction)
+
 	if(--amount < 0)
 		return
-	for(var/atom/M in view(1,src))
-		if(M == src)
-			continue
-		reagents.reaction(M, TOUCH)
 	spread_foam()
 
+/obj/effect/effect/foam/proc/foam_mob(var/mob/living/L as mob)
+	if(lifetime<1)
+		return
+	if(!istype(L))
+		return
+	var/fraction = 1/max_lifetime
+	reagents.reaction(L, TOUCH, fraction)
+	lifetime--
 
 /obj/effect/effect/foam/Crossed(var/atom/movable/AM)
 	if(istype(AM, /mob/living/carbon))
 		var/mob/living/carbon/M = AM
 		M.slip(5, 2, src)
-
 
 /obj/effect/effect/foam/metal/Crossed(var/atom/movable/AM)
 	return
@@ -87,10 +106,14 @@
 		if(foundfoam)
 			continue
 
-		var/obj/effect/effect/foam/F = PoolOrNew(/obj/effect/effect/foam, T)
+		for(var/mob/living/L in T)
+			foam_mob(L)
+		var/obj/effect/effect/foam/F = PoolOrNew(src.type, T)
 		F.amount = amount
 		reagents.copy_to(F, (reagents.total_volume))
 		F.color = color
+		F.metal = metal
+		F.max_lifetime = max_lifetime
 
 
 /obj/effect/effect/foam/temperature_expose(datum/gas_mixture/air, exposed_temperature, exposed_volume)
@@ -136,7 +159,6 @@
 	amount = round(sqrt(amt / 2), 1)
 	carry.copy_to(chemholder, carry.total_volume)
 
-
 /datum/effect/effect/system/foam_spread/metal/set_up(amt=5, loca, var/datum/reagents/carry = null, var/metaltype)
 	..()
 	metal = metaltype
@@ -148,11 +170,12 @@
 	else
 		var/obj/effect/effect/foam/F = PoolOrNew(foamtype, location)
 		var/foamcolor = mix_color_from_reagents(chemholder.reagents.reagent_list)
-		chemholder.reagents.copy_to(F, chemholder.reagents.total_volume)
+		chemholder.reagents.copy_to(F, chemholder.reagents.total_volume/amount) //how much reagents each foam cell holds
 		F.color = foamcolor
 		F.amount = amount
 		F.metal = metal
-
+		F.max_lifetime = Clamp(round(sqrt(chemholder.reagents.total_volume/2), 1), 3, 10) //how long each foam cell lasts.
+		F.lifetime = F.max_lifetime
 
 //////////////////////////////////////////////////////////
 // FOAM STRUCTURE. Formed by metal foams. Dense and opaque, but easy to break

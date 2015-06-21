@@ -858,3 +858,7 @@ Sorry Giacom. Please don't be mad :(
 		return 0
 
 	return 1
+
+//used in datum/reagents/reaction() proc
+/mob/living/proc/get_permeability_protection()
+	return 0

@@ -309,7 +309,9 @@
 	pass_flags = PASSTABLE
 
 /obj/effect/nanofrost_container/proc/Smoke()
-	PoolOrNew(/obj/effect/effect/freezing_smoke, list(loc, 6, 1))
+	var/datum/effect/effect/system/smoke_spread/freezing/S = new
+	S.set_up(6, 0, loc, null, 1)
+	S.start()
 	var/obj/effect/decal/cleanable/flour/F = new /obj/effect/decal/cleanable/flour(src.loc)
 	F.color = "#B2FFFF"
 	F.name = "nanofrost residue"
@@ -317,33 +319,16 @@
 	playsound(src,'sound/effects/bamf.ogg',100,1)
 	qdel(src)
 
-/obj/effect/effect/freezing_smoke
+/obj/effect/effect/smoke/freezing
 	name = "nanofrost smoke"
-	icon_state = "smoke"
 	opacity = 0
-	anchored = 0.0
-	mouse_opacity = 0
-	icon = 'icons/effects/96x96.dmi'
-	pixel_x = -32
-	pixel_y = -32
 	color = "#B2FFFF"
-	var/amount = 0
 
-/obj/effect/effect/freezing_smoke/New(loc, var/amt, var/blast)
-	..()
-	spawn(100+rand(10,30))
-		qdel(src)
-	amount = amt
-	if(amount)
-		var/datum/effect/effect/system/freezing_smoke_spread/F = new /datum/effect/effect/system/freezing_smoke_spread
-		F.set_up(amount, 0, src.loc)
-		F.start()
-	if(blast)
-		for(var/turf/T in trange(2, src.loc))
-			Chilled(T)
-	return
+/datum/effect/effect/system/smoke_spread/freezing
+	smoke_type = /obj/effect/effect/smoke/freezing
+	var/blast = 0
 
-/obj/effect/effect/freezing_smoke/proc/Chilled(atom/A)
+/datum/effect/effect/system/smoke_spread/freezing/proc/Chilled(atom/A)
 	if(istype(A, /turf/simulated))
 		var/turf/simulated/T = A
 		if(T.air)
@@ -364,29 +349,16 @@
 			L.ExtinguishMob()
 	return
 
-/datum/effect/effect/system/freezing_smoke_spread
+/datum/effect/effect/system/smoke_spread/freezing/set_up(n = 5, c = 0, loca, direct, blasting = 0)
+	..()
+	blast = blasting
 
-/datum/effect/effect/system/freezing_smoke_spread/set_up(n = 6, c = 0, loca)
-	number = n
-	if(istype(loca, /turf/))
-		location = loca
-	else
-		location = get_turf(loca)
+/datum/effect/effect/system/smoke_spread/freezing/start()
+	if(blast)
+		for(var/turf/T in trange(2, location))
+			Chilled(T)
+	..()
 
-/datum/effect/effect/system/freezing_smoke_spread/start()
-	var/i = 0
-	for(i=0, i<number, i++)
-		spawn(0)
-			var/obj/effect/effect/freezing_smoke/smoke = PoolOrNew(/obj/effect/effect/freezing_smoke, list(location, 0, 0))
-			smoke.amount = 0
-			var/direction = pick(alldirs)
-			for(i=0, i<rand(1,3), i++)
-				sleep(5)
-				step(smoke,direction)
-			spawn(150+rand(10,30))
-				if(smoke)
-					fadeOut(smoke)
-					qdel(smoke)
 
 #undef EXTINGUISHER
 #undef NANOFROST

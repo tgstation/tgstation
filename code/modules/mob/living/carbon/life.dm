@@ -71,12 +71,12 @@
 
 				//Harmful gasses
 				if(!has_smoke_protection())
-					for(var/obj/effect/effect/chem_smoke/smoke in view(1,src))
-						if(smoke.reagents.total_volume)
-							smoke.reagents.reaction(src,INGEST)
-							spawn(5)
-								if(smoke)
-									smoke.reagents.copy_to(src, 10)
+					for(var/obj/effect/effect/smoke/chem/S in range(1,src))
+						if(S.reagents.total_volume)
+							var/amount = min(S.reagents.total_volume, 10)
+							var/fraction = min(amount/S.reagents.total_volume, 1)
+							S.reagents.reaction(src,INGEST, fraction)
+							S.reagents.copy_to(src, amount)
 							break
 
 		else //Breathe from loc as obj again

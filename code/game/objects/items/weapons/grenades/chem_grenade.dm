@@ -180,31 +180,29 @@
 
 	mix_reagents()
 
-	if(reagents.total_volume)	//The possible reactions didnt use up all reagents.
+	if(reagents.total_volume)	//The possible reactions didnt use up all reagents, so we spread it around.
 		var/datum/effect/effect/system/steam_spread/steam = new /datum/effect/effect/system/steam_spread()
 		steam.set_up(10, 0, get_turf(src))
 		steam.attach(src)
 		steam.start()
 
-	var/list/viewable = view(affected_area, loc)
-	var/list/accessible = can_flood_from(loc, affected_area)
-	var/list/reactable = accessible
-	var/mycontents = GetAllContents()
-	for(var/turf/T in accessible)
-		for(var/atom/A in T.GetAllContents())
-			if(A in mycontents) continue
-			if(!(A in viewable)) continue
-			reactable |= A
-	if(!reactable.len) //Nothing to react with. Probably means we're in nullspace.
-		qdel(src)
-		return
-	var/fraction = 1/reactable.len
-	for(var/atom/A in reactable)
-		reagents.reaction(A, TOUCH, fraction)
+		var/list/viewable = view(affected_area, loc)
+		var/list/accessible = can_flood_from(loc, affected_area)
+		var/list/reactable = accessible
+		var/mycontents = GetAllContents()
+		for(var/turf/T in accessible)
+			for(var/atom/A in T.GetAllContents())
+				if(A in mycontents) continue
+				if(!(A in viewable)) continue
+				reactable |= A
+		if(!reactable.len) //Nothing to react with. Probably means we're in nullspace.
+			qdel(src)
+			return
+		var/fraction = 1/reactable.len
+		for(var/atom/A in reactable)
+			reagents.reaction(A, TOUCH, fraction)
 
-	invisibility = INVISIBILITY_MAXIMUM		//Why am i doing this?
-	spawn(50)		   //To make sure all reagents can work
-		qdel(src)	   //correctly before deleting the grenade.
+	qdel(src)
 
 /obj/item/weapon/grenade/chem_grenade/proc/mix_reagents()
 	var/total_temp
@@ -381,6 +379,7 @@
 	beakers += B1
 	beakers += B2
 
+
 /obj/item/weapon/grenade/chem_grenade/colorful
 	name = "colorful grenade"
 	desc = "Used for wide scale painting projects."
@@ -398,6 +397,7 @@
 
 	beakers += B1
 	beakers += B2
+
 
 /obj/item/weapon/grenade/chem_grenade/clf3
 	name = "clf3 grenade"

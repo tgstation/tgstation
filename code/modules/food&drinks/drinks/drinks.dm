@@ -34,24 +34,19 @@
 
 	if(M == user)
 		M << "<span class='notice'>You swallow a gulp of [src].</span>"
-		if(reagents.total_volume)
-			reagents.reaction(M, INGEST)
-			spawn(5)
-				reagents.trans_to(M, gulp_size)
+	else
 
-		playsound(M.loc,'sound/items/drink.ogg', rand(10,50), 1)
-		return 1
+		user.visible_message("<span class='warning'>[user] attempts to feed [src] to [M].</span>", "<span class='notice'>You attempt to feed [src] to [M].</span>")
+		if(!do_mob(user, M))
+			return
+		if(!reagents || !reagents.total_volume)
+			return // The drink might be empty after the delay, such as by spam-feeding
+		user.visible_message("<span class='warning'>[user] feeds [src] to [M].</span>", "<span class='notice'>You feed [src] to [M].</span>")
+		add_logs(user, M, "fed", object="[reagentlist(src)]")
 
-	user.visible_message("<span class='warning'>[user] attempts to feed [src] to [M].</span>", "<span class='notice'>You attempt to feed [src] to [M].</span>")
-	if(!do_mob(user, M)) return
-	if(!reagents.total_volume) return // The drink might be empty after the delay, such as by spam-feeding
-	user.visible_message("<span class='warning'>[user] feeds [src] to [M].</span>", "<span class='notice'>You feed [src] to [M].</span>")
-	add_logs(user, M, "fed", object="[reagentlist(src)]")
-	if(reagents.total_volume)
-		reagents.reaction(M, INGEST)
-		spawn(5)
-			reagents.trans_to(M, gulp_size)
-
+	var/fraction = min(gulp_size/reagents.total_volume, 1)
+	reagents.reaction(M, INGEST, fraction)
+	reagents.trans_to(M, gulp_size)
 	playsound(M.loc,'sound/items/drink.ogg', rand(10,50), 1)
 	return 1
 

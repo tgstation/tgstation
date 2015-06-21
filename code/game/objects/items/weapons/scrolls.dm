@@ -57,7 +57,7 @@
 	if(!((user == loc || (in_range(src, user) && istype(src.loc, /turf)))))
 		return
 
-	var/datum/effect/effect/system/harmless_smoke_spread/smoke = new /datum/effect/effect/system/harmless_smoke_spread()
+	var/datum/effect/effect/system/smoke_spread/smoke = new
 	smoke.set_up(5, 0, user.loc)
 	smoke.attach(user)
 	smoke.start()

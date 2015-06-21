@@ -101,8 +101,6 @@
 	emag.reagents.add_reagent("facid", 250)
 	emag.name = "Fluacid spray"
 
-	var/obj/item/weapon/reagent_containers/spray/S = emag
-	S.banned_reagents = list()
 
 	var/datum/robot_energy_storage/gauze/gauzestore = new /datum/robot_energy_storage/gauze(src)
 
