@@ -34,4 +34,5 @@ delete-after: True
 # Please surround your changes in  double quotes ("). It works without them, but if you use certain characters it screws up compiling. The quotes will not show up in the changelog.
 changes: 
   - rscadd: "Click and drag from a bag/stachel/Storage Object to dump his contents on a tile near you. You can do so into another storage item, a bin, or the ground/table if there's nothing else." 
-  - rscadd: "Storage Content Transfer : Bluespace Boogaloo! You can now transfer the content of the BoH/BRPED into tiles/bins/bags out of your reach."
+  - rscadd: "Storage Content Transfer : Bluespace Boogaloo! You can now transfer the content of the BoH/BRPED into tiles/bins/bags out of your reach. Range is 7 tiles."
+  - rscadd: "BRPED has a range of 7 tiles now for replacing parts now." 
