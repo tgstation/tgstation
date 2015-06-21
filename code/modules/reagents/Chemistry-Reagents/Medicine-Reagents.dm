@@ -525,6 +525,20 @@
 	..()
 	return
 
+datum/reagent/medicine/ether //morphine except good
+	name = "Ether"
+	id = "ether"
+	description = "Will eventually knock you out if you take too much."
+	reagent_state = LIQUID
+	color = "#C8A5DC"
+	metabolization_rate = 0.4 * REAGENTS_METABOLISM
+
+datum/reagent/medicine/ether/on_mob_life(var/mob/living/M as mob)
+	if(current_cycle >= 12)
+		M.sleeping += 1
+	..()
+	return
+
 /datum/reagent/medicine/oculine
 	name = "Oculine"
 	id = "oculine"

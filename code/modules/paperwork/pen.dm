@@ -73,7 +73,7 @@
 
 /obj/item/weapon/pen/sleepy/New()
 	create_reagents(55)
-	reagents.add_reagent("morphine", 30)
+	reagents.add_reagent("ether", 30)
 	reagents.add_reagent("mutetoxin", 15)
 	reagents.add_reagent("tirizene", 10)
 	..()

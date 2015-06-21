@@ -193,5 +193,9 @@
 	required_reagents = list("stable_plasma" = 1, "acetone" = 1, "mutagen" = 1)
 	result_amount = 3
 
-
-
+/datum/chemical_reaction/ether
+	name = "Ether"
+	id = "ether"
+	result = "ether"
+	required_reagents = list("sacid" = 1, "ethanol" = 1, "oxygen" = 1)
+	result_amount = 3
