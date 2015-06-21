@@ -42,6 +42,13 @@
 	pshoom_or_beepboopblorpzingshadashwoosh = 'sound/items/PSHOOM.ogg'
 	alt_sound = 'sound/items/PSHOOM_2.ogg'
 
+/obj/item/weapon/storage/part_replacer/bluespace/content_can_dump(atom/dest_object, mob/user)
+	if(Adjacent(user))
+		if(dest_object.storage_contents_dump_act(src, user))
+			play_rped_sound()
+			user.Beam(dest_object,icon_state="rped_upgrade",icon='icons/effects/effects.dmi',time=5)
+			return 1
+	return 0
 
 /obj/item/weapon/storage/part_replacer/proc/play_rped_sound()
 	//Plays the sound for RPED exhanging or installing parts.
