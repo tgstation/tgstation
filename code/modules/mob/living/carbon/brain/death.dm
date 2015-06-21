@@ -2,7 +2,7 @@
 	if(stat == DEAD)	return
 	if(!gibbed && container && istype(container, /obj/item/device/mmi))//If not gibbed but in a container.
 		container.OnMobDeath(src)
-	ghostize(0)
+
 	stat = DEAD
 
 	if(blind)	blind.layer = 0
