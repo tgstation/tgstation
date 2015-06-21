@@ -86,7 +86,7 @@
 	if(locked)
 		var/area/locked_area = get_area(locked)
 		. = {"
-		<b>Destination:</b> [locked_area.name]<br>
+		<b>Destination:</b> [sanitize(locked_area.name)]<br>
 		<a href='?src=\ref[src];clear=1'>Clear destination</a><br>
 		"}
 	else
@@ -95,7 +95,7 @@
 		"}
 
 	. += {"
-		<b>Available destinations:<b><br>
+		<br><b>Available destinations:<b><br>
 		<lu>
 	"}
 
@@ -103,7 +103,7 @@
 
 	for(var/name in dests)
 		. += {"
-			<li><a href='?src=\ref[src];dest=[dests.Find(name)]'[dests[name] == locked ? " class='linkOn'" : ""]>[name]</a></li>
+			<li><a href='?src=\ref[src];dest=[dests.Find(name)]'[dests[name] == locked ? " class='linkOn'" : ""]>[sanitize(name)]</a></li>
 		"}
 
 	. += "</lu>"
