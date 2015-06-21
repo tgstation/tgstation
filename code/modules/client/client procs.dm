@@ -31,8 +31,6 @@
 
 	//Admin PM
 	if(href_list["priv_msg"])
-		src << "message to src"
-		usr << "message to usr"
 		cmd_admin_pm(href_list["priv_msg"],null)
 		return
 
