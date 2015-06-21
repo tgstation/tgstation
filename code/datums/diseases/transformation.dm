@@ -208,6 +208,7 @@
 /datum/disease/transformation/corgi
 	name = "The Barkening"
 	cure_text = "Death"
+	cures = list("adminordrazine")
 	agent = "Fell Doge Majicks"
 	desc = "This disease transforms the victim into a corgi."
 	visibility_flags = 0
