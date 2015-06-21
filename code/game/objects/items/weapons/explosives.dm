@@ -70,7 +70,7 @@
 	user << "<span class='notice'>You start planting the bomb...</span>"
 
 	if(do_after(user, 50) && in_range(user, target))
-		if(!user.unEquip(target))
+		if(!user.unEquip(src))
 			return
 		src.target = target
 		loc = null
