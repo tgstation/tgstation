@@ -757,7 +757,7 @@
 #include "code\game\objects\structures\transit_tubes\transit_tube.dm"
 #include "code\game\objects\structures\transit_tubes\transit_tube_construction.dm"
 #include "code\game\objects\structures\transit_tubes\transit_tube_pod.dm"
-#include "code\game\pooling\atom_pool.dm"
+#include "code\game\pooling\pool.dm"
 #include "code\game\turfs\simulated.dm"
 #include "code\game\turfs\turf.dm"
 #include "code\game\turfs\unsimulated.dm"
