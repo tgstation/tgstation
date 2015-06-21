@@ -63,6 +63,8 @@
 
 /obj/machinery/computer/atmos_alert/update_icon()
 	..()
+	if(stat & (NOPOWER|BROKEN))
+		return
 	if(priority_alarms.len)
 		overlays += "alert:2"
 	else if(minor_alarms.len)
