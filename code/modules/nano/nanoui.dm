@@ -131,8 +131,13 @@ nanoui is used to open and update nano browser uis
 			set_status(STATUS_DISABLED, push_update) // no updates, completely disabled (red visibility)
 	else
 		var/dist = get_dist(src_object, user)
+		var/isTK = 0
 
-		if (dist > 4)
+		if(ishuman(user))
+			var/mob/living/carbon/human/H = user
+			isTK = H.dna.check_mutation(TK)
+
+		if (dist > 4 && !isTK)
 			close()
 			return
 
@@ -141,10 +146,10 @@ nanoui is used to open and update nano browser uis
 		else if (user.restrained() || user.lying)
 			set_status(STATUS_UPDATE, push_update) // update only (orange visibility)
 		else if (!(src_object in view(4, user))) // If the src object is not in visable, set status to 0
-			set_status(STATUS_DISABLED, push_update) // interactive (green visibility)
+			set_status(STATUS_DISABLED, push_update) // no updates, completely disabled (red visibility)
 		else if (dist <= 1)
 			set_status(STATUS_INTERACTIVE, push_update) // interactive (green visibility)
-		else if (dist <= 2)
+		else if (dist <= 2 || isTK)
 			set_status(STATUS_UPDATE, push_update) // update only (orange visibility)
 		else if (dist <= 4)
 			set_status(STATUS_DISABLED, push_update) // no updates, completely disabled (red visibility)

@@ -408,7 +408,7 @@
 				return 1
 
 			if("reset_external_pressure")
-				send_signal(device_id, list(href_list["command"] = ONE_ATMOSPHERE))
+				send_signal(device_id, list("set_external_pressure" = ONE_ATMOSPHERE))
 				return 1
 			if(
 				"power",

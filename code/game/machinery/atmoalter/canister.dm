@@ -259,6 +259,9 @@ update_flag
 /obj/machinery/portable_atmospherics/canister/attack_paw(var/mob/user as mob)
 	return src.attack_hand(user)
 
+/obj/machinery/portable_atmospherics/canister/attack_tk(var/mob/user as mob)
+	return src.attack_hand(user)
+
 /obj/machinery/portable_atmospherics/canister/attack_hand(var/mob/user as mob)
 	return src.ui_interact(user)
 
@@ -327,8 +330,7 @@ update_flag
 		if (href_list["remove_tank"])
 			if(holding)
 				if (valve_open)
-					investigate_log("Valve was <b>closed</b> automatically by [key_name(usr)] removing the [holding]<br>", "atmos")
-					valve_open = !valve_open
+					investigate_log("[key_name(usr)] removed the [holding], leaving the valve open and transfering into the <span class='boldannounce'>air</span><br>", "atmos")
 				holding.loc = loc
 				holding = null
 
