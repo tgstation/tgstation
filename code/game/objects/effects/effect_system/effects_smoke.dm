@@ -63,11 +63,6 @@
 		return
 	smoke_mob(M)
 
-/obj/effect/effect/smoke/Cross(mob/living/M as mob)
-	if(!istype(M))
-		return
-	smoke_mob(M)
-
 /obj/effect/effect/smoke/proc/smoke_mob(mob/living/carbon/M as mob)
 	if(!istype(M))
 		return 0
@@ -115,6 +110,7 @@
 		else
 			S.direction = direction
 		S.steps = pick(0,1,1,1,2,2,2,3)
+		S.process()
 
 
 

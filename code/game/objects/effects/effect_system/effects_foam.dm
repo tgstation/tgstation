@@ -36,12 +36,6 @@
 /obj/effect/effect/foam/Destroy()
 	SSobj.processing.Remove(src)
 	return ..()
-/*
-/obj/effect/effect/foam/metal/New(loc)
-	..()
-	var/obj/structure/foamedmetal/M = new(src.loc)
-	M.metal = metal
-	M.updateicon()*/
 
 
 /obj/effect/effect/foam/proc/kill_foam()

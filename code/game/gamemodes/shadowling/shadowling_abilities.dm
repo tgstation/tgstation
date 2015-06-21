@@ -349,7 +349,7 @@
 		var/datum/effect/effect/system/smoke_spread/chem/S = new
 		S.attach(B)
 		if(S)
-			S.set_up(10, 0, B.loc, null, 0, B.reagents)
+			S.set_up(B.reagents, 10, 0, B.loc)
 			S.start()
 			sleep(10)
 			S.start()

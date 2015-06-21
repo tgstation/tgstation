@@ -215,9 +215,7 @@
 /datum/chemical_reaction/smoke_powder/on_reaction(var/datum/reagents/holder, var/created_volume)
 	if(holder.has_reagent("stabilizing_agent"))
 		return
-	world << "holder volb4:[holder.total_volume]"
 	holder.remove_reagent("smoke_powder", created_volume)
-	world << "holder vol w/o created vol:[holder.total_volume]"
 	var/smoke_amount = round(Clamp(created_volume/5, 1, 20),1)
 	var/location = get_turf(holder.my_atom)
 	var/datum/effect/effect/system/smoke_spread/chem/S = new

@@ -94,7 +94,7 @@
 	var/turf/location = get_turf(src)
 
 	// Create the reagents to put into the air
-	create_reagents(2)
+	create_reagents(25)
 
 	if(overmind && overmind.blob_reagent_datum)
 		reagents.add_reagent(overmind.blob_reagent_datum.id, 25)
