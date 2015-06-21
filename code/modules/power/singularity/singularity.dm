@@ -337,10 +337,10 @@
 	if(force_move) //We are forcing the Singularity to move in a particular direction
 		movement_dir = force_move //Go this way
 
-	if(!force_move && target && prob(75)) //Otherwise we have a singularity beacon online
+	if(!force_move && target && prob(66)) //Otherwise we have a singularity beacon online
 		movement_dir = get_dir(src,target) //Moves to a singulo beacon, if there is one
 
-	if(!force_move && !target && last_failed_movement != last_movement_dir && prob(75)) //Otherwise we will perform a biased movement
+	if(!force_move && !target && last_failed_movement != last_movement_dir && prob(66)) //Otherwise we will perform a biased movement
 		movement_dir = last_movement_dir
 
 	last_movement_dir = movement_dir //We have chosen our direction, log it
@@ -481,9 +481,9 @@
 					return
 				else
 					H << "<span class='warning'>You stare directly into \the [src] but your eyewear does absolutely nothing to protect you from it!</span>"
-		M.visible_message("<span class='danger'>[M] stares blankly at \the [src]!</span>", \
-		"<span class='danger'>You stare directly into \the [src] and feel [current_size == 11 ? "helpless" : "weak"].</span>")
-		M.apply_effect(3, STUN)
+				M.visible_message("<span class='danger'>[M] stares blankly at \the [src]!</span>", \
+				"<span class='danger'>You stare directly into \the [src] and feel [current_size == 11 ? "helpless" : "weak"].</span>")
+				M.apply_effect(3, STUN)
 
 /obj/machinery/singularity/proc/emp_area()
 	if(current_size != 11)
