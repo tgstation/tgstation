@@ -341,8 +341,6 @@
 				continue
 			if(AM.density)
 				if(AM.anchored)
-					if(istype(AM, /obj/item/projectile)) //"You grab the bullet and push off of it!" No
-						continue
 					return 1
 				if(pulling == AM)
 					continue
