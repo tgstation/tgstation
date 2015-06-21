@@ -169,11 +169,10 @@
 			M.adjustFireLoss(-volume)
 			if(show_message)
 				M << "<span class='notice'>You feel your burns healing!</span>"
-			M.emote("scream")
 		if(method == INGEST)
 			M.adjustToxLoss(0.5*volume)
 			if(show_message)
-				M << "<span class='notice'>You probably shouldn't have eaten that. Maybe you should of splashed it on, or applied a patch?</span>"
+				M << "<span class='notice'>You feel awful!</span>"
 	..()
 	return
 
@@ -200,7 +199,7 @@
 		if(method == INGEST)
 			M.adjustToxLoss(0.5*volume)
 			if(show_message)
-				M << "<span class='notice'>You feel kind of ill. Maybe you ate a medicine you shouldn't have?</span>"
+				M << "<span class='notice'>You feel kind of ill...</span>"
 	..()
 	return
 
