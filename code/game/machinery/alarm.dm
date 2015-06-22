@@ -412,7 +412,7 @@
 			if("set_external_pressure")
 				var/input_pressure = input("What pressure you like the system to mantain?", "Pressure Controls") as num|null
 				if(isnum(input_pressure))
-					send_signal(device_id, list(href_list["command"] = input_pressure))
+					send_signal(device_id, list("set_external_pressure" = ONE_ATMOSPHERE))
 				return 1
 
 			if("reset_external_pressure")

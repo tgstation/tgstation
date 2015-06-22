@@ -3,7 +3,7 @@ var/datum/subsystem/nano/SSnano
 /datum/subsystem/nano
 	name = "NanoUI"
 	can_fire = 1
-	wait = 5
+	wait = 10
 	priority = 16
 
 	var/list/open_uis = list()			//a list of current open /nanoui UIs, grouped by src_object and ui_key
