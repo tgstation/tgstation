@@ -1,4 +1,0 @@
-author: Clusterfack
-delete-after: true
-changes:
-- experimental: Drastically balance changes vampires by making them respawn after the intended 30-45 second delay instead of 3-4.5 second delay
