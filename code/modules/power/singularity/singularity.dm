@@ -367,7 +367,7 @@
 		radiationmin = round((radiation/5),1)
 	for(var/mob/living/M in view(toxrange, src.loc))
 		M.irradiate(rand(radiationmin,radiation))
-		var/toxdamage = (toxpwr - (toxpwr*M.getarmor(null, "rad")))
+		var/toxdamage = toxpwr - toxpwr*(M.getarmor(null, "rad")/100)
 		M.apply_damage(toxdamage, TOX)
 	return
 
