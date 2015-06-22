@@ -215,7 +215,8 @@
 				A.particle_type = reagent
 				A.additional_particles = numparticles - 1
 				//A.target = target_field
-				//
+				A.startMove(1)
+
 				cur_assembly.rod_quantities[reagent] -= amount
 				amount_left += cur_assembly.rod_quantities[reagent]
 		cur_assembly.percent_depleted = amount_left / 300

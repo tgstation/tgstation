@@ -44,140 +44,57 @@ max volume of plasma storeable by the field = the total volume of a number of ti
 #define MIN_FIELD_FREQ 1
 #define MAX_FIELD_STR 1000
 #define MIN_FIELD_STR 1
+#define RUST_CORE_STR_COST 5
 
 /obj/machinery/power/rust_core
-	name = "RUST Tokamak core"
-	desc = "Enormous solenoid for generating extremely high power electromagnetic fields"
+	name = "R-UST Mk 7 Tokamak core"
+	desc = "An enormous solenoid for generating extremely high power electromagnetic fields"
 	icon = 'code/WorkInProgress/Cael_Aislinn/Rust/rust.dmi'
 	icon_state = "core0"
 	density = 1
+	light_power_on = 2
+	light_range_on = 3
+	light_color = LIGHT_COLOR_BLUE
+
 	var/obj/effect/rust_em_field/owned_field
 	var/field_strength = 1//0.01
 	var/field_frequency = 1
-	var/id_tag = "allan, don't forget to set the ID of this one too"
-	req_access = list(access_engine)
-	//
+	var/id_tag
+
 	use_power = 1
 	idle_power_usage = 50
 	active_power_usage = 500	//multiplied by field strength
-	var/cached_power_avail = 0
 	anchored = 0
 
-	var/locked = 1
-	var/remote_access_enabled = 1
+	machine_flags = WRENCHMOVE | FIXED2WORK | WELD_FIXED | EMAGGABLE | MULTITOOL_MENU
 
-	machine_flags = WRENCHMOVE | FIXED2WORK | WELD_FIXED | EMAGGABLE
+/obj/machinery/power/rust_core/New()
+	. = ..()
+	if(ticker)
+		initialize()
+
+/obj/machinery/power/rust_core/initialize()
+	if(!id_tag)
+		assign_uid()
+		id_tag = uid
 
 /obj/machinery/power/rust_core/process()
 	if(stat & BROKEN || !powernet)
 		Shutdown()
 
-	cached_power_avail = avail()
-	//luminosity = round(owned_field.field_strength/10)
-	//luminosity = max(luminosity,1)
-
-/obj/machinery/power/rust_core/wrenchAnchor(mob/user)
-	if(owned_field)
-		user << "Turn off \the [src] first."
-		return -1
-	return ..()
-
 /obj/machinery/power/rust_core/weldToFloor(var/obj/item/weapon/weldingtool/WT, mob/user)
+	if(owned_field)
+		user << user << "<span class='warning'>Turn \the [src] off first!</span>"
+		return -1
+
 	if(..() == 1)
 		switch(state)
 			if(1)
-				connect_to_network()
-			if(2)
 				disconnect_from_network()
+			if(2)
+				connect_to_network()
 		return 1
 	return -1
-
-/obj/machinery/power/rust_core/emag(mob/user)
-	if(!emagged)
-		locked = 0
-		emagged = 1
-		user.visible_message("[user.name] emags the [src.name].","<span class='warning'>You short out the lock.</span>")
-		return
-
-/obj/machinery/power/rust_core/attackby(obj/item/W, mob/user)
-
-	if(..())
-		return 1
-
-	if(istype(W, /obj/item/weapon/card/id) || istype(W, /obj/item/device/pda))
-		if(emagged)
-			user << "<span class='warning'>The lock seems to be broken</span>"
-			return
-		if(src.allowed(user))
-			if(owned_field)
-				src.locked = !src.locked
-				user << "The controls are now [src.locked ? "locked." : "unlocked."]"
-			else
-				src.locked = 0 //just in case it somehow gets locked
-				user << "<span class='warning'>The controls can only be locked when the [src] is online</span>"
-		else
-			user << "<span class='warning'>Access denied.</span>"
-		return
-
-/obj/machinery/power/rust_core/attack_ai(mob/user)
-	attack_hand(user)
-
-/obj/machinery/power/rust_core/attack_hand(mob/user)
-	add_fingerprint(user)
-	interact(user)
-
-/obj/machinery/power/rust_core/interact(mob/user)
-	if(stat & BROKEN)
-		user.unset_machine()
-		user << browse(null, "window=core_gen")
-		return
-	if(!istype(user, /mob/living/silicon) && get_dist(src, user) > 1)
-		user.unset_machine()
-		user << browse(null, "window=core_gen")
-		return
-
-	var/dat = ""
-	if(stat & NOPOWER || locked || state != 2)
-		dat += "<i>The console is dark and nonresponsive.</i>"
-	else
-
-		// KINDA-AUTOFIXED BY fix_string_idiocy.py
-		// C:\Users\Rob\Documents\Projects\vgstation13\code\WorkInProgress\Cael_Aislinn\Rust\core_gen.dm:187: dat += "<b>RUST Tokamak pattern Electromagnetic Field Generator</b><br>"
-		dat += {"<b>RUST Tokamak pattern Electromagnetic Field Generator</b><br>
-			<b>Device ID tag: </b> [id_tag ? id_tag : "UNSET"] <a href='?src=\ref[src];new_id_tag=1'>\[Modify\]</a><br>
-			<a href='?src=\ref[src];toggle_active=1'>\[[owned_field ? "Deactivate" : "Activate"]\]</a><br>
-			<a href='?src=\ref[src];toggle_remote=1'>\[[remote_access_enabled ? "Disable remote access to this device" : "Enable remote access to this device"]\]</a><br>
-			<hr>
-			<b>Field strength:</b> [field_strength]Wm^3<br>
-			<a href='?src=\ref[src];str=-1000'>\[----\]</a>
-		<a href='?src=\ref[src];str=-100'>\[--- \]</a>
-		<a href='?src=\ref[src];str=-10'>\[--  \]</a>
-		<a href='?src=\ref[src];str=-1'>\[-   \]</a>
-		<a href='?src=\ref[src];str=1'>\[+   \]</a>
-		<a href='?src=\ref[src];str=10'>\[++  \]</a>
-		<a href='?src=\ref[src];str=100'>\[+++ \]</a>
-		<a href='?src=\ref[src];str=1000'>\[++++\]</a><br>
-		<b>Field frequency:</b> [field_frequency]MHz<br>
-		<a href='?src=\ref[src];freq=-1000'>\[----\]</a>
-		<a href='?src=\ref[src];freq=-100'>\[--- \]</a>
-		<a href='?src=\ref[src];freq=-10'>\[--  \]</a>
-		<a href='?src=\ref[src];freq=-1'>\[-   \]</a>
-		<a href='?src=\ref[src];freq=1'>\[+   \]</a>
-		<a href='?src=\ref[src];freq=10'>\[++  \]</a>
-		<a href='?src=\ref[src];freq=100'>\[+++ \]</a>
-		<a href='?src=\ref[src];freq=1000'>\[++++\]</a><br>"}
-		// END KINDA-AUTOFIX
-
-		var/font_colour = "green"
-		if(cached_power_avail < active_power_usage)
-			font_colour = "red"
-		else if(cached_power_avail < active_power_usage * 2)
-			font_colour = "orange"
-		dat += "<b>Power status:</b> <font color=[font_colour]>[active_power_usage]/[cached_power_avail] W</font><br>"
-
-	user << browse(dat, "window=core_gen;size=500x300")
-	onclose(user, "core_gen")
-	user.set_machine(src)
 
 /obj/machinery/power/rust_core/Topic(href, href_list)
 	if(..()) return 1
@@ -194,54 +111,51 @@ max volume of plasma storeable by the field = the total volume of a number of ti
 		if(owned_field)
 			owned_field.ChangeFieldFrequency(field_frequency)
 
-	if(href_list["toggle_active"])
-		if(!Startup())
-			Shutdown()
-
-	if( href_list["toggle_remote"] )
-		remote_access_enabled = !remote_access_enabled
-
-	if(href_list["new_id_tag"])
-		if(usr)
-			id_tag = input("Enter a new ID tag", "Tokamak core ID tag", id_tag) as text|null
-
-	if(href_list["close"])
-		usr << browse(null, "window=core_gen")
-		usr.unset_machine()
-
-	if(href_list["extern_update"])
-		var/obj/machinery/computer/rust_core_control/C = locate(href_list["extern_update"])
-		if(C)
-			C.updateDialog()
-
-	src.updateDialog()
-
 /obj/machinery/power/rust_core/proc/Startup()
 	if(owned_field)
 		return
-	owned_field = new(src.loc)
+
+	owned_field = new(loc, src)
 	owned_field.ChangeFieldStrength(field_strength)
 	owned_field.ChangeFieldFrequency(field_frequency)
+	set_light(light_range_on, light_power_on)
 	icon_state = "core1"
-	luminosity = 1
 	use_power = 2
-	return 1
+	. = 1
 
 /obj/machinery/power/rust_core/proc/Shutdown()
 	//todo: safety checks for field status
 	if(owned_field)
 		icon_state = "core0"
-		del(owned_field)
-		luminosity = 0
+		qdel(owned_field)
 		use_power = 1
+		set_light(0)
 
 /obj/machinery/power/rust_core/proc/AddParticles(var/name, var/quantity = 1)
 	if(owned_field)
 		owned_field.AddParticles(name, quantity)
-		return 1
-	return 0
+		. = 1
 
 /obj/machinery/power/rust_core/bullet_act(var/obj/item/projectile/Proj)
 	if(owned_field)
-		return owned_field.bullet_act(Proj)
-	return 0
+		. = owned_field.bullet_act(Proj)
+
+/obj/machinery/power/rust_core/multitool_menu(var/mob/user, var/obj/item/device/multitool/P)
+	return {"
+		<ul>
+			<li>[format_tag("ID Tag","id_tag")]</li>
+		</ul>
+	"}
+
+/obj/machinery/power/rust_core/proc/set_strength(var/value)
+	value = Clamp(value, MIN_FIELD_STR, MAX_FIELD_STR)
+	field_strength = value
+	active_power_usage = RUST_CORE_STR_COST * value
+	if(owned_field)
+		owned_field.ChangeFieldStrength(value)
+
+/obj/machinery/power/rust_core/proc/set_frequency(var/value)
+	value = Clamp(value, MIN_FIELD_FREQ, MAX_FIELD_FREQ)
+	field_frequency = value
+	if(owned_field)
+		owned_field.ChangeFieldFrequency(value)

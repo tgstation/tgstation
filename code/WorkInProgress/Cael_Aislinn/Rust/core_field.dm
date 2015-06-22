@@ -11,17 +11,18 @@ Deuterium-tritium fusion: 4.5 x 10^7 K
 	desc = "A coruscating, barely visible field of energy. It is shaped like a slightly flattened torus."
 	icon = 'code/WorkInProgress/Cael_Aislinn/Rust/rust.dmi'
 	icon_state = "emfield_s1"
-	//
+	alpha = 50
+
 	var/major_radius = 0	//longer radius in meters = field_strength * 0.21875, max = 8.75
 	var/minor_radius = 0	//shorter radius in meters = field_strength * 0.2125, max = 8.625
 	var/size = 1			//diameter in tiles
 	var/volume_covered = 0	//atmospheric volume covered
-	//
+
 	var/obj/machinery/power/rust_core/owned_core
 	var/list/dormant_reactant_quantities = new
-	//luminosity = 1
+
 	layer = 3.1
-	//
+
 	var/energy = 0
 	var/mega_energy = 0
 	var/radiation = 0
@@ -34,7 +35,7 @@ Deuterium-tritium fusion: 4.5 x 10^7 K
 
 	var/emp_overload = 0
 
-/obj/effect/rust_em_field/New()
+/obj/effect/rust_em_field/New(loc, var/obj/machinery/power/rust_core/new_owned_core)
 	..()
 	//create radiator
 	for(var/obj/machinery/rust/rad_source/rad in range(0))
@@ -42,21 +43,19 @@ Deuterium-tritium fusion: 4.5 x 10^7 K
 	if(!radiator)
 		radiator = new()
 
-	//make sure there's a field generator
-	for(var/obj/machinery/power/rust_core/core in loc)
-		owned_core = core
+	owned_core = new_owned_core
 
 	if(!owned_core)
-		del(src)
+		qdel(src)
 
 	//create the gimmicky things to handle field collisions
 	var/obj/effect/rust_particle_catcher/catcher
-	//
+
 	catcher = new (locate(src.x,src.y,src.z))
 	catcher.parent = src
 	catcher.SetSize(1)
 	particle_catchers.Add(catcher)
-	//
+
 	catcher = new (locate(src.x-1,src.y,src.z))
 	catcher.parent = src
 	catcher.SetSize(3)
@@ -73,7 +72,7 @@ Deuterium-tritium fusion: 4.5 x 10^7 K
 	catcher.parent = src
 	catcher.SetSize(3)
 	particle_catchers.Add(catcher)
-	//
+
 	catcher = new (locate(src.x-2,src.y,src.z))
 	catcher.parent = src
 	catcher.SetSize(5)
@@ -90,7 +89,7 @@ Deuterium-tritium fusion: 4.5 x 10^7 K
 	catcher.parent = src
 	catcher.SetSize(5)
 	particle_catchers.Add(catcher)
-	//
+
 	catcher = new (locate(src.x-3,src.y,src.z))
 	catcher.parent = src
 	catcher.SetSize(7)
@@ -118,7 +117,7 @@ Deuterium-tritium fusion: 4.5 x 10^7 K
 /obj/effect/rust_em_field/process()
 	//make sure the field generator is still intact
 	if(!owned_core)
-		del(src)
+		qdel(src)
 
 	//handle radiation
 	if(!radiator)
@@ -431,8 +430,18 @@ Deuterium-tritium fusion: 4.5 x 10^7 K
 /obj/effect/rust_em_field/Destroy()
 	//radiate everything in one giant burst
 	for(var/obj/effect/rust_particle_catcher/catcher in particle_catchers)
-		del (catcher)
+		qdel(catcher)
+
+	owned_core.owned_field = null
+	owned_core = null
+
 	RadiateAll()
 
 	processing_objects.Remove(src)
-	..()
+	. = ..()
+
+/obj/effect/rust_em_field/bullet_act(var/obj/item/projectile/Proj)
+	if(Proj.flag != "bullet")
+		AddEnergy(Proj.damage * 20, 0, 1)
+		update_icon()
+	return 0

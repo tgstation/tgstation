@@ -10,15 +10,10 @@
 
 	invisibility = 101
 
-/*/obj/effect/rust_particle_catcher/New()
-	for(var/obj/machinery/rust/em_field/field in range(6))
-		parent = field
-	if(!parent)
-		del(src)*/
-
-/obj/effect/rust_particle_catcher/process()
-	if(!parent)
-		del(src)
+/obj/effect/rust_particle_catcher/Destroy()
+	. =..()
+	parent.particle_catchers -= src
+	parent = null
 
 /obj/effect/rust_particle_catcher/proc/SetSize(var/newsize)
 	name = "collector [newsize]"
