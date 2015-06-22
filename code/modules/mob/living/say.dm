@@ -129,7 +129,6 @@ var/list/crit_allowed_modes = list(MODE_WHISPER)
 			spans |= SPAN_ITALICS
 
 
-//	world << "AT THIS POINT THE MESSAGE IS: [message], RANGE: [message_range] SOURCE: [src] BUBBLE: [bubble_type]"
 	send_speech(message, message_range, src, bubble_type, spans)
 
 	log_say("[name]/[key] : [message]")
