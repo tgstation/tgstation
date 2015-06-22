@@ -213,6 +213,33 @@
 						return 0
 	return 1
 
+/datum/objective/hijackclone
+	explanation_text = "Hijack the emergency shuttle by escaping with only your copies."
+	dangerrating = 25
+	martyr_compatible = 0 
+
+/datum/objective/hijackclone/check_completion()
+	if(!owner.current || owner.current.stat)
+		return 0
+	if(SSshuttle.emergency.mode < SHUTTLE_ENDGAME)
+		return 0
+	if(issilicon(owner.current))
+		return 0
+
+	var/area/A = get_area(owner.current)
+	if(SSshuttle.emergency.areaInstance != A)
+		return 0
+
+	for(var/mob/living/player in player_list)
+		if(player.mind && player.mind != owner)
+			if(player.stat != DEAD)
+				switch(player.type)
+					if(/mob/living/silicon/ai, /mob/living/silicon/pai)
+						continue
+				if(get_area(player) == A)
+					if(player.real_name != owner.current.real_name && !istype(get_turf(player.mind.current), /turf/simulated/floor/plasteel/shuttle/red))
+						return 0
+	return 1
 
 /datum/objective/block
 	explanation_text = "Do not allow any organic lifeforms to escape on the shuttle alive."
