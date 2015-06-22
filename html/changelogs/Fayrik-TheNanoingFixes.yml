@@ -1,0 +1,10 @@
+author: Fayrik
+
+delete-after: True
+
+changes:
+- rscadd: "NanoUI is now Telekenesis aware, but due to other constraints, NanoUI interfaces are read only at a distance."
+- tweak: "Refactored all NanoUI interfaces to use a more universal proc."
+- tweak: "Adjusted the refresh time of the NanoUI SubSystem. All interfaces will update less, but register mouse clicks faster."
+- bugfix: "Removed automatic updates on atmospheric pumps, canisters and tanks, making them respond to button clicks much faster."
+- bugfix: "Atmos alarm reset buttons work now. Probably."

@@ -176,6 +176,7 @@ update_flag
 		can_label = 1
 	else
 		can_label = 0
+
 /obj/machinery/portable_atmospherics/canister/process()
 	src.updateDialog()
 	return ..()
@@ -258,13 +259,25 @@ update_flag
 /obj/machinery/portable_atmospherics/canister/attack_paw(var/mob/user as mob)
 	return src.attack_hand(user)
 
+/obj/machinery/portable_atmospherics/canister/attack_tk(var/mob/user as mob)
+	return src.attack_hand(user)
+
 /obj/machinery/portable_atmospherics/canister/attack_hand(var/mob/user as mob)
 	return src.ui_interact(user)
 
-/obj/machinery/portable_atmospherics/canister/ui_interact(mob/user, ui_key = "main")
+/obj/machinery/portable_atmospherics/canister/interact(mob/user, ui_key = "main")
+	if (src.destroyed || !user)
+		return
+
+	SSnano.try_update_ui(user, src, ui_key, null, src.get_ui_data())
+
+/obj/machinery/portable_atmospherics/canister/ui_interact(mob/user, ui_key = "main", var/datum/nanoui/ui = null)
 	if (src.destroyed)
 		return
 
+	ui = SSnano.push_open_or_new_ui(user, src, ui_key, ui, "canister.tmpl", "Canister", 480, 400, 0)
+
+/obj/machinery/portable_atmospherics/canister/get_ui_data()
 	var/data = list()
 	data["name"] = src.name
 	data["canLabel"] = src.can_label ? 1 : 0
@@ -278,15 +291,7 @@ update_flag
 	data["hasHoldingTank"] = src.holding ? 1 : 0
 	if (holding)
 		data["holdingTank"] = list("name" = src.holding.name, "tankPressure" = round(src.holding.air_contents.return_pressure()))
-
-	var/datum/nanoui/ui = SSnano.get_open_ui(user, src, ui_key)
-	if (!ui)
-		ui = new /datum/nanoui(user, src, ui_key, "canister.tmpl", "Canister", 480, 400)
-		ui.set_initial_data(data)
-		ui.open()
-		ui.set_auto_update(1)
-	else
-		ui.push_data(data)
+	return data
 
 /obj/machinery/portable_atmospherics/canister/Topic(href, href_list)
 
@@ -324,6 +329,8 @@ update_flag
 
 		if (href_list["remove_tank"])
 			if(holding)
+				if (valve_open)
+					investigate_log("[key_name(usr)] removed the [holding], leaving the valve open and transfering into the <span class='boldannounce'>air</span><br>", "atmos")
 				holding.loc = loc
 				holding = null
 
