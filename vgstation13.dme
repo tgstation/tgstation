@@ -1108,6 +1108,7 @@
 #include "code\modules\mining\materials.dm"
 #include "code\modules\mining\mine_areas.dm"
 #include "code\modules\mining\mine_items.dm"
+#include "code\modules\mining\mine_structures.dm"
 #include "code\modules\mining\mine_turfs.dm"
 #include "code\modules\mining\minerals.dm"
 #include "code\modules\mining\mint.dm"
