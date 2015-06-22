@@ -249,6 +249,11 @@
 	if(!part || being_built) //we're in the middle of something here!
 		return
 
+	if(is_contraband(part) && !src.hacked)
+		stopped = 1
+		src.visible_message("<font color='blue'>The [src.name] buzzes, \"Safety procedures prevent current queued item from being built.\"</font>")
+		return
+
 	if(!remove_materials(part))
 		stopped = 1
 		src.visible_message("<font color='blue'>The [src.name] beeps, \"Not enough materials to complete item.\"</font>")
@@ -311,6 +316,9 @@
 	if(part)
 		//src.visible_message("\icon[src] <b>[src]</b> beeps: [part.name] was added to the queue\".")
 		//queue[++queue.len] = part
+		if(is_contraband(part) && !src.hacked)
+			src.visible_message("<font color='blue'>The [src.name] buzzes, \"Safety procedures prevent that item from being queued.\"</font>")
+			return
 		queue.Add(part)
 	return queue.len
 
@@ -319,6 +327,9 @@
 		return 0
 	queue.Cut(index,++index)
 	return 1
+
+/obj/machinery/r_n_d/fabricator/proc/is_contraband(var/datum/design/part)
+	return
 
 /* This is what process() is for you nerd - N3X
 /obj/machinery/r_n_d/fabricator/proc/process_queue()

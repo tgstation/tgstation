@@ -6,6 +6,7 @@
 	desc = "Produces a large range of common items using metal and glass."
 	icon_state = "autolathe"
 	icon_state_open = "autolathe_t"
+	nano_file = "autolathe.tmpl"
 	density = 1
 
 	design_types = list()
@@ -31,67 +32,79 @@
 	light_color = LIGHT_COLOR_CYAN
 
 	part_sets = list(
-		"Items" = list( \
-		new /obj/item/weapon/reagent_containers/glass/bucket(), \
-		new /obj/item/weapon/crowbar(), \
-		new /obj/item/device/flashlight(), \
-		new /obj/item/weapon/extinguisher(), \
+		"Tools"=list(
 		new /obj/item/device/multitool(), \
-		new /obj/item/device/analyzer(), \
-		new /obj/item/device/t_scanner(), \
 		new /obj/item/weapon/weldingtool(), \
+		new /obj/item/weapon/crowbar(), \
 		new /obj/item/weapon/screwdriver(), \
 		new /obj/item/weapon/wirecutters(), \
 		new /obj/item/weapon/wrench(), \
 		new /obj/item/weapon/solder(),\
-		new /obj/item/clothing/head/welding(), \
+		new /obj/item/device/analyzer(), \
+		new /obj/item/device/t_scanner(), \
+		),
+		"Containers"=list(
+		new /obj/item/weapon/reagent_containers/glass/beaker(), \
+		new /obj/item/weapon/reagent_containers/glass/beaker/large(), \
+		new /obj/item/weapon/reagent_containers/glass/bucket(), \
+		new /obj/item/weapon/reagent_containers/glass/beaker/vial(), \
+		),
+		"Assemblies"=list(
+		new /obj/item/device/assembly/igniter(), \
+		new /obj/item/device/assembly/signaler(), \
+		new /obj/item/device/assembly/infra(), \
+		new /obj/item/device/assembly/timer(), \
+		new /obj/item/device/assembly/voice(), \
+		new /obj/item/device/assembly/prox_sensor(), \
+		new /obj/item/device/assembly/speaker(), \
+		),
+		"Stock_Parts"=list(
 		new /obj/item/weapon/stock_parts/console_screen(), \
 		new /obj/item/weapon/stock_parts/capacitor(), \
 		new /obj/item/weapon/stock_parts/scanning_module(), \
 		new /obj/item/weapon/stock_parts/manipulator(), \
 		new /obj/item/weapon/stock_parts/micro_laser(), \
 		new /obj/item/weapon/stock_parts/matter_bin(), \
-		new /obj/item/stack/sheet/metal(), \
-		new /obj/item/stack/sheet/glass/glass(), \
-		new /obj/item/stack/sheet/glass/rglass(), \
-		new /obj/item/stack/rods(), \
-		new /obj/item/weapon/rcd_ammo(), \
-		new /obj/item/weapon/kitchen/utensil/knife/large(), \
+		),
+		"Medical"=list(
+		new /obj/item/weapon/storage/pill_bottle(),\
+		new /obj/item/weapon/reagent_containers/syringe(), \
 		new /obj/item/weapon/scalpel(), \
 		new /obj/item/weapon/circular_saw(), \
 		new /obj/item/weapon/surgicaldrill(),\
 		new /obj/item/weapon/retractor(),\
 		new /obj/item/weapon/cautery(),\
 		new /obj/item/weapon/hemostat(),\
-		new /obj/item/weapon/storage/pill_bottle(),\
-		new /obj/item/weapon/reagent_containers/glass/beaker(), \
-		new /obj/item/weapon/reagent_containers/glass/beaker/large(), \
-		new /obj/item/weapon/reagent_containers/glass/beaker/vial(), \
-		new /obj/item/weapon/reagent_containers/syringe(), \
+		),
+		"Ammunition"=list(
 		new /obj/item/ammo_casing/shotgun/blank(), \
 		new /obj/item/ammo_casing/shotgun/beanbag(), \
 		new /obj/item/ammo_casing/shotgun/flare(), \
 		new /obj/item/ammo_storage/speedloader/c38/empty(), \
 		new /obj/item/ammo_storage/box/c38(), \
-		new /obj/item/device/taperecorder(), \
-		new /obj/item/weapon/storage/pill_bottle/dice(),\
-		new /obj/item/device/assembly/igniter(), \
-		new /obj/item/device/assembly/signaler(), \
+		),
+		"Misc_Tools"=list(
+		new /obj/item/device/flashlight(), \
+		new /obj/item/weapon/extinguisher(), \
 		new /obj/item/device/radio/headset(), \
 		new /obj/item/device/radio/off(), \
-		new /obj/item/device/assembly/infra(), \
-		new /obj/item/device/assembly/timer(), \
-		new /obj/item/device/assembly/voice(), \
-		new /obj/item/device/assembly/prox_sensor(), \
-		new /obj/item/device/assembly/speaker(), \
-		new /obj/item/weapon/light/tube(), \
-		new /obj/item/weapon/light/bulb(), \
-		new /obj/item/ashtray/glass(), \
-		new /obj/item/weapon/camera_assembly(), \
+		new /obj/item/weapon/kitchen/utensil/knife/large(), \
+		new /obj/item/clothing/head/welding(), \
+		new /obj/item/device/taperecorder(), \
 		new /obj/item/weapon/chisel(), \
 		new /obj/item/weapon/tile_painter(), \
 		),
-		"Hidden Items" = list(
+		"Misc_Other"=list(
+		new /obj/item/weapon/rcd_ammo(), \
+		new /obj/item/weapon/light/tube(), \
+		new /obj/item/weapon/light/bulb(), \
+		new /obj/item/ashtray/glass(), \
+		new /obj/item/weapon/storage/pill_bottle/dice(),\
+		new /obj/item/weapon/camera_assembly(), \
+		new /obj/item/stack/sheet/glass/rglass(), \
+		new /obj/item/stack/rods(), \
+		),
+		"Hidden_Items" = list(
 		new /obj/item/weapon/flamethrower/full(), \
 		new /obj/item/ammo_storage/box/flare(), \
 		new /obj/item/weapon/rcd(), \
@@ -124,11 +137,16 @@
 /obj/machinery/r_n_d/fabricator/mechanic_fab/autolathe/get_construction_time_w_coeff(datum/design/part)
 	return min(..(), (AUTOLATHE_MAX_TIME * time_coeff)) //we have set designs, so we can make them quickly
 
+/obj/machinery/r_n_d/fabricator/mechanic_fab/autolathe/is_contraband(var/datum/design/part)
+	if(part in part_sets["Hidden_Items"])
+		return 1
+
 /obj/machinery/r_n_d/fabricator/mechanic_fab/autolathe/update_hacked()
-	if(hacked)
+	if(screen == 51) screen = 11 //take the autolathe away from the contraband menu, since otherwise it can still print contraband until another category is selected
+	/*if(hacked)
 		part_sets["Items"] |= part_sets["Hidden Items"]
 	else
-		part_sets["Items"] -= part_sets["Hidden Items"]
+		part_sets["Items"] -= part_sets["Hidden Items"]*/
 
 /obj/machinery/r_n_d/fabricator/mechanic_fab/autolathe/attackby(obj/item/I, mob/user)
 	if(..())
