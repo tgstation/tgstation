@@ -129,6 +129,7 @@ var/list/crit_allowed_modes = list(MODE_WHISPER)
 			spans |= SPAN_ITALICS
 
 
+//	world << "AT THIS POINT THE MESSAGE IS: [message], RANGE: [message_range] SOURCE: [src] BUBBLE: [bubble_type]"
 	send_speech(message, message_range, src, bubble_type, spans)
 
 	log_say("[name]/[key] : [message]")
@@ -300,9 +301,11 @@ var/list/crit_allowed_modes = list(MODE_WHISPER)
 		return 1
 	return 0
 
-/mob/living/say_quote()
+/mob/living/say_quote(input, list/spans)
 	if (stuttering)
-		return "stammers, \"[text]\""
+		input = attach_spans(input, spans)
+		return "stammers, \"[input]\""
 	if (getBrainLoss() >= 60)
-		return "gibbers, \"[text]\""
+		input = attach_spans(input, spans)
+		return "gibbers, \"[input]\""
 	return ..()
