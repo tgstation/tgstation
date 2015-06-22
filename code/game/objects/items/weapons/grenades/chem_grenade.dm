@@ -138,6 +138,11 @@
 		detonator.Crossed(AM)
 	..()
 
+/obj/item/weapon/grenade/chem_grenade/on_found(AM as mob|obj)
+	if(detonator)
+		detonator.on_found(AM)
+	..()
+
 /obj/item/weapon/grenade/chem_grenade/activate(mob/user as mob)
 	if(active) return
 

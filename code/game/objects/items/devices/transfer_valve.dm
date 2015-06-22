@@ -20,6 +20,11 @@
 		attached_device.Crossed(AM)
 	..()
 
+/obj/item/device/transfer_valve/on_found(AM as mob|obj)
+	if(attached_device)
+		attached_device.on_found(AM)
+	..()
+
 /obj/item/device/transfer_valve/attackby(obj/item/item, mob/user)
 	if(istype(item, /obj/item/weapon/tank))
 		if(tank_one && tank_two)
