@@ -43,23 +43,26 @@ var/list/mechtoys = list(
 	anchored = 1
 	layer = 4
 	explosion_resistance = 5
+	var/airtight = 0
 
 /obj/structure/plasticflaps/attackby(obj/item/I as obj, mob/user as mob)
-	if (istype(I, /obj/item/weapon/crowbar))
-		if(anchored == 1)
-			user.visible_message("[user] pops loose the flaps.", "You pop loose the flaps.")
-			anchored = 0
-			playsound(get_turf(src), 'sound/items/Crowbar.ogg', 50, 1)
-			var/turf/T = get_turf(loc)
-			if(T)
-				T.blocks_air = 0
+	if(istype(I, /obj/item/weapon/crowbar) && anchored == 1)
+		if(airtight == 0)
+			playsound(get_turf(src), 'sound/items/Ratchet.ogg', 50, 1)
 		else
-			user.visible_message("[user] pops in the flaps.", "You pop in the flaps.")
-			anchored = 1
 			playsound(get_turf(src), 'sound/items/Deconstruct.ogg', 50, 1)
-			var/turf/T = get_turf(loc)
-			if(T)
-				T.blocks_air = 1
+		user.visible_message("[user] [airtight? "loosen the [src] from" : "tighten the [src] into"] an airtight position.", "You [airtight? "loosen the [src] from" : "tighten the [src] into"] an airtight position.")
+		airtight = !airtight
+		name = "\improper [airtight? "Airtight p" : "P"]lastic flaps"
+		desc = "[airtight? "Heavy duty, airtight, plastic flaps." : "I definitely can't get past those. No way."]"
+		return 1
+	if(istype(I, /obj/item/weapon/wrench) && airtight != 1)
+		if(anchored == 0)
+			playsound(get_turf(src), 'sound/items/Crowbar.ogg', 50, 1)
+		else
+			playsound(get_turf(src), 'sound/items/Deconstruct.ogg', 50, 1)
+		user.visible_message("[user] [anchored? "loosens" : "tightens"] the flap from its anchoring.", "You [anchored? "loosen" : "tighten"] the flap from its anchoring.")
+		anchored = !anchored
 		return 1
 	else if (iswelder(I) && anchored == 0)
 		var/obj/item/weapon/weldingtool/WT = I
@@ -68,6 +71,10 @@ var/list/mechtoys = list(
 			qdel(src)
 			return
 	return ..()
+
+/obj/structure/plasticflaps/examine(mob/user as mob)
+	..()
+	user << "It appears to be [anchored? "anchored to" : "unachored from"] the floor, [airtight? "and it seems to be airtight as well." : "but it does not seem to be airtight."]"
 
 /obj/structure/plasticflaps/CanPass(atom/movable/mover, turf/target, height=1.5, air_group = 0)
 	if(istype(mover) && mover.checkpass(PASSGLASS))
@@ -81,7 +88,7 @@ var/list/mechtoys = list(
 		var/mob/living/M = mover
 		if(!M.lying && !istype(M, /mob/living/carbon/monkey) && !istype(M, /mob/living/carbon/slime) && !istype(M, /mob/living/simple_animal/mouse))  //If your not laying down, or a small creature, no pass.
 			return 0
-	return ..()
+	return !(airtight && air_group)
 
 /obj/structure/plasticflaps/ex_act(severity)
 	switch(severity)
@@ -94,22 +101,12 @@ var/list/mechtoys = list(
 			if (prob(5))
 				qdel(src)
 
-/obj/structure/plasticflaps/mining //A specific type for mining that doesn't allow airflow because of them damn crates
+/obj/structure/plasticflaps/mining
 	name = "\improper Airtight plastic flaps"
 	desc = "Heavy duty, airtight, plastic flaps."
+	airtight = 1
 
-	New() //set the turf below the flaps to block air
-		var/turf/T = get_turf(loc)
-		if(T)
-			T.blocks_air = 1
-		..()
 
-	Destroy() //lazy hack to set the turf to allow air to pass if it's a simulated floor
-		var/turf/T = get_turf(loc)
-		if(T)
-			if(istype(T, /turf/simulated/floor))
-				T.blocks_air = 0
-		..()
 
 /obj/machinery/computer/supplycomp
 	name = "Supply shuttle console"
