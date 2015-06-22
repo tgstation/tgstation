@@ -6,7 +6,7 @@
 	w_type = RECYK_BIOLOGICAL
 
 //	flags = NOREACT
-	flags = HEAR
+	flags = HEAR | PROXMOVE
 	var/datum/mind/mind
 
 	var/stat = 0 //Whether a mob is alive or dead. TODO: Move this to living - Nodrak

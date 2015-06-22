@@ -10,6 +10,9 @@
 	unacidable = 1
 	use_power = 0
 	luminosity = 4
+
+	flags = FPRINT | PROXMOVE
+
 	var/obj/machinery/field_generator/FG1 = null
 	var/obj/machinery/field_generator/FG2 = null
 	var/hasShocked = 0 //Used to add a delay between shocks. In some cases this used to crash servers by spawning hundreds of sparks every second.

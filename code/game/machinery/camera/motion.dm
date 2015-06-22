@@ -5,6 +5,7 @@
 	var/area/ai_monitored/area_motion = null
 	var/alarm_delay = 100 // Don't forget, there's another 10 seconds in queueAlarm()
 
+	flags = FPRINT | PROXMOVE
 
 /obj/machinery/camera/process()
 	// motion camera event loop

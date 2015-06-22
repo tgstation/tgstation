@@ -3435,11 +3435,14 @@
 	icon = 'icons/obj/wiz_cards.dmi'
 	icon_state = "frog"
 
+	flags = PROXMOVE
+
 	var/jump_cd
-	New()
-		..()
-		reagents.add_reagent("nutriment",2)
-		reagents.add_reagent("hyperzine",1)
+
+/obj/item/weapon/reagent_containers/food/snacks/chocofrog/New()
+	..()
+	reagents.add_reagent("nutriment",2)
+	reagents.add_reagent("hyperzine",1)
 
 /obj/item/weapon/reagent_containers/food/snacks/chocofrog/HasProximity(atom/movable/AM as mob|obj)
 	if(!jump_cd)

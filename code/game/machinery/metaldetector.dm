@@ -21,9 +21,8 @@
 
 	req_access = list(access_security)
 
-/obj/machinery/detector/New(loc)
-	..(loc)
-	machine_flags |= WRENCHMOVE | FIXED2WORK
+	flags = FPRINT | PROXMOVE
+	machine_flags = WRENCHMOVE | FIXED2WORK
 
 /obj/machinery/detector/proc/assess_perp(mob/living/carbon/human/perp as mob)
 	var/threatcount = 0

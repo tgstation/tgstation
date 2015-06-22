@@ -3,7 +3,7 @@
 	icon = 'icons/obj/assemblies/new_assemblies.dmi'
 	icon_state = "holder"
 	item_state = "assembly"
-	flags = FPRINT
+	flags = FPRINT | PROXMOVE
 	siemens_coefficient = 1
 	throwforce = 5
 	w_class = 2.0

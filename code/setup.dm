@@ -194,6 +194,8 @@ var/MAX_EXPLOSION_RANGE = 14
 
 //FLAGS BITMASK
 
+#define PROXMOVE		1	//Will the code check us when we move or when something moves near us?
+
 #define MASKINTERNALS	8	// mask allows internals
 //#define SUITSPACE		8	// suit protects against space
 

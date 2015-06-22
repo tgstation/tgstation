@@ -169,13 +169,13 @@
 			Obj:inertia_dir = 0
 	..()
 	var/objects = 0
-	for(var/atom/A as mob|obj|turf|area in range(1))
-		if(objects > loopsanity)	break
-		objects++
-		spawn( 0 )
-			if ((A && Obj))
-				A.HasProximity(Obj, 1)
-			return
+	if(Obj && Obj.flags & PROXMOVE)
+		for(var/atom/A as mob|obj|turf|area in range(1))
+			if(objects > loopsanity)	break
+			objects++
+			spawn( 0 )
+				if ((A && Obj) && A.flags & PROXMOVE)
+					A.HasProximity(Obj, 1)
 	return
 
 /turf/proc/is_plating()
