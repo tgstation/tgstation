@@ -173,7 +173,7 @@ var/global/list/obj/machinery/light/alllights = list()
 	fitting = "bulb"
 	brightness_range = 4
 	brightness_power = 2
-	brightness_color = LIGHT_COLOR_BULB
+	brightness_color = LIGHT_COLOR_TUNGSTEN
 	cost = 4
 	desc = "A small lighting fixture."
 	light_type = /obj/item/weapon/light/bulb
@@ -639,7 +639,7 @@ var/global/list/obj/machinery/light/alllights = list()
 	fitting = "bulb"
 	brightness_range = 5
 	brightness_power = 2
-	brightness_color = "#a0a080"
+	brightness_color = LIGHT_COLOR_TUNGSTEN
 	starting_materials = list(MAT_GLASS = 100)
 	cost = 5
 	w_type = RECYK_GLASS
