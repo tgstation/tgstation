@@ -267,6 +267,7 @@
 	M.mind.name = usr.real_name
 	M.real_name = usr.real_name
 	M.name = usr.real_name
+	M.faction = list("[usr.real_name]")
 	if(evil)
 		var/datum/objective/hijackclone/hijack_objective = new /datum/objective/hijackclone
 		hijack_objective.owner = M.mind
