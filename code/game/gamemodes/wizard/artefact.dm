@@ -189,7 +189,7 @@
 	var/faction = list("unassigned")
 	var/charged = 40
 	var/assigned = "unassigned"
-	var/evil = FALSE
+	var/evil = TRUE
 
 /obj/item/weapon/multisword/New()
 	..()
