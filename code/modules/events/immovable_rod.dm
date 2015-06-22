@@ -66,7 +66,7 @@ In my current plan for it, 'solid' will be defined as anything with density == 1
 		if(istype(clong, /mob/living/carbon/human))
 			var/mob/living/carbon/human/H = clong
 			H << "The rod penetrates you!"
-			H.gib() //blame goof
+			H.adjustBruteLoss(160)
 		if(clong.density || prob(10))
 			clong.ex_act(2)
 	return
