@@ -85,6 +85,8 @@
 		return 0
 	return 1
 
+/obj/structure/window/storage_contents_dump_act(obj/item/weapon/storage/src_object, mob/user)
+	return 0
 
 /obj/structure/window/hitby(AM as mob|obj)
 	..()
@@ -158,6 +160,8 @@
 	if(islarva(user)) return
 	attack_generic(user, 15)
 	update_nearby_icons()
+
+
 
 /obj/structure/window/attack_animal(mob/living/user as mob)
 	if(!isanimal(user))

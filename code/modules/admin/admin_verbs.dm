@@ -318,12 +318,12 @@ var/list/admin_verbs_hideable = list(
 	set category = "Admin"
 	set desc = "Toggles ghost-like invisibility (Don't abuse this)"
 	if(holder && mob)
-		if(mob.invisibility == INVISIBILITY_OBSERVER)
+		if(mob.invisibility == INVISIBILITY_MAXIMUM)
 			mob.invisibility = initial(mob.invisibility)
 			mob << "<span class='userdanger'>Invisimin off. Invisibility reset.</span>"
 		else
-			mob.invisibility = INVISIBILITY_OBSERVER
-			mob << "<span class='adminnotice'><b>Invisimin on. You are now as invisible as a ghost.</b></span>"
+			mob.invisibility = INVISIBILITY_MAXIMUM
+			mob << "<span class='adminnotice'><b>Invisimin on. You are now invisible.</b></span>"
 
 
 /client/proc/player_panel()

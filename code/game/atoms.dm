@@ -451,3 +451,7 @@ var/list/blood_splatter_icons = list()
 
 /atom/proc/SinguloCanEat()
 	return 1
+
+
+/atom/proc/storage_contents_dump_act(obj/item/weapon/storage/src_object, mob/user)
+	return 0

@@ -243,6 +243,10 @@
 /turf/proc/Bless()
 	flags |= NOJAUNT
 
+/turf/storage_contents_dump_act(obj/item/weapon/storage/src_object, mob/user)
+	for(var/obj/item/I in src_object)
+		src_object.remove_from_storage(I, src) //No check needed, put everything inside
+	return 1
 
 //////////////////////////////
 //Distance procs

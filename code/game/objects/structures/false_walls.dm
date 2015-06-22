@@ -191,6 +191,9 @@
 	icon_state = "rwall[junction]"
 	return
 
+/obj/structure/falsewall/storage_contents_dump_act(obj/item/weapon/storage/src_object, mob/user)
+	return 0
+
 /*
  * Uranium Falsewalls
  */

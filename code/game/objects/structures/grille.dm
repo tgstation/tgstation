@@ -131,6 +131,9 @@
 	var/obj/item/stack/rods/newrods = new(loc)
 	transfer_fingerprints_to(newrods)
 
+/obj/structure/grille/storage_contents_dump_act(obj/item/weapon/storage/src_object, mob/user)
+	return 0
+
 /obj/structure/grille/attackby(obj/item/weapon/W as obj, mob/user as mob, params)
 	user.changeNext_move(CLICK_CD_MELEE)
 	add_fingerprint(user)
