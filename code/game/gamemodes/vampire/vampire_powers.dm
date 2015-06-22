@@ -136,7 +136,7 @@
 		M.current.update_canmove()
 		M.current.remove_vampire_powers()
 
-		spawn(rand(30,45))
+		spawn(rand(300,450))
 			src << "<span class='sinister'>Your corpse twitches slightly. It's safe to assume nobody noticed.</span>"
 			src.verbs += /client/proc/vampire_returntolife
 		return 1
