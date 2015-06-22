@@ -35,6 +35,8 @@ var/global/disable_vents     = 0
 #define MIN_PLASMA_DAMAGE 1
 #define MAX_PLASMA_DAMAGE 10
 
+#define mouse_respawn_time 5 //Amount of time that must pass between a player dying as a mouse and repawning as a mouse. In minutes.
+
 #define BREATH_VOLUME 0.5	//liters in a normal breath
 #define BREATH_MOLES (ONE_ATMOSPHERE * BREATH_VOLUME /(T20C*R_IDEAL_GAS_EQUATION))
 #define BREATH_PERCENTAGE BREATH_VOLUME/CELL_VOLUME
