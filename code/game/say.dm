@@ -79,6 +79,7 @@ var/list/freqtospan = list(
 	return "[verb_say], \"[input]\""
 
 /atom/movable/proc/lang_treat(atom/movable/speaker, message_langs, raw_message, list/spans)
+//	world << "speaker: [speaker] langs: [message_langs] message: [raw_message]"
 	if(languages & message_langs)
 		var/atom/movable/AM = speaker.GetSource()
 		if(AM) //Basically means "if the speaker is virtual"
