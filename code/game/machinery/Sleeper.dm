@@ -19,7 +19,7 @@
 	var/list/possible_chems = list(list("morphine", "salbutamol", "bicaridine", "kelotane"),
 								   list("morphine", "salbutamol", "bicaridine", "kelotane", "oculine"),
 								   list("morphine", "salbutamol", "bicaridine", "kelotane", "oculine", "antitoxin", "mutadone", "mannitol", "pen_acid"),
-								   list("morphine", "salbutamol", "bicaridine", "kelotane", "oculine", "antitoxin", "mutadone", "mannitol", "pen_acid"))
+								   list("morphine", "salbutamol", "bicaridine", "kelotane", "oculine", "antitoxin", "mutadone", "mannitol", "pen_acid", "omnizine"))
 /obj/machinery/sleeper/New()
 	..()
 	component_parts = list()
