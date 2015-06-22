@@ -16,7 +16,6 @@
 	var/steps = 0
 	var/lifetime = 10
 	var/direction
-	var/fading = 0
 
 
 /obj/effect/effect/smoke/proc/fade_out(var/frames = 16)
@@ -41,15 +40,12 @@
 
 /obj/effect/effect/smoke/proc/kill_smoke()
 	SSobj.processing.Remove(src)
-	qdel(src)
+	fade_out()
+	spawn(5)
+		qdel(src)
 
 /obj/effect/effect/smoke/process()
-	world << "Process"
 	lifetime--
-	if(lifetime < 3 && !fading)
-		fading = 1
-		spawn(0)
-			fade_out(100)
 	if(lifetime < 1)
 		kill_smoke()
 		return 0
