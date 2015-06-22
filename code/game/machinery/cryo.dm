@@ -237,9 +237,10 @@
 		if(beaker)
 			user << "<span class='warning'>A beaker is already loaded into [src]!</span>"
 			return
+		if(!user.drop_item())
+			return
 
 		beaker = I
-		user.drop_item()
 		I.loc = src
 		user.visible_message("[user] places [I] in [src].", \
 							"<span class='notice'>You place [I] in [src].</span>")

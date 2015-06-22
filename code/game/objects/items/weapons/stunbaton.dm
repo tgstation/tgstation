@@ -71,7 +71,8 @@
 			if(C.maxcharge < hitcost)
 				user << "<span class='notice'>[src] requires a higher capacity cell.</span>"
 				return
-			user.drop_item()
+			if(!user.unEquip(W))
+				return
 			W.loc = src
 			bcell = W
 			user << "<span class='notice'>You install a cell in [src].</span>"

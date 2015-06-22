@@ -141,7 +141,7 @@ Transponder Codes:<UL>"}
 			t += "<LI>[key] ... [codes[key]]"
 			t += "	<A href='byond://?src=\ref[src];edit=1;code=[key]'>Edit</A>"
 			t += "	<A href='byond://?src=\ref[src];delete=1;code=[key]'>Delete</A><BR>"
-		t += "	<A href='byond://?src=\ref[src];add=1;'> Add New</A><BR>"
+		t += "	<A href='byond://?src=\ref[src];add=1;'>Add New</A><BR>"
 		t+= "<UL></TT>"
 
 	var/datum/browser/popup = new(user, "navbeacon", "Navigation Beacon", 300, 400)

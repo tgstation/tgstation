@@ -68,6 +68,8 @@
 	new /obj/item/clothing/under/color/black(src)
 	if(prob(25))
 		new /obj/item/clothing/suit/jacket/leather(src)
+	if(prob(25))
+		new /obj/item/clothing/suit/jacket/leather/overcoat(src)
 	new /obj/item/clothing/shoes/sneakers/black(src)
 	new /obj/item/clothing/shoes/sneakers/black(src)
 	new /obj/item/clothing/shoes/sneakers/black(src)

@@ -89,7 +89,8 @@
 	if(istype(W,/obj/item/weapon/card/id))
 		var/obj/item/weapon/card/id/I = usr.get_active_hand()
 		if(istype(I) && !istype(inserted_id))
-			usr.drop_item()
+			if(!user.drop_item())
+				return
 			I.loc = src
 			inserted_id = I
 			interact(user)
@@ -184,7 +185,8 @@
 		else if(href_list["choice"] == "insert")
 			var/obj/item/weapon/card/id/I = usr.get_active_hand()
 			if(istype(I))
-				usr.drop_item()
+				if(!usr.drop_item())
+					return
 				I.loc = src
 				inserted_id = I
 			else usr << "<span class='warning'>No valid ID.</span>"
@@ -333,7 +335,8 @@
 		else if(href_list["choice"] == "insert")
 			var/obj/item/weapon/card/id/I = usr.get_active_hand()
 			if(istype(I))
-				usr.drop_item()
+				if(!usr.drop_item())
+					return
 				I.loc = src
 				inserted_id = I
 			else usr << "<span class='danger'>No valid ID.</span>"
@@ -356,7 +359,8 @@
 	if(istype(I,/obj/item/weapon/card/id))
 		var/obj/item/weapon/card/id/C = usr.get_active_hand()
 		if(istype(C) && !istype(inserted_id))
-			usr.drop_item()
+			if(!usr.drop_item())
+				return
 			C.loc = src
 			inserted_id = C
 			interact(user)

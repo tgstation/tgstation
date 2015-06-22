@@ -24,9 +24,10 @@
 	var/order = 1 // -1 = Descending - 1 = Ascending
 
 
-/obj/machinery/computer/secure_data/attackby(obj/item/O as obj, user as mob, params)
+/obj/machinery/computer/secure_data/attackby(obj/item/O as obj, mob/user as mob, params)
 	if(istype(O, /obj/item/weapon/card/id) && !scan)
-		usr.drop_item()
+		if(!user.drop_item())
+			return
 		O.loc = src
 		scan = O
 		user << "<span class='notice'>You insert [O].</span>"
@@ -299,7 +300,8 @@ What a mess.*/
 				else
 					var/obj/item/I = usr.get_active_hand()
 					if(istype(I, /obj/item/weapon/card/id))
-						usr.drop_item()
+						if(!usr.drop_item())
+							return
 						I.loc = src
 						scan = I
 
@@ -519,7 +521,7 @@ What a mess.*/
 				switch(href_list["field"])
 					if("name")
 						if(istype(active1, /datum/data/record) || istype(active2, /datum/data/record))
-							var/t1 = stripped_input(usr, "Please input name:", "Secure. records", active1.fields["name"], null)
+							var/t1 = copytext(sanitize(input("Please input name:", "Secure. records", active1.fields["name"], null)  as text),1,MAX_MESSAGE_LEN)
 							if(!canUseSecurityRecordsConsole(usr, t1, a1))
 								return
 							if(istype(active1, /datum/data/record))

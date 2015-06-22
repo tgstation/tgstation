@@ -25,6 +25,7 @@
 	var/target = null //its target. moves towards the target if it has one
 	var/last_failed_movement = 0//Will not move in the same dir if it couldnt before, will help with the getting stuck on fields thing
 	var/last_warning
+	var/consumedSupermatter = 0 //If the singularity has eaten a supermatter shard and can go to stage six
 	allow_spin = 0
 /obj/singularity/New(loc, var/starting_energy = 50, var/temp = 0)
 	//CARN: admin-alert for chuckle-fuckery.
@@ -129,6 +130,8 @@
 	var/temp_allowed_size = src.allowed_size
 	if(force_size)
 		temp_allowed_size = force_size
+	if(temp_allowed_size >= STAGE_SIX && !consumedSupermatter)
+		temp_allowed_size = STAGE_FIVE
 	switch(temp_allowed_size)
 		if(STAGE_ONE)
 			current_size = STAGE_ONE
@@ -185,6 +188,15 @@
 			grav_pull = 10
 			consume_range = 4
 			dissipate = 0 //It cant go smaller due to e loss
+		if(STAGE_SIX) //This only happens if a stage 5 singulo consumes a supermatter shard.
+			current_size = STAGE_SIX
+			icon = 'icons/effects/352x352.dmi'
+			icon_state = "singularity_s11"
+			pixel_x = -160
+			pixel_y = -160
+			grav_pull = 15
+			consume_range = 5
+			dissipate = 0
 	if(current_size == allowed_size)
 		investigate_log("<font color='red'>grew to size [current_size]</font>","singulo")
 		return 1
@@ -199,6 +211,8 @@
 		investigate_log("collapsed.","singulo")
 		qdel(src)
 		return 0
+	if(energy > 2999 && !consumedSupermatter)
+		energy = 2000
 	switch(energy)//Some of these numbers might need to be changed up later -Mport
 		if(1 to 199)
 			allowed_size = STAGE_ONE
@@ -208,8 +222,10 @@
 			allowed_size = STAGE_THREE
 		if(1000 to 1999)
 			allowed_size = STAGE_FOUR
-		if(2000 to INFINITY)
+		if(2000 to 2999)
 			allowed_size = STAGE_FIVE
+		if(3000 to INFINITY)
+			allowed_size = STAGE_SIX
 	if(current_size != allowed_size)
 		expand()
 	return 1
@@ -230,6 +246,11 @@
 /obj/singularity/proc/consume(var/atom/A)
 	var/gain = A.singularity_act(current_size)
 	src.energy += gain
+	if(istype(A, /obj/machinery/power/supermatter_shard) && !consumedSupermatter)
+		desc = "[initial(desc)] It glows fiercely with inner fire."
+		name = "supermatter-charged [initial(name)]"
+		consumedSupermatter = 1
+		luminosity = 10
 	return
 
 
@@ -326,6 +347,10 @@
 			toxmob()
 		if(4)//Stun mobs who lack optic scanners
 			mezzer()
+		if(5,6) //Sets all nearby mobs on fire
+			if(current_size < STAGE_SIX)
+				return 0
+			combust_mobs()
 		else
 			return 0
 	return 1
@@ -344,6 +369,15 @@
 		M.irradiate(rand(radiationmin,radiation))
 		toxdamage = (toxdamage - (toxdamage*M.getarmor(null, "rad")))
 		M.apply_effect(toxdamage, TOX)
+	return
+
+
+/obj/singularity/proc/combust_mobs()
+	for(var/mob/living/carbon/C in orange(20, src))
+		C.visible_message("<span class='warning'>[C]'s skin bursts into flame!</span>", \
+						  "<span class='boldannounce'>You feel an inner fire as your skin is suddenly covered in fire!</span>")
+		C.adjust_fire_stacks(5)
+		C.IgniteMob()
 	return
 
 

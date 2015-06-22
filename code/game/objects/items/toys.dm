@@ -168,7 +168,7 @@
 	src.bullets--
 	user.visible_message("<span class='danger'>[user] fires [src] at [target]!</span>", \
 						"<span class='danger'>You fire [src] at [target]!</span>", \
-						 "<span class='italics'> You hear a gunshot!</span>")
+						 "<span class='italics'>You hear a gunshot!</span>")
 
 /obj/item/toy/ammo/gun
 	name = "capgun ammo"
@@ -474,7 +474,7 @@
 						return
 				for(var/obj/effect/decal/cleanable/crayon/old_marking in target)
 					qdel(old_marking)
-				new /obj/effect/decal/cleanable/crayon/gang(target,gangID,temp,graf_rot)
+				new /obj/effect/decal/cleanable/crayon/gang(target,gangID,"graffiti",graf_rot)
 				user << "<span class='notice'>You tagged [territory] for your gang!</span>"
 
 			else
@@ -533,7 +533,7 @@
 	s.set_up(3, 1, src)
 	s.start()
 	new /obj/effect/decal/cleanable/ash(src.loc)
-	src.visible_message("<span class='suicide'> The [src.name] explodes!</span>","<span class='italics'>You hear a snap!</span>")
+	src.visible_message("<span class='suicide'>The [src.name] explodes!</span>","<span class='italics'>You hear a snap!</span>")
 	playsound(src, 'sound/effects/snap.ogg', 50, 1)
 	qdel(src)
 

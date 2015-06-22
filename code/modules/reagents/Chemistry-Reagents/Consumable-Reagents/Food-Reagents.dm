@@ -57,7 +57,7 @@
 	overdose_threshold = 200 // Hyperglycaemic shock
 
 /datum/reagent/consumable/sugar/overdose_start(var/mob/living/M as mob)
-	M << "<span class = 'userdanger'>You go into hyperglycaemic shock! Lay off the twinkies!</span>"
+	M << "<span class='userdanger'>You go into hyperglycaemic shock! Lay off the twinkies!</span>"
 	M.sleeping += 30
 	return
 

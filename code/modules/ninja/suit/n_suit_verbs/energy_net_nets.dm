@@ -124,7 +124,6 @@ It is possible to destroy the net by the occupant or someone else.
 
 /obj/effect/energy_net/hitby(AM as mob|obj)
 	..()
-	visible_message("<span class='danger'>[src] was hit by [AM].</span>")
 	var/tforce = 0
 	if(ismob(AM))
 		tforce = 10

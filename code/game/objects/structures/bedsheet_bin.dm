@@ -194,7 +194,8 @@ LINEN BINS
 
 /obj/structure/bedsheetbin/attackby(obj/item/I as obj, mob/user as mob, params)
 	if(istype(I, /obj/item/weapon/bedsheet))
-		user.drop_item()
+		if(!user.drop_item())
+			return
 		I.loc = src
 		sheets.Add(I)
 		amount++

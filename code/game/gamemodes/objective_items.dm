@@ -47,12 +47,6 @@
 	difficulty = 5
 	excludefromjob = list("Chief Engineer")
 
-/datum/objective_item/steal/corgimeat
-	name = "a piece of corgi meat"
-	targetitem = /obj/item/weapon/reagent_containers/food/snacks/meat/slab/corgi
-	difficulty = 5
-	excludefromjob = list("Head of Personnel", "Quartermaster", "Cargo Technician") //>hurting your little buddy ever
-
 /datum/objective_item/steal/capmedal
 	name = "the medal of captaincy"
 	targetitem = /obj/item/clothing/tie/medal/gold/captain
@@ -180,6 +174,11 @@
 /datum/objective_item/special/laserpointer
 	name = "a laser pointer"
 	targetitem = /obj/item/device/laser_pointer
+	difficulty = 5
+
+/datum/objective_item/special/corgimeat
+	name = "a piece of corgi meat"
+	targetitem = /obj/item/weapon/reagent_containers/food/snacks/meat/slab/corgi
 	difficulty = 5
 
 //Stack objectives get their own subtype

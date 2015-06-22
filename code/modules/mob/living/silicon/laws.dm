@@ -47,3 +47,8 @@
 		if(2)
 			var/datum/ai_laws/lawtype = pick(typesof(/datum/ai_laws/default) - /datum/ai_laws/default)
 			laws = new lawtype()
+	laws.associate(src)
+
+/mob/living/silicon/proc/clear_zeroth_law(var/force)
+	laws_sanity_check()
+	laws.clear_zeroth_law(force)

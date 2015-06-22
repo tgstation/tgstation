@@ -40,7 +40,7 @@
 						break
 					lock_suit(U,1)//Check for icons.
 					U.regenerate_icons()
-					U << "<span class='notice'> Linking neural-net interface...\nPattern</span>\green <B>GREEN</B><span class='notice'>, continuing operation.</span>"
+					U << "<span class='notice'>Linking neural-net interface...\nPattern</span>\green <B>GREEN</B><span class='notice'>, continuing operation.</span>"
 				if(4)
 					U << "<span class='notice'>VOID-shift device status: <B>ONLINE</B>.\nCLOAK-tech device status: <B>ONLINE</B>.</span>"
 				if(5)
