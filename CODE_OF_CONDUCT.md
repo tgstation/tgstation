@@ -10,6 +10,6 @@ Project maintainers have no right or responsibility to remove, edit, or reject c
 
 This code of conduct applies both within project spaces and in public spaces when an individual is representing the project or its community.
 
-Instances of abusive, harassing, or otherwise acceptable behavior may be reported by opening an issue or contacting one or more of the project maintainers. This issue will be promptly closed, and completely ignored.
+Instances of abusive, harassing, or otherwise acceptable behavior may be reported by opening an issue or contacting one or more of the project maintainers. This issue will be promptly closed and completely ignored.
 
 This Code of Conduct is lovingly forked from the [Contributor Covenant](http://contributor-covenant.org), version 1.1.0, available at [http://contributor-covenant.org/version/1/1/0/](http://contributor-covenant.org/version/1/1/0/)
