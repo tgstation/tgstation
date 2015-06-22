@@ -1,0 +1,4 @@
+author: PJB3005
+delete-after: true
+changes:
+  - bugfix: Silicons can no longer put their modules into potted plants or smartfridges.
