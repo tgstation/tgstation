@@ -141,8 +141,8 @@
 			if(src == user:tool_state || src == user:sight_state)
 				return 0
 			attack_hand(user)
-	if(istype(src.loc, /obj/item/weapon/robot_module))
-		if(!isrobot(user)) 	return
+	else if(isrobot(user))
+		if(!istype(src.loc, /obj/item/weapon/robot_module)) return
 		var/mob/living/silicon/robot/R = user
 		R.activate_module(src)
 		R.hud_used.update_robot_modules_display()

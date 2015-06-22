@@ -42,11 +42,8 @@
 		if(src.cell.charge <= 0)
 			uneq_all()
 			src.stat = 1
-		else if (src.cell.charge <= 100)
-			src.module_active = null
-			src.sight_state = null
-			src.tool_state = null
-			src.sight_mode = 0
+		else if (src.cell.charge <= MOMMI_LOW_POWER)
+			uneq_all()
 			src.cell.use(1)
 		else
 			if(src.sight_state)
@@ -292,3 +289,5 @@
 /mob/living/silicon/robot/mommi/update_canmove()
 	canmove = !(paralysis || stunned || weakened || buckled || lockcharge || anchored)
 	return canmove
+
+#undef MOMMI_LOW_POWER

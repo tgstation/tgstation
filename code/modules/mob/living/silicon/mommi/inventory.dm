@@ -22,10 +22,15 @@
 	else
 		return locate(W) in src.module.modules
 
+#define MOMMI_LOW_POWER 100
+
 /mob/living/silicon/robot/mommi/put_in_hands(var/obj/item/W)
 	// Fixing NPEs caused by PDAs giving me NULLs to hold :V - N3X
 	// And before you ask, this is how /mob handles NULLs, too.
 	if(!W)
+		return 0
+	if(cell && cell.charge <= MOMMI_LOW_POWER)
+		drop_item(W)
 		return 0
 	// Make sure we're not picking up something that's in our factory-supplied toolbox.
 	//if(is_type_in_list(W,src.module.modules))
@@ -77,7 +82,6 @@
 		unequip_sight()
 	else if (W == head_state)
 		unequip_head()
-
 
 
 // Override the default /mob version since we only have one hand slot.
