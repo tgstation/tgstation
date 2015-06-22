@@ -361,14 +361,14 @@
 	var/toxdamage = 4
 	var/radiation = 15
 	var/radiationmin = 3
-	if (src.energy>200)
-		toxdamage = round(((src.energy-150)/50)*4,1)
-		radiation = round(((src.energy-150)/50)*5,1)
-		radiationmin = round((radiation/5),1)//
+	if (energy>200)
+		toxdamage += round((energy-150)/30,1)
+		radiation += round((energy-150)/10,1)
+		radiationmin = round((radiation/5),1)
 	for(var/mob/living/M in view(toxrange, src.loc))
 		M.irradiate(rand(radiationmin,radiation))
 		toxdamage = (toxdamage - (toxdamage*M.getarmor(null, "rad")))
-		M.apply_effect(toxdamage, TOX)
+		M.apply_damage(toxdamage, TOX)
 	return
 
 
