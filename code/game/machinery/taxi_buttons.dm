@@ -44,7 +44,7 @@
 	add_fingerprint(user)
 
 	spawn if(!connected_computer.callTo(destination, wait_time))
-		src.visible_message("Taxi engines are on cooldown for the next [(TAXI_SHUTTLE_COOLDOWN - (world.time - connected_computer.lastMove))/10] second\s. Please wait before trying again.")
+		src.visible_message("Taxi engines are on cooldown for the next [round((TAXI_SHUTTLE_COOLDOWN - (world.time - connected_computer.lastMove)) / 10)] second\s. Please wait before trying again.")
 
 	spawn(30)
 		icon_state = initial(icon_state)
