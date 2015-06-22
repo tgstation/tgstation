@@ -31,6 +31,114 @@ RCD
 	var/advanced_airlock_setting = 1 //Set to 1 if you want more paintjobs available
 	var/sheetmultiplier	= 4			 //Controls the amount of matter added for each glass/metal sheet, triple for plasteel
 
+	var/list/conf_access = null
+	var/use_one_access = 0 //If the airlock should require ALL or only ONE of the listed accesses.
+	var/last_configurator = null
+	var/locked = 1
+
+/obj/item/weapon/rcd/verb/change_airlock_access()
+	set name = "Change Airlock Access"
+	set category = "Object"
+	set src in usr
+
+	if (!ishuman(usr))
+		return ..(usr)
+
+	var/mob/living/carbon/human/H = usr
+	if(H.getBrainLoss() >= 60)
+		return
+
+	var/t1 = text("")
+
+
+	if (last_configurator)
+		t1 += "Operator: [last_configurator]<br>"
+
+	if (locked)
+		t1 += "<a href='?src=\ref[src];login=1'>Swipe ID</a><hr>"
+	else
+		t1 += "<a href='?src=\ref[src];logout=1'>Lock Interface</a><hr>"
+
+		if(use_one_access)
+			t1 += "Restriction Type: <a href='?src=\ref[src];access=one'>At least one access required</a><br>"
+		else
+			t1 += "Restriction Type: <a href='?src=\ref[src];access=one'>All accesses required</a><br>"
+
+		t1 += "<a href='?src=\ref[src];access=all'>Remove All</a><br>"
+
+		var/accesses = ""
+		accesses += "<div align='center'><b>Access</b></div>"
+		accesses += "<table style='width:100%'>"
+		accesses += "<tr>"
+		for(var/i = 1; i <= 7; i++)
+			accesses += "<td style='width:14%'><b>[get_region_accesses_name(i)]:</b></td>"
+		accesses += "</tr><tr>"
+		for(var/i = 1; i <= 7; i++)
+			accesses += "<td style='width:14%' valign='top'>"
+			for(var/A in get_region_accesses(i))
+				if(A in conf_access)
+					accesses += "<a href='?src=\ref[src];access=[A]'><font color=\"red\">[replacetext(get_access_desc(A), " ", "&nbsp")]</font></a> "
+				else
+					accesses += "<a href='?src=\ref[src];access=[A]'>[replacetext(get_access_desc(A), " ", "&nbsp")]</a> "
+				accesses += "<br>"
+			accesses += "</td>"
+		accesses += "</tr></table>"
+		t1 += "<tt>[accesses]</tt>"
+
+	t1 += text("<p><a href='?src=\ref[];close=1'>Close</a></p>\n", src)
+
+	var/datum/browser/popup = new(usr, "airlock_electronics", "Access Control", 900, 500)
+	popup.set_content(t1)
+	popup.set_title_image(usr.browse_rsc_icon(src.icon, src.icon_state))
+	popup.open()
+	onclose(usr, "airlock")
+
+/obj/item/weapon/rcd/Topic(href, href_list)
+	..()
+	if (usr.stat || usr.restrained() || !ishuman(usr))
+		return
+	if (href_list["close"])
+		usr << browse(null, "window=airlock")
+		return
+
+	if (href_list["login"])
+		var/obj/item/I = usr.get_active_hand()
+		if (istype(I, /obj/item/device/pda))
+			var/obj/item/device/pda/pda = I
+			I = pda.id
+		if (I && src.check_access(I))
+			src.locked = 0
+			src.last_configurator = I:registered_name
+
+	if (locked)
+		return
+
+	if (href_list["logout"])
+		locked = 1
+
+	if (href_list["access"])
+		toggle_access(href_list["access"])
+
+	change_airlock_access()
+
+/obj/item/weapon/rcd/proc/toggle_access(var/acc)
+	if (acc == "all")
+		conf_access = null
+	else if(acc == "one")
+		use_one_access = !use_one_access
+	else
+		var/req = text2num(acc)
+
+		if (conf_access == null)
+			conf_access = list()
+
+		if (!(req in conf_access))
+			conf_access += req
+		else
+			conf_access -= req
+			if (!conf_access.len)
+				conf_access = null
+
 /obj/item/weapon/rcd/verb/change_airlock_setting()
 	set name = "Change Airlock Setting"
 	set category = "Object"
@@ -216,12 +324,28 @@ RCD
 							break
 
 					if(door_check)
+						if (!conf_access)
+							user << "<span class='warning'>Configure access first!</span>"
+							return 0
 						user << "<span class='notice'>You start building airlock...</span>"
 						playsound(src.loc, 'sound/machines/click.ogg', 50, 1)
 						if(do_after(user, 50))
 							if(!useResource(10, user)) return 0
 							activate()
 							var/obj/machinery/door/airlock/T = new airlock_type( A )
+
+							T.electronics = new/obj/item/weapon/airlock_electronics( src.loc )
+
+							T.electronics.conf_access = conf_access.Copy()
+							T.electronics.use_one_access = use_one_access
+							T.electronics.last_configurator = last_configurator
+							T.electronics.locked = locked
+
+							if(T.electronics.use_one_access)
+								T.req_one_access = T.electronics.conf_access
+							else
+								T.req_access = T.electronics.conf_access
+
 							if(!T.checkForMultipleDoors())
 								qdel(T)
 								useResource(-10, user)
