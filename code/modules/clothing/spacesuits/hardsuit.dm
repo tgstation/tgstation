@@ -133,7 +133,7 @@
 		name = initial(name)
 		desc = initial(desc)
 		set_light(brightness_on)
-		flags |= HEADCOVERSEYES | HEADCOVERSMOUTH | STOPSPRESSUREDMAGE | THICKMATERIAL
+		flags |= HEADCOVERSEYES | HEADCOVERSMOUTH | STOPSPRESSUREDMAGE
 		flags_inv |= HIDEMASK|HIDEEYES|HIDEFACE
 		cold_protection |= HEAD
 	else
@@ -141,7 +141,7 @@
 		name += " (combat)"
 		desc = alt_desc
 		set_light(0)
-		flags &= ~(HEADCOVERSEYES| HEADCOVERSMOUTH | STOPSPRESSUREDMAGE | THICKMATERIAL)
+		flags &= ~(HEADCOVERSEYES| HEADCOVERSMOUTH | STOPSPRESSUREDMAGE)
 		flags_inv &= ~(HIDEMASK|HIDEEYES|HIDEFACE)
 		cold_protection &= ~HEAD
 	update_icon()

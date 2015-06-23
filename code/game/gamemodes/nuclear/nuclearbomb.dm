@@ -134,7 +134,7 @@ var/bomb_set
 					if(!src.safety)
 						bomb_set = 1//There can still be issues with this reseting when there are multiple bombs. Not a big deal tho for Nuke/N
 						var/current_level = get_security_level()
-+						previous_level = "[current_level == "delta" ? "red" : current_level ]" //If a nuke is armed during Delta, it will stand down to Red Alert when disarmed.
+						previous_level = "[current_level == "delta" ? "red" : current_level ]" //If a nuke is armed during Delta, it will stand down to Red Alert when disarmed.
 						set_security_level("delta")
 					else
 						bomb_set = 0
