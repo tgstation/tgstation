@@ -116,6 +116,10 @@ Pipelines + Other Objects -> Pipe network
 
 		playsound(src.loc, 'sound/items/Ratchet.ogg', 50, 1)
 		user << "<span class='notice'>You begin to unfasten \the [src]...</span>"
+		if (internal_pressure > 2*ONE_ATMOSPHERE)
+			user << "<span class='warning'>As you begin unwrenching \the [src] a gush of air blows in your face... maybe you should reconsider?</span>"
+			unsafe_wrenching = TRUE //Oh dear oh dear
+
 		if (do_after(user, 40, target = src) && !gc_destroyed)
 			user.visible_message( \
 				"[user] unfastens \the [src].", \
