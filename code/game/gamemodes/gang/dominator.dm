@@ -6,8 +6,8 @@
 	density = 1
 	anchored = 1.0
 	layer = 3.6
-	var/maxhealth = 300
-	var/health = 300
+	var/maxhealth = 200
+	var/health = 200
 	var/gang
 	var/operating = 0
 
@@ -40,6 +40,10 @@
 		user << "<span class='notice'>System on standby.</span>"
 	user << "<span class='danger'>System Integrity: [round((health/maxhealth)*100,1)]%</span>"
 
+/obj/machinery/dominator/process()
+	var/datum/game_mode/gang/mode = ticker.mode
+	if(((gang == "A") && mode.A_timer) || ((gang == "B") && mode.B_timer))
+		playsound(loc, 'sound/items/timer.ogg', 30, 0)
 
 /obj/machinery/dominator/proc/healthcheck(var/damage)
 	var/iconname = "dominator"
@@ -89,21 +93,12 @@
 			if(get_security_level() == "delta")
 				set_security_level("red")
 
-			for(var/obj/item/weapon/pinpointer/pointer in world)
-				pointer.scandisk() //Reset the pinpointer
-
-		else if(isnum(mode.A_timer) || isnum(mode.B_timer))
-			for(var/obj/machinery/dominator/dom in world)
-				if(dom.operating)
-					for(var/obj/item/weapon/pinpointer/pointer in world)
-						pointer.the_disk = dom //The pinpointer now tracks the dominator's location
-					break
-
 		ticker.mode.message_gangtools(((gang=="A") ? ticker.mode.A_tools : ticker.mode.B_tools),"Hostile takeover cancelled: Dominator is no longer operational.",1,1)
 
 	SetLuminosity(0)
 	icon_state = "dominator-broken"
 	operating = -1
+	SSmachine.processing -= src
 
 /obj/machinery/dominator/Destroy()
 	if(operating != -1)
@@ -182,6 +177,7 @@
 		healthcheck(0)
 		operating = 1
 		ticker.mode.message_gangtools(((gang=="A") ? ticker.mode.A_tools : ticker.mode.B_tools),"Hostile takeover in progress: Estimated [time] seconds until victory.")
+		SSmachine.processing += src
 
 /obj/machinery/dominator/attack_alien(mob/living/user)
 	user.do_attack_animation(src)
