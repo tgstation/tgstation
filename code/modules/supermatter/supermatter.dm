@@ -384,9 +384,11 @@
 /obj/machinery/power/supermatter/proc/Consume(var/mob/living/user)
 	if(istype(user))
 		user.dust()
+		if(istype(user,/mob/living/simple_animal/mouse)) //>implying mice are going to follow the rules
+			return
 		power += 200
 	else
-		del user
+		qdel(user)
 
 	power += 200
 
