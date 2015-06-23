@@ -91,14 +91,7 @@ What are the archived variables for?
 	return 0
 
 /datum/gas_mixture/proc/sanitize_values()
-	if(toxins < 0) toxins = 0
-	if(nitrogen < 0) nitrogen = 0
-	if(temperature < 0) temperature = 0
-	if(oxygen < 0) oxygen = 0
-	if(carbon_dioxide < 0) carbon_dioxide = 0
-	if(trace_gases.len)
-		for(var/datum/gas/trace_gas in trace_gases)
-			if(trace_gas.moles < 0) trace_gas.moles = 0
+	temperature = max(0, temperature)
 	return
 
 /datum/gas_mixture/proc/return_temperature()
