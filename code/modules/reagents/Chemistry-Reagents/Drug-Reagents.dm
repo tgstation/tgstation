@@ -49,7 +49,7 @@ datum/reagent/drug/nicotine
 	description = "Slightly reduces stun times. If overdosed it will deal toxin and oxygen damage."
 	reagent_state = LIQUID
 	color = "#60A584" // rgb: 96, 165, 132
-	addiction_threshold = 30
+	addiction_threshold = 30 //What, no addiction_act defined?
 
 datum/reagent/drug/nicotine/on_mob_life(var/mob/living/M as mob)
 	var/smoke_message = pick("You feel relaxed.", "You feel calmed.", "You feel the money you wasted.", "You feel like a space cowboy.", "You feel rugged.")
@@ -249,7 +249,7 @@ datum/reagent/drug/crank/addiction_act_stage4(var/mob/living/M as mob)
 	M.adjustStaminaLoss(-5)
 	M.adjustBrainLoss(0.5)
 	M.adjustToxLoss(0.1)
-	M.hallucination += 10
+	M.hallucination += 2
 	if(M.canmove && !istype(M.loc, /atom/movable))
 		step(M, pick(cardinal))
 		step(M, pick(cardinal))
@@ -257,7 +257,7 @@ datum/reagent/drug/crank/addiction_act_stage4(var/mob/living/M as mob)
 	return
 
 /datum/reagent/drug/bath_salts/overdose_process(var/mob/living/M as mob)
-	M.hallucination += 10
+	M.hallucination += 2
 	if(M.canmove && !istype(M.loc, /atom/movable))
 		for(var/i = 0, i < 8, i++)
 			step(M, pick(cardinal))
@@ -353,7 +353,7 @@ datum/reagent/drug/hotline/on_mob_life(var/mob/living/M as mob)
 	if(prob(5))
 		M << "<span class='notice'>[high_message]</span>"
 	M.druggy = max(M.druggy, 15)
-	M.hallucination += 10
+	M.hallucination += 2
 	M.adjustBrainLoss(0.2*REM)
 	M.adjustBruteLoss(-0.2*REM)
 	M.adjustFireLoss(-0.2*REM)
@@ -367,7 +367,7 @@ datum/reagent/drug/hotline/overdose_process(var/mob/living/M as mob)
 	M.adjustToxLoss(2*REM)
 	M.adjustBruteLoss(2*REM)
 	M.druggy = max(M.druggy, 30)
-	M.hallucination += 30
+	M.hallucination += 3
 	if(prob(5))
 		M << pick("<span class = 'userdanger'>Your head feels like it's ripping apart!</span>","<span class = 'userdanger'>You wonder why the fuck did you decide to take [src.name].</span>","<span class = 'userdanger'>It hurts so bad!</span>","<span class = 'userdanger'>Please, end it now!</span>","<span class = 'userdanger'>Dear god please no it hurts!</span>")
 	..()
@@ -375,13 +375,13 @@ datum/reagent/drug/hotline/overdose_process(var/mob/living/M as mob)
 
 datum/reagent/drug/hotline/addiction_act_stage1(var/mob/living/M as mob)
 	M.adjustBrainLoss(rand(1,10))
-	M.hallucination += 30
+	M.hallucination += 10
 	M.druggy = max(M.druggy, 30)
 	..()
 	return
 datum/reagent/drug/hotline/addiction_act_stage2(var/mob/living/M as mob)
 	M.adjustBrainLoss(rand(1,20))
-	M.hallucination += 30
+	M.hallucination += 20
 	M.druggy = max(M.druggy, 30)
 	..()
 	return
