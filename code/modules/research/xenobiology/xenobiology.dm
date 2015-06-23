@@ -18,10 +18,10 @@
 /obj/item/slime_extract/attackby(obj/item/O as obj, mob/user as mob)
 	if(istype(O, /obj/item/weapon/slimesteroid2))
 		if(enhanced == 1)
-			user << "<span class='warning'> This extract has already been enhanced!</span>"
+			user << "<span class='warning'>This extract has already been enhanced!</span>"
 			return ..()
 		if(Uses == 0)
-			user << "<span class='warning'> You can't enhance a used extract!</span>"
+			user << "<span class='warning'>You can't enhance a used extract!</span>"
 			return ..()
 		user <<"<span class='notice'>You apply the enhancer. It now has triple the amount of uses.</span>"
 		Uses = 3
@@ -138,8 +138,8 @@
 
 	M.docile = 1
 	M.nutrition = 700
-	M <<"<span class='warning'> You absorb the potion and feel your intense desire to feed melt away.</span>"
-	user <<"<span class='notice'> You feed the slime the potion, removing it's hunger and calming it.</span>"
+	M <<"<span class='warning'>You absorb the potion and feel your intense desire to feed melt away.</span>"
+	user <<"<span class='notice'>You feed the slime the potion, removing it's hunger and calming it.</span>"
 	var/newname = copytext(sanitize(input(user, "Would you like to give the slime a name?", "Name your new pet", "pet slime") as null|text),1,MAX_NAME_LEN)
 
 	if (!newname)
@@ -220,16 +220,16 @@
 
 /obj/item/weapon/slimesteroid/attack(mob/living/simple_animal/slime/M as mob, mob/user as mob)
 	if(!isslime(M))//If target is not a slime.
-		user << "<span class='warning'> The steroid only works on baby slimes!</span>"
+		user << "<span class='warning'>The steroid only works on baby slimes!</span>"
 		return ..()
 	if(M.is_adult) //Can't tame adults
-		user << "<span class='warning'> Only baby slimes can use the steroid!</span>"
+		user << "<span class='warning'>Only baby slimes can use the steroid!</span>"
 		return..()
 	if(M.stat)
-		user << "<span class='warning'> The slime is dead!</span>"
+		user << "<span class='warning'>The slime is dead!</span>"
 		return..()
 	if(M.cores == 3)
-		user <<"<span class='warning'> The slime already has the maximum amount of extract!</span>"
+		user <<"<span class='warning'>The slime already has the maximum amount of extract!</span>"
 		return..()
 
 	user <<"<span class='notice'>You feed the slime the steroid. It now has triple the amount of extract.</span>"
@@ -252,10 +252,10 @@
 	/*afterattack(obj/target, mob/user , flag)
 		if(istype(target, /obj/item/slime_extract))
 			if(target.enhanced == 1)
-				user << "<span class='warning'> This extract has already been enhanced!</span>"
+				user << "<span class='warning'>This extract has already been enhanced!</span>"
 				return ..()
 			if(target.Uses == 0)
-				user << "<span class='warning'> You can't enhance a used extract!</span>"
+				user << "<span class='warning'>You can't enhance a used extract!</span>"
 				return ..()
 			user <<"You apply the enhancer. It now has triple the amount of uses."
 			target.Uses = 3
@@ -271,13 +271,13 @@
 
 /obj/item/weapon/slimestabilizer/attack(mob/living/simple_animal/slime/M as mob, mob/user as mob)
 	if(!isslime(M))
-		user << "<span class='warning'> The stabilizer only works on slimes!</span>"
+		user << "<span class='warning'>The stabilizer only works on slimes!</span>"
 		return ..()
 	if(M.stat)
-		user << "<span class='warning'> The slime is dead!</span>"
+		user << "<span class='warning'>The slime is dead!</span>"
 		return..()
 	if(M.mutation_chance == 0)
-		user <<"<span class='warning'> The slime already has no chance of mutating!</span>"
+		user <<"<span class='warning'>The slime already has no chance of mutating!</span>"
 		return..()
 
 	user <<"<span class='notice'>You feed the slime the stabilizer. It is now less likely to mutate.</span>"
@@ -292,16 +292,16 @@
 
 /obj/item/weapon/slimemutator/attack(mob/living/simple_animal/slime/M as mob, mob/user as mob)
 	if(!isslime(M))
-		user << "<span class='warning'> The mutator only works on slimes!</span>"
+		user << "<span class='warning'>The mutator only works on slimes!</span>"
 		return ..()
 	if(M.stat)
-		user << "<span class='warning'> The slime is dead!</span>"
+		user << "<span class='warning'>The slime is dead!</span>"
 		return..()
 	if(M.mutator_used)
-		user << "<span class='warning'> This slime has already consumed a mutator, any more would be far too unstable!</span>"
+		user << "<span class='warning'>This slime has already consumed a mutator, any more would be far too unstable!</span>"
 		return..()
 	if(M.mutation_chance == 100)
-		user <<"<span class='warning'> The slime is already guaranteed to mutate!</span>"
+		user <<"<span class='warning'>The slime is already guaranteed to mutate!</span>"
 		return..()
 
 	user <<"<span class='notice'>You feed the slime the mutator. It is now more likely to mutate.</span>"
@@ -443,6 +443,7 @@
 
 
 /obj/effect/timestop/proc/timestop()
+	playsound(get_turf(src), 'sound/magic/TIMEPARADOX2.ogg', 100, 1, -1)
 	while(loc)
 		if(duration)
 			for(var/mob/living/M in orange (freezerange, src.loc))
@@ -471,3 +472,50 @@
 			qdel(src)
 			return
 		sleep(1)
+
+
+
+/obj/item/stack/tile/bluespace
+	name = "bluespace floor tile"
+	singular_name = "floor tile"
+	desc = "Through a series of micro-teleports these tiles let people move at incredible speeds"
+	icon_state = "tile-bluespace"
+	w_class = 3.0
+	force = 6.0
+	m_amt = 937.5
+	throwforce = 10.0
+	throw_speed = 3
+	throw_range = 7
+	flags = CONDUCT
+	max_amount = 60
+	turf_type = /turf/simulated/floor/bluespace
+
+
+/turf/simulated/floor/bluespace
+	slowdown = -1
+	icon_state = "bluespace"
+	desc = "Through a series of micro-teleports these tiles let people move at incredible speeds"
+	floor_tile = /obj/item/stack/tile/bluespace
+
+
+/obj/item/stack/tile/sepia
+	name = "sepia floor tile"
+	singular_name = "floor tile"
+	desc = "Time seems to flow very slowly around these tiles"
+	icon_state = "tile-sepia"
+	w_class = 3.0
+	force = 6.0
+	m_amt = 937.5
+	throwforce = 10.0
+	throw_speed = 3
+	throw_range = 7
+	flags = CONDUCT
+	max_amount = 60
+	turf_type = /turf/simulated/floor/sepia
+
+
+/turf/simulated/floor/sepia
+	slowdown = 2
+	icon_state = "sepia"
+	desc = "Time seems to flow very slowly around these tiles"
+	floor_tile = /obj/item/stack/tile/sepia

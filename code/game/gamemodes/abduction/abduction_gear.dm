@@ -22,15 +22,6 @@
 	var/stealth_armor = list(melee = 15, bullet = 15, laser = 15, energy = 15, bomb = 15, bio = 15, rad = 15)
 	var/combat_armor = list(melee = 50, bullet = 50, laser = 50, energy = 50, bomb = 50, bio = 50, rad = 50)
 
-	var/obj/machinery/camera/portable/vest_cam = null
-
-
-/obj/item/clothing/suit/armor/abductor/vest/New()
-	..()
-	vest_cam = new /obj/machinery/camera/portable(src)
-	vest_cam.c_tag = "Agent Vest Cam"
-	vest_cam.network = list("Abductor")
-
 /obj/item/clothing/suit/armor/abductor/vest/proc/flip_mode()
 	switch(mode)
 		if(VEST_STEALTH)

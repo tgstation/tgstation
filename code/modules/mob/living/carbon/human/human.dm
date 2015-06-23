@@ -166,7 +166,7 @@
 
 /mob/living/carbon/human/blob_act()
 	if(stat == DEAD)	return
-	show_message("<span class='userdanger'> The blob attacks you!</span>")
+	show_message("<span class='userdanger'>The blob attacks you!</span>")
 	var/dam_zone = pick("chest", "l_hand", "r_hand", "l_leg", "r_leg")
 	var/obj/item/organ/limb/affecting = get_organ(ran_zone(dam_zone))
 	apply_damage(5, BRUTE, affecting, run_armor_check(affecting, "melee"))
@@ -291,6 +291,8 @@
 				usr.put_in_hands(I)
 				usr.emote("scream")
 				usr.visible_message("[usr] successfully rips [I] out of their [L.getDisplayName()]!","<span class='notice'>You successfully remove [I] from your [L.getDisplayName()].</span>")
+				if(!has_embedded_objects())
+					clear_alert("embeddedobject")
 			return
 
 		if(href_list["item"])

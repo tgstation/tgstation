@@ -277,12 +277,12 @@
 	dat += "<b>Metal amount:</b> [src.m_amount] / [max_m_amount] cm<sup>3</sup><br>"
 	dat += "<b>Glass amount:</b> [src.g_amount] / [max_g_amount] cm<sup>3</sup>"
 
-	dat += "<form name='search' action='?src=\ref[src]'> \
-	<input type='hidden' name='src' value='\ref[src]'> \
-	<input type='hidden' name='search' value='to_search'> \
-	<input type='hidden' name='menu' value='[AUTOLATHE_SEARCH_MENU]'> \
-	<input type='text' name='to_search'> \
-	<input type='submit' value='Search'> \
+	dat += "<form name='search' action='?src=\ref[src]'>\
+	<input type='hidden' name='src' value='\ref[src]'>\
+	<input type='hidden' name='search' value='to_search'>\
+	<input type='hidden' name='menu' value='[AUTOLATHE_SEARCH_MENU]'>\
+	<input type='text' name='to_search'>\
+	<input type='submit' value='Search'>\
 	</form><hr>"
 
 	var/line_length = 1

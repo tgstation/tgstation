@@ -349,8 +349,9 @@
 
 	for(var/entry in expandables)
 		if(istype(W,entry))
+			if(!user.unEquip(W))
+				return
 			bugtype = expandables[entry]
-			user.drop_item()
 			W.loc = src
 			expansion = W
 			user << "<span class='notice'>You add [W] to [src].</span>"

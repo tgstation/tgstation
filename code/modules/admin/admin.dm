@@ -39,7 +39,7 @@ var/global/floorIsLava = 0
 	body += "<a href='?_src_=holder;traitor=\ref[M]'>TP</a> - "
 	body += "<a href='?priv_msg=[M.ckey]'>PM</a> - "
 	body += "<a href='?_src_=holder;subtlemessage=\ref[M]'>SM</a> - "
-	body += "<a href='?_src_=holder;adminplayerobservejump=\ref[M]'>JMP</a>\] </b><br>"
+	body += "<a href='?_src_=holder;adminplayerobservefollow=\ref[M]'>FLW</a>\] </b><br>"
 
 	body += "<b>Mob type</b> = [M.type]<br><br>"
 
@@ -47,7 +47,8 @@ var/global/floorIsLava = 0
 	body += "<A href='?_src_=holder;newban=\ref[M]'>Ban</A> | "
 	body += "<A href='?_src_=holder;jobban2=\ref[M]'>Jobban</A> | "
 	body += "<A href='?_src_=holder;appearanceban=\ref[M]'>Identity Ban</A> | "
-	body += "<A href='?_src_=holder;notes=show;ckey=[M.ckey]'>Notes</A> "
+	body += "<A href='?_src_=holder;notes=show;ckey=[M.ckey]'>Notes</A> | "
+	body += "<A href='?_src_=holder;watchlist=\ref[M]'>Watchlist Flag</A> "
 
 	if(M.client)
 		body += "| <A href='?_src_=holder;sendtoprison=\ref[M]'>Prison</A> | "
@@ -322,9 +323,9 @@ var/global/floorIsLava = 0
 			dat+="<A href='?src=\ref[src];ac_set_wanted_name=1'>Criminal Name</A>: [src.admincaster_wanted_message.criminal] <BR>"
 			dat+="<A href='?src=\ref[src];ac_set_wanted_desc=1'>Description</A>: [src.admincaster_wanted_message.body] <BR>"
 			if(wanted_already)
-				dat+="<B>Wanted Issue created by:</B><FONT COLOR='green'> [news_network.wanted_issue.scannedUser]</FONT><BR>"
+				dat+="<B>Wanted Issue created by:</B><FONT COLOR='green'>[news_network.wanted_issue.scannedUser]</FONT><BR>"
 			else
-				dat+="<B>Wanted Issue will be created under prosecutor:</B><FONT COLOR='green'> [src.admincaster_signature]</FONT><BR>"
+				dat+="<B>Wanted Issue will be created under prosecutor:</B><FONT COLOR='green'>[src.admincaster_signature]</FONT><BR>"
 			dat+="<BR><A href='?src=\ref[src];ac_submit_wanted=[end_param]'>[(wanted_already) ? ("Edit Issue") : ("Submit")]</A>"
 			if(wanted_already)
 				dat+="<BR><A href='?src=\ref[src];ac_cancel_wanted=1'>Take down Issue</A>"
@@ -398,91 +399,6 @@ var/global/floorIsLava = 0
 
 	usr << browse(dat, "window=admin2;size=210x180")
 	return
-
-/datum/admins/proc/Secrets()
-	if(!check_rights(0))	return
-
-	var/dat = "<B>The first rule of adminbuse is: you don't talk about the adminbuse.</B><HR>"
-
-	dat +={"
-			<B>General Secrets</B><BR>
-			<BR>
-			<A href='?src=\ref[src];secretsgeneral=list_job_debug'>Show Job Debug</A><BR>
-			<A href='?src=\ref[src];secretsgeneral=spawn_objects'>Admin Log</A><BR>
-			<A href='?src=\ref[src];secretsgeneral=show_admins'>Show Admin List</A><BR>
-			<BR>
-			"}
-
-	if(check_rights(R_ADMIN,0))
-		dat += {"
-			<B>Admin Secrets</B><BR>
-			<BR>
-			<A href='?src=\ref[src];secretsadmin=clear_virus'>Cure all diseases currently in existence</A><BR>
-			<A href='?src=\ref[src];secretsadmin=list_bombers'>Bombing List</A><BR>
-			<A href='?src=\ref[src];secretsadmin=check_antagonist'>Show current traitors and objectives</A><BR>
-			<A href='?src=\ref[src];secretsadmin=list_signalers'>Show last [length(lastsignalers)] signalers</A><BR>
-			<A href='?src=\ref[src];secretsadmin=list_lawchanges'>Show last [length(lawchanges)] law changes</A><BR>
-			<A href='?src=\ref[src];secretsadmin=showailaws'>Show AI Laws</A><BR>
-			<A href='?src=\ref[src];secretsadmin=showgm'>Show Game Mode</A><BR>
-			<A href='?src=\ref[src];secretsadmin=manifest'>Show Crew Manifest</A><BR>
-			<A href='?src=\ref[src];secretsadmin=DNA'>List DNA (Blood)</A><BR>
-			<A href='?src=\ref[src];secretsadmin=fingerprints'>List Fingerprints</A><BR><BR>
-			<BR>
-			<B>Shuttles</B><BR>
-			<BR>
-			<A href='?src=\ref[src];secretsadmin=moveferry'>Move Ferry</A><BR>
-			<A href='?src=\ref[src];secretsadmin=moveminingshuttle'>Move Mining Shuttle</A><BR>
-			<A href='?src=\ref[src];secretsadmin=movelaborshuttle'>Move Labor Shuttle</A><BR>
-			<BR>
-			"}
-
-	if(check_rights(R_FUN,0))
-		dat += {"
-			<B>Fun Secrets</B><BR>
-			<BR>
-			<A href='?src=\ref[src];secretsfun=tdomereset'>Reset Thunderdome to default state</A><BR>
-			<A href='?src=\ref[src];secretsfun=virus'>Trigger a Virus Outbreak</A><BR>
-			<A href='?src=\ref[src];secretsfun=monkey'>Turn all humans into monkeys</A><BR>
-			<A href='?src=\ref[src];secretsfun=allspecies'>Change the species of all humans</A><BR>
-			<A href='?src=\ref[src];secretsfun=power'>Make all areas powered</A><BR>
-			<A href='?src=\ref[src];secretsfun=unpower'>Make all areas unpowered</A><BR>
-			<A href='?src=\ref[src];secretsfun=quickpower'>Power all SMES</A><BR>
-			<A href='?src=\ref[src];secretsfun=tripleAI'>Triple AI mode (needs to be used in the lobby)</A><BR>
-			<A href='?src=\ref[src];secretsfun=traitor_all'>Everyone is the traitor</A><BR>
-			<A href='?src=\ref[src];secretsfun=guns'>Summon Guns</A><BR>
-			<A href='?src=\ref[src];secretsfun=magic'>Summon Magic</A><BR>
-			<A href='?src=\ref[src];secretsfun=events'>Summon Events (Toggle)</A><BR>
-			<A href='?src=\ref[src];secretsfun=onlyone'>There can only be one!</A><BR>
-			<A href='?src=\ref[src];secretsfun=retardify'>Make all players retarded</A><BR>
-			<A href='?src=\ref[src];secretsfun=eagles'>Egalitarian Station Mode</A><BR>
-			<A href='?src=\ref[src];secretsfun=blackout'>Break all lights</A><BR>
-			<A href='?src=\ref[src];secretsfun=whiteout'>Fix all lights</A><BR>
-			<A href='?src=\ref[src];secretsfun=floorlava'>The floor is lava! (DANGEROUS: extremely lame)</A><BR>
-			<BR>
-			"}
-
-/* DEATH SQUADS
-<A href='?src=\ref[src];secretsfun=striketeam'>Send in a strike team</A><BR>
-*/
-	if(check_rights(R_SERVER,0))
-		dat += "<A href='?src=\ref[src];secretsfun=togglebombcap'>Toggle bomb cap</A><BR>"
-
-	dat += "<BR>"
-
-	if(check_rights(R_DEBUG,0))
-		dat += {"
-			<B>Security Level Elevated</B><BR>
-			<BR>
-			<A href='?src=\ref[src];secretscoder=maint_access_engiebrig'>Change all maintenance doors to engie/brig access only</A><BR>
-			<A href='?src=\ref[src];secretscoder=maint_access_brig'>Change all maintenance doors to brig access only</A><BR>
-			<A href='?src=\ref[src];secretscoder=infinite_sec'>Remove cap on security officers</A><BR>
-			<BR>
-			"}
-
-	usr << browse(dat, "window=secrets")
-	return
-
-
 
 /////////////////////////////////////////////////////////////////////////////////////////////////admins2.dm merge
 //i.e. buttons/verbs

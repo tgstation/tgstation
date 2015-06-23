@@ -37,7 +37,7 @@
 		CB.update_icon()
 		num_unloaded++
 	if (num_unloaded)
-		user << "<span class = 'notice'>You unload [num_unloaded] shell\s from [src].</span>"
+		user << "<span class='notice'>You unload [num_unloaded] shell\s from [src].</span>"
 	else
 		user << "<span class='warning'>[src] is empty!</span>"
 
@@ -79,7 +79,7 @@
 			playsound(user, fire_sound, 50, 1)
 			user << "<span class='userdanger'>[src] blows up in your face!</span>"
 			user.take_organ_damage(0,20)
-			user.drop_item()
+			user.unEquip(src)
 			qdel(src)
 			return 0
 	..()
@@ -170,7 +170,7 @@
 			CB.update_icon()
 			num_unloaded++
 		if (num_unloaded)
-			user << "<span class = 'notice'>You unload [num_unloaded] shell\s from [src].</span>"
+			user << "<span class='notice'>You unload [num_unloaded] shell\s from [src].</span>"
 		else
 			user << "<span class='notice'>[src] is empty.</span>"
 

@@ -183,11 +183,15 @@
 			take_damage(round(Proj.damage / 2))
 	..()
 
+/obj/machinery/door/window/temperature_expose(datum/gas_mixture/air, exposed_temperature, exposed_volume)
+	if(exposed_temperature > T0C + 800)
+		take_damage(round(exposed_volume / 200))
+	..()
+
 //When an object is thrown at the window
 /obj/machinery/door/window/hitby(AM as mob|obj)
 
 	..()
-	visible_message("<span class='danger'>\The [src] was hit by \the [AM].</span>")
 	var/tforce = 0
 	if(ismob(AM))
 		tforce = 40

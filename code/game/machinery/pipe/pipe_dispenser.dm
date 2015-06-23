@@ -72,7 +72,8 @@
 	add_fingerprint(user)
 	if (istype(W, /obj/item/pipe) || istype(W, /obj/item/pipe_meter))
 		usr << "<span class='notice'>You put [W] back into [src].</span>"
-		user.drop_item()
+		if(!user.drop_item())
+			return
 		qdel(W)
 		return
 	else if (istype(W, /obj/item/weapon/wrench))

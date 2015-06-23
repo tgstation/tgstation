@@ -3,7 +3,7 @@
 // Mappers: you can use "Generate Instances from Icon-states"
 //  to get the different pieces.
 /obj/structure/transit_tube
-	icon = 'icons/obj/pipes/transit_tube.dmi'
+	icon = 'icons/obj/atmospherics/pipes/transit_tube.dmi'
 	icon_state = "E-W"
 	density = 1
 	layer = 3.1

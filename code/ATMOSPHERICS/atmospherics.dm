@@ -103,16 +103,17 @@ Pipelines + Other Objects -> Pipe network
 
 /obj/machinery/atmospherics/attackby(var/obj/item/weapon/W as obj, var/mob/user as mob, params)
 	if(can_unwrench && istype(W, /obj/item/weapon/wrench))
-		var/turf/T = src.loc
+		var/turf/T = get_turf(src)
 		if (level==1 && isturf(T) && T.intact)
 			user << "<span class='warning'>You must remove the plating first!</span>"
 			return 1
 		var/datum/gas_mixture/int_air = return_air()
 		var/datum/gas_mixture/env_air = loc.return_air()
 		add_fingerprint(user)
-		if ((int_air.return_pressure()-env_air.return_pressure()) > 2*ONE_ATMOSPHERE)
-			user << "<span class='warning'>You cannot unwrench this [src], it is too exerted due to internal pressure!</span>"
-			return 1
+
+		var/unsafe_wrenching = FALSE
+		var/internal_pressure = int_air.return_pressure()-env_air.return_pressure()
+
 		playsound(src.loc, 'sound/items/Ratchet.ogg', 50, 1)
 		user << "<span class='notice'>You begin to unfasten \the [src]...</span>"
 		if (do_after(user, 40, target = src) && !gc_destroyed)
@@ -121,9 +122,32 @@ Pipelines + Other Objects -> Pipe network
 				"<span class='notice'>You unfasten \the [src].</span>", \
 				"<span class='italics'>You hear ratchet.</span>")
 			investigate_log("was <span class='warning'>REMOVED</span> by [key_name(usr)]", "atmos")
+
+			//You unwrenched a pipe full of pressure? let's splat you into the wall silly.
+			if(unsafe_wrenching)
+				unsafe_pressure_release(user,internal_pressure)
 			Deconstruct()
+
 	else
 		return ..()
+
+
+//Called when an atmospherics object is unwrenched while having a large pressure difference
+//with it's locs air contents.
+/obj/machinery/atmospherics/proc/unsafe_pressure_release(var/mob/user,var/pressures)
+	if(!user)
+		return
+
+	if(!pressures)
+		var/datum/gas_mixture/int_air = return_air()
+		var/datum/gas_mixture/env_air = loc.return_air()
+		pressures = int_air.return_pressure()-env_air.return_pressure()
+
+	var/fuck_you_dir = get_dir(src,user)
+	var/turf/general_direction = get_edge_target_turf(user,fuck_you_dir)
+	user.visible_message("<span class='danger'>[user] is sent flying by pressure!</span>","<span class='userdanger'>The pressure sends you flying!</span>")
+	//Values based on 2*ONE_ATMOS (the unsafe pressure), resulting in 20 range and 4 speed
+	user.throw_at(general_direction,pressures/10,pressures/50)
 
 /obj/machinery/atmospherics/Deconstruct()
 	if(can_unwrench)

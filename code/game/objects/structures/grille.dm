@@ -251,7 +251,6 @@
 
 /obj/structure/grille/hitby(AM as mob|obj)
 	..()
-	visible_message("<span class='danger'>[src] was hit by [AM].</span>")
 	var/tforce = 0
 	if(ismob(AM))
 		tforce = 5
@@ -261,3 +260,6 @@
 	playsound(loc, 'sound/effects/grillehit.ogg', 80, 1)
 	health = max(0, health - tforce)
 	healthcheck()
+
+/obj/structure/grille/storage_contents_dump_act(obj/item/weapon/storage/src_object, mob/user)
+	return 0

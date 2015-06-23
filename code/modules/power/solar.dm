@@ -253,8 +253,9 @@
 
 	if(!tracker)
 		if(istype(W, /obj/item/weapon/tracker_electronics))
+			if(!user.drop_item())
+				return
 			tracker = 1
-			user.drop_item()
 			qdel(W)
 			user.visible_message("[user] inserts the electronics into the solar assembly.", "<span class='notice'>You insert the electronics into the solar assembly.</span>")
 			return 1
@@ -369,8 +370,10 @@
 	if(!..())
 		ui_interact(user)
 
-/obj/machinery/power/solar_control/ui_interact(mob/user, ui_key = "main")
+/obj/machinery/power/solar_control/ui_interact(mob/user, ui_key = "main", var/datum/nanoui/ui = null)
+	ui = SSnano.push_open_or_new_ui(user, src, ui_key, ui, "solar_control.tmpl", name, 490, 420, 1)
 
+/obj/machinery/power/solar_control/get_ui_data()
 	var/data = list()
 
 	data["generated"] = round(lastgen)
@@ -383,16 +386,7 @@
 
 	data["connected_panels"] = connected_panels.len
 	data["connected_tracker"] = (connected_tracker ? 1 : 0)
-
-	var/datum/nanoui/ui = SSnano.get_open_ui(user, src, ui_key)
-	if (!ui)
-		ui = new(user, src, ui_key, "solar_control.tmpl", name, 490, 420)
-		ui.set_initial_data(data)
-		ui.open()
-		ui.set_auto_update(1)
-	else
-		ui.push_data(data)
-		return
+	return data
 
 /obj/machinery/power/solar_control/attackby(I as obj, user as mob, params)
 	if(istype(I, /obj/item/weapon/screwdriver))

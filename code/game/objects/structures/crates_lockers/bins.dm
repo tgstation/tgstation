@@ -84,8 +84,7 @@
 /obj/structure/closet/crate/bin/place(var/mob/user, var/obj/item/I)
 	if(contents.len >= storage_capacity)
 		return 1
-	if(!opened)
-		user.drop_item()
+	if(!opened && user.drop_item())
 		insert(I, 0, 1)
 		return 1
 	return 0

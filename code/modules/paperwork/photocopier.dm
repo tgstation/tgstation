@@ -223,7 +223,8 @@
 /obj/machinery/photocopier/attackby(obj/item/O, mob/user, params)
 	if(istype(O, /obj/item/weapon/paper))
 		if(copier_empty())
-			user.drop_item()
+			if(!user.drop_item())
+				return
 			copy = O
 			O.loc = src
 			user << "<span class='notice'>You insert [O] into [src].</span>"
@@ -234,7 +235,8 @@
 
 	else if(istype(O, /obj/item/weapon/photo))
 		if(copier_empty())
-			user.drop_item()
+			if(!user.drop_item())
+				return
 			photocopy = O
 			O.loc = src
 			user << "<span class='notice'>You insert [O] into [src].</span>"
@@ -245,7 +247,8 @@
 
 	else if(istype(O, /obj/item/device/toner))
 		if(toner <= 0)
-			user.drop_item()
+			if(!user.drop_item())
+				return
 			qdel(O)
 			toner = 40
 			user << "<span class='notice'>You insert [O] into [src].</span>"

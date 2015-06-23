@@ -18,6 +18,7 @@
 
 /obj/structure/closet/secure_closet/quartermaster/New()
 	..()
+	new /obj/item/clothing/cloak/qm(src)
 	new /obj/item/clothing/suit/hooded/wintercoat/cargo(src)
 	new /obj/item/clothing/under/rank/cargo(src)
 	new /obj/item/clothing/shoes/sneakers/brown(src)

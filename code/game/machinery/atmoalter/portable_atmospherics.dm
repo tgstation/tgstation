@@ -67,8 +67,10 @@
 	if ((istype(W, /obj/item/weapon/tank) && !( src.destroyed )))
 		if (src.holding)
 			return
+		if(!user.drop_item())
+			return
+
 		var/obj/item/weapon/tank/T = W
-		user.drop_item()
 		T.loc = src
 		src.holding = T
 		update_icon()

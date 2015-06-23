@@ -109,7 +109,6 @@
 
 /obj/structure/alien/resin/hitby(atom/movable/AM)
 	..()
-	visible_message("<span class='danger'>[src] was hit by [AM].</span>")
 	var/tforce = 0
 	if(!isobj(AM))
 		tforce = 10

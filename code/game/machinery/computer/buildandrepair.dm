@@ -83,6 +83,10 @@
 /obj/item/weapon/circuitboard/card/centcom
 	name = "circuit board (Centcom ID Console)"
 	build_path = /obj/machinery/computer/card/centcom
+/obj/item/weapon/circuitboard/card/minor
+	name = "circuit board (Department Management Console)"
+	build_path = /obj/machinery/computer/card/minor
+	var/target_dept = 1
 //obj/item/weapon/circuitboard/shield
 //	name = "Circuit board (Shield Control)"
 //	build_path = /obj/machinery/computer/stationshield
@@ -244,6 +248,13 @@
 	build_path = /obj/machinery/computer/libraryconsole
 	origin_tech = "programming=1"
 
+/obj/item/weapon/circuitboard/card/minor/attackby(obj/item/I as obj, mob/user as mob, params)
+	if(istype(I,/obj/item/device/multitool))
+		var/list/dept_list = list("general","security","medical","science","engineering")
+		var/choice = input("Currently set to [dept_list[target_dept]] personnel database. Changing to:","Multitool-Circuitboard interface") as null|anything in dept_list
+		if(choice)
+			target_dept = dept_list.Find(choice)
+	return
 
 /obj/item/weapon/circuitboard/supplycomp/attackby(obj/item/I as obj, mob/user as mob, params)
 	if(istype(I,/obj/item/device/multitool))
@@ -336,11 +347,12 @@
 			if(istype(P, /obj/item/weapon/circuitboard) && !circuit)
 				var/obj/item/weapon/circuitboard/B = P
 				if(B.board_type == "computer")
+					if(!user.drop_item())
+						return
 					playsound(src.loc, 'sound/items/Deconstruct.ogg', 50, 1)
 					user << "<span class='notice'>You place the circuit board inside the frame.</span>"
 					icon_state = "1"
 					circuit = P
-					user.drop_item()
 					circuit.add_fingerprint(user)
 					P.loc = null
 				else

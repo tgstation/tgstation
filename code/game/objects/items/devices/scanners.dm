@@ -80,10 +80,10 @@ MASS SPECTROMETER
 
 /obj/item/device/healthanalyzer/attack_self(mob/user)
 	if(!scanchems)
-		user << "<span class = 'notice'>You switch the health analyzer to scan chemical contents.</span>"
+		user << "<span class='notice'>You switch the health analyzer to scan chemical contents.</span>"
 		scanchems = 1
 	else
-		user << "<span class = 'notice'>You switch the health analyzer to check physical health.</span>"
+		user << "<span class='notice'>You switch the health analyzer to check physical health.</span>"
 		scanchems = 0
 	return
 /obj/item/device/healthanalyzer/attack(mob/living/M as mob, mob/living/carbon/human/user as mob)
@@ -191,6 +191,13 @@ MASS SPECTROMETER
 			else
 				user << "<span class='info'>Blood level [blood_percent] %, [blood_volume] cl, type: [blood_type]</span>"
 
+		var/implant_detect
+		for(var/obj/item/cybernetic_implant/CI in H.internal_organs)
+			implant_detect += "[H.name] is modified with a [CI.name].<br>"
+		if(implant_detect)
+			user.show_message("<span class='notice'>Detected cybernetic modifications:</span>")
+			user.show_message("<span class='notice'>[implant_detect]</span>")
+
 /proc/chemscan(var/mob/living/user, var/mob/living/M)
 	if(ishuman(M))
 		var/mob/living/carbon/human/H = M
@@ -198,9 +205,9 @@ MASS SPECTROMETER
 			if(H.reagents.reagent_list.len)
 				user << "<span class='notice'>Subject contains the following reagents:</span>"
 				for(var/datum/reagent/R in H.reagents.reagent_list)
-					user << "<span class='notice'>[R.volume] units of [R.name][R.overdosed == 1 ? "</span> - <span class = 'boldannounce'>OVERDOSING</span>" : ".</span>"]"
+					user << "<span class='notice'>[R.volume] units of [R.name][R.overdosed == 1 ? "</span> - <span class='boldannounce'>OVERDOSING</span>" : ".</span>"]"
 			else
-				user << "<span class = 'notice'>Subject contains no reagents.</span>"
+				user << "<span class='notice'>Subject contains no reagents.</span>"
 			if(H.reagents.addiction_list.len)
 				user << "<span class='boldannounce'>Subject is addicted to the following reagents:</span>"
 				for(var/datum/reagent/R in H.reagents.addiction_list)

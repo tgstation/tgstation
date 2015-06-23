@@ -188,7 +188,8 @@
 	if(istype(W,/obj/item/toy/crayon) ||istype(W,/obj/item/weapon/stamp))
 		if( state in list(	1, 3, 6 ) )
 			if(!crayon)
-				user.drop_item()
+				if(!user.drop_item())
+					return
 				crayon = W
 				crayon.loc = src
 			else
@@ -256,7 +257,8 @@
 
 		if(contents.len < 5)
 			if ( state in list(1, 3) )
-				user.drop_item()
+				if(!user.drop_item())
+					return
 				W.loc = src
 				state = 3
 			else

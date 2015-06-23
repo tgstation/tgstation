@@ -352,7 +352,7 @@
 			if (do_after(user, 20, target = src))
 				user.visible_message( \
 					"[user] tightens \the [src]'s casters.", \
-					"<span class='notice'> You tighten \the [src]'s casters. Now it can be played again.</span>", \
+					"<span class='notice'>You tighten \the [src]'s casters. Now it can be played again.</span>", \
 					"<span class='italics'>You hear ratchet.</span>")
 				anchored = 1
 		else if(anchored)
@@ -361,7 +361,7 @@
 			if (do_after(user, 40, target = src))
 				user.visible_message( \
 					"[user] loosens \the [src]'s casters.", \
-					"<span class='notice'> You loosen \the [src]. Now it can be pulled somewhere else.</span>", \
+					"<span class='notice'>You loosen \the [src]. Now it can be pulled somewhere else.</span>", \
 					"<span class='italics'>You hear ratchet.</span>")
 				anchored = 0
 	else

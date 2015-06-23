@@ -112,7 +112,8 @@ RCD
 		if((matter + R.ammoamt) > max_matter)
 			user << "<span class='warning'>The RCD can't hold any more matter-units!</span>"
 			return
-		user.drop_item()
+		if(!user.unEquip(W))
+			return
 		qdel(W)
 		matter += R.ammoamt
 		playsound(src.loc, 'sound/machines/click.ogg', 50, 1)
@@ -210,7 +211,7 @@ RCD
 
 		if(3)
 			if(istype(A, /turf/simulated/wall))
-				var/turf/simulated/wall/W
+				var/turf/simulated/wall/W = A
 				if(istype(W, /turf/simulated/wall/r_wall) && !canRwall)
 					return 0
 				if(checkResource(5, user))

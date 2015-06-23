@@ -115,26 +115,26 @@
 	return
 
 /datum/reagent/proc/overdose_start(var/mob/living/M as mob)
-	M << "<span class = 'userdanger'>You feel like you took too much of [name]!</span>"
+	M << "<span class='userdanger'>You feel like you took too much of [name]!</span>"
 	return
 
 /datum/reagent/proc/addiction_act_stage1(var/mob/living/M as mob)
 	if(prob(30))
-		M << "<span class = 'notice'>You feel like some [name] right about now.</span>"
+		M << "<span class='notice'>You feel like some [name] right about now.</span>"
 	return
 
 /datum/reagent/proc/addiction_act_stage2(var/mob/living/M as mob)
 	if(prob(30))
-		M << "<span class = 'notice'>You feel like you need [name]. You just can't get enough.</span>"
+		M << "<span class='notice'>You feel like you need [name]. You just can't get enough.</span>"
 	return
 
 /datum/reagent/proc/addiction_act_stage3(var/mob/living/M as mob)
 	if(prob(30))
-		M << "<span class = 'danger'>You have an intense craving for [name].</span>"
+		M << "<span class='danger'>You have an intense craving for [name].</span>"
 	return
 
 /datum/reagent/proc/addiction_act_stage4(var/mob/living/M as mob)
 	if(prob(30))
-		M << "<span class = 'boldannounce'>You're not feeling good at all! You really need some [name].</span>"
+		M << "<span class='boldannounce'>You're not feeling good at all! You really need some [name].</span>"
 	return
 

@@ -5,7 +5,7 @@ The regular pipe you see everywhere, including bent ones.
 */
 
 /obj/machinery/atmospherics/pipe/simple
-	icon = 'icons/obj/pipes.dmi'
+	icon = 'icons/obj/atmospherics/pipes/simple.dmi'
 	icon_state = "intact"
 
 	name = "pipe"

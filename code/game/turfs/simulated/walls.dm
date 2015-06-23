@@ -265,3 +265,6 @@
 /turf/simulated/wall/narsie_act()
 	if(prob(20))
 		ChangeTurf(/turf/simulated/wall/cult)
+
+/turf/simulated/wall/storage_contents_dump_act(obj/item/weapon/storage/src_object, mob/user)
+	return 0
