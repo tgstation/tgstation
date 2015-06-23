@@ -49,7 +49,7 @@
 	layer = 5
 	light_range = 6 //Luminosity of hanging lanterns
 	light_power = 2
-	light_color = LIGHT_COLOR_BULB
+	light_color = LIGHT_COLOR_TUNGSTEN
 	ghost_write = 0 //Can't be too safe
 	ghost_read = 0
 
