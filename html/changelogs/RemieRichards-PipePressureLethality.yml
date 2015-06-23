@@ -1,0 +1,8 @@
+
+author: RemieRichards
+
+delete-after: True
+
+changes: 
+  - tweak: "You can now unwrench pipes who's internal pressures are greater than that of their environment..."
+  - rscadd: "However it will throw you away from the pipe at extreme speed! (You are warned beforehand if the pipe will do this, allowing you to cancel)"
