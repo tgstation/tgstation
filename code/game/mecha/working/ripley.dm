@@ -8,6 +8,8 @@
 	wreckage = /obj/effect/decal/mecha_wreckage/ripley
 	var/list/cargo = new
 	var/cargo_capacity = 15
+	var/obj/structure/ore_box/ore_box //to save on locate()
+	var/obj/item/mecha_parts/mecha_equipment/tool/hydraulic_clamp/hydraulic_clamp
 
 /*
 /obj/mecha/working/ripley/New()
@@ -55,10 +57,13 @@
 		var/obj/item/mecha_parts/mecha_equipment/tool/drill/D = new /obj/item/mecha_parts/mecha_equipment/tool/drill
 		D.attach(src)
 
-	//Attach hydrolic clamp
+	//Attach hydraulic clamp
 	var/obj/item/mecha_parts/mecha_equipment/tool/hydraulic_clamp/HC = new /obj/item/mecha_parts/mecha_equipment/tool/hydraulic_clamp
 	HC.attach(src)
-	for(var/obj/item/mecha_parts/mecha_tracking/B in src.contents)//Deletes the beacon so it can't be found easily
+	src.hydraulic_clamp = HC
+
+	//Deletes the beacon so it can't be found easily
+	for(var/obj/item/mecha_parts/mecha_tracking/B in src.contents)
 		del (B)
 		src.tracking = null
 
@@ -73,11 +78,10 @@
 		var/obj/O = locate(href_list["drop_from_cargo"])
 		if(O && O in src.cargo)
 			src.occupant_message("<span class='notice'>You unload [O].</span>")
-			O.loc = get_turf(src)
+			O.forceMove(get_turf(src))
 			src.cargo -= O
-			var/turf/T = get_turf(O)
-			if(T)
-				T.Entered(O)
+			if (ore_box == O)
+				ore_box = locate(/obj/structure/ore_box) in cargo //i'll fix this later
 			src.log_message("Unloaded [O]. Cargo compartment capacity: [cargo_capacity - src.cargo.len]")
 	return
 
