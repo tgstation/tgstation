@@ -704,9 +704,9 @@ Traitors and the like can also be revived with the previous role mostly intact.
 	if(level)
 		set_security_level(level)
 
-	log_admin("[key_name(usr)] changed the security level to [level]")
-	message_admins("[key_name_admin(usr)] changed the security level to [level]")
-	feedback_add_details("admin_verb","CSL") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
+		log_admin("[key_name(usr)] changed the security level to [level]")
+		message_admins("[key_name_admin(usr)] changed the security level to [level]")
+		feedback_add_details("admin_verb","CSL") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
 /client/proc/toggle_nuke(obj/machinery/nuclearbomb/N in nuke_list)
 	set name = "Toggle Nuke"
@@ -719,12 +719,8 @@ Traitors and the like can also be revived with the previous role mostly intact.
 		if(!newtime)
 			return
 		N.timeleft = newtime
-	N.safety = !N.safety
-	N.timing = !N.timing
-	bomb_set = !bomb_set
-	N.icon_state = (N.timing ? "nuclearbomb2" : "nuclearbomb1")
-	N.previous_level = "[get_security_level()]"
-	set_security_level((N.timing ? "delta" : "[N.previous_level]"))
+	N.set_safety()
+	N.set_active()
 
 	log_admin("[key_name(usr)] [N.timing ? "activated" : "deactivated"] a nuke at ([N.x],[N.y],[N.z]).")
 	message_admins("[key_name_admin(usr)] (<A HREF='?_src_=holder;adminplayerobservefollow=\ref[usr]'>FLW</A>) [N.timing ? "activated" : "deactivated"] a nuke at ([N.x],[N.y],[N.z] - <A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[N.x];Y=[N.y];Z=[N.z]'>JMP</a>).")
