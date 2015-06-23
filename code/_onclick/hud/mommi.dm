@@ -92,6 +92,15 @@
 	using.layer = 19
 	src.adding += using
 
+	//Robot Module Hud
+	using = getFromPool(/obj/screen)
+	using.dir = SOUTHWEST
+	using.icon = 'icons/mob/screen1.dmi'
+	using.icon_state = "block"
+	using.layer = 19
+	src.adding += using
+	M.robot_modules_background = using
+
 	// Store
 	mymob.throw_icon = getFromPool(/obj/screen)
 	mymob.throw_icon.icon = 'icons/mob/screen1_robot.dmi'

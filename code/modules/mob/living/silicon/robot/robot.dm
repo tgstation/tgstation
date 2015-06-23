@@ -87,10 +87,6 @@
 	else
 		wires = new(src)
 
-	robot_modules_background = new()
-	robot_modules_background.icon_state = "block"
-	robot_modules_background.layer = 19
-
 	ident = rand(1, 999)
 	updatename("Default")
 	updateicon()
@@ -189,6 +185,13 @@
 			mmi.brainmob.locked_to_z = locked_to_z
 		mmi = null
 	..()
+
+/mob/living/silicon/robot/remove_screen_obj_references()
+	..()
+	cells = null //TODO: Move to mob level helper
+	inv1 = null
+	inv2 = null
+	inv3 = null
 
 /proc/getAvailableRobotModules()
 	var/list/modules = list("Standard", "Engineering", "Medical", "Miner", "Janitor", "Service", "Security")

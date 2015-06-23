@@ -48,6 +48,14 @@
 	src.adding += using
 	mymob:inv3 = using
 
+	using = getFromPool(/obj/screen)
+	using.dir = SOUTHWEST
+	using.icon = 'icons/mob/screen1.dmi'
+	using.icon_state = "block"
+	using.layer = 19
+	src.adding += using
+	mymob:robot_modules_background = using
+
 //End of module select
 
 //Intent
