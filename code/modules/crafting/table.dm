@@ -80,7 +80,7 @@
 	check_table()
 	var/send_feedback = 1
 	if(check_contents(R) && check_tools(user, R))
-		if(do_after(user, R.time))
+		if(do_after(user, R.time, target = src))
 			if(!check_contents(R) || !check_tools(user, R))
 				return 0
 			var/atom/movable/I = new R.result (loc)

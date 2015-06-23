@@ -158,7 +158,7 @@
 				assailant.visible_message("<span class='danger'>[assailant] starts to tighten \his grip on [affecting]'s neck!</span>")
 				hud.icon_state = "disarm/kill1"
 				state = GRAB_UPGRADING
-				if(do_after(assailant, UPGRADE_KILL_TIMER))
+				if(do_after(assailant, UPGRADE_KILL_TIMER, target = affecting))
 					if(state == GRAB_KILL)
 						return
 					if(!affecting)
@@ -207,9 +207,9 @@
 			var/mob/living/carbon/attacker = user
 			user.visible_message("<span class='danger'>[user] is attempting to devour [affecting]!</span>")
 			if(istype(user, /mob/living/carbon/alien/humanoid/hunter))
-				if(!do_mob(user, affecting)||!do_after(user, 30)) return
+				if(!do_mob(user, affecting)||!do_after(user, 30, target = affecting)) return
 			else
-				if(!do_mob(user, affecting)||!do_after(user, 100)) return
+				if(!do_mob(user, affecting)||!do_after(user, 100, target = affecting)) return
 			user.visible_message("<span class='danger'>[user] devours [affecting]!</span>")
 			affecting.loc = user
 			attacker.stomach_contents.Add(affecting)
