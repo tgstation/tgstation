@@ -57,21 +57,17 @@
 
 	var/t = input(user, "Which camera should you change to?") as null|anything in D
 	if(!t || t == "Cancel")
-		user.unset_machine()
-		user.reset_view(null)
+		user.cancel_camera()
 		return 0
 	user.set_machine(src)
 
 	var/obj/machinery/camera/C = D[t]
 
-	if(t == "Cancel")
-		user.unset_machine()
-		return 0
-
 	if(C)
 		if ((get_dist(user, src) > 1 || user.machine != src || user.blinded || !( user.canmove ) || !( C.can_use() )) && (!istype(user, /mob/living/silicon/ai)))
 			if(!C.can_use() && !isAI(user))
 				src.current = null
+			user.cancel_camera()
 			return 0
 		else
 			if(isAI(user))

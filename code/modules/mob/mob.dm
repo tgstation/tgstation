@@ -1079,6 +1079,8 @@ var/list/slot_equipment_priority = list( \
 	if(istype(src, /mob/living))
 		if(src:cameraFollow)
 			src:cameraFollow = null
+		if(istype(src, /mob/living/carbon/human))
+			src:handle_regular_hud_updates()
 
 /mob/Topic(href,href_list[])
 	if(href_list["mach_close"])
