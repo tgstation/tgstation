@@ -450,7 +450,8 @@
 		else if(cell)
 			user << "<span class='warning'>There is a power cell already installed!</span>"
 		else
-			user.drop_item()
+			if(!user.drop_item())
+				return
 			W.loc = src
 			cell = W
 			user << "<span class='notice'>You insert the power cell.</span>"
@@ -525,27 +526,29 @@
 	else if(istype(W, /obj/item/borg/upgrade/))
 		var/obj/item/borg/upgrade/U = W
 		if(!opened)
-			usr << "<span class='warning'>You must access the borgs internals!</span>"
+			user << "<span class='warning'>You must access the borgs internals!</span>"
 		else if(!src.module && U.require_module)
-			usr << "<span class='warning'>The borg must choose a module before it can be upgraded!</span>"
+			user << "<span class='warning'>The borg must choose a module before it can be upgraded!</span>"
 		else if(U.locked)
-			usr << "<span class='warning'>The upgrade is locked and cannot be used yet!</span>"
+			user << "<span class='warning'>The upgrade is locked and cannot be used yet!</span>"
 		else
+			if(!user.drop_item())
+				return
 			if(U.action(src))
-				usr << "<span class='notice'>You apply the upgrade to [src].</span>"
-				usr.drop_item()
+				user << "<span class='notice'>You apply the upgrade to [src].</span>"
 				U.loc = src
 			else
-				usr << "<span class='danger'>Upgrade error.</span>"
+				user << "<span class='danger'>Upgrade error.</span>"
 
 	else if(istype(W, /obj/item/device/toner))
 		if(toner >= tonermax)
-			usr << "<span class='warning'>The toner level of [src] is at it's highest level possible!</span>"
+			user << "<span class='warning'>The toner level of [src] is at it's highest level possible!</span>"
 		else
+			if(!user.drop_item())
+				return
 			toner = 40
-			usr.drop_item()
 			qdel(W)
-			usr << "<span class='notice'>You fill the toner level of [src] to its max capacity.</span>"
+			user << "<span class='notice'>You fill the toner level of [src] to its max capacity.</span>"
 
 	else
 		if(W.force && W.damtype != STAMINA) //only sparks if real damage is dealt.

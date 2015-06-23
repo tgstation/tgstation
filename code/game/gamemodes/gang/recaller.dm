@@ -78,18 +78,24 @@
 
 		dat += "(10 Influence) "
 		if(points >= 10)
-			dat += "<a href='?src=\ref[src];purchase=ammo'>10mm Ammo</a><br>"
+			dat += "<a href='?src=\ref[src];purchase=10mmammo'>10mm Ammo</a><br>"
 		else
 			dat += "10mm Ammo<br>"
 
-		dat += "(50 Influence) "
-		if(points >= 50)
-			dat += "<a href='?src=\ref[src];purchase=SMG'>Thompson SMG</a><br>"
+		dat += "(40 Influence) "
+		if(points >= 40)
+			dat += "<a href='?src=\ref[src];purchase=uzi'>Mini Uzi</a><br>"
 		else
-			dat += "Thompson SMG<br>"
+			dat += "Mini Uzi<br>"
+
+		dat += "(25 Influence) "
+		if(points >= 25)
+			dat += "<a href='?src=\ref[src];purchase=9mmammo'>Uzi Ammo</a><br>"
+		else
+			dat += "Uzi Magazine<br>"
 
 		dat += "<br>"
-		dat += "<B>Purchase Utilities:</B><br>"
+		dat += "<B>Purchase Equipment:</B><br>"
 
 		dat += "(5 Influence) "
 		if(points >= 5)
@@ -124,7 +130,7 @@
 				dat += "<a href='?src=\ref[src];purchase=dominator'><b>Station Dominator</b></a><br>"
 			else
 				dat += "Station Dominator<br>"
-			dat += "<i>(Estimated Takeover Time: [round(max(180,900 - ((round((gang_territory/start_state.num_territories)*200, 10) - 60) * 15))/60,1)] minutes)</i><br>"
+			dat += "<i>(Estimated Takeover Time: [round(max(300,900 - ((round((gang_territory/start_state.num_territories)*200, 10) - 60) * 15))/60,1)] minutes)</i><br>"
 
 	dat += "<br>"
 	dat += "<a href='?src=\ref[src];choice=refresh'>Refresh</a><br>"
@@ -163,14 +169,18 @@
 				if(points >= 20)
 					item_type = /obj/item/weapon/gun/projectile/automatic/pistol
 					points = 20
-			if("ammo")
+			if("10mmammo")
 				if(points >= 10)
 					item_type = /obj/item/ammo_box/magazine/m10mm
 					points = 10
-			if("SMG")
-				if(points >= 50)
-					item_type = /obj/item/weapon/gun/projectile/automatic/tommygun
-					points = 50
+			if("uzi")
+				if(points >= 40)
+					item_type = /obj/item/weapon/gun/projectile/automatic/mini_uzi
+					points = 40
+			if("9mmammo")
+				if(points >= 25)
+					item_type = /obj/item/ammo_box/magazine/uzim9mm
+					points = 25
 			if("vest")
 				if(points >= 10)
 					item_type = /obj/item/clothing/suit/armor/bulletproof
@@ -357,3 +367,4 @@
 
 /obj/item/device/gangtool/lt
 	boss = 0
+	outfits = 1

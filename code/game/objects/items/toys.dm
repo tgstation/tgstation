@@ -474,7 +474,7 @@
 						return
 				for(var/obj/effect/decal/cleanable/crayon/old_marking in target)
 					qdel(old_marking)
-				new /obj/effect/decal/cleanable/crayon/gang(target,gangID,temp,graf_rot)
+				new /obj/effect/decal/cleanable/crayon/gang(target,gangID,"graffiti",graf_rot)
 				user << "<span class='notice'>You tagged [territory] for your gang!</span>"
 
 			else

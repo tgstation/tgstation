@@ -788,7 +788,8 @@ var/list/obj/machinery/newscaster/allCasters = list()
 		photo = null
 	if(istype(user.get_active_hand(), /obj/item/weapon/photo))
 		photo = user.get_active_hand()
-		user.drop_item()
+		if(!user.drop_item())
+			return
 		photo.loc = src
 	if(istype(user,/mob/living/silicon))
 		var/list/nametemp = list()
@@ -892,6 +893,10 @@ var/list/obj/machinery/newscaster/allCasters = list()
 	var/wantedBody
 	var/wantedPhoto
 	var/creationTime
+
+/obj/item/weapon/newspaper/suicide_act(mob/user)
+	user.visible_message("<span class='suicide'>[user] is focusing intently on [src]! It looks like they're trying to commit sudoku.</span>")
+	return(OXYLOSS)
 
 /obj/item/weapon/newspaper/attack_self(mob/user)
 	if(ishuman(user))

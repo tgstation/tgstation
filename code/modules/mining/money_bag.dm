@@ -60,8 +60,9 @@
 	..()
 	if (istype(W, /obj/item/weapon/coin))
 		var/obj/item/weapon/coin/C = W
+		if(!user.drop_item())
+			return
 		user << "<span class='notice'>You add the [C.name] into the bag.</span>"
-		usr.drop_item()
 		contents += C
 	if (istype(W, /obj/item/weapon/moneybag))
 		var/obj/item/weapon/moneybag/C = W

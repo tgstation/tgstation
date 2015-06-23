@@ -384,6 +384,22 @@ Auto Patrol: []"},
 		target = user
 		mode = BOT_HUNT
 
+/obj/machinery/bot/secbot/Crossed(atom/movable/AM)
+	if(ismob(AM) && target)
+		var/mob/living/carbon/C = AM
+		if(!istype(C) || !C || in_range(src, target))
+			return
+		C.visible_message("<span class='warning'>[pick( \
+						  "[C] dives out of [src]'s way!", \
+						  "[C] stumbles over [src]!", \
+						  "[C] jumps out of [src]'s path!", \
+						  "[C] trips over [src] and falls!", \
+						  "[C] topples over [src]!", \
+						  "[C] leaps out of [src]'s way!")]</span>")
+		C.Weaken(2)
+		return
+	..()
+
 //Secbot Construction
 
 /obj/item/clothing/head/helmet/attackby(var/obj/item/device/assembly/signaler/S, mob/user as mob, params)
@@ -429,7 +445,8 @@ Auto Patrol: []"},
 				user << "<span class='notice'>You weld the hole in [src] shut!</span>"
 
 	else if(isprox(I) && (build_step == 1))
-		user.drop_item()
+		if(!user.unEquip(I))
+			return
 		build_step++
 		user << "<span class='notice'>You add the prox sensor to [src]!</span>"
 		overlays += "hs_eye"
@@ -437,7 +454,8 @@ Auto Patrol: []"},
 		qdel(I)
 
 	else if(((istype(I, /obj/item/robot_parts/l_arm)) || (istype(I, /obj/item/robot_parts/r_arm))) && (build_step == 2))
-		user.drop_item()
+		if(!user.unEquip(I))
+			return
 		build_step++
 		user << "<span class='notice'>You add the robot arm to [src]!</span>"
 		name = "helmet/signaler/prox sensor/robot arm assembly"
@@ -445,7 +463,8 @@ Auto Patrol: []"},
 		qdel(I)
 
 	else if((istype(I, /obj/item/weapon/melee/baton)) && (build_step >= 3))
-		user.drop_item()
+		if(!user.unEquip(I))
+			return
 		build_step++
 		user << "<span class='notice'>You complete the Securitron! Beep boop.</span>"
 		var/obj/machinery/bot/secbot/S = new /obj/machinery/bot/secbot

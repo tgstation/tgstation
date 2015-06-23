@@ -92,7 +92,8 @@
 			if(href_list["id"] =="insert" && !istype(inserted_id))
 				var/obj/item/weapon/card/id/prisoner/I = usr.get_active_hand()
 				if(istype(I))
-					usr.drop_item()
+					if(!usr.drop_item())
+						return
 					I.loc = src
 					inserted_id = I
 				else usr << "<span class='danger'>No valid ID.</span>"

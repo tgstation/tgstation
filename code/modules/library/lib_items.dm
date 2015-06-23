@@ -63,7 +63,8 @@
 
 		if(2)
 			if(is_type_in_list(I, allowed_books))
-				user.drop_item()
+				if(!user.drop_item())
+					return
 				I.loc = src
 				update_icon()
 			else if(istype(I, /obj/item/weapon/storage/bag/books))

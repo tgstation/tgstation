@@ -347,6 +347,8 @@
 			src.add_fingerprint(user)
 			var/obj/item/weapon/light/L = W
 			if(istype(L, light_type))
+				if(!user.drop_item())
+					return
 				status = L.status
 				user << "<span class='notice'>You insert the [L.name].</span>"
 				switchcount = L.switchcount
@@ -355,7 +357,6 @@
 				on = has_power()
 				update()
 
-				user.drop_item()	//drop the item to update overlays and such
 				qdel(L)
 
 				if(on && rigged)
