@@ -34,7 +34,7 @@ delete-after: True
 # Please surround your changes in  double quotes ("). It works without them, but if you use certain characters it screws up compiling. The quotes will not show up in the changelog.
 changes: 
   - rscadd: "New gang names with tags created by Joan"
-  - rscadd: "C4 explosive can be purchased by gangs for 15 influence."
+  - rscadd: "C4 explosive can be purchased by gangs for 10 influence."
   - tweak: "Recruitment pen cost increased to 50."
   - rscadd: "Lieutenants recieve one free recruitment pen."
   - tweak: "Recruitment pens are now stealthy and no longer give a tiny prick message."

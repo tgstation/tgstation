@@ -105,8 +105,8 @@
 		else
 			dat += "Territory Spraycan<br>"
 
-		dat += "(15 Influence) "
-		if(points >= 15)
+		dat += "(10 Influence) "
+		if(points >= 10)
 			dat += "<a href='?src=\ref[src];purchase=C4'>C4 Explosive</a><br>"
 		else
 			dat += "C4 Explosive<br>"
@@ -191,9 +191,9 @@
 					item_type = /obj/item/ammo_box/magazine/uzim9mm
 					points = 25
 			if("C4")
-				if(points >= 15)
+				if(points >= 10)
 					item_type = /obj/item/weapon/c4
-					points = 15
+					points = 10
 			if("pen")
 				if(free_pen)
 					item_type = /obj/item/weapon/pen/gang
@@ -357,10 +357,13 @@
 	recalling = 0
 	log_game("[key_name(user)] has tried to recall the shuttle with a gangtool.")
 	message_admins("[key_name_admin(user)] has tried to recall the shuttle with a gangtool.", 1)
-	if(!SSshuttle.cancelEvac(user))
-		loc << "<span class='info'>\icon[src]No response recieved. Emergency shuttle cannot be recalled at this time.</span>"
-	else
-		return 1
+	userturf = get_turf(user)
+	if(userturf.z == 1) //Check one more time that they are on station.
+		if(SSshuttle.cancelEvac(user))
+			return 1
+
+	loc << "<span class='info'>\icon[src]No response recieved. Emergency shuttle cannot be recalled at this time.</span>"
+	return 0
 
 /obj/item/device/gangtool/proc/can_use(mob/living/carbon/human/user)
 	if(!istype(user))

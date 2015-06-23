@@ -259,6 +259,7 @@
 	item_state = "armor"
 	body_parts_covered = CHEST|GROIN
 	cold_protection = CHEST|GROIN
+	armor = list(melee = 0, bullet = 0, laser = 0,energy = 0, bomb = 0, bio = 30, rad = 0)
 
 /obj/item/clothing/suit/xenos
 	name = "xenos suit"
