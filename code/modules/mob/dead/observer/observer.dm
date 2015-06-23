@@ -382,6 +382,7 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 		mind.current.ajourn.ajourn = null
 		mind.current.ajourn = null
 	mind.current.key = key
+	mind.isScrying = 0
 	return 1
 
 /mob/dead/observer/verb/toggle_medHUD()

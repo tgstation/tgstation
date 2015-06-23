@@ -46,7 +46,7 @@
 			if(wizard.current.health < 0)
 				wizard.current << "<span class='warning'><font size='4'>The Space Wizard Federation is upset with your performance and have terminated your employment.</font></span>"
 				wizard.current.stat = 2
-			continue
+				continue
 		wizards_alive++
 
 	if (wizards_alive)
@@ -76,6 +76,9 @@
 		message_admins("SWF is still pissed, sending another wizard - [max_mages - mages_made] left.")
 		for(var/mob/dead/observer/G in get_active_candidates(ROLE_WIZARD, poll="Do you wish to be considered for the position of Space Wizard Foundation 'diplomat'?"))
 			if(G.client && !G.client.holder && !jobban_isbanned(G, "wizard") && !jobban_isbanned(G, "Syndicate"))
+				if(G.mind && G.mind.isScrying)
+					if(G.mind.current.stat < DEAD || !iscarbon(G.mind.current) || isbrain(G.mind.current))
+						continue
 				candidates += G
 		if(!candidates.len)
 			message_admins("No candidates found, sleeping until another mage check...")

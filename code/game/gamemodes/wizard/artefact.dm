@@ -95,6 +95,7 @@
 	user << "<span class='notice'>You can see...everything!</span>"
 	visible_message("<span class='danger'>[usr] stares into [src], their eyes glazing over.</span>")
 	user.ghostize(1)
+	user.mind.isScrying = 1
 	return
 
 
