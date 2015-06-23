@@ -2,6 +2,7 @@
 	icon = 'icons/turf/floors.dmi'
 	level = 1.0
 
+	var/slowdown = 0 //negative for faster, positive for slower
 	var/intact = 1
 	var/baseturf = /turf/space
 
