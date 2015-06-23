@@ -1,0 +1,11 @@
+# Your name.  
+author: Iamgoofball
+
+# Optional: Remove this file after generating master changelog.  Useful for PR changelogs that won't get used again.
+delete-after: True
+
+changes: 
+  - rscadd: "Changes up how Explosive Implants work."
+  - rscadd: "They have become Microbomb Implants. They cost 1 TC each. Each implant you inject increases the size of the explosion."
+  - rscadd: "If you have 4 or more injected, you are guaranteed to be gibbed on activation." 
+  - rscadd: "A Macrobomb implant was added for 20 TC. It is the equivalent of injecting 20 microbombs."
