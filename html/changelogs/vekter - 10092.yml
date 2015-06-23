@@ -1,9 +1,0 @@
-author: Vekter
-
-delete-after: True
-
-changes:
-  - bugfix: "Finally fixed immovable rods! They will now properly bisect the station (and crit anyone unlucky enough to be in their path)."
-  - tweak: "Increased Meteor activity detected in the vicinity of the station. Be advised that many storms may be more violent than they once were."
-  - rscadd: "Gravitational anomalies will now throw items at mobs in their vicinity. Take care while scanning them."
-  - rscadd: "Flux anomalies explode much more violently now. Get there and destroy them, or risk losing half a department."
