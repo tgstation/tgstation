@@ -6,3 +6,7 @@
 html/changelog.html merge=union
 
 *.dm text eol=lf
+*.dmm text eol=lf
+*.txt text eol=lf
+*.html text eol=lf
+*.py text eol=lf
