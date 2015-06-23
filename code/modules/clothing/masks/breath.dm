@@ -4,13 +4,14 @@
 	icon_state = "breath"
 	item_state = "m_mask"
 	body_parts_covered = 0
-	flags = MASKCOVERSMOUTH | MASKINTERNALS
+	flags = MASKINTERNALS
 	visor_flags = MASKCOVERSMOUTH | MASKINTERNALS
 	w_class = 2
 	gas_transfer_coefficient = 0.10
 	permeability_coefficient = 0.50
 	action_button_name = "Adjust Breath Mask"
 	ignore_maskadjust = 0
+	flags_cover = MASKCOVERSMOUTH
 
 /obj/item/clothing/mask/breath/attack_self(var/mob/user)
 	adjustmask(user)

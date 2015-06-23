@@ -219,7 +219,7 @@
 		return 0
 
 	if (M.a_intent == "harm")
-		if(M.is_muzzled() || (M.wear_mask && M.wear_mask.flags & MASKCOVERSMOUTH))
+		if(M.is_muzzled() || (M.wear_mask && M.wear_mask.flags_cover & MASKCOVERSMOUTH))
 			M << "<span class='warning'>You can't bite with your mouth covered!</span>"
 			return 0
 		M.do_attack_animation(src)

@@ -131,7 +131,7 @@
 /atom/proc/CheckExit()
 	return 1
 
-/atom/proc/HasProximity(atom/movable/AM as mob|obj)
+/atom/proc/HasProximity(atom/movable/AM as mob|obj) //Requires the PROXMOVE flag to work.
 	return
 
 /atom/proc/emp_act(var/severity)

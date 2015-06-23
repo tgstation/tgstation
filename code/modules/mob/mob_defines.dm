@@ -2,7 +2,7 @@
 	density = 1
 	layer = 4
 	animate_movement = 2
-	flags = HEAR
+	flags = HEAR | PROXMOVE
 	hud_possible = list(ANTAG_HUD)
 	pressure_resistance = 8
 	var/datum/mind/mind
