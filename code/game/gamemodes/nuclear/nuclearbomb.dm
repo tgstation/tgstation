@@ -183,7 +183,7 @@ var/bomb_set
 	src.timing = -1.0
 	src.yes_code = 0
 	src.safety = 1
-	src.icon_state = "nuclearbomb3"
+	src.icon_state = "nuclearbomb_exploding"
 	for(var/mob/M in player_list)
 		M << 'sound/machines/Alarm.ogg'
 	if (ticker && ticker.mode)
