@@ -55,7 +55,7 @@
 /obj/machinery/rust/gyrotron/proc/emit()
 	var/obj/item/projectile/beam/emitter/A = getFromPool(/obj/item/projectile/beam/emitter, loc)
 	A.frequency = frequency
-	A.damage = mega_energy * 500
+	A.damage = mega_energy * 1500
 
 	playsound(get_turf(src), 'sound/weapons/emitter.ogg', 25, 1)
 	use_power(100 * mega_energy + 500)
