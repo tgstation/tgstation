@@ -10,6 +10,8 @@
 	var/valve_open = 0
 	var/toggle = 1
 
+	flags = FPRINT | PROXMOVE
+
 /obj/item/device/transfer_valve/proc/process_activation(var/obj/item/device/D)
 
 /obj/item/device/transfer_valve/IsAssemblyHolder()

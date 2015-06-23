@@ -17,7 +17,6 @@
 //	unacidable = 1 //Aliens won't ment their own.
 	w_type=NOT_RECYCLABLE
 
-
 /*
  * Resin
  */
@@ -403,6 +402,8 @@ Alien plants should do something if theres a lot of poison
 
 	var/health = 100
 	var/status = GROWING //can be GROWING, GROWN or BURST; all mutually exclusive
+
+	flags = PROXMOVE
 
 	New()
 		if(aliens_allowed)

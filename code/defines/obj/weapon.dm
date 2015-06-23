@@ -520,6 +520,7 @@
 	var/timing = 0
 	var/armed = 0
 	var/timepassed = 0
+	flags = FPRINT | PROXMOVE
 
 /obj/item/weapon/caution/proximity_sign/attack_self(mob/user as mob)
 	if(ishuman(user))

@@ -8,6 +8,8 @@
 
 	wires = WIRE_PULSE
 
+	flags = FPRINT | PROXMOVE
+
 	secured = 0
 
 	var/scanning = 0
