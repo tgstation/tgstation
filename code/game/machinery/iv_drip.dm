@@ -77,8 +77,9 @@
 		if(!isnull(beaker))
 			user << "<span class='warning'>There is already a reagent container loaded!</span>"
 			return
+		if(!user.drop_item())
+			return
 
-		user.drop_item()
 		W.loc = src
 		beaker = W
 		user << "<span class='notice'>You attach \the [W] to \the [src].</span>"

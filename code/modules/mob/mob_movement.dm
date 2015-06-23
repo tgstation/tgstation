@@ -103,8 +103,6 @@
 	if(mob.stat == DEAD)
 		mob.ghostize()
 		return 0
-	if(isAI(mob))
-		return AIMove(n,direct,mob)
 	if(moving)
 		return 0
 	if(isliving(mob))
@@ -120,6 +118,9 @@
 
 	if(mob.remote_control)					//we're controlling something, our movement is relayed to it
 		return mob.remote_control.relaymove(mob, direct)
+
+	if(isAI(mob))
+		return AIMove(n,direct,mob)
 
 	if(!mob.canmove)
 		return 0
@@ -297,6 +298,16 @@
 					anim(mobloc,mob,'icons/mob/mob.dmi',,"shadow",,L.dir)
 				L.loc = get_step(L, direct)
 			L.dir = direct
+		if(3) //Incorporeal move, but blocked by holy-watered tiles
+			var/turf/simulated/floor/stepTurf = get_step(L, direct)
+			if(stepTurf.flags & NOJAUNT)
+				L << "<span class='warning'>Holy energies block your path.</span>"
+				L.notransform = 1
+				spawn(2)
+					L.notransform = 0
+			else
+				L.loc = get_step(L, direct)
+				L.dir = direct
 	return 1
 
 
@@ -330,8 +341,6 @@
 				continue
 			if(AM.density)
 				if(AM.anchored)
-					if(istype(AM, /obj/item/projectile)) //"You grab the bullet and push off of it!" No
-						continue
 					return 1
 				if(pulling == AM)
 					continue

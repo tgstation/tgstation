@@ -39,7 +39,8 @@
 		return
 	if(istype(I, gun_category))
 		if(contents.len < capacity && open)
-			user.drop_item()
+			if(!user.drop_item())
+				return
 			contents += I
 			user << "<span class='notice'>You place [I] in [src].</span>"
 			update_icon()

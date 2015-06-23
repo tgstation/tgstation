@@ -15,6 +15,7 @@
 	var/cooldown = 0
 	var/obj/item/device/flashlight/F = null
 	var/can_flashlight = 0
+	var/gang //Is this a gang outfit?
 
 //Ears: currently only used for headsets and earmuffs
 /obj/item/clothing/ears
@@ -234,7 +235,8 @@ BLIND     // can't see anything
 			return 0
 		else
 			if(user)
-				user.drop_item()
+				if(!user.drop_item())
+					return
 			hastie = I
 			I.loc = src
 			if(user && notifyAttach)

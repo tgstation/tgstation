@@ -1,5 +1,5 @@
 
-//Bartender
+//Bartender //it's chef what the fuck is your problem?
 /obj/item/clothing/head/chefhat
 	name = "chef's hat"
 	desc = "It's a hat used by chefs to keep hair out of your food. Judging by the food in the mess, they don't work."
@@ -8,6 +8,15 @@
 	desc = "The commander in chef's head wear."
 	strip_delay = 10
 	put_on_delay = 10
+
+/obj/item/clothing/head/chefhat/suicide_act(mob/user)
+	user.visible_message("<span class='suicide'>[user] is donning [src]! It looks like they're trying to become a chef.</span>")
+	user.say("Bork Bork Bork!")
+	sleep(20)
+	user.visible_message("<span class='suicide'>[user] climbs into an imaginary oven!</span>")
+	user.say("BOOORK!")
+	playsound(user, 'sound/machines/ding.ogg', 50, 1)
+	return(FIRELOSS)
 
 //Captain
 /obj/item/clothing/head/caphat

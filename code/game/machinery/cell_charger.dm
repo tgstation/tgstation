@@ -47,8 +47,9 @@
 			if(a.power_equip == 0) // There's no APC in this area, don't try to cheat power!
 				user << "<span class='warning'>The [name] blinks red as you try to insert the cell!</span>"
 				return
+			if(!user.drop_item())
+				return
 
-			user.drop_item()
 			W.loc = src
 			charging = W
 			user.visible_message("[user] inserts a cell into the charger.", "<span class='notice'>You insert a cell into the charger.</span>")

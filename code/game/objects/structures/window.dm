@@ -93,7 +93,6 @@
 
 /obj/structure/window/hitby(AM as mob|obj)
 	..()
-	visible_message("<span class='danger'>[src] was hit by [AM].</span>")
 	var/tforce = 0
 	if(ismob(AM))
 		tforce = 40
@@ -415,6 +414,8 @@
 		hit(round(exposed_volume / 100), 0)
 	..()
 
+/obj/structure/window/storage_contents_dump_act(obj/item/weapon/storage/src_object, mob/user)
+	return 0
 
 /obj/structure/window/reinforced
 	name = "reinforced window"

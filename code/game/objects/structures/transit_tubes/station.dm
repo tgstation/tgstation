@@ -4,7 +4,7 @@
 //  one.
 /obj/structure/transit_tube/station
 	name = "station tube station"
-	icon = 'icons/obj/pipes/transit_tube_station.dmi'
+	icon = 'icons/obj/atmospherics/pipes/transit_tube_station.dmi'
 	icon_state = "closed"
 	exit_delay = 1
 	enter_delay = 2

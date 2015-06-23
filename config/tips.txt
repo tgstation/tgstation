@@ -85,3 +85,6 @@ You can use . or # instead of : for radio channels. Building this habit reduces 
 While pulling something, clicking on a tile with an empty hand will move it to that tile. No more getting stuck in maint while dragging something!
 Things that override clicks like decks of cards or paper bins can still be picked up by dragging them to your character. Equipped things that override click can be unequipped by dragging it to an empty hand.
 In the job selection menu, from the lobby, you can use right click on the "Low/Medium/High" priority button to make it cycle backwards.
+If you stay out of camera range for 10 seconds, the AI's track on you will break.
+You can shoot cameras with bullets to disable them remotely.
+Disabling a camera with wirecutters will not cause a camera alarm, but bludgeoning it will.
