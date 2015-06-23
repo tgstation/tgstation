@@ -15,7 +15,7 @@
 	var/efficiency
 	var/initial_bin_rating = 1
 	var/min_health = 25
-	var/list/injection_chems = list() //list of injectable chems except ephedrine, coz ephedrine is always avalible
+	var/list/injection_chems = list() //list of injectable chems except inaprovaline, coz inaprovaline is always avalible
 	var/list/possible_chems = list(list("morphine", "dexalin", "bicaridine", "kelotane"),
 								   list("morphine", "dexalin", "bicaridine", "kelotane", "imidazoline"),
 								   list("morphine", "dexalin", "bicaridine", "kelotane", "imidazoline", "anti_toxin", "ryetalyn", "alkysine", "pen_acid"),
