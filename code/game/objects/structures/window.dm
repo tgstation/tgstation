@@ -93,7 +93,6 @@
 
 /obj/structure/window/hitby(AM as mob|obj)
 	..()
-	visible_message("<span class='danger'>[src] was hit by [AM].</span>")
 	var/tforce = 0
 	if(ismob(AM))
 		tforce = 40
@@ -235,7 +234,7 @@
 
 	else if(istype(I, /obj/item/weapon/wrench) && !anchored)
 		playsound(loc, 'sound/items/Ratchet.ogg', 75, 1)
-		user << "<span class='notice'> You begin to disassemble [src]...</span>"
+		user << "<span class='notice'>You begin to disassemble [src]...</span>"
 		if(do_after(user, 40))
 			if(disassembled)
 				return //Prevents multiple deconstruction attempts
@@ -256,7 +255,7 @@
 
 			playsound(src.loc, 'sound/items/Deconstruct.ogg', 50, 1)
 			disassembled = 1
-			user << "<span class='notice'> You successfully disassemble [src].</span>"
+			user << "<span class='notice'>You successfully disassemble [src].</span>"
 			qdel(src)
 
 	else
@@ -415,6 +414,8 @@
 		hit(round(exposed_volume / 100), 0)
 	..()
 
+/obj/structure/window/storage_contents_dump_act(obj/item/weapon/storage/src_object, mob/user)
+	return 0
 
 /obj/structure/window/reinforced
 	name = "reinforced window"

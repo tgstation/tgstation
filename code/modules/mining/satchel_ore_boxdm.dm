@@ -11,7 +11,8 @@
 
 /obj/structure/ore_box/attackby(obj/item/weapon/W as obj, mob/user as mob, params)
 	if (istype(W, /obj/item/weapon/ore))
-		user.drop_item()
+		if(!user.drop_item())
+			return
 		W.loc = src
 	if (istype(W, /obj/item/weapon/storage))
 		var/obj/item/weapon/storage/S = W

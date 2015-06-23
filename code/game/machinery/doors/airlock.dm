@@ -45,6 +45,10 @@
 	var/obj/item/weapon/airlock_electronics/electronics = null
 	var/hasShocked = 0 //Prevents multiple shocks from happening
 	var/autoclose = 1
+	var/obj/item/device/doorCharge/charge = null //If applied, causes an explosion upon opening the door
+	var/detonated = 0
+
+	explosion_block = 1
 
 /obj/machinery/door/airlock/command
 	icon = 'icons/obj/doors/Doorcom.dmi'
@@ -89,6 +93,7 @@
 	icon = 'icons/obj/doors/vault.dmi'
 	opacity = 1
 	doortype = /obj/structure/door_assembly/door_assembly_vault
+	explosion_block = 2
 
 /obj/machinery/door/airlock/glass_large
 	name = "glass airlock"
@@ -268,6 +273,7 @@
 	name = "high tech security airlock"
 	icon = 'icons/obj/doors/hightechsecurity.dmi'
 	doortype = /obj/structure/door_assembly/door_assembly_highsecurity
+	explosion_block = 2
 
 /obj/machinery/door/airlock/shuttle
 	name = "shuttle airlock"
@@ -473,6 +479,11 @@ About the new airlock wires panel:
 			flick("door_deny", src)
 	return
 
+/obj/machinery/door/airlock/examine(mob/user)
+	..()
+	if(charge && !p_open && in_range(user, src))
+		user << "The maintenance panel is bulging slightly."
+
 /obj/machinery/door/airlock/attack_ai(mob/user as mob)
 	if(!src.canAIControl())
 		if(src.canAIHack())
@@ -482,6 +493,9 @@ About the new airlock wires panel:
 			user << "<span class='warning'>Airlock AI control has been blocked with a firewall. Unable to hack.</span>"
 	if(emagged)
 		user << "<span class='warning'>Unable to interface: Airlock is unresponsive.</span>"
+		return
+	if(detonated)
+		user << "<span class='warning'>Unable to interface. Airlock control panel damaged.</span>"
 		return
 
 	//Separate interface for the AI.
@@ -562,16 +576,16 @@ About the new airlock wires panel:
 	if(src.isWireCut(AIRLOCK_WIRE_SAFETY))
 		t1 += text("Door force sensors not responding.</a><br>\n")
 	else if(src.safe)
-		t1 += text("Door safeties operating normally.  <A href='?src=\ref[];aiDisable=8'> Override?</a><br>\n",src)
+		t1 += text("Door safeties operating normally.  <A href='?src=\ref[];aiDisable=8'>Override?</a><br>\n",src)
 	else
-		t1 += text("Danger.  Door safeties disabled.  <A href='?src=\ref[];aiEnable=8'> Restore?</a><br>\n",src)
+		t1 += text("Danger.  Door safeties disabled.  <A href='?src=\ref[];aiEnable=8'>Restore?</a><br>\n",src)
 
 	if(src.isWireCut(AIRLOCK_WIRE_SPEED))
 		t1 += text("Door timing circuitry not responding.</a><br>\n")
 	else if(src.normalspeed)
-		t1 += text("Door timing circuitry operating normally.  <A href='?src=\ref[];aiDisable=9'> Override?</a><br>\n",src)
+		t1 += text("Door timing circuitry operating normally.  <A href='?src=\ref[];aiDisable=9'>Override?</a><br>\n",src)
 	else
-		t1 += text("Warning.  Door timing circuitry operating abnormally.  <A href='?src=\ref[];aiEnable=9'> Restore?</a><br>\n",src)
+		t1 += text("Warning.  Door timing circuitry operating abnormally.  <A href='?src=\ref[];aiEnable=9'>Restore?</a><br>\n",src)
 
 
 
@@ -920,6 +934,9 @@ About the new airlock wires panel:
 					update_icon()
 		return
 	else if(istype(C, /obj/item/weapon/screwdriver))
+		if(p_open && detonated)
+			user << "<span class='warning'>[src] has no maintenance panel!</span>"
+			return
 		src.p_open = !( src.p_open )
 		user << "<span class='notice'>You [p_open ? "open":"close"] the maintenance panel of the airlock.</span>"
 		src.update_icon()
@@ -938,6 +955,22 @@ About the new airlock wires panel:
 			beingcrowbarred = 1 //derp, Agouri
 		else
 			beingcrowbarred = 0
+		if(p_open && charge)
+			user << "<span class='notice'>You carefully start removing [charge] from [src]...</span>"
+			playsound(get_turf(src), 'sound/items/Crowbar.ogg', 50, 1)
+			if(!do_after(user, 150))
+				user << "<span class='warning'>You slip and [charge] detonates!</span>"
+				charge.ex_act(1)
+				user.Weaken(3)
+				return
+			user.visible_message("<span class='notice'>[user] removes [charge] from [src].</span>", \
+								 "<span class='notice'>You gently pry out [charge] from [src] and unhook its wires.</span>")
+			charge.loc = get_turf(user)
+			if(prob(25))
+				charge.ex_act(1)
+				return
+			charge = null
+			return
 		if( beingcrowbarred && (density && welded && !operating && src.p_open && (!hasPower()) && !src.locked) )
 			playsound(src.loc, 'sound/items/Crowbar.ogg', 100, 1)
 			user.visible_message("[user] removes the electronics from the airlock assembly.", \
@@ -970,9 +1003,9 @@ About the new airlock wires panel:
 					qdel(src)
 					return
 		else if(hasPower())
-			user << "<span class='warning'> The airlock's motors resist your efforts to force it!</span>"
+			user << "<span class='warning'>The airlock's motors resist your efforts to force it!</span>"
 		else if(locked)
-			user << "<span class='warning'> The airlock's bolts prevent it from being forced!</span>"
+			user << "<span class='warning'>The airlock's bolts prevent it from being forced!</span>"
 		else if( !welded && !operating)
 			if(density)
 				if(beingcrowbarred == 0) //being fireaxe'd
@@ -995,14 +1028,31 @@ About the new airlock wires panel:
 
 	else if(istype(C, /obj/item/weapon/airlock_painter))
 		change_paintjob(C, user)
+	else if(istype(C, /obj/item/device/doorCharge) && p_open)
+		if(emagged)
+			return
+		if(charge && !detonated)
+			user << "<span class='warning'>There's already a charge hooked up to this door!</span>"
+			return
+		if(detonated)
+			user << "<span class='warning'>The maintenance panel is destroyed!</span>"
+			return
+		user << "<span class='warning'>You apply [C]. Next time someone opens the door, it will explode.</span>"
+		user.drop_item()
+		p_open = 0
+		update_icon()
+		var/obj/item/device/doorCharge/newCharge = C //This is necessary, for some reason
+		newCharge.loc = src
+		charge = newCharge
+		return
 	else
 		..()
 	return
 
 /obj/machinery/door/airlock/plasma/attackby(C as obj, mob/user as mob, params)
 	if(is_hot(C) > 300)//If the temperature of the object is over 300, then ignite
-		message_admins("Plasma wall ignited by [key_name(user, user.client)](<A HREF='?_src_=holder;adminmoreinfo=\ref[user]'>?</A>) in ([x],[y],[z] - <A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[x];Y=[y];Z=[z]'>JMP</a>)")
-		log_game("Plasma wall ignited by [user.ckey]([user]) in ([x],[y],[z])")
+		message_admins("Plasma airlock ignited by [key_name_admin(user)](<A HREF='?_src_=holder;adminmoreinfo=\ref[user]'>?</A>) (<A HREF='?_src_=holder;adminplayerobservefollow=\ref[user]'>FLW</A>) in ([x],[y],[z] - <A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[x];Y=[y];Z=[z]'>JMP</a>)")
+		log_game("Plasma wall ignited by [key_name(user)] in ([x],[y],[z])")
 		ignite(is_hot(C))
 		return
 	..()
@@ -1013,6 +1063,18 @@ About the new airlock wires panel:
 	if(!forced)
 		if( !hasPower() || isWireCut(AIRLOCK_WIRE_OPEN_DOOR) )
 			return 0
+	if(charge && !detonated)
+		p_open = 1
+		update_icon()
+		visible_message("<span class='warning'>[src]'s panel is blown off in a spray of deadly shrapnel!</span>")
+		charge.ex_act(1)
+		detonated = 1
+		charge = null
+		for(var/mob/living/carbon/human/H in orange(1,src))
+			H.Paralyse(8)
+			H.adjust_fire_stacks(1)
+			H.IgniteMob() //Guaranteed knockout and ignition for nearby people
+		return
 	if(forced < 2)
 		if(emagged)
 			return 0

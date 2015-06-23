@@ -355,7 +355,9 @@
 		return
 	if("tail" in dna.species.mutant_bodyparts)
 		dna.species.mutant_bodyparts -= "tail"
+		dna.species.mutant_bodyparts -= "spines"
 		dna.species.mutant_bodyparts |= "waggingtail"
+		dna.species.mutant_bodyparts |= "waggingspines"
 	update_body()
 
 
@@ -364,5 +366,8 @@
 		return
 	if("waggingtail" in dna.species.mutant_bodyparts)
 		dna.species.mutant_bodyparts -= "waggingtail"
+		dna.species.mutant_bodyparts -= "waggingspines"
 		dna.species.mutant_bodyparts |= "tail"
+		dna.species.mutant_bodyparts |= "spines"
+
 	update_body()

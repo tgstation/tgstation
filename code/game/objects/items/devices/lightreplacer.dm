@@ -88,9 +88,10 @@
 		var/obj/item/weapon/light/L = W
 		if(L.status == 0) // LIGHT OKAY
 			if(uses < max_uses)
+				if(!user.unEquip(W))
+					return
 				AddUses(1)
 				user << "<span class='notice'>You insert the [L.name] into the [src.name]. You have [uses] lights remaining.</span>"
-				user.drop_item()
 				qdel(L)
 				return
 		else

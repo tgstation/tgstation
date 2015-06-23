@@ -25,7 +25,7 @@ RPD
 	var/categoryId = CATEGORY_ATMOS
 	var/dir=SOUTH
 	var/dirtype=PIPE_BINARY
-	var/icon = 'icons/obj/pipe-item.dmi'
+	var/icon = 'icons/obj/atmospherics/pipes/pipe_item.dmi'
 	var/icon_state=""
 	var/selected=0
 
@@ -39,7 +39,7 @@ RPD
 	return "<li><a href='?src=\ref[dispenser];makepipe=[id];dir=[dir];type=[dirtype]'>[label]</a></li>"
 
 /datum/pipe_info/meter
-	icon = 'icons/obj/pipes.dmi'
+	icon = 'icons/obj/atmospherics/pipes/simple.dmi'
 	icon_state = "meterX"
 
 /datum/pipe_info/meter/New()
@@ -64,7 +64,7 @@ var/global/list/disposalpipeID2State=list(
 
 /datum/pipe_info/disposal
 	categoryId = CATEGORY_DISPOSALS
-	icon = 'icons/obj/pipes/disposal.dmi'
+	icon = 'icons/obj/atmospherics/pipes/disposal.dmi'
 	icon_state = "meterX"
 
 /datum/pipe_info/disposal/New(var/pid,var/dt)

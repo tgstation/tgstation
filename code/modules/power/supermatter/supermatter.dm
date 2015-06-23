@@ -18,7 +18,7 @@
 
 /obj/machinery/power/supermatter_shard
 	name = "supermatter shard"
-	desc = "A strangely translucent and iridescent crystal that looks like it used to be part of a larger structure. <span class='danger'> You get headaches just from looking at it.</span>"
+	desc = "A strangely translucent and iridescent crystal that looks like it used to be part of a larger structure. <span class='danger'>You get headaches just from looking at it.</span>"
 	icon = 'icons/obj/supermatter.dmi'
 	icon_state = "darkmatter_shard"
 	density = 1
@@ -187,6 +187,7 @@
 
 	return 1
 
+/obj/machinery/power/supermatter_shard
 
 /obj/machinery/power/supermatter_shard/bullet_act(var/obj/item/projectile/Proj)
 	var/turf/L = loc
@@ -205,6 +206,16 @@
 		damage += Proj.damage * config_bullet_energy
 	return 0
 
+/obj/machinery/power/supermatter_shard/singularity_act()
+	var/gain = 100
+	investigate_log("Supermatter shard consumed by singularity.","singulo")
+	message_admins("Singularity has consumed a supermatter shard and can now become stage six.")
+	visible_message("<span class='userdanger'>[src] is consumed by the singularity!</span>")
+	for(var/mob/M in mob_list)
+		M << 'sound/effects/supermatter.ogg' //everyone goan know bout this
+		M << "<span class='boldannounce'>A horrible screeching fills your ears, and a wave of dread washes over you...</span>"
+	qdel(src)
+	return(gain)
 
 /obj/machinery/power/supermatter_shard/attack_paw(mob/user as mob)
 	return attack_hand(user)
@@ -214,11 +225,11 @@
 	if(Adjacent(user))
 		return attack_hand(user)
 	else
-		user << "<span class = 'warning'>You attempt to interface with the control circuits but find they are not connected to your network. Maybe in a future firmware update.</span>"
+		user << "<span class='warning'>You attempt to interface with the control circuits but find they are not connected to your network. Maybe in a future firmware update.</span>"
 	return
 
 /obj/machinery/power/supermatter_shard/attack_ai(mob/user as mob)
-	user << "<span class = 'warning'>You attempt to interface with the control circuits but find they are not connected to your network. Maybe in a future firmware update.</span>"
+	user << "<span class='warning'>You attempt to interface with the control circuits but find they are not connected to your network. Maybe in a future firmware update.</span>"
 
 /obj/machinery/power/supermatter_shard/attack_hand(mob/living/user as mob)
 	if(!istype(user))
@@ -272,11 +283,11 @@
 		var/mob/living/user = AM
 		user.dust()
 		power += 200
-		message_admins("[src] has consumed [key_name(user)]<A HREF='?_src_=holder;adminmoreinfo=\ref[user]'>?</A> <A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[x];Y=[y];Z=[z]'>(JMP)</a>.")
+		message_admins("[src] has consumed [key_name_admin(user)]<A HREF='?_src_=holder;adminmoreinfo=\ref[user]'>?</A> (<A HREF='?_src_=holder;adminplayerobservefollow=\ref[user]'>FLW</A>) <A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[x];Y=[y];Z=[z]'>(JMP)</a>.")
+		investigate_log("has consumed [key_name(user)].", "supermatter")
 	else if(isobj(AM) && !istype(AM, /obj/effect))
+		investigate_log("has consumed [AM].", "supermatter")
 		qdel(AM)
-
-	investigate_log("has consumed [AM].", "supermatter")
 
 	power += 200
 

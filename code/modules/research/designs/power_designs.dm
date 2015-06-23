@@ -48,6 +48,19 @@
 	build_path = /obj/item/weapon/stock_parts/cell/hyper
 	category = list("Misc","Power Designs")
 
+/datum/design/bluespace_cell
+	name = "Bluespace Power Cell"
+	desc = "A power cell that holds 40000 units of energy."
+	id = "bluespace_cell"
+	req_tech = list("powerstorage" = 6, "materials" = 5)
+	reliability = 70
+	build_type = PROTOLATHE | MECHFAB
+	materials = list("$metal" = 800, "$gold" = 300, "$silver" = 300, "$glass" = 160, "$diamond" = 160)
+	construction_time=100
+	build_path = /obj/item/weapon/stock_parts/cell/bluespace
+	category = list("Misc","Power Designs")
+
+
 /datum/design/light_replacer
 	name = "Light Replacer"
 	desc = "A device to automatically replace lights. Refill with working lightbulbs."

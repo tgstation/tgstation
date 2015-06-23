@@ -1,6 +1,5 @@
 /obj
 	languages = HUMAN
-	//var/datum/module/mod		//not used
 	var/crit_fail = 0
 	var/unacidable = 0 //universal "unacidabliness" var, here so you can use it in any obj.
 	animate_movement = 2
@@ -153,3 +152,7 @@
 
 /obj/get_spans()
 	return ..() | SPAN_ROBOT
+
+/obj/storage_contents_dump_act(obj/item/weapon/storage/src_object, mob/user)
+	var/turf/T = get_turf(src)
+	return T.storage_contents_dump_act(src_object, user)

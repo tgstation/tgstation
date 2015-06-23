@@ -144,6 +144,7 @@
 		T.ex_act(hitpwr)
 
 
+
 //process getting 'hit' by colliding with a dense object
 //or randomly when ramming turfs
 /obj/effect/meteor/proc/get_hit()
@@ -174,7 +175,7 @@
 			if(!T || T.z != src.z)
 				continue
 			var/dist = get_dist(M.loc, src.loc)
-			shake_camera(M, dist > 20 ? 3 : 5, dist > 20 ? 1 : 3)
+			shake_camera(M, dist > 20 ? 2 : 4, dist > 20 ? 1 : 3)
 			M.playsound_local(src.loc, meteorsound, 50, 1, get_rand_frequency(), 10)
 
 ///////////////////////

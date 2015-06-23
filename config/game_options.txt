@@ -66,8 +66,8 @@ ALERT_GREEN All threats to the station have passed. Security may not have weapon
 ALERT_BLUE_UPTO The station has received reliable information about possible hostile activity on the station. Security staff may have weapons visible, random searches are permitted.
 ALERT_BLUE_DOWNTO The immediate threat has passed. Security may no longer have weapons drawn at all times, but may continue to have them visible. Random searches are still allowed.
 ALERT_RED_UPTO There is an immediate serious threat to the station. Security may have weapons unholstered at all times. Random searches are allowed and advised.
-ALERT_RED_DOWNTO The self-destruct mechanism has been deactivated, there is still however an immediate serious threat to the station. Security may have weapons unholstered at all times, random searches are allowed and advised.
-ALERT_DELTA The station's self-destruct mechanism has been engaged. All crew are instructed to obey all instructions given by heads of staff. Any violations of these orders can be punished by death. This is not a drill.
+ALERT_RED_DOWNTO The station's destruction has been averted. There is still however an immediate serious threat to the station. Security may have weapons unholstered at all times, random searches are allowed and advised.
+ALERT_DELTA Destruction of the station is imminent. All crew are instructed to obey all instructions given by heads of staff. Any violations of these orders can be punished by death. This is not a drill.
 
 
 
@@ -275,4 +275,23 @@ MIDROUND_ANTAG_LIFE_CHECK 0.7
 #NO_SUMMON_GUNS
 #NO_SUMMON_MAGIC
 #NO_SUMMON_EVENTS
+
+//Comment for "normal" explosions, which ignore obstacles
+//Uncomment for explosions that react to doors and walls
+REACTIONARY_EXPLOSIONS
+
+### Configure the bomb cap
+## This caps all explosions to the specified range. Used for both balance reasons and to prevent overloading the server and lagging the game out.
+## This is given as the 3rd number(light damage) in the standard (1,2,3) explosion notation. The other numbers are derived by dividing by 2 and 4.
+## eg: If you give the number 20. The bomb cap will be 5,10,20.
+## Can be any number between 4 and 128, some examples are provided below.
+
+## Default (3,7,14)
+BOMBCAP 14
+## One 'step' up (4,8,16) (recommended if you enable REACTIONARY_EXPLOSIONS above)
+#BOMBCAP 16
+## LagHell (7,14,28)
+#BOMBCAP 28
+
+
 

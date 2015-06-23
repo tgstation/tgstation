@@ -30,17 +30,20 @@ var/list/ai_list = list()
 	var/alarms = list("Motion"=list(), "Fire"=list(), "Atmosphere"=list(), "Power"=list(), "Camera"=list(), "Burglar"=list())
 	var/viewalerts = 0
 	var/icon/holo_icon//Default is assigned when AI is created.
+	var/obj/mecha/controlled_mech //For controlled_mech a mech, to determine whether to relaymove or use the AI eye.
 	var/radio_enabled = 1 //Determins if a carded AI can speak with its built in radio or not.
 	radiomod = ";" //AIs will, by default, state their laws on the internal radio.
 	var/obj/item/device/pda/ai/aiPDA = null
 	var/obj/item/device/multitool/aiMulti = null
 	var/obj/machinery/bot/Bot
+	var/tracking = 0 //this is 1 if the AI is currently tracking somebody, but the track has not yet been completed.
 
 	//MALFUNCTION
 	var/datum/module_picker/malf_picker
 	var/processing_time = 100
 	var/list/datum/AI_Module/current_modules = list()
 	var/fire_res_on_core = 0
+	var/can_dominate_mechs = 0
 
 	var/control_disabled = 0 // Set to 1 to stop AI from interacting via Click()
 	var/malfhacking = 0 // More or less a copy of the above var, so that malf AIs can hack and still get new cyborgs -- NeoFite
@@ -61,6 +64,13 @@ var/list/ai_list = list()
 	var/turf/waypoint //Holds the turf of the currently selected waypoint.
 	var/waypoint_mode = 0 //Waypoint mode is for selecting a turf via clicking.
 	var/apc_override = 0 //hack for letting the AI use its APC even when visionless
+
+	var/mob/camera/aiEye/eyeobj = new()
+	var/sprint = 10
+	var/cooldown = 0
+	var/acceleration = 1
+
+	var/obj/machinery/camera/portable/builtInCamera
 
 /mob/living/silicon/ai/New(loc, var/datum/ai_laws/L, var/obj/item/device/mmi/B, var/safety = 0)
 	rename_self("ai", 1)
@@ -118,6 +128,13 @@ var/list/ai_list = list()
 			job = "AI"
 	ai_list += src
 	shuttle_caller_list += src
+
+	eyeobj.ai = src
+	eyeobj.name = "[src.name] (AI Eye)" // Give it a name
+	eyeobj.loc = src.loc
+
+	builtInCamera = new /obj/machinery/camera/portable(src)
+	builtInCamera.network = list("SS13")
 	..()
 	return
 
@@ -125,6 +142,7 @@ var/list/ai_list = list()
 	ai_list -= src
 	shuttle_caller_list -= src
 	SSshuttle.autoEvac()
+	qdel(eyeobj) // No AI, no Eye
 	..()
 
 
@@ -433,6 +451,14 @@ var/list/ai_list = list()
 		botcall()
 		return
 
+	if (href_list["ai_take_control"]) //Mech domination
+		var/obj/mecha/M = locate(href_list["ai_take_control"])
+		if(controlled_mech)
+			src << "You are already loaded into an onboard computer!"
+			return
+		if(M)
+			M.transfer_ai(AI_MECH_HACK,src, usr) //Called om the mech itself.
+
 /mob/living/silicon/ai/bullet_act(var/obj/item/projectile/Proj)
 	..(Proj)
 	updatehealth()
@@ -457,7 +483,8 @@ var/list/ai_list = list()
 
 /mob/living/silicon/ai/proc/switchCamera(var/obj/machinery/camera/C)
 
-	src.cameraFollow = null
+	if(!tracking)
+		cameraFollow = null
 
 	if (!C || stat == 2) //C.can_use())
 		return 0
@@ -589,7 +616,7 @@ var/list/ai_list = list()
 	set category = "AI Commands"
 	set name = "Jump To Network"
 	unset_machine()
-	src.cameraFollow = null
+	cameraFollow = null
 	var/cameralist[0]
 
 	if(usr.stat == 2)
@@ -775,3 +802,20 @@ var/list/ai_list = list()
 /mob/living/silicon/ai/attack_slime(mob/living/simple_animal/slime/user)
 	return
 
+/mob/living/silicon/ai/transfer_ai(var/interaction, var/mob/user, var/mob/living/silicon/ai/AI, var/obj/item/device/aicard/card)
+	if(!..())
+		return
+	if(interaction == AI_TRANS_TO_CARD)//The only possible interaction. Upload AI mob to a card.
+		if(!mind)
+			user << "<span class='warning'>No intelligence patterns detected.</span>"    //No more magical carding of empty cores, AI RETURN TO BODY!!!11
+			return
+		if (mind.special_role == "malfunction") //AI MALF!!
+			user << "<span class='boldannounce'>ERROR</span>: Remote transfer interface disabled."//Do ho ho ho~
+			return
+		new /obj/structure/AIcore/deactivated(loc)//Spawns a deactivated terminal at AI location.
+		aiRestorePowerRoutine = 0//So the AI initially has power.
+		control_disabled = 1//Can't control things remotely if you're stuck in a card!
+		radio_enabled = 0 	//No talking on the built-in radio for you either!
+		loc = card//Throw AI into the card.
+		src << "You have been downloaded to a mobile storage device. Remote device connection severed."
+		user << "<span class='boldnotice'>Transfer successful</span>: [name] ([rand(1000,9999)].exe) removed from host terminal and stored within local memory."

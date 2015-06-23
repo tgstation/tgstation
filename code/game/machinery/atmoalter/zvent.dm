@@ -1,13 +1,21 @@
 /obj/machinery/zvent
 	name = "interfloor air transfer system"
 
-	icon = 'icons/obj/pipes.dmi'
-	icon_state = "vent-db"
+	icon = 'icons/obj/atmospherics/unary_devices.dmi'
+	icon_state = "vent_map"
 	density = 0
 	anchored=1
 
 	var/on = 0
 	var/volume_rate = 800
+
+/obj/machinery/zvent/New()
+	..()
+	SSair.atmos_machinery += src
+
+/obj/machinery/zvent/Destroy()
+	SSair.atmos_machinery -= src
+	..()
 
 /obj/machinery/zvent/process_atmos()
 

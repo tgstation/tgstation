@@ -664,15 +664,22 @@ Sorry Giacom. Please don't be mad :(
 /mob/living/update_gravity(has_gravity)
 	if(!ticker)
 		return
+	if(has_gravity)
+		clear_alert("weightless")
+	else
+		throw_alert("weightless")
 	float(!has_gravity)
 
 /mob/living/proc/float(on)
 	if(throwing)
 		return
-	if(on && !floating)
+	var/fixed = 0
+	if(anchored || (buckled && buckled.anchored))
+		fixed = 1
+	if(on && !floating && !fixed)
 		animate(src, pixel_y = pixel_y + 2, time = 10, loop = -1)
 		floating = 1
-	else if(!on && floating)
+	else if(((!on || fixed) && floating))
 		var/final_pixel_y = get_standard_pixel_y_offset(lying)
 		animate(src, pixel_y = final_pixel_y, time = 10)
 		floating = 0
@@ -816,3 +823,41 @@ Sorry Giacom. Please don't be mad :(
 
 /mob/living/proc/get_standard_pixel_y_offset(lying = 0)
 	return initial(pixel_y)
+
+/mob/living/Stat()
+	..()
+	if(statpanel("Status"))
+		if(ticker)
+			if(ticker.mode)
+				if(istype(ticker.mode, /datum/game_mode/gang))
+					var/datum/game_mode/gang/mode = ticker.mode
+					if(isnum(mode.A_timer))
+						stat(null, "[gang_name("A")] Gang Takeover: [max(mode.A_timer, 0)]")
+					if(isnum(mode.B_timer))
+						stat(null, "[gang_name("B")] Gang Takeover: [max(mode.B_timer, 0)]")
+
+/mob/living/cancel_camera()
+	..()
+	cameraFollow = null
+
+/mob/living/proc/can_track(mob/living/user)
+	//basic fast checks go first. When overriding this proc, I recommend calling ..() at the end.
+	var/turf/T = get_turf(src)
+	if(!T)
+		return 0
+	if(T.z == ZLEVEL_CENTCOM) //dont detect mobs on centcomm
+		return 0
+	if(T.z >= ZLEVEL_SPACEMAX)
+		return 0
+	if(src == user)
+		return 0
+	if(invisibility || alpha == 0)//cloaked
+		return 0
+	if(digitalcamo)
+		return 0
+
+	// Now, are they viewable by a camera? (This is last because it's the most intensive check)
+	if(!near_camera(src))
+		return 0
+
+	return 1

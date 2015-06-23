@@ -21,7 +21,7 @@
 	PoolOrNew(/obj/effect/effect/sparks, loc)
 	playsound(src.loc, "sparks", 50, 1)
 	blink_mob(user)
-	user.drop_item()
+	user.unEquip(src)
 	qdel(src)
 
 /obj/item/bluespace_crystal/proc/blink_mob(var/mob/living/L)

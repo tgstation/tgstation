@@ -56,7 +56,7 @@
 
 //returns turfs within our projected rectangle in a specific order.
 //this ensures that turfs are copied over in the same order, regardless of any rotation
-/obj/docking_port/proc/return_ordered_turfs(_x, _y, _z, _dir)
+/obj/docking_port/proc/return_ordered_turfs(_x, _y, _z, _dir, area/A)
 	if(!_dir)
 		_dir = dir
 	if(!_x)
@@ -86,7 +86,14 @@
 		for(var/dy=0, dy<height, ++dy)
 			xi = _x + (dx-dwidth)*cos - (dy-dheight)*sin
 			yi = _y + (dy-dheight)*cos + (dx-dwidth)*sin
-			. += locate(xi, yi, _z)
+			var/turf/T = locate(xi, yi, _z)
+			if(A)
+				if(get_area(T) == A)
+					. += T
+				else
+					. += null
+			else
+				. += T
 
 #ifdef DOCKING_PORT_HIGHLIGHT
 //Debug proc used to highlight bounding area
@@ -181,7 +188,7 @@
 	if(!areaInstance)
 		areaInstance = new()
 		areaInstance.name = name
-	areaInstance.contents += return_ordered_turfs()
+		areaInstance.contents += return_ordered_turfs()
 
 	#ifdef DOCKING_PORT_HIGHLIGHT
 	highlight("#0f0")
@@ -286,7 +293,7 @@
 		if(S0.area_type)
 			area_type = S0.area_type
 
-	var/list/L0 = return_ordered_turfs()
+	var/list/L0 = return_ordered_turfs(x, y, z, dir, areaInstance)
 	var/list/L1 = return_ordered_turfs(S1.x, S1.y, S1.z, S1.dir)
 
 	//remove area surrounding docking port
@@ -302,7 +309,8 @@
 
 	for(var/i=1, i<=L0.len, ++i)
 		var/turf/T0 = L0[i]
-
+		if(!T0)
+			continue
 		var/turf/T1 = L1[i]
 		if(!T1)
 			continue
@@ -474,8 +482,8 @@
 
 /obj/machinery/computer/shuttle
 	name = "Shuttle Console"
-	icon = 'icons/obj/computer.dmi'
-	icon_state = "shuttle"
+	icon_screen = "shuttle"
+	icon_keyboard = "tech_key"
 	req_access = list( )
 	circuit = /obj/item/weapon/circuitboard/shuttle
 	var/shuttleId
@@ -536,7 +544,7 @@
 	if(!emagged)
 		src.req_access = list()
 		emagged = 1
-		user << "<span class='notice'> You fried the consoles ID checking system.</span>"
+		user << "<span class='notice'>You fried the consoles ID checking system.</span>"
 
 /obj/machinery/computer/shuttle/ferry
 	name = "transport ferry console"
@@ -559,7 +567,7 @@
 			return
 		cooldown = 1
 		usr << "<span class='notice'>Your request has been recieved by Centcom.</span>"
-		admins << "<b>FERRY: <font color='blue'>[key_name(usr)] (<A HREF='?_src_=holder;adminmoreinfo=\ref[usr]'>?</A>) (<A HREF='?_src_=holder;adminplayerobservejump=\ref[usr]'>JMP</A>) (<A HREF='?_src_=holder;secretsadmin=moveferry'>Move Ferry</a>)</b> is requesting to move the transport ferry to Centcom.</font>"
+		admins << "<b>FERRY: <font color='blue'>[key_name_admin(usr)] (<A HREF='?_src_=holder;adminmoreinfo=\ref[usr]'>?</A>) (<A HREF='?_src_=holder;adminplayerobservefollow=\ref[usr]'>FLW</A>) (<A HREF='?_src_=holder;secretsadmin=moveferry'>Move Ferry</a>)</b> is requesting to move the transport ferry to Centcom.</font>"
 		spawn(600) //One minute cooldown
 			cooldown = 0
 

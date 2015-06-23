@@ -87,11 +87,11 @@
 	name = "Boxing"
 
 /datum/martial_art/boxing/disarm_act(var/mob/living/carbon/human/A, var/mob/living/carbon/human/D)
-	A << "<span class='warning'> Can't disarm while boxing!</span>"
+	A << "<span class='warning'>Can't disarm while boxing!</span>"
 	return 1
 
 /datum/martial_art/boxing/grab_act(var/mob/living/carbon/human/A, var/mob/living/carbon/human/D)
-	A << "<span class='warning'> Can't grab while boxing!</span>"
+	A << "<span class='warning'>Can't grab while boxing!</span>"
 	return 1
 
 /datum/martial_art/boxing/harm_act(var/mob/living/carbon/human/A, var/mob/living/carbon/human/D)
