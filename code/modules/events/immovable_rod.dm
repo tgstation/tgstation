@@ -49,20 +49,19 @@ In my current plan for it, 'solid' will be defined as anything with density == 1
 	return ..()
 
 /obj/effect/immovablerod/Bump(atom/clong)
-	playsound(src, 'sound/effects/bang.ogg', 50, 1)
-	audible_message("CLANG")
+	if(prob(10))
+		playsound(src, 'sound/effects/bang.ogg', 50, 1)
+		audible_message("CLANG")
 
 	if(clong)
 		x = clong.x
 		y = clong.y
 
-	if (istype(clong, /turf) || istype(clong, /obj))
+	if (istype(clong))
 		if(clong.density)
 			clong.ex_act(2)
 
-	else if (istype(clong, /mob) && prob(25))
-		if(clong.density)
-			clong.ex_act(2)
+	return
 
 /obj/effect/immovablerod/ex_act()
 	return

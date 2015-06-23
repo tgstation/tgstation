@@ -44,7 +44,7 @@
 /obj/effect/anomaly/grav
 	name = "gravitational anomaly"
 	icon_state = "shield2"
-	density = 1
+	density = 0
 	var/boing = 0
 
 /obj/effect/anomaly/grav/New()
@@ -60,12 +60,20 @@
 			step_towards(O,src)
 	for(var/mob/living/M in orange(4, src))
 		step_towards(M,src)
+	for(var/obj/O in range(2,src))
+		if(!O.anchored)
+			var/mob/living/target = locate() in view(10,src)
+			if(target)
+				O.throw_at(target, 5, 10)
 
 /obj/effect/anomaly/grav/Bump(mob/A)
 	gravShock(A)
 	return
 
 /obj/effect/anomaly/grav/Bumped(mob/A)
+	gravShock(A)
+	return
+/obj/effect/anomaly/grav/Crossed(mob/A)
 	gravShock(A)
 	return
 
