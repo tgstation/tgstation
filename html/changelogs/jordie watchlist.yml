@@ -1,0 +1,6 @@
+author: Jordie0608
+
+delete-after: True
+
+changes: 
+  - rscadd: "Admins can now flag ckeys to be alerted when they connect to the server."
