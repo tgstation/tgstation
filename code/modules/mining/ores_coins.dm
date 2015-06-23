@@ -101,6 +101,41 @@
 	points = 27
 	refined_type = /obj/item/stack/sheet/mineral/bananium
 
+/obj/item/weapon/ore/iron/fish
+	name = "ironclad scales"
+	icon_state = "ironclad_scales"
+	icon = 'icons/obj/fishing.dmi'
+
+/obj/item/weapon/ore/gold/fish
+	name = "midas's fish scales"
+	icon_state = "midasfish_scales"
+	icon = 'icons/obj/fishing.dmi'
+
+/obj/item/weapon/ore/silver/fish
+	name = "sliver scales"
+	icon_state = "sliver_scales"
+	icon = 'icons/obj/fishing.dmi'
+
+/obj/item/weapon/ore/bananium/fish
+	name = "clownfish scales"
+	icon_state = "ironclad_scales"
+	icon = 'icons/obj/fishing.dmi'
+
+/obj/item/weapon/ore/uranium/fish
+	name = "radioactive waver scales"
+	icon_state = "midasfish_scales"
+	icon = 'icons/obj/fishing.dmi'
+
+/obj/item/weapon/ore/diamond/fish
+	name = "nurse's best friend scales"
+	icon_state = "sliver_scales"
+	icon = 'icons/obj/fishing.dmi'
+
+/obj/item/weapon/ore/plasma/fish
+	name = "firefish scales"
+	icon_state = "sliver_scales"
+	icon = 'icons/obj/fishing.dmi'
+
 /obj/item/weapon/ore/slag
 	name = "slag"
 	desc = "Completely useless"

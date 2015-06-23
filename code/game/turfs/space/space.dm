@@ -71,6 +71,9 @@
 				user << "<span class='warning'>You need one floor tile to build a floor!</span>"
 		else
 			user << "<span class='warning'>The plating is going to need some support! Place metal rods first.</span>"
+	if(istype(C, /obj/item/weapon/fishing_pole))
+		var/obj/item/weapon/fishing_pole/P = C
+		P.fish(user, src)
 
 /turf/space/Entered(atom/movable/A)
 	..()

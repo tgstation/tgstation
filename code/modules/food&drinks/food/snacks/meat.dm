@@ -271,3 +271,10 @@
 /obj/item/weapon/reagent_containers/food/snacks/meat/cutlet/spider
 	name = "spider cutlet"
 
+/obj/item/weapon/reagent_containers/food/snacks/meat/slab/fish
+	name = "fish fillet"
+	desc = "A fillet of fish meat."
+	icon_state = "fishfillet"
+	list_reagents = list("nutriment" = 1) // take it to the kitchen for processing
+	bitesize = 6
+	filling_color = "#FA8072"

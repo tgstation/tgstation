@@ -34,6 +34,15 @@
 	var/output
 	var/time = 40
 /datum/food_processor_process/proc/process_food(loc, what, var/obj/machinery/processor/processor)
+	if(istype(what, /obj/item/weapon/fish))
+		var/obj/item/weapon/fish/F = what
+		for(var/i = 0, i < F.harvest_times + processor.rating_amount, i++)
+			for(var/obj/item/I in F.harvest_drops)
+				new I.type(loc)
+			for(var/obj/item/I in F.min_harvest_drops)
+				new I.type(loc)
+		qdel(F)
+		return
 	if (src.output && loc && processor)
 		for(var/i = 0, i < processor.rating_amount, i++)
 			new src.output(loc)
@@ -72,6 +81,10 @@
 /datum/food_processor_process/sweetpotato
 	input = /obj/item/weapon/reagent_containers/food/snacks/grown/sweetpotato
 	output = /obj/item/weapon/reagent_containers/food/snacks/yakiimo
+
+/datum/food_processor_process/fish_processing
+	input = /obj/item/weapon/fish
+	output = null
 
 
 /* mobs */
