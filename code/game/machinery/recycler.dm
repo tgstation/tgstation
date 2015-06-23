@@ -37,15 +37,12 @@ var/const/SAFETY_COOLDOWN = 100
 	for(var/obj/item/weapon/stock_parts/matter_bin/B in component_parts)
 		amt_made = 1 * B.rating
 	for(var/obj/item/weapon/stock_parts/manipulator/M in component_parts)
-		if(M.rating > 1)
-			prob_mod = 2 * M.rating
-		else
-			prob_mod = 1 * M.rating
+		prob_mod = 1 * M.rating
 		if(M.rating >= 3)
 			extra_materials = 1
 		else
 			extra_materials = 0
-	probability_mod = prob_mod
+	probability_mod = sqrt(prob_mod)
 	amount_produced = amt_made
 
 /obj/machinery/recycler/examine(mob/user)
