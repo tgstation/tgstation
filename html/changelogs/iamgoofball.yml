@@ -1,8 +1,0 @@
-# Your name.  
-author: Iamgoofball
-
-# Optional: Remove this file after generating master changelog.  Useful for PR changelogs that won't get used again.
-delete-after: True
-
-changes: 
-  - rscadd: "Adds a progress bar when performing actions."
