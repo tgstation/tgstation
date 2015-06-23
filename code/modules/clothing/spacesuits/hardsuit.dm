@@ -184,7 +184,7 @@
 		name = initial(name)
 		desc = initial(desc)
 		user.AddLuminosity(brightness_on)
-		flags |= STOPSPRESSUREDMAGE | THICKMATERIAL
+		flags |= STOPSPRESSUREDMAGE
 		flags_cover |= HEADCOVERSEYES | HEADCOVERSMOUTH
 		flags_inv |= HIDEMASK|HIDEEYES|HIDEFACE
 		cold_protection |= HEAD
@@ -193,7 +193,7 @@
 		name += " (combat)"
 		desc = alt_desc
 		user.AddLuminosity(-brightness_on)
-		flags &= ~(STOPSPRESSUREDMAGE | THICKMATERIAL)
+		flags &= ~(STOPSPRESSUREDMAGE)
 		flags_cover &= ~(HEADCOVERSEYES | HEADCOVERSMOUTH)
 		flags_inv &= ~(HIDEMASK|HIDEEYES|HIDEFACE)
 		cold_protection &= ~HEAD
@@ -208,13 +208,13 @@
 			linkedsuit.name = initial(linkedsuit.name)
 			linkedsuit.desc = initial(linkedsuit.desc)
 			linkedsuit.slowdown = 1
-			linkedsuit.flags |= STOPSPRESSUREDMAGE | THICKMATERIAL
+			linkedsuit.flags |= STOPSPRESSUREDMAGE
 			linkedsuit.cold_protection |= CHEST | GROIN | LEGS | FEET | ARMS | HANDS
 		else
 			linkedsuit.name += " (combat)"
 			linkedsuit.desc = linkedsuit.alt_desc
 			linkedsuit.slowdown = 0
-			linkedsuit.flags &= ~(STOPSPRESSUREDMAGE | THICKMATERIAL)
+			linkedsuit.flags &= ~(STOPSPRESSUREDMAGE)
 			linkedsuit.cold_protection &= ~(CHEST | GROIN | LEGS | FEET | ARMS | HANDS)
 
 		linkedsuit.icon_state = "hardsuit[on]-[item_color]"
@@ -236,10 +236,6 @@
 	armor = list(melee = 40, bullet = 50, laser = 30, energy = 15, bomb = 35, bio = 100, rad = 50)
 	allowed = list(/obj/item/weapon/gun,/obj/item/ammo_box,/obj/item/ammo_casing,/obj/item/weapon/melee/baton,/obj/item/weapon/melee/energy/sword/saber,/obj/item/weapon/restraints/handcuffs,/obj/item/weapon/tank/internals)
 	helmettype = /obj/item/clothing/head/helmet/space/hardsuit/syndi
-
-/obj/item/clothing/suit/space/hardsuit/syndi/ToggleHelmet()
-	..()
-	flags ^= NODROP
 
 /obj/item/clothing/suit/space/hardsuit/syndi/New()
 	jetpack = new /obj/item/weapon/tank/jetpack/suit(src)

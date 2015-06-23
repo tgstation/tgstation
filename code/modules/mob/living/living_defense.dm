@@ -1,5 +1,14 @@
-/mob/living/proc/run_armor_check(def_zone = null, attack_flag = "melee", absorb_text = null, soften_text = null)
+/mob/living/proc/run_armor_check(def_zone = null, attack_flag = "melee", absorb_text = null, soften_text = null, var/armour_penetration, var/penetrated_text)
 	var/armor = getarmor(def_zone, attack_flag)
+
+	//the if "armor" check is because this is used for everything on /living, including humans
+	if(armor && armour_penetration)
+		armor = max(0, armor - armour_penetration)
+		if(penetrated_text)
+			src << "<span class='userdanger'>[penetrated_text]</span>"
+		else
+			src << "<span class='userdanger'>Your armor was penetrated!</span>"
+
 	if(armor >= 100)
 		if(absorb_text)
 			src << "<span class='userdanger'>[absorb_text]</span>"
@@ -20,7 +29,7 @@
 	return
 
 /mob/living/bullet_act(obj/item/projectile/P, def_zone)
-	var/armor = run_armor_check(def_zone, P.flag)
+	var/armor = run_armor_check(def_zone, P.flag, "","",P.armour_penetration)
 	if(!P.nodamage)
 		apply_damage(P.damage, P.damage_type, def_zone, armor)
 	return P.on_hit(src, armor, def_zone)
@@ -60,7 +69,7 @@
 
 		visible_message("<span class='danger'>[src] has been hit by [I].</span>", \
 						"<span class='userdanger'>[src] has been hit by [I].</span>")
-		var/armor = run_armor_check(zone, "melee", "Your armor has protected your [parse_zone(zone)].", "Your armor has softened hit to your [parse_zone(zone)].")
+		var/armor = run_armor_check(zone, "melee", "Your armor has protected your [parse_zone(zone)].", "Your armor has softened hit to your [parse_zone(zone)].",I.armour_penetration)
 		apply_damage(I.throwforce, dtype, zone, armor, I)
 		if(!I.fingerprintslast)
 			return
