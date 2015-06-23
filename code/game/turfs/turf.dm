@@ -104,9 +104,8 @@
 			if(loopsanity == 0)
 				break
 			loopsanity--
-			spawn(0)
-				if((A && M) && A.flags & PROXMOVE)
-					A.HasProximity(M, 1)
+			if((A && M) && A.flags & PROXMOVE)
+				A.HasProximity(M, 1)
 
 /turf/proc/is_plasteel_floor()
 	return 0
