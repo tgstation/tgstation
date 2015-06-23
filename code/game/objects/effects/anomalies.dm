@@ -64,10 +64,7 @@
 		if(!O.anchored)
 			var/mob/living/target = locate() in view(10,src)
 			if(!target)
-				return
-			else
 				O.throw_at(target, 5, 10)
-		return
 
 
 /obj/effect/anomaly/grav/Bump(mob/A)

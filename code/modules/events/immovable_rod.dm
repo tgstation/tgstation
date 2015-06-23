@@ -51,8 +51,9 @@ In my current plan for it, 'solid' will be defined as anything with density == 1
 	return 0
 
 /obj/effect/immovablerod/Bump(atom/clong)
-	playsound(src, 'sound/effects/bang.ogg', 50, 1)
-	audible_message("CLANG")
+	if(prob(10))
+		playsound(src, 'sound/effects/bang.ogg', 50, 1)
+		audible_message("CLANG")
 
 	if(clong && prob(25))
 		x = clong.x
@@ -65,7 +66,7 @@ In my current plan for it, 'solid' will be defined as anything with density == 1
 	else if (istype(clong, /mob))
 		if(istype(clong, /mob/living/carbon/human))
 			var/mob/living/carbon/human/H = clong
-			H << "The rod penetrates you!"
+			H.visible_message("<span class='danger'>[H.name] is penetrated by an immovable rod!</span>" , "<span class='userdanger'>The rod penetrates you!</span>" , "<span class ='danger'>You hear a CLANG!</span>")
 			H.adjustBruteLoss(160)
 		if(clong.density || prob(10))
 			clong.ex_act(2)
