@@ -1077,10 +1077,12 @@ var/list/slot_equipment_priority = list( \
 	unset_machine()
 	reset_view(null)
 	if(istype(src, /mob/living))
-		if(src:cameraFollow)
-			src:cameraFollow = null
+		var/mob/living/M = src
+		if(M.cameraFollow)
+			M.cameraFollow = null
 		if(istype(src, /mob/living/carbon/human))
-			src:handle_regular_hud_updates()
+			var/mob/living/carbon/human/H = M
+			H.handle_regular_hud_updates()
 
 /mob/Topic(href,href_list[])
 	if(href_list["mach_close"])
