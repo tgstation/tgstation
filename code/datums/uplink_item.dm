@@ -666,7 +666,7 @@ var/list/uplink_items = list()
 	name = "Explosive Implant"
 	desc = "An implant injected into the body, and later activated either manually or automatically upon death. Creates a moderately-sized fiery explosion. For those agents who know there is no going back."
 	item = /obj/item/weapon/storage/box/syndie_kit/imp_explosive
-	cost = 6
+	cost = 4
 
 
 //CYBERNETIC IMPLANTS
