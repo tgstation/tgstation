@@ -168,7 +168,7 @@
 		return
 
 	if(tempgang == "A" ? !mode.A_dominations : !mode.B_dominations)
-		user << "<span class='warning'>Error: Unable to breach station network. Firewall has detected our signature and is blocking all further attempts.</span>"
+		user << "<span class='warning'>Error: Unable to breach station network. Firewall has logged our signature and is blocking all further attempts.</span>"
 		return
 
 	var/time = max(300,900 - ((round((gang_territory/start_state.num_territories)*200, 1) - 60) * 15))

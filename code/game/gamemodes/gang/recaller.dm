@@ -332,6 +332,7 @@
 	if(!istype(ticker.mode, /datum/game_mode/gang))
 		return 0
 
+	var/datum/game_mode/gang/mode = ticker.mode
 	recalling = 1
 	loc << "<span class='info'>\icon[src]Generating shuttle recall order with codes retrieved from last call signal...</span>"
 
@@ -344,6 +345,11 @@
 	loc << "<span class='info'>\icon[src]Shuttle recall order generated. Accessing station long-range communication arrays...</span>"
 
 	sleep(rand(100,300))
+
+	if(gang == "A" ? !mode.A_dominations : !mode.B_dominations)
+		user << "<span class='info'>\icon[src]Error: Unable to access communication arrays. Firewall has logged our signature and is blocking all further attempts.</span>"
+		recalling = 0
+		return 0
 
 	var/turf/userturf = get_turf(user)
 	if(userturf.z != 1) //Shuttle can only be recalled while on station
