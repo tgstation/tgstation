@@ -192,8 +192,12 @@
 		A = console.pad.teleport_target
 		if(A.safe) // right now crew areas are safe - being locked behind closed doors is not fun
 			TeleportToArea(H,A)
+			H.uncuff()
+			return
 	//Area not chosen / It's not safe area - teleport to arrivals
 	H.forceMove(pick(latejoin))
+	H.uncuff()
+	return
 
 
 /obj/machinery/abductor/experiment/update_icon()
