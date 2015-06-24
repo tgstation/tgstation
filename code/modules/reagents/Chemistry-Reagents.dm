@@ -43,7 +43,7 @@
 	if(method == TOUCH)
 		if(M.reagents)
 			var/modifier = Clamp((1 - touch_protection) + rand(-5,5)/100, 0, 1)
-			var/amount = round(volume*modifier)
+			var/amount = round(volume*modifier, 0.1)
 			if(amount >= 1)
 				M.reagents.add_reagent(self.id, amount)
 	return 1

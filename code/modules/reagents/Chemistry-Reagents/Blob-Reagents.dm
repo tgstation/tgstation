@@ -11,13 +11,12 @@
 	color = "#B68D00"
 	message = "The blob splashes you with burning oil"
 
-/datum/reagent/blob/boiling_oil/reaction_mob(var/mob/living/M as mob, var/method=TOUCH, var/volume, var/show_message = 1)
+/datum/reagent/blob/boiling_oil/reaction_mob(var/mob/living/M as mob, var/method=TOUCH, var/volume)
 	if(method == TOUCH)
-		M.apply_damage(15, BURN)
-		M.adjust_fire_stacks(2)
+		var/ratio = volume/25
+		M.apply_damage(15*ratio, BURN)
+		M.adjust_fire_stacks(2*ratio)
 		M.IgniteMob()
-		if(show_message)
-			send_message(M)
 		if(isliving(M))
 			M.emote("scream")
 
@@ -28,11 +27,10 @@
 	color = "#008000"
 	message_living = ", and you feel sick and nauseated"
 
-/datum/reagent/blob/toxic_goop/reaction_mob(var/mob/living/M as mob, var/method=TOUCH, var/volume, var/show_message = 1)
+/datum/reagent/blob/toxic_goop/reaction_mob(var/mob/living/M as mob, var/method=TOUCH, var/volume)
 	if(method == TOUCH)
-		M.apply_damage(20, TOX)
-		if(show_message)
-			send_message(M)
+		var/ratio = volume/25
+		M.apply_damage(20*ratio, TOX)
 
 /datum/reagent/blob/skin_ripper
 	name = "Skin Ripper"
@@ -41,12 +39,11 @@
 	color = "#FF4C4C"
 	message_living = ", and you feel your skin ripping and tearing off"
 
-/datum/reagent/blob/skin_ripper/reaction_mob(var/mob/living/M as mob, var/method=TOUCH, var/volume, var/show_message = 1)
+/datum/reagent/blob/skin_ripper/reaction_mob(var/mob/living/M as mob, var/method=TOUCH, var/volume)
 	if(method == TOUCH)
-		M.apply_damage(20, BRUTE)
-		if(show_message)
-			send_message(M)
-		if(isliving(M))
+		var/ratio = volume/25
+		M.apply_damage(20*ratio, BRUTE)
+		if(iscarbon(M))
 			M.emote("scream")
 
 // Combo Reagents
@@ -58,15 +55,14 @@
 	color = "#7F0000"
 	message_living = ", and you feel your skin char and melt"
 
-/datum/reagent/blob/skin_melter/reaction_mob(var/mob/living/M as mob, var/method=TOUCH, var/volume, var/show_message = 1)
+/datum/reagent/blob/skin_melter/reaction_mob(var/mob/living/M as mob, var/method=TOUCH, var/volume)
 	if(method == TOUCH)
-		M.apply_damage(10, BRUTE)
-		M.apply_damage(10, BURN)
-		M.adjust_fire_stacks(2)
+		var/ratio = volume/25
+		M.apply_damage(10*ratio, BRUTE)
+		M.apply_damage(10*ratio, BURN)
+		M.adjust_fire_stacks(2*ratio)
 		M.IgniteMob()
-		if(show_message)
-			send_message(M)
-		if(isliving(M))
+		if(iscarbon(M))
 			M.emote("scream")
 
 /datum/reagent/blob/lung_destroying_toxin
@@ -76,13 +72,13 @@
 	color = "#00FFC5"
 	message_living = ", and your lungs feel heavy and weak"
 
-/datum/reagent/blob/lung_destroying_toxin/reaction_mob(var/mob/living/M as mob, var/method=TOUCH, var/volume,var/show_message = 1)
+/datum/reagent/blob/lung_destroying_toxin/reaction_mob(var/mob/living/M as mob, var/method=TOUCH, var/volume)
 	if(method == TOUCH)
-		M.apply_damage(20, OXY)
-		M.losebreath += 15
-		M.apply_damage(20, TOX)
-		if(show_message)
-			send_message(M)
+		var/ratio = volume/25
+		M.apply_damage(20* ratio, OXY)
+		M.losebreath += 15*ratio
+		M.apply_damage(20*ratio, TOX)
+
 // Special Reagents
 
 /datum/reagent/blob/radioactive_liquid
@@ -92,19 +88,18 @@
 	color = "#00EE00"
 	message_living = ", and your skin feels papery and everything hurts"
 
-/datum/reagent/blob/radioactive_liquid/reaction_mob(var/mob/living/M as mob, var/method=TOUCH, var/volume,var/show_message = 1)
+/datum/reagent/blob/radioactive_liquid/reaction_mob(var/mob/living/M as mob, var/method=TOUCH, var/volume)
 	if(method == TOUCH)
+		var/ratio = volume/25
+		M.apply_damage(10*ratio, BRUTE)
 		if(istype(M, /mob/living/carbon/human))
-			M.apply_damage(10, BRUTE)
-			M.irradiate(40)
-			if(prob(33))
+			M.irradiate(40*ratio)
+			if(prob(33*ratio))
 				randmuti(M)
 				if(prob(98))
 					randmutb(M)
 				domutcheck(M, null)
 				updateappearance(M)
-			if(show_message)
-				send_message(M)
 
 /datum/reagent/blob/dark_matter
 	name = "Dark Matter"
@@ -113,12 +108,12 @@
 	color = "#61407E"
 	message = "You feel a thrum as the blob strikes you, and everything flies at you"
 
-/datum/reagent/blob/dark_matter/reaction_mob(var/mob/living/M as mob, var/method=TOUCH, var/volume, var/show_message = 1)
+/datum/reagent/blob/dark_matter/reaction_mob(var/mob/living/M as mob, var/method=TOUCH, var/volume)
 	if(method == TOUCH)
-		M.apply_damage(15, BRUTE)
+		var/ratio = volume/25
+		M.apply_damage(15*ratio, BRUTE)
 		reagent_vortex(M, 0)
-		if(show_message)
-			send_message(M)
+
 
 /datum/reagent/blob/b_sorium
 	name = "Sorium"
@@ -127,11 +122,10 @@
 	color = "#808000"
 	message = "The blob slams into you, and sends you flying"
 
-/datum/reagent/blob/b_sorium/reaction_mob(var/mob/living/M as mob, var/method=TOUCH, var/volume, var/show_message = 1)
+/datum/reagent/blob/b_sorium/reaction_mob(var/mob/living/M as mob, var/method=TOUCH, var/volume)
 	if(method == TOUCH)
-		M.apply_damage(15, BRUTE)
-		if(show_message)
-			send_message(M)
+		var/ratio = volume/25
+		M.apply_damage(15*ratio, BRUTE)
 		reagent_vortex(M, 1)
 
 
@@ -142,11 +136,10 @@
 	color = "#FFA500"
 	message = "The blob strikes you, and its tendrils explode"
 
-/datum/reagent/blob/explosive/reaction_mob(var/mob/living/M as mob, var/method=TOUCH, var/volume, var/show_message = 1)
+/datum/reagent/blob/explosive/reaction_mob(var/mob/living/M as mob, var/method=TOUCH, var/volume)
 	if(method == TOUCH)
-		if(prob(75))
-			if(show_message)
-				send_message(M)
+		var/ratio = volume/25
+		if(prob(75*ratio))
 			explosion(M.loc, 0, 0, 1, 0, 0)
 
 /datum/reagent/blob/omnizine
@@ -157,25 +150,10 @@
 	message = "The blob squirts something at you"
 	message_living = ", and you feel great"
 
-/datum/reagent/blob/omnizine/reaction_mob(var/mob/living/M as mob, var/method=TOUCH, var/volume, var/show_message = 1)
+/datum/reagent/blob/omnizine/reaction_mob(var/mob/living/M as mob, var/method=TOUCH, var/volume)
 	if(method == TOUCH)
-		if(show_message)
-			send_message(M)
-		M.reagents.add_reagent("omnizine", 11)
-
-/datum/reagent/blob/morphine
-	name = "Morphine"
-	id = "b_morphine"
-	description = ""
-	color = "#335555"
-	message = "The blob squirts something at you"
-	message_living = ", and you feel numb"
-
-/datum/reagent/blob/morphine/reaction_mob(var/mob/living/M as mob, var/method=TOUCH, var/volume, var/show_message = 1)
-	if(method == TOUCH)
-		if(show_message)
-			send_message(M)
-		M.reagents.add_reagent("morphine", 16)
+		var/ratio = volume/25
+		M.reagents.add_reagent("omnizine", 11*ratio)
 
 /datum/reagent/blob/spacedrugs
 	name = "Space drugs"
@@ -185,12 +163,11 @@
 	message = "The blob squirts something at you"
 	message_living = ", and you feel funny"
 
-/datum/reagent/blob/spacedrugs/reaction_mob(var/mob/living/M as mob, var/method=TOUCH, var/volume, var/show_message = 1)
+/datum/reagent/blob/spacedrugs/reaction_mob(var/mob/living/M as mob, var/method=TOUCH, var/volume)
 	if(method == TOUCH)
-		if(show_message)
-			send_message(M)
-		M.reagents.add_reagent("space_drugs", 15)
-		M.apply_damage(10, TOX)
+		var/ratio = volume/25
+		M.reagents.add_reagent("space_drugs", 15*ratio)
+		M.apply_damage(10*ratio, TOX)
 
 
 /datum/reagent/blob/proc/reagent_vortex(var/mob/living/M as mob, var/setting_type)

@@ -13,7 +13,6 @@
 	animate_movement = 0
 	var/metal = 0
 	var/lifetime = 6
-	var/max_lifetime = 6
 
 
 /obj/effect/effect/foam/metal/aluminium
@@ -55,13 +54,16 @@
 		kill_foam()
 		return
 
-	var/fraction = 1/max_lifetime
+	var/fraction = 1/initial(lifetime)
 	for(var/obj/O in range(0,src))
 		if(O.type == src.type)
 			continue
 		reagents.reaction(O, TOUCH, fraction)
+	var/hit = 0
 	for(var/mob/living/L in range(0,src))
-		foam_mob(L)
+		hit += foam_mob(L)
+	if(hit)
+		lifetime++ //this is so the decrease from mobs hit and the natural decrease don't cumulate.
 	var/T = get_turf(src)
 	reagents.reaction(T, TOUCH, fraction)
 
@@ -71,12 +73,13 @@
 
 /obj/effect/effect/foam/proc/foam_mob(var/mob/living/L as mob)
 	if(lifetime<1)
-		return
+		return 0
 	if(!istype(L))
-		return
-	var/fraction = 1/max_lifetime
+		return 0
+	var/fraction = 1/initial(lifetime)
 	reagents.reaction(L, TOUCH, fraction)
 	lifetime--
+	return 1
 
 /obj/effect/effect/foam/Crossed(var/atom/movable/AM)
 	if(istype(AM, /mob/living/carbon))
@@ -107,7 +110,6 @@
 		reagents.copy_to(F, (reagents.total_volume))
 		F.color = color
 		F.metal = metal
-		F.max_lifetime = max_lifetime
 
 
 /obj/effect/effect/foam/temperature_expose(datum/gas_mixture/air, exposed_temperature, exposed_volume)
@@ -168,8 +170,7 @@
 		F.color = foamcolor
 		F.amount = amount
 		F.metal = metal
-		F.max_lifetime = Clamp(round(sqrt(chemholder.reagents.total_volume/2), 1), 3, 10) //how long each foam cell lasts.
-		F.lifetime = F.max_lifetime
+
 
 //////////////////////////////////////////////////////////
 // FOAM STRUCTURE. Formed by metal foams. Dense and opaque, but easy to break

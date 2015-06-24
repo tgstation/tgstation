@@ -71,13 +71,13 @@
 
 				//Harmful gasses
 				if(!has_smoke_protection())
-					for(var/obj/effect/effect/smoke/chem/S in range(1,src))
-						if(S.reagents.total_volume)
-							var/amount = min(S.reagents.total_volume, 10)
-							var/fraction = min(amount/S.reagents.total_volume, 1)
+					for(var/obj/effect/effect/smoke/chem/S in range(1, src))
+						if(S.reagents.total_volume && S.lifetime)
+							var/fraction = 1/S.max_lifetime
 							S.reagents.reaction(src,INGEST, fraction)
+							var/amount = round(S.reagents.total_volume*fraction,0.1)
 							S.reagents.copy_to(src, amount)
-							break
+							S.lifetime--
 
 		else //Breathe from loc as obj again
 			if(istype(loc, /obj/))

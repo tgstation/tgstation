@@ -349,13 +349,14 @@
 
 /obj/item/weapon/grenade/chem_grenade/teargas/New()
 	..()
-	var/obj/item/weapon/reagent_containers/glass/beaker/B1 = new(src)
-	var/obj/item/weapon/reagent_containers/glass/beaker/B2 = new(src)
+	var/obj/item/weapon/reagent_containers/glass/beaker/large/B1 = new(src)
+	var/obj/item/weapon/reagent_containers/glass/beaker/large/B2 = new(src)
 
-	B1.reagents.add_reagent("condensedcapsaicin", 25)
-	B1.reagents.add_reagent("potassium", 25)
-	B2.reagents.add_reagent("phosphorus", 25)
-	B2.reagents.add_reagent("sugar", 25)
+	B1.reagents.add_reagent("condensedcapsaicin", 70)
+	B1.reagents.add_reagent("potassium", 30)
+	B2.reagents.add_reagent("phosphorus", 30)
+	B2.reagents.add_reagent("sugar", 30)
+	B1.reagents.add_reagent("condensedcapsaicin", 40)
 
 	beakers += B1
 	beakers += B2
@@ -368,13 +369,14 @@
 
 /obj/item/weapon/grenade/chem_grenade/facid/New()
 	..()
-	var/obj/item/weapon/reagent_containers/glass/beaker/B1 = new(src)
-	var/obj/item/weapon/reagent_containers/glass/beaker/B2 = new(src)
+	var/obj/item/weapon/reagent_containers/glass/beaker/bluespace/B1 = new(src)
+	var/obj/item/weapon/reagent_containers/glass/beaker/bluespace/B2 = new(src)
 
-	B1.reagents.add_reagent("facid", 25)
-	B1.reagents.add_reagent("potassium", 25)
-	B2.reagents.add_reagent("phosphorus", 25)
-	B2.reagents.add_reagent("sugar", 25)
+	B1.reagents.add_reagent("facid", 290)
+	B1.reagents.add_reagent("potassium", 10)
+	B2.reagents.add_reagent("phosphorus", 10)
+	B2.reagents.add_reagent("sugar", 10)
+	B2.reagents.add_reagent("facid", 280)
 
 	beakers += B1
 	beakers += B2
@@ -409,10 +411,10 @@
 	var/obj/item/weapon/reagent_containers/glass/beaker/bluespace/B1 = new(src)
 	var/obj/item/weapon/reagent_containers/glass/beaker/bluespace/B2 = new(src)
 
-	B1.reagents.add_reagent("fluorosurfactant", 290)
-	B1.reagents.add_reagent("clf3", 10)
-	B2.reagents.add_reagent("water", 290)
-	B2.reagents.add_reagent("clf3", 10)
+	B1.reagents.add_reagent("fluorosurfactant", 250)
+	B1.reagents.add_reagent("clf3", 50)
+	B2.reagents.add_reagent("water", 250)
+	B2.reagents.add_reagent("clf3", 50)
 
 	beakers += B1
 	beakers += B2

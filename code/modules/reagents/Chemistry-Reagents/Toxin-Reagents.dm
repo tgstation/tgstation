@@ -34,7 +34,7 @@
 	if(!istype(M) || !M.dna)
 		return  //No robots, AIs, aliens, Ians or other mobs should be affected by this.
 	src = null
-	if((method==TOUCH && prob(33)) || method==INGEST)
+	if((method==TOUCH && prob(min(33, volume))) || method==INGEST)
 		randmuti(M)
 		if(prob(98))
 			randmutb(M)
@@ -194,8 +194,8 @@
 	if(iscarbon(M))
 		var/mob/living/carbon/C = M
 		if(!C.wear_mask) // If not wearing a mask
-			C.adjustToxLoss(2) // 4 toxic damage per application, doubled for some reason
-
+			var/damage = min(round(0.4*volume, 0.1),10)
+			C.adjustToxLoss(damage)
 /datum/reagent/toxin/plantbgone/weedkiller
 	name = "Weed Killer"
 	id = "weedkiller"
@@ -215,7 +215,8 @@
 	if(iscarbon(M))
 		var/mob/living/carbon/C = M
 		if(!C.wear_mask) // If not wearing a mask
-			C.adjustToxLoss(2) // 4 toxic damage per application, doubled for some reason
+			var/damage = min(round(0.4*volume, 0.1),10)
+			C.adjustToxLoss(damage)
 
 /datum/reagent/toxin/spore
 	name = "Spore Toxin"
@@ -620,6 +621,7 @@
 /datum/reagent/toxin/acid/reaction_mob(var/mob/living/carbon/C, var/method=TOUCH, var/volume)
 	if(!istype(C))
 		return
+	volume = round(volume,0.1)
 	if(method != TOUCH)
 		C.take_organ_damage(min(6*toxpwr, volume * toxpwr))
 		return
@@ -629,6 +631,7 @@
 /datum/reagent/toxin/acid/reaction_obj(var/obj/O, var/volume)
 	if(istype(O.loc, /mob)) //handled in human acid_act()
 		return
+	volume = round(volume,0.1)
 	O.acid_act(acidpwr, toxpwr, volume)
 
 /datum/reagent/toxin/acid/fluacid

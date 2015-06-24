@@ -67,7 +67,7 @@
 
 /datum/reagent/clf3/reaction_mob(var/mob/living/M, var/method=TOUCH, var/volume)
 	if(method == TOUCH && isliving(M))
-		M.adjust_fire_stacks(5)
+		M.adjust_fire_stacks(min(volume/5, 10))
 		M.IgniteMob()
 		PoolOrNew(/obj/effect/hotspot, M.loc)
 
@@ -148,7 +148,7 @@
 
 /datum/reagent/napalm/reaction_mob(var/mob/living/M, var/method=TOUCH, var/volume)
 	if(method == TOUCH && isliving(M))
-		M.adjust_fire_stacks(7)
+		M.adjust_fire_stacks(min(volume/4, 20))
 
 /datum/reagent/cryostylane
 	name = "Cryostylane"

@@ -1,0 +1,6 @@
+author: phil235
+
+delete-after: True
+
+changes: 
+  - tweak: "Smoke (and foam) no longer distribute more reagents than they have. The amount of clouds in a smoke now depends on the amount of smoke created. Acid no longer melts items on a mob at low volume, and the chances to melt them increases with the amount applied on the mob. Sprays can now contain acid again."

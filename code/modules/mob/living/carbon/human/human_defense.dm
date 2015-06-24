@@ -240,7 +240,7 @@ emp_act
 	var/list/inventory_items_to_kill = list()
 	var/acidity = min(acidpwr*acid_volume/200, toxpwr)
 	var/acid_volume_left = acid_volume
-	var/acid_decay = 200/acidpwr // how much volume we lose per item we try to melt. 10 for fluoro, 20 for sulphuric
+	var/acid_decay = 100/acidpwr // how much volume we lose per item we try to melt. 5 for fluoro, 10 for sulphuric
 
 	//HEAD//
 	var/obj/item/clothing/head_clothes = null

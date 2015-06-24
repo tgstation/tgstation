@@ -14,7 +14,7 @@
 	anchored = 0
 	mouse_opacity = 0
 	var/steps = 0
-	var/lifetime = 10
+	var/lifetime = 5
 	var/direction
 
 
@@ -32,7 +32,7 @@
 	..()
 	create_reagents(500)
 	SSobj.processing.Add(src)
-	lifetime = lifetime + rand(1,3)
+	lifetime += rand(-1,1)
 
 /obj/effect/effect/smoke/Destroy()
 	SSobj.processing.Remove(src)
@@ -40,8 +40,9 @@
 
 /obj/effect/effect/smoke/proc/kill_smoke()
 	SSobj.processing.Remove(src)
-	fade_out()
-	spawn(5)
+	spawn(0)
+		fade_out()
+	spawn(10)
 		qdel(src)
 
 /obj/effect/effect/smoke/process()
@@ -97,7 +98,6 @@
 		if(holder)
 			src.location = get_turf(holder)
 		var/obj/effect/effect/smoke/S = PoolOrNew(smoke_type, location)
-		SSobj.processing.Add(S)
 		if(!direction)
 			if(src.cardinals)
 				S.direction = pick(cardinal)
@@ -113,6 +113,9 @@
 /////////////////////////////////////////////
 // Bad smoke
 /////////////////////////////////////////////
+
+/obj/effect/effect/smoke/bad
+	lifetime = 8
 
 /obj/effect/effect/smoke/bad/process()
 	if(..())
@@ -145,6 +148,7 @@
 /obj/effect/effect/smoke/chem
 	icon = 'icons/effects/chemsmoke.dmi'
 	icon_state = ""
+	lifetime = 10
 	var/max_lifetime = 10
 
 /obj/effect/effect/smoke/chem/process()
@@ -158,17 +162,21 @@
 		for(var/turf/T in range(1,src))
 			reagents.reaction(T, TOUCH, fraction)
 
+		var/hit = 0
 		for(var/mob/living/L in range(1,src))
-			smoke_mob(L)
+			hit += smoke_mob(L)
+		if(hit)
+			lifetime++ //this is so the decrease from mobs hit and the natural decrease don't cumulate.
 
-/obj/effect/effect/smoke/chem/smoke_mob((mob/living/carbon/M as mob))
+/obj/effect/effect/smoke/chem/smoke_mob(mob/living/carbon/M as mob)
 	if(lifetime<1)
-		return
+		return 0
 	if(!istype(M))
-		return
+		return 0
 	var/fraction = 1/max_lifetime
 	reagents.reaction(M, TOUCH, fraction)
 	lifetime--
+	return 1
 
 
 
@@ -239,17 +247,19 @@
 				S.direction = pick(alldirs)
 		else
 			S.direction = direction
-		if(number<=5)
+		if(number == 1)
+			S.steps = 0
+		else if(number<=5)
 			S.steps = pick(0,1,1)
 		else if(number<=10)
 			S.steps = pick(0,1,1,1,2)
 		else
 			S.steps = pick(0,1,1,1,2,2,2,3)
-		S.max_lifetime = Clamp(round(sqrt(chemholder.reagents.total_volume/2), 1), 4, 10) //the more chemicals, the longer the smoke duration.
-		S.lifetime = S.max_lifetime
+
+		S.max_lifetime = S.lifetime
 
 		if(chemholder.reagents.total_volume > 1) // can't split 1 very well
-			chemholder.reagents.copy_to(S, chemholder.reagents.total_volume / number) // copy reagents to each smoke, divide evenly
+			chemholder.reagents.copy_to(S, chemholder.reagents.total_volume/number) // copy reagents to each smoke, divide evenly
 
 		if(color)
 			S.color = color // give the smoke color, if it has any to begin with
@@ -266,6 +276,7 @@
 
 /obj/effect/effect/smoke/sleeping
 	color = "#9C3636"
+	lifetime = 10
 
 /obj/effect/effect/smoke/sleeping/process()
 	for(var/mob/living/carbon/M in range(1,src))
