@@ -154,8 +154,6 @@ update_label("John Doe", "Clowny")
 
 		var u = copytext(sanitize(input(user, "What occupation would you like to put on this card?\nNote: This will not grant any access levels other than Maintenance.", "Agent card job assignment", "Assistant")as text | null),1,MAX_MESSAGE_LEN)
 		if(!u)
-			if (u)
-				alert("Invalid assignment.")
 			src.registered_name = ""
 			return
 		src.assignment = u
