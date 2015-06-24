@@ -188,3 +188,9 @@ var/datum/subsystem/garbage_collector/SSgarbage
 			garbage.destroyed.Cut(1, 2)
 #endif
 
+/proc/qdeleted(var/datum/A)
+	if (!istype(A))
+		return 0
+	if (A.gc_destroyed)
+		return 1
+	return 0
