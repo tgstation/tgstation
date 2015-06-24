@@ -121,7 +121,7 @@
 			return
 		if (R.time)
 			usr << "<span class='notice'>Building [R.title] ...</span>"
-			if (!do_after(usr, R.time))
+			if (!do_after(usr, R.time, target = usr))
 				return
 			if(!building_checks(R, multiplier))
 				return

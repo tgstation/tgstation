@@ -547,7 +547,7 @@ mob/living/simple_animal/borer/proc/detach()
 
 	src << "You slither up [M] and begin probing at their ear canal..."
 
-	if(!do_after(src,50))
+	if(!do_after(src,50, target = M))
 		src << "As [M] moves away, you are dislodged and fall to the ground."
 		return
 

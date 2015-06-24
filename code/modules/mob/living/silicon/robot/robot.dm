@@ -493,7 +493,7 @@
 			return
 		else
 			playsound(src, 'sound/items/Ratchet.ogg', 50, 1)
-			if(do_after(user, 50) && !cell)
+			if(do_after(user, 50, target = src) && !cell)
 				user.visible_message("<span class='danger'>[user] deconstructs [src]!</span>", "<span class='notice'>You unfasten the securing bolts, and [src] falls to pieces!</span>")
 				deconstruct()
 

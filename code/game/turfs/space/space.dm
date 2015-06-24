@@ -51,7 +51,7 @@
 			if(R.use(1))
 				user << "<span class='notice'>Constructing catwalk...</span>"
 				playsound(src, 'sound/weapons/Genhit.ogg', 50, 1)
-				if(do_after(user, 10, 5, 0))
+				if(do_after(user, 10, 5, 0, target = src))
 					qdel(L)
 					ReplaceWithCatwalk()
 					user << "<span class='notice'>Catwalk constructed</span>"

@@ -493,7 +493,7 @@ var/global/list/RPD_recipes=list(
 			if(istype(A,/obj/item/pipe) || istype(A,/obj/item/pipe_meter) || istype(A,/obj/structure/disposalconstruct))
 				user << "<span class='notice'>Destroying Pipe...</span>"
 				playsound(get_turf(src), 'sound/machines/click.ogg', 50, 1)
-				if(do_after(user, 5))
+				if(do_after(user, 5, target = A))
 					activate()
 					qdel(A)
 					return 1
@@ -508,7 +508,7 @@ var/global/list/RPD_recipes=list(
 				return 0
 			user << "<span class='notice'>Building Pipes ...</span>"
 			playsound(get_turf(src), 'sound/machines/click.ogg', 50, 1)
-			if(do_after(user, 20))
+			if(do_after(user, 20, target = A))
 				activate()
 				var/obj/item/pipe/P = new (A, pipe_type=p_type, dir=p_dir)
 				P.flipped = p_flipped
@@ -523,7 +523,7 @@ var/global/list/RPD_recipes=list(
 				return 0
 			user << "<span class='notice'>Building Meter...</span>"
 			playsound(get_turf(src), 'sound/machines/click.ogg', 50, 1)
-			if(do_after(user, 20))
+			if(do_after(user, 20, target = A))
 				activate()
 				new /obj/item/pipe_meter(A)
 				return 1
@@ -535,7 +535,7 @@ var/global/list/RPD_recipes=list(
 				return 0
 			user << "<span class='notice'>Building Pipes...</span>"
 			playsound(get_turf(src), 'sound/machines/click.ogg', 50, 1)
-			if(do_after(user, 20))
+			if(do_after(user, 20, target = A))
 				var/obj/structure/disposalconstruct/C = new (A,p_type,p_dir)
 
 				if(!C.can_place())

@@ -116,7 +116,7 @@ var/global/list/datum/stack_recipe/xeno_recipes = list ( \
 
 		//visible message on mobs is defined as visible_message(var/message, var/self_message, var/blind_message)
 		usr.visible_message("<span class='notice'>\the [usr] starts cutting hair off \the [src]</span>", "<span class='notice'>You start cutting the hair off \the [src]</span>", "You hear the sound of a knife rubbing against flesh")
-		if(do_after(user,50))
+		if(do_after(user,50, target = src))
 			usr << "<span class='notice'>You cut the hair from this [src.singular_name]</span>"
 			//Try locating an exisitng stack on the tile and add to there if possible
 			for(var/obj/item/stack/sheet/hairlesshide/HS in usr.loc)

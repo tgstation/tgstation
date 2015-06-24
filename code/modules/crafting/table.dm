@@ -79,7 +79,7 @@
 /obj/structure/table/proc/construct_item(mob/user, datum/table_recipe/R)
 	check_table()
 	if(check_contents(R) && check_tools(user, R))
-		if(do_after(user, R.time))
+		if(do_after(user, R.time, target = src))
 			if(!check_contents(R) || !check_tools(user, R))
 				return 0
 			var/atom/movable/I = new R.result (loc)

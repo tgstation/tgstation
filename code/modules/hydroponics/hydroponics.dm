@@ -774,7 +774,7 @@ obj/machinery/hydroponics/attackby(var/obj/item/O as obj, var/mob/user as mob, p
 			user.visible_message("<span class='notice'>[user] begins to wrench [src] into place.</span>", \
 								"<span class='notice'>You begin to wrench [src] in place.</span>")
 			playsound(loc, 'sound/items/Ratchet.ogg', 50, 1)
-			if (do_after(user, 20))
+			if (do_after(user, 20, target = src))
 				if(anchored)
 					return
 				anchored = 1
@@ -784,7 +784,7 @@ obj/machinery/hydroponics/attackby(var/obj/item/O as obj, var/mob/user as mob, p
 			user.visible_message("<span class='notice'>[user] begins to unwrench [src].</span>", \
 								"<span class='notice'>You begin to unwrench [src].</span>")
 			playsound(loc, 'sound/items/Ratchet.ogg', 50, 1)
-			if (do_after(user, 20))
+			if (do_after(user, 20, target = src))
 				if(!anchored)
 					return
 				anchored = 0

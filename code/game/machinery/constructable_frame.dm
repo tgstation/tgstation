@@ -64,7 +64,7 @@
 				if(C.get_amount() >= 5)
 					playsound(src.loc, 'sound/items/Deconstruct.ogg', 50, 1)
 					user << "<span class='notice'>You start to add cables to the frame.</span>"
-					if(do_after(user, 20))
+					if(do_after(user, 20, target = src))
 						if(C.get_amount() >= 5 && status == 1)
 							C.use(5)
 							user << "<span class='notice'>You add cables to the frame.</span>"

@@ -15,7 +15,7 @@
 		if(0)
 			if(istype(P, /obj/item/weapon/wrench))
 				playsound(loc, 'sound/items/Ratchet.ogg', 50, 1)
-				if(do_after(user, 20))
+				if(do_after(user, 20, target = src))
 					user << "<span class='notice'>You wrench the frame into place.</span>"
 					anchored = 1
 					state = 1
@@ -25,7 +25,7 @@
 					user << "<span class='warning'>The welder must be on for this task.</span>"
 					return
 				playsound(loc, 'sound/items/Welder.ogg', 50, 1)
-				if(do_after(user, 20))
+				if(do_after(user, 20, target = src))
 					if(!src || !WT.remove_fuel(0, user)) return
 					user << "<span class='notice'>You deconstruct the frame.</span>"
 					new /obj/item/stack/sheet/plasteel( loc, 4)
@@ -33,7 +33,7 @@
 		if(1)
 			if(istype(P, /obj/item/weapon/wrench))
 				playsound(loc, 'sound/items/Ratchet.ogg', 50, 1)
-				if(do_after(user, 20))
+				if(do_after(user, 20, target = src))
 					user << "<span class='notice'>You unfasten the frame.</span>"
 					anchored = 0
 					state = 0
@@ -66,7 +66,7 @@
 				var/obj/item/stack/cable_coil/C = P
 				if(C.get_amount() >= 5)
 					playsound(loc, 'sound/items/Deconstruct.ogg', 50, 1)
-					if(do_after(user, 20))
+					if(do_after(user, 20, target = src))
 						if (C.get_amount() >= 5 && state == 2)
 							C.use(5)
 							user << "<span class='notice'>You add cables to the frame.</span>"
@@ -91,7 +91,7 @@
 				var/obj/item/stack/sheet/rglass/G = P
 				if(G.get_amount() >= 2)
 					playsound(loc, 'sound/items/Deconstruct.ogg', 50, 1)
-					if(do_after(user, 20))
+					if(do_after(user, 20, target = src))
 						if (G.get_amount() >= 2 && state == 3)
 							G.use(2)
 							user << "<span class='notice'>You put in the glass panel.</span>"
@@ -205,11 +205,11 @@
 		playsound(loc, 'sound/items/Ratchet.ogg', 50, 1)
 		switch(anchored)
 			if(0)
-				if(do_after(user, 20))
+				if(do_after(user, 20, target = src))
 					user << "<span class='notice'>You wrench the core into place.</span>"
 					anchored = 1
 			if(1)
-				if(do_after(user, 20))
+				if(do_after(user, 20, target = src))
 					user << "<span class='notice'>You unfasten the core.</span>"
 					anchored = 0
 	return

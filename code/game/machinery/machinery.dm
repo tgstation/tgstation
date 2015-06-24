@@ -413,7 +413,7 @@ Class Procs:
 	if(istype(W))
 		user << "<span class='notice'>Now [anchored ? "un" : ""]securing [name].</span>"
 		playsound(src.loc, 'sound/items/Ratchet.ogg', 50, 1)
-		if(do_after(user, time))
+		if(do_after(user, time, target = src))
 			user << "<span class='notice'>You've [anchored ? "un" : ""]secured [name].</span>"
 			anchored = !anchored
 			playsound(src.loc, 'sound/items/Deconstruct.ogg', 50, 1)
@@ -434,7 +434,7 @@ Class Procs:
 		user.visible_message("[user.name] starts to [state - 1 ? "unweld": "weld" ] the [src] [state - 1 ? "from" : "to"] the floor.", \
 				"You start to [state - 1 ? "unweld": "weld" ] the [src] [state - 1 ? "from" : "to"] the floor.", \
 				"You hear welding.")
-		if (do_after(user, time))
+		if (do_after(user, time, target = src))
 			if(!src || !W.isOn())
 				return -1
 			switch(state)

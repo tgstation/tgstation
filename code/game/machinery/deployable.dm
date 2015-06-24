@@ -68,7 +68,7 @@ for reference:
 	if (istype(W, /obj/item/stack/sheet/mineral/wood))
 		if (src.health < src.maxhealth)
 			visible_message("<span class='danger'>[user] begins to repair \the [src]!</span>")
-			if(do_after(user,20))
+			if(do_after(user,20, target = src))
 				src.health = src.maxhealth
 				W:use(1)
 				visible_message("<span class='danger'>[user] repairs \the [src]!</span>")

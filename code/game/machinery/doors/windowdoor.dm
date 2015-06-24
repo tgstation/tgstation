@@ -276,7 +276,7 @@
 			playsound(src.loc, 'sound/items/Crowbar.ogg', 100, 1)
 			user.visible_message("<span class='warning'>[user] removes the electronics from the [src.name].</span>", \
 								 "You start to remove electronics from the [src.name].")
-			if(do_after(user,40))
+			if(do_after(user,40, target = src))
 				if(src.p_open && !src.density && !src.operating && src.loc)
 					var/obj/structure/windoor_assembly/WA = new /obj/structure/windoor_assembly(src.loc)
 					switch(base_state)

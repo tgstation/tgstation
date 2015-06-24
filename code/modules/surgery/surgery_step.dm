@@ -43,7 +43,7 @@
 		Handle_Multi_Loc(user, target)
 
 	preop(user, target, target_zone, tool)
-	if(do_after(user, time))
+	if(do_after(user, time, target = target))
 
 		var/advance = 0
 		var/prob_chance = 100

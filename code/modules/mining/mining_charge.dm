@@ -51,7 +51,7 @@
 		return
 	user.visible_message("<span class='notice'>[user] starts placing [src] onto [target].</span>", \
 						 "<span class='notice'>You start placing the charge.</span>")
-	if(do_after(user, 30 && in_range(user, target)))
+	if(do_after(user, 30, target = src) && in_range(user, target))
 		user.visible_message("<span class='notice'>[user] places [src] onto [target].</span>", \
 							 "<span class='warning'>You slap [src] onto [target]!</span>")
 		user.drop_item()

@@ -797,7 +797,7 @@ var/list/obj/machinery/newscaster/allCasters = list() //Global list that will co
 	if(istype(I, /obj/item/weapon/wrench))
 		user << "<span class='notice'>Now [anchored ? "un" : ""]securing [name]</span>"
 		playsound(src.loc, 'sound/items/Ratchet.ogg', 50, 1)
-		if(do_after(user, 60))
+		if(do_after(user, 60, target = src))
 			new /obj/item/newscaster_frame(loc)
 			playsound(src.loc, 'sound/items/Deconstruct.ogg', 50, 1)
 			qdel(src)

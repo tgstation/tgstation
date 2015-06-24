@@ -33,7 +33,7 @@
 								D << "<span class='notice'>You can't seem to find the [pick(faux_gadgets)]. Without it, [src] [pick(faux_problems)].</span>"
 								return
 							D.visible_message("<span class='notice'>[D] begins to reactivate [src].</span>")
-							if(do_after(user,30,needhand = 1))
+							if(do_after(user,30,needhand = 1, target = src))
 								health = health_repair_max
 								stat = CONSCIOUS
 								icon_state = icon_living

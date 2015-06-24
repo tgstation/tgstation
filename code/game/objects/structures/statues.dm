@@ -24,7 +24,7 @@
 			playsound(src.loc, 'sound/items/Ratchet.ogg', 100, 1)
 			user.visible_message("<span class='notice'>[user] is loosening the [name]'s bolts...</span>", \
 								 "<span class='notice'>You are loosening the [name]'s bolts...</span>")
-			if(do_after(user,40))
+			if(do_after(user,40, target = src))
 				if(!src.loc || !anchored)
 					return
 				user.visible_message("<span class='notice'>[user] loosened the [name]'s bolts!</span>", \
@@ -37,7 +37,7 @@
 			playsound(src.loc, 'sound/items/Ratchet.ogg', 100, 1)
 			user.visible_message("<span class='notice'>[user] is securing the [name]'s bolts...</span>", \
 								 "<span class='notice'>You are securing the [name]'s bolts...</span>")
-			if(do_after(user, 40))
+			if(do_after(user, 40, target = src))
 				if(!src.loc || anchored)
 					return
 				user.visible_message("<span class='notice'>[user] has secured the [name]'s bolts!</span>", \
@@ -47,7 +47,7 @@
 	else if(istype(W, /obj/item/weapon/gun/energy/plasmacutter))
 		user.visible_message("<span class='notice'>[user] is slicing apart the [name]...</span>", \
 							 "<span class='notice'>You are slicing apart the [name]...</span>")
-		if(do_after(user,30))
+		if(do_after(user,30, target = src))
 			if(!src.loc)
 				return
 			user.visible_message("<span class='notice'>[user] slices apart the [name]!</span>", \
@@ -67,7 +67,7 @@
 		playsound(loc, 'sound/items/Welder.ogg', 40, 1)
 		user.visible_message("<span class='notice'>[user] is slicing apart the [name]...</span>", \
 							 "<span class='notice'>You are slicing apart the [name]...</span>")
-		if(do_after(user, 40))
+		if(do_after(user, 40, target = src))
 			if(!src.loc)
 				return
 			playsound(loc, 'sound/items/Welder2.ogg', 50, 1)

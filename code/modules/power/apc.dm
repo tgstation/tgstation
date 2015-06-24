@@ -383,7 +383,7 @@
 				return
 			playsound(src.loc, 'sound/items/Crowbar.ogg', 50, 1)
 			user << "You are trying to remove the power control board..." //lpeters - fixed grammar issues
-			if(do_after(user, 50))
+			if(do_after(user, 50, target = src))
 				if (has_electronics==1)
 					has_electronics = 0
 					if ((stat & BROKEN) || malfhack)
@@ -477,7 +477,7 @@
 		user.visible_message("<span class='warning'>[user.name] adds cables to the APC frame.</span>", \
 							"You start adding cables to the APC frame...")
 		playsound(src.loc, 'sound/items/Deconstruct.ogg', 50, 1)
-		if(do_after(user, 20))
+		if(do_after(user, 20, target = src))
 			if (C.amount >= 10 && !terminal && opened && has_electronics != 2)
 				var/turf/T = get_turf(src)
 				var/obj/structure/cable/N = T.get_cable_node()
@@ -497,7 +497,7 @@
 		user.visible_message("<span class='warning'>[user.name] inserts the power control board into [src].</span>", \
 							"You start to insert the power control board into the frame...")
 		playsound(src.loc, 'sound/items/Deconstruct.ogg', 50, 1)
-		if(do_after(user, 10))
+		if(do_after(user, 10, target = src))
 			if(has_electronics==0)
 				has_electronics = 1
 				user << "<span class='notice'>You place the power control board inside the frame.</span>"
@@ -514,7 +514,7 @@
 							"You start welding the APC frame...", \
 							"You hear welding.")
 		playsound(src.loc, 'sound/items/Welder.ogg', 50, 1)
-		if(do_after(user, 50))
+		if(do_after(user, 50, target = src))
 			if(!src || !WT.remove_fuel(3, user)) return
 			if (emagged || malfhack || (stat & BROKEN) || opened==2)
 				new /obj/item/stack/sheet/metal(loc)
@@ -543,7 +543,7 @@
 			return
 		user.visible_message("<span class='warning'>[user.name] replaces the damaged APC frame with a new one.</span>",\
 							"You begin to replace the damaged APC frame...")
-		if(do_after(user, 50))
+		if(do_after(user, 50, target = src))
 			user << "<span class='notice'>You've replaced the damaged APC frame with a new one.</span>"
 			qdel(W)
 			stat &= ~BROKEN

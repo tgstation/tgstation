@@ -207,7 +207,7 @@
 	if(!user)
 		return 0
 	user << "You start sharpening the [O]"
-	if(do_after(user, 30))
+	if(do_after(user, 30, target = O))
 		user.visible_message("[src] sharpens the [O]","You sharpen \the [O]", "You hear grinding")
 		O.sharp++
 		O.force += 9
