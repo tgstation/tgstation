@@ -1,0 +1,75 @@
+\documentclass[10pt, a4paper]{article}
+
+\usepackage[utf8]{inputenc}
+\usepackage{amsmath}
+\usepackage{amssymb}
+
+\title{NanoUI Template Reference}
+\author{Zaers}
+\begin{document}
+
+
+\begin{titlepage}
+ \maketitle
+ \tableofcontents
+\end{titlepage}
+\section{Syntax}
+
+The basic syntax of the templates could be described as HTML with JSrender extensions for displaying dynamic data.
+
+The CSS classes and icons used in NanoUI are defined in /nano/css/*.css
+
+JSrender functionality is called between \{\{ \}\}.
+
+The variables used are defined in the game code for each particular object that use nanoUI
+
+\subsection{Displaying a variable}
+Variables are displayed via \{\{:\verb|variable|\}\}
+
+\subsection{Calling a function}
+Functions are called using \{\{\textasciitilde\verb|function(ARGS)|\}\}
+
+\subsection{Conditionals}
+JSrender conditionals are used via 
+
+\{\{if \verb|condition|\}\}
+
+and 
+
+\{\{else \verb|optional contidition|\}\}
+
+terminated with
+
+\{\{/if\}\}
+
+\subsection{Progress bars}
+Progress bars are used as a function via 
+
+\verb|displayBar(variable, minimum, maximum, styleClass, text)|
+
+\subsection{Links}
+BYOND links are generated as a function via
+
+\verb|link(text, icon, parameters, status, elementClass, elementId)|
+
+\subsection{For loops}
+JSrender supports for loops, used as
+
+\{\{for \verb|object or array|\}\}
+
+\verb|...|
+
+\{\{/for\}\}
+
+\subsection{Data linking}
+JSViews data linking is done via 
+\{\textasciicircum\{ \}\}
+and automatically refreshes the data displayed if it changes
+
+\section{Other resources}
+If the above reference was insufficient, 
+JSrender API documentation is available at \verb|http://www.jsviews.com|
+
+and complete templates are viewable in /nano/templates/*.tmpl
+
+\end{document}
