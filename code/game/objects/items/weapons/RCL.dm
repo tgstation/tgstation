@@ -4,6 +4,7 @@
 	icon = 'icons/obj/items.dmi'
 	icon_state = "rcl-0"
 	item_state = "rcl-0"
+	inhand_states = list("left_hand" = 'icons/mob/in-hand/left/electronics.dmi', "right_hand" = 'icons/mob/in-hand/right/electronics.dmi')
 	opacity = 0
 	flags = FPRINT
 	siemens_coefficient = 1 //Not quite as conductive as working with cables themselves
@@ -91,7 +92,8 @@
 /obj/item/weapon/rcl/attackby(obj/item/weapon/W, mob/user)
 	if(isscrewdriver(W))
 		user << "<span class='notice'>You loosen the securing screws on the side, allowing you to lower it and retrieve the wires.</span>"
-		loaded.loc = usr.loc
+		loaded.loc = user.loc
+		loaded.forcemove()
 		user.put_in_hands(loaded)
 		loaded = null
 		update_icon()
