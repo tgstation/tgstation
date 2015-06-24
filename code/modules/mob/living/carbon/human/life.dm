@@ -1618,6 +1618,12 @@ var/global/list/organ_damage_overlays = list(
 
 		if(machine)
 			if(!machine.check_eye(src))		reset_view(null)
+			if(iscamera(client.eye))
+				var/obj/machinery/camera/C = client.eye
+				sight = 0
+				if(C.isXRay())
+					sight |= SEE_TURFS|SEE_MOBS|SEE_OBJS
+
 		else
 			var/isRemoteObserve = 0
 			if((M_REMOTE_VIEW in mutations) && remoteview_target)
