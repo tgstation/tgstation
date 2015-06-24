@@ -118,9 +118,8 @@ emp_act
 			if(!isturf(picked)) return
 			if(buckled)
 				buckled.unbuckle_mob()
-			src.loc = picked
-			Weaken(5)
-			radiation += 10
+			forceMove(picked)
+			Weaken(2)
 			return 1
 	return 0
 
