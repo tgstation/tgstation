@@ -130,12 +130,15 @@
 				else
 					dat += "Promote a Gangster<br>"
 		if(gangmode)
-			dat += "(30 Influence) "
-			if(points >= 30)
-				dat += "<a href='?src=\ref[src];purchase=dominator'><b>Station Dominator</b></a><br>"
+			if(gang == "A" ? !gangmode.A_dominations : !gangmode.B_dominations)
+				dat += "(Out of stock) Station Dominator"
 			else
-				dat += "<b>Station Dominator</b><br>"
-			dat += "<i>(Estimated Takeover Time: [round(max(300,900 - ((round((gang_territory/start_state.num_territories)*200, 10) - 60) * 15))/60,1)] minutes)</i><br>"
+				dat += "(30 Influence) "
+				if(points >= 30)
+					dat += "<a href='?src=\ref[src];purchase=dominator'><b>Station Dominator</b></a><br>"
+				else
+					dat += "<b>Station Dominator</b><br>"
+				dat += "<i>(Estimated Takeover Time: [round(max(300,900 - ((round((gang_territory/start_state.num_territories)*200, 10) - 60) * 15))/60,1)] minutes)</i><br>"
 
 	dat += "<br>"
 	dat += "<a href='?src=\ref[src];choice=refresh'>Refresh</a><br>"
@@ -211,6 +214,9 @@
 				if(istype(ticker.mode, /datum/game_mode/gang))
 					var/datum/game_mode/gang/mode = ticker.mode
 					if(isnum((gang == "A") ? mode.A_timer : mode.B_timer))
+						return
+
+					if(gang == "A" ? !mode.A_dominations : !mode.B_dominations)
 						return
 
 					var/area/usrarea = get_area(usr.loc)

@@ -31,6 +31,9 @@
 	// Victory timers
 	var/A_timer = "OFFLINE"
 	var/B_timer = "OFFLINE"
+	//How many attempts at domination each team is allowed
+	var/A_dominations = 3
+	var/B_dominations = 3
 ///////////////////////////
 //Announces the game type//
 ///////////////////////////
