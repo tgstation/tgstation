@@ -311,12 +311,13 @@
 	desc = "It's soy milk. White and nutritious goodness!"
 	icon_state = "soymilk"
 	item_state = "carton"
-	vending_cat = "dairy products"//it's not a dairy product but oh come on who cares I DO
+	vending_cat = "dairy products"//it's not a dairy product but oh come on who cares
 /obj/item/weapon/reagent_containers/food/drinks/soymilk/New()
 	..()
 	reagents.add_reagent("soymilk", 50)
 	src.pixel_x = rand(-10.0, 10)
 	src.pixel_y = rand(-10.0, 10)
+
 
 /obj/item/weapon/reagent_containers/food/drinks/coffee
 	name = "Robust Coffee"
@@ -582,6 +583,7 @@
 	reagents.add_reagent("ale", 30)
 	src.pixel_x = rand(-10.0, 10)
 	src.pixel_y = rand(-10.0, 10)
+
 /obj/item/weapon/reagent_containers/food/drinks/soda_cans
 	vending_cat = "carbonated drinks"
 
@@ -771,7 +773,7 @@
 /obj/item/weapon/reagent_containers/food/drinks/bottle
 	amount_per_transfer_from_this = 10
 	volume = 100
-	g_amt = 500
+	starting_materials = list(MAT_GLASS = 500)
 	bottleheight = 31
 	melt_temperature = MELTPOINT_GLASS
 	w_type=RECYK_GLASS
@@ -792,7 +794,7 @@
 	item_state = "beer"
 	attack_verb = list("stabbed", "slashed", "attacked")
 	var/icon/broken_outline = icon('icons/obj/drinks.dmi', "broken")
-	g_amt=500
+	starting_materials = list(MAT_GLASS = 500)
 	melt_temperature = MELTPOINT_GLASS
 	w_type=RECYK_GLASS
 
@@ -978,7 +980,8 @@
 	icon_state = "orangejuice"
 	item_state = "carton"
 	vending_cat = "fruit juices"
-	g_amt=0
+	starting_materials = null
+
 /obj/item/weapon/reagent_containers/food/drinks/orangejuice/New()
 	..()
 	reagents.add_reagent("orangejuice", 100)
@@ -989,7 +992,8 @@
 	icon_state = "cream"
 	item_state = "carton"
 	vending_cat = "dairy products"
-	g_amt=0
+	starting_materials = null
+
 /obj/item/weapon/reagent_containers/food/drinks/cream/New()
 	..()
 	reagents.add_reagent("cream", 100)
@@ -1000,10 +1004,12 @@
 	icon_state = "tomatojuice"
 	item_state = "carton"
 	vending_cat = "fruit juices"
-	g_amt=0
+	starting_materials = null
+
 /obj/item/weapon/reagent_containers/food/drinks/tomatojuice/New()
 	..()
 	reagents.add_reagent("tomatojuice", 100)
+
 
 /obj/item/weapon/reagent_containers/food/drinks/bottle/limejuice
 	name = "Lime Juice"
@@ -1011,10 +1017,12 @@
 	icon_state = "limejuice"
 	item_state = "carton"
 	vending_cat = "fruit juices"
-	g_amt=0
+	starting_materials = null
+
 /obj/item/weapon/reagent_containers/food/drinks/limejuice/New()
 	..()
 	reagents.add_reagent("limejuice", 100)
+
 
 
 
