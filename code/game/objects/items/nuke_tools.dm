@@ -7,15 +7,14 @@
 	icon = 'icons/obj/nuke_tools.dmi'
 	icon_state = "plutonium_core"
 	var/pulse = 0
+	var/cooldown = 0
 
 /obj/item/nuke_core/process()
-	if(!pulse)
-		pulse = 1
+	if(cooldown < world.time - 40)
+		cooldown = world.time
 		for(var/mob/living/L in range(8,get_turf(src)))
 			var/rads = 100 - get_dist(L,src)*7
 			L.irradiate(rads)
-		spawn(40)
-			pulse = 0
 
 //nuke core box, for carrying the core
 /obj/item/nuke_core_container
@@ -26,10 +25,14 @@
 	var/obj/item/nuke_core/core = null
 
 /obj/item/nuke_core_container/proc/load(obj/item/nuke_core/ncore, obj/machinery/nuclearbomb/nuke)
+	if(core)
+		return 0
 	SSobj.processing -= ncore
 	ncore.loc = src
 	core = ncore
+	nuke.core = null
 	icon_state = "core_container_loaded"
+	return 1
 
 //snowflake screwdriver, works as a key to start nuke theft, traitor only
 /obj/item/weapon/screwdriver/nuke

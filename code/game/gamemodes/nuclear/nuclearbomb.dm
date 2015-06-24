@@ -16,11 +16,11 @@ var/bomb_set
 /obj/machinery/nuclearbomb
 	name = "nuclear fission explosive"
 	desc = "You probably shouldn't stick around to see if this is armed."
-	icon = 'icons/obj/stationobjs.dmi'
-	icon_state = "nuclearbomb0"
+	icon = 'icons/obj/machines/nuke.dmi'
+	icon_state = "nuclearbomb_base"
 	density = 1
 
-	var/timeleft = 60.0
+	var/timeleft = 60
 	var/timing = 0
 	var/r_code = "ADMIN"
 	var/code = ""
@@ -33,6 +33,10 @@ var/bomb_set
 	var/immobile = 0 //Not all nukes should be moved
 	var/obj/item/nuke_core/core = null
 	var/deconstruction_state = NUKESTATE_INTACT
+	var/image/lights = null
+	var/image/panel = null
+	var/image/interior = null
+	var/image/glow = null
 
 /obj/machinery/nuclearbomb/selfdestruct
 	name = "station self-destruct terminal"
@@ -42,32 +46,33 @@ var/bomb_set
 	anchored = 1 //stops it being moved
 	immobile = 1 //prevents it from ever being moved
 	layer = 4
-	var/image/lights = null
-	var/image/panel = null
-	var/image/interior = null
-	var/image/glow = null
 
-/obj/machinery/nuclearbomb/selfdestruct/New()
+/obj/machinery/nuclearbomb/New()
 	core = new /obj/item/nuke_core(src)
-	lights = image(icon,"lights-off")
-	panel = image(icon,"panel-overlay")
-	overlays += lights
-	overlays += panel
+	update_icon()
 	..()
 
-/obj/machinery/nuclearbomb/selfdestruct/attackby(obj/item/I, mob/user, params)
+/obj/machinery/nuclearbomb/attackby(obj/item/I, mob/user, params)
+	if (istype(I, /obj/item/weapon/disk/nuclear))
+		if(!user.drop_item())
+			return
+		I.loc = src
+		auth = I
+		add_fingerprint(user)
+		return
+
 	switch(deconstruction_state)
 		if(NUKESTATE_INTACT)
 			if(istype(I, /obj/item/weapon/screwdriver/nuke))
 				playsound(loc, 'sound/items/Screwdriver.ogg', 100, 1)
 				user << "<span class='notice'>You start removing the front panel's screws...</span>"
-				if(do_after(user, 100))
+				if(do_after(user, 100,target=src))
 					deconstruction_state = NUKESTATE_OPEN
 					user << "<span class='notice'>You remove the screws and the front panel slides open.</span>"
 					update_icon()
 				return
 		if(NUKESTATE_OPEN,NUKESTATE_OPEN_TRAP)
-			if((deconstruction_state == 5) && istype(I, /obj/item/weapon/wirecutters))
+			if((deconstruction_state == NUKESTATE_OPEN) && istype(I, /obj/item/weapon/wirecutters))
 				playsound(loc, 'sound/effects/sparks4.ogg', 100, 1)
 				playsound(loc, 'sound/effects/EMPulse.ogg', 100, 1)
 				user << "<span class='warning'>You must have cut the wrong wire!</span>"
@@ -78,7 +83,7 @@ var/bomb_set
 				if(istype(I, /obj/item/stack/cable_coil))
 					var/obj/item/stack/cable_coil/S = I
 					user << "<span class='notice'>You start tying the uncountable wires...</span>"
-					if(do_after(user,30))
+					if(do_after(user,30,target=src))
 						if(S.use(15))
 							user << "<span class='notice'>You tie the uncountable wires with some cable, clearing the insides of [src].</span>"
 							deconstruction_state = NUKESTATE_WIRES_TIED
@@ -89,7 +94,7 @@ var/bomb_set
 		if(NUKESTATE_WIRES_TIED)
 			if(istype(I, /obj/item/weapon/pen))
 				user << "<span class='notice'>You start drawing cut lines...</span>"
-				if(do_after(user,30))
+				if(do_after(user,30,target=src))
 					user << "<span class='notice'>You draw cut lines inside [src].</span>"
 					deconstruction_state = NUKESTATE_CUT_LINES
 					update_icon()
@@ -100,7 +105,7 @@ var/bomb_set
 				playsound(loc, 'sound/items/Welder.ogg', 100, 1)
 				user << "<span class='notice'>You start cutting into [src]'s warhead...</span>"
 				if(welder.remove_fuel(1,user))
-					if(do_after(user,50))
+					if(do_after(user,50,target=src))
 						playsound(loc, 'sound/items/Deconstruct.ogg', 100, 1)
 						user << "<span class='notice'>You cut into [src]'s warhead. You can see the core's green glow.</span>"
 						deconstruction_state = NUKESTATE_CORE_EXPOSED
@@ -111,11 +116,13 @@ var/bomb_set
 			if(istype(I, /obj/item/nuke_core_container))
 				var/obj/item/nuke_core_container/core_box = I
 				user << "<span class='notice'>You start loading the plutonium core into [core_box]...</span>"
-				if(do_after(user,50))
-					user << "<span class='notice'>You load the plutonium core into [core_box].</span>"
-					core_box.load(core)
-					deconstruction_state = NUKESTATE_CORE_REMOVED
-					update_icon()
+				if(do_after(user,50,target=src))
+					if(core_box.load(core,src))
+						user << "<span class='notice'>You load the plutonium core into [core_box].</span>"
+						deconstruction_state = NUKESTATE_CORE_REMOVED
+						update_icon()
+					else
+						user << "<span class='warning'>You fail to load the plutonium core into [core_box]. [core_box] has already been used!</span>"
 				return
 		else
 			..()
@@ -130,7 +137,7 @@ var/bomb_set
 	else
 		return NUKE_OFF_UNLOCKED
 
-/obj/machinery/nuclearbomb/selfdestruct/update_icon()
+/obj/machinery/nuclearbomb/update_icon()
 	if(deconstruction_state == NUKESTATE_INTACT)
 		switch(get_nuke_state())
 			if(NUKE_OFF_LOCKED, NUKE_OFF_UNLOCKED)
@@ -146,7 +153,7 @@ var/bomb_set
 		update_icon_interior()
 		update_icon_lights()
 
-/obj/machinery/nuclearbomb/selfdestruct/proc/update_icon_interior()
+/obj/machinery/nuclearbomb/proc/update_icon_interior()
 	overlays -= interior
 	overlays -= glow
 	switch(deconstruction_state)
@@ -165,7 +172,7 @@ var/bomb_set
 	overlays += interior
 	overlays += glow
 
-/obj/machinery/nuclearbomb/selfdestruct/proc/update_icon_lights()
+/obj/machinery/nuclearbomb/proc/update_icon_lights()
 	overlays -= lights
 	overlays -= panel
 	panel = null
@@ -202,15 +209,6 @@ var/bomb_set
 			if ((M.client && M.machine == src))
 				attack_hand(M)
 	return
-
-/obj/machinery/nuclearbomb/attackby(obj/item/I as obj, mob/user as mob, params)
-	if (istype(I, /obj/item/weapon/disk/nuclear))
-		usr.drop_item()
-		I.loc = src
-		auth = I
-		add_fingerprint(user)
-		return
-	..()
 
 /obj/machinery/nuclearbomb/attack_paw(mob/user as mob)
 	return attack_hand(user)
@@ -342,7 +340,8 @@ var/bomb_set
 	if (safety)
 		timing = 0
 		return
-	timing = -1.0
+
+	timing = -1
 	yes_code = 0
 	safety = 1
 	update_icon()
@@ -351,6 +350,11 @@ var/bomb_set
 	if (ticker && ticker.mode)
 		ticker.mode.explosion_in_progress = 1
 	sleep(100)
+
+	if(!core)
+		ticker.station_explosion_cinematic(3,"no_core")
+		ticker.mode.explosion_in_progress = 0
+		return
 
 	enter_allowed = 0
 
@@ -380,21 +384,6 @@ var/bomb_set
 			return
 	return
 
-/obj/machinery/nuclearbomb/selfdestruct/explode()
-	if(core)
-		..()
-	else
-		timing = -1
-		yes_code = 0
-		safety = 1
-		update_icon()
-		for(var/mob/M in player_list)
-			M << 'sound/machines/Alarm.ogg'
-		if(ticker && ticker.mode)
-			ticker.mode.explosion_in_progress = 1
-			sleep(100)
-			ticker.station_explosion_cinematic(3,"no_core")
-			ticker.mode.explosion_in_progress = 0
 
 /*
 This is here to make the tiles around the station mininuke change when it's armed.
