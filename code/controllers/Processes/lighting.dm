@@ -16,7 +16,7 @@
 
 		scheck()
 
-	lighting_update_lights.len = 0
+	lighting_update_lights.Cut()
 
 	for(var/atom/movable/lighting_overlay/O in lighting_update_overlays)
 		if(O.needs_update)
@@ -25,4 +25,4 @@
 
 		scheck()
 
-	lighting_update_overlays.len = 0
+	lighting_update_overlays.Cut()

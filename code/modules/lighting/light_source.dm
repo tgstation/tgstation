@@ -144,7 +144,11 @@
 				effect_g[T.lighting_overlay] = round(lum_g * strength, LIGHTING_ROUND_VALUE)
 				effect_b[T.lighting_overlay] = round(lum_b * strength, LIGHTING_ROUND_VALUE)
 
-				T.lighting_overlay.update_lumcount(effect_r[T.lighting_overlay], effect_g[T.lighting_overlay], effect_b[T.lighting_overlay])
+				T.lighting_overlay.update_lumcount(
+					round(lum_r * strength, LIGHTING_ROUND_VALUE),
+					round(lum_g * strength, LIGHTING_ROUND_VALUE),
+					round(lum_b * strength, LIGHTING_ROUND_VALUE)
+				)
 
 			if(!T.affecting_lights)
 				T.affecting_lights = list()
@@ -162,7 +166,7 @@
 		if(T.lighting_overlay)
 			T.lighting_overlay.update_lumcount(-effect_r[T.lighting_overlay], -effect_g[T.lighting_overlay], -effect_b[T.lighting_overlay])
 
-	effect_r.len = 0
-	effect_g.len = 0
-	effect_b.len = 0
-	effect_turf.len = 0
+	effect_r.Cut()
+	effect_g.Cut()
+	effect_b.Cut()
+	effect_turf.Cut()
