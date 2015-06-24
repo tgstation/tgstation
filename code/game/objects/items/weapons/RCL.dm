@@ -93,7 +93,6 @@
 	if(isscrewdriver(W))
 		user << "<span class='notice'>You loosen the securing screws on the side, allowing you to lower it and retrieve the wires.</span>"
 		loaded.loc = user.loc
-		loaded.forcemove()
 		user.put_in_hands(loaded)
 		loaded = null
 		update_icon()
