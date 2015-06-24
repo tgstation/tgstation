@@ -55,6 +55,7 @@
 		/obj/item/weapon/storage/belt/utility/full,
 		/obj/item/clothing/tie/horrible,
 		/obj/item/clothing/suit/jacket/leather,
+		/obj/item/clothing/suit/jacket/leather/overcoat,
 		/obj/item/clothing/suit/poncho,
 		/obj/item/clothing/suit/poncho/green,
 		/obj/item/clothing/suit/poncho/red)

@@ -96,7 +96,10 @@
 /obj/mecha/Destroy()
 	go_out()
 	for(var/mob/M in src) //Let's just be ultra sure
-		M.Move(loc)
+		if(isAI(M))
+			M.gib() //AIs are loaded into the mech computer itself. When the mech dies, so does the AI. Forever.
+		else
+			M.Move(loc)
 
 	if(prob(30))
 		explosion(get_turf(loc), 0, 0, 1, 3)
@@ -782,17 +785,92 @@
 		call((proc_res["dynattackby"]||src), "dynattackby")(W,user)
 	return
 
-/*
-/obj/mecha/attack_ai(var/mob/living/silicon/ai/user as mob)
-	if(!istype(user, /mob/living/silicon/ai))
-		return
-	var/output = {"<b>Assume direct control over [src]?</b>
-						<a href='?src=\ref[src];ai_take_control=\ref[user];duration=3000'>Yes</a><br>
-						"}
-	user << browse(output, "window=mecha_attack_ai")
-	return
-*/
+/////////////////////////////////////
+//////////// AI piloting ////////////
+/////////////////////////////////////
 
+/obj/mecha/attack_ai(var/mob/living/silicon/ai/user as mob)
+	if(!isAI(user))
+		return
+	//Allows the Malf to scan a mech's status and loadout, helping it to decide if it is a worthy chariot.
+	if(user.can_dominate_mechs)
+		examine(user) //Get diagnostic information!
+		var/obj/item/mecha_parts/mecha_tracking/B = locate(/obj/item/mecha_parts/mecha_tracking) in src
+		if(B) //Beacons give the AI more detailed mech information.
+			user << "<span class='danger'>Warning: Tracking Beacon detected. Enter at your own risk. Beacon Data:"
+			user << "[B.get_mecha_info()]"
+		//Nothing like a big, red link to make the player feel powerful!
+		user << "<a href='?src=\ref[user];ai_take_control=\ref[src]'><span class='userdanger'>ASSUME DIRECT CONTROL?</span></a><br>"
+
+/obj/mecha/transfer_ai(var/interaction, mob/user, var/mob/living/silicon/ai/AI, var/obj/item/device/aicard/card)
+	if(!..())
+		return
+
+ //Transfer from core or card to mech. Proc is called by mech.
+	switch(interaction)
+		if(AI_TRANS_TO_CARD) //Upload AI from mech to AI card.
+			if(!state) //Mech must be in maint mode to allow carding.
+				user << "<span class='warning'>[name] must have maintenance protocols active in order to allow a transfer.</span>"
+				return
+			AI = occupant
+			if(!AI || !isAI(occupant)) //Mech does not have an AI for a pilot
+				user << "<span class='warning'>No AI detected in the [name] onboard computer.</span>"
+				return
+			if (AI.mind.special_role == "malfunction") //Malf AIs cannot leave mechs. Except through death.
+				user << "<span class='boldannounce'>ACCESS DENIED.</span>"
+				return
+			AI.aiRestorePowerRoutine = 0//So the AI initially has power.
+			AI.control_disabled = 1
+			AI.radio_enabled = 0
+			AI.loc = card
+			occupant = null
+			AI.controlled_mech = null
+			AI.remote_control = null
+			icon_state = initial(icon_state)+"-open"
+			AI << "You have been downloaded to a mobile storage device. Wireless connection offline."
+			user << "<span class='boldnotice'>Transfer successful</span>: [AI.name] ([rand(1000,9999)].exe) removed from [name] and stored within local memory."
+
+		if(AI_MECH_HACK) //Called by Malf AI mob on the mech.
+			new /obj/structure/AIcore/deactivated(AI.loc)
+			if(occupant) //Oh, I am sorry, were you using that?
+				AI << "<span class='warning'>Pilot detected! Forced ejection initiated!"
+				occupant << "<span class='danger'>You have been forcibly ejected!</span>"
+				go_out(1) //IT IS MINE, NOW. SUCK IT, RD!
+			ai_enter_mech(AI, interaction)
+
+		if(AI_TRANS_FROM_CARD) //Using an AI card to upload to a mech.
+			AI = locate(/mob/living/silicon/ai) in card
+			if(!AI)
+				user << "<span class='warning'>There is no AI currently installed on this device.</span>"
+				return
+			else if(AI.stat || !AI.client)
+				user << "<span class='warning'>[AI.name] is currently unresponsive, and cannot be uploaded.</span>"
+				return
+			else if(occupant || dna) //Normal AIs cannot steal mechs!
+				user << "<span class='warning'>Access denied. [name] is [occupant ? "currently occupied" : "secured with a DNA lock"]."
+				return
+			AI.control_disabled = 0
+			AI.radio_enabled = 1
+			user << "<span class='boldnotice'>Transfer successful</span>: [AI.name] ([rand(1000,9999)].exe) installed and executed successfully. Local copy has been removed."
+			ai_enter_mech(AI, interaction)
+
+//Hack and From Card interactions share some code, so leave that here for both to use.
+/obj/mecha/proc/ai_enter_mech(var/mob/living/silicon/ai/AI, var/interaction)
+	AI.aiRestorePowerRoutine = 0
+	AI.loc = src
+	occupant = AI
+	icon_state = initial(icon_state)
+	playsound(src, 'sound/machines/windowdoor.ogg', 50, 1)
+	if(!hasInternalDamage())
+		occupant << sound('sound/mecha/nominal.ogg',volume=50)
+	AI.cancel_camera()
+	AI.controlled_mech = src
+	AI.remote_control = src
+	AI.canmove = 1 //Much easier than adding AI checks! Be sure to set this back to 0 if you decide to allow an AI to leave a mech somehow.
+	AI.can_shunt = 0 //ONE AI ENTERS. NO AI LEAVES.
+	AI << "[interaction == AI_MECH_HACK ? "<span class='announce'>Takeover of [name] complete! You are now permanently loaded onto the onboard computer. Do not attempt to leave the station sector!</span>" \
+	: "<span class='notice'>You have been uploaded to a mech's onboard computer."]"
+	AI << "<span class='boldnotice'>Use Middle-Mouse to activate mech functions and equipment. Click normally for AI interactions.</span>"
 
 
 /////////////////////////////////////
@@ -1090,7 +1168,7 @@
 	go_out()
 
 
-/obj/mecha/proc/go_out()
+/obj/mecha/proc/go_out(var/forced)
 	if(!src.occupant) return
 	var/atom/movable/mob_container
 	if(ishuman(occupant))
@@ -1100,6 +1178,10 @@
 	else if(istype(occupant, /mob/living/carbon/brain))
 		var/mob/living/carbon/brain/brain = occupant
 		mob_container = brain.container
+	else if(isAI(occupant) && forced) //This should only happen if there are multiple AIs in a round, and at least one is Malf.
+		occupant.gib()  //If one Malf decides to steal a mech from another AI (even other Malfs!), they are destroyed, as they have nowhere to go when replaced.
+		occupant = null
+		return
 	else
 		return
 	if(mob_container.forceMove(src.loc))//ejecting mob container
@@ -1520,10 +1602,13 @@ var/year_integer = text2num(year) // = 2013???
 		user << browse(null,"window=exosuit_add_access")
 		return
 	if(href_list["dna_lock"])
-		if(usr != src.occupant)	return
-		if(src.occupant && occupant.dna)
-			src.dna = src.occupant.dna.unique_enzymes
-			src.occupant_message("You feel a prick as the needle takes your DNA sample.")
+		if(usr != src.occupant)
+			return
+		if(src.occupant && !iscarbon(src.occupant))
+			src.occupant << "<span class='danger'> You do not have any DNA!</span>"
+			return
+		src.dna = src.occupant.dna.unique_enzymes
+		src.occupant_message("You feel a prick as the needle takes your DNA sample.")
 		return
 	if(href_list["reset_dna"])
 		if(usr != src.occupant)	return
@@ -1552,54 +1637,6 @@ var/year_integer = text2num(year) // = 2013???
 		return
 	*/
 
-
-
-/*
-
-	if (href_list["ai_take_control"])
-		var/mob/living/silicon/ai/AI = locate(href_list["ai_take_control"])
-		var/duration = text2num(href_list["duration"])
-		var/mob/living/silicon/ai/O = new /mob/living/silicon/ai(src)
-		var/cur_occupant = src.occupant
-		O.invisibility = 0
-		O.canmove = 1
-		O.name = AI.name
-		O.real_name = AI.real_name
-		O.anchored = 1
-		O.aiRestorePowerRoutine = 0
-		O.control_disabled = 1 // Can't control things remotely if you're stuck in a card!
-		O.laws = AI.laws
-		O.stat = AI.stat
-		O.oxyloss = AI.getOxyLoss()
-		O.fireloss = AI.getFireLoss()
-		O.bruteloss = AI.getBruteLoss()
-		O.toxloss = AI.toxloss
-		O.updatehealth()
-		src.occupant = O
-		if(AI.mind)
-			AI.mind.transfer_to(O)
-		AI.name = "Inactive AI"
-		AI.real_name = "Inactive AI"
-		AI.icon_state = "ai-empty"
-		spawn(duration)
-			AI.name = O.name
-			AI.real_name = O.real_name
-			if(O.mind)
-				O.mind.transfer_to(AI)
-			AI.control_disabled = 0
-			AI.laws = O.laws
-			AI.oxyloss = O.getOxyLoss()
-			AI.fireloss = O.getFireLoss()
-			AI.bruteloss = O.getBruteLoss()
-			AI.toxloss = O.toxloss
-			AI.updatehealth()
-			qdel(O)
-			if (!AI.stat)
-				AI.icon_state = "ai"
-			else
-				AI.icon_state = "ai-crash"
-			src.occupant = cur_occupant
-*/
 	return
 
 ///////////////////////

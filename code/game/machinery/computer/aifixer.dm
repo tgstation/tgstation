@@ -15,20 +15,8 @@
 		else
 			user << "<span class='warning'>The screws on [name]'s screen won't budge and it emits a warning beep.</span>"
 		return
-
-	if(istype(I, /obj/item/device/aicard))
-		var/obj/item/device/aicard/AIcard = I
-		if(stat & (NOPOWER|BROKEN))
-			if(occupier)
-				AIcard.transfer_ai("AIFIXER","AICARD",src,user)
-				overlays.Cut()
-				return
-			user << "This terminal isn't functioning right now, get it working!"
-			return
-		AIcard.transfer_ai("AIFIXER","AICARD",src,user)
 	else
 		..()
-	return
 
 /obj/machinery/computer/aifixer/attack_hand(var/mob/user as mob)
 	if(..())
@@ -132,3 +120,31 @@
 					overlays += "ai-fixer-404"
 		else
 			overlays += "ai-fixer-empty"
+
+/obj/machinery/computer/aifixer/transfer_ai(var/interaction, var/mob/user, var/mob/living/silicon/ai/AI, var/obj/item/device/aicard/card)
+	if(!..())
+		return
+	//Downloading AI from card to terminal.
+	if(interaction == AI_TRANS_FROM_CARD)
+		if(stat & (NOPOWER|BROKEN))
+			user << "[src] is offline and cannot take an AI at this time!"
+			return
+		AI.loc = src
+		occupier = AI
+		AI.control_disabled = 1
+		AI.radio_enabled = 0
+		AI << "You have been uploaded to a stationary terminal. Sadly, there is no remote access from here."
+		user << "<span class='boldnotice'>Transfer successful</span>: [AI.name] ([rand(1000,9999)].exe) installed and executed successfully. Local copy has been removed."
+		update_icon()
+
+	else //Uploading AI from terminal to card
+		if(occupier && !active)
+			occupier << "You have been downloaded to a mobile storage device. Still no remote access."
+			user << "<span class='boldnotice'>Transfer successful</span>: [occupier.name] ([rand(1000,9999)].exe) removed from host terminal and stored within local memory."
+			occupier.loc = card
+			occupier = null
+			update_icon()
+		else if (active)
+			user << "<span class='boldannounce'>ERROR</span>: Reconstruction in progress."
+		else if (!occupier)
+			user << "<span class='boldannounce'>ERROR</span>: Unable to locate artificial intelligence."

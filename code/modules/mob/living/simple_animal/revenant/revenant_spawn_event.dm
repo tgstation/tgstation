@@ -1,3 +1,5 @@
+#define REVENANT_SPAWN_THRESHOLD 10
+
 /datum/round_event_control/revenant
 	name = "Spawn Revenant"
 	typepath = /datum/round_event/revenant
@@ -6,13 +8,17 @@
 	earliest_start = 0 //Meant to mix things up early-game.
 
 
-
 /datum/round_event/revenant
 	var/key_of_revenant
 
 
-
 /datum/round_event/revenant/proc/get_revenant(var/end_if_fail = 0)
+	var/deadMobs = 0
+	for(var/mob/M in dead_mob_list)
+		deadMobs++
+	if(deadMobs < REVENANT_SPAWN_THRESHOLD)
+		message_admins("Random event attempted to spawn a revenant, but there were only [deadMobs]/[REVENANT_SPAWN_THRESHOLD] dead mobs.")
+		return
 	key_of_revenant = null
 	if(!key_of_revenant)
 		var/list/candidates = get_candidates(BE_REVENANT)
@@ -32,32 +38,38 @@
 	for(var/obj/effect/landmark/L in landmarks_list)
 		if(isturf(L.loc))
 			switch(L.name)
-				if("carpspawn")
+				if("revenantspawn")
 					spawn_locs += L.loc
-	if(!spawn_locs)
+	if(!spawn_locs) //If we can't find any revenant spawns, try the carp spawns
+		for(var/obj/effect/landmark/L in landmarks_list)
+			if(isturf(L.loc))
+				switch(L.name)
+					if("carpspawn")
+						spawn_locs += L.loc
+	if(!spawn_locs) //If we can't find either, just spawn the revenant at the player's location
+		spawn_locs += get_turf(player_mind.current)
+	if(!spawn_locs) //If we can't find THAT, then just retry
 		return find_revenant()
 	var/mob/living/simple_animal/revenant/revvie = new /mob/living/simple_animal/revenant/(pick(spawn_locs))
 	player_mind.transfer_to(revvie)
 	player_mind.assigned_role = "revenant"
 	player_mind.special_role = "Revenant"
 	ticker.mode.traitors |= player_mind
-	message_admins("[key_of_revenant] has been made into a Revenant by an event.")
-	log_game("[key_of_revenant] was spawned as a Revenant by an event.")
+	message_admins("[key_of_revenant] has been made into a revenant by an event.")
+	log_game("[key_of_revenant] was spawned as a revenant by an event.")
 	return 1
-
 
 
 /datum/round_event/revenant/start()
 	get_revenant()
 
 
-
 /datum/round_event/revenant/proc/find_revenant()
-	message_admins("Attempted to spawn a Revenant but there was no players available. Will try again momentarily, bear with me...")
+	message_admins("An event failed to spawn a revenant. Retrying momentarily...")
 	spawn(50)
 		if(get_revenant(1))
-			message_admins("Hooray! Situation has been resolved, [key_of_revenant] has been spawned as a Revenant.")
-			log_game("[key_of_revenant] was spawned as a Revenant by an event.")
+			message_admins("[key_of_revenant] has been spawned as a revenant.")
+			log_game("[key_of_revenant] was spawned as a revenant by an event.")
 			return 0
-		message_admins("Unfortunately, no candidates were available for becoming a Revenant. Shutting down. :(")
+		message_admins("No candidates were available for becoming a revenant.")
 	return kill()

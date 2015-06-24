@@ -49,7 +49,7 @@ obj/item/weapon/mop/proc/clean(turf/simulated/A)
 	if(istype(turf))
 		user.visible_message("[user] begins to clean \the [turf] with [src].", "<span class='notice'>You begin to clean \the [turf] with [src]...</span>")
 
-		if(do_after(user, mopspeed))
+		if(do_after(user, mopspeed, target = src))
 			clean(turf)
 			user << "<span class='notice'>You finish mopping.</span>"
 

@@ -36,7 +36,7 @@
 "aJ" = (/obj/structure/cable{d1 = 1; d2 = 2; icon_state = "1-2"; pixel_y = 0},/obj/structure/table/reinforced,/turf/simulated/floor/plasteel,/area/bridge)
 "aK" = (/obj/structure/table/reinforced,/obj/item/weapon/folder/yellow,/obj/item/weapon/disk/nuclear,/turf/simulated/floor/plasteel,/area/bridge)
 "aL" = (/obj/structure/sign/securearea{desc = "A warning sign which reads 'HIGH VOLTAGE'"; icon_state = "shock"; name = "HIGH VOLTAGE"; pixel_x = 32; pixel_y = 0},/obj/structure/cable{d2 = 8; icon_state = "0-8"},/obj/structure/grille,/obj/structure/window/reinforced/fulltile,/obj/machinery/door/poddoor/preopen{id = "bridge blast"; layer = 2.9; name = "bridge blast door"},/turf/simulated/floor/plating/airless,/area/bridge)
-"aM" = (/obj/structure/closet/fireaxecabinet{pixel_x = 32},/turf/simulated/floor/plasteel,/area/bridge)
+"aM" = (/obj/structure/fireaxecabinet{pixel_x = 32},/turf/simulated/floor/plasteel,/area/bridge)
 "aN" = (/obj/machinery/light{icon_state = "tube1"; dir = 8},/turf/simulated/floor/plasteel,/area/bridge)
 "aO" = (/obj/machinery/atmospherics/pipe/simple/supply/hidden,/turf/simulated/floor/plasteel,/area/bridge)
 "aP" = (/obj/structure/table/reinforced,/obj/item/weapon/storage/secure/briefcase,/obj/item/device/flash,/obj/item/device/flash,/turf/simulated/floor/plasteel,/area/bridge)

@@ -381,7 +381,7 @@
 				return
 			playsound(src.loc, 'sound/items/Crowbar.ogg', 50, 1)
 			user << "<span class='notice'>You are trying to remove the power control board...</span>" //lpeters - fixed grammar issues
-			if(do_after(user, 50))
+			if(do_after(user, 50, target = src))
 				if (has_electronics==1)
 					has_electronics = 0
 					if ((stat & BROKEN) || malfhack)
@@ -476,7 +476,7 @@
 		user.visible_message("[user.name] adds cables to the APC frame.", \
 							"<span class='notice'>You start adding cables to the APC frame...</span>")
 		playsound(src.loc, 'sound/items/Deconstruct.ogg', 50, 1)
-		if(do_after(user, 20))
+		if(do_after(user, 20, target = src))
 			if (C.amount >= 10 && !terminal && opened && has_electronics != 2)
 				var/turf/T = get_turf(src)
 				var/obj/structure/cable/N = T.get_cable_node()
@@ -496,7 +496,7 @@
 		user.visible_message("[user.name] inserts the power control board into [src].", \
 							"<span class='notice'>You start to insert the power control board into the frame...</span>")
 		playsound(src.loc, 'sound/items/Deconstruct.ogg', 50, 1)
-		if(do_after(user, 10))
+		if(do_after(user, 10, target = src))
 			if(has_electronics==0)
 				has_electronics = 1
 				user << "<span class='notice'>You place the power control board inside the frame.</span>"
@@ -513,7 +513,7 @@
 							"<span class='notice'>You start welding the APC frame...</span>", \
 							"<span class='italics'>You hear welding.</span>")
 		playsound(src.loc, 'sound/items/Welder.ogg', 50, 1)
-		if(do_after(user, 50))
+		if(do_after(user, 50, target = src))
 			if(!src || !WT.remove_fuel(3, user)) return
 			if (emagged || malfhack || (stat & BROKEN) || opened==2)
 				new /obj/item/stack/sheet/metal(loc)
@@ -542,7 +542,7 @@
 			return
 		user.visible_message("[user.name] replaces the damaged APC frame with a new one.",\
 							"<span class='notice'>You begin to replace the damaged APC frame...</span>")
-		if(do_after(user, 50))
+		if(do_after(user, 50, target = src))
 			user << "<span class='notice'>You replace the damaged APC frame with a new one.</span>"
 			qdel(W)
 			stat &= ~BROKEN
@@ -664,6 +664,9 @@
 	if(!user)
 		return
 
+	ui = SSnano.push_open_or_new_ui(user, src, ui_key, ui, "apc.tmpl", "[area.name] - APC", 520, user.has_unlimited_silicon_privilege ? 465 : 420, 1)
+
+/obj/machinery/power/apc/get_ui_data(mob/user)
 	var/list/data = list(
 		"locked" = locked,
 		"isOperating" = operating,
@@ -709,19 +712,7 @@
 			)
 		)
 	)
-
-	// update the ui if it exists, returns null if no ui is passed/found
-	ui = SSnano.try_update_ui(user, src, ui_key, ui, data)
-	if (!ui)
-		// the ui does not exist, so we'll create a new() one
-        // for a list of parameters and their descriptions see the code docs in \code\modules\nano\nanoui.dm
-		ui = new(user, src, ui_key, "apc.tmpl", "[area.name] - APC", 520, data["siliconUser"] ? 465 : 420)
-		// when the ui is first opened this is the data it will use
-		ui.set_initial_data(data)
-		// open the new ui window
-		ui.open()
-		// auto update every Master Controller tick
-		ui.set_auto_update(1)
+	return data
 
 /obj/machinery/power/apc/proc/report()
 	return "[area.name] : [equipment]/[lighting]/[environ] ([lastused_equip+lastused_light+lastused_environ]) : [cell? cell.percent() : "N/C"] ([charging])"

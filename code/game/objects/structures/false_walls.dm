@@ -141,6 +141,9 @@
 	playsound(src, 'sound/items/Welder.ogg', 100, 1)
 	qdel(src)
 
+/obj/structure/falsewall/storage_contents_dump_act(obj/item/weapon/storage/src_object, mob/user)
+	return 0
+
 /*
  * False R-Walls
  */

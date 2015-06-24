@@ -220,3 +220,22 @@ Housekeeping and pipe network stuff below
 		parent2 = New
 	else if(Old == parent3)
 		parent3 = New
+
+
+/obj/machinery/atmospherics/trinary/unsafe_pressure_release(var/mob/user,var/pressures)
+	..()
+
+	var/turf/T = get_turf(src)
+	if(T)
+		//Remove the gas from air1+air2+air3 and assume it
+		var/datum/gas_mixture/environment = T.return_air()
+		var/lost = pressures*environment.volume/(air1.temperature * R_IDEAL_GAS_EQUATION)
+		lost += pressures*environment.volume/(air2.temperature * R_IDEAL_GAS_EQUATION)
+		lost += pressures*environment.volume/(air3.temperature * R_IDEAL_GAS_EQUATION)
+		var/shared_loss = lost/3
+
+		var/datum/gas_mixture/to_release = air1.remove(shared_loss)
+		to_release.merge(air2.remove(shared_loss))
+		to_release.merge(air3.remove(shared_loss))
+		T.assume_air(to_release)
+		air_update_turf(1)

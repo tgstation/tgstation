@@ -106,7 +106,7 @@
 
 		user.visible_message("<span class='danger'>[user] starts to put [G.affecting] into the gibber!</span>")
 		src.add_fingerprint(user)
-		if(do_after(user, gibtime) && G && G.affecting && !occupant)
+		if(do_after(user, gibtime, target = src) && G && G.affecting && !occupant)
 			user.visible_message("<span class='danger'>[user] stuffs [G.affecting] into the gibber!</span>")
 			var/mob/M = G.affecting
 			if(M.client)

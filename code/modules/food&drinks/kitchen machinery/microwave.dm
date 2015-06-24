@@ -67,7 +67,7 @@
 				"[user] starts to fix part of the microwave.", \
 				"<span class='notice'>You start to fix part of the microwave...</span>" \
 			)
-			if (do_after(user,20))
+			if (do_after(user,20, target = src))
 				user.visible_message( \
 					"[user] fixes part of the microwave.", \
 					"<span class='notice'>You fix part of the microwave.</span>" \
@@ -78,7 +78,7 @@
 				"[user] starts to fix part of the microwave.", \
 				"<span class='notice'>You start to fix part of the microwave...</span>" \
 			)
-			if (do_after(user,20))
+			if (do_after(user,20, target = src))
 				user.visible_message( \
 					"[user] fixes the microwave.", \
 					"<span class='notice'>You fix the microwave.</span>" \
@@ -116,7 +116,7 @@
 			"[user] starts to clean the microwave.", \
 			"<span class='notice'>You start to clean the microwave...</span>" \
 		)
-		if (do_after(user, P.cleanspeed))
+		if (do_after(user, P.cleanspeed, target = src))
 			user.visible_message( \
 				"[user] has cleaned the microwave.", \
 				"<span class='notice'>You clean the microwave.</span>" \
