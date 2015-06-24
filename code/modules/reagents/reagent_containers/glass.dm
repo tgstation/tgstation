@@ -53,6 +53,7 @@
 /obj/item/weapon/reagent_containers/glass/New()
 	..()
 	base_name = name
+	update_icon() //Used by all subtypes for reagent filling, and allows roundstart lids
 
 /obj/item/weapon/reagent_containers/glass/mop_act(obj/item/weapon/mop/M, mob/user)
 	return is_open_container()
@@ -245,21 +246,18 @@
 	New()
 		..()
 		reagents.add_reagent("cryoxadone", 30)
-		update_icon()
 
 /obj/item/weapon/reagent_containers/glass/beaker/sulphuric
 
 	New()
 		..()
 		reagents.add_reagent("sacid", 50)
-		update_icon()
 
 /obj/item/weapon/reagent_containers/glass/beaker/slime
 
 	New()
 		..()
 		reagents.add_reagent("slimejelly", 50)
-		update_icon()
 
 /obj/item/weapon/reagent_containers/glass/bucket
 	desc = "It's a bucket."
@@ -366,6 +364,7 @@
 
 */
 
+//No idea if this actually works anymore. Please handle carefully
 /obj/item/weapon/reagent_containers/glass/kettle
 	name = "Kettle"
 	desc = "A pot made for holding hot drinks. Can hold up to 75 units."
