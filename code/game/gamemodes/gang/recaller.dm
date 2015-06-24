@@ -261,7 +261,7 @@
 	if(!user)
 		return
 	var/message = stripped_input(user,"Discreetly send a gang-wide message.","Send Message") as null|text
-	if(!message || (message == "") || !can_use(user))
+	if(!message || !can_use(user))
 		return
 	if(user.z > 2)
 		user << "<span class='info'>\icon[src]Error: Station out of range.</span>"
