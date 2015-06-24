@@ -150,6 +150,10 @@
 	targetvendomat = /obj/machinery/vending/sovietvend
 	icon_state = "soviet"
 
+/obj/structure/vendomatpack/nuka
+	name = "Nuka Cola recharge pack"
+	targetvendomat = /obj/machinery/vending/nuka
+	icon_state = "nuka"
 
 //////EMPTY PACKS//////
 

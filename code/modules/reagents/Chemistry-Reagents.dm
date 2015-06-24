@@ -3504,7 +3504,7 @@
 	color = "#100800" // rgb: 16, 8, 0
 	adj_sleepy = -2
 
-/datum/reagent/drink/cold/nuke_cola/on_mob_life(var/mob/living/M as mob)
+/datum/reagent/drink/cold/nuka_cola/on_mob_life(var/mob/living/M as mob)
 
 	if(!holder) return
 	M.Jitter(20)
@@ -4740,3 +4740,20 @@ var/global/list/tonio_doesnt_remove=list(
 	name = "Recharger"
 	id = "etank"
 	description = "Regardless of how energized this coffee makes you feel, jumping against doors will still never be a viable way to open them."
+
+
+/datum/reagent/drink/cold/quantum
+	name = "Nuka Cola Quantum"
+	id = "quantum"
+	description = "Take the leap... enjoy a Quantum!"
+	color = "#100800" // rgb: 16, 8, 0
+	adj_sleepy = -2
+
+
+/datum/reagent/drink/cold/quantum/on_mob_life(var/mob/living/M as mob)
+
+	if(!holder) return
+	if(!M) M = holder.my_atom
+	M.apply_effect(2,IRRADIATE,0)
+	..()
+	return

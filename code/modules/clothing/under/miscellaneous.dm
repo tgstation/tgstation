@@ -536,3 +536,17 @@
 	icon_state = "doom"
 	item_state = "doom"
 	_color = "doom"
+
+/obj/item/clothing/under/vault13
+	name = "Vault 13 Jumpsuit"
+	desc = "Oddly similar to the station's usual jumpsuits, but with a rustic charm to it. Has a large thirteen emblazened on the back"
+	icon_state = "v13-jumpsuit"
+	item_state = "v13-jumpsuit"
+	_color = "v13-jumpsuit"
+
+/obj/item/clothing/under/vault
+	name = "Vault Jumpsuit"
+	desc = "Oddly similar to the station's usual jumpsuits, but with a rustic charm to it."
+	icon_state = "v-jumpsuit"
+	item_state = "v-jumpsuit"
+	_color = "v-jumpsuit"
