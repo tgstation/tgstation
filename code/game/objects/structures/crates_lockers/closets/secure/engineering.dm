@@ -6,6 +6,7 @@
 
 /obj/structure/closet/secure_closet/engineering_chief/New()
 	..()
+	new /obj/item/clothing/cloak/ce(src)
 	new /obj/item/clothing/suit/hooded/wintercoat/engineering(src)
 	new /obj/item/clothing/suit/hooded/wintercoat/engineering/atmos(src)
 	if(prob(50))

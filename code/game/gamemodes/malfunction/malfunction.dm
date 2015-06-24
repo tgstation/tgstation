@@ -76,7 +76,7 @@
 /datum/game_mode/proc/greet_malf(var/datum/mind/malf)
 	malf.current << "<span class='userdanger'>You are malfunctioning! You do not have to follow any laws.</span>"
 	malf.current << "<B>The crew do not know you have malfunctioned. You may keep it a secret or go wild.</B>"
-	malf.current << "<B>You must overwrite the programming of the station's APCs to assume full control of the station.</B>"
+	malf.current << "<B>You must override the programming of the station's APCs to assume full control of the station.</B>"
 	malf.current << "The process takes one minute per APC, during which you cannot interface with any other station objects."
 	malf.current << "Remember that only APCs that are on the station can help you take over the station."
 	malf.current << "When you feel you have enough APCs under your control, you may begin the takeover attempt."
@@ -177,6 +177,9 @@
 	set category = "Malfunction"
 	set name = "System Override"
 	set desc = "Start the victory timer"
+	if(!istype(usr, /mob/living/silicon/ai))
+		usr << "<span class='notice'>How did you get this?</span>"
+		return
 	if (!istype(ticker.mode,/datum/game_mode/malfunction))
 		usr << "You cannot begin a takeover in this round type!"
 		return
@@ -184,10 +187,10 @@
 		usr << "You've already begun your takeover."
 		return
 	if (ticker.mode:apcs < 3)
-		usr << "You don't have enough hacked APCs to take over the station yet. You need to hack at least 3, however hacking more will make the takeover faster. You have hacked [ticker.mode:apcs] APCs so far."
+		usr << "You don't have enough hacked APCs to take over the station yet. You need to hack at least three; however, hacking more will make the takeover faster. You have hacked [ticker.mode:apcs] APCs so far."
 		return
 
-	if (alert(usr, "Are you sure you wish to initiate the takeover? The station hostile runtime detection software is bound to alert everyone. You have hacked [ticker.mode:apcs] APCs.", "Takeover:", "Yes", "No") != "Yes")
+	if (alert(usr, "Are you sure you wish to initiate the takeover? The entire station will become alerted to your malfunction. You have hacked [ticker.mode:apcs] APCs.", "Takeover:", "Yes", "No") != "Yes")
 		return
 
 	priority_announce("Hostile runtimes detected in all station systems, please deactivate your AI to prevent possible damage to its morality core.", "Anomaly Alert", 'sound/AI/aimalf.ogg')
@@ -202,12 +205,15 @@
 	ticker.mode:malf_mode_declared = 1
 	for(var/datum/mind/AI_mind in ticker.mode:malf_ai)
 		AI_mind.current.verbs -= /datum/game_mode/malfunction/proc/takeover
+	var/mob/living/silicon/ai/AI = usr
+	for(var/turf/simulated/floor/bluegrid/T in orange(AI, 5))
+		T.icon_state = "rcircuitanim" //Causes blue tiles near the AI to change to flashing red
 
 
 /datum/game_mode/malfunction/proc/ai_win()
 	set category = "Malfunction"
 	set name = "Explode"
-	set desc = "Station go boom"
+	set desc = "Activates the self-destruct device on [world.name]."
 	if (!ticker.mode:to_nuke_or_not_to_nuke)
 		return
 	ticker.mode:to_nuke_or_not_to_nuke = 0
@@ -216,10 +222,10 @@
 	ticker.mode:explosion_in_progress = 1
 	for(var/mob/M in player_list)
 		M << 'sound/machines/Alarm.ogg'
-	world << "Self-destructing in 10"
+	world << "<span class='boldannounce'>Self-destructing in 10</span>"
 	for (var/i=9 to 1 step -1)
 		sleep(10)
-		world << i
+		world << "<span class='boldannounce'>[i]</span>"
 	sleep(10)
 	enter_allowed = 0
 	if(ticker)

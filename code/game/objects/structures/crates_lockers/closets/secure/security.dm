@@ -5,6 +5,7 @@
 
 /obj/structure/closet/secure_closet/captains/New()
 	..()
+	new /obj/item/clothing/cloak/cap(src)
 	new /obj/item/clothing/suit/hooded/wintercoat/captain(src)
 	if(prob(50))
 		new /obj/item/weapon/storage/backpack/captain(src)
@@ -55,6 +56,7 @@
 
 /obj/structure/closet/secure_closet/hos/New()
 	..()
+	new /obj/item/clothing/cloak/hos(src)
 	new /obj/item/clothing/suit/hooded/wintercoat/security(src)
 	new /obj/item/weapon/cartridge/hos(src)
 	new /obj/item/device/radio/headset/heads/hos(src)

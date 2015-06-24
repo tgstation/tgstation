@@ -1032,6 +1032,9 @@ obj/item/weapon/newspaper/attackby(obj/item/weapon/W as obj, mob/user as mob, pa
 		return
 
 
+/obj/item/weapon/newspaper/suicide_act(mob/user)
+	user.visible_message("<span class='suicide'>[user] is focusing intently on [src]! It looks like they're trying to commit sudoku.</span>")
+	return(OXYLOSS)
 ////////////////////////////////////helper procs
 
 
