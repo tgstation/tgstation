@@ -278,7 +278,7 @@
 		var/obj/machinery/abductor/console/console = get_team_console(team_number)
 		var/datum/objective/objective = team_objectives[team_number]
 		var/team_name = team_names[team_number]
-		if(console.experiment.points > objective.target_amount)
+		if(console.experiment.points >= objective.target_amount)
 			world << "<span class='greentext'><b>[team_name] team fullfilled its mission!</b></span>"
 		else
 			world << "<span class='greentext'><b>[team_name] team failed its mission.</b></span>"

@@ -64,6 +64,8 @@
 
 /obj/item/gland/slime/activate()
 	host << "<span class='warning'>You feel nauseous!</span>"
+	if(host.is_muzzled())
+		host << "<span class='warning'>The muzzle prevents you from vomiting!</span>"
 
 	host.visible_message("<span class='danger'>[host] vomits on the floor!</span>", \
 					"<span class='userdanger'>You throw up on the floor!</span>")
@@ -161,7 +163,7 @@
 
 /obj/item/gland/egg
 	cooldown_low = 300
-	cooldown_high = 600
+	cooldown_high = 400
 	uses = -1
 	icon_state = "egg"
 
@@ -242,8 +244,8 @@
 		qdel(src)
 
 /obj/item/gland/plasma
-	cooldown_low = 1200
-	cooldown_high = 2400
+	cooldown_low = 2400
+	cooldown_high = 3000
 	uses = 1
 
 /obj/item/gland/plasma/activate()
