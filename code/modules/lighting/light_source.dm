@@ -113,6 +113,7 @@
 		lum_g = 1
 		lum_b = 1
 
+/*
 /datum/light_source/proc/falloff(atom/movable/lighting_overlay/O)
   #if LIGHTING_FALLOFF == 1 // circular
 	. = (O.x - source_turf.x)**2 + (O.y - source_turf.y)**2 + LIGHTING_HEIGHT
@@ -130,24 +131,42 @@
 	. = 1 - CLAMP01(. / light_range)
    #endif
   #endif
+*/
 
 /datum/light_source/proc/apply_lum()
 	applied = 1
 	if(istype(source_turf))
 		for(var/turf/T in dview(light_range, source_turf, INVISIBILITY_LIGHTING))
 			if(T.lighting_overlay)
-				var/strength = light_power * falloff(T.lighting_overlay)
-				if(!strength) //Don't add turfs that aren't affected to the affected turfs.
+
+			  #if LIGHTING_FALLOFF == 1 // circular
+				. = (T.lighting_overlay.x - source_turf.x)**2 + (T.lighting_overlay.y - source_turf.y)**2 + LIGHTING_HEIGHT
+			   #if LIGHTING_LAMBERTIAN == 1
+				. = CLAMP01((1 - CLAMP01(sqrt(.) / light_range)) * (1 / (sqrt(. + 1))))
+			   #else
+				. = 1 - CLAMP01(sqrt(.) / light_range)
+			   #endif
+
+			  #elif LIGHTING_FALLOFF == 2 // square
+				. = abs(T.lighting_overlay.x - source_turf.x) + abs(T.lighting_overlay.y - source_turf.y) + LIGHTING_HEIGHT
+			   #if LIGHTING_LAMBERTIAN == 1
+				. = CLAMP01((1 - CLAMP01(. / light_range)) * (1 / (sqrt(.)**2 + )))
+			   #else
+				. = 1 - CLAMP01(. / light_range)
+			   #endif
+			  #endif
+				. *= light_power
+				if(!.) //Don't add turfs that aren't affected to the affected turfs.
 					continue
 
-				effect_r[T.lighting_overlay] = round(lum_r * strength, LIGHTING_ROUND_VALUE)
-				effect_g[T.lighting_overlay] = round(lum_g * strength, LIGHTING_ROUND_VALUE)
-				effect_b[T.lighting_overlay] = round(lum_b * strength, LIGHTING_ROUND_VALUE)
+				effect_r[T.lighting_overlay] = round(lum_r * ., LIGHTING_ROUND_VALUE)
+				effect_g[T.lighting_overlay] = round(lum_g * ., LIGHTING_ROUND_VALUE)
+				effect_b[T.lighting_overlay] = round(lum_b * ., LIGHTING_ROUND_VALUE)
 
 				T.lighting_overlay.update_lumcount(
-					round(lum_r * strength, LIGHTING_ROUND_VALUE),
-					round(lum_g * strength, LIGHTING_ROUND_VALUE),
-					round(lum_b * strength, LIGHTING_ROUND_VALUE)
+					round(lum_r * ., LIGHTING_ROUND_VALUE),
+					round(lum_g * ., LIGHTING_ROUND_VALUE),
+					round(lum_b * ., LIGHTING_ROUND_VALUE)
 				)
 
 			if(!T.affecting_lights)
