@@ -23,11 +23,10 @@
 		return
 	else
 		if(works_from_distance)
-			if(get_dist(user, T) < 8)
-				if(istype(T))
-					if(T.component_parts)
-						T.exchange_parts(user, src)
-						user.Beam(T,icon_state="rped_upgrade",icon='icons/effects/effects.dmi',time=5)
+			if(istype(T))
+				if(T.component_parts)
+					T.exchange_parts(user, src)
+					user.Beam(T,icon_state="rped_upgrade",icon='icons/effects/effects.dmi',time=5)
 	return
 
 /obj/item/weapon/storage/part_replacer/bluespace
