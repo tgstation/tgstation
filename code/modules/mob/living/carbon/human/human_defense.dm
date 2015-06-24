@@ -119,6 +119,8 @@ emp_act
 			if(buckled)
 				buckled.unbuckle_mob()
 			src.loc = picked
+			Weaken(5)
+			radiation += 10
 			return 1
 	return 0
 
