@@ -285,11 +285,7 @@
 	var/old_opacity = opacity
 	var/old_dynamic_lighting = dynamic_lighting
 	var/list/old_affecting_lights = affecting_lights
-	#if LIGHTING_RESOLUTION == 1
 	var/old_lighting_overlay = lighting_overlay
-	#else
-	var/old_lighting_overlay = lighting_overlays
-	#endif
 
 	//world << "Replacing [src.type] with [N]"
 
@@ -351,12 +347,7 @@
 
 		. = W
 
-	#if LIGHTING_RESOLUTION == 1
 	lighting_overlay = old_lighting_overlay
-	#else
-	lighting_overlays = old_lighting_overlay
-	#endif
-
 	affecting_lights = old_affecting_lights
 	if((old_opacity != opacity) || (dynamic_lighting != old_dynamic_lighting) || force_lighting_update)
 		reconsider_lights()
