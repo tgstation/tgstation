@@ -285,7 +285,7 @@
 				thralls++
 				M << "<span class='deadsay'>You feel hooks sink into your mind and pull.</span>"
 
-		if(!do_after(user, 30))
+		if(!do_after(user, 30, target = user))
 			user << "<span class='warning'>Your concentration has been broken. The mental hooks you have sent out now retract into your mind.</span>"
 			return
 

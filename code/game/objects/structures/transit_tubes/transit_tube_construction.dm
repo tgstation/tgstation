@@ -3,7 +3,7 @@
 // normal transit tubes
 /obj/structure/c_transit_tube
 	name = "unattached transit tube"
-	icon = 'icons/obj/pipes/transit_tube.dmi'
+	icon = 'icons/obj/atmospherics/pipes/transit_tube.dmi'
 	icon_state = "E-W" //icon_state decides which tube will be built
 	density = 0
 	layer = 3.1 //same as the built tube
@@ -81,7 +81,7 @@
 	if(istype(I, /obj/item/weapon/wrench))
 		user << "<span class='notice'>You start attaching the [name]...</span>"
 		src.add_fingerprint(user)
-		if(do_after(user, 40))
+		if(do_after(user, 40, target = src))
 			if(!src) return
 			user << "<span class='notice'>You attach the [name].</span>"
 			var/obj/structure/transit_tube/R = src.buildtube()
@@ -92,7 +92,7 @@
 // transit tube station
 /obj/structure/c_transit_tube/station
 	name = "unattached through station"
-	icon = 'icons/obj/pipes/transit_tube_station.dmi'
+	icon = 'icons/obj/atmospherics/pipes/transit_tube_station.dmi'
 	icon_state = "closed"
 
 /obj/structure/c_transit_tube/station/tube_turn(var/angle)
@@ -122,7 +122,7 @@
 // in that sense they're the same as stations and can reuse their flip and rotate verbs
 /obj/structure/c_transit_tube/station/block
 	name = "unattached tube blocker"
-	icon = 'icons/obj/pipes/transit_tube.dmi'
+	icon = 'icons/obj/atmospherics/pipes/transit_tube.dmi'
 	icon_state = "Block"
 
 /obj/structure/c_transit_tube/station/block/buildtube()
@@ -136,7 +136,7 @@
 //see station.dm for the logic
 /obj/structure/c_transit_tube_pod
 	name = "unattached transit tube pod"
-	icon = 'icons/obj/pipes/transit_tube_pod.dmi'
+	icon = 'icons/obj/atmospherics/pipes/transit_tube_pod.dmi'
 	icon_state = "pod"
 	anchored = 0.0
 	density = 0

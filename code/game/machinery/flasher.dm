@@ -42,7 +42,7 @@
 		if (bulb)
 			user.visible_message("[user] begins to disconnect [src]'s flashbulb.", "<span class='notice'>You begin to disconnect [src]'s flashbulb...</span>")
 			playsound(src.loc, 'sound/items/Wirecutter.ogg', 100, 1)
-			if(do_after(user, 30) && bulb)
+			if(do_after(user, 30, target = src) && bulb)
 				user.visible_message("[user] has disconnected [src]'s flashbulb!", "<span class='notice'>You disconnect [src]'s flashbulb.</span>")
 				bulb.loc = src.loc
 				bulb = null
@@ -50,8 +50,9 @@
 
 	else if (istype(W, /obj/item/device/flash/handheld))
 		if (!bulb)
+			if(!user.drop_item())
+				return
 			user.visible_message("[user] installs [W] into [src].", "<span class='notice'>You install [W] into [src].</span>")
-			user.drop_item()
 			W.loc = src
 			bulb = W
 			power_change()

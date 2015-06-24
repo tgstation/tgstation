@@ -33,7 +33,8 @@
 
 /obj/item/device/taperecorder/attackby(obj/item/I, mob/user, params)
 	if(!mytape && istype(I, /obj/item/device/tape))
-		user.drop_item()
+		if(!user.unEquip(I))
+			return
 		I.loc = src
 		mytape = I
 		user << "<span class='notice'>You insert [I] into [src].</span>"
@@ -283,7 +284,7 @@
 /obj/item/device/tape/attackby(obj/item/I, mob/user, params)
 	if(ruined && istype(I, /obj/item/weapon/screwdriver))
 		user << "<span class='notice'>You start winding the tape back in...</span>"
-		if(do_after(user, 120))
+		if(do_after(user, 120, target = src))
 			user << "<span class='notice'>You wound the tape back in.</span>"
 			fix()
 

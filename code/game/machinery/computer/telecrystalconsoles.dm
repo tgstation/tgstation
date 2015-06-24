@@ -39,7 +39,8 @@ var/list/possible_uplinker_IDs = list("Alfa","Bravo","Charlie","Delta","Echo","F
 
 		if(O.hidden_uplink)
 			var/obj/item/P = user.get_active_hand()
-			user.drop_item()
+			if(!user.drop_item())
+				return
 			uplinkholder = P
 			P.loc = src
 			P.add_fingerprint(user)
