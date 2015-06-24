@@ -3,6 +3,7 @@
 	mouse_opacity = 0
 	anchored = 1
 
+	icon_state = "light1"
 	icon = LIGHTING_ICON
 	layer = LIGHTING_LAYER
 	invisibility = INVISIBILITY_LIGHTING
@@ -12,11 +13,6 @@
 	var/lum_r
 	var/lum_g
 	var/lum_b
-
-	#if LIGHTING_RESOLUTION != 1
-	var/xoffset
-	var/yoffset
-	#endif
 
 	var/needs_update
 
@@ -94,10 +90,6 @@
 
 	color = "#000000"
 
-	#if LIGHTING_RESOLUTION != 1
-	xoffset = null
-	yoffset = null
-	#endif
 
 	needs_update = 0
 
@@ -107,15 +99,7 @@
 
 	var/turf/T = loc
 	if(istype(T))
-		#if LIGHTING_RESOLUTION == 1
 		T.lighting_overlay = null
-		#else
-		T.lighting_overlays -= src
-		#endif
-		for(var/datum/light_source/D in T.affecting_lights) //Remove references to us on the light sources affecting us.
-			D.effect_r -= src
-			D.effect_g -= src
-			D.effect_b -= src
 
 /atom/movable/lighting_overlay/singuloCanEat()
 	return 0
