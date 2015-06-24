@@ -117,7 +117,7 @@ emp_act
 			if(!isturf(picked)) return
 			if(buckled)
 				buckled.unbuckle_mob()
-			src.loc = picked
+			forceMove(picked)
 			return 1
 	return 0
 
