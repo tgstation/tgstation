@@ -742,7 +742,7 @@ var/list/obj/machinery/newscaster/allCasters = list()
 	if(istype(I, /obj/item/weapon/wrench))
 		user << "<span class='notice'>You start [anchored ? "un" : ""]securing [name]...</span>"
 		playsound(loc, 'sound/items/Ratchet.ogg', 50, 1)
-		if(do_after(user, 60))
+		if(do_after(user, 60, target = src))
 			user << "<span class='notice'>You [anchored ? "un" : ""]secure [name].</span>"
 			new /obj/item/newscaster_frame(loc)
 			playsound(loc, 'sound/items/Deconstruct.ogg', 50, 1)
@@ -893,6 +893,10 @@ var/list/obj/machinery/newscaster/allCasters = list()
 	var/wantedBody
 	var/wantedPhoto
 	var/creationTime
+
+/obj/item/weapon/newspaper/suicide_act(mob/user)
+	user.visible_message("<span class='suicide'>[user] is focusing intently on [src]! It looks like they're trying to commit sudoku.</span>")
+	return(OXYLOSS)
 
 /obj/item/weapon/newspaper/attack_self(mob/user)
 	if(ishuman(user))

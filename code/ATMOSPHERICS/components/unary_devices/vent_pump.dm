@@ -275,7 +275,7 @@
 		if (WT.remove_fuel(0,user))
 			playsound(loc, 'sound/items/Welder.ogg', 40, 1)
 			user << "<span class='notice'>You begin welding the vent...</span>"
-			if(do_after(user, 20))
+			if(do_after(user, 20, target = src))
 				if(!src || !WT.isOn()) return
 				playsound(src.loc, 'sound/items/Welder2.ogg', 50, 1)
 				if(!welded)

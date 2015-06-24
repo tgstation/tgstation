@@ -37,7 +37,7 @@ var/list/ventcrawl_machinery = list(/obj/machinery/atmospherics/unary/vent_pump,
 		if(vent_found.parent && (vent_found.parent.members.len || vent_found.parent.other_atmosmch))
 			visible_message("<span class='notice'>[src] begins climbing into the ventilation system...</span>" ,"<span class='notice'>You begin climbing into the ventilation system...</span>")
 
-			if(!do_after(src, 25))
+			if(!do_after(src, 25, target = vent_found))
 				return
 
 			if(!client)

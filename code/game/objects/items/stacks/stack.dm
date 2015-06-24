@@ -121,7 +121,7 @@
 			return
 		if (R.time)
 			usr.visible_message("<span class='notice'>[usr] starts building [R.title].</span>", "<span class='notice'>You start building [R.title]...</span>")
-			if (!do_after(usr, R.time))
+			if (!do_after(usr, R.time, target = usr))
 				return
 			if(!building_checks(R, multiplier))
 				return

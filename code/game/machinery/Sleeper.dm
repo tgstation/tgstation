@@ -16,10 +16,10 @@
 	var/initial_bin_rating = 1
 	var/min_health = 25
 	var/list/injection_chems = list() //list of injectable chems except ephedrine, coz ephedrine is always avalible
-	var/list/possible_chems = list(list("morphine", "salbutamol", "salglu_solution"),
-								   list("morphine", "salbutamol", "salglu_solution", "oculine"),
-								   list("morphine", "salbutamol", "salglu_solution", "oculine", "charcoal", "mutadone", "mannitol", "pen_acid"),
-								   list("morphine", "salbutamol", "salglu_solution", "oculine", "charcoal", "mutadone", "mannitol", "omnizine"))
+	var/list/possible_chems = list(list("morphine", "salbutamol", "bicaridine", "kelotane"),
+								   list("morphine", "salbutamol", "bicaridine", "kelotane", "oculine"),
+								   list("morphine", "salbutamol", "bicaridine", "kelotane", "oculine", "antitoxin", "mutadone", "mannitol", "pen_acid"),
+								   list("morphine", "salbutamol", "bicaridine", "kelotane", "oculine", "antitoxin", "mutadone", "mannitol", "pen_acid", "omnizine"))
 /obj/machinery/sleeper/New()
 	..()
 	component_parts = list()

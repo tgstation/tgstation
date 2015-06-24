@@ -177,13 +177,13 @@
 			if(triggered_by == 1)
 				message_admins("An explosion has triggered a [name] to detonate at <A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[bombturf.x];Y=[bombturf.y];Z=[bombturf.z]'>[A.name] (JMP)</a>.")
 			else if(triggered_by == 2)
-				message_admins("A signal has triggered a [name] to detonate at <A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[bombturf.x];Y=[bombturf.y];Z=[bombturf.z]'>[A.name] (JMP)</a>. Igniter attacher: [attacher]")
+				message_admins("A signal has triggered a [name] to detonate at <A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[bombturf.x];Y=[bombturf.y];Z=[bombturf.z]'>[A.name] (JMP)</a>. Igniter attacher: [key_name_admin(attacher)]<A HREF='?_src_=holder;adminmoreinfo=\ref[attacher]'>?</A> (<A HREF='?_src_=holder;adminplayerobservefollow=\ref[attacher]'>FLW</A>)")
 			else
-				message_admins("[key_name(user)]<A HREF='?_src_=holder;adminmoreinfo=\ref[user]'>?</A> has triggered a [name] to detonate at <A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[bombturf.x];Y=[bombturf.y];Z=[bombturf.z]'>[A.name] (JMP)</a>.")
+				message_admins("[key_name_admin(user)]<A HREF='?_src_=holder;adminmoreinfo=\ref[user]'>?</A> (<A HREF='?_src_=holder;adminplayerobservefollow=\ref[user]'>FLW</A>) has triggered a [name] to detonate at <A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[bombturf.x];Y=[bombturf.y];Z=[bombturf.z]'>[A.name] (JMP)</a>.")
 		if(triggered_by == 1)
 			log_game("An explosion has primed a [name] for detonation at [A.name]([bombturf.x],[bombturf.y],[bombturf.z])")
 		else if(triggered_by == 2)
-			log_game("A signal has primed a [name] for detonation at [A.name]([bombturf.x],[bombturf.y],[bombturf.z]). Igniter attacher: [attacher].")
+			log_game("A signal has primed a [name] for detonation at [A.name]([bombturf.x],[bombturf.y],[bombturf.z]). Igniter attacher: [key_name(attacher)].")
 		else
 			user.visible_message("<span class='warning'>[user] strikes \the [src], causing a chain reaction!</span>", "<span class='danger'>You strike \the [src], causing a chain reaction.</span>")
 			log_game("[key_name(user)] has primed a [name] for detonation at [A.name]([bombturf.x],[bombturf.y],[bombturf.z])")
@@ -326,7 +326,7 @@
 		flick("coin_[cmineral]_flip", src)
 		icon_state = "coin_[cmineral]_[coinflip]"
 		playsound(user.loc, 'sound/items/coinflip.ogg', 50, 1)
-		if(do_after(user, 15))
+		if(do_after(user, 15, target = src))
 			user.visible_message("[user] has flipped [src]. It lands on [coinflip].", \
 								 "<span class='notice'>You flip [src]. It lands on [coinflip].</span>", \
 								 "<span class='italics'>You hear the clattering of loose change.</span>")

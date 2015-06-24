@@ -160,6 +160,18 @@
 /obj/item/ammo_casing/shotgun/dart/attackby()
 	return
 
+/obj/item/ammo_casing/shotgun/dart/bioterror
+	desc = "A shotgun dart filled with deadly toxins."
+
+/obj/item/ammo_casing/shotgun/dart/bioterror/New()
+	..()
+	reagents.add_reagent("neurotoxin", 5)
+	reagents.add_reagent("morphine", 5)
+	reagents.add_reagent("spore", 5)
+	reagents.add_reagent("mutetoxin", 5) //;HELP OPS IN MAINT
+	reagents.add_reagent("initropidril", 5)
+	reagents.add_reagent("sodium_thiopental", 5)
+
 /obj/item/ammo_casing/a762
 	desc = "A 7.62mm bullet casing."
 	icon_state = "762-casing"

@@ -19,7 +19,7 @@
 	if(!message)	return
 	var/F = investigate_subject2file(subject)
 	if(!F)	return
-	F << "<small>[time2text(world.timeofday,"hh:mm")] \ref[src] ([x],[y],[z])</small> || [src] [message]<br>"
+	F << "<small>[time_stamp()] \ref[src] ([x],[y],[z])</small> || [src] [message]<br>"
 
 //ADMINVERBS
 /client/proc/investigate_show( subject in list("hrefs","notes","ntsl","singulo","wires","telesci", "gravity", "records", "cargo", "supermatter", "atmos", "experimentor", "kudzu") )

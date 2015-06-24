@@ -41,6 +41,13 @@
 		user << "<span class='danger'>It's locked!</span>"
 	return
 
+/obj/item/weapon/storage/lockbox/MouseDrop(over_object, src_location, over_location)
+	if (locked)
+		src.add_fingerprint(usr)
+		usr << "<span class='warning'>It's locked!</span>"
+		return 0
+	..()
+
 /obj/item/weapon/storage/lockbox/emag_act(mob/user as mob)
 	if(!broken)
 		broken = 1
@@ -56,6 +63,13 @@
 	else
 		..()
 	return
+
+//Check the destination item type for contentto.
+/obj/item/weapon/storage/lockbox/storage_contents_dump_act(obj/item/weapon/storage/src_object, mob/user)
+	if(locked)
+		user << "<span class='warning'>It's locked!</span>"
+		return 0
+	return ..()
 
 /obj/item/weapon/storage/lockbox/can_be_inserted(obj/item/W, stop_messages = 0)
 	if(locked)

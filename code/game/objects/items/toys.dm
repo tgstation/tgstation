@@ -464,7 +464,7 @@
 		user << "<span class='notice'>You start [instant ? "spraying" : "drawing"] a [temp] on the [target.name]...</span>"
 		if(instant)
 			playsound(user.loc, 'sound/effects/spray.ogg', 5, 1, 5)
-		if((instant>0) || do_after(user, 50))
+		if((instant>0) || do_after(user, 50, target = target))
 
 			//Gang functions
 			if(gangID)
@@ -474,7 +474,7 @@
 						return
 				for(var/obj/effect/decal/cleanable/crayon/old_marking in target)
 					qdel(old_marking)
-				new /obj/effect/decal/cleanable/crayon/gang(target,gangID,temp,graf_rot)
+				new /obj/effect/decal/cleanable/crayon/gang(target,gangID,"graffiti",graf_rot)
 				user << "<span class='notice'>You tagged [territory] for your gang!</span>"
 
 			else

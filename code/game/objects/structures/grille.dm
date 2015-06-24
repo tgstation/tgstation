@@ -174,7 +174,7 @@
 				user << "<span class='warning'>There is already a window there!</span>"
 				return
 			user << "<span class='notice'>You start placing the window...</span>"
-			if(do_after(user,20))
+			if(do_after(user,20, target = src))
 				if(!src.loc || !anchored) //Grille destroyed or unanchored while waiting
 					return
 				for(var/obj/structure/window/WINDOW in loc) //Another window already installed on grille
@@ -251,7 +251,6 @@
 
 /obj/structure/grille/hitby(AM as mob|obj)
 	..()
-	visible_message("<span class='danger'>[src] was hit by [AM].</span>")
 	var/tforce = 0
 	if(ismob(AM))
 		tforce = 5
@@ -261,3 +260,6 @@
 	playsound(loc, 'sound/effects/grillehit.ogg', 80, 1)
 	health = max(0, health - tforce)
 	healthcheck()
+
+/obj/structure/grille/storage_contents_dump_act(obj/item/weapon/storage/src_object, mob/user)
+	return 0

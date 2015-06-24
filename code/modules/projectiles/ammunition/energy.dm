@@ -154,3 +154,13 @@
 /obj/item/ammo_casing/energy/bolt/large
 	projectile_type = /obj/item/projectile/energy/bolt/large
 	select_name = "heavy bolt"
+
+obj/item/ammo_casing/energy/net
+	projectile_type = /obj/item/projectile/energy/net
+	select_name = "netting"
+	pellets = 6
+	variance = 1
+
+/obj/item/ammo_casing/energy/trap
+	projectile_type = /obj/item/projectile/energy/trap
+	select_name = "snare"

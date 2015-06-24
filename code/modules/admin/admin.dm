@@ -39,7 +39,7 @@ var/global/floorIsLava = 0
 	body += "<a href='?_src_=holder;traitor=\ref[M]'>TP</a> - "
 	body += "<a href='?priv_msg=[M.ckey]'>PM</a> - "
 	body += "<a href='?_src_=holder;subtlemessage=\ref[M]'>SM</a> - "
-	body += "<a href='?_src_=holder;adminplayerobservejump=\ref[M]'>JMP</a>\] </b><br>"
+	body += "<a href='?_src_=holder;adminplayerobservefollow=\ref[M]'>FLW</a>\] </b><br>"
 
 	body += "<b>Mob type</b> = [M.type]<br><br>"
 
@@ -47,7 +47,8 @@ var/global/floorIsLava = 0
 	body += "<A href='?_src_=holder;newban=\ref[M]'>Ban</A> | "
 	body += "<A href='?_src_=holder;jobban2=\ref[M]'>Jobban</A> | "
 	body += "<A href='?_src_=holder;appearanceban=\ref[M]'>Identity Ban</A> | "
-	body += "<A href='?_src_=holder;notes=show;ckey=[M.ckey]'>Notes</A> "
+	body += "<A href='?_src_=holder;notes=show;ckey=[M.ckey]'>Notes</A> | "
+	body += "<A href='?_src_=holder;watchlist=\ref[M]'>Watchlist Flag</A> "
 
 	if(M.client)
 		body += "| <A href='?_src_=holder;sendtoprison=\ref[M]'>Prison</A> | "

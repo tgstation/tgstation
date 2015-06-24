@@ -24,7 +24,7 @@
 			playsound(src.loc, 'sound/items/Ratchet.ogg', 100, 1)
 			user.visible_message("[user] is loosening the [name]'s bolts.", \
 								 "<span class='notice'>You are loosening the [name]'s bolts...</span>")
-			if(do_after(user,40))
+			if(do_after(user,40, target = src))
 				if(!src.loc || !anchored)
 					return
 				user.visible_message("[user] loosened the [name]'s bolts!", \
@@ -37,7 +37,7 @@
 			playsound(src.loc, 'sound/items/Ratchet.ogg', 100, 1)
 			user.visible_message("[user] is securing the [name]'s bolts...", \
 								 "<span class='notice'>You are securing the [name]'s bolts...</span>")
-			if(do_after(user, 40))
+			if(do_after(user, 40, target = src))
 				if(!src.loc || anchored)
 					return
 				user.visible_message("[user] has secured the [name]'s bolts.", \
@@ -47,7 +47,7 @@
 	else if(istype(W, /obj/item/weapon/gun/energy/plasmacutter))
 		user.visible_message("[user] is slicing apart the [name]...", \
 							 "<span class='notice'>You are slicing apart the [name]...</span>")
-		if(do_after(user,30))
+		if(do_after(user,30, target = src))
 			if(!src.loc)
 				return
 			user.visible_message("[user] slices apart the [name].", \
@@ -67,7 +67,7 @@
 		playsound(loc, 'sound/items/Welder.ogg', 40, 1)
 		user.visible_message("[user] is slicing apart the [name].", \
 							 "<span class='notice'>You are slicing apart the [name]...</span>")
-		if(do_after(user, 40))
+		if(do_after(user, 40, target = src))
 			if(!src.loc)
 				return
 			playsound(loc, 'sound/items/Welder2.ogg', 50, 1)
@@ -207,8 +207,8 @@
 
 /obj/structure/statue/plasma/attackby(obj/item/weapon/W as obj, mob/user as mob, params)
 	if(is_hot(W) > 300)//If the temperature of the object is over 300, then ignite
-		message_admins("Plasma statue ignited by [key_name(user, user.client)](<A HREF='?_src_=holder;adminmoreinfo=\ref[user]'>?</A>) in ([x],[y],[z] - <A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[x];Y=[y];Z=[z]'>JMP</a>)",0,1)
-		log_game("Plasma statue ignited by [user.ckey]([user]) in ([x],[y],[z])")
+		message_admins("Plasma statue ignited by [key_name_admin(user)](<A HREF='?_src_=holder;adminmoreinfo=\ref[user]'>?</A>) (<A HREF='?_src_=holder;adminplayerobservefollow=\ref[user]'>FLW</A>) in ([x],[y],[z] - <A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[x];Y=[y];Z=[z]'>JMP</a>)",0,1)
+		log_game("Plasma statue ignited by [key_name(user)] in ([x],[y],[z])")
 		ignite(is_hot(W))
 		return
 	..()

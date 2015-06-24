@@ -41,7 +41,7 @@
 		return
 	if(!IsAbductor(user))
 		user << "<span class='warning'>You start mashing alien buttons at random!</span>"
-		if(do_after(user,100))
+		if(do_after(user,100, target = src))
 			TeleporterSend()
 		return
 	user.set_machine(src)

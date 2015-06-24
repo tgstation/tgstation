@@ -192,7 +192,7 @@
 		if( WT.remove_fuel(0,user) )
 			user << "<span class='notice'>You begin slicing through the outer plating...</span>"
 			playsound(src, 'sound/items/Welder.ogg', 100, 1)
-			if(do_after(user, slicing_duration))
+			if(do_after(user, slicing_duration, target = src))
 				if( !istype(src, /turf/simulated/wall) || !user || !WT || !WT.isOn() || !T )
 					return 1
 				if( user.loc == T && user.get_active_hand() == WT )
@@ -202,7 +202,7 @@
 	else if( istype(W, /obj/item/weapon/gun/energy/plasmacutter) )
 		user << "<span class='notice'>You begin slicing through the outer plating...</span>"
 		playsound(src, 'sound/items/Welder.ogg', 100, 1)
-		if(do_after(user, slicing_duration*0.6))  // plasma cutter is faster than welding tool
+		if(do_after(user, slicing_duration*0.6, target = src))  // plasma cutter is faster than welding tool
 			if( !istype(src, /turf/simulated/wall) || !user || !W || !T )
 				return 1
 			if( user.loc == T && user.get_active_hand() == W )
@@ -265,3 +265,6 @@
 /turf/simulated/wall/narsie_act()
 	if(prob(20))
 		ChangeTurf(/turf/simulated/wall/cult)
+
+/turf/simulated/wall/storage_contents_dump_act(obj/item/weapon/storage/src_object, mob/user)
+	return 0

@@ -268,10 +268,24 @@ var/list/uplink_items = list()
 	cost = 2
 	gamemodes = list(/datum/game_mode/nuclear,/datum/game_mode/gang)
 
+/datum/uplink_item/ammo/ammobag
+	name = "Ammo Duffelbag - Shotgun Ammo Grab Bag"
+	desc = "A duffelbag filled with Bulldog ammo to kit out an entire team, at a discounted price."
+	item = /obj/item/weapon/storage/backpack/dufflebag/syndieammo/loaded
+	cost = 10 //bulk buyer's discount. Very useful if you're buying a mech and dont have TC left to buy people non-shotgun guns
+	gamemodes = list(/datum/game_mode/nuclear)
+
+/datum/uplink_item/ammo/bullslug
+	name = "Drum Magazine - 12g Slugs"
+	desc = "An additional 8-round slug magazine for use in the Bulldog shotgun. Now 8 times less likely to shoot your pals."
+	item = /obj/item/ammo_box/magazine/m12g
+	cost = 2
+	gamemodes = list(/datum/game_mode/nuclear)
+
 /datum/uplink_item/ammo/bullbuck
 	name = "Drum Magazine - 12g Buckshot"
 	desc = "An additional 8-round buckshot magazine for use in the Bulldog shotgun. Front towards enemy."
-	item = /obj/item/ammo_box/magazine/m12g
+	item = /obj/item/ammo_box/magazine/m12g/buckshot
 	cost = 2
 	gamemodes = list(/datum/game_mode/nuclear)
 
@@ -286,6 +300,13 @@ var/list/uplink_items = list()
 	name = "Drum Magazine - 12g Dragon's Breath"
 	desc = "An alternative 8-round dragon's breath magazine for use in the Bulldog shotgun. I'm a fire starter, twisted fire starter!"
 	item = /obj/item/ammo_box/magazine/m12g/dragon
+	cost = 2
+	gamemodes = list(/datum/game_mode/nuclear)
+
+/datum/uplink_item/ammo/bulltoxin
+	name = "Drum Magazine - 12g Bioterror"
+	desc = "An alternative 8-round toxic magazine for use in the Bulldog shotgun. Contains debilitating toxins to make your target die an agonizing death."
+	item = /obj/item/ammo_box/magazine/m12g/bioterror
 	cost = 3
 	gamemodes = list(/datum/game_mode/nuclear)
 
@@ -388,6 +409,14 @@ var/list/uplink_items = list()
 	desc = "Just add water to make your very own hostile to everything space carp. It looks just like a plushie."
 	item = /obj/item/toy/carpplushie/dehy_carp
 	cost = 3
+
+/datum/uplink_item/stealthy_weapons/door_charge
+	name = "Explosive Airlock Charge"
+	desc = "A small, easily concealable device. It can be applied to an open airlock panel, and the next person to open that airlock will be knocked down in an explosion. The airlock's maintenance panel will also be destroyed by this."
+	item = /obj/item/device/doorCharge
+	cost = 5
+	surplus = 6
+	excludefrom = list(/datum/game_mode/nuclear)
 
 // STEALTHY TOOLS
 
@@ -637,13 +666,64 @@ var/list/uplink_items = list()
 	name = "Explosive Implant"
 	desc = "An implant injected into the body, and later activated either manually or automatically upon death. Creates a moderately-sized fiery explosion. For those agents who know there is no going back."
 	item = /obj/item/weapon/storage/box/syndie_kit/imp_explosive
-	cost = 6
+	cost = 4
+
+
+//CYBERNETIC IMPLANTS
+
+/datum/uplink_item/cyber_implants
+	category = "Cybernetic Implants"
+	gamemodes = list(/datum/game_mode/nuclear)
+	surplus = 0
+
+/datum/uplink_item/cyber_implants/thermals
+	name = "Thermal Vision Implant"
+	desc = "These cybernetic eyes will give you thermal vision."
+	item = /obj/item/cybernetic_implant/eyes/thermals
+	cost = 8
+
+/datum/uplink_item/cyber_implants/xray
+	name = "X-Ray Vision Implant"
+	desc = "These cybernetic eyes will give you X-ray vision."
+	item = /obj/item/cybernetic_implant/eyes/xray
+	cost = 10
+
+/datum/uplink_item/cyber_implants/antistun
+	name = "CNS Rebooter Implant"
+	desc = "This implant will help you get back up on your feet faster after being stunned."
+	item = /obj/item/cybernetic_implant/brain/anti_stun
+	cost = 12
+
+/datum/uplink_item/cyber_implants/antidrop
+	name = "Anti-Drop Implant"
+	desc = "This cybernetic brain implant will allow you to force your hand muscles to contract, preventing item dropping."
+	item = /obj/item/cybernetic_implant/brain/anti_drop
+	cost = 8
+
+/datum/uplink_item/cyber_implants/reviver
+	name = "Reviver Implant"
+	desc = "This implant will attempt to revive you if you lose consciousness."
+	item = /obj/item/cybernetic_implant/chest/reviver
+	cost = 8
+
+/datum/uplink_item/cyber_implants/nutriment
+	name = "Nutriment Pump Implant PLUS"
+	desc = "This implant will pump you with nutriments and electrolytes so you don't go hungry in action."
+	item = /obj/item/cybernetic_implant/chest/nutriment/plus
+	cost = 5
+
+/datum/uplink_item/cyber_implants/bundle
+	name = "Cybernetic Implants Bundle"
+	desc = "A random selection of cybernetic implants. Guaranteed 5 high quality implants."
+	item = /obj/item/weapon/storage/box/cyber_implants
+	cost = 40
 
 // POINTLESS BADASSERY
 
 /datum/uplink_item/badass
 	category = "(Pointless) Badassery"
 	surplus = 0
+	last = 1
 
 /datum/uplink_item/badass/bundle
 	name = "Syndicate Bundle"
