@@ -103,20 +103,19 @@
 	if(!cause || !imp_in)	return 0
 	if(cause == "action_button" && alert(imp_in, "Are you sure you want to activate your microbomb implant? This will cause you to explode!", "Microbomb Implant Confirmation", "Yes", "No") != "Yes")
 		return 0
-	var/light = 2
-	var/medium = 1
-	var/heavy = 0.5
+	var/light = 1
+	var/medium = 0.5
+	var/heavy = 0.25
 	for(var/obj/item/weapon/implant/explosive/E in imp_in)
-		heavy += 0.5
-		medium += 1
-		light += 2
+		heavy += 0.25
+		medium += 0.5
+		light += 1
 		if(E != src)
 			qdel(E)
 	heavy = round(heavy)
 	medium = round(medium)
 	light = round(light)
-	if(heavy >= 2)
-		imp_in.gib()
+	imp_in.gib()
 	explosion(src,0,heavy,medium,light,light, flame_range = medium)
 	qdel(src)
 
@@ -130,7 +129,7 @@
 	if(cause == "action_button" && alert(imp_in, "Are you sure you want to activate your macrobomb implant? This will cause you to explode and gib!", "Macrobomb Implant Confirmation", "Yes", "No") != "Yes")
 		return 0
 	imp_in.gib()
-	explosion(src,0,5,10,20,20, flame_range = 20)
+	explosion(src,0,5,10,20,20, flame_range = 5)
 	qdel(src)
 
 /obj/item/weapon/implant/chem
