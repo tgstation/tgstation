@@ -125,7 +125,7 @@ aggressive_pinging_delay = 150 # How often to send a ping
 aggressive_pinging_refresh = 2.5 # How long is the sleep between checks
 ####
 allow_callnames = True #Disables NT, call if the variable is False
-automatic_youtube_reveal = True
+automatic_youtube_reveal = False # this thing is annoying as shit
 birthday_announced = 0 #Will be the year when it was announced
 call_to_action = False
 call_me_max_length = 20
