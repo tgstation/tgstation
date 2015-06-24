@@ -199,7 +199,7 @@ obj/item/projectile/kinetic/New()
 /obj/item/projectile/bullet/frag12
 	name ="explosive slug"
 	damage = 25
-	weaken = 1
+	weaken = 2
 
 /obj/item/projectile/bullet/frag12/on_hit(atom/target, blocked = 0)
 	..()

@@ -49,8 +49,8 @@
 /obj/item/projectile/bullet/stunshot //taser slugs for shotguns, nothing special
 	name = "stunshot"
 	damage = 5
-	stun = 1
-	weaken = 1
+	stun = 2
+	weaken = 2
 	stutter = 5
 	jitter = 20
 	range = 7

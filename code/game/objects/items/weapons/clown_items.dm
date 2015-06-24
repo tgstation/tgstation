@@ -19,6 +19,8 @@
 	throwforce = 0
 	throw_speed = 3
 	throw_range = 7
+	var/slip_weaken = 1
+	var/slip_stun = 2
 	var/cleanspeed = 50 //slower than mop
 
 /obj/item/weapon/soap/nanotrasen
@@ -34,11 +36,13 @@
 	desc = "An untrustworthy bar of soap made of strong chemical agents that dissolve blood faster."
 	icon_state = "soapsyndie"
 	cleanspeed = 10 //much faster than mop so it is useful for traitors who want to clean crime scenes
+	slip_weaken = 3 //Slips harder than regular soap
+	slip_stun = 4
 
 /obj/item/weapon/soap/Crossed(AM as mob|obj)
 	if (istype(AM, /mob/living/carbon))
 		var/mob/living/carbon/M = AM
-		M.slip(4, 2, src)
+		M.slip(slip_stun, slip_weaken, src)
 
 /obj/item/weapon/soap/afterattack(atom/target, mob/user as mob, proximity)
 	if(!proximity || !check_allowed_items(target))
