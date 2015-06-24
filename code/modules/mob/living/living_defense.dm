@@ -3,7 +3,7 @@
 
 	//the if "armor" check is because this is used for everything on /living, including humans
 	if(armor && armour_penetration)
-		armor = max(0, armor - armour_penetration)
+		armor = min(0, armor - armour_penetration)
 		if(penetrated_text)
 			src << "<span class='userdanger'>[penetrated_text]</span>"
 		else
