@@ -148,9 +148,12 @@
 
 /obj/machinery/computer/mech_bay_power_console/update_icon()
 	..()
-	if(!recharge_port || !recharge_port.recharging_mech || !recharge_port.recharging_mech.cell || !(recharge_port.recharging_mech.cell.charge < recharge_port.recharging_mech.cell.maxcharge || stat & NOPOWER|BROKEN))
+	if(stat)
 		return
-	overlays += "recharge_comp_on"
+	if(!recharge_port || !recharge_port.recharging_mech || !recharge_port.recharging_mech.cell || !(recharge_port.recharging_mech.cell.charge < recharge_port.recharging_mech.cell.maxcharge))
+		return
+	else
+		overlays += "recharge_comp_on"
 
 /obj/machinery/computer/mech_bay_power_console/initialize()
 	reconnect()
