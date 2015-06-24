@@ -6,7 +6,7 @@
 	g_amt = 200
 	origin_tech = "magnets=1"
 	attachable = 1
-	flags = PROXMOVE
+
 	var/scanning = 0
 	var/timing = 0
 	var/time = 10

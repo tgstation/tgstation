@@ -17,7 +17,6 @@
 #define ABSTRACT    	128		// for all things that are technically items but used for various different stuff, made it 128 because it could conflict with other flags other way
 #define FPRINT			256		// takes a fingerprint
 #define ON_BORDER		512		// item has priority to check when entering or leaving
-#define PROXMOVE		2048	// Will the code check us when we move or when something moves near us?
 
 
 #define HEADBANGPROTECT		4096

@@ -21,7 +21,6 @@
 	anchored = 0
 	base_state = "pflash"
 	density = 1
-	flags = FPRINT | PROXMOVE
 
 /obj/machinery/flasher/New()
 	bulb = new /obj/item/device/flash/handheld(src)

@@ -98,14 +98,12 @@
 			O.lastarea = get_area(O.loc)
 //		O.update_gravity(O.mob_has_gravity())
 
-	if(M && M.flags & PROXMOVE)
-		var/loopsanity = 100
-		for(var/atom/A in range(1))
-			if(loopsanity == 0)
-				break
-			loopsanity--
-			if((A && M) && A.flags & PROXMOVE)
-				A.HasProximity(M, 1)
+	var/loopsanity = 100
+	for(var/atom/A in range(1))
+		if(loopsanity == 0)
+			break
+		loopsanity--
+		A.HasProximity(M, 1)
 
 /turf/proc/is_plasteel_floor()
 	return 0

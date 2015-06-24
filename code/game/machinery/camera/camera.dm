@@ -7,7 +7,6 @@
 	idle_power_usage = 5
 	active_power_usage = 10
 	layer = 5
-	flags = FPRINT | PROXMOVE
 
 	var/health = 50
 	var/list/network = list("SS13")

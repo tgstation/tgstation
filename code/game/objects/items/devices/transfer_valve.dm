@@ -9,7 +9,6 @@
 	var/mob/attacher = null
 	var/valve_open = 0
 	var/toggle = 1
-	flags = FPRINT | PROXMOVE
 
 /obj/item/device/transfer_valve/IsAssemblyHolder()
 	return 1
