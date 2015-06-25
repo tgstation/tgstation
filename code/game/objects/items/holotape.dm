@@ -153,6 +153,8 @@
 			charging = 0
 
 /obj/item/holotape/Bumped(var/mob/M)
+	if(!ismob(M))
+		return
 	if(iscarbon(M))
 		var/mob/living/carbon/C = M
 		if(C.m_intent == "walk")
@@ -214,7 +216,6 @@
 
 /obj/item/holotape/hitby(AM as mob|obj)
 	..()
-	visible_message("<span class='danger'>[src] was hit by [AM].</span>")
 	var/tforce = 0
 	if(ismob(AM))
 		tforce = 5
@@ -227,11 +228,11 @@
 
 /obj/item/holotape/proc/breaktape()
 	var/dir[2]
-	var/icon_dir = src.icon_state
-	if(icon_dir == "[src.icon_base]_h")
+	var/icon_dir = icon_state
+	if(icon_dir == "[icon_base]_h")
 		dir[1] = EAST
 		dir[2] = WEST
-	if(icon_dir == "[src.icon_base]_v")
+	if(icon_dir == "[icon_base]_v")
 		dir[1] = NORTH
 		dir[2] = SOUTH
 

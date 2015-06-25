@@ -20,7 +20,8 @@
 
 	if((istype(I, /obj/item/weapon/grenade)))
 		if(grenades.len < max_grenades)
-			user.drop_item()
+			if(!user.unEquip(I))
+				return
 			I.loc = src
 			grenades += I
 			user << "<span class='notice'>You put the grenade in the grenade launcher.</span>"

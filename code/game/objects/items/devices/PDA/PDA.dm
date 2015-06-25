@@ -50,6 +50,8 @@ var/global/list/obj/item/device/pda/PDAs = list()
 	var/list/ntrclog = list() //NTRC message log
 	var/new_ntrc_msg = 0
 
+	var/image/photo = null //Scanned photo
+
 	var/noreturn = 0 //whether the PDA can use the Return button, used for the aiPDA chatroom
 
 /obj/item/device/pda/medical
@@ -815,13 +817,15 @@ var/global/list/obj/item/device/pda/PDAs = list()
 		if(useTC != 2) // Does our recipient have a broadcaster on their level?
 			U << "ERROR: Cannot reach recipient."
 			return
-		useMS.send_pda_message("[P.owner]","[owner]","[t]")
-
-		tnote += "<i><b>&rarr; To [P.owner]:</b></i><br>[t]<br>"
-		P.tnote += "<i><b>&larr; From <a href='byond://?src=\ref[P];choice=Message;target=\ref[src]'>[owner]</a> ([ownjob]):</b></i><br>[t]<br>"
+		var/msg_ref = useMS.send_pda_message("[P.owner]","[owner]","[t]",photo)
+		var/photo_ref = ""
+		if(photo)
+			photo_ref = "<a href='byond://?src=\ref[msg_ref];photo=1'>(Photo)</a>"
+		tnote += "<i><b>&rarr; To [P.owner]:</b></i><br>[t][photo_ref]<br>"
+		P.tnote += "<i><b>&larr; From <a href='byond://?src=\ref[P];choice=Message;target=\ref[src]'>[owner]</a> ([ownjob]):</b></i><br>[t][photo_ref]<br>"
 		for(var/mob/M in player_list)
 			if(isobserver(M) && M.client && (M.client.prefs.chat_toggles & CHAT_GHOSTPDA))
-				M.show_message("<span class='game say'>PDA Message - <span class='name'>[owner]</span> -> <span class='name'>[P.owner]</span>: <span class='message'>[t]</span></span>")
+				M.show_message("<span class='game say'>PDA Message - <span class='name'>[owner]</span> -> <span class='name'>[P.owner]</span>: <span class='message'>[t][photo_ref]</span></span>")
 
 		if (!P.silent)
 			playsound(P.loc, 'sound/machines/twobeep.ogg', 50, 1)
@@ -835,9 +839,10 @@ var/global/list/obj/item/device/pda/PDAs = list()
 			L = get(P, /mob/living/silicon)
 
 		if(L)
-			L << "\icon[P] <b>Message from [src.owner] ([ownjob]), </b>\"[t]\" (<a href='byond://?src=\ref[P];choice=Message;skiprefresh=1;target=\ref[src]'>Reply</a>)"
+			L << "\icon[P] <b>Message from [src.owner] ([ownjob]), </b>\"[t]\"[photo_ref] (<a href='byond://?src=\ref[P];choice=Message;skiprefresh=1;target=\ref[src]'>Reply</a>)"
 
 		log_pda("[usr] (PDA: [src.name]) sent \"[t]\" to [P.name]")
+		photo = null
 		P.overlays.Cut()
 		P.overlays += image('icons/obj/pda.dmi', "pda-r")
 	else
@@ -967,6 +972,10 @@ var/global/list/obj/item/device/pda/PDAs = list()
 				return
 			C.loc = src
 			user << "<span class='notice'>You slide \the [C] into \the [src].</span>"
+	else if(istype(C, /obj/item/weapon/photo))
+		var/obj/item/weapon/photo/P = C
+		photo = P.img
+		user << "<span class='notice'>You scan \the [C].</span>"
 	return
 
 /obj/item/device/pda/attack(mob/living/carbon/C, mob/living/user as mob)
@@ -1032,7 +1041,7 @@ var/global/list/obj/item/device/pda/PDAs = list()
 		note = replacetext(note, "<li>", "\[*\]")
 		note = replacetext(note, "<ul>", "\[list\]")
 		note = replacetext(note, "</ul>", "\[/list\]")
-		note = strip_html_properly(note)
+		note = html_encode(note)
 		notescanned = 1
 		user << "<span class='notice'>Paper scanned. Saved to PDA's notekeeper.</span>" //concept of scanning paper copyright brainoblivion 2009
 
@@ -1104,6 +1113,12 @@ var/global/list/obj/item/device/pda/PDAs = list()
 		return
 
 	var/selected = plist[c]
+
+	if(aicamera.aipictures.len>0)
+		var/add_photo = input(user,"Do you want to attach a photo?","Photo","No") as null|anything in list("Yes","No")
+		if(add_photo=="Yes")
+			var/datum/picture/Pic = aicamera.selectpicture(aicamera)
+			src.aiPDA.photo = Pic.fields["img"]
 	src.aiPDA.create_message(src, selected)
 
 
@@ -1186,7 +1201,7 @@ var/global/list/obj/item/device/pda/PDAs = list()
 
 //ntrc handler proc
 /obj/item/device/pda/proc/msg_chat(channel as text, sender as text, message as text)
-	var/msg = "<b>[strip_html_properly(sender)]</b>| [strip_html_properly(message)]<br>"
+	var/msg = "<b>[html_encode(sender)]</b>| [html_encode(message)]<br>"
 	if(!channel)
 		for(var/C in ntrclog)
 			ntrclog[C] = msg + ntrclog[C]

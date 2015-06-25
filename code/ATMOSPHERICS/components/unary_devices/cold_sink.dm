@@ -1,7 +1,6 @@
 /obj/machinery/atmospherics/unary/cold_sink
-	icon = 'icons/obj/atmospherics/cold_sink.dmi'
-	icon_state = "intact_off"
-	density = 1
+
+	icon_state = "cold_map"
 	use_power = 1
 
 	name = "cold sink"
@@ -12,15 +11,17 @@
 	var/current_temperature = T20C
 	var/current_heat_capacity = 50000 //totally random
 
-/obj/machinery/atmospherics/unary/cold_sink/update_icon()
-	if(node)
-		icon_state = "intact_[on?("on"):("off")]"
+/obj/machinery/atmospherics/unary/cold_sink/update_icon_nopipes()
+	overlays.Cut()
+	if(showpipe)
+		overlays += getpipeimage('icons/obj/atmospherics/unary_devices.dmi', "scrub_cap", initialize_directions) //scrub_cap works for now
+
+	if(!node || !on || stat & (NOPOWER|BROKEN))
+		icon_state = "cold_off"
+		return
+
 	else
-		icon_state = "exposed"
-
-		on = 0
-
-	return
+		icon_state = "cold_on"
 
 /obj/machinery/atmospherics/unary/cold_sink/process_atmos()
 	..()

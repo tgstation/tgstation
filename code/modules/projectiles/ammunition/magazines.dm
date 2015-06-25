@@ -53,7 +53,7 @@
 	desc = "Oh god, this shouldn't be here"
 	ammo_type = /obj/item/ammo_casing/shotgun/buckshot
 	caliber = "shotgun"
-	max_ammo = 8
+	max_ammo = 6
 	multiload = 0
 
 /obj/item/ammo_box/magazine/internal/cylinder/dualshot
@@ -134,6 +134,17 @@
 	..()
 	icon_state = "45-[ammo_count() ? "8" : "0"]"
 
+/obj/item/ammo_box/magazine/uzim9mm
+	name = "uzi magazine (9mm)"
+	icon_state = "uzi9mm-32"
+	ammo_type = /obj/item/ammo_casing/c9mm
+	caliber = "9mm"
+	max_ammo = 32
+
+/obj/item/ammo_box/magazine/uzim9mm/update_icon()
+	..()
+	icon_state = "uzi9mm-[round(ammo_count(),4)]"
+
 /obj/item/ammo_box/magazine/smgm9mm
 	name = "SMG magazine (9mm)"
 	icon_state = "smg9mm-20"
@@ -203,10 +214,11 @@ obj/item/ammo_box/magazine/tommygunm45
 	icon_state = "a762-[round(ammo_count(),10)]"
 
 
+
 /obj/item/ammo_box/magazine/m12g
-	name = "shotgun magazine (12g buckshot)"
+	name = "shotgun magazine (12g slugs)"
 	icon_state = "m12gb"
-	ammo_type = /obj/item/ammo_casing/shotgun/buckshot
+	ammo_type = /obj/item/ammo_casing/shotgun
 	origin_tech = "combat=3;syndicate=1"
 	caliber = "shotgun"
 	max_ammo = 8
@@ -214,6 +226,11 @@ obj/item/ammo_box/magazine/tommygunm45
 /obj/item/ammo_box/magazine/m12g/update_icon()
 	..()
 	icon_state = "[initial(icon_state)]-[Ceiling(ammo_count(0)/8)*8]"
+
+/obj/item/ammo_box/magazine/m12g/buckshot
+	name = "shotgun magazine (12g buckshot slugs)"
+	icon_state = "m12gb"
+	ammo_type = /obj/item/ammo_casing/shotgun/buckshot
 
 /obj/item/ammo_box/magazine/m12g/stun
 	name = "shotgun magazine (12g taser slugs)"
@@ -224,6 +241,11 @@ obj/item/ammo_box/magazine/tommygunm45
 	name = "shotgun magazine (12g dragon's breath)"
 	icon_state = "m12gf"
 	ammo_type = /obj/item/ammo_casing/shotgun/incendiary/dragonsbreath
+
+/obj/item/ammo_box/magazine/m12g/bioterror
+	name = "shotgun magazine (12g bioterror)"
+	icon_state = "m12gt"
+	ammo_type = /obj/item/ammo_casing/shotgun/dart/bioterror
 
 /obj/item/ammo_box/magazine/toy
 	name = "foam force META magazine"

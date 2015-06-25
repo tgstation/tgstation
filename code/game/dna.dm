@@ -21,7 +21,7 @@
 	var/uni_identity
 	var/blood_type
 	var/datum/species/species = new /datum/species/human() //The type of mutant race the player is if applicable (i.e. potato-man)
-	var/mutant_color = "FFF"		 // What color you are if you have certain speciess
+	var/list/features = list("FFF") //first value is mutant color
 	var/real_name //Stores the real name of the person who originally got this dna datum. Used primarely for changelings,
 	var/list/mutations = list()   //All mutations are from now on here
 	var/mob/living/carbon/holder
@@ -36,7 +36,7 @@
 		destination.dna.uni_identity = uni_identity
 		destination.dna.blood_type = blood_type
 		hardset_dna(destination, null, null, null, null, species)
-		destination.dna.mutant_color = mutant_color
+		destination.dna.features = features
 		destination.dna.real_name = real_name
 		destination.dna.mutations = mutations
 
@@ -46,7 +46,7 @@
 	new_dna.uni_identity = uni_identity
 	new_dna.blood_type = blood_type
 	new_dna.species = new species.type
-	new_dna.mutant_color = mutant_color
+	new_dna.features = features
 	new_dna.real_name = real_name
 	new_dna.mutations = mutations
 
@@ -131,7 +131,7 @@
 		spans |= M.get_spans()
 	return spans
 
-/proc/hardset_dna(mob/living/carbon/owner, ui, se, real_name, blood_type, datum/species/mrace, mcolor)
+/proc/hardset_dna(mob/living/carbon/owner, ui, se, real_name, blood_type, datum/species/mrace, features)
 	if(!ismonkey(owner) && !ishuman(owner))
 		return
 	if(!owner.dna)
@@ -143,8 +143,8 @@
 			owner.reagents.del_reagent(exotic_blood.id)
 		owner.dna.species = new mrace()
 
-	if(mcolor)
-		owner.dna.mutant_color = mcolor
+	if(features)
+		owner.dna.features = features
 
 	if(real_name)
 		owner.real_name = real_name
@@ -193,6 +193,7 @@
 	character.dna.uni_identity = character.dna.generate_uni_identity(character)
 	character.dna.struc_enzymes = character.dna.generate_struc_enzymes(character)
 	character.dna.unique_enzymes = character.dna.generate_unique_enzymes(character)
+	character.dna.features = character.features
 	return character.dna
 
 /proc/create_dna(mob/living/carbon/C, datum/species/S) //don't use this unless you're about to use hardset_dna or ready_dna
@@ -409,7 +410,7 @@
 	user << "<span class='notice'>You lean on the back of [src] and start pushing the door open... (this will take about [breakout_time] minutes.)</span>"
 	user.visible_message("<span class='italics'>You hear a metallic creaking from [src]!</span>")
 
-	if(do_after(user,(breakout_time*60*10))) //minutes * 60seconds * 10deciseconds
+	if(do_after(user,(breakout_time*60*10), target = src)) //minutes * 60seconds * 10deciseconds
 		if(!user || user.stat != CONSCIOUS || user.loc != src || state_open || !locked)
 			return
 
@@ -497,8 +498,8 @@
 /obj/machinery/computer/scan_consolenew
 	name = "\improper DNA scanner access console"
 	desc = "Scan DNA."
-	icon = 'icons/obj/computer.dmi'
-	icon_state = "scanner"
+	icon_screen = "dna"
+	icon_keyboard = "med_key"
 	density = 1
 	circuit = /obj/item/weapon/circuitboard/scan_consolenew
 	var/radduration = 2
@@ -518,7 +519,8 @@
 /obj/machinery/computer/scan_consolenew/attackby(obj/item/I as obj, mob/user as mob, params)
 	if (istype(I, /obj/item/weapon/disk/data)) //INSERT SOME DISKETTES
 		if (!src.diskette)
-			user.drop_item()
+			if(!user.drop_item())
+				return
 			I.loc = src
 			src.diskette = I
 			user << "<span class='notice'>You insert [I].</span>"
@@ -972,7 +974,7 @@
 
 /datum/dna/proc/is_same_as(var/datum/dna/D)
 	if(uni_identity == D.uni_identity && struc_enzymes == D.struc_enzymes && real_name == D.real_name)
-		if(species == D.species && mutant_color == D.mutant_color && blood_type == D.blood_type)
+		if(species == D.species && features == D.features && blood_type == D.blood_type)
 			return 1
 	return 0
 

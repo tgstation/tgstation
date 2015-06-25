@@ -77,7 +77,8 @@
 	if(istype(I, /obj/item/weapon/coin))
 		var/obj/item/weapon/coin/C = I
 		if(prob(2))
-			user.drop_item()
+			if(!user.drop_item())
+				return
 			C.loc = loc
 			C.throw_at(user, 3, 10)
 			if(prob(10))
@@ -85,7 +86,8 @@
 			user << "<span class='warning'>[src] spits your coin back out!</span>"
 
 		else
-			user.drop_item()
+			if(!user.drop_item())
+				return
 			user << "<span class='notice'>You insert a [C.cmineral] coin into [src]'s slot!</span>"
 			balance += C.value
 			qdel(C)
@@ -293,14 +295,14 @@
 
 	return amount
 
-/obj/machinery/computer/slot_machine/proc/dispense(amount = 0, cointype = /obj/item/weapon/coin/silver, mob/living/target, throwCoin = 0)
+/obj/machinery/computer/slot_machine/proc/dispense(amount = 0, cointype = /obj/item/weapon/coin/silver, mob/living/target, throwit = 0)
 	var/value = coinvalues["[cointype]"]
 
 
 	while(amount >= value)
 		var/obj/item/weapon/coin/C = new cointype(loc) //DOUBLE THE PAIN
 		amount -= value
-		if(throwCoin && target)
+		if(throwit && target)
 			C.throw_at(target, 3, 10)
 		else
 			random_step(C, 2, 40)

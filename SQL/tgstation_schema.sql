@@ -306,7 +306,16 @@ CREATE TABLE `poll_vote` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
---
+--var/reason = input(usr,"Reason?","reason","Metagaming") as text|null
+			if(!reason)
+				return
+			log_admin("[key_name_admin(usr)] has added [key_name_admin(M)] to the watchlist - Reason: [reason]")
+			message_admins("[key_name_admin(usr)] has added [key_name_admin(M)] to the watchlist - Reason: [reason]", 1)
+			reason = sanitizeSQL(reason)
+			var/DBQuery/query_watchadd = dbcon.NewQuery("INSERT INTO [format_table_name("watch")] (ckey, reason) VALUES ('[sql_ckey]', '[reason]')")
+			if(!query_watchadd.Execute())
+				var/err = query_watchadd.ErrorMsg()
+				log_game("SQL ERROR during adding new watch entry. Error : \[[err]\]\n")
 -- Table structure for table `privacy`
 --
 
@@ -331,5 +340,20 @@ CREATE TABLE `privacy` (
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
+
+--
+-- Table structure for table `watch`
+--
+
+DROP TABLE IF EXISTS `watch`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `watch` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `ckey` varchar(32) NOT NULL,
+  `reason` text NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
 
 -- Dump completed on 2013-03-24 18:02:35

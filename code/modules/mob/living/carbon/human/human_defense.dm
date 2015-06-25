@@ -130,6 +130,8 @@ emp_act
 	var/obj/item/organ/limb/affecting = get_organ(ran_zone(user.zone_sel.selecting))
 	var/hit_area = parse_zone(affecting.name)
 	var/target_area = parse_zone(target_limb.name)
+	feedback_add_details("item_used_for_combat","[I.name]|[I.force]")
+	feedback_add_details("zone_targeted","[def_zone]")
 
 	if(dna)	// allows your species to affect the attacked_by code
 		return dna.species.spec_attacked_by(I,user,def_zone,affecting,hit_area,src.a_intent,target_limb,target_area,src)
@@ -149,12 +151,12 @@ emp_act
 		else
 			return 0
 
-		var/armor = run_armor_check(affecting, "melee", "<span class='notice'>Your armor has protected your [hit_area].</span>", "<span class='notice'>Your armor has softened a hit to your [hit_area].</span>")
-		if(armor >= 100)	return 0
+		var/armor = run_armor_check(affecting, "melee", "<span class='notice'>Your armor has protected your [hit_area].</span>", "<span class='notice'>Your armor has softened a hit to your [hit_area].</span>", I.armour_penetration)
+		armor = min(90,armor) //cap damage reduction at 90%
+
 		var/Iforce = I.force //to avoid runtimes on the forcesay checks at the bottom. Some items might delete themselves if you drop them. (stunning yourself, ninja swords)
 
 		apply_damage(I.force, I.damtype, affecting, armor , I)
-
 		var/bloody = 0
 		if(((I.damtype == BRUTE) && I.force && prob(25 + (I.force * 2))))
 			if(affecting.status == ORGAN_ORGANIC)
@@ -187,7 +189,7 @@ emp_act
 							visible_message("<span class='danger'>[src] has been knocked unconscious!</span>", \
 											"<span class='userdanger'>[src] has been knocked unconscious!</span>")
 							apply_effect(20, PARALYZE, armor)
-						if(prob(I.force + ((100 - src.health)/2)) && src != user && I.damtype == BRUTE)
+						if(prob(I.force + min(100,100 - src.health)) && src != user && I.damtype == BRUTE)
 							ticker.mode.remove_revolutionary(mind)
 							ticker.mode.remove_gangster(mind, exclude_bosses=1)
 					if(bloody)	//Apply blood
@@ -383,8 +385,6 @@ emp_act
 		var/armor = run_armor_check(affecting, "melee")
 		apply_damage(damage, BRUTE, affecting, armor)
 		updatehealth()
-/*		if(armor >= 2) //why is this here?
-		return */
 
 
 /mob/living/carbon/human/attack_larva(mob/living/carbon/alien/larva/L as mob)

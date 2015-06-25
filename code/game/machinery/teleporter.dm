@@ -1,7 +1,8 @@
 /obj/machinery/computer/teleporter
 	name = "Teleporter Control Console"
 	desc = "Used to control a linked teleportation Hub and Station."
-	icon_state = "teleport"
+	icon_screen = "teleport"
+	icon_keyboard = "teleport_key"
 	circuit = "/obj/item/weapon/circuitboard/teleporter"
 	var/obj/item/device/gps/locked = null
 	var/regime_set = "Teleporter"
@@ -43,7 +44,7 @@
 				return
 			L.loc = src
 			locked = L
-			user << "<span class = 'caution'>You insert the GPS device into the [name]'s slot.</span>"
+			user << "<span class='caution'>You insert the GPS device into the [name]'s slot.</span>"
 	else
 		..()
 	return
@@ -397,9 +398,9 @@
 			if(linked_stations.len < efficiency)
 				linked_stations.Add(M.buffer)
 				M.buffer = null
-				user << "<span class = 'caution'>You upload the data from the [W.name]'s buffer.</span>"
+				user << "<span class='caution'>You upload the data from the [W.name]'s buffer.</span>"
 			else
-				user << "<span class = 'alert'>This station can't hold more information, try to use better parts.</span>"
+				user << "<span class='alert'>This station can't hold more information, try to use better parts.</span>"
 	if(default_deconstruction_screwdriver(user, "controller-o", "controller", W))
 		update_icon()
 		return
@@ -413,11 +414,11 @@
 		if(istype(W, /obj/item/device/multitool))
 			var/obj/item/device/multitool/M = W
 			M.buffer = src
-			user << "<span class = 'caution'>You download the data to the [W.name]'s buffer.</span>"
+			user << "<span class='caution'>You download the data to the [W.name]'s buffer.</span>"
 			return
 		if(istype(W, /obj/item/weapon/wirecutters))
 			link_console_and_hub()
-			user << "<span class = 'caution'>You reconnect the station to nearby machinery.</span>"
+			user << "<span class='caution'>You reconnect the station to nearby machinery.</span>"
 			return
 
 /obj/machinery/teleport/station/attack_paw()

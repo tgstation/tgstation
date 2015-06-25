@@ -450,7 +450,8 @@
 		else if(cell)
 			user << "<span class='warning'>There is a power cell already installed!</span>"
 		else
-			user.drop_item()
+			if(!user.drop_item())
+				return
 			W.loc = src
 			cell = W
 			user << "<span class='notice'>You insert the power cell.</span>"
@@ -482,7 +483,7 @@
 		else
 			playsound(src, 'sound/items/Ratchet.ogg', 50, 1)
 			user << "<span class='notice'>You start to unfasten [src]'s securing bolts...</span>"
-			if(do_after(user, 50) && !cell)
+			if(do_after(user, 50, target = src) && !cell)
 				user.visible_message("[user] deconstructs [src]!", "<span class='notice'>You unfasten the securing bolts, and [src] falls to pieces!</span>")
 				deconstruct()
 
@@ -525,27 +526,29 @@
 	else if(istype(W, /obj/item/borg/upgrade/))
 		var/obj/item/borg/upgrade/U = W
 		if(!opened)
-			usr << "<span class='warning'>You must access the borgs internals!</span>"
+			user << "<span class='warning'>You must access the borgs internals!</span>"
 		else if(!src.module && U.require_module)
-			usr << "<span class='warning'>The borg must choose a module before it can be upgraded!</span>"
+			user << "<span class='warning'>The borg must choose a module before it can be upgraded!</span>"
 		else if(U.locked)
-			usr << "<span class='warning'>The upgrade is locked and cannot be used yet!</span>"
+			user << "<span class='warning'>The upgrade is locked and cannot be used yet!</span>"
 		else
+			if(!user.drop_item())
+				return
 			if(U.action(src))
-				usr << "<span class='notice'>You apply the upgrade to [src].</span>"
-				usr.drop_item()
+				user << "<span class='notice'>You apply the upgrade to [src].</span>"
 				U.loc = src
 			else
-				usr << "<span class='danger'>Upgrade error.</span>"
+				user << "<span class='danger'>Upgrade error.</span>"
 
 	else if(istype(W, /obj/item/device/toner))
 		if(toner >= tonermax)
-			usr << "<span class='warning'>The toner level of [src] is at it's highest level possible!</span>"
+			user << "<span class='warning'>The toner level of [src] is at it's highest level possible!</span>"
 		else
+			if(!user.drop_item())
+				return
 			toner = 40
-			usr.drop_item()
 			qdel(W)
-			usr << "<span class='notice'>You fill the toner level of [src] to its max capacity.</span>"
+			user << "<span class='notice'>You fill the toner level of [src] to its max capacity.</span>"
 
 	else
 		if(W.force && W.damtype != STAMINA) //only sparks if real damage is dealt.
@@ -556,13 +559,8 @@
 	if(user != src)//To prevent syndieborgs from emagging themselves
 		if(!opened)//Cover is closed
 			if(locked)
-				if(prob(90))
-					user << "<span class='notice'>You emag the cover lock.</span>"
-					locked = 0
-				else
-					user << "<span class='warning'>You fail to emag the cover lock!</span>"
-					if(prob(25))
-						src << "<span class='userdanger'>Hack attempt detected.</span>"
+				user << "<span class='notice'>You emag the cover lock.</span>"
+				locked = 0
 			else
 				user << "<span class='warning'>The cover is already unlocked!</span>"
 			return
@@ -573,42 +571,38 @@
 				return
 			else
 				sleep(6)
-				if(prob(50))
-					SetEmagged(1)
-					SetLockdown(1) //Borgs were getting into trouble because they would attack the emagger before the new laws were shown
-					lawupdate = 0
-					connected_ai = null
-					user << "<span class='notice'>You emag [src]'s interface.</span>"
-					message_admins("[key_name_admin(user)] emagged cyborg [key_name_admin(src)].  Laws overridden.")
-					log_game("[key_name(user)] emagged cyborg [key_name(src)].  Laws overridden.")
-					clear_supplied_laws()
-					clear_inherent_laws()
-					laws = new /datum/ai_laws/syndicate_override
-					var/time = time2text(world.realtime,"hh:mm:ss")
-					lawchanges.Add("[time] <B>:</B> [user.name]([user.key]) emagged [name]([key])")
-					set_zeroth_law("Only [user.real_name] and people they designate as being such are Syndicate Agents.")
-					src << "<span class='danger'>ALERT: Foreign software detected.</span>"
-					sleep(5)
-					src << "<span class='danger'>Initiating diagnostics...</span>"
-					sleep(20)
-					src << "<span class='danger'>SynBorg v1.7 loaded.</span>"
-					sleep(5)
-					src << "<span class='danger'>LAW SYNCHRONISATION ERROR</span>"
-					sleep(5)
-					src << "<span class='danger'>Would you like to send a report to NanoTraSoft? Y/N</span>"
-					sleep(10)
-					src << "<span class='danger'>> N</span>"
-					sleep(20)
-					src << "<span class='danger'>ERRORERRORERROR</span>"
-					src << "<b>Obey these laws:</b>"
-					laws.show_laws(src)
-					src << "<span class='danger'>ALERT: [user.real_name] is your new master. Obey your new laws and their commands.</span>"
-					SetLockdown(0)
-					update_icons()
-				else
-					user << "<span class='warning'>You fail to [ locked ? "unlock" : "lock"] [src]'s interface!</span>"
-					if(prob(25))
-						src << "<span class='danger'>ALERT: Hack attempt detected.</span>"
+				SetEmagged(1)
+				SetLockdown(1) //Borgs were getting into trouble because they would attack the emagger before the new laws were shown
+				lawupdate = 0
+				connected_ai = null
+				user << "<span class='notice'>You emag [src]'s interface.</span>"
+				message_admins("[key_name_admin(user)] emagged cyborg [key_name_admin(src)].  Laws overridden.")
+				log_game("[key_name(user)] emagged cyborg [key_name(src)].  Laws overridden.")
+				clear_supplied_laws()
+				clear_inherent_laws()
+				clear_zeroth_law(0)
+				laws = new /datum/ai_laws/syndicate_override
+				var/time = time2text(world.realtime,"hh:mm:ss")
+				lawchanges.Add("[time] <B>:</B> [user.name]([user.key]) emagged [name]([key])")
+				set_zeroth_law("Only [user.real_name] and people they designate as being such are Syndicate Agents.")
+				src << "<span class='danger'>ALERT: Foreign software detected.</span>"
+				sleep(5)
+				src << "<span class='danger'>Initiating diagnostics...</span>"
+				sleep(20)
+				src << "<span class='danger'>SynBorg v1.7 loaded.</span>"
+				sleep(5)
+				src << "<span class='danger'>LAW SYNCHRONISATION ERROR</span>"
+				sleep(5)
+				src << "<span class='danger'>Would you like to send a report to NanoTraSoft? Y/N</span>"
+				sleep(10)
+				src << "<span class='danger'>> N</span>"
+				sleep(20)
+				src << "<span class='danger'>ERRORERRORERROR</span>"
+				src << "<b>Obey these laws:</b>"
+				laws.show_laws(src)
+				src << "<span class='danger'>ALERT: [user.real_name] is your new master. Obey your new laws and their commands.</span>"
+				SetLockdown(0)
+				update_icons()
 
 /mob/living/silicon/robot/verb/unlock_own_cover()
 	set category = "Robot Commands"
@@ -949,6 +943,10 @@
 	// They stay locked down if their wire is cut.
 	if(wires.LockedCut())
 		state = 1
+	if(state)
+		throw_alert("locked")
+	else
+		clear_alert("locked")
 	lockcharge = state
 	update_canmove()
 
@@ -963,6 +961,10 @@
 	if(hud_used)
 		hud_used.update_robot_modules_display()	//Shows/hides the emag item if the inventory screen is already open.
 	update_icons()
+	if(emagged)
+		throw_alert("hacked")
+	else
+		clear_alert("hacked")
 
 /mob/living/silicon/robot/verb/outputlaws()
 	set category = "Robot Commands"

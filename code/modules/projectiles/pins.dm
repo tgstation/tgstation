@@ -30,7 +30,8 @@
 				user << "<span class ='notice'>You remove [G]'s old pin.</span>"
 
 			if(!G.pin)
-				user.drop_item()
+				if(!user.unEquip(src))
+					return
 				gun_insert(user, G)
 				user << "<span class ='notice'>You insert [src] into [G].</span>"
 			else

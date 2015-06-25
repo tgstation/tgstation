@@ -60,12 +60,17 @@
 			if(target.stat == 0)
 				user << "<span class='danger'>The monkey is struggling far too much to put it in the recycler.</span>"
 			else
-				user.drop_item()
+				if(!user.drop_item())
+					return
 				qdel(target)
 				user << "<span class='notice'>You stuff the monkey in the machine.</span>"
 				playsound(src.loc, 'sound/machines/juicer.ogg', 50, 1)
+				var/offset = prob(50) ? -2 : 2
+				animate(src, pixel_x = pixel_x + offset, time = 0.2, loop = 200) //start shaking
 				use_power(500)
 				src.grinded++
+				sleep(50)
+				pixel_x = initial(pixel_x) //return to its spot after shaking
 				user << "<span class='notice'>The machine now has [grinded] monkey\s worth of material stored.</span>"
 
 		else

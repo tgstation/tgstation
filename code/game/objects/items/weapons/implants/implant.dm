@@ -79,7 +79,7 @@
 	return dat
 
 /obj/item/weapon/implant/explosive
-	name = "explosive implant"
+	name = "microbomb implant"
 	desc = "And boom goes the weasel."
 	icon_state = "explosive"
 
@@ -101,12 +101,36 @@
 
 /obj/item/weapon/implant/explosive/activate(var/cause)
 	if(!cause || !imp_in)	return 0
-	if(cause == "action_button" && alert(imp_in, "Are you sure you want to activate your explosive implant? This will cause you to explode and gib!", "Explosive Implant Confirmation", "Yes", "No") != "Yes")
+	if(cause == "action_button" && alert(imp_in, "Are you sure you want to activate your microbomb implant? This will cause you to explode!", "Microbomb Implant Confirmation", "Yes", "No") != "Yes")
 		return 0
-	explosion(src,0,1,5,7,10, flame_range = 5)
-	if(imp_in)
-		imp_in.gib()
+	var/light = 1
+	var/medium = 0.5
+	var/heavy = 0.25
+	for(var/obj/item/weapon/implant/explosive/E in imp_in)
+		heavy += 0.25
+		medium += 0.5
+		light += 1
+		if(E != src)
+			qdel(E)
+	heavy = round(heavy)
+	medium = round(medium)
+	light = round(light)
+	imp_in.gib()
+	explosion(src,heavy,medium,light,light, flame_range = light)
+	qdel(src)
 
+/obj/item/weapon/implant/explosive/macro
+	name = "macrobomb implant"
+	desc = "And boom goes the weasel. And everything else nearby."
+	icon_state = "explosive"
+
+/obj/item/weapon/implant/explosive/macro/activate(var/cause)
+	if(!cause || !imp_in)	return 0
+	if(cause == "action_button" && alert(imp_in, "Are you sure you want to activate your macrobomb implant? This will cause you to explode and gib!", "Macrobomb Implant Confirmation", "Yes", "No") != "Yes")
+		return 0
+	imp_in.gib()
+	explosion(src,5,10,20,20, flame_range = 20)
+	qdel(src)
 
 /obj/item/weapon/implant/chem
 	name = "chem implant"
@@ -174,15 +198,15 @@
 
 /obj/item/weapon/implant/loyalty/implanted(mob/target)
 	..()
-	if((target.mind in (ticker.mode.head_revolutionaries | ticker.mode.A_bosses | ticker.mode.B_bosses)) || is_shadow_or_thrall(target))
+	if((target.mind in ticker.mode.head_revolutionaries) || is_shadow_or_thrall(target))
 		target.visible_message("<span class='warning'>[target] seems to resist the implant!</span>", "<span class='warning'>You feel the corporate tendrils of Nanotrasen try to invade your mind!</span>")
-		return 0
-	if(target.mind in (ticker.mode.A_gang | ticker.mode.B_gang))
-		ticker.mode.remove_gangster(target.mind, exclude_bosses=0)
 		return 0
 	if(target.mind in ticker.mode.revolutionaries)
 		ticker.mode.remove_revolutionary(target.mind)
-	target << "<span class='notice'>You feel a surge of loyalty towards Nanotrasen.</span>"
+	if(target.mind in (ticker.mode.cult| ticker.mode.A_bosses | ticker.mode.B_bosses | ticker.mode.A_gang | ticker.mode.B_gang))
+		target << "<span class='warning'>You feel the corporate tendrils of Nanotrasen try to invade your mind!</span>"
+	else
+		target << "<span class='notice'>You feel a surge of loyalty towards Nanotrasen.</span>"
 	return 1
 
 

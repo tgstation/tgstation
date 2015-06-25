@@ -106,7 +106,7 @@
 
 		user.visible_message("<span class='danger'>[user] starts to put [G.affecting] into the gibber!</span>")
 		src.add_fingerprint(user)
-		if(do_after(user, gibtime) && G && G.affecting && !occupant)
+		if(do_after(user, gibtime, target = src) && G && G.affecting && !occupant)
 			user.visible_message("<span class='danger'>[user] stuffs [G.affecting] into the gibber!</span>")
 			var/mob/M = G.affecting
 			if(M.client)
@@ -156,8 +156,11 @@
 		return
 	use_power(1000)
 	visible_message("<span class='italics'>You hear a loud squelchy grinding sound.</span>")
+	playsound(src.loc, 'sound/machines/juicer.ogg', 50, 1)
 	src.operating = 1
 	update_icon()
+	var/offset = prob(50) ? -2 : 2
+	animate(src, pixel_x = pixel_x + offset, time = 0.2, loop = 200) //start shaking
 	var/sourcename = src.occupant.real_name
 	var/sourcejob
 	if(ishuman(occupant))
@@ -207,6 +210,7 @@
 				if (!gibturf.density && src in viewers(gibturf))
 					new gibtype(gibturf,i)
 
+		pixel_x = initial(pixel_x) //return to its spot after shaking
 		src.operating = 0
 		update_icon()
 

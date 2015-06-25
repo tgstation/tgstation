@@ -75,8 +75,10 @@
 	if(stat & (BROKEN)) return
 	if(user.stat || user.restrained()) return
 
-	// this is the data which will be sent to the ui
-	var/data[0]
+	ui = SSnano.push_open_or_new_ui(user, src, ui_key, ui, "chem_dispenser.tmpl", "[uiname]", 490, 710, 0)
+
+/obj/machinery/chem_dispenser/get_ui_data()
+	var/data = list()
 	data["amount"] = amount
 	data["energy"] = energy
 	data["maxEnergy"] = max_energy
@@ -103,17 +105,7 @@
 		if(temp)
 			chemicals.Add(list(list("title" = temp.name, "id" = temp.id, "commands" = list("dispense" = temp.id)))) // list in a list because Byond merges the first list...
 	data["chemicals"] = chemicals
-
-	// update the ui if it exists, returns null if no ui is passed/found
-	ui = SSnano.try_update_ui(user, src, ui_key, ui, data)
-	if (!ui)
-		// the ui does not exist, so we'll create a new() one
-        // for a list of parameters and their descriptions see the code docs in \code\modules\nano\nanoui.dm
-		ui = new(user, src, ui_key, "chem_dispenser.tmpl", "[uiname]", 490, 710)
-		// when the ui is first opened this is the data it will use
-		ui.set_initial_data(data)
-		// open the new ui window
-		ui.open()
+	return data
 
 /obj/machinery/chem_dispenser/Topic(href, href_list)
 	if(stat & (BROKEN))
@@ -155,9 +147,10 @@
 	if(src.beaker)
 		user << "<span class='warning'>A beaker is already loaded into the machine!</span>"
 		return
+	if(!user.drop_item())
+		return
 
 	src.beaker =  B
-	user.drop_item()
 	B.loc = src
 	user << "<span class='notice'>You add the beaker to the machine.</span>"
 	SSnano.update_uis(src) // update all UIs attached to src
@@ -192,7 +185,8 @@
 	dispensable_reagents = list()
 	var/list/special_reagents = list(list("hydrogen", "oxygen", "silicon", "phosphorus", "sulfur", "carbon", "nitrogen", "water"),
 						 		list("lithium", "sugar", "sacid", "copper", "mercury", "sodium","iodine","bromine"),
-								list("ethanol", "chlorine", "potassium", "aluminium", "radium", "fluorine", "iron", "welding_fuel","silver","stable_plasma"))
+								list("ethanol", "chlorine", "potassium", "aluminium", "radium", "fluorine", "iron", "welding_fuel","silver","stable_plasma"),
+								list("oil", "ash", "acetone", "saltpetre", "ammonia", "diethylamine"))
 
 /obj/machinery/chem_dispenser/constructable/New()
 	..()
@@ -289,8 +283,10 @@
 		if(src.beaker)
 			user << "<span class='warning'>A beaker is already loaded into the machine!</span>"
 			return
+		if(!user.drop_item())
+			return
+
 		src.beaker = B
-		user.drop_item()
 		B.loc = src
 		user << "<span class='notice'>You add the beaker to the machine.</span>"
 		src.updateUsrDialog()
@@ -300,8 +296,10 @@
 		if(src.loaded_pill_bottle)
 			user << "<span class='warning'>A pill bottle is already loaded into the machine!</span>"
 			return
+		if(!user.drop_item())
+			return
+
 		src.loaded_pill_bottle = B
-		user.drop_item()
 		B.loc = src
 		user << "<span class='notice'>You add the pill bottle into the dispenser slot.</span>"
 		src.updateUsrDialog()
@@ -618,8 +616,10 @@
 		if(src.beaker)
 			user << "<span class='warning'>A beaker is already loaded into the machine!</span>"
 			return
+		if(!user.drop_item())
+			return
+
 		src.beaker = B
-		user.drop_item()
 		B.loc = src
 		user << "<span class='notice'>You add the beaker to the machine.</span>"
 		src.updateUsrDialog()
@@ -629,8 +629,10 @@
 		if(src.loaded_pill_bottle)
 			user << "<span class='warning'>A pill bottle is already loaded into the machine!</span>"
 			return
+		if(!user.drop_item())
+			return
+
 		src.loaded_pill_bottle = B
-		user.drop_item()
 		B.loc = src
 		user << "<span class='notice'>You add the pill bottle into the dispenser slot.</span>"
 		src.updateUsrDialog()
@@ -918,9 +920,10 @@
 		if(src.beaker)
 			user << "<span class='warning'>A beaker is already loaded into the machine!</span>"
 			return
+		if(!user.drop_item())
+			return
 
 		src.beaker =  I
-		user.drop_item()
 		I.loc = src
 		user << "<span class='notice'>You add the beaker to the machine.</span>"
 		src.updateUsrDialog()
@@ -1052,8 +1055,9 @@
 				if (beaker)
 						return 1
 				else
+						if(!user.drop_item())
+								return 1
 						src.beaker =  O
-						user.drop_item()
 						O.loc = src
 						update_icon()
 						src.updateUsrDialog()
@@ -1244,9 +1248,12 @@
 		if (!beaker || (beaker && beaker.reagents.total_volume >= beaker.reagents.maximum_volume))
 				return
 		playsound(src.loc, 'sound/machines/juicer.ogg', 20, 1)
+		var/offset = prob(50) ? -2 : 2
+		animate(src, pixel_x = pixel_x + offset, time = 0.2, loop = 250) //start shaking
 		operating = 1
 		updateUsrDialog()
 		spawn(50)
+				pixel_x = initial(pixel_x) //return to its spot after shaking
 				operating = 0
 				updateUsrDialog()
 
@@ -1279,9 +1286,12 @@
 		if (!beaker || (beaker && beaker.reagents.total_volume >= beaker.reagents.maximum_volume))
 				return
 		playsound(src.loc, 'sound/machines/blender.ogg', 50, 1)
+		var/offset = prob(50) ? -2 : 2
+		animate(src, pixel_x = pixel_x + offset, time = 0.2, loop = 250) //start shaking
 		operating = 1
 		updateUsrDialog()
 		spawn(60)
+				pixel_x = initial(pixel_x) //return to its spot after shaking
 				operating = 0
 				updateUsrDialog()
 
@@ -1492,7 +1502,10 @@
 /obj/machinery/chem_heater/ui_interact(var/mob/user, ui_key = "main", var/datum/nanoui/ui = null)
 	if(user.stat || user.restrained()) return
 
-	var/data[0]
+	ui = SSnano.push_open_or_new_ui(user, src, ui_key, ui, "chem_heater.tmpl", "ChemHeater", 350, 270, 0)
+
+/obj/machinery/chem_heater/get_ui_data()
+	var/data = list()
 	data["targetTemp"] = desired_temp
 	data["isActive"] = on
 	data["isBeakerLoaded"] = beaker ? 1 : 0
@@ -1507,13 +1520,7 @@
 		for(var/datum/reagent/R in beaker.reagents.reagent_list)
 			beakerContents.Add(list(list("name" = R.name, "volume" = R.volume))) // list in a list because Byond merges the first list...
 	data["beakerContents"] = beakerContents
-
-	// update the ui if it exists, returns null if no ui is passed/found
-	ui = SSnano.try_update_ui(user, src, ui_key, ui, data)
-	if (!ui)
-		ui = new(user, src, ui_key, "chem_heater.tmpl", "ChemHeater", 350, 270)
-		ui.set_initial_data(data)
-		ui.open()
+	return data
 
 ///////////////////////////////////////////////////////////////////////////
 
@@ -1541,8 +1548,9 @@
 				if (beaker)
 						return 1
 				else
+						if(!user.drop_item())
+								return 1
 						src.beaker =  O
-						user.drop_item()
 						O.loc = src
 						update_icon()
 						src.updateUsrDialog()

@@ -5,7 +5,7 @@
 
 	name = "disposal pipe segment"
 	desc = "A huge pipe segment used for constructing disposal systems."
-	icon = 'icons/obj/pipes/disposal.dmi'
+	icon = 'icons/obj/atmospherics/pipes/disposal.dmi'
 	icon_state = "conpipe-s"
 	anchored = 0
 	density = 0
@@ -173,11 +173,11 @@
 	if(T.intact && istype(T, /turf/simulated/floor))
 		user << "<span class='warning'>You can only attach the [nicetype] if the floor plating is removed!</span>"
 		return
-	
+
 	if(!ispipe && istype(T, /turf/simulated/wall))
 		user << "<span class='warning'>You can't build [nicetype]s on walls, only disposal pipes!</span>"
 		return
-	
+
 	var/obj/structure/disposalpipe/CP = locate() in T
 
 	if(istype(I, /obj/item/weapon/wrench))
@@ -223,7 +223,7 @@
 			if(W.remove_fuel(0,user))
 				playsound(loc, 'sound/items/Welder2.ogg', 100, 1)
 				user << "<span class='notice'>You start welding the [nicetype] in place...</span>"
-				if(do_after(user, 20))
+				if(do_after(user, 20, target = src))
 					if(!loc || !W.isOn())
 						return
 					user << "<span class='notice'>The [nicetype] has been welded in place.</span>"

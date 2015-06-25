@@ -71,6 +71,8 @@
 						user << "<span class='warning'>That is the wrong robotic limb for this body part.</span>"
 						return 0
 
+			if(!user.drop_item())
+				return 0
 			var/mob/living/carbon/human/H = target
 			user.visible_message("[user] successfully augments [target]'s [parse_zone(target_zone)]!", "<span class='notice'>You successfully augment [target]'s [parse_zone(target_zone)].</span>")
 			L.loc = get_turf(target)
@@ -92,7 +94,6 @@
 					H.organs += new /obj/item/organ/limb/robot/chest(src)
 					for(var/datum/disease/appendicitis/A in H.viruses) //If they already have Appendicitis, Remove it
 						A.cure(1)
-			user.drop_item()
 			qdel(tool)
 			H.update_damage_overlays(0)
 			H.update_augments() //Gives them the Cyber limb overlay

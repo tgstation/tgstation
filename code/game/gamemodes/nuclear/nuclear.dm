@@ -180,7 +180,11 @@
 	U.hidden_uplink.uses = 20
 	synd_mob.equip_to_slot_or_del(U, slot_in_backpack)
 
-	var/obj/item/weapon/implant/weapons_auth/E = new/obj/item/weapon/implant/weapons_auth(synd_mob)
+	var/obj/item/weapon/implant/weapons_auth/W = new/obj/item/weapon/implant/weapons_auth(synd_mob)
+	W.imp_in = synd_mob
+	W.implanted = 1
+	W.implanted(synd_mob)
+	var/obj/item/weapon/implant/explosive/E = new/obj/item/weapon/implant/explosive(synd_mob)
 	E.imp_in = synd_mob
 	E.implanted = 1
 	E.implanted(synd_mob)

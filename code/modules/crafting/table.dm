@@ -78,14 +78,17 @@
 
 /obj/structure/table/proc/construct_item(mob/user, datum/table_recipe/R)
 	check_table()
+	var/send_feedback = 1
 	if(check_contents(R) && check_tools(user, R))
-		if(do_after(user, R.time))
+		if(do_after(user, R.time, target = src))
 			if(!check_contents(R) || !check_tools(user, R))
 				return 0
 			var/atom/movable/I = new R.result (loc)
 			if(istype(I, /obj/item/weapon/reagent_containers/food/snacks))
 				var/obj/item/weapon/reagent_containers/food/snacks/S = I
 				S.create_reagents(S.volume)
+				feedback_add_details("food_made","[S.name]")
+				send_feedback = 0
 			var/list/parts = del_reqs(R, I)
 			for(var/A in parts)
 				if(istype(A, /obj/item))
@@ -98,6 +101,8 @@
 						I.reagents = new /datum/reagents()
 					I.reagents.reagent_list.Add(A)
 			I.CheckParts()
+			if(send_feedback)
+				feedback_add_details("object_crafted","[I.name]")
 			return 1
 	return 0
 

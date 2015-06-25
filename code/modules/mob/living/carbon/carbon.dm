@@ -251,7 +251,7 @@
 
 	if(istype(item, /obj/item/weapon/grab))
 		var/obj/item/weapon/grab/G = item
-		item = G.throwAffecting() //throw the person instead of the grab
+		item = G.get_mob_if_throwable() //throw the person instead of the grab
 		qdel(G)			//We delete the grab, as it needs to stay around until it's returned.
 		if(ismob(item))
 			var/turf/start_T = get_turf(loc) //Get the start and target tile for the descriptors
@@ -306,7 +306,7 @@
 	<BR><B>Left Hand:</B> <A href='?src=\ref[src];item=[slot_l_hand]'>		[(l_hand && !(l_hand.flags&ABSTRACT))		? l_hand	: "Nothing"]</A>
 	<BR><B>Right Hand:</B> <A href='?src=\ref[src];item=[slot_r_hand]'>		[(r_hand && !(r_hand.flags&ABSTRACT))		? r_hand	: "Nothing"]</A>"}
 
-	dat += "<BR><B>Back:</B> <A href='?src=\ref[src];item=[slot_back]'> [back ? back : "Nothing"]</A>"
+	dat += "<BR><B>Back:</B> <A href='?src=\ref[src];item=[slot_back]'>[back ? back : "Nothing"]</A>"
 
 	if(istype(wear_mask, /obj/item/clothing/mask) && istype(back, /obj/item/weapon/tank))
 		dat += "<BR><A href='?src=\ref[src];internal=1'>[internal ? "Disable Internals" : "Set Internals"]</A>"
@@ -402,12 +402,12 @@ var/const/GALOSHES_DONT_HELP = 8
 	return
 
 /mob/living/carbon/resist_buckle()
-	if(handcuffed)
+	if(restrained())
 		changeNext_move(CLICK_CD_BREAKOUT)
 		last_special = world.time + CLICK_CD_BREAKOUT
 		visible_message("<span class='warning'>[src] attempts to unbuckle themself!</span>", \
 					"<span class='notice'>You attempt to unbuckle yourself... (This will take around one minute and you need to stay still.)</span>")
-		if(do_after(src, 600, needhand = 0))
+		if(do_after(src, 600, needhand = 0, target = src))
 			if(!buckled)
 				return
 			buckled.user_unbuckle_mob(src,src)
@@ -450,7 +450,7 @@ var/const/GALOSHES_DONT_HELP = 8
 	if(!cuff_break)
 		visible_message("<span class='warning'>[src] attempts to remove [I]!</span>")
 		src << "<span class='notice'>You attempt to remove [I]... (This will take around [displaytime] minutes and you need to stand still.)</span>"
-		if(do_after(src, breakouttime, 10, 0))
+		if(do_after(src, breakouttime, 10, 0, target = src))
 			if(I.loc != src || buckled)
 				return
 			visible_message("<span class='danger'>[src] manages to remove [I]!</span>")
@@ -466,6 +466,7 @@ var/const/GALOSHES_DONT_HELP = 8
 				return
 			if(legcuffed)
 				legcuffed.loc = loc
+				legcuffed.dropped()
 				legcuffed = null
 				update_inv_legcuffed(0)
 		else
@@ -475,7 +476,7 @@ var/const/GALOSHES_DONT_HELP = 8
 		breakouttime = 50
 		visible_message("<span class='warning'>[src] is trying to break [I]!</span>")
 		src << "<span class='notice'>You attempt to break [I]... (This will take around 5 seconds and you need to stand still.)</span>"
-		if(do_after(src, breakouttime, needhand = 0))
+		if(do_after(src, breakouttime, needhand = 0, target = src))
 			if(!I.loc || buckled)
 				return
 			visible_message("<span class='danger'>[src] manages to break [I]!</span>")

@@ -90,8 +90,6 @@
 
 
 /obj/machinery/shield/hitby(AM as mob|obj)
-	//Let everyone know we've been hit!
-	visible_message("<span class='boldannounce'>[src] was hit by [AM].</span>")
 
 	//Super realistic, resource-intensive, real-time damage calculations.
 	var/tforce = 0
@@ -248,7 +246,7 @@
 			user << "<span class='warning'>You need one length of cable to repair [src]!</span>"
 			return
 		user << "<span class='notice'>You begin to replace the wires...</span>"
-		if(do_after(user, 30))
+		if(do_after(user, 30, target = src))
 			if(coil.get_amount() < 1)
 				return
 			coil.use(1)
@@ -263,13 +261,13 @@
 			return
 		if(!anchored && !isinspace())
 			playsound(src.loc, 'sound/items/Ratchet.ogg', 100, 1)
-			user << "<span class='notice'> You secure \the [src] to the floor!</span>"
+			user << "<span class='notice'>You secure \the [src] to the floor!</span>"
 			anchored = 1
 		else if(anchored)
 			playsound(src.loc, 'sound/items/Ratchet.ogg', 100, 1)
-			user << "<span class='notice'> You unsecure \the [src] from the floor!</span>"
+			user << "<span class='notice'>You unsecure \the [src] from the floor!</span>"
 			if(active)
-				user << "<span class='notice'> \The [src] shuts off!</span>"
+				user << "<span class='notice'>\The [src] shuts off!</span>"
 				src.shields_down()
 			anchored = 0
 
