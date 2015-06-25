@@ -193,47 +193,23 @@
 
 		dat += "<div class='statusDisplay'>"
 
+		//Filter the recipes we can craft to the top
+		var/list/can_craft = list()
+		var/list/cant_craft = list()
 		for(var/datum/table_recipe/R in table_recipes)
 			if(R.category != categories[viewing_category])
 				continue
-
-			var/name_text = ""
-			var/req_text = ""
-			var/tool_text = ""
-			var/catalist_text = ""
 			if(check_contents(R))
-				name_text ="<A href='?src=\ref[src];make=\ref[R]'>[R.name]</A>"
-
+				can_craft += R
 			else
-				name_text = "<span class='linkOff'>[R.name]</span>"
+				cant_craft += R
 
-			if(name_text)
-				for(var/A in R.reqs)
-					if(ispath(A, /obj))
-						var/obj/O = new A
-						req_text += " [R.reqs[A]] [O.name]"
-						qdel(O)
-					if(ispath(A, /datum/reagent))
-						var/datum/reagent/RE = new A
-						req_text += " [R.reqs[A]] [RE.name]"
-						qdel(RE)
+		for(var/datum/table_recipe/R in can_craft)
+			dat += build_recipe_text(R)
+		for(var/datum/table_recipe/R in cant_craft)
+			dat += build_recipe_text(R)
 
-				if(R.chem_catalysts.len)
-					catalist_text += ", Catalysts:"
-					for(var/C in R.chem_catalysts)
-						if(ispath(C, /datum/reagent))
-							var/datum/reagent/RE = new C
-							catalist_text += " [R.chem_catalysts[C]] [RE.name]"
-							qdel(RE)
-				if(R.tools.len)
-					tool_text += ", Tools:"
-					for(var/O in R.tools)
-						if(ispath(O, /obj))
-							var/obj/T = new O
-							tool_text += " [R.tools[O]] [T.name]"
-							qdel(T)
 
-				dat += "[name_text][req_text][tool_text][catalist_text]<BR>"
 		dat += "</div>"
 
 	var/datum/browser/popup = new(user, "table", "Table", 500, 500)
@@ -275,3 +251,43 @@
 		. = viewing_category % categories.len - 1
 	if(. <= 0)
 		. = categories.len
+
+/obj/structure/table/proc/build_recipe_text(var/datum/table_recipe/R)
+	. = ""
+	var/name_text = ""
+	var/req_text = ""
+	var/tool_text = ""
+	var/catalist_text = ""
+	if(check_contents(R))
+		name_text ="<A href='?src=\ref[src];make=\ref[R]'>[R.name]</A>"
+
+	else
+		name_text = "<span class='linkOff'>[R.name]</span>"
+
+	if(name_text)
+		for(var/A in R.reqs)
+			if(ispath(A, /obj))
+				var/obj/O = new A
+				req_text += " [R.reqs[A]] [O.name]"
+				qdel(O)
+			if(ispath(A, /datum/reagent))
+				var/datum/reagent/RE = new A
+				req_text += " [R.reqs[A]] [RE.name]"
+				qdel(RE)
+
+			if(R.chem_catalysts.len)
+				catalist_text += ", Catalysts:"
+				for(var/C in R.chem_catalysts)
+					if(ispath(C, /datum/reagent))
+						var/datum/reagent/RE = new C
+						catalist_text += " [R.chem_catalysts[C]] [RE.name]"
+						qdel(RE)
+			if(R.tools.len)
+				tool_text += ", Tools:"
+				for(var/O in R.tools)
+					if(ispath(O, /obj))
+						var/obj/T = new O
+						tool_text += " [R.tools[O]] [T.name]"
+						qdel(T)
+
+			. = "[name_text][req_text][tool_text][catalist_text]<BR>"
