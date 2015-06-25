@@ -30,7 +30,6 @@
 	..()
 
 /obj/item/clothing/head/helmet/sec
-	spawnWithHelmetCam = 1
 	canAttachCam = 1
 	can_flashlight = 1
 
