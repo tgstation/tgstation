@@ -209,13 +209,13 @@
 
 	if(mob.control_object)	Move_object(dir)
 
-	if(mob.incorporeal_move)
-		Process_Incorpmove(dir)
-		return
-
 	if(moving)	return 0
 
 	if(move_delayer.blocked()) return
+
+	if(mob.incorporeal_move)
+		Process_Incorpmove(dir)
+		return
 
 	if(locate(/obj/effect/stop/, mob.loc))
 		for(var/obj/effect/stop/S in mob.loc)

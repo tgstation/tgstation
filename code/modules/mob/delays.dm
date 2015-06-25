@@ -6,7 +6,7 @@
 /datum/delay_controller
 	// Delay clamps (for adminbus, effects)
 	var/min_delay = 1
-	var/max_delay = 100 // arbitrary number, should be set to a sane value
+	var/max_delay = 10000 // arbitrary number, should be set to a sane value
 
 	var/next_allowed = 0
 
@@ -34,11 +34,11 @@
 // Constructor args are currently all the same, but placed here for ease of tuning.
 /client // Yep, clients are snowflakes.
 	// Walking speed is 7, as is grab speed.
-	var/datum/delay_controller/move_delayer    = new (1, 100) // /mob/delayNextMove()
+	var/datum/delay_controller/move_delayer    = new (1,10000) // /mob/delayNextMove()
 /mob
-	var/datum/delay_controller/click_delayer   = new (1, 100) // (Handled in Click())
-	var/datum/delay_controller/attack_delayer  = new (1, 100) // delayNextAttack()
-	var/datum/delay_controller/special_delayer = new (1, 100) // delayNextSpecial()
+	var/datum/delay_controller/click_delayer   = new (1,10000) // (Handled in Click())
+	var/datum/delay_controller/attack_delayer  = new (1,10000) // delayNextAttack()
+	var/datum/delay_controller/special_delayer = new (1,10000) // delayNextSpecial()
 
 // Convenience procs.
 /mob/proc/delayNextMove(var/delay, var/additive=0)
