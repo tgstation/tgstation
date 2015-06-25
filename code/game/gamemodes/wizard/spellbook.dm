@@ -339,7 +339,7 @@
 	feedback_add_details("wizard_spell_learned",log_name)
 	rightandwrong(0, user, 25)
 	playsound(get_turf(user),"sound/magic/CastSummon.ogg",50,1)
-	user << "<span class='notice'>You have cast summon guns and gained an extra charge for your spellbook.</span>"
+	user << "<span class='notice'>You have cast summon guns!</span>"
 	return 1
 
 /datum/spellbook_entry/summon/magic
