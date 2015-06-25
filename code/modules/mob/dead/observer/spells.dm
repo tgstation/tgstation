@@ -69,6 +69,11 @@ var/global/list/boo_phrases_silicon=list(
 				if(L)
 					L.flicker()
 
+			if(istype(A,/obj/structure/hanging_lantern))
+				var/obj/structure/hanging_lantern/H = A
+				if(H) //Fucked if I know
+					H.flicker()
+
 			// OH GOD BLUE APC (single animation cycle)
 			if(istype(A, /obj/machinery/power/apc))
 				A:spookify()
