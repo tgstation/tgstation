@@ -60,19 +60,27 @@ var/list/camera_names=list()
 		ASSERT(src.network.len > 0)
 
 	if(!c_tag)
-		var/area/A=get_area(src)
-		var/basename=A.name
-		var/nethash=english_list(network)
-		var/suffix = 0
-		while(1)
-			c_tag = "[basename]"
-			if(suffix)
-				c_tag += " [suffix]"
-			if(!(nethash+c_tag in camera_names))
-				camera_names[nethash+c_tag]=src
-				break
-			suffix++
+		name_camera()
 	..()
+
+/obj/machinery/camera/proc/name_camera()
+	var/area/A=get_area(src)
+	var/basename=A.name
+	var/nethash=english_list(network)
+	var/suffix = 0
+	while(!suffix || nethash+c_tag in camera_names)
+		c_tag = "[basename]"
+		if(suffix)
+			c_tag += " [suffix]"
+		suffix++
+	camera_names[nethash+c_tag]=src
+
+/obj/machinery/camera/change_area(oldarea, newarea)
+	var/nethash=english_list(network)
+	camera_names[nethash+c_tag]=null
+	..()
+	if(name != replacetext(name,oldarea,newarea))
+		name_camera()
 
 /obj/machinery/camera/Destroy()
 	deactivate(null, 0) //kick anyone viewing out

@@ -861,6 +861,10 @@
 	if (buildstage < 1)
 		user << "<span class='info'>The circuit is missing.</span>"
 
+/obj/machinery/alarm/change_area(oldarea, newarea)
+	..()
+	name = replacetext(name,oldarea,newarea)
+
 /*
 FIRE ALARM
 */
@@ -1126,6 +1130,10 @@ FIRE ALARM
 
 	machines.Remove(src)
 	update_icon()
+
+/obj/machinery/firealarm/change_area(oldarea, newarea)
+	..()
+	name = replacetext(name,oldarea,newarea)
 
 /obj/machinery/partyalarm
 	name = "\improper PARTY BUTTON"

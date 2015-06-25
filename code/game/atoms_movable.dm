@@ -292,6 +292,9 @@
 	src.throwing = 0
 	if(isobj(src)) src.throw_impact(get_turf(src), throw_speed, user)
 
+/atom/movable/change_area(oldarea, newarea)
+	areaMaster = newarea
+	..()
 
 //Overlays
 /atom/movable/overlay

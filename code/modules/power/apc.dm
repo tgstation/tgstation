@@ -1285,4 +1285,8 @@ obj/machinery/power/apc/proc/autoset(var/val, var/on)
 	if(src.invisibility != INVISIBILITY_MAXIMUM)
 		src.invisibility = INVISIBILITY_MAXIMUM
 
+/obj/machinery/power/apc/change_area(oldarea, newarea)
+	..()
+	name = replacetext(name,oldarea,newarea)
+
 #undef APC_UPDATE_ICON_COOLDOWN

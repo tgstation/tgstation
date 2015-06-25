@@ -358,3 +358,11 @@
 		return MT_UPDATE
 
 	return ..()
+
+/obj/machinery/atmospherics/unary/vent_pump/change_area(oldarea, newarea)
+	areaMaster.air_vent_info.Remove(id_tag)
+	areaMaster.air_vent_names.Remove(id_tag)
+	..()
+	name = replacetext(name,newarea,oldarea)
+	area_uid = areaMaster.uid
+	broadcast_status()

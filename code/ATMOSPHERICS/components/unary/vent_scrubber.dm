@@ -356,3 +356,11 @@
 		return MT_UPDATE
 
 	return ..()
+
+/obj/machinery/atmospherics/unary/vent_scrubber/change_area(oldarea, newarea)
+	areaMaster.air_scrub_info.Remove(id_tag)
+	areaMaster.air_scrub_names.Remove(id_tag)
+	..()
+	name = replacetext(name,newarea,oldarea)
+	area_uid = areaMaster.uid
+	broadcast_status()

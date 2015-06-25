@@ -662,3 +662,9 @@ its easier to just keep the beam vertical.
 
 /atom/proc/mop_act(obj/item/weapon/mop/M, mob/user)
 	return 0
+
+/atom/proc/change_area(var/area/oldarea, var/area/newarea)
+	if(istype(oldarea))
+		oldarea = "[oldarea.name]"
+	if(istype(newarea))
+		newarea = "[newarea.name]"
