@@ -54,7 +54,7 @@
 	item_state = "pickaxe"
 	w_class = 4.0
 	m_amt = 3750 //one sheet, but where can you make them?
-	var/digspeed = 40
+	var/digspeed = 25
 	var/list/digsound = list('sound/effects/picaxe1.ogg','sound/effects/picaxe2.ogg','sound/effects/picaxe3.ogg')
 	origin_tech = "materials=1;engineering=1"
 	attack_verb = list("hit", "pierced", "sliced", "attacked")
@@ -74,7 +74,7 @@
 	name = "mining drill"
 	icon_state = "handdrill"
 	item_state = "jackhammer"
-	digspeed = 25 //available from roundstart, faster than a pickaxe.
+	digspeed = 15
 	digsound = list('sound/weapons/drill.ogg')
 	hitsound = 'sound/weapons/drill.ogg'
 	origin_tech = "materials=2;powerstorage=3;engineering=2"
