@@ -11,6 +11,7 @@
 	response_harm   = "punches"
 	icon = 'icons/mob/mob.dmi'
 	icon_state = "daemon"
+	icon_living = "daemon"
 	speed = 0
 	a_intent = "harm"
 	stop_automated_movement = 1
@@ -76,7 +77,7 @@
 			src.phased = TRUE
 			src.holder = holder
 			if(src.kidnapped)
-				src << "<B>You being to feast on [kidnapped]. You can not move while you are doing this.</B>"
+				src << "<B>You begin to feast on [kidnapped]. You can not move while you are doing this.</B>"
 				src.eating = TRUE
 				playsound(get_turf(src),'sound/magic/Demon_consume.ogg', 100, 1)
 				sleep(30)

@@ -302,6 +302,15 @@
 	desc = "A bottle of magically infused blood, the smell of which will attract extradimensional beings when broken. Be careful though, the kinds of creatures summoned by blood magic are indiscriminate in their killing, and you yourself may become a victim."
 	item_path = /obj/item/weapon/antag_spawner/slaughter_demon
 	log_name = "BB"
+	var/limit = 0
+
+/datum/spellbook_entry/item/bloodbottle/Buy(var/mob/living/carbon/human/user,var/obj/item/weapon/spellbook/book)
+	if(..())
+		limit = 1
+	return 1
+
+/datum/spellbook_entry/item/bloodbottle/CanBuy(var/mob/living/carbon/human/user,var/obj/item/weapon/spellbook/book)
+	return ..() && !limit
 
 /datum/spellbook_entry/summon
 	name = "Summon Stuff"
