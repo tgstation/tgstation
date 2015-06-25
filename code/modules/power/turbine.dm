@@ -134,7 +134,7 @@
 
 	..()
 
-/obj/machinery/power/compressor/CanAtmosPass(var/turf/T)
+/obj/machinery/power/compressor/CanPass(var/turf/T)
 	return !density
 
 /obj/machinery/power/compressor/process()
@@ -236,7 +236,7 @@
 //	if(compressor)
 //		compressor.locate_machinery()
 
-/obj/machinery/power/turbine/CanAtmosPass(var/turf/T)
+/obj/machinery/power/turbine/CanPass(var/turf/T)
 	return !density
 
 /obj/machinery/power/turbine/process()

@@ -118,7 +118,7 @@ proc/trange(var/Dist=0,var/turf/Center=null)//alternative to range (ONLY process
 
 			if(T)
 				if(flame_dist && prob(40) && !istype(T, /turf/space) && !T.density)
-					PoolOrNew(/obj/effect/hotspot, T) //Mostly for ambience!
+					PoolOrNew(/obj/fire, T) //Mostly for ambience!
 				if(dist > 0)
 					T.ex_act(dist)
 

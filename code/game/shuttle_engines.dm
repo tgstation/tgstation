@@ -3,7 +3,7 @@
 	name = "shuttle"
 	icon = 'icons/turf/shuttle.dmi'
 
-/obj/structure/shuttle/CanAtmosPass(turf/T)
+/obj/structure/shuttle/CanPass()
 	return 0
 
 /obj/structure/shuttle/engine

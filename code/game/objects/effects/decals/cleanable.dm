@@ -40,3 +40,16 @@
 	reagents.chem_temp += 30
 	reagents.handle_reactions()
 	..()
+
+/obj/effect/decal/cleanable/soot
+	name = "soot"
+	desc = "One hell of a party..."
+	gender = PLURAL
+	icon = 'icons/effects/tile_effects.dmi'
+	icon_state = "tile_soot"
+	anchored = 1
+	layer=2
+
+/obj/effect/decal/cleanable/soot/New()
+	..()
+	dir = pick(cardinal)

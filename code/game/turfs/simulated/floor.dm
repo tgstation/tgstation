@@ -84,8 +84,8 @@ var/list/icons_to_ignore_at_floor_init = list("damaged1","damaged2","damaged3","
 /turf/simulated/floor/proc/update_icon()
 	if(lava)
 		return 0
-	if(air)
-		update_visuals(air)
+//	if(air)
+//		update_visuals(air)
 	return 1
 
 /turf/simulated/floor/attack_paw(mob/user as mob)

@@ -386,13 +386,6 @@
 	dir = ini_dir
 	move_update_air(T)
 
-/obj/structure/window/CanAtmosPass(turf/T)
-	if(get_dir(loc, T) == dir)
-		return !density
-	if(dir == SOUTHWEST || dir == SOUTHEAST || dir == NORTHWEST || dir == NORTHEAST)
-		return !density
-	return 1
-
 //This proc is used to update the icons of nearby windows.
 /obj/structure/window/proc/update_nearby_icons()
 	update_icon()
@@ -424,7 +417,7 @@
 		overlays += "damage[ratio]"
 		return
 
-/obj/structure/window/temperature_expose(datum/gas_mixture/air, exposed_temperature, exposed_volume)
+/obj/structure/window/fire_act(datum/gas_mixture/air, exposed_temperature, exposed_volume)
 	if(exposed_temperature > T0C + 800)
 		hit(round(exposed_volume / 100), 0)
 	..()

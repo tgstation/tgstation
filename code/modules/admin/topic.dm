@@ -1189,6 +1189,14 @@
 		Game() // updates the main game menu
 		.(href, list("f_secret"=1))
 
+
+	else if(href_list["vsc"])
+		if(check_rights(R_ADMIN|R_SERVER))
+			if(href_list["vsc"] == "airflow")
+				zas_settings.ChangeSettingsDialog(usr,zas_settings.settings)
+			if(href_list["vsc"] == "default")
+				zas_settings.SetDefault(usr)
+
 	else if(href_list["monkeyone"])
 		if(!check_rights(R_SPAWN))	return
 

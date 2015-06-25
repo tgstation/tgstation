@@ -172,7 +172,7 @@
 			break
 		if(T == previousturf)
 			continue	//so we don't burn the tile we be standin on
-		if(!T.CanAtmosPass(previousturf))
+		if(!T.CanPass(previousturf))
 			break
 		ignite_turf(T)
 		sleep(1)
@@ -193,7 +193,7 @@
 	//Burn it based on transfered gas
 	target.hotspot_expose((ptank.air_contents.temperature*2) + 380,500)
 	//location.hotspot_expose(1000,500,1)
-	SSair.add_to_active(target, 0)
+	SSair.mark_for_update(target)
 	return
 
 

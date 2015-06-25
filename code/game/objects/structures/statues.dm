@@ -86,7 +86,7 @@
 	user.visible_message("<span class='notice'>[user] rubs some dust off from the [name]'s surface.</span>", \
 						 "<span class='notice'>You rub some dust off from the [name]'s surface.</span>")
 
-/obj/structure/statue/CanAtmosPass()
+/obj/structure/statue/CanPass()
 	return !density
 
 /obj/structure/statue/bullet_act(obj/item/projectile/Proj)
@@ -193,7 +193,7 @@
 	name = "Statue of a Scientist"
 	icon_state = "sci"
 
-/obj/structure/statue/plasma/temperature_expose(datum/gas_mixture/air, exposed_temperature, exposed_volume)
+/obj/structure/statue/plasma/fire_act(datum/gas_mixture/air, exposed_temperature, exposed_volume)
 	if(exposed_temperature > 300)
 		PlasmaBurn(exposed_temperature)
 
@@ -209,7 +209,7 @@
 	if(is_hot(W) > 300)//If the temperature of the object is over 300, then ignite
 		message_admins("Plasma statue ignited by [key_name_admin(user)](<A HREF='?_src_=holder;adminmoreinfo=\ref[user]'>?</A>) (<A HREF='?_src_=holder;adminplayerobservefollow=\ref[user]'>FLW</A>) in ([x],[y],[z] - <A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[x];Y=[y];Z=[z]'>JMP</a>)",0,1)
 		log_game("Plasma statue ignited by [key_name(user)] in ([x],[y],[z])")
-		ignite(is_hot(W))
+		combust(is_hot(W))
 		return
 	..()
 
@@ -218,7 +218,7 @@
 	hardness = 0
 	CheckHardness()
 
-/obj/structure/statue/plasma/proc/ignite(exposed_temperature)
+/obj/structure/statue/plasma/proc/combust(exposed_temperature)
 	if(exposed_temperature > 300)
 		PlasmaBurn(exposed_temperature)
 

@@ -18,6 +18,8 @@
 	pressure_resistance = 0
 	slot_flags = SLOT_HEAD
 	body_parts_covered = HEAD
+	autoignition_temperature = AUTOIGNITION_PAPER
+	fire_fuel = 1
 
 	var/info		//What's actually written on the paper.
 	var/info_links	//A different version of the paper which includes html links at fields and EOF
@@ -26,7 +28,7 @@
 	var/list/stamped
 	var/rigged = 0
 	var/spam_flag = 0
-	var/burning = 0 //Whether or not the paper is on fire
+//	var/burning = 0 //Whether or not the paper is on fire
 
 
 /obj/item/weapon/paper/New()
@@ -91,7 +93,7 @@
 
 /obj/item/weapon/paper/attack_hand()
 	var/mob/living/carbon/M = usr
-	if(burning)
+	if(on_fire)
 		M << "<span class='danger'>Picking up a burning paper seems awfully stupid.</span>"
 		return //Doesn't make any sense to pick up a burning paper
 	else //Probably isn't necessary but it's safer
@@ -278,7 +280,7 @@
 /obj/item/weapon/paper/attackby(obj/item/weapon/P, mob/living/carbon/human/user, params)
 	..()
 
-	if(burning)
+	if(on_fire)
 		return
 
 	if(is_blind(user))
@@ -325,12 +327,12 @@
 
 		user.unEquip(src)
 		user.visible_message("<span class='danger'>[user] lights [src] ablaze with [P]!</span>", "<span class='danger'>You light [src] on fire!</span>")
-		burn(0, 100)
+		fire_act(null, 700, 1)
 
 
 
 	add_fingerprint(user)
-
+/*
 /obj/item/weapon/paper/fire_act()
 	burn(1, 50)
 
@@ -346,7 +348,7 @@
 		src.visible_message("<span class='danger'>[src] burns away, leaving behind a pile of ashes.</span>")
 		new /obj/effect/decal/cleanable/ash(src.loc)
 		qdel(src)
-
+*/
 /*
  * Premade paper
  */

@@ -437,3 +437,12 @@ var/global/list/watt_suffixes = list("W", "KW", "MW", "GW", "TW", "PW", "EW", "Z
 		number/=1000
 		i++
 	return "[format_num(number)] [watt_suffixes[i]]"
+
+
+
+/proc/rfindtext(Haystack, Needle, Start = 1, End = 0)
+	var/i = findtext(Haystack, Needle, Start, End)
+
+	while (i)
+		. = i
+		i = findtext(Haystack, Needle, i + 1, End)

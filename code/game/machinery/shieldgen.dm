@@ -26,12 +26,6 @@
 	..()
 	move_update_air(T)
 
-/obj/machinery/shield/CanPass(atom/movable/mover, turf/target, height)
-	if(!height) return 0
-	else return ..()
-
-/obj/machinery/shield/CanAtmosPass(var/turf/T)
-	return !density
 
 /obj/machinery/shield/attackby(obj/item/weapon/W as obj, mob/user as mob, params)
 	if(!istype(W)) return

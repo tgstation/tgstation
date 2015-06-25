@@ -25,6 +25,7 @@
 	air_contents.temperature = T20C
 	AddAir()
 	air_update_turf(1)
+	air_contents.update_values()
 	update_icon()
 
 
@@ -72,7 +73,7 @@
 		overlays += I
 
 /obj/machinery/atmospherics/miner/process()
-	..()
+//	..()
 	if(stat & NOPOWER)
 		return
 	if (!on)

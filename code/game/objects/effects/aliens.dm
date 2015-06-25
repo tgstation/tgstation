@@ -41,7 +41,7 @@
 	..()
 	move_update_air(T)
 
-/obj/structure/alien/resin/CanAtmosPass()
+/obj/structure/alien/resin/CanPass()
 	return !density
 
 /obj/structure/alien/resin/wall
@@ -54,8 +54,6 @@
 	..()
 	relativewall_neighbours()
 
-/obj/structure/alien/resin/wall/BlockSuperconductivity()
-	return 1
 
 /obj/structure/alien/resin/wall/shadowling //For chrysalis
 	name = "chrysalis wall"
@@ -242,7 +240,7 @@
 		qdel(src)
 
 
-/obj/structure/alien/weeds/temperature_expose(datum/gas_mixture/air, exposed_temperature, exposed_volume)
+/obj/structure/alien/weeds/fire_act(datum/gas_mixture/air, exposed_temperature, exposed_volume)
 	if(exposed_temperature > 300)
 		health -= 5
 		healthcheck()
@@ -402,7 +400,7 @@
 			qdel(src)	//Remove the egg after it has been hit after bursting.
 
 
-/obj/structure/alien/egg/temperature_expose(datum/gas_mixture/air, exposed_temperature, exposed_volume)
+/obj/structure/alien/egg/fire_act(datum/gas_mixture/air, exposed_temperature, exposed_volume)
 	if(exposed_temperature > 500)
 		health -= 5
 		healthcheck()

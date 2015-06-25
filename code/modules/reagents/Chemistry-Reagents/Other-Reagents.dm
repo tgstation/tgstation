@@ -129,7 +129,7 @@ datum/reagent/water/reaction_turf(var/turf/simulated/T, var/volume)
 	for(var/mob/living/carbon/slime/M in T)
 		M.apply_water()
 
-	var/obj/effect/hotspot/hotspot = (locate(/obj/effect/hotspot) in T)
+	var/obj/fire/hotspot = (locate(/obj/fire) in T)
 	if(hotspot && !istype(T, /turf/space))
 		if(T.air)
 			var/datum/gas_mixture/G = T.air

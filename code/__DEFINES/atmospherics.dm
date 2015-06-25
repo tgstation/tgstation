@@ -1,3 +1,5 @@
+//#define ZASDBG
+
 #define FIRE_DAMAGE_MODIFIER	0.0215	//Higher values result in more external fire damage to the skin (default 0.0215)
 #define AIR_DAMAGE_MODIFIER		2.025	//More means less damage from hot air scalding lungs, less = more damage. (default 2.025)
 
@@ -56,7 +58,7 @@
 #define PLASMA_MINIMUM_BURN_TEMPERATURE		100+T0C
 #define PLASMA_UPPER_TEMPERATURE			1370+T0C
 #define PLASMA_MINIMUM_OXYGEN_NEEDED		2
-#define PLASMA_MINIMUM_OXYGEN_PLASMA_RATIO	30
+#define PLASMA_MINIMUM_OXYGEN_PLASMA_RATIO	20
 #define PLASMA_OXYGEN_FULLBURN				10
 #define MIN_PLASMA_DAMAGE					1
 #define MAX_PLASMA_DAMAGE					10
@@ -112,3 +114,19 @@
 
 #define MAX_OUTPUT_PRESSURE					4500 // (kPa) What pressure pumps and powered equipment max out at.
 #define MAX_TRANSFER_RATE					200 // (L/s) Maximum speed powered equipment can work at.
+
+#define BASE_ZAS_FUEL_REQ	0.1
+
+#define AIR_BLOCKED 1
+#define ZONE_BLOCKED 2
+#define BLOCKED 3
+
+
+#define AUTOIGNITION_WOOD  573.15
+#define AUTOIGNITION_PAPER 519.15
+
+#define MELTPOINT_GLASS   1500+T0C
+#define MELTPOINT_STEEL   1510+T0C
+#define MELTPOINT_SILICON 1687 // KELVIN
+#define MELTPOINT_PLASTIC 180+T0C
+#define MELTPOINT_SNOW	304.15	//about 30°C

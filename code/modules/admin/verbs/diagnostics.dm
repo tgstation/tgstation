@@ -1,3 +1,4 @@
+/*
 /client/proc/air_status(turf/target as turf)
 	set category = "Debug"
 	set name = "Display Air Status"
@@ -16,7 +17,7 @@
 	for(var/datum/gas/trace_gas in GM.trace_gases)
 		usr << "[trace_gas.type]: [trace_gas.moles]"
 	feedback_add_details("admin_verb","DAST") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
-
+*/
 /client/proc/fix_next_move()
 	set category = "Debug"
 	set name = "Unfreeze Everyone"

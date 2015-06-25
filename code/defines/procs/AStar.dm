@@ -258,7 +258,7 @@ length to avoid portals or something i guess?? Not that they're counted right no
 				L.Add(T)
 	else
 		for(var/dir in cardinal)
-			if(dir & atmos_adjacent_turfs)
+			if(dir & open_directions)
 				T = get_step(src,dir)
 				if(!istype(T))
 					continue

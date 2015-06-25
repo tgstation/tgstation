@@ -1298,7 +1298,7 @@
 "yX" = (/obj/machinery/atmospherics/pipe/simple/supply/hidden{dir = 4},/turf/simulated/floor/plating/airless,/area/space)
 "yY" = (/obj/structure/grille,/obj/machinery/meter,/obj/machinery/atmospherics/pipe/simple{dir = 4; icon_state = "intact"; level = 2},/obj/structure/window/reinforced/fulltile,/turf/simulated/floor/plating/airless,/area/engine/engineering)
 "yZ" = (/obj/machinery/atmospherics/unary/vent_pump{dir = 8; external_pressure_bound = 0; frequency = 1441; id_tag = "o2_out"; initialize_directions = 1; internal_pressure_bound = 4000; on = 1; pressure_checks = 2; pump_direction = 0},/turf/simulated/floor/engine{name = "air floor"; nitrogen = 10580; oxygen = 2644},/area/engine/engineering)
-"za" = (/obj/machinery/portable_atmospherics/canister/air,/turf/simulated/floor/engine{name = "air floor"; nitrogen = 10580; oxygen = 2644},/area/engine/engineering)
+"za" = (/obj/machinery/atmospherics/miner/air,/turf/simulated/floor/engine{name = "air floor"; nitrogen = 10580; oxygen = 2644},/area/engine/engineering)
 "zb" = (/obj/machinery/light/small{dir = 4},/turf/simulated/floor/engine{name = "air floor"; nitrogen = 10580; oxygen = 2644},/area/engine/engineering)
 "zc" = (/obj/structure/cable{d1 = 1; d2 = 4; icon_state = "1-4"},/turf/simulated/floor/plasteel,/area/engine/engineering)
 "zd" = (/obj/structure/cable{d1 = 1; d2 = 4; icon_state = "1-4"},/obj/structure/cable{d1 = 4; d2 = 8; icon_state = "4-8"},/turf/simulated/floor/plasteel,/area/engine/engineering)

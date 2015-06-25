@@ -10,6 +10,9 @@
 	if(!istype(A)) return null
 	return A.contents
 
+// Flags for door_alerts.
+#define DOORALERT_ATMOS 1
+#define DOORALERT_FIRE  2
 
 /area
 	var/global/global_uid = 0
@@ -45,6 +48,101 @@
 
 
 
+
+/area/proc/updateDangerLevel(source)
+	var/danger_level = 0
+
+	// Determine what the highest DL reported by air alarms is
+	for(var/obj/machinery/alarm/AA in src)
+		if((AA.stat & (NOPOWER|BROKEN)) || AA.shorted || AA.buildstage != 2)
+			continue
+		var/reported_danger_level=AA.local_danger_level
+		if(AA.alarmActivated)
+			reported_danger_level=2
+		if(reported_danger_level>danger_level)
+			danger_level=reported_danger_level
+		//testing("Danger level at [AA.name]: [AA.local_danger_level] (reported [reported_danger_level])")
+
+	//testing("Danger level decided upon in [name]: [danger_level] (from [atmosalm])")
+
+	// Danger level change?
+	if(danger_level != atmosalm)
+		// Going to danger level 2 from something else
+		if (danger_level == 2)
+			//updateicon()
+			var/list/cameras = list()
+			for(var/obj/machinery/camera/C in src)
+				cameras += C
+			for(var/mob/living/silicon/aiPlayer in player_list)
+				aiPlayer.triggerAlarm("Atmosphere", src, cameras, source)
+			for(var/obj/machinery/computer/station_alert/a in machines)
+				a.triggerAlarm("Atmosphere", src, cameras, source)
+			for(var/mob/living/simple_animal/drone/D in mob_list)
+				D.triggerAlarm("Atmosphere", src, cameras, source)
+			door_alerts |= DOORALERT_ATMOS
+			UpdateFirelocks()
+		// Dropping from danger level 2.
+		else if (atmosalm == 2)
+			for(var/mob/living/silicon/aiPlayer in player_list)
+				aiPlayer.cancelAlarm("Atmosphere", src, source)
+			for(var/obj/machinery/computer/station_alert/a in machines)
+				a.cancelAlarm("Atmosphere", src, source)
+			for(var/mob/living/simple_animal/drone/D in mob_list)
+				D.cancelAlarm("Atmosphere", src, source)
+			door_alerts &= ~DOORALERT_ATMOS
+			UpdateFirelocks()
+		atmosalm = danger_level
+		for (var/obj/machinery/alarm/AA in src)
+			if ( !(AA.stat & (NOPOWER|BROKEN)) && !AA.shorted)
+				AA.update_icon()
+		return 1
+	return 0
+
+/area/proc/sendDangerLevel(var/obj/machinery/computer/station_alert/a)//sending alerts to newly built Station Alert Computers.
+	var/danger_level = 0
+
+	// Determine what the highest DL reported by air alarms is
+	for(var/obj/machinery/alarm/AA in src)
+		if((AA.stat & (NOPOWER|BROKEN)) || AA.shorted || AA.buildstage != 2)
+			continue
+		var/reported_danger_level=AA.local_danger_level
+		if(AA.alarmActivated)
+			reported_danger_level=2
+		if(reported_danger_level>danger_level)
+			danger_level=reported_danger_level
+
+	if (danger_level == 2)
+		a.triggerAlarm("Atmosphere", src, null, src)
+
+/area/proc/UpdateFirelocks()
+	if(door_alerts != 0)
+		CloseFirelocks()
+	else
+		OpenFirelocks()
+
+/area/proc/CloseFirelocks()
+	if(doors_down) return
+	doors_down=1
+	for(var/obj/machinery/door/firedoor/D in all_doors)
+		if(!D.blocked)
+			if(D.operating)
+				D.nextstate = CLOSED
+			else if(!D.density)
+				spawn()
+					D.close()
+
+/area/proc/OpenFirelocks()
+	if(!doors_down) return
+	doors_down=0
+	for(var/obj/machinery/door/firedoor/D in all_doors)
+		if(!D.blocked)
+			if(D.operating)
+				D.nextstate = OPEN
+			else if(D.density)
+				spawn()
+					D.open()
+
+
 /area/proc/poweralert(var/state, var/obj/source as obj)
 	if (state != poweralm)
 		poweralm = state
@@ -70,7 +168,7 @@
 				else
 					D.triggerAlarm("Power", src, cameras, source)
 	return
-
+/*
 /area/proc/atmosalert(var/danger_level, var/obj/source as obj)
 	if(danger_level != atmosalm)
 		if (danger_level==2)
@@ -96,7 +194,7 @@
 		src.atmosalm = danger_level
 		return 1
 	return 0
-
+*/
 /area/proc/firealert(var/obj/source as obj)
 	if(always_unpowered == 1) //no fire alarms in space/asteroid
 		return
@@ -105,13 +203,8 @@
 
 	if (!( src.fire ))
 		src.set_fire_alarm_effect()
-		for(var/obj/machinery/door/firedoor/D in src)
-			if(!D.blocked)
-				if(D.operating)
-					D.nextstate = CLOSED
-				else if(!D.density)
-					spawn(0)
-						D.close()
+		door_alerts |= DOORALERT_FIRE
+		UpdateFirelocks()
 		for(var/obj/machinery/firealarm/F in src)
 			F.update_icon()
 	for (var/obj/machinery/camera/C in src)
@@ -130,13 +223,8 @@
 		src.fire = 0
 		src.mouse_opacity = 0
 		src.updateicon()
-		for(var/obj/machinery/door/firedoor/D in src)
-			if(!D.blocked)
-				if(D.operating)
-					D.nextstate = OPEN
-				else if(D.density)
-					spawn(0)
-						D.open()
+		door_alerts &= ~DOORALERT_FIRE
+		UpdateFirelocks()
 		for(var/obj/machinery/firealarm/F in src)
 			F.update_icon()
 
@@ -147,6 +235,8 @@
 	for (var/mob/living/simple_animal/drone/D in mob_list)
 		D.cancelAlarm("Fire", src, source)
 	return
+
+
 
 /area/proc/burglaralert(var/obj/trigger)
 	if(always_unpowered == 1) //no burglar alarms in space/asteroid
@@ -176,6 +266,23 @@
 	fire = 1
 	updateicon()
 	mouse_opacity = 0
+
+
+/area/proc/radiation_alert()
+	if(name == "Space")
+		return
+	if(!radalert)
+		radalert = 1
+		updateicon()
+	return
+
+/area/proc/reset_radiation_alert()
+	if(name == "Space")
+		return
+	if(radalert)
+		radalert = 0
+		updateicon()
+	return
 
 /area/proc/readyalert()
 	if(name == "Space")

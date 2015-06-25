@@ -46,8 +46,8 @@ var/const/AALARM_WIRE_AALARM = 16
 				//world << "Syphon Wire Cut"
 
 		if(AALARM_WIRE_AALARM)
-			if (A.alarm_area.atmosalert(2,holder))
-				A.post_alert(2)
+//			if (A.alarm_area.atmosalert(2,holder))
+//				A.post_alert(2)
 			A.update_icon()
 
 /datum/wires/alarm/UpdatePulsed(var/index)
@@ -88,6 +88,6 @@ var/const/AALARM_WIRE_AALARM = 16
 
 		if(AALARM_WIRE_AALARM)
 		//	world << "Aalarm wire pulsed"
-			if (A.alarm_area.atmosalert(0,holder))
-				A.post_alert(0)
+	//		if (A.alarm_area.atmosalert(0,holder))
+	//			A.post_alert(0)
 			A.update_icon()

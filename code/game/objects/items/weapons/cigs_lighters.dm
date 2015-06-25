@@ -33,7 +33,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 		matchburnout()
 		return
 	if(location)
-		location.hotspot_expose(700, 5)
+		location.hotspot_expose(700, 5,surfaces=istype(loc,/turf))
 		return
 
 /obj/item/weapon/match/fire_act()
@@ -306,7 +306,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	throw_speed = 0.5
 	item_state = "cigaroff"
 	smoketime = 1500
-	chem_volume = 20
+	chem_volume = 40
 
 /obj/item/clothing/mask/cigarette/cigar/cohiba
 	name = "\improper Cohiba Robusto cigar"
@@ -322,7 +322,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	icon_on = "cigar2on"
 	icon_off = "cigar2off"
 	smoketime = 7200
-	chem_volume = 30
+	chem_volume = 60
 
 /obj/item/weapon/cigbutt
 	name = "cigarette butt"

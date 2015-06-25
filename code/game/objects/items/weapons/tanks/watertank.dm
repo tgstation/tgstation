@@ -351,7 +351,7 @@
 			if(get_dist(T, src) < 2) // Otherwise we'll get silliness like people using Nanofrost to kill people through walls with cold air
 				G.temperature = 2
 			T.air_update_turf()
-			for(var/obj/effect/hotspot/H in T)
+			for(var/obj/fire/H in T)
 				H.Kill()
 				if(G.toxins)
 					G.nitrogen += (G.toxins)

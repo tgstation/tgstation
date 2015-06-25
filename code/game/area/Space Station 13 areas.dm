@@ -19,6 +19,7 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 	var/atmos = 1
 	var/atmosalm = 0
 	var/poweralm = 1
+	var/radalert = 0
 	var/party = null
 	level = null
 	name = "Space"
@@ -50,6 +51,17 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 	var/has_gravity = 0
 
 	var/no_air = null
+
+
+	var/list/all_doors = list()		//Added by Strumpetplaya - Alarm Change - Contains a list of doors adjacent to this area
+
+	// /vg/: Bitmap of subsystems asking for firedoors.
+	var/door_alerts=0
+
+	var/doors_down=0
+
+	// /vg/: No teleporting for you. 2 = SUPER JAMMED, inaccessible even to telecrystals.
+	var/jammed = 0
 //	var/area/master				// master area used for power calcluations
 								// (original area before splitting due to sd_DAL)
 //	var/list/related			// the other areas of the same type as this

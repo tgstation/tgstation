@@ -226,11 +226,11 @@
 	var/mineral = "plasma"
 	doortype = /obj/structure/door_assembly/door_assembly_plasma
 
-/obj/machinery/door/airlock/plasma/temperature_expose(datum/gas_mixture/air, exposed_temperature, exposed_volume)
+/obj/machinery/door/airlock/plasma/fire_act(datum/gas_mixture/air, exposed_temperature, exposed_volume)
 	if(exposed_temperature > 300)
 		PlasmaBurn(exposed_temperature)
 
-/obj/machinery/door/airlock/plasma/proc/ignite(exposed_temperature)
+/obj/machinery/door/airlock/plasma/proc/combust(exposed_temperature)
 	if(exposed_temperature > 300)
 		PlasmaBurn(exposed_temperature)
 
@@ -239,8 +239,6 @@
 	new/obj/structure/door_assembly/door_assembly_0( src.loc )
 	qdel(src)
 
-/obj/machinery/door/airlock/plasma/BlockSuperconductivity() //we don't stop the heat~
-	return 0
 
 /obj/machinery/door/airlock/clown
 	name = "bananium airlock"
@@ -1006,7 +1004,7 @@ About the new airlock wires panel:
 	if(is_hot(C) > 300)//If the temperature of the object is over 300, then ignite
 		message_admins("Plasma airlock ignited by [key_name_admin(user)](<A HREF='?_src_=holder;adminmoreinfo=\ref[user]'>?</A>) (<A HREF='?_src_=holder;adminplayerobservefollow=\ref[user]'>FLW</A>) in ([x],[y],[z] - <A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[x];Y=[y];Z=[z]'>JMP</a>)")
 		log_game("Plasma wall ignited by [key_name(user)] in ([x],[y],[z])")
-		ignite(is_hot(C))
+		combust(is_hot(C))
 		return
 	..()
 

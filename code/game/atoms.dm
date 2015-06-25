@@ -84,7 +84,6 @@
 	return
 
 /atom/proc/assume_air(datum/gas_mixture/giver)
-	del(giver)
 	return null
 
 /atom/proc/remove_air(amount)
@@ -280,9 +279,6 @@ its easier to just keep the beam vertical.
 	contents_explosion(severity, target)
 
 /atom/proc/blob_act()
-	return
-
-/atom/proc/fire_act()
 	return
 
 /atom/proc/hitby(atom/movable/AM as mob|obj)

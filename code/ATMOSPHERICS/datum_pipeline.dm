@@ -267,14 +267,23 @@ var/pipenetwarnings = 10
 		if(total_heat_capacity > 0)
 			temperature = total_thermal_energy/total_heat_capacity
 
+		temperature = max(0, temperature)
+		for(var/datum/gas_mixture/G in GL)
+			G.temperature = temperature
+			G.set_gas(o2 = (total_oxygen*G.volume/total_volume), \
+			n2 = (total_nitrogen*G.volume/total_volume), \
+			co2 = (total_carbon_dioxide*G.volume/total_volume), \
+			tx = (total_toxins*G.volume/total_volume), \
+			traces = total_trace_gases,)
 		//Update individual gas_mixtures by volume ratio
+/*
 		for(var/datum/gas_mixture/G in GL)
 			G.oxygen = total_oxygen*G.volume/total_volume
 			G.nitrogen = total_nitrogen*G.volume/total_volume
 			G.toxins = total_toxins*G.volume/total_volume
 			G.carbon_dioxide = total_carbon_dioxide*G.volume/total_volume
 
-			G.temperature = temperature
+
 
 			if(total_trace_gases.len)
 				for(var/datum/gas/trace_gas in total_trace_gases)
@@ -284,3 +293,4 @@ var/pipenetwarnings = 10
 						G.trace_gases += corresponding
 
 					corresponding.moles = trace_gas.moles*G.volume/total_volume
+*/

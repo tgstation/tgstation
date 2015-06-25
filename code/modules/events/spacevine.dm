@@ -579,7 +579,7 @@
 				return
 	return
 
-/obj/effect/spacevine/temperature_expose(null, temp, volume)
+/obj/effect/spacevine/fire_act(null, temp, volume)
 	var/override = 0
 	for(var/datum/spacevine_mutation/SM in mutations)
 		override += SM.process_temperature(src, temp, volume)

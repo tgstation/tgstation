@@ -73,7 +73,7 @@ var/list/image/ghost_darkness_images = list() //this is a list of images for thi
 		updateallghostimages()
 	..()
 
-/mob/dead/CanPass(atom/movable/mover, turf/target, height=0)
+/mob/dead/CanPass(atom/movable/mover, turf/target, height=1.5, air_group = 0)
 	return 1
 /*
 Transfer_mind is there to check if mob is being deleted/not going to have a body.

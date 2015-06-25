@@ -144,7 +144,7 @@ var/list/admin_ranks = list()								//list of all admin_rank datums
 		//process each line seperately
 		for(var/line in Lines)
 			if(!length(line))				continue
-			if(findtextEx(line,"#",1,2))	continue
+			if(findtext(line,"#",1,2))	continue
 
 			//Split the line at every "="
 			var/list/List = text2list(line, "=")

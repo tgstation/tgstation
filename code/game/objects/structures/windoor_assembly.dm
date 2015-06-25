@@ -53,11 +53,6 @@
 	else
 		return 1
 
-/obj/structure/windoor_assembly/CanAtmosPass(var/turf/T)
-	if(get_dir(loc, T) == dir)
-		return !density
-	else
-		return 1
 
 /obj/structure/windoor_assembly/CheckExit(atom/movable/mover as mob|obj, turf/target as turf)
 	if(istype(mover) && mover.checkpass(PASSGLASS))

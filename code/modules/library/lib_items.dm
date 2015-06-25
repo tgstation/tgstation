@@ -19,6 +19,8 @@
 	opacity = 0
 	var/state = 0
 	var/list/allowed_books = list(/obj/item/weapon/book, /obj/item/weapon/spellbook, /obj/item/weapon/storage/book) //Things allowed in the bookcase
+	autoignition_temperature = AUTOIGNITION_WOOD
+	fire_fuel = 10
 
 
 /obj/structure/bookcase/initialize()
@@ -160,7 +162,6 @@
 	name = "book"
 	icon = 'icons/obj/library.dmi'
 	icon_state ="book"
-	force = 3
 	throwforce = 3
 	throw_speed = 1
 	throw_range = 5
@@ -172,6 +173,9 @@
 	var/unique = 0		//0 - Normal book, 1 - Should not be treated as normal book, unable to be copied, unable to be modified
 	var/title			//The real name of the book.
 	var/window_size = null // Specific window size for the book, i.e: "1920x1080", Size x Width
+
+	autoignition_temperature = AUTOIGNITION_PAPER
+	fire_fuel = 3
 
 
 /obj/item/weapon/book/attack_self(mob/user)

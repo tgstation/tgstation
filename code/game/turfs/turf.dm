@@ -46,11 +46,11 @@
 	turfs.Remove(src)
 	set_opacity(0)
 	reconsider_lights()
-	for(var/direction in cardinal)
-		if(atmos_adjacent_turfs & direction)
-			var/turf/simulated/T = get_step(src, direction)
-			if(istype(T))
-				SSair.add_to_active(T)
+//	for(var/direction in cardinal)
+//		if(atmos_adjacent_turfs & direction)
+//			var/turf/simulated/T = get_step(src, direction)
+//			if(istype(T))
+//				SSair.mark_for_update(T)
 	..()
 
 /turf/Destroy()
@@ -153,7 +153,7 @@
 
 //	var/old_opacity = opacity
 	var/old_baseturf = baseturf
-	SSair.remove_from_active(src)
+//	SSair.remove_from_active(src)
 
 	var/turf/W = new path(src)
 	W.baseturf = old_baseturf
@@ -170,7 +170,7 @@
 		W.lighting_clear_overlays()
 
 	if(istype(W, /turf/simulated))
-		W:Assimilate_Air()
+//		W:Assimilate_Air()
 		W.RemoveLattice()
 
 //	W.lighting_lumcount += old_lumcount
@@ -186,11 +186,11 @@
 		S.update_starlight()
 
 	W.levelupdate()
-	W.CalculateAdjacentTurfs()
+	SSair.mark_for_update(W)
 
 	universe.OnTurfChange(W)
 	return W
-
+/*
 //////Assimilate Air//////
 /turf/simulated/proc/Assimilate_Air()
 	if(air)
@@ -221,7 +221,7 @@
 		air.toxins = (atox/max(turf_count,1))
 		air.temperature = (atemp/max(turf_count,1))//Trace gases can get bant
 		SSair.add_to_active(src)
-
+*/
 /turf/proc/ReplaceWithLattice()
 	src.ChangeTurf(/turf/space)
 	new /obj/structure/lattice(locate(src.x, src.y, src.z) )

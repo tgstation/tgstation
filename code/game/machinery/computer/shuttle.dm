@@ -133,7 +133,7 @@
 */
 
 //Code above preserved so you can see what DOING IT WRONG looks like
-/obj/structure/plasticflaps/mining/CanAtmosPass()
+/obj/structure/plasticflaps/mining/CanPass()
 	return 0
 
 

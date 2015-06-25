@@ -905,9 +905,9 @@ Turf and target are seperate in case you want to teleport some distance from a t
 
 
 					// Give the new turf our air, if simulated
-					if(istype(X, /turf/simulated) && istype(T, /turf/simulated))
-						var/turf/simulated/sim = X
-						sim.copy_air_with_tile(T)
+//					if(istype(X, /turf/simulated) && istype(T, /turf/simulated))
+//						var/turf/simulated/sim = X
+//						sim.copy_air_with_tile(T)
 
 					/* Quick visual fix for some weird shuttle corner artefacts when on transit space tiles */
 					if(direction && findtext(X.icon_state, "swall_s"))
@@ -978,15 +978,15 @@ Turf and target are seperate in case you want to teleport some distance from a t
 
 	if(toupdate.len)
 		for(var/turf/simulated/T1 in toupdate)
-			SSair.remove_from_active(T1)
-			T1.CalculateAdjacentTurfs()
-			SSair.add_to_active(T1,1)
+//			SSair.remove_from_active(T1)
+//			T1.CalculateAdjacentTurfs()
+			SSair.mark_for_update(T1)
 
 	if(fromupdate.len)
 		for(var/turf/simulated/T2 in fromupdate)
-			SSair.remove_from_active(T2)
-			T2.CalculateAdjacentTurfs()
-			SSair.add_to_active(T2,1)
+//			SSair.remove_from_active(T2)
+//			T2.CalculateAdjacentTurfs()
+			SSair.mark_for_update(T2)
 
 
 
@@ -1130,8 +1130,8 @@ Turf and target are seperate in case you want to teleport some distance from a t
 
 	if(toupdate.len)
 		for(var/turf/simulated/T1 in toupdate)
-			T1.CalculateAdjacentTurfs()
-			SSair.add_to_active(T1,1)
+//			T1.CalculateAdjacentTurfs()
+			SSair.mark_for_update(T1)
 
 
 	return copiedobjs

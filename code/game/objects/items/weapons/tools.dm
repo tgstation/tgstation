@@ -236,7 +236,7 @@
 		if(M.l_hand == src || M.r_hand == src)
 			location = get_turf(M)
 	if(isturf(location))
-		location.hotspot_expose(700, 5)
+		location.hotspot_expose(700, 5,surfaces=istype(loc,/turf))
 
 
 /obj/item/weapon/weldingtool/afterattack(atom/O, mob/user, proximity)

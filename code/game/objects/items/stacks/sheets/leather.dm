@@ -135,7 +135,7 @@ var/global/list/datum/stack_recipe/xeno_recipes = list ( \
 //Step two - washing..... it's actually in washing machine code.
 
 //Step three - drying
-/obj/item/stack/sheet/wetleather/temperature_expose(datum/gas_mixture/air, exposed_temperature, exposed_volume)
+/obj/item/stack/sheet/wetleather/fire_act(datum/gas_mixture/air, exposed_temperature, exposed_volume)
 	..()
 	if(exposed_temperature >= drying_threshold_temperature)
 		wetness--

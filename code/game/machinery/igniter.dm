@@ -87,11 +87,11 @@
 
 /obj/machinery/sparker/attack_ai()
 	if (src.anchored)
-		return src.ignite()
+		return src.combust()
 	else
 		return
 
-/obj/machinery/sparker/proc/ignite()
+/obj/machinery/sparker/proc/combust()
 	if (!(powered()))
 		return
 
