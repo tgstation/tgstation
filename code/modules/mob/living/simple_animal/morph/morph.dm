@@ -1,6 +1,6 @@
 #define MORPH_COOLDOWN 50
 
-/mob/living/simple_animal/morph
+/mob/living/simple_animal/hostile/morph
 	name = "Morph"
 	real_name = "Morph"
 	desc = "some amorphous blob"
@@ -8,6 +8,8 @@
 	emote_hear = list("gurgles")
 	icon = 'icons/mob/animal.dmi'
 	icon_state = "morph"
+	icon_living = "morph"
+	icon_dead = "morph_dead"
 	speed = 2
 	a_intent = "harm"
 	stop_automated_movement = 1
@@ -23,31 +25,40 @@
 	melee_damage_upper = 30
 	see_in_dark = 8
 	see_invisible = SEE_INVISIBLE_MINIMUM
+	idle_vision_range = 1 // Only attack when target is close
+	wander = 0
 
 	var/morphed = 0
-	var/atom/form = null
+	var/atom/movable/form = null
 	var/morph_time = 0
 
-/mob/living/simple_animal/morph/examine(mob/user)
+/mob/living/simple_animal/hostile/morph/examine(mob/user)
 	if(morphed)
-		form.examine(user) // Refactor examine to return desc ? Not sure if worth it
+		form.examine(user) // Refactor examine to return desc so it's static? Not sure if worth it
 		if(get_dist(user,src)<=3) 
 			user << "<span class='notice'>Looks odd!</span>"
 	else
 		..()
 	return
 
-/mob/living/simple_animal/morph/ShiftClickOn(var/atom/A)
+/mob/living/simple_animal/hostile/morph/proc/allowed(var/atom/movable/A) // make it into property/proc ? not sure if worth it
+	if(istype(A,/obj/screen))
+		return 0
+	if(istype(A,/obj/singularity))
+		return 0
+	return 1
+
+/mob/living/simple_animal/hostile/morph/ShiftClickOn(var/atom/movable/A)
 	if(morph_time <= world.time)
 		if(A == src)
 			restore()
 			return
-		if(istype(A,/atom/movable/))
+		if(istype(A) && allowed(A))
 			assume(A)
 	else
 		..()
 
-/mob/living/simple_animal/morph/proc/assume(var/atom/target)
+/mob/living/simple_animal/hostile/morph/proc/assume(var/atom/movable/target)
 	morphed = 1
 	form = target
 	
@@ -73,7 +84,7 @@
 	morph_time = world.time + MORPH_COOLDOWN
 	return
 
-/mob/living/simple_animal/morph/proc/restore()
+/mob/living/simple_animal/hostile/morph/proc/restore()
 	if(!morphed)
 		return
 	morphed = 0
@@ -94,9 +105,80 @@
 	morph_time = world.time + MORPH_COOLDOWN
 	return
 
-/mob/living/simple_animal/morph/death()
+/mob/living/simple_animal/hostile/morph/death()
 	if(morphed)
 		visible_message("<span class='danger'>The [src] dissolves!</span>")
 		restore()
 	..(0)
 	return
+
+/mob/living/simple_animal/hostile/morph/Aggro() // automated only
+	..()
+	restore()
+
+/mob/living/simple_animal/hostile/morph/LoseAggro()
+	vision_range = idle_vision_range
+
+/mob/living/simple_animal/hostile/morph/AIShouldSleep()
+	. = ..()
+	if(.)
+		var/list/things = list()
+		for(var/atom/movable/A in view(src))
+			if(allowed(A))
+				things += A
+		var/atom/movable/T = pick(things)
+		assume(T)
+
+
+//Spawn Event
+
+/datum/round_event_control/morph
+	name = "Spawn Morph"
+	typepath = /datum/round_event/morph
+	weight = 0 //Admin only
+	max_occurrences = 1
+
+/datum/round_event/morph
+	var/key_of_morph
+
+/datum/round_event/morph/proc/get_morph(var/end_if_fail = 0)
+	key_of_morph = null
+	if(!key_of_morph)
+		var/list/candidates = get_candidates(BE_ALIEN)
+		if(!candidates.len)
+			if(end_if_fail)
+				return 0
+			return find_morph()
+		var/client/C = pick(candidates)
+		key_of_morph = C.key
+	if(!key_of_morph)
+		if(end_if_fail)
+			return 0
+		return find_morph()
+	var/datum/mind/player_mind = new /datum/mind(key_of_morph)
+	player_mind.active = 1
+	if(!xeno_spawn)
+		return find_morph()
+	var/mob/living/simple_animal/hostile/morph/S = new /mob/living/simple_animal/hostile/morph(pick(xeno_spawn))
+	player_mind.transfer_to(S)
+	player_mind.assigned_role = "Morph"
+	player_mind.special_role = "Morph"
+	ticker.mode.traitors |= player_mind
+	S << "<B>You are a Morph, a shapeshifting alien creature.</B> You can assume the shape of anything in sight by Shift-Clicking it.<br> You can only transform every 5 seconds.<br> To return to your basic form Shift-Click on yourself."
+	message_admins("[key_of_morph] has been made into Morph by an event.")
+	log_game("[key_of_morph] was spawned as a Morph by an event.")
+	return 1
+
+/datum/round_event/morph/start()
+	get_morph()
+
+
+/datum/round_event/morph/proc/find_morph()
+	message_admins("Attempted to spawn a Morph but there was no players available. Will try again momentarily.")
+	spawn(50)
+		if(get_morph(1))
+			message_admins("Situation has been resolved, [key_of_morph] has been spawned as a Morph.")
+			log_game("[key_of_morph] was spawned as a Morph by an event.")
+			return 0
+		message_admins("Unfortunately, no candidates were available for becoming a Morph. Shutting down.")
+	return kill()
