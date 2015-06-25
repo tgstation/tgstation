@@ -11,27 +11,15 @@
 	heat_protection = HEAD
 	max_heat_protection_temperature = HELMET_MAX_TEMP_PROTECT
 	strip_delay = 60
-	var/obj/machinery/camera/portable/helmetCam = null
-	var/spawnWithHelmetCam = 0
-	var/canAttachCam = 0
 
 
 /obj/item/clothing/head/helmet/New()
 	..()
-	if(spawnWithHelmetCam)
-		helmetCam = new /obj/machinery/camera/portable(src)
-		helmetCam.c_tag = "Helmet-Mounted Camera (No User)([rand(1,999)])"
-		helmetCam.network = list("SS13")
-		update_icon()
 
 /obj/item/clothing/head/helmet/emp_act(severity)
-	if(helmetCam) //Transfer the EMP to the camera so you can still disable it this way.
-		helmetCam.emp_act(severity)
 	..()
 
 /obj/item/clothing/head/helmet/sec
-	spawnWithHelmetCam = 1
-	canAttachCam = 1
 	can_flashlight = 1
 
 /obj/item/clothing/head/helmet/alt
@@ -171,8 +159,6 @@
 /obj/item/clothing/head/helmet/update_icon()
 
 	var/state = "[initial(icon_state)]"
-	if(helmetCam)
-		state += "-cam" //"helmet-cam"
 	if(F)
 		if(F.on)
 			state += "-flight-on" //"helmet-flight-on" // "helmet-cam-flight-on"
@@ -220,37 +206,6 @@
 				usr.update_inv_head(0)
 				verbs -= /obj/item/clothing/head/helmet/proc/toggle_helmlight
 			return
-
-
-	if(istype(A, /obj/item/weapon/camera_assembly))
-		if(!canAttachCam)
-			user << "<span class='warning'>You can't attach [A] to [src]!</span>"
-			return
-		if(helmetCam)
-			user << "<span class='notice'>[src] already has a mounted camera.</span>"
-			return
-		if(!user.unEquip(A))
-			return
-		helmetCam = new /obj/machinery/camera/portable(src)
-		helmetCam.assembly = A
-		A.loc = helmetCam
-		helmetCam.c_tag = "Helmet-Mounted Camera (No User)([rand(1,999)])"
-		helmetCam.network = list("SS13")
-		update_icon()
-		user.visible_message("[user] attaches [A] to [src].","<span class='notice'>You attach [A] to [src].</span>")
-		return
-
-	if(istype(A, /obj/item/weapon/crowbar))
-		if(!helmetCam)
-			..()
-			return
-		user.visible_message("[user] removes [helmetCam] from [src].","<span class='notice'>You remove [helmetCam] from [src].</span>")
-		helmetCam.assembly.loc = get_turf(src)
-		helmetCam.assembly = null
-		qdel(helmetCam)
-		helmetCam = null
-		update_icon()
-		return
 
 	..()
 	return
@@ -302,16 +257,8 @@
 			SetLuminosity(0)
 
 
-/obj/item/clothing/head/helmet/equipped(mob/user)
-	if(helmetCam)
-		spawn(10) //Gives time for the game to set a name (lol rhyme) to roundstart officers.
-			helmetCam.c_tag = "Helmet-Mounted Camera ([user.name])([rand(1,999)])"
-
 /obj/item/clothing/head/helmet/dropped(mob/user)
 	if(F)
 		if(F.on)
 			user.AddLuminosity(-F.brightness_on)
 			SetLuminosity(F.brightness_on)
-
-	if(helmetCam)
-		helmetCam.c_tag = "Helmet-Mounted Camera (No User)([rand(1,999)])"
