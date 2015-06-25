@@ -1,3 +1,5 @@
+var/global/image/fire_overlay = image("icon" = 'icons/effects/fire.dmi', "icon_state" = "fire")
+
 /obj/item
 	name = "item"
 	icon = 'icons/obj/items.dmi'
@@ -20,7 +22,6 @@
 	var/cold_protection = 0 //flags which determine which body parts are protected from cold. Use the HEAD, CHEST, GROIN, etc. flags. See setup.dm
 	var/max_heat_protection_temperature //Set this variable to determine up to which temperature (IN KELVIN) the item protects against heat damage. Keep at null to disable protection. Only protects areas set by heat_protection flags
 	var/min_cold_protection_temperature //Set this variable to determine down to which temperature (IN KELVIN) the item protects against cold damage. 0 is NOT an acceptable number due to if(varname) tests!! Keep at null to disable protection. Only protects areas set by cold_protection flags
-	var/burning = 0
 
 	//If this is set, The item will make an action button on the player's HUD when picked up.
 	var/action_button_name //It is also the text which gets displayed on the action button. If not set it defaults to 'Use [name]'. If it's not set, there'll be no button.
@@ -103,18 +104,6 @@
 	if(!gc_destroyed)
 		contents_explosion(severity, target)
 
-/obj/item/proc/burn()
-	src.visible_message("<span class='warning'>[src] disintegrates, leaving behind a pile of ashes.</span>")
-	new /obj/effect/decal/cleanable/ash(src.loc)
-	qdel(src)
-
-/obj/item/proc/extinguish()
-	if(burning)
-		burning = 0
-		for(var/image/img in overlays)
-			if(img.icon_state == "fire")
-				overlays -= img
-
 //user: The mob that is suiciding
 //damagetype: The type of damage the item will inflict on the user
 //BRUTELOSS = 1
@@ -169,9 +158,21 @@
 /obj/item/attack_hand(mob/user as mob)
 	if (!user) return
 
-	if(burning)
-		burn() //It just disintigrates if you try to pick it up
-		return
+	if(burn_state == 1)
+		var/mob/living/carbon/human/H = user
+		if(istype(H))
+			if(H.gloves && (H.gloves.max_heat_protection_temperature > 360))
+				extinguish()
+				user << "<span class='notice'>You put out the fire on [src].</span>"
+			else
+				user << "<span class='warning'>You burn your hand on [src]!</span>"
+				var/obj/item/organ/limb/affecting = H.get_organ("[user.hand ? "l" : "r" ]_arm")
+				if(affecting.take_damage( 0, 5 ))		// 5 burn damage
+					H.update_damage_overlays(0)
+				H.updatehealth()
+				return
+		else
+			extinguish()
 
 	if (istype(src.loc, /obj/item/weapon/storage))
 		//If the item is in a storage item, take it out

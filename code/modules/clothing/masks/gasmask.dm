@@ -8,6 +8,7 @@
 	item_state = "gas_alt"
 	gas_transfer_coefficient = 0.01
 	permeability_coefficient = 0.01
+	burn_state = -1 //Won't burn in fires
 
 // **** Welding gas mask ****
 
@@ -198,6 +199,7 @@
 	icon_state = "plaguedoctor"
 	item_state = "gas_mask"
 	armor = list(melee = 0, bullet = 0, laser = 2,energy = 2, bomb = 0, bio = 75, rad = 0)
+	max_heat_protection_temperature = 0
 
 /obj/item/clothing/mask/gas/syndicate
 	name = "syndicate mask"
@@ -225,6 +227,7 @@
 	flags = MASKCOVERSEYES | BLOCK_GAS_SMOKE_EFFECT | MASKINTERNALS
 	icon_state = "clown"
 	item_state = "clown_hat"
+	burn_state = 0 //Burnable
 
 /obj/item/clothing/mask/gas/clown_hat/attack_self(mob/user)
 
@@ -248,6 +251,7 @@
 	flags = MASKCOVERSEYES | BLOCK_GAS_SMOKE_EFFECT | MASKINTERNALS
 	icon_state = "sexyclown"
 	item_state = "sexyclown"
+	burn_state = 0 //Burnable
 
 /obj/item/clothing/mask/gas/mime
 	name = "mime mask"
@@ -255,6 +259,7 @@
 	flags = MASKCOVERSEYES | BLOCK_GAS_SMOKE_EFFECT | MASKINTERNALS
 	icon_state = "mime"
 	item_state = "mime"
+	burn_state = 0 //Burnable
 
 /obj/item/clothing/mask/gas/monkeymask
 	name = "monkey mask"
@@ -262,6 +267,7 @@
 	flags = MASKCOVERSEYES | BLOCK_GAS_SMOKE_EFFECT | MASKINTERNALS
 	icon_state = "monkeymask"
 	item_state = "monkeymask"
+	burn_state = 0 //Burnable
 
 /obj/item/clothing/mask/gas/sexymime
 	name = "sexy mime mask"
@@ -269,6 +275,7 @@
 	flags = MASKCOVERSEYES | BLOCK_GAS_SMOKE_EFFECT | MASKINTERNALS
 	icon_state = "sexymime"
 	item_state = "sexymime"
+	burn_state = 0 //Burnable
 
 /obj/item/clothing/mask/gas/death_commando
 	name = "Death Commando Mask"
@@ -279,9 +286,11 @@
 	name = "cyborg visor"
 	desc = "Beep boop."
 	icon_state = "death"
+	burn_state = 0 //Burnable
 
 /obj/item/clothing/mask/gas/owl_mask
 	name = "owl mask"
 	desc = "Twoooo!"
 	flags = MASKCOVERSEYES | BLOCK_GAS_SMOKE_EFFECT | MASKINTERNALS
 	icon_state = "owl"
+	burn_state = 0 //Burnable

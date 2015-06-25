@@ -443,31 +443,30 @@
 	var/shredded
 
 	if(!bomb)
-		if(!max_heat_protection_temperature)
+		if(burn_state != -1)
 			shredded = 1 //No heat protection, it burns
 		else
 			shredded = -1 //Heat protection = Fireproof
 
 	else if(shock > 0)
-		if(prob(max(10,shock)))
+		if(prob(min(90,max(10,shock))))
 			shredded = armor["bomb"] + 10 //It gets shredded, but it also absorbs the shock the clothes underneath would recieve by this amount
 		else
 			shredded = -1 //It survives explosion
 
-	if(shredded)
+	if(shredded > 0)
 		if(Human) //Unequip if equipped
 			Human.unEquip(src)
 
-		for(var/obj/item/Item in contents) //Empty out the contents
-			Item.loc = src.loc
-
 		if(bomb)
-			var/obj/effect/decal/cleanable/shreds/Shreds = new(loc)
-			Shreds.name = "shredded [src]"
-			Shreds.desc = "The sad remains of what used to be a glorious [src]."
+			for(var/obj/item/Item in contents) //Empty out the contents
+				Item.loc = src.loc
+			spawn(1) //so the shreds aren't instantly deleted by the explosion
+				var/obj/effect/decal/cleanable/shreds/Shreds = new(loc)
+				Shreds.name = "shredded [src.name]"
+				Shreds.desc = "The sad remains of what used to be a glorious [src.name]."
+				qdel(src)
 		else
-			new /obj/effect/decal/cleanable/ash(loc)
-
-		qdel(src)
+			burn(0)
 
 	return shredded

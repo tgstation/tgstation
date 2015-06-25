@@ -1,5 +1,7 @@
 /obj/item/clothing
 	name = "clothing"
+	burn_state = 0 //Burnable
+	burntime = 15
 	var/flash_protect = 0		//Malk: What level of bright light protection item has. 1 = Flashers, Flashes, & Flashbangs | 2 = Welding | -1 = OH GOD WELDING BURNT OUT MY RETINAS
 	var/tint = 0				//Malk: Sets the item's level of visual impairment tint, normally set to the same as flash_protect
 	var/up = 0					//	   but seperated to allow items to protect but not impair vision, like space helmets
@@ -30,24 +32,13 @@
 				shred(1,10)
 	return
 
-/obj/item/clothing/fire_act()
-	if(burning)
-		return
-	if(max_heat_protection_temperature)
-		return
-	src.visible_message("<span class='warning'>[src] catches on fire.</span>")
-	burning = 1
-	overlays += image("icon" = 'icons/effects/fire.dmi', "icon_state" = "fire")
-	spawn(100)
-		if(burning)
-			burn()
-
 //Ears: currently only used for headsets and earmuffs
 /obj/item/clothing/ears
 	name = "ears"
 	w_class = 1.0
 	throwforce = 0
 	slot_flags = SLOT_EARS
+	burn_state = -1 //Won't burn in fires
 
 /obj/item/clothing/ears/earmuffs
 	name = "earmuffs"
@@ -73,6 +64,7 @@
 	var/list/icon/current = list() //the current hud icons
 	strip_delay = 20
 	put_on_delay = 25
+	burn_state = -1 //Won't burn in fires
 
 /*
 SEE_SELF  // can see self, no matter what
@@ -204,6 +196,7 @@ BLIND     // can't see anything
 	flash_protect = 2
 	strip_delay = 50
 	put_on_delay = 50
+	burn_state = -1 //Won't burn in fires
 
 /obj/item/clothing/suit/space
 	name = "space suit"
@@ -225,6 +218,7 @@ BLIND     // can't see anything
 	max_heat_protection_temperature = SPACE_SUIT_MAX_TEMP_PROTECT
 	strip_delay = 80
 	put_on_delay = 80
+	burn_state = -1 //Won't burn in fires
 
 //Under clothing
 /obj/item/clothing/under

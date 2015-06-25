@@ -10,6 +10,8 @@
 	item_color = "FFFFFF"
 	item_state = "paintcan"
 	w_class = 3.0
+	burn_state = 0 //Burnable
+	burntime = 5
 	var/paintleft = 10
 
 /obj/item/weapon/paint/red
