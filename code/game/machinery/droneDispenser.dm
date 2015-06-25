@@ -49,7 +49,7 @@
 		return
 	health -= amount
 	if(health <= 0)
-		visible_message("<span class='warning'>[src] lets out a torrent of sparks and falls silent.</span>")
+		visible_message("<span class='warning'>[src] lets out a flurry of sparks and goes dark!</span>")
 		var/datum/effect/effect/system/spark_spread/sparks = new /datum/effect/effect/system/spark_spread
 		sparks.set_up(5, 1, src)
 		sparks.start()
@@ -100,26 +100,26 @@
 		add_fingerprint(user)
 		if(!O.m_amt && !O.g_amt)
 			return ..()
-		if(!user.unEquip(O))
-			user << "<span class='warning'>[O] is stuck to your hand, you can't get it off!</span>"
-			return
 		var/obj/item/stack/sheets = O
 		if(broken)
-			if(sheets.m_amt && sheets.amount <= 10)
+			if(sheets.m_amt && sheets.amount >= 10)
+				if(sheets.flags & NODROP)
+					user << "<span class='warning'>[sheets] is stuck to your hand, you can't get it off!</span>"
+					return
 				user << "<span class='notice'>You start replacing [src]'s damaged plating with [sheets]...</span>"
 				if(!do_after(user, 60))
 					return
 				user.visible_message("<span class='notice'>[user] adds new plating to [src].</span>", \
 									 "<span class='notice'>You replace the damaged plating.</span>")
-				sheets.use(10)
-				if(!sheets.amount)
+				sheets.amount -= 10
+				if(sheets.amount <= 0)
 					user.drop_item()
 					qdel(sheets)
 				health = maxHealth
 				broken = 0
 				droneMadeRecently = 0
 				return
-			else if(sheets.m_amt && sheets.amount > 10)
+			else if(sheets.m_amt && sheets.amount < 10)
 				user << "<span class='notice'>You need ten sheets of metal to repair [src].</span>"
 				return
 			else
@@ -131,14 +131,17 @@
 			return
 		if(!user.canUseTopic(src))
 			return
+		if(!user.unEquip(O))
+			user << "<span class='warning'>[O] is stuck to your hand, you can't get it off!</span>"
+			return
 		stack = Clamp(stack, 0, sheets.amount)
-		sheets.use(stack)
+		sheets.amount -= stack
 		if(!sheets.amount)
 			user.drop_item()
 			O.loc = src
 		metal += O.m_amt * stack
 		glass += O.g_amt * stack
-		user << "<span class='notice'>You insert [stack] sheet[stack > 1 ? "s" : ""] to [src].</span>"
+		user << "<span class='notice'>You insert [stack] sheet[stack > 1 ? "s" : ""] into [src].</span>"
 		if((O && O.loc == src) || !sheets.amount)
 			qdel(O)
 		return
@@ -148,7 +151,7 @@
 		user.do_attack_animation(src)
 		if((O.flags&NOBLUDGEON) || !O.force )
 			return
-		playsound(src, 'sound/weapons/smash.ogg', 50, 1)
+		playsound(src, O.hitsound, 100, 1)
 		visible_message("<span class='danger'>[user] hits [src] with [O].</span>")
 		if(O.damtype == BURN || O.damtype == BRUTE)
 			takeDamage(O.force)
