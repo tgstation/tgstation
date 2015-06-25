@@ -471,7 +471,7 @@
 	name = "Groans: Banned Edition"
 	desc = "Banned literally everywhere."
 	icon_state = "groansevil"
-/obj/item/weapon/reagent_containers/food/drinks/coffee/groansbanned/New()
+/obj/item/weapon/reagent_containers/food/drinks/groansbanned/New()
 	..()
 	switch(pick(1,2,3,4,5))
 		if(1)
@@ -591,7 +591,7 @@
 	name = "Space Cola"
 	desc = "Cola. in space."
 	icon_state = "cola"
-/obj/item/weapon/reagent_containers/food/drinks/cola/New()
+/obj/item/weapon/reagent_containers/food/drinks/soda_cans/cola/New()
 	..()
 	reagents.add_reagent("cola", 30)
 	src.pixel_x = rand(-10.0, 10)
@@ -601,7 +601,7 @@
 	name = "T-Borg's Tonic Water"
 	desc = "Quinine tastes funny, but at least it'll keep that Space Malaria away."
 	icon_state = "tonic"
-/obj/item/weapon/reagent_containers/food/drinks/tonic/New()
+/obj/item/weapon/reagent_containers/food/drinks/soda_cans/tonic/New()
 	..()
 	reagents.add_reagent("tonic", 50)
 
@@ -609,7 +609,7 @@
 	name = "Soda Water"
 	desc = "A can of soda water. Why not make a scotch and soda?"
 	icon_state = "sodawater"
-/obj/item/weapon/reagent_containers/food/drinks/sodawater/New()
+/obj/item/weapon/reagent_containers/food/drinks/soda_cans/sodawater/New()
 	..()
 	reagents.add_reagent("sodawater", 50)
 
@@ -617,7 +617,7 @@
 	name = "Lemon-Lime"
 	desc = "You wanted ORANGE. It gave you Lemon Lime."
 	icon_state = "lemon-lime"
-/obj/item/weapon/reagent_containers/food/drinks/lemon_lime/New()
+/obj/item/weapon/reagent_containers/food/drinks/soda_cans/lemon_lime/New()
 	..()
 	reagents.add_reagent("lemon_lime", 30)
 	src.pixel_x = rand(-10.0, 10)
@@ -627,7 +627,7 @@
 	name = "Space-Up"
 	desc = "Tastes like a hull breach in your mouth."
 	icon_state = "space-up"
-/obj/item/weapon/reagent_containers/food/drinks/space_up/New()
+/obj/item/weapon/reagent_containers/food/drinks/soda_cans/space_up/New()
 	..()
 	reagents.add_reagent("space_up", 30)
 	src.pixel_x = rand(-10.0, 10)
@@ -637,7 +637,7 @@
 	name = "Star-kist"
 	desc = "The taste of a star in liquid form. And, a bit of tuna...?"
 	icon_state = "starkist"
-/obj/item/weapon/reagent_containers/food/drinks/starkist/New()
+/obj/item/weapon/reagent_containers/food/drinks/soda_cans/starkist/New()
 	..()
 	reagents.add_reagent("cola", 15)
 	reagents.add_reagent("orangejuice", 15)
@@ -648,7 +648,7 @@
 	name = "Space Mountain Wind"
 	desc = "Blows right through you like a space wind."
 	icon_state = "space_mountain_wind"
-/obj/item/weapon/reagent_containers/food/drinks/space_mountain_wind/New()
+/obj/item/weapon/reagent_containers/food/drinks/soda_cans/space_mountain_wind/New()
 	..()
 	reagents.add_reagent("spacemountainwind", 30)
 	src.pixel_x = rand(-10.0, 10)
@@ -658,7 +658,7 @@
 	name = "Thirteen Loko"
 	desc = "The CMO has advised crew members that consumption of Thirteen Loko may result in seizures, blindness, drunkeness, or even death. Please Drink Responsably."
 	icon_state = "thirteen_loko"
-/obj/item/weapon/reagent_containers/food/drinks/coffee/thirteenloko/New()
+/obj/item/weapon/reagent_containers/food/drinks/soda_cans/coffee/thirteenloko/New()
 	..()
 	reagents.add_reagent("thirteenloko", 30)
 	src.pixel_x = rand(-10.0, 10)
@@ -668,7 +668,7 @@
 	name = "Dr. Gibb"
 	desc = "A delicious mixture of 42 different flavors."
 	icon_state = "dr_gibb"
-/obj/item/weapon/reagent_containers/food/drinks/dr_gibb/New()
+/obj/item/weapon/reagent_containers/food/drinks/soda_cans/dr_gibb/New()
 	..()
 	reagents.add_reagent("dr_gibb", 30)
 	src.pixel_x = rand(-10.0, 10)
@@ -678,7 +678,7 @@
 	name = "Nuka Cola"
 	desc = "Cool, refreshing, Nuka Cola."
 	icon_state = "nuka"
-/obj/item/weapon/reagent_containers/food/drinks/nuka/New()
+/obj/item/weapon/reagent_containers/food/drinks/soda_cans/nuka/New()
 	..()
 	reagents.add_reagent("nuka_cola", 30)
 	src.pixel_x = rand(-10, 10)
@@ -688,7 +688,7 @@
 	name = "Nuka Cola Quantum"
 	desc = "Take the leap... enjoy a Quantum!"
 	icon_state = "quantum"
-/obj/item/weapon/reagent_containers/food/drinks/quantum/New()
+/obj/item/weapon/reagent_containers/food/drinks/soda_cans/quantum/New()
 	..()
 	reagents.add_reagent("quantum", 30)
 	src.pixel_x = rand(-10, 10)
@@ -811,7 +811,7 @@
 	bottleheight = 30
 	isGlass = 1
 	molotov = -1
-/obj/item/weapon/reagent_containers/food/drinks/gin/New()
+/obj/item/weapon/reagent_containers/food/drinks/bottle/gin/New()
 	..()
 	reagents.add_reagent("gin", 100)
 
@@ -822,7 +822,7 @@
 	vending_cat = "spirits"
 	isGlass = 1
 	molotov = -1
-/obj/item/weapon/reagent_containers/food/drinks/whiskey/New()
+/obj/item/weapon/reagent_containers/food/drinks/bottle/whiskey/New()
 	..()
 	reagents.add_reagent("whiskey", 100)
 
@@ -833,7 +833,7 @@
 	vending_cat = "spirits"
 	isGlass = 1
 	molotov = -1
-/obj/item/weapon/reagent_containers/food/drinks/vodka/New()
+/obj/item/weapon/reagent_containers/food/drinks/bottle/vodka/New()
 	..()
 	reagents.add_reagent("vodka", 100)
 
@@ -844,7 +844,7 @@
 	vending_cat = "spirits"
 	isGlass = 1
 	molotov = -1
-/obj/item/weapon/reagent_containers/food/drinks/tequila/New()
+/obj/item/weapon/reagent_containers/food/drinks/bottle/tequila/New()
 	..()
 	reagents.add_reagent("tequila", 100)
 
@@ -855,7 +855,7 @@
 	isGlass = 1
 	molotov = -1
 	smashtext = ""
-/obj/item/weapon/reagent_containers/food/drinks/bottleofnothing/New()
+/obj/item/weapon/reagent_containers/food/drinks/bottle/bottleofnothing/New()
 	..()
 	reagents.add_reagent("nothing", 100)
 
@@ -866,7 +866,7 @@
 	bottleheight = 26 //has a cork but for now it goes on top of the cork
 	molotov = -1
 	isGlass = 1
-/obj/item/weapon/reagent_containers/food/drinks/patron/New()
+/obj/item/weapon/reagent_containers/food/drinks/bottle/patron/New()
 	..()
 	reagents.add_reagent("patron", 100)
 
@@ -877,7 +877,7 @@
 	vending_cat = "spirits"
 	molotov = -1
 	isGlass = 1
-/obj/item/weapon/reagent_containers/food/drinks/rum/New()
+/obj/item/weapon/reagent_containers/food/drinks/bottle/rum/New()
 	..()
 	reagents.add_reagent("rum", 100)
 
@@ -913,7 +913,7 @@
 	vending_cat = "fermented"
 	molotov = -1
 	isGlass = 1
-/obj/item/weapon/reagent_containers/food/drinks/vermouth/New()
+/obj/item/weapon/reagent_containers/food/drinks/bottle/vermouth/New()
 	..()
 	reagents.add_reagent("vermouth", 100)
 
@@ -924,7 +924,7 @@
 	vending_cat = "fermented"
 	molotov = -1
 	isGlass = 1
-/obj/item/weapon/reagent_containers/food/drinks/kahlua/New()
+/obj/item/weapon/reagent_containers/food/drinks/bottle/kahlua/New()
 	..()
 	reagents.add_reagent("kahlua", 100)
 
@@ -934,7 +934,7 @@
 	icon_state = "goldschlagerbottle"
 	molotov = -1
 	isGlass = 1
-/obj/item/weapon/reagent_containers/food/drinks/goldschlager/New()
+/obj/item/weapon/reagent_containers/food/drinks/bottle/goldschlager/New()
 	..()
 	reagents.add_reagent("goldschlager", 100)
 
@@ -945,7 +945,7 @@
 	vending_cat = "spirits"
 	molotov = -1
 	isGlass = 1
-/obj/item/weapon/reagent_containers/food/drinks/cognac/New()
+/obj/item/weapon/reagent_containers/food/drinks/bottle/cognac/New()
 	..()
 	reagents.add_reagent("cognac", 100)
 
@@ -957,7 +957,7 @@
 	bottleheight = 30
 	molotov = -1
 	isGlass = 1
-/obj/item/weapon/reagent_containers/food/drinks/wine/New()
+/obj/item/weapon/reagent_containers/food/drinks/bottle/wine/New()
 	..()
 	reagents.add_reagent("wine", 100)
 
@@ -968,7 +968,7 @@
 	bottleheight = 27
 	molotov = -1
 	isGlass = 1
-/obj/item/weapon/reagent_containers/food/drinks/absinthe/New()
+/obj/item/weapon/reagent_containers/food/drinks/bottle/absinthe/New()
 	..()
 	reagents.add_reagent("absinthe", 100)
 
@@ -982,7 +982,7 @@
 	vending_cat = "fruit juices"
 	starting_materials = null
 
-/obj/item/weapon/reagent_containers/food/drinks/orangejuice/New()
+/obj/item/weapon/reagent_containers/food/drinks/bottle/orangejuice/New()
 	..()
 	reagents.add_reagent("orangejuice", 100)
 
@@ -994,7 +994,7 @@
 	vending_cat = "dairy products"
 	starting_materials = null
 
-/obj/item/weapon/reagent_containers/food/drinks/cream/New()
+/obj/item/weapon/reagent_containers/food/drinks/bottle/cream/New()
 	..()
 	reagents.add_reagent("cream", 100)
 
@@ -1006,7 +1006,7 @@
 	vending_cat = "fruit juices"
 	starting_materials = null
 
-/obj/item/weapon/reagent_containers/food/drinks/tomatojuice/New()
+/obj/item/weapon/reagent_containers/food/drinks/bottle/tomatojuice/New()
 	..()
 	reagents.add_reagent("tomatojuice", 100)
 
@@ -1019,7 +1019,7 @@
 	vending_cat = "fruit juices"
 	starting_materials = null
 
-/obj/item/weapon/reagent_containers/food/drinks/limejuice/New()
+/obj/item/weapon/reagent_containers/food/drinks/bottle/limejuice/New()
 	..()
 	reagents.add_reagent("limejuice", 100)
 
