@@ -226,3 +226,141 @@
 	name = "jester hat"
 	desc = "A hat with bells, to add some merryness to the suit."
 	icon_state = "jester_hat"
+
+/obj/item/clothing/head/bombCollar
+	name = "bomb collar"
+	desc = "A metal collar with electronic locks designed to be worn around the neck. Can be triggered with a remote detonator."
+	icon_state = "bombCollar"
+	item_state = "electronic"
+	strip_delay = 150
+	unacidable = 1 //nice try!
+	var/obj/item/device/collarDetonator/linked = null //The linked detonator
+	var/locked = 0 //if the collar can be removed
+
+/obj/item/clothing/head/bombCollar/attackby(obj/item/W, mob/user)
+	if(istype(W, /obj/item/weapon/screwdriver) && !locked && linked)
+		user << "<span class='notice'>You unlink [src] from [linked].</span>"
+		linked.linkedCollars.Remove(src)
+		linked = null
+		return
+	..()
+
+/obj/item/clothing/head/bombCollar/proc/detonate()
+	audible_message("<span class='boldannounce'>[src] lets out a high-pitched squeal.</span>")
+	playsound(src, "sound/machines/defib_charge.ogg", 100, 0)
+	spawn(30)
+		if(!iscarbon(loc) || !linked)
+			audible_message("<span class='danger'>[src] lets out two beeps and falls silent.</span>")
+			playsound(src, "sound/machines/defib_failed.ogg", 50, 0)
+			return
+		var/mob/living/carbon/H = loc
+		if(!H || !istype(H))
+			audible_message("<span class='danger'>[src] lets out two beeps and falls silent.</span>")
+			playsound(src, "sound/machines/defib_failed.ogg", 50, 0)
+			return
+		explosion(H, -1, -1, 1, 1)
+		H.apply_damage(200, BRUTE, "head")
+		H.apply_damage(200, BURN, "head")
+		if(ishuman(H))
+			var/mob/living/carbon/human/HH = H
+			HH.facial_hair_style = "Shaved"
+			HH.hair_style = "Bald" //Hair burned away
+		H.update_hair()
+		H.visible_message("<span class='warning'>[H]'s bomb collar explodes!</span>", \
+						  "<span class='userdanger'>Your collar explodes!</span>")
+		if(flags & NODROP)
+			flags -= NODROP
+			H.unEquip(src)
+		locked = 0
+		qdel(src)
+		return
+
+/obj/item/device/collarDetonator
+	name = "remote collar detonator"
+	desc = "A wireless detonator used to control bomb collars."
+	icon_state = "locator"
+	w_class = 2
+	var/list/linkedCollars = list()
+
+/obj/item/device/collarDetonator/attackby(obj/item/W, mob/user)
+	if(istype(W, /obj/item/clothing/head/bombCollar))
+		var/obj/item/clothing/head/bombCollar/C = W
+		if(C.linked)
+			user << "<span class='warning'>[C] is already linked to a detonator!</span>"
+			return
+		user << "<span class='notice'>You link [C] to [src] and add it to the control interface.</span>"
+		var/newName = input(user, "Enter an ID for the collar.", "Collar ID")
+		if(!newName)
+			C.name = "[initial(C.name)] #[rand(1,99999)]"
+		else
+			C.name = "[initial(C.name)] - [newName]"
+		linkedCollars.Add(C)
+		C.linked = src
+		return
+	..()
+
+/obj/item/device/collarDetonator/attack_self(mob/user as mob)
+	if(!ishuman(user))
+		user << "<span class='warning'>You aren't sure how to use this...</span>"
+		return
+	switch(alert("Select an option.","Bomb Collar Control","Locks","Detonation","Status"))
+		if("Locks")
+			var/choice = input(user, "Select collar to change.", "Locking Control") in linkedCollars
+			if(!choice || !user.canUseTopic(src))
+				return
+			var/obj/item/clothing/head/bombCollar/collarToLock = choice
+			if(!collarToLock)
+				return
+			if(!iscarbon(collarToLock.loc))
+				user << "<span class='warning'>That collar isn't being held or worn by anyone.</span>"
+				return
+			var/mob/living/carbon/C = collarToLock.loc
+			if(C.head != collarToLock)
+				user << "<span class='warning'>That collar isn't around someone's neck.</span>"
+				return
+			collarToLock.audible_message("<span class='warning'>[collarToLock] softly clicks.</span>")
+			switch(collarToLock.locked)
+				if(0)
+					collarToLock.locked = 1
+					collarToLock.flags |= NODROP
+					C << "<span class='boldannounce'>[collarToLock] tightens and locks around your neck.</span>"
+					message_admins("[user] locked bomb collar worn by [C]")
+				if(1)
+					collarToLock.locked = 0
+					collarToLock.flags -= NODROP
+					C << "<span class='boldannounce'>[collarToLock] loosens around your neck.</span>"
+					message_admins("[user] unlocked bomb collar worn by [C]")
+			user << "<span class='notice'>You [collarToLock.locked ? "" : "dis"]engage [collarToLock]'s locks.</span>"
+			return
+		if("Detonation")
+			var/choice = input(user, "Select collar to detonate.", "Detonation Control") in linkedCollars
+			if(!choice || !user.canUseTopic(src))
+				return
+			var/obj/item/clothing/head/bombCollar/collarToDetonate = choice
+			if(!collarToDetonate)
+				return
+			if(!iscarbon(collarToDetonate.loc))
+				user << "<span class='warning'>That collar isn't being held or worn by anyone.</span>"
+				return
+			var/mob/living/carbon/C = collarToDetonate.loc
+			if(C.head != collarToDetonate)
+				user << "<span class='warning'>That collar isn't around someone's neck.</span>"
+				return
+			switch(alert("Are you sure about this?","Bomb Collar Detonation","Proceed","Exit"))
+				if("Proceed")
+					if(!collarToDetonate.locked)
+						user << "<span class='warning'>That collar isn't locked.</span>"
+						return
+					user << "<span class='notice'>Detonation signal sent.</span>"
+					linkedCollars.Remove(collarToDetonate)
+					collarToDetonate.detonate()
+					message_admins("[user] detonated bomb collar worn by [C]")
+				if("Exit")
+					return
+			return
+		if("Status")
+			user << "<span class='notice'><b>Bomb Collar Status Report:</b></span>"
+			for(var/obj/item/clothing/head/bombCollar/C in linkedCollars)
+				var/turf/T = get_turf(C)
+				user << "<b>[C]:</b> [iscarbon(C.loc) ? "Worn by [C.loc], " : ""][get_area(C)], [T.loc.x], [T.loc.y], [C.locked ? "<span class='boldannounce'>Locked</span>" : "<font color='green'><b>Unlocked</b></font>"]"
+			return

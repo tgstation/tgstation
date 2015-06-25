@@ -343,6 +343,16 @@ var/list/all_supply_groups = list(supply_emergency,supply_security,supply_engine
 	cost = 30
 	containername = "exile implant crate"
 
+/datum/supply_packs/security/armory/bombcollars
+	name = "Bomb Collar Crate"
+	contains = list(/obj/item/clothing/head/bombCollar,
+					/obj/item/clothing/head/bombCollar,
+					/obj/item/clothing/head/bombCollar,
+					/obj/item/device/collarDetonator,
+					/obj/item/weapon/paper/bombcollars)
+	cost = 40
+	containername = "bomb collar crate"
+
 /datum/supply_packs/security/securitybarriers
 	name = "Security Barriers Crate"
 	contains = list(/obj/machinery/deployable/barrier,

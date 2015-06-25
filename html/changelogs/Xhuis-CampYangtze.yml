@@ -1,0 +1,5 @@
+author: Xhuis
+delete-after: True
+
+changes: 
+  - rscadd: "Bomb collars, along with remote detonators for them, have been added to the prisoner transfer centers on Boxstation and Metastation. They are also available from cargo."
