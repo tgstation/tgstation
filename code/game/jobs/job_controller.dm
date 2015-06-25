@@ -440,6 +440,13 @@ var/global/datum/controller/occupations/job_master
 				var/obj/item/clothing/glasses/G = H.glasses
 				G.prescription = 1
 //		H.update_icons()
+		//Gives wheelchair to those missing both of their feet
+		var/datum/organ/external/left_leg = H.get_organ("l_foot")
+		var/datum/organ/external/right_leg = H.get_organ("r_foot")
+
+		if(!left_leg || left_leg.status & ORGAN_DESTROYED && !right_leg || right_leg.status & ORGAN_DESTROYED) //If the character is missing both of his feet
+			var/obj/structure/stool/bed/chair/vehicle/wheelchair/W = new(H.loc)
+			W.buckle_mob(H,H)
 		return 1
 
 

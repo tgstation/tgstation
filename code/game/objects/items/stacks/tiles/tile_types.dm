@@ -8,6 +8,11 @@
 /obj/item/stack/tile
 	var/material
 
+/obj/item/stack/tile/New()
+	. = ..()
+	pixel_x = rand(1, 14)
+	pixel_y = rand(1, 14)
+
 /obj/item/stack/tile/ex_act(severity)
 	switch(severity)
 		if(1.0)

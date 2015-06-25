@@ -1,4 +1,3 @@
-# define ARBITRARILY_LARGE_NUMBER 10000
 //////////////////////////////////
 // /vg/ MODULARIZED DELAYS - by N3X15
 //////////////////////////////////
@@ -7,7 +6,7 @@
 /datum/delay_controller
 	// Delay clamps (for adminbus, effects)
 	var/min_delay = 1
-	var/max_delay = ARBITRARILY_LARGE_NUMBER // arbitrary number, should be set to a sane value
+	var/max_delay = ARBITRARILY_LARGE_NUMBER //See setup.dm, 12
 
 	var/next_allowed = 0
 
@@ -38,7 +37,7 @@
 	var/datum/delay_controller/move_delayer    = new (1,ARBITRARILY_LARGE_NUMBER) // /mob/delayNextMove()
 /mob
 	var/datum/delay_controller/click_delayer   = new (1,ARBITRARILY_LARGE_NUMBER) // (Handled in Click())
-	var/datum/delay_controller/attack_delayer  = new (1,ARBITRARILY_LARGE_NUMBER) // delayNextAttack()
+	var/datum/delay_controller/attack_delayer  = new (1,ARBITRARILY_LARGE_NUMBER) // delayNextAttack() See setup.dm, 12
 	var/datum/delay_controller/special_delayer = new (1,ARBITRARILY_LARGE_NUMBER) // delayNextSpecial()
 
 // Convenience procs.
@@ -56,5 +55,3 @@
 	if(types & DELAY_MOVE) delayNextMove(delay,additive)
 	if(types & DELAY_ATTACK) delayNextAttack(delay,additive)
 	if(types & DELAY_SPECIAL) delayNextSpecial(delay,additive)
-
-# undef ARBITRARILY_LARGE_NUMBER

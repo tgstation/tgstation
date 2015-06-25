@@ -1012,6 +1012,14 @@ var/list/all_supply_groups = list("Supplies","Clothing","Security","Hospitality"
 	access = access_medical
 	group = "Medical"
 
+/datum/supply_packs/wheelchair
+	name = "Wheelchair Crate"
+	contains = list(/obj/structure/stool/bed/chair/vehicle/wheelchair)
+	cost = 40
+	containertype = /obj/structure/closet/crate/medical
+	containername = "Wheelchair Crate"
+	group = "Medical"
+
 //////SCIENCE//////
 
 /datum/supply_packs/robotics
