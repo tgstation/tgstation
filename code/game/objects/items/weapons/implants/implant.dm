@@ -116,7 +116,7 @@
 	medium = round(medium)
 	light = round(light)
 	imp_in.gib()
-	explosion(src,0,heavy,medium,light,light, flame_range = medium)
+	explosion(src,heavy,medium,light,light, flame_range = light)
 	qdel(src)
 
 /obj/item/weapon/implant/explosive/macro
@@ -129,7 +129,7 @@
 	if(cause == "action_button" && alert(imp_in, "Are you sure you want to activate your macrobomb implant? This will cause you to explode and gib!", "Macrobomb Implant Confirmation", "Yes", "No") != "Yes")
 		return 0
 	imp_in.gib()
-	explosion(src,0,5,10,20,20, flame_range = 5)
+	explosion(src,5,10,20,20, flame_range = 20)
 	qdel(src)
 
 /obj/item/weapon/implant/chem
