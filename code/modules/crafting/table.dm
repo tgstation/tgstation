@@ -1,5 +1,3 @@
-#define TABLECRAFT_MAX_ITEMS 30
-
 /obj/structure/table
 	var/list/table_contents = list()
 
@@ -243,9 +241,6 @@
 	if(usr.stat || !Adjacent(usr) || usr.lying)
 		return
 	if(href_list["make"])
-		if(!check_table_space())
-			usr << "<span class ='warning'>The table is too crowded.</span>"
-			return
 		var/datum/table_recipe/TR = locate(href_list["make"])
 		busy = 1
 		interact(usr)
@@ -255,12 +250,3 @@
 			usr << "<span class ='warning'>Construction failed.</span>"
 		busy = 0
 		interact(usr)
-
-/obj/structure/table/proc/check_table_space()
-	var/Item_amount = 0
-	for(var/obj/item/I in loc)
-		Item_amount++
-	if(Item_amount <= TABLECRAFT_MAX_ITEMS) //is the table crowded?
-		return 1
-
- #undef TABLECRAFT_MAX_ITEMS
