@@ -291,17 +291,65 @@
 		new /obj/item/clothing/shoes/sandal(get_turf(user)) //In case they've lost them.
 		new /obj/item/clothing/gloves/color/purple(get_turf(user))//To complete the outfit
 
-/datum/spellbook_entry/item/contract
+/datum/spellbook_entry/item/summoning/contract
 	name = "Contract of Apprenticeship"
 	desc = "A magical contract binding an apprentice wizard to your service, using it will summon them to your side."
 	item_path = /obj/item/weapon/antag_spawner/contract
 	log_name = "CT"
 
-/datum/spellbook_entry/item/bloodbottle
+/datum/spellbook_entry/item/summoning/bloodbottle
 	name = "Bottle of Blood"
 	desc = "A bottle of magically infused blood, the smell of which will attract extradimensional beings when broken. Be careful though, the kinds of creatures summoned by blood magic are indiscriminate in their killing, and you yourself may become a victim."
 	item_path = /obj/item/weapon/antag_spawner/slaughter_demon
 	log_name = "BB"
+
+/datum/spellbook_entry/item/summoning/elementalEarth
+	name = "Obsidian Heart"
+	desc = "A blackened heart forged of obsidian and filled with magmatic blood. Activating it will summon an earth elemental to fight by your side."
+	item_path = /obj/item/weapon/antag_spawner/elemental/earth
+	log_name = "EE"
+
+/datum/spellbook_entry/item/summoning/elementalAir
+	name = "Phial of Cloud Essence"
+	desc = "A small vial filled with enchanted air. Opening it will summon an air elemental to fight by your side."
+	item_path = /obj/item/weapon/antag_spawner/elemental/air
+	log_name = "AE"
+
+/datum/spellbook_entry/item/summoning/elementalFire
+	name = "Everburning Flame"
+	desc = "A gently flickering flame fuelled by magic. Clutching it will summon a fire elemental to fight by your side."
+	item_path = /obj/item/weapon/antag_spawner/elemental/fire
+	log_name = "FE"
+
+/datum/spellbook_entry/item/summoning/elementalWater
+	name = "Tidal Globe"
+	desc = "A fragile bubble enclosing a tiny sea. Rupturing it will summon a water elemental to fight by your side."
+	item_path = /obj/item/weapon/antag_spawner/elemental/water
+	log_name = "WE"
+
+/datum/spellbook_entry/item/summoning/elementalLife
+	name = "Ever-Blooming Frond"
+	desc = "A vibrant fern with life-giving properties. Crushing its leaves will summon a nature elemental to fight by your side."
+	item_path = /obj/item/weapon/antag_spawner/elemental/life
+	log_name = "LE"
+
+/datum/spellbook_entry/item/summoning/elementalDeath
+	name = "Blackened Skull"
+	desc = "A charred skull imbued with sinister energies. Breaking its jawbone will summon a necrotic elemental to fight by your side."
+	item_path = /obj/item/weapon/antag_spawner/elemental/death
+	log_name = "DE"
+
+/datum/spellbook_entry/item/summoning/elementalArcane
+	name = "Caster's Rune"
+	desc = "An arcane rune scribed on a stone slate. Invoking it will summon a mana elemental to fight by your side."
+	item_path = /obj/item/weapon/antag_spawner/elemental/arcane
+	log_name = "ME"
+
+/datum/spellbook_entry/item/summoning/elementalUnbound
+	name = "Elemental Amalgation"
+	desc = "This is a terrible idea. A flask filled with miscellaneous representations of all the other elementals. Smashing it will summon... something."
+	item_path = /obj/item/weapon/antag_spawner/elemental/unbound
+	log_name = "UE"
 
 /datum/spellbook_entry/summon
 	name = "Summon Stuff"

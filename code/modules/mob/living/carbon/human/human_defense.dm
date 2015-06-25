@@ -383,7 +383,7 @@ emp_act
 		var/dam_zone = pick("chest", "l_hand", "r_hand", "l_leg", "r_leg")
 		var/obj/item/organ/limb/affecting = get_organ(ran_zone(dam_zone))
 		var/armor = run_armor_check(affecting, "melee")
-		apply_damage(damage, BRUTE, affecting, armor)
+		apply_damage(damage, M.damtype, affecting, armor)
 		updatehealth()
 
 

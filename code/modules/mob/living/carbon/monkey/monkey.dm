@@ -154,7 +154,7 @@
 /mob/living/carbon/monkey/attack_animal(mob/living/simple_animal/M as mob)
 	if(..())
 		var/damage = rand(M.melee_damage_lower, M.melee_damage_upper)
-		adjustBruteLoss(damage)
+		apply_damage(damage, M.damtype)
 		updatehealth()
 
 

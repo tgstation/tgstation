@@ -73,7 +73,7 @@ In all, this is a lot like the monkey code. /N
 /mob/living/carbon/alien/attack_animal(mob/living/simple_animal/M as mob)
 	if(..())
 		var/damage = rand(M.melee_damage_lower, M.melee_damage_upper)
-		adjustBruteLoss(damage)
+		apply_damage(damage, M.damtype)
 		updatehealth()
 
 /mob/living/carbon/alien/attack_slime(mob/living/simple_animal/slime/M as mob)
