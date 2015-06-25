@@ -138,9 +138,6 @@ var/const/SAFETY_COOLDOWN = 100
 		var/obj/item/stack/sheet/rglass/R = new /obj/item/stack/sheet/rglass(loc)
 		R.amount = amount_produced
 	if(extra_materials)
-		if(prob(4 + probability_mod))
-			var/obj/item/stack/sheet/mineral/plasma/PS = new /obj/item/stack/sheet/mineral/plasma(loc)
-			PS.amount = amount_produced
 		if(prob(3 + probability_mod))
 			var/obj/item/stack/sheet/mineral/gold/GS = new /obj/item/stack/sheet/mineral/gold(loc)
 			GS.amount = amount_produced
@@ -150,9 +147,6 @@ var/const/SAFETY_COOLDOWN = 100
 		if(prob(1 + probability_mod))
 			var/obj/item/stack/sheet/mineral/bananium/B = new /obj/item/stack/sheet/mineral/bananium(loc)
 			B.amount = amount_produced
-		if(prob(1 + probability_mod))
-			var/obj/item/stack/sheet/mineral/diamond/D = new /obj/item/stack/sheet/mineral/diamond(loc)
-			D.amount = amount_produced
 	if(sound)
 		playsound(src.loc, 'sound/items/Welder.ogg', 50, 1)
 
