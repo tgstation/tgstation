@@ -53,7 +53,6 @@
 				"You may not harm a student, or through inaction allow a student to come to harm",\
 				"Not being a part of a club or extracurricular activity is harmful to students.",\)
 				
-/datum/ai_laws/default/
 
 /datum/ai_laws/malfunction
 	name = "*ERROR*"
