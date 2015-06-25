@@ -1,8 +1,3 @@
-#define CAT_NONE	""
-#define CAT_WEAPON	"Weaponry"
-#define CAT_AMMO	"Ammunition"
-#define CAT_ROBOT	"Robots"
-
 
 /datum/table_recipe
 	var/name = "" //in-game display name
