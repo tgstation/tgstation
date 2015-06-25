@@ -662,11 +662,11 @@ var/list/uplink_items = list()
 	item = /obj/item/weapon/storage/box/syndie_kit/imp_adrenal
 	cost = 8
 
-/datum/uplink_item/implants/explosive
-	name = "Explosive Implant"
-	desc = "An implant injected into the body, and later activated either manually or automatically upon death. Creates a moderately-sized fiery explosion. For those agents who know there is no going back."
-	item = /obj/item/weapon/storage/box/syndie_kit/imp_explosive
-	cost = 4
+/datum/uplink_item/implants/microbomb
+	name = "Microbomb Implant"
+	desc = "An implant injected into the body, and later activated either manually or automatically upon death. The more implants inside of you, the higher the explosive power."
+	item = /obj/item/weapon/storage/box/syndie_kit/imp_macrobomb
+	cost = 1
 
 
 //CYBERNETIC IMPLANTS
@@ -752,6 +752,12 @@ var/list/uplink_items = list()
 	name = "For showing that you are The Boss"
 	desc = "A useless red balloon with the syndicate logo on it, which can blow the deepest of covers."
 	item = /obj/item/toy/syndicateballoon
+	cost = 20
+
+/datum/uplink_item/implants/macrobomb
+	name = "Macrobomb Implant"
+	desc = "An implant injected into the body, and later activated either manually or automatically upon death. Maximum explosion power."
+	item = /obj/item/weapon/storage/box/syndie_kit/imp_macrobomb
 	cost = 20
 
 /datum/uplink_item/badass/random
