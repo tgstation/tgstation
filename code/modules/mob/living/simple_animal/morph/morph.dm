@@ -129,6 +129,11 @@
 		var/atom/movable/T = pick(things)
 		assume(T)
 
+/mob/living/simple_animal/hostile/morph/can_track(mob/living/user)
+	if(morphed)
+		return 0
+	return ..()
+
 
 //Spawn Event
 
@@ -164,7 +169,7 @@
 	player_mind.assigned_role = "Morph"
 	player_mind.special_role = "Morph"
 	ticker.mode.traitors |= player_mind
-	S << "<B>You are a Morph, a shapeshifting alien creature.</B> You can assume the shape of anything in sight by Shift-Clicking it.<br> You can only transform every 5 seconds.<br> To return to your basic form Shift-Click on yourself."
+	S << "<B>You are a Morph, a shapeshifting alien creature.</B><br>You can assume the shape of anything in sight by Shift-Clicking it.<br> You can only transform every 5 seconds.<br> To return to your basic form Shift-Click on yourself."
 	message_admins("[key_of_morph] has been made into Morph by an event.")
 	log_game("[key_of_morph] was spawned as a Morph by an event.")
 	return 1
