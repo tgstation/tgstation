@@ -143,3 +143,19 @@
 	icon = 'icons/obj/objects.dmi'
 	icon_state = "ash"
 	anchored = 1
+
+/obj/effect/decal/cleanable/shreds
+	name = "shreds"
+	desc = "The shredded remains of what appears to be clothing."
+	icon = 'icons/effects/effects.dmi'
+	icon_state = "shreds"
+	gender = PLURAL
+	density = 0
+	anchored = 1
+	layer = 2
+
+/obj/effect/decal/cleanable/shreds/New(loc,var/clothing)
+	..(loc)
+	if(clothing)
+		name = "shredded [clothing]"
+		desc = "The sad remains of what used to be a glorious [clothing]."

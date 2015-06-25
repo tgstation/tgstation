@@ -17,6 +17,31 @@
 	var/can_flashlight = 0
 	var/gang //Is this a gang outfit?
 
+/obj/item/clothing/ex_act(severity, target)
+	if(prob(armor["bomb"]))
+		return
+	switch(severity)
+		if(1.0)
+			shred(1,100)
+		if(2.0)
+			shred(1,50)
+		if(3.0)
+			if(!prob(armor["bomb"]))
+				shred(1,10)
+	return
+
+/obj/item/clothing/fire_act()
+	if(burning)
+		return
+	if(max_heat_protection_temperature)
+		return
+	src.visible_message("<span class='warning'>[src] catches on fire.</span>")
+	burning = 1
+	overlays += image("icon" = 'icons/effects/fire.dmi', "icon_state" = "fire")
+	spawn(100)
+		if(burning)
+			burn()
+
 //Ears: currently only used for headsets and earmuffs
 /obj/item/clothing/ears
 	name = "ears"

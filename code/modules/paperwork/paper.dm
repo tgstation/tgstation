@@ -26,7 +26,6 @@
 	var/list/stamped
 	var/rigged = 0
 	var/spam_flag = 0
-	var/burning = 0 //Whether or not the paper is on fire
 
 
 /obj/item/weapon/paper/New()
@@ -39,6 +38,9 @@
 
 
 /obj/item/weapon/paper/update_icon()
+	if(burning)
+		icon_state = "paper_onfire"
+		return
 	if(info)
 		icon_state = "paper_words"
 		return
@@ -87,15 +89,6 @@
 			playsound(loc, 'sound/items/bikehorn.ogg', 50, 1)
 			spawn(20)
 				spam_flag = 0
-
-
-/obj/item/weapon/paper/attack_hand()
-	var/mob/living/carbon/M = usr
-	if(burning)
-		M << "<span class='danger'>Picking up a burning paper seems awfully stupid.</span>"
-		return //Doesn't make any sense to pick up a burning paper
-	else //Probably isn't necessary but it's safer
-		..()
 
 
 /obj/item/weapon/paper/attack_ai(mob/living/silicon/ai/user)
@@ -325,16 +318,16 @@
 
 		user.unEquip(src)
 		user.visible_message("<span class='danger'>[user] lights [src] ablaze with [P]!</span>", "<span class='danger'>You light [src] on fire!</span>")
-		burn(0, 100)
+		paper_burn(0, 100)
 
 
 
 	add_fingerprint(user)
 
 /obj/item/weapon/paper/fire_act()
-	burn(1, 50)
+	paper_burn(1, 50)
 
-/obj/item/weapon/paper/proc/burn(var/showmsg, var/burntime)
+/obj/item/weapon/paper/proc/paper_burn(var/showmsg, var/burntime)
 	if (burning)
 		return
 	if(showmsg)
@@ -343,9 +336,15 @@
 	icon_state = "paper_onfire"
 	info = "[stars(info)]"
 	spawn(burntime) //7 seconds
-		src.visible_message("<span class='warning'>[src] burns away, leaving behind a pile of ashes.</span>")
-		new /obj/effect/decal/cleanable/ash(src.loc)
-		qdel(src)
+		if(burning)
+			src.visible_message("<span class='warning'>[src] burns away, leaving behind a pile of ashes.</span>")
+			new /obj/effect/decal/cleanable/ash(src.loc)
+			qdel(src)
+
+/obj/item/weapon/paper/extinguish()
+	burning = 0
+	update_icon()
+	return
 
 /*
  * Premade paper
