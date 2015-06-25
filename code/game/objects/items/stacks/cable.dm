@@ -209,7 +209,7 @@ var/global/list/datum/stack_recipe/cable_recipes = list ( \
 			// cable is pointing at us, we're standing on an open tile
 			// so create a stub pointing at the clicked cable on our tile
 
-			turf_place(T,user,turn(dirn,180))
+			turf_place(user.loc,user,turn(dirn,180))
 
 	// exisiting cable doesn't point at our position, so see if it's a stub
 	else if(C.d1 == 0)
