@@ -358,18 +358,13 @@
 
 /obj/singularity/proc/toxmob()
 	var/toxrange = 10
-	var/toxpwr = 4
 	var/radiation = 15
 	var/radiationmin = 3
 	if (energy>200)
-		toxpwr += round((energy-150)/30,1)
 		radiation += round((energy-150)/10,1)
 		radiationmin = round((radiation/5),1)
 	for(var/mob/living/M in view(toxrange, src.loc))
 		M.irradiate(rand(radiationmin,radiation))
-		var/toxdamage = toxpwr - toxpwr*(M.getarmor(null, "rad")/100)
-		M.apply_damage(toxdamage, TOX)
-	return
 
 
 /obj/singularity/proc/combust_mobs()
