@@ -1,0 +1,7 @@
+author: Kor
+
+delete-after: True
+
+changes: 
+  - tweak: "Summon Guns has returned to its former glory. The spell will once again create antagonists, now with the objective to steal as many guns as possible."
+  - tweak: "Summon Guns once again costs a spell point, rather than granting one."
