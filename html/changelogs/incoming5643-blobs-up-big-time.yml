@@ -1,0 +1,10 @@
+author: Incoming5643
+
+delete-after: True
+
+changes: 
+  - rscadd: "A couple of nerfs (and a buff) for blobs to make reagent blob play more survivable:"
+  - rscdel: "Blob zombies no longer release gas on death, but zombieless blob chicken nuggets still do."
+  - rscdel: "Clothes with some biological defense (like labcoats) now have a chance to negate the chemical effects of blob attacks. Armor with perfect biological armor (like spacesuits and biosuits) won't be affected by blob chem attacks at all."
+  - experiment: "This protection doesn't extend to clouds of blob gas, wear internals! Likewise blob attacks do minor brute damage even if their chem component is blocked."
+  - rscadd: "Creating a blobbernaut is now free (Due to previous nerfs and the loss of a factory node being a pretty big cost in itself)."
