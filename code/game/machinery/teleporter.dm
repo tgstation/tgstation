@@ -54,8 +54,7 @@
 				//
 			else
 			*/
-			for(var/mob/O in hearers(src, null))
-				O.show_message("<span class='notice'>Locked In</span>", 2)
+			say("Locked in")
 			src.locked = L
 			one_time_use = 1
 
@@ -127,6 +126,7 @@
 		var/list/dests = get_avail_dests()
 		var/idx = Clamp(text2num(href_list["dest"]), 1, dests.len)
 		locked = dests[dests[idx]]
+		say("Locked in")
 		updateUsrDialog()
 		return 1
 
