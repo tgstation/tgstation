@@ -32,6 +32,10 @@
 	return out
 
 /datum/automation/get_register_data/Topic(href, href_list)
+	. = ..()
+	if(.)
+		return
+
 	if(href_list["setfield"])
 		var/new_child = selectValidChildFor(usr)
 		if(!new_child)
@@ -80,6 +84,10 @@
 	return out
 
 datum/automation/set_register_data/Topic(href, href_list)
+	. = ..()
+	if(.)
+		return
+
 	if(href_list["setfield"])
 		var/idx = text2num(href_list["setfield"])
 		var/new_child = selectValidChildFor(usr)

@@ -32,23 +32,23 @@
 /datum/automation/set_vent_pump_mode/GetText()
 	return "Set <a href=\"?src=\ref[src];toggle_type=1\">[vent_type ? "Dual-Port" : "Unary"]</a> vent pump <a href=\"?src=\ref[src];set_vent_pump=1\">[fmtString(vent_pump)]</a> mode to <a href=\"?src=\ref[src];set_mode=1\">[mode]</a>."
 
-/datum/automation/set_vent_pump_mode/Topic(href,href_list)
+/datum/automation/set_vent_pump_mode/Topic(href, href_list)
 	. = ..()
 	if(.)
 		return
 
 	if(href_list["set_mode"])
-		mode = input("Select a mode to put this pump into.",mode) in modes
+		mode = input("Select a mode to put this pump into.", mode) in modes
 		parent.updateUsrDialog()
 		return 1
 
 	if(href_list["set_vent_pump"])
 		var/list/injector_names = list()
 
-		if(!mode)
+		if(!vent_type)
 			for(var/obj/machinery/atmospherics/unary/vent_pump/I in atmos_machines)
 				if(!isnull(I.id_tag) && I.frequency == parent.frequency)
-					injector_names |=I.id_tag
+					injector_names |= I.id_tag
 
 		else
 			for(var/obj/machinery/atmospherics/binary/dp_vent_pump/I in atmos_machines)
