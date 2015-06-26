@@ -1,6 +1,0 @@
-author: Kurfurst
-delete-after: True
-changes:
- - tweak: Suit storage icons now properly work
- - tweak: You can now properly reach the maintenace panel on suit storage units
- - tweak: You can now repair suit storage units with a solder
