@@ -7,7 +7,7 @@
 	name = "Suit Storage Unit"
 	desc = "An industrial U-Stor-It Storage unit designed to accomodate all kinds of space suits. Its on-board equipment also allows the user to decontaminate the contents through a UV-ray purging cycle. There's a warning label dangling from the control pad, reading \"STRICTLY NO BIOLOGICALS IN THE CONFINES OF THE UNIT\"."
 	icon = 'icons/obj/suitstorage.dmi'
-	icon_state = "suitstorage000000100" //order is: [has helmet][has suit][has human][is open][is locked][is UV cycling][is powered][is dirty/broken] [is superUVcycling]
+	icon_state = "suitstorage-closed-00" //order is: [has helmet][has suit]
 	anchored = 1
 	density = 1
 	var/mob/living/carbon/human/OCCUPANT = null
@@ -22,11 +22,7 @@
 	var/isopen = 0
 	var/islocked = 0
 	var/isUV = 0
-	//var/ispowered = 1 //starts powered
-	//var/isbroken = 0
-	//OBSOLETE: That's what the NOPOWER and BROKEN stat bitflags are for
 	var/issuperUV = 0
-	var/panelopen = 0
 	var/safetieson = 1
 	var/cycletime_left = 0
 
@@ -102,28 +98,13 @@
 		BOOTS = new BOOT_TYPE(src)
 
 /obj/machinery/suit_storage_unit/update_icon()
-	var/hashelmet = 0
-	var/hassuit = 0
-	var/hashuman = 0
-	var/full = 0
-	if(HELMET && (!stat & NOPOWER))
-		hashelmet = 1
-	if(SUIT && (!stat & NOPOWER))
-		hassuit = 1
-	if(OCCUPANT && (!stat & NOPOWER))
-		hashuman = 1
-	if((HELMET || SUIT || OCCUPANT) && (stat & NOPOWER))
-		full = 1
-	icon_state = text("suitstorage[][][][][][][][][]",
-					hashelmet,
-					hassuit,
-					hashuman,
-					src.isopen,
-					src.islocked,
-					src.isUV,
-					(full||!(stat & NOPOWER)),
-					stat & BROKEN,
-					src.issuperUV)
+	if((stat & NOPOWER) || (stat & BROKEN))
+		icon_state = "suitstorage-off"
+		return
+	if(!isopen)
+		icon_state = "suitstorage-closed-[issuperUV][isUV]"
+	else
+		icon_state = "suitstorage-open-[HELMET ? "1" : "0"][SUIT ? "1" : "0"]"
 
 /obj/machinery/suit_storage_unit/power_change()
 	if( powered() )
@@ -160,7 +141,7 @@
 		return
 	if(stat & NOPOWER)
 		return
-	if(src.panelopen) //The maintenance panel is open. Time for some shady stuff
+	if(src.panel_open) //The maintenance panel is open. Time for some shady stuff
 
 		// AUTOFIXED BY fix_string_idiocy.py
 		// C:\Users\Rob\Documents\Projects\vgstation13\code\game\machinery\suit_storage_unit.dm:100: dat+= "<HEAD><TITLE>Suit storage unit: Maintenance panel</TITLE></HEAD>"
@@ -292,7 +273,7 @@
 /obj/machinery/suit_storage_unit/proc/toggleUV(mob/user as mob)
 //	var/protected = 0
 //	var/mob/living/carbon/human/H = user
-	if(!src.panelopen)
+	if(!src.panel_open)
 		return
 
 	/*if(istype(H)) //Let's check if the guy's wearing electrically insulated gloves
@@ -318,7 +299,7 @@
 /obj/machinery/suit_storage_unit/proc/togglesafeties(mob/user as mob)
 //	var/protected = 0
 //	var/mob/living/carbon/human/H = user
-	if(!src.panelopen) //Needed check due to bugs
+	if(!src.panel_open) //Needed check due to bugs
 		return
 
 	/*if(istype(H)) //Let's check if the guy's wearing electrically insulated gloves
@@ -554,6 +535,15 @@
 	src.updateUsrDialog()
 
 /obj/machinery/suit_storage_unit/attackby(obj/item/I as obj, mob/user as mob)
+	if((stat & BROKEN) && issolder(I))
+		var/obj/item/weapon/solder/S = I
+		if(!S.remove_fuel(4,user))
+			return
+		playsound(loc, 'sound/items/Welder.ogg', 100, 1)
+		if(do_after(user, src,40))
+			playsound(loc, 'sound/items/Welder.ogg', 100, 1)
+			stat &= !BROKEN
+			user << "<span class='notice'>You repair the blown out electronics in the suit storage unit.</span>"
 	if((stat & NOPOWER) && iscrowbar(I) && !islocked)
 		playsound(get_turf(src), 'sound/items/Deconstruct.ogg', 50, 1)
 		user << "<span class='notice'>You begin prying the equipment out of the suit storage unit</span>"
