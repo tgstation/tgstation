@@ -38,9 +38,10 @@
 /mob/living/carbon/relaymove(var/mob/user, direction)
 	if(user in src.stomach_contents)
 		if(prob(40))
-			audible_message("<span class='warning'>You hear something rumbling inside [src]'s stomach...</span>", \
-						 "<span class='warning'>You hear something rumbling.</span>", 4,\
-						  "<span class='userdanger'>Something is rumbling inside your stomach!</span>")
+			if(prob(25))
+				audible_message("<span class='warning'>You hear something rumbling inside [src]'s stomach...</span>", \
+							 "<span class='warning'>You hear something rumbling.</span>", 4,\
+							  "<span class='userdanger'>Something is rumbling inside your stomach!</span>")
 			var/obj/item/I = user.get_active_hand()
 			if(I && I.force)
 				var/d = rand(round(I.force / 4), I.force)
