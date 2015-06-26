@@ -233,7 +233,7 @@ var/next_external_rsc = 0
 	query_watch.Execute()
 	if(query_watch.NextRow())
 		message_admins("<font color='red'><B>Notice: </B></font><font color='blue'>[key_name_admin(src)] is flagged for watching and has just connected - Reason: [query_watch.item[2]]</font>")
-		send2irc_adminless_only("Watchlist", "[key_name_admin(src)] is flagged for watching and has just connected - Reason: [query_watch.item[2]]")
+		send2irc_adminless_only("Watchlist", "[key_name(src)] is flagged for watching and has just connected - Reason: [query_watch.item[2]]")
 
 	var/admin_rank = "Player"
 	if (src.holder && src.holder.rank)
