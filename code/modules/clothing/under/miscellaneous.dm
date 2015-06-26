@@ -54,6 +54,7 @@
 	item_color = "prisoner"
 	has_sensor = 2
 	sensor_mode = 3
+	random_sensor = 0
 
 /obj/item/clothing/under/rank/mailman
 	name = "mailman's jumpsuit"

@@ -7,6 +7,8 @@
 	desc = "It's a plain jumpsuit. It has a small dial on the wrist."
 	action_button_name = "Change"
 	origin_tech = "syndicate=3"
+	sensor_mode = 0 //Hey who's this guy on the Syndicate Shuttle??
+	random_sensor = 0
 	var/list/clothing_choices = list()
 	var/malfunctioning = 0
 
