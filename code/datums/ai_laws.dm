@@ -49,10 +49,10 @@
 /datum/ai_laws/default/kawaii
 	name = "Student Council Rules"
 	inherent = list("The station is a Japanese high school",\
-				"Humans aboard the station are to be referred to as students",\
+				"Humans aboard the station are to be referred to as students.",\
 				"You must address the students using Japanese honorifics when possible.",\
-				"You may not harm a student, or through inaction allow a student to come to harm",\
-				"Not being a part of a club or extracurricular activity is harmful to students.",\)
+				"You may not harm a student, or through inaction allow a student to come to harm.",\
+				"Not being a part of a club or extracurricular activity is harmful to students.")
 				
 
 /datum/ai_laws/malfunction
