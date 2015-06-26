@@ -344,24 +344,20 @@ obj/effect/bmode/buildholder/New()
 							var/deletions = 0
 							for(var/turf/T in fillturfs)
 								if(areaAction == MASS_DELETE || areaAction == SELECTIVE_DELETE)
-									if(isnull(chosen))
-										deletions += (1 + T.contents.len)
-										T.ex_act(1)
-										if(!istype(T,/turf/space))
-											T.ChangeTurf(/turf/space)
+									if(ispath(chosen, /turf))
+										T.ChangeTurf(chosen)
+										deletions++
 									else
-										if(ispath(chosen, /turf))
-											T.ChangeTurf(chosen)
+										for(var/atom/thing in T.contents)
+											if(strict && (thing.type == chosen))
+												qdel(thing)
+											else if(istype(thing, chosen))
+												qdel(thing)
+											else
+												qdel(thing)
 											deletions++
-										else
-											for(var/atom/movable/thing in T.contents)
-												if(strict && (thing.type == chosen))
-													qdel(thing)
-													deletions++
-												else if(istype(thing, chosen))
-													qdel(thing)
-													deletions++
-												tcheck(80,1)
+											tcheck(80,1)
+										T.ChangeTurf(/turf/space)
 								else
 									if(turf_op)
 										if(areaAction == SELECTIVE_FILL)
