@@ -319,6 +319,90 @@
 		var/mob/living/carbon/human/H = user
 		var/datum/martial_art/plasma_fist/F = new/datum/martial_art/plasma_fist(null)
 		F.teach(H)
-		H << "<span class='notice'>You learn the PLASMA FIST style</span>"
+		H << "<span class='notice'>You read through the scroll and realize you know the secrets of the Plasma Fist.</span>"
+		if(istype(src, /obj/item/weapon/plasma_fist_scroll/oneuse))
+			H.drop_item()
+			visible_message("<span class='warning'>[src] lights up in fire and quickly burns to ash.</span>")
+			new /obj/effect/decal/cleanable/ash(get_turf(src))
+			qdel(src)
 		used = 1
 		desc += "It looks like it's magic was used up."
+
+/obj/item/weapon/plasma_fist_scroll/oneuse
+	name = "mysterious scroll"
+	desc = "A scroll filled with strange markings. It seems to be drawings of some sort of martial art."
+
+/obj/item/weapon/twohanded/bostaff
+	name = "bo staff"
+	desc = "A long, tall staff made of polished wood. Traditionally used in ancient  old-Earth martial arts."
+	force = 10
+	w_class = 4
+	slot_flags = SLOT_BACK
+	force_unwielded = 10
+	force_wielded = 24
+	throwforce = 20
+	throw_speed = 2
+	attack_verb = list("smashed", "slammed", "whacked", "thwacked")
+	icon_state = "spearglass0" //temp
+
+/obj/item/weapon/twohanded/bostaff/update_icon() //temp
+	icon_state = "spearglass[wielded]"
+	return
+
+/obj/item/weapon/twohanded/bostaff/attack(mob/target, mob/living/user)
+	add_fingerprint(user)
+	if((CLUMSY in user.disabilities) && prob(50))
+		user << "<span class ='warning'>You club yourself over the head with [src].</span>"
+		user.Weaken(3 * force)
+		if(ishuman(user))
+			var/mob/living/carbon/human/H = user
+			H.apply_damage(2*force, BRUTE, "head")
+		else
+			user.take_organ_damage(2*force)
+		return
+	if(isrobot(target))
+		return ..()
+	if(!isliving(target))
+		return ..()
+	var/mob/living/carbon/C = target
+	if(C.stat)
+		user << "<span class='warning'>It would be dishonorable to attack a foe while they cannot retaliate.</span>"
+		return
+	switch(user.a_intent)
+		if("disarm")
+			if(!wielded)
+				return ..()
+			if(!ishuman(target))
+				return ..()
+			var/mob/living/carbon/human/H = target
+			var/list/fluffmessages = list("[user] clubs [H] with [src]!", \
+										  "[user] smacks [H] with the butt of [src]!", \
+										  "[user] broadsides [H] with [src]!", \
+										  "[user] smashes [H]'s head with [src]!", \
+										  "[user] beats [H] with front of [src]!", \
+										  "[user] twirls and slams [H] with [src]!")
+			H.visible_message("<span class='warning'>[pick(fluffmessages)]</span>", \
+								   "<span class='userdanger'>[pick(fluffmessages)]</span>")
+			playsound(get_turf(user), 'sound/effects/woodhit.ogg', 75, 1, -1)
+			H.adjustStaminaLoss(rand(13,20))
+			if(prob(10))
+				H.visible_message("<span class='warning'>[H] collapses!</span>", \
+									   "<span class='userdanger'>Your legs give out!</span>")
+				H.Weaken(4)
+			if(H.staminaloss && !H.sleeping)
+				var/total_health = (H.health - H.staminaloss)
+				if(total_health <= config.health_threshold_crit && !H.stat)
+					H.visible_message("<span class='warning'>[user] delivers a heavy hit to [H]'s head, knocking them out cold!</span>", \
+										   "<span class='userdanger'>[user] knocks you unconscious!</span>")
+					H.sleeping += 30
+					H.adjustBrainLoss(25)
+			return
+		else
+			return ..()
+	return ..()
+
+/obj/item/weapon/twohanded/bostaff/IsShield()
+	if(wielded)
+		return 1
+	else
+		return 0
