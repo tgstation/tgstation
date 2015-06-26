@@ -2,7 +2,7 @@
 	name = "dropper"
 	desc = "A dropper. Holds up to 5 units."
 	icon = 'icons/obj/chemical.dmi'
-	icon_state = "dropper0"
+	icon_state = "dropper"
 	amount_per_transfer_from_this = 5
 	possible_transfer_amounts = list(1, 2, 3, 4, 5)
 	volume = 5
@@ -83,7 +83,8 @@
 		update_icon()
 
 /obj/item/weapon/reagent_containers/dropper/update_icon()
-	if(reagents.total_volume<=0)
-		icon_state = "dropper0"
-	else
-		icon_state = "dropper1"
+	overlays.Cut()
+	if(reagents.total_volume)
+		var/image/filling = image('icons/obj/reagentfillings.dmi', src, "dropper")
+		filling.color = mix_color_from_reagents(reagents.reagent_list)
+		overlays += filling
