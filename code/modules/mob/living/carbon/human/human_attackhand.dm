@@ -123,8 +123,11 @@
 						M << "<span class='warning'>Remove their mask!</span>"
 						return 0
 					if(M.check_body_part_coverage(MOUTH))
-						M << "<span class='warning'>Remove your mask!</span>"
-						return 0
+						if(M.species.breath_type == "oxygen")
+							M << "<span class='warning'>Remove your mask!</span>"
+							return 0
+						else
+							M << "<span class='notice'>With practiced ease, you shift aside your mask for each gulp of blood.</span>"
 					if(mind && mind.vampire && (mind in ticker.mode.vampires))
 						M << "<span class='warning'>Your fangs fail to pierce [src.name]'s cold flesh.</span>"
 						return 0

@@ -345,7 +345,7 @@ You are weak to holy things and starlight. Don't go into space and avoid the Cha
 		if(!mind.vampire || !(mind in ticker.mode.vampires))
 			src << "<span class='warning'>Your fangs have disappeared!</span>"
 			return 0
-		if(H.flags & NO_BLOOD)
+		if(H.species.flags & NO_BLOOD)
 			src << "<span class='warning'>Not a drop of blood here</span>"
 			return 0
 		bloodtotal = src.mind.vampire.bloodtotal
