@@ -27,7 +27,7 @@
 			new /obj/item/weapon/reagent_containers/food/drinks/bottle/rum(src)
 			new /obj/item/weapon/reagent_containers/food/snacks/grown/ambrosia(src)
 			new /obj/item/weapon/reagent_containers/food/drinks/bottle/whiskey(src)
-			new /obj/item/weapon/lighter/zippo(src)
+			new /obj/item/weapon/lighter(src)
 		if(6 to 10)
 			new /obj/item/weapon/bedsheet(src)
 			new /obj/item/weapon/kitchen/knife(src)
