@@ -206,8 +206,6 @@ obj/effect/bmode/buildholder/New()
 	//set instant = 1
 	set hidden = 1
 	set name = ".fillmouse_down"
-
-	usr << "fillmouse down"
 	if(src.buildmode == 2 && !src.filling)
 		filling = !filling
 		src.mouse_pointer_icon = 'icons/mouse/buildfill.dmi'
@@ -216,8 +214,6 @@ obj/effect/bmode/buildholder/New()
 	//set instant = 1
 	set hidden = 1
 	set name = ".fillmouse_released"
-
-	usr << "fillmouse up"
 	if(src.filling)
 		src.mouse_pointer_icon = initial(src.mouse_pointer_icon)
 
@@ -288,12 +284,13 @@ obj/effect/bmode/buildholder/New()
 					if(SOUTHWEST)
 						new/obj/structure/window/full/reinforced(get_turf(object))
 		if(2)
-			if(pa["ctrl"] && pa["shift"])
-				if(!holder) return
-				if(pa["left"])
+			if(pa.Find("ctrl") && pa.Find("shift"))
+				if(!holder)
+					return
+				if(pa.Find("left"))
 					holder.fillingtiles[BOTTOM_LEFT] = RT
 					usr << "<span class='notice'>Set bottom left fill corner to ([formatJumpTo(RT)])</span>"
-				else if(pa["right"])
+				else if(pa.Find("right"))
 					holder.fillingtiles[TOP_RIGHT] = RT
 					usr << "<span class='notice'>Set top right fill corner to ([formatJumpTo(RT)])</span>"
 				if(holder.fillingtiles[BOTTOM_LEFT] && holder.fillingtiles[TOP_RIGHT])
@@ -303,27 +300,70 @@ obj/effect/bmode/buildholder/New()
 						usr << "<span class='warning'>You can't do a fill across zlevels you silly person.</span>"
 						holder.fillingtiles[BOTTOM_LEFT] = null
 						holder.fillingtiles[TOP_RIGHT] = null
-
 						return
 					var/list/fillturfs = block(start,end)
 					if(fillturfs.len)
 						if(alert("You're about to do a fill operation spanning [fillturfs.len] tiles, are you sure?","Panic","Yes","No") == "Yes")
-							if(fillturfs.len > 50)
+							if(fillturfs.len > 150)
 								if(alert("Are you completely sure about filling [fillturfs.len] tiles?","Panic!!!!","Yes","No") != "Yes")
 									holder.fillingtiles[BOTTOM_LEFT] = null
 									holder.fillingtiles[TOP_RIGHT] = null
 									usr << "<span class='notice'>Cleared filling corners.</span>"
 									return
 							var/deleting = alert("FILL tiles or DELETE them? Deleting will destroy EVERYTHING IN THE SELECTED AREA", "Create or destroy, your chance to be a GOD","FILL","DELETE") == "DELETE"
-							message_admins("<span class='danger'>[key_name_admin(usr)] just buildmode [deleting ? "<big>DELETED</big>" : "FILLED"] [fillturfs.len] tiles [deleting ? "" : " with [holder.buildmode.objholder] "]at ([formatJumpTo(start)] to [formatJumpTo(end)])</span>")
-							log_admin("<span class='danger'>[key_name_admin(usr)] just buildmode [deleting ? "<big>DELETED</big>" : "FILLED"] [fillturfs.len] tiles [deleting ? "" : " with [holder.buildmode.objholder] "] at ([formatJumpTo(start)] to [formatJumpTo(end)])</span>")
+							if(deleting) deleting = (alert("Selective(TYPE) Delete or MASS Delete?", "Scorched Earth or selective destruction?", "Selective", "MASS") == "Selective" ? 2 : 1)
+							var/msglog = "<span class='danger'>[key_name_admin(usr)] just buildmode"
+							var/strict = 1
+							var/chosen
+							switch(deleting)
+								if(1)
+									msglog += " <big>DELETED EVERYTHING</big> in [fillturfs.len] tile\s "
+								if(2)
+									var/list/matches = new()
+									var/O = input("What type? Leave as /atom to choose from a global list of types.", "Gibs me dat", "/atom") as text
+									for(var/path in typesof(/atom))
+										if(findtext("[path]", O))
+											matches += path
+
+									if(matches.len==0)
+										usr << "<span class='warning'>No types of [O] found.</span>"
+										return
+
+									if(matches.len==1)
+										chosen = matches[1]
+									else
+										chosen = input("Select an atom type", "Spawn Atom", matches[1]) as null|anything in matches
+										if(!chosen)
+											return
+									strict = alert("Delete all children of [chosen]?", "Children being all types and subtypes of [chosen]", "Yes", "No") == "No"
+									msglog += " <big>DELETED [!strict ? "ALL TYPES OF " :""][chosen]</big> in [fillturfs.len] tile\s "
+								else
+									msglog += " FILLED [fillturfs.len] tile\s with [holder.buildmode.objholder] "
+							msglog += "at ([formatJumpTo(start)] to [formatJumpTo(end)])</span>"
+							message_admins(msglog)
+							log_admin(msglog)
 							usr << "<span class='notice'>If the server is lagging the operation will periodically sleep so the fill may take longer than typical.</span>"
 							var/turf_op = ispath(holder.buildmode.objholder,/turf)
+							var/deletions = 0
 							for(var/turf/T in fillturfs)
 								if(deleting)
-									T.ex_act(1)
-									if(!istype(T,/turf/space))
-										T.ChangeTurf(/turf/space)
+									if(isnull(chosen))
+										deletions += (1 + T.contents.len)
+										T.ex_act(1)
+										if(!istype(T,/turf/space))
+											T.ChangeTurf(/turf/space)
+									else
+										if(ispath(chosen, /turf))
+											T.ChangeTurf(chosen)
+											deletions++
+										else
+											for(var/atom/movable/thing in T.contents)
+												if(strict && (thing.type == chosen))
+													qdel(thing)
+													deletions++
+												else if(istype(thing, chosen))
+													qdel(thing)
+													deletions++
 								else if(turf_op)
 									T.ChangeTurf(holder.buildmode.objholder)
 								else
@@ -331,8 +371,9 @@ obj/effect/bmode/buildholder/New()
 									if(istype(A))
 										A.dir = holder.builddir.dir
 								tcheck(80,1)
-								holder.fillingtiles[BOTTOM_LEFT] = null
-								holder.fillingtiles[TOP_RIGHT] = null
+							holder.fillingtiles[BOTTOM_LEFT] = null
+							holder.fillingtiles[TOP_RIGHT] = null
+							if(deletions) usr << "<span class='info'>Successfully deleted [deletions] [chosen]'\s</span>"
 				return
 			if(pa.Find("left"))
 				if(holder.buildmode.copycat)
