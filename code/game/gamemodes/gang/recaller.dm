@@ -130,12 +130,15 @@
 				else
 					dat += "Promote a Gangster<br>"
 		if(gangmode)
-			dat += "(30 Influence) "
-			if(points >= 30)
-				dat += "<a href='?src=\ref[src];purchase=dominator'><b>Station Dominator</b></a><br>"
+			if(gang == "A" ? !gangmode.A_dominations : !gangmode.B_dominations)
+				dat += "(Out of stock) Station Dominator"
 			else
-				dat += "<b>Station Dominator</b><br>"
-			dat += "<i>(Estimated Takeover Time: [round(max(300,900 - ((round((gang_territory/start_state.num_territories)*200, 10) - 60) * 15))/60,1)] minutes)</i><br>"
+				dat += "(30 Influence) "
+				if(points >= 30)
+					dat += "<a href='?src=\ref[src];purchase=dominator'><b>Station Dominator</b></a><br>"
+				else
+					dat += "<b>Station Dominator</b><br>"
+				dat += "<i>(Estimated Takeover Time: [round(max(300,900 - ((round((gang_territory/start_state.num_territories)*200, 10) - 60) * 15))/60,1)] minutes)</i><br>"
 
 	dat += "<br>"
 	dat += "<a href='?src=\ref[src];choice=refresh'>Refresh</a><br>"
@@ -213,6 +216,9 @@
 					if(isnum((gang == "A") ? mode.A_timer : mode.B_timer))
 						return
 
+					if(gang == "A" ? !mode.A_dominations : !mode.B_dominations)
+						return
+
 					var/area/usrarea = get_area(usr.loc)
 					var/usrturf = get_turf(usr.loc)
 					if(initial(usrarea.name) == "Space" || istype(usrturf,/turf/space) || usr.z != 1)
@@ -274,7 +280,7 @@
 	if(members.len)
 		var/ping = "<span class='danger'><B><i>[gang_name(gang)] [boss ? "Gang Boss" : "Gang Lieutenant"]</i>: [message]</B></span>"
 		for(var/datum/mind/ganger in members)
-			if(ganger.current.z <= 2)
+			if((ganger.current.z <= 2) && (ganger.current.stat == CONSCIOUS))
 				ganger.current << ping
 		for(var/mob/M in dead_mob_list)
 			M << ping
@@ -326,6 +332,7 @@
 	if(!istype(ticker.mode, /datum/game_mode/gang))
 		return 0
 
+	var/datum/game_mode/gang/mode = ticker.mode
 	recalling = 1
 	loc << "<span class='info'>\icon[src]Generating shuttle recall order with codes retrieved from last call signal...</span>"
 
@@ -338,6 +345,11 @@
 	loc << "<span class='info'>\icon[src]Shuttle recall order generated. Accessing station long-range communication arrays...</span>"
 
 	sleep(rand(100,300))
+
+	if(gang == "A" ? !mode.A_dominations : !mode.B_dominations)
+		user << "<span class='info'>\icon[src]Error: Unable to access communication arrays. Firewall has logged our signature and is blocking all further attempts.</span>"
+		recalling = 0
+		return 0
 
 	var/turf/userturf = get_turf(user)
 	if(userturf.z != 1) //Shuttle can only be recalled while on station
