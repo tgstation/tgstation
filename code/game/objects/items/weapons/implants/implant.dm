@@ -82,6 +82,10 @@
 	name = "microbomb implant"
 	desc = "And boom goes the weasel."
 	icon_state = "explosive"
+	var/light = 1.6
+	var/medium = 0.8
+	var/heavy = 0.4
+	var/delay = 7
 
 /obj/item/weapon/implant/explosive/get_data()
 	var/dat = {"<b>Implant Specifications:</b><BR>
@@ -103,18 +107,34 @@
 	if(!cause || !imp_in)	return 0
 	if(cause == "action_button" && alert(imp_in, "Are you sure you want to activate your microbomb implant? This will cause you to explode!", "Microbomb Implant Confirmation", "Yes", "No") != "Yes")
 		return 0
-	var/light = 1
-	var/medium = 0.5
-	var/heavy = 0.25
 	for(var/obj/item/weapon/implant/explosive/E in imp_in)
-		heavy += 0.25
-		medium += 0.5
-		light += 1
+		heavy += 0.4
+		medium += 0.8
+		light += 1.6
+		delay += 7
 		if(E != src)
 			qdel(E)
 	heavy = round(heavy)
 	medium = round(medium)
 	light = round(light)
+	imp_in << "<span_class='notice'>You activate your microbomb implant.</span>"
+//If the delay is short, just blow up already jeez
+	if(delay <= 7)
+		imp_in.gib()
+		explosion(src,heavy,medium,light,light, flame_range = light)
+		qdel(src)
+	imp_in.visible_message("<span class = 'warning'>[imp_in] starts beeping ominously!</span>")
+	playsound(loc, sound/items/timer.ogg, 30, 0)
+	sleep(delay/4)
+	if(imp_in.stat)
+		imp_in.visible_message("<span class = 'warning'>[imp_in] doubles over in pain!</span>")
+		imp_in.Weaken(7)
+	playsound(loc, sound/items/timer.ogg, 30, 0)
+	sleep(delay/4)
+	playsound(loc, sound/items/timer.ogg, 30, 0)
+	sleep(delay/4)
+	playsound(loc, sound/items/timer.ogg, 30, 0)
+	sleep(delay/4)
 	imp_in.gib()
 	explosion(src,heavy,medium,light,light, flame_range = light)
 	qdel(src)
@@ -123,13 +143,33 @@
 	name = "macrobomb implant"
 	desc = "And boom goes the weasel. And everything else nearby."
 	icon_state = "explosive"
+	var/light = 16
+	var/medium = 8
+	var/heavy = 4
+	var/delay = 70
 
 /obj/item/weapon/implant/explosive/macro/activate(var/cause)
 	if(!cause || !imp_in)	return 0
 	if(cause == "action_button" && alert(imp_in, "Are you sure you want to activate your macrobomb implant? This will cause you to explode and gib!", "Macrobomb Implant Confirmation", "Yes", "No") != "Yes")
 		return 0
+	for(var/obj/item/weapon/implant/explosive/macro/E in imp_in)
+		if(E != src)
+			qdel(E)
+	imp_in << "<span_class='notice'>You activate your macrobomb implant.</span>"
+	imp_in.visible_message("<span class = 'warning'>[imp_in] starts beeping ominously!</span>")
+	playsound(loc, sound/items/timer.ogg, 30, 0)
+	sleep(delay/4)
+	if(imp_in.stat)
+		imp_in.visible_message("<span class = 'warning'>[imp_in] doubles over in pain!</span>")
+		imp_in.Weaken(7)
+	playsound(loc, sound/items/timer.ogg, 30, 0)
+	sleep(delay/4)
+	playsound(loc, sound/items/timer.ogg, 30, 0)
+	sleep(delay/4)
+	playsound(loc, sound/items/timer.ogg, 30, 0)
+	sleep(delay/4)
 	imp_in.gib()
-	explosion(src,5,10,20,20, flame_range = 20)
+	explosion(src,heavy,medium,light,light, flame_range = light)
 	qdel(src)
 
 /obj/item/weapon/implant/chem
