@@ -1,5 +1,9 @@
-#define BOTTOM_LEFT 1
-#define TOP_RIGHT 2
+#define BOTTOM_LEFT			1
+#define TOP_RIGHT			2
+#define MASS_FILL			0
+#define MASS_DELETE			1
+#define SELECTIVE_DELETE	2
+#define SELECTIVE_FILL		3
 /proc/togglebuildmode(mob/M as mob in player_list)
 	set name = "Toggle Build Mode"
 	set category = "Special Verbs"
@@ -310,33 +314,26 @@ obj/effect/bmode/buildholder/New()
 									holder.fillingtiles[TOP_RIGHT] = null
 									usr << "<span class='notice'>Cleared filling corners.</span>"
 									return
-							var/deleting = alert("FILL tiles or DELETE them? Deleting will destroy EVERYTHING IN THE SELECTED AREA", "Create or destroy, your chance to be a GOD","FILL","DELETE") == "DELETE"
-							if(deleting) deleting = (alert("Selective(TYPE) Delete or MASS Delete?", "Scorched Earth or selective destruction?", "Selective", "MASS") == "Selective" ? 2 : 1)
+							var/areaAction = alert("FILL tiles or DELETE them? areaAction will destroy EVERYTHING IN THE SELECTED AREA", "Create or destroy, your chance to be a GOD","FILL","DELETE") == "DELETE"
+							if(areaAction) areaAction = (alert("Selective(TYPE) Delete or MASS Delete?", "Scorched Earth or selective destruction?", "Selective", "MASS") == "Selective" ? 2 : 1)
+							else
+								areaAction = (alert("Mass FILL or Selective(Type => Type) FILL?", "Do they really need [fillturfs.len] of closets?", "Selective", "Mass") == "Selective" ? 3 : 0)
 							var/msglog = "<span class='danger'>[key_name_admin(usr)] just buildmode"
 							var/strict = 1
 							var/chosen
-							switch(deleting)
-								if(1)
+							switch(areaAction)
+								if(MASS_DELETE)
 									msglog += " <big>DELETED EVERYTHING</big> in [fillturfs.len] tile\s "
-								if(2)
-									var/list/matches = new()
-									var/O = input("What type? Leave as /atom to choose from a global list of types.", "Gibs me dat", "/atom") as text
-									for(var/path in typesof(/atom))
-										if(findtext("[path]", O))
-											matches += path
-
-									if(matches.len==0)
-										usr << "<span class='warning'>No types of [O] found.</span>"
-										return
-
-									if(matches.len==1)
-										chosen = matches[1]
-									else
-										chosen = input("Select an atom type", "Spawn Atom", matches[1]) as null|anything in matches
-										if(!chosen)
-											return
+								if(SELECTIVE_DELETE)
+									chosen = easyTypeSelector()
+									if(!chosen) return
 									strict = alert("Delete all children of [chosen]?", "Children being all types and subtypes of [chosen]", "Yes", "No") == "No"
 									msglog += " <big>DELETED [!strict ? "ALL TYPES OF " :""][chosen]</big> in [fillturfs.len] tile\s "
+								if(SELECTIVE_FILL)
+									chosen = easyTypeSelector()
+									if(!chosen) return
+									strict = alert("Change all children of [chosen]?", "Children being all types and subtypes of [chosen]", "Yes", "No") == "No"
+									msglog += " Changed all [chosen] in [fillturfs.len] tile\s to [holder.buildmode.objholder] "
 								else
 									msglog += " FILLED [fillturfs.len] tile\s with [holder.buildmode.objholder] "
 							msglog += "at ([formatJumpTo(start)] to [formatJumpTo(end)])</span>"
@@ -346,7 +343,7 @@ obj/effect/bmode/buildholder/New()
 							var/turf_op = ispath(holder.buildmode.objholder,/turf)
 							var/deletions = 0
 							for(var/turf/T in fillturfs)
-								if(deleting)
+								if(areaAction == MASS_DELETE || areaAction == SELECTIVE_DELETE)
 									if(isnull(chosen))
 										deletions += (1 + T.contents.len)
 										T.ex_act(1)
@@ -364,12 +361,30 @@ obj/effect/bmode/buildholder/New()
 												else if(istype(thing, chosen))
 													qdel(thing)
 													deletions++
-								else if(turf_op)
-									T.ChangeTurf(holder.buildmode.objholder)
+												tcheck(80,1)
 								else
-									var/obj/A = new holder.buildmode.objholder(T)
-									if(istype(A))
-										A.dir = holder.builddir.dir
+									if(turf_op)
+										if(areaAction == SELECTIVE_FILL)
+											if(strict)
+												if(T.type != chosen) continue
+											else
+												if(!istype(T, chosen)) continue
+										T.ChangeTurf(holder.buildmode.objholder)
+									else
+										if(areaAction == SELECTIVE_FILL)
+											for(var/atom/thing in T.contents)
+												if(strict)
+													if(thing.type != chosen) continue
+												else
+													if(!istype(thing, chosen)) continue
+												var/atom/A = new holder.buildmode.objholder(T)
+												A.dir = thing.dir
+												qdel(thing)
+												tcheck(80,1)
+										else
+											var/obj/A = new holder.buildmode.objholder(T)
+											if(istype(A))
+												A.dir = holder.builddir.dir
 								tcheck(80,1)
 							holder.fillingtiles[BOTTOM_LEFT] = null
 							holder.fillingtiles[TOP_RIGHT] = null
@@ -470,5 +485,30 @@ obj/effect/bmode/buildholder/New()
 					holder.throw_atom.throw_at(object, 10, 1)
 					log_admin("[key_name(usr)] is throwing a [holder.throw_atom] at [object] - [formatJumpTo(RT)]")
 
+/proc/easyTypeSelector()
+	var/chosen = null
+
+	var/list/matches = new()
+	var/O = input("What type? Leave as /atom to choose from a global list of types.", "Gibs me dat", "/atom") as text
+	for(var/path in typesof(/atom))
+		if(findtext("[path]", O))
+			matches += path
+
+	if(matches.len==0)
+		usr << "<span class='warning'>No types of [O] found.</span>"
+		return
+
+	if(matches.len==1)
+		chosen = matches[1]
+	else
+		chosen = input("Select an atom type", "Selected Atom", matches[1]) as null|anything in matches
+		if(!chosen)
+			return
+	return chosen
+
 #undef BOTTOM_LEFT
 #undef TOP_RIGHT
+#undef MASS_FILL
+#undef MASS_DELETE
+#undef SELECTIVE_DELETE
+#undef SELECTIVE_FILL
