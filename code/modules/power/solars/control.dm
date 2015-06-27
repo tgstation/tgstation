@@ -16,6 +16,9 @@
 	var/nexttime = 0		//Next clock time that manual tracking will move the array
 
 	light_color = LIGHT_COLOR_YELLOW
+	use_auto_lights = 1
+	light_range_on = 3
+	light_power_on = 2
 
 /obj/machinery/power/solar/control/initialize()
 	..()
@@ -215,13 +218,8 @@ Manual Tracking Direction:"}
 			P.ndir = cdir
 
 /obj/machinery/power/solar/control/power_change()
-	if(powered())
-		stat &= ~NOPOWER
-		update_icon()
-	else
-		spawn(rand(0, 15))
-			stat |= NOPOWER
-			update_icon()
+	. = ..()
+	update_icon()
 
 /obj/machinery/power/solar/control/proc/broken()
 	stat |= BROKEN
