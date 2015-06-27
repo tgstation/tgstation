@@ -173,7 +173,8 @@
 		"Meteor impact" = 'sound/effects/meteorimpact.ogg',
 		"Supermatter" = 'sound/effects/supermatter.ogg',
 		"Emitter" = 'sound/weapons/emitter.ogg',
-		"Laughter" = 'sound/effects/laughtrack.ogg')
+		"Laughter" = 'sound/effects/laughtrack.ogg',
+		"Mecha step" = 'sound/mecha/mechstep.ogg')
 
 /obj/item/clothing/shoes/clown_shoes/advanced/attack_self(mob/user)
 	if(user.mind && user.mind.assigned_role != "Clown")
