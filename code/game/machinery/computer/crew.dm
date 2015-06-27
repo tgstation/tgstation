@@ -35,10 +35,8 @@
 
 var/datum/singleton/crewmonitor/crewmonitor = new
 
-/datum/singleton/crewmonitor
-	var
-		list/jobs
-		list/interfaces
+/datum/singleton/crewmonitor/var/list/jobs
+/datum/singleton/crewmonitor/var/list/interfaces
 
 /datum/singleton/crewmonitor/New()
 	. = ..()

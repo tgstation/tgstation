@@ -41,8 +41,6 @@ var/datum/subsystem/procqueue/procqueue
 
 	src.queue.Insert(1, item)
 
-/datum/procqueue_item
-	var
-		ref
-		procname
-		list/args
+/datum/procqueue_item/var/ref
+/datum/procqueue_item/var/procname
+/datum/procqueue_item/var/list/args
