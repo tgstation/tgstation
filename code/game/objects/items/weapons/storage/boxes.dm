@@ -24,6 +24,7 @@
 	desc = "It's just an ordinary box."
 	icon_state = "box"
 	item_state = "syringe_kit"
+	burn_state = 0 //Burnable
 	var/foldable = /obj/item/stack/sheet/cardboard
 
 

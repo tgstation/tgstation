@@ -10,7 +10,7 @@
 	var/obj/item/weapon/pen/haspen		//The stored pen.
 	var/obj/item/weapon/paper/toppaper	//The topmost piece of paper.
 	slot_flags = SLOT_BELT
-
+	burn_state = 0 //Burnable
 
 /obj/item/weapon/clipboard/New()
 	update_icon()

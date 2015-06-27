@@ -1,3 +1,5 @@
+var/global/image/fire_overlay = image("icon" = 'icons/effects/fire.dmi', "icon_state" = "fire")
+
 /obj/item
 	name = "item"
 	icon = 'icons/obj/items.dmi'
@@ -158,6 +160,23 @@
 
 /obj/item/attack_hand(mob/user as mob)
 	if (!user) return
+
+	if(burn_state == 1)
+		var/mob/living/carbon/human/H = user
+		if(istype(H))
+			if(H.gloves && (H.gloves.max_heat_protection_temperature > 360))
+				extinguish()
+				user << "<span class='notice'>You put out the fire on [src].</span>"
+			else
+				user << "<span class='warning'>You burn your hand on [src]!</span>"
+				var/obj/item/organ/limb/affecting = H.get_organ("[user.hand ? "l" : "r" ]_arm")
+				if(affecting.take_damage( 0, 5 ))		// 5 burn damage
+					H.update_damage_overlays(0)
+				H.updatehealth()
+				return
+		else
+			extinguish()
+
 	if (istype(src.loc, /obj/item/weapon/storage))
 		//If the item is in a storage item, take it out
 		var/obj/item/weapon/storage/S = src.loc
