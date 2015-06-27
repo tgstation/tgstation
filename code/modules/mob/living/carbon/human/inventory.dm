@@ -449,7 +449,7 @@
 			shredded = -1 //Heat protection = Fireproof
 
 	else if(shock > 0)
-		if(prob(min(90,max(10,shock))))
+		if(prob(min(90,max(0,shock))))
 			shredded = armor["bomb"] + 10 //It gets shredded, but it also absorbs the shock the clothes underneath would recieve by this amount
 		else
 			shredded = -1 //It survives explosion
@@ -463,7 +463,6 @@
 				Item.loc = src.loc
 			spawn(1) //so the shreds aren't instantly deleted by the explosion
 				var/obj/effect/decal/cleanable/shreds/Shreds = new(loc)
-				Shreds.name = "shredded [src.name]"
 				Shreds.desc = "The sad remains of what used to be a glorious [src.name]."
 				qdel(src)
 		else
