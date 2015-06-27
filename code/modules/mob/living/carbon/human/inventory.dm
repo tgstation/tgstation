@@ -467,6 +467,6 @@
 				Shreds.desc = "The sad remains of what used to be a glorious [src.name]."
 				qdel(src)
 		else
-			burn(0)
+			burn()
 
 	return shredded

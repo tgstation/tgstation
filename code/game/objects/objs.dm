@@ -11,6 +11,7 @@
 
 	var/burn_state = -1 // -1=fireproof | 0=will burn in fires | 1=currently on fire
 	var/burntime = 10 //How long it takes to burn to ashes, in seconds
+	var/burn_world_time //What world time the object will burn up completely
 
 /obj/Destroy()
 	if(!istype(src, /obj/machinery))
@@ -163,19 +164,16 @@
 /obj/fire_act(var/global_overlay=1)
 	if(!burn_state)
 		burn_state = 1
+		SSobj.burning += src
+		burn_world_time = world.time + burntime*10
 		if(global_overlay)
 			overlays += fire_overlay
-		spawn(burntime*10)
-			if(burn_state == 1)
-				burn()
+		return 1
 
-/obj/proc/burn(var/visible=1)
+/obj/proc/burn()
 	for(var/obj/item/Item in contents) //Empty out the contents
 		Item.loc = src.loc
 		Item.fire_act() //Set them on fire, too
-
-	if(visible)
-		src.visible_message("<span class='warning'>[src] burns away, leaving behind a pile of ashes.</span>")
 	new /obj/effect/decal/cleanable/ash(src.loc)
 	qdel(src)
 
@@ -183,3 +181,4 @@
 	if(burn_state == 1)
 		burn_state = 0
 		overlays -= fire_overlay
+		SSobj.burning -= src
