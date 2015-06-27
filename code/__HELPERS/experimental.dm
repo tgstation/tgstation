@@ -82,7 +82,6 @@ var/list/exclude = list("inhand_states", "loc", "locs", "parent_type", "vars", "
 
 	if(isnull(masterPool["[AM.type]"]))
 		masterPool["[AM.type]"] = list()
-
 	AM.Destroy()
 	AM.resetVariables()
 	masterPool["[AM.type]"] |= AM
@@ -121,23 +120,4 @@ var/list/exclude = list("inhand_states", "loc", "locs", "parent_type", "vars", "
 
 /atom/movable/resetVariables()
 	loc = null
-
-	var/list/exclude = global.exclude + args // explicit var exclusion
-
-	for(var/key in vars)
-		if(key in exclude)
-			continue
-
-		vars[key] = initial(vars[key])
-
-/proc/isInTypes(atom/Object, types)
-	if(!Object)
-		return 0
-	var/prototype = Object.type
-	Object = null
-
-	for (var/type in params2list(types))
-		if (ispath(prototype, text2path(type)))
-			return 1
-
-	return 0
+	..("loc",args)
