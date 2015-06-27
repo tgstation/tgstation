@@ -1,0 +1,5 @@
+author: NullQuery
+delete-after: True
+
+changes: 
+  - tweak: "The crew monitoring computer, AI crew monitoring popup and the handheld crew monitor now update automatically."
