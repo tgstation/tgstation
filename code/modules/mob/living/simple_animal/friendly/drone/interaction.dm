@@ -49,7 +49,7 @@
 						if("Cannibalize")
 							if(D.health < D.maxHealth)
 								D.visible_message("[D] begins to cannibalize parts from [src].", "<span class='notice'>You begin to cannibalize parts from [src]...</span>")
-								if(do_after(D, 60,5,0))
+								if(do_after(D, 60,5,0, target = src))
 									D.visible_message("[D] repairs itself using [src]'s remains!", "<span class='notice'>You repair yourself using [src]'s remains.</span>")
 									D.adjustBruteLoss(-src.maxHealth)
 									new /obj/effect/decal/cleanable/oil/streak(get_turf(src))

@@ -31,6 +31,9 @@
 			user << "<span class='caution'>You place the [F.name] back in the [name].</span>"
 			update_icon()
 			return
+		else if(glass_hp > 0)
+			toggle_open()
+
 	else if(istype(I, /obj/item/weapon))
 		user.changeNext_move(CLICK_CD_MELEE)
 		var/obj/item/weapon/W = I
@@ -122,7 +125,7 @@
 /obj/structure/fireaxecabinet/proc/toggle_lock(mob/user)
 	user << "<span class = 'caution'> Resetting circuitry...</span>"
 	playsound(src, 'sound/machines/locktoggle.ogg', 50, 1)
-	if(do_after(user, 20))
+	if(do_after(user, 20, target = src))
 		user << "<span class='caution'>You [locked ? "disable" : "re-enable"] the locking modules.</span>"
 		locked = !locked
 		update_icon()

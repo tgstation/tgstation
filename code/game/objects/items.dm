@@ -79,6 +79,9 @@ var/global/image/fire_overlay = image("icon" = 'icons/effects/fire.dmi', "icon_s
 		/obj/machinery/r_n_d/experimentor,
 		/obj/machinery/autolathe
 	)
+
+	var/flags_cover = 0 //for flags such as GLASSESCOVERSEYES
+
 /obj/item/proc/check_allowed_items(atom/target, not_inside)
 	if((src in target) || ((!istype(target.loc, /turf)) && (!istype(target, /turf)) && (not_inside)) || is_type_in_list(target, can_be_placed_into))
 		return 0
@@ -347,16 +350,16 @@ var/global/image/fire_overlay = image("icon" = 'icons/effects/fire.dmi', "icon_s
 	if(ishuman(M))
 		is_human_victim = 1
 		var/mob/living/carbon/human/H = M
-		if((H.head && H.head.flags & HEADCOVERSEYES) || \
-			(H.wear_mask && H.wear_mask.flags & MASKCOVERSEYES) || \
-			(H.glasses && H.glasses.flags & GLASSESCOVERSEYES))
+		if((H.head && H.head.flags_cover & HEADCOVERSEYES) || \
+			(H.wear_mask && H.wear_mask.flags_cover & MASKCOVERSEYES) || \
+			(H.glasses && H.glasses.flags_cover & GLASSESCOVERSEYES))
 			// you can't stab someone in the eyes wearing a mask!
 			user << "<span class='danger'>You're going to need to remove that mask/helmet/glasses first!</span>"
 			return
 
 	if(ismonkey(M))
 		var/mob/living/carbon/monkey/Mo = M
-		if(Mo.wear_mask && Mo.wear_mask.flags & MASKCOVERSEYES)
+		if(Mo.wear_mask && Mo.wear_mask.flags_cover & MASKCOVERSEYES)
 			// you can't stab someone in the eyes wearing a mask!
 			user << "<span class='danger'>You're going to need to remove that mask/helmet/glasses first!</span>"
 			return

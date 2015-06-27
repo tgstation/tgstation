@@ -51,7 +51,7 @@
 	var/loose = 40
 	if(stat || (status_flags & FAKEDEATH))
 		multiplier = 2
-	if(H.flags & (HEADCOVERSEYES | HEADCOVERSMOUTH) || H.flags_inv & (HIDEEYES | HIDEFACE))
+	if(H.flags_cover & (HEADCOVERSEYES | HEADCOVERSMOUTH) || H.flags_inv & (HIDEEYES | HIDEFACE))
 		loose = 0
 	return loose * multiplier
 
