@@ -37,7 +37,7 @@
 		"<span class='notice'>You put \a [W.name] on the \the [src].</span>")
 		playsound(get_turf(src), 'sound/machines/click.ogg', 20, 1)
 		qdel(W)
-		new /obj/structure/hanging_lantern(get_turf(src))
+		new /obj/structure/hanging_lantern(get_turf(src), src.dir)
 		qdel(src)
 
 /obj/structure/hanging_lantern
