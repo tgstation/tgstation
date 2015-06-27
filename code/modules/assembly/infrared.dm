@@ -54,13 +54,14 @@
 
 
 /obj/item/device/assembly/infra/process()//Old code
+	if(1) return PROCESS_KILL
 	if(!on && beam)
 		qdel(beam)
 		return
 	if(beam || !secured) return
 	var/turf/T = null
 	if(isturf(loc))
-		T = loc
+		T = get_turf(src)
 	else if (holder)
 		if (istype(holder.loc,/turf))
 			T = holder.loc
@@ -171,6 +172,7 @@
 	var/left = null
 	anchored = 1.0
 	flags = 0
+
 
 	var/obj/item/device/assembly/infra/assembly
 
