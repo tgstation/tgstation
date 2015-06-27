@@ -52,6 +52,9 @@
 		return 0
 	return 1
 
+/client/proc/qualifies_for_human_authority()
+	return prefs.pref_species.id == "human" && prefs.features["tail_human"] == "None" && prefs.features["ears"] == "None"
+
 /client/proc/handle_spam_prevention(var/message, var/mute_type)
 	if(config.automute_on && !holder && src.last_message == message)
 		src.last_message_count++
