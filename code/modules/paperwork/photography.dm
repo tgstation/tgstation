@@ -472,7 +472,7 @@
 	if(!on || !pictures_left || get_dist(src, target) < 1) return
 	captureimage(target, user, flag)
 
-	playsound(loc, pick('sound/items/polaroid1.ogg', 'sound/items/polaroid2.ogg'), 75, 1, -3)
+	playsound(loc, "polaroid", 75, 1, -3)
 
 	pictures_left--
 	user << "<span class='notice'>[pictures_left] photos left.</span>"
