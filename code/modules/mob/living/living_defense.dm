@@ -224,7 +224,7 @@ proc/vol_by_throwforce_and_or_w_class(var/obj/item/I)
 		return 0
 
 	if (M.a_intent == "harm")
-		if(M.is_muzzled() || (M.wear_mask && M.wear_mask.flags & MASKCOVERSMOUTH))
+		if(M.is_muzzled() || (M.check_part_covered("mouth")))
 			M << "<span class='warning'>You can't bite with your mouth covered!</span>"
 			return 0
 		M.do_attack_animation(src)

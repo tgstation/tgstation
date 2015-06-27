@@ -765,10 +765,10 @@
 				return 1
 
 			//CPR
-			if((M.head && (M.head.flags & HEADCOVERSMOUTH)) || (M.wear_mask && (M.wear_mask.flags & MASKCOVERSMOUTH)))
+			if((M.check_part_covered("mouth")))
 				M << "<span class='notice'>Remove your mask!</span>"
 				return 0
-			if((H.head && (H.head.flags & HEADCOVERSMOUTH)) || (H.wear_mask && (H.wear_mask.flags & MASKCOVERSMOUTH)))
+			if((H.check_part_covered("mouth")))
 				M << "<span class='notice'>Remove their mask!</span>"
 				return 0
 

@@ -194,8 +194,13 @@ datum/reagent/consumable/condensedcapsaicin/reaction_mob(var/mob/living/M, var/m
 		//check for protection
 		var/mouth_covered = 0
 		var/eyes_covered = 0
-		var/obj/item/safe_thing = null
 
+		if(M.check_part_covered("eyes"))
+			eyes_covered = 1
+		if(M.check_part_covered("mouth"))
+			mouth_covered = 1
+
+		/* The following code is shit
 		//monkeys and humans can have masks
 		if( victim.wear_mask )
 			if ( victim.wear_mask.flags & MASKCOVERSEYES )
@@ -219,6 +224,7 @@ datum/reagent/consumable/condensedcapsaicin/reaction_mob(var/mob/living/M, var/m
 				eyes_covered = 1
 				if ( !safe_thing )
 					safe_thing = H.glasses
+		*/
 
 		//actually handle the pepperspray effects
 		if ( eyes_covered && mouth_covered )

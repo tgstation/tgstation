@@ -63,7 +63,10 @@
 #define HAND_LEFT	512
 #define HAND_RIGHT	1024
 #define HANDS		1536
-#define FULL_BODY	2047
+#define EYES		2048
+#define MOUTH		4096
+#define FACE		6144
+#define FULL_BODY	8191
 
 // bitflags for the percentual amount of protection a piece of clothing which covers the body part offers.
 // Used with human/proc/get_heat_protection() and human/proc/get_cold_protection()

@@ -50,7 +50,7 @@ mob/living/carbon/human/proc/hat_fall_prob()
 	var/loose = 40
 	if(stat || (status_flags & FAKEDEATH))
 		multiplier = 2
-	if(H.flags & (HEADCOVERSEYES | HEADCOVERSMOUTH) || H.flags_inv & (HIDEEYES | HIDEFACE))
+	if(H.body_parts_covered & (EYES | MOUTH) || H.flags_inv & (HIDEEYES | HIDEFACE))
 		loose = 0
 	return loose * multiplier
 

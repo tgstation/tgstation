@@ -87,7 +87,7 @@
 	action_button_name = "Toggle Welding Goggles"
 	flash_protect = 2
 	tint = 2
-	visor_flags = GLASSESCOVERSEYES
+	visor_coverage = EYES
 	visor_flags_inv = HIDEEYES
 
 

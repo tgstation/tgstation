@@ -67,7 +67,7 @@
 			return 1
 
 	if(!isnull(cover))
-		if((cover.flags & HEADCOVERSMOUTH) || (cover.flags & MASKCOVERSMOUTH))
+		if(cover.body_parts_covered & MOUTH)
 			var/who = (isnull(user) || eater == user) ? "your" : "their"
 
 			if(istype(cover, /obj/item/clothing/mask/))

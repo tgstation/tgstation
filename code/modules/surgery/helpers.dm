@@ -73,29 +73,26 @@ proc/get_location_modifier(mob/M)
 /proc/get_location_accessible(mob/M, location)
 	var/covered_locations	= 0	//based on body_parts_covered
 	var/face_covered		= 0	//based on flags_inv
-	var/eyesmouth_covered	= 0	//based on flags
 	if(iscarbon(M))
 		var/mob/living/carbon/C = M
-		for(var/obj/item/clothing/I in list(C.back, C.wear_mask))
+		for(var/obj/item/clothing/I in list(C.back, C.wear_mask,  C.head))
 			covered_locations |= I.body_parts_covered
 			face_covered |= I.flags_inv
-			eyesmouth_covered |= I.flags
 		if(ishuman(C))
 			var/mob/living/carbon/human/H = C
-			for(var/obj/item/I in list(H.wear_suit, H.w_uniform, H.shoes, H.belt, H.gloves, H.glasses, H.head, H.ears))
+			for(var/obj/item/I in list(H.wear_suit, H.w_uniform, H.shoes, H.belt, H.gloves, H.glasses, H.ears))
 				covered_locations |= I.body_parts_covered
 				face_covered |= I.flags_inv
-				eyesmouth_covered |= I.flags
 
 	switch(location)
 		if("head")
 			if(covered_locations & HEAD)
 				return 0
 		if("eyes")
-			if(covered_locations & HEAD || face_covered & HIDEEYES || eyesmouth_covered & GLASSESCOVERSEYES)
+			if(covered_locations & EYES || face_covered & HIDEEYES)
 				return 0
 		if("mouth")
-			if(covered_locations & HEAD || face_covered & HIDEFACE || eyesmouth_covered & MASKCOVERSMOUTH)
+			if(covered_locations & MOUTH || face_covered & HIDEFACE)
 				return 0
 		if("chest")
 			if(covered_locations & CHEST)
@@ -130,3 +127,6 @@ proc/get_location_modifier(mob/M)
 
 	return 1
 
+
+/mob/living/proc/check_part_covered(location)	//This checks if a determined bodypart is not accessible
+	return !get_location_accessible(src, location)

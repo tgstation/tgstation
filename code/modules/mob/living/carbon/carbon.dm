@@ -518,8 +518,8 @@ var/const/GALOSHES_DONT_HELP = 8
 		return
 
 
-/mob/living/carbon/proc/is_mouth_covered(head_only = 0, mask_only = 0)
-	if( (!mask_only && head && (head.flags & HEADCOVERSMOUTH)) || (!head_only && wear_mask && (wear_mask.flags & MASKCOVERSMOUTH)) )
+/mob/living/carbon/proc/is_mouth_covered(head_only = 0, mask_only = 0)		//fuck
+	if( (!mask_only && head && (head.body_parts_covered & MOUTH)) || (!head_only && wear_mask && (wear_mask.body_parts_covered & MOUTH)) )
 		return 1
 
 

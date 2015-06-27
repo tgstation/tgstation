@@ -5,6 +5,7 @@
 	var/up = 0					//	   but seperated to allow items to protect but not impair vision, like space helmets
 	var/visor_flags = 0			// flags that are added/removed when an item is adjusted up/down
 	var/visor_flags_inv = 0		// same as visor_flags, but for flags_inv
+	var/visor_coverage = 0		// same as visor_flags, but for body_parts_covered
 	lefthand_file = 'icons/mob/inhands/clothing_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/clothing_righthand.dmi'
 	var/alt_desc = null
@@ -31,7 +32,7 @@
 	name = "glasses"
 	icon = 'icons/obj/clothing/glasses.dmi'
 	w_class = 2.0
-	flags = GLASSESCOVERSEYES
+	body_parts_covered = EYES
 	slot_flags = SLOT_EYES
 	var/vision_flags = 0
 	var/darkness_view = 2//Base human is 2
@@ -104,6 +105,7 @@ BLIND     // can't see anything
 			src.icon_state = initial(icon_state)
 			gas_transfer_coefficient = initial(gas_transfer_coefficient)
 			permeability_coefficient = initial(permeability_coefficient)
+			body_parts_covered |= visor_coverage
 			flags |= visor_flags
 			flags_inv |= visor_flags_inv
 			user << "You push \the [src] back into place."
@@ -114,6 +116,7 @@ BLIND     // can't see anything
 			user << "You push \the [src] out of the way."
 			gas_transfer_coefficient = null
 			permeability_coefficient = null
+			body_parts_covered &= ~visor_coverage
 			flags &= ~visor_flags
 			flags_inv &= ~visor_flags_inv
 			src.mask_adjusted = 1
@@ -158,7 +161,8 @@ BLIND     // can't see anything
 	name = "space helmet"
 	icon_state = "spaceold"
 	desc = "A special helmet with solar UV shielding to protect your eyes from harmful rays."
-	flags = HEADCOVERSEYES | BLOCKHAIR | HEADCOVERSMOUTH | STOPSPRESSUREDMAGE | THICKMATERIAL
+	body_parts_covered = HEAD | EYES | MOUTH
+	flags = BLOCKHAIR | STOPSPRESSUREDMAGE | THICKMATERIAL
 	item_state = "spaceold"
 	permeability_coefficient = 0.01
 	armor = list(melee = 0, bullet = 0, laser = 0,energy = 0, bomb = 0, bio = 100, rad = 50)

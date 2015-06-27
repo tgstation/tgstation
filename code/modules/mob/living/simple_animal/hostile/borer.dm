@@ -541,7 +541,7 @@ mob/living/simple_animal/borer/proc/detach()
 
 	if(istype(M,/mob/living/carbon/human))
 		var/mob/living/carbon/human/H = M
-		if(H.head && H.head.flags & HEADCOVERSMOUTH) //Not an exact match, but it's what we got
+		if(H.check_part_covered("mouth"))
 			src << "You cannot get through that host's protective gear."
 			return
 
