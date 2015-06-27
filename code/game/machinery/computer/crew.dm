@@ -33,12 +33,12 @@
 		src.updateDialog()
 		return
 
-var/global/datum/singleton/crewmonitor/crewmonitor = new
+var/global/datum/crewmonitor/crewmonitor = new
 
-/datum/singleton/crewmonitor/var/list/jobs
-/datum/singleton/crewmonitor/var/list/interfaces
+/datum/crewmonitor/var/list/jobs
+/datum/crewmonitor/var/list/interfaces
 
-/datum/singleton/crewmonitor/New()
+/datum/crewmonitor/New()
 	. = ..()
 
 	var/list/jobs = new/list()
@@ -85,7 +85,7 @@ var/global/datum/singleton/crewmonitor/crewmonitor = new
 	src.jobs = jobs
 	src.interfaces = list()
 
-/datum/singleton/crewmonitor/Destroy()
+/datum/crewmonitor/Destroy()
 	if (src.interfaces)
 		for (var/datum/html_interface/hi in interfaces)
 			qdel(hi)
@@ -93,7 +93,7 @@ var/global/datum/singleton/crewmonitor/crewmonitor = new
 
 	return ..()
 
-/datum/singleton/crewmonitor/proc/show(mob/mob, z)
+/datum/crewmonitor/proc/show(mob/mob, z)
 	if (!z) z = mob.z
 
 	if (z > 0 && src.interfaces)
@@ -105,7 +105,7 @@ var/global/datum/singleton/crewmonitor/crewmonitor = new
 		var/datum/html_interface/hi = src.interfaces["[z]"]
 		hi.show(mob)
 
-/datum/singleton/crewmonitor/proc/update(z)
+/datum/crewmonitor/proc/update(z)
 	if (src.interfaces["[z]"])
 		var/datum/html_interface/hi = src.interfaces["[z]"]
 
@@ -189,7 +189,7 @@ var/global/datum/singleton/crewmonitor/crewmonitor = new
 
 			hi.updateContent("content", t)
 
-/datum/singleton/crewmonitor/proc/hiIsValidClient(datum/html_interface_client/hclient, datum/html_interface/hi)
+/datum/crewmonitor/proc/hiIsValidClient(datum/html_interface_client/hclient, datum/html_interface/hi)
 	var/z = ""
 
 	for (z in src.interfaces)
