@@ -131,7 +131,7 @@ var/global/list/obj/machinery/light/alllights = list()
 	name = "light fixture"
 	icon = 'icons/obj/lighting.dmi'
 	var/base_state = "tube"		// base description and icon_state
-	icon_state = "tube1"
+	icon_state = "ltube1"
 	desc = "A lighting fixture."
 	anchored = 1
 	layer = 5  					// They were appearing under mobs which is a little weird - Ostaf
@@ -168,7 +168,7 @@ var/global/list/obj/machinery/light/alllights = list()
 	qdel(src)
 
 /obj/machinery/light/small
-	icon_state = "bulb1"
+	icon_state = "lbulb1"
 	base_state = "bulb"
 	fitting = "bulb"
 	brightness_range = 4
