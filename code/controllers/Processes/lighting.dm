@@ -5,9 +5,9 @@
 	create_lighting_overlays()
 
 /datum/controller/process/lighting/doWork()
-	var/list/lighting_update_lights_old = lighting_update_lights //We use a different list so any additions to the update lists during a delay from scheck() don't cause things to be cut from the list without being updated.
-	lighting_update_lights = null //Nulling it first because of http://www.byond.com/forum/?post=1854520
-	lighting_update_lights = list()
+	var/list/lighting_update_lights_old = lighting_update_lights.Copy() //We use a different list so any additions to the update lists during a delay from scheck() don't cause things to be cut from the list without being updated.
+	lighting_update_lights = null
+	lighting_update_lights = new
 
 	for(var/datum/light_source/L in lighting_update_lights_old)
 		if(L.needs_update)
@@ -20,9 +20,9 @@
 
 		scheck()
 
-	var/list/lighting_update_overlays_old = lighting_update_overlays //Same as above.
-	lighting_update_overlays = null //Same as above
-	lighting_update_overlays = list()
+	var/list/lighting_update_overlays_old = lighting_update_overlays.Copy() //Same as above.
+	lighting_update_overlays = null
+	lighting_update_overlays = new
 
 	for(var/atom/movable/lighting_overlay/O in lighting_update_overlays_old)
 		if(O.needs_update)
@@ -30,3 +30,5 @@
 			O.needs_update = 0
 
 		scheck()
+	lighting_update_lights_old = null
+	lighting_update_overlays_old = null

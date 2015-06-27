@@ -15,6 +15,7 @@
 	var/on = 0
 	var/visible = 0
 	var/obj/effect/beam/infrared/beam = null
+	New() del(src)
 
 
 ///obj/item/device/assembly/infra/describe()
