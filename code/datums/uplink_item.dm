@@ -478,7 +478,7 @@ var/list/uplink_items = list()
 
 /datum/uplink_item/stealthy_tools/stimpack
 	name = "Stimpack"
-	desc = "Stimpacks, a tool of many great heroes, make you immune to stuns and knockdowns for about 5 minutes after injection."
+	desc = "Stimpacks, a tool of many great heroes, make you nearly immune to stuns and knockdowns for about 5 minutes after injection."
 	item = /obj/item/weapon/reagent_containers/syringe/stimulants
 	cost = 8
 	surplus = 90
@@ -665,7 +665,7 @@ var/list/uplink_items = list()
 /datum/uplink_item/implants/microbomb
 	name = "Microbomb Implant"
 	desc = "An implant injected into the body, and later activated either manually or automatically upon death. The more implants inside of you, the higher the explosive power."
-	item = /obj/item/weapon/storage/box/syndie_kit/imp_macrobomb
+	item = /obj/item/weapon/storage/box/syndie_kit/imp_microbomb
 	cost = 1
 
 

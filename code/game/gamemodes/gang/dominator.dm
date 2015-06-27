@@ -163,15 +163,23 @@
 		examine(user)
 		return
 
-	if(isnum(timer)) //In theory, this shouldn't happen. But if it does, they get this meme
+	if(isnum(timer))
 		user << "<span class='warning'>Error: Hostile Takeover is already in progress.</span>"
 		return
 
+	if(tempgang == "A" ? !mode.A_dominations : !mode.B_dominations)
+		user << "<span class='warning'>Error: Unable to breach station network. Firewall has logged our signature and is blocking all further attempts.</span>"
+		return
+
 	var/time = max(300,900 - ((round((gang_territory/start_state.num_territories)*200, 1) - 60) * 15))
-	if(alert(user,"With [round((gang_territory/start_state.num_territories)*100, 1)]% station control, a takeover will require [time] seconds.\nYour gang will be unable to gain influence while it is active.\nThe entire station will likely be alerted to it once it starts.\nAre you ready?","Confirm","Ready","Later") == "Ready")
+	if(alert(user,"With [round((gang_territory/start_state.num_territories)*100, 1)]% station control, a takeover will require [time] seconds.\nYour gang will be unable to gain influence while it is active.\nThe entire station will likely be alerted to it once it starts.\nYou have [tempgang == "A" ? mode.A_dominations : mode.B_dominations] attempt(s) remaining. Are you ready?","Confirm","Ready","Later") == "Ready")
 		if ((!in_range(src, user) || !istype(src.loc, /turf)))
 			return 0
 		gang = tempgang
+		if(gang == "A")
+			mode.A_dominations --
+		else
+			mode.B_dominations --
 		mode.domination(gang,1,src)
 		src.name = "[gang_name(gang)] Gang [src.name]"
 		healthcheck(0)
