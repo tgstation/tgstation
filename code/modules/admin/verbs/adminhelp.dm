@@ -1,4 +1,4 @@
-/proc/keywords_lookup(var/msg, var/followlink = 1)
+/proc/keywords_lookup(var/msg)
 
 	//This is a list of words which are ignored by the parser when comparing message contents for names. MUST BE IN LOWER CASE!
 	var/list/adminhelp_ignored_words = list("unknown","the","a","an","of","monkey","alien","as", "i")
@@ -52,10 +52,7 @@
 							mobs_found += found
 							if(!ai_found && isAI(found))
 								ai_found = 1
-							if (followlink)
-								msg += "[original_word]<b><font color='black'>(<A HREF='?_src_=holder;adminmoreinfo=\ref[found]'>?</A>) (<A HREF='?_src_=holder;adminplayerobservefollow=\ref[found]'>FLW</A>)</font></b> "
-							else
-								msg += "[original_word]<b><font color='black'>(<A HREF='?_src_=holder;adminmoreinfo=\ref[found]'>?</A>)</font></b> "
+							msg += "[original_word]<font size='1' color='black'>(<A HREF='?_src_=holder;adminmoreinfo=\ref[found]'>?</A>|<A HREF='?_src_=holder;adminplayerobservefollow=\ref[found]'>F</A>)</font> "
 							continue
 			msg += "[original_word] "
 	return msg
