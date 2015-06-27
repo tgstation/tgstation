@@ -120,11 +120,11 @@
 			else
 				dat += "Wrestling Belt<br>"
 
-			dat += "(50 Influence) "
-			if(points >= 50)
-				dat += "<a href='?src=\ref[src];purchase=plasmafist'>Plasma Fist Scroll (one-use)</a><br>"
+			dat += "(30 Influence) "
+			if(points >= 30)
+				dat += "<a href='?src=\ref[src];purchase=scroll'>Sleeping Carp Scroll (one-use)</a><br>"
 			else
-				dat += "Plasma Fist Scroll (one-use)<br>"
+				dat += "Sleeping Carp Scroll (one-use)<br>"
 			dat += "<br>"
 
 		////////////////////////
@@ -223,10 +223,10 @@
 				if(points >= 40)
 					item_type = /obj/item/weapon/gun/projectile/automatic/mini_uzi
 					points = 40
-			if("plasmafist")
-				if(points >= 50)
-					item_type = /obj/item/weapon/plasma_fist_scroll/oneuse
-					points = 50
+			if("scroll")
+				if(points >= 30)
+					item_type = /obj/item/weapon/sleeping_carp_scroll
+					points = 30
 			if("wrestlingbelt")
 				if(points >= 20)
 					item_type = /obj/item/weapon/storage/belt/champion/wrestling
