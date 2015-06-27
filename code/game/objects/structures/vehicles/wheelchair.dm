@@ -47,10 +47,16 @@
 	//Human with two empty hands gets 4
 
 	//Wheelchair's speed depends on the resulting value
+	var/mob/living/M = user
+	if(!M) return
+
 	var/left_hand_exists = 1
 	var/right_hand_exists = 1
 
-	if(ishuman(user)) //Human check - 0 to 4
+	if(M.handcuffed)
+		return 0
+
+	if(ishuman(M)) //Human check - 0 to 4
 		var/mob/living/carbon/human/H = user
 
 		if(H.l_hand == null) left_hand_exists++ //Check to see if left hand is holding anything
@@ -66,7 +72,7 @@
 			right_hand_exists = 0
 		else if(right_hand.status & ORGAN_DESTROYED)
 			right_hand_exists = 0
-	else if( ismonkey(user) || isalien(user) ) //Monkey and alien check - 0 to 2
+	else if( ismonkey(M) || isalien(M) ) //Monkey and alien check - 0 to 2
 		left_hand_exists = 0
 		if(user.l_hand == null) left_hand_exists++
 
