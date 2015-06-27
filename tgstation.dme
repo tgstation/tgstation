@@ -1113,6 +1113,7 @@
 #include "code\modules\lighting\lighting_turf.dm"
 #include "code\modules\makeshift\armor.dm"
 #include "code\modules\makeshift\trayshield.dm"
+#include "code\modules\mining\abandoned_crate.dm"
 #include "code\modules\mining\bug_bait.dm"
 #include "code\modules\mining\equipment_locker.dm"
 #include "code\modules\mining\hivelord_fridge.dm"

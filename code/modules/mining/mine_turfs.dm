@@ -584,9 +584,14 @@
 		for (i=0;i<mineralAmt;i++)
 			new mineralType(src)
 		feedback_add_details("ore_mined","[mineralType]|[mineralAmt]")
+
+	if(rand(1,1000) == 1)
+		visible_message("<span class='notice'>An old dusty crate was buried within!</span>")
+		DropAbandonedCrate()
 	var/turf/simulated/floor/plating/asteroid/airless/N = ChangeTurf(/turf/simulated/floor/plating/asteroid/airless)
 	playsound(src, 'sound/effects/break_stone.ogg', 50, 1) //beautiful destruction
 	N.fullUpdateMineralOverlays()
+
 	return
 
 /turf/simulated/mineral/proc/excavate_find(var/prob_clean = 0, var/datum/find/F)
@@ -619,6 +624,9 @@
 				del(X)
 
 	finds.Remove(F)
+
+/turf/simulated/mineral/proc/DropAbandonedCrate()
+	new /obj/structure/closet/crate/secure/loot(src)
 
 /turf/simulated/mineral/proc/artifact_debris(var/severity = 0)
 	for(var/j in 1 to rand(1, 3 + max(min(severity, 1), 0) * 2))
