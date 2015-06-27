@@ -1426,3 +1426,14 @@ proc/find_holder_of_type(var/atom/reference,var/typepath) //Returns the first ob
 /mob/dview
 	invisibility = 101
 	density = 0
+
+//Gets the Z level datum for this atom's Z level
+/proc/get_z_level(var/atom/A)
+	var/z
+	if(istype(A, /atom/movable))
+		var/turf/T = get_turf(A)
+		z = T.z
+	else
+		z = A.z
+
+	. = map.zLevels[z]
