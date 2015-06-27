@@ -754,12 +754,6 @@ var/list/uplink_items = list()
 	item = /obj/item/toy/syndicateballoon
 	cost = 20
 
-/datum/uplink_item/implants/macrobomb
-	name = "Macrobomb Implant"
-	desc = "An implant injected into the body, and later activated either manually or automatically upon death. Maximum explosion power."
-	item = /obj/item/weapon/storage/box/syndie_kit/imp_macrobomb
-	cost = 20
-
 /datum/uplink_item/badass/random
 	name = "Random Item"
 	desc = "Picking this choice will send you a random item from the list. Useful for when you cannot think of a strategy to finish your objectives with."
