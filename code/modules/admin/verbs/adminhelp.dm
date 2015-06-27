@@ -64,11 +64,6 @@
 	src.verbs |= /client/verb/adminhelp
 	adminhelptimerid = 0
 
-
-var/list/adminhelp_ignored_words = list("unknown","the","a","an","of","monkey","alien","as", "i")
-
-
-
 /client/verb/adminhelp(msg as text)
 	set category = "Admin"
 	set name = "Adminhelp"
