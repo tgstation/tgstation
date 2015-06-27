@@ -709,7 +709,7 @@
 
 				playsound(loc, pick('sound/items/Welder.ogg', 'sound/items/Welder2.ogg'), 50, 1)
 				user << "<span class='notice'>You start to remove the turret's interior metal armor...</span>"
-				if(do_after(user, 20))
+				if(do_after(user, 20, target = src))
 					if(!src || !WT.remove_fuel(5, user)) return
 					build_step = 1
 					user << "<span class='notice'>You remove the turret's interior metal armor.</span>"
@@ -785,7 +785,7 @@
 
 				playsound(loc, pick('sound/items/Welder.ogg', 'sound/items/Welder2.ogg'), 50, 1)
 				user << "<span class='notice'>You begin to weld the turret's armor down...</span>"
-				if(do_after(user, 30))
+				if(do_after(user, 30, target = src))
 					if(!src || !WT.remove_fuel(5, user))
 						return
 					build_step = 8

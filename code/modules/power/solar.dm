@@ -60,7 +60,7 @@
 	if(istype(W, /obj/item/weapon/crowbar))
 		playsound(src.loc, 'sound/machines/click.ogg', 50, 1)
 		user.visible_message("[user] begins to take the glass off the solar panel.", "<span class='notice'>You begin to take the glass off the solar panel...</span>")
-		if(do_after(user, 50))
+		if(do_after(user, 50, target = src))
 			var/obj/item/solar_assembly/S = locate() in src
 			if(S)
 				S.loc = src.loc
@@ -370,8 +370,10 @@
 	if(!..())
 		ui_interact(user)
 
-/obj/machinery/power/solar_control/ui_interact(mob/user, ui_key = "main")
+/obj/machinery/power/solar_control/ui_interact(mob/user, ui_key = "main", var/datum/nanoui/ui = null)
+	ui = SSnano.push_open_or_new_ui(user, src, ui_key, ui, "solar_control.tmpl", name, 490, 420, 1)
 
+/obj/machinery/power/solar_control/get_ui_data()
 	var/data = list()
 
 	data["generated"] = round(lastgen)
@@ -384,21 +386,12 @@
 
 	data["connected_panels"] = connected_panels.len
 	data["connected_tracker"] = (connected_tracker ? 1 : 0)
-
-	var/datum/nanoui/ui = SSnano.get_open_ui(user, src, ui_key)
-	if (!ui)
-		ui = new(user, src, ui_key, "solar_control.tmpl", name, 490, 420)
-		ui.set_initial_data(data)
-		ui.open()
-		ui.set_auto_update(1)
-	else
-		ui.push_data(data)
-		return
+	return data
 
 /obj/machinery/power/solar_control/attackby(I as obj, user as mob, params)
 	if(istype(I, /obj/item/weapon/screwdriver))
 		playsound(src.loc, 'sound/items/Screwdriver.ogg', 50, 1)
-		if(do_after(user, 20))
+		if(do_after(user, 20, target = src))
 			if (src.stat & BROKEN)
 				user << "<span class='notice'>The broken glass falls out.</span>"
 				var/obj/structure/computerframe/A = new /obj/structure/computerframe( src.loc )

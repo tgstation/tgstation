@@ -50,7 +50,7 @@
 			user.visible_message("<span class='warning'>[user] tries to stuff [O] into [src].</span>", \
 							 	 "<span class='danger'>You try to stuff [O] into [src].</span>", \
 							 	 "<span class='italics'>You hear clanging.</span>")
-			if (!do_after(user, 40))
+			if (!do_after(user, 40, target = src))
 				return
 			if(!..(O, user, 0, 0))
 				return

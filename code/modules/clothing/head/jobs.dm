@@ -47,7 +47,8 @@
 	name = "nun hood"
 	desc = "Maximum piety in this star system."
 	icon_state = "nun_hood"
-	flags = HEADCOVERSEYES|BLOCKHAIR
+	flags = BLOCKHAIR
+	flags_cover = HEADCOVERSEYES
 
 /obj/item/clothing/head/det_hat
 	name = "detective's fedora"

@@ -362,6 +362,8 @@
 			V.visible_message("<span class='danger'>[V] was frozen shut!</span>")
 		for(var/mob/living/L in T)
 			L.ExtinguishMob()
+		for(var/obj/item/Item in T)
+			Item.extinguish()
 	return
 
 /datum/effect/effect/system/freezing_smoke_spread

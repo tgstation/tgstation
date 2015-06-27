@@ -66,8 +66,9 @@
 
 
 /obj/item/areaeditor/permit/create_area()
-	..()
-	qdel(src)
+	var/success = ..()
+	if(success)
+		qdel(src)
 
 
 //Station blueprints!!!
@@ -84,7 +85,7 @@
 	var/area/A = get_area()
 	if(get_area_type() == AREA_STATION)
 		. += "<p>According to \the [src], you are now in <b>\"[html_encode(A.name)]\"</b>.</p>"
-		. += "<p>You may <a href='?src=\ref[src];edit_area=1'>move an amendment</a> to the drawing.</p>"
+		. += "<p>You may <a href='?src=\ref[src];edit_area=1'>make an amendment</a> to the drawing.</p>"
 	var/datum/browser/popup = new(user, "blueprints", "[src]", 700, 500)
 	popup.set_content(.)
 	popup.open()
@@ -162,7 +163,7 @@
 	A.addSorted()
 
 	interact()
-	return
+	return 1
 
 
 /obj/item/areaeditor/proc/move_turfs_to_area(var/list/turf/turfs, var/area/A)

@@ -6,8 +6,8 @@
 	density = 1
 	anchored = 1.0
 	layer = 3.6
-	var/maxhealth = 300
-	var/health = 300
+	var/maxhealth = 200
+	var/health = 200
 	var/gang
 	var/operating = 0
 
@@ -40,6 +40,10 @@
 		user << "<span class='notice'>System on standby.</span>"
 	user << "<span class='danger'>System Integrity: [round((health/maxhealth)*100,1)]%</span>"
 
+/obj/machinery/dominator/process()
+	var/datum/game_mode/gang/mode = ticker.mode
+	if(((gang == "A") && mode.A_timer) || ((gang == "B") && mode.B_timer))
+		playsound(loc, 'sound/items/timer.ogg', 30, 0)
 
 /obj/machinery/dominator/proc/healthcheck(var/damage)
 	var/iconname = "dominator"
@@ -89,21 +93,12 @@
 			if(get_security_level() == "delta")
 				set_security_level("red")
 
-			for(var/obj/item/weapon/pinpointer/pointer in world)
-				pointer.scandisk() //Reset the pinpointer
-
-		else if(isnum(mode.A_timer) || isnum(mode.B_timer))
-			for(var/obj/machinery/dominator/dom in world)
-				if(dom.operating)
-					for(var/obj/item/weapon/pinpointer/pointer in world)
-						pointer.the_disk = dom //The pinpointer now tracks the dominator's location
-					break
-
 		ticker.mode.message_gangtools(((gang=="A") ? ticker.mode.A_tools : ticker.mode.B_tools),"Hostile takeover cancelled: Dominator is no longer operational.",1,1)
 
 	SetLuminosity(0)
 	icon_state = "dominator-broken"
 	operating = -1
+	SSmachine.processing -= src
 
 /obj/machinery/dominator/Destroy()
 	if(operating != -1)
@@ -168,20 +163,29 @@
 		examine(user)
 		return
 
-	if(isnum(timer)) //In theory, this shouldn't happen. But if it does, they get this meme
+	if(isnum(timer))
 		user << "<span class='warning'>Error: Hostile Takeover is already in progress.</span>"
 		return
 
+	if(tempgang == "A" ? !mode.A_dominations : !mode.B_dominations)
+		user << "<span class='warning'>Error: Unable to breach station network. Firewall has logged our signature and is blocking all further attempts.</span>"
+		return
+
 	var/time = max(300,900 - ((round((gang_territory/start_state.num_territories)*200, 1) - 60) * 15))
-	if(alert(user,"With [round((gang_territory/start_state.num_territories)*100, 1)]% station control, a takeover will require [time] seconds.\nYour gang will be unable to gain influence while it is active.\nThe entire station will likely be alerted to it once it starts.\nAre you ready?","Confirm","Ready","Later") == "Ready")
+	if(alert(user,"With [round((gang_territory/start_state.num_territories)*100, 1)]% station control, a takeover will require [time] seconds.\nYour gang will be unable to gain influence while it is active.\nThe entire station will likely be alerted to it once it starts.\nYou have [tempgang == "A" ? mode.A_dominations : mode.B_dominations] attempt(s) remaining. Are you ready?","Confirm","Ready","Later") == "Ready")
 		if ((!in_range(src, user) || !istype(src.loc, /turf)))
 			return 0
 		gang = tempgang
+		if(gang == "A")
+			mode.A_dominations --
+		else
+			mode.B_dominations --
 		mode.domination(gang,1,src)
 		src.name = "[gang_name(gang)] Gang [src.name]"
 		healthcheck(0)
 		operating = 1
 		ticker.mode.message_gangtools(((gang=="A") ? ticker.mode.A_tools : ticker.mode.B_tools),"Hostile takeover in progress: Estimated [time] seconds until victory.")
+		SSmachine.processing += src
 
 /obj/machinery/dominator/attack_alien(mob/living/user)
 	user.do_attack_animation(src)

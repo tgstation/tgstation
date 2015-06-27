@@ -3,6 +3,7 @@
 	desc = "You sit in this. Either by will or force."
 	icon_state = "chair"
 	buckle_lying = 0 //you sit in a chair, not lay
+	burn_state = -1 //Not Burnable
 
 /obj/structure/stool/bed/chair/New()
 	..()
@@ -73,6 +74,10 @@
 
 
 // Chair types
+/obj/structure/stool/bed/chair/wood
+	burn_state = 0 //Burnable
+	burntime = 20
+
 /obj/structure/stool/bed/chair/wood/normal
 	icon_state = "wooden_chair"
 	name = "wooden chair"
@@ -96,6 +101,8 @@
 	desc = "It looks comfy."
 	icon_state = "comfychair"
 	color = rgb(255,255,255)
+	burn_state = 0 //Burnable
+	burntime = 30
 	var/image/armrest = null
 
 /obj/structure/stool/bed/chair/comfy/New()

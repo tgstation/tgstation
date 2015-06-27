@@ -50,7 +50,7 @@
 	if(istype(I, /obj/item/weapon/crowbar))
 		user << "<span class='notice'>You start to [cistern ? "replace the lid on the cistern" : "lift the lid off the cistern"]...</span>"
 		playsound(loc, 'sound/effects/stonedoor_openclose.ogg', 50, 1)
-		if(do_after(user, 30))
+		if(do_after(user, 30, target = src))
 			user.visible_message("[user] [cistern ? "replaces the lid on the cistern" : "lifts the lid off the cistern"]!", "<span class='notice'>You [cistern ? "replace the lid on the cistern" : "lift the lid off the cistern"]!</span>", "<span class='italics'>You hear grinding porcelain.</span>")
 			cistern = !cistern
 			update_icon()
@@ -71,7 +71,7 @@
 					if(open)
 						GM.visible_message("<span class='danger'>[user] starts to give [GM] a swirlie!</span>", "<span class='userdanger'>[user] starts to give [GM] a swirlie...</span>")
 						swirlie = GM
-						if(do_after(user, 30, 5, 0))
+						if(do_after(user, 30, 5, 0, target = src))
 							GM.visible_message("<span class='danger'>[user] gives [GM] a swirlie!</span>", "<span class='userdanger'>[user] gives [GM] a swirlie!</span>", "<span class='italics'>You hear a toilet flushing.</span>")
 							if(iscarbon(GM))
 								var/mob/living/carbon/C = GM
@@ -172,7 +172,7 @@
 		user << "<span class='notice'>The water temperature seems to be [watertemp].</span>"
 	if(istype(I, /obj/item/weapon/wrench))
 		user << "<span class='notice'>You begin to adjust the temperature valve with \the [I]...</span>"
-		if(do_after(user, 50))
+		if(do_after(user, 50, target = src))
 			switch(watertemp)
 				if("normal")
 					watertemp = "freezing"
@@ -229,6 +229,7 @@
 //Yes, showers are super powerful as far as washing goes.
 /obj/machinery/shower/proc/wash(atom/movable/O)
 	if(!on) return
+
 	if(ismob(O))
 		mobpresent += 1
 		check_heat(O)
@@ -303,13 +304,19 @@
 		else
 			O.clean_blood()
 
+	else
+		O.clean_blood()
+
+		if(istype(O,/obj/item))
+			var/obj/item/Item = O
+			Item.extinguish()
+
 	if(isturf(loc))
 		var/turf/tile = loc
 		loc.clean_blood()
 		for(var/obj/effect/E in tile)
 			if(is_cleanable(E))
 				qdel(E)
-
 
 /obj/machinery/shower/process()
 	if(!on || !mobpresent) return
