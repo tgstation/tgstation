@@ -26,6 +26,8 @@
 	if (!can_use(user))
 		return
 
+	var/gang_bosses = ((gang == "A")? ticker.mode.A_bosses.len : ticker.mode.B_bosses.len)
+
 	var/dat
 	if(!gang)
 		dat += "This device is not registered.<br><br>"
@@ -33,15 +35,16 @@
 			dat += "Give this device to another member of your organization to use to promote them.<hr>"
 			dat += "If this is meant as a spare device for yourself:<br>"
 			dat += "<a href='?src=\ref[src];register=1'>Register Device</a><br>"
-		else
+		else if (gang_bosses < 3)
 			dat += "You have been selected for a promotion!<br>"
 			dat += "<a href='?src=\ref[src];register=1'>Register Device</a><br>"
+		else
+			dat += "No promotions available: All positions filled."
 	else
 		var/datum/game_mode/gang/gangmode
 		if(istype(ticker.mode, /datum/game_mode/gang))
 			gangmode = ticker.mode
 
-		var/gang_bosses = ((gang == "A")? ticker.mode.A_bosses.len : ticker.mode.B_bosses.len)
 		var/gang_size = gang_bosses + ((gang == "A")? ticker.mode.A_gang.len : ticker.mode.B_gang.len)
 		var/gang_territory = ((gang == "A")? ticker.mode.A_territory.len : ticker.mode.B_territory.len)
 		var/points = ((gang == "A") ? ticker.mode.gang_points.A : ticker.mode.gang_points.B)
@@ -292,6 +295,12 @@
 
 
 /obj/item/device/gangtool/proc/register_device(var/mob/user)
+	if(!(user.mind in (ticker.mode.B_bosses|ticker.mode.B_bosses)))
+		var/gang_bosses = ((gang == "A")? ticker.mode.A_bosses.len : ticker.mode.B_bosses.len)
+		if(gang_bosses >= 3)
+			user << "<span class='warning'>\icon[src] Error: All positions filled.</span>"
+			return
+
 	if(jobban_isbanned(user, "gangster") || jobban_isbanned(user, "Syndicate"))
 		user << "<span class='warning'>\icon[src] ACCESS DENIED: Blacklisted user.</span>"
 		return 0

@@ -439,8 +439,8 @@
 //////////////////////////////////////////////////////////
 
 /datum/gang_points
-	var/A = 20
-	var/B = 20
+	var/A = 15
+	var/B = 15
 	var/next_point_interval = 1800
 	var/next_point_time
 
@@ -578,7 +578,7 @@
 
 	//Increase outfit stock
 	for(var/obj/item/device/gangtool/tool in (ticker.mode.A_tools | ticker.mode.B_tools))
-		tool.outfits = min(tool.outfits+2,10)
+		tool.outfits = min(tool.outfits+2,5)
 
 	//Restart the counter
 	start()
