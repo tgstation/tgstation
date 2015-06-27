@@ -180,7 +180,8 @@ mob/verb/test()
 	for (var/client in src.clients)
 		hclient = src._getClient(src.clients[client])
 
-		if (hclient && hclient.active) src._renderContent(id, hclient, ignore_cache)
+		if (hclient && hclient.active)
+			spawn (-1) src._renderContent(id, hclient, ignore_cache)
 
 /datum/html_interface/proc/show(datum/html_interface_client/hclient)
 	hclient = getClient(hclient, TRUE)
@@ -254,13 +255,13 @@ mob/verb/test()
 /datum/html_interface/proc/_getClient(datum/html_interface_client/hclient)
 	if (hclient)
 		if (hclient.client)
-			if (hascall(src.ref, "hiIsValidClient"))
-				var/res = call(src.ref, "hiIsValidClient")(hclient)
+			// res = if the client has been active in the past 10 minutes and the client is allowed to view the object (context-sensitive).
+			var/res = hclient.client.inactivity <= 6000 && (hascall(src.ref, "hiIsValidClient") ? call(src.ref, "hiIsValidClient")(hclient, src) : TRUE)
 
-				if (res)
-					if (!hclient.active) src.enableFor(hclient)
-				else
-					if (hclient.active)  src.disableFor(hclient)
+			if (res)
+				if (!hclient.active) src.enableFor(hclient)
+			else
+				if (hclient.active)  src.disableFor(hclient)
 
 			return hclient
 		else
