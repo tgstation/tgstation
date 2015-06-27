@@ -16,7 +16,6 @@
 		update_icon()
 		..()
 
-
 /obj/item/weapon/gun/energy/process_chambered()
 	if(in_chamber)	return 1
 	if(!power_supply)	return 0
@@ -25,13 +24,20 @@
 	in_chamber = new projectile_type(src)
 	return 1
 
-
 /obj/item/weapon/gun/energy/update_icon()
 	if(!power_supply.maxcharge)
 		ASSERT(power_supply.maxcharge > 0)
 		return
+
 	var/ratio = power_supply.charge / power_supply.maxcharge
-	ratio = round(ratio, 0.25) * 100
+
+	ratio *= 100
+
+	if(ratio >= 50)
+		ratio = Floor(ratio, 25)
+	else
+		ratio = Ceiling(ratio, 25)
+
 	if(modifystate && charge_states)
 		icon_state = "[modifystate][ratio]"
 	else if(charge_states)
