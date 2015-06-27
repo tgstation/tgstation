@@ -11,3 +11,4 @@
 	. = ..() // we need the default resources
 
 	client << browse_rsc('cards.css')
+	client << browse_rsc('cards.png')
