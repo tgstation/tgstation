@@ -42,6 +42,7 @@
 	var/name			//the preview name of the accessory
 	var/gender = NEUTER	//Determines if the accessory will be skipped or included in random hair generations
 	var/gender_specific //Something that can be worn by either gender, but looks different on each
+	var/hasinner		//Decides if this sprite has an "inner" part, such as the fleshy parts on ears.
 
 //////////////////////
 // Hair Definitions //
@@ -1094,69 +1095,85 @@
 /datum/sprite_accessory/tails_animated
 	icon = 'icons/mob/mutant_bodyparts.dmi'
 
-/datum/sprite_accessory/tails/smooth
+/datum/sprite_accessory/tails/lizard/smooth
 	name = "Smooth"
 	icon_state = "smooth"
 
-/datum/sprite_accessory/tails_animated/smooth
+/datum/sprite_accessory/tails_animated/lizard/smooth
 	name = "Smooth"
 	icon_state = "smooth"
 
-/datum/sprite_accessory/tails/light
+/datum/sprite_accessory/tails/lizard/light
 	name = "Light"
 	icon_state = "light"
 
-/datum/sprite_accessory/tails_animated/light
+/datum/sprite_accessory/tails_animated/lizard/light
 	name = "Light"
 	icon_state = "light"
 
-/datum/sprite_accessory/tails/dstripe
+/datum/sprite_accessory/tails/lizard/dstripe
 	name = "Dark Stripe"
 	icon_state = "dstripe"
 
-/datum/sprite_accessory/tails_animated/dstripe
+/datum/sprite_accessory/tails_animated/lizard/dstripe
 	name = "Dark Stripe"
 	icon_state = "dstripe"
 
-/datum/sprite_accessory/tails/lstripe
+/datum/sprite_accessory/tails/lizard/lstripe
 	name = "Light Stripe"
 	icon_state = "lstripe"
 
-/datum/sprite_accessory/tails_animated/lstripe
+/datum/sprite_accessory/tails_animated/lizard/lstripe
 	name = "Light Stripe"
 	icon_state = "lstripe"
 
-/datum/sprite_accessory/tails/dtiger
+/datum/sprite_accessory/tails/lizard/dtiger
 	name = "Dark Tiger"
 	icon_state = "dtiger"
 
-/datum/sprite_accessory/tails_animated/dtiger
+/datum/sprite_accessory/tails_animated/lizard/dtiger
 	name = "Dark Tiger"
 	icon_state = "dtiger"
 
-/datum/sprite_accessory/tails/ltiger
+/datum/sprite_accessory/tails/lizard/ltiger
 	name = "Light Tiger"
 	icon_state = "ltiger"
 
-/datum/sprite_accessory/tails_animated/ltiger
+/datum/sprite_accessory/tails_animated/lizard/ltiger
 	name = "Light Tiger"
 	icon_state = "ltiger"
 
-/datum/sprite_accessory/tails/club
+/datum/sprite_accessory/tails/lizard/club
 	name = "Club"
 	icon_state = "club"
 
-/datum/sprite_accessory/tails_animated/club
+/datum/sprite_accessory/tails_animated/lizard/club
 	name = "Club"
 	icon_state = "club"
 
-/datum/sprite_accessory/tails/aqua
+/datum/sprite_accessory/tails/lizard/aqua
 	name = "Aquatic"
 	icon_state = "aqua"
 
-/datum/sprite_accessory/tails_animated/aqua
+/datum/sprite_accessory/tails_animated/lizard/aqua
 	name = "Aquatic"
 	icon_state = "aqua"
+
+/datum/sprite_accessory/tails/human/none
+	name = "None"
+	icon_state = "none"
+
+/datum/sprite_accessory/tails_animated/human/none
+	name = "None"
+	icon_state = "none"
+
+/datum/sprite_accessory/tails/human/longsmooth
+	name = "Long and Smooth"
+	icon_state = "longsmooth"
+
+/datum/sprite_accessory/tails_animated/human/longsmooth
+	name = "Long and Smooth"
+	icon_state = "longsmooth"
 
 /datum/sprite_accessory/snouts
 	icon = 'icons/mob/mutant_bodyparts.dmi'
@@ -1203,6 +1220,15 @@
 /datum/sprite_accessory/horns/angler
 	name = "Angeler"
 	icon_state = "angler"
+
+/datum/sprite_accessory/ears/none
+	name = "None"
+	icon_state = "none"
+
+/datum/sprite_accessory/ears/cat
+	name = "Cat"
+	icon_state = "cat"
+	hasinner = 1
 
 /datum/sprite_accessory/frills
 	icon = 'icons/mob/mutant_bodyparts.dmi'

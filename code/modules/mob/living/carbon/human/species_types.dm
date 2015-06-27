@@ -5,8 +5,11 @@
 /datum/species/human
 	name = "Human"
 	id = "human"
+	default_color = "FFFFFF"
 	roundstart = 1
-	specflags = list(EYECOLOR,HAIR,FACEHAIR,LIPS)
+	specflags = list(MUTCOLORS_PARTSONLY,EYECOLOR,HAIR,FACEHAIR,LIPS)
+	mutant_bodyparts = list("tail_human", "ears")
+	default_features = list("mcolor" = "FFF", "tail_human" = "None", "ears" = "None")
 	use_skintones = 1
 
 /datum/species/human/handle_chemicals(datum/reagent/chem, mob/living/carbon/human/H)
@@ -17,6 +20,11 @@
 		H.reagents.del_reagent(chem.type)
 		H.faction |= "slime"
 		return 1
+
+//Curiosity killed the cat's wagging tail.
+datum/species/human/spec_death(var/gibbed, var/mob/living/carbon/human/H)
+	if(H)
+		H.endTailWag()
 
 /*
  LIZARDPEOPLE
@@ -30,7 +38,8 @@
 	default_color = "00FF00"
 	roundstart = 1
 	specflags = list(MUTCOLORS,EYECOLOR,LIPS)
-	mutant_bodyparts = list("tail", "snout", "spines", "horns", "frills", "body_markings")
+	mutant_bodyparts = list("tail_lizard", "snout", "spines", "horns", "frills", "body_markings")
+	default_features = list("mcolor" = "0F0", "tail" = "Smooth", "snout" = "Round", "horns" = "None", "frills" = "None", "spines" = "None", "body_markings" = "None")
 	attack_verb = "slash"
 	attack_sound = 'sound/weapons/slash.ogg'
 	miss_sound = 'sound/weapons/slashmiss.ogg'
