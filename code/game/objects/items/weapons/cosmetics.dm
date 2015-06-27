@@ -65,7 +65,7 @@
 		else
 			user.visible_message("<span class='warning'>[user] begins to do [H]'s lips with \the [src].</span>", \
 								 "<span class='notice'>You begin to apply \the [src] on [H]'s lips...</span>")
-			if(do_after(user, 20, target = H) && do_after(H, 20, 5, 0))	//user needs to keep their active hand, H does not.
+			if(do_after(user, 20, target = H))
 				user.visible_message("[user] does [H]'s lips with \the [src].", \
 									 "<span class='notice'>You apply \the [src] on [H]'s lips.</span>")
 				H.lip_style = "lipstick"
