@@ -601,17 +601,28 @@ var/list/admin_verbs_hideable = list(
 		var/area/area
 		var/list/candidates
 		var/turf/simulated/floor/tile
-		var/r
+		var/j,k
+		var/mob/living/carbon/human/mob
 
 		for (var/i = 1 to amount)
-			area = pick(the_station_areas)
-			candidates = get_area_turfs(area)
-
-			r = 100
+			j = 100
 
 			do
-				tile = pick(candidates)
-			while ((!tile || !istype(tile)) && --r > 0)
+				area = pick(the_station_areas)
 
-			world.log << "Spawning test mob at [tile.x],[tile.y],[tile.z]!"
-			new/mob/living/carbon/human/interactive(tile)
+				if (area)
+
+					candidates = get_area_turfs(area)
+
+					if (candidates.len)
+						k = 100
+
+						do
+							tile = pick(candidates)
+						while ((!tile || !istype(tile)) && --k > 0)
+
+						if (tile)
+							mob = new/mob/living/carbon/human/interactive(tile)
+
+							testing("Spawned test mob with name \"[mob.name]\" at [tile.x],[tile.y],[tile.z]")
+			while (!area && --j > 0)
