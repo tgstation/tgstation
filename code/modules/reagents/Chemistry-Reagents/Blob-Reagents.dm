@@ -176,6 +176,8 @@ datum/reagent/blob/explosive/reaction_mob(var/mob/living/M as mob, var/method=TO
 			explosion(M.loc, 0, 0, 1, 0, 0)
 
 /proc/reagent_vortex(var/mob/living/M as mob, var/setting_type)
+	if(!istype(M))
+		return
 	var/turf/pull = get_turf(M)
 	for(var/atom/movable/X in range(4,pull))
 		if(istype(X, /atom/movable))

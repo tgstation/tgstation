@@ -96,7 +96,8 @@ var/list/icons_to_ignore_at_floor_init = list("damaged1","damaged2","damaged3","
 
 /turf/simulated/floor/proc/break_tile_to_plating()
 	var/turf/simulated/floor/plating/T = make_plating()
-	T.break_tile()
+	if(T)
+		T.break_tile()
 
 /turf/simulated/floor/proc/break_tile()
 	if(broken)
