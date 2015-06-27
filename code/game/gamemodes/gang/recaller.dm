@@ -10,9 +10,8 @@
 	throw_range = 7
 	flags = CONDUCT
 	var/gang //Which gang uses this?
-	var/boss = 1 //If it has the power to promote gang members
+	var/boss = 1 //Is this the original boss?
 	var/recalling = 0
-	var/promotions = 0
 	var/outfits = 3
 	var/free_pen = 0
 
@@ -29,17 +28,21 @@
 
 	var/dat
 	if(!gang)
-		dat += "This device is not registered.<br>"
+		dat += "This device is not registered.<br><br>"
 		if(user.mind in (ticker.mode.A_bosses | ticker.mode.B_bosses))
-			dat += "Give this device to another member of your organization to use.<br>"
+			dat += "Give this device to another member of your organization to use to promote them.<hr>"
+			dat += "If this is meant as a spare device for yourself:<br>"
+			dat += "<a href='?src=\ref[src];register=1'>Register Device</a><br>"
 		else
+			dat += "You have been selected for a promotion!<br>"
 			dat += "<a href='?src=\ref[src];register=1'>Register Device</a><br>"
 	else
 		var/datum/game_mode/gang/gangmode
 		if(istype(ticker.mode, /datum/game_mode/gang))
 			gangmode = ticker.mode
 
-		var/gang_size = ((gang == "A")? (ticker.mode.A_gang.len + ticker.mode.A_bosses.len) : (ticker.mode.B_gang.len + ticker.mode.B_bosses.len))
+		var/gang_bosses = ((gang == "A")? ticker.mode.A_bosses.len : ticker.mode.B_bosses.len)
+		var/gang_size = gang_bosses + ((gang == "A")? ticker.mode.A_gang.len : ticker.mode.B_gang.len)
 		var/gang_territory = ((gang == "A")? ticker.mode.A_territory.len : ticker.mode.B_territory.len)
 		var/points = ((gang == "A") ? ticker.mode.gang_points.A : ticker.mode.gang_points.B)
 		var/timer
@@ -72,8 +75,8 @@
 		else
 			dat += "Switchblade<br>"
 
-		dat += "(20 Influence) "
-		if(points >= 20)
+		dat += "(25 Influence) "
+		if(points >= 25)
 			dat += "<a href='?src=\ref[src];purchase=pistol'>10mm Pistol</a><br>"
 		else
 			dat += "10mm Pistol<br>"
@@ -84,14 +87,14 @@
 		else
 			dat += "10mm Ammo<br>"
 
-		dat += "(40 Influence) "
-		if(points >= 40)
+		dat += "(50 Influence) "
+		if(points >= 50)
 			dat += "<a href='?src=\ref[src];purchase=uzi'>Mini Uzi</a><br>"
 		else
 			dat += "Mini Uzi<br>"
 
-		dat += "(25 Influence) "
-		if(points >= 25)
+		dat += "(20 Influence) "
+		if(points >= 20)
 			dat += "<a href='?src=\ref[src];purchase=9mmammo'>Uzi Ammo</a><br>"
 		else
 			dat += "Uzi Magazine<br>"
@@ -120,15 +123,16 @@
 		else
 			dat += "Recruitment Pen<br>"
 
-		if(boss)
-			if(promotions >= 3)
-				dat += "(Out of stock) Promote a Gangster<br>"
-			else
-				dat += "([(promotions*10)+10] Influence, [3-promotions] left) "
-				if(points >= (promotions*10)+10)
-					dat += "<a href='?src=\ref[src];purchase=gangtool'>Promote a Gangster</a><br>"
-				else
-					dat += "Promote a Gangster<br>"
+		var/tool_cost = (boss ? 10 : 30)
+		var/gangtooldesc = "Promote a Gangster ([3-gang_bosses] left)"
+		if(gang_bosses >= 3)
+			gangtooldesc = "Additional Gangtools"
+		dat += "([tool_cost] Influence) "
+		if(points >= tool_cost)
+			dat += "<a href='?src=\ref[src];purchase=gangtool'>[gangtooldesc]</a><br>"
+		else
+			dat += "[gangtooldesc]<br>"
+
 		if(gangmode)
 			if(gang == "A" ? !gangmode.A_dominations : !gangmode.B_dominations)
 				dat += "(Out of stock) Station Dominator"
@@ -178,21 +182,21 @@
 					item_type = /obj/item/weapon/switchblade
 					points = 10
 			if("pistol")
-				if(points >= 20)
+				if(points >= 25)
 					item_type = /obj/item/weapon/gun/projectile/automatic/pistol
-					points = 20
+					points = 25
 			if("10mmammo")
 				if(points >= 10)
 					item_type = /obj/item/ammo_box/magazine/m10mm
 					points = 10
 			if("uzi")
-				if(points >= 40)
+				if(points >= 50)
 					item_type = /obj/item/weapon/gun/projectile/automatic/mini_uzi
-					points = 40
+					points = 50
 			if("9mmammo")
-				if(points >= 25)
+				if(points >= 20)
 					item_type = /obj/item/ammo_box/magazine/uzim9mm
-					points = 25
+					points = 20
 			if("C4")
 				if(points >= 10)
 					item_type = /obj/item/weapon/c4
@@ -206,10 +210,10 @@
 					item_type = /obj/item/weapon/pen/gang
 					points = 50
 			if("gangtool")
-				if((promotions < 3) && (points >= (promotions*10)+10))
+				var/tool_cost = (boss ? 10 : 30)
+				if(points >= tool_cost)
 					item_type = /obj/item/device/gangtool/lt
-					points = (promotions*10)+10
-					promotions++
+					points = tool_cost
 			if("dominator")
 				if(istype(ticker.mode, /datum/game_mode/gang))
 					var/datum/game_mode/gang/mode = ticker.mode
