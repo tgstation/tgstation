@@ -46,7 +46,9 @@
 	if(!istype(level))
 		warning("ERROR: addZLevel received [level ? "a bad level of type [ispath(level) ? "[level]" : "[level.type]" ]" : "no level at all!"]")
 		return
-	zLevels += level
+	if(z_to_use > zLevels.len)
+		zLevels.len = z_to_use
+	zLevels[z_to_use] = level
 	if(!level.movementJammed)
 		accessable_z_levels += list("[z_to_use]" = level.movementChance)
 
@@ -89,7 +91,7 @@ var/global/list/accessable_z_levels = list()
 	src << "\nCurrent map data:"
 	src << "* Short name: [map.nameShort]"
 	src << "* Long name: [map.nameLong]"
-	src << "* Z-levels: [map.zLevels]"
+	src << "* [map.zLevels.len] Z-levels: [map.zLevels]"
 	for(var/datum/zLevel/level in map.zLevels)
 		src << "  * [level.name], Telejammed : [level.teleJammed], Movejammed : [level.movementJammed]"
 	src << "* Main station Z: [map.zMainStation]"
