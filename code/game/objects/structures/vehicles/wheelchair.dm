@@ -47,8 +47,8 @@
 	//Human with two empty hands gets 4
 
 	//Wheelchair's speed depends on the resulting value
-	var/mob/living/M = user
-	if(!M) return
+	var/mob/living/carbon/M = user
+	if(!M) return 0
 
 	var/left_hand_exists = 1
 	var/right_hand_exists = 1
