@@ -190,7 +190,7 @@
 "dH" = (/turf/simulated/wall/shuttle{icon_state = "swall_s10"; dir = 2},/area/shuttle/supply)
 "dI" = (/turf/simulated/floor/plasteel/shuttle,/area/shuttle/supply)
 "dJ" = (/turf/simulated/wall/shuttle{icon_state = "swall3"; dir = 2},/area/shuttle/supply)
-"dK" = (/obj/structure/closet/secure_closet/cargotech,/turf/simulated/floor{dir = 1; icon_state = "loadingarea"},/area/centcom/supply)
+"dK" = (/obj/structure/closet/wardrobe/cargotech,/turf/simulated/floor{dir = 1; icon_state = "loadingarea"},/area/centcom/supply)
 "dL" = (/obj/structure/closet,/turf/simulated/floor{tag = "icon-warningcorner (NORTH)"; icon_state = "warningcorner"; dir = 1},/area/centcom/supply)
 "dM" = (/obj/structure/closet/secure_closet/quartermaster,/turf/simulated/floor{dir = 1; icon_state = "loadingarea"},/area/centcom/supply)
 "dN" = (/obj/structure/closet,/turf/simulated/floor{icon_state = "floor"},/area/centcom/supply)
