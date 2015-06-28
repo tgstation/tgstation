@@ -1,0 +1,4 @@
+author: Intigracy
+delete-after: true
+changes:
+  - bugfix: fixed vampire enthrall not working correctly
