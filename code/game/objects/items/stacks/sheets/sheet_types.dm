@@ -249,6 +249,22 @@ var/global/list/datum/stack_recipe/cardboard_recipes = list ( \
 		recipes = cardboard_recipes
 		return ..()
 
+/obj/item/stack/sheet/cardboard/attackby(obj/item/W, mob/user)
+	if(istype(W,/obj/item/stack/rods))
+		var/obj/item/stack/rods/R = W
+		if(src.amount < 2)
+			user << "You need at least two cardboard sheets to create a picket sign."
+			return
+		if(R.amount < 1)
+			user << "You need at least one metal rod to create a picket sign."
+			return
+
+		src.use(2)
+		R.use(1)
+		var/obj/item/weapon/picket_sign/P = new(get_turf(user))
+		user << "You create a picket sign!"
+	..()
+
 /*
  * /vg/ charcoal
  */
