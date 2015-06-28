@@ -149,6 +149,10 @@
 					user << "<span class='warning'>This MMI does not seem to fit!</span>"
 					return
 
+				if(istype(P, /obj/item/device/mmi/syndie))
+					user << "<span class='warning'>This MMI does not seem to fit!</span>"
+					return
+
 				if(!M.brainmob.mind)
 					user << "<span class='warning'>This MMI is mindless!</span>"
 					return
