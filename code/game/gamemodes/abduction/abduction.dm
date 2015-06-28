@@ -1,4 +1,5 @@
 /datum/game_mode
+	var/abductor_teams = 0
 	var/list/datum/mind/abductors = list()
 	var/list/datum/mind/abductees = list()
 
@@ -9,7 +10,7 @@
 	recommended_enemies = 2
 	required_players = 15
 	var/max_teams = 4
-	var/teams = 1
+	abductor_teams = 1
 	var/list/datum/mind/scientists = list()
 	var/list/datum/mind/agents = list()
 	var/list/datum/objective/team_objectives = list()
@@ -23,17 +24,17 @@
 	world << "<b>Crew</b> - don't get abducted and stop the abductors."
 
 /datum/game_mode/abduction/pre_setup()
-	teams = max(1, min(max_teams,round(num_players()/config.abductor_scaling_coeff)))
+	abductor_teams = max(1, min(max_teams,round(num_players()/config.abductor_scaling_coeff)))
 	var/possible_teams = max(1,round(antag_candidates.len / 2))
-	teams = min(teams,possible_teams)
+	abductor_teams = min(abductor_teams,possible_teams)
 
-	abductors.len = 2*teams
-	scientists.len = teams
-	agents.len = teams
-	team_objectives.len = teams
-	team_names.len = teams
+	abductors.len = 2*abductor_teams
+	scientists.len = abductor_teams
+	agents.len = abductor_teams
+	team_objectives.len = abductor_teams
+	team_names.len = abductor_teams
 
-	for(var/i=1,i<=teams,i++)
+	for(var/i=1,i<=abductor_teams,i++)
 		if(!make_abductor_team(i))
 			return 0
 
@@ -100,7 +101,7 @@
 	var/team_name
 	var/mob/living/carbon/human/H
 	var/datum/species/abductor/S
-	for(var/team_number=1,team_number<=teams,team_number++)
+	for(var/team_number=1,team_number<=abductor_teams,team_number++)
 		team_name = team_names[team_number]
 		agent = agents[team_number]
 		H = agent.current
@@ -138,6 +139,7 @@
 	agent_landmarks.len = max_teams
 	scientist_landmarks.len = max_teams
 	for(var/obj/effect/landmark/abductor/A in landmarks_list)
+		world << "Found this [A]"
 		if(istype(A,/obj/effect/landmark/abductor/agent))
 			agent_landmarks[text2num(A.team)] = A
 		else if(istype(A,/obj/effect/landmark/abductor/scientist))
@@ -264,7 +266,7 @@
 
 /datum/game_mode/abduction/check_finished()
 	if(!finished)
-		for(var/team_number=1,team_number<=teams,team_number++)
+		for(var/team_number=1,team_number<=abductor_teams,team_number++)
 			var/obj/machinery/abductor/console/con = get_team_console(team_number)
 			var/datum/objective/objective = team_objectives[team_number]
 			if (con.experiment.points >= objective.target_amount)
@@ -274,7 +276,7 @@
 	return ..()
 
 /datum/game_mode/abduction/declare_completion()
-	for(var/team_number=1,team_number<=teams,team_number++)
+	for(var/team_number=1,team_number<=abductor_teams,team_number++)
 		var/obj/machinery/abductor/console/console = get_team_console(team_number)
 		var/datum/objective/objective = team_objectives[team_number]
 		var/team_name = team_names[team_number]
