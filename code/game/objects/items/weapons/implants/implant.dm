@@ -117,7 +117,7 @@
 	heavy = round(heavy)
 	medium = round(medium)
 	weak = round(weak)
-	imp_in << "<span_class='notice'>You activate your microbomb implant.</span>"
+	imp_in << "<span class='notice'>You activate your microbomb implant.</span>"
 //If the delay is short, just blow up already jeez
 	if(delay <= 7)
 		imp_in.gib()
@@ -155,7 +155,7 @@
 	for(var/obj/item/weapon/implant/explosive/macro/E in imp_in)
 		if(E != src)
 			qdel(E)
-	imp_in << "<span_class='notice'>You activate your macrobomb implant.</span>"
+	imp_in << "<span class='notice'>You activate your macrobomb implant.</span>"
 	imp_in.visible_message("<span class = 'warning'>[imp_in] starts beeping ominously!</span>")
 	playsound(loc, 'sound/items/timer.ogg', 30, 0)
 	sleep(delay/4)
