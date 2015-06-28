@@ -242,6 +242,7 @@
 	w_class = 2
 	flags = NOSHIELD
 	attack_verb = list("bludgeoned", "whacked", "disciplined")
+	burn_state = 0 //Burnable
 
 /obj/item/weapon/staff/broom
 	name = "broom"

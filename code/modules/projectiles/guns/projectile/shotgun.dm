@@ -229,7 +229,7 @@
 
 	sawn_state = SAWN_SAWING
 
-	if(do_after(user, 30))
+	if(do_after(user, 30, target = src))
 		user.visible_message("[user] shortens \the [src]!", "<span class='notice'>You shorten \the [src].</span>")
 		name = "sawn-off [src.name]"
 		desc = sawn_desc

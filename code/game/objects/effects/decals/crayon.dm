@@ -42,13 +42,13 @@
 
 	if(type == "A")
 		gang = type
-		color = "#00b4ff"
+		color = "#00B7EF"
 		icon_state = gang_name("A")
 		ticker.mode.A_territory_new |= list(territory.type = territory.name)
 		ticker.mode.A_territory_lost -= territory.type
 	else if(type == "B")
 		gang = type
-		color = "#ff3232"
+		color = "#DA0000"
 		icon_state = gang_name("B")
 		ticker.mode.B_territory_new |= list(territory.type = territory.name)
 		ticker.mode.B_territory_lost -= territory.type

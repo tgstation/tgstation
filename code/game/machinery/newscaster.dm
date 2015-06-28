@@ -742,7 +742,7 @@ var/list/obj/machinery/newscaster/allCasters = list()
 	if(istype(I, /obj/item/weapon/wrench))
 		user << "<span class='notice'>You start [anchored ? "un" : ""]securing [name]...</span>"
 		playsound(loc, 'sound/items/Ratchet.ogg', 50, 1)
-		if(do_after(user, 60))
+		if(do_after(user, 60, target = src))
 			user << "<span class='notice'>You [anchored ? "un" : ""]secure [name].</span>"
 			new /obj/item/newscaster_frame(loc)
 			playsound(loc, 'sound/items/Deconstruct.ogg', 50, 1)

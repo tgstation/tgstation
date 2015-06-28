@@ -107,7 +107,7 @@
 
 /obj/machinery/computer/aifixer/update_icon()
 	..()
-	if((stat & BROKEN) || (stat & NOPOWER))
+	if(stat & (NOPOWER|BROKEN))
 		return
 	else
 		if(active)

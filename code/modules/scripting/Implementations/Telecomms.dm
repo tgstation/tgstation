@@ -308,7 +308,7 @@ var/const/SIGNAL_COOLDOWN = 20 // 2 seconds
 			ERROR("[src] has no radio.")
 			return
 
-		if((!message || message == "") && message != 0)
+		if((!message) && message != 0)
 			message = "*beep*"
 		if(!source)
 			source = "[html_encode(uppertext(S.id))]"

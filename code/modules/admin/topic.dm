@@ -5,8 +5,26 @@
 		message_admins("[usr.key] has attempted to override the admin panel!")
 		log_admin("[key_name(usr)] tried to use the admin panel without authorization.")
 		return
+	if(href_list["rejectadminhelp"])
+		if(!check_rights(R_ADMIN))
+			return
+		var/client/C = locate(href_list["rejectadminhelp"])
+		if(!C)
+			return
+		if (deltimer(C.adminhelptimerid))
+			C.giveadminhelpverb()
 
-	if(href_list["makeAntag"])
+		C << 'sound/effects/adminhelp.ogg'
+
+		C << "<font color='red' size='4'><b>- AdminHelp Rejected! -</b></font>"
+		C << "<font color='red'><b>Your admin help was rejected.</b> The adminhelp verb has been returned to you so that you may try again</font>"
+		C << "Please try to be calm, clear, and descriptive in admin helps, do not assume the admin has seen any related events, and clearly state the names of anybody you are reporting."
+
+		message_admins("[key_name_admin(usr)] Rejected [C.key]'s admin help. [C.key]'s Adminhelp verb has been returned to them")
+		log_admin("[key_name(usr)] Rejected [C.key]'s admin help")
+
+
+	else if(href_list["makeAntag"])
 		if (!ticker.mode)
 			usr << "<span class='danger'>Not until the round starts!</span>"
 			return
@@ -1076,6 +1094,63 @@
 				alert(usr,"This ban has already been lifted / does not exist.","Error","Ok")
 				unjobbanpanel()
 
+	//Watchlist
+	else if(href_list["watchlist"])
+		if(!check_rights(R_ADMIN))	return
+		var/mob/M = locate(href_list["watchlist"])
+		if(!dbcon.IsConnected())
+			usr << "<span class='danger'>Failed to establish database connection.</span>"
+			return
+		if(!ismob(M))
+			usr << "This can only be used on instances of type /mob"
+			return
+		if(!M.ckey)
+			usr << "This mob has no ckey"
+			return
+		var/sql_ckey = sanitizeSQL(M.ckey)
+		var/DBQuery/query = dbcon.NewQuery("SELECT ckey FROM [format_table_name("watch")] WHERE (ckey = '[sql_ckey]')")
+		query.Execute()
+		if(query.NextRow())
+			switch(alert(usr, "[sql_ckey] is already on the watchlist, do you want to:", "Ckey already flagged", "Remove", "Edit reason", "Cancel"))
+				if("Cancel")
+					return
+				if("Remove")
+					var/DBQuery/query_watchdel = dbcon.NewQuery("DELETE FROM [format_table_name("watch")] WHERE ckey = '[sql_ckey]'")
+					if(!query_watchdel.Execute())
+						var/err = query_watchdel.ErrorMsg()
+						log_game("SQL ERROR during removing watch entry. Error : \[[err]\]\n")
+						return
+					log_admin("[key_name(usr)] has removed [key_name_admin(M)] from the watchlist")
+					message_admins("[key_name_admin(usr)] has removed [key_name_admin(M)] from the watchlist", 1)
+				if("Edit reason")
+					var/DBQuery/query_reason = dbcon.NewQuery("SELECT ckey, reason FROM [format_table_name("watch")] WHERE (ckey = '[sql_ckey]')")
+					query_reason.Execute()
+					if(query_reason.NextRow())
+						var/watch_reason = query_reason.item[3]
+						var/new_reason = input("Insert new reason", "New Reason", "[watch_reason]", null) as null|text
+						new_reason = sanitizeSQL(new_reason)
+						if(!new_reason)
+							return
+						var/DBQuery/update_query = dbcon.NewQuery("UPDATE [format_table_name("watch")] SET reason = '[new_reason]' WHERE (ckey = '[sql_ckey]')")
+						if(!update_query.Execute())
+							var/err = update_query.ErrorMsg()
+							log_game("SQL ERROR during edit watch entry reason. Error : \[[err]\]\n")
+							return
+						log_admin("[key_name(usr)] has edited [sql_ckey]'s reason from [watch_reason] to [new_reason]",1)
+						message_admins("[key_name_admin(usr)] has edited [sql_ckey]'s reason from [watch_reason] to [new_reason]",1)
+		else
+			var/reason = input(usr,"Reason?","reason","Metagaming") as text|null
+			if(!reason)
+				return
+			reason = sanitizeSQL(reason)
+			var/DBQuery/query_watchadd = dbcon.NewQuery("INSERT INTO [format_table_name("watch")] (ckey, reason) VALUES ('[sql_ckey]', '[reason]')")
+			if(!query_watchadd.Execute())
+				var/err = query_watchadd.ErrorMsg()
+				log_game("SQL ERROR during adding new watch entry. Error : \[[err]\]\n")
+				return
+			log_admin("[key_name(usr)] has added [key_name_admin(M)] to the watchlist - Reason: [reason]")
+			message_admins("[key_name_admin(usr)] has added [key_name_admin(M)] to the watchlist - Reason: [reason]", 1)
+
 	else if(href_list["mute"])
 		if(!check_rights(R_ADMIN))	return
 		cmd_admin_mute(href_list["mute"], text2num(href_list["mute_type"]))
@@ -1430,6 +1505,8 @@
 		var/mob/dead/observer/A = C.mob
 		sleep(2)
 		A.ManualFollow(M)
+		log_admin("[key_name(usr)] followed [key_name(M)]")
+		message_admins("[key_name_admin(usr)] followed [key_name_admin(M)]")
 
 	else if(href_list["adminplayerobservecoodjump"])
 		if(!isobserver(usr) && !check_rights(R_ADMIN))	return

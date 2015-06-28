@@ -146,3 +146,6 @@
 
 /mob/living/carbon/alien/humanoid/check_ear_prot()
 	return 1
+
+/mob/living/carbon/alien/carbon/alien/humanoid/get_permeability_protection()
+	return 0.8

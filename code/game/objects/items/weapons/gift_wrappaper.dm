@@ -13,7 +13,7 @@
 	icon = 'icons/obj/storage.dmi'
 	icon_state = "giftcrate3"
 	item_state = "gift1"
-
+	burn_state = 0 //Burnable
 
 /obj/item/weapon/a_gift/New()
 	..()
@@ -30,7 +30,7 @@
 		/obj/item/weapon/storage/wallet,
 		/obj/item/weapon/storage/photo_album,
 		/obj/item/weapon/storage/box/snappops,
-		/obj/item/weapon/storage/fancy/crayons,
+		/obj/item/weapon/storage/crayons,
 		/obj/item/weapon/storage/backpack/holding,
 		/obj/item/weapon/storage/belt/champion,
 		/obj/item/weapon/soap/deluxe,
@@ -86,6 +86,7 @@
 	flags = NOBLUDGEON
 	amount = 25
 	max_amount = 25
+	burn_state = 0 //Burnable
 
 /obj/item/stack/wrapping_paper/attack_self(mob/user)
 	user << "<span class='warning'>You need to use it on a package that has already been wrapped!</span>"

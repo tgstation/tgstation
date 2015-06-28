@@ -690,7 +690,7 @@
 				user.visible_message("[user.name] removes the electronics from [src.name].",\
 									"<span class='notice'>You start prying out the circuit...</span>")
 				playsound(src.loc, 'sound/items/Crowbar.ogg', 50, 1)
-				if (do_after(user, 20))
+				if (do_after(user, 20, target = src))
 					if (buildstage == 1)
 						user <<"<span class='notice'>You remove the air alarm electronics.</span>"
 						new /obj/item/weapon/airalarm_electronics( src.loc )
@@ -706,7 +706,7 @@
 					return
 				user.visible_message("[user.name] wires the air alarm.", \
 									"<span class='notice'>You start wiring the air alarm...</span>")
-				if (do_after(user, 20))
+				if (do_after(user, 20, target = src))
 					if (cable.get_amount() >= 5 && buildstage == 1)
 						cable.use(5)
 						user << "<span class='notice'>You wire the air alarm.</span>"
@@ -949,7 +949,7 @@ FIRE ALARM
 					playsound(src.loc, 'sound/items/Crowbar.ogg', 50, 1)
 					user.visible_message("[user.name] removes the electronics from [src.name].", \
 										"<span class='notice'>You start prying out the circuit...</span>")
-					if(do_after(user, 20))
+					if(do_after(user, 20, target = src))
 						if(buildstage == 1)
 							if(stat & BROKEN)
 								user << "<span class='notice'>You remove the destroyed circuit.</span>"
