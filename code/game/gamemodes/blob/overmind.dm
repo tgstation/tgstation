@@ -30,7 +30,6 @@
 	blob_reagent_datum = pick(possible_reagents)
 	if(blob_core)
 		blob_core.adjustcolors(blob_reagent_datum.color)
-		blob_core.update_desc(blob_reagent_datum.name)
 
 	ghostimage = image(src.icon,src,src.icon_state)
 	ghost_darkness_images |= ghostimage //so ghosts can see the blob cursor when they disable darkness

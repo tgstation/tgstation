@@ -398,7 +398,6 @@
 	blob_reagent_datum = new B
 
 	for(var/obj/effect/blob/BL in blobs)
-		BL.update_desc(blob_reagent_datum.name)
 		BL.adjustcolors(blob_reagent_datum.color)
 
 	for(var/mob/living/simple_animal/hostile/blob/BLO)
