@@ -76,10 +76,13 @@ obj/structure/windoor_assembly/Destroy()
 					if(do_after(user, src, 40))
 						if(!src || !WT.isOn()) return
 						user << "<span class='notice'>You dissasembled the windoor assembly!</span>"
-						new /obj/item/stack/sheet/glass/rglass(get_turf(src), 5)
+						if(plasma)
+							getFromPool(/obj/item/stack/sheet/glass/plasmarglass, get_turf(src), 5)
+						else
+							getFromPool(/obj/item/stack/sheet/glass/rglass, get_turf(src), 5)
 						if(secure)
-							new /obj/item/stack/rods(get_turf(src), 4)
-						del(src)
+							getFromPool(/obj/item/stack/sheet/plasteel, get_turf(src), 2)
+						qdel(src)
 				else
 					user << "<span class='rose'>You need more welding fuel to dissassemble the windoor assembly.</span>"
 					return
