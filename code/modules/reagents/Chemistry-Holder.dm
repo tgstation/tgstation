@@ -124,7 +124,7 @@ var/const/INGEST = 2
 		var/current_reagent_transfer = current_reagent.volume * part
 		if(preserve_data)
 			trans_data = copy_data(current_reagent)
-		R.add_reagent(current_reagent.id, (current_reagent_transfer * multiplier), trans_data, src.chem_temp)
+		R.add_reagent(current_reagent.id, (current_reagent_transfer * multiplier), trans_data, src.chem_temp, no_react = 1) //we only handle reaction after every reagent has been transfered.
 		src.remove_reagent(current_reagent.id, current_reagent_transfer)
 
 	src.update_total()
@@ -426,17 +426,21 @@ var/const/INGEST = 2
 	return 0
 
 /datum/reagents/proc/reaction(var/atom/A, var/method=TOUCH, var/volume_modifier=1,var/show_message=1)
-	for(var/datum/reagent/R in reagent_list)
-		if(ismob(A))
-			R.reaction_mob(A, method, R.volume*volume_modifier, show_message)
-		if(isturf(A))
+	if(isliving(A))
+		var/mob/living/L = A
+		var/touch_protection = 0
+		if(method == TOUCH)
+			touch_protection = L.get_permeability_protection()
+		for(var/datum/reagent/R in reagent_list)
+			R.reaction_mob(L, method, R.volume*volume_modifier, show_message, touch_protection)
+	else if(isturf(A))
+		for(var/datum/reagent/R in reagent_list)
 			R.reaction_turf(A, R.volume*volume_modifier, show_message)
-		if(isobj(A))
+	else if(isobj(A))
+		for(var/datum/reagent/R in reagent_list)
 			R.reaction_obj(A, R.volume*volume_modifier, show_message)
 
-	return
-
-/datum/reagents/proc/add_reagent(var/reagent, var/amount, var/list/data=null, var/reagtemp = 300)
+/datum/reagents/proc/add_reagent(var/reagent, var/amount, var/list/data=null, var/reagtemp = 300, var/no_react = 0)
 	if(!isnum(amount) || !amount)
 		return 1
 	update_total()
@@ -451,7 +455,8 @@ var/const/INGEST = 2
 			update_total()
 			my_atom.on_reagent_change()
 			R.on_merge(data)
-			handle_reactions()
+			if(!no_react)
+				handle_reactions()
 			return 0
 
 	var/datum/reagent/D = chemical_reagents_list[reagent]
@@ -465,19 +470,16 @@ var/const/INGEST = 2
 			R.data = data
 			R.on_new(data)
 
-		//debug
-		//world << "Adding data"
-		//for(var/D in R.data)
-		//	world << "Container data: [D] = [R.data[D]]"
-		//debug
 		update_total()
 		my_atom.on_reagent_change()
-		handle_reactions()
+		if(!no_react)
+			handle_reactions()
 		return 0
 	else
 		WARNING("[my_atom] attempted to add a reagent called ' [reagent] ' which doesn't exist. ([usr])")
 
-	handle_reactions()
+	if(!no_react)
+		handle_reactions()
 
 	return 1
 

@@ -151,7 +151,8 @@
 				var/contained = english_list(rinject)
 				var/mob/M = target
 				add_logs(user, M, "injected", object="[src.name]", addition="which had [contained]")
-				reagents.reaction(target, INGEST)
+				var/fraction = min(amount_per_transfer_from_this/reagents.total_volume, 1)
+				reagents.reaction(target, INGEST, fraction)
 			if(ismob(target) && target == user)
 				//Attack log entries are produced here due to failure to produce elsewhere. Remove them here if you have doubles from normal syringes.
 				var/list/rinject = list()
@@ -161,8 +162,8 @@
 				var/mob/M = target
 				log_attack("<font color='red'>[user.name] ([user.ckey]) injected [M.name] ([M.ckey]) with [src.name], which had [contained] (INTENT: [uppertext(user.a_intent)])</font>")
 				M.attack_log += text("\[[time_stamp()]\] <font color='orange'>Injected themselves ([contained]) with [src.name].</font>")
-
-				reagents.reaction(target, INGEST)
+				var/fraction = min(amount_per_transfer_from_this/reagents.total_volume, 1)
+				reagents.reaction(target, INGEST, fraction)
 			spawn(5)
 				var/datum/reagent/blood/B
 				for(var/datum/reagent/blood/d in src.reagents.reagent_list)

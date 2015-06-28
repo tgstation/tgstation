@@ -434,27 +434,34 @@ var/global/image/fire_overlay = image("icon" = 'icons/effects/fire.dmi', "icon_s
 			throw_at(S,14,3)
 		else ..()
 
-/obj/item/acid_act(var/acidpwr, var/toxpwr, var/acid_volume)
+/obj/item/acid_act(var/acidpwr, var/acid_volume)
 	. = 1
 	if(unacidable)
+		return
+
+	var/meltingpwr = acid_volume*acidpwr
+	var/melting_threshold = 100
+	if(meltingpwr <= melting_threshold) // so a single unit can't melt items. You need 5.1+ unit for fluoro and 10.1+ for sulphuric
 		return
 
 	for(var/V in armor)
 		if(armor[V] > 0)
 			.-- //it survives the acid...
 			break
-	if(.)
+	if(. && prob(min(meltingpwr/10,90))) //chance to melt depends on acid power and volume.
 		var/turf/T = get_turf(src)
 		if(T)
-			T.visible_message("<span class='danger'>[src] melts away!</span>")
 			var/obj/effect/decal/cleanable/molten_item/I = new (T)
 			I.pixel_x = rand(-16,16)
 			I.pixel_y = rand(-16,16)
 			I.desc = "Looks like this was \an [src] some time ago."
+		if(istype(src,/obj/item/weapon/storage))
+			var/obj/item/weapon/storage/S = src
+			S.do_quick_empty() //melted storage item drops its content.
 		qdel(src)
 	else
 		for(var/armour_value in armor) //but is weakened
-			armor[armour_value] = max(armor[armour_value]-acidpwr,0)
+			armor[armour_value] = max(armor[armour_value]-min(acidpwr,meltingpwr/10),0)
 		if(!findtext(desc, "it looks slightly melted...")) //it looks slightly melted... it looks slightly melted... it looks slightly melted... etc.
 			desc += " it looks slightly melted..." //needs a space at the start, formatting
 

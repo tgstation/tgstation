@@ -1101,13 +1101,13 @@
 
 				// Handle chem smoke effect  -- Doohl
 				if(!H.has_smoke_protection())
-					for(var/obj/effect/effect/chem_smoke/smoke in view(1, H))
-						if(smoke.reagents.total_volume)
-							smoke.reagents.reaction(H, INGEST)
-							spawn(5)
-								if(smoke)
-									smoke.reagents.copy_to(H, 10) // I dunno, maybe the reagents enter the blood stream through the lungs?
-							break // If they breathe in the nasty stuff once, no need to continue checking
+					for(var/obj/effect/effect/smoke/chem/S in range(1, H))
+						if(S.reagents.total_volume && S.lifetime)
+							var/fraction = 1/S.max_lifetime
+							S.reagents.reaction(H,INGEST, fraction)
+							var/amount = round(S.reagents.total_volume*fraction,0.1)
+							S.reagents.copy_to(H, amount)
+							S.lifetime--
 
 		else //Still give containing object the chance to interact
 			if(istype(H.loc, /obj/))
