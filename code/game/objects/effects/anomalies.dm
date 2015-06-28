@@ -27,7 +27,7 @@
 
 
 /obj/effect/anomaly/proc/anomalyNeutralize()
-	PoolOrNew(/obj/effect/effect/bad_smoke, loc)
+	PoolOrNew(/obj/effect/effect/smoke/bad, loc)
 
 	for(var/atom/movable/O in src)
 		O.loc = src.loc

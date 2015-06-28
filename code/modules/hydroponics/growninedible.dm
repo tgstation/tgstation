@@ -5,6 +5,7 @@
 /obj/item/weapon/grown // Grown weapons
 	name = "grown_weapon"
 	icon = 'icons/obj/hydroponics/harvest.dmi'
+	burn_state = 0 //Burnable
 	var/seed = null
 	var/plantname = ""
 	var/product	//a type path

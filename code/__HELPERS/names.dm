@@ -131,7 +131,7 @@ var/syndicate_name = null
 	syndicate_name = name
 	return name
 
-var/gang_name_pool = list("Clandestine", "Prima", "Zero-G", "Max", "Blasto", "Waffle", "North", "Omni", "Newton", "Cyber", "Donk", "Gene", "Gib", "Tunnel", "Diablo", "Psyke", "Osiron")
+var/gang_name_pool = list("Clandestine", "Prima", "Zero-G", "Max", "Blasto", "Waffle", "North", "Omni", "Newton", "Cyber", "Donk", "Gene", "Gib", "Tunnel", "Diablo", "Psyke", "Osiron", "Sleeping Carp")
 var/gang_A_name = null
 var/gang_B_name = null
 /proc/gang_name(var/gang)

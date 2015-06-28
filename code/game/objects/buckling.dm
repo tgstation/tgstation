@@ -47,6 +47,9 @@
 	M.update_canmove()
 	post_buckle_mob(M)
 	M.throw_alert("buckled", new_master = src)
+	if(burn_state == 1) //Sets the mob on fire if you buckle them to a burning object
+		M.adjust_fire_stacks(1)
+		M.IgniteMob()
 	return 1
 
 /obj/proc/unbuckle_mob()

@@ -72,37 +72,65 @@
 		dat += "<br>"
 		dat += "<B>Purchase Weapons:</B><br>"
 
-		dat += "(10 Influence) "
-		if(points >= 10)
-			dat += "<a href='?src=\ref[src];purchase=switchblade'>Switchblade</a><br>"
-		else
-			dat += "Switchblade<br>"
+		/////////////////
+		// NORMAL GANG //
+		/////////////////
 
-		dat += "(25 Influence) "
-		if(points >= 25)
-			dat += "<a href='?src=\ref[src];purchase=pistol'>10mm Pistol</a><br>"
-		else
-			dat += "10mm Pistol<br>"
+		if(!gangmode || (gang == "A" && gangmode.A_fighting_style == "normal") || (gang == "B" && gangmode.B_fighting_style == "normal")) //If the gamemode is not gang, always use standard loadout.
+			dat += "(10 Influence) "
+			if(points >= 10)
+				dat += "<a href='?src=\ref[src];purchase=switchblade'>Switchblade</a><br>"
+			else
+				dat += "Switchblade<br>"
 
-		dat += "(10 Influence) "
-		if(points >= 10)
-			dat += "<a href='?src=\ref[src];purchase=10mmammo'>10mm Ammo</a><br>"
-		else
-			dat += "10mm Ammo<br>"
+			dat += "(25 Influence) "
+			if(points >= 25)
+				dat += "<a href='?src=\ref[src];purchase=pistol'>10mm Pistol</a><br>"
+			else
+				dat += "10mm Pistol<br>"
 
-		dat += "(50 Influence) "
-		if(points >= 50)
-			dat += "<a href='?src=\ref[src];purchase=uzi'>Mini Uzi</a><br>"
-		else
-			dat += "Mini Uzi<br>"
+			dat += "(50 Influence) "
+			if(points >= 50)
+				dat += "<a href='?src=\ref[src];purchase=uzi'>Mini Uzi</a><br>"
+			else
+				dat += "Mini Uzi<br>"
 
-		dat += "(20 Influence) "
-		if(points >= 20)
-			dat += "<a href='?src=\ref[src];purchase=9mmammo'>Uzi Ammo</a><br>"
-		else
-			dat += "Uzi Magazine<br>"
+			dat += "(20 Influence) "
+			if(points >= 20)
+				dat += "<a href='?src=\ref[src];purchase=9mmammo'>Uzi Ammo</a><br>"
+			else
+				dat += "Uzi Magazine<br>"
 
-		dat += "<br>"
+			dat += "<br>"
+
+		//////////////////
+		// MARTIAL ARTS //
+		//////////////////
+
+		else if((gang == "A" && gangmode.A_fighting_style == "martial") || (gang == "B" && gangmode.B_fighting_style == "martial"))
+			dat += "(10 Influence) "
+			if(points >= 10)
+				dat += "<a href='?src=\ref[src];purchase=bostaff'>Bo Staff</a><br>"
+			else
+				dat += "Bo Staff<br>"
+
+			dat += "(20 Influence) "
+			if(points >= 20)
+				dat += "<a href='?src=\ref[src];purchase=wrestlingbelt'>Wrestling Belt</a><br>"
+			else
+				dat += "Wrestling Belt<br>"
+
+			dat += "(30 Influence) "
+			if(points >= 30)
+				dat += "<a href='?src=\ref[src];purchase=scroll'>Sleeping Carp Scroll (one-use)</a><br>"
+			else
+				dat += "Sleeping Carp Scroll (one-use)<br>"
+			dat += "<br>"
+
+		////////////////////////
+		// STANDARD EQUIPMENT //
+		////////////////////////
+
 		dat += "<B>Purchase Equipment:</B><br>"
 
 		dat += "(5 Influence) "
@@ -196,6 +224,18 @@
 				if(points >= 50)
 					item_type = /obj/item/weapon/gun/projectile/automatic/mini_uzi
 					points = 50
+			if("scroll")
+				if(points >= 30)
+					item_type = /obj/item/weapon/sleeping_carp_scroll
+					points = 30
+			if("wrestlingbelt")
+				if(points >= 20)
+					item_type = /obj/item/weapon/storage/belt/champion/wrestling
+					points = 20
+			if("bostaff")
+				if(points >= 10)
+					item_type = /obj/item/weapon/twohanded/bostaff
+					points = 10
 			if("9mmammo")
 				if(points >= 20)
 					item_type = /obj/item/ammo_box/magazine/uzim9mm
