@@ -34,8 +34,8 @@
 	var/A_timer = "OFFLINE"
 	var/B_timer = "OFFLINE"
 	//How many attempts at domination each team is allowed
-	var/A_dominations = 3
-	var/B_dominations = 3
+	var/A_dominations = 2
+	var/B_dominations = 2
 ///////////////////////////
 //Announces the game type//
 ///////////////////////////
@@ -453,8 +453,8 @@
 //////////////////////////////////////////////////////////
 
 /datum/gang_points
-	var/A = 20
-	var/B = 20
+	var/A = 15
+	var/B = 15
 	var/next_point_interval = 1800
 	var/next_point_time
 
@@ -522,7 +522,7 @@
 	ticker.mode.message_gangtools(ticker.mode.A_tools,"*---------*<br><b>[gang_name("A")] Gang Status Report:</b>")
 	var/A_message = ""
 	if(gangmode && isnum(gangmode.A_timer))
-		var/new_time = max(180,gangmode.A_timer - ((ticker.mode.A_territory.len + A_uniformed) * 2))
+		var/new_time = max(300,gangmode.A_timer - ((ticker.mode.A_territory.len + A_uniformed) * 2))
 		if(new_time < gangmode.A_timer)
 			A_message += "Takeover shortened by [gangmode.A_timer - new_time] seconds for defending [ticker.mode.A_territory.len] territories and [A_uniformed] uniformed gangsters.<BR>"
 			gangmode.A_timer = new_time
@@ -538,7 +538,7 @@
 	ticker.mode.message_gangtools(ticker.mode.B_tools,"<b>[gang_name("B")] Gang Status Report:</b>")
 	var/B_message = ""
 	if(gangmode && isnum(gangmode.B_timer))
-		var/new_time = max(180,gangmode.B_timer - ((ticker.mode.B_territory.len + B_uniformed) * 2))
+		var/new_time = max(300,gangmode.B_timer - ((ticker.mode.B_territory.len + B_uniformed) * 2))
 		if(new_time < gangmode.B_timer)
 			A_message += "Takeover shortened by [gangmode.B_timer - new_time] seconds for defending [ticker.mode.B_territory.len] territories and [B_uniformed] uniformed gangsters.<BR>"
 			gangmode.B_timer = new_time
@@ -592,7 +592,7 @@
 
 	//Increase outfit stock
 	for(var/obj/item/device/gangtool/tool in (ticker.mode.A_tools | ticker.mode.B_tools))
-		tool.outfits = min(tool.outfits+2,10)
+		tool.outfits = min(tool.outfits+2,5)
 
 	//Restart the counter
 	start()
