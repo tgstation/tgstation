@@ -82,6 +82,7 @@
 	var/registered_name = null // The name registered_name on the card
 	var/credits = 0 //Amount of dosh stored on card
 	var/pin = 1234 //The 4-digit PIN number used in ATMs
+	var/datum/bankaccount/linked_account = null //The bank account the card is linked to
 	slot_flags = SLOT_ID
 
 	var/assignment = null
