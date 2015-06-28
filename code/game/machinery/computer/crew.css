@@ -1,0 +1,100 @@
+body
+{
+	padding-left: 490px;
+	cursor: default;
+}
+
+#ntbgcenter
+{
+	background-position: 550px 0px !important;
+}
+
+#minimap
+{
+	position: fixed;
+	top: 8px;
+	left: 8px;
+	border: 2px inset #888;
+}
+
+#textbased
+{
+	width: 100%;
+}
+
+#textbased table
+{
+	min-width: 380px;
+	width: 100%;
+	table-layout: fixed;
+}
+
+#textbased td
+{
+	vertical-align: top;
+	padding: 2px;
+}
+
+#textbased tbody tr:hover td, #textbased tbody tr.hover td
+{
+	background-color: #434343;
+}
+
+#textarea:after
+{
+	content: "";
+	clear: both;
+}
+
+a { display: none; }
+
+.health
+{
+	width: 16px;
+	background-color: #FFF;
+	border: 1px solid #434343;
+	position: relative;
+	top: 2px;
+}
+
+.health-5 { background-color: #17d568; }
+.health-4 { background-color: #2ecc71; }
+.health-3 { background-color: #e67e22; }
+.health-2 { background-color: #ed5100; }
+.health-1 { background-color: #e74c3c; }
+.health-0 { background-color: #ed2814; }
+
+.tt
+{
+	position: relative;
+	display: inline-block;
+	height: 16px;
+}
+
+.tt > div
+{
+	display: none;
+}
+
+.tt:hover > div
+{
+	position: absolute;
+	bottom: -30px;
+	left: 50%;
+	margin-left: -64px;
+
+	display: block;
+	width: 128px;
+	height: 24px;
+	border: 1px solid #313131;
+	background-color: #434343;
+	padding: 4px;
+	z-index: 999;
+	text-align: center;
+}
+
+.tt > div > span
+{
+	position: relative;
+	top: -2px;
+}
