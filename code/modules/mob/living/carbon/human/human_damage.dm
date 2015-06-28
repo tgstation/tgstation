@@ -10,9 +10,10 @@
 		total_brute	+= O.brute_dam
 		total_burn	+= O.burn_dam
 	health = maxHealth - getOxyLoss() - getToxLoss() - getCloneLoss() - total_burn - total_brute
-	//TODO: fix husking
 	if( ((maxHealth - total_burn) < config.health_threshold_dead) && stat == DEAD )
 		ChangeToHusk()
+		if(bodytemperature > FIRE_MINIMUM_TEMPERATURE_TO_EXIST)
+			shred_clothing()
 	med_hud_set_health()
 	med_hud_set_status()
 	return

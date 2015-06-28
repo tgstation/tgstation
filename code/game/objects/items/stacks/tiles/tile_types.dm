@@ -84,6 +84,7 @@
 	max_amount = 60
 	origin_tech = "biotech=1"
 	turf_type = /turf/simulated/floor/fancy/grass
+	burn_state = 0 //Burnable
 
 /*
  * Wood
@@ -101,6 +102,7 @@
 	max_amount = 60
 	origin_tech = "biotech=1"
 	turf_type = /turf/simulated/floor/wood
+	burn_state = 0 //Burnable
 
 /*
  * Carpets
@@ -117,6 +119,7 @@
 	throw_range = 7
 	max_amount = 60
 	turf_type = /turf/simulated/floor/fancy/carpet
+	burn_state = 0 //Burnable
 
 /*
  * High-traction

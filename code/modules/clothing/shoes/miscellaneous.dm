@@ -15,6 +15,7 @@
 	permeability_coefficient = 0.05
 	flags = NOSLIP
 	origin_tech = "syndicate=3"
+	burn_state = -1 //Won't burn in fires
 
 /obj/item/clothing/shoes/sneakers/mime
 	name = "mime shoes"
@@ -35,6 +36,7 @@
 	permeability_coefficient = 0.01
 	flags = NOSLIP
 	armor = list(melee = 40, bullet = 30, laser = 25, energy = 25, bomb = 50, bio = 30, rad = 30)
+	burn_state = -1 //Won't burn in fires
 
 /obj/item/clothing/shoes/sandal
 	desc = "A pair of rather plain, wooden sandals."
@@ -58,6 +60,7 @@
 	slowdown = SHOES_SLOWDOWN+1
 	strip_delay = 50
 	put_on_delay = 50
+	burn_state = -1 //Won't burn in fires
 
 /obj/item/clothing/shoes/clown_shoes
 	desc = "The prankster's standard-issue clowning shoes. Damn, they're huge!"

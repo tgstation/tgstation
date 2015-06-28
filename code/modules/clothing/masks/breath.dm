@@ -12,6 +12,7 @@
 	action_button_name = "Adjust Breath Mask"
 	ignore_maskadjust = 0
 	flags_cover = MASKCOVERSMOUTH
+	burn_state = -1 //Won't burn in fires
 
 /obj/item/clothing/mask/breath/attack_self(var/mob/user)
 	adjustmask(user)
