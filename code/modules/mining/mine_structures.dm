@@ -67,7 +67,7 @@
 	user.visible_message("<span class='notice'>[user] takes the mining lantern off the \the [src].</span>", \
 	"<span class='notice'>You take the mining lantern off the \the [src].</span>")
 	playsound(get_turf(src), 'sound/machines/click.ogg', 20, 1)
-	new /obj/structure/hanging_lantern_hook(get_turf(src))
+	new /obj/structure/hanging_lantern_hook(get_turf(src), src.dir)
 	var/obj/item/device/flashlight/lantern/lantern = new /obj/item/device/flashlight/lantern(get_turf(src))
 	user.put_in_hands(lantern)
 	alllights -= src
