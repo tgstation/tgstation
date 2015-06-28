@@ -7,6 +7,7 @@
 	icon = 'icons/obj/hydroponics/seeds.dmi'
 	icon_state = "seed"				//Unknown plant seed - these shouldn't exist in-game.
 	w_class = 1						//Pocketable.
+	burn_state = 0 //Burnable
 	var/plantname = "Plants"		//Name of plant when planted.
 	var/product						//A type path. The thing that is created when the plant is harvested.
 	var/species = ""				//Used to update icons. Should match the name in the sprites.

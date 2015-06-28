@@ -229,6 +229,7 @@
 //Yes, showers are super powerful as far as washing goes.
 /obj/machinery/shower/proc/wash(atom/movable/O)
 	if(!on) return
+
 	if(ismob(O))
 		mobpresent += 1
 		check_heat(O)
@@ -303,13 +304,19 @@
 		else
 			O.clean_blood()
 
+	else
+		O.clean_blood()
+
+		if(istype(O,/obj/item))
+			var/obj/item/Item = O
+			Item.extinguish()
+
 	if(isturf(loc))
 		var/turf/tile = loc
 		loc.clean_blood()
 		for(var/obj/effect/E in tile)
 			if(is_cleanable(E))
 				qdel(E)
-
 
 /obj/machinery/shower/process()
 	if(!on || !mobpresent) return

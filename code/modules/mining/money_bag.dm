@@ -8,6 +8,8 @@
 	force = 10.0
 	throwforce = 0
 	w_class = 4.0
+	burn_state = 0 //Burnable
+	burntime = 20
 
 /obj/item/weapon/moneybag/attack_hand(user as mob)
 	var/amt_gold = 0
