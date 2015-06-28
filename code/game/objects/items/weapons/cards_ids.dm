@@ -80,7 +80,7 @@
 	var/mining_points = 0 //For redeeming at mining equipment vendors
 	var/list/access = list()
 	var/registered_name = null // The name registered_name on the card
-	var/credits = 100 //Amount of dosh stored on card
+	var/credits = 0 //Amount of dosh stored on card
 	var/pin = 1234 //The 4-digit PIN number used in ATMs
 	slot_flags = SLOT_ID
 
@@ -89,23 +89,27 @@
 
 /obj/item/weapon/card/id/New()
 	..()
-	sleep(10)
 	pin = rand(0000,9999)
 	if(!ishuman(src.loc))
 		return
 	var/mob/living/carbon/human/H = src.loc
-	H << "<span class='notice'>The randomized PIN for your identification card this shift is [pin]. This can be changed at any ATM.</span>"
-	if(H.job == "Chief Medical Officer" || H.job == "Chief Engineer" || H.job == "Research Director" || H.job == "Head of Personnel" || H.job == "Head of Security")
-		H << "<span class='info'>You have recieved a credit bonus to your ID card due to your position as a [H.job].</span>"
+	var/list/low_pay_boost_jobs = list("Cargo Technician", "Chief Medical Officer", "Chief Engineer", "Research Director", "Security Officer", "Warden")
+	var/list/med_pay_boost_jobs = list("Head of Personnel", "Head of Security", "Quartermaster")
+	var/list/high_pay_boost_jobs = list("Captain")
+	if(H.job in low_pay_boost_jobs) //125 creds. roundstart
+		credits += 125
 		return
-	else if(H.job == "Quartermaster")
-		H << "<span class='info'>Being the head of commerce on [world.name], you have recieved a credit bonus to your ID card.</span>"
+	else if(H.job in med_pay_boost_jobs) //150 creds. roundstart
+		credits += 150
+		return
+	else if(H.job in high_pay_boost_jobs) //200 creds. roundstart
+		credits += 200
+		return
+	else //All other jobs starts with 100 credits
 		credits += 100
+	spawn(20) //Delay before message, to allow it to show up after the rest of the roundstart stuff
+		H << "<span class='info'>The randomized PIN for your identification card this shift is [pin]. This can be changed at any ATM.</span>"
 		return
-	else if(H.job == "Captain")
-		H << "<span class='info'>Being the captain, you have recieved a credit bonus to your ID card.</span>"
-		return
-	return
 
 /obj/item/weapon/card/id/attack_self(mob/user as mob)
 	user.visible_message("<span class='notice'>[user] shows you: \icon[src] [src.name].</span>", \
