@@ -32,6 +32,7 @@
 		if("voicemodulators")	loadout[4] = /obj/item/clothing/mask/gas/voice
 		if("catgirls2015")
 			loadout[3] = /obj/item/clothing/head/kitty
+			ruins_spaceworthiness = 1
 			ruins_wizard_loadout = 1
 
 	for(var/mob/living/carbon/human/H in living_mob_list)
