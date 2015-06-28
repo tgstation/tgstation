@@ -11,6 +11,8 @@
 	var/datum/gang_points/gang_points
 	var/A_style
 	var/B_style
+	var/A_fighting_style
+	var/B_fighting_style
 	var/list/A_territory = list()
 	var/list/B_territory = list()
 	var/list/A_territory_new = list()
@@ -77,6 +79,7 @@
 
 	modePlayer += A_bosses
 	modePlayer += B_bosses
+	assign_gang_fighting_style()
 	..()
 
 /datum/game_mode/gang/process(seconds)
@@ -110,6 +113,17 @@
 		rival_obj.explanation_text = "Preform a hostile takeover of the station with a Dominator."
 		boss_mind.objectives += rival_obj
 
+/datum/game_mode/proc/assign_gang_fighting_style()
+	var/aName = gang_name("A")
+	if(aName == "Sleeping Carp")
+		A_fighting_style = "martial"
+	else
+		A_fighting_style = "normal"
+	var/bName = gang_name("B")
+	if(bName == "Sleeping Carp")
+		B_fighting_style = "martial"
+	else
+		B_fighting_style = "normal"
 
 /datum/game_mode/proc/greet_gang(var/datum/mind/boss_mind, var/you_are=1)
 	var/obj_count = 1
