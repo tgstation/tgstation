@@ -116,6 +116,7 @@ BLIND     // can't see anything
 			permeability_coefficient = initial(permeability_coefficient)
 			flags |= visor_flags
 			flags_inv |= visor_flags_inv
+			flags_cover = initial(flags_cover)
 			user << "<span class='notice'>You push \the [src] back into place.</span>"
 			src.mask_adjusted = 0
 			slot_flags = initial(slot_flags)
@@ -126,6 +127,7 @@ BLIND     // can't see anything
 			permeability_coefficient = null
 			flags &= ~visor_flags
 			flags_inv &= ~visor_flags_inv
+			flags_cover &= 0
 			src.mask_adjusted = 1
 			if(adjusted_flags)
 				slot_flags = adjusted_flags
@@ -400,6 +402,7 @@ atom/proc/generate_female_clothing(index,t_color,icon,type)
 			up = !up
 			flags |= (visor_flags)
 			flags_inv |= (visor_flags_inv)
+			flags_cover = initial(flags_cover)
 			icon_state = initial(icon_state)
 			usr << "<span class='notice'>You pull \the [src] down.</span>"
 			flash_protect = initial(flash_protect)
@@ -408,6 +411,7 @@ atom/proc/generate_female_clothing(index,t_color,icon,type)
 			up = !up
 			flags &= ~(visor_flags)
 			flags_inv &= ~(visor_flags_inv)
+			flags_cover &= 0
 			icon_state = "[initial(icon_state)]up"
 			usr << "<span class='notice'>You push \the [src] up.</span>"
 			flash_protect = 0
