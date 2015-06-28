@@ -439,7 +439,7 @@
 	P.fields["blueprints"] = blueprintsinject
 
 	aipictures += P
-	usr << "<FONT COLOR=blue><B>Image recorded</B>"	//feedback to the AI player that the picture was taken
+	usr << "<font color=blue><B>Image recorded</B></font>"	//feedback to the AI player that the picture was taken
 
 
 /obj/item/device/camera/ai_camera/proc/viewpictures() //AI proc for viewing pictures they have taken
@@ -451,7 +451,7 @@
 		return
 	for(var/datum/picture/t in src.aipictures)
 		nametemp += t.fields["name"]
-	find = input("Select image (numbered in order taken)") in nametemp
+	find = input("Select image (listed in order taken)") in nametemp
 	var/obj/item/weapon/photo/P = new/obj/item/weapon/photo()
 	for(var/datum/picture/q in src.aipictures)
 		if(q.fields["name"] == find)
