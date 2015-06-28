@@ -24,7 +24,6 @@
 	w_class = 1
 	flags_cover = MASKCOVERSMOUTH
 	flags_inv = HIDEFACE
-	visor_flags = MASKCOVERSMOUTH
 	visor_flags_inv = HIDEFACE
 	gas_transfer_coefficient = 0.90
 	permeability_coefficient = 0.01
@@ -113,7 +112,6 @@
 	w_class = 1
 	flags_cover = MASKCOVERSMOUTH
 	flags_inv = HIDEFACE
-	visor_flags = MASKCOVERSMOUTH
 	visor_flags_inv = HIDEFACE
 	slot_flags = SLOT_MASK
 	ignore_maskadjust = 0
