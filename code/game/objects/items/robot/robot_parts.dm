@@ -199,7 +199,9 @@
 			if(!user.unEquip(W))
 				return
 
+			var/syndiemmi = 0
 			if(istype(W, /obj/item/device/mmi/syndie))
+				syndiemmi = 1
 				aisync = 0
 				lawsync = 0
 				O.laws = new /datum/ai_laws/syndicate_override
@@ -216,7 +218,7 @@
 				O.notify_ai(1)
 				if(forced_ai)
 					O.connected_ai = forced_ai
-			if(!lawsync)
+			if(!lawsync && !syndiemmi)
 				O.lawupdate = 0
 				O.make_laws()
 				if(ticker.mode.config_tag == "malfunction") //Don't let humans get a cyborg on their side during malf, for balance reasons.
