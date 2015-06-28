@@ -53,6 +53,8 @@
 	var/seeStatic = 1 //Whether we see static instead of mobs
 	var/visualAppearence = MAINTDRONE //What we appear as
 	var/can_emag = 1
+	var/emagged = 0
+	var/datum/effect/effect/system/spark_spread/spark_system
 
 
 /mob/living/simple_animal/drone/New()
@@ -103,16 +105,32 @@
 		unEquip(internal_storage)
 	if(head)
 		unEquip(head)
-
+	can_emag = 0
+	emagged = 0
+	if(spark_system)
+		qdel(spark_system)
 	alert_drones(DRONE_NET_DISCONNECT)
 
 
 /mob/living/simple_animal/drone/gib()
 	dust()
 
+/mob/living/simple_animal/drone/handle_regular_status_updates()
+	if(emagged)
+		do_jitter_animation(6)
+		if(prob(15))
+			src << "<span class='danger'><b>ERR#%: DA#%GE TO C$%UIT</b></span>"
+			health = health - 1
+			if(spark_system)
+				spark_system.start()
+	..()
+
 
 /mob/living/simple_animal/drone/examine(mob/user)
 	. = ..()
+	if(emagged && stat != DEAD)
+		user << "<span class='danger'>Its movements are jittery and it appears to be falling apart.</span>"
+
 	if(!client && stat != DEAD)
 		user << "<span class='notice'>A small blue LED is blinking on and off at a steady rate.</span>"
 
@@ -189,6 +207,11 @@
 		"<span class='danger'>3. Your goals are to destroy, sabotage, break, tear apart, and depower to the best of your abilities, You must never actively work against these goals.</span>"
 		src << "<span class='danger'><b>WARNING: UNAUTHORIZED ACCESS DETECTED TO LAW MEMO#^&*!,..</b></span>"
 		src << laws
+		spark_system = new/datum/effect/effect/system/spark_spread()
+		spark_system.set_up(5, 0, src)
+		spark_system.attach(src)
+		spark_system.start()
 		can_emag = 0 //Once emagged we cannot be emagged again.
+		emagged = 1
 	else
 		user << "You cannot override this drone's laws."
