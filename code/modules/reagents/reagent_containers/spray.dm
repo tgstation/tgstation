@@ -15,7 +15,6 @@
 	amount_per_transfer_from_this = 5
 	volume = 250
 	possible_transfer_amounts = null
-	banned_reagents = list("facid","sacid")
 
 
 /obj/item/weapon/reagent_containers/spray/afterattack(atom/A as mob|obj, mob/user as mob)
@@ -159,7 +158,6 @@
 	amount_per_transfer_from_this = 10
 	volume = 600
 	origin_tech = "combat=3;materials=3;engineering=3"
-	banned_reagents = list()//the safeties are off, spray and pay!
 
 
 /obj/item/weapon/reagent_containers/spray/chemsprayer/spray(var/atom/A)
