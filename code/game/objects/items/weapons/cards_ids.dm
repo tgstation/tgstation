@@ -80,10 +80,32 @@
 	var/mining_points = 0 //For redeeming at mining equipment vendors
 	var/list/access = list()
 	var/registered_name = null // The name registered_name on the card
+	var/credits = 100 //Amount of dosh stored on card
+	var/pin = 1234 //The 4-digit PIN number used in ATMs
 	slot_flags = SLOT_ID
 
 	var/assignment = null
 	var/dorm = 0		// determines if this ID has claimed a dorm already
+
+/obj/item/weapon/card/id/New()
+	..()
+	sleep(10)
+	pin = rand(0000,9999)
+	if(!ishuman(src.loc))
+		return
+	var/mob/living/carbon/human/H = src.loc
+	H << "<span class='notice'>The randomized PIN for your identification card this shift is [pin]. This can be changed at any ATM.</span>"
+	if(H.job == "Chief Medical Officer" || H.job == "Chief Engineer" || H.job == "Research Director" || H.job == "Head of Personnel" || H.job == "Head of Security")
+		H << "<span class='info'>You have recieved a credit bonus to your ID card due to your position as a [H.job].</span>"
+		return
+	else if(H.job == "Quartermaster")
+		H << "<span class='info'>Being the head of commerce on [world.name], you have recieved a credit bonus to your ID card.</span>"
+		credits += 100
+		return
+	else if(H.job == "Captain")
+		H << "<span class='info'>Being the captain, you have recieved a credit bonus to your ID card.</span>"
+		return
+	return
 
 /obj/item/weapon/card/id/attack_self(mob/user as mob)
 	user.visible_message("<span class='notice'>[user] shows you: \icon[src] [src.name].</span>", \
@@ -121,11 +143,13 @@ update_label("John Doe", "Clowny")
 	desc = "A silver card which shows honour and dedication."
 	icon_state = "silver"
 	item_state = "silver_id"
+	credits = 150 //Heads start out with a few more credits
 
 /obj/item/weapon/card/id/gold
 	desc = "A golden card which shows power and might."
 	icon_state = "gold"
 	item_state = "gold_id"
+	credits = 200 //Captain starts with even more!
 
 /obj/item/weapon/card/id/syndicate
 	name = "agent card"
@@ -139,7 +163,9 @@ update_label("John Doe", "Clowny")
 		src.access |= I.access
 		if(istype(user, /mob/living) && user.mind)
 			if(user.mind.special_role)
-				usr << "<span class='notice'>The card's microscanners activate as you pass it over the ID, copying its access.</span>"
+				usr << "<span class='notice'>The card's microscanners activate as you pass it over the ID, copying its access and transferring its credits.</span>"
+				src.credits += I.credits //Steal all their credits!
+				I.credits = 0
 
 
 /obj/item/weapon/card/id/syndicate/attack_self(mob/user as mob)
