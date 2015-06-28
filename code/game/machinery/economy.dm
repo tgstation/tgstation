@@ -10,7 +10,7 @@ Contains:
 var/list/atms_in_world = list()
 /obj/machinery/atm
 	name = "automated transfer machine"
-	desc = "A Nanotrasen Bank of Credit ATM, used for trasnferring funds to and from ID cards."
+	desc = "A Nanotrasen Bank of Credit ATM, used for transferring funds to and from ID cards."
 	icon = 'icons/obj/terminals.dmi'
 	icon_state = "dorm_available"
 	layer = 3
