@@ -11,10 +11,9 @@
 
 /datum/chemical_reaction/slimespawn/on_reaction(var/datum/reagents/holder)
 	feedback_add_details("slime_cores_used","[replacetext(name," ","_")]")
-	for(var/mob/O in viewers(get_turf(holder.my_atom), null))
-		O.show_message(text("<span class='danger'>Infused with plasma, the core begins to quiver and grow, and soon a new baby slime emerges from it!</span>"), 1)
 	var/mob/living/simple_animal/slime/S = new /mob/living/simple_animal/slime
 	S.loc = get_turf(holder.my_atom)
+	S.visible_message("<span class='danger'>Infused with plasma, the core begins to quiver and grow, and soon a new baby slime emerges from it!</span>")
 
 /datum/chemical_reaction/slimeinaprov
 	name = "Slime epinephrine"
@@ -618,3 +617,20 @@
 	var/obj/P = new chosen
 	if(P)
 		P.loc = get_turf(holder.my_atom)
+
+//Rainbow :o)
+/datum/chemical_reaction/slimeRNG
+	name = "Random Core"
+	id = "slimerng"
+	result = null
+	required_reagents = list("plasma" = 1)
+	result_amount = 1
+	required_other = 1
+	required_container = /obj/item/slime_extract/rainbow
+
+/datum/chemical_reaction/slimeRNG/on_reaction(var/datum/reagents/holder)
+	feedback_add_details("slime_cores_used","[replacetext(name," ","_")]")
+	var/mob/living/simple_animal/slime/S = new /mob/living/simple_animal/slime
+	S.colour = pick("grey","orange", "metal", "blue", "purple", "dark purple", "dark blue", "green", "silver", "yellow", "gold", "yellow", "red", "silver", "pink", "cerulean", "sepia", "bluespace", "pyrite", "light pink", "oil", "adamantine", "black")
+	S.loc = get_turf(holder.my_atom)
+	S.visible_message("<span class='danger'>Infused with plasma, the core begins to quiver and grow, and soon a new baby slime emerges from it!</span>")

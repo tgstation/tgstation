@@ -1,0 +1,9 @@
+author: Incoming5643
+
+
+delete-after: True
+
+
+changes: 
+  - rscadd: "The secrets of the rainbow slimes have finally been revealed. To attain this rare blob you must breed a slime with a 100% mutation chance!"
+  - rscadd: "Rainbow slime cores will generate a randomly colored slime when injected with plasma. It's a good plan B if the slimes aren't cooperating in terms of colors. You can get any color slime this way, pray to the RNG!"
