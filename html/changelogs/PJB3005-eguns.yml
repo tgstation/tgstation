@@ -1,0 +1,4 @@
+author: PJB3005
+delete-after: true
+changes:
+  - tweak: Makes the code that changes the charge meter on an energy weapon round up below 50% and down above 50%.
