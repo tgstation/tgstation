@@ -21,6 +21,14 @@
 	)
 	result = /obj/item/weapon/reagent_containers/food/snacks/donut
 
+/datum/table_recipe/donutsteel
+	name = "Donut steel"
+	reqs = list(
+		/datum/reagent/consumable/sugar = 1,
+		/obj/item/weapon/reagent_containers/food/snacks/pastrybase = 1,
+		/obj/item/stack/sheet/metal = 1)
+	result = /obj/item/weapon/reagent_containers/food/snacks/donut/steel
+
 /datum/table_recipe/jellydonut
 	name = "Jelly donut"
 	reqs = list(
@@ -122,6 +130,15 @@
 		/obj/item/weapon/ectoplasm = 1
 	)
 	result = /obj/item/weapon/reagent_containers/food/snacks/muffin/booberry
+
+/datum/table_recipe/dindumuffin
+	name = "Dindu muffin"
+	reqs = list(
+		/datum/reagent/consumable/milk = 5,
+		/obj/item/weapon/reagent_containers/food/snacks/pastrybase = 1,
+		/obj/item/weapon/restraints/handcuffs/cable/zipties = 1
+	)
+	result = /obj/item/weapon/reagent_containers/food/snacks/muffin/dindu
 
 /datum/table_recipe/chawanmushi
 	name = "Chawanmushi"

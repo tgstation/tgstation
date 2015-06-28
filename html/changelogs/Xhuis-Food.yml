@@ -1,0 +1,6 @@
+author: Xhuis
+delete-after: True
+
+changes: 
+  - rscadd: "Adds the 'dindu muffin' food item, made with 5 milk, 1 pastry base, and a pair of zipties."
+  - rscadd: "Adds the 'donut steel' food item, made with 1 sugar, 1 pastry base, and a sheet of metal."
