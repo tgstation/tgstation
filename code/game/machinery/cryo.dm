@@ -60,19 +60,12 @@
 			on = 0
 			open_machine()
 			playsound(src.loc, 'sound/machines/ding.ogg', 50, 1)
-	if(!node || !is_operational())
+	if(!node || !is_operational() || !on)
 		return
-
-	if(!on)
-		updateDialog()
-		return
-
 	if(air_contents)
 		if (occupant)
 			process_occupant()
 		expel_gas()
-
-	updateDialog()
 	return 1
 
 /obj/machinery/atmospherics/unary/cryo_cell/MouseDrop_T(mob/target, mob/user)
@@ -335,3 +328,135 @@
 	expel_gas.temperature = T20C	//Lets expel hot gas and see if that helps people not die as they are removed
 	loc.assume_air(expel_gas)
 	air_update_turf()
+
+
+
+#define UICOLOR_GREEN	"#287d33"
+#define UICOLOR_GRAY	"#999999"
+
+/obj/machinery/atmospherics/unary/cryo_cell/aran
+	var/datum/browser/aran/UI
+
+/obj/machinery/atmospherics/unary/cryo_cell/aran/Destroy()
+	UI.item = null
+	..()
+
+/obj/machinery/atmospherics/unary/cryo_cell/aran/process()
+	..()
+	UI.UIprocess()
+
+/obj/machinery/atmospherics/unary/cryo_cell/aran/New()
+	var/datum/browser/aran/B = new(null, "computer", "Cryo Cell Control System")
+	UI = B
+	UI.item = src
+	..()
+
+/obj/machinery/atmospherics/unary/cryo_cell/aran/ui_interact(var/user)
+	UI.mobs |= user
+	UI.user = user
+	UI.set_content(returnText())
+	UI.open()
+
+/obj/machinery/atmospherics/unary/cryo_cell/aran/proc/returnText()
+	var/txt
+	txt += {"<h3>Cryo Cell Status</h3>
+			<div class='statusDisplay'>"}
+	if(!occupant)
+		txt += "<div class='line'>Cell Unoccupied</div>"
+	else
+		txt += "<div class='line'> [occupant.name] => "
+		if(occupant.stat == 0)
+			txt += "<span class='good'>Conscious</span>"
+		else if(occupant.stat == 1)
+			txt += "<span class='average'>Unconscious</span>"
+		else
+			txt += "<span class='bad'>DEAD</span>"
+		txt += "</div>"
+		if(occupant.stat < 2)
+			txt += "<div class='line'><div class='statusLabel'>Health:</div>"
+			if(occupant.health >= 0)
+				txt += "[healthBar(occupant.health, "good")]"
+			else
+				txt += "[healthBar(occupant.health, "average alignRight")]"
+			txt += "<div class='statusValue'>[round(occupant.health)]</div></div>"
+		txt += {"
+			<div class='line'>
+				<div class='statusLabel'>=&gt; Brute Damage:</div>
+				[healthBar(occupant.getBruteLoss(), "bad")]
+				<div class='statusValue'>[round(occupant.getBruteLoss())]</div>
+			</div>
+			<div class='line'>
+				<div class='statusLabel'>=&gt; Resp. Damage:</div>
+				[healthBar(occupant.getOxyLoss(), "bad")]
+				<div class='statusValue'>[round(occupant.getOxyLoss())]</div>
+			</div>
+			<div class='line'>
+				<div class='statusLabel'>=&gt; Toxin Damage:</div>
+				[healthBar(occupant.getToxLoss(), "bad")]
+				<div class='statusValue'>[round(occupant.getToxLoss())]</div>
+			</div>
+			<div class='line'>
+				<div class='statusLabel'>=&gt; Burn Severity:</div>
+				[healthBar(occupant.getFireLoss(), "bad")]
+				<div class='statusValue'>[round(occupant.getFireLoss())]</div>
+			</div>"}
+	txt += {"
+	<br><hr>
+	<div class='line'>
+		<div class='statusLabel'>Cell Temperature:</div>
+		<div class='statusValue'>"}
+	if(air_contents.temperature > T0C) // if greater than 273.15 kelvin (0 celcius)
+		txt += "<span class='bad'>[air_contents.temperature] K</span>"
+	else if(air_contents.temperature > 225)
+		txt += "<span class='average'>[air_contents.temperature] K</span>"
+	else
+		txt += "<span class='good'>[air_contents.temperature] K</span>"
+	txt += {"
+		</div></div><br></div>
+		[UIhrefLink(src, "open", state_open, "Open", "UIpower", UICOLOR_GREEN)]
+		[UIhrefLink(src, "close", !state_open, "Close", "UIpower", UICOLOR_GREEN)]
+		<br>
+		<h3>Cryo Cell Operation</h3><br>
+		<div class='itemLabel'>Cryo Cell Status:</div>
+		<div class='itemContent' style='width: 40%'>
+			[UIhrefLink(src, "switchOn", on, "On", "UIpower", UICOLOR_GREEN)]
+			[UIhrefLink(src, "switchOff", !on, "Off", "UIpower", UICOLOR_GREEN)]
+		</div>
+		<br><br>
+		<div class="itemLabel">Beaker:</div>
+		<div class='itemContent' style='width: 40%'>"}
+	if(!beaker)
+		txt += "<span class='average'><I>No beaker loaded</I></span>"
+	else
+		if(beaker.reagents.reagent_list.len == 0)
+			txt += " <span class='bad'><I>Beaker is empty</I></span>"
+		else
+			txt += "<span class='highlight'>"
+			for(var/datum/reagent/R in beaker.reagents.reagent_list)
+				txt += "[round(R.volume)] units of [R.name]<br>"
+			txt += "</span>"
+
+	txt += {"</div>
+		<div class='itemContent' style='width: 26%'>
+		[UIhrefLink(src, "ejectBeaker", !beaker, "Eject Beaker", "UIpower", UICOLOR_GRAY)]
+		</div>"}
+
+	return txt
+
+/obj/machinery/atmospherics/unary/cryo_cell/aran/Topic(href, href_list)
+	..()
+	UI.UIprocess()
+
+/proc/healthBar(var/num, var/colour)
+	var/txt = "<div class='displayBar'><div class='displayBarFill [colour]' style='width:[num]%'></div></div>"
+	return txt
+
+/proc/imageLink(var/img)
+	if(!img)
+		return
+	var/txt = "<img src='[img].png' style='vertical-align: text-bottom'>"
+	return txt
+
+/proc/UIhrefLink(var/item, var/href, var/variable, var/text, var/img, var/colour)
+	var/txt = "<A href='?src=\ref[item];[href]=1'[variable ? "style='background:[colour]'" : ""]>[imageLink(img)][text]</A>"
+	return txt
