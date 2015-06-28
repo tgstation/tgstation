@@ -109,6 +109,14 @@
 	if(morphed)
 		visible_message("<span class='danger'>The [src] dissolves!</span>")
 		restore()
+
+		//Dump eaten stuff
+		for(var/obj/O in src)
+			O.loc = loc
+
+		for(var/mob/M in src)
+			M.loc = loc
+
 	..(0)
 	return
 
@@ -134,6 +142,23 @@
 		return 0
 	return ..()
 
+/mob/living/simple_animal/hostile/morph/AttackingTarget()
+	if(isliving(target)) // Eat Corpses to regen health
+		var/mob/living/L = target
+		if(L.stat == DEAD)
+			if(do_after(src, 30, target = src))
+				visible_message("<span class='warning'>[src] swallows the [target] whole!</span>")
+				L.loc = src
+				adjustBruteLoss(-50)
+			return
+	if(istype(target,/obj/item)) // Eat items just to be annoying
+		var/obj/item/I = target
+		if(!I.anchored)
+			if(do_after(src,20, target = src))
+				visible_message("<span class='warning'>[src] swallows the [target] whole!</span>")
+				I.loc = src
+			return
+	target.attack_animal(src)
 
 //Spawn Event
 
