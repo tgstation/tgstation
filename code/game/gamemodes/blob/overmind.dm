@@ -15,7 +15,7 @@
 	var/blob_points = 0
 	var/max_blob_points = 100
 	var/last_attack = 0
-	var/datum/reagent/blob_reagent_datum = new/datum/reagent()
+	var/datum/reagent/blob/blob_reagent_datum = new/datum/reagent/blob()
 	var/list/blob_mobs = list()
 	var/ghostimage = null
 

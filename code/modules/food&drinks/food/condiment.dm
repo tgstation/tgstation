@@ -30,9 +30,8 @@
 	return
 
 /obj/item/weapon/reagent_containers/food/condiment/attack(mob/M as mob, mob/user as mob, def_zone)
-	var/datum/reagents/R = src.reagents
 
-	if(!R || !R.total_volume)
+	if(!reagents || !reagents.total_volume)
 		user << "<span class='warning'>None of [src] left, oh no!</span>"
 		return 0
 
@@ -41,28 +40,20 @@
 
 	if(M == user)
 		M << "<span class='notice'>You swallow some of contents of \the [src].</span>"
-		if(reagents.total_volume)
-			reagents.reaction(M, INGEST)
-			spawn(5)
-				reagents.trans_to(M, 10)
-		playsound(M.loc,'sound/items/drink.ogg', rand(10,50), 1)
-		return 1
-
 	else
 		user.visible_message("<span class='warning'>[user] attempts to feed [M] from [src].</span>")
-		if(!do_mob(user, M)) return
+		if(!do_mob(user, M))
+			return
+		if(!reagents || !reagents.total_volume)
+			return // The condiment might be empty after the delay.
 		user.visible_message("<span class='warning'>[user] feeds [M] from [src].</span>")
-
 		add_logs(user, M, "fed", object="[reagentlist(src)]")
 
-		if(reagents.total_volume)
-			reagents.reaction(M, INGEST)
-			spawn(5)
-				reagents.trans_to(M, 10)
-
-		playsound(M.loc,'sound/items/drink.ogg', rand(10,50), 1)
-		return 1
-	return 0
+	var/fraction = min(10/reagents.total_volume, 1)
+	reagents.reaction(M, INGEST, fraction)
+	reagents.trans_to(M, 10)
+	playsound(M.loc,'sound/items/drink.ogg', rand(10,50), 1)
+	return 1
 
 /obj/item/weapon/reagent_containers/food/condiment/afterattack(obj/target, mob/user , proximity)
 	if(!proximity) return
