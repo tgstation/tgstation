@@ -95,13 +95,6 @@
 	alpha = 125
 	desc = "My stomach is a graveyard! No living being can quench my bloodthirst!"
 
-/obj/item/weapon/reagent_containers/food/snacks/muffin/dindu
-	name = "dindu muffin"
-	desc = "Eating this muffin fills you with a sense of outrage and innocence."
-	icon_state = "berrymuffin"
-	bonus_reagents = list("vitamin" = 2, "sodiumchloride" = 1)
-	list_reagents = list("nutriment", 7)
-
 /obj/item/weapon/reagent_containers/food/snacks/chawanmushi
 	name = "chawanmushi"
 	desc = "A legendary egg custard that makes friends out of enemies. Probably too hot for a cat to eat."

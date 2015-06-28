@@ -131,15 +131,6 @@
 	)
 	result = /obj/item/weapon/reagent_containers/food/snacks/muffin/booberry
 
-/datum/table_recipe/dindumuffin
-	name = "Dindu muffin"
-	reqs = list(
-		/datum/reagent/consumable/milk = 5,
-		/obj/item/weapon/reagent_containers/food/snacks/pastrybase = 1,
-		/obj/item/weapon/restraints/handcuffs/cable/zipties = 1
-	)
-	result = /obj/item/weapon/reagent_containers/food/snacks/muffin/dindu
-
 /datum/table_recipe/chawanmushi
 	name = "Chawanmushi"
 	reqs = list(
