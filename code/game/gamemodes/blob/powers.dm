@@ -170,7 +170,7 @@
 
 /mob/camera/blob/verb/create_blobbernaut()
 	set category = "Blob"
-	set name = "Create Blobbernaut (20)"
+	set name = "Create Blobbernaut (0)"
 	set desc = "Create a powerful blob-being, a Blobbernaut"
 
 	var/turf/T = get_turf(src)
@@ -185,9 +185,6 @@
 
 	if(!istype(B, /obj/effect/blob/factory))
 		src << "Unable to use this blob, find a factory blob."
-		return
-
-	if(!can_buy(20))
 		return
 
 	var/mob/living/simple_animal/hostile/blob/blobbernaut/blobber = new /mob/living/simple_animal/hostile/blob/blobbernaut (get_turf(B))
@@ -276,7 +273,8 @@
 	last_attack = world.time
 	OB.expand(T, 0, blob_reagent_datum.color)
 	for(var/mob/living/L in T)
-		blob_reagent_datum.reaction_mob(L, TOUCH)
+		if(!prob(L.run_armor_check(pick("chest","head"), "bio")))
+			blob_reagent_datum.reaction_mob(L, TOUCH)
 	OB.color = blob_reagent_datum.color
 	return
 
