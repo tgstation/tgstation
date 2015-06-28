@@ -149,7 +149,7 @@
 					user << "<span class='warning'>This MMI does not seem to fit!</span>"
 					return
 
-				if(istype(P, /obj/item/device/mmi/syndie))
+				if(M.syndiemmi)
 					user << "<span class='warning'>This MMI does not seem to fit!</span>"
 					return
 
