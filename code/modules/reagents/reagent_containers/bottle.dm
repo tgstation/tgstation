@@ -13,6 +13,15 @@
 	if(!icon_state)
 		icon_state = "bottle[rand(1,20)]"
 
+/obj/item/weapon/reagent_containers/glass/bottle/throw_impact(atom/hit_atom)
+	..()
+	if(hit_atom)
+		visible_message("<span class = 'danger'>[src] breaks!</span>")
+		for(var/turf/T in range(1,hit_atom))
+			for(var/atom/A in T.GetAllContents())
+				reagents.reaction(A, TOUCH)
+		qdel(src)
+
 /obj/item/weapon/reagent_containers/glass/bottle/epinephrine
 	name = "epinephrine bottle"
 	desc = "A small bottle. Contains epinephrine - used to stabilize patients."

@@ -53,4 +53,5 @@
 					return
 				var/obj/item/clothing/shoes/S = shoes
 				S.step_action()
-
+	if(reagents)
+		reagents.conditional_update_move()

@@ -14,6 +14,7 @@ var/const/INGEST = 2
 	var/last_tick = 1
 	var/addiction_tick = 1
 	var/list/datum/reagent/addiction_list = new/list()
+	var/speed_modifier = 0
 
 /datum/reagents/New(maximum=100)
 	maximum_volume = maximum
@@ -215,7 +216,7 @@ var/const/INGEST = 2
 	if(M)
 		chem_temp = M.bodytemperature
 		handle_reactions()
-
+	speed_modifier = 0
 	for(var/A in reagent_list)
 		var/datum/reagent/R = A
 		if(!R.holder)
@@ -239,6 +240,7 @@ var/const/INGEST = 2
 						if(istype(R, addicted_reagent))
 							addicted_reagent.addiction_stage = -15 // you're satisfied for a good while.
 				R.on_mob_life(M)
+			speed_modifier += R.speed_modifier
 
 	if(addiction_tick == 6)
 		addiction_tick = 1
@@ -270,9 +272,9 @@ var/const/INGEST = 2
 		R.on_tick()
 	return
 
-/datum/reagents/proc/conditional_update_move(var/atom/A, var/Running = 0)
+/datum/reagents/proc/conditional_update_move()
 	for(var/datum/reagent/R in reagent_list)
-		R.on_move (A, Running)
+		R.on_move()
 	update_total()
 
 /datum/reagents/proc/conditional_update(var/atom/A)
@@ -385,30 +387,14 @@ var/const/INGEST = 2
 			update_total()
 			my_atom.on_reagent_change()
 			check_ignoreslow(my_atom)
-			check_gofast(my_atom)
-			check_goreallyfast(my_atom)
 	return 1
 
 /datum/reagents/proc/check_ignoreslow(var/mob/M)
 	if(istype(M, /mob))
-		if(M.reagents.has_reagent("morphine")||M.reagents.has_reagent("ephedrine"))
+		if(M.reagents.has_reagent("morphine"))
 			return 1
 		else
 			M.status_flags &= ~IGNORESLOWDOWN
-
-/datum/reagents/proc/check_gofast(var/mob/M)
-	if(istype(M, /mob))
-		if(M.reagents.has_reagent("unholywater")||M.reagents.has_reagent("nuka_cola"))
-			return 1
-		else
-			M.status_flags &= ~GOTTAGOFAST
-
-/datum/reagents/proc/check_goreallyfast(var/mob/M)
-	if(istype(M, /mob))
-		if(M.reagents.has_reagent("methamphetamine"))
-			return 1
-		else
-			M.status_flags &= ~GOTTAGOREALLYFAST
 
 /datum/reagents/proc/update_total()
 	total_volume = 0
