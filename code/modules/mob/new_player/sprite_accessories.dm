@@ -619,6 +619,11 @@
 	icon_state = "male_stripe"
 	gender = MALE
 
+/datum/sprite_accessory/underwear/male_usastripe
+	name = "Mens Striped Freedom Boxer"
+	icon_state = "male_assblastusa"
+	gender = MALE
+
 /datum/sprite_accessory/underwear/male_kinky
 	name = "Mens Kinky"
 	icon_state = "male_kinky"
@@ -753,6 +758,11 @@
 /datum/sprite_accessory/undershirt/uk
 	name = "UK Shirt"
 	icon_state = "uk"
+	gender = NEUTER
+
+/datum/sprite_accessory/undershirt/usa
+	name = "USA Shirt"
+	icon_state = "shirt_assblastusa"
 	gender = NEUTER
 
 /datum/sprite_accessory/undershirt/ilovent
@@ -1041,6 +1051,16 @@
 /datum/sprite_accessory/socks/rainbow_thigh
 	name = "Thigh-high Rainbow"
 	icon_state = "rainbow_thigh"
+	gender = NEUTER
+
+/datum/sprite_accessory/socks/usa_knee
+	name = "Knee-High Freedom Stripes"
+	icon_state = "assblastusa_knee"
+	gender = NEUTER
+
+/datum/sprite_accessory/socks/usa_thigh
+	name = "Thigh-high Freedom Stripes"
+	icon_state = "assblastusa_thigh"
 	gender = NEUTER
 
 /datum/sprite_accessory/socks/pantyhose
