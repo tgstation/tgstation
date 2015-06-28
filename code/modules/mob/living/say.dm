@@ -217,6 +217,7 @@ var/list/department_radio_keys = list(
 		return
 	var/deaf_message
 	var/deaf_type
+	var/type = 2
 	if(speaker != src)
 		if(!radio_freq) //These checks have to be seperate, else people talking on the radio will make "You can't hear yourself!" appear when hearing people over the radio while deaf.
 			deaf_message = "<span class='name'>[speaker]</span> talks but you cannot hear them."
@@ -227,7 +228,7 @@ var/list/department_radio_keys = list(
 	var/atom/movable/AM = speaker.GetSource()
 	if(!say_understands((istype(AM) ? AM : speaker),speaking)|| force_compose) //force_compose is so AIs don't end up without their hrefs.
 		message = compose_message(speaker, speaking, raw_message, radio_freq)
-	show_message(message, 2, deaf_message, deaf_type)
+	show_message(message, type, deaf_message, deaf_type)
 	return message
 
 /mob/living/send_speech(message, message_range, var/datum/language/speaking, obj/source = src, bubble_type)
