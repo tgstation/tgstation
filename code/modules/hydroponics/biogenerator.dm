@@ -169,6 +169,7 @@
 			dat += "Shoulder holster: <A href='?src=\ref[src];create=sholster;amount=1'>Make</A> ([400/efficiency])<BR>"
 			dat += "Leather Satchel: <A href='?src=\ref[src];create=satchel;amount=1'>Make</A> ([400/efficiency])<BR>"
 			dat += "Leather Jacket: <A href='?src=\ref[src];create=jacket;amount=1'>Make</A> ([500/efficiency])<BR>"
+			dat += "Leather Overcoat: <A href='?src=\ref[src];create=overcoat;amount=1'>Make</A> ([1000/efficiency])<BR>"
 			dat += "</div>"
 		else
 			dat += "<div class='statusDisplay'>No container inside, please insert container.</div>"
@@ -301,6 +302,9 @@
 		if("jacket")
 			if (check_cost(500/efficiency)) return 0
 			else new/obj/item/clothing/suit/jacket/leather(src.loc)
+		if("overcoat")
+			if (check_cost(1000/efficiency)) return 0
+			else new/obj/item/clothing/suit/jacket/leather/overcoat(src.loc)
 		//if("monkey")
 		//	if (check_cost(500)) return 0
 		//	else new/mob/living/carbon/monkey(src.loc)
