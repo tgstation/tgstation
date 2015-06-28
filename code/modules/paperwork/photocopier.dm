@@ -226,11 +226,11 @@
 			var/datum/picture/selection
 			var/mob/living/silicon/ai/tempAI = usr
 			if(tempAI.aicamera.aipictures.len == 0)
-				usr << "<FONT COLOR=red><B>No images saved<B>"
+				usr << "<font color=red><B>No images saved<B></font>"
 				return
 			for(var/datum/picture/t in tempAI.aicamera.aipictures)
 				nametemp += t.fields["name"]
-			find = input("Select image (numbered in order taken)") in nametemp
+			find = input("Select image") in nametemp
 			var/obj/item/weapon/photo/p = new /obj/item/weapon/photo (loc)
 			for(var/datum/picture/q in tempAI.aicamera.aipictures)
 				if(q.fields["name"] == find)
