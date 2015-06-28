@@ -1,3 +1,7 @@
+/obj/structure/flora
+	burn_state = 0 //Burnable
+	burntime = 30
+
 //trees
 /obj/structure/flora/tree
 	name = "tree"
@@ -217,6 +221,7 @@
 	icon_state = "rock1"
 	icon = 'icons/obj/flora/rocks.dmi'
 	anchored = 1
+	burn_state = -1 //Not Burnable
 
 /obj/structure/flora/rock/New()
 	..()

@@ -22,7 +22,7 @@
 								M.Paralyse(5)
 								cooldown(max(0,ticker.mode.B_gang.len - ticker.mode.A_gang.len))
 							if(1)
-								user << "<span class='warning'>This mind has already been recruited by another gang!</span>"
+								user << "<span class='warning'>This mind has already been recruited into a gang!</span>"
 							else
 								user << "<span class='warning'>This mind is resistant to recruitment!</span>"
 					else if(user.mind in ticker.mode.B_bosses)
@@ -32,7 +32,7 @@
 								M.Paralyse(5)
 								cooldown(max(0,ticker.mode.A_gang.len - ticker.mode.B_gang.len))
 							if(1)
-								user << "<span class='warning'>This mind has already been recruited by another gang!</span>"
+								user << "<span class='warning'>This mind has already been recruited into a gang!</span>"
 							else
 								user << "<span class='warning'>This mind is resistant to recruitment!</span>"
 

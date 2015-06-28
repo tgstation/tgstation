@@ -732,15 +732,16 @@ Turf and target are seperate in case you want to teleport some distance from a t
 	for (var/i = 1 to numticks)
 		if(user.client)
 			progbar = make_progress_bar(i, numticks, target)
-			user.client.images |= progbar
+			if(progbar)
+				user.client.images |= progbar
 		sleep(delayfraction)
 		if(!user || user.stat || user.weakened || user.stunned  || !(user.loc == Uloc))
-			if(user && user.client)
+			if(user && user.client && progbar)
 				user.client.images -= progbar
 			return 0
 
 		if(Tloc && (!target || Tloc != target.loc)) //Tloc not set when we don't want to track target
-			if(user && user.client)
+			if(user && user.client && progbar)
 				user.client.images -= progbar
 			return 0 // Target no longer exists or has moved
 
@@ -749,18 +750,18 @@ Turf and target are seperate in case you want to teleport some distance from a t
 			//i.e the hand is used to insert some item/tool into the construction
 			if(!holdingnull)
 				if(!holding)
-					if(user && user.client)
+					if(user && user.client && progbar)
 						user.client.images -= progbar
 					return 0
 			if(user.get_active_hand() != holding)
-				if(user && user.client)
+				if(user && user.client && progbar)
 					user.client.images -= progbar
 				return 0
-			if(user && user.client)
+			if(user && user.client && progbar)
 				user.client.images -= progbar
-		if(user && user.client)
+		if(user && user.client && progbar)
 			user.client.images -= progbar
-	if(user && user.client)
+	if(user && user.client && progbar)
 		user.client.images -= progbar
 	return 1
 

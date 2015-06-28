@@ -17,6 +17,8 @@
 	anchored = 0
 	density = 1
 	opacity = 0
+	burn_state = 0 //Burnable
+	burntime = 30
 	var/state = 0
 	var/list/allowed_books = list(/obj/item/weapon/book, /obj/item/weapon/spellbook, /obj/item/weapon/storage/book) //Things allowed in the bookcase
 
@@ -165,6 +167,7 @@
 	throw_range = 5
 	w_class = 3		 //upped to three because books are, y'know, pretty big. (and you could hide them inside eachother recursively forever)
 	attack_verb = list("bashed", "whacked", "educated")
+	burn_state = 0 //Burnable
 	var/dat				//Actual page content
 	var/due_date = 0	//Game time in 1/10th seconds
 	var/author			//Who wrote the thing, can be changed by pen or PC. It is not automatically assigned

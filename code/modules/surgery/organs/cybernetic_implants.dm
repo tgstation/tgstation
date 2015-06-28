@@ -318,6 +318,7 @@
 	origin_tech = "materials=6;programming=3;biotech=6;syndicate=4"
 	var/revive_cost = 0
 	var/reviving = 0
+	var/cooldown = 0
 
 /obj/item/cybernetic_implant/chest/reviver/function()
 	SSobj.processing |= src
@@ -333,22 +334,22 @@
 			spawn(30)
 				if(prob(90) && owner.getOxyLoss())
 					owner.adjustOxyLoss(-3)
-					revive_cost += 0.1
+					revive_cost += 5
 				if(prob(75) && owner.getBruteLoss())
 					owner.adjustBruteLoss(-1)
-					revive_cost += 0.5
+					revive_cost += 20
 				if(prob(75) && owner.getFireLoss())
 					owner.adjustFireLoss(-1)
-					revive_cost += 0.5
+					revive_cost += 20
 				if(prob(40) && owner.getToxLoss())
 					owner.adjustToxLoss(-1)
-					revive_cost++
+					revive_cost += 50
 		else
-			revive_cost = (revive_cost * 100) + world.time
+			cooldown = revive_cost + world.time
 			reviving = 0
 		return
 
-	if(revive_cost > world.time)
+	if(cooldown > world.time)
 		return
 	if(owner.stat != UNCONSCIOUS)
 		return
@@ -360,7 +361,11 @@
 	reviving = 1
 
 /obj/item/cybernetic_implant/chest/reviver/emp_act(severity)
-	revive_cost = world.time + 200
+	if(reviving)
+		revive_cost += 200
+	else
+		cooldown += 200
+
 	if(prob(50 / severity))
 		owner.heart_attack = 1
 		spawn(600 / severity)

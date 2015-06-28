@@ -38,9 +38,10 @@
 /mob/living/carbon/relaymove(var/mob/user, direction)
 	if(user in src.stomach_contents)
 		if(prob(40))
-			audible_message("<span class='warning'>You hear something rumbling inside [src]'s stomach...</span>", \
-						 "<span class='warning'>You hear something rumbling.</span>", 4,\
-						  "<span class='userdanger'>Something is rumbling inside your stomach!</span>")
+			if(prob(25))
+				audible_message("<span class='warning'>You hear something rumbling inside [src]'s stomach...</span>", \
+							 "<span class='warning'>You hear something rumbling.</span>", 4,\
+							  "<span class='userdanger'>Something is rumbling inside your stomach!</span>")
 			var/obj/item/I = user.get_active_hand()
 			if(I && I.force)
 				var/d = rand(round(I.force / 4), I.force)
@@ -494,7 +495,7 @@ var/const/GALOSHES_DONT_HELP = 8
 			src << "<span class='warning'>You fail to break [I]!</span>"
 
 /mob/living/carbon/proc/is_mouth_covered(head_only = 0, mask_only = 0)
-	if( (!mask_only && head && (head.flags & HEADCOVERSMOUTH)) || (!head_only && wear_mask && (wear_mask.flags & MASKCOVERSMOUTH)) )
+	if( (!mask_only && head && (head.flags_cover & HEADCOVERSMOUTH)) || (!head_only && wear_mask && (wear_mask.flags_cover & MASKCOVERSMOUTH)) )
 		return 1
 
 /mob/living/carbon/get_standard_pixel_y_offset(lying = 0)

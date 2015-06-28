@@ -181,7 +181,7 @@
 
 
 /obj/item/weapon/reagent_containers/syringe/update_icon()
-	var/rounded_vol = round(reagents.total_volume,5)
+	var/rounded_vol = min(max(round(reagents.total_volume,5),5),15)
 	overlays.Cut()
 	if(ismob(loc))
 		var/injoverlay
@@ -196,12 +196,7 @@
 
 	if(reagents.total_volume)
 		var/image/filling = image('icons/obj/reagentfillings.dmi', src, "syringe10")
-
-		switch(rounded_vol)
-			if(5)	filling.icon_state = "syringe5"
-			if(10)	filling.icon_state = "syringe10"
-			if(15)	filling.icon_state = "syringe15"
-
+		filling.icon_state = "syringe[rounded_vol]"
 		filling.color = mix_color_from_reagents(reagents.reagent_list)
 		overlays += filling
 

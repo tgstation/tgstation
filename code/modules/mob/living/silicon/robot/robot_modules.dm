@@ -219,7 +219,7 @@
 
 	modules += new /obj/item/weapon/reagent_containers/dropper(src)
 
-	var/obj/item/weapon/lighter/zippo/L = new /obj/item/weapon/lighter/zippo(src)
+	var/obj/item/weapon/lighter/L = new /obj/item/weapon/lighter(src)
 	L.lit = 1
 	modules += L
 

@@ -176,10 +176,10 @@
 
 		//monkeys and humans can have masks
 		if( victim.wear_mask )
-			if ( victim.wear_mask.flags & MASKCOVERSEYES )
+			if ( victim.wear_mask.flags_cover & MASKCOVERSEYES )
 				eyes_covered = 1
 				safe_thing = victim.wear_mask
-			if ( victim.wear_mask.flags & MASKCOVERSMOUTH )
+			if ( victim.wear_mask.flags_cover & MASKCOVERSMOUTH )
 				mouth_covered = 1
 				safe_thing = victim.wear_mask
 
@@ -187,10 +187,10 @@
 		if(istype(victim, /mob/living/carbon/human))
 			var/mob/living/carbon/human/H = victim
 			if( H.head )
-				if ( H.head.flags & MASKCOVERSEYES )
+				if ( H.head.flags_cover & MASKCOVERSEYES )
 					eyes_covered = 1
 					safe_thing = H.head
-				if ( H.head.flags & MASKCOVERSMOUTH )
+				if ( H.head.flags_cover & MASKCOVERSMOUTH )
 					mouth_covered = 1
 					safe_thing = H.head
 			if(H.glasses)

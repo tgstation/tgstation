@@ -11,6 +11,7 @@
 	throwforce = 6.0
 	w_class = 2.0
 	attack_verb = list("bashed", "battered", "judged", "whacked")
+	burn_state = 0 //Burnable
 
 /obj/item/weapon/gavelhammer/suicide_act(mob/user)
 	user.visible_message("<span class='suicide'>[user] has sentenced \himself to death with the [src.name]! It looks like \he's trying to commit suicide.</span>")
@@ -25,6 +26,7 @@
 	force = 2.0
 	throwforce = 2.0
 	w_class = 1.0
+	burn_state = 0 //Burnable
 
 /obj/item/weapon/gavelblock/attackby(obj/item/I, mob/user, params)
 	if(istype(I, /obj/item/weapon/gavelhammer))

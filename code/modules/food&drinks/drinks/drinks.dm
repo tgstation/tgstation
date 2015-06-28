@@ -10,6 +10,7 @@
 	var/gulp_size = 5 //This is now officially broken ... need to think of a nice way to fix it.
 	possible_transfer_amounts = list(5,10,25)
 	volume = 50
+	burn_state = -1
 
 /obj/item/weapon/reagent_containers/food/drinks/New()
 	..()

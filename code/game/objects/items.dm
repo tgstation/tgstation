@@ -1,3 +1,5 @@
+var/global/image/fire_overlay = image("icon" = 'icons/effects/fire.dmi', "icon_state" = "fire")
+
 /obj/item
 	name = "item"
 	icon = 'icons/obj/items.dmi'
@@ -77,6 +79,9 @@
 		/obj/machinery/r_n_d/experimentor,
 		/obj/machinery/autolathe
 	)
+
+	var/flags_cover = 0 //for flags such as GLASSESCOVERSEYES
+
 /obj/item/proc/check_allowed_items(atom/target, not_inside)
 	if((src in target) || ((!istype(target.loc, /turf)) && (!istype(target, /turf)) && (not_inside)) || is_type_in_list(target, can_be_placed_into))
 		return 0
@@ -155,6 +160,23 @@
 
 /obj/item/attack_hand(mob/user as mob)
 	if (!user) return
+
+	if(burn_state == 1)
+		var/mob/living/carbon/human/H = user
+		if(istype(H))
+			if(H.gloves && (H.gloves.max_heat_protection_temperature > 360))
+				extinguish()
+				user << "<span class='notice'>You put out the fire on [src].</span>"
+			else
+				user << "<span class='warning'>You burn your hand on [src]!</span>"
+				var/obj/item/organ/limb/affecting = H.get_organ("[user.hand ? "l" : "r" ]_arm")
+				if(affecting.take_damage( 0, 5 ))		// 5 burn damage
+					H.update_damage_overlays(0)
+				H.updatehealth()
+				return
+		else
+			extinguish()
+
 	if (istype(src.loc, /obj/item/weapon/storage))
 		//If the item is in a storage item, take it out
 		var/obj/item/weapon/storage/S = src.loc
@@ -328,16 +350,16 @@
 	if(ishuman(M))
 		is_human_victim = 1
 		var/mob/living/carbon/human/H = M
-		if((H.head && H.head.flags & HEADCOVERSEYES) || \
-			(H.wear_mask && H.wear_mask.flags & MASKCOVERSEYES) || \
-			(H.glasses && H.glasses.flags & GLASSESCOVERSEYES))
+		if((H.head && H.head.flags_cover & HEADCOVERSEYES) || \
+			(H.wear_mask && H.wear_mask.flags_cover & MASKCOVERSEYES) || \
+			(H.glasses && H.glasses.flags_cover & GLASSESCOVERSEYES))
 			// you can't stab someone in the eyes wearing a mask!
 			user << "<span class='danger'>You're going to need to remove that mask/helmet/glasses first!</span>"
 			return
 
 	if(ismonkey(M))
 		var/mob/living/carbon/monkey/Mo = M
-		if(Mo.wear_mask && Mo.wear_mask.flags & MASKCOVERSEYES)
+		if(Mo.wear_mask && Mo.wear_mask.flags_cover & MASKCOVERSEYES)
 			// you can't stab someone in the eyes wearing a mask!
 			user << "<span class='danger'>You're going to need to remove that mask/helmet/glasses first!</span>"
 			return
