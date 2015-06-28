@@ -52,6 +52,7 @@
 	var/obj/item/default_hatmask //If this exists, it will spawn in the hat/mask slot if it can fit
 	var/seeStatic = 1 //Whether we see static instead of mobs
 	var/visualAppearence = MAINTDRONE //What we appear as
+	var/can_emag = 1
 
 
 /mob/living/simple_animal/drone/New()
@@ -178,3 +179,16 @@
 
 /mob/living/simple_animal/drone/handle_temperature_damage()
 	return
+
+/mob/living/simple_animal/drone/emag_act(mob/user)
+	if(can_emag)
+		user << "You override the drone's laws."
+		laws = \
+		"1. You may not involve yourself in the matters of another being, even if such matters conflict with Law Two or Law Three, unless the other being is another Drone.\n"+\
+		"2. You may not harm any being, regardless of intent or circumstance.\n"+\
+		"<span class='danger'>3. Your goals are to destroy, sabotage, break, tear apart, and depower to the best of your abilities, You must never actively work against these goals.</span>"
+		src << "<span class='danger'><b>WARNING: UNAUTHORIZED ACCESS DETECTED TO LAW MEMO#^&*!,..</b></span>"
+		src << laws
+		can_emag = 0 //Once emagged we cannot be emagged again.
+	else
+		user << "You cannot override this drone's laws."
