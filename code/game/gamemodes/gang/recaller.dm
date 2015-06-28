@@ -89,6 +89,12 @@
 			else
 				dat += "10mm Pistol<br>"
 
+			dat += "(10 Influence) "
+			if(points >= 10)
+				dat += "<a href='?src=\ref[src];purchase=10mmammo'>10mm Ammo</a><br>"
+			else
+				dat += "10mm Ammo<br>"
+
 			dat += "(50 Influence) "
 			if(points >= 50)
 				dat += "<a href='?src=\ref[src];purchase=uzi'>Mini Uzi</a><br>"
