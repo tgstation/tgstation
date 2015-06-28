@@ -15,7 +15,7 @@
 	icon_state = "security"
 	item_state = "r_suit"
 	item_color = "security"
-	armor = list(melee = 10, bullet = 0, laser = 0,energy = 0, bomb = 0, bio = 0, rad = 0)
+	armor = list(melee = 0, bullet = 0, laser = 0,energy = 0, bomb = 0, bio = 0, rad = 0)
 	strip_delay = 50
 
 /obj/item/clothing/under/rank/warden
@@ -24,7 +24,7 @@
 	icon_state = "warden"
 	item_state = "r_suit"
 	item_color = "warden"
-	armor = list(melee = 10, bullet = 0, laser = 0,energy = 0, bomb = 0, bio = 0, rad = 0)
+	armor = list(melee = 0, bullet = 0, laser = 0,energy = 0, bomb = 0, bio = 0, rad = 0)
 	strip_delay = 50
 
 /*
@@ -36,7 +36,7 @@
 	icon_state = "detective"
 	item_state = "det"
 	item_color = "detective"
-	armor = list(melee = 10, bullet = 0, laser = 0,energy = 0, bomb = 0, bio = 0, rad = 0)
+	armor = list(melee = 0, bullet = 0, laser = 0,energy = 0, bomb = 0, bio = 0, rad = 0)
 	strip_delay = 50
 
 /obj/item/clothing/under/rank/det/grey
@@ -55,7 +55,7 @@
 	icon_state = "hos"
 	item_state = "r_suit"
 	item_color = "hos"
-	armor = list(melee = 10, bullet = 0, laser = 0,energy = 0, bomb = 0, bio = 0, rad = 0)
+	armor = list(melee = 0, bullet = 0, laser = 0,energy = 0, bomb = 0, bio = 0, rad = 0)
 	strip_delay = 60
 
 /obj/item/clothing/under/rank/head_of_security/alt
