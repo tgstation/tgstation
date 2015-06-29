@@ -2,14 +2,15 @@
 /obj/item/clothing/mask/gas/sechailer
 	name = "security gas mask"
 	desc = "A standard issue Security gas mask with integrated 'Compli-o-nator 3000' device. Plays over a dozen pre-recorded compliance phrases designed to get scumbags to stand still whilst you taze them. \
-			Do not tamper with the device. IMPORTANT NOTICE: Overuse of 'Compli-o-nator 3000' device in a short period has, in some cases, been known to malfunction and cause harm to user."
+			Do not tamper with the device. IMPORTANT NOTICE: Overuse of 'Compli-o-nator 3000' device in a short period has, in some cases, been known to malfunction and cause harm to user or device."
 	action_button_name = "HALT!"
 	icon_state = "sechailer"
 	ignore_maskadjust = 0
-	flags = MASKCOVERSMOUTH | BLOCK_GAS_SMOKE_EFFECT | MASKINTERNALS
+	flags = BLOCK_GAS_SMOKE_EFFECT | MASKINTERNALS
 	flags_inv = HIDEFACE
 	visor_flags = MASKCOVERSMOUTH | BLOCK_GAS_SMOKE_EFFECT | MASKINTERNALS
 	visor_flags_inv = HIDEFACE
+	flags_cover = MASKCOVERSMOUTH
 	var/aggressiveness = 2
 	var/cooldown_special
 	var/recent_uses = 0
@@ -100,7 +101,7 @@
 			recent_uses = initial(recent_uses)
 
 		if(recent_uses == 4)
-			user << "<span class='danger'>\The [src] is heating up dangerously from overuse.</span>"
+			usr << "<span class='danger'>\The [src] is heating up dangerously from overuse.</span>"
 
 		if(recent_uses >= 5) //YOU have the right to shut the fuck up
 			hailer_overload(usr)
