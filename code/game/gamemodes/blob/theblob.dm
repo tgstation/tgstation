@@ -116,7 +116,6 @@
 	var/obj/effect/blob/normal/B = new /obj/effect/blob/normal(src.loc, min(src.health, 30))
 	B.color = a_color
 	B.density = 1
-	B.desc = desc
 	if(T.Enter(B,src))//Attempt to move into the tile
 		B.density = initial(B.density)
 		B.loc = T
@@ -188,7 +187,6 @@
 	var/obj/effect/blob/B = new type(src.loc)
 	if(!istype(type, /obj/effect/blob/core) || !istype(type, /obj/effect/blob/node))
 		B.color = color
-		B.desc = desc
 	else
 		B.adjustcolors(color)
 	qdel(src)
