@@ -1078,47 +1078,54 @@ Pressure: [env.return_pressure()]"}
 
 	for(var/obj/machinery/power/emitter/E in power_machines)
 		if(E.anchored)
-			E.active = 1
+			//We now have a toggle proc, so here goes
+			E.turn_on()
+			E.investigation_log(I_SINGULO,"turned <font color='green'>on</font> <font color='red'>via Start Singularity Debug verb.</font>")
 
 	for(var/obj/machinery/field_generator/F in field_gen_list)
 		if(F.anchored)
-			F.Varedit_start = 1
-	spawn(30)
-		for(var/obj/machinery/the_singularitygen/G in machines)
-			if(G.anchored)
-				var/obj/machinery/singularity/S = new /obj/machinery/singularity(get_turf(G), 50)
-				spawn(0)
-					del(G)
-				S.energy = 1750
-				S.current_size = 7
-				S.icon = 'icons/effects/224x224.dmi'
-				S.icon_state = "singularity_s7"
-				S.pixel_x = -96
-				S.pixel_y = -96
-				S.grav_pull = 0
-				//S.consume_range = 3
-				S.dissipate = 0
-				//S.dissipate_delay = 10
-				//S.dissipate_track = 0
-				//S.dissipate_strength = 10
+			//The gentleman who coded this was nice enough to add a proc
+			F.turn_on()
+			F.investigation_log(I_SINGULO,"<font color='green'>activated</font> <font color='red'>via Start Singularity Debug verb.</font>")
 
 	for(var/obj/machinery/power/rad_collector/Rad in rad_collectors)
 		if(Rad.anchored)
 			if(!Rad.P)
 				var/obj/item/weapon/tank/plasma/Plasma = new/obj/item/weapon/tank/plasma(Rad)
-				Plasma.air_contents.toxins = 70
+				Plasma.air_contents.toxins = 100 //Don't need to explain, space magic
+				Plasma.air_contents.temperature = 73.15 //Perfect freezer cooling
 				Rad.drain_ratio = 0
 				Rad.P = Plasma
 				Plasma.loc = Rad
 
 			if(!Rad.active)
 				Rad.toggle_power()
+				Rad.locked = 1
+
+	sleep(200) //Field generators take 15 seconds to warm up, so we'll give 20
+
+	for(var/obj/machinery/the_singularitygen/G in machines)
+		if(G.anchored)
+			var/obj/machinery/singularity/S = new /obj/machinery/singularity(get_turf(G), 50)
+			spawn(0)
+				del(G)
+			S.energy = 1250 //No energy dissipates
+			S.current_size = 7
+			S.icon = 'icons/effects/224x224.dmi'
+			S.icon_state = "singularity_s7"
+			S.pixel_x = -96
+			S.pixel_y = -96
+			S.grav_pull = 0
+			S.dissipate = 0
+			S.consume_range = 0 //Can't be too sure
+
+	sleep(50) //Extra five seconds for the radiation collectors to get their shit together
 
 	for(var/obj/machinery/power/battery/smes/SMES in power_machines)
 		if(SMES.anchored)
-			SMES.connect_to_network() // Just in case.
+			SMES.connect_to_network() //Just in case.
 			SMES.chargemode = 1
-			SMES.online=1
+			SMES.online = 1
 
 /client/proc/cheat_power()
 
