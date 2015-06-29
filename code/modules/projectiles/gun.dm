@@ -54,6 +54,12 @@
 	if(pin)
 		pin = new pin(src)
 
+/obj/item/weapon/gun/CheckParts()
+	var/obj/item/weapon/gun/G = locate(/obj/item/weapon/gun) in contents
+	G.pin.loc = loc
+	G.pin = null
+	G.loc = loc
+	qdel(src)
 
 /obj/item/weapon/gun/examine(mob/user)
 	..()
