@@ -4,8 +4,9 @@
 
 //#define DEBUG_DATUM_POOL
 
-#define MAINTAINING_DATUM_POOL_COUNT 100
+#define MAINTAINING_DATUM_POOL_COUNT 500
 var/global/list/masterdatumPool = new
+var/global/list/pooledvariables = new
 
 /*
  * @args : datum type, normal arguments
@@ -59,7 +60,8 @@ var/global/list/masterdatumPool = new
 		#ifdef DEBUG_DATUM_POOL
 		world << text("DEBUG_DATUM_POOL: returnToPool([]) exceeds [] discarding...", D.type, MAINTAINING_DATUM_POOL_COUNT)
 		#endif
-		del(D)
+		var/list/pool = masterdatumPool["[D.type]"]
+		pool.Cut(End=1) //LET IT GO. LET IT GOOOOOO.
 		return
 	if(isnull(masterdatumPool["[D.type]"]))
 		masterdatumPool["[D.type]"] = list()
@@ -82,13 +84,34 @@ var/global/list/masterdatumPool = new
 #undef DEBUG_DATUM_POOL
 #endif
 
+/datum/proc/createVariables(var/list/exclude)
+	pooledvariables["[type]"] = new/list()
+	exclude += global.exclude
+
+	for(var/key in vars)
+		if(key in exclude)
+			continue
+		pooledvariables["[type]"][key] = initial(key)
+
 //RETURNS NULL WHEN INITIALIZED AS A LIST() AND POSSIBLY OTHER DISCRIMINATORS
 //IF YOU ARE USING SPECIAL VARIABLES SUCH A LIST() INITIALIZE THEM USING RESET VARIABLES
 //SEE http://www.byond.com/forum/?post=76850 AS A REFERENCE ON THIS
 
 /datum/proc/resetVariables()
-	var/list/exclude = global.exclude + args // explicit var exclusion
-	for(var/key in vars)
-		if(key in exclude)
-			continue
-		vars[key] = initial(vars[key])
+	if(!pooledvariables["[type]"])
+		createVariables(args)
+
+	for(var/key in pooledvariables[type])
+		vars[key] = pooledvariables["[type]"][key]
+
+/proc/isInTypes(atom/Object, types)
+	if(!Object)
+		return 0
+	var/prototype = Object.type
+	Object = null
+
+	for (var/type in params2list(types))
+		if (ispath(prototype, text2path(type)))
+			return 1
+
+	return 0
