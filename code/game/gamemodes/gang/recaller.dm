@@ -341,7 +341,7 @@
 
 
 /obj/item/device/gangtool/proc/register_device(var/mob/user)
-	if(!(user.mind in (ticker.mode.B_bosses|ticker.mode.B_bosses)))
+	if(!(user.mind in (ticker.mode.A_bosses|ticker.mode.B_bosses)))
 		var/gang_bosses = ((gang == "A")? ticker.mode.A_bosses.len : ticker.mode.B_bosses.len)
 		if(gang_bosses >= 3)
 			user << "<span class='warning'>\icon[src] Error: All positions filled.</span>"
