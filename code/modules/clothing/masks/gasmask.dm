@@ -24,7 +24,7 @@
 	armor = list(melee = 10, bullet = 0, laser = 0,energy = 0, bomb = 0, bio = 0, rad = 0)
 	origin_tech = "materials=2;engineering=2"
 	action_button_name = "Toggle Welding Mask"
-	visor_flags = MASKCOVERSEYES
+	flags_cover = MASKCOVERSEYES
 	visor_flags_inv = HIDEEYES
 
 /obj/item/clothing/mask/gas/welding/attack_self()
@@ -51,7 +51,7 @@
 	ignore_maskadjust = 0
 	flags = BLOCK_GAS_SMOKE_EFFECT | MASKINTERNALS
 	flags_inv = HIDEFACE
-	visor_flags = MASKCOVERSMOUTH | BLOCK_GAS_SMOKE_EFFECT | MASKINTERNALS
+	visor_flags = BLOCK_GAS_SMOKE_EFFECT | MASKINTERNALS
 	visor_flags_inv = HIDEFACE
 	flags_cover = MASKCOVERSMOUTH
 
