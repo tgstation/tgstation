@@ -571,7 +571,6 @@ What are the archived variables for?
 	//Called by: airgroups splitting, ?
 	//Inputs: Gas to copy
 	//Outputs: 1
-
 	oxygen = sample.oxygen
 	carbon_dioxide = sample.carbon_dioxide
 	nitrogen = sample.nitrogen
@@ -587,6 +586,7 @@ What are the archived variables for?
 			corresponding.moles = trace_gas.moles
 
 	temperature = sample.temperature
+	update_values()
 
 	return 1
 

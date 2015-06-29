@@ -43,6 +43,9 @@
 	sleep(200)
 	for(var/atom/A in contents)
 		A.clean_blood()
+		if(istype(A, /obj/item))
+			var/obj/item/I = A
+			I.decontaminate()
 
 	//Tanning!
 	for(var/obj/item/stack/sheet/hairlesshide/HH in contents)

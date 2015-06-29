@@ -98,6 +98,8 @@
 
 
 /obj/item/device/taperecorder/Hear(message, atom/movable/speaker, message_langs, raw_message, radio_freq, spans)
+	if(istype(speaker, /obj/item/device/taperecorder))
+		return //Do not record from other recorders
 	if(mytape && recording)
 		mytape.timestamp += mytape.used_capacity
 		mytape.storedinfo += "\[[time2text(mytape.used_capacity * 10,"mm:ss")]\] [html_encode(message)]"

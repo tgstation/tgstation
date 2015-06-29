@@ -41,6 +41,11 @@
 	new /obj/item/weapon/pinpointer/nukeop(src)
 	new /obj/item/weapon/pinpointer/nukeop(src)
 	new /obj/item/weapon/pinpointer/nukeop(src)
+	new /obj/item/clothing/shoes/magboots/syndie(src)
+	new /obj/item/clothing/shoes/magboots/syndie(src)
+	new /obj/item/clothing/shoes/magboots/syndie(src)
+	new /obj/item/clothing/shoes/magboots/syndie(src)
+	new /obj/item/clothing/shoes/magboots/syndie(src)
 	new /obj/item/device/pda/syndicate(src)
 	return
 

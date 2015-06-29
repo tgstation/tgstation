@@ -29,6 +29,7 @@
 #define EARBANGPROTECT		1024
 
 #define NOSLIP		1024 		//prevents from slipping on wet floors, in space etc (NOTE: flag shared with THICKMATERIAL for external suits and helmet)
+#define PRESSUREPROTECT		2048 		//prevents airflow from affecting the user
 
 #define OPENCONTAINER	4096	// is an open container for chemistry purposes
 

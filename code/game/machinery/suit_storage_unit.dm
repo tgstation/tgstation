@@ -46,6 +46,7 @@
 /obj/machinery/suit_storage_unit/engine
 	SUIT_TYPE = /obj/item/clothing/suit/space/hardsuit
 	MASK_TYPE = /obj/item/clothing/mask/breath
+	STORAGE_TYPE= /obj/item/clothing/shoes/magboots
 
 /obj/machinery/suit_storage_unit/ce
 	SUIT_TYPE = /obj/item/clothing/suit/space/hardsuit/elite
@@ -55,19 +56,28 @@
 /obj/machinery/suit_storage_unit/security
 	SUIT_TYPE = /obj/item/clothing/suit/space/hardsuit/security
 	MASK_TYPE = /obj/item/clothing/mask/gas/sechailer
+	STORAGE_TYPE= /obj/item/clothing/shoes/magboots
 
 /obj/machinery/suit_storage_unit/hos
 	SUIT_TYPE = /obj/item/clothing/suit/space/hardsuit/security/hos
 	MASK_TYPE = /obj/item/clothing/mask/gas/sechailer
+	STORAGE_TYPE= /obj/item/clothing/shoes/magboots
 
 /obj/machinery/suit_storage_unit/atmos
 	SUIT_TYPE = /obj/item/clothing/suit/space/hardsuit/atmos
 	MASK_TYPE = /obj/item/clothing/mask/gas
-	STORAGE_TYPE = /obj/item/weapon/watertank/atmos
+	STORAGE_TYPE= /obj/item/clothing/shoes/magboots
 
 /obj/machinery/suit_storage_unit/mining
 	SUIT_TYPE = /obj/item/clothing/suit/space/hardsuit/mining
 	MASK_TYPE = /obj/item/clothing/mask/breath
+	STORAGE_TYPE= /obj/item/clothing/shoes/magboots
+
+/obj/machinery/suit_storage_unit/excsuit
+	SUIT_TYPE = /obj/item/clothing/suit/space/anomaly
+	HELMET_TYPE = /obj/item/clothing/head/helmet/space/anomaly
+	MASK_TYPE = /obj/item/clothing/mask/breath
+	STORAGE_TYPE= /obj/item/clothing/shoes/magboots
 
 /obj/machinery/suit_storage_unit/cmo
 	SUIT_TYPE = /obj/item/clothing/suit/space/hardsuit/medical
@@ -394,6 +404,7 @@
 				if(!src.issuperUV)
 					for(var/obj/item/ITEM in src)
 						ITEM.clean_blood()
+						ITEM.decontaminate()
 					if(istype(STORAGE, /obj/item/weapon/reagent_containers/food))
 						del(STORAGE)
 				else //It was supercycling, destroy everything

@@ -31,6 +31,9 @@
 
 	//Admin PM
 	if(href_list["priv_msg"])
+		if (href_list["ahelp_reply"])
+			cmd_ahelp_reply(href_list["priv_msg"])
+			return
 		cmd_admin_pm(href_list["priv_msg"],null)
 		return
 
@@ -165,6 +168,12 @@ var/next_external_rsc = 0
 		sync_client_with_db()
 
 	send_resources()
+
+	if(!void)
+		void = new()
+
+	screen += void
+
 
 	if(prefs.lastchangelog != changelog_hash) //bolds the changelog button on the interface so we know there are updates.
 		src << "<span class='info'>You have unread updates in the changelog.</span>"

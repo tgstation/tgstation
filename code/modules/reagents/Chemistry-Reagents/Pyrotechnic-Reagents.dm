@@ -59,7 +59,7 @@ datum/reagent/nitroglycerin
 		else if(prob(volume))
 			F.burn_tile()
 		if(istype(F, /turf/simulated/floor/))
-			PoolOrNew(/obj/fire, F)
+			PoolOrNew(/obj/effect/fire, F)
 	if(istype(T, /turf/simulated/wall/))
 		var/turf/simulated/wall/W = T
 		if(prob(volume/10))
@@ -69,7 +69,7 @@ datum/reagent/nitroglycerin
 	if(method == TOUCH && isliving(M))
 		M.adjust_fire_stacks(5)
 		M.IgniteMob()
-		PoolOrNew(/obj/fire, M.loc)
+		PoolOrNew(/obj/effect/fire, M.loc)
 
 /datum/reagent/sorium
 	name = "Sorium"

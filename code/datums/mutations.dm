@@ -83,6 +83,9 @@
 /datum/mutation/human/proc/on_life(mob/living/carbon/human/owner)
 	return
 
+/datum/mutation/human/proc/on_move(mob/living/carbon/human/owner, new_loc)
+	return
+
 /datum/mutation/human/proc/on_losing(mob/living/carbon/human/owner)
 	if(owner && owner.dna.mutations.Remove(src))
 		lose_indication(owner)

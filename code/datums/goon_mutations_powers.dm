@@ -30,13 +30,10 @@
 	var/last_location
 
 /datum/mutation/human/chameleon/on_life(mob/living/carbon/human/owner)
-	if(owner.loc != last_location)
-		owner.alpha = round(255 * 0.80)
-	last_location = owner.loc
-	if((world.time - owner.next_move) >= 30 && !owner.stat && owner.canmove && !owner.restrained())
-		owner.alpha -= 25
-	else
-		owner.alpha = round(255 * 0.80)
+	owner.alpha = max(0, owner.alpha - 25)
+
+/datum/mutation/human/chameleon/on_move(mob/living/carbon/human/owner)
+	owner.alpha = 204  //famous 255 * 0.8, yes its magic number, no i wont make it a define
 
 /datum/mutation/human/chameleon/on_losing(mob/living/carbon/human/owner)
 	..()

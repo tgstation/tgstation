@@ -58,16 +58,17 @@
 
 // AND NOW WE HAVE TO YELL AT THE NEIGHBORS FOR BEING LOUD AND NOT PAINTING WITH HOA-APPROVED COLORS
 /atom/proc/relativewall_neighbours()
-	// OPTIMIZE BY NOT CHECKING FOR NEIGHBORS IF WE DON'T FUCKING SMOOTH
-	if(canSmoothWith.len>0)
-		relativewall()
-		for(var/cdir in cardinal)
-			var/turf/T = get_step(src,cdir)
-			if(isSmoothableNeighbor(T))
-				T.relativewall()
+	// OPTIMIZE BY NOT CHECKING FOR NEIGHBORS IF WE DON'T FUCKING SMOOTH //NO DON'T IT BREAKS SHIT
+//	if(canSmoothWith.len>0)
+	relativewall()
+	for(var/cdir in cardinal)
+		var/turf/T = get_step(src,cdir)
+		//if(isSmoothableNeighbor(T))
+		if(T)
+			T.relativewall()
 			for(var/atom/A in T)
-				if(isSmoothableNeighbor(A))
-					A.relativewall()
+				//if(isSmoothableNeighbor(A))
+				A.relativewall()
 
 /turf/simulated/wall/New()
 

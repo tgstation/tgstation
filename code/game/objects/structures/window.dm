@@ -71,7 +71,7 @@
 	if(istype(mover) && mover.checkpass(PASSGLASS))
 		return 1
 	if(dir == SOUTHWEST || dir == SOUTHEAST || dir == NORTHWEST || dir == NORTHEAST)
-		return 0	//full tile window, you can't move into it!
+		return 0 //full tile window, you can't move into it!
 	if(get_dir(loc, target) == dir)
 		return !density
 	else

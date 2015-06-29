@@ -198,7 +198,7 @@ Class Procs:
 
 
 /datum/subsystem/air/proc/process_hotspots()
-	for(var/obj/fire/fire in active_hotspots)
+	for(var/obj/effect/fire/fire in active_hotspots)
 		fire.process()
 
 /*

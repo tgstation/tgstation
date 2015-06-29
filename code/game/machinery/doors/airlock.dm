@@ -1047,7 +1047,7 @@ About the new airlock wires panel:
 			return 0
 	if(safe)
 		for(var/atom/movable/M in get_turf(src))
-			if(M.density && M != src) //something is blocking the door
+			if(M.density && M != src && !istype(M, /obj/machinery/door/firedoor)) //something is blocking the door
 				spawn (60)
 					autoclose()
 				return 0

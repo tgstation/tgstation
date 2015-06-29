@@ -48,7 +48,7 @@
 /turf/simulated/var/tmp/datum/gas_mixture/air
 /turf/simulated/var/tmp/processing = 1
 /turf/simulated/var/tmp/air_check_directions = 0 //Do not modify this, just add turf to air_master.tiles_to_update
-/turf/simulated/var/tmp/obj/fire/active_hotspot
+/turf/simulated/var/tmp/obj/effect/fire/active_hotspot
 /turf/simulated/var/tmp/was_icy=0
 
 /turf/simulated/proc/update_visuals()

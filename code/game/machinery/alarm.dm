@@ -171,6 +171,8 @@
 /obj/machinery/alarm/attack_hand(mob/user)
 	if (..())
 		return
+	if (buildstage != 2)
+		return
 	user.set_machine(src)
 
 	if ( (get_dist(src, user) > 1 ))
@@ -395,6 +397,9 @@
 /obj/machinery/alarm/Topic(href, href_list)
 	if(..())
 		return
+
+	if (buildstage != 2)
+		return
 	usr.set_machine(src)
 
 	if (locked && !usr.has_unlimited_silicon_privilege)
@@ -580,6 +585,9 @@
 
 /obj/machinery/alarm/process()
 	if((stat & (NOPOWER|BROKEN)) || shorted)
+		return
+
+	if (buildstage != 2)
 		return
 
 	var/turf/simulated/location = src.loc

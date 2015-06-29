@@ -99,9 +99,10 @@ Class Procs:
 			continue
 
 		//Check for knocking people over
-		if(ismob(M) && differential > zas_settings.Get(/datum/ZAS_Setting/airflow_stun_pressure))
-			if(M:status_flags & GODMODE) continue
-			M:airflow_stun()
+		if(ismob(M) && (differential / 5) > zas_settings.Get(/datum/ZAS_Setting/airflow_stun_pressure))
+			var/mob/Mo = M
+			if(Mo.status_flags & GODMODE) continue
+			Mo.airflow_stun()
 
 		if(M.check_airflow_movable(differential))
 			//Check for things that are in range of the midpoint turfs.
@@ -128,7 +129,7 @@ Class Procs:
 							continue
 					else if(!(M.loc in src:A.contents))
 						continue
-						M.GotoAirflowDest(differential/10)
+					M.GotoAirflowDest(differential/5)
 
 
 

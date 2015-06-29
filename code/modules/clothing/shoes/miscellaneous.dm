@@ -6,7 +6,7 @@
 	icon_state = "brown"
 	item_state = "brown"
 	permeability_coefficient = 0.05
-	flags = NOSLIP
+	flags = NOSLIP | PRESSUREPROTECT //Protect against airflow so spacing people is easier
 	origin_tech = "syndicate=3"
 
 /obj/item/clothing/shoes/sneakers/mime
@@ -26,7 +26,7 @@
 	name = "\improper SWAT boots"
 	desc = "High speed, no drag combat boots."
 	permeability_coefficient = 0.01
-	flags = NOSLIP
+	flags = NOSLIP | PRESSUREPROTECT
 	armor = list(melee = 80, bullet = 60, laser = 50, energy = 50, bomb = 50, bio = 30, rad = 30)
 
 /obj/item/clothing/shoes/sandal

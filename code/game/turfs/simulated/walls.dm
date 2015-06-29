@@ -30,6 +30,12 @@
 	if (sheet_type)
 		builtin_sheet = new sheet_type
 
+/turf/simulated/wall/Del()
+	if(!del_suppress_resmoothing)
+		spawn(10)
+			relativewall_neighbours()
+	..()
+
 /turf/simulated/wall/attack_tk()
 	return
 

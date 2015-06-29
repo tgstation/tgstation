@@ -303,7 +303,7 @@
 
 	removed.oxygen += max((device_energy + removed.temperature - T0C) / OXYGEN_RELEASE_MODIFIER, 0)
 
-//	removed.update_values()
+	removed.update_values()
 
 	env.merge(removed)
 

@@ -38,6 +38,16 @@
 	DD.holder = src
 	if(DD.disease_flags & CAN_CARRY && prob(5))
 		DD.carrier = 1
+	//Copy properties over. This is so edited diseases persist.
+	var/list/skipped = list("affected_mob","holder","carrier","stage","type","parent_type","vars")
+	for(var/V in DD.vars)
+		if(V in skipped)
+			continue
+		if(istype(DD.vars[V],/list))
+			var/list/L = D.vars[V]
+			DD.vars[V] = L.Copy()
+		else
+			DD.vars[V] = D.vars[V]
 	DD.affected_mob.med_hud_set_status()
 
 

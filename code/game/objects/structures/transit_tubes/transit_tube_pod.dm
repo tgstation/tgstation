@@ -11,8 +11,8 @@
 /obj/structure/transit_tube_pod/New(loc)
 	..(loc)
 
-	air_contents.oxygen = MOLES_O2STANDARD * 2
-	air_contents.nitrogen = MOLES_N2STANDARD
+	air_contents.adjust(o2 = MOLES_O2STANDARD * 2)
+	air_contents.adjust(n2 = MOLES_N2STANDARD)
 	air_contents.temperature = T20C
 
 	// Give auto tubes time to align before trying to start moving
@@ -123,11 +123,13 @@
 //  datum, there might be problems if I don't...
 /obj/structure/transit_tube_pod/return_air()
 	var/datum/gas_mixture/GM = new()
-	GM.oxygen			= air_contents.oxygen
-	GM.carbon_dioxide	= air_contents.carbon_dioxide
-	GM.nitrogen			= air_contents.nitrogen
-	GM.toxins			= air_contents.toxins
+	GM.adjust(o2 = air_contents.oxygen,
+				co2 = air_contents.carbon_dioxide,
+				n2 = air_contents.nitrogen,
+				tx = air_contents.toxins) //Doesn't do traces for some reason
 	GM.temperature		= air_contents.temperature
+	GM.pressure = air_contents.pressure
+	GM.update_values()
 	return GM
 
 // For now, copying what I found in an unused FEA file (and almost identical in a

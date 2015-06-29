@@ -162,7 +162,7 @@ BLIND     // can't see anything
 	icon_state = "spaceold"
 	desc = "A special helmet with solar UV shielding to protect your eyes from harmful rays."
 	body_parts_covered = HEAD | EYES | MOUTH
-	flags = BLOCKHAIR | STOPSPRESSUREDMAGE | THICKMATERIAL
+	flags = BLOCKHAIR | STOPSPRESSUREDMAGE | THICKMATERIAL | PLASMAGUARD
 	item_state = "spaceold"
 	permeability_coefficient = 0.01
 	armor = list(melee = 0, bullet = 0, laser = 0,energy = 0, bomb = 0, bio = 100, rad = 50)
@@ -183,7 +183,7 @@ BLIND     // can't see anything
 	w_class = 4//bulky item
 	gas_transfer_coefficient = 0.01
 	permeability_coefficient = 0.02
-	flags = STOPSPRESSUREDMAGE | THICKMATERIAL
+	flags = STOPSPRESSUREDMAGE | THICKMATERIAL | PLASMAGUARD
 	body_parts_covered = CHEST|GROIN|LEGS|FEET|ARMS|HANDS
 	allowed = list(/obj/item/device/flashlight,/obj/item/weapon/tank/internals)
 	slowdown = 2

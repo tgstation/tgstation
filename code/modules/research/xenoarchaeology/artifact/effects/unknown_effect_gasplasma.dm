@@ -14,7 +14,7 @@
 	if(holder)
 		var/datum/gas_mixture/env = holder.loc.return_air()
 		if(env)
-			env.toxins += rand(2,15)
+			env.toxins += rand(4,30)
 			holder.air_update_turf(0)
 
 /datum/artifact_effect/gasplasma/DoEffectAura()

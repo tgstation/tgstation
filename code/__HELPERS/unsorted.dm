@@ -1399,13 +1399,15 @@ var/list/WALLITEMS = list(
 /proc/format_text(text)
 	return replacetext(replacetext(text,"\proper ",""),"\improper ","")
 
-/obj/proc/atmosanalyzer_scan(var/datum/gas_mixture/air_contents, mob/user, var/obj/target = src)
-	var/obj/icon = target
-	user.visible_message("<span class='danger'>[user] has used the analyzer on \icon[icon] [target].</span>")
+/proc/atmosanalyzer_scan(var/datum/gas_mixture/air_contents, mob/user, var/obj/target = src)
+	if(target)
+		var/obj/icon = target
+		user.visible_message("<span class='danger'>[user] has used the analyzer on \icon[icon] [target].</span>")
+		user << "<span class='notice'>Results of analysis of \icon[icon] [target].</span>"
 	var/pressure = air_contents.return_pressure()
-	var/total_moles = air_contents.total_moles()
+	var/total_moles = air_contents.total_moles
 
-	user << "<span class='notice'>Results of analysis of \icon[icon] [target].</span>"
+	user << "<span class='info'> <B>Results:</B></span>"
 	if(total_moles>0)
 		var/o2_concentration = air_contents.oxygen/total_moles
 		var/n2_concentration = air_contents.nitrogen/total_moles
@@ -1419,17 +1421,17 @@ var/list/WALLITEMS = list(
 		var/unknown_moles = total_moles-(o2_moles+n2_moles+co2_moles+plasma_moles)
 		var/unknown_concentration =  1-(o2_concentration+n2_concentration+co2_concentration+plasma_concentration)
 
-		user << "<span class='notice'>Pressure: [round(pressure,0.1)] kPa</span>"
-		user << "<span class='notice'>Total Moles: [round(total_moles,0.01)] mol</span>"
-		user << "<span class='notice'>Nitrogen: [round(n2_concentration*100,0.1)]% [round(n2_moles,0.01)] mol</span>"
-		user << "<span class='notice'>Oxygen: [round(o2_concentration*100,0.1)]% [round(o2_moles,0.01)] mol</span>"
-		user << "<span class='notice'>CO2: [round(co2_concentration*100,0.1)]% [round(co2_moles,0.01)] mol</span>"
-		user << "<span class='notice'>Plasma: [round(plasma_concentration*100,0.1)]% [round(plasma_moles,0.01)] mol</span>"
+		user << "<span class='info'>Pressure: [round(pressure,0.1)] kPa</span>"
+		user << "<span class='info'>Total Moles: [round(total_moles,0.01)] mol</span>"
+		user << "<span class='info'>Nitrogen: [round(n2_concentration*100,0.1)]% [round(n2_moles,0.1)] mol</span>"
+		user << "<span class='info'>Oxygen: [round(o2_concentration*100,0.1)]% [round(o2_moles,0.1)] mol</span>"
+		user << "<span class='info'>CO2: [round(co2_concentration*100,0.1)]% [round(co2_moles,0.1)] mol</span>"
+		user << "<span class='info'>Plasma: [round(plasma_concentration*100,0.1)]% [round(plasma_moles,0.1)] mol</span>"
 		if(unknown_concentration>0.01)
-			user << "<span class='danger'>Unknown: [round(unknown_concentration*100,0.1)]% [round(unknown_moles,0.01)] mol</span>"
-		user << "<span class='notice'>Temperature: [round(air_contents.temperature-T0C,0.1)]&deg;C</span>"
+			user << "<span class='warning'>Unknown: [round(unknown_concentration*100,0.1)]% [round(unknown_moles,0.1)] mol</span>"
+		user << "<span class='info'>Temperature: [round(air_contents.temperature-T0C,0.1)]&deg;C</span>"
 	else
-		user << "<span class='notice'>[target] is empty!</span>"
+		user << "<span class='info'>No gasses detected!</span>"
 	return
 
 /proc/check_target_facings(mob/living/initator, mob/living/target)
@@ -1500,4 +1502,22 @@ proc/find_holder_of_type(var/atom/reference,var/typepath) //Returns the first ob
 
 #define islightingoverlay(A) (istype(A, /atom/movable/lighting_overlay))
 
+/proc/IsValidSrc(var/A)
+	if(istype(A, /datum))
+		var/datum/B = A
+		return !B.gc_destroyed
+	if(istype(A, /client))
+		return 1
+	return 0
 
+
+/proc/screen_loc2turf(scr_loc, turf/origin)
+	var/tX = text2list(scr_loc, ",")
+	var/tY = text2list(tX[2], ":")
+	var/tZ = origin.z
+	tY = tY[1]
+	tX = text2list(tX[1], ":")
+	tX = tX[1]
+	tX = max(1, min(world.maxx, origin.x + (text2num(tX) - (world.view + 1))))
+	tY = max(1, min(world.maxy, origin.y + (text2num(tY) - (world.view + 1))))
+	return locate(tX, tY, tZ)

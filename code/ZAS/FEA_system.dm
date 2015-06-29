@@ -215,7 +215,7 @@ Total Unsimulated Turfs: [world.maxx*world.maxy*world.maxz - simulated_turf_coun
 	//Process fires.
 	if(.)
 		tick_progress = "active_hotspots (fire)"
-	for(var/obj/fire/F in active_hotspots)
+	for(var/obj/effect/fire/F in active_hotspots)
 		if(. && F && !F.process())
 			. = 0
 

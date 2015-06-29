@@ -115,7 +115,7 @@
 #define MAX_OUTPUT_PRESSURE					4500 // (kPa) What pressure pumps and powered equipment max out at.
 #define MAX_TRANSFER_RATE					200 // (L/s) Maximum speed powered equipment can work at.
 
-#define BASE_ZAS_FUEL_REQ	0.1
+#define BASE_ZAS_FUEL_REQ	0.7
 
 #define AIR_BLOCKED 1
 #define ZONE_BLOCKED 2

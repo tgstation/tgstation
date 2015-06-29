@@ -255,7 +255,8 @@ MASS SPECTROMETER
 		return
 
 	var/datum/gas_mixture/environment = location.return_air()
-
+	atmosanalyzer_scan(environment, user, null) //copypasta pls go
+/*
 	var/pressure = environment.return_pressure()
 	var/total_moles = environment.total_moles()
 
@@ -299,7 +300,7 @@ MASS SPECTROMETER
 			user.show_message("<span class='warning'> Unknown: [round(unknown_concentration*100,0.1)]% [round(unknown_moles,0.01)] mol</span>", 1)
 
 		user.show_message("<span class='info'> Temperature: [round(environment.temperature-T0C,0.1)]&deg;C</span>", 1)
-
+*/
 	src.add_fingerprint(user)
 	return
 
