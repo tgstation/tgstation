@@ -143,3 +143,8 @@
 	icon_state="bsposter29"
 	name = "Winter Is Coming"
 	desc = "On the poster is a frighteningly large wolf, he warns: \"Only YOU can keep the station from freezing during planetary occultation!\""
+
+/datum/poster/bay_30
+	icon_state="bsposter30"
+	name = "Kill Catbeasts"
+	desc = "This poster has large text reading \"KILL CAT BEAST\", as well as two small images of freaks of nature. The official Nanotrasen seal can be seen at the bottom."
