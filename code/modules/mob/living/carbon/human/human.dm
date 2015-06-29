@@ -215,7 +215,7 @@
 				b_loss = b_loss/1.5
 				f_loss = f_loss/1.5
 
-			if (!istype(ears, /obj/item/clothing/ears/earmuffs) && !istype(ears, /obj/item/device/radio/headset/headset_earmuffs))
+			if (!earprot())
 				ear_damage += 30
 				ear_deaf += 120
 			if (prob(70) && !shielded)
@@ -225,7 +225,7 @@
 			b_loss += 30
 			if (prob(getarmor(null, "bomb")))
 				b_loss = b_loss/2
-			if (!istype(ears, /obj/item/clothing/ears/earmuffs) && !istype(ears, /obj/item/device/radio/headset/headset_earmuffs))
+			if (!earprot())
 				ear_damage += 15
 				ear_deaf += 60
 			if (prob(50) && !shielded)

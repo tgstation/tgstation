@@ -82,6 +82,9 @@
 			usr << "<span class='warning'>Invalid volume.</span>"
 	updateDialog()
 
+#define SYSTEMISDONE 2
+#define SYSTEMISKINDADONE 1
+#define SYSTEMISNOTDONE 0
 
 /obj/machinery/media/receiver/boombox/wallmount
 	name = "Sound System"
@@ -108,33 +111,33 @@
 	update_icon()
 
 /obj/machinery/media/receiver/boombox/wallmount/update_icon()
-	if(buildstage==2 && on)
+	if(buildstage==SYSTEMISDONE && on)
 		icon_state="wallradio-p"
 	else
 		icon_state="wallradio"
 
 /obj/machinery/media/receiver/boombox/wallmount/attack_hand(var/mob/user)
-	if(buildstage<2)
+	if(buildstage<SYSTEMISDONE)
 		return
 	else
 		return ..()
 
 /obj/machinery/media/receiver/boombox/wallmount/attackby(obj/item/weapon/W as obj, mob/user as mob)
 	switch(buildstage)
-		if(2)
+		if(SYSTEMISDONE)
 			if(iscrowbar(W))
 				user << "<span class='notice'>You pry the cover off [src].</span>"
 				playsound(get_turf(src), 'sound/items/Deconstruct.ogg', 50, 1)
-				if(do_after(user, src, 10))
+				if(do_after(user, src, 10) && buildstage==SYSTEMISDONE)
 					on = 0
 					buildstage = 1
 					update_icon()
 				return 1
 			else return ..()
-		if(1)
+		if(SYSTEMISKINDADONE)
 			if(isscrewdriver(W))
 				playsound(get_turf(src), 'sound/items/Screwdriver.ogg', 50, 1)
-				if(do_after(user, src, 10))
+				if(do_after(user, src, 10) && buildstage==SYSTEMISKINDADONE)
 					on = 1
 					buildstage = 2
 					user << "<span class='notice'>You secure the cover.</span>"
@@ -142,18 +145,18 @@
 				return 1
 			else if(iswirecutter(W))
 				playsound(get_turf(src), 'sound/items/Wirecutter.ogg', 50, 1)
-				if(do_after(user,src,10))
-					new /obj/item/stack/cable_coil(get_turf(src),5)
+				if(do_after(user, src, 10) && buildstage==SYSTEMISKINDADONE)
+					getFromPool(/obj/item/stack/cable_coil,get_turf(src),5)
 					buildstage = 0
 					update_icon()
 
-		if(0)
+		if(SYSTEMISNOTDONE)
 			if(iscoil(W))
 				var/obj/item/stack/cable_coil/coil = W
 				if(coil.amount < 5)
 					user << "<span class='warning'>You need more cable for this!</span>"
 					return
-				if(do_after(user, src, 10))
+				if(do_after(user, src, 10) && buildstage==SYSTEMISNOTDONE)
 					coil.use(5)
 					user << "<span class='notice'>You wire \the [src]!</span>"
 					buildstage = 1
@@ -161,7 +164,7 @@
 			if(iswrench(W))
 				user << "<span class='notice'>You remove the securing bolts...</span>"
 				playsound(get_turf(src), 'sound/items/Ratchet.ogg', 50, 1)
-				if(do_after(user, src, 10))
+				if(do_after(user, src, 10) && buildstage==SYSTEMISNOTDONE)
 					new /obj/item/mounted/frame/soundsystem(get_turf(src))
 					user << "<span class='notice'>The frame pops off.</span>"
 					qdel(src)

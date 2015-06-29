@@ -18,9 +18,9 @@ var/const/TRANS_SETTINGS = 16 //Pulse shows percentage given by environment temp
 /datum/wires/transmitter/GetInteractWindow()
 	var/obj/machinery/media/transmitter/broadcast/T = holder
 	. += ..()
-	. += "<BR>The backlight is [IsIndexCut(TRANS_POWER) ? "illuminated" : "dim"].<BR>"
-	. += "The radiation warning light is [T.count_rad_wires() ? "on" : "off"].<BR>"
-	. += "It has a cryptic display [counter ? "reading [counter]" : "that is blank"].<BR>"
+	. += {"<BR>The backlight is [IsIndexCut(TRANS_POWER) ? "illuminated" : "dim"].<BR>
+	The radiation warning light is [T.count_rad_wires() ? "on" : "off"].<BR>
+	It has a cryptic display [counter ? "reading [counter]" : "that is blank"].<BR>"}
 
 /datum/wires/transmitter/UpdatePulsed(var/index)
 	var/obj/machinery/media/transmitter/broadcast/T = holder
@@ -42,7 +42,7 @@ var/const/TRANS_SETTINGS = 16 //Pulse shows percentage given by environment temp
 			T.shock(usr, 50)
 		if(TRANS_LINK)
 			T.shock(usr, 50)
-			if(T.machine_flags & MULTITOOL_MENU)
+			if(IsIndexCut(TRANS_LINK))
 				T.machine_flags &= !MULTITOOL_MENU
 			else
 				T.machine_flags |= MULTITOOL_MENU

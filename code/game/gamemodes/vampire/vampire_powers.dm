@@ -290,7 +290,7 @@
 			if(C == M.current) continue
 			if(ishuman(C))
 				var/mob/living/carbon/human/H = C
-				if(H.is_on_ears(/obj/item/clothing/ears/earmuffs)||H.is_on_ears(/obj/item/device/radio/headset/headset_earmuffs)) continue
+				if(H.earprot()) continue
 			if(!C.vampire_affected(M)) continue
 			C << "<span class='danger'><font size='3'>You hear a ear piercing shriek and your senses dull!</font></span>"
 			C.Weaken(8)
