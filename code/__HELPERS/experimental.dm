@@ -34,7 +34,8 @@ var/list/exclude = list("inhand_states", "loc", "locs", "parent_type", "vars", "
 	B += (args - A)
 	if(length(masterPool["[A]"]) <= 0)
 		#ifdef DEBUG_OBJECT_POOL
-		world << text("DEBUG_OBJECT_POOL: new proc has been called ([] | []).", A, list2params(B))
+		if(ticker)
+			world << text("DEBUG_OBJECT_POOL: new proc has been called ([] | []).", A, list2params(B))
 		#endif
 		//so the GC knows we're pooling this type.
 		if(isnull(masterPool["[A]"]))

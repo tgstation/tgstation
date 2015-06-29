@@ -18,7 +18,8 @@ var/global/list/pooledvariables = new
 	B += (args - A)
 	if(length(masterdatumPool["[A]"]) <= 0)
 		#ifdef DEBUG_DATUM_POOL
-		world << text("DEBUG_DATUM_POOL: new proc has been called ([] | []).", A, list2params(B))
+		if(ticker)
+			world << text("DEBUG_DATUM_POOL: new proc has been called ([] | []).", A, list2params(B))
 		#endif
 		//so the GC knows we're pooling this type.
 		if(isnull(masterdatumPool["[A]"]))
@@ -84,25 +85,25 @@ var/global/list/pooledvariables = new
 #undef DEBUG_DATUM_POOL
 #endif
 
-/datum/proc/createVariables(var/list/exclude)
-	pooledvariables["[type]"] = new/list()
-	exclude += global.exclude
+/datum/proc/createVariables()
+	pooledvariables[type] = new/list()
+	var/list/exclude = global.exclude + args
 
 	for(var/key in vars)
 		if(key in exclude)
 			continue
-		pooledvariables["[type]"][key] = initial(key)
+		pooledvariables[type][key] = initial(vars[key])
 
 //RETURNS NULL WHEN INITIALIZED AS A LIST() AND POSSIBLY OTHER DISCRIMINATORS
 //IF YOU ARE USING SPECIAL VARIABLES SUCH A LIST() INITIALIZE THEM USING RESET VARIABLES
 //SEE http://www.byond.com/forum/?post=76850 AS A REFERENCE ON THIS
 
 /datum/proc/resetVariables()
-	if(!pooledvariables["[type]"])
+	if(!pooledvariables[type])
 		createVariables(args)
 
 	for(var/key in pooledvariables[type])
-		vars[key] = pooledvariables["[type]"][key]
+		vars[key] = pooledvariables[type][key]
 
 /proc/isInTypes(atom/Object, types)
 	if(!Object)
