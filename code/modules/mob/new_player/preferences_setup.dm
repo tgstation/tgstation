@@ -113,7 +113,19 @@
 				icon_string = "[pref_species.id]_m_[bodypart]_[S.icon_state]_[layer]"
 			var/icon/part = new/icon("icon" = 'icons/mob/mutant_bodyparts.dmi', "icon_state" = icon_string)
 
-			part.Blend("#[features["mcolor"]]", ICON_MULTIPLY)
+			switch(S.color_src)
+				if(MUTCOLORS)
+					part.Blend("#[features["mcolor"]]", ICON_MULTIPLY)
+				if(HAIR)
+					if(hair_color == "mutcolor")
+						part.Blend("#[features["mcolor"]]", ICON_MULTIPLY)
+					else
+						part.Blend("#[hair_color]", ICON_MULTIPLY)
+				if(FACEHAIR)
+					part.Blend("#[facial_hair_color]", ICON_MULTIPLY)
+				if(EYECOLOR)
+					part.Blend("#[eye_color]", ICON_MULTIPLY)
+
 			preview_icon.Blend(part, ICON_OVERLAY)
 
 	if(underwear)

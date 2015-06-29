@@ -351,7 +351,18 @@
 			I = image("icon" = 'icons/mob/mutant_bodyparts.dmi', "icon_state" = icon_string, "layer" =- layer)
 
 			if(!(H.disabilities & HUSK))
-				I.color = "#[H.dna.features["mcolor"]]"
+				switch(S.color_src)
+					if(MUTCOLORS)
+						I.color = "#[H.dna.features["mcolor"]]"
+					if(HAIR)
+						if(hair_color == "mutcolor")
+							I.color = "#[H.dna.features["mcolor"]]"
+						else
+							I.color = "#[H.hair_color]"
+					if(FACEHAIR)
+						I.color = "#[H.facial_hair_color]"
+					if(EYECOLOR)
+						I.color = "#[H.eye_color]"
 			standing += I
 
 		H.overlays_standing[layer] = standing.Copy()

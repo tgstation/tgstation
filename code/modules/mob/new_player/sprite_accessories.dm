@@ -42,6 +42,7 @@
 	var/name			//the preview name of the accessory
 	var/gender = NEUTER	//Determines if the accessory will be skipped or included in random hair generations
 	var/gender_specific //Something that can be worn by either gender, but looks different on each
+	var/color_src = MUTCOLORS	//Currently only used by mutantparts so don't worry about hair and stuff. This is the source that this accessory will get its color from. Default is MUTCOLOR, but can also be HAIR, FACEHAIR, EYECOLOR and 0 if none.
 	var/hasinner		//Decides if this sprite has an "inner" part, such as the fleshy parts on ears.
 
 //////////////////////
@@ -1170,10 +1171,12 @@
 /datum/sprite_accessory/tails/human/longsmooth
 	name = "Long and Smooth"
 	icon_state = "longsmooth"
+	color_src = HAIR
 
 /datum/sprite_accessory/tails_animated/human/longsmooth
 	name = "Long and Smooth"
 	icon_state = "longsmooth"
+	color_src = HAIR
 
 /datum/sprite_accessory/snouts
 	icon = 'icons/mob/mutant_bodyparts.dmi'
@@ -1229,6 +1232,7 @@
 	name = "Cat"
 	icon_state = "cat"
 	hasinner = 1
+	color_src = HAIR
 
 /datum/sprite_accessory/frills
 	icon = 'icons/mob/mutant_bodyparts.dmi'
