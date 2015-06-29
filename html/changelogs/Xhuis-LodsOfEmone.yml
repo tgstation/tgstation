@@ -1,0 +1,11 @@
+author: Xhuis
+delete-after: True
+
+changes: 
+  - experiment: "Money and commerce have been added!"
+  - rscadd: "Whenever a new ID card is created, a random PIN number is assigned to it. It is also loaded with a preset amount of credits based on the wearer's job."
+  - rscadd: "Credits can be stored in ID cards in addition to digital bank accounts storted on a server located within the vault."
+  - tweak: "Agent cards now steal credits from other cards after scanning them."
+  - rscadd: "ATMs have been added. They will sync up with the bank server and can transfer credits to and from the server's accounts."
+  - rscadd: "A bank server has been added. This mighty piece of hardware is immune to fire and explosions and stores all the station's credit funds. ATMs will not function without a bank server."
+  - experiment: "Note that ATMs and bank servers have not yet been added to the map. These will be coming shortly."
