@@ -56,13 +56,17 @@
 	else
 		..()
 
-/obj/item/clothing/mask/gas/sechailer/verb/hailer_overload(var/mob/living/user)
-	if(ishuman(user))
-		user.adjust_fire_stacks(15)
-		user.IgniteMob()
+/obj/item/clothing/mask/gas/sechailer/proc/hailer_overload(var/mob/living/user)
+	if(isliving(user))
 		user.adjustBrainLoss(20)
-		user << "<span class='danger'>\The [src] spews battery acid all over you and explodes.</span>"
-		playsound(src.loc, 'sound/effects/spray.ogg', 10, 1, -3)
+		if(aggressiveness > 2)
+			user << "<span class='danger'>\The [src] spews battery acid all over you and explodes.</span>"
+			playsound(src.loc, 'sound/effects/spray.ogg', 10, 1, -3)
+			user.adjust_fire_stacks(15)
+			user.IgniteMob()
+		else
+			user << "<span class='danger'>\The [src] overheats, melting it apart.</span>"
+		new /obj/effect/decal/cleanable/robot_debris(get_turf(src))
 		qdel(src)
 
 /obj/item/clothing/mask/gas/sechailer/cyborg/hailer_overload(var/mob/living/user)
@@ -92,10 +96,13 @@
 
 	if(cooldown < world.time - 30) // A cooldown, to stop people being jerks
 		recent_uses++
-		if(cooldown_special < world.time - 150) //A better cooldown that lights jerks on fire
+		if(cooldown_special < world.time - 175) //A better cooldown that lights jerks on fire
 			recent_uses = initial(recent_uses)
 
-		if(recent_uses >= 3) //YOU have the right to shut the fuck up
+		if(recent_uses == 4)
+			user << "<span class='danger'>\The [src] is heating up dangerously from overuse.</span>"
+
+		if(recent_uses >= 5) //YOU have the right to shut the fuck up
 			hailer_overload(usr)
 			return
 
