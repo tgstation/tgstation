@@ -121,7 +121,7 @@ Class Procs:
 	..()
 	machines += src
 	SSmachine.processing += src
-	auto_use_power()
+	power_change()
 
 /obj/machinery/Destroy()
 	machines.Remove(src)
