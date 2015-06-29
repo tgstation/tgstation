@@ -132,12 +132,6 @@
 	if(health > 1)
 		health = 1 //Only holding up on shards and scrap
 
-/obj/machinery/power/solar/panel/meteorhit()
-	if(stat & !BROKEN)
-		broken()
-	else
-		kill()
-
 /obj/machinery/power/solar/panel/ex_act(severity)
 	switch(severity)
 		if(1.0)

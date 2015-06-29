@@ -354,15 +354,6 @@
 	visible_message("<span class='danger'>\The [src] spontaenously combusts!.</span>") //!!OH SHIT!!
 	return
 
-/turf/simulated/wall/meteorhit(obj/M as obj)
-	if(prob(15) && !rotting)
-		dismantle_wall()
-	else if(prob(70) && !rotting)
-		ChangeTurf(/turf/simulated/floor/plating)
-	else
-		ReplaceWithLattice()
-	return 0
-
 /turf/simulated/wall/Destroy()
 	for(var/obj/effect/E in src)
 		if(E.name == "Wallrot")

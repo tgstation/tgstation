@@ -138,12 +138,6 @@
 	..()
 	healthcheck()
 
-/obj/machinery/bot/meteorhit()
-	if(flags & INVULNERABLE)
-		return
-	src.explode()
-	return
-
 /obj/machinery/bot/blob_act()
 	if(flags & INVULNERABLE)
 		return

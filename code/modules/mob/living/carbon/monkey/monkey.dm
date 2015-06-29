@@ -329,19 +329,6 @@
 	..()
 	return
 
-/mob/living/carbon/monkey/meteorhit(obj/O as obj)
-	if(flags & INVULNERABLE)
-		return
-	for(var/mob/M in viewers(src, null))
-		M.show_message(text("<span class='warning'>[] has been hit by []</span>", src, O), 1)
-	if (health > 0)
-		var/shielded = 0
-		adjustBruteLoss(30)
-		if ((O.icon_state == "flaming" && !( shielded )))
-			adjustFireLoss(40)
-		health = 100 - getOxyLoss() - getToxLoss() - getFireLoss() - getBruteLoss()
-	return
-
 //mob/living/carbon/monkey/bullet_act(var/obj/item/projectile/Proj)taken care of in living
 
 /mob/living/carbon/monkey/getarmor(var/def_zone, var/type)

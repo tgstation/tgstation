@@ -161,12 +161,6 @@ So, hopefully this is helpful if any more icons are to be added/changed/wonderin
 		del(src)
 	return
 
-
-/obj/structure/particle_accelerator/meteorhit()
-	if(prob(50))
-		del(src)
-	return
-
 /obj/structure/particle_accelerator/update_icon()
 	switch(construction_state)
 		if(0,1)
@@ -346,13 +340,6 @@ So, hopefully this is helpful if any more icons are to be added/changed/wonderin
 	if(prob(50))
 		del(src)
 	return
-
-
-/obj/machinery/particle_accelerator/meteorhit()
-	if(prob(50))
-		del(src)
-	return
-
 
 /obj/machinery/particle_accelerator/proc/update_state()
 	return 0

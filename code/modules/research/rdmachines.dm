@@ -67,10 +67,6 @@ var/global/list/rnd_machines = list()
 	if (prob(50))
 		del(src)
 
-/obj/machinery/r_n_d/meteorhit()
-	del(src)
-	return
-
 /obj/machinery/r_n_d/attack_hand(mob/user as mob)
 	if (shocked)
 		shock(user,50)

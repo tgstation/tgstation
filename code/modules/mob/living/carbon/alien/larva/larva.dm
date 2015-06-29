@@ -94,16 +94,6 @@
 /mob/living/carbon/alien/larva/attack_ui(slot_id)
 	return
 
-/mob/living/carbon/alien/larva/meteorhit(O as obj)
-	if(flags & INVULNERABLE)
-		return
-	visible_message("<span class='warning'>\The [src] has been hit by [O]")
-	if(health > 0)
-		adjustBruteLoss((istype(O, /obj/effect/meteor/small) ? 10 : 25)) //You fucking what
-		adjustFireLoss(30)
-		updatehealth()
-	return
-
 /mob/living/carbon/alien/larva/attack_animal(mob/living/simple_animal/M as mob)
 	if(M.melee_damage_upper == 0)
 		M.emote("[M.friendly] [src]")

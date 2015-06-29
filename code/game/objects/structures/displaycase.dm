@@ -136,13 +136,6 @@
 		if(occupant) dump()
 		del(src)
 
-
-/obj/structure/displaycase/meteorhit(obj/O as obj)
-		getFromPool(/obj/item/weapon/shard, loc)
-		if(occupant) dump()
-		del(src)
-
-
 /obj/structure/displaycase/proc/healthcheck()
 	if (src.health <= 0)
 		if (!( src.destroyed ))

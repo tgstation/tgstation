@@ -357,14 +357,6 @@ var/global/list/datum/stack_recipe/snow_recipes = list (
 				qdel(src)
 			return
 
-/obj/structure/barricade/snow/meteorhit()
-	visible_message("<span class='danger'>\the [src] is blown apart!</span>")
-	new /obj/item/stack/sheet/snow(get_turf(src), 1)
-	new /obj/item/stack/sheet/snow(get_turf(src), 1)
-	new /obj/item/stack/sheet/snow(get_turf(src), 1)
-	del(src)
-	return
-
 /obj/structure/barricade/snow/blob_act()
 	src.health -= 25
 	if (src.health <= 0)

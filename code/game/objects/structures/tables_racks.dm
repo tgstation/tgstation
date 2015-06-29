@@ -642,10 +642,6 @@
 	user.drop_item(W, src.loc)
 	return 1
 
-/obj/structure/rack/meteorhit(obj/O as obj)
-	del(src)
-
-
 /obj/structure/table/attack_hand(mob/user)
 	if(M_HULK in user.mutations)
 		visible_message("<span class='danger'>[user] smashes [src] apart!</span>")
