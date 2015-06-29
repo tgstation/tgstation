@@ -44,3 +44,5 @@
 
 	var/list/pipes_shown = list()
 	var/last_played_vent
+
+	var/smoke_delay = 0 //used to prevent spam with smoke reagent reaction on mob.

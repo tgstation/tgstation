@@ -143,10 +143,8 @@
 
 /datum/chemical_reaction/foam/on_reaction(var/datum/reagents/holder, var/created_volume)
 	var/location = get_turf(holder.my_atom)
-
 	for(var/mob/M in viewers(5, location))
 		M << "<span class='danger'>The solution spews out foam!</span>"
-
 	var/datum/effect/effect/system/foam_spread/s = new()
 	s.set_up(created_volume, location, holder)
 	s.start()

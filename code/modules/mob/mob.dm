@@ -159,8 +159,8 @@ var/next_mob_id = 0
 	var/range = 7
 	if(hearing_distance)
 		range = hearing_distance
-	var/msg = message
 	for(var/mob/M in get_hearers_in_view(range, src))
+		var/msg = message
 		if(self_message && M==src)
 			msg = self_message
 		M.show_message( msg, 2, deaf_message, 1)

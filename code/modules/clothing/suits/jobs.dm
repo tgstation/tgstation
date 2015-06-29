@@ -100,6 +100,7 @@
 	item_state = "hazard"
 	blood_overlay_type = "armor"
 	allowed = list(/obj/item/device/flashlight,/obj/item/weapon/tank/internals/emergency_oxygen,/obj/item/device/t_scanner,)
+	burn_state = -1 //Won't burn in fires
 
 //Lawyer
 /obj/item/clothing/suit/toggle/lawyer

@@ -367,7 +367,7 @@ Class Procs:
 	if(istype(W))
 		user << "<span class='notice'>You begin [anchored ? "un" : ""]securing [name]...</span>"
 		playsound(src.loc, 'sound/items/Ratchet.ogg', 50, 1)
-		if(do_after(user, time))
+		if(do_after(user, time, target = src))
 			user << "<span class='notice'>You [anchored ? "un" : ""]secure [name].</span>"
 			anchored = !anchored
 			playsound(src.loc, 'sound/items/Deconstruct.ogg', 50, 1)
@@ -416,3 +416,15 @@ Class Procs:
 
 /obj/machinery/allow_drop()
 	return 0
+
+// Hook for html_interface module to prevent updates to clients who don't have this as their active machine.
+/obj/machinery/proc/hiIsValidClient(datum/html_interface_client/hclient)
+	if (hclient.client.mob && hclient.client.mob.stat == 0)
+		if (isAI(hclient.client.mob)) return TRUE
+		else                          return hclient.client.mob.machine == src && src.Adjacent(hclient.client.mob)
+	else
+		return FALSE
+
+// Hook for html_interface module to unset the active machine when the window is closed by the player.
+/obj/machinery/proc/hiOnHide(datum/html_interface_client/hclient)
+	if (hclient.client.mob && hclient.client.mob.machine == src) hclient.client.mob.unset_machine()

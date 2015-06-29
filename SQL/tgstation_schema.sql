@@ -306,16 +306,7 @@ CREATE TABLE `poll_vote` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
---var/reason = input(usr,"Reason?","reason","Metagaming") as text|null
-			if(!reason)
-				return
-			log_admin("[key_name_admin(usr)] has added [key_name_admin(M)] to the watchlist - Reason: [reason]")
-			message_admins("[key_name_admin(usr)] has added [key_name_admin(M)] to the watchlist - Reason: [reason]", 1)
-			reason = sanitizeSQL(reason)
-			var/DBQuery/query_watchadd = dbcon.NewQuery("INSERT INTO [format_table_name("watch")] (ckey, reason) VALUES ('[sql_ckey]', '[reason]')")
-			if(!query_watchadd.Execute())
-				var/err = query_watchadd.ErrorMsg()
-				log_game("SQL ERROR during adding new watch entry. Error : \[[err]\]\n")
+
 -- Table structure for table `privacy`
 --
 

@@ -10,7 +10,7 @@
 
 /obj/structure/hivebot_beacon/New()
 	..()
-	var/datum/effect/effect/system/harmless_smoke_spread/smoke = new /datum/effect/effect/system/harmless_smoke_spread()
+	var/datum/effect/effect/system/smoke_spread/smoke = new
 	smoke.set_up(5, 0, src.loc)
 	smoke.start()
 	visible_message("<span class='boldannounce'>The [src] warps in!</span>")

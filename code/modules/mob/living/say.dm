@@ -56,6 +56,8 @@ var/list/department_radio_keys = list(
 	  ":ï" = "changeling",	"#ï" = "changeling",	".ï" = "changeling"
 )
 
+var/list/crit_allowed_modes = list(MODE_WHISPER,MODE_CHANGELING,MODE_ALIEN)
+
 /mob/living/say(message, bubble_type,)
 	message = trim(copytext(sanitize(message), 1, MAX_MESSAGE_LEN))
 
@@ -63,17 +65,16 @@ var/list/department_radio_keys = list(
 		say_dead(message)
 		return
 
-	if(stat)
-		return
-
 	if(check_emote(message))
 		return
 
 	if(!can_speak_basic(message)) //Stat is seperate so I can handle whispers properly.
-		src << "<span class='warning'>You find yourself unable to speak!</span>"
 		return
 
 	var/message_mode = get_message_mode(message)
+
+	if(stat && !(message_mode in crit_allowed_modes))
+		return
 
 	if(message_mode == MODE_HEADSET || message_mode == MODE_ROBOT)
 		message = copytext(message, 2)
@@ -86,14 +87,14 @@ var/list/department_radio_keys = list(
 		return
 
 	if(!can_speak_vocal(message))
-		src << "<span class='warning'>You find yourself unable to speak!</span>" //repetition intended
+		src << "<span class='warning'>You find yourself unable to speak!</span>" 
 		return
 
 	message = treat_message(message)
 	var/spans = list()
 	spans += get_spans()
 
-	if(!message || message == "")
+	if(!message)
 		return
 
 	var/message_range = 7
@@ -163,9 +164,6 @@ var/list/department_radio_keys = list(
 		return 1
 
 /mob/living/proc/can_speak_basic(message) //Check BEFORE handling of xeno and ling channels
-	if(!message || message == "")
-		return 0
-
 	if(client)
 		if(client.prefs.muted & MUTE_IC)
 			src << "<span class='danger'>You cannot speak in IC (muted).</span>"
@@ -176,9 +174,6 @@ var/list/department_radio_keys = list(
 	return 1
 
 /mob/living/proc/can_speak_vocal(message) //Check AFTER handling of xeno and ling channels
-	if(!message)
-		return 0
-
 	if(disabilities & MUTE)
 		return 0
 

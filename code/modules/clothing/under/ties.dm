@@ -84,6 +84,7 @@
 	desc = "A bronze medal."
 	icon_state = "bronze"
 	item_color = "bronze"
+	burn_state = -1 //Won't burn in fires
 
 //Pinning medals on people
 /obj/item/clothing/tie/medal/attack(mob/living/carbon/human/M, mob/living/user)

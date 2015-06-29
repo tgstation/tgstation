@@ -81,7 +81,8 @@
 
 #define MINERAL_MATERIAL_AMOUNT 2000
 //The amount of materials you get from a sheet of mineral like iron/diamond/glass etc
-
+#define MAX_STACK_SIZE 50
+//The maximum size of a stack object.
 
 #define CLICK_CD_MELEE 8
 #define CLICK_CD_RANGE 4
