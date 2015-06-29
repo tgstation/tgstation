@@ -291,9 +291,9 @@
 //Deals with converting players to a gang//
 ///////////////////////////////////////////
 /datum/game_mode/proc/add_gangster(datum/mind/gangster_mind, var/gang, var/check = 1)
-	if(check && isloyal(gangster_mind.current)) //Check to see if the potential gangster is implanted
-		return 0
 	if(gangster_mind in (A_bosses | A_gang | B_bosses | B_gang))
+		return 0
+	if(check && isloyal(gangster_mind.current)) //Check to see if the potential gangster is implanted
 		return 1
 	if(gang == "A")
 		A_gang += gangster_mind
