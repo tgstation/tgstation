@@ -31,6 +31,9 @@
 
 	//Admin PM
 	if(href_list["priv_msg"])
+		if (href_list["ahelp_reply"])
+			cmd_ahelp_reply(href_list["priv_msg"])
+			return
 		cmd_admin_pm(href_list["priv_msg"],null)
 		return
 

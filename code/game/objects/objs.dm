@@ -9,6 +9,10 @@
 	var/damtype = "brute"
 	var/force = 0
 
+	var/burn_state = -1 // -1=fireproof | 0=will burn in fires | 1=currently on fire
+	var/burntime = 10 //How long it takes to burn to ashes, in seconds
+	var/burn_world_time //What world time the object will burn up completely
+
 /obj/Destroy()
 	if(!istype(src, /obj/machinery))
 		SSobj.processing.Remove(src) // TODO: Have a processing bitflag to reduce on unnecessary loops through the processing lists
@@ -156,3 +160,25 @@
 /obj/storage_contents_dump_act(obj/item/weapon/storage/src_object, mob/user)
 	var/turf/T = get_turf(src)
 	return T.storage_contents_dump_act(src_object, user)
+
+/obj/fire_act(var/global_overlay=1)
+	if(!burn_state)
+		burn_state = 1
+		SSobj.burning += src
+		burn_world_time = world.time + burntime*10
+		if(global_overlay)
+			overlays += fire_overlay
+		return 1
+
+/obj/proc/burn()
+	for(var/obj/item/Item in contents) //Empty out the contents
+		Item.loc = src.loc
+		Item.fire_act() //Set them on fire, too
+	new /obj/effect/decal/cleanable/ash(src.loc)
+	qdel(src)
+
+/obj/proc/extinguish()
+	if(burn_state == 1)
+		burn_state = 0
+		overlays -= fire_overlay
+		SSobj.burning -= src

@@ -6,37 +6,84 @@
 
 /obj/effect/effect/smoke
 	name = "smoke"
-	icon = 'icons/effects/water.dmi'
-	icon_state = "smoke"
-	opacity = 1
-	anchored = 0.0
-	mouse_opacity = 0
-	var/amount = 8.0
-
-/obj/effect/effect/harmless_smoke
-	name = "smoke"
-	icon_state = "smoke"
-	opacity = 1
-	anchored = 0.0
-	mouse_opacity = 0
-	var/amount = 6.0
-	//Remove this bit to use the old smoke
 	icon = 'icons/effects/96x96.dmi'
 	pixel_x = -32
 	pixel_y = -32
-
-/obj/effect/effect/harmless_smoke/New()
-	..()
-	spawn (100)
-		qdel(src)
-
-/datum/effect/effect/system/harmless_smoke_spread
-	var/total_smoke = 0 // To stop it being spammed and lagging!
+	icon_state = "smoke"
+	opacity = 1
+	anchored = 0
+	mouse_opacity = 0
+	var/steps = 0
+	var/lifetime = 5
 	var/direction
 
-/datum/effect/effect/system/harmless_smoke_spread/set_up(n = 5, c = 0, loca, direct)
-	if(n > 10)
-		n = 10
+
+/obj/effect/effect/smoke/proc/fade_out(var/frames = 16)
+	if(alpha == 0) //Handle already transparent case
+		return
+	if(frames == 0)
+		frames = 1 //We will just assume that by 0 frames, the coder meant "during one frame".
+	var/step = alpha / frames
+	for(var/i = 0, i < frames, i++)
+		alpha -= step
+		sleep(world.tick_lag)
+
+/obj/effect/effect/smoke/New()
+	..()
+	create_reagents(500)
+	SSobj.processing.Add(src)
+	lifetime += rand(-1,1)
+
+/obj/effect/effect/smoke/Destroy()
+	SSobj.processing.Remove(src)
+	..()
+
+/obj/effect/effect/smoke/proc/kill_smoke()
+	SSobj.processing.Remove(src)
+	spawn(0)
+		fade_out()
+	spawn(10)
+		qdel(src)
+
+/obj/effect/effect/smoke/process()
+	lifetime--
+	if(lifetime < 1)
+		kill_smoke()
+		return 0
+	if(steps >= 1)
+		step(src,direction)
+		steps--
+	return 1
+
+/obj/effect/effect/smoke/Crossed(mob/living/M as mob)
+	if(!istype(M))
+		return
+	smoke_mob(M)
+
+/obj/effect/effect/smoke/proc/smoke_mob(mob/living/carbon/M as mob)
+	if(!istype(M))
+		return 0
+	if(lifetime<1)
+		return 0
+	if(M.internal != null || (M.wear_mask && (M.wear_mask.flags & BLOCK_GAS_SMOKE_EFFECT)))
+		return 0
+	if(M.smoke_delay)
+		return 0
+	M.smoke_delay++
+	spawn(10)
+		if(M)
+			M.smoke_delay = 0
+	return 1
+
+
+
+/datum/effect/effect/system/smoke_spread
+	var/direction
+	var/smoke_type = /obj/effect/effect/smoke
+
+/datum/effect/effect/system/smoke_spread/set_up(n = 5, c = 0, loca, direct)
+	if(n > 20)
+		n = 20
 	number = n
 	cardinals = c
 	if(istype(loca, /turf/))
@@ -46,70 +93,42 @@
 	if(direct)
 		direction = direct
 
+/datum/effect/effect/system/smoke_spread/start()
+	for(var/i=0, i<src.number, i++)
+		if(holder)
+			src.location = get_turf(holder)
+		var/obj/effect/effect/smoke/S = PoolOrNew(smoke_type, location)
+		if(!direction)
+			if(src.cardinals)
+				S.direction = pick(cardinal)
+			else
+				S.direction = pick(alldirs)
+		else
+			S.direction = direction
+		S.steps = pick(0,1,1,1,2,2,2,3)
+		S.process()
 
-/datum/effect/effect/system/harmless_smoke_spread/start()
-	var/i = 0
-	for(i=0, i<src.number, i++)
-		if(src.total_smoke > 20)
-			return
-		spawn(0)
-			if(holder)
-				src.location = get_turf(holder)
-			var/obj/effect/effect/harmless_smoke/smoke = PoolOrNew(/obj/effect/effect/harmless_smoke, location)
-			src.total_smoke++
-			var/direction = src.direction
-			if(!direction)
-				if(src.cardinals)
-					direction = pick(cardinal)
-				else
-					direction = pick(alldirs)
-			for(i=0, i<pick(0,1,1,1,2,2,2,3), i++)
-				sleep(10)
-				step(smoke,direction)
-			spawn(75+rand(10,30))
-				if(smoke)
-					fadeOut(smoke)
-					qdel(smoke)
-				src.total_smoke--
 
 
 /////////////////////////////////////////////
 // Bad smoke
 /////////////////////////////////////////////
 
-/obj/effect/effect/bad_smoke
-	name = "smoke"
-	icon_state = "smoke"
-	opacity = 1
-	anchored = 0.0
-	mouse_opacity = 0
-	var/amount = 6.0
-	icon = 'icons/effects/96x96.dmi'
-	pixel_x = -32
-	pixel_y = -32
+/obj/effect/effect/smoke/bad
+	lifetime = 8
 
-/obj/effect/effect/bad_smoke/New()
-	..()
-	spawn (200+rand(10,30))
-		qdel(src)
+/obj/effect/effect/smoke/bad/process()
+	if(..())
+		for(var/mob/living/carbon/M in range(1,src))
+			smoke_mob(M)
 
-/obj/effect/effect/bad_smoke/Move()
-	..()
-	for(var/mob/living/carbon/M in get_turf(src))
-		if (M.internal != null && M.wear_mask && (M.wear_mask.flags & MASKINTERNALS))
-		else
-			M.drop_item()
-			M.adjustOxyLoss(1)
-			if (M.coughedtime != 1)
-				M.coughedtime = 1
-				M.emote("cough")
-				spawn(20)
-					if(M && M.loc)
-						M.coughedtime = 0
-	return
+/obj/effect/effect/smoke/bad/smoke_mob(mob/living/carbon/M as mob)
+	if(..())
+		M.drop_item()
+		M.adjustOxyLoss(1)
+		M.emote("cough")
 
-
-/obj/effect/effect/bad_smoke/CanPass(atom/movable/mover, turf/target, height=0)
+/obj/effect/effect/smoke/bad/CanPass(atom/movable/mover, turf/target, height=0)
 	if(height==0) return 1
 	if(istype(mover, /obj/item/projectile/beam))
 		var/obj/item/projectile/beam/B = mover
@@ -117,135 +136,78 @@
 	return 1
 
 
-/obj/effect/effect/bad_smoke/Crossed(mob/living/carbon/M as mob )
-	..()
-	if(istype(M, /mob/living/carbon))
-		if (M.internal != null && M.wear_mask && (M.wear_mask.flags & MASKINTERNALS))
-			return
-		else
-			M.drop_item()
-			M.adjustOxyLoss(1)
-			if (M.coughedtime != 1)
-				M.coughedtime = 1
-				M.emote("cough")
-				spawn(20)
-					if(M && M.loc)
-						M.coughedtime = 0
-	return
 
-/datum/effect/effect/system/bad_smoke_spread
-	var/total_smoke = 0 // To stop it being spammed and lagging!
-	var/direction
-
-/datum/effect/effect/system/bad_smoke_spread/set_up(n = 5, c = 0, loca, direct)
-	if(n > 20)
-		n = 20
-	number = n
-	cardinals = c
-	if(istype(loca, /turf/))
-		location = loca
-	else
-		location = get_turf(loca)
-	if(direct)
-		direction = direct
-
-/datum/effect/effect/system/bad_smoke_spread/start()
-	var/i = 0
-	for(i=0, i<src.number, i++)
-		if(src.total_smoke > 20)
-			return
-		spawn(0)
-			if(holder)
-				src.location = get_turf(holder)
-			var/obj/effect/effect/bad_smoke/smoke = PoolOrNew(/obj/effect/effect/bad_smoke, location)
-			src.total_smoke++
-			var/direction = src.direction
-			if(!direction)
-				if(src.cardinals)
-					direction = pick(cardinal)
-				else
-					direction = pick(alldirs)
-			for(i=0, i<pick(0,1,1,1,2,2,2,3), i++)
-				sleep(10)
-				step(smoke,direction)
-			spawn(150+rand(10,30))
-				if(smoke)
-					fadeOut(smoke)
-					qdel(smoke)
-				src.total_smoke--
+/datum/effect/effect/system/smoke_spread/bad
+	smoke_type = /obj/effect/effect/smoke/bad
 
 
 /////////////////////////////////////////////
 // Chem smoke
 /////////////////////////////////////////////
 
-
-/obj/effect/effect/chem_smoke
-	name = "smoke"
-	opacity = 1
-	anchored = 0.0
-	mouse_opacity = 0
-	var/amount = 6.0
+/obj/effect/effect/smoke/chem
 	icon = 'icons/effects/chemsmoke.dmi'
-	pixel_x = -32
-	pixel_y = -32
+	icon_state = ""
+	lifetime = 10
+	var/max_lifetime = 10
+
+/obj/effect/effect/smoke/chem/process()
+	if(..())
+		var/fraction = 1/max_lifetime
+		for(var/obj/O in range(1,src))
+			if(O.type == src.type)
+				continue
+			reagents.reaction(O, TOUCH, fraction)
+
+		for(var/turf/T in range(1,src))
+			reagents.reaction(T, TOUCH, fraction)
+
+		var/hit = 0
+		for(var/mob/living/L in range(1,src))
+			hit += smoke_mob(L)
+		if(hit)
+			lifetime++ //this is so the decrease from mobs hit and the natural decrease don't cumulate.
+
+/obj/effect/effect/smoke/chem/smoke_mob(mob/living/carbon/M as mob)
+	if(lifetime<1)
+		return 0
+	if(!istype(M))
+		return 0
+	var/fraction = 1/max_lifetime
+	reagents.reaction(M, TOUCH, fraction)
+	lifetime--
+	return 1
 
 
-/obj/effect/effect/chem_smoke/New()
-	..()
-	create_reagents(500)
-	spawn(200+rand(10,30))
-		qdel(src)
 
-
-/obj/effect/effect/chem_smoke/Move()
-	..()
-	for(var/mob/living/A in view(1, src))
-		if(reagents.total_volume >= 1)
-			reagents.reaction(A, TOUCH)
-			reagents.trans_to(A.reagents, 10)
-	return
-
-
-/obj/effect/effect/chem_smoke/Crossed(mob/living/carbon/M as mob )
-	..()
-	if(reagents.total_volume >= 1)
-		reagents.reaction(M, TOUCH)
-		reagents.trans_to(M.reagents, 10)
-
-/datum/effect/effect/system/chem_smoke_spread
-	var/total_smoke = 0 // To stop it being spammed and lagging!
-	var/direction
+/datum/effect/effect/system/smoke_spread/chem
 	var/obj/chemholder
+	smoke_type = /obj/effect/effect/smoke/chem
 
-
-/datum/effect/effect/system/chem_smoke_spread/New()
+/datum/effect/effect/system/smoke_spread/chem/New()
 	..()
 	chemholder = PoolOrNew(/obj)
 	var/datum/reagents/R = new/datum/reagents(500)
 	chemholder.reagents = R
 	R.my_atom = chemholder
 
-/datum/effect/effect/system/chem_smoke_spread/Destroy()
+/datum/effect/effect/system/smoke_spread/chem/Destroy()
 	chemholder = null
 	..()
 	return QDEL_HINT_PUTINPOOL
 
-/datum/effect/effect/system/chem_smoke_spread/set_up(var/datum/reagents/carry = null, n = 5, c = 0, loca, direct, silent = 0)
+/datum/effect/effect/system/smoke_spread/chem/set_up(var/datum/reagents/carry = null, n = 5, c = 0, loca, direct, silent = 0)
 	if(n > 20)
 		n = 20
 	number = n
 	cardinals = c
-	carry.copy_to(chemholder, carry.total_volume)
-
-
 	if(istype(loca, /turf/))
 		location = loca
 	else
 		location = get_turf(loca)
-
 	if(direct)
 		direction = direct
+	carry.copy_to(chemholder, carry.total_volume)
 
 	if(!silent)
 		var/contained = ""
@@ -270,140 +232,66 @@
 			log_game("A chemical smoke reaction has taken place in ([where])[contained]. No associated key.")
 
 
-/datum/effect/effect/system/chem_smoke_spread/start()
-	var/i = 0
+/datum/effect/effect/system/smoke_spread/chem/start()
 
 	var/color = mix_color_from_reagents(chemholder.reagents.reagent_list)
 
-	for(i=0, i<src.number, i++)
-		if(src.total_smoke > 20)
-			return
-		spawn(0)
-			if(holder)
-				src.location = get_turf(holder)
-			var/obj/effect/effect/chem_smoke/smoke = PoolOrNew(/obj/effect/effect/chem_smoke, location)
-			src.total_smoke++
-			var/direction = src.direction
-			if(!direction)
-				if(src.cardinals)
-					direction = pick(cardinal)
-				else
-					direction = pick(alldirs)
-
-			if(chemholder.reagents.total_volume != 1) // can't split 1 very well
-				chemholder.reagents.copy_to(smoke, chemholder.reagents.total_volume / number) // copy reagents to each smoke, divide evenly
-
-			if(color)
-				smoke.color = color // give the smoke color, if it has any to begin with
+	for(var/i=0, i<src.number, i++)
+		if(holder)
+			src.location = get_turf(holder)
+		var/obj/effect/effect/smoke/chem/S = PoolOrNew(smoke_type, location)
+		if(!direction)
+			if(src.cardinals)
+				S.direction = pick(cardinal)
 			else
-				// if no color, just use the old smoke icon
-				smoke.icon = 'icons/effects/96x96.dmi'
-				smoke.icon_state = "smoke"
+				S.direction = pick(alldirs)
+		else
+			S.direction = direction
+		if(number == 1)
+			S.steps = 0
+		else if(number<=5)
+			S.steps = pick(0,1,1)
+		else if(number<=10)
+			S.steps = pick(0,1,1,1,2)
+		else
+			S.steps = pick(0,1,1,1,2,2,2,3)
 
-			for(i=0, i<pick(0,1,1,1,2,2,2,3), i++)
-				sleep(10)
-				step(smoke,direction)
-			spawn(150+rand(10,30))
-				if(smoke)
-					fadeOut(smoke)
-					qdel(smoke)
-				src.total_smoke--
+		S.max_lifetime = S.lifetime
 
+		if(chemholder.reagents.total_volume > 1) // can't split 1 very well
+			chemholder.reagents.copy_to(S, chemholder.reagents.total_volume/number) // copy reagents to each smoke, divide evenly
 
+		if(color)
+			S.color = color // give the smoke color, if it has any to begin with
+		else
+			// if no color, just use the old smoke icon
+			S.icon = 'icons/effects/96x96.dmi'
+			S.icon_state = "smoke"
+
+		S.process() //calling process right now so the smoke immediately attacks mobs.
 
 /////////////////////////////////////////////
 // Sleep smoke
 /////////////////////////////////////////////
 
-/obj/effect/effect/sleep_smoke
-	name = "smoke"
-	icon_state = "smoke"
-	opacity = 1
-	anchored = 0.0
-	mouse_opacity = 0
-	var/amount = 6.0
-	//Remove this bit to use the old smoke
-	icon = 'icons/effects/96x96.dmi'
-	pixel_x = -32
-	pixel_y = -32
+/obj/effect/effect/smoke/sleeping
 	color = "#9C3636"
+	lifetime = 10
 
-/obj/effect/effect/sleep_smoke/New()
-	..()
-	spawn (200+rand(10,30))
-		qdel(src)
+/obj/effect/effect/smoke/sleeping/process()
+	for(var/mob/living/carbon/M in range(1,src))
+		smoke_mob(M)
 
-/obj/effect/effect/sleep_smoke/Move()
-	..()
-	for(var/mob/living/carbon/M in get_turf(src))
-		if (M.internal != null && M.wear_mask && (M.wear_mask.flags & MASKINTERNALS))
-//		if (M.wear_suit, /obj/item/clothing/suit/wizrobe && (M.hat, /obj/item/clothing/head/wizard) && (M.shoes, /obj/item/clothing/shoes/sandal))  // I'll work on it later
-		else
-			M.drop_item()
-			M:sleeping += 5
-			if (M.coughedtime != 1)
-				M.coughedtime = 1
-				M.emote("cough")
-				spawn(20)
-					if(M && M.loc)
-						M.coughedtime = 0
-	return
-
-/obj/effect/effect/sleep_smoke/Crossed(mob/living/carbon/M as mob )
-	..()
-	if(istype(M, /mob/living/carbon))
-		if (M.internal != null && M.wear_mask && (M.wear_mask.flags & MASKINTERNALS))
-//		if (M.wear_suit, /obj/item/clothing/suit/wizrobe && (M.hat, /obj/item/clothing/head/wizard) && (M.shoes, /obj/item/clothing/shoes/sandal)) // Work on it later
+/obj/effect/effect/smoke/sleeping/smoke_mob(mob/living/carbon/M as mob)
+	if(..())
+		if(M.internal != null || (M.wear_mask && (M.wear_mask.flags & BLOCK_GAS_SMOKE_EFFECT)))
 			return
 		else
 			M.drop_item()
-			M:sleeping += 5
-			if (M.coughedtime != 1)
-				M.coughedtime = 1
-				M.emote("cough")
-				spawn(20)
-					if(M && M.loc)
-						M.coughedtime = 0
-	return
-
-/datum/effect/effect/system/sleep_smoke_spread
-	var/total_smoke = 0 // To stop it being spammed and lagging!
-	var/direction
-
-/datum/effect/effect/system/sleep_smoke_spread/set_up(n = 5, c = 0, loca, direct)
-	if(n > 20)
-		n = 20
-	number = n
-	cardinals = c
-	if(istype(loca, /turf/))
-		location = loca
-	else
-		location = get_turf(loca)
-	if(direct)
-		direction = direct
+			M.sleeping = max(M.sleeping,10)
+			M.emote("cough")
 
 
-/datum/effect/effect/system/sleep_smoke_spread/start()
-	var/i = 0
-	for(i=0, i<src.number, i++)
-		if(src.total_smoke > 20)
-			return
-		spawn(0)
-			if(holder)
-				src.location = get_turf(holder)
-			var/obj/effect/effect/sleep_smoke/smoke = PoolOrNew(/obj/effect/effect/sleep_smoke, location)
-			src.total_smoke++
-			var/direction = src.direction
-			if(!direction)
-				if(src.cardinals)
-					direction = pick(cardinal)
-				else
-					direction = pick(alldirs)
-			for(i=0, i<pick(0,1,1,1,2,2,2,3), i++)
-				sleep(10)
-				step(smoke,direction)
-			spawn(150+rand(10,30))
-				if(smoke)
-					fadeOut(smoke)
-					qdel(smoke)
-				src.total_smoke--
+/datum/effect/effect/system/smoke_spread/sleeping
+	smoke_type = /obj/effect/effect/smoke/sleeping
+	var/obj/chemholder

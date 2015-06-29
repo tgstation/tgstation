@@ -271,7 +271,7 @@
 "fk" = (/obj/machinery/door_control{desc = "A remote control switch for port-side blast doors."; icon_state = "doorctrl0"; id = "CentComPort"; name = "Security Doors"; pixel_y = 28; req_access_txt = "101"},/obj/structure/showcase/fakeid,/turf/simulated/floor/plasteel/black,/area/centcom/control)
 "fl" = (/obj/structure/table/reinforced,/obj/item/weapon/pen,/turf/simulated/floor/plasteel/red/side{dir = 2},/area/centcom/evac)
 "fm" = (/obj/structure/table/reinforced,/obj/item/toy/carpplushie,/obj/structure/window/reinforced{dir = 4},/turf/simulated/floor/plasteel/red/side{dir = 6},/area/centcom/evac)
-"fn" = (/obj/structure/closet/secure_closet/cargotech,/turf/simulated/floor/plasteel/loadingarea,/area/centcom/supply)
+"fn" = (/obj/structure/closet/wardrobe/cargotech,/turf/simulated/floor/plasteel/loadingarea,/area/centcom/supply)
 "fo" = (/obj/structure/closet,/turf/simulated/floor/plasteel/warning/corner{dir = 1},/area/centcom/supply)
 "fp" = (/obj/structure/closet,/turf/simulated/floor/plasteel,/area/centcom/supply)
 "fq" = (/obj/structure/closet/secure_closet/quartermaster,/turf/simulated/floor/plasteel/loadingarea,/area/centcom/supply)

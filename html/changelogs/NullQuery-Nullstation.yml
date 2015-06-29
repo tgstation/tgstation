@@ -1,6 +1,0 @@
-author: NullQuery
-delete-after: True
-
-changes: 
-  - wip: "Introduces html_interface, a module to streamline the management of browser windows."
-  - rscadd: "Adds playing cards that utilize a new HTML window management system."

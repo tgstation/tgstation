@@ -216,19 +216,16 @@
 	if(holder.has_reagent("stabilizing_agent"))
 		return
 	holder.remove_reagent("smoke_powder", created_volume)
+	var/smoke_amount = round(Clamp(created_volume/5, 1, 20),1)
 	var/location = get_turf(holder.my_atom)
-	var/datum/effect/effect/system/chem_smoke_spread/S = new /datum/effect/effect/system/chem_smoke_spread
+	var/datum/effect/effect/system/smoke_spread/chem/S = new
 	S.attach(location)
 	playsound(location, 'sound/effects/smoke.ogg', 50, 1, -3)
-	spawn(0)
-		if(S)
-			S.set_up(holder, 10, 0, location)
-			S.start()
-			sleep(10)
-			S.start()
-		if(holder && holder.my_atom)
-			holder.clear_reagents()
-	return
+	if(S)
+		S.set_up(holder, smoke_amount, 0, location)
+		S.start()
+	if(holder && holder.my_atom)
+		holder.clear_reagents()
 
 /datum/chemical_reaction/smoke_powder_smoke
 	name = "smoke_powder_smoke"
@@ -242,18 +239,16 @@
 
 /datum/chemical_reaction/smoke_powder_smoke/on_reaction(var/datum/reagents/holder, var/created_volume)
 	var/location = get_turf(holder.my_atom)
-	var/datum/effect/effect/system/chem_smoke_spread/S = new /datum/effect/effect/system/chem_smoke_spread
+	var/smoke_amount = round(Clamp(created_volume/5, 1, 20),1)
+	var/datum/effect/effect/system/smoke_spread/chem/S = new
 	S.attach(location)
 	playsound(location, 'sound/effects/smoke.ogg', 50, 1, -3)
-	spawn(0)
-		if(S)
-			S.set_up(holder, 10, 0, location)
-			S.start()
-			sleep(10)
-			S.start()
-		if(holder && holder.my_atom)
-			holder.clear_reagents()
-	return
+	if(S)
+		S.set_up(holder, smoke_amount, 0, location)
+		S.start()
+	if(holder && holder.my_atom)
+		holder.clear_reagents()
+
 
 
 /datum/chemical_reaction/sonic_powder
@@ -318,6 +313,7 @@
 	var/turf/simulated/T = get_turf(holder.my_atom)
 	if(istype(T))
 		T.atmos_spawn_air(SPAWN_HEAT | SPAWN_TOXINS, created_volume)
+	holder.clear_reagents()
 	return
 
 

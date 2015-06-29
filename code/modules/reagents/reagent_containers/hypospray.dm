@@ -25,7 +25,8 @@
 		M << "<span class='warning'>You feel a tiny prick!</span>"
 		user << "<span class='notice'>You inject [M] with [src].</span>"
 
-		reagents.reaction(M, INGEST)
+		var/fraction = min(amount_per_transfer_from_this/reagents.total_volume, 1)
+		reagents.reaction(M, INGEST, fraction)
 		if(M.reagents)
 			var/list/injected = list()
 			for(var/datum/reagent/R in reagents.reagent_list)

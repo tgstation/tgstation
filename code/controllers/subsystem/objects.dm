@@ -9,6 +9,7 @@ var/datum/subsystem/objects/SSobj
 	priority = 12
 
 	var/list/processing = list()
+	var/list/burning = list()
 
 /datum/subsystem/objects/New()
 	NEW_SS_GLOBAL(SSobj)
@@ -37,5 +38,9 @@ var/datum/subsystem/objects/SSobj
 			++i
 			continue
 		SSobj.processing.Cut(i, i+1)
-
-
+	for(var/obj/burningobj in SSobj.burning)
+		if(burningobj && (burningobj.burn_state == 1))
+			if(burningobj.burn_world_time < world.time)
+				burningobj.burn()
+		else
+			SSobj.burning -= burningobj

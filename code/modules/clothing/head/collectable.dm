@@ -58,6 +58,7 @@
 	desc = "A collectable welding helmet. Now with 80% less lead! Not for actual welding. Any welding done while wearing this helmet is done so at the owner's own risk!"
 	icon_state = "welding"
 	item_state = "welding"
+	burn_state = -1 //Won't burn in fires
 
 /obj/item/clothing/head/collectable/slime
 	name = "collectable slime hat"
@@ -110,9 +111,11 @@
 	desc = "Go Red! I mean Green! I mean Red! No Green!"
 	icon_state = "thunderdome"
 	item_state = "thunderdome"
+	burn_state = -1 //Won't burn in fires
 
 /obj/item/clothing/head/collectable/swat
 	name = "collectable SWAT helmet"
 	desc = "That's not real blood. That's red paint." //Reference to the actual description
 	icon_state = "swat"
 	item_state = "swat"
+	burn_state = -1 //Won't burn in fires

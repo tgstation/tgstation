@@ -10,9 +10,8 @@
 	throw_range = 7
 	flags = CONDUCT
 	var/gang //Which gang uses this?
-	var/boss = 1 //If it has the power to promote gang members
+	var/boss = 1 //Is this the original boss?
 	var/recalling = 0
-	var/promotions = 0
 	var/outfits = 3
 	var/free_pen = 0
 
@@ -27,19 +26,26 @@
 	if (!can_use(user))
 		return
 
+	var/gang_bosses = ((gang == "A")? ticker.mode.A_bosses.len : ticker.mode.B_bosses.len)
+
 	var/dat
 	if(!gang)
-		dat += "This device is not registered.<br>"
+		dat += "This device is not registered.<br><br>"
 		if(user.mind in (ticker.mode.A_bosses | ticker.mode.B_bosses))
-			dat += "Give this device to another member of your organization to use.<br>"
-		else
+			dat += "Give this device to another member of your organization to use to promote them.<hr>"
+			dat += "If this is meant as a spare device for yourself:<br>"
 			dat += "<a href='?src=\ref[src];register=1'>Register Device</a><br>"
+		else if (gang_bosses < 3)
+			dat += "You have been selected for a promotion!<br>"
+			dat += "<a href='?src=\ref[src];register=1'>Register Device</a><br>"
+		else
+			dat += "No promotions available: All positions filled."
 	else
 		var/datum/game_mode/gang/gangmode
 		if(istype(ticker.mode, /datum/game_mode/gang))
 			gangmode = ticker.mode
 
-		var/gang_size = ((gang == "A")? (ticker.mode.A_gang.len + ticker.mode.A_bosses.len) : (ticker.mode.B_gang.len + ticker.mode.B_bosses.len))
+		var/gang_size = gang_bosses + ((gang == "A")? ticker.mode.A_gang.len : ticker.mode.B_gang.len)
 		var/gang_territory = ((gang == "A")? ticker.mode.A_territory.len : ticker.mode.B_territory.len)
 		var/points = ((gang == "A") ? ticker.mode.gang_points.A : ticker.mode.gang_points.B)
 		var/timer
@@ -66,37 +72,71 @@
 		dat += "<br>"
 		dat += "<B>Purchase Weapons:</B><br>"
 
-		dat += "(10 Influence) "
-		if(points >= 10)
-			dat += "<a href='?src=\ref[src];purchase=switchblade'>Switchblade</a><br>"
-		else
-			dat += "Switchblade<br>"
+		/////////////////
+		// NORMAL GANG //
+		/////////////////
 
-		dat += "(20 Influence) "
-		if(points >= 20)
-			dat += "<a href='?src=\ref[src];purchase=pistol'>10mm Pistol</a><br>"
-		else
-			dat += "10mm Pistol<br>"
+		if(!gangmode || (gang == "A" && gangmode.A_fighting_style == "normal") || (gang == "B" && gangmode.B_fighting_style == "normal")) //If the gamemode is not gang, always use standard loadout.
+			dat += "(10 Influence) "
+			if(points >= 10)
+				dat += "<a href='?src=\ref[src];purchase=switchblade'>Switchblade</a><br>"
+			else
+				dat += "Switchblade<br>"
 
-		dat += "(10 Influence) "
-		if(points >= 10)
-			dat += "<a href='?src=\ref[src];purchase=10mmammo'>10mm Ammo</a><br>"
-		else
-			dat += "10mm Ammo<br>"
+			dat += "(25 Influence) "
+			if(points >= 25)
+				dat += "<a href='?src=\ref[src];purchase=pistol'>10mm Pistol</a><br>"
+			else
+				dat += "10mm Pistol<br>"
 
-		dat += "(40 Influence) "
-		if(points >= 40)
-			dat += "<a href='?src=\ref[src];purchase=uzi'>Mini Uzi</a><br>"
-		else
-			dat += "Mini Uzi<br>"
+			dat += "(10 Influence) "
+			if(points >= 10)
+				dat += "<a href='?src=\ref[src];purchase=10mmammo'>10mm Ammo</a><br>"
+			else
+				dat += "10mm Ammo<br>"
 
-		dat += "(25 Influence) "
-		if(points >= 25)
-			dat += "<a href='?src=\ref[src];purchase=9mmammo'>Uzi Ammo</a><br>"
-		else
-			dat += "Uzi Magazine<br>"
+			dat += "(50 Influence) "
+			if(points >= 50)
+				dat += "<a href='?src=\ref[src];purchase=uzi'>Mini Uzi</a><br>"
+			else
+				dat += "Mini Uzi<br>"
 
-		dat += "<br>"
+			dat += "(20 Influence) "
+			if(points >= 20)
+				dat += "<a href='?src=\ref[src];purchase=9mmammo'>Uzi Ammo</a><br>"
+			else
+				dat += "Uzi Magazine<br>"
+
+			dat += "<br>"
+
+		//////////////////
+		// MARTIAL ARTS //
+		//////////////////
+
+		else if((gang == "A" && gangmode.A_fighting_style == "martial") || (gang == "B" && gangmode.B_fighting_style == "martial"))
+			dat += "(10 Influence) "
+			if(points >= 10)
+				dat += "<a href='?src=\ref[src];purchase=bostaff'>Bo Staff</a><br>"
+			else
+				dat += "Bo Staff<br>"
+
+			dat += "(20 Influence) "
+			if(points >= 20)
+				dat += "<a href='?src=\ref[src];purchase=wrestlingbelt'>Wrestling Belt</a><br>"
+			else
+				dat += "Wrestling Belt<br>"
+
+			dat += "(30 Influence) "
+			if(points >= 30)
+				dat += "<a href='?src=\ref[src];purchase=scroll'>Sleeping Carp Scroll (one-use)</a><br>"
+			else
+				dat += "Sleeping Carp Scroll (one-use)<br>"
+			dat += "<br>"
+
+		////////////////////////
+		// STANDARD EQUIPMENT //
+		////////////////////////
+
 		dat += "<B>Purchase Equipment:</B><br>"
 
 		dat += "(5 Influence) "
@@ -120,15 +160,16 @@
 		else
 			dat += "Recruitment Pen<br>"
 
-		if(boss)
-			if(promotions >= 3)
-				dat += "(Out of stock) Promote a Gangster<br>"
-			else
-				dat += "([(promotions*10)+10] Influence, [3-promotions] left) "
-				if(points >= (promotions*10)+10)
-					dat += "<a href='?src=\ref[src];purchase=gangtool'>Promote a Gangster</a><br>"
-				else
-					dat += "Promote a Gangster<br>"
+		var/tool_cost = (boss ? 10 : 30)
+		var/gangtooldesc = "Promote a Gangster ([3-gang_bosses] left)"
+		if(gang_bosses >= 3)
+			gangtooldesc = "Additional Gangtools"
+		dat += "([tool_cost] Influence) "
+		if(points >= tool_cost)
+			dat += "<a href='?src=\ref[src];purchase=gangtool'>[gangtooldesc]</a><br>"
+		else
+			dat += "[gangtooldesc]<br>"
+
 		if(gangmode)
 			if(gang == "A" ? !gangmode.A_dominations : !gangmode.B_dominations)
 				dat += "(Out of stock) Station Dominator"
@@ -178,21 +219,33 @@
 					item_type = /obj/item/weapon/switchblade
 					points = 10
 			if("pistol")
-				if(points >= 20)
+				if(points >= 25)
 					item_type = /obj/item/weapon/gun/projectile/automatic/pistol
-					points = 20
+					points = 25
 			if("10mmammo")
 				if(points >= 10)
 					item_type = /obj/item/ammo_box/magazine/m10mm
 					points = 10
 			if("uzi")
-				if(points >= 40)
+				if(points >= 50)
 					item_type = /obj/item/weapon/gun/projectile/automatic/mini_uzi
-					points = 40
+					points = 50
+			if("scroll")
+				if(points >= 30)
+					item_type = /obj/item/weapon/sleeping_carp_scroll
+					points = 30
+			if("wrestlingbelt")
+				if(points >= 20)
+					item_type = /obj/item/weapon/storage/belt/champion/wrestling
+					points = 20
+			if("bostaff")
+				if(points >= 10)
+					item_type = /obj/item/weapon/twohanded/bostaff
+					points = 10
 			if("9mmammo")
-				if(points >= 25)
+				if(points >= 20)
 					item_type = /obj/item/ammo_box/magazine/uzim9mm
-					points = 25
+					points = 20
 			if("C4")
 				if(points >= 10)
 					item_type = /obj/item/weapon/c4
@@ -206,10 +259,10 @@
 					item_type = /obj/item/weapon/pen/gang
 					points = 50
 			if("gangtool")
-				if((promotions < 3) && (points >= (promotions*10)+10))
+				var/tool_cost = (boss ? 10 : 30)
+				if(points >= tool_cost)
 					item_type = /obj/item/device/gangtool/lt
-					points = (promotions*10)+10
-					promotions++
+					points = tool_cost
 			if("dominator")
 				if(istype(ticker.mode, /datum/game_mode/gang))
 					var/datum/game_mode/gang/mode = ticker.mode
@@ -288,6 +341,12 @@
 
 
 /obj/item/device/gangtool/proc/register_device(var/mob/user)
+	if(!(user.mind in (ticker.mode.B_bosses|ticker.mode.B_bosses)))
+		var/gang_bosses = ((gang == "A")? ticker.mode.A_bosses.len : ticker.mode.B_bosses.len)
+		if(gang_bosses >= 3)
+			user << "<span class='warning'>\icon[src] Error: All positions filled.</span>"
+			return
+
 	if(jobban_isbanned(user, "gangster") || jobban_isbanned(user, "Syndicate"))
 		user << "<span class='warning'>\icon[src] ACCESS DENIED: Blacklisted user.</span>"
 		return 0
