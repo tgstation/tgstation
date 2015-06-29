@@ -151,7 +151,8 @@
 				var/contained = english_list(rinject)
 				var/mob/M = target
 				add_logs(user, M, "injected", object="[src.name]", addition="which had [contained]")
-				reagents.reaction(target, INGEST)
+				var/fraction = min(amount_per_transfer_from_this/reagents.total_volume, 1)
+				reagents.reaction(target, INGEST, fraction)
 			if(ismob(target) && target == user)
 				//Attack log entries are produced here due to failure to produce elsewhere. Remove them here if you have doubles from normal syringes.
 				var/list/rinject = list()
@@ -161,8 +162,8 @@
 				var/mob/M = target
 				log_attack("<font color='red'>[user.name] ([user.ckey]) injected [M.name] ([M.ckey]) with [src.name], which had [contained] (INTENT: [uppertext(user.a_intent)])</font>")
 				M.attack_log += text("\[[time_stamp()]\] <font color='orange'>Injected themselves ([contained]) with [src.name].</font>")
-
-				reagents.reaction(target, INGEST)
+				var/fraction = min(amount_per_transfer_from_this/reagents.total_volume, 1)
+				reagents.reaction(target, INGEST, fraction)
 			spawn(5)
 				var/datum/reagent/blood/B
 				for(var/datum/reagent/blood/d in src.reagents.reagent_list)
@@ -180,7 +181,7 @@
 
 
 /obj/item/weapon/reagent_containers/syringe/update_icon()
-	var/rounded_vol = round(reagents.total_volume,5)
+	var/rounded_vol = min(max(round(reagents.total_volume,5),5),15)
 	overlays.Cut()
 	if(ismob(loc))
 		var/injoverlay
@@ -195,12 +196,7 @@
 
 	if(reagents.total_volume)
 		var/image/filling = image('icons/obj/reagentfillings.dmi', src, "syringe10")
-
-		switch(rounded_vol)
-			if(5)	filling.icon_state = "syringe5"
-			if(10)	filling.icon_state = "syringe10"
-			if(15)	filling.icon_state = "syringe15"
-
+		filling.icon_state = "syringe[rounded_vol]"
 		filling.color = mix_color_from_reagents(reagents.reagent_list)
 		overlays += filling
 

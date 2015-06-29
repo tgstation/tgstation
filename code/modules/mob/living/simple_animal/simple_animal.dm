@@ -201,6 +201,10 @@
 				if(!atmos_suitable)
 					adjustBruteLoss(unsuitable_atmos_damage)
 
+		else
+			if(atmos_requirements["min_oxy"] || atmos_requirements["min_tox"] || atmos_requirements["min_n2"] || atmos_requirements["min_co2"])
+				adjustBruteLoss(unsuitable_atmos_damage)
+
 	handle_temperature_damage()
 
 /mob/living/simple_animal/proc/handle_temperature_damage()

@@ -182,31 +182,29 @@
 
 	mix_reagents()
 
-	if(reagents.total_volume)	//The possible reactions didnt use up all reagents.
+	if(reagents.total_volume)	//The possible reactions didnt use up all reagents, so we spread it around.
 		var/datum/effect/effect/system/steam_spread/steam = new /datum/effect/effect/system/steam_spread()
 		steam.set_up(10, 0, get_turf(src))
 		steam.attach(src)
 		steam.start()
 
-	var/list/viewable = view(affected_area, loc)
-	var/list/accessible = can_flood_from(loc, affected_area)
-	var/list/reactable = accessible
-	var/mycontents = GetAllContents()
-	for(var/turf/T in accessible)
-		for(var/atom/A in T.GetAllContents())
-			if(A in mycontents) continue
-			if(!(A in viewable)) continue
-			reactable |= A
-	if(!reactable.len) //Nothing to react with. Probably means we're in nullspace.
-		qdel(src)
-		return
-	var/fraction = 1/reactable.len
-	for(var/atom/A in reactable)
-		reagents.reaction(A, TOUCH, fraction)
+		var/list/viewable = view(affected_area, loc)
+		var/list/accessible = can_flood_from(loc, affected_area)
+		var/list/reactable = accessible
+		var/mycontents = GetAllContents()
+		for(var/turf/T in accessible)
+			for(var/atom/A in T.GetAllContents())
+				if(A in mycontents) continue
+				if(!(A in viewable)) continue
+				reactable |= A
+		if(!reactable.len) //Nothing to react with. Probably means we're in nullspace.
+			qdel(src)
+			return
+		var/fraction = 1/reactable.len
+		for(var/atom/A in reactable)
+			reagents.reaction(A, TOUCH, fraction)
 
-	invisibility = INVISIBILITY_MAXIMUM		//Why am i doing this?
-	spawn(50)		   //To make sure all reagents can work
-		qdel(src)	   //correctly before deleting the grenade.
+	qdel(src)
 
 /obj/item/weapon/grenade/chem_grenade/proc/mix_reagents()
 	var/total_temp
@@ -354,13 +352,14 @@
 
 /obj/item/weapon/grenade/chem_grenade/teargas/New()
 	..()
-	var/obj/item/weapon/reagent_containers/glass/beaker/B1 = new(src)
-	var/obj/item/weapon/reagent_containers/glass/beaker/B2 = new(src)
+	var/obj/item/weapon/reagent_containers/glass/beaker/large/B1 = new(src)
+	var/obj/item/weapon/reagent_containers/glass/beaker/large/B2 = new(src)
 
-	B1.reagents.add_reagent("condensedcapsaicin", 25)
-	B1.reagents.add_reagent("potassium", 25)
-	B2.reagents.add_reagent("phosphorus", 25)
-	B2.reagents.add_reagent("sugar", 25)
+	B1.reagents.add_reagent("condensedcapsaicin", 70)
+	B1.reagents.add_reagent("potassium", 30)
+	B2.reagents.add_reagent("phosphorus", 30)
+	B2.reagents.add_reagent("sugar", 30)
+	B1.reagents.add_reagent("condensedcapsaicin", 40)
 
 	beakers += B1
 	beakers += B2
@@ -373,16 +372,18 @@
 
 /obj/item/weapon/grenade/chem_grenade/facid/New()
 	..()
-	var/obj/item/weapon/reagent_containers/glass/beaker/B1 = new(src)
-	var/obj/item/weapon/reagent_containers/glass/beaker/B2 = new(src)
+	var/obj/item/weapon/reagent_containers/glass/beaker/bluespace/B1 = new(src)
+	var/obj/item/weapon/reagent_containers/glass/beaker/bluespace/B2 = new(src)
 
-	B1.reagents.add_reagent("facid", 25)
-	B1.reagents.add_reagent("potassium", 25)
-	B2.reagents.add_reagent("phosphorus", 25)
-	B2.reagents.add_reagent("sugar", 25)
+	B1.reagents.add_reagent("facid", 290)
+	B1.reagents.add_reagent("potassium", 10)
+	B2.reagents.add_reagent("phosphorus", 10)
+	B2.reagents.add_reagent("sugar", 10)
+	B2.reagents.add_reagent("facid", 280)
 
 	beakers += B1
 	beakers += B2
+
 
 /obj/item/weapon/grenade/chem_grenade/colorful
 	name = "colorful grenade"
@@ -402,6 +403,7 @@
 	beakers += B1
 	beakers += B2
 
+
 /obj/item/weapon/grenade/chem_grenade/clf3
 	name = "clf3 grenade"
 	desc = "BURN!-brand foaming clf3. In a special applicator for rapid purging of wide areas."
@@ -412,10 +414,10 @@
 	var/obj/item/weapon/reagent_containers/glass/beaker/bluespace/B1 = new(src)
 	var/obj/item/weapon/reagent_containers/glass/beaker/bluespace/B2 = new(src)
 
-	B1.reagents.add_reagent("fluorosurfactant", 290)
-	B1.reagents.add_reagent("clf3", 10)
-	B2.reagents.add_reagent("water", 290)
-	B2.reagents.add_reagent("clf3", 10)
+	B1.reagents.add_reagent("fluorosurfactant", 250)
+	B1.reagents.add_reagent("clf3", 50)
+	B2.reagents.add_reagent("water", 250)
+	B2.reagents.add_reagent("clf3", 50)
 
 	beakers += B1
 	beakers += B2

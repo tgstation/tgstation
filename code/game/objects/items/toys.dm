@@ -271,6 +271,7 @@
 	item_state = "arm_blade"
 	attack_verb = list("pricked", "absorbed", "gored")
 	w_class = 2
+	burn_state = 0 //Burnable
 
 
 /*
@@ -527,6 +528,10 @@
 	icon_state = "snappop"
 	w_class = 1
 
+/obj/item/toy/snappop/fire_act()
+	throw_impact()
+	return
+
 /obj/item/toy/snappop/throw_impact(atom/hit_atom)
 	..()
 	var/datum/effect/effect/system/spark_spread/s = new /datum/effect/effect/system/spark_spread
@@ -710,6 +715,8 @@
 
 
 /obj/item/toy/cards
+	burn_state = 0 //Burnable
+	burntime = 5
 	var/parentdeck = null
 	var/deckstyle = "nanotrasen"
 	var/card_hitsound = null
@@ -949,7 +956,8 @@
 	newobj.card_throw_speed = sourceobj.card_throw_speed
 	newobj.card_throw_range = sourceobj.card_throw_range
 	newobj.card_attack_verb = sourceobj.card_attack_verb
-
+	if(sourceobj.burn_state == -1)
+		newobj.burn_state = -1
 
 /obj/item/toy/cards/singlecard
 	name = "card"
@@ -1065,6 +1073,7 @@
 	card_throw_speed = 3
 	card_throw_range = 7
 	card_attack_verb = list("attacked", "sliced", "diced", "slashed", "cut")
+	burn_state = -1 //Not Burnable
 
 /*
  * Fake nuke
@@ -1123,6 +1132,7 @@
 	icon_state = "carpplushie"
 	w_class = 2.0
 	attack_verb = list("bitten", "eaten", "fin slapped")
+	burn_state = 0 //Burnable
 	var/bitesound = 'sound/weapons/bite.ogg'
 
 // Attack mob

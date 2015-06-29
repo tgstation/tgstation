@@ -11,6 +11,8 @@
 	var/datum/gang_points/gang_points
 	var/A_style
 	var/B_style
+	var/A_fighting_style
+	var/B_fighting_style
 	var/list/A_territory = list()
 	var/list/B_territory = list()
 	var/list/A_territory_new = list()
@@ -31,6 +33,9 @@
 	// Victory timers
 	var/A_timer = "OFFLINE"
 	var/B_timer = "OFFLINE"
+	//How many attempts at domination each team is allowed
+	var/A_dominations = 2
+	var/B_dominations = 2
 ///////////////////////////
 //Announces the game type//
 ///////////////////////////
@@ -74,6 +79,7 @@
 
 	modePlayer += A_bosses
 	modePlayer += B_bosses
+	assign_gang_fighting_style()
 	..()
 
 /datum/game_mode/gang/process(seconds)
@@ -107,6 +113,17 @@
 		rival_obj.explanation_text = "Preform a hostile takeover of the station with a Dominator."
 		boss_mind.objectives += rival_obj
 
+/datum/game_mode/proc/assign_gang_fighting_style()
+	var/aName = gang_name("A")
+	if(aName == "Sleeping Carp")
+		A_fighting_style = "martial"
+	else
+		A_fighting_style = "normal"
+	var/bName = gang_name("B")
+	if(bName == "Sleeping Carp")
+		B_fighting_style = "martial"
+	else
+		B_fighting_style = "normal"
 
 /datum/game_mode/proc/greet_gang(var/datum/mind/boss_mind, var/you_are=1)
 	var/obj_count = 1
@@ -118,9 +135,9 @@
 
 /datum/game_mode/gang/proc/domination(var/gang,var/modifier=1,var/obj/dominator)
 	if(gang=="A")
-		A_timer = max(180,900 - ((round((A_territory.len/start_state.num_territories)*200, 1) - 60) * 15)) * modifier
+		A_timer = max(300,900 - ((round((A_territory.len/start_state.num_territories)*200, 1) - 60) * 15)) * modifier
 	if(gang=="B")
-		B_timer = max(180,900 - ((round((B_territory.len/start_state.num_territories)*200, 1) - 60) * 15)) * modifier
+		B_timer = max(300,900 - ((round((B_territory.len/start_state.num_territories)*200, 1) - 60) * 15)) * modifier
 	if(gang && dominator)
 		var/area/domloc = get_area(dominator.loc)
 		priority_announce("Network breach detected in [initial(domloc.name)]. The [gang_name(gang)] Gang is attempting to seize control of the station!","Network Alert")
@@ -274,9 +291,9 @@
 //Deals with converting players to a gang//
 ///////////////////////////////////////////
 /datum/game_mode/proc/add_gangster(datum/mind/gangster_mind, var/gang, var/check = 1)
-	if(check && isloyal(gangster_mind.current)) //Check to see if the potential gangster is implanted
-		return 0
 	if(gangster_mind in (A_bosses | A_gang | B_bosses | B_gang))
+		return 0
+	if(check && isloyal(gangster_mind.current)) //Check to see if the potential gangster is implanted
 		return 1
 	if(gang == "A")
 		A_gang += gangster_mind
@@ -380,7 +397,7 @@
 	if(!finished)
 		world << "<FONT size=3 color=red><B>The station was [station_was_nuked ? "destroyed!" : "evacuated before either gang could claim it!"]</B></FONT>"
 	else
-		world << "<FONT size=3 color=red><B>The [finished=="A" ? gang_name("A") : gang_name("B")] Gang successfully preformed a hostile takeover of the station!!</B></FONT>"
+		world << "<FONT size=3 color=red><B>The [finished=="A" ? gang_name("A") : gang_name("B")] Gang successfully performed a hostile takeover of the station!!</B></FONT>"
 	..()
 	return 1
 
@@ -436,8 +453,8 @@
 //////////////////////////////////////////////////////////
 
 /datum/gang_points
-	var/A = 20
-	var/B = 20
+	var/A = 15
+	var/B = 15
 	var/next_point_interval = 1800
 	var/next_point_time
 
@@ -505,7 +522,7 @@
 	ticker.mode.message_gangtools(ticker.mode.A_tools,"*---------*<br><b>[gang_name("A")] Gang Status Report:</b>")
 	var/A_message = ""
 	if(gangmode && isnum(gangmode.A_timer))
-		var/new_time = max(180,gangmode.A_timer - ((ticker.mode.A_territory.len + A_uniformed) * 2))
+		var/new_time = max(300,gangmode.A_timer - ((ticker.mode.A_territory.len + A_uniformed) * 2))
 		if(new_time < gangmode.A_timer)
 			A_message += "Takeover shortened by [gangmode.A_timer - new_time] seconds for defending [ticker.mode.A_territory.len] territories and [A_uniformed] uniformed gangsters.<BR>"
 			gangmode.A_timer = new_time
@@ -521,7 +538,7 @@
 	ticker.mode.message_gangtools(ticker.mode.B_tools,"<b>[gang_name("B")] Gang Status Report:</b>")
 	var/B_message = ""
 	if(gangmode && isnum(gangmode.B_timer))
-		var/new_time = max(180,gangmode.B_timer - ((ticker.mode.B_territory.len + B_uniformed) * 2))
+		var/new_time = max(300,gangmode.B_timer - ((ticker.mode.B_territory.len + B_uniformed) * 2))
 		if(new_time < gangmode.B_timer)
 			A_message += "Takeover shortened by [gangmode.B_timer - new_time] seconds for defending [ticker.mode.B_territory.len] territories and [B_uniformed] uniformed gangsters.<BR>"
 			gangmode.B_timer = new_time
@@ -575,7 +592,7 @@
 
 	//Increase outfit stock
 	for(var/obj/item/device/gangtool/tool in (ticker.mode.A_tools | ticker.mode.B_tools))
-		tool.outfits = min(tool.outfits+2,10)
+		tool.outfits = min(tool.outfits+2,5)
 
 	//Restart the counter
 	start()
@@ -589,7 +606,7 @@
 		return
 	for(var/obj/item/device/gangtool/tool in gangtools)
 		var/mob/living/mob = get(tool.loc,/mob/living)
-		if(mob && mob.mind)
+		if(mob && mob.mind && mob.stat == CONSCIOUS)
 			if(((tool.gang == "A") && ((mob.mind in A_gang) || (mob.mind in A_bosses))) || ((tool.gang == "B") && ((mob.mind in B_gang) || (mob.mind in B_bosses))))
 				mob << "<span class='[warning ? "warning" : "notice"]'>\icon[tool] [message]</span>"
 				if(beep)

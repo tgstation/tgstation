@@ -199,6 +199,11 @@
 			if(!user.unEquip(W))
 				return
 
+			if(M.syndiemmi)
+				aisync = 0
+				lawsync = 0
+				O.laws = new /datum/ai_laws/syndicate_override
+
 			O.invisibility = 0
 			//Transfer debug settings to new mob
 			O.custom_name = created_name
@@ -211,7 +216,7 @@
 				O.notify_ai(1)
 				if(forced_ai)
 					O.connected_ai = forced_ai
-			if(!lawsync)
+			if(!lawsync && !M.syndiemmi)
 				O.lawupdate = 0
 				O.make_laws()
 				if(ticker.mode.config_tag == "malfunction") //Don't let humans get a cyborg on their side during malf, for balance reasons.

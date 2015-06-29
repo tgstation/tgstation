@@ -7,7 +7,6 @@
 	var/amount_per_transfer_from_this = 5
 	var/possible_transfer_amounts = list(5,10,15,25,30)
 	var/volume = 30
-	var/list/banned_reagents = list() //List of reagent IDs we reject.
 	var/list/list_reagents = null
 	var/spawned_disease = null
 	var/disease_amount = 20

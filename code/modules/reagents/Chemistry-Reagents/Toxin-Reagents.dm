@@ -34,7 +34,7 @@
 	if(!istype(M) || !M.dna)
 		return  //No robots, AIs, aliens, Ians or other mobs should be affected by this.
 	src = null
-	if((method==TOUCH && prob(33)) || method==INGEST)
+	if((method==TOUCH && prob(min(33, volume))) || method==INGEST)
 		randmuti(M)
 		if(prob(98))
 			randmutb(M)
@@ -194,8 +194,8 @@
 	if(iscarbon(M))
 		var/mob/living/carbon/C = M
 		if(!C.wear_mask) // If not wearing a mask
-			C.adjustToxLoss(2) // 4 toxic damage per application, doubled for some reason
-
+			var/damage = min(round(0.4*volume, 0.1),10)
+			C.adjustToxLoss(damage)
 /datum/reagent/toxin/plantbgone/weedkiller
 	name = "Weed Killer"
 	id = "weedkiller"
@@ -215,7 +215,8 @@
 	if(iscarbon(M))
 		var/mob/living/carbon/C = M
 		if(!C.wear_mask) // If not wearing a mask
-			C.adjustToxLoss(2) // 4 toxic damage per application, doubled for some reason
+			var/damage = min(round(0.4*volume, 0.1),10)
+			C.adjustToxLoss(damage)
 
 /datum/reagent/toxin/spore
 	name = "Spore Toxin"
@@ -362,9 +363,9 @@
 	..()
 
 /datum/reagent/toxin/histamine/overdose_process(var/mob/living/M as mob)
-	M.adjustOxyLoss(1*REM)
-	M.adjustBruteLoss(1*REM)
-	M.adjustToxLoss(1*REM)
+	M.adjustOxyLoss(2*REM)
+	M.adjustBruteLoss(2*REM)
+	M.adjustToxLoss(2*REM)
 	..()
 
 /datum/reagent/toxin/formaldehyde
@@ -374,7 +375,7 @@
 	reagent_state = LIQUID
 	color = "#CF3600"
 	metabolization_rate = 0.5 * REAGENTS_METABOLISM
-	toxpwr = 0.5
+	toxpwr = 1
 
 /datum/reagent/toxin/formaldehyde/on_mob_life(var/mob/living/M as mob)
 	if(prob(5))
@@ -392,8 +393,8 @@
 	toxpwr = 0
 
 /datum/reagent/toxin/venom/on_mob_life(var/mob/living/M as mob)
-	toxpwr = 0.05*volume
-	M.adjustBruteLoss((0.1*volume)*REM)
+	toxpwr = 0.2*volume
+	M.adjustBruteLoss((0.3*volume)*REM)
 	if(prob(15))
 		M.reagents.add_reagent("histamine",pick(5,10))
 		M.reagents.remove_reagent("venom",1)
@@ -423,12 +424,12 @@
 	reagent_state = LIQUID
 	color = "#CF3600"
 	metabolization_rate = 0.125 * REAGENTS_METABOLISM
-	toxpwr = 0.75
+	toxpwr = 1.25
 
 /datum/reagent/toxin/cyanide/on_mob_life(var/mob/living/M as mob)
 	if(prob(5))
 		M.losebreath += 1
-	if(prob(4))
+	if(prob(8))
 		M << "You feel horrendously weak!"
 		M.Stun(2)
 		M.adjustToxLoss(2*REM)
@@ -482,7 +483,7 @@
 	toxpwr = 2.5
 
 /datum/reagent/toxin/initropidril/on_mob_life(var/mob/living/M as mob)
-	if(prob(5))
+	if(prob(25))
 		var/picked_option = rand(1,3)
 		switch(picked_option)
 			if(1)
@@ -504,7 +505,7 @@
 /datum/reagent/toxin/pancuronium
 	name = "Pancuronium"
 	id = "pancuronium"
-	description = "Knocks you out after 10 seconds, 7% chance to cause some oxygen loss."
+	description = "Knocks you out after 10 seconds, 20% chance to cause some oxygen loss."
 	reagent_state = LIQUID
 	color = "#CF3600"
 	metabolization_rate = 0.25 * REAGENTS_METABOLISM
@@ -513,14 +514,14 @@
 /datum/reagent/toxin/pancuronium/on_mob_life(var/mob/living/M as mob)
 	if(current_cycle >= 10)
 		M.SetParalysis(1)
-	if(prob(7))
+	if(prob(20))
 		M.losebreath += 4
 	..()
 
 /datum/reagent/toxin/sodium_thiopental
 	name = "Sodium Thiopental"
 	id = "sodium_thiopental"
-	description = "Puts you to sleep after 30 seconds, along with some major stamina loss."
+	description = "Puts you to sleep after 10 seconds, along with some major stamina loss."
 	reagent_state = LIQUID
 	color = "#CF3600"
 	metabolization_rate = 0.75 * REAGENTS_METABOLISM
@@ -529,13 +530,13 @@
 /datum/reagent/toxin/sodium_thiopental/on_mob_life(var/mob/living/M as mob)
 	if(current_cycle >= 10)
 		M.sleeping += 1
-	M.adjustStaminaLoss(5*REM)
+	M.adjustStaminaLoss(10*REM)
 	..()
 
 /datum/reagent/toxin/sulfonal
 	name = "Sulfonal"
 	id = "sulfonal"
-	description = "Deals some toxin damage, and puts you to sleep after 66 seconds."
+	description = "Deals some toxin damage, and puts you to sleep after 22 seconds."
 	reagent_state = LIQUID
 	color = "#CF3600"
 	metabolization_rate = 0.125 * REAGENTS_METABOLISM
@@ -584,10 +585,10 @@
 	reagent_state = LIQUID
 	color = "#CF3600"
 	metabolization_rate = 0.06 * REAGENTS_METABOLISM
-	toxpwr = 1
+	toxpwr = 1.75
 
 /datum/reagent/toxin/coniine/on_mob_life(var/mob/living/M as mob)
-	M.losebreath += 3
+	M.losebreath += 5
 	..()
 
 /datum/reagent/toxin/curare
@@ -597,12 +598,12 @@
 	reagent_state = LIQUID
 	color = "#CF3600"
 	metabolization_rate = 0.125 * REAGENTS_METABOLISM
-	toxpwr = 0.5
+	toxpwr = 1
 
 /datum/reagent/toxin/curare/on_mob_life(var/mob/living/M as mob)
 	if(current_cycle >= 11)
 		M.Weaken(1)
-	M.adjustOxyLoss(0.5*REM)
+	M.adjustOxyLoss(1*REM)
 	..()
 
 
@@ -620,6 +621,7 @@
 /datum/reagent/toxin/acid/reaction_mob(var/mob/living/carbon/C, var/method=TOUCH, var/volume)
 	if(!istype(C))
 		return
+	volume = round(volume,0.1)
 	if(method != TOUCH)
 		C.take_organ_damage(min(6*toxpwr, volume * toxpwr))
 		return
@@ -629,6 +631,7 @@
 /datum/reagent/toxin/acid/reaction_obj(var/obj/O, var/volume)
 	if(istype(O.loc, /mob)) //handled in human acid_act()
 		return
+	volume = round(volume,0.1)
 	O.acid_act(acidpwr, toxpwr, volume)
 
 /datum/reagent/toxin/acid/fluacid

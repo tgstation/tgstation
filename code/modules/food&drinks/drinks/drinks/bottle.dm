@@ -77,7 +77,7 @@
 	armor_duration /= 10
 
 	//Apply the damage!
-	armor_block = max(90,armor_block)
+	armor_block = min(90,armor_block)
 	target.apply_damage(force, BRUTE, affecting, armor_block)
 
 	// You are going to knock someone out for longer if they are not wearing a helmet.

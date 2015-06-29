@@ -37,6 +37,7 @@
 	item_state = "armor"
 	can_adjust = 0
 	strip_delay = 100
+	burn_state = -1 //Won't burn in fires
 
 /obj/item/clothing/under/waiter
 	name = "waiter's outfit"
@@ -54,6 +55,7 @@
 	item_color = "prisoner"
 	has_sensor = 2
 	sensor_mode = 3
+	random_sensor = 0
 
 /obj/item/clothing/under/rank/mailman
 	name = "mailman's jumpsuit"
@@ -115,6 +117,7 @@
 	heat_protection = CHEST|GROIN|LEGS|FEET|ARMS|HANDS
 	max_heat_protection_temperature = SPACE_SUIT_MAX_TEMP_PROTECT
 	can_adjust = 0
+	burn_state = -1 //Won't burn in fires
 
 /obj/item/clothing/under/acj
 	name = "administrative cybernetic jumpsuit"
@@ -131,6 +134,7 @@
 	heat_protection = CHEST|GROIN|LEGS|FEET|ARMS|HANDS
 	max_heat_protection_temperature = SPACE_SUIT_MAX_TEMP_PROTECT
 	can_adjust = 0
+	burn_state = -1 //Won't burn in fires
 
 /obj/item/clothing/under/owl
 	name = "owl uniform"
@@ -338,6 +342,7 @@
 	body_parts_covered = CHEST|GROIN|ARMS
 	fitted = NO_FEMALE_UNIFORM
 	can_adjust = 0
+	burn_state = -1 //Won't burn in fires
 
 /obj/item/clothing/under/sundress
 	name = "sundress"
