@@ -22,9 +22,10 @@ var/datum/bank/bank = new()
 		deptaccounts[acc.name] = acc
 
 /datum/bank/proc/isOperational() //If the bank system can be used.
-	if(!servers.len)
-		return
-	return 1
+	for(var/obj/machinery/bankserver/BS in servers)
+		if(BS.can_use()) //the system works as long as one server is online.
+			return 1
+	return 0
 
 /datum/bank/proc/transferAmount(datum/bankaccount/from, datum/bankaccount/to, amount, username, silent = 0, note, force = 0) //self-explanatory.
 	if(!isOperational())
