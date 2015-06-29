@@ -113,7 +113,7 @@ var/list/ai_list = list()
 	if(!safety)//Only used by AIize() to successfully spawn an AI.
 		if (!B)//If there is no player/brain inside.
 			new/obj/structure/AIcore/deactivated(loc)//New empty terminal.
-			del(src)//Delete AI.
+			qdel(src)//Delete AI.
 			return
 		else
 			if (B.brainmob.mind)
@@ -159,7 +159,7 @@ var/list/ai_list = list()
 		if("Cancel")
 			return
 		if("Delete")
-			del(selection)
+			qdel(selection)
 		if("Rename")
 			var/new_name = sanitize(input(usr, "Write a new name for [selection.fields["name"]]:","Photo Modification"))
 			if(length(new_name) > 0)
