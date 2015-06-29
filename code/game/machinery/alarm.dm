@@ -169,6 +169,10 @@
 /obj/machinery/alarm/attack_hand(mob/user)
 	if (..())
 		return
+
+	if (buildstage != 2)
+		return
+
 	user.set_machine(src)
 
 	if ( (get_dist(src, user) > 1 ))
@@ -385,6 +389,10 @@
 /obj/machinery/alarm/Topic(href, href_list)
 	if(..())
 		return
+
+	if (buildstage != 2)
+		return
+
 	usr.set_machine(src)
 
 	if (locked && !usr.has_unlimited_silicon_privilege)
@@ -1184,6 +1192,9 @@ Code shamelessly copied from apc_frame
 
 /obj/machinery/firealarm/partyalarm/attack_hand(mob/user as mob)
 	if(user.stat || stat & (NOPOWER|BROKEN))
+		return
+
+	if (buildstage != 2)
 		return
 
 	user.set_machine(src)
