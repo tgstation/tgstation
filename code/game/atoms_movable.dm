@@ -81,6 +81,16 @@
 /atom/movable/Move(newLoc,Dir=0,step_x=0,step_y=0)
 	if(!loc || !newLoc)
 		return 0
+	//set up glide sizes before the move
+	//ensure this is a step, not a jump
+
+	//. = ..(NewLoc,Dir,step_x,step_y)
+	var/move_delay = 5 * world.tick_lag
+	if(ismob(src))
+		var/mob/M = src
+		if(M.client)
+			move_delay = (3+(M.client.move_delayer.next_allowed - world.time))*world.tick_lag
+	glide_size = Ceiling(32 / move_delay * world.tick_lag) - 1 //We always split up movements into cardinals for issues with diagonal movements.
 	var/atom/oldloc = loc
 	if((bound_height != 32 || bound_width != 32) && (loc == newLoc))
 		return ..()
