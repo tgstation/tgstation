@@ -40,7 +40,7 @@
 
 /datum/reagent/drug/nicotine/on_mob_life(var/mob/living/M as mob)
 	if(prob(1))
-		var/smoke_message = pick("You feel relaxed.", "You feel calmed.","You feel alert")
+		var/smoke_message = pick("You feel relaxed.", "You feel calmed.","You feel alert.","You feel rugged.")
 		M << "<span class='notice'>[smoke_message]</span>"
 	M.AdjustStunned(-1)
 	M.adjustStaminaLoss(-0.5*REM)
