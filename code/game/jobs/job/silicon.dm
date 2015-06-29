@@ -12,6 +12,7 @@ AI
 	supervisors = "your laws"
 	req_admin_notify = 1
 	minimal_player_age = 30
+	paygrade = 0
 
 /datum/job/ai/equip(var/mob/living/carbon/human/H)
 	if(!H)	return 0
@@ -34,6 +35,7 @@ Cyborg
 	supervisors = "your laws and the AI"	//Nodrak
 	selection_color = "#ddffdd"
 	minimal_player_age = 21
+	paygrade = 0
 
 /datum/job/cyborg/equip(var/mob/living/carbon/human/H)
 	if(!H)	return 0

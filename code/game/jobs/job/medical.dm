@@ -13,6 +13,9 @@ Chief Medical Officer
 	selection_color = "#ffddf0"
 	req_admin_notify = 1
 	minimal_player_age = 7
+	paygrade = 200
+	startbalance = 700
+	payroll = "Medbay"
 
 	default_id = /obj/item/weapon/card/id/silver
 	default_pda = /obj/item/device/pda/heads/cmo
@@ -51,6 +54,9 @@ Medical Doctor
 	spawn_positions = 3
 	supervisors = "the chief medical officer"
 	selection_color = "#ffeef0"
+	paygrade = 75
+	startbalance = 250
+	payroll = "Medbay"
 
 	default_pda = /obj/item/device/pda/medical
 	default_headset = /obj/item/device/radio/headset/headset_med
@@ -80,6 +86,9 @@ Chemist
 	spawn_positions = 2
 	supervisors = "the chief medical officer"
 	selection_color = "#ffeef0"
+	paygrade = 80
+	startbalance = 250
+	payroll = "Medbay"
 
 	default_pda = /obj/item/device/pda/chemist
 	default_headset = /obj/item/device/radio/headset/headset_med
@@ -105,6 +114,9 @@ Geneticist
 	spawn_positions = 2
 	supervisors = "the chief medical officer and research director"
 	selection_color = "#ffeef0"
+	paygrade = 80
+	startbalance = 250
+	payroll = "Medbay"
 
 	default_pda = /obj/item/device/pda/geneticist
 	default_headset = /obj/item/device/radio/headset/headset_medsci
@@ -131,6 +143,9 @@ Virologist
 	spawn_positions = 1
 	supervisors = "the chief medical officer"
 	selection_color = "#ffeef0"
+	paygrade = 85
+	startbalance = 250
+	payroll = "Medbay"
 
 	default_pda = /obj/item/device/pda/viro
 	default_headset = /obj/item/device/radio/headset/headset_med
@@ -146,4 +161,3 @@ Virologist
 	H.equip_to_slot_or_del(new /obj/item/clothing/shoes/sneakers/white(H), slot_shoes)
 	H.equip_to_slot_or_del(new /obj/item/clothing/suit/toggle/labcoat/virologist(H), slot_wear_suit)
 	H.equip_to_slot_or_del(new /obj/item/device/flashlight/pen(H), slot_s_store)
-

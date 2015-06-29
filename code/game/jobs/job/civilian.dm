@@ -11,6 +11,9 @@ Clown
 	spawn_positions = 1
 	supervisors = "the head of personnel"
 	selection_color = "#dddddd"
+	paygrade = 40
+	startbalance = 200
+	payroll = "Station"
 
 	default_pda = /obj/item/device/pda/clown
 	default_backpack = /obj/item/weapon/storage/backpack/clown
@@ -53,6 +56,9 @@ Mime
 	spawn_positions = 1
 	supervisors = "the head of personnel"
 	selection_color = "#dddddd"
+	paygrade = 40
+	startbalance = 200
+	payroll = "Station"
 
 	default_pda = /obj/item/device/pda/mime
 	default_backpack = /obj/item/weapon/storage/backpack/mime
@@ -97,6 +103,9 @@ Librarian
 	spawn_positions = 1
 	supervisors = "the head of personnel"
 	selection_color = "#dddddd"
+	paygrade = 40
+	startbalance = 200
+	payroll = "Station"
 
 	default_pda = /obj/item/device/pda/librarian
 
@@ -124,6 +133,9 @@ Lawyer
 	supervisors = "the head of personnel"
 	selection_color = "#dddddd"
 	var/global/lawyers = 0 //Counts lawyer amount
+	paygrade = 40
+	startbalance = 200
+	payroll = "Station"
 
 	default_pda = /obj/item/device/pda/lawyer
 	default_headset = /obj/item/device/radio/headset/headset_sec

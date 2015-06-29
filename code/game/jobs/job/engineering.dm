@@ -13,6 +13,9 @@ Chief Engineer
 	selection_color = "#ffeeaa"
 	req_admin_notify = 1
 	minimal_player_age = 7
+	paygrade = 200
+	startbalance = 700
+	payroll = "Engineering"
 
 	default_id = /obj/item/weapon/card/id/silver
 	default_pda = /obj/item/device/pda/heads/ce
@@ -55,6 +58,9 @@ Station Engineer
 	spawn_positions = 5
 	supervisors = "the chief engineer"
 	selection_color = "#fff5cc"
+	paygrade = 75
+	startbalance = 250
+	payroll = "Engineering"
 
 	default_pda = /obj/item/device/pda/engineering
 	default_pda_slot = slot_l_store
@@ -88,6 +94,9 @@ Atmospheric Technician
 	spawn_positions = 2
 	supervisors = "the chief engineer"
 	selection_color = "#fff5cc"
+	paygrade = 75
+	startbalance = 250
+	payroll = "Engineering"
 
 	default_pda = /obj/item/device/pda/atmos
 	default_pda_slot = slot_l_store

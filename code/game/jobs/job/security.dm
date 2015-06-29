@@ -19,6 +19,9 @@ Head of Security
 	selection_color = "#ffdddd"
 	req_admin_notify = 1
 	minimal_player_age = 14
+	paygrade = 200
+	startbalance = 700
+	payroll = "Security"
 
 	default_id = /obj/item/weapon/card/id/silver
 	default_pda = /obj/item/device/pda/heads/hos
@@ -69,6 +72,9 @@ Warden
 	supervisors = "the head of security"
 	selection_color = "#ffeeee"
 	minimal_player_age = 7
+	paygrade = 100
+	startbalance = 300
+	payroll = "Security"
 
 	default_pda = /obj/item/device/pda/warden
 	default_headset = /obj/item/device/radio/headset/headset_sec/alt
@@ -119,6 +125,9 @@ Detective
 	supervisors = "the head of security"
 	selection_color = "#ffeeee"
 	minimal_player_age = 7
+	paygrade = 75 //plus fifteen credits cig allowance
+	startbalance = 250
+	payroll = "Security"
 
 	default_pda = /obj/item/device/pda/detective
 	default_headset = /obj/item/device/radio/headset/headset_sec
@@ -167,6 +176,9 @@ Security Officer
 	selection_color = "#ffeeee"
 	minimal_player_age = 7
 	var/list/dep_access = null
+	paygrade = 70
+	startbalance = 300
+	payroll = "Security"
 
 	default_pda = /obj/item/device/pda/security
 	default_headset = /obj/item/device/radio/headset/headset_sec/alt

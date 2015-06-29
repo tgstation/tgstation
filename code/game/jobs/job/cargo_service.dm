@@ -11,6 +11,9 @@ Quartermaster
 	spawn_positions = 1
 	supervisors = "the head of personnel"
 	selection_color = "#d7b088"
+	paygrade = 50
+	startbalance = 250
+	payroll = "Cargo"
 
 	default_pda = /obj/item/device/pda/quartermaster
 	default_headset = /obj/item/device/radio/headset/headset_cargo
@@ -37,6 +40,9 @@ Cargo Technician
 	spawn_positions = 2
 	supervisors = "the quartermaster and the head of personnel"
 	selection_color = "#dcba97"
+	paygrade = 30
+	startbalance = 150
+	payroll = "Cargo"
 
 	default_pda = /obj/item/device/pda/cargo
 	default_headset = /obj/item/device/radio/headset/headset_cargo
@@ -61,6 +67,9 @@ Shaft Miner
 	spawn_positions = 3
 	supervisors = "the quartermaster and the head of personnel"
 	selection_color = "#dcba97"
+	paygrade = 25 //they can sell minerals
+	startbalance = 150
+	payroll = "Cargo"
 
 	default_pda = /obj/item/device/pda/shaftminer
 	default_headset = /obj/item/device/radio/headset/headset_cargo
@@ -99,6 +108,9 @@ Bartender
 	spawn_positions = 1
 	supervisors = "the head of personnel"
 	selection_color = "#bbe291"
+	paygrade = 25
+	startbalance = 120
+	payroll = "Service"
 
 	default_pda = /obj/item/device/pda/bar
 	default_headset = /obj/item/device/radio/headset/headset_srv
@@ -150,7 +162,10 @@ Cook
 	spawn_positions = 1
 	supervisors = "the head of personnel"
 	selection_color = "#bbe291"
-	var/global/cooks = 0 //Counts cooks amount
+	var/global/cooks = 0 //Counts cooks amount //too many cooks
+	paygrade = 25
+	startbalance = 120
+	payroll = "Service"
 
 	default_pda = /obj/item/device/pda/cook
 	default_headset = /obj/item/device/radio/headset/headset_srv
@@ -184,6 +199,9 @@ Botanist
 	spawn_positions = 2
 	supervisors = "the head of personnel"
 	selection_color = "#bbe291"
+	paygrade = 25
+	startbalance = 120
+	payroll = "Service"
 
 	default_pda = /obj/item/device/pda/botanist
 	default_headset = /obj/item/device/radio/headset/headset_srv
@@ -212,6 +230,9 @@ Janitor
 	supervisors = "the head of personnel"
 	selection_color = "#bbe291"
 	var/global/janitors = 0
+	paygrade = 30
+	startbalance = 120
+	payroll = "Station"
 
 	default_pda = /obj/item/device/pda/janitor
 	default_headset = /obj/item/device/radio/headset/headset_srv
