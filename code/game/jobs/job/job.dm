@@ -87,6 +87,8 @@
 	C.access = get_access()
 	C.registered_name = H.real_name
 	C.assignment = H.job
+	if(H.dna && H.dna.species)
+		C.registered_race = new H.dna.species.type
 	C.update_label()
 	H.equip_to_slot_or_del(C, slot_wear_id)
 

@@ -12,6 +12,7 @@
 	var/datum/changeling/changeling=user.mind.changeling
 	if(changeling.mimicing)
 		changeling.mimicing = ""
+		changeling.mimicing_accent = null
 		changeling.chem_recharge_slowdown -= 0.5
 		user << "<span class='notice'>We return our vocal glands to their original position.</span>"
 		return
@@ -19,6 +20,14 @@
 	var/mimic_voice = stripped_input(user, "Enter a name to mimic.", "Mimic Voice", null, MAX_NAME_LEN)
 	if(!mimic_voice)
 		return
+	var/list/choosable_races = list()
+	for(var/speciestype in typesof(/datum/species) - /datum/species)
+		var/datum/species/S = new speciestype()
+		choosable_races += S.id
+	var/racechoice = input(user, "Enter an accent to use.", "Mimic Voice") as null|anything in choosable_races
+	if(racechoice)
+		racechoice = species_list[racechoice]
+		changeling.mimicing_accent = new racechoice
 
 	changeling.mimicing = mimic_voice
 	changeling.chem_recharge_slowdown += 0.5

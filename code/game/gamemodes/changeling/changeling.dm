@@ -242,6 +242,7 @@ var/list/possible_changeling_IDs = list("Alpha","Beta","Gamma","Delta","Epsilon"
 	var/geneticpoints = 10
 	var/purchasedpowers = list()
 	var/mimicing = ""
+	var/datum/species/mimicing_accent = null
 	var/canrespec = 0
 	var/changeling_speak = 0
 	var/datum/dna/chosen_dna
