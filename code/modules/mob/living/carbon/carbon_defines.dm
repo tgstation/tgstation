@@ -29,5 +29,4 @@
 	var/obj/item/weapon/reagent_containers/food/snacks/meat/slab/type_of_meat = /obj/item/weapon/reagent_containers/food/snacks/meat/slab/
 
 	var/remote_view = 0
-	var/is_mouse_down = null
 	var/gib_type = /obj/effect/decal/cleanable/blood/gibs
