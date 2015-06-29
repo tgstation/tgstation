@@ -12,6 +12,26 @@
 	default_features = list("mcolor" = "FFF", "tail_human" = "None", "ears" = "None")
 	use_skintones = 1
 
+/datum/species/human/qualifies_for_rank(var/rank, var/list/features)
+	if(features["tail_human"] == "None" && features["ears"] == "None")
+		return 1	//Pure humans are always allowed in all roles.
+
+	//Mutants are not allowed in most roles.
+	if(rank in command_positions)
+		return 0
+	if(rank in security_positions) //This list does not include lawyers.
+		return 0
+	if(rank in science_positions)
+		return 0
+	if(rank in medical_positions)
+		return 0
+	if(rank in engineering_positions)
+		return 0
+	if(rank == "Quartermaster") //QM is not contained in command_positions but we still want to bar mutants from it.
+		return 0
+	return 1
+
+
 /datum/species/human/handle_chemicals(datum/reagent/chem, mob/living/carbon/human/H)
 	if(chem.id == "mutationtoxin")
 		H << "<span class='danger'>Your flesh rapidly mutates!</span>"
@@ -44,6 +64,11 @@ datum/species/human/spec_death(var/gibbed, var/mob/living/carbon/human/H)
 	attack_sound = 'sound/weapons/slash.ogg'
 	miss_sound = 'sound/weapons/slashmiss.ogg'
 	meat = /obj/item/weapon/reagent_containers/food/snacks/meat/slab/human/mutant/lizard
+
+/datum/species/lizard/qualifies_for_rank(var/rank, var/list/features)
+	if(rank in command_positions)
+		return 0
+	return 1
 
 /datum/species/lizard/handle_speech(message)
 	// jesus christ why

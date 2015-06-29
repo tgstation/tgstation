@@ -40,7 +40,6 @@
 	var/dangerous_existence = null //A flag for transformation spells that tells them "hey if you turn a person into one of these without preperation, they'll probably die!"
 	var/say_mod = "says"	// affects the speech message
 	var/list/default_features = list() // Default mutant bodyparts for this species. Don't forget to set one for every mutant bodypart you allow this species to have.
-
 	var/list/mutant_bodyparts = list() 	// Parts of the body that are diferent enough from the standard human model that they cause clipping with some equipment
 
 	var/speedmod = 0	// this affects the race's speed. positive numbers make it move slower, negative numbers make it move faster
@@ -84,6 +83,10 @@
 	///////////
 	// PROCS //
 	///////////
+
+//Please override this locally if you want to define when what species qualifies for what rank if human authority is enforced.
+/datum/species/proc/qualifies_for_rank(var/rank, var/list/features)
+	return 1
 
 /datum/species/proc/update_base_icon_state(var/mob/living/carbon/human/H)
 	if(H.disabilities & HUSK)
