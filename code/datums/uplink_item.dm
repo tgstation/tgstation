@@ -664,9 +664,11 @@ var/list/uplink_items = list()
 
 /datum/uplink_item/implants/microbomb
 	name = "Microbomb Implant"
-	desc = "An implant injected into the body, and later activated either manually or automatically upon death. The more implants inside of you, the higher the explosive power."
+	desc = "An implant injected into the body, and later activated either manually or automatically upon death. The more implants inside of you, the higher the explosive power. \
+	Will permanently destroy your body, however."
 	item = /obj/item/weapon/storage/box/syndie_kit/imp_microbomb
-	cost = 1
+	cost = 2
+	gamemodes = list(/datum/game_mode/nuclear)
 
 
 //CYBERNETIC IMPLANTS
@@ -759,6 +761,7 @@ var/list/uplink_items = list()
 	desc = "An implant injected into the body, and later activated either manually or automatically upon death. Maximum explosion power."
 	item = /obj/item/weapon/storage/box/syndie_kit/imp_macrobomb
 	cost = 20
+	gamemodes = list(/datum/game_mode/nuclear)
 
 /datum/uplink_item/badass/random
 	name = "Random Item"

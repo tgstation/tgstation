@@ -285,9 +285,13 @@
 				if(H.shoes && washshoes)
 					if(H.shoes.clean_blood())
 						H.update_inv_shoes(0)
-				if(H.wear_mask && washmask)
-					if(H.wear_mask.clean_blood())
-						H.update_inv_wear_mask(0)
+				if(H.wear_mask)
+					if(washmask)
+						if(H.wear_mask.clean_blood())
+							H.update_inv_wear_mask(0)
+				else
+					H.lip_style = null
+					H.update_body()
 				if(H.glasses && washglasses)
 					if(H.glasses.clean_blood())
 						H.update_inv_glasses(0)

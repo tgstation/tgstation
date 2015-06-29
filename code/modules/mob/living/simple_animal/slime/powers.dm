@@ -182,7 +182,9 @@
 			var/new_powerlevel = round(powerlevel / 4)
 			for(var/i=1,i<=4,i++)
 				var/mob/living/simple_animal/slime/M = new /mob/living/simple_animal/slime/(loc)
-				if(prob(mutation_chance))
+				if(mutation_chance >= 100)
+					M.colour = "rainbow"
+				else if(prob(mutation_chance))
 					M.colour = slime_mutation[rand(1,4)]
 				else
 					M.colour = colour

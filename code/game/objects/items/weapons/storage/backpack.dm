@@ -351,7 +351,7 @@
 	item_state = "duffle-sec"
 
 /obj/item/weapon/storage/backpack/dufflebag/engineering
-	name = "engineering dufflebag"
+	name = "industrial dufflebag"
 	desc = "A large dufflebag for holding extra tools and supplies."
 	icon_state = "duffle-eng"
 	item_state = "duffle-eng"
