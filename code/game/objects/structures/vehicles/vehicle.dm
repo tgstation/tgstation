@@ -205,7 +205,7 @@
 	..()
 	if(buckled_mob)
 		if(buckled_mob.buckled == src)
-			buckled_mob.loc = loc
+			buckled_mob.forceMove(loc)
 
 /obj/structure/stool/bed/chair/vehicle/buckle_mob(mob/M, mob/user)
 	if(M != user || !ishuman(user) || !Adjacent(user) || user.restrained() || user.lying || user.stat || user.buckled || destroyed)
