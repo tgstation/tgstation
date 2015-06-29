@@ -1,10 +1,13 @@
 /mob/living/simple_animal/ascendant_shadowling
-	name = "Ascendant Shadowling"
+	name = "ascendant shadowling"
 	desc = "A large, floating eldritch horror. It has pulsing markings all about its body and large horns. It seems to be floating without any form of support."
 	icon = 'icons/mob/mob.dmi'
 	icon_state = "shadowling_ascended"
 	icon_living = "shadowling_ascended"
-	speak_emote = list("telepathically thunders", "telepathically booms")
+	verb_say = "telepathically thunders"
+	verb_ask = "telepathically thunders"
+	verb_exclaim = "telepathically thunders"
+	verb_yell = "telepathically thunders"
 	force_threshold = INFINITY //Can't die by normal means
 	health = 100000
 	maxHealth = 100000
@@ -25,9 +28,16 @@
 
 	minbodytemp = 0
 	maxbodytemp = INFINITY
-	environment_smash = 2
+	environment_smash = 3
 
 	faction = list("faithless")
 
 /mob/living/simple_animal/ascendant_shadowling/Process_Spacemove(var/movement_dir = 0)
 	return 1 //copypasta from carp code
+
+/mob/living/simple_animal/ascendant_shadowling/say(var/message)
+	message = message + "!!"
+	return ..()
+
+/mob/living/simple_animal/ascendant_shadowling/get_spans()
+	return ..() | SPAN_REALLYBIG
