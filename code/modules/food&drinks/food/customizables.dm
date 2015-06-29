@@ -44,7 +44,8 @@
 		else if((ingredients.len >= ingMax) || (reagents.total_volume >= volume))
 			user << "<span class='warning'>You can't add more ingredients to [src]!</span>"
 		else
-			user.drop_item()
+			if(!user.unEquip(I))
+				return
 			if(S.trash)
 				new S.trash(get_turf(user))
 				S.trash = null  //we remove the plate before adding the ingredient

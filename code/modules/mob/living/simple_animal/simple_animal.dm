@@ -202,6 +202,10 @@
 				if(!atmos_suitable)
 					adjustBruteLoss(unsuitable_atmos_damage)
 
+		else
+			if(atmos_requirements["min_oxy"] || atmos_requirements["min_tox"] || atmos_requirements["min_n2"] || atmos_requirements["min_co2"])
+				adjustBruteLoss(unsuitable_atmos_damage)
+
 	handle_temperature_damage()
 
 /mob/living/simple_animal/proc/handle_temperature_damage()
@@ -347,16 +351,16 @@
 						MED.amount -= 1
 						if(MED.amount <= 0)
 							qdel(MED)
-						visible_message("<span class='notice'> [user] applies [MED] on [src].</span>")
+						visible_message("<span class='notice'>[user] applies [MED] on [src].</span>")
 						return
 					else
-						user << "<span class='notice'> [MED] won't help at all.</span>"
+						user << "<span class='notice'>[MED] won't help at all.</span>"
 						return
 			else
-				user << "<span class='notice'> [src] is at full health.</span>"
+				user << "<span class='notice'>[src] is at full health.</span>"
 				return
 		else
-			user << "<span class='notice'> [src] is dead, medical items won't bring it back to life.</span>"
+			user << "<span class='notice'>[src] is dead, medical items won't bring it back to life.</span>"
 			return
 
 	if((butcher_results) && (stat == DEAD))

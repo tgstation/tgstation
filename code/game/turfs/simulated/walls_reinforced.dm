@@ -33,7 +33,7 @@
 	if(istype(W, /obj/item/weapon/pickaxe/drill/jackhammer))
 		var/obj/item/weapon/pickaxe/drill/jackhammer/D = W
 		user << "<span class='notice'>You begin to smash though the [name]...</span>"
-		if(do_after(user, 50))
+		if(do_after(user, 50, target = src))
 			if( !istype(src, /turf/simulated/wall/r_wall) || !user || !W || !T )
 				return 1
 			if( user.loc == T && user.get_active_hand() == W )
@@ -47,7 +47,7 @@
 			user << "<span class='warning'>You need one sheet of metal to repair the wall!</span>"
 			return 1
 		user << "<span class='notice'>You begin patching-up the wall with \a [MS]...</span>"
-		if (do_after(user, max(20*d_state,100)))//time taken to repair is proportional to the damage! (max 10 seconds)
+		if (do_after(user, max(20*d_state,100), target = src))//time taken to repair is proportional to the damage! (max 10 seconds)
 			if(loc == null || MS.get_amount() < 1)
 				return 1
 			MS.use(1)
@@ -74,7 +74,7 @@
 				user << "<span class='notice'>You begin removing the support lines...</span>"
 				playsound(src, 'sound/items/Screwdriver.ogg', 100, 1)
 
-				if(do_after(user, 40))
+				if(do_after(user, 40, target = src))
 					if( !istype(src, /turf/simulated/wall/r_wall) || !user || !W || !T )
 						return 1
 
@@ -105,7 +105,7 @@
 					user << "<span class='notice'>You begin slicing through the metal cover...</span>"
 					playsound(src, 'sound/items/Welder.ogg', 100, 1)
 
-					if(do_after(user, 60))
+					if(do_after(user, 60, target = src))
 						if( !istype(src, /turf/simulated/wall/r_wall) || !user || !WT || !WT.isOn() || !T )
 							return 0
 
@@ -120,7 +120,7 @@
 				user << "<span class='notice'>You begin slicing through the metal cover...</span>"
 				playsound(src, 'sound/items/Welder.ogg', 100, 1)
 
-				if(do_after(user, 60))
+				if(do_after(user, 60, target = src))
 					if( !istype(src, /turf/simulated/wall/r_wall) || !user || !W || !T )
 						return 1
 
@@ -136,7 +136,7 @@
 				user << "<span class='notice'>You struggle to pry off the cover...</span>"
 				playsound(src, 'sound/items/Crowbar.ogg', 100, 1)
 
-				if(do_after(user, 100))
+				if(do_after(user, 100, target = src))
 					if( !istype(src, /turf/simulated/wall/r_wall) || !user || !W || !T )
 						return 1
 
@@ -152,7 +152,7 @@
 				user << "<span class='notice'>You start loosening the anchoring bolts which secure the support rods to their frame...</span>"
 				playsound(src, 'sound/items/Ratchet.ogg', 100, 1)
 
-				if(do_after(user, 40))
+				if(do_after(user, 40, target = src))
 					if( !istype(src, /turf/simulated/wall/r_wall) || !user || !W || !T )
 						return 1
 
@@ -170,7 +170,7 @@
 					user << "<span class='notice'>You begin slicing through the support rods...</span>"
 					playsound(src, 'sound/items/Welder.ogg', 100, 1)
 
-					if(do_after(user, 100))
+					if(do_after(user, 100, target = src))
 						if( !istype(src, /turf/simulated/wall/r_wall) || !user || !WT || !WT.isOn() || !T )
 							return 1
 
@@ -185,7 +185,7 @@
 				user << "<span class='notice'>You begin slicing through the support rods...</span>"
 				playsound(src, 'sound/items/Welder.ogg', 100, 1)
 
-				if(do_after(user, 70))
+				if(do_after(user, 70, target = src))
 					if( !istype(src, /turf/simulated/wall/r_wall) || !user || !W || !T )
 						return 1
 
@@ -201,7 +201,7 @@
 				user << "<span class='notice'>You struggle to pry off the outer sheath...</span>"
 				playsound(src, 'sound/items/Crowbar.ogg', 100, 1)
 
-				if(do_after(user, 100))
+				if(do_after(user, 100, target = src))
 					if( !istype(src, /turf/simulated/wall/r_wall) || !user || !W || !T )
 						return 1
 

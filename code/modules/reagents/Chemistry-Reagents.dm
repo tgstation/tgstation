@@ -34,43 +34,22 @@
 	..()
 	holder = null
 
-/datum/reagent/proc/reaction_mob(var/mob/M, var/method=TOUCH, var/volume, var/show_message = 1) //By default we have a chance to transfer some
-	if(!istype(M, /mob/living))
+/datum/reagent/proc/reaction_mob(var/mob/living/M, var/method=TOUCH, var/volume, var/show_message = 1, var/touch_protection = 0)
+	if(!istype(M))
 		return 0
 	var/datum/reagent/self = src
-	src = null										  //of the reagent to the mob on TOUCHING it.
+	src = null
 
-	if(!istype(self.holder.my_atom, /obj/effect/effect/chem_smoke))
-				// If the chemicals are in a smoke cloud, do not try to let the chemicals "penetrate" into the mob's system (balance station 13) -- Doohl
-
-		if(method == TOUCH)
-
-			var/chance = 1
-			var/block  = 0
-
-			for(var/obj/item/clothing/C in M.get_equipped_items())
-				if(C.permeability_coefficient < chance) chance = C.permeability_coefficient
-				if(istype(C, /obj/item/clothing/suit/bio_suit))
-					// bio suits are just about completely fool-proof - Doohl
-					// kind of a hacky way of making bio suits more resistant to chemicals but w/e
-					if(prob(75))
-						block = 1
-
-				if(istype(C, /obj/item/clothing/head/bio_hood))
-					if(prob(75))
-						block = 1
-
-			chance = chance * 100
-
-			if(prob(chance) && !block)
-				if(M.reagents)
-					M.reagents.add_reagent(self.id,self.volume/2)
+	if(method == TOUCH)
+		if(M.reagents)
+			var/modifier = Clamp((1 - touch_protection) + rand(-5,5)/100, 0, 1)
+			var/amount = round(volume*modifier, 0.1)
+			if(amount >= 1)
+				M.reagents.add_reagent(self.id, amount)
 	return 1
 
-/datum/reagent/proc/reaction_obj(var/obj/O, var/volume) //By default we transfer a small part of the reagent to the object
-	src = null						//if it can hold reagents. nope!
-	//if(O.reagents)
-	//	O.reagents.add_reagent(id,volume/3)
+/datum/reagent/proc/reaction_obj(var/obj/O, var/volume)
+	src = null
 	return
 
 /datum/reagent/proc/reaction_turf(var/turf/T, var/volume)
@@ -115,26 +94,26 @@
 	return
 
 /datum/reagent/proc/overdose_start(var/mob/living/M as mob)
-	M << "<span class = 'userdanger'>You feel like you took too much of [name]!</span>"
+	M << "<span class='userdanger'>You feel like you took too much of [name]!</span>"
 	return
 
 /datum/reagent/proc/addiction_act_stage1(var/mob/living/M as mob)
 	if(prob(30))
-		M << "<span class = 'notice'>You feel like some [name] right about now.</span>"
+		M << "<span class='notice'>You feel like some [name] right about now.</span>"
 	return
 
 /datum/reagent/proc/addiction_act_stage2(var/mob/living/M as mob)
 	if(prob(30))
-		M << "<span class = 'notice'>You feel like you need [name]. You just can't get enough.</span>"
+		M << "<span class='notice'>You feel like you need [name]. You just can't get enough.</span>"
 	return
 
 /datum/reagent/proc/addiction_act_stage3(var/mob/living/M as mob)
 	if(prob(30))
-		M << "<span class = 'danger'>You have an intense craving for [name].</span>"
+		M << "<span class='danger'>You have an intense craving for [name].</span>"
 	return
 
 /datum/reagent/proc/addiction_act_stage4(var/mob/living/M as mob)
 	if(prob(30))
-		M << "<span class = 'boldannounce'>You're not feeling good at all! You really need some [name].</span>"
+		M << "<span class='boldannounce'>You're not feeling good at all! You really need some [name].</span>"
 	return
 

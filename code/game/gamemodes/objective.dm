@@ -576,3 +576,21 @@ var/global/list/possible_items_special = list()
 		explanation_text = "Destroy [target.name], the experimental AI."
 	else
 		explanation_text = "Free Objective"
+
+/datum/objective/summon_guns
+	explanation_text = "Steal at least five guns!"
+
+/datum/objective/summon_guns/check_completion()
+	if(!isliving(owner.current))	return 0
+	var/guncount = 0
+	var/list/all_items = owner.current.GetAllContents()	//this should get things in cheesewheels, books, etc.
+	for(var/obj/I in all_items) //Check for guns
+		if(istype(I, /obj/item/weapon/gun))
+			guncount++
+	if(guncount >= 5)
+		return 1
+	else
+		return 0
+	return 0
+
+

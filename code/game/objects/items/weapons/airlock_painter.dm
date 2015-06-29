@@ -63,7 +63,8 @@
 		if(ink)
 			user << "<span class='notice'>\the [name] already contains \a [ink].</span>"
 			return
-		user.drop_item()
+		if(!user.unEquip(W))
+			return
 		W.loc = src
 		user << "<span class='notice'>You install \the [W] into \the [name].</span>"
 		ink = W

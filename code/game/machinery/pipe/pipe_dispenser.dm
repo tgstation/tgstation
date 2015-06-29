@@ -72,14 +72,15 @@
 	add_fingerprint(user)
 	if (istype(W, /obj/item/pipe) || istype(W, /obj/item/pipe_meter))
 		usr << "<span class='notice'>You put [W] back into [src].</span>"
-		user.drop_item()
+		if(!user.drop_item())
+			return
 		qdel(W)
 		return
 	else if (istype(W, /obj/item/weapon/wrench))
 		if (!anchored && !isinspace())
 			playsound(src.loc, 'sound/items/Ratchet.ogg', 50, 1)
 			user << "<span class='notice'>You begin to fasten \the [src] to the floor...</span>"
-			if (do_after(user, 40))
+			if (do_after(user, 40, target = src))
 				add_fingerprint(user)
 				user.visible_message( \
 					"[user] fastens \the [src].", \
@@ -92,7 +93,7 @@
 		else if(anchored)
 			playsound(src.loc, 'sound/items/Ratchet.ogg', 50, 1)
 			user << "<span class='notice'>You begin to unfasten \the [src] from the floor...</span>"
-			if (do_after(user, 20))
+			if (do_after(user, 20, target = src))
 				add_fingerprint(user)
 				user.visible_message( \
 					"[user] unfastens \the [src].", \

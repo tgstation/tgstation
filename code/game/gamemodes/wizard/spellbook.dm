@@ -246,7 +246,7 @@
 /datum/spellbook_entry/item/scryingorb
 	name = "Scrying Orb"
 	desc = "An incandescent orb of crackling energy, using it will allow you to ghost while alive, allowing you to spy upon the station with ease. In addition, buying it will permanently grant you x-ray vision."
-	item_path = /obj/item/weapon/gun/magic/staff/chaos
+	item_path = /obj/item/weapon/scrying
 	log_name = "SO"
 
 /datum/spellbook_entry/item/scryingorb/Buy(var/mob/living/carbon/human/user,var/obj/item/weapon/spellbook/book)
@@ -297,6 +297,12 @@
 	item_path = /obj/item/weapon/antag_spawner/contract
 	log_name = "CT"
 
+/datum/spellbook_entry/item/bloodbottle
+	name = "Bottle of Blood"
+	desc = "A bottle of magically infused blood, the smell of which will attract extradimensional beings when broken. Be careful though, the kinds of creatures summoned by blood magic are indiscriminate in their killing, and you yourself may become a victim."
+	item_path = /obj/item/weapon/antag_spawner/slaughter_demon
+	log_name = "BB"
+
 /datum/spellbook_entry/summon
 	name = "Summon Stuff"
 	category = "Rituals"
@@ -321,9 +327,9 @@
 
 /datum/spellbook_entry/summon/guns
 	name = "Summon Guns"
-	category = "Challenges"
+	category = "Rituals"
 	desc = "Nothing could possibly go wrong with arming a crew of lunatics just itching for an excuse to kill you. Just be careful not to stand still too long!"
-	cost = 0
+	cost = 1
 	log_name = "SG"
 
 /datum/spellbook_entry/summon/guns/IsAvailible()
@@ -331,11 +337,9 @@
 
 /datum/spellbook_entry/summon/guns/Buy(var/mob/living/carbon/human/user,var/obj/item/weapon/spellbook/book)
 	feedback_add_details("wizard_spell_learned",log_name)
-	rightandwrong(0, user, 0)
-	book.uses += 1
-	active = 1
+	rightandwrong(0, user, 25)
 	playsound(get_turf(user),"sound/magic/CastSummon.ogg",50,1)
-	user << "<span class='notice'>You have cast summon guns and gained an extra charge for your spellbook.</span>"
+	user << "<span class='notice'>You have cast summon guns!</span>"
 	return 1
 
 /datum/spellbook_entry/summon/magic
@@ -421,6 +425,10 @@
 			user << "<span class='notice'>You feed the contract back into the spellbook, refunding your points.</span>"
 			src.uses++
 			qdel(O)
+	if(istype(O, /obj/item/weapon/antag_spawner/slaughter_demon))
+		user << "<span class='notice'>On second thought, maybe summoning a demon is a bad idea. You refund your points.</span>"
+		src.uses++
+		qdel(O)
 
 /obj/item/weapon/spellbook/proc/GetCategoryHeader(var/category)
 	var/dat = ""
@@ -482,7 +490,7 @@
 
 	dat += "<li><a><b>Uses remaining : [uses]</b></a></li>"
 	dat += "</ul>"
-	
+
 	var/datum/spellbook_entry/E
 	for(var/i=1,i<=entries.len,i++)
 		var/spell_info = ""

@@ -24,7 +24,7 @@
 
 	loot = list(
 				/obj/item/weapon/gun/projectile/automatic/pistol = 8,
-				/obj/item/weapon/gun/projectile/shotgun/combat = 5,
+				/obj/item/weapon/gun/projectile/shotgun/automatic/combat = 5,
 				/obj/item/weapon/gun/projectile/revolver/mateba,
 				/obj/item/weapon/gun/projectile/automatic/pistol/deagle
 				)
@@ -117,4 +117,13 @@
 				/obj/item/weapon/wrench = 4,
 				/obj/item/weapon/relic = 3,
 				"" = 11
+				)
+
+/obj/effect/spawner/lootdrop/crate_spawner
+	name = "lootcrate spawner"
+	lootdoubles = 0
+
+	loot = list(
+				/obj/structure/closet/crate/secure/loot = 20,
+				"" = 80
 				)

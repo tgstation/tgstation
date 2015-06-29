@@ -73,6 +73,7 @@
 			var/thisemp = emped //Take note of which EMP this proc is for
 			spawn(900)
 				if(loc) //qdel limbo
+					triggerCameraAlarm() //camera alarm triggers even if multiple EMPs are in effect.
 					if(emped == thisemp) //Only fix it if the camera hasn't been EMP'd again
 						network = previous_network
 						icon_state = initial(icon_state)
@@ -80,7 +81,6 @@
 						if(can_use())
 							cameranet.addCamera(src)
 						emped = 0 //Resets the consecutive EMP count
-						triggerCameraAlarm()
 						spawn(100)
 							cancelCameraAlarm()
 			for(var/mob/O in mob_list)
@@ -226,35 +226,35 @@
 		L.laser_act(src, user)
 
 	else
-		if(W.force > 10) //fairly simplistic, but will do for now.
+		if(W.force >= 10) //fairly simplistic, but will do for now.
 			user.changeNext_move(CLICK_CD_MELEE)
 			visible_message("<span class='warning'>[user] hits [src] with [W]!</span>", "<span class='warning'>You hit [src] with [W]!</span>")
 			health = max(0, health - W.force)
+			user.do_attack_animation(src)
 			if(!health && status)
+				triggerCameraAlarm()
 				deactivate(user, 1)
 	return
 
 /obj/machinery/camera/proc/deactivate(mob/user, displaymessage = 1) //this should be called toggle() but doing a find and replace for this would be ass
+	status = !status
+	cameranet.updateChunk(x, y, z)
+	var/change_msg = "deactivates"
+	if(!status)
+		icon_state = "[initial(icon_state)]1"
+	else
+		icon_state = initial(icon_state)
+		change_msg = "reactivates"
+		triggerCameraAlarm()
+		spawn(100)
+			cancelCameraAlarm()
 	if(displaymessage)
-		status = !status
-		if(!status)
-			if(user)
-				visible_message("<span class='danger'>[user] deactivates [src]!</span>")
-				add_hiddenprint(user)
-			else
-				visible_message("<span class='danger'>\The [src] deactivates!</span>")
-			icon_state = "[initial(icon_state)]1"
-
+		if(user)
+			visible_message("<span class='danger'>[user] [change_msg] [src]!</span>")
+			add_hiddenprint(user)
 		else
-			if(user)
-				visible_message("<span class='danger'>[user] reactivates [src]!</span>")
-				add_hiddenprint(user)
-			else
-				visible_message("<span class='danger'>\The [src] reactivates!</span>")
-			triggerCameraAlarm()
-			icon_state = initial(icon_state)
-			spawn(100)
-				cancelCameraAlarm()
+			visible_message("<span class='danger'>\The [src] [change_msg]!</span>")
+
 		playsound(src.loc, 'sound/items/Wirecutter.ogg', 100, 1)
 
 	// now disconnect anyone using the camera
@@ -270,7 +270,6 @@
 	alarm_on = 1
 	for(var/mob/living/silicon/S in mob_list)
 		S.triggerAlarm("Camera", get_area(src), list(src), src)
-
 
 /obj/machinery/camera/proc/cancelCameraAlarm()
 	alarm_on = 0
@@ -337,7 +336,7 @@
 	user << "<span class='notice'>You start to weld [src]...</span>"
 	playsound(src.loc, 'sound/items/Welder.ogg', 50, 1)
 	busy = 1
-	if(do_after(user, 100))
+	if(do_after(user, 100, target = src))
 		busy = 0
 		if(!WT.isOn())
 			return 0
@@ -345,6 +344,12 @@
 	busy = 0
 	return 0
 
+/obj/machinery/camera/bullet_act(var/obj/item/projectile/proj)
+	if(proj.damage_type == BRUTE)
+		health = max(0, health - proj.damage)
+		if(!health && status)
+			triggerCameraAlarm()
+			deactivate(null, 1)
 
 /obj/machinery/camera/portable //Cameras which are placed inside of things, such as helmets.
 	var/turf/prev_turf

@@ -56,7 +56,8 @@
 
 /obj/item/device/electropack/Topic(href, href_list)
 	//..()
-	if(usr.stat || usr.restrained())
+	var/mob/living/carbon/C = usr
+	if(usr.stat || usr.restrained() || C.back == src)
 		return
 	if(((istype(usr, /mob/living/carbon/human) && ((!( ticker ) || (ticker && ticker.mode != "monkey")) && usr.contents.Find(src))) || (usr.contents.Find(master) || (in_range(src, usr) && istype(loc, /turf)))))
 		usr.set_machine(src)

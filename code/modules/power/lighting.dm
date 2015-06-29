@@ -42,7 +42,7 @@
 	playsound(src.loc, 'sound/machines/click.ogg', 75, 1)
 	var/constrdir = usr.dir
 	var/constrloc = usr.loc
-	if (!do_after(usr, 30))
+	if (!do_after(usr, 30, target = src))
 		return
 	switch(fixture_type)
 		if("bulb")
@@ -100,7 +100,7 @@
 		if (src.stage == 1)
 			playsound(src.loc, 'sound/items/Ratchet.ogg', 75, 1)
 			usr << "<span class='notice'>You begin deconstructing [src]...</span>"
-			if (!do_after(usr, 30))
+			if (!do_after(usr, 30, target = src))
 				return
 			new /obj/item/stack/sheet/metal( get_turf(src.loc), sheets_refunded )
 			user.visible_message("[user.name] deconstructs [src].", \
@@ -347,6 +347,8 @@
 			src.add_fingerprint(user)
 			var/obj/item/weapon/light/L = W
 			if(istype(L, light_type))
+				if(!user.drop_item())
+					return
 				status = L.status
 				user << "<span class='notice'>You insert the [L.name].</span>"
 				switchcount = L.switchcount
@@ -355,7 +357,6 @@
 				on = has_power()
 				update()
 
-				user.drop_item()	//drop the item to update overlays and such
 				qdel(L)
 
 				if(on && rigged)

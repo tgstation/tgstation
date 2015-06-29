@@ -71,13 +71,13 @@
 
 				//Harmful gasses
 				if(!has_smoke_protection())
-					for(var/obj/effect/effect/chem_smoke/smoke in view(1,src))
-						if(smoke.reagents.total_volume)
-							smoke.reagents.reaction(src,INGEST)
-							spawn(5)
-								if(smoke)
-									smoke.reagents.copy_to(src, 10)
-							break
+					for(var/obj/effect/effect/smoke/chem/S in range(1, src))
+						if(S.reagents.total_volume && S.lifetime)
+							var/fraction = 1/S.max_lifetime
+							S.reagents.reaction(src,INGEST, fraction)
+							var/amount = round(S.reagents.total_volume*fraction,0.1)
+							S.reagents.copy_to(src, amount)
+							S.lifetime--
 
 		else //Breathe from loc as obj again
 			if(istype(loc, /obj/))
@@ -293,12 +293,16 @@
 	CheckStamina()
 
 	if(sleeping)
+		throw_alert("asleep")
 		handle_dreams()
 		adjustStaminaLoss(-10)
 		sleeping = max(sleeping-1, 0)
 		if( prob(10) && health && !hal_crit )
 			spawn(0)
 				emote("snore")
+	else
+		clear_alert("asleep")
+
 
 	var/restingpwr = 1 + 4 * resting
 
@@ -370,10 +374,6 @@
 			hallucination = 0
 		else
 			hallucination -= 2
-
-	else
-		for(var/atom/a in hallucinations)
-			qdel(a)
 
 //this handles hud updates. Calls update_vision() and handle_hud_icons()
 /mob/living/carbon/handle_regular_hud_updates()

@@ -1,6 +1,6 @@
 /obj/machinery/atmospherics/unary/generator_input
-	icon = 'icons/obj/atmospherics/heat_exchanger.dmi'
-	icon_state = "intact"
+
+	icon_state = "he_intact"
 	density = 1
 
 	name = "generator input"

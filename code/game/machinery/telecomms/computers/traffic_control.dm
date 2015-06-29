@@ -2,7 +2,6 @@
 
 /obj/machinery/computer/telecomms/traffic
 	name = "telecommunications traffic control console"
-	icon_state = "computer_generic"
 
 	var/screen = 0				// the screen number:
 	var/list/servers = list()	// the servers located by the computer
@@ -169,7 +168,8 @@
 				var/obj/item/weapon/card/id/I = C.get_active_hand()
 				if(istype(I))
 					if(check_access(I))
-						C.drop_item()
+						if(!C.drop_item())
+							return
 						I.loc = src
 						auth = I
 						create_log("has logged in.", usr)

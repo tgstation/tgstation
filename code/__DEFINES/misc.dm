@@ -81,7 +81,8 @@
 
 #define MINERAL_MATERIAL_AMOUNT 2000
 //The amount of materials you get from a sheet of mineral like iron/diamond/glass etc
-
+#define MAX_STACK_SIZE 50
+//The maximum size of a stack object.
 
 #define CLICK_CD_MELEE 8
 #define CLICK_CD_RANGE 4
@@ -108,6 +109,7 @@
 #define STAGE_THREE 5
 #define STAGE_FOUR 7
 #define STAGE_FIVE 9
+#define STAGE_SIX 11 //From supermatter shard
 
 //zlevel defines, can be overridden for different maps in the appropriate _maps file.
 #define ZLEVEL_SPACEMAX 7
@@ -160,3 +162,8 @@
 #define CHANCE_TALK 15
 #define MAXCOIL 30
 #define RESIZE_DEFAULT_SIZE 1
+
+//transfer_ai() defines. Main proc in ai_core.dm
+#define AI_TRANS_TO_CARD	1 //Downloading AI to InteliCard.
+#define AI_TRANS_FROM_CARD	2 //Uploading AI from InteliCard
+#define AI_MECH_HACK		3 //Malfunctioning AI hijacking mecha

@@ -83,14 +83,11 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 		usr << "<font color='blue'>[procname] returned: [returnval ? returnval : "null"]</font>"
 		feedback_add_details("admin_verb","APC") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
-/client/proc/callproc_datum(var/atom/A as null|area|mob|obj|turf)
+/client/proc/callproc_datum(var/A as null|area|mob|obj|turf)
 	set category = "Debug"
 	set name = "Atom ProcCall"
 
 	if(!check_rights(R_DEBUG))
-		return
-
-	if(!istype(A))
 		return
 
 	var/procname = input("Proc name, eg: fake_blood","Proc:", null) as text|null
@@ -101,7 +98,7 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 	if(!lst)
 		return
 
-	if(!A || A.gc_destroyed)
+	if(!A || !IsValidSrc(A))
 		usr << "<span class='warning'>Error: callproc_datum(): owner of proc no longer exists.</span>"
 		return
 	if(!hascall(A,procname))
@@ -885,7 +882,7 @@ var/global/list/g_fancy_list_of_types = null
 			M.equip_to_slot_or_del(new /obj/item/clothing/mask/cigarette/cigar/cohiba(M), slot_wear_mask)
 			M.equip_to_slot_or_del(new /obj/item/clothing/head/centhat(M), slot_head)
 			M.equip_to_slot_or_del(new /obj/item/weapon/gun/projectile/revolver/mateba(M), slot_belt)
-			M.equip_to_slot_or_del(new /obj/item/weapon/lighter/zippo(M), slot_r_store)
+			M.equip_to_slot_or_del(new /obj/item/weapon/lighter(M), slot_r_store)
 			M.equip_to_slot_or_del(new /obj/item/ammo_box/a357(M), slot_l_store)
 			M.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack/satchel(M), slot_back)
 
@@ -912,7 +909,7 @@ var/global/list/g_fancy_list_of_types = null
 			M.equip_to_slot_or_del(new /obj/item/clothing/mask/cigarette/cigar/havana(M), slot_wear_mask)
 			M.equip_to_slot_or_del(new /obj/item/clothing/head/helmet/space/beret(M), slot_head)
 			M.equip_to_slot_or_del(new /obj/item/weapon/gun/energy/pulse/pistol/m1911(M), slot_belt)
-			M.equip_to_slot_or_del(new /obj/item/weapon/lighter/zippo(M), slot_r_store)
+			M.equip_to_slot_or_del(new /obj/item/weapon/lighter(M), slot_r_store)
 			M.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack/satchel(M), slot_back)
 
 			var/obj/item/weapon/card/id/W = new(M)

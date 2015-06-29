@@ -6,7 +6,6 @@
 	icon_state = "candle1"
 	item_state = "candle1"
 	w_class = 1
-
 	var/wax = 200
 	var/lit = 0
 	proc
@@ -46,6 +45,10 @@
 		if(M.lit)
 			light()
 
+/obj/item/candle/fire_act()
+	if(!src.lit)
+		light() //honk
+	return
 
 /obj/item/candle/light(var/flavor_text = "<span class='danger'>[usr] lights the [name].</span>")
 	if(!src.lit)

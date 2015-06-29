@@ -8,6 +8,8 @@
 	force = 10.0
 	throwforce = 0
 	w_class = 4.0
+	burn_state = 0 //Burnable
+	burntime = 20
 
 /obj/item/weapon/moneybag/attack_hand(user as mob)
 	var/amt_gold = 0
@@ -60,8 +62,9 @@
 	..()
 	if (istype(W, /obj/item/weapon/coin))
 		var/obj/item/weapon/coin/C = W
+		if(!user.drop_item())
+			return
 		user << "<span class='notice'>You add the [C.name] into the bag.</span>"
-		usr.drop_item()
 		contents += C
 	if (istype(W, /obj/item/weapon/moneybag))
 		var/obj/item/weapon/moneybag/C = W

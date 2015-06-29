@@ -144,20 +144,20 @@
 	M.Move(dest)
 
 	if(entersparks)
-		var/datum/effect/effect/system/spark_spread/s = new /datum/effect/effect/system/spark_spread
+		var/datum/effect/effect/system/spark_spread/s = new
 		s.set_up(4, 1, src)
 		s.start()
 	if(exitsparks)
-		var/datum/effect/effect/system/spark_spread/s = new /datum/effect/effect/system/spark_spread
+		var/datum/effect/effect/system/spark_spread/s = new
 		s.set_up(4, 1, dest)
 		s.start()
 
 	if(entersmoke)
-		var/datum/effect/effect/system/harmless_smoke_spread/s = new /datum/effect/effect/system/harmless_smoke_spread
+		var/datum/effect/effect/system/smoke_spread/s = new
 		s.set_up(4, 1, src, 0)
 		s.start()
 	if(exitsmoke)
-		var/datum/effect/effect/system/harmless_smoke_spread/s = new /datum/effect/effect/system/harmless_smoke_spread
+		var/datum/effect/effect/system/smoke_spread/s = new
 		s.set_up(4, 1, dest, 0)
 		s.start()
 

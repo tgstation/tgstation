@@ -85,7 +85,8 @@ Made by Xhuis
 	if(config.protect_assistant_from_antagonist)
 		restricted_jobs += "Assistant"
 
-	var/shadowlings = 2 //How many shadowlings there are; hardcoded to 2
+	var/shadowlings = max(2, round(num_players()/10))
+
 
 	while(shadowlings)
 		var/datum/mind/shadow = pick(antag_candidates)

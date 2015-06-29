@@ -145,7 +145,7 @@ Note: Must be placed west/left of and R&D console to function.
 	if (disabled)
 		return
 	if (!linked_console)
-		user << "<span class='warning'> The [src.name] must be linked to an R&D console first!</span>"
+		user << "<span class='warning'>The [src.name] must be linked to an R&D console first!</span>"
 		return 1
 	if (busy)
 		user << "<span class='warning'>The [src.name] is busy! Please wait for completion of previous operation.</span>"

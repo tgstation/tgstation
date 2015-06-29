@@ -388,7 +388,7 @@ obj/machinery/bot/floorbot/process_scan(var/scan_target)
 /obj/machinery/bot/floorbot/proc/eattile(var/obj/item/stack/tile/plasteel/T)
 	if(!istype(T, /obj/item/stack/tile/plasteel))
 		return
-	visible_message("<span class='notice'> [src] begins to collect tiles.</span>")
+	visible_message("<span class='notice'>[src] begins to collect tiles.</span>")
 	mode = BOT_REPAIRING
 	spawn(20)
 		if(isnull(T))
@@ -409,7 +409,7 @@ obj/machinery/bot/floorbot/process_scan(var/scan_target)
 /obj/machinery/bot/floorbot/proc/maketile(var/obj/item/stack/sheet/metal/M)
 	if(!istype(M, /obj/item/stack/sheet/metal))
 		return
-	visible_message("<span class='notice'> [src] begins to create tiles.</span>")
+	visible_message("<span class='notice'>[src] begins to create tiles.</span>")
 	mode = BOT_REPAIRING
 	spawn(20)
 		if(isnull(M))

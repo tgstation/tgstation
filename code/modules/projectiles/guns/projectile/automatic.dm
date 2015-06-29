@@ -106,7 +106,13 @@
 	icon_state = "c20r[magazine ? "-[Ceiling(get_ammo(0)/4)*4]" : ""][chambered ? "" : "-e"][suppressed ? "-suppressed" : ""]"
 	return
 
-
+/obj/item/weapon/gun/projectile/automatic/mini_uzi
+	name = "uzi"
+	desc = "A lightweight, burst-fire submachine gun, for when you really want someone dead. Uses 9mm rounds."
+	icon_state = "mini-uzi"
+	origin_tech = "combat=5;materials=2;syndicate=8"
+	mag_type = /obj/item/ammo_box/magazine/uzim9mm
+	burst_size = 2
 
 /obj/item/weapon/gun/projectile/automatic/l6_saw
 	name = "syndicate LMG"
@@ -231,7 +237,7 @@
 
 /obj/item/weapon/gun/projectile/automatic/tommygun
 	name = "thompson SMG"
-	desc = "A genuine 'Chicago Typewriter'."
+	desc = "Based on the classic 'Chicago Typewriter'."
 	icon_state = "tommygun"
 	item_state = "shotgun"
 	w_class = 5

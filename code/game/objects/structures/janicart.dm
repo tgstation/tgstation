@@ -29,7 +29,8 @@
 		playsound(loc, 'sound/effects/slosh.ogg', 25, 1)
 
 /obj/structure/janitorialcart/proc/put_in_cart(obj/item/I, mob/user)
-	user.drop_item()
+	if(!user.drop_item())
+		return
 	I.loc = src
 	updateUsrDialog()
 	user << "<span class='notice'>You put [I] into [src].</span>"
@@ -79,7 +80,7 @@
 		mybag.attackby(I, user)
 	else if(istype(I, /obj/item/weapon/crowbar))
 		user.visible_message("[user] begins to empty the contents of [src].", "<span class='notice'>You begin to empty the contents of [src]...</span>")
-		if(do_after(user, 30))
+		if(do_after(user, 30, target = src))
 			usr << "<span class='notice'>You empty the contents of [src]'s bucket onto the floor.</span>"
 			reagents.reaction(src.loc)
 			src.reagents.clear_reagents()
@@ -199,8 +200,9 @@
 		user << "Hold [I] in one of your hands while you drive this [callme]."
 	else if(istype(I, /obj/item/weapon/storage/bag/trash))
 		if(keytype == /obj/item/key/janitor)
+			if(!user.drop_item())
+				return
 			user << "<span class='notice'>You hook the trashbag onto the [callme].</span>"
-			user.drop_item()
 			I.loc = src
 			mybag = I
 	else if(istype(I, /obj/item/janiupgrade))

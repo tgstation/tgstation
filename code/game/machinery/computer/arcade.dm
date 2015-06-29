@@ -1,8 +1,9 @@
 /obj/machinery/computer/arcade/
 	name = "random arcade"
 	desc = "random arcade machine"
-	icon = 'icons/obj/computer.dmi'
 	icon_state = "arcade"
+	icon_keyboard = null
+	icon_screen = "invaders"
 	var/list/prizes = list(	/obj/item/weapon/storage/box/snappops					= 2,
 							/obj/item/toy/AI										= 2,
 							/obj/item/clothing/under/syndicate/tacticool			= 2,
@@ -10,7 +11,7 @@
 							/obj/item/toy/gun										= 2,
 							/obj/item/weapon/gun/projectile/shotgun/toy/crossbow	= 2,
 							/obj/item/weapon/storage/box/fakesyndiesuit				= 2,
-							/obj/item/weapon/storage/fancy/crayons					= 2,
+							/obj/item/weapon/storage/crayons						= 2,
 							/obj/item/toy/spinningtoy								= 2,
 							/obj/item/toy/prize/ripley								= 1,
 							/obj/item/toy/prize/fireripley							= 1,
@@ -82,7 +83,6 @@
 /obj/machinery/computer/arcade/battle
 	name = "arcade machine"
 	desc = "Does not support Pinball."
-	icon = 'icons/obj/computer.dmi'
 	icon_state = "arcade"
 	circuit = /obj/item/weapon/circuitboard/arcade/battle
 	var/enemy_name = "Space Villian"
@@ -298,7 +298,6 @@
 /obj/machinery/computer/arcade/orion_trail
 	name = "The Orion Trail"
 	desc = "Learn how our ancestors got to Orion, and have fun in the process!"
-	icon = 'icons/obj/computer.dmi'
 	icon_state = "arcade"
 	circuit = /obj/item/weapon/circuitboard/arcade/orion_trail
 	var/engine = 0

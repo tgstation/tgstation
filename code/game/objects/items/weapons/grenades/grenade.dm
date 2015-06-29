@@ -9,9 +9,14 @@
 	throw_range = 7
 	flags = CONDUCT
 	slot_flags = SLOT_BELT
+	burn_state = 0 //Burnable
+	burntime = 5
 	var/active = 0
 	var/det_time = 50
 	var/display_timer = 1
+
+/obj/item/weapon/grenade/burn()
+	prime()
 
 /obj/item/weapon/grenade/proc/clown_check(var/mob/living/carbon/human/user)
 	if(user.disabilities & CLUMSY && prob(50))
@@ -64,7 +69,7 @@
 			add_fingerprint(user)
 			var/turf/bombturf = get_turf(src)
 			var/area/A = get_area(bombturf)
-			message_admins("[key_name(usr)]<A HREF='?_src_=holder;adminmoreinfo=\ref[usr]'>?</A> has primed a [name] for detonation at <A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[bombturf.x];Y=[bombturf.y];Z=[bombturf.z]'>[A.name] (JMP)</a>.")
+			message_admins("[key_name_admin(usr)]<A HREF='?_src_=holder;adminmoreinfo=\ref[usr]'>?</A> (<A HREF='?_src_=holder;adminplayerobservefollow=\ref[usr]'>FLW</A>) has primed a [name] for detonation at <A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[bombturf.x];Y=[bombturf.y];Z=[bombturf.z]'>[A.name] (JMP)</a>.")
 			log_game("[key_name(usr)] has primed a [name] for detonation at [A.name] ([bombturf.x],[bombturf.y],[bombturf.z]).")
 			if(iscarbon(user))
 				var/mob/living/carbon/C = user

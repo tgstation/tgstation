@@ -83,6 +83,45 @@
 	else
 		..()
 
+/*
+ * Crayon Box
+ */
+/obj/item/weapon/storage/crayons
+	name = "box of crayons"
+	desc = "A box of crayons for all your rune drawing needs."
+	icon = 'icons/obj/crayons.dmi'
+	icon_state = "crayonbox"
+	w_class = 2.0
+	storage_slots = 6
+	can_hold = list(
+		/obj/item/toy/crayon
+	)
+
+/obj/item/weapon/storage/crayons/New()
+	..()
+	new /obj/item/toy/crayon/red(src)
+	new /obj/item/toy/crayon/orange(src)
+	new /obj/item/toy/crayon/yellow(src)
+	new /obj/item/toy/crayon/green(src)
+	new /obj/item/toy/crayon/blue(src)
+	new /obj/item/toy/crayon/purple(src)
+	update_icon()
+
+/obj/item/weapon/storage/crayons/update_icon()
+	overlays.Cut()
+	for(var/obj/item/toy/crayon/crayon in contents)
+		overlays += image('icons/obj/crayons.dmi',crayon.colourName)
+
+/obj/item/weapon/storage/crayons/attackby(obj/item/W as obj, mob/user as mob, params)
+	if(istype(W,/obj/item/toy/crayon))
+		switch(W:colourName)
+			if("mime")
+				usr << "This crayon is too sad to be contained in this box."
+				return
+			if("rainbow")
+				usr << "This crayon is too powerful to be contained in this box."
+				return
+	..()
 
 //Spraycan stuff
 
@@ -125,6 +164,7 @@
 	if(!proximity)
 		return
 	if(capped)
+		user << "<span class='warning'>Take the cap off first!</span>"
 		return
 	else
 		if(iscarbon(target))

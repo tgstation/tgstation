@@ -1,7 +1,7 @@
 //In this file: Summon Magic/Summon Guns/Summon Events
 
 /proc/rightandwrong(var/summon_type, var/mob/user, var/survivor_probability) //0 = Summon Guns, 1 = Summon Magic
-	var/list/gunslist 			= list("taser","egun","laser","revolver","detective","c20r","nuclear","deagle","gyrojet","pulse","suppressed","cannon","doublebarrel","shotgun","combatshotgun","bulldog","mateba","sabr","crossbow","saw","car","boltaction","speargun","arg")
+	var/list/gunslist 			= list("taser","egun","laser","revolver","detective","c20r","nuclear","deagle","gyrojet","pulse","suppressed","cannon","doublebarrel","shotgun","combatshotgun","bulldog","mateba","sabr","crossbow","saw","car","boltaction","speargun","arg","uzi")
 	var/list/magiclist 			= list("fireball","smoke","blind","mindswap","forcewall","knock","horsemask","charge", "summonitem", "wandnothing", "wanddeath", "wandresurrection", "wandpolymorph", "wandteleport", "wanddoor", "wandfireball", "staffchange", "staffhealing", "armor", "scrying","staffdoor", "special")
 	var/list/magicspeciallist	= list("staffchange","staffanimation", "wandbelt", "contract", "staffchaos", "necromantic")
 
@@ -12,15 +12,18 @@
 	for(var/mob/living/carbon/human/H in player_list)
 		if(H.stat == 2 || !(H.client)) continue
 		if(H.mind)
-			if(H.mind.special_role == "Wizard" || H.mind.special_role == "apprentice") continue
+			if(H.mind.special_role == "Wizard" || H.mind.special_role == "apprentice" || H.mind.special_role == "survivalist") continue
 		if(prob(survivor_probability) && !(H.mind in ticker.mode.traitors))
 			ticker.mode.traitors += H.mind
-			H.mind.special_role = "traitor"
+			var/datum/objective/summon_guns/guns = new
+			guns.owner = H.mind
+			H.mind.objectives += guns
+			H.mind.special_role = "survivalist"
 			var/datum/objective/survive/survive = new
 			survive.owner = H.mind
 			H.mind.objectives += survive
-			H.attack_log += "\[[time_stamp()]\] <font color='red'>Was made into a survivor, and trusts no one!</font>"
-			H << "<B>You are the survivor! Your own safety matters above all else, trust no one and kill anyone who gets in your way. However, armed as you are, now would be the perfect time to settle that score or grab that pair of yellow gloves you've been eyeing...</B>"
+			H.attack_log += "\[[time_stamp()]\] <font color='red'>Was made into a survivalist, and trusts no one!</font>"
+			H << "<B>You are the survivalist! Your own safety matters above all else, and the only way to ensure your safety is to stockpile weapons! Grab as many guns as possible, by any means necessary. Kill anyone who gets in your way.</B>"
 			var/obj_count = 1
 			for(var/datum/objective/OBJ in H.mind.objectives)
 				H << "<B>Objective #[obj_count]</B>: [OBJ.explanation_text]"
@@ -54,7 +57,7 @@
 				if("shotgun")
 					new /obj/item/weapon/gun/projectile/shotgun(get_turf(H))
 				if("combatshotgun")
-					new /obj/item/weapon/gun/projectile/shotgun/combat(get_turf(H))
+					new /obj/item/weapon/gun/projectile/shotgun/automatic/combat(get_turf(H))
 				if("arg")
 					new /obj/item/weapon/gun/projectile/automatic/ar(get_turf(H))
 				if("mateba")
@@ -63,6 +66,8 @@
 					new /obj/item/weapon/gun/projectile/shotgun/boltaction(get_turf(H))
 				if("speargun")
 					new /obj/item/weapon/gun/projectile/automatic/speargun(get_turf(H))
+				if("uzi")
+					new /obj/item/weapon/gun/projectile/automatic/mini_uzi(get_turf(H))
 				if("cannon")
 					var/obj/item/weapon/gun/energy/lasercannon/gat  = new(get_turf(H))
 					gat.pin = new /obj/item/device/firing_pin //no authentication pins for spawned guns. fun allowed.

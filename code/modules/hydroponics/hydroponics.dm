@@ -684,25 +684,25 @@
 	else if(istype(O, /obj/item/device/analyzer/plant_analyzer))
 		if(planted && myseed)
 			user << "*** <B>[myseed.plantname]</B> ***" //Carn: now reports the plants growing, not the seeds.
-			user << "-Plant Age: <span class='notice'> [age]</span>"
-			user << "-Plant Endurance: <span class='notice'> [myseed.endurance]</span>"
-			user << "-Plant Lifespan: <span class='notice'> [myseed.lifespan]</span>"
+			user << "-Plant Age: <span class='notice'>[age]</span>"
+			user << "-Plant Endurance: <span class='notice'>[myseed.endurance]</span>"
+			user << "-Plant Lifespan: <span class='notice'>[myseed.lifespan]</span>"
 			if(myseed.yield != -1)
-				user << "-Plant Yield: <span class='notice'> [myseed.yield]</span>"
-			user << "-Plant Production: <span class='notice'> [myseed.production]</span>"
+				user << "-Plant Yield: <span class='notice'>[myseed.yield]</span>"
+			user << "-Plant Production: <span class='notice'>[myseed.production]</span>"
 			if(myseed.potency != -1)
-				user << "-Plant Potency: <span class='notice'> [myseed.potency]</span>"
+				user << "-Plant Potency: <span class='notice'>[myseed.potency]</span>"
 			var/list/text_strings = myseed.get_analyzer_text()
 			if(text_strings)
 				for(var/string in text_strings)
 					user << string
 		else
 			user << "<B>No plant found.</B>"
-		user << "-Weed level: <span class='notice'> [weedlevel] / 10</span>"
-		user << "-Pest level: <span class='notice'> [pestlevel] / 10</span>"
-		user << "-Toxicity level: <span class='notice'> [toxic] / 100</span>"
-		user << "-Water level: <span class='notice'> [waterlevel] / [maxwater]</span>"
-		user << "-Nutrition level: <span class='notice'> [nutrilevel] / [maxnutri]</span>"
+		user << "-Weed level: <span class='notice'>[weedlevel] / 10</span>"
+		user << "-Pest level: <span class='notice'>[pestlevel] / 10</span>"
+		user << "-Toxicity level: <span class='notice'>[toxic] / 100</span>"
+		user << "-Water level: <span class='notice'>[waterlevel] / [maxwater]</span>"
+		user << "-Nutrition level: <span class='notice'>[nutrilevel] / [maxnutri]</span>"
 		user << ""
 
 	else if(istype(O, /obj/item/weapon/cultivator))
@@ -730,7 +730,7 @@
 			user.visible_message("[user] begins to wrench [src] into place.", \
 								"<span class='notice'>You begin to wrench [src] in place...</span>")
 			playsound(loc, 'sound/items/Ratchet.ogg', 50, 1)
-			if (do_after(user, 20))
+			if (do_after(user, 20, target = src))
 				if(anchored)
 					return
 				anchored = 1
@@ -740,7 +740,7 @@
 			user.visible_message("[user] begins to unwrench [src].", \
 								"<span class='notice'>You begin to unwrench [src]...</span>")
 			playsound(loc, 'sound/items/Ratchet.ogg', 50, 1)
-			if (do_after(user, 20))
+			if (do_after(user, 20, target = src))
 				if(!anchored)
 					return
 				anchored = 0
@@ -863,9 +863,9 @@
 			podman.ckey = ckey_holder
 		podman.gender = blood_gender
 		podman.faction |= factions
-		if(!mutant_color)
-			mutant_color = "#59CE00"
-		hardset_dna(podman,null,null,podman.real_name,blood_type,/datum/species/plant/pod,mutant_color)//Discard SE's and UI's, podman cloning is inaccurate, and always make them a podman
+		if(!features["mcolor"])
+			features["mcolor"] = "#59CE00"
+		hardset_dna(podman,null,null,podman.real_name,blood_type,/datum/species/plant/pod,features)//Discard SE's and UI's, podman cloning is inaccurate, and always make them a podman
 		podman.set_cloned_appearance()
 
 	else //else, one packet of seeds. maybe two

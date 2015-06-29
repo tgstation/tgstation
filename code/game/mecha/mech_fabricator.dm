@@ -139,7 +139,7 @@
 		var/amount = min(res_max_amount, resources[resource])
 		output += "<span class=\"res_name\">[material2name(resource)]: </span>[amount] cm&sup3;"
 		if(amount>0)
-			output += "<span style='font-size:80%;'> - Remove \[<a href='?src=\ref[src];remove_mat=1;material=[resource]'>1</a>\] | \[<a href='?src=\ref[src];remove_mat=10;material=[resource]'>10</a>\] | \[<a href='?src=\ref[src];remove_mat=[resources[resource] / MINERAL_MATERIAL_AMOUNT];material=[resource]'>All</a>\]</span>"
+			output += "<span style='font-size:80%;'>- Remove \[<a href='?src=\ref[src];remove_mat=1;material=[resource]'>1</a>\] | \[<a href='?src=\ref[src];remove_mat=10;material=[resource]'>10</a>\] | \[<a href='?src=\ref[src];remove_mat=[resources[resource] / MINERAL_MATERIAL_AMOUNT];material=[resource]'>All</a>\]</span>"
 		output += "<br/>"
 	return output
 
@@ -169,7 +169,7 @@
 	overlays -= "fab-active"
 	desc = initial(desc)
 
-	var/location = get_step(src,SOUTH)
+	var/location = get_step(src,(dir))
 	var/obj/item/I = new D.build_path(location)
 	I.m_amt = get_resource_cost_w_coeff(D,"$metal")
 	I.g_amt = get_resource_cost_w_coeff(D,"$glass")
@@ -305,7 +305,7 @@
 	if (..())
 		return
 	user.set_machine(src)
-	var/turf/exit = get_step(src,SOUTH)
+	var/turf/exit = get_step(src,(dir))
 	if(exit.density)
 		visible_message("\icon[src] <b>\The [src]</b> beeps, \"Error! Part outlet is obstructed.\"")
 		return

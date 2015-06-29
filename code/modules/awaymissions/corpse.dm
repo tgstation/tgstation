@@ -260,7 +260,7 @@
 	corpsehelmet = /obj/item/clothing/head/centhat
 	corpsegloves = /obj/item/clothing/gloves/combat
 	corpseshoes = /obj/item/clothing/shoes/combat/swat
-	corpsepocket1 = /obj/item/weapon/lighter/zippo
+	corpsepocket1 = /obj/item/weapon/lighter
 	corpseid = 1
 	corpseidjob = "Commander"
 	corpseidaccess = "Captain"

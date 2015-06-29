@@ -86,7 +86,9 @@ var/list/admin_verbs_fun = list(
 	/client/proc/set_ooc,
 	/client/proc/reset_ooc,
 	/client/proc/forceEvent,
-	/client/proc/bluespace_artillery
+	/client/proc/bluespace_artillery,
+	/client/proc/admin_change_sec_level,
+	/client/proc/toggle_nuke
 	)
 var/list/admin_verbs_spawn = list(
 	/datum/admins/proc/spawn_atom,		/*allows us to spawn instances*/
@@ -198,7 +200,9 @@ var/list/admin_verbs_hideable = list(
 	/proc/release,
 	/client/proc/reload_admins,
 	/client/proc/reset_all_tcs,
-	/client/proc/panicbunker
+	/client/proc/panicbunker,
+	/client/proc/admin_change_sec_level,
+	/client/proc/toggle_nuke
 	)
 
 /client/proc/add_admin_verbs()
@@ -459,13 +463,18 @@ var/list/admin_verbs_hideable = list(
 	set category = "Fun"
 	set name = "Give Spell"
 	set desc = "Gives a spell to a mob."
-	var/obj/effect/proc_holder/spell/S = input("Choose the spell to give to that guy", "ABRAKADABRA") as null|anything in spells
+
+	var/list/spell_list = list()
+	var/type_length = length("/obj/effect/proc_holder/spell") + 2
+	for(var/A in spells)
+		spell_list[copytext("[A]", type_length)] = A
+	var/obj/effect/proc_holder/spell/S = input("Choose the spell to give to that guy", "ABRAKADABRA") as null|anything in spell_list
 	if(!S)
 		return
+	S = spell_list[S]
 	feedback_add_details("admin_verb","GS") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 	log_admin("[key_name(usr)] gave [key_name(T)] the spell [S].")
 	message_admins("<span class='adminnotice'>[key_name_admin(usr)] gave [key_name(T)] the spell [S].</span>")
-
 	if(T.mind)
 		T.mind.AddSpell(new S)
 	else

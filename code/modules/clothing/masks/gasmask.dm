@@ -2,12 +2,14 @@
 	name = "gas mask"
 	desc = "A face-covering mask that can be connected to an air supply. While good for concealing your identity, it isn't good for blocking gas flow." //More accurate
 	icon_state = "gas_alt"
-	flags = MASKCOVERSMOUTH | MASKCOVERSEYES | BLOCK_GAS_SMOKE_EFFECT | MASKINTERNALS
+	flags = BLOCK_GAS_SMOKE_EFFECT | MASKINTERNALS
 	flags_inv = HIDEEARS|HIDEEYES|HIDEFACE
 	w_class = 3.0
 	item_state = "gas_alt"
 	gas_transfer_coefficient = 0.01
 	permeability_coefficient = 0.01
+	flags_cover = MASKCOVERSEYES | MASKCOVERSMOUTH
+	burn_state = -1 //Won't burn in fires
 
 // **** Welding gas mask ****
 
@@ -22,7 +24,7 @@
 	armor = list(melee = 10, bullet = 0, laser = 0,energy = 0, bomb = 0, bio = 0, rad = 0)
 	origin_tech = "materials=2;engineering=2"
 	action_button_name = "Toggle Welding Mask"
-	visor_flags = MASKCOVERSEYES
+	flags_cover = MASKCOVERSEYES
 	visor_flags_inv = HIDEEYES
 
 /obj/item/clothing/mask/gas/welding/attack_self()
@@ -47,10 +49,11 @@
 	icon_state = "sechailer"
 	var/aggressiveness = 2
 	ignore_maskadjust = 0
-	flags = MASKCOVERSMOUTH | BLOCK_GAS_SMOKE_EFFECT | MASKINTERNALS
+	flags = BLOCK_GAS_SMOKE_EFFECT | MASKINTERNALS
 	flags_inv = HIDEFACE
-	visor_flags = MASKCOVERSMOUTH | BLOCK_GAS_SMOKE_EFFECT | MASKINTERNALS
+	visor_flags = BLOCK_GAS_SMOKE_EFFECT | MASKINTERNALS
 	visor_flags_inv = HIDEFACE
+	flags_cover = MASKCOVERSMOUTH
 
 /obj/item/clothing/mask/gas/sechailer/swat
 	name = "\improper SWAT mask"
@@ -222,9 +225,11 @@
 /obj/item/clothing/mask/gas/clown_hat
 	name = "clown wig and mask"
 	desc = "A true prankster's facial attire. A clown is incomplete without his wig and mask."
-	flags = MASKCOVERSEYES | BLOCK_GAS_SMOKE_EFFECT | MASKINTERNALS
+	flags = MASKINTERNALS
 	icon_state = "clown"
 	item_state = "clown_hat"
+	flags_cover = MASKCOVERSEYES
+	burn_state = 0 //Burnable
 
 /obj/item/clothing/mask/gas/clown_hat/attack_self(mob/user)
 
@@ -245,30 +250,38 @@
 /obj/item/clothing/mask/gas/sexyclown
 	name = "sexy-clown wig and mask"
 	desc = "A feminine clown mask for the dabbling crossdressers or female entertainers."
-	flags = MASKCOVERSEYES | BLOCK_GAS_SMOKE_EFFECT | MASKINTERNALS
+	flags = MASKINTERNALS
 	icon_state = "sexyclown"
 	item_state = "sexyclown"
+	flags_cover = MASKCOVERSEYES
+	burn_state = 0 //Burnable
 
 /obj/item/clothing/mask/gas/mime
 	name = "mime mask"
 	desc = "The traditional mime's mask. It has an eerie facial posture."
-	flags = MASKCOVERSEYES | BLOCK_GAS_SMOKE_EFFECT | MASKINTERNALS
+	flags = MASKINTERNALS
 	icon_state = "mime"
 	item_state = "mime"
+	flags_cover = MASKCOVERSEYES
+	burn_state = 0 //Burnable
 
 /obj/item/clothing/mask/gas/monkeymask
 	name = "monkey mask"
 	desc = "A mask used when acting as a monkey."
-	flags = MASKCOVERSEYES | BLOCK_GAS_SMOKE_EFFECT | MASKINTERNALS
+	flags = MASKINTERNALS
 	icon_state = "monkeymask"
 	item_state = "monkeymask"
+	flags_cover = MASKCOVERSEYES
+	burn_state = 0 //Burnable
 
 /obj/item/clothing/mask/gas/sexymime
 	name = "sexy mime mask"
 	desc = "A traditional female mime's mask."
-	flags = MASKCOVERSEYES | BLOCK_GAS_SMOKE_EFFECT | MASKINTERNALS
+	flags = MASKINTERNALS
 	icon_state = "sexymime"
 	item_state = "sexymime"
+	flags_cover = MASKCOVERSEYES
+	burn_state = 0 //Burnable
 
 /obj/item/clothing/mask/gas/death_commando
 	name = "Death Commando Mask"
@@ -279,9 +292,12 @@
 	name = "cyborg visor"
 	desc = "Beep boop."
 	icon_state = "death"
+	burn_state = 0 //Burnable
 
 /obj/item/clothing/mask/gas/owl_mask
 	name = "owl mask"
 	desc = "Twoooo!"
-	flags = MASKCOVERSEYES | BLOCK_GAS_SMOKE_EFFECT | MASKINTERNALS
 	icon_state = "owl"
+	flags = MASKINTERNALS
+	flags_cover = MASKCOVERSEYES
+	burn_state = 0 //Burnable

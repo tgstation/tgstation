@@ -62,6 +62,7 @@
 	return
 
 /mob/living/proc/handle_mutations_and_radiation()
+	radiation = 0 //so radiation don't accumulate in simple animals
 	return
 
 /mob/living/proc/handle_chemicals_in_body()
@@ -170,8 +171,10 @@
 		if(blind)
 			if(eye_blind)
 				blind.layer = 18
+				throw_alert("blind")
 			else
 				blind.layer = 0
+				clear_alert("blind")
 
 				if (disabilities & NEARSIGHT)
 					client.screen += global_hud.vimpaired
@@ -181,6 +184,9 @@
 
 				if (druggy)
 					client.screen += global_hud.druggy
+					throw_alert("high")
+				else
+					clear_alert("high")
 
 				if(eye_stat > 20)
 					if(eye_stat > 30)

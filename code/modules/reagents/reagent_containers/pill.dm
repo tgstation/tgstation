@@ -45,10 +45,9 @@
 
 	if(reagents.total_volume)
 		reagents.reaction(M, apply_type)
-		spawn(5)
-			reagents.trans_to(M, reagents.total_volume)
-			qdel(src)
-			return 1
+		reagents.trans_to(M, reagents.total_volume)
+		qdel(src)
+		return 1
 	else
 		qdel(src)
 		return 1

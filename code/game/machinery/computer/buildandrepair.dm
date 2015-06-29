@@ -83,6 +83,10 @@
 /obj/item/weapon/circuitboard/card/centcom
 	name = "circuit board (Centcom ID Console)"
 	build_path = /obj/machinery/computer/card/centcom
+/obj/item/weapon/circuitboard/card/minor
+	name = "circuit board (Department Management Console)"
+	build_path = /obj/machinery/computer/card/minor
+	var/target_dept = 1
 //obj/item/weapon/circuitboard/shield
 //	name = "Circuit board (Shield Control)"
 //	build_path = /obj/machinery/computer/stationshield
@@ -244,6 +248,13 @@
 	build_path = /obj/machinery/computer/libraryconsole
 	origin_tech = "programming=1"
 
+/obj/item/weapon/circuitboard/card/minor/attackby(obj/item/I as obj, mob/user as mob, params)
+	if(istype(I,/obj/item/device/multitool))
+		var/list/dept_list = list("general","security","medical","science","engineering")
+		var/choice = input("Currently set to [dept_list[target_dept]] personnel database. Changing to:","Multitool-Circuitboard interface") as null|anything in dept_list
+		if(choice)
+			target_dept = dept_list.Find(choice)
+	return
 
 /obj/item/weapon/circuitboard/supplycomp/attackby(obj/item/I as obj, mob/user as mob, params)
 	if(istype(I,/obj/item/device/multitool))
@@ -307,7 +318,7 @@
 			if(istype(P, /obj/item/weapon/wrench))
 				playsound(src.loc, 'sound/items/Ratchet.ogg', 50, 1)
 				user << "<span class='notice'>You start wrenching the frame into place...</span>"
-				if(do_after(user, 20))
+				if(do_after(user, 20, target = src))
 					user << "<span class='notice'>You wrench the frame into place.</span>"
 					anchored = 1
 					state = 1
@@ -319,7 +330,7 @@
 					return
 				playsound(src.loc, 'sound/items/Welder.ogg', 50, 1)
 				user << "<span class='notice'>You start deconstructing the frame...</span>"
-				if(do_after(user, 20))
+				if(do_after(user, 20, target = src))
 					if(!src || !WT.isOn()) return
 					user << "<span class='notice'>You deconstruct the frame.</span>"
 					var/obj/item/stack/sheet/metal/M = new (loc, 5)
@@ -329,18 +340,19 @@
 			if(istype(P, /obj/item/weapon/wrench))
 				playsound(src.loc, 'sound/items/Ratchet.ogg', 50, 1)
 				user << "<span class='notice'>You start to unfasten the frame...</span>"
-				if(do_after(user, 20))
+				if(do_after(user, 20, target = src))
 					user << "<span class='notice'>You unfasten the frame.</span>"
 					anchored = 0
 					state = 0
 			if(istype(P, /obj/item/weapon/circuitboard) && !circuit)
 				var/obj/item/weapon/circuitboard/B = P
 				if(B.board_type == "computer")
+					if(!user.drop_item())
+						return
 					playsound(src.loc, 'sound/items/Deconstruct.ogg', 50, 1)
 					user << "<span class='notice'>You place the circuit board inside the frame.</span>"
 					icon_state = "1"
 					circuit = P
-					user.drop_item()
 					circuit.add_fingerprint(user)
 					P.loc = null
 				else
@@ -369,7 +381,7 @@
 				if(C.get_amount() >= 5)
 					playsound(src.loc, 'sound/items/Deconstruct.ogg', 50, 1)
 					user << "<span class='notice'>You start adding cables to the frame...</span>"
-					if(do_after(user, 20))
+					if(do_after(user, 20, target = src))
 						if(C.get_amount() >= 5 && state == 2)
 							C.use(5)
 							user << "<span class='notice'>You add cables to the frame.</span>"
@@ -395,7 +407,7 @@
 				else
 					playsound(src.loc, 'sound/items/Deconstruct.ogg', 50, 1)
 					user << "<span class='notice'>You start to put in the glass panel...</span>"
-					if(do_after(user, 20))
+					if(do_after(user, 20, target = src))
 						if(G.get_amount() >= 2 && state == 3)
 							G.use(2)
 							user << "<span class='notice'>You put in the glass panel.</span>"

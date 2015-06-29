@@ -16,7 +16,7 @@
 
 /obj/item/weapon/banhammer/attack(mob/M, mob/user)
 	M << "<font color='red'><b> You have been banned FOR NO REISIN by [user]<b></font>"
-	user << "<font color='red'> You have <b>BANNED</b> [M]</font>"
+	user << "<font color='red'>You have <b>BANNED</b> [M]</font>"
 	playsound(loc, 'sound/effects/adminhelp.ogg', 15) //keep it at 15% volume so people don't jump out of their skin too much
 
 
@@ -242,6 +242,7 @@
 	w_class = 2
 	flags = NOSHIELD
 	attack_verb = list("bludgeoned", "whacked", "disciplined")
+	burn_state = 0 //Burnable
 
 /obj/item/weapon/staff/broom
 	name = "broom"

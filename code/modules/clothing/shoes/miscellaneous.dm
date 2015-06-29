@@ -1,5 +1,12 @@
 /obj/item/clothing/shoes/proc/step_action() //this was made to rewrite clown shoes squeaking
 
+/obj/item/clothing/shoes/suicide_act(mob/user)
+	user.visible_message("<span class='suicide'>[user] is bashing their own head in with [src]! Ain't that a kick in the head?</span>")
+	for(var/i = 0, i < 3, i++)
+		sleep(3)
+		playsound(user, 'sound/weapons/genhit2.ogg', 50, 1)
+	return(BRUTELOSS)
+
 /obj/item/clothing/shoes/sneakers/syndigaloshes
 	desc = "A pair of brown shoes."
 	name = "brown shoes"
@@ -8,6 +15,7 @@
 	permeability_coefficient = 0.05
 	flags = NOSLIP
 	origin_tech = "syndicate=3"
+	burn_state = -1 //Won't burn in fires
 
 /obj/item/clothing/shoes/sneakers/mime
 	name = "mime shoes"
@@ -19,7 +27,7 @@
 	desc = "High speed, low drag combat boots."
 	icon_state = "jackboots"
 	item_state = "jackboots"
-	armor = list(melee = 50, bullet = 50, laser = 50, energy = 25, bomb = 50, bio = 10, rad = 0)
+	armor = list(melee = 25, bullet = 25, laser = 25, energy = 25, bomb = 50, bio = 10, rad = 0)
 	strip_delay = 70
 
 /obj/item/clothing/shoes/combat/swat //overpowered boots for death squads
@@ -27,7 +35,8 @@
 	desc = "High speed, no drag combat boots."
 	permeability_coefficient = 0.01
 	flags = NOSLIP
-	armor = list(melee = 80, bullet = 60, laser = 50, energy = 50, bomb = 50, bio = 30, rad = 30)
+	armor = list(melee = 40, bullet = 30, laser = 25, energy = 25, bomb = 50, bio = 30, rad = 30)
+	burn_state = -1 //Won't burn in fires
 
 /obj/item/clothing/shoes/sandal
 	desc = "A pair of rather plain, wooden sandals."
@@ -51,6 +60,7 @@
 	slowdown = SHOES_SLOWDOWN+1
 	strip_delay = 50
 	put_on_delay = 50
+	burn_state = -1 //Won't burn in fires
 
 /obj/item/clothing/shoes/clown_shoes
 	desc = "The prankster's standard-issue clowning shoes. Damn, they're huge!"

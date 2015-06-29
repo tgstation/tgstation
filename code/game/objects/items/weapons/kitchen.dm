@@ -24,7 +24,7 @@
 	hitsound = 'sound/weapons/bladeslice.ogg'
 	var/datum/reagent/forkload //used to eat omelette
 
-/obj/item/weapon/kitchen/fork/attack(mob/living/carbon/M as mob, mob/living/carbon/user as mob)
+/obj/item/weapon/kitchen/fork/attack(mob/living/carbon/M, mob/living/carbon/user)
 	if(!istype(M))
 		return ..()
 

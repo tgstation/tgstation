@@ -20,6 +20,7 @@
 	icon = 'icons/obj/hydroponics/harvest.dmi'
 	potency = -1
 	dried_type = -1 //bit different. saves us from having to define each stupid grown's dried_type as itself. If you don't want a plant to be driable (watermelons) set this to null in the time definition.
+	burn_state = 0 //Burnable
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/New(newloc, new_potency = 50)
 	..()
@@ -897,7 +898,7 @@ obj/item/weapon/reagent_containers/food/snacks/grown/shell/eggy/add_juice()
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/tomato/blue/bluespace/attack_self(var/mob/user)
 	squish(user)
-	user.drop_item()
+	user.unEquip(src)
 	src.visible_message("[user] squashes the [src.name].","<span class='italics'>You hear a smack.</span>")
 	qdel(src)
 
