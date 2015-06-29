@@ -77,3 +77,26 @@
 	reagents.chem_temp += 30
 	reagents.handle_reactions()
 	..()
+
+/obj/item/weapon/reagent_containers/throw_impact(atom/target)
+	..()
+
+	if(!reagents.total_volume || !is_open_container())
+		return
+
+	if(ismob(target) && target.reagents)
+		var/mob/M = target
+		var/R
+		target.visible_message("<span class='danger'>[M] has been splashed with something!</span>", \
+						"<span class='userdanger'>[M] has been splashed with something!</span>")
+		if(reagents)
+			for(var/datum/reagent/A in reagents.reagent_list)
+				R += A.id + " ("
+				R += num2text(A.volume) + "),"
+
+		var/client/thrower = directory[ckey(src.fingerprintslast)]
+		add_logs(thrower.mob, M, "splashed", object="[R]")
+		reagents.reaction(target, TOUCH)
+	else
+		reagents.reaction(target, TOUCH)
+	reagents.clear_reagents()

@@ -508,22 +508,30 @@ var/const/GALOSHES_DONT_HELP = 8
 	if(head && (head.flags & HEADBANGPROTECT))
 		return 1
 
-/mob/living/carbon/proc/accident(var/obj/item/Item)
-	if(!Item)
+/mob/living/carbon/proc/accident(var/obj/item/I)
+	if(!I || (I.flags & NODROP))
 		return
 
-	switch(rand(1,100)) //Nothing special happens 91-100
-		if(1 to 30) //attack yourself
-			src.Click()
-		if(31 to 60) //attack your turf/loc
+	unEquip(I)
+
+	var/modifier = 0
+	if(disabilities & CLUMSY)
+		modifier -= 30 //Clumsy people are more likely to hit themselves -Honk!
+
+	switch(rand(1,100)+modifier) //91-100=Nothing special happens
+		if(-INFINITY to 0) //attack yourself
+			I.attack(src,src)
+		if(1 to 30) //throw it at yourself
+			I.throw_impact(src)
+		if(31 to 60) //throw it down to the floor
 			var/turf/target = get_turf(loc)
-			target.Click()
+			I.throw_at(target,I.throw_range,I.throw_speed)
 		if(61 to 90) //Throw object in facing direction
 			var/turf/target = get_turf(loc)
-			var/range = rand(2,5)
+			var/range = rand(2,I.throw_range)
 			for(var/i = 1; i < range; i++)
-				var/turf/new_turf = get_step(target, src.dir)
+				var/turf/new_turf = get_step(target, dir)
 				target = new_turf
 				if(new_turf.density)
 					break
-			throw_item(target)
+			I.throw_at(target,I.throw_range,I.throw_speed)

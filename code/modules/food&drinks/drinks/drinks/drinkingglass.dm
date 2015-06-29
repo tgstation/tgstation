@@ -8,10 +8,7 @@
 	volume = 50
 	burn_state = 0 //Burnable
 	burntime = 5
-
-/obj/item/weapon/reagent_containers/food/drinks/drinkingglass/throw_impact(atom/target)
-	..()
-	impact_reagent(target)
+	flags = OPENCONTAINER
 
 /obj/item/weapon/reagent_containers/food/drinks/drinkingglass/fire_act()
 	if(!reagents.total_volume)

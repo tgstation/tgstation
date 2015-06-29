@@ -82,8 +82,8 @@ var/global/image/fire_overlay = image("icon" = 'icons/effects/fire.dmi', "icon_s
 
 	var/flags_cover = 0 //for flags such as GLASSESCOVERSEYES
 
-/obj/item/proc/check_allowed_items(atom/target, not_inside, hitting_themselves)
-	if(((src in target) && !hitting_themselves) || ((!istype(target.loc, /turf)) && (!istype(target, /turf)) && (not_inside)) || is_type_in_list(target, can_be_placed_into))
+/obj/item/proc/check_allowed_items(atom/target, not_inside)
+	if((src in target) || ((!istype(target.loc, /turf)) && (!istype(target, /turf)) && (not_inside)) || is_type_in_list(target, can_be_placed_into))
 		return 0
 	else
 		return 1
@@ -494,24 +494,3 @@ var/global/image/fire_overlay = image("icon" = 'icons/effects/fire.dmi', "icon_s
 		S.remove_from_storage(src,newLoc)
 		return 1
 	return 0
-
-/obj/item/proc/impact_reagent(atom/target)
-	if(!reagents.total_volume || prob(5)) //Small chance it doesn't spill!
-		return
-
-	if(ismob(target) && target.reagents)
-		var/mob/M = target
-		var/R
-		target.visible_message("<span class='danger'>[M] has been splashed with something!</span>", \
-						"<span class='userdanger'>[M] has been splashed with something!</span>")
-		if(reagents)
-			for(var/datum/reagent/A in reagents.reagent_list)
-				R += A.id + " ("
-				R += num2text(A.volume) + "),"
-
-		var/mob/thrower = directory[ckey(src.fingerprintslast)]
-		add_logs(thrower, M, "splashed", object="[R]")
-		reagents.reaction(target, TOUCH)
-	else
-		reagents.reaction(target, TOUCH)
-	reagents.clear_reagents()

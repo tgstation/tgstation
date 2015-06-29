@@ -232,14 +232,11 @@
 				M << "<span class='notice'>You slipped on the [O.name]!</span>"
 			else
 				M << "<span class='notice'>You slipped!</span>"
+			M.attack_log += "\[[time_stamp()]\] <font color='orange'>Slipped[O ? " on the [O.name]" : ""][(lube&SLIDE)? " (LUBE)" : ""]!</font>"
 			playsound(M.loc, 'sound/misc/slip.ogg', 50, 1, -3)
 
-			var/active_hand = M.hand
-			M.hand = 1
 			M.accident(M.l_hand)
-			M.hand = 0
 			M.accident(M.r_hand)
-			M.hand = active_hand
 
 			var/olddir = M.dir
 			M.Stun(s_amount)
