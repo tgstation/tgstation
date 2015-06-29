@@ -1323,3 +1323,11 @@ var/list/WALLITEMS = list(
 						"lime","darkgreen","cyan","navy","teal","purple","indigo")
 		else
 			return "white"
+
+/proc/IsValidSrc(var/A)
+	if(istype(A, /datum))
+		var/datum/B = A
+		return !B.gc_destroyed
+	if(istype(A, /client))
+		return 1
+	return 0
