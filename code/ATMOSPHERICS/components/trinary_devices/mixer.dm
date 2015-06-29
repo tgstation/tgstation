@@ -20,6 +20,21 @@
 	icon_state = "mixer_off_f"
 	flipped = 1
 
+/obj/machinery/atmospherics/trinary/mixer/icon_addintact(var/obj/machinery/atmospherics/node, var/connected)
+	var/image/img = getpipeimage('icons/obj/atmospherics/trinary_devices.dmi', "cap", get_dir(src,node), node.pipe_color)
+	overlays += img
+	return ..()
+
+/obj/machinery/atmospherics/trinary/mixer/icon_addbroken(var/connected)
+	var/unconnected = (~connected) & initialize_directions
+	for(var/direction in cardinal)
+		if(unconnected & direction)
+			underlays += getpipeimage('icons/obj/atmospherics/binary_devices.dmi', "pipe_exposed", direction)
+			overlays += getpipeimage('icons/obj/atmospherics/trinary_devices.dmi', "cap", direction)
+
+/obj/machinery/atmospherics/trinary/mixer/update_icon()
+	overlays.Cut()
+	..()
 
 /obj/machinery/atmospherics/trinary/mixer/update_icon_nopipes()
 	if(!(stat & NOPOWER) && on && node1 && node2 && node3)

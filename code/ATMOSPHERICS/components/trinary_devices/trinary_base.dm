@@ -45,23 +45,11 @@ Iconnery
 /obj/machinery/atmospherics/trinary/proc/update_icon_nopipes()
 	return
 
-/obj/machinery/atmospherics/trinary/icon_addintact(var/obj/machinery/atmospherics/node, var/connected)
-	var/image/img = getpipeimage('icons/obj/atmospherics/trinary_devices.dmi', "intact", get_dir(src,node), node.pipe_color)
-	overlays += img
-
-	return connected | img.dir
-
-/obj/machinery/atmospherics/trinary/icon_addbroken(var/connected)
-	var/unconnected = (~connected) & initialize_directions
-	for(var/direction in cardinal)
-		if(unconnected & direction)
-			overlays += getpipeimage('icons/obj/atmospherics/trinary_devices.dmi', "intact", direction)
-
 /obj/machinery/atmospherics/trinary/update_icon()
 	update_icon_nopipes()
 
 	var/connected = 0
-	overlays.Cut()
+	underlays.Cut()
 
 	//Add non-broken pieces
 	if(node1)
