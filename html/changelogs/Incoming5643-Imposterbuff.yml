@@ -1,0 +1,9 @@
+author: Incoming5643
+
+delete-after: True
+
+changes: 
+  - rscadd: "Voice changers will now respect the race of an ID holder and impart/mask a proper accent."
+  - rscadd: "Agent IDs can now set their race to allow them to work properly with voice changers."
+  - rscadd: "The mimic voice power of changlings gains both of the above abilities as well."
+  - rscadd: "ID cards with a race attached that isn't human will generate a line in examine to highlight this fact."
