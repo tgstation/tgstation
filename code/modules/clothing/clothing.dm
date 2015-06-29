@@ -216,17 +216,19 @@ BLIND     // can't see anything
 	armor = list(melee = 0, bullet = 0, laser = 0,energy = 0, bomb = 0, bio = 0, rad = 0)
 	var/fitted = FEMALE_UNIFORM_FULL // For use in alternate clothing styles for women
 	var/has_sensor = 1//For the crew computer 2 = unable to change mode
-	var/sensor_mode = 0
+	var/random_sensor = 1
+	var/sensor_mode = 0	/* 1 = Report living/dead, 2 = Report detailed damages, 3 = Report location */
 	var/can_adjust = 1
 	var/adjusted = 0
 	var/suit_color = null
-
-		/*
-		1 = Report living/dead
-		2 = Report detailed damages
-		3 = Report location
-		*/
 	var/obj/item/clothing/tie/hastie = null
+
+/obj/item/clothing/under/New()
+	if(random_sensor)
+		sensor_mode = pick(0,1,2,3)
+	adjusted = 0
+	suit_color = item_color
+	..()
 
 /obj/item/clothing/under/attackby(obj/item/I, mob/user, params)
 	attachTie(I, user)
@@ -387,12 +389,6 @@ atom/proc/generate_female_clothing(index,t_color,icon,type)
 		if(istype(loc, /mob/living/carbon/human))
 			var/mob/living/carbon/human/H = loc
 			H.update_inv_w_uniform(0)
-
-/obj/item/clothing/under/New()
-	sensor_mode = pick(0,1,2,3)
-	adjusted = 0
-	suit_color = item_color
-	..()
 
 /obj/item/clothing/proc/weldingvisortoggle()			//Malk: proc to toggle welding visors on helmets, masks, goggles, etc.
 	if(can_use(usr))
