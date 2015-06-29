@@ -507,3 +507,23 @@ var/const/GALOSHES_DONT_HELP = 8
 /mob/living/carbon/check_ear_prot()
 	if(head && (head.flags & HEADBANGPROTECT))
 		return 1
+
+/mob/living/carbon/proc/accident(var/obj/item/Item)
+	if(!Item)
+		return
+
+	switch(rand(1,100)) //Nothing special happens 91-100
+		if(1 to 30) //attack yourself
+			src.Click()
+		if(31 to 60) //attack your turf/loc
+			var/turf/target = get_turf(loc)
+			target.Click()
+		if(61 to 90) //Throw object in facing direction
+			var/turf/target = get_turf(loc)
+			var/range = rand(2,5)
+			for(var/i = 1; i < range; i++)
+				var/turf/new_turf = get_step(target, src.dir)
+				target = new_turf
+				if(new_turf.density)
+					break
+			throw_item(target)

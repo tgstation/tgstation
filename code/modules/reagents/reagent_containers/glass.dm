@@ -31,16 +31,22 @@
 		/mob/living/simple_animal/hostile/retaliate/goat
 	)
 
-
+/obj/item/weapon/reagent_containers/glass/throw_impact(atom/target)
+	..()
+	impact_reagent(target)
 
 /obj/item/weapon/reagent_containers/glass/afterattack(obj/target, mob/user, proximity)
-	if((!proximity) || !check_allowed_items(target)) return
+	if((!proximity) || !check_allowed_items(target,hitting_themselves=1)) return
 
 	if(ismob(target) && target.reagents && reagents.total_volume)
 		var/mob/M = target
 		var/R
-		target.visible_message("<span class='danger'>[user] has splashed [target] with something!</span>", \
-						"<span class='userdanger'>[user] has splashed [target] with something!</span>")
+		if(user==target)
+			target.visible_message("<span class='danger'>[user] splashes himself with something!</span>", \
+							"<span class='userdanger'>[user] splashes himself with something!</span>")
+		else
+			target.visible_message("<span class='danger'>[user] has splashed [target] with something!</span>", \
+							"<span class='userdanger'>[user] has splashed [target] with something!</span>")
 		if(reagents)
 			for(var/datum/reagent/A in reagents.reagent_list)
 				R += A.id + " ("
