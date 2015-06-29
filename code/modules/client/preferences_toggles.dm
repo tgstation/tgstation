@@ -1,13 +1,4 @@
 //toggles
-/client/verb/toggle_autoclick()
-	set name = "Toggle Autoclick"
-	set category = "Preferences"
-	set desc = ".Enable or disable autoclick"
-	prefs.autoclick_delay = !prefs.autoclick_delay
-	src << "You have [prefs.autoclick_delay ? "enabled" : "disabled"] autoclick."
-	prefs.save_preferences()
-	feedback_add_details("admin_verb","TAC") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
-
 /client/verb/toggle_ghost_ears()
 	set name = "Show/Hide GhostEars"
 	set category = "Preferences"

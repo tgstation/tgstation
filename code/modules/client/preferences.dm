@@ -64,7 +64,6 @@ var/global/list/special_roles = list( //keep synced with the defines BE_* in set
 	var/list/features = list("mcolor" = "FFF", "tail" = "Smooth", "snout" = "Round", "horns" = "None", "frills" = "None", "spines" = "None", "body_markings" = "None")
 
 	var/list/custom_names = list("clown", "mime", "ai", "cyborg", "religion", "deity")
-	var/autoclick_delay = 0
 
 		//Mob preview
 	var/icon/preview_icon_front = null
@@ -309,7 +308,6 @@ var/global/list/special_roles = list( //keep synced with the defines BE_* in set
 			if (1) // Game Preferences
 				dat += "<table><tr><td width='340px' height='300px' valign='top'>"
 				dat += "<h2>General Settings</h2>"
-				dat += "<b>Autoclick on mouse button hold:</b> <a href='?_src_=prefs;preference=autoclick'>[autoclick_delay ? "Yes" : "No"]</a><br>"
 				dat += "<b>UI Style:</b> <a href='?_src_=prefs;preference=ui'>[UI_style]</a><br>"
 				dat += "<b>Play admin midis:</b> <a href='?_src_=prefs;preference=hear_midis'>[(toggles & SOUND_MIDI) ? "Yes" : "No"]</a><br>"
 				dat += "<b>Play lobby music:</b> <a href='?_src_=prefs;preference=lobby_music'>[(toggles & SOUND_LOBBY) ? "Yes" : "No"]</a><br>"
@@ -918,9 +916,6 @@ var/global/list/special_roles = list( //keep synced with the defines BE_* in set
 
 					if("hear_adminhelps")
 						toggles ^= SOUND_ADMINHELP
-
-					if("autoclick")
-						autoclick_delay = !autoclick_delay
 
 					if("ui")
 						switch(UI_style)
