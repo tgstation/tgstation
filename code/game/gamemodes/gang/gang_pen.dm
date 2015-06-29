@@ -39,7 +39,7 @@
 /obj/item/weapon/pen/gang/proc/cooldown(modifier)
 	cooldown = 1
 	icon_state = "pen_blink"
-	spawn(max(50,1200-(modifier*150)))
+	spawn(max(50,1800-(modifier*300)))
 		cooldown = 0
 		icon_state = "pen"
 		var/mob/M = get(src, /mob)
