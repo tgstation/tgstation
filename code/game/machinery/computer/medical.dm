@@ -211,7 +211,10 @@
 			src.temp = null
 		if(href_list["scan"])
 			if(src.scan)
-				src.scan.loc = src.loc
+				if(istype(usr,/mob/living/carbon/human) && !usr.get_active_hand())
+					usr.put_in_hands(scan)
+				else
+					scan.loc = get_turf(src)
 				src.scan = null
 			else
 				var/obj/item/I = usr.get_active_hand()
