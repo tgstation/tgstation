@@ -99,18 +99,16 @@
 	var/list/high_pay_boost_jobs = list("Captain")
 	if(H.job in low_pay_boost_jobs) //125 creds. roundstart
 		credits += 125
-		return
 	else if(H.job in med_pay_boost_jobs) //150 creds. roundstart
 		credits += 150
-		return
 	else if(H.job in high_pay_boost_jobs) //200 creds. roundstart
 		credits += 200
-		return
 	else //All other jobs starts with 100 credits
 		credits += 100
-	spawn(20) //Delay before message, to allow it to show up after the rest of the roundstart stuff
-		H << "<span class='info'>The randomized PIN for your identification card this shift is [pin]. This can be changed at any ATM.</span>"
-		return
+	spawn(20) //To display all other roundstart info
+		H << "<span class='info'>The PIN for your identification card this shift is [pin]. This can be changed at any ATM.</span>"
+		if(H.mind)
+			H.mind.memory += "[src] PIN: [pin]"
 
 /obj/item/weapon/card/id/attack_self(mob/user as mob)
 	user.visible_message("<span class='notice'>[user] shows you: \icon[src] [src.name].</span>", \

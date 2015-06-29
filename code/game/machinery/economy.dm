@@ -107,8 +107,8 @@ var/list/atms_in_world = list()
 
 /obj/machinery/atm/proc/Interface(mob/user)
 	if(!user.canUseTopic(src)) return
-	var/list/options = list("Check Balance", "Change PIN #", "Create New Account", "Access Banking Account", "Exit")
-	switch(input(user, "Please choose an action.", "ATM Interface", null) in options)
+	var/list/options = list("Change card PIN #", "Create New Account", "Access Banking Account", "Exit")
+	switch(input(user, "You have [id.credits] credits on your ID.", "ATM Interface", null) in options)
 		if("Check Balance")
 			if(!user.canUseTopic(src)) return
 			user << "<span class='notice'>[id] currently has $[id.credits] stored.</span>"
@@ -142,6 +142,8 @@ var/list/atms_in_world = list()
 			newAccount.id = accountId
 			newAccount.pin = pinToAccount
 			linked_server.bank_accounts.Add(newAccount)
+			say("Account successfully created.")
+			return Interface(user)
 		if("Access Banking Account")
 			if(!user.canUseTopic(src)) return
 			if(!linked_server)
@@ -172,7 +174,7 @@ var/list/atms_in_world = list()
 	if(!account || !user || !ishuman(user)) return
 	if(!user.canUseTopic(src)) return
 	var/list/options = list("Deposit Credits from ID", "Withdraw Credits to ID", "Return to ATM")
-	switch(input(user, "Please choose an action.", "ATM Interface", null) in options)
+	switch(input(user, "You have [account.credits] credits on your account.", "ATM Interface", null) in options)
 		if("Deposit Credits from ID")
 			if(!user.canUseTopic(src)) return
 			var/creditsToAdd = null
@@ -244,6 +246,10 @@ var/list/bankservers_in_world = list()
 /obj/machinery/bankserver/Destroy()
 	bankservers_in_world.Remove(src)
 	message_admins("Banking server destroyed in [get_area(src)]")
+	for(var/obj/machinery/atm/A in atms_in_world)
+		if(A.linked_server == src)
+			A.say("Notice: Banking server link severed. Online functions nonfunctional until link is restored.")
+			A.linked_server = null
 	..()
 
 /obj/machinery/bankserver/ex_act(severity)
