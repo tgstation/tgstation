@@ -440,6 +440,9 @@
 			w_uniform.shred(bomb,shock-absorbed,src)
 
 /obj/item/proc/shred(var/bomb,var/shock,var/mob/living/carbon/human/Human)
+	if(flags & ABSTRACT)
+		return -1
+
 	var/shredded
 
 	if(!bomb)
