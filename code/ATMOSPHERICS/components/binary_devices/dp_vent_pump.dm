@@ -1,3 +1,10 @@
+/*
+Acts like a normal vent, but has an input AND output.
+*/
+#define EXT_BOUND	1
+#define INPUT_MIN	2
+#define OUTPUT_MAX	4
+
 /obj/machinery/atmospherics/binary/dp_vent_pump
 	icon = 'icons/obj/atmospherics/unary_devices.dmi' //We reuse the normal vent icons!
 	icon_state = "dpvent_map"
@@ -20,10 +27,10 @@
 	var/input_pressure_min = 0
 	var/output_pressure_max = 0
 
-	var/pressure_checks = 1
-	//1: Do not pass external_pressure_bound
-	//2: Do not pass input_pressure_min
-	//4: Do not pass output_pressure_max
+	var/pressure_checks = EXT_BOUND
+	//EXT_BOUND: Do not pass external_pressure_bound
+	//INPUT_MIN: Do not pass input_pressure_min
+	//OUTPUT_MAX: Do not pass output_pressure_max
 
 /obj/machinery/atmospherics/binary/dp_vent_pump/Destroy()
 	if(radio_controller)
@@ -65,9 +72,9 @@
 	if(pump_direction) //input -> external
 		var/pressure_delta = 10000
 
-		if(pressure_checks&1)
+		if(pressure_checks&EXT_BOUND)
 			pressure_delta = min(pressure_delta, (external_pressure_bound - environment_pressure))
-		if(pressure_checks&2)
+		if(pressure_checks&INPUT_MIN)
 			pressure_delta = min(pressure_delta, (air1.return_pressure() - input_pressure_min))
 
 		if(pressure_delta > 0)
@@ -84,9 +91,9 @@
 	else //external -> output
 		var/pressure_delta = 10000
 
-		if(pressure_checks&1)
+		if(pressure_checks&EXT_BOUND)
 			pressure_delta = min(pressure_delta, (environment_pressure - external_pressure_bound))
-		if(pressure_checks&4)
+		if(pressure_checks&INPUT_MIN)
 			pressure_delta = min(pressure_delta, (output_pressure_max - air2.return_pressure()))
 
 		if(pressure_delta > 0)
@@ -195,3 +202,7 @@
 	spawn(2)
 		broadcast_status()
 	update_icon()
+
+#undef EXT_BOUND
+#undef INPUT_MIN
+#undef OUTPUT_MAX
