@@ -34,8 +34,8 @@
 	var/A_timer = "OFFLINE"
 	var/B_timer = "OFFLINE"
 	//How many attempts at domination each team is allowed
-	var/A_dominations = 2
-	var/B_dominations = 2
+	var/A_dominations = 3
+	var/B_dominations = 3
 ///////////////////////////
 //Announces the game type//
 ///////////////////////////
@@ -54,7 +54,11 @@
 	if(config.protect_assistant_from_antagonist)
 		restricted_jobs += "Assistant"
 
-	if(antag_candidates.len >= 2)
+	//Spawn more bosses depending on server population
+	assign_bosses(1)
+	if(num_players() >= 30) //30
+		assign_bosses()
+	if(num_players() >= 40) //40
 		assign_bosses()
 
 	if(!A_bosses.len || !B_bosses.len)
@@ -91,20 +95,23 @@
 
 		check_win()
 
-/datum/game_mode/gang/proc/assign_bosses()
+/datum/game_mode/gang/proc/assign_bosses(var/leader)
+	if(antag_candidates.len < 2) //Not enough bosses
+		return
+
 	var/datum/mind/boss = pick(antag_candidates)
 	A_bosses += boss
 	antag_candidates -= boss
-	boss.special_role = "[gang_name("A")] Gang (A) Boss"
+	boss.special_role = "[gang_name("A")] Gang (A) [leader ? "Boss" : "Lieutenant"]"
 	boss.restricted_roles = restricted_jobs
-	log_game("[boss.key] has been selected as the boss for the [gang_name("A")] Gang (A)")
+	log_game("[boss.key] has been selected as a [leader ? "Boss" : "Lieutenant"] for the [gang_name("A")] Gang (A)")
 
 	boss = pick(antag_candidates)
 	B_bosses += boss
 	antag_candidates -= boss
-	boss.special_role = "[gang_name("B")] Gang (B) Boss"
+	boss.special_role = "[gang_name("B")] Gang (B) [leader ? "Boss" : "Lieutenant"]"
 	boss.restricted_roles = restricted_jobs
-	log_game("[boss.key] has been selected as the boss for the [gang_name("B")] Gang (B)")
+	log_game("[boss.key] has been selected as a [leader ? "Boss" : "Lieutenant"] for the [gang_name("B")] Gang (B)")
 
 /datum/game_mode/proc/forge_gang_objectives(var/datum/mind/boss_mind)
 	if(istype(ticker.mode, /datum/game_mode/gang))
@@ -127,8 +134,9 @@
 
 /datum/game_mode/proc/greet_gang(var/datum/mind/boss_mind, var/you_are=1)
 	var/obj_count = 1
+	var/isboss = (boss_mind==A_bosses[1] || boss_mind==B_bosses[1])
 	if (you_are)
-		boss_mind.current << "<FONT size=3 color=red><B>You are the founding member of the [(boss_mind in A_bosses) ? gang_name("A") : gang_name("B")] Gang!</B></FONT>"
+		boss_mind.current << "<FONT size=3 color=red><B>You are [isboss ? "the Boss of" : "a Lieutenant in"] the [(boss_mind in A_bosses) ? gang_name("A") : gang_name("B")] Gang!</B></FONT>"
 	for(var/datum/objective/objective in boss_mind.objectives)
 		boss_mind.current << "<B>Objective #[obj_count]</B>: [objective.explanation_text]"
 		obj_count++
@@ -151,13 +159,20 @@
 	if(!istype(mob))
 		return
 
+	var/isboss
 	if (mob.mind)
+		isboss = (mob.mind==A_bosses[1] || mob.mind==B_bosses[1])
 		if (mob.mind.assigned_role == "Clown")
 			mob << "Your training has allowed you to overcome your clownish nature, allowing you to wield weapons without harming yourself."
 			mob.dna.remove_mutation(CLOWNMUT)
 
+	var/obj/item/device/gangtool/gangtool
+	if(isboss)
+		gangtool = new(mob)
+	else
+		var/obj/item/device/gangtool/lt/lt_tool = new(mob)
+		gangtool = lt_tool
 	var/obj/item/weapon/pen/gang/T = new(mob)
-	var/obj/item/device/gangtool/gangtool = new(mob)
 	var/obj/item/toy/crayon/spraycan/gang/SC = new(mob)
 
 	var/list/slots = list (
@@ -176,8 +191,9 @@
 		. += 1
 	else
 		gangtool.register_device(mob)
-		mob << "The <b>Gangtool</b> in your [where] will allow you to purchase items, send messages to your gangsters and recall the emergency shuttle from anywhere on the station."
-		mob << "You can also promote your gang members to <b>lieutenant</b> by having them use an unregistered gangtool. Unlike regular gangsters, Lieutenants cannot be deconverted and are able to use recruitment pens and gangtools."
+		mob << "The <b>Gangtool</b> in your [where] will allow you to use your influence to purchase weapons and equipment and communicate with your gangsters."
+		if(isboss)
+			mob << "<b>As the Gang Boss</b> you also have the power to recall the emergency shuttle from anywhere on the station."
 
 	var/where2 = mob.equip_in_one_of_slots(T, slots)
 	if (!where2)
@@ -198,7 +214,7 @@
 
 
 //Used by recallers when purchasing a gang outfit. First time a gang outfit is purchased the buyer decides a gang style which is stored so gang outfits are uniform
-/datum/game_mode/proc/gang_outfit(mob/user,var/obj/item/device/gangtool/gangtool,var/gang)
+/datum/game_mode/proc/gang_outfit(mob/living/carbon/user,var/obj/item/device/gangtool/gangtool,var/gang)
 	if(!user || !gangtool || !gang)
 		return 0
 	if(!gangtool.can_use(user))
@@ -208,12 +224,18 @@
 	var/style
 	if(gang == "A")
 		if(!A_style)
-			A_style = input("Pick an outfit style.", "Pick Style") as null|anything in gang_style_list
+			if(gangtool.outfits >=3)	//Gives the gang boss a few minutes to pick a style first before someone else gets to
+				A_style = input("Pick an outfit style.", "Pick Style") as null|anything in gang_style_list
+			else
+				user << "<span class='warning'>Your gang boss hasn't picked a style yet!</span>"
 		style = A_style
 
 	if(gang == "B")
 		if(!B_style)
-			B_style = input("Pick an outfit style.", "Pick Style") as null|anything in gang_style_list
+			if(gangtool.outfits >=3)	//Gives the gang boss a few minutes to pick a style first before someone else gets to
+				B_style = input("Pick an outfit style.", "Pick Style") as null|anything in gang_style_list
+			else
+				user << "<span class='warning'>Your gang boss hasn't picked a style yet!</span>"
 		style = B_style
 
 	if(!style)
@@ -252,6 +274,7 @@
 			outfit.armor = list(melee = 20, bullet = 30, laser = 10, energy = 10, bomb = 20, bio = 0, rad = 0)
 			outfit.desc += " Tailored for the [gang_name(gang)] Gang to offer the wearer moderate protection against ballistics and physical trauma."
 			outfit.gang = gang
+			user.put_in_any_hand_if_possible(outfit)
 			return 1
 
 	return 0

@@ -10,10 +10,9 @@
 	throw_range = 7
 	flags = CONDUCT
 	var/gang //Which gang uses this?
-	var/boss = 1 //Is this the original boss?
+	var/boss = 1 //If this gangtool belongs to the big boss
 	var/recalling = 0
 	var/outfits = 3
-	var/free_pen = 0
 
 /obj/item/device/gangtool/New() //Initialize supply point income if it hasn't already been started
 	if(!ticker.mode.gang_points)
@@ -31,15 +30,7 @@
 	var/dat
 	if(!gang)
 		dat += "This device is not registered.<br><br>"
-		if(user.mind in (ticker.mode.A_bosses | ticker.mode.B_bosses))
-			dat += "Give this device to another member of your organization to use to promote them.<hr>"
-			dat += "If this is meant as a spare device for yourself:<br>"
-			dat += "<a href='?src=\ref[src];register=1'>Register Device</a><br>"
-		else if (gang_bosses < 3)
-			dat += "You have been selected for a promotion!<br>"
-			dat += "<a href='?src=\ref[src];register=1'>Register Device</a><br>"
-		else
-			dat += "No promotions available: All positions filled."
+		dat += "<a href='?src=\ref[src];register=1'>Register Device</a><br>"
 	else
 		var/datum/game_mode/gang/gangmode
 		if(istype(ticker.mode, /datum/game_mode/gang))
@@ -54,9 +45,9 @@
 			if(isnum(timer))
 				dat += "<center><font color='red'>Takeover In Progress:<br><B>[timer] seconds remain</B></font></center><br>"
 
-		dat += "Registration: <B>[(gang == "A")? gang_name("A") : gang_name("B")] Gang [boss ? "Administrator" : "Lieutenant"]</B><br>"
+		dat += "Registration: <B>[(gang == "A")? gang_name("A") : gang_name("B")] Gang [boss ? "Boss" : "Lieutenant"]</B><br>"
 		dat += "Organization Size: <B>[gang_size]</B> | Station Control: <B>[round((gang_territory/start_state.num_territories)*100, 1)]%</B><br>"
-		dat += "Influence: <B>[points]</B><br>"
+		dat += "Gang Influence: <B>[points]</B> | Outfit Stock: <B>[outfits]</B><br>"
 		dat += "Time until Influence grows: <B>[(points >= 999) ? ("--:--") : (time2text(ticker.mode.gang_points.next_point_time - world.time, "mm:ss"))]</B><br>"
 		dat += "<hr>"
 		dat += "<B>Gangtool Functions:</B><br>"
@@ -66,7 +57,7 @@
 			dat += "<a href='?src=\ref[src];choice=outfit'>Create Armored Gang Outfit</a><br>"
 		else
 			dat += "<b>Create Gang Outfit</b> (Restocking)<br>"
-		if(gangmode)
+		if(gangmode && boss)
 			dat += "<a href='?src=\ref[src];choice=recall'>Recall Emergency Shuttle</a><br>"
 
 		dat += "<br>"
@@ -151,24 +142,23 @@
 		else
 			dat += "C4 Explosive<br>"
 
-		if(free_pen)
-			dat += "(ONE FREE) "
+		dat += "(10 Influence) "
+		if(points >= 10)
+			dat += "<a href='?src=\ref[src];purchase=implant'>Implant Breaker</a><br>"
 		else
-			dat += "(50 Influence) "
-		if(free_pen || (points >= 50))
+			dat += "Implant Breaker<br>"
+
+		dat += "(50 Influence) "
+		if(points >= 50)
 			dat += "<a href='?src=\ref[src];purchase=pen'>Recruitment Pen</a><br>"
 		else
 			dat += "Recruitment Pen<br>"
 
-		var/tool_cost = (boss ? 10 : 30)
-		var/gangtooldesc = "Promote a Gangster ([3-gang_bosses] left)"
-		if(gang_bosses >= 3)
-			gangtooldesc = "Additional Gangtools"
-		dat += "([tool_cost] Influence) "
-		if(points >= tool_cost)
-			dat += "<a href='?src=\ref[src];purchase=gangtool'>[gangtooldesc]</a><br>"
+		dat += "(30 Influence) "
+		if(points >= 30)
+			dat += "<a href='?src=\ref[src];purchase=gangtool'>Spare Gangtool</a><br>"
 		else
-			dat += "[gangtooldesc]<br>"
+			dat += "Spare Gangtool<br>"
 
 		if(gangmode)
 			if(gang == "A" ? !gangmode.A_dominations : !gangmode.B_dominations)
@@ -184,7 +174,7 @@
 	dat += "<br>"
 	dat += "<a href='?src=\ref[src];choice=refresh'>Refresh</a><br>"
 
-	var/datum/browser/popup = new(user, "gangtool", "Welcome to GangTool v2.1", 340, 600)
+	var/datum/browser/popup = new(user, "gangtool", "Welcome to GangTool v2.2", 340, 620)
 	popup.set_content(dat)
 	popup.open()
 
@@ -195,10 +185,6 @@
 		return
 
 	add_fingerprint(usr)
-
-	if(recalling)
-		usr << "<span class='warning'>Device is busy. Shuttle recall in progress.</span>"
-		return
 
 	if(href_list["register"])
 		register_device(usr)
@@ -230,39 +216,41 @@
 				if(points >= 50)
 					item_type = /obj/item/weapon/gun/projectile/automatic/mini_uzi
 					points = 50
+			if("9mmammo")
+				if(points >= 20)
+					item_type = /obj/item/ammo_box/magazine/uzim9mm
+					points = 20
 			if("scroll")
 				if(points >= 30)
 					item_type = /obj/item/weapon/sleeping_carp_scroll
+					usr << "<span class='notice'>Anyone who reads the <b>sleeping carp scroll</b> will learn secrets of the sleeping carp martial arts style.</span>"
 					points = 30
 			if("wrestlingbelt")
 				if(points >= 20)
 					item_type = /obj/item/weapon/storage/belt/champion/wrestling
+					usr << "<span class='notice'>Anyone wearing the <b>wresting belt</b> will know how to be effective with wrestling.</span>"
 					points = 20
 			if("bostaff")
 				if(points >= 10)
 					item_type = /obj/item/weapon/twohanded/bostaff
 					points = 10
-			if("9mmammo")
-				if(points >= 20)
-					item_type = /obj/item/ammo_box/magazine/uzim9mm
-					points = 20
 			if("C4")
 				if(points >= 10)
 					item_type = /obj/item/weapon/c4
 					points = 10
 			if("pen")
-				if(free_pen)
-					item_type = /obj/item/weapon/pen/gang
-					free_pen = 0
-					points = 0
-				else if(points >= 50)
+				if(points >= 50)
 					item_type = /obj/item/weapon/pen/gang
 					points = 50
+			if("implant")
+				if(points >= 10)
+					item_type = /obj/item/weapon/implanter/gang
+					usr << "<span class='notice'>The <b>implant breaker</b> destroys all other implants within the target before trying to recruit them to your gang. Implant is destroyed after one use.</span>"
+					points = 10
 			if("gangtool")
-				var/tool_cost = (boss ? 10 : 30)
-				if(points >= tool_cost)
+				if(points >= 30)
 					item_type = /obj/item/device/gangtool/lt
-					points = tool_cost
+					points = 30
 			if("dominator")
 				if(istype(ticker.mode, /datum/game_mode/gang))
 					var/datum/game_mode/gang/mode = ticker.mode
@@ -285,6 +273,7 @@
 
 					if(points >= 30)
 						item_type = /obj/machinery/dominator
+						usr << "<span class='notice'>The <b>dominator</b> will secure your gang's dominance over the station. Turn it on when you are ready to defend it.</span>"
 						points = 30
 
 		if(item_type)
@@ -293,7 +282,7 @@
 			else if(gang == "B")
 				ticker.mode.gang_points.B -= points
 			if(ispath(item_type))
-				var/obj/purchased = new item_type(get_turf(usr))
+				var/obj/purchased = new item_type(get_turf(usr),gang)
 				var/mob/living/carbon/human/H = usr
 				H.put_in_any_hand_if_possible(purchased)
 			if(points)
@@ -306,11 +295,12 @@
 	else if(href_list["choice"])
 		switch(href_list["choice"])
 			if("recall")
-				recall(usr)
+				if(boss)
+					recall(usr)
 			if("outfit")
 				if(outfits > 0)
-					ticker.mode.gang_outfit(usr,src,gang)
-					outfits -= 1
+					if(ticker.mode.gang_outfit(usr,src,gang))
+						outfits -= 1
 			if("ping")
 				ping_gang(usr)
 	attack_self(usr)
@@ -331,7 +321,7 @@
 	else if(gang == "B")
 		members += ticker.mode.B_bosses | ticker.mode.B_gang
 	if(members.len)
-		var/ping = "<span class='danger'><B><i>[gang_name(gang)] [boss ? "Gang Boss" : "Gang Lieutenant"]</i>: [message]</B></span>"
+		var/ping = "<span class='danger'><B><i>[gang_name(gang)] [boss ? "Gang Boss" : "Lieutenant"] [user.real_name]</i>: [message]</B></span>"
 		for(var/datum/mind/ganger in members)
 			if((ganger.current.z <= 2) && (ganger.current.stat == CONSCIOUS))
 				ganger.current << ping
@@ -341,46 +331,14 @@
 
 
 /obj/item/device/gangtool/proc/register_device(var/mob/user)
-	if(!(user.mind in (ticker.mode.A_bosses|ticker.mode.B_bosses)))
-		var/gang_bosses = ((gang == "A")? ticker.mode.A_bosses.len : ticker.mode.B_bosses.len)
-		if(gang_bosses >= 3)
-			user << "<span class='warning'>\icon[src] Error: All positions filled.</span>"
-			return
-
-	if(jobban_isbanned(user, "gangster") || jobban_isbanned(user, "Syndicate"))
-		user << "<span class='warning'>\icon[src] ACCESS DENIED: Blacklisted user.</span>"
-		return 0
-
-	var/promoted
-	if(user.mind in (ticker.mode.A_gang | ticker.mode.A_bosses))
+	if(user.mind in ticker.mode.A_bosses)
 		ticker.mode.A_tools += src
 		gang = "A"
 		icon_state = "gangtool-a"
-		if(!(user.mind in ticker.mode.A_bosses))
-			ticker.mode.remove_gangster(user.mind, 0, 2)
-			ticker.mode.A_bosses += user.mind
-			user.mind.special_role = "[gang_name("A")] Gang (A) Lieutenant"
-			ticker.mode.update_gang_icons_added(user.mind, "A")
-			log_game("[key_name(user)] has been promoted to Lieutenant in the [gang_name("A")] Gang (A)")
-			promoted = 1
-	else if(user.mind in (ticker.mode.B_gang | ticker.mode.B_bosses))
+	else if(user.mind in ticker.mode.B_bosses)
 		ticker.mode.B_tools += src
 		gang = "B"
 		icon_state = "gangtool-b"
-		if(!(user.mind in ticker.mode.B_bosses))
-			ticker.mode.remove_gangster(user.mind, 0, 2)
-			ticker.mode.B_bosses += user.mind
-			user.mind.special_role = "[gang_name("B")] Gang (B) Lieutenant"
-			ticker.mode.update_gang_icons_added(user.mind, "B")
-			log_game("[key_name(user)] has been promoted to Lieutenant in the [gang_name("B")] Gang (B)")
-			promoted = 1
-	if(promoted)
-		ticker.mode.message_gangtools(((gang=="A")? ticker.mode.A_tools : ticker.mode.B_tools), "[user] has been promoted to Lieutenant.")
-		user << "<FONT size=3 color=red><B>You have been promoted to Lieutenant!</B></FONT>"
-		ticker.mode.forge_gang_objectives(user.mind)
-		ticker.mode.greet_gang(user.mind,0)
-		user << "The <b>Gangtool</b> you registered will allow you to purchase items, send messages to your gangsters and to recall the emergency shuttle from anywhere on the station."
-		user << "Unlike regular gangsters, you may use <b>recruitment pens</b> to add recruits to your gang. Use them on unsuspecting crew members to recruit them. Don't forget to get your one free pen from the gangtool."
 	if(!gang)
 		usr << "<span class='warning'>ACCESS DENIED: Unauthorized user.</span>"
 
@@ -392,6 +350,7 @@
 		return 0
 
 	var/datum/game_mode/gang/mode = ticker.mode
+	mode.message_gangtools(((gang=="A")? ticker.mode.A_tools : ticker.mode.B_tools), "[usr] is attempting to recall the emergency shuttle.")
 	recalling = 1
 	loc << "<span class='info'>\icon[src]Generating shuttle recall order with codes retrieved from last call signal...</span>"
 
@@ -461,4 +420,3 @@
 /obj/item/device/gangtool/lt
 	boss = 0
 	outfits = 1
-	free_pen = 1

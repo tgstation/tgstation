@@ -44,3 +44,72 @@
 		icon_state = "pen"
 		var/mob/M = get(src, /mob)
 		M << "<span class='notice'>\icon[src] [src][(src.loc == M)?(""):(" in your [src.loc]")] vibrates softly.</span>"
+
+
+/obj/item/weapon/implant/gang
+	name = "gang implant"
+	desc = "Makes you a gangster or such."
+	activated = 0
+
+/obj/item/weapon/implant/gang/get_data()
+	var/dat = {"<b>Implant Specifications:</b><BR>
+				<b>Name:</b> Criminal Loyalty Implant<BR>
+				<b>Life:</b> A few seconds after injection.<BR>
+				<b>Important Notes:</b> Illegal<BR>
+				<HR>
+				<b>Implant Details:</b><BR>
+				<b>Function:</b> Contains a small pod of nanobots that change the host's brain to be loyal to a certain organization.<BR>
+				<b>Special Features:</b> This device will also emit a small EMP pulse, destroying any other implants within the host's brain.<BR>
+				<b>Integrity:</b> Implant's EMP function will destroy itself in the process."}
+	return dat
+
+
+//////////////
+// IMPLANTS //
+//////////////
+
+/obj/item/weapon/implant/gang
+	name = "gang implant"
+	desc = "Makes you a gangster or such."
+	activated = 0
+	var/gang
+
+/obj/item/weapon/implant/gang/New(loc,var/setgang)
+	..()
+	gang = setgang
+
+/obj/item/weapon/implant/gang/get_data()
+	var/dat = {"<b>Implant Specifications:</b><BR>
+				<b>Name:</b> Criminal Loyalty Implant<BR>
+				<b>Life:</b> A few seconds after injection.<BR>
+				<b>Important Notes:</b> Illegal<BR>
+				<HR>
+				<b>Implant Details:</b><BR>
+				<b>Function:</b> Contains a small pod of nanobots that change the host's brain to be loyal to a certain organization.<BR>
+				<b>Special Features:</b> This device will also emit a small EMP pulse, destroying any other implants within the host's brain.<BR>
+				<b>Integrity:</b> Implant's EMP function will destroy itself in the process."}
+	return dat
+
+/obj/item/weapon/implant/gang/implanted(mob/target)
+	..()
+	for(var/obj/item/weapon/implant/I in target)
+		if(I != src)
+			qdel(I)
+
+	ticker.mode.remove_gangster(target.mind,0,1,1)
+	if(ticker.mode.add_gangster(target.mind,gang))
+		target.Paralyse(5)
+	else
+		target.visible_message("<span class='warning'>[target] seems to resist the implant!</span>", "<span class='warning'>You feel the influence of your enemies try to invade your mind!</span>")
+	qdel(src)
+
+/obj/item/weapon/implanter/gang
+	name = "implanter-gang"
+
+/obj/item/weapon/implanter/gang/New(loc,var/gang)
+	if(!gang)
+		qdel(src)
+		return
+	imp = new /obj/item/weapon/implant/gang(src,gang)
+	..()
+	update_icon()
