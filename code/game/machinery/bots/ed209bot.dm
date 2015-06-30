@@ -67,7 +67,6 @@
 			check_records = 0//Don't actively target people set to arrest
 			arrest_type = 1//Don't even try to cuff
 			req_access = list(access_maint_tunnels, access_theatre)
-			arrest_type = 1
 			if((lasercolor == "b") && (name == "\improper ED-209 Security Robot"))//Picks a name if there isn't already a custome one
 				name = pick("BLUE BALLER","SANIC","BLUE KILLDEATH MURDERBOT")
 			if((lasercolor == "r") && (name == "\improper ED-209 Security Robot"))
@@ -126,7 +125,6 @@ Auto Patrol[]"},
 "<A href='?src=\ref[src];operation=idcheck'>[idcheck ? "Yes" : "No"]</A>",
 "<A href='?src=\ref[src];operation=weaponscheck'>[weaponscheck ? "Yes" : "No"]</A>",
 "<A href='?src=\ref[src];operation=ignorerec'>[check_records ? "Yes" : "No"]</A>",
-"<A href='?src=\ref[src];operation=switchmode'>[arrest_type ? "Detain" : "Arrest"]</A>",
 "<A href='?src=\ref[src];operation=declarearrests'>[declare_arrests ? "Yes" : "No"]</A>",
 "<A href='?src=\ref[src];operation=patrol'>[auto_patrol ? "On" : "Off"]</A>" )
 	var/datum/browser/popup = new(user, "autoed209", "Automatic Security Unit v2.6")
@@ -151,9 +149,6 @@ Auto Patrol[]"},
 			updateUsrDialog()
 		if ("ignorerec")
 			check_records = !check_records
-			updateUsrDialog()
-		if ("switchmode")
-			arrest_type = !arrest_type
 			updateUsrDialog()
 		if("declarearrests")
 			declare_arrests = !declare_arrests
@@ -264,9 +259,9 @@ Auto Patrol[]"},
 						M.stuttering = 5
 						M.Stun(5)
 
-					if(declare_arrests)
+					if(declare_arrests && !arrest_type)
 						var/area/location = get_area(src)
-						speak("[arrest_type ? "Detaining" : "Arresting"] level [threatlevel] scumbag <b>[target]</b> in [location].", radio_frequency)
+						speak("Arresting level [threatlevel] scumbag <b>[target]</b> in [location].", radio_frequency)
 					target.visible_message("<span class='danger'>[src] has stunned [target]!</span>",\
 											"<span class='userdanger'>[src] has stunned you!</span>")
 
