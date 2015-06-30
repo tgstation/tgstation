@@ -1,4 +1,4 @@
-/obj/machinery/atmospherics/unary/vent_pump
+/obj/machinery/atmospherics/components/unary/vent_pump
 	icon_state = "vent_map"
 
 	name = "air vent"
@@ -29,18 +29,18 @@
 	var/radio_filter_out
 	var/radio_filter_in
 
-/obj/machinery/atmospherics/unary/vent_pump/on
+/obj/machinery/atmospherics/components/unary/vent_pump/on
 	on = 1
 	icon_state = "vent_out"
 
-/obj/machinery/atmospherics/unary/vent_pump/siphon
+/obj/machinery/atmospherics/components/unary/vent_pump/siphon
 	pump_direction = 0
 
-/obj/machinery/atmospherics/unary/vent_pump/siphon/on
+/obj/machinery/atmospherics/components/unary/vent_pump/siphon/on
 	on = 1
 	icon_state = "vent_in"
 
-/obj/machinery/atmospherics/unary/vent_pump/New()
+/obj/machinery/atmospherics/components/unary/vent_pump/New()
 	..()
 	initial_loc = get_area(loc)
 	if (initial_loc.master)
@@ -54,20 +54,20 @@
 		src.initialize()
 		src.broadcast_status()
 
-/obj/machinery/atmospherics/unary/vent_pump/Destroy()
+/obj/machinery/atmospherics/components/unary/vent_pump/Destroy()
 	if(radio_controller)
 		radio_controller.remove_object(src,frequency)
 	..()
 
-/obj/machinery/atmospherics/unary/vent_pump/high_volume
+/obj/machinery/atmospherics/components/unary/vent_pump/high_volume
 	name = "large air vent"
 	power_channel = EQUIP
 
-/obj/machinery/atmospherics/unary/vent_pump/high_volume/New()
+/obj/machinery/atmospherics/components/unary/vent_pump/high_volume/New()
 	..()
 	air_contents.volume = 1000
 
-/obj/machinery/atmospherics/unary/vent_pump/update_icon_nopipes()
+/obj/machinery/atmospherics/components/unary/vent_pump/update_icon_nopipes()
 	overlays.Cut()
 	if(showpipe)
 		overlays += getpipeimage('icons/obj/atmospherics/unary_devices.dmi', "vent_cap", initialize_directions)
@@ -85,7 +85,7 @@
 	else
 		icon_state = "vent_in"
 
-/obj/machinery/atmospherics/unary/vent_pump/process_atmos()
+/obj/machinery/atmospherics/components/unary/vent_pump/process_atmos()
 	..()
 	if(stat & (NOPOWER|BROKEN))
 		return
@@ -144,13 +144,13 @@
 
 //Radio remote control
 
-/obj/machinery/atmospherics/unary/vent_pump/proc/set_frequency(new_frequency)
+/obj/machinery/atmospherics/components/unary/vent_pump/proc/set_frequency(new_frequency)
 	radio_controller.remove_object(src, frequency)
 	frequency = new_frequency
 	if(frequency)
 		radio_connection = radio_controller.add_object(src, frequency,radio_filter_in)
 
-/obj/machinery/atmospherics/unary/vent_pump/proc/broadcast_status()
+/obj/machinery/atmospherics/components/unary/vent_pump/proc/broadcast_status()
 	if(!radio_connection)
 		return 0
 
@@ -182,21 +182,21 @@
 	return 1
 
 
-/obj/machinery/atmospherics/unary/vent_pump/atmosinit()
+/obj/machinery/atmospherics/components/unary/vent_pump/atmosinit()
 	//some vents work his own spesial way
 	radio_filter_in = frequency==1439?(RADIO_FROM_AIRALARM):null
 	radio_filter_out = frequency==1439?(RADIO_TO_AIRALARM):null
 	if(frequency)
 		set_frequency(frequency)
 	..()
-/obj/machinery/atmospherics/unary/vent_pump/initialize()
+/obj/machinery/atmospherics/components/unary/vent_pump/initialize()
 	..()
 	broadcast_status()
 
-/obj/machinery/atmospherics/unary/vent_pump/receive_signal(datum/signal/signal)
+/obj/machinery/atmospherics/components/unary/vent_pump/receive_signal(datum/signal/signal)
 	if(stat & (NOPOWER|BROKEN))
 		return
-	//log_admin("DEBUG \[[world.timeofday]\]: /obj/machinery/atmospherics/unary/vent_pump/receive_signal([signal.debug_print()])")
+	//log_admin("DEBUG \[[world.timeofday]\]: /obj/machinery/atmospherics/components/unary/vent_pump/receive_signal([signal.debug_print()])")
 	if(!signal.data["tag"] || (signal.data["tag"] != id_tag) || (signal.data["sigtype"]!="command"))
 		return 0
 
@@ -266,7 +266,7 @@
 	update_icon()
 	return
 
-/obj/machinery/atmospherics/unary/vent_pump/attackby(obj/item/W, mob/user, params)
+/obj/machinery/atmospherics/components/unary/vent_pump/attackby(obj/item/W, mob/user, params)
 	if (istype(W, /obj/item/weapon/wrench)&& !(stat & NOPOWER) && on)
 		user << "<span class='warning'>You cannot unwrench this [src], turn it off first!</span>"
 		return 1
@@ -290,24 +290,24 @@
 	else
 		return ..()
 
-/obj/machinery/atmospherics/unary/vent_pump/examine(mob/user)
+/obj/machinery/atmospherics/components/unary/vent_pump/examine(mob/user)
 	..()
 	if(welded)
 		user << "It seems welded shut."
 
-/obj/machinery/atmospherics/unary/vent_pump/power_change()
+/obj/machinery/atmospherics/components/unary/vent_pump/power_change()
 	if(powered(power_channel))
 		stat &= ~NOPOWER
 	else
 		stat |= NOPOWER
 	update_icon_nopipes()
 
-/obj/machinery/atmospherics/unary/vent_pump/Destroy()
+/obj/machinery/atmospherics/components/unary/vent_pump/Destroy()
 	if(initial_loc)
 		initial_loc.air_vent_info -= id_tag
 		initial_loc.air_vent_names -= id_tag
 	..()
 
 
-/obj/machinery/atmospherics/unary/vent_pump/can_crawl_through()
+/obj/machinery/atmospherics/components/unary/vent_pump/can_crawl_through()
 	return !welded

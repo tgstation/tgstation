@@ -1,4 +1,4 @@
-/obj/machinery/atmospherics/trinary
+/obj/machinery/atmospherics/components/trinary
 	icon = 'icons/obj/atmospherics/trinary_devices.dmi'
 	dir = SOUTH
 	initialize_directions = SOUTH|NORTH|WEST
@@ -18,7 +18,7 @@
 
 	var/flipped = 0
 
-/obj/machinery/atmospherics/trinary/New()
+/obj/machinery/atmospherics/components/trinary/New()
 	..()
 
 	air1 = new
@@ -29,7 +29,7 @@
 	air2.volume = 200
 	air3.volume = 200
 
-/obj/machinery/atmospherics/trinary/SetInitDirections()
+/obj/machinery/atmospherics/components/trinary/SetInitDirections()
 	switch(dir)
 		if(NORTH)
 			initialize_directions = EAST|NORTH|SOUTH
@@ -42,10 +42,8 @@
 /*
 Iconnery
 */
-/obj/machinery/atmospherics/trinary/proc/update_icon_nopipes()
-	return
 
-/obj/machinery/atmospherics/trinary/update_icon()
+/* /obj/machinery/atmospherics/components/trinary/update_icon()
 	update_icon_nopipes()
 
 	var/connected = 0
@@ -62,12 +60,12 @@ Iconnery
 		connected = icon_addintact(node3, connected)
 
 	//Add broken pieces
-	icon_addbroken(connected)
+	icon_addbroken(connected) */
 
 /*
 Housekeeping and pipe network stuff below
 */
-/obj/machinery/atmospherics/trinary/Destroy()
+/obj/machinery/atmospherics/components/trinary/Destroy()
 	if(node1)
 		node1.disconnect(src)
 		node1 = null
@@ -82,7 +80,7 @@ Housekeeping and pipe network stuff below
 		nullifyPipenet(parent3)
 	..()
 
-/obj/machinery/atmospherics/trinary/atmosinit()
+/obj/machinery/atmospherics/components/trinary/atmosinit()
 
 	//Mixer:
 	//1 and 2 is input
@@ -121,13 +119,13 @@ Housekeeping and pipe network stuff below
 	update_icon()
 	..()
 
-/obj/machinery/atmospherics/trinary/construction()
+/obj/machinery/atmospherics/components/trinary/construction()
 	..()
 	parent1.update = 1
 	parent2.update = 1
 	parent3.update = 1
 
-/obj/machinery/atmospherics/trinary/build_network()
+/obj/machinery/atmospherics/components/trinary/build_network()
 	if(!parent1)
 		parent1 = new /datum/pipeline()
 		parent1.build_pipeline(src)
@@ -140,7 +138,7 @@ Housekeeping and pipe network stuff below
 		parent3 = new /datum/pipeline()
 		parent3.build_pipeline(src)
 
-/obj/machinery/atmospherics/trinary/disconnect(obj/machinery/atmospherics/reference)
+/obj/machinery/atmospherics/components/trinary/disconnect(obj/machinery/atmospherics/reference)
 	if(reference == node1)
 		if(istype(node1, /obj/machinery/atmospherics/pipe))
 			qdel(parent1)
@@ -155,7 +153,7 @@ Housekeeping and pipe network stuff below
 		node3 = null
 	update_icon()
 
-/obj/machinery/atmospherics/trinary/nullifyPipenet(datum/pipeline/P)
+/obj/machinery/atmospherics/components/trinary/nullifyPipenet(datum/pipeline/P)
 	..()
 	if(P == parent1)
 		parent1.other_airs -= air1
@@ -167,7 +165,7 @@ Housekeeping and pipe network stuff below
 		parent3.other_airs -= air3
 		parent3 = null
 
-/obj/machinery/atmospherics/trinary/returnPipenetAir(datum/pipeline/P)
+/obj/machinery/atmospherics/components/trinary/returnPipenetAir(datum/pipeline/P)
 	if(P == parent1)
 		return air1
 	else if(P == parent2)
@@ -175,7 +173,7 @@ Housekeeping and pipe network stuff below
 	else if(P == parent3)
 		return air3
 
-/obj/machinery/atmospherics/trinary/pipeline_expansion(datum/pipeline/P)
+/obj/machinery/atmospherics/components/trinary/pipeline_expansion(datum/pipeline/P)
 	if(P)
 		if(parent1 == P)
 			return list(node1)
@@ -185,7 +183,7 @@ Housekeeping and pipe network stuff below
 			return list(node3)
 	return list(node1, node2, node3)
 
-/obj/machinery/atmospherics/trinary/setPipenet(datum/pipeline/P, obj/machinery/atmospherics/A)
+/obj/machinery/atmospherics/components/trinary/setPipenet(datum/pipeline/P, obj/machinery/atmospherics/A)
 	if(A == node1)
 		parent1 = P
 	else if(A == node2)
@@ -193,7 +191,7 @@ Housekeeping and pipe network stuff below
 	else if(A == node3)
 		parent3 = P
 
-/obj/machinery/atmospherics/trinary/returnPipenet(obj/machinery/atmospherics/A)
+/obj/machinery/atmospherics/components/trinary/returnPipenet(obj/machinery/atmospherics/A)
 	if(A == node1)
 		return parent1
 	else if(A == node2)
@@ -201,7 +199,7 @@ Housekeeping and pipe network stuff below
 	else if(A == node3)
 		return parent3
 
-/obj/machinery/atmospherics/trinary/replacePipenet(datum/pipeline/Old, datum/pipeline/New)
+/obj/machinery/atmospherics/components/trinary/replacePipenet(datum/pipeline/Old, datum/pipeline/New)
 	if(Old == parent1)
 		parent1 = New
 	else if(Old == parent2)
@@ -210,7 +208,7 @@ Housekeeping and pipe network stuff below
 		parent3 = New
 
 
-/obj/machinery/atmospherics/trinary/unsafe_pressure_release(var/mob/user,var/pressures)
+/obj/machinery/atmospherics/components/trinary/unsafe_pressure_release(var/mob/user,var/pressures)
 	..()
 
 	var/turf/T = get_turf(src)

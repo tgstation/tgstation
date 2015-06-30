@@ -1,4 +1,4 @@
-/obj/machinery/atmospherics/trinary/mixer
+/obj/machinery/atmospherics/components/trinary/mixer
 	icon_state = "mixer_off"
 	density = 0
 
@@ -16,34 +16,34 @@
 
 	//node 3 is the outlet, nodes 1 & 2 are intakes
 
-/obj/machinery/atmospherics/trinary/mixer/flipped
+/obj/machinery/atmospherics/components/trinary/mixer/flipped
 	icon_state = "mixer_off_f"
 	flipped = 1
 
-/obj/machinery/atmospherics/trinary/mixer/icon_addintact(var/obj/machinery/atmospherics/node, var/connected)
+/obj/machinery/atmospherics/components/trinary/mixer/icon_addintact(var/obj/machinery/atmospherics/node, var/connected)
 	var/image/img = getpipeimage('icons/obj/atmospherics/trinary_devices.dmi', "cap", get_dir(src,node), node.pipe_color)
 	overlays += img
 	return ..()
 
-/obj/machinery/atmospherics/trinary/mixer/icon_addbroken(var/connected)
+/obj/machinery/atmospherics/components/trinary/mixer/icon_addbroken(var/connected)
 	var/unconnected = (~connected) & initialize_directions
 	for(var/direction in cardinal)
 		if(unconnected & direction)
 			underlays += getpipeimage('icons/obj/atmospherics/binary_devices.dmi', "pipe_exposed", direction)
 			overlays += getpipeimage('icons/obj/atmospherics/trinary_devices.dmi', "cap", direction)
 
-/obj/machinery/atmospherics/trinary/mixer/update_icon()
+/obj/machinery/atmospherics/components/trinary/mixer/update_icon()
 	overlays.Cut()
 	..()
 
-/obj/machinery/atmospherics/trinary/mixer/update_icon_nopipes()
+/obj/machinery/atmospherics/components/trinary/mixer/update_icon_nopipes()
 	if(!(stat & NOPOWER) && on && node1 && node2 && node3)
 		icon_state = "mixer_on[flipped?"_f":""]"
 		return
 
 	icon_state = "mixer_off[flipped?"_f":""]"
 
-/obj/machinery/atmospherics/trinary/mixer/power_change()
+/obj/machinery/atmospherics/components/trinary/mixer/power_change()
 	var/old_stat = stat
 	..()
 	if(stat & NOPOWER)
@@ -51,11 +51,11 @@
 	if(old_stat != stat)
 		update_icon()
 
-/obj/machinery/atmospherics/trinary/mixer/New()
+/obj/machinery/atmospherics/components/trinary/mixer/New()
 	..()
 	air3.volume = 300
 
-/obj/machinery/atmospherics/trinary/mixer/process_atmos()
+/obj/machinery/atmospherics/components/trinary/mixer/process_atmos()
 	..()
 	if(!on)
 		return 0
@@ -113,7 +113,7 @@
 
 	return 1
 
-/obj/machinery/atmospherics/trinary/mixer/attack_hand(user as mob)
+/obj/machinery/atmospherics/components/trinary/mixer/attack_hand(user as mob)
 	if(..())
 		return
 
@@ -123,13 +123,13 @@
 
 	ui_interact(user)
 
-/obj/machinery/atmospherics/trinary/mixer/ui_interact(mob/user, ui_key = "main", var/datum/nanoui/ui = null)
+/obj/machinery/atmospherics/components/trinary/mixer/ui_interact(mob/user, ui_key = "main", var/datum/nanoui/ui = null)
 	if(stat & (BROKEN|NOPOWER))
 		return
 
 	ui = SSnano.push_open_or_new_ui(user, src, ui_key, ui, "atmos_mixer.tmpl", name, 400, 320, 0)
 
-/obj/machinery/atmospherics/trinary/mixer/get_ui_data()
+/obj/machinery/atmospherics/components/trinary/mixer/get_ui_data()
 	var/data = list()
 	data["on"] = on
 	data["pressure_set"] = round(target_pressure*100) //Nano UI can't handle rounded non-integers, apparently.
@@ -138,7 +138,7 @@
 	data["node2_concentration"] = round(node2_concentration*100)
 	return data
 
-/obj/machinery/atmospherics/trinary/mixer/Topic(href,href_list)
+/obj/machinery/atmospherics/components/trinary/mixer/Topic(href,href_list)
 	if(..()) return
 	if(href_list["power"])
 		on = !on

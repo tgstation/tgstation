@@ -1,4 +1,4 @@
-/obj/machinery/atmospherics/unary/oxygen_generator
+/obj/machinery/atmospherics/components/unary/oxygen_generator
 
 	icon_state = "o2gen_map"
 
@@ -12,7 +12,7 @@
 
 	var/oxygen_content = 10
 
-/obj/machinery/atmospherics/unary/oxygen_generator/update_icon_nopipes()
+/obj/machinery/atmospherics/components/unary/oxygen_generator/update_icon_nopipes()
 
 	overlays.Cut()
 	if(showpipe)
@@ -25,12 +25,12 @@
 	else
 		icon_state = "o2gen_on"
 
-/obj/machinery/atmospherics/unary/oxygen_generator/New()
+/obj/machinery/atmospherics/components/unary/oxygen_generator/New()
 	..()
 
 	air_contents.volume = 50
 
-/obj/machinery/atmospherics/unary/oxygen_generator/process_atmos()
+/obj/machinery/atmospherics/components/unary/oxygen_generator/process_atmos()
 	..()
 	if(!on)
 		return 0

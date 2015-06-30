@@ -46,7 +46,7 @@
 	var/internal_tank_valve = ONE_ATMOSPHERE
 	var/obj/machinery/portable_atmospherics/canister/internal_tank
 	var/datum/gas_mixture/cabin_air
-	var/obj/machinery/atmospherics/unary/portables_connector/connected_port = null
+	var/obj/machinery/atmospherics/components/unary/portables_connector/connected_port = null
 
 	var/obj/item/device/radio/radio = null
 
@@ -900,7 +900,7 @@
 		. = t_air.return_temperature()
 	return
 
-/obj/mecha/proc/connect(obj/machinery/atmospherics/unary/portables_connector/new_port)
+/obj/mecha/proc/connect(obj/machinery/atmospherics/components/unary/portables_connector/new_port)
 	//Make sure not already connected to something else
 	if(connected_port || !new_port || new_port.connected_device)
 		return 0
@@ -943,7 +943,7 @@
 	if(!can_use(usr))
 		return
 
-	var/obj/machinery/atmospherics/unary/portables_connector/possible_port = locate(/obj/machinery/atmospherics/unary/portables_connector/) in loc
+	var/obj/machinery/atmospherics/components/unary/portables_connector/possible_port = locate(/obj/machinery/atmospherics/components/unary/portables_connector/) in loc
 	if(possible_port)
 		if(connect(possible_port))
 			src.occupant_message("<span class='notice'>[name] connects to the port.</span>")

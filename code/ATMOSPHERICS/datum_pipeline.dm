@@ -205,11 +205,11 @@ var/pipenetwarnings = 10
 		var/datum/pipeline/P = PL[i]
 		GL += P.air
 		GL += P.other_airs
-		for(var/obj/machinery/atmospherics/binary/valve/V in P.other_atmosmch)
+		for(var/obj/machinery/atmospherics/components/binary/valve/V in P.other_atmosmch)
 			if(V.open)
 				PL |= V.parent1
 				PL |= V.parent2
-		for(var/obj/machinery/atmospherics/unary/portables_connector/C in P.other_atmosmch)
+		for(var/obj/machinery/atmospherics/components/unary/portables_connector/C in P.other_atmosmch)
 			if(C.connected_device)
 				GL += C.portableConnectorReturnAir()
 

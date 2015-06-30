@@ -22,14 +22,14 @@ Gunshots/explosions/opening doors/less rare audio (done)
 /mob/living/carbon/proc/handle_hallucinations()
 	if(handling_hal)
 		return
-	
+
 	//Least obvious
 	var/list/minor = list("sounds"=20,"bolts_minor"=10,"whispers"=15,"message"=5)
 	//Something's wrong here
 	var/list/medium = list("hudscrew"=15,"items"=15,"dangerflash"=15,"bolts"=10,"flood"=10,"husks"=10,"battle"=10)
 	//AAAAH
 	var/list/major = list("fake"=10,"death"=5,"xeno"=10,"singulo"=10,"delusion"=10)
-	
+
 	var/grade = 0
 	var/current = list()
 	var/trip_length = 0
@@ -123,7 +123,7 @@ Gunshots/explosions/opening doors/less rare audio (done)
 /obj/effect/hallucination/fake_flood/New(loc,var/mob/living/carbon/T)
 	..()
 	target = T
-	for(var/obj/machinery/atmospherics/unary/vent_pump/U in orange(7,target))
+	for(var/obj/machinery/atmospherics/components/unary/vent_pump/U in orange(7,target))
 		if(!U.welded)
 			src.loc = U.loc
 			break
@@ -209,7 +209,7 @@ Gunshots/explosions/opening doors/less rare audio (done)
 
 	src.throwing = 0
 	src.throw_impact(get_turf(src))
-	
+
 	return 1
 
 /obj/effect/hallucination/simple/xeno/throw_impact(A)
@@ -220,12 +220,12 @@ Gunshots/explosions/opening doors/less rare audio (done)
 
 /obj/effect/hallucination/xeno_attack
 	//Xeno crawls from nearby vent,jumps at you, and goes back in
-	var/obj/machinery/atmospherics/unary/vent_pump/pump = null
+	var/obj/machinery/atmospherics/components/unary/vent_pump/pump = null
 	var/obj/effect/hallucination/simple/xeno/xeno = null
 
 /obj/effect/hallucination/xeno_attack/New(loc,var/mob/living/carbon/T)
 	target = T
-	for(var/obj/machinery/atmospherics/unary/vent_pump/U in orange(7,target))
+	for(var/obj/machinery/atmospherics/components/unary/vent_pump/U in orange(7,target))
 		if(!U.welded)
 			pump = U
 			break
