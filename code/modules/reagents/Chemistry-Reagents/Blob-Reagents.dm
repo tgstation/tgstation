@@ -166,6 +166,7 @@
 /datum/reagent/blob/spacedrugs/reaction_mob(var/mob/living/M as mob, var/method=TOUCH, var/volume)
 	if(method == TOUCH)
 		var/ratio = volume/25
+		M.hallucination += 20*ratio
 		M.reagents.add_reagent("space_drugs", 15*ratio)
 		M.apply_damage(10*ratio, TOX)
 

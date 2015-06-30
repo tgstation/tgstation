@@ -1,0 +1,8 @@
+
+author: phil235
+
+delete-after: True
+
+changes: 
+  - tweak: "Space drug overdose no longer cause brute/brain damage but you hallucinate more. Space Drug Blob now makes you hallucinate even if you don't overdose on its space drug."
+

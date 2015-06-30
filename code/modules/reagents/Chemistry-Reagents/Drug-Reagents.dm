@@ -10,7 +10,7 @@
 	id = "space_drugs"
 	description = "An illegal chemical compound used as drug."
 	color = "#60A584" // rgb: 96, 165, 132
-	overdose_threshold = 25
+	overdose_threshold = 30
 
 /datum/reagent/drug/space_drugs/on_mob_life(var/mob/living/M as mob)
 	M.druggy = max(M.druggy, 15)
@@ -22,11 +22,13 @@
 	..()
 	return
 
+/datum/reagent/drug/space_drugs/overdose_start(var/mob/living/M as mob)
+	M << "<span class='userdanger'>You start tripping hard!</span>"
+
+
 /datum/reagent/drug/space_drugs/overdose_process(var/mob/living/M as mob)
-	if(prob(20))
-		M.hallucination = max(M.hallucination, 5)
-	M.adjustBrainLoss(0.25*REM)
-	M.adjustToxLoss(0.25*REM)
+	if(M.hallucination < volume && prob(20))
+		M.hallucination += 5
 	..()
 	return
 
