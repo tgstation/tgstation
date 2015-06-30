@@ -239,6 +239,7 @@
 			if("pen")
 				if(points >= 50)
 					item_type = /obj/item/weapon/pen/gang
+					usr << "<span class='notice'>More <b>recruitmen pens</b> will allow you to recruit gangsters faster. Only gang leaders can recruit with pens.</span>"
 					points = 50
 			if("implant")
 				if(points >= 10)

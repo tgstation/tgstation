@@ -6,10 +6,11 @@
 	var/cooldown
 
 /obj/item/weapon/pen/gang/attack(mob/living/M, mob/user)
-	if(!istype(M))	return
-	if(..(M,user,1))
-		if(ishuman(M) && ishuman(user) && M.stat != DEAD)
-			if(user.mind && ((user.mind in ticker.mode.A_bosses) || (user.mind in ticker.mode.B_bosses)))
+	if(!istype(M))
+		return
+	if(ishuman(M) && ishuman(user) && M.stat != DEAD)
+		if(user.mind && ((user.mind in ticker.mode.A_bosses) || (user.mind in ticker.mode.B_bosses)))
+			if(..(M,user,1))
 				if(cooldown)
 					user << "<span class='warning'>[src] needs more time to recharge before it can be used.</span>"
 					return
@@ -35,6 +36,8 @@
 								user << "<span class='warning'>This mind is resistant to recruitment!</span>"
 							else
 								user << "<span class='warning'>This mind has already been recruited into a gang!</span>"
+			return
+	..()
 
 /obj/item/weapon/pen/gang/proc/cooldown(modifier)
 	cooldown = 1
