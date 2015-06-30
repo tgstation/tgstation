@@ -313,3 +313,10 @@ div.notice
 	width: 100%;
 	clear: both;
 }
+
+input
+{
+	background-color: #313131;
+	border: 1px solid #414141;
+	padding: 2px 4px;
+}
