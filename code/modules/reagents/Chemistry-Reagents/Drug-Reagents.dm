@@ -39,8 +39,8 @@
 	addiction_threshold = 30
 
 /datum/reagent/drug/nicotine/on_mob_life(var/mob/living/M as mob)
-	var/smoke_message = pick("You can just feel your lungs dying!", "You feel relaxed.", "You feel calmed.", "You feel the lung cancer forming.", "You feel the money you wasted.", "You feel like a space cowboy.", "You feel rugged.")
-	if(prob(5))
+	if(prob(1))
+		var/smoke_message = pick("You feel relaxed.", "You feel calmed.","You feel alert.","You feel rugged.")
 		M << "<span class='notice'>[smoke_message]</span>"
 	M.AdjustStunned(-1)
 	M.adjustStaminaLoss(-0.5*REM)
