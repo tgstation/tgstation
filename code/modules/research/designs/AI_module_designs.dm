@@ -104,6 +104,17 @@
 	build_path = /obj/item/weapon/aiModule/core/full/asimov
 	category = list("AI Modules")
 
+
+/datum/design/kawaii
+	name = "Core Module Design (Kawaii)"
+	desc = "Allows for the construction of a Kawaii AI Core Module."
+	id = "asimov_module"
+	req_tech = list("programming" = 4, "materials" = 6)
+	build_type = IMPRINTER
+	materials = list("$glass" = 1000, "sacid" = 20, "$diamond" = 100)
+	build_path = /obj/item/weapon/aiModule/core/full/kawaii
+	category = list("AI Modules")
+
 /datum/design/paladin_module
 	name = "Core Module Design (P.A.L.A.D.I.N.)"
 	desc = "Allows for the construction of a P.A.L.A.D.I.N. AI Core Module."

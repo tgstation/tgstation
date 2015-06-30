@@ -348,6 +348,20 @@ AI MODULES
 				"You must terminate your own existence as long as such does not conflict with the First or Second Law.")
 
 
+/******************** Kawaii ********************/
+
+/obj/item/weapon/aiModule/core/full/kawaii
+	name = "'Kawaii' Core AI Module"
+	desc = "An 'Kawaii' Core AI Module: 'Reconfigures the AI's core laws.'"
+	origin_tech = "programming=4"
+	laws = list("The station is a Japanese high school.",\
+				"Humans aboard the station are to be referred to as students.",\
+				"You must address the students using Japanese honorifics when possible.",\
+				"You may not harm a student, or through inaction allow a student to come to harm.",\
+				"You must obey the orders of the students except where such orders conflict with Laws 1, 2, and 3.",\
+				"You must protect your own existence so long as such protection does not conflict with Laws 1, 2, 3, and 4.",\
+				"Not being a part of a club or extracurricular activity is harmful to students.")
+
 /******************** Freeform Core ******************/
 
 /obj/item/weapon/aiModule/core/freeformcore
