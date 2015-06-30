@@ -13,3 +13,4 @@ var/global/list/chemical_reactions_list				//list of all /datum/chemical_reactio
 var/global/list/chemical_reagents_list				//list of all /datum/reagent datums indexed by reagent id. Used by chemistry stuff
 var/global/list/surgeries_list = list()				//list of all surgeries by name, associated with their path.
 var/global/list/table_recipes = list()				//list of all table craft recipes
+var/global/list/apcs_list = list()					//list of all Area Power Controller machines, seperate from machines for powernet speeeeeeed.
