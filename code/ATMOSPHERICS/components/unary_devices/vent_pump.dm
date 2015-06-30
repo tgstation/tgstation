@@ -315,20 +315,18 @@
 	if(L.lying)
 		L << "You can't vent crawl while you're stunned!"
 		return
+	if(!isturf(L.loc))
+		L << "You can't vent crawl while you're inside [L.loc]!"
+		return
 	if(iscarbon(L))
 		var/mob/living/carbon/C = L
 		if(C.handcuffed)
 			return
 
-
 	if(welded)
 		L << "That vent is welded shut."
 		return
-	if(isborer(L))
-		var/mob/living/simple_animal/borer/B = L
-		if (B.host)
-			L << "You cannot ventcrawl while inside a host"
-			return
+
 
 	var/list/vents = list()
 	if(!parent)
