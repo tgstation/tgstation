@@ -516,3 +516,76 @@
 		return 0
 
 	return max(0, enemy_minimum_age - C.player_age)
+
+
+/datum/game_mode/proc/greetAntagonist(var/datum/mind/M, var/antagonist)
+	var/list/validAntagonists = list("traitor", "double agent", "changeling", "nuclear operative", "wizard", "head revolutionary", "blob", "cultist", "shadowling", "gang boss", "abductor scientist", \
+									 "abductor agent", "space ninja", "revenant")
+	if(!(antagonist in validAntagonists))
+		return 0
+	var/text
+	text += "<font color='red' size=3><center><b>You are the [antagonist].</b></center></font><br><br>"
+	switch(antagonist)
+		if("traitor")
+			text += "<center>You are an agent of the Syndicate aboard [station_name()].</center>"
+			text += "<center>You are to accomplish the following objectives assigned to you by your employers:</center><br>"
+			var/objCount = 1
+			for(var/datum/objective/objective in M.objectives)
+				text += "<center><b>Objective #[objCount]:</b> [objective.explanation_text]</center>"
+				objCount++
+			text += "<br><center>You have also been supplied with an uplink cunningly hidden in your PDA or headset. This uplink contains 20 telecrystals and allows you to purchase exclusive equipment \
+			to aid in completing your objectives. In addition, you have been given a set of code words to identify other agents. Use these in conversation but be aware that anyone may be a potential foe. \
+			</center><br><br>"
+			text += "<center><b>Code Phrases:</b> <font color='red'>[syndicate_code_phrase]</font></center>"
+			text += "<center><b>Code Responses:</b> <font color='red'>[syndicate_code_response]</font></center><br><br>"
+			text += "<center>Accomplish your objectives at all costs!</center>"
+			text += "<center><i><b>Wiki Page:</b></i> <a href='https://tgstation13.org/wiki/Traitor'>Click Here</a></center>"
+		if("double agent")
+			text += "<center>You are a Syndicate double agent aboard [station_name()].</center>"
+			text += "<center>For some reason or another, you have been assigned to kill another Syndicate agent. However, be wary, as a third double agent is also trying to kill <i>you!</i> You will need \
+			to kill your quarry while avoiding death yourself. Your objectives:</center><br>"
+			var/objCount = 1
+			for(var/datum/objective/objective in M.objectives)
+				text += "<center><b>Objective #[objCount]:</b> [objective.explanation_text]</center>"
+				objCount++
+			text += "<br><center>You have also been supplied with an uplink cunningly hidden in your PDA or headset. This uplink contains 20 telecrystals and allows you to purchase exclusive equipment \
+			to aid in completing your objectives. In addition, you have been given a set of code words to identify other agents. Use these in conversation but be aware that anyone may be a potential foe. \
+			</center><br><br>"
+			text += "<center><b>Code Phrases:</b> <font color='red'>[syndicate_code_phrase]</font></center>"
+			text += "<center><b>Code Responses:</b> <font color='red'>[syndicate_code_response]</font></center><br><br>"
+			text += "<center>Eliminate your quarry and avoid death at all costs!</center>"
+			text += "<center><i><b>Wiki Page:</b></i> <a href='https://tgstation13.org/wiki/Traitor'>Click Here</a></center>"
+		if("changeling")
+			text += "<center>We are a changeling, an alien lifeform aboard [station_name()].</center>"
+			text += "<center>We are employed by the Syndicate and must accomplish the following objectives they wish of us:</center><br>"
+			var/objCount = 1
+			for(var/datum/objective/objective in M.objectives)
+				text += "<center><b>Objective #[objCount]:</b> [objective.explanation_text]</center>"
+				objCount++
+			text += "<br><center>While we do not have unique appliances and equipment to accomplish these difficult objectives, we possess a biological arsenal. As a hivemind organism, we have the ability \
+			to absorb the genetic code of any human into our own form. We can then shapeshift into the human, taking on their exact appearance. In addition, we may evolve additional abilities by using our \
+			Evolution Menu to bend our body to our will. Finally, we may say \".g (message)\" to silently communicate with all other changelings.</center><br><br>"
+			text += "<center>Accomplish our objectives at all costs!</center>"
+			text += "<center><i><b>Wiki Page:</b></i> <a href='https://tgstation13.org/wiki/Changeling'>Click Here</a></center>"
+	var/datum/browser/popup = new(M.current, "greeting", "Antagonist Greeting", 800, 600)
+	popup.set_content(text)
+	popup.set_title_image(M.current.browse_rsc_icon(antagonist, 'icons/misc/antagIcons.dmi'))
+	popup.open()
+	return 1
+
+/obj/item/debugger
+	name = "debugger"
+	desc = "A mystical artifact used by the Gods to ensure the world's timeways are correctly flowing."
+	icon = 'icons/obj/device.dmi'
+	icon_state = "shield1"
+	item_state = "electrical"
+	w_class = 2
+	unacidable = 1
+
+/obj/item/debugger/antagonistGreet
+	name = "antagonist greeting debugger"
+
+/obj/item/debugger/antagonistGreet/attack_self(mob/user)
+	var/antag
+	antag = stripped_input(user, "antag", "Which antagonist?", "[antag]")
+	ticker.mode.greetAntagonist(user.mind, antag)
