@@ -3,14 +3,14 @@
 	dir = SOUTH
 	initialize_directions = SOUTH
 	layer = TURF_LAYER+0.1
+	nodes = 1
+
 	var/datum/gas_mixture/air_contents
 	var/obj/machinery/atmospherics/node
 
 /obj/machinery/atmospherics/components/unary/New()
-	..()
-	air_contents = new
-	air_contents.volume = 200
-
+	var/airs[] = ..()
+	set_airs(airs)
 
 /obj/machinery/atmospherics/components/unary/SetInitDirections()
 	initialize_directions = dir
@@ -18,52 +18,47 @@
 Iconnery
 */
 
-/obj/machinery/atmospherics/components/unary/update_icon()
-	nodes = list(node)
-	..()
-/* /obj/machinery/atmospherics/components/unary/update_icon()
-	update_icon_nopipes()
-
-	underlays.Cut()
-
-	if(!showpipe)
-		return //no need to continue if we're not showing pipes
-	if(node)
-		icon_addintact(node)
-		return
-	icon_addbroken() */
-
 /obj/machinery/atmospherics/components/unary/hide(var/intact)
 	showpipe = !intact
 	update_icon()
 
 	..(intact)
+/*
+Helpers
+*/
+
+/obj/machinery/atmospherics/components/unary/get_airs()
+	return list(air_contents)
+
+/obj/machinery/atmospherics/components/unary/get_nodes()
+	return list(node)
+
+/obj/machinery/atmospherics/components/unary/get_parents()
+	return list(parent)
+
+/obj/machinery/atmospherics/components/unary/set_airs(var/list/L)
+	var/datum/gas_mixture/a1 = L[1]
+	air_contents = a1
+
+/obj/machinery/atmospherics/components/unary/set_nodes(var/list/L)
+	var/obj/machinery/atmospherics/n1 = L[1]
+	node = n1
+
+/obj/machinery/atmospherics/components/unary/set_parents(var/list/L)
+	var/datum/pipeline/p1 = L[1]
+	parent = p1
 
 /*
 Housekeeping and pipe network stuff below
 */
 
-/obj/machinery/atmospherics/components/unary/Destroy()
-	if(node)
-		node.disconnect(src)
-		node = null
-		nullifyPipenet(parent)
-	..()
-
-
 /obj/machinery/atmospherics/components/unary/atmosinit()
-	for(var/obj/machinery/atmospherics/target in get_step(src, dir))
+	//var/node_connects = list(dir)
+	for(var/obj/machinery/atmospherics/target in get_step(src,dir))
 		if(target.initialize_directions & get_dir(target,src))
 			node = target
 			break
-	if(level == 2)
-		showpipe = 1
-	update_icon()
-	..()
-
-/obj/machinery/atmospherics/components/unary/construction()
-	..()
-	parent.update = 1
+	..(/*node_connects*/)
 
 /obj/machinery/atmospherics/components/unary/default_change_direction_wrench(mob/user, obj/item/weapon/wrench/W)
 	if(..())
@@ -81,48 +76,33 @@ Housekeeping and pipe network stuff below
 		build_network()
 		. = 1
 
+/obj/machinery/atmospherics/components/unary/construction()
+	var/parents[] = ..()
+	set_parents(parents)
+
 /obj/machinery/atmospherics/components/unary/build_network()
-	if(!parent)
-		parent = new /datum/pipeline()
-		parent.build_pipeline(src)
+	var/parents[] = ..()
+	set_parents(parents)
 
 /obj/machinery/atmospherics/components/unary/disconnect(obj/machinery/atmospherics/reference)
-	if(reference == node)
-		if(istype(node, /obj/machinery/atmospherics/pipe))
-			qdel(parent)
-		node = null
-	update_icon()
+	var/parents[] = ..(reference)
+	set_parents(parents)
 
-/obj/machinery/atmospherics/components/unary/nullifyPipenet()
-	..()
-	parent.other_airs -= air_contents
-	parent = null
+/obj/machinery/atmospherics/components/unary/nullifyPipenet(datum/pipeline/P)
+	var/parents[] = ..(P)
+	set_parents(parents)
 
-/obj/machinery/atmospherics/components/unary/returnPipenetAir()
-	return air_contents
-
-/obj/machinery/atmospherics/components/unary/pipeline_expansion()
-	return list(node)
-
-/obj/machinery/atmospherics/components/unary/setPipenet(datum/pipeline/P)
-	parent = P
+/obj/machinery/atmospherics/components/unary/setPipenet(datum/pipeline/P, obj/machinery/atmospherics/A)
+	var/parents[] = ..(P, A)
+	set_parents(parents)
 
 /obj/machinery/atmospherics/components/unary/replacePipenet(datum/pipeline/Old, datum/pipeline/New)
-	if(Old == parent)
-		parent = New
+	var/parents[] = ..(Old, New)
+	set_parents(parents)
 
+/obj/machinery/atmospherics/components/unary/unsafe_pressure_release(var/mob/user, var/pressures)
+	var/airs[] = ..(user, pressures)
+	set_airs(airs)
 
-/obj/machinery/atmospherics/components/unary/unsafe_pressure_release(var/mob/user,var/pressures)
-	..()
-
-	var/turf/T = get_turf(src)
-	if(T)
-		//Remove the gas from air_contents and assume it
-		var/datum/gas_mixture/environment = T.return_air()
-		var/lost = pressures*environment.volume/(air_contents.temperature * R_IDEAL_GAS_EQUATION)
-
-		var/datum/gas_mixture/to_release = air_contents.remove(lost)
-		T.assume_air(to_release)
-		air_update_turf(1)
-
-
+//This sure looks like a lot of copypaste... It's already way better though, so it works for now
+//TODO: make it even more OOP - duncathan
