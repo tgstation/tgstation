@@ -23,7 +23,6 @@ Pipelines + Other Objects -> Pipe network
 	var/global/list/iconsetids = list()
 	var/global/list/pipeimages = list()
 	var/datum/pipeline/parent = null
-	var/welded = 0 //Used on pumps and scrubbers
 
 	var/image/pipe_vision_img = null
 

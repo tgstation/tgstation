@@ -24,11 +24,18 @@
 
 /obj/machinery/atmospherics/components/binary/SetInitDirections()
 	switch(dir)
-		if(NORTH || SOUTH)
+		if(NORTH)
 			initialize_directions = NORTH|SOUTH
-		if(EAST || WEST)
+		if(SOUTH)
+			initialize_directions = NORTH|SOUTH
+		if(EAST)
+			initialize_directions = EAST|WEST
+		if(WEST)
 			initialize_directions = EAST|WEST
 
+/obj/machinery/atmospherics/components/binary/update_icon()
+	nodes = list(node1, node2)
+	..()
 /* /obj/machinery/atmospherics/components/binary/update_icon()
 	update_icon_nopipes()
 

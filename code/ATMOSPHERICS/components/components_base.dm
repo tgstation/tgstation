@@ -2,10 +2,10 @@
 So much of atmospherics.dm was used solely by components, so separating this makes things all a lot cleaner.
 On top of that, now people can add component-speciic procs/vars if they want!
 */
-
-var/welded = 0 //Used on pumps and scrubbers
-var/showpipe = 0
-var/nodes = list()
+/obj/machinery/atmospherics/components/
+	var/welded = 0 //Used on pumps and scrubbers
+	var/showpipe = 0
+	var/nodes = list() //Used for nice OOP update_icon()
 
 /*
 Iconnery
@@ -35,7 +35,7 @@ Iconnery
 
 	var/connected = 0
 
-	for(var/N in nodes) //adds intact pieces
+	for(var/N in update_nodes) //adds intact pieces
 		var/obj/machinery/atmospherics/node = N
 		if(node)
 			connected = icon_addintact(node, connected)

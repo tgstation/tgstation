@@ -42,6 +42,9 @@
 /*
 Iconnery
 */
+/obj/machinery/atmospherics/components/trinary/update_icon()
+	nodes = list(node1, node2, node3)
+	..()
 
 /* /obj/machinery/atmospherics/components/trinary/update_icon()
 	update_icon_nopipes()
@@ -115,6 +118,9 @@ Housekeeping and pipe network stuff below
 		if(target.initialize_directions & get_dir(target,src))
 			node3 = target
 			break
+
+	if(level == 2)
+		showpipe = 1
 
 	update_icon()
 	..()

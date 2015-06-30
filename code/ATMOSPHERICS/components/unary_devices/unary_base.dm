@@ -18,6 +18,9 @@
 Iconnery
 */
 
+/obj/machinery/atmospherics/components/unary/update_icon()
+	nodes = list(node)
+	..()
 /* /obj/machinery/atmospherics/components/unary/update_icon()
 	update_icon_nopipes()
 
