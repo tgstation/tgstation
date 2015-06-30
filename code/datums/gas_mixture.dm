@@ -13,21 +13,20 @@ What are the archived variables for?
 #define MINIMUM_HEAT_CAPACITY	0.0003
 #define QUANTIZE(variable)		(round(variable,0.0001))
 
-/datum/gas/
+/datum/gas
+	sleeping_agent
+		specific_heat = 40
+
+	oxygen_agent_b
+		specific_heat = 300
+
+	volatile_fuel
+		specific_heat = 30
+
 	var/moles = 0
 	var/specific_heat = 0
 
 	var/moles_archived = 0
-
-/datum/gas/sleeping_agent
-	specific_heat = 40
-
-/datum/gas/oxygen_agent_b
-	specific_heat = 300
-
-/datum/gas/volatile_fuel
-	specific_heat = 30
-
 
 
 /datum/gas_mixture
@@ -149,7 +148,7 @@ What are the archived variables for?
 /datum/gas_mixture/proc/fire()
 	var/energy_released = 0
 	var/old_heat_capacity = heat_capacity()
-	var/datum/gas/sleeping_agent/oxidizer = locate(/datum/gas/sleeping_agent) in trace_gases
+
 	var/datum/gas/volatile_fuel/fuel_store = locate(/datum/gas/volatile_fuel/) in trace_gases
 	if(fuel_store) //General volatile gas burn
 		var/burned_fuel = 0
@@ -172,25 +171,21 @@ What are the archived variables for?
 	if(toxins > MINIMUM_HEAT_CAPACITY)
 		var/plasma_burn_rate = 0
 		var/oxygen_burn_rate = 0
-		var/oxidizer_burn_rate = 0
 		//more plasma released at higher temperatures
 		var/temperature_scale
-
 		if(temperature > PLASMA_UPPER_TEMPERATURE)
 			temperature_scale = 1
 		else
 			temperature_scale = (temperature-PLASMA_MINIMUM_BURN_TEMPERATURE)/(PLASMA_UPPER_TEMPERATURE-PLASMA_MINIMUM_BURN_TEMPERATURE)
 		if(temperature_scale > 0)
-			oxidizer_burn_rate = (oxidizer.moles*temperature_scale)/2 //Burns slower than plasma but faster than oxygen
 			oxygen_burn_rate = 1.4 - temperature_scale
-			if(oxygen + oxidizer.moles > toxins*PLASMA_OXYGEN_FULLBURN)
-				plasma_burn_rate = ((toxins*temperature_scale)+oxidizer.moles)/4
+			if(oxygen > toxins*PLASMA_OXYGEN_FULLBURN)
+				plasma_burn_rate = (toxins*temperature_scale)/4
 			else
-				plasma_burn_rate = (temperature_scale*(oxygen/PLASMA_OXYGEN_FULLBURN)+oxidizer.moles)/4
+				plasma_burn_rate = (temperature_scale*(oxygen/PLASMA_OXYGEN_FULLBURN))/4
 			if(plasma_burn_rate > MINIMUM_HEAT_CAPACITY)
 				toxins -= plasma_burn_rate
 				oxygen -= plasma_burn_rate*oxygen_burn_rate
-				oxidizer.moles -= plasma_burn_rate*oxidizer_burn_rate
 				carbon_dioxide += plasma_burn_rate
 
 				energy_released += FIRE_PLASMA_ENERGY_RELEASED * (plasma_burn_rate)
@@ -203,6 +198,7 @@ What are the archived variables for?
 			temperature = (temperature*old_heat_capacity + energy_released)/new_heat_capacity
 
 	return fuel_burnt
+
 /datum/gas_mixture/proc/archive()
 	//Update archived versions of variables
 	//Returns: 1 in all cases
