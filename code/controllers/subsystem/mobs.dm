@@ -20,3 +20,13 @@ var/datum/subsystem/mobs/SSmob
 			thing:Life(seconds)
 			continue
 		mob_list.Remove(thing)
+
+/datum/subsystem/mobs/AfterInitialize()
+	set_clownplanet_mob_ai(AI_OFF)
+
+
+
+/datum/subsystem/mobs/proc/set_clownplanet_mob_ai(var/AIstatus)
+	for(var/mob/living/simple_animal/hostile/M in living_mob_list)
+		if(M.z == ZLEVEL_CLOWN)	//Suspend mob AI in clown planet
+			M.AIStatus = AIstatus

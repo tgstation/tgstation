@@ -64,6 +64,7 @@
 		if (istype(S, /turf))
 			usr.loc = S.loc // ye olde code ends
 			qdel(I)  //Delete the card once the nigga is yoinked
+			SSmob.set_clownplanet_mob_ai(AI_ON)
 	else
 		..()
 	return
