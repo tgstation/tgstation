@@ -44,6 +44,9 @@
 /obj/item/projectile/bullet/heavybullet
 	damage = 35
 
+/obj/item/projectile/bullet/heavybullet2 //syndie shotguns use this, since 60 brute is too high!
+	damage = 49 //any bullet armor at all means 3 shots to crit, bulletproof armor should be 4 if I calculated right
+
 
 /obj/item/projectile/bullet/stunshot //taser slugs for shotguns, nothing special
 	name = "stunshot"
