@@ -31,14 +31,14 @@ STI KALY - blind
 			if(prob(1)&&prob(50))
 				affected_mob.say(pick("You shall not pass!", "Expeliarmus!", "By Merlins beard!", "Feel the power of the Dark Side!"))
 			if(prob(1)&&prob(50))
-				affected_mob << "<span class='danger'>You feel [pick("that you don't have enough mana.", "that the winds of magic are gone.", "an urge to summon familiar.")].</span>"
+				affected_mob << "<span class='danger'>You feel [pick("that you don't have enough mana", "that the winds of magic are gone", "an urge to summon familiar")].</span>"
 
 
 		if(3)
 			if(prob(1)&&prob(50))
 				affected_mob.say(pick("NEC CANTIO!","AULIE OXIN FIERA!", "STI KALY!", "TARCOL MINTI ZHERI!"))
 			if(prob(1)&&prob(50))
-				affected_mob << "\<span class='danger'>You feel [pick("the magic bubbling in your veins","that this location gives you a +1 to INT","an urge to summon familiar.")].</span>"
+				affected_mob << "<span class='danger'>You feel [pick("the magic bubbling in your veins","that this location gives you a +1 to INT","an urge to summon familiar")].</span>"
 
 		if(4)
 
