@@ -82,6 +82,7 @@
 	var/reappearing = 0
 	density = 0
 	anchored = 1
+	invisibility = 60
 
 /obj/effect/dummy/spell_jaunt/Destroy()
 	// Eject contents if deleted somehow
