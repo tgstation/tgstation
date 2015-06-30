@@ -1168,14 +1168,14 @@
 	name = "None"
 	icon_state = "none"
 
-/datum/sprite_accessory/tails/human/longsmooth
-	name = "Long and Smooth"
-	icon_state = "longsmooth"
+/datum/sprite_accessory/tails/human/cat
+	name = "Cat"
+	icon_state = "cat"
 	color_src = HAIR
 
-/datum/sprite_accessory/tails_animated/human/longsmooth
-	name = "Long and Smooth"
-	icon_state = "longsmooth"
+/datum/sprite_accessory/tails_animated/human/cat
+	name = "Cat"
+	icon_state = "cat"
 	color_src = HAIR
 
 /datum/sprite_accessory/snouts

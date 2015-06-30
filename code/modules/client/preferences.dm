@@ -259,6 +259,16 @@ var/global/list/special_roles = list( //keep synced with the defines BE_* in set
 
 						dat += "</td>"
 
+/*
+					else if("tail_human" in pref_species.mutant_bodyparts)
+						dat += "<td valign='top' width='7%'>"
+
+						dat += "<h3>Tail</h3>"
+
+						dat += "<a href='?_src_=prefs;preference=tail_human;task=input'>[features["tail_human"]]</a><BR>"
+
+						dat += "</td>"
+*/
 					if("snout" in pref_species.mutant_bodyparts)
 						dat += "<td valign='top' width='7%'>"
 
@@ -276,6 +286,16 @@ var/global/list/special_roles = list( //keep synced with the defines BE_* in set
 						dat += "<a href='?_src_=prefs;preference=horns;task=input'>[features["horns"]]</a><BR>"
 
 						dat += "</td>"
+/*
+					if("ears" in pref_species.mutant_bodyparts)
+						dat += "<td valign='top' width='7%'>"
+
+						dat += "<h3>Ears</h3>"
+
+						dat += "<a href='?_src_=prefs;preference=ears;task=input'>[features["ears"]]</a><BR>"
+
+						dat += "</td>"
+*/
 
 					if("frills" in pref_species.mutant_bodyparts)
 						dat += "<td valign='top' width='7%'>"
@@ -816,7 +836,13 @@ var/global/list/special_roles = list( //keep synced with the defines BE_* in set
 						new_tail = input(user, "Choose your character's tail:", "Character Preference") as null|anything in tails_list_lizard
 						if(new_tail)
 							features["tail_lizard"] = new_tail
-
+/*
+					if("tail_human")
+						var/new_tail
+						new_tail = input(user, "Choose your character's tail:", "Character Preference") as null|anything in tails_list_human
+						if(new_tail)
+							features["tail_human"] = new_tail
+*/
 					if("snout")
 						var/new_snout
 						new_snout = input(user, "Choose your character's snout:", "Character Preference") as null|anything in snouts_list
@@ -828,7 +854,13 @@ var/global/list/special_roles = list( //keep synced with the defines BE_* in set
 						new_horns = input(user, "Choose your character's horns:", "Character Preference") as null|anything in horns_list
 						if(new_horns)
 							features["horns"] = new_horns
-
+/*
+					if("ears")
+						var/new_ears
+						new_ears = input(user, "Choose your character's ears:", "Character Preference") as null|anything in ears_list
+						if(new_ears)
+							features["ears"] = new_ears
+*/
 					if("frills")
 						var/new_frills
 						new_frills = input(user, "Choose your character's frills:", "Character Preference") as null|anything in frills_list

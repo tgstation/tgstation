@@ -333,16 +333,6 @@
 
 			var/icon_string
 
-			if(S.hasinner)
-				if(S.gender_specific)
-					icon_string = "[id]_[g]_[bodypart]inner_[S.icon_state]_[layer]"
-				else
-					icon_string = "[id]_m_[bodypart]inner_[S.icon_state]_[layer]"
-
-				I = image("icon" = 'icons/mob/mutant_bodyparts.dmi', "icon_state" = icon_string, "layer" =- layer)
-
-				standing += I
-
 			if(S.gender_specific)
 				icon_string = "[id]_[g]_[bodypart]_[S.icon_state]_[layer]"
 			else
@@ -364,6 +354,16 @@
 					if(EYECOLOR)
 						I.color = "#[H.eye_color]"
 			standing += I
+
+			if(S.hasinner)
+				if(S.gender_specific)
+					icon_string = "[id]_[g]_[bodypart]inner_[S.icon_state]_[layer]"
+				else
+					icon_string = "[id]_m_[bodypart]inner_[S.icon_state]_[layer]"
+
+				I = image("icon" = 'icons/mob/mutant_bodyparts.dmi', "icon_state" = icon_string, "layer" =- layer)
+
+				standing += I
 
 		H.overlays_standing[layer] = standing.Copy()
 		standing = list()
