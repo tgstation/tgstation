@@ -283,6 +283,7 @@ var/global/datum/crewmonitor/crewmonitor = new
 	var/list/tiles = block(locate(x1, y1, z), locate(x2, y2, z))
 	var/hash = ""
 	var/temp
+	var/obj/obj
 
 	#ifdef MINIMAP_DEBUG
 	var/tiledata_path = "data/minimaps/debug_tiledata_[z].sav"
@@ -297,12 +298,26 @@ var/global/datum/crewmonitor/crewmonitor = new
 			temp = "/area/asteroid"
 		else if (istype(tile.loc, /area/mine) && istype(tile, /turf/simulated/floor/plating/asteroid))
 			temp = "/area/mine/explored"
-		else if (tile.type == /area/start && tile.type == /turf/space || istype(tile, /turf/space/transit))
+		else if (tile.loc.type == /area/start || (tile.type == /turf/space && !(locate(/obj/structure/lattice) in tile)) || istype(tile, /turf/space/transit))
 			temp = "/turf/space"
+			if (locate(/obj/structure/lattice/catwalk) in tile)
+
+			else
+		else if (tile.type == /turf/space)
+			if (locate(/obj/structure/lattice/catwalk) in tile)
+				temp = "/obj/structure/lattice/catwalk"
+			else
+				temp = "/obj/structure/lattice"
 		else if (tile.type == /turf/simulated/floor/plating/abductor)
 			temp = "/turf/simulated/floor/plating/abductor"
+		else if (tile.type == /turf/simulated/floor/plating && (locate(/obj/structure/window/shuttle) in tile))
+			temp = "/obj/structure/window/shuttle"
 		else
 			temp = "[tile.icon][tile.icon_state][tile.dir]"
+
+		obj = locate(/obj/structure/transit_tube) in tile
+
+		if (obj) temp = "[temp]/obj/structure/transit_tube[obj.icon_state][obj.dir]"
 
 		#ifdef MINIMAP_DEBUG
 		if (F["/[tile.y]/[tile.x]"] && F["/[tile.y]/[tile.x]"] != temp)
@@ -334,6 +349,7 @@ var/global/datum/crewmonitor/crewmonitor = new
 
 		var/i = 0
 		var/icon/turf_icon
+		var/icon/obj_icon
 		var/old_icon
 		var/old_icon_state
 		var/old_dir
@@ -342,7 +358,7 @@ var/global/datum/crewmonitor/crewmonitor = new
 		var/new_dir
 
 		for (var/turf/tile in tiles)
-			if (tile.type != /area/start && tile.type != /turf/space && !istype(tile, /turf/space/transit))
+			if (tile.loc.type != /area/start && (tile.type != /turf/space || (locate(/obj/structure/lattice) in tile) || (locate(/obj/structure/transit_tube) in tile)) && !istype(tile, /turf/space/transit))
 				if (istype(tile.loc, /area/asteroid) || istype(tile.loc, /area/mine/unexplored) || istype(tile, /turf/simulated/mineral) || (istype(tile.loc, /area/space) && istype(tile, /turf/simulated/floor/plating/asteroid)))
 					new_icon = 'icons/turf/mining.dmi'
 					new_icon_state = "rock"
@@ -355,6 +371,21 @@ var/global/datum/crewmonitor/crewmonitor = new
 					new_icon = 'icons/turf/floors.dmi'
 					new_icon_state = "alienpod1"
 					new_dir = 2
+				else if (tile.type == /turf/space)
+					obj = locate(/obj/structure/lattice) in tile
+
+					if (!obj) obj = locate(/obj/structure/transit_tube) in tile
+
+					ASSERT(obj != null)
+
+					if (obj)
+						new_icon = obj.icon
+						new_dir = obj.dir
+						new_icon_state = obj.icon_state
+				else if (tile.type == /turf/simulated/floor/plating && (locate(/obj/structure/window/shuttle) in tile))
+					new_icon = 'icons/obj/structures.dmi'
+					new_dir = 2
+					new_icon_state = "swindow"
 				else
 					new_icon = tile.icon
 					new_icon_state = tile.icon_state
@@ -367,6 +398,14 @@ var/global/datum/crewmonitor/crewmonitor = new
 
 					turf_icon = new/icon(new_icon, new_icon_state, new_dir, 1, 0)
 					turf_icon.Scale(ICON_SIZE, ICON_SIZE)
+
+				if (tile.type != /turf/space || (locate(/obj/structure/lattice) in tile))
+					obj = locate(/obj/structure/transit_tube) in tile
+
+					if (obj)
+						obj_icon = new/icon(obj.icon, obj.icon_state, obj.dir, 1, 0)
+						obj_icon.Scale(ICON_SIZE, ICON_SIZE)
+						turf_icon.Blend(obj_icon, ICON_OVERLAY)
 
 				map_icon.Blend(turf_icon, ICON_OVERLAY, ((tile.x - 1) * ICON_SIZE), ((tile.y - 1) * ICON_SIZE))
 
