@@ -328,11 +328,11 @@
 			carbon_mob.silent = max(carbon_mob.silent, 5)
 			carbon_mob.flash_eyes(1, 1)
 		gangster_mind.current.Stun(5)
-	gangster_mind.current << "<FONT size=3 color=red><B>You are now a member of the [gang=="A" ? gang_name("A") : gang_name("B")] Gang!</B></FONT>"
+	gangster_mind.current << "<FONT size=3 color=red><B>You are now a member of the [gang_name(gang)] Gang!</B></FONT>"
 	gangster_mind.current << "<font color='red'>Help your bosses take over the station by claiming territory with <b>special spraycans</b> only they can provide. Simply spray on any unclaimed area of the station.</font>"
 	gangster_mind.current << "<font color='red'>You can identify your bosses by their <b>red \[G\] icon</b>.</font>"
-	gangster_mind.current.attack_log += "\[[time_stamp()]\] <font color='red'>Has been converted to the [gang=="A" ? "[gang_name("A")] Gang (A)" : "[gang_name("B")] Gang (B)"]!</font>"
-	gangster_mind.special_role = "[gang=="A" ? "[gang_name("A")] Gang (A)" : "[gang_name("B")] Gang (B)"]"
+	gangster_mind.current.attack_log += "\[[time_stamp()]\] <font color='red'>Has been converted to the [gang_name(gang)] Gang ([gang])!</font>"
+	gangster_mind.special_role = "[gang_name(gang)] Gang ([gang])"
 	update_gang_icons_added(gangster_mind,gang)
 	return 2
 ////////////////////////////////////////////////////////////////////
@@ -363,13 +363,13 @@
 
 	gangster_mind.special_role = null
 	if(silent < 2)
-		gangster_mind.current.attack_log += "\[[time_stamp()]\] <font color='red'>Has reformed and defected from the [gang=="A" ? "[gang_name("A")] Gang (A)" : "[gang_name("B")] Gang (B)"]!</font>"
+		gangster_mind.current.attack_log += "\[[time_stamp()]\] <font color='red'>Has reformed and defected from the [gang_name(gang)] Gang ([gang])!</font>"
 
 		if(beingborged)
 			if(!silent)
 				gangster_mind.current.visible_message("The frame beeps contentedly from the MMI before initalizing it.")
 			gangster_mind.current << "<FONT size=3 color=red><B>The frame's firmware detects and deletes your criminal behavior! You are no longer a gangster!</B></FONT>"
-			message_admins("[key_name_admin(gangster_mind.current)] <A HREF='?_src_=holder;adminmoreinfo=\ref[gangster_mind.current]'>?</A> (<A HREF='?_src_=holder;adminplayerobservefollow=\ref[gangster_mind.current]'>FLW</A>) has been borged while being a member of the [gang=="A" ? "[gang_name("A")] Gang (A)" : "[gang_name("B")] Gang (B)"] Gang. They are no longer a gangster.")
+			message_admins("[key_name_admin(gangster_mind.current)] <A HREF='?_src_=holder;adminmoreinfo=\ref[gangster_mind.current]'>?</A> (<A HREF='?_src_=holder;adminplayerobservefollow=\ref[gangster_mind.current]'>FLW</A>) has been borged while being a member of the [gang_name(gang)] Gang ([gang]). They are no longer a gangster.")
 		else
 			if(!silent)
 				gangster_mind.current.Paralyse(5)
@@ -420,7 +420,7 @@
 	if(!finished)
 		world << "<FONT size=3 color=red><B>The station was [station_was_nuked ? "destroyed!" : "evacuated before either gang could claim it!"]</B></FONT>"
 	else
-		world << "<FONT size=3 color=red><B>The [finished=="A" ? gang_name("A") : gang_name("B")] Gang successfully performed a hostile takeover of the station!!</B></FONT>"
+		world << "<FONT size=3 color=red><B>The [get_gang_bosses(finished)] Gang successfully performed a hostile takeover of the station!!</B></FONT>"
 	..()
 	return 1
 

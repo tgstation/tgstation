@@ -46,24 +46,6 @@
 		M << "<span class='notice'>\icon[src] [src][(src.loc == M)?(""):(" in your [src.loc]")] vibrates softly.</span>"
 
 
-/obj/item/weapon/implant/gang
-	name = "gang implant"
-	desc = "Makes you a gangster or such."
-	activated = 0
-
-/obj/item/weapon/implant/gang/get_data()
-	var/dat = {"<b>Implant Specifications:</b><BR>
-				<b>Name:</b> Criminal Loyalty Implant<BR>
-				<b>Life:</b> A few seconds after injection.<BR>
-				<b>Important Notes:</b> Illegal<BR>
-				<HR>
-				<b>Implant Details:</b><BR>
-				<b>Function:</b> Contains a small pod of nanobots that change the host's brain to be loyal to a certain organization.<BR>
-				<b>Special Features:</b> This device will also emit a small EMP pulse, destroying any other implants within the host's brain.<BR>
-				<b>Integrity:</b> Implant's EMP function will destroy itself in the process."}
-	return dat
-
-
 //////////////
 // IMPLANTS //
 //////////////
@@ -102,9 +84,6 @@
 	else
 		target.visible_message("<span class='warning'>[target] seems to resist the implant!</span>", "<span class='warning'>You feel the influence of your enemies try to invade your mind!</span>")
 	qdel(src)
-
-/obj/item/weapon/implanter/gang
-	name = "implanter-gang"
 
 /obj/item/weapon/implanter/gang/New(loc,var/gang)
 	if(!gang)

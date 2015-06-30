@@ -25,8 +25,6 @@
 	if (!can_use(user))
 		return
 
-	var/gang_bosses = ((gang == "A")? ticker.mode.A_bosses.len : ticker.mode.B_bosses.len)
-
 	var/dat
 	if(!gang)
 		dat += "This device is not registered.<br><br>"
@@ -36,7 +34,7 @@
 		if(istype(ticker.mode, /datum/game_mode/gang))
 			gangmode = ticker.mode
 
-		var/gang_size = gang_bosses + ((gang == "A")? ticker.mode.A_gang.len : ticker.mode.B_gang.len)
+		var/gang_size = ((gang == "A")? (ticker.mode.A_bosses.len+ticker.mode.A_gang.len) : (ticker.mode.B_bosses.len+ticker.mode.B_gang.len))
 		var/gang_territory = ((gang == "A")? ticker.mode.A_territory.len : ticker.mode.B_territory.len)
 		var/points = ((gang == "A") ? ticker.mode.gang_points.A : ticker.mode.gang_points.B)
 		var/timer
@@ -45,7 +43,7 @@
 			if(isnum(timer))
 				dat += "<center><font color='red'>Takeover In Progress:<br><B>[timer] seconds remain</B></font></center><br>"
 
-		dat += "Registration: <B>[(gang == "A")? gang_name("A") : gang_name("B")] Gang [boss ? "Boss" : "Lieutenant"]</B><br>"
+		dat += "Registration: <B>[gang_name(gang)] Gang [boss ? "Boss" : "Lieutenant"]</B><br>"
 		dat += "Organization Size: <B>[gang_size]</B> | Station Control: <B>[round((gang_territory/start_state.num_territories)*100, 1)]%</B><br>"
 		dat += "Gang Influence: <B>[points]</B> | Outfit Stock: <B>[outfits]</B><br>"
 		dat += "Time until Influence grows: <B>[(points >= 999) ? ("--:--") : (time2text(ticker.mode.gang_points.next_point_time - world.time, "mm:ss"))]</B><br>"
@@ -245,7 +243,7 @@
 			if("implant")
 				if(points >= 10)
 					item_type = /obj/item/weapon/implanter/gang
-					usr << "<span class='notice'>The <b>implant breaker</b> destroys all other implants within the target before trying to recruit them to your gang. Implant is destroyed after one use.</span>"
+					usr << "<span class='notice'>The <b>implant breaker</b> is a single-use device that destroys all implants within the target before trying to recruit them to your gang. Also works on enemy gangsters.</span>"
 					points = 10
 			if("gangtool")
 				if(points >= 30)
