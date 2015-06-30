@@ -49,7 +49,24 @@ Filter types:
 		radio_controller.remove_object(src,frequency)
 	..()
 
+/obj/machinery/atmospherics/trinary/filter/icon_addintact(var/obj/machinery/atmospherics/node, var/connected)
+	var/image/img = getpipeimage('icons/obj/atmospherics/trinary_devices.dmi', "cap", get_dir(src,node), node.pipe_color)
+	overlays += img
+	return ..()
+
+/obj/machinery/atmospherics/trinary/filter/icon_addbroken(var/connected)
+	var/unconnected = (~connected) & initialize_directions
+	for(var/direction in cardinal)
+		if(unconnected & direction)
+			underlays += getpipeimage('icons/obj/atmospherics/binary_devices.dmi', "pipe_exposed", direction)
+			overlays += getpipeimage('icons/obj/atmospherics/trinary_devices.dmi', "cap", direction)
+
+/obj/machinery/atmospherics/trinary/filter/update_icon()
+	overlays.Cut()
+	..()
+
 /obj/machinery/atmospherics/trinary/filter/update_icon_nopipes()
+
 	if(!(stat & NOPOWER) && on && node1 && node2 && node3)
 		icon_state = "filter_on[flipped?"_f":""]"
 		return
