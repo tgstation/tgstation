@@ -3,10 +3,7 @@
 	dir = SOUTH
 	initialize_directions = SOUTH|NORTH|WEST
 	use_power = 1
-
-	var/datum/gas_mixture/air1
-	var/datum/gas_mixture/air2
-	var/datum/gas_mixture/air3
+	nodes = 3
 
 	var/obj/machinery/atmospherics/node1
 	var/obj/machinery/atmospherics/node2
@@ -16,18 +13,15 @@
 	var/datum/pipeline/parent2
 	var/datum/pipeline/parent3
 
+	var/datum/gas_mixture/air1
+	var/datum/gas_mixture/air2
+	var/datum/gas_mixture/air3
+
 	var/flipped = 0
 
 /obj/machinery/atmospherics/components/trinary/New()
-	..()
-
-	air1 = new
-	air2 = new
-	air3 = new
-
-	air1.volume = 200
-	air2.volume = 200
-	air3.volume = 200
+	var/airs[] = ..()
+	set_airs(airs)
 
 /obj/machinery/atmospherics/components/trinary/SetInitDirections()
 	switch(dir)
@@ -39,49 +33,56 @@
 			initialize_directions = EAST|WEST|SOUTH
 		if(WEST)
 			initialize_directions = WEST|NORTH|EAST
+
 /*
-Iconnery
+Helpers //these all look kinda copypaste-y, but I'm not entirely certain how to get around that -duncathan
 */
-/obj/machinery/atmospherics/components/trinary/update_icon()
-	nodes = list(node1, node2, node3)
-	..()
 
-/* /obj/machinery/atmospherics/components/trinary/update_icon()
-	update_icon_nopipes()
+/obj/machinery/atmospherics/components/trinary/get_airs()
+	return list(air1, air2, air3)
 
-	var/connected = 0
-	underlays.Cut()
+/obj/machinery/atmospherics/components/trinary/get_nodes()
+	return list(node1, node2, node3)
 
-	//Add non-broken pieces
-	if(node1)
-		connected = icon_addintact(node1, connected)
+/obj/machinery/atmospherics/components/trinary/get_parents()
+	return list(parent1, parent2, parent3)
 
-	if(node2)
-		connected = icon_addintact(node2, connected)
+/obj/machinery/atmospherics/components/trinary/set_airs(var/list/L)
+	var/datum/gas_mixture/a1 = L[1]
+	var/datum/gas_mixture/a2 = L[2]
+	var/datum/gas_mixture/a3 = L[3]
 
-	if(node3)
-		connected = icon_addintact(node3, connected)
+	air1 = a1
+	air2 = a2
+	air3 = a3
 
-	//Add broken pieces
-	icon_addbroken(connected) */
+/obj/machinery/atmospherics/components/trinary/set_nodes(var/list/L)
+	var/obj/machinery/atmospherics/n1 = L[1]
+	var/obj/machinery/atmospherics/n2 = L[2]
+	var/obj/machinery/atmospherics/n3 = L[3]
+
+	node1 = n1
+	node2 = n2
+	node3 = n3
+
+/obj/machinery/atmospherics/components/trinary/set_parents(var/list/L)
+	var/datum/pipeline/p1 = L[1]
+	var/datum/pipeline/p2 = L[2]
+	var/datum/pipeline/p3 = L[3]
+
+	parent1 = p1
+	parent2 = p2
+	parent3 = p3
 
 /*
-Housekeeping and pipe network stuff below
+Housekeeping and pipe network stuff
+//WOW this got cut down thank you based OOP - duncathan
 */
 /obj/machinery/atmospherics/components/trinary/Destroy()
-	if(node1)
-		node1.disconnect(src)
-		node1 = null
-		nullifyPipenet(parent1)
-	if(node2)
-		node2.disconnect(src)
-		node2 = null
-		nullifyPipenet(parent2)
-	if(node3)
-		node3.disconnect(src)
-		node3 = null
-		nullifyPipenet(parent3)
-	..()
+	var/returns[] = ..()
+
+	set_nodes(returns[1])
+	set_parents(returns[2])
 
 /obj/machinery/atmospherics/components/trinary/atmosinit()
 
@@ -104,130 +105,49 @@ Housekeeping and pipe network stuff below
 		node1_connect = turn(node1_connect, 180)
 		node3_connect = turn(node3_connect, 180)
 
+	//var/node_connects[] = list(nodes[node1]_connect, nodes[node2]_connect, nodes[node3]_connect)
+
 	for(var/obj/machinery/atmospherics/target in get_step(src,node1_connect))
 		if(target.initialize_directions & get_dir(target,src))
-			node1 = target
+			nodes[node1] = target
 			break
-
 	for(var/obj/machinery/atmospherics/target in get_step(src,node2_connect))
 		if(target.initialize_directions & get_dir(target,src))
-			node2 = target
+			nodes[node2] = target
 			break
-
 	for(var/obj/machinery/atmospherics/target in get_step(src,node3_connect))
 		if(target.initialize_directions & get_dir(target,src))
-			node3 = target
+			nodes[node3] = target
 			break
-
-	if(level == 2)
-		showpipe = 1
-
-	update_icon()
-	..()
+	..(/*node_connects*/)
 
 /obj/machinery/atmospherics/components/trinary/construction()
-	..()
-	parent1.update = 1
-	parent2.update = 1
-	parent3.update = 1
+	var/parents[] = ..()
+	set_parents(parents)
 
 /obj/machinery/atmospherics/components/trinary/build_network()
-	if(!parent1)
-		parent1 = new /datum/pipeline()
-		parent1.build_pipeline(src)
-
-	if(!parent2)
-		parent2 = new /datum/pipeline()
-		parent2.build_pipeline(src)
-
-	if(!parent3)
-		parent3 = new /datum/pipeline()
-		parent3.build_pipeline(src)
+	var/parents[] = ..()
+	set_parents(parents)
 
 /obj/machinery/atmospherics/components/trinary/disconnect(obj/machinery/atmospherics/reference)
-	if(reference == node1)
-		if(istype(node1, /obj/machinery/atmospherics/pipe))
-			qdel(parent1)
-		node1 = null
-	else if(reference == node2)
-		if(istype(node2, /obj/machinery/atmospherics/pipe))
-			qdel(parent2)
-		node2 = null
-	else if(reference == node3)
-		if(istype(node3, /obj/machinery/atmospherics/pipe))
-			qdel(parent3)
-		node3 = null
-	update_icon()
+	var/parents[] = ..(reference)
+	set_parents(parents)
 
 /obj/machinery/atmospherics/components/trinary/nullifyPipenet(datum/pipeline/P)
-	..()
-	if(P == parent1)
-		parent1.other_airs -= air1
-		parent1 = null
-	else if(P == parent2)
-		parent2.other_airs -= air2
-		parent2 = null
-	else if(P == parent3)
-		parent3.other_airs -= air3
-		parent3 = null
-
-/obj/machinery/atmospherics/components/trinary/returnPipenetAir(datum/pipeline/P)
-	if(P == parent1)
-		return air1
-	else if(P == parent2)
-		return air2
-	else if(P == parent3)
-		return air3
-
-/obj/machinery/atmospherics/components/trinary/pipeline_expansion(datum/pipeline/P)
-	if(P)
-		if(parent1 == P)
-			return list(node1)
-		else if(parent2 == P)
-			return list(node2)
-		else if(parent3 == P)
-			return list(node3)
-	return list(node1, node2, node3)
+	var/parents[] = ..(P)
+	set_parents(parents)
 
 /obj/machinery/atmospherics/components/trinary/setPipenet(datum/pipeline/P, obj/machinery/atmospherics/A)
-	if(A == node1)
-		parent1 = P
-	else if(A == node2)
-		parent2 = P
-	else if(A == node3)
-		parent3 = P
-
-/obj/machinery/atmospherics/components/trinary/returnPipenet(obj/machinery/atmospherics/A)
-	if(A == node1)
-		return parent1
-	else if(A == node2)
-		return parent2
-	else if(A == node3)
-		return parent3
+	var/parents[] = ..(P, A)
+	set_parents(parents)
 
 /obj/machinery/atmospherics/components/trinary/replacePipenet(datum/pipeline/Old, datum/pipeline/New)
-	if(Old == parent1)
-		parent1 = New
-	else if(Old == parent2)
-		parent2 = New
-	else if(Old == parent3)
-		parent3 = New
+	var/parents[] = ..(Old, New)
+	set_parents(parents)
 
+/obj/machinery/atmospherics/components/trinary/unsafe_pressure_release(var/mob/user, var/pressures)
+	var/airs[] = ..(user, pressures)
+	set_airs(airs)
 
-/obj/machinery/atmospherics/components/trinary/unsafe_pressure_release(var/mob/user,var/pressures)
-	..()
-
-	var/turf/T = get_turf(src)
-	if(T)
-		//Remove the gas from air1+air2+air3 and assume it
-		var/datum/gas_mixture/environment = T.return_air()
-		var/lost = pressures*environment.volume/(air1.temperature * R_IDEAL_GAS_EQUATION)
-		lost += pressures*environment.volume/(air2.temperature * R_IDEAL_GAS_EQUATION)
-		lost += pressures*environment.volume/(air3.temperature * R_IDEAL_GAS_EQUATION)
-		var/shared_loss = lost/3
-
-		var/datum/gas_mixture/to_release = air1.remove(shared_loss)
-		to_release.merge(air2.remove(shared_loss))
-		to_release.merge(air3.remove(shared_loss))
-		T.assume_air(to_release)
-		air_update_turf(1)
+//This sure looks like a lot of copypaste... It's already way better though, so it works for now
+//TODO: make it even more OOP - duncathan
