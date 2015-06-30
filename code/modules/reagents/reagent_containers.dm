@@ -84,7 +84,10 @@
 	if(!reagents.total_volume || !is_open_container())
 		return
 
+	var/client/thrower = directory[ckey(src.fingerprintslast)]
+
 	if(ismob(target) && target.reagents)
+		reagents.total_volume *= rand(5,10) * 0.1 //Not all of it makes contact with the target
 		var/mob/M = target
 		var/R
 		target.visible_message("<span class='danger'>[M] has been splashed with something!</span>", \
@@ -94,9 +97,16 @@
 				R += A.id + " ("
 				R += num2text(A.volume) + "),"
 
-		var/client/thrower = directory[ckey(src.fingerprintslast)]
-		add_logs(thrower.mob, M, "splashed", object="[R]")
+		if(thrower && thrower.mob)
+			add_logs(thrower.mob, M, "splashed", object="[R]")
 		reagents.reaction(target, TOUCH)
+
+	else if(!target.density || target.throwpass)
+		if(thrower && thrower.mob && thrower.mob.mind && thrower.mob.mind.assigned_role == "Bartender")
+			visible_message("<span class='notice'>[src] lands onto the [target.name] without spilling a single drop.</span>")
+			return
+
 	else
+		visible_message("<span class='notice'>[src] spills its contents all over [target].</span>")
 		reagents.reaction(target, TOUCH)
 	reagents.clear_reagents()

@@ -8,7 +8,6 @@
 	volume = 50
 	burn_state = 0 //Burnable
 	burntime = 5
-	flags = OPENCONTAINER
 
 /obj/item/weapon/reagent_containers/food/drinks/drinkingglass/fire_act()
 	if(!reagents.total_volume)
