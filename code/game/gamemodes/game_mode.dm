@@ -569,7 +569,6 @@
 			text += "<center><i><b>Wiki Page:</b></i> <a href='https://tgstation13.org/wiki/Changeling'>Click Here</a></center>"
 	var/datum/browser/popup = new(M.current, "greeting", "Antagonist Greeting", 800, 600)
 	popup.set_content(text)
-	popup.set_title_image(M.current.browse_rsc_icon(antagonist, 'icons/misc/antagIcons.dmi'))
 	popup.open()
 	return 1
 
