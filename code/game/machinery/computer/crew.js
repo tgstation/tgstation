@@ -56,12 +56,14 @@ function isHead(ijob)
 
 function getColor(ijob)
 {
-	if		(ijob >= 10 && ijob < 20)	{ return "#E74C3C"; } // security
+	if		(ijob == 0)					{ return "#C06616"; } // captain
+	else if	(ijob >= 10 && ijob < 20)	{ return "#E74C3C"; } // security
 	else if (ijob >= 20 && ijob < 30)	{ return "#3498DB"; } // medical
 	else if (ijob >= 30 && ijob < 40)	{ return "#9B59B6"; } // science
 	else if (ijob >= 40 && ijob < 50)	{ return "#F1C40F"; } // engineering
 	else if (ijob >= 50 && ijob < 60)	{ return "#F39C12"; } // cargo
 	else if (ijob >= 200 && ijob < 230)	{ return "#00C100"; } // Centcom
+	else								{ return "#C38312"; } // other / unknown
 }
 
 function add(name, assignment, ijob, life_status, dam1, dam2, dam3, dam4, area, pos_x, pos_y, in_range)
@@ -151,23 +153,21 @@ function add(name, assignment, ijob, life_status, dam1, dam2, dam3, dam4, area, 
 
 		var tx					= (translate(x - 1, scale_x) - 1.5).toFixed(0);
 		var ty					= (translate(y - 1, scale_y) + 3).toFixed(0);
-		
-		if (!color)				{ color = "#FFFFFF"; }
-		
-		var dotElem				= $("<div class=\"dot\" style=\"position: absolute; top: " + ty + "px; left: " + tx + "px; background-color: " + color + "; border: 1px solid transparent; width: 3px; height: 3px; z-index: " + ijob + ";\"></div>");
+
+		var dotElem				= $("<div class=\"dot\" style=\"transition: .2s all; position: absolute; top: " + ty + "px; left: " + tx + "px; background-color: " + color + "; border: 1px solid transparent; width: 3px; height: 3px; z-index: " + ijob + ";\"></div>");
 
 		$("#minimap").append(dotElem);
 
 		function enable()
 		{
-			dotElem.css({ "border-color": "#FFFFFF", "z-index": 9999, "width": "6px", "height": "6px", "margin-top": "-1px", "margin-left": "-2px" });
+			dotElem.css({ "border-color": color, "z-index": 9999, "width": "8px", "height": "8px", "margin-top": "-2px", "margin-left": "-3px" });
 		}
-		
+
 		function disable()
 		{
 			dotElem.css({ "border-color": "transparent", "z-index": ijob, "width": "3px", "height": "3px", "margin-top": "0px", "margin-left": "0px", "filter": "" });
 		}
-		
+
 		function click(e)
 		{
 			e.preventDefault();

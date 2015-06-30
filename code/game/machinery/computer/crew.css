@@ -35,9 +35,14 @@ body
 	padding: 2px;
 }
 
+#textbased tbody td
+{
+	transition: .2s all;
+}
+
 #textbased tbody tr:hover td, #textbased tbody tr.hover td
 {
-	background-color: #434343;
+	background-color: #515151;
 }
 
 #textarea:after
