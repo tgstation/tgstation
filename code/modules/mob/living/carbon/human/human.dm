@@ -125,11 +125,12 @@
 
 			f_loss += 60
 
-			shred_clothing(1,50)
-
 			if (prob(getarmor(null, "bomb")))
 				b_loss = b_loss/1.5
 				f_loss = f_loss/1.5
+				shred_clothing(1,25)
+			else
+				shred_clothing(1,50)
 
 			if (!istype(ears, /obj/item/clothing/ears/earmuffs))
 				adjustEarDamage(30, 120)
