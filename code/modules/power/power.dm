@@ -356,7 +356,6 @@
 	return null
 
 /area/proc/get_apc()
-	for(var/area/RA in src.related)
-		var/obj/machinery/power/apc/FINDME = locate() in RA
-		if (FINDME)
-			return FINDME
+	for(var/obj/machinery/power/apc/APC in apcs_list)
+		if(APC.area == src)
+			return APC
