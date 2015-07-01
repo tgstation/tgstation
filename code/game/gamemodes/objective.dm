@@ -348,7 +348,7 @@ var/global/list/possible_items = list()
 /datum/objective/steal/find_target()
 	var/approved_targets = list()
 	for(var/datum/objective_item/possible_item in possible_items)
-		if(is_unique_objective(possible_item.targetitem))
+		if(is_unique_objective(possible_item.targetitem) && !(owner.current.mind.assigned_role in possible_item.excludefromjob))
 			approved_targets += possible_item
 	return set_target(safepick(possible_items))
 
