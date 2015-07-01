@@ -8,6 +8,9 @@
 	flag = "laser"
 	eyeblur = 2
 
+/obj/item/projectile/beam/AirflowCanPush() //Light does not get pushed around
+	return 0
+
 /obj/item/projectile/beam/practice
 	name = "practice laser"
 	damage = 0
