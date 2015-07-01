@@ -30,7 +30,6 @@ var/bomb_set
 	use_power = 0
 	var/previous_level = ""
 	var/lastentered = ""
-	var/immobile = 0 //Not all nukes should be moved
 	var/obj/item/nuke_core/core = null
 	var/deconstruction_state = NUKESTATE_INTACT
 	var/image/lights = null
@@ -41,6 +40,9 @@ var/bomb_set
 /obj/machinery/nuclearbomb/New()
 	..()
 	nuke_list += src
+	core = new /obj/item/nuke_core(src)
+	update_icon()
+	previous_level = get_security_level()
 
 /obj/machinery/nuclearbomb/selfdestruct
 	name = "station self-destruct terminal"
@@ -48,13 +50,7 @@ var/bomb_set
 	icon = 'icons/obj/machines/bignuke.dmi'
 	icon_state = "nuclearbomb_base"
 	anchored = 1 //stops it being moved
-	immobile = 1 //prevents it from ever being moved
 	layer = 4
-
-/obj/machinery/nuclearbomb/New()
-	core = new /obj/item/nuke_core(src)
-	update_icon()
-	..()
 
 /obj/machinery/nuclearbomb/attackby(obj/item/I, mob/user, params)
 	if (istype(I, /obj/item/weapon/disk/nuclear))
@@ -287,46 +283,43 @@ var/bomb_set
 				timeleft += time
 				timeleft = min(max(round(timeleft), 60), 600)
 			if (href_list["timer"])
-				if (timing == -1.0)
-					return
-				if (safety)
-					usr << "<span class='danger'>The safety is still on.</span>"
-					return
-				timing = !( timing )
-				if (timing)
-					if(!safety)
-						bomb_set = 1//There can still be issues with this reseting when there are multiple bombs. Not a big deal tho for Nuke/N
-						previous_level = "[get_security_level()]"
-						set_security_level("delta")
-						update_icon()
-					else
-						bomb_set = 0
-						set_security_level("[previous_level]")
-						update_icon()
-				else
-					update_icon()
-					bomb_set = 0
-					set_security_level("[previous_level]")
+				set_active()
 			if (href_list["safety"])
-				safety = !safety
-				if(safety)
-					timing = 0
-					bomb_set = 0
-					update_icon()
-				else
-					update_icon()
+				set_safety()
 			if (href_list["anchor"])
-				if(!isinspace()&&(!immobile))
-					anchored = !( anchored )
-				else if(immobile)
-					usr << "<span class='warning'>This device is immovable!</span>"
-				else
-					usr << "<span class='warning'>There is nothing to anchor to!</span>"
+				set_anchor()
 	add_fingerprint(usr)
 	for(var/mob/M in viewers(1, src))
 		if ((M.client && M.machine == src))
 			attack_hand(M)
 
+/obj/machinery/nuclearbomb/proc/set_anchor()
+	if(!isinspace())
+		anchored = !anchored
+	else
+		usr << "<span class='warning'>There is nothing to anchor to!</span>"
+
+/obj/machinery/nuclearbomb/proc/set_safety()
+	safety = !safety
+	if(safety)
+		timing = 0
+		bomb_set = 0
+		set_security_level(previous_level)
+	update_icon()
+
+/obj/machinery/nuclearbomb/proc/set_active()
+	if(safety)
+		usr << "<span class='danger'>The safety is still on.</span>"
+		return
+	timing = !timing
+	previous_level = get_security_level()
+	if(timing)
+		bomb_set = 1
+		set_security_level("delta")
+	else
+		bomb_set = 0
+		set_security_level(previous_level)
+	update_icon()
 
 /obj/machinery/nuclearbomb/ex_act(severity, target)
 	return
@@ -395,15 +388,15 @@ This is here to make the tiles around the station mininuke change when it's arme
 
 /obj/machinery/nuclearbomb/selfdestruct/proc/SetTurfs()
 	if(loc == initial(loc))
-		var/text_icon_state = "[timing ? "rcircuitanim" : "gcircuit"]"
 		for(var/turf/simulated/floor/bluegrid/T in orange(src, 1))
-			T.icon_state = text_icon_state
+			T.icon_state = (timing ? "rcircuitanim" : "gcircuit")
 
-/obj/machinery/nuclearbomb/selfdestruct/Topic()
-        ..()
-        SetTurfs()
+/obj/machinery/nuclearbomb/selfdestruct/set_anchor()
+	return
 
-
+/obj/machinery/nuclearbomb/selfdestruct/set_active()
+	..()
+	SetTurfs()
 
 //==========DAT FUKKEN DISK===============
 /obj/item/weapon/disk/nuclear
