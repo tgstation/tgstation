@@ -34,7 +34,7 @@
 		return 0
 
 	var/deciseconds_passed = world.time - last_used
-	for(var/seconds = deciseconds_passed/interval, seconds>=interval, seconds-=interval) //get 1 charge every interval
+	for(var/seconds = deciseconds_passed/10, seconds>=interval, seconds-=interval) //get 1 charge every interval
 		times_used--
 
 	last_used = world.time
@@ -103,7 +103,7 @@
 		return 0
 	user.visible_message("<span class='disarm'>[user]'s flash emits a blinding light!</span>", "<span class='danger'>Your flash emits a blinding light!</span>")
 	for(var/mob/living/carbon/M in oviewers(3, null))
-		flash_carbon(M, user, 2, 0)
+		flash_carbon(M, user, 1, 0)
 
 
 /obj/item/device/flash/emp_act(severity)
