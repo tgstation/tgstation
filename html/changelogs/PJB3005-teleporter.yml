@@ -1,0 +1,5 @@
+author: PJB3005
+delete-after: true
+changes:
+  - rscadd: The teleporter now has a nicer UI for selecting the destination.
+  - rscadd: On top of that, you can see the current destination in the UI or by examining it.
