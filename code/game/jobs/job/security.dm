@@ -55,6 +55,9 @@ Head of Security
 	L.implanted = 1
 	H.sec_hud_set_implants()
 
+	var/datum/martial_art/krav_maga/style = new
+	style.teach(H,1)
+	H.verbs += /mob/living/carbon/human/proc/krav_maga_help
 /*
 Warden
 */
@@ -99,6 +102,10 @@ Warden
 	L.imp_in = H
 	L.implanted = 1
 	H.sec_hud_set_implants()
+
+	var/datum/martial_art/krav_maga/style = new
+	style.teach(H,1)
+	H.verbs += /mob/living/carbon/human/proc/krav_maga_help
 
 /datum/job/warden/get_access()
 	var/list/L = list()
@@ -152,6 +159,10 @@ Detective
 	L.implanted = 1
 	H.sec_hud_set_implants()
 
+	var/datum/martial_art/krav_maga/style = new
+	style.teach(H,1)
+	H.verbs += /mob/living/carbon/human/proc/krav_maga_help
+
 /*
 Security Officer
 */
@@ -197,6 +208,10 @@ Security Officer
 	L.imp_in = H
 	L.implanted = 1
 	H.sec_hud_set_implants()
+
+	var/datum/martial_art/krav_maga/style = new
+	style.teach(H,1)
+	H.verbs += /mob/living/carbon/human/proc/krav_maga_help
 
 /datum/job/officer/get_access()
 	var/list/L = list()
