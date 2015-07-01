@@ -23,21 +23,21 @@
 	max_amount = max(0, max_amt)
 
 	if(mat_list[MAT_METAL])
-		materials += new /datum/material/metal(MAT_METAL)
+		materials[MAT_METAL] = new /datum/material/metal(MAT_METAL)
 	if(mat_list[MAT_GLASS])
-		materials += new /datum/material/glass(MAT_GLASS)
+		materials[MAT_GLASS] = new /datum/material/glass(MAT_GLASS)
 	if(mat_list[MAT_SILVER])
-		materials += new /datum/material/silver(MAT_SILVER)
+		materials[MAT_SILVER] = new /datum/material/silver(MAT_SILVER)
 	if(mat_list[MAT_GOLD])
-		materials += new /datum/material/gold(MAT_GOLD)
+		materials[MAT_GOLD] = new /datum/material/gold(MAT_GOLD)
 	if(mat_list[MAT_DIAMOND])
-		materials += new /datum/material/diamond(MAT_DIAMOND)
+		materials[MAT_DIAMOND] = new /datum/material/diamond(MAT_DIAMOND)
 	if(mat_list[MAT_URANIUM])
-		materials += new /datum/material/uranium(MAT_URANIUM)
+		materials[MAT_URANIUM] = new /datum/material/uranium(MAT_URANIUM)
 	if(mat_list[MAT_PLASMA])
-		materials += new /datum/material/plasma(MAT_PLASMA)
+		materials[MAT_PLASMA] = new /datum/material/plasma(MAT_PLASMA)
 	if(mat_list[MAT_BANANIUM])
-		materials += new /datum/material/bananium(MAT_BANANIUM)
+		materials[MAT_BANANIUM] = new /datum/material/bananium(MAT_BANANIUM)
 
 //For inserting an amount of material
 /datum/material_container/proc/insert_amount(amt, material_type = null)
@@ -84,37 +84,44 @@
 	return material_amount
 
 /datum/material_container/proc/insert_materials(obj/item/I) //for internal usage only
-	for(var/datum/material/M in materials)
-		M.amount += I.materials[M.material_type]
-		total_amount += I.materials[M.material_type]
+	var/datum/material/M
+	for(var/MAT in materials)
+		M = materials[MAT]
+		M.amount += I.materials[MAT]
+		total_amount += I.materials[MAT]
 
 //For consuming material
+//mats is a list of types of material to use and the corresponding amounts, example: list(MAT_METAL=100, MAT_GLASS=200)
 /datum/material_container/proc/use_amount(list/mats)
 	if(!mats || !mats.len)
 		return 0
 
-	for(var/datum/material/M in materials)
-		if(M.amount < mats[M.material_type])
+	var/datum/material/M
+	for(var/MAT in materials)
+		M = materials[MAT]
+		if(M.amount < mats[MAT])
 			return 0
 
 	var/total_amount_save = total_amount
-	for(var/datum/material/M in materials)
-		M.amount -= mats[M.material_type]
-		total_amount -= mats[M.material_type]
+	for(var/MAT in materials)
+		M = materials[MAT]
+		M.amount -= mats[MAT]
+		total_amount -= mats[MAT]
 
 	return total_amount_save - total_amount
 
 
 /datum/material_container/proc/use_amount_type(amt, material_type)
-	for(var/datum/material/M in materials)
-		if(M.material_type == material_type)
-			if(M.amount >= amt)
-				M.amount -= amt
-				total_amount -= amt
-				return amt
+	var/datum/material/M
+	for(var/MAT in materials)
+		M = materials[MAT]
+		if(M.amount >= amt)
+			M.amount -= amt
+			total_amount -= amt
+			return amt
 	return 0
 
-//For spawning mineral sheets
+//For spawning mineral sheets; internal use only
 /datum/material_container/proc/retrieve(sheet_amt, datum/material/M)
 	if(sheet_amt > 0 && M.amount >= (sheet_amt * MINERAL_MATERIAL_AMOUNT))
 		var/count = 0
@@ -138,9 +145,8 @@
 	return 0
 
 /datum/material_container/proc/retrieve_sheets(sheet_amt, material_type)
-	for(var/datum/material/M in materials)
-		if(M.material_type == material_type)
-			return retrieve(sheet_amt, M)
+	if(materials[material_type])
+		return retrieve(sheet_amt, materials[material_type])
 	return 0
 
 /datum/material_container/proc/retrieve_amount(amt, material_type)
@@ -148,8 +154,10 @@
 
 /datum/material_container/proc/retrieve_all()
 	var/result = 0
-	for(var/datum/material/M in materials)
-		result += retrieve_sheets(amount2sheet(M.amount), M.material_type)
+	var/datum/material/M
+	for(var/MAT in materials)
+		M = materials[MAT]
+		result += retrieve_sheets(amount2sheet(M.amount), MAT)
 	return result
 
 /datum/material_container/proc/has_space(amt = 0)
@@ -166,9 +174,10 @@
 	return 0
 
 /datum/material_container/proc/amount(material_type)
-	for(var/datum/material/M in materials)
-		if(M.material_type == material_type)
-			return M.amount
+	var/datum/material/M = materials[material_type]
+	if(M)
+		world << "M [M] : M.amount [M.amount]"
+	return M ? M.amount : 0
 
 /datum/material_container/proc/can_insert(obj/item/I)
 	return get_item_material_amount(I)
@@ -178,9 +187,9 @@
 /datum/material_container/proc/get_item_material_amount(obj/item/I)
 	if(!istype(I))
 		return 0
-	var/material_amount
-	for(var/datum/material/M in materials)
-		material_amount += I.materials[M.material_type]
+	var/material_amount = 0
+	for(var/MAT in materials)
+		material_amount += I.materials[MAT]
 	return material_amount
 
 
