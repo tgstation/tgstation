@@ -11,23 +11,10 @@
 /obj/machinery/atmospherics/components/unary/portables_connector/visible
 	level = 2
 
-/obj/machinery/atmospherics/components/unary/portables_connector/update_icon()
-	icon_state = "connector"
-	underlays.Cut()
-	if(showpipe)
-		var/state
-		var/col
-		if(node)
-			state = "pipe_intact"
-			col = node.pipe_color
-		else
-			state = "pipe_exposed"
-		underlays += getpipeimage('icons/obj/atmospherics/binary_devices.dmi', state, initialize_directions, col)
-
 /obj/machinery/atmospherics/components/unary/portables_connector/process_atmos()
 	if(!connected_device)
 		return
-	parent.update = 1
+	update_parents()
 
 /obj/machinery/atmospherics/components/unary/portables_connector/Destroy()
 	if(connected_device)

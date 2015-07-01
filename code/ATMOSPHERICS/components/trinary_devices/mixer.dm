@@ -37,7 +37,7 @@
 	..()
 
 /obj/machinery/atmospherics/components/trinary/mixer/update_icon_nopipes()
-	if(!(stat & NOPOWER) && on && node1 && node2 && node3)
+	if(!(stat & NOPOWER) && on && nodes[1] && nodes[2] && nodes[3])
 		icon_state = "mixer_on[flipped?"_f":""]"
 		return
 
@@ -53,12 +53,17 @@
 
 /obj/machinery/atmospherics/components/trinary/mixer/New()
 	..()
-	air3.volume = 300
+	var/datum/gas_mixture/air3 = airs[3] ; air3.volume = 300
+	airs[3] = air3
 
 /obj/machinery/atmospherics/components/trinary/mixer/process_atmos()
 	..()
 	if(!on)
 		return 0
+
+	var/datum/gas_mixture/air1 = airs[1]
+	var/datum/gas_mixture/air2 = airs[2]
+	var/datum/gas_mixture/air3 = airs[3]
 
 	var/output_starting_pressure = air3.return_pressure()
 
@@ -104,12 +109,13 @@
 		air3.merge(removed2)
 
 	if(transfer_moles1)
-		parent1.update = 1
+		update_parents(list(1 = parents[1]))
 
 	if(transfer_moles2)
-		parent2.update = 1
+		update_parents(list(2 = parents[2]))
 
-	parent3.update = 1
+	update_airs(air1, air2, air3)
+	update_parents(list(3 = parents[3]))
 
 	return 1
 

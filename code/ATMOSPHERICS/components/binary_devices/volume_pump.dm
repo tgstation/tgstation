@@ -48,6 +48,9 @@ Thus, the two variables affect pump operation are set in New():
 	if(!on)
 		return 0
 
+	var/datum/gas_mixture/air1 = airs[1]
+	var/datum/gas_mixture/air2 = airs[2]
+
 // Pump mechanism just won't do anything if the pressure is too high/too low
 
 	var/input_starting_pressure = air1.return_pressure()
@@ -62,9 +65,8 @@ Thus, the two variables affect pump operation are set in New():
 
 	air2.merge(removed)
 
-	parent1.update = 1
-
-	parent2.update = 1
+	update_airs(air1, air2)
+	update_parents()
 
 	return 1
 
@@ -124,6 +126,7 @@ Thus, the two variables affect pump operation are set in New():
 		on = !on
 
 	if("set_transfer_rate" in signal.data)
+		var/datum/gas_mixture/air1 = airs[1]
 		transfer_rate = Clamp(
 			text2num(signal.data["set_transfer_rate"]),
 			0,
