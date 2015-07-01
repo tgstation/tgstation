@@ -136,6 +136,12 @@ var/global/ZAS_Settings/zas_settings = new
 	desc="1=yes please rape my server, 0=no"
 	valtype=ZAS_TYPE_BOOLEAN
 
+/datum/ZAS_Setting/connection_speed
+	value = 1
+	name = "Connections - Speed Multiplier"
+	desc = "How fast a connection is, in terms of gas transfer.  1 is very fast, and 0 is insulated."
+	valtype=ZAS_TYPE_NUMERIC
+
 /datum/ZAS_Setting/connection_insulation
 	value = 0.4
 	name = "Connections - Insulation"

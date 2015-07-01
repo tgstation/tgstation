@@ -247,13 +247,18 @@ Class Procs:
 	var/list/attracted = A.movables()
 	flow(attracted, abs(differential), differential < 0)
 
+
+
 var/list/sharing_lookup_table = list(0.30, 0.40, 0.48, 0.54, 0.60, 0.66)
 
 proc/ShareRatio(datum/gas_mixture/A, datum/gas_mixture/B, connecting_tiles)
 	//Shares a specific ratio of gas between mixtures using simple weighted averages.
+
+	if(!zas_settings.Get(/datum/ZAS_Setting/connection_speed))
+		return 0
 	var
 		//WOOT WOOT TOUCH THIS AND YOU ARE A RETARD
-		ratio = sharing_lookup_table[6]
+		ratio = sharing_lookup_table[6] * zas_settings.Get(/datum/ZAS_Setting/connection_speed)
 		//WOOT WOOT TOUCH THIS AND YOU ARE A RETARD
 
 		size = max(1,A.group_multiplier)
@@ -282,7 +287,7 @@ proc/ShareRatio(datum/gas_mixture/A, datum/gas_mixture/B, connecting_tiles)
 
 	//WOOT WOOT TOUCH THIS AND YOU ARE A RETARD
 	if(sharing_lookup_table.len >= connecting_tiles) //6 or more interconnecting tiles will max at 42% of air moved per tick.
-		ratio = sharing_lookup_table[connecting_tiles]
+		ratio = sharing_lookup_table[connecting_tiles] * zas_settings.Get(/datum/ZAS_Setting/connection_speed)
 	//WOOT WOOT TOUCH THIS AND YOU ARE A RETARD
 
 	A.oxygen = max(0, (A.oxygen - oxy_avg) * (1-ratio) + oxy_avg )
@@ -330,6 +335,8 @@ proc/ShareRatio(datum/gas_mixture/A, datum/gas_mixture/B, connecting_tiles)
 
 proc/ShareSpace(datum/gas_mixture/A, list/unsimulated_tiles, dbg_output)
 	//A modified version of ShareRatio for spacing gas at the same rate as if it were going into a large airless room.
+	if(!zas_settings.Get(/datum/ZAS_Setting/connection_speed))
+		return 0
 	if(!unsimulated_tiles)
 		return 0
 
@@ -391,7 +398,7 @@ proc/ShareSpace(datum/gas_mixture/A, list/unsimulated_tiles, dbg_output)
 	unsim_heat_capacity = HEAT_CAPACITY_CALCULATION(unsim_oxygen, unsim_co2, unsim_nitrogen, unsim_plasma)
 
 	var
-		ratio = sharing_lookup_table[6]
+		ratio = sharing_lookup_table[6] * zas_settings.Get(/datum/ZAS_Setting/connection_speed)
 
 		old_pressure = A.return_pressure()
 
@@ -413,7 +420,7 @@ proc/ShareSpace(datum/gas_mixture/A, list/unsimulated_tiles, dbg_output)
 		temp_avg = (A.temperature * full_heat_capacity + unsim_temperature * unsim_heat_capacity) / (full_heat_capacity + unsim_heat_capacity)
 
 	if(sharing_lookup_table.len >= tileslen) //6 or more interconnecting tiles will max at 42% of air moved per tick.
-		ratio = sharing_lookup_table[tileslen]
+		ratio = sharing_lookup_table[tileslen] * zas_settings.Get(/datum/ZAS_Setting/connection_speed)
 
 	if(dbg_output)
 		world << "Ratio: [ratio]"
