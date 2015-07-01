@@ -112,6 +112,8 @@
 
 /obj/machinery/power/apc/New(turf/loc, var/ndir, var/building=0)
 	..()
+	apcs_list += src
+
 	wires = new(src)
 	// offset 24 pixels in direction of dir
 	// this allows the APC to be embedded in a wall, yet still inside an area
@@ -138,6 +140,8 @@
 			src.update()
 
 /obj/machinery/power/apc/Destroy()
+	apcs_list -= src
+
 	if(malfai && operating)
 		if (ticker.mode.config_tag == "malfunction")
 			if (src.z == ZLEVEL_STATION) //if (is_type_in_list(get_area(src), the_station_areas))
@@ -381,7 +385,7 @@
 				return
 			playsound(src.loc, 'sound/items/Crowbar.ogg', 50, 1)
 			user << "<span class='notice'>You are trying to remove the power control board...</span>" //lpeters - fixed grammar issues
-			if(do_after(user, 50))
+			if(do_after(user, 50, target = src))
 				if (has_electronics==1)
 					has_electronics = 0
 					if ((stat & BROKEN) || malfhack)
@@ -476,7 +480,7 @@
 		user.visible_message("[user.name] adds cables to the APC frame.", \
 							"<span class='notice'>You start adding cables to the APC frame...</span>")
 		playsound(src.loc, 'sound/items/Deconstruct.ogg', 50, 1)
-		if(do_after(user, 20))
+		if(do_after(user, 20, target = src))
 			if (C.amount >= 10 && !terminal && opened && has_electronics != 2)
 				var/turf/T = get_turf(src)
 				var/obj/structure/cable/N = T.get_cable_node()
@@ -496,7 +500,7 @@
 		user.visible_message("[user.name] inserts the power control board into [src].", \
 							"<span class='notice'>You start to insert the power control board into the frame...</span>")
 		playsound(src.loc, 'sound/items/Deconstruct.ogg', 50, 1)
-		if(do_after(user, 10))
+		if(do_after(user, 10, target = src))
 			if(has_electronics==0)
 				has_electronics = 1
 				user << "<span class='notice'>You place the power control board inside the frame.</span>"
@@ -513,7 +517,7 @@
 							"<span class='notice'>You start welding the APC frame...</span>", \
 							"<span class='italics'>You hear welding.</span>")
 		playsound(src.loc, 'sound/items/Welder.ogg', 50, 1)
-		if(do_after(user, 50))
+		if(do_after(user, 50, target = src))
 			if(!src || !WT.remove_fuel(3, user)) return
 			if (emagged || malfhack || (stat & BROKEN) || opened==2)
 				new /obj/item/stack/sheet/metal(loc)
@@ -542,7 +546,7 @@
 			return
 		user.visible_message("[user.name] replaces the damaged APC frame with a new one.",\
 							"<span class='notice'>You begin to replace the damaged APC frame...</span>")
-		if(do_after(user, 50))
+		if(do_after(user, 50, target = src))
 			user << "<span class='notice'>You replace the damaged APC frame with a new one.</span>"
 			qdel(W)
 			stat &= ~BROKEN
@@ -937,11 +941,11 @@
 				cell.corrupt()
 				src.malfhack = 1
 				update_icon()
-				var/datum/effect/effect/system/harmless_smoke_spread/smoke = new /datum/effect/effect/system/harmless_smoke_spread()
+				var/datum/effect/effect/system/smoke_spread/smoke = new
 				smoke.set_up(3, 0, src.loc)
 				smoke.attach(src)
 				smoke.start()
-				var/datum/effect/effect/system/spark_spread/s = new /datum/effect/effect/system/spark_spread
+				var/datum/effect/effect/system/spark_spread/s = new
 				s.set_up(3, 1, src)
 				s.start()
 				visible_message("<span class='warning'>The [src.name] suddenly lets out a blast of smoke and some sparks!</span>", \

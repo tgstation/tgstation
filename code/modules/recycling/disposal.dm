@@ -100,7 +100,7 @@
 				playsound(src.loc, 'sound/items/Welder2.ogg', 100, 1)
 				user << "<span class='notice'>You start slicing the floorweld off \the [src]...</span>"
 
-				if(do_after(user,20))
+				if(do_after(user,20, target = src))
 					if(!src || !W.isOn()) return
 					user << "<span class='notice'>You slice the floorweld off \the [src].</span>"
 					Deconstruct()
@@ -847,7 +847,7 @@
 			playsound(src.loc, 'sound/items/Welder2.ogg', 100, 1)
 			user << "<span class='notice'>You start slicing the disposal pipe...</span>"
 			// check if anything changed over 2 seconds
-			if(do_after(user,30))
+			if(do_after(user,30, target = src))
 				if(!src || !W.isOn()) return
 				Deconstruct()
 				user << "<span class='notice'>You slice the disposal pipe.</span>"
@@ -1151,7 +1151,7 @@
 		if(W.remove_fuel(0,user))
 			playsound(src.loc, 'sound/items/Welder2.ogg', 100, 1)
 			user << "<span class='notice'>You start slicing the disposal pipe...</span>"
-			if(do_after(user,30))
+			if(do_after(user,30, target = src))
 				if(!src || !W.isOn()) return
 				Deconstruct()
 				user << "<span class='notice'>You slice the disposal pipe.</span>"
@@ -1285,7 +1285,7 @@
 		if(W.remove_fuel(0,user))
 			playsound(src.loc, 'sound/items/Welder2.ogg', 100, 1)
 			user << "<span class='notice'>You start slicing the floorweld off \the [src]...</span>"
-			if(do_after(user,20))
+			if(do_after(user,20, target = src))
 				if(!src || !W.isOn()) return
 				user << "<span class='notice'>You slice the floorweld off \the [src].</span>"
 				stored.loc = loc

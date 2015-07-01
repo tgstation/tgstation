@@ -19,6 +19,9 @@
 /obj/effect/decal/cleanable/ash/New()
 	..()
 	reagents.add_reagent("ash", 30)
+	pixel_x = rand(-5, 5)
+	pixel_y = rand(-5, 5)
+
 
 /obj/effect/decal/cleanable/greenglow
 	name = "green glow"
@@ -71,6 +74,10 @@
 	layer = 3
 	icon = 'icons/effects/effects.dmi'
 	icon_state = "cobweb1"
+	burntime = 1
+
+/obj/effect/decal/cleanable/cobweb/fire_act()
+	qdel(src)
 
 /obj/effect/decal/cleanable/molten_item
 	name = "gooey grey mass"
@@ -143,3 +150,18 @@
 	icon = 'icons/obj/objects.dmi'
 	icon_state = "ash"
 	anchored = 1
+
+/obj/effect/decal/cleanable/shreds
+	name = "shreds"
+	desc = "The shredded remains of what appears to be clothing."
+	icon = 'icons/effects/effects.dmi'
+	icon_state = "shreds"
+	gender = PLURAL
+	density = 0
+	anchored = 1
+	layer = 2
+
+/obj/effect/decal/cleanable/shreds/New()
+	pixel_x = rand(-5, 5)
+	pixel_y = rand(-5, 5)
+	..()

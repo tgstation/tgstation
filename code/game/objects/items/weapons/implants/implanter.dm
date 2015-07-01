@@ -23,7 +23,7 @@
 		M.visible_message("<span class='warning'>[user] is attemping to implant [M].</span>")
 
 		var/turf/T = get_turf(M)
-		if(T && (M == user || do_after(user, 50)))
+		if(T && (M == user || do_after(user, 50, target = M)))
 			if(user && M && (get_turf(M) == T) && src && imp)
 				M.visible_message("[user] has implanted [M].", "<span class='notice'>[user] implants you with the implant.</span>")
 				add_logs(user, M, "implanted", object="[name]")

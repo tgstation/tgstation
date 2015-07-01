@@ -46,7 +46,7 @@ obj/structure/transit_tube/ex_act(severity, target)
 				return
 			user.visible_message("[user] starts to deattach \the [src].", "<span class='notice'>You start to deattach the [name]...</span>")
 			playsound(src.loc, 'sound/items/Ratchet.ogg', 50, 1)
-			if(do_after(user, 35))
+			if(do_after(user, 35, target = src))
 				user << "<span class='notice'>You deattach the [name].</span>"
 				var/obj/structure/R = new tube_construction(src.loc)
 				R.icon_state = src.icon_state

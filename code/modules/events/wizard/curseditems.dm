@@ -10,10 +10,11 @@
 //item you want to equip to the hand, and set its slots_flags = null. Only items equiped to hands need do this.
 
 /datum/round_event/wizard/cursed_items/start()
-	var/item_set = pick("wizardmimic", "swords", "bigfatdoobie", "boxing", "voicemodulators")
+	var/item_set = pick("wizardmimic", "swords", "bigfatdoobie", "boxing", "voicemodulators", "catgirls2015")
 	var/list/wearslots	= list(slot_wear_suit, slot_shoes, slot_head, slot_wear_mask, slot_r_hand, slot_gloves, slot_ears)
 	var/list/loadout = list()
 	var/ruins_spaceworthiness
+	var/ruins_wizard_loadout
 	loadout.len = 7
 
 	switch(item_set)
@@ -29,9 +30,16 @@
 			loadout[6] = /obj/item/clothing/gloves/boxing
 			ruins_spaceworthiness = 1
 		if("voicemodulators")	loadout[4] = /obj/item/clothing/mask/gas/voice
+		if("catgirls2015")
+			loadout[3] = /obj/item/clothing/head/kitty
+			ruins_spaceworthiness = 1
+			ruins_wizard_loadout = 1
 
 	for(var/mob/living/carbon/human/H in living_mob_list)
 		if(ruins_spaceworthiness && (H.z != 1 || istype(H.loc, /turf/space)))	continue	//#savetheminers
+		if(ruins_wizard_loadout && H.mind && H.mind in ticker.mode.wizards)		continue
+		if(item_set == "catgirls2015") //Wizard code means never having to say you're sorry
+			H.gender = FEMALE
 		var/list/slots		= list(H.wear_suit, H.shoes, H.head, H.wear_mask, H.r_hand, H.gloves, H.ears) //add new slots as needed to back
 		for(var/i = 1, i <= loadout.len, i++)
 			if(loadout[i])
@@ -43,6 +51,6 @@
 				I.name = "cursed " + I.name
 
 	for(var/mob/living/carbon/human/H in living_mob_list)
-		var/datum/effect/effect/system/harmless_smoke_spread/smoke = new /datum/effect/effect/system/harmless_smoke_spread()
+		var/datum/effect/effect/system/smoke_spread/smoke = new
 		smoke.set_up(max(1,1), 0, H.loc)
 		smoke.start()

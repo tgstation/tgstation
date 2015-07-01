@@ -3,7 +3,7 @@
 	desc = "To stop that awful noise."
 	icon_state = "muzzle"
 	item_state = "blindfold"
-	flags = MASKCOVERSMOUTH
+	flags_cover = MASKCOVERSMOUTH
 	w_class = 2
 	gas_transfer_coefficient = 0.90
 	put_on_delay = 20
@@ -22,9 +22,8 @@
 	icon_state = "sterile"
 	item_state = "sterile"
 	w_class = 1
-	flags = MASKCOVERSMOUTH
+	flags_cover = MASKCOVERSMOUTH
 	flags_inv = HIDEFACE
-	visor_flags = MASKCOVERSMOUTH
 	visor_flags_inv = HIDEFACE
 	gas_transfer_coefficient = 0.90
 	permeability_coefficient = 0.01
@@ -111,9 +110,8 @@
 	name = "botany bandana"
 	desc = "A fine bandana with nanotech lining and a hydroponics pattern."
 	w_class = 1
-	flags = MASKCOVERSMOUTH
+	flags_cover = MASKCOVERSMOUTH
 	flags_inv = HIDEFACE
-	visor_flags = MASKCOVERSMOUTH
 	visor_flags_inv = HIDEFACE
 	slot_flags = SLOT_MASK
 	ignore_maskadjust = 0

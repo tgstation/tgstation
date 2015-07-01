@@ -191,3 +191,6 @@ NOTIFY_NEW_PLAYER_AGE 0
 
 ## Uncomment to have the changelog file automatically open when a user connects and hasn't seen the latest changelog
 #AGGRESSIVE_CHANGELOG
+
+## Uncomment to have the game log runtimes to the log folder. (Note: this disables normal output in dd/ds, so it should be left off for testing.
+#LOG_RUNTIMES

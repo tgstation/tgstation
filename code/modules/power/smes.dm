@@ -135,7 +135,7 @@
 		user << "<span class='notice'>You start building the power terminal...</span>"
 		playsound(src.loc, 'sound/items/Deconstruct.ogg', 50, 1)
 
-		if(do_after(user, 20) && C.amount >= 10)
+		if(do_after(user, 20, target = src) && C.amount >= 10)
 			var/obj/structure/cable/N = T.get_cable_node() //get the connecting node cable, if there's one
 			if (prob(50) && electrocute_mob(usr, N, N)) //animate the electrocution if uncautious and unlucky
 				var/datum/effect/effect/system/spark_spread/s = new /datum/effect/effect/system/spark_spread

@@ -23,7 +23,7 @@
 			var/obj/item/weapon/stock_parts/cell/CELL = I
 			if(CELL.maxcharge > cell.maxcharge && n_gloves && n_gloves.candrain)
 				U << "<span class='notice'>Higher maximum capacity detected.\nUpgrading...</span>"
-				if (n_gloves && n_gloves.candrain && do_after(U,s_delay))
+				if (n_gloves && n_gloves.candrain && do_after(U,s_delay, target = src))
 					U.drop_item()
 					CELL.loc = src
 					CELL.charge = min(CELL.charge+cell.charge, CELL.maxcharge)
@@ -43,7 +43,7 @@
 			var/obj/item/weapon/disk/tech_disk/TD = I
 			if(TD.stored)//If it has something on it.
 				U << "Research information detected, processing..."
-				if(do_after(U,s_delay))
+				if(do_after(U,s_delay, target = src))
 					for(var/datum/tech/current_data in stored_research)
 						if(current_data.id==TD.stored.id)
 							if(current_data.level<TD.stored.level)

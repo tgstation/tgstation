@@ -43,7 +43,7 @@
 /datum/objective/proc/update_explanation_text()
 	//Default does nothing, override where needed
 
-
+/datum/objective/proc/give_special_equipment()
 
 /datum/objective/assassinate
 	var/target_role_type=0
@@ -348,7 +348,7 @@ var/global/list/possible_items = list()
 /datum/objective/steal/find_target()
 	var/approved_targets = list()
 	for(var/datum/objective_item/possible_item in possible_items)
-		if(is_unique_objective(possible_item.targetitem))
+		if(is_unique_objective(possible_item.targetitem) && !(owner.current.mind.assigned_role in possible_item.excludefromjob))
 			approved_targets += possible_item
 	return set_target(safepick(possible_items))
 
@@ -359,6 +359,7 @@ var/global/list/possible_items = list()
 		steal_target = targetinfo.targetitem
 		explanation_text = "Steal [targetinfo.name]."
 		dangerrating = targetinfo.difficulty
+		give_special_equipment()
 		return steal_target
 	else
 		explanation_text = "Free objective"
@@ -400,6 +401,15 @@ var/global/list/possible_items = list()
 			if(targetinfo.check_special_completion(I))//Yeah, we do! Don't return 0 if we don't though - then you could fail if you had 1 item that didn't pass and got checked first!
 				return 1
 	return 0
+
+/datum/objective/steal/give_special_equipment()
+	if(owner && owner.current && targetinfo)
+		if(istype(owner.current, /mob/living/carbon/human))
+			var/mob/living/carbon/human/H = owner.current
+			var/list/slots = list ("backpack" = slot_in_backpack)
+			for(var/obj/item/I in targetinfo.special_equipment)
+				H.equip_in_one_of_slots(I, slots)
+				H.update_icons()
 
 var/global/list/possible_items_special = list()
 /datum/objective/steal/special //ninjas are so special they get their own subtype good for them
@@ -576,3 +586,21 @@ var/global/list/possible_items_special = list()
 		explanation_text = "Destroy [target.name], the experimental AI."
 	else
 		explanation_text = "Free Objective"
+
+/datum/objective/summon_guns
+	explanation_text = "Steal at least five guns!"
+
+/datum/objective/summon_guns/check_completion()
+	if(!isliving(owner.current))	return 0
+	var/guncount = 0
+	var/list/all_items = owner.current.GetAllContents()	//this should get things in cheesewheels, books, etc.
+	for(var/obj/I in all_items) //Check for guns
+		if(istype(I, /obj/item/weapon/gun))
+			guncount++
+	if(guncount >= 5)
+		return 1
+	else
+		return 0
+	return 0
+
+
