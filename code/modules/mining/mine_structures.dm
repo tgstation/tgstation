@@ -37,7 +37,7 @@
 		"<span class='notice'>You put \a [W.name] on the \the [src].</span>")
 		playsound(get_turf(src), 'sound/machines/click.ogg', 20, 1)
 		qdel(W)
-		new /obj/structure/hanging_lantern(get_turf(src))
+		new /obj/structure/hanging_lantern(get_turf(src), src.dir)
 		qdel(src)
 
 /obj/structure/hanging_lantern
@@ -52,6 +52,7 @@
 	light_color = LIGHT_COLOR_TUNGSTEN
 	ghost_write = 0 //Can't be too safe
 	ghost_read = 0
+	var/flickering = 0 //SPOOK
 
 /obj/structure/hanging_lantern/New()
 	..()
@@ -66,8 +67,22 @@
 	user.visible_message("<span class='notice'>[user] takes the mining lantern off the \the [src].</span>", \
 	"<span class='notice'>You take the mining lantern off the \the [src].</span>")
 	playsound(get_turf(src), 'sound/machines/click.ogg', 20, 1)
-	new /obj/structure/hanging_lantern_hook(get_turf(src))
+	new /obj/structure/hanging_lantern_hook(get_turf(src), src.dir)
 	var/obj/item/device/flashlight/lantern/lantern = new /obj/item/device/flashlight/lantern(get_turf(src))
 	user.put_in_hands(lantern)
 	alllights -= src
 	qdel(src)
+
+//Direct rip from lights with a few adjustments, not much to worry about since it's not machinery
+/obj/structure/hanging_lantern/proc/flicker(var/amount = rand(10, 20))
+	if(flickering)
+		return
+	//Store our light's vars in here
+	flickering = 1
+	spawn(0)
+		for(var/i = 0; i < amount; i++)
+			set_light(0)
+			spawn(rand(5, 15))
+				set_light(6, 2, LIGHT_COLOR_TUNGSTEN)
+		set_light(6, 2, LIGHT_COLOR_TUNGSTEN)
+	flickering = 0
