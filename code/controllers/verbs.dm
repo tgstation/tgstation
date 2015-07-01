@@ -21,7 +21,7 @@
 			supply_shuttle.process()
 			feedback_add_details("admin_verb","RSupply")
 		if("Process Scheduler")
-			processScheduler = new
+			var/datum/controller/processScheduler/psched = new
 			processScheduler.deferSetupFor(/datum/controller/process/ticker)
 			processScheduler.setup()
 	message_admins("Admin [key_name_admin(usr)] has restarted the [controller] controller.")

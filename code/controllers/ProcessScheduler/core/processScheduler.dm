@@ -53,7 +53,9 @@ var/global/datum/controller/processScheduler/processScheduler
 	// There can be only one
 	if(processScheduler && (processScheduler != src))
 		del(processScheduler)
-
+		processScheduler = src
+	else if(!processScheduler)
+		processScheduler = src
 	var/process
 	// Add all the processes we can find, except for the ticker
 	for (process in typesof(/datum/controller/process) - /datum/controller/process)
