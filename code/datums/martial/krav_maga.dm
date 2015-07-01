@@ -141,7 +141,7 @@ datum/martial_art/krav_maga/grab_act(var/mob/living/carbon/human/A, var/mob/livi
 	set desc = "Access the Krav Maga tutorial."
 	set category = "Krav Maga"
 
-	usr << "<b><i>You access the Krav Maga tutorial section of your glove's chip...</i></b>"
+	usr << "<b><i>You recall your Krav Maga teachings...</i></b>"
 	usr << "<span class='notice'>Leg Sweep</span>: Harm Disarm. Performs a leg sweep, knocking down the target and making him vulnerable to attack."
 	usr << "<span class='notice'>Quick Choke</span>: Disarm Grab. Grabs and chokes the target, briefly stunning them while they catch their breath."
 	usr << "<span class='notice'>Head Elbow</span>: Harm Harm Disarm. Elbows the opponent in the face, stunning them, leaving them vulnerable to attacks."

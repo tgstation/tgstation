@@ -147,7 +147,7 @@
 	usr << "<span class='notice'>Tatsumaki Senpukyaku</span>: Disarm Disarm Harm Harm. Hits 4 times in a row, knocking them down and moving you 4 tiles forward."
 	usr << "<span class='notice'>Shoryuken</span>: Grab Disarm Disarm Grab. Deliver a powerful uppercut, stunning the opponent."
 	usr << "<span class='notice'>Hadouken</span>: Disarm Disarm Grab Grab. Hits the opponent with a firey blast and stuns."
-	usr << "<span class='notice'>Shakunetsu Hadouken</span>: Harm Disarm Harm Disarm Disarm Grab. Like the Hadoken, but hits multiple times for more."
+	usr << "<span class='notice'>Shakunetsu Hadouken</span>: Harm Disarm Harm Disarm Disarm Grab. Like the Hadouken, but hits multiple times for more."
 
 /obj/item/clothing/gloves/hallway_brawler
 	desc = "These gloves will teach you the ways of the hallway brawler."
