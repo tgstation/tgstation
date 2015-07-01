@@ -280,6 +280,11 @@ var/next_external_rsc = 0
 			hi = new type(null)
 			hi.sendResources(src)
 
+	// Preload the crew monitor. This needs to be done due to BYOND bug http://www.byond.com/forum/?post=1487244
+	spawn
+		if (crewmonitor && crewmonitor.initialized)
+			crewmonitor.sendResources(src)
+
 	//Send nanoui files to client
 	SSnano.send_resources(src)
 	getFiles(
