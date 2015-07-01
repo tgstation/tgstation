@@ -11,17 +11,22 @@
 			A.visible_message("<span class='warning'>[A] counters [D]'s hit!</span>", \
 						 	"<span class='userdanger'>You counter the hit!</span>")
 			sleep(5)
-			playsound(get_turf(A), 'sound/effects/hit_punch.ogg', 50, 1, -1)
+			playsound(get_turf(A), 'sound/effects/hit_block.ogg', 50, 1, -1)
 			D.apply_damage(10, BRUTE)
 			return 1
 
 		else
 			A.visible_message("<span class='warning'>[A] blocks [D]'s hit!</span>", \
 						 	"<span class='userdanger'>You block the hit!</span>")
+			playsound(get_turf(A), 'sound/effects/hit_block.ogg', 50, 1, -1)
 			return 1
 	return 0
 
 /datum/martial_art/krav_maga/proc/check_streak(var/mob/living/carbon/human/A, var/mob/living/carbon/human/D)
+	if(findtext(streak,HEAD_ELBOW))
+		streak = ""
+		head_elbow(A,D)
+		return 1
 	if(findtext(streak,LEG_SWEEP))
 		streak = ""
 		leg_sweep(A,D)
@@ -29,10 +34,6 @@
 	if(findtext(streak,QUICK_CHOKE))
 		streak = ""
 		quick_choke(A,D)
-		return 1
-	if(findtext(streak,HEAD_ELBOW))
-		streak = ""
-		head_elbow(A,D)
 		return 1
 	return 0
 
@@ -104,8 +105,6 @@ datum/martial_art/krav_maga/grab_act(var/mob/living/carbon/human/A, var/mob/livi
 		return 1
 	return ..()
 
-#define LEG_SWEEP "HD"
-#define QUICK_CHOKE "DG"
 /mob/living/carbon/human/proc/krav_maga_help()
 	set name = "Access Tutorial"
 	set desc = "Access the Krav Maga tutorial."
@@ -118,7 +117,7 @@ datum/martial_art/krav_maga/grab_act(var/mob/living/carbon/human/A, var/mob/livi
 
 /obj/item/clothing/gloves/krav_maga
 	desc = "These gloves can teach you to perform Krav Maga using nanochips."
-	name = "krav maga gloves"
+	name = "black gloves"
 	icon_state = "black"
 	item_state = "bgloves"
 	var/datum/martial_art/krav_maga/style = new

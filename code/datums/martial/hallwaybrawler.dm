@@ -12,13 +12,14 @@
 			A.visible_message("<span class='warning'>[A] counters [D]'s hit!</span>", \
 						 	"<span class='userdanger'>You counter the hit!</span>")
 			sleep(5)
-			playsound(get_turf(A), 'sound/effects/hit_punch.ogg', 50, 1, -1)
+			playsound(get_turf(A), 'sound/effects/hit_block.ogg', 50, 1, -1)
 			D.apply_damage(10, BRUTE)
 			return 1
 
 		else
 			A.visible_message("<span class='warning'>[A] blocks [D]'s hit!</span>", \
 						 	"<span class='userdanger'>You block the hit!</span>")
+			playsound(get_turf(A), 'sound/effects/hit_block.ogg', 50, 1, -1)
 			return 1
 	return 0
 
