@@ -1165,7 +1165,7 @@ var/global/list/arenas = list()
 		for(var/atom/movable/AM in T)
 			AM.areaMaster = get_area_master(T)
 		if(open_space && (under.name == "Space"))
-			T.ChangeTurf(/turf/space)
+			T.ChangeTurf(get_base_turf(T.z))
 		else
 			T.ChangeTurf(/turf/simulated/floor/plating)
 		T.maptext = null

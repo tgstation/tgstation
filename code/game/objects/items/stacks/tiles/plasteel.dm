@@ -44,16 +44,11 @@
 */
 
 /obj/item/stack/tile/plasteel/proc/build(turf/S as turf)
-	var/oldturf = S.type
-	var/turf/T
-	if (istype(S,/turf/space) || istype(S,/turf/unsimulated))
-		T = S.ChangeTurf(/turf/simulated/floor/plating/airless)
+
+	if(istype(S,/turf/space) || istype(S,/turf/unsimulated))
+		S.ChangeTurf(/turf/simulated/floor/plating/airless)
 	else
-		T = S.ChangeTurf(/turf/simulated/floor/plating)
-	if(T)
-		T.under_turf = oldturf
-//	var/turf/simulated/floor/W = S.ReplaceWithFloor()
-//	W.make_plating()
+		S.ChangeTurf(/turf/simulated/floor/plating)
 	return
 
 /obj/item/stack/tile/plasteel/attackby(obj/item/W as obj, mob/user as mob)

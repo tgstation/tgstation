@@ -256,9 +256,9 @@ var/global/list/narsie_list = list()
 					spawn (0)
 						step_towards(AM2, src)
 
-			if (dist <= consume_range && !istype(A, /turf/space))
+			if (dist <= consume_range && !istype(A, get_base_turf(A.z)))
 				var/turf/T2 = A
-				T2.ChangeTurf(/turf/space)
+				T2.ChangeTurf(get_base_turf(T2.z))
 
 
 /obj/machinery/singularity/narsie/consume(const/atom/A) //This one is for the small ones.
@@ -303,9 +303,9 @@ var/global/list/narsie_list = list()
 				spawn (0)
 					step_towards(AM2, src)
 
-		if (dist <= consume_range && !istype(A, /turf/space))
+		if (dist <= consume_range && !istype(A, get_base_turf(A.z)))
 			var/turf/T2 = A
-			T2.ChangeTurf(/turf/space)
+			T2.ChangeTurf(get_base_turf(T2.z))
 
 /obj/machinery/singularity/narsie/ex_act(severity) //No throwing bombs at it either. --NEO
 	return

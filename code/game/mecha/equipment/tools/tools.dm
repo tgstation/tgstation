@@ -449,7 +449,7 @@
 				if(do_after_cooldown(target))
 					if(disabled) return
 					chassis.spark_system.start()
-					target:ChangeTurf(target:under_turf)
+					target:ChangeTurf(get_base_turf(target.z))
 					playsound(target, 'sound/items/Deconstruct.ogg', 50, 1)
 					chassis.use_power(energy_drain)
 			else if (istype(target, /obj/machinery/door/airlock))

@@ -221,7 +221,7 @@ RCD
 					if(do_after(user,A, 50))
 						if(!useResource(decon_cost, user)) return 0
 						activate()
-						A:ChangeTurf(A:under_turf)
+						A:ChangeTurf(get_base_turf(A.z))
 						return 1
 				return 0
 

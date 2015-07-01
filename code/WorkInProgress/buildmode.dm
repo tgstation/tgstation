@@ -357,7 +357,7 @@ obj/effect/bmode/buildholder/New()
 												qdel(thing)
 											deletions++
 											tcheck(80,1)
-										T.ChangeTurf(/turf/space)
+										T.ChangeTurf(get_base_turf(T.z))
 								else
 									if(turf_op)
 										if(areaAction == SELECTIVE_FILL)

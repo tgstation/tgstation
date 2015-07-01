@@ -65,7 +65,7 @@ var/image/list/w_overlays = list("wet" = image('icons/effects/water.dmi',icon_st
 	//set src in oview(1)
 	switch(severity)
 		if(1.0)
-			src.ChangeTurf(under_turf)
+			src.ChangeTurf(get_base_turf(src.z))
 		if(2.0)
 			switch(pick(1,2;75,3))
 				if (1)
@@ -74,7 +74,7 @@ var/image/list/w_overlays = list("wet" = image('icons/effects/water.dmi',icon_st
 						var/obj/item/stack/sheet/metal/M = getFromPool(/obj/item/stack/sheet/metal, get_turf(src))
 						M.amount = 1
 				if(2)
-					src.ChangeTurf(under_turf)
+					src.ChangeTurf(get_base_turf(src.z))
 				if(3)
 					if(prob(80))
 						src.break_tile_to_plating()
