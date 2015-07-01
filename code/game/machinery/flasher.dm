@@ -74,6 +74,11 @@
 	if (bulb.broken || (last_flash && world.time < src.last_flash + 150))
 		return
 
+	if(!bulb.flash_recharge(30)) //Bulb can burn out if it's used too often too fast
+		power_change()
+		return
+	bulb.times_used ++
+
 	playsound(src.loc, 'sound/weapons/flash.ogg', 100, 1)
 	flick("[base_state]_flash", src)
 	last_flash = world.time
@@ -110,13 +115,6 @@
 		var/mob/living/carbon/M = AM
 		if (M.m_intent != "walk" && anchored)
 			flash()
-
-/obj/machinery/flasher/portable/flash()
-	if(!..())
-		return
-	if(prob(4))	//Small chance to burn out on use
-		bulb.burn_out()
-		power_change()
 
 /obj/machinery/flasher/portable/attackby(obj/item/weapon/W, mob/user, params)
 	if (istype(W, /obj/item/weapon/wrench))
