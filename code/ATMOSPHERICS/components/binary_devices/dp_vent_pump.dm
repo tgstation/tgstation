@@ -42,9 +42,9 @@ Acts like a normal vent, but has an input AND output.
 
 /obj/machinery/atmospherics/binary/dp_vent_pump/high_volume/New()
 	..()
-
-	air1.volume = 1000
-	air2.volume = 1000
+	var/datum/gas_mixture/air1 = airs[1] ; air1.volume = 1000
+	var/datum/gas_mixture/air2 = airs[2] ; air2.volume = 1000
+	update_airs(air1, air2)
 
 /obj/machinery/atmospherics/binary/dp_vent_pump/update_icon_nopipes()
 	overlays.Cut()
@@ -65,6 +65,8 @@ Acts like a normal vent, but has an input AND output.
 
 	if(!on)
 		return 0
+	var/datum/gas_mixture/air1 = airs[1]
+	var/datum/gas_mixture/air2 = airs[2]
 
 	var/datum/gas_mixture/environment = loc.return_air()
 	var/environment_pressure = environment.return_pressure()
@@ -86,7 +88,7 @@ Acts like a normal vent, but has an input AND output.
 				loc.assume_air(removed)
 				air_update_turf()
 
-				parent1.update = 1
+				update_parents(list(1 = parents[1])) //this looks disgusting, but it works
 
 	else //external -> output
 		var/pressure_delta = 10000
@@ -105,7 +107,9 @@ Acts like a normal vent, but has an input AND output.
 				air2.merge(removed)
 				air_update_turf()
 
-				parent2.update = 1
+				update_parents(list(2 = parents[2]))
+
+	update_airs(air1, air2)
 
 	return 1
 

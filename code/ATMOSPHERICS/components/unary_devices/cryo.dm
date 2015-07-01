@@ -47,11 +47,13 @@
 	..()
 /obj/machinery/atmospherics/unary/cryo_cell/process_atmos()
 	..()
+	var/datum/gas_mixture/air_contents = airs[1]
+
 	if(air_contents)
 		temperature_archived = air_contents.temperature
 		heat_gas_contents()
 	if(abs(temperature_archived-air_contents.temperature) > 1)
-		parent.update = 1
+		update_parents()
 
 /obj/machinery/atmospherics/unary/cryo_cell/process()
 	..()
@@ -60,14 +62,14 @@
 			on = 0
 			open_machine()
 			playsound(src.loc, 'sound/machines/ding.ogg', 50, 1)
-	if(!node || !is_operational())
+	if(!nodes[1] || !is_operational())
 		return
 
 	if(!on)
 		updateDialog()
 		return
 
-	if(air_contents)
+	if(airs[1])
 		if (occupant)
 			process_occupant()
 		expel_gas()
@@ -144,6 +146,8 @@
 
 /obj/machinery/atmospherics/unary/cryo_cell/get_ui_data()
 	// this is the data which will be sent to the ui
+	var/datum/gas_mixture/air_contents = airs[1]
+
 	var/data = list()
 	data["isOperating"] = on
 	data["hasOccupant"] = occupant ? 1 : 0
@@ -286,6 +290,7 @@
 	update_icon()
 
 /obj/machinery/atmospherics/unary/cryo_cell/proc/process_occupant()
+	var/datum/gas_mixture/air_contents = airs[1]
 	if(air_contents.total_moles() < 10)
 		return
 	if(occupant)
@@ -293,7 +298,7 @@
 			occupant.bodytemperature = T0C
 			return
 		occupant.bodytemperature += 2*(air_contents.temperature - occupant.bodytemperature) * current_heat_capacity / (current_heat_capacity + air_contents.heat_capacity())
-		occupant.bodytemperature = max(occupant.bodytemperature, air_contents.temperature) // this is so ugly i'm sorry for doing it i'll fix it later i promise
+		occupant.bodytemperature = max(occupant.bodytemperature, air_contents.temperature) // this is so ugly i'm sorry for doing it i'll fix it later i promise //TODO: fix someone else's broken promise - duncathan
 		if(occupant.bodytemperature < T0C)
 //			occupant.sleeping = max(5/efficiency, (1 / occupant.bodytemperature)*2000/efficiency)
 //			occupant.Paralyse(max(5/efficiency, (1 / occupant.bodytemperature)*3000/efficiency))
@@ -317,6 +322,8 @@
 
 
 /obj/machinery/atmospherics/unary/cryo_cell/proc/heat_gas_contents()
+	var/datum/gas_mixture/air_contents = airs[1]
+
 	if(air_contents.total_moles() < 1)
 		return
 	var/air_heat_capacity = air_contents.heat_capacity()
@@ -324,9 +331,12 @@
 	if(combined_heat_capacity > 0)
 		var/combined_energy = T20C * current_heat_capacity + air_heat_capacity * air_contents.temperature
 		air_contents.temperature = combined_energy/combined_heat_capacity
+	update_airs(air_contents)
 
 
 /obj/machinery/atmospherics/unary/cryo_cell/proc/expel_gas()
+	var/datum/gas_mixture/air_contents = airs[1]
+
 	if(air_contents.total_moles() < 1)
 		return
 	var/datum/gas_mixture/expel_gas = new
@@ -335,3 +345,4 @@
 	expel_gas.temperature = T20C	//Lets expel hot gas and see if that helps people not die as they are removed
 	loc.assume_air(expel_gas)
 	air_update_turf()
+	update_airs(air_contents)

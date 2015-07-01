@@ -67,7 +67,7 @@ Filter types:
 
 /obj/machinery/atmospherics/trinary/filter/update_icon_nopipes()
 
-	if(!(stat & NOPOWER) && on && node1 && node2 && node3)
+	if(!(stat & NOPOWER) && on && nodes[1] && nodes[2] && nodes[3])
 		icon_state = "filter_on[flipped?"_f":""]"
 		return
 
@@ -85,6 +85,10 @@ Filter types:
 	..()
 	if(!on)
 		return 0
+
+	var/datum/gas_mixture/air1 = airs[1]
+	var/datum/gas_mixture/air2 = airs[2]
+	var/datum/gas_mixture/air3 = airs[3]
 
 	var/output_starting_pressure = air3.return_pressure()
 
@@ -147,11 +151,8 @@ Filter types:
 		air2.merge(filtered_out)
 		air3.merge(removed)
 
-	parent2.update = 1
-
-	parent3.update = 1
-
-	parent1.update = 1
+	update_airs(air1, air2, air3)
+	update_parents()
 
 	return 1
 

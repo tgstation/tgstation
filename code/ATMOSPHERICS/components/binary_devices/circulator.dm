@@ -18,6 +18,8 @@
 
 /obj/machinery/atmospherics/binary/circulator/proc/return_transfer_air()
 
+	var/datum/gas_mixture/air1 = airs[1]
+	var/datum/gas_mixture/air2 = airs[2]
 
 	var/output_starting_pressure = air1.return_pressure()
 	var/input_starting_pressure = air2.return_pressure()
@@ -40,9 +42,9 @@
 		//Actually transfer the gas
 		var/datum/gas_mixture/removed = air2.remove(transfer_moles)
 
-		parent1.update = 1
+		update_airs(air1, air2)
 
-		parent2.update = 1
+		update_parents()
 
 		return removed
 

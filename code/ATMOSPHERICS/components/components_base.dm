@@ -5,17 +5,19 @@ On top of that, now people can add component-speciic procs/vars if they want!
 /obj/machinery/atmospherics/components/
 	var/welded = 0 //Used on pumps and scrubbers
 	var/showpipe = 0
-	var/nodes = 0
+	var/list/nodes
+	var/list/parents
+	var/list/airs
+	var/node_amount
 
-/obj/machinery/atmospherics/components/New(var/new_airs[] = get_airs()) //doesn't work properly
+/obj/machinery/atmospherics/components/New() //doesn't work properly
 	..()
-	for(var/A in new_airs)
+	for(var/A = 1; A <= node_amount; A++)
 		var/datum/gas_mixture/air = A
 
 		air = new
 		air.volume = 200
-		new_airs[A] = air
-	return new_airs
+		airs[A] = air
 /*
 Iconnery
 */
@@ -35,7 +37,7 @@ Iconnery
 /obj/machinery/atmospherics/components/proc/update_icon_nopipes()
 	return
 
-/obj/machinery/atmospherics/components/update_icon(var/update_nodes[] = nodes) //works
+/obj/machinery/atmospherics/components/update_icon() //works
 	update_icon_nopipes()
 
 	underlays.Cut()
@@ -44,7 +46,7 @@ Iconnery
 
 	var/connected = 0
 
-	for(var/N in update_nodes) //adds intact pieces
+	for(var/N in nodes) //adds intact pieces
 		var/obj/machinery/atmospherics/node = N
 		if(node)
 			connected = icon_addintact(node, connected)
@@ -54,124 +56,113 @@ Iconnery
 /*
 Pipenet stuff; housekeeping
 */
-/obj/machinery/atmospherics/components/Destroy(var/dest_nodes[] = get_nodes(), var/dest_parents[] = get_parents()) //works somewhat
-	for(var/N in dest_nodes)
+/obj/machinery/atmospherics/components/Destroy() //works somewhat
+	for(var/N in nodes)
 		var/obj/machinery/atmospherics/node = N
-		var/datum/pipeline/parent = dest_parents[N]
+		var/datum/pipeline/parent = parents[N]
 
 		if(node)
 			node.disconnect(src)
 			node = null
 			nullifyPipenet(parent)
-			dest_nodes[N] = node
-			dest_parents[N] = parent
+			nodes[N] = node
+			parents[N] = parent
 	..()
-	return list(nodes = dest_nodes, parents = dest_parents)
 
-/obj/machinery/atmospherics/components/atmosinit(var/node_connects[], var/init_nodes[] = get_nodes()) //doesn't work for another reason
-	/*for(var/N in nodes)
-		var/obj/machinery/atmospherics/node = N
-		var/dir/node_connect = node_connects[N]
-
-		for(var/obj/machinery/atmospherics/target in get_step(src,node_connect))
+/obj/machinery/atmospherics/components/atmosinit(var/list/node_connects) //doesn't work for another reason
+	for(var/N = 1; N <= node_amount; N++)
+		for(var/obj/machinery/atmospherics/target in get_step(src,node_connects[N]))
 			if(target.initialize_directions & get_dir(target,src))
-				node = target
-				break*/
+				nodes[N] = target
 	if(level == 2)
 		showpipe = 1
 	update_icon()
 	return
 
-/obj/machinery/atmospherics/components/construction(var/constr_parents[] = get_parents()) //doesn't work
+/obj/machinery/atmospherics/components/construction() //doesn't work
 	..()
-	for(var/P in constr_parents)
+	for(var/P in parents)
 		var/datum/pipeline/parent = P
 		parent.update = 1
-		constr_parents[P] = parent
-	return constr_parents
+		parents[P] = parent
 
-/obj/machinery/atmospherics/components/build_network(var/build_parents[] = get_parents()) //doesn't work
-	for(var/P in build_parents)
+/obj/machinery/atmospherics/components/build_network() //doesn't work
+	for(var/P in parents)
 		var/datum/pipeline/parent = P
 
 		if(parent)
 			return
 		parent = new /datum/pipeline()
 		parent.build_pipeline(src)
-		build_parents[P] = parent
-	return build_parents
+		parents[P] = parent
 
-/obj/machinery/atmospherics/components/disconnect(obj/machinery/atmospherics/reference, var/disc_nodes[] = get_nodes(), var/disc_parents[] = get_parents()) //works
-	for(var/N in disc_nodes)
+/obj/machinery/atmospherics/components/disconnect(obj/machinery/atmospherics/reference) //works
+	for(var/N in nodes)
 		var/obj/machinery/atmospherics/node = N
-		var/datum/pipeline/parent = disc_parents[N]
+		var/datum/pipeline/parent = parents[N]
 
 		if(reference == node)
 			if(istype(node, /obj/machinery/atmospherics/pipe))
 				qdel(parent)
 			parent = null
-			disc_parents[N] = parent
+			parents[N] = parent
 	update_icon()
-	return disc_parents
 
-/obj/machinery/atmospherics/components/nullifyPipenet(datum/pipeline/pipeline, var/null_parents[] = get_parents(), var/null_airs[] = get_airs()) //untestable
+/obj/machinery/atmospherics/components/nullifyPipenet(datum/pipeline/pipeline) //untestable
 	..()
-	for(var/P in null_parents)
+	for(var/P in parents)
 		var/datum/pipeline/parent = P
-		var/datum/gas_mixture/air = null_airs[P]
+		var/datum/gas_mixture/air = airs[P]
 
 		if(pipeline == parent)
 			parent.other_airs -= air
 			parent = null
-			null_parents[P] = parent
-	return null_parents
+			parents[P] = parent
 
-/obj/machinery/atmospherics/components/returnPipenetAir(datum/pipeline/pipeline, var/return_parents[] = get_parents(), var/return_airs[] = get_airs()) //untestable; should work
-	for(var/P in return_parents)
+/obj/machinery/atmospherics/components/returnPipenetAir(datum/pipeline/pipeline) //untestable; should work
+	for(var/P in parents)
 		var/datum/pipeline/parent = P
-		var/datum/gas_mixture/air = return_airs[P]
+		var/datum/gas_mixture/air = airs[P]
 
 		if(pipeline == parent)
 			return air
 
-/obj/machinery/atmospherics/components/pipeline_expansion(datum/pipeline/pipeline, var/expand_parents[] = get_parents(), var/expand_nodes[] = get_nodes()) //TODO: dong
+/obj/machinery/atmospherics/components/pipeline_expansion(datum/pipeline/pipeline)
 	if(!pipeline)
-		return expand_nodes //works
-	for(var/N in expand_nodes)
+		return nodes //works
+	for(var/N in nodes)
 		var/obj/machinery/atmospherics/node = N
-		var/datum/pipeline/parent = expand_parents[N]
+		var/datum/pipeline/parent = parents[N]
 
 		if(parent == pipeline)
 			return list(node) //untestable; should work
 
-/obj/machinery/atmospherics/components/setPipenet(datum/pipeline/pipeline, obj/machinery/atmospherics/A, var/set_parents[] = get_parents(), var/set_nodes[] = get_nodes())
-	for(var/N in set_nodes)
+/obj/machinery/atmospherics/components/setPipenet(datum/pipeline/pipeline, obj/machinery/atmospherics/A)
+	for(var/N in nodes)
 		var/obj/machinery/atmospherics/node = N
-		var/datum/pipeline/parent = set_parents[N]
+		var/datum/pipeline/parent = parents[N]
 
 		if(A == node)
 			parent = pipeline
-			set_parents[N] = parent
-	return set_parents
+			parents[N] = parent
 
-/obj/machinery/atmospherics/components/returnPipenet(obj/machinery/atmospherics/A, var/return_parents[] = get_parents(), var/return_nodes = get_nodes())
-	for(var/N in return_nodes)
+/obj/machinery/atmospherics/components/returnPipenet(obj/machinery/atmospherics/A)
+	for(var/N in nodes)
 		var/obj/machinery/atmospherics/node = N
-		var/datum/pipeline/parent = return_parents[N]
+		var/datum/pipeline/parent = parents[N]
 
 		if(A == node)
 			return parent //probably works
 
-/obj/machinery/atmospherics/components/replacePipenet(datum/pipeline/Old, datum/pipeline/New, var/replace_parents[] = get_parents())
-	for(var/P in replace_parents)
+/obj/machinery/atmospherics/components/replacePipenet(datum/pipeline/Old, datum/pipeline/New)
+	for(var/P in parents)
 		var/datum/pipeline/parent = P
 
 		if(Old == parent)
 			parent = New
-			replace_parents[P] = parent
-	return replace_parents
+		parents[P] = parent
 
-/obj/machinery/atmospherics/components/unsafe_pressure_release(var/mob/user, var/pressures, var/unsafe_airs[] = get_airs()) //untestable; I'll fix this last
+/obj/machinery/atmospherics/components/unsafe_pressure_release(var/mob/user, var/pressures) //untestable; I'll fix this last
 	..()
 
 	var/turf/T = get_turf(src)
@@ -180,23 +171,22 @@ Pipenet stuff; housekeeping
 		var/datum/gas_mixture/environment = T.return_air()
 		var/lost = null
 		var/times_lost = 0
-		for(var/A in unsafe_airs)
+		for(var/A in airs)
 			var/datum/gas_mixture/air = A
 			lost += pressures*environment.volume/(air.temperature * R_IDEAL_GAS_EQUATION)
 			times_lost++
 		var/shared_loss = lost/times_lost
 
 		var/datum/gas_mixture/to_release
-		for(var/A in unsafe_airs)
+		for(var/A in airs)
 			var/datum/gas_mixture/air = A
 			if(!to_release)
 				to_release = air.remove(shared_loss)
 				continue
 			to_release.merge(air.remove(shared_loss))
-			unsafe_airs[A] = air
+			airs[A] = air
 		T.assume_air(to_release)
 		air_update_turf(1)
-	return unsafe_airs
 
 /*
 I think this is NanoUI?
@@ -218,9 +208,14 @@ Helpers
 /obj/machinery/atmospherics/components/proc/get_parents()
 	return
 
-/obj/machinery/atmospherics/components/proc/set_airs()
-	return
-/obj/machinery/atmospherics/components/proc/set_nodes()
-	return
-/obj/machinery/atmospherics/components/proc/set_parents()
-	return
+/obj/machinery/atmospherics/components/proc/update_airs(var/list/L)
+	for(var/N in L)
+		var/datum/gas_mixture/air = L[N]
+		airs[N] = air
+
+/obj/machinery/atmospherics/components/proc/update_parents(var/list/L = parents)
+	for(var/N in L)
+		if(!N)
+			continue
+		var/datum/pipeline/parent = N ; parent.update = 1
+		parents[N] = parent

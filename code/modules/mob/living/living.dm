@@ -824,11 +824,12 @@ Sorry Giacom. Please don't be mad :(
 
 	else if(istype(loc, /obj/machinery/atmospherics/unary/cryo_cell))
 		var/obj/machinery/atmospherics/unary/cryo_cell/C = loc
+		var/datum/gas_mixture/C_air_contents = C.airs[1]
 
-		if(C.air_contents.total_moles() < 10)
+		if(C_air_contents.total_moles() < 10)
 			loc_temp = environment.temperature
 		else
-			loc_temp = C.air_contents.temperature
+			loc_temp = C_air_contents.temperature
 
 	else
 		loc_temp = environment.temperature

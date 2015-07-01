@@ -65,7 +65,9 @@
 
 /obj/machinery/atmospherics/unary/vent_pump/high_volume/New()
 	..()
+	var/datum/gas_mixture/air_contents = airs[1]
 	air_contents.volume = 1000
+	update_airs(air_contents)
 
 /obj/machinery/atmospherics/unary/vent_pump/update_icon_nopipes()
 	overlays.Cut()
@@ -76,7 +78,7 @@
 		icon_state = "vent_welded"
 		return
 
-	if(!node || !on || stat & (NOPOWER|BROKEN))
+	if(!nodes[1] || !on || stat & (NOPOWER|BROKEN))
 		icon_state = "vent_off"
 		return
 
@@ -89,7 +91,7 @@
 	..()
 	if(stat & (NOPOWER|BROKEN))
 		return
-	if (!node)
+	if (!nodes[1])
 		on = 0
 	//broadcast_status() // from now air alarm/control computer should request update purposely --rastaf0
 	if(!on)
@@ -98,6 +100,7 @@
 	if(welded)
 		return 0
 
+	var/datum/gas_mixture/air_contents = airs[1]
 	var/datum/gas_mixture/environment = loc.return_air()
 	var/environment_pressure = environment.return_pressure()
 
@@ -118,8 +121,6 @@
 				loc.assume_air(removed)
 				air_update_turf()
 
-				parent.update = 1
-
 	else //external -> internal
 		var/pressure_delta = 10000
 		if(pressure_checks&1)
@@ -137,8 +138,8 @@
 
 				air_contents.merge(removed)
 				air_update_turf()
-
-				parent.update = 1
+	update_airs(air_contents)
+	update_parents()
 
 	return 1
 

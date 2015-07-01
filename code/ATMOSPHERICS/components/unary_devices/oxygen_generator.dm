@@ -18,7 +18,7 @@
 	if(showpipe)
 		overlays += getpipeimage('icons/obj/atmospherics/unary_devices.dmi', "scrub_cap", initialize_directions) //it works for now
 
-	if(!node || !on || stat & BROKEN)
+	if(!nodes[1] || !on || stat & BROKEN)
 		icon_state = "o2gen_off"
 		return
 
@@ -27,13 +27,15 @@
 
 /obj/machinery/atmospherics/unary/oxygen_generator/New()
 	..()
-
-	air_contents.volume = 50
+	var/datum/gas_mixture/air_contents = airs[1] ; air_contents.volume = 50
+	airs[1] = air_contents
 
 /obj/machinery/atmospherics/unary/oxygen_generator/process_atmos()
 	..()
 	if(!on)
 		return 0
+
+	var/datum/gas_mixture/air_contents = airs[1]
 
 	var/total_moles = air_contents.total_moles()
 
@@ -45,6 +47,7 @@
 		air_contents.temperature = (current_heat_capacity*air_contents.temperature + 20*added_oxygen*T0C)/(current_heat_capacity+20*added_oxygen)
 		air_contents.oxygen += added_oxygen
 
-		parent.update = 1
+		update_airs(air_contents)
+		update_parents()
 
 	return 1

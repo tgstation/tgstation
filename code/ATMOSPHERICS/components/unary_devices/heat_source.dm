@@ -17,7 +17,7 @@
 	if(showpipe)
 		overlays += getpipeimage('icons/obj/atmospherics/unary_devices.dmi', "scrub_cap", initialize_directions) //scrub_cap works for now
 
-	if(!node || !on || stat & (NOPOWER|BROKEN))
+	if(!nodes[1] || !on || stat & (NOPOWER|BROKEN))
 		icon_state = "cold_off"
 		return
 
@@ -28,6 +28,9 @@
 	..()
 	if(!on)
 		return 0
+
+	var/datum/gas_mixture/air_contents = airs[1]
+
 	var/air_heat_capacity = air_contents.heat_capacity()
 	var/combined_heat_capacity = current_heat_capacity + air_heat_capacity
 	var/old_temperature = air_contents.temperature
@@ -39,5 +42,6 @@
 	//todo: have current temperature affected. require power to bring up current temperature again
 
 	if(abs(old_temperature-air_contents.temperature) > 1)
-		parent.update = 1
+		update_parents()
+	update_airs(air_contents)
 	return 1
