@@ -374,7 +374,7 @@
 	if(!C.vampire_affected(mind))
 		C.visible_message("<span class='warning'>[C] seems to resist the takeover!</span>", "<span class='notice'>Your faith of [ticker.Bible_deity_name] has kept your mind clear of all evil</span>")
 	if(!ishuman(C))
-		src << "<span class='warning'>You can only enthrall humans!"
+		src << "<span class='warning'>You can only enthrall humanoids!"
 		return 0
 	return 1
 
@@ -387,10 +387,15 @@
 		ticker.mode.thralls[ref] = list(H.mind)
 	else
 		ticker.mode.thralls[ref] += H.mind
+	var/datum/objective/protect/new_objective = new /datum/objective/protect
+	new_objective.owner = H.mind
+	new_objective.target = src.mind
+	new_objective.explanation_text = "You have been Enthralled by [src.name], the vampire. Follow their every command."
+	H.mind.objectives += new_objective
 	ticker.mode.enthralled.Add(H.mind)
 	ticker.mode.enthralled[H.mind] = src.mind
 	H.mind.special_role = "VampThrall"
-	H << "<span class='sinister'>You have been Enthralled by [name]. Follow their every command.</span>"
+	H << "<span class='sinister'>You have been Enthralled by [src.name]. Follow their every command.</span>"
 	src << "<span class='warning'>You have successfully Enthralled [H.name]. <i>If they refuse to do as you say just adminhelp.</i></span>"
 	ticker.mode.update_vampire_icons_added(H.mind)
 	ticker.mode.update_vampire_icons_added(src.mind)
