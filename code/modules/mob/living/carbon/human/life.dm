@@ -1672,14 +1672,14 @@ var/global/list/organ_damage_overlays = list(
 	if(blood_virus_spreading_disabled)
 		return 0
 	for(var/obj/effect/decal/cleanable/blood/B in get_turf(src))
-		if(B.virus2.len)
+		if(istype(B.virus2,/list) && B.virus2.len)
 			for (var/ID in B.virus2)
 				var/datum/disease2/disease/V = B.virus2[ID]
 				if (infect_virus2(src,V, notes="(Airborne from blood)"))
 					return 1
 
 	for(var/obj/effect/decal/cleanable/mucus/M in get_turf(src))
-		if(M.virus2.len)
+		if(istype(M.virus2,/list) && M.virus2.len)
 			for (var/ID in M.virus2)
 				var/datum/disease2/disease/V = M.virus2[ID]
 				if (infect_virus2(src,V, notes="(Airborne from mucus)"))

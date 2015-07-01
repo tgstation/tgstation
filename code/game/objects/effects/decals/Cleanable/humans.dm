@@ -105,7 +105,10 @@ var/global/list/blood_list = list()
 		perp.track_blood = max(amount,perp.track_blood)                                //Or feet
 		if(!perp.feet_blood_DNA)
 			perp.feet_blood_DNA = list()
-		perp.feet_blood_DNA |= blood_DNA.Copy()
+		if(!istype(blood_DNA, /list))
+			blood_DNA = list()
+		else
+			perp.feet_blood_DNA |= blood_DNA.Copy()
 		perp.feet_blood_color=basecolor
 
 	amount--

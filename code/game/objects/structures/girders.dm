@@ -156,6 +156,7 @@
 						user.visible_message("<span class='notice'>[user] finishes installing plating to \the [src]</span>", \
 						"<span class='notice'>You finish installing plating to \the [src]</span>")
 						var/turf/Tsrc = get_turf(src)
+						if(!istype(Tsrc)) return 0
 						var/turf/simulated/wall/X = Tsrc.ChangeTurf(/turf/simulated/wall)
 						if(X)
 							X.add_hiddenprint(user)

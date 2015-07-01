@@ -249,6 +249,9 @@
 	if(!part || being_built) //we're in the middle of something here!
 		return
 
+	if(!part.build_path)
+		WARNING("[part.name] has a null build path var!")
+		return
 	if(is_contraband(part) && !src.hacked)
 		stopped = 1
 		src.visible_message("<font color='blue'>The [src.name] buzzes, \"Safety procedures prevent current queued item from being built.\"</font>")

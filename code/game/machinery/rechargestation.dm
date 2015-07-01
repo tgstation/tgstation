@@ -138,7 +138,7 @@
 			if(alert(user, "You have chosen [upgrading], is this correct?", , "Yes", "No") == "Yes")
 				upgrade_finished = world.timeofday + (600/manipulator_coeff)
 				user << "The upgrade should complete in approximately [60/manipulator_coeff] seconds, you will be unable to exit \the [src] during this unless you cancel the process."
-				spawn() do_after(user,src,600/manipulator_coeff,need_hand = FALSE)
+				spawn() do_after(user,src,600/manipulator_coeff,needhand = FALSE)
 				return
 			else
 				upgrading = 0

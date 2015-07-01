@@ -1,7 +1,7 @@
 /mob/living/New()
 	. = ..()
 	generate_static_overlay()
-	if(static_overlays && static_overlays.len)
+	if(istype(static_overlays,/list) && static_overlays.len)
 		for(var/mob/living/silicon/robot/mommi/MoMMI in player_list)
 			if(MoMMI.can_see_static())
 				if(MoMMI.static_choice in static_overlays)
@@ -893,6 +893,8 @@
 
 
 /mob/living/proc/generate_static_overlay()
+	if(!istype(static_overlays,/list))
+		static_overlays = list()
 	static_overlays.Add(list("static", "blank", "letter"))
 	var/image/static_overlay = image(getStaticIcon(new/icon(src.icon, src.icon_state)), loc = src)
 	static_overlay.override = 1

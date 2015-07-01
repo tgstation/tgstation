@@ -152,9 +152,9 @@
 	"<span class='warning'>You hear a pop and smell ozone.</span>")
 	if(istype(src,/obj/effect/rune))
 		new /obj/item/weapon/tome(src.loc)
+		src.invocation("tome_spawn")
 	else
 		new /obj/item/weapon/tome(usr.loc)
-	invocation("tome_spawn")
 	qdel(src)
 	return
 

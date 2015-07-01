@@ -20,7 +20,7 @@
 	var/list/atom/hallucinations = list() //A list of hallucinated people that try to attack the mob. See /obj/effect/fake_attacker in hallucinations.dm
 
 
-	var/list/image/static_overlays = list()
+	var/list/image/static_overlays
 
 	var/t_plasma = null
 	var/t_oxygen = null

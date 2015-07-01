@@ -216,6 +216,7 @@
 		return(OXYLOSS)
 
 /obj/item/weapon/legcuffs/bolas/throw_at(var/atom/A, throw_range, throw_speed)
+	if(!throw_range) return //divide by zero, also you throw like a girl
 	if(usr && !istype(thrown_from, /obj/item/mecha_parts/mecha_equipment/weapon/ballistic/missile_rack/bolas)) //if there is a user, but not a mech
 		if(istype(usr, /mob/living/carbon/human)) //if the user is human
 			var/mob/living/carbon/human/H = usr
@@ -233,7 +234,7 @@
 	var/xadjust = 0
 	var/yadjust = 0
 	var/scaler = 0 //used to changed the normalised vector to the proper size
-	scaler = throw_range / max(abs(target.x - src.x), abs(target.y - src.y)) //whichever is larger magnitude is what we normalise to
+	scaler = throw_range / max(max(abs(target.x - src.x), abs(target.y - src.y),1) //whichever is larger magnitude is what we normalise to
 	if (target.x - src.x != 0) //just to avoid fucking with math for no reason
 		xadjust = round((target.x - src.x) * scaler) //normalised vector is now scaled up to throw_range
 		adjtarget.x = src.x + xadjust //the new target at max range

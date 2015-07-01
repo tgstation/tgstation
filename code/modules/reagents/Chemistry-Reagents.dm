@@ -705,7 +705,7 @@
 	src = null
 	// Vamps react to this like acid
 	if(ishuman(M))
-		if(M.mind.vampire)
+		if(M.mind && M.mind.vampire)
 			var/mob/living/carbon/human/H=M
 			if(!(VAMP_UNDYING in M.mind.vampire.powers))
 				if(method == TOUCH)

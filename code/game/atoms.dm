@@ -620,7 +620,8 @@ its easier to just keep the beam vertical.
 /atom/proc/clean_blood()
 	src.germ_level = 0
 	if(istype(blood_DNA, /list))
-		del(blood_DNA)
+		//del(blood_DNA)
+		blood_DNA.len = 0
 		return 1
 
 

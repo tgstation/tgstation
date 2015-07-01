@@ -202,6 +202,7 @@
 	src.u_equip(O,1)
 	if (src.client)
 		src.client.screen -= O
+	if(!O) return
 	O.layer = initial(O.layer)
 	O.screen_loc = null
 	return 1

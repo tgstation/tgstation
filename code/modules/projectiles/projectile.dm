@@ -83,7 +83,7 @@
 	return output //Send it back to the gun!
 
 /obj/item/projectile/resetVariables()
-	if(!permutated)
+	if(!istype(permutated,/list))
 		permutated = list()
 	else
 		permutated.len = 0

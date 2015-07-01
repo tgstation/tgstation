@@ -120,6 +120,9 @@ log transactions
 		..()
 
 /obj/machinery/atm/attack_hand(mob/user as mob)
+	if(isobserver(user))
+		user << "<span class='warning'>Your ghostly limb passes right through \the [src].</span>"
+		return
 	if(istype(user, /mob/living/silicon))
 		user << "<span class='warning'>Artificial unit recognized. Artificial units do not currently receive monetary compensation, as per NanoTrasen regulation #1005.</span>"
 		return

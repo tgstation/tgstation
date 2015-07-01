@@ -92,8 +92,9 @@ proc/FindDesign(var/atom/part, material_strict = 0)
 
 	for(var/datum/design/D in design_list)
 		if(D.build_path == part.type)
-			if(material_strict && ((istype(part, /obj/machinery) && material_strict == 2) || (!istype(part, /obj/machinery) && material_strict))) //if we care about materials, we have to check candidates
+			if(material_strict && ((istype(part, /obj/machinery) && material_strict == 2) || (!istype(part, /obj/machinery) && material_strict)) && istype(part.materials, /list)) //if we care about materials, we have to check candidates
 				var/all_correct = 1
+
 				for(var/matID in D.materials)
 					if(copytext(matID, 1, 2) == "$" && (part.materials.storage[matID] != D.materials[matID])) //if it's a materal, but it doesn't match the atom's values
 						all_correct = 0
