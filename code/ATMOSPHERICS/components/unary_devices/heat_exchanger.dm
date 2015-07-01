@@ -1,4 +1,4 @@
-/obj/machinery/atmospherics/unary/heat_exchanger
+/obj/machinery/atmospherics/components/unary/heat_exchanger
 
 	icon_state = "he_intact"
 
@@ -7,10 +7,10 @@
 
 	can_unwrench = 1
 
-	var/obj/machinery/atmospherics/unary/heat_exchanger/partner = null
+	var/obj/machinery/atmospherics/components/unary/heat_exchanger/partner = null
 	var/update_cycle
 
-/obj/machinery/atmospherics/unary/heat_exchanger/update_icon()
+/obj/machinery/atmospherics/components/unary/heat_exchanger/update_icon()
 	if(node)
 		icon_state = "he_intact"
 		color = node.color
@@ -19,11 +19,11 @@
 
 	return
 
-/obj/machinery/atmospherics/unary/heat_exchanger/atmosinit()
+/obj/machinery/atmospherics/components/unary/heat_exchanger/atmosinit()
 	if(!partner)
 		var/partner_connect = turn(dir,180)
 
-		for(var/obj/machinery/atmospherics/unary/heat_exchanger/target in get_step(src,partner_connect))
+		for(var/obj/machinery/atmospherics/components/unary/heat_exchanger/target in get_step(src,partner_connect))
 			if(target.dir & get_dir(src,target))
 				partner = target
 				partner.partner = src
@@ -31,7 +31,7 @@
 
 	..()
 
-/obj/machinery/atmospherics/unary/heat_exchanger/process_atmos()
+/obj/machinery/atmospherics/components/unary/heat_exchanger/process_atmos()
 	..()
 	if(!partner)
 		return 0

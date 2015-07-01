@@ -805,8 +805,8 @@ Sorry Giacom. Please don't be mad :(
 		var/turf/heat_turf = get_turf(src)
 		loc_temp = heat_turf.temperature
 
-	else if(istype(loc, /obj/machinery/atmospherics/unary/cryo_cell))
-		var/obj/machinery/atmospherics/unary/cryo_cell/C = loc
+	else if(istype(loc, /obj/machinery/atmospherics/components/unary/cryo_cell))
+		var/obj/machinery/atmospherics/components/unary/cryo_cell/C = loc
 
 		if(C.air_contents.total_moles() < 10)
 			loc_temp = environment.temperature

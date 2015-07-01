@@ -1,5 +1,5 @@
 
-var/list/ventcrawl_machinery = list(/obj/machinery/atmospherics/unary/vent_pump, /obj/machinery/atmospherics/unary/vent_scrubber)
+var/list/ventcrawl_machinery = list(/obj/machinery/atmospherics/components/unary/vent_pump, /obj/machinery/atmospherics/components/unary/vent_scrubber)
 
 //VENTCRAWLING
 
@@ -13,7 +13,7 @@ var/list/ventcrawl_machinery = list(/obj/machinery/atmospherics/unary/vent_pump,
 		src << "You can't vent crawl while you're stunned!"
 		return
 
-	var/obj/machinery/atmospherics/unary/vent_found
+	var/obj/machinery/atmospherics/components/unary/vent_found
 
 
 	if(A)
