@@ -8,6 +8,12 @@
 /obj/item/clothing/head/collectable/petehat
 	name = "ultra rare Pete's hat!"
 	desc = "It smells faintly of plasma."
+	flags = STOPSPRESSUREDMAGE
+	armor = list(melee = 0, bullet = 0, laser = 0, energy = 0, bomb = 100, bio = 0, rad = 0)
+	cold_protection = HEAD
+	min_cold_protection_temperature = HELMET_MIN_TEMP_PROTECT
+	heat_protection = HEAD
+	max_heat_protection_temperature = HELMET_MAX_TEMP_PROTECT
 	icon_state = "petehat"
 
 /obj/item/clothing/head/collectable/slime
