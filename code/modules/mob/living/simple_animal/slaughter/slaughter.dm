@@ -145,6 +145,7 @@
 	var/canmove = 1
 	density = 0
 	anchored = 1
+	invisibility = 60
 
 obj/effect/dummy/slaughter/relaymove(var/mob/user, direction)
 	if (!src.canmove || !direction) return

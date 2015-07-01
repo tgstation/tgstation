@@ -337,6 +337,11 @@
 					config.irc_first_connection_alert = 1
 				if("aggressive_changelog")
 					config.aggressive_changelog = 1
+				if("log_runtimes")
+					var/newlog = file("data/logs/runtimes/runtime-[time2text(world.realtime, "YYYY-MM-DD")].log")
+					if (world.log != newlog)
+						world.log << "Now logging runtimes to data/logs/runtimes/runtime-[time2text(world.realtime, "YYYY-MM-DD")].log"
+						world.log = newlog
 				else
 					diary << "Unknown setting in configuration: '[name]'"
 

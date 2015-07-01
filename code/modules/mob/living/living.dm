@@ -849,7 +849,7 @@ Sorry Giacom. Please don't be mad :(
 		return 0
 	if(T.z >= ZLEVEL_SPACEMAX)
 		return 0
-	if(src == user)
+	if(user != null && src == user)
 		return 0
 	if(invisibility || alpha == 0)//cloaked
 		return 0

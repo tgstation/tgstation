@@ -25,7 +25,6 @@
 	armor = list(melee = 10, bullet = 0, laser = 0,energy = 0, bomb = 0, bio = 0, rad = 0)
 	flags_inv = HIDEMASK|HIDEEARS|HIDEEYES|HIDEFACE
 	action_button_name = "Toggle Welding Helmet"
-	visor_flags = HEADCOVERSEYES | HEADCOVERSMOUTH
 	visor_flags_inv = HIDEMASK|HIDEEARS|HIDEEYES|HIDEFACE
 	burn_state = -1 //Won't burn in fires
 

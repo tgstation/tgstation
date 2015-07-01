@@ -74,8 +74,10 @@
 	layer = 3
 	icon = 'icons/effects/effects.dmi'
 	icon_state = "cobweb1"
-	burn_state = 0 //Burnable
 	burntime = 1
+
+/obj/effect/decal/cleanable/cobweb/fire_act()
+	qdel(src)
 
 /obj/effect/decal/cleanable/molten_item
 	name = "gooey grey mass"
@@ -162,3 +164,4 @@
 /obj/effect/decal/cleanable/shreds/New()
 	pixel_x = rand(-5, 5)
 	pixel_y = rand(-5, 5)
+	..()

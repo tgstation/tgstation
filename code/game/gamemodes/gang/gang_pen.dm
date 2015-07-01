@@ -22,9 +22,9 @@
 								M.Paralyse(5)
 								cooldown(max(0,ticker.mode.B_gang.len - ticker.mode.A_gang.len))
 							if(1)
-								user << "<span class='warning'>This mind has already been recruited into a gang!</span>"
-							else
 								user << "<span class='warning'>This mind is resistant to recruitment!</span>"
+							else
+								user << "<span class='warning'>This mind has already been recruited into a gang!</span>"
 					else if(user.mind in ticker.mode.B_bosses)
 						var/recruitable = ticker.mode.add_gangster(M.mind,"B")
 						switch(recruitable)
@@ -32,14 +32,14 @@
 								M.Paralyse(5)
 								cooldown(max(0,ticker.mode.A_gang.len - ticker.mode.B_gang.len))
 							if(1)
-								user << "<span class='warning'>This mind has already been recruited into a gang!</span>"
-							else
 								user << "<span class='warning'>This mind is resistant to recruitment!</span>"
+							else
+								user << "<span class='warning'>This mind has already been recruited into a gang!</span>"
 
 /obj/item/weapon/pen/gang/proc/cooldown(modifier)
 	cooldown = 1
 	icon_state = "pen_blink"
-	spawn(max(50,1200-(modifier*150)))
+	spawn(max(50,1800-(modifier*300)))
 		cooldown = 0
 		icon_state = "pen"
 		var/mob/M = get(src, /mob)

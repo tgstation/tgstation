@@ -149,6 +149,10 @@
 					user << "<span class='warning'>This MMI does not seem to fit!</span>"
 					return
 
+				if(M.syndiemmi)
+					user << "<span class='warning'>This MMI does not seem to fit!</span>"
+					return
+
 				if(!M.brainmob.mind)
 					user << "<span class='warning'>This MMI is mindless!</span>"
 					return
