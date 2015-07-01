@@ -44,7 +44,7 @@
 
 # Airflow Impact - Damage
 #   Damage from airflow impacts.
-/datum/ZAS_Setting/airflow_damage 2
+/datum/ZAS_Setting/airflow_damage 4
 
 # Airflow Speed Decay
 #   How rapidly the speed gained from airflow decays.
@@ -60,11 +60,7 @@
 
 # Airflow - Push
 #   1=yes please rape my server, 0=no
-/datum/ZAS_Setting/airflow_push 0
-
-# Connections - Speed Multiplier
-#   How fast a connection is, in terms of gas transfer.  1 is very fast, and 0 is insulated.
-/datum/ZAS_Setting/connection_speed 0.75
+/datum/ZAS_Setting/airflow_push 1
 
 # Connections - Insulation
 #   How insulative a connection is, in terms of heat transfer.  1 is perfectly insulative, and 0 is perfectly conductive.
