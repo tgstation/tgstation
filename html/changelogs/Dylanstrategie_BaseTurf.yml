@@ -1,0 +1,4 @@
+author: Dylanstrategie
+delete-after: True
+changes:
+  - experiment: New base_turf system that allows custom tiles to be set to replace turfs instead of space. Please, please report any serious oddities with turfs that should be replaced to space (do mind that the admins now have a verb to change base_turf during the round from space to something like grass or live supermatter)

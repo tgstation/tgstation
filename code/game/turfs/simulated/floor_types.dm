@@ -127,7 +127,7 @@
 			if(prob(80))
 				src.ReplaceWithLattice()
 			else if(prob(50))
-				src.ChangeTurf(under_turf)
+				src.ChangeTurf(get_base_turf(src.z))
 			else
 				var/turf/simulated/floor/F = src
 				F.make_plating()

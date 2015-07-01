@@ -80,7 +80,7 @@
 		severity = 1.0
 	switch(severity)
 		if(1.0)
-			src.ChangeTurf(under_turf) //You get NOTHING, you LOSE
+			src.ChangeTurf(get_base_turf(src.z)) //You get NOTHING, you LOSE
 			return
 		if(2.0)
 			if(prob(50))
