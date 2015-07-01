@@ -234,7 +234,7 @@
 	var/xadjust = 0
 	var/yadjust = 0
 	var/scaler = 0 //used to changed the normalised vector to the proper size
-	scaler = throw_range / max(max(abs(target.x - src.x), abs(target.y - src.y),1) //whichever is larger magnitude is what we normalise to
+	scaler = throw_range / max(max(abs(target.x - src.x), abs(target.y - src.y),1)) //whichever is larger magnitude is what we normalise to
 	if (target.x - src.x != 0) //just to avoid fucking with math for no reason
 		xadjust = round((target.x - src.x) * scaler) //normalised vector is now scaled up to throw_range
 		adjtarget.x = src.x + xadjust //the new target at max range
