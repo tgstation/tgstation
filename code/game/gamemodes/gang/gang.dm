@@ -191,9 +191,7 @@
 		. += 1
 	else
 		gangtool.register_device(mob)
-		mob << "The <b>Gangtool</b> in your [where] will allow you to use your influence to purchase weapons and equipment and communicate with your gangsters."
-		if(isboss)
-			mob << "<b>As the Gang Boss</b> you also have the power to recall the emergency shuttle from anywhere on the station."
+		mob << "The <b>Gangtool</b> in your [where] will allow you to purchase weapons and equipment, send messages to your gang, and recall the emergency shuttle from anywhere on the station."
 
 	var/where2 = mob.equip_in_one_of_slots(T, slots)
 	if (!where2)

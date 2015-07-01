@@ -55,7 +55,7 @@
 			dat += "<a href='?src=\ref[src];choice=outfit'>Create Armored Gang Outfit</a><br>"
 		else
 			dat += "<b>Create Gang Outfit</b> (Restocking)<br>"
-		if(gangmode && boss)
+		if(gangmode)
 			dat += "<a href='?src=\ref[src];choice=recall'>Recall Emergency Shuttle</a><br>"
 
 		dat += "<br>"
@@ -184,6 +184,10 @@
 
 	add_fingerprint(usr)
 
+	if(recalling)
+		usr << "<span class='warning'>Device is busy. Shuttle recall in progress.</span>"
+		return
+
 	if(href_list["register"])
 		register_device(usr)
 
@@ -294,8 +298,7 @@
 	else if(href_list["choice"])
 		switch(href_list["choice"])
 			if("recall")
-				if(boss)
-					recall(usr)
+				recall(usr)
 			if("outfit")
 				if(outfits > 0)
 					if(ticker.mode.gang_outfit(usr,src,gang))
