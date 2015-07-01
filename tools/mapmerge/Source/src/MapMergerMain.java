@@ -11,47 +11,69 @@ public class MapMergerMain {
 	
 	public static void main(String[] args) throws IOException{
 		
-		System.out.print("Path to _maps folder: ");
-		String pathTo_maps = input.nextLine();
-		Path fileDir = Paths.get(pathTo_maps);
-		FileFinder finder = new FileFinder("*.dmm");
-		Files.walkFileTree(fileDir, finder);
-		ArrayList<Path> foundFiles = finder.foundPaths;
+		System.out.print("Path to maps folder: ");	
+		Path pathToMaps = Paths.get(input.nextLine());
+		FileFinder dmmFinder = new FileFinder("*.dmm");
+		Files.walkFileTree(pathToMaps, dmmFinder);
+		ArrayList<Path> foundFiles = dmmFinder.foundPaths;
 		if (foundFiles.size() > 0) {
+			
+		
+			System.out.println("How many files do you want to merge?");
+			int selection1;
+			inputCheck:while(true){
+				while(!input.hasNextInt()){
+						String temp = input.next();
+						System.out.println(temp + " is not a valid int.");
+				}
+				selection1 = input.nextInt();
+				if(selection1 < 0){
+						System.out.println("Use a number greater than 0!");
+					continue inputCheck;
+				}else{
+					break inputCheck;
+				}
+			}
+			
+			for(int numOfFiles = selection1; numOfFiles != 0; numOfFiles--){
+				
 				for(int num = 0;num < foundFiles.size();num++){
 					System.out.println(num + ": " + foundFiles.get(num));
 				}
+				
+				System.out.print("File to use: ");
+				int selection2;
+				inputCheck:while(true){
+					while(!input.hasNextInt()){
+							String temp = input.next();
+							System.out.println(temp + " is not a valid int.");
+					}
+					selection2 = input.nextInt();
+					if(selection2 < 0 || selection2 >= foundFiles.size()){
+						if(selection2 < 0){
+							System.out.println("Use a number greater than 0!");
+						}else{
+							System.out.println("Use a number less than " + foundFiles.size() +"!");
+						}
+						continue inputCheck;
+					}else{
+						break inputCheck;
+					}
+				}
+				
+				String newMap = foundFiles.get(selection2) + "";
+				String oldMap = foundFiles.get(selection2) + ".backup";
+				String[] passInto = new String[4];
+				passInto[0] = "-clean";
+				passInto[1] = oldMap;
+				passInto[2] = newMap;
+				passInto[3] = newMap;
+				MapPatcher.main(passInto);
+			}
+			
 		}else{
 			System.out.println("No files were found!");
 		}
-		System.out.print("File to use: ");
-		int selection;
-		inputCheck:while(true){
-			while(!input.hasNextInt()){
-					String temp = input.next();
-					System.out.println(temp + " is not a valid int.");
-			}
-			selection = input.nextInt();
-			if(selection < 0 || selection >= foundFiles.size()){
-				if(selection < 0){
-					System.out.println("Use a number greater than 0!");
-				}else{
-					System.out.println("Use a number less than " + foundFiles.size() +"!");
-				}
-				continue inputCheck;
-			}else{
-				break inputCheck;
-			}
-		}
-		
-		String newMap = foundFiles.get(selection) + "";
-		String oldMap = foundFiles.get(selection) + ".backup";
-		String[] passInto = new String[4];
-		passInto[0] = "-clean";
-		passInto[1] = oldMap;
-		passInto[2] = newMap;
-		passInto[3] = newMap;
-		MapPatcher.main(passInto);
 	}
 	
 }
