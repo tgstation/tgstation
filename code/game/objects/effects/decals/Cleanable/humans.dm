@@ -33,9 +33,8 @@ var/global/list/blood_list = list()
 		var/datum/game_mode/cult/mode_ticker = ticker.mode
 		var/turf/T = get_turf(src)
 		if(T && (T.z == map.zMainStation))
-			if(locate(T) in mode_ticker.bloody_floors)
-				mode_ticker.bloody_floors -= T
-				mode_ticker.blood_check()
+			mode_ticker.bloody_floors -= T
+			mode_ticker.blood_check()
 	..()
 
 /obj/effect/decal/cleanable/blood/resetVariables()
