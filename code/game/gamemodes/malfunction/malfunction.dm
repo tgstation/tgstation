@@ -117,8 +117,7 @@
 
 
 /datum/game_mode/malfunction/proc/capture_the_station()
-	world << "<FONT size = 3><B>The AI has accessed the station's Core Files!</B></FONT>"
-	world << "<B>It has fully taken control of all of [station_name()]'s systems.</B>"
+	minor_announce("The Intelligence Unit has accessed the core files!", null, 'sound/AI/aimalf.ogg', "Priority")
 
 	to_nuke_or_not_to_nuke = 1
 	for(var/datum/mind/AI_mind in malf_ai)
@@ -212,7 +211,7 @@
 /datum/game_mode/malfunction/proc/ai_win()
 	set category = "Malfunction"
 	set name = "Explode"
-	set desc = "Activates the self-destruct device on [world.name]."
+	set desc = "Activates the self-destruct device on the station."
 	if (!ticker.mode:to_nuke_or_not_to_nuke)
 		return
 	ticker.mode:to_nuke_or_not_to_nuke = 0
