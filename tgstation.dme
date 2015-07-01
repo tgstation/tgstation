@@ -32,6 +32,7 @@
 #include "code\__DEFINES\say.dm"
 #include "code\__DEFINES\sight.dm"
 #include "code\__DEFINES\stat.dm"
+#include "code\__DEFINES\tablecrafting.dm"
 #include "code\__HELPERS\_logging.dm"
 #include "code\__HELPERS\_string_lists.dm"
 #include "code\__HELPERS\cmp.dm"
