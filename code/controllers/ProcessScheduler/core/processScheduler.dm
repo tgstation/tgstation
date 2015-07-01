@@ -52,8 +52,7 @@ var/global/datum/controller/processScheduler/processScheduler
 /datum/controller/processScheduler/proc/setup()
 	// There can be only one
 	if(processScheduler && (processScheduler != src))
-		del(src)
-		return 0
+		del(processScheduler)
 
 	var/process
 	// Add all the processes we can find, except for the ticker

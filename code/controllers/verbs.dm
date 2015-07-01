@@ -1,7 +1,7 @@
 //TODO: rewrite and standardise all controller datums to the datum/controller type
 //TODO: allow all controllers to be deleted for clean restarts (see WIP master controller stuff) - MC done - lighting done
 
-/client/proc/restart_controller(controller in list("Master","Failsafe","Supply Shuttle"))
+/client/proc/restart_controller(controller in list("Master","Failsafe","Supply Shuttle", "Process Scheduler"))
 	set category = "Debug"
 	set name = "Restart Controller"
 	set desc = "Restart one of the various periodic loop controllers for the game (be careful!)"
@@ -20,6 +20,10 @@
 		if("Supply Shuttle")
 			supply_shuttle.process()
 			feedback_add_details("admin_verb","RSupply")
+		if("Process Scheduler")
+			processScheduler = new
+			processScheduler.deferSetupFor(/datum/controller/process/ticker)
+			processScheduler.setup()
 	message_admins("Admin [key_name_admin(usr)] has restarted the [controller] controller.")
 	return
 
