@@ -121,6 +121,12 @@
 		return 1
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+//used in the AStar algorithm to determinate if the turf the door is on is passable
+/obj/machinery/door/firedoor/CanAStarPass()
+	return !density
+>>>>>>> parent of 0ff7157... Finish up the port
 
 
 =======

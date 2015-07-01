@@ -96,9 +96,6 @@
 		return
 	..()
 
-/obj/item/device/pizza_bomb/fire_act()
-	go_boom()
-
 /obj/item/device/pizza_bomb/New()
 	..()
 	correct_wire = pick(wires)

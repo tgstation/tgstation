@@ -120,7 +120,6 @@
 	mymob.blind.name = " "
 	mymob.blind.screen_loc = "CENTER-7,CENTER-7"
 	mymob.blind.layer = 0
-	mymob.blind.mouse_opacity = 0
 
 	mymob.damageoverlay = new /obj/screen()
 	mymob.damageoverlay.icon = 'icons/mob/screen_full.dmi'
@@ -142,7 +141,7 @@
 	mymob.zone_sel.icon = ui_style
 	mymob.zone_sel.update_icon()
 
-	mymob.client.screen = list()
+	mymob.client.screen = null
 
 	using = new /obj/screen/resist()
 	using.icon = ui_style
@@ -151,4 +150,3 @@
 
 	mymob.client.screen += list( mymob.throw_icon, mymob.zone_sel, mymob.internals, mymob.healths, mymob.pullin, mymob.blind, mymob.flash, lingchemdisplay, lingstingdisplay) //, mymob.hands, mymob.rest, mymob.sleep, mymob.mach )
 	mymob.client.screen += adding + other
-	mymob.client.screen += mymob.client.void

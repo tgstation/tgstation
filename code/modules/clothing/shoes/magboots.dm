@@ -21,10 +21,10 @@
 
 /obj/item/clothing/shoes/magboots/attack_self(mob/user)
 	if(src.magpulse)
-		src.flags &= ~(NOSLIP | PRESSUREPROTECT)
+		src.flags &= ~NOSLIP
 		src.slowdown = SHOES_SLOWDOWN
 	else
-		src.flags |= (NOSLIP | PRESSUREPROTECT)
+		src.flags |= NOSLIP
 		src.slowdown = slowdown_active
 	magpulse = !magpulse
 	icon_state = "[magboot_state][magpulse]"
@@ -33,7 +33,7 @@
 	user.update_gravity(user.mob_has_gravity())
 
 /obj/item/clothing/shoes/magboots/negates_gravity()
-	return flags & (NOSLIP | PRESSUREPROTECT)
+	return flags & NOSLIP
 
 /obj/item/clothing/shoes/magboots/examine(mob/user)
 	..()

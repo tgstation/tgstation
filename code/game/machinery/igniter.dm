@@ -141,7 +141,7 @@
 	for(var/obj/machinery/sparker/M in machines)
 		if (M.id == src.id)
 			spawn( 0 )
-				M.combust()
+				M.ignite()
 
 	for(var/obj/machinery/igniter/M in machines)
 		if(M.id == src.id)

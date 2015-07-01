@@ -120,10 +120,10 @@
 		return
 
 	if(!check_hub_connection())
-		say("Error: Unable to detect hub.</span>")
+		usr << "<span class='warning'>Error: Unable to detect hub.</span>"
 		return
 	if(calibrating)
-		say("Error: Calibration in progress. Stand by.")
+		usr << "<span class='warning'>Error: Calibration in progress. Stand by.</span>"
 		return
 
 	if(href_list["regimeset"])
@@ -143,21 +143,21 @@
 		target = get_turf(locked.locked_location)
 	if(href_list["calibrate"])
 		if(!target)
-			say("Error: No target set to calibrate to.")
+			usr << "<span class='warning'>Error: No target set to calibrate to.</span>"
 			return
 		if(power_station.teleporter_hub.calibrated || power_station.teleporter_hub.accurate >= 3)
-			say("Hub is already calibrated.")
+			usr << "<span class='notice'>Hub is already calibrated.</span>"
 			return
-		say("Processing hub calibration to target...")
+		src.visible_message("<span class='notice'>Processing hub calibration to target...</span>")
 
 		calibrating = 1
 		spawn(50 * (3 - power_station.teleporter_hub.accurate)) //Better parts mean faster calibration
 			calibrating = 0
 			if(check_hub_connection())
 				power_station.teleporter_hub.calibrated = 1
-				say("Calibration complete.")
+				src.visible_message("<span class='notice'>Calibration complete.</span>")
 			else
-				say("Error: Unable to detect hub.")
+				src.visible_message("<span class='warning'>Error: Unable to detect hub.</span>")
 			updateDialog()
 
 	updateDialog()
@@ -225,7 +225,7 @@
 		var/list/areaindex = list()
 		var/list/S = power_station.linked_stations
 		if(!S.len)
-			say("No connected stations located.")
+			user << "<span class='alert'>No connected stations located.</span>"
 			return
 		for(var/obj/machinery/teleport/station/R in S)
 			var/turf/T = get_turf(R)
@@ -458,9 +458,9 @@
 	if (teleporter_console.target)
 		src.engaged = !src.engaged
 		use_power(5000)
-		say("Teleporter [engaged ? "" : "dis"]engaged!")
+		visible_message("<span class='notice'>Teleporter [engaged ? "" : "dis"]engaged!</span>")
 	else
-		say("No target detected.")
+		visible_message("<span class='alert'>No target detected.</span>")
 		src.engaged = 0
 	teleporter_hub.update_icon()
 	src.add_fingerprint(user)

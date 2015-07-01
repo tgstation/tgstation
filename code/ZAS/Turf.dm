@@ -272,12 +272,8 @@
 	air.group_multiplier = 1
 
 turf/simulated/proc/copy_air_with_tile(turf/simulated/T)
-	if(!air)
-		make_air()
-	if(istype(T))
-		air.copy_from(T.return_air())
-		air.group_multiplier = 1
-
+	if(istype(T) && T.air && air)
+		air.copy_from(T.air)
 
 /turf/attack_hand(mob/user as mob)
 	user.Move_Pulled(src)

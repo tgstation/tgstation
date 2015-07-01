@@ -110,10 +110,14 @@
 	var/turf/T = get_turf(holder.my_atom)
 	for(var/turf/turf in range(1,T))
 <<<<<<< HEAD
+<<<<<<< HEAD
 		PoolOrNew(/obj/effect/fire, turf)
 =======
 		PoolOrNew(/obj/effect/hotspot, turf)
 >>>>>>> parent of 3c820fb... Initiate ZAS port
+=======
+		PoolOrNew(/obj/fire, turf)
+>>>>>>> parent of 0ff7157... Finish up the port
 	holder.chem_temp = 1000 // hot as shit
 
 /datum/chemical_reaction/sorium

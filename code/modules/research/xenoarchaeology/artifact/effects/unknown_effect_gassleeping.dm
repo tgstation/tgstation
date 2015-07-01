@@ -15,8 +15,8 @@
 		var/datum/gas_mixture/env = holder.loc.return_air()
 		if(env)
 			var/datum/gas/sleeping_agent/trace_gas = new
-			trace_gas.moles = rand(3,30)
-			env.adjust(traces = list(trace_gas))
+			env.trace_gases += trace_gas
+			trace_gas.moles = rand(2,15)
 			holder.air_update_turf(0)
 		//	env.update_values()
 
@@ -26,8 +26,8 @@
 		var/datum/gas_mixture/env = holder.loc.return_air()
 		if(env && env.total_moles() < max_pressure)
 			var/datum/gas/sleeping_agent/trace_gas = new
-			trace_gas.moles = pick(0, 0.5, rand())
-			env.adjust(traces = list(trace_gas))
+			env.trace_gases += trace_gas
+			trace_gas.moles = pick(0, 0, 0.1, rand())
 			holder.air_update_turf(0)
 		//	env.update_values()
 

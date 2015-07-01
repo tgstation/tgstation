@@ -142,33 +142,15 @@ var/list/VVckey_edit = list("key", "ckey")
 		if(confirm != "Continue")
 			return
 
-	var/assoc = 0
-	if(L.len > 0)
-		var/a = L[1]
-		if(istext(a) && L[a] != null)
-			assoc = 1 //This is pretty weak test but i can't think of anything else
-			usr << "List appears to be associative."
+	var/list/names = sortList(L)
 
-	var/list/names = null
-	if(!assoc)
-		names = sortList(L)
-
-	var/variable
-	var/assoc_key
-	if(assoc)
-		variable = input("Which var?","Var") as null|anything in L + "(ADD VAR)"
-	else
-		variable = input("Which var?","Var") as null|anything in names + "(ADD VAR)"
+	var/variable = input("Which var?","Var") as null|anything in names + "(ADD VAR)"
 
 	if(variable == "(ADD VAR)")
 		mod_list_add(L, O, original_name, objectvar)
 		return
 
-	if(assoc)
-		assoc_key = variable
-		variable = L[assoc_key]
-
-	if(!assoc && !variable || assoc && !assoc_key)
+	if(!variable)
 		return
 
 	var/default
@@ -258,11 +240,7 @@ var/list/VVckey_edit = list("key", "ckey")
 	if(holder.marked_datum && class == "marked datum ([holder.marked_datum.type])")
 		class = "marked datum"
 
-	var/original_var
-	if(assoc)
-		original_var = L[assoc_key]
-	else
-		original_var = L[L.Find(variable)]
+	var/original_var = L[L.Find(variable)]
 	var/new_var
 	switch(class) //Spits a runtime error if you try to modify an entry in the contents list. Dunno how to fix it, yet.
 
@@ -271,10 +249,7 @@ var/list/VVckey_edit = list("key", "ckey")
 
 		if("restore to default")
 			new_var = initial(variable)
-			if(assoc)
-				L[assoc_key] = new_var
-			else
-				L[L.Find(variable)] = new_var
+			L[L.Find(variable)] = new_var
 
 		if("edit referenced object")
 			modify_variables(variable)
@@ -288,52 +263,31 @@ var/list/VVckey_edit = list("key", "ckey")
 
 		if("text")
 			new_var = input("Enter new text:","Text") as text
-			if(assoc)
-				L[assoc_key] = new_var
-			else
-				L[L.Find(variable)] = new_var
+			L[L.Find(variable)] = new_var
 
 		if("num")
 			new_var = input("Enter new number:","Num") as num
-			if(assoc)
-				L[assoc_key] = new_var
-			else
-				L[L.Find(variable)] = new_var
+			L[L.Find(variable)] = new_var
 
 		if("type")
 			new_var = input("Enter type:","Type") in typesof(/obj,/mob,/area,/turf)
-			if(assoc)
-				L[assoc_key] = new_var
-			else
-				L[L.Find(variable)] = new_var
+			L[L.Find(variable)] = new_var
 
 		if("reference")
 			new_var = input("Select reference:","Reference") as mob|obj|turf|area in world
-			if(assoc)
-				L[assoc_key] = new_var
-			else
-				L[L.Find(variable)] = new_var
+			L[L.Find(variable)] = new_var
 
 		if("mob reference")
 			new_var = input("Select reference:","Reference") as mob in world
-			if(assoc)
-				L[assoc_key] = new_var
-			else
-				L[L.Find(variable)] = new_var
+			L[L.Find(variable)] = new_var
 
 		if("file")
 			new_var = input("Pick file:","File") as file
-			if(assoc)
-				L[assoc_key] = new_var
-			else
-				L[L.Find(variable)] = new_var
+			L[L.Find(variable)] = new_var
 
 		if("icon")
 			new_var = input("Pick icon:","Icon") as icon
-			if(assoc)
-				L[assoc_key] = new_var
-			else
-				L[L.Find(variable)] = new_var
+			L[L.Find(variable)] = new_var
 
 		if("marked datum")
 			new_var = holder.marked_datum

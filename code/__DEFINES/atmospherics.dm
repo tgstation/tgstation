@@ -114,7 +114,7 @@
 #define MAX_TRANSFER_RATE					200 // (L/s) Maximum speed powered equipment can work at.
 <<<<<<< HEAD
 
-#define BASE_ZAS_FUEL_REQ	0.7
+#define BASE_ZAS_FUEL_REQ	0.1
 
 #define AIR_BLOCKED 1
 #define ZONE_BLOCKED 2

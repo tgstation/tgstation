@@ -327,16 +327,9 @@
 		areaInstance.contents += T1
 
 		//copy over air
-		if(istype(T0) && T0.zone)
+		if(istype(T1, /turf/simulated))
 			var/turf/simulated/Ts1 = T1
-			if(!Ts1.air)
-				Ts1.make_air()
-			Ts1.air.copy_from(T0.zone.air)
-			T0.zone.remove(T0)
-
-//		if(istype(T1, /turf/simulated))
-//			var/turf/simulated/Ts1 = T1
-//			Ts1.copy_air_with_tile(T0)
+			Ts1.copy_air_with_tile(T0)
 
 		//move mobile to new location
 		loc = S1.loc
@@ -374,6 +367,7 @@
 			if(istype(M, /mob/living/carbon))
 				if(!M.buckled)
 					M.Weaken(3)
+
 		T0.ChangeTurf(turf_type)
 
 
@@ -393,8 +387,6 @@
 		SSair.remove_from_active(T0)
 		T0.CalculateAdjacentTurfs()
 		SSair.add_to_active(T0,1)
-
-
 
 	spawn(5)
 		for(var/turf/T in L1)

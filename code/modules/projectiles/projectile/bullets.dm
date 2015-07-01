@@ -75,10 +75,14 @@
 	if(!location)
 		return
 <<<<<<< HEAD
+<<<<<<< HEAD
 	PoolOrNew(/obj/effect/fire, location)
 =======
 	PoolOrNew(/obj/effect/hotspot, location)
 >>>>>>> parent of 3c820fb... Initiate ZAS port
+=======
+	PoolOrNew(/obj/fire, location)
+>>>>>>> parent of 0ff7157... Finish up the port
 	location.hotspot_expose(700, 50, 1)
 
 /obj/item/projectile/bullet/incendiary/shell/dragonsbreath

@@ -51,7 +51,7 @@
 	name = "officer's beret"
 	desc = "An armored beret commonly used by special operations officers. Uses advanced force field technology to protect the head from space."
 	icon_state = "beret_badge"
-	flags = STOPSPRESSUREDMAGE | PLASMAGUARD
+	flags = STOPSPRESSUREDMAGE
 	flags_inv = 0
 	armor = list(melee = 80, bullet = 80, laser = 50, energy = 50, bomb = 100, bio = 100, rad = 100)
 	strip_delay = 130
@@ -97,7 +97,7 @@
 	desc = "Ho ho ho. Merrry X-mas!"
 	icon_state = "santahat"
 	body_parts_covered = HEAD | EYES
-	flags = BLOCKHAIR | STOPSPRESSUREDMAGE | PLASMAGUARD
+	flags = BLOCKHAIR | STOPSPRESSUREDMAGE
 
 /obj/item/clothing/suit/space/santa
 	name = "Santa's suit"
@@ -105,7 +105,7 @@
 	icon_state = "santa"
 	item_state = "santa"
 	slowdown = 0
-	flags = STOPSPRESSUREDMAGE | PLASMAGUARD
+	flags = STOPSPRESSUREDMAGE
 	allowed = list(/obj/item) //for stuffing exta special presents
 
 
@@ -117,7 +117,7 @@
 	item_state = "pirate"
 	armor = list(melee = 60, bullet = 50, laser = 30,energy = 15, bomb = 30, bio = 30, rad = 30)
 	body_parts_covered = HEAD | EYES
-	flags = BLOCKHAIR | STOPSPRESSUREDMAGE | PLASMAGUARD
+	flags = BLOCKHAIR | STOPSPRESSUREDMAGE
 	strip_delay = 40
 	put_on_delay = 20
 
@@ -142,7 +142,7 @@
 	item_color = "ert_commander"
 	armor = list(melee = 65, bullet = 50, laser = 50, energy = 50, bomb = 50, bio = 100, rad = 100)
 	strip_delay = 130
-	flags = BLOCKHAIR | STOPSPRESSUREDMAGE | THICKMATERIAL | NODROP | PLASMAGUARD
+	flags = BLOCKHAIR | STOPSPRESSUREDMAGE | THICKMATERIAL | NODROP
 	brightness_on = 7
 
 /obj/item/clothing/suit/space/hardsuit/ert
