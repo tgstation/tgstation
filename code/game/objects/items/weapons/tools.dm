@@ -24,7 +24,7 @@
 	force = 5
 	throwforce = 7
 	w_class = 2
-	m_amt = 150
+	materials = list(MAT_METAL=150)
 	origin_tech = "materials=1;engineering=1"
 	attack_verb = list("bashed", "battered", "bludgeoned", "whacked")
 
@@ -48,8 +48,7 @@
 	throwforce = 5
 	throw_speed = 3
 	throw_range = 5
-	g_amt = 0
-	m_amt = 75
+	materials = list(MAT_METAL=75)
 	attack_verb = list("stabbed")
 	hitsound = 'sound/weapons/bladeslice.ogg'
 
@@ -111,7 +110,7 @@
 	throw_speed = 3
 	throw_range = 7
 	w_class = 2.0
-	m_amt = 80
+	materials = list(MAT_METAL=80)
 	origin_tech = "materials=1;engineering=1"
 	attack_verb = list("pinched", "nipped")
 	hitsound = 'sound/items/Wirecutter.ogg'
@@ -156,8 +155,7 @@
 	throw_speed = 3
 	throw_range = 5
 	w_class = 2
-	m_amt = 70
-	g_amt = 30
+	materials = list(MAT_METAL=70, MAT_GLASS=30)
 	origin_tech = "engineering=1"
 	var/welding = 0 	//Whether or not the welding tool is off(0), on(1) or currently welding(2)
 	var/status = 1 		//Whether the welder is secured or unsecured (able to attach rods to it to make a flamethrower)
@@ -375,7 +373,7 @@
 	desc = "A slightly larger welder with a larger tank."
 	icon_state = "indwelder"
 	max_fuel = 40
-	g_amt = 60
+	materials = list(MAT_GLASS=60)
 	origin_tech = "engineering=2"
 
 /obj/item/weapon/weldingtool/largetank/cyborg
@@ -390,8 +388,7 @@
 	icon_state = "miniwelder"
 	max_fuel = 10
 	w_class = 1
-	m_amt = 30
-	g_amt = 10
+	materials = list(MAT_METAL=30, MAT_GLASS=10)
 	change_icons = 0
 
 /obj/item/weapon/weldingtool/mini/flamethrower_screwdriver()
@@ -404,8 +401,7 @@
 	icon_state = "upindwelder"
 	item_state = "upindwelder"
 	max_fuel = 80
-	m_amt = 70
-	g_amt = 120
+	materials = list(MAT_METAL=70, MAT_GLASS=120)
 	origin_tech = "engineering=3"
 
 /obj/item/weapon/weldingtool/experimental
@@ -414,8 +410,7 @@
 	icon_state = "exwelder"
 	item_state = "exwelder"
 	max_fuel = 40
-	m_amt = 70
-	g_amt = 120
+	materials = list(MAT_METAL=70, MAT_GLASS=120)
 	origin_tech = "materials=4;engineering=4;bluespace=3;plasmatech=3"
 	var/last_gen = 0
 	change_icons = 0
@@ -453,7 +448,7 @@
 	throwforce = 7
 	item_state = "crowbar"
 	w_class = 2
-	m_amt = 50
+	materials = list(MAT_METAL=50)
 	origin_tech = "engineering=1"
 	attack_verb = list("attacked", "bashed", "battered", "bludgeoned", "whacked")
 
@@ -474,5 +469,5 @@
 	w_class = 3
 	throw_speed = 3
 	throw_range = 3
-	m_amt = 66
+	materials = list(MAT_METAL=70)
 	icon_state = "crowbar_large"

@@ -43,8 +43,7 @@ var/global/image/fire_overlay = image("icon" = 'icons/effects/fire.dmi', "icon_s
 	var/obj/item/device/uplink/hidden/hidden_uplink = null // All items can have an uplink hidden inside, just remember to add the triggers.
 	var/strip_delay = 40
 	var/put_on_delay = 20
-	var/m_amt = 0	// metal
-	var/g_amt = 0	// glass
+	var/list/materials = list()
 	var/reliability = 100	//Used by SOME devices to determine how reliable they are.
 	var/origin_tech = null	//Used by R&D to determine what research bonuses it grants.
 	var/needs_permit = 0			//Used by security bots to determine if this item is safe for public use.
@@ -494,3 +493,40 @@ var/global/image/fire_overlay = image("icon" = 'icons/effects/fire.dmi', "icon_s
 		S.remove_from_storage(src,newLoc)
 		return 1
 	return 0
+
+/obj/item/proc/get_item_materials()
+	if(!materials.len)
+		return 0
+	var/material_types = 0
+	if(materials[MAT_METAL])
+		material_types |= TYPE_METAL
+	if(materials[MAT_GLASS])
+		material_types |= TYPE_GLASS
+	if(materials[MAT_SILVER])
+		material_types |= TYPE_SILVER
+	if(materials[MAT_GOLD])
+		material_types |= TYPE_GOLD
+	if(materials[MAT_DIAMOND])
+		material_types |= TYPE_DIAMOND
+	if(materials[MAT_URANIUM])
+		material_types |= TYPE_URANIUM
+	if(materials[MAT_PLASMA])
+		material_types |= TYPE_PLASMA
+	if(materials[MAT_BANANIUM])
+		material_types |= TYPE_BANANIUM
+	return material_types
+
+/obj/item/proc/get_item_materials_amount()
+	if(!materials.len)
+		return 0
+
+	var/amt = 0
+	amt += materials[MAT_METAL]
+	amt += materials[MAT_GLASS]
+	amt += materials[MAT_SILVER]
+	amt += materials[MAT_GOLD]
+	amt += materials[MAT_DIAMOND]
+	amt += materials[MAT_URANIUM]
+	amt += materials[MAT_PLASMA]
+	amt += materials[MAT_BANANIUM]
+	return amt
