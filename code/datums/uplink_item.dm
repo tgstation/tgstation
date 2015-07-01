@@ -243,6 +243,18 @@ var/list/uplink_items = list()
 	if(istype(T))
 		T.TC_cost = cost
 
+/datum/uplink_item/dangerous/wrestling
+	name = "Wrestling Belt"
+	desc = "A belt that allows you to wrestle with the best. You can suplex people by getting them into a cinch with Harm, and then Disarming them to suplex."
+	item = /obj/item/weapon/storage/belt/champion/wrestling
+	cost = 10
+
+/datum/uplink_item/dangerous/krav_maga
+	name = "Krav Maga Gloves"
+	desc = "Gloves fitted with nanochips that can teach you the ways of Krav Maga."
+	item = /obj/item/clothing/gloves/krav_maga
+	cost = 10
+
 // AMMUNITION
 
 /datum/uplink_item/ammo
