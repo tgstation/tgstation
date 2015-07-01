@@ -1,9 +1,3 @@
-#define BLOB_PROBABILITY 40
-#define HEADBUTT_PROBABILITY 40
-#define BRAINLOSS_FOR_HEADBUTT 60
-
-#define DOOR_LAYER		2.7
-#define DOOR_CLOSED_MOD	0.4 //how much the layer is increased when the door is closed
 
 /obj/machinery/door
 	name = "door"
@@ -13,8 +7,7 @@
 	anchored = 1
 	opacity = 1
 	density = 1
-	layer = DOOR_LAYER
-	var/base_layer = DOOR_LAYER
+	layer = 2.7
 	power_channel = ENVIRON
 
 	var/secondsElectrified = 0
@@ -30,9 +23,9 @@
 /obj/machinery/door/New()
 	..()
 	if(density)
-		layer = DOOR_LAYER + DOOR_CLOSED_MOD //Above most items if closed
+		layer = 3.1 //Above most items if closed
 	else
-		layer = DOOR_LAYER //Under all objects if opened. 2.7 due to tables being at 2.6
+		layer = 2.7 //Under all objects if opened. 2.7 due to tables being at 2.6
 	update_freelook_sight()
 	air_update_turf(1)
 	airlocks += src
@@ -82,10 +75,12 @@
 	..()
 	move_update_air(T)
 
-/obj/machinery/door/CanPass(atom/movable/mover, turf/target, height=1.5, air_group = 0)
-	if(air_group) return 0
+/obj/machinery/door/CanPass(atom/movable/mover, turf/target, height=0)
 	if(istype(mover) && mover.checkpass(PASSGLASS))
 		return !opacity
+	return !density
+
+/obj/machinery/door/CanAtmosPass()
 	return !density
 
 //used in the AStar algorithm to determinate if the turf the door is on is passable
@@ -229,7 +224,7 @@
 	sleep(5)
 	src.density = 0
 	sleep(5)
-	src.layer = DOOR_LAYER
+	src.layer = 2.7
 	update_icon()
 	src.set_opacity(0)
 	operating = 0
@@ -246,7 +241,7 @@
 	operating = 1
 
 	do_animate("closing")
-	src.layer = DOOR_LAYER + DOOR_CLOSED_MOD
+	src.layer = 3.1
 	sleep(5)
 	src.density = 1
 	sleep(5)
@@ -257,8 +252,6 @@
 	air_update_turf(1)
 	update_freelook_sight()
 	return
-
-
 
 /obj/machinery/door/proc/crush()
 	for(var/mob/living/L in get_turf(src))
@@ -286,6 +279,10 @@
 /obj/machinery/door/proc/hasPower()
 	return !(stat & NOPOWER)
 
+/obj/machinery/door/BlockSuperconductivity()
+	if(opacity || heat_proof)
+		return 1
+	return 0
 
 /obj/machinery/door/morgue
 	icon = 'icons/obj/doors/doormorgue.dmi'

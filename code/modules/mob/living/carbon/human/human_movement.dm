@@ -45,6 +45,10 @@
 					return
 				var/obj/item/clothing/shoes/S = shoes
 				S.step_action()
+<<<<<<< HEAD
+=======
+
+>>>>>>> parent of 3c820fb... Initiate ZAS port
 
 /*
 /mob/living/carbon/human/experience_pressure_difference()
@@ -53,4 +57,3 @@
 		if(shoes.flags&NOSLIP)
 			return 0
 	. = ..()
-*/

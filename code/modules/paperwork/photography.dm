@@ -32,8 +32,6 @@
 	var/scribble		//Scribble on the back.
 	var/blueprints = 0	//Does it include the blueprints?
 	var/sillynewscastervar  //Photo objects with this set to 1 will not be ejected by a newscaster. Only gets set to 1 if a silicon puts one of their images into a newscaster
-	autoignition_temperature = AUTOIGNITION_PAPER
-	fire_fuel = 1
 
 
 /obj/item/weapon/photo/attack_self(mob/user)

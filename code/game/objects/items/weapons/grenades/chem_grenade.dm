@@ -218,7 +218,7 @@
 			for(var/turf/NT in orange(1, T))
 				if(!(NT in reachable)) continue
 				if(!(get_dir(T,NT) in cardinal)) continue
-				if(!NT.CanPass(T)) continue
+				if(!NT.CanAtmosPass(T)) continue
 				reachable |= T
 				break
 	return reachable

@@ -67,10 +67,6 @@
 	var/shorted = 0
 	var/buildstage = 2 // 2 = complete, 1 = no wires,  0 = circuit gone
 
-	var/local_danger_level = 0
-	var/alarmActivated = 0 // Manually activated (independent from danger level)
-	var/danger_averted_confidence=0
-
 
 	var/mode = AALARM_MODE_SCRUBBING
 
@@ -95,7 +91,7 @@
 		"carbon dioxide" = new/datum/tlv(-1.0,-1.0, 0.5,   1), // Partial pressure, kpa
 */
 /obj/machinery/alarm/server
-	req_access = list(access_rd) //no, let departaments to work together //fuck you m8
+	//req_access = list(access_rd) //no, let departaments to work together
 	TLV = list(
 		"oxygen"         = new/datum/tlv(-1.0, -1.0,-1.0,-1.0), // Partial pressure, kpa
 		"carbon dioxide" = new/datum/tlv(-1.0, -1.0,-1.0,-1.0), // Partial pressure, kpa
@@ -476,14 +472,14 @@
 
 
 	if(href_list["atmos_alarm"])
-		alarmActivated=1
-		alarm_area.updateDangerLevel(src)
+		if (alarm_area.atmosalert(2,src))
+			post_alert(2)
 		spawn(1)
 			src.updateUsrDialog()
 		update_icon()
 	if(href_list["atmos_reset"])
-		alarmActivated=0
-		alarm_area.updateDangerLevel(src)
+		if (alarm_area.atmosalert(0,src))
+			post_alert(0)
 		spawn(1)
 			src.updateUsrDialog()
 		update_icon()
@@ -631,7 +627,7 @@
 		temperature_dangerlevel
 	)
 	if (old_danger_level!=danger_level)
-		setDangerLevel(danger_level)
+		apply_danger_level()
 
 	if (mode==AALARM_MODE_REPLACEMENT && environment_pressure<ONE_ATMOSPHERE*0.05)
 		mode=AALARM_MODE_SCRUBBING
@@ -640,17 +636,11 @@
 	//src.updateDialog()
 	return
 
-/obj/machinery/alarm/proc/setDangerLevel(var/new_danger_level)
-	if(local_danger_level==new_danger_level)
-		return
-	local_danger_level=new_danger_level
-	if(alarm_area.updateDangerLevel(src))
-		post_alert(new_danger_level)
-
 /obj/machinery/alarm/proc/post_alert(alert_level)
+
 	var/datum/radio_frequency/frequency = radio_controller.return_frequency(alarm_frequency)
-	if(!frequency)
-		return
+
+	if(!frequency) return
 
 	var/datum/signal/alert_signal = new
 	alert_signal.source = src
@@ -665,7 +655,17 @@
 	else if (alert_level==0)
 		alert_signal.data["alert"] = "clear"
 
-	frequency.post_signal(src, alert_signal)
+	frequency.post_signal(src, alert_signal,null,-1)
+
+/obj/machinery/alarm/proc/apply_danger_level()
+	var/new_area_danger_level = 0
+	var/area/A = alarm_area
+	for (var/obj/machinery/alarm/AA in A)
+		if (!(AA.stat & (NOPOWER|BROKEN)) && !AA.shorted)
+			new_area_danger_level = max(new_area_danger_level,AA.danger_level)
+	if (alarm_area.atmosalert(new_area_danger_level,src)) //if area was in normal state or if area was in alert state
+		post_alert(new_area_danger_level)
+	update_icon()
 
 /obj/machinery/alarm/attackby(obj/item/W as obj, mob/user as mob, params)
 	if (!user.IsAdvancedToolUser())
@@ -770,12 +770,6 @@
 		user.visible_message("<span class='warning'>Sparks fly out of the [src]!</span>", "<span class='warning'>You emag the [src], disabling its safeties.</span>")
 		playsound(src.loc, 'sound/effects/sparks4.ogg', 50, 1)
 		return
-
-/obj/machinery/alarm/proc/air_doors_close(manual)
-	alarm_area.CloseFirelocks()
-
-/obj/machinery/alarm/proc/air_doors_open(manual)
-	alarm_area.OpenFirelocks()
 
 
 /*
@@ -906,7 +900,7 @@ FIRE ALARM
 		return
 
 
-/obj/machinery/firealarm/fire_act(datum/gas_mixture/air, temperature, volume)
+/obj/machinery/firealarm/temperature_expose(datum/gas_mixture/air, temperature, volume)
 	if(src.detecting)
 		if(temperature > T0C+200)
 			if(!emagged) //Doesn't give off alarm when emagged

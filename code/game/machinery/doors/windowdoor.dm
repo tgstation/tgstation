@@ -79,7 +79,11 @@
 	else
 		return 1
 
-
+/obj/machinery/door/window/CanAtmosPass(var/turf/T)
+	if(get_dir(loc, T) == dir)
+		return !density
+	else
+		return 1
 
 //used in the AStar algorithm to determinate if the turf the door is on is passable
 /obj/machinery/door/window/CanAStarPass(var/obj/item/weapon/card/id/ID, var/to_dir)
@@ -354,7 +358,7 @@
 
 	return
 
-/obj/machinery/door/window/fire_act(datum/gas_mixture/air, exposed_temperature, exposed_volume)
+/obj/machinery/door/window/temperature_expose(datum/gas_mixture/air, exposed_temperature, exposed_volume)
 	if(exposed_temperature > T0C + 800)
 		take_damage(round(exposed_volume / 200))
 	..()

@@ -383,14 +383,16 @@
 	//air system updates
 	for(var/turf/T1 in L1)
 //		T1.shift_to_subarea()
-//		T1.CalculateAdjacentTurfs()
-		SSair.mark_for_update(T1)
+		SSair.remove_from_active(T1)
+		T1.CalculateAdjacentTurfs()
+		SSair.add_to_active(T1,1)
 
 
 	for(var/turf/T0 in L0)
 //		T0.shift_to_subarea()
-//		T0.CalculateAdjacentTurfs()
-		SSair.mark_for_update(T0)
+		SSair.remove_from_active(T0)
+		T0.CalculateAdjacentTurfs()
+		SSair.add_to_active(T0,1)
 
 
 

@@ -5,8 +5,6 @@
 	icon_state = "densecrate"
 	density = 1
 	var/obj/item/weapon/paper/manifest/manifest
-	autoignition_temperature = AUTOIGNITION_WOOD // TODO:  Special ash subtype that looks like charred table legs.
-	fire_fuel = 5
 
 /obj/structure/largecrate/New()
 	..()

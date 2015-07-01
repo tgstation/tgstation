@@ -96,11 +96,6 @@
 		return 1
 	return 0
 
-/proc/iseye(A)
-	if(istype(A, /mob/camera))
-		return 1
-	return 0
-
 /proc/ispAI(A)
 	if(istype(A, /mob/living/silicon/pai))
 		return 1

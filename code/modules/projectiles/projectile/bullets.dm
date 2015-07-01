@@ -74,7 +74,11 @@
 	var/turf/location = get_turf(src)
 	if(!location)
 		return
+<<<<<<< HEAD
 	PoolOrNew(/obj/effect/fire, location)
+=======
+	PoolOrNew(/obj/effect/hotspot, location)
+>>>>>>> parent of 3c820fb... Initiate ZAS port
 	location.hotspot_expose(700, 50, 1)
 
 /obj/item/projectile/bullet/incendiary/shell/dragonsbreath

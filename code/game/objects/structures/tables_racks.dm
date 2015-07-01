@@ -433,11 +433,6 @@
 	frame = /obj/structure/table_frame/wood
 	framestack = /obj/item/stack/sheet/mineral/wood
 	buildstack = /obj/item/stack/sheet/mineral/wood
-	autoignition_temperature = AUTOIGNITION_WOOD // TODO:  Special ash subtype that looks like charred table legs.
-	fire_fuel = 5
-
-/obj/structure/table/woodentable/narsie_act()
-	return
 
 /obj/structure/table/wood/poker //No specialties, Just a mapping object.
 	name = "gambling table"

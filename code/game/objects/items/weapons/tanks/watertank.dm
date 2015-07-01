@@ -351,7 +351,11 @@
 			if(get_dist(T, src) < 2) // Otherwise we'll get silliness like people using Nanofrost to kill people through walls with cold air
 				G.temperature = 2
 			T.air_update_turf()
+<<<<<<< HEAD
 			for(var/obj/effect/fire/H in T)
+=======
+			for(var/obj/effect/hotspot/H in T)
+>>>>>>> parent of 3c820fb... Initiate ZAS port
 				H.Kill()
 				if(G.toxins)
 					G.nitrogen += (G.toxins)
