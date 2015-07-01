@@ -6,6 +6,7 @@
 	var/throw_speed = 2
 	var/throw_range = 7
 	var/mob/pulledby = null
+	var/mob/thrownby = null
 	var/languages = 0 //For say() and Hear()
 	var/verb_say = "says"
 	var/verb_ask = "asks"
@@ -168,9 +169,14 @@
 					src.throw_impact(A)
 					src.throwing = 0
 
-/atom/movable/proc/throw_at(atom/target, range, speed)
+/atom/movable/proc/throw_at(atom/target, range, speed, mob/user)
 	if(!target || !src || (flags & NODROP))	return 0
 	//use a modified version of Bresenham's algorithm to get from the atom's current position to that of the target
+
+	if(user)
+		thrownby = user
+	else
+		thrownby = null
 
 	src.throwing = 1
 	if(target.allow_spin) // turns out 1000+ spinning objects being thrown at the singularity creates lag - Iamgoofball

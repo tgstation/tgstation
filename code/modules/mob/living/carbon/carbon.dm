@@ -278,7 +278,7 @@
 
 		newtonian_move(get_dir(target, src))
 
-		item.throw_at(target, item.throw_range, item.throw_speed)
+		item.throw_at(target, item.throw_range, item.throw_speed, src)
 
 /mob/living/carbon/can_use_hands()
 	if(handcuffed)
@@ -531,7 +531,7 @@ var/const/GALOSHES_DONT_HELP = 8
 				target = new_turf
 				if(new_turf.density)
 					break
-			I.throw_at(target,I.throw_range,I.throw_speed)
+			I.throw_at(target,I.throw_range,I.throw_speed,src)
 		if(61 to 90) //throw it down to the floor
 			var/turf/target = get_turf(loc)
-			I.throw_at(target,I.throw_range,I.throw_speed)
+			I.throw_at(target,I.throw_range,I.throw_speed,src)

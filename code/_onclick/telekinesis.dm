@@ -128,7 +128,7 @@ var/const/tk_maxrange = 15
 
 	else
 		apply_focus_overlay()
-		focus.throw_at(target, 10, 1)
+		focus.throw_at(target, 10, 1,user)
 		last_throw = world.time
 	return
 

@@ -71,12 +71,9 @@
 						"<span class='userdanger'>[src] has been hit by [I].</span>")
 		var/armor = run_armor_check(zone, "melee", "Your armor has protected your [parse_zone(zone)].", "Your armor has softened hit to your [parse_zone(zone)].",I.armour_penetration)
 		apply_damage(I.throwforce, dtype, zone, armor, I)
-		if(!I.fingerprintslast)
-			return
-		var/client/assailant = directory[ckey(I.fingerprintslast)]
-		if(assailant && assailant.mob && istype(assailant.mob,/mob))
-			var/mob/M = assailant.mob
-			add_logs(M, src, "hit", object="[I]")
+
+		if(I.thrownby)
+			add_logs(I.thrownby, src, "hit", object="[I]")
 
 /mob/living/mech_melee_attack(obj/mecha/M)
 	if(M.occupant.a_intent == "harm")
