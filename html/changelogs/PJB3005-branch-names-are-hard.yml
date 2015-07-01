@@ -1,0 +1,5 @@
+author: PJB3005
+delete-after: true
+changes:
+  - bugfix: Fixes the AAC vent mode control automation.
+  - bugfix: Fixed ghosts being able to fuck with the AAC.
