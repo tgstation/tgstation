@@ -39,24 +39,21 @@
 	var/blacklisted_lights = list(/obj/item/device/flashlight/flare, /obj/item/device/flashlight/slime)
 
 /obj/effect/proc_holder/spell/aoe_turf/veil/proc/extinguishItem(var/obj/item/I) //WARNING NOT SUFFICIENT TO EXTINGUISH AN ITEM HELD BY A MOB
-	if(is_type_in_list(I, blacklisted_lights))
-		I.visible_message("<span class='danger'>[I] dims slightly, before the shadows around it scatter.</span>")
-		if(istype(I, /obj/item/device/flashlight))
-			var/obj/item/device/flashlight/F = I
-			return F.brightness_on //Necessary because flashlights become 0-luminosity when held.  I don't make the rules of lightcode.
-	else if(istype(I, /obj/item/device/flashlight))
+	if(istype(I, /obj/item/device/flashlight))
 		var/obj/item/device/flashlight/F = I
-		F.on = 0
-		F.update_brightness()
+		if(F.on)
+			if(is_type_in_list(I, blacklisted_lights))
+				I.visible_message("<span class='danger'>[I] dims slightly, before the shadows around it scatter.</span>")
+				return F.brightness_on //Necessary because flashlights become 0-luminosity when held.  I don't make the rules of lightcode.
+			F.on = 0
+			F.update_brightness()
 	else if(istype(I, /obj/item/device/pda))
 		var/obj/item/device/pda/P = I
 		P.fon = 0
-		P.SetLuminosity(0)
-	else
-		I.SetLuminosity(0)
+	I.SetLuminosity(0)
 	return I.luminosity
 
-/obj/effect/proc_holder/spell/aoe_turf/veil/proc/extinguishHuman(var/mob/living/carbon/human/H)
+/obj/effect/proc_holder/spell/aoe_turf/veil/proc/extinguishMob(var/mob/living/H)
 	var/blacklistLuminosity = 0
 	for(var/obj/item/F in H)
 		blacklistLuminosity += extinguishItem(F)
@@ -77,8 +74,8 @@
 		for(var/obj/effect/glowshroom/G in orange(2, usr)) //Very small radius
 			G.visible_message("<span class='warning'>\The [G] withers away!</span>")
 			qdel(G)
-		for(var/mob/living/carbon/human/H in T.contents)
-			extinguishHuman(H)
+		for(var/mob/living/H in T.contents)
+			extinguishMob(H)
 
 
 
