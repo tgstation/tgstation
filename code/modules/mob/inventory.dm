@@ -125,9 +125,6 @@
 /mob/proc/unEquip(obj/item/I, force) //Force overrides NODROP for things like wizarditis and admin undress.
 	if(!I) //If there's nothing to drop, the drop is automatically succesfull. If(unEquip) should generally be used to check for NODROP.
 		return 1
-	if(!(locate(I) in contents)) //Item not in the mob
-		return 0
-
 
 	if((I.flags & NODROP) && !force)
 		return 0

@@ -5,6 +5,7 @@
 	item_state = "m_mask"
 	body_parts_covered = MOUTH
 	flags =  MASKINTERNALS
+	visor_coverage = MOUTH
 	visor_flags = MASKINTERNALS
 	w_class = 2
 	gas_transfer_coefficient = 0.10

@@ -203,7 +203,7 @@
 		return
 	attack_paw(A)
 
-/obj/item/attack_ai(mob/user as mob)
+/obj/item/attack_ai(mob/user)
 	if (istype(src.loc, /obj/item/weapon/robot_module))
 		//If the item is part of a cyborg module, equip it
 		if(!isrobot(user)) return
@@ -213,7 +213,7 @@
 
 // Due to storage type consolidation this should get used more now.
 // I have cleaned it up a little, but it could probably use more.  -Sayu
-/obj/item/attackby(obj/item/weapon/W as obj, mob/user as mob, params)
+/obj/item/attackby(obj/item/weapon/W , mob/user, params)
 	if(istype(W,/obj/item/weapon/storage))
 		var/obj/item/weapon/storage/S = W
 		if(S.use_to_pickup)

@@ -485,6 +485,8 @@
 /obj/machinery/suit_storage_unit/proc/store_mob(mob/living/M as mob, mob/user as mob)
 	if(!istype(M))
 		return
+	if(M.buckled)
+		return
 	if (user.stat != 0)
 		return
 	if (!src.isopen)
