@@ -10,7 +10,7 @@
 
 /obj/item/clothing/shoes/clown_shoes/banana_shoes/New()
 	..()
-	bananium = new/datum/material_container(src,TYPE_BANANIUM,200000)
+	bananium = new/datum/material_container(src,list(MAT_BANANIUM=1),200000)
 
 /obj/item/clothing/shoes/clown_shoes/banana_shoes/step_action()
 	if(on)
@@ -38,8 +38,10 @@
 
 /obj/item/clothing/shoes/clown_shoes/banana_shoes/attackby(obj/item/O, mob/user, params)
 	if(!bananium.can_insert(O))
+		user << "<span class='notice'>This item has no bananium!</span>"
 		return
 	if(!user.unEquip(O))
+		user << "<span class='notice'>You can't drop [O]!</span>"
 		return
 	var/sheet_amount = bananium.insert_stack(O)
 	if(sheet_amount)
@@ -49,7 +51,8 @@
 
 /obj/item/clothing/shoes/clown_shoes/banana_shoes/examine(mob/user)
 	..()
-	user << "<span class='notice'>The shoes are [on ? "enabled" : "disabled"]. There is [bananium.amount(MAT_BANANIUM)] bananium left.</span>"
+	var/ban_amt = bananium.amount(MAT_BANANIUM)
+	user << "<span class='notice'>The shoes are [on ? "enabled" : "disabled"]. There is [ban_amt ? ban_amt : "no"] bananium left.</span>"
 
 /obj/item/clothing/shoes/clown_shoes/banana_shoes/ui_action_click()
 	if(bananium.amount(MAT_BANANIUM))

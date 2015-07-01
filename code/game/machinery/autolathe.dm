@@ -52,7 +52,7 @@
 	component_parts += new /obj/item/weapon/stock_parts/matter_bin(null)
 	component_parts += new /obj/item/weapon/stock_parts/manipulator(null)
 	component_parts += new /obj/item/weapon/stock_parts/console_screen(null)
-	materials = new /datum/material_container(src, TYPE_METAL|TYPE_GLASS)
+	materials = new /datum/material_container(src, list(MAT_METAL=1, MAT_GLASS=1))
 	RefreshParts()
 
 	wires = new(src)
@@ -113,7 +113,7 @@
 	if(!material_amount)
 		user << "<span class='warning'>This object does not contain sufficient amounts of metal or glass to be accepted by the autolathe.</span>"
 		return 1
-	if(materials.isFull(material_amount))
+	if(!materials.has_space(material_amount))
 		user << "<span class='warning'>The autolathe is full. Please remove metal or glass from the autolathe in order to insert more.</span>"
 		return 1
 	if(!user.unEquip(O))
