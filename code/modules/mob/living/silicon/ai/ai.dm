@@ -113,7 +113,7 @@ var/list/ai_list = list()
 	if(!safety)//Only used by AIize() to successfully spawn an AI.
 		if (!B)//If there is no player/brain inside.
 			new/obj/structure/AIcore/deactivated(loc)//New empty terminal.
-			del(src)//Delete AI.
+			qdel(src)//Delete AI.
 			return
 		else
 			if (B.brainmob.mind)
@@ -132,6 +132,40 @@ var/list/ai_list = list()
 	ai_list += src
 	..()
 	return
+
+/mob/living/silicon/ai/verb/rename_photo() //This is horrible but will do for now
+	set category = "AI Commands"
+	set name = "Modify Photo Files"
+	if(stat || aiRestorePowerRoutine)
+		return
+
+	var/list/nametemp = list()
+	var/find
+	var/datum/picture/selection
+	if(aicamera.aipictures.len == 0)
+		usr << "<font color=red><B>No images saved<B></font>"
+		return
+	for(var/datum/picture/t in aicamera.aipictures)
+		nametemp += t.fields["name"]
+	find = input("Select image to delete or rename.", "Photo Modification") in nametemp
+	for(var/datum/picture/q in aicamera.aipictures)
+		if(q.fields["name"] == find)
+			selection = q
+			break
+
+	if(!selection) return
+	var/choice = input(usr, "Would you like to rename or delete [selection.fields["name"]]?", "Photo Modification") in list("Rename","Delete","Cancel")
+	switch(choice)
+		if("Cancel")
+			return
+		if("Delete")
+			qdel(selection)
+		if("Rename")
+			var/new_name = sanitize(input(usr, "Write a new name for [selection.fields["name"]]:","Photo Modification"))
+			if(length(new_name) > 0)
+				selection.fields["name"] = new_name
+			else
+				usr << "You must write a name."
 
 /mob/living/silicon/ai/verb/pick_icon()
 	set category = "AI Commands"

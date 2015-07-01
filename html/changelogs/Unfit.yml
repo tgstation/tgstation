@@ -1,2 +1,5 @@
 author: Unid
-changes: []
+delete-after: True
+changes: 
+  - tweak: AIs can upload photos to newscasters.
+  - tweak: AIs can rename or delete their stored photos.

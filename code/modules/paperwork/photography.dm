@@ -330,9 +330,8 @@
 		printpicture(user, icon('icons/effects/96x96.dmi',"blocked"), "You can't see a thing.", flag)
 		return
 	var/mobs = ""
-	var/isAi = istype(user, /mob/living/silicon/ai)
 	var/list/seen
-	if(!isAi) //crappy check, but without it AI photos would be subject to line of sight from the AI Eye object. Made the best of it by moving the sec camera check inside
+	if(!isAI(user)) //crappy check, but without it AI photos would be subject to line of sight from the AI Eye object. Made the best of it by moving the sec camera check inside
 		if(user.client)		//To make shooting through security cameras possible
 			seen = get_hear(world.view, user.client.eye) //To make shooting through security cameras possible
 		else
@@ -343,7 +342,7 @@
 	var/list/turfs = list()
 	for(var/turf/T in range(1, target))
 		if(T in seen)
-			if(isAi && !cameranet.checkTurfVis(T))
+			if(isAI(user) && !cameranet.checkTurfVis(T))
 				continue
 			else
 				turfs += T
@@ -353,7 +352,7 @@
 	temp.Blend("#000", ICON_OVERLAY)
 	temp.Blend(camera_get_icon(turfs, target), ICON_OVERLAY)
 
-	if(!isAi)
+	if(!isAI(user))
 		printpicture(user, temp, mobs, flag)
 	else
 		aipicture(user, temp, mobs, blueprints)
@@ -440,7 +439,7 @@
 	P.fields["blueprints"] = blueprintsinject
 
 	aipictures += P
-	usr << "<FONT COLOR=blue><B>Image recorded</B>"	//feedback to the AI player that the picture was taken
+	usr << "<font color=blue><B>Image recorded</B></font>"	//feedback to the AI player that the picture was taken
 
 
 /obj/item/device/camera/ai_camera/proc/viewpictures() //AI proc for viewing pictures they have taken
@@ -448,11 +447,11 @@
 	var/find
 	var/datum/picture/selection
 	if(src.aipictures.len == 0)
-		usr << "<FONT COLOR=red><B>No images saved</B>"
+		usr << "<font color=red><B>No images saved</B></font>"
 		return
 	for(var/datum/picture/t in src.aipictures)
 		nametemp += t.fields["name"]
-	find = input("Select image (numbered in order taken)") in nametemp
+	find = input("Select image (listed in order taken)") in nametemp
 	var/obj/item/weapon/photo/P = new/obj/item/weapon/photo()
 	for(var/datum/picture/q in src.aipictures)
 		if(q.fields["name"] == find)
