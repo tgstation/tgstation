@@ -188,10 +188,6 @@
 
 	return 1
 
-/obj/machinery/containment_field/meteorhit()
-
-	return 0
-
 /obj/machinery/power/emitter/process()
 
 	if(!anchored) //If it got unanchored "inexplicably"... fucking badmins

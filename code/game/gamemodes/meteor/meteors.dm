@@ -107,11 +107,10 @@
 		for(var/mob/M in range(10, src))
 			if(!M.stat && !istype(M, /mob/living/silicon/ai)) //bad idea to shake an ai's view
 				shake_camera(M, 3, 2) //Medium hit
-		if(A)
-			A.meteorhit(src)
-			playsound(get_turf(src), "explosion", 50, 1) //Medium boom
-			explosion(src.loc, 2, 4, 6, 8, 0) //Medium meteor, medium boom
-			qdel(src)
+
+		playsound(get_turf(src), "explosion", 50, 1) //Medium boom
+		explosion(src.loc, 2, 4, 6, 8, 0) //Medium meteor, medium boom
+		qdel(src)
 
 /obj/effect/meteor/ex_act(severity)
 
@@ -129,12 +128,10 @@
 		for(var/mob/M in range(8, src))
 			if(!M.stat && !istype(M, /mob/living/silicon/ai)) //bad idea to shake an ai's view
 				shake_camera(M, 2, 1) //Poof
-		if(A)
-			A.meteorhit(src)
-			playsound(get_turf(src), 'sound/effects/meteorimpact.ogg', 10, 1)
-			explosion(src.loc, -1, 1, 3, 4, 0) //Tiny meteor doesn't cause too much damage
-			qdel(src)
 
+		playsound(get_turf(src), 'sound/effects/meteorimpact.ogg', 10, 1)
+		explosion(src.loc, -1, 1, 3, 4, 0) //Tiny meteor doesn't cause too much damage
+		qdel(src)
 
 /obj/effect/meteor/big
 	name = "big meteor"
@@ -149,10 +146,10 @@
 		for(var/mob/M in range(15, src)) //Now that's visible
 			if(!M.stat && !istype(M, /mob/living/silicon/ai)) //bad idea to shake an ai's view
 				shake_camera(M, 7, 3) //Massive shellshock
-		if(A)
-			explosion(src.loc, 4, 6, 8, 8, 0) //You have been visited by the nuclear meteor
-			playsound(get_turf(src), "explosion", 100, 1) //Deafening boom, default is 50
-			qdel(src)
+
+		explosion(src.loc, 4, 6, 8, 8, 0) //You have been visited by the nuclear meteor
+		playsound(get_turf(src), "explosion", 100, 1) //Deafening boom, default is 50
+		qdel(src)
 
 /obj/effect/meteor/attackby(obj/item/weapon/W as obj, mob/user as mob)
 	if(istype(W, /obj/item/weapon/pickaxe))

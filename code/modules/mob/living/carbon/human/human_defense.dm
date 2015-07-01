@@ -373,21 +373,3 @@ emp_act
 	var/datum/organ/external/affecting = get_organ(ran_zone(dam_zone))
 	apply_damage(rand(30,40), BRUTE, affecting, run_armor_check(affecting, "melee"))
 	return
-
-/mob/living/carbon/human/meteorhit(O as obj)
-	if(flags & INVULNERABLE)
-		return
-	for(var/mob/M in viewers(src, null))
-		if ((M.client && !( M.blinded )))
-			M.show_message("<span class='warning'>[src] has been hit by [O]</span>", 1)
-	if (health > 0)
-		var/datum/organ/external/affecting = get_organ(pick("chest", "chest", "chest", "head"))
-		if(!affecting)	return
-		if (istype(O, /obj/effect/immovablerod))
-			if(affecting.take_damage(101, 0))
-				UpdateDamageIcon(1)
-		else
-			if(affecting.take_damage((istype(O, /obj/effect/meteor/small) ? 10 : 25), 30))
-				UpdateDamageIcon(1)
-		updatehealth()
-	return

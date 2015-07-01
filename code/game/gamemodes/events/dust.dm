@@ -99,7 +99,7 @@ The "dust" will damage the hull of the station causin minor hull breaches.
 				playsound(get_turf(src), 'sound/effects/meteorimpact.ogg', 40, 1)
 
 				if(ismob(A))
-					A.meteorhit(src)//This should work for now I guess
+					A.ex_act(strength)
 				else if(!istype(A,/obj/machinery/power/emitter) && !istype(A,/obj/machinery/field_generator)) //Protect the singularity from getting released every round!
 					A.ex_act(strength) //Changing emitter/field gen ex_act would make it immune to bombs and C4
 

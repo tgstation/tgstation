@@ -58,10 +58,6 @@
 	if (prob(50))
 		qdel(src)
 
-/obj/machinery/snackbar_machine/meteorhit()
-	qdel(src)
-	return
-
 /obj/machinery/snackbar_machine/power_change()
 	if(powered())
 		stat &= ~NOPOWER

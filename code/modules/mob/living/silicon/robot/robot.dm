@@ -617,21 +617,6 @@
 
 	updatehealth()
 
-
-/mob/living/silicon/robot/meteorhit(obj/O as obj)
-	if(flags & INVULNERABLE)
-		return
-	for(var/mob/M in viewers(src, null))
-		M.show_message(text("<span class='attack'>[src] has been hit by [O]</span>"), 1)
-		//Foreach goto(19)
-	if (health > 0)
-		adjustBruteLoss(30)
-		if ((O.icon_state == "flaming"))
-			adjustFireLoss(40)
-		updatehealth()
-	return
-
-
 /mob/living/silicon/robot/bullet_act(var/obj/item/projectile/Proj)
 	..(Proj)
 	updatehealth()

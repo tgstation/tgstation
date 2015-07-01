@@ -17,9 +17,6 @@ obj/structure/ex_act(severity)
 		if(3.0)
 			return
 
-obj/structure/meteorhit(obj/O as obj)
-	del(src)
-
 /obj/structure/Destroy()
 	if(hascall(src, "unbuckle"))
 		src:unbuckle()

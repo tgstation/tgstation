@@ -124,11 +124,6 @@
 	health -= rand(30, 50)
 	healthcheck()
 
-/obj/structure/window/meteorhit()
-
-	health -= rand(100, 150)
-	healthcheck()
-
 /obj/structure/window/CheckExit(var/atom/movable/O, var/turf/target)
 
 	if(istype(O) && O.checkpass(PASSGLASS))

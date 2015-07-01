@@ -85,11 +85,6 @@
 	healthcheck()
 	return
 
-/obj/effect/alien/resin/meteorhit()
-	health-=50
-	healthcheck()
-	return
-
 /obj/effect/alien/resin/hitby(AM as mob|obj)
 	..()
 	for(var/mob/O in viewers(src, null))

@@ -59,9 +59,6 @@
 	opacity = 1
 	spawn(20) if(src) opacity = 0
 
-/obj/machinery/shield/meteorhit()
-	src.health -= max_health*0.75 //3/4 health as damage
-
 	if(src.health <= 0)
 		visible_message("<span class='notice'>The [src] dissapates</span>")
 		del(src)
@@ -197,13 +194,6 @@
 	if(health <= 0)
 		del(src)
 	update_icon()
-	return
-
-/obj/machinery/shieldgen/meteorhit(obj/O as obj)
-	src.health -= max_health*0.25 //A quarter of the machine's health
-	if (prob(5))
-		src.malfunction = 1
-	src.checkhp()
 	return
 
 /obj/machinery/shieldgen/ex_act(severity)

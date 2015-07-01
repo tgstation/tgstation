@@ -227,10 +227,6 @@ Manual Tracking Direction:"}
 	stat |= BROKEN
 	update_icon()
 
-/obj/machinery/power/solar/control/meteorhit()
-	broken()
-	return
-
 /obj/machinery/power/solar/control/ex_act(severity)
 	switch(severity)
 		if(1.0)

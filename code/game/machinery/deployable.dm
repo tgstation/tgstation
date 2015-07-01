@@ -106,14 +106,6 @@ for reference:
 					qdel(src)
 				return
 
-	meteorhit()
-		visible_message("<span class='danger'>The barricade is smashed apart!</span>")
-		new /obj/item/stack/sheet/wood(get_turf(src))
-		new /obj/item/stack/sheet/wood(get_turf(src))
-		new /obj/item/stack/sheet/wood(get_turf(src))
-		del(src)
-		return
-
 	blob_act()
 		src.health -= 25
 		if (src.health <= 0)
@@ -247,10 +239,6 @@ for reference:
 		locked = !locked
 		anchored = !anchored
 		icon_state = "barrier[src.locked]"
-
-/obj/machinery/deployable/barrier/meteorhit()
-	src.explode()
-	return
 
 /obj/machinery/deployable/barrier/blob_act()
 	src.health -= 25

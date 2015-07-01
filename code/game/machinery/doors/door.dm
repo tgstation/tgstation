@@ -120,10 +120,6 @@ var/list/all_doors = list()
 
 	return
 
-/obj/machinery/door/meteorhit(obj/M as obj)
-	open()
-	return
-
 /obj/machinery/door/attack_ai(mob/user as mob)
 	add_hiddenprint(user)
 	attack_hand(user)

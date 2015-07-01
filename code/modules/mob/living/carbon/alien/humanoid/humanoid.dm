@@ -84,18 +84,6 @@
 
 	return
 
-
-/mob/living/carbon/alien/humanoid/meteorhit(O as obj)
-	if(flags & INVULNERABLE)
-		return
-	visible_message("<span class='warning'>\The [src] has been hit by [O]</span>")
-	if(health > 0)
-		adjustFireLoss((istype(O, /obj/effect/meteor/small) ? 10 : 25))
-		adjustFireLoss(30)
-		updatehealth()
-	return
-
-
 /mob/living/carbon/alien/humanoid/attack_paw(mob/living/carbon/monkey/M as mob)
 	if(!ismonkey(M))
 		return//Fix for aliens receiving double messages when attacking other aliens.

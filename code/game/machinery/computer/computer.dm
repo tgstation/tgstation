@@ -32,15 +32,6 @@
 		return 0
 	return 1
 
-/obj/machinery/computer/meteorhit(var/obj/O as obj)
-	for(var/x in verbs)
-		verbs -= x
-	set_broken()
-	var/datum/effect/effect/system/smoke_spread/smoke = new /datum/effect/effect/system/smoke_spread()
-	smoke.set_up(5, 0, src)
-	smoke.start()
-	return
-
 /obj/machinery/computer/emp_act(severity)
 	if(prob(20/severity)) set_broken()
 	..()

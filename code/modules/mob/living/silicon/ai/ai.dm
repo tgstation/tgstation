@@ -422,19 +422,6 @@ var/list/ai_list = list()
 
 	return
 
-/mob/living/silicon/ai/meteorhit(obj/O as obj)
-	if(flags & INVULNERABLE)
-		return
-	for(var/mob/M in viewers(src, null))
-		M.show_message(text("<span class='warning'>[] has been hit by []</span>", src, O), 1)
-		//Foreach goto(19)
-	if (health > 0)
-		adjustBruteLoss(30)
-		if ((O.icon_state == "flaming"))
-			adjustFireLoss(40)
-		updatehealth()
-	return
-
 /mob/living/silicon/ai/bullet_act(var/obj/item/projectile/Proj)
 	..(Proj)
 	updatehealth()

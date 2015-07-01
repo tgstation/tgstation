@@ -53,10 +53,6 @@
 	health -= rand(initial(health)*0.8, initial(health)*3) //Grille will always be blasted, but chances of leaving things over
 	healthcheck(hitsound = 1)
 
-/obj/structure/grille/meteorhit()
-	health -= rand(initial(health)*0.8, initial(health)*3)
-	healthcheck(hitsound = 1)
-
 /obj/structure/grille/Bumped(atom/user)
 	if(ismob(user))
 		shock(user, 60) //Give the user the benifit of the doubt

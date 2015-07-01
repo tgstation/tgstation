@@ -274,20 +274,6 @@
 /mob/living/carbon/slime/attack_ui(slot)
 	return
 
-/mob/living/carbon/slime/meteorhit(O as obj)
-	if(flags & INVULNERABLE)
-		return
-	for(var/mob/M in viewers(src, null))
-		if ((M.client && !( M.blinded )))
-			M.show_message(text("<span class='warning'>[] has been hit by []</span>", src, O), 1)
-	if (health > 0)
-		adjustBruteLoss((istype(O, /obj/effect/meteor/small) ? 10 : 25))
-		adjustFireLoss(30)
-
-		updatehealth()
-	return
-
-
 /mob/living/carbon/slime/attack_slime(mob/living/carbon/slime/M as mob)
 	if (!ticker)
 		M << "You cannot attack people before the game has started."
