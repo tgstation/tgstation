@@ -240,8 +240,7 @@ proc/cardinalrange(var/center)
 	throwforce = 5
 	throw_speed = 1
 	throw_range = 2
-	m_amt = 100
-
+	materials = list(MAT_METAL=100)
 /obj/item/device/am_shielding_container/attackby(var/obj/item/I, var/mob/user, params)
 	if(istype(I, /obj/item/device/multitool) && istype(src.loc,/turf))
 		new/obj/machinery/am_shielding(src.loc)

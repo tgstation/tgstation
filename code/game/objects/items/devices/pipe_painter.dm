@@ -1,5 +1,5 @@
 
-/obj/item/device/pipe_painter
+/obj/item/device/pipe_painter //deprecated?
 	name = "pipe painter"
 	icon = 'icons/obj/bureaucracy.dmi'
 	icon_state = "labeler1"
@@ -15,8 +15,7 @@
 	)
 	var/mode = "grey"
 
-	m_amt = 5000
-	g_amt = 2000
+	materials = list(MAT_METAL=5000, MAT_GLASS=2000)
 
 /obj/item/device/pipe_painter/afterattack(atom/A, mob/user as mob, proximity_flag)
 	//Make sure we only paint adjacent items

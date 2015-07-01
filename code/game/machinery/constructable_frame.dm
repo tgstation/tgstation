@@ -201,6 +201,8 @@
 micro-manipulator, console screen, beaker, Microlaser, matter bin, power cells.
 Note: Once everything is added to the public areas, will add m_amt and g_amt to circuit boards since autolathe won't be able
 to destroy them and players will be able to make replacements.
+
+>implying
 */
 
 /obj/item/weapon/circuitboard/vendor

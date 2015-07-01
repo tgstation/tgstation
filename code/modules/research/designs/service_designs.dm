@@ -8,7 +8,7 @@
 	id = "buffer"
 	req_tech = list("materials" = 5, "engineering" = 3, "service" = 1)
 	build_type = PROTOLATHE
-	materials = list("$metal" = 3000, "$glass" = 200)
+	materials = list(MAT_METAL = 3000, MAT_GLASS = 200)
 	build_path = /obj/item/janiupgrade
 	category = list("service")
 
@@ -18,7 +18,7 @@
 	id = "holosign"
 	req_tech = list("magnets" = 3, "powerstorage" = 2, "service" = 1)
 	build_type = PROTOLATHE
-	materials = list("$metal" = 2000, "$glass" = 1000)
+	materials = list(MAT_METAL = 2000, MAT_GLASS = 1000)
 	build_path = /obj/item/weapon/holosign_creator
 	category = list("service")
 
@@ -28,7 +28,7 @@
 	id = "flora_gun"
 	req_tech = list("materials" = 2, "biotech" = 3, "powerstorage" = 3, "service" = 2)
 	build_type = PROTOLATHE
-	materials = list("$metal" = 2000, "$glass" = 500, "radium" = 20)
+	materials = list(MAT_METAL = 2000, MAT_GLASS = 500, "radium" = 20)
 	build_path = /obj/item/weapon/gun/energy/floragun
 	category = list("service")
 
@@ -38,7 +38,7 @@
 	id = "galoshes"
 	req_tech = list("materials" = 3 "service" = 3)
 	build_type = PROTOLATHE
-	materials = ("$metal" = 2000, "$uranium" = 1000)
+	materials = (MAT_METAL = 2000, "$uranium" = 1000)
 	build_path = /obj/item/clothing/shoes/galoshes
 	category = list("service")
 
@@ -48,7 +48,7 @@
 	id = "soapnt"
 	req_tech = ("plasma" = 2 "service" = 1)
 	build_type = PROTOLATHE
-	materials = ("$metal" = 1000, "$plasma" = 1000)
+	materials = (MAT_METAL = 1000, MAT_PLASMA = 1000)
 	build_path = /obj/item/weapon/soap/nanotrasen
 	category = list("service")
 
@@ -58,7 +58,7 @@
 	id = "soapsyndie"
 	req_tech = ("plasma" = 2 "illegal" = 2, "service" = 1)
 	build_type = PROTOLATHE
-	materials = ("$plasma" = 2000)
+	materials = (MAT_PLASMA = 2000)
 	build_path = /obj/item/weapon/soap/syndie
 	category = list("service")
 
@@ -68,7 +68,7 @@
 	id = "fastcart"
 	req_tech = ("materials" = 2 "programming" = 4, "magnets" = 2 "service" = 6)
 	build_type = PROTOLATHE
-	materials = ("$metal" = 2000, "$gold" = 2000)
+	materials = (MAT_METAL = 2000, MAT_GOLD = 2000)
 	build_path = /obj/item/devices/upgrades/fastcart
 	category = list("service")
 
@@ -78,7 +78,7 @@
 	id = "tankcart"
 	req_tech = ("materials" = 4 "service" = 5)
 	build_type = PROTOLATHE
-	materials = ("$metal" = 4000, "$plasma" = 2000)
+	materials = (MAT_METAL = 4000, MAT_PLASMA = 2000)
 	build_path = /obj/item/devices/upgrades/tankcart
 	category = list("service")
 
@@ -88,7 +88,7 @@
 	id = "spacecart"
 	req_tech = ("materials" = 6, "magnets" = 4, "powerstorage" = 7, "service" = 8)
 	build_type = PROTOLATHE
-	materials = ("$metal" = 8000, "$uranium" = 4000, "$plasma" = 4000)
+	materials = (MAT_METAL = 8000, "$uranium" = 4000, MAT_PLASMA = 4000)
 	build_path = /obj/item/devices/upgrades/spacecart
 	category = list("service")
 
@@ -98,7 +98,7 @@
 	id = "whetstone"
 	req_tech = ("materials" = 4 "service" = 3, "syndicate" = 3)
 	build_type = PROTOLATHE
-	materials = ("$metal" = 2500)
+	materials = (MAT_METAL = 2500)
 	build_path = /obj/item/weapon/kitchen/whetstone
 	category = list("service")
 
@@ -108,7 +108,7 @@
 	id = "cyborg shaker"
 	req_tech = list("materials" = 7 "programming" = 3, "powerstorage" = 4, "bluespace" = 4, "service" = 8)
 	build_type = PROTOLATHE
-	materials = list("$metal" = 5000, "$glass" = 1000, "$diamond" = 2000)
+	materials = list(MAT_METAL = 5000, MAT_GLASS = 1000, MAT_DIAMOND = 2000)
 	build_path = /obj/item/weapon/reagent_containers/borghypo/borgshaker/human
 	category = list("service")
 
@@ -118,7 +118,7 @@
 	id = "crack"
 	req_tech = list("materials" = 4, "syndicate" = 3, "service" = 2)
 	build_type = PROTOLATHE
-	materials = list("$plasma" = 500, "$glass" = 500)
+	materials = list(MAT_PLASMA = 500, MAT_GLASS = 500)
 	build_path = /obj/item/weapon/reagent_containers/food/condiment/crack
 	category = list("service")
 
@@ -128,7 +128,7 @@
 	id = "plantbag"
 	req_tech = list("materials" =4 "magnets" = 4, "bluespace" = 3, "service" = 4)
 	build_type = PROTOLATHE
-	materials = list("$metal" = 5000, "$glass" = 1000, "$diamond" = 2000)
+	materials = list(MAT_METAL = 5000, MAT_GLASS = 1000, MAT_DIAMOND = 2000)
 	build_path = /obj/item/weapon/storage/bag/plants/holding
 	category = list("service")
 
@@ -138,7 +138,7 @@
 	id = "chainsaw"
 	req_tech = list("materials" = 5 "combat" = 5, "powerstorage" = 3, "syndicate" = 5, "service" = 8)
 	build_type = PROTOLATHE
-	materials = list("$metal" = 5000, "$glass" = 1000, "$diamond" = 2000, "$plasma" = 1000)
+	materials = list(MAT_METAL = 5000, MAT_GLASS = 1000, MAT_DIAMOND = 2000, MAT_PLASMA = 1000)
 	build_path = /obj/item/weapon/twohanded/chainsaw
 	category = list("service")
 
@@ -148,6 +148,6 @@
 	id = "muffinmachine"
 	req_tech = list("materials" = 6 "magnets" = 5, "programming" = 4, "powerstorage" = 4, "bluespace" = 6 "service" = 8)
 	build_type = PROTOLATHE
-	materials = list("$metal" = 10000, "$glass" = 2000, "$diamond" = 4000)
+	materials = list(MAT_METAL = 10000, MAT_GLASS = 2000, MAT_DIAMOND = 4000)
 	build_path = /obj/machinery/muffinmachine
 	category = list("service")

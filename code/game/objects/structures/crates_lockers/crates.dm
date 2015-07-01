@@ -46,13 +46,6 @@
 /obj/structure/closet/crate/rcd
 	desc = "A crate for the storage of the RCD."
 	name = "\improper RCD crate"
-	icon = 'icons/obj/storage.dmi'
-	icon_state = "crate"
-	density = 1
-
-/obj/structure/closet/crate/rcd
-	desc = "A crate for the storage of the RCD."
-	name = "\improper RCD crate"
 
 /obj/structure/closet/crate/rcd/New()
 	..()

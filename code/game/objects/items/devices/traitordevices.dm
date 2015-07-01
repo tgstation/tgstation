@@ -80,7 +80,7 @@ effective or pretty fucking useless.
 	w_class = 1.0
 	throw_speed = 3
 	throw_range = 7
-	m_amt = 400
+	materials = list(MAT_METAL=400)
 	origin_tech = "magnets=3;biotech=5;syndicate=3"
 	var/intensity = 5 // how much damage the radiation does
 	var/wavelength = 10 // time it takes for the radiation to kick in, in seconds

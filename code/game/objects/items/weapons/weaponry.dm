@@ -106,7 +106,7 @@ obj/item/weapon/wirerod
 	force = 9
 	throwforce = 10
 	w_class = 3
-	m_amt = 1875
+	materials = list(MAT_METAL=1875)
 	attack_verb = list("hit", "bludgeoned", "whacked", "bonked")
 
 obj/item/weapon/wirerod/attackby(var/obj/item/I, mob/user as mob, params)
@@ -171,7 +171,7 @@ obj/item/weapon/wirerod/attackby(var/obj/item/I, mob/user as mob, params)
 	throwforce = 15
 	throw_speed = 3
 	throw_range = 6
-	m_amt = 12000
+	materials = list(MAT_METAL=12000)
 	origin_tech = "materials=1"
 	hitsound = 'sound/weapons/Genhit.ogg'
 	attack_verb = list("stubbed", "poked")
@@ -276,5 +276,5 @@ obj/item/weapon/wirerod/attackby(var/obj/item/I, mob/user as mob, params)
 	force = 5.0
 	throwforce = 5
 	w_class = 2.0
-	m_amt = 50
+	materials = list(MAT_METAL=50)
 	attack_verb = list("bludgeoned", "whacked", "disciplined", "thrashed")

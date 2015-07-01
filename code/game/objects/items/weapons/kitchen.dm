@@ -109,7 +109,7 @@
 	throwforce = 10.0
 	throw_speed = 3
 	throw_range = 6
-	m_amt = 12000
+	materials = list(MAT_METAL=12000)
 	sharp = 1
 	origin_tech = "materials=1"
 	attack_verb = list("slashed", "stabbed", "sliced", "torn", "ripped", "diced", "cut")
@@ -140,7 +140,7 @@
 	throwforce = 8.0
 	throw_speed = 3
 	throw_range = 6
-	m_amt = 12000
+	materials = list(MAT_METAL=12000)
 	sharp = 1
 	origin_tech = "materials=1"
 	hitsound = 'sound/weapons/bladeslice.ogg'
@@ -228,7 +228,7 @@
 	throwforce = 15.0
 	throw_speed = 3
 	throw_range = 4
-	m_amt = 15000
+	materials = list(MAT_METAL=15000)
 	sharp = 1
 	origin_tech = "materials=2;combat=1"
 	attack_verb = list("chopped", "torn", "cut")

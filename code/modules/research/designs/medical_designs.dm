@@ -8,7 +8,7 @@ datum/design/mass_spectrometer
 	id = "mass_spectrometer"
 	req_tech = list("biotech" = 2, "magnets" = 2)
 	build_type = PROTOLATHE
-	materials = list("$metal" = 30, "$glass" = 20)
+	materials = list(MAT_METAL = 30, MAT_GLASS = 20)
 	reliability = 76
 	build_path = /obj/item/device/mass_spectrometer
 	category = list("Medical Designs")
@@ -19,7 +19,7 @@ datum/design/adv_mass_spectrometer
 	id = "adv_mass_spectrometer"
 	req_tech = list("biotech" = 2, "magnets" = 4)
 	build_type = PROTOLATHE
-	materials = list("$metal" = 30, "$glass" = 20)
+	materials = list(MAT_METAL = 30, MAT_GLASS = 20)
 	reliability = 74
 	build_path = /obj/item/device/mass_spectrometer/adv
 	category = list("Medical Designs")
@@ -30,7 +30,7 @@ datum/design/mmi
 	id = "mmi"
 	req_tech = list("programming" = 2, "biotech" = 3)
 	build_type = PROTOLATHE | MECHFAB
-	materials = list("$metal" = 1000, "$glass" = 500)
+	materials = list(MAT_METAL = 1000, MAT_GLASS = 500)
 	construction_time = 75
 	reliability = 76
 	build_path = /obj/item/device/mmi
@@ -42,7 +42,7 @@ datum/design/mmi_radio
 	id = "mmi_radio"
 	req_tech = list("programming" = 2, "biotech" = 4)
 	build_type = PROTOLATHE | MECHFAB
-	materials = list("$metal" = 1200, "$glass" = 500)
+	materials = list(MAT_METAL = 1200, MAT_GLASS = 500)
 	construction_time = 75
 	reliability = 74
 	build_path = /obj/item/device/mmi/radio_enabled
@@ -54,7 +54,7 @@ datum/design/posibrain
 	id = "mmi_posi"
 	req_tech = list("programming" = 5, "biotech" = 4, "materials" = 6, "bluespace" = 3)
 	build_type = PROTOLATHE | MECHFAB
-	materials = list("$metal" = 1700, "$glass" = 1350, "$diamond" = 1000, "$uranium" = 500)
+	materials = list(MAT_METAL = 1700, MAT_GLASS = 1350, MAT_DIAMOND = 1000, MAT_URANIUM = 500)
 	reliability = 74
 	construction_time = 75
 	build_path = /obj/item/device/mmi/posibrain
@@ -67,7 +67,7 @@ datum/design/synthetic_flash
 	id = "sflash"
 	req_tech = list("magnets" = 3, "combat" = 2)
 	build_type = MECHFAB
-	materials = list("$metal" = 750, "$glass" = 750)
+	materials = list(MAT_METAL = 750, MAT_GLASS = 750)
 	construction_time = 100
 	reliability = 76
 	build_path = /obj/item/device/flash/handheld
@@ -79,7 +79,7 @@ datum/design/bluespacebeaker
 	id = "bluespacebeaker"
 	req_tech = list("bluespace" = 2, "materials" = 6)
 	build_type = PROTOLATHE
-	materials = list("$metal" = 3000, "$plasma" = 3000, "$diamond" = 500)
+	materials = list(MAT_METAL = 3000, MAT_PLASMA = 3000, MAT_DIAMOND = 500)
 	reliability = 76
 	build_path = /obj/item/weapon/reagent_containers/glass/beaker/bluespace
 	category = list("Misc","Medical Designs")
@@ -90,7 +90,7 @@ datum/design/noreactbeaker
 	id = "splitbeaker"
 	req_tech = list("materials" = 2)
 	build_type = PROTOLATHE
-	materials = list("$metal" = 3000)
+	materials = list(MAT_METAL = 3000)
 	reliability = 76
 	build_path = /obj/item/weapon/reagent_containers/glass/beaker/noreact
 	category = list("Medical Designs")
@@ -101,7 +101,7 @@ datum/design/bluespacebodybag
 	id = "bluespacebodybag"
 	req_tech = list("bluespace" = 2, "materials" = 6)
 	build_type = PROTOLATHE
-	materials = list("$metal" = 3000, "$plasma" = 2000, "$diamond" = 500)
+	materials = list(MAT_METAL = 3000, MAT_PLASMA = 2000, MAT_DIAMOND = 500)
 	reliability = 76
 	build_path = /obj/item/bodybag/bluespace
 	category = list("Medical Designs")
@@ -117,7 +117,7 @@ datum/design/cyberimp_medical_hud
 	id = "ci-medhud"
 	req_tech = list("materials" = 6, "programming" = 4, "biotech" = 4)
 	build_type = MECHFAB
-	materials = list("$metal" = 200, "$glass" = 200, "$silver" = 200, "$gold" = 100)
+	materials = list(MAT_METAL = 200, MAT_GLASS = 200, MAT_SILVER = 200, MAT_GOLD = 100)
 	construction_time = 75
 	build_path = /obj/item/cybernetic_implant/eyes/hud/medical
 	category = list("Misc")
@@ -128,7 +128,7 @@ datum/design/cyberimp_security_hud
 	id = "ci-sechud"
 	req_tech = list("materials" = 6, "programming" = 5, "biotech" = 4, "combat" = 2)
 	build_type = MECHFAB
-	materials = list("$metal" = 200, "$glass" = 200, "$silver" = 300, "$gold" = 300)
+	materials = list(MAT_METAL = 200, MAT_GLASS = 200, MAT_SILVER = 300, MAT_GOLD = 300)
 	construction_time = 75
 	build_path = /obj/item/cybernetic_implant/eyes/hud/security
 	category = list("Misc")
@@ -139,7 +139,7 @@ datum/design/cyberimp_xray
 	id = "ci-xray"
 	req_tech = list("materials" = 7, "programming" = 5, "biotech" = 4, "magnets" = 5, "plasmatech" = 3)
 	build_type = MECHFAB
-	materials = list("$metal" = 200, "$glass" = 200, "$silver" = 200, "$gold" = 200, "$plasma" = 200, "$uranium" = 500, "$diamond" = 1000)
+	materials = list(MAT_METAL = 200, MAT_GLASS = 200, MAT_SILVER = 200, MAT_GOLD = 200, MAT_PLASMA = 200, MAT_URANIUM = 500, MAT_DIAMOND = 1000)
 	construction_time = 75
 	build_path = /obj/item/cybernetic_implant/eyes/xray
 	category = list("Misc")
@@ -150,7 +150,7 @@ datum/design/cyberimp_thermals
 	id = "ci-thermals"
 	req_tech = list("materials" = 7, "programming" = 5, "biotech" = 4, "magnets" = 5, "plasmatech" = 3, "syndicate" = 3)
 	build_type = MECHFAB
-	materials = list("$metal" = 200, "$glass" = 200, "$silver" = 200, "$gold" = 200, "$plasma" = 200, "$diamond" = 1000)
+	materials = list(MAT_METAL = 200, MAT_GLASS = 200, MAT_SILVER = 200, MAT_GOLD = 200, MAT_PLASMA = 200, MAT_DIAMOND = 1000)
 	construction_time = 75
 	build_path = /obj/item/cybernetic_implant/eyes/thermals
 	category = list("Misc")
@@ -161,7 +161,7 @@ datum/design/cyberimp_antidrop
 	id = "ci-antidrop"
 	req_tech = list("materials" = 7, "programming" = 5, "biotech" = 4)
 	build_type = MECHFAB
-	materials = list("$metal" = 200, "$glass" = 200, "$silver" = 400, "$gold" = 400)
+	materials = list(MAT_METAL = 200, MAT_GLASS = 200, MAT_SILVER = 400, MAT_GOLD = 400)
 	construction_time = 75
 	build_path = /obj/item/cybernetic_implant/brain/anti_drop
 	category = list("Misc")
@@ -172,7 +172,7 @@ datum/design/cyberimp_antistun
 	id = "ci-antistun"
 	req_tech = list("materials" = 7, "programming" = 5, "biotech" = 4)
 	build_type = MECHFAB
-	materials = list("$metal" = 200, "$glass" = 200, "$silver" = 500, "$gold" = 1000)
+	materials = list(MAT_METAL = 200, MAT_GLASS = 200, MAT_SILVER = 500, MAT_GOLD = 1000)
 	construction_time = 75
 	build_path = /obj/item/cybernetic_implant/brain/anti_stun
 	category = list("Misc")
@@ -184,7 +184,7 @@ datum/design/cyberimp_nutriment
 	id = "ci-nutriment"
 	req_tech = list("materials" = 6, "programming" = 4, "biotech" = 4)
 	build_type = MECHFAB
-	materials = list("$metal" = 200, "$glass" = 200, "$gold" = 500, "$uranium" = 500)
+	materials = list(MAT_METAL = 200, MAT_GLASS = 200, MAT_GOLD = 500, MAT_URANIUM = 500)
 	construction_time = 75
 	build_path = /obj/item/cybernetic_implant/chest/nutriment
 	category = list("Misc")
@@ -195,7 +195,7 @@ datum/design/cyberimp_nutriment_plus
 	id = "ci-nutrimentplus"
 	req_tech = list("materials" = 6, "programming" = 4, "biotech" = 4)
 	build_type = MECHFAB
-	materials = list("$metal" = 200, "$glass" = 200, "$gold" = 500, "$uranium" = 750)
+	materials = list(MAT_METAL = 200, MAT_GLASS = 200, MAT_GOLD = 500, MAT_URANIUM = 750)
 	construction_time = 75
 	build_path = /obj/item/cybernetic_implant/chest/nutriment/plus
 	category = list("Misc")
@@ -206,6 +206,6 @@ datum/design/cyberimp_reviver
 	id = "ci-reviver"
 	req_tech = list("materials" = 6, "programming" = 4, "biotech" = 4)
 	build_type = MECHFAB
-	materials = list("$metal" = 500, "$gold" = 1000, "$uranium" = 1000, "$diamond" = 2000)
+	materials = list(MAT_METAL = 500, MAT_GOLD = 1000, MAT_URANIUM = 1000, MAT_DIAMOND = 2000)
 	category = list("Misc")
 */

@@ -81,6 +81,8 @@
 
 #define MINERAL_MATERIAL_AMOUNT 2000
 //The amount of materials you get from a sheet of mineral like iron/diamond/glass etc
+#define MAX_STACK_SIZE 50
+//The maximum size of a stack object.
 
 
 #define CLICK_CD_MELEE 8
@@ -146,3 +148,12 @@
 #define SECONDS * 10
 #define MINUTES * 600
 #define HOURS   * 36000
+
+#define MAT_METAL		"$metal"
+#define MAT_GLASS		"$glass"
+#define MAT_SILVER		"$silver"
+#define MAT_GOLD		"$gold"
+#define MAT_DIAMOND		"$diamond"
+#define MAT_URANIUM		"$uranium"
+#define MAT_PLASMA		"$plasma"
+#define MAT_BANANIUM	"$bananium"

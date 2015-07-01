@@ -16,20 +16,21 @@
 		if (src.metal_amount < 150000.0)
 			var/count = 0
 			src.overlays += "fab-load-metal"
+			var/obj/item/stack/sheet/metal/S = O
 			spawn(15)
-				if(O)
-					if(!O:amount)
+				if(S)
+					if(!S.amount)
 						return
 					while(metal_amount < 150000 && O:amount)
-						src.metal_amount += O:m_amt /*O:height * O:width * O:length * 100000.0*/
-						O:amount--
+						metal_amount += S.materials[MAT_METAL] /*O:height * O:width * O:length * 100000.0*/
+						S.amount--
 						count++
 
-					if (O:amount < 1)
-						qdel(O)
+					if (S.amount < 1)
+						qdel(S)
 
 					user << "You insert [count] metal sheet\s into \the [src]."
-					src.overlays -= "fab-load-metal"
+					overlays -= "fab-load-metal"
 					updateDialog()
 		else
 			user << "\The [src] is full."

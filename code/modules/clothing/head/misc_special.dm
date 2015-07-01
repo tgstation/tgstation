@@ -17,8 +17,7 @@
 	icon_state = "welding"
 	body_parts_covered = HEAD|EYES|MOUTH
 	item_state = "welding"
-	m_amt = 1750
-	g_amt = 400
+	materials = list(MAT_METAL=1750, MAT_GLASS= 400)
 //	var/up = 0
 	flash_protect = 2
 	tint = 2
