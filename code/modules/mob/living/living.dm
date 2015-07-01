@@ -792,7 +792,7 @@ Sorry Giacom. Please don't be mad :(
 			I = image(r_hand.icon,A,r_hand.icon_state,A.layer+1)
 	if(I)
 		var/list/viewing = list()
-		for(var/mob/M in view(A))
+		for(var/mob/M in viewers(A))
 			if(M.client)
 				viewing |= M.client
 		flick_overlay(I,viewing,5)
