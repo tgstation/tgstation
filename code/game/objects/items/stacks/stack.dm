@@ -231,7 +231,6 @@
 	return
 
 /obj/item/stack/attackby(obj/item/W as obj, mob/user as mob, params)
-
 	if (istype(W, src.type))
 		if(zero_amount())	return
 		var/obj/item/stack/S = W

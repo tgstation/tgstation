@@ -17,7 +17,7 @@
 	icon = 'icons/obj/card.dmi'
 	w_class = 1.0
 
-	var/list/files = list(  )
+	var/list/files = list()
 
 /obj/item/weapon/card/data
 	name = "data disk"
@@ -84,6 +84,8 @@
 
 	var/assignment = null
 	var/dorm = 0		// determines if this ID has claimed a dorm already
+	var/datum/bankaccount/account = null //the primary bank account linked to this ID, if any.
+	var/list/accountlist = list() //primary account and other accounts that this card has access to.
 
 /obj/item/weapon/card/id/attack_self(mob/user as mob)
 	user.visible_message("<span class='notice'>[user] shows you: \icon[src] [src.name].</span>", \

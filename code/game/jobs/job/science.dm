@@ -13,6 +13,9 @@ Research Director
 	selection_color = "#ffddff"
 	req_admin_notify = 1
 	minimal_player_age = 7
+	paygrade = 200
+	startbalance = 700
+	payroll = "Research"
 
 	default_id = /obj/item/weapon/card/id/silver
 	default_pda = /obj/item/device/pda/heads/rd
@@ -53,6 +56,9 @@ Scientist
 	spawn_positions = 3
 	supervisors = "the research director"
 	selection_color = "#ffeeff"
+	paygrade = 80
+	startbalance = 250
+	payroll = "Research"
 
 	default_pda = /obj/item/device/pda/toxins
 	default_headset = /obj/item/device/radio/headset/headset_sci
@@ -78,6 +84,9 @@ Roboticist
 	spawn_positions = 2
 	supervisors = "research director"
 	selection_color = "#ffeeff"
+	paygrade = 70
+	startbalance = 250
+	payroll = "Research"
 
 	default_pda = /obj/item/device/pda/roboticist
 	default_headset = /obj/item/device/radio/headset/headset_sci

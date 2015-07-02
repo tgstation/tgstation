@@ -46,7 +46,7 @@
 /var/const/access_theatre = 46
 /var/const/access_research = 47
 /var/const/access_mining = 48
-/var/const/access_mining_office = 49 //not in use
+/var/const/access_finance = 49
 /var/const/access_mailsorting = 50
 /var/const/access_mint = 51
 /var/const/access_mint_vault = 52
@@ -66,19 +66,19 @@
 /var/const/access_weapons = 66 //Weapon authorization for secbots
 
 	//BEGIN CENTCOM ACCESS
-	/*Should leave plenty of room if we need to add more access levels.
-/var/const/Mostly for admin fun times.*/
-/var/const/access_cent_general = 101//General facilities.
-/var/const/access_cent_thunder = 102//Thunderdome.
-/var/const/access_cent_specops = 103//Special Ops.
-/var/const/access_cent_medical = 104//Medical/Research
-/var/const/access_cent_living = 105//Living quarters.
-/var/const/access_cent_storage = 106//Generic storage areas.
-/var/const/access_cent_teleporter = 107//Teleporter.
-/var/const/access_cent_captain = 109//Captain's office/ID comp/AI.
+	/*	Should leave plenty of room if we need to add more access levels.
+		Mostly for admin fun times.*/
+/var/const/access_cent_general = 101	//General facilities.
+/var/const/access_cent_thunder = 102	//Thunderdome.
+/var/const/access_cent_specops = 103	//Special Ops.
+/var/const/access_cent_medical = 104	//Medical/Research
+/var/const/access_cent_living = 105		//Living quarters.
+/var/const/access_cent_storage = 106	//Generic storage areas.
+/var/const/access_cent_teleporter = 107	//Teleporter.
+/var/const/access_cent_captain = 109	//Captain's office/ID comp/AI.
 
 	//The Syndicate
-/var/const/access_syndicate = 150//General Syndicate Access
+/var/const/access_syndicate = 150		//General Syndicate Access
 /var/const/access_syndicate_leader = 151//Nuke Op Leader Access
 
 /obj/var/list/req_access = null
@@ -210,7 +210,7 @@
 	            access_teleporter, access_eva, access_heads, access_captain, access_all_personal_lockers,
 	            access_tech_storage, access_chapel_office, access_atmospherics, access_kitchen,
 	            access_bar, access_janitor, access_crematorium, access_robotics, access_cargo, access_construction,
-	            access_hydroponics, access_library, access_lawyer, access_virology, access_cmo, access_qm, access_surgery,
+	            access_hydroponics, access_library, access_lawyer, access_virology, access_cmo, access_qm, access_finance, access_surgery,
 	            access_theatre, access_research, access_mining, access_mailsorting, access_weapons,
 	            access_heads_vault, access_mining_station, access_xenobiology, access_ce, access_hop, access_hos, access_RC_announce,
 	            access_keycard_auth, access_tcomsat, access_gateway, access_mineral_storeroom, access_minisat)
@@ -249,7 +249,7 @@
 		if(6) //supply
 			return list(access_mailsorting, access_mining, access_mining_station, access_mineral_storeroom, access_cargo, access_qm)
 		if(7) //command
-			return list(access_heads, access_RC_announce, access_keycard_auth, access_change_ids, access_ai_upload, access_teleporter, access_eva, access_gateway, access_all_personal_lockers, access_heads_vault, access_hop, access_captain)
+			return list(access_heads, access_RC_announce, access_keycard_auth, access_change_ids, access_ai_upload, access_teleporter, access_eva, access_gateway, access_all_personal_lockers, access_heads_vault, access_finance, access_hop, access_captain)
 
 /proc/get_region_accesses_name(var/code)
 	switch(code)
@@ -364,8 +364,8 @@
 			return "Science"
 		if(access_mining)
 			return "Mining"
-		if(access_mining_office)
-			return "Mining Office"
+		if(access_finance)
+			return "Finance"
 		if(access_mailsorting)
 			return "Cargo Office"
 		if(access_mint)

@@ -167,3 +167,5 @@
 #define AI_TRANS_TO_CARD	1 //Downloading AI to InteliCard.
 #define AI_TRANS_FROM_CARD	2 //Uploading AI from InteliCard
 #define AI_MECH_HACK		3 //Malfunctioning AI hijacking mecha
+
+#define CURRENCY(X) X == 1 ? config.currencyname : config.currencynamemult //just a macro to prevent having to type this out everywhere.

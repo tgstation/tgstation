@@ -12,6 +12,9 @@ Chaplain
 	spawn_positions = 1
 	supervisors = "the head of personnel"
 	selection_color = "#dddddd"
+	paygrade = 20
+	startbalance = 100
+	payroll = "Station"
 
 	default_pda = /obj/item/device/pda/chaplain
 

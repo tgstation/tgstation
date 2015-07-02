@@ -32,6 +32,12 @@
 	//Sellection screen color
 	var/selection_color = "#ffffff"
 
+	//How much money this job gets at roundstart.
+	var/startbalance = 100
+	//How much this job is paid at roundstart.
+	var/paygrade = 5
+	//From which budget the job is paid.
+	var/payroll = "Station"
 
 	//If this is set to 1, a text is printed to the player when jobs are assigned, telling him that he should let admins know that he has to disconnect.
 	var/req_admin_notify
@@ -40,13 +46,13 @@
 	var/minimal_player_age = 0
 
 	//Job specific items
-	var/default_id				= /obj/item/weapon/card/id //this is just the looks of it
-	var/default_pda				= /obj/item/device/pda
+	var/default_id			= /obj/item/weapon/card/id //this is just the looks of it
+	var/default_pda			= /obj/item/device/pda
 	var/default_pda_slot	= slot_belt
 	var/default_headset		= /obj/item/device/radio/headset
 	var/default_backpack	= /obj/item/weapon/storage/backpack
 	var/default_satchel		= /obj/item/weapon/storage/backpack/satchel_norm
-	var/default_storagebox= /obj/item/weapon/storage/box/survival
+	var/default_storagebox	= /obj/item/weapon/storage/box/survival
 
 //Only override this proc
 /datum/job/proc/equip_items(var/mob/living/carbon/human/H)
@@ -89,6 +95,15 @@
 	C.assignment = H.job
 	C.update_label()
 	H.equip_to_slot_or_del(C, slot_wear_id)
+
+	if(C && paygrade)
+		var/datum/bankaccount/acc = new(startbalance)
+		acc.owner = H.real_name + " (" + name + ")"
+		acc.verified = 1
+		bank.addAccount(acc)
+		C.account = acc
+		C.accountlist += acc
+		bank.addToPayroll(acc, paygrade, payroll)
 
 	//Equip PDA
 	var/obj/item/device/pda/PDA = new default_pda(H)
