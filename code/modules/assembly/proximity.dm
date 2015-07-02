@@ -2,8 +2,7 @@
 	name = "proximity sensor"
 	desc = "Used for scanning and alerting when someone enters a certain proximity."
 	icon_state = "prox"
-	m_amt = 800
-	g_amt = 200
+	materials = list(MAT_METAL=800, MAT_GLASS=200)
 	origin_tech = "magnets=1"
 	attachable = 1
 

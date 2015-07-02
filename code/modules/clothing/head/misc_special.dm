@@ -17,8 +17,7 @@
 	icon_state = "welding"
 	flags_cover = HEADCOVERSEYES | HEADCOVERSMOUTH
 	item_state = "welding"
-	m_amt = 1750
-	g_amt = 400
+	materials = list(MAT_METAL=1750, MAT_GLASS=400)
 //	var/up = 0
 	flash_protect = 2
 	tint = 2

@@ -78,7 +78,7 @@
 
 /obj/machinery/droneDispenser/attackby(obj/item/O, mob/living/user)
 	if(istype(O, /obj/item/stack))
-		if(!O.m_amt && !O.g_amt)
+		if(!O.materials[MAT_METAL] && !O.materials[MAT_GLASS])
 			return ..()
 		var/stack = 1
 		var/obj/item/stack/sheets
@@ -96,8 +96,8 @@
 				return
 			user.drop_item()
 			O.loc = src
-		metal += O.m_amt * stack
-		glass += O.g_amt * stack
+		metal += O.materials[MAT_METAL] * stack
+		glass += O.materials[MAT_GLASS] * stack
 		user << "<span class='notice'>You insert [stack] sheet[stack > 1 ? "s" : ""] to [src].</span>"
 		if((O && O.loc == src) || !stack)
 			qdel(O)

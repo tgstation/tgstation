@@ -773,8 +773,7 @@ Just a object used in constructing air alarms
 	icon_state = "airalarm_electronics"
 	desc = "Looks like a circuit. Probably is."
 	w_class = 2.0
-	m_amt = 50
-	g_amt = 50
+	materials = list(MAT_METAL=50, MAT_GLASS=50)
 
 
 /*
@@ -1133,8 +1132,7 @@ Just a object used in constructing fire alarms
 	icon_state = "door_electronics"
 	desc = "A circuit. It has a label on it, it says \"Can handle heat levels up to 40 degrees celsius!\""
 	w_class = 2.0
-	m_amt = 50
-	g_amt = 50
+	materials = list(MAT_METAL=50, MAT_GLASS=50)
 
 
 /*
