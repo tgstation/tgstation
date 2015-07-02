@@ -249,7 +249,7 @@
 	var/dat = "<div class='statusDisplay'><h3>Autolathe Menu:</h3><br>"
 	dat += "<b>Total amount:</b> [materials.total_amount] / [materials.max_amount] cm<sup>3</sup><br>"
 	dat += "<b>Metal amount:</b> [materials.amount(MAT_METAL)] cm<sup>3</sup><br>"
-	dat += "<b>Glass amount:</b> [materials.amount(MAT_GLASS)] cm<sup>3</sup>"
+	dat += "<b>Glass amount:</b> [materials.amount(MAT_GLASS)] cm<sup>3</sup><br>"
 
 	dat += "<form name='search' action='?src=\ref[src]'>\
 	<input type='hidden' name='src' value='\ref[src]'>\
@@ -278,7 +278,7 @@
 	dat += "<div class='statusDisplay'><h3>Browsing [selected_category]:</h3><br>"
 	dat += "<b>Total amount:</b> [materials.total_amount] / [materials.max_amount] cm<sup>3</sup><br>"
 	dat += "<b>Metal amount:</b> [materials.amount(MAT_METAL)] cm<sup>3</sup><br>"
-	dat += "<b>Glass amount:</b> [materials.amount(MAT_GLASS)] cm<sup>3</sup>"
+	dat += "<b>Glass amount:</b> [materials.amount(MAT_GLASS)] cm<sup>3</sup><br>"
 
 	for(var/datum/design/D in files.known_designs)
 		if(!(selected_category in D.category))
@@ -308,7 +308,7 @@
 	dat += "<div class='statusDisplay'><h3>Search results:</h3><br>"
 	dat += "<b>Total amount:</b> [materials.total_amount] / [materials.max_amount] cm<sup>3</sup><br>"
 	dat += "<b>Metal amount:</b> [materials.amount(MAT_METAL)] cm<sup>3</sup><br>"
-	dat += "<b>Glass amount:</b> [materials.amount(MAT_GLASS)] cm<sup>3</sup>"
+	dat += "<b>Glass amount:</b> [materials.amount(MAT_GLASS)] cm<sup>3</sup><br>"
 
 	for(var/datum/design/D in matching_designs)
 		if(disabled || !can_build(D))

@@ -59,9 +59,7 @@
 	if(!amt)
 		amt = S.amount
 	var/material_amt = get_item_material_amount(S)
-	while(!has_space(material_amt * amt))
-		amt--
-
+	amt = min(amt, round(((max_amount - total_amount) / material_amt)))
 	if(!amt)
 		return 0
 
@@ -175,8 +173,6 @@
 
 /datum/material_container/proc/amount(material_type)
 	var/datum/material/M = materials[material_type]
-	if(M)
-		world << "M [M] : M.amount [M.amount]"
 	return M ? M.amount : 0
 
 /datum/material_container/proc/can_insert(obj/item/I)
