@@ -796,6 +796,7 @@ Sorry Giacom. Please don't be mad :(
 			if(M.client)
 				viewing |= M.client
 		flick_overlay(I,viewing,5)
+		animate(I, pixel_z = 16, alpha = 125, 5)
 
 
 /mob/living/proc/do_jitter_animation(jitteriness)
