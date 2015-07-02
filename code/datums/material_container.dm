@@ -23,21 +23,21 @@
 	max_amount = max(0, max_amt)
 
 	if(mat_list[MAT_METAL])
-		materials[MAT_METAL] = new /datum/material/metal(MAT_METAL)
+		materials[MAT_METAL] = new /datum/material/metal()
 	if(mat_list[MAT_GLASS])
-		materials[MAT_GLASS] = new /datum/material/glass(MAT_GLASS)
+		materials[MAT_GLASS] = new /datum/material/glass()
 	if(mat_list[MAT_SILVER])
-		materials[MAT_SILVER] = new /datum/material/silver(MAT_SILVER)
+		materials[MAT_SILVER] = new /datum/material/silver()
 	if(mat_list[MAT_GOLD])
-		materials[MAT_GOLD] = new /datum/material/gold(MAT_GOLD)
+		materials[MAT_GOLD] = new /datum/material/gold()
 	if(mat_list[MAT_DIAMOND])
-		materials[MAT_DIAMOND] = new /datum/material/diamond(MAT_DIAMOND)
+		materials[MAT_DIAMOND] = new /datum/material/diamond()
 	if(mat_list[MAT_URANIUM])
-		materials[MAT_URANIUM] = new /datum/material/uranium(MAT_URANIUM)
+		materials[MAT_URANIUM] = new /datum/material/uranium()
 	if(mat_list[MAT_PLASMA])
-		materials[MAT_PLASMA] = new /datum/material/plasma(MAT_PLASMA)
+		materials[MAT_PLASMA] = new /datum/material/plasma()
 	if(mat_list[MAT_BANANIUM])
-		materials[MAT_BANANIUM] = new /datum/material/bananium(MAT_BANANIUM)
+		materials[MAT_BANANIUM] = new /datum/material/bananium()
 
 //For inserting an amount of material
 /datum/material_container/proc/insert_amount(amt, material_type = null)
@@ -198,53 +198,58 @@
 	var/material_type = null
 	var/sheet_type = null
 
-/datum/material/New(var/mat_type)
-	material_type = mat_type
-
 /datum/material/metal
 
-/datum/material/metal/New(var/mat_type)
+/datum/material/metal/New()
 	..()
+	material_type = MAT_METAL
 	sheet_type = /obj/item/stack/sheet/metal
 
 /datum/material/glass
 
-/datum/material/glass/New(var/mat_type)
+/datum/material/glass/New()
 	..()
+	material_type = MAT_GLASS
 	sheet_type = /obj/item/stack/sheet/glass
 
 /datum/material/silver
 
-/datum/material/silver/New(var/mat_type)
+/datum/material/silver/New()
 	..()
+	material_type = MAT_SILVER
 	sheet_type = /obj/item/stack/sheet/mineral/silver
 
 /datum/material/gold
 
-/datum/material/gold/New(var/mat_type)
+/datum/material/gold/New()
 	..()
+	material_type = MAT_GOLD
 	sheet_type = /obj/item/stack/sheet/mineral/gold
 
 /datum/material/diamond
 
-/datum/material/diamond/New(var/mat_type)
+/datum/material/diamond/New()
 	..()
+	material_type = MAT_DIAMOND
 	sheet_type = /obj/item/stack/sheet/mineral/diamond
 
 /datum/material/uranium
 
-/datum/material/uranium/New(var/mat_type)
+/datum/material/uranium/New()
 	..()
+	material_type = MAT_URANIUM
 	sheet_type = /obj/item/stack/sheet/mineral/uranium
 
 /datum/material/plasma
 
-/datum/material/plasma/New(var/mat_type)
+/datum/material/plasma/New()
 	..()
+	material_type = MAT_PLASMA
 	sheet_type = /obj/item/stack/sheet/mineral/plasma
 
 /datum/material/bananium
 
-/datum/material/bananium/New(var/mat_type)
+/datum/material/bananium/New()
 	..()
+	material_type = MAT_BANANIUM
 	sheet_type = /obj/item/stack/sheet/mineral/bananium
