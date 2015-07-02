@@ -41,12 +41,12 @@
 			dat += "No promotions available: All positions filled.<br>"
 	else
 		if(isnum(gang.dom_timer))
-			dat += "<center><font color='red'>Takeover In Progress:<br><B>[gang.dom_timer] seconds remain</B></font></center><br>"
+			dat += "<center><font color='red'>Takeover In Progress:<br><B>[gang.dom_timer] seconds remain</B></font></center>"
 
 		var/points = gang.points
 		dat += "Registration: <B>[gang.name] Gang [boss ? "Boss" : "Lieutenant"]</B><br>"
 		dat += "Organization Size: <B>[gang.gangsters.len + gang.bosses.len]</B> | Station Control: <B>[round((gang.territory.len/start_state.num_territories)*100, 1)]%</B><br>"
-		dat += "Gang Influence: <B>[points]</B> | Outfit Stock: <B>[outfits]</B><br>"
+		dat += "Gang Influence: <B>[points]</B><br>"
 		dat += "Time until Influence grows: <B>[(points >= 999) ? ("--:--") : (time2text(ticker.mode.gang_points.next_point_time - world.time, "mm:ss"))]</B><br>"
 		dat += "<hr>"
 		dat += "<B>Gangtool Functions:</B><br>"
@@ -56,7 +56,8 @@
 			dat += "<a href='?src=\ref[src];choice=outfit'>Create Armored Gang Outfit</a><br>"
 		else
 			dat += "<b>Create Gang Outfit</b> (Restocking)<br>"
-		dat += "<a href='?src=\ref[src];choice=recall'>Recall Emergency Shuttle</a><br>"
+		if(boss)
+			dat += "<a href='?src=\ref[src];choice=recall'>Recall Emergency Shuttle</a><br>"
 
 		dat += "<br>"
 		dat += "<B>Purchase Weapons:</B><br>"
@@ -177,7 +178,7 @@
 	dat += "<br>"
 	dat += "<a href='?src=\ref[src];choice=refresh'>Refresh</a><br>"
 
-	var/datum/browser/popup = new(user, "gangtool", "Welcome to GangTool v2.2", 340, 620)
+	var/datum/browser/popup = new(user, "gangtool", "Welcome to GangTool v3.0", 340, 625)
 	popup.set_content(dat)
 	popup.open()
 
@@ -188,10 +189,6 @@
 		return
 
 	add_fingerprint(usr)
-
-	if(recalling)
-		usr << "<span class='warning'>Device is busy. Shuttle recall in progress.</span>"
-		return
 
 	if(href_list["register"])
 		if(promotable)
@@ -262,7 +259,7 @@
 					if(boss)
 						item_type = /obj/item/device/gangtool/spare
 						if(gang.bosses.len < 3)
-							usr << "<span class='notice'><b>Gangtools</b> allow you to promote a gangster to be your Lieutenant. Simply have them register the gangtool. You may promote up to [3-gang.bosses.len] more Lieutenants</span>"
+							usr << "<span class='notice'><b>Gangtools</b> allow you to promote a gangster to be your Lieutenant, enabling them to recruit and purchase items like you. Simply have them register the gangtool. You may promote up to [3-gang.bosses.len] more Lieutenants</span>"
 					else
 						item_type = /obj/item/device/gangtool/spare/lt
 					pointcost = 10
@@ -302,7 +299,8 @@
 	else if(href_list["choice"])
 		switch(href_list["choice"])
 			if("recall")
-				recall(usr)
+				if(boss)
+					recall(usr)
 			if("outfit")
 				if(outfits > 0)
 					if(gang.gang_outfit(usr,src))
@@ -348,13 +346,17 @@
 			user << "<FONT size=3 color=red><B>You have been promoted to Lieutenant!</B></FONT>"
 			ticker.mode.forge_gang_objectives(user.mind)
 			ticker.mode.greet_gang(user.mind,0)
-			user << "The <b>Gangtool</b> you registered will allow you to purchase items, send messages to your gangsters and to recall the emergency shuttle from anywhere on the station."
+			user << "The <b>Gangtool</b> you registered will allow you to purchase weapons and equipment, and send messages to your gang."
 			user << "Unlike regular gangsters, you may use <b>recruitment pens</b> to add recruits to your gang. Use them on unsuspecting crew members to recruit them. Don't forget to get your one free pen from the gangtool."
 	else
 		usr << "<span class='warning'>ACCESS DENIED: Unauthorized user.</span>"
 
 /obj/item/device/gangtool/proc/recall(mob/user)
 	if(!can_use(user))
+		return 0
+
+	if(recalling)
+		usr << "<span class='warning'>Error: Recall already in progress.</span>"
 		return 0
 
 	gang.message_gangtools("[usr] is attempting to recall the emergency shuttle.")

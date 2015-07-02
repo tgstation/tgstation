@@ -7,6 +7,10 @@
 	var/last_used = 0
 	var/charges = 1
 
+/obj/item/weapon/pen/gang/New()
+	..()
+	last_used = world.time
+
 /obj/item/weapon/pen/gang/attack(mob/living/M, mob/user)
 	if(!istype(M))
 		return
@@ -32,16 +36,17 @@
 	..()
 
 /obj/item/weapon/pen/gang/proc/cooldown(datum/gang/gang)
-	var/cooldown_time = 1200+(600*gang.bosses.len) // 1recruiter=3mins, 2recruiters=4mins, 3recruiters=5 mins
+	var/cooldown_time = 300+(900*gang.bosses.len) // 1recruiter=2mins, 2recruiters=3.5mins, 3recruiters=5mins
 
 	cooldown = 1
 	icon_state = "pen_blink"
 
-	charges = max(0,charges-1)
 	var/time_passed = world.time - last_used
-	var/time = time_passed/cooldown_time
-	for(null, time>=cooldown_time, time-=cooldown_time) //get 1 charge every cooldown interval
+	var/time
+	for(time=time_passed, time>=cooldown_time, time-=cooldown_time) //get 1 charge every cooldown interval
 		charges++
+
+	charges = max(0,charges-1)
 
 	last_used = world.time - time
 
@@ -51,7 +56,7 @@
 		cooldown = 0
 		icon_state = "pen"
 		var/mob/M = get(src, /mob)
-		M << "<span class='notice'>\icon[src] [src][(src.loc == M)?(""):(" in your [src.loc]")] vibrates softly.</span>"
+		M << "<span class='notice'>\icon[src] [src][(src.loc == M)?(""):(" in your [src.loc]")] vibrates softly. It is ready to be used again.</span>"
 
 
 //////////////

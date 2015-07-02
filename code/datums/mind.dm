@@ -853,19 +853,14 @@
 			if("new")
 				if(gang_colors_pool.len)
 					var/list/names = list("Random") + gang_name_pool
-					var/list/colors = list("Random") + gang_colors_pool
 					var/gangname = input("Pick a gang name.","Select Name") as null|anything in names
-					if(gangname)
-						var/gangcolor = input("Pick a gang color.","Select Color") as null|anything in colors
-						if(gangcolor && gang_colors_pool.len) //Check again just in case another admin made max gangs at the same time
-							if(!(gangname in gang_name_pool))
-								gangname = null
-							if(!(gangcolor in gang_colors_pool))
-								gangcolor = null
-							var/datum/gang/newgang = new(null,gangname,gangcolor)
-							ticker.mode.gangs += newgang
-							message_admins("[key_name_admin(usr)] has created the [newgang.name] Gang[gangcolor ? " with the color [gangcolor]" : ""].")
-							log_admin("[key_name(usr)] has created the [newgang.name] Gang[gangcolor ? " with the color [gangcolor]" : ""].")
+					if(gangname && gang_colors_pool.len) //Check again just in case another admin made max gangs at the same time
+						if(!(gangname in gang_name_pool))
+							gangname = null
+						var/datum/gang/newgang = new(null,gangname)
+						ticker.mode.gangs += newgang
+						message_admins("[key_name_admin(usr)] has created the [newgang.name] Gang.")
+						log_admin("[key_name(usr)] has created the [newgang.name] Gang.")
 
 	else if (href_list["gangboss"])
 		var/datum/gang/G = locate(href_list["gangboss"]) in ticker.mode.gangs
