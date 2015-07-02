@@ -1067,6 +1067,7 @@ About the new airlock wires panel:
 		p_open = 1
 		update_icon()
 		visible_message("<span class='warning'>[src]'s panel is blown off in a spray of deadly shrapnel!</span>")
+		charge.loc = get_turf(src)
 		charge.ex_act(1)
 		detonated = 1
 		charge = null

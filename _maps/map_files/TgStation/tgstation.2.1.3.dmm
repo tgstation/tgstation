@@ -5610,7 +5610,7 @@
 "cdU" = (/obj/machinery/camera{c_tag = "Atmospherics South East"; dir = 1},/obj/machinery/atmospherics/binary/pump{dir = 1; name = "Air Outlet Pump"; on = 1},/turf/simulated/floor/plasteel{icon_state = "arrival"; dir = 6},/area/atmos)
 "cdV" = (/obj/machinery/atmospherics/pipe/simple/yellow/visible{tag = "icon-intact (NORTHEAST)"; icon_state = "intact"; dir = 5},/turf/simulated/wall,/area/maintenance/incinerator)
 "cdW" = (/obj/machinery/atmospherics/pipe/simple/yellow/visible{dir = 4},/turf/simulated/wall,/area/maintenance/incinerator)
-"cdX" = (/obj/machinery/atmospherics/binary/pump{dir = 4; name = "atmospherics mix pump"},/obj/effect/decal/cleanable/cobweb,/turf/simulated/floor/plasteel{icon_state = "floorgrime"},/area/maintenance/incinerator)
+"cdX" = (/obj/machinery/atmospherics/binary/pump{dir = 4; name = "atmospherics mix pump"},/obj/effect/decal/cleanable/cobweb,/obj/machinery/droneDispenser/preloaded,/turf/simulated/floor/plasteel{icon_state = "floorgrime"},/area/maintenance/incinerator)
 "cdY" = (/obj/machinery/light{dir = 1},/obj/machinery/atmospherics/pipe/simple/yellow/visible{tag = "icon-intact (SOUTHWEST)"; icon_state = "intact"; dir = 10},/turf/simulated/floor/plasteel{icon_state = "floorgrime"},/area/maintenance/incinerator)
 "cdZ" = (/obj/machinery/light_switch{pixel_x = 0; pixel_y = 26},/obj/machinery/atmospherics/pipe/simple/supply/hidden,/turf/simulated/floor/plasteel{icon_state = "floorgrime"},/area/maintenance/incinerator)
 "cea" = (/obj/structure/cable{d1 = 1; d2 = 4; icon_state = "1-4"},/obj/machinery/atmospherics/unary/vent_scrubber{dir = 1; on = 1; scrub_N2O = 0; scrub_Toxins = 0},/turf/simulated/floor/plating{icon_state = "warnplate"; dir = 1},/area/maintenance/incinerator)
