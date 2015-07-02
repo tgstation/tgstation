@@ -63,8 +63,7 @@
 	if(!amt)
 		return 0
 
-	for(var/i=0, i < amt, i++)
-		insert_materials(S)
+	insert_materials(S,amt)
 	S.use(amt)
 	return amt
 
@@ -81,12 +80,12 @@
 	insert_materials(I)
 	return material_amount
 
-/datum/material_container/proc/insert_materials(obj/item/I) //for internal usage only
+/datum/material_container/proc/insert_materials(obj/item/I, multiplier = 1) //for internal usage only
 	var/datum/material/M
 	for(var/MAT in materials)
 		M = materials[MAT]
-		M.amount += I.materials[MAT]
-		total_amount += I.materials[MAT]
+		M.amount += I.materials[MAT] * multiplier
+		total_amount += I.materials[MAT] * multiplier
 
 //For consuming material
 //mats is a list of types of material to use and the corresponding amounts, example: list(MAT_METAL=100, MAT_GLASS=200)
@@ -111,8 +110,8 @@
 
 /datum/material_container/proc/use_amount_type(amt, material_type)
 	var/datum/material/M
-	for(var/MAT in materials)
-		M = materials[MAT]
+	M = materials[material_type]
+	if(M)
 		if(M.amount >= amt)
 			M.amount -= amt
 			total_amount -= amt
@@ -123,22 +122,17 @@
 /datum/material_container/proc/retrieve(sheet_amt, datum/material/M)
 	if(sheet_amt > 0 && M.amount >= (sheet_amt * MINERAL_MATERIAL_AMOUNT))
 		var/count = 0
-		var/obj/item/stack/sheet/S
 
 		while(sheet_amt > MAX_STACK_SIZE)
-			S = new M.sheet_type(get_turf(owner))
-			S.amount = MAX_STACK_SIZE
+			new M.sheet_type(get_turf(owner), MAX_STACK_SIZE)
 			count += MAX_STACK_SIZE
-			M.amount -= MAX_STACK_SIZE * MINERAL_MATERIAL_AMOUNT
-			total_amount -= MAX_STACK_SIZE * MINERAL_MATERIAL_AMOUNT
+			use_amount_type(sheet_amt * MINERAL_MATERIAL_AMOUNT, M.material_type)
 			sheet_amt -= MAX_STACK_SIZE
 
 		if(round(M.amount / MINERAL_MATERIAL_AMOUNT))
-			S = new M.sheet_type(get_turf(owner))
-			S.amount = sheet_amt
+			new M.sheet_type(get_turf(owner), sheet_amt)
 			count += sheet_amt
-			M.amount -= sheet_amt * MINERAL_MATERIAL_AMOUNT
-			total_amount -= sheet_amt * MINERAL_MATERIAL_AMOUNT
+			use_amount_type(sheet_amt * MINERAL_MATERIAL_AMOUNT, M.material_type)
 		return count
 	return 0
 
