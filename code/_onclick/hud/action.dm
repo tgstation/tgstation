@@ -14,7 +14,7 @@
 	var/name = "Generic Action"
 	var/action_type = AB_ITEM
 	var/procname = null
-	var/atom/movable/target = null
+	var/obj/item/target = null
 	var/check_flags = 0
 	var/processing = 0
 	var/active = 0
@@ -104,7 +104,7 @@
 		if(owner.stat)
 			return 0
 	if(check_flags & AB_CHECK_INSIDE)
-		if(!(target in owner))
+		if(!(target in owner) && !(target.action_button_internal))
 			return 0
 	return 1
 
