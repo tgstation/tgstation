@@ -356,15 +356,9 @@ datum/reagent/consumable/cornoil/reaction_turf(var/turf/simulated/T, var/volume)
 	src = null
 	if(volume >= 3)
 		T.MakeSlippery()
-<<<<<<< HEAD
-<<<<<<< HEAD
-	var/obj/effect/fire/hotspot = (locate(/obj/effect/fire) in T)
-=======
+
 	var/obj/effect/hotspot/hotspot = (locate(/obj/effect/hotspot) in T)
->>>>>>> parent of 3c820fb... Initiate ZAS port
-=======
-	var/obj/fire/hotspot = (locate(/obj/fire) in T)
->>>>>>> parent of 0ff7157... Finish up the port
+
 	if(hotspot)
 		var/datum/gas_mixture/lowertemp = T.remove_air( T:air:total_moles() )
 		lowertemp.temperature = max( min(lowertemp.temperature-2000,lowertemp.temperature / 2) ,0)

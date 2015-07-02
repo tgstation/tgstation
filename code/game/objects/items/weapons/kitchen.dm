@@ -50,7 +50,7 @@
 	desc = "Pointy."
 	icon_state = "fork"
 
-/obj/item/weapon/kitchen/utensil/fork/attack(mob/living/carbon/M as mob, mob/living/carbon/user as mob)
+/obj/item/weapon/kitchen/utensil/fork/attack(mob/living/carbon/M, mob/living/carbon/user)
 	if(!istype(M))
 		return ..()
 
@@ -181,7 +181,7 @@
 	origin_tech = "materials=3"
 
 
-/obj/item/weapon/kitchen/whetstone/attackby(obj/item/weapon/W as obj, mob/user as mob)
+/obj/item/weapon/kitchen/whetstone/attackby(obj/item/weapon/W, mob/user)
 	if(isSharpenable(W))
 		sharpen(W, src, user)
 	else

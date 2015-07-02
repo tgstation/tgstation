@@ -1501,3 +1501,23 @@ proc/find_holder_of_type(var/atom/reference,var/typepath) //Returns the first ob
 #define islightingoverlay(A) (istype(A, /atom/movable/lighting_overlay))
 
 
+
+/proc/IsValidSrc(var/A)
+	if(istype(A, /datum))
+		var/datum/B = A
+		return !B.gc_destroyed
+	if(istype(A, /client))
+		return 1
+	return 0
+
+
+/proc/screen_loc2turf(scr_loc, turf/origin)
+	var/tX = text2list(scr_loc, ",")
+	var/tY = text2list(tX[2], ":")
+	var/tZ = origin.z
+	tY = tY[1]
+	tX = text2list(tX[1], ":")
+	tX = tX[1]
+	tX = max(1, min(world.maxx, origin.x + (text2num(tX) - (world.view + 1))))
+	tY = max(1, min(world.maxy, origin.y + (text2num(tY) - (world.view + 1))))
+	return locate(tX, tY, tZ)

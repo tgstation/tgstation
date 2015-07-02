@@ -59,15 +59,9 @@ datum/reagent/nitroglycerin
 		else if(prob(volume))
 			F.burn_tile()
 		if(istype(F, /turf/simulated/floor/))
-<<<<<<< HEAD
-<<<<<<< HEAD
-			PoolOrNew(/obj/effect/fire, F)
-=======
+
+
 			PoolOrNew(/obj/effect/hotspot, F)
->>>>>>> parent of 3c820fb... Initiate ZAS port
-=======
-			PoolOrNew(/obj/fire, F)
->>>>>>> parent of 0ff7157... Finish up the port
 	if(istype(T, /turf/simulated/wall/))
 		var/turf/simulated/wall/W = T
 		if(prob(volume/10))
@@ -77,15 +71,8 @@ datum/reagent/nitroglycerin
 	if(method == TOUCH && isliving(M))
 		M.adjust_fire_stacks(5)
 		M.IgniteMob()
-<<<<<<< HEAD
-<<<<<<< HEAD
-		PoolOrNew(/obj/effect/fire, M.loc)
-=======
+
 		PoolOrNew(/obj/effect/hotspot, M.loc)
->>>>>>> parent of 3c820fb... Initiate ZAS port
-=======
-		PoolOrNew(/obj/fire, M.loc)
->>>>>>> parent of 0ff7157... Finish up the port
 
 /datum/reagent/sorium
 	name = "Sorium"

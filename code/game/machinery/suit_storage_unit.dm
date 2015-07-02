@@ -78,6 +78,11 @@
 	MASK_TYPE = /obj/item/clothing/mask/gas/syndicate
 	STORAGE_TYPE = /obj/item/weapon/tank/jetpack/oxygen/harness
 
+/obj/machinery/suit_storage_unit/excsuit
+	SUIT_TYPE = /obj/item/clothing/suit/space/anomaly
+	HELMET_TYPE = /obj/item/clothing/head/helmet/space/anomaly
+	MASK_TYPE = /obj/item/clothing/mask/breath
+
 /obj/machinery/suit_storage_unit/ertCom
 	SUIT_TYPE = /obj/item/clothing/suit/space/hardsuit/ert
 	MASK_TYPE = /obj/item/clothing/mask/breath

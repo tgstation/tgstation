@@ -91,7 +91,7 @@
 		"carbon dioxide" = new/datum/tlv(-1.0,-1.0, 0.5,   1), // Partial pressure, kpa
 */
 /obj/machinery/alarm/server
-	//req_access = list(access_rd) //no, let departaments to work together
+	req_access = list(access_rd) //no, let departaments to work together
 	TLV = list(
 		"oxygen"         = new/datum/tlv(-1.0, -1.0,-1.0,-1.0), // Partial pressure, kpa
 		"carbon dioxide" = new/datum/tlv(-1.0, -1.0,-1.0,-1.0), // Partial pressure, kpa
@@ -168,6 +168,8 @@
 	if (..())
 		return
 	user.set_machine(src)
+	if (buildstage != 2)
+		return
 
 	if ( (get_dist(src, user) > 1 ))
 		if (!istype(user, /mob/living/silicon))
@@ -246,6 +248,8 @@
 	radio_controller.remove_object(src, frequency)
 	frequency = new_frequency
 	radio_connection = radio_controller.add_object(src, frequency, RADIO_TO_AIRALARM)
+
+
 
 /obj/machinery/alarm/proc/send_signal(var/target, var/list/command)//sends signal 'command' to 'target'. Returns 0 if no radio connection, 1 otherwise
 	if(!radio_connection)
@@ -392,6 +396,8 @@
 	if(..())
 		return
 	usr.set_machine(src)
+	if (buildstage != 2)
+		return
 
 	if (locked && !usr.has_unlimited_silicon_privilege)
 		return

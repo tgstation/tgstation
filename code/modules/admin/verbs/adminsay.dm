@@ -6,6 +6,7 @@
 
 	msg = copytext(sanitize(msg), 1, MAX_MESSAGE_LEN)
 	if(!msg)	return
+	msg = keywords_lookup(msg)
 
 	log_admin("[key_name(src)] : [msg]")
 

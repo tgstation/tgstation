@@ -159,6 +159,8 @@
 		target.visible_message("<span class='danger'>[user] starts putting [target] into [src].</span>", \
 								"<span class='userdanger'>[user] starts putting [target] into [src]!</span>")
 	if(do_mob(user, target, 20))
+		if(!loc)
+			return
 		if (target.client)
 			target.client.perspective = EYE_PERSPECTIVE
 			target.client.eye = src

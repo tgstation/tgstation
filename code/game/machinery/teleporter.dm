@@ -120,10 +120,10 @@
 		return
 
 	if(!check_hub_connection())
-		usr << "<span class='warning'>Error: Unable to detect hub.</span>"
+		say("Error: Unable to detect hub.")
 		return
 	if(calibrating)
-		usr << "<span class='warning'>Error: Calibration in progress. Stand by.</span>"
+		say("Error: Calibration in progress. Stand by.")
 		return
 
 	if(href_list["regimeset"])
@@ -143,21 +143,21 @@
 		target = get_turf(locked.locked_location)
 	if(href_list["calibrate"])
 		if(!target)
-			usr << "<span class='warning'>Error: No target set to calibrate to.</span>"
+			say("Error: No target set to calibrate to.")
 			return
 		if(power_station.teleporter_hub.calibrated || power_station.teleporter_hub.accurate >= 3)
-			usr << "<span class='notice'>Hub is already calibrated.</span>"
+			say("Hub is already calibrated.")
 			return
-		src.visible_message("<span class='notice'>Processing hub calibration to target...</span>")
+		say("Processing hub calibration to target...")
 
 		calibrating = 1
 		spawn(50 * (3 - power_station.teleporter_hub.accurate)) //Better parts mean faster calibration
 			calibrating = 0
 			if(check_hub_connection())
 				power_station.teleporter_hub.calibrated = 1
-				src.visible_message("<span class='notice'>Calibration complete.</span>")
+				say("Calibration complete.")
 			else
-				src.visible_message("<span class='warning'>Error: Unable to detect hub.</span>")
+				say("Error: Unable to detect hub.")
 			updateDialog()
 
 	updateDialog()

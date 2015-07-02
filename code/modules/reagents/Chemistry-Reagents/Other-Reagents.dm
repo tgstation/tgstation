@@ -129,15 +129,9 @@ datum/reagent/water/reaction_turf(var/turf/simulated/T, var/volume)
 	for(var/mob/living/carbon/slime/M in T)
 		M.apply_water()
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-	var/obj/effect/fire/hotspot = (locate(/obj/effect/fire) in T)
-=======
+
 	var/obj/effect/hotspot/hotspot = (locate(/obj/effect/hotspot) in T)
->>>>>>> parent of 3c820fb... Initiate ZAS port
-=======
-	var/obj/fire/hotspot = (locate(/obj/fire) in T)
->>>>>>> parent of 0ff7157... Finish up the port
+
 	if(hotspot && !istype(T, /turf/space))
 		if(T.air)
 			var/datum/gas_mixture/G = T.air

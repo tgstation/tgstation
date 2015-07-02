@@ -306,3 +306,4 @@
 	else
 		if(dx > 0)	dir = EAST
 		else		dir = WEST
+

@@ -215,4 +215,5 @@
 	adding += using
 
 	mymob.client.screen += adding + other
+	mymob.client.screen += mymob.client.void
 	return

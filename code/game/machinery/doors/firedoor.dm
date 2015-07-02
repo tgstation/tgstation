@@ -120,17 +120,10 @@
 	else
 		return 1
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
 //used in the AStar algorithm to determinate if the turf the door is on is passable
 /obj/machinery/door/firedoor/CanAStarPass()
 	return !density
->>>>>>> parent of 0ff7157... Finish up the port
 
-
-=======
->>>>>>> parent of 3c820fb... Initiate ZAS port
 /obj/machinery/door/firedoor/border_only/CheckExit(atom/movable/mover as mob|obj, turf/target as turf)
 	if(istype(mover) && mover.checkpass(PASSGLASS))
 		return 1

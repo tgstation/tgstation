@@ -694,8 +694,8 @@
 			hasjetpack = 1
 	var/grav = has_gravity(H)
 
-	if(!grav && !hasjetpack)
-		mspeed += 1 //Slower space without jetpack
+	if(!grav)
+		mspeed = -1 - hasjetpack
 
 	var/health_deficiency = (100 - H.health + H.staminaloss)
 	if(health_deficiency >= 40)
@@ -719,14 +719,15 @@
 
 	mspeed += speedmod
 
-	if(H.status_flags & IGNORESLOWDOWN)
-		mspeed = 0
+	if(grav)
+		if(H.status_flags & IGNORESLOWDOWN)
+			mspeed = 0
 
-	if(H.status_flags & GOTTAGOFAST)
-		mspeed -= 1
+		if(H.status_flags & GOTTAGOFAST)
+			mspeed -= 1
 
-	if(H.status_flags & GOTTAGOREALLYFAST)
-		mspeed -= 2
+		if(H.status_flags & GOTTAGOREALLYFAST)
+			mspeed -= 2
 
 
 	return mspeed

@@ -168,6 +168,9 @@ proc/process_ghost_teleport_locs()
 /area/shuttle/abandoned
 	name = "\improper Abandoned Ship"
 
+/area/shuttle/NTrec
+	name = "\improper NT medical ship"
+
 
 
 /area/start
