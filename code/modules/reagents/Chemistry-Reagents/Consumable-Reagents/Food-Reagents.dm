@@ -122,27 +122,27 @@
 	id = "frostoil"
 	description = "A special oil that noticably chills the body. Extraced from Icepeppers."
 	color = "#B31008" // rgb: 139, 166, 233
-
+	var/freezepower = 10
 /datum/reagent/consumable/frostoil/on_mob_life(var/mob/living/M as mob)
 	switch(current_cycle)
 		if(1 to 15)
-			M.bodytemperature -= 10 * TEMPERATURE_DAMAGE_COEFFICIENT
+			M.bodytemperature -= freezepower * TEMPERATURE_DAMAGE_COEFFICIENT
 			if(holder.has_reagent("capsaicin"))
 				holder.remove_reagent("capsaicin", 5)
 			if(isslime(M))
 				M.bodytemperature -= rand(5,20)
 		if(15 to 25)
-			M.bodytemperature -= 20 * TEMPERATURE_DAMAGE_COEFFICIENT
+			M.bodytemperature -= (2*freezepower) * TEMPERATURE_DAMAGE_COEFFICIENT
 			if(isslime(M))
 				M.bodytemperature -= rand(10,20)
 		if(25 to 35)
-			M.bodytemperature -= 30 * TEMPERATURE_DAMAGE_COEFFICIENT
+			M.bodytemperature -= (3*freezepower) * TEMPERATURE_DAMAGE_COEFFICIENT
 			if(prob(1))
 				M.emote("shiver")
 			if(isslime(M))
 				M.bodytemperature -= rand(15,20)
 		if(35 to INFINITY)
-			M.bodytemperature -= 40 * TEMPERATURE_DAMAGE_COEFFICIENT
+			M.bodytemperature -= (4*freezepower) * TEMPERATURE_DAMAGE_COEFFICIENT
 			if(prob(5))
 				M.emote("shiver")
 			if(isslime(M))

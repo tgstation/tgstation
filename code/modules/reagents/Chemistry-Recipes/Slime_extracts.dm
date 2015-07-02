@@ -15,16 +15,16 @@
 	S.loc = get_turf(holder.my_atom)
 	S.visible_message("<span class='danger'>Infused with plasma, the core begins to quiver and grow, and soon a new baby slime emerges from it!</span>")
 
-/datum/chemical_reaction/slimeinaprov
+/datum/chemical_reaction/slimefeed
 	name = "Slime epinephrine"
 	id = "m_inaprov"
-	result = "epinephrine"
-	required_reagents = list("water" = 5)
+	result = "slimefeed"
+	required_reagents = list("slimejelly" = 1)
 	result_amount = 3
 	required_other = 1
 	required_container = /obj/item/slime_extract/grey
 
-/datum/chemical_reaction/slimeinaprov/on_reaction(var/datum/reagents/holder)
+/datum/chemical_reaction/slimefeed/on_reaction(var/datum/reagents/holder)
 	feedback_add_details("slime_cores_used","[replacetext(name," ","_")]")
 
 /datum/chemical_reaction/slimemonkey
@@ -47,7 +47,7 @@
 	name = "Mutation Toxin"
 	id = "mutationtoxin"
 	result = "mutationtoxin"
-	required_reagents = list("plasma" = 1)
+	required_reagents = list("slimejelly" = 1)
 	result_amount = 1
 	required_other = 1
 	required_container = /obj/item/slime_extract/green
@@ -209,7 +209,7 @@
 	name = "Slime Frost Oil"
 	id = "m_frostoil"
 	result = "frostoil"
-	required_reagents = list("plasma" = 1)
+	required_reagents = list("slimejelly" = 1)
 	result_amount = 10
 	required_container = /obj/item/slime_extract/blue
 	required_other = 1
@@ -255,12 +255,24 @@
 				M.bodytemperature -= 240
 				M << "<span class='notice'>You feel a chill!</span>"
 
+
+/datum/chemical_reaction/slimeice
+	name = "Slime Ice"
+	id  ="m_slimeIce"
+	result = "slimefrost"
+	required_reagents = list("slimejelly = 1")
+	required_container = /obj/item/slime_extract/darkblue
+	required_other = 1
+/datum/chemical_reaction/slimeice/on_reaction(var/datum/reagents/holder)
+		feedback_add_details("slime_cores_used","[replacetext(name," ","_")]")
+
+
 //Orange
 /datum/chemical_reaction/slimecasp
 	name = "Slime Capsaicin Oil"
 	id = "m_capsaicinoil"
 	result = "capsaicin"
-	required_reagents = list("blood" = 1)
+	required_reagents = list("slimejelly" = 1)
 	result_amount = 10
 	required_container = /obj/item/slime_extract/orange
 	required_other = 1
@@ -333,6 +345,14 @@
 	var/obj/item/device/flashlight/slime/F = new /obj/item/device/flashlight/slime
 	F.loc = get_turf(holder.my_atom)
 
+/datum/chemical_reaction/slimeshocker
+	name = "Slime Shocker"
+	id = "m_shock"
+	result = "slime_electrodes"
+	required_reagents = list("slimejelly" = 1)
+	result_amount = 5
+	required_container = /obj/item/slime_extract/yellow
+	required_other = 1
 //Purple
 
 /datum/chemical_reaction/slimepsteroid
@@ -378,19 +398,29 @@
 	P.amount = 10
 	P.loc = get_turf(holder.my_atom)
 
+/datum/chemical_reaction/slimeliquidplasma/
+	name = "Slime Liquid Plasma"
+	id = "m_liquidplasma"
+	result = "plasma"
+	required_reagents = list("slimejelly")
+	result_amount = 20
+	required_container = /obj/item/slime_extract/darkpurple
+/datum/chemical_reaction/slimeliquidplasma/on_reaction(var/datum/reagents/holder)
+	feedback_add_details("slime_cores_used","[replacetext(name," ","_")]")
+
 //Red
-/*/datum/chemical_reaction/slimeglycerol
-	name = "Slime Glycerol"
-	id = "m_glycerol"
-	result = "glycerol"
-	required_reagents = list("plasma" = 1)
+/datum/chemical_reaction/slimeadrenaline
+	name = "Slime Adrenaline"
+	id = "m_adrenaline"
+	result = "slimeadrenaline"
+	required_reagents = list("slimejelly" = 1)
 	result_amount = 8
 	required_container = /obj/item/slime_extract/red
 	required_other = 1
 
 /datum/chemical_reaction/slimeglycerol/on_reaction(var/datum/reagents/holder)
 	feedback_add_details("slime_cores_used","[replacetext(name," ","_")]")
-*/
+
 
 /datum/chemical_reaction/slimemutator
 	name = "Slime Mutator"
@@ -443,7 +473,7 @@
 	name = "Advanced Mutation Toxin"
 	id = "mutationtoxin2"
 	result = "amutationtoxin"
-	required_reagents = list("plasma" = 1)
+	required_reagents = list("slimejelly" = 1)
 	result_amount = 1
 	required_other = 1
 	required_container = /obj/item/slime_extract/black
@@ -484,6 +514,18 @@
 	var/obj/item/slimepotion2/P = new /obj/item/slimepotion2
 	P.loc = get_turf(holder.my_atom)
 
+/datum/chemical_reaction/slimemeds
+	name = "Slime Medicine"
+	id = "m_medicine"
+	result = "slimemeds"
+	result_amount = 10
+	required_container = /obj/item/slime_extract/lightpink
+	required_reagents = list("slimejelly" = 1)
+	required_other = 1
+/datum/chemical_reaction/slimepotion2/on_reaction(var/datum/reagents/holder)
+	feedback_add_details("slime_cores_used","[replacetext(name," ","_")]")
+
+
 //Adamantine
 /datum/chemical_reaction/slimegolem
 	name = "Slime Golem"
@@ -500,6 +542,17 @@
 	Z.loc = get_turf(holder.my_atom)
 	notify_ghosts("Golem rune created in [get_area(Z)].", 'sound/effects/ghost2.ogg')
 
+/datum/chemical_reaction/slimebuff
+	name = "Slime Re-enforcement"
+	id = "m_buff"
+	result = "slime_buff"
+	required_reagents = list("slimejelly" = 1)
+	result_amount = 10
+	required_container = /obj/item/slime_extract/adamantine
+	required_other = 1
+
+/datum/chemical_reaction/slimebuff/on_reaction(var/datum/reagents/holder)
+	feedback_add_details("slime_cores_used","[replacetext(name," ","_")]")
 //Bluespace
 /datum/chemical_reaction/slimefloor2
 	name = "Bluespace Floor"
@@ -617,6 +670,17 @@
 	var/obj/P = new chosen
 	if(P)
 		P.loc = get_turf(holder.my_atom)
+
+/datum/chemical_reaction/pyritepoison
+	name = "Slime Poison"
+	id = "s_clonehurt"
+	result = "pyritepoison"
+	required_reagents = list("slimejelly" = 1)
+	result_amount = 5
+	required_container = /obj/item/slime_extract/pyrite
+	required_other = 1
+/datum/chemical_reaction/slimepaint/on_reaction(var/datum/reagents/holder)
+	feedback_add_details("slime_cores_used","[replacetext(name," ","_")]")
 
 //Rainbow :o)
 /datum/chemical_reaction/slimeRNG

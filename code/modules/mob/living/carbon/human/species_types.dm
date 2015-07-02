@@ -164,7 +164,7 @@
 	hair_alpha = 150
 	ignored_by = list(/mob/living/simple_animal/slime)
 	meat = /obj/item/weapon/reagent_containers/food/snacks/meat/slab/human/mutant/slime
-	exotic_blood = /datum/reagent/toxin/slimejelly
+	exotic_blood = /datum/reagent/toxin/slime/jelly
 	var/recently_changed = 1
 
 /datum/species/slime/spec_life(mob/living/carbon/human/H)
@@ -177,7 +177,7 @@
 			H.adjustBruteLoss(5)
 			H << "<span class='danger'>You feel empty!</span>"
 
-	for(var/datum/reagent/toxin/slimejelly/S in H.reagents.reagent_list)
+	for(var/datum/reagent/toxin/slime/jelly/S in H.reagents.reagent_list)
 		if(S.volume < 100)
 			if(H.nutrition >= NUTRITION_LEVEL_STARVING)
 				H.reagents.add_reagent("slimejelly", 0.5)
@@ -204,7 +204,7 @@
 	eyes = "jelleyes"
 	specflags = list(MUTCOLORS,EYECOLOR,NOBLOOD)
 	meat = /obj/item/weapon/reagent_containers/food/snacks/meat/slab/human/mutant/slime
-	exotic_blood = /datum/reagent/toxin/slimejelly
+	exotic_blood = /datum/reagent/toxin/slime/jelly
 	var/recently_changed = 1
 
 /datum/species/jelly/spec_life(mob/living/carbon/human/H)
@@ -217,7 +217,7 @@
 			H.adjustBruteLoss(5)
 			H << "<span class='danger'>You feel empty!</span>"
 
-	for(var/datum/reagent/toxin/slimejelly/S in H.reagents.reagent_list)
+	for(var/datum/reagent/toxin/slime/jelly/S in H.reagents.reagent_list)
 		if(S.volume < 100)
 			if(H.nutrition >= NUTRITION_LEVEL_STARVING)
 				H.reagents.add_reagent("slimejelly", 0.5)

@@ -102,21 +102,6 @@
 	..()
 	return
 
-/datum/reagent/toxin/slimejelly
-	name = "Slime Jelly"
-	id = "slimejelly"
-	description = "A gooey semi-liquid produced from one of the deadliest lifeforms in existence. SO REAL."
-	color = "#801E28" // rgb: 128, 30, 40
-	toxpwr = 0
-
-/datum/reagent/toxin/slimejelly/on_mob_life(var/mob/living/M as mob)
-	if(prob(10))
-		M << "<span class='danger'>Your insides are burning!</span>"
-		M.adjustToxLoss(rand(20,60)*REM)
-	else if(prob(40))
-		M.heal_organ_damage(5*REM,0)
-	..()
-	return
 
 /datum/reagent/toxin/minttoxin
 	name = "Mint Toxin"
