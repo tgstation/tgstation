@@ -247,6 +247,11 @@ Sorry Giacom. Please don't be mad :(
 	bruteloss = min(max(bruteloss + amount, 0),(maxHealth*2))
 	handle_regular_status_updates() //we update our health right away.
 
+/mob/living/proc/setBruteLoss(var/amount)
+	if(status_flags & GODMODE)	return 0
+	bruteloss = amount
+	handle_regular_status_updates()
+
 /mob/living/proc/getOxyLoss()
 	return oxyloss
 
@@ -280,6 +285,11 @@ Sorry Giacom. Please don't be mad :(
 	if(status_flags & GODMODE)	return 0
 	fireloss = min(max(fireloss + amount, 0),(maxHealth*2))
 	handle_regular_status_updates() //we update our health right away.
+
+/mob/living/proc/setFireLoss(var/amount)
+	if(status_flags & GODMODE)	return 0
+	fireloss = amount
+	handle_regular_status_updates()
 
 /mob/living/proc/getCloneLoss()
 	return cloneloss

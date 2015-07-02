@@ -44,7 +44,7 @@
 /datum/table_recipe/slimejellydonut
 	name = "Slime jelly donut"
 	reqs = list(
-		/datum/reagent/toxin/slimejelly = 5,
+		/datum/reagent/toxin/slime/jelly = 5,
 		/obj/item/weapon/reagent_containers/food/snacks/pastrybase = 1
 	)
 	result = /obj/item/weapon/reagent_containers/food/snacks/donut/jelly/slimejelly

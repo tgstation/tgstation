@@ -1407,6 +1407,7 @@
 #include "code\modules\reagents\Chemistry-Reagents\Medicine-Reagents.dm"
 #include "code\modules\reagents\Chemistry-Reagents\Other-Reagents.dm"
 #include "code\modules\reagents\Chemistry-Reagents\Pyrotechnic-Reagents.dm"
+#include "code\modules\reagents\Chemistry-Reagents\Slime-Reagents.dm"
 #include "code\modules\reagents\Chemistry-Reagents\Toxin-Reagents.dm"
 #include "code\modules\reagents\Chemistry-Reagents\Consumable-Reagents\Food-Reagents.dm"
 #include "code\modules\reagents\Chemistry-Reagents\Consumable-Reagents\Drink-Reagents\Alcohols.dm"
