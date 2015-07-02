@@ -1,0 +1,4 @@
+author: oranges
+delete-after: True
+changes: 
+  - tweak: "Thanks to changes in our latest clone physiology package your time period for defib revival has now been reduced to 5 minutes instead of 10"
