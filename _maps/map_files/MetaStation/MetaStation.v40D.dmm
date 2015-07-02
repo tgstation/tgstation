@@ -266,7 +266,7 @@
 "aff" = (/obj/structure/stool/bed/chair/comfy/black,/turf/simulated/floor/plasteel{icon_state = "dark"},/area/security/hos)
 "afg" = (/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{dir = 6},/obj/structure/cable/yellow{d1 = 1; d2 = 4; icon_state = "1-4"},/turf/simulated/floor/plasteel{icon_state = "dark"},/area/security/hos)
 "afh" = (/obj/machinery/status_display{density = 0; layer = 4; pixel_x = 32; pixel_y = 32},/obj/machinery/atmospherics/unary/vent_scrubber{dir = 8; on = 1; scrub_N2O = 0; scrub_Toxins = 0},/obj/structure/cable/yellow{d1 = 2; d2 = 8; icon_state = "2-8"},/turf/simulated/floor/plasteel{icon_state = "dark"},/area/security/hos)
-"afi" = (/obj/machinery/light{dir = 4},/obj/structure/reagent_dispensers/peppertank{pixel_x = 30; pixel_y = 0},/obj/structure/extinguisher_cabinet{pixel_x = 27; pixel_y = 29},/turf/simulated/floor/plasteel{icon_state = "dark"},/area/security/hos)
+"afi" = (/obj/machinery/light{dir = 4},/obj/structure/reagent_dispensers/peppertank{pixel_x = 30; pixel_y = 0},/obj/structure/extinguisher_cabinet{pixel_x = 27; pixel_y = 29},/obj/machinery/suit_storage_unit/hos,/turf/simulated/floor/plasteel{icon_state = "dark"},/area/security/hos)
 "afj" = (/obj/machinery/light/small{dir = 1},/turf/simulated/floor/plasteel{dir = 9; icon_state = "warning"},/area/security/range)
 "afk" = (/turf/simulated/floor/plasteel{dir = 1; icon_state = "warning"},/area/security/range)
 "afl" = (/obj/machinery/light/small{dir = 1},/turf/simulated/floor/plasteel{dir = 5; icon_state = "warning"},/area/security/range)
