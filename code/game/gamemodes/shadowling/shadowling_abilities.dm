@@ -145,11 +145,9 @@
 	var/enthralling = 0
 
 /obj/effect/proc_holder/spell/targeted/enthrall/cast(list/targets)
-	var/thrallsPresent = 0
 	var/mob/living/carbon/human/user = usr
-	for(var/datum/mind/mindToCount in ticker.mode.thralls)
-		thrallsPresent++
-	if(thrallsPresent >= 5 && (user.dna.species.id != "shadowling"))
+	listclearnulls(ticker.mode.thralls)
+	if(ticker.mode.thralls.len >= 5 && (user.dna.species.id != "shadowling"))
 		user << "<span class='warning'>With your telepathic abilities suppressed, your human form will not allow you to enthrall any others. Hatch first.</span>"
 		charge_counter = charge_max
 		return
@@ -371,7 +369,7 @@
 		qdel(B)
 
 datum/reagent/shadowling_blindness_smoke //Blinds non-shadowlings, heals shadowlings/thralls
-	name = "Odd Black Liquid"
+	name = "odd black liquid"
 	id = "blindness_smoke"
 	description = "<::ERROR::> CANNOT ANALYZE REAGENT <::ERROR::>"
 	color = "#000000" //Complete black (RGB: 0, 0, 0)
@@ -450,21 +448,21 @@ datum/reagent/shadowling_blindness_smoke //Blinds non-shadowlings, heals shadowl
 		for(var/mob/living/carbon/M in T.contents)
 			targetsDrained++
 			nearbyTargets.Add(M)
-		for(var/mob/living/carbon/M in nearbyTargets)
-			nearbyTargets.Remove(M) //To prevent someone dying like a zillion times
-			U.heal_organ_damage(10, 10)
-			U.adjustToxLoss(-10)
-			U.adjustOxyLoss(-10)
-			U.adjustStaminaLoss(-20)
-			U.AdjustWeakened(-1)
-			U.AdjustStunned(-1)
-			M.adjustOxyLoss(20)
-			M.adjustStaminaLoss(20)
-			M << "<span class='boldannounce'>You feel a wave of exhaustion and a curious draining sensation directed towards [usr]!</span>"
-			usr << "<span class='shadowling'>You draw the life from [M] to heal your wounds.</span>"
 	if(!targetsDrained)
 		charge_counter = charge_max
 		usr << "<span class='warning'>There were no nearby humans for you to drain.</span>"
+		return
+	for(var/mob/living/carbon/M in nearbyTargets)
+		U.heal_organ_damage(10, 10)
+		U.adjustToxLoss(-10)
+		U.adjustOxyLoss(-10)
+		U.adjustStaminaLoss(-20)
+		U.AdjustWeakened(-1)
+		U.AdjustStunned(-1)
+		M.adjustOxyLoss(20)
+		M.adjustStaminaLoss(20)
+		M << "<span class='boldannounce'>You feel a wave of exhaustion and a curious draining sensation directed towards [usr]!</span>"
+	usr << "<span class='shadowling'>You draw life from those around you to heal your wounds.</span>"
 
 
 

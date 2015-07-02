@@ -35,9 +35,5 @@
 /mob/living/simple_animal/ascendant_shadowling/Process_Spacemove(var/movement_dir = 0)
 	return 1 //copypasta from carp code
 
-/mob/living/simple_animal/ascendant_shadowling/say(var/message)
-	message = message + "!!"
-	return ..()
-
 /mob/living/simple_animal/ascendant_shadowling/get_spans()
-	return ..() | SPAN_REALLYBIG
+	return ..() | list(SPAN_REALLYBIG, SPAN_YELL)
