@@ -229,7 +229,7 @@
 
 /datum/intercept_text/proc/build_gang(datum/mind/correct_person)
 	src.text += "<BR><BR>We have reports of criminal activity in close proximity to our operations within your sector."
-	src.text += "Ensure law and order is maintained on the station and be on the lookout for aggressive factionalism within the crew."
+	src.text += "Ensure law and order is maintained on the station and be on the lookout for territorial aggression within the crew."
 	src.text += "In the event of a full-scale criminal takeover threat, sensitive research items are to be secured and the station evacuated ASAP."
 	src.text += "<BR><HR>"
 
