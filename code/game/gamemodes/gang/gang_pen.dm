@@ -88,6 +88,13 @@
 
 	if(target.stat != DEAD)
 		ticker.mode.remove_gangster(target.mind,0,1)
+
+	if(!target.mind)
+		return
+
+	if(ishuman(target))
+		var/mob/living/carbon/human/H = target
+		H.sec_hud_set_implants()
 		if(ticker.mode.add_gangster(target.mind,gang))
 			target.Paralyse(5)
 		else

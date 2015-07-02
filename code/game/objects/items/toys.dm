@@ -123,8 +123,7 @@
 	flags =  CONDUCT
 	slot_flags = SLOT_BELT
 	w_class = 3.0
-	g_amt = 10
-	m_amt = 10
+	materials = list(MAT_METAL=10, MAT_GLASS=10)
 	attack_verb = list("struck", "pistol whipped", "hit", "bashed")
 	var/bullets = 7.0
 
@@ -176,8 +175,7 @@
 	icon = 'icons/obj/ammo.dmi'
 	icon_state = "357OLD-7"
 	w_class = 1.0
-	g_amt = 10
-	m_amt = 10
+	materials = list(MAT_METAL=10, MAT_GLASS=10)
 	var/amount_left = 7.0
 
 /obj/item/toy/ammo/gun/update_icon()

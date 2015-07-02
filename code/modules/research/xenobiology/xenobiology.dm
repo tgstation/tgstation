@@ -482,7 +482,7 @@
 	icon_state = "tile-bluespace"
 	w_class = 3.0
 	force = 6.0
-	m_amt = 937.5
+	materials = list(MAT_METAL=937.5)
 	throwforce = 10.0
 	throw_speed = 3
 	throw_range = 7
@@ -505,7 +505,7 @@
 	icon_state = "tile-sepia"
 	w_class = 3.0
 	force = 6.0
-	m_amt = 937.5
+	materials = list(MAT_METAL=937.5)
 	throwforce = 10.0
 	throw_speed = 3
 	throw_range = 7
