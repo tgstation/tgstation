@@ -197,10 +197,11 @@
 			M.add_language("Cult")
 			log_admin("[usr]([ckey(usr.key)]) has converted [M] ([ckey(M.key)]) to the cult at [M.loc.x], [M.loc.y], [M.loc.z]")
 			if(M.client)
-				spawn(100)//10 seconds sounds good
-					if(M && !M.client)
-						message_admins("[M] ([ckey(M.key)]) ghosted/disconnected shortly after having been converted to the cult!")
-						log_admin("[usr]([ckey(usr.key)]) ghosted/disconnected shortly after having been converted to the cult!")
+				src = null
+				sleep(100)//10 seconds sounds good
+				if(M && !M.client)
+					message_admins("[M] ([ckey(M.key)]) ghosted/disconnected shortly after having been converted to the cult!")
+					log_admin("[usr]([ckey(usr.key)]) ghosted/disconnected shortly after having been converted to the cult!")
 			return 1
 		else
 			M << "<span class='sinister'>Your blood pulses. Your head throbs. The world goes red. All at once you are aware of a horrible, horrible truth. The veil of reality has been ripped away and in the festering wound left behind something sinister takes root.</span>"
