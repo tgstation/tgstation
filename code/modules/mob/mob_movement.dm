@@ -199,19 +199,19 @@
 	if(!mob)
 		return // Moved here to avoid nullrefs below. - N3X
 
-	// USE /event
-	call(/datum/pda_app/station_map/proc/minimap_update)(mob)
+	if(moving)	return 0
+
+	if(move_delayer.blocked()) return
 
 	// /vg/ - Deny clients from moving certain mobs. (Like cluwnes :^)
 	if(mob.deny_client_move)
 		src << "<span class='warning'>You cannot move this mob.</span>"
 		return
 
+	// USE /event
+	call(/datum/pda_app/station_map/proc/minimap_update)(mob)
+
 	if(mob.control_object)	Move_object(dir)
-
-	if(moving)	return 0
-
-	if(move_delayer.blocked()) return
 
 	if(mob.incorporeal_move)
 		Process_Incorpmove(dir)
@@ -280,12 +280,9 @@
 		if(Findgrab)
 			move_delay += 7
 
-		if(config.Tickcomp)
-			move_delay *= (1/(2*world.tick_lag))
-
 		//We are now going to move
 		moving = 1
-		mob.delayNextMove(move_delay)
+		mob.delayNextMove(move_delay/2)
 		//Something with pulling things
 		if(Findgrab)
 			var/list/L = mob.ret_grab()
