@@ -5,6 +5,13 @@
 /datum/martial_art/hallway_brawler
 	name = "Hallway Brawler"
 	counter_prob = 50
+/datum/martial_art/hallway_brawler/teach(var/mob/living/carbon/human/H,var/make_temporary=0)
+	..()
+	H.verbs += /mob/living/carbon/human/proc/hallway_brawler_help
+
+/datum/martial_art/hallway_brawler/remove(var/mob/living/carbon/human/H)
+	..()
+	H.verbs -= /mob/living/carbon/human/proc/hallway_brawler_help
 
 /datum/martial_art/hallway_brawler/on_hit(var/mob/living/carbon/human/A, var/mob/living/carbon/human/D)
 	if(prob(counter_prob))
@@ -162,7 +169,6 @@
 	if(slot == slot_gloves)
 		var/mob/living/carbon/human/H = user
 		style.teach(H,1)
-		user.verbs += /mob/living/carbon/human/proc/hallway_brawler_help
 	return
 
 /obj/item/clothing/gloves/hallway_brawler/dropped(mob/user)
@@ -171,6 +177,5 @@
 	var/mob/living/carbon/human/H = user
 	if(H.get_item_by_slot(slot_gloves) == src)
 		style.remove(H)
-		H.verbs -= /mob/living/carbon/human/proc/hallway_brawler_help
 	return
 
