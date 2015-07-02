@@ -605,3 +605,14 @@
 			return
 	else
 		..()
+
+/obj/item/weapon/reagent_containers/food/drinks/drinkingglass/attack(obj/target, mob/user)
+
+	if(user.a_intent == "harm" && ismob(target) && target.reagents && reagents.total_volume)
+		target.visible_message("<span class='danger'>[user] splashes [target] with [src]!</span>", \
+						"<span class='userdanger'>[user] splashes [target] with [src]!</span>")
+		add_logs(user, target, "splashed", object="[src]")
+		reagents.reaction(target, TOUCH)
+		reagents.clear_reagents()
+		return
+	..()
