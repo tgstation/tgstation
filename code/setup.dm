@@ -9,6 +9,8 @@
 #define DEBUG
 #define PROFILE_MACHINES // Disable when not debugging.
 
+#define ARBITRARILY_LARGE_NUMBER 10000 //Used in delays.dm and vehicle.dm. Upper limit on delays
+
 #ifdef PROFILE_MACHINES
 #define CHECK_DISABLED(TYPE) if(disable_##TYPE) return
 var/global/disable_scrubbers = 0

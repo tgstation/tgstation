@@ -1,5 +1,5 @@
 author: Unid
 delete-after: True
 changes: 
-  - tweak: AIs can upload photos to newscasters.
-  - tweak: AIs can rename or delete their stored photos.
+  - rscadd: Added wheelchairs to the game. Two can be found in medbay, more can be ordered from cargo.
+  - rscadd: Characters missing both of their feet now spawn with a wheelchair.

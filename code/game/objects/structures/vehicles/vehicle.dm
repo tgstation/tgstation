@@ -25,6 +25,7 @@
 
 	var/empstun = 0
 	var/health = 100
+	var/max_health = 100
 	var/destroyed = 0
 	var/inertia_dir = 0
 
@@ -35,6 +36,14 @@
 	var/obj/item/key/mykey
 
 	var/vin=null
+	var/datum/delay_controller/move_delayer = new(1,ARBITRARILY_LARGE_NUMBER) //See setup.dm, 12
+	var/movement_delay = 0 //Speed of the vehicle decreases as this value increases. Anything above 6 is slow, 1 is fast and 0 is very fast
+
+/obj/structure/stool/bed/chair/vehicle/proc/getMovementDelay()
+	return movement_delay
+
+/obj/structure/stool/bed/chair/vehicle/proc/delayNextMove(var/delay, var/additive=0)
+	move_delayer.delayNext(delay,additive)
 
 /obj/structure/stool/bed/chair/vehicle/New()
 	..()
@@ -90,9 +99,13 @@
 		if(user)
 			user << "<span class='warning'>\the [src] is unresponsive.</span>"
 		return
+	if(move_delayer.blocked())
+		return
 	if(istype(src.loc, /turf/space))
 		if(!src.Process_Spacemove(0))	return
+
 	step(src, direction)
+	delayNextMove(getMovementDelay())
 	update_mob()
 	handle_rotation()
 	/*
@@ -207,8 +220,13 @@
 		if(buckled_mob.buckled == src)
 			buckled_mob.forceMove(loc)
 
-/obj/structure/stool/bed/chair/vehicle/buckle_mob(mob/M, mob/user)
+/obj/structure/stool/bed/chair/vehicle/proc/can_buckle(mob/M, mob/user)
 	if(M != user || !ishuman(user) || !Adjacent(user) || user.restrained() || user.lying || user.stat || user.buckled || destroyed)
+		return 0
+	return 1
+
+/obj/structure/stool/bed/chair/vehicle/buckle_mob(mob/M, mob/user)
+	if(!can_buckle(M,user))
 		return
 
 	unbuckle()
@@ -231,11 +249,14 @@
 		buckled_mob.pixel_y = 0
 	..()
 
-/obj/structure/stool/bed/chair/vehicle/handle_rotation()
+/obj/structure/stool/bed/chair/vehicle/handle_layer()
 	if(dir == SOUTH)
 		layer = FLY_LAYER
 	else
 		layer = OBJ_LAYER
+
+/obj/structure/stool/bed/chair/vehicle/handle_rotation()
+	handle_layer()
 
 	if(buckled_mob)
 		if(buckled_mob.loc != loc)
@@ -303,7 +324,7 @@
 		HealthCheck()
 
 /obj/structure/stool/bed/chair/vehicle/proc/HealthCheck()
-	if(health > 100) health = 100
+	if(health > max_health) health = max_health
 	if(health <= 0 && !destroyed)
 		die()
 

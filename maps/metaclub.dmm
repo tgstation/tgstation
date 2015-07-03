@@ -5758,7 +5758,7 @@
 "cgL" = (/obj/machinery/atmospherics/pipe/simple/cyan/visible,/obj/machinery/atmospherics/pipe/simple/filtering/visible{dir = 4},/obj/machinery/light,/turf/simulated/floor,/area/engineering/atmos)
 "cgM" = (/obj/machinery/atmospherics/pipe/simple/cyan/visible,/obj/machinery/door_control{desc = "A remote control-switch for the engineering security doors."; id_tag = "air_vent"; name = "EMERGENCY VENT"; pixel_x = 0; pixel_y = -30; req_access_txt = "24"},/obj/machinery/atmospherics/pipe/simple/filtering/visible{dir = 4},/turf/simulated/floor{icon_state = "arrival"; dir = 10},/area/engineering/atmos)
 "cgN" = (/obj/machinery/computer/general_air_control/large_tank_control{frequency = 1443; input_tag = "air_in"; name = "Mixed Air Supply Control"; output_tag = "air_out"; pressure_setting = 2000; sensors = list("air_sensor" = "Tank")},/obj/machinery/atmospherics/pipe/simple/filtering/visible{dir = 4},/turf/simulated/floor{icon_state = "arrival"},/area/engineering/atmos)
-"cgO" = (/turf/simulated/floor{dir = 1; icon_state = "whiteblue"},/area/medical/sleeper{name = "Sleepers"})
+"cgO" = (/obj/structure/stool/bed/chair/vehicle/wheelchair,/turf/simulated/floor{dir = 1; icon_state = "whiteblue"},/area/medical/sleeper{name = "Sleepers"})
 "cgP" = (/obj/structure/cable/yellow{d1 = 1; d2 = 2; icon_state = "1-2"},/obj/structure/disposalpipe/segment,/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,/turf/simulated/floor,/area/hallway/primary/starboard)
 "cgQ" = (/obj/machinery/light/small{dir = 1},/turf/simulated/floor/plating,/area/engineering/atmos)
 "cgR" = (/obj/machinery/door/airlock/external{req_access_txt = "24"},/turf/simulated/floor/plating,/area/engineering/atmos)
