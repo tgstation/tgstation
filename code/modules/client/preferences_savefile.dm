@@ -223,10 +223,6 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	real_name		= reject_bad_name(real_name)
 	if(!features["mcolor"] || features["mcolor"] == "#000")
 		features["mcolor"] = pick("FFFFFF","7F7F7F", "7FFF7F", "7F7FFF", "FF7F7F", "7FFFFF", "FF7FFF", "FFFF7F")
-	if(!features["tail_human"])
-		features["tail_human"] = "None"
-	if(!features["ears"])
-		features["ears"] = "None"
 	if(!real_name)	real_name = random_name(gender)
 	be_random_name	= sanitize_integer(be_random_name, 0, 1, initial(be_random_name))
 	be_random_body	= sanitize_integer(be_random_body, 0, 1, initial(be_random_body))
@@ -252,10 +248,10 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	backbag			= sanitize_integer(backbag, 1, backbaglist.len, initial(backbag))
 	features["mcolor"]	= sanitize_hexcolor(features["mcolor"], 3, 0)
 	features["tail_lizard"]	= sanitize_inlist(features["tail_lizard"], tails_list_lizard)
-	features["tail_human"] 	= sanitize_inlist(features["tail_human"], tails_list_human)
+	features["tail_human"] 	= sanitize_inlist(features["tail_human"], tails_list_human, "None")
 	features["snout"]	= sanitize_inlist(features["snout"], snouts_list)
 	features["horns"] 	= sanitize_inlist(features["horns"], horns_list)
-	features["ears"]	= sanitize_inlist(features["ears"], ears_list)
+	features["ears"]	= sanitize_inlist(features["ears"], ears_list, "None")
 	features["frills"] 	= sanitize_inlist(features["frills"], frills_list)
 	features["spines"] 	= sanitize_inlist(features["spines"], spines_list)
 	features["body_markings"] 	= sanitize_inlist(features["body_markings"], body_markings_list)
