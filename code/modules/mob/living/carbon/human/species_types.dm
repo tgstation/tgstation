@@ -12,6 +12,11 @@
 	default_features = list("mcolor" = "FFF", "tail_human" = "None", "ears" = "None")
 	use_skintones = 1
 
+/datum/species/human/New()
+	if(config && !config.mutant_humans) //Muties go home
+		mutant_bodyparts = list()
+	..()
+
 /datum/species/human/qualifies_for_rank(var/rank, var/list/features)
 	if(!config.mutant_humans) //No mutie scum here
 		return 1
