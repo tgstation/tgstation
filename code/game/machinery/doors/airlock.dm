@@ -1082,7 +1082,7 @@ About the new airlock wires panel:
 				else
 					spawn(0)	close(1)
 		src.busy = 0
-	else if (istype(I, /obj/item/weapon/card/emag) || istype(I, /obj/item/weapon/melee/energy/blade))
+	else if (istype(I, /obj/item/weapon/card/emag))
 		if (!operating)
 			operating = -1
 			if(density)

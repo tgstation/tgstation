@@ -65,16 +65,6 @@
 	w_class = 2
 	gas_transfer_coefficient = 0.90
 
-/obj/item/clothing/mask/ninjascarf
-	name = "ninja scarf"
-	desc = "A stealthy, dark scarf."
-	icon_state = "ninja_scarf"
-	item_state = "ninja_scarf"
-	flags = FPRINT
-	w_class = 2
-	gas_transfer_coefficient = 0.90
-	siemens_coefficient = 0
-
 /obj/item/clothing/mask/pig
 	name = "pig mask"
 	desc = "A rubber pig mask."

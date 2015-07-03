@@ -237,15 +237,6 @@ var/list/camera_names=list()
 				if (S.current == src)
 					O << "[U] holds \a [itemname] up to one of the cameras ..."
 					O << browse(text("<HTML><HEAD><TITLE>[]</TITLE></HEAD><BODY><TT>[]</TT></BODY></HTML>", itemname, info), text("window=[]", itemname))
-	else if(istype(W, /obj/item/weapon/melee/energy/blade))//Putting it here last since it's a special case. I wonder if there is a better way to do these than type casting.
-		deactivate(user,2)//Here so that you can disconnect anyone viewing the camera, regardless if it's on or off.
-		var/datum/effect/effect/system/spark_spread/spark_system = new /datum/effect/effect/system/spark_spread()
-		spark_system.set_up(5, 0, loc)
-		spark_system.start()
-		playsound(loc, 'sound/weapons/blade1.ogg', 50, 1)
-		playsound(loc, "sparks", 50, 1)
-		visible_message("<span class='notice'>The camera has been sliced apart by [] with an energy blade!</span>")
-		del(src)
 	else
 		..()
 	return

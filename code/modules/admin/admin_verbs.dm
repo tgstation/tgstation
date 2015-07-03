@@ -97,8 +97,6 @@ var/list/admin_verbs_fun = list(
 	/client/proc/one_click_antag,
 	/client/proc/antag_madness,
 	/datum/admins/proc/toggle_aliens,
-	/datum/admins/proc/toggle_space_ninja,
-	/client/proc/send_space_ninja,
 	// FUUUUCKED /client/proc/zombie_event, // ZOMBB-B-BIES
 	/client/proc/cmd_admin_add_freeform_ai_law,
 	/client/proc/cmd_admin_add_random_ai_law,
@@ -137,7 +135,6 @@ var/list/admin_verbs_server = list(
 	/datum/admins/proc/adspawn,
 	/datum/admins/proc/adjump,
 	/datum/admins/proc/toggle_aliens,
-	/datum/admins/proc/toggle_space_ninja,
 	/client/proc/toggle_random_events,
 	/client/proc/check_customitem_activity,
 	/client/proc/dump_chemreactions,
@@ -226,8 +223,6 @@ var/list/admin_verbs_hideable = list(
 	/client/proc/drop_bomb,
 	/client/proc/cinematic,
 	/datum/admins/proc/toggle_aliens,
-	/datum/admins/proc/toggle_space_ninja,
-	/client/proc/send_space_ninja,
 	/client/proc/cmd_admin_add_freeform_ai_law,
 	/client/proc/cmd_admin_add_random_ai_law,
 	/client/proc/cmd_admin_create_centcom_report,
@@ -392,7 +387,7 @@ var/list/admin_verbs_mod = list(
 		var/mob/body = mob
 		if(body.mind) body.mind.isScrying = 1
 		body.ghostize(1)
-		
+
 		if(body && !body.key)
 			body.key = "@[key]"	//Haaaaaaaack. But the people have spoken. If it breaks; blame adminbus
 		feedback_add_details("admin_verb","O") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!

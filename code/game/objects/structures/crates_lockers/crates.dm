@@ -451,7 +451,7 @@
 		overlays.len = 0
 		overlays += redlight
 		return
-	else if ( (istype(W, /obj/item/weapon/card/emag)||istype(W, /obj/item/weapon/melee/energy/blade)) && locked &&!broken)
+	else if ( istype(W, /obj/item/weapon/card/emag) && locked &&!broken)
 		overlays.len = 0
 		overlays += emag
 		overlays += sparks

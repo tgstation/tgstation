@@ -190,17 +190,6 @@
 			T.attackby(W,user)
 		del(src)
 
-	else if( istype(W, /obj/item/weapon/melee/energy/blade) )
-		var/turf/T = get_turf(src)
-		if(!mineral)
-			T.ChangeTurf(/turf/simulated/wall)
-		else
-			T.ChangeTurf(text2path("/turf/simulated/wall/mineral/[mineral]"))
-		if(mineral != "plasma")
-			T = get_turf(src)
-			T.attackby(W,user)
-		del(src)
-
 /obj/structure/falsewall/update_icon()//Calling icon_update will refresh the smoothwalls if it's closed, otherwise it will make sure the icon is correct if it's open
 	..()
 	if(density)
@@ -286,7 +275,7 @@
 			T.ChangeTurf(/turf/simulated/wall)
 			T = get_turf(src)
 			T.attackby(W,user)
-			del(src)
+			qdel(src)
 
 	else if( istype(W, /obj/item/weapon/pickaxe) )
 		var/obj/item/weapon/pickaxe/used_pick = W
@@ -296,14 +285,7 @@
 		T.ChangeTurf(/turf/simulated/wall)
 		T = get_turf(src)
 		T.attackby(W,user)
-		del(src)
-
-	else if( istype(W, /obj/item/weapon/melee/energy/blade) )
-		var/turf/T = get_turf(src)
-		T.ChangeTurf(/turf/simulated/wall)
-		T = get_turf(src)
-		T.attackby(W,user)
-		del(src)
+		qdel(src)
 
 
 /*

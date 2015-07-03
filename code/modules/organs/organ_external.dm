@@ -689,26 +689,6 @@ Note that amputating the affected organ does in fact remove the infection from t
 	if (prob(25))
 		release_restraints()
 
-	// This is mostly for the ninja suit to stop ninja being so crippled by breaks.
-	// TODO: consider moving this to a suit proc or process() or something during
-	// hardsuit rewrite.
-	/*
-	if(!(status & ORGAN_SPLINTED) && istype(owner,/mob/living/carbon/human))
-
-		var/mob/living/carbon/human/H = owner
-
-		if(H.wear_suit && istype(H.wear_suit,/obj/item/clothing/suit/space))
-			return
-
-			//var/obj/item/clothing/suit/space/suit = H.wear_suit
-
-			if(!suit.supporting_limbs)
-				return
-
-			owner << "You feel \the [suit] constrict about your [display_name], supporting it."
-			status |= ORGAN_SPLINTED
-			suit.supporting_limbs |= src
-	remove ninja code */
 	return
 
 /datum/organ/external/proc/robotize()

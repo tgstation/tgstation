@@ -66,7 +66,7 @@
 	var/list/uplink_items_bought = list()
 	var/total_TC = 0
 	var/spent_TC = 0
-	
+
 	//fix scrying raging mages issue.
 	var/isScrying = 0
 
@@ -550,9 +550,6 @@
 					return
 
 				switch(new_obj_type)
-					if("download")
-						new_objective = new /datum/objective/download
-						new_objective.explanation_text = "Download [target_number] research levels."
 					if("capture")
 						new_objective = new /datum/objective/capture
 						new_objective.explanation_text = "Accumulate [target_number] capture points."

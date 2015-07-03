@@ -32,13 +32,6 @@
 	if(..())
 		return
 
-	if(ishuman(user))//Checks to see if they are ninja
-		if(istype(user:gloves, /obj/item/clothing/gloves/space_ninja)&&user:gloves:candrain&&!user:gloves:draining)
-			if(user:wear_suit:s_control)
-				user:wear_suit.transfer_ai("AIFIXER","NINJASUIT",src,user)
-			else
-				user << "<span class='danger'>ERROR: </span>Remote access channel disabled."
-			return
 	var/dat = "<h3>AI System Integrity Restorer</h3><br><br>"
 
 	if (src.occupant)

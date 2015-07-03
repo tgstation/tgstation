@@ -74,10 +74,6 @@
 			//Cameras can't track people wearing an agent card or a ninja hood.
 			if(H.wear_id && istype(H.wear_id.GetID(), /obj/item/weapon/card/id/syndicate))
 				continue
-			if(istype(H.head, /obj/item/clothing/head/helmet/space/space_ninja))
-				var/obj/item/clothing/head/helmet/space/space_ninja/hood = H.head
-				if(!hood.canremove)
-					continue
 		//Skipping aliens because shit, that's OP
 		if(isalien(M))
 			continue
@@ -117,9 +113,6 @@
 		if(istype(target, /mob/living/carbon/human))
 			var/mob/living/carbon/human/H = target
 			if(H.wear_id && istype(H.wear_id.GetID(), /obj/item/weapon/card/id/syndicate))
-				src << "Unable to locate an airlock"
-				return
-			if(istype(H.head, /obj/item/clothing/head/helmet/space/space_ninja) && !H.head.canremove)
 				src << "Unable to locate an airlock"
 				return
 			if(H.digitalcamo)
@@ -173,10 +166,6 @@
 				var/mob/living/carbon/human/H = target
 				if(H.wear_id && istype(H.wear_id.GetID(), /obj/item/weapon/card/id/syndicate))
 					U << "Follow camera mode terminated."
-					U.cameraFollow = null
-					return
-		 		if(istype(H.head, /obj/item/clothing/head/helmet/space/space_ninja) && !H.head.canremove)
-		 			U << "Follow camera mode terminated."
 					U.cameraFollow = null
 					return
 				if(H.digitalcamo)
