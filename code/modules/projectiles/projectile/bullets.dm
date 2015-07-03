@@ -6,6 +6,10 @@
 	nodamage = 0
 	flag = "bullet"
 
+/obj/item/projectile/bullet/revolver
+	damage = 60
+	armour_penetration = 10
+
 
 /obj/item/projectile/bullet/weakbullet //beanbag, heavy stamina damage
 	damage = 5
