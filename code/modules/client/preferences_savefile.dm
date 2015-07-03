@@ -223,6 +223,10 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	real_name		= reject_bad_name(real_name)
 	if(!features["mcolor"] || features["mcolor"] == "#000")
 		features["mcolor"] = pick("FFFFFF","7F7F7F", "7FFF7F", "7F7FFF", "FF7F7F", "7FFFFF", "FF7FFF", "FFFF7F")
+	if(!features["tail_human"])
+		features["tail_human"] = "None"
+	if(!features["ears"])
+		features["ears"] = "None"
 	if(!real_name)	real_name = random_name(gender)
 	be_random_name	= sanitize_integer(be_random_name, 0, 1, initial(be_random_name))
 	be_random_body	= sanitize_integer(be_random_body, 0, 1, initial(be_random_body))
@@ -297,10 +301,10 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	S["species"]			<< pref_species.name
 	S["feature_mcolor"]					<< features["mcolor"]
 	S["feature_lizard_tail"]			<< features["tail_lizard"]
-//	S["feature_human_tail"]				<< features["tail_human"]
+	S["feature_human_tail"]				<< features["tail_human"]
 	S["feature_lizard_snout"]			<< features["snout"]
 	S["feature_lizard_horns"]			<< features["horns"]
-//	S["feature_human_ears"]				<< features["ears"]
+	S["feature_human_ears"]				<< features["ears"]
 	S["feature_lizard_frills"]			<< features["frills"]
 	S["feature_lizard_spines"]			<< features["spines"]
 	S["feature_lizard_body_markings"]	<< features["body_markings"]
