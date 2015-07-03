@@ -34,7 +34,7 @@
 
 
 /obj/item/weapon/reagent_containers/glass/afterattack(obj/target, mob/user, proximity)
-	if((!proximity) || !check_allowed_items(target,1)) return
+	if((!proximity) || !check_allowed_items(target,target_self=1)) return
 
 	if(ismob(target) && target.reagents && reagents.total_volume)
 		var/mob/M = target
