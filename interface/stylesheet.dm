@@ -17,7 +17,7 @@ em						{font-style: normal;	font-weight: bold;}
 
 .ooc					{					font-weight: bold;}
 .adminobserverooc		{color: #0099cc;	font-weight: bold;}
-.adminooc				{color: #b82e00;	font-weight: bold;}
+.adminooc				{color: #e60073;	font-weight: bold;}
 
 .adminobserver			{color: #996600;	font-weight: bold;}
 .admin					{color: #386aff;	font-weight: bold;}
@@ -29,7 +29,7 @@ em						{font-style: normal;	font-weight: bold;}
 .radio					{color: #008000;}
 .sciradio				{color: #993399;}
 .comradio				{color: #aca82d;}
-.secradio				{color: #e60073;}
+.secradio				{color: #b22222;}
 .medradio				{color: #337296;}
 .engradio				{color: #fb5613;}
 .suppradio				{color: #a8732b;}
