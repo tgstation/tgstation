@@ -797,7 +797,7 @@ Sorry Giacom. Please don't be mad :(
 				viewing |= M.client
 		flick_overlay(I,viewing,5)
 		I.pixel_z = 16 //lift it up...
-		animate(I, pixel_z = 0, alpha = 125, 3) //smash it down into them!
+		animate(I, pixel_z = 0, alpha = 125, time = 3) //smash it down into them!
 
 /mob/living/proc/do_jitter_animation(jitteriness)
 	var/amplitude = min(4, (jitteriness/100) + 1)
