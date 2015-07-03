@@ -86,7 +86,7 @@ var/datum/subsystem/job/SSjob
 		if(player.mind && job.title in player.mind.restricted_roles)
 			Debug("FOC incompatible with antagonist role, Player: [player]")
 			continue
-		if(config.enforce_human_authority && (job.title in command_positions) && player.client.prefs.pref_species.id != "human")
+		if(config.enforce_human_authority && !player.client.prefs.pref_species.qualifies_for_rank(job.title, player.client.prefs.features))
 			Debug("FOC non-human failed, Player: [player]")
 			continue
 		if(player.client.prefs.GetJobDepartment(job, level) & job.flag)
@@ -118,7 +118,7 @@ var/datum/subsystem/job/SSjob
 			Debug("GRJ incompatible with antagonist role, Player: [player], Job: [job.title]")
 			continue
 
-		if(config.enforce_human_authority && (job.title in command_positions) && player.client.prefs.pref_species.id != "human")
+		if(config.enforce_human_authority && !player.client.prefs.pref_species.qualifies_for_rank(job.title, player.client.prefs.features))
 			Debug("GRJ non-human failed, Player: [player]")
 			continue
 
@@ -291,7 +291,7 @@ var/datum/subsystem/job/SSjob
 					Debug("DO incompatible with antagonist role, Player: [player], Job:[job.title]")
 					continue
 
-				if(config.enforce_human_authority && (job.title in command_positions) && player.client.prefs.pref_species.id != "human")
+				if(config.enforce_human_authority && !player.client.prefs.pref_species.qualifies_for_rank(job.title, player.client.prefs.features))
 					Debug("DO non-human failed, Player: [player], Job:[job.title]")
 					continue
 
