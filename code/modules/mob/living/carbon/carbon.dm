@@ -278,7 +278,7 @@
 
 		newtonian_move(get_dir(target, src))
 
-		item.throw_at(target, item.throw_range, item.throw_speed)
+		item.throw_at(target, item.throw_range, item.throw_speed, src)
 
 /mob/living/carbon/can_use_hands()
 	if(handcuffed)
@@ -507,3 +507,31 @@ var/const/GALOSHES_DONT_HELP = 8
 /mob/living/carbon/check_ear_prot()
 	if(head && (head.flags & HEADBANGPROTECT))
 		return 1
+
+/mob/living/carbon/proc/accident(var/obj/item/I)
+	if(!I || (I.flags & NODROP))
+		return
+
+	unEquip(I)
+
+	var/modifier = 0
+	if(disabilities & CLUMSY)
+		modifier -= 40 //Clumsy people are more likely to hit themselves -Honk!
+
+	switch(rand(1,100)+modifier) //91-100=Nothing special happens
+		if(-INFINITY to 0) //attack yourself
+			I.attack(src,src)
+		if(1 to 30) //throw it at yourself
+			I.throw_impact(src)
+		if(31 to 60) //Throw object in facing direction
+			var/turf/target = get_turf(loc)
+			var/range = rand(2,I.throw_range)
+			for(var/i = 1; i < range; i++)
+				var/turf/new_turf = get_step(target, dir)
+				target = new_turf
+				if(new_turf.density)
+					break
+			I.throw_at(target,I.throw_range,I.throw_speed,src)
+		if(61 to 90) //throw it down to the floor
+			var/turf/target = get_turf(loc)
+			I.throw_at(target,I.throw_range,I.throw_speed,src)

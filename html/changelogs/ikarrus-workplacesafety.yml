@@ -1,0 +1,6 @@
+author: Ikarrus
+delete-after: True
+
+changes: 
+  - rscadd: "Throwing reagent containers such as drinks or beakers may spill their contents onto whatever they hit"
+  - rscadd: "Slipping while carrying items in your hand may cause ~accidents~"
