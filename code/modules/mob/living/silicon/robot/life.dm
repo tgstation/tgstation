@@ -59,6 +59,7 @@
 
 		if (paralysis || stunned || weakened) //Stunned etc.
 			stat = UNCONSCIOUS
+			update_headlamp()
 
 		return 1
 

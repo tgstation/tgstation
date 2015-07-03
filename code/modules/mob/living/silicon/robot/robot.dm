@@ -60,6 +60,8 @@
 	var/tonermax = 40
 	var/jetpackoverlay = 0
 	var/braintype = "Cyborg"
+	var/lamp_on = 0 //If a borg's headlamp is on or not.
+	var/lamp_intensity = 4 //Some borgies require more light than others, such as miners.
 
 /mob/living/silicon/robot/New(loc)
 	spark_system = new /datum/effect/effect/system/spark_spread()
@@ -182,6 +184,7 @@
 			animation_length = 30
 			modtype = "Miner"
 			feedback_inc("cyborg_miner",1)
+			lamp_intensity = 6 //mining lantern
 
 		if("Medical")
 			module = new /obj/item/weapon/robot_module/medical(src)
@@ -201,6 +204,7 @@
 			//speed = -1 Secborgs have nerfed tasers now, so the speed boost is not necessary
 			status_flags &= ~CANPUSH
 			feedback_inc("cyborg_security",1)
+			lamp_intensity = 5 //seclite
 
 		if("Engineering")
 			module = new /obj/item/weapon/robot_module/engineering(src)
@@ -221,6 +225,7 @@
 	transform_animation(animation_length)
 	notify_ai(2)
 	update_icons()
+	update_headlamp()
 	SetEmagged(emagged) // Update emag status and give/take emag modules.
 
 /mob/living/silicon/robot/proc/transform_animation(animation_length)
@@ -751,8 +756,6 @@
 		overlays += "minerjetpack"
 	update_fire()
 
-
-
 /mob/living/silicon/robot/proc/installed_modules()
 	if(!module)
 		pick_module()
@@ -977,6 +980,20 @@
 	set desc = "Modify the default radio setting for stating your laws."
 	set category = "Robot Commands"
 	set_autosay()
+
+/mob/living/silicon/robot/proc/toggle_headlamp()
+	lamp_on = !lamp_on
+	src << "Headlamp power [lamp_on ? "enabled" : "disabled"]."
+	update_headlamp()
+
+/mob/living/silicon/robot/proc/update_headlamp()
+	SetLuminosity(0)
+
+	if(!lamp_on || stat)
+		return
+	else
+		AddLuminosity(lamp_intensity)
+
 
 /mob/living/silicon/robot/proc/deconstruct()
 	var/turf/T = get_turf(src)
