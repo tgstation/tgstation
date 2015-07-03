@@ -1390,6 +1390,7 @@
 /datum/mind/proc/make_Gang(var/datum/gang/G)
 	special_role = "[G.name] Gang Boss"
 	G.bosses += src
+	gang_datum = G
 	G.add_gang_hud(src)
 	ticker.mode.forge_gang_objectives(src)
 	ticker.mode.greet_gang(src)
