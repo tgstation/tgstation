@@ -9,3 +9,4 @@ changes:
   - tweak: The Free Cultist rune will now only list cultists that are currently restrained.
   - rscadd: The Free Cultist rune will give its user the list of all the currently restrained culists if used without 3 cultists around it.
   - rscadd: The target of the Free Cultist rune now gets notified that they got freed from their restraints.
+  - rscadd: Just like cultists, observers can now examine a rune to learn which spell it procs. So deadchat can laugh at bad cultists trying to summon Nar-Sie around a convert rune.
