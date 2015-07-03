@@ -15,13 +15,8 @@
 
 	for(var/t in organs)
 		del(t)
-	var/atom/movable/overlay/animation = new /atom/movable/overlay( loc )
-	animation.icon_state = "blank"
-	animation.icon = 'icons/mob/mob.dmi'
-	animation.master = src
-	flick("h2monkey", animation)
-	sleep(48)
-	//animation = null
+	anim(target = src, a_icon = 'icons/mob/mob.dmi', flick_anim = "h2monkey", sleeptime = 15)
+	sleep(33)
 
 	if(!species.primitive) //If the creature in question has no primitive set, this is going to be messy.
 		gib()
@@ -47,9 +42,7 @@
 
 	O << "<B>You are now [O]. </B>"
 
-	spawn(0)//To prevent the proc from returning null.
-		del(src)
-	del(animation)
+	qdel(src)
 
 	return O
 
