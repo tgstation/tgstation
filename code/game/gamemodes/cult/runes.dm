@@ -201,7 +201,7 @@
 				sleep(100)//10 seconds sounds good
 				if(M && !M.client)
 					message_admins("[M] ([ckey(M.key)]) ghosted/disconnected shortly after having been converted to the cult!")
-					log_admin("[usr]([ckey(usr.key)]) ghosted/disconnected shortly after having been converted to the cult!")
+					log_admin("[M]([ckey(M.key)]) ghosted/disconnected shortly after having been converted to the cult!")
 			return 1
 		else
 			M << "<span class='sinister'>Your blood pulses. Your head throbs. The world goes red. All at once you are aware of a horrible, horrible truth. The veil of reality has been ripped away and in the festering wound left behind something sinister takes root.</span>"
@@ -1009,12 +1009,18 @@
 			possible_targets += cultistarget
 		else if (istype(cultistarget.wear_mask, /obj/item/clothing/mask/muzzle))
 			possible_targets += cultistarget
-		else if (istype(cultistarget.loc, /obj/structure/closet)&&cultistarget.loc:welded)
-			possible_targets += cultistarget
-		else if (istype(cultistarget.loc, /obj/structure/closet/secure_closet)&&cultistarget.loc:locked)
-			possible_targets += cultistarget
-		else if (istype(cultistarget.loc, /obj/machinery/dna_scannernew)&&cultistarget.loc:locked)
-			possible_targets += cultistarget
+		else if (istype(cultistarget.loc, /obj/structure/closet))
+			var/obj/structure/closet/closet = cultistarget.loc
+			if(closet.welded)
+				possible_targets += cultistarget
+		else if (istype(cultistarget.loc, /obj/structure/closet/secure_closet))
+			var/obj/structure/closet/secure_closet/secure_closet = cultistarget.loc
+			if (secure_closet.locked)
+				possible_targets += cultistarget
+		else if (istype(cultistarget.loc, /obj/machinery/dna_scannernew))
+			var/obj/machinery/dna_scannernew/dna_scannernew = cultistarget.loc
+			if (dna_scannernew.locked)
+				possible_targets += cultistarget
 
 	if(!possible_targets.len)
 		user << "<span class='warning'>None of the cultists are currently under restraints.</span>"
@@ -1046,15 +1052,22 @@
 			cultist.update_inv_legcuffed()
 		if (istype(cultist.wear_mask, /obj/item/clothing/mask/muzzle))
 			cultist.u_equip(cultist.wear_mask, 1)
-		if(istype(cultist.loc, /obj/structure/closet)&&cultist.loc:welded)
-			cultist.loc:welded = 0
-		if(istype(cultist.loc, /obj/structure/closet/secure_closet)&&cultist.loc:locked)
-			cultist.loc:locked = 0
-		if(istype(cultist.loc, /obj/machinery/dna_scannernew)&&cultist.loc:locked)
-			cultist.loc:locked = 0
+		if(istype(cultist.loc, /obj/structure/closet))
+			var/obj/structure/closet/closet = cultist.loc
+			if(closet.welded)
+				closet.welded = 0
+		if(istype(cultist.loc, /obj/structure/closet/secure_closet))
+			var/obj/structure/closet/secure_closet/secure_closet = cultist.loc
+			if (secure_closet.locked)
+				secure_closet.locked = 0
+		if(istype(cultist.loc, /obj/machinery/dna_scannernew))
+			var/obj/machinery/dna_scannernew/dna_scannernew = cultist.loc
+			if (dna_scannernew.locked)
+				dna_scannernew.locked = 0
 		for(var/mob/living/carbon/C in users)
 			user.take_overall_damage(10, 0)
 			C.say("Khari[pick("'","`")]d! Gual'te nikka!")
+		cultist << "<span class='warning'>You feel a tingle as you find yourself freed from your restraints.</span>"
 		qdel(src)
 	else
 		var/text = "<span class='sinister'>The following cultists are currently under restraints:</span>"
