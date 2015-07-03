@@ -139,3 +139,8 @@
 		user.visible_message("[user] collects [loaded].", "<span class='notice'>You collect [loaded].</span>")
 	..()
 
+/obj/structure/stool/bed/dogbed
+	name = "dog bed"
+	icon_state = "dogbed"
+	desc = "A comfy-looking dog bed. You can even strap your pet in, in case the gravity turns off."
+	anchored = 0
