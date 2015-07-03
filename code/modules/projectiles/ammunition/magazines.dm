@@ -75,7 +75,7 @@
 /obj/item/ammo_box/magazine/internal/shotriot
 	name = "riot shotgun internal magazine"
 	desc = "Oh god, this shouldn't be here"
-	ammo_type = /obj/item/ammo_casing/shotgun/beanbag
+	ammo_type = /obj/item/ammo_casing/shotgun/rubbershot
 	caliber = "shotgun"
 	max_ammo = 6
 	multiload = 0
