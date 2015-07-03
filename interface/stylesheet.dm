@@ -29,7 +29,7 @@ em						{font-style: normal;	font-weight: bold;}
 .radio					{color: #008000;}
 .sciradio				{color: #993399;}
 .comradio				{color: #aca82d;}
-.secradio				{color: #b22222;}
+.secradio				{color: #e60073;}
 .medradio				{color: #337296;}
 .engradio				{color: #fb5613;}
 .suppradio				{color: #a8732b;}
