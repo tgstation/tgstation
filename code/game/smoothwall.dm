@@ -63,6 +63,8 @@
 	relativewall()
 	for(var/cdir in cardinal)
 		var/turf/T = get_step(src,cdir)
+		if(!T)
+			continue
 	//	if(isSmoothableNeighbor(T))
 		T.relativewall()
 		for(var/atom/A in T)
