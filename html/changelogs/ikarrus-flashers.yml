@@ -1,0 +1,7 @@
+
+author: Ikarrus
+
+delete-after: True
+
+changes: 
+  - tweak: "Mounted and portable flashers can now only be burned out from overuse, similar to flashes."
