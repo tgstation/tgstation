@@ -461,8 +461,8 @@
 		return
 	user << "<span class='notice'>You begin to read the scroll...</span>"
 	user << "<span class='sciradio'><i>And all at once the secrets of the Sleeping Carp fill your mind. The ancient clan's martial teachings have been imbued into this scroll. As you read through it, \
- 	these secrets flood into your mind and body. You now know the martial techniques of the Sleeping Carp. Your hand-to-hand combat has become much more effective, and you may now perform powerful \
- 	combination attacks. To learn more about these combos, use the Recall Teachings ability in the Sleeping Carp tab.</i></span>"
+ 	these secrets flood into your mind and body.<br>You now know the martial techniques of the Sleeping Carp. Your hand-to-hand combat has become much more effective, and you may now perform powerful \
+ 	combination attacks.<br>To learn more about these combos, use the Recall Teachings ability in the Sleeping Carp tab.</i></span>"
 	user.verbs += /mob/living/carbon/human/proc/sleeping_carp_help
 	var/datum/martial_art/the_sleeping_carp/theSleepingCarp = new(null)
 	theSleepingCarp.teach(user)

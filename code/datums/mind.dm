@@ -55,6 +55,7 @@
 	var/miming = 0 // Mime's vow of silence
 	var/antag_hud_icon_state = null //this mind's ANTAG_HUD should have this icon_state
 	var/datum/atom_hud/antag/antag_hud = null //this mind's antag HUD
+	var/datum/gang/gang_datum //Which gang this mind belongs to, if any
 
 /datum/mind/New(var/key)
 	src.key = key
@@ -163,7 +164,7 @@
 
 
 /datum/mind/proc/remove_gang()
-		ticker.mode.remove_gangster(src,0,1)
+		ticker.mode.remove_gangster(src,0,1,1)
 		remove_objectives()
 
 /datum/mind/proc/remove_malf()
@@ -223,10 +224,10 @@
 		alert("Not before round-start!", "Alert")
 		return
 
-	var/out = "<B>[name]</B>[(current&&(current.real_name!=name))?" (as [current.real_name])":""]<br>"
+	var/out = ""
 	out += "Mind currently owned by key: [key] [active?"(synced)":"(not synced)"]<br>"
 	out += "Assigned role: [assigned_role]. <a href='?src=\ref[src];role_edit=1'>Edit</a><br>"
-	out += "Factions and special roles:<br>"
+	out += "Faction and special role: <b><font color='red'>[special_role]</font></b><br>"
 
 	var/list/sections = list(
 		"revolution",
@@ -250,7 +251,7 @@
 		if (assigned_role in command_positions)
 			text += "<b>HEAD</b>|loyal|employee|headrev|rev"
 		else if (src in ticker.mode.head_revolutionaries)
-			text = "head|loyal|<a href='?src=\ref[src];revolution=clear'>employee</a>|<b>HEADREV</b>|<a href='?src=\ref[src];revolution=rev'>rev</a>"
+			text += "head|loyal|<a href='?src=\ref[src];revolution=clear'>employee</a>|<b>HEADREV</b>|<a href='?src=\ref[src];revolution=rev'>rev</a>"
 			text += "<br>Flash: <a href='?src=\ref[src];revolution=flash'>give</a>"
 
 			var/list/L = current.get_contents()
@@ -285,45 +286,42 @@
 		if (ticker.mode.config_tag=="gang")
 			text = uppertext(text)
 		text = "<i><b>[text]</b></i>: "
-		if (src in ticker.mode.A_bosses)
-			text += "loyal|<a href='?src=\ref[src];gang=clear'>none</a>|<B>(A)</B> <a href='?src=\ref[src];gang=agang'>gangster</a> <b>BOSS</b>|(B) <a href='?src=\ref[src];gang=bgang'>gangster</a> <a href='?src=\ref[src];gang=bboss'>boss</a>"
-			text += "<br>Equipment: <a href='?src=\ref[src];gang=equip'>give</a>"
-
-			var/list/L = current.get_contents()
-			var/obj/item/device/gangtool/gangtool = locate() in L
-			if (gangtool)
-				text += "|<a href='?src=\ref[src];gang=takeequip'>take</a>."
-			else
-				text += "."
-
-		else if (src in ticker.mode.B_bosses)
-			text += "loyal|<a href='?src=\ref[src];gang=clear'>none</a>|(A) <a href='?src=\ref[src];gang=agang'>gangster</a> <a href='?src=\ref[src];gang=aboss'>boss</a>|<B>(B)</B> <a href='?src=\ref[src];gang=bgang'>gangster</a> <b>BOSS</b>"
-			text += "<br>Equipment: <a href='?src=\ref[src];gang=equip'>give</a>"
-
-			var/list/L = current.get_contents()
-			var/obj/item/device/gangtool/gangtool = locate() in L
-			if (gangtool)
-				text += "|<a href='?src=\ref[src];gang=takeequip'>take</a>."
-			else
-				text += "."
-
-		else if (src in ticker.mode.A_gang)
-			text += "loyal|<a href='?src=\ref[src];gang=clear'>none</a>|<B>(A) GANGSTER</B> <a href='?src=\ref[src];gang=aboss'>boss</a>|(B) <a href='?src=\ref[src];gang=bgang'>gangster</a> <a href='?src=\ref[src];gang=bboss'>boss</a>"
-		else if (src in ticker.mode.B_gang)
-			text += "loyal|<a href='?src=\ref[src];gang=clear'>none</a>|(A) <a href='?src=\ref[src];gang=agang'>gangster</a> <a href='?src=\ref[src];gang=aboss'>boss</a>|<B>(B) GANGSTER</B> <a href='?src=\ref[src];gang=bboss'>boss</a>"
-		else if(isloyal(current))
-			text += "<B>LOYAL</B>|none|(A) <a href='?src=\ref[src];gang=agang'>gangster</a> <a href='?src=\ref[src];gang=aboss'>boss</a>|(B) <a href='?src=\ref[src];gang=bgang'>gangster</a> <a href='?src=\ref[src];gang=bboss'>boss</a>"
+		text += "[isloyal(current) ? "<B>LOYAL</B>" : "loyal"]|"
+		if(src in ticker.mode.get_all_gangsters())
+			text += "<a href='?src=\ref[src];gang=clear'>none</a>"
 		else
-			text += "loyal|<B>NONE</B>|(A) <a href='?src=\ref[src];gang=agang'>gangster</a> <a href='?src=\ref[src];gang=aboss'>boss</a>|(B) <a href='?src=\ref[src];gang=bgang'>gangster</a> <a href='?src=\ref[src];gang=bboss'>boss</a>"
-
+			text += "<B>NONE</B>"
 
 		if(current && current.client && current.client.prefs.be_special & BE_GANG)
-			text += "|Enabled in Prefs"
+			text += "|Enabled in Prefs<BR>"
 		else
-			text += "|Disabled in Prefs"
+			text += "|Disabled in Prefs<BR>"
 
+		for(var/datum/gang/G in ticker.mode.gangs)
+			text += "<i>[G.name]</i>: "
+			if(src in (G.gangsters))
+				text += "<B>GANGSTER</B>"
+			else
+				text += "<a href='?src=\ref[src];gangster=\ref[G]'>gangster</a>"
+			text += "|"
+			if(src in (G.bosses))
+				text += "<B>GANG LEADER</B>"
+			else
+				text += "<a href='?src=\ref[src];gangboss=\ref[G]'>gang leader</a>"
+			text += "<BR>"
+
+		if(gang_colors_pool)
+			text += "<a href='?src=\ref[src];gang=new'>Create New Gang</a>"
+
+		if(src in ticker.mode.get_gang_bosses())
+			text += "<br>Equipment: <a href='?src=\ref[src];gang=equip'>give</a>"
+			var/list/L = current.get_contents()
+			var/obj/item/device/gangtool/gangtool = locate() in L
+			if (gangtool)
+				text += "|<a href='?src=\ref[src];gang=takeequip'>take</a>"
 
 		sections["gang"] = text
+
 
 		/** CULT ***/
 		text = "cult"
@@ -538,12 +536,12 @@
 		if (sections["traitor"])
 			out += sections["traitor"]+"<br>"
 		if (sections["changeling"])
-			out += sections["changeling"]+"<br>"
+			out += sections["changeling"]+"<br><br>"
 		sections -= "traitor"
 		sections -= "changeling"
 	else
 		if (sections[ticker.mode.config_tag])
-			out += sections[ticker.mode.config_tag]+"<br>"
+			out += sections[ticker.mode.config_tag]+"<br><br>"
 		sections -= ticker.mode.config_tag
 	for (var/i in sections)
 		if (sections[i])
@@ -551,8 +549,6 @@
 
 
 	if (((src in ticker.mode.head_revolutionaries) || \
-		(src in ticker.mode.A_bosses)              || \
-		(src in ticker.mode.B_bosses)              || \
 		(src in ticker.mode.traitors)              || \
 		(src in ticker.mode.syndicates))           && \
 		istype(current,/mob/living/carbon/human)      )
@@ -571,7 +567,7 @@
 		text += "." //hiel grammar
 		out += text
 
-	out += "<br>"
+	out += "<br><br>"
 
 	out += "<b>Memory:</b><br>"
 	out += memory
@@ -588,7 +584,9 @@
 
 	out += "<a href='?src=\ref[src];obj_announce=1'>Announce objectives</a><br><br>"
 
-	usr << browse(out, "window=edit_memory[src];size=500x500")
+	var/datum/browser/popup = new(usr, "edit_memory[src]", "<B>[name]</B>[(current&&(current.real_name!=name))?" (as [current.real_name])":""]", 500, 600)
+	popup.set_content(out)
+	popup.open()
 
 /datum/mind/Topic(href, href_list)
 	if(!check_rights(R_ADMIN))	return
@@ -823,54 +821,16 @@
 				else
 					flash.broken = 0
 
+
+
+//////////////////// GANG MODE
+
 	else if (href_list["gang"])
 		switch(href_list["gang"])
 			if("clear")
 				remove_gang()
 				message_admins("[key_name_admin(usr)] has de-gang'ed [current].")
 				log_admin("[key_name(usr)] has de-gang'ed [current].")
-
-			if("agang")
-				if(src in ticker.mode.A_gang)
-					return
-				ticker.mode.remove_gangster(src, 0, 2)
-				ticker.mode.add_gangster(src,"A",0)
-				message_admins("[key_name_admin(usr)] has added [current] to the [gang_name("A")] Gang (A).")
-				log_admin("[key_name(usr)] has added [current] to the [gang_name("A")] Gang (A).")
-
-			if("aboss")
-				if(src in ticker.mode.A_bosses)
-					return
-				ticker.mode.remove_gangster(src, 0, 2)
-				ticker.mode.A_bosses += src
-				src.special_role = "[gang_name("A")] Gang (A) Boss"
-				ticker.mode.update_gang_icons_added(src, "A")
-				current << "<FONT size=3 color=red><B>You are a [gang_name("A")] Gang Boss!</B></FONT>"
-				message_admins("[key_name_admin(usr)] has added [current] to the [gang_name("A")] Gang (A) leadership.")
-				log_admin("[key_name(usr)] has added [current] to the [gang_name("A")] Gang (A) leadership.")
-				ticker.mode.forge_gang_objectives(src)
-				ticker.mode.greet_gang(src,0)
-
-			if("bgang")
-				if(src in ticker.mode.B_gang)
-					return
-				ticker.mode.remove_gangster(src, 0, 2)
-				ticker.mode.add_gangster(src,"B",0)
-				message_admins("[key_name_admin(usr)] has added [current] to the [gang_name("B")] Gang (B).")
-				log_admin("[key_name(usr)] has added [current] to the [gang_name("B")] Gang (B).")
-
-			if("bboss")
-				if(src in ticker.mode.B_bosses)
-					return
-				ticker.mode.remove_gangster(src, 0, 2)
-				ticker.mode.B_bosses += src
-				src.special_role = "[gang_name("B")] Gang (B) Boss"
-				ticker.mode.update_gang_icons_added(src, "B")
-				current << "<FONT size=3 color=red><B>You are a [gang_name("B")] Gang Boss!</B></FONT>"
-				message_admins("[key_name_admin(usr)] has added [current] to the [gang_name("B")] Gang (B) leadership.")
-				log_admin("[key_name(usr)] has added [current] to the [gang_name("B")] Gang (B) leadership.")
-				ticker.mode.forge_gang_objectives(src)
-				ticker.mode.greet_gang(src,0)
 
 			if("equip")
 				switch(ticker.mode.equip_gang(current))
@@ -889,6 +849,46 @@
 					qdel(gangtool)
 				for(var/obj/item/toy/crayon/spraycan/gang/SC in L)
 					qdel(SC)
+
+			if("new")
+				if(gang_colors_pool.len)
+					var/list/names = list("Random") + gang_name_pool
+					var/gangname = input("Pick a gang name.","Select Name") as null|anything in names
+					if(gangname && gang_colors_pool.len) //Check again just in case another admin made max gangs at the same time
+						if(!(gangname in gang_name_pool))
+							gangname = null
+						var/datum/gang/newgang = new(null,gangname)
+						ticker.mode.gangs += newgang
+						message_admins("[key_name_admin(usr)] has created the [newgang.name] Gang.")
+						log_admin("[key_name(usr)] has created the [newgang.name] Gang.")
+
+	else if (href_list["gangboss"])
+		var/datum/gang/G = locate(href_list["gangboss"]) in ticker.mode.gangs
+		if(!G || (src in G.bosses))
+			return
+		ticker.mode.remove_gangster(src,0,2,1)
+		G.bosses += src
+		gang_datum = G
+		special_role = "[G.name] Gang Boss"
+		G.add_gang_hud(src)
+		current << "<FONT size=3 color=red><B>You are a [G.name] Gang Boss!</B></FONT>"
+		message_admins("[key_name_admin(usr)] has added [current] to the [G.name] Gang leadership.")
+		log_admin("[key_name(usr)] has added [current] to the [G.name] Gang leadership.")
+		ticker.mode.forge_gang_objectives(src)
+		ticker.mode.greet_gang(src,0)
+
+	else if (href_list["gangster"])
+		var/datum/gang/G = locate(href_list["gangster"]) in ticker.mode.gangs
+		if(!G || (src in G.gangsters))
+			return
+		ticker.mode.remove_gangster(src,0,2,1)
+		ticker.mode.add_gangster(src,G,0)
+		message_admins("[key_name_admin(usr)] has added [current] to the [G.name] Gang (A).")
+		log_admin("[key_name(usr)] has added [current] to the [G.name] Gang (A).")
+
+/////////////////////////////////
+
+
 
 	else if (href_list["cult"])
 		switch(href_list["cult"])
@@ -1213,6 +1213,7 @@
 					if (!isnull(crystals))
 						if (suplink)
 							suplink.uses = crystals
+							message_admins("[key_name_admin(usr)] changed [current]'s telecrystal count to [crystals].")
 							log_admin("[key_name(usr)] changed [current]'s telecrystal count to [crystals].")
 			if("uplink")
 				if (!ticker.mode.equip_traitor(current, !(src in ticker.mode.traitors)))
@@ -1386,14 +1387,11 @@
 	fail |= !ticker.mode.equip_revolutionary(current)
 
 
-/datum/mind/proc/make_Gang(var/gang)
-	special_role = "[gang_name(gang)] Gang ([gang]) Boss"
-	if(gang=="A")
-		ticker.mode.A_bosses += src
-	else if(gang=="B")
-		ticker.mode.B_bosses += src
-	ticker.mode.update_gang_icons_added(src, gang)
-	ticker.mode.forge_gang_objectives(src, gang)
+/datum/mind/proc/make_Gang(var/datum/gang/G)
+	special_role = "[G.name] Gang Boss"
+	G.bosses += src
+	G.add_gang_hud(src)
+	ticker.mode.forge_gang_objectives(src)
 	ticker.mode.greet_gang(src)
 	ticker.mode.equip_gang(current)
 
