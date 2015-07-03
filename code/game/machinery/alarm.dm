@@ -203,7 +203,7 @@
 /obj/machinery/alarm/ui_interact(mob/user, ui_key = "main", var/datum/nanoui/ui = null)
 	if(stat & (BROKEN|NOPOWER))
 		return
-	ui = SSnano.push_open_or_new_ui(user, src, ui_key, ui, "air_alarm.tmpl", "Air Alarm", 350, 500, 1)
+	ui = SSnano.push_open_or_new_ui(user, src, ui_key, ui, "air_alarm.tmpl", "Air Alarm", 350, 500, 5)
 
 /obj/machinery/alarm/get_ui_data(mob/user)
 	var/data = list()

@@ -160,7 +160,7 @@
 
 
 /obj/machinery/portable_atmospherics/scrubber/ui_interact(mob/user, ui_key = "main", var/datum/nanoui/ui = null)
-	ui = SSnano.push_open_or_new_ui(user, src, ui_key, ui, "scrubber.tmpl", "Scrubber", 480, 400, 0)
+	ui = SSnano.push_open_or_new_ui(user, src, ui_key, ui, "scrubber.tmpl", "Scrubber", 480, 400, 10)
 
 /obj/machinery/portable_atmospherics/scrubber/get_ui_data()
 	var/data = list()

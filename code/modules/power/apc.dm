@@ -670,7 +670,7 @@
 	if(!user)
 		return
 
-	ui = SSnano.push_open_or_new_ui(user, src, ui_key, ui, "apc.tmpl", "[area.name] - APC", 520, user.has_unlimited_silicon_privilege ? 465 : 420, 1)
+	ui = SSnano.push_open_or_new_ui(user, src, ui_key, ui, "apc.tmpl", "[area.name] - APC", 520, user.has_unlimited_silicon_privilege ? 465 : 420, 5)
 
 
 /obj/machinery/power/apc/get_ui_data(mob/user)

@@ -275,7 +275,7 @@ update_flag
 /obj/machinery/portable_atmospherics/canister/ui_interact(mob/user, ui_key = "main", var/datum/nanoui/ui = null)
 	if (src.destroyed)
 		return
-	ui = SSnano.push_open_or_new_ui(user, src, ui_key, ui, "canister.tmpl", "Canister", 480, 400, 0)
+	ui = SSnano.push_open_or_new_ui(user, src, ui_key, ui, "canister.tmpl", "Canister", 480, 400, 10)
 
 /obj/machinery/portable_atmospherics/canister/get_ui_data()
 	var/data = list()
