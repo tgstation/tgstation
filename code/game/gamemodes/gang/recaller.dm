@@ -14,7 +14,7 @@
 	var/recalling = 0
 	var/outfits = 3
 	var/free_pen = 0
-	var/promotable = 1
+	var/promotable = 0
 
 /obj/item/device/gangtool/New() //Initialize supply point income if it hasn't already been started
 	if(!ticker.mode.gang_points)
@@ -26,17 +26,15 @@
 
 	var/dat
 	if(!gang)
-		dat += "This device is not registered.<br><br>"
+		dat += "This device is not registered.<hr>"
 		if(user.mind in ticker.mode.get_gang_bosses())
-			if(promotable && user.mind.gang_datum.bosses < 3)
-				dat += "Give this device to another member of your organization to use to promote them to Lieutenant.<hr>"
+			if(promotable && user.mind.gang_datum.bosses.len < 3)
+				dat += "Give this device to another member of your organization to use to promote them to Lieutenant.<br><br>"
 				dat += "If this is meant as a spare device for yourself:<br>"
-			else
-				dat += "No promotions available: All positions filled.<br>"
-			dat += "<a href='?src=\ref[src];register=1'>Register Device</a><br>"
-		else if (promotable && user.mind.gang_datum.bosses < 3)
+			dat += "<a href='?src=\ref[src];register=1'>Register Device as Spare</a><br>"
+		else if (promotable && user.mind.gang_datum.bosses.len < 3)
 			dat += "You have been selected for a promotion!<br>"
-			dat += "<a href='?src=\ref[src];register=1'>Register Device</a><br>"
+			dat += "<a href='?src=\ref[src];register=1'>Accept Promotion</a><br>"
 		else
 			dat += "No promotions available: All positions filled.<br>"
 	else
@@ -191,8 +189,7 @@
 	add_fingerprint(usr)
 
 	if(href_list["register"])
-		if(promotable)
-			register_device(usr)
+		register_device(usr)
 
 	else if(!gang) //Gangtool must be registered before you can use the functions below
 		return
@@ -257,11 +254,11 @@
 			if("gangtool")
 				if(gang.points >= 10)
 					if(boss)
-						item_type = /obj/item/device/gangtool/spare
+						item_type = /obj/item/device/gangtool/spare/lt
 						if(gang.bosses.len < 3)
 							usr << "<span class='notice'><b>Gangtools</b> allow you to promote a gangster to be your Lieutenant, enabling them to recruit and purchase items like you. Simply have them register the gangtool. You may promote up to [3-gang.bosses.len] more Lieutenants</span>"
 					else
-						item_type = /obj/item/device/gangtool/spare/lt
+						item_type = /obj/item/device/gangtool/spare/
 					pointcost = 10
 			if("dominator")
 				if(!gang.dom_attempts)
@@ -331,7 +328,7 @@
 
 
 /obj/item/device/gangtool/proc/register_device(var/mob/user)
-	if(user.mind in ticker.mode.get_all_gangsters())
+	if((promotable && (user.mind in ticker.mode.get_all_gangsters())) || (user.mind in ticker.mode.get_gang_bosses()))
 		gang = user.mind.gang_datum
 		gang.gangtools += src
 		icon_state = "gangtool-[gang.color]"
@@ -421,4 +418,4 @@
 	outfits = 1
 
 /obj/item/device/gangtool/spare/lt
-	promotable = 0
+	promotable = 1

@@ -126,6 +126,7 @@ var/list/gang_colors_pool = list("red","orange","yellow","green","blue","purple"
 	else
 		gangtool.register_device(mob)
 		mob << "The <b>Gangtool</b> in your [where] will allow you to purchase weapons and equipment, send messages to your gang, and recall the emergency shuttle from anywhere on the station."
+		mob << "As the gang boss, you can also promote your gang members to <b>lieutenant</b>. Unlike regular gangsters, Lieutenants cannot be deconverted and are able to use recruitment pens and gangtools."
 
 	var/where2 = mob.equip_in_one_of_slots(T, slots)
 	if (!where2)
