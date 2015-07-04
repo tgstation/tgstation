@@ -284,12 +284,14 @@ var/list/gang_colors_pool = list("red","orange","yellow","green","blue","purple"
 	for(var/datum/gang/G in ticker.mode.gangs)
 		if(world.time > next_point_time)
 			G.income()
-			next_point_time = world.time + next_point_interval
 
 		if(isnum(G.dom_timer))
 			G.dom_timer -= seconds/10
 			if(G.dom_timer < 0)
 				winners += G
+
+	if(world.time > next_point_time)
+		next_point_time = world.time + next_point_interval
 
 	if(winners.len)
 		if(winners.len > 1) //Edge Case: If more than one dominator complete at the same time
