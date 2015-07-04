@@ -10,6 +10,7 @@
 	var/list/list_reagents = null
 	var/spawned_disease = null
 	var/disease_amount = 20
+	var/spillable = 0
 
 /obj/item/weapon/reagent_containers/verb/set_APTFT() //set amount_per_transfer_from_this
 	set name = "Set transfer amount"
@@ -81,7 +82,7 @@
 /obj/item/weapon/reagent_containers/throw_impact(atom/target,mob/thrower)
 	..()
 
-	if(!reagents.total_volume || !is_open_container())
+	if(!reagents.total_volume || !spillable)
 		return
 
 	if(ismob(target) && target.reagents)
@@ -99,12 +100,12 @@
 			add_logs(thrower, M, "splashed", object="[R]")
 		reagents.reaction(target, TOUCH)
 
-	else if(!target.density || target.throwpass)
-		if(thrower && thrower.mind && thrower.mind.assigned_role == "Bartender")
-			visible_message("<span class='notice'>[src] lands onto the [target.name] without spilling a single drop.</span>")
-			return
+	else if((!target.density || target.throwpass) && thrower && thrower.mind && thrower.mind.assigned_role == "Bartender")
+		visible_message("<span class='notice'>[src] lands onto the [target.name] without spilling a single drop.</span>")
+		return
 
 	else
 		visible_message("<span class='notice'>[src] spills its contents all over [target].</span>")
 		reagents.reaction(target, TOUCH)
+
 	reagents.clear_reagents()
