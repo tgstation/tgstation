@@ -19,7 +19,6 @@ client/proc/one_click_antag()
 		<a href='?src=\ref[src];makeAntag=6'>Make Wizard (Requires Ghosts)</a><br>
 		<a href='?src=\ref[src];makeAntag=11'>Make Vox Raiders (Requires Ghosts)</a><br>
 		<a href='?src=\ref[src];makeAntag=7'>Make Nuke Team (Requires Ghosts)</a><br>
-		<a href='?src=\ref[src];makeAntag=8'>Make Space Ninja (Requires Ghosts)</a><br>
 		<a href='?src=\ref[src];makeAntag=9'>Make Aliens (Requires Ghosts)</a><br>
 		<a href='?src=\ref[src];makeAntag=10'>Make Deathsquad (Syndicate) (Requires Ghosts)</a><br>
 		"}
@@ -293,11 +292,6 @@ client/proc/one_click_antag()
 /datum/admins/proc/makeAliens()
 	alien_infestation(3)
 	return 1
-
-/datum/admins/proc/makeSpaceNinja()
-	space_ninja_arrival()
-	return 1
-
 /datum/admins/proc/makeDeathsquad()
 	var/list/mob/dead/observer/candidates = list()
 	var/mob/dead/observer/theghost = null

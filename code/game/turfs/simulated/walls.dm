@@ -248,31 +248,6 @@
 				log_admin("[user.real_name] ([user.ckey]) dismantled with a pdiff of [pdiff] at [loc]!")
 		return
 
-	else if(istype(W, /obj/item/weapon/melee/energy/blade)) //Oh sweet, some snowflakes !
-
-		if(mineral == "diamond") //Nah fuck off I'm made of diamonds
-			return
-
-		var/obj/item/weapon/melee/energy/blade/EB = W
-		EB.spark_system.start()
-		user.visible_message("<span class='notice'>[user] stabs \his [EB] into \the [src] and begin to slice it apart.</span>", \
-		"<span class='notice'>You stab your [EB] into \the [src] and begin to slice it apart.</span>")
-		playsound(src, "sparks", 50, 1)
-
-		if(do_after(user, src, 70))
-			EB.spark_system.start()
-			playsound(src, "sparks", 50, 1)
-			playsound(src, 'sound/weapons/blade1.ogg', 50, 1)
-			user.visible_message("<span class='warning'>[user] slices through \the [src] using \his [EB].</span>", \
-			"<span class='notice'>You slice through \the [src] using your [EB].</span>")
-			dismantle_wall(1)
-
-			var/pdiff = performWallPressureCheck(src.loc)
-			if(pdiff)
-				message_admins("[user.real_name] ([formatPlayerPanel(user,user.ckey)]) sliced up a wall with a pdiff of [pdiff] at [formatJumpTo(loc)]!")
-				log_admin("[user.real_name] ([user.ckey]) sliced up a wall with a pdiff of [pdiff] at [loc]!")
-		return
-
 	else if(istype(W, /obj/item/mounted)) //If we place it, we don't want to have a silly message
 		return
 

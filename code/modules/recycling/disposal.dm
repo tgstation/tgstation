@@ -121,10 +121,6 @@
 				user << "You need more welding fuel to complete this task."
 				return
 
-	if(istype(I, /obj/item/weapon/melee/energy/blade))
-		user << "You can't place that item inside the disposal unit."
-		return
-
 	if(istype(I, /obj/item/weapon/storage/bag/))
 		var/obj/item/weapon/storage/bag/B = I
 		if(B.contents.len == 0)

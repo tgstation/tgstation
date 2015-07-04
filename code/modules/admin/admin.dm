@@ -734,7 +734,6 @@ var/global/floorIsLava = 0
 			<A href='?src=\ref[src];secretsfun=aliens'>Trigger an Alien infestation</A><BR>
 			<A href='?src=\ref[src];secretsfun=alien_silent'>Spawn an Alien silently</A><BR>
 			<A href='?src=\ref[src];secretsfun=spiders'>Trigger a Spider infestation</A><BR>
-			<A href='?src=\ref[src];secretsfun=spaceninja'>Send in a space ninja</A><BR>
 			<A href='?src=\ref[src];secretsfun=striketeam'>Send in a strike team</A><BR>
 			<A href='?src=\ref[src];secretsfun=carp'>Trigger a Carp migration</A><BR>
 			<A href='?src=\ref[src];secretsfun=radiation'>Irradiate the station</A><BR>
@@ -971,14 +970,6 @@ var/global/floorIsLava = 0
 	message_admins("[key_name_admin(usr)] toggled Aliens [aliens_allowed ? "on" : "off"].", 1)
 	feedback_add_details("admin_verb","TA") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
-/datum/admins/proc/toggle_space_ninja()
-	set category = "Server"
-	set desc="Toggle space ninjas spawning."
-	set name="Toggle Space Ninjas"
-	toggle_space_ninja = !toggle_space_ninja
-	log_admin("[key_name(usr)] toggled Space Ninjas to [toggle_space_ninja].")
-	message_admins("[key_name_admin(usr)] toggled Space Ninjas [toggle_space_ninja ? "on" : "off"].", 1)
-	feedback_add_details("admin_verb","TSN") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 #define LOBBY_TICKING_STOPPED 0
 #define LOBBY_TICKING_RESTARTED 2
 /datum/admins/proc/delay()

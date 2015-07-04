@@ -251,8 +251,6 @@ Works together with spawning an observer, noted above.
 					U.client.images += image(tempHud,target,"hudalien")
 				if("Death Commando")
 					U.client.images += image(tempHud,target,"huddeathsquad")
-				if("Ninja")
-					U.client.images += image(tempHud,target,"hudninja")
 				if("Vampire")
 					U.client.images += image(tempHud,target,"vampire")
 				if("VampThrall")

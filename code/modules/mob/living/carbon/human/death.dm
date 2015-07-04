@@ -91,12 +91,6 @@
 	if(!gibbed)
 		emote("deathgasp") //let the world KNOW WE ARE DEAD
 
-		//For ninjas exploding when they die.
-		if( istype(wear_suit, /obj/item/clothing/suit/space/space_ninja) && wear_suit:s_initialized )
-			src << browse(null, "window=spideros")//Just in case.
-			var/location = loc
-			explosion(location, 1, 2, 3, 4)
-
 		update_canmove()
 		if(client)	blind.layer = 0
 

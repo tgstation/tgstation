@@ -602,11 +602,6 @@
 		if(stat & (BROKEN|MAINT))
 			return
 
-		if(ishuman(user))
-			if(istype(user:gloves, /obj/item/clothing/gloves/space_ninja)&&user:gloves:candrain&&!user:gloves:draining)
-				call(/obj/item/clothing/gloves/space_ninja/proc/drain)("APC",src,user:wear_suit)
-				return
-	// do APC interaction
 	src.interact(user)
 
 /obj/machinery/power/apc/attack_alien(mob/living/carbon/alien/humanoid/user)

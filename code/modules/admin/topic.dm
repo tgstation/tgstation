@@ -37,9 +37,6 @@
 				log_admin("[key_name(usr)] has spawned a nuke team.")
 				if(!src.makeNukeTeam())
 					usr << "<span class='warning'>Unfortunately there weren't enough candidates available.</span>"
-			if("8")
-				log_admin("[key_name(usr)] has spawned a ninja.")
-				src.makeSpaceNinja()
 			if("9")
 				log_admin("[key_name(usr)] has spawned aliens.")
 				src.makeAliens()
@@ -2000,10 +1997,6 @@
 				if(!check_rights(R_FUN,0))
 					removed_paths += dirty_path
 					continue
-			else if(ispath(path, /obj/item/weapon/melee/energy/blade))//Not an item one should be able to spawn./N
-				if(!check_rights(R_FUN,0))
-					removed_paths += dirty_path
-					continue
 			else if(ispath(path, /obj/effect/bhole))
 				if(!check_rights(R_FUN,0))
 					removed_paths += dirty_path
@@ -2484,12 +2477,6 @@
 				feedback_add_details("admin_secrets_fun_used","PDA")
 				new /datum/event/pda_spam
 
-			if("spaceninja")
-				feedback_inc("admin_secrets_fun_used",1)
-				feedback_add_details("admin_secrets_fun_used","SN")
-				if(toggle_space_ninja)
-					if(space_ninja_arrival())//If the ninja is actually spawned. They may not be depending on a few factors.
-						message_admins("[key_name_admin(usr)] has sent in a space ninja", 1)
 			if("carp")
 				feedback_inc("admin_secrets_fun_used",1)
 				feedback_add_details("admin_secrets_fun_used","C")
