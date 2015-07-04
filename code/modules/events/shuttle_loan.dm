@@ -1,7 +1,9 @@
 #define HIJACK_SYNDIE 1
 #define RUSKY_PARTY 2
 #define SPIDER_GIFT 3
-#define ANTIDOTE_NEEDED 4
+#define DEPARTMENT_RESUPPLY 4
+#define ANTIDOTE_NEEDED 5
+
 
 /datum/round_event_control/shuttle_loan
 	name = "Shuttle loan"
@@ -18,7 +20,7 @@
 	announceWhen	= 1
 
 /datum/round_event/shuttle_loan/start()
-	dispatch_type = pick(HIJACK_SYNDIE, RUSKY_PARTY, SPIDER_GIFT, ANTIDOTE_NEEDED)
+	dispatch_type = pick(HIJACK_SYNDIE, RUSKY_PARTY, SPIDER_GIFT, DEPARTMENT_RESUPPLY, ANTIDOTE_NEEDED)
 
 /datum/round_event/shuttle_loan/announce()
 	SSshuttle.shuttle_loan = src
@@ -29,6 +31,10 @@
 			priority_announce("Cargo: A group of angry russians want to have a party, can you send them your cargo shuttle then make them disappear?","Centcom Russian Outreach Program")
 		if(SPIDER_GIFT)
 			priority_announce("Cargo: The Spider Clan has sent us a mysterious gift, can we ship it to you to see what's inside?","Centcom Diplomatic Corps")
+		if(DEPARTMENT_RESUPPLY)
+			priority_announce("Cargo: Seems we've ordered doubles of our department resupply packages this month. Can we send them to you?","Centcom Supply Department")
+			thanks_msg = "The cargo shuttle should return in 5 minutes."
+			bonus_points = 0
 		if(ANTIDOTE_NEEDED)
 			priority_announce("Cargo: Your station has been chosen for an epidemiological research project. Send us your cargo shuttle to receive your research samples.", "Centcom Research Initiatives")
 
@@ -55,6 +61,8 @@
 			SSshuttle.centcom_message += "Partying Russians incoming."
 		if(SPIDER_GIFT)
 			SSshuttle.centcom_message += "Spider Clan gift incoming."
+		if(DEPARTMENT_RESUPPLY)
+			SSshuttle.centcom_message += "Department resupply incoming."
 		if(ANTIDOTE_NEEDED)
 			SSshuttle.centcom_message += "Virus samples incoming."
 
@@ -82,7 +90,7 @@
 		var/list/shuttle_spawns = list()
 		switch(dispatch_type)
 			if(HIJACK_SYNDIE)
-
+				add_crates(list(/datum/supply_packs/emergency/specialops), empty_shuttle_turfs)
 				shuttle_spawns.Add(/mob/living/simple_animal/hostile/syndicate)
 				shuttle_spawns.Add(/mob/living/simple_animal/hostile/syndicate)
 				if(prob(75))
@@ -91,7 +99,7 @@
 					shuttle_spawns.Add(/mob/living/simple_animal/hostile/syndicate)
 
 			if(RUSKY_PARTY)
-
+				add_crates(list(/datum/supply_packs/organic/party), empty_shuttle_turfs)
 				shuttle_spawns.Add(/mob/living/simple_animal/hostile/russian)
 				shuttle_spawns.Add(/mob/living/simple_animal/hostile/russian/ranged)	//drops a mateba
 				shuttle_spawns.Add(/mob/living/simple_animal/hostile/bear)
@@ -101,7 +109,7 @@
 					shuttle_spawns.Add(/mob/living/simple_animal/hostile/bear)
 
 			if(SPIDER_GIFT)
-
+				add_crates(list(/datum/supply_packs/emergency/specialops), empty_shuttle_turfs)
 				shuttle_spawns.Add(/mob/living/simple_animal/hostile/poison/giant_spider)
 				shuttle_spawns.Add(/mob/living/simple_animal/hostile/poison/giant_spider)
 				shuttle_spawns.Add(/mob/living/simple_animal/hostile/poison/giant_spider/nurse)
@@ -147,6 +155,24 @@
 				shuttle_spawns.Add(/obj/item/weapon/reagent_containers/glass/bottle/pierrot_throat)
 				shuttle_spawns.Add(/obj/item/weapon/reagent_containers/glass/bottle/magnitis)
 
+			if(DEPARTMENT_RESUPPLY)
+				var/list/crate_types = list(
+					/datum/supply_packs/emergency/evac,
+					/datum/supply_packs/security/supplies,
+					/datum/supply_packs/organic/food,
+					/datum/supply_packs/emergency/weedcontrol,
+					/datum/supply_packs/engineering/tools,
+					/datum/supply_packs/engineering/engiequipment,
+					/datum/supply_packs/science/robotics,
+					/datum/supply_packs/science/plasma,
+					/datum/supply_packs/medical/supplies
+					)
+				add_crates(crate_types, empty_shuttle_turfs)
+
+				for(var/i=0,i<5,i++)
+					var/turf/T = pick(empty_shuttle_turfs)
+					var/spawn_type = pick(/obj/effect/decal/cleanable/flour, /obj/effect/decal/cleanable/robot_debris, /obj/effect/decal/cleanable/oil)
+					new spawn_type(T)
 
 		var/false_positive = 0
 		while(shuttle_spawns.len && empty_shuttle_turfs.len)
@@ -157,6 +183,17 @@
 
 			var/spawn_type = pick_n_take(shuttle_spawns)
 			new spawn_type(T)
+
+/datum/round_event/shuttle_loan/proc/add_crates(var/list/crate_types, var/list/turfs)
+	for(var/crate_type in crate_types)
+		var/turf/T = pick_n_take(turfs)
+		var/datum/supply_packs/sp_obj = new crate_type()
+		var/atom/Crate = new sp_obj.containertype(T)
+		Crate.name = sp_obj.containername
+		for(var/type_path in sp_obj.contains)
+			var/atom/A = new type_path(Crate)
+			if(sp_obj.amount && A.vars.Find("amount") && A:amount)
+				A:amount = sp_obj.amount
 
 #undef HIJACK_SYNDIE
 #undef RUSKY_PARTY
