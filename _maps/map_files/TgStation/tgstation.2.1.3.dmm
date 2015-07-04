@@ -271,7 +271,7 @@
 "afk" = (/turf/simulated/floor/plasteel{icon_state = "whitehall"; dir = 2},/area/security/prison)
 "afl" = (/obj/machinery/flasher_button{id = "insaneflash"; pixel_y = -26},/obj/machinery/atmospherics/pipe/simple/supply/hidden,/turf/simulated/floor/plasteel{icon_state = "whitehall"; dir = 2},/area/security/prison)
 "afm" = (/obj/structure/table,/obj/item/device/electropack,/turf/simulated/floor/plasteel{icon_state = "whitehall"; dir = 2},/area/security/prison)
-"afn" = (/obj/structure/rack,/obj/item/weapon/storage/box/firingpins{pixel_x = 3; pixel_y = 3},/obj/item/weapon/storage/box/firingpins,/turf/simulated/floor/plasteel{icon_state = "vault"; dir = 8},/area/ai_monitored/security/armory)
+"afn" = (/obj/structure/rack,/obj/item/weapon/storage/box/firingpins{pixel_x = 3; pixel_y = 3},/obj/item/weapon/storage/box/firingpins,/obj/item/key/security,/turf/simulated/floor/plasteel{icon_state = "vault"; dir = 8},/area/ai_monitored/security/armory)
 "afo" = (/obj/structure/table,/obj/item/device/assembly/signaler,/turf/simulated/floor/plasteel{dir = 2; icon_state = "escape"},/area/security/prison)
 "afp" = (/obj/structure/closet/secure_closet/brig{anchored = 1},/turf/simulated/floor/plasteel{icon_state = "red"},/area/security/prison)
 "afq" = (/obj/machinery/door/firedoor,/obj/machinery/door/airlock/glass_security{name = "Prison Wing"; req_access_txt = "2"},/obj/structure/cable{d1 = 1; d2 = 2; icon_state = "1-2"},/obj/machinery/atmospherics/pipe/simple/supply/hidden,/turf/simulated/floor/plasteel{icon_state = "red"; dir = 9},/area/security/prison)
