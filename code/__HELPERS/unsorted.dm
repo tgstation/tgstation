@@ -1042,7 +1042,7 @@ proc/DuplicateObject(obj/original, var/perfectcopy = 0 , var/sameloc = 0)
 	if(perfectcopy)
 		if((O) && (original))
 			for(var/V in original.vars)
-				if(!(V in list("type","loc","locs","vars", "parent", "parent_type","verbs","ckey","key")))
+				if(!(V in list("type","loc","locs","vars", "parent", "parent_type","verbs","ckey","key","group")))
 					O.vars[V] = original.vars[V]
 	return O
 
