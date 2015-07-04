@@ -4,6 +4,7 @@
 	possible_transfer_amounts = list(5, 10, 15, 25, 30, 50)
 	volume = 50
 	flags = OPENCONTAINER
+	spillable = 1
 
 	can_be_placed_into = list(
 		/obj/machinery/chem_master/,

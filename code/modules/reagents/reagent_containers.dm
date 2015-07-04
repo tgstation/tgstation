@@ -10,6 +10,7 @@
 	var/list/list_reagents = null
 	var/spawned_disease = null
 	var/disease_amount = 20
+	var/spillable = 0
 
 /obj/item/weapon/reagent_containers/verb/set_APTFT() //set amount_per_transfer_from_this
 	set name = "Set transfer amount"
@@ -81,7 +82,7 @@
 /obj/item/weapon/reagent_containers/throw_impact(atom/target,mob/thrower)
 	..()
 
-	if(!reagents.total_volume || !is_open_container())
+	if(!reagents.total_volume || !spillable)
 		return
 
 	if(ismob(target) && target.reagents)
