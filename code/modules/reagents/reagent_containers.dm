@@ -100,12 +100,12 @@
 			add_logs(thrower, M, "splashed", object="[R]")
 		reagents.reaction(target, TOUCH)
 
-	else if(!target.density || target.throwpass)
-		if(thrower && thrower.mind && thrower.mind.assigned_role == "Bartender")
-			visible_message("<span class='notice'>[src] lands onto the [target.name] without spilling a single drop.</span>")
-			return
+	else if((!target.density || target.throwpass) && thrower && thrower.mind && thrower.mind.assigned_role == "Bartender")
+		visible_message("<span class='notice'>[src] lands onto the [target.name] without spilling a single drop.</span>")
+		return
 
 	else
 		visible_message("<span class='notice'>[src] spills its contents all over [target].</span>")
 		reagents.reaction(target, TOUCH)
+
 	reagents.clear_reagents()
