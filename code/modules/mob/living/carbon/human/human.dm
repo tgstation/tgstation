@@ -112,24 +112,24 @@
 	switch (severity)
 		if (1.0)
 			b_loss += 500
-			if (!prob(getarmor(null, "bomb")))
-				gib()
-				return
-			else
+			if (prob(getarmor(null, "bomb")))
 				shred_clothing(1,150)
 				var/atom/target = get_edge_target_turf(src, get_dir(src, get_step_away(src, src)))
 				throw_at(target, 200, 4)
+			else
+				gib()
+				return
 
 		if (2.0)
 			b_loss += 60
 
 			f_loss += 60
-
-			shred_clothing(1,50)
-
 			if (prob(getarmor(null, "bomb")))
 				b_loss = b_loss/1.5
 				f_loss = f_loss/1.5
+				shred_clothing(1,25)
+			else
+				shred_clothing(1,50)
 
 			if (!istype(ears, /obj/item/clothing/ears/earmuffs))
 				adjustEarDamage(30, 120)

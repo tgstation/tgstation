@@ -10,7 +10,7 @@
 	throw_speed = 1
 	throw_range = 5
 	w_class = 3.0
-	m_amt = 500
+	materials = list(MAT_METAL=500)
 	origin_tech = "combat=1;plasmatech=1"
 	var/status = 0
 	var/throw_amount = 100

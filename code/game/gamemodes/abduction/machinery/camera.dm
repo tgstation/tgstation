@@ -67,10 +67,13 @@
 	origin.tele_self_action.Remove(C)
 	origin.vest_mode_action.Remove(C)
 	origin.vest_disguise_action.Remove(C)
+	remote_eye.user = null
 	if(C.client)
 		C.client.perspective = MOB_PERSPECTIVE
 		C.client.eye = src
 		C.client.images -= remote_eye.user_image
+		for(var/datum/camerachunk/chunk in remote_eye.visibleCameraChunks)
+			C.client.images -= chunk.obscured
 	C.remote_control = null
 	C.unset_machine()
 	src.Remove(C)

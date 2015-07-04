@@ -114,7 +114,8 @@
 /mob/living/carbon/human/interactive/bullet_act(var/obj/item/projectile/P)
 	var/potentialAssault = locate(/mob/living) in view(2,P.starting)
 	if(potentialAssault)
-		attacked_by(P,potentialAssault)
+		retal = 1
+		retal_target = potentialAssault
 	..()
 
 /mob/living/carbon/human/interactive/New()

@@ -149,6 +149,10 @@
 					user << "<span class='warning'>This MMI does not seem to fit!</span>"
 					return
 
+				if(M.syndiemmi)
+					user << "<span class='warning'>This MMI does not seem to fit!</span>"
+					return
+
 				if(!M.brainmob.mind)
 					user << "<span class='warning'>This MMI is mindless!</span>"
 					return
@@ -158,7 +162,7 @@
 
 				ticker.mode.remove_cultist(M.brainmob.mind, 1)
 				ticker.mode.remove_revolutionary(M.brainmob.mind, 1)
-				ticker.mode.remove_gangster(M.brainmob.mind, 1)
+				ticker.mode.remove_gangster(M.brainmob.mind, 1, remove_bosses=1)
 
 				M.loc = src
 				brain = M

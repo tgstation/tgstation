@@ -1,7 +1,9 @@
-#define TABLECRAFT_MAX_ITEMS 30
 
 /obj/structure/table
 	var/list/table_contents = list()
+	var/viewing_category = 1 //typical powergamer starting on the Weapons tab
+	var/list/categories = list(CAT_WEAPON,CAT_AMMO,CAT_ROBOT,CAT_FOOD,CAT_MISC)
+
 
 /obj/structure/table/MouseDrop(atom/over)
 	if(over != usr)
@@ -28,17 +30,6 @@
 		if(table_contents[A] < R.chem_catalysts[A])
 			return 0
 	return 1
-
-/obj/structure/table/proc/partial_check_contents(datum/table_recipe/R)
-	check_table()
-	var/required_amount = max(round(R.reqs.len/2), 1)
-	var/amount = 0
-	for(var/A in R.reqs)
-		for(var/B in table_contents)
-			if(ispath(B, A))
-				amount += 1
-	if(amount >= required_amount)
-		return 1
 
 /obj/structure/table/proc/check_table()
 	table_contents = list()
@@ -190,48 +181,35 @@
 		return
 	user.face_atom(src)
 	var/dat = "<h3>Crafting menu</h3>"
-	dat += "<div class='statusDisplay'>"
 	if(busy)
+		dat += "<div class='statusDisplay'>"
 		dat += "Crafting in progress...</div>"
 	else
+		dat += "<A href='?src=\ref[src];backwardCat=1'><--</A>"
+		dat += " [categories[prev_cat()]] |"
+		dat += " <B>[categories[viewing_category]]</B> "
+		dat += "| [categories[next_cat()]] "
+		dat += "<A href='?src=\ref[src];forwardCat=1'>--></A><BR><BR>"
+
+		dat += "<div class='statusDisplay'>"
+
+		//Filter the recipes we can craft to the top
+		var/list/can_craft = list()
+		var/list/cant_craft = list()
 		for(var/datum/table_recipe/R in table_recipes)
-			var/name_text = ""
-			var/req_text = ""
-			var/tool_text = ""
-			var/catalist_text = ""
+			if(R.category != categories[viewing_category])
+				continue
 			if(check_contents(R))
-				name_text ="<A href='?src=\ref[src];make=\ref[R]'>[R.name]</A>"
+				can_craft += R
+			else
+				cant_craft += R
 
-			else if(partial_check_contents(R))
-				name_text = "<span class='linkOff'>[R.name]</span>"
+		for(var/datum/table_recipe/R in can_craft)
+			dat += build_recipe_text(R)
+		for(var/datum/table_recipe/R in cant_craft)
+			dat += build_recipe_text(R)
 
-			if(name_text)
-				for(var/A in R.reqs)
-					if(ispath(A, /obj))
-						var/obj/O = new A
-						req_text += " [R.reqs[A]] [O.name]"
-						qdel(O)
-					if(ispath(A, /datum/reagent))
-						var/datum/reagent/RE = new A
-						req_text += " [R.reqs[A]] [RE.name]"
-						qdel(RE)
 
-				if(R.chem_catalysts.len)
-					catalist_text += ", Catalysts:"
-					for(var/C in R.chem_catalysts)
-						if(ispath(C, /datum/reagent))
-							var/datum/reagent/RE = new C
-							catalist_text += " [R.chem_catalysts[C]] [RE.name]"
-							qdel(RE)
-				if(R.tools.len)
-					tool_text += ", Tools:"
-					for(var/O in R.tools)
-						if(ispath(O, /obj))
-							var/obj/T = new O
-							tool_text += " [R.tools[O]] [T.name]"
-							qdel(T)
-
-				dat += "[name_text][req_text][tool_text][catalist_text]<BR>"
 		dat += "</div>"
 
 	var/datum/browser/popup = new(user, "table", "Table", 500, 500)
@@ -243,9 +221,6 @@
 	if(usr.stat || !Adjacent(usr) || usr.lying)
 		return
 	if(href_list["make"])
-		if(!check_table_space())
-			usr << "<span class ='warning'>The table is too crowded.</span>"
-			return
 		var/datum/table_recipe/TR = locate(href_list["make"])
 		busy = 1
 		interact(usr)
@@ -255,12 +230,64 @@
 			usr << "<span class ='warning'>Construction failed.</span>"
 		busy = 0
 		interact(usr)
+	if(href_list["forwardCat"])
+		viewing_category = next_cat()
+		usr << "<span class='notice'>Category is now [categories[viewing_category]].</span>"
+		interact(usr)
+	if(href_list["backwardCat"])
+		viewing_category = prev_cat()
+		usr << "<span class='notice'>Category is now [categories[viewing_category]].</span>"
+		interact(usr)
 
-/obj/structure/table/proc/check_table_space()
-	var/Item_amount = 0
-	for(var/obj/item/I in loc)
-		Item_amount++
-	if(Item_amount <= TABLECRAFT_MAX_ITEMS) //is the table crowded?
-		return 1
+//Next works nicely with modular arithmetic
+/obj/structure/table/proc/next_cat()
+	. = viewing_category % categories.len + 1
 
- #undef TABLECRAFT_MAX_ITEMS
+//Previous can go fuck itself
+/obj/structure/table/proc/prev_cat()
+	if(viewing_category == categories.len)
+		. = viewing_category-1
+	else
+		. = viewing_category % categories.len - 1
+	if(. <= 0)
+		. = categories.len
+
+/obj/structure/table/proc/build_recipe_text(var/datum/table_recipe/R)
+	. = ""
+	var/name_text = ""
+	var/req_text = ""
+	var/tool_text = ""
+	var/catalist_text = ""
+	if(check_contents(R))
+		name_text ="<A href='?src=\ref[src];make=\ref[R]'>[R.name]</A>"
+
+	else
+		name_text = "<span class='linkOff'>[R.name]</span>"
+
+	if(name_text)
+		for(var/A in R.reqs)
+			if(ispath(A, /obj))
+				var/obj/O = new A
+				req_text += " [R.reqs[A]] [O.name]"
+				qdel(O)
+			if(ispath(A, /datum/reagent))
+				var/datum/reagent/RE = new A
+				req_text += " [R.reqs[A]] [RE.name]"
+				qdel(RE)
+
+			if(R.chem_catalysts.len)
+				catalist_text += ", Catalysts:"
+				for(var/C in R.chem_catalysts)
+					if(ispath(C, /datum/reagent))
+						var/datum/reagent/RE = new C
+						catalist_text += " [R.chem_catalysts[C]] [RE.name]"
+						qdel(RE)
+			if(R.tools.len)
+				tool_text += ", Tools:"
+				for(var/O in R.tools)
+					if(ispath(O, /obj))
+						var/obj/T = new O
+						tool_text += " [R.tools[O]] [T.name]"
+						qdel(T)
+
+			. = "[name_text][req_text][tool_text][catalist_text]<BR>"
