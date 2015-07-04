@@ -382,13 +382,13 @@
 /datum/mutation/human/chameleon/on_acquiring(mob/living/carbon/human/owner)
 	if(..())
 		return
-	owner.alpha = 204  //famous 255 * 0.8, yes its magic number, no i wont make it a define
+	owner.alpha = CHAMELEON_MUTATION_DEFAULT_TRANSPARENCY
 
 /datum/mutation/human/chameleon/on_life(mob/living/carbon/human/owner)
 	owner.alpha = max(0, owner.alpha - 25)
 
 /datum/mutation/human/chameleon/on_move(mob/living/carbon/human/owner)
-	owner.alpha = 204  //famous 255 * 0.8, yes its magic number, no i wont make it a define
+	owner.alpha = CHAMELEON_MUTATION_DEFAULT_TRANSPARENCY
 
 /datum/mutation/human/chameleon/on_losing(mob/living/carbon/human/owner)
 	if(..())
