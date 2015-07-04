@@ -337,8 +337,8 @@
 	EquipCustomItems(character)
 	character.loc = pick(latejoin)
 	//Give them their fucking wheelchair where they spawn instead of inside of the splash screen
-	var/datum/organ/external/left_leg = H.get_organ("l_foot")
-	var/datum/organ/external/right_leg = H.get_organ("r_foot")
+	var/datum/organ/external/left_leg = character.get_organ("l_foot")
+	var/datum/organ/external/right_leg = character.get_organ("r_foot")
 
 	if( (!left_leg || left_leg.status & ORGAN_DESTROYED) && (!right_leg || right_leg.status & ORGAN_DESTROYED) ) //If the character is missing both of his feet
 		var/obj/structure/stool/bed/chair/vehicle/wheelchair/W = new(character.loc)
