@@ -160,7 +160,8 @@ var/global/list/image/fluidtrack_cache=list()
 			updated=1
 
 	dirs |= comingdir|realgoing
-	blood_DNA |= DNA.Copy()
+	if(istype(DNA,/list))
+		blood_DNA |= DNA.Copy()
 	if(updated)
 		update_icon()
 

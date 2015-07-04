@@ -62,7 +62,7 @@ var/global/list/pooledvariables = new
 		world << text("DEBUG_DATUM_POOL: returnToPool([]) exceeds [] discarding...", D.type, MAINTAINING_DATUM_POOL_COUNT)
 		#endif
 		var/list/pool = masterdatumPool["[D.type]"]
-		pool.Cut(End=1) //LET IT GO. LET IT GOOOOOO.
+		pool.Cut(1,2) //LET IT GO. LET IT GOOOOOO. AKA REMOVE THE OLDEST ENTRY
 		return
 	if(isnull(masterdatumPool["[D.type]"]))
 		masterdatumPool["[D.type]"] = list()

@@ -40,10 +40,10 @@ var/global/list/blood_list = list()
 
 /obj/effect/decal/cleanable/blood/resetVariables()
 	Destroy()
+	..("viruses","virus2", "blood_DNA", "random_icon_states", args)
 	viruses = list()
 	virus2 = list()
 	blood_DNA = list()
-	..("viruses","virus2", "blood_DNA", "random_icon_states", args)
 
 /obj/effect/decal/cleanable/blood/New()
 	..()

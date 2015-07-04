@@ -21,7 +21,7 @@
 	set category = "Fun"
 	set name = "Play Local Sound"
 	if(!check_rights(R_SOUNDS))	return
-
+	if(!istype(S)) S = sound(S)
 	log_admin("[key_name(src)] played a local sound [S]")
 	message_admins("[key_name_admin(src)] played a local sound [S]", 1)
 	S.status = SOUND_STREAM | SOUND_UPDATE

@@ -14,6 +14,7 @@
 	update_light()
 
 /atom/proc/update_light()
+	if(gcDestroyed) return
 	if(!light_power || !light_range)
 		if(light)
 			light.destroy()

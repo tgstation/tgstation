@@ -54,6 +54,9 @@
 	..(new_loc, "Muton")
 
 /mob/living/carbon/human/generate_static_overlay()
+	if(!istype(static_overlays,/list))
+		static_overlays = list()
+	static_overlays.Add(list("static", "blank", "letter"))
 	var/image/static_overlay = image(icon('icons/effects/effects.dmi', "static"), loc = src)
 	static_overlay.override = 1
 	static_overlays["static"] = static_overlay
