@@ -336,6 +336,10 @@
 	job_master.EquipRank(character, rank, 1)					//equips the human
 	EquipCustomItems(character)
 	character.loc = pick(latejoin)
+	//Give them their fucking wheelchair where they spawn instead of inside of the splash screen
+	if( (!left_leg || left_leg.status & ORGAN_DESTROYED) && (!right_leg || right_leg.status & ORGAN_DESTROYED) ) //If the character is missing both of his feet
+		var/obj/structure/stool/bed/chair/vehicle/wheelchair/W = new(character.loc)
+		W.buckle_mob(character,character)
 	character.store_position()
 
 	if(bomberman_mode)
