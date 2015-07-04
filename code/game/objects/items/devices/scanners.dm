@@ -49,7 +49,7 @@ MASS SPECTROMETER
 			if(O.invisibility == 101)
 				O.invisibility = 0
 				spawn(10)
-					if(O)
+					if(O && O.loc)
 						var/turf/U = O.loc
 						if(U.intact)
 							O.invisibility = 101
