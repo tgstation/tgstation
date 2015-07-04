@@ -1,3 +1,4 @@
+
 /datum/table_recipe
 	var/name = "" //in-game display name
 	var/reqs[] = list() //type paths of items consumed associated with how many are needed
@@ -6,6 +7,7 @@
 	var/time = 30 //time in deciseconds
 	var/parts[] = list() //type paths of items that will be placed in the result
 	var/chem_catalysts[] = list() //like tools but for reagents
+	var/category = CAT_NONE //where it shows up in the crafting UI
 
 
 /datum/table_recipe/IED
@@ -17,6 +19,7 @@
 				/obj/item/weapon/reagent_containers/food/drinks/soda_cans = 1)
 	parts = list(/obj/item/weapon/reagent_containers/food/drinks/soda_cans = 1)
 	time = 80
+	category = CAT_WEAPON
 
 /datum/table_recipe/stunprod
 	name = "Stunprod"
@@ -27,6 +30,7 @@
 				/obj/item/weapon/stock_parts/cell = 1)
 	time = 80
 	parts = list(/obj/item/weapon/stock_parts/cell = 1)
+	category = CAT_WEAPON
 
 /datum/table_recipe/ed209
 	name = "ED209"
@@ -44,6 +48,7 @@
 				/obj/item/robot_parts/r_arm = 1)
 	tools = list(/obj/item/weapon/weldingtool, /obj/item/weapon/screwdriver)
 	time = 120
+	category = CAT_ROBOT
 
 /datum/table_recipe/secbot
 	name = "Secbot"
@@ -55,6 +60,7 @@
 				/obj/item/robot_parts/r_arm = 1)
 	tools = list(/obj/item/weapon/weldingtool)
 	time = 120
+	category = CAT_ROBOT
 
 /datum/table_recipe/cleanbot
 	name = "Cleanbot"
@@ -63,6 +69,7 @@
 				/obj/item/device/assembly/prox_sensor = 1,
 				/obj/item/robot_parts/r_arm = 1)
 	time = 80
+	category = CAT_ROBOT
 
 /datum/table_recipe/floorbot
 	name = "Floorbot"
@@ -72,6 +79,7 @@
 				/obj/item/device/assembly/prox_sensor = 1,
 				/obj/item/robot_parts/r_arm = 1)
 	time = 80
+	category = CAT_ROBOT
 
 /datum/table_recipe/medbot
 	name = "Medbot"
@@ -81,6 +89,7 @@
 				/obj/item/device/assembly/prox_sensor = 1,
 				/obj/item/robot_parts/r_arm = 1)
 	time = 80
+	category = CAT_ROBOT
 
 /datum/table_recipe/flamethrower
 	name = "Flamethrower"
@@ -92,6 +101,7 @@
 				/obj/item/weapon/weldingtool = 1)
 	tools = list(/obj/item/weapon/screwdriver)
 	time = 20
+	category = CAT_WEAPON
 
 /datum/table_recipe/meteorshot
 	name = "Meteorshot Shell"
@@ -101,6 +111,7 @@
 				/obj/item/weapon/stock_parts/manipulator = 2)
 	tools = list(/obj/item/weapon/screwdriver)
 	time = 5
+	category = CAT_AMMO
 
 /datum/table_recipe/pulseslug
 	name = "Pulse Slug Shell"
@@ -110,6 +121,7 @@
 				/obj/item/weapon/stock_parts/micro_laser/ultra = 1)
 	tools = list(/obj/item/weapon/screwdriver)
 	time = 5
+	category = CAT_AMMO
 
 /datum/table_recipe/dragonsbreath
 	name = "Dragonsbreath Shell"
@@ -118,6 +130,7 @@
 				/datum/reagent/phosphorus = 5,)
 	tools = list(/obj/item/weapon/screwdriver)
 	time = 5
+	category = CAT_AMMO
 
 /datum/table_recipe/frag12
 	name = "FRAG-12 Shell"
@@ -128,6 +141,7 @@
 				/datum/reagent/toxin/acid/fluacid = 5,)
 	tools = list(/obj/item/weapon/screwdriver)
 	time = 5
+	category = CAT_AMMO
 
 /datum/table_recipe/ionslug
 	name = "Ion Scatter Shell"
@@ -137,6 +151,7 @@
 				/obj/item/weapon/stock_parts/subspace/crystal = 1)
 	tools = list(/obj/item/weapon/screwdriver)
 	time = 5
+	category = CAT_AMMO
 
 /datum/table_recipe/improvisedslug
 	name = "Improvised Shotgun Shell"
@@ -147,6 +162,7 @@
 				/datum/reagent/fuel = 10)
 	tools = list(/obj/item/weapon/screwdriver)
 	time = 5
+	category = CAT_AMMO
 
 /datum/table_recipe/improvisedslugoverload
 	name = "Overload Improvised Shell"
@@ -155,6 +171,7 @@
 				/datum/reagent/blackpowder = 5)
 	tools = list(/obj/item/weapon/screwdriver)
 	time = 5
+	category = CAT_AMMO
 
 /datum/table_recipe/laserslug
 	name = "Laser Slug Shell"
@@ -164,6 +181,7 @@
 				/obj/item/weapon/stock_parts/micro_laser/high = 1)
 	tools = list(/obj/item/weapon/screwdriver)
 	time = 5
+	category = CAT_AMMO
 
 /datum/table_recipe/ishotgun
 	name = "Improvised Shotgun"
@@ -174,3 +192,4 @@
 				/obj/item/stack/packageWrap = 5,)
 	tools = list(/obj/item/weapon/screwdriver)
 	time = 200
+	category = CAT_WEAPON

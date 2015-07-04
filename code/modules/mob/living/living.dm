@@ -829,12 +829,9 @@ Sorry Giacom. Please don't be mad :(
 	if(statpanel("Status"))
 		if(ticker)
 			if(ticker.mode)
-				if(istype(ticker.mode, /datum/game_mode/gang))
-					var/datum/game_mode/gang/mode = ticker.mode
-					if(isnum(mode.A_timer))
-						stat(null, "[gang_name("A")] Gang Takeover: [max(mode.A_timer, 0)]")
-					if(isnum(mode.B_timer))
-						stat(null, "[gang_name("B")] Gang Takeover: [max(mode.B_timer, 0)]")
+				for(var/datum/gang/G in ticker.mode.gangs)
+					if(isnum(G.dom_timer))
+						stat(null, "[G.name] Gang Takeover: [max(G.dom_timer, 0)]")
 
 /mob/living/cancel_camera()
 	..()
@@ -849,7 +846,7 @@ Sorry Giacom. Please don't be mad :(
 		return 0
 	if(T.z >= ZLEVEL_SPACEMAX)
 		return 0
-	if(src == user)
+	if(user != null && src == user)
 		return 0
 	if(invisibility || alpha == 0)//cloaked
 		return 0

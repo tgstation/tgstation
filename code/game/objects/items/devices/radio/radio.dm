@@ -34,8 +34,7 @@
 	throw_speed = 3
 	throw_range = 7
 	w_class = 2
-	g_amt = 25
-	m_amt = 75
+	materials = list(MAT_METAL=75, MAT_GLASS=25)
 
 	var/const/TRANSMISSION_DELAY = 5 // only 2/second/radio
 	var/const/FREQ_LISTENING = 1
