@@ -82,15 +82,17 @@ var/bomb_set
 			else
 				if(istype(I, /obj/item/stack/cable_coil))
 					var/obj/item/stack/cable_coil/S = I
-					user << "<span class='notice'>You start tying the uncountable wires...</span>"
+					user << "<span class='notice'>You start tying the wires...</span>"
 					if(do_after(user,30,target=src))
 						if(S.use(15))
-							user << "<span class='notice'>You tie the uncountable wires with some cable, clearing the insides of [src].</span>"
+							user << "<span class='notice'>You tie the wires with some cable, clearing the insides of [src].</span>"
 							deconstruction_state = NUKESTATE_WIRES_TIED
 							update_icon()
 						else
 							user << "<span class='warning'>You need more cable to do that.</span>"
-					return
+				else
+					user << "<span class='warning'>You can't do anything with this tangle of cables in the way.</span>"
+				return
 		if(NUKESTATE_WIRES_TIED)
 			if(istype(I, /obj/item/weapon/pen))
 				user << "<span class='notice'>You start drawing cut lines...</span>"
