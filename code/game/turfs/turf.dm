@@ -231,13 +231,14 @@
 			return
 		spawn(5)
 			if((M && !(M.anchored) && !(M.pulledby) && (M.loc == src)))
+				var/mob/living/carbon/carbons = M
+				if(istype(carbons))
+					carbons.update_minimap() //Should this even be here, oh well whatever
 				if(M.inertia_dir)
 					step(M, M.inertia_dir)
-					call(/datum/pda_app/station_map/proc/minimap_update)(M)
 					return
 				M.inertia_dir = M.last_move
 				step(M, M.inertia_dir)
-				call(/datum/pda_app/station_map/proc/minimap_update)(M)
 	return
 
 /turf/proc/levelupdate()

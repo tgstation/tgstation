@@ -199,19 +199,16 @@
 	if(!mob)
 		return // Moved here to avoid nullrefs below. - N3X
 
-	if(moving)	return 0
-
-	if(move_delayer.blocked()) return
+	if(move_delayer.next_allowed > world.time)
+		return 0
 
 	// /vg/ - Deny clients from moving certain mobs. (Like cluwnes :^)
 	if(mob.deny_client_move)
 		src << "<span class='warning'>You cannot move this mob.</span>"
 		return
 
-	// USE /event
-	call(/datum/pda_app/station_map/proc/minimap_update)(mob)
-
-	if(mob.control_object)	Move_object(dir)
+	if(mob.control_object)
+		Move_object(dir)
 
 	if(mob.incorporeal_move)
 		Process_Incorpmove(dir)
@@ -222,20 +219,23 @@
 			if(S.victim == mob)
 				return
 
-	if(mob.stat==2)	return
+	if(mob.stat == DEAD)
+		return
 
-	if(isAI(mob))	return AIMove(loc,dir,mob)
+	if(isAI(mob))
+		return AIMove(loc,dir,mob)
 
-	if(mob.monkeyizing)	return//This is sota the goto stop mobs from moving var
+	if(mob.monkeyizing)
+		return//This is sota the goto stop mobs from moving var
 
+	if(Process_Grab())
+		return
 
-
-	if(Process_Grab())	return
-
-	if(mob.buckled)							//if we're buckled to something, tell it we moved.
+	if(mob.buckled) //if we're buckled to something, tell it we moved.
 		return mob.buckled.relaymove(mob, dir)
 
-	if(!mob.canmove)	return
+	if(!mob.canmove)
+		return
 
 	//if(istype(mob.loc, /turf/space) || (mob.flags & NOGRAV))
 	//	if(!mob.Process_Spacemove(0))	return 0
@@ -281,8 +281,8 @@
 			move_delay += 7
 
 		//We are now going to move
-		moving = 1
-		mob.delayNextMove(move_delay/2)
+		move_delay = min(move_delay,1)
+		mob.delayNextMove(move_delay)
 		//Something with pulling things
 		if(Findgrab)
 			var/list/L = mob.ret_grab()
@@ -321,13 +321,6 @@
 		else
 			. = ..()
 			mob.last_movement=world.time
-
-		moving = 0
-
-		return .
-
-	return
-
 
 ///Process_Grab()
 ///Called by client/Move()
@@ -418,6 +411,7 @@
 	for(var/obj/S in mob.loc)
 		if(istype(S,/obj/effect/step_trigger) || istype(S,/obj/effect/beam))
 			S.Crossed(mob)
+	mob.delayNextMove(1)
 
 	return 1
 

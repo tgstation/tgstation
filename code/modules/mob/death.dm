@@ -2,24 +2,17 @@
 //added different sort of gibs and animations. N
 /mob/proc/gib()
 	death(1)
-	var/atom/movable/overlay/animation = null
 	monkeyizing = 1
 	canmove = 0
 	icon = null
 	invisibility = 101
 
-	animation = new(loc)
-	animation.icon_state = "blank"
-	animation.icon = 'icons/mob/mob.dmi'
-	animation.master = src
-
-//	flick("gibbed-m", animation)
+//	anim(target = src, a_icon = 'icons/mob/mob.dmi', /*flick_anim = "dust-m"*/, sleeptime = 15)
 	gibs(loc, viruses, dna)
 
 	dead_mob_list -= src
-	spawn(15)
-		if(animation)	del(animation)
-		if(src)			del(src)
+
+	qdel(src)
 
 
 //This is the proc for turning a mob into ash. Mostly a copy of gib code (above).
@@ -27,24 +20,17 @@
 //Dusting robots does not eject the MMI, so it's a bit more powerful than gib() /N
 /mob/proc/dust()
 	death(1)
-	var/atom/movable/overlay/animation = null
 	monkeyizing = 1
 	canmove = 0
 	icon = null
 	invisibility = 101
 
-	animation = new(loc)
-	animation.icon_state = "blank"
-	animation.icon = 'icons/mob/mob.dmi'
-	animation.master = src
-
-//	flick("dust-m", animation)
+//	anim(target = src, a_icon = 'icons/mob/mob.dmi', /*flick_anim = "dust-m"*/, sleeptime = 15)
 	new /obj/effect/decal/cleanable/ash(loc)
 
 	dead_mob_list -= src
-	spawn(15)
-		if(animation)	del(animation)
-		if(src)			del(src)
+
+	qdel(src)
 
 
 /mob/proc/death(gibbed)

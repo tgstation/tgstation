@@ -1,15 +1,9 @@
 /mob/living/carbon/human/gib()
 	death(1)
-	var/atom/movable/overlay/animation = null
 	monkeyizing = 1
 	canmove = 0
 	icon = null
 	invisibility = 101
-
-	animation = new(loc)
-	animation.icon_state = "blank"
-	animation.icon = 'icons/mob/mob.dmi'
-	animation.master = src
 
 	// If we have brain worms, dump 'em.
 	var/mob/living/simple_animal/borer/B=has_brain_worms()
@@ -24,26 +18,16 @@
 			// Override the current limb status and don't cause an explosion
 			E.droplimb(1,1)
 
-	flick("gibbed-h", animation)
-
+	anim(target = src, a_icon = 'icons/mob/mob.dmi', flick_anim = "gibbed-h", sleeptime = 15)
 	hgibs(loc, viruses, dna, species.flesh_color, species.blood_color)
-
-	spawn(15)
-		if(animation)	del(animation)
-		if(src)			del(src)
+	qdel(src)
 
 /mob/living/carbon/human/dust()
 	death(1)
-	var/atom/movable/overlay/animation = null
 	monkeyizing = 1
 	canmove = 0
 	icon = null
 	invisibility = 101
-
-	animation = new(loc)
-	animation.icon_state = "blank"
-	animation.icon = 'icons/mob/mob.dmi'
-	animation.master = src
 
 	// If we have brain worms, dump 'em.
 	var/mob/living/simple_animal/borer/B=has_brain_worms()
@@ -51,14 +35,12 @@
 		B.detach()
 
 	if (istype(src, /mob/living/carbon/human/manifested))
-		flick("dust-hm", animation)
+		anim(target = src, a_icon = 'icons/mob/mob.dmi', flick_anim = "dust-hm", sleeptime = 15)
 	else
-		flick("dust-h", animation)
-	new /obj/effect/decal/remains/human(loc)
+		anim(target = src, a_icon = 'icons/mob/mob.dmi', flick_anim = "dust-h", sleeptime = 15)
 
-	spawn(15)
-		if(animation)	del(animation)
-		if(src)			del(src)
+	new /obj/effect/decal/remains/human(loc)
+	qdel(src)
 
 
 /mob/living/carbon/human/death(gibbed)
