@@ -198,6 +198,7 @@ var/global/list/datum/stack_recipe/wood_recipes = list ( \
 	icon_state = "sheet-wood"
 	origin_tech = "materials=1;biotech=1"
 	autoignition_temperature=AUTOIGNITION_WOOD
+	sheettype = "wood"
 
 /obj/item/stack/sheet/wood/cultify()
 	return

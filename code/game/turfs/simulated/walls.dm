@@ -50,22 +50,19 @@
 			new /obj/effect/decal/remains/human(src)
 
 	else
-		if(!devastated)
-			new /obj/structure/girder(src)
-			if(mineral == "metal")
-				getFromPool(/obj/item/stack/sheet/metal, get_turf(src), 2)
-			else
-				var/M = text2path("/obj/item/stack/sheet/mineral/[mineral]")
-				new M(src)
-				new M(src)
+		if(mineral == "metal")
+			getFromPool(/obj/item/stack/sheet/metal, get_turf(src), 2)
+		else if(mineral == "wood")
+			getFromPool(/obj/item/stack/sheet/wood, get_turf(src), 2)
 		else
-			if(mineral == "metal")
-				getFromPool(/obj/item/stack/sheet/metal, get_turf(src), 3)
-			else
-				var/M = text2path("/obj/item/stack/sheet/mineral/[mineral]")
-				new M(src)
-				new M(src)
-				getFromPool(/obj/item/stack/sheet/metal, get_turf(src))
+			var/M = text2path("/obj/item/stack/sheet/mineral/[mineral]")
+			if(M)
+				getFromPool(M, get_turf(src), 2)
+
+		if(devastated)
+			getFromPool(/obj/item/stack/sheet/metal, get_turf(src))
+		else
+			new /obj/structure/girder(src)
 
 	for(var/obj/O in src.contents) //Eject contents!
 		if(istype(O,/obj/structure/sign/poster))

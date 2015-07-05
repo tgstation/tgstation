@@ -6,6 +6,13 @@
 	var/last_event = 0
 	var/active = null
 
+/turf/simulated/wall/mineral/wood
+	name = "wooden wall"
+	desc = "A wall with wooden plating."
+	icon_state = "wood0"
+	walltype = "wood"
+	mineral = "wood"
+
 /turf/simulated/wall/mineral/gold
 	name = "gold wall"
 	desc = "A wall with gold plating. Swag!"
