@@ -11,9 +11,9 @@ On top of that, now people can add component-speciic procs/vars if they want!
 	var/welded = 0 //Used on pumps and scrubbers
 	var/showpipe = 0
 
-	var/list/nodes = new/list()
-	var/list/parents = new/list()
-	var/list/airs = new/list()
+	var/list/obj/machinery/atmospherics/nodes = list()
+	var/list/datum/pipeline/parents = list()
+	var/list/datum/gas_mixture/airs = list()
 
 	var/device_type //used for initialization stuff
 		//UNARY = 1
@@ -23,8 +23,7 @@ On top of that, now people can add component-speciic procs/vars if they want!
 /obj/machinery/atmospherics/components/New() //it's workiiiing
 	..()
 	for(var/I = 1; I <= device_type; I++)
-		var/datum/gas_mixture/A
-		A = new
+		var/datum/gas_mixture/A = new
 		A.volume = 200
 		airs["a[I]"] = A
 /*
@@ -46,7 +45,7 @@ Iconnery
 /obj/machinery/atmospherics/components/proc/update_icon_nopipes()
 	return
 
-/obj/machinery/atmospherics/components/update_icon() //works
+/obj/machinery/atmospherics/components/update_icon() //not working
 	update_icon_nopipes()
 
 	underlays.Cut()
@@ -56,8 +55,7 @@ Iconnery
 	var/connected = 0
 
 	for(var/obj/machinery/atmospherics/N in nodes) //adds intact pieces
-		if(N)
-			connected |= icon_addintact(N)
+		connected |= icon_addintact(N)
 
 	icon_addbroken(connected) //adds broken pieces
 
@@ -65,102 +63,82 @@ Iconnery
 Pipenet stuff; housekeeping
 */
 /obj/machinery/atmospherics/components/Destroy() //works somewhat
-	var/I = 1
-	for(var/obj/machinery/atmospherics/N in nodes)
+	for(var/I = 1; I <= device_type; I++)
+		var/obj/machinery/atmospherics/N = nodes["n[I]"]
 		if(N)
 			N.disconnect(src)
 			N = null
 			nullifyPipenet(parents["p[I]"])
-			nodes["n[I]"] = N
-	I++
 	..()
 
 /obj/machinery/atmospherics/components/atmosinit(var/list/node_connects) //doesn't get called properly
-	var/I = 1
-	for(var/N in node_connects)
-		for(var/obj/machinery/atmospherics/target in get_step(src,N))
+	for(var/I = 1; I <= device_type; I++)
+		for(var/obj/machinery/atmospherics/target in get_step(src,node_connects[I]))
 			if(target.initialize_directions & get_dir(target,src))
 				nodes["n[I]"] = target
 				break
-		I++
 	if(level == 2)
 		showpipe = 1
 	update_icon()
 
 /obj/machinery/atmospherics/components/construction()
 	..()
-	for(var/I = 1; I <= device_type; I++)
-		var/datum/pipeline/P = new
+	for(var/datum/pipeline/P in parents)
 		P.update = 1
-		parents["p[I]"] = P
-		I++
 
 /obj/machinery/atmospherics/components/build_network() //doesn't work
 	for(var/I = 1; I <= device_type; I++)
-		var/datum/pipeline/P = parents["p[I]"]
-		if(P)
-			return
-		P = new /datum/pipeline()
-		P.build_pipeline(src)
-		parents["p[I]"] = P
+		if(!parents["p[I]"])
+			var/datum/pipeline/P = new
+			P.build_pipeline(src)
+			parents["p[I]"] = P
 
-/obj/machinery/atmospherics/components/disconnect(obj/machinery/atmospherics/reference) //works
-	var/I = 1
-	for(var/obj/machinery/atmospherics/N in nodes)
-		if(reference == N)
-			if(istype(N, /obj/machinery/atmospherics/pipe))
+/obj/machinery/atmospherics/components/disconnect(obj/machinery/atmospherics/reference)
+	for(var/I = 1; I <= device_type; I++)
+		if(reference == nodes["n[I]"])
+			if(istype(nodes["n[I]"], /obj/machinery/atmospherics/pipe))
 				qdel(parents["p[I]"])
 			parents["p[I]"] = null
-		I++
+			break
 	update_icon()
 
 /obj/machinery/atmospherics/components/nullifyPipenet(datum/pipeline/reference) //untestable
 	..()
-	var/I = 1
-	for(var/datum/pipeline/P in parents)
+	for(var/I = 1; I <= device_type; I++)
+		var/datum/pipeline/P = parents["p[I]"]
 		if(reference == P)
-			P.other_airs -= airs[I]
+			P.other_airs -= airs["a[I]"]
 			P = null
-			parents["p[I]"] = P
-		I++
+			break
 
-/obj/machinery/atmospherics/components/returnPipenetAir(datum/pipeline/reference) //untestable; should work
-	var/I = 1
-	for(var/datum/pipeline/P in parents)
-		if(reference == parent)
+/obj/machinery/atmospherics/components/returnPipenetAir(datum/pipeline/reference)
+	for(var/I = 1; I <= device_type; I++)
+		if(reference == parents["p[I]"])
 			return airs["a[I]"]
-		I++
 
 /obj/machinery/atmospherics/components/pipeline_expansion(datum/pipeline/reference)
 	if(!reference)
 		return nodes
-	var/I = 1
-	for(var/obj/machinery/atmospherics/N in nodes)
+	for(var/I = 1; I <= device_type; I++)
 		if(parents["p[I]"] == reference)
-			return list(N) //untestable; should work
-		I++
+			return list(nodes["n[I]"])
 
-/obj/machinery/atmospherics/components/setPipenet(datum/pipeline/pipeline, obj/machinery/atmospherics/A)
-	var/I = 1
-	for(var/obj/machinery/atmospherics/N in nodes)
-		if(A == N)
-			parents["p[I]"] = pipeline
-		I++
+/obj/machinery/atmospherics/components/setPipenet(datum/pipeline/reference, obj/machinery/atmospherics/A)
+	for(var/I = 1; I <= device_type; I++)
+		if(A == nodes["n[I]"])
+			parents["p[I]"] = reference
+			break
 
 /obj/machinery/atmospherics/components/returnPipenet(obj/machinery/atmospherics/A)
-	var/I = 1
-	for(var/obj/machinery/atmospherics/N in nodes)
-		if(A == N)
+	for(var/I = 1; I <= device_type; I++)
+		if(A == nodes["n[I]"])
 			return parents["p[I]"] //probably works
-		I++
 
 /obj/machinery/atmospherics/components/replacePipenet(datum/pipeline/Old, datum/pipeline/New)
-	var/I
 	for(var/datum/pipeline/P in parents)
 		if(Old == P)
 			P = New
-		parents["p[I]"] = P
-		I++
+			break
 
 /obj/machinery/atmospherics/components/unsafe_pressure_release(var/mob/user, var/pressures) //untestable; I'll fix this last
 	..()
@@ -210,8 +188,6 @@ Helpers
 /obj/machinery/atmospherics/components/proc/update_parents(var/list/L = parents)
 	var/I = 1
 	for(var/datum/pipeline/parent in L)
-		if(!parent)
-			continue
 		parent.update = 1
 		parents["p[I]"] = parent
 		I++
