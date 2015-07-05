@@ -104,7 +104,7 @@
 	H.update_icon()
 
 	source.visible_message("\The [source] deals a card to \the [target].")
-	H.throw_at(get_step(target, target.dir), 10, 1, H)
+	H.throw_at(get_step(target, target.dir), 10, 1, source)
 
 /* Hand */
 

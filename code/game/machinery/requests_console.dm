@@ -315,7 +315,7 @@ var/list/obj/machinery/requests_console/allConsoles = list()
 					emergency = "Medical"
 			if(radio_freq)
 				Radio.set_frequency(radio_freq)
-				Radio.talk_into(src,"[emergency] emergency declared from [department]!",radio_freq)
+				Radio.talk_into(src,"[emergency] emergency in [department]!!",radio_freq)
 				update_icon()
 				spawn(3000)
 					emergency = null
@@ -359,23 +359,24 @@ var/list/obj/machinery/requests_console/allConsoles = list()
 				if(msgVerified || msgStamped)
 					authentic = " (Authenticated)"
 
+				var/alert = ""
 				for (var/obj/machinery/requests_console/Console in allConsoles)
 					if (ckey(Console.department) == ckey(href_list["department"]))
 						switch(priority)
 							if(2)		//High priority
-								Console.createmessage(src, "PRIORITY Alert in [department][authentic]", sending, 2, 1)
-								if(radio_freq)
-									Radio.talk_into(src,"PRIORITY Alert from [department][authentic]: <i>[message]</i>",radio_freq)
+								alert = "PRIORITY Alert in [department][authentic]"
+								Console.createmessage(src, alert, sending, 2, 1)
 							if(3)		// Extreme Priority
-								Console.createmessage(src, "EXTREME PRIORITY Alert from [department][authentic]", sending, 3, 1)
-								if(radio_freq)
-									Radio.talk_into(src,"EXTREME PRIORITY Alert in [department][authentic]: <i>[message]</i>",radio_freq)
+								alert = "EXTREME PRIORITY Alert from [department][authentic]"
+								Console.createmessage(src, alert , sending, 3, 1)
 							else		// Normal priority
-								Console.createmessage(src, "Message from [department][authentic]", sending, 1, 1)
-								if(radio_freq)
-									Radio.talk_into(src,"Message from [department][authentic]: <i>[message]</i>",radio_freq)
+								alert = "Message from [department][authentic]"
+								Console.createmessage(src, alert , sending, 1, 1)
 						screen = 6
 						Console.SetLuminosity(2)
+
+				if(radio_freq)
+					Radio.talk_into(src,"[alert]: <i>[message]</i>",radio_freq)
 
 				switch(priority)
 					if(2)

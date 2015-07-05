@@ -5,8 +5,7 @@
 	icon = 'icons/obj/doors/door_assembly.dmi'
 	icon_state = "door_electronics"
 	w_class = 2.0 //It should be tiny! -Agouri
-	m_amt = 50
-	g_amt = 50
+	materials = list(MAT_METAL=50, MAT_GLASS=50)
 
 	req_access = list(access_maint_tunnels)
 

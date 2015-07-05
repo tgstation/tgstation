@@ -297,7 +297,7 @@
 	throw_range = 5
 	w_class = 4.0
 	flags = CONDUCT
-	m_amt = 3000
+	materials = list(MAT_METAL=3000)
 	preposition = "on"
 
 /obj/item/weapon/storage/bag/tray/attack(mob/living/M as mob, mob/living/user as mob)

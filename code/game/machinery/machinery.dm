@@ -121,7 +121,7 @@ Class Procs:
 	..()
 	machines += src
 	SSmachine.processing += src
-	auto_use_power()
+	power_change()
 
 /obj/machinery/Destroy()
 	machines.Remove(src)
@@ -331,6 +331,7 @@ Class Procs:
 /obj/machinery/proc/default_deconstruction_crowbar(var/obj/item/weapon/crowbar/C, var/ignore_panel = 0)
 	. = istype(C) && (panel_open || ignore_panel)
 	if(.)
+		deconstruction()
 		playsound(src.loc, 'sound/items/Crowbar.ogg', 50, 1)
 		var/obj/machinery/constructable_frame/machine_frame/M = new /obj/machinery/constructable_frame/machine_frame(src.loc)
 		M.state = 2
@@ -412,6 +413,10 @@ Class Procs:
 
 //called on machinery construction (i.e from frame to machinery) but not on initialization
 /obj/machinery/proc/construction()
+	return
+
+//called on deconstruction before the final deletion
+/obj/machinery/proc/deconstruction()
 	return
 
 /obj/machinery/allow_drop()

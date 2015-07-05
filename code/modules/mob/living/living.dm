@@ -782,6 +782,23 @@ Sorry Giacom. Please don't be mad :(
 	..(A, final_pixel_y)
 	floating = 0 // If we were without gravity, the bouncing animation got stopped, so we make sure to restart it in next life().
 
+	//Show an image of the wielded weapon over the person who got dunked.
+	var/image/I
+	if(hand)
+		if(l_hand)
+			I = image(l_hand.icon,A,l_hand.icon_state,A.layer+1)
+	else
+		if(r_hand)
+			I = image(r_hand.icon,A,r_hand.icon_state,A.layer+1)
+	if(I)
+		var/list/viewing = list()
+		for(var/mob/M in viewers(A))
+			if(M.client)
+				viewing |= M.client
+		flick_overlay(I,viewing,5)
+		I.pixel_z = 16 //lift it up...
+		animate(I, pixel_z = 0, alpha = 125, time = 3) //smash it down into them!
+
 /mob/living/proc/do_jitter_animation(jitteriness)
 	var/amplitude = min(4, (jitteriness/100) + 1)
 	var/pixel_x_diff = rand(-amplitude, amplitude)
@@ -829,12 +846,9 @@ Sorry Giacom. Please don't be mad :(
 	if(statpanel("Status"))
 		if(ticker)
 			if(ticker.mode)
-				if(istype(ticker.mode, /datum/game_mode/gang))
-					var/datum/game_mode/gang/mode = ticker.mode
-					if(isnum(mode.A_timer))
-						stat(null, "[gang_name("A")] Gang Takeover: [max(mode.A_timer, 0)]")
-					if(isnum(mode.B_timer))
-						stat(null, "[gang_name("B")] Gang Takeover: [max(mode.B_timer, 0)]")
+				for(var/datum/gang/G in ticker.mode.gangs)
+					if(isnum(G.dom_timer))
+						stat(null, "[G.name] Gang Takeover: [max(G.dom_timer, 0)]")
 
 /mob/living/cancel_camera()
 	..()

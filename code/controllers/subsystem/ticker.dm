@@ -101,7 +101,7 @@ var/datum/subsystem/ticker/ticker
 			if(!mode.explosion_in_progress && mode.check_finished() || force_ending)
 				current_state = GAME_STATE_FINISHED
 				auto_toggle_ooc(1) // Turn it on
-				declare_completion()
+				declare_completion(force_ending)
 				spawn(50)
 					if(mode.station_was_nuked)
 						world.Reboot("Station destroyed by Nuclear Device.", "end_proper", "nuke")
@@ -276,6 +276,15 @@ var/datum/subsystem/ticker/ticker
 					flick("station_explode_fade_red",cinematic)
 					world << sound('sound/effects/explosionfar.ogg')
 					cinematic.icon_state = "summary_selfdes"
+				if("no_core") //Nuke failed to detonate as it had no core
+					flick("intro_nuke",cinematic)
+					sleep(35)
+					flick("station_intact",cinematic)
+					world << sound('sound/ambience/signal.ogg')
+					sleep(100)
+					if(cinematic)	del(cinematic)
+					if(temp_buckle)	del(temp_buckle)
+					return	//Faster exit, since nothing happened
 				else //Station nuked (nuke,explosion,summary)
 					flick("intro_nuke",cinematic)
 					sleep(35)
@@ -398,7 +407,7 @@ var/datum/subsystem/ticker/ticker
 	//calls auto_declare_completion_* for all modes
 	for(var/handler in typesof(/datum/game_mode/proc))
 		if (findtext("[handler]","auto_declare_completion_"))
-			call(mode, handler)()
+			call(mode, handler)(force_ending)
 
 	//Print a list of antagonists to the server log
 	var/list/total_antagonists = list()

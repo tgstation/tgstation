@@ -106,7 +106,7 @@
 	stop_bleeding = 900
 
 /obj/item/stack/medical/gauze/cyborg/
-	m_amt = 0
+	materials = list()
 	is_cyborg = 1
 	cost = 250
 

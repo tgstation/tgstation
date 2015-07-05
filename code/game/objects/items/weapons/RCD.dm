@@ -18,7 +18,7 @@ RCD
 	throw_speed = 3
 	throw_range = 5
 	w_class = 3.0
-	m_amt = 100000
+	materials = list(MAT_METAL=100000)
 	origin_tech = "engineering=4;materials=2"
 	var/datum/effect/effect/system/spark_spread/spark_system
 	var/matter = 0
@@ -298,8 +298,7 @@ RCD
 	density = 0
 	anchored = 0.0
 	origin_tech = "materials=2"
-	m_amt = 16000
-	g_amt = 8000
+	materials = list(MAT_METAL=16000, MAT_GLASS=8000)
 	var/ammoamt = 20
 
 /obj/item/weapon/rcd_ammo/large

@@ -4,7 +4,7 @@
 	icon_state = "laser"
 	item_state = "laser"
 	w_class = 3.0
-	m_amt = 2000
+	materials = list(MAT_METAL=2000)
 	origin_tech = "combat=3;magnets=2"
 	ammo_type = list(/obj/item/ammo_casing/energy/lasergun)
 

@@ -92,7 +92,7 @@
 			loadedWeightClass -= ITD.w_class
 			ITD.throw_speed = pressureSetting * 2
 			ITD.loc = get_turf(src)
-			ITD.throw_at(target, pressureSetting * 5, pressureSetting * 2)
+			ITD.throw_at(target, pressureSetting * 5, pressureSetting * 2,user)
 	if(pressureSetting >= 3)
 		user << "<span class='boldannounce'>\The [src]'s recoil knocks you down!</span>"
 		user.Weaken(2)
@@ -115,6 +115,7 @@
 				/obj/item/stack/packageWrap = 8,
 				/obj/item/pipe = 2)
 	time = 300
+	category = CAT_WEAPON
 
 /obj/item/weapon/pneumatic_cannon/proc/updateTank(var/obj/item/weapon/tank/internals/thetank, var/removing = 0, var/mob/living/carbon/human/user)
 	if(removing)
