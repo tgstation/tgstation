@@ -18,7 +18,7 @@
 	var/external_pressure_bound = ONE_ATMOSPHERE
 	var/internal_pressure_bound = 0
 
-	var/pressure_checks = 1
+	var/pressure_checks = 1 //TODO: make these defines
 	//1: Do not pass external_pressure_bound
 	//2: Do not pass internal_pressure_bound
 	//3: Do not pass either
@@ -65,7 +65,7 @@
 
 /obj/machinery/atmospherics/unary/vent_pump/high_volume/New()
 	..()
-	var/datum/gas_mixture/air_contents = airs[1]
+	var/datum/gas_mixture/air_contents = airs["a1"]
 	air_contents.volume = 1000
 	update_airs(air_contents)
 
@@ -78,7 +78,7 @@
 		icon_state = "vent_welded"
 		return
 
-	if(!nodes[1] || !on || stat & (NOPOWER|BROKEN))
+	if(!nodes["n1"] || !on || stat & (NOPOWER|BROKEN))
 		icon_state = "vent_off"
 		return
 
@@ -91,7 +91,7 @@
 	..()
 	if(stat & (NOPOWER|BROKEN))
 		return
-	if (!nodes[1])
+	if (!nodes["n1"])
 		on = 0
 	//broadcast_status() // from now air alarm/control computer should request update purposely --rastaf0
 	if(!on)
@@ -100,7 +100,7 @@
 	if(welded)
 		return 0
 
-	var/datum/gas_mixture/air_contents = airs[1]
+	var/datum/gas_mixture/air_contents = airs["a1"]
 	var/datum/gas_mixture/environment = loc.return_air()
 	var/environment_pressure = environment.return_pressure()
 

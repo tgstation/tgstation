@@ -25,7 +25,7 @@
 	on = 1
 
 /obj/machinery/atmospherics/unary/outlet_injector/update_icon_nopipes()
-	if(!nodes[1] || !on || stat & (NOPOWER|BROKEN))
+	if(!nodes["n1"] || !on || stat & (NOPOWER|BROKEN))
 		icon_state = "inje_off"
 		return
 
@@ -45,7 +45,7 @@
 	if(!on || stat & NOPOWER)
 		return 0
 
-	var/datum/gas_mixture/air_contents = airs[1]
+	var/datum/gas_mixture/air_contents = airs["a1"]
 
 	if(air_contents.temperature > 0)
 		var/transfer_moles = (air_contents.return_pressure())*volume_rate/(air_contents.temperature * R_IDEAL_GAS_EQUATION)
@@ -64,7 +64,7 @@
 	if(on || injecting)
 		return 0
 
-	var/datum/gas_mixture/air_contents = airs[1]
+	var/datum/gas_mixture/air_contents = airs["a1"]
 
 	injecting = 1
 
@@ -132,7 +132,7 @@
 
 	if("set_volume_rate" in signal.data)
 		var/number = text2num(signal.data["set_volume_rate"])
-		var/datum/gas_mixture/air_contents = airs[1]
+		var/datum/gas_mixture/air_contents = airs["a1"]
 		volume_rate = Clamp(number, 0, air_contents.volume)
 
 	if("status" in signal.data)

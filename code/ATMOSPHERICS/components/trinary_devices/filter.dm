@@ -5,7 +5,7 @@
 #define FILTER_CARBONDIOXIDE	3
 #define FILTER_NITROUSOXIDE		4
 
-/obj/machinery/atmospherics/trinary/filter
+/obj/machinery/atmospherics/components/trinary/filter
 	icon_state = "filter_off"
 	density = 0
 
@@ -34,46 +34,41 @@ Filter types:
 	var/frequency = 0
 	var/datum/radio_frequency/radio_connection
 
-/obj/machinery/atmospherics/trinary/filter/flipped
+/obj/machinery/atmospherics/components/trinary/filter/flipped
 	icon_state = "filter_off_f"
 	flipped = 1
 
-/obj/machinery/atmospherics/trinary/filter/proc/set_frequency(new_frequency)
+/obj/machinery/atmospherics/components/trinary/filter/proc/set_frequency(new_frequency)
 	radio_controller.remove_object(src, frequency)
 	frequency = new_frequency
 	if(frequency)
 		radio_connection = radio_controller.add_object(src, frequency, RADIO_ATMOSIA)
 
-/obj/machinery/atmospherics/trinary/filter/Destroy()
+/obj/machinery/atmospherics/components/trinary/filter/Destroy()
 	if(radio_controller)
 		radio_controller.remove_object(src,frequency)
 	..()
 
-/obj/machinery/atmospherics/trinary/filter/icon_addintact(var/obj/machinery/atmospherics/node, var/connected)
-	var/image/img = getpipeimage('icons/obj/atmospherics/trinary_devices.dmi', "cap", get_dir(src,node), node.pipe_color)
-	overlays += img
-	return ..()
-
-/obj/machinery/atmospherics/trinary/filter/icon_addbroken(var/connected)
-	var/unconnected = (~connected) & initialize_directions
-	for(var/direction in cardinal)
-		if(unconnected & direction)
-			underlays += getpipeimage('icons/obj/atmospherics/binary_devices.dmi', "pipe_exposed", direction)
-			overlays += getpipeimage('icons/obj/atmospherics/trinary_devices.dmi', "cap", direction)
-
-/obj/machinery/atmospherics/trinary/filter/update_icon()
+/obj/machinery/atmospherics/components/trinary/filter/update_icon()
 	overlays.Cut()
+	for(var/direction in cardinal)
+		if(direction & initialize_directions)
+			var/obj/machinery/atmospherics/node = findConnecting(direction)
+			if(node)
+				overlays += getpipeimage('icons/obj/atmospherics/trinary_devices.dmi', "cap", direction, node.pipe_color)
+				continue
+			overlays += getpipeimage('icons/obj/atmospherics/trinary_devices.dmi', "cap", direction)
 	..()
 
-/obj/machinery/atmospherics/trinary/filter/update_icon_nopipes()
+/obj/machinery/atmospherics/components/trinary/filter/update_icon_nopipes()
 
-	if(!(stat & NOPOWER) && on && nodes[1] && nodes[2] && nodes[3])
+	if(!(stat & NOPOWER) && on && nodes["n1"] && nodes["n2"] && nodes["n3"])
 		icon_state = "filter_on[flipped?"_f":""]"
 		return
 
 	icon_state = "filter_off[flipped?"_f":""]"
 
-/obj/machinery/atmospherics/trinary/filter/power_change()
+/obj/machinery/atmospherics/components/trinary/filter/power_change()
 	var/old_stat = stat
 	..()
 	if(stat & NOPOWER)
@@ -81,14 +76,14 @@ Filter types:
 	if(old_stat != stat)
 		update_icon()
 
-/obj/machinery/atmospherics/trinary/filter/process_atmos()
+/obj/machinery/atmospherics/components/trinary/filter/process_atmos()
 	..()
 	if(!on)
 		return 0
 
-	var/datum/gas_mixture/air1 = airs[1]
-	var/datum/gas_mixture/air2 = airs[2]
-	var/datum/gas_mixture/air3 = airs[3]
+	var/datum/gas_mixture/air1 = airs["a1"]
+	var/datum/gas_mixture/air2 = airs["a2"]
+	var/datum/gas_mixture/air3 = airs["a3"]
 
 	var/output_starting_pressure = air3.return_pressure()
 
@@ -156,11 +151,11 @@ Filter types:
 
 	return 1
 
-/obj/machinery/atmospherics/trinary/filter/atmosinit()
+/obj/machinery/atmospherics/components/trinary/filter/atmosinit()
 	set_frequency(frequency)
 	return ..()
 
-/obj/machinery/atmospherics/trinary/filter/attack_hand(user as mob)
+/obj/machinery/atmospherics/components/trinary/filter/attack_hand(user as mob)
 	if(..())
 		return
 
@@ -170,13 +165,13 @@ Filter types:
 
 	ui_interact(user)
 
-/obj/machinery/atmospherics/trinary/filter/ui_interact(mob/user, ui_key = "main", var/datum/nanoui/ui = null)
+/obj/machinery/atmospherics/components/trinary/filter/ui_interact(mob/user, ui_key = "main", var/datum/nanoui/ui = null)
 	if(stat & (BROKEN|NOPOWER))
 		return
 
 	ui = SSnano.push_open_or_new_ui(user, src, ui_key, ui, "atmos_filter.tmpl", name, 400, 320, 0)
 
-/obj/machinery/atmospherics/trinary/filter/get_ui_data()
+/obj/machinery/atmospherics/components/trinary/filter/get_ui_data()
 	var/data = list()
 	data["on"] = on
 	data["pressure_set"] = round(target_pressure*100) //Nano UI can't handle rounded non-integers, apparently.
@@ -184,7 +179,7 @@ Filter types:
 	data["filter_type"] = filter_type
 	return data
 
-/obj/machinery/atmospherics/trinary/filter/Topic(href, href_list)
+/obj/machinery/atmospherics/components/trinary/filter/Topic(href, href_list)
 	if(..())
 		return
 	usr.set_machine(src)

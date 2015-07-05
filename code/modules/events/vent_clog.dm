@@ -11,14 +11,15 @@
 	var/list/vents  = list()
 
 /datum/round_event/vent_clog/announce()
-	priority_announce("The scrubbers network is experiencing a backpressure surge.  Some ejection of contents may occur.", "Atmospherics alert")
+	priority_announce("The scrubbers network is experiencing a backpressure surge. Some ejection of contents may occur.", "Atmospherics alert")
 
 
 /datum/round_event/vent_clog/setup()
 	endWhen = rand(25, 100)
 	for(var/obj/machinery/atmospherics/unary/vent_scrubber/temp_vent in machines)
 		if(temp_vent.loc.z == ZLEVEL_STATION)
-			if(temp_vent.parent.other_atmosmch.len > 20)
+			var/datum/pipeline/temp_vent_parent = temp_vent.parents["p1"]
+			if(temp_vent_parent.other_atmosmch.len > 20)
 				vents += temp_vent
 	if(!vents.len)
 		return kill()
