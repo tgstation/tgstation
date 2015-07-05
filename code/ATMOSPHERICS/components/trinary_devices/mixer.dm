@@ -23,11 +23,13 @@
 /obj/machinery/atmospherics/components/trinary/mixer/update_icon()
 	overlays.Cut()
 	for(var/direction in cardinal)
-		if(direction & (get_dir(src,nodes["n1"]) || get_dir(src,nodes["n2"]) || get_dir(src,nodes["n3"])))
+		if(direction & initialize_directions)
 			var/obj/machinery/atmospherics/node = findConnecting(direction)
-			overlays += getpipeimage('icons/obj/atmospherics/trinary_devices.dmi', "cap", direction, node.pipe_color)
-			continue
-		overlays += getpipeimage('icons/obj/atmospherics/trinary_devices.dmi', "cap", direction)
+			if(node)
+				overlays += getpipeimage('icons/obj/atmospherics/trinary_devices.dmi', "cap", direction, node.pipe_color)
+				continue
+			overlays += getpipeimage('icons/obj/atmospherics/trinary_devices.dmi', "cap", direction)
+	..()
 
 /obj/machinery/atmospherics/components/trinary/mixer/update_icon_nopipes()
 	if(!(stat & NOPOWER) && on && nodes["n1"] && nodes["n2"] && nodes["n3"])
