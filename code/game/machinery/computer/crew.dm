@@ -11,31 +11,29 @@
 /obj/machinery/computer/crew/attack_ai(mob/user)
 	if(stat & (BROKEN|NOPOWER))
 		return
-	crewmonitor(user,src)
+	crewmonitor.show(user)
 
 /obj/machinery/computer/crew/attack_hand(mob/user)
 	if(..())
 		return
 	if(stat & (BROKEN|NOPOWER))
 		return
-	crewmonitor(user,src)
+	crewmonitor.show(user)
 
-/obj/machinery/computer/crew/Topic(href, href_list)
-	if(..()) return
-	if (src.z > 6)
-		usr << "<span class='boldannounce'>Unable to establish a connection</span>: \black You're too far away from the station!"
-		return
-	if( href_list["close"] )
-		usr << browse(null, "window=crewcomp")
-		usr.unset_machine()
-		return
-	if(href_list["update"])
-		src.updateDialog()
-		return
+var/global/datum/crewmonitor/crewmonitor = new
 
+/datum/crewmonitor
+	var/list/jobs
+	var/list/interfaces
+	var/list/data
+	var/const/MAX_ICON_DIMENSION = 1024
+	var/const/ICON_SIZE = 4
+	var/initialized = FALSE
 
-/proc/crewmonitor(mob/user,var/atom/source)
-	var/jobs[0]
+/datum/crewmonitor/New()
+	. = ..()
+
+	var/list/jobs = new/list()
 	jobs["Captain"] = 00
 	jobs["Head of Personnel"] = 50
 	jobs["Head of Security"] = 10
@@ -74,71 +72,162 @@
 	jobs["Security Response Officer"] = 221
 	jobs["Engineer Response Officer"] = 222
 	jobs["Medical Response Officer"] = 223
-	jobs["Assistant"] = 999	//Unknowns/custom jobs should appear after civilians, and before assistants
+	jobs["Assistant"] = 999 //Unknowns/custom jobs should appear after civilians, and before assistants
 
-	var/t = "<table width='100%'><tr><td width='40%'><h3>Name</h3></td><td width='30%'><h3>Vitals</h3></td><td width='30%'><h3>Position</h3></td></tr>"
-	var/list/logs = list()
-	var/list/tracked = crewscan()
-	var/turf/srcturf = get_turf(source)
-	for(var/mob/living/carbon/human/H in tracked)
-		var/log = ""
-		var/turf/pos = get_turf(H)
-		if(istype(H.w_uniform, /obj/item/clothing/under))
-			var/obj/item/clothing/under/U = H.w_uniform
-			if(pos && pos.z == srcturf.z && U.sensor_mode)
-				var/obj/item/weapon/card/id/I = null
-				if(H.wear_id)
-					I = H.wear_id.GetID()
+	src.jobs = jobs
+	src.interfaces = list()
+	src.data = list()
 
-				var/life_status = "[H.stat > 1 ? "<span class='bad'>Deceased</span>" : "<span class='good'>Living</span>"]"
+/datum/crewmonitor/Destroy()
+	if (src.interfaces)
+		for (var/datum/html_interface/hi in interfaces)
+			qdel(hi)
+		src.interfaces = null
 
-				if(I)
-					var/style = null
-					var/ijob = jobs[I.assignment]
-					if(ijob % 10 == 0)
-						style += "font-weight: bold; "	//head roles always end in 0
-					if(ijob >= 10 && ijob < 20)
-						style += "color: #E74C3C; "	//security
-					if(ijob >= 20 && ijob < 30)
-						style += "color: #3498DB; "	//medical
-					if(ijob >= 30 && ijob < 40)
-						style += "color: #9B59B6; "	//science
-					if(ijob >= 40 && ijob < 50)
-						style += "color: #F1C40F; "	//engineering
-					if(ijob >= 50 && ijob < 60)
-						style += "color: #F39C12; "	//cargo
-					if(ijob >= 200 && ijob < 230)
-						style += "color: #00C100; "	//Centcom
-					log += "<span style=\"display: none\">[ijob]]</span><tr><td width='40%'><span style=\"[style]\">[I.registered_name]</span> ([I.assignment])</td>"		//ijob does not get displayed, nor does it take up space, it's just used for the positioning of an entry
-				else
-					log += "<span style=\"display: none\">80</span><tr><td width='40%'><i>Unknown</i></td>"
+	return ..()
 
-				var/damage_report
-				if(U.sensor_mode > 1)
-					var/dam1 = round(H.getOxyLoss(),1)
-					var/dam2 = round(H.getToxLoss(),1)
-					var/dam3 = round(H.getFireLoss(),1)
-					var/dam4 = round(H.getBruteLoss(),1)
-					damage_report = "(<font color='#3498db'>[dam1]</font>/<font color='#2ecc71'>[dam2]</font>/<font color='#e67e22'>[dam3]</font>/<font color='#e74c3c'>[dam4]</font>)"
+/datum/crewmonitor/proc/show(mob/mob, z)
+	if (!z) z = mob.z
 
-				switch(U.sensor_mode)
-					if(1)
-						log += "<td width='30%'>[life_status]</td><td width='30%'><span style=\"color:#7f8c8d\">Not Available</span></td></tr>"
-					if(2)
-						log += "<td width='30%'>[life_status] [damage_report]</td><td width='30%'><span style=\"color:#7f8c8d\">Not Available</span></td></tr>"
-					if(3)
-						var/area/player_area = get_area(H)
-						log += "<td width='30%'>[life_status] [damage_report]</td><td width='30%'>[format_text(player_area.name)] ([pos.x], [pos.y])</td></tr>"
-		logs += log
-	logs = sortList(logs)
-	for(var/log in logs)
-		t += log
-	t += "</table>"
-	var/datum/browser/popup = new(user, "crewcomp", "Crew Monitoring", 900, 600)
-	popup.set_content(t)
-	popup.open()
+	if (z > 0 && src.interfaces)
+		var/datum/html_interface/hi
 
+		if (!src.interfaces["[z]"])
+			src.interfaces["[z]"] = new/datum/html_interface/nanotrasen(src, "Crew Monitoring", 900, 540, "<link rel=\"stylesheet\" type=\"text/css\" href=\"crewmonitor.css\" /><script type=\"text/javascript\">var z = [z]; var tile_size = [world.icon_size]; var maxx = [world.maxx]; var maxy = [world.maxy];</script><script type=\"text/javascript\" src=\"crewmonitor.js\"></script>")
 
+			hi = src.interfaces["[z]"]
+
+			hi.updateContent("content", "<a href=\"javascript:switchTo(0);\">Switch to mini map</a> <a href=\"javascript:switchTo(1);\">Switch to text-based</a><div id=\"minimap\"></div><div id=\"textbased\"></div>")
+
+			src.update(z, TRUE)
+		else
+			hi = src.interfaces["[z]"]
+
+		hi = src.interfaces["[z]"]
+		hi.show(mob)
+		src.updateFor(mob, hi, z)
+
+/datum/crewmonitor/proc/updateFor(hclient_or_mob, datum/html_interface/hi, z)
+	// This check will succeed if updateFor is called after showing to the player, but will fail
+	// on regular updates. Since we only really need this once we don't care if it fails.
+	var/list/parameters = list(ismob(hclient_or_mob) && isAI(hclient_or_mob) ? "true" : "false")
+
+	hi.callJavaScript("clearAll", parameters, hclient_or_mob)
+
+	for (var/list/L in data)
+		hi.callJavaScript("add", L, hclient_or_mob)
+
+/datum/crewmonitor/proc/update(z, ignore_unused = FALSE)
+	if (src.interfaces["[z]"])
+		var/datum/html_interface/hi = src.interfaces["[z]"]
+
+		if (ignore_unused || hi.isUsed())
+			var/list/results = list()
+			var/obj/item/clothing/under/U
+			var/obj/item/weapon/card/id/I
+			var/turf/pos
+			var/ijob
+			var/name
+			var/assignment
+			var/dam1
+			var/dam2
+			var/dam3
+			var/dam4
+			var/area
+			var/pos_x
+			var/pos_y
+			var/life_status
+
+			for(var/mob/living/carbon/human/H in mob_list)
+				// Check if their z-level is correct and if they are wearing a uniform.
+				// Accept H.z==0 as well in case the mob is inside an object.
+				if ((H.z == 0 || H.z == z) && istype(H.w_uniform, /obj/item/clothing/under))
+					U = H.w_uniform
+
+					// Are the suit sensors on?
+					if (U.has_sensor && U.sensor_mode)
+						pos = H.z == 0 || U.sensor_mode == 3 ? get_turf(H) : null
+
+						// Special case: If the mob is inside an object confirm the z-level on turf level.
+						if (H.z == 0 && (!pos || pos.z != z)) continue
+
+						I = H.wear_id ? H.wear_id.GetID() : null
+
+						if (I)
+							name = I.registered_name
+							assignment = I.assignment
+							ijob = jobs[I.assignment]
+						else
+							name = "<i>Unknown</i>"
+							assignment = ""
+							ijob = 80
+
+						if (U.sensor_mode >= 1) life_status = (!H.stat ? "true" : "false")
+						else                    life_status = null
+
+						if (U.sensor_mode >= 2)
+							dam1 = round(H.getOxyLoss(),1)
+							dam2 = round(H.getToxLoss(),1)
+							dam3 = round(H.getFireLoss(),1)
+							dam4 = round(H.getBruteLoss(),1)
+						else
+							dam1 = null
+							dam2 = null
+							dam3 = null
+							dam4 = null
+
+						if (U.sensor_mode >= 3)
+							if (!pos) pos = get_turf(H)
+							var/area/player_area = get_area(H)
+
+							area = format_text(player_area.name)
+							pos_x = pos.x
+							pos_y = pos.y
+						else
+							area = null
+							pos_x = null
+							pos_y = null
+
+						results[++results.len] = list(name, assignment, ijob, life_status, dam1, dam2, dam3, dam4, area, pos_x, pos_y, H.can_track(null))
+
+			src.data = results
+			src.updateFor(null, hi, z) // updates for everyone
+
+/datum/crewmonitor/proc/hiIsValidClient(datum/html_interface_client/hclient, datum/html_interface/hi)
+	var/z = ""
+
+	for (z in src.interfaces)
+		if (src.interfaces[z] == hi) break
+
+	return (hclient.client.mob && hclient.client.mob.stat == 0 && hclient.client.mob.z == text2num(z) && ( isAI(hclient.client.mob) || (locate(/obj/machinery/computer/crew, range(1, hclient.client.mob))) || (locate(/obj/item/device/sensor_device, hclient.client.mob.contents)) ) )
+
+/datum/crewmonitor/Topic(href, href_list[], datum/html_interface_client/hclient)
+	if (istype(hclient))
+		if (hclient && hclient.client && hclient.client.mob && isAI(hclient.client.mob))
+			var/mob/living/silicon/ai/AI = hclient.client.mob
+
+			switch (href_list["action"])
+				if ("select_person")
+					AI.ai_camera_track(href_list["name"])
+
+				if ("select_position")
+					var/x = text2num(href_list["x"])
+					var/y = text2num(href_list["y"])
+					var/turf/tile = locate(x, y, AI.z)
+
+					var/obj/machinery/camera/C = locate(/obj/machinery/camera) in range(5, tile)
+
+					if (!C) C = locate(/obj/machinery/camera) in range(10, tile)
+					if (!C) C = locate(/obj/machinery/camera) in range(15, tile)
+
+					if (C)
+						var/turf/current_loc = AI.eyeobj.loc
+
+						spawn(min(30, get_dist(get_turf(C), AI.eyeobj) / 4))
+							if (AI && AI.eyeobj && current_loc == AI.eyeobj.loc)
+								AI.switchCamera(C)
+
+/*
 /proc/crewscan()
 	var/list/tracked = list()
 	for(var/mob/living/carbon/human/H in mob_list)
@@ -147,3 +236,195 @@
 			if(U.has_sensor && U.sensor_mode)
 				tracked.Add(H)
 	return tracked
+*/
+
+/mob/living/carbon/human/Move()
+	if (src.w_uniform)
+		var/old_z = src.z
+
+		. = ..()
+
+		if (old_z != src.z) crewmonitor.queueUpdate(old_z)
+		crewmonitor.queueUpdate(src.z)
+	else
+		return ..()
+
+/datum/crewmonitor/proc/queueUpdate(z)
+	procqueue.queue(crewmonitor, "update", z)
+
+/datum/crewmonitor/proc/generateMiniMaps()
+	spawn
+		for (var/z = 1 to world.maxz) src.generateMiniMap(z)
+
+		NOTICE("MINIMAP: All minimaps have been generated.")
+
+		for (var/client/C in clients)
+			src.sendResources(C)
+
+		src.initialized = TRUE
+
+/datum/crewmonitor/proc/sendResources(client/C)
+	C << browse_rsc('crew.js', "crewmonitor.js")
+	C << browse_rsc('crew.css', "crewmonitor.css")
+	for (var/z = 1 to world.maxz) C << browse_rsc(file("[getMinimapFile(z)].png"), "minimap_[z].png")
+
+/datum/crewmonitor/proc/getMinimapFile(z)
+	return "data/minimaps/map_[z]"
+
+// Activate this to debug tile mismatches in the minimap.
+// This will store the full information on each tile and compare it the next time you run the minimap.
+// It can be used to find out what's changed since the last iteration.
+// Only activate this when you need it - this should never be active on a live server!
+// #define MINIMAP_DEBUG
+
+/datum/crewmonitor/proc/generateMiniMap(z, x1 = 1, y1 = 1, x2 = world.maxx, y2 = world.maxy)
+	var/result_path = "[src.getMinimapFile(z)].png"
+	var/hash_path = "[src.getMinimapFile(z)].md5"
+	var/list/tiles = block(locate(x1, y1, z), locate(x2, y2, z))
+	var/hash = ""
+	var/temp
+	var/obj/obj
+
+	#ifdef MINIMAP_DEBUG
+	var/tiledata_path = "data/minimaps/debug_tiledata_[z].sav"
+	var/savefile/F = new/savefile(tiledata_path)
+	#endif
+
+	// Note for future developer: If you have tiles on the map with random or dynamic icons this hash check will fail
+	// every time. You'll have to modify this code to generate a unique hash for your object.
+	// Don't forget to modify the minimap generation code to use a default icon (or skip generation altogether).
+	for (var/turf/tile in tiles)
+		if      (istype(tile.loc, /area/asteroid) || istype(tile.loc, /area/mine/unexplored) || istype(tile, /turf/simulated/mineral) || (istype(tile.loc, /area/space) && istype(tile, /turf/simulated/floor/plating/asteroid)))
+			temp = "/area/asteroid"
+		else if (istype(tile.loc, /area/mine) && istype(tile, /turf/simulated/floor/plating/asteroid))
+			temp = "/area/mine/explored"
+		else if (tile.loc.type == /area/start || (tile.type == /turf/space && !(locate(/obj/structure/lattice) in tile)) || istype(tile, /turf/space/transit))
+			temp = "/turf/space"
+			if (locate(/obj/structure/lattice/catwalk) in tile)
+
+			else
+		else if (tile.type == /turf/space)
+			if (locate(/obj/structure/lattice/catwalk) in tile)
+				temp = "/obj/structure/lattice/catwalk"
+			else
+				temp = "/obj/structure/lattice"
+		else if (tile.type == /turf/simulated/floor/plating/abductor)
+			temp = "/turf/simulated/floor/plating/abductor"
+		else if (tile.type == /turf/simulated/floor/plating && (locate(/obj/structure/window/shuttle) in tile))
+			temp = "/obj/structure/window/shuttle"
+		else
+			temp = "[tile.icon][tile.icon_state][tile.dir]"
+
+		obj = locate(/obj/structure/transit_tube) in tile
+
+		if (obj) temp = "[temp]/obj/structure/transit_tube[obj.icon_state][obj.dir]"
+
+		#ifdef MINIMAP_DEBUG
+		if (F["/[tile.y]/[tile.x]"] && F["/[tile.y]/[tile.x]"] != temp)
+			CRASH("Mismatch: [tile.type] at [tile.x],[tile.y],[tile.z] ([tile.icon], [tile.icon_state], [tile.dir])")
+		else
+			F["/[tile.y]/[tile.x]"] << temp
+		#endif
+
+		hash = md5("[hash][temp]")
+
+	if (fexists(result_path))
+		if (!fexists(hash_path) || trim(file2text(hash_path)) != hash)
+			fdel(result_path)
+			fdel(hash_path)
+
+	if (!fexists(result_path))
+		ASSERT(x1 > 0)
+		ASSERT(y1 > 0)
+		ASSERT(x2 <= world.maxx)
+		ASSERT(y2 <= world.maxy)
+
+		var/icon/map_icon = new/icon('html/mapbase1024.png')
+
+		// map_icon is fine and contains only 1 direction at this point.
+
+		ASSERT(map_icon.Width() == MAX_ICON_DIMENSION && map_icon.Height() == MAX_ICON_DIMENSION)
+
+		NOTICE("MINIMAP: Generating minimap for z-level [z].")
+
+		var/i = 0
+		var/icon/turf_icon
+		var/icon/obj_icon
+		var/old_icon
+		var/old_icon_state
+		var/old_dir
+		var/new_icon
+		var/new_icon_state
+		var/new_dir
+
+		for (var/turf/tile in tiles)
+			if (tile.loc.type != /area/start && (tile.type != /turf/space || (locate(/obj/structure/lattice) in tile) || (locate(/obj/structure/transit_tube) in tile)) && !istype(tile, /turf/space/transit))
+				if (istype(tile.loc, /area/asteroid) || istype(tile.loc, /area/mine/unexplored) || istype(tile, /turf/simulated/mineral) || (istype(tile.loc, /area/space) && istype(tile, /turf/simulated/floor/plating/asteroid)))
+					new_icon = 'icons/turf/mining.dmi'
+					new_icon_state = "rock"
+					new_dir = 2
+				else if (istype(tile.loc, /area/mine) && istype(tile, /turf/simulated/floor/plating/asteroid))
+					new_icon = 'icons/turf/floors.dmi'
+					new_icon_state = "asteroid"
+					new_dir = 2
+				else if (tile.type == /turf/simulated/floor/plating/abductor)
+					new_icon = 'icons/turf/floors.dmi'
+					new_icon_state = "alienpod1"
+					new_dir = 2
+				else if (tile.type == /turf/space)
+					obj = locate(/obj/structure/lattice) in tile
+
+					if (!obj) obj = locate(/obj/structure/transit_tube) in tile
+
+					ASSERT(obj != null)
+
+					if (obj)
+						new_icon = obj.icon
+						new_dir = obj.dir
+						new_icon_state = obj.icon_state
+				else if (tile.type == /turf/simulated/floor/plating && (locate(/obj/structure/window/shuttle) in tile))
+					new_icon = 'icons/obj/structures.dmi'
+					new_dir = 2
+					new_icon_state = "swindow"
+				else
+					new_icon = tile.icon
+					new_icon_state = tile.icon_state
+					new_dir = tile.dir
+
+				if (new_icon != old_icon || new_icon_state != old_icon_state || new_dir != old_dir)
+					old_icon = new_icon
+					old_icon_state = new_icon_state
+					old_dir = new_dir
+
+					turf_icon = new/icon(new_icon, new_icon_state, new_dir, 1, 0)
+					turf_icon.Scale(ICON_SIZE, ICON_SIZE)
+
+				if (tile.type != /turf/space || (locate(/obj/structure/lattice) in tile))
+					obj = locate(/obj/structure/transit_tube) in tile
+
+					if (obj)
+						obj_icon = new/icon(obj.icon, obj.icon_state, obj.dir, 1, 0)
+						obj_icon.Scale(ICON_SIZE, ICON_SIZE)
+						turf_icon.Blend(obj_icon, ICON_OVERLAY)
+
+				map_icon.Blend(turf_icon, ICON_OVERLAY, ((tile.x - 1) * ICON_SIZE), ((tile.y - 1) * ICON_SIZE))
+
+				if ((++i) % 512 == 0) sleep(1) // deliberate delay to avoid lag spikes
+
+				if ((i % 1024) == 0) NOTICE("MINIMAP: Generated [i] of [tiles.len] tiles.")
+			else
+				sleep(-1) // avoid sleeping if possible: prioritize pending procs
+
+		NOTICE("MINIMAP: Generated [tiles.len] of [tiles.len] tiles.")
+
+		// BYOND BUG: map_icon now contains 4 directions? Create a new icon with only a single state.
+		var/icon/result_icon = new/icon()
+
+		result_icon.Insert(map_icon, "", SOUTH, 1, 0)
+
+		fcopy(result_icon, result_path)
+		text2file(hash, hash_path)
+
+#ifdef MINIMAP_DEBUG
+#undef MINIMAP_DEBUG
+#endif

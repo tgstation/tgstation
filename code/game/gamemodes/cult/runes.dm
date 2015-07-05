@@ -972,24 +972,69 @@ var/list/sacrificed = list()
 
 
 /obj/effect/rune/proc/armor()
+	var/list/armors = list("zealot")
+	var/armorworn
 	var/mob/living/carbon/human/user = usr
+	if(istype(user.wear_suit, /obj/item/clothing/suit/wizrobe) && istype(user.head, /obj/item/clothing/head/wizard))
+		armors += "summoner"
+	if(istype(user.wear_suit, /obj/item/clothing/suit/space) && istype(user.head, /obj/item/clothing/head/helmet/space))
+		armors += "traveler"
+	if(istype(user.wear_suit, /obj/item/clothing/suit/space/captain) && istype(user.head, /obj/item/clothing/head/helmet/space/captain))
+		armors += "marauder"
+	if(istype(user.wear_suit, /obj/item/clothing/suit/armor/reactive))
+		armors += "trickster"
+	if(istype(user.wear_suit, /obj/item/clothing/suit/toggle/labcoat/cmo))
+		armors += "physician"
 	if(istype(src,/obj/effect/rune))
-		usr.say("N'ath reth sh'yro eth d[pick("'","`")]raggathnor!")
+		armorworn = input ("Choose your attire.") in armors
 	else
-		usr.whisper("N'ath reth sh'yro eth d[pick("'","`")]raggathnor!")
-	usr.visible_message("<span class='danger'>The rune disappears with a flash of red light, and a set of armor appears on [usr]...</span>", \
-	"<span class='danger'>You are blinded by the flash of red light! After you're able to see again, you see that you are now wearing a set of armor.</span>")
-
-	user.equip_to_slot_or_del(new /obj/item/clothing/head/culthood/alt(user), slot_head)
-	user.equip_to_slot_or_del(new /obj/item/clothing/suit/cultrobes/alt(user), slot_wear_suit)
-	user.equip_to_slot_or_del(new /obj/item/clothing/shoes/cult(user), slot_shoes)
-	user.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack/cultpack(user), slot_back)
-	//the above update their overlay icons cache but do not call update_icons()
-	//the below calls update_icons() at the end, which will update overlay icons by using the (now updated) cache
-	user.put_in_hands(new /obj/item/weapon/melee/cultblade(user))	//put in hands or on floor
-
-	qdel(src)
-
+		armorworn = "zealot"
+	if (armorworn == "zealot")
+		usr.say("N'ath reth sh'yro eth d[pick("'","`")]raggathnor!")
+		user.equip_to_slot_or_del(new /obj/item/clothing/head/culthood/alt(user), slot_head)
+		user.equip_to_slot_or_del(new /obj/item/clothing/suit/cultrobes/alt(user), slot_wear_suit)
+		user.equip_to_slot_or_del(new /obj/item/clothing/shoes/cult(user), slot_shoes)
+		user.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack/cultpack(user), slot_back)
+		user.put_in_hands(new /obj/item/weapon/melee/cultblade(user))
+		usr.visible_message("\red The rune disappears with a flash of red light, and a set of armor appears on [usr]...", \
+		"\red You are blinded by the flash of red light! After you're able to see again, you see that you are now wearing a set of armor.")
+	if (armorworn == "summoner" || armorworn == "trickster" || armorworn == "physician")
+		usr.say("Uln Shogg Hafh[pick("'","`")]drn!")
+		user << "\red You quietly prick your finger and make a pact with the geometer of blood to acquire more power."
+		user.take_overall_damage(rand(5,20))
+		del(user.head)
+		del(user.wear_suit)
+		user.equip_to_slot_or_del(new /obj/item/clothing/head/magus(user), slot_head)
+		user.equip_to_slot_or_del(new /obj/item/clothing/suit/magusred(user), slot_wear_suit)
+		user.equip_to_slot_or_del(new /obj/item/clothing/shoes/cult(user), slot_shoes)
+		user.spellremove(user)
+		usr.visible_message("\red The rune disappears with a flash of red light, and a set of robes appears on [usr]...", \
+		"\red You are blinded by the flash of red light! After you're able to see again, you see that you are now wearing a set of robes.")
+	if (armorworn == "summoner")
+		user.mind.spell_list += new /obj/effect/proc_holder/spell/aoe_turf/conjure/soulstone/cult(user)
+		user.mind.spell_list += new /obj/effect/proc_holder/spell/aoe_turf/conjure/construct/lesser/cult(user)
+	if (armorworn == "trickster")
+		user.put_in_hands(new /obj/item/weapon/gun/magic/wand/door(user))
+		user.mind.spell_list += new /obj/effect/proc_holder/spell/targeted/turf_teleport/blink/cult(user)
+	if (armorworn == "physician")
+		user.put_in_hands(new /obj/item/weapon/gun/magic/wand/resurrection(user))
+	if (armorworn == "traveler" || armorworn == "marauder")
+		usr.say("Tharanak n[pick("'","`")]ghft!")
+		del(user.head)
+		del(user.wear_suit)
+		user.equip_to_slot_or_del(new /obj/item/clothing/head/helmet/space/cult(user), slot_head)
+		user.equip_to_slot_or_del(new /obj/item/clothing/suit/space/cult(user), slot_wear_suit)
+		user.equip_to_slot_or_del(new /obj/item/clothing/shoes/cult(user), slot_shoes)
+		user.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack/cultpack(user), slot_back)
+		user.put_in_hands(new /obj/item/weapon/melee/cultblade(user))
+		user.spellremove(user)
+		usr.visible_message("\red The rune disappears with a flash of red light, and an armored space suit appears on [usr]...", \
+		"\red You are blinded by the flash of red light! After you're able to see again, you see that you are now wearing an armored space suit.")
+	if (armorworn == "marauder")
+		user.spellremove(user)
+		user.mind.spell_list += new /obj/effect/proc_holder/spell/aoe_turf/conjure/creature/cult(user)
+	del(src)
+	return
 
 ///Summon Shell: Summons a construct shell if there's four plasteel sheets on top of the rune
 

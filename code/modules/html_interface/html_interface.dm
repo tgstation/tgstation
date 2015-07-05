@@ -54,6 +54,10 @@ Hides the HTML interface from the provided client. This will close the browser w
 
 Returns TRUE if the interface is being used (has an active client) or FALSE if not.
 
+	hi.closeAll()
+
+Closes the interface on all clients.
+
 	** Additional notes **
 
 When working with byond:// links make sure to reference the HTML interface object and NOT the original object. Topic() will still be called on
@@ -73,6 +77,8 @@ mob/verb/test()
 	hi.show(src)
 
 */
+
+/var/list/html_interfaces = new/list()
 
 /datum/html_interface
 	// The atom we should report to.
@@ -100,6 +106,8 @@ mob/verb/test()
 	var/height
 
 /datum/html_interface/New(atom/ref, title, width = 700, height = 480, head = "")
+	html_interfaces.Add(src)
+
 	. = ..()
 
 	src.ref            = ref
@@ -109,9 +117,9 @@ mob/verb/test()
 	src.head           = head
 
 /datum/html_interface/Destroy()
-	if (src.clients)
-		for (var/client in src.clients)
-			src.hide(src.clients[client])
+	src.closeAll()
+
+	html_interfaces.Remove(src)
 
 	return ..()
 
@@ -160,7 +168,19 @@ mob/verb/test()
 		if (istype(hclient))
 			if (hclient.is_loaded) hclient.client << output(list2params(list(jscript)), "browser_\ref[src].browser:eval")
 	else
-		for (var/client in src.clients) src.executeJavaScript(jscript, src.clients[client])
+		for (var/client in src.clients) if(src.clients[client]) src.executeJavaScript(jscript, src.clients[client])
+
+/datum/html_interface/proc/callJavaScript(func, list/arguments, datum/html_interface_client/hclient = null)
+	if (!arguments) arguments = new/list()
+
+	if (hclient)
+		hclient = getClient(hclient)
+
+		if (istype(hclient))
+			if (hclient.is_loaded)
+				hclient.client << output(list2params(arguments), "browser_\ref[src].browser:[func]")
+	else
+		for (var/client in src.clients) if (src.clients[client]) src.callJavaScript(func, arguments, src.clients[client])
 
 /datum/html_interface/proc/updateLayout(layout)
 	src.layout = layout
@@ -180,7 +200,8 @@ mob/verb/test()
 	for (var/client in src.clients)
 		hclient = src._getClient(src.clients[client])
 
-		if (hclient && hclient.active) src._renderContent(id, hclient, ignore_cache)
+		if (hclient && hclient.active)
+			spawn (-1) src._renderContent(id, hclient, ignore_cache)
 
 /datum/html_interface/proc/show(datum/html_interface_client/hclient)
 	hclient = getClient(hclient, TRUE)
@@ -199,6 +220,8 @@ mob/verb/test()
 			hclient.is_loaded = FALSE
 			hclient.client << output(replacetextEx(replacetextEx(file2text('html_interface.html'), "\[hsrc\]", "\ref[src]"), "</head>", "[head]</head>"), "browser_\ref[src].browser")
 			winshow(hclient.client, "browser_\ref[src]", TRUE)
+
+		while (hclient.client && hclient.active && !hclient.is_loaded) sleep(2)
 
 /datum/html_interface/proc/hide(datum/html_interface_client/hclient)
 	hclient = getClient(hclient)
@@ -243,24 +266,34 @@ mob/verb/test()
 /datum/html_interface/proc/isUsed()
 	if (src.clients && src.clients.len > 0)
 		var/datum/html_interface_client/hclient
+
 		for (var/key in clients)
-			hclient = clients[key]
-			if (hclient.active) return TRUE
+			hclient = _getClient(clients[key])
+
+			if (hclient)
+				if (hclient.active) return TRUE
+			else
+				clients.Remove(key)
 
 	return FALSE
+
+/datum/html_interface/proc/closeAll()
+	if (src.clients)
+		for (var/client in src.clients)
+			src.hide(src.clients[client])
 
 /*                 * Danger Zone */
 
 /datum/html_interface/proc/_getClient(datum/html_interface_client/hclient)
 	if (hclient)
 		if (hclient.client)
-			if (hascall(src.ref, "hiIsValidClient"))
-				var/res = call(src.ref, "hiIsValidClient")(hclient)
+			// res = if the client has been active in the past 10 minutes and the client is allowed to view the object (context-sensitive).
+			var/res = hclient.client.inactivity <= 6000 && (hascall(src.ref, "hiIsValidClient") ? call(src.ref, "hiIsValidClient")(hclient, src) : TRUE)
 
-				if (res)
-					if (!hclient.active) src.enableFor(hclient)
-				else
-					if (hclient.active)  src.disableFor(hclient)
+			if (res)
+				if (!hclient.active) src.enableFor(hclient)
+			else
+				if (hclient.active)  src.disableFor(hclient)
 
 			return hclient
 		else
@@ -268,8 +301,8 @@ mob/verb/test()
 	else
 		return null
 
-/datum/html_interface/proc/_renderTitle(datum/html_interface_client/hclient, ignore_cache = FALSE)
-	if (hclient && hclient.is_loaded)
+/datum/html_interface/proc/_renderTitle(datum/html_interface_client/hclient, ignore_cache = FALSE, ignore_loaded = FALSE)
+	if (hclient && (ignore_loaded || hclient.is_loaded))
 		// Only render if we have new content.
 
 		if (ignore_cache || src.title != hclient.title)
@@ -279,8 +312,8 @@ mob/verb/test()
 
 			hclient.client << output(list2params(list(title)), "browser_\ref[src].browser:setTitle")
 
-/datum/html_interface/proc/_renderLayout(datum/html_interface_client/hclient)
-	if (hclient && hclient.is_loaded)
+/datum/html_interface/proc/_renderLayout(datum/html_interface_client/hclient, ignore_loaded = FALSE)
+	if (hclient && (ignore_loaded || hclient.is_loaded))
 		var/html   = src.layout
 
 		// Only render if we have new content.
@@ -289,10 +322,10 @@ mob/verb/test()
 
 			hclient.client << output(list2params(list(html)), "browser_\ref[src].browser:updateLayout")
 
-			for (var/id in src.content_elements) src._renderContent(id, hclient)
+			for (var/id in src.content_elements) src._renderContent(id, hclient, ignore_loaded = ignore_loaded)
 
-/datum/html_interface/proc/_renderContent(id, datum/html_interface_client/hclient, ignore_cache = FALSE)
-	if (hclient && hclient.is_loaded)
+/datum/html_interface/proc/_renderContent(id, datum/html_interface_client/hclient, ignore_cache = FALSE, ignore_loaded = FALSE)
+	if (hclient && (ignore_loaded || hclient.is_loaded))
 		var/html   = src.content_elements[id]
 
 		// Only render if we have new content.
@@ -311,10 +344,11 @@ mob/verb/test()
 				if ("onload")
 					hclient.layout = null
 					hclient.content_elements.len = 0
-					hclient.is_loaded = TRUE
 
-					src._renderTitle(hclient, TRUE)
-					src._renderLayout(hclient)
+					src._renderTitle(hclient, TRUE, TRUE)
+					src._renderLayout(hclient, TRUE)
+
+					hclient.is_loaded = TRUE
 
 				if ("onclose")
 					src.hide(hclient)

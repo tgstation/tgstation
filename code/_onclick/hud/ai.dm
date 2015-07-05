@@ -41,7 +41,7 @@
 
 /obj/screen/ai/crew_monitor/Click()
 	var/mob/living/silicon/ai/AI = usr
-	crewmonitor(AI,AI)
+	crewmonitor.show(AI)
 
 /obj/screen/ai/crew_manifest
 	name = "Crew Manifest"

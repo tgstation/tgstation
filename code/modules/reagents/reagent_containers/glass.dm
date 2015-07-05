@@ -4,6 +4,7 @@
 	possible_transfer_amounts = list(5, 10, 15, 25, 30, 50)
 	volume = 50
 	flags = OPENCONTAINER
+	spillable = 1
 
 	can_be_placed_into = list(
 		/obj/machinery/chem_master/,
@@ -34,7 +35,7 @@
 
 
 /obj/item/weapon/reagent_containers/glass/afterattack(obj/target, mob/user, proximity)
-	if((!proximity) || !check_allowed_items(target)) return
+	if((!proximity) || !check_allowed_items(target,target_self=1)) return
 
 	if(ismob(target) && target.reagents && reagents.total_volume)
 		var/mob/M = target
@@ -122,8 +123,7 @@
 	icon = 'icons/obj/chemical.dmi'
 	icon_state = "beaker"
 	item_state = "beaker"
-	m_amt = 0
-	g_amt = 500
+	materials = list(MAT_GLASS=500)
 
 /obj/item/weapon/reagent_containers/glass/beaker/New()
 	..()
@@ -167,7 +167,7 @@
 	name = "large beaker"
 	desc = "A large beaker. Can hold up to 100 units."
 	icon_state = "beakerlarge"
-	g_amt = 2500
+	materials = list(MAT_GLASS=2500)
 	volume = 100
 	amount_per_transfer_from_this = 10
 	possible_transfer_amounts = list(5,10,15,25,30,50,100)
@@ -177,7 +177,7 @@
 	name = "cryostasis beaker"
 	desc = "A cryostasis beaker that allows for chemical storage without reactions. Can hold up to 50 units."
 	icon_state = "beakernoreact"
-	g_amt = 500
+	materials = list(MAT_GLASS=500)
 	volume = 50
 	amount_per_transfer_from_this = 10
 	flags = OPENCONTAINER | NOREACT
@@ -186,7 +186,7 @@
 	name = "bluespace beaker"
 	desc = "A bluespace beaker, powered by experimental bluespace technology and Element Cuban combined with the Compound Pete. Can hold up to 300 units."
 	icon_state = "beakerbluespace"
-	g_amt = 5000
+	materials = list(MAT_GLASS=5000)
 	volume = 300
 	amount_per_transfer_from_this = 10
 	possible_transfer_amounts = list(5,10,15,25,30,50,100,300)
@@ -223,8 +223,7 @@
 	icon = 'icons/obj/janitor.dmi'
 	icon_state = "bucket"
 	item_state = "bucket"
-	m_amt = 200
-	g_amt = 0
+	materials = list(MAT_METAL=200)
 	w_class = 3.0
 	amount_per_transfer_from_this = 20
 	possible_transfer_amounts = list(10,20,30,50,70)

@@ -112,6 +112,8 @@
 
 /obj/machinery/power/apc/New(turf/loc, var/ndir, var/building=0)
 	..()
+	apcs_list += src
+
 	wires = new(src)
 	// offset 24 pixels in direction of dir
 	// this allows the APC to be embedded in a wall, yet still inside an area
@@ -138,6 +140,8 @@
 			src.update()
 
 /obj/machinery/power/apc/Destroy()
+	apcs_list -= src
+
 	if(malfai && operating)
 		if (ticker.mode.config_tag == "malfunction")
 			if (src.z == ZLEVEL_STATION) //if (is_type_in_list(get_area(src), the_station_areas))

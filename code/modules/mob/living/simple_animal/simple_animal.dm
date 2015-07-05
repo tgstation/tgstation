@@ -65,7 +65,8 @@
 
 /mob/living/simple_animal/Login()
 	if(src && src.client)
-		src.client.screen = null
+		src.client.screen = list()
+		client.screen += client.void
 	..()
 
 /mob/living/simple_animal/updatehealth()

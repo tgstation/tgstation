@@ -228,6 +228,16 @@
 		if (M.m_intent=="walk" && (lube&NO_SLIP_WHEN_WALKING))
 			return 0
 		if(!M.lying && (M.status_flags & CANWEAKEN)) // we slip those who are standing and can fall.
+			if(O)
+				M << "<span class='notice'>You slipped on the [O.name]!</span>"
+			else
+				M << "<span class='notice'>You slipped!</span>"
+			M.attack_log += "\[[time_stamp()]\] <font color='orange'>Slipped[O ? " on the [O.name]" : ""][(lube&SLIDE)? " (LUBE)" : ""]!</font>"
+			playsound(M.loc, 'sound/misc/slip.ogg', 50, 1, -3)
+
+			M.accident(M.l_hand)
+			M.accident(M.r_hand)
+
 			var/olddir = M.dir
 			M.Stun(s_amount)
 			M.Weaken(w_amount)
@@ -239,11 +249,9 @@
 						M.spin(1,1)
 				if(M.lying) //did I fall over?
 					M.adjustBruteLoss(2)
-			if(O)
-				M << "<span class='notice'>You slipped on the [O.name]!</span>"
-			else
-				M << "<span class='notice'>You slipped!</span>"
-			playsound(M.loc, 'sound/misc/slip.ogg', 50, 1, -3)
+
+
+
 			return 1
 	return 0 // no success. Used in clown pda and wet floors
 

@@ -121,7 +121,7 @@ Class Procs:
 	..()
 	machines += src
 	SSmachine.processing += src
-	auto_use_power()
+	power_change()
 
 /obj/machinery/Destroy()
 	machines.Remove(src)
@@ -331,6 +331,7 @@ Class Procs:
 /obj/machinery/proc/default_deconstruction_crowbar(var/obj/item/weapon/crowbar/C, var/ignore_panel = 0)
 	. = istype(C) && (panel_open || ignore_panel)
 	if(.)
+		deconstruction()
 		playsound(src.loc, 'sound/items/Crowbar.ogg', 50, 1)
 		var/obj/machinery/constructable_frame/machine_frame/M = new /obj/machinery/constructable_frame/machine_frame(src.loc)
 		M.state = 2
@@ -414,11 +415,15 @@ Class Procs:
 /obj/machinery/proc/construction()
 	return
 
+//called on deconstruction before the final deletion
+/obj/machinery/proc/deconstruction()
+	return
+
 /obj/machinery/allow_drop()
 	return 0
 
 // Hook for html_interface module to prevent updates to clients who don't have this as their active machine.
-/obj/machinery/proc/hiIsValidClient(datum/html_interface_client/hclient)
+/obj/machinery/proc/hiIsValidClient(datum/html_interface_client/hclient, datum/html_interface/hi)
 	if (hclient.client.mob && hclient.client.mob.stat == 0)
 		if (isAI(hclient.client.mob)) return TRUE
 		else                          return hclient.client.mob.machine == src && src.Adjacent(hclient.client.mob)

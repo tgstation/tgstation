@@ -190,7 +190,7 @@ emp_act
 							apply_effect(20, PARALYZE, armor)
 						if(prob(I.force + min(100,100 - src.health)) && src != user && I.damtype == BRUTE)
 							ticker.mode.remove_revolutionary(mind)
-							ticker.mode.remove_gangster(mind, exclude_bosses=1)
+							ticker.mode.remove_gangster(mind)
 					if(bloody)	//Apply blood
 						if(wear_mask)
 							wear_mask.add_blood(src)

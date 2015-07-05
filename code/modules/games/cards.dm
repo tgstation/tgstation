@@ -104,7 +104,7 @@
 	H.update_icon()
 
 	source.visible_message("\The [source] deals a card to \the [target].")
-	H.throw_at(get_step(target, target.dir), 10, 1, H)
+	H.throw_at(get_step(target, target.dir), 10, 1, source)
 
 /* Hand */
 
@@ -248,5 +248,5 @@
 				src.toggle_conceal()
 
 // Hook for html_interface module to prevent updates to clients who don't have this in their inventory.
-/obj/item/weapon/hand/proc/hiIsValidClient(datum/html_interface_client/hclient)
+/obj/item/weapon/hand/proc/hiIsValidClient(datum/html_interface_client/hclient, datum/html_interface/hi)
 	return (hclient.client.mob && hclient.client.mob.stat == 0 && (src in hclient.client.mob.contents))

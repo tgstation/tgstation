@@ -169,6 +169,11 @@ var/next_external_rsc = 0
 
 	send_resources()
 
+	if(!void)
+		void = new()
+
+	screen += void
+
 	if(prefs.lastchangelog != changelog_hash) //bolds the changelog button on the interface so we know there are updates.
 		src << "<span class='info'>You have unread updates in the changelog.</span>"
 		if(config.aggressive_changelog)
@@ -279,6 +284,11 @@ var/next_external_rsc = 0
 		for (var/type in typesof(/datum/html_interface))
 			hi = new type(null)
 			hi.sendResources(src)
+
+	// Preload the crew monitor. This needs to be done due to BYOND bug http://www.byond.com/forum/?post=1487244
+	spawn
+		if (crewmonitor && crewmonitor.initialized)
+			crewmonitor.sendResources(src)
 
 	//Send nanoui files to client
 	SSnano.send_resources(src)
