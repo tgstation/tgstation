@@ -26,7 +26,7 @@
 
 	var/dat
 	if(!gang)
-		dat += "This device is not registered.<hr>"
+		dat += "This device is not registered.<br><br>"
 		if(user.mind in ticker.mode.get_gang_bosses())
 			if(promotable && user.mind.gang_datum.bosses.len < 3)
 				dat += "Give this device to another member of your organization to use to promote them to Lieutenant.<br><br>"
@@ -164,7 +164,7 @@
 			dat += "[gangtooltext]<br>"
 
 		if(!gang.dom_attempts)
-			dat += "(Out of stock) Station Dominator"
+			dat += "(Out of stock) Station Dominator<br>"
 		else
 			dat += "(30 Influence) "
 			if(points >= 30)
@@ -243,8 +243,10 @@
 			if("pen")
 				if((gang.points >= 50) || free_pen)
 					item_type = /obj/item/weapon/pen/gang
-					usr << "<span class='notice'>More <b>recruitmen pens</b> will allow you to recruit gangsters faster. Only gang leaders can recruit with pens.</span>"
-					if(!free_pen)
+					usr << "<span class='notice'>More <b>recruitment pens</b> will allow you to recruit gangsters faster. Only gang leaders can recruit with pens.</span>"
+					if(free_pen)
+						free_pen = 0
+					else
 						pointcost = 50
 			if("implant")
 				if(gang.points >= 10)
@@ -316,7 +318,9 @@
 	if(user.z > 2)
 		user << "<span class='info'>\icon[src]Error: Station out of range.</span>"
 		return
-	var/list/members = list(gang.gangsters + gang.bosses)
+	var/list/members = list()
+	members += gang.gangsters
+	members += gang.bosses
 	if(members.len)
 		var/ping = "<span class='danger'><B><i>[gang.name] [boss ? "Gang Boss" : "Lieutenant"]</i>: [message]</B></span>"
 		for(var/datum/mind/ganger in members)
@@ -328,13 +332,14 @@
 
 
 /obj/item/device/gangtool/proc/register_device(var/mob/user)
-	if((promotable && (user.mind in ticker.mode.get_all_gangsters())) || (user.mind in ticker.mode.get_gang_bosses()))
+	if((promotable && (user.mind in ticker.mode.get_gangsters())) || (user.mind in ticker.mode.get_gang_bosses()))
 		gang = user.mind.gang_datum
 		gang.gangtools += src
 		icon_state = "gangtool-[gang.color]"
 		if(!(user.mind in gang.bosses))
 			ticker.mode.remove_gangster(user.mind, 0, 2)
 			gang.bosses += user.mind
+			user.mind.gang_datum = gang
 			user.mind.special_role = "[gang.name] Gang Lieutenant"
 			gang.add_gang_hud(user.mind)
 			log_game("[key_name(user)] has been promoted to Lieutenant in the [gang.name] Gang")
