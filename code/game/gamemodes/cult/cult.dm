@@ -67,6 +67,7 @@
 	var/list/sacrificed = list()	//contains the mind of the sacrifice target ONCE the sacrifice objective has been completed
 	var/mass_convert = 0	//set to 1 if the convert objective has been accomplised once that round
 	var/spilled_blood = 0	//set to 1 if the bloodspill objective has been accomplised once that round
+	var/max_spilled_blood = 0	//highest quantity of blood covered tiles during the round
 	var/bonus = 0	//set to 1 if the cult has completed the bonus (third phase) objective (harvest, hijack, massacre)
 
 	var/harvest_target = 10
@@ -104,6 +105,7 @@
 	return (cult.len > 0)
 
 /datum/game_mode/cult/proc/blood_check()
+	max_spilled_blood = (max(bloody_floors.len,max_spilled_blood))
 	if((objectives[current_objective] == "bloodspill") && (bloody_floors.len >= spilltarget) && !spilled_blood)
 		spilled_blood = 1
 		additional_phase()
@@ -125,6 +127,7 @@
 		if("convert")
 			explanation = "We must increase our influence before we can summon Nar-Sie. Convert [convert_target] crew members. Take it slowly to avoid raising suspicions."
 		if("bloodspill")
+			spilltarget = 100 + rand(0,player_list.len * 3)
 			explanation = "We must prepare this place for the Geometer of Blood's coming. Spill blood and gibs over [spilltarget] floor tiles."
 		if("sacrifice")
 			explanation = "We need to sacrifice [sacrifice_target.name], the [sacrifice_target.assigned_role], for his blood is the key that will lead our master to this realm. You will need 3 cultists around a Sacrifice rune (Hell Blood Join) to perform the ritual."
@@ -167,10 +170,13 @@
 				new_objective = pick_objective()
 			else
 				message_admins("There are over twice more unconvertables than there are cultists ([cult.len] cultists for [unconvertables.len]) unconvertables! Nar-Sie objective unlocked.")
+				log_admin("There are over twice more unconvertables than there are cultists ([cult.len] cultists for [unconvertables.len]) unconvertables! Nar-Sie objective unlocked.")
 		else
 			message_admins("The Cult has already completed [prenarsie_objectives] objectives! Nar-Sie objective unlocked.")
+			log_admin("The Cult has already completed [prenarsie_objectives] objectives! Nar-Sie objective unlocked.")
 	else
 		message_admins("There are less than 4 cultists! Nar-Sie objective unlocked.")
+		log_admin("There are less than 4 cultists! Nar-Sie objective unlocked.")
 
 	if(!sacrificed.len && (new_objective != "sacrifice"))
 		sacrifice_target = null
@@ -187,6 +193,7 @@
 			if("convert")
 				explanation = "We must increase our influence before we can summon Nar-Sie. Convert [convert_target] crew members. Take it slowly to avoid raising suspicions."
 			if("bloodspill")
+				spilltarget = 100 + rand(0,player_list.len * 3)
 				explanation = "We must prepare this place for the Geometer of Blood's coming. Spread blood and gibs over [spilltarget] of the Station's floor tiles."
 			if("sacrifice")
 				explanation = "We need to sacrifice [sacrifice_target.name], the [sacrifice_target.assigned_role], for his blood is the key that will lead our master to this realm. You will need 3 cultists around a Sacrifice rune (Hell Blood Join) to perform the ritual."
@@ -195,6 +202,11 @@
 			cult_mind.current << "<span class='sinister'>You and your acolytes have completed your task, but this place requires yet more preparation!</span>"
 			cult_mind.current << "<B>Objective #[current_objective]</B>: [explanation]"
 			cult_mind.memory += "<B>Objective #[current_objective]</B>: [explanation]<BR>"
+
+		message_admins("New Cult Objective: [new_objective]")
+		log_admin("New Cult Objective: [new_objective]")
+
+		blood_check()//in case there are already enough blood covered tiles when the objective is given.
 
 /datum/game_mode/cult/proc/second_phase()
 	narsie_condition_cleared = 1
@@ -231,6 +243,9 @@
 		cult_mind.current << "<B>Objective #[current_objective]</B>: [explanation]"
 		cult_mind.memory += "<B>Objective #[current_objective]</B>: [explanation]<BR>"
 
+	message_admins("Last Cult Objective: [last_objective]")
+	log_admin("Last Cult Objective: [last_objective]")
+
 /datum/game_mode/cult/post_setup()
 	modePlayer += cult
 
@@ -262,6 +277,7 @@
 			possible_objectives |= "sacrifice"
 		else
 			message_admins("Didn't find a suitable sacrifice target...what the hell? Shout at Deity.")
+			log_admin("Didn't find a suitable sacrifice target...what the hell? Shout at Deity.")
 
 	if(!mass_convert)
 		var/living_crew = 0
@@ -279,14 +295,17 @@
 		if((living_cultists * 2) < total)
 			if (total < 15)
 				message_admins("There are [total] players, too little for the mass convert objective!")
+				log_admin("There are [total] players, too little for the mass convert objective!")
 			else if (total > 50)
 				message_admins("There are [total] players, too many for the mass convert objective!")
+				log_admin("There are [total] players, too many for the mass convert objective!")
 			else
 				possible_objectives |= "convert"
 				convert_target = round(total / 2)
 
 	if(!possible_objectives.len)//No more possible objectives, time to summon Nar-Sie
 		message_admins("No suitable objectives left! Nar-Sie objective unlocked.")
+		log_admin("No suitable objectives left! Nar-Sie objective unlocked.")
 		return "eldergod"
 	else
 		return pick(possible_objectives)
@@ -316,19 +335,18 @@
 /datum/game_mode/cult/proc/memoize_cult_objectives(var/datum/mind/cult_mind)
 	cult_mind.current << "The convert rune is Join Blood Self"
 	cult_mind.memory += "The convert rune is Join Blood Self<BR>"
-	for(var/obj_count = 1,obj_count <= objectives.len,obj_count++)
-		var/explanation
-		switch(objectives[obj_count])
-			if("convert")
-				explanation = "We must increase our influence before we can summon Nar-Sie. Convert [convert_target] crew members. Take it slowly to avoid raising suspicions."
-			if("bloodspill")
-				explanation = "We must prepare this place for the Geometer of Blood's coming. Spill blood and gibs over [spilltarget] floor tiles."
-			if("sacrifice")
-				explanation = "We need to sacrifice [sacrifice_target.name], the [sacrifice_target.assigned_role], for his blood is the key that will lead our master to this realm. You will need 3 cultists around a Sacrifice rune (Hell Blood Join) to perform the ritual."
-			if("eldergod")
-				explanation = "Summon Nar-Sie via the use of the Tear Reality rune (Hell Join Self). You will need 9 cultists standing on and around the rune to summon Him."
-		cult_mind.current << "<B>Objective #[obj_count]</B>: [explanation]"
-		cult_mind.memory += "<B>Objective #[obj_count]</B>: [explanation]<BR>"
+	var/explanation
+	switch(objectives[current_objective])
+		if("convert")
+			explanation = "We must increase our influence before we can summon Nar-Sie. Convert [convert_target] crew members. Take it slowly to avoid raising suspicions."
+		if("bloodspill")
+			explanation = "We must prepare this place for the Geometer of Blood's coming. Spill blood and gibs over [spilltarget] floor tiles."
+		if("sacrifice")
+			explanation = "We need to sacrifice [sacrifice_target.name], the [sacrifice_target.assigned_role], for his blood is the key that will lead our master to this realm. You will need 3 cultists around a Sacrifice rune (Hell Blood Join) to perform the ritual."
+		if("eldergod")
+			explanation = "Summon Nar-Sie via the use of the Tear Reality rune (Hell Join Self). You will need 9 cultists standing on and around the rune to summon Him."
+	cult_mind.current << "<B>Objective #[current_objective]</B>: [explanation]"
+	cult_mind.memory += "<B>Objective #[current_objective]</B>: [explanation]<BR>"
 
 
 /datum/game_mode/proc/equip_cultist(mob/living/carbon/human/mob)
@@ -534,10 +552,10 @@
 
 				if("bloodspill")//cover a large portion of the station in blood
 					if(obj_count < objectives.len)
-						explanation = "Cover [spilltarget] tiles of the station in blood ([bloody_floors.len] tiles covered at round end). <font color='green'><B>Success!</B></font>"
+						explanation = "Cover [spilltarget] tiles of the station in blood (The peak number of covered tiles was: [max_spilled_blood]). <font color='green'><B>Success!</B></font>"
 						feedback_add_details("cult_objective","cult_bloodspill|SUCCESS")
 					else
-						explanation = "Cover [spilltarget] tiles of the station in blood ([bloody_floors.len] tiles covered). <font color='red'><B>Fail!</B></font>"
+						explanation = "Cover [spilltarget] tiles of the station in blood (The peak number of covered tiles was: [max_spilled_blood]). <font color='red'><B>Fail!</B></font>"
 						feedback_add_details("cult_objective","cult_bloodspill|FAIL")
 
 				if("sacrifice")//sacrifice a high value target

@@ -32,10 +32,9 @@ var/global/list/blood_list = list()
 	if(ticker.mode && ticker.mode.name == "cult")
 		var/datum/game_mode/cult/mode_ticker = ticker.mode
 		var/turf/T = get_turf(src)
-		if(T)
-			if(locate(T) in mode_ticker.bloody_floors)
-				mode_ticker.bloody_floors -= T
-				mode_ticker.blood_check()
+		if(T && (T.z == map.zMainStation))
+			mode_ticker.bloody_floors -= T
+			mode_ticker.blood_check()
 	..()
 
 /obj/effect/decal/cleanable/blood/resetVariables()
@@ -52,14 +51,12 @@ var/global/list/blood_list = list()
 
 	if(ticker && ticker.mode && ticker.mode.name == "cult")
 		var/datum/game_mode/cult/mode_ticker = ticker.mode
-		if((mode_ticker.objectives[mode_ticker.current_objective] == "bloodspill") && !mode_ticker.narsie_condition_cleared)
-			var/turf/T = get_turf(src)
-			if(T && (T.z == map.zMainStation))//F I V E   T I L E S
-				if(locate("\ref[T]") in mode_ticker.bloody_floors)
-				else
-					mode_ticker.bloody_floors += T
-					mode_ticker.bloody_floors[T] = T
-					mode_ticker.blood_check()
+		var/turf/T = get_turf(src)
+		if(T && (T.z == map.zMainStation))//F I V E   T I L E S
+			if(!(locate("\ref[T]") in mode_ticker.bloody_floors))
+				mode_ticker.bloody_floors += T
+				mode_ticker.bloody_floors[T] = T
+				mode_ticker.blood_check()
 
 	if(istype(src, /obj/effect/decal/cleanable/blood/gibs))
 		return

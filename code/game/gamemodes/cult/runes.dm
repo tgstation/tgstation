@@ -196,6 +196,12 @@
 			M << "<span class='sinister'>You can now speak and understand the forgotten tongue of the occult.</span>"
 			M.add_language("Cult")
 			log_admin("[usr]([ckey(usr.key)]) has converted [M] ([ckey(M.key)]) to the cult at [M.loc.x], [M.loc.y], [M.loc.z]")
+			if(M.client)
+				src = null
+				sleep(100)//10 seconds sounds good
+				if(M && !M.client)
+					message_admins("[M] ([ckey(M.key)]) ghosted/disconnected shortly after having been converted to the cult!")
+					log_admin("[M]([ckey(M.key)]) ghosted/disconnected shortly after having been converted to the cult!")
 			return 1
 		else
 			M << "<span class='sinister'>Your blood pulses. Your head throbs. The world goes red. All at once you are aware of a horrible, horrible truth. The veil of reality has been ripped away and in the festering wound left behind something sinister takes root.</span>"
@@ -994,8 +1000,34 @@
 	for(var/mob/living/C in orange(1,src))
 		if(iscultist(C) && !C.stat)
 			users+=C
+
+	var/list/possible_targets = list()
+	for(var/mob/living/carbon/cultistarget in (cultists - users))
+		if (cultistarget.handcuffed)
+			possible_targets += cultistarget
+		else if (cultistarget.legcuffed)
+			possible_targets += cultistarget
+		else if (istype(cultistarget.wear_mask, /obj/item/clothing/mask/muzzle))
+			possible_targets += cultistarget
+		else if (istype(cultistarget.loc, /obj/structure/closet))
+			var/obj/structure/closet/closet = cultistarget.loc
+			if(closet.welded)
+				possible_targets += cultistarget
+		else if (istype(cultistarget.loc, /obj/structure/closet/secure_closet))
+			var/obj/structure/closet/secure_closet/secure_closet = cultistarget.loc
+			if (secure_closet.locked)
+				possible_targets += cultistarget
+		else if (istype(cultistarget.loc, /obj/machinery/dna_scannernew))
+			var/obj/machinery/dna_scannernew/dna_scannernew = cultistarget.loc
+			if (dna_scannernew.locked)
+				possible_targets += cultistarget
+
+	if(!possible_targets.len)
+		user << "<span class='warning'>None of the cultists are currently under restraints.</span>"
+		return fizzle()
+
 	if(users.len>=3)
-		var/mob/living/carbon/cultist = input("Choose the one who you want to free", "Followers of Geometer") as null|anything in (cultists - users)
+		var/mob/living/carbon/cultist = input("Choose the one who you want to free", "Followers of Geometer") as null|anything in possible_targets
 		if(!cultist)
 			return fizzle()
 		if (cultist == user) //just to be sure.
@@ -1020,16 +1052,31 @@
 			cultist.update_inv_legcuffed()
 		if (istype(cultist.wear_mask, /obj/item/clothing/mask/muzzle))
 			cultist.u_equip(cultist.wear_mask, 1)
-		if(istype(cultist.loc, /obj/structure/closet)&&cultist.loc:welded)
-			cultist.loc:welded = 0
-		if(istype(cultist.loc, /obj/structure/closet/secure_closet)&&cultist.loc:locked)
-			cultist.loc:locked = 0
-		if(istype(cultist.loc, /obj/machinery/dna_scannernew)&&cultist.loc:locked)
-			cultist.loc:locked = 0
+		if(istype(cultist.loc, /obj/structure/closet))
+			var/obj/structure/closet/closet = cultist.loc
+			if(closet.welded)
+				closet.welded = 0
+		if(istype(cultist.loc, /obj/structure/closet/secure_closet))
+			var/obj/structure/closet/secure_closet/secure_closet = cultist.loc
+			if (secure_closet.locked)
+				secure_closet.locked = 0
+		if(istype(cultist.loc, /obj/machinery/dna_scannernew))
+			var/obj/machinery/dna_scannernew/dna_scannernew = cultist.loc
+			if (dna_scannernew.locked)
+				dna_scannernew.locked = 0
 		for(var/mob/living/carbon/C in users)
 			user.take_overall_damage(10, 0)
 			C.say("Khari[pick("'","`")]d! Gual'te nikka!")
+		cultist << "<span class='warning'>You feel a tingle as you find yourself freed from your restraints.</span>"
 		qdel(src)
+	else
+		var/text = "<span class='sinister'>The following cultists are currently under restraints:</span>"
+		for(var/mob/living/carbon/cultist in possible_targets)
+			text += "<br><b>[cultist]</b>"
+		user << text
+		user.say("Khari[pick("'","`")]d!")
+		return
+
 	return fizzle()
 
 /////////////////////////////////////////NINETEENTH RUNE
@@ -1063,10 +1110,24 @@
 			if(iscultist(C) && !C.stat)
 				C.say("N'ath reth sh'yro eth d[pick("'","`")]rekkathnor!")
 				C.take_overall_damage(15, 0)
+				if(C != cultist)
+					C << "<span class='warning'>Your body take its toll as you drag your fellow cultist through dimensions.</span>"
+				else
+					C << "<span class='warning'>You feel a sharp pain as your body gets dragged through dimensions.</span>"
 		user.visible_message("<span class='warning'>The rune disappears with a flash of red light, and in its place now a body lies.</span>", \
 		"<span class='warning'>You are blinded by the flash of red light! After you're able to see again, you see that now instead of the rune there's a body.</span>", \
 		"<span class='warning'>You hear a pop and smell ozone.</span>")
 		qdel(src)
+	else
+		var/text = "<span class='sinister'>The following individuals are living and conscious followers of the Geometer of Blood:</span>"
+		for(var/mob/living/L in player_list)
+			if(L.stat != DEAD)
+				if(L.mind in ticker.mode.cult)
+					text += "<br><b>[L]</b>"
+		user << text
+		user.say("N'ath reth!")
+		return
+
 	return fizzle()
 
 /////////////////////////////////////////TWENTIETH RUNES

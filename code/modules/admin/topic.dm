@@ -1624,6 +1624,7 @@
 		var/datum/game_mode/cult/mode_ticker = ticker.mode
 		mode_ticker.bypass_phase()
 		message_admins("Admin [key_name_admin(usr)] has unlocked the Cult's next objective.")
+		log_admin("Admin [key_name_admin(usr)] has unlocked the Cult's next objective.")
 		check_antagonists()
 
 	else if(href_list["cult_mindspeak"])
