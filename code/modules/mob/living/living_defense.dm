@@ -1,5 +1,14 @@
-/mob/living/proc/run_armor_check(def_zone = null, attack_flag = "melee", absorb_text = null, soften_text = null)
+/mob/living/proc/run_armor_check(def_zone = null, attack_flag = "melee", absorb_text = null, soften_text = null, var/armour_penetration, var/penetrated_text)
 	var/armor = getarmor(def_zone, attack_flag)
+
+	//the if "armor" check is because this is used for everything on /living, including humans
+	if(armor && armour_penetration)
+		armor = max(0, armor - armour_penetration)
+		if(penetrated_text)
+			src << "<span class='userdanger'>[penetrated_text]</span>"
+		else
+			src << "<span class='userdanger'>Your armor was penetrated!</span>"
+
 	if(armor >= 100)
 		if(absorb_text)
 			src << "<span class='userdanger'>[absorb_text]</span>"
@@ -20,12 +29,12 @@
 	return
 
 /mob/living/bullet_act(obj/item/projectile/P, def_zone)
-	var/armor = run_armor_check(def_zone, P.flag)
+	var/armor = run_armor_check(def_zone, P.flag, "","",P.armour_penetration)
 	if(!P.nodamage)
 		apply_damage(P.damage, P.damage_type, def_zone, armor)
 	return P.on_hit(src, armor, def_zone)
 
-proc/vol_by_throwforce_and_or_w_class(var/obj/item/I)
+/proc/vol_by_throwforce_and_or_w_class(var/obj/item/I)
 		if(!I)
 				return 0
 		if(I.throwforce && I.w_class)
@@ -35,7 +44,7 @@ proc/vol_by_throwforce_and_or_w_class(var/obj/item/I)
 		else
 				return 0
 
-/mob/living/hitby(atom/movable/AM)//Standardization and logging -Sieve
+/mob/living/hitby(atom/movable/AM,mob/thrower)//Standardization and logging -Sieve
 	if(istype(AM, /obj/item))
 		var/obj/item/I = AM
 		var/zone = ran_zone("chest", 65)//Hits a random part of the body, geared towards the chest
@@ -60,14 +69,11 @@ proc/vol_by_throwforce_and_or_w_class(var/obj/item/I)
 
 		visible_message("<span class='danger'>[src] has been hit by [I].</span>", \
 						"<span class='userdanger'>[src] has been hit by [I].</span>")
-		var/armor = run_armor_check(zone, "melee", "Your armor has protected your [parse_zone(zone)].", "Your armor has softened hit to your [parse_zone(zone)].")
+		var/armor = run_armor_check(zone, "melee", "Your armor has protected your [parse_zone(zone)].", "Your armor has softened hit to your [parse_zone(zone)].",I.armour_penetration)
 		apply_damage(I.throwforce, dtype, zone, armor, I)
-		if(!I.fingerprintslast)
-			return
-		var/client/assailant = directory[ckey(I.fingerprintslast)]
-		if(assailant && assailant.mob && istype(assailant.mob,/mob))
-			var/mob/M = assailant.mob
-			add_logs(M, src, "hit", object="[I]")
+
+		if(thrower)
+			add_logs(thrower, src, "hit", object="[I]")
 
 /mob/living/mech_melee_attack(obj/mecha/M)
 	if(M.occupant.a_intent == "harm")
@@ -219,7 +225,7 @@ proc/vol_by_throwforce_and_or_w_class(var/obj/item/I)
 		return 0
 
 	if (M.a_intent == "harm")
-		if(M.is_muzzled() || (M.wear_mask && M.wear_mask.flags & MASKCOVERSMOUTH))
+		if(M.is_muzzled() || (M.wear_mask && M.wear_mask.flags_cover & MASKCOVERSMOUTH))
 			M << "<span class='warning'>You can't bite with your mouth covered!</span>"
 			return 0
 		M.do_attack_animation(src)

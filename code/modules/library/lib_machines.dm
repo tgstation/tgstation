@@ -16,8 +16,9 @@
  */
 /obj/machinery/computer/libraryconsole
 	name = "library visitor console"
-	icon = 'icons/obj/computer.dmi'
-	icon_state = "library"
+	icon_state = "oldcomp"
+	icon_screen = "library"
+	icon_keyboard = null
 	circuit = /obj/item/weapon/circuitboard/libraryconsole
 	var/screenstate = 0
 	var/title
@@ -112,7 +113,7 @@
 /*
  * Borrowbook datum
  */
-datum/borrowbook // Datum used to keep track of who has borrowed what when and for how long.
+/datum/borrowbook // Datum used to keep track of who has borrowed what when and for how long.
 	var/bookname
 	var/mobname
 	var/getdate
@@ -121,7 +122,7 @@ datum/borrowbook // Datum used to keep track of who has borrowed what when and f
 /*
  * Cachedbook datum
  */
-datum/cachedbook // Datum used to cache the SQL DB books locally in order to achieve a performance gain.
+/datum/cachedbook // Datum used to cache the SQL DB books locally in order to achieve a performance gain.
 	var/id
 	var/title
 	var/author
@@ -446,7 +447,8 @@ var/global/list/datum/cachedbook/cachedbooks // List of our cached book datums
 
 /obj/machinery/libraryscanner/attackby(var/obj/O as obj, var/mob/user as mob, params)
 	if(istype(O, /obj/item/weapon/book))
-		user.drop_item()
+		if(!user.drop_item())
+			return
 		O.loc = src
 
 /obj/machinery/libraryscanner/attack_hand(var/mob/user as mob)
@@ -504,7 +506,8 @@ var/global/list/datum/cachedbook/cachedbooks // List of our cached book datums
 		if(busy)
 			user << "<span class='warning'>The book binder is busy. Please wait for completion of previous operation.</span>"
 			return
-		user.drop_item()
+		if(!user.drop_item())
+			return
 		O.loc = src
 		user.visible_message("[user] loads some paper into [src].", "You load some paper into [src].")
 		src.visible_message("[src] begins to hum as it warms up its printing drums.")

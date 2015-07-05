@@ -17,6 +17,7 @@ LINEN BINS
 	throw_range = 2
 	w_class = 1.0
 	item_color = "white"
+	burn_state = 0 //Burnable
 
 
 /obj/item/weapon/bedsheet/attack(mob/living/M, mob/user)
@@ -170,6 +171,8 @@ LINEN BINS
 	icon = 'icons/obj/structures.dmi'
 	icon_state = "linenbin-full"
 	anchored = 1
+	burn_state = 0 //Burnable
+	burntime = 20
 	var/amount = 10
 	var/list/sheets = list()
 	var/obj/item/hidden = null
@@ -191,10 +194,21 @@ LINEN BINS
 		if(1 to 5)	icon_state = "linenbin-half"
 		else		icon_state = "linenbin-full"
 
+/obj/structure/bedsheetbin/fire_act()
+	if(!amount)
+		return
+	..()
+
+/obj/structure/bedsheetbin/burn()
+	amount = 0
+	extinguish()
+	update_icon()
+	return
 
 /obj/structure/bedsheetbin/attackby(obj/item/I as obj, mob/user as mob, params)
 	if(istype(I, /obj/item/weapon/bedsheet))
-		user.drop_item()
+		if(!user.drop_item())
+			return
 		I.loc = src
 		sheets.Add(I)
 		amount++

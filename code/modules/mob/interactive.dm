@@ -114,7 +114,8 @@
 /mob/living/carbon/human/interactive/bullet_act(var/obj/item/projectile/P)
 	var/potentialAssault = locate(/mob/living) in view(2,P.starting)
 	if(potentialAssault)
-		attacked_by(P,potentialAssault)
+		retal = 1
+		retal_target = potentialAssault
 	..()
 
 /mob/living/carbon/human/interactive/New()
@@ -286,7 +287,7 @@
 	else
 		unEquip(I,TRUE)
 	update_hands = 1
-	
+
 /mob/living/carbon/human/interactive/proc/targetRange(var/towhere)
 	return get_dist(get_turf(towhere), get_turf(src))
 
@@ -473,7 +474,7 @@
 /mob/living/carbon/human/interactive/proc/target_filter(var/target)
 	var/list/L = target
 	for(var/atom/A in target)
-		if(istype(A,/area) || istype(A,/turf/unsimulated) || istype(A,/turf/space))
+		if(istype(A,/area) || istype(A,/turf/space))
 			L -= A
 	return L
 

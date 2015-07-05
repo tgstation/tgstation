@@ -21,6 +21,10 @@
 	// replaced by OPENCONTAINER flags and atom/proc/is_open_container()
 	///Chemistry.
 	var/allow_spin = 1
+
+	//Value used to increment ex_act() if reactionary_explosions is on
+	var/explosion_block = 0
+
 /atom/proc/onCentcom()
 	var/turf/T = get_turf(src)
 	if(!T)
@@ -38,10 +42,23 @@
 	//finally check for centcom itself
 	return istype(T.loc,/area/centcom)
 
-/atom/proc/throw_impact(atom/hit_atom)
+/atom/proc/onSyndieBase()
+	var/turf/T = get_turf(src)
+	if(!T)
+		return 0
+
+	if(T.z != ZLEVEL_CENTCOM)//if not, don't bother
+		return 0
+
+	if(istype(T.loc,/area/shuttle/syndicate) || istype(T.loc,/area/syndicate_mothership))
+		return 1
+
+	return 0
+
+/atom/proc/throw_impact(atom/hit_atom,mob/thrower)
 	if(istype(hit_atom,/mob/living))
 		var/mob/living/M = hit_atom
-		M.hitby(src)
+		M.hitby(src,thrower)
 
 	else if(isobj(hit_atom))
 		var/obj/O = hit_atom
@@ -432,3 +449,6 @@ var/list/blood_splatter_icons = list()
 
 /atom/proc/narsie_act()
 	return
+
+/atom/proc/storage_contents_dump_act(obj/item/weapon/storage/src_object, mob/user)
+    return 0

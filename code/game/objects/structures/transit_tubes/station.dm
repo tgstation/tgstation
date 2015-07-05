@@ -4,7 +4,7 @@
 //  one.
 /obj/structure/transit_tube/station
 	name = "station tube station"
-	icon = 'icons/obj/pipes/transit_tube_station.dmi'
+	icon = 'icons/obj/atmospherics/pipes/transit_tube_station.dmi'
 	icon_state = "closed"
 	exit_delay = 1
 	enter_delay = 2
@@ -68,7 +68,7 @@
 				else if(icon_state == "open")
 					if(pod.contents.len && user.loc != pod)
 						user.visible_message("[user] starts emptying [pod]'s contents onto the floor.", "<span class='notice'>You start emptying [pod]'s contents onto the floor...</span>")
-						if(do_after(user, 10)) //So it doesn't default to close_animation() on fail
+						if(do_after(user, 10, target = src)) //So it doesn't default to close_animation() on fail
 							if(pod.loc == loc)
 								for(var/atom/movable/AM in pod)
 									AM.loc = get_turf(user)
@@ -88,7 +88,7 @@
 			var/mob/GM = G.affecting
 			for(var/obj/structure/transit_tube_pod/pod in loc)
 				pod.visible_message("<span class='warning'>[user] starts putting [GM] into the [pod]!</span>")
-				if(do_after(user, 15) && GM && G && G.affecting == GM)
+				if(do_after(user, 15, target = src) && GM && G && G.affecting == GM)
 					GM.Weaken(5)
 					src.Bumped(GM)
 					qdel(G)

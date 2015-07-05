@@ -38,9 +38,10 @@
 /mob/living/carbon/relaymove(var/mob/user, direction)
 	if(user in src.stomach_contents)
 		if(prob(40))
-			audible_message("<span class='warning'>You hear something rumbling inside [src]'s stomach...</span>", \
-						 "<span class='warning'>You hear something rumbling.</span>", 4,\
-						  "<span class='userdanger'>Something is rumbling inside your stomach!</span>")
+			if(prob(25))
+				audible_message("<span class='warning'>You hear something rumbling inside [src]'s stomach...</span>", \
+							 "<span class='warning'>You hear something rumbling.</span>", 4,\
+							  "<span class='userdanger'>Something is rumbling inside your stomach!</span>")
 			var/obj/item/I = user.get_active_hand()
 			if(I && I.force)
 				var/d = rand(round(I.force / 4), I.force)
@@ -251,7 +252,7 @@
 
 	if(istype(item, /obj/item/weapon/grab))
 		var/obj/item/weapon/grab/G = item
-		item = G.throw() //throw the person instead of the grab
+		item = G.get_mob_if_throwable() //throw the person instead of the grab
 		qdel(G)			//We delete the grab, as it needs to stay around until it's returned.
 		if(ismob(item))
 			var/turf/start_T = get_turf(loc) //Get the start and target tile for the descriptors
@@ -277,7 +278,7 @@
 
 		newtonian_move(get_dir(target, src))
 
-		item.throw_at(target, item.throw_range, item.throw_speed)
+		item.throw_at(target, item.throw_range, item.throw_speed, src)
 
 /mob/living/carbon/can_use_hands()
 	if(handcuffed)
@@ -306,7 +307,7 @@
 	<BR><B>Left Hand:</B> <A href='?src=\ref[src];item=[slot_l_hand]'>		[(l_hand && !(l_hand.flags&ABSTRACT))		? l_hand	: "Nothing"]</A>
 	<BR><B>Right Hand:</B> <A href='?src=\ref[src];item=[slot_r_hand]'>		[(r_hand && !(r_hand.flags&ABSTRACT))		? r_hand	: "Nothing"]</A>"}
 
-	dat += "<BR><B>Back:</B> <A href='?src=\ref[src];item=[slot_back]'> [back ? back : "Nothing"]</A>"
+	dat += "<BR><B>Back:</B> <A href='?src=\ref[src];item=[slot_back]'>[back ? back : "Nothing"]</A>"
 
 	if(istype(wear_mask, /obj/item/clothing/mask) && istype(back, /obj/item/weapon/tank))
 		dat += "<BR><A href='?src=\ref[src];internal=1'>[internal ? "Disable Internals" : "Set Internals"]</A>"
@@ -402,12 +403,12 @@ var/const/GALOSHES_DONT_HELP = 8
 	return
 
 /mob/living/carbon/resist_buckle()
-	if(handcuffed)
+	if(restrained())
 		changeNext_move(CLICK_CD_BREAKOUT)
 		last_special = world.time + CLICK_CD_BREAKOUT
 		visible_message("<span class='warning'>[src] attempts to unbuckle themself!</span>", \
 					"<span class='notice'>You attempt to unbuckle yourself... (This will take around one minute and you need to stay still.)</span>")
-		if(do_after(src, 600, needhand = 0))
+		if(do_after(src, 600, needhand = 0, target = src))
 			if(!buckled)
 				return
 			buckled.user_unbuckle_mob(src,src)
@@ -450,7 +451,7 @@ var/const/GALOSHES_DONT_HELP = 8
 	if(!cuff_break)
 		visible_message("<span class='warning'>[src] attempts to remove [I]!</span>")
 		src << "<span class='notice'>You attempt to remove [I]... (This will take around [displaytime] minutes and you need to stand still.)</span>"
-		if(do_after(src, breakouttime, 10, 0))
+		if(do_after(src, breakouttime, 10, 0, target = src))
 			if(I.loc != src || buckled)
 				return
 			visible_message("<span class='danger'>[src] manages to remove [I]!</span>")
@@ -466,6 +467,7 @@ var/const/GALOSHES_DONT_HELP = 8
 				return
 			if(legcuffed)
 				legcuffed.loc = loc
+				legcuffed.dropped()
 				legcuffed = null
 				update_inv_legcuffed(0)
 		else
@@ -475,7 +477,7 @@ var/const/GALOSHES_DONT_HELP = 8
 		breakouttime = 50
 		visible_message("<span class='warning'>[src] is trying to break [I]!</span>")
 		src << "<span class='notice'>You attempt to break [I]... (This will take around 5 seconds and you need to stand still.)</span>"
-		if(do_after(src, breakouttime, needhand = 0))
+		if(do_after(src, breakouttime, needhand = 0, target = src))
 			if(!I.loc || buckled)
 				return
 			visible_message("<span class='danger'>[src] manages to break [I]!</span>")
@@ -492,8 +494,34 @@ var/const/GALOSHES_DONT_HELP = 8
 		else
 			src << "<span class='warning'>You fail to break [I]!</span>"
 
+/mob/living/carbon/proc/uncuff()
+	if (handcuffed)
+		var/obj/item/weapon/W = handcuffed
+		handcuffed = null
+		if (buckled && buckled.buckle_requires_restraints)
+			buckled.unbuckle_mob()
+		update_inv_handcuffed(0)
+		if (client)
+			client.screen -= W
+		if (W)
+			W.loc = loc
+			W.dropped(src)
+			if (W)
+				W.layer = initial(W.layer)
+	if (legcuffed)
+		var/obj/item/weapon/W = legcuffed
+		legcuffed = null
+		update_inv_legcuffed(0)
+		if (client)
+			client.screen -= W
+		if (W)
+			W.loc = loc
+			W.dropped(src)
+			if (W)
+				W.layer = initial(W.layer)
+
 /mob/living/carbon/proc/is_mouth_covered(head_only = 0, mask_only = 0)
-	if( (!mask_only && head && (head.flags & HEADCOVERSMOUTH)) || (!head_only && wear_mask && (wear_mask.flags & MASKCOVERSMOUTH)) )
+	if( (!mask_only && head && (head.flags_cover & HEADCOVERSMOUTH)) || (!head_only && wear_mask && (wear_mask.flags_cover & MASKCOVERSMOUTH)) )
 		return 1
 
 /mob/living/carbon/get_standard_pixel_y_offset(lying = 0)
@@ -505,3 +533,31 @@ var/const/GALOSHES_DONT_HELP = 8
 /mob/living/carbon/check_ear_prot()
 	if(head && (head.flags & HEADBANGPROTECT))
 		return 1
+
+/mob/living/carbon/proc/accident(var/obj/item/I)
+	if(!I || (I.flags & NODROP))
+		return
+
+	unEquip(I)
+
+	var/modifier = 0
+	if(disabilities & CLUMSY)
+		modifier -= 40 //Clumsy people are more likely to hit themselves -Honk!
+
+	switch(rand(1,100)+modifier) //91-100=Nothing special happens
+		if(-INFINITY to 0) //attack yourself
+			I.attack(src,src)
+		if(1 to 30) //throw it at yourself
+			I.throw_impact(src)
+		if(31 to 60) //Throw object in facing direction
+			var/turf/target = get_turf(loc)
+			var/range = rand(2,I.throw_range)
+			for(var/i = 1; i < range; i++)
+				var/turf/new_turf = get_step(target, dir)
+				target = new_turf
+				if(new_turf.density)
+					break
+			I.throw_at(target,I.throw_range,I.throw_speed,src)
+		if(61 to 90) //throw it down to the floor
+			var/turf/target = get_turf(loc)
+			I.throw_at(target,I.throw_range,I.throw_speed,src)

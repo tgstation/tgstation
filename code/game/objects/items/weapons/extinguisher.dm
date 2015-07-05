@@ -11,7 +11,7 @@
 	throw_speed = 2
 	throw_range = 7
 	force = 10
-	m_amt = 90
+	materials = list(MAT_METAL=90)
 	attack_verb = list("slammed", "whacked", "bashed", "thunked", "battered", "bludgeoned", "thrashed")
 	var/max_water = 50
 	var/last_use = 1.0
@@ -31,7 +31,7 @@
 	throwforce = 2
 	w_class = 2.0
 	force = 3.0
-	m_amt = 0
+	materials = list()
 	max_water = 30
 	sprite_name = "miniFE"
 
@@ -151,6 +151,9 @@
 						if(isliving(atm)) //For extinguishing mobs on fire
 							var/mob/living/M = atm
 							M.ExtinguishMob()
+						if(istype(atm,/obj/item))
+							var/obj/item/Item = atm
+							Item.extinguish()
 					if(W.loc == my_target) break
 					sleep(2)
 

@@ -81,10 +81,8 @@
 /obj/machinery/computer/mech_bay_power_console
 	name = "mech bay power control console"
 	desc = "Used to control mechbay power ports."
-	density = 1
-	anchored = 1
-	icon = 'icons/obj/computer.dmi'
-	icon_state = "recharge_comp"
+	icon_screen = "recharge_comp"
+	icon_keyboard = "rd_key"
 	circuit = /obj/item/weapon/circuitboard/mech_bay_power_console
 	var/obj/machinery/mech_bay_recharge_port/recharge_port
 
@@ -147,16 +145,10 @@
 
 
 /obj/machinery/computer/mech_bay_power_console/update_icon()
-	if(stat & NOPOWER)
-		icon_state = "recharge_comp0"
+	..()
+	if(!recharge_port || !recharge_port.recharging_mech || !recharge_port.recharging_mech.cell || !(recharge_port.recharging_mech.cell.charge < recharge_port.recharging_mech.cell.maxcharge) || stat & (NOPOWER|BROKEN))
 		return
-	if(stat & BROKEN)
-		icon_state = "recharge_compb"
-		return
-	if(!recharge_port || !recharge_port.recharging_mech || !recharge_port.recharging_mech.cell || !(recharge_port.recharging_mech.cell.charge < recharge_port.recharging_mech.cell.maxcharge))
-		icon_state = "recharge_comp"
-		return
-	icon_state = "recharge_comp_on"
+	overlays += "recharge_comp_on"
 
 /obj/machinery/computer/mech_bay_power_console/initialize()
 	reconnect()

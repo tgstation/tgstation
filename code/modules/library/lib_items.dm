@@ -17,6 +17,8 @@
 	anchored = 0
 	density = 1
 	opacity = 0
+	burn_state = 0 //Burnable
+	burntime = 30
 	var/state = 0
 	var/list/allowed_books = list(/obj/item/weapon/book, /obj/item/weapon/spellbook, /obj/item/weapon/storage/book) //Things allowed in the bookcase
 
@@ -36,13 +38,13 @@
 		if(0)
 			if(istype(I, /obj/item/weapon/wrench))
 				playsound(loc, 'sound/items/Ratchet.ogg', 100, 1)
-				if(do_after(user, 20))
+				if(do_after(user, 20, target = src))
 					user << "<span class='notice'>You wrench the frame into place.</span>"
 					anchored = 1
 					state = 1
 			if(istype(I, /obj/item/weapon/crowbar))
 				playsound(loc, 'sound/items/Crowbar.ogg', 100, 1)
-				if(do_after(user, 20))
+				if(do_after(user, 20, target = src))
 					user << "<span class='notice'>You pry the frame apart.</span>"
 					new /obj/item/stack/sheet/mineral/wood(loc, 4)
 					qdel(src)
@@ -63,7 +65,8 @@
 
 		if(2)
 			if(is_type_in_list(I, allowed_books))
-				user.drop_item()
+				if(!user.drop_item())
+					return
 				I.loc = src
 				update_icon()
 			else if(istype(I, /obj/item/weapon/storage/bag/books))
@@ -164,6 +167,7 @@
 	throw_range = 5
 	w_class = 3		 //upped to three because books are, y'know, pretty big. (and you could hide them inside eachother recursively forever)
 	attack_verb = list("bashed", "whacked", "educated")
+	burn_state = 0 //Burnable
 	var/dat				//Actual page content
 	var/due_date = 0	//Game time in 1/10th seconds
 	var/author			//Who wrote the thing, can be changed by pen or PC. It is not automatically assigned
@@ -252,7 +256,7 @@
 
 	else if(istype(I, /obj/item/weapon/kitchen/knife) || istype(I, /obj/item/weapon/wirecutters))
 		user << "<span class='notice'>You begin to carve out [title]...</span>"
-		if(do_after(user, 30))
+		if(do_after(user, 30, target = src))
 			user << "<span class='notice'>You carve out the pages from [title]! You didn't want to read it anyway.</span>"
 			var/obj/item/weapon/storage/book/B = new
 			B.name = src.name

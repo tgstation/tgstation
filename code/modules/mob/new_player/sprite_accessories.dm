@@ -41,6 +41,9 @@
 	var/icon_state		//the icon_state of the accessory
 	var/name			//the preview name of the accessory
 	var/gender = NEUTER	//Determines if the accessory will be skipped or included in random hair generations
+	var/gender_specific //Something that can be worn by either gender, but looks different on each
+	var/color_src = MUTCOLORS	//Currently only used by mutantparts so don't worry about hair and stuff. This is the source that this accessory will get its color from. Default is MUTCOLOR, but can also be HAIR, FACEHAIR, EYECOLOR and 0 if none.
+	var/hasinner		//Decides if this sprite has an "inner" part, such as the fleshy parts on ears.
 
 //////////////////////
 // Hair Definitions //
@@ -618,6 +621,21 @@
 	icon_state = "male_stripe"
 	gender = MALE
 
+/datum/sprite_accessory/underwear/male_commie
+	name = "Mens Striped Commie Boxer"
+	icon_state = "male_commie"
+	gender = MALE
+
+/datum/sprite_accessory/underwear/male_uk
+	name = "Mens Striped UK Boxer"
+	icon_state = "male_uk"
+	gender = MALE
+
+/datum/sprite_accessory/underwear/male_usastripe
+	name = "Mens Striped Freedom Boxer"
+	icon_state = "male_assblastusa"
+	gender = MALE
+
 /datum/sprite_accessory/underwear/male_kinky
 	name = "Mens Kinky"
 	icon_state = "male_kinky"
@@ -752,6 +770,11 @@
 /datum/sprite_accessory/undershirt/uk
 	name = "UK Shirt"
 	icon_state = "uk"
+	gender = NEUTER
+
+/datum/sprite_accessory/undershirt/usa
+	name = "USA Shirt"
+	icon_state = "shirt_assblastusa"
 	gender = NEUTER
 
 /datum/sprite_accessory/undershirt/ilovent
@@ -1042,7 +1065,294 @@
 	icon_state = "rainbow_thigh"
 	gender = NEUTER
 
+/datum/sprite_accessory/socks/usa_knee
+	name = "Knee-High Freedom Stripes"
+	icon_state = "assblastusa_knee"
+	gender = NEUTER
+
+/datum/sprite_accessory/socks/usa_thigh
+	name = "Thigh-high Freedom Stripes"
+	icon_state = "assblastusa_thigh"
+	gender = NEUTER
+
+/datum/sprite_accessory/socks/uk_knee
+	name = "Knee-High UK Stripes"
+	icon_state = "uk_knee"
+	gender = NEUTER
+
+/datum/sprite_accessory/socks/uk_thigh
+	name = "Thigh-high UK Stripes"
+	icon_state = "uk_thigh"
+	gender = NEUTER
+
+/datum/sprite_accessory/socks/commie_knee
+	name = "Knee-High Commie Stripes"
+	icon_state = "commie_knee"
+	gender = NEUTER
+
+/datum/sprite_accessory/socks/commie_thigh
+	name = "Thigh-high Commie Stripes"
+	icon_state = "commie_thigh"
+	gender = NEUTER
+
 /datum/sprite_accessory/socks/pantyhose
 	name = "Pantyhose"
 	icon_state = "pantyhose"
 	gender = FEMALE
+
+//////////.//////////////////
+// MutantParts Definitions //
+/////////////////////////////
+
+/datum/sprite_accessory/body_markings
+	icon = 'icons/mob/mutant_bodyparts.dmi'
+
+/datum/sprite_accessory/body_markings/none
+	name = "None"
+	icon_state = "none"
+
+/datum/sprite_accessory/body_markings/dstripe
+	name = "Dark Stripe"
+	icon_state = "dstripe"
+
+/datum/sprite_accessory/body_markings/lstripe
+	name = "Light Stripe"
+	icon_state = "lstripe"
+
+/datum/sprite_accessory/body_markings/dtiger
+	name = "Dark Tiger Body"
+	icon_state = "dtiger"
+
+/datum/sprite_accessory/body_markings/dtigerhead
+	name = "Dark Tiger Body + Head"
+	icon_state = "dtigerhead"
+
+/datum/sprite_accessory/body_markings/ltiger
+	name = "Light Tiger Body"
+	icon_state = "ltiger"
+
+/datum/sprite_accessory/body_markings/ltigerhead
+	name = "Light Tiger Body + Head"
+	icon_state = "ltigerhead"
+
+/datum/sprite_accessory/body_markings/lbelly
+	name = "Light Belly"
+	icon_state = "lbelly"
+	gender_specific = 1
+
+/datum/sprite_accessory/tails
+	icon = 'icons/mob/mutant_bodyparts.dmi'
+
+/datum/sprite_accessory/tails_animated
+	icon = 'icons/mob/mutant_bodyparts.dmi'
+
+/datum/sprite_accessory/tails/lizard/smooth
+	name = "Smooth"
+	icon_state = "smooth"
+
+/datum/sprite_accessory/tails_animated/lizard/smooth
+	name = "Smooth"
+	icon_state = "smooth"
+
+/datum/sprite_accessory/tails/lizard/light
+	name = "Light"
+	icon_state = "light"
+
+/datum/sprite_accessory/tails_animated/lizard/light
+	name = "Light"
+	icon_state = "light"
+
+/datum/sprite_accessory/tails/lizard/dstripe
+	name = "Dark Stripe"
+	icon_state = "dstripe"
+
+/datum/sprite_accessory/tails_animated/lizard/dstripe
+	name = "Dark Stripe"
+	icon_state = "dstripe"
+
+/datum/sprite_accessory/tails/lizard/lstripe
+	name = "Light Stripe"
+	icon_state = "lstripe"
+
+/datum/sprite_accessory/tails_animated/lizard/lstripe
+	name = "Light Stripe"
+	icon_state = "lstripe"
+
+/datum/sprite_accessory/tails/lizard/dtiger
+	name = "Dark Tiger"
+	icon_state = "dtiger"
+
+/datum/sprite_accessory/tails_animated/lizard/dtiger
+	name = "Dark Tiger"
+	icon_state = "dtiger"
+
+/datum/sprite_accessory/tails/lizard/ltiger
+	name = "Light Tiger"
+	icon_state = "ltiger"
+
+/datum/sprite_accessory/tails_animated/lizard/ltiger
+	name = "Light Tiger"
+	icon_state = "ltiger"
+
+/datum/sprite_accessory/tails/lizard/club
+	name = "Club"
+	icon_state = "club"
+
+/datum/sprite_accessory/tails_animated/lizard/club
+	name = "Club"
+	icon_state = "club"
+
+/datum/sprite_accessory/tails/lizard/aqua
+	name = "Aquatic"
+	icon_state = "aqua"
+
+/datum/sprite_accessory/tails_animated/lizard/aqua
+	name = "Aquatic"
+	icon_state = "aqua"
+
+/datum/sprite_accessory/tails/human/none
+	name = "None"
+	icon_state = "none"
+
+/datum/sprite_accessory/tails_animated/human/none
+	name = "None"
+	icon_state = "none"
+
+/datum/sprite_accessory/tails/human/cat
+	name = "Cat"
+	icon_state = "cat"
+	color_src = HAIR
+
+/datum/sprite_accessory/tails_animated/human/cat
+	name = "Cat"
+	icon_state = "cat"
+	color_src = HAIR
+
+/datum/sprite_accessory/snouts
+	icon = 'icons/mob/mutant_bodyparts.dmi'
+
+/datum/sprite_accessory/snouts/sharp
+	name = "Sharp"
+	icon_state = "sharp"
+
+/datum/sprite_accessory/snouts/round
+	name = "Round"
+	icon_state = "round"
+
+/datum/sprite_accessory/snouts/sharplight
+	name = "Sharp + Light"
+	icon_state = "sharplight"
+
+/datum/sprite_accessory/snouts/roundlight
+	name = "Round + Light"
+	icon_state = "roundlight"
+
+/datum/sprite_accessory/horns
+	icon = 'icons/mob/mutant_bodyparts.dmi'
+
+/datum/sprite_accessory/horns/none
+	name = "None"
+	icon_state = "none"
+
+/datum/sprite_accessory/horns/simple
+	name = "Simple"
+	icon_state = "simple"
+
+/datum/sprite_accessory/horns/short
+	name = "Short"
+	icon_state = "short"
+
+/datum/sprite_accessory/horns/curled
+	name = "Curled"
+	icon_state = "curled"
+
+/datum/sprite_accessory/horns/ram
+	name = "Ram"
+	icon_state = "ram"
+
+/datum/sprite_accessory/horns/angler
+	name = "Angeler"
+	icon_state = "angler"
+
+/datum/sprite_accessory/ears/none
+	name = "None"
+	icon_state = "none"
+
+/datum/sprite_accessory/ears/cat
+	name = "Cat"
+	icon_state = "cat"
+	hasinner = 1
+	color_src = HAIR
+
+/datum/sprite_accessory/frills
+	icon = 'icons/mob/mutant_bodyparts.dmi'
+
+/datum/sprite_accessory/frills/none
+	name = "None"
+	icon_state = "none"
+
+/datum/sprite_accessory/frills/simple
+	name = "Simple"
+	icon_state = "simple"
+
+/datum/sprite_accessory/frills/short
+	name = "Short"
+	icon_state = "short"
+
+/datum/sprite_accessory/frills/aquatic
+	name = "Aquatic"
+	icon_state = "aqua"
+
+/datum/sprite_accessory/spines
+	icon = 'icons/mob/mutant_bodyparts.dmi'
+
+/datum/sprite_accessory/spines_animated
+	icon = 'icons/mob/mutant_bodyparts.dmi'
+
+/datum/sprite_accessory/spines/none
+	name = "None"
+	icon_state = "none"
+
+/datum/sprite_accessory/spines_animated/none
+	name = "None"
+	icon_state = "none"
+
+/datum/sprite_accessory/spines/short
+	name = "Short"
+	icon_state = "short"
+
+/datum/sprite_accessory/spines_animated/short
+	name = "Short"
+	icon_state = "short"
+
+/datum/sprite_accessory/spines/shortmeme
+	name = "Short + Membrane"
+	icon_state = "shortmeme"
+
+/datum/sprite_accessory/spines_animated/shortmeme
+	name = "Short + Membrane"
+	icon_state = "shortmeme"
+
+/datum/sprite_accessory/spines/long
+	name = "Long"
+	icon_state = "long"
+
+/datum/sprite_accessory/spines_animated/long
+	name = "Long"
+	icon_state = "long"
+
+/datum/sprite_accessory/spines/longmeme
+	name = "Long + Membrane"
+	icon_state = "longmeme"
+
+/datum/sprite_accessory/spines_animated/longmeme
+	name = "Long + Membrane"
+	icon_state = "longmeme"
+
+/datum/sprite_accessory/spines/aqautic
+	name = "Aquatic"
+	icon_state = "aqua"
+
+/datum/sprite_accessory/spines_animated/aqautic
+	name = "Aquatic"
+	icon_state = "aqua"

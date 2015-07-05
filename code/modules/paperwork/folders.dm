@@ -5,6 +5,7 @@
 	icon_state = "folder"
 	w_class = 2
 	pressure_resistance = 2
+	burn_state = 0 //Burnable
 
 /obj/item/weapon/folder/blue
 	desc = "A blue folder."
@@ -31,7 +32,8 @@
 
 /obj/item/weapon/folder/attackby(obj/item/weapon/W, mob/user, params)
 	if(istype(W, /obj/item/weapon/paper) || istype(W, /obj/item/weapon/photo) || istype(W, /obj/item/documents))
-		user.drop_item()
+		if(!user.unEquip(W))
+			return
 		W.loc = src
 		user << "<span class='notice'>You put [W] into [src].</span>"
 		update_icon()

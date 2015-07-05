@@ -93,7 +93,6 @@
 
 /obj/structure/window/hitby(AM as mob|obj)
 	..()
-	visible_message("<span class='danger'>[src] was hit by [AM].</span>")
 	var/tforce = 0
 	if(ismob(AM))
 		tforce = 40
@@ -197,7 +196,7 @@
 		else if(!reinf)
 			user << (anchored ? "<span class='notice'>You begin to unscrew the window from the floor...</span>" : "<span class='notice'>You begin to screw the window to the floor...</span>")
 
-		if(do_after(user, 40))
+		if(do_after(user, 40, target = src))
 			if(reinf && (state == 1 || state == 2))
 				//If state was unfastened, fasten it, else do the reverse
 				state = (state == 1 ? 2 : 1)
@@ -214,29 +213,28 @@
 	else if (istype(I, /obj/item/weapon/crowbar) && reinf && (state == 0 || state == 1))
 		user << (state == 0 ? "<span class='notice'>You begin to lever the window into the frame...</span>" : "<span class='notice'>You begin to lever the window out of the frame...</span>")
 		playsound(loc, 'sound/items/Crowbar.ogg', 75, 1)
-		if(do_after(user, 40))
+		if(do_after(user, 40, target = src))
 			//If state was out of frame, put into frame, else do the reverse
 			state = (state == 0 ? 1 : 0)
 			user << (state == 1 ? "<span class='notice'>You pry the window into the frame.</span>" : "<span class='notice'>You pry the window out of the frame.</span>")
 
-	else if(istype(I, /obj/item/weapon/weldingtool))
+	else if(istype(I, /obj/item/weapon/weldingtool) && user.a_intent == "help")
 		var/obj/item/weapon/weldingtool/WT = I
-		if(user.a_intent == "help") //so you can still break windows with welding tools
-			if(health < maxhealth)
-				if(WT.remove_fuel(0,user))
-					user << "<span class='notice'>You begin repairing [src]...</span>"
-					playsound(loc, 'sound/items/Welder.ogg', 40, 1)
-					if(do_after(user, 40))
-						health = maxhealth
-						playsound(loc, 'sound/items/Welder2.ogg', 50, 1)
-			else
-				user << "<span class='warning'>[src] is already in good condition!</span>"
+		if(health < maxhealth)
+			if(WT.remove_fuel(0,user))
+				user << "<span class='notice'>You begin repairing [src]...</span>"
+				playsound(loc, 'sound/items/Welder.ogg', 40, 1)
+				if(do_after(user, 40, target = src))
+					health = maxhealth
+					playsound(loc, 'sound/items/Welder2.ogg', 50, 1)
+		else
+			user << "<span class='warning'>[src] is already in good condition!</span>"
 		update_nearby_icons()
 
 	else if(istype(I, /obj/item/weapon/wrench) && !anchored)
 		playsound(loc, 'sound/items/Ratchet.ogg', 75, 1)
 		user << "<span class='notice'> You begin to disassemble [src]...</span>"
-		if(do_after(user, 40))
+		if(do_after(user, 40, target = src))
 			if(disassembled)
 				return //Prevents multiple deconstruction attempts
 
@@ -256,7 +254,7 @@
 
 			playsound(src.loc, 'sound/items/Deconstruct.ogg', 50, 1)
 			disassembled = 1
-			user << "<span class='notice'> You successfully disassemble [src].</span>"
+			user << "<span class='notice'>You successfully disassemble [src].</span>"
 			qdel(src)
 
 	else
@@ -415,6 +413,8 @@
 		hit(round(exposed_volume / 100), 0)
 	..()
 
+/obj/structure/window/storage_contents_dump_act(obj/item/weapon/storage/src_object, mob/user)
+	return 0
 
 /obj/structure/window/reinforced
 	name = "reinforced window"

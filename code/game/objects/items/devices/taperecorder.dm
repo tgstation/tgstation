@@ -7,8 +7,7 @@
 	flags = HEAR
 	slot_flags = SLOT_BELT
 	languages = ALL //this is a translator, after all.
-	m_amt = 60
-	g_amt = 30
+	materials = list(MAT_METAL=60, MAT_GLASS=30)
 	force = 2
 	throwforce = 0
 	var/recording = 0
@@ -33,7 +32,8 @@
 
 /obj/item/device/taperecorder/attackby(obj/item/I, mob/user, params)
 	if(!mytape && istype(I, /obj/item/device/tape))
-		user.drop_item()
+		if(!user.unEquip(I))
+			return
 		I.loc = src
 		mytape = I
 		user << "<span class='notice'>You insert [I] into [src].</span>"
@@ -55,6 +55,9 @@
 		mytape = null
 		update_icon()
 
+/obj/item/device/taperecorder/fire_act()
+	mytape.ruin() //Fires destroy the tape
+	return()
 
 /obj/item/device/taperecorder/attack_hand(mob/user)
 	if(loc == user)
@@ -100,7 +103,7 @@
 /obj/item/device/taperecorder/Hear(message, atom/movable/speaker, message_langs, raw_message, radio_freq, spans)
 	if(mytape && recording)
 		mytape.timestamp += mytape.used_capacity
-		mytape.storedinfo += "\[[time2text(mytape.used_capacity * 10,"mm:ss")]\] [strip_html_properly(message)]"
+		mytape.storedinfo += "\[[time2text(mytape.used_capacity * 10,"mm:ss")]\] [html_encode(message)]"
 
 /obj/item/device/taperecorder/verb/record()
 	set name = "Start Recording"
@@ -253,8 +256,7 @@
 	icon_state = "tape_white"
 	item_state = "analyzer"
 	w_class = 1
-	m_amt = 20
-	g_amt = 5
+	materials = list(MAT_METAL=20, MAT_GLASS=5)
 	force = 1
 	throwforce = 0
 	var/max_capacity = 600
@@ -263,6 +265,8 @@
 	var/list/timestamp = list()
 	var/ruined = 0
 
+/obj/item/device/tape/fire_act()
+	ruin()
 
 /obj/item/device/tape/attack_self(mob/user)
 	if(!ruined)
@@ -283,7 +287,7 @@
 /obj/item/device/tape/attackby(obj/item/I, mob/user, params)
 	if(ruined && istype(I, /obj/item/weapon/screwdriver))
 		user << "<span class='notice'>You start winding the tape back in...</span>"
-		if(do_after(user, 120))
+		if(do_after(user, 120, target = src))
 			user << "<span class='notice'>You wound the tape back in.</span>"
 			fix()
 

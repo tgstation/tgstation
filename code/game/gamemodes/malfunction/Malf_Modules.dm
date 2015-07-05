@@ -38,7 +38,7 @@
 /datum/AI_Module/large/upgrade_turrets
 	module_name = "AI Turret upgrade"
 	mod_pick_name = "turret"
-	description = "Improves the firing speed and health of all AI turrets. This effect is permanent."
+	description = "Improves the power and health of all AI turrets. This effect is permanent."
 	cost = 50
 	one_time = 1
 
@@ -55,14 +55,15 @@
 	for(var/obj/machinery/porta_turret/turret in machines)
 		if(turret.ai) //Make sure only the AI's turrets are affected.
 			turret.health += 30
-			turret.shot_delay = 10 //Standard portable turret delay is 15.
+			turret.eprojectile = /obj/item/projectile/beam/heavylaser //Once you see it, you will know what it means to FEAR.
+			turret.eshot_sound = 'sound/weapons/lasercannonfire.ogg'
 	src << "<span class='notice'>Turrets upgraded.</span>"
 
 /datum/AI_Module/large/lockdown
 	module_name = "Hostile Station Lockdown"
 	mod_pick_name = "lockdown"
-	description = "Take control of the airlock, blast door and fire control networks, locking them down. Caution! This command also electrifies all airlocks."
-	cost = 20
+	description = "Overload the airlock, blast door and fire control networks, locking them down. Caution! This command also electrifies all airlocks. The networks will automatically reset after 90 seconds."
+	cost = 30
 	one_time = 1
 
 	power_type = /mob/living/silicon/ai/proc/lockdown
@@ -72,9 +73,6 @@
 	set name = "Initiate Hostile Lockdown"
 
 	if(!canUseTopic())
-		return
-
-	if(malf_cooldown)
 		return
 
 	var/obj/machinery/door/airlock/AL
@@ -88,8 +86,7 @@
 					AL.locked = 0 //For airlocks that were bolted open.
 					AL.safe = 0 //DOOR CRUSH
 					AL.close()
-					AL.locked = 1 //Bolt it!
-					AL.lights = 0 //Stealth bolt for a classic AI door trap.
+					AL.bolt() //Bolt it!
 					AL.secondsElectrified = -1  //Shock it!
 			else if(!D.stat) //So that only powered doors are closed.
 				D.close() //Close ALL the doors!
@@ -98,20 +95,15 @@
 	if(C)
 		C.post_status("alert", "lockdown")
 
-	src.verbs += /mob/living/silicon/ai/proc/disablelockdown
-	src << "<span class = 'warning'>Lockdown Initiated.</span>"
-	malf_cooldown = 1
-	spawn(30)
-	malf_cooldown = 0
+	verbs -= /mob/living/silicon/ai/proc/lockdown
+	minor_announce("Hostile runtime detected in door controllers. Isolation Lockdown protocols are now in effect. Please remain calm.","Network Alert:", 1)
+	src << "<span class = 'warning'>Lockdown Initiated. Network reset in 90 seconds.</span>"
+	spawn(900) //90 Seconds.
+		disablelockdown() //Reset the lockdown after 90 seconds.
 
 /mob/living/silicon/ai/proc/disablelockdown()
 	set category = "Malfunction"
 	set name = "Disable Lockdown"
-
-	if(!canUseTopic())
-		return
-	if(malf_cooldown)
-		return
 
 	var/obj/machinery/door/airlock/AL
 	for(var/obj/machinery/door/D in airlocks)
@@ -119,18 +111,14 @@
 			if(istype(D, /obj/machinery/door/airlock))
 				AL = D
 				if(AL.canAIControl() && !AL.stat) //Must be powered and have working AI wire.
-					AL.locked = 0
+					AL.unbolt()
 					AL.secondsElectrified = 0
 					AL.open()
 					AL.safe = 1
-					AL.lights = 1 //Essentially reset the airlock to normal.
 			else if(!D.stat) //Opens only powered doors.
 				D.open() //Open everything!
 
-	src << "<span class = 'notice'>Lockdown Lifted.</span>"
-	malf_cooldown = 1
-	spawn(30)
-	malf_cooldown = 0
+	minor_announce("Automatic system reboot complete. Have a secure day.","Network reset:")
 
 /datum/AI_Module/large/disable_rcd
 	module_name = "RCD disable"
@@ -156,6 +144,27 @@
 				rcd.disabled = 1
 			src << "<span class='warning>RCD-disabling pulse emitted.</span>"
 		else src << "<span class='notice'>Out of uses.</span>"
+
+/datum/AI_Module/large/mecha_domination
+	module_name = "Viral Mech Domination"
+	mod_pick_name = "mechjack"
+	description = "Hack into a mech's onboard computer, shunting all processes into it and ejecting any occupants. Once uploaded to the mech, it is impossible to leave.\
+	Do not allow the mech to leave the station's vicinity or allow it to be destroyed."
+	cost = 30
+	one_time = 1
+
+	power_type = /mob/living/silicon/ai/proc/mech_takeover
+
+/mob/living/silicon/ai/proc/mech_takeover()
+	set name = "Compile Mecha Virus"
+	set category = "Malfunction"
+	set desc = "Target a mech by clicking it. Click the appropriate command when ready."
+	if(stat)
+		return
+	can_dominate_mechs = 1 //Yep. This is all it does. Honk!
+	src << "Virus package compiled. Select a target mech at any time. <b>You must remain on the station at all times. Loss of signal will result in total system lockout.</b>"
+	verbs -= /mob/living/silicon/ai/proc/mech_takeover
+
 
 /datum/AI_Module/large/break_fire_alarms
 	module_name = "Thermal Sensor Override"
@@ -270,65 +279,71 @@
 	mod_pick_name = "cyborgtransformer"
 	description = "Build a machine anywhere, using expensive nanomachines, that can convert a living human into a loyal cyborg slave when placed inside."
 	cost = 100
-
 	power_type = /mob/living/silicon/ai/proc/place_transformer
+	var/list/turfOverlays = list()
+
+/datum/AI_Module/large/place_cyborg_transformer/New()
+	for(var/i=0;i<3;i++)
+		var/image/I = image("icon"='icons/turf/overlays.dmi')
+		turfOverlays += I
+	..()
 
 /mob/living/silicon/ai/proc/place_transformer()
 	set name = "Place Robotic Factory"
 	set category = "Malfunction"
-
-	if(!eyeobj)
+	if(!canPlaceTransformer())
 		return
-
-	if(!isturf(src.loc)) // AI must be in it's core.
-		return
-
-	var/datum/AI_Module/large/place_cyborg_transformer/PCT = locate() in src.current_modules
-	if(!PCT)
-		return
-
-	if(PCT.uses < 1)
-		src << "Out of uses."
-		return
-
-	if(!canUseTopic())
-		return
-
-	var/sure = alert(src, "Make sure the room it is in is big enough, there is camera vision and that there is a 1x3 area for the machine. Are you sure you want to place the machine here?", "Are you sure?", "Yes", "No")
-	if(sure != "Yes")
-		return
-
-	// Make sure there is enough room.
-	var/turf/middle = get_turf(eyeobj.loc)
-	var/list/turfs = list(middle, locate(middle.x - 1, middle.y, middle.z), locate(middle.x + 1, middle.y, middle.z))
-
-	var/alert_msg = "There isn't enough room. Make sure you are placing the machine in a clear area and on a floor."
-
-	var/datum/camerachunk/C = cameranet.getCameraChunk(middle.x, middle.y, middle.z)
-	if(!C.visibleTurfs[middle])
-		alert(src, "We cannot get camera vision of this location.")
-		return
-
-	for(var/T in turfs)
-
-		// Make sure the turfs are clear and the correct type.
-		if(!istype(T, /turf/simulated/floor))
-			alert(src, alert_msg)
+	var/sure = alert(src, "Are you sure you want to place the machine here?", "Are you sure?", "Yes", "No")
+	if(sure == "Yes")
+		if(!canPlaceTransformer())
 			return
+		var/turf/T = get_turf(eyeobj)
+		new /obj/machinery/transformer/conveyor(T)
+		playsound(T, 'sound/effects/phasein.ogg', 100, 1)
+		var/datum/AI_Module/large/place_cyborg_transformer/PCT = locate() in current_modules
+		PCT.uses --
+		can_shunt = 0
+		src << "<span class='warning'>You cannot shunt anymore.</span>"
 
-		var/turf/simulated/floor/F = T
-		for(var/atom/movable/AM in F.contents)
-			if(AM.density)
-				alert(src, alert_msg)
-				return
-
-	// All clear, place the transformer
-	new /obj/machinery/transformer/conveyor(middle)
-	playsound(middle, 'sound/effects/phasein.ogg', 100, 1)
-	src.can_shunt = 0
-	PCT.uses -= 1
-	src << "<span class='warning'>You cannot shunt anymore.</span>"
-
+/mob/living/silicon/ai/proc/canPlaceTransformer()
+	if(!eyeobj || !isturf(src.loc) || !canUseTopic())
+		return
+	var/datum/AI_Module/large/place_cyborg_transformer/PCT = locate() in current_modules
+	if(!PCT || PCT.uses < 1)
+		alert(src, "Out of uses.")
+		return
+	var/turf/middle = get_turf(eyeobj)
+	var/list/turfs = list(middle, locate(middle.x - 1, middle.y, middle.z), locate(middle.x + 1, middle.y, middle.z))
+	var/alert_msg = "There isn't enough room. Make sure you are placing the machine in a clear area and on a floor."
+	var/success = 1
+	if(turfs.len == 3)
+		for(var/n=1;n<4,n++)
+			var/fail
+			var/turf/T = turfs[n]
+			if(!istype(T, /turf/simulated/floor))
+				fail = 1
+			var/datum/camerachunk/C = cameranet.getCameraChunk(T.x, T.y, T.z)
+			if(!C.visibleTurfs[T])
+				alert_msg = "We cannot get camera vision of this location."
+				fail = 1
+			for(var/atom/movable/AM in T.contents)
+				if(AM.density)
+					fail = 1
+			var/image/I = PCT.turfOverlays[n]
+			I.loc = T
+			client.images += I
+			if(fail)
+				success = 0
+				I.icon_state = "redOverlay"
+			else
+				I.icon_state = "greenOverlay"
+			spawn(30)
+				if(client && (I.loc == T))
+					client.images -= I
+	if(success)
+		return 1
+	alert(src, alert_msg)
+	return
 
 /datum/AI_Module/small/blackout
 	module_name = "Blackout"

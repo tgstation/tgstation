@@ -3,6 +3,9 @@
 //Intended to be called by a higher up emote proc if the requested emote isn't in the custom emotes.
 
 /mob/living/emote(var/act, var/m_type=1, var/message = null)
+	if(stat)
+		return
+
 	var/param = null
 
 	if (findtext(act, "-", 1, null))
@@ -150,8 +153,6 @@
 					return
 				if (src.client.handle_spam_prevention(message,MUTE_IC))
 					return
-			if (stat)
-				return
 			if(!(message))
 				return
 			else

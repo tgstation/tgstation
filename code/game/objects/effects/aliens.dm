@@ -25,8 +25,11 @@
 	density = 1
 	opacity = 1
 	anchored = 1
+	canSmoothWith = list(/obj/structure/alien/resin)
 	var/health = 200
 	var/resintype = null
+
+
 /obj/structure/alien/resin/New(location)
 	relativewall_neighbours()
 	..()
@@ -54,8 +57,8 @@
 	resintype = "wall"
 
 /obj/structure/alien/resin/wall/New()
-	relativewall_neighbours()
 	..()
+	relativewall_neighbours()
 
 /obj/structure/alien/resin/wall/BlockSuperconductivity()
 	return 1
@@ -106,7 +109,6 @@
 
 /obj/structure/alien/resin/hitby(atom/movable/AM)
 	..()
-	visible_message("<span class='danger'>[src] was hit by [AM].</span>")
 	var/tforce = 0
 	if(!isobj(AM))
 		tforce = 10

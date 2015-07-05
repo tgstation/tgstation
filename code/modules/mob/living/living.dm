@@ -664,15 +664,22 @@ Sorry Giacom. Please don't be mad :(
 /mob/living/update_gravity(has_gravity)
 	if(!ticker)
 		return
+	if(has_gravity)
+		clear_alert("weightless")
+	else
+		throw_alert("weightless")
 	float(!has_gravity)
 
 /mob/living/proc/float(on)
 	if(throwing)
 		return
-	if(on && !floating)
+	var/fixed = 0
+	if(anchored || (buckled && buckled.anchored))
+		fixed = 1
+	if(on && !floating && !fixed)
 		animate(src, pixel_y = pixel_y + 2, time = 10, loop = -1)
 		floating = 1
-	else if(!on && floating)
+	else if(((!on || fixed) && floating))
 		var/final_pixel_y = get_standard_pixel_y_offset(lying)
 		animate(src, pixel_y = final_pixel_y, time = 10)
 		floating = 0
@@ -775,6 +782,23 @@ Sorry Giacom. Please don't be mad :(
 	..(A, final_pixel_y)
 	floating = 0 // If we were without gravity, the bouncing animation got stopped, so we make sure to restart it in next life().
 
+	//Show an image of the wielded weapon over the person who got dunked.
+	var/image/I
+	if(hand)
+		if(l_hand)
+			I = image(l_hand.icon,A,l_hand.icon_state,A.layer+1)
+	else
+		if(r_hand)
+			I = image(r_hand.icon,A,r_hand.icon_state,A.layer+1)
+	if(I)
+		var/list/viewing = list()
+		for(var/mob/M in viewers(A))
+			if(M.client)
+				viewing |= M.client
+		flick_overlay(I,viewing,5)
+		I.pixel_z = 16 //lift it up...
+		animate(I, pixel_z = 0, alpha = 125, time = 3) //smash it down into them!
+
 /mob/living/proc/do_jitter_animation(jitteriness)
 	var/amplitude = min(4, (jitteriness/100) + 1)
 	var/pixel_x_diff = rand(-amplitude, amplitude)
@@ -816,3 +840,42 @@ Sorry Giacom. Please don't be mad :(
 
 /mob/living/proc/get_standard_pixel_y_offset(lying = 0)
 	return initial(pixel_y)
+
+/mob/living/Stat()
+	..()
+	if(statpanel("Status"))
+		if(ticker)
+			if(ticker.mode)
+				for(var/datum/gang/G in ticker.mode.gangs)
+					if(isnum(G.dom_timer))
+						stat(null, "[G.name] Gang Takeover: [max(G.dom_timer, 0)]")
+
+/mob/living/cancel_camera()
+	..()
+	cameraFollow = null
+
+/mob/living/proc/can_track(mob/living/user)
+	//basic fast checks go first. When overriding this proc, I recommend calling ..() at the end.
+	var/turf/T = get_turf(src)
+	if(!T)
+		return 0
+	if(T.z == ZLEVEL_CENTCOM) //dont detect mobs on centcomm
+		return 0
+	if(T.z >= ZLEVEL_SPACEMAX)
+		return 0
+	if(user != null && src == user)
+		return 0
+	if(invisibility || alpha == 0)//cloaked
+		return 0
+	if(digitalcamo)
+		return 0
+
+	// Now, are they viewable by a camera? (This is last because it's the most intensive check)
+	if(!near_camera(src))
+		return 0
+
+	return 1
+
+//used in datum/reagents/reaction() proc
+/mob/living/proc/get_permeability_protection()
+	return 0

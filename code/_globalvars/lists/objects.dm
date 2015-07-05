@@ -7,8 +7,10 @@ var/global/list/machines = list()					//NOTE: this is a list of ALL machines now
 var/global/list/navbeacons = list()					//list of all bot nagivation beacons, used for patrolling.
 var/global/list/deliverybeacons = list()			//list of all MULEbot delivery beacons.
 var/global/list/deliverybeacontags = list()			//list of all tags associated with delivery beacons.
+var/global/list/nuke_list = list()
 
 var/global/list/chemical_reactions_list				//list of all /datum/chemical_reaction datums. Used during chemical reactions
 var/global/list/chemical_reagents_list				//list of all /datum/reagent datums indexed by reagent id. Used by chemistry stuff
 var/global/list/surgeries_list = list()				//list of all surgeries by name, associated with their path.
 var/global/list/table_recipes = list()				//list of all table craft recipes
+var/global/list/apcs_list = list()					//list of all Area Power Controller machines, seperate from machines for powernet speeeeeeed.

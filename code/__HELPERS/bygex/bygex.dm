@@ -29,7 +29,7 @@
 	#define LIBREGEX_LIBRARY "bin/bygex"
 #endif
 
-proc
+/proc
 	regEx_compare(str, exp)
 		return new /datum/regex(str, exp, call(LIBREGEX_LIBRARY, "regEx_compare")(str, exp))
 

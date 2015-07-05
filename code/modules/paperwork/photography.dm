@@ -17,7 +17,7 @@
 	icon_state = "film"
 	item_state = "electropack"
 	w_class = 1.0
-
+	burn_state = 0 //Burnable
 
 /*
  * Photo
@@ -28,6 +28,8 @@
 	icon_state = "photo"
 	item_state = "paper"
 	w_class = 1.0
+	burn_state = 0 //Burnable
+	burntime = 5
 	var/icon/img		//Big photo image
 	var/scribble		//Scribble on the back.
 	var/blueprints = 0	//Does it include the blueprints?
@@ -92,7 +94,7 @@
 	icon_state = "album"
 	item_state = "briefcase"
 	can_hold = list(/obj/item/weapon/photo)
-
+	burn_state = 0 //Burnable
 
 /*
  * Camera
@@ -106,7 +108,7 @@
 	w_class = 2.0
 	flags = CONDUCT
 	slot_flags = SLOT_BELT
-	m_amt = 2000
+	materials = list(MAT_METAL=2000)
 	var/pictures_max = 10
 	var/pictures_left = 10
 	var/on = 1
@@ -140,8 +142,9 @@
 		if(pictures_left)
 			user << "<span class='notice'>[src] still has some film in it!</span>"
 			return
+		if(!user.unEquip(I))
+			return
 		user << "<span class='notice'>You insert [I] into [src].</span>"
-		user.drop_item()
 		qdel(I)
 		pictures_left = pictures_max
 		return
@@ -332,7 +335,7 @@
 	else
 		injectaialbum(icon, img, desc, pixel_x, pixel_y, blueprintsinject)
 
-obj/item/device/camera/siliconcam/proc/selectpicture(var/obj/item/device/camera/siliconcam/targetloc)
+/obj/item/device/camera/siliconcam/proc/selectpicture(var/obj/item/device/camera/siliconcam/targetloc)
 	var/list/nametemp = list()
 	var/find
 	if(targetloc.aipictures.len == 0)
@@ -345,7 +348,7 @@ obj/item/device/camera/siliconcam/proc/selectpicture(var/obj/item/device/camera/
 		if(q.fields["name"] == find)
 			return q
 
-obj/item/device/camera/siliconcam/proc/viewpichelper(var/obj/item/device/camera/siliconcam/targetloc)
+/obj/item/device/camera/siliconcam/proc/viewpichelper(var/obj/item/device/camera/siliconcam/targetloc)
 	var/obj/item/weapon/photo/P = new/obj/item/weapon/photo()
 	var/datum/picture/selection = selectpicture(targetloc)
 	if(selection)
@@ -357,7 +360,7 @@ obj/item/device/camera/siliconcam/proc/viewpichelper(var/obj/item/device/camera/
 		usr << P.desc
 	qdel(P)    //so 10 thousand picture items are not left in memory should an AI take them and then view them all
 
-obj/item/device/camera/siliconcam/proc/viewpictures(user)
+/obj/item/device/camera/siliconcam/proc/viewpictures(user)
 	if(isrobot(user)) // Cyborg
 		var/mob/living/silicon/robot/C = src.loc
 		var/obj/item/device/camera/siliconcam/Cinfo
@@ -399,7 +402,7 @@ obj/item/device/camera/siliconcam/proc/viewpictures(user)
 	src.in_camera_mode = 1
 	usr << "<B>Camera Mode activated</B>"
 
-obj/item/device/camera/siliconcam/robot_camera/proc/borgprint()
+/obj/item/device/camera/siliconcam/robot_camera/proc/borgprint()
 	var/list/nametemp = list()
 	var/find
 	var/datum/picture/selection

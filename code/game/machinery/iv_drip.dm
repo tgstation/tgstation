@@ -77,8 +77,9 @@
 		if(!isnull(beaker))
 			user << "<span class='warning'>There is already a reagent container loaded!</span>"
 			return
+		if(!user.drop_item())
+			return
 
-		user.drop_item()
 		W.loc = src
 		beaker = W
 		user << "<span class='notice'>You attach \the [W] to \the [src].</span>"
@@ -93,7 +94,7 @@
 		return PROCESS_KILL
 
 	if(!(get_dist(src, attached) <= 1 && isturf(attached.loc)))
-		attached << "<span class='warning'>The IV drip needle is ripped out of you, doesn't that hurt?</span>"
+		attached << "<span class='userdanger'>The IV drip needle is ripped out of you!</span>"
 		attached.apply_damage(3, BRUTE, pick("r_arm", "l_arm"))
 		attached = null
 		update_icon()
@@ -103,11 +104,12 @@
 		// Give blood
 		if(mode)
 			if(beaker.volume > 0)
-				var/transfer_amount = REAGENTS_METABOLISM
+				var/transfer_amount = 5
 				if(istype(beaker, /obj/item/weapon/reagent_containers/blood))
 					// speed up transfer on blood packs
-					transfer_amount = 4
-				beaker.reagents.reaction(attached, INGEST, 1,0) //make reagents reacts, but don't spam messages
+					transfer_amount = 10
+				var/fraction = min(transfer_amount/beaker.volume, 1) //the fraction that is transfered of the total volume
+				beaker.reagents.reaction(attached, INGEST, fraction,0) //make reagents reacts, but don't spam messages
 				beaker.reagents.trans_to(attached, transfer_amount)
 				update_icon()
 

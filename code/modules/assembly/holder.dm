@@ -21,12 +21,14 @@
 	attach(A2,user)
 	name = "[A.name]-[A2.name] assembly"
 	update_icon()
+	feedback_add_details("assembly_made","[name]")
 
 /obj/item/device/assembly_holder/proc/attach(var/obj/item/device/assembly/A, var/mob/user)
-	if(user)
-		user.remove_from_mob(A)
+	if(!A.remove_item_from_storage(src))
+		if(user)
+			user.remove_from_mob(A)
+		A.loc = src
 	A.holder = src
-	A.loc = src
 	A.toggle_secure()
 	if(!a_left)
 		a_left = A

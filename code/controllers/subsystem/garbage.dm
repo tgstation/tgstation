@@ -5,9 +5,11 @@ var/datum/subsystem/garbage_collector/SSgarbage
 	can_fire = 1
 	wait = 5
 	priority = -1
+	dynamic_wait = 1
+	dwait_delta = 5
 
 	var/collection_timeout = 300// deciseconds to wait to let running procs finish before we just say fuck it and force del() the object
-	var/max_run_time = 2		// how long, in deciseconds, can we run before waiting for the next tick
+	var/max_run_time = 1		// how long, in deciseconds, can we run before waiting for the next tick
 	var/delslasttick = 0		// number of del()'s we've done this tick
 	var/gcedlasttick = 0		// number of things that gc'ed last tick
 	var/totaldels = 0
@@ -119,6 +121,14 @@ var/datum/subsystem/garbage_collector/SSgarbage
 				PlaceInPool(A,0)
 			else
 				SSgarbage.Queue(A)
+
+// Returns 1 if the object has been queued for deletion.
+/proc/qdeleted(var/datum/A)
+	if (!istype(A))
+		return 0
+	if (A.gc_destroyed)
+		return 1
+	return 0
 
 // Default implementation of clean-up code.
 // This should be overridden to remove all references pointing to the object being destroyed.

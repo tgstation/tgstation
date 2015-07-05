@@ -41,7 +41,7 @@ They *could* go in their appropriate files, but this is supposed to be modular
 				drain = S.cell.maxcharge - S.cell.charge
 				maxcapacity = 1//Reached maximum battery capacity.
 
-			if (do_after(H,10))
+			if (do_after(H,10, target = src))
 				spark_system.start()
 				playsound(loc, "sparks", 50, 1)
 				cell.charge -= drain
@@ -84,7 +84,7 @@ They *could* go in their appropriate files, but this is supposed to be modular
 				drain = S.cell.maxcharge - S.cell.charge
 				maxcapacity = 1
 
-			if (do_after(H,10))
+			if (do_after(H,10, target = src))
 				spark_system.start()
 				playsound(loc, "sparks", 50, 1)
 				charge -= drain
@@ -103,7 +103,7 @@ They *could* go in their appropriate files, but this is supposed to be modular
 	. = 0
 
 	if(charge)
-		if(G.candrain && do_after(H,30))
+		if(G.candrain && do_after(H,30, target = src))
 			. = charge
 			if(S.cell.charge + charge > S.cell.maxcharge)
 				S.cell.charge = S.cell.maxcharge
@@ -130,7 +130,7 @@ They *could* go in their appropriate files, but this is supposed to be modular
 	if(files && files.known_tech.len)
 		for(var/datum/tech/current_data in S.stored_research)
 			H << "<span class='notice'>Checking \the [current_data.name] database.</span>"
-			if(do_after(H, S.s_delay) && G.candrain && src)
+			if(do_after(H, S.s_delay, target = src) && G.candrain && src)
 				for(var/datum/tech/analyzing_data in files.known_tech)
 					if(current_data.id == analyzing_data.id)
 						if(analyzing_data.level > current_data.level)
@@ -161,7 +161,7 @@ They *could* go in their appropriate files, but this is supposed to be modular
 	if(files && files.known_tech.len)
 		for(var/datum/tech/current_data in S.stored_research)
 			H << "<span class='notice'>Checking \the [current_data.name] database.</span>"
-			if(do_after(H, S.s_delay) && G.candrain && src)
+			if(do_after(H, S.s_delay, target = src) && G.candrain && src)
 				for(var/datum/tech/analyzing_data in files.known_tech)
 					if(current_data.id == analyzing_data.id)
 						if(analyzing_data.level > current_data.level)
@@ -189,7 +189,7 @@ They *could* go in their appropriate files, but this is supposed to be modular
 	while(G.candrain && !maxcapacity && src)
 		drain = (round((rand(G.mindrain, G.maxdrain))/2))
 		var/drained = 0
-		if(PN && do_after(H,10))
+		if(PN && do_after(H,10, target = src))
 			drained = min(drain, PN.avail)
 			PN.load += drained
 			if(drained < drain)//if no power on net, drain apcs
@@ -229,7 +229,7 @@ They *could* go in their appropriate files, but this is supposed to be modular
 			if(S.cell.charge + drain > S.cell.maxcharge)
 				drain = S.cell.maxcharge - S.cell.charge
 				maxcapacity = 1
-			if (do_after(H,10))
+			if (do_after(H,10, target = src))
 				spark_system.start()
 				playsound(loc, "sparks", 50, 1)
 				cell.use(drain)

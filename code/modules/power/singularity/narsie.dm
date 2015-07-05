@@ -42,7 +42,7 @@
 		user << "Your soul is too far away."
 		return
 	makeNewConstruct(/mob/living/simple_animal/construct/harvester, user, null, 1)
-	PoolOrNew(/obj/effect/effect/sleep_smoke, user.loc)
+	PoolOrNew(/obj/effect/effect/smoke/sleeping, user.loc)
 
 
 /obj/singularity/narsie/process()
@@ -70,7 +70,7 @@
 
 	else if(isturf(A))
 		var/turf/T = A
-		T.ChangeTurf(/turf/simulated/floor/engine/cult)
+		T.ChangeTurf(/turf/simulated/floor/plasteel/cult)
 
 
 /obj/singularity/narsie/mezzer()

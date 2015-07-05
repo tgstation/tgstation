@@ -10,7 +10,7 @@
 	item_state = "gun"
 	flags =  CONDUCT
 	slot_flags = SLOT_BELT
-	m_amt = 2000
+	materials = list(MAT_METAL=2000)
 	w_class = 3.0
 	throwforce = 5
 	throw_speed = 3
@@ -54,6 +54,14 @@
 	if(pin)
 		pin = new pin(src)
 
+/obj/item/weapon/gun/CheckParts()
+	var/obj/item/weapon/gun/G = locate(/obj/item/weapon/gun) in contents
+	if(G)
+		G.loc = loc
+		qdel(G.pin)
+		G.pin = null
+		visible_message("[G] can now fit a new pin, but old one was destroyed in the process.")
+	qdel(src)
 
 /obj/item/weapon/gun/examine(mob/user)
 	..()
@@ -98,8 +106,8 @@
 	if(heavy_weapon)
 		if(user.get_inactive_hand())
 			if(prob(15))
-				user.visible_message("<span class='danger'>[src] flies out of [user]'s hands!</span>", "<span class='userdanger'>[src] kicks out of your grip!</span>")
-				user.drop_item()
+				if(user.drop_item())
+					user.visible_message("<span class='danger'>[src] flies out of [user]'s hands!</span>", "<span class='userdanger'>[src] kicks out of your grip!</span>")
 
 /obj/item/weapon/gun/emp_act(severity)
 	for(var/obj/O in contents)
@@ -130,6 +138,7 @@
 			return
 
 	process_fire(target,user,1,params)
+
 
 
 /obj/item/weapon/gun/proc/can_trigger_gun(mob/living/carbon/user)
@@ -218,7 +227,7 @@
 		user.update_inv_l_hand(0)
 	else
 		user.update_inv_r_hand(0)
-
+	feedback_add_details("gun_fired","[src.name]")
 
 /obj/item/weapon/gun/attack(mob/M as mob, mob/user)
 	if(user.a_intent == "harm") //Flogging
@@ -234,7 +243,8 @@
 				if(user.l_hand != src && user.r_hand != src)
 					user << "<span class='warning'>You'll need [src] in your hands to do that!</span>"
 					return
-				user.drop_item()
+				if(!user.unEquip(A))
+					return
 				user << "<span class='notice'>You click [S] into place on [src].</span>"
 				if(S.on)
 					SetLuminosity(0)

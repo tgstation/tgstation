@@ -128,7 +128,7 @@ var/const/tk_maxrange = 15
 
 	else
 		apply_focus_overlay()
-		focus.throw_at(target, 10, 1)
+		focus.throw_at(target, 10, 1,user)
 		last_throw = world.time
 	return
 
@@ -177,7 +177,7 @@ var/const/tk_maxrange = 15
 		overlays += icon(focus.icon,focus.icon_state)
 	return
 
-obj/item/tk_grab/suicide_act(mob/user)
+/obj/item/tk_grab/suicide_act(mob/user)
 	user.visible_message("<span class='suicide'>[user] is using \his telekinesis to choke \himself! It looks like \he's trying to commit suicide.</span>")
 	return (OXYLOSS)
 

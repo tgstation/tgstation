@@ -30,6 +30,7 @@
 	icon_state = "xray"
 	damage = 15
 	irradiate = 30
+	range = 15
 	forcedodge = 1
 
 /obj/item/projectile/beam/disabler
@@ -62,7 +63,7 @@
 /obj/item/projectile/beam/emitter/singularity_pull()
 	return //don't want the emitters to miss
 
-obj/item/projectile/beam/emitter/Destroy()
+/obj/item/projectile/beam/emitter/Destroy()
 	return QDEL_HINT_PUTINPOOL
 
 /obj/item/projectile/lasertag

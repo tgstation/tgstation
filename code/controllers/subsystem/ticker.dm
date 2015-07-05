@@ -47,7 +47,7 @@ var/datum/subsystem/ticker/ticker
 /datum/subsystem/ticker/New()
 	NEW_SS_GLOBAL(ticker)
 
-	login_music = pickweight(list('sound/ambience/title2.ogg' = 49, 'sound/ambience/title1.ogg' = 49, 'sound/ambience/clown.ogg' = 2)) // choose title music!
+	login_music = pickweight(list('sound/ambience/title2.ogg' = 31, 'sound/ambience/title1.ogg' = 31, 'sound/ambience/title3.ogg' =31, 'sound/ambience/clown.ogg' = 7)) // choose title music!
 	if(SSevent.holidays && SSevent.holidays[APRIL_FOOLS])
 		login_music = 'sound/ambience/clown.ogg'
 
@@ -66,6 +66,7 @@ var/datum/subsystem/ticker/ticker
 			timeLeft = config.lobby_countdown * 10
 			world << "<B><FONT color='blue'>Welcome to the pre-game lobby!</FONT></B>"
 			world << "Please, setup your character and select ready. Game will start in [config.lobby_countdown] seconds"
+			crewmonitor.generateMiniMaps() // start generating minimaps (this is a background process)
 			current_state = GAME_STATE_PREGAME
 
 		if(GAME_STATE_PREGAME)
@@ -100,28 +101,12 @@ var/datum/subsystem/ticker/ticker
 			if(!mode.explosion_in_progress && mode.check_finished() || force_ending)
 				current_state = GAME_STATE_FINISHED
 				auto_toggle_ooc(1) // Turn it on
-				declare_completion()
+				declare_completion(force_ending)
 				spawn(50)
 					if(mode.station_was_nuked)
-						feedback_set_details("end_proper","nuke")
-						if(!delay_end)
-							world << "\blue <B>Rebooting due to destruction of station in [restart_timeout/10] seconds</B>"
+						world.Reboot("Station destroyed by Nuclear Device.", "end_proper", "nuke")
 					else
-						feedback_set_details("end_proper","proper completion")
-						if(!delay_end)
-							world << "\blue <B>Restarting in [restart_timeout/10] seconds</B>"
-
-
-					if(blackbox)
-						blackbox.save_all_data_to_sql()
-
-					if(delay_end)
-						world << "\blue <B>An admin has delayed the round end</B>"
-					else
-						sleep(restart_timeout)
-						kick_clients_in_lobby("\red The round came to an end with you in the lobby.", 1) //second parameter ensures only afk clients are kicked
-						world.Reboot()
-
+						world.Reboot("Round ended.", "end_proper", "proper completion")
 
 /datum/subsystem/ticker/proc/setup()
 		//Create and announce mode
@@ -216,6 +201,10 @@ var/datum/subsystem/ticker/ticker
 	//Plus it provides an easy way to make cinematics for other events. Just use this as a template
 /datum/subsystem/ticker/proc/station_explosion_cinematic(var/station_missed=0, var/override = null)
 	if( cinematic )	return	//already a cinematic in progress!
+
+	for (var/datum/html_interface/hi in html_interfaces)
+		hi.closeAll()
+
 	auto_toggle_ooc(1) // Turn it on
 	//initialise our cinematic screen object
 	cinematic = new /obj/screen{icon='icons/effects/station_explosion.dmi';icon_state="station_intact";layer=20;mouse_opacity=0;screen_loc="1,0";}(src)
@@ -287,6 +276,15 @@ var/datum/subsystem/ticker/ticker
 					flick("station_explode_fade_red",cinematic)
 					world << sound('sound/effects/explosionfar.ogg')
 					cinematic.icon_state = "summary_selfdes"
+				if("no_core") //Nuke failed to detonate as it had no core
+					flick("intro_nuke",cinematic)
+					sleep(35)
+					flick("station_intact",cinematic)
+					world << sound('sound/ambience/signal.ogg')
+					sleep(100)
+					if(cinematic)	del(cinematic)
+					if(temp_buckle)	del(temp_buckle)
+					return	//Faster exit, since nothing happened
 				else //Station nuked (nuke,explosion,summary)
 					flick("intro_nuke",cinematic)
 					sleep(35)
@@ -329,7 +327,7 @@ var/datum/subsystem/ticker/ticker
 		if(player && player.mind && player.mind.assigned_role)
 			if(player.mind.assigned_role == "Captain")
 				captainless=0
-			if(player.mind.assigned_role != "MODE")
+			if(player.mind.assigned_role != player.mind.special_role)
 				SSjob.EquipRank(player, player.mind.assigned_role, 0)
 	if(captainless)
 		for(var/mob/M in player_list)
@@ -353,7 +351,7 @@ var/datum/subsystem/ticker/ticker
 			if(Player.stat != DEAD && !isbrain(Player))
 				num_survivors++
 				if(station_evacuated) //If the shuttle has already left the station
-					if(!Player.onCentcom())
+					if(!Player.onCentcom() && !Player.onSyndieBase())
 						Player << "<font color='blue'><b>You managed to survive, but were marooned on [station_name()]...</b></FONT>"
 					else
 						num_escapees++
@@ -409,7 +407,7 @@ var/datum/subsystem/ticker/ticker
 	//calls auto_declare_completion_* for all modes
 	for(var/handler in typesof(/datum/game_mode/proc))
 		if (findtext("[handler]","auto_declare_completion_"))
-			call(mode, handler)()
+			call(mode, handler)(force_ending)
 
 	//Print a list of antagonists to the server log
 	var/list/total_antagonists = list()
@@ -433,5 +431,5 @@ var/datum/subsystem/ticker/ticker
 /datum/subsystem/ticker/proc/send_random_tip()
 	var/list/randomtips = file2list("config/tips.txt")
 	if(randomtips.len)
-		world << "<font color='purple'><b>Tip of the round: </b>[strip_html_properly(pick(randomtips))]</font>"
+		world << "<font color='purple'><b>Tip of the round: </b>[html_encode(pick(randomtips))]</font>"
 

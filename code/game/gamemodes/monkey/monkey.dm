@@ -46,7 +46,7 @@
 
 
 /datum/game_mode/monkey/proc/greet_carrier(var/datum/mind/carrier)
-	carrier.current << "<B><span class = 'notice'>You are the Jungle Fever patient zero!!</B>"
+	carrier.current << "<B><span class='notice'>You are the Jungle Fever patient zero!!</B>"
 	carrier.current << "<b>You have been planted onto this station by the Animal Rights Consortium.</b>"
 	carrier.current << "<b>Soon the disease will transform you into an ape. Afterwards, you will be able spread the infection to others with a bite.</b>"
 	carrier.current << "<b>While your infection strain is undetectable by scanners, any other infectees will show up on medical equipment.</b>"
@@ -89,7 +89,7 @@
 	var/datum/disease/D = new /datum/disease/transformation/jungle_fever()
 	for(var/mob/living/carbon/monkey/M in living_mob_list)
 		if (M.HasDisease(D))
-			if(M.onCentcom())
+			if(M.onCentcom() || M.onSyndieBase())
 				escaped_monkeys++
 	if(escaped_monkeys >= monkeys_to_win)
 		return 1

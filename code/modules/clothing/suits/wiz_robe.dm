@@ -8,6 +8,7 @@
 	strip_delay = 50
 	put_on_delay = 50
 	unacidable = 1
+	burn_state = -1 //Won't burn in fires
 
 /obj/item/clothing/head/wizard/red
 	name = "red wizard hat"
@@ -18,6 +19,11 @@
 	name = "yellow wizard hat"
 	desc = "Strange-looking yellow hat-wear that most certainly belongs to a powerful magic user."
 	icon_state = "yellowwizard"
+
+/obj/item/clothing/head/wizard/black
+	name = "black wizard hat"
+	desc = "Strange-looking black hat-wear that most certainly belongs to a real skeleton. Spooky."
+	icon_state = "blackwizard"
 
 /obj/item/clothing/head/wizard/fake
 	name = "wizard hat"
@@ -58,7 +64,7 @@
 	strip_delay = 50
 	put_on_delay = 50
 	unacidable = 1
-
+	burn_state = -1 //Won't burn in fires
 
 /obj/item/clothing/suit/wizrobe/red
 	name = "red wizard robe"
@@ -71,6 +77,12 @@
 	desc = "A magnificant yellow gem-lined robe that seems to radiate power."
 	icon_state = "yellowwizard"
 	item_state = "yellowwizrobe"
+
+/obj/item/clothing/suit/wizrobe/black
+	name = "black wizard robe"
+	desc = "An unnerving black gem-lined robe that reeks of death and decay."
+	icon_state = "blackwizard"
+	item_state = "blackwizrobe"
 
 /obj/item/clothing/suit/wizrobe/marisa
 	name = "witch robe"
@@ -106,6 +118,7 @@
 	permeability_coefficient = 1
 	armor = list(melee = 0, bullet = 0, laser = 0, energy = 0, bomb = 0, bio = 0, rad = 0)
 	unacidable = 0
+	burn_state = 0 //Burnable
 
 /obj/item/clothing/head/wizard/marisa/fake
 	name = "witch hat"
@@ -115,6 +128,7 @@
 	permeability_coefficient = 1
 	armor = list(melee = 0, bullet = 0, laser = 0, energy = 0, bomb = 0, bio = 0, rad = 0)
 	unacidable = 0
+	burn_state = 0 //Burnable
 
 /obj/item/clothing/suit/wizrobe/marisa/fake
 	name = "witch robe"
@@ -125,3 +139,4 @@
 	permeability_coefficient = 1
 	armor = list(melee = 0, bullet = 0, laser = 0, energy = 0, bomb = 0, bio = 0, rad = 0)
 	unacidable = 0
+	burn_state = 0 //Burnable

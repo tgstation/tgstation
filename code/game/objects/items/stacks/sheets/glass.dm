@@ -13,11 +13,11 @@
 	desc = "HOLY SHEET! That is a lot of glass."
 	singular_name = "glass sheet"
 	icon_state = "sheet-glass"
-	g_amt = MINERAL_MATERIAL_AMOUNT
+	materials = list(MAT_GLASS=MINERAL_MATERIAL_AMOUNT)
 	origin_tech = "materials=1"
 
 /obj/item/stack/sheet/glass/cyborg
-	g_amt = 0
+	materials = list()
 	is_cyborg = 1
 	cost = 500
 
@@ -127,13 +127,11 @@
 	desc = "Glass which seems to have rods or something stuck in them."
 	singular_name = "reinforced glass sheet"
 	icon_state = "sheet-rglass"
-	g_amt = MINERAL_MATERIAL_AMOUNT
-	m_amt = MINERAL_MATERIAL_AMOUNT / 2
+	materials = list(MAT_METAL=MINERAL_MATERIAL_AMOUNT/2, MAT_GLASS=MINERAL_MATERIAL_AMOUNT)
 	origin_tech = "materials=2"
 
 /obj/item/stack/sheet/rglass/cyborg
-	g_amt = 0
-	m_amt = 0
+	materials = list()
 	var/datum/robot_energy_storage/metsource
 	var/datum/robot_energy_storage/glasource
 	var/metcost = 250
@@ -267,7 +265,7 @@
 	force = 5.0
 	throwforce = 10.0
 	item_state = "shard-glass"
-	g_amt = MINERAL_MATERIAL_AMOUNT
+	materials = list(MAT_GLASS=MINERAL_MATERIAL_AMOUNT)
 	attack_verb = list("stabbed", "slashed", "sliced", "cut")
 	hitsound = 'sound/weapons/bladeslice.ogg'
 	var/cooldown = 0
@@ -332,7 +330,7 @@
 		playsound(loc, 'sound/effects/glass_step.ogg', 50, 1)
 		if(ishuman(AM))
 			var/mob/living/carbon/human/H = AM
-			if(HARDFEET in H.dna.species.specflags)
+			if(PIERCEIMMUNE in H.dna.species.specflags)
 				return 0
 			if(!H.shoes)
 				H.apply_damage(5,BRUTE,(pick("l_leg", "r_leg")))

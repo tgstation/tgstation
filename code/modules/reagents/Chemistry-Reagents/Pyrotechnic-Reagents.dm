@@ -1,12 +1,12 @@
 
-datum/reagent/thermite
+/datum/reagent/thermite
 	name = "Thermite"
 	id = "thermite"
 	description = "Thermite produces an aluminothermic reaction known as a thermite reaction. Can be used to melt walls."
 	reagent_state = SOLID
 	color = "#673910" // rgb: 103, 57, 16
 
-datum/reagent/thermite/reaction_turf(var/turf/T, var/volume)
+/datum/reagent/thermite/reaction_turf(var/turf/T, var/volume)
 	src = null
 	if(volume >= 1 && istype(T, /turf/simulated/wall))
 		var/turf/simulated/wall/Wall = T
@@ -17,11 +17,11 @@ datum/reagent/thermite/reaction_turf(var/turf/T, var/volume)
 		Wall.overlays = list()
 		Wall.overlays += image('icons/effects/effects.dmi',"thermite")
 
-datum/reagent/thermite/on_mob_life(var/mob/living/M as mob)
+/datum/reagent/thermite/on_mob_life(var/mob/living/M as mob)
 	M.adjustFireLoss(1)
 	..()
 
-datum/reagent/nitroglycerin
+/datum/reagent/nitroglycerin
 	name = "Nitroglycerin"
 	id = "nitroglycerin"
 	description = "Nitroglycerin is a heavy, colorless, oily, explosive liquid obtained by nitrating glycerol."
@@ -51,7 +51,7 @@ datum/reagent/nitroglycerin
 	if(istype(T, /turf/simulated/floor/plating))
 		var/turf/simulated/floor/plating/F = T
 		if(prob(1 + F.burnt + 5*F.broken)) //broken or burnt plating is more susceptible to being destroyed
-			F.ChangeTurf(/turf/space)
+			F.ChangeTurf(F.baseturf)
 	if(istype(T, /turf/simulated/floor/))
 		var/turf/simulated/floor/F = T
 		if(prob(volume/10))
@@ -67,7 +67,7 @@ datum/reagent/nitroglycerin
 
 /datum/reagent/clf3/reaction_mob(var/mob/living/M, var/method=TOUCH, var/volume)
 	if(method == TOUCH && isliving(M))
-		M.adjust_fire_stacks(5)
+		M.adjust_fire_stacks(min(volume/5, 10))
 		M.IgniteMob()
 		PoolOrNew(/obj/effect/hotspot, M.loc)
 
@@ -148,9 +148,9 @@ datum/reagent/nitroglycerin
 
 /datum/reagent/napalm/reaction_mob(var/mob/living/M, var/method=TOUCH, var/volume)
 	if(method == TOUCH && isliving(M))
-		M.adjust_fire_stacks(7)
+		M.adjust_fire_stacks(min(volume/4, 20))
 
-datum/reagent/cryostylane
+/datum/reagent/cryostylane
 	name = "Cryostylane"
 	id = "cryostylane"
 	description = "Comes into existence at 20K. As long as there is sufficient oxygen for it to react with, Cryostylane slowly cools all other reagents in the mob down to 0K."
@@ -158,38 +158,38 @@ datum/reagent/cryostylane
 	metabolization_rate = 0.5 * REAGENTS_METABOLISM
 
 
-datum/reagent/cryostylane/on_mob_life(var/mob/living/M as mob) //TODO: code freezing into an ice cube
+/datum/reagent/cryostylane/on_mob_life(var/mob/living/M as mob) //TODO: code freezing into an ice cube
 	if(M.reagents.has_reagent("oxygen"))
 		M.reagents.remove_reagent("oxygen", 0.5)
 		M.bodytemperature -= 15
 	..()
 
-datum/reagent/cryostylane/on_tick()
+/datum/reagent/cryostylane/on_tick()
 	if(holder.has_reagent("oxygen"))
 		holder.remove_reagent("oxygen", 1)
 		holder.chem_temp -= 10
 		holder.handle_reactions()
 	..()
 
-datum/reagent/cryostylane/reaction_turf(var/turf/simulated/T, var/volume)
+/datum/reagent/cryostylane/reaction_turf(var/turf/simulated/T, var/volume)
 	if(volume >= 5)
 		for(var/mob/living/simple_animal/slime/M in T)
 			M.adjustToxLoss(rand(15,30))
 
-datum/reagent/pyrosium
+/datum/reagent/pyrosium
 	name = "Pyrosium"
 	id = "pyrosium"
 	description = "Comes into existence at 20K. As long as there is sufficient oxygen for it to react with, Pyrosium slowly cools all other reagents in the mob down to 0K."
 	color = "#B20000" // rgb: 139, 166, 233
 	metabolization_rate = 0.5 * REAGENTS_METABOLISM
 
-datum/reagent/pyrosium/on_mob_life(var/mob/living/M as mob)
+/datum/reagent/pyrosium/on_mob_life(var/mob/living/M as mob)
 	if(M.reagents.has_reagent("oxygen"))
 		M.reagents.remove_reagent("oxygen", 0.5)
 		M.bodytemperature += 15
 	..()
 
-datum/reagent/pyrosium/on_tick()
+/datum/reagent/pyrosium/on_tick()
 	if(holder.has_reagent("oxygen"))
 		holder.remove_reagent("oxygen", 1)
 		holder.chem_temp += 10

@@ -19,6 +19,15 @@
 	force = 10
 	ammo_type = list(/obj/item/ammo_casing/energy/electrode/hos, /obj/item/ammo_casing/energy/laser/hos, /obj/item/ammo_casing/energy/disabler)
 
+/obj/item/weapon/gun/energy/gun/dragnet
+	name = "DRAGnet"
+	desc = "The \"Dynamic Rapid-Apprehension of the Guilty\" net is a revolution in law enforcement technology."
+	icon_state = "dragnet"
+	item_state = null
+	origin_tech = "combat=3;magnets=3;materials=4; bluespace=4"
+	ammo_type = list(/obj/item/ammo_casing/energy/net, /obj/item/ammo_casing/energy/trap)
+	can_flashlight = 0
+
 /obj/item/weapon/gun/energy/gun/nuclear
 	name = "advanced energy gun"
 	desc = "An energy gun with an experimental miniaturized nuclear reactor that automatically charges the internal power cell."
@@ -126,5 +135,5 @@
 	can_flashlight = 0
 	trigger_guard = 0
 
-obj/item/weapon/gun/energy/gun/turret/update_icon()
+/obj/item/weapon/gun/energy/gun/turret/update_icon()
 	icon_state = initial(icon_state)

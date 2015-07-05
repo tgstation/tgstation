@@ -113,7 +113,7 @@ var/datum/global_hud/global_hud = new()
 	var/obj/screen/movable/action_button/hide_toggle/hide_actions_toggle
 	var/action_buttons_hidden = 0
 
-datum/hud/New(mob/owner)
+/datum/hud/New(mob/owner)
 	mymob = owner
 	instantiate()
 	..()
@@ -198,7 +198,7 @@ datum/hud/New(mob/owner)
 	else if(isdrone(mymob))
 		drone_hud(ui_style)
 
-	if(istype(mymob.loc,/obj/mecha))
+	if(istype(mymob.loc,/obj/mecha) && ishuman(mymob))
 		show_hud(HUD_STYLE_REDUCED)
 
 //Version denotes which style should be displayed. blank or 0 means "next version"

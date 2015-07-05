@@ -83,15 +83,14 @@
 	H.hair_style = null
 	H.update_hair()
 	human_overlays = H.overlays
-	if(overmind && overmind.blob_reagent_datum)
-		adjustcolors(overmind.blob_reagent_datum.color)
+	update_icons()
 	H.loc = src
-	loc.visible_message("<span class='warning'> The corpse of [H.name] suddenly rises!</span>")
+	loc.visible_message("<span class='warning'>The corpse of [H.name] suddenly rises!</span>")
 
 /mob/living/simple_animal/hostile/blob/blobspore/death(gibbed)
 	..(1)
 	// On death, create a small smoke of harmful gas (s-Acid)
-	var/datum/effect/effect/system/chem_smoke_spread/S = new
+	var/datum/effect/effect/system/smoke_spread/chem/S = new
 	var/turf/location = get_turf(src)
 
 	// Create the reagents to put into the air
@@ -120,8 +119,18 @@
 	..()
 
 
+/mob/living/simple_animal/hostile/blob/blobspore/update_icons()
+	..()
+
+	if(overmind && overmind.blob_reagent_datum)
+		adjustcolors(overmind.blob_reagent_datum.color)
+	else
+		adjustcolors(color) //to ensure zombie/other overlays update
+
+
 /mob/living/simple_animal/hostile/blob/blobspore/adjustcolors(var/a_color)
 	color = a_color
+
 	if(is_zombie)
 		overlays.Cut()
 		overlays = human_overlays
@@ -129,7 +138,6 @@
 		I.color = color
 		color = initial(color)//looks better.
 		overlays += I
-
 
 /////////////////
 // BLOBBERNAUT //

@@ -1,5 +1,5 @@
 /obj/machinery/atmospherics/unary/tank
-	icon = 'icons/obj/atmospherics/pipe_tank.dmi'
+	icon = 'icons/obj/atmospherics/pipes/pressure_tank.dmi'
 	icon_state = "generic"
 	name = "pressure tank"
 	desc = "A large vessel containing pressurized gas."
@@ -16,7 +16,7 @@
 			col = node.pipe_color
 		else
 			state = "pipe_exposed"
-		underlays += getpipeimage('icons/obj/atmospherics/pipe_tank.dmi', state, initialize_directions, col)
+		underlays += getpipeimage('icons/obj/atmospherics/pipes/pressure_tank.dmi', state, initialize_directions, col)
 
 /obj/machinery/atmospherics/unary/tank/carbon_dioxide
 	name = "pressure tank (Carbon Dioxide)"

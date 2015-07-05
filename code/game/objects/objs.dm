@@ -1,6 +1,5 @@
 /obj
 	languages = HUMAN
-	//var/datum/module/mod		//not used
 	var/crit_fail = 0
 	var/unacidable = 0 //universal "unacidabliness" var, here so you can use it in any obj.
 	animate_movement = 2
@@ -9,6 +8,10 @@
 
 	var/damtype = "brute"
 	var/force = 0
+
+	var/burn_state = -1 // -1=fireproof | 0=will burn in fires | 1=currently on fire
+	var/burntime = 10 //How long it takes to burn to ashes, in seconds
+	var/burn_world_time //What world time the object will burn up completely
 
 /obj/Destroy()
 	if(!istype(src, /obj/machinery))
@@ -150,3 +153,33 @@
 
 /obj/proc/Deconstruct()
 	qdel(src)
+
+/obj/get_spans()
+	return ..() | SPAN_ROBOT
+
+/obj/storage_contents_dump_act(obj/item/weapon/storage/src_object, mob/user)
+	var/turf/T = get_turf(src)
+	return T.storage_contents_dump_act(src_object, user)
+
+/obj/fire_act(var/global_overlay=1)
+	if(!burn_state)
+		burn_state = 1
+		SSobj.burning += src
+		burn_world_time = world.time + burntime*rand(10,20)
+		if(global_overlay)
+			overlays += fire_overlay
+		return 1
+
+/obj/proc/burn()
+	for(var/obj/item/Item in contents) //Empty out the contents
+		Item.loc = src.loc
+		Item.fire_act() //Set them on fire, too
+	var/obj/effect/decal/cleanable/ash/A = new(src.loc)
+	A.desc = "Looks like this used to be a [name] some time ago."
+	qdel(src)
+
+/obj/proc/extinguish()
+	if(burn_state == 1)
+		burn_state = 0
+		overlays -= fire_overlay
+		SSobj.burning -= src

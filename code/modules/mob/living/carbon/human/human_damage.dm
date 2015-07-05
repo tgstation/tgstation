@@ -10,9 +10,10 @@
 		total_brute	+= O.brute_dam
 		total_burn	+= O.burn_dam
 	health = maxHealth - getOxyLoss() - getToxLoss() - getCloneLoss() - total_burn - total_brute
-	//TODO: fix husking
 	if( ((maxHealth - total_burn) < config.health_threshold_dead) && stat == DEAD )
 		ChangeToHusk()
+		if(on_fire)
+			shred_clothing()
 	med_hud_set_health()
 	med_hud_set_status()
 	return
@@ -44,13 +45,13 @@
 	else
 		heal_overall_damage(0, -amount)
 
-mob/living/carbon/human/proc/hat_fall_prob()
+/mob/living/carbon/human/proc/hat_fall_prob()
 	var/multiplier = 1
 	var/obj/item/clothing/head/H = head
 	var/loose = 40
 	if(stat || (status_flags & FAKEDEATH))
 		multiplier = 2
-	if(H.flags & (HEADCOVERSEYES | HEADCOVERSMOUTH) || H.flags_inv & (HIDEEYES | HIDEFACE))
+	if(H.flags_cover & (HEADCOVERSEYES | HEADCOVERSMOUTH) || H.flags_inv & (HIDEEYES | HIDEFACE))
 		loose = 0
 	return loose * multiplier
 

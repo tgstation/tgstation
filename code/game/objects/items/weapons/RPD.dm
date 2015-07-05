@@ -25,7 +25,7 @@ RPD
 	var/categoryId = CATEGORY_ATMOS
 	var/dir=SOUTH
 	var/dirtype=PIPE_BINARY
-	var/icon = 'icons/obj/pipe-item.dmi'
+	var/icon = 'icons/obj/atmospherics/pipes/pipe_item.dmi'
 	var/icon_state=""
 	var/selected=0
 
@@ -39,7 +39,7 @@ RPD
 	return "<li><a href='?src=\ref[dispenser];makepipe=[id];dir=[dir];type=[dirtype]'>[label]</a></li>"
 
 /datum/pipe_info/meter
-	icon = 'icons/obj/pipes.dmi'
+	icon = 'icons/obj/atmospherics/pipes/simple.dmi'
 	icon_state = "meterX"
 
 /datum/pipe_info/meter/New()
@@ -64,7 +64,7 @@ var/global/list/disposalpipeID2State=list(
 
 /datum/pipe_info/disposal
 	categoryId = CATEGORY_DISPOSALS
-	icon = 'icons/obj/pipes/disposal.dmi'
+	icon = 'icons/obj/atmospherics/pipes/disposal.dmi'
 	icon_state = "meterX"
 
 /datum/pipe_info/disposal/New(var/pid,var/dt)
@@ -106,10 +106,6 @@ var/global/list/RPD_recipes=list(
 		"Junction"       = new /datum/pipe_info(PIPE_JUNCTION,			1, PIPE_UNARY),
 		"Heat Exchanger" = new /datum/pipe_info(PIPE_HEAT_EXCHANGE,		1, PIPE_UNARY),
 	),
-	"Insulated Pipes" = list(
-		"Pipe"           = new /datum/pipe_info(PIPE_INSULATED_STRAIGHT,1, PIPE_BINARY),
-		"Bent Pipe"      = new /datum/pipe_info(PIPE_INSULATED_BENT,	5, PIPE_BENT),
-	),
 	"Disposal Pipes" = list(
 		"Pipe"          = new /datum/pipe_info/disposal(DISP_PIPE_STRAIGHT,	PIPE_BINARY),
 		"Bent Pipe"     = new /datum/pipe_info/disposal(DISP_PIPE_BENT,		PIPE_TRINARY),
@@ -136,8 +132,7 @@ var/global/list/RPD_recipes=list(
 	throw_speed = 1
 	throw_range = 5
 	w_class = 3.0
-	m_amt = 75000
-	g_amt = 37500
+	materials = list(MAT_METAL=75000, MAT_GLASS=37500)
 	origin_tech = "engineering=4;materials=2"
 	var/datum/effect/effect/system/spark_spread/spark_system
 	var/working = 0
@@ -195,7 +190,7 @@ var/global/list/RPD_recipes=list(
 	else if(screen == CATEGORY_DISPOSALS)
 		dat += "<A href='?src=\ref[src];screen=[CATEGORY_ATMOS];makepipe=0;dir=1;type=0'>Atmospherics</A> <span class='linkOn'>Disposals</span><BR>"
 	dat += "</ul>"
-	
+
 	var/icon/preview=null
 	var/datbuild = ""
 	for(var/category in RPD_recipes)
@@ -215,7 +210,7 @@ var/global/list/RPD_recipes=list(
 					datbuild += "<span class='linkOn'>[label]</span>"
 				else
 					datbuild += I.Render(src,label)
-		
+
 		if(length(datbuild) > 0)
 			dat += "<b>[category]:</b><ul>"
 			dat += datbuild
@@ -400,17 +395,17 @@ var/global/list/RPD_recipes=list(
 		background:none;
 		margin: 1px;
 	}
-	
+
 	a.imglink:hover {
 		background:none;
 		color:none;
 	}
-	
+
 	a.imglink.selected img {
 		border: 1px solid #24722e;
 		background: #2f943c;
 	}
-	
+
 	a img {
 		border: 1px solid #161616;
 		background: #40628a;
@@ -447,7 +442,7 @@ var/global/list/RPD_recipes=list(
 	if(href_list["screen"])
 		screen = text2num(href_list["screen"])
 		show_menu(usr)
-	
+
 	if(href_list["setdir"])
 		p_dir= text2num(href_list["setdir"])
 		p_flipped = text2num(href_list["flipped"])
@@ -512,12 +507,12 @@ var/global/list/RPD_recipes=list(
 
 	if(istype(A,/area/shuttle)||istype(A,/turf/space/transit))
 		return 0
-	
+
 	//So that changing the menu settings doesn't affect the pipes already being built.
 	var/queued_p_type = p_type
 	var/queued_p_dir = p_dir
 	var/queued_p_flipped = p_flipped
-	
+
 	switch(p_class)
 		if(PAINT_MODE) // Paint pipes
 			if(!istype(A,/obj/machinery/atmospherics/pipe))
@@ -538,7 +533,7 @@ var/global/list/RPD_recipes=list(
 			if(istype(A,/obj/item/pipe) || istype(A,/obj/item/pipe_meter) || istype(A,/obj/structure/disposalconstruct))
 				user << "<span class='notice'>You start destroying pipe...</span>"
 				playsound(get_turf(src), 'sound/machines/click.ogg', 50, 1)
-				if(do_after(user, 5))
+				if(do_after(user, 5, target = A))
 					activate()
 					qdel(A)
 					return 1
@@ -553,7 +548,7 @@ var/global/list/RPD_recipes=list(
 				return 0
 			user << "<span class='notice'>You start building pipes...</span>"
 			playsound(get_turf(src), 'sound/machines/click.ogg', 50, 1)
-			if(do_after(user, 20))
+			if(do_after(user, 20, target = A))
 				activate()
 				var/obj/item/pipe/P = new (A, pipe_type=queued_p_type, dir=queued_p_dir)
 				P.flipped = queued_p_flipped
@@ -568,7 +563,7 @@ var/global/list/RPD_recipes=list(
 				return 0
 			user << "<span class='notice'>You start building meter...</span>"
 			playsound(get_turf(src), 'sound/machines/click.ogg', 50, 1)
-			if(do_after(user, 20))
+			if(do_after(user, 20, target = A))
 				activate()
 				new /obj/item/pipe_meter(A)
 				return 1
@@ -580,7 +575,7 @@ var/global/list/RPD_recipes=list(
 				return 0
 			user << "<span class='notice'>You start building pipes...</span>"
 			playsound(get_turf(src), 'sound/machines/click.ogg', 50, 1)
-			if(do_after(user, 20))
+			if(do_after(user, 20, target = A))
 				var/obj/structure/disposalconstruct/C = new (A, queued_p_type ,queued_p_dir)
 
 				if(!C.can_place())

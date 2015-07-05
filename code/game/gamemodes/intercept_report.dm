@@ -228,9 +228,9 @@
 	*/
 
 /datum/intercept_text/proc/build_gang(datum/mind/correct_person)
-	src.text += "<BR><BR>We have recieved reports of a sudden increase of criminal activity in close proximity to our operations within your sector."
-	src.text += "Ensure law and order is maintained on the station and be on the lookout for unusually territorial behavior from the crew."
-	src.text += "In the event of a full-scale takeover attempt, sensitive research items are to be secured and the station evacuated ASAP."
+	src.text += "<BR><BR>We have reports of criminal activity in close proximity to our operations within your sector."
+	src.text += "Ensure law and order is maintained on the station and be on the lookout for territorial aggression within the crew."
+	src.text += "In the event of a full-scale criminal takeover threat, sensitive research items are to be secured and the station evacuated ASAP."
 	src.text += "<BR><HR>"
 
 /datum/intercept_text/proc/build_wizard(datum/mind/correct_person)
@@ -289,3 +289,4 @@
 	*/
 	src.text += "These lifeforms are associated with the <B><U>[orgname1] [orgname2]</U></B> and may be attempting to acquire sensitive materials on their behalf.  "
 	src.text += "Please take care not to alarm the crew, as <B><U>[cname]</U></B> may take advantage of a panic situation. Remember, they can be anybody, suspect everybody!"
+	src.text += "<BR><HR>"

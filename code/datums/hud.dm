@@ -9,8 +9,6 @@ var/datum/atom_hud/huds = list( \
 	ANTAG_HUD_CULT = new/datum/atom_hud/antag(), \
 	ANTAG_HUD_REV = new/datum/atom_hud/antag(), \
 	ANTAG_HUD_OPS = new/datum/atom_hud/antag(), \
-	ANTAG_HUD_GANG_A = new/datum/atom_hud/antag(), \
-	ANTAG_HUD_GANG_B = new/datum/atom_hud/antag(), \
 	ANTAG_HUD_WIZ = new/datum/atom_hud/antag(), \
 	ANTAG_HUD_SHADOW = new/datum/atom_hud/antag(), \
 	)
@@ -56,6 +54,9 @@ var/datum/atom_hud/huds = list( \
 
 //MOB PROCS
 /mob/proc/reload_huds()
-	for(var/datum/atom_hud/hud in huds)
+	var/gang_huds = list()
+	for(var/datum/gang/G in ticker.mode.gangs)
+		gang_huds += G.ganghud
+	for(var/datum/atom_hud/hud in (huds|gang_huds))
 		if(src in hud.hudusers)
 			hud.add_hud_to(src)

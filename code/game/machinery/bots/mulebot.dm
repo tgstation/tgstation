@@ -89,8 +89,9 @@ obj/machinery/bot/mulebot/bot_reset()
 			user << "<span class='notice'>Controls [(locked ? "locked" : "unlocked")].</span>"
 
 	else if(istype(I,/obj/item/weapon/stock_parts/cell) && open && !cell)
+		if(!user.drop_item())
+			return
 		var/obj/item/weapon/stock_parts/cell/C = I
-		user.drop_item()
 		C.loc = src
 		cell = C
 		updateDialog()
@@ -117,14 +118,14 @@ obj/machinery/bot/mulebot/bot_reset()
 				"<span class='notice'>You repair [src].</span>"
 			)
 		else
-			user << "<span class='notice'> [src] does not need a repair!</span>"
+			user << "<span class='warning'>[src] does not need a repair!</span>"
 	else if(istype(I, /obj/item/device/multitool) || istype(I, /obj/item/weapon/wirecutters))
 		if(open)
 			attack_hand(usr)
 	else if(load && ismob(load))  // chance to knock off rider
 		if(prob(1+I.force * 2))
 			unload(0)
-			user.visible_message("<span class='danger'> [user] knocks [load] off [src] with \the [I]!</span>", "<span class='danger'> You knock [load] off [src] with \the [I]!</span>")
+			user.visible_message("<span class='danger'>[user] knocks [load] off [src] with \the [I]!</span>", "<span class='danger'>You knock [load] off [src] with \the [I]!</span>")
 		else
 			user << "<span class='warning'>You hit [src] with \the [I] but to no effect!</span>"
 	else
@@ -154,7 +155,7 @@ obj/machinery/bot/mulebot/bot_reset()
 		if(prob(50) && !isnull(load))
 			unload(0)
 		if(prob(25))
-			visible_message("<span class='danger'> Something shorts out inside [src]!</span>")
+			visible_message("<span class='danger'>Something shorts out inside [src]!</span>")
 			wires.RandomCut()
 
 
@@ -288,7 +289,8 @@ obj/machinery/bot/mulebot/bot_reset()
 				if(open && !cell)
 					var/obj/item/weapon/stock_parts/cell/C = usr.get_active_hand()
 					if(istype(C))
-						usr.drop_item()
+						if(!usr.drop_item())
+							return
 						cell = C
 						C.loc = src
 						C.add_fingerprint(usr)

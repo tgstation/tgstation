@@ -7,8 +7,7 @@
 
 	w_class = 2.0
 
-	m_amt = 50
-	g_amt = 50
+	materials = list(MAT_METAL=50, MAT_GLASS=50)
 	origin_tech = "engineering=1"
 
 	flags = CONDUCT
@@ -63,7 +62,8 @@
 		if(ink)
 			user << "<span class='notice'>\the [name] already contains \a [ink].</span>"
 			return
-		user.drop_item()
+		if(!user.unEquip(W))
+			return
 		W.loc = src
 		user << "<span class='notice'>You install \the [W] into \the [name].</span>"
 		ink = W

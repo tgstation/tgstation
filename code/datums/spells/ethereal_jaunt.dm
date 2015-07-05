@@ -16,6 +16,7 @@
 	action_icon_state = "jaunt"
 
 /obj/effect/proc_holder/spell/targeted/ethereal_jaunt/cast(list/targets) //magnets, so mostly hardcoded
+	playsound(get_turf(usr), 'sound/magic/Ethereal_Enter.ogg', 50, 1, -1)
 	for(var/mob/living/target in targets)
 		target.notransform = 1 //protects the mob from being transformed (replaced) midjaunt and getting stuck in bluespace
 		spawn(0)
@@ -44,6 +45,7 @@
 			jaunt_steam(mobloc)
 			target.canmove = 0
 			holder.reappearing = 1
+			playsound(get_turf(usr), 'sound/magic/Ethereal_Exit.ogg', 50, 1, -1)
 			sleep(20)
 			jaunt_reappear(animation, target)
 			sleep(5)
@@ -62,8 +64,10 @@
 	animation.icon_state = "liquify"
 	flick("liquify",animation)
 
+
 /obj/effect/proc_holder/spell/targeted/ethereal_jaunt/proc/jaunt_reappear(var/atom/movable/overlay/animation, var/mob/living/target)
 	flick("reappear",animation)
+
 
 /obj/effect/proc_holder/spell/targeted/ethereal_jaunt/proc/jaunt_steam(var/mobloc)
 	var/datum/effect/effect/system/steam_spread/steam = new /datum/effect/effect/system/steam_spread()
@@ -78,6 +82,7 @@
 	var/reappearing = 0
 	density = 0
 	anchored = 1
+	invisibility = 60
 
 /obj/effect/dummy/spell_jaunt/Destroy()
 	// Eject contents if deleted somehow

@@ -7,7 +7,7 @@
 	invocation = "GAR YOK"
 	invocation_type = "whisper"
 	range = -1
-	level_max = 1 //cannot be improved
+	level_max = 0 //cannot be improved
 	cooldown_min = 100
 	include_user = 1
 
@@ -104,8 +104,11 @@
 			if(butterfingers)
 				item_to_retrive.loc = user.loc
 				item_to_retrive.loc.visible_message("<span class='caution'>The [item_to_retrive.name] suddenly appears!</span>")
+				playsound(get_turf(user),"sound/magic/SummonItems_generic.ogg",50,1)
 			else
 				item_to_retrive.loc.visible_message("<span class='caution'>The [item_to_retrive.name] suddenly appears in [user]'s hand!</span>")
+				playsound(get_turf(user),"sound/magic/SummonItems_generic.ogg",50,1)
+
 
 		if(message)
 			user << message

@@ -41,6 +41,10 @@
 			return
 	..()
 
+/mob/living/simple_animal/hostile/asteroid/death(gibbed)
+	feedback_add_details("mobs_killed_mining","[src.name]")
+	..(gibbed)
+
 /mob/living/simple_animal/hostile/asteroid/basilisk
 	name = "basilisk"
 	desc = "A territorial beast, covered in a thick shell that absorbs energy. Its stare causes victims to freeze from the inside."
@@ -109,6 +113,7 @@
 		var/obj/item/weapon/ore/diamond/D = new /obj/item/weapon/ore/diamond(src.loc)
 		D.layer = 4.1
 	..(gibbed)
+
 
 /mob/living/simple_animal/hostile/asteroid/goldgrub
 	name = "goldgrub"
@@ -259,7 +264,7 @@
 
 /obj/item/asteroid/hivelord_core
 	name = "hivelord remains"
-	desc = "All that remains of a hivelord, it seems to be what allows it to break pieces of itself off without being hurt... its healing properties will soon become inert if not used quickly. Try not to think about what you're eating."
+	desc = "All that remains of a hivelord, it seems to be what allows it to break pieces of itself off without being hurt... its healing properties will soon become inert if not used quickly."
 	icon = 'icons/obj/food/food.dmi'
 	icon_state = "boiledrorocore"
 	var/inert = 0
@@ -280,10 +285,9 @@
 				user << "<span class='notice'>[src] are useless on the dead.</span>"
 				return
 			if(H != user)
-				H.visible_message("[user] forces [H] to eat [src]... they quickly regenerate all injuries!")
+				H.visible_message("[user] forces [H] to apply [src]... they quickly regenerate all injuries!")
 			else
-				user << "<span class='notice'>You chomp into [src], barely managing to hold it down, but feel amazingly refreshed in mere moments.</span>"
-			playsound(src.loc,'sound/items/eatfood.ogg', rand(10,50), 1)
+				user << "<span class='notice'>You start to smear [src] on yourself. It feels and smells disgusting, but you feel amazingly refreshed in mere moments.</span>"
 			H.revive()
 			qdel(src)
 	..()

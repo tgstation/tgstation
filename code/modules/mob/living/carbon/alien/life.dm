@@ -64,4 +64,5 @@
 	return 1
 
 /mob/living/carbon/alien/CheckStamina()
+	setStaminaLoss(max((staminaloss - 2), 0))
 	return

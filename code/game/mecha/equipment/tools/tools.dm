@@ -301,22 +301,24 @@
 	switch(mode)
 		if(0)
 			if (istype(target, /turf/simulated/wall))
-				occupant_message("Deconstructing [target]...")
+				var/turf/simulated/wall/W = target
+				occupant_message("Deconstructing [W]...")
 				set_ready_state(0)
-				if(do_after_cooldown(target))
+				if(do_after_cooldown(W))
 					if(disabled) return
 					chassis.spark_system.start()
-					target:ChangeTurf(/turf/simulated/floor/plating)
-					playsound(target, 'sound/items/Deconstruct.ogg', 50, 1)
+					W.ChangeTurf(/turf/simulated/floor/plating)
+					playsound(W, 'sound/items/Deconstruct.ogg', 50, 1)
 					chassis.use_power(energy_drain)
 			else if (istype(target, /turf/simulated/floor))
-				occupant_message("Deconstructing [target]...")
+				var/turf/simulated/floor/F = target
+				occupant_message("Deconstructing [F]...")
 				set_ready_state(0)
-				if(do_after_cooldown(target))
+				if(do_after_cooldown(F))
 					if(disabled) return
 					chassis.spark_system.start()
-					target:ChangeTurf(/turf/space)
-					playsound(target, 'sound/items/Deconstruct.ogg', 50, 1)
+					F.ChangeTurf(F.baseturf)
+					playsound(F, 'sound/items/Deconstruct.ogg', 50, 1)
 					chassis.use_power(energy_drain)
 			else if (istype(target, /obj/machinery/door/airlock))
 				occupant_message("Deconstructing [target]...")
@@ -329,21 +331,23 @@
 					chassis.use_power(energy_drain)
 		if(1)
 			if(istype(target, /turf/space))
+				var/turf/space/S = target
 				occupant_message("Building Floor...")
 				set_ready_state(0)
-				if(do_after_cooldown(target))
+				if(do_after_cooldown(S))
 					if(disabled) return
-					target:ChangeTurf(/turf/simulated/floor/plating)
-					playsound(target, 'sound/items/Deconstruct.ogg', 50, 1)
+					S.ChangeTurf(/turf/simulated/floor/plating)
+					playsound(S, 'sound/items/Deconstruct.ogg', 50, 1)
 					chassis.spark_system.start()
 					chassis.use_power(energy_drain*2)
 			else if(istype(target, /turf/simulated/floor))
+				var/turf/simulated/floor/F = target
 				occupant_message("Building Wall...")
 				set_ready_state(0)
 				if(do_after_cooldown(target))
 					if(disabled) return
-					target:ChangeTurf(/turf/simulated/wall)
-					playsound(target, 'sound/items/Deconstruct.ogg', 50, 1)
+					F.ChangeTurf(/turf/simulated/wall)
+					playsound(F, 'sound/items/Deconstruct.ogg', 50, 1)
 					chassis.spark_system.start()
 					chassis.use_power(energy_drain*2)
 		if(2)
@@ -591,8 +595,8 @@
 	P.icon_state = "anom"
 	P.name = "wormhole"
 	var/turf/T = get_turf(target)
-	message_admins("[key_name(chassis.occupant, chassis.occupant.client)](<A HREF='?_src_=holder;adminmoreinfo=\ref[chassis.occupant]'>?</A>) used a Wormhole Generator in ([T.x],[T.y],[T.z] - <A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[T.x];Y=[T.y];Z=[T.z]'>JMP</a>)",0,1)
-	log_game("[chassis.occupant.ckey]([chassis.occupant]) used a Wormhole Generator in ([T.x],[T.y],[T.z])")
+	message_admins("[key_name_admin(chassis.occupant, chassis.occupant.client)](<A HREF='?_src_=holder;adminmoreinfo=\ref[chassis.occupant]'>?</A>) (<A HREF='?_src_=holder;adminplayerobservefollow=\ref[chassis.occupant]'>FLW</A>) used a Wormhole Generator in ([T.x],[T.y],[T.z] - <A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[T.x];Y=[T.y];Z=[T.z]'>JMP</a>)",0,1)
+	log_game("[key_name(chassis.occupant)] used a Wormhole Generator in ([T.x],[T.y],[T.z])")
 	do_after_cooldown()
 	src = null
 	spawn(rand(150,300))

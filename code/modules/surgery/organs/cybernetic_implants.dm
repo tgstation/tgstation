@@ -75,7 +75,7 @@
 	desc = "These cybernetic eyes will give you X-ray vision. Blinking is futile."
 	eye_color = "000"
 	implant_color = "#000000"
-	origin_tech = "materials=6;programming=4;biotech=5;magnets=5;plasmatech=2"
+	origin_tech = "materials=6;programming=4;biotech=6;magnets=5"
 
 /obj/item/cybernetic_implant/eyes/xray/function()
 	if(!owner)
@@ -95,7 +95,7 @@
 	eye_color = "FC0"
 	implant_color = "#FFCC00"
 	flash_protect = -1
-	origin_tech = "materials=6;programming=4;biotech=5;magnets=5;plasmatech=2;syndicate=4"
+	origin_tech = "materials=6;programming=4;biotech=5;magnets=5;syndicate=4"
 
 /obj/item/cybernetic_implant/eyes/thermals/function()
 	if(!owner)
@@ -295,7 +295,7 @@
 
 /obj/item/cybernetic_implant/chest/nutriment/plus
 	name = "Nutriment pump implant PLUS"
-	desc = "This implant with synthesize and pump into your bloodstream a small amount of nutriment when you are hungry."
+	desc = "This implant will synthesize and pump into your bloodstream a small amount of nutriment when you are hungry."
 	icon_state = "chest_implant"
 	implant_color = "#006607"
 	hunger_threshold = NUTRITION_LEVEL_HUNGRY
@@ -307,4 +307,86 @@
 	if(!owner)
 		return
 	owner.reagents.add_reagent("????",poison_amount / severity) //food poisoning
-	owner << "<span class='notice'>You feel like your insides are burning.</span>"
+	owner << "<span class='warning'>You feel like your insides are burning.</span>"
+
+
+/obj/item/cybernetic_implant/chest/reviver
+	name = "Reviver implant"
+	desc = "This implant will attempt to revive you if you lose consciousness. For the faint of heart!"
+	icon_state = "chest_implant"
+	implant_color = "#AD0000"
+	origin_tech = "materials=6;programming=3;biotech=6;syndicate=4"
+	var/revive_cost = 0
+	var/reviving = 0
+	var/cooldown = 0
+
+/obj/item/cybernetic_implant/chest/reviver/function()
+	SSobj.processing |= src
+
+/obj/item/cybernetic_implant/chest/reviver/process()
+	if(!owner)
+		SSobj.processing.Remove(src)
+		qdel(src)
+		return
+
+	if(reviving)
+		if(owner.stat == UNCONSCIOUS)
+			spawn(30)
+				if(prob(90) && owner.getOxyLoss())
+					owner.adjustOxyLoss(-3)
+					revive_cost += 5
+				if(prob(75) && owner.getBruteLoss())
+					owner.adjustBruteLoss(-1)
+					revive_cost += 20
+				if(prob(75) && owner.getFireLoss())
+					owner.adjustFireLoss(-1)
+					revive_cost += 20
+				if(prob(40) && owner.getToxLoss())
+					owner.adjustToxLoss(-1)
+					revive_cost += 50
+		else
+			cooldown = revive_cost + world.time
+			reviving = 0
+		return
+
+	if(cooldown > world.time)
+		return
+	if(owner.stat != UNCONSCIOUS)
+		return
+	if(owner.suiciding)
+		SSobj.processing.Remove(src)
+		return
+
+	revive_cost = 0
+	reviving = 1
+
+/obj/item/cybernetic_implant/chest/reviver/emp_act(severity)
+	if(reviving)
+		revive_cost += 200
+	else
+		cooldown += 200
+
+	if(prob(50 / severity))
+		owner.heart_attack = 1
+		spawn(600 / severity)
+			owner.heart_attack = 0
+
+
+//BOX O' IMPLANTS
+
+/obj/item/weapon/storage/box/cyber_implants
+	name = "boxed cybernetic implants"
+	desc = "A sleek, sturdy box."
+	icon_state = "cyber_implants"
+	var/list/boxed = list(/obj/item/cybernetic_implant/eyes/xray,/obj/item/cybernetic_implant/eyes/thermals,
+						/obj/item/cybernetic_implant/brain/anti_drop, /obj/item/cybernetic_implant/brain/anti_stun,
+						/obj/item/cybernetic_implant/chest/nutriment/plus, /obj/item/cybernetic_implant/chest/reviver)
+	var/amount = 5
+
+/obj/item/weapon/storage/box/cyber_implants/New()
+	..()
+	var/i
+	var/implant
+	for(i = 0, i < amount, i++)
+		implant = pick(boxed)
+		new implant(src)

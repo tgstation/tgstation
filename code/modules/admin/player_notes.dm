@@ -26,11 +26,11 @@
 	popup.open()
 
 
-datum/admins/proc/notes_show(var/ckey)
+/datum/admins/proc/notes_show(var/ckey)
 	usr << browse("<head><title>Player Notes</title></head><body>[notes_gethtml(ckey)]</body>","window=player_notes;size=700x400")
 
 
-datum/admins/proc/notes_gethtml(var/ckey)
+/datum/admins/proc/notes_gethtml(var/ckey)
 	var/savefile/notesfile = new(NOTESFILE)
 	if(!notesfile)	return "<span class='warning'>Error: Cannot access [NOTESFILE]</span>"
 	if(ckey)

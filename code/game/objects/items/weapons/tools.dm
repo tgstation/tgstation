@@ -24,7 +24,7 @@
 	force = 5
 	throwforce = 7
 	w_class = 2
-	m_amt = 150
+	materials = list(MAT_METAL=150)
 	origin_tech = "materials=1;engineering=1"
 	attack_verb = list("bashed", "battered", "bludgeoned", "whacked")
 
@@ -48,8 +48,7 @@
 	throwforce = 5
 	throw_speed = 3
 	throw_range = 5
-	g_amt = 0
-	m_amt = 75
+	materials = list(MAT_METAL=75)
 	attack_verb = list("stabbed")
 	hitsound = 'sound/weapons/bladeslice.ogg'
 
@@ -111,7 +110,7 @@
 	throw_speed = 3
 	throw_range = 7
 	w_class = 2.0
-	m_amt = 80
+	materials = list(MAT_METAL=80)
 	origin_tech = "materials=1;engineering=1"
 	attack_verb = list("pinched", "nipped")
 	hitsound = 'sound/items/Wirecutter.ogg'
@@ -144,6 +143,7 @@
  */
 /obj/item/weapon/weldingtool
 	name = "welding tool"
+	desc = "A standard edition welder provided by NanoTrasen."
 	icon = 'icons/obj/items.dmi'
 	icon_state = "welder"
 	item_state = "welder"
@@ -155,13 +155,13 @@
 	throw_speed = 3
 	throw_range = 5
 	w_class = 2
-	m_amt = 70
-	g_amt = 30
+	materials = list(MAT_METAL=70, MAT_GLASS=30)
 	origin_tech = "engineering=1"
 	var/welding = 0 	//Whether or not the welding tool is off(0), on(1) or currently welding(2)
 	var/status = 1 		//Whether the welder is secured or unsecured (able to attach rods to it to make a flamethrower)
 	var/max_fuel = 20 	//The max amount of fuel the welder can hold
 	var/change_icons = 1
+	var/can_off_process = 0
 
 /obj/item/weapon/weldingtool/New()
 	..()
@@ -223,7 +223,8 @@
 			force = 3
 			damtype = "brute"
 			update_icon()
-			SSobj.processing.Remove(src)
+			if(!can_off_process)
+				SSobj.processing.Remove(src)
 			return
 	//Welders left on now use up fuel, but lets not have them run out quite that fast
 		if(1)
@@ -356,8 +357,9 @@
 		var/obj/item/stack/rods/R = I
 		if (R.use(1))
 			var/obj/item/weapon/flamethrower/F = new /obj/item/weapon/flamethrower(user.loc)
-			user.unEquip(src)
-			loc = F
+			if(!remove_item_from_storage(F))
+				user.unEquip(src)
+				loc = F
 			F.weldtool = src
 			add_fingerprint(user)
 			user << "<span class='notice'>You add a rod to a welder, starting to build a flamethrower.</span>"
@@ -368,9 +370,10 @@
 
 /obj/item/weapon/weldingtool/largetank
 	name = "industrial welding tool"
+	desc = "A slightly larger welder with a larger tank."
 	icon_state = "indwelder"
 	max_fuel = 40
-	g_amt = 60
+	materials = list(MAT_GLASS=60)
 	origin_tech = "engineering=2"
 
 /obj/item/weapon/weldingtool/largetank/cyborg
@@ -381,11 +384,11 @@
 
 /obj/item/weapon/weldingtool/mini
 	name = "emergency welding tool"
+	desc = "A miniature welder used during emergencies."
 	icon_state = "miniwelder"
 	max_fuel = 10
 	w_class = 1
-	m_amt = 30
-	g_amt = 10
+	materials = list(MAT_METAL=30, MAT_GLASS=10)
 	change_icons = 0
 
 /obj/item/weapon/weldingtool/mini/flamethrower_screwdriver()
@@ -394,28 +397,30 @@
 
 /obj/item/weapon/weldingtool/hugetank
 	name = "upgraded industrial welding tool"
+	desc = "An upgraded welder based of the industrial welder."
 	icon_state = "upindwelder"
 	item_state = "upindwelder"
 	max_fuel = 80
-	m_amt = 70
-	g_amt = 120
+	materials = list(MAT_METAL=70, MAT_GLASS=120)
 	origin_tech = "engineering=3"
 
 /obj/item/weapon/weldingtool/experimental
 	name = "experimental welding tool"
+	desc = "An experimental welder capable of self-fuel generation."
 	icon_state = "exwelder"
 	item_state = "exwelder"
 	max_fuel = 40
-	m_amt = 70
-	g_amt = 120
-	origin_tech = "engineering=4;plasmatech=3"
+	materials = list(MAT_METAL=70, MAT_GLASS=120)
+	origin_tech = "materials=4;engineering=4;bluespace=3;plasmatech=3"
 	var/last_gen = 0
+	change_icons = 0
+	can_off_process = 1
 
 
 //Proc to make the experimental welder generate fuel, optimized as fuck -Sieve
 //i don't think this is actually used, yaaaaay -Pete
 /obj/item/weapon/weldingtool/experimental/proc/fuel_gen()
-	if(!last_gen)
+	if(!welding && !last_gen)
 		last_gen = 1
 		reagents.add_reagent("welding_fuel",1)
 		spawn(10)
@@ -443,7 +448,7 @@
 	throwforce = 7
 	item_state = "crowbar"
 	w_class = 2
-	m_amt = 50
+	materials = list(MAT_METAL=50)
 	origin_tech = "engineering=1"
 	attack_verb = list("attacked", "bashed", "battered", "bludgeoned", "whacked")
 
@@ -464,5 +469,5 @@
 	w_class = 3
 	throw_speed = 3
 	throw_range = 3
-	m_amt = 66
+	materials = list(MAT_METAL=70)
 	icon_state = "crowbar_large"

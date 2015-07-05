@@ -12,8 +12,7 @@
 	w_class = 3.0
 	var/charge = 0	// note %age conveted to actual charge in New
 	var/maxcharge = 1000
-	m_amt = 700
-	g_amt = 50
+	materials = list(MAT_METAL=700, MAT_GLASS=50)
 	var/rigged = 0		// true if rigged to explode
 	var/minor_fault = 0 //If not 100% reliable, it will build up faults.
 	var/chargerate = 100 //how much power is given every tick in a recharger
@@ -43,6 +42,8 @@
 		return 0
 	if(charge < amount)	return 0
 	charge = (charge - amount)
+	if(!istype(loc, /obj/machinery/power/apc))
+		feedback_add_details("cell_used","[src.name]")
 	return 1
 
 // recharge the cell
@@ -146,7 +147,7 @@
 	desc = "You can't top the plasma top." //TOTALLY TRADEMARK INFRINGEMENT
 	origin_tech = "powerstorage=0"
 	maxcharge = 500
-	g_amt = 40
+	materials = list(MAT_GLASS=40)
 	rating = 2
 
 /obj/item/weapon/stock_parts/cell/crap/empty/New()
@@ -157,7 +158,7 @@
 	name = "security borg rechargable D battery"
 	origin_tech = "powerstorage=0"
 	maxcharge = 600	//600 max charge / 100 charge per shot = six shots
-	g_amt = 40
+	materials = list(MAT_GLASS=40)
 	rating = 2.5
 
 /obj/item/weapon/stock_parts/cell/secborg/empty/New()
@@ -183,7 +184,7 @@
 	origin_tech = "powerstorage=2"
 	icon_state = "hcell"
 	maxcharge = 10000
-	g_amt = 60
+	materials = list(MAT_GLASS=60)
 	rating = 3
 	chargerate = 1500
 
@@ -196,7 +197,7 @@
 	origin_tech = "powerstorage=5"
 	icon_state = "scell"
 	maxcharge = 20000
-	g_amt = 70
+	materials = list(MAT_GLASS=70)
 	rating = 4
 	chargerate = 2000
 
@@ -209,11 +210,24 @@
 	origin_tech = "powerstorage=6"
 	icon_state = "hpcell"
 	maxcharge = 30000
-	g_amt = 80
+	materials = list(MAT_GLASS=80)
 	rating = 5
 	chargerate = 3000
 
 /obj/item/weapon/stock_parts/cell/hyper/empty/New()
+	..()
+	charge = 0
+
+/obj/item/weapon/stock_parts/cell/bluespace
+	name = "bluespace power cell"
+	origin_tech = "powerstorage=7"
+	icon_state = "bscell"
+	maxcharge = 40000
+	materials = list(MAT_GLASS=80)
+	rating = 6
+	chargerate = 4000
+
+/obj/item/weapon/stock_parts/cell/bluespace/empty/New()
 	..()
 	charge = 0
 
@@ -222,7 +236,7 @@
 	icon_state = "icell"
 	origin_tech =  null
 	maxcharge = 30000
-	g_amt = 80
+	materials = list(MAT_GLASS=80)
 	rating = 6
 	chargerate = 30000
 	use()
@@ -236,8 +250,7 @@
 	icon_state = "potato_cell" //"potato_battery"
 	charge = 100
 	maxcharge = 300
-	m_amt = 0
-	g_amt = 0
+	materials = list()
 	minor_fault = 1
 	rating = 1
 
@@ -247,8 +260,7 @@
 	origin_tech = "powerstorage=2;biotech=4"
 	icon = 'icons/mob/slimes.dmi'
 	icon_state = "yellow slime extract"
-	m_amt = 0
-	g_amt = 0
+	materials = list()
 
 /obj/item/weapon/stock_parts/cell/emproof
 	name = "\improper EMP-proof cell"

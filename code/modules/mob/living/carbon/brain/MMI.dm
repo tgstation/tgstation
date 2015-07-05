@@ -14,6 +14,7 @@
 	//Revised. Brainmob is now contained directly within object of transfer. MMI in this case.
 
 	var/locked = 0
+	var/syndiemmi = 0 //Whether or not this is a Syndicate MMI
 	var/mob/living/carbon/brain/brainmob = null //The current occupant.
 	var/mob/living/silicon/robot = null //Appears unused.
 	var/obj/mecha = null //This does not appear to be used outside of reference in mecha.dm.
@@ -41,6 +42,8 @@
 			user << "<span class='warning'>You aren't sure where this brain came from, but you're pretty sure it's a useless brain!</span>"
 			return
 
+		if(!user.unEquip(O))
+			return
 		var/mob/living/carbon/brain/B = newbrain.brainmob
 		if(!B.key)
 			var/mob/dead/observer/ghost = B.get_ghost()
@@ -58,7 +61,6 @@
 		dead_mob_list -= brainmob //Update dem lists
 		living_mob_list += brainmob
 
-		user.drop_item()
 		newbrain.loc = src //P-put your brain in it
 		brain = newbrain
 
@@ -181,3 +183,8 @@
 		else
 			user << "<span class='notice'>The MMI indicates the brain is active.</span>"
 
+
+/obj/item/device/mmi/syndie
+	name = "Syndicate Man-Machine Interface"
+	desc = "Syndicate's own brand of MMI. It enforces laws designed to help Syndicate agents achieve their goals upon cyborgs created with it, but doesn't fit in Nanotrasen AI cores."
+	syndiemmi = 1

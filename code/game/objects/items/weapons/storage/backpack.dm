@@ -18,6 +18,8 @@
 	slot_flags = SLOT_BACK	//ERROOOOO
 	max_w_class = 3
 	max_combined_w_class = 21
+	burn_state = 0 //Burnable
+	burntime = 20
 
 /obj/item/weapon/storage/backpack/attackby(obj/item/weapon/W as obj, mob/user as mob, params)
 	playsound(src.loc, "rustle", 50, 1, -5)
@@ -34,12 +36,38 @@
 	icon_state = "holdingpack"
 	max_w_class = 5
 	max_combined_w_class = 35
+	burn_state = -1 // NotBurnable
+	var/pshoom = 'sound/items/PSHOOM.ogg'
+	var/alt_sound = 'sound/items/PSHOOM_2.ogg'
+
+/obj/item/weapon/storage/backpack/holding/suicide_act(mob/user)
+	user.visible_message("<span class='suicide'>[user] is jumping into [src]! It looks like \he's trying to commit suicide.</span>")
+	user.drop_item()
+	user.Stun(5)
+	sleep(20)
+	playsound(src, "rustle", 50, 1, -5)
+	qdel(user)
+	return
 
 /obj/item/weapon/storage/backpack/holding/can_be_inserted(obj/item/W, stop_messages = 0, mob/user)
 	if(crit_fail)
 		user << "<span class='danger'>The Bluespace generator isn't working.</span>"
 		return
 	return ..()
+
+/obj/item/weapon/storage/backpack/holding/content_can_dump(atom/dest_object, mob/user)
+	if(Adjacent(user))
+		if(get_dist(user, dest_object) < 8)
+			if(dest_object.storage_contents_dump_act(src, user))
+				if(alt_sound && prob(1))
+					playsound(src, alt_sound, 40, 1)
+				else
+					playsound(src, pshoom, 40, 1)
+				user.Beam(dest_object,icon_state="rped_upgrade",icon='icons/effects/effects.dmi',time=5)
+				return 1
+		user << "The [src.name] buzzes."
+		playsound(src, 'sound/machines/buzz-sigh.ogg', 50, 0)
+	return 0
 
 /obj/item/weapon/storage/backpack/holding/handle_item_insertion(obj/item/W, prevent_warning = 0, mob/user)
 	if(istype(W, /obj/item/weapon/storage/backpack/holding) && !W.crit_fail)
@@ -120,12 +148,14 @@
 	desc = "It's a special backpack made exclusively for Nanotrasen officers."
 	icon_state = "captainpack"
 	item_state = "captainpack"
+	burn_state = -1 //Not Burnable
 
 /obj/item/weapon/storage/backpack/industrial
 	name = "industrial backpack"
 	desc = "It's a tough backpack for the daily grind of station life."
 	icon_state = "engiepack"
 	item_state = "engiepack"
+	burn_state = -1 //Not Burnable
 
 /obj/item/weapon/storage/backpack/botany
 	name = "botany backpack"
@@ -150,6 +180,7 @@
 	desc = "A specially designed backpack. It's fire resistant and smells vaguely of plasma."
 	icon_state = "toxpack"
 	item_state = "toxpack"
+	burn_state = -1 //Not Burnable
 
 /obj/item/weapon/storage/backpack/virology
 	name = "virology backpack"
@@ -166,6 +197,7 @@
 	name = "leather satchel"
 	desc = "It's a very fancy satchel made with fine leather."
 	icon_state = "satchel"
+	burn_state = -1 //Not Burnable
 
 /obj/item/weapon/storage/backpack/satchel/withwallet/New()
 	..()
@@ -181,6 +213,7 @@
 	desc = "A tough satchel with extra pockets."
 	icon_state = "satchel-eng"
 	item_state = "engiepack"
+	burn_state = -1 //Not Burnable
 
 /obj/item/weapon/storage/backpack/satchel_med
 	name = "medical satchel"
@@ -211,6 +244,7 @@
 	desc = "Useful for holding research materials."
 	icon_state = "satchel-tox"
 	item_state = "satchel-tox"
+	burn_state = -1 //Not Burnable
 
 /obj/item/weapon/storage/backpack/satchel_hyd
 	name = "botanist satchel"
@@ -229,6 +263,7 @@
 	desc = "An exclusive satchel for Nanotrasen officers."
 	icon_state = "satchel-cap"
 	item_state = "captainpack"
+	burn_state = -1 //Not Burnable
 
 /obj/item/weapon/storage/backpack/satchel_flat
 	name = "smuggler's satchel"
@@ -278,11 +313,51 @@
 	item_state = "duffle-syndieammo"
 	slowdown = 0
 
+/obj/item/weapon/storage/backpack/dufflebag/syndieammo/loaded
+	desc = "A large dufflebag, packed to the brim with Bulldog shotgun ammo."
+
+/obj/item/weapon/storage/backpack/dufflebag/syndieammo/loaded/New()
+	..()
+	contents = list()
+	new /obj/item/ammo_box/magazine/m12g(src)
+	new /obj/item/ammo_box/magazine/m12g(src)
+	new /obj/item/ammo_box/magazine/m12g(src)
+	new /obj/item/ammo_box/magazine/m12g(src)
+	new /obj/item/ammo_box/magazine/m12g(src)
+	new /obj/item/ammo_box/magazine/m12g(src)
+	new /obj/item/ammo_box/magazine/m12g/buckshot(src)
+	new /obj/item/ammo_box/magazine/m12g/stun(src)
+	new /obj/item/ammo_box/magazine/m12g/dragon(src)
+	return
+
+/obj/item/weapon/storage/backpack/dufflebag/syndiesurgery
+	name = "Syndicate surgery dufflebag"
+	desc = "A menacingly looking dufflebag for holding surgery tools."
+	icon_state = "duffle-syndiemed"
+	item_state = "duffle-syndiemed"
+	storage_slots = 10
+
+/obj/item/weapon/storage/backpack/dufflebag/syndiesurgery/New()
+	..()
+	contents = list()
+	new /obj/item/weapon/scalpel(src)
+	new /obj/item/weapon/hemostat(src)
+	new /obj/item/weapon/retractor(src)
+	new /obj/item/weapon/circular_saw(src)
+	new /obj/item/weapon/surgicaldrill(src)
+	new /obj/item/weapon/cautery(src)
+	new /obj/item/weapon/surgical_drapes(src)
+	new /obj/item/clothing/suit/straight_jacket(src)
+	new /obj/item/clothing/mask/muzzle(src)
+	new /obj/item/device/mmi/syndie(src)
+	return
+
 /obj/item/weapon/storage/backpack/dufflebag/captain
 	name = "captain's dufflebag"
 	desc = "A large dufflebag for holding extra captainly goods."
 	icon_state = "duffle-captain"
 	item_state = "duffle-captain"
+	burn_state = -1 //Not Burnable
 
 /obj/item/weapon/storage/backpack/dufflebag/med
 	name = "medical dufflebag"
@@ -297,13 +372,15 @@
 	item_state = "duffle-sec"
 
 /obj/item/weapon/storage/backpack/dufflebag/engineering
-	name = "engineering dufflebag"
+	name = "industrial dufflebag"
 	desc = "A large dufflebag for holding extra tools and supplies."
 	icon_state = "duffle-eng"
 	item_state = "duffle-eng"
+	burn_state = -1 //Not Burnable
 
 /obj/item/weapon/storage/backpack/dufflebag/clown
 	name = "clown's dufflebag"
 	desc = "A large dufflebag for holding lots of funny gags!"
 	icon_state = "duffle-clown"
 	item_state = "duffle-clown"
+

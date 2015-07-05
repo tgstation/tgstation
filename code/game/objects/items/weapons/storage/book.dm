@@ -6,6 +6,7 @@
 	throw_speed = 2
 	throw_range = 5
 	w_class = 3.0
+	burn_state = 0 //Burnable
 	var/title = "book"
 /obj/item/weapon/storage/book/attack_self(mob/user)
 		user << "<span class='notice'>The pages of [title] have been cut out!</span>"
@@ -68,11 +69,9 @@ var/global/list/bibleitemstates =	list("bible", "koran", "scrapbook", "bible", "
 /obj/item/weapon/storage/book/bible/proc/setupbiblespecifics(var/obj/item/weapon/storage/book/bible/B, var/mob/living/carbon/human/H)
 	switch(B.icon_state)
 		if("honk1","honk2")
-			new /obj/item/weapon/grown/bananapeel(B)
-			new /obj/item/weapon/grown/bananapeel(B)
-
-			if(B.icon_state == "honk1")
-				H.equip_to_slot_or_del(new /obj/item/clothing/mask/gas/clown_hat(H), slot_wear_mask)
+			new /obj/item/weapon/bikehorn(B)
+			H.dna.add_mutation(CLOWNMUT)
+			H.equip_to_slot_or_del(new /obj/item/clothing/mask/gas/clown_hat(H), slot_wear_mask)
 
 		if("bible")
 			for(var/area/chapel/main/A in world)
@@ -204,7 +203,7 @@ var/global/list/bibleitemstates =	list("bible", "koran", "scrapbook", "bible", "
 			A.reagents.del_reagent("water")
 			A.reagents.add_reagent("holywater",water2holy)
 		if(A.reagents && A.reagents.has_reagent("unholywater")) //yeah yeah, copy pasted code - sue me
-			user << "<span class='notice'> You purify [A].</span>"
+			user << "<span class='notice'>You purify [A].</span>"
 			var/unholy2clean = A.reagents.get_reagent_amount("unholywater")
 			A.reagents.del_reagent("unholywater")
 			A.reagents.add_reagent("holywater",unholy2clean)

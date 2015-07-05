@@ -28,9 +28,12 @@ Passive gate is similar to the regular pump except:
 	..()
 
 /obj/machinery/atmospherics/binary/passive_gate/update_icon_nopipes()
-	overlays.Cut()
-	if(on & !(stat & NOPOWER))
-		overlays += getpipeimage('icons/obj/atmospherics/binary_devices.dmi', "passgate_on")
+	if(!on)
+		icon_state = "passgate_off"
+		overlays.Cut()
+		return
+
+	overlays += getpipeimage('icons/obj/atmospherics/binary_devices.dmi', "passgate_on")
 
 /obj/machinery/atmospherics/binary/passive_gate/process_atmos()
 	..()
@@ -89,24 +92,18 @@ Passive gate is similar to the regular pump except:
 
 	return 1
 
-/obj/machinery/atmospherics/binary/passive_gate/ui_interact(mob/user, ui_key = "main")
+/obj/machinery/atmospherics/binary/passive_gate/ui_interact(mob/user, ui_key = "main", var/datum/nanoui/ui = null)
 	if(stat & (BROKEN|NOPOWER))
 		return
 
-	var/data = list()
+	ui = SSnano.push_open_or_new_ui(user, src, ui_key, ui, "atmos_gas_pump.tmpl", name, 400, 120, 0)
 
+/obj/machinery/atmospherics/binary/passive_gate/get_ui_data()
+	var/data = list()
 	data["on"] = on
 	data["pressure_set"] = round(target_pressure*100) //Nano UI can't handle rounded non-integers, apparently.
 	data["max_pressure"] = MAX_OUTPUT_PRESSURE
-
-	var/datum/nanoui/ui = SSnano.get_open_ui(user, src, ui_key)
-	if (!ui)
-		ui = new /datum/nanoui(user, src, ui_key, "atmos_gas_pump.tmpl", name, 400, 120)
-		ui.set_initial_data(data)
-		ui.open()
-		ui.set_auto_update(1)
-	else
-		ui.push_data(data)
+	return data
 
 /obj/machinery/atmospherics/binary/passive_gate/atmosinit()
 	..()

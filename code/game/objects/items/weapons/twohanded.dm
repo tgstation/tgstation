@@ -128,8 +128,10 @@
 
 /obj/item/weapon/twohanded/required/attack_hand(mob/user)//Can't even pick it up without both hands empty
 	var/obj/item/weapon/twohanded/required/H = user.get_inactive_hand()
+	if(get_dist(src,user) > 1)
+		return 0
 	if(H != null)
-		user.visible_message("<span class='notice'>[src.name] is too cumbersome to carry in one hand!</span>")
+		user << "<span class='notice'>[src.name] is too cumbersome to carry in one hand!</span>"
 		return
 	var/obj/item/weapon/twohanded/offhand/O = new(user)
 	user.put_in_inactive_hand(O)
@@ -137,7 +139,7 @@
 	wielded = 1
 
 
-obj/item/weapon/twohanded/
+/obj/item/weapon/twohanded/
 
 /*
  * Fireaxe

@@ -106,6 +106,7 @@
 	var/shuttle_refuel_delay = 12000
 	var/show_game_type_odds = 0			//if set this allows players to see the odds of each roundtype on the get revision screen
 	var/mutant_races = 0				//players can choose their mutant race before joining the game
+	var/mutant_humans = 0				//players can pick mutant bodyparts for humans before joining the game
 
 	var/no_summon_guns		//No
 	var/no_summon_magic		//Fun
@@ -115,8 +116,8 @@
 	var/alert_desc_blue_upto = "The station has received reliable information about possible hostile activity on the station. Security staff may have weapons visible, random searches are permitted."
 	var/alert_desc_blue_downto = "The immediate threat has passed. Security may no longer have weapons drawn at all times, but may continue to have them visible. Random searches are still allowed."
 	var/alert_desc_red_upto = "There is an immediate serious threat to the station. Security may have weapons unholstered at all times. Random searches are allowed and advised."
-	var/alert_desc_red_downto = "The self-destruct mechanism has been deactivated, there is still however an immediate serious threat to the station. Security may have weapons unholstered at all times, random searches are allowed and advised."
-	var/alert_desc_delta = "The station's self-destruct mechanism has been engaged. All crew are instructed to obey all instructions given by heads of staff. Any violations of these orders can be punished by death. This is not a drill."
+	var/alert_desc_red_downto = "The station's destruction has been averted. There is still however an immediate serious threat to the station. Security may have weapons unholstered at all times, random searches are allowed and advised."
+	var/alert_desc_delta = "Destruction of the station is imminent. All crew are instructed to obey all instructions given by heads of staff. Any violations of these orders can be punished by death. This is not a drill."
 
 	var/health_threshold_crit = 0
 	var/health_threshold_dead = -100
@@ -159,6 +160,8 @@
 	var/grey_assistants = 0
 
 	var/aggressive_changelog = 0
+
+	var/reactionary_explosions = 0 //If we use reactionary explosions, explosions that react to walls and doors
 
 /datum/configuration/New()
 	var/list/L = typesof(/datum/game_mode) - /datum/game_mode
@@ -335,6 +338,11 @@
 					config.irc_first_connection_alert = 1
 				if("aggressive_changelog")
 					config.aggressive_changelog = 1
+				if("log_runtimes")
+					var/newlog = file("data/logs/runtimes/runtime-[time2text(world.realtime, "YYYY-MM-DD")].log")
+					if (world.log != newlog)
+						world.log << "Now logging runtimes to data/logs/runtimes/runtime-[time2text(world.realtime, "YYYY-MM-DD")].log"
+						world.log = newlog
 				else
 					diary << "Unknown setting in configuration: '[name]'"
 
@@ -473,6 +481,8 @@
 					config.silicon_max_law_amount	= text2num(value)
 				if("join_with_mutant_race")
 					config.mutant_races				= 1
+				if("join_with_mutant_humans")
+					config.mutant_humans			= 1
 				if("assistant_cap")
 					config.assistant_cap			= text2num(value)
 				if("starlight")
@@ -485,6 +495,22 @@
 					config.no_summon_magic			= 1
 				if("no_summon_events")
 					config.no_summon_events			= 1
+				if("reactionary_explosions")
+					config.reactionary_explosions	= 1
+				if("bombcap")
+					var/BombCap = text2num(value)
+					if (!BombCap)
+						continue
+					if (BombCap < 4)
+						BombCap = 4
+					if (BombCap > 128)
+						BombCap = 128
+
+					MAX_EX_DEVESTATION_RANGE = round(BombCap/4)
+					MAX_EX_HEAVY_RANGE = round(BombCap/2)
+					MAX_EX_LIGHT_RANGE = BombCap
+					MAX_EX_FLASH_RANGE = BombCap
+					MAX_EX_FLAME_RANGE = BombCap
 				else
 					diary << "Unknown setting in configuration: '[name]'"
 
@@ -560,7 +586,7 @@
 			//world << "DEBUG: runnable_mode\[[runnable_modes.len]\] = [M.config_tag]"
 	return runnable_modes
 
-datum/configuration/proc/get_runnable_midround_modes(crew)
+/datum/configuration/proc/get_runnable_midround_modes(crew)
 	var/list/datum/game_mode/runnable_modes = new
 	for(var/T in (typesof(/datum/game_mode) - /datum/game_mode - ticker.mode.type))
 		var/datum/game_mode/M = new T()

@@ -21,6 +21,7 @@
 	min_cold_protection_temperature = GLOVES_MIN_TEMP_PROTECT
 	heat_protection = HANDS
 	max_heat_protection_temperature = GLOVES_MAX_TEMP_PROTECT
+	burn_state = -1 //Not Burnable
 
 /obj/item/clothing/gloves/combat
 	name = "combat gloves"
@@ -34,3 +35,4 @@
 	min_cold_protection_temperature = GLOVES_MIN_TEMP_PROTECT
 	heat_protection = HANDS
 	max_heat_protection_temperature = GLOVES_MAX_TEMP_PROTECT
+	burn_state = -1 //Won't burn in fires

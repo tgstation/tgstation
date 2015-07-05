@@ -4,7 +4,7 @@
 	icon_state = "pistol"
 	origin_tech = "combat=2;materials=2"
 	w_class = 3.0
-	m_amt = 1000
+	materials = list(MAT_METAL=1000)
 
 	var/mag_type = /obj/item/ammo_box/magazine/m10mm //Removes the need for max_ammo and caliber info
 	var/obj/item/ammo_box/magazine/magazine
@@ -68,7 +68,8 @@
 				if(user.l_hand != src && user.r_hand != src)
 					user << "<span class='notice'>You'll need [src] in your hands to do that.</span>"
 					return
-				user.drop_item()
+				if(!user.unEquip(A))
+					return
 				user << "<span class='notice'>You screw [S] onto [src].</span>"
 				suppressed = A
 				S.oldsound = fire_sound

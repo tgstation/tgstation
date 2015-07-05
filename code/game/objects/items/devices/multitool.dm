@@ -13,8 +13,7 @@
 	throwforce = 0
 	throw_range = 7
 	throw_speed = 3
-	m_amt = 50
-	g_amt = 20
+	materials = list(MAT_METAL=50, MAT_GLASS=20)
 	origin_tech = "magnets=1;engineering=1"
 	var/obj/machinery/telecomms/buffer // simple machine buffer for device linkage
 	hitsound = 'sound/weapons/tap.ogg'
@@ -30,23 +29,24 @@
 	..()
 	SSobj.processing += src
 
-
 /obj/item/device/multitool/ai_detect/Destroy()
 	SSobj.processing -= src
 	..()
 
 /obj/item/device/multitool/ai_detect/process()
-
 	if(track_delay > world.time)
 		return
 
 	var/found_eye = 0
 	var/turf/our_turf = get_turf(src)
 
-	if(cameranet.chunkGenerated(our_turf.x, our_turf.y, our_turf.z))
+	for(var/mob/living/silicon/ai/AI in ai_list)
+		if(AI.cameraFollow == src)
+			found_eye = 1
+			break
 
+	if(!found_eye && cameranet.chunkGenerated(our_turf.x, our_turf.y, our_turf.z))
 		var/datum/camerachunk/chunk = cameranet.getCameraChunk(our_turf.x, our_turf.y, our_turf.z)
-
 		if(chunk)
 			if(chunk.seenby.len)
 				for(var/mob/camera/aiEye/A in chunk.seenby)
@@ -62,4 +62,3 @@
 
 	track_delay = world.time + 10 // 1 second
 	return
-

@@ -135,7 +135,7 @@
 	action_button_name = "Toggle Welding Goggles"
 	flash_protect = 2
 	tint = 2
-	visor_flags = GLASSESCOVERSEYES
+	flags_cover = GLASSESCOVERSEYES
 	visor_flags_inv = HIDEEYES
 
 
@@ -212,19 +212,19 @@
 	icon_state = "cold"
 	item_state = "cold"
 
-obj/item/clothing/glasses/heat
+/obj/item/clothing/glasses/heat
 	name = "heat goggles"
 	desc = "A pair of goggles meant for high temperatures."
 	icon_state = "heat"
 	item_state = "heat"
 
-obj/item/clothing/glasses/orange
+/obj/item/clothing/glasses/orange
 	name = "orange glasses"
 	desc = "A sweet pair of orange shades."
 	icon_state = "orangeglasses"
 	item_state = "orangeglasses"
 
-obj/item/clothing/glasses/red
+/obj/item/clothing/glasses/red
 	name = "red glasses"
 	desc = "A sweet pair of red shades."
 	icon_state = "redglasses"

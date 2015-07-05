@@ -1,8 +1,8 @@
 /obj/machinery/computer/camera_advanced
 	name = "advanced camera console"
 	desc = "Used to access the various cameras on the station."
-	icon_state = "cameras"
-	//circuit = /obj/item/weapon/circuitboard/security
+	icon_screen = "cameras"
+	icon_keyboard = "security_key"
 	var/mob/camera/aiEye/remote/eyeobj
 	var/mob/living/carbon/human/current_user = null
 	var/list/networks = list("SS13")
@@ -116,10 +116,13 @@
 	C.remote_view = 0
 	remote_eye.origin.current_user = null
 	remote_eye.origin.jump_action.Remove(C)
+	remote_eye.user = null
 	if(C.client)
 		C.client.perspective = MOB_PERSPECTIVE
 		C.client.eye = src
 		C.client.images -= remote_eye.user_image
+		for(var/datum/camerachunk/chunk in remote_eye.visibleCameraChunks)
+			C.client.images -= chunk.obscured
 	C.remote_control = null
 	C.unset_machine()
 	src.Remove(C)

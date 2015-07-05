@@ -164,8 +164,7 @@ var/list/obj/machinery/newscaster/allCasters = list()
 	desc = "Used to build newscasters, just secure to the wall."
 	icon_state = "newscaster"
 	item_state = "syringe_kit"
-	m_amt = 14000
-	g_amt = 8000
+	materials = list(MAT_METAL=14000, MAT_GLASS=8000)
 
 /obj/item/newscaster_frame/proc/try_build(turf/on_wall)
 	if (get_dist(on_wall,usr)>1)
@@ -478,9 +477,9 @@ var/list/obj/machinery/newscaster/allCasters = list()
 				dat+="<A href='?src=\ref[src];set_wanted_desc=1'>Description</A>: [msg] <BR>"
 				dat+="<A href='?src=\ref[src];set_attachment=1'>Attach Photo</A>: [(photo ? "Photo Attached" : "No Photo")]</BR>"
 				if(wanted_already)
-					dat+="<B>Wanted Issue created by:</B><FONT COLOR='green'> [news_network.wanted_issue.scannedUser]</FONT><BR>"
+					dat+="<B>Wanted Issue created by:</B><FONT COLOR='green'>[news_network.wanted_issue.scannedUser]</FONT><BR>"
 				else
-					dat+="<B>Wanted Issue will be created under prosecutor:</B><FONT COLOR='green'> [scanned_user]</FONT><BR>"
+					dat+="<B>Wanted Issue will be created under prosecutor:</B><FONT COLOR='green'>[scanned_user]</FONT><BR>"
 				dat+="<BR><A href='?src=\ref[src];submit_wanted=[end_param]'>[(wanted_already) ? ("Edit Issue") : ("Submit")]</A>"
 				if(wanted_already)
 					dat+="<BR><A href='?src=\ref[src];cancel_wanted=1'>Take down Issue</A>"
@@ -742,7 +741,7 @@ var/list/obj/machinery/newscaster/allCasters = list()
 	if(istype(I, /obj/item/weapon/wrench))
 		user << "<span class='notice'>You start [anchored ? "un" : ""]securing [name]...</span>"
 		playsound(loc, 'sound/items/Ratchet.ogg', 50, 1)
-		if(do_after(user, 60))
+		if(do_after(user, 60, target = src))
 			user << "<span class='notice'>You [anchored ? "un" : ""]secure [name].</span>"
 			new /obj/item/newscaster_frame(loc)
 			playsound(loc, 'sound/items/Deconstruct.ogg', 50, 1)
@@ -788,7 +787,8 @@ var/list/obj/machinery/newscaster/allCasters = list()
 		photo = null
 	if(istype(user.get_active_hand(), /obj/item/weapon/photo))
 		photo = user.get_active_hand()
-		user.drop_item()
+		if(!user.drop_item())
+			return
 		photo.loc = src
 	if(istype(user,/mob/living/silicon))
 		var/list/nametemp = list()
@@ -892,6 +892,10 @@ var/list/obj/machinery/newscaster/allCasters = list()
 	var/wantedBody
 	var/wantedPhoto
 	var/creationTime
+
+/obj/item/weapon/newspaper/suicide_act(mob/user)
+	user.visible_message("<span class='suicide'>[user] is focusing intently on [src]! It looks like they're trying to commit sudoku.</span>")
+	return(OXYLOSS)
 
 /obj/item/weapon/newspaper/attack_self(mob/user)
 	if(ishuman(user))

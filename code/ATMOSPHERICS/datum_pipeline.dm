@@ -7,8 +7,6 @@
 
 	var/update = 1
 
-	var/alert_pressure = 0
-
 /datum/pipeline/New()
 	SSair.networks += src
 
@@ -28,17 +26,6 @@
 		reconcile_air()
 
 	return
-	/*
-	//Check to see if pressure is within acceptable limits
-	var/pressure = air.return_pressure()
-	if(pressure > alert_pressure)
-		for(var/obj/machinery/atmospherics/pipe/member in members)
-			if(!member.check_pressure(pressure))
-				break //Only delete 1 pipe per process
-	//Allow for reactions
-	//air.react() //Should be handled by pipe_network now
-	*/
-
 
 var/pipenetwarnings = 10
 
@@ -47,7 +34,6 @@ var/pipenetwarnings = 10
 	if(istype(base, /obj/machinery/atmospherics/pipe))
 		var/obj/machinery/atmospherics/pipe/E = base
 		volume = E.volume
-		alert_pressure = E.alert_pressure
 		members += E
 		if(E.air_temporary)
 			air = E.air_temporary
@@ -79,8 +65,6 @@ var/pipenetwarnings = 10
 
 							volume += item.volume
 							item.parent = src
-
-							alert_pressure = min(alert_pressure, item.alert_pressure)
 
 							if(item.air_temporary)
 								air.merge(item.air_temporary)
@@ -360,7 +344,7 @@ var/pipenetwarnings = 10
 					corresponding.moles = trace_gas.moles*gas.volume/air_transient.volume
 	return 1
 
-proc/equalize_gases(datum/gas_mixture/list/gases)
+/proc/equalize_gases(datum/gas_mixture/list/gases)
 	//Perfectly equalize all gases members instantly
 
 	//Calculate totals from individual components
