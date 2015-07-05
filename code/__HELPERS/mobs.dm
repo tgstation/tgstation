@@ -54,8 +54,10 @@ proc/random_name(gender, speciesName = "Human")
 	if(S)
 		return S.makeName(gender)
 	else
-		var/datum/species/human/H
+		var/datum/species/human/H = new
 		return H.makeName(gender)
+
+
 
 proc/random_skin_tone()
 	switch(pick(60;"caucasian", 15;"afroamerican", 10;"african", 10;"latino", 5;"albino"))
