@@ -23,7 +23,7 @@
 	icon_state = "hos"
 	item_state = "greatcoat"
 	body_parts_covered = CHEST|GROIN|ARMS|LEGS
-	armor = list(melee = 55, bullet = 50, laser = 50, energy = 10, bomb = 25, bio = 10, rad = 0)
+	armor = list(melee = 55, bullet = 40, laser = 50, energy = 10, bomb = 25, bio = 10, rad = 0)
 	flags_inv = HIDEJUMPSUIT
 	cold_protection = CHEST|GROIN|LEGS|ARMS
 	heat_protection = CHEST|GROIN|LEGS|ARMS
