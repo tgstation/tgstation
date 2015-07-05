@@ -137,6 +137,7 @@
 /obj/item/toy/crayon/spraycan/New()
 	..()
 	name = "spray can"
+	colour = pick("#DA0000","#FF9300","#FFF200","#A8E61D","#00B7EF","#DA00FF")
 	update_icon()
 
 /obj/item/toy/crayon/spraycan/examine(mob/user)

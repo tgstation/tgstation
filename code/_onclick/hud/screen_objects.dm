@@ -274,17 +274,6 @@
 	overlays.Cut()
 	overlays += image('icons/mob/screen_gen.dmi', "[selecting]")
 
-
-/obj/screen/Click(location, control, params)
-	if(!usr)	return 1
-
-	if(name == "Reset Machine") //I don't know what this is, CTRL+F has the only entry right here in this file, so I'm going to leave it in case it is something important
-		usr.unset_machine()
-	else
-		return 0
-
-	return 1
-
 /obj/screen/inventory/Click()
 	// At this point in client Click() code we have passed the 1/10 sec check and little else
 	// We don't even know if it's a middle click

@@ -165,7 +165,7 @@
 	if(!burn_state)
 		burn_state = 1
 		SSobj.burning += src
-		burn_world_time = world.time + burntime*10
+		burn_world_time = world.time + burntime*rand(10,20)
 		if(global_overlay)
 			overlays += fire_overlay
 		return 1
@@ -174,7 +174,8 @@
 	for(var/obj/item/Item in contents) //Empty out the contents
 		Item.loc = src.loc
 		Item.fire_act() //Set them on fire, too
-	new /obj/effect/decal/cleanable/ash(src.loc)
+	var/obj/effect/decal/cleanable/ash/A = new(src.loc)
+	A.desc = "Looks like this used to be a [name] some time ago."
 	qdel(src)
 
 /obj/proc/extinguish()

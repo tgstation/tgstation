@@ -7,8 +7,7 @@
 	flags = HEAR
 	slot_flags = SLOT_BELT
 	languages = ALL //this is a translator, after all.
-	m_amt = 60
-	g_amt = 30
+	materials = list(MAT_METAL=60, MAT_GLASS=30)
 	force = 2
 	throwforce = 0
 	var/recording = 0
@@ -257,8 +256,7 @@
 	icon_state = "tape_white"
 	item_state = "analyzer"
 	w_class = 1
-	m_amt = 20
-	g_amt = 5
+	materials = list(MAT_METAL=20, MAT_GLASS=5)
 	force = 1
 	throwforce = 0
 	var/max_capacity = 600

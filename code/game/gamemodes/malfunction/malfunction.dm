@@ -117,7 +117,7 @@
 
 
 /datum/game_mode/malfunction/proc/capture_the_station()
-	world << "<FONT size = 3><B>The AI has won!</B></FONT>"
+	world << "<FONT size = 3><B>The AI has accessed the station's Core Files!</B></FONT>"
 	world << "<B>It has fully taken control of all of [station_name()]'s systems.</B>"
 
 	to_nuke_or_not_to_nuke = 1

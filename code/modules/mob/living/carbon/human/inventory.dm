@@ -392,7 +392,7 @@
 
 //Cycles through all clothing slots and tests them for destruction
 /mob/living/carbon/human/proc/shred_clothing(var/bomb,var/shock)
-	var/covered_parts		//The body parts that are protected by exterior clothing/armor
+	var/covered_parts = 0	//The body parts that are protected by exterior clothing/armor
 	var/head_absorbed = 0	//How much of the shock the headgear absorbs when it is shredded. -1=it survives
 	var/suit_absorbed = 0	//How much of the shock the exosuit absorbs when it is shredded. -1=it survives
 
@@ -405,7 +405,7 @@
 		head_absorbed = head.shred(bomb,shock,src)
 	if(wear_mask)
 		var/absorbed = ((covered_parts & HIDEMASK) ? head_absorbed : 0) //Check if clothing covering this part absorbed any of the shock
-		if(!(absorbed < 0))
+		if(absorbed >= 0)
 			//Masks can be used to shield other parts, but are simplified to simply add their absorbsion to the head armor if it covers the face
 			var/mask_absorbed = wear_mask.shred(bomb,shock-absorbed,src)
 			if(wear_mask.flags_inv & HIDEFACE)
@@ -416,11 +416,11 @@
 					head_absorbed += mask_absorbed
 	if(ears)
 		var/absorbed = ((covered_parts & HIDEEARS) ? head_absorbed : 0)
-		if(!(absorbed < 0))
+		if(absorbed >= 0)
 			ears.shred(bomb,shock-absorbed,src)
 	if(glasses)
 		var/absorbed = ((covered_parts & HIDEEYES) ? head_absorbed : 0)
-		if(!(absorbed < 0))
+		if(absorbed >= 0)
 			glasses.shred(bomb,shock-absorbed,src)
 
 	if(wear_suit)
@@ -428,15 +428,15 @@
 		suit_absorbed = wear_suit.shred(bomb,shock,src)
 	if(gloves)
 		var/absorbed = ((covered_parts & HIDEGLOVES) ? suit_absorbed : 0)
-		if(!(absorbed < 0))
+		if(absorbed >= 0)
 			gloves.shred(bomb,shock-absorbed,src)
 	if(shoes)
 		var/absorbed = ((covered_parts & HIDESHOES) ? suit_absorbed : 0)
-		if(!(absorbed < 0))
+		if(absorbed >= 0)
 			shoes.shred(bomb,shock-absorbed,src)
 	if(w_uniform)
 		var/absorbed = ((covered_parts & HIDEJUMPSUIT) ? suit_absorbed : 0)
-		if(!(absorbed < 0))
+		if(absorbed >= 0)
 			w_uniform.shred(bomb,shock-absorbed,src)
 
 /obj/item/proc/shred(var/bomb,var/shock,var/mob/living/carbon/human/Human)
@@ -452,7 +452,7 @@
 			shredded = -1 //Heat protection = Fireproof
 
 	else if(shock > 0)
-		if(prob(min(90,max(0,shock))))
+		if(prob(Clamp(shock,0,90)))
 			shredded = armor["bomb"] + 10 //It gets shredded, but it also absorbs the shock the clothes underneath would recieve by this amount
 		else
 			shredded = -1 //It survives explosion

@@ -78,8 +78,10 @@
 	for(var/layer in relevent_layers)
 		for(var/bodypart in pref_species.mutant_bodyparts)
 			switch(bodypart)
-				if("tail")
-					S = tails_list[features["tail"]]
+				if("tail_lizard")
+					S = tails_list_lizard[features["tail_lizard"]]
+				if("tail_human")
+					S = tails_list_human[features["tail_human"]]
 				if("spines")
 					S = spines_list[features["spines"]]
 				if("snout")
@@ -88,19 +90,42 @@
 					S = frills_list[features["frills"]]
 				if("horns")
 					S = horns_list[features["horns"]]
+				if("ears")
+					S = ears_list[features["ears"]]
 				if("body_markings")
 					S = body_markings_list[features["body_markings"]]
 
 			if(!S || S.icon_state == "none")
 				continue
+
+			//A little rename so we don't have to use tail_lizard or tail_human when naming the sprites.
+			if(bodypart == "tail_lizard" || bodypart == "tail_human")
+				bodypart = "tail"
+
+			if(S.hasinner)
+				preview_icon.Blend(new/icon("icon" = 'icons/mob/mutant_bodyparts.dmi', "icon_state" = "[pref_species.id]_m_[bodypart]inner_[S.icon_state]_[layer]"), ICON_OVERLAY)
+
 			var/icon_string
+
 			if(S.gender_specific)
 				icon_string = "[pref_species.id]_[g]_[bodypart]_[S.icon_state]_[layer]"
 			else
 				icon_string = "[pref_species.id]_m_[bodypart]_[S.icon_state]_[layer]"
 			var/icon/part = new/icon("icon" = 'icons/mob/mutant_bodyparts.dmi', "icon_state" = icon_string)
 
-			part.Blend("#[features["mcolor"]]", ICON_MULTIPLY)
+			switch(S.color_src)
+				if(MUTCOLORS)
+					part.Blend("#[features["mcolor"]]", ICON_MULTIPLY)
+				if(HAIR)
+					if(hair_color == "mutcolor")
+						part.Blend("#[features["mcolor"]]", ICON_MULTIPLY)
+					else
+						part.Blend("#[hair_color]", ICON_MULTIPLY)
+				if(FACEHAIR)
+					part.Blend("#[facial_hair_color]", ICON_MULTIPLY)
+				if(EYECOLOR)
+					part.Blend("#[eye_color]", ICON_MULTIPLY)
+
 			preview_icon.Blend(part, ICON_OVERLAY)
 
 	if(underwear)

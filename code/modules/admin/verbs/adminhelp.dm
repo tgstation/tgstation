@@ -54,7 +54,7 @@
 								ai_found = 1
 							msg += "[original_word]<font size='1' color='black'>(<A HREF='?_src_=holder;adminmoreinfo=\ref[found]'>?</A>|<A HREF='?_src_=holder;adminplayerobservefollow=\ref[found]'>F</A>)</font> "
 							continue
-			msg += "[original_word] "
+		msg += "[original_word] "
 	return msg
 
 
