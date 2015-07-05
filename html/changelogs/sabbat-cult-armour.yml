@@ -3,6 +3,8 @@ author: Sabbat
 
 delete-after: True
 
+changes:
+
   - rscadd: "Updated the cult armor rune to let you get additional equipment or abilities based on what you're wearing or holding. Some nerfed versions of wizard spells can be used by the cult in exchange for unique clothing, these spells require the cult robes or armor in order to use. No armor choices are mandatory, you will always have the option of the default choice."
 
   - rscadd: "Zealot - Default armor rune. If none of the required clothing is worn this will be chosen automatically. Is the same as ever."
