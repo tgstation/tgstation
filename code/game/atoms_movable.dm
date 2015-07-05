@@ -28,12 +28,17 @@
 /atom/movable/New()
 	. = ..()
 	areaMaster = get_area_master(src)
+	if(flags & HEAR && !ismob(src))
+		getFromPool(/mob/virtualhearer, src)
 
 /atom/movable/Destroy()
+	if(flags & HEAR && !ismob(src))
+		for(var/mob/virtualhearer/VH in virtualhearers)
+			if(VH.attached == src)
+				returnToPool(VH)
 	gcDestroyed = "Bye, world!"
 	tag = null
 	loc = null
-
 	..()
 
 /proc/delete_profile(var/type, code = 0)
@@ -338,3 +343,17 @@
 
 /atom/movable/proc/say_understands(var/mob/other)
 	return 1
+
+////////////
+/// HEAR ///
+////////////
+/atom/movable/proc/addHear()
+	flags |= HEAR
+	getFromPool(/mob/virtualhearer, src)
+
+/atom/movable/proc/removeHear()
+	flags &= ~HEAR
+	for(var/mob/virtualhearer/VH in virtualhearers)
+		if(VH.attached == src)
+			returnToPool(VH)
+

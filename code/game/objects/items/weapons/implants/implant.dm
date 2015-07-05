@@ -180,7 +180,7 @@ Implant Specifics:<BR>"}
 	phrase = sanitize_simple(phrase, replacechars)
 	usr.mind.store_memory("Explosive implant in [source] can be activated by saying something containing the phrase ''[src.phrase]'', <B>say [src.phrase]</B> to attempt to activate.", 0, 0)
 	usr << "The implanted explosive implant in [source] can be activated by saying something containing the phrase ''[src.phrase]'', <B>say [src.phrase]</B> to attempt to activate."
-	flags |= HEAR
+	addHear()
 	return 1
 
 /obj/item/weapon/implant/explosive/emp_act(severity)
@@ -443,7 +443,7 @@ the implant may become unstable and either pre-maturely inject the subject or si
 		if("death")
 			if(!announcement_intercom || !istype(announcement_intercom))
 				announcement_intercom = new(null)
-			
+
 			if(istype(t, /area/syndicate_station) || istype(t, /area/syndicate_mothership) || istype(t, /area/shuttle/syndicate_elite) )
 				//give the syndies a bit of stealth
 				Broadcast_Message(announcement_intercom, all_languages["Sol Common"], null, announcement_intercom, "[mobname] has died in Space!", "[mobname]'s Death Alarm", "Death Alarm", "[mobname]'s Death Alarm", 0, 0, list(0,1), 1459)
