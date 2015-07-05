@@ -91,8 +91,10 @@
 		if(I != src)
 			qdel(I)
 
+	var/success
 	if(target.stat != DEAD)
-		ticker.mode.remove_gangster(target.mind,0,1)
+		if(ticker.mode.remove_gangster(target.mind,0,1))
+			success = 1
 
 	if(!target.mind)
 		return
@@ -100,11 +102,14 @@
 	if(ishuman(target))
 		var/mob/living/carbon/human/H = target
 		H.sec_hud_set_implants()
-		if(ticker.mode.add_gangster(target.mind,gang))
+		if(success && ticker.mode.add_gangster(target.mind,gang))
 			target.Paralyse(5)
 		else
 			target.visible_message("<span class='warning'>[target] seems to resist the implant!</span>", "<span class='warning'>You feel the influence of your enemies try to invade your mind!</span>")
 	qdel(src)
+
+/obj/item/weapon/implanter/gang/
+	name = "implanter-gang"
 
 /obj/item/weapon/implanter/gang/New(loc,var/gang)
 	if(!gang)
