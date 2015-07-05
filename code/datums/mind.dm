@@ -306,19 +306,18 @@
 			text += "|"
 			if(src in (G.bosses))
 				text += "<B>GANG LEADER</B>"
+				text += "|Equipment: <a href='?src=\ref[src];gang=equip'>give</a>"
+				var/list/L = current.get_contents()
+				var/obj/item/device/gangtool/gangtool = locate() in L
+				if (gangtool)
+					text += "|<a href='?src=\ref[src];gang=takeequip'>take</a>"
+
 			else
 				text += "<a href='?src=\ref[src];gangboss=\ref[G]'>gang leader</a>"
 			text += "<BR>"
 
 		if(gang_colors_pool)
 			text += "<a href='?src=\ref[src];gang=new'>Create New Gang</a>"
-
-		if(src in ticker.mode.get_gang_bosses())
-			text += "<br>Equipment: <a href='?src=\ref[src];gang=equip'>give</a>"
-			var/list/L = current.get_contents()
-			var/obj/item/device/gangtool/gangtool = locate() in L
-			if (gangtool)
-				text += "|<a href='?src=\ref[src];gang=takeequip'>take</a>"
 
 		sections["gang"] = text
 

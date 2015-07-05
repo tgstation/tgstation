@@ -86,8 +86,8 @@
 			else
 				dat += "10mm Ammo<br>"
 
-			dat += "(50 Influence) "
-			if(points >= 50)
+			dat += "(60 Influence) "
+			if(points >= 60)
 				dat += "<a href='?src=\ref[src];purchase=uzi'>Uzi SMG</a><br>"
 			else
 				dat += "Uzi SMG<br>"
@@ -218,9 +218,9 @@
 					item_type = /obj/item/ammo_box/magazine/m10mm
 					pointcost = 10
 			if("uzi")
-				if(gang.points >= 50)
+				if(gang.points >= 60)
 					item_type = /obj/item/weapon/gun/projectile/automatic/mini_uzi
-					pointcost = 50
+					pointcost = 60
 			if("9mmammo")
 				if(gang.points >= 40)
 					item_type = /obj/item/ammo_box/magazine/uzim9mm
