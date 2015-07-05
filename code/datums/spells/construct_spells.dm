@@ -3,6 +3,10 @@
 /obj/effect/proc_holder/spell/aoe_turf/conjure/construct/lesser
 	charge_max = 1800
 
+/obj/effect/proc_holder/spell/aoe_turf/conjure/construct/lesser/cult
+	cult_req = 1
+	charge_max = 2500
+
 /obj/effect/proc_holder/spell/aoe_turf/conjure/floor
 	name = "Floor Construction"
 	desc = "This spell constructs a cult floor"
@@ -54,7 +58,12 @@
 	invocation_type = "none"
 	range = 0
 
+
 	summon_type = list(/obj/item/device/soulstone)
+
+/obj/effect/proc_holder/spell/aoe_turf/conjure/soulstone/cult
+	cult_req = 1
+	charge_max = 4000
 
 
 /obj/effect/proc_holder/spell/aoe_turf/conjure/lesserforcewall

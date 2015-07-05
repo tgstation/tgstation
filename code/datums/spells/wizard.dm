@@ -132,6 +132,13 @@
 	sound1="sound/magic/blink.ogg"
 	sound2="sound/magic/blink.ogg"
 
+/obj/effect/proc_holder/spell/targeted/turf_teleport/blink/cult
+	name = "quickstep"
+
+	charge_max = 100
+	clothes_req = 0
+	cult_req = 1
+
 /obj/effect/proc_holder/spell/targeted/area_teleport/teleport
 	name = "Teleport"
 	desc = "This spell teleports you to a type of area of your selection."
@@ -231,6 +238,12 @@
 	starting_spells = list("/obj/effect/proc_holder/spell/targeted/inflict_handler/blind","/obj/effect/proc_holder/spell/targeted/genetic/blind")
 
 	action_icon_state = "blind"
+
+/obj/effect/proc_holder/spell/aoe_turf/conjure/creature/cult
+	name = "Summon Creatures (DANGEROUS)"
+	cult_req = 1
+	charge_max = 5000
+	summon_amt = 2
 
 
 
