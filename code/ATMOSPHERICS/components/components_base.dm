@@ -30,11 +30,11 @@ On top of that, now people can add component-speciic procs/vars if they want!
 Iconnery
 */
 
-/obj/machinery/atmospherics/components/proc/icon_addintact(var/obj/machinery/atmospherics/node)
+/obj/machinery/atmospherics/components/proc/icon_addintact(var/obj/machinery/atmospherics/node, var/connected = 0)
 	var/image/img = getpipeimage('icons/obj/atmospherics/binary_devices.dmi', "pipe_intact", get_dir(src,node), node.pipe_color)
 	underlays += img
 
-	return img.dir
+	return connected | img.dir
 
 /obj/machinery/atmospherics/components/proc/icon_addbroken(var/connected = 0)
 	var/unconnected = (~connected) & initialize_directions
@@ -54,15 +54,16 @@ Iconnery
 
 	var/connected = 0
 
-	for(var/obj/machinery/atmospherics/N in nodes) //adds intact pieces
-		connected |= icon_addintact(N)
-
+	for(var/I = 1; I <= device_type; I++) //adds intact pieces
+		var/obj/machinery/atmospherics/N = nodes["n[I]"]
+		connected = icon_addintact(N, connected)
 	icon_addbroken(connected) //adds broken pieces
+
 
 /*
 Pipenet stuff; housekeeping
 */
-/obj/machinery/atmospherics/components/Destroy() //works somewhat
+/obj/machinery/atmospherics/components/Destroy()
 	for(var/I = 1; I <= device_type; I++)
 		var/obj/machinery/atmospherics/N = nodes["n[I]"]
 		if(N)
@@ -71,7 +72,7 @@ Pipenet stuff; housekeeping
 			nullifyPipenet(parents["p[I]"])
 	..()
 
-/obj/machinery/atmospherics/components/atmosinit(var/list/node_connects) //doesn't get called properly
+/obj/machinery/atmospherics/components/atmosinit(var/list/node_connects)
 	for(var/I = 1; I <= device_type; I++)
 		for(var/obj/machinery/atmospherics/target in get_step(src,node_connects[I]))
 			if(target.initialize_directions & get_dir(target,src))
@@ -119,9 +120,11 @@ Pipenet stuff; housekeeping
 /obj/machinery/atmospherics/components/pipeline_expansion(datum/pipeline/reference)
 	if(!reference)
 		return nodes
-	for(var/I = 1; I <= device_type; I++)
+	var/I = 1
+	for(var/obj/machinery/atmospherics/N in nodes)
 		if(parents["p[I]"] == reference)
-			return list(nodes["n[I]"])
+			return list(N)
+		I++
 
 /obj/machinery/atmospherics/components/setPipenet(datum/pipeline/reference, obj/machinery/atmospherics/A)
 	for(var/I = 1; I <= device_type; I++)
