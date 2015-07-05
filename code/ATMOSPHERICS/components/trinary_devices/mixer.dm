@@ -20,24 +20,17 @@
 	icon_state = "mixer_off_f"
 	flipped = 1
 
-/obj/machinery/atmospherics/components/trinary/mixer/icon_addintact(var/obj/machinery/atmospherics/node, var/connected)
-	var/image/img = getpipeimage('icons/obj/atmospherics/trinary_devices.dmi', "cap", get_dir(src,node), node.pipe_color)
-	overlays += img
-	return ..()
-
-/obj/machinery/atmospherics/components/trinary/mixer/icon_addbroken(var/connected)
-	var/unconnected = (~connected) & initialize_directions
-	for(var/direction in cardinal)
-		if(unconnected & direction)
-			underlays += getpipeimage('icons/obj/atmospherics/binary_devices.dmi', "pipe_exposed", direction)
-			overlays += getpipeimage('icons/obj/atmospherics/trinary_devices.dmi', "cap", direction)
-
 /obj/machinery/atmospherics/components/trinary/mixer/update_icon()
 	overlays.Cut()
-	..()
+	for(var/direction in cardinal)
+		if(direction & (get_dir(src,nodes["n1"]) || get_dir(src,nodes["n2"]) || get_dir(src,nodes["n3"])))
+			var/obj/machinery/atmospherics/node = findConnecting(direction)
+			overlays += getpipeimage('icons/obj/atmospherics/trinary_devices.dmi', "cap", direction, node.pipe_color)
+			continue
+		overlays += getpipeimage('icons/obj/atmospherics/trinary_devices.dmi', "cap", direction)
 
 /obj/machinery/atmospherics/components/trinary/mixer/update_icon_nopipes()
-	if(!(stat & NOPOWER) && on && nodes[1] && nodes[2] && nodes[3])
+	if(!(stat & NOPOWER) && on && nodes["n1"] && nodes["n2"] && nodes["n3"])
 		icon_state = "mixer_on[flipped?"_f":""]"
 		return
 
@@ -53,17 +46,17 @@
 
 /obj/machinery/atmospherics/components/trinary/mixer/New()
 	..()
-	var/datum/gas_mixture/air3 = airs[3] ; air3.volume = 300
-	airs[3] = air3
+	var/datum/gas_mixture/air3 = airs["a3"] ; air3.volume = 300
+	airs["a3"] = air3
 
 /obj/machinery/atmospherics/components/trinary/mixer/process_atmos()
 	..()
 	if(!on)
 		return 0
 
-	var/datum/gas_mixture/air1 = airs[1]
-	var/datum/gas_mixture/air2 = airs[2]
-	var/datum/gas_mixture/air3 = airs[3]
+	var/datum/gas_mixture/air1 = airs["a1"]
+	var/datum/gas_mixture/air2 = airs["a2"]
+	var/datum/gas_mixture/air3 = airs["a3"]
 
 	var/output_starting_pressure = air3.return_pressure()
 
@@ -109,13 +102,13 @@
 		air3.merge(removed2)
 
 	if(transfer_moles1)
-		update_parents(list(1 = parents[1]))
+		update_parents(list("p1" = parents["p1"]))
 
 	if(transfer_moles2)
-		update_parents(list(2 = parents[2]))
+		update_parents(list("p2" = parents["p2"]))
 
 	update_airs(air1, air2, air3)
-	update_parents(list(3 = parents[3]))
+	update_parents(list("p3" = parents["p3"]))
 
 	return 1
 

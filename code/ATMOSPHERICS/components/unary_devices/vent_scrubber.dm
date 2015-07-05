@@ -56,7 +56,7 @@
 		icon_state = "scrub_welded"
 		return
 
-	if(!nodes[1] || !on || stat & (NOPOWER|BROKEN))
+	if(!nodes["n1"] || !on || stat & (NOPOWER|BROKEN))
 		icon_state = "scrub_off"
 		return
 
@@ -114,13 +114,13 @@
 	..()
 	if(stat & (NOPOWER|BROKEN))
 		return
-	if (!nodes[1])
+	if (!nodes["n1"])
 		on = 0
 	//broadcast_status()
 	if(!on || welded)
 		return 0
 
-	var/datum/gas_mixture/air_contents = airs[1]
+	var/datum/gas_mixture/air_contents = airs["a1"]
 	var/datum/gas_mixture/environment = loc.return_air()
 
 	if(scrubbing)

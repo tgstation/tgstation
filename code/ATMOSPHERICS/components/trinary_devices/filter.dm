@@ -49,25 +49,20 @@ Filter types:
 		radio_controller.remove_object(src,frequency)
 	..()
 
-/obj/machinery/atmospherics/components/trinary/filter/icon_addintact(var/obj/machinery/atmospherics/node, var/connected)
-	var/image/img = getpipeimage('icons/obj/atmospherics/trinary_devices.dmi', "cap", get_dir(src,node), node.pipe_color)
-	overlays += img
-	return ..()
-
-/obj/machinery/atmospherics/components/trinary/filter/icon_addbroken(var/connected)
-	var/unconnected = (~connected) & initialize_directions
-	for(var/direction in cardinal)
-		if(unconnected & direction)
-			underlays += getpipeimage('icons/obj/atmospherics/binary_devices.dmi', "pipe_exposed", direction)
-			overlays += getpipeimage('icons/obj/atmospherics/trinary_devices.dmi', "cap", direction)
-
 /obj/machinery/atmospherics/components/trinary/filter/update_icon()
 	overlays.Cut()
+	for(var/direction in cardinal)
+		if(direction & initialize_directions)
+			var/obj/machinery/atmospherics/node = findConnecting(direction)
+			if(node)
+				overlays += getpipeimage('icons/obj/atmospherics/trinary_devices.dmi', "cap", direction, node.pipe_color)
+				continue
+			overlays += getpipeimage('icons/obj/atmospherics/trinary_devices.dmi', "cap", direction)
 	..()
 
 /obj/machinery/atmospherics/components/trinary/filter/update_icon_nopipes()
 
-	if(!(stat & NOPOWER) && on && nodes[1] && nodes[2] && nodes[3])
+	if(!(stat & NOPOWER) && on && nodes["n1"] && nodes["n2"] && nodes["n3"])
 		icon_state = "filter_on[flipped?"_f":""]"
 		return
 
@@ -86,9 +81,9 @@ Filter types:
 	if(!on)
 		return 0
 
-	var/datum/gas_mixture/air1 = airs[1]
-	var/datum/gas_mixture/air2 = airs[2]
-	var/datum/gas_mixture/air3 = airs[3]
+	var/datum/gas_mixture/air1 = airs["a1"]
+	var/datum/gas_mixture/air2 = airs["a2"]
+	var/datum/gas_mixture/air3 = airs["a3"]
 
 	var/output_starting_pressure = air3.return_pressure()
 

@@ -3,7 +3,7 @@
 	dir = SOUTH
 	initialize_directions = SOUTH|NORTH
 	use_power = 1
-	node_amount = 2
+	device_type = BINARY
 
 /obj/machinery/atmospherics/components/binary/SetInitDirections()
 	switch(dir)
@@ -27,9 +27,8 @@ Iconnery
 Helpers
 */
 
-/obj/machinery/atmospherics/components/trinary/update_airs(var/a1, var/a2)
-	..(list(1 = a1, 2 = a2))
-
+/obj/machinery/atmospherics/components/binary/update_airs(var/a1, var/a2)
+	..(list("a1" = a1, "a2" = a2))
 /*
 Housekeeping and pipe network stuff
 */
@@ -39,13 +38,6 @@ Housekeeping and pipe network stuff
 	var/node2_connect = dir
 	var/node1_connect = turn(dir, 180)
 
-	var/node_connects[] = list(1 = node1_connect, 2 = node2_connect)
-	/* for(var/obj/machinery/atmospherics/target in get_step(src,node1_connect))
-		if(target.initialize_directions & get_dir(target,src))
-			nodes[1] = target
-			break
-	for(var/obj/machinery/atmospherics/target in get_step(src,node2_connect))
-		if(target.initialize_directions & get_dir(target,src))
-			nodes[2] = target
-			break */
+	var/list/node_connects = new/list()
+	node_connects.Add(node1_connect, node2_connect)
 	..(node_connects)
