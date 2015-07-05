@@ -400,7 +400,6 @@ RCD
 				return	0
 
 			if(istype(A, /obj/structure/window))
-				user << "clicked on window"
 				if(checkResource(5, user))
 					user << "<span class='notice'>You start deconstructing the window...</span>"
 					playsound(src.loc, 'sound/machines/click.ogg', 50, 1)
@@ -412,7 +411,6 @@ RCD
 				return	0
 
 			if(istype(A, /obj/structure/grille))
-				user << "clicked on grille"
 				if(checkResource(5, user))
 					user << "<span class='notice'>You start deconstructing the grille...</span>"
 					playsound(src.loc, 'sound/machines/click.ogg', 50, 1)
