@@ -306,6 +306,7 @@
 			if("outfit")
 				if(outfits > 0)
 					if(gang.gang_outfit(usr,src))
+						usr << "<span class='notice'><b>Gang Outfits</b> can act as armor with moderate protection against ballistic and melee attacks. Every gangster wearing one will also help grow your gang's influence.</span>"
 						outfits -= 1
 			if("ping")
 				ping_gang(usr)
