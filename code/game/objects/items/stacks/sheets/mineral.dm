@@ -16,7 +16,15 @@ Mineral Sheets
 */
 
 /obj/item/stack/sheet/mineral
-	w_type=RECYK_METAL
+	w_type = RECYK_METAL
+	var/recyck_mat
+
+/obj/item/stack/sheet/mineral/recycle(var/datum/materials/rec)
+	if(!recyck_mat)
+		return 0
+
+	rec.addAmount(recyck_mat, 1 * amount)
+	. = 1
 
 /*
  * Sandstone
@@ -31,6 +39,7 @@ Mineral Sheets
 	origin_tech = "materials=1"
 	sheettype = "sandstone"
 	melt_temperature = MELTPOINT_GLASS
+	recyck_mat = MAT_GLASS
 
 var/global/list/datum/stack_recipe/sandstone_recipes = list ( \
 	new/datum/stack_recipe("pile of dirt", /obj/machinery/portable_atmospherics/hydroponics/soil, 3, time = 10, one_per_turf = 1, on_floor = 1), \
@@ -43,9 +52,6 @@ var/global/list/datum/stack_recipe/sandstone_recipes = list ( \
 	recipes = sandstone_recipes
 	..()
 
-/obj/item/stack/sheet/mineral/sandstone/recycle(var/datum/materials/rec)
-	rec.addAmount("glass",1*amount)
-	return 1
 /*
  * Diamond
  */
@@ -61,6 +67,7 @@ var/global/list/datum/stack_recipe/sandstone_recipes = list ( \
 	perunit = 1750
 	sheettype = "diamond"
 	melt_temperature = 3820 // In a vacuum, but fuck dat
+	recyck_mat = MAT_DIAMOND
 
 var/global/list/datum/stack_recipe/diamond_recipes = list ( \
 	new/datum/stack_recipe("diamond floor tile", /obj/item/stack/tile/mineral/diamond, 1, 4, 20), \
@@ -70,10 +77,6 @@ var/global/list/datum/stack_recipe/diamond_recipes = list ( \
 /obj/item/stack/sheet/mineral/diamond/New(var/loc, var/amount=null)
 	recipes = diamond_recipes
 	..()
-
-/obj/item/stack/sheet/mineral/diamond/recycle(var/datum/materials/rec)
-	rec.addAmount("diamond",1*amount)
-	return 1
 
 /*
  * Uranium
@@ -91,6 +94,7 @@ var/global/list/datum/stack_recipe/diamond_recipes = list ( \
 	perunit = 2000
 	sheettype = "uranium"
 	melt_temperature = 1132+T0C
+	recyck_mat = MAT_URANIUM
 
 var/global/list/datum/stack_recipe/uranium_recipes = list ( \
 	new/datum/stack_recipe("uranium floor tile", /obj/item/stack/tile/mineral/uranium, 1, 4, 20), \
@@ -100,10 +104,6 @@ var/global/list/datum/stack_recipe/uranium_recipes = list ( \
 /obj/item/stack/sheet/mineral/uranium/New(var/loc, var/amount=null)
 	recipes = uranium_recipes
 	..()
-
-/obj/item/stack/sheet/mineral/uranium/recycle(var/datum/materials/rec)
-	rec.addAmount("uranium",1*amount)
-	return 1
 
 /*
  * Plasma
@@ -120,7 +120,8 @@ var/global/list/datum/stack_recipe/uranium_recipes = list ( \
 	origin_tech = "plasmatech=2;materials=2"
 	perunit = 2000
 	sheettype = "plasma"
-	melt_temperature = MELTPOINT_STEEL+500
+	melt_temperature = MELTPOINT_STEEL + 500
+	recyck_mat = MAT_PLASMA
 
 var/global/list/datum/stack_recipe/plasma_recipes = list ( \
 	new/datum/stack_recipe("plasma floor tile", /obj/item/stack/tile/mineral/plasma, 1, 4, 20), \
@@ -131,10 +132,6 @@ var/global/list/datum/stack_recipe/plasma_recipes = list ( \
 	recipes = plasma_recipes
 
 	..()
-
-/obj/item/stack/sheet/mineral/plasma/recycle(var/datum/materials/rec)
-	rec.addAmount("plasma",1*amount)
-	return 1
 
 /obj/item/stack/sheet/mineral/plastic
 	name = "plastic"
@@ -149,6 +146,7 @@ var/global/list/datum/stack_recipe/plasma_recipes = list ( \
 	perunit = 2000
 	melt_temperature = MELTPOINT_PLASTIC
 	sheettype = "plastic"
+	recyck_mat = MAT_PLASTIC
 
 var/global/list/datum/stack_recipe/plastic_recipes = list ( \
 	new/datum/stack_recipe("plastic crate", /obj/structure/closet/pcrate, 10, one_per_turf = 1, on_floor = 1), \
@@ -167,10 +165,6 @@ var/global/list/datum/stack_recipe/plastic_recipes = list ( \
 	recipes = plastic_recipes
 	..()
 
-/obj/item/stack/sheet/mineral/plastic/recycle(var/datum/materials/rec)
-	rec.addAmount("plastic",1*amount)
-	return 0
-
 /*
  * Gold
  */
@@ -187,6 +181,7 @@ var/global/list/datum/stack_recipe/plastic_recipes = list ( \
 	perunit = 2000
 	melt_temperature = 1064+T0C
 	sheettype = "gold"
+	recyck_mat = MAT_GOLD
 
 var/global/list/datum/stack_recipe/gold_recipes = list ( \
 	new/datum/stack_recipe("golden floor tile", /obj/item/stack/tile/mineral/gold, 1, 4, 20), \
@@ -196,11 +191,6 @@ var/global/list/datum/stack_recipe/gold_recipes = list ( \
 /obj/item/stack/sheet/mineral/gold/New(var/loc, var/amount=null)
 	recipes = gold_recipes
 	..()
-
-/obj/item/stack/sheet/mineral/gold/recycle(var/datum/materials/rec)
-	rec.addAmount("gold",1*amount)
-	return 1
-
 
 /*
  * Phazon
@@ -222,14 +212,11 @@ var/global/list/datum/stack_recipe/phazon_recipes = list( \
 	flags = FPRINT
 	siemens_coefficient = 1
 	origin_tech = "materials=9"
+	recyck_mat = MAT_PHAZON
 
 /obj/item/stack/sheet/mineral/phazon/New(var/loc, var/amount=null)
 		recipes = phazon_recipes
 		return ..()
-
-/obj/item/stack/sheet/mineral/phazon/recycle(var/datum/materials/rec)
-	rec.addAmount("phazon",1*amount)
-	return 1
 
 /*
  * Silver
@@ -246,6 +233,7 @@ var/global/list/datum/stack_recipe/phazon_recipes = list( \
 	origin_tech = "materials=3"
 	perunit = 2000
 	sheettype = "silver"
+	recyck_mat = MAT_SILVER
 
 var/global/list/datum/stack_recipe/silver_recipes = list ( \
 	new/datum/stack_recipe("silver floor tile", /obj/item/stack/tile/mineral/silver, 1, 4, 20), \
@@ -255,10 +243,6 @@ var/global/list/datum/stack_recipe/silver_recipes = list ( \
 /obj/item/stack/sheet/mineral/silver/New(var/loc, var/amount=null)
 	recipes = silver_recipes
 	..()
-
-/obj/item/stack/sheet/mineral/silver/recycle(var/datum/materials/rec)
-	rec.addAmount("silver",1*amount)
-	return 1
 
 /*
  * Clown
@@ -275,6 +259,7 @@ var/global/list/datum/stack_recipe/silver_recipes = list ( \
 	origin_tech = "materials=4"
 	perunit = 2000
 	sheettype = "clown"
+	recyck_mat = MAT_CLOWN
 
 var/global/list/datum/stack_recipe/clown_recipes = list ( \
 	new/datum/stack_recipe("bananium floor tile", /obj/item/stack/tile/mineral/clown, 1, 4, 20), \
@@ -283,11 +268,6 @@ var/global/list/datum/stack_recipe/clown_recipes = list ( \
 /obj/item/stack/sheet/mineral/clown/New(var/loc, var/amount=null)
 	recipes = clown_recipes
 	..()
-
-/obj/item/stack/sheet/mineral/clown/recycle(var/datum/materials/rec)
-	rec.addAmount("clown",1*amount)
-	return 1
-
 
 /****************************** Others ****************************/
 
