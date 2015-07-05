@@ -562,13 +562,7 @@
 
 	if(candidates.len >= 2)
 		//Oh god why we can't have static functions
-		var/teams_finished = 0
-		if(ticker.mode.config_tag == "abduction")
-			var/datum/game_mode/abduction/A = ticker.mode
-			teams_finished = A.teams
-		else
-			teams_finished = round(ticker.mode.abductors.len / 2)
-		var/number =  teams_finished + 1
+		var/number =  ticker.mode.abductor_teams + 1
 
 		var/datum/game_mode/abduction/temp
 		if(ticker.mode.config_tag == "abduction")
@@ -596,10 +590,10 @@
 		temp.abductors |= list(agent_mind,scientist_mind)
 		temp.make_abductor_team(number,preset_scientist=scientist_mind,preset_agent=agent_mind)
 		temp.post_setup_team(number)
-		if(ticker.mode.config_tag == "abduction")
-			var/datum/game_mode/abduction/A = ticker.mode
-			A.teams += 1
-		else
+		
+		ticker.mode.abductor_teams++
+		
+		if(ticker.mode.config_tag != "abduction")
 			ticker.mode.abductors |= temp.abductors
 
 		return 1
