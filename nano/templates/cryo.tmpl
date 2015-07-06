@@ -54,6 +54,9 @@ Used In File(s): \code\game\machinery\cryo.dm
 				<div class="statusValue">{{:~round(occupant.fireLoss)}}</div>
 			</div>
 		{{/if}}
+		<div class="line"><div class="statusLabel">Patient Temperature:</div><div class="statusValue">
+			{{:~string('<span class="{0}">{1} K</span>', occupant.bodyTemperatureStatus, occupant.bodyTemperature)}}
+		</div></div>
 	{{/if}}
 	<hr>
 	<div class="line"><div class="statusLabel">Cell Temperature:</div><div class="statusValue">

@@ -164,6 +164,7 @@
 		occupantData["toxLoss"] = null
 		occupantData["fireLoss"] = null
 		occupantData["bodyTemperature"] = null
+		occupantData["bodyTemperatureStatus"] = null
 	else
 		occupantData["name"] = occupant.name
 		occupantData["stat"] = occupant.stat
@@ -174,7 +175,12 @@
 		occupantData["oxyLoss"] = occupant.getOxyLoss()
 		occupantData["toxLoss"] = occupant.getToxLoss()
 		occupantData["fireLoss"] = occupant.getFireLoss()
-		occupantData["bodyTemperature"] = occupant.bodytemperature
+		occupantData["bodyTemperature"] = round(occupant.bodytemperature)
+		occupantData["bodyTemperatureStatus"] = "good"
+		if(occupant.bodytemperature > T0C) // if greater than 273.15 kelvin (0 celcius)
+			occupantData["bodyTemperatureStatus"] = "bad"
+		else if(occupant.bodytemperature > 170) //Temperature cryox/clonex kicks in
+			occupantData["bodyTemperatureStatus"] = "average"
 	data["occupant"] = occupantData;
 
 	data["isOpen"] = state_open
@@ -286,25 +292,11 @@
 	if(air_contents.total_moles() < 10)
 		return
 	if(occupant)
-		if(occupant.stat == 2 || occupant.health >= 100)  //Why waste energy on dead or healthy people
-			occupant.bodytemperature = T0C
-			return
-		occupant.bodytemperature += 2*(air_contents.temperature - occupant.bodytemperature) * current_heat_capacity / (current_heat_capacity + air_contents.heat_capacity())
-		occupant.bodytemperature = max(occupant.bodytemperature, air_contents.temperature) // this is so ugly i'm sorry for doing it i'll fix it later i promise
-		if(occupant.bodytemperature < T0C)
-//			occupant.sleeping = max(5/efficiency, (1 / occupant.bodytemperature)*2000/efficiency)
-//			occupant.Paralyse(max(5/efficiency, (1 / occupant.bodytemperature)*3000/efficiency))
-			if(air_contents.oxygen > 2)
-				if(occupant.getOxyLoss()) occupant.adjustOxyLoss(-1)
-			else
-				occupant.adjustOxyLoss(-1)
-			//severe damage should heal waaay slower without proper chemicals
-			if(occupant.bodytemperature < 225)
-				if(occupant.getToxLoss())
-					occupant.adjustToxLoss(max(-efficiency, (-20*(efficiency ** 2)) / occupant.getToxLoss()))
-				var/heal_brute = occupant.getBruteLoss() ? min(efficiency, 20*(efficiency**2) / occupant.getBruteLoss()) : 0
-				var/heal_fire = occupant.getFireLoss() ? min(efficiency, 20*(efficiency**2) / occupant.getFireLoss()) : 0
-				occupant.heal_organ_damage(heal_brute,heal_fire)
+		if(ishuman(occupant)) //Speed up cooling (but only for humans)
+			var/mob/living/carbon/human/H = occupant
+			var/thermal_protection = H.get_cold_protection(air_contents.temperature)
+			H.bodytemperature += ((air_contents.temperature - H.bodytemperature) * current_heat_capacity / (current_heat_capacity + air_contents.heat_capacity()) * thermal_protection)
+			H.bodytemperature = max(H.bodytemperature, air_contents.temperature) // this is so ugly i'm sorry for doing it i'll fix it later i promise //no you will never ever fix this shit
 		if(beaker && next_trans == 0)
 			beaker.reagents.trans_to(occupant, 1, 10)
 			beaker.reagents.reaction(occupant)

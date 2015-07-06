@@ -1360,22 +1360,24 @@
 					H.apply_damage(HEAT_DAMAGE_LEVEL_2*heatmod, BURN)
 
 	else if(H.bodytemperature < BODYTEMP_COLD_DAMAGE_LIMIT && !(mutations_list[COLDRES] in H.dna.mutations))
-		if(!istype(H.loc, /obj/machinery/atmospherics/unary/cryo_cell))
-			switch(H.bodytemperature)
-				if(200 to 260)
-					H.throw_alert("temp","cold",1)
+		var/colddamage = !istype(H.loc, /obj/machinery/atmospherics/unary/cryo_cell) //Damage from cold if not in a cryo cell
+		switch(H.bodytemperature)
+			if(200 to 260)
+				H.throw_alert("temp","cold",1)
+				if(colddamage)
 					H.apply_damage(COLD_DAMAGE_LEVEL_1*coldmod, BURN)
-				if(120 to 200)
-					H.throw_alert("temp","cold",2)
+			if(120 to 200)
+				H.throw_alert("temp","cold",2)
+				if(colddamage)
 					H.apply_damage(COLD_DAMAGE_LEVEL_2*coldmod, BURN)
-				if(-INFINITY to 120)
-					H.throw_alert("temp","cold",3)
+			if(-INFINITY to 120)
+				H.throw_alert("temp","cold",3)
+				if(colddamage)
 					H.apply_damage(COLD_DAMAGE_LEVEL_3*coldmod, BURN)
-		else
-			H.clear_alert("temp")
-
 	else
 		H.clear_alert("temp")
+
+
 
 	// Account for massive pressure differences.  Done by Polymorph
 	// Made it possible to actually have something that can protect against high pressure... Done by Errorage. Polymorph now has an axe sticking from his head for his previous hardcoded nonsense!
