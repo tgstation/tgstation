@@ -1,3 +1,15 @@
+/obj/screen/fuckstat
+	name = "Toggle Stat"
+	desc = "Fuck It"
+	icon = 'icons/fuckstat.dmi'
+	icon_state = "fuckstat"
+
+	Click()
+		var/mob/M = usr
+		if(!istype(M)) return
+		M.stat_fucked = !M.stat_fucked
+
+var/global/obj/screen/fuckstat/FUCK = new
 /mob/recycle(var/datum/materials)
 	return RECYK_BIOLOGICAL
 
@@ -1146,86 +1158,87 @@ var/list/slot_equipment_priority = list( \
 			stat(null, "Location:\t([x], [y], [z])")
 			stat(null, "CPU:\t[world.cpu]")
 			stat(null, "Instances:\t[world.contents.len]")
+			stat(null, FUCK)
+			if(!src.stat_fucked)
+				if (garbageCollector)
+					/*stat(null, "MasterController-[last_tick_duration] ([master_controller.processing?"On":"Off"]-[master_controller.iteration])")
+					stat(null, "Air-[master_controller.air_cost]")
+					stat(null, "Sun-[master_controller.sun_cost]")
+					stat(null, "Mob-[master_controller.mobs_cost]\t#[mob_list.len]")
+					stat(null, "Dis-[master_controller.diseases_cost]\t#[active_diseases.len]")
+					stat(null, "Mch-[master_controller.machines_cost]\t#[machines.len]")
+					stat(null, "Obj-[master_controller.objects_cost]\t#[processing_objects.len]")
+					stat(null, "PiNet-[master_controller.networks_cost]\t#[pipe_networks.len]")
+					stat(null, "Ponet-[master_controller.powernets_cost]\t#[powernets.len]")
+					stat(null, "NanoUI-[master_controller.nano_cost]\t#[nanomanager.processing_uis.len]")
+					stat(null, "Tick-[master_controller.ticker_cost]")
+					stat(null, "garbage collector - [master_controller.garbageCollectorCost]")*/
+					stat(null, "\tqdel - [garbageCollector.del_everything ? "off" : "on"]")
+					stat(null, "\ton queue - [garbageCollector.queue.len]")
+					stat(null, "\ttotal delete - [garbageCollector.dels_count]")
+					stat(null, "\tsoft delete - [soft_dels]")
+					stat(null, "\thard delete - [garbageCollector.hard_dels]")
+				else
+					stat(null, "Garbage Controller is not running.")
 
-			if (garbageCollector)
-				/*stat(null, "MasterController-[last_tick_duration] ([master_controller.processing?"On":"Off"]-[master_controller.iteration])")
-				stat(null, "Air-[master_controller.air_cost]")
-				stat(null, "Sun-[master_controller.sun_cost]")
-				stat(null, "Mob-[master_controller.mobs_cost]\t#[mob_list.len]")
-				stat(null, "Dis-[master_controller.diseases_cost]\t#[active_diseases.len]")
-				stat(null, "Mch-[master_controller.machines_cost]\t#[machines.len]")
-				stat(null, "Obj-[master_controller.objects_cost]\t#[processing_objects.len]")
-				stat(null, "PiNet-[master_controller.networks_cost]\t#[pipe_networks.len]")
-				stat(null, "Ponet-[master_controller.powernets_cost]\t#[powernets.len]")
-				stat(null, "NanoUI-[master_controller.nano_cost]\t#[nanomanager.processing_uis.len]")
-				stat(null, "Tick-[master_controller.ticker_cost]")
-				stat(null, "garbage collector - [master_controller.garbageCollectorCost]")*/
-				stat(null, "\tqdel - [garbageCollector.del_everything ? "off" : "on"]")
-				stat(null, "\ton queue - [garbageCollector.queue.len]")
-				stat(null, "\ttotal delete - [garbageCollector.dels_count]")
-				stat(null, "\tsoft delete - [soft_dels]")
-				stat(null, "\thard delete - [garbageCollector.hard_dels]")
-			else
-				stat(null, "Garbage Controller is not running.")
+				if(processScheduler && processScheduler.getIsRunning())
+					var/datum/controller/process/process
 
-			if(processScheduler && processScheduler.getIsRunning())
-				var/datum/controller/process/process
+					process = processScheduler.getProcess("vote")
+					stat(null, "VOT\t - #[process.getTicks()]\t - [process.getLastRunTime()]")
 
-				process = processScheduler.getProcess("vote")
-				stat(null, "VOT\t - #[process.getTicks()]\t - [process.getLastRunTime()]")
+					process = processScheduler.getProcess("air")
+					stat(null, "AIR\t - #[process.getTicks()]\t - [process.getLastRunTime()]")
 
-				process = processScheduler.getProcess("air")
-				stat(null, "AIR\t - #[process.getTicks()]\t - [process.getLastRunTime()]")
+					process = processScheduler.getProcess("sun")
+					stat(null, "SUN\t - #[process.getTicks()]\t - [process.getLastRunTime()]")
 
-				process = processScheduler.getProcess("sun")
-				stat(null, "SUN\t - #[process.getTicks()]\t - [process.getLastRunTime()]")
+					process = processScheduler.getProcess("ticker")
+					stat(null, "TIC\t - #[process.getTicks()]\t - [process.getLastRunTime()]")
 
-				process = processScheduler.getProcess("ticker")
-				stat(null, "TIC\t - #[process.getTicks()]\t - [process.getLastRunTime()]")
+					process = processScheduler.getProcess("garbage")
+					stat(null, "GAR\t - #[process.getTicks()]\t - [process.getLastRunTime()]")
 
-				process = processScheduler.getProcess("garbage")
-				stat(null, "GAR\t - #[process.getTicks()]\t - [process.getLastRunTime()]")
+					process = processScheduler.getProcess("lighting")
+					stat(null, "LIG\t - #[process.getTicks()]\t - [process.getLastRunTime()]")
 
-				process = processScheduler.getProcess("lighting")
-				stat(null, "LIG\t - #[process.getTicks()]\t - [process.getLastRunTime()]")
+					process = processScheduler.getProcess("supply shuttle")
+					stat(null, "SUP\t - #[process.getTicks()]\t - [process.getLastRunTime()]")
 
-				process = processScheduler.getProcess("supply shuttle")
-				stat(null, "SUP\t - #[process.getTicks()]\t - [process.getLastRunTime()]")
+					process = processScheduler.getProcess("emergency shuttle")
+					stat(null, "EME\t - #[process.getTicks()]\t - [process.getLastRunTime()]")
 
-				process = processScheduler.getProcess("emergency shuttle")
-				stat(null, "EME\t - #[process.getTicks()]\t - [process.getLastRunTime()]")
+					process = processScheduler.getProcess("inactivity")
+					stat(null, "IAC\t - #[process.getTicks()]\t - [process.getLastRunTime()]")
 
-				process = processScheduler.getProcess("inactivity")
-				stat(null, "IAC\t - #[process.getTicks()]\t - [process.getLastRunTime()]")
+					process = processScheduler.getProcess("mob")
+					stat(null, "MOB([mob_list.len])\t - #[process.getTicks()]\t - [process.getLastRunTime()]")
 
-				process = processScheduler.getProcess("mob")
-				stat(null, "MOB([mob_list.len])\t - #[process.getTicks()]\t - [process.getLastRunTime()]")
+					process = processScheduler.getProcess("disease")
+					stat(null, "DIS([active_diseases.len])\t - #[process.getTicks()]\t - [process.getLastRunTime()]")
 
-				process = processScheduler.getProcess("disease")
-				stat(null, "DIS([active_diseases.len])\t - #[process.getTicks()]\t - [process.getLastRunTime()]")
+					process = processScheduler.getProcess("machinery")
+					stat(null, "MAC([machines.len])\t - #[process.getTicks()]\t - [process.getLastRunTime()]")
 
-				process = processScheduler.getProcess("machinery")
-				stat(null, "MAC([machines.len])\t - #[process.getTicks()]\t - [process.getLastRunTime()]")
+					process = processScheduler.getProcess("pow_machine")
+					stat(null, "POM([power_machines.len])\t - #[process.getTicks()]\t - [process.getLastRunTime()]")
 
-				process = processScheduler.getProcess("pow_machine")
-				stat(null, "POM([power_machines.len])\t - #[process.getTicks()]\t - [process.getLastRunTime()]")
+					process = processScheduler.getProcess("obj")
+					stat(null, "OBJ([processing_objects.len])\t - #[process.getTicks()]\t - [process.getLastRunTime()]")
 
-				process = processScheduler.getProcess("obj")
-				stat(null, "OBJ([processing_objects.len])\t - #[process.getTicks()]\t - [process.getLastRunTime()]")
+					process = processScheduler.getProcess("pipenet")
+					stat(null, "PIP([pipe_networks.len])\t - #[process.getTicks()]\t - [process.getLastRunTime()]")
 
-				process = processScheduler.getProcess("pipenet")
-				stat(null, "PIP([pipe_networks.len])\t - #[process.getTicks()]\t - [process.getLastRunTime()]")
+					process = processScheduler.getProcess("powernet")
+					stat(null, "POW([powernets.len])\t - #[process.getTicks()]\t - [process.getLastRunTime()]")
 
-				process = processScheduler.getProcess("powernet")
-				stat(null, "POW([powernets.len])\t - #[process.getTicks()]\t - [process.getLastRunTime()]")
+					process = processScheduler.getProcess("nanoui")
+					stat(null, "NAN([nanomanager.processing_uis.len])\t - #[process.getTicks()]\t - [process.getLastRunTime()]")
 
-				process = processScheduler.getProcess("nanoui")
-				stat(null, "NAN([nanomanager.processing_uis.len])\t - #[process.getTicks()]\t - [process.getLastRunTime()]")
-
-				process = processScheduler.getProcess("event")
-				stat(null, "EVE([events.len])\t - #[process.getTicks()]\t - [process.getLastRunTime()]")
-			else
-				stat(null, "processScheduler is not running.")
+					process = processScheduler.getProcess("event")
+					stat(null, "EVE([events.len])\t - #[process.getTicks()]\t - [process.getLastRunTime()]")
+				else
+					stat(null, "processScheduler is not running.")
 
 	if(client && client.inactivity < (1200))
 		if(listed_turf)
@@ -1249,7 +1262,7 @@ var/list/slot_equipment_priority = list( \
 						statpanel(S.panel,"[S.charge_counter]/[S.charge_max]",S.connected_button)
 					if(Sp_HOLDVAR)
 						statpanel(S.panel,"[S.holder_var_type] [S.holder_var_amount]",S.connected_button)
-	sleep(4) //Prevent updating the stat panel for the next .4 seconds, prevents clientside latency from updates
+	sleep(4/world.tick_lag) //Prevent updating the stat panel for the next .4 seconds, prevents clientside latency from updates
 
 
 
