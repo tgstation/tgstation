@@ -874,9 +874,10 @@ datum
 			on_reaction(var/datum/reagents/holder, var/created_volume)
 
 				// Calculate new position (searches through beacons in world)
-				var/obj/item/device/radio/beacon/chosen
+				var
+				/chosen
 				var/list/possible = list()
-				for(var/obj/item/device/radio/beacon/W in world)
+				for(var/obj/item/beacon/W in beacons)
 					possible += W
 
 				if(possible.len > 0)
@@ -899,7 +900,7 @@ datum
 					var/y_distance = TO.y - FROM.y
 					var/x_distance = TO.x - FROM.x
 					for (var/atom/movable/A in range(2, FROM )) // iterate thru list of mobs in the area
-						if(istype(A, /obj/item/device/radio/beacon)) continue // don't teleport beacons because that's just insanely stupid
+						if(istype(A, /obj/item/beacon)) continue // don't teleport beacons because that's just insanely stupid
 						if( A.anchored && !istype(A, /mob/dead/observer) ) continue // don't teleport anchored things (computers, tables, windows, grilles, etc) because this causes problems!
 						// do teleport ghosts however because hell why not
 
@@ -1648,9 +1649,9 @@ datum
 				else
 					send_admin_alert(holder, reaction_name="bluespace slime + plasma (Mass Teleport) in a grenade")
 				// Calculate new position (searches through beacons in world)
-				var/obj/item/device/radio/beacon/chosen
+				var/obj/item/beacon/chosen
 				var/list/possible = list()
-				for(var/obj/item/device/radio/beacon/W in world)
+				for(var/obj/item/beacon/W in beacons)
 					possible += W
 
 				if(possible.len > 0)
@@ -1673,7 +1674,7 @@ datum
 					var/y_distance = TO.y - FROM.y
 					var/x_distance = TO.x - FROM.x
 					for (var/atom/movable/A in range(4, FROM )) // iterate thru list of mobs in the area
-						if(istype(A, /obj/item/device/radio/beacon)) continue // don't teleport beacons because that's just insanely stupid
+						if(istype(A, /obj/item/beacon)) continue // don't teleport beacons because that's just insanely stupid
 						if(A.anchored) continue
 						if(istype(A, /obj/structure/cable )) continue
 

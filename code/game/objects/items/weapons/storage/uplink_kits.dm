@@ -56,7 +56,7 @@
 
 
 			if("lordsingulo")
-				new /obj/item/device/radio/beacon/syndicate(src)
+				new /obj/item/beacon/syndicate(src)
 				new /obj/item/clothing/suit/space/syndicate(src)
 				new /obj/item/clothing/head/helmet/space/syndicate(src)
 				new /obj/item/weapon/card/emag(src)

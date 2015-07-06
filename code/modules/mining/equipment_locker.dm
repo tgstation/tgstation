@@ -381,15 +381,15 @@
 
 /obj/item/device/wormhole_jaunter/attack_self(mob/user as mob)
 	var/turf/device_turf = get_turf(user)
-	if(!device_turf||device_turf.z==2||device_turf.z>=7)
+	if(!device_turf||device_turf.z==CENTCOMM_Z||device_turf.z>=map.zLevels.len)
 		user << "<span class='notice'>You're having difficulties getting the [src.name] to work.</span>"
 		return
 	else
 		user.visible_message("<span class='notice'>[user.name] activates the [src.name]!</span>")
 		var/list/L = list()
-		for(var/obj/item/device/radio/beacon/B in world)
+		for(var/obj/item/beacon/B in beacons)
 			var/turf/T = get_turf(B)
-			if(T.z == 1)
+			if(T.z == STATION_Z)
 				L += B
 		if(!L.len)
 			user << "<span class='notice'>The [src.name] failed to create a wormhole.</span>"
@@ -399,7 +399,7 @@
 		J.target = chosen_beacon
 		try_move_adjacent(J)
 		playsound(src,'sound/effects/sparks4.ogg',50,1)
-		del(src) //Single-use
+		qdel(src) //Single-use
 
 /obj/effect/portal/jaunt_tunnel
 	name = "jaunt tunnel"
@@ -408,8 +408,8 @@
 	desc = "A stable hole in the universe made by a wormhole jaunter. Turbulent doesn't even begin to describe how rough passage through one of these is, but at least it will always get you somewhere near a beacon."
 
 /obj/effect/portal/jaunt_tunnel/New()
-	spawn(300) // 30s
-		del(src)
+	sleep(300) // 30s
+	qdel(src)
 
 /*/obj/effect/portal/wormhole/jaunt_tunnel/teleport(atom/movable/M)
 	if(istype(M, /obj/effect))

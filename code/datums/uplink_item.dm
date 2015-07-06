@@ -434,7 +434,7 @@ var/list/uplink_items = list()
 /datum/uplink_item/device_tools/singularity_beacon
 	name = "Singularity Beacon"
 	desc = "When screwed to wiring attached to an electric grid, then activated, this large device pulls the singularity towards it. Does not work when the singularity is still in containment. A singularity beacon can cause catastrophic damage to a space station, leading to an emergency evacuation. Because of its size, it cannot be carried. Ordering this sends you a small beacon that will teleport the larger beacon to your location on activation."
-	item = /obj/item/device/radio/beacon/syndicate
+	item = /obj/item/beacon/syndicate
 	cost = 7
 
 /datum/uplink_item/device_tools/pdapinpointer
