@@ -34,7 +34,7 @@
 	/obj/item/device/paicard,\
 	/obj/item/device/radio,\
 	/obj/item/device/radio/headset,\
-	/obj/item/device/radio/beacon,\
+	/obj/item/device/beacon,\
 /*	/obj/item/weapon/autopsy_scanner, \ */
 	/obj/item/weapon/bikehorn,\
 /*	/obj/item/weapon/bonesetter,\ */

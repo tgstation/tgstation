@@ -186,20 +186,20 @@
 		var/list/L = list()
 		var/list/areaindex = list()
 
-		for(var/obj/item/device/radio/beacon/R in world)
+		for(var/obj/item/device/beacon/R in beacons)
 			var/turf/T = get_turf(R)
 			if (!T)
 				continue
 			if(T.z == ZLEVEL_CENTCOM || T.z > ZLEVEL_SPACEMAX)
 				continue
-			var/tmpname = T.loc.name
+			var/tmpname = "[R.code] ([T.loc.name])"
 			if(areaindex[tmpname])
 				tmpname = "[tmpname] ([++areaindex[tmpname]])"
 			else
 				areaindex[tmpname] = 1
 			L[tmpname] = R
 
-		for (var/obj/item/weapon/implant/tracking/I in world)
+		for (var/obj/item/weapon/implant/tracking/I in implants)
 			if (!I.implanted || !ismob(I.loc))
 				continue
 			else
@@ -208,8 +208,10 @@
 					if (M.timeofdeath + 6000 < world.time)
 						continue
 				var/turf/T = get_turf(M)
-				if(!T)	continue
-				if(T.z == ZLEVEL_CENTCOM)	continue
+				if(!T)
+					continue
+				if(T.z == ZLEVEL_CENTCOM || T.z > ZLEVEL_SPACEMAX)
+					continue
 				var/tmpname = M.real_name
 				if(areaindex[tmpname])
 					tmpname = "[tmpname] ([++areaindex[tmpname]])"

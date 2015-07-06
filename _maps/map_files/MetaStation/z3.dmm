@@ -249,7 +249,7 @@
 "eO" = (/obj/effect/decal/cleanable/robot_debris/old,/turf/simulated/floor/plating/airless,/area/AIsattele)
 "eP" = (/obj/machinery/door/airlock/external,/turf/simulated/floor/plating/airless,/area/AIsattele)
 "eQ" = (/obj/effect/decal/cleanable/dirt,/obj/item/device/flashlight,/turf/simulated/floor/plating/airless,/area/AIsattele)
-"eR" = (/obj/effect/decal/cleanable/dirt,/obj/item/device/radio/beacon,/turf/simulated/floor/plating/airless,/area/AIsattele)
+"eR" = (/obj/effect/decal/cleanable/dirt,/obj/item/device/beacon,/turf/simulated/floor/plating/airless,/area/AIsattele)
 "eS" = (/obj/machinery/portable_atmospherics/canister/air,/turf/simulated/floor/plating/airless,/area/AIsattele)
 "eT" = (/obj/structure/grille,/obj/structure/window/reinforced,/obj/structure/window/reinforced{dir = 4},/obj/structure/window/reinforced{dir = 1},/turf/simulated/floor/plating/airless,/area/AIsattele)
 "eU" = (/obj/effect/decal/cleanable/blood/old,/turf/simulated/floor/plating/airless,/area/AIsattele)

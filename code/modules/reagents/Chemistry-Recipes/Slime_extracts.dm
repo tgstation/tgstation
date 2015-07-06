@@ -523,9 +523,9 @@
 /datum/chemical_reaction/slimeteleport/on_reaction(var/datum/reagents/holder, var/created_volume)
 	feedback_add_details("slime_cores_used","[replacetext(name," ","_")]")
 	if(holder.my_atom)
-		var/obj/item/device/radio/beacon/chosen
+		var/obj/item/device/beacon/chosen
 		var/list/possible = list()
-		for(var/obj/item/device/radio/beacon/W in world)
+		for(var/obj/item/device/beacon/W in beacons)
 			possible += W
 
 		if(possible.len > 0)
@@ -547,7 +547,7 @@
 			var/y_distance = TO.y - FROM.y
 			var/x_distance = TO.x - FROM.x
 			for (var/atom/movable/A in range(5, FROM )) // iterate thru list of mobs in the area
-				if(istype(A, /obj/item/device/radio/beacon)) continue // don't teleport beacons because that's just insanely stupid
+				if(istype(A, /obj/item/device/beacon)) continue // don't teleport beacons because that's just insanely stupid
 				if(istype(A, /atom/movable/lighting_overlay)) continue //don't move the lighting while at it!
 				if(A.anchored) continue
 

@@ -191,7 +191,7 @@ datum/design/proc/CalcReliability(var/list/temp_techs)
 	req_tech = list("bluespace" = 1)
 	build_type = PROTOLATHE
 	materials = list(MAT_METAL = 20, MAT_GLASS = 10)
-	build_path = /obj/item/device/radio/beacon
+	build_path = /obj/item/device/beacon
 	category = list("Bluespace Designs")
 
 /datum/design/bag_holding

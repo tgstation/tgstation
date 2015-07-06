@@ -532,16 +532,15 @@
 	if (!( istype(W, /obj/item/weapon/screwdriver) ))
 		return
 	b_stat = !( b_stat )
-	if(!istype(src, /obj/item/device/radio/beacon))
-		if (b_stat)
-			user.show_message("<span class='notice'>The radio can now be attached and modified!</span>")
-		else
-			user.show_message("<span class='notice'>The radio can no longer be modified or attached!</span>")
-		updateDialog()
+	if (b_stat)
+		user.show_message("<span class='notice'>The radio can now be attached and modified!</span>")
+	else
+		user.show_message("<span class='notice'>The radio can no longer be modified or attached!</span>")
+	updateDialog()
 			//Foreach goto(83)
-		add_fingerprint(user)
-		return
-	else return
+	add_fingerprint(user)
+	return
+
 
 /obj/item/device/radio/emp_act(severity)
 	emped++ //There's been an EMP; better count it

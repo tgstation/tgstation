@@ -11,7 +11,7 @@
 		/obj/item/weapon/storage/box/samplebags,
 		/obj/item/device/core_sampler,
 		/obj/item/device/ano_scanner,
-		/obj/item/device/radio/beacon,
+		/obj/item/device/beacon,
 		/obj/item/device/gps,
 		/obj/item/device/measuring_tape,
 		/obj/item/device/flashlight,

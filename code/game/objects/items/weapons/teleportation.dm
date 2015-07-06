@@ -7,6 +7,7 @@
 /*
  * Locator
  */
+
 /obj/item/weapon/locator
 	name = "locator"
 	desc = "Used to track those with locater implants."
@@ -60,25 +61,24 @@ Frequency:
 			if (sr)
 				src.temp += "<B>Located Beacons:</B><BR>"
 
-				for(var/obj/item/device/radio/beacon/W in world)
-					if (W.frequency == src.frequency)
-						var/turf/tr = get_turf(W)
-						if (tr.z == sr.z && tr)
-							var/direct = max(abs(tr.x - sr.x), abs(tr.y - sr.y))
-							if (direct < 5)
-								direct = "very strong"
+				for(var/obj/item/device/beacon/W in beacons)
+					var/turf/tr = get_turf(W)
+					if (tr.z == sr.z && tr)
+						var/direct = max(abs(tr.x - sr.x), abs(tr.y - sr.y))
+						if (direct < 5)
+							direct = "very strong"
+						else
+							if (direct < 10)
+								direct = "strong"
 							else
-								if (direct < 10)
-									direct = "strong"
+								if (direct < 20)
+									direct = "weak"
 								else
-									if (direct < 20)
-										direct = "weak"
-									else
-										direct = "very weak"
-							src.temp += "[W.code]-[dir2text(get_dir(sr, tr))]-[direct]<BR>"
+									direct = "very weak"
+						src.temp += "[W.code]-[dir2text(get_dir(sr, tr))]-[direct]<BR>"
 
 				src.temp += "<B>Extranneous Signals:</B><BR>"
-				for (var/obj/item/weapon/implant/tracking/W in world)
+				for (var/obj/item/weapon/implant/tracking/W in implants)
 					if (!W.implanted || !ismob(W.loc))
 						continue
 					else
@@ -142,7 +142,7 @@ Frequency:
 		user << "<span class='notice'>\The [src] is malfunctioning.</span>"
 		return
 	var/list/L = list(  )
-	for(var/obj/machinery/computer/teleporter/com in world)
+	for(var/obj/machinery/computer/teleporter/com in machines)
 		if(com.target)
 			if(com.power_station && com.power_station.teleporter_hub && com.power_station.engaged)
 				L["[com.id] (Active)"] = com.target

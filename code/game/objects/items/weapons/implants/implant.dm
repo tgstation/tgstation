@@ -9,6 +9,13 @@
 	item_color = "b"
 	var/allow_reagents = 0
 
+/obj/item/weapon/implant/New()
+	..()
+	implants += src
+
+/obj/item/weapon/implant/Destroy()
+	implants -= src
+	..()
 
 /obj/item/weapon/implant/proc/trigger(emote, mob/source)
 	return

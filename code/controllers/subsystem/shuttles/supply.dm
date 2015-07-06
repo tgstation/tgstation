@@ -195,7 +195,7 @@
 		/obj/effect/spider/spiderling,
 		/obj/item/weapon/disk/nuclear,
 		/obj/machinery/nuclearbomb,
-		/obj/item/device/radio/beacon,
+		/obj/item/device/beacon,
 		/obj/machinery/the_singularitygen,
 		/obj/singularity,
 	)
