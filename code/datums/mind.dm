@@ -224,7 +224,7 @@
 		alert("Not before round-start!", "Alert")
 		return
 
-	var/out = ""
+	var/out = "<B>[name]</B>[(current&&(current.real_name!=name))?" (as [current.real_name])":""]<br>"
 	out += "Mind currently owned by key: [key] [active?"(synced)":"(not synced)"]<br>"
 	out += "Assigned role: [assigned_role]. <a href='?src=\ref[src];role_edit=1'>Edit</a><br>"
 	out += "Faction and special role: <b><font color='red'>[special_role]</font></b><br>"
@@ -583,9 +583,8 @@
 
 	out += "<a href='?src=\ref[src];obj_announce=1'>Announce objectives</a><br><br>"
 
-	var/datum/browser/popup = new(usr, "edit_memory[src]", "<B>[name]</B>[(current&&(current.real_name!=name))?" (as [current.real_name])":""]", 500, 600)
-	popup.set_content(out)
-	popup.open()
+	usr << browse(out, "window=edit_memory[src];size=500x600")
+
 
 /datum/mind/Topic(href, href_list)
 	if(!check_rights(R_ADMIN))	return
