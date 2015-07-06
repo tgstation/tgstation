@@ -1,3 +1,4 @@
+/*
 /datum/round_event_control/droneuprising
 	name 			= "Drone Uprising"
 	typepath 		= /datum/round_event/droneuprising
@@ -10,7 +11,7 @@
 			d.uprising = 1
 			d.show_uprising_notification()
 			d.check_laws()
-
+*/
 /datum/round_event_control/mommiuprising
 	name 			= "MoMMI Uprising"
 	typepath 		= /datum/round_event/mommiuprising

@@ -155,7 +155,6 @@ proc/wabbajack(mob/living/M)
 					switch(robot)
 						if("cyborg")		new_mob = new /mob/living/silicon/robot(M.loc)
 						if("syndiborg")		new_mob = new /mob/living/silicon/robot/syndicate(M.loc)
-					//	if("drone")			new_mob = new /mob/living/simple_animal/drone(M.loc)
 					if(issilicon(new_mob))
 						new_mob.gender = M.gender
 						new_mob.invisibility = 0

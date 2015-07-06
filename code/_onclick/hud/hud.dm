@@ -200,8 +200,6 @@ datum/hud/New(mob/owner)
 		ghost_hud()
 	else if(isovermind(mymob))
 		blob_hud()
-	else if(isdrone(mymob))
-		drone_hud(ui_style)
 
 
 	if(istype(mymob.loc,/obj/mecha))

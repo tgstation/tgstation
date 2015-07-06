@@ -64,11 +64,6 @@
 				else
 					a.triggerAlarm("Power", src, cameras, source)
 
-			for(var/mob/living/simple_animal/drone/D in mob_list)
-				if(state == 1)
-					D.cancelAlarm("Power", src, source)
-				else
-					D.triggerAlarm("Power", src, cameras, source)
 	return
 
 /area/proc/atmosalert(var/danger_level, var/obj/source as obj)
@@ -82,16 +77,12 @@
 				aiPlayer.triggerAlarm("Atmosphere", src, cameras, source)
 			for(var/obj/machinery/computer/station_alert/a in machines)
 				a.triggerAlarm("Atmosphere", src, cameras, source)
-			for(var/mob/living/simple_animal/drone/D in mob_list)
-				D.triggerAlarm("Atmosphere", src, cameras, source)
 
 		else if (src.atmosalm == 2)
 			for(var/mob/living/silicon/aiPlayer in player_list)
 				aiPlayer.cancelAlarm("Atmosphere", src, source)
 			for(var/obj/machinery/computer/station_alert/a in machines)
 				a.cancelAlarm("Atmosphere", src, source)
-			for(var/mob/living/simple_animal/drone/D in mob_list)
-				D.cancelAlarm("Atmosphere", src, source)
 
 		src.atmosalm = danger_level
 		return 1
@@ -121,8 +112,6 @@
 		a.triggerAlarm("Fire", src, cameras, source)
 	for (var/mob/living/silicon/aiPlayer in player_list)
 		aiPlayer.triggerAlarm("Fire", src, cameras, source)
-	for (var/mob/living/simple_animal/drone/D in mob_list)
-		D.triggerAlarm("Fire", src, cameras, source)
 	return
 
 /area/proc/firereset(var/obj/source as obj)
@@ -144,8 +133,6 @@
 		aiPlayer.cancelAlarm("Fire", src, source)
 	for (var/obj/machinery/computer/station_alert/a in machines)
 		a.cancelAlarm("Fire", src, source)
-	for (var/mob/living/simple_animal/drone/D in mob_list)
-		D.cancelAlarm("Fire", src, source)
 	return
 
 /area/proc/burglaralert(var/obj/trigger)

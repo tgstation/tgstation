@@ -26,7 +26,7 @@
 
 
 /obj/item/weapon/storage/MouseDrop(atom/over_object)
-	if(iscarbon(usr) || isdrone(usr) || ismommi(usr)) //all the check for item manipulation are in other places, you can safely open any storages as anything and its not buggy, i checked
+	if(iscarbon(usr) || ismommi(usr)) //all the check for item manipulation are in other places, you can safely open any storages as anything and its not buggy, i checked
 		var/mob/M = usr
 
 		if(!over_object)
