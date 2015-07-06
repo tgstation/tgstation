@@ -369,6 +369,8 @@
 	var/times = 0
 
 /datum/spellbook_entry/summon/events/IsAvailible()
+	if(!ticker.mode) // In case spellbook is placed on map
+		return 0
 	return (ticker.mode.name != "ragin' mages" && !config.no_summon_events)
 
 /datum/spellbook_entry/summon/events/Buy(var/mob/living/carbon/human/user,var/obj/item/weapon/spellbook/book)
@@ -403,8 +405,7 @@
 	var/list/datum/spellbook_entry/entries = list()
 	var/list/categories = list()
 
-/obj/item/weapon/spellbook/New()
-	..()
+/obj/item/weapon/spellbook/proc/Initialize()
 	var/entry_types = typesof(/datum/spellbook_entry) - /datum/spellbook_entry - /datum/spellbook_entry/item - /datum/spellbook_entry/summon
 	for(var/T in entry_types)
 		var/datum/spellbook_entry/E = new T
@@ -414,6 +415,10 @@
 		else
 			del(E)
 	tab = categories[1]
+
+/obj/item/weapon/spellbook/New()
+	..()
+	Initialize()
 
 
 /obj/item/weapon/spellbook/attackby(obj/item/O as obj, mob/user as mob, params)
@@ -561,6 +566,9 @@
 /obj/item/weapon/spellbook/oneuse/New()
 	..()
 	name += spellname
+
+/obj/item/weapon/spellbook/oneuse/Initialize() //No need to init
+	return
 
 /obj/item/weapon/spellbook/oneuse/attack_self(mob/user as mob)
 	var/obj/effect/proc_holder/spell/S = new spell
