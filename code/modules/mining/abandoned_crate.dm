@@ -210,3 +210,11 @@
 				user << "<span class='notice'>Last code attempt had [bulls] correct digits at correct positions and [cows] correct digits at incorrect positions.</span>"
 		else ..()
 	else ..()
+
+/obj/structure/closet/crate/secure/loot/dump_contents()
+	if(locked)
+		var/turf/T = get_turf(src.loc)
+		explosion(T, -1, -1, 1, 1)
+		qdel(src)
+		return
+	else ..()
