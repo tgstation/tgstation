@@ -167,9 +167,9 @@ var/global/borer_chem_types = typesof(/datum/borer_chem) - /datum/borer_chem
 	return html + "</ul>"
 */
 /mob/living/simple_animal/borer/Topic(href, href_list)
-//	if(!usr.check_rights(R_ADMIN))
-//		usr << "<span class='danger'>Hell no.</span>"
-//		return
+	if(!check_rights(R_ADMIN))
+		usr << "<span class='danger'>Hell no.</span>"
+		return
 
 	switch(href_list["act"])
 		if("detach")

@@ -987,10 +987,14 @@
 					usr << "<span class='danger'>Resetting DNA failed!</span>"
 				else
 					var/mob/living/carbon/C = current
-					C.dna = changeling.absorbed_dna[1]
-					C.real_name = C.dna.real_name
-					updateappearance(C)
-					domutcheck(C)
+					if(changeling.absorbed_dna[1])
+						C.dna = changeling.absorbed_dna[1]
+						C.real_name = C.dna.real_name
+						updateappearance(C)
+						domutcheck(C)
+					else
+						if(C.dna)
+							changeling.absorbed_dna[1] = C.dna
 
 	else if (href_list["nuclear"])
 		switch(href_list["nuclear"])

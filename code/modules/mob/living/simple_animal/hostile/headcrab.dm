@@ -18,17 +18,14 @@
 	environment_smash = 0
 	speak_emote = list("squeaks")
 	ventcrawler = 2
-	var/datum/mind/origin
 	var/egg_lain = 0
 
 /mob/living/simple_animal/hostile/headcrab/proc/Infect(var/mob/living/carbon/human/victim)
 	var/obj/item/body_egg/changeling_egg/egg = new(victim)
-	if(origin)
-		egg.owner = origin
-	else if(mind) // Let's make this a feature
-		egg.owner = mind
+	mind.transfer_to(egg.mind_holder)
 	victim.internal_organs += egg
 	visible_message("<span class='warning'>[src] lays an egg in a [victim].</span>")
+	death()
 	egg_lain = 1
 
 /mob/living/simple_animal/hostile/headcrab/AttackingTarget()
@@ -38,22 +35,41 @@
 	if(ishuman(target))
 		var/mob/living/carbon/human/H = target
 		if(H.stat == DEAD)
-			Infect(target)
 			src << "<span class='userdanger'>With your egg laid you feel your death rapidly approaching, time to die...</span>"
-			spawn(100)
-				death()
+			Infect(target)
 			return
 	target.attack_animal(src)
 
 
+//defined here because why not?
+/mob/living/mind_holder
+	name = "abstract mind holder"
+
+/mob/living/mind_holder/say(var/message)
+	return
+
+/mob/living/mind_holder/emote(var/message)
+	return
+
+
+/mob/living/mind_holder/Stat()
+	..()
+	if(istype(loc, /obj/item/body_egg/changeling_egg))
+		var/obj/item/body_egg/changeling_egg/egg = loc
+		stat("Bursting progress", "[egg.time]/[EGG_INCUBATION_TIME]")
 
 
 /obj/item/body_egg/changeling_egg
 	name = "changeling egg"
 	desc = "Twitching and disgusting"
-	var/datum/mind/owner
+//	var/datum/mind/owner  //Replaced by the mind holder
+	var/mob/living/mind_holder/mind_holder //Allow storing minds inside so they can't ghost out and meta it up
 	var/time
 	var/used
+
+/obj/item/body_egg/changeling_egg/New()
+	mind_holder = new(src)
+	..()
 
 /obj/item/body_egg/changeling_egg/egg_process()
 	//Changeling eggs grow in dead people
@@ -64,7 +80,8 @@
 /obj/item/body_egg/changeling_egg/proc/Pop()
 	if(!used)
 		var/mob/living/carbon/monkey/M = new(affected_mob.loc)
-		if(owner)
+		if(mind_holder && mind_holder.mind && mind_holder.client)
+			var/datum/mind/owner = mind_holder.mind
 			owner.transfer_to(M)
 			if(owner.changeling)
 				owner.changeling.purchasedpowers += new /obj/effect/proc_holder/changeling/humanform(null)

@@ -18,6 +18,7 @@
 
 /mob/living/carbon/human/death(gibbed)
 	if(stat == DEAD)	return
+	if(status_flags & FAKEDEATH)	return
 	if(healths)		healths.icon_state = "health5"
 	stat = DEAD
 	dizziness = 0
