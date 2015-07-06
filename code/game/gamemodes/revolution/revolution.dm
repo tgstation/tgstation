@@ -73,6 +73,9 @@
 		antag_candidates += trotsky
 		head_revolutionaries -= trotsky
 		update_rev_icons_removed(trotsky)
+	if(heads.len == 0 || head_revolutionaries.len == 0) //No heads (staff or rev), the round can't happen
+		message_admins("Revolution has been picked as the gamemode but there are no heads")
+
 
 	for(var/datum/mind/rev_mind in head_revolutionaries)
 		log_game("[rev_mind.key] (ckey) has been selected as a head rev")
