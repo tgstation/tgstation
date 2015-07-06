@@ -90,7 +90,7 @@
 			if(get_security_level() == "delta")
 				set_security_level("red")
 
-		gang.message_gangtools("Hostile takeover cancelled: Dominator is no longer operational.",1,1)
+		gang.message_gangtools("Hostile takeover cancelled: Dominator is no longer operational.[gang.dom_attempts ? " You have [gang.dom_attempts] attempt remaining." : " The station network will have likely blocked any more attempts by us."]",1,1)
 
 	SetLuminosity(0)
 	icon_state = "dominator-broken"
@@ -161,16 +161,23 @@
 
 	var/time = max(300,900 - ((round((tempgang.territory.len/start_state.num_territories)*200, 1) - 60) * 15))
 	if(alert(user,"With [round((tempgang.territory.len/start_state.num_territories)*100, 1)]% station control, a takeover will require [time] seconds.\nYour gang will be unable to gain influence while it is active.\nThe entire station will likely be alerted to it once it starts.\nYou have [tempgang.dom_attempts] attempt(s) remaining. Are you ready?","Confirm","Ready","Later") == "Ready")
-		if ((!in_range(src, user) || !istype(src.loc, /turf)))
+		if (!tempgang.dom_attempts || !in_range(src, user) || !istype(src.loc, /turf))
 			return 0
+
 		gang = tempgang
 		gang.dom_attempts --
-		gang.domination(1,src)
+		gang.domination()
 		src.name = "[gang.name] Gang [src.name]"
 		healthcheck(0)
 		operating = 1
-		gang.message_gangtools("Hostile takeover in progress: Estimated [time] seconds until victory.")
 		SSmachine.processing += src
+		var/area/A = get_area(loc)
+		var/locname = initial(A.name)
+		priority_announce("Network breach detected in [locname]. The [gang.name] Gang is attempting to seize control of the station!","Network Alert")
+		gang.message_gangtools("Hostile takeover in progress: Estimated [time] seconds until victory.[gang.dom_attempts ? "" : " This is your final attempt."]")
+		for(var/datum/gang/G in ticker.mode.gangs)
+			if(G != gang)
+				G.message_gangtools("Enemy takeover attempt detected in [locname]: Estimated [time] seconds until our defeat.",1,1)
 
 /obj/machinery/dominator/attack_alien(mob/living/user)
 	user.do_attack_animation(src)
