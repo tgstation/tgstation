@@ -148,7 +148,7 @@
 		AttemptLateSpawn(href_list["SelectedJob"])
 		return
 
-	if(href_list["privacy_poll"])
+/*	if(href_list["privacy_poll"])
 		establish_db_connection()
 		if(!dbcon.IsConnected())
 			return
@@ -184,7 +184,7 @@
 			var/DBQuery/query_insert = dbcon.NewQuery(sql)
 			query_insert.Execute()
 			usr << "<b>Thank you for your vote!</b>"
-			usr << browse(null,"window=privacypoll")
+			usr << browse(null,"window=privacypoll") */
 
 	if(!ready && href_list["preference"])
 		if(client)

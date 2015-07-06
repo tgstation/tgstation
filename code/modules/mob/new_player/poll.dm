@@ -1,4 +1,4 @@
-
+/*
 /mob/new_player/proc/handle_privacy_poll()
 	establish_db_connection()
 	if(!dbcon.IsConnected())
@@ -41,7 +41,7 @@
 
 	src << browse(output,"window=privacypoll;size=600x500")
 	return
-
+*/
 /datum/polloption
 	var/optionid
 	var/optiontext
