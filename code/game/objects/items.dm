@@ -386,35 +386,26 @@ var/global/image/fire_overlay = image("icon" = 'icons/effects/fire.dmi', "icon_s
 	if(is_human_victim)
 		var/mob/living/carbon/human/U = M
 		var/obj/item/organ/limb/affecting = U.get_organ("head")
-		world << "7 damage has been taken to [U]'s head."
 		if(affecting.take_damage(7))
 			U.update_damage_overlays(0)
 
 	else
 		M.take_organ_damage(7)
 
-	M.eye_blurry += rand(3,4)
-	if (M.eye_stat < 10)
-		world << "[M]'s eye blurriness is now [M.eye_blurry]"
+	M.eye_blurry += rand(2,3) //adds 2 or 3 blurriness with each eyestab
 	M.eye_stat += rand(1,2) //5 or 10 eyestabs are necessary to become nearsighted
-	world << "[M]'s eye stat is now [M.eye_stat]"
 	if (M.eye_stat >= 10)
-		M.eye_blurry += 5+(0.1*M.eye_blurry)
+		M.eye_blurry += 5+(0.1*M.eye_blurry) //if nearsighted, each stab adds extra blurriness based on current blurriness
 		if(M.disabilities != NEARSIGHT)
 			M.disabilities |= NEARSIGHT
-			world << "[M] is now nearsighted due to having an eye stat at or above 10: [M.eye_stat]!"
-			(!(M.stat))
-				M << "<span class='danger'>Your eyes start to bleed profusely!</span>"//warns the victim they're nearsighted
-		if(prob(30))//30% chance of being stunned and an extra 10 blur added to vision
-			world << "[M] has passed the 30% probability check and will be paralysed, weakened and further blinded."
-			if(M.stat != 2)
-				M.Paralyse(1) //we don't paralyse or weaken if already stunned to prevent chainstunning
+			M << "<span class='danger'>Your vision is a mess!</span>"//warns the victim they've become nearsighted
+		if(prob(25))//25% chance of being stunned and an extra 5 blur added to vision
+			if(!(M.stat)) //we don't paralyse or weaken if already stunned to discourage chainstunning
+				M.Paralyse(1)
 				M.Weaken(2)
-				M << "<span class='danger'>You drop what you're holding and clutch at your eyes!</span>"
-			M.eye_blurry += 10
-			world << "[M]'s eye blurriness had 10 added to it for a total of [M.eye_blurry]"
-		if (prob(M.eye_stat - 10 + 1)) //chance to go blind, currently 5 or 6 stabs after going nearsighted grants 10% per stab
-			world << "[M] has gone blind at a [(prob(M.eye_stat - 10 + 1))]% chance!"
+				M << "<span class='danger'>You collapse in pain!</span>"
+			M.eye_blurry += 5
+		if (prob(M.eye_stat - 10 + 1)) //chance to go blind. after 6 stabs while nearsighted, there's a 10% chance to go blind that keeps increasing with each stab
 			if(M.stat != 2)
 				M << "<span class='danger'>You go blind!</span>"
 			M.disabilities |= BLIND
