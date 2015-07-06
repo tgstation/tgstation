@@ -156,6 +156,8 @@
 
 /obj/structure/closet/secure_closet/detective/New()
 	..()
+	new /obj/item/weapon/gavelhammer
+	new /obj/item/weapon/gavelblock
 	new /obj/item/clothing/under/rank/det(src)
 	new /obj/item/clothing/suit/det_suit(src)
 	new /obj/item/clothing/head/det_hat(src)
