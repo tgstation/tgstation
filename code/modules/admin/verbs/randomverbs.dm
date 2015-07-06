@@ -286,7 +286,10 @@ Traitors and the like can also be revived with the previous role mostly intact.
 		A.copy_to(new_character)
 
 	if(!new_character.real_name)
-		new_character.real_name = random_name(new_character.gender)
+		if(new_character.dna.species.id == "lizard")
+			new_character.real_name = random_lizard_name(new_character.gender)
+		else
+			new_character.real_name = random_name(new_character.gender)
 	new_character.name = new_character.real_name
 
 	if(G_found.mind && !G_found.mind.active)

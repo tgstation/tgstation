@@ -15,13 +15,26 @@
 		if(!S.dangerous_existence)
 			all_species += speciestype
 
-	var/new_species = pick(all_species)
+	var/datum/species/new_species = pick(all_species)
 
 	if(prob(50))
 		all_the_same = 1
 
 	for(var/mob/living/carbon/human/H in mob_list) //yes, even the dead
 		if(H.dna)
+			if(new_species.id != H.dna.species.id) //Change their name if their species changes
+				if(new_species.id == "lizard")
+					switch(H.gender)
+						if(MALE)
+							H.real_name = pick(lizard_names_male)
+						if(FEMALE)
+							H.real_name = pick(lizard_names_female)
+				else
+					switch(H.gender)
+						if(MALE)
+							H.real_name = pick(first_names_male)
+						if(FEMALE)
+							H.real_name = pick(first_names_female)
 			hardset_dna(H, null, null, null, null, new_species)
 			H.regenerate_icons()
 			H << "<span class='notice'>You feel somehow... different?</span>"

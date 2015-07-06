@@ -18,7 +18,10 @@
 		user.visible_message("[user] successfully restores [target]'s appearance!", "<span class='notice'>You successfully restore [target]'s appearance.</span>")
 	else
 		var/oldname = target.real_name
-		target.real_name = random_name(target.gender)
+		if(target.dna.species.id == "lizard")
+			target.real_name = random_lizard_name(target.gender)
+		else
+			target.real_name = random_name(target.gender)
 		var/newname = target.real_name	//something about how the code handles names required that I use this instead of target.real_name
 		user.visible_message("[user] alters [oldname]'s appearance completely, they are now [newname]!", "<span class='notice'>You alter [oldname]'s appearance completely, they are now [newname].</span>")
 	return 1

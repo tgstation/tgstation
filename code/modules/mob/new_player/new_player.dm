@@ -382,7 +382,10 @@
 
 	if(config.force_random_names || appearance_isbanned(src))
 		client.prefs.random_character()
-		client.prefs.real_name = random_name(gender)
+		if(client.prefs.pref_species.id == "lizard")
+			client.prefs.real_name = random_lizard_name(gender)
+		else
+			client.prefs.real_name = random_name(gender)
 	client.prefs.copy_to(new_character)
 
 	if(mind)

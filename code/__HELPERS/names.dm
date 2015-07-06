@@ -185,9 +185,12 @@ var/syndicate_code_response//Code response for traitors.
 						if(names.len&&prob(70))
 							code_phrase += pick(names)
 						else
-							code_phrase += pick(pick(first_names_male,first_names_female))
-							code_phrase += " "
-							code_phrase += pick(last_names)
+							if(prob(20))
+								code_phrase += pick(pick(lizard_names_male,lizard_names_female))
+							else
+								code_phrase += pick(pick(first_names_male,first_names_female))
+								code_phrase += " "
+								code_phrase += pick(last_names)
 					if(2)
 						code_phrase += pick(get_all_jobs())//Returns a job.
 				safety -= 1

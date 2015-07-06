@@ -37,12 +37,19 @@ Bonus
 				if(ishuman(M))
 					var/mob/living/carbon/human/H = M
 					var/random_name = ""
-					switch(H.gender)
-						if(MALE)
-							random_name = pick(first_names_male)
-						else
-							random_name = pick(first_names_female)
-					random_name += " [pick(last_names)]"
+					if(H.dna.species.id == "lizard")
+						switch(H.gender)
+							if(MALE)
+								random_name = pick(lizard_names_male)
+							else
+								random_name = pick(lizard_names_female)
+					else
+						switch(H.gender)
+							if(MALE)
+								random_name = pick(first_names_male)
+							else
+								random_name = pick(first_names_female)
+						random_name += " [pick(last_names)]"
 					H.SetSpecialVoice(random_name)
 
 	return

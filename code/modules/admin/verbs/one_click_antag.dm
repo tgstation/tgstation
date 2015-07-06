@@ -422,7 +422,10 @@
 		var/mob/living/carbon/human/newmob = new (pick(emergencyresponseteamspawn))
 		chosen_candidate.client.prefs.copy_to(newmob)
 		ready_dna(newmob)
-		newmob.real_name = random_name(newmob.gender)
+		if(newmob.dna.species.id == "lizard")
+			newmob.real_name = random_lizard_name(newmob.gender)
+		else
+			newmob.real_name = random_name(newmob.gender)
 		newmob.key = chosen_candidate.key
 		newmob.mind.assigned_role = "Centcom Official"
 		equip_centcomofficial(newmob)
@@ -492,27 +495,28 @@
 			var/list/lastname = last_names
 			chosen_candidate.client.prefs.copy_to(ERTOperative)
 			ready_dna(ERTOperative)
+			var/ertname = ((ERTOperative.dna.species.id == "lizard") ? (ERTOperative.gender==MALE ? pick(lizard_names_male) : pick(lizard_names_female)) : pick(lastname))
 			switch(numagents)
 				if(1)
-					ERTOperative.real_name = "Commander [pick(lastname)]"
+					ERTOperative.real_name = "Commander [ertname]"
 					equip_emergencyresponsesquad(ERTOperative, "commander",redalert)
 				if(2)
-					ERTOperative.real_name = "Security Officer [pick(lastname)]"
+					ERTOperative.real_name = "Security Officer [ertname]"
 					equip_emergencyresponsesquad(ERTOperative, "sec",redalert)
 				if(3)
-					ERTOperative.real_name = "Medical Officer [pick(lastname)]"
+					ERTOperative.real_name = "Medical Officer [ertname]"
 					equip_emergencyresponsesquad(ERTOperative, "med",redalert)
 				if(4)
-					ERTOperative.real_name = "Engineer [pick(lastname)]"
+					ERTOperative.real_name = "Engineer [ertname]"
 					equip_emergencyresponsesquad(ERTOperative, "eng",redalert)
 				if(5)
-					ERTOperative.real_name = "Security Officer [pick(lastname)]"
+					ERTOperative.real_name = "Security Officer [ertname]"
 					equip_emergencyresponsesquad(ERTOperative, "sec",redalert)
 				if(6)
-					ERTOperative.real_name = "Medical Officer [pick(lastname)]"
+					ERTOperative.real_name = "Medical Officer [ertname]"
 					equip_emergencyresponsesquad(ERTOperative, "med",redalert)
 				if(7)
-					ERTOperative.real_name = "Engineer [pick(lastname)]"
+					ERTOperative.real_name = "Engineer [ertname]"
 					equip_emergencyresponsesquad(ERTOperative, "eng",redalert)
 			ERTOperative.key = chosen_candidate.key
 			ERTOperative.mind.assigned_role = "ERT"
@@ -590,9 +594,9 @@
 		temp.abductors |= list(agent_mind,scientist_mind)
 		temp.make_abductor_team(number,preset_scientist=scientist_mind,preset_agent=agent_mind)
 		temp.post_setup_team(number)
-		
+
 		ticker.mode.abductor_teams++
-		
+
 		if(ticker.mode.config_tag != "abduction")
 			ticker.mode.abductors |= temp.abductors
 
