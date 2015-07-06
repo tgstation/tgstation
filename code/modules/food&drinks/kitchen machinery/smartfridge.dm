@@ -14,8 +14,11 @@
 	active_power_usage = 100
 	flags = NOREACT
 	var/max_n_of_items = 1500
+	icon_open = "smartfridge_open"
+	icon_closed = "smartfridge"
 	var/icon_on = "smartfridge"
 	var/icon_off = "smartfridge-off"
+	machine_flags = REPLACEPARTS | SCREWTOGGLE | WRENCHMOVE | CROWPRY | CROWDESTROY
 	var/item_quants = list()
 
 /obj/machinery/smartfridge/New()
@@ -45,21 +48,7 @@
 ********************/
 
 /obj/machinery/smartfridge/attackby(var/obj/item/O as obj, var/mob/user as mob, params)
-	if(default_deconstruction_screwdriver(user, "smartfridge_open", "smartfridge", O))
-		return
-
-	if(exchange_parts(user, O))
-		return
-
-	if(default_pry_open(O))
-		return
-
-	if(default_unfasten_wrench(user, O))
-		power_change()
-		return
-
-	default_deconstruction_crowbar(O)
-
+	..()
 	if(stat)
 		return 0
 
@@ -215,6 +204,7 @@
 	active_power_usage = 200
 	icon_on = "drying_rack_on"
 	icon_off = "drying_rack"
+	machine_flags = WRENCHMOVE | CROWPRY
 	var/drying = 0
 
 /obj/machinery/smartfridge/drying_rack/interact(mob/user as mob)
