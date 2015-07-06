@@ -59,7 +59,7 @@
 	item_state = "claymore"
 	hitsound = 'sound/weapons/bladeslice.ogg'
 	flags = CONDUCT
-	slot_flags = SLOT_BELT
+	slot_flags = SLOT_BELT | SLOT_BACK
 	force = 40
 	throwforce = 10
 	w_class = 3
