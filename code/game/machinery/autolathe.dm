@@ -17,9 +17,6 @@
 	var/hacked = 0
 	var/disabled = 0
 	var/shocked = 0
-	var/hack_wire
-	var/disable_wire
-	var/shock_wire
 	use_power = 1
 	idle_power_usage = 10
 	active_power_usage = 100

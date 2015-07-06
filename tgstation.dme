@@ -307,6 +307,7 @@
 #include "code\datums\wires\mulebot.dm"
 #include "code\datums\wires\particle_accelerator.dm"
 #include "code\datums\wires\radio.dm"
+#include "code\datums\wires\rnd.dm"
 #include "code\datums\wires\robot.dm"
 #include "code\datums\wires\syndicatebomb.dm"
 #include "code\datums\wires\taperecorder.dm"

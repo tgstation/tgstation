@@ -46,6 +46,10 @@ Note: Must be placed within 3 tiles of the R&D Console
 			linked_console = null
 		return
 
+	if(panel_open)
+		if(istype(O, /obj/item/device/multitool) || istype(O,/obj/item/weapon/wirecutters))
+			attack_hand(user)
+
 	if(exchange_parts(user, O))
 		return
 

@@ -109,6 +109,8 @@ Note: Must be placed west/left of and R&D console to function.
 		return
 
 	if (panel_open)
+		if(istype(O, /obj/item/device/multitool) || istype(O,/obj/item/weapon/wirecutters))
+			attack_hand(user)
 		if(istype(O, /obj/item/weapon/crowbar))
 			for(var/obj/item/weapon/reagent_containers/glass/G in component_parts)
 				reagents.trans_to(G, G.reagents.maximum_volume)
@@ -201,3 +203,7 @@ Note: Must be placed west/left of and R&D console to function.
 	src.overlays -= "protolathe_[stack.name]"
 
 	return
+
+
+/obj/machinery/r_n_d/protolathe/proc/get_resource_cost_w_coeff(datum/design/D, resource, roundto = 1)
+	return round(D.materials[resource]*efficiency_coeff, roundto)

@@ -179,8 +179,14 @@
 
 	var/obj/item/I = new D.build_path(get_step(src,SOUTH))
 	I.loc = get_step(src,SOUTH)
+	I.reliability = D.reliability
 	I.materials[MAT_METAL] = get_resource_cost_w_coeff(D,MAT_METAL)
 	I.materials[MAT_GLASS] = get_resource_cost_w_coeff(D,MAT_GLASS)
+	I.materials[MAT_GOLD] = get_resource_cost_w_coeff(D,MAT_GOLD)
+	I.materials[MAT_SILVER] = get_resource_cost_w_coeff(D,MAT_SILVER)
+	I.materials[MAT_DIAMOND] = get_resource_cost_w_coeff(D,MAT_DIAMOND)
+	I.materials[MAT_URANIUM] = get_resource_cost_w_coeff(D,MAT_URANIUM)
+	I.materials[MAT_BANANIUM] = get_resource_cost_w_coeff(D,MAT_BANANIUM)
 	visible_message("\icon[src] <b>\The [src]</b> beeps, \"\The [I] is complete.\"")
 	being_built = null
 

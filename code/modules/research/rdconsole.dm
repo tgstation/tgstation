@@ -345,13 +345,9 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 		sync = !sync
 
 	else if(href_list["build"]) //Causes the Protolathe to build something.
-		var/coeff
-		if(linked_lathe)
-			coeff = linked_lathe.efficiency_coeff
-		else
-			coeff = 1
 		var/g2g = 1
 		if(linked_lathe)
+			var/coeff = linked_lathe.efficiency_coeff
 			var/datum/design/being_built = null
 			for(var/datum/design/D in files.known_designs)
 				if(D.id == href_list["build"])
@@ -418,12 +414,19 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 								if( new_item.type == /obj/item/weapon/storage/backpack/holding )
 									new_item.investigate_log("built by [key]","singulo")
 								new_item.reliability = R
-								new_item.materials[MAT_METAL] /= coeff
+/*								new_item.materials[MAT_METAL] /= coeff
 								new_item.materials[MAT_GLASS] /= coeff
 								new_item.materials[MAT_SILVER] /= coeff
 								new_item.materials[MAT_GOLD] /= coeff
 								new_item.materials[MAT_DIAMOND] /= coeff
-								new_item.materials[MAT_BANANIUM] /= coeff
+								new_item.materials[MAT_BANANIUM] /= coeff */
+								new_item.materials[MAT_METAL] = being_built.materials[MAT_METAL]/coeff
+								new_item.materials[MAT_GLASS] = being_built.materials[MAT_GLASS]/coeff
+								new_item.materials[MAT_GOLD] = being_built.materials[MAT_GOLD]/coeff
+								new_item.materials[MAT_SILVER] = being_built.materials[MAT_SILVER]/coeff
+								new_item.materials[MAT_DIAMOND] = being_built.materials[MAT_DIAMOND]/coeff
+								new_item.materials[MAT_URANIUM] = being_built.materials[MAT_URANIUM]/coeff
+								new_item.materials[MAT_BANANIUM] = being_built.materials[MAT_BANANIUM]/coeff
 								if(linked_lathe.hacked)
 									R = max((new_item.reliability/2), 0)
 								new_item.loc = linked_lathe.loc
@@ -432,9 +435,9 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 						updateUsrDialog()
 
 	else if(href_list["imprint"]) //Causes the Circuit Imprinter to build something.
-		var/coeff = linked_imprinter.efficiency_coeff
 		var/g2g = 1
 		if(linked_imprinter)
+			var/coeff = linked_imprinter.efficiency_coeff
 			var/datum/design/being_built = null
 			for(var/datum/design/D in files.known_designs)
 				if(D.id == href_list["imprint"])

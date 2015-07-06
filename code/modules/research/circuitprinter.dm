@@ -87,6 +87,8 @@ using metal and glass, it uses glass and reagents (usually sulfuric acis).
 		return
 
 	if (panel_open)
+		if(istype(O, /obj/item/device/multitool) || istype(O,/obj/item/weapon/wirecutters))
+			attack_hand(user)
 		if(istype(O, /obj/item/weapon/crowbar))
 			for(var/obj/item/weapon/reagent_containers/glass/G in component_parts)
 				reagents.trans_to(G, G.reagents.maximum_volume)
