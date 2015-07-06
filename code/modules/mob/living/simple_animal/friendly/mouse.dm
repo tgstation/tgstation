@@ -170,6 +170,10 @@
 	_color = "brown"
 	icon_state = "mouse_brown"
 
+/mob/living/simple_animal/mouse/black
+	_color = "black"
+	icon_state = "mouse_black"
+
 //TOM IS ALIVE! SQUEEEEEEEE~K :)
 /mob/living/simple_animal/mouse/brown/Tom
 	name = "Tom"
@@ -177,6 +181,13 @@
 	response_help  = "pets"
 	response_disarm = "gently pushes aside"
 	response_harm   = "splats"
+
+/mob/living/simple_animal/mouse/black/Dessert
+	name = "Dessert"
+	desc = "Crunchy!"
+	response_help  = "pets"
+	response_disarm = "gently pushes aside"
+	response_harm   = "tenderizes"
 
 /mob/living/simple_animal/mouse/say_quote(text)
 	if(!text)
