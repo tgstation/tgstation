@@ -348,6 +348,7 @@ obj/effect/bmode/buildholder/New()
 										deletions++
 									else
 										for(var/atom/thing in T.contents)
+											if(thing==usr) continue 
 											if(strict && (thing.type == chosen))
 												qdel(thing)
 											else if(istype(thing, chosen))
