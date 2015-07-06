@@ -144,8 +144,6 @@
 				adjustEarDamage(15,60)
 			if (prob(50))
 				Paralyse(10)
-				if(b_loss >= 30)
-					shred_clothing(1,10)
 
 	var/update = 0
 	for(var/obj/item/organ/limb/temp in organs)
