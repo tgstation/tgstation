@@ -3099,7 +3099,6 @@ proc/getScanDesign(var/obj/O)
 	category = "Machine Boards"
 	build_path = /obj/item/weapon/circuitboard/mech_bay_power_port
 
-
 /datum/design/mechapowerfloor
 	name = "Circuit Design (Recharge Station)"
 	desc = "Allows for the construction of circuit boards used to build a mech bay recharge station."
@@ -3110,6 +3109,51 @@ proc/getScanDesign(var/obj/O)
 	category = "Machine Boards"
 	build_path = /obj/item/weapon/circuitboard/mech_bay_recharge_station
 
+/datum/design/smeltcomp
+	name = "Circuit Design (Ore Processing Console)"
+	desc = "Allows for the construction of circuit boards used to build an ore processing console."
+	id = "smeltcomp"
+	req_tech = list("materials" = 2, "programming" = 2)
+	build_type = IMPRINTER
+	materials = list(MAT_GLASS = 2000, "sacid" = 20)
+	category = "Console Boards"
+	build_path = /obj/item/weapon/circuitboard/smeltcomp
+
+/datum/design/processing_unit
+	name = "Circuit Design (Ore Processor)"
+	desc = "Allows for the construction of circuit boards used to build an ore processor."
+	id = "smelter"
+	req_tech = list("programming" = 2, "materials" = 3, "engineering" = 3)
+	build_type = IMPRINTER
+	materials = list(MAT_GLASS = 2000, "sacid" = 20)
+	category = "Machine Boards"
+	build_path = /obj/item/weapon/circuitboard/processing_unit
+
+/datum/design/processing_unit/recycling
+	name = "Circuit Design (Recycling Furnace)"
+	desc = "Allows for the construction of circuit boards used to build a recycling furnace."
+	id = "smelter_recycling"
+	build_path = /obj/item/weapon/circuitboard/processing_unit/recycling
+
+/datum/design/stacking_unit_console
+	name = "Circuit Design (Stacking Machine Console)"
+	desc = "Allows for the construction of circuit boards used to build a stacking machine console."
+	id = "stackconsole"
+	req_tech = list("programming" = 2, "materials" = 3, "engineering" = 3)
+	build_type = IMPRINTER
+	materials = list(MAT_GLASS = 2000, "sacid" = 20)
+	category = "Console Boards"
+	build_path = /obj/item/weapon/circuitboard/stacking_machine_console
+
+/datum/design/stacking_unit
+	name = "Circuit Design (Stacking Machine)"
+	desc = "Allows for the construction of circuit boards used to build a stacking machine."
+	id = "stackingmachine"
+	req_tech = list("programming" = 2, "materials" = 3, "engineering" = 3)
+	build_type = IMPRINTER
+	materials = list(MAT_GLASS = 2000, "sacid" = 20)
+	category = "Machine Boards"
+	build_path = /obj/item/weapon/circuitboard/stacking_unit
 
 //////////////////////////////////////////////////////////////////
 // EMBEDDED CONTROLLER BOARDS
@@ -3345,6 +3389,21 @@ proc/getScanDesign(var/obj/O)
 	materials = list(MAT_GLASS = 2000, "sacid" = 20)
 	category = "Machine Boards"
 	build_path = /obj/item/weapon/circuitboard/cell_charger
+
+/datum/design/sorting_machine
+	name = "Circuit Design (Recycling Sorting Machine)"
+	desc = "Allows for the construction of circuit boards used to build a recycling sorting machine"
+	id = "sortingmachine"
+	req_tech = list("materials" = 3, "engineering" = 3, "programming" = 3)
+	build_type = IMPRINTER
+	materials = list(MAT_GLASS = 2000, "sacid" = 20)
+	build_path = /obj/item/weapon/circuitboard/sorting_machine/recycling
+
+/datum/design/sorting_machine/destination
+	name = "Circuit Design (Destinations Sorting Machine)"
+	desc = "Allows for the construction of circuit boards used to build a destinations sorting machine"
+	id = "destsortingmachine"
+	build_path = /obj/item/weapon/circuitboard/sorting_machine/destination
 
 /*
  *

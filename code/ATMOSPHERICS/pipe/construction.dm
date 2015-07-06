@@ -43,6 +43,8 @@ Buildable meters
 #define DISP_END_BIN			5
 #define DISP_END_OUTLET			6
 #define DISP_END_CHUTE			7
+#define DISP_SORT_JUNCTION		8
+#define DISP_SORT_WRAP_JUNCTION	9
 
 /obj/item/pipe_spawner
 	name = "Pipe Spawner"

@@ -56,6 +56,8 @@ var/global/list/disposalpipeID2State=list(
 	"disposal",
 	"outlet",
 	"intake",
+	"pipe-j1s",
+	"pipe-j1s",
 )
 
 /datum/pipe_info/disposal
@@ -115,14 +117,16 @@ var/global/list/RPD_recipes=list(
 		"4-Way Manifold" = new /datum/pipe_info(PIPE_INSUL_MANIFOLD4W,	1, PIPE_BINARY),
 	),
 	"Disposal Pipes" = list(
-		"Pipe"       = new /datum/pipe_info/disposal(DISP_PIPE_STRAIGHT,	PIPE_UNARY),
-		"Bent Pipe"  = new /datum/pipe_info/disposal(DISP_PIPE_BENT,		PIPE_BENT),
-		"Junction"   = new /datum/pipe_info/disposal(DISP_JUNCTION,			PIPE_TRINARY),
-		"Y-Junction" = new /datum/pipe_info/disposal(DISP_YJUNCTION,		PIPE_TRINARY),
-		"Trunk"      = new /datum/pipe_info/disposal(DISP_END_TRUNK,		PIPE_UNARY),
-		"Bin"        = new /datum/pipe_info/disposal(DISP_END_BIN,			PIPE_BINARY),
-		"Outlet"     = new /datum/pipe_info/disposal(DISP_END_OUTLET,		PIPE_UNARY),
-		"Chute"      = new /datum/pipe_info/disposal(DISP_END_CHUTE,		PIPE_UNARY),
+		"Pipe"						= new /datum/pipe_info/disposal(DISP_PIPE_STRAIGHT,			PIPE_UNARY),
+		"Bent Pipe"					= new /datum/pipe_info/disposal(DISP_PIPE_BENT,				PIPE_BENT),
+		"Junction"					= new /datum/pipe_info/disposal(DISP_JUNCTION,				PIPE_TRINARY),
+		"Y-Junction"				= new /datum/pipe_info/disposal(DISP_YJUNCTION,				PIPE_TRINARY),
+		"Trunk"						= new /datum/pipe_info/disposal(DISP_END_TRUNK,				PIPE_UNARY),
+		"Bin"						= new /datum/pipe_info/disposal(DISP_END_BIN,				PIPE_BINARY),
+		"Outlet"					= new /datum/pipe_info/disposal(DISP_END_OUTLET,			PIPE_UNARY),
+		"Chute"						= new /datum/pipe_info/disposal(DISP_END_CHUTE,				PIPE_UNARY),
+		"Sorting Junction"			= new /datum/pipe_info/disposal(DISP_SORT_JUNCTION,			PIPE_TRINARY),
+		"Wrapped Sorting Junction"	= new /datum/pipe_info/disposal(DISP_SORT_WRAP_JUNCTION,	PIPE_TRINARY),
 	)
 )
 /obj/item/weapon/pipe_dispenser
@@ -572,6 +576,10 @@ var/global/list/RPD_recipes=list(
 					if(7)
 						C.ptype = 8
 						C.density = 1
+					if(8)
+						C.ptype = 9
+					if(9)
+						C.ptype = 11
 				C.add_fingerprint(usr)
 				C.update()
 				return 1

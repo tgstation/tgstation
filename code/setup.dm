@@ -622,35 +622,6 @@ var/list/liftable_structures = list(\
 //some arbitrary defines to be used by self-pruning global lists. (see master_controller)
 #define PROCESS_KILL 26	//Used to trigger removal from a processing list
 
-// Reference list for disposal sort junctions. Set the sortType variable on disposal sort junctions to
-// the index of the sort department that you want. For example, sortType set to 2 will reroute all packages
-// tagged for the Cargo Bay.
-var/list/TAGGERLOCATIONS = list(
-	"Disposals",     // 1
-	"Cargo Bay",     // 2
-	"QM Office",     // 3
-	"Engineering",   // 4
-	"CE Office",     // 5
-	"Atmospherics",  // 6
-	"Security",      // 7
-	"HoS Office",    // 8
-	"Medbay",        // 9
-	"CMO Office",    // 10
-	"Chemistry",     // 11
-	"Research",      // 12
-	"RD Office",     // 13
-	"Robotics",      // 14
-	"HoP Office",    // 15
-	"Library",       // 16
-	"Chapel",        // 17
-	"Theatre",       // 18
-	"Bar",           // 19
-	"Kitchen",       // 20
-	"Hydroponics",   // 21
-	"Janitor Closet",// 22
-	"Genetics",      // 23
-	"Telecomms")     // 24
-
 #define HOSTILE_STANCE_IDLE 1
 #define HOSTILE_STANCE_ALERT 2
 #define HOSTILE_STANCE_ATTACK 3
@@ -1210,3 +1181,12 @@ var/list/RESTRICTED_CAMERA_NETWORKS = list( //Those networks can only be accesse
 #define LIGHT_COLOR_SLIME_LAMP "#AFC84B" //Weird color, between yellow and green, very slimy. rgb(175, 200, 75)
 #define LIGHT_COLOR_TUNGSTEN "#FAE1AF" //Extremely diluted yellow, close to skin color (for some reason). rgb(250, 225, 175)
 #define LIGHT_COLOR_HALOGEN "#F0FAFA" //Barely visible cyan-ish hue, as the doctor prescribed. rgb(240, 250, 250)
+
+//Default frequencies of signal based RC stuff, because comic and his magic numbers.
+#define FREQ_DISPOSAL 1367
+
+
+//Ore processing types for the ore processor
+#define ORE_PROCESSING_GENERAL 1
+#define ORE_PROCESSING_ALLOY 2
+

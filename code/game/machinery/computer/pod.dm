@@ -13,6 +13,9 @@
 	var/list/maxtimes = list()
 	var/list/powers = list()
 	var/list/loopings = list()
+	var/default_time = 30
+	var/default_loop = 0
+	var/default_timings = 0
 
 	light_color = LIGHT_COLOR_CYAN
 
@@ -22,7 +25,6 @@
 		driver_sync()
 	machines += src
 	return
-
 
 /obj/machinery/computer/pod/proc/driver_sync()
 	timings = list()
@@ -34,15 +36,15 @@
 			if((M.id_tag == ident_tag) && !(ident_tag in synced))
 				synced += ident_tag
 				timings += ident_tag
-				timings[ident_tag] = 0.0
+				timings[ident_tag] = default_timings
 				times += ident_tag
-				times[ident_tag] = 30.0
+				times[ident_tag] = default_time
 				maxtimes += ident_tag
-				maxtimes[ident_tag] = 30.0
+				maxtimes[ident_tag] = default_time
 				powers += ident_tag
 				powers[ident_tag] = 1.0
 				loopings += ident_tag
-				loopings[ident_tag] = 0
+				loopings[ident_tag] = default_loop
 				break
 	for(var/obj/machinery/door/poddoor/M in poddoors)
 		if(M.z != src.z)	continue
@@ -61,13 +63,13 @@
 			timings += ident_tag
 			timings[ident_tag] = 0.0
 			times += ident_tag
-			times[ident_tag] = 30.0
+			times[ident_tag] = default_time
 			maxtimes += ident_tag
-			maxtimes[ident_tag] = 30.0
+			maxtimes[ident_tag] = default_time
 			powers += ident_tag
 			powers[ident_tag] = 1.0
 			loopings += ident_tag
-			loopings[ident_tag] = 0
+			loopings[ident_tag] = default_loop
 			break
 	if(!(ident_tag in synced))
 		for(var/obj/machinery/door/poddoor/M in poddoors)
@@ -376,3 +378,11 @@
 		var/atom/target = get_edge_target_turf(AM, AM.dir)
 		AM.throw_at(target, 50, AM.throw_speed)
 	return
+
+//The automatic mass driver control in taxi's delivery office, controls the disposals network.
+/obj/machinery/computer/pod/disposal
+	name = "Disposal Network Mass Driver Control Computer"
+	default_loop = 1
+	default_time = 10
+	default_timings = 1
+	id_tags = list("disposal_network")

@@ -1041,6 +1041,47 @@ obj/item/weapon/circuitboard/rdserver
 							"/obj/item/weapon/stock_parts/scanning_module" = 1,
 							"/obj/item/weapon/stock_parts/capacitor" = 2)
 
+/obj/item/weapon/circuitboard/sorting_machine
+	name = "Circuit Board (Sorting Machine)"
+	board_type = "machine"
+	origin_tech = "materials=2;engineering=2;programming=3"
+	frame_desc = "Requires 3 Matter Bins and 1 Capacitor" //Matter bins because it's moving matter, I guess, and a capacitor because else the recipe is boring.
+	req_components = list(
+							"/obj/item/weapon/stock_parts/matter_bin" = 3,
+							"/obj/item/weapon/stock_parts/capacitor" = 1)
+
+/obj/item/weapon/circuitboard/sorting_machine/recycling
+	name = "Circuit Board (Recycling Sorting Machine)"
+	build_path = "/obj/machinery/sorting_machine/recycling"
+
+/obj/item/weapon/circuitboard/sorting_machine/destination
+	name = "Circuit Board (Destinations Sorting Machine)"
+	build_path = "/obj/machinery/sorting_machine/destination"
+
+/obj/item/weapon/circuitboard/processing_unit
+	name = "Circuit Board (Ore Processor)"
+	build_path = "/obj/machinery/mineral/processing_unit"
+	board_type = "machine"
+	origin_tech = "materials=3;engineering=2;programming=2"
+	frame_desc = "Requires 2 Matter Bins and 2 Micro-lasers"
+	req_components = list(
+							"/obj/item/weapon/stock_parts/matter_bin" = 2,
+							"/obj/item/weapon/stock_parts/micro_laser" = 2)
+
+/obj/item/weapon/circuitboard/processing_unit/recycling
+	name = "Circuit Board (Recycling Furnace)"
+	build_path = "/obj/machinery/mineral/processing_unit/recycle"
+
+/obj/item/weapon/circuitboard/stacking_unit
+	name = "Circuit Board (Stacking Machine)"
+	build_path = "/obj/machinery/mineral/stacking_machine"
+	board_type = "machine"
+	origin_tech = "materials=3;engineering=2;programming=2"
+	frame_desc = "Requires 3 Matter Bins and 1 Capacitor" //Matter bins because it's moving matter, I guess, and a capacitor because else the recipe is boring.
+	req_components = list(
+							"/obj/item/weapon/stock_parts/matter_bin" = 3,
+							"/obj/item/weapon/stock_parts/capacitor" = 1)
+
 /*
  *
  *

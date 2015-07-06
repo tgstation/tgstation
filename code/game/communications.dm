@@ -104,6 +104,7 @@ Devices:
 
 On the map:
 1311 for prison shuttle console (in fact, it is not used)
+1367 for recycling/mining processing machinery and conveyors
 1435 for status displays
 1437 for atmospherics/fire alerts
 1439 for engine components

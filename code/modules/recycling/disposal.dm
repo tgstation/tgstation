@@ -265,6 +265,9 @@
 
 		if(href_list["eject"])
 			eject()
+
+		nanomanager.update_uis(src)
+
 	return
 
 // eject the contents of the disposal unit
@@ -509,7 +512,7 @@
 	dir = 0
 	var/count = 1000	//*** can travel 1000 steps before going inactive (in case of loops)
 	var/has_fat_guy = 0	// true if contains a fat person
-	var/destinationTag = 0 // changes if contains a delivery container
+	var/destinationTag = "DISPOSALS"// changes if contains a delivery container
 	var/tomail = 0 //changes if contains wrapped package
 	var/hasmob = 0 //If it contains a mob
 
@@ -547,7 +550,6 @@
 				var/obj/item/smallDelivery/T = AM
 				src.destinationTag = T.sortTag
 
-
 	// start the movement process
 	// argument is the disposal unit the holder started in
 	proc/start(var/obj/machinery/disposal/D)
@@ -560,8 +562,6 @@
 		dir = DOWN
 		spawn(1)
 			move()		// spawn off the movement process
-
-		return
 
 	// movement process, persists while holder is moving through pipes
 	proc/move()
@@ -582,7 +582,8 @@
 			sleep(1)		// was 1
 			if(!loc || isnull(loc))
 				qdel(src)
-				return 0
+				return
+
 			var/obj/structure/disposalpipe/curr = loc
 			last = curr
 			curr = curr.transfer(src)
@@ -924,148 +925,141 @@
 /obj/structure/disposalpipe/segment
 	icon_state = "pipe-s"
 
-	New()
-		..()
-		if(icon_state == "pipe-s")
-			dpdir = dir | turn(dir, 180)
-		else
-			dpdir = dir | turn(dir, -90)
+/obj/structure/disposalpipe/segment/New()
+	..()
+	if(icon_state == "pipe-s")
+		dpdir = dir | turn(dir, 180)
+	else
+		dpdir = dir | turn(dir, -90)
 
-		update()
-		return
-
-
-
+	update()
 
 //a three-way junction with dir being the dominant direction
 /obj/structure/disposalpipe/junction
 	icon_state = "pipe-j1"
 
-	New()
-		..()
-		if(icon_state == "pipe-j1")
-			dpdir = dir | turn(dir, -90) | turn(dir,180)
-		else if(icon_state == "pipe-j2")
-			dpdir = dir | turn(dir, 90) | turn(dir,180)
-		else // pipe-y
-			dpdir = dir | turn(dir,90) | turn(dir, -90)
-		update()
-		return
+/obj/structure/disposalpipe/junction/New()
+	..()
+	if(icon_state == "pipe-j1")
+		dpdir = dir | turn(dir, -90) | turn(dir,180)
+	else if(icon_state == "pipe-j2")
+		dpdir = dir | turn(dir, 90) | turn(dir,180)
+	else // pipe-y
+		dpdir = dir | turn(dir,90) | turn(dir, -90)
+	update()
+	return
 
+// next direction to move
+// if coming in from secondary dirs, then next is primary dir
+// if coming in from primary dir, then next is equal chance of other dirs
 
-	// next direction to move
-	// if coming in from secondary dirs, then next is primary dir
-	// if coming in from primary dir, then next is equal chance of other dirs
+/obj/structure/disposalpipe/junction/nextdir(var/fromdir)
+	var/flipdir = turn(fromdir, 180)
+	if(flipdir != dir)	// came from secondary dir
+		return dir		// so exit through primary
+	else				// came from primary
+						// so need to choose either secondary exit
+		var/mask = ..(fromdir)
 
-	nextdir(var/fromdir)
-		var/flipdir = turn(fromdir, 180)
-		if(flipdir != dir)	// came from secondary dir
-			return dir		// so exit through primary
-		else				// came from primary
-							// so need to choose either secondary exit
-			var/mask = ..(fromdir)
+		// find a bit which is set
+		var/setbit = 0
+		if(mask & NORTH)
+			setbit = NORTH
+		else if(mask & SOUTH)
+			setbit = SOUTH
+		else if(mask & EAST)
+			setbit = EAST
+		else
+			setbit = WEST
 
-			// find a bit which is set
-			var/setbit = 0
-			if(mask & NORTH)
-				setbit = NORTH
-			else if(mask & SOUTH)
-				setbit = SOUTH
-			else if(mask & EAST)
-				setbit = EAST
-			else
-				setbit = WEST
-
-			if(prob(50))	// 50% chance to choose the found bit or the other one
-				return setbit
-			else
-				return mask & (~setbit)
+		if(prob(50))	// 50% chance to choose the found bit or the other one
+			return setbit
+		else
+			return mask & (~setbit)
 
 //a three-way junction that sorts objects
 /obj/structure/disposalpipe/sortjunction
-
 	icon_state = "pipe-j1s"
-	var/sortType = 0	//Look at the list called TAGGERLOCATIONS in setup.dm
+	var/sortType = 0 //Deprecated, here for legacy support.
+	var/sort_tag //Replacement of the above, more construction friendly.
+
 	var/posdir = 0
 	var/negdir = 0
 	var/sortdir = 0
 
-	proc/updatedesc()
-		desc = "An underfloor disposal pipe with a package sorting mechanism."
-		if(sortType>0)
-			var/tag = uppertext(TAGGERLOCATIONS[sortType])
-			desc += "\nIt's tagged with [tag]"
+/obj/structure/disposalpipe/sortjunction/proc/updatedesc()
+	desc = "An underfloor disposal pipe with a package sorting mechanism."
+	if(sort_tag)
+		desc += "\nIt's tagged with [sort_tag]."
 
-	proc/updatedir()
-		posdir = dir
-		negdir = turn(posdir, 180)
+/obj/structure/disposalpipe/sortjunction/proc/updatedir()
+	posdir = dir
+	negdir = turn(posdir, 180)
 
-		if(icon_state == "pipe-j1s")
-			sortdir = turn(posdir, -90)
-		else
-			icon_state = "pipe-j2s"
-			sortdir = turn(posdir, 90)
+	if(icon_state == "pipe-j1s")
+		sortdir = turn(posdir, -90)
+	else
+		icon_state = "pipe-j2s"
+		sortdir = turn(posdir, 90)
 
-		dpdir = sortdir | posdir | negdir
+	dpdir = sortdir | posdir | negdir
 
-	New()
-		..()
-		updatedir()
-		updatedesc()
-		update()
-		return
+/obj/structure/disposalpipe/sortjunction/New()
+	. = ..()
+	if(sortType && !sort_tag)
+		sort_tag = uppertext(DEFAULT_TAGGER_LOCATIONS[sortType])
 
-	attackby(var/obj/item/I, var/mob/user)
-		if(..())
-			return
+	updatedir()
+	updatedesc()
+	update()
 
-		if(istype(I, /obj/item/device/destTagger))
-			var/obj/item/device/destTagger/O = I
+/obj/structure/disposalpipe/sortjunction/attackby(var/obj/item/I, var/mob/user)
+	if(istype(I, /obj/item/device/destTagger))
+		var/obj/item/device/destTagger/O = I
 
-			if(O.currTag > 0)// Tag set
-				sortType = O.currTag
-				playsound(get_turf(src), 'sound/machines/twobeep.ogg', 100, 1)
-				var/tag = uppertext(TAGGERLOCATIONS[O.currTag])
-				user << "<span class='notice'>Changed filter to [tag]</span>"
-				updatedesc()
+		if(O.currTag)// Tag set
+			sort_tag = uppertext(O.destinations[O.currTag])
+			playsound(get_turf(src), 'sound/machines/twobeep.ogg', 100, 1)
+			user << "<span class='notice'>Changed filter to [sort_tag]</span>"
+			updatedesc()
+		return 1
 
-
+	. = ..()
 	// next direction to move
 	// if coming in from negdir, then next is primary dir or sortdir
 	// if coming in from posdir, then flip around and go back to posdir
 	// if coming in from sortdir, go to posdir
 
-	nextdir(var/fromdir, var/sortTag)
-		//var/flipdir = turn(fromdir, 180)
-		if(fromdir != sortdir)	// probably came from the negdir
+/obj/structure/disposalpipe/sortjunction/nextdir(var/fromdir, var/sortTag)
+	//var/flipdir = turn(fromdir, 180)
+	if(fromdir != sortdir)	// probably came from the negdir
 
-			if(src.sortType == sortTag) //if destination matches filtered type...
-				return sortdir		// exit through sortdirection
-			else
-				return posdir
-		else				// came from sortdir
-							// so go with the flow to positive direction
+		if(sort_tag == sortTag) //if destination matches filtered type...
+			return sortdir		// exit through sortdirection
+		else
 			return posdir
+	else				// came from sortdir
+						// so go with the flow to positive direction
+		return posdir
 
-	transfer(var/obj/structure/disposalholder/H)
-		var/nextdir = nextdir(H.dir, H.destinationTag)
-		H.dir = nextdir
-		var/turf/T = H.nextloc()
-		var/obj/structure/disposalpipe/P = H.findpipe(T)
+/obj/structure/disposalpipe/sortjunction/transfer(var/obj/structure/disposalholder/H)
+	var/nextdir = nextdir(H.dir, H.destinationTag)
+	H.dir = nextdir
+	var/turf/T = H.nextloc()
+	var/obj/structure/disposalpipe/P = H.findpipe(T)
 
-		if(P)
-			// find other holder in next loc, if inactive merge it with current
-			var/obj/structure/disposalholder/H2 = locate() in P
-			if(H2 && !H2.active)
-				H.merge(H2)
+	if(P)
+		// find other holder in next loc, if inactive merge it with current
+		var/obj/structure/disposalholder/H2 = locate() in P
+		if(H2 && !H2.active)
+			H.merge(H2)
 
-			H.forceMove(P)
-		else			// if wasn't a pipe, then set loc to turf
-			H.forceMove(T)
-			return null
+		H.forceMove(P)
+	else			// if wasn't a pipe, then set loc to turf
+		H.forceMove(T)
+		return
 
-		return P
-
+	return P
 
 //a three-way junction that sorts objects destined for the mail office mail table (tomail = 1)
 /obj/structure/disposalpipe/wrapsortjunction
@@ -1076,61 +1070,58 @@
 	var/negdir = 0
 	var/sortdir = 0
 
-	New()
-		..()
-		posdir = dir
-		if(icon_state == "pipe-j1s")
-			sortdir = turn(posdir, -90)
-			negdir = turn(posdir, 180)
-		else
-			icon_state = "pipe-j2s"
-			sortdir = turn(posdir, 90)
-			negdir = turn(posdir, 180)
-		dpdir = sortdir | posdir | negdir
+/obj/structure/disposalpipe/wrapsortjunction/New()
+	. = ..()
 
-		update()
+	update_dir()
+	update()
+
+/obj/structure/disposalpipe/wrapsortjunction/proc/update_dir()
+	posdir = dir
+	negdir = turn(posdir, 180)
+
+	if(icon_state == "pipe-j1s")
+		sortdir = turn(posdir, -90)
+	else
+		icon_state = "pipe-j2s"
+		sortdir = turn(posdir, 90)
+	dpdir = sortdir | posdir | negdir
+
+// next direction to move
+// if coming in from negdir, then next is primary dir or sortdir
+// if coming in from posdir, then flip around and go back to posdir
+// if coming in from sortdir, go to posdir
+
+/obj/structure/disposalpipe/wrapsortjunction/nextdir(var/fromdir, var/istomail)
+	//var/flipdir = turn(fromdir, 180)
+	if(fromdir != sortdir)	// probably came from the negdir
+
+		if(istomail) //if destination matches filtered type...
+			return sortdir		// exit through sortdirection
+		else
+			return posdir
+	else				// came from sortdir
+						// so go with the flow to positive direction
+		return posdir
+
+/obj/structure/disposalpipe/wrapsortjunction/transfer(var/obj/structure/disposalholder/H)
+	var/nextdir = nextdir(H.dir, H.tomail)
+	H.dir = nextdir
+	var/turf/T = H.nextloc()
+	var/obj/structure/disposalpipe/P = H.findpipe(T)
+
+	if(P)
+		// find other holder in next loc, if inactive merge it with current
+		var/obj/structure/disposalholder/H2 = locate() in P
+		if(H2 && !H2.active)
+			H.merge(H2)
+
+		H.forceMove(P)
+	else			// if wasn't a pipe, then set loc to turf
+		H.forceMove(T)
 		return
 
-
-	// next direction to move
-	// if coming in from negdir, then next is primary dir or sortdir
-	// if coming in from posdir, then flip around and go back to posdir
-	// if coming in from sortdir, go to posdir
-
-	nextdir(var/fromdir, var/istomail)
-		//var/flipdir = turn(fromdir, 180)
-		if(fromdir != sortdir)	// probably came from the negdir
-
-			if(istomail) //if destination matches filtered type...
-				return sortdir		// exit through sortdirection
-			else
-				return posdir
-		else				// came from sortdir
-							// so go with the flow to positive direction
-			return posdir
-
-	transfer(var/obj/structure/disposalholder/H)
-		var/nextdir = nextdir(H.dir, H.tomail)
-		H.dir = nextdir
-		var/turf/T = H.nextloc()
-		var/obj/structure/disposalpipe/P = H.findpipe(T)
-
-		if(P)
-			// find other holder in next loc, if inactive merge it with current
-			var/obj/structure/disposalholder/H2 = locate() in P
-			if(H2 && !H2.active)
-				H.merge(H2)
-
-			H.forceMove(P)
-		else			// if wasn't a pipe, then set loc to turf
-			H.forceMove(T)
-			return null
-
-		return P
-
-
-
-
+	return P
 
 //a trunk joining to a disposal bin or outlet on the same turf
 /obj/structure/disposalpipe/trunk

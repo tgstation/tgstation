@@ -1,142 +1,122 @@
 /datum/smelting_recipe
-	var/name=""
-	var/list/ingredients=list() // phazon=1, iron=1
-	var/yieldtype=null
+	var/name= ""
+	var/list/ingredients[0]
+	var/yieldtype = null
 
 // Note: Returns -1 if not enough ore!
 /datum/smelting_recipe/proc/checkIngredients(var/obj/machinery/mineral/processing_unit/P)
-	var/sufficient_ore=1
-	var/matching_ingredient_count=0
 	for(var/ore_id in P.ore.storage)
-		var/required=(ore_id in ingredients)
-		var/selected=(ore_id in P.selected)
+		var/min_ore_required = ingredients[ore_id]
 
-		// Selected but not in ingredients
-		if(selected && !required)
+		if(P.ore.getAmount(ore_id) < min_ore_required)
 			return 0
 
-		// Unselected but in ingredients
-		if(!selected && required)
-			return 0
-
-		var/min_ore_required=ingredients[ore_id]
-
-		// Selected, in ingredients, but not enough in stock.
-		if(selected && required)
-			if(P.ore.storage[ore_id] < min_ore_required)
-				sufficient_ore=0
-				continue
-
-			matching_ingredient_count++
-
-	if(!sufficient_ore)
-		return -1 // -1 means not enough ore. NOT A TYPO.
-
-	return matching_ingredient_count == ingredients.len
+	. = 1
 
 // RECIPES BEEP BOOP
 /datum/smelting_recipe/glass
-	name="Glass"
+	name = "Glass"
 	ingredients=list(
-		MAT_GLASS=1
+		MAT_GLASS = 1
 	)
-	yieldtype=/obj/item/stack/sheet/glass/glass
+	yieldtype = /obj/item/stack/sheet/glass/glass
+
 
 /datum/smelting_recipe/rglass
-	name="Reinforced Glass"
+	name = "Reinforced Glass"
 	ingredients=list(
-		MAT_GLASS=1,
-		MAT_IRON=1
+		MAT_GLASS = 1,
+		MAT_IRON = 1
 	)
-	yieldtype=/obj/item/stack/sheet/glass/rglass
+	yieldtype = /obj/item/stack/sheet/glass/rglass
 
 /datum/smelting_recipe/gold
-	name="Gold"
+	name = "Gold"
 	ingredients=list(
-		MAT_GOLD=1
+		MAT_GOLD = 1
 	)
-	yieldtype=/obj/item/stack/sheet/mineral/gold
+	yieldtype = /obj/item/stack/sheet/mineral/gold
 
 /datum/smelting_recipe/silver
-	name="Silver"
+	name = "Silver"
 	ingredients=list(
-		MAT_SILVER=1
+		MAT_SILVER = 1
 	)
-	yieldtype=/obj/item/stack/sheet/mineral/silver
+	yieldtype = /obj/item/stack/sheet/mineral/silver
 
 /datum/smelting_recipe/diamond
-	name="Diamond"
+	name = "Diamond"
 	ingredients=list(
-		MAT_DIAMOND=1
+		MAT_DIAMOND = 1
 	)
-	yieldtype=/obj/item/stack/sheet/mineral/diamond
+	yieldtype = /obj/item/stack/sheet/mineral/diamond
 
 /datum/smelting_recipe/plasma
-	name="Plasma"
+	name = "Plasma"
 	ingredients=list(
-		MAT_PLASMA=1
+		MAT_PLASMA = 1
 	)
-	yieldtype=/obj/item/stack/sheet/mineral/plasma
+	yieldtype = /obj/item/stack/sheet/mineral/plasma
 
 /datum/smelting_recipe/uranium
-	name="Uranium"
+	name = "Uranium"
 	ingredients=list(
-		MAT_URANIUM=1
+		MAT_URANIUM = 1
 	)
-	yieldtype=/obj/item/stack/sheet/mineral/uranium
+	yieldtype = /obj/item/stack/sheet/mineral/uranium
 
 /datum/smelting_recipe/metal
-	name="Metal"
+	name = "Metal"
 	ingredients=list(
-		MAT_IRON=1
+		MAT_IRON = 1
 	)
-	yieldtype=/obj/item/stack/sheet/metal
+	yieldtype = /obj/item/stack/sheet/metal
 
 /datum/smelting_recipe/plasteel
-	name="Plasteel"
+	name = "Plasteel"
 	ingredients=list(
-		MAT_IRON=1,
-		MAT_PLASMA=1
+		MAT_IRON = 1,
+		MAT_PLASMA = 1
 	)
-	yieldtype=/obj/item/stack/sheet/plasteel
+	yieldtype = /obj/item/stack/sheet/plasteel
 
 /datum/smelting_recipe/clown
-	name="Bananium"
+	name = "Bananium"
 	ingredients=list(
-		"clown"=1
+		MAT_CLOWN = 1
 	)
-	yieldtype=/obj/item/stack/sheet/mineral/clown
+	yieldtype = /obj/item/stack/sheet/mineral/clown
 
 /datum/smelting_recipe/plasma_glass
-	name="Plasma Glass"
+	name = "Plasma Glass"
 	ingredients=list(
-		MAT_PLASMA=1,
-		MAT_GLASS=1
+		MAT_PLASMA = 1,
+		MAT_GLASS = 1
 	)
-	yieldtype=/obj/item/stack/sheet/glass/plasmaglass
+	yieldtype = /obj/item/stack/sheet/glass/plasmaglass
 
 /datum/smelting_recipe/plasma_rglass
 	name="Reinforced Plasma Glass"
 	ingredients=list(
-		MAT_PLASMA=1,
-		MAT_GLASS=1,
-		MAT_IRON=1
+		MAT_PLASMA = 1,
+		MAT_GLASS = 1,
+		MAT_IRON = 1
 	)
 	yieldtype=/obj/item/stack/sheet/glass/plasmarglass
 
 /datum/smelting_recipe/phazon
-	name="phazon"
+	name = "phazon"
 	ingredients=list(
-		MAT_PHAZON=1
+		MAT_PHAZON = 1
 	)
-	yieldtype=/obj/item/stack/sheet/mineral/phazon
+	yieldtype = /obj/item/stack/sheet/mineral/phazon
 
 /datum/smelting_recipe/plastic
-	name="Plastic"
+	name = "Plastic"
 	ingredients=list(
-		MAT_PLASTIC=1
+		MAT_PLASTIC = 1
 	)
-	yieldtype=/obj/item/stack/sheet/mineral/plastic
+	yieldtype = /obj/item/stack/sheet/mineral/plastic
 
 /*
 /datum/smelting_recipe/pharosium

@@ -10,6 +10,8 @@ var/global/list/multitool_var_whitelist = list(	"id_tag",
 													"tag_chamber_sensor",
 													"tag_interior_sensor",
 													"tag_exterior_sensor",
+													"smelter_tag",
+													"stacker_tag"
 													)
 
 /*
@@ -285,6 +287,7 @@ Class Procs:
 			if(newid)
 				vars[href_list["set_tag"]] = newid
 				re_init=1
+			update_mt_menu = 1
 
 		if("unlink" in href_list)
 			var/idx = text2num(href_list["unlink"])
