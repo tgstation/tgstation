@@ -37,12 +37,6 @@ var/global/list/obj/item/beacon/beacons = list()
 	src.add_fingerprint(usr)
 	return
 
-
-/obj/item/beacon/bacon/proc/digest_delay()
-	sleep(600)
-	qdel(src)
-
-
 // SINGULO BEACON SPAWNER
 
 /obj/item/beacon/syndicate
@@ -56,3 +50,36 @@ var/global/list/obj/item/beacon/beacons = list()
 		new /obj/machinery/singularity_beacon/syndicate( user.loc )
 		playsound(src, 'sound/effects/pop.ogg', 100, 1, 1)
 		qdel(src)
+
+/obj/item/beacon/bluespace_beacon
+	icon = 'icons/obj/objects.dmi'
+	icon_state = "floor_beaconf"
+	name = "Bluespace Gigabeacon"
+	desc = "A device that draws power from bluespace and creates a permanent tracking beacon."
+	level = 1		// underfloor
+	layer = 2.5
+	anchored = 1
+
+/obj/item/beacon/bluespace_beacon/New()
+	..()
+	var/turf/T = loc
+	hide(T.intact)
+
+// update the invisibility and icon
+/obj/item/beacon/bluespace_beacon/hide(var/intact)
+	invisibility = intact ? 101 : 0
+	update_icon()
+
+	// update the icon_state
+/obj/item/beacon/bluespace_beacon/update_icon()
+	icon_state = "floor_beacon" + "[invisibility? "f" : ""]"
+
+/obj/item/beacon/bluespace_beacon/attack_hand(mob/user as mob) //Let's not pick up the anchored item
+	return
+
+/obj/item/beacon/bluespace_beacon/ex_act() //It has to have SOME advantage over a normal beacon
+	return
+
+/obj/item/beacon/bluespace_beacon/singularity_pull()
+	return
+

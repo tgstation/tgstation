@@ -9364,7 +9364,7 @@
 "dyd" = (/obj/machinery/door/airlock/external{name = "Telecoms External Airlock"; req_access_txt = "13; 17"},/turf/simulated/floor/plating,/area/tcommsat/entrance)
 "dye" = (/obj/machinery/camera/xray{c_tag = "External Airlock"; network = list("Tcomsat")},/turf/simulated/floor/plating,/area/tcommsat/entrance)
 "dyf" = (/obj/effect/decal/warning_stripes{tag = "icon-warning (WEST)"; icon_state = "warning"; dir = 8},/turf/simulated/floor,/area/tcommsat/entrance)
-"dyg" = (/obj/machinery/bluespace_beacon,/turf/simulated/floor,/area/tcommsat/entrance)
+"dyg" = (/obj/item/beacon/bluespace_beacon,/turf/simulated/floor,/area/tcommsat/entrance)
 "dyh" = (/obj/item/device/radio/intercom{name = "Station Intercom (General)"; pixel_x = 29},/turf/simulated/floor,/area/tcommsat/entrance)
 "dyi" = (/obj/machinery/light/small{dir = 4},/turf/simulated/floor/plating/airless,/area)
 "dyj" = (/obj/structure/closet/crate,/obj/item/clothing/glasses/night,/obj/effect/decal/warning_stripes{tag = "icon-warning (SOUTHWEST)"; icon_state = "warning"; dir = 10},/turf/simulated/floor,/area/tcommsat/entrance)
