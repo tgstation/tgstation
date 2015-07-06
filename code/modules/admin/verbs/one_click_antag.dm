@@ -422,10 +422,7 @@
 		var/mob/living/carbon/human/newmob = new (pick(emergencyresponseteamspawn))
 		chosen_candidate.client.prefs.copy_to(newmob)
 		ready_dna(newmob)
-		if(newmob.dna.species.id == "lizard")
-			newmob.real_name = random_lizard_name(newmob.gender)
-		else
-			newmob.real_name = random_name(newmob.gender)
+		newmob.real_name = newmob.dna.species.random_name(newmob.gender,1)
 		newmob.key = chosen_candidate.key
 		newmob.mind.assigned_role = "Centcom Official"
 		equip_centcomofficial(newmob)
@@ -495,7 +492,7 @@
 			var/list/lastname = last_names
 			chosen_candidate.client.prefs.copy_to(ERTOperative)
 			ready_dna(ERTOperative)
-			var/ertname = ((ERTOperative.dna.species.id == "lizard") ? (ERTOperative.gender==MALE ? pick(lizard_names_male) : pick(lizard_names_female)) : pick(lastname))
+			var/ertname = pick(lastname)
 			switch(numagents)
 				if(1)
 					ERTOperative.real_name = "Commander [ertname]"

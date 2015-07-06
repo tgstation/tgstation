@@ -328,23 +328,11 @@
 			M << "That name is reserved."
 			return nukelastname(M)
 
-	return newname
+	return capitalize(newname)
 
 /proc/NukeNameAssign(var/lastname,var/list/syndicates)
 	for(var/datum/mind/synd_mind in syndicates)
 		var/mob/living/carbon/human/H = synd_mind.current
-		if(H.dna.species.id == "lizard")
-			switch(synd_mind.current.gender)
-				if(MALE)
-					synd_mind.name = pick(lizard_names_male)
-				if(FEMALE)
-					synd_mind.name = pick(lizard_names_female)
-		else
-			switch(synd_mind.current.gender)
-				if(MALE)
-					synd_mind.name = pick(first_names_male)
-				if(FEMALE)
-					synd_mind.name = pick(first_names_female)
-		synd_mind.name += " [lastname]"
+		synd_mind.name = H.dna.species.random_name(H.gender,0,lastname)
 		synd_mind.current.real_name = synd_mind.name
 	return

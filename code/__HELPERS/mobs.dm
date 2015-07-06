@@ -79,8 +79,7 @@
 
 /proc/random_lizard_name(gender, attempts_to_find_unique_name=10)
 	for(var/i=1, i<=attempts_to_find_unique_name, i++)
-		if(gender==FEMALE)	. = capitalize(pick(lizard_names_female))
-		else				. = capitalize(pick(lizard_names_male))
+		. = capitalize(lizard_name(gender))
 
 		if(i != attempts_to_find_unique_name && !findname(.))
 			break

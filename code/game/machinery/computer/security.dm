@@ -711,8 +711,8 @@ What a mess.*/
 		if(prob(10/severity))
 			switch(rand(1,8))
 				if(1)
-					if(prob(20))
-						R.fields["name"] = "[pick(pick(lizard_names_male), pick(lizard_names_female))]"
+					if(prob(10))
+						R.fields["name"] = "[pick(lizard_name(MALE),lizard_name(FEMALE))]"
 					else
 						R.fields["name"] = "[pick(pick(first_names_male), pick(first_names_female))] [pick(last_names)]"
 				if(2)

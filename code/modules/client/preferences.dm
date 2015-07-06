@@ -111,10 +111,7 @@ var/global/list/special_roles = list( //keep synced with the defines BE_* in set
 			return
 	//we couldn't load character data so just randomize the character appearance + name
 	random_character()		//let's create a random character then - rather than a fat, bald and naked man.
-	if(pref_species.id == "lizard")
-		real_name = random_lizard_name(gender)
-	else
-		real_name = random_name(gender)
+	real_name = pref_species.random_name(gender,1)
 	if(!loaded_preferences_successfully)
 		save_preferences()
 	save_character()		//let's save this new random character so it doesn't keep generating new ones.
@@ -677,10 +674,7 @@ var/global/list/special_roles = list( //keep synced with the defines BE_* in set
 			if("random")
 				switch(href_list["preference"])
 					if("name")
-						if(pref_species.id == "lizard")
-							real_name = random_lizard_name(gender)
-						else
-							real_name = random_name(gender)
+						real_name = pref_species.random_name(gender,1)
 					if("age")
 						age = rand(AGE_MIN, AGE_MAX)
 					if("hair")

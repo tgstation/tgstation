@@ -1,3 +1,10 @@
+/proc/lizard_name(gender)
+	if(gender == MALE)
+		return "[pick(lizard_names_male)]-[pick(lizard_names_male)]"
+	else
+		return "[pick(lizard_names_female)]-[pick(lizard_names_female)]"
+
+
 var/church_name = null
 /proc/church_name()
 	if (church_name)
@@ -185,8 +192,8 @@ var/syndicate_code_response//Code response for traitors.
 						if(names.len&&prob(70))
 							code_phrase += pick(names)
 						else
-							if(prob(20))
-								code_phrase += pick(pick(lizard_names_male,lizard_names_female))
+							if(prob(10))
+								code_phrase += pick(lizard_name(MALE),lizard_name(FEMALE))
 							else
 								code_phrase += pick(pick(first_names_male,first_names_female))
 								code_phrase += " "

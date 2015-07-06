@@ -561,7 +561,7 @@
 		if(prob(10/severity))
 			switch(rand(1,6))
 				if(1)
-					if(prob(20))
+					if(prob(10))
 						R.fields["name"] = random_lizard_name(R.fields["sex"],1)
 					else
 						R.fields["name"] = random_name(R.fields["sex"],1)
