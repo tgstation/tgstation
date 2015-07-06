@@ -26,6 +26,7 @@
 	status_flags = 0
 	wander = 0
 	density = 0
+	atmos_requirements = list("min_oxy" = 0, "max_oxy" = 0, "min_tox" = 0, "max_tox" = 0, "min_co2" = 0, "max_co2" = 0, "min_n2" = 0, "max_n2" = 0)
 
 	var/essence = 25 //The resource of revenants. Max health is equal to twice this amount
 	var/essence_regen_cap = 25 //The regeneration cap of essence (go figure); regenerates every Life() tick up to this amount.

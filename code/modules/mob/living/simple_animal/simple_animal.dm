@@ -39,14 +39,7 @@
 	var/cold_damage_per_tick = 2	//same as heat_damage_per_tick, only if the bodytemperature it's lower than minbodytemp
 
 	//Atmos effect - Yes, you can make creatures that require plasma or co2 to survive. N2O is a trace gas and handled separately, hence why it isn't here. It'd be hard to add it. Hard and me don't mix (Yes, yes make all the dick jokes you want with that.) - Errorage
-	var/min_oxy = 5
-	var/max_oxy = 0					//Leaving something at 0 means it's off - has no maximum
-	var/min_tox = 0
-	var/max_tox = 1
-	var/min_co2 = 0
-	var/max_co2 = 5
-	var/min_n2 = 0
-	var/max_n2 = 0
+	var/list/atmos_requirements = list("min_oxy" = 5, "max_oxy" = 0, "min_tox" = 0, "max_tox" = 1, "min_co2" = 0, "max_co2" = 5, "min_n2" = 0, "max_n2" = 0) //Leaving something at 0 means it's off - has no maximum
 	var/unsuitable_atmos_damage = 2	//This damage is taken when atmos doesn't fit all the requirements above
 
 
@@ -186,30 +179,22 @@
 				var/n2  = ST.air.nitrogen
 				var/co2 = ST.air.carbon_dioxide
 
-				if(min_oxy)
-					if(oxy < min_oxy)
-						atmos_suitable = 0
-				if(max_oxy)
-					if(oxy > max_oxy)
-						atmos_suitable = 0
-				if(min_tox)
-					if(tox < min_tox)
-						atmos_suitable = 0
-				if(max_tox)
-					if(tox > max_tox)
-						atmos_suitable = 0
-				if(min_n2)
-					if(n2 < min_n2)
-						atmos_suitable = 0
-				if(max_n2)
-					if(n2 > max_n2)
-						atmos_suitable = 0
-				if(min_co2)
-					if(co2 < min_co2)
-						atmos_suitable = 0
-				if(max_co2)
-					if(co2 > max_co2)
-						atmos_suitable = 0
+				if(atmos_requirements["min_oxy"] && oxy < atmos_requirements["min_oxy"])
+					atmos_suitable = 0
+				else if(atmos_requirements["max_oxy"] && oxy > atmos_requirements["max_oxy"])
+					atmos_suitable = 0
+				else if(atmos_requirements["min_tox"] && tox < atmos_requirements["min_tox"])
+					atmos_suitable = 0
+				else if(atmos_requirements["max_tox"] && tox > atmos_requirements["max_tox"])
+					atmos_suitable = 0
+				else if(atmos_requirements["min_n2"] && n2 < atmos_requirements["min_n2"])
+					atmos_suitable = 0
+				else if(atmos_requirements["max_n2"] && n2 > atmos_requirements["max_n2"])
+					atmos_suitable = 0
+				else if(atmos_requirements["min_co2"] && co2 < atmos_requirements["min_co2"])
+					atmos_suitable = 0
+				else if(atmos_requirements["max_co2"] && co2 > atmos_requirements["max_co2"])
+					atmos_suitable = 0
 
 	//Atmos effect
 	if(bodytemperature < minbodytemp)
