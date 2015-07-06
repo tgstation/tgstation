@@ -930,3 +930,10 @@
 	name = "fingerbox"
 	desc = "A high quality fingerbox."
 	icon_state = "fingerbox"
+
+	//I couldn't think of anywhere else to put this
+/obj/item/toy/canary
+	name = "canary"
+	desc = "Small mechanical canary in a cage, does absolutely nothing of any importance!"
+	icon = 'icons/mob/animal.dmi'
+	icon_state = "canary"

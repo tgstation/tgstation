@@ -146,3 +146,16 @@ mob/living/simple_animal/hostile/scarybat/book/New()
 	icon_state = "bookbat_[book_cover]"
 	icon_living = "bookbat_[book_cover]"
 	icon_dead = "bookbat_[book_cover]_dead"
+
+/mob/living/simple_animal/hostile/scarybat/book/woody
+	name = "Woody"
+	desc = "A close friend to many librarians."
+	icon_state = "bookbat_woody"
+	icon_living = "bookbat_woody"
+	icon_dead = "bookbat_woody_dead"
+	icon_gib = "bookbat_woody_dead"
+	book_cover = "woody"
+	environment_smash = 0
+	harm_intent_damage = 0
+	melee_damage_lower = 0
+	melee_damage_upper = 0
