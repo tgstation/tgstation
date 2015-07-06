@@ -1,7 +1,7 @@
 /turf/simulated/wall
 	name = "wall"
 	desc = "A huge chunk of metal used to separate rooms."
-	icon = 'icons/turf/walls.dmi'
+	icon = 'icons/turf/walls/wall.dmi'
 	var/mineral = "metal"
 	opacity = 1
 	density = 1
@@ -17,20 +17,27 @@
 	var/sheet_type = /obj/item/stack/sheet/metal
 	var/obj/item/stack/sheet/builtin_sheet = null
 
-
-	var/del_suppress_resmoothing = 0 // Do not resmooth neighbors on Destroy. (smoothwall.dm)
 	canSmoothWith = list(
 	/turf/simulated/wall,
 	/obj/structure/falsewall,
 	/obj/structure/falsewall/reinforced  // WHY DO WE SMOOTH WITH FALSE R-WALLS WHEN WE DON'T SMOOTH WITH REAL R-WALLS.
 	)
+	smooth = 1
 
 /turf/simulated/wall/New()
 	..()
 	builtin_sheet = new sheet_type
+	if(smooth)
+		smoother = new /datum/tile_smoother(src, canSmoothWith)
 
 /turf/simulated/wall/attack_tk()
 	return
+
+/turf/simulated/wall/ChangeTurf(var/path)
+	..()
+	for(var/atom/A in orange(1,src))
+		if(A.smoother)
+			A.smoother.smooth()
 
 /turf/simulated/wall/proc/dismantle_wall(devastated=0, explode=0)
 	if(devastated)
@@ -268,3 +275,21 @@
 
 /turf/simulated/wall/storage_contents_dump_act(obj/item/weapon/storage/src_object, mob/user)
 	return 0
+
+/*/turf/simulated/wall/smooth
+	name = "smooth wall"
+	desc = "A huge chunk of smooth."
+	icon = 'icons/turf/smooth_wall.dmi'
+	icon_state = "smooth"
+	var/datum/tile_smoother/smoother
+
+/turf/simulated/wall/smooth/New()
+	..()
+	smoother = new /datum/tile_smoother(src)
+	smoother.smooth()
+	icon_state = ""
+
+/turf/simulated/wall/smooth/ChangeTurf(var/path)
+	..()
+	for(var/turf/simulated/wall/smooth/smoothwall in orange(1,src))
+		smoothwall.smoother.smooth(get_dir(src,smoothwall))*/
