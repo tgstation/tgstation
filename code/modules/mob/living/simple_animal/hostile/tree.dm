@@ -17,6 +17,8 @@
 	mob_size = MOB_SIZE_LARGE
 
 	pixel_x = -16
+	emote_taunt = list("growls")
+	taunt_chance = 20
 
 	harm_intent_damage = 5
 	melee_damage_lower = 8
@@ -30,10 +32,6 @@
 
 	faction = list("hostile")
 
-/mob/living/simple_animal/hostile/tree/FindTarget()
-	. = ..()
-	if(.)
-		emote("me", 1, "growls at [.].")
 
 /mob/living/simple_animal/hostile/tree/AttackingTarget()
 	..()

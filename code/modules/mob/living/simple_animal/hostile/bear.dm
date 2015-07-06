@@ -9,11 +9,12 @@
 	speak = list("RAWR!","Rawr!","GRR!","Growl!")
 	speak_emote = list("growls", "roars")
 	emote_hear = list("rawrs","grumbles","grawls")
-	emote_see = list("stares ferociously", "stomps")
+	emote_taunt = list("stares ferociously", "stomps")
 	speak_chance = 1
 	turns_per_move = 5
 	see_in_dark = 6
 	meat_type = /obj/item/weapon/reagent_containers/food/snacks/meat/slab/bear
+	taunt_chance = 25
 	meat_amount = 3
 	response_help  = "pets"
 	response_disarm = "gently pushes aside"
@@ -50,14 +51,7 @@
 /mob/living/simple_animal/hostile/bear/Process_Spacemove(var/movement_dir = 0)
 	return 1	//No drifting in space for space bears!
 
-/mob/living/simple_animal/hostile/bear/FindTarget()
-	. = ..()
-	if(.)
-		emote("me", 1, "stares alertly at [.]")
-		stance = HOSTILE_STANCE_ATTACK
 
-/mob/living/simple_animal/hostile/bear/LoseTarget()
-	..(5)
 
 
 

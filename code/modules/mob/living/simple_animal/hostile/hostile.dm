@@ -12,6 +12,9 @@
 	var/move_to_delay = 3 //delay for the automated movement.
 	var/list/friends = list()
 
+	var/list/emote_taunt = list()
+	var/taunt_chance = 0
+
 	var/ranged_message = "fires" //Fluff text for ranged mobs
 	var/ranged_cooldown = 0 //What the starting cooldown is on ranged attacks
 	var/ranged_cooldown_cap = 3 //What ranged attacks, after being used are set to, to go back on cooldown, defaults to 3 life() ticks
@@ -182,7 +185,7 @@
 			else
 				if(FindHidden())
 					return
-	LostTarget()
+	LoseTarget()
 
 /mob/living/simple_animal/hostile/proc/Goto(var/target, var/delay, var/minimum_distance)
 	walk_to(src, target, minimum_distance, delay)
@@ -209,7 +212,7 @@
 		LoseTarget()
 		return 0
 	if(!(target in ListTargets()))
-		LostTarget()
+		LoseTarget()
 		return 0
 	if(isturf(loc) && target.Adjacent(src))
 		AttackingTarget()
@@ -220,19 +223,18 @@
 
 /mob/living/simple_animal/hostile/proc/Aggro()
 	vision_range = aggro_vision_range
+	if(target && emote_taunt.len && prob(taunt_chance))
+		emote("me", 1, "[pick(emote_taunt)] at [target].")
+		taunt_chance = max(taunt_chance-7,2)
 
 /mob/living/simple_animal/hostile/proc/LoseAggro()
 	stop_automated_movement = 0
 	vision_range = idle_vision_range
+	taunt_chance = initial(taunt_chance)
 
 /mob/living/simple_animal/hostile/proc/LoseTarget()
 	stance = HOSTILE_STANCE_IDLE
 	target = null
-	walk(src, 0)
-	LoseAggro()
-
-/mob/living/simple_animal/hostile/proc/LostTarget()
-	stance = HOSTILE_STANCE_IDLE
 	walk(src, 0)
 	LoseAggro()
 
