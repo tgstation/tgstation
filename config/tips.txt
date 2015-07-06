@@ -69,7 +69,6 @@ Hulks can't fire weapons because of their meaty fingers.
 The mime's crayon is edible.
 Shooting lasers at a computer console will destroy it.
 Using ethanol on a piece of paper will remove any writing on it.
-Using an emag on the gibber will allow you to throw people into it!
 Using the comms console with captain level access will allow you to broadcast announcements in BIG, RED LETTERS!
 You can repair cracked windows with a welding tool on help intent.
 Alt-click on an adjacent tile to see its contents in the top right pane.
