@@ -134,11 +134,11 @@
 	var/list/L = list()
 	var/list/areaindex = list()
 
-	for(var/obj/item/device/radio/beacon/R in world)
+	for(var/obj/item/beacon/R in beacons)
 		var/turf/T = get_turf(R)
 		if (!T)
 			continue
-		if(T.z == 2 || T.z > 7)
+		if(T.z == CENTCOMM_Z || T.z > map.zLevels.len)
 			continue
 		var/tmpname = T.loc.name
 		if(areaindex[tmpname])

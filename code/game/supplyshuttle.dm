@@ -400,7 +400,7 @@ var/list/mechtoys = list(
 		. = TRUE
 	else if (locate(/obj/machinery/nuclearbomb) in contents)
 		. = TRUE
-	else if (locate(/obj/item/device/radio/beacon) in contents)
+	else if (locate(/obj/item/beacon) in contents)
 		. = TRUE
 	else
 		. = FALSE

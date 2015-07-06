@@ -492,16 +492,12 @@
 	if (!( istype(W, /obj/item/weapon/screwdriver) ))
 		return
 	b_stat = !( b_stat )
-	if(!istype(src, /obj/item/device/radio/beacon))
-		if (b_stat)
-			user.show_message("<span class = 'notice'>\The [src] can now be attached and modified!</span>")
-		else
-			user.show_message("<span class = 'notice'>\The [src] can no longer be modified or attached!</span>")
-		updateDialog()
-			//Foreach goto(83)
-		add_fingerprint(user)
-		return
-	else return
+	if (b_stat)
+		user.show_message("<span class = 'notice'>\The [src] can now be attached and modified!</span>")
+	else
+		user.show_message("<span class = 'notice'>\The [src] can no longer be modified or attached!</span>")
+	updateDialog()
+	add_fingerprint(user)
 
 /obj/item/device/radio/emp_act(severity)
 	broadcasting = 0

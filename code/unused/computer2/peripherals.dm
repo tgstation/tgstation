@@ -158,7 +158,7 @@
 				prize.name = "space ticket"
 				prize.desc = "It's almost like actual currency!"
 			if(2)
-				prize = new /obj/item/device/radio/beacon( prize_location )
+				prize = new /obj/item/beacon( prize_location )
 				prize.name = "electronic blink toy game"
 				prize.desc = "Blink.  Blink.  Blink."
 			if(3)

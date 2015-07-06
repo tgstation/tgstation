@@ -2542,7 +2542,7 @@ proc/getScanDesign(var/obj/O)
 	build_type = PROTOLATHE
 	materials = list (MAT_IRON = 20, MAT_GLASS = 10)
 	category = "Bluespace"
-	build_path = /obj/item/device/radio/beacon
+	build_path = /obj/item/beacon
 
 /datum/design/bag_holding
 	name = "Bag of Holding"
