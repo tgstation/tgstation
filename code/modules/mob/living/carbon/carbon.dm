@@ -33,7 +33,7 @@
 
 /mob/living/carbon/proc/update_minimap()
 	var/obj/item/device/pda/pda_device = machine
-	if(machine && istype(machine))
+	if(machine && istype(pda_device))
 		var/turf/user_loc = get_turf(src)
 		var/turf/pda_loc = get_turf(pda_device)
 		if(get_dist(user_loc,pda_loc) <= 1)
