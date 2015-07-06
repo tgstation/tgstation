@@ -77,12 +77,11 @@ Er
 Esqoo
 Etaku
 Gah
-GahJulan
 Gajul
 Gam
 Geeh
 Geel
-GeemJasaiin
+Geem
 Geh
 Gei
 Gih
@@ -111,6 +110,7 @@ Jah
 Jaraleet
 Jaree
 Jas
+Jasaiin
 Jaseen
 Jat
 Jee
@@ -125,6 +125,7 @@ Jilux
 Jin
 Jon
 Jul
+Julan
 Junal
 Jush
 Juunei
