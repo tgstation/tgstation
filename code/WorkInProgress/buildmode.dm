@@ -1,5 +1,3 @@
-#define BOTTOM_LEFT			1
-#define TOP_RIGHT			2
 #define MASS_FILL			0
 #define MASS_DELETE			1
 #define SELECTIVE_DELETE	2
@@ -132,7 +130,8 @@ var/global/list/obj/effect/bmode/buildholder/buildmodeholders = list()
 	var/obj/effect/bmode/buildmode/buildmode = null
 	var/obj/effect/bmode/buildquit/buildquit = null
 	var/atom/movable/throw_atom = null
-	var/list/fillingtiles[2]
+	var/turf/fill_left
+	var/turf/fill_right
 
 obj/effect/bmode/buildholder/New()
 	..()
@@ -292,26 +291,26 @@ obj/effect/bmode/buildholder/New()
 				if(!holder)
 					return
 				if(pa.Find("left"))
-					holder.fillingtiles[BOTTOM_LEFT] = RT
+					holder.fill_left = RT
 					usr << "<span class='notice'>Set bottom left fill corner to ([formatJumpTo(RT)])</span>"
 				else if(pa.Find("right"))
-					holder.fillingtiles[TOP_RIGHT] = RT
+					holder.fill_right = RT
 					usr << "<span class='notice'>Set top right fill corner to ([formatJumpTo(RT)])</span>"
-				if(holder.fillingtiles[BOTTOM_LEFT] && holder.fillingtiles[TOP_RIGHT])
-					var/turf/start = holder.fillingtiles[BOTTOM_LEFT]
-					var/turf/end = holder.fillingtiles[TOP_RIGHT]
+				if(holder.fill_left && holder.fill_right)
+					var/turf/start = holder.fill_left
+					var/turf/end = holder.fill_right
 					if(start.z != end.z)
 						usr << "<span class='warning'>You can't do a fill across zlevels you silly person.</span>"
-						holder.fillingtiles[BOTTOM_LEFT] = null
-						holder.fillingtiles[TOP_RIGHT] = null
+						holder.fill_left = null
+						holder.fill_right = null
 						return
 					var/list/fillturfs = block(start,end)
 					if(fillturfs.len)
 						if(alert("You're about to do a fill operation spanning [fillturfs.len] tiles, are you sure?","Panic","Yes","No") == "Yes")
 							if(fillturfs.len > 150)
 								if(alert("Are you completely sure about filling [fillturfs.len] tiles?","Panic!!!!","Yes","No") != "Yes")
-									holder.fillingtiles[BOTTOM_LEFT] = null
-									holder.fillingtiles[TOP_RIGHT] = null
+									holder.fill_left = null
+									holder.fill_right = null
 									usr << "<span class='notice'>Cleared filling corners.</span>"
 									return
 							var/areaAction = alert("FILL tiles or DELETE them? areaAction will destroy EVERYTHING IN THE SELECTED AREA", "Create or destroy, your chance to be a GOD","FILL","DELETE") == "DELETE"
@@ -382,8 +381,8 @@ obj/effect/bmode/buildholder/New()
 											if(istype(A))
 												A.dir = holder.builddir.dir
 								tcheck(80,1)
-							holder.fillingtiles[BOTTOM_LEFT] = null
-							holder.fillingtiles[TOP_RIGHT] = null
+							holder.fill_left = null
+							holder.fill_right = null
 							if(deletions) usr << "<span class='info'>Successfully deleted [deletions] [chosen]'\s</span>"
 				return
 			if(pa.Find("left"))
