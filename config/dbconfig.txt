@@ -27,7 +27,7 @@ FEEDBACK_DATABASE feedback
 FEEDBACK_TABLEPREFIX 
 
 ## Username/Login used to access the database.
-FEEDBACK_LOGIN spoky
+FEEDBACK_LOGIN Spoky
 
 ## Password used to access the database.
-FEEDBACK_PASSWORD spoks
+FEEDBACK_PASSWORD Spoks
