@@ -15,9 +15,10 @@
 #endif
 
 //Some defines to generalise colours used in lighting.
-#define LIGHT_COLOR_RED "#A96666"
-#define LIGHT_COLOR_GREEN "#66AA66"
-#define LIGHT_COLOR_BLUE "#6699FF"
+//Important note on colors. Colors can end up significantly different from the basic html picture, especially when saturated
+#define LIGHT_COLOR_RED "#FA8282" //Warm but extremely diluted red. rgb(250, 130, 130)
+#define LIGHT_COLOR_GREEN "#64C864" //Bright but quickly dissipating neon green. rgb(100, 200, 100)
+#define LIGHT_COLOR_BLUE "#6496FA" //Cold, diluted blue. rgb(100, 150, 250)
 
 #define LIGHT_COLOR_CYAN "#7DE1E1" //Diluted cyan. rgb(125, 225, 225)
 #define LIGHT_COLOR_PINK "#E17DE1" //Diluted, mid-warmth pink. rgb(225, 125, 225)
