@@ -399,7 +399,7 @@
 	if(candidates.len >= 2)
 		for(var/needs_assigned=2,needs_assigned>0,needs_assigned--)
 			H = pick(candidates)
-			if(gang_colors_pool)
+			if(gang_colors_pool.len)
 				var/datum/gang/newgang = new()
 				ticker.mode.gangs += newgang
 				H.mind.make_Gang(newgang)
@@ -590,9 +590,9 @@
 		temp.abductors |= list(agent_mind,scientist_mind)
 		temp.make_abductor_team(number,preset_scientist=scientist_mind,preset_agent=agent_mind)
 		temp.post_setup_team(number)
-		
+
 		ticker.mode.abductor_teams++
-		
+
 		if(ticker.mode.config_tag != "abduction")
 			ticker.mode.abductors |= temp.abductors
 
