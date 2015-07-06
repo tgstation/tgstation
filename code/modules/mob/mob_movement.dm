@@ -281,7 +281,7 @@
 			move_delay += 7
 
 		//We are now going to move
-		move_delay = min(move_delay,1)
+		move_delay = max(move_delay,1)
 		mob.delayNextMove(move_delay)
 		//Something with pulling things
 		if(Findgrab)
