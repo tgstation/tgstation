@@ -23,7 +23,7 @@ Mineral Sheets
 	if(!recyck_mat)
 		return 0
 
-	rec.addAmount(recyck_mat, 1 * amount)
+	rec.addAmount(recyck_mat, amount)
 	. = 1
 
 /*

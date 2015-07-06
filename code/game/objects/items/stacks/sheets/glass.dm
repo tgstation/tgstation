@@ -202,7 +202,7 @@
 	starting_materials = null
 
 /obj/item/stack/sheet/glass/glass/recycle(var/datum/materials/rec)
-	rec.addAmount("glass", 1*src.amount)
+	rec.addAmount(MAT_GLASS, amount)
 	return 1
 
 /obj/item/stack/sheet/glass/glass/attackby(obj/item/W, mob/user)
@@ -248,8 +248,8 @@
 	starting_materials = null
 
 /obj/item/stack/sheet/glass/rglass/recycle(var/datum/materials/rec)
-	rec.addAmount(MAT_GLASS, 1*src.amount)
-	rec.addAmount(MAT_IRON,  0.5*src.amount)
+	rec.addAmount(MAT_GLASS, amount)
+	rec.addAmount(MAT_IRON,  0.5 * amount)
 	return 1
 
 /*
@@ -274,8 +274,8 @@
 	shard_type = /obj/item/weapon/shard/plasma
 
 /obj/item/stack/sheet/glass/plasmaglass/recycle(var/datum/materials/rec)
-	rec.addAmount(MAT_PLASMA,1*src.amount)
-	rec.addAmount(MAT_GLASS, 1*src.amount)
+	rec.addAmount(MAT_PLASMA, amount)
+	rec.addAmount(MAT_GLASS, amount)
 	return RECYK_GLASS
 
 /*
@@ -300,7 +300,7 @@
 	shard_type = /obj/item/weapon/shard/plasma
 
 /obj/item/stack/sheet/glass/plasmarglass/recycle(var/datum/materials/rec)
-	rec.addAmount("plasma",1*src.amount)
-	rec.addAmount("glass", 1*src.amount)
-	rec.addAmount("iron",  0.5*src.amount)
+	rec.addAmount(MAT_PLASMA, amount)
+	rec.addAmount(MAT_GLASS, amount)
+	rec.addAmount(MAT_IRON,  0.5 * amount)
 	return 1
