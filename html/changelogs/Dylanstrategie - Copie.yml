@@ -1,0 +1,4 @@
+author: Dylanstrategie
+delete-after: True
+changes:
+  - imageadd: Particle accelerators set to 3 now have a specific computer sprite, correct highlighting and now spew out purple particles. Now you know.
