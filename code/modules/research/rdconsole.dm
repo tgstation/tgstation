@@ -420,6 +420,10 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 								new_item.reliability = R
 								new_item.materials[MAT_METAL] /= coeff
 								new_item.materials[MAT_GLASS] /= coeff
+								new_item.materials[MAT_SILVER] /= coeff
+								new_item.materials[MAT_GOLD] /= coeff
+								new_item.materials[MAT_DIAMOND] /= coeff
+								new_item.materials[MAT_BANANIUM] /= coeff
 								if(linked_lathe.hacked)
 									R = max((new_item.reliability/2), 0)
 								new_item.loc = linked_lathe.loc

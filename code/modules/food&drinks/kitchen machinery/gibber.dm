@@ -12,9 +12,12 @@
 	var/typeofmeat = /obj/item/weapon/reagent_containers/food/snacks/meat/slab/human
 	var/meat_produced = 0
 	var/ignore_clothing = 0
+	icon_open = "grinder_open"
+	icon_closed = "grinder"
 	use_power = 1
 	idle_power_usage = 2
 	active_power_usage = 500
+	machine_flags = CROWDESTROY | REPLACEPARTS | SCREWTOGGLE | FIXED2WORK | WRENCHMOVE | CROWPRY
 
 //auto-gibs anything that bumps into it
 //auto-gibs anything that bumps into it
@@ -118,19 +121,7 @@
 			qdel(G)
 			update_icon()
 
-	if(default_deconstruction_screwdriver(user, "grinder_open", "grinder", P))
-		return
-
-	if(exchange_parts(user, P))
-		return
-
-	if(default_pry_open(P))
-		return
-
-	if(default_unfasten_wrench(user, P))
-		return
-
-	default_deconstruction_crowbar(P)
+	..()
 
 
 /obj/machinery/gibber/verb/eject()
