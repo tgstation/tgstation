@@ -92,8 +92,6 @@
 			smoother.smooth()
 	else
 		make_plating()
-		if(smoother)
-			smoother.update_neighbors()
 
 /turf/simulated/floor/fancy/carpet/break_tile()
 	broken = 1

@@ -291,7 +291,7 @@
 	name = "wooden table"
 	desc = "Do not apply fire to this. Rumour says it burns easily."
 	icon = 'icons/obj/smooth_structures/wood_table.dmi'
-	icon_state = "woodtable"
+	icon_state = "wood_table"
 	frame = /obj/structure/table_frame/wood
 	framestack = /obj/item/stack/sheet/mineral/wood
 	buildstack = /obj/item/stack/sheet/mineral/wood
@@ -303,7 +303,7 @@
 	name = "gambling table"
 	desc = "A seedy table for seedy dealings in seedy places."
 	icon = 'icons/obj/smooth_structures/poker_table.dmi'
-	icon_state = "pokertable"
+	icon_state = "poker_table"
 	buildstack = /obj/item/stack/tile/carpet
 	canSmoothWith = list(/obj/structure/table/wood/poker, /obj/structure/table/wood)
 
@@ -314,7 +314,7 @@
 	name = "reinforced table"
 	desc = "A reinforced version of the four legged table, much harder to simply deconstruct."
 	icon = 'icons/obj/smooth_structures/reinforced_table.dmi'
-	icon_state = "reinftable"
+	icon_state = "r_table"
 	var/status = 2
 	buildstack = /obj/item/stack/sheet/plasteel
 	canSmoothWith = list(/obj/structure/table/reinforced, /obj/structure/table)

@@ -58,7 +58,4 @@
 /turf/simulated/ChangeTurf(var/path)
 	..()
 	if(smoother)
-		world << "[src], smoothing neighbors"
 		smoother.update_neighbors()
-	if(!smooth)
-		qdel(smoother)

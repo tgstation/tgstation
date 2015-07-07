@@ -1,8 +1,16 @@
 /atom/var/smooth = 0
 /atom/var/datum/tile_smoother/smoother = null
-/atom/var/del_suppress_resmoothing = 0
 /atom/var/list/canSmoothWith=list() // TYPE PATHS I CAN SMOOTH WITH~~~~~
 
+//generic (by snowflake) tile smoothing datum; smooth your icons with this!
+/*
+	Each tile is divided in 4 corners, each corner has an image associated to it; the tile is then overlayed by these 4 images
+	To use this, just set your atom's 'smooth' var to 1. If your atom can't be moved/unanchored, set its 'can_be_unanchored' var to 0.
+	If you don't want your atom's icon to smooth with anything but atoms of the same type, set the list 'canSmoothWith' to null;
+	Otherwise, put all types you want the atom icon to smooth with in 'canSmoothWith' INCLUDING THE TYPE OF THE ATOM ITSELF.
+
+	Each atom has its own icon file with all the possible corner states. See 'smooth_wall.dmi' for a template.
+*/
 /datum/tile_smoother
 	var/image/top_right
 	var/image/top_left
@@ -13,18 +21,14 @@
 	var/list/diagonal_adj
 	var/list/siblings
 	var/movable
+	var/enabled = 1
 
 /datum/tile_smoother/New(var/a_holder, var/list/s_list=null, movable_b = 0)
 	holder = a_holder
-	PoolOrNew(/image)
 	top_left = image(holder.icon, "1-i")
 	top_right = image(holder.icon, "2-i")
 	bottom_left = image(holder.icon, "3-i")
 	bottom_right = image(holder.icon, "4-i")
-	PlaceInPool(top_left)
-	PlaceInPool(top_right)
-	PlaceInPool(bottom_left)
-	PlaceInPool(bottom_right)
 	if(s_list && s_list.len == 0)
 		siblings = null
 	else
@@ -56,21 +60,25 @@
 			if(find_type_in_direction(holder, direction, siblings))
 				diagonal_adj |= direction
 
-/datum/tile_smoother/proc/smooth(direction)
+/datum/tile_smoother/proc/smooth()
+	if(!enabled)	return
 	spawn(2)
 		if(holder && holder.smooth)
+			holder.overlays -= top_left
+			holder.overlays -= top_right
+			holder.overlays -= bottom_right
+			holder.overlays -= bottom_left
+
 			update_adjacencies()
 			make_nw_corner()
 			make_ne_corner()
 			make_sw_corner()
 			make_se_corner()
-			holder.overlays.Cut()
+
 			holder.overlays += top_left
 			holder.overlays += top_right
 			holder.overlays += bottom_right
 			holder.overlays += bottom_left
-		else
-			qdel(src)
 
 
 /datum/tile_smoother/proc/make_nw_corner()
@@ -87,9 +95,7 @@
 			sdir = "w"
 		else
 			sdir = "i"
-	top_left = GetFromPool(top_left,list(holder.icon, "1-[sdir]"))
-	if(!top_left)
-		top_left = image(holder.icon, "1-[sdir]")
+	top_left = image(holder.icon, "1-[sdir]")
 
 /datum/tile_smoother/proc/make_ne_corner()
 	var/sdir = ""
@@ -105,9 +111,7 @@
 			sdir = "e"
 		else
 			sdir = "i"
-	top_right = GetFromPool(top_right,list(holder.icon, "2-[sdir]"))
-	if(!top_right)
-		top_right = image(holder.icon, "2-[sdir]")
+	top_right = image(holder.icon, "2-[sdir]")
 
 /datum/tile_smoother/proc/make_sw_corner()
 	var/sdir = ""
@@ -123,9 +127,7 @@
 			sdir = "w"
 		else
 			sdir = "i"
-	bottom_left = GetFromPool(bottom_left,list(holder.icon, "3-[sdir]"))
-	if(!bottom_left)
-		bottom_left = image(holder.icon, "3-[sdir]")
+	bottom_left = image(holder.icon, "3-[sdir]")
 
 /datum/tile_smoother/proc/make_se_corner()
 	var/sdir = ""
@@ -142,9 +144,7 @@
 				sdir = "e"
 			else
 				sdir = "i"
-	bottom_right = GetFromPool(bottom_right,list(holder.icon, "4-[sdir]"))
-	if(!bottom_right)
-		bottom_right = image(holder.icon, "4-[sdir]")
+	bottom_right = image(holder.icon, "4-[sdir]")
 
 /datum/tile_smoother/proc/update_neighbors()
 	for(var/atom/A in orange(1,holder))
@@ -152,8 +152,6 @@
 			A.smoother.smooth()
 
 /proc/find_type_in_direction(atom/source, direction, list/siblings=null, range=1)
-//	if(!source || !type || !direction || range < 1)
-//		return null
 	var/x_offset = 0
 	var/y_offset = 0
 
@@ -196,3 +194,13 @@
 	var/atom/A = locate(source.type) in locate(source.x + x_offset, source.y + y_offset, source.z)
 	return A && A.type == source.type ? A : null
 
+/datum/tile_smoother/proc/enable_smoothing(enable = 1)
+	if(!enable)
+		enabled = 0
+		holder.overlays -= top_left
+		holder.overlays -= top_right
+		holder.overlays -= bottom_right
+		holder.overlays -= bottom_left
+	else
+		enabled = 1
+		smooth()

@@ -2,6 +2,7 @@
 	name = "wall"
 	desc = "A huge chunk of metal used to separate rooms."
 	icon = 'icons/turf/walls/wall.dmi'
+	icon_state = "wall"
 	var/mineral = "metal"
 	opacity = 1
 	density = 1
@@ -267,21 +268,3 @@
 
 /turf/simulated/wall/storage_contents_dump_act(obj/item/weapon/storage/src_object, mob/user)
 	return 0
-
-/*/turf/simulated/wall/smooth
-	name = "smooth wall"
-	desc = "A huge chunk of smooth."
-	icon = 'icons/turf/smooth_wall.dmi'
-	icon_state = "smooth"
-	var/datum/tile_smoother/smoother
-
-/turf/simulated/wall/smooth/New()
-	..()
-	smoother = new /datum/tile_smoother(src)
-	smoother.smooth()
-	icon_state = ""
-
-/turf/simulated/wall/smooth/ChangeTurf(var/path)
-	..()
-	for(var/turf/simulated/wall/smooth/smoothwall in orange(1,src))
-		smoothwall.smoother.smooth(get_dir(src,smoothwall))*/
