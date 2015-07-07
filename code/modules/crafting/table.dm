@@ -275,19 +275,20 @@
 				req_text += " [R.reqs[A]] [RE.name]"
 				qdel(RE)
 
-			if(R.chem_catalysts.len)
-				catalist_text += ", Catalysts:"
-				for(var/C in R.chem_catalysts)
-					if(ispath(C, /datum/reagent))
-						var/datum/reagent/RE = new C
-						catalist_text += " [R.chem_catalysts[C]] [RE.name]"
-						qdel(RE)
-			if(R.tools.len)
-				tool_text += ", Tools:"
-				for(var/O in R.tools)
-					if(ispath(O, /obj))
-						var/obj/T = new O
-						tool_text += " [R.tools[O]] [T.name]"
-						qdel(T)
+		if(R.chem_catalysts.len)
+			catalist_text += ", Catalysts:"
+			for(var/C in R.chem_catalysts)
+				if(ispath(C, /datum/reagent))
+					var/datum/reagent/RE = new C
+					catalist_text += " [R.chem_catalysts[C]] [RE.name]"
+					qdel(RE)
 
-			. = "[name_text][req_text][tool_text][catalist_text]<BR>"
+		if(R.tools.len)
+			tool_text += ", Tools:"
+			for(var/O in R.tools)
+				if(ispath(O, /obj))
+					var/obj/T = new O
+					tool_text += " [R.tools[O]] [T.name]"
+					qdel(T)
+
+		. = "[name_text][req_text][tool_text][catalist_text]<BR>"

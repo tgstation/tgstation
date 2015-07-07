@@ -55,13 +55,10 @@
 	ganghud.leave_hud(defector_mind.current)
 	ticker.mode.set_antag_hud(defector_mind.current, null)
 
-/datum/gang/proc/domination(var/modifier=1,var/obj/dominator)
+/datum/gang/proc/domination(var/modifier=1)
 	dom_timer = max(300,900 - ((round((territory.len/start_state.num_territories)*200, 1) - 60) * 15)) * modifier
-	if(dominator)
-		var/area/domloc = get_area(dominator.loc)
-		priority_announce("Network breach detected in [initial(domloc.name)]. The [src] Gang is attempting to seize control of the station!","Network Alert")
-		set_security_level("delta")
-		SSshuttle.emergencyNoEscape = 1
+	set_security_level("delta")
+	SSshuttle.emergencyNoEscape = 1
 
 //////////////////////////////////////////// OUTFITS
 
@@ -74,7 +71,7 @@
 		return 0
 
 	var/gang_style_list = list("Gang Colors","Black Suits","White Suits","Leather Jackets","Leather Overcoats","Puffer Jackets","Military Jackets","Tactical Turtlenecks","Soviet Uniforms")
-	if(!style && gangtool.boss)	//Only the boss gets to pick a style
+	if(!style && (user.mind in ticker.mode.get_gang_bosses()))	//Only the boss gets to pick a style
 		style = input("Pick an outfit style.", "Pick Style") as null|anything in gang_style_list
 
 	if(gangtool.can_use(user) && (gangtool.outfits >= 1))

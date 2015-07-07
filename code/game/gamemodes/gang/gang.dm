@@ -164,6 +164,7 @@ var/list/gang_colors_pool = list("red","orange","yellow","green","blue","purple"
 		gangster_mind.current.Stun(5)
 	gangster_mind.current << "<FONT size=3 color=red><B>You are now a member of the [G.name] Gang!</B></FONT>"
 	gangster_mind.current << "<font color='red'>Help your bosses take over the station by claiming territory with <b>special spraycans</b> only they can provide. Simply spray on any unclaimed area of the station.</font>"
+	gangster_mind.current << "<font color='red'>Their ultimate objective is to take over the station with a Dominator machine.</font>"
 	gangster_mind.current << "<font color='red'>You can identify your bosses by their <b>red \[G\] icon</b>.</font>"
 	gangster_mind.current.attack_log += "\[[time_stamp()]\] <font color='red'>Has been converted to the [G.name] Gang!</font>"
 	gangster_mind.special_role = "[G.name] Gangster"
@@ -175,12 +176,20 @@ var/list/gang_colors_pool = list("red","orange","yellow","green","blue","purple"
 /datum/game_mode/proc/remove_gangster(datum/mind/gangster_mind, var/beingborged, var/silent, var/remove_bosses=0)
 	var/datum/gang/gang = gangster_mind.gang_datum
 	if(!gang)
-		return
+		return 0
+
+	var/removed
 
 	for(var/datum/gang/G in gangs)
-		G.gangsters -= gangster_mind
-		if(remove_bosses)
+		if(gangster_mind in G.gangsters)
+			G.gangsters -= gangster_mind
+			removed = 1
+		if(remove_bosses && (gangster_mind in G.bosses))
 			G.bosses -= gangster_mind
+			removed = 1
+
+	if(!removed)
+		return 0
 
 	gangster_mind.special_role = null
 	gangster_mind.gang_datum = null
@@ -200,6 +209,7 @@ var/list/gang_colors_pool = list("red","orange","yellow","green","blue","purple"
 			gangster_mind.current << "<FONT size=3 color=red><B>You have been reformed! You are no longer a gangster!</B><BR>You try as hard as you can, but you can't seem to recall any of the identities of your former gangsters...</FONT>"
 
 	gang.remove_gang_hud(gangster_mind)
+	return 1
 
 ////////////////
 //Helper Procs//

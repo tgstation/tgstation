@@ -45,7 +45,7 @@ var/list/image/ghost_darkness_images = list() //this is a list of images for thi
 			if(body.real_name)
 				name = body.real_name
 			else
-				name = random_name(gender)
+				name = random_unique_name(gender)
 
 		mind = body.mind	//we don't transfer the mind but we keep a reference to it.
 
@@ -53,7 +53,7 @@ var/list/image/ghost_darkness_images = list() //this is a list of images for thi
 	loc = T
 
 	if(!name)							//To prevent nameless ghosts
-		name = random_name(gender)
+		name = random_unique_name(gender)
 	real_name = name
 
 	if(!fun_verbs)

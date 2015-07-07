@@ -43,7 +43,7 @@ Blobs are extremely powerful and are impossible to defeat alone. Communicate wit
 You can fight blob pieces diagonally, as they can only expand onto adjacent tiles in cardinal directions.
 Security huds and secglass huds can tell you if someone is implanted with a loyalty implant. Use this to your advantage in a revolution.
 Loyalty implants can only prevent someone from being turned into a cultist: unlike revolutionaries, it will not de-cult them if they have already been converted.
-Loyalty implants can only prevent someone from being turned into a gangster: unlike revolutionaries, it will not de-gang them if they have already been recruited.
+Loyalty implants will break when used to de-convert a gangster. You will need to use two if you want to prevent them from being re-recruited.
 Don't neglect upgrading your machines with the machine parts produced by research! These can seriously improve the efficiency of your equipment.
 Cyborgs are impervious to fires and temperature, and can walk in a blazing inferno without worry. Don't shy away from setting the whole station on fire as a malfunctioning or rogue AI!
 The heads of staff, especially the Head of Security and the Captain, are usually extremely difficult to kill. If one of them is your target as a traitor, plan carefully.
@@ -89,4 +89,4 @@ In the job selection menu, from the lobby, you can use right click on the "Low/M
 If you stay out of camera range for 10 seconds, the AI's track on you will break.
 You can shoot cameras with bullets to disable them remotely.
 Disabling a camera with wirecutters will not cause a camera alarm, but bludgeoning it will.
-Gangs derive their power from their presence. Cleaning up gang tags is the best way to prevent them from growing out of control.
+Gangs derive their power from their presence and notoriety. Cleaning up gang tags is the best way to slow their growth.
