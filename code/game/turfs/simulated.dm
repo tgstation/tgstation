@@ -56,6 +56,6 @@
 				M.slip(0, 7, null, (STEP|SLIDE|GALOSHES_DONT_HELP))
 
 /turf/simulated/ChangeTurf(var/path)
-	..()
+	. = ..()
 	if(smoother)
 		smoother.update_neighbors()

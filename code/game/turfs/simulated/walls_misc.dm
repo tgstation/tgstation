@@ -5,6 +5,7 @@
 	icon_state = "cult"
 	walltype = "cult"
 	builtin_sheet = null
+	canSmoothWith = null
 
 /turf/simulated/wall/cult/break_wall()
 	new /obj/effect/decal/cleanable/blood(src)
@@ -18,6 +19,7 @@
 	return
 
 /turf/simulated/wall/vault
+	icon = 'icons/turf/walls.dmi'
 	icon_state = "rockvault"
 
 /turf/simulated/wall/rust
