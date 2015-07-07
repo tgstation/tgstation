@@ -19,6 +19,7 @@
 
 	canSmoothWith = list(
 	/turf/simulated/wall,
+	/turf/simulated/wall/r_wall,
 	/obj/structure/falsewall,
 	/obj/structure/falsewall/reinforced  // WHY DO WE SMOOTH WITH FALSE R-WALLS WHEN WE DON'T SMOOTH WITH REAL R-WALLS.
 	)
@@ -27,17 +28,9 @@
 /turf/simulated/wall/New()
 	..()
 	builtin_sheet = new sheet_type
-	if(smooth)
-		smoother = new /datum/tile_smoother(src, canSmoothWith)
 
 /turf/simulated/wall/attack_tk()
 	return
-
-/turf/simulated/wall/ChangeTurf(var/path)
-	..()
-	for(var/atom/A in orange(1,src))
-		if(A.smoother)
-			A.smoother.smooth()
 
 /turf/simulated/wall/proc/dismantle_wall(devastated=0, explode=0)
 	if(devastated)
@@ -53,18 +46,17 @@
 			P.roll_and_drop(src)
 		else
 			O.loc = src
-
 	ChangeTurf(/turf/simulated/floor/plating)
 
 /turf/simulated/wall/proc/break_wall()
-		builtin_sheet.amount = 2
-		builtin_sheet.loc = src
-		return (new /obj/structure/girder(src))
+	builtin_sheet.amount = 2
+	builtin_sheet.loc = src
+	return (new /obj/structure/girder(src))
 
 /turf/simulated/wall/proc/devastate_wall()
-		builtin_sheet.amount = 2
-		builtin_sheet.loc = src
-		new /obj/item/stack/sheet/metal(src)
+	builtin_sheet.amount = 2
+	builtin_sheet.loc = src
+	new /obj/item/stack/sheet/metal(src)
 
 /turf/simulated/wall/ex_act(severity, target)
 	if(target == src)

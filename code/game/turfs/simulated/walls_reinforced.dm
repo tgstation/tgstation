@@ -1,6 +1,7 @@
 /turf/simulated/wall/r_wall
 	name = "reinforced wall"
 	desc = "A huge chunk of reinforced metal used to seperate rooms."
+	icon = 'icons/turf/walls/reinforced_wall.dmi'
 	icon_state = "r_wall"
 	opacity = 1
 	density = 1
@@ -53,7 +54,7 @@
 			MS.use(1)
 			src.d_state = 0
 			src.icon_state = "r_wall"
-			relativewall_neighbours()	//call smoothwall stuff
+			smoother.update_neighbors()
 			user << "<span class='notice'>You repair the last of the damage.</span>"
 			return 1
 	return 0
@@ -90,7 +91,7 @@
 				if (O.use(1))
 					src.d_state = 0
 					src.icon_state = "r_wall"
-					relativewall_neighbours()	//call smoothwall stuff
+					smoother.update_neighbors()	//call smoothwall stuff
 					user << "<span class='notice'>You replace the outer grille.</span>"
 				else
 					user << "<span class='warning'>Report this to a coder: metal stack had less than one sheet in it when trying to repair wall</span>"

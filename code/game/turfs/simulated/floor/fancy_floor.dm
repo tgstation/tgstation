@@ -71,9 +71,12 @@
 
 /turf/simulated/floor/fancy/carpet
 	name = "Carpet"
+	icon = 'icons/turf/floors/carpet.dmi'
 	icon_state = "carpet"
 	floor_tile = /obj/item/stack/tile/carpet
-	broken_states = list("carpet-broken")
+	broken_states = list("damaged")
+	smooth = 1
+	canSmoothWith = null
 
 /turf/simulated/floor/fancy/carpet/New()
 	..()
@@ -85,45 +88,17 @@
 	if(!..())
 		return 0
 	if(!broken && !burnt)
-		if(icon_state == "carpetsymbol") //le snowflake :^)
-			return
+		if(smoother)
+			smoother.smooth()
+	else
+		make_plating()
+		if(smoother)
+			smoother.update_neighbors()
 
-		var/connectdir = 0
-		for(var/direction in cardinal)
-			if(istype(get_step(src,direction),/turf/simulated/floor/fancy/carpet))
-				var/turf/simulated/floor/fancy/carpet/FF = get_step(src,direction)
-				if(istype(FF, /turf/simulated/floor/fancy/carpet))
-					connectdir |= direction
+/turf/simulated/floor/fancy/carpet/break_tile()
+	broken = 1
+	update_icon()
 
-		//Check the diagonal connections for corners, where you have, for example, connections both north and east. In this case it checks for a north-east connection to determine whether to add a corner marker or not.
-		var/diagonalconnect = 0 //1 = NE; 2 = SE; 4 = NW; 8 = SW
-
-		//Northeast
-		if(connectdir & NORTH && connectdir & EAST)
-			if(istype(get_step(src,NORTHEAST),/turf/simulated/floor))
-				var/turf/simulated/floor/FF = get_step(src,NORTHEAST)
-				if(istype(FF, /turf/simulated/floor/fancy/carpet))
-					diagonalconnect |= 1
-
-		//Southeast
-		if(connectdir & SOUTH && connectdir & EAST)
-			if(istype(get_step(src,SOUTHEAST),/turf/simulated/floor))
-				var/turf/simulated/floor/FF = get_step(src,SOUTHEAST)
-				if(istype(FF, /turf/simulated/floor/fancy/carpet))
-					diagonalconnect |= 2
-
-		//Northwest
-		if(connectdir & NORTH && connectdir & WEST)
-			if(istype(get_step(src,NORTHWEST),/turf/simulated/floor))
-				var/turf/simulated/floor/FF = get_step(src,NORTHWEST)
-				if(istype(FF, /turf/simulated/floor/fancy/carpet))
-					diagonalconnect |= 4
-
-		//Southwest
-		if(connectdir & SOUTH && connectdir & WEST)
-			if(istype(get_step(src,SOUTHWEST),/turf/simulated/floor))
-				var/turf/simulated/floor/FF = get_step(src,SOUTHWEST)
-				if(istype(FF, /turf/simulated/floor/fancy/carpet))
-					diagonalconnect |= 8
-
-		icon_state = "carpet[connectdir]-[diagonalconnect]"
+/turf/simulated/floor/fancy/carpet/burn_tile()
+	burnt = 1
+	update_icon()

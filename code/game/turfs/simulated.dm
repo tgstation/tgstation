@@ -12,6 +12,10 @@
 /turf/simulated/New()
 	..()
 	levelupdate()
+	if(smooth)
+		smoother = new /datum/tile_smoother(src, canSmoothWith)
+		smoother.smooth()
+		icon_state = ""
 
 /turf/simulated/proc/burn_tile()
 
@@ -50,3 +54,11 @@
 				return
 			if(2) //lube
 				M.slip(0, 7, null, (STEP|SLIDE|GALOSHES_DONT_HELP))
+
+/turf/simulated/ChangeTurf(var/path)
+	..()
+	if(smoother)
+		world << "[src], smoothing neighbors"
+		smoother.update_neighbors()
+	if(!smooth)
+		qdel(smoother)

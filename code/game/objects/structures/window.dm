@@ -1,12 +1,11 @@
 /obj/structure/window
 	name = "window"
 	desc = "A window."
-	icon = 'icons/obj/structures.dmi'
 	icon_state = "window"
 	density = 1
 	layer = 3.2//Just above doors
 	pressure_resistance = 4*ONE_ATMOSPHERE
-	anchored = 1.0
+	anchored = 1 //initially is 0 for tile smoothing
 	flags = ON_BORDER
 	var/maxhealth = 25
 	var/health = 0
@@ -19,6 +18,7 @@
 	var/list/storeditems = list()
 //	var/silicate = 0 // number of units of silicate
 //	var/icon/silicateIcon = null // the silicated icon
+	var/image/crack_overlay
 
 /obj/structure/window/New(Loc,re=0)
 	..()
@@ -37,7 +37,6 @@
 			R.add(1)
 
 	air_update_turf(1)
-	update_nearby_icons()
 
 	return
 
@@ -229,6 +228,7 @@
 					playsound(loc, 'sound/items/Welder2.ogg', 50, 1)
 		else
 			user << "<span class='warning'>[src] is already in good condition!</span>"
+			return
 		update_nearby_icons()
 
 	else if(istype(I, /obj/item/weapon/wrench) && !anchored)
@@ -380,9 +380,8 @@
 //This proc is used to update the icons of nearby windows.
 /obj/structure/window/proc/update_nearby_icons()
 	update_icon()
-	for(var/direction in cardinal)
-		for(var/obj/structure/window/W in get_step(src,direction) )
-			W.update_icon()
+	if(smoother)
+		smoother.update_neighbors()
 
 //merges adjacent full-tile windows into one (blatant ripoff from game/smoothwall.dm)
 /obj/structure/window/update_icon()
@@ -393,20 +392,33 @@
 		if(!src) return
 		if(!fulltile)
 			return
-		var/junction = 0 //will be used to determine from which side the window is connected to other windows
+		/*var/junction = 0 //will be used to determine from which side the window is connected to other windows
 		if(anchored)
 			for(var/obj/structure/window/W in orange(src,1))
 				if(W.anchored && W.density	&& W.fulltile) //Only counts anchored, not-destroyed fill-tile windows.
 					if(src.wtype == W.wtype)
 						if(abs(x-W.x)-abs(y-W.y) ) 		//doesn't count windows, placed diagonally to src
 							junction |= get_dir(src,W)
-		icon_state = "[initial(icon_state)][junction]"
+		icon_state = "[initial(icon_state)][junction]"*/
 
-		overlays.Cut()
 		var/ratio = health / maxhealth
 		ratio = Ceiling(ratio*4) * 25
-		overlays += "damage[ratio]"
-		return
+
+		if(smoother)
+			smoother.smooth()
+			sleep(2)
+			if(ratio > 75)
+				overlays -= crack_overlay
+				return
+			crack_overlay = image('icons/obj/structures.dmi',"damage[ratio]")
+			overlays += crack_overlay
+		else
+			if(ratio > 75)
+				overlays -= crack_overlay
+				return
+			overlays -= crack_overlay
+			crack_overlay = image('icons/obj/structures.dmi',"damage[ratio]")
+			overlays += crack_overlay
 
 /obj/structure/window/temperature_expose(datum/gas_mixture/air, exposed_temperature, exposed_volume)
 	if(exposed_temperature > T0C + 800)
@@ -435,22 +447,32 @@
 /* Full Tile Windows (more health) */
 
 /obj/structure/window/fulltile
+	icon = 'icons/obj/smooth_structures/window.dmi'
 	dir = 5
 	maxhealth = 50
 	fulltile = 1
+	smooth = 1
+	canSmoothWith = list(/obj/structure/window/fulltile, /obj/structure/window/reinforced/fulltile, /obj/structure/window/reinforced/tinted/fulltile)
 
 /obj/structure/window/reinforced/fulltile
+	icon = 'icons/obj/smooth_structures/reinforced_window.dmi'
 	dir = 5
 	maxhealth = 100
 	fulltile = 1
+	smooth = 1
+	canSmoothWith = list(/obj/structure/window/fulltile, /obj/structure/window/reinforced/fulltile, /obj/structure/window/reinforced/tinted/fulltile)
 
 /obj/structure/window/reinforced/tinted/fulltile
+	icon = 'icons/obj/smooth_structures/tinted_window.dmi'
 	dir = 5
 	fulltile = 1
+	smooth = 1
+	canSmoothWith = list(/obj/structure/window/fulltile, /obj/structure/window/reinforced/fulltile, /obj/structure/window/reinforced/tinted/fulltile)
 
 /obj/structure/window/shuttle
 	name = "shuttle window"
 	desc = "A reinforced, air-locked pod window."
+	icon = 'icons/obj/smooth_structures/shuttle_window.dmi'
 	icon_state = "swindow"
 	dir = 5
 	maxhealth = 100

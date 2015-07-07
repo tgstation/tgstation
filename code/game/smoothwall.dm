@@ -56,29 +56,12 @@
 	var/junction=findSmoothingNeighbors()
 	icon_state = "[walltype][junction]" // WHY ISN'T THIS IN UPDATE_ICON OR SIMILAR
 
-// AND NOW WE HAVE TO YELL AT THE NEIGHBORS FOR BEING LOUD AND NOT PAINTING WITH HOA-APPROVED COLORS
-/atom/proc/relativewall_neighbours()
-	// OPTIMIZE BY NOT CHECKING FOR NEIGHBORS IF WE DON'T FUCKING SMOOTH
-	if(canSmoothWith.len>0)
-		relativewall()
-		for(var/cdir in cardinal)
-			var/turf/T = get_step(src,cdir)
-			if(isSmoothableNeighbor(T))
-				T.relativewall()
-			for(var/atom/A in T)
-				if(isSmoothableNeighbor(A))
-					A.relativewall()
 
 /turf/simulated/wall/New()
 	..()
 	relativewall_neighbours()
 
 /turf/simulated/wall/Destroy()
-
-	if(!del_suppress_resmoothing)
-		spawn(10)
-			relativewall_neighbours()
-
 	// JESUS WHY
 	for(var/direction in cardinal)
 		for(var/obj/effect/glowshroom/shroom in get_step(src,direction))
@@ -88,6 +71,11 @@
 				shroom.pixel_x = 0
 				shroom.pixel_y = 0
 
+	if(!del_suppress_resmoothing && smoother)
+		spawn(5)
+			for(var/atom/A in orange(1,src))
+				if(A.smoother)
+					A.smoother.smooth()
 	..()
 
 // DE-HACK

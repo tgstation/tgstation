@@ -12,8 +12,9 @@
 	var/cardinal_adj
 	var/list/diagonal_adj
 	var/list/siblings
+	var/movable
 
-/datum/tile_smoother/New(var/a_holder, var/s_list=null)
+/datum/tile_smoother/New(var/a_holder, var/list/s_list=null, movable_b = 0)
 	holder = a_holder
 	PoolOrNew(/image)
 	top_left = image(holder.icon, "1-i")
@@ -24,30 +25,52 @@
 	PlaceInPool(top_right)
 	PlaceInPool(bottom_left)
 	PlaceInPool(bottom_right)
-	siblings = s_list
+	if(s_list && s_list.len == 0)
+		siblings = null
+	else
+		siblings = s_list
+	movable = movable_b
 
 /datum/tile_smoother/proc/update_adjacencies()
 	cardinal_adj = 0
 	diagonal_adj = list()
-	for(var/direction in cardinal)
-		if(find_type_in_direction(holder, direction, siblings))
-			cardinal_adj |= direction
-	for(var/direction in diagonals)
-		if(find_type_in_direction(holder, direction, siblings))
-			diagonal_adj |= direction
+	if(movable)
+		var/atom/movable/A = holder
+		if(!A.anchored)
+			cardinal_adj = 0
+			diagonal_adj = list()
+			return
+		for(var/direction in cardinal)
+			var/atom/movable/AM = find_type_in_direction(holder, direction, siblings)
+			if(AM)
+				if(AM.anchored)
+					cardinal_adj |= direction
+		for(var/direction in diagonals)
+			if(find_type_in_direction(holder, direction, siblings))
+				diagonal_adj |= direction
+	else
+		for(var/direction in cardinal)
+			if(find_type_in_direction(holder, direction, siblings))
+				cardinal_adj |= direction
+		for(var/direction in diagonals)
+			if(find_type_in_direction(holder, direction, siblings))
+				diagonal_adj |= direction
 
 /datum/tile_smoother/proc/smooth(direction)
-	spawn(1)
-		update_adjacencies()
-		make_nw_corner()
-		make_ne_corner()
-		make_sw_corner()
-		make_se_corner()
-		holder.overlays.Cut()
-		holder.overlays += top_left
-		holder.overlays += top_right
-		holder.overlays += bottom_right
-		holder.overlays += bottom_left
+	spawn(2)
+		if(holder && holder.smooth)
+			update_adjacencies()
+			make_nw_corner()
+			make_ne_corner()
+			make_sw_corner()
+			make_se_corner()
+			holder.overlays.Cut()
+			holder.overlays += top_left
+			holder.overlays += top_right
+			holder.overlays += bottom_right
+			holder.overlays += bottom_left
+		else
+			qdel(src)
 
 
 /datum/tile_smoother/proc/make_nw_corner()
@@ -123,11 +146,14 @@
 	if(!bottom_right)
 		bottom_right = image(holder.icon, "4-[sdir]")
 
+/datum/tile_smoother/proc/update_neighbors()
+	for(var/atom/A in orange(1,holder))
+		if(A.smoother)
+			A.smoother.smooth()
 
 /proc/find_type_in_direction(atom/source, direction, list/siblings=null, range=1)
 //	if(!source || !type || !direction || range < 1)
 //		return null
-
 	var/x_offset = 0
 	var/y_offset = 0
 
@@ -143,17 +169,30 @@
 
 	if(istype(source, /turf))
 		if(siblings)
-			for(var/atom/A in siblings)
-				if(istype(locate(source.x + x_offset, source.y + y_offset, source.z),A.type))
-					return 1
-			return 0
+			for(var/a_type in siblings)
+				if(ispath(a_type, /obj))
+					var/atom/A = locate(a_type) in locate(source.x + x_offset, source.y + y_offset, source.z)
+					if(A && A.type == a_type)
+						return A
+				else
+					var/turf/T = locate(source.x + x_offset, source.y + y_offset, source.z)
+					if(T.type == a_type)
+						return T
+			return null
 		var/turf/T = locate(source.x + x_offset, source.y + y_offset, source.z)
-		return T.type == source.type
+		return T.type == source.type ? T : null
 
 	if(siblings)
-		for(var/atom/A in siblings)
-			if(locate(A.type) in locate(source.x + x_offset, source.y + y_offset, source.z))
-				return 1
-		return 0
+		for(var/a_type in siblings)
+			if(ispath(a_type, /turf))
+				var/turf/T = locate(source.x + x_offset, source.y + y_offset, source.z)
+				if(T.type == a_type)
+					return T
+			else
+				var/atom/A = locate(a_type) in locate(source.x + x_offset, source.y + y_offset, source.z)
+				if(A && A.type == a_type)
+					return A
+		return null
 	var/atom/A = locate(source.type) in locate(source.x + x_offset, source.y + y_offset, source.z)
-	return A.type == source.type
+	return A && A.type == source.type ? A : null
+
