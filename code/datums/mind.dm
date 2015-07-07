@@ -316,7 +316,7 @@
 				text += "<a href='?src=\ref[src];gangboss=\ref[G]'>gang leader</a>"
 			text += "<BR>"
 
-		if(gang_colors_pool)
+		if(gang_colors_pool.len)
 			text += "<a href='?src=\ref[src];gang=new'>Create New Gang</a>"
 
 		sections["gang"] = text

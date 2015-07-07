@@ -9,7 +9,8 @@
 	var/maxhealth = 200
 	var/health = 200
 	var/datum/gang/gang
-	var/operating = 0
+	var/operating = 0	//-1=broken, 0=standby, 1=takeover
+	var/warned = 0	//if this device has set off the warning at <3 minutes yet
 
 /obj/machinery/dominator/New()
 	..()
@@ -37,6 +38,13 @@
 	if(gang && isnum(gang.dom_timer))
 		if(gang.dom_timer > 0)
 			playsound(loc, 'sound/items/timer.ogg', 30, 0)
+			if(!warned && (gang.dom_timer < 180))
+				warned = 1
+				var/area/domloc = get_area(loc)
+				gang.message_gangtools("Less than 3 minutes remain in hostile takeover. Defend your dominator at [initial(domloc.name)]!")
+				for(var/datum/gang/G in ticker.mode.gangs)
+					if(G != gang)
+						G.message_gangtools("WARNING: [gang.name] Gang takeover imminent. Their dominator at [initial(domloc.name)] must be destroyed!",1,1)
 		else
 			SSmachine.processing -= src
 

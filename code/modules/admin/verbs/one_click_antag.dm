@@ -399,7 +399,7 @@
 	if(candidates.len >= 2)
 		for(var/needs_assigned=2,needs_assigned>0,needs_assigned--)
 			H = pick(candidates)
-			if(gang_colors_pool)
+			if(gang_colors_pool.len)
 				var/datum/gang/newgang = new()
 				ticker.mode.gangs += newgang
 				H.mind.make_Gang(newgang)

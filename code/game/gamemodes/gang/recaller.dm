@@ -328,7 +328,7 @@
 	if(members.len)
 		var/ping = "<span class='danger'><B><i>[gang.name] [(user.mind in ticker.mode.get_gang_bosses()) ? "Gang Boss" : "Lieutenant"]</i>: [message]</B></span>"
 		for(var/datum/mind/ganger in members)
-			if((ganger.current.z <= 2) && (ganger.current.stat == CONSCIOUS))
+			if(ganger.current && (ganger.current.z <= 2) && (ganger.current.stat == CONSCIOUS))
 				ganger.current << ping
 		for(var/mob/M in dead_mob_list)
 			M << ping
@@ -336,6 +336,8 @@
 
 
 /obj/item/device/gangtool/proc/register_device(var/mob/user)
+	if(gang)	//It's already been registered!
+		return
 	if((promotable && (user.mind in ticker.mode.get_gangsters())) || (user.mind in ticker.mode.get_gang_bosses()))
 		gang = user.mind.gang_datum
 		gang.gangtools += src
@@ -391,7 +393,7 @@
 		return 0
 	var/datum/station_state/end_state = new /datum/station_state()
 	end_state.count()
-	if((100 *  start_state.score(end_state)) < 70) //Shuttle cannot be recalled if the station is too damaged
+	if((100 *  start_state.score(end_state)) < 80) //Shuttle cannot be recalled if the station is too damaged
 		user << "<span class='warning'>\icon[src]Error: Station communication systems compromised. Unable to establish connection.</span>"
 		recalling = 0
 		return 0
