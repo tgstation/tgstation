@@ -16,7 +16,7 @@ would spawn and follow the beaker, even if it is carried or thrown.
 /obj/effect/effect/Destroy()
 	..()
 	return QDEL_HINT_PUTINPOOL
-
+/*
 /datum/effect/effect/proc/fadeOut(var/atom/A, var/frames = 16)
 	if(A.alpha == 0) //Handle already transparent case
 		return
@@ -27,7 +27,7 @@ would spawn and follow the beaker, even if it is carried or thrown.
 		A.alpha -= step
 		sleep(world.tick_lag)
 	return
-
+*/
 /datum/effect/effect/system
 	var/number = 3
 	var/cardinals = 0

@@ -169,6 +169,10 @@
 /obj/machinery/alarm/attack_hand(mob/user)
 	if (..())
 		return
+
+	if (buildstage != 2)
+		return
+
 	user.set_machine(src)
 
 	if ( (get_dist(src, user) > 1 ))
@@ -185,13 +189,6 @@
 			return
 
 	if(!shorted)
-		//user << browse(return_text(),"window=air_alarm")
-		//onclose(user, "air_alarm")
-		/*var/datum/browser/popup = new(user, "air_alarm", "[alarm_area.name] Air Alarm", 500, 400)
-		popup.set_content(return_text())
-		popup.set_title_image(user.browse_rsc_icon(src.icon, src.icon_state))
-		popup.open()
-		refresh_all()*/
 		ui_interact(user)
 
 	if(panel_open && (!istype(user, /mob/living/silicon/ai)))
@@ -199,29 +196,22 @@
 
 	return
 
-/obj/machinery/alarm/ui_interact(mob/user, ui_key = "main")
+/obj/machinery/alarm/ui_interact(mob/user, ui_key = "main", var/datum/nanoui/ui = null)
 	if(stat & (BROKEN|NOPOWER))
 		return
 
-	var/data = list()
+	ui = SSnano.push_open_or_new_ui(user, src, ui_key, ui, "air_alarm.tmpl", "Air Alarm", 350, 500, 1)
 
+/obj/machinery/alarm/get_ui_data(mob/user)
+	var/data = list()
 	data["locked"] = locked
 	data["siliconUser"] = user.has_unlimited_silicon_privilege
 	data["screen"] = screen
 	data["dangerous"] = emagged
-
 	populate_status(data)
 	if (!locked || user.has_unlimited_silicon_privilege)
 		populate_controls(data)
-
-	var/datum/nanoui/ui = SSnano.get_open_ui(user, src, ui_key)
-	if (!ui)
-		ui = new /datum/nanoui(user, src, ui_key, "air_alarm.tmpl", "Air Alarm", 350, 500)
-		ui.set_initial_data(data)
-		ui.open()
-		ui.set_auto_update(1)
-	else
-		ui.push_data(data)
+	return data
 
 /obj/machinery/alarm/proc/shock(mob/user, prb)
 	if((stat & (NOPOWER)))		// unpowered, no shock
@@ -399,6 +389,10 @@
 /obj/machinery/alarm/Topic(href, href_list)
 	if(..())
 		return
+
+	if (buildstage != 2)
+		return
+
 	usr.set_machine(src)
 
 	if (locked && !usr.has_unlimited_silicon_privilege)
@@ -424,7 +418,7 @@
 				return 1
 
 			if("reset_external_pressure")
-				send_signal(device_id, list(href_list["command"] = ONE_ATMOSPHERE))
+				send_signal(device_id, list("set_external_pressure" = ONE_ATMOSPHERE))
 				return 1
 			if(
 				"power",
@@ -704,7 +698,7 @@
 				user.visible_message("[user.name] removes the electronics from [src.name].",\
 									"<span class='notice'>You start prying out the circuit...</span>")
 				playsound(src.loc, 'sound/items/Crowbar.ogg', 50, 1)
-				if (do_after(user, 20))
+				if (do_after(user, 20, target = src))
 					if (buildstage == 1)
 						user <<"<span class='notice'>You remove the air alarm electronics.</span>"
 						new /obj/item/weapon/airalarm_electronics( src.loc )
@@ -720,7 +714,7 @@
 					return
 				user.visible_message("[user.name] wires the air alarm.", \
 									"<span class='notice'>You start wiring the air alarm...</span>")
-				if (do_after(user, 20))
+				if (do_after(user, 20, target = src))
 					if (cable.get_amount() >= 5 && buildstage == 1)
 						cable.use(5)
 						user << "<span class='notice'>You wire the air alarm.</span>"
@@ -779,8 +773,7 @@ Just a object used in constructing air alarms
 	icon_state = "airalarm_electronics"
 	desc = "Looks like a circuit. Probably is."
 	w_class = 2.0
-	m_amt = 50
-	g_amt = 50
+	materials = list(MAT_METAL=50, MAT_GLASS=50)
 
 
 /*
@@ -963,7 +956,7 @@ FIRE ALARM
 					playsound(src.loc, 'sound/items/Crowbar.ogg', 50, 1)
 					user.visible_message("[user.name] removes the electronics from [src.name].", \
 										"<span class='notice'>You start prying out the circuit...</span>")
-					if(do_after(user, 20))
+					if(do_after(user, 20, target = src))
 						if(buildstage == 1)
 							if(stat & BROKEN)
 								user << "<span class='notice'>You remove the destroyed circuit.</span>"
@@ -1139,8 +1132,7 @@ Just a object used in constructing fire alarms
 	icon_state = "door_electronics"
 	desc = "A circuit. It has a label on it, it says \"Can handle heat levels up to 40 degrees celsius!\""
 	w_class = 2.0
-	m_amt = 50
-	g_amt = 50
+	materials = list(MAT_METAL=50, MAT_GLASS=50)
 
 
 /*
@@ -1198,6 +1190,9 @@ Code shamelessly copied from apc_frame
 
 /obj/machinery/firealarm/partyalarm/attack_hand(mob/user as mob)
 	if(user.stat || stat & (NOPOWER|BROKEN))
+		return
+
+	if (buildstage != 2)
 		return
 
 	user.set_machine(src)

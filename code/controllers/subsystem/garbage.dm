@@ -122,6 +122,14 @@ var/datum/subsystem/garbage_collector/SSgarbage
 			else
 				SSgarbage.Queue(A)
 
+// Returns 1 if the object has been queued for deletion.
+/proc/qdeleted(var/datum/A)
+	if (!istype(A))
+		return 0
+	if (A.gc_destroyed)
+		return 1
+	return 0
+
 // Default implementation of clean-up code.
 // This should be overridden to remove all references pointing to the object being destroyed.
 // Return true if the the GC controller should allow the object to continue existing. (Useful if pooling objects.)

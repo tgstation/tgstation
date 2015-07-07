@@ -7,8 +7,7 @@
 	flags = CONDUCT
 	slot_flags = SLOT_BACK
 	w_class = 5.0
-	g_amt = 2500
-	m_amt = 10000
+	materials = list(MAT_METAL=10000, MAT_GLASS=2500)
 	var/on = 1
 	var/code = 2
 	var/frequency = 1449
@@ -56,7 +55,8 @@
 
 /obj/item/device/electropack/Topic(href, href_list)
 	//..()
-	if(usr.stat || usr.restrained())
+	var/mob/living/carbon/C = usr
+	if(usr.stat || usr.restrained() || C.back == src)
 		return
 	if(((istype(usr, /mob/living/carbon/human) && ((!( ticker ) || (ticker && ticker.mode != "monkey")) && usr.contents.Find(src))) || (usr.contents.Find(master) || (in_range(src, usr) && istype(loc, /turf)))))
 		usr.set_machine(src)

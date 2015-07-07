@@ -390,3 +390,85 @@
 			src << "<span class='danger'>You are trying to equip this item to an unsupported inventory slot. Report this to a coder!</span>"
 			return
 
+//Cycles through all clothing slots and tests them for destruction
+/mob/living/carbon/human/proc/shred_clothing(var/bomb,var/shock)
+	var/covered_parts = 0	//The body parts that are protected by exterior clothing/armor
+	var/head_absorbed = 0	//How much of the shock the headgear absorbs when it is shredded. -1=it survives
+	var/suit_absorbed = 0	//How much of the shock the exosuit absorbs when it is shredded. -1=it survives
+
+	//Backpacks can never be protected but are annoying as fuck to lose, so they get a lower chance to be shredded
+	if(back)
+		back.shred(bomb,shock-20,src)
+
+	if(head)
+		covered_parts |= head.flags_inv
+		head_absorbed = head.shred(bomb,shock,src)
+	if(wear_mask)
+		var/absorbed = ((covered_parts & HIDEMASK) ? head_absorbed : 0) //Check if clothing covering this part absorbed any of the shock
+		if(absorbed >= 0)
+			//Masks can be used to shield other parts, but are simplified to simply add their absorbsion to the head armor if it covers the face
+			var/mask_absorbed = wear_mask.shred(bomb,shock-absorbed,src)
+			if(wear_mask.flags_inv & HIDEFACE)
+				covered_parts |= wear_mask.flags_inv
+				if(mask_absorbed < 0) //If the mask didn't get shredded, everything else on the head is protected
+					head_absorbed = -1
+				else
+					head_absorbed += mask_absorbed
+	if(ears)
+		var/absorbed = ((covered_parts & HIDEEARS) ? head_absorbed : 0)
+		if(absorbed >= 0)
+			ears.shred(bomb,shock-absorbed,src)
+	if(glasses)
+		var/absorbed = ((covered_parts & HIDEEYES) ? head_absorbed : 0)
+		if(absorbed >= 0)
+			glasses.shred(bomb,shock-absorbed,src)
+
+	if(wear_suit)
+		covered_parts |= wear_suit.flags_inv
+		suit_absorbed = wear_suit.shred(bomb,shock,src)
+	if(gloves)
+		var/absorbed = ((covered_parts & HIDEGLOVES) ? suit_absorbed : 0)
+		if(absorbed >= 0)
+			gloves.shred(bomb,shock-absorbed,src)
+	if(shoes)
+		var/absorbed = ((covered_parts & HIDESHOES) ? suit_absorbed : 0)
+		if(absorbed >= 0)
+			shoes.shred(bomb,shock-absorbed,src)
+	if(w_uniform)
+		var/absorbed = ((covered_parts & HIDEJUMPSUIT) ? suit_absorbed : 0)
+		if(absorbed >= 0)
+			w_uniform.shred(bomb,shock-20-absorbed,src)	//Uniforms are also annoying to get shredded
+
+/obj/item/proc/shred(var/bomb,var/shock,var/mob/living/carbon/human/Human)
+	if(flags & ABSTRACT)
+		return -1
+
+	var/shredded
+
+	if(!bomb)
+		if(burn_state != -1)
+			shredded = 1 //No heat protection, it burns
+		else
+			shredded = -1 //Heat protection = Fireproof
+
+	else if(shock > 0)
+		if(prob(Clamp(shock,0,90)))
+			shredded = armor["bomb"] + 10 //It gets shredded, but it also absorbs the shock the clothes underneath would recieve by this amount
+		else
+			shredded = -1 //It survives explosion
+
+	if(shredded > 0)
+		if(Human) //Unequip if equipped
+			Human.unEquip(src)
+
+		if(bomb)
+			for(var/obj/item/Item in contents) //Empty out the contents
+				Item.loc = src.loc
+			spawn(1) //so the shreds aren't instantly deleted by the explosion
+				var/obj/effect/decal/cleanable/shreds/Shreds = new(loc)
+				Shreds.desc = "The sad remains of what used to be [src.name]."
+				qdel(src)
+		else
+			burn()
+
+	return shredded

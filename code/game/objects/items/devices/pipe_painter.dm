@@ -15,8 +15,7 @@
 	)
 	var/mode = "grey"
 
-	m_amt = 5000
-	g_amt = 2000
+	materials = list(MAT_METAL=5000, MAT_GLASS=2000)
 
 /obj/item/device/pipe_painter/afterattack(atom/A, mob/user as mob, proximity_flag)
 	//Make sure we only paint adjacent items

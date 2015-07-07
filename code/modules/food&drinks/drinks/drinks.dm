@@ -10,6 +10,7 @@
 	var/gulp_size = 5 //This is now officially broken ... need to think of a nice way to fix it.
 	possible_transfer_amounts = list(5,10,25)
 	volume = 50
+	burn_state = -1
 
 /obj/item/weapon/reagent_containers/food/drinks/New()
 	..()
@@ -34,24 +35,19 @@
 
 	if(M == user)
 		M << "<span class='notice'>You swallow a gulp of [src].</span>"
-		if(reagents.total_volume)
-			reagents.reaction(M, INGEST)
-			spawn(5)
-				reagents.trans_to(M, gulp_size)
+	else
 
-		playsound(M.loc,'sound/items/drink.ogg', rand(10,50), 1)
-		return 1
+		user.visible_message("<span class='warning'>[user] attempts to feed [src] to [M].</span>", "<span class='notice'>You attempt to feed [src] to [M].</span>")
+		if(!do_mob(user, M))
+			return
+		if(!reagents || !reagents.total_volume)
+			return // The drink might be empty after the delay, such as by spam-feeding
+		user.visible_message("<span class='warning'>[user] feeds [src] to [M].</span>", "<span class='notice'>You feed [src] to [M].</span>")
+		add_logs(user, M, "fed", object="[reagentlist(src)]")
 
-	user.visible_message("<span class='warning'>[user] attempts to feed [src] to [M].</span>", "<span class='notice'>You attempt to feed [src] to [M].</span>")
-	if(!do_mob(user, M)) return
-	if(!reagents.total_volume) return // The drink might be empty after the delay, such as by spam-feeding
-	user.visible_message("<span class='warning'>[user] feeds [src] to [M].</span>", "<span class='notice'>You feed [src] to [M].</span>")
-	add_logs(user, M, "fed", object="[reagentlist(src)]")
-	if(reagents.total_volume)
-		reagents.reaction(M, INGEST)
-		spawn(5)
-			reagents.trans_to(M, gulp_size)
-
+	var/fraction = min(gulp_size/reagents.total_volume, 1)
+	reagents.reaction(M, INGEST, fraction)
+	reagents.trans_to(M, gulp_size)
 	playsound(M.loc,'sound/items/drink.ogg', rand(10,50), 1)
 	return 1
 
@@ -116,6 +112,7 @@
 	possible_transfer_amounts = null
 	volume = 150
 	flags = CONDUCT | OPENCONTAINER
+	spillable = 1
 
 /obj/item/weapon/reagent_containers/food/drinks/golden_cup/tournament_26_06_2011
 	desc = "A golden cup. It will be presented to a winner of tournament 26 june and name of the winner will be graved on it."
@@ -131,6 +128,7 @@
 	desc = "Careful, the beverage you're about to enjoy is extremely hot."
 	icon_state = "coffee"
 	list_reagents = list("coffee" = 30)
+	spillable = 1
 
 /obj/item/weapon/reagent_containers/food/drinks/tea
 	name = "Duke Purple Tea"
@@ -138,12 +136,14 @@
 	icon_state = "tea"
 	item_state = "coffee"
 	list_reagents = list("tea" = 30)
+	spillable = 1
 
 /obj/item/weapon/reagent_containers/food/drinks/ice
 	name = "Ice Cup"
 	desc = "Careful, cold ice, do not chew."
 	icon_state = "coffee"
 	list_reagents = list("ice" = 30)
+	spillable = 1
 
 /obj/item/weapon/reagent_containers/food/drinks/h_chocolate
 	name = "Dutch Hot Coco"
@@ -151,6 +151,7 @@
 	icon_state = "tea"
 	item_state = "coffee"
 	list_reagents = list("hot_coco" = 30, "sugar" = 5)
+	spillable = 1
 
 /obj/item/weapon/reagent_containers/food/drinks/dry_ramen
 	name = "Cup Ramen"
@@ -177,6 +178,7 @@
 	icon_state = "water_cup_e"
 	possible_transfer_amounts = null
 	volume = 10
+	spillable = 1
 
 /obj/item/weapon/reagent_containers/food/drinks/sillycup/on_reagent_change()
 	if(reagents.total_volume)
@@ -215,6 +217,7 @@
 	desc = "A cup with the british flag emblazoned on it."
 	icon_state = "britcup"
 	volume = 30
+	spillable = 1
 
 //////////////////////////soda_cans//
 //These are in their own group to be used as IED's in /obj/item/weapon/grenade/ghettobomb.dm

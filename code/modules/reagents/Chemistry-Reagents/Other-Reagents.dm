@@ -144,6 +144,11 @@
 
 /datum/reagent/water/reaction_obj(var/obj/O, var/volume)
 	src = null
+
+	if(istype(O,/obj/item))
+		var/obj/item/Item = O
+		Item.extinguish()
+
 	// Monkey cube
 	if(istype(O,/obj/item/weapon/reagent_containers/food/snacks/monkeycube))
 		var/obj/item/weapon/reagent_containers/food/snacks/monkeycube/cube = O
@@ -151,7 +156,7 @@
 			cube.Expand()
 
 	// Dehydrated carp
-	if(istype(O,/obj/item/toy/carpplushie/dehy_carp))
+	else if(istype(O,/obj/item/toy/carpplushie/dehy_carp))
 		var/obj/item/toy/carpplushie/dehy_carp/dehy = O
 		dehy.Swell() // Makes a carp
 
@@ -628,7 +633,7 @@
 
 /datum/reagent/nanites/reaction_mob(var/mob/M, var/method=TOUCH, var/volume)
 	src = null
-	if( (prob(10) && method==TOUCH) || method==INGEST)
+	if( (prob(min(10, volume)) && method==TOUCH) || method==INGEST)
 		M.ForceContractDisease(new /datum/disease/transformation/robot(0))
 
 /datum/reagent/xenomicrobes
@@ -639,7 +644,7 @@
 
 /datum/reagent/xenomicrobes/reaction_mob(var/mob/M, var/method=TOUCH, var/volume)
 	src = null
-	if( (prob(10) && method==TOUCH) || method==INGEST)
+	if( (prob(min(10, volume)) && method==TOUCH) || method==INGEST)
 		M.ContractDisease(new /datum/disease/transformation/xeno(0))
 
 /datum/reagent/fluorosurfactant//foam precursor

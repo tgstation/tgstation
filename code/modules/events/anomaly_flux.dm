@@ -22,5 +22,5 @@
 
 /datum/round_event/anomaly/anomaly_flux/end()
 	if(newAnomaly.loc)//If it hasn't been neutralized, it's time to blow up.
-		explosion(newAnomaly, -1, 3, 5, 5)
+		explosion(newAnomaly, -1, 3, 8, 10)
 		qdel(newAnomaly)

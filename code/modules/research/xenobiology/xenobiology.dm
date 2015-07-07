@@ -472,3 +472,50 @@
 			qdel(src)
 			return
 		sleep(1)
+
+
+
+/obj/item/stack/tile/bluespace
+	name = "bluespace floor tile"
+	singular_name = "floor tile"
+	desc = "Through a series of micro-teleports these tiles let people move at incredible speeds"
+	icon_state = "tile-bluespace"
+	w_class = 3.0
+	force = 6.0
+	materials = list(MAT_METAL=937.5)
+	throwforce = 10.0
+	throw_speed = 3
+	throw_range = 7
+	flags = CONDUCT
+	max_amount = 60
+	turf_type = /turf/simulated/floor/bluespace
+
+
+/turf/simulated/floor/bluespace
+	slowdown = -1
+	icon_state = "bluespace"
+	desc = "Through a series of micro-teleports these tiles let people move at incredible speeds"
+	floor_tile = /obj/item/stack/tile/bluespace
+
+
+/obj/item/stack/tile/sepia
+	name = "sepia floor tile"
+	singular_name = "floor tile"
+	desc = "Time seems to flow very slowly around these tiles"
+	icon_state = "tile-sepia"
+	w_class = 3.0
+	force = 6.0
+	materials = list(MAT_METAL=937.5)
+	throwforce = 10.0
+	throw_speed = 3
+	throw_range = 7
+	flags = CONDUCT
+	max_amount = 60
+	turf_type = /turf/simulated/floor/sepia
+
+
+/turf/simulated/floor/sepia
+	slowdown = 2
+	icon_state = "sepia"
+	desc = "Time seems to flow very slowly around these tiles"
+	floor_tile = /obj/item/stack/tile/sepia

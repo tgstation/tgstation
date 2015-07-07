@@ -309,12 +309,12 @@
 				m_type = 2
 
 		if("wag")
-			if(dna && dna.species && ("tail" in dna.species.mutant_bodyparts))
+			if(dna && dna.species && (("tail_lizard" in dna.species.mutant_bodyparts) || ("tail_human" in dna.species.mutant_bodyparts)))
 				message = "<B>[src]</B> wags \his tail."
 				startTailWag()
 
 		if("stopwag")
-			if(dna && dna.species && ("waggingtail" in dna.species.mutant_bodyparts))
+			if(dna && dna.species && (("waggingtail_lizard" in dna.species.mutant_bodyparts) || ("waggingtail_human" in dna.species.mutant_bodyparts)))
 				message = "<B>[src]</B> stops wagging \his tail."
 				endTailWag()
 
@@ -353,21 +353,26 @@
 /mob/living/carbon/human/proc/startTailWag()
 	if(!dna || !dna.species)
 		return
-	if("tail" in dna.species.mutant_bodyparts)
-		dna.species.mutant_bodyparts -= "tail"
+	if("tail_lizard" in dna.species.mutant_bodyparts)
+		dna.species.mutant_bodyparts -= "tail_lizard"
 		dna.species.mutant_bodyparts -= "spines"
-		dna.species.mutant_bodyparts |= "waggingtail"
+		dna.species.mutant_bodyparts |= "waggingtail_lizard"
 		dna.species.mutant_bodyparts |= "waggingspines"
+	if("tail_human" in dna.species.mutant_bodyparts)
+		dna.species.mutant_bodyparts -= "tail_human"
+		dna.species.mutant_bodyparts |= "waggingtail_human"
 	update_body()
 
 
 /mob/living/carbon/human/proc/endTailWag()
 	if(!dna || !dna.species)
 		return
-	if("waggingtail" in dna.species.mutant_bodyparts)
-		dna.species.mutant_bodyparts -= "waggingtail"
+	if("waggingtail_lizard" in dna.species.mutant_bodyparts)
+		dna.species.mutant_bodyparts -= "waggingtail_lizard"
 		dna.species.mutant_bodyparts -= "waggingspines"
-		dna.species.mutant_bodyparts |= "tail"
+		dna.species.mutant_bodyparts |= "tail_lizard"
 		dna.species.mutant_bodyparts |= "spines"
-
+	if("waggingtail_human" in dna.species.mutant_bodyparts)
+		dna.species.mutant_bodyparts -= "waggingtail_human"
+		dna.species.mutant_bodyparts |= "tail_human"
 	update_body()

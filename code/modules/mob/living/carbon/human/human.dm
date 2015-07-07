@@ -112,24 +112,24 @@
 	switch (severity)
 		if (1.0)
 			b_loss += 500
-			if (!prob(getarmor(null, "bomb")))
-				gib()
-				return
-			else
+			if (prob(getarmor(null, "bomb")))
+				shred_clothing(1,150)
 				var/atom/target = get_edge_target_turf(src, get_dir(src, get_step_away(src, src)))
 				throw_at(target, 200, 4)
-			//return
-//				var/atom/target = get_edge_target_turf(user, get_dir(src, get_step_away(user, src)))
-				//user.throw_at(target, 200, 4)
+			else
+				gib()
+				return
 
 		if (2.0)
 			b_loss += 60
 
 			f_loss += 60
-
 			if (prob(getarmor(null, "bomb")))
 				b_loss = b_loss/1.5
 				f_loss = f_loss/1.5
+				shred_clothing(1,25)
+			else
+				shred_clothing(1,50)
 
 			if (!istype(ears, /obj/item/clothing/ears/earmuffs))
 				adjustEarDamage(30, 120)
@@ -284,7 +284,7 @@
 				return
 			var/time_taken = I.embedded_unsafe_removal_time*I.w_class
 			usr.visible_message("<span class='warning'>[usr] attempts to remove [I] from their [L.getDisplayName()].</span>","<span class='notice'>You attempt to remove [I] from your [L.getDisplayName()]... (It will take [time_taken/10] seconds.)</span>")
-			if(do_after(usr, time_taken, needhand = 1))
+			if(do_after(usr, time_taken, needhand = 1, target = src))
 				L.embedded_objects -= I
 				L.take_damage(I.embedded_unsafe_removal_pain_multiplier*I.w_class)//It hurts to rip it out, get surgery you dingus.
 				I.loc = get_turf(src)

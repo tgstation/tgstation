@@ -196,6 +196,17 @@
 		color = a_color
 	return
 
+/obj/effect/blob/examine(mob/user)
+	..()
+	user << "It looks like it's of a [get_chem_name()] kind."
+	return
+
+/obj/effect/blob/proc/get_chem_name()
+	for(var/mob/camera/blob/B in mob_list)
+		if(lowertext(B.blob_reagent_datum.color) == lowertext(src.color)) // Goddamit why we use strings for these
+			return B.blob_reagent_datum.name
+	return "unknown"
+
 /obj/effect/blob/normal
 	icon_state = "blob"
 	luminosity = 0

@@ -347,7 +347,7 @@
 	if(destroy_type == TBL_DISASSEMBLE)
 		user << "<span class='notice'>You start disassembling [src]...</span>"
 		playsound(src.loc, 'sound/items/Screwdriver.ogg', 50, 1)
-		if(do_after(user, 20))
+		if(do_after(user, 20, target = src))
 			new frame(src.loc)
 			for(var/i = 1, i <= buildstackamount, i++)
 				new buildstack(get_turf(src))
@@ -357,7 +357,7 @@
 	if(destroy_type == TBL_DECONSTRUCT)
 		user << "<span class='notice'>You start deconstructing [src]...</span>"
 		playsound(src.loc, 'sound/items/Ratchet.ogg', 50, 1)
-		if(do_after(user, 40))
+		if(do_after(user, 40, target = src))
 			for(var/i = 1, i <= framestackamount, i++)
 				new framestack(get_turf(src))
 			for(var/i = 1, i <= buildstackamount, i++)
@@ -432,6 +432,8 @@
 	frame = /obj/structure/table_frame/wood
 	framestack = /obj/item/stack/sheet/mineral/wood
 	buildstack = /obj/item/stack/sheet/mineral/wood
+	burn_state = 0 //Burnable
+	burntime = 20
 
 /obj/structure/table/wood/poker //No specialties, Just a mapping object.
 	name = "gambling table"
@@ -456,14 +458,14 @@
 			if(src.status == 2)
 				user << "<span class='notice'>You start weakening the reinforced table...</span>"
 				playsound(src.loc, 'sound/items/Welder.ogg', 50, 1)
-				if (do_after(user, 50))
+				if (do_after(user, 50, target = src))
 					if(!src || !WT.isOn()) return
 					user << "<span class='notice'>You weaken the table.</span>"
 					src.status = 1
 			else
 				user << "<span class='notice'>You start strengthening the reinforced table...</span>"
 				playsound(src.loc, 'sound/items/Welder.ogg', 50, 1)
-				if (do_after(user, 50))
+				if (do_after(user, 50, target = src))
 					if(!src || !WT.isOn()) return
 					user << "<span class='notice'>You strengthen the table.</span>"
 					src.status = 2
@@ -612,7 +614,7 @@
 	icon = 'icons/obj/items.dmi'
 	icon_state = "rack_parts"
 	flags = CONDUCT
-	m_amt = 3750
+	materials = list(MAT_METAL=3750)
 
 /obj/item/weapon/rack_parts/attackby(obj/item/weapon/W as obj, mob/user as mob, params)
 	..()
@@ -624,7 +626,7 @@
 
 /obj/item/weapon/rack_parts/attack_self(mob/user as mob)
 	user << "<span class='notice'>You start constructing rack...</span>"
-	if (do_after(user, 50))
+	if (do_after(user, 50, target = src))
 		if(!user.drop_item())
 			return
 		var/obj/structure/rack/R = new /obj/structure/rack( user.loc )

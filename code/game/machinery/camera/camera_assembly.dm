@@ -6,8 +6,7 @@
 	w_class = 2
 	anchored = 0
 
-	m_amt = 400
-	g_amt = 250
+	materials = list(MAT_METAL=400, MAT_GLASS=250)
 
 	//	Motion, EMP-Proof, X-Ray
 	var/list/obj/item/possible_upgrades = list(/obj/item/device/assembly/prox_sensor, /obj/item/stack/sheet/mineral/plasma, /obj/item/device/analyzer)
@@ -160,7 +159,7 @@
 	user << "<span class='notice'>You start to weld \the [src]...</span>"
 	playsound(src.loc, 'sound/items/Welder.ogg', 50, 1)
 	busy = 1
-	if(do_after(user, 20))
+	if(do_after(user, 20, target = src))
 		busy = 0
 		if(!WT.isOn())
 			return 0

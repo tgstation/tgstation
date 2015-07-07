@@ -17,7 +17,7 @@
 	icon_state = "film"
 	item_state = "electropack"
 	w_class = 1.0
-
+	burn_state = 0 //Burnable
 
 /*
  * Photo
@@ -28,6 +28,8 @@
 	icon_state = "photo"
 	item_state = "paper"
 	w_class = 1.0
+	burn_state = 0 //Burnable
+	burntime = 5
 	var/icon/img		//Big photo image
 	var/scribble		//Scribble on the back.
 	var/blueprints = 0	//Does it include the blueprints?
@@ -92,7 +94,7 @@
 	icon_state = "album"
 	item_state = "briefcase"
 	can_hold = list(/obj/item/weapon/photo)
-
+	burn_state = 0 //Burnable
 
 /*
  * Camera
@@ -106,7 +108,7 @@
 	w_class = 2.0
 	flags = CONDUCT
 	slot_flags = SLOT_BELT
-	m_amt = 2000
+	materials = list(MAT_METAL=2000)
 	var/pictures_max = 10
 	var/pictures_left = 10
 	var/on = 1

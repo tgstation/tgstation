@@ -28,21 +28,21 @@
 	visible_message("The [src.name] burns out!")
 
 
-/obj/item/device/flash/proc/flash_recharge(var/mob/user)
-	if(prob(times_used * 2))	//if you use it 5 times in a minute it has a 10% chance to break!
+/obj/item/device/flash/proc/flash_recharge(var/interval=10)
+	if(prob(times_used * 3)) //The more often it's used in a short span of time the more likely it will burn out
 		burn_out()
 		return 0
 
 	var/deciseconds_passed = world.time - last_used
-	for(var/seconds = deciseconds_passed/10, seconds>=10, seconds-=10) //get 1 charge every 10 seconds
+	for(var/seconds = deciseconds_passed/10, seconds>=interval, seconds-=interval) //get 1 charge every interval
 		times_used--
 
 	last_used = world.time
 	times_used = max(0, times_used) //sanity
-
+	return 1
 
 /obj/item/device/flash/proc/try_use_flash(var/mob/user = null)
-	flash_recharge(user)
+	flash_recharge(10)
 
 	if(broken)
 		return 0
@@ -103,7 +103,7 @@
 		return 0
 	user.visible_message("<span class='disarm'>[user]'s flash emits a blinding light!</span>", "<span class='danger'>Your flash emits a blinding light!</span>")
 	for(var/mob/living/carbon/M in oviewers(3, null))
-		flash_carbon(M, user, 3, 0)
+		flash_carbon(M, user, 1, 0)
 
 
 /obj/item/device/flash/emp_act(severity)
@@ -124,7 +124,9 @@
 					var/resisted
 					if(!isloyal(M))
 						if(user.mind in ticker.mode.head_revolutionaries)
-							if(!ticker.mode.add_revolutionary(M.mind))
+							if(ticker.mode.add_revolutionary(M.mind))
+								times_used -- //Flashes less likely to burn out for headrevs when used for conversion
+							else
 								resisted = 1
 					else
 						resisted = 1

@@ -135,7 +135,7 @@
 		user << "<span class='notice'>You start building the power terminal...</span>"
 		playsound(src.loc, 'sound/items/Deconstruct.ogg', 50, 1)
 
-		if(do_after(user, 20) && C.amount >= 10)
+		if(do_after(user, 20, target = src) && C.amount >= 10)
 			var/obj/structure/cable/N = T.get_cable_node() //get the connecting node cable, if there's one
 			if (prob(50) && electrocute_mob(usr, N, N)) //animate the electrocution if uncautious and unlucky
 				var/datum/effect/effect/system/spark_spread/s = new /datum/effect/effect/system/spark_spread
@@ -326,6 +326,10 @@
 	if(!user)
 		return
 
+	// update the ui if it exists, create a new one if it doesn't
+	ui = SSnano.push_open_or_new_ui(user, src, ui_key, ui, "smes.tmpl", "SMES - [name]", 350, 560, 1)
+
+/obj/machinery/power/smes/get_ui_data()
 	var/list/data = list(
 		"capacityPercent" = round(100.0*charge/capacity, 0.1),
 		"capacity" = capacity,
@@ -343,19 +347,7 @@
 		"outputLevelMax" = output_level_max,
 		"outputUsed" = output_used
 	)
-
-	// update the ui if it exists, returns null if no ui is passed/found
-	ui = SSnano.try_update_ui(user, src, ui_key, ui, data)
-	if (!ui)
-		// the ui does not exist, so we'll create a new() one
-		// for a list of parameters and their descriptions see the code docs in \code\modules\nano\nanoui.dm
-		ui = new(user, src, ui_key, "smes.tmpl", "SMES - [name]", 350, 560)
-		// when the ui is first opened this is the data it will use
-		ui.set_initial_data(data)
-		// open the new ui window
-		ui.open()
-		// auto update every Master Controller tick
-		ui.set_auto_update(1)
+	return data
 
 /obj/machinery/power/smes/Topic(href, href_list)
 //	world << "[href] ; [href_list[href]]"

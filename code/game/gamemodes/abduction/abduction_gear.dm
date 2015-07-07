@@ -5,8 +5,8 @@
 
 //AGENT VEST
 /obj/item/clothing/suit/armor/abductor/vest
-	name = "Agent Vest"
-	desc = "Vest outfitted with alien stealth technology."
+	name = "agent vest"
+	desc = "A vest outfitted with advanced stealth technology. It has two modes - combat and stealth."
 	icon = 'icons/obj/abductor.dmi'
 	icon_state = "vest_stealth"
 	item_state = "armor"
@@ -134,8 +134,8 @@
 	return S.scientist
 
 /obj/item/device/abductor/gizmo
-	name = "Science Tool"
-	desc = "Alien science is 90% dissections 10% probings."
+	name = "science tool"
+	desc = "A dual-mode tool for retrieving specimens and scanning appearances. Scanning can be done through cameras."
 	icon = 'icons/obj/abductor.dmi'
 	icon_state = "gizmo_scan"
 	item_state = "silencer"
@@ -189,7 +189,7 @@
 	if(istype(target,/mob/living/carbon/human))
 		if(console!=null)
 			console.AddSnapshot(target)
-			user << "<span class='notice'>You scan and add the being to the database</span>"
+			user << "<span class='notice'>You scan [target] and add them to the database.</span>"
 
 /obj/item/device/abductor/gizmo/proc/mark(var/atom/target, var/mob/living/user)
 	if(marked == target)
@@ -198,7 +198,7 @@
 	if(istype(target,/mob/living/carbon/human))
 		if(IsAbductor(target))
 			marked = target
-			user << "<span class='notice'>You mark the target for future retrieval.</span>"
+			user << "<span class='notice'>You mark [target] for future retrieval.</span>"
 		else
 			prepare(target,user)
 	else
@@ -208,15 +208,15 @@
 	if(get_dist(target,user)>1)
 		user << "<span class='warning'>You need to be next to the specimen to prepare it for transport!</span>"
 		return
-	user << "<span class='notice'>You start preparing the specimen for transport...</span>"
-	if(do_after(user, 100))
+	user << "<span class='notice'>You begin preparing [target] for transport...</span>"
+	if(do_after(user, 100, target = target))
 		marked = target
-		user << "<span class='notice'>You finish preparing the specimen for transport.</span>"
+		user << "<span class='notice'>You finish preparing [target] for transport.</span>"
 
 
 /obj/item/device/abductor/silencer
-	name = "Abductor Silencer"
-	desc = "Device used to break communication equipment"
+	name = "abductor silencer"
+	desc = "A compact device used to shut down communications equipment."
 	icon = 'icons/obj/abductor.dmi'
 	icon_state = "silencer"
 	item_state = "gizmo"
@@ -244,7 +244,7 @@
 	for(M in view(2,targloc))
 		if(M == user)
 			continue
-		user << "<span class='notice'>You silence [M.name] radio devices.</span>"
+		user << "<span class='notice'>You silence [M]'s radio devices.</span>"
 		radio_off_mob(M)
 
 /obj/item/device/abductor/silencer/proc/radio_off_mob(var/mob/living/carbon/human/M)
@@ -259,8 +259,8 @@
 
 
 /obj/item/weapon/implant/abductor
-	name = "Emergency Beam"
-	desc = "Gets you back on the ship."
+	name = "recall implant"
+	desc = "Returns you to the mothership."
 	icon = 'icons/obj/abductor.dmi'
 	icon_state = "implant"
 	activated = 1
@@ -273,7 +273,7 @@
 		cooldown = 0
 		SSobj.processing |= src
 	else
-		imp_in << "<span class='warning'>The emergency beam is still recharging!</span>"
+		imp_in << "<span class='warning'>You must wait [30 - cooldown] seconds to use [src] again!</span>"
 	return
 
 /obj/item/weapon/implant/abductor/process()
@@ -284,9 +284,9 @@
 
 
 /obj/item/device/firing_pin/alien
-	name = "alien-looking pin"
-	desc = "Only non-humans can use this pin"
-	fail_message = "<span class='alienwarning'>Human DNA detected! Authorization revoked!</span>"
+	name = "alien firing pin"
+	desc = "An odd device that resembles a firing pin."
+	fail_message = "<span class='alienwarning'>UNAUTHORIZED -- UNAUTHORIZED</span>"
 
 /obj/item/device/firing_pin/alien/pin_auth(mob/living/user)
 	if(ishuman(user))
@@ -329,7 +329,8 @@ Congratulations! You are now trained for xenobiology research!"}
 #define BATON_MODES 4
 
 /obj/item/weapon/abductor_baton
-	name = "Advanced Baton"
+	name = "advanced baton"
+	desc = "A quad-mode baton used for incapacitation and restraining of specimens."
 	var/mode = BATON_STUN
 	icon = 'icons/obj/abductor.dmi'
 	icon_state = "wonderprod"
@@ -345,15 +346,15 @@ Congratulations! You are now trained for xenobiology research!"}
 	var/txt
 	switch(mode)
 		if(BATON_STUN)
-			txt = "stun"
+			txt = "stunning"
 		if(BATON_SLEEP)
-			txt = "sleep inducment"
+			txt = "sleep inducement"
 		if(BATON_CUFF)
 			txt = "restraining"
 		if(BATON_PROBE)
 			txt = "probing"
 
-	usr << "<span class='notice'>You switch the baton to [txt] mode</span>"
+	usr << "<span class='notice'>You switch the baton to [txt] mode.</span>"
 	update_icon()
 
 /obj/item/weapon/abductor_baton/update_icon()
@@ -439,8 +440,8 @@ Congratulations! You are now trained for xenobiology research!"}
 	var/mob/living/carbon/C = L
 	if(!C.handcuffed)
 		playsound(loc, 'sound/weapons/cablecuff.ogg', 30, 1, -2)
-		C.visible_message("<span class='danger'>[user] is trying to put energy cuffs on [C]!</span>", \
-								"<span class='userdanger'>[user] is trying to put energy cuffs on [C]!</span>")
+		C.visible_message("<span class='danger'>[user] begins restraining [C] with [src]!</span>", \
+								"<span class='userdanger'>[user] begins shaping an energy field around your hands!</span>")
 		if(do_mob(user, C, 30))
 			if(!C.handcuffed)
 				C.handcuffed = new /obj/item/weapon/restraints/handcuffs/energy/used(C)
@@ -453,30 +454,30 @@ Congratulations! You are now trained for xenobiology research!"}
 
 /obj/item/weapon/abductor_baton/proc/ProbeAttack(mob/living/L,mob/living/user)
 	L.visible_message("<span class='danger'>[user] probes [L] with [src]!</span>", \
-						"<span class='userdanger'>[user] probed [L]!</span>")
+						"<span class='userdanger'>[user] probes you!</span>")
 
-	var/species = "<span class='warning'>Unknown Species</span>"
+	var/species = "<span class='warning'>Unknown species</span>"
 	if(ishuman(L))
 		var/mob/living/carbon/human/H = L
 		if(H.dna && H.dna.species)
 			species = "<span clas=='notice'>[H.dna.species.name]</span>"
 		if(L.mind && L.mind.changeling)
-			species = "<span class='warning'>Changeling Lifeform</span>"
-	user << "<span class='notice'>Probing Result:</span>[species]"
+			species = "<span class='warning'>Changeling lifeform</span>"
+	user << "<span class='notice'>Probing result:</span>[species]"
 
 /obj/item/weapon/restraints/handcuffs/energy
-	name = "energy cuffs"
-	desc = "Energy field restraining the hands."
+	name = "hard-light energy field"
+	desc = "A hard-light field restraining the hands."
 	icon_state = "cuff_white" // Needs sprite
 	breakouttime = 450
 	trashtype = /obj/item/weapon/restraints/handcuffs/energy/used
 
 /obj/item/weapon/restraints/handcuffs/energy/used
-	desc = "Energy Discharge"
+	desc = "energy discharge"
 
 /obj/item/weapon/restraints/handcuffs/energy/used/dropped(mob/user)
-	user.visible_message("<span class='danger'>[user] cuffs break in a discharge of energy!</span>", \
-							"<span class='userdanger'>[user] cuffs break in a discharge of energy!</span>")
+	user.visible_message("<span class='danger'>[user]'s [src] break in a discharge of energy!</span>", \
+							"<span class='userdanger'>[user]'s [src] break in a discharge of energy!</span>")
 	var/datum/effect/effect/system/spark_spread/S = new
 	S.set_up(4,0,user.loc)
 	S.start()
@@ -488,9 +489,11 @@ Congratulations! You are now trained for xenobiology research!"}
 		if(BATON_STUN)
 			user <<"<span class='warning'>The baton is in stun mode.</span>"
 		if(BATON_SLEEP)
-			user <<"<span class='warning'>The baton is in sleep induction mode.</span>"
+			user <<"<span class='warning'>The baton is in sleep inducement mode.</span>"
 		if(BATON_CUFF)
-			user <<"<span class='warning'>The baton is in restrain mode.</span>"
+			user <<"<span class='warning'>The baton is in restraining mode.</span>"
+		if(BATON_PROBE)
+			user << "<span class='warning'>The baton is in probing mode.</span>"
 
 
 /obj/item/weapon/scalpel/alien
@@ -518,8 +521,8 @@ Congratulations! You are now trained for xenobiology research!"}
 	icon = 'icons/obj/abductor.dmi'
 
 /obj/item/clothing/head/helmet/abductor
-	name = "Agent Headgear"
-	desc = "Abducting with style. Spiky style. Prevents digital tracking."
+	name = "agent headgear"
+	desc = "Abduct with style - spiky style. Prevents digital tracking."
 	icon_state = "alienhelmet"
 	item_state = "alienhelmet"
 	blockTracking = 1
@@ -546,6 +549,6 @@ Congratulations! You are now trained for xenobiology research!"}
 
 /obj/structure/closet/abductor
 	name = "alien locker"
-	desc = "Contains secrets of the universe"
+	desc = "Contains secrets of the universe."
 	icon_state = "abductor"
 	icon_door = "abductor"

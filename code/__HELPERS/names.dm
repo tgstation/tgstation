@@ -1,3 +1,10 @@
+/proc/lizard_name(gender)
+	if(gender == MALE)
+		return "[pick(lizard_names_male)]-[pick(lizard_names_male)]"
+	else
+		return "[pick(lizard_names_female)]-[pick(lizard_names_female)]"
+
+
 var/church_name = null
 /proc/church_name()
 	if (church_name)
@@ -131,21 +138,6 @@ var/syndicate_name = null
 	syndicate_name = name
 	return name
 
-var/gang_name_pool = list("Clandestine", "Prima", "Blue", "Zero-G", "Max", "Blasto", "Waffle", "North", "Omni", "Newton", "Cyber", "Donk", "Gene", "Gib", "Tunnel")
-var/gang_A_name = null
-var/gang_B_name = null
-/proc/gang_name(var/gang)
-	if(!gang_A_name || !gang_B_name)
-		gang_A_name = pick(gang_name_pool)
-		gang_name_pool -= gang_A_name
-		gang_B_name = pick(gang_name_pool)
-		gang_name_pool -= gang_B_name
-
-	if(gang == "A")
-		return gang_A_name
-	if(gang == "B")
-		return gang_B_name
-
 
 //Traitors and traitor silicons will get these. Revs will not.
 var/syndicate_code_phrase//Code phrase for traitors.
@@ -200,9 +192,12 @@ var/syndicate_code_response//Code response for traitors.
 						if(names.len&&prob(70))
 							code_phrase += pick(names)
 						else
-							code_phrase += pick(pick(first_names_male,first_names_female))
-							code_phrase += " "
-							code_phrase += pick(last_names)
+							if(prob(10))
+								code_phrase += pick(lizard_name(MALE),lizard_name(FEMALE))
+							else
+								code_phrase += pick(pick(first_names_male,first_names_female))
+								code_phrase += " "
+								code_phrase += pick(last_names)
 					if(2)
 						code_phrase += pick(get_all_jobs())//Returns a job.
 				safety -= 1

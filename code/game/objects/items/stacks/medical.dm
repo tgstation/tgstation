@@ -7,6 +7,8 @@
 	w_class = 1
 	throw_speed = 3
 	throw_range = 7
+	burn_state = 0 //Burnable
+	burntime = 5
 	var/heal_brute = 0
 	var/heal_burn = 0
 	var/stop_bleeding = 0
@@ -104,7 +106,7 @@
 	stop_bleeding = 900
 
 /obj/item/stack/medical/gauze/cyborg/
-	m_amt = 0
+	materials = list()
 	is_cyborg = 1
 	cost = 250
 

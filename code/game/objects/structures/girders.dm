@@ -114,7 +114,7 @@
 						user << "<span class='warning'>You need two sheets of metal to finish a wall!</span>"
 						return
 					user << "<span class='notice'>You start adding plating...</span>"
-					if (do_after(user, 40))
+					if (do_after(user, 40, target = src))
 						if(loc == null || S.get_amount() < 2)
 							return
 						S.use(2)
@@ -145,7 +145,7 @@
 					if (src.icon_state == "reinforced") //I cant believe someone would actually write this line of code...
 						if(S.amount < 1) return ..()
 						user << "<span class='notice'>You start finalizing the reinforced wall...</span>"
-						if(do_after(user, 50))
+						if(do_after(user, 50, target = src))
 							if(!src.loc || !S || S.amount < 1)
 								return
 							S.use(1)
@@ -159,7 +159,7 @@
 					else
 						if(S.amount < 1) return ..()
 						user << "<span class='notice'>You start reinforcing the girder...</span>"
-						if (do_after(user, 60))
+						if (do_after(user, 60, target = src))
 							if(!src.loc || !S || S.amount < 1)
 								return
 							S.use(1)
@@ -184,7 +184,7 @@
 			else
 				if(S.amount < 2) return ..()
 				user << "<span class='notice'>You start adding plating...</span>"
-				if (do_after(user, 40))
+				if (do_after(user, 40, target = src))
 					if(!src.loc || !S || S.amount < 2)
 						return
 					S.use(2)
@@ -292,7 +292,7 @@
 			playsound(src.loc, 'sound/items/Welder2.ogg', 50, 1)
 			user.visible_message("<span class='warning'>[user] disassembles the girder.</span>", \
 								"<span class='notice'>You start to disassemble the girder...</span>", "You hear welding and clanking.")
-			if(do_after(user, 40))
+			if(do_after(user, 40, target = src))
 				if( !WT.isOn() )
 					return
 				user << "<span class='notice'>You disassemble the girder.</span>"
@@ -302,7 +302,7 @@
 
 	else if(istype(W, /obj/item/weapon/gun/energy/plasmacutter))
 		user << "<span class='notice'>You start slicing apart the girder...</span>"
-		if(do_after(user, 30))
+		if(do_after(user, 30, target = src))
 			user << "<span class='notice'>You slice apart the girder.</span>"
 			var/obj/effect/decal/remains/human/R = new (get_turf(src))
 			transfer_fingerprints_to(R)

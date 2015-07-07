@@ -255,7 +255,7 @@
 			src << "<span class='warning'>Your mask protects you from the acid.</span>"
 		return
 
-	take_organ_damage(min(6*toxpwr, acid_volume * toxpwr))
+	take_organ_damage(min(6*toxpwr, acid_volume * acidpwr/10))
 
 /mob/living/carbon/monkey/help_shake_act(mob/living/carbon/M)
 	if(health < 0 && ishuman(M))
@@ -263,3 +263,12 @@
 		H.do_cpr(src)
 	else
 		..()
+
+/mob/living/carbon/monkey/get_permeability_protection()
+	var/protection = 0
+	if(head)
+		protection = 1 - head.permeability_coefficient
+	if(wear_mask)
+		protection = max(1 - wear_mask.permeability_coefficient, protection)
+	protection = protection/7 //the rest of the body isn't covered.
+	return protection

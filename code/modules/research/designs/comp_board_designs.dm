@@ -6,7 +6,7 @@
 	id = "seccamera"
 	req_tech = list("programming" = 2)
 	build_type = IMPRINTER
-	materials = list("$glass" = 1000, "sacid" = 20)
+	materials = list(MAT_GLASS = 1000, "sacid" = 20)
 	build_path = /obj/item/weapon/circuitboard/security
 	category = list("Computer Boards")
 
@@ -16,7 +16,7 @@
 	id = "aicore"
 	req_tech = list("programming" = 4, "biotech" = 3)
 	build_type = IMPRINTER
-	materials = list("$glass" = 1000, "sacid" = 20)
+	materials = list(MAT_GLASS = 1000, "sacid" = 20)
 	build_path = /obj/item/weapon/circuitboard/aicore
 	category = list("Computer Boards")
 
@@ -26,7 +26,7 @@
 	id = "aiupload"
 	req_tech = list("programming" = 4)
 	build_type = IMPRINTER
-	materials = list("$glass" = 1000, "sacid" = 20)
+	materials = list(MAT_GLASS = 1000, "sacid" = 20)
 	build_path = /obj/item/weapon/circuitboard/aiupload
 	category = list("Computer Boards")
 
@@ -36,7 +36,7 @@
 	id = "borgupload"
 	req_tech = list("programming" = 4)
 	build_type = IMPRINTER
-	materials = list("$glass" = 1000, "sacid" = 20)
+	materials = list(MAT_GLASS = 1000, "sacid" = 20)
 	build_path = /obj/item/weapon/circuitboard/borgupload
 	category = list("Computer Boards")
 
@@ -46,7 +46,7 @@
 	id = "med_data"
 	req_tech = list("programming" = 2)
 	build_type = IMPRINTER
-	materials = list("$glass" = 1000, "sacid" = 20)
+	materials = list(MAT_GLASS = 1000, "sacid" = 20)
 	build_path = /obj/item/weapon/circuitboard/med_data
 	category = list("Computer Boards")
 
@@ -56,7 +56,7 @@
 	id = "operating"
 	req_tech = list("programming" = 2, "biotech" = 2)
 	build_type = IMPRINTER
-	materials = list("$glass" = 1000, "sacid" = 20)
+	materials = list(MAT_GLASS = 1000, "sacid" = 20)
 	build_path = /obj/item/weapon/circuitboard/operating
 	category = list("Computer Boards")
 
@@ -66,7 +66,7 @@
 	id = "pandemic"
 	req_tech = list("programming" = 2, "biotech" = 2)
 	build_type = IMPRINTER
-	materials = list("$glass" = 1000, "sacid" = 20)
+	materials = list(MAT_GLASS = 1000, "sacid" = 20)
 	build_path = /obj/item/weapon/circuitboard/pandemic
 	category = list("Computer Boards")
 
@@ -76,7 +76,7 @@
 	id = "scan_console"
 	req_tech = list("programming" = 2, "biotech" = 3)
 	build_type = IMPRINTER
-	materials = list("$glass" = 1000, "sacid" = 20)
+	materials = list(MAT_GLASS = 1000, "sacid" = 20)
 	build_path = /obj/item/weapon/circuitboard/scan_consolenew
 	category = list("Computer Boards")
 
@@ -86,7 +86,7 @@
 	id = "comconsole"
 	req_tech = list("programming" = 2, "magnets" = 2)
 	build_type = IMPRINTER
-	materials = list("$glass" = 1000, "sacid" = 20)
+	materials = list(MAT_GLASS = 1000, "sacid" = 20)
 	build_path = /obj/item/weapon/circuitboard/communications
 	category = list("Computer Boards")
 
@@ -96,7 +96,7 @@
 	id = "idcardconsole"
 	req_tech = list("programming" = 2)
 	build_type = IMPRINTER
-	materials = list("$glass" = 1000, "sacid" = 20)
+	materials = list(MAT_GLASS = 1000, "sacid" = 20)
 	build_path = /obj/item/weapon/circuitboard/card
 	category = list("Computer Boards")
 
@@ -106,7 +106,7 @@
 	id = "crewconsole"
 	req_tech = list("programming" = 3, "magnets" = 2, "biotech" = 2)
 	build_type = IMPRINTER
-	materials = list("$glass" = 1000, "sacid" = 20)
+	materials = list(MAT_GLASS = 1000, "sacid" = 20)
 	build_path = /obj/item/weapon/circuitboard/crew
 	category = list("Computer Boards")
 
@@ -116,7 +116,7 @@
 	id = "teleconsole"
 	req_tech = list("programming" = 3, "bluespace" = 2)
 	build_type = IMPRINTER
-	materials = list("$glass" = 1000, "sacid" = 20)
+	materials = list(MAT_GLASS = 1000, "sacid" = 20)
 	build_path = /obj/item/weapon/circuitboard/teleporter
 	category = list("Computer Boards")
 
@@ -126,7 +126,7 @@
 	id = "secdata"
 	req_tech = list("programming" = 2)
 	build_type = IMPRINTER
-	materials = list("$glass" = 1000, "sacid" = 20)
+	materials = list(MAT_GLASS = 1000, "sacid" = 20)
 	build_path = /obj/item/weapon/circuitboard/secure_data
 	category = list("Computer Boards")
 
@@ -136,7 +136,7 @@
 	id = "atmosalerts"
 	req_tech = list("programming" = 2)
 	build_type = IMPRINTER
-	materials = list("$glass" = 1000, "sacid" = 20)
+	materials = list(MAT_GLASS = 1000, "sacid" = 20)
 	build_path = /obj/item/weapon/circuitboard/atmos_alert
 	category = list("Computer Boards")
 
@@ -146,7 +146,7 @@
 	id = "air_management"
 	req_tech = list("programming" = 2)
 	build_type = IMPRINTER
-	materials = list("$glass" = 1000, "sacid" = 20)
+	materials = list(MAT_GLASS = 1000, "sacid" = 20)
 	build_path = /obj/item/weapon/circuitboard/air_management
 	category = list("Computer Boards")
 
@@ -156,7 +156,7 @@
 	id = "robocontrol"
 	req_tech = list("programming" = 4)
 	build_type = IMPRINTER
-	materials = list("$glass" = 1000, "sacid" = 20)
+	materials = list(MAT_GLASS = 1000, "sacid" = 20)
 	build_path = /obj/item/weapon/circuitboard/robotics
 	category = list("Computer Boards")
 
@@ -166,7 +166,7 @@
 	id = "clonecontrol"
 	req_tech = list("programming" = 3, "biotech" = 3)
 	build_type = IMPRINTER
-	materials = list("$glass" = 1000, "sacid" = 20)
+	materials = list(MAT_GLASS = 1000, "sacid" = 20)
 	build_path = /obj/item/weapon/circuitboard/cloning
 	category = list("Computer Boards")
 
@@ -176,7 +176,7 @@
 	id = "clonepod"
 	req_tech = list("programming" = 3, "biotech" = 3)
 	build_type = IMPRINTER
-	materials = list("$glass" = 1000, "sacid" = 20)
+	materials = list(MAT_GLASS = 1000, "sacid" = 20)
 	build_path = /obj/item/weapon/circuitboard/clonepod
 	category = list("Computer Boards")
 
@@ -186,7 +186,7 @@
 	id = "clonescanner"
 	req_tech = list("programming" = 3, "biotech" = 3)
 	build_type = IMPRINTER
-	materials = list("$glass" = 1000, "sacid" = 20)
+	materials = list(MAT_GLASS = 1000, "sacid" = 20)
 	build_path = /obj/item/weapon/circuitboard/clonescanner
 	category = list("Computer Boards")
 
@@ -196,7 +196,7 @@
 	id = "arcademachine"
 	req_tech = list("programming" = 1)
 	build_type = IMPRINTER
-	materials = list("$glass" = 1000, "sacid" = 20)
+	materials = list(MAT_GLASS = 1000, "sacid" = 20)
 	build_path = /obj/item/weapon/circuitboard/arcade/battle
 	category = list("Computer Boards")
 
@@ -206,7 +206,7 @@
 	id = "arcademachine"
 	req_tech = list("programming" = 2)
 	build_type = IMPRINTER
-	materials = list("$glass" = 1000, "sacid" = 20)
+	materials = list(MAT_GLASS = 1000, "sacid" = 20)
 	build_path = /obj/item/weapon/circuitboard/arcade/orion_trail
 	category = list("Computer Boards")
 
@@ -216,7 +216,7 @@
 	id = "slotmachine"
 	req_tech = list("programming" = 2)
 	build_type = IMPRINTER
-	materials = list("$glass" = 1000, "sacid" = 20)
+	materials = list(MAT_GLASS = 1000, "sacid" = 20)
 	build_path = /obj/item/weapon/circuitboard/slot_machine
 	category = list("Computer Boards")
 
@@ -226,7 +226,7 @@
 	id = "powermonitor"
 	req_tech = list("programming" = 2)
 	build_type = IMPRINTER
-	materials = list("$glass" = 1000, "sacid" = 20)
+	materials = list(MAT_GLASS = 1000, "sacid" = 20)
 	build_path = /obj/item/weapon/circuitboard/powermonitor
 	category = list("Computer Boards")
 
@@ -236,7 +236,7 @@
 	id = "solarcontrol"
 	req_tech = list("programming" = 2, "powerstorage" = 2)
 	build_type = IMPRINTER
-	materials = list("$glass" = 1000, "sacid" = 20)
+	materials = list(MAT_GLASS = 1000, "sacid" = 20)
 	build_path = /obj/item/weapon/circuitboard/solar_control
 	category = list("Computer Boards")
 
@@ -246,7 +246,7 @@
 	id = "prisonmanage"
 	req_tech = list("programming" = 2)
 	build_type = IMPRINTER
-	materials = list("$glass" = 1000, "sacid" = 20)
+	materials = list(MAT_GLASS = 1000, "sacid" = 20)
 	build_path = /obj/item/weapon/circuitboard/prisoner
 	category = list("Computer Boards")
 
@@ -256,7 +256,7 @@
 	id = "mechacontrol"
 	req_tech = list("programming" = 3)
 	build_type = IMPRINTER
-	materials = list("$glass" = 1000, "sacid" = 20)
+	materials = list(MAT_GLASS = 1000, "sacid" = 20)
 	build_path = /obj/item/weapon/circuitboard/mecha_control
 	category = list("Computer Boards")
 
@@ -266,7 +266,7 @@
 	id = "mechapower"
 	req_tech = list("programming" = 2, "powerstorage" = 3)
 	build_type = IMPRINTER
-	materials = list("$glass" = 1000, "sacid" = 20)
+	materials = list(MAT_GLASS = 1000, "sacid" = 20)
 	build_path = /obj/item/weapon/circuitboard/mech_bay_power_console
 	category = list("Computer Boards")
 
@@ -276,7 +276,7 @@
 	id = "rdconsole"
 	req_tech = list("programming" = 4)
 	build_type = IMPRINTER
-	materials = list("$glass" = 1000, "sacid" = 20)
+	materials = list(MAT_GLASS = 1000, "sacid" = 20)
 	build_path = /obj/item/weapon/circuitboard/rdconsole
 	category = list("Computer Boards")
 
@@ -286,7 +286,7 @@
 	id = "ordercomp"
 	req_tech = list("programming" = 2)
 	build_type = IMPRINTER
-	materials = list("$glass" = 1000, "sacid" = 20)
+	materials = list(MAT_GLASS = 1000, "sacid" = 20)
 	build_path = /obj/item/weapon/circuitboard/ordercomp
 	category = list("Computer Boards")
 
@@ -296,7 +296,7 @@
 	id = "supplycomp"
 	req_tech = list("programming" = 3)
 	build_type = IMPRINTER
-	materials = list("$glass" = 1000, "sacid" = 20)
+	materials = list(MAT_GLASS = 1000, "sacid" = 20)
 	build_path = /obj/item/weapon/circuitboard/supplycomp
 	category = list("Computer Boards")
 
@@ -306,7 +306,7 @@
 	id = "mining"
 	req_tech = list("programming" = 2)
 	build_type = IMPRINTER
-	materials = list("$glass" = 1000, "sacid" = 20)
+	materials = list(MAT_GLASS = 1000, "sacid" = 20)
 	build_path = /obj/item/weapon/circuitboard/mining
 	category = list("Computer Boards")
 
@@ -316,7 +316,7 @@
 	id = "comm_monitor"
 	req_tech = list("programming" = 3)
 	build_type = IMPRINTER
-	materials = list("$glass" = 1000, "sacid" = 20)
+	materials = list(MAT_GLASS = 1000, "sacid" = 20)
 	build_path = /obj/item/weapon/circuitboard/comm_monitor
 	category = list("Computer Boards")
 
@@ -326,7 +326,7 @@
 	id = "comm_server"
 	req_tech = list("programming" = 3)
 	build_type = IMPRINTER
-	materials = list("$glass" = 1000, "sacid" = 20)
+	materials = list(MAT_GLASS = 1000, "sacid" = 20)
 	build_path = /obj/item/weapon/circuitboard/comm_server
 	category = list("Computer Boards")
 
@@ -336,7 +336,7 @@
 	id = "message_monitor"
 	req_tech = list("programming" = 5)
 	build_type = IMPRINTER
-	materials = list("$glass" = 1000, "sacid" = 20)
+	materials = list(MAT_GLASS = 1000, "sacid" = 20)
 	build_path = /obj/item/weapon/circuitboard/message_monitor
 	category = list("Computer Boards")
 
@@ -346,7 +346,7 @@
 	id = "comm_traffic"
 	req_tech = list("programming" = 3)
 	build_type = IMPRINTER
-	materials = list("$glass" = 1000, "sacid" = 20)
+	materials = list(MAT_GLASS = 1000, "sacid" = 20)
 	build_path = /obj/item/weapon/circuitboard/comm_traffic
 	category = list("Computer Boards")
 
@@ -356,7 +356,7 @@
 	id = "telesci_console"
 	req_tech = list("programming" = 3, "bluespace" = 2)
 	build_type = IMPRINTER
-	materials = list("$glass" = 1000, "sacid" = 20)
+	materials = list(MAT_GLASS = 1000, "sacid" = 20)
 	build_path = /obj/item/weapon/circuitboard/telesci_console
 	category = list("Computer Boards")
 
@@ -366,7 +366,7 @@
 	id = "aifixer"
 	req_tech = list("programming" = 3, "biotech" = 2)
 	build_type = IMPRINTER
-	materials = list("$glass" = 1000, "sacid" = 20)
+	materials = list(MAT_GLASS = 1000, "sacid" = 20)
 	build_path = /obj/item/weapon/circuitboard/aifixer
 	category = list("Computer Boards")
 
@@ -376,6 +376,6 @@
 	id = "libraryconsole"
 	req_tech = list("programming" = 1)
 	build_type = IMPRINTER
-	materials = list("$glass" = 1000, "sacid" = 20)
+	materials = list(MAT_GLASS = 1000, "sacid" = 20)
 	build_path = /obj/item/weapon/circuitboard/libraryconsole
 	category = list("Computer Boards")

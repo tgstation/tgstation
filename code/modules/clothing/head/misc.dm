@@ -21,6 +21,12 @@
 	icon_state = "tophat"
 	item_state = "that"
 
+/obj/item/clothing/head/canada
+	name = "striped red tophat"
+	desc = " It feels sticky, like maple syrup - <i>il se sent collante, comme le sirop d'érable</i>"
+	icon_state = "canada"
+	item_state = "canada"
+
 /obj/item/clothing/head/redcoat
 	name = "redcoat's hat"
 	icon_state = "redcoat"
@@ -41,7 +47,8 @@
 	name = "hastur's hood"
 	desc = "It's <i>unspeakably</i> stylish."
 	icon_state = "hasturhood"
-	flags = HEADCOVERSEYES|BLOCKHAIR
+	flags = BLOCKHAIR
+	flags_cover = HEADCOVERSEYES
 
 /obj/item/clothing/head/nursehat
 	name = "nurse's hat"
@@ -56,19 +63,12 @@
 	flags = BLOCKHAIR
 	flags_inv = HIDEMASK|HIDEEARS|HIDEEYES|HIDEFACE
 
-/obj/item/clothing/head/that
-	name = "sturdy top-hat"
-	desc = "It's an amish looking armored top hat."
-	icon_state = "tophat"
-	item_state = "that"
-	flags_inv = 0
-
 /obj/item/clothing/head/cardborg
 	name = "cardborg helmet"
 	desc = "A helmet made out of a box."
 	icon_state = "cardborg_h"
 	item_state = "cardborg_h"
-	flags = HEADCOVERSEYES
+	flags_cover = HEADCOVERSEYES
 	flags_inv = HIDEMASK|HIDEEARS|HIDEEYES|HIDEFACE
 
 /obj/item/clothing/head/justice
@@ -76,7 +76,8 @@
 	desc = "Fight for what's righteous!"
 	icon_state = "justicered"
 	item_state = "justicered"
-	flags = HEADCOVERSEYES|BLOCKHAIR
+	flags = BLOCKHAIR
+	flags_cover = HEADCOVERSEYES
 
 /obj/item/clothing/head/justice/blue
 	icon_state = "justiceblue"
@@ -213,6 +214,7 @@
 	throw_range = 5
 	w_class = 2.0
 	attack_verb = list("warned", "cautioned", "smashed")
+	burn_state = -1 //Won't burn in fires
 
 /obj/item/clothing/head/santa
 	name = "santa hat"

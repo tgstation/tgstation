@@ -123,8 +123,7 @@
 	flags =  CONDUCT
 	slot_flags = SLOT_BELT
 	w_class = 3.0
-	g_amt = 10
-	m_amt = 10
+	materials = list(MAT_METAL=10, MAT_GLASS=10)
 	attack_verb = list("struck", "pistol whipped", "hit", "bashed")
 	var/bullets = 7.0
 
@@ -176,8 +175,7 @@
 	icon = 'icons/obj/ammo.dmi'
 	icon_state = "357OLD-7"
 	w_class = 1.0
-	g_amt = 10
-	m_amt = 10
+	materials = list(MAT_METAL=10, MAT_GLASS=10)
 	var/amount_left = 7.0
 
 /obj/item/toy/ammo/gun/update_icon()
@@ -271,6 +269,7 @@
 	item_state = "arm_blade"
 	attack_verb = list("pricked", "absorbed", "gored")
 	w_class = 2
+	burn_state = 0 //Burnable
 
 
 /*
@@ -419,28 +418,16 @@
 		var/gangID
 		if(gang)
 			//Determine gang affiliation
-			if(user.mind in (ticker.mode.A_bosses | ticker.mode.A_gang))
-				temp = "[gang_name("A")] gang tag"
-				gangID = "A"
-			else if(user.mind in (ticker.mode.B_bosses | ticker.mode.B_gang))
-				temp = "[gang_name("B")] gang tag"
-				gangID = "B"
+			gangID = user.mind.gang_datum
 
 			//Check area validity. Reject space, player-created areas, and non-station z-levels.
-			if (gangID)
+			if(gangID)
 				territory = get_area(target)
 				if(territory && (territory.z == ZLEVEL_STATION) && territory.valid_territory)
 					//Check if this area is already tagged by a gang
 					if(!(locate(/obj/effect/decal/cleanable/crayon/gang) in target)) //Ignore the check if the tile being sprayed has a gang tag
 						if(territory_claimed(territory, user))
 							return
-					/*
-					//Prevent people spraying from outside of the territory (ie. Maint walls)
-					var/area/user_area = get_area(user.loc)
-					if(istype(user_area) && (user_area.type != territory.type))
-						user << "<span class='warning'>You cannot tag [territory] from the outside.</span>"
-						return
-					*/
 					if(locate(/obj/machinery/power/apc) in (user.loc.contents | target.contents))
 						user << "<span class='warning'>You cannot tag here.</span>"
 						return
@@ -464,7 +451,7 @@
 		user << "<span class='notice'>You start [instant ? "spraying" : "drawing"] a [temp] on the [target.name]...</span>"
 		if(instant)
 			playsound(user.loc, 'sound/effects/spray.ogg', 5, 1, 5)
-		if((instant>0) || do_after(user, 50))
+		if((instant>0) || do_after(user, 50, target = target))
 
 			//Gang functions
 			if(gangID)
@@ -507,10 +494,10 @@
 
 /obj/item/toy/crayon/proc/territory_claimed(var/area/territory,mob/user)
 	var/occupying_gang
-	if(territory.type in (ticker.mode.A_territory | ticker.mode.A_territory_new))
-		occupying_gang = gang_name("A")
-	if(territory.type in (ticker.mode.B_territory | ticker.mode.B_territory_new))
-		occupying_gang = gang_name("B")
+	for(var/datum/gang/G in ticker.mode.gangs)
+		if(territory.type in (G.territory|G.territory_new))
+			occupying_gang = G.name
+			break
 	if(occupying_gang)
 		user << "<span class='danger'>[territory] has already been tagged by the [occupying_gang] gang! You must get rid of or spray over the old tag first!</span>"
 		return 1
@@ -526,6 +513,10 @@
 	icon = 'icons/obj/toy.dmi'
 	icon_state = "snappop"
 	w_class = 1
+
+/obj/item/toy/snappop/fire_act()
+	throw_impact()
+	return
 
 /obj/item/toy/snappop/throw_impact(atom/hit_atom)
 	..()
@@ -710,6 +701,8 @@
 
 
 /obj/item/toy/cards
+	burn_state = 0 //Burnable
+	burntime = 5
 	var/parentdeck = null
 	var/deckstyle = "nanotrasen"
 	var/card_hitsound = null
@@ -949,7 +942,8 @@
 	newobj.card_throw_speed = sourceobj.card_throw_speed
 	newobj.card_throw_range = sourceobj.card_throw_range
 	newobj.card_attack_verb = sourceobj.card_attack_verb
-
+	if(sourceobj.burn_state == -1)
+		newobj.burn_state = -1
 
 /obj/item/toy/cards/singlecard
 	name = "card"
@@ -1065,6 +1059,7 @@
 	card_throw_speed = 3
 	card_throw_range = 7
 	card_attack_verb = list("attacked", "sliced", "diced", "slashed", "cut")
+	burn_state = -1 //Not Burnable
 
 /*
  * Fake nuke
@@ -1123,6 +1118,7 @@
 	icon_state = "carpplushie"
 	w_class = 2.0
 	attack_verb = list("bitten", "eaten", "fin slapped")
+	burn_state = 0 //Burnable
 	var/bitesound = 'sound/weapons/bite.ogg'
 
 // Attack mob

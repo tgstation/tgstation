@@ -73,6 +73,9 @@
 /datum/mutation/human/proc/on_ranged_attack(mob/living/carbon/human/owner, atom/target)
 	return
 
+/datum/mutation/human/proc/on_move(mob/living/carbon/human/owner, new_loc)
+	return
+
 /datum/mutation/human/proc/on_life(mob/living/carbon/human/owner)
 	return
 
@@ -375,16 +378,17 @@
 	lowest_value = 256 * 14
 	text_gain_indication = "<span class='notice'>You feel one with your surroundings.</span>"
 	text_lose_indication = "<span class='notice'>You feel oddly exposed.</span>"
-	var/last_location
+
+/datum/mutation/human/chameleon/on_acquiring(mob/living/carbon/human/owner)
+	if(..())
+		return
+	owner.alpha = CHAMELEON_MUTATION_DEFAULT_TRANSPARENCY
 
 /datum/mutation/human/chameleon/on_life(mob/living/carbon/human/owner)
-	if(owner.loc != last_location)
-		owner.alpha = round(255 * 0.80)
-	last_location = owner.loc
-	if((world.time - owner.next_move) >= 30 && !owner.stat && owner.canmove && !owner.restrained())
-		owner.alpha -= 25
-	else
-		owner.alpha = round(255 * 0.80)
+	owner.alpha = max(0, owner.alpha - 25)
+
+/datum/mutation/human/chameleon/on_move(mob/living/carbon/human/owner)
+	owner.alpha = CHAMELEON_MUTATION_DEFAULT_TRANSPARENCY
 
 /datum/mutation/human/chameleon/on_losing(mob/living/carbon/human/owner)
 	if(..())

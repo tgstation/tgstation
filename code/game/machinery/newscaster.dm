@@ -164,8 +164,7 @@ var/list/obj/machinery/newscaster/allCasters = list()
 	desc = "Used to build newscasters, just secure to the wall."
 	icon_state = "newscaster"
 	item_state = "syringe_kit"
-	m_amt = 14000
-	g_amt = 8000
+	materials = list(MAT_METAL=14000, MAT_GLASS=8000)
 
 /obj/item/newscaster_frame/proc/try_build(turf/on_wall)
 	if (get_dist(on_wall,usr)>1)
@@ -742,7 +741,7 @@ var/list/obj/machinery/newscaster/allCasters = list()
 	if(istype(I, /obj/item/weapon/wrench))
 		user << "<span class='notice'>You start [anchored ? "un" : ""]securing [name]...</span>"
 		playsound(loc, 'sound/items/Ratchet.ogg', 50, 1)
-		if(do_after(user, 60))
+		if(do_after(user, 60, target = src))
 			user << "<span class='notice'>You [anchored ? "un" : ""]secure [name].</span>"
 			new /obj/item/newscaster_frame(loc)
 			playsound(loc, 'sound/items/Deconstruct.ogg', 50, 1)

@@ -39,7 +39,7 @@
 	var/nojumpsuit = 0	// this is sorta... weird. it basically lets you equip stuff that usually needs jumpsuits without one, like belts and pockets and ids
 	var/dangerous_existence = null //A flag for transformation spells that tells them "hey if you turn a person into one of these without preperation, they'll probably die!"
 	var/say_mod = "says"	// affects the speech message
-
+	var/list/default_features = list() // Default mutant bodyparts for this species. Don't forget to set one for every mutant bodypart you allow this species to have.
 	var/list/mutant_bodyparts = list() 	// Parts of the body that are diferent enough from the standard human model that they cause clipping with some equipment
 
 	var/speedmod = 0	// this affects the race's speed. positive numbers make it move slower, negative numbers make it move faster
@@ -83,6 +83,28 @@
 	///////////
 	// PROCS //
 	///////////
+
+/datum/species/proc/random_name(gender,unique,lastname)
+	if(unique)
+		return random_unique_name(gender)
+
+	var/randname
+	if(gender == MALE)
+		randname = pick(first_names_male)
+	else
+		randname = pick(first_names_female)
+
+	if(lastname)
+		randname += " [lastname]"
+	else
+		randname += " [pick(last_names)]"
+
+	return randname
+
+
+//Please override this locally if you want to define when what species qualifies for what rank if human authority is enforced.
+/datum/species/proc/qualifies_for_rank(var/rank, var/list/features)
+	return 1
 
 /datum/species/proc/update_base_icon_state(var/mob/living/carbon/human/H)
 	if(H.disabilities & HUSK)
@@ -236,16 +258,26 @@
 	if(!mutant_bodyparts)
 		return
 
-	if("tail" in mutant_bodyparts)
+	if("tail_lizard" in mutant_bodyparts)
 		if(H.wear_suit && (H.wear_suit.flags_inv & HIDEJUMPSUIT))
-			bodyparts_to_add -= "tail"
+			bodyparts_to_add -= "tail_lizard"
+
+	if("waggingtail_lizard" in mutant_bodyparts)
+		if(H.wear_suit && (H.wear_suit.flags_inv & HIDEJUMPSUIT))
+			bodyparts_to_add -= "waggingtail_lizard"
+		else if ("tail_lizard" in mutant_bodyparts)
+			bodyparts_to_add -= "waggingtail_lizard"
+
+	if("tail_human" in mutant_bodyparts)
+		if(H.wear_suit && (H.wear_suit.flags_inv & HIDEJUMPSUIT))
+			bodyparts_to_add -= "tail_human"
 
 
-	if("waggingtail" in mutant_bodyparts)
+	if("waggingtail_human" in mutant_bodyparts)
 		if(H.wear_suit && (H.wear_suit.flags_inv & HIDEJUMPSUIT))
-			bodyparts_to_add -= "waggingtail"
-		else if ("tail" in mutant_bodyparts)
-			bodyparts_to_add -= "waggingtail"
+			bodyparts_to_add -= "waggingtail_human"
+		else if ("tail_human" in mutant_bodyparts)
+			bodyparts_to_add -= "waggingtail_human"
 
 	if("spines" in mutant_bodyparts)
 		if(!H.dna.features["spines"] || H.dna.features["spines"] == "None" || H.wear_suit && (H.wear_suit.flags_inv & HIDEJUMPSUIT))
@@ -269,6 +301,10 @@
 		if(!H.dna.features["horns"] || H.dna.features["horns"] == "None" || H.head && (H.head.flags & BLOCKHAIR) || (H.wear_mask && (H.wear_mask.flags & BLOCKHAIR)))
 			bodyparts_to_add -= "horns"
 
+	if("ears" in mutant_bodyparts)
+		if(!H.dna.features["ears"] || H.dna.features["ears"] == "None" || H.head && (H.head.flags & BLOCKHAIR) || (H.wear_mask && (H.wear_mask.flags & BLOCKHAIR)))
+			bodyparts_to_add -= "ears"
+
 	if(!bodyparts_to_add)
 		return
 
@@ -280,10 +316,14 @@
 		for(var/bodypart in bodyparts_to_add)
 			var/datum/sprite_accessory/S
 			switch(bodypart)
-				if("tail")
-					S = tails_list[H.dna.features["tail"]]
-				if("waggingtail")
-					S.= animated_tails_list[H.dna.features["tail"]]
+				if("tail_lizard")
+					S = tails_list_lizard[H.dna.features["tail_lizard"]]
+				if("waggingtail_lizard")
+					S.= animated_tails_list_lizard[H.dna.features["tail_lizard"]]
+				if("tail_human")
+					S = tails_list_human[H.dna.features["tail_human"]]
+				if("waggingtail_human")
+					S.= animated_tails_list_human[H.dna.features["tail_human"]]
 				if("spines")
 					S = spines_list[H.dna.features["spines"]]
 				if("waggingspines")
@@ -294,12 +334,23 @@
 					S = frills_list[H.dna.features["frills"]]
 				if("horns")
 					S = horns_list[H.dna.features["horns"]]
+				if("ears")
+					S = ears_list[H.dna.features["ears"]]
 				if("body_markings")
 					S = body_markings_list[H.dna.features["body_markings"]]
 
 			if(!S || S.icon_state == "none")
 				continue
+
+			//A little rename so we don't have to use tail_lizard or tail_human when naming the sprites.
+			if(bodypart == "tail_lizard" || bodypart == "tail_human")
+				bodypart = "tail"
+			else if(bodypart == "waggingtail_lizard" || bodypart == "waggingtail_human")
+				bodypart = "waggingtail"
+
+
 			var/icon_string
+
 			if(S.gender_specific)
 				icon_string = "[id]_[g]_[bodypart]_[S.icon_state]_[layer]"
 			else
@@ -308,8 +359,30 @@
 			I = image("icon" = 'icons/mob/mutant_bodyparts.dmi', "icon_state" = icon_string, "layer" =- layer)
 
 			if(!(H.disabilities & HUSK))
-				I.color = "#[H.dna.features["mcolor"]]"
+				switch(S.color_src)
+					if(MUTCOLORS)
+						I.color = "#[H.dna.features["mcolor"]]"
+					if(HAIR)
+						if(hair_color == "mutcolor")
+							I.color = "#[H.dna.features["mcolor"]]"
+						else
+							I.color = "#[H.hair_color]"
+					if(FACEHAIR)
+						I.color = "#[H.facial_hair_color]"
+					if(EYECOLOR)
+						I.color = "#[H.eye_color]"
 			standing += I
+
+			if(S.hasinner)
+				if(S.gender_specific)
+					icon_string = "[id]_[g]_[bodypart]inner_[S.icon_state]_[layer]"
+				else
+					icon_string = "[id]_m_[bodypart]inner_[S.icon_state]_[layer]"
+
+				I = image("icon" = 'icons/mob/mutant_bodyparts.dmi', "icon_state" = icon_string, "layer" =- layer)
+
+				standing += I
+
 		H.overlays_standing[layer] = standing.Copy()
 		standing = list()
 
@@ -738,7 +811,7 @@
 				if(P.allow_thrust(0.01, H))
 					hasjetpack = 1
 
-			mspeed = 1 - hasjetpack
+			mspeed = -1 - hasjetpack
 
 		if(grav || !hasjetpack)
 			var/health_deficiency = (100 - H.health + H.staminaloss)
@@ -763,11 +836,12 @@
 
 			mspeed += speedmod
 
-	if(H.status_flags & GOTTAGOFAST)
-		mspeed -= 1
+		if(grav)
+			if(H.status_flags & GOTTAGOFAST)
+				mspeed -= 1
 
-	if(H.status_flags & GOTTAGOREALLYFAST)
-		mspeed -= 2
+			if(H.status_flags & GOTTAGOREALLYFAST)
+				mspeed -= 2
 
 	return mspeed
 
@@ -923,8 +997,8 @@
 	else
 		return 0
 
-	var/armor = H.run_armor_check(affecting, "melee", "<span class='notice'>Your armor has protected your [hit_area].</span>", "<span class='notice'>Your armor has softened a hit to your [hit_area].</span>")
-	if(armor >= 100)	return 0
+	var/armor = H.run_armor_check(affecting, "melee", "<span class='notice'>Your armor has protected your [hit_area].</span>", "<span class='notice'>Your armor has softened a hit to your [hit_area].</span>",I.armour_penetration)
+	armor = min(90,armor) //cap damage reduction at 90%
 	var/Iforce = I.force //to avoid runtimes on the forcesay checks at the bottom. Some items might delete themselves if you drop them. (stunning yourself, ninja swords)
 
 	apply_damage(I.force, I.damtype, affecting, armor, H)
@@ -962,7 +1036,7 @@
 						H.apply_effect(20, PARALYZE, armor)
 					if(prob(I.force + ((100 - H.health)/2)) && H != user && I.damtype == BRUTE)
 						ticker.mode.remove_revolutionary(H.mind)
-						ticker.mode.remove_gangster(H.mind, exclude_bosses=1)
+						ticker.mode.remove_gangster(H.mind)
 
 				if(bloody)	//Apply blood
 					if(H.wear_mask)
@@ -1101,13 +1175,13 @@
 
 				// Handle chem smoke effect  -- Doohl
 				if(!H.has_smoke_protection())
-					for(var/obj/effect/effect/chem_smoke/smoke in view(1, H))
-						if(smoke.reagents.total_volume)
-							smoke.reagents.reaction(H, INGEST)
-							spawn(5)
-								if(smoke)
-									smoke.reagents.copy_to(H, 10) // I dunno, maybe the reagents enter the blood stream through the lungs?
-							break // If they breathe in the nasty stuff once, no need to continue checking
+					for(var/obj/effect/effect/smoke/chem/S in range(1, H))
+						if(S.reagents.total_volume && S.lifetime)
+							var/fraction = 1/S.max_lifetime
+							S.reagents.reaction(H,INGEST, fraction)
+							var/amount = round(S.reagents.total_volume*fraction,0.1)
+							S.reagents.copy_to(H, amount)
+							S.lifetime--
 
 		else //Still give containing object the chance to interact
 			if(istype(H.loc, /obj/))

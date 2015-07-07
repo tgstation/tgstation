@@ -5,6 +5,7 @@
 	force = 5
 	w_class = 4.0
 	attack_verb = list("bashed","smacked")
+	burn_state = 0 //Burnable
 
 	var/label = ""
 	var/last_wave = 0
@@ -33,3 +34,4 @@
 	reqs = list(/obj/item/stack/rods = 1,
 				/obj/item/stack/sheet/cardboard = 2)
 	time = 80
+	category = CAT_MISC

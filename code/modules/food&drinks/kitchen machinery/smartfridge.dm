@@ -16,14 +16,23 @@
 	var/max_n_of_items = 1500
 	var/icon_on = "smartfridge"
 	var/icon_off = "smartfridge-off"
-	var/item_quants = list()
+	var/list/item_quants = list()
 
 /obj/machinery/smartfridge/New()
 	..()
 	component_parts = list()
-	component_parts += new /obj/item/weapon/circuitboard/smartfridge(null)
+	component_parts += new /obj/item/weapon/circuitboard/smartfridge(null, type)
 	component_parts += new /obj/item/weapon/stock_parts/matter_bin(null)
 	RefreshParts()
+
+/obj/machinery/smartfridge/construction()
+	item_quants.Cut()
+	for(var/datum/A in contents)
+		qdel(A)
+
+/obj/machinery/smartfridge/deconstruction()
+	for(var/atom/movable/A in contents)
+		A.loc = loc
 
 /obj/machinery/smartfridge/RefreshParts()
 	for(var/obj/item/weapon/stock_parts/matter_bin/B in component_parts)

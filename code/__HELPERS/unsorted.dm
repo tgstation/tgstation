@@ -674,7 +674,7 @@ Turf and target are seperate in case you want to teleport some distance from a t
 
 	else return get_step(ref, base_dir)
 
-/proc/do_mob(var/mob/user , var/mob/target, var/time = 30, numticks = 5) //This is quite an ugly solution but i refuse to use the old request system.
+/proc/do_mob(var/mob/user , var/mob/target, var/time = 30, numticks = 5, var/stealth = 0) //This is quite an ugly solution but i refuse to use the old request system.
 	if(!user || !target)
 		return 0
 	if(numticks == 0)
@@ -683,14 +683,33 @@ Turf and target are seperate in case you want to teleport some distance from a t
 	var/target_loc = target.loc
 	var/holding = user.get_active_hand()
 	var/timefraction = round(time/numticks)
-	for(var/i = 0, i<numticks, i++)
+	var/image/progbar
+	for(var/i = 1 to numticks)
+		if(user.client)
+			progbar = make_progress_bar(i, numticks, target)
+			user.client.images |= progbar
 		sleep(timefraction)
 		if(!user || !target)
+			if(user && user.client)
+				user.client.images -= progbar
 			return 0
 		if ( user.loc != user_loc || target.loc != target_loc || user.get_active_hand() != holding || user.incapacitated() || user.lying )
+			if(user && user.client)
+				user.client.images -= progbar
 			return 0
-
+		if(user && user.client)
+			user.client.images -= progbar
+	if(user && user.client)
+		user.client.images -= progbar
 	return 1
+
+/proc/make_progress_bar(var/current_number, var/goal_number, var/atom/target)
+	if(current_number && goal_number && target)
+		var/image/progbar
+		progbar = image("icon" = 'icons/effects/doafter_icon.dmi', "loc" = target, "icon_state" = "prog_bar_0")
+		progbar.icon_state = "prog_bar_[round(((current_number / goal_number) * 100), 10)]"
+		progbar.pixel_y = 32
+		return progbar
 
 /proc/do_after(mob/user, delay, numticks = 5, needhand = 1, atom/target = null)
 	if(!user)
@@ -709,13 +728,21 @@ Turf and target are seperate in case you want to teleport some distance from a t
 	var/holdingnull = 1 //User is not holding anything
 	if(holding)
 		holdingnull = 0 //User is holding a tool of some kind
-
-	for(var/i = 0, i<numticks, i++)
+	var/image/progbar
+	for (var/i = 1 to numticks)
+		if(user.client)
+			progbar = make_progress_bar(i, numticks, target)
+			if(progbar)
+				user.client.images |= progbar
 		sleep(delayfraction)
 		if(!user || user.stat || user.weakened || user.stunned  || !(user.loc == Uloc))
+			if(user && user.client && progbar)
+				user.client.images -= progbar
 			return 0
 
 		if(Tloc && (!target || Tloc != target.loc)) //Tloc not set when we don't want to track target
+			if(user && user.client && progbar)
+				user.client.images -= progbar
 			return 0 // Target no longer exists or has moved
 
 		if(needhand)
@@ -723,10 +750,19 @@ Turf and target are seperate in case you want to teleport some distance from a t
 			//i.e the hand is used to insert some item/tool into the construction
 			if(!holdingnull)
 				if(!holding)
+					if(user && user.client && progbar)
+						user.client.images -= progbar
 					return 0
 			if(user.get_active_hand() != holding)
+				if(user && user.client && progbar)
+					user.client.images -= progbar
 				return 0
-
+			if(user && user.client && progbar)
+				user.client.images -= progbar
+		if(user && user.client && progbar)
+			user.client.images -= progbar
+	if(user && user.client && progbar)
+		user.client.images -= progbar
 	return 1
 
 //Takes: Anything that could possibly have variables and a varname to check.
@@ -1287,3 +1323,24 @@ var/list/WALLITEMS = list(
 						"lime","darkgreen","cyan","navy","teal","purple","indigo")
 		else
 			return "white"
+
+
+/proc/screen_loc2turf(scr_loc, turf/origin)
+	var/tX = text2list(scr_loc, ",")
+	var/tY = text2list(tX[2], ":")
+	var/tZ = origin.z
+	tY = tY[1]
+	tX = text2list(tX[1], ":")
+	tX = tX[1]
+	tX = max(1, min(world.maxx, origin.x + (text2num(tX) - (world.view + 1))))
+	tY = max(1, min(world.maxy, origin.y + (text2num(tY) - (world.view + 1))))
+	return locate(tX, tY, tZ)
+
+/proc/IsValidSrc(var/A)
+	if(istype(A, /datum))
+		var/datum/B = A
+		return !B.gc_destroyed
+	if(istype(A, /client))
+		return 1
+	return 0
+
