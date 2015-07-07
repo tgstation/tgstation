@@ -1,7 +1,0 @@
-author: NullQuery
-delete-after: True
-
-changes: 
-  - bugfix: "Crew monitoring computers now sort by department and rank again."
-  - tweak: "Crew monitoring computer: Hovering over a dot on the minimap will now jump to the appropriate entry in the table."
-  - bugfix: "sNPCs were given ID cards with blank assignments."

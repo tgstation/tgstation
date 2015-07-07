@@ -84,6 +84,24 @@
 	// PROCS //
 	///////////
 
+/datum/species/proc/random_name(gender,unique,lastname)
+	if(unique)
+		return random_unique_name(gender)
+
+	var/randname
+	if(gender == MALE)
+		randname = pick(first_names_male)
+	else
+		randname = pick(first_names_female)
+
+	if(lastname)
+		randname += " [lastname]"
+	else
+		randname += " [pick(last_names)]"
+
+	return randname
+
+
 //Please override this locally if you want to define when what species qualifies for what rank if human authority is enforced.
 /datum/species/proc/qualifies_for_rank(var/rank, var/list/features)
 	return 1
