@@ -350,7 +350,7 @@ var/global/list/possible_items = list()
 	for(var/datum/objective_item/possible_item in possible_items)
 		if(is_unique_objective(possible_item.targetitem) && !(owner.current.mind.assigned_role in possible_item.excludefromjob))
 			approved_targets += possible_item
-	return set_target(safepick(possible_items))
+	return set_target(safepick(approved_targets))
 
 /datum/objective/steal/proc/set_target(var/datum/objective_item/item)
 	if(item)
