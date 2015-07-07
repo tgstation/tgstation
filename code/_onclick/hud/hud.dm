@@ -198,8 +198,6 @@ var/datum/global_hud/global_hud = new()
 	else if(isdrone(mymob))
 		drone_hud(ui_style)
 
-	if(istype(mymob.loc,/obj/mecha) && ishuman(mymob))
-		show_hud(HUD_STYLE_REDUCED)
 
 //Version denotes which style should be displayed. blank or 0 means "next version"
 /datum/hud/proc/show_hud(var/version = 0)

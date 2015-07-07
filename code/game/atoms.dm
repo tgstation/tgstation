@@ -17,11 +17,6 @@
 	//HUD images that this atom can provide.
 	var/list/hud_possible
 
-	//var/chem_is_open_container = 0
-	// replaced by OPENCONTAINER flags and atom/proc/is_open_container()
-	///Chemistry.
-	var/allow_spin = 1
-
 	//Value used to increment ex_act() if reactionary_explosions is on
 	var/explosion_block = 0
 
