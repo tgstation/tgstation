@@ -24,6 +24,7 @@
 	var/obj/item/seeds/myseed = null	//The currently planted seed
 	var/rating = 1
 	var/unwrenchable = 1
+	var/recent_bee_visit = FALSE
 
 	pixel_y=8
 
