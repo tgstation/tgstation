@@ -3,10 +3,11 @@
 	real_name = "Construct"
 	desc = ""
 	speak_emote = list("hisses")
-	emote_hear = list("wails","screeches")
+	emote_hear = list("wails.","screeches.")
 	response_help  = "thinks better of touching"
 	response_disarm = "flails at"
 	response_harm   = "punches"
+	speak_chance = 1
 	icon = 'icons/mob/mob.dmi'
 	speed = 0
 	a_intent = "harm"
