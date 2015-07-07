@@ -113,23 +113,8 @@
 		S.remove_from_storage(O,src)
 
 	O.loc = src
+	var/n = O.name
 
-	//I have sinned
-	//This is nescessary because BYOND uses params2list() for the href list, so we need to munge it here and at the actual name comparison so it matches up
-	/*
-	*	=============================================================================================================================
-	*													HACK AHEAD
-	*	=============================================================================================================================
-	*/
-	var/list/hack = list()					//T-T-THANKS BYOND
-	var/params = "itemname=[O.name]"		//CAN'T WAKE UP
-	hack = params2list(params)				//Munge the name so it matches up with what the href list will have
-	var/n = hack["itemname"]				//Worstcode 2015
-	/*
-	*	=============================================================================================================================
-	*													HACK ENDED
-	*	=============================================================================================================================
-	*/
 
 	if(item_quants[n])
 		item_quants[n]++
@@ -163,7 +148,7 @@
 		for (var/O in item_quants)
 			if(item_quants[O] > 0)
 				var/N = item_quants[O]
-				var/itemName = sanitize(O)
+				var/itemName = encodeparams(sanitize(O))
 				dat += "<FONT color = 'blue'><B>[capitalize(O)]</B>:"
 				dat += " [N] </font>"
 				dat += "<a href='byond://?src=\ref[src];vend=[itemName];amount=1'>Vend</A> "
@@ -198,15 +183,7 @@
 
 	var/i = amount
 	for(var/obj/O in contents)
-
-		//HACK 2: ELETRIC BOOGALOO
-		var/list/hack = list()
-		var/params = "itemname=[O.name]"
-		hack = params2list(params)
-		var/mungedname = hack["itemname"]
-		//WHAT HAVE I DONE TO DESERVE THIS
-
-		if(mungedname == N)
+		if(O.name == N)
 			O.loc = src.loc
 			i--
 			if(i <= 0)

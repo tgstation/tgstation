@@ -437,3 +437,15 @@ var/global/list/watt_suffixes = list("W", "KW", "MW", "GW", "TW", "PW", "EW", "Z
 		number/=1000
 		i++
 	return "[format_num(number)] [watt_suffixes[i]]"
+
+//Needed to make some params2list stuff work (smartfridges etc.)
+/proc/encodeparams(t)		//Yes, this is horrible, but >BYOND
+	if(length(t) < 1)		//No input means nothing needs to be parsed
+		return
+	t = replacetext(t, "%", "%25") //Replaced first for obvious reasons
+	t = replacetext(t, "+", "%2b")
+	t = replacetext(t, "=", "%3d")
+	t = replacetext(t, ";", "%3b")
+	t = replacetext(t, "&", "%26")
+
+	return t
