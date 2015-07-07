@@ -59,7 +59,7 @@ var/const/HOLOPAD_MODE = 0
 	I don't need to check for client since they're clicking on an object.
 	This may change in the future but for now will suffice.*/
 	if(user.eyeobj.loc != src.loc)//Set client eye on the object if it's not already.
-		user.eyeobj.setLoc(get_turf(src))
+		user.eyeobj.forceMove(get_turf(src))
 	else if(!hologram)//If there is no hologram, possibly make one.
 		activate_holo(user)
 	else if(master==user)//If there is a hologram, remove it. But only if the user is the master. Otherwise do nothing.

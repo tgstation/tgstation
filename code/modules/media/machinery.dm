@@ -91,9 +91,9 @@
 	if(anchored)
 		update_music()
 
-/obj/machinery/media/setLoc(var/turf/T, var/teleported=0)
+/obj/machinery/media/forceMove(var/atom/destination)
 	disconnect_media_source()
-	..(T)
+	..()
 	if(anchored)
 		update_music()
 

@@ -70,14 +70,6 @@
 
 	..()
 
-// Used in shuttle movement and AI eye stuff.
-// Primarily used to notify objects being moved by a shuttle/bluespace fuckup.
-/atom/movable/proc/setLoc(var/T, var/teleported=0)
-	loc = T
-
-	// Update on_moved listeners.
-	INVOKE_EVENT(on_moved,list("loc"=loc))
-
 /atom/movable/Move(newLoc,Dir=0,step_x=0,step_y=0)
 	if(!loc || !newLoc)
 		return 0

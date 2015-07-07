@@ -233,7 +233,7 @@
 	// Removes dropped items/magically appearing mobs from the charger too
 	for (var/atom/movable/x in src.contents)
 		if(!(x in upgrade_holder))
-			x.setLoc(src.loc)
+			x.forceMove(src.loc)
 	return
 
 /obj/machinery/recharge_station/proc/restock_modules()

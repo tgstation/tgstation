@@ -101,7 +101,7 @@
 		if(cam)
 			if(isAI(usr))
 				var/mob/living/silicon/ai/A = usr
-				A.eyeobj.setLoc(get_turf(cam))
+				A.eyeobj.forceMove(get_turf(cam))
 				A.client.eye = A.eyeobj
 			else
 				use_power(50)
