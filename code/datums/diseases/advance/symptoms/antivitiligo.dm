@@ -10,9 +10,9 @@ BONUS
         wachu lookin at nygga
 //////////////////////////////////////
 */
- 
+
 /datum/symptom/antivitiligo
- 
+
         name = "Anti-Vitiligo"
         stealth = -3
         resistance = -1
@@ -20,7 +20,7 @@ BONUS
         transmittable = -3
         level = 3
         severity = 3
- 
+
 /datum/symptom/antivitiligo/Activate(var/datum/disease/advance/A)
         ..()
         if(prob(SYMPTOM_ACTIVATION_PROB))
@@ -44,9 +44,9 @@ BONUS
                                         var/random_name = ""
                                         switch(H.gender)
                                                 if(MALE)
-                                                        random_name = pick("Jamal, Devon, Ooga")
+                                                        random_name = pick("Jamal", "Devon", "Ooga")
                                                 else
-                                                        random_name = pick("Shaniqua, Jewel, Latifa")
+                                                        random_name = pick("Shaniqua", "Jewel", "Latifa")
                                         random_name += " [pick("Melons, Jabongo")]"
                                         H.SetSpecialVoice(random_name)
                                 else
