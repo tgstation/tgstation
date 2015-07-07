@@ -1,7 +1,3 @@
-#define LEG_SWEEP "HD"
-#define QUICK_CHOKE "DG"
-#define HEAD_ELBOW "HHD"
-#define NECK_CHOP "DDH"
 /datum/martial_art/krav_maga
 	name = "Krav Maga"
 	counter_prob = 25
@@ -29,27 +25,38 @@
 	H << "<span class = 'userdanger'>You know the arts of Krav Maga!</span>"
 	H << "<span class = 'danger'>Recall your teachings using the Access Tutorial verb in the Krav Maga menu, in your verbs menu.</span>"
 	H.verbs += /mob/living/carbon/human/proc/krav_maga_help
+	H.verbs += /mob/living/carbon/human/proc/neck_chop
+	H.verbs += /mob/living/carbon/human/proc/head_elbow
+	H.verbs += /mob/living/carbon/human/proc/leg_sweep
+	H.verbs += /mob/living/carbon/human/proc/quick_choke
 
 /datum/martial_art/krav_maga/remove(var/mob/living/carbon/human/H)
 	..()
 	H.verbs -= /mob/living/carbon/human/proc/krav_maga_help
+	H.verbs -= /mob/living/carbon/human/proc/neck_chop
+	H.verbs -= /mob/living/carbon/human/proc/head_elbow
+	H.verbs -= /mob/living/carbon/human/proc/leg_sweep
+	H.verbs -= /mob/living/carbon/human/proc/quick_choke
 /datum/martial_art/krav_maga/proc/check_streak(var/mob/living/carbon/human/A, var/mob/living/carbon/human/D)
-	if(findtext(streak,NECK_CHOP))
-		streak = ""
-		neck_chop(A,D)
-		return 1
-	if(findtext(streak,HEAD_ELBOW))
-		streak = ""
-		head_elbow(A,D)
-		return 1
-	if(findtext(streak,LEG_SWEEP))
-		streak = ""
-		leg_sweep(A,D)
-		return 1
-	if(findtext(streak,QUICK_CHOKE))
-		streak = ""
-		quick_choke(A,D)
-		return 1
+	if(streak != "")
+		switch(streak)
+			if("neck_chop")
+				streak = ""
+				neck_chop(A,D)
+				return 1
+			if("head_elbow")
+				streak = ""
+				head_elbow(A,D)
+				return 1
+			if("leg_sweep")
+				streak = ""
+				leg_sweep(A,D)
+				return 1
+			if("quick_choke")
+				streak = ""
+				quick_choke(A,D)
+				return 1
+		return 0
 	return 0
 
 /datum/martial_art/krav_maga/proc/leg_sweep(var/mob/living/carbon/human/A, var/mob/living/carbon/human/D)
@@ -89,13 +96,11 @@
 	return 1
 
 datum/martial_art/krav_maga/grab_act(var/mob/living/carbon/human/A, var/mob/living/carbon/human/D)
-	add_to_streak("G")
 	if(check_streak(A,D))
 		return 1
 	..()
 
 /datum/martial_art/krav_maga/harm_act(var/mob/living/carbon/human/A, var/mob/living/carbon/human/D)
-	add_to_streak("H")
 	if(check_streak(A,D))
 		return 1
 	add_logs(A, D, "punched")
@@ -120,7 +125,6 @@ datum/martial_art/krav_maga/grab_act(var/mob/living/carbon/human/A, var/mob/livi
 
 
 /datum/martial_art/krav_maga/disarm_act(var/mob/living/carbon/human/A, var/mob/living/carbon/human/D)
-	add_to_streak("D")
 	if(check_streak(A,D))
 		return 1
 	if(prob(60))
@@ -149,10 +153,39 @@ datum/martial_art/krav_maga/grab_act(var/mob/living/carbon/human/A, var/mob/livi
 	set category = "Krav Maga"
 
 	usr << "<b><i>You recall your Krav Maga teachings...</i></b>"
-	usr << "<span class='notice'>Leg Sweep</span>: Harm Disarm. Performs a leg sweep, knocking down the target and making him vulnerable to attack."
-	usr << "<span class='notice'>Quick Choke</span>: Disarm Grab. Grabs and chokes the target. Good for speeding up a kill"
-	usr << "<span class='notice'>Head Elbow</span>: Harm Harm Disarm. Elbows the opponent in the face, stunning them, leaving them vulnerable to attacks."
-	usr << "<span class='notice'>Neck Chop</span>: Disarm Disarm Harm.  Karate chops the opponent's neck, rendering them unable to speak for a short period of time."
+	usr << "<span class='notice'>Leg Sweep</span>: Performs a leg sweep, knocking down the target and making him vulnerable to attack."
+	usr << "<span class='notice'>Quick Choke</span>: Grabs and chokes the target. Good for speeding up a kill"
+	usr << "<span class='notice'>Head Elbow</span>: Elbows the opponent in the face, stunning them, leaving them vulnerable to attacks."
+	usr << "<span class='notice'>Neck Chop</span>:  Karate chops the opponent's neck, rendering them unable to speak for a short period of time."
+	usr << "<b><i>Trigger your moves by activating them with the verb, and then clicking on an opponent with a hostile intent.</i></b>"
+
+/mob/living/carbon/human/proc/neck_chop()
+	set name = "Neck Chop"
+	set desc = "Sets your next move to the Neck Chop."
+	set category = "Krav Maga"
+	usr << "<b><i>Your next attack will be a Neck Chop.</i></b>"
+	martial_art.streak = "neck_chop"
+
+/mob/living/carbon/human/proc/head_elbow()
+	set name = "Head Elbow"
+	set desc = "Sets your next move to the Head Elbow."
+	set category = "Krav Maga"
+	usr << "<b><i>Your next attack will be a Head Elbow.</i></b>"
+	martial_art.streak = "head_elbow"
+
+/mob/living/carbon/human/proc/leg_sweep()
+	set name = "Leg Sweep"
+	set desc = "Sets your next move to the Leg Sweep."
+	set category = "Krav Maga"
+	usr << "<b><i>Your next attack will be a Leg Sweep.</i></b>"
+	martial_art.streak = "leg_sweep"
+
+/mob/living/carbon/human/proc/quick_choke()
+	set name = "Quick Choke"
+	set desc = "Sets your next move to the Quick Choke."
+	set category = "Krav Maga"
+	usr << "<b><i>Your next attack will be a Quick Choke.</i></b>"
+	martial_art.streak = "quick_choke"
 
 /obj/item/clothing/gloves/krav_maga
 	desc = "These gloves can teach you to perform Krav Maga using nanochips."
