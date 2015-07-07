@@ -158,6 +158,10 @@ datum/controller/game_controller/proc/setup_objects()
 			var/obj/machinery/atmospherics/unary/vent_scrubber/T = U
 			T.broadcast_status()
 
+	world << "<span class='danger'>Generating ingame minimaps.</span>"
+	sleep(-1)
+	crewmonitor.generateMiniMaps() // start generating minimaps (this is a background process)
+
 	world << "<span class='danger'>Initializations complete.</span>"
 	sleep(-1)
 
