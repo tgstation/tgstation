@@ -201,7 +201,7 @@ var/global/datum/crewmonitor/crewmonitor = new
 
 	if (hclient.client.mob && hclient.client.mob.stat == 0 && hclient.client.mob.z == text2num(z))
 		if (isAI(hclient.client.mob)) return TRUE
-		else if (isrobot(hclient.client.mob)) // fix for /tg/station issue #10380 to allow borgs to operate the crew monitoring computer remotely
+		else if (isrobot(hclient.client.mob))
 			return (locate(/obj/machinery/computer/crew, range(world.view, hclient.client.mob))) || (locate(/obj/item/device/sensor_device, hclient.client.mob.contents))
 		else
 			return (locate(/obj/machinery/computer/crew, range(1, hclient.client.mob))) || (locate(/obj/item/device/sensor_device, hclient.client.mob.contents))
