@@ -7004,7 +7004,7 @@
 "cEJ" = (/obj/machinery/mass_driver{dir = 4; id = "toxinsdriver"},/turf/simulated/floor/plating/airless,/area/toxins/mixing{name = "\improper Toxins Lab"})
 "cEK" = (/obj/structure/sign/securearea{desc = "A warning sign which reads 'EXTERNAL AIRLOCK'"; icon_state = "space"; layer = 4; name = "EXTERNAL AIRLOCK"; pixel_x = 0; pixel_y = -32},/obj/machinery/light/small,/turf/simulated/floor/plating/airless,/area/toxins/mixing{name = "\improper Toxins Lab"})
 "cEL" = (/turf/simulated/floor/plating/airless{dir = 4; icon_state = "warnplate"},/area/toxins/mixing{name = "\improper Toxins Lab"})
-"cEM" = (/obj/machinery/door/poddoor{id = "toxinsdriver"; name = "Toxins Launcher Bay Door"},/turf/simulated/floor/plating,/area/toxins/mixing{name = "\improper Toxins Lab"})
+"cEM" = (/obj/machinery/door/poddoor{id = "toxinsdriver"; name = "Toxins Launcher Bay Door"},/turf/simulated/floor/plating/airless,/area/toxins/mixing{name = "\improper Toxins Lab"})
 "cEN" = (/turf/simulated/floor/plating/airless{dir = 8; icon_state = "warnplate"},/area/toxins/mixing{name = "\improper Toxins Lab"})
 "cEO" = (/obj/item/device/beacon,/turf/simulated/floor/plating/airless{dir = 4; icon_state = "warnplate"},/area/toxins/test_area)
 "cEP" = (/obj/machinery/camera{active_power_usage = 0; c_tag = "Bomb Test Site"; desc = "A specially-reinforced camera with a long lasting battery, used to monitor the bomb testing site. An external light is attached to the top."; dir = 8; invuln = 1; light = null; luminosity = 3; name = "Hardened Bomb-Test Camera"; network = list("Toxins"); use_power = 0},/obj/item/target/alien{anchored = 1},/turf/simulated/floor/plating{dir = 4; icon_state = "warnplate"; luminosity = 2; nitrogen = 0.01; oxygen = 0.01; temperature = 2.7},/area/toxins/test_area)
