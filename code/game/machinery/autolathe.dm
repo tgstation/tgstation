@@ -106,6 +106,9 @@
 	if (stat)
 		return 1
 
+	if((O.flags & NODROP) || !user.unEquip(O))
+		user << "<span class='warning'>\The [O] is stuck to you and cannot be placed into the autolathe.</span>"
+		return 1
 	var/material_amount = materials.can_insert(O)
 	if(!material_amount)
 		user << "<span class='warning'>This object does not contain sufficient amounts of metal or glass to be accepted by the autolathe.</span>"
@@ -113,10 +116,7 @@
 	if(!materials.has_space(material_amount))
 		user << "<span class='warning'>The autolathe is full. Please remove metal or glass from the autolathe in order to insert more.</span>"
 		return 1
- 	if(!user.unEquip(O))
- 		user << "<span class='warning'>\The [O] is stuck to you and cannot be placed into the autolathe.</span>"
- 		return 1
- 	busy = 1
+	busy = 1
 
 	var/inserted = materials.insert_item(O)
 	if(inserted)
