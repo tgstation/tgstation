@@ -82,9 +82,9 @@
 				shuttletarget = pick(escape_list) //Pick a shuttle target
 			enroute = 1
 			stop_automated_movement = 1
-			spawn()
+/*			spawn()
 				if(!src.stat)
-					horde()
+					horde()*/
 
 		if(get_dist(src, shuttletarget) <= 2)		//The monster reached the escape hallway
 			enroute = 0
