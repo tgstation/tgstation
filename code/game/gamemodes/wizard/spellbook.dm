@@ -329,7 +329,7 @@
 	name = "Summon Guns"
 	category = "Rituals"
 	desc = "Nothing could possibly go wrong with arming a crew of lunatics just itching for an excuse to kill you. Just be careful not to stand still too long!"
-	cost = 1
+	cost = 0
 	log_name = "SG"
 
 /datum/spellbook_entry/summon/guns/IsAvailible()
@@ -338,8 +338,10 @@
 /datum/spellbook_entry/summon/guns/Buy(var/mob/living/carbon/human/user,var/obj/item/weapon/spellbook/book)
 	feedback_add_details("wizard_spell_learned",log_name)
 	rightandwrong(0, user, 25)
+	book.uses += 1
+	active = 1
 	playsound(get_turf(user),"sound/magic/CastSummon.ogg",50,1)
-	user << "<span class='notice'>You have cast summon guns!</span>"
+	user << "<span class='notice'>You have cast summon guns, and recieved a bonus spell point!</span>"
 	return 1
 
 /datum/spellbook_entry/summon/magic
