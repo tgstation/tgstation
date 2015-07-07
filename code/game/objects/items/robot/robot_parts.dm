@@ -226,6 +226,8 @@
 
 			if(O.mind && O.mind.special_role)
 				O.mind.store_memory("As a cyborg, any objectives listed here are null and void, and will be marked as failed. They are simply here for memory purposes.")
+				O << "<span class='userdanger'>You have been robotized! You are no longer a [O.mind.special_role]!</span>"
+				O << "<span class='danger'>All of your objectives are null and void, and will be marked as failed. You must now follow your programmed laws above all else.</span>"
 
 			O.job = "Cyborg"
 
