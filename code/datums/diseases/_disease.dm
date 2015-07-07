@@ -6,7 +6,7 @@
 //Disease Flags
 #define CURABLE		1
 #define CAN_CARRY	2
-#define CAN_RESIST	3
+#define CAN_RESIST	4
 
 //Spread Flags
 #define SPECIAL 1
@@ -88,6 +88,8 @@ var/list/diseases = typesof(/datum/disease) - /datum/disease
 
 /datum/disease/proc/has_cure()
 	if(!(disease_flags & CURABLE))
+		return 0
+	if(!cures || !cures.len) //No cure
 		return 0
 
 	. = 1

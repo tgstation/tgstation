@@ -24,7 +24,7 @@
 		user.visible_message("<span class='notice'>[user] successfully removes [target]'s appendix!</span>")
 		A.loc = get_turf(target)
 		target.internal_organs -= A
-		for(var/datum/disease/appendicitis in target.viruses)
+		for(var/datum/disease/appendicitis/appendicitis in target.viruses)
 			appendicitis.cure()
 	else
 		user.visible_message("<span class='notice'>[user] can't find an appendix in [target]!</span>")
