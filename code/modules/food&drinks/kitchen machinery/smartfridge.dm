@@ -13,7 +13,7 @@
 	idle_power_usage = 5
 	active_power_usage = 100
 	flags = NOREACT
-	var/max_n_of_items = 1500
+	var/max_n_of_items = 1000
 	icon_open = "smartfridge_open"
 	icon_closed = "smartfridge"
 	var/icon_on = "smartfridge"
@@ -30,7 +30,7 @@
 
 /obj/machinery/smartfridge/RefreshParts()
 	for(var/obj/item/weapon/stock_parts/matter_bin/B in component_parts)
-		max_n_of_items = 1500 * B.rating
+		max_n_of_items = 1000 * B.rating
 
 /obj/machinery/smartfridge/power_change()
 	..()
@@ -113,7 +113,23 @@
 		S.remove_from_storage(O,src)
 
 	O.loc = src
-	var/n = O.name
+
+	//I have sinned
+	//This is nescessary because BYOND uses params2list() for the href list, so we need to munge it here and at the actual name comparison so it matches up
+	/*
+	*	=============================================================================================================================
+	*													HACK AHEAD
+	*	=============================================================================================================================
+	*/
+	var/list/hack = list()					//T-T-THANKS BYOND
+	var/params = "itemname=[O.name]"		//CAN'T WAKE UP
+	hack = params2list(params)				//Munge the name so it matches up with what the href list will have
+	var/n = hack["itemname"]				//Worstcode 2015
+	/*
+	*	=============================================================================================================================
+	*													HACK ENDED
+	*	=============================================================================================================================
+	*/
 
 	if(item_quants[n])
 		item_quants[n]++
@@ -182,7 +198,15 @@
 
 	var/i = amount
 	for(var/obj/O in contents)
-		if(O.name == N)
+
+		//HACK 2: ELETRIC BOOGALOO
+		var/list/hack = list()
+		var/params = "itemname=[O.name]"
+		hack = params2list(params)
+		var/mungedname = hack["itemname"]
+		//WHAT HAVE I DONE TO DESERVE THIS
+
+		if(mungedname == N)
 			O.loc = src.loc
 			i--
 			if(i <= 0)
