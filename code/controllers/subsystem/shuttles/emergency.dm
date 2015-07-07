@@ -91,6 +91,14 @@
 				timer = world.time
 				send2irc("Server", "The Emergency Shuttle has docked with the station.")
 				priority_announce("The Emergency Shuttle has docked with the station. You have [timeLeft(600)] minutes to board the Emergency Shuttle.", null, 'sound/AI/shuttledock.ogg', "Priority")
+
+				//Gangs only have one attempt left if the shuttle has docked with the station to prevent suffering from dominator delays
+				for(var/datum/gang/G in ticker.mode.gangs)
+					if(isnum(G.dom_timer))
+						G.dom_attempts = 0
+					else
+						G.dom_attempts = min(1,G.dom_attempts)
+
 		if(SHUTTLE_DOCKED)
 			if(time_left <= 0 && SSshuttle.emergencyNoEscape)
 				priority_announce("Hostile enviroment detected. Departure has been postponed indefinitely pending conflict resolution.", null, 'sound/misc/notice1.ogg', "Priority")

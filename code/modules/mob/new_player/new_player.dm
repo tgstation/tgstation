@@ -110,7 +110,7 @@
 			src << "<span class='notice'>Now teleporting.</span>"
 			observer.loc = O.loc
 			if(client.prefs.be_random_name)
-				client.prefs.real_name = random_name(gender)
+				client.prefs.real_name = random_unique_name(gender)
 			if(client.prefs.be_random_body)
 				client.prefs.random_character(gender)
 			observer.real_name = client.prefs.real_name
@@ -382,7 +382,7 @@
 
 	if(config.force_random_names || appearance_isbanned(src))
 		client.prefs.random_character()
-		client.prefs.real_name = random_name(gender)
+		client.prefs.real_name = client.prefs.pref_species.random_name(gender,1)
 	client.prefs.copy_to(new_character)
 
 	if(mind)

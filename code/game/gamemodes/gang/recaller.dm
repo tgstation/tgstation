@@ -10,7 +10,6 @@
 	throw_range = 7
 	flags = CONDUCT
 	var/datum/gang/gang //Which gang uses this?
-	var/boss = 1 //If this gangtool belongs to the big boss
 	var/recalling = 0
 	var/outfits = 3
 	var/free_pen = 0
@@ -32,17 +31,21 @@
 				dat += "Give this device to another member of your organization to use to promote them to Lieutenant.<br><br>"
 				dat += "If this is meant as a spare device for yourself:<br>"
 			dat += "<a href='?src=\ref[src];register=1'>Register Device as Spare</a><br>"
-		else if (promotable && user.mind.gang_datum.bosses.len < 3)
-			dat += "You have been selected for a promotion!<br>"
-			dat += "<a href='?src=\ref[src];register=1'>Accept Promotion</a><br>"
+		else if (promotable)
+			if(user.mind.gang_datum.bosses.len < 3)
+				dat += "You have been selected for a promotion!<br>"
+				dat += "<a href='?src=\ref[src];register=1'>Accept Promotion</a><br>"
+			else
+				dat += "No promotions available: All positions filled.<br>"
 		else
-			dat += "No promotions available: All positions filled.<br>"
+			dat += "This device is not authorized to promote.<br>"
 	else
 		if(isnum(gang.dom_timer))
 			dat += "<center><font color='red'>Takeover In Progress:<br><B>[gang.dom_timer] seconds remain</B></font></center>"
 
+		var/isboss = (user.mind in ticker.mode.get_gang_bosses())
 		var/points = gang.points
-		dat += "Registration: <B>[gang.name] Gang [boss ? "Boss" : "Lieutenant"]</B><br>"
+		dat += "Registration: <B>[gang.name] Gang [isboss ? "Boss" : "Lieutenant"]</B><br>"
 		dat += "Organization Size: <B>[gang.gangsters.len + gang.bosses.len]</B> | Station Control: <B>[round((gang.territory.len/start_state.num_territories)*100, 1)]%</B><br>"
 		dat += "Gang Influence: <B>[points]</B><br>"
 		dat += "Time until Influence grows: <B>[(points >= 999) ? ("--:--") : (time2text(ticker.mode.gang_points.next_point_time - world.time, "mm:ss"))]</B><br>"
@@ -54,7 +57,7 @@
 			dat += "<a href='?src=\ref[src];choice=outfit'>Create Armored Gang Outfit</a><br>"
 		else
 			dat += "<b>Create Gang Outfit</b> (Restocking)<br>"
-		if(boss)
+		if(user.mind in ticker.mode.get_gang_bosses())
 			dat += "<a href='?src=\ref[src];choice=recall'>Recall Emergency Shuttle</a><br>"
 
 		dat += "<br>"
@@ -77,23 +80,23 @@
 			else
 				dat += "10mm Pistol<br>"
 
-			dat += "(10 Influence) "
+			dat += "&nbsp;&#8627;(10 Influence) "
 			if(points >= 10)
 				dat += "<a href='?src=\ref[src];purchase=10mmammo'>10mm Ammo</a><br>"
 			else
 				dat += "10mm Ammo<br>"
 
-			dat += "(50 Influence) "
-			if(points >= 50)
-				dat += "<a href='?src=\ref[src];purchase=uzi'>Mini Uzi</a><br>"
+			dat += "(60 Influence) "
+			if(points >= 60)
+				dat += "<a href='?src=\ref[src];purchase=uzi'>Uzi SMG</a><br>"
 			else
-				dat += "Mini Uzi<br>"
+				dat += "Uzi SMG<br>"
 
-			dat += "(20 Influence) "
-			if(points >= 20)
+			dat += "&nbsp;&#8627;(40 Influence) "
+			if(points >= 40)
 				dat += "<a href='?src=\ref[src];purchase=9mmammo'>Uzi Ammo</a><br>"
 			else
-				dat += "Uzi Magazine<br>"
+				dat += "Uzi Ammo<br>"
 
 			dat += "<br>"
 
@@ -155,7 +158,7 @@
 			dat += "Recruitment Pen<br>"
 
 		var/gangtooltext = "Spare Gangtool"
-		if(boss && gang.bosses.len < 3)
+		if((user.mind in ticker.mode.get_gang_bosses()) && gang.bosses.len < 3)
 			gangtooltext = "Promote a Gangster"
 		dat += "(10 Influence) "
 		if(points >= 10)
@@ -176,7 +179,7 @@
 	dat += "<br>"
 	dat += "<a href='?src=\ref[src];choice=refresh'>Refresh</a><br>"
 
-	var/datum/browser/popup = new(user, "gangtool", "Welcome to GangTool v3.0", 340, 625)
+	var/datum/browser/popup = new(user, "gangtool", "Welcome to GangTool v3.2", 340, 625)
 	popup.set_content(dat)
 	popup.open()
 
@@ -215,13 +218,13 @@
 					item_type = /obj/item/ammo_box/magazine/m10mm
 					pointcost = 10
 			if("uzi")
-				if(gang.points >= 50)
+				if(gang.points >= 60)
 					item_type = /obj/item/weapon/gun/projectile/automatic/mini_uzi
-					pointcost = 50
+					pointcost = 60
 			if("9mmammo")
-				if(gang.points >= 20)
+				if(gang.points >= 40)
 					item_type = /obj/item/ammo_box/magazine/uzim9mm
-					pointcost = 20
+					pointcost = 40
 			if("scroll")
 				if(gang.points >= 30)
 					item_type = /obj/item/weapon/sleeping_carp_scroll
@@ -255,7 +258,7 @@
 					pointcost = 10
 			if("gangtool")
 				if(gang.points >= 10)
-					if(boss)
+					if(usr.mind in ticker.mode.get_gang_bosses())
 						item_type = /obj/item/device/gangtool/spare/lt
 						if(gang.bosses.len < 3)
 							usr << "<span class='notice'><b>Gangtools</b> allow you to promote a gangster to be your Lieutenant, enabling them to recruit and purchase items like you. Simply have them register the gangtool. You may promote up to [3-gang.bosses.len] more Lieutenants</span>"
@@ -298,11 +301,12 @@
 	else if(href_list["choice"])
 		switch(href_list["choice"])
 			if("recall")
-				if(boss)
+				if(usr.mind in ticker.mode.get_gang_bosses())
 					recall(usr)
 			if("outfit")
 				if(outfits > 0)
 					if(gang.gang_outfit(usr,src))
+						usr << "<span class='notice'><b>Gang Outfits</b> can act as armor with moderate protection against ballistic and melee attacks. Every gangster wearing one will also help grow your gang's influence.</span>"
 						outfits -= 1
 			if("ping")
 				ping_gang(usr)
@@ -322,9 +326,9 @@
 	members += gang.gangsters
 	members += gang.bosses
 	if(members.len)
-		var/ping = "<span class='danger'><B><i>[gang.name] [boss ? "Gang Boss" : "Lieutenant"]</i>: [message]</B></span>"
+		var/ping = "<span class='danger'><B><i>[gang.name] [(user.mind in ticker.mode.get_gang_bosses()) ? "Gang Boss" : "Lieutenant"]</i>: [message]</B></span>"
 		for(var/datum/mind/ganger in members)
-			if((ganger.current.z <= 2) && (ganger.current.stat == CONSCIOUS))
+			if(ganger.current && (ganger.current.z <= 2) && (ganger.current.stat == CONSCIOUS))
 				ganger.current << ping
 		for(var/mob/M in dead_mob_list)
 			M << ping
@@ -332,6 +336,8 @@
 
 
 /obj/item/device/gangtool/proc/register_device(var/mob/user)
+	if(gang)	//It's already been registered!
+		return
 	if((promotable && (user.mind in ticker.mode.get_gangsters())) || (user.mind in ticker.mode.get_gang_bosses()))
 		gang = user.mind.gang_datum
 		gang.gangtools += src
@@ -387,7 +393,7 @@
 		return 0
 	var/datum/station_state/end_state = new /datum/station_state()
 	end_state.count()
-	if((100 *  start_state.score(end_state)) < 70) //Shuttle cannot be recalled if the station is too damaged
+	if((100 *  start_state.score(end_state)) < 80) //Shuttle cannot be recalled if the station is too damaged
 		user << "<span class='warning'>\icon[src]Error: Station communication systems compromised. Unable to establish connection.</span>"
 		recalling = 0
 		return 0
@@ -408,18 +414,24 @@
 
 /obj/item/device/gangtool/proc/can_use(mob/living/carbon/human/user)
 	if(!istype(user))
-		return
+		return 0
 	if(user.restrained() || user.lying || user.stat || user.stunned || user.weakened)
-		return
+		return 0
 	if(!(src in user.contents))
-		return
-	if(user.mind)
-		if(gang && !(user.mind in gang.bosses))
-			return
-		return 1
+		return 0
+	if(!user.mind)
+		return 0
+
+	if(gang)	//If it's already registered, only let the gang's bosses use this
+		if(user.mind in gang.bosses)
+			return 1
+	else	//If it's not registered, any gangster can use this to register
+		if(user.mind in ticker.mode.get_all_gangsters())
+			return 1
+
+	return 0
 
 /obj/item/device/gangtool/spare
-	boss = 0
 	outfits = 1
 
 /obj/item/device/gangtool/spare/lt

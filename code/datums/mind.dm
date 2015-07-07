@@ -224,7 +224,7 @@
 		alert("Not before round-start!", "Alert")
 		return
 
-	var/out = ""
+	var/out = "<B>[name]</B>[(current&&(current.real_name!=name))?" (as [current.real_name])":""]<br>"
 	out += "Mind currently owned by key: [key] [active?"(synced)":"(not synced)"]<br>"
 	out += "Assigned role: [assigned_role]. <a href='?src=\ref[src];role_edit=1'>Edit</a><br>"
 	out += "Faction and special role: <b><font color='red'>[special_role]</font></b><br>"
@@ -306,19 +306,18 @@
 			text += "|"
 			if(src in (G.bosses))
 				text += "<B>GANG LEADER</B>"
+				text += "|Equipment: <a href='?src=\ref[src];gang=equip'>give</a>"
+				var/list/L = current.get_contents()
+				var/obj/item/device/gangtool/gangtool = locate() in L
+				if (gangtool)
+					text += "|<a href='?src=\ref[src];gang=takeequip'>take</a>"
+
 			else
 				text += "<a href='?src=\ref[src];gangboss=\ref[G]'>gang leader</a>"
 			text += "<BR>"
 
-		if(gang_colors_pool)
+		if(gang_colors_pool.len)
 			text += "<a href='?src=\ref[src];gang=new'>Create New Gang</a>"
-
-		if(src in ticker.mode.get_gang_bosses())
-			text += "<br>Equipment: <a href='?src=\ref[src];gang=equip'>give</a>"
-			var/list/L = current.get_contents()
-			var/obj/item/device/gangtool/gangtool = locate() in L
-			if (gangtool)
-				text += "|<a href='?src=\ref[src];gang=takeequip'>take</a>"
 
 		sections["gang"] = text
 
@@ -584,9 +583,8 @@
 
 	out += "<a href='?src=\ref[src];obj_announce=1'>Announce objectives</a><br><br>"
 
-	var/datum/browser/popup = new(usr, "edit_memory[src]", "<B>[name]</B>[(current&&(current.real_name!=name))?" (as [current.real_name])":""]", 500, 600)
-	popup.set_content(out)
-	popup.open()
+	usr << browse(out, "window=edit_memory[src];size=500x600")
+
 
 /datum/mind/Topic(href, href_list)
 	if(!check_rights(R_ADMIN))	return
@@ -710,7 +708,7 @@
 						new_objective.explanation_text = "Download [target_number] research levels."
 					if("capture")
 						new_objective = new /datum/objective/capture
-						new_objective.explanation_text = "Accumulate [target_number] capture points."
+						new_objective.explanation_text = "Capture [target_number] lifeforms with an energy net. Live, rare specimens are worth more."
 					if("absorb")
 						new_objective = new /datum/objective/absorb
 						new_objective.explanation_text = "Absorb [target_number] compatible genomes."
