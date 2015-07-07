@@ -398,7 +398,7 @@
 
 	//Backpacks can never be protected but are annoying as fuck to lose, so they get a lower chance to be shredded
 	if(back)
-		back.shred(bomb,shock-30,src)
+		back.shred(bomb,shock-20,src)
 
 	if(head)
 		covered_parts |= head.flags_inv
@@ -437,7 +437,7 @@
 	if(w_uniform)
 		var/absorbed = ((covered_parts & HIDEJUMPSUIT) ? suit_absorbed : 0)
 		if(absorbed >= 0)
-			w_uniform.shred(bomb,shock-absorbed,src)
+			w_uniform.shred(bomb,shock-20-absorbed,src)	//Uniforms are also annoying to get shredded
 
 /obj/item/proc/shred(var/bomb,var/shock,var/mob/living/carbon/human/Human)
 	if(flags & ABSTRACT)

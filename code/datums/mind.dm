@@ -316,7 +316,7 @@
 				text += "<a href='?src=\ref[src];gangboss=\ref[G]'>gang leader</a>"
 			text += "<BR>"
 
-		if(gang_colors_pool)
+		if(gang_colors_pool.len)
 			text += "<a href='?src=\ref[src];gang=new'>Create New Gang</a>"
 
 		sections["gang"] = text
@@ -708,7 +708,7 @@
 						new_objective.explanation_text = "Download [target_number] research levels."
 					if("capture")
 						new_objective = new /datum/objective/capture
-						new_objective.explanation_text = "Accumulate [target_number] capture points."
+						new_objective.explanation_text = "Capture [target_number] lifeforms with an energy net. Live, rare specimens are worth more."
 					if("absorb")
 						new_objective = new /datum/objective/absorb
 						new_objective.explanation_text = "Absorb [target_number] compatible genomes."

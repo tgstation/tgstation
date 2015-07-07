@@ -516,3 +516,217 @@
 		return 0
 
 	return max(0, enemy_minimum_age - C.player_age)
+
+
+/datum/game_mode/proc/greetAntagonist(var/datum/mind/M, var/antagonist)
+	var/list/validAntagonists = list("traitor", "double agent", "changeling", "nuclear operative", "wizard", "head revolutionary", "blob", "cultist", "shadowling", "gang boss", "abductor scientist", \
+									 "abductor agent")
+	if(!(antagonist in validAntagonists))
+		return 0
+	var/text
+	text += "<font color='red' size=3><center><b>You are the [antagonist].</b></center></font><br><br>"
+	switch(antagonist)
+		if("traitor")
+			text += "<center>You are an agent of the Syndicate aboard [station_name()].</center>"
+			text += "<center>You are to accomplish the following objectives assigned to you by your employers:</center><br>"
+			var/objCount = 1
+			for(var/datum/objective/objective in M.objectives)
+				text += "<center><b>Objective #[objCount]:</b> [objective.explanation_text]</center>"
+				objCount++
+			text += "<br><center>You have also been supplied with an uplink cunningly hidden in your PDA or headset. This uplink contains 20 telecrystals and allows you to purchase exclusive equipment \
+			to aid in completing your objectives. In addition, you have been given a set of code words to identify other agents. Use these in conversation but be aware that anyone may be a potential foe. \
+			</center><br><br>"
+			text += "<center><b>Code Phrases:</b> <font color='red'>[syndicate_code_phrase]</font></center>"
+			text += "<center><b>Code Responses:</b> <font color='red'>[syndicate_code_response]</font></center><br><br>"
+			text += "<center>Accomplish your objectives at all costs!</center>"
+			text += "<center><i><b>Wiki Page:</b></i> <a href='[config.wikiurl]/Traitor'>Click Here</a></center>"
+
+
+		if("double agent")
+			text += "<center>You are a Syndicate double agent aboard [station_name()].</center>"
+			text += "<center>For some reason or another, you have been assigned to kill another Syndicate agent. However, be wary, as a third double agent is also trying to kill <i>you!</i> You will need \
+			to kill your quarry while avoiding death yourself. Your objectives:</center><br>"
+			var/objCount = 1
+			for(var/datum/objective/objective in M.objectives)
+				text += "<center><b>Objective #[objCount]:</b> [objective.explanation_text]</center>"
+				objCount++
+			text += "<br><center>You have also been supplied with an uplink cunningly hidden in your PDA or headset. This uplink contains 20 telecrystals and allows you to purchase exclusive equipment \
+			to aid in completing your objectives. In addition, you have been given a set of code words to identify other agents. Use these in conversation but be aware that anyone may be a potential foe. \
+			</center><br><br>"
+			text += "<center><b>Code Phrases:</b> <font color='red'>[syndicate_code_phrase]</font></center>"
+			text += "<center><b>Code Responses:</b> <font color='red'>[syndicate_code_response]</font></center><br><br>"
+			text += "<center>Eliminate your quarry and avoid death at all costs!</center>"
+			text += "<center><i><b>Wiki Page:</b></i> <a href='[config.wikiurl]/Traitor'>Click Here</a></center>"
+
+
+		if("changeling")
+			text += "<center>We are a changeling, an alien lifeform aboard [station_name()].</center>"
+			text += "<center>We are employed by the Syndicate and must accomplish the following objectives they wish of us:</center><br>"
+			var/objCount = 1
+			for(var/datum/objective/objective in M.objectives)
+				text += "<center><b>Objective #[objCount]:</b> [objective.explanation_text]</center>"
+				objCount++
+			text += "<br><center>While we do not have unique appliances and equipment to accomplish these difficult objectives, we possess a biological arsenal. As a hivemind organism, we have the ability \
+			to absorb the genetic code of any human into our own form. We can then shapeshift into the human, taking on their exact appearance. In addition, we may evolve additional abilities by using our \
+			Evolution Menu to bend our body to our will. Finally, we may say \".g (message)\" to silently communicate with all other changelings.</center><br><br>"
+			text += "<center>Accomplish our objectives at all costs!</center>"
+			text += "<center><i><b>Wiki Page:</b></i> <a href='[config.wikiurl]/Changeling'>Click Here</a></center>"
+
+
+		if("nuclear operative")
+			text += "<center>You are a Syndicate operative sent on a mission to destroy [station_name()].</center>"
+			text += "<center>You have four teammates and you are all working towards one common goal:</center><br>"
+			var/objCount = 1
+			for(var/datum/objective/objective in M.objectives)
+				text += "<center><b>[objective.explanation_text]</b></center>"
+				objCount++
+			text += "<br><center>In your backpack, you have a Syndicate uplink with 20 telecrystals. You and your teammates can 'donate' these telecrystals to a common pool on a single uplink, allowing the \
+			purchase of more powerful equipment such as the Syndicate cyborg or Mauler exosuit. While you are currently in the reconaissance outpost, you will leave on a Syndicate infiltrator shuttle. This \
+			shuttle contains many supplies, including dual-mode space suits and some basic weaponry, as well as the pinpointer, a device required to succeed. You see, the nuke on board the infiltrator can \
+			not detonate without a very specific device: the nuclear authentication disk, held by the captain (if there is one). Your job is to acquire this disk through any means necessary and destroy the \
+			station using the infiltrator's nuke. Cooperate with your teammates and form a plan. Remember: failure is not an option.</center><br><br>"
+			text += "<center>Move out and get that disk!</center>"
+			text += "<center><i><b>Wiki Page:</b></i> <a href='https://tgstation13.org/wiki/Nuclear_Operative'>Click Here</a></center>"
+
+
+		if("wizard")
+			text += "<center>You are a mage of the Wizard's Federation deployed to [station_name()].</center>"
+			text += "<center>The Federation has asked you accomplish these objectives:</center><br>"
+			var/objCount = 1
+			for(var/datum/objective/objective in M.objectives)
+				text += "<center><b>Objective #[objCount]:</b> [objective.explanation_text]</center>"
+				objCount++
+			text += "<br><center>You have your trusty spellbook as well as a teleportation scroll. The spellbook can be used to memorize up to five of a wide variety of magical incantations that can be \
+			used in many situations. You can also summon artifacts, such as a gem-encrused hardsuit or an apprentice that will serve under you. In order to cast most of these spells, you will require a set \
+			of magical wizard robes, such as the ones you are wearing now. <i>You should always bring a spare set of robes!</i> Furthermore, the crew are trained to report wizard sightings, so trying to be \
+			stealthy or friendly is almost impossible. Finally, your spells can backfire against you! Don't fireball someone near you, or you might be caught in the blast!</center><br><br>"
+			text += "<center>Make the Federation proud and get your objectives done!</center>"
+			text += "<center><i><b>Wiki Page:</b></i> <a href='[config.wikiurl]/Wizard'>Click Here</a></center>"
+
+
+		if("head revolutionary")
+			text += "<center>You are starting a revolution aboard [station_name()]!</center>"
+			text += "<center>The Nanotrasen pigs have oppressed the crew for too long! Kill the following heads of staff:</center><br>"
+			var/objCount = 1
+			for(var/datum/objective/objective in M.objectives)
+				text += "<center><b>Objective #[objCount]:</b> [objective.explanation_text]</center>"
+				objCount++
+			text += "<br><center>You have a specially modified flash in your backpack, and it can be used on crewmen with unprotected eyes to hypnotize them into joining the revolution. You can tell who \
+			fellow head revolutionaries are by looking for the blue 'R' above their heads - converted revolutionaries have a red 'R'. It is imperative that you remain safe and ensure that your fellow heads \
+			do not die - if all head revolutionaries die, the heads of staff succeed! The opposite is also true - to win the revolution, all heads of staff must be either killed or sent off the station. \
+			Security will do everything in their power to stop you - don't let them get in the way of your goals!</center><br><br>"
+			text += "<center>Destroy the heads of staff! Viva la Revolucion!</center>"
+			text += "<center><i><b>Wiki Page:</b></i> <a href='[config.wikiurl]/Revolution'>Click Here</a></center>"
+
+
+		if("blob")
+			text += "<center>You are infected by the blob!</center>"
+			text += "<center>Your body has been taken over by a macroscopic organism known as the blob. In a few minutes, you will burst into your true form! Your goal: <b>expand</b>!</center><br>"
+			text += "<br><center>As a blob, you start off weak. Your resources are governed by the creatively-named currency known as 'Resources'. Your blob core will generate these resources over time. \
+			Your primary ability as a blob is to create new tiles, or towers, by expanding. You may create resource towers, which increase your resources more quickly; factory towers, which create spores \
+			that will attack nearby lifeforms and provide protection; and node towers, which will cause automatic blob expansion nearby. Factory and resource towers both need to be very close to a node or \
+			your core in order to function! While expanding onto a tile, if there is a being there, they will take damage. The type of damage is governed by your randomly-assigned blob reagent, which can \
+			have many effects, from setting ablaze to depriving of oxygen. You have many abilities, and a full list can be found on the wiki page.</center><br><br>"
+			text += "<center>Get to a good spot and wait to become a blob! Take over [station_name()]!</center>"
+			text += "<center><i><b>Wiki Page:</b></i> <a href='[config.wikiurl]/Blob'>Click Here</a></center>"
+
+
+		if("cultist")
+			text += "<center>You are a member of the Nar-Sian cult aboard [station_name()]!</center>"
+			text += "<center>The Geometer wishes you perform the following tasks:</center><br>"
+			var/objCount = 1
+			for(var/datum/objective/objective in M.objectives)
+				text += "<center><b>Objective #[objCount]:</b> [objective.explanation_text]</center>"
+				objCount++
+			text += "<br><center>You are one of the followers of Nar-Sie, the One Who Sees, the Geometer of Blood. The Geometer lies incorporeal, manipulating her pawns from the astral plane. You are to \
+			follow the will of Nar-Sie with your fellow enlightened. You may tell who else is a cultist by viewing the symbol above their heads. In your inventory is a sheet of paper. When activated, it \
+			will allow you to perform a small amount of rituals imbued onto the paper. A tome is necessary for any cultist, as it allows them to scribe runes, which function as gateways into Nar-Sie's \
+			domain and have various effects. To gain research words, you may either sacrifice lesser beings (non-cultist humans, monkeys...) or perform trial-and-error exercises.</center><br><br>"
+			text += "<center>Obey the Geometer's will! Complete the cult's objectives!</center>"
+			text += "<center><i><b>Wiki Page:</b></i> <a href='[config.wikiurl]/Cult'>Click Here</a></center>"
+
+
+		if("shadowling")
+			text += "<center>You are a shadowling on [station_name()]!</center>"
+			text += "<center>You need to accomplish the following objectives:</center><br>"
+			var/objCount = 1
+			for(var/datum/objective/objective in M.objectives)
+				text += "<center><b>Objective #[objCount]:</b> [objective.explanation_text]</center>"
+				objCount++
+			text += "<br><center>You are a shadowling, a light-sensitive alien disguised as a crew member. You are currently in disguise and only have one ability: Enthrall. This ability will, after some \
+			time, convert any crew member into a slave, bound to you and other shadowlings. You may commune with other shadowlings as well as thralls by using the Hivemind Commune ability. You also possess \
+			an ability called Hatch - this will reveal your true form, unlocking all of your abilities and causing you to take damage from the light. Your goal is to ascend into your true form, whereupon \
+			you will be an unstoppable force of destruction. To do this, you need to enthrall fifteen crew members. A good starting point will be the wiki.</center><br><br>"
+			text += "<center>Ascend at all costs!</center>"
+			text += "<center><i><b>Wiki Page:</b></i> <a href='[config.wikiurl]/Shadowling'>Click Here</a></center>"
+
+
+		if("gang boss")
+			text += "<center>You are a gang boss aboard [station_name()]!</center>"
+			text += "<center>Your gang is to accomplish the following tasks:</center><br>"
+			var/objCount = 1
+			for(var/datum/objective/objective in M.objectives)
+				text += "<center><b>Objective #[objCount]:</b> [objective.explanation_text]</center>"
+				objCount++
+			text += "<br><center>You are the leader of a gang aboard the station. Your long-term goal is to take over the station via use of a dominator, a powerful machine that can invade station systems. \
+			To do this, you need to gather Influence and followers. There are three things in your backpack: a spray can, a suspicious device, and a pen. The spray can may be used to spray graffiti across \
+			the station, which will claim an area as your gang's territory. The device is called a 'gang tool' and is required for any gang. It can buy all sorts of supplies and is needed for a dominator. \
+			Finally, the pen contains a hidden device that will convert anyone stabbed with it to your gang's cause. Members of a rival gang and people who are loyalty implanted will not be affected. \
+			Remember: there is another gang that seeks nothing but your destruction. Make sure to take over the station before they can!</center><br><br>"
+			text += "<center>Take over the station before your rival gang can!</center>"
+			text += "<center><i><b>Wiki Page:</b></i> <a href='[config.wikiurl]/Gang'>Click Here</a></center>"
+
+
+		if("abductor scientist")
+			text += "<center>You are an abductor scientist sent to research [station_name()]!</center>"
+			text += "<center>Your Mothership must accomplish the following tasks:</center><br>"
+			var/objCount = 1
+			for(var/datum/objective/objective in M.objectives)
+				text += "<center><b>Objective #[objCount]:</b> [objective.explanation_text]</center>"
+				objCount++
+			text += "<br><center>You are an alien scientist sent via spaceship to kidnap crew members aboard [station_name()] and perform experiments on them. As the scientist, you are to perform scouting, \
+			surgery, retrieval, marking, and many other important tasks of your Mothership. In your inventory you have a dual-mode science tool, which has two modes: Scan and Mark. Scanning will add a \
+			human to the database, allowing your agent to disguise as the scanned human. Marking will scan the target for warp, allowing them to be retrieved with the advanced camera console on the left \
+			side of your Mothership. There is another alien with you - this is an agent, and they will be performing the brute-force work of your Mothership. You also have an emergency implant that will \
+			instantly return you to your Mothership at any time (with a small cooldown).</center><br><br>"
+			text += "<center>Cooperate with your agent and experiment on humans!</center>"
+			text += "<center><i><b>Wiki Page:</b></i> <a href='[config.wikiurl]/Abductor'>Click Here</a></center>"
+
+
+		if("abductor agent")
+			text += "<center>You are an abductor agent sent to research [station_name()]!</center>"
+			text += "<center>Your Mothership must accomplish the following tasks:</center><br>"
+			var/objCount = 1
+			for(var/datum/objective/objective in M.objectives)
+				text += "<center><b>Objective #[objCount]:</b> [objective.explanation_text]</center>"
+				objCount++
+			text += "<br><center>You are an alien agent sent via spaceship to kidnap crew members aboard [station_name()] and perform experiments on them. As the agent, you are to perform abduction, \
+			combat, incapacitation, and restraining of human subjects aboard the station. In your inventory you have an advanced baton with four modes: Stun, Sleep, Restrain, and Probe. Stun will do just \
+			that - stun the target. Sleep will induce a minute of sleep in the target, so long as they are stunned. Restrain will apply a restraining energy field around the target's hands. Probe is \
+			largely useless. You also have a tool that will silence nearby communications equipment. There is another alien with you - this is a scientist, and they will be performing the more intricate \
+			tasks of your Mothership.</center><br><br>"
+			text += "<center>Cooperate with your scientist and experiment on humans!</center>"
+			text += "<center><i><b>Wiki Page:</b></i> <a href='[config.wikiurl]/Abductor'>Click Here</a></center>"
+
+
+	var/datum/browser/popup = new(M.current, "greeting", "", 800, 600)
+	popup.set_content(text)
+	popup.open()
+	return 1
+
+/obj/item/debugger
+	name = "debugger"
+	desc = "A mystical artifact used by the Gods to ensure the world's timeways are correctly flowing."
+	icon = 'icons/obj/device.dmi'
+	icon_state = "shield1"
+	item_state = "electronic"
+	w_class = 2
+	unacidable = 1
+
+/obj/item/debugger/antagonistGreet
+	name = "antagonist greeting debugger"
+
+/obj/item/debugger/antagonistGreet/attack_self(mob/user)
+	var/antag
+	antag = stripped_input(user, "antag", "Which antagonist?", "[antag]")
+	ticker.mode.greetAntagonist(user.mind, antag)
