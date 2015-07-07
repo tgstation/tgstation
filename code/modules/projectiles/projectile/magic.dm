@@ -232,6 +232,7 @@
 							if(!S.dangerous_existence)
 								all_species += speciestype
 						hardset_dna(H, null, null, null, null, pick(all_species))
+						H.dna.species.random_name(H.gender,1)
 					H.update_icons()
 				else
 					return
