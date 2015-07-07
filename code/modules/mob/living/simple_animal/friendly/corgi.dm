@@ -55,6 +55,7 @@
 			else					healths.icon_state = "health7"
 	regenerate_icons()
 
+
 /mob/living/simple_animal/corgi/show_inv(mob/user as mob)
 	user.set_machine(src)
 	if(user.stat) return
@@ -362,6 +363,16 @@
 
 	return valid
 
+/mob/living/simple_animal/corgi/proc/spinaroo(var/list/emotes = list("dances around","chases its tail"))
+    if(!stat && !resting && !buckled)
+        if(prob(1))
+            if (ckey == null)
+                emote(pick(emotes))
+                spawn(0)
+                    for(var/i in list(1,2,4,8,4,2,1,2,4,8,4,2,1,2,4,8,4,2))
+                        dir = i
+                        sleep(1)
+
 
 //IAN! SQUEEEEEEEEE~
 /mob/living/simple_animal/corgi/Ian
@@ -377,6 +388,8 @@
 
 /mob/living/simple_animal/corgi/Ian/Life()
 	..()
+
+	spinaroo(list("dances around","chases its tail"))
 
 	//Feeding, chasing food, FOOOOODDDD
 	if(!stat && !resting && !buckled && (ckey == null))
@@ -419,12 +432,6 @@
 						else if(ishuman(movement_target.loc) )
 							if(prob(20))
 								emote("stares at [movement_target.loc]'s [movement_target] with a sad puppy-face")
-		if(prob(1))
-			emote(pick("dances around","chases its tail"))
-			spawn(0)
-				for(var/i in list(1,2,4,8,4,2,1,2,4,8,4,2,1,2,4,8,4,2))
-					dir = i
-					sleep(1)
 
 /obj/item/weapon/reagent_containers/food/snacks/meat/corgi
 	name = "Corgi meat"
@@ -505,15 +512,7 @@
 	..()
 
 	make_babies()
-
-	if(!stat && !resting && !buckled)
-		if(prob(1))
-			if (ckey == null)
-				emote(pick("dances around","chases her tail"))
-				spawn(0)
-					for(var/i in list(1,2,4,8,4,2,1,2,4,8,4,2,1,2,4,8,4,2))
-						dir = i
-						sleep(1)
+	spinaroo(list("dances around","chases her tail"))
 
 /mob/living/simple_animal/corgi/attack_hand(mob/living/carbon/human/M)
 	. = ..()
@@ -530,3 +529,27 @@
 		else
 			if(M && stat != DEAD) // Same check here, even though emote checks it as well (poor form to check it only in the help case)
 				emote("growls")
+
+
+//Sasha isn't even a corgi you dummy!
+/mob/living/simple_animal/corgi/Sasha
+	name = "Sasha"
+	real_name = "Sasha"
+	gender = FEMALE
+	desc = "It's a doberman, how intimidating!"
+	icon_state = "doby"
+	icon_living = "doby"
+	icon_dead = "doby_dead"
+
+//Sasha can't wear hats!
+/mob/living/simple_animal/corgi/Sasha/Topic(href, href_list)
+	if(href_list["remove_inv"] || href_list["add_inv"])
+		usr << "<span class='warning'>[src] won't wear that!</span>"
+		return
+	..()
+
+
+/mob/living/simple_animal/corgi/Sasha/Life()
+    ..()
+
+    spinaroo(list("prances around","chases her nub of a tail"))

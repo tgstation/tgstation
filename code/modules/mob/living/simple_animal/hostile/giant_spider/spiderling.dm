@@ -134,3 +134,12 @@
 	if(!v.welded)
 		entry_vent = v
 		Goto(get_turf(v),move_to_delay)
+
+//Virologist's little friend!
+/mob/living/simple_animal/hostile/giant_spider/spiderling/Jonas
+	name = "Jonas"
+	desc = "Named after someone who did their job much better than you do"
+	icon = 'icons/effects/effects.dmi'
+	icon_state = "jonas"
+	icon_living = "jonas"
+	amount_grown = -INFINITY
