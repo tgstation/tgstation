@@ -1,0 +1,6 @@
+author: Chiefwaffles
+
+delete-after: True
+
+changes: 
+  - rscadd: "Department Heads, on arrival, (latejoin or start) now have their name announced to their underlings."

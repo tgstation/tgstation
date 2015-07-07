@@ -55,6 +55,8 @@ Head of Security
 	L.implanted = 1
 	H.sec_hud_set_implants()
 
+	announce_head(H.mind) //tell underlings they have a head
+
 /*
 Warden
 */
