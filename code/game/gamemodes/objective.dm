@@ -499,7 +499,7 @@ var/global/list/possible_items_special = list()
 
 /datum/objective/capture/proc/gen_amount_goal()
 		target_amount = rand(5,10)
-		explanation_text = "Accumulate [target_amount] capture point\s. It is better if they remain relatively unharmed."
+		explanation_text = "Capture [target_amount] lifeform\s with an energy net. Live, rare specimens are worth more."
 		return target_amount
 
 /datum/objective/capture/check_completion()//Basically runs through all the mobs in the area to determine how much they are worth.
