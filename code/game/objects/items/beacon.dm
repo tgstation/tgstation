@@ -3,6 +3,7 @@ var/global/list/obj/item/beacon/beacons = list()
 /obj/item/beacon
 	name = "Tracking Beacon"
 	desc = "A beacon used by a teleporter."
+	icon = 'icons/obj/radio.dmi'
 	icon_state = "beacon"
 	item_state = "signaler"
 	var/code = "electronic"
