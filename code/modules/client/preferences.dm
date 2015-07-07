@@ -1017,7 +1017,7 @@ var/global/list/special_roles = list( //keep synced with the defines BE_* in set
 					if("changeslot")
 						if(!load_character(text2num(href_list["num"])))
 							random_character()
-							real_name = random_name(gender)
+							real_name = random_unique_name(gender)
 							save_character()
 
 					if("tab")
@@ -1029,10 +1029,7 @@ var/global/list/special_roles = list( //keep synced with the defines BE_* in set
 
 	proc/copy_to(mob/living/carbon/human/character)
 		if(be_random_name)
-			if(pref_species.id == "lizard")
-				real_name = random_lizard_name(gender)
-			else
-				real_name = random_name(gender)
+			real_name = pref_species.random_name(gender)
 
 		if(be_random_body)
 			random_character(gender)

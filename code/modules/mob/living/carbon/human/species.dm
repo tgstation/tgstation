@@ -86,7 +86,7 @@
 
 /datum/species/proc/random_name(gender,unique,lastname)
 	if(unique)
-		return random_name(gender)
+		return random_unique_name(gender)
 
 	var/randname
 	if(gender == MALE)

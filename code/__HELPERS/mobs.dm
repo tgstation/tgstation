@@ -69,7 +69,7 @@
 		if(FEMALE)	return pick(facial_hair_styles_female_list)
 		else		return pick(facial_hair_styles_list)
 
-/proc/random_name(gender, attempts_to_find_unique_name=10)
+/proc/random_unique_name(gender, attempts_to_find_unique_name=10)
 	for(var/i=1, i<=attempts_to_find_unique_name, i++)
 		if(gender==FEMALE)	. = capitalize(pick(first_names_female)) + " " + capitalize(pick(last_names))
 		else				. = capitalize(pick(first_names_male)) + " " + capitalize(pick(last_names))
@@ -77,7 +77,7 @@
 		if(i != attempts_to_find_unique_name && !findname(.))
 			break
 
-/proc/random_lizard_name(gender, attempts_to_find_unique_name=10)
+/proc/random_unique_lizard_name(gender, attempts_to_find_unique_name=10)
 	for(var/i=1, i<=attempts_to_find_unique_name, i++)
 		. = capitalize(lizard_name(gender))
 

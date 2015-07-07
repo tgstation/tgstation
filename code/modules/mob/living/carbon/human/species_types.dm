@@ -70,7 +70,7 @@ datum/species/human/spec_death(var/gibbed, var/mob/living/carbon/human/H)
 
 /datum/species/lizard/random_name(gender,unique,lastname)
 	if(unique)
-		return random_lizard_name(gender)
+		return random_unique_lizard_name(gender)
 
 	var/randname = lizard_name(gender)
 
