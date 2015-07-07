@@ -1,7 +1,7 @@
 /obj/machinery/rust/gyrotron
 	icon = 'code/WorkInProgress/Cael_Aislinn/Rust/rust.dmi'
 	icon_state = "emitter-off"
-	name = "Gyrotron"
+	name = "gyrotron"
 	anchored = 0
 	state = 0
 	density = 1
@@ -90,3 +90,31 @@
 		user << "<span class='warning'>Turn \the [src] off first!</span>"
 		return -1
 	. = ..()
+
+/obj/machinery/rust/gyrotron/verb/rotate_cw()
+	set name = "Rotate (Clockwise)"
+	set src in oview(1)
+	set category = "Object"
+
+	if(usr.restrained() || usr.stat || usr.weakened || usr.stunned || usr.paralysis || usr.resting || !Adjacent(usr))
+		return
+
+	if(anchored)
+		usr << "<span class='notify'>\the [src] is anchored to the floor!</span>"
+		return
+
+	dir = turn(dir, -90)
+
+/obj/machinery/rust/gyrotron/verb/rotate_ccw()
+	set name = "Rotate (Counter-Clockwise)"
+	set src in oview(1)
+	set category = "Object"
+
+	if(usr.restrained() || usr.stat || usr.weakened || usr.stunned || usr.paralysis || usr.resting || !Adjacent(usr))
+		return
+
+	if(anchored)
+		usr << "<span class='notify'>\the [src] is anchored to the floor!</span>"
+		return
+
+	dir = turn(dir, 90)
