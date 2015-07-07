@@ -341,7 +341,7 @@
 	book.uses += 1
 	active = 1
 	playsound(get_turf(user),"sound/magic/CastSummon.ogg",50,1)
-	user << "<span class='notice'>You have cast summon guns!</span>"
+	user << "<span class='notice'>You have cast summon guns, and recieved a bonus spell point!</span>"
 	return 1
 
 /datum/spellbook_entry/summon/magic
