@@ -324,7 +324,7 @@ its easier to just keep the beam vertical.
 /atom/proc/examine(mob/user, var/size = "")
 	//This reformat names to get a/an properly working on item descriptions when they are bloody
 	var/f_name = "\a [src]."
-	if(src.blood_DNA)
+	if(src.blood_DNA && src.blood_DNA.len)
 		if(gender == PLURAL)
 			f_name = "some "
 		else
