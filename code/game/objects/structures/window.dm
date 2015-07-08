@@ -341,7 +341,7 @@
 
 
 /*
-/obj/structure/window/proc/updateSilicate()
+/obj/structure/window/proc/updateSilicate() what do you call a syndicate silicon?
 	if(silicateIcon && silicate)
 		icon = initial(icon)
 
@@ -392,21 +392,13 @@
 		if(!src) return
 		if(!fulltile)
 			return
-		/*var/junction = 0 //will be used to determine from which side the window is connected to other windows
-		if(anchored)
-			for(var/obj/structure/window/W in orange(src,1))
-				if(W.anchored && W.density	&& W.fulltile) //Only counts anchored, not-destroyed fill-tile windows.
-					if(src.wtype == W.wtype)
-						if(abs(x-W.x)-abs(y-W.y) ) 		//doesn't count windows, placed diagonally to src
-							junction |= get_dir(src,W)
-		icon_state = "[initial(icon_state)][junction]"*/
 
 		var/ratio = health / maxhealth
 		ratio = Ceiling(ratio*4) * 25
 
 		if(smoother)
 			smoother.smooth()
-			sleep(2)
+			//sleep(2)
 			if(ratio > 75)
 				overlays -= crack_overlay
 				return

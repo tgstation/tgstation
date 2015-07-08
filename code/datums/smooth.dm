@@ -95,7 +95,7 @@
 			sdir = "w"
 		else
 			sdir = "i"
-	top_left = image(holder.icon, "1-[sdir]")
+	top_left = "1-[sdir]"
 
 /datum/tile_smoother/proc/make_ne_corner()
 	var/sdir = ""
@@ -111,7 +111,7 @@
 			sdir = "e"
 		else
 			sdir = "i"
-	top_right = image(holder.icon, "2-[sdir]")
+	top_right = "2-[sdir]"
 
 /datum/tile_smoother/proc/make_sw_corner()
 	var/sdir = ""
@@ -127,7 +127,7 @@
 			sdir = "w"
 		else
 			sdir = "i"
-	bottom_left = image(holder.icon, "3-[sdir]")
+	bottom_left = "3-[sdir]"
 
 /datum/tile_smoother/proc/make_se_corner()
 	var/sdir = ""
@@ -144,7 +144,7 @@
 				sdir = "e"
 			else
 				sdir = "i"
-	bottom_right = image(holder.icon, "4-[sdir]")
+	bottom_right = "4-[sdir]"
 
 /datum/tile_smoother/proc/update_neighbors()
 	for(var/atom/A in orange(1,holder))
@@ -204,3 +204,12 @@
 	else
 		enabled = 1
 		smooth()
+
+var/list/TileCornerImages = list()
+
+/proc/GetTileCornerImage(icon_file, corner)
+	var/key = "[icon_file][corner]"
+	if(TileCornerImages[key])
+		return TileCornerImages[key]
+	TileCornerImages[key] = image(icon_file, corner)
+	return TileCornerImages[key]

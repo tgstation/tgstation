@@ -33,7 +33,7 @@
 	spawn(1)
 		update_icon()
 
-/turf/simulated/floor/fancy/grass/attackby(obj/item/C as obj, mob/user as mob, params)
+/turf/simulated/floor/grass/attackby(obj/item/C as obj, mob/user as mob, params)
 	if(..())
 		return
 	if(istype(C, /obj/item/weapon/shovel))
