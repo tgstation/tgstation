@@ -333,7 +333,9 @@
 	log_name = "SG"
 
 /datum/spellbook_entry/summon/guns/IsAvailible()
-	return !config.no_summon_guns
+	if(!ticker.mode) // In case spellbook is placed on map
+		return 0
+	return (ticker.mode.name != "ragin' mages" && !config.no_summon_guns)
 
 /datum/spellbook_entry/summon/guns/Buy(var/mob/living/carbon/human/user,var/obj/item/weapon/spellbook/book)
 	feedback_add_details("wizard_spell_learned",log_name)
@@ -350,7 +352,9 @@
 	log_name = "SU"
 
 /datum/spellbook_entry/summon/magic/IsAvailible()
-	return !config.no_summon_magic
+	if(!ticker.mode) // In case spellbook is placed on map
+		return 0
+	return (ticker.mode.name != "ragin' mages" && !config.no_summon_magic)
 
 /datum/spellbook_entry/summon/magic/Buy(var/mob/living/carbon/human/user,var/obj/item/weapon/spellbook/book)
 	feedback_add_details("wizard_spell_learned",log_name)
