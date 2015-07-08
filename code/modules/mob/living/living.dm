@@ -424,6 +424,7 @@
 	eye_blurry = 0
 	ear_deaf = 0
 	ear_damage = 0
+	suiciding = 0
 	if(!reagents)
 		create_reagents(1000)
 	else
