@@ -8,6 +8,4 @@
 # Case is not important for ckey.                                                 #
 ###################################################################################
 
-riesen
-kuranyll
-kwatax11
+zaers
