@@ -180,4 +180,4 @@
 			if(p_job.department_head)
 				for(var/head in p_job.department_head)
 					if(head == o_mind.assigned_role)
-						p_mind.current << "<span class = 'notice'>[o_mind.name] is your department head! </span>"
+						p_mind.current << "<span class = 'boldannounce'>[head] [o_mind.name] is your department head! </span>"
