@@ -286,6 +286,8 @@ Class Procs:
 /mob/living/silicon/ai/canUseTopic(atom/movable/M, be_close = 0)
 	if(stat)
 		return
+	if(control_disabled)
+		return
 	if(be_close && !in_range(M, src))
 		return
 	//stop AIs from leaving windows open and using then after they lose vision

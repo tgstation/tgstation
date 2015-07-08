@@ -265,7 +265,7 @@ What a mess.*/
 		active1 = null
 	if(!( data_core.security.Find(active2) ))
 		active2 = null
-	if((usr.contents.Find(src) || (in_range(src, usr) && istype(loc, /turf))) || (istype(usr, /mob/living/silicon)))
+	if(can_be_used_by(usr))
 		usr.set_machine(src)
 		switch(href_list["choice"])
 // SORTING!
