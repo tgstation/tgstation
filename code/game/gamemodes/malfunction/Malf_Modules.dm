@@ -175,7 +175,7 @@
 	if(!canUseTopic())
 		return
 
-	for(var/obj/machinery/firealarm/F in world)
+	for(var/obj/machinery/firealarm/F in machines)
 		if(F.z != ZLEVEL_STATION)
 			continue
 		F.emagged = 1
@@ -198,7 +198,7 @@
 	if(!canUseTopic())
 		return
 
-	for(var/obj/machinery/alarm/A in world)
+	for(var/obj/machinery/alarm/A in machines)
 		if(A.z != ZLEVEL_STATION)
 			continue
 		A.emagged = 1
@@ -349,7 +349,7 @@
 	for(var/datum/AI_Module/small/blackout/blackout in current_modules)
 		if(blackout.uses > 0)
 			blackout.uses --
-			for(var/obj/machinery/power/apc/apc in world)
+			for(var/obj/machinery/power/apc/apc in apcs_list)
 				if(prob(30*apc.overload))
 					apc.overload_lighting()
 				else apc.overload++

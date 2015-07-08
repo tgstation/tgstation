@@ -322,7 +322,7 @@ About the new airlock wires panel:
 
 /obj/machinery/door/airlock/Destroy()
 	if(id_tag)
-		for(var/obj/machinery/doorButtons/D in world)
+		for(var/obj/machinery/doorButtons/D in range(15,src))
 			D.removeMe(src)
 	..()
 
@@ -1096,7 +1096,7 @@ About the new airlock wires panel:
 	wires = new(src)
 	if(src.closeOtherId != null)
 		spawn (5)
-			for (var/obj/machinery/door/airlock/A in world)
+			for (var/obj/machinery/door/airlock/A in range(15,src))
 				if(A.closeOtherId == src.closeOtherId && A != src)
 					src.closeOther = A
 					break
