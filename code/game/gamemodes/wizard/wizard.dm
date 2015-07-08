@@ -128,6 +128,8 @@
 
 /datum/game_mode/proc/name_wizard(mob/living/carbon/human/wizard_mob)
 	//Allows the wizard to choose a custom name or go with a random one. Spawn 0 so it does not lag the round starting.
+	if(wizard_mob.species && wizard_mob.species.name != "Human")
+		wizard_mob.set_species("Human", 1)
 	var/wizard_name_first = pick(wizard_first)
 	var/wizard_name_second = pick(wizard_second)
 	var/randomname = "[wizard_name_first] [wizard_name_second]"
@@ -192,7 +194,7 @@
 	wizard_mob.equip_to_slot_or_del(new /obj/item/weapon/spellbook(wizard_mob), slot_r_hand)
 
 	// For Vox and plasmadudes.
-	wizard_mob.species.handle_post_spawn(wizard_mob)
+	//wizard_mob.species.handle_post_spawn(wizard_mob)
 
 	wizard_mob << "You will find a list of available spells in your spell book. Choose your magic arsenal carefully."
 	wizard_mob << "In your pockets you will find a teleport scroll. Use it as needed."
