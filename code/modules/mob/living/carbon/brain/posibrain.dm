@@ -29,7 +29,7 @@ var/global/posibrain_notif_cooldown = 0
 			posibrain_notif_cooldown = 0
 
 /obj/item/device/mmi/posibrain/attack_self(mob/user as mob)
-	if(brainmob && !brainmob.key && !notified)
+	if((!brainmob || (brainmob && !brainmob.key)) && !notified) //Only allow to ping if there's no brainmob or the brainmob ghosted
 		//Start the process of notified for a new user.
 		user << "<span class='notice'>You carefully locate the manual activation switch and start the positronic brain's boot process.</span>"
 		ping_ghosts("requested")
