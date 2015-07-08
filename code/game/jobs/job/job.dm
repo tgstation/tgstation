@@ -173,11 +173,11 @@
 /datum/job/proc/config_check()
 	return 1
 
-/datum/job/proc/announce_head(var/datum/mind/o_mind) //Announces to underlings of the mind's assigned job that the mind is their head.
-	for(var/datum/mind/p_mind in ticker.minds)
-		if(p_mind.current && p_mind.current.stat != DEAD)
-			var/datum/job/p_job = SSjob.GetJob(p_mind.assigned_role)
-			if(p_job.department_head)
-				for(var/head in p_job.department_head)
-					if(head == o_mind.assigned_role)
-						p_mind.current << "<span class = 'boldannounce'>[head] [o_mind.name] is your department head! </span>"
+/datum/job/proc/announce_head(var/datum/mind/o_mind, var/channel) //tells the given channel that the given mind is the new department head. Channel must be given like so: ":n" for science, etc.
+	var/ailist[] = list()
+	for (var/mob/living/silicon/ai/A in living_mob_list)
+		ailist += A
+	if (ailist.len)
+		for(var/a_channel in channel)
+			var/mob/living/silicon/ai/announcer = pick(ailist)
+			announcer.say("[a_channel] [o_mind.name], [o_mind.assigned_role], is the new department head.")

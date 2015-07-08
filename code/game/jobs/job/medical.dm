@@ -38,7 +38,8 @@ Chief Medical Officer
 	if(H.backbag == 2 || H.backbag == 3)
 		H.equip_to_slot_or_del(new /obj/item/weapon/melee/classic_baton/telescopic(H), slot_in_backpack)
 
-	announce_head(H.mind) //tell underlings they have a head
+	spawn(2) //to wait for initialization stuff
+		announce_head(H.mind, list(":m")) //tell underlings (medical radio) they have a head
 
 /*
 Medical Doctor
