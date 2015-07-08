@@ -517,56 +517,7 @@
 		living_mob_list |= list(C)
 		C.stat = CONSCIOUS
 		C.tod = null
-		C.setToxLoss(0)
-		C.setOxyLoss(0)
-		C.setCloneLoss(0)
-		C.setBrainLoss(0)
-		C.SetParalysis(0)
-		C.SetStunned(0)
-		C.SetWeakened(0)
-		C.radiation = 0
-		C.heal_overall_damage(C.getBruteLoss(), C.getFireLoss())
-		C.reagents.clear_reagents()
-		C.germ_level = 0
-		C.next_pain_time = 0
-		C.traumatic_shock = 0
-		if(ishuman(C))
-			var/mob/living/carbon/human/H = C
-			H.timeofdeath = 0
-			H.vessel.reagent_list = list()
-			H.vessel.add_reagent("blood",560)
-			H.shock_stage = 0
-			spawn(1)
-				H.fixblood()
-			for(var/organ_name in H.organs_by_name)
-				var/datum/organ/external/O = H.organs_by_name[organ_name]
-				for(var/obj/item/weapon/shard/shrapnel/s in O.implants)
-					if(istype(s))
-						O.implants -= s
-						H.contents -= s
-						qdel(s)
-				O.amputated = 0
-				O.brute_dam = 0
-				O.burn_dam = 0
-				O.damage_state = "00"
-				O.germ_level = 0
-				O.hidden = null
-				O.number_wounds = 0
-				O.open = 0
-				O.perma_injury = 0
-				O.stage = 0
-				O.status = 0
-				O.trace_chemicals = list()
-				O.wounds = list()
-				O.wound_update_accuracy = 1
-			for(var/organ_name in H.internal_organs_by_name)
-				var/datum/organ/internal/IO = H.internal_organs_by_name[organ_name]
-				IO.damage = 0
-				IO.trace_chemicals.len = 0
-				IO.germ_level = 0
-				IO.status = 0
-				IO.robotic = 0
-			H.updatehealth()
+		C.revive(0)
 		C << "<span class='notice'>We have regenerated.</span>"
 		C.visible_message("<span class='warning'>[src] appears to wake from the dead, having healed all wounds.</span>")
 		C.status_flags &= ~(FAKEDEATH)
@@ -584,6 +535,10 @@
 	if(!changeling)	return
 
 	var/mob/living/carbon/C = src
+	if(C.suiciding)
+		C << "<span class='warning'>Why would we wish to regenerate if we have already committed suicide?"
+		return
+
 	if(!C.stat && alert("Are we sure we wish to fake our death?",,"Yes","No") == "No")//Confirmation for living changelings if they want to fake their death
 		return
 	C << "<span class='notice'>We will attempt to regenerate our form.</span>"
