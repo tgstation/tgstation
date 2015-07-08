@@ -63,6 +63,9 @@
 	else
 		suit_toggle()
 
+/obj/item/clothing/suit/toggle/ui_action_click()
+	..()
+	suit_toggle()
 
 /obj/item/clothing/suit/toggle/proc/suit_toggle()
 	set src in usr
