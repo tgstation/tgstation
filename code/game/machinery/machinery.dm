@@ -275,6 +275,9 @@ Class Procs:
 		return
 	if(!isturf(M.loc) && M.loc != src)
 		return
+	if(eye_blind)
+		src << "<span class='warning'>You cannot see [M]!</span>"
+		return
 	if(getBrainLoss() >= 60)
 		visible_message("<span class='danger'>[src] stares cluelessly at [M] and drools.</span>")
 		return
@@ -336,6 +339,9 @@ Class Procs:
 		else if(prob(H.getBrainLoss()))
 			user << "<span class='danger'>You momentarily forget how to use [src].</span>"
 			return 1
+		if(H.eye_blind)
+			src << "<span class='warning'>You cannot see [src]!</span>"
+			return
 	if(panel_open)
 		src.add_fingerprint(user)
 		return 0
