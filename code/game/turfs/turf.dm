@@ -288,6 +288,19 @@
 /turf/indestructible/riveted
 	icon_state = "riveted"
 
+/turf/indestructible/riveted/New()
+	..()
+	if(smooth)
+		smoother = new /datum/tile_smoother(src, canSmoothWith)
+		smoother.smooth()
+		icon_state = ""
+
+/turf/indestructible/riveted/uranium
+	icon = 'icons/turf/walls/uranium_wall.dmi'
+	icon_state = "uranium"
+	smooth = 1
+	canSmoothWith = null
+
 /turf/indestructible/abductor
 	icon_state = "alien1"
 

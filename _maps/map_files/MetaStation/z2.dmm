@@ -498,7 +498,7 @@
 "jD" = (/obj/machinery/door/airlock/glass_command{name = "Cockpit"; req_access_txt = "19"},/turf/simulated/floor/plasteel/shuttle,/area/shuttle/escape)
 "jE" = (/turf/simulated/wall/shuttle{tag = "icon-swall15"; icon_state = "swall15"; dir = 2},/area/shuttle/escape)
 "jF" = (/turf/indestructible/fakeglass{color = "#008000"; dir = 8; icon_state = "fakewindows2"},/area/wizard_station)
-"jG" = (/turf/indestructible/riveted{icon_state = "uranium0"},/area/wizard_station)
+"jG" = (/turf/indestructible/riveted/uranium,/area/wizard_station)
 "jH" = (/turf/indestructible/fakeglass{color = "#008000"; dir = 4; icon_state = "fakewindows"},/area/wizard_station)
 "jI" = (/obj/structure/table,/obj/item/stack/sheet/glass{amount = 10},/obj/item/device/multitool,/turf/simulated/floor/plasteel/shuttle{icon_state = "shuttlefloor4"},/area/shuttle/syndicate)
 "jJ" = (/obj/item/weapon/shard{color = "#008000"; icon_state = "small"},/obj/structure/grille{color = "#008000"; density = 0; icon_state = "brokengrille"},/turf/simulated/floor/plating/airless,/area/wizard_station)

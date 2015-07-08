@@ -443,7 +443,7 @@
 "iA" = (/obj/machinery/computer/security/telescreen{pixel_y = -32},/turf/simulated/floor/plasteel/redyellow,/area/tdome/tdomeadmin)
 "iB" = (/turf/simulated/floor/plasteel,/area/tdome/tdomeadmin)
 "iC" = (/turf/indestructible/riveted,/area/tdome/tdomeadmin)
-"iD" = (/turf/indestructible/riveted{icon_state = "uranium0"},/area/wizard_station)
+"iD" = (/turf/indestructible/riveted/uranium,/area/wizard_station)
 "iE" = (/obj/machinery/door/airlock{icon = 'icons/obj/doors/Dooruranium.dmi'; name = "Personal Quarters"},/turf/simulated/floor/plasteel/cult,/area/wizard_station)
 "iF" = (/turf/indestructible/fakedoor{name = "Thunderdome Admin"},/area/tdome/tdomeadmin)
 "iG" = (/obj/structure/table,/obj/machinery/door_control{id = "thunderdomegen"; name = "General Supply Control"; pixel_y = 0; req_access_txt = "102"},/turf/simulated/floor/plasteel,/area/tdome/tdomeadmin)
