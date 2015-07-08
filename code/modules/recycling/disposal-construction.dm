@@ -59,14 +59,13 @@
 				base_state = "intake"
 				dpdir = dir
 
-			if(9)
+			if(9, 11)
 				base_state = "pipe-j1s"
 				dpdir = dir | right | flip
 
-			if(10)
+			if(10, 12)
 				base_state = "pipe-j2s"
 				dpdir = dir | left | flip
-
 
 		if(ptype<6 || ptype>8)
 			icon_state = "con[base_state]"
@@ -120,6 +119,10 @@
 				ptype = 10
 			if(10)
 				ptype = 9
+			if(11)
+				ptype = 12
+			if(12)
+				ptype = 11
 
 		update()
 
@@ -140,6 +143,8 @@
 				return /obj/machinery/disposal/deliveryChute
 			if(9,10)
 				return /obj/structure/disposalpipe/sortjunction
+			if(11, 12)
+				return /obj/structure/disposalpipe/wrapsortjunction
 		return
 
 
@@ -161,6 +166,9 @@
 				nicetype = "delivery chute"
 			if(9, 10)
 				nicetype = "sorting pipe"
+				ispipe = 1
+			if(11, 12)
+				nicetype = "wrap sorting pipe"
 				ispipe = 1
 			else
 				nicetype = "pipe"
@@ -233,9 +241,13 @@
 							P.updateicon()
 
 							//Needs some special treatment ;)
-							if(ptype==9 || ptype==10)
-								var/obj/structure/disposalpipe/sortjunction/SortP = P
-								SortP.updatedir()
+							switch(ptype)
+								if(9, 10)
+									var/obj/structure/disposalpipe/sortjunction/SortP = P
+									SortP.updatedir()
+								if(11, 12)
+									var/obj/structure/disposalpipe/wrapsortjunction/sort_P = P
+									sort_P.update_dir()
 
 						else if(ptype==6) // Disposal bin
 							var/obj/machinery/disposal/P = new /obj/machinery/disposal(src.loc)
