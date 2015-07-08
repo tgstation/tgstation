@@ -24,78 +24,15 @@
 	var/datum/action/mecha/mech_toggle_thrusters/thrusters_action = new
 	var/datum/action/mecha/mech_zoom/zoom_action = new
 
+/obj/mecha/combat/marauder/New()
+	..()
+	smoke_system.set_up(3, 0, src)
+	smoke_system.attach(src)
+
 /obj/mecha/combat/marauder/Destroy()
 	qdel(smoke_system)
 	smoke_system = null
 	..()
-
-/obj/mecha/combat/marauder/seraph
-	desc = "Heavy-duty, command-type exosuit. This is a custom model, utilized only by high-ranking military personnel."
-	name = "\improper Seraph"
-	icon_state = "seraph"
-	operation_req_access = list(access_cent_specops)
-	step_in = 3
-	health = 550
-	wreckage = /obj/structure/mecha_wreckage/seraph
-	internal_damage_threshold = 20
-	force = 55
-	max_equip = 5
-
-/obj/mecha/combat/marauder/mauler
-	desc = "Heavy-duty, combat exosuit, developed off of the existing Marauder model."
-	name = "\improper Mauler"
-	icon_state = "mauler"
-	operation_req_access = list(access_syndicate)
-	wreckage = /obj/structure/mecha_wreckage/mauler
-
-/obj/mecha/combat/marauder/mauler/loaded/New()
-	..()
-	var/obj/item/mecha_parts/mecha_equipment/ME = new /obj/item/mecha_parts/mecha_equipment/weapon/ballistic/lmg(src)
-	ME.attach(src)
-	ME = new /obj/item/mecha_parts/mecha_equipment/weapon/ballistic/scattershot(src)
-	ME.attach(src)
-	ME = new /obj/item/mecha_parts/mecha_equipment/weapon/ballistic/launcher/missile_rack(src)
-	ME.attach(src)
-	ME = new /obj/item/mecha_parts/mecha_equipment/tesla_energy_relay(src)
-	ME.attach(src)
-	ME = new /obj/item/mecha_parts/mecha_equipment/antiproj_armor_booster(src)
-	ME.attach(src)
-	src.smoke_system.set_up(3, 0, src)
-	src.smoke_system.attach(src)
-	return
-
-/obj/mecha/combat/marauder/loaded/New()
-	..()
-	var/obj/item/mecha_parts/mecha_equipment/ME = new /obj/item/mecha_parts/mecha_equipment/weapon/energy/pulse(src)
-	ME.attach(src)
-	ME = new /obj/item/mecha_parts/mecha_equipment/weapon/ballistic/launcher/missile_rack(src)
-	ME.attach(src)
-	ME = new /obj/item/mecha_parts/mecha_equipment/tesla_energy_relay(src)
-	ME.attach(src)
-	ME = new /obj/item/mecha_parts/mecha_equipment/antiproj_armor_booster(src)
-	ME.attach(src)
-	src.smoke_system.set_up(3, 0, src)
-	src.smoke_system.attach(src)
-	return
-
-/obj/mecha/combat/marauder/seraph/New()
-	..()//Let it equip whatever is needed.
-	var/obj/item/mecha_parts/mecha_equipment/ME
-	if(equipment.len)//Now to remove it and equip anew.
-		for(ME in equipment)
-			equipment -= ME
-			qdel(ME)
-	ME = new /obj/item/mecha_parts/mecha_equipment/weapon/ballistic/scattershot(src)
-	ME.attach(src)
-	ME = new /obj/item/mecha_parts/mecha_equipment/weapon/ballistic/launcher/missile_rack(src)
-	ME.attach(src)
-	ME = new /obj/item/mecha_parts/mecha_equipment/teleporter(src)
-	ME.attach(src)
-	ME = new /obj/item/mecha_parts/mecha_equipment/tesla_energy_relay(src)
-	ME.attach(src)
-	ME = new /obj/item/mecha_parts/mecha_equipment/antiproj_armor_booster(src)
-	ME.attach(src)
-	return
 
 /obj/mecha/combat/marauder/relaymove(mob/user,direction)
 	if(zoom)
@@ -148,6 +85,64 @@
 	return output
 
 
+/obj/mecha/combat/marauder/loaded/New()
+	..()
+	var/obj/item/mecha_parts/mecha_equipment/ME = new /obj/item/mecha_parts/mecha_equipment/weapon/energy/pulse(src)
+	ME.attach(src)
+	ME = new /obj/item/mecha_parts/mecha_equipment/weapon/ballistic/launcher/missile_rack(src)
+	ME.attach(src)
+	ME = new /obj/item/mecha_parts/mecha_equipment/tesla_energy_relay(src)
+	ME.attach(src)
+	ME = new /obj/item/mecha_parts/mecha_equipment/antiproj_armor_booster(src)
+	ME.attach(src)
+
+/obj/mecha/combat/marauder/seraph
+	desc = "Heavy-duty, command-type exosuit. This is a custom model, utilized only by high-ranking military personnel."
+	name = "\improper Seraph"
+	icon_state = "seraph"
+	operation_req_access = list(access_cent_specops)
+	step_in = 3
+	health = 550
+	wreckage = /obj/structure/mecha_wreckage/seraph
+	internal_damage_threshold = 20
+	force = 55
+	max_equip = 5
+
+/obj/mecha/combat/marauder/seraph/New()
+	..()
+	var/obj/item/mecha_parts/mecha_equipment/ME
+	ME = new /obj/item/mecha_parts/mecha_equipment/weapon/ballistic/scattershot(src)
+	ME.attach(src)
+	ME = new /obj/item/mecha_parts/mecha_equipment/weapon/ballistic/launcher/missile_rack(src)
+	ME.attach(src)
+	ME = new /obj/item/mecha_parts/mecha_equipment/teleporter(src)
+	ME.attach(src)
+	ME = new /obj/item/mecha_parts/mecha_equipment/tesla_energy_relay(src)
+	ME.attach(src)
+	ME = new /obj/item/mecha_parts/mecha_equipment/antiproj_armor_booster(src)
+	ME.attach(src)
+
+/obj/mecha/combat/marauder/mauler
+	desc = "Heavy-duty, combat exosuit, developed off of the existing Marauder model."
+	name = "\improper Mauler"
+	icon_state = "mauler"
+	operation_req_access = list(access_syndicate)
+	wreckage = /obj/structure/mecha_wreckage/mauler
+
+/obj/mecha/combat/marauder/mauler/loaded/New()
+	..()
+	var/obj/item/mecha_parts/mecha_equipment/ME = new /obj/item/mecha_parts/mecha_equipment/weapon/ballistic/lmg(src)
+	ME.attach(src)
+	ME = new /obj/item/mecha_parts/mecha_equipment/weapon/ballistic/scattershot(src)
+	ME.attach(src)
+	ME = new /obj/item/mecha_parts/mecha_equipment/weapon/ballistic/launcher/missile_rack(src)
+	ME.attach(src)
+	ME = new /obj/item/mecha_parts/mecha_equipment/tesla_energy_relay(src)
+	ME.attach(src)
+	ME = new /obj/item/mecha_parts/mecha_equipment/antiproj_armor_booster(src)
+	ME.attach(src)
+
+
 /datum/action/mecha/mech_smoke
 	name = "Smoke"
 	button_icon_state = "smoke"
@@ -162,7 +157,6 @@
 		M.smoke_ready = 0
 		spawn(M.smoke_cooldown)
 			M.smoke_ready = 1
-
 
 /datum/action/mecha/mech_toggle_thrusters
 	name = "Toggle Thrusters"

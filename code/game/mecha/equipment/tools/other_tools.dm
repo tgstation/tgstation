@@ -155,11 +155,6 @@
 	var/deflect_coeff = 1.15
 	var/damage_coeff = 0.8
 
-/obj/item/mecha_parts/mecha_equipment/anticcw_armor_booster/can_attach(obj/mecha/combat/M as obj)
-	if(..())
-		if(istype(M))
-			return 1
-
 /obj/item/mecha_parts/mecha_equipment/anticcw_armor_booster/get_equip_info()
 	if(!chassis) return
 	return "<span style=\"color:[equip_ready?"#0f0":"#f00"];\">*</span>&nbsp;[src.name]"
@@ -181,12 +176,6 @@
 	range = 0
 	var/deflect_coeff = 1.15
 	var/damage_coeff = 0.8
-
-/obj/item/mecha_parts/mecha_equipment/antiproj_armor_booster/can_attach(obj/mecha/combat/M as obj)
-	if(..())
-		if(istype(M))
-			return 1
-	return 0
 
 /obj/item/mecha_parts/mecha_equipment/antiproj_armor_booster/get_equip_info()
 	if(!chassis) return
@@ -276,7 +265,9 @@
 	else //no repair needed, we turn off
 		SSobj.processing.Remove(src)
 		set_ready_state(1)
-
+		chassis.overlays -= droid_overlay
+		droid_overlay = new(src.icon, icon_state = "repair_droid")
+		chassis.overlays += droid_overlay
 
 
 
@@ -357,7 +348,7 @@
 					pow_chan = c
 					break
 			if(pow_chan)
-				var/delta = min(15, chassis.cell.maxcharge-cur_charge)
+				var/delta = min(20, chassis.cell.maxcharge-cur_charge)
 				chassis.give_power(delta)
 				A.master.use_power(delta*coeff, pow_chan)
 

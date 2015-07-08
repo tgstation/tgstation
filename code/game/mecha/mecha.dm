@@ -133,6 +133,8 @@
 	equipment.Cut()
 	cell = null
 	internal_tank = null
+	qdel(cabin_air)
+	cabin_air = null
 	qdel(spark_system)
 	spark_system = null
 
@@ -324,7 +326,10 @@
 
 
 /obj/mecha/proc/click_action(atom/target,mob/user)
-	if(!occupant || occupant != user ) return
+	if(!occupant || occupant != user )
+		return
+	if(!locate(/turf) in list(target,target.loc)) // Prevents inventory from being drilled
+		return
 	if(user.incapacitated())
 		return
 	if(state)

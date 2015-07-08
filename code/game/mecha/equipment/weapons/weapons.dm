@@ -117,9 +117,10 @@
 	fire_sound = 'sound/weapons/Laser.ogg'
 
 /obj/item/mecha_parts/mecha_equipment/weapon/energy/plasma/can_attach(obj/mecha/working/M as obj)
-	if(..())
-		if(istype(M))
-			return 1
+	if(..()) //combat mech
+		return 1
+	else if(M.equipment.len < M.max_equip && istype(M))
+		return 1
 	return 0
 
 /obj/item/projectile/beam/pulse/heavy
