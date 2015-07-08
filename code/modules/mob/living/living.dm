@@ -378,7 +378,13 @@
 /mob/living/proc/restore_all_organs()
 	return
 
-
+/*
+NOTE TO ANYONE MAKING A PROC THAT USES REVIVE/REJUVENATE:
+If the proc calling either of these is:
+	-meant to be an admin/overpowered revival proc, make sure you set suiciding = 0
+	-meant to be something that a player uses to heal/revive themself or others, check if suiciding = 1 and prevent them from reviving if true.
+Thanks.
+*/
 
 /mob/living/proc/revive(animation = 0)
 	rejuvenate(animation)
@@ -424,7 +430,6 @@
 	eye_blurry = 0
 	ear_deaf = 0
 	ear_damage = 0
-	suiciding = 0
 	if(!reagents)
 		create_reagents(1000)
 	else
