@@ -1537,3 +1537,6 @@ mob/proc/walking()
 
 /mob/proc/dexterity_check()
 	return 0
+
+/mob/proc/html_mob_check()
+	return 0

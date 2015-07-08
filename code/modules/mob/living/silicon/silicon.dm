@@ -290,3 +290,10 @@
 
 /mob/living/silicon/dexterity_check()
 	return 1
+
+/mob/living/silicon/html_mob_check(var/typepath)
+	for(var/atom/movable/AM in html_machines)
+		if(typepath == AM.type)
+			if(max(abs(AM.x-src.x),abs(AM.y-src.y)) <= client.view)
+				return 1
+	return 0

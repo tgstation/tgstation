@@ -14,7 +14,12 @@
 
 /obj/machinery/computer/crew/New()
 	tracked = list()
+	html_machines += src
 	..()
+
+/obj/machinery/computer/crew/Destroy()
+	..()
+	html_machines -= src
 
 /obj/machinery/computer/crew/attack_ai(mob/user)
 	attack_hand(user)
@@ -84,9 +89,6 @@ var/global/datum/crewmonitor/crewmonitor = new
 	jobs["Lawyer"] = 69
 	jobs["Admiral"] = 200
 	jobs["Centcom Commander"] = 210
-	jobs["Custodian"] = 211
-	jobs["Medical Officer"] = 212
-	jobs["Research Officer"] = 213
 	jobs["Emergency Response Team Commander"] = 220
 	jobs["Security Response Officer"] = 221
 	jobs["Engineer Response Officer"] = 222
@@ -100,10 +102,11 @@ var/global/datum/crewmonitor/crewmonitor = new
 /datum/crewmonitor/Destroy()
 	if (src.interfaces)
 		for (var/datum/html_interface/hi in interfaces)
-			qdel(hi)
+			Destroy(hi)
 		src.interfaces = null
 
 	return ..()
+
 /datum/crewmonitor/proc/show(mob/mob, z)
 	if (!z) z = mob.z
 
@@ -206,13 +209,12 @@ var/global/datum/crewmonitor/crewmonitor = new
 							pos_x = null
 							pos_y = null
 
-						results[++results.len] = list(name, assignment, ijob, life_status, dam1, dam2, dam3, dam4, area, pos_x, pos_y, H.can_track())
+						results[++results.len] = list(name, assignment, ijob, life_status, dam1, dam2, dam3, dam4, area, pos_x, pos_y, H.monitor_check())
 
 			src.data = results
 			src.updateFor(null, hi, z) // updates for everyone
 
-/mob/living/carbon/human/proc/can_track()
-	//basic fast checks go first. When overriding this proc, I recommend calling ..() at the end.
+/mob/living/carbon/human/proc/monitor_check()
 	var/turf/T = get_turf(src)
 	if(!T)
 		return 0
@@ -228,7 +230,7 @@ var/global/datum/crewmonitor/crewmonitor = new
 	for (z in src.interfaces)
 		if (src.interfaces[z] == hi) break
 
-	return (hclient.client.mob && hclient.client.mob.stat == 0 && hclient.client.mob.z == text2num(z) && ( isAI(hclient.client.mob) || (locate(/obj/machinery/computer/crew, range(1, hclient.client.mob))) ) )
+	return (hclient.client.mob && hclient.client.mob.stat == 0 && hclient.client.mob.z == text2num(z) && hclient.client.mob.html_mob_check(/obj/machinery/computer/crew))
 
 /datum/crewmonitor/Topic(href, href_list[], datum/html_interface_client/hclient)
 	if (istype(hclient))
@@ -441,127 +443,3 @@ var/global/datum/crewmonitor/crewmonitor = new
 #ifdef MINIMAP_DEBUG
 #undef MINIMAP_DEBUG
 #endif
-/*
-/obj/machinery/computer/crew/interact(mob/user)
-	ui_interact(user)
-
-/obj/machinery/computer/crew/ui_interact(mob/user, ui_key = "main", var/datum/nanoui/ui = null, var/force_open = 1)
-	if(stat & (BROKEN|NOPOWER))
-		return
-	user.set_machine(src)
-	src.scan()
-
-	var/data[0]
-	var/list/crewmembers = list()
-
-	for(var/mob/living/carbon/brain/B in mob_list)
-		var/turf/pos = get_turf(B)
-		if(!pos) continue
-		var/obj/item/device/mmi/M = B.loc
-		if(istype(M) && M.brainmob == B)
-			if(isrobot(M.loc))
-				continue
-			var/list/crewmemberData = list()
-			crewmemberData["sensor_type"] = 3
-			crewmemberData["dead"] = 0
-			crewmemberData["oxy"] = 0
-			crewmemberData["tox"] = 0
-			crewmemberData["fire"] = 0
-			crewmemberData["brute"] = 0
-			crewmemberData["name"] = M.name
-			crewmemberData["rank"] = "Unknown"
-			crewmemberData["area"] = get_area(M)
-			crewmemberData["x"] = pos.x
-			crewmemberData["y"] = pos.y
-			crewmemberData["z"] = pos.z
-			crewmemberData["xoffset"] = pos.x-WORLD_X_OFFSET[pos.z]
-			crewmemberData["yoffset"] = pos.y-WORLD_Y_OFFSET[pos.z]
-			crewmembers += list(crewmemberData)
-
-
-	for(var/obj/item/clothing/under/C in src.tracked)
-
-		var/turf/pos = get_turf(C)
-
-		if((C) && (C.has_sensor) && (pos) && (pos.z != CENTCOMM_Z) && C.sensor_mode)
-			if(istype(C.loc, /mob/living/carbon/human))
-
-				var/mob/living/carbon/human/H = C.loc
-
-				var/list/crewmemberData = list()
-
-				crewmemberData["sensor_type"] = C.sensor_mode
-				crewmemberData["dead"] = H.stat > 1
-				crewmemberData["oxy"] = round(H.getOxyLoss(), 1)
-				crewmemberData["tox"] = round(H.getToxLoss(), 1)
-				crewmemberData["fire"] = round(H.getFireLoss(), 1)
-				crewmemberData["brute"] = round(H.getBruteLoss(), 1)
-
-				crewmemberData["name"] = "Unknown"
-				crewmemberData["rank"] = "Unknown"
-				if(H.wear_id && istype(H.wear_id, /obj/item/weapon/card/id) )
-					var/obj/item/weapon/card/id/I = H.wear_id
-					crewmemberData["name"] = I.name
-					crewmemberData["rank"] = I.rank
-				else if(H.wear_id && istype(H.wear_id, /obj/item/device/pda) )
-					var/obj/item/device/pda/P = H.wear_id
-					crewmemberData["name"] = (P.id ? P.id.name : "Unknown")
-					crewmemberData["rank"] = (P.id ? P.id.rank : "Unknown")
-
-				crewmemberData["area"] = get_area(H)
-				crewmemberData["x"] = pos.x
-				crewmemberData["y"] = pos.y
-				crewmemberData["z"] = pos.z
-				crewmemberData["xoffset"] = pos.x-WORLD_X_OFFSET[pos.z]
-				crewmemberData["yoffset"] = pos.y-WORLD_Y_OFFSET[pos.z]
-
-				crewmembers += list(crewmemberData)
-				// Works around list += list2 merging lists; it's not pretty but it works
-				//crewmembers += "temporary item"
-				//crewmembers[crewmembers.len] = crewmemberData
-
-	crewmembers = sortList(crewmembers)
-
-	data["crewmembers"] = crewmembers
-
-	//ui = nanomanager.try_update_ui(user, src, ui_key, ui, data, force_open)
-	if (!ui) // no ui has been passed, so we'll search for one
-		ui = nanomanager.get_open_ui(user, src, ui_key)
-	if(!ui)
-		ui = new(user, src, ui_key, "crew_monitor.tmpl", "Crew Monitoring Computer", 900, 800)
-
-		// adding a template with the key "mapContent" enables the map ui functionality
-		ui.add_template("mapContent", "crew_monitor_map_content.tmpl")
-		// adding a template with the key "mapHeader" replaces the map header content
-		ui.add_template("mapHeader", "crew_monitor_map_header.tmpl")
-
-		// we want to show the map by default
-		ui.set_show_map(1)
-
-		ui.set_initial_data(data)
-		ui.open()
-
-		// should make the UI auto-update; doesn't seem to?
-		ui.set_auto_update(1)
-	else
-		// The UI is already open so push the new data to it
-		ui.push_data(data)
-		return
-
-/obj/machinery/computer/crew/proc/is_scannable(const/obj/item/clothing/under/C, const/mob/living/carbon/human/H)
-	if(!istype(H) || H.iscorpse)
-		return 0
-
-	if(isnull(track_special_role))
-		return C.has_sensor
-
-	return (H.mind ? H.mind.special_role == track_special_role : 1)
-
-/obj/machinery/computer/crew/proc/scan()
-	for(var/mob/living/carbon/human/H in mob_list)
-		if(istype(H.w_uniform, /obj/item/clothing/under))
-			var/obj/item/clothing/under/C = H.w_uniform
-			if (C.has_sensor)
-				if(is_scannable(C, H))
-					tracked |= C
-	return 1*/
