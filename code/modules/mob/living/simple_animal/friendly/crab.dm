@@ -82,3 +82,14 @@
 	icon_state = "kickstool"
 	icon_living = "kickstool"
 	icon_dead = "kickstool_dead"
+
+/mob/living/simple_animal/crab/norris
+	name = "Norris"
+	desc = "Some weird Thing that makes a neat pet. Screams a lot."
+	icon_state = "norris"
+	icon_living = "norris"
+	icon_dead = "norris_dead"
+	speak_emote = list("screams")
+	emote_hear = list("screams")
+	emote_see = list("screams")
+	friendly = "bites"
