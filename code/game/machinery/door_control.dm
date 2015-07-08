@@ -79,7 +79,7 @@
 	add_fingerprint(user)
 
 	if(normaldoorcontrol)
-		for(var/obj/machinery/door/airlock/D in airlocks)
+		for(var/obj/machinery/door/airlock/D in range(15,src))
 			if(D.id_tag == src.id)
 				if(specialfunctions & OPEN)
 					spawn(0)
@@ -99,7 +99,7 @@
 					D.safe = !D.safe
 	else
 		var/openclose
-		for(var/obj/machinery/door/poddoor/M in airlocks)
+		for(var/obj/machinery/door/poddoor/M in range(15,src))
 			if(M.id == src.id)
 				if(openclose == null)
 					openclose = M.density
@@ -147,7 +147,7 @@
 	active = 1
 	icon_state = "launcheract"
 
-	for(var/obj/machinery/door/poddoor/M in airlocks)
+	for(var/obj/machinery/door/poddoor/M in range(15,src))
 		if (M.id == src.id)
 			spawn( 0 )
 				M.open()
@@ -155,13 +155,13 @@
 
 	sleep(20)
 
-	for(var/obj/machinery/mass_driver/M in machines)
+	for(var/obj/machinery/mass_driver/M in range(15,src))
 		if(M.id == src.id)
 			M.drive()
 
 	sleep(50)
 
-	for(var/obj/machinery/door/poddoor/M in airlocks)
+	for(var/obj/machinery/door/poddoor/M in range(15,src))
 		if (M.id == src.id)
 			spawn( 0 )
 				M.close()
