@@ -4,7 +4,7 @@
 	icon = 'icons/obj/gun.dmi'
 	icon_state = "pneumatic"
 	item_state = "pneumatic"
-	w_class = 5.0
+	w_class = 4.0
 	flags = FPRINT
 	siemens_coefficient = 1
 	slot_flags = SLOT_BELT
