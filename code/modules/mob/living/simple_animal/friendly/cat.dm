@@ -77,7 +77,7 @@
 /mob/living/simple_animal/cat/Proc
 	name = "Proc"
 
-/mob/living/simple_animal/cat/Salem
+/mob/living/simple_animal/cat/salem
 	name = "Salem"
 	desc = "Meow."
 	icon_state = "salem"
@@ -104,3 +104,6 @@
 	speak_emote = list("hisses")
 	emote_hear = list("hisses")
 	emote_see = list("slithers")
+
+/mob/living/simple_animal/cat/snek/corpus
+	name = "Corpus"

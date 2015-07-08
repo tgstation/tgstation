@@ -136,8 +136,8 @@
 		Goto(get_turf(v),move_to_delay)
 
 //Virologist's little friend!
-/mob/living/simple_animal/hostile/giant_spider/spiderling/Jonas
-	name = "Jonas"
+/mob/living/simple_animal/hostile/giant_spider/spiderling/salk
+	name = "Salk"
 	desc = "Named after someone who did their job much better than you do"
 	icon = 'icons/effects/effects.dmi'
 	icon_state = "jonas"

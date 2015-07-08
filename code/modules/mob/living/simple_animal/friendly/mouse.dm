@@ -182,7 +182,7 @@
 	response_disarm = "gently pushes aside"
 	response_harm   = "splats"
 
-/mob/living/simple_animal/mouse/black/Dessert
+/mob/living/simple_animal/mouse/black/dessert
 	name = "Dessert"
 	desc = "Crunchy!"
 	response_help  = "pets"

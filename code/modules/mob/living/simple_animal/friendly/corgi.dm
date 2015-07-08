@@ -532,7 +532,7 @@
 
 
 //Sasha isn't even a corgi you dummy!
-/mob/living/simple_animal/corgi/Sasha
+/mob/living/simple_animal/corgi/sasha
 	name = "Sasha"
 	real_name = "Sasha"
 	gender = FEMALE
@@ -542,14 +542,14 @@
 	icon_dead = "doby_dead"
 
 //Sasha can't wear hats!
-/mob/living/simple_animal/corgi/Sasha/Topic(href, href_list)
+/mob/living/simple_animal/corgi/sasha/Topic(href, href_list)
 	if(href_list["remove_inv"] || href_list["add_inv"])
 		usr << "<span class='warning'>[src] won't wear that!</span>"
 		return
 	..()
 
 
-/mob/living/simple_animal/corgi/Sasha/Life()
+/mob/living/simple_animal/corgi/sasha/Life()
     ..()
 
     spinaroo(list("prances around","chases her nub of a tail"))
