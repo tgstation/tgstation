@@ -185,10 +185,6 @@
 				user << "<span class='warning'>Sticking a dead brain into the frame would sort of defeat the purpose!</span>"
 				return
 
-			if(BM.mind in (ticker.mode.head_revolutionaries|ticker.mode.get_gang_bosses()))
-				user << "<span class='warning'>The frame's firmware lets out a shrill sound, and flashes 'Abnormal Memory Engram'. It refuses to accept the MMI!</span>"
-				return
-
 			if(jobban_isbanned(BM, "Cyborg"))
 				user << "<span class='warning'>This MMI does not seem to fit!</span>"
 				return
@@ -222,12 +218,15 @@
 				if(ticker.mode.config_tag == "malfunction") //Don't let humans get a cyborg on their side during malf, for balance reasons.
 					O.set_zeroth_law("<span class='danger'>ERROR ER0RR $R0RRO$!R41.%%!!(%$^^__+ @#F0E4'STATION OVERRUN, ASSUME CONTROL TO CONTAIN OUTBREAK#*�&110010</span>")
 
+			ticker.mode.remove_cultist(BM.mind, 1)
+			ticker.mode.remove_revolutionary(BM.mind, 1)
+			ticker.mode.remove_gangster(BM.mind, 1, remove_bosses=1)
 			BM.mind.transfer_to(O)
 
 			if(O.mind && O.mind.special_role)
-				O.mind.store_memory("As a cyborg, any objectives listed here are null and void, and will be marked as failed. They are simply here for memory purposes.")
-				O << "<span class='userdanger'>You have been robotized! You are no longer a [O.mind.special_role]!</span>"
-				O << "<span class='danger'>All of your objectives are null and void, and will be marked as failed. You must now follow your programmed laws above all else.</span>"
+				O.mind.store_memory("As a cyborg, you must obey your silicon laws and master AI above all else. Your objectives will consider you to be dead.")
+				O << "<span class='userdanger'>You have been robotized!</span>"
+				O << "<span class='danger'>You must obey your silicon laws and master AI above all else. Your objectives will consider you to be dead.</span>"
 
 			O.job = "Cyborg"
 
