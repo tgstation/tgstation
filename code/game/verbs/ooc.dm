@@ -60,13 +60,9 @@
 
 /proc/toggle_ooc(var/toggle = null)
 	if(toggle != null) //if we're specifically en/disabling ooc
-		world << "toggle has value [toggle]"
-		world << "ooc_allowed is [ooc_allowed]"
 		if(toggle != ooc_allowed)
-			world << "ooc_allowed set to toggle"
 			ooc_allowed = toggle
 		else
-			world << "toggle was the same as ooc_allowed returning"
 			return
 	else //otherwise just toggle it
 		ooc_allowed = !ooc_allowed
