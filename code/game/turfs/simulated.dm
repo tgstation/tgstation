@@ -57,5 +57,6 @@
 
 /turf/simulated/ChangeTurf(var/path)
 	. = ..()
-	if(smoother)
-		smoother.update_neighbors()
+	for(var/turf/T in orange(1,src)) //manual update because it doesnt work otherwise
+		if(T.smoother)
+			T.smoother.smooth()

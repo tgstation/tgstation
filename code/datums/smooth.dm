@@ -25,10 +25,10 @@
 
 /datum/tile_smoother/New(var/a_holder, var/list/s_list=null, movable_b = 0)
 	holder = a_holder
-	top_left = image(holder.icon, "1-i")
-	top_right = image(holder.icon, "2-i")
-	bottom_left = image(holder.icon, "3-i")
-	bottom_right = image(holder.icon, "4-i")
+	top_left += "1-i"
+	top_right += "2-i"
+	bottom_left += "3-i"
+	bottom_right += "4-i"
 	if(s_list && s_list.len == 0)
 		siblings = null
 	else
