@@ -625,14 +625,15 @@
 	icon_state = "hugbox"
 	foldable = null
 
-/obj/item/weapon/storage/box/attack_self(mob/user)
+/obj/item/weapon/storage/box/hug/attack_self(mob/user)
 	..()
+	user.changeNext_move(CLICK_CD_MELEE)
 	playsound(loc, "rustle", 50, 1, -5)
 	user.visible_message("<span class='notice'>[user] hugs the [src].</span>","<span class='notice'>You hug the [src].</span>")
 	return
 
 /obj/item/weapon/storage/box/hug/New()
 	..()
-	new /obj/item/stack/medical/gauze(src)
 	new /obj/item/stack/medical/bruise_pack(src)
 	new /obj/item/stack/medical/ointment(src)
+	new /obj/item/weapon/reagent_containers/hypospray/medipen(src)
