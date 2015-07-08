@@ -31,14 +31,13 @@
 			T.update_icon()
 
 /obj/structure/table/cultify()
-	new /obj/structure/table/woodentable(loc)
-	..()
+	new /obj/structure/table/woodentable(loc) //See New() for qdel
 
 /obj/structure/table/New()
 	..()
 	for(var/obj/structure/table/T in src.loc)
 		if(T != src)
-			del(T)
+			qdel(T)
 	update_icon()
 	update_adjacent()
 
