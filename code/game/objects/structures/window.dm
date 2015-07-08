@@ -256,6 +256,8 @@
 			disassembled = 1
 			user << "<span class='notice'>You successfully disassemble [src].</span>"
 			qdel(src)
+	else if(istype(I, /obj/item/weapon/rcd)) //Do not attack the window if the user is holding an RCD
+		return
 
 	else
 		if(I.damtype == BRUTE || I.damtype == BURN)

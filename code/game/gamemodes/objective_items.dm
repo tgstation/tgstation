@@ -29,12 +29,6 @@
 	difficulty = 5
 	excludefromjob = list("Captain")
 
-/datum/objective_item/steal/rcd
-	name = "a rapid-construction-device"
-	targetitem = /obj/item/weapon/rcd
-	difficulty = 3
-	excludefromjob = list("Chief Engineer", "Quartermaster", "Cargo Technician")
-
 /datum/objective_item/steal/jetpack
 	name = "a jetpack"
 	targetitem = /obj/item/weapon/tank/jetpack
