@@ -557,45 +557,45 @@
 			if(check_dna_integrity(viable_occupant) && (!(NOCLONE in viable_occupant.mutations) || (connected.scan_level == 3)))	//occupent is viable for dna modification
 				occupant_status += "[viable_occupant.name] => "
 				switch(viable_occupant.stat)
-					if(CONSCIOUS)	occupant_status += "<span class='good'>Conscious</span>"
-					if(UNCONSCIOUS)	occupant_status += "<span class='average'>Unconscious</span>"
-					else			occupant_status += "<span class='bad'>DEAD - Cannot Operate</span>"
+					if(CONSCIOUS)	occupant_status += "<span class='good'>Conscious</span><br>"
+					if(UNCONSCIOUS)	occupant_status += "<span class='average'>Unconscious</span><br>"
+					else			occupant_status += "<span class='bad'>DEAD - Cannot Operate</span<br>>"
 				occupant_status += "</div></div>"
-				occupant_status += "<div class='line'><div class='statusLabel'>Health:</div><div class='progressBar'><div style='width: [viable_occupant.health]%;' class='progressFill good'></div></div><div class='statusValue'>[viable_occupant.health]%</div></div>"
-				occupant_status += "<div class='line'><div class='statusLabel'>Radiation Level:</div><div class='progressBar'><div style='width: [viable_occupant.radiation]%;' class='progressFill bad'></div></div><div class='statusValue'>[viable_occupant.radiation]%</div></div>"
+				occupant_status += "<div class='line'><div class='statusLabel'>Health:</div><div class='progressBar'><div style='width: [viable_occupant.health]%;' class='progressFill good'></div></div><div class='statusValue'>[viable_occupant.health]%</div></div><br>"
+				occupant_status += "<div class='line'><div class='statusLabel'>Radiation Level:</div><div class='progressBar'><div style='width: [viable_occupant.radiation]%;' class='progressFill bad'></div></div><div class='statusValue'>[viable_occupant.radiation]%</div></div><br>"
 				var/rejuvenators = viable_occupant.reagents.get_reagent_amount("inaprovaline")
-				occupant_status += "<div class='line'><div class='statusLabel'>Rejuvenators:</div><div class='progressBar'><div style='width: [round((rejuvenators / REJUVENATORS_MAX) * 100)]%;' class='progressFill highlight'></div></div><div class='statusValue'>[rejuvenators] units</div></div>"
-				occupant_status += "<div class='line'><div class='statusLabel'>Unique Enzymes :</div><div class='statusValue'><span class='highlight'>[viable_occupant.dna.unique_enzymes]</span></div></div>"
-				occupant_status += "<div class='line'><div class='statusLabel'>Last Operation:</div><div class='statusValue'>[last_change ? last_change : "----"]</div></div>"
+				occupant_status += "<div class='line'><div class='statusLabel'>Rejuvenators:</div><div class='progressBar'><div style='width: [round((rejuvenators / REJUVENATORS_MAX) * 100)]%;' class='progressFill highlight'></div></div><div class='statusValue'>[rejuvenators] units</div></div><br>"
+				occupant_status += "<div class='line'><div class='statusLabel'>Unique Enzymes :</div><div class='statusValue'><span class='highlight'>[viable_occupant.dna.unique_enzymes]</span></div></div><br>"
+				occupant_status += "<div class='line'><div class='statusLabel'>Last Operation:</div><div class='statusValue'>[last_change ? last_change : "----"]</div></div><br>"
 			else
 				viable_occupant = null
-				occupant_status += "<span class='bad'>Invalid DNA structure</span></div></div>"
+				occupant_status += "<span class='bad'>Invalid DNA structure</span></div></div><br>"
 		else
-			occupant_status += "<span class='bad'>No subject detected</span></div></div>"
+			occupant_status += "<span class='bad'>No subject detected</span></div></div><br>"
 
 		if(connected.state_open)
 			scanner_status = "Open"
 		else
 			scanner_status = "Closed"
 			if(connected.locked)
-				scanner_status += " <span class='bad'>(Locked)</span>"
+				scanner_status += " <span class='bad'>(Locked)</span><br>"
 			else
-				scanner_status += " <span class='good'>(Unlocked)</span>"
+				scanner_status += " <span class='good'>(Unlocked)</span><br>"
 
 
 	else
-		occupant_status += "<span class='bad'>----</span></div></div>"
-		scanner_status += "<span class='bad'>Error: No scanner detected</span>"
+		occupant_status += "<span class='bad'>----</span></div></div><br>"
+		scanner_status += "<span class='bad'>Error: No scanner detected</span><br>"
 
 	var/status = "<div class='statusDisplay'>"
-	status += "<div class='line'><div class='statusLabel'>Scanner:</div><div class='statusValue'>[scanner_status]</div></div>"
+	status += "<div class='line'><div class='statusLabel'>Scanner:</div><div class='statusValue'>[scanner_status]</div></div><br>"
 	status += "[occupant_status]"
 
 
 	status += "<h3>Radiation Emitter Status</h3>"
 	var/stddev = radstrength*RADIATION_STRENGTH_MULTIPLIER
-	status += "<div class='line'><div class='statusLabel'>Output Level:</div><div class='statusValue'>[radstrength]</div></div>"
-	status += "<div class='line'><div class='statusLabel'>&nbsp;&nbsp;\> Mutation:</div><div class='statusValue'>(-[stddev] to +[stddev] = 68%) (-[2*stddev] to +[2*stddev] = 95%)</div></div>"
+	status += "<div class='line'><div class='statusLabel'>Output Level:</div><div class='statusValue'>[radstrength]</div></div><br>"
+	status += "<div class='line'><div class='statusLabel'>&nbsp;&nbsp;\> Mutation:</div><div class='statusValue'>(-[stddev] to +[stddev] = 68%) (-[2*stddev] to +[2*stddev] = 95%)</div></div><br>"
 	if(connected)
 		stddev = RADIATION_ACCURACY_MULTIPLIER/(radduration + (connected.precision_coeff ** 2))
 	else
@@ -606,12 +606,12 @@
 		if(0.25 to 0.5)			chance_to_hit = "68-95%"
 		if(0.5 to 0.75)			chance_to_hit = "55-68%"
 		else					chance_to_hit = "<38%"
-	status += "<div class='line'><div class='statusLabel'>Pulse Duration:</div><div class='statusValue'>[radduration]</div></div>"
-	status += "<div class='line'><div class='statusLabel'>&nbsp;&nbsp;\> Accuracy:</div><div class='statusValue'>[chance_to_hit]</div></div>"
-	status += "</div>" // Close statusDisplay div
+	status += "<div class='line'><div class='statusLabel'>Pulse Duration:</div><div class='statusValue'>[radduration]</div></div><br>"
+	status += "<div class='line'><div class='statusLabel'>&nbsp;&nbsp;\> Accuracy:</div><div class='statusValue'>[chance_to_hit]</div></div><br>"
+	status += "</div><br>" // Close statusDisplay div
 	var/buttons = "<a href='?src=\ref[src];'>Scan</a> "
 	if(connected)
-		buttons += " <a href='?src=\ref[src];task=toggleopen;'>[connected.state_open ? "Close" : "Open"] Scanner</a> "
+		buttons += " <a href='?src=\ref[src];task=toggleopen;'>[connected.state_open ? "Close" : "Open"] Scanner</a>"
 		if (connected.state_open)
 			buttons += "<span class='linkOff'>[connected.locked ? "Unlock" : "Lock"] Scanner</span> "
 		else
