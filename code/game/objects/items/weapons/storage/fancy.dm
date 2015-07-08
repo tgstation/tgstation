@@ -25,20 +25,6 @@
 	..()
 	for(var/i = 1 to storage_slots)
 		new spawn_type(src)
-	world << "NORTH ([NORTH])"
-	world << "SOUTH ([SOUTH])"
-	world << "EAST ([EAST])"
-	world << "WEST ([WEST])"
-	world << "NORTHEAST ([NORTHEAST])"
-	world << "NORTHWEST ([NORTHWEST])"
-	world << "SOUTHEAST ([SOUTHEAST])"
-	world << "SOUTHWEST ([SOUTHWEST])"
-	world << "NORTH|EAST & NORTHEAST ([(NORTH|EAST)&NORTHEAST])"
-	world << "NORTH|EAST & NORTHWEST ([(NORTH|EAST)&NORTHWEST])"
-	world << "NORTH|EAST & SOUTHWEST ([(NORTH|EAST)&SOUTHWEST])"
-	world << "NORTH|EAST|SOUTH & NORTHEAST & SOUTHEAST ([(NORTH|EAST|SOUTH)&NORTHEAST&SOUTHEAST])"
-	world << "NORTH|EAST|SOUTH & NORTHEAST & SOUTHWEST ([(NORTH|EAST|SOUTH)&NORTHEAST&SOUTHWEST])"
-	world << "NORTH|EAST|SOUTH|WEST & NORTHEAST ([(NORTH|EAST|SOUTH|WEST)&NORTHEAST])"
 
 /obj/item/weapon/storage/fancy/update_icon(var/itemremoved = 0)
 	var/total_contents = src.contents.len - itemremoved

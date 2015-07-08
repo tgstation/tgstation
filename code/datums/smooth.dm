@@ -204,12 +204,3 @@
 	else
 		enabled = 1
 		smooth()
-
-var/list/TileCornerImages = list()
-
-/proc/GetTileCornerImage(icon_file, corner)
-	var/key = "[icon_file][corner]"
-	if(TileCornerImages[key])
-		return TileCornerImages[key]
-	TileCornerImages[key] = image(icon_file, corner)
-	return TileCornerImages[key]

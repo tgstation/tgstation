@@ -398,7 +398,6 @@
 
 		if(smoother)
 			smoother.smooth()
-			//sleep(2)
 			if(ratio > 75)
 				overlays -= crack_overlay
 				return
