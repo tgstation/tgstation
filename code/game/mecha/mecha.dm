@@ -647,22 +647,22 @@
 		return
 	if(!ishuman(user)) // no silicons or drones in mechas.
 		return
-	src.log_message("[user] tries to move in.")
-	if (src.occupant)
-		usr << "<span class='warning'>The [src.name] is already occupied!</span>"
-		src.log_append_to_last("Permission denied.")
+	log_message("[user] tries to move in.")
+	if (occupant)
+		usr << "<span class='warning'>The [name] is already occupied!</span>"
+		log_append_to_last("Permission denied.")
 		return
 	var/passed
-	if(src.dna)
+	if(dna)
 		if(check_dna_integrity(user))
 			var/mob/living/carbon/C = user
 			if(C.dna.unique_enzymes==src.dna)
 				passed = 1
-	else if(src.operation_allowed(user))
+	else if(operation_allowed(user))
 		passed = 1
 	if(!passed)
 		user << "<span class='warning'>Access denied.</span>"
-		src.log_append_to_last("Permission denied.")
+		log_append_to_last("Permission denied.")
 		return
 	for(var/mob/living/simple_animal/slime/S in range(1,user))
 		if(S.Victim == user)
@@ -714,8 +714,6 @@
 	else if(dna && dna!=mmi_as_oc.brainmob.dna.unique_enzymes)
 		user << "<span class='warning'>Stop it!</span>"
 		return 0
-	//Added a message here since people assume their first click failed or something./N
-//	user << "Installing MMI, please stand by."
 
 	visible_message("<span class='notice'>[user] starts to insert an MMI into [src.name].</span>")
 
