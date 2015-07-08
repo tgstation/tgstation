@@ -375,6 +375,8 @@ var/global/image/fire_overlay = image("icon" = 'icons/effects/fire.dmi', "icon_s
 
 	src.add_fingerprint(user)
 
+	playsound(loc, src.hitsound, 30, 1, -1)
+
 	if(M != user)
 		M.visible_message("<span class='danger'>[user] has stabbed [M] in the eye with [src]!</span>", \
 							"<span class='userdanger'>[user] stabs you in the eye with [src]!</span>")
@@ -393,19 +395,19 @@ var/global/image/fire_overlay = image("icon" = 'icons/effects/fire.dmi', "icon_s
 		M.take_organ_damage(7)
 
 	M.eye_blurry += rand(2,3) //adds 2 or 3 blurriness with each eyestab
-	M.eye_stat += rand(1,2) //between 10 or 5 eyestabs are necessary to become nearsighted
+	M.eye_stat += rand(1,2) //between 5 and 10 eyestabs are necessary to become nearsighted
 	if (M.eye_stat >= 10)
-		M.eye_blurry += 5+(0.1*M.eye_blurry)//once nearsighted, each stab adds more blurriness based on current blurriness
-		if(M.disabilities != NEARSIGHT)
+		M.eye_blurry += 5+(0.1*M.eye_blurry) //once nearsighted, extra blurriness is added per stab based on current blurrinesss
+		if (!M.disabilities & (NEARSIGHT | BLIND))
 			M.disabilities |= NEARSIGHT
-			M << "<span class='danger'>Your eyes start to bleed profusely!</span>"//hints the victim has become nearsighted
-		if(prob(25))//25% chance of being stunned with an extra 5 blur added to vision
-			if(!(M.stat)) //we don't stun if already stunned to discourage chainstunning
+			M << "<span class='danger'>You become nearsighted!</span>"
+		if(prob(20)) //20% chance of being stunned and an extra 5 blurryness added
+			if(!(M.stat)) //we don't stun if already stunned to limit chainstunning
 				M.Paralyse(1)
 				M.Weaken(2)
-				M << "<span class='danger'>You collapse in pain!</span>"
 			M.eye_blurry += 5
-		if (prob(M.eye_stat - 5 + 1)) //For a 10% chance to go blind, maximum 14 stabs, minimum 7. Increases with each stab.
+
+		if (prob(M.eye_stat - 5 + 1) && !(M.disabilities & BLIND)) //Minimum 7 stabs for a 10% chance to go blind, maximum 14 stabs. Chance increases with each stab.
 			if(M.stat != 2)
 				M << "<span class='danger'>You go blind!</span>"
 			M.disabilities |= BLIND
