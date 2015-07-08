@@ -614,3 +614,10 @@
 		return default_language
 
 	return null
+
+/mob/living/carbon/html_mob_check(var/typepath)
+	for(var/atom/movable/AM in html_machines)
+		if(typepath == AM.type)
+			if(Adjacent(AM))
+				return 1
+	return 0

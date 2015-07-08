@@ -817,3 +817,6 @@ var/list/ai_list = list()
 // An AI doesn't become inoperable until -100% (or whatever config.health_threshold_dead is set to)
 /mob/living/silicon/ai/system_integrity()
 	return (health - config.health_threshold_dead) / 2
+
+/mob/living/silicon/ai/html_mob_check()
+	return 1

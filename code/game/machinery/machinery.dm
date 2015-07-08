@@ -608,12 +608,13 @@ Class Procs:
 		return 0
 
 // Hook for html_interface module to prevent updates to clients who don't have this as their active machine.
-/obj/machinery/proc/hiIsValidClient(datum/html_interface_client/hclient)
+/obj/machinery/proc/hiIsValidClient(datum/html_interface_client/hclient, datum/html_interface/hi)
 	if (hclient.client.mob && hclient.client.mob.stat == 0)
-		if (isAI(hclient.client.mob)) return TRUE
-		else                          return hclient.client.mob.machine == src && src.Adjacent(hclient.client.mob)
-	else
-		return FALSE
+		if(isAI(hclient.client.mob))
+			return 1
+		if(hclient.client.mob.machine == src)
+			return hclient.client.mob.html_mob_check(src.type)
+	return FALSE
 
 // Hook for html_interface module to unset the active machine when the window is closed by the player.
 /obj/machinery/proc/hiOnHide(datum/html_interface_client/hclient)

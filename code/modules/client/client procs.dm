@@ -316,6 +316,12 @@
 			hi = new type(null)
 			hi.sendResources(src)
 
+	// Preload the crew monitor. This needs to be done due to BYOND bug http://www.byond.com/forum/?post=1487244
+	//The above bug report thing doesn't exist anymore so uh, whatever.
+	spawn
+		if (crewmonitor && crewmonitor.initialized)
+			crewmonitor.sendResources(src)
+
 	// Send NanoUI resources to this client
 	spawn nanomanager.send_resources(src)
 

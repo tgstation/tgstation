@@ -227,6 +227,9 @@ var/global/datum/controller/gameticker/ticker
 /datum/controller/gameticker/proc/station_explosion_cinematic(var/station_missed=0, var/override = null)
 	if( cinematic )	return	//already a cinematic in progress!
 
+	for (var/datum/html_interface/hi in html_interfaces)
+		hi.closeAll()
+
 	//initialise our cinematic screen object
 	cinematic = new(src)
 	cinematic.icon = 'icons/effects/station_explosion.dmi'
