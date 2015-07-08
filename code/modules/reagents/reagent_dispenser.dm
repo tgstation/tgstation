@@ -231,6 +231,16 @@
 /obj/structure/reagent_dispensers/water_cooler/attack_paw(mob/user as mob)
 	return attack_hand(user)
 
+/obj/structure/reagent_dispensers/water_cooler/attackby(obj/item/I as obj, mob/user as mob)
+	if (iswelder(I))
+		var/obj/item/weapon/weldingtool/WT = I
+		if(WT.remove_fuel(0, user))
+			new /obj/item/stack/sheet/mineral/plastic (src.loc,4)
+			qdel(src)
+			return
+	else
+		..()
+
 /obj/structure/reagent_dispensers/beerkeg
 	name = "beer keg"
 	desc = "A beer keg"
