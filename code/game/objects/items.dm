@@ -394,20 +394,23 @@ var/global/image/fire_overlay = image("icon" = 'icons/effects/fire.dmi', "icon_s
 	else
 		M.take_organ_damage(7)
 
-	M.eye_blurry += rand(2,3) //adds 2 or 3 blurriness with each eyestab
-	M.eye_stat += rand(1,2) //between 5 and 10 eyestabs are necessary to become nearsighted
+	M.eye_blurry += rand(3,4)
+	M.eye_stat += rand(2,4)
 	if (M.eye_stat >= 10)
-		M.eye_blurry += 5+(0.1*M.eye_blurry) //once nearsighted, extra blurriness is added per stab based on current blurrinesss
-		if (!M.disabilities & (NEARSIGHT | BLIND))
+		M.eye_blurry += 15+(0.1*M.eye_blurry)
+		if(M.stat != 2)
+			M << "<span class='danger'>Your eyes start to bleed profusely!</span>"
+		if (!(M.disabilities & (NEARSIGHT | BLIND)))
 			M.disabilities |= NEARSIGHT
 			M << "<span class='danger'>You become nearsighted!</span>"
-		if(prob(20)) //20% chance of being stunned and an extra 5 blurryness added
-			if(!(M.stat)) //we don't stun if already stunned to limit chainstunning
-				M.Paralyse(1)
-				M.Weaken(2)
-			M.eye_blurry += 5
-
-		if (prob(M.eye_stat - 5 + 1) && !(M.disabilities & BLIND)) //Minimum 7 stabs for a 10% chance to go blind, maximum 14 stabs. Chance increases with each stab.
+		if(prob(50))
+			if(M.stat != 2)
+				if(M.drop_item())
+					M << "<span class='danger'>You drop what you're holding and clutch at your eyes!</span>"
+			M.eye_blurry += 10
+			M.Paralyse(1)
+			M.Weaken(2)
+		if (prob(M.eye_stat - 10 + 1) && !(M.disabilities & BLIND))
 			if(M.stat != 2)
 				M << "<span class='danger'>You go blind!</span>"
 			M.disabilities |= BLIND
