@@ -1,0 +1,9 @@
+author: Kurfurst
+delete-after: True
+changes:
+ - tweak: Dropping an SPS no longer triggers its 'lost' text
+ - bugfix: Putting an SPS in a container no longer triggers its 'lost' text
+ - tweak: The SPS now only announces when it has been stripped (or the container it is within has been stripped) off
+ - rscadd: The SPS now fits on the security belt.
+ - rscadd: The SPS properly reports while inside containers.
+ - rscadd: New proc stripped(mob,mob)

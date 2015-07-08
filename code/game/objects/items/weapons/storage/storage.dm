@@ -576,3 +576,11 @@
 			handle_item_insertion(target)
 			return 1
 	return 0
+
+/obj/item/weapon/storage/OnMobDeath(mob/wearer as mob)
+	for(var/obj/item/device/gps/secure/S in contents)
+		S.OnMobDeath(wearer)
+
+/obj/item/weapon/storage/stripped(mob/wearer as mob, mob/stripper as mob)
+	for(var/obj/item/device/gps/secure/S in contents)
+		S.stripped(wearer,stripper)

@@ -225,6 +225,10 @@
 	if(wielded)
 		unwield(user)
 
+///called when an item is stripped off by another person, called AFTER it is on the ground
+/obj/item/proc/stripped(mob/wearer as mob, mob/stripper as mob)
+	return
+
 // called just as an item is picked up (loc is not yet changed)
 /obj/item/proc/pickup(mob/user)
 	return

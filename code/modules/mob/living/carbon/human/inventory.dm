@@ -892,6 +892,7 @@ It can still be worn/put on as normal.
 				W.loc = target.loc
 				W.layer = initial(W.layer)
 				//W.dropped(target)
+			W.stripped(target,source)
 			W.add_fingerprint(source)
 			if(slot_to_process == slot_l_store) //pockets! Needs to process the other one too. Snowflake code, wooo! It's not like anyone will rewrite this anytime soon. If I'm wrong then... CONGRATULATIONS! ;)
 				if(target.r_store)
