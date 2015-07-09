@@ -82,7 +82,7 @@
 	for(var/atom/movable/X in orange(range, T))
 		if(istype(X, /obj/effect))
 			continue
-		if(X && !X.anchored)
+		if(!X.anchored)
 			var/distance = get_dist(X, T)
 			var/moving_power = max(range - distance, 1)
 			spawn(0) //so everything moves at the same time.

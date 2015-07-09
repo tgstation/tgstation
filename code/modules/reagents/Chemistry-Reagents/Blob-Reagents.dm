@@ -175,7 +175,9 @@
 	var/turf/pull = get_turf(M)
 	var/range_power = Clamp(round(volume/5, 1), 1, 5)
 	for(var/atom/movable/X in range(range_power,pull))
-		if(X && !X.anchored)
+		if(istype(X, /obj/effect))
+			continue
+		if(!X.anchored)
 			var/distance = get_dist(X, pull)
 			var/moving_power = max(range_power - distance, 1)
 			spawn(0)
