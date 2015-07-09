@@ -48,6 +48,9 @@
 	if(!user.IsAdvancedToolUser())
 		user << "<span class='notice'>You don't have the dexterity to do this!</span>"
 		return
+	if(user.eye_blind)
+		user << "<span class='notice'>You can't see [target]!</span>"
+		return
 	add_logs(user, target, "attempted to inject", object="[name]")
 
 	if(target != user)

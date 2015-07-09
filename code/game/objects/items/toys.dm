@@ -320,8 +320,9 @@
 	w_class = 1.0
 	attack_verb = list("attacked", "coloured")
 	var/colour = "#FF0000" //RGB
+	var/drawmat = "crayon"
 	var/drawtype = "rune"
-	var/list/graffiti = list("amyjon","face","matt","revolution","engie","guy","end","dwarf","uboa","body","cyka","arrow","poseur tag")
+	var/list/graffiti = list("amyjon","face","matt","revolution","engie","guy","end","dwarf","uboa","body","cyka","arrow","50blessings", "poseur tag")
 	var/list/letters = list("a","b","c","d","e","f","g","h","i","j","k","l","m","n","o","p","q","r","s","t","u","v","w","x","y","z")
 	var/list/oriented = list("arrow","body") // These turn to face the same way as the drawer
 	var/uses = 30 //0 for unlimited uses
@@ -338,7 +339,8 @@
 
 /obj/item/toy/crayon/New()
 	..()
-	name = "[colourName] crayon" //Makes crayons identifiable in things like grinders
+	if(colourName)
+		name = "[colourName] crayon" //Makes crayons identifiable in things like grinders
 	drawtype = pick(pick(graffiti), pick(letters), "rune[rand(1,6)]")
 	if(config)
 		if(config.mutant_races == 1)
@@ -419,28 +421,16 @@
 		var/gangID
 		if(gang)
 			//Determine gang affiliation
-			if(user.mind in (ticker.mode.A_bosses | ticker.mode.A_gang))
-				temp = "[gang_name("A")] gang tag"
-				gangID = "A"
-			else if(user.mind in (ticker.mode.B_bosses | ticker.mode.B_gang))
-				temp = "[gang_name("B")] gang tag"
-				gangID = "B"
+			gangID = user.mind.gang_datum
 
 			//Check area validity. Reject space, player-created areas, and non-station z-levels.
-			if (gangID)
+			if(gangID)
 				territory = get_area(target)
 				if(territory && (territory.z == ZLEVEL_STATION) && territory.valid_territory)
 					//Check if this area is already tagged by a gang
 					if(!(locate(/obj/effect/decal/cleanable/crayon/gang) in target)) //Ignore the check if the tile being sprayed has a gang tag
 						if(territory_claimed(territory, user))
 							return
-					/*
-					//Prevent people spraying from outside of the territory (ie. Maint walls)
-					var/area/user_area = get_area(user.loc)
-					if(istype(user_area) && (user_area.type != territory.type))
-						user << "<span class='warning'>You cannot tag [territory] from the outside.</span>"
-						return
-					*/
 					if(locate(/obj/machinery/power/apc) in (user.loc.contents | target.contents))
 						user << "<span class='warning'>You cannot tag here.</span>"
 						return
@@ -474,11 +464,11 @@
 						return
 				for(var/obj/effect/decal/cleanable/crayon/old_marking in target)
 					qdel(old_marking)
-				new /obj/effect/decal/cleanable/crayon/gang(target,gangID,temp,graf_rot)
+				new /obj/effect/decal/cleanable/crayon/gang(target,gangID,temp,graf_rot, material = drawmat)
 				user << "<span class='notice'>You tagged [territory] for your gang!</span>"
 
 			else
-				new /obj/effect/decal/cleanable/crayon(target,colour,drawtype,temp,graf_rot)
+				new /obj/effect/decal/cleanable/crayon(target,colour,drawtype,temp,graf_rot, material = drawmat)
 
 			user << "<span class='notice'>You finish [instant ? "spraying" : "drawing"] [temp].</span>"
 			if(instant<0)
@@ -507,14 +497,15 @@
 
 /obj/item/toy/crayon/proc/territory_claimed(var/area/territory,mob/user)
 	var/occupying_gang
-	if(territory.type in (ticker.mode.A_territory | ticker.mode.A_territory_new))
-		occupying_gang = gang_name("A")
-	if(territory.type in (ticker.mode.B_territory | ticker.mode.B_territory_new))
-		occupying_gang = gang_name("B")
+	for(var/datum/gang/G in ticker.mode.gangs)
+		if(territory.type in (G.territory|G.territory_new))
+			occupying_gang = G.name
+			break
 	if(occupying_gang)
 		user << "<span class='danger'>[territory] has already been tagged by the [occupying_gang] gang! You must get rid of or spray over the old tag first!</span>"
 		return 1
 	return 0
+
 
 /*
  * Snap pops

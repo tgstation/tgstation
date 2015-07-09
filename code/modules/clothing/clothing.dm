@@ -9,6 +9,7 @@
 	lefthand_file = 'icons/mob/inhands/clothing_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/clothing_righthand.dmi'
 	var/alt_desc = null
+	var/gang //Is this a gang outfit?
 
 //Ears: currently only used for headsets and earmuffs
 /obj/item/clothing/ears

@@ -10,7 +10,7 @@ client/proc/one_click_antag()
 
 /datum/admins/proc/one_click_antag()
 
-	var/dat = {"<B>Quick-Create Antagonist</B><br>
+	var/dat = {"
 		<a href='?src=\ref[src];makeAntag=1'>Make Traitors</a><br>
 		<a href='?src=\ref[src];makeAntag=2'>Make Changelings</a><br>
 		<a href='?src=\ref[src];makeAntag=3'>Make Revs</a><br>
@@ -25,16 +25,9 @@ client/proc/one_click_antag()
 		<a href='?src=\ref[src];makeAntag=15'>Make Shadowling</a><br>
 		<a href='?src=\ref[src];makeAntag=16'>Make Borers (Requires Ghosts)</a><br>
 		"}
-/* These dont work just yet
-	Ninja, aliens and deathsquad I have not looked into yet
-	Nuke team is getting a null mob returned from makebody() (runtime error: null.mind. Line 272)
-
-
-		<a href='?src=\ref[src];makeAntag=8'>Make Space Ninja (Requires Ghosts)</a><br>
-		<a href='?src=\ref[src];makeAntag=9'>Make Aliens (Requires Ghosts)</a><br>
-		"}
-*/
-	usr << browse(dat, "window=oneclickantag;size=400x400")
+	var/datum/browser/popup = new(usr, "oneclickantag", "Quick-Create Antagonist", 400, 400)
+	popup.set_content(dat)
+	popup.open()
 	return
 
 
@@ -404,12 +397,16 @@ client/proc/one_click_antag()
 									candidates += applicant
 
 	if(candidates.len >= 2)
-		H = pick(candidates)
-		H.mind.make_Gang("A")
-		candidates.Remove(H)
-		H = pick(candidates)
-		H.mind.make_Gang("B")
-		return 1
+		for(var/needs_assigned=2,needs_assigned>0,needs_assigned--)
+			H = pick(candidates)
+			if(gang_colors_pool)
+				var/datum/gang/newgang = new()
+				ticker.mode.gangs += newgang
+				H.mind.make_Gang(newgang)
+				candidates.Remove(H)
+			else if(needs_assigned == 2)
+				return 0
+ 		return 1
 
 	return 0
 
