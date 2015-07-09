@@ -149,7 +149,7 @@
 					rinject += R.name
 				var/contained = english_list(rinject)
 				var/mob/M = target
-				add_logs(user, M, "injected", object="[src.name]", addition="which had [contained]")
+				add_logs(user, M, "injected", src, addition="which had [contained]")
 				var/fraction = min(amount_per_transfer_from_this/reagents.total_volume, 1)
 				reagents.reaction(target, INGEST, fraction)
 			if(ismob(target) && target == user)

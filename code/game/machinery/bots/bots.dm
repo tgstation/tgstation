@@ -167,7 +167,7 @@
 	M.changeNext_move(CLICK_CD_MELEE)
 	health -= M.melee_damage_upper
 	visible_message("<span class='danger'>[M] has [M.attacktext] [src]!</span>")
-	add_logs(M, src, "attacked", admin=0)
+	add_logs(M, src, "attacked")
 	if(prob(10))
 		new /obj/effect/decal/cleanable/oil(loc)
 	healthcheck()

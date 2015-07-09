@@ -37,7 +37,7 @@
 
 			var/contained = english_list(injected)
 
-			add_logs(user, M, "injected", object="[src.name]", addition="([contained])")
+			add_logs(user, M, "injected", src, "([contained])")
 
 /obj/item/weapon/reagent_containers/hypospray/CMO
 	list_reagents = list("omnizine" = 30)

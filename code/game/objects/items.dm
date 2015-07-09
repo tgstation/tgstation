@@ -371,8 +371,6 @@ var/global/image/fire_overlay = image("icon" = 'icons/effects/fire.dmi', "icon_s
 		user << "<span class='danger'>You cannot locate any organic eyes on this brain!</span>"
 		return
 
-	add_logs(user, M, "attacked", object="[src.name]", addition="(INTENT: [uppertext(user.a_intent)])")
-
 	src.add_fingerprint(user)
 
 	if(M != user)
@@ -391,6 +389,8 @@ var/global/image/fire_overlay = image("icon" = 'icons/effects/fire.dmi', "icon_s
 
 	else
 		M.take_organ_damage(7)
+
+	add_logs(user, M, "attacked", "[src.name]", "(INTENT: [uppertext(user.a_intent)])")
 
 	M.eye_blurry += rand(3,4)
 	M.eye_stat += rand(2,4)

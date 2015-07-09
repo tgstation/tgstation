@@ -37,7 +37,7 @@ effective or pretty fucking useless.
 		user << "<span class='danger'>The mind batterer has been burnt out!</span>"
 		return
 
-	add_logs(user, null, "knocked down people in the area", admin=0, object="[src]")
+	add_logs(user, null, "knocked down people in the area", src)
 
 	for(var/mob/living/carbon/human/M in orange(10, user))
 		spawn()
@@ -88,7 +88,7 @@ effective or pretty fucking useless.
 
 /obj/item/device/rad_laser/attack(mob/living/M as mob, mob/living/user as mob)
 	if(!used)
-		add_logs(user, M, "irradiated", object="[src.name]")
+		add_logs(user, M, "irradiated", src)
 		user.visible_message("<span class='notice'>[user] has analyzed [M]'s vitals.</span>")
 		var/cooldown = round(max(100,(((intensity*8)-(wavelength/2))+(intensity*2))*10))
 		used = 1

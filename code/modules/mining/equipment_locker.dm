@@ -561,7 +561,7 @@
 			playsound(src,'sound/weapons/resonator_blast.ogg',50,1)
 			if(creator)
 				for(var/mob/living/L in src.loc)
-					add_logs(creator, L, "used a resonator field on", object="resonator")
+					add_logs(creator, L, "used a resonator field on", "resonator")
 					L << "<span class='danger'>The [src.name] ruptured with you in it!</span>"
 					L.adjustBruteLoss(resonance_damage)
 			else
