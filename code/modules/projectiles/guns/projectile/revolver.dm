@@ -82,7 +82,6 @@
 			user << "<span class='danger'>[src] blows up in your face!</span>"
 			user.take_organ_damage(0,20)
 			user.drop_item()
-			qdel(src)
 			return fired
 	return ..()
 

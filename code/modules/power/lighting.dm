@@ -376,6 +376,7 @@
 		//If xenos decide they want to smash a light bulb with a toolbox, who am I to stop them? /N
 
 	else if(status != LIGHT_BROKEN && status != LIGHT_EMPTY)
+		user.changeNext_move(CLICK_CD_MELEE)
 
 		user.do_attack_animation(src)
 		if(W.damtype == STAMINA)
@@ -478,6 +479,7 @@
 // if hands aren't protected and the light is on, burn the player
 
 /obj/machinery/light/attack_hand(mob/living/carbon/human/user)
+	user.changeNext_move(CLICK_CD_MELEE)
 
 	add_fingerprint(user)
 

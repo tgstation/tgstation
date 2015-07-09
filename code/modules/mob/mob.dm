@@ -165,7 +165,7 @@ var/next_mob_id = 0
 	for(var/mob/M in get_hearers_in_view(range, src))
 		if(M.client)
 			var/image/I = image('icons/effects/sound.dmi', get_turf(src))
-			I.layer = (blind.layer  > 0) ? (blind.layer + 1) : 1
+			I.layer = (M.blind.layer  > 0) ? (M.blind.layer + 1) : 1
 			I.mouse_opacity = 0
 			M.client.show_image(I,10)
 		if(self_message && M==src)
@@ -185,7 +185,7 @@ var/next_mob_id = 0
 	for(var/mob/M in get_hearers_in_view(range, src))
 		if(M.client)
 			var/image/I = image('icons/effects/sound.dmi', get_turf(src))
-			I.layer = (blind.layer  > 0) ? (blind.layer + 1) : 1
+			I.layer = (M.blind.layer  > 0) ? (M.blind.layer + 1) : 1
 			I.mouse_opacity = 0
 			M.client.show_image(I,10)
 		M.show_message( message, 2, deaf_message, 1)

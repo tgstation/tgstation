@@ -500,7 +500,8 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 					user.visible_message("<span class='notice'>After a few attempts, [user] manages to light [src].</span>")
 				else
 					user << "<span class='warning'>You burn yourself while lighting the lighter.</span>"
-					user.adjustFireLoss(5)
+					var/hitzone = user.r_hand == src ? "r_hand" : "l_hand"
+					user.apply_damage(5, BURN, hitzone)
 					user.visible_message("<span class='notice'>After a few attempts, [user] manages to light [src], they however burn their finger in the process.</span>")
 
 			set_light(2)
