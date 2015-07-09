@@ -42,7 +42,7 @@
 "aaP" = (/obj/machinery/atmospherics/unary/vent_scrubber{dir = 1; on = 1; scrub_N2O = 0; scrub_Toxins = 0},/turf/simulated/floor/plasteel{tag = "icon-warndark (NORTHEAST)"; icon_state = "warndark"; dir = 5},/area/security/transfer)
 "aaQ" = (/obj/machinery/computer/libraryconsole/bookmanagement{pixel_y = 0},/obj/structure/table,/obj/machinery/newscaster{pixel_x = -32; pixel_y = 0},/turf/simulated/floor/plasteel{icon_state = "floorgrime"},/area/security/prison)
 "aaR" = (/obj/structure/table,/obj/item/weapon/storage/pill_bottle/dice,/turf/simulated/floor/plasteel,/area/security/prison)
-"aaS" = (/obj/structure/table,/obj/item/weapon/pen,/turf/simulated/floor/plasteel,/area/security/prison)
+"aaS" = (/obj/structure/table,/obj/item/weapon/pen,/obj/item/weapon/reagent_containers/food/condiment/saltshaker{desc = "Collected from all the previous occupants of this brig. Tastes amazing."; name = "dried prisoner tears shaker"},/turf/simulated/floor/plasteel,/area/security/prison)
 "aaT" = (/obj/structure/cable{d1 = 1; d2 = 2; icon_state = "1-2"},/turf/simulated/floor/plasteel{icon_state = "barber"},/area/security/prison)
 "aaU" = (/obj/structure/table,/obj/structure/bedsheetbin,/turf/simulated/floor/plasteel{icon_state = "barber"},/area/security/prison)
 "aaV" = (/obj/structure/lattice,/obj/structure/sign/securearea{pixel_y = -32},/turf/space,/area/space)
