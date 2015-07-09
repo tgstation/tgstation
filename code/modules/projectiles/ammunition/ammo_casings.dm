@@ -39,6 +39,9 @@
 	projectile_type = /obj/item/projectile/bullet
 	materials = list(MAT_METAL=4000)
 
+/obj/item/ammo_casing/shotgun/syndie
+	projectile_type = /obj/item/projectile/bullet/heavybullet2
+
 
 /obj/item/ammo_casing/shotgun/buckshot
 	name = "buckshot shell"
