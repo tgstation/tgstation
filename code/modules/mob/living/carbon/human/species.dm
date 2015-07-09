@@ -1177,7 +1177,7 @@
 				if(!H.has_smoke_protection())
 					for(var/obj/effect/effect/smoke/chem/S in range(1, H))
 						if(S.reagents.total_volume && S.lifetime)
-							var/fraction = 1/S.max_lifetime
+							var/fraction = 1/initial(S.lifetime)
 							S.reagents.reaction(H,INGEST, fraction)
 							var/amount = round(S.reagents.total_volume*fraction,0.1)
 							S.reagents.copy_to(H, amount)

@@ -9,6 +9,8 @@
 
 	can_unwrench = 1
 
+	welded = 0
+
 	var/area/initial_loc
 	var/id_tag = null
 	var/frequency = 1439

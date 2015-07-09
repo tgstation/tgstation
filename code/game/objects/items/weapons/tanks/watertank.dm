@@ -191,6 +191,10 @@
 	item_state = "waterbackpackatmos"
 	volume = 200
 
+/obj/item/weapon/watertank/atmos/New()
+	..()
+	reagents.add_reagent("water", 200)
+
 /obj/item/weapon/watertank/atmos/make_noz()
 	return new /obj/item/weapon/extinguisher/mini/nozzle(src)
 
@@ -294,8 +298,7 @@
 			F.amount = 0
 			metal_synthesis_cooldown++
 			spawn(100)
-				if(src)
-					metal_synthesis_cooldown--
+				metal_synthesis_cooldown--
 		else
 			user << "<span class='warning'>Metal foam mix is still being synthesized...</span>"
 			return
@@ -333,7 +336,7 @@
 		var/turf/simulated/T = A
 		if(T.air)
 			var/datum/gas_mixture/G = T.air
-			if(get_dist(T, src) < 2) // Otherwise we'll get silliness like people using Nanofrost to kill people through walls with cold air
+			if(get_dist(T, location) < 2) // Otherwise we'll get silliness like people using Nanofrost to kill people through walls with cold air
 				G.temperature = 2
 			T.air_update_turf()
 			for(var/obj/effect/hotspot/H in T)
@@ -341,10 +344,11 @@
 				if(G.toxins)
 					G.nitrogen += (G.toxins)
 					G.toxins = 0
-		for(var/obj/machinery/atmospherics/unary/vent_pump/V in T)
-			V.welded = 1
-			V.update_icon()
-			V.visible_message("<span class='danger'>[V] was frozen shut!</span>")
+		for(var/obj/machinery/atmospherics/unary/U in T)
+			if(!isnull(U.welded) && !U.welded) //must be an unwelded vent pump or vent scrubber.
+				U.welded = 1
+				U.update_icon()
+				U.visible_message("<span class='danger'>[U] was frozen shut!</span>")
 		for(var/mob/living/L in T)
 			L.ExtinguishMob()
 		for(var/obj/item/Item in T)

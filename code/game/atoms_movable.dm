@@ -94,16 +94,13 @@
 	return
 
 /atom/movable/Bump(var/atom/A as mob|obj|turf|area, yes)
-	if(src.throwing)
-		src.throw_impact(A)
-		src.throwing = 0
-
+	if(throwing)
+		throw_impact(A)
+		throwing = 0
 	if ((A && yes))
 		A.last_bumped = world.time
 		A.Bumped(src)
-	return
-	..()
-	return
+
 
 /atom/movable/proc/forceMove(atom/destination)
 	if(destination)

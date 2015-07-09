@@ -149,11 +149,10 @@
 	icon = 'icons/effects/chemsmoke.dmi'
 	icon_state = ""
 	lifetime = 10
-	var/max_lifetime = 10
 
 /obj/effect/effect/smoke/chem/process()
 	if(..())
-		var/fraction = 1/max_lifetime
+		var/fraction = 1/initial(lifetime)
 		for(var/obj/O in range(1,src))
 			if(O.type == src.type)
 				continue
@@ -173,7 +172,7 @@
 		return 0
 	if(!istype(M))
 		return 0
-	var/fraction = 1/max_lifetime
+	var/fraction = 1/initial(lifetime)
 	reagents.reaction(M, TOUCH, fraction)
 	lifetime--
 	return 1
@@ -207,7 +206,7 @@
 		location = get_turf(loca)
 	if(direct)
 		direction = direct
-	carry.copy_to(chemholder, carry.total_volume)
+	carry.copy_to(chemholder, 4*carry.total_volume) //The smoke holds 4 times the total reagents volume for balance purposes.
 
 	if(!silent)
 		var/contained = ""
@@ -255,8 +254,6 @@
 			S.steps = pick(0,1,1,1,2)
 		else
 			S.steps = pick(0,1,1,1,2,2,2,3)
-
-		S.max_lifetime = S.lifetime
 
 		if(chemholder.reagents.total_volume > 1) // can't split 1 very well
 			chemholder.reagents.copy_to(S, chemholder.reagents.total_volume/number) // copy reagents to each smoke, divide evenly

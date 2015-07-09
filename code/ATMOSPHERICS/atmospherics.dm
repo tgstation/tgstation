@@ -20,7 +20,7 @@ Pipelines + Other Objects -> Pipe network
 	var/initialize_directions = 0
 	var/pipe_color
 	var/obj/item/pipe/stored
-	var/welded = 0 //Used on pumps and scrubbers
+	var/welded //Used on pumps and scrubbers
 	var/global/list/iconsetids = list()
 	var/global/list/pipeimages = list()
 	var/datum/pipeline/parent = null

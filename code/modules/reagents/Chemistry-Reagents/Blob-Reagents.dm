@@ -173,16 +173,31 @@
 
 /datum/reagent/blob/proc/reagent_vortex(var/mob/living/M as mob, var/setting_type)
 	var/turf/pull = get_turf(M)
-	for(var/atom/movable/X in range(4,pull))
-		if(istype(X, /atom/movable))
-			if((X) && !X.anchored)
-				if(setting_type)
-					step_away(X,pull)
-					step_away(X,pull)
-					step_away(X,pull)
-					step_away(X,pull)
+	var/range_power = Clamp(round(volume/5, 1), 1, 5)
+	for(var/atom/movable/X in range(range_power,pull))
+		if(X && !X.anchored)
+			var/distance = get_dist(X, pull)
+			var/moving_power = max(range_power - distance, 1)
+			spawn(0)
+				if(moving_power > 2) //if the vortex is powerful and we're close, we get thrown
+					if(setting_type)
+						var/atom/throw_target = get_edge_target_turf(X, get_dir(X, get_step_away(X, pull)))
+						var/throw_range = 5 - distance
+						X.throw_at(throw_target, throw_range, 1)
+					else
+						X.throw_at(pull, distance, 1)
 				else
-					X.throw_at(pull)
+					if(setting_type)
+						for(var/i = 0, i < moving_power, i++)
+							sleep(2)
+							if(!step_away(X, pull))
+								break
+					else
+						for(var/i = 0, i < moving_power, i++)
+							sleep(2)
+							if(!step_towards(X, pull))
+								break
+
 
 /datum/reagent/blob/proc/send_message(var/mob/living/M as mob)
 	var/totalmessage = message
