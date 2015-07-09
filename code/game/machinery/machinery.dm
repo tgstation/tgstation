@@ -612,7 +612,7 @@ Class Procs:
 
 // Hook for html_interface module to prevent updates to clients who don't have this as their active machine.
 /obj/machinery/proc/hiIsValidClient(datum/html_interface_client/hclient, datum/html_interface/hi)
-	if (hclient.client.mob && hclient.client.mob.stat == 0)
+	if (hclient.client.mob && (hclient.client.mob.stat == 0 || isobserver(hclient.client.mob)))
 		if(isAI(hclient.client.mob))
 			return 1
 		if(hclient.client.mob.machine == src)

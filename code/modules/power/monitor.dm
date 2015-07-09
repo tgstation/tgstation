@@ -37,6 +37,7 @@
 		attached = locate() in T
 	if(attached)
 		powernet = attached.get_powernet()
+	html_machines += src
 
 /obj/machinery/power/monitor/attack_ai(mob/user)
 	add_fingerprint(user)
@@ -44,6 +45,10 @@
 	if(stat & (BROKEN|NOPOWER))
 		return
 	interact(user)
+
+/obj/machinery/power/monitor/Destroy()
+	..()
+	html_machines -= src
 
 /obj/machinery/power/monitor/attack_hand(mob/user)
 	add_fingerprint(user)
@@ -55,7 +60,7 @@
 /obj/machinery/power/monitor/interact(mob/user)
 
 	if ( (get_dist(src, user) > 1 ) || (stat & (BROKEN|NOPOWER)) )
-		if (!istype(user, /mob/living/silicon))
+		if (!(issilicon(user) || isobserver(user)))
 			user.unset_machine()
 			src.interface.hide(user)
 			return

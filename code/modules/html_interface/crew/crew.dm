@@ -109,6 +109,7 @@ var/global/datum/crewmonitor/crewmonitor = new
 
 /datum/crewmonitor/proc/show(mob/mob, z)
 	if (!z) z = mob.z
+	if (z == CENTCOMM_Z) return
 
 	if (z > 0 && src.interfaces)
 		var/datum/html_interface/hi
@@ -264,7 +265,9 @@ var/global/datum/crewmonitor/crewmonitor = new
 
 /datum/crewmonitor/proc/generateMiniMaps()
 	spawn
-		for (var/z = 1 to world.maxz) src.generateMiniMap(z)
+		for (var/z = 1 to world.maxz)
+			if(z == CENTCOMM_Z) continue
+			src.generateMiniMap(z)
 
 		testing("MINIMAP: All minimaps have been generated.")
 
@@ -276,7 +279,9 @@ var/global/datum/crewmonitor/crewmonitor = new
 /datum/crewmonitor/proc/sendResources(client/C)
 	C << browse_rsc('crew.js', "crewmonitor.js")
 	C << browse_rsc('crew.css', "crewmonitor.css")
-	for (var/z = 1 to world.maxz) C << browse_rsc(file("[getMinimapFile(z)].png"), "minimap_[z].png")
+	for (var/z = 1 to world.maxz)
+		if(z == CENTCOMM_Z) continue
+		C << browse_rsc(file("[getMinimapFile(z)].png"), "minimap_[z].png")
 
 /datum/crewmonitor/proc/getMinimapFile(z)
 	return "data/minimaps/map_[z]"
