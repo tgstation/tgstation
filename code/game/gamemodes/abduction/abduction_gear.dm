@@ -545,9 +545,7 @@ Congratulations! You are now trained for xenobiology research!"}
 /obj/structure/table/abductor
 	name = "alien table"
 	desc = "Advanced flat surface technology at work!"
-	icon = 'icons/obj/smooth_structures/alien_table.dmi'
-	icon_state = "alien_table"
-	canSmoothWith = null
+	icon_state = "alientable"
 
 /obj/structure/closet/abductor
 	name = "alien locker"
