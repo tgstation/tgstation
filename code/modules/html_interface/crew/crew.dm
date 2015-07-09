@@ -114,11 +114,11 @@ var/global/datum/crewmonitor/crewmonitor = new
 		var/datum/html_interface/hi
 
 		if (!src.interfaces["[z]"])
-			src.interfaces["[z]"] = new/datum/html_interface/nanotrasen(src, "Crew Monitoring", 900, 540, "<link rel=\"stylesheet\" type=\"text/css\" href=\"crewmonitor.css\" /><script type=\"text/javascript\">var z = [z]; var tile_size = [world.icon_size]; var maxx = [world.maxx]; var maxy = [world.maxy];</script><script type=\"text/javascript\" src=\"crewmonitor.js\"></script>")
+			src.interfaces["[z]"] = new/datum/html_interface/nanotrasen(src, "Crew Monitoring", 900, 540, "<link rel=\"stylesheet\" type=\"text/css\" href=\"crewmonitor.css\" /><link rel=\"stylesheet\" type=\"text/css\" href=\"icons.css\" /><script type=\"text/javascript\">var z = [z]; var tile_size = [world.icon_size]; var maxx = [world.maxx]; var maxy = [world.maxy];</script><script type=\"text/javascript\" src=\"crewmonitor.js\"></script>")
 
 			hi = src.interfaces["[z]"]
 
-			hi.updateContent("content", "<a href=\"javascript:switchTo(0);\">Switch to mini map</a> <a href=\"javascript:switchTo(1);\">Switch to text-based</a><div id=\"minimap\"></div><div id=\"textbased\"></div>")
+			hi.updateLayout("<a href=\"javascript:switchTo(0);\">Switch to mini map</a> <a href=\"javascript:switchTo(1);\">Switch to text-based</a><div id=\"minimap\"></div><div id=\"textbased\"></div>")
 
 			src.update(z, TRUE)
 		else
@@ -257,17 +257,6 @@ var/global/datum/crewmonitor/crewmonitor = new
 						spawn(min(30, get_dist(get_turf(C), AI.eyeobj) / 4))
 							if (AI && AI.eyeobj && current_loc == AI.eyeobj.loc)
 								AI.switchCamera(C)
-
-/mob/living/carbon/human/Move()
-	if(src.w_uniform)
-		var/old_z = src.z
-
-		. = ..()
-
-		if (old_z != src.z) crewmonitor.queueUpdate(old_z)
-		crewmonitor.queueUpdate(src.z)
-	else
-		return ..()
 
 /datum/crewmonitor/proc/queueUpdate(z)
 	var/datum/controller/process/html/html = processScheduler.getProcess("html")
