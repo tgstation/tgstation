@@ -3774,7 +3774,7 @@
 "buD" = (/obj/structure/window/reinforced,/obj/structure/window/reinforced{dir = 1},/obj/structure/grille,/turf/simulated/floor/plating,/area/maintenance/disposal)
 "buE" = (/obj/structure/grille,/obj/structure/window/reinforced{dir = 4},/obj/structure/window/reinforced,/obj/machinery/atmospherics/pipe/simple/supply/hidden{dir = 5},/turf/simulated/floor/plating,/area/maintenance/disposal)
 "buF" = (/obj/machinery/conveyor{dir = 1; id_tag = "garbage"},/obj/machinery/atmospherics/pipe/simple/supply/hidden{dir = 4},/obj/effect/decal/warning_stripes{tag = "icon-warning"; icon_state = "warning"; dir = 2},/turf/simulated/floor,/area/maintenance/disposal)
-"buG" = (/obj/machinery/atmospherics/pipe/simple/supply/hidden{dir = 9},/obj/machinery/computer/smelting,/turf/simulated/floor,/area/mine/production)
+"buG" = (/obj/machinery/atmospherics/pipe/simple/supply/hidden{dir = 9},/obj/machinery/computer/smelting{smelter_tag = "mining_smelter"},/turf/simulated/floor,/area/mine/production)
 "buH" = (/obj/structure/stool,/obj/machinery/door/window{base_state = "right"; dir = 8; name = "Conveyor Access"; req_access_txt = "0"},/obj/machinery/atmospherics/pipe/simple/supply/hidden{dir = 4},/turf/simulated/floor{icon_state = "neutralcorner"; dir = 1},/area/maintenance/disposal)
 "buI" = (/obj/machinery/atmospherics/pipe/simple/supply/hidden{dir = 4},/obj/structure/cable{d1 = 2; d2 = 4; icon_state = "2-4"},/turf/simulated/floor,/area/maintenance/disposal)
 "buJ" = (/obj/item/device/radio/intercom{name = "Station Intercom (General)"; pixel_y = -29},/obj/machinery/camera{c_tag = "Recycling"; dir = 1},/obj/machinery/atmospherics/pipe/simple/supply/hidden{dir = 4},/obj/structure/cable{d1 = 4; d2 = 8; icon_state = "4-8"},/turf/simulated/floor,/area/maintenance/disposal)
