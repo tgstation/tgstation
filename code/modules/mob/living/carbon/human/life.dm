@@ -42,6 +42,9 @@
 			for(var/datum/mutation/human/HM in dna.mutations)
 				HM.on_life(src)
 
+		//heart attack stuff
+		handle_heart()
+
 		//Stuff jammed in your limbs hurts
 		handle_embedded_objects()
 	//Update our name based on whether our face is obscured/disfigured
@@ -338,13 +341,12 @@
 				if(!has_embedded_objects())
 					clear_alert("embeddedobject")
 
-/mob/living/carbon/human/handle_heart()
+/mob/living/carbon/human/proc/handle_heart()
 	if(!heart_attack)
 		return
 	else
 		losebreath += 5
 		adjustOxyLoss(5)
 		adjustBruteLoss(1)
-	return
 
 #undef HUMAN_MAX_OXYLOSS

@@ -479,7 +479,8 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 				if(prob(75))
 					user.visible_message("After a few attempts, [user] manages to light [src].", "<span class='notice'>After a few attempts, you manage to light [src].</span>")
 				else
-					user.adjustFireLoss(5)
+					var/hitzone = user.r_hand == src ? "r_hand" : "l_hand"
+					user.apply_damage(5, BURN, hitzone)
 					user.visible_message("<span class='warning'>After a few attempts, [user] manages to light [src] - they however burn their finger in the process.</span>", "<span class='warning'>You burn yourself while lighting the lighter!</span>")
 
 			user.AddLuminosity(1)
