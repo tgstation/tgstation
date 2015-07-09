@@ -42,7 +42,7 @@
 		return
 
 	// These look weird if you make them dirty
-	if(istype(src, /turf/simulated/floor/fancy/carpet) || istype(src, /turf/simulated/floor/fancy/grass) || istype(src, /turf/simulated/floor/plating/beach) || istype(src, /turf/simulated/floor/holofloor) || istype(src, /turf/simulated/floor/plating/snow) || istype(src, /turf/simulated/floor/plating/ironsand))
+	if(istype(src, /turf/simulated/floor/carpet) || istype(src, /turf/simulated/floor/grass) || istype(src, /turf/simulated/floor/plating/beach) || istype(src, /turf/simulated/floor/holofloor) || istype(src, /turf/simulated/floor/plating/snow) || istype(src, /turf/simulated/floor/plating/ironsand))
 		return
 
 	if(locate(/obj/structure/grille) in contents)

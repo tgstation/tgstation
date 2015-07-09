@@ -48,6 +48,15 @@
 	pellets = 5
 	variance = 0.8
 
+/obj/item/ammo_casing/shotgun/rubbershot
+	name = "rubber shot"
+	desc = "A shotgun casing filled with densely-packed rubber balls, used to incapacitate crowds from a distance."
+	icon_state = "bshell"
+	projectile_type = /obj/item/projectile/bullet/rpellet
+	pellets = 5
+	variance = 0.8
+	materials = list(MAT_METAL=4000)
+
 
 /obj/item/ammo_casing/shotgun/beanbag
 	name = "beanbag slug"

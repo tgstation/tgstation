@@ -199,7 +199,14 @@ var/global/datum/crewmonitor/crewmonitor = new
 	for (z in src.interfaces)
 		if (src.interfaces[z] == hi) break
 
-	return (hclient.client.mob && hclient.client.mob.stat == 0 && hclient.client.mob.z == text2num(z) && ( isAI(hclient.client.mob) || (locate(/obj/machinery/computer/crew, range(1, hclient.client.mob))) || (locate(/obj/item/device/sensor_device, hclient.client.mob.contents)) ) )
+	if (hclient.client.mob && hclient.client.mob.stat == 0 && hclient.client.mob.z == text2num(z))
+		if (isAI(hclient.client.mob)) return TRUE
+		else if (isrobot(hclient.client.mob))
+			return (locate(/obj/machinery/computer/crew, range(world.view, hclient.client.mob))) || (locate(/obj/item/device/sensor_device, hclient.client.mob.contents))
+		else
+			return (locate(/obj/machinery/computer/crew, range(1, hclient.client.mob))) || (locate(/obj/item/device/sensor_device, hclient.client.mob.contents))
+	else
+		return FALSE
 
 /datum/crewmonitor/Topic(href, href_list[], datum/html_interface_client/hclient)
 	if (istype(hclient))
