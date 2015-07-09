@@ -14,7 +14,7 @@ var/list/gang_colors_pool = list("red","orange","yellow","green","blue","purple"
 	config_tag = "gang"
 	antag_flag = BE_GANG
 	restricted_jobs = list("Security Officer", "Warden", "Detective", "AI", "MoMMI", "Cyborg","Captain", "Head of Personnel", "Head of Security", "Chief Engineer", "Research Director", "Chief Medical Officer")
-	required_players = 20
+	required_players = 15
 	required_enemies = 2
 	recommended_enemies = 2
 	enemy_minimum_age = 14
@@ -39,8 +39,9 @@ var/list/gang_colors_pool = list("red","orange","yellow","green","blue","purple"
 
 	//Spawn more bosses depending on server population
 	var/gangs_to_create = 2
-	if(prob(num_players() * 2))
-		gangs_to_create ++
+	if(num_players() > 20)
+		if(prob(num_players() * 2))
+			gangs_to_create ++
 
 	for(var/i=1 to gangs_to_create)
 		if(!antag_candidates.len)
