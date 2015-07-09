@@ -9,6 +9,8 @@
 	var/frequency = get_rand_frequency() // Same frequency for everybody
 	var/turf/turf_source = get_turf(source)
 
+
+
  	// Looping through the player list has the added bonus of working for mobs inside containers
 	for (var/P in player_list)
 		var/mob/M = P
@@ -76,6 +78,10 @@
 /mob/playsound_local(var/turf/turf_source, soundin, vol as num, vary, frequency, falloff, surround = 1)
 	if(!client || ear_deaf > 0)
 		return
+	var/image/I = image('icons/effects/sound.dmi',turf_source)
+	I.layer = (blind.layer  > 0) ? (blind.layer + 1) : 1
+	I.mouse_opacity = 0
+	client.show_image(I,10)
 	..()
 
 /client/proc/playtitlemusic()
