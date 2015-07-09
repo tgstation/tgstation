@@ -16,11 +16,11 @@
 	/turf/simulated/wall,
 	/turf/simulated/wall/r_wall,
 	/obj/structure/falsewall,
-	/obj/structure/falsewall/reinforced  // WHY DO WE SMOOTH WITH FALSE R-WALLS WHEN WE DON'T SMOOTH WITH REAL R-WALLS.
-	)
+	/obj/structure/falsewall/reinforced,  // WHY DO WE SMOOTH WITH FALSE R-WALLS WHEN WE DON'T SMOOTH WITH REAL R-WALLS.
+	/turf/simulated/wall/rust,
+	/turf/simulated/wall/r_wall/rust)
 	smooth = 1
 	can_be_unanchored = 0
-	var/list/save_overlays
 
 
 /obj/structure/falsewall/attack_hand(mob/user)
@@ -48,17 +48,19 @@
 
 /obj/structure/falsewall/proc/do_the_flick()
 	if(density)
-		save_overlays = overlays.Copy()
-		overlays.Cut()
+		smooth = 0
+		clear_overlays(src)
 		flick("fwall_opening", src)
 	else
 		flick("fwall_closing", src)
 
 /obj/structure/falsewall/update_icon()//Calling icon_update will refresh the smoothwalls if it's closed, otherwise it will make sure the icon is correct if it's open
 	if(density)
-		overlays = save_overlays.Copy()
+		smooth = 1
+		smooth_icon(src)
+		icon_state = ""
 	else
-		overlays += "fwall_open"
+		icon_state = "fwall_open"
 
 /obj/structure/falsewall/proc/ChangeToWall(delete = 1)
 	var/turf/T = get_turf(src)
@@ -146,11 +148,13 @@
 /obj/structure/falsewall/uranium
 	name = "uranium wall"
 	desc = "A wall with uranium plating. This is probably a bad idea."
+	icon = 'icons/turf/walls/uranium_wall.dmi'
 	icon_state = ""
 	mineral = "uranium"
 	walltype = "uranium"
 	var/active = null
 	var/last_event = 0
+	canSmoothWith = list(/obj/structure/falsewall/uranium, /turf/simulated/wall/mineral/uranium)
 
 /obj/structure/falsewall/uranium/attackby(obj/item/weapon/W, mob/user, params)
 	radiate()
@@ -179,30 +183,38 @@
 /obj/structure/falsewall/gold
 	name = "gold wall"
 	desc = "A wall with gold plating. Swag!"
+	icon = 'icons/turf/walls/gold_wall.dmi'
 	icon_state = ""
 	mineral = "gold"
 	walltype = "gold"
+	canSmoothWith = list(/obj/structure/falsewall/gold, /turf/simulated/wall/mineral/gold)
 
 /obj/structure/falsewall/silver
 	name = "silver wall"
 	desc = "A wall with silver plating. Shiny."
+	icon = 'icons/turf/walls/silver_wall.dmi'
 	icon_state = ""
 	mineral = "silver"
 	walltype = "silver"
+	canSmoothWith = list(/obj/structure/falsewall/silver, /turf/simulated/wall/mineral/silver)
 
 /obj/structure/falsewall/diamond
 	name = "diamond wall"
 	desc = "A wall with diamond plating. You monster."
+	icon = 'icons/turf/walls/diamond_wall.dmi'
 	icon_state = ""
 	mineral = "diamond"
 	walltype = "diamond"
+	canSmoothWith = list(/obj/structure/falsewall/diamond, /turf/simulated/wall/mineral/diamond)
 
 /obj/structure/falsewall/plasma
 	name = "plasma wall"
 	desc = "A wall with plasma plating. This is definately a bad idea."
+	icon = 'icons/turf/walls/plasma_wall.dmi'
 	icon_state = ""
 	mineral = "plasma"
 	walltype = "plasma"
+	canSmoothWith = list(/obj/structure/falsewall/plasma, /turf/simulated/wall/mineral/plasma)
 
 /obj/structure/falsewall/plasma/attackby(obj/item/weapon/W, mob/user, params)
 	if(is_hot(W) > 300)
@@ -222,26 +234,30 @@
 	if(exposed_temperature > 300)
 		burnbabyburn()
 
-//-----------wtf?-----------start
 /obj/structure/falsewall/clown
 	name = "bananium wall"
 	desc = "A wall with bananium plating. Honk!"
+	icon = 'icons/turf/walls/bananium_wall.dmi'
 	icon_state = ""
 	mineral = "bananium"
 	walltype = "bananium"
+	canSmoothWith = list(/obj/structure/falsewall/clown, /turf/simulated/wall/mineral/clown)
 
 
 /obj/structure/falsewall/sandstone
 	name = "sandstone wall"
 	desc = "A wall with sandstone plating."
+	icon = 'icons/turf/walls/sandstone_wall.dmi'
 	icon_state = ""
 	mineral = "sandstone"
 	walltype = "sandstone"
-//------------wtf?------------end
+	canSmoothWith = list(/obj/structure/falsewall/sandstone, /turf/simulated/wall/mineral/sandstone)
 
 /obj/structure/falsewall/wood
 	name = "wooden wall"
-	desc = "A wall with wooden plating."
+	desc = "A wall with wooden plating. Stiff."
+	icon = 'icons/turf/walls/wood_wall.dmi'
 	icon_state = ""
 	mineral = "wood"
 	walltype = "wood"
+	canSmoothWith = list(/obj/structure/falsewall/wood, /turf/simulated/wall/mineral/wood)
