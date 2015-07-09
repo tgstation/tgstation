@@ -228,10 +228,10 @@ emp_act
 				informed = 1
 			switch(severity)
 				if(1)
-					L.take_damage(0,10)
+					L.take_damage(0,30)
 					src.Stun(10)
 				if(2)
-					L.take_damage(0,5)
+					L.take_damage(0,10)
 					src.Stun(5)
 	..()
 

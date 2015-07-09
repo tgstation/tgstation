@@ -210,7 +210,10 @@
 
 	if(affecting.status == ORGAN_ROBOTIC && user.a_intent != "harm")
 		if(src.remove_fuel(0))
-			item_heal_robotic(H, user, 30, 0)
+			playsound(loc, 'sound/items/Welder.ogg', 50, 1)
+			user.visible_message("[user] starts to fix some of the dents on [H]'s [affecting.getDisplayName()].", "<span class='notice'>You start fixing some of the dents on [H]'s [affecting.getDisplayName()].</span>")
+			if(!do_mob(user, H))	return
+			item_heal_robotic(H, user, 10, 0)
 			return
 		else
 			return
