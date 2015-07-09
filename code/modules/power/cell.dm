@@ -9,7 +9,7 @@
 	throwforce = 5.0
 	throw_speed = 2
 	throw_range = 5
-	w_class = 2.0 //is that a power cell in your pocket, or are you happy to see me?
+	w_class = 2.0
 	var/charge = 0	// note %age conveted to actual charge in New
 	var/maxcharge = 1000
 	materials = list(MAT_METAL=700, MAT_GLASS=50)
