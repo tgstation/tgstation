@@ -61,10 +61,11 @@
 /obj/effect/proc_holder/changeling/sting/transformation
 	name = "Transformation Sting"
 	desc = "We silently sting a human, injecting a retrovirus that forces them to transform."
-	helptext = "The victim will transform much like a changeling would. The effects will be obvious and painful to the victim."
+	helptext = "The victim will transform much like a changeling would. The effects will be obvious to the victim, and the process will damage our genomes."
 	sting_icon = "sting_transform"
 	chemical_cost = 40
 	dna_cost = 3
+	genetic_damage = 100
 	var/datum/dna/selected_dna = null
 
 /obj/effect/proc_holder/changeling/sting/transformation/Click()
@@ -90,20 +91,77 @@
 	add_logs(user, target, "stung", object="transformation sting", addition=" new identity is [selected_dna.real_name]")
 	var/datum/dna/NewDNA = selected_dna
 	if(ismonkey(target))
-		user << "<span class='notice'>We stealthily sting [target.name].</span>"
-	target.forcesay(hit_appends)
-	target.visible_message("<span class='danger'>[target] begins to violenty convulse!</span>","<span class='userdanger'>You feel a tiny prick and a begin to violently convulse!</span>")
+		user << "<span class='notice'>Our genes cry out as we sting [target.name]!</span>"
+
 	if(iscarbon(target) && (target.status_flags & CANWEAKEN))
 		var/mob/living/carbon/C = target
-		C.Stun(3)
-		C.Weaken(3)
-		C.do_jitter_animation(100)
+		C.do_jitter_animation(500)
 		C.take_organ_damage(20, 0) //The process is extremely painful
-	spawn(20)
+
+	target.visible_message("<span class='danger'>[target] begins to violenty convulse!</span>","<span class='userdanger'>You feel a tiny prick and a begin to uncontrollably convulse!</span>")
+	spawn(10)
 		hardset_dna(target, NewDNA.uni_identity, NewDNA.struc_enzymes, NewDNA.real_name, NewDNA.blood_type, NewDNA.species.type, NewDNA.features)
 		updateappearance(target)
 	feedback_add_details("changeling_powers","TS")
 	return 1
+
+
+/obj/effect/proc_holder/changeling/sting/false_armblade
+	name = "False Armblade Sting"
+	desc = "We silently sting a human, injecting a retrovirus that mutates their arm to temporarily appear as an armblade."
+	helptext = "The victim will form an armblade much like a changeling would, except the armblade is dull and useless."
+	sting_icon = "sting_armblade"
+	chemical_cost = 20
+	dna_cost = 1
+	genetic_damage = 20
+	max_genetic_damage = 10
+
+/obj/item/weapon/melee/false_arm_blade
+	name = "arm blade"
+	desc = "A grotesque mass of flesh that used to be your arm. Although it looks dangerous at first, you can tell it's actually quite dull and useless."
+	icon = 'icons/obj/weapons.dmi'
+	icon_state = "arm_blade"
+	item_state = "arm_blade"
+	flags = ABSTRACT | NODROP
+	w_class = 5.0
+	force = 5 //Basically as strong as a punch
+
+/obj/item/weapon/melee/false_arm_blade/dropped()
+	qdel(src)
+
+/obj/effect/proc_holder/changeling/sting/false_armblade/can_sting(var/mob/user, var/mob/target)
+	if(!..())
+		return
+	if((target.disabilities & HUSK) || !check_dna_integrity(target))
+		user << "<span class='warning'>Our sting appears ineffective against its DNA.</span>"
+		return 0
+	return 1
+
+/obj/effect/proc_holder/changeling/sting/false_armblade/sting_action(var/mob/user, var/mob/target)
+	add_logs(user, target, "stung", object="falso armblade sting")
+
+	if(!target.drop_item())
+		user << "<span class='warning'>The [target.get_active_hand()] is stuck to their hand, you cannot grow a false armblade over it!</span>"
+		return
+
+	if(ismonkey(target))
+		user << "<span class='notice'>Our genes cry out as we sting [target.name]!</span>"
+
+	var/obj/item/weapon/melee/false_arm_blade/blade = new(target)
+	target.put_in_hands(blade)
+	target.visible_message("<span class='warning'>A grotesque blade forms around [target.name]\'s arm!</span>", "<span class='userdanger'>Your arm twists and mutates, transforming into a horrific monstrosity!</span>", "<span class='italics'>You hear organic matter ripping and tearing!</span>")
+	playsound(target, 'sound/effects/blobattack.ogg', 30, 1)
+
+	spawn(600)
+		playsound(target, 'sound/effects/blobattack.ogg', 30, 1)
+		target.visible_message("<span class='warning'>With a sickening crunch, [target] reforms his [blade] into an arm!</span>", "<span class='warning'>[blade] reforms back to normal.</span>", "<span class='italics>You hear organic matter ripping and tearing!</span>")
+		qdel(blade)
+		user.update_inv_l_hand()
+		user.update_inv_r_hand()
+
+	feedback_add_details("changeling_powers","AS")
+	return 1
+
 
 /obj/effect/proc_holder/changeling/sting/extract_dna
 	name = "Extract DNA Sting"

@@ -21,6 +21,7 @@
 	var/weapon_name_simple
 
 /obj/effect/proc_holder/changeling/weapon/try_to_sting(var/mob/user, var/mob/target)
+	playsound(user, 'sound/effects/blobattack.ogg', 30, 1)
 	if(istype(user.l_hand, weapon_type)) //Not the nicest way to do it, but eh
 		qdel(user.l_hand)
 		user.visible_message("<span class='warning'>With a sickening crunch, [user] reforms his [weapon_name_simple] into an arm!</span>", "<span class='notice'>We assimilate the [weapon_name_simple] back into our body.</span>", "<span class='italics>You hear organic matter ripping and tearing!</span>")
@@ -39,6 +40,7 @@
 		return
 	var/obj/item/W = new weapon_type(user)
 	user.put_in_hands(W)
+	playsound(user, 'sound/effects/blobattack.ogg', 30, 1)
 	return W
 
 //Parent to space suits and armor.
