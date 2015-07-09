@@ -259,14 +259,14 @@
 	if (usr.stat || usr.restrained()  || anchored || (usr.status_flags & FAKEDEATH))
 		return
 
-	src.dir = turn(src.dir, 90)
+	src.dir = turn(src.dir, -90)
 
 /obj/machinery/power/rust_fuel_injector/verb/rotate_anticlock()
 	set category = "Object"
-	set name = "Rotate Generator (Counterclockwise)"
+	set name = "Rotate Generator (Counter-clockwise)"
 	set src in view(1)
 
 	if (usr.stat || usr.restrained()  || anchored || (usr.status_flags & FAKEDEATH))
 		return
 
-	src.dir = turn(src.dir, -90)
+	src.dir = turn(src.dir, 90)
