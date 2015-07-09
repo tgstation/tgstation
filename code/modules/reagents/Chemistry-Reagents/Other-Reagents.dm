@@ -819,7 +819,7 @@
 /datum/reagent/carpet/reaction_turf(var/turf/simulated/T, var/volume)
 	if(istype(T, /turf/simulated/floor/plating) || istype(T, /turf/simulated/floor/plasteel))
 		var/turf/simulated/floor/F = T
-		F.ChangeTurf(/turf/simulated/floor/fancy/carpet)
+		F.ChangeTurf(/turf/simulated/floor/carpet)
 	..()
 	return
 
