@@ -21,6 +21,12 @@
 		bonus_reagents = list("sprinkles" = 2, "sugar" = 1)
 		filling_color = "#FF69B4"
 
+/obj/item/weapon/reagent_containers/food/snacks/donut/steel
+	name = "donut steel"
+	desc = "A donut so hard to eat you don't feel like stealing it! Tastes like snow."
+	bonus_reagents = list("iron" = 3)
+	icon_state = "donutsteel"
+
 /obj/item/weapon/reagent_containers/food/snacks/donut/chaos
 	name = "chaos donut"
 	desc = "Like life, it never quite tastes the same."

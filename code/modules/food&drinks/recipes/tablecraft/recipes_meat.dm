@@ -20,6 +20,23 @@
 	result = /obj/item/weapon/reagent_containers/food/snacks/kebab/monkey
 	category = CAT_FOOD
 
+/datum/table_recipe/catbeestkebab
+	name = "Catbeest on a stick"
+	reqs = list(
+		/obj/item/stack/rods = 1,
+		/obj/item/weapon/reagent_containers/food/snacks/meat/steak = 2,
+		/obj/item/clothing/tie/petcollar = 1
+	)
+	result = /obj/item/weapon/reagent_containers/food/snacks/roastedcatbeest
+
+/datum/table_recipe/catbeestkebab_alt //Alt. recipe - kitty ears instead of meat and pet collar
+	name = "Catbeest on a stick"
+	reqs = list(
+		/obj/item/stack/rods = 1,
+		/obj/item/clothing/head/kitty = 1
+	)
+	result = /obj/item/weapon/reagent_containers/food/snacks/roastedcatbeest
+
 /datum/table_recipe/tofukebab
 	name = "Tofu kebab"
 	reqs = list(

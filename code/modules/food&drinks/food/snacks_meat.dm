@@ -104,6 +104,25 @@
 	w_class = 3
 	list_reagents = list("nutriment" = 8)
 
+/obj/item/weapon/reagent_containers/food/snacks/roastedcatbeest //show the kawaii nekos what's for
+	name = "catbeest on a stick"
+	icon_state = "catbeestkebab"
+	trash = /obj/item/stack/rods
+	w_class = 3
+	list_reagents = list("nutriment" = 5)
+	bonus_reagents = list("vitamin" = 3, "milk" = 1) //nekos drink milk ;))))) :3333
+
+/obj/item/weapon/reagent_containers/food/snacks/roastedcatbeest/New()
+	..()
+	desc = "[pick("You have got to be kitten me.", \
+				  "Live long and pawspurr.", \
+				  "If I laugh much more I might puma pants.", \
+				  "This tastes cat-astrophically good.", \
+				  "If you made a triangle out of these, you'd have a purramid.", \
+				  "Nyaa~", \
+				  "M-meow?~", \
+				  "Each bite of this kebab gives a vision of a world-destroying snowstorm...")]"
+
 /obj/item/weapon/reagent_containers/food/snacks/kebab/human
 	name = "human-kebab"
 	desc = "A human meat, on a stick."

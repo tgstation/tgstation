@@ -1,0 +1,6 @@
+author: Xhuis
+delete-after: True
+
+changes: 
+  - rscadd: "Adds the 'donut steel' food item, made with 1 sugar, 1 pastry base, and a sheet of metal."
+  - rscadd: "Adds the 'catbeest on a stick' food item, made with 1 rod and either 2 meat steak + a pet collar OR a set of kitty ears."

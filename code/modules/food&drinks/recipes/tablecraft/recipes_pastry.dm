@@ -23,6 +23,14 @@
 	result = /obj/item/weapon/reagent_containers/food/snacks/donut
 	category = CAT_FOOD
 
+/datum/table_recipe/donutsteel
+	name = "Donut steel"
+	reqs = list(
+		/datum/reagent/consumable/sugar = 1,
+		/obj/item/weapon/reagent_containers/food/snacks/pastrybase = 1,
+		/obj/item/stack/sheet/metal = 1)
+	result = /obj/item/weapon/reagent_containers/food/snacks/donut/steel
+
 /datum/table_recipe/jellydonut
 	name = "Jelly donut"
 	reqs = list(
