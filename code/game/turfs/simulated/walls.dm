@@ -1,7 +1,8 @@
 /turf/simulated/wall
 	name = "wall"
 	desc = "A huge chunk of metal used to separate rooms."
-	icon = 'icons/turf/walls.dmi'
+	icon = 'icons/turf/walls/wall.dmi'
+	icon_state = "wall"
 	var/mineral = "metal"
 	opacity = 1
 	density = 1
@@ -17,13 +18,14 @@
 	var/sheet_type = /obj/item/stack/sheet/metal
 	var/obj/item/stack/sheet/builtin_sheet = null
 
-
-	var/del_suppress_resmoothing = 0 // Do not resmooth neighbors on Destroy. (smoothwall.dm)
 	canSmoothWith = list(
 	/turf/simulated/wall,
+	/turf/simulated/wall/r_wall,
 	/obj/structure/falsewall,
-	/obj/structure/falsewall/reinforced  // WHY DO WE SMOOTH WITH FALSE R-WALLS WHEN WE DON'T SMOOTH WITH REAL R-WALLS.
-	)
+	/obj/structure/falsewall/reinforced,  // WHY DO WE SMOOTH WITH FALSE R-WALLS WHEN WE DON'T SMOOTH WITH REAL R-WALLS.
+	/turf/simulated/wall/rust,
+	/turf/simulated/wall/r_wall/rust)
+	smooth = 1
 
 /turf/simulated/wall/New()
 	..()
@@ -46,18 +48,17 @@
 			P.roll_and_drop(src)
 		else
 			O.loc = src
-
 	ChangeTurf(/turf/simulated/floor/plating)
 
 /turf/simulated/wall/proc/break_wall()
-		builtin_sheet.amount = 2
-		builtin_sheet.loc = src
-		return (new /obj/structure/girder(src))
+	builtin_sheet.amount = 2
+	builtin_sheet.loc = src
+	return (new /obj/structure/girder(src))
 
 /turf/simulated/wall/proc/devastate_wall()
-		builtin_sheet.amount = 2
-		builtin_sheet.loc = src
-		new /obj/item/stack/sheet/metal(src)
+	builtin_sheet.amount = 2
+	builtin_sheet.loc = src
+	new /obj/item/stack/sheet/metal(src)
 
 /turf/simulated/wall/ex_act(severity, target)
 	if(target == src)
