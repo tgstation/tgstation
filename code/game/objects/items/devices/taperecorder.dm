@@ -102,7 +102,7 @@
 			return //Do not record from other recorders
 
 		mytape.timestamp += mytape.used_capacity
-		mytape.storedinfo += "\[[time2text(mytape.used_capacity * 10,"mm:ss")]\] [html_encode(message)]"
+		mytape.storedinfo += "\[[time2text(mytape.used_capacity * 10,"mm:ss")]\] [message]"
 
 /obj/item/device/taperecorder/verb/record()
 	set name = "Start Recording"
