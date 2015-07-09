@@ -19,6 +19,7 @@
 //	var/silicate = 0 // number of units of silicate
 //	var/icon/silicateIcon = null // the silicated icon
 	var/image/crack_overlay
+	can_be_unanchored = 1
 
 /obj/structure/window/New(Loc,re=0)
 	..()
@@ -380,8 +381,8 @@
 //This proc is used to update the icons of nearby windows.
 /obj/structure/window/proc/update_nearby_icons()
 	update_icon()
-	if(smoother)
-		smoother.update_neighbors()
+	if(smooth)
+		smooth_icon_neighbors(src)
 
 //merges adjacent full-tile windows into one (blatant ripoff from game/smoothwall.dm)
 /obj/structure/window/update_icon()
@@ -396,8 +397,8 @@
 		var/ratio = health / maxhealth
 		ratio = Ceiling(ratio*4) * 25
 
-		if(smoother)
-			smoother.smooth()
+		if(smooth)
+			smooth_icon(src)
 			if(ratio > 75)
 				overlays -= crack_overlay
 				return

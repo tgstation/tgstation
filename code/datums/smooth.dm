@@ -1,157 +1,134 @@
 /atom/var/smooth = 0
-/atom/var/datum/tile_smoother/smoother = null
+/atom/var/top_left_corner
+/atom/var/top_right_corner
+/atom/var/bottom_left_corner
+/atom/var/bottom_right_corner
+/atom/var/can_be_unanchored = 0
 /atom/var/list/canSmoothWith=list() // TYPE PATHS I CAN SMOOTH WITH~~~~~
 
-//generic (by snowflake) tile smoothing datum; smooth your icons with this!
+//generic (by snowflake) tile smoothing code; smooth your icons with this!
 /*
 	Each tile is divided in 4 corners, each corner has an image associated to it; the tile is then overlayed by these 4 images
-	To use this, just set your atom's 'smooth' var to 1. If your atom can't be moved/unanchored, set its 'can_be_unanchored' var to 0.
+	To use this, just set your atom's 'smooth' var to 1. If your atom can be moved/unanchored, set its 'can_be_unanchored' var to 1.
 	If you don't want your atom's icon to smooth with anything but atoms of the same type, set the list 'canSmoothWith' to null;
 	Otherwise, put all types you want the atom icon to smooth with in 'canSmoothWith' INCLUDING THE TYPE OF THE ATOM ITSELF.
 
 	Each atom has its own icon file with all the possible corner states. See 'smooth_wall.dmi' for a template.
 */
-/datum/tile_smoother
-	var/image/top_right
-	var/image/top_left
-	var/image/bottom_left
-	var/image/bottom_right
-	var/atom/holder
-	var/cardinal_adj
-	var/list/diagonal_adj
-	var/list/siblings
-	var/movable
-	var/enabled = 1
 
-/datum/tile_smoother/New(var/a_holder, var/list/s_list=null, movable_b = 0)
-	holder = a_holder
-	top_left += "1-i"
-	top_right += "2-i"
-	bottom_left += "3-i"
-	bottom_right += "4-i"
-	if(s_list && s_list.len == 0)
-		siblings = null
-	else
-		siblings = s_list
-	movable = movable_b
+//Redefinitions of the diagonal directions so they can be stored in one var without conflicts
+#define NORTH_EAST	16
+#define NORTH_WEST	32
+#define SOUTH_EAST	64
+#define SOUTH_WEST	128
 
-/datum/tile_smoother/proc/update_adjacencies()
-	cardinal_adj = 0
-	diagonal_adj = list()
-	if(movable)
-		var/atom/movable/A = holder
-		if(!A.anchored)
-			cardinal_adj = 0
-			diagonal_adj = list()
-			return
-		for(var/direction in cardinal)
-			var/atom/movable/AM = find_type_in_direction(holder, direction, siblings)
+/proc/calculate_adjacencies(atom/A)
+	var/adjacencies = 0
+
+	if(A.can_be_unanchored)
+		var/atom/movable/T = A
+		if(!T.anchored)
+			return 0
+
+		for(var/direction in alldirs)
+			var/atom/movable/AM = find_type_in_direction(A, direction)
 			if(AM)
 				if(AM.anchored)
-					cardinal_adj |= direction
-		for(var/direction in diagonals)
-			if(find_type_in_direction(holder, direction, siblings))
-				diagonal_adj |= direction
+					adjacencies |= transform_dir(direction)
 	else
-		for(var/direction in cardinal)
-			if(find_type_in_direction(holder, direction, siblings))
-				cardinal_adj |= direction
-		for(var/direction in diagonals)
-			if(find_type_in_direction(holder, direction, siblings))
-				diagonal_adj |= direction
+		for(var/direction in alldirs)
+			if(find_type_in_direction(A, direction))
+				adjacencies |= transform_dir(direction)
+	return adjacencies
 
-/datum/tile_smoother/proc/smooth()
-	if(!enabled)	return
+/proc/smooth_icon(atom/A)
 	spawn(2)
-		if(holder && holder.smooth)
-			holder.overlays -= top_left
-			holder.overlays -= top_right
-			holder.overlays -= bottom_right
-			holder.overlays -= bottom_left
+		if(A && A.smooth)
+			clear_overlays(A)
+			var/adjacencies = calculate_adjacencies(A)
 
-			update_adjacencies()
-			make_nw_corner()
-			make_ne_corner()
-			make_sw_corner()
-			make_se_corner()
+			A.top_left_corner = make_nw_corner(adjacencies)
+			A.top_right_corner = make_ne_corner(adjacencies)
+			A.bottom_left_corner = make_sw_corner(adjacencies)
+			A.bottom_right_corner = make_se_corner(adjacencies)
 
-			holder.overlays += top_left
-			holder.overlays += top_right
-			holder.overlays += bottom_right
-			holder.overlays += bottom_left
+			A.overlays += A.top_left_corner
+			A.overlays += A.top_right_corner
+			A.overlays += A.bottom_right_corner
+			A.overlays += A.bottom_left_corner
 
 
-/datum/tile_smoother/proc/make_nw_corner()
-	var/sdir = ""
-	if((cardinal_adj & NORTH) && (cardinal_adj & WEST))
-		if(NORTHWEST in diagonal_adj)
+/proc/make_nw_corner(adjacencies)
+	var/sdir = "i"
+	if((adjacencies & NORTH) && (adjacencies & WEST))
+		if(adjacencies & NORTH_WEST)
 			sdir = "f"
 		else
 			sdir = "nw"
 	else
-		if(cardinal_adj & NORTH)
+		if(adjacencies & NORTH)
 			sdir = "n"
-		else if(cardinal_adj & WEST)
+		else if(adjacencies & WEST)
 			sdir = "w"
 		else
 			sdir = "i"
-	top_left = "1-[sdir]"
+	return "1-[sdir]"
 
-/datum/tile_smoother/proc/make_ne_corner()
-	var/sdir = ""
-	if((cardinal_adj & NORTH) && (cardinal_adj & EAST))
-		if(NORTHEAST in diagonal_adj)
+/proc/make_ne_corner(adjacencies)
+	var/sdir = "i"
+	if((adjacencies & NORTH) && (adjacencies & EAST))
+		if(adjacencies & NORTH_EAST)
 			sdir = "f"
 		else
 			sdir = "ne"
 	else
-		if(cardinal_adj & NORTH)
+		if(adjacencies & NORTH)
 			sdir = "n"
-		else if(cardinal_adj & EAST)
+		else if(adjacencies & EAST)
 			sdir = "e"
 		else
 			sdir = "i"
-	top_right = "2-[sdir]"
+	return "2-[sdir]"
 
-/datum/tile_smoother/proc/make_sw_corner()
-	var/sdir = ""
-	if((cardinal_adj & SOUTH) && (cardinal_adj & WEST))
-		if(SOUTHWEST in diagonal_adj)
+/proc/make_sw_corner(adjacencies)
+	var/sdir = "i"
+	if((adjacencies & SOUTH) && (adjacencies & WEST))
+		if(adjacencies & SOUTH_WEST)
 			sdir = "f"
 		else
 			sdir = "sw"
 	else
-		if(cardinal_adj & SOUTH)
+		if(adjacencies & SOUTH)
 			sdir = "s"
-		else if(cardinal_adj & WEST)
+		else if(adjacencies & WEST)
 			sdir = "w"
 		else
 			sdir = "i"
-	bottom_left = "3-[sdir]"
+	return "3-[sdir]"
 
-/datum/tile_smoother/proc/make_se_corner()
-	var/sdir = ""
-	if((cardinal_adj & SOUTH) && (cardinal_adj & EAST))
-		if(SOUTHEAST in diagonal_adj)
+/proc/make_se_corner(adjacencies)
+	var/sdir = "i"
+	if((adjacencies & SOUTH) && (adjacencies & EAST))
+		if(adjacencies & SOUTH_EAST)
 			sdir = "f"
 		else
 			sdir = "se"
 	else
-		if(cardinal_adj & SOUTH)
+		if(adjacencies & SOUTH)
 			sdir = "s"
 		else
-			if(cardinal_adj & EAST)
+			if(adjacencies & EAST)
 				sdir = "e"
 			else
 				sdir = "i"
-	bottom_right = "4-[sdir]"
+	return "4-[sdir]"
 
-/datum/tile_smoother/proc/update_neighbors()
-	for(var/atom/A in orange(1,holder))
-		if(A.smoother)
-			A.smoother.smooth()
+/proc/smooth_icon_neighbors(atom/A)
+	for(var/atom/T in orange(1,A))
+		if(T.smooth)
+			smooth_icon(T)
 
-/proc/find_type_in_direction(atom/source, direction, list/siblings=null, range=1)
+/proc/find_type_in_direction(atom/source, direction, range=1)
 	var/x_offset = 0
 	var/y_offset = 0
 
@@ -165,6 +142,7 @@
 	else if(direction & WEST)
 		x_offset -= range
 
+	var/list/siblings = source.canSmoothWith
 	if(istype(source, /turf))
 		if(siblings)
 			for(var/a_type in siblings)
@@ -194,13 +172,21 @@
 	var/atom/A = locate(source.type) in locate(source.x + x_offset, source.y + y_offset, source.z)
 	return A && A.type == source.type ? A : null
 
-/datum/tile_smoother/proc/enable_smoothing(enable = 1)
-	if(!enable)
-		enabled = 0
-		holder.overlays -= top_left
-		holder.overlays -= top_right
-		holder.overlays -= bottom_right
-		holder.overlays -= bottom_left
-	else
-		enabled = 1
-		smooth()
+/proc/clear_overlays(atom/A)
+	A.overlays -= A.top_left_corner
+	A.overlays -= A.top_right_corner
+	A.overlays -= A.bottom_right_corner
+	A.overlays -= A.bottom_left_corner
+
+/proc/transform_dir(direction)
+	switch(direction)
+		if(NORTH,SOUTH,EAST,WEST)
+			return direction
+		if(NORTHEAST)
+			return NORTH_EAST
+		if(NORTHWEST)
+			return NORTH_WEST
+		if(SOUTHEAST)
+			return SOUTH_EAST
+		if(SOUTHWEST)
+			return SOUTH_WEST

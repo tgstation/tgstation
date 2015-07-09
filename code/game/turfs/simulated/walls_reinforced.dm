@@ -54,7 +54,7 @@
 			MS.use(1)
 			src.d_state = 0
 			src.icon_state = "r_wall"
-			smoother.update_neighbors()
+			smooth_icon_neighbors(src)
 			user << "<span class='notice'>You repair the last of the damage.</span>"
 			return 1
 	return 0
@@ -215,9 +215,10 @@
 /turf/simulated/wall/r_wall/proc/update_icon()
 	if(d_state)
 		icon_state = "r_wall-[d_state]"
-		smoother.enable_smoothing(0)
+		smooth = 0
+		clear_overlays(src)
 	else
-		smoother.enable_smoothing(1)
+		smooth = 1
 		icon_state = ""
 
 /turf/simulated/wall/r_wall/singularity_pull(S, current_size)

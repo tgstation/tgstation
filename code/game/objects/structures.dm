@@ -1,14 +1,12 @@
 /obj/structure
 	icon = 'icons/obj/structures.dmi'
 	pressure_resistance = 8
-	var/can_be_unanchored = 1
 
 /obj/structure/New()
 	..()
 	if(smooth)
-		smoother = new /datum/tile_smoother(src, canSmoothWith, can_be_unanchored)
-		smoother.smooth()
-		smoother.update_neighbors()
+		smooth_icon(src)
+		smooth_icon_neighbors(src)
 		icon_state = ""
 
 /obj/structure/blob_act()
@@ -18,8 +16,8 @@
 /obj/structure/Destroy()
 	if(opacity)
 		UpdateAffectingLights()
-	if(smoother)
-		smoother.update_neighbors()
+	if(smooth)
+		smooth_icon_neighbors(src)
 	..()
 
 /obj/structure/mech_melee_attack(obj/mecha/M)

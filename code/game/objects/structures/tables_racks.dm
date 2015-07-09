@@ -29,7 +29,6 @@
 	var/framestackamount = 2
 	var/mob/tableclimber
 	smooth = 1
-	can_be_unanchored = 0
 	canSmoothWith = list(/obj/structure/table, /obj/structure/table/reinforced)
 
 /obj/structure/table/New()
@@ -39,9 +38,9 @@
 			qdel(T)
 
 /obj/structure/table/update_icon()
-	if(smoother)
-		smoother.smooth()
-		smoother.update_neighbors()
+	if(smooth)
+		smooth_icon(src)
+		smooth_icon_neighbors(src)
 
 /obj/structure/table/ex_act(severity, target)
 	..()

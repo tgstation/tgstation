@@ -291,8 +291,7 @@
 /turf/indestructible/riveted/New()
 	..()
 	if(smooth)
-		smoother = new /datum/tile_smoother(src, canSmoothWith)
-		smoother.smooth()
+		smooth_icon(src)
 		icon_state = ""
 
 /turf/indestructible/riveted/uranium

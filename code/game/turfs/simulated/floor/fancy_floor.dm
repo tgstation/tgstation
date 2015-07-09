@@ -60,12 +60,12 @@
 	if(!..())
 		return 0
 	if(!broken && !burnt)
-		if(smoother)
-			smoother.smooth()
+		if(smooth)
+			smooth_icon(src)
 	else
 		make_plating()
-		if(smoother)
-			smoother.update_neighbors()
+		if(smooth)
+			smooth_icon_neighbors(src)
 
 /turf/simulated/floor/carpet/break_tile()
 	broken = 1

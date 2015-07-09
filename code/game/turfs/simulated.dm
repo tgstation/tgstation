@@ -13,8 +13,7 @@
 	..()
 	levelupdate()
 	if(smooth)
-		smoother = new /datum/tile_smoother(src, canSmoothWith)
-		smoother.smooth()
+		smooth_icon(src)
 		icon_state = ""
 
 /turf/simulated/proc/burn_tile()
@@ -57,6 +56,4 @@
 
 /turf/simulated/ChangeTurf(var/path)
 	. = ..()
-	for(var/turf/T in orange(1,src)) //manual update because it doesnt work otherwise
-		if(T.smoother)
-			T.smoother.smooth()
+	smooth_icon_neighbors(src)
