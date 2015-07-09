@@ -183,6 +183,11 @@ var/next_mob_id = 0
 	if(hearing_distance)
 		range = hearing_distance
 	for(var/mob/M in get_hearers_in_view(range, src))
+		if(M.client)
+			var/image/I = image('icons/effects/sound.dmi', get_turf(src))
+			I.layer = (blind.layer  > 0) ? (blind.layer + 1) : 1
+			I.mouse_opacity = 0
+			M.client.show_image(I,10)
 		M.show_message( message, 2, deaf_message, 1)
 
 /mob/proc/movement_delay()
