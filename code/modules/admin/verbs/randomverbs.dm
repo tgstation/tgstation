@@ -576,6 +576,7 @@ Traitors and the like can also be revived with the previous role mostly intact.
 		return
 	if(config.allow_admin_rev)
 		M.revive(0)
+		M.suiciding = 0
 
 		log_admin("[key_name(usr)] healed / revived [key_name(M)]")
 		message_admins("<span class='warning'>Admin [key_name_admin(usr)] healed / revived [key_name_admin(M)]!</span>", 1)

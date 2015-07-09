@@ -198,6 +198,7 @@
 
 	for(var/mob/living/M in orange(src,3))
 		M.revive(1)
+		M.suiciding = 0
 		M << "<span class='notice'>THE ADMINBUS IS LOVE. THE ADMINBUS IS LIFE.</span>"
 		sleep(2)
 	update_rearview()
