@@ -61,10 +61,10 @@
 /obj/effect/proc_holder/changeling/sting/transformation
 	name = "Transformation Sting"
 	desc = "We silently sting a human, injecting a retrovirus that forces them to transform."
-	helptext = "Does not provide a warning to others. The victim will transform much like a changeling would."
+	helptext = "The victim will transform much like a changeling would. The effects will be obvious and painful to the victim."
 	sting_icon = "sting_transform"
 	chemical_cost = 40
-	dna_cost = 2
+	dna_cost = 3
 	var/datum/dna/selected_dna = null
 
 /obj/effect/proc_holder/changeling/sting/transformation/Click()
@@ -91,8 +91,17 @@
 	var/datum/dna/NewDNA = selected_dna
 	if(ismonkey(target))
 		user << "<span class='notice'>We stealthily sting [target.name].</span>"
-	hardset_dna(target, NewDNA.uni_identity, NewDNA.struc_enzymes, NewDNA.real_name, NewDNA.blood_type, NewDNA.species.type, NewDNA.features)
-	updateappearance(target)
+	target.forcesay(hit_appends)
+	target.visible_message("<span class='danger'>[target] begins to violenty convulse!</span>","<span class='userdanger'>You feel a tiny prick and a begin to violently convulse!</span>")
+	if(iscarbon(target) && (target.status_flags & CANWEAKEN))
+		var/mob/living/carbon/C = target
+		C.Stun(3)
+		C.Weaken(3)
+		C.do_jitter_animation(100)
+		C.take_organ_damage(20, 0) //The process is extremely painful
+	spawn(20)
+		hardset_dna(target, NewDNA.uni_identity, NewDNA.struc_enzymes, NewDNA.real_name, NewDNA.blood_type, NewDNA.species.type, NewDNA.features)
+		updateappearance(target)
 	feedback_add_details("changeling_powers","TS")
 	return 1
 
