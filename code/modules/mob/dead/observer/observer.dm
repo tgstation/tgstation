@@ -868,6 +868,8 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 
 //END TELEPORT HREF CODE
 
+/mob/dead/observer/html_mob_check()
+	return 1
 
 //this is a mob verb instead of atom for performance reasons
 //see /mob/verb/examinate() in mob.dm for more info
