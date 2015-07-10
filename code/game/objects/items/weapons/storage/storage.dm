@@ -578,9 +578,9 @@
 	return 0
 
 /obj/item/weapon/storage/OnMobDeath(mob/wearer as mob)
-	for(var/obj/item/device/gps/secure/S in contents)
-		S.OnMobDeath(wearer)
+	for(var/obj/item/I in contents)
+		I.OnMobDeath(wearer)
 
 /obj/item/weapon/storage/stripped(mob/wearer as mob, mob/stripper as mob)
-	for(var/obj/item/device/gps/secure/S in contents)
-		S.stripped(wearer,stripper)
+	for(var/obj/item/I in contents)
+		I.stripped(wearer,stripper)

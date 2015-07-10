@@ -15,10 +15,13 @@ var/list/SPS_list = list()
 
 /obj/item/device/gps/New()
 	..()
-	if(SPS_list.Find(src)) return //exit if we already did this
+	overlays += "working"
+	handle_list()
+
+
+/obj/item/device/gps/proc/handle_list()
 	GPS_list.Add(src)
 	name = "global positioning system ([gpstag])"
-	overlays += "working"
 
 /obj/item/device/gps/Destroy()
 	if(istype(src,/obj/item/device/gps/secure))
@@ -121,13 +124,12 @@ var/global/secure_GPS_count = 0
 	icon_state = "sps"
 	gpstag = "SEC0"
 
-/obj/item/device/gps/secure/New()
+/obj/item/device/gps/secure/handle_list()
 	SPS_list.Add(src)
 	gpstag = "SEC[secure_GPS_count]"
 	secure_GPS_count++
 	name = "secure positioning system ([gpstag])"
-	overlays += "working"
-	..()
+
 
 /obj/item/device/gps/secure/OnMobDeath(mob/wearer as mob)
 	for(var/E in SPS_list)
