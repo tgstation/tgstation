@@ -212,10 +212,6 @@ var/const/INGEST = 2
 */
 
 /datum/reagents/proc/metabolize(var/mob/M)
-	if(M)
-		chem_temp = M.bodytemperature
-		handle_reactions()
-
 	for(var/A in reagent_list)
 		var/datum/reagent/R = A
 		if(!R.holder)
