@@ -381,13 +381,13 @@ var/list/DEFAULT_TAGGER_LOCATIONS = list(
 	for(var/obj/structure/bigDelivery/O in src)
 		deliveryCheck = 1
 		if(O.sortTag == 0)
-			O.sortTag = 1
+			O.sortTag = "DISPOSALS"
 	for(var/obj/item/smallDelivery/O in src)
 		deliveryCheck = 1
 		if (O.sortTag == 0)
-			O.sortTag = 1
+			O.sortTag = "DISPOSALS"
 	if(deliveryCheck == 0)
-		H.destinationTag = 1
+		H.destinationTag = "DISPOSALS"
 
 	air_contents = new()		// new empty gas resv.
 
