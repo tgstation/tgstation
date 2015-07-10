@@ -1,0 +1,10 @@
+author: Kurfurst
+delete-after: True
+changes:
+ - tweak: Rearranged items in electrical closet
+ - tweak: RCL now toggles on/off, places cables automatically on step if on
+ - tweak: RCL description tweaked to indicate how to remove wires
+ - tweak: RCL now holds up to 90 cables
+ - tweak: Atmos Analyzer now works on pipes
+ - tweak: Solder circuit interface removed; circuits are now designed with a menu
+ - tweak: Solder now creates intercom electronics instead of seed extractor circuitboard
