@@ -1,5 +1,14 @@
 var/list/ventcrawl_machinery = list(/obj/machinery/atmospherics/unary/vent_pump, /obj/machinery/atmospherics/unary/vent_scrubber)
 
+/mob/living/carbon/human/AltClickOn(var/atom/A)
+	if(is_type_in_list(A,ventcrawl_machinery) && w_uniform && istype(w_uniform,/obj/item/clothing/under/contortionist))
+		var/obj/item/clothing/under/contortionist/C = w_uniform
+		if(C.check_clothing(src))
+			src.handle_ventcrawl(A,1)
+			return
+	else
+		..(A)
+
 /mob/living/carbon/slime/AltClickOn(var/atom/A)
 	if(is_type_in_list(A,ventcrawl_machinery))
 		src.handle_ventcrawl(A)
@@ -45,9 +54,7 @@ var/list/ventcrawl_machinery = list(/obj/machinery/atmospherics/unary/vent_pump,
 /mob/living/carbon/alien/humanoid/queen/AltClickOn(var/atom/A)
 	..(A,1)
 
-
-/mob/living/proc/handle_ventcrawl(var/atom/clicked_on) // -- TLE -- Merged by Carn
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/living/proc/handle_ventcrawl() called tick#: [world.time]")
+/mob/living/proc/handle_ventcrawl(var/atom/clicked_on, var/allowed_carry=0) // Allowed carry is 1 if allowed to carry items inside.
 	diary << "[src] is ventcrawling."
 	if(!stat)
 		if(!lying)
@@ -107,7 +114,7 @@ var/list/ventcrawl_machinery = list(/obj/machinery/atmospherics/unary/vent_pump,
 					if(!client)
 						return
 
-					if(contents.len && !isrobot(src))
+					if((contents.len && !isrobot(src))&&!allowed_carry)
 						for(var/obj/item/carried_item in contents)//If the ventcrawler got on objects.
 							if(!(isInTypes(carried_item, canEnterVentWith)))
 								src << "<SPAN CLASS='warning'>You can't be carrying items or have items equipped when vent crawling!</SPAN>"
