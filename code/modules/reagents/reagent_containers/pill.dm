@@ -40,15 +40,14 @@
 
 
 	user.unEquip(src) //icon update
-	add_logs(user, M, "fed", object="[reagentlist(src)]")
+	add_logs(user, M, "fed", reagentlist(src))
 	loc = M //Put the pill inside the mob. This fixes the issue where the pill appears to drop to the ground after someone eats it.
 
 	if(reagents.total_volume)
 		reagents.reaction(M, apply_type)
-		spawn(5)
-			reagents.trans_to(M, reagents.total_volume)
-			qdel(src)
-			return 1
+		reagents.trans_to(M, reagents.total_volume)
+		qdel(src)
+		return 1
 	else
 		qdel(src)
 		return 1

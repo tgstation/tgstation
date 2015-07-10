@@ -115,6 +115,8 @@
 	icon_state = "jetpack-void"
 	item_state =  "jetpack-void"
 	var/obj/item/weapon/tank/internals/tank = null
+	action_button_name = "Toggle Jetpack"
+	action_button_internal = 1
 
 /obj/item/weapon/tank/jetpack/suit/New()
 	..()

@@ -231,7 +231,7 @@
 		loaded_item = null
 
 /obj/machinery/r_n_d/experimentor/proc/throwSmoke(var/turf/where)
-	var/datum/effect/effect/system/harmless_smoke_spread/smoke = new
+	var/datum/effect/effect/system/smoke_spread/smoke = new
 	smoke.set_up(1,0, where, 0)
 	smoke.start()
 
@@ -323,7 +323,7 @@
 			R.my_atom = src
 			R.add_reagent(chosenchem , 50)
 			investigate_log("Experimentor has released [chosenchem] smoke.", "experimentor")
-			var/datum/effect/effect/system/chem_smoke_spread/smoke = new
+			var/datum/effect/effect/system/smoke_spread/chem/smoke = new
 			smoke.set_up(R, 1, 0, src, 0, silent = 1)
 			playsound(src.loc, 'sound/effects/smoke.ogg', 50, 1, -3)
 			smoke.start()
@@ -335,7 +335,7 @@
 			var/datum/reagents/R = new/datum/reagents(50)
 			R.my_atom = src
 			R.add_reagent(chosenchem , 50)
-			var/datum/effect/effect/system/chem_smoke_spread/smoke = new
+			var/datum/effect/effect/system/smoke_spread/chem/smoke = new
 			smoke.set_up(R, 1, 0, src, 0, silent = 1)
 			playsound(src.loc, 'sound/effects/smoke.ogg', 50, 1, -3)
 			smoke.start()
@@ -422,7 +422,7 @@
 			R.my_atom = src
 			R.add_reagent("frostoil" , 50)
 			investigate_log("Experimentor has released frostoil gas.", "experimentor")
-			var/datum/effect/effect/system/chem_smoke_spread/smoke = new
+			var/datum/effect/effect/system/smoke_spread/chem/smoke = new
 			smoke.set_up(R, 1, 0, src, 0, silent = 1)
 			playsound(src.loc, 'sound/effects/smoke.ogg', 50, 1, -3)
 			smoke.start()
@@ -444,7 +444,7 @@
 			ejectItem(TRUE)
 		if(prob(EFFECT_PROB_MEDIUM-badThingCoeff))
 			visible_message("<span class='warning'>[src] malfunctions, releasing a flurry of chilly air as [exp_on] pops out!</span>")
-			var/datum/effect/effect/system/harmless_smoke_spread/smoke = new
+			var/datum/effect/effect/system/smoke_spread/smoke = new
 			smoke.set_up(1,0, src.loc, 0)
 			smoke.start()
 			ejectItem()
@@ -455,8 +455,8 @@
 			visible_message("<span class='warning'>[src]'s crushing mechanism slowly and smoothly descends, flattening the [exp_on]!</span>")
 			new /obj/item/stack/sheet/plasteel(get_turf(pick(oview(1,src))))
 		if(linked_console.linked_lathe)
-			linked_console.linked_lathe.m_amount += min((linked_console.linked_lathe.max_material_storage - linked_console.linked_lathe.TotalMaterials()), (exp_on.m_amt))
-			linked_console.linked_lathe.g_amount += min((linked_console.linked_lathe.max_material_storage - linked_console.linked_lathe.TotalMaterials()), (exp_on.g_amt))
+			linked_console.linked_lathe.m_amount += min((linked_console.linked_lathe.max_material_storage - linked_console.linked_lathe.TotalMaterials()), (exp_on.materials[MAT_METAL]))
+			linked_console.linked_lathe.g_amount += min((linked_console.linked_lathe.max_material_storage - linked_console.linked_lathe.TotalMaterials()), (exp_on.materials[MAT_GLASS]))
 		if(prob(EFFECT_PROB_VERYLOW-badThingCoeff))
 			visible_message("<span class='danger'>[src]'s crusher goes way too many levels too high, crushing right through space-time!</span>")
 			playsound(src.loc, 'sound/effects/supermatter.ogg', 50, 1, -3)
@@ -652,7 +652,7 @@
 //////////////// RELIC PROCS /////////////////////////////
 
 /obj/item/weapon/relic/proc/throwSmoke(var/turf/where)
-	var/datum/effect/effect/system/harmless_smoke_spread/smoke = new
+	var/datum/effect/effect/system/smoke_spread/smoke = new
 	smoke.set_up(1,0, where, 0)
 	smoke.start()
 

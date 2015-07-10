@@ -66,7 +66,8 @@
 
 /mob/living/simple_animal/Login()
 	if(src && src.client)
-		src.client.screen = null
+		src.client.screen = list()
+		client.screen += client.void
 	..()
 
 /mob/living/simple_animal/updatehealth()
@@ -202,6 +203,10 @@
 				if(!atmos_suitable)
 					adjustBruteLoss(unsuitable_atmos_damage)
 
+		else
+			if(atmos_requirements["min_oxy"] || atmos_requirements["min_tox"] || atmos_requirements["min_n2"] || atmos_requirements["min_co2"])
+				adjustBruteLoss(unsuitable_atmos_damage)
+
 	handle_temperature_damage()
 
 /mob/living/simple_animal/proc/handle_temperature_damage()
@@ -275,7 +280,7 @@
 			visible_message("<span class='danger'>[M] [response_harm] [src]!</span>")
 			playsound(loc, "punch", 25, 1, -1)
 			attack_threshold_check(harm_intent_damage)
-			add_logs(M, src, "attacked", admin=0)
+			add_logs(M, src, "attacked")
 			updatehealth()
 			return 1
 
@@ -298,14 +303,14 @@
 			playsound(loc, 'sound/weapons/pierce.ogg', 25, 1, -1)
 			visible_message("<span class='danger'>[M] [response_disarm] [name]!</span>", \
 					"<span class='userdanger'>[M] [response_disarm] [name]!</span>")
-			add_logs(M, src, "disarmed", admin=0)
+			add_logs(M, src, "disarmed")
 		else
 			var/damage = rand(15, 30)
 			visible_message("<span class='danger'>[M] has slashed at [src]!</span>", \
 					"<span class='userdanger'>[M] has slashed at [src]!</span>")
 			playsound(loc, 'sound/weapons/slice.ogg', 25, 1, -1)
-			add_logs(M, src, "attacked", admin=0)
 			attack_threshold_check(damage)
+			add_logs(M, src, "attacked")
 		return 1
 
 /mob/living/simple_animal/attack_larva(mob/living/carbon/alien/larva/L as mob)

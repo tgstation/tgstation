@@ -10,7 +10,7 @@
 
 /datum/admins/proc/one_click_antag()
 
-	var/dat = {"<B>Quick-Create Antagonist</B><br>
+	var/dat = {"
 		<a href='?src=\ref[src];makeAntag=1'>Make Traitors</a><br>
 		<a href='?src=\ref[src];makeAntag=2'>Make Changelings</a><br>
 		<a href='?src=\ref[src];makeAntag=3'>Make Revs</a><br>
@@ -25,17 +25,10 @@
 		<a href='?src=\ref[src];makeAntag=14'>Make Abductor Team (Requires Ghosts)</a><br>
 		<a href='?src=\ref[src];makeAntag=15'>Make Revenant (Requires Ghost)</a><br>
 		"}
-/* These dont work just yet
-	Ninja, aliens and deathsquad I have not looked into yet
-	Nuke team is getting a null mob returned from makebody() (runtime error: null.mind. Line 272)
 
-
-		<a href='?src=\ref[src];makeAntag=8'>Make Space Ninja (Requires Ghosts)</a><br>
-		<a href='?src=\ref[src];makeAntag=9'>Make Aliens (Requires Ghosts)</a><br>
-		"}
-*/
-	usr << browse(dat, "window=oneclickantag;size=400x400")
-	return
+	var/datum/browser/popup = new(usr, "oneclickantag", "Quick-Create Antagonist", 400, 400)
+	popup.set_content(dat)
+	popup.open()
 
 
 /datum/admins/proc/makeMalfAImode()
@@ -404,14 +397,19 @@
 									candidates += applicant
 
 	if(candidates.len >= 2)
-		H = pick(candidates)
-		H.mind.make_Gang("A")
-		candidates.Remove(H)
-		H = pick(candidates)
-		H.mind.make_Gang("B")
+		for(var/needs_assigned=2,needs_assigned>0,needs_assigned--)
+			H = pick(candidates)
+			if(gang_colors_pool.len)
+				var/datum/gang/newgang = new()
+				ticker.mode.gangs += newgang
+				H.mind.make_Gang(newgang)
+				candidates.Remove(H)
+			else if(needs_assigned == 2)
+				return 0
 		return 1
 
 	return 0
+
 
 /datum/admins/proc/makeOfficial()
 	var/mission = input("Assign a task for the official", "Assign Task", "Conduct a routine preformance review of [station_name()] and its Captain.")
@@ -424,7 +422,7 @@
 		var/mob/living/carbon/human/newmob = new (pick(emergencyresponseteamspawn))
 		chosen_candidate.client.prefs.copy_to(newmob)
 		ready_dna(newmob)
-		newmob.real_name = random_name(newmob.gender)
+		newmob.real_name = newmob.dna.species.random_name(newmob.gender,1)
 		newmob.key = chosen_candidate.key
 		newmob.mind.assigned_role = "Centcom Official"
 		equip_centcomofficial(newmob)
@@ -494,27 +492,28 @@
 			var/list/lastname = last_names
 			chosen_candidate.client.prefs.copy_to(ERTOperative)
 			ready_dna(ERTOperative)
+			var/ertname = pick(lastname)
 			switch(numagents)
 				if(1)
-					ERTOperative.real_name = "Commander [pick(lastname)]"
+					ERTOperative.real_name = "Commander [ertname]"
 					equip_emergencyresponsesquad(ERTOperative, "commander",redalert)
 				if(2)
-					ERTOperative.real_name = "Security Officer [pick(lastname)]"
+					ERTOperative.real_name = "Security Officer [ertname]"
 					equip_emergencyresponsesquad(ERTOperative, "sec",redalert)
 				if(3)
-					ERTOperative.real_name = "Medical Officer [pick(lastname)]"
+					ERTOperative.real_name = "Medical Officer [ertname]"
 					equip_emergencyresponsesquad(ERTOperative, "med",redalert)
 				if(4)
-					ERTOperative.real_name = "Engineer [pick(lastname)]"
+					ERTOperative.real_name = "Engineer [ertname]"
 					equip_emergencyresponsesquad(ERTOperative, "eng",redalert)
 				if(5)
-					ERTOperative.real_name = "Security Officer [pick(lastname)]"
+					ERTOperative.real_name = "Security Officer [ertname]"
 					equip_emergencyresponsesquad(ERTOperative, "sec",redalert)
 				if(6)
-					ERTOperative.real_name = "Medical Officer [pick(lastname)]"
+					ERTOperative.real_name = "Medical Officer [ertname]"
 					equip_emergencyresponsesquad(ERTOperative, "med",redalert)
 				if(7)
-					ERTOperative.real_name = "Engineer [pick(lastname)]"
+					ERTOperative.real_name = "Engineer [ertname]"
 					equip_emergencyresponsesquad(ERTOperative, "eng",redalert)
 			ERTOperative.key = chosen_candidate.key
 			ERTOperative.mind.assigned_role = "ERT"
@@ -564,13 +563,7 @@
 
 	if(candidates.len >= 2)
 		//Oh god why we can't have static functions
-		var/teams_finished = 0
-		if(ticker.mode.config_tag == "abduction")
-			var/datum/game_mode/abduction/A = ticker.mode
-			teams_finished = A.teams
-		else
-			teams_finished = round(ticker.mode.abductors.len / 2)
-		var/number =  teams_finished + 1
+		var/number =  ticker.mode.abductor_teams + 1
 
 		var/datum/game_mode/abduction/temp
 		if(ticker.mode.config_tag == "abduction")
@@ -598,10 +591,10 @@
 		temp.abductors |= list(agent_mind,scientist_mind)
 		temp.make_abductor_team(number,preset_scientist=scientist_mind,preset_agent=agent_mind)
 		temp.post_setup_team(number)
-		if(ticker.mode.config_tag == "abduction")
-			var/datum/game_mode/abduction/A = ticker.mode
-			A.teams += 1
-		else
+
+		ticker.mode.abductor_teams++
+
+		if(ticker.mode.config_tag != "abduction")
 			ticker.mode.abductors |= temp.abductors
 
 		return 1

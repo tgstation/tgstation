@@ -31,7 +31,6 @@
 
 /obj/structure/closet/secure_closet/hop/New()
 	..()
-	new /obj/item/clothing/suit/hooded/wintercoat/cargo(src)
 	new /obj/item/clothing/under/rank/head_of_personnel(src)
 	new /obj/item/clothing/head/hopcap(src)
 	new /obj/item/weapon/cartridge/hop(src)
@@ -55,7 +54,6 @@
 /obj/structure/closet/secure_closet/hos/New()
 	..()
 	new /obj/item/clothing/cloak/hos(src)
-	new /obj/item/clothing/suit/hooded/wintercoat/security(src)
 	new /obj/item/weapon/cartridge/hos(src)
 	new /obj/item/device/radio/headset/heads/hos(src)
 	new /obj/item/clothing/under/hosparadefem(src)
@@ -84,7 +82,7 @@
 /obj/structure/closet/secure_closet/warden/New()
 	..()
 	new /obj/item/device/radio/headset/headset_sec(src)
-	new /obj/item/clothing/suit/armor/vest/warden/(src)
+	new /obj/item/clothing/suit/armor/vest/warden(src)
 	new /obj/item/clothing/head/warden(src)
 	new /obj/item/clothing/head/beret/sec/navywarden(src)
 	new /obj/item/clothing/suit/armor/vest/warden/alt(src)
@@ -109,13 +107,12 @@
 	new /obj/item/clothing/suit/armor/vest(src)
 	new /obj/item/device/radio/headset/headset_sec(src)
 	new /obj/item/device/radio/headset/headset_sec/alt(src)
-	new /obj/item/clothing/head/beret/sec(src)
-	new /obj/item/clothing/head/soft/sec(src)
 	new /obj/item/weapon/reagent_containers/spray/pepper(src)
 	new /obj/item/device/flash/handheld(src)
 	new /obj/item/weapon/grenade/flashbang(src)
 	new /obj/item/weapon/storage/belt/security/full(src)
 	new /obj/item/clothing/glasses/hud/security/sunglasses(src)
+	new /obj/item/clothing/head/helmet/sec(src)
 
 /obj/structure/closet/secure_closet/security/sec
 
@@ -155,6 +152,8 @@
 	name = "\proper detective's cabinet"
 	req_access = list(access_forensics_lockers)
 	icon_state = "cabinet"
+	burn_state = 0 //Burnable
+	burntime = 20
 
 /obj/structure/closet/secure_closet/detective/New()
 	..()

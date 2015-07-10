@@ -6,6 +6,21 @@
 	icon_state = "glass_empty"
 	amount_per_transfer_from_this = 10
 	volume = 50
+	burn_state = 0 //Burnable
+	burntime = 5
+	spillable = 1
+
+/obj/item/weapon/reagent_containers/food/drinks/drinkingglass/fire_act()
+	if(!reagents.total_volume)
+		return
+	..()
+
+/obj/item/weapon/reagent_containers/food/drinks/drinkingglass/burn()
+	reagents.total_volume = 0 //Burns away all the alcohol :(
+	reagents.reagent_list.Cut()
+	on_reagent_change()
+	extinguish()
+	return
 
 /obj/item/weapon/reagent_containers/food/drinks/drinkingglass/on_reagent_change()
 	overlays.Cut()
@@ -591,3 +606,26 @@
 			return
 	else
 		..()
+
+/obj/item/weapon/reagent_containers/food/drinks/drinkingglass/attack(obj/target, mob/user)
+
+	if(user.a_intent == "harm" && ismob(target) && target.reagents && reagents.total_volume)
+		target.visible_message("<span class='danger'>[user] splashes the contents of [src] onto [target]!</span>", \
+						"<span class='userdanger'>[user] splashes the contents of [src] onto [target]!</span>")
+		add_logs(user, target, "splashed", src)
+		reagents.reaction(target, TOUCH)
+		reagents.clear_reagents()
+		return
+	..()
+
+/obj/item/weapon/reagent_containers/food/drinks/drinkingglass/afterattack(obj/target, mob/user, proximity)
+	if((!proximity) || !check_allowed_items(target,1)) return
+
+	else if(reagents.total_volume && user.a_intent == "harm")
+		user.visible_message("<span class='danger'>[user] splashes the contents of [src] onto [target]!</span>", \
+							"<span class='notice'>You splash the contents of [src] onto [target].</span>")
+		reagents.reaction(target, TOUCH)
+		reagents.clear_reagents()
+		return
+	..()
+

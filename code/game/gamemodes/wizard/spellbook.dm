@@ -375,21 +375,21 @@
 
 /datum/spellbook_entry/summon/guns
 	name = "Summon Guns"
-	category = "Challenges"
+	category = "Rituals"
 	desc = "Nothing could possibly go wrong with arming a crew of lunatics just itching for an excuse to kill you. Just be careful not to stand still too long!"
-	cost = 0
+	cost = 1
 	log_name = "SG"
 
 /datum/spellbook_entry/summon/guns/IsAvailible()
-	return !config.no_summon_guns
+	if(!ticker.mode) // In case spellbook is placed on map
+		return 0
+	return (ticker.mode.name != "ragin' mages" && !config.no_summon_guns)
 
 /datum/spellbook_entry/summon/guns/Buy(var/mob/living/carbon/human/user,var/obj/item/weapon/spellbook/book)
 	feedback_add_details("wizard_spell_learned",log_name)
-	rightandwrong(0, user, 0)
-	book.uses += 1
-	active = 1
+	rightandwrong(0, user, 25)
 	playsound(get_turf(user),"sound/magic/CastSummon.ogg",50,1)
-	user << "<span class='notice'>You have cast summon guns and gained an extra charge for your spellbook.</span>"
+	user << "<span class='notice'>You have cast summon guns!</span>"
 	return 1
 
 /datum/spellbook_entry/summon/magic
@@ -400,7 +400,9 @@
 	log_name = "SU"
 
 /datum/spellbook_entry/summon/magic/IsAvailible()
-	return !config.no_summon_magic
+	if(!ticker.mode) // In case spellbook is placed on map
+		return 0
+	return (ticker.mode.name != "ragin' mages" && !config.no_summon_magic)
 
 /datum/spellbook_entry/summon/magic/Buy(var/mob/living/carbon/human/user,var/obj/item/weapon/spellbook/book)
 	feedback_add_details("wizard_spell_learned",log_name)
@@ -419,6 +421,8 @@
 	var/times = 0
 
 /datum/spellbook_entry/summon/events/IsAvailible()
+	if(!ticker.mode) // In case spellbook is placed on map
+		return 0
 	return (ticker.mode.name != "ragin' mages" && !config.no_summon_events)
 
 /datum/spellbook_entry/summon/events/Buy(var/mob/living/carbon/human/user,var/obj/item/weapon/spellbook/book)
@@ -453,8 +457,7 @@
 	var/list/datum/spellbook_entry/entries = list()
 	var/list/categories = list()
 
-/obj/item/weapon/spellbook/New()
-	..()
+/obj/item/weapon/spellbook/proc/Initialize()
 	var/entry_types = typesof(/datum/spellbook_entry) - /datum/spellbook_entry - /datum/spellbook_entry/item - /datum/spellbook_entry/summon
 	for(var/T in entry_types)
 		var/datum/spellbook_entry/E = new T
@@ -464,6 +467,10 @@
 		else
 			del(E)
 	tab = categories[1]
+
+/obj/item/weapon/spellbook/New()
+	..()
+	Initialize()
 
 
 /obj/item/weapon/spellbook/attackby(obj/item/O as obj, mob/user as mob, params)
@@ -611,6 +618,9 @@
 /obj/item/weapon/spellbook/oneuse/New()
 	..()
 	name += spellname
+
+/obj/item/weapon/spellbook/oneuse/Initialize() //No need to init
+	return
 
 /obj/item/weapon/spellbook/oneuse/attack_self(mob/user as mob)
 	var/obj/effect/proc_holder/spell/S = new spell

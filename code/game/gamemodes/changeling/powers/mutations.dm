@@ -21,6 +21,7 @@
 	var/weapon_name_simple
 
 /obj/effect/proc_holder/changeling/weapon/try_to_sting(var/mob/user, var/mob/target)
+	playsound(user, 'sound/effects/blobattack.ogg', 30, 1)
 	if(istype(user.l_hand, weapon_type)) //Not the nicest way to do it, but eh
 		qdel(user.l_hand)
 		user.visible_message("<span class='warning'>With a sickening crunch, [user] reforms his [weapon_name_simple] into an arm!</span>", "<span class='notice'>We assimilate the [weapon_name_simple] back into our body.</span>", "<span class='italics>You hear organic matter ripping and tearing!</span>")
@@ -39,6 +40,7 @@
 		return
 	var/obj/item/W = new weapon_type(user)
 	user.put_in_hands(W)
+	playsound(user, 'sound/effects/blobattack.ogg', 30, 1)
 	return W
 
 //Parent to space suits and armor.
@@ -130,9 +132,9 @@
 	throw_range = 0
 	throw_speed = 0
 
-/obj/item/weapon/melee/arm_blade/New()
+/obj/item/weapon/melee/arm_blade/New(location,silent)
 	..()
-	if(ismob(loc))
+	if(ismob(loc) && !silent)
 		loc.visible_message("<span class='warning'>A grotesque blade forms around [loc.name]\'s arm!</span>", "<span class='warning'>Our arm twists and mutates, transforming it into a deadly blade.</span>", "<span class='italics'>You hear organic matter ripping and tearing!</span>")
 
 /obj/item/weapon/melee/arm_blade/dropped(mob/user)
@@ -271,8 +273,9 @@
 	name = "flesh mass"
 	icon_state = "lingspacehelmet"
 	desc = "A covering of pressure and temperature-resistant organic tissue with a glass-like chitin front."
-	flags = HEADCOVERSEYES | BLOCKHAIR | HEADCOVERSMOUTH | STOPSPRESSUREDMAGE | NODROP //Again, no THICKMATERIAL.
+	flags = BLOCKHAIR | STOPSPRESSUREDMAGE | NODROP //Again, no THICKMATERIAL.
 	armor = list(melee = 0, bullet = 0, laser = 0,energy = 0, bomb = 0, bio = 0, rad = 0)
+	flags_cover = HEADCOVERSEYES | HEADCOVERSMOUTH
 
 /obj/item/clothing/head/helmet/space/changeling/dropped()
 	qdel(src)
@@ -320,9 +323,10 @@
 	name = "chitinous mass"
 	desc = "A tough, hard covering of black chitin with transparent chitin in front."
 	icon_state = "lingarmorhelmet"
-	flags = HEADCOVERSEYES | BLOCKHAIR | NODROP
+	flags = BLOCKHAIR | NODROP
 	armor = list(melee = 40, bullet = 15, laser = 30,energy = 10, bomb = 5, bio = 2, rad = 0)
 	flags_inv = HIDEEARS
+	flags_cover = HEADCOVERSEYES
 
 /obj/item/clothing/head/helmet/changeling/dropped()
 	qdel(src)

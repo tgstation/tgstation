@@ -10,7 +10,7 @@
 	id = "space_drugs"
 	description = "An illegal chemical compound used as drug."
 	color = "#60A584" // rgb: 96, 165, 132
-	overdose_threshold = 25
+	overdose_threshold = 30
 
 /datum/reagent/drug/space_drugs/on_mob_life(var/mob/living/M as mob)
 	M.druggy = max(M.druggy, 15)
@@ -22,11 +22,13 @@
 	..()
 	return
 
+/datum/reagent/drug/space_drugs/overdose_start(var/mob/living/M as mob)
+	M << "<span class='userdanger'>You start tripping hard!</span>"
+
+
 /datum/reagent/drug/space_drugs/overdose_process(var/mob/living/M as mob)
-	if(prob(20))
-		M.hallucination = max(M.hallucination, 5)
-	M.adjustBrainLoss(0.25*REM)
-	M.adjustToxLoss(0.25*REM)
+	if(M.hallucination < volume && prob(20))
+		M.hallucination += 5
 	..()
 	return
 
@@ -39,8 +41,8 @@
 	addiction_threshold = 30
 
 /datum/reagent/drug/nicotine/on_mob_life(var/mob/living/M as mob)
-	var/smoke_message = pick("You can just feel your lungs dying!", "You feel relaxed.", "You feel calmed.", "You feel the lung cancer forming.", "You feel the money you wasted.", "You feel like a space cowboy.", "You feel rugged.")
-	if(prob(5))
+	if(prob(1))
+		var/smoke_message = pick("You feel relaxed.", "You feel calmed.","You feel alert.","You feel rugged.")
 		M << "<span class='notice'>[smoke_message]</span>"
 	M.AdjustStunned(-1)
 	M.adjustStaminaLoss(-0.5*REM)

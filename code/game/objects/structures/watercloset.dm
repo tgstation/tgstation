@@ -229,6 +229,7 @@
 //Yes, showers are super powerful as far as washing goes.
 /obj/machinery/shower/proc/wash(atom/movable/O)
 	if(!on) return
+
 	if(ismob(O))
 		mobpresent += 1
 		check_heat(O)
@@ -284,9 +285,13 @@
 				if(H.shoes && washshoes)
 					if(H.shoes.clean_blood())
 						H.update_inv_shoes(0)
-				if(H.wear_mask && washmask)
-					if(H.wear_mask.clean_blood())
-						H.update_inv_wear_mask(0)
+				if(H.wear_mask)
+					if(washmask)
+						if(H.wear_mask.clean_blood())
+							H.update_inv_wear_mask(0)
+				else
+					H.lip_style = null
+					H.update_body()
 				if(H.glasses && washglasses)
 					if(H.glasses.clean_blood())
 						H.update_inv_glasses(0)
@@ -303,13 +308,19 @@
 		else
 			O.clean_blood()
 
+	else
+		O.clean_blood()
+
+		if(istype(O,/obj/item))
+			var/obj/item/Item = O
+			Item.extinguish()
+
 	if(isturf(loc))
 		var/turf/tile = loc
 		loc.clean_blood()
 		for(var/obj/effect/E in tile)
 			if(is_cleanable(E))
 				qdel(E)
-
 
 /obj/machinery/shower/process()
 	if(!on || !mobpresent) return

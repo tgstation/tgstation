@@ -3,6 +3,7 @@
 	desc = "A box suited for pizzas."
 	icon = 'icons/obj/food/containers.dmi'
 	icon_state = "pizzabox1"
+	burn_state = 0 //Burnable
 	var/timer = 10 //Adjustable timer
 	var/timer_set = 0
 	var/primed = 0
@@ -53,6 +54,10 @@
 		primed = 1
 		sleep(timer)
 		return go_boom()
+
+/obj/item/device/pizza_bomb/burn() //Instead of burning to ashes, it will just explode
+	go_boom()
+	return
 
 /obj/item/device/pizza_bomb/proc/go_boom()
 	if(disarmed)

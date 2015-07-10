@@ -280,8 +280,7 @@ research holder datum.
 	icon_state = "datadisk2"
 	item_state = "card-id"
 	w_class = 1.0
-	m_amt = 30
-	g_amt = 10
+	materials = list(MAT_METAL=30, MAT_GLASS=10)
 	var/datum/tech/stored
 
 /obj/item/weapon/disk/tech_disk/New()

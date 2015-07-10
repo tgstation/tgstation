@@ -5,6 +5,7 @@
 	icon_state = "folder"
 	w_class = 2
 	pressure_resistance = 2
+	burn_state = 0 //Burnable
 
 /obj/item/weapon/folder/blue
 	desc = "A blue folder."

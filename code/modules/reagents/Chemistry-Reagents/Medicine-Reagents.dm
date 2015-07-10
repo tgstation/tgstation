@@ -640,7 +640,7 @@
 				dead_mob_list -= M
 				living_mob_list |= list(M)
 				M.emote("gasp")
-				add_logs(M, M, "revived", object="strange reagent")
+				add_logs(M, M, "revived", src)
 	..()
 	return
 
@@ -704,10 +704,10 @@
 		M.adjustToxLoss(-1*REM)
 		M.adjustBruteLoss(-1*REM)
 		M.adjustFireLoss(-1*REM)
-	M.AdjustParalysis(-1)
-	M.AdjustStunned(-1)
-	M.AdjustWeakened(-1)
-	M.adjustStaminaLoss(-1.5*REM)
+	M.AdjustParalysis(-3)
+	M.AdjustStunned(-3)
+	M.AdjustWeakened(-3)
+	M.adjustStaminaLoss(-5*REM)
 	..()
 
 /datum/reagent/medicine/stimulants/overdose_process(var/mob/living/M as mob)

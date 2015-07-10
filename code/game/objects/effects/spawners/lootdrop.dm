@@ -107,6 +107,7 @@
 				/obj/item/weapon/storage/box/cups = 1,
 				/obj/item/weapon/storage/box/donkpockets = 1,
 				/obj/item/weapon/storage/box/lights/mixed = 3,
+				/obj/item/weapon/storage/box/hug = 1,
 				/obj/item/weapon/storage/fancy/cigarettes/dromedaryco = 1,
 				/obj/item/weapon/storage/toolbox/mechanical = 1,
 				/obj/item/weapon/screwdriver = 3,
@@ -117,4 +118,13 @@
 				/obj/item/weapon/wrench = 4,
 				/obj/item/weapon/relic = 3,
 				"" = 11
+				)
+
+/obj/effect/spawner/lootdrop/crate_spawner
+	name = "lootcrate spawner"
+	lootdoubles = 0
+
+	loot = list(
+				/obj/structure/closet/crate/secure/loot = 20,
+				"" = 80
 				)

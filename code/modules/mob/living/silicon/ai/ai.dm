@@ -113,6 +113,10 @@ var/list/ai_list = list()
 		else
 			if (B.brainmob.mind)
 				B.brainmob.mind.transfer_to(src)
+				if(mind.special_role)
+					mind.store_memory("As an AI, you must obey your silicon laws above all else. Your objectives will consider you to be dead.")
+					src << "<span class='userdanger'>You have been installed as an AI! </span>"
+					src << "<span class='danger'>You must obey your silicon laws above all else. Your objectives will consider you to be dead.</span>"
 
 			src << "<B>You are playing the station's AI. The AI cannot move, but can interact with many objects while viewing them (through cameras).</B>"
 			src << "<B>To look at other parts of the station, click on yourself to get a camera menu.</B>"

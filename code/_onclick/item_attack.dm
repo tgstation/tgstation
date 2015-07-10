@@ -76,11 +76,12 @@
 	user.lastattacked = M
 	M.lastattacker = user
 
-	add_logs(user, M, "attacked", object=src.name, addition="(INTENT: [uppertext(user.a_intent)]) (DAMTYPE: [uppertext(damtype)])")
-
 	//spawn(1800)            // this wont work right
 	//	M.lastattacker = null
 	/////////////////////////
 	M.attacked_by(src, user, def_zone)
+
+	add_logs(user, M, "attacked", src.name, "(INTENT: [uppertext(user.a_intent)]) (DAMTYPE: [uppertext(damtype)])")
 	add_fingerprint(user)
+
 	return 1

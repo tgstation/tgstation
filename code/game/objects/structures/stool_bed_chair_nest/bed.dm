@@ -13,6 +13,8 @@
 	icon_state = "bed"
 	can_buckle = 1
 	buckle_lying = 1
+	burn_state = 0 //Burnable
+	burntime = 30
 
 /obj/structure/stool/bed/alien
 	name = "resting contraption"
@@ -59,6 +61,7 @@
 	icon = 'icons/obj/rollerbed.dmi'
 	icon_state = "down"
 	anchored = 0
+	burn_state = -1 //Not Burnable
 
 /obj/structure/stool/bed/roller/post_buckle_mob(mob/living/M)
 	if(M == buckled_mob)
@@ -136,3 +139,8 @@
 		user.visible_message("[user] collects [loaded].", "<span class='notice'>You collect [loaded].</span>")
 	..()
 
+/obj/structure/stool/bed/dogbed
+	name = "dog bed"
+	icon_state = "dogbed"
+	desc = "A comfy-looking dog bed. You can even strap your pet in, in case the gravity turns off."
+	anchored = 0

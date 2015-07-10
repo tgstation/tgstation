@@ -28,6 +28,7 @@ var/list/spells = typesof(/obj/effect/proc_holder/spell) //needed for the badmin
 	var/holder_var_amount = 20 //same. The amount adjusted with the mob's var when the spell is used
 
 	var/clothes_req = 1 //see if it requires clothes
+	var/cult_req = 0 //SPECIAL SNOWFLAKE clothes required for cult only spells
 	var/human_req = 0 //spell can only be cast by humans
 	var/nonabstract_req = 0 //spell can only be cast by mobs that are physical entities
 	var/stat_allowed = 0 //see if it requires being conscious/alive, need to set to 1 for ghostpells
@@ -103,6 +104,13 @@ var/list/spells = typesof(/obj/effect/proc_holder/spell) //needed for the badmin
 			if(!istype(H.head, /obj/item/clothing/head/wizard) && !istype(H.head, /obj/item/clothing/head/helmet/space/hardsuit/wizard))
 				H << "<span class='notice'>I don't feel strong enough without my hat.</span>"
 				return 0
+		if(cult_req) //CULT_REQ CLOTHES CHECK
+			if(!istype(H.wear_suit, /obj/item/clothing/suit/magusred) && !istype(H.wear_suit, /obj/item/clothing/suit/space/cult))
+				H << "<span class='notice'>I don't feel strong enough without my armor.</span>"
+				return 0
+			if(!istype(H.head, /obj/item/clothing/head/magus) && !istype(H.head, /obj/item/clothing/head/helmet/space/cult))
+				H << "<span class='notice'>I don't feel strong enough without my helmet.</span>"
+				return 0
 	else
 		if(clothes_req || human_req)
 			user << "<span class='notice'>This spell can only be cast by humans!</span>"
@@ -110,6 +118,7 @@ var/list/spells = typesof(/obj/effect/proc_holder/spell) //needed for the badmin
 		if(nonabstract_req && (isbrain(user) || ispAI(user)))
 			user << "<span class='notice'>This spell can only be cast by physical beings!</span>"
 			return 0
+
 
 	if(!skipcharge)
 		switch(charge_type)
@@ -198,20 +207,20 @@ var/list/spells = typesof(/obj/effect/proc_holder/spell) //needed for the badmin
 		if(istype(target,/mob/living) && message)
 			target << text("[message]")
 		if(sparks_spread)
-			var/datum/effect/effect/system/spark_spread/sparks = new /datum/effect/effect/system/spark_spread()
+			var/datum/effect/effect/system/spark_spread/sparks = new
 			sparks.set_up(sparks_amt, 0, location) //no idea what the 0 is
 			sparks.start()
 		if(smoke_spread)
 			if(smoke_spread == 1)
-				var/datum/effect/effect/system/harmless_smoke_spread/smoke = new /datum/effect/effect/system/harmless_smoke_spread()
+				var/datum/effect/effect/system/smoke_spread/smoke = new
 				smoke.set_up(smoke_amt, 0, location, smoke_amt == 1 ? 15 : 0) // if more than one smoke, spread it around
 				smoke.start()
 			else if(smoke_spread == 2)
-				var/datum/effect/effect/system/bad_smoke_spread/smoke = new /datum/effect/effect/system/bad_smoke_spread()
+				var/datum/effect/effect/system/smoke_spread/bad/smoke = new
 				smoke.set_up(smoke_amt, 0, location, smoke_amt == 1 ? 15 : 0) // same here
 				smoke.start()
 			else if(smoke_spread == 3)
-				var/datum/effect/effect/system/sleep_smoke_spread/smoke = new /datum/effect/effect/system/sleep_smoke_spread()
+				var/datum/effect/effect/system/smoke_spread/sleeping/smoke = new
 				smoke.set_up(smoke_amt, 0, location, smoke_amt == 1 ? 15 : 0) // same here
 				smoke.start()
 

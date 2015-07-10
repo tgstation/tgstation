@@ -41,7 +41,7 @@
 			energyKatana.spark_system.start()
 			playsound(H, "sparks", 50, 1)
 			H.visible_message("<span class='danger'>\the [energyKatana] flies towards [H]!</span>","<span class='warning'>You hold out your hand and \the [energyKatana] flies towards you!</span>")
-			energyKatana.throw_at(H, distance+1, energyKatana.throw_speed)
+			energyKatana.throw_at(H, distance+1, energyKatana.throw_speed,H)
 
 		else //Else just TP it to us.
 			energyKatana.returnToOwner(H,1)

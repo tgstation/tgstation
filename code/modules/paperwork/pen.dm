@@ -20,7 +20,7 @@
 	w_class = 1.0
 	throw_speed = 3
 	throw_range = 7
-	m_amt = 10
+	materials = list(MAT_METAL=10)
 	pressure_resistance = 2
 	var/colour = "black"	//what colour the ink is!
 
@@ -54,7 +54,7 @@
 			M << "<span class='danger'>You feel a tiny prick!</span>"
 		. = 1
 
-	add_logs(user, M, "stabbed", object="[name]")
+	add_logs(user, M, "stabbed", src)
 
 /*
  * Sleepypens
@@ -69,12 +69,12 @@
 	if(..())
 		if(reagents.total_volume)
 			if(M.reagents)
-				reagents.trans_to(M, 55)
+				reagents.trans_to(M, reagents.total_volume)
 
 
 /obj/item/weapon/pen/sleepy/New()
-	create_reagents(55)
-	reagents.add_reagent("morphine", 30)
+	create_reagents(45)
+	reagents.add_reagent("morphine", 20)
 	reagents.add_reagent("mutetoxin", 15)
 	reagents.add_reagent("tirizene", 10)
 	..()

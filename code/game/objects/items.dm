@@ -1,3 +1,5 @@
+var/global/image/fire_overlay = image("icon" = 'icons/effects/fire.dmi', "icon_state" = "fire")
+
 /obj/item
 	name = "item"
 	icon = 'icons/obj/items.dmi'
@@ -24,6 +26,7 @@
 	//If this is set, The item will make an action button on the player's HUD when picked up.
 	var/action_button_name //It is also the text which gets displayed on the action button. If not set it defaults to 'Use [name]'. If it's not set, there'll be no button.
 	var/action_button_is_hands_free = 0 //If 1, bypass the restrained, lying, and stunned checks action buttons normally test for
+	var/action_button_internal = 0 //If 1, bypass the inside check action buttons test for
 	var/datum/action/item_action/action = null
 
 	//Since any item can now be a piece of clothing, this has to be put here so all items share it.
@@ -41,8 +44,7 @@
 	var/obj/item/device/uplink/hidden/hidden_uplink = null // All items can have an uplink hidden inside, just remember to add the triggers.
 	var/strip_delay = 40
 	var/put_on_delay = 20
-	var/m_amt = 0	// metal
-	var/g_amt = 0	// glass
+	var/list/materials = list()
 	var/reliability = 100	//Used by SOME devices to determine how reliable they are.
 	var/origin_tech = null	//Used by R&D to determine what research bonuses it grants.
 	var/needs_permit = 0			//Used by security bots to determine if this item is safe for public use.
@@ -77,8 +79,11 @@
 		/obj/machinery/r_n_d/experimentor,
 		/obj/machinery/autolathe
 	)
-/obj/item/proc/check_allowed_items(atom/target, not_inside)
-	if((src in target) || ((!istype(target.loc, /turf)) && (!istype(target, /turf)) && (not_inside)) || is_type_in_list(target, can_be_placed_into))
+
+	var/flags_cover = 0 //for flags such as GLASSESCOVERSEYES
+
+/obj/item/proc/check_allowed_items(atom/target, not_inside, target_self)
+	if(((src in target) && !target_self) || ((!istype(target.loc, /turf)) && (!istype(target, /turf)) && (not_inside)) || is_type_in_list(target, can_be_placed_into))
 		return 0
 	else
 		return 1
@@ -155,6 +160,23 @@
 
 /obj/item/attack_hand(mob/user as mob)
 	if (!user) return
+
+	if(burn_state == 1)
+		var/mob/living/carbon/human/H = user
+		if(istype(H))
+			if(H.gloves && (H.gloves.max_heat_protection_temperature > 360))
+				extinguish()
+				user << "<span class='notice'>You put out the fire on [src].</span>"
+			else
+				user << "<span class='warning'>You burn your hand on [src]!</span>"
+				var/obj/item/organ/limb/affecting = H.get_organ("[user.hand ? "l" : "r" ]_arm")
+				if(affecting.take_damage( 0, 5 ))		// 5 burn damage
+					H.update_damage_overlays(0)
+				H.updatehealth()
+				return
+		else
+			extinguish()
+
 	if (istype(src.loc, /obj/item/weapon/storage))
 		//If the item is in a storage item, take it out
 		var/obj/item/weapon/storage/S = src.loc
@@ -328,16 +350,16 @@
 	if(ishuman(M))
 		is_human_victim = 1
 		var/mob/living/carbon/human/H = M
-		if((H.head && H.head.flags & HEADCOVERSEYES) || \
-			(H.wear_mask && H.wear_mask.flags & MASKCOVERSEYES) || \
-			(H.glasses && H.glasses.flags & GLASSESCOVERSEYES))
+		if((H.head && H.head.flags_cover & HEADCOVERSEYES) || \
+			(H.wear_mask && H.wear_mask.flags_cover & MASKCOVERSEYES) || \
+			(H.glasses && H.glasses.flags_cover & GLASSESCOVERSEYES))
 			// you can't stab someone in the eyes wearing a mask!
 			user << "<span class='danger'>You're going to need to remove that mask/helmet/glasses first!</span>"
 			return
 
 	if(ismonkey(M))
 		var/mob/living/carbon/monkey/Mo = M
-		if(Mo.wear_mask && Mo.wear_mask.flags & MASKCOVERSEYES)
+		if(Mo.wear_mask && Mo.wear_mask.flags_cover & MASKCOVERSEYES)
 			// you can't stab someone in the eyes wearing a mask!
 			user << "<span class='danger'>You're going to need to remove that mask/helmet/glasses first!</span>"
 			return
@@ -349,8 +371,6 @@
 	if(isbrain(M))
 		user << "<span class='danger'>You cannot locate any organic eyes on this brain!</span>"
 		return
-
-	add_logs(user, M, "attacked", object="[src.name]", addition="(INTENT: [uppertext(user.a_intent)])")
 
 	src.add_fingerprint(user)
 
@@ -370,6 +390,8 @@
 
 	else
 		M.take_organ_damage(7)
+
+	add_logs(user, M, "attacked", "[src.name]", "(INTENT: [uppertext(user.a_intent)])")
 
 	M.eye_blurry += rand(3,4)
 	M.eye_stat += rand(2,4)
@@ -412,27 +434,34 @@
 			throw_at(S,14,3)
 		else ..()
 
-/obj/item/acid_act(var/acidpwr, var/toxpwr, var/acid_volume)
+/obj/item/acid_act(var/acidpwr, var/acid_volume)
 	. = 1
 	if(unacidable)
+		return
+
+	var/meltingpwr = acid_volume*acidpwr
+	var/melting_threshold = 100
+	if(meltingpwr <= melting_threshold) // so a single unit can't melt items. You need 5.1+ unit for fluoro and 10.1+ for sulphuric
 		return
 
 	for(var/V in armor)
 		if(armor[V] > 0)
 			.-- //it survives the acid...
 			break
-	if(.)
+	if(. && prob(min(meltingpwr/10,90))) //chance to melt depends on acid power and volume.
 		var/turf/T = get_turf(src)
 		if(T)
-			T.visible_message("<span class='danger'>[src] melts away!</span>")
 			var/obj/effect/decal/cleanable/molten_item/I = new (T)
 			I.pixel_x = rand(-16,16)
 			I.pixel_y = rand(-16,16)
 			I.desc = "Looks like this was \an [src] some time ago."
+		if(istype(src,/obj/item/weapon/storage))
+			var/obj/item/weapon/storage/S = src
+			S.do_quick_empty() //melted storage item drops its content.
 		qdel(src)
 	else
 		for(var/armour_value in armor) //but is weakened
-			armor[armour_value] = max(armor[armour_value]-acidpwr,0)
+			armor[armour_value] = max(armor[armour_value]-min(acidpwr,meltingpwr/10),0)
 		if(!findtext(desc, "it looks slightly melted...")) //it looks slightly melted... it looks slightly melted... it looks slightly melted... etc.
 			desc += " it looks slightly melted..." //needs a space at the start, formatting
 

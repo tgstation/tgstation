@@ -732,15 +732,16 @@ Turf and target are seperate in case you want to teleport some distance from a t
 	for (var/i = 1 to numticks)
 		if(user.client)
 			progbar = make_progress_bar(i, numticks, target)
-			user.client.images |= progbar
+			if(progbar)
+				user.client.images |= progbar
 		sleep(delayfraction)
 		if(!user || user.stat || user.weakened || user.stunned  || !(user.loc == Uloc))
-			if(user && user.client)
+			if(user && user.client && progbar)
 				user.client.images -= progbar
 			return 0
 
 		if(Tloc && (!target || Tloc != target.loc)) //Tloc not set when we don't want to track target
-			if(user && user.client)
+			if(user && user.client && progbar)
 				user.client.images -= progbar
 			return 0 // Target no longer exists or has moved
 
@@ -749,18 +750,18 @@ Turf and target are seperate in case you want to teleport some distance from a t
 			//i.e the hand is used to insert some item/tool into the construction
 			if(!holdingnull)
 				if(!holding)
-					if(user && user.client)
+					if(user && user.client && progbar)
 						user.client.images -= progbar
 					return 0
 			if(user.get_active_hand() != holding)
-				if(user && user.client)
+				if(user && user.client && progbar)
 					user.client.images -= progbar
 				return 0
-			if(user && user.client)
+			if(user && user.client && progbar)
 				user.client.images -= progbar
-		if(user && user.client)
+		if(user && user.client && progbar)
 			user.client.images -= progbar
-	if(user && user.client)
+	if(user && user.client && progbar)
 		user.client.images -= progbar
 	return 1
 
@@ -1322,3 +1323,24 @@ var/list/WALLITEMS = list(
 						"lime","darkgreen","cyan","navy","teal","purple","indigo")
 		else
 			return "white"
+
+
+/proc/screen_loc2turf(scr_loc, turf/origin)
+	var/tX = text2list(scr_loc, ",")
+	var/tY = text2list(tX[2], ":")
+	var/tZ = origin.z
+	tY = tY[1]
+	tX = text2list(tX[1], ":")
+	tX = tX[1]
+	tX = max(1, min(world.maxx, origin.x + (text2num(tX) - (world.view + 1))))
+	tY = max(1, min(world.maxy, origin.y + (text2num(tY) - (world.view + 1))))
+	return locate(tX, tY, tZ)
+
+/proc/IsValidSrc(var/A)
+	if(istype(A, /datum))
+		var/datum/B = A
+		return !B.gc_destroyed
+	if(istype(A, /client))
+		return 1
+	return 0
+

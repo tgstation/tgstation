@@ -103,11 +103,11 @@
 				new/datum/round_event/blob(strength)
 			if("12")
 				if(src.makeGangsters())
-					message_admins("[key_name(usr)] started a gang war.")
-					log_admin("[key_name(usr)] started a gang war.")
+					message_admins("[key_name(usr)] created gangs.")
+					log_admin("[key_name(usr)] created gangs.")
 				else
-					message_admins("[key_name(usr)] tried to start a gang war. Unfortunately, there were not enough candidates available.")
-					log_admin("[key_name(usr)] failed to start a gang war.")
+					message_admins("[key_name(usr)] tried to create gangs. Unfortunately, there were not enough candidates available.")
+					log_admin("[key_name(usr)] failed create gangs.")
 			if("13")
 				message_admins("[key_name(usr)] is creating a Centcom response team...")
 				if(src.makeEmergencyresponseteam())
@@ -1111,7 +1111,7 @@
 		var/DBQuery/query = dbcon.NewQuery("SELECT ckey FROM [format_table_name("watch")] WHERE (ckey = '[sql_ckey]')")
 		query.Execute()
 		if(query.NextRow())
-			switch(alert(usr, "Ckey already flagged", "[sql_ckey] is already on the watchlist, do you want to:", "Remove", "Edit reason", "Cancel"))
+			switch(alert(usr, "[sql_ckey] is already on the watchlist, do you want to:", "Ckey already flagged", "Remove", "Edit reason", "Cancel"))
 				if("Cancel")
 					return
 				if("Remove")
@@ -1120,7 +1120,7 @@
 						var/err = query_watchdel.ErrorMsg()
 						log_game("SQL ERROR during removing watch entry. Error : \[[err]\]\n")
 						return
-					log_admin("[key_name_admin(usr)] has removed [key_name_admin(M)] from the watchlist")
+					log_admin("[key_name(usr)] has removed [key_name_admin(M)] from the watchlist")
 					message_admins("[key_name_admin(usr)] has removed [key_name_admin(M)] from the watchlist", 1)
 				if("Edit reason")
 					var/DBQuery/query_reason = dbcon.NewQuery("SELECT ckey, reason FROM [format_table_name("watch")] WHERE (ckey = '[sql_ckey]')")
@@ -1131,12 +1131,12 @@
 						new_reason = sanitizeSQL(new_reason)
 						if(!new_reason)
 							return
-						var/DBQuery/update_query = dbcon.NewQuery("UPDATE [format_table_name("watch")] SET reason = '[new_reason]', edits = CONCAT(edits,'- [usr] changed watchlist reason from <cite><b>\\\"[watch_reason]\\\"</b></cite> to <cite><b>\\\"[new_reason]\\\"</b></cite><BR>') WHERE (ckey = '[sql_ckey]')")
+						var/DBQuery/update_query = dbcon.NewQuery("UPDATE [format_table_name("watch")] SET reason = '[new_reason]' WHERE (ckey = '[sql_ckey]')")
 						if(!update_query.Execute())
 							var/err = update_query.ErrorMsg()
 							log_game("SQL ERROR during edit watch entry reason. Error : \[[err]\]\n")
 							return
-						log_admin("[key_name_admin(usr)] has edited [sql_ckey]'s reason from [watch_reason] to [new_reason]",1)
+						log_admin("[key_name(usr)] has edited [sql_ckey]'s reason from [watch_reason] to [new_reason]",1)
 						message_admins("[key_name_admin(usr)] has edited [sql_ckey]'s reason from [watch_reason] to [new_reason]",1)
 		else
 			var/reason = input(usr,"Reason?","reason","Metagaming") as text|null
@@ -1148,7 +1148,7 @@
 				var/err = query_watchadd.ErrorMsg()
 				log_game("SQL ERROR during adding new watch entry. Error : \[[err]\]\n")
 				return
-			log_admin("[key_name_admin(usr)] has added [key_name_admin(M)] to the watchlist - Reason: [reason]")
+			log_admin("[key_name(usr)] has added [key_name_admin(M)] to the watchlist - Reason: [reason]")
 			message_admins("[key_name_admin(usr)] has added [key_name_admin(M)] to the watchlist - Reason: [reason]", 1)
 
 	else if(href_list["mute"])
@@ -1491,6 +1491,16 @@
 
 		usr.client.cmd_admin_animalize(M)
 
+	else if(href_list["gangpoints"])
+		var/datum/gang/G = locate(href_list["gangpoints"]) in ticker.mode.gangs
+		if(G)
+			var/newpoints = input("Set [G.name ] Gang's influence.","Set Influence",G.points) as null|num
+			if(newpoints)
+				message_admins("[key_name_admin(usr)] changed the [G.name] Gang's influence from [G.points] to [newpoints]</span>")
+				log_admin("[key_name(usr)] changed the [G.name] Gang's influence from [G.points] to [newpoints]</span>")
+				G.points = newpoints
+				G.message_gangtools("Your gang now has [G.points] influence.")
+
 	else if(href_list["adminplayeropts"])
 		var/mob/M = locate(href_list["adminplayeropts"])
 		show_player_panel(M)
@@ -1505,6 +1515,8 @@
 		var/mob/dead/observer/A = C.mob
 		sleep(2)
 		A.ManualFollow(M)
+		log_admin("[key_name(usr)] followed [key_name(M)]")
+		message_admins("[key_name_admin(usr)] followed [key_name_admin(M)]")
 
 	else if(href_list["adminplayerobservecoodjump"])
 		if(!isobserver(usr) && !check_rights(R_ADMIN))	return

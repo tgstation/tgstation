@@ -101,10 +101,10 @@
 		if(J.title == "Cyborg" || J.title == "AI" || J.title == "Chaplain" || J.title == "Mime")
 			jobs -= J
 	myjob = pick(jobs)
+	src.job = myjob.title
 	if(!graytide)
 		myjob.equip(src)
 	myjob.apply_fingerprints(src)
-	src.job = myjob
 
 /mob/living/carbon/human/interactive/attacked_by(var/obj/item/I, var/mob/living/user, var/def_zone)
 	..()
@@ -114,7 +114,8 @@
 /mob/living/carbon/human/interactive/bullet_act(var/obj/item/projectile/P)
 	var/potentialAssault = locate(/mob/living) in view(2,P.starting)
 	if(potentialAssault)
-		attacked_by(P,potentialAssault)
+		retal = 1
+		retal_target = potentialAssault
 	..()
 
 /mob/living/carbon/human/interactive/New()
