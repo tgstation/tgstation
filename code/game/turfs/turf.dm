@@ -107,8 +107,6 @@
 
 /turf/proc/is_plasteel_floor()
 	return 0
-/turf/proc/return_siding_icon_state()		//used for grass floors, which have siding.
-	return 0
 
 /turf/proc/levelupdate()
 	for(var/obj/O in src)
