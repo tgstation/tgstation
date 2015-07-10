@@ -54,7 +54,6 @@
 	user << "<span class='notice'>We stealthily sting [target.name].</span>"
 	if(target.mind && target.mind.changeling)
 		target << "<span class='warning'>You feel a tiny prick.</span>"
-		add_logs(user, target, "unsuccessfully stung")
 	return 1
 
 
@@ -88,7 +87,7 @@
 	return 1
 
 /obj/effect/proc_holder/changeling/sting/transformation/sting_action(var/mob/user, var/mob/target)
-	add_logs(user, target, "stung", object="transformation sting", addition=" new identity is [selected_dna.real_name]")
+	add_logs(user, target, "stung", "transformation sting", " new identity is [selected_dna.real_name]")
 	var/datum/dna/NewDNA = selected_dna
 	if(ismonkey(target))
 		user << "<span class='notice'>Our genes cry out as we sting [target.name]!</span>"
@@ -174,7 +173,7 @@
 		return user.mind.changeling.can_absorb_dna(user, target)
 
 /obj/effect/proc_holder/changeling/sting/extract_dna/sting_action(var/mob/user, var/mob/living/carbon/human/target)
-	add_logs(user, target, "stung", object="extraction sting")
+	add_logs(user, target, "stung", "extraction sting")
 	if(!(user.mind.changeling.has_dna(target.dna)))
 		user.mind.changeling.absorb_dna(target, user)
 	feedback_add_details("changeling_powers","ED")
@@ -189,7 +188,7 @@
 	dna_cost = 2
 
 /obj/effect/proc_holder/changeling/sting/mute/sting_action(var/mob/user, var/mob/living/carbon/target)
-	add_logs(user, target, "stung", object="mute sting")
+	add_logs(user, target, "stung", "mute sting")
 	target.silent += 30
 	feedback_add_details("changeling_powers","MS")
 	return 1
@@ -203,7 +202,7 @@
 	dna_cost = 1
 
 /obj/effect/proc_holder/changeling/sting/blind/sting_action(var/mob/user, var/mob/target)
-	add_logs(user, target, "stung", object="blind sting")
+	add_logs(user, target, "stung", "blind sting")
 	target << "<span class='danger'>Your eyes burn horrifically!</span>"
 	target.disabilities |= NEARSIGHT
 	target.eye_blind = 20
@@ -220,7 +219,7 @@
 	dna_cost = 1
 
 /obj/effect/proc_holder/changeling/sting/LSD/sting_action(var/mob/user, var/mob/living/carbon/target)
-	add_logs(user, target, "stung", object="LSD sting")
+	add_logs(user, target, "stung", "LSD sting")
 	spawn(rand(300,600))
 		if(target)
 			target.hallucination = max(400, target.hallucination)
@@ -236,7 +235,7 @@
 	dna_cost = 2
 
 /obj/effect/proc_holder/changeling/sting/cryo/sting_action(var/mob/user, var/mob/target)
-	add_logs(user, target, "stung", object="cryo sting")
+	add_logs(user, target, "stung", "cryo sting")
 	if(target.reagents)
 		target.reagents.add_reagent("frostoil", 30)
 	feedback_add_details("changeling_powers","CS")

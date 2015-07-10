@@ -52,8 +52,9 @@
 					for(var/datum/reagent/A in reagents.reagent_list)
 						R += A.id + " ("
 						R += num2text(A.volume) + "),"
-				add_logs(user, M, "splashed", object="[R]")
+
 				reagents.reaction(M, TOUCH)
+				add_logs(user, M, "splashed", R)
 				reagents.clear_reagents()
 				return
 
@@ -72,7 +73,7 @@
 			if(!do_mob(user, M)) return
 			if(!reagents.total_volume) return // The drink might be empty after the delay, such as by spam-feeding
 			M.visible_message("<span class='danger'>[user] feeds something to [M].</span>", "<span class='userdanger'>[user] feeds something to you.</span>")
-			add_logs(user, M, "fed", object="[reagentlist(src)]")
+			add_logs(user, M, "fed", reagentlist(src))
 			if(reagents.total_volume)
 				reagents.reaction(M, INGEST)
 				spawn(5)

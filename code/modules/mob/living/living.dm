@@ -725,7 +725,7 @@ Sorry Giacom. Please don't be mad :(
 			if(what && Adjacent(who))
 				src.unEquip(what)
 				who.equip_to_slot_if_possible(what, where, 0, 1)
-				add_logs(src, who, "equipped", object=what)
+				add_logs(src, who, "equipped", what)
 
 /mob/living/singularity_act()
 	var/gain = 20
