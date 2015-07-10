@@ -236,6 +236,7 @@
 	for(var/obj/machinery/atmospherics/node in pipeline_expansion())
 		if(node)
 			node.disconnect(src)
+			node = null
 
 	// Move away from explosion
 	loc=null
@@ -283,6 +284,9 @@
 		node1.disconnect(src)
 	if(node2)
 		node2.disconnect(src)
+
+	node1 = null
+	node2 = null
 
 	..()
 
@@ -521,6 +525,10 @@
 	if(node3)
 		node3.disconnect(src)
 
+	node1 = null
+	node2 = null
+	node3 = null
+
 	..()
 
 
@@ -756,6 +764,11 @@
 		node3.disconnect(src)
 	if(node4)
 		node4.disconnect(src)
+
+	node1 = null
+	node2 = null
+	node3 = null
+	node4 = null
 
 	..()
 
