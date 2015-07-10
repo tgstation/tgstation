@@ -106,6 +106,10 @@
 		on = 0
 	update_icon()
 
+/obj/machinery/media/receiver/boombox/wallmount/Topic(href,href_list)
+	..()
+	relay_area_configuration()
+
 /obj/machinery/media/receiver/boombox/wallmount/update_on()
 	..()
 	update_icon()
@@ -130,7 +134,7 @@
 				playsound(get_turf(src), 'sound/items/Deconstruct.ogg', 50, 1)
 				if(do_after(user, src, 10) && buildstage==SYSTEMISDONE)
 					on = 0
-					buildstage = 1
+					buildstage = SYSTEMISKINDADONE
 					update_icon()
 				return 1
 			else return ..()
@@ -139,7 +143,7 @@
 				playsound(get_turf(src), 'sound/items/Screwdriver.ogg', 50, 1)
 				if(do_after(user, src, 10) && buildstage==SYSTEMISKINDADONE)
 					on = 1
-					buildstage = 2
+					buildstage = SYSTEMISDONE
 					user << "<span class='notice'>You secure the cover.</span>"
 					update_icon()
 				return 1
@@ -147,7 +151,7 @@
 				playsound(get_turf(src), 'sound/items/Wirecutter.ogg', 50, 1)
 				if(do_after(user, src, 10) && buildstage==SYSTEMISKINDADONE)
 					getFromPool(/obj/item/stack/cable_coil,get_turf(src),5)
-					buildstage = 0
+					buildstage = SYSTEMISNOTDONE
 					update_icon()
 
 		if(SYSTEMISNOTDONE)
@@ -159,7 +163,7 @@
 				if(do_after(user, src, 10) && buildstage==SYSTEMISNOTDONE)
 					coil.use(5)
 					user << "<span class='notice'>You wire \the [src]!</span>"
-					buildstage = 1
+					buildstage = SYSTEMISKINDADONE
 				return 1
 			if(iswrench(W))
 				user << "<span class='notice'>You remove the securing bolts...</span>"
@@ -170,6 +174,13 @@
 					qdel(src)
 				return 1
 	return 0
+
+/obj/machinery/media/receiver/boombox/wallmount/proc/relay_area_configuration()
+	for(var/obj/machinery/media/receiver/boombox/wallmount/W in areaMaster)
+		W.on = src.on
+		W.media_frequency=src.media_frequency
+		W.volume = src.volume
+		W.update_icon()
 
 /obj/machinery/media/receiver/boombox/wallmount/shuttle
 	on=1

@@ -4,6 +4,15 @@
 	holder_type = /obj/machinery/media/jukebox
 	wire_count = 8
 	var/interference = 0 //Caused by pulsing the transmit wire
+	var/last = 0 //Value of the last JukeWire we pulsed
+	var/list/freq_config_data = list(0,0,0,0) //Set up in new
+
+/datum/wires/jukebox/New(var/atom/holder)
+	..()
+	last = rand(1,14)
+	freq_config_data[JUKE_POWER_ONE] = rand(1,14)
+	freq_config_data[JUKE_POWER_TWO] = rand(1,14)
+	freq_config_data[JUKE_POWER_THREE] = rand(1,14)
 
 var/const/JUKE_POWER_ONE = 1 //Power. Cut for shock and off. Pulse toggles.
 var/const/JUKE_POWER_TWO = 2 //Power. Cut for shock and off. Pulse toggles.
@@ -36,6 +45,9 @@ var/const/JUKE_SETTING = 128 //Cut shocks. Pulse toggles settings menu.
 			J.playing=!J.playing
 			J.update_music()
 			J.update_icon()
+			var/calc = freq_config_data[index] - last
+			J.visible_message("[J] hums and outputs: [calc]")
+			last = freq_config_data[index]
 		if(JUKE_SHUFFLE)
 			J.current_song=rand(1,J.playlist.len)
 		if(JUKE_CAPITAL)
@@ -53,9 +65,13 @@ var/const/JUKE_SETTING = 128 //Cut shocks. Pulse toggles settings menu.
 /datum/wires/jukebox/UpdateCut(var/index, var/mended)
 	var/obj/machinery/media/jukebox/J = holder
 	switch(index)
-		if(JUKE_POWER_ONE||JUKE_POWER_TWO||JUKE_POWER_THREE)
+		if(JUKE_POWER_ONE,JUKE_POWER_TWO,JUKE_POWER_THREE)
 			J.power_change()
 			J.shock(usr, 50)
+			if(freq_config_data[index]==0)
+				freq_config_data[index] = 14
+			else
+				freq_config_data[index] -= 1
 		if(JUKE_SHUFFLE)
 			if(IsIndexCut(JUKE_SHUFFLE))
 				J.allowed_modes = list(2 = "Single", 3 = "Once")
@@ -69,6 +85,9 @@ var/const/JUKE_SETTING = 128 //Cut shocks. Pulse toggles settings menu.
 			else
 				J.machine_flags |= MULTITOOL_MENU
 		if(JUKE_CONFIG)
+			for(var/e in freq_config_data)
+				if(e != 0)
+					return
 			J.short()
 		if(JUKE_SETTING)
 			J.shock(usr, 50)

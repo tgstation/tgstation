@@ -65,6 +65,9 @@
 	broadcast() // Bzzt
 
 /obj/machinery/media/transmitter/broadcast/attackby(var/obj/item/W, mob/user)
+	. = ..()
+	if(.)
+		return .
 	if(panel_open && (istype(W, /obj/item/device/multitool)||istype(W, /obj/item/weapon/wirecutters)))
 		attack_hand(user)
 	if(issolder(W))
@@ -79,9 +82,6 @@
 			playsound(loc, 'sound/items/Welder.ogg', 100, 1)
 			integrity = 100
 			user << "<span class='notice'>You repair the blown fuses on [src].</span>"
-	. = ..()
-	if(.)
-		return .
 
 /obj/machinery/media/transmitter/broadcast/attack_ai(var/mob/user as mob)
 	src.add_hiddenprint(user)
