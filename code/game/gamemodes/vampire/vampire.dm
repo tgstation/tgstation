@@ -158,8 +158,10 @@
 		var/icon/logo = icon('icons/mob/mob.dmi', "thrall-logo")
 		end_icons += logo
 		var/tempstate = end_icons.len
-		text += {"<FONT size = 2><img src="logo_[tempstate].png"> <B>The Enthralled were:</B> <img src="logo_[tempstate].png"></FONT>"}
+		text += {"<br><FONT size = 2><img src="logo_[tempstate].png"> <B>The Enthralled were:</B> <img src="logo_[tempstate].png"></FONT>"}
 		for(var/datum/mind/Mind in enthralled)
+			var/traitorwin = 1
+
 			if(Mind.current)
 				var/icon/flat = getFlatIcon(Mind.current, SOUTH, 1, 1)
 				end_icons += flat
@@ -181,11 +183,33 @@
 				text += "body destroyed"
 			text += ")"
 
+			if(Mind.objectives.len)//If the traitor had no objectives, don't need to process this.
+				var/count = 1
+				for(var/datum/objective/objective in Mind.objectives)
+					if(objective.check_completion())
+						text += "<br><B>Objective #[count]</B>: [objective.explanation_text] <font color='green'><B>Success!</B></font>"
+						feedback_add_details("traitor_objective","[objective.type]|SUCCESS")
+					else
+						text += "<br><B>Objective #[count]</B>: [objective.explanation_text] <font color='red'>Fail.</font>"
+						feedback_add_details("traitor_objective","[objective.type]|FAIL")
+						traitorwin = 0
+					count++
+			var/special_role_text
+			if(Mind.special_role)
+				special_role_text = lowertext(Mind.special_role)
+			else
+				special_role_text = "antagonist"
 			if(Mind.total_TC)
 				if(Mind.spent_TC)
 					text += "<br><span class='sinister'>TC Remaining: [Mind.total_TC - Mind.spent_TC]/[Mind.total_TC] - The tools used by the Enthralled were: [list2text(Mind.uplink_items_bought, ", ")]</span>"
 				else
 					text += "<span class='sinister'>The Enthralled was a smooth operator this round (did not purchase any uplink items)</span>"
+			if(traitorwin)
+				text += "<br><font color='green'><B>The [special_role_text] was successful!</B></font>"
+				feedback_add_details("traitor_success","SUCCESS")
+			else
+				text += "<br><font color='red'><B>The [special_role_text] has failed!</B></font>"
+				feedback_add_details("traitor_success","FAIL")
 		text += "<BR><HR>"
 	else
 		if(text)

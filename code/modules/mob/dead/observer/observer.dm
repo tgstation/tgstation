@@ -254,7 +254,7 @@ Works together with spawning an observer, noted above.
 				if("Vampire")
 					U.client.images += image(tempHud,target,"vampire")
 				if("VampThrall")
-					U.client.images += image(tempHud,target,"vampire")
+					U.client.images += image(tempHud,target,"vampthrall")
 				else//If we don't know what role they have but they have one.
 					U.client.images += image(tempHud,target,"hudunknown1")
 		else if(issilicon(target))//If the silicon mob has no law datum, no inherent laws, or a law zero, add them to the hud.
