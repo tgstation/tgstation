@@ -3475,3 +3475,13 @@
 
 			jump()
 	return 1
+
+/obj/item/weapon/reagent_containers/food/snacks/potentham
+	name = "potent ham"
+	desc = "I'm sorry Dave, but I am afraid I can't let you eat that."
+	icon_state = "potentham"
+	New()
+		..()
+		reagents.add_reagent("nanites", 2)
+		reagents.add_reagent("hamserum", 2)
+		bitesize = 2
