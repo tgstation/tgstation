@@ -7,6 +7,7 @@
 	var/mode = 0	//0 - regular mesons mode	1 - t-ray mode
 	var/invis_objects = list()
 	action_button_name = "Change Scanning Mode"
+	var/range = 1
 
 /obj/item/clothing/glasses/meson/engine/attack_self()
 	ui_action_click()
@@ -19,13 +20,13 @@
 		vision_flags = 0
 		darkness_view = 2
 		invis_view = SEE_INVISIBLE_LIVING
-		usr << "<span class='notice'>You toggle the goggles scanning mode to \[T-Ray].</span>"
+		usr << "<span class='notice'>You toggle the goggles' scanning mode to \[T-Ray].</span>"
 	else
 		SSobj.processing.Remove(src)
 		vision_flags = SEE_TURFS
 		darkness_view = 1
 		invis_view = SEE_INVISIBLE_MINIMUM
-		usr << "<span class='notice'>You toggle the goggles scanning mode to \[Meson].</span>"
+		usr << "<span class='notice'>You toggle the goggles' scanning mode to \[Meson].</span>"
 		invis_update()
 
 	update_icon()
@@ -46,7 +47,7 @@
 	scan()
 
 /obj/item/clothing/glasses/meson/engine/proc/scan()
-	for(var/turf/T in range(1, loc))
+	for(var/turf/T in range(range, loc))
 
 		if(!T.intact)
 			continue
@@ -83,3 +84,49 @@
 		var/mob/living/carbon/human/user = loc
 		if(user.glasses == src)
 			user.update_inv_glasses()
+
+/obj/item/clothing/glasses/meson/engine/tray //atmos techs have lived far too long without tray goggles while those damned engineers get their dual-purpose gogles all to themselves
+	name = "Optical T-Ray Scanner"
+	desc = "Used by engineering staff to see underfloor objects such as cables and pipes."
+	icon_state = "trayson-tray"
+	action_button_name = "Toggle Scanner Power"
+
+	mode = 1
+	var/on = 1
+	vision_flags = 0
+	darkness_view = 2
+	invis_view = SEE_INVISIBLE_LIVING
+	range = 2
+
+/obj/item/clothing/glasses/meson/engine/tray/New()
+	SSobj.processing |= src
+	..()
+
+/obj/item/clothing/glasses/meson/engine/tray/process()
+	if(!on)
+		return null
+	..()
+
+/obj/item/clothing/glasses/meson/engine/tray/update_icon()
+	icon_state = "trayson-tray[on ? "" : "_off"]"
+	if(istype(loc,/mob/living/carbon/human/))
+		var/mob/living/carbon/human/user = loc
+		if(user.glasses == src)
+			user.update_inv_glasses()
+
+/obj/item/clothing/glasses/meson/engine/tray/ui_action_click()
+	on = !on
+
+	if(on)
+		SSobj.processing |= src
+		usr << "<span class='notice'>You turn the goggles on.</span>"
+
+	else
+		SSobj.processing.Remove(src)
+		usr << "<span class='notice'>You turn the goggles off.</span>"
+		invis_update()
+
+	update_icon()
+
+/obj/item/clothing/glasses/meson/engine/tray/t_ray_on()
+	return on & ..()
