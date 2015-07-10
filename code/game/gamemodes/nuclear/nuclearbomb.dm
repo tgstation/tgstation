@@ -1,8 +1,9 @@
-#define NUKESTATE_INTACT		6
-#define NUKESTATE_OPEN			5
-#define NUKESTATE_OPEN_TRAP		4
-#define NUKESTATE_WIRES_TIED	3
-#define NUKESTATE_CUT_LINES		2
+#define NUKESTATE_INTACT		7
+#define NUKESTATE_OPEN			6
+#define NUKESTATE_OPEN_TRAP		5
+#define NUKESTATE_WIRES_TIED	4
+#define NUKESTATE_CUT_LINES		3
+#define NUKESTATE_BREACHED		2
 #define NUKESTATE_CORE_EXPOSED	1
 #define NUKESTATE_CORE_REMOVED	0
 
@@ -109,10 +110,28 @@ var/bomb_set
 				if(welder.remove_fuel(1,user))
 					if(do_after(user,50,target=src))
 						playsound(loc, 'sound/items/Deconstruct.ogg', 100, 1)
-						user << "<span class='notice'>You cut into [src]'s warhead. You can see the core's green glow.</span>"
-						deconstruction_state = NUKESTATE_CORE_EXPOSED
+						user << "<span class='notice'>You cut into [src]'s warhead. The last containment plate seems to be stuck...</span>"
+						deconstruction_state = NUKESTATE_BREACHED
 						update_icon()
-						SSobj.processing += core
+				return
+		if(NUKESTATE_BREACHED)
+			if(istype(I, /obj/item/weapon/wrench))
+				playsound(loc, 'sound/effects/bang.ogg', 100, 1)
+				user << "<span class='notice'>You bang on the containment plate with [I].</span>"
+				if(do_after(user,15,target=src))
+					playsound(loc, 'sound/effects/bang.ogg', 100, 1)
+					user << "<span class='notice'>Again.</span>"
+					if(do_after(user,15,target=src))
+						playsound(loc, 'sound/effects/bang.ogg', 100, 1)
+						user << "<span class='notice'>And again.</span>"
+						if(do_after(user,15,target=src))
+							playsound(loc, 'sound/effects/bang.ogg', 100, 1)
+							sleep(5)
+							playsound(loc, 'sound/effects/clang.ogg', 100, 1)
+							user << "<span class='notice'>The containment plate falls off! You can see the core's green glow.</span>"
+							deconstruction_state = NUKESTATE_CORE_EXPOSED
+							update_icon()
+							SSobj.processing += core
 				return
 		if(NUKESTATE_CORE_EXPOSED)
 			if(istype(I, /obj/item/nuke_core_container))
@@ -162,7 +181,7 @@ var/bomb_set
 		if(NUKESTATE_OPEN_TRAP,NUKESTATE_OPEN)
 			glow = null
 			interior = image(icon,"panel-removed")
-		if(NUKESTATE_CORE_REMOVED,NUKESTATE_CUT_LINES,NUKESTATE_WIRES_TIED)
+		if(NUKESTATE_CORE_REMOVED,NUKESTATE_CUT_LINES,NUKESTATE_WIRES_TIED, NUKESTATE_BREACHED)
 			glow = null
 			interior = image(icon,"wires-sorted")
 		if(NUKESTATE_CORE_EXPOSED)
