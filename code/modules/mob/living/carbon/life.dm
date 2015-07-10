@@ -446,6 +446,8 @@
 	if(!(disabilities & BLIND) && !stat)	//blindness from disability or unconsciousness doesn't get better on its own
 		if(eye_blind)			//blindness, heals slowly over time
 			eye_blind = max(eye_blind-1,0)
+		else if(eye_covered)			//partially blind eyes heal slowly
+			eye_covered = max(eye_covered-1, 0)
 		else if(eye_blurry)			//blurry eyes heal slowly
 			eye_blurry = max(eye_blurry-1, 0)
 	else

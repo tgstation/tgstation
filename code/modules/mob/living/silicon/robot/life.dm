@@ -39,23 +39,24 @@
 	if (src.cell)
 		if(src.cell.charge <= 0)
 			uneq_all()
-			src.stat = 1
+			stat = 1
 		else if (src.cell.charge <= 100)
 			uneq_all()
-			src.cell.use(1)
+			cell.use(1)
 		else
 			if(src.module_state_1)
-				src.cell.use(5)
+				cell.use(5)
 			if(src.module_state_2)
-				src.cell.use(5)
+				cell.use(5)
 			if(src.module_state_3)
-				src.cell.use(5)
-			src.cell.use(1)
-			src.eye_blind = 0
-			src.stat = 0
+				cell.use(5)
+			cell.use(1)
+			eye_blind = 0
+			eye_covered = 0
+			stat = 0
 	else
 		uneq_all()
-		src.stat = 1
+		stat = 1
 
 
 /mob/living/silicon/robot/handle_regular_status_updates()
@@ -99,9 +100,9 @@
 				AdjustWeakened(-1)
 			if (src.paralysis > 0)
 				AdjustParalysis(-1)
-				src.eye_blind = max(eye_blind, 1)
+				src.eye_covered = max(eye_covered, 1)
 			else
-				src.eye_blind = 0
+				src.eye_covered = 0
 
 		else	//Not stunned.
 			src.stat = 0
@@ -111,8 +112,10 @@
 
 	if (src.stuttering) src.stuttering--
 
-	if (src.eye_blind)
-		src.eye_blind--
+	if (eye_blind)
+		eye_blind--
+	if (eye_covered)
+		eye_covered--
 
 	src.density = !( src.lying )
 
@@ -219,6 +222,12 @@
 			src.blind.layer = 18
 		else
 			src.blind.layer = 0
+
+			if(src.eye_covered)
+				src.cover.layer = 17
+			else
+				src.cover.layer = 0
+
 			if (src.disabilities & NEARSIGHT)
 				src.client.screen += global_hud.vimpaired
 

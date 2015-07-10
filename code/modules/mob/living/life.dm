@@ -124,6 +124,8 @@
 		eye_blind = max(eye_blind, 1)
 	else if(eye_blind)			//blindness, heals slowly over time
 		eye_blind = max(eye_blind-1,0)
+	else if(eye_covered)			//partially blind eyes heal slowly
+		eye_covered = max(eye_covered-1, 0)
 	else if(eye_blurry)			//blurry eyes heal slowly
 		eye_blurry = max(eye_blurry-1, 0)
 
@@ -178,6 +180,12 @@
 			else
 				blind.layer = 0
 				clear_alert("blind")
+
+				if(eye_covered)
+					cover.layer = 18
+				else
+					cover.layer = 0
+
 
 				if (disabilities & NEARSIGHT)
 					client.screen += global_hud.vimpaired

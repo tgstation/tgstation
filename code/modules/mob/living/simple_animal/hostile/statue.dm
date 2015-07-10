@@ -118,11 +118,11 @@
 	for(var/atom/check in check_list)
 		for(var/mob/living/M in viewers(world.view + 1, check) - src)
 			if(M.client && CanAttack(M) && !issilicon(M))
-				if(!M.eye_blind)
+				if(!is_blind(M))
 					return M
 		for(var/obj/mecha/M in view(world.view + 1, check)) //assuming if you can see them they can see you
 			if(M.occupant && M.occupant.client)
-				if(!M.occupant.eye_blind)
+				if(!is_blind(M.occupant))
 					return M.occupant
 	return null
 

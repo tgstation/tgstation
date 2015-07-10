@@ -110,6 +110,9 @@
 		src.eye_blind--
 //		src.blinded = 1
 
+	if (eye_covered)
+		eye_covered--
+
 	if (src.ear_deaf > 0) src.ear_deaf--
 	if (src.ear_damage < 25)
 		src.ear_damage -= 0.05

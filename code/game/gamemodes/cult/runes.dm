@@ -963,7 +963,7 @@ proc/set_runecults( setELDERGOD_CULTS = null, setCONVERT_CULTS = null, setSACRIF
 			if(N)
 				continue
 			C.eye_blurry += 30
-			C.eye_blind += 10
+			C.eye_covered += 10
 			//talismans is weaker.
 			affected++
 			C.show_message("<span class='danger'>You feel a sharp pain in your eyes, and the world disappears into darkness..</span>", 3)

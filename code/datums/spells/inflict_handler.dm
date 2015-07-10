@@ -13,6 +13,7 @@
 	var/amt_dam_tox = 0
 
 	var/amt_eye_blind = 0
+	var/amt_eye_covered = 0
 	var/amt_eye_blurry = 0
 
 	var/destroys = "none" //can be "none", "gib" or "disintegrate"
@@ -61,6 +62,7 @@
 		target.Stun(amt_stunned)
 
 		target.eye_blind += amt_eye_blind
+		target.eye_covered += amt_eye_covered
 		target.eye_blurry += amt_eye_blurry
 		//summoning
 		if(summon_type)

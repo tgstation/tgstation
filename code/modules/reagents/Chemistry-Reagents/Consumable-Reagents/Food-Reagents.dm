@@ -233,7 +233,7 @@ datum/reagent/consumable/condensedcapsaicin/reaction_mob(var/mob/living/M, var/m
 			if(prob(5))
 				victim.emote("scream")
 			victim.eye_blurry = max(M.eye_blurry, 3)
-			victim.eye_blind = max(M.eye_blind, 1)
+			victim.eye_covered = max(M.eye_covered, 1)
 			victim.confused = max(M.confused, 3)
 			victim.damageoverlaytemp = 60
 			victim.Weaken(3)
@@ -247,7 +247,7 @@ datum/reagent/consumable/condensedcapsaicin/reaction_mob(var/mob/living/M, var/m
 			if(prob(5))
 				victim.emote("scream")
 			victim.eye_blurry = max(M.eye_blurry, 5)
-			victim.eye_blind = max(M.eye_blind, 2)
+			victim.eye_covered = max(M.eye_covered, 2)
 			victim.confused = max(M.confused, 6)
 			victim.damageoverlaytemp = 75
 			victim.Weaken(5)

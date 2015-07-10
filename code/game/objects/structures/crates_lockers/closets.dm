@@ -386,7 +386,7 @@
 			src.locked = !src.locked
 			add_fingerprint(user)
 			for(var/mob/O in viewers(user, 3))
-				if((O.client && !( O.eye_blind )))
+				if((O.client && !is_blind(O)))
 					O << "<span class='notice'>[user] has [locked ? null : "un"]locked the locker.</span>"
 			update_icon()
 		else

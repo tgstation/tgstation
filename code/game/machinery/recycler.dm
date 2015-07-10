@@ -95,7 +95,7 @@ var/const/SAFETY_COOLDOWN = 100
 
 /obj/machinery/recycler/Bumped(var/atom/movable/AM)
 
-	if(stat & (BROKEN|NOPOWER))
+	if(stat & (BROKEN|NOPOWER) || panel_open)
 		return
 	if(safety_mode)
 		return

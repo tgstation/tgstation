@@ -564,7 +564,7 @@
 		if(H.tinttotal >= TINT_IMPAIR)
 			if(tinted_weldhelh)
 				if(H.tinttotal >= TINT_BLIND)
-					H.eye_blind = max(H.eye_blind, 1)
+					H.eye_covered = max(H.eye_covered, 1)
 				if(H.client)
 					H.client.screen += global_hud.darkMask
 
@@ -575,6 +575,12 @@
 			else
 				H.clear_alert("blind")
 				H.blind.layer = 0
+
+		if(H.cover)
+			if(H.eye_covered)
+				H.cover.layer = 17
+			else
+				H.cover.layer = 0
 
 		if(!H.client)//no client, no screen to update
 			return 1

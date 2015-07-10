@@ -375,7 +375,7 @@ datum/reagent/shadowling_blindness_smoke/on_mob_life(var/mob/living/M as mob)
 	if(!M) M = holder.my_atom
 	if(!is_shadow_or_thrall(M))
 		M << "<span class='warning'><b>You breathe in the black smoke, and your eyes burn horribly!</b></span>"
-		M.eye_blind = 5
+		M.eye_covered = 5
 		if(prob(25))
 			M.visible_message("<b>[M]</b> screams and claws at their eyes!")
 			M.Stun(2)

@@ -285,6 +285,14 @@
 //	mymob.blind.mouse_opacity = 0
 	mymob.blind.layer = 0
 
+	mymob.cover = new /obj/screen()
+	mymob.cover.icon = 'icons/mob/screen_full.dmi'
+	mymob.cover.icon_state = "coveredimageoverlay"
+	mymob.cover.name = " "
+	mymob.cover.screen_loc = "CENTER-7,CENTER-7"
+	mymob.cover.mouse_opacity = 0
+	mymob.cover.layer = 0
+
 	mymob.damageoverlay = new /obj/screen()
 	mymob.damageoverlay.icon = 'icons/mob/screen_full.dmi'
 	mymob.damageoverlay.icon_state = "oxydamageoverlay0"
@@ -307,7 +315,7 @@
 
 	mymob.client.screen = list()
 
-	mymob.client.screen += list( mymob.throw_icon, mymob.zone_sel, mymob.internals, mymob.healths, mymob.healthdoll, mymob.pullin, mymob.blind, mymob.flash, mymob.damageoverlay, lingchemdisplay, lingstingdisplay) //, mymob.hands, mymob.rest, mymob.sleep) //, mymob.mach )
+	mymob.client.screen += list( mymob.throw_icon, mymob.zone_sel, mymob.internals, mymob.healths, mymob.healthdoll, mymob.pullin, mymob.blind, mymob.cover, mymob.flash, mymob.damageoverlay, lingchemdisplay, lingstingdisplay) //, mymob.hands, mymob.rest, mymob.sleep) //, mymob.mach )
 	mymob.client.screen += adding + hotkeybuttons
 	mymob.client.screen += mymob.client.void
 	inventory_shown = 0;

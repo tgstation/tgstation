@@ -48,6 +48,7 @@ datum/reagent/consumable/carrotjuice
 
 datum/reagent/consumable/carrotjuice/on_mob_life(var/mob/living/M as mob)
 	M.eye_blurry = max(M.eye_blurry-1 , 0)
+	M.eye_covered = max(M.eye_covered-1 , 0)
 	M.eye_blind = max(M.eye_blind-1 , 0)
 	switch(current_cycle)
 		if(1 to 20)

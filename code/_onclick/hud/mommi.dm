@@ -174,6 +174,14 @@ obj/screen/robot/mommi/hat
 	mymob.blind.layer = 0
 //	mymob.blind.mouse_opacity = 0
 
+	mymob.cover = new /obj/screen()
+	mymob.cover.icon = 'icons/mob/screen_full.dmi'
+	mymob.cover.icon_state = "coveredimageoverlay"
+	mymob.cover.name = " "
+	mymob.cover.screen_loc = "CENTER-7,CENTER-7"
+	mymob.cover.mouse_opacity = 0
+	mymob.cover.layer = 0
+
 	mymob.flash = new /obj/screen()
 	mymob.flash.icon = 'icons/mob/screen_gen.dmi'
 	mymob.flash.icon_state = "blank"

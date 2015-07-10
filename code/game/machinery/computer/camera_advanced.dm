@@ -21,7 +21,7 @@
 	jump_action.Grant(user)
 
 /obj/machinery/computer/camera_advanced/check_eye(var/mob/user as mob)
-	if (get_dist(user, src) > 1 || user.eye_blind)
+	if (get_dist(user, src) > 1 || is_blind(user))
 		off_action.Activate()
 		return 0
 	return 1

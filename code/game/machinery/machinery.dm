@@ -275,7 +275,7 @@ Class Procs:
 		return
 	if(!isturf(M.loc) && M.loc != src)
 		return
-	if(eye_blind)
+	if(is_blind(src))
 		src << "<span class='warning'>You cannot see [M]!</span>"
 		return
 	if(getBrainLoss() >= 60)
@@ -339,7 +339,7 @@ Class Procs:
 		else if(prob(H.getBrainLoss()))
 			user << "<span class='danger'>You momentarily forget how to use [src].</span>"
 			return 1
-		if(H.eye_blind)
+		if(is_blind(H))
 			src << "<span class='warning'>You cannot see [src]!</span>"
 			return
 	if(panel_open)

@@ -68,6 +68,11 @@
 		else
 			blind.layer = 0
 
+			if(eye_covered)
+				cover.layer = 17
+			else
+				cover.layer = 0
+
 			if (disabilities & NEARSIGHT)
 				client.screen += global_hud.vimpaired
 
