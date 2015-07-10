@@ -1452,7 +1452,7 @@
 		if(config.allow_admin_rev)
 			L.revive(0)
 			message_admins("<span class='warning'>Admin [key_name_admin(usr)] healed / revived [key_name_admin(L)]!</span>", 1)
-			log_admin("[key_name(usr)] healed / Rrvived [key_name(L)]")
+			log_admin("[key_name(usr)] healed / revived [key_name(L)]")
 		else
 			usr << "Admin Rejuvinates have been disabled"
 
