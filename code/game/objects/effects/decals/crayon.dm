@@ -32,7 +32,7 @@
 	layer = 3.6 //Harder to hide
 	var/datum/gang/gang
 
-/obj/effect/decal/cleanable/crayon/gang/New(location, var/datum/gang/G, var/e_name = "gang tag", var/rotation = 0)
+/obj/effect/decal/cleanable/crayon/gang/New(location, var/datum/gang/G, var/e_name = "gang tag", var/rotation = 0, var/material = "crayon")
 	if(!type || !G)
 		qdel(src)
 
@@ -45,7 +45,7 @@
 	G.territory_new |= list(territory.type = territory.name)
 	G.territory_lost -= territory.type
 
-	..(location, color, icon_state, e_name, rotation)
+	..(location, color, icon_state, e_name, rotation, material)
 
 /obj/effect/decal/cleanable/crayon/gang/Destroy()
 	var/area/territory = get_area(src)
