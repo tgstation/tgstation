@@ -640,7 +640,7 @@
 				dead_mob_list -= M
 				living_mob_list |= list(M)
 				M.emote("gasp")
-				add_logs(M, M, "revived", object="strange reagent")
+				add_logs(M, M, "revived", src)
 	..()
 	return
 
