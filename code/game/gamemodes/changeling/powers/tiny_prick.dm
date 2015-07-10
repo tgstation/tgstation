@@ -116,18 +116,16 @@
 	genetic_damage = 20
 	max_genetic_damage = 10
 
-/obj/item/weapon/melee/false_arm_blade
-	name = "arm blade"
+/obj/item/weapon/melee/arm_blade/false
 	desc = "A grotesque mass of flesh that used to be your arm. Although it looks dangerous at first, you can tell it's actually quite dull and useless."
-	icon = 'icons/obj/weapons.dmi'
-	icon_state = "arm_blade"
-	item_state = "arm_blade"
-	flags = ABSTRACT | NODROP
-	w_class = 5.0
 	force = 5 //Basically as strong as a punch
 
-/obj/item/weapon/melee/false_arm_blade/dropped()
+/obj/item/weapon/melee/arm_blade/false/dropped(mob/user)
 	qdel(src)
+	return
+
+/obj/item/weapon/melee/arm_blade/false/afterattack(atom/target, mob/user, proximity)
+	return
 
 /obj/effect/proc_holder/changeling/sting/false_armblade/can_sting(var/mob/user, var/mob/target)
 	if(!..())
@@ -147,7 +145,7 @@
 	if(ismonkey(target))
 		user << "<span class='notice'>Our genes cry out as we sting [target.name]!</span>"
 
-	var/obj/item/weapon/melee/false_arm_blade/blade = new(target)
+	var/obj/item/weapon/melee/arm_blade/false/blade = new(target,1)
 	target.put_in_hands(blade)
 	target.visible_message("<span class='warning'>A grotesque blade forms around [target.name]\'s arm!</span>", "<span class='userdanger'>Your arm twists and mutates, transforming into a horrific monstrosity!</span>", "<span class='italics'>You hear organic matter ripping and tearing!</span>")
 	playsound(target, 'sound/effects/blobattack.ogg', 30, 1)
