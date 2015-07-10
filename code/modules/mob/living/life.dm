@@ -120,7 +120,11 @@
 
 /mob/living/proc/handle_disabilities()
 	//Eyes
-	if(disabilities & BLIND || stat)	//blindness from disability or unconsciousness doesn't get better on its own
+	if(stat)
+		if(config && config.critfullblind)
+			eye_blind = max(eye_blind, 5)
+		eye_covered = max(eye_covered, 5)
+	if(disabilities & BLIND)	//blindness from disability or unconsciousness doesn't get better on its own
 		eye_blind = max(eye_blind, 1)
 	else if(eye_blind)			//blindness, heals slowly over time
 		eye_blind = max(eye_blind-1,0)
@@ -180,6 +184,7 @@
 			else
 				blind.layer = 0
 				clear_alert("blind")
+
 
 				if(eye_covered)
 					cover.layer = 18

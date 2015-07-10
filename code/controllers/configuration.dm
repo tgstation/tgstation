@@ -51,6 +51,7 @@
 	var/jobs_have_minimal_access = 0	//determines whether jobs use minimal access or expanded access.
 	var/jobs_have_maint_access = 0 		//Who gets maint access?  See defines above.
 	var/sec_start_brig = 0				//makes sec start in brig or dept sec posts
+	var/critfullblind = 0				//If being in crit should fully blind you or just use the old effect
 
 	var/server
 	var/banappeals
@@ -492,6 +493,8 @@
 					config.starlight			= 1
 				if("grey_assistants")
 					config.grey_assistants			= 1
+				if("crit_full_blindness")
+					config.critfullblind = 1
 				else
 					diary << "Unknown setting in configuration: '[name]'"
 

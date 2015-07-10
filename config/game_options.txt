@@ -270,3 +270,6 @@ MIDROUND_ANTAG_TIME_CHECK 90
 
 ## A ratio of living to total crew members, the lower this is, the more people will have to die in order for midround antag to be skipped
 MIDROUND_ANTAG_LIFE_CHECK 0.6 
+
+##If being in crit should fully blind or just use the old partial blind effect
+#CRIT_FULL_BLIND
