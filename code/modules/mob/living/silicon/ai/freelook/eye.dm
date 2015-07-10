@@ -18,7 +18,7 @@
 		if(!isturf(ai.loc))
 			return
 
-		..()
+		forceEnter(destination)
 
 		cameranet.visibility(src)
 		if(ai.client)
