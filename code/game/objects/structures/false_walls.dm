@@ -5,7 +5,7 @@
 	name = "wall"
 	desc = "A huge chunk of metal used to seperate rooms."
 	anchored = 1
-	icon = 'icons/turf/walls.dmi'
+	icon = 'icons/turf/walls/wall.dmi'
 	var/mineral = "metal"
 	var/walltype = "metal"
 	var/opening = 0
@@ -14,37 +14,14 @@
 
 	canSmoothWith = list(
 	/turf/simulated/wall,
+	/turf/simulated/wall/r_wall,
 	/obj/structure/falsewall,
 	/obj/structure/falsewall/reinforced  // WHY DO WE SMOOTH WITH FALSE R-WALLS WHEN WE DON'T SMOOTH WITH REAL R-WALLS.
 	)
+	smooth = 1
+	can_be_unanchored = 0
+	var/list/save_overlays
 
-
-/obj/structure/falsewall/New()
-	..()
-	relativewall_neighbours()
-
-/obj/structure/falsewall/Destroy()
-
-	var/temploc = loc
-	loc = null
-
-	for(var/turf/simulated/wall/W in range(temploc,1))
-		W.relativewall()
-
-	for(var/obj/structure/falsewall/W in range(temploc,1))
-		W.relativewall()
-	..()
-
-
-/obj/structure/falsewall/relativewall()
-
-	if(!density)
-		icon_state = "[walltype]fwall_open"
-		return
-
-	var/junction = findSmoothingNeighbors()
-	icon_state = "[walltype][junction]"
-	return
 
 /obj/structure/falsewall/attack_hand(mob/user)
 	if(opening)
@@ -56,7 +33,7 @@
 		sleep(4)
 		density = 0
 		SetOpacity(0)
-		update_icon(0)
+		update_icon()
 	else
 		var/srcturf = get_turf(src)
 		for(var/mob/living/obstacle in srcturf) //Stop people from using this as a shield
@@ -71,17 +48,17 @@
 
 /obj/structure/falsewall/proc/do_the_flick()
 	if(density)
-		flick("[walltype]fwall_opening", src)
+		save_overlays = overlays.Copy()
+		overlays.Cut()
+		flick("fwall_opening", src)
 	else
-		flick("[walltype]fwall_closing", src)
+		flick("fwall_closing", src)
 
-/obj/structure/falsewall/update_icon(relativewall = 1)//Calling icon_update will refresh the smoothwalls if it's closed, otherwise it will make sure the icon is correct if it's open
+/obj/structure/falsewall/update_icon()//Calling icon_update will refresh the smoothwalls if it's closed, otherwise it will make sure the icon is correct if it's open
 	if(density)
-		icon_state = "[walltype]0"
-		if(relativewall)
-			relativewall()
+		overlays = save_overlays.Copy()
 	else
-		icon_state = "[walltype]fwall_open"
+		overlays += "fwall_open"
 
 /obj/structure/falsewall/proc/ChangeToWall(delete = 1)
 	var/turf/T = get_turf(src)
@@ -151,6 +128,7 @@
 /obj/structure/falsewall/reinforced
 	name = "reinforced wall"
 	desc = "A huge chunk of reinforced metal used to seperate rooms."
+	icon = 'icons/turf/walls/reinforced_wall.dmi'
 	icon_state = "r_wall"
 	walltype = "rwall"
 
@@ -160,19 +138,6 @@
 	if(delete)
 		qdel(src)
 	return T
-
-/obj/structure/falsewall/reinforced/do_the_flick()
-	if(density)
-		flick("frwall_opening", src)
-	else
-		flick("frwall_closing", src)
-
-/obj/structure/falsewall/reinforced/update_icon(relativewall = 1)
-	if(density)
-		icon_state = "rwall0"
-		src.relativewall()
-	else
-		icon_state = "frwall_open"
 
 /*
  * Uranium Falsewalls

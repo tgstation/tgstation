@@ -5,11 +5,9 @@
 	icon_living = "butterfly"
 	icon_dead = "butterfly_dead"
 	turns_per_move = 1
-	emote_see = list("flutters")
 	response_help = "shoos"
 	response_disarm = "brushes aside"
 	response_harm = "squashes"
-	speak_chance = 0
 	maxHealth = 2
 	health = 2
 	harm_intent_damage = 1

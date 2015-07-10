@@ -24,6 +24,8 @@
 	attacktext = "bites"
 	attack_sound = 'sound/weapons/bite.ogg'
 	speak_emote = list("pines")
+	emote_taunt = list("growls")
+	taunt_chance = 20
 
 	//Space carp aren't affected by atmos.
 	atmos_requirements = list("min_oxy" = 0, "max_oxy" = 0, "min_tox" = 0, "max_tox" = 0, "min_co2" = 0, "max_co2" = 0, "min_n2" = 0, "max_n2" = 0)
@@ -31,11 +33,6 @@
 
 	faction = list("hostile")
 	var/drop_type = /obj/item/stack/sheet/mineral/wood
-
-/mob/living/simple_animal/hostile/tree/FindTarget()
-	. = ..()
-	if(.)
-		emote("me", 1, "growls at [.].")
 
 /mob/living/simple_animal/hostile/tree/AttackingTarget()
 	..()
