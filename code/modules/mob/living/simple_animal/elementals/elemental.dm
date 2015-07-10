@@ -31,6 +31,8 @@
 	..()
 	spawn(20)
 		if(!src.mind)
+			if(!src)
+				return
 			message_admins("[src] was created but has no mind! Will continue to search for a mind until one is found.")
 			while(!src.mind)
 				sleep(10)
@@ -69,6 +71,7 @@
 	maxHealth = 250
 	force_threshold = 10 //Made of rock, so pretty tanky
 	speed = 1
+	environment_smash = 1
 
 	harm_intent_damage = 0
 	attacktext = "punches"
@@ -91,7 +94,8 @@
 	attack_sound = 'sound/magic/lightningbolt.ogg'
 	damtype = BURN
 	playstyle_string = "<b>You are an air elemental. You are very fast but also very fragile. You can use your attacks and abilities to harness the storm..</b>"
-	deathmessage = "flies apart, breaking away and leaving nothing."
+	deathmessage = "breaks apart into errant clouds."
+	ventcrawler = 1
 
 /mob/living/simple_animal/elemental/fire //All-rounder; offensive
 	name = "fire elemental"
@@ -118,6 +122,7 @@
 	attack_sound = 'sound/magic/exit_blood.ogg'
 	playstyle_string = "<b>You are a water elemental. You are well-rounded, and your abilities can be used to influence many things around you.</b>"
 	deathmessage = "falls into a formless pile of water."
+	ventcrawler = 1
 
 /mob/living/simple_animal/elemental/life //Healing; defensive
 	name = "nature elemental"
@@ -154,7 +159,7 @@
 /mob/living/simple_animal/elemental/unbound //Random; random
 	name = "unbound elemental"
 	desc = "Oh. God. What is this horrible abomination of magic? This poor thing probably lives its tortured existence in eternal agony."
-	speak_emote = list("screams", "cries", "screeches", "stammers")
+	speak_emote = list("screams", "cries", "screeches", "whimpers")
 
 	attacktext = "slices"
 	playstyle_string = "<b>You are an unbound elemental. Living a life in eternal agony, you are an aberration of all the elements. All of your stats are randomized and your abilities are also randomized.</b>"
@@ -164,6 +169,20 @@
 	..()
 	melee_damage_upper = rand(1,30)
 	melee_damage_lower = rand(1,30)
+	if((melee_damage_upper > 20) || (melee_damage_lower) > 20)
+		src << "<i>You feel very strong. Your melee attacks will hit hard.</i>"
+	else
+		src << "<i>You feel weak. Your melee attacks won't hit very hard.</i>"
 	maxHealth = rand(50,200)
+	if(maxHealth > 100)
+		src << "<i>You feel sturdy. You have a decent amount of maximum health.</i>"
+	else
+		src << "<i>You feel frail. You have a low amount of maximum health.</i>"
 	health = maxHealth
 	harm_intent_damage = rand(1,10)
+	ventcrawler = rand(1,2)
+	if(ventcrawler)
+		src << "<i>You feel limber and agile. You can crawl through vents.</i>"
+	force_threshold = rand(0,10)
+	if(force_threshold > 5)
+		src << "<i>Your hardened exoskeleton can absorb weaker attacks.</i>"

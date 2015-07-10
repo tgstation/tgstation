@@ -238,12 +238,12 @@
 			A.key = C.key
 			A.master = user
 		if("fire")
-			visible_message("<span class='warning'>The flame rapidly grows to a living inferno.</span>")
+			visible_message("<span class='warning'>The flame rapidly grows to a raging inferno.</span>")
 			var/mob/living/simple_animal/elemental/fire/F = new(get_turf(src))
 			F.key = C.key
 			F.master = user
 		if("water")
-			visible_message("<span class='warning'>A form rises from the water pool.</span>")
+			visible_message("<span class='warning'>The puddle rises and takes a humanoid form.</span>")
 			var/mob/living/simple_animal/elemental/water/W = new(get_turf(src))
 			W.key = C.key
 			W.master = user
@@ -255,7 +255,7 @@
 			if(prob(1))
 				L.say("I am Groot!")
 		if("death")
-			visible_message("<span class='warning'>Red mist swirls rapidly around the skull and darkens to black.</span>")
+			visible_message("<span class='warning'>Red mist swirls rapidly around the skull, darkening to a shade of black.</span>")
 			var/mob/living/simple_animal/elemental/necrotic/D = new(get_turf(src))
 			D.key = C.key
 			D.master = user
@@ -282,7 +282,7 @@
 	name = "phial of cloud essence"
 	desc = "A sturdy glass phial filled with white, swirling mist. It strains to get out."
 	summonType = "air"
-	flavorText = "You uncap the vial. Its contents whirl into the air and begin to twist into a shape."
+	flavorText = "You uncap the vial. Its contents whirl into the air and begin to coalesce."
 	usedFlavorText = "This vial is empty."
 
 /obj/item/weapon/antag_spawner/elemental/fire
@@ -296,32 +296,25 @@
 	name = "tidal globe"
 	desc = "A small enclosure of some gelatinous substance. Encapsuled within is a tiny, raging sea."
 	summonType = "water"
-	flavorText = "You gently apply pressure to the orb. Immediately it pops open and the water within floods out."
+	flavorText = "You gently apply pressure to the orb. It ruptures, the water within flooding out."
 	usedFlavorText = "The sac is deflated and empty."
 
 /obj/item/weapon/antag_spawner/elemental/life
 	name = "ever-blooming frond"
-	desc = "A gorgeous green plant that seems to have a mind of its own."
+	desc = "A gorgeous green plant dancing with small particles."
 	summonType = "life"
-	flavorText = "You crush the plant's leaves in your hand. Green sap seeps through your fingers and begins to shift."
+	flavorText = "You crush the plant's leaves in your hand. Green sap seeps through your fingers and onto the ground."
 	usedFlavorText = "There is nothing but a pile of crushed detritus."
 
-/obj/item/weapon/antag_spawner/elemental/death
-	name = "charred skull"
-	desc = "An eerie skull that seems blackened from fire. Two tiny red dots glimmer in its eye sockets."
-	summonType = "death"
-	flavorText = "You pry the jawbone off of the skull. Immediately red mist flows out of the skull's mouth and begins forming."
-	usedFlavorText = "The relic seems dead - it is just a skull, after all. Duh."
-
 /obj/item/weapon/antag_spawner/elemental/arcane
-	name = "invocationist's rune"
+	name = "invocationist's tablet"
 	desc = "Some strange chalk markings engraved on a limestone tablet."
 	summonType = "arcane"
-	flavorText = "After some fumbles, you manage to speak the words of the engravings. The markings begin to shift and turn."
+	flavorText = "After some fumbles, you manage to speak the words on the tablet. The markings begin to shift and turn."
 	usedFlavorText = "It's just a blank tablet."
 
 /obj/item/weapon/antag_spawner/elemental/unbound //The !!FUN!! elemental
 	name = "elemental amalgation"
-	desc = "This is an aberration of random debris encapsuled in a gently-vibrating glass container. Are you sure about this?"
+	desc = "An aberration of random debris encapsuled in a gently-vibrating glass container. Are you sure about this?"
 	summonType = "unbound"
-	flavorText = "You hold your breath and drop the bottle. The glass vanishes and its contents begin to coalesce into... something."
+	flavorText = "You hold your breath and drop the bottle. The glass vanishes and its contents begin to pull together."

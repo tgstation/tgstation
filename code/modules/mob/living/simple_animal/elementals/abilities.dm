@@ -10,38 +10,50 @@
 	name = "Storm Bolt"
 	panel = "Abilities"
 	invocation_type = null
-	charge_max = 200
+	charge_max = 150
 	clothes_req = 0
 
 /obj/effect/proc_holder/spell/aoe_turf/repulse/elemental
 	name = "Gale"
 	panel = "Abilities"
 	invocation_type = null
-	charge_max = 250
+	charge_max = 200
 	clothes_req = 0
 
-/obj/effect/proc_holder/spell/targeted/stormwinds
-	name = "Cyclonic Winds"
-	desc = "Envelop yourself in cyclonic winds and charge forward, knocking down anyone in your path."
+/obj/effect/proc_holder/spell/targeted/airElementalBind
+	name = "Cyclone"
 	panel = "Abilities"
-	charge_max = 500
+	invocation_type = null
+	charge_max = 600
 	clothes_req = 0
-	range = -1
-	include_user = 1
 
-/obj/effect/proc_holder/spell/targeted/stormwinds/cast(list/targets)
-	for(var/mob/living/simple_animal/elemental/air/user in targets)
-		if(!istype(user))
+/obj/effect/proc_holder/spell/targeted/airElementalBind/cast(list/targets)
+	for(var/mob/living/target in targets)
+		if(target.stat)
+			charge_counter = charge_max
 			return
-		user.visible_message("<span class='warning'>The winds around [user] begin to swell and rush...</span>")
-		sleep(20)
-		user.visible_message("<span class='boldannounce'>[user] rockets forward!</span>")
-		for(var/i = 0, i < 20, i++)
-			sleep(0.5)
-			var/turf/stepTurf = get_step(user, user.dir)
-			for(var/mob/living/carbon/M in stepTurf.contents)
-				M.Weaken(5)
-				M.apply_damage(10, BRUTE)
-				M.visible_message("<span class='warning'>[user] bowls [M] over!</span>", \
-							      "<span class='warning'><b>[user] bowls you over!</b></span>")
-			step_to(user,stepTurf,1)
+		new /obj/structure/cyclone(get_turf(target))
+
+/obj/structure/cyclone
+	name = "cyclone"
+	desc = "A small localized tornado, Raging winds swirl around a central point. It is impossible to tell if something is inside."
+	density = 1
+	anchored = 1
+	icon = 'icons/effects/effects.dmi'
+	icon_state = "bhole3"
+
+/obj/structure/cyclone/New()
+	visible_message("<span class='warning'>A raging cyclone suddenly manifests!</span>")
+	for(var/mob/living/M in get_turf(src))
+		if(istype(M, /mob/living/simple_animal/revenant))
+			continue
+		M.visible_message("<span class='warning'>[M] is trapped in the cylone!</span>", \
+						  "<span class='boldannounce'>A cocoon of raging winds appears around you, locking you in place!</span>")
+		M.notransform = 1
+		M.alpha = 0
+	spawn(100)
+		for(var/mob/living/M in get_turf(src))
+			if(M.notransform)
+				M.notransform = 0
+				M.alpha = 255
+		qdel(src)

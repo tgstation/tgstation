@@ -291,6 +291,13 @@
 		new /obj/item/clothing/shoes/sandal(get_turf(user)) //In case they've lost them.
 		new /obj/item/clothing/gloves/color/purple(get_turf(user))//To complete the outfit
 
+/datum/spellbook_entry/item/summoning
+	name = "Buy Item"
+	category = "Summoning"
+	refundable = 0
+	buy_word = "Summon"
+	item_path = null
+
 /datum/spellbook_entry/item/summoning/contract
 	name = "Contract of Apprenticeship"
 	desc = "A magical contract binding an apprentice wizard to your service, using it will summon them to your side."
@@ -332,12 +339,6 @@
 	desc = "A vibrant fern with life-giving properties. Crushing its leaves will summon a nature elemental to fight by your side."
 	item_path = /obj/item/weapon/antag_spawner/elemental/life
 	log_name = "LE"
-
-/datum/spellbook_entry/item/summoning/elementalDeath
-	name = "Blackened Skull"
-	desc = "A charred skull imbued with sinister energies. Breaking its jawbone will summon a necrotic elemental to fight by your side."
-	item_path = /obj/item/weapon/antag_spawner/elemental/death
-	log_name = "DE"
 
 /datum/spellbook_entry/item/summoning/elementalArcane
 	name = "Caster's Rune"
@@ -506,6 +507,8 @@
 			dat += "Arming the station against you will increases the risk, but will grant you one more charge for your spellbook.<BR>"
 		if("Rituals")
 			dat += "These powerful spells change the very fabric of reality. Not always in your favour.<BR>"
+		if("Summoning")
+			dat += "Small artifacts used to call forth minions or other creatures. Ranges from apprentices to elementals.<BR>"
 	return dat
 
 /obj/item/weapon/spellbook/proc/wrap(var/content)
