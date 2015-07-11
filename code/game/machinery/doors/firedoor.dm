@@ -182,6 +182,7 @@
 	icon = 'icons/obj/module.dmi'
 	icon_state = "mainboard"
 	w_class = 2
+	materials = list(MAT_METAL = 50, MAT_GLASS = 50)
 
 /obj/structure/firelock_frame
 	name = "firelock frame"

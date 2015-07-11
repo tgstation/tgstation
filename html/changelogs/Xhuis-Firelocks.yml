@@ -1,0 +1,6 @@
+author: Dorsidwarf
+delete-after: True
+
+changes: 
+  - rscadd: "Firelocks may now be constructed and deconstructed with standard tools. Circuit boards can be produced at a standard autolathe."
+
