@@ -35,7 +35,6 @@ The client is optional and may be a /mob, /client or /html_interface_client obje
 	client << browse_rsc('uiBg.png')
 	client << browse_rsc('uiBgcenter.png')
 	client << browse_rsc('nanotrasen.css')
-	client << browse_rsc('..\\html_interface_icons.css')
 
 /datum/html_interface/nanotrasen/createWindow(datum/html_interface_client/hclient)
 	. = ..() // we want the default window

@@ -131,6 +131,7 @@ mob/verb/test()
 	client << browse_rsc('bootstrap.min.css')
 	client << browse_rsc('html_interface.css')
 	client << browse_rsc('html_interface.js')
+	client << browse_rsc('html_interface_icons.css')
 
 /datum/html_interface/proc/createWindow(datum/html_interface_client/hclient)
 	winclone(hclient.client, "window", "browser_\ref[src]")
