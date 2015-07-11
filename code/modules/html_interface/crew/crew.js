@@ -261,7 +261,8 @@ $(window).on("onUpdateContent", function()
 	$("#uiMap").append("<img src=\"minimap_" + z + ".png\" id=\"uiMapImage\" width=\"256\" height=\"256\" unselectable=\"on\"/><div id=\"uiMapContent\" unselectable=\"on\"></div>");
 	$("#uiMapContainer").append("<div id=\"uiMapTooltip\"></div>");
 
-	$("body")[0].onselectstart = disableSelection;
+	$("#switches").append("<div id='zoomcontainer' style='position: static; z-index: 9999; margin-bottom: -75px;'>Zoom: <div id='zoomslider' style='width: 75px; position: relative; top: -31px; right: -50px; z-index: 9999;'><input type=\"range\" onchange=\"setzoom(value);\" value=\"4\" step=\"0.5\" max=\"16\" min=\"0.5\" id=\"zoom\"></div><div id=\"zoomval\" style='position:relative; z-index: 9999; right: -135px; top: -80px; color: white;'>100%</div></div>");
+	//$("body")[0].onselectstart = disableSelection;
 
 	var width = $("#uiMapImage").width();
 
@@ -328,6 +329,7 @@ function switchTo(i)
 	if (i == 1)
 	{
 		$("#uiMapContainer").hide();
+		$("#zoomcontainer").hide();
 		$("body").css({"padding-left": "0px" , "cursor": "default"});
 		$("#textbased").show();
 
@@ -336,6 +338,7 @@ function switchTo(i)
 	{
 		$("#textbased").hide();
 		$("#uiMapContainer").show();
+		$("#zoomcontainer").show();
 		$("body").css({"padding-left": "0" , "cursor": "default"});
 		//$("#uiMap").css({"width": "auto" , "height": "600" , "margin-top": "20px"});
 		//$("#map").width("800px");
@@ -346,26 +349,33 @@ function switchTo(i)
 }
 var defaultzoom = 4;
 function changeZoom(offset){
-	defaultzoom = Math.max(defaultzoom + (offset*2), 1);
+	defaultzoom = Math.max(defaultzoom + offset, 1);
 	var uiMapObject = $('#uiMap');
 	var uiMapWidth = uiMapObject.width() * defaultzoom;
 	var uiMapHeight = uiMapObject.height() * defaultzoom;
+	var ourpos = uiMapObject.position();
 
 	uiMapObject.css({
 		zoom: defaultzoom,
-		left: '50%',
-		top: '50%',
+		left: ourpos["left"],
+		top: ourpos["top"],
 		marginLeft: '-' + Math.floor(uiMapWidth / 2) + 'px',
 		marginTop: '-' + Math.floor(uiMapHeight / 2) + 'px'
 	});
+	document.getElementById('zoomval').innerHTML = (defaultzoom/4)*100 + "%";
+}
 
+function setzoom(val){
+	val = parseInt(val);
+	changeZoom(val - defaultzoom);
 }
 
 function changezlevels()
 {
 	var newZ = parseInt(Math.min(Math.max(prompt("View which Z-Level?", z), 1), 6));
-	$("#uiMapImage").attr('src', 'minimap_' + newZ + '.png');
-	z = newZ
+	//$("#uiMapImage").attr('src', 'minimap_' + newZ + '.png');
+	//z = newZ
+	window.location.href = "byond://?src=" + hSrc + "&action=changez&value=" + newZ;
 }
 
 function clearAll(ai)
@@ -484,7 +494,7 @@ function add(name, assignment, ijob, life_status, dam1, dam2, dam3, dam4, area, 
 		var tx					= (translate(x - 1, scale_x) - 1).toFixed(0);
 		var ty					= (translate(y - 1, scale_y) + 7).toFixed(0);
 
-		var dotElem				= $("<div class=\"mapIcon mapIcon16 rank-" +  ijobNames[ijob.toString()] + " " + (life_status ? 'alive' : 'dead') + "\" style =\"top:" + ty +"px; left: " + tx + "px;\" z-index: 2; unselectable=\"on\"><div class=\"tooltip hidden\">" + name + " " + (life_status ? "<span class='good'>Living</span>" : "<span class='bad'>Deceased</span>") + " (<span class=\"oxyloss_light\">" + dam1 + "</span>/<span class=\"toxin_light\">" + dam2 + "</span>/<span class=\"burn\">" + dam3 + "</span>/<span class=\"brute\">" + dam4 + "</span>) "+area+": "+pos_x+", "+pos_y+")</div></div>");
+		var dotElem				= $("<div class=\"mapIcon mapIcon16 rank-" +  ijobNames[ijob.toString()] + " " + (avg_dam <= 25 ? 'good' : (avg_dam > 25 && avg_dam <= 90 ? 'average' : 'bad')) + "\" style =\"top:" + ty +"px; left: " + tx + "px;\" z-index: 2; unselectable=\"on\"><div class=\"tooltip hidden\">" + name + " " + (life_status ? "<span class='good'>Living</span>" : "<span class='bad'>Deceased</span>") + " (<span class=\"oxyloss_light\">" + dam1 + "</span>/<span class=\"toxin_light\">" + dam2 + "</span>/<span class=\"burn\">" + dam3 + "</span>/<span class=\"brute\">" + dam4 + "</span>) "+area+": "+pos_x+", "+pos_y+")</div></div>");
 		//$("#uiMap").append("<div class=\"dot\" style=\"top: " + ty + "px; left: " + tx + "px; background-color: " + color + "; z-index: " + 999 + ";\"></div>");
 
 		$("#uiMap").append(dotElem);

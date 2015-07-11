@@ -74,6 +74,7 @@ body
 
 #textbased
 {
+	display: none;
 	width: 100%;
 }
 
@@ -131,12 +132,9 @@ a { display: inline; }
 	height: 16px;
 }
 
-.tt > div
-{
-	display: none;
-}
 
-.tt:hover > div
+
+.tt > div
 {
 	position: absolute;
 	bottom: -30px;
@@ -146,8 +144,6 @@ a { display: inline; }
 	display: block;
 	width: 128px;
 	height: 24px;
-	border: 1px solid #313131;
-	background-color: #434343;
 	padding: 4px;
 	z-index: 999;
 	text-align: center;

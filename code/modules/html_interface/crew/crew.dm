@@ -119,7 +119,7 @@ var/global/datum/crewmonitor/crewmonitor = new
 
 			hi = src.interfaces["[z]"]
 
-			hi.updateContent("content", "<div id='switches'><a href=\"javascript:switchTo(0);\">Switch to mini map</a> <a href=\"javascript:switchTo(1);\">Switch to text-based</a> <a href='javascript:changezlevels();'>Change Z-Level</a>  Zoom:<a href='javascript:changeZoom(-1);'>-</a><a href='javascript:changeZoom(1);'>+</a></div><div id=\"uiMapContainer\"><div id=\"uiMap\" unselectable=\"on\"></div></div><div id=\"textbased\"></div>")
+			hi.updateContent("content", "<div id='switches'><a href=\"javascript:switchTo(0);\">Switch to mini map</a> <a href=\"javascript:switchTo(1);\">Switch to text-based</a> <a href='javascript:changezlevels();'>Change Z-Level</a> </div><div id=\"uiMapContainer\"><div id=\"uiMap\" unselectable=\"on\"></div></div><div id=\"textbased\"></div>")
 
 			src.update(z, TRUE)
 		else
@@ -258,6 +258,14 @@ var/global/datum/crewmonitor/crewmonitor = new
 						spawn(min(30, get_dist(get_turf(C), AI.eyeobj) / 4))
 							if (AI && AI.eyeobj && current_loc == AI.eyeobj.loc)
 								AI.switchCamera(C)
+		else if(hclient && hclient.client && hclient.client.mob)
+			var/mob/living/L = hclient.client.mob
+			if(!istype(L)) return
+			switch (href_list["action"])
+				if("changez")
+					var/newz = text2num(href_list["value"])
+					if(newz)
+						show(L,newz)
 
 /datum/crewmonitor/proc/queueUpdate(z)
 	var/datum/controller/process/html/html = processScheduler.getProcess("html")
