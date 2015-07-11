@@ -272,6 +272,12 @@ RCD
 			mode = 4
 			user << "<span class='notice'>You change RCD's mode to 'Grilles & Windows'.</span>"
 		if(4)
+			mode = 5
+			user << "<span class='notice'>You change RCD's mode to 'Conveyor Belts'.</span>"
+		if(5)
+			mode = 6
+			user << "<span class='notice'>You change RCD's mode to 'Conveyor Switches'.</span>"
+		if(6)
 			mode = 1
 			user << "<span class='notice'>You change RCD's mode to 'Floor & Walls'.</span>"
 
@@ -448,6 +454,36 @@ RCD
 						activate()
 						var/obj/structure/window/WD = new/obj/structure/window/fulltile(A.loc)
 						WD.anchored = 1
+						return 1
+					return 0
+				return 0
+		if (5)
+			if(istype(A, /turf/simulated/floor))
+				if(checkResource(5, user))
+					for(var/obj/machinery/conveyor/C in A)
+						user << "<span class='warning'>There is already a belt there!</span>"
+						return 0
+					user << "<span class='notice'>You start building a conveyor belt...</span>"
+					playsound(src.loc, 'sound/machines/click.ogg', 50, 1)
+					if(do_after(user, 10, target = A))
+						if(!useResource(3, user)) return 0
+						activate()
+						new/obj/machinery/conveyor(A, user.dir) // face north, get a north facing belt, etc.
+						return 1
+					return 0
+				return 0
+		if (6)
+			if(istype(A, /turf/simulated/floor))
+				if(checkResource(5, user))
+					for(var/obj/machinery/conveyor_switch/C in A)
+						user << "<span class='warning'>There is already a switch there!</span>"
+						return 0
+					user << "<span class='notice'>You start building a conveyor switch...</span>"
+					playsound(src.loc, 'sound/machines/click.ogg', 50, 1)
+					if(do_after(user, 10, target = A))
+						if(!useResource(5, user)) return 0
+						activate()
+						new/obj/machinery/conveyor_switch(A, rand(1000, 9999)) // generate a random ID for the switch
 						return 1
 					return 0
 				return 0
