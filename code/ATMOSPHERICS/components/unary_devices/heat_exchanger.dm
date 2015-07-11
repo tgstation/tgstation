@@ -66,7 +66,4 @@
 	if(abs(other_old_temperature-partner_air_contents.temperature) > 1)
 		partner.update_parents()
 
-	update_airs(air_contents)
-	partner.update_airs(partner_air_contents)
-
 	return 1

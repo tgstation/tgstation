@@ -67,7 +67,6 @@
 	..()
 	var/datum/gas_mixture/air_contents = airs["a1"]
 	air_contents.volume = 1000
-	update_airs(air_contents)
 
 /obj/machinery/atmospherics/unary/vent_pump/update_icon_nopipes()
 	overlays.Cut()
@@ -138,7 +137,6 @@
 
 				air_contents.merge(removed)
 				air_update_turf()
-	update_airs(air_contents)
 	update_parents()
 
 	return 1

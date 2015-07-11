@@ -169,7 +169,6 @@
 		air_contents.merge(removed)
 		air_update_turf()
 
-	update_airs(air_contents)
 	update_parents()
 
 	return 1

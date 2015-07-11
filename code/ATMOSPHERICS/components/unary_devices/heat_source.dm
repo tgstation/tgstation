@@ -43,5 +43,4 @@
 
 	if(abs(old_temperature-air_contents.temperature) > 1)
 		update_parents()
-	update_airs(air_contents)
 	return 1

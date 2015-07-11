@@ -331,8 +331,6 @@
 	if(combined_heat_capacity > 0)
 		var/combined_energy = T20C * current_heat_capacity + air_heat_capacity * air_contents.temperature
 		air_contents.temperature = combined_energy/combined_heat_capacity
-	update_airs(air_contents)
-
 
 /obj/machinery/atmospherics/components/unary/cryo_cell/proc/expel_gas()
 	var/datum/gas_mixture/air_contents = airs["a1"]
@@ -345,4 +343,3 @@
 	expel_gas.temperature = T20C	//Lets expel hot gas and see if that helps people not die as they are removed
 	loc.assume_air(expel_gas)
 	air_update_turf()
-	update_airs(air_contents)

@@ -19,11 +19,6 @@
 			initialize_directions = WEST|NORTH|EAST
 
 /*
-Helpers
-*/
-/obj/machinery/atmospherics/components/trinary/update_airs(var/a1, var/a2, var/a3)
-	..(list("a1" = a1, "a2" = a2, "a3" = a3))
-/*
 Housekeeping and pipe network stuff
 */
 

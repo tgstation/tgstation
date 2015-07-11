@@ -47,7 +47,6 @@
 		air_contents.temperature = (current_heat_capacity*air_contents.temperature + 20*added_oxygen*T0C)/(current_heat_capacity+20*added_oxygen)
 		air_contents.oxygen += added_oxygen
 
-		update_airs(air_contents)
 		update_parents()
 
 	return 1

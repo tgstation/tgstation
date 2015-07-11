@@ -55,7 +55,6 @@
 		loc.assume_air(removed)
 		air_update_turf()
 
-		update_airs(air_contents)
 		update_parents()
 
 	return 1
@@ -75,7 +74,6 @@
 
 		loc.assume_air(removed)
 
-		update_airs(air_contents)
 		update_parents()
 
 	flick("inje_inject", src)

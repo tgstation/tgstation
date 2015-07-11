@@ -24,12 +24,6 @@ Iconnery
 
 	..(intact)
 /*
-Helpers
-*/
-
-/obj/machinery/atmospherics/components/binary/update_airs(var/a1, var/a2)
-	..(list("a1" = a1, "a2" = a2))
-/*
 Housekeeping and pipe network stuff
 */
 
