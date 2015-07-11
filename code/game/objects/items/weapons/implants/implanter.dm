@@ -31,7 +31,7 @@
 				if(M.head && (M.head.flags & THICKMATERIAL))
 					return
 				M.visible_message("[user] has implanted [M].", "<span class='notice'>[user] implants you with the implant.</span>")
-				add_logs(user, M, "implanted", object="[name]")
+				add_logs(user, M, "implanted", src)
 				user << "<span class='notice'>You implant the implant into [M].</span>"
 				if(imp.implanted(M))
 					imp.loc = M

@@ -25,7 +25,7 @@
 				visible_message("<span class='danger'>[M] has wounded [src]!</span>", \
 					"<span class='userdanger'>[M] has wounded [src]!</span>")
 				apply_effect(4, WEAKEN, armor_block)
-				add_logs(M, src, "attacked", admin=0)
+				add_logs(M, src, "attacked")
 			updatehealth()
 
 		if(M.a_intent == "disarm")
@@ -33,7 +33,7 @@
 			if (randn <= 80)
 				playsound(loc, 'sound/weapons/pierce.ogg', 25, 1, -1)
 				Weaken(5)
-				add_logs(M, src, "tackled", admin=0)
+				add_logs(M, src, "tackled")
 				visible_message("<span class='danger'>[M] has tackled down [src]!</span>", \
 					"<span class='userdanger'>[M] has tackled down [src]!</span>")
 			else

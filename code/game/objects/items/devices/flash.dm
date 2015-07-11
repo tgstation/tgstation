@@ -58,7 +58,7 @@
 
 
 /obj/item/device/flash/proc/flash_carbon(var/mob/living/carbon/M, var/mob/user = null, var/power = 5, targeted = 1)
-	add_logs(user, M, "flashed", object="[src.name]")
+	add_logs(user, M, "flashed", src)
 	if(user && targeted)
 		if(M.weakeyes)
 			M.Weaken(3) //quick weaken bypasses eye protection but has no eye flash
@@ -89,7 +89,7 @@
 		return 1
 
 	else if(issilicon(M))
-		add_logs(user, M, "flashed", object="[src.name]")
+		add_logs(user, M, "flashed", src)
 		flick("e_flash", M.flash)
 		M.Weaken(rand(5,10))
 		user.visible_message("<span class='disarm'>[user] overloads [M]'s sensors with the flash!</span>", "<span class='danger'>You overload [M]'s sensors with the flash!</span>")

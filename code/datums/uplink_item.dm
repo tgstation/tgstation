@@ -557,7 +557,7 @@ var/list/uplink_items = list()
 	name = "Syndicate Encryption Key"
 	desc = "A key, that when inserted into a radio headset, allows you to listen to all station department channels as well as talk on an encrypted Syndicate channel."
 	item = /obj/item/device/encryptionkey/syndicate
-	cost = 5
+	cost = 2 //Nowhere near as useful as the Binary Key!
 	surplus = 75
 
 /datum/uplink_item/device_tools/ai_detector
@@ -659,7 +659,7 @@ var/list/uplink_items = list()
 	desc = "An implant injected into the body, and later activated using a bodily gesture to open an uplink with 10 telecrystals. \
 	The ability for an agent to open an uplink after their posessions have been stripped from them makes this implant excellent for escaping confinement."
 	item = /obj/item/weapon/storage/box/syndie_kit/imp_uplink
-	cost = 20
+	cost = 14
 	surplus = 0
 
 /datum/uplink_item/implants/adrenal

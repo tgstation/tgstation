@@ -352,7 +352,7 @@
 			H.updatehealth() //forces health update before next life tick
 			playsound(get_turf(src), 'sound/machines/defib_zap.ogg', 50, 1, -1)
 			H.emote("gasp")
-			add_logs(user, M, "stunned", object="defibrillator")
+			add_logs(user, M, "stunned", defib)
 			defib.deductcharge(revivecost)
 			cooldown = 1
 			busy = 0
@@ -386,7 +386,7 @@
 							if(!HU.stat)
 								HU.visible_message("<span class='warning'>[M] thrashes wildly, clutching at their chest!</span>", "<span class='userdanger'>You feel a horrible agony in your chest!</span>")
 						HU.apply_damage(50, BURN, "chest")
-						add_logs(user, M, "overloaded the heart of", object="defibrillator")
+						add_logs(user, M, "overloaded the heart of", defib)
 						M.Weaken(5)
 						M.Jitter(100)
 						defib.deductcharge(revivecost)
@@ -454,7 +454,7 @@
 							if(tplus > tloss)
 								H.setBrainLoss( max(0, min(99, ((tlimit - tplus) / tlimit * 100))))
 							defib.deductcharge(revivecost)
-							add_logs(user, M, "revived", object="defibrillator")
+							add_logs(user, M, "revived", defib)
 						else
 							if (H.suiciding || (NOCLONE in H.mutations))
 								user.visible_message("<span class='warning'>[defib] buzzes: Resuscitation failed - Recovery of patient impossible. Further attempts futile.</span>")

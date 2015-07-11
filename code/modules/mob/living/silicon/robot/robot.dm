@@ -624,7 +624,7 @@
 				step(src,get_dir(M,src))
 				spawn(5)
 					step(src,get_dir(M,src))
-				add_logs(M, src, "pushed", admin=0)
+				add_logs(M, src, "pushed")
 				playsound(loc, 'sound/weapons/pierce.ogg', 50, 1, -1)
 				visible_message("<span class='danger'>[M] has forced back [src]!</span>", \
 								"<span class='userdanger'>[M] has forced back [src]!</span>")

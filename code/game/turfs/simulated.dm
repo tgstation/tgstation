@@ -14,7 +14,6 @@
 	levelupdate()
 	if(smooth)
 		smooth_icon(src)
-		icon_state = ""
 
 /turf/simulated/proc/burn_tile()
 

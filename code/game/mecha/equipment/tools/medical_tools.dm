@@ -196,7 +196,7 @@
 	if(to_inject && occupant.reagents.get_reagent_amount(R.id) + to_inject <= inject_amount*2)
 		occupant_message("Injecting [occupant] with [to_inject] units of [R.name].")
 		log_message("Injecting [occupant] with [to_inject] units of [R.name].")
-		add_logs(chassis.occupant, occupant, "injected", object="[name] ([R] - [to_inject] units)")
+		add_logs(chassis.occupant, occupant, "injected", "[name] ([R] - [to_inject] units)")
 		SG.reagents.trans_id_to(occupant,R.id,to_inject)
 		update_equip_info()
 	return
@@ -328,7 +328,6 @@
 				if(M)
 					var/R
 					mechsyringe.visible_message("<span class=\"attack\"> [M] was hit by the syringe!</span>")
-					add_logs(originaloccupant, M, "shot", object="syringegun")
 					if(M.can_inject(null, 1))
 						if(mechsyringe.reagents)
 							for(var/datum/reagent/A in mechsyringe.reagents.reagent_list)
@@ -338,6 +337,7 @@
 						mechsyringe.icon = initial(mechsyringe.icon)
 						mechsyringe.reagents.trans_to(M, mechsyringe.reagents.total_volume)
 						M.take_organ_damage(2)
+						add_logs(originaloccupant, M, "shot", "syringegun")
 					break
 				else if(mechsyringe.loc == trg)
 					mechsyringe.icon_state = initial(mechsyringe.icon_state)
