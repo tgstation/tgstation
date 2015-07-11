@@ -344,10 +344,21 @@ function switchTo(i)
 		//$("document").height("800px");
 	}
 }
-
+var defaultzoom = 4;
 function changeZoom(offset){
-	$('#uiMap').style.zoom = Math.min(Math.max($('#uiMap').style.zoom + zoom, 0),12);
-	
+	defaultzoom = Math.max(defaultzoom + (offset*2), 1);
+	var uiMapObject = $('#uiMap');
+	var uiMapWidth = uiMapObject.width() * defaultzoom;
+	var uiMapHeight = uiMapObject.height() * defaultzoom;
+
+	uiMapObject.css({
+		zoom: defaultzoom,
+		left: '50%',
+		top: '50%',
+		marginLeft: '-' + Math.floor(uiMapWidth / 2) + 'px',
+		marginTop: '-' + Math.floor(uiMapHeight / 2) + 'px'
+	});
+
 }
 
 function changezlevels()
