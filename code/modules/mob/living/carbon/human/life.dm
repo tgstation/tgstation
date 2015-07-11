@@ -85,55 +85,48 @@
 
 
 /mob/living/carbon/human/handle_mutations_and_radiation()
-	if(dna)
-		if(dna.species.handle_mutations_and_radiation(src))
-			..()
+	if(!dna || !dna.species.handle_mutations_and_radiation(src))
+		..()
 
 /mob/living/carbon/human/breathe()
-	if(dna)
-		dna.species.breathe(src)
+	if(!dna || !dna.species.breathe(src))
+		..()
 
-	return
+/mob/living/carbon/human/check_breath(datum/gas_mixture/breath)
+	if(!dna || !dna.species.check_breath(breath, src))
+		..()
 
 /mob/living/carbon/human/handle_environment(datum/gas_mixture/environment)
 	if(dna)
 		dna.species.handle_environment(environment, src)
 
-	return
-
 ///FIRE CODE
 /mob/living/carbon/human/handle_fire()
-	if(dna)
-		dna.species.handle_fire(src)
-	if(..())
-		return
-	var/thermal_protection = 0 //Simple check to estimate how protected we are against multiple temperatures
-	if(wear_suit)
-		if(wear_suit.max_heat_protection_temperature >= FIRE_SUIT_MAX_TEMP_PROTECT)
-			thermal_protection += (wear_suit.max_heat_protection_temperature*0.7)
-	if(head)
-		if(head.max_heat_protection_temperature >= FIRE_HELM_MAX_TEMP_PROTECT)
-			thermal_protection += (head.max_heat_protection_temperature*THERMAL_PROTECTION_HEAD)
-	thermal_protection = round(thermal_protection)
-	if(thermal_protection >= FIRE_IMMUNITY_SUIT_MAX_TEMP_PROTECT)
-		return
-	if(thermal_protection >= FIRE_SUIT_MAX_TEMP_PROTECT)
-		bodytemperature += 11
-		return
-	else
-		bodytemperature += BODYTEMP_HEATING_MAX
-	return
+	if(!dna || !dna.species.handle_fire(src))
+		..()
+	if(on_fire)
+		var/thermal_protection = 0 //Simple check to estimate how protected we are against multiple temperatures
+		if(wear_suit)
+			if(wear_suit.max_heat_protection_temperature >= FIRE_SUIT_MAX_TEMP_PROTECT)
+				thermal_protection += (wear_suit.max_heat_protection_temperature*0.7)
+		if(head)
+			if(head.max_heat_protection_temperature >= FIRE_HELM_MAX_TEMP_PROTECT)
+				thermal_protection += (head.max_heat_protection_temperature*THERMAL_PROTECTION_HEAD)
+		thermal_protection = round(thermal_protection)
+		if(thermal_protection >= FIRE_IMMUNITY_SUIT_MAX_TEMP_PROTECT)
+			return
+		if(thermal_protection >= FIRE_SUIT_MAX_TEMP_PROTECT)
+			bodytemperature += 11
+		else
+			bodytemperature += BODYTEMP_HEATING_MAX
+
 
 /mob/living/carbon/human/IgniteMob()
-	if(dna)
-		dna.species.IgniteMob(src)
-	else
+	if(!dna || !dna.species.IgniteMob(src))
 		..()
 
 /mob/living/carbon/human/ExtinguishMob()
-	if(dna)
-		dna.species.ExtinguishMob(src)
-	else
+	if(!dna || !dna.species.ExtinguishMob(src))
 		..()
 //END FIRE CODE
 
