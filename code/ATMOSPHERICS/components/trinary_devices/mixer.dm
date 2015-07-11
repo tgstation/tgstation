@@ -104,13 +104,12 @@
 		air3.merge(removed2)
 
 	if(transfer_moles1)
-		update_parents(list("p1" = parents["p1"]))
+		var/datum/pipeline/parent1 = parents["p1"] ; parent1.update = 1
 
 	if(transfer_moles2)
-		update_parents(list("p2" = parents["p2"]))
+		var/datum/pipeline/parent2 = parents["p2"] ; parent2.update = 1
 
-	update_airs(air1, air2, air3)
-	update_parents(list("p3" = parents["p3"]))
+	var/datum/pipeline/parent3 = parents["p3"] ; parent3.update = 1
 
 	return 1
 

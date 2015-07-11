@@ -65,7 +65,6 @@ Thus, the two variables affect pump operation are set in New():
 
 	air2.merge(removed)
 
-	update_airs(air1, air2)
 	update_parents()
 
 	return 1

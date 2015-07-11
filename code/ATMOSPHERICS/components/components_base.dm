@@ -20,7 +20,7 @@ On top of that, now people can add component-speciic procs/vars if they want!
 		//BINARY = 2
 		//TRINARY = 3
 
-/obj/machinery/atmospherics/components/New() //it's workiiiing
+/obj/machinery/atmospherics/components/New()
 	..()
 	for(var/I = 1; I <= device_type; I++)
 		var/datum/gas_mixture/A = new
@@ -55,8 +55,9 @@ Iconnery
 	var/connected = 0
 
 	for(var/I = 1; I <= device_type; I++) //adds intact pieces
-		var/obj/machinery/atmospherics/N = nodes["n[I]"]
-		connected = icon_addintact(N, connected)
+		if(nodes["n[I]"])
+			connected = icon_addintact(nodes["n[I]"], connected)
+
 	icon_addbroken(connected) //adds broken pieces
 
 
@@ -103,11 +104,11 @@ Pipenet stuff; housekeeping
 			break
 	update_icon()
 
-/obj/machinery/atmospherics/components/nullifyPipenet(datum/pipeline/reference) //untestable
+/obj/machinery/atmospherics/components/nullifyPipenet(datum/pipeline/reference)
 	..()
 	for(var/I = 1; I <= device_type; I++)
-		var/datum/pipeline/P = parents["p[I]"]
-		if(reference == P)
+		if(reference == parents["p[I]"])
+			var/datum/pipeline/P = parents["p[I]"]
 			P.other_airs -= airs["a[I]"]
 			P = null
 			break
@@ -117,14 +118,13 @@ Pipenet stuff; housekeeping
 		if(reference == parents["p[I]"])
 			return airs["a[I]"]
 
-/obj/machinery/atmospherics/components/pipeline_expansion(datum/pipeline/reference)
-	if(!reference)
-		return nodes
-	var/I = 1
-	for(var/obj/machinery/atmospherics/N in nodes)
-		if(parents["p[I]"] == reference)
-			return list(N)
-		I++
+/obj/machinery/atmospherics/components/pipeline_expansion(datum/pipeline/reference) //runtime
+	if(reference)
+		for(var/I = 1; I <= device_type; I++)
+			if(nodes["n[I]"])
+				if(parents["p[I]"] == reference)
+					return list("n" = nodes["n1"])
+	return nodes
 
 /obj/machinery/atmospherics/components/setPipenet(datum/pipeline/reference, obj/machinery/atmospherics/A)
 	for(var/I = 1; I <= device_type; I++)
@@ -135,7 +135,7 @@ Pipenet stuff; housekeeping
 /obj/machinery/atmospherics/components/returnPipenet(obj/machinery/atmospherics/A)
 	for(var/I = 1; I <= device_type; I++)
 		if(A == nodes["n[I]"])
-			return parents["p[I]"] //probably works
+			return parents["p[I]"]
 
 /obj/machinery/atmospherics/components/replacePipenet(datum/pipeline/Old, datum/pipeline/New)
 	for(var/datum/pipeline/P in parents)
@@ -182,21 +182,7 @@ I think this is NanoUI?
 /*
 Helpers
 */
-/obj/machinery/atmospherics/components/proc/update_airs(var/list/L)
-	var/I = 1
-	for(var/datum/gas_mixture/air in L)
-		airs["a[I]"] = air
-		I++
 
-/obj/machinery/atmospherics/components/proc/update_parents(var/list/L = parents)
-	var/I = 1
-	for(var/datum/pipeline/parent in L)
+/obj/machinery/atmospherics/components/proc/update_parents()
+	for(var/datum/pipeline/parent in parents)
 		parent.update = 1
-		parents["p[I]"] = parent
-		I++
-/obj/machinery/atmospherics/components/proc/init_airs()
-	return
-/obj/machinery/atmospherics/components/proc/init_nodes()
-	return
-/obj/machinery/atmospherics/components/proc/init_parents()
-	return

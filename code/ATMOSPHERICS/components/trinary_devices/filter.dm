@@ -146,7 +146,6 @@ Filter types:
 		air2.merge(filtered_out)
 		air3.merge(removed)
 
-	update_airs(air1, air2, air3)
 	update_parents()
 
 	return 1

@@ -9,12 +9,6 @@
 	initialize_directions = dir
 
 /*
-Helpers
-*/
-
-/obj/machinery/atmospherics/components/unary/update_airs(var/a1)
-	..(list("a1" = a1))
-/*
 Iconnery
 */
 

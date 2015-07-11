@@ -38,7 +38,6 @@
 		air_contents.temperature = combined_energy/combined_heat_capacity
 
 	//todo: have current temperature affected. require power to bring down current temperature again
-	update_airs(air_contents)
 	if(abs(old_temperature-air_contents.temperature) > 1)
 		update_parents()
 	return 1
