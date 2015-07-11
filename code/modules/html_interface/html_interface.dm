@@ -181,8 +181,9 @@ mob/verb/test()
 	else
 		for (var/client in src.clients) if (src.clients[client]) src.callJavaScript(func, arguments, src.clients[client])
 
-/datum/html_interface/proc/updateLayout(layout)
-	src.layout = layout
+/datum/html_interface/proc/updateLayout(nlayout)
+	src.layout = nlayout
+	
 
 	var/datum/html_interface_client/hclient
 
@@ -315,7 +316,6 @@ mob/verb/test()
 	if (hclient && (ignore_loaded || hclient.is_loaded))
 
 		var/html   = src.layout
-
 		// Only render if we have new content.
 		if (html != hclient.layout)
 			hclient.layout = html

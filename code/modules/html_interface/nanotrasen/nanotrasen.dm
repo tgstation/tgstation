@@ -21,9 +21,9 @@ The client is optional and may be a /mob, /client or /html_interface_client obje
 	src.head = src.head + "<link rel=\"stylesheet\" type=\"text/css\" href=\"nanotrasen.css\" />"
 	src.updateLayout("")
 
-/datum/html_interface/updateLayout(layout)
+/datum/html_interface/nanotrasen/updateLayout(nlayout)
 	// Wrap the layout in our custom HTML
-	return ..("<div id=\"ntbgcenter\"></div><div id=\"content\">[layout]</div>")
+	return ..("<div id=\"ntbgcenter\"></div><div id=\"content\">[nlayout]</div>")
 
 /datum/html_interface/specificRenderTitle(datum/html_interface_client/hclient, ignore_cache = FALSE)
 	// Update the title in our custom header (in addition to default functionality)
@@ -35,6 +35,7 @@ The client is optional and may be a /mob, /client or /html_interface_client obje
 	client << browse_rsc('uiBg.png')
 	client << browse_rsc('uiBgcenter.png')
 	client << browse_rsc('nanotrasen.css')
+	client << browse_rsc('..\\html_interface_icons.css')
 
 /datum/html_interface/nanotrasen/createWindow(datum/html_interface_client/hclient)
 	. = ..() // we want the default window

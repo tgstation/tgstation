@@ -1,20 +1,75 @@
 body
 {
-	padding-left: 490px;
+	padding-left: 0px;
 	cursor: default;
+	scrollable: true;
 }
 
 #ntbgcenter
 {
 	background-position: 550px 0px !important;
 }
-
-#minimap
+#uiMapImage {
+    position: absolute;
+    bottom: 2px;
+    left: -6px;
+}
+/*#uiMap
 {
 	position: fixed;
 	top: 8px;
 	left: 8px;
 	border: 2px inset #888;
+}*/
+
+/*#uiMapImage
+{
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    margin: -512px 0 0 -512px;
+    width: 256px;
+    height: 256px;
+    overflow: hidden;
+	zoom:2;
+}*/
+
+/*#uiMap {
+    position: relative;
+    width: 100%;
+    height: 600px;
+    overflow: hidden;
+    border: 1px solid #40628a;
+    background: url(nanomapBackground.png);
+}*/
+#uiMap {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    margin: -512px 0 0 -512px;
+    width: 256px;
+    height: 256px;
+    overflow: hidden;
+    zoom: 4;
+}
+#uiMapContainer {
+    position: relative;
+    width: 100%;
+    height: 600px;
+    overflow: hidden;
+    border: 1px solid #40628a;
+    background: url(nanomapBackground.png);
+}
+
+#uiMapTooltip {
+    position: absolute;
+    right: 10px;
+    top: 10px;
+    border: 1px solid #40628a;
+    background-color: #272727;
+    padding: 8px;
+    display: none;
+    z-index: 9999;
 }
 
 #textbased
@@ -51,7 +106,7 @@ body
 	clear: both;
 }
 
-a { display: none; }
+a { display: inline; }
 
 .health
 {
@@ -122,4 +177,24 @@ a { display: none; }
 	height: 8px;
 	margin-top: -2px;
 	margin-left: -3px;
+}
+
+.oxygen
+{
+	color: #3498db;
+}
+
+.toxin
+{
+	color: #2ecc71;
+}
+
+.fire
+{
+	color: #e67e22;
+}
+
+.brute
+{
+	color: #e74c3c;
 }

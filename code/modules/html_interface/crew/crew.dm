@@ -115,11 +115,11 @@ var/global/datum/crewmonitor/crewmonitor = new
 		var/datum/html_interface/hi
 
 		if (!src.interfaces["[z]"])
-			src.interfaces["[z]"] = new/datum/html_interface/nanotrasen(src, "Crew Monitoring", 900, 540, "<link rel=\"stylesheet\" type=\"text/css\" href=\"crewmonitor.css\" /><script type=\"text/javascript\">var z = [z]; var tile_size = [world.icon_size]; var maxx = [world.maxx]; var maxy = [world.maxy];</script><script type=\"text/javascript\" src=\"crewmonitor.js\"></script>")
+			src.interfaces["[z]"] = new/datum/html_interface/nanotrasen(src, "Crew Monitoring", 900, 800, "<script type=\"text/javascript\" src=\"3-jquery.timers.js\"></script><script type=\"text/javascript\" src=\"libraries.min.js\"></script><link rel=\"stylesheet\" type=\"text/css\" href=\"html_interface_icons.css\" /><link rel=\"stylesheet\" type=\"text/css\" href=\"crewmonitor.css\" /><script type=\"text/javascript\">var z = [z]; var tile_size = [world.icon_size]; var maxx = [world.maxx]; var maxy = [world.maxy];</script><script type=\"text/javascript\" src=\"crewmonitor.js\"></script>")
 
 			hi = src.interfaces["[z]"]
 
-			hi.updateContent("content", "<a href=\"javascript:switchTo(0);\">Switch to mini map</a> <a href=\"javascript:switchTo(1);\">Switch to text-based</a><div id=\"minimap\"></div><div id=\"textbased\"></div>")
+			hi.updateContent("content", "<div id='switches'><a href=\"javascript:switchTo(0);\">Switch to mini map</a> <a href=\"javascript:switchTo(1);\">Switch to text-based</a> <a href='javascript:changezlevels();'>Change Z-Level</a>  Zoom:<a href='javascript:changeZoom(-1);'>-</a><a href='javascript:changeZoom(1);'>+</a></div><div id=\"uiMapContainer\"><div id=\"uiMap\" unselectable=\"on\"></div></div><div id=\"textbased\"></div>")
 
 			src.update(z, TRUE)
 		else
