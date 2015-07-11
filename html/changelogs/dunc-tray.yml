@@ -1,0 +1,6 @@
+author: Dunc
+
+delete-after: True
+
+changes: 
+  - rscadd: "Added Optical T-Ray scanners to R&D and Atmospheric Technician closets. Optical T-Ray Scanners function identically to a handheld scanner."
