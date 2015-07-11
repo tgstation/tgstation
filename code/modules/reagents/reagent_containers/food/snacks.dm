@@ -3482,5 +3482,5 @@
 	icon_state = "potentham"
 	New()
 		..()
-		reagents.add_reagent("nanites", 2)
+		reagents.add_reagent("hamserum", 1)
 		bitesize = 2
