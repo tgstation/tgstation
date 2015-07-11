@@ -116,16 +116,23 @@ Class Procs:
 	var/mob/living/occupant = null
 	var/unsecuring_tool = /obj/item/weapon/wrench
 	var/interact_offline = 0 // Can the machine be interacted with while de-powered.
+	var/fast_process = 0 // Process faster than other machines?
 
 /obj/machinery/New()
 	..()
 	machines += src
-	SSmachine.processing += src
+	if(fast_process)
+		SSfast_machine.processing += src
+	else
+		SSmachine.processing += src
 	power_change()
 
 /obj/machinery/Destroy()
 	machines.Remove(src)
-	SSmachine.processing -= src
+	if(fast_process)
+		SSfast_machine.processing -= src
+	else
+		SSmachine.processing -= src
 	if(occupant)
 		dropContents()
 	..()

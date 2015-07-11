@@ -7,6 +7,7 @@
 	name = "conveyor belt"
 	desc = "A conveyor belt."
 	anchored = 1
+	fast_process = 1
 	var/operating = 0	// 1 if running forward, -1 if backwards, 0 if off
 	var/operable = 1	// true if can operate (no broken segments in this belt run)
 	var/forwards		// this is the default (forward) direction, set by the map dir
@@ -105,7 +106,7 @@
 	use_power(100)
 
 	affecting = loc.contents - src		// moved items will be all in loc
-	spawn(1)	// slight delay to prevent infinite propagation due to map order	//TODO: please no spawn() in process(). It's a very bad idea
+	spawn(0)	// slight delay to prevent infinite propagation due to map order	//TODO: please no spawn() in process(). It's a very bad idea
 		var/items_moved = 0
 		for(var/atom/movable/A in affecting)
 			if(!A.anchored)
@@ -208,6 +209,7 @@
 
 	var/list/conveyors		// the list of converyors that are controlled by this switch
 	anchored = 1
+	fast_process = 1
 
 
 
