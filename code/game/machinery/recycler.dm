@@ -1,7 +1,7 @@
 var/const/SAFETY_COOLDOWN = 100
 
 /obj/machinery/recycler
-	name = "crusher"
+	name = "recycler"
 	desc = "A large crushing machine which is used to recycle small items ineffeciently; there are lights on the side of it."
 	icon = 'icons/obj/recycling.dmi'
 	icon_state = "grinder-o0"
