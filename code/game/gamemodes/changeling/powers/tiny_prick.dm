@@ -119,10 +119,6 @@
 	desc = "A grotesque mass of flesh that used to be your arm. Although it looks dangerous at first, you can tell it's actually quite dull and useless."
 	force = 5 //Basically as strong as a punch
 
-/obj/item/weapon/melee/arm_blade/false/dropped(mob/user)
-	qdel(src)
-	return
-
 /obj/item/weapon/melee/arm_blade/false/afterattack(atom/target, mob/user, proximity)
 	return
 
@@ -151,7 +147,7 @@
 
 	spawn(600)
 		playsound(target, 'sound/effects/blobattack.ogg', 30, 1)
-		target.visible_message("<span class='warning'>With a sickening crunch, [target] reforms his [blade] into an arm!</span>", "<span class='warning'>[blade] reforms back to normal.</span>", "<span class='italics>You hear organic matter ripping and tearing!</span>")
+		target.visible_message("<span class='warning'>With a sickening crunch, [target] reforms their [blade.name] into an arm!</span>", "<span class='warning'>[blade] reforms back to normal.</span>", "<span class='italics>You hear organic matter ripping and tearing!</span>")
 		qdel(blade)
 		user.update_inv_l_hand()
 		user.update_inv_r_hand()
