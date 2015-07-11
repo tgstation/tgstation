@@ -148,12 +148,12 @@
 	icon_state = "fireaxe0"
 	name = "fire axe"
 	desc = "Truly, the weapon of a madman. Who would think to fight fire with an axe?"
-	force = 5
+	force = 10 // up from 5, still an axe man
 	throwforce = 15
 	w_class = 4.0
 	slot_flags = SLOT_BACK
 	force_unwielded = 5
-	force_wielded = 24 // Was 18, Buffed - RobRichards/RR
+	force_wielded = 30 // Was 18, Buffed - RobRichards/RR //was 24. buffed again -Dorsidwarf
 	attack_verb = list("attacked", "chopped", "cleaved", "torn", "cut")
 	hitsound = 'sound/weapons/bladeslice.ogg'
 
