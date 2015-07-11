@@ -106,14 +106,14 @@
 	use_power(100)
 
 	affecting = loc.contents - src		// moved items will be all in loc
-	spawn(0)	// slight delay to prevent infinite propagation due to map order	//TODO: please no spawn() in process(). It's a very bad idea
+	spawn(1)	// slight delay to prevent infinite propagation due to map order	//TODO: please no spawn() in process(). It's a very bad idea
 		var/items_moved = 0
 		for(var/atom/movable/A in affecting)
 			if(!A.anchored)
 				if(A.loc == src.loc) // prevents the object from being affected if it's not currently here.
 					step(A,movedir)
 					items_moved++
-			if(items_moved >= 100)
+			if(items_moved >= 25)
 				break
 
 // attack with item, place item on conveyor
