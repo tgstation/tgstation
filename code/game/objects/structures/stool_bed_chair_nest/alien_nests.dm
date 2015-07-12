@@ -6,6 +6,11 @@
 	icon = 'icons/mob/alien.dmi'
 	icon_state = "nest"
 	var/health = 100
+	var/image/nest_overlay
+
+/obj/structure/stool/bed/nest/New()
+	nest_overlay = image('icons/mob/alien.dmi', "nestoverlay", layer=MOB_LAYER - 0.2)
+	return ..()
 
 /*
 /obj/structure/stool/bed/nest/unbuckle_other(mob/user as mob)
@@ -65,11 +70,12 @@
 	if(M == buckled_mob)
 		M.pixel_y += 6
 		M.pixel_x += 2
-		overlays += image('icons/mob/alien.dmi', "nestoverlay", layer=6)
+		overlays += nest_overlay
 	else
 		M.pixel_x -= 2
 		M.pixel_y = initial(M.pixel_y)
-		overlays.Cut()
+		overlays -= nest_overlay
+
 
 /obj/structure/stool/bed/nest/attackby(obj/item/weapon/W as obj, mob/user as mob, params)
 	var/aforce = W.force
