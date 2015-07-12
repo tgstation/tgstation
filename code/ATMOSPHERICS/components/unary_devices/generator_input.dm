@@ -1,4 +1,4 @@
-/obj/machinery/atmospherics/unary/generator_input
+/obj/machinery/atmospherics/components/unary/generator_input
 
 	icon_state = "he_intact"
 	density = 1
@@ -8,7 +8,7 @@
 
 	var/update_cycle
 
-/obj/machinery/atmospherics/unary/generator_input/update_icon()
+/obj/machinery/atmospherics/components/unary/generator_input/update_icon()
 	if(nodes["n1"])
 		icon_state = "intact"
 	else
@@ -16,5 +16,5 @@
 
 	return
 
-/obj/machinery/atmospherics/unary/generator_input/proc/return_exchange_air()
+/obj/machinery/atmospherics/components/unary/generator_input/proc/return_exchange_air()
 	return airs["a1"]

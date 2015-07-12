@@ -1,4 +1,4 @@
-/obj/machinery/atmospherics/unary/oxygen_generator
+/obj/machinery/atmospherics/components/unary/oxygen_generator
 
 	icon_state = "o2gen_map"
 
@@ -12,11 +12,11 @@
 
 	var/oxygen_content = 10
 
-/obj/machinery/atmospherics/unary/oxygen_generator/update_icon_nopipes()
+/obj/machinery/atmospherics/components/unary/oxygen_generator/update_icon_nopipes()
 
 	overlays.Cut()
 	if(showpipe)
-		overlays += getpipeimage('icons/obj/atmospherics/unary_devices.dmi', "scrub_cap", initialize_directions) //it works for now
+		overlays += getpipeimage('icons/obj/atmospherics/components/unary_devices.dmi', "scrub_cap", initialize_directions) //it works for now
 
 	if(!nodes["n1"] || !on || stat & BROKEN)
 		icon_state = "o2gen_off"
@@ -25,12 +25,12 @@
 	else
 		icon_state = "o2gen_on"
 
-/obj/machinery/atmospherics/unary/oxygen_generator/New()
+/obj/machinery/atmospherics/components/unary/oxygen_generator/New()
 	..()
 	var/datum/gas_mixture/air_contents = airs["a1"] ; air_contents.volume = 50
 	airs["a1"] = air_contents
 
-/obj/machinery/atmospherics/unary/oxygen_generator/process_atmos()
+/obj/machinery/atmospherics/components/unary/oxygen_generator/process_atmos()
 	..()
 	if(!on)
 		return 0

@@ -1,4 +1,4 @@
-/obj/machinery/atmospherics/unary/heat_reservoir
+/obj/machinery/atmospherics/components/unary/heat_reservoir
 //currently the same code as cold_sink but anticipating process() changes
 
 	icon_state = "cold_map"
@@ -12,10 +12,10 @@
 	var/current_temperature = T20C
 	var/current_heat_capacity = 50000 //totally random
 
-/obj/machinery/atmospherics/unary/heat_reservoir/update_icon_nopipes()
+/obj/machinery/atmospherics/components/unary/heat_reservoir/update_icon_nopipes()
 	overlays.Cut()
 	if(showpipe)
-		overlays += getpipeimage('icons/obj/atmospherics/unary_devices.dmi', "scrub_cap", initialize_directions) //scrub_cap works for now
+		overlays += getpipeimage('icons/obj/atmospherics/components/unary_devices.dmi', "scrub_cap", initialize_directions) //scrub_cap works for now
 
 	if(!nodes["n1"] || !on || stat & (NOPOWER|BROKEN))
 		icon_state = "cold_off"
@@ -24,7 +24,7 @@
 	else
 		icon_state = "cold_on"
 
-/obj/machinery/atmospherics/unary/heat_reservoir/process_atmos()
+/obj/machinery/atmospherics/components/unary/heat_reservoir/process_atmos()
 	..()
 	if(!on)
 		return 0

@@ -1,4 +1,4 @@
-/obj/machinery/atmospherics/unary/outlet_injector
+/obj/machinery/atmospherics/components/unary/outlet_injector
 	icon_state = "inje_map"
 	use_power = 1
 
@@ -16,29 +16,29 @@
 
 	level = 1
 
-/obj/machinery/atmospherics/unary/outlet_injector/Destroy()
+/obj/machinery/atmospherics/components/unary/outlet_injector/Destroy()
 	if(radio_controller)
 		radio_controller.remove_object(src,frequency)
 	..()
 
-/obj/machinery/atmospherics/unary/outlet_injector/on
+/obj/machinery/atmospherics/components/unary/outlet_injector/on
 	on = 1
 
-/obj/machinery/atmospherics/unary/outlet_injector/update_icon_nopipes()
+/obj/machinery/atmospherics/components/unary/outlet_injector/update_icon_nopipes()
 	if(!nodes["n1"] || !on || stat & (NOPOWER|BROKEN))
 		icon_state = "inje_off"
 		return
 
 	icon_state = "inje_on"
 
-/obj/machinery/atmospherics/unary/outlet_injector/power_change()
+/obj/machinery/atmospherics/components/unary/outlet_injector/power_change()
 	var/old_stat = stat
 	..()
 	if(old_stat != stat)
 		update_icon()
 
 
-/obj/machinery/atmospherics/unary/outlet_injector/process_atmos()
+/obj/machinery/atmospherics/components/unary/outlet_injector/process_atmos()
 	..()
 	injecting = 0
 
@@ -59,7 +59,7 @@
 
 	return 1
 
-/obj/machinery/atmospherics/unary/outlet_injector/proc/inject()
+/obj/machinery/atmospherics/components/unary/outlet_injector/proc/inject()
 	if(on || injecting)
 		return 0
 
@@ -78,13 +78,13 @@
 
 	flick("inje_inject", src)
 
-/obj/machinery/atmospherics/unary/outlet_injector/proc/set_frequency(new_frequency)
+/obj/machinery/atmospherics/components/unary/outlet_injector/proc/set_frequency(new_frequency)
 	radio_controller.remove_object(src, frequency)
 	frequency = new_frequency
 	if(frequency)
 		radio_connection = radio_controller.add_object(src, frequency)
 
-/obj/machinery/atmospherics/unary/outlet_injector/proc/broadcast_status()
+/obj/machinery/atmospherics/components/unary/outlet_injector/proc/broadcast_status()
 	if(!radio_connection)
 		return 0
 
@@ -105,16 +105,16 @@
 
 	return 1
 
-/obj/machinery/atmospherics/unary/outlet_injector/atmosinit()
+/obj/machinery/atmospherics/components/unary/outlet_injector/atmosinit()
 	set_frequency(frequency)
 	..()
 
-/obj/machinery/atmospherics/unary/outlet_injector/initialize()
+/obj/machinery/atmospherics/components/unary/outlet_injector/initialize()
 	..()
 	broadcast_status()
 
 
-/obj/machinery/atmospherics/unary/outlet_injector/receive_signal(datum/signal/signal)
+/obj/machinery/atmospherics/components/unary/outlet_injector/receive_signal(datum/signal/signal)
 	if(!signal.data["tag"] || (signal.data["tag"] != id) || (signal.data["sigtype"]!="command"))
 		return 0
 

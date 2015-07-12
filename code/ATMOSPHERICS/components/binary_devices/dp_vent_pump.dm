@@ -5,8 +5,8 @@ Acts like a normal vent, but has an input AND output.
 #define INPUT_MIN	2
 #define OUTPUT_MAX	4
 
-/obj/machinery/atmospherics/binary/dp_vent_pump
-	icon = 'icons/obj/atmospherics/unary_devices.dmi' //We reuse the normal vent icons!
+/obj/machinery/atmospherics/components/binary/dp_vent_pump
+	icon = 'icons/obj/atmospherics/components/unary_devices.dmi' //We reuse the normal vent icons!
 	icon_state = "dpvent_map"
 
 	//node2 is output port
@@ -32,23 +32,23 @@ Acts like a normal vent, but has an input AND output.
 	//INPUT_MIN: Do not pass input_pressure_min
 	//OUTPUT_MAX: Do not pass output_pressure_max
 
-/obj/machinery/atmospherics/binary/dp_vent_pump/Destroy()
+/obj/machinery/atmospherics/components/binary/dp_vent_pump/Destroy()
 	if(radio_controller)
 		radio_controller.remove_object(src, frequency)
 	..()
 
-/obj/machinery/atmospherics/binary/dp_vent_pump/high_volume
+/obj/machinery/atmospherics/components/binary/dp_vent_pump/high_volume
 	name = "large dual-port air vent"
 
-/obj/machinery/atmospherics/binary/dp_vent_pump/high_volume/New()
+/obj/machinery/atmospherics/components/binary/dp_vent_pump/high_volume/New()
 	..()
 	var/datum/gas_mixture/air1 = airs["a1"] ; air1.volume = 1000
 	var/datum/gas_mixture/air2 = airs["a2"] ; air2.volume = 1000
 
-/obj/machinery/atmospherics/binary/dp_vent_pump/update_icon_nopipes()
+/obj/machinery/atmospherics/components/binary/dp_vent_pump/update_icon_nopipes()
 	overlays.Cut()
 	if(showpipe)
-		overlays += getpipeimage('icons/obj/atmospherics/unary_devices.dmi', "dpvent_cap")
+		overlays += getpipeimage('icons/obj/atmospherics/components/unary_devices.dmi', "dpvent_cap")
 
 	if(!on || stat & (NOPOWER|BROKEN))
 		icon_state = "vent_off"
@@ -59,7 +59,7 @@ Acts like a normal vent, but has an input AND output.
 	else
 		icon_state = "vent_in"
 
-/obj/machinery/atmospherics/binary/dp_vent_pump/process_atmos()
+/obj/machinery/atmospherics/components/binary/dp_vent_pump/process_atmos()
 	..()
 
 	if(!on)
@@ -112,13 +112,13 @@ Acts like a normal vent, but has an input AND output.
 
 	//Radio remote control
 
-/obj/machinery/atmospherics/binary/dp_vent_pump/proc/set_frequency(new_frequency)
+/obj/machinery/atmospherics/components/binary/dp_vent_pump/proc/set_frequency(new_frequency)
 	radio_controller.remove_object(src, frequency)
 	frequency = new_frequency
 	if(frequency)
 		radio_connection = radio_controller.add_object(src, frequency, filter = RADIO_ATMOSIA)
 
-/obj/machinery/atmospherics/binary/dp_vent_pump/proc/broadcast_status()
+/obj/machinery/atmospherics/components/binary/dp_vent_pump/proc/broadcast_status()
 	if(!radio_connection)
 		return 0
 
@@ -141,16 +141,16 @@ Acts like a normal vent, but has an input AND output.
 
 	return 1
 
-/obj/machinery/atmospherics/binary/dp_vent_pump/atmosinit()
+/obj/machinery/atmospherics/components/binary/dp_vent_pump/atmosinit()
 	..()
 	if(frequency)
 		set_frequency(frequency)
 
-/obj/machinery/atmospherics/binary/dp_vent_pump/initialize()
+/obj/machinery/atmospherics/components/binary/dp_vent_pump/initialize()
 	..()
 	broadcast_status()
 
-/obj/machinery/atmospherics/binary/dp_vent_pump/receive_signal(datum/signal/signal)
+/obj/machinery/atmospherics/components/binary/dp_vent_pump/receive_signal(datum/signal/signal)
 
 	if(!signal.data["tag"] || (signal.data["tag"] != id) || (signal.data["sigtype"]!="command"))
 		return 0

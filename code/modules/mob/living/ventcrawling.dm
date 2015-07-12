@@ -1,5 +1,5 @@
 
-var/list/ventcrawl_machinery = list(/obj/machinery/atmospherics/unary/vent_pump, /obj/machinery/atmospherics/unary/vent_scrubber)
+var/list/ventcrawl_machinery = list(/obj/machinery/atmospherics/components/unary/vent_pump, /obj/machinery/atmospherics/components/unary/vent_scrubber)
 
 //VENTCRAWLING
 
@@ -13,7 +13,7 @@ var/list/ventcrawl_machinery = list(/obj/machinery/atmospherics/unary/vent_pump,
 		src << "You can't vent crawl while you're stunned!"
 		return
 
-	var/obj/machinery/atmospherics/unary/vent_found
+	var/obj/machinery/atmospherics/components/unary/vent_found
 
 
 	if(A)
@@ -34,7 +34,8 @@ var/list/ventcrawl_machinery = list(/obj/machinery/atmospherics/unary/vent_pump,
 
 
 	if(vent_found)
-		if(vent_found.parent && (vent_found.parent.members.len || vent_found.parent.other_atmosmch))
+		var/datum/pipeline/vent_found_parent = vent_found.parents["p1"]
+		if(vent_found_parent && (vent_found_parent.members.len || vent_found_parent.other_atmosmch))
 			visible_message("<span class='notice'>[src] begins climbing into the ventilation system...</span>" ,"<span class='notice'>You begin climbing into the ventilation system...</span>")
 
 			if(!do_after(src, 25, target = vent_found))
@@ -62,12 +63,13 @@ var/list/ventcrawl_machinery = list(/obj/machinery/atmospherics/unary/vent_pump,
 		src << "<span class='warning'>This ventilation duct is not connected to anything!</span>"
 
 
-/mob/living/proc/add_ventcrawl(obj/machinery/atmospherics/starting_machine)
+/mob/living/proc/add_ventcrawl(obj/machinery/atmospherics/components/starting_machine)
 	if(!istype(starting_machine) || !starting_machine.returnPipenet())
 		return
 	var/list/totalMembers = list()
-	totalMembers |= starting_machine.parent.members
-	totalMembers |= starting_machine.parent.other_atmosmch
+	var/datum/pipeline/starting_machine_parent = starting_machine.parents["p1"]
+	totalMembers |= starting_machine_parent.members
+	totalMembers |= starting_machine_parent.other_atmosmch
 
 	for(var/obj/machinery/atmospherics/A in totalMembers)
 		if(!A.pipe_vision_img)

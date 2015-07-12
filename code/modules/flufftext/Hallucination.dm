@@ -123,7 +123,7 @@ Gunshots/explosions/opening doors/less rare audio (done)
 /obj/effect/hallucination/fake_flood/New(loc,var/mob/living/carbon/T)
 	..()
 	target = T
-	for(var/obj/machinery/atmospherics/unary/vent_pump/U in orange(7,target))
+	for(var/obj/machinery/atmospherics/components/unary/vent_pump/U in orange(7,target))
 		if(!U.welded)
 			src.loc = U.loc
 			break
@@ -220,12 +220,12 @@ Gunshots/explosions/opening doors/less rare audio (done)
 
 /obj/effect/hallucination/xeno_attack
 	//Xeno crawls from nearby vent,jumps at you, and goes back in
-	var/obj/machinery/atmospherics/unary/vent_pump/pump = null
+	var/obj/machinery/atmospherics/components/unary/vent_pump/pump = null
 	var/obj/effect/hallucination/simple/xeno/xeno = null
 
 /obj/effect/hallucination/xeno_attack/New(loc,var/mob/living/carbon/T)
 	target = T
-	for(var/obj/machinery/atmospherics/unary/vent_pump/U in orange(7,target))
+	for(var/obj/machinery/atmospherics/components/unary/vent_pump/U in orange(7,target))
 		if(!U.welded)
 			pump = U
 			break

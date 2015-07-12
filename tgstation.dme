@@ -94,6 +94,7 @@
 #include "code\_onclick\hud\screen_objects.dm"
 #include "code\ATMOSPHERICS\atmospherics.dm"
 #include "code\ATMOSPHERICS\datum_pipeline.dm"
+#include "code\ATMOSPHERICS\components\components_base.dm"
 #include "code\ATMOSPHERICS\components\binary_devices\binary_atmos_base.dm"
 #include "code\ATMOSPHERICS\components\binary_devices\circulator.dm"
 #include "code\ATMOSPHERICS\components\binary_devices\dp_vent_pump.dm"

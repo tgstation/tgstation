@@ -1,4 +1,4 @@
-/obj/machinery/atmospherics/unary/vent_scrubber
+/obj/machinery/atmospherics/components/unary/vent_scrubber
 	icon_state = "scrub_map"
 
 	name = "air scrubber"
@@ -28,7 +28,7 @@
 	var/radio_filter_in
 
 
-/obj/machinery/atmospherics/unary/vent_scrubber/New()
+/obj/machinery/atmospherics/components/unary/vent_scrubber/New()
 	..()
 	initial_loc = get_area(loc)
 	if (initial_loc.master)
@@ -42,15 +42,15 @@
 		src.initialize()
 		src.broadcast_status()
 
-/obj/machinery/atmospherics/unary/vent_scrubber/Destroy()
+/obj/machinery/atmospherics/components/unary/vent_scrubber/Destroy()
 	if(radio_controller)
 		radio_controller.remove_object(src,frequency)
 	..()
 
-/obj/machinery/atmospherics/unary/vent_scrubber/update_icon_nopipes()
+/obj/machinery/atmospherics/components/unary/vent_scrubber/update_icon_nopipes()
 	overlays.Cut()
 	if(showpipe)
-		overlays += getpipeimage('icons/obj/atmospherics/unary_devices.dmi', "scrub_cap", initialize_directions)
+		overlays += getpipeimage('icons/obj/atmospherics/components/unary_devices.dmi', "scrub_cap", initialize_directions)
 
 	if(welded)
 		icon_state = "scrub_welded"
@@ -65,12 +65,12 @@
 	else
 		icon_state = "scrub_purge"
 
-/obj/machinery/atmospherics/unary/vent_scrubber/proc/set_frequency(new_frequency)
+/obj/machinery/atmospherics/components/unary/vent_scrubber/proc/set_frequency(new_frequency)
 	radio_controller.remove_object(src, frequency)
 	frequency = new_frequency
 	radio_connection = radio_controller.add_object(src, frequency, radio_filter_in)
 
-/obj/machinery/atmospherics/unary/vent_scrubber/proc/broadcast_status()
+/obj/machinery/atmospherics/components/unary/vent_scrubber/proc/broadcast_status()
 	if(!radio_connection)
 		return 0
 
@@ -99,18 +99,18 @@
 
 	return 1
 
-/obj/machinery/atmospherics/unary/vent_scrubber/atmosinit()
+/obj/machinery/atmospherics/components/unary/vent_scrubber/atmosinit()
 	radio_filter_in = frequency==initial(frequency)?(RADIO_FROM_AIRALARM):null
 	radio_filter_out = frequency==initial(frequency)?(RADIO_TO_AIRALARM):null
 	if (frequency)
 		set_frequency(frequency)
 	..()
-/obj/machinery/atmospherics/unary/vent_scrubber/initialize()
+/obj/machinery/atmospherics/components/unary/vent_scrubber/initialize()
 	..()
 	broadcast_status()
 
 
-/obj/machinery/atmospherics/unary/vent_scrubber/process_atmos()
+/obj/machinery/atmospherics/components/unary/vent_scrubber/process_atmos()
 	..()
 	if(stat & (NOPOWER|BROKEN))
 		return
@@ -173,7 +173,7 @@
 
 	return 1
 
-/obj/machinery/atmospherics/unary/vent_scrubber/receive_signal(datum/signal/signal)
+/obj/machinery/atmospherics/components/unary/vent_scrubber/receive_signal(datum/signal/signal)
 	if(stat & (NOPOWER|BROKEN))
 		return
 	if(!signal.data["tag"] || (signal.data["tag"] != id_tag) || (signal.data["sigtype"]!="command"))
@@ -238,14 +238,14 @@
 	update_icon()
 	return
 
-/obj/machinery/atmospherics/unary/vent_scrubber/power_change()
+/obj/machinery/atmospherics/components/unary/vent_scrubber/power_change()
 	if(powered(power_channel))
 		stat &= ~NOPOWER
 	else
 		stat |= NOPOWER
 	update_icon_nopipes()
 
-/obj/machinery/atmospherics/unary/vent_scrubber/attackby(var/obj/item/weapon/W as obj, var/mob/user as mob, params)
+/obj/machinery/atmospherics/components/unary/vent_scrubber/attackby(var/obj/item/weapon/W as obj, var/mob/user as mob, params)
 	if(istype(W, /obj/item/weapon/weldingtool))
 		var/obj/item/weapon/weldingtool/WT = W
 		if(WT.remove_fuel(0,user))
@@ -272,12 +272,12 @@
 	return ..()
 
 
-/obj/machinery/atmospherics/unary/vent_scrubber/Destroy()
+/obj/machinery/atmospherics/components/unary/vent_scrubber/Destroy()
 	if(initial_loc)
 		initial_loc.air_scrub_info -= id_tag
 		initial_loc.air_scrub_names -= id_tag
 	..()
 
 
-/obj/machinery/atmospherics/unary/vent_scrubber/can_crawl_through()
+/obj/machinery/atmospherics/components/unary/vent_scrubber/can_crawl_through()
 	return !welded

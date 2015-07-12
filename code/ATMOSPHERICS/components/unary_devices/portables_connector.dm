@@ -1,7 +1,7 @@
 /obj/machinery/atmospherics/components/unary/portables_connector
 	name = "connector port"
 	desc = "For connecting portables devices related to atmospherics control."
-	icon = 'icons/obj/atmospherics/unary_devices.dmi'
+	icon = 'icons/obj/atmospherics/components/unary_devices.dmi'
 	icon_state = "connector_map" //Only for mapping purposes, so mappers can see direction
 	can_unwrench = 1
 	var/obj/machinery/portable_atmospherics/connected_device

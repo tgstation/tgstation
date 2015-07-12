@@ -32,7 +32,7 @@
 /mob/living/carbon/proc/breathe()
 	if(reagents.has_reagent("lexorin"))
 		return
-	if(istype(loc, /obj/machinery/atmospherics/unary/cryo_cell))
+	if(istype(loc, /obj/machinery/atmospherics/components/unary/cryo_cell))
 		return
 
 	var/datum/gas_mixture/environment

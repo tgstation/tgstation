@@ -1139,7 +1139,7 @@
 
 /datum/species/proc/breathe(var/mob/living/carbon/human/H)
 	if(H.reagents.has_reagent("lexorin")) return
-	if(istype(H.loc, /obj/machinery/atmospherics/unary/cryo_cell)) return
+	if(istype(H.loc, /obj/machinery/atmospherics/components/unary/cryo_cell)) return
 
 	var/datum/gas_mixture/environment = H.loc.return_air()
 	var/datum/gas_mixture/breath
@@ -1409,7 +1409,7 @@
 					H.apply_damage(HEAT_DAMAGE_LEVEL_2*heatmod, BURN)
 
 	else if(H.bodytemperature < BODYTEMP_COLD_DAMAGE_LIMIT && !(mutations_list[COLDRES] in H.dna.mutations))
-		if(!istype(H.loc, /obj/machinery/atmospherics/unary/cryo_cell))
+		if(!istype(H.loc, /obj/machinery/atmospherics/components/unary/cryo_cell))
 			switch(H.bodytemperature)
 				if(200 to 260)
 					H.throw_alert("temp","cold",1)

@@ -1,5 +1,5 @@
 /obj/machinery/atmospherics/components/unary
-	icon = 'icons/obj/atmospherics/unary_devices.dmi'
+	icon = 'icons/obj/atmospherics/components/unary_devices.dmi'
 	dir = SOUTH
 	initialize_directions = SOUTH
 	layer = TURF_LAYER+0.1
@@ -35,7 +35,7 @@ Housekeeping and pipe network stuff below
 	if(node)
 		node.disconnect(src)
 	node = null
-	nullifyPipenet(parent)
+	nullifyPipenet(parents["p1"])
 	atmosinit()
 	initialize()
 	if(node)

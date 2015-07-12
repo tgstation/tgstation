@@ -26,9 +26,9 @@
 		if(direction & initialize_directions)
 			var/obj/machinery/atmospherics/node = findConnecting(direction)
 			if(node)
-				overlays += getpipeimage('icons/obj/atmospherics/trinary_devices.dmi', "cap", direction, node.pipe_color)
+				overlays += getpipeimage('icons/obj/atmospherics/components/trinary_devices.dmi', "cap", direction, node.pipe_color)
 				continue
-			overlays += getpipeimage('icons/obj/atmospherics/trinary_devices.dmi', "cap", direction)
+			overlays += getpipeimage('icons/obj/atmospherics/components/trinary_devices.dmi', "cap", direction)
 	..()
 
 /obj/machinery/atmospherics/components/trinary/mixer/update_icon_nopipes()
@@ -54,6 +54,8 @@
 /obj/machinery/atmospherics/components/trinary/mixer/process_atmos()
 	..()
 	if(!on)
+		return 0
+	if(!(nodes["n1"] && nodes["n2"] && nodes["n3"]))
 		return 0
 
 	var/datum/gas_mixture/air1 = airs["a1"]
