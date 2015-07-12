@@ -338,6 +338,16 @@ other types of metals and chemistry for reagents).
 	build_path = /obj/item/clothing/glasses/meson/engine
 	category = list("Equipment")
 
+/datum/design/tray_goggles
+	name = "Optical T-Ray Scanners"
+	desc = "Used by engineering staff to see underfloor objects such as cables and pipes."
+	id = "tray_goggles"
+	req_tech = list("materials" = 3, "magnets" = 2, "engineering" = 2)
+	build_type = PROTOLATHE
+	materials = list(MAT_METAL = 200, MAT_GLASS = 300)
+	build_path = /obj/item/clothing/glasses/meson/engine/tray
+	category = list("Equipment")
+
 /datum/design/nvgmesons
 	name = "Night Vision Optical Meson Scanners"
 	desc = "Prototype meson scanners fitted with an extra sensor which amplifies the visible light spectrum and overlays it to the UHD display."

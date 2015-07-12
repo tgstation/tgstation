@@ -44,7 +44,8 @@
 
 /datum/reagent/clf3/on_mob_life(var/mob/living/M as mob)
 	M.adjust_fire_stacks(2)
-	M.adjustFireLoss(0.3*M.fire_stacks)
+	var/burndmg = max(0.3*M.fire_stacks, 0.3)
+	M.adjustFireLoss(burndmg)
 	..()
 
 /datum/reagent/clf3/reaction_turf(var/turf/simulated/T, var/volume)
