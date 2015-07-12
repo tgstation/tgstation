@@ -138,8 +138,8 @@
 
 	var/list/stacks = list()
 
-	var/stack_amt = 50 //amount to stack before releassing
-	var/max_moved = 10 //Max amount of moveable atoms moved per process()
+	var/stack_amt = 50 //amount to stack before releassing.
+	var/max_moved = 50 //Conveyors go 2x as fast and move 25 things to 2 x 25 = 50.
 
 	var/id_tag//The ID of the stacker this console should control
 	var/frequency = FREQ_DISPOSAL

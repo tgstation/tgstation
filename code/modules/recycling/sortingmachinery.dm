@@ -469,7 +469,7 @@ var/list/DEFAULT_TAGGER_LOCATIONS = list(
 	var/output_dir = WEST
 	var/filter_dir = SOUTH
 
-	var/max_items_moved = 10//Max amount of moveable atoms this machine can move in a process()
+	var/max_items_moved = 50//Max amount of moveable atoms this machine can move in a process()
 
 /obj/machinery/sorting_machine/New()
 	. = ..()

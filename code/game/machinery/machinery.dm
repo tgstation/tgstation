@@ -182,6 +182,8 @@ Class Procs:
 		power_machines.Remove(src)
 	if(src in atmos_machines)
 		atmos_machines.Remove(src)
+	if(src in fast_machines)
+		fast_machines.Remove(src)
 /*
 	if(component_parts)
 		for(var/atom/movable/AM in component_parts)

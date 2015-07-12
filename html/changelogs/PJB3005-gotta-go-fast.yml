@@ -1,0 +1,5 @@
+author: PJB3005
+delete-after: true
+changes:
+  - tweak: Conveyors now move more stuff and move twice as fast.
+  - tweak: Sorting & mining machinery now moved 5x as many things per tick to accomodate this.
