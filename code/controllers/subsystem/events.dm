@@ -1,4 +1,4 @@
-#define DIFFICULTY_DEVIATION 10
+#define DEVIATION_COEFFICIENT 0.25
 
 var/datum/subsystem/events/SSevent
 
@@ -16,7 +16,7 @@ var/datum/subsystem/events/SSevent
 	var/list/holidays			//List of all holidays occuring today or null if no holidays
 	var/wizardmode = 0
 
-	var/difficulty_mod = 0 //For var-editing badmins
+	var/difficulty_mod = 0 //For adjusting round pacing.  Is added to the round length in minutes to determine the desired difficulty of events.
 
 
 /datum/subsystem/events/New()
@@ -37,8 +37,22 @@ var/datum/subsystem/events/SSevent
 	getHoliday()
 	..()
 
-/datum/subsystem/events/proc/getWeightOf(var/datum/round_event_control/E)
-	return normalDistribution(world.time / 600 + difficulty_mod, DIFFICULTY_DEVIATION, E.average_time)
+/datum/subsystem/events/proc/getWeightOf(var/datum/round_event_control/E, difficulty)
+	return normalDistribution(difficulty, difficulty * DEVIATION_COEFFICIENT, E.average_time)
+
+/datum/subsystem/events/proc/testDistribution(var/time)
+	var/sum_of_weights = 0
+	for(var/datum/round_event_control/E in control)
+		if(E.occurrences >= E.max_occurrences)	continue
+		if(E.holidayID)
+			if(!holidays || !holidays[E.holidayID])			continue
+		sum_of_weights += getWeightOf(E, time)
+
+	for(var/datum/round_event_control/E in control)
+		if(E.occurrences >= E.max_occurrences)	continue
+		if(E.holidayID)
+			if(!holidays || !holidays[E.holidayID])			continue
+		world << "[E]: [round(getWeightOf(E, time)/sum_of_weights * 100)]%"
 
 
 /datum/subsystem/events/fire()
@@ -70,6 +84,7 @@ var/datum/subsystem/events/SSevent
 		return
 
 	var/sum_of_weights = 0
+	var/difficulty = world.time / 600 + difficulty_mod
 	for(var/datum/round_event_control/E in control)
 		if(E.occurrences >= E.max_occurrences)	continue
 		if(E.holidayID)
@@ -82,14 +97,14 @@ var/datum/subsystem/events/SSevent
 				message_admins("Random Event triggering: [E.name] ([E.typepath])")
 			log_game("Random Event triggering: [E.name] ([E.typepath])")
 			return
-		sum_of_weights += getWeightOf(E)
+		sum_of_weights += getWeightOf(E, difficulty)
 
 	sum_of_weights = rand(0, 1e9) / 1e9 * sum_of_weights //reusing this variable. It now represents the 'weight' we want to select
 	for(var/datum/round_event_control/E in control)
 		if(E.occurrences >= E.max_occurrences)	continue
 		if(E.holidayID)
 			if(!holidays || !holidays[E.holidayID])			continue
-		sum_of_weights -= getWeightOf(E)
+		sum_of_weights -= getWeightOf(E, difficulty)
 
 		if(sum_of_weights <= 0)				//we've hit our goal
 			if(E.runEvent() == PROCESS_KILL)//we couldn't run this event for some reason, set its max_occurrences to 0
