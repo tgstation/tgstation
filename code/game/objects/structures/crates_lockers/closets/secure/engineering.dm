@@ -89,3 +89,4 @@
 	new /obj/item/tapeproj/engineering(src)
 	new /obj/item/weapon/watertank/atmos(src)
 	new /obj/item/clothing/suit/fire/atmos(src)
+	new /obj/item/clothing/glasses/meson/engine/tray(src)

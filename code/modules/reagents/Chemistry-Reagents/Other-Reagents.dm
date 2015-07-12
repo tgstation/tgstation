@@ -171,9 +171,6 @@
 		return
 	if(method == TOUCH)
 		M.adjust_fire_stacks(-(volume / 10))
-		if(M.fire_stacks <= 0)
-			M.ExtinguishMob()
-		return
 
 /datum/reagent/water/holywater
 	name = "Holy Water"
