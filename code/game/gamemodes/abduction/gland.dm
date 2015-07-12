@@ -67,15 +67,7 @@
 	if(host.is_muzzled())
 		host << "<span class='warning'>The muzzle prevents you from vomiting!</span>"
 
-	host.visible_message("<span class='danger'>[host] vomits on the floor!</span>", \
-					"<span class='userdanger'>You throw up on the floor!</span>")
-
-	host.nutrition -= 20
-	host.adjustToxLoss(-3)
-
-	var/turf/pos = get_turf(host)
-	pos.add_vomit_floor(host)
-	playsound(pos, 'sound/effects/splat.ogg', 50, 1)
+	host.vomit(1)
 
 	var/mob/living/simple_animal/slime/Slime = new/mob/living/simple_animal/slime(pos)
 	Slime.Friends = list(host)

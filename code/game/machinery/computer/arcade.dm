@@ -475,14 +475,9 @@
 						M.Stun(3)
 					if(severity >= 3) //you didn't pray hard enough
 						M << "<span class='warning'>An overpowering wave of nausea consumes over you. You hunch over, your stomach's contents preparing for a spectacular exit.</span>"
-						M.Stun(5)
+						M.Stun(3)
 						sleep(30)
-						M.visible_message("<span class='warning'>[M] throws up!</span>", "<span class='userdanger'>You violently throw up!</span>")
-						playsound(loc, 'sound/effects/splat.ogg', 50, 1)
-						M.nutrition -= 50 //lose a lot of food
-						var/turf/location = usr.loc
-						if(istype(location, /turf/simulated))
-							location.add_vomit_floor(src, 1)
+						M.vomit(1)
 				if("Interstellar Flux")
 					if(prob(75))
 						M.Weaken(3)

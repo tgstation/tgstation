@@ -119,6 +119,17 @@
 		src.hands.dir = SOUTH*/
 	return
 
+/mob/living/carbon/proc/vomit(var/stun)
+	var/mob/living/carbon/C = usr
+	if(stun) C.Stun(rand(4,6))
+	C.visible_message("<span class='warning'>[C] throws up!</span>", \
+					  "<span class='boldannounce'>You throw up!</span>")
+	playsound(get_turf(C), 'sound/effects/splat.ogg', 50, 1)
+	var/turf/simulated/T = get_turf(C)
+	T.add_vomit_floor(C)
+	C.nutrition -= 95
+	C.adjustToxLoss(rand(-3,-5))
+
 /mob/living/carbon/activate_hand(var/selhand) //0 or "r" or "right" for right hand; 1 or "l" or "left" for left hand.
 
 	if(istext(selhand))
