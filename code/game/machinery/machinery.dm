@@ -117,6 +117,7 @@ Class Procs:
 	var/unsecuring_tool = /obj/item/weapon/wrench
 	var/interact_offline = 0 // Can the machine be interacted with while de-powered.
 	var/fast_process = 0 // Process faster than other machines?
+	var/rcd_deconstruct = 0 // Can an RCD deconstruct this?
 
 /obj/machinery/New()
 	..()
