@@ -41,6 +41,9 @@ var/datum/subsystem/ticker/ticker
 	var/totalPlayers = 0					//used for pregame stats on statpanel
 	var/totalPlayersReady = 0				//used for pregame stats on statpanel
 
+	var/queue_delay = 0
+	var/list/queued_players = list()		//used for join queues when the server exceeds the hard population cap
+
 	var/obj/screen/cinematic = null			//used for station explosion cinematic
 
 
@@ -97,6 +100,7 @@ var/datum/subsystem/ticker/ticker
 
 		if(GAME_STATE_PLAYING)
 			mode.process(wait * 0.1)
+			check_queue()
 
 			if(!mode.explosion_in_progress && mode.check_finished() || force_ending)
 				current_state = GAME_STATE_FINISHED
@@ -434,3 +438,23 @@ var/datum/subsystem/ticker/ticker
 	if(randomtips.len)
 		world << "<font color='purple'><b>Tip of the round: </b>[html_encode(pick(randomtips))]</font>"
 
+/datum/subsystem/ticker/proc/check_queue()
+	if(!queued_players.len || !config.hard_popcap)
+		return
+
+	queue_delay ++
+	var/mob/new_player/next_in_line = queued_players[1]
+
+	switch(queue_delay)
+		if(5) //every 5 ticks check if there is a slot available
+			if(living_player_count() < config.hard_popcap)
+				if(next_in_line && next_in_line.client)
+					next_in_line << "<span class='userdanger'>A slot has opened! You have approximately 20 seconds to join. <a href='?src=\ref[next_in_line];late_join=1'>\>\>Join Game\<\<</a>.</span>"
+					next_in_line << sound('sound/misc/notice1.ogg')
+					return
+				queued_players -= next_in_line //Client disconnected, remove he
+			queue_delay = 0 //No vacancy: restart timer
+		if(20 to INFINITY)  //No response from the next in line when a vacancy exists, remove he
+			next_in_line << "<span class='danger'>No response recieved. You have been removed from the line.</span>"
+			queued_players -= next_in_line
+			queue_delay = 0

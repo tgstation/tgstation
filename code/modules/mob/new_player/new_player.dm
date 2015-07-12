@@ -126,13 +126,28 @@
 		if(!ticker || ticker.current_state != GAME_STATE_PLAYING)
 			usr << "<span class='danger'>The round is either not ready, or has already finished...</span>"
 			return
+
 		var/relevant_cap
 		if(config.hard_popcap && config.extreme_popcap)
 			relevant_cap = min(config.hard_popcap, config.extreme_popcap)
 		else
 			relevant_cap = max(config.hard_popcap, config.extreme_popcap)
-		if(relevant_cap && living_player_count() >= relevant_cap && !(ckey(key) in admin_datums))
+
+		if(ticker.queued_players.len || (relevant_cap && living_player_count() >= relevant_cap && !(ckey(key) in admin_datums)))
+			var/queue_position = ticker.queued_players.Find(usr)
+
+			if(queue_position == 1 && living_player_count() < relevant_cap) //Let them join if there is a slot available and they are the next one in line
+				LateChoices()
+				return
+
 			usr << "<span class='danger'>[config.hard_popcap_message]</span>"
+			if(queue_position == 1)
+				usr << "<span class='notice'>You are next in line to join the game. You will be notified when a slot opens up.</span>"
+			else if(queue_position)
+				usr << "<span class='notice'>There are [queue_position-1] players in front of you in the queue to join the game.</span>"
+			else
+				ticker.queued_players += usr
+				usr << "<span class='notice'>You have been added to the queue to join the game. Your position in queue is [ticker.queued_players.len].</span>"
 			return
 		LateChoices()
 
@@ -233,6 +248,10 @@
 	if(!IsJobAvailable(rank))
 		src << alert("[rank] is not available. Please try another.")
 		return 0
+
+	//Remove the player from the join queue if he was in one and reset the timer
+	ticker.queued_players -= src
+	ticker.queue_delay = 4
 
 	SSjob.AssignRole(src, rank, 1)
 
