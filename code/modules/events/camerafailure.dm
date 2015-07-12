@@ -1,9 +1,9 @@
 /datum/round_event_control/camera_failure
 	name = "Camera Failure"
 	typepath = /datum/round_event/camera_failure
-	weight = 100
 	max_occurrences = 20
 	alertadmins = 0
+	average_time = 5 //A simple event with no damage that can't be fixed at roundstart
 
 /datum/round_event/camera_failure
 	startWhen = 1

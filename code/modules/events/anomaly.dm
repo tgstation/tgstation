@@ -2,7 +2,8 @@
 	name = "Anomaly: Energetic Flux"
 	typepath = /datum/round_event/anomaly
 	max_occurrences = 0 //This one probably shouldn't occur! It'd work, but it wouldn't be very fun.
-	weight = 15
+	average_time = 25 //Minor challenge to the crew and possibly somewhat dangerous; occurs relatively early in the round.
+
 
 /datum/round_event/anomaly
 	var/area/impact_area

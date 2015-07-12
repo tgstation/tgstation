@@ -3,11 +3,7 @@
 	var/name					//The name human-readable name of the event
 	var/typepath				//The typepath of the event datum /datum/round_event
 
-	var/weight = 10				//The weight this event has in the random-selection process.
-								//Higher weights are more likely to be picked.
-								//10 is the default weight. 20 is twice more likely; 5 is half as likely as this default.
-
-	var/earliest_start = 12000	//The earliest world.time that an event can start (round-duration in deciseconds) default: 20 mins
+	var/average_time = 5		//The world time at which an event is most likely in minutes, defaulting at 5 minutes.
 
 	var/occurrences = 0			//How many times this event has occured
 	var/max_occurrences = 20		//The maximum number of times this event can occur (naturally), it can still be forced.

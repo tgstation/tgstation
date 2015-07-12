@@ -14,7 +14,8 @@ Contents:
 	name = "Space Ninja"
 	typepath = /datum/round_event/ninja
 	max_occurrences = 1
-	earliest_start = 30000 // 1 hour
+	average_time = 55 	//Ninjas aren't as strong or as murderboney as they used to, but they're still pretty strong and murderboney.
+						//This increases the average time 5 minutes past the actual previous minimum time to spawn a ninja.
 
 
 /datum/round_event/ninja

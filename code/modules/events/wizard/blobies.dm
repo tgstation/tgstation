@@ -1,9 +1,8 @@
 /datum/round_event_control/wizard/blobies //avast!
 	name = "Zombie Outbreak"
-	weight = 3
 	typepath = /datum/round_event/wizard/blobies/
-	max_occurrences = 3
-	earliest_start = 12000 // 20 minutes (gotta get some bodies made!)
+	max_occurrences = 1
+	average_time = 30 // 30 minutes (gotta get some bodies made!)
 
 /datum/round_event/wizard/blobies/start()
 
