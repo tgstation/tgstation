@@ -37,7 +37,7 @@ effective or pretty fucking useless.
 		user << "<span class='danger'>The mind batterer has been burnt out!</span>"
 		return
 
-	add_logs(user, null, "knocked down people in the area", admin=0, object="[src]")
+	add_logs(user, null, "knocked down people in the area", src)
 
 	for(var/mob/living/carbon/human/M in orange(10, user))
 		spawn()
@@ -80,7 +80,7 @@ effective or pretty fucking useless.
 	w_class = 1.0
 	throw_speed = 3
 	throw_range = 7
-	m_amt = 400
+	materials = list(MAT_METAL=400)
 	origin_tech = "magnets=3;biotech=5;syndicate=3"
 	var/intensity = 5 // how much damage the radiation does
 	var/wavelength = 10 // time it takes for the radiation to kick in, in seconds
@@ -88,7 +88,7 @@ effective or pretty fucking useless.
 
 /obj/item/device/rad_laser/attack(mob/living/M as mob, mob/living/user as mob)
 	if(!used)
-		add_logs(user, M, "irradiated", object="[src.name]")
+		add_logs(user, M, "irradiated", src)
 		user.visible_message("<span class='notice'>[user] has analyzed [M]'s vitals.</span>")
 		var/cooldown = round(max(100,(((intensity*8)-(wavelength/2))+(intensity*2))*10))
 		used = 1

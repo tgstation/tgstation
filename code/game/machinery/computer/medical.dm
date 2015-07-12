@@ -211,7 +211,10 @@
 			src.temp = null
 		if(href_list["scan"])
 			if(src.scan)
-				src.scan.loc = src.loc
+				if(istype(usr,/mob/living/carbon/human) && !usr.get_active_hand())
+					usr.put_in_hands(scan)
+				else
+					scan.loc = get_turf(src)
 				src.scan = null
 			else
 				var/obj/item/I = usr.get_active_hand()
@@ -561,7 +564,10 @@
 		if(prob(10/severity))
 			switch(rand(1,6))
 				if(1)
-					R.fields["name"] = random_name(R.fields["sex"],1)
+					if(prob(10))
+						R.fields["name"] = random_unique_lizard_name(R.fields["sex"],1)
+					else
+						R.fields["name"] = random_unique_name(R.fields["sex"],1)
 				if(2)
 					R.fields["sex"]	= pick("Male", "Female")
 				if(3)

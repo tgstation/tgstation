@@ -159,7 +159,7 @@
 /obj/item/slimepotion2/afterattack(mob/living/M as mob, mob/user as mob)
 	if(being_used || !ismob(M))
 		return
-	if( !(isanimal(M) || ismonkey(M)) || M.ckey) //only works on monkeys and animals that aren't player controlled
+	if(!isanimal(M) || M.ckey) //only works on animals that aren't player controlled
 		user << "<span class='warning'>[M] is already too intelligent for this to work!</span>"
 		return ..()
 	if(M.stat)
@@ -482,7 +482,7 @@
 	icon_state = "tile-bluespace"
 	w_class = 3.0
 	force = 6.0
-	m_amt = 937.5
+	materials = list(MAT_METAL=937.5)
 	throwforce = 10.0
 	throw_speed = 3
 	throw_range = 7
@@ -505,7 +505,7 @@
 	icon_state = "tile-sepia"
 	w_class = 3.0
 	force = 6.0
-	m_amt = 937.5
+	materials = list(MAT_METAL=937.5)
 	throwforce = 10.0
 	throw_speed = 3
 	throw_range = 7

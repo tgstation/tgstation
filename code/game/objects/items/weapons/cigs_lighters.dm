@@ -284,7 +284,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 
 /obj/item/weapon/cigbutt/roach
 	name = "roach"
-	desc = "A manky old roach."
+	desc = "A manky old roach, or for non-stoners, a used rollup."
 	icon_state = "roach"
 
 /obj/item/weapon/cigbutt/roach/New()
@@ -306,7 +306,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	throw_speed = 0.5
 	item_state = "cigaroff"
 	smoketime = 1500
-	chem_volume = 20
+	chem_volume = 40
 
 /obj/item/clothing/mask/cigarette/cigar/cohiba
 	name = "\improper Cohiba Robusto cigar"
@@ -314,15 +314,18 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	icon_state = "cigar2off"
 	icon_on = "cigar2on"
 	icon_off = "cigar2off"
+	smoketime = 2000
+	chem_volume = 80
+
 
 /obj/item/clothing/mask/cigarette/cigar/havana
 	name = "premium Havanian cigar"
-	desc = "A cigar fit for only the best for the best."
+	desc = "A cigar fit for only the best of the best."
 	icon_state = "cigar2off"
 	icon_on = "cigar2on"
 	icon_off = "cigar2off"
 	smoketime = 7200
-	chem_volume = 30
+	chem_volume = 50
 
 /obj/item/weapon/cigbutt
 	name = "cigarette butt"
@@ -476,7 +479,8 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 				if(prob(75))
 					user.visible_message("After a few attempts, [user] manages to light [src].", "<span class='notice'>After a few attempts, you manage to light [src].</span>")
 				else
-					user.adjustFireLoss(5)
+					var/hitzone = user.r_hand == src ? "r_hand" : "l_hand"
+					user.apply_damage(5, BURN, hitzone)
 					user.visible_message("<span class='warning'>After a few attempts, [user] manages to light [src] - they however burn their finger in the process.</span>", "<span class='warning'>You burn yourself while lighting the lighter!</span>")
 
 			user.AddLuminosity(1)
@@ -500,7 +504,8 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 /obj/item/weapon/lighter/attack(mob/living/carbon/M as mob, mob/living/carbon/user as mob)
 	if(!isliving(M))
 		return
-	M.IgniteMob()
+	if(lit)
+		M.IgniteMob()
 	var/obj/item/clothing/mask/cigarette/cig = help_light_cig(M,user)
 	if(lit && cig)
 		if(M == user)

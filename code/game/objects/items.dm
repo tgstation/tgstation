@@ -26,6 +26,7 @@ var/global/image/fire_overlay = image("icon" = 'icons/effects/fire.dmi', "icon_s
 	//If this is set, The item will make an action button on the player's HUD when picked up.
 	var/action_button_name //It is also the text which gets displayed on the action button. If not set it defaults to 'Use [name]'. If it's not set, there'll be no button.
 	var/action_button_is_hands_free = 0 //If 1, bypass the restrained, lying, and stunned checks action buttons normally test for
+	var/action_button_internal = 0 //If 1, bypass the inside check action buttons test for
 	var/datum/action/item_action/action = null
 
 	//Since any item can now be a piece of clothing, this has to be put here so all items share it.
@@ -43,8 +44,7 @@ var/global/image/fire_overlay = image("icon" = 'icons/effects/fire.dmi', "icon_s
 	var/obj/item/device/uplink/hidden/hidden_uplink = null // All items can have an uplink hidden inside, just remember to add the triggers.
 	var/strip_delay = 40
 	var/put_on_delay = 20
-	var/m_amt = 0	// metal
-	var/g_amt = 0	// glass
+	var/list/materials = list()
 	var/reliability = 100	//Used by SOME devices to determine how reliable they are.
 	var/origin_tech = null	//Used by R&D to determine what research bonuses it grants.
 	var/needs_permit = 0			//Used by security bots to determine if this item is safe for public use.
@@ -82,8 +82,8 @@ var/global/image/fire_overlay = image("icon" = 'icons/effects/fire.dmi', "icon_s
 
 	var/flags_cover = 0 //for flags such as GLASSESCOVERSEYES
 
-/obj/item/proc/check_allowed_items(atom/target, not_inside)
-	if((src in target) || ((!istype(target.loc, /turf)) && (!istype(target, /turf)) && (not_inside)) || is_type_in_list(target, can_be_placed_into))
+/obj/item/proc/check_allowed_items(atom/target, not_inside, target_self)
+	if(((src in target) && !target_self) || ((!istype(target.loc, /turf)) && (!istype(target, /turf)) && (not_inside)) || is_type_in_list(target, can_be_placed_into))
 		return 0
 	else
 		return 1
@@ -372,8 +372,6 @@ var/global/image/fire_overlay = image("icon" = 'icons/effects/fire.dmi', "icon_s
 		user << "<span class='danger'>You cannot locate any organic eyes on this brain!</span>"
 		return
 
-	add_logs(user, M, "attacked", object="[src.name]", addition="(INTENT: [uppertext(user.a_intent)])")
-
 	src.add_fingerprint(user)
 
 	if(M != user)
@@ -392,6 +390,8 @@ var/global/image/fire_overlay = image("icon" = 'icons/effects/fire.dmi', "icon_s
 
 	else
 		M.take_organ_damage(7)
+
+	add_logs(user, M, "attacked", "[src.name]", "(INTENT: [uppertext(user.a_intent)])")
 
 	M.eye_blurry += rand(3,4)
 	M.eye_stat += rand(2,4)

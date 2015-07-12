@@ -7,8 +7,7 @@
 	var/pointer_icon_state
 	flags = CONDUCT
 	slot_flags = SLOT_BELT
-	m_amt = 500
-	g_amt = 500
+	materials = list(MAT_METAL=500, MAT_GLASS=500)
 	w_class = 2 //Increased to 2, because diodes are w_class 2. Conservation of matter.
 	origin_tech = "combat=1;magnets=2"
 	var/turf/pointer_loc
@@ -99,7 +98,7 @@
 	if(iscarbon(target))
 		var/mob/living/carbon/C = target
 		if(user.zone_sel.selecting == "eyes")
-			add_logs(user, C, "shone in the eyes", object="laser pointer")
+			add_logs(user, C, "shone in the eyes", src)
 
 			var/severity = 1
 			if(prob(33))
@@ -124,7 +123,7 @@
 			S.Weaken(rand(5,10))
 			S << "<span class='danger'>Your sensors were overloaded by a laser!</span>"
 			outmsg = "<span class='notice'>You overload [S] by shining [src] at their sensors.</span>"
-			add_logs(user, S, "shone in the sensors", object="laser pointer")
+			add_logs(user, S, "shone in the sensors", src)
 		else
 			outmsg = "<span class='warning'>You fail to overload [S] by shining [src] at their sensors!</span>"
 
@@ -134,7 +133,7 @@
 		if(prob(effectchance * diode.rating))
 			C.emp_act(1)
 			outmsg = "<span class='notice'>You hit the lens of [C] with [src], temporarily disabling the camera!</span>"
-			add_logs(user, C, "EMPed", object="laser pointer")
+			add_logs(user, C, "EMPed", src)
 		else
 			outmsg = "<span class='warning'>You miss the lens of [C] with [src]!</span>"
 

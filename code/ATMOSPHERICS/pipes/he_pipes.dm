@@ -112,6 +112,9 @@
 	minimum_temperature_difference = 300
 	thermal_conductivity = WALL_HEAT_TRANSFER_COEFFICIENT
 
+/obj/machinery/atmospherics/pipe/simple/heat_exchanging/junction/normalize_dir()
+	return
+
 /obj/machinery/atmospherics/pipe/simple/heat_exchanging/junction/SetInitDirections()
 	switch(dir)
 		if(SOUTH)

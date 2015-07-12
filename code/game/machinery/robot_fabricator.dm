@@ -21,7 +21,7 @@
 					if(!O:amount)
 						return
 					while(metal_amount < 150000 && O:amount)
-						src.metal_amount += O:m_amt /*O:height * O:width * O:length * 100000.0*/
+						src.metal_amount += O:materials[MAT_METAL] /*O:height * O:width * O:length * 100000.0*/
 						O:amount--
 						count++
 

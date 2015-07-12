@@ -162,7 +162,7 @@
 
 				ticker.mode.remove_cultist(M.brainmob.mind, 1)
 				ticker.mode.remove_revolutionary(M.brainmob.mind, 1)
-				ticker.mode.remove_gangster(M.brainmob.mind, 1)
+				ticker.mode.remove_gangster(M.brainmob.mind, 1, remove_bosses=1)
 
 				M.loc = src
 				brain = M

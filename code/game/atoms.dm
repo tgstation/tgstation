@@ -55,10 +55,10 @@
 
 	return 0
 
-/atom/proc/throw_impact(atom/hit_atom)
+/atom/proc/throw_impact(atom/hit_atom,mob/thrower)
 	if(istype(hit_atom,/mob/living))
 		var/mob/living/M = hit_atom
-		M.hitby(src)
+		M.hitby(src,thrower)
 
 	else if(isobj(hit_atom))
 		var/obj/O = hit_atom
@@ -78,7 +78,7 @@
 /atom/proc/attack_hulk(mob/living/carbon/human/hulk, do_attack_animation = 0)
 	if(do_attack_animation)
 		hulk.changeNext_move(CLICK_CD_MELEE)
-		add_logs(hulk, src, "punched", "hulk powers", admin=0)
+		add_logs(hulk, src, "punched", "hulk powers")
 		hulk.do_attack_animation(src)
 	return
 

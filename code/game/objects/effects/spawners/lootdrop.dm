@@ -107,6 +107,7 @@
 				/obj/item/weapon/storage/box/cups = 1,
 				/obj/item/weapon/storage/box/donkpockets = 1,
 				/obj/item/weapon/storage/box/lights/mixed = 3,
+				/obj/item/weapon/storage/box/hug = 1,
 				/obj/item/weapon/storage/fancy/cigarettes/dromedaryco = 1,
 				/obj/item/weapon/storage/toolbox/mechanical = 1,
 				/obj/item/weapon/screwdriver = 3,

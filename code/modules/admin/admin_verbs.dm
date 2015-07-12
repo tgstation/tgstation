@@ -125,7 +125,8 @@ var/list/admin_verbs_debug = list(
 	/client/proc/test_snap_UI,
 	/client/proc/debugNatureMapGenerator,
 	/client/proc/check_bomb_impacts,
-	/proc/machine_upgrade
+	/proc/machine_upgrade,
+	/client/proc/populate_world
 	)
 var/list/admin_verbs_possess = list(
 	/proc/possess,
@@ -260,7 +261,7 @@ var/list/admin_verbs_hideable = list(
 		/client/proc/fps,
 		/client/proc/cmd_admin_grantfullaccess,
 		/client/proc/cmd_admin_areatest,
-		/client/proc/readmin
+		/client/proc/readmin,
 		)
 	if(holder)
 		verbs.Remove(holder.rank.adds)
@@ -595,3 +596,38 @@ var/list/admin_verbs_hideable = list(
 		verbs -= /client/proc/readmin
 		deadmins -= ckey
 		return
+
+/client/proc/populate_world(var/amount = 50 as num)
+	set name = "Populate World"
+	set category = "Debug"
+	set desc = "(\"Amount of mobs to create\") Populate the world with test mobs."
+
+	if (amount > 0)
+		var/area/area
+		var/list/candidates
+		var/turf/simulated/floor/tile
+		var/j,k
+		var/mob/living/carbon/human/mob
+
+		for (var/i = 1 to amount)
+			j = 100
+
+			do
+				area = pick(the_station_areas)
+
+				if (area)
+
+					candidates = get_area_turfs(area)
+
+					if (candidates.len)
+						k = 100
+
+						do
+							tile = pick(candidates)
+						while ((!tile || !istype(tile)) && --k > 0)
+
+						if (tile)
+							mob = new/mob/living/carbon/human/interactive(tile)
+
+							testing("Spawned test mob with name \"[mob.name]\" at [tile.x],[tile.y],[tile.z]")
+			while (!area && --j > 0)

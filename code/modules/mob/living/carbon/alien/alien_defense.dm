@@ -36,7 +36,7 @@ In all, this is a lot like the monkey code. /N
 				visible_message("<span class='danger'>[M.name] bites [src]!</span>", \
 						"<span class='userdanger'>[M.name] bites [src]!</span>")
 				adjustBruteLoss(damage)
-				add_logs(M, src, "attacked", admin=0)
+				add_logs(M, src, "attacked")
 				updatehealth()
 			else
 				M << "<span class='warning'>[name] is too injured for that.</span>"
@@ -82,5 +82,5 @@ In all, this is a lot like the monkey code. /N
 		if(M.is_adult)
 			damage = rand(10, 40)
 		adjustBruteLoss(damage)
-		add_logs(M, src, "attacked", admin=0)
+		add_logs(M, src, "attacked")
 		updatehealth()

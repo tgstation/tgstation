@@ -108,7 +108,6 @@ emp_act
 							"<span class='userdanger'>The reactive teleport system flings [src] clear of [attack_text]!</span>")
 			var/list/turfs = new/list()
 			for(var/turf/T in orange(6, src))
-				if(istype(T,/turf/space)) continue
 				if(T.density) continue
 				if(T.x>world.maxx-6 || T.x<6)	continue
 				if(T.y>world.maxy-6 || T.y<6)	continue
@@ -118,7 +117,7 @@ emp_act
 			if(!isturf(picked)) return
 			if(buckled)
 				buckled.unbuckle_mob()
-			src.loc = picked
+			forceMove(picked)
 			return 1
 	return 0
 
@@ -191,7 +190,7 @@ emp_act
 							apply_effect(20, PARALYZE, armor)
 						if(prob(I.force + min(100,100 - src.health)) && src != user && I.damtype == BRUTE)
 							ticker.mode.remove_revolutionary(mind)
-							ticker.mode.remove_gangster(mind, exclude_bosses=1)
+							ticker.mode.remove_gangster(mind)
 					if(bloody)	//Apply blood
 						if(wear_mask)
 							wear_mask.add_blood(src)
@@ -451,7 +450,7 @@ emp_act
 
 		visible_message("<span class='danger'>[M.name] has hit [src]!</span>", \
 								"<span class='userdanger'>[M.name] has hit [src]!</span>")
-		add_logs(M.occupant, src, "attacked", object=M, addition="(INTENT: [uppertext(M.occupant.a_intent)]) (DAMTYPE: [uppertext(M.damtype)])")
+		add_logs(M.occupant, src, "attacked", M, "(INTENT: [uppertext(M.occupant.a_intent)]) (DAMTYPE: [uppertext(M.damtype)])")
 
 	else
 		..()

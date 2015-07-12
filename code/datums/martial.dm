@@ -25,7 +25,7 @@
 	return
 
 /datum/martial_art/proc/basic_hit(var/mob/living/carbon/human/A,var/mob/living/carbon/human/D)
-	add_logs(A, D, "punched")
+
 	A.do_attack_animation(D)
 	var/damage = rand(0,9)
 
@@ -44,6 +44,7 @@
 		else
 			playsound(D.loc, 'sound/weapons/punchmiss.ogg', 25, 1, -1)
 			D.visible_message("<span class='warning'>[A] has attempted to [atk_verb] [D]!</span>")
+			add_logs(A, D, "attempted to [atk_verb]")
 			return 0
 
 	var/obj/item/organ/limb/affecting = D.get_organ(ran_zone(A.zone_sel.selecting))
@@ -58,6 +59,9 @@
 								"<span class='userdanger'>[A] has [atk_verb]ed [D]!</span>")
 
 	D.apply_damage(damage, BRUTE, affecting, armor_block)
+
+	add_logs(A, D, "punched")
+
 	if((D.stat != DEAD) && damage >= 9)
 		D.visible_message("<span class='danger'>[A] has weakened [D]!!</span>", \
 								"<span class='userdanger'>[A] has weakened [D]!</span>")
@@ -95,7 +99,7 @@
 	return 1
 
 /datum/martial_art/boxing/harm_act(var/mob/living/carbon/human/A, var/mob/living/carbon/human/D)
-	add_logs(A, D, "punched")
+
 	A.do_attack_animation(D)
 
 	var/atk_verb = pick("left hook","right hook","straight punch")
@@ -109,6 +113,7 @@
 		else
 			playsound(D.loc, 'sound/weapons/punchmiss.ogg', 25, 1, -1)
 			D.visible_message("<span class='warning'>[A] has attempted to hit [D] with a [atk_verb]!</span>")
+			add_logs(A, D, "attempted to hit", atk_verb)
 			return 0
 
 
@@ -122,6 +127,7 @@
 								"<span class='userdanger'>[A] has hit [D] with a [atk_verb]!</span>")
 
 	D.apply_damage(damage, STAMINA, affecting, armor_block)
+	add_logs(A, D, "punched")
 	if(D.getStaminaLoss() > 50)
 		var/knockout_prob = D.getStaminaLoss() + rand(-15,15)
 		if((D.stat != DEAD) && prob(knockout_prob))
@@ -151,13 +157,15 @@
 
 
 /datum/martial_art/wrestling/proc/Suplex(var/mob/living/carbon/human/A, var/mob/living/carbon/human/D)
-	add_logs(A, D, "suplexed")
+
 	D.visible_message("<span class='danger'>[A] suplexes [D]!</span>", \
 								"<span class='userdanger'>[A] suplexes [D]!</span>")
 	D.forceMove(A.loc)
 	var/armor_block = D.run_armor_check(null, "melee")
 	D.apply_damage(30, BRUTE, null, armor_block)
 	D.apply_effect(6, WEAKEN, armor_block)
+	add_logs(A, D, "suplexed")
+
 	A.SpinAnimation(10,1)
 
 	D.SpinAnimation(10,1)
@@ -225,7 +233,7 @@
 								"<span class='userdanger'>[A] has hit [D] with Plasma Punch!</span>")
 	playsound(D.loc, 'sound/weapons/punch1.ogg', 50, 1, -1)
 	var/atom/throw_target = get_edge_target_turf(D, get_dir(D, get_step_away(D, A)))
-	D.throw_at(throw_target, 200, 4)
+	D.throw_at(throw_target, 200, 4,A)
 	A.say("HYAH!")
 	return
 
@@ -461,8 +469,8 @@
 		return
 	user << "<span class='notice'>You begin to read the scroll...</span>"
 	user << "<span class='sciradio'><i>And all at once the secrets of the Sleeping Carp fill your mind. The ancient clan's martial teachings have been imbued into this scroll. As you read through it, \
- 	these secrets flood into your mind and body. You now know the martial techniques of the Sleeping Carp. Your hand-to-hand combat has become much more effective, and you may now perform powerful \
- 	combination attacks. To learn more about these combos, use the Recall Teachings ability in the Sleeping Carp tab.</i></span>"
+ 	these secrets flood into your mind and body.<br>You now know the martial techniques of the Sleeping Carp. Your hand-to-hand combat has become much more effective, and you may now perform powerful \
+ 	combination attacks.<br>To learn more about these combos, use the Recall Teachings ability in the Sleeping Carp tab.</i></span>"
 	user.verbs += /mob/living/carbon/human/proc/sleeping_carp_help
 	var/datum/martial_art/the_sleeping_carp/theSleepingCarp = new(null)
 	theSleepingCarp.teach(user)

@@ -110,7 +110,7 @@
 			src << "<span class='notice'>Now teleporting.</span>"
 			observer.loc = O.loc
 			if(client.prefs.be_random_name)
-				client.prefs.real_name = random_name(gender)
+				client.prefs.real_name = random_unique_name(gender)
 			if(client.prefs.be_random_body)
 				client.prefs.random_character(gender)
 			observer.real_name = client.prefs.real_name
@@ -147,44 +147,6 @@
 
 		AttemptLateSpawn(href_list["SelectedJob"])
 		return
-
-	if(href_list["privacy_poll"])
-		establish_db_connection()
-		if(!dbcon.IsConnected())
-			return
-		var/voted = 0
-
-		//First check if the person has not voted yet.
-		var/DBQuery/query = dbcon.NewQuery("SELECT * FROM [format_table_name("privacy")] WHERE ckey='[src.ckey]'")
-		query.Execute()
-		while(query.NextRow())
-			voted = 1
-			break
-
-		//This is a safety switch, so only valid options pass through
-		var/option = "UNKNOWN"
-		switch(href_list["privacy_poll"])
-			if("signed")
-				option = "SIGNED"
-			if("anonymous")
-				option = "ANONYMOUS"
-			if("nostats")
-				option = "NOSTATS"
-			if("later")
-				usr << browse(null,"window=privacypoll")
-				return
-			if("abstain")
-				option = "ABSTAIN"
-
-		if(option == "UNKNOWN")
-			return
-
-		if(!voted)
-			var/sql = "INSERT INTO [format_table_name("privacy")] VALUES (null, Now(), '[src.ckey]', '[option]')"
-			var/DBQuery/query_insert = dbcon.NewQuery(sql)
-			query_insert.Execute()
-			usr << "<b>Thank you for your vote!</b>"
-			usr << browse(null,"window=privacypoll")
 
 	if(!ready && href_list["preference"])
 		if(client)
@@ -262,7 +224,7 @@
 		return 0
 	if(!job.player_old_enough(src.client))
 		return 0
-	if(config.enforce_human_authority && (rank in command_positions) && client.prefs.pref_species.id != "human")
+	if(config.enforce_human_authority && !client.prefs.pref_species.qualifies_for_rank(rank, client.prefs.features))
 		return 0
 	return 1
 
@@ -382,7 +344,7 @@
 
 	if(config.force_random_names || appearance_isbanned(src))
 		client.prefs.random_character()
-		client.prefs.real_name = random_name(gender)
+		client.prefs.real_name = client.prefs.pref_species.random_name(gender,1)
 	client.prefs.copy_to(new_character)
 
 	if(mind)

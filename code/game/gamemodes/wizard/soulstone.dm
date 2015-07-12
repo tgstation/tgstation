@@ -29,7 +29,7 @@
 		return ..()
 	if(istype(M, /mob/living/carbon/human/dummy))
 		return..()
-	add_logs(user, M, "captured [M.name]'s soul", object=src)
+	add_logs(user, M, "captured [M.name]'s soul", src)
 
 	transfer_soul("VICTIM", M, user)
 	return

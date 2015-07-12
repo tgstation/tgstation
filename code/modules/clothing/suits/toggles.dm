@@ -8,6 +8,10 @@
 	MakeHood()
 	..()
 
+/obj/item/clothing/suit/hooded/Destroy()
+	qdel(hood)
+	..()
+
 /obj/item/clothing/suit/hooded/proc/MakeHood()
 	if(!hood)
 		var/obj/item/clothing/head/winterhood/W = new hoodtype(src)
@@ -92,6 +96,9 @@
 	if(!jetpack)
 		verbs -= /obj/item/clothing/suit/space/hardsuit/verb/Jetpack
 		verbs -= /obj/item/clothing/suit/space/hardsuit/verb/Jetpack_Rockets
+	..()
+/obj/item/clothing/suit/space/hardsuit/Destroy()
+	qdel(helmet)
 	..()
 
 /obj/item/clothing/suit/space/hardsuit/proc/MakeHelmet()

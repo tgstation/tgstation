@@ -411,9 +411,6 @@ Auto Patrol: []"},
 	if(type != /obj/item/clothing/head/helmet/sec) //Eh, but we don't want people making secbots out of space helmets.
 		return
 
-	if(!helmetCam) //I am so sorry for this. I could not think of a less terrible (and lazy) way.
-		user << "<span class='warning'>[src] needs to have a camera attached first!</span>"
-		return
 	if(F) //Has a flashlight. Player must remove it, else it will be lost forever.
 		user << "<span class='warning'>The mounted flashlight is in the way, remove it first!</span>"
 		return

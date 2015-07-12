@@ -7,8 +7,7 @@
 	w_class = 2
 	flags = CONDUCT
 	slot_flags = SLOT_BELT
-	m_amt = 50
-	g_amt = 20
+	materials = list(MAT_METAL=50, MAT_GLASS=20)
 	action_button_name = "Toggle Light"
 	var/on = 0
 	var/brightness_on = 4 //luminosity when on
@@ -160,8 +159,7 @@
 	brightness_on = 5
 	w_class = 4
 	flags = CONDUCT
-	m_amt = 0
-	g_amt = 0
+	materials = list()
 	on = 1
 
 
@@ -276,8 +274,7 @@ obj/item/device/flashlight/lamp/bananalamp
 	item_state = "slime"
 	w_class = 2
 	slot_flags = SLOT_BELT
-	m_amt = 0
-	g_amt = 0
+	materials = list()
 	brightness_on = 6 //luminosity when on
 
 /obj/item/device/flashlight/emp
@@ -316,7 +313,7 @@ obj/item/device/flashlight/lamp/bananalamp
 											"<span class='userdanger'>[user] blinks \the [src] at \the [A].")
 		if(ismob(A))
 			var/mob/M = A
-			add_logs(user, M, "attacked", object="EMP-light")
+			add_logs(user, M, "attacked", "EMP-light")
 		user << "\The [src] now has [emp_cur_charges] charge\s."
 		A.emp_act(1)
 	else
