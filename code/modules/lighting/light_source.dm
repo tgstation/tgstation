@@ -156,18 +156,24 @@
 			   #endif
 			  #endif
 				. *= light_power
+
 				if(!.) //Don't add turfs that aren't affected to the affected turfs.
 					continue
 
-				effect_r[T.lighting_overlay] = round(lum_r * ., LIGHTING_ROUND_VALUE)
-				effect_g[T.lighting_overlay] = round(lum_g * ., LIGHTING_ROUND_VALUE)
-				effect_b[T.lighting_overlay] = round(lum_b * ., LIGHTING_ROUND_VALUE)
+				effect_r += round(lum_r * ., LIGHTING_ROUND_VALUE)
+				effect_g += round(lum_g * ., LIGHTING_ROUND_VALUE)
+				effect_b += round(lum_b * ., LIGHTING_ROUND_VALUE)
 
 				T.lighting_overlay.update_lumcount(
 					round(lum_r * ., LIGHTING_ROUND_VALUE),
 					round(lum_g * ., LIGHTING_ROUND_VALUE),
 					round(lum_b * ., LIGHTING_ROUND_VALUE)
 				)
+
+			else
+				effect_r += 0
+				effect_b += 0
+				effect_g += 0
 
 			if(!T.affecting_lights)
 				T.affecting_lights = list()
@@ -178,12 +184,15 @@
 /datum/light_source/proc/remove_lum()
 	applied = 0
 
+	var/i = 1
 	for(var/turf/T in effect_turf)
 		if(T.affecting_lights)
 			T.affecting_lights -= src
 
 		if(T.lighting_overlay)
-			T.lighting_overlay.update_lumcount(-effect_r[T.lighting_overlay], -effect_g[T.lighting_overlay], -effect_b[T.lighting_overlay])
+			T.lighting_overlay.update_lumcount(-effect_r[i], -effect_g[i], -effect_b[i])
+
+		i++
 
 	effect_r.Cut()
 	effect_g.Cut()
