@@ -205,7 +205,7 @@
 	else
 		user << "<span class='warning'>You have to stand still!</span>"
 
-/obj/item/device/soundsynth/verb/ChangeSound()
+/obj/item/clothing/shoes/clown_shoes/advanced/verb/ChangeSound()
 	set category = "Object"
 	set name = "Change Sound"
 
