@@ -166,5 +166,5 @@ var/gaussian_next
 #undef ACCURACY
 
 //Probability density function for normal distributions
-/proc/normalDist(mean, stdev, x)
+/proc/normalDistribution(mean, stdev, x)
 	return 1/(stdev * sqrt(2 * PI)) * MATH_E ** -(((x - mean) ** 2) / (2 * (stdev ** 2)))

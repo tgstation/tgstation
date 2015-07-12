@@ -3,7 +3,7 @@
 	typepath = /datum/round_event/blob
 	max_occurrences = 1
 
-	average_time = 80 //High potential to end rounds; only spawn in rounds that have gone on too long.
+	average_time = 70 //High potential to end rounds; only spawn in rounds that have gone on too long.
 
 /datum/round_event/blob
 	announceWhen	= 12

@@ -38,10 +38,7 @@ var/datum/subsystem/events/SSevent
 	..()
 
 /datum/subsystem/events/proc/getWeightOf(var/datum/round_event_control/E)
-	var/difficulty = world.time / 600 + difficulty_mod
-	var/weight = normalDist(difficulty, DIFFICULTY_DEVIATION, E.average_time)
-	world << "[E] weight: [weight]"
-	return normalDist(world.time / 600, DIFFICULTY_DEVIATION, E.average_time)
+	return normalDistribution(world.time / 600 + difficulty_mod, DIFFICULTY_DEVIATION, E.average_time)
 
 
 /datum/subsystem/events/fire()
@@ -87,7 +84,7 @@ var/datum/subsystem/events/SSevent
 			return
 		sum_of_weights += getWeightOf(E)
 
-	sum_of_weights = rand(0, 1e9) / 1e9 * sum_of_weights //rand(0,sum_of_weights)	//reusing this variable. It now represents the 'weight' we want to select
+	sum_of_weights = rand(0, 1e9) / 1e9 * sum_of_weights //reusing this variable. It now represents the 'weight' we want to select
 	for(var/datum/round_event_control/E in control)
 		if(E.occurrences >= E.max_occurrences)	continue
 		if(E.holidayID)

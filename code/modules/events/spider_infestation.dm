@@ -1,7 +1,7 @@
 /datum/round_event_control/spider_infestation
 	name = "Spider Infestation"
 	typepath = /datum/round_event/spider_infestation
-	average_time = 45
+	average_time = 40
 	max_occurrences = 1
 
 /datum/round_event/spider_infestation
