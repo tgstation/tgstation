@@ -241,7 +241,7 @@
 	modules += new /obj/item/weapon/shovel(src)
 	modules += new /obj/item/device/flashlight/lantern(src)
 	modules += new /obj/item/weapon/storage/bag/sheetsnatcher/borg(src)
-	modules += new /obj/item/device/t_scanner/adv_mining_scanner(src)
+	modules += new /obj/item/device/mining_scanner(src)
 	modules += new /obj/item/weapon/gun/energy/kinetic_accelerator(src)
 	fix_modules()
 
