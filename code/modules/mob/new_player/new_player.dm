@@ -82,6 +82,13 @@
 
 	if(!client)	return 0
 
+	//Determines Relevent Population Cap
+	var/relevant_cap
+	if(config.hard_popcap && config.extreme_popcap)
+		relevant_cap = min(config.hard_popcap, config.extreme_popcap)
+	else
+		relevant_cap = max(config.hard_popcap, config.extreme_popcap)
+
 	if(href_list["show_preferences"])
 		client.prefs.ShowChoices(src)
 		return 1
@@ -127,20 +134,14 @@
 			usr << "<span class='danger'>The round is either not ready, or has already finished...</span>"
 			return
 
-		var/relevant_cap
-		if(config.hard_popcap && config.extreme_popcap)
-			relevant_cap = min(config.hard_popcap, config.extreme_popcap)
-		else
-			relevant_cap = max(config.hard_popcap, config.extreme_popcap)
+		if(href_list["late_join"] == "override")
+			LateChoices()
+			return
 
 		if(ticker.queued_players.len || (relevant_cap && living_player_count() >= relevant_cap && !(ckey(key) in admin_datums)))
-			var/queue_position = ticker.queued_players.Find(usr)
-
-			if(queue_position == 1 && living_player_count() < relevant_cap) //Let them join if there is a slot available and they are the next one in line
-				LateChoices()
-				return
-
 			usr << "<span class='danger'>[config.hard_popcap_message]</span>"
+
+			var/queue_position = ticker.queued_players.Find(usr)
 			if(queue_position == 1)
 				usr << "<span class='notice'>You are next in line to join the game. You will be notified when a slot opens up.</span>"
 			else if(queue_position)
@@ -159,6 +160,11 @@
 		if(!enter_allowed)
 			usr << "<span class='notice'>There is an administrative lock on entering the game!</span>"
 			return
+
+		if(ticker.queued_players.len && !(ckey(key) in admin_datums))
+			if((living_player_count() >= relevant_cap) || (src != ticker.queued_players[1]))
+				usr << "<span class='warning'>Server is full.</span>"
+				return
 
 		AttemptLateSpawn(href_list["SelectedJob"])
 		return

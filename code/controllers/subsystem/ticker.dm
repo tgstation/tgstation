@@ -442,19 +442,20 @@ var/datum/subsystem/ticker/ticker
 	if(!queued_players.len || !config.hard_popcap)
 		return
 
-	queue_delay ++
+	queue_delay++
 	var/mob/new_player/next_in_line = queued_players[1]
 
 	switch(queue_delay)
 		if(5) //every 5 ticks check if there is a slot available
 			if(living_player_count() < config.hard_popcap)
 				if(next_in_line && next_in_line.client)
-					next_in_line << "<span class='userdanger'>A slot has opened! You have approximately 20 seconds to join. <a href='?src=\ref[next_in_line];late_join=1'>\>\>Join Game\<\<</a>.</span>"
+					next_in_line << "<span class='userdanger'>A slot has opened! You have approximately 20 seconds to join. <a href='?src=\ref[next_in_line];late_join=override'>\>\>Join Game\<\<</a></span>"
 					next_in_line << sound('sound/misc/notice1.ogg')
+					next_in_line.LateChoices()
 					return
 				queued_players -= next_in_line //Client disconnected, remove he
 			queue_delay = 0 //No vacancy: restart timer
-		if(20 to INFINITY)  //No response from the next in line when a vacancy exists, remove he
+		if(25 to INFINITY)  //No response from the next in line when a vacancy exists, remove he
 			next_in_line << "<span class='danger'>No response recieved. You have been removed from the line.</span>"
 			queued_players -= next_in_line
 			queue_delay = 0
