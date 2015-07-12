@@ -782,7 +782,8 @@
 						randmutb(H)
 						domutcheck(H,null)
 						H.emote("gasp")
-		return 1
+		return 0
+	return 1
 
 ////////////////
 // MOVE SPEED //
@@ -1138,6 +1139,7 @@
 /////////////
 
 /datum/species/proc/breathe(var/mob/living/carbon/human/H)
+<<<<<<< HEAD
 	if(H.reagents.has_reagent("lexorin")) return
 	if(istype(H.loc, /obj/machinery/atmospherics/components/unary/cryo_cell)) return
 
@@ -1192,6 +1194,9 @@
 
 	if(breath)
 		H.loc.assume_air(breath)
+=======
+	return
+>>>>>>> remotes/upstream/master
 
 /datum/species/proc/check_breath(datum/gas_mixture/breath, var/mob/living/carbon/human/H)
 	if((H.status_flags & GODMODE))
@@ -1457,31 +1462,14 @@
 
 /datum/species/proc/handle_fire(var/mob/living/carbon/human/H)
 	if((HEATRES in specflags) || (NOFIRE in specflags))
-		return
-	if(H.fire_stacks < 0)
-		H.fire_stacks++ //If we've doused ourselves in water to avoid fire, dry off slowly
-		H.fire_stacks = min(0, H.fire_stacks)//So we dry ourselves back to default, nonflammable.
-	if(!H.on_fire)
-		return
-	var/datum/gas_mixture/G = H.loc.return_air() // Check if we're standing in an oxygenless environment
-	if(G.oxygen < 1)
-		ExtinguishMob(H) //If there's no oxygen in the tile we're on, put out the fire
-		return
-	var/turf/location = get_turf(H)
-	location.hotspot_expose(700, 50, 1)
+		return 1
 
 /datum/species/proc/IgniteMob(var/mob/living/carbon/human/H)
-	if(H.fire_stacks > 0 && !H.on_fire && !(HEATRES in specflags) && !(NOFIRE in specflags))
-		H.on_fire = 1
-		H.AddLuminosity(3)
-		H.update_fire()
+	if((HEATRES in specflags) || (NOFIRE in specflags))
+		return 1
 
 /datum/species/proc/ExtinguishMob(var/mob/living/carbon/human/H)
-	if(H.on_fire)
-		H.on_fire = 0
-		H.fire_stacks = 0
-		H.AddLuminosity(-3)
-		H.update_fire()
+	return
 
 #undef HUMAN_MAX_OXYLOSS
 #undef HUMAN_CRIT_MAX_OXYLOSS
