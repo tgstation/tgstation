@@ -123,7 +123,7 @@ var/global/list/datum/stack_recipe/metal_recipes = list ( \
 	return 2
 
 /obj/item/stack/sheet/metal/recycle(var/datum/materials/rec)
-	rec.addAmount("iron",1*amount)
+	rec.addAmount(MAT_IRON, amount)
 	return 1
 
 // Diet metal.
@@ -170,8 +170,8 @@ var/global/list/datum/stack_recipe/plasteel_recipes = list ( \
 		return ..()
 
 /obj/item/stack/sheet/plasteel/recycle(var/datum/materials/rec)
-	rec.addAmount("plasma",1*amount)
-	rec.addAmount("iron",1*amount)
+	rec.addAmount(MAT_PLASMA, amount)
+	rec.addAmount(MAT_IRON, amount)
 	return 1
 
 /*
