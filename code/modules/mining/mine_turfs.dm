@@ -22,7 +22,6 @@ var/global/list/rockTurfEdgeCache
 	var/spread = 0 //will the seam spread?
 	var/spreadChance = 0 //the percentual chance of an ore spreading to the neighbouring tiles
 	var/last_act = 0
-	var/scan_state = null //Holder for the image we display when we're pinged by a mining scanner
 	var/hidden = 1
 
 /turf/simulated/mineral/ex_act(severity, target)
@@ -164,35 +163,35 @@ var/global/list/rockTurfEdgeCache
 
 /turf/simulated/mineral/uranium
 	name = "uranium deposit"
+	icon_state = "rock_Uranium"
 	mineralType = /obj/item/weapon/ore/uranium
 	spreadChance = 5
 	spread = 1
-	hidden = 1
-	scan_state = "rock_Uranium"
+	hidden = 0
 
 /turf/simulated/mineral/diamond
 	name = "diamond deposit"
+	icon_state = "rock_Diamond"
 	mineralType = /obj/item/weapon/ore/diamond
 	spreadChance = 0
 	spread = 1
-	hidden = 1
-	scan_state = "rock_Diamond"
+	hidden = 0
 
 /turf/simulated/mineral/gold
 	name = "gold deposit"
+	icon_state = "rock_Gold"
 	mineralType = /obj/item/weapon/ore/gold
 	spreadChance = 5
 	spread = 1
-	hidden = 1
-	scan_state = "rock_Gold"
+	hidden = 0
 
 /turf/simulated/mineral/silver
 	name = "silver deposit"
+	icon_state = "rock_Silver"
 	mineralType = /obj/item/weapon/ore/silver
 	spreadChance = 5
 	spread = 1
-	hidden = 1
-	scan_state = "rock_Silver"
+	hidden = 0
 
 /turf/simulated/mineral/plasma
 	name = "plasma deposit"
@@ -200,8 +199,7 @@ var/global/list/rockTurfEdgeCache
 	mineralType = /obj/item/weapon/ore/plasma
 	spreadChance = 8
 	spread = 1
-	hidden = 1
-	scan_state = "rock_Plasma"
+	hidden = 0
 
 /turf/simulated/mineral/clown
 	name = "bananium deposit"
@@ -219,8 +217,7 @@ var/global/list/rockTurfEdgeCache
 	mineralAmt = 1
 	spreadChance = 0
 	spread = 0
-	hidden = 1
-	scan_state = "rock_BScrystal"
+	hidden = 0
 
 ////////////////////////////////Gibtonite
 /turf/simulated/mineral/gibtonite
@@ -229,8 +226,7 @@ var/global/list/rockTurfEdgeCache
 	mineralAmt = 1
 	spreadChance = 0
 	spread = 0
-	hidden = 1
-	scan_state = "rock_Gibtonite"
+	hidden = 0
 	var/det_time = 8 //Countdown till explosion, but also rewards the player for how close you were to detonation when you defuse it
 	var/stage = 0 //How far into the lifecycle of gibtonite we are, 0 is untouched, 1 is active and attempting to detonate, 2 is benign and ready for extraction
 	var/activated_ckey = null //These are to track who triggered the gibtonite deposit for logging purposes
@@ -241,7 +237,7 @@ var/global/list/rockTurfEdgeCache
 	..()
 
 /turf/simulated/mineral/gibtonite/attackby(obj/item/I, mob/user, params)
-	if(istype(I, /obj/item/device/mining_scanner) || istype(I, /obj/item/device/t_scanner/adv_mining_scanner) && stage == 1)
+	if(istype(I, /obj/item/device/mining_scanner) && stage == 1)
 		user.visible_message("<span class='notice'>You use [I] to locate where to cut off the chain reaction and attempt to stop it...</span>")
 		defuse()
 	..()
