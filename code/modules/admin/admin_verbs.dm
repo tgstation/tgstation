@@ -126,7 +126,8 @@ var/list/admin_verbs_debug = list(
 	/client/proc/debugNatureMapGenerator,
 	/client/proc/check_bomb_impacts,
 	/proc/machine_upgrade,
-	/client/proc/populate_world
+	/client/proc/populate_world,
+	/client/proc/cmd_display_del_log
 	)
 var/list/admin_verbs_possess = list(
 	/proc/possess,
@@ -203,7 +204,8 @@ var/list/admin_verbs_hideable = list(
 	/client/proc/reset_all_tcs,
 	/client/proc/panicbunker,
 	/client/proc/admin_change_sec_level,
-	/client/proc/toggle_nuke
+	/client/proc/toggle_nuke,
+	/client/proc/cmd_display_del_log
 	)
 
 /client/proc/add_admin_verbs()
