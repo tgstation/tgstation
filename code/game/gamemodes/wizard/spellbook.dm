@@ -104,7 +104,7 @@
 
 /datum/spellbook_entry/disintegrate
 	name = "Disintegrate"
-	spell_type = /obj/effect/proc_holder/spell/targeted/inflict_handler/disintegrate
+	spell_type = /obj/effect/proc_holder/spell/targeted/touch/disintegrate
 	log_name = "DG"
 
 /datum/spellbook_entry/disabletech
@@ -173,7 +173,7 @@
 
 /datum/spellbook_entry/fleshtostone
 	name = "Flesh to Stone"
-	spell_type = /obj/effect/proc_holder/spell/targeted/inflict_handler/flesh_to_stone
+	spell_type = /obj/effect/proc_holder/spell/targeted/touch/flesh_to_stone
 	log_name = "FS"
 
 /datum/spellbook_entry/summonitem
