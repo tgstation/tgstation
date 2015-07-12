@@ -233,12 +233,12 @@
 			E.key = C.key
 			E.master = user
 		if("air")
-			visible_message("<span class='warning'>The swirling clouds expand and pulse, crackling with lightning, into a living storm.</span>")
+			visible_message("<span class='warning'>The swirling clouds expand into a mass of airy bubbles.</span>")
 			var/mob/living/simple_animal/elemental/air/A = new(get_turf(src))
 			A.key = C.key
 			A.master = user
 		if("fire")
-			visible_message("<span class='warning'>The flame rapidly grows to a raging inferno.</span>")
+			visible_message("<span class='warning'>The flame rapidly grows to a hovering ball of fire.</span>")
 			var/mob/living/simple_animal/elemental/fire/F = new(get_turf(src))
 			F.key = C.key
 			F.master = user
@@ -248,19 +248,14 @@
 			W.key = C.key
 			W.master = user
 		if("life")
-			visible_message("<span class='warning'>With the creaking of wood and crunching of leaves, the sap grows into a tree.</span>")
+			visible_message("<span class='warning'>With the rustling of leaves, the sap grows into a new plant.</span>")
 			var/mob/living/simple_animal/elemental/life/L = new(get_turf(src))
 			L.key = C.key
 			L.master = user
 			if(prob(1))
 				L.say("I am Groot!")
-		if("death")
-			visible_message("<span class='warning'>Red mist swirls rapidly around the skull, darkening to a shade of black.</span>")
-			var/mob/living/simple_animal/elemental/necrotic/D = new(get_turf(src))
-			D.key = C.key
-			D.master = user
 		if("arcane")
-			visible_message("<span class='warning'>The markings pulse and throb. The air shimmers and something emerges.</span>")
+			visible_message("<span class='warning'>The markings pulse and throb. The air shimmers. Glowing crystals form and swirl.</span>")
 			var/mob/living/simple_animal/elemental/arcane/AC = new(get_turf(src))
 			AC.key = C.key
 			AC.master = user

@@ -2,8 +2,8 @@
 	name = "elemental"
 	desc = "A physical manifestation of the elements."
 	icon = 'icons/mob/elemental.dmi'
-	icon_state = "necrotic"
-	icon_living = "necrotic"
+	icon_state = "earth"
+	icon_living = "earth"
 	speak_emote = list("says")
 	health = 100
 	maxHealth = 100
@@ -81,11 +81,13 @@
 
 /mob/living/simple_animal/elemental/air //Glass cannon; offensive
 	name = "air elemental"
-	desc = "A swirling cyclone that crackles with electricity."
+	desc = "A swirling mass of bubbles."
 	health = 50
 	maxHealth = 50
 	speak_emote = list("blows")
 	speed = -1 //Fast because made of wind
+	icon_state = "air"
+	icon_living = "air"
 
 	harm_intent_damage = 0 //Made of wind...
 	melee_damage_upper = 25
@@ -116,6 +118,8 @@
 	name = "water elemental"
 	desc = "A large form of water that shimmers in the light."
 	speak_emote = list("splashes")
+	icon_state = "water"
+	icon_living = "water"
 
 	harm_intent_damage = 0
 	attacktext = "splashes"
@@ -126,8 +130,10 @@
 
 /mob/living/simple_animal/elemental/life //Healing; defensive
 	name = "nature elemental"
-	desc = "A walking treant made of bark and leaves."
+	desc = "A walking plant with swivelling stems."
 	speak_emote = list("creaks", "pines")
+	icon_state = "life"
+	icon_living = "life"
 
 	melee_damage_upper = 5 //Based around healing so he doesn't hit very hard
 	melee_damage_upper = 5
@@ -135,22 +141,12 @@
 	playstyle_string = "<b>You are a nature elemental. You don't do much damage, but you have many useful healing abilities to keep your master and subordinates in the fight.</b>"
 	deathmessage = "collapses, withers, and dies."
 
-/mob/living/simple_animal/elemental/necrotic //All-rounder; offensive
-	name = "necrotic elemental"
-	desc = "A floating black mist with sinister red eyes."
-	speak_emote = list("hisses")
-
-	melee_damage_upper = 30 //Completely offensive
-	melee_damage_upper = 30
-	attacktext = "drains"
-	attack_sound = 'sound/magic/demon_attack1.ogg'
-	playstyle_string = "<b>You are a necrotic elemental. You are focused around doing high amounts of damage in a short amount of time. You cannot be affected by healing, however.</b>"
-	deathmessage = "disperses into nothing."
-
 /mob/living/simple_animal/elemental/arcane //All-rounder; both
 	name = "mana elemental"
-	desc = "A translucent blue form shaped somewhat like a man."
+	desc = "A hovering mass of shimmering, translucent crystals."
 	speak_emote = list("swoons")
+	icon_state = "mana"
+	icon_living = "mana"
 
 	attacktext = "claws"
 	playstyle_string = "<b>You are a mana elemental. A raw manifestation of magic, you can harness the aura to great extent. Your power will wax and wane depending on your master's living status.</b>"
@@ -160,6 +156,8 @@
 	name = "unbound elemental"
 	desc = "Oh. God. What is this horrible abomination of magic? This poor thing probably lives its tortured existence in eternal agony."
 	speak_emote = list("screams", "cries", "screeches", "whimpers")
+	icon_state = "unbound"
+	icon_living = "unbound"
 
 	attacktext = "slices"
 	playstyle_string = "<b>You are an unbound elemental. Living a life in eternal agony, you are an aberration of all the elements. All of your stats are randomized and your abilities are also randomized.</b>"
