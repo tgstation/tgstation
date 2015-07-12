@@ -4553,10 +4553,9 @@
 	reagent_state = LIQUID
 	color = "#00FF21" // rgb: 0, 255, 33
 
-/datum/reagent/hamserum/on_mob_life(var/mob/living/M)
-	empulse(M.loc,0,1,0)
+/datum/reagent/hamserum/reaction_mob(var/mob/M, var/method=INGEST, var/volume)
+	empulse(M.loc,1,2,0)
 	return
-
 
 //Cafe drinks
 
