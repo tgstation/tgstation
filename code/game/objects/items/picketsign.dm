@@ -1,3 +1,5 @@
+#define PICKET_SIGN_WAVE_DELAY 40
+
 /obj/item/weapon/picket_sign
 	name = "black picket sign"
 	desc = "It's blank."
@@ -13,6 +15,9 @@
 /obj/item/weapon/picket_sign/attackby(obj/item/W, mob/user)
 	if(istype(W, /obj/item/weapon/pen) || istype(W, /obj/item/toy/crayon))
 		var/txt = stripped_input(user, "What would you like to write on the sign?", "Sign Label", null , 30)
+		if(!Adjacent(user))
+			return
+
 		if(txt)
 			label = txt
 			src.name = "[label] sign"
@@ -24,7 +29,7 @@
 	..()
 
 /obj/item/weapon/picket_sign/attack_self(mob/living/carbon/human/user)
-	if(spam_flag + 40 < world.timeofday)
+	if(spam_flag + PICKET_SIGN_WAVE_DELAY < world.timeofday)
 		if(label)
 			user.visible_message("<span class='warning'>[user] waves the \"[label]\" sign around.</span>")
 		else
@@ -33,3 +38,5 @@
 		spam_flag = world.timeofday
 
 		return 1
+
+#undef PICKET_SIGN_WAVE_DELAY
