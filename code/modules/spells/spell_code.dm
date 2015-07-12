@@ -185,10 +185,15 @@ var/list/spells = typesof(/spell) //needed for the badmin verb for now
 	if(silenced > 0)
 		return
 
-	if(map.zLevels.len < user.z || !user.z)
-		WARNING("[user] is somehow on a zlevel [(user.z > map.zLevels.len) ? "higher" : "lower"] than our zlevels list! [map.zLevels.len] level\s, [map.nameLong] - [formatJumpTo(get_turf(user))]")
+	var/ourz = user.z
+	if(!ourz)
+		var/turf/T = get_turf(user)
+		if(!T) return 0
+		ourz = T.z
+	if(map.zLevels.len < ourz || !ourz)
+		WARNING("[user] is somehow on a zlevel [(ourz > map.zLevels.len) ? "higher" : "lower"] than our zlevels list! [map.zLevels.len] level\s, [map.nameLong] - [formatJumpTo(get_turf(user))]")
 		return 0
-	if(istype(map.zLevels[user.z], /datum/zLevel/centcomm) && spell_flags & Z2NOCAST) //Certain spells are not allowed on the centcomm zlevel
+	if(istype(map.zLevels[ourz], /datum/zLevel/centcomm) && spell_flags & Z2NOCAST) //Certain spells are not allowed on the centcomm zlevel
 		return 0
 
 	if(spell_flags & CONSTRUCT_CHECK)
