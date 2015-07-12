@@ -103,9 +103,9 @@ calculate the longest number of ticks the MC can wait between each cycle without
 							SS.cost = MC_AVERAGE(SS.cost, world.timeofday - timer)
 							if (SS.dynamic_wait)
 								var/oldwait = SS.wait
-								var/GlobalCostDelta = (SSCostPerSecond-(SS.cost/(SS.wait/10)))-1
-								var/NewWait = MC_AVERAGE(oldwait,(SS.cost-SS.dwait_buffer+GlobalCostDelta)*SS.dwait_delta)
-								SS.wait = Clamp(round(NewWait,world.tick_lag),SS.dwait_lower,SS.dwait_upper)
+								var/GlobalCostDelta = (SSCostPerSecond-(SS.cost/SS.wait))/(SS.wait/10)-1
+								var/NewWait = MC_AVERAGE(oldwait,(SS.cost-1.5+GlobalCostDelta)*SS.dwait_delta)
+								SS.wait = Clamp(round(NewWait,0.1),SS.dwait_lower,SS.dwait_upper)
 								if (oldwait != SS.wait)
 									calculateGCD()
 							SS.next_fire += SS.wait

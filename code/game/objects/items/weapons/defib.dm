@@ -325,6 +325,7 @@
 
 /obj/item/weapon/twohanded/shockpaddles/attack(mob/M, mob/user)
 	var/halfwaycritdeath = (config.health_threshold_crit + config.health_threshold_dead) / 2
+	var/mob/living/carbon/human/H = M
 
 	if(busy)
 		return
@@ -342,7 +343,6 @@
 		user << "<span class='warning'>The instructions on [defib] don't mention how to revive that...</span>"
 		return
 	else
-		var/mob/living/carbon/human/H = M
 		if(user.a_intent == "disarm" && !defib.safety)
 			busy = 1
 			H.visible_message("<span class='danger'>[user] has touched [H.name] with [src]!</span>", \
@@ -422,7 +422,11 @@
 								busy = 0
 								update_icon()
 								return
-					if(H.stat == DEAD)
+					if(H.heart_attack)
+						H.heart_attack = 0
+						user.visible_message("<span class='notice'>[defib] pings: Patient's heart is now beating again.</span>")
+						playsound(get_turf(src), 'sound/machines/defib_zap.ogg', 50, 1, -1)
+					if(H.stat == 2)
 						M.visible_message("<span class='warning'>[M]'s body convulses a bit.")
 						playsound(get_turf(src), "bodyfall", 50, 1)
 						playsound(get_turf(src), 'sound/machines/defib_zap.ogg', 50, 1, -1)
@@ -443,7 +447,7 @@
 								H.adjustBruteLoss((mobhealth - halfwaycritdeath) * (total_brute / overall_damage))
 							user.visible_message("<span class='notice'>[defib] pings: Resuscitation successful.</span>")
 							playsound(get_turf(src), 'sound/machines/defib_success.ogg', 50, 0)
-							H.stat = UNCONSCIOUS
+							H.stat = 1
 							dead_mob_list -= H
 							living_mob_list |= list(H)
 							H.emote("gasp")
@@ -465,10 +469,6 @@
 						update_icon()
 						cooldown = 1
 						defib.cooldowncheck(user)
-					else if(H.heart_attack)
-						H.heart_attack = 0
-						user.visible_message("<span class='notice'>[defib] pings: Patient's heart is now beating again.</span>")
-						playsound(get_turf(src), 'sound/machines/defib_zap.ogg', 50, 1, -1)
 					else
 						user.visible_message("<span class='warning'>[defib] buzzes: Patient is not in a valid state. Operation aborted.</span>")
 						playsound(get_turf(src), 'sound/machines/defib_failed.ogg', 50, 0)

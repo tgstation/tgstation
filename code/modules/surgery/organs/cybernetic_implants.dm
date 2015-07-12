@@ -366,14 +366,10 @@
 	else
 		cooldown += 200
 
-	if(istype(owner, /mob/living/carbon/human))
-		var/mob/living/carbon/human/H = owner
-		if(H.stat != DEAD && prob(50 / severity))
-			H.heart_attack = 1
-			spawn(600 / severity)
-				H.heart_attack = 0
-				if(H.stat == CONSCIOUS)
-					H << "<span class='notice'>You feel your heart beating again!</span>"
+	if(prob(50 / severity))
+		owner.heart_attack = 1
+		spawn(600 / severity)
+			owner.heart_attack = 0
 
 
 //BOX O' IMPLANTS

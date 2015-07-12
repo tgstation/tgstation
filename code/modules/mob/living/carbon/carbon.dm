@@ -78,21 +78,23 @@
 	shock_damage *= siemens_coeff
 	if (shock_damage<1)
 		return 0
-	take_overall_damage(0,shock_damage)
+	src.take_overall_damage(0,shock_damage)
 	//src.burn_skin(shock_damage)
 	//src.adjustFireLoss(shock_damage) //burn_skin will do this for us
 	//src.updatehealth()
-	visible_message(
+	src.visible_message(
 		"<span class='danger'>[src] was shocked by \the [source]!</span>", \
 		"<span class='userdanger'>You feel a powerful shock coursing through your body!</span>", \
 		"<span class='italics'>You hear a heavy electrical crack.</span>" \
 	)
+	if(prob(25) && heart_attack)
+		heart_attack = 0
 	jitteriness += 1000 //High numbers for violent convulsions
 	do_jitter_animation(jitteriness)
 	stuttering += 2
 	Stun(2)
 	spawn(20)
-		jitteriness = max(jitteriness - 990, 10) //Still jittery, but vastly less
+		src.jitteriness -= 990 //Still jittery, but vastly less
 		Stun(3)
 		Weaken(3)
 	return shock_damage
@@ -368,6 +370,12 @@ var/const/GALOSHES_DONT_HELP = 8
 
 /mob/living/carbon/is_muzzled()
 	return(istype(src.wear_mask, /obj/item/clothing/mask/muzzle))
+
+
+/mob/living/carbon/revive()
+	heart_attack = 0
+	..()
+	return
 
 /mob/living/carbon/blob_act()
 	if (stat == DEAD)

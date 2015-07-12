@@ -10,7 +10,10 @@
 	if(..())
 		//Updates the number of stored chemicals for powers
 		handle_changeling()
-		return 1
+		//Heart Attacks, etc.
+		handle_heart()
+
+		. = 1
 
 ///////////////
 // BREATHING //
@@ -235,6 +238,8 @@
 	if(reagents)
 		reagents.metabolize(src)
 
+/mob/living/carbon/proc/handle_heart()
+	return
 
 /mob/living/carbon/handle_stomach()
 	spawn(0)

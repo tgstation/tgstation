@@ -272,11 +272,6 @@
 		if(gloves)
 			var/obj/item/clothing/gloves/G = gloves
 			siemens_coeff = G.siemens_coefficient
-	if(heart_attack)
-		if(shock_damage * siemens_coeff >= 1 && prob(25))
-			heart_attack = 0
-			if(stat == CONSCIOUS)
-				src << "<span class='notice'>You feel your heart beating again!</span>"
 	return ..(shock_damage,source,siemens_coeff)
 
 /mob/living/carbon/human/Topic(href, href_list)
@@ -285,13 +280,11 @@
 		if(href_list["embedded_object"])
 			var/obj/item/I = locate(href_list["embedded_object"])
 			var/obj/item/organ/limb/L = locate(href_list["embedded_limb"])
-			if(!I || !L || I.loc != src || !(I in L.embedded_objects)) //no item, no limb, or item is not in limb or in the person anymore
+			if(!I || !L || I.loc != src) //no item, no limb, or item is not in limb (the person atleast) anymore
 				return
 			var/time_taken = I.embedded_unsafe_removal_time*I.w_class
 			usr.visible_message("<span class='warning'>[usr] attempts to remove [I] from their [L.getDisplayName()].</span>","<span class='notice'>You attempt to remove [I] from your [L.getDisplayName()]... (It will take [time_taken/10] seconds.)</span>")
 			if(do_after(usr, time_taken, needhand = 1, target = src))
-				if(!I || !L || I.loc != src || !(I in L.embedded_objects))
-					return
 				L.embedded_objects -= I
 				L.take_damage(I.embedded_unsafe_removal_pain_multiplier*I.w_class)//It hurts to rip it out, get surgery you dingus.
 				I.loc = get_turf(src)
@@ -311,9 +304,11 @@
 		if(href_list["pockets"])
 			var/pocket_side = href_list["pockets"]
 			var/pocket_id = (pocket_side == "right" ? slot_r_store : slot_l_store)
-			var/obj/item/pocket_item = (pocket_id == slot_r_store ? r_store : l_store)
+			var/obj/item/pocket_item = (pocket_id == slot_r_store ? src.r_store : src.l_store)
 			var/obj/item/place_item = usr.get_active_hand() // Item to place in the pocket, if it's empty
 
+			//visible_message("<span class='danger'>[usr] tries to empty [src]'s pockets.</span>", \
+							"<span class='userdanger'>[usr] tries to empty [src]'s pockets.</span>") // Pickpocketing!
 			var/delay_denominator = 1
 			if(pocket_item && !(pocket_item.flags&ABSTRACT))
 				if(pocket_item.flags & NODROP)
@@ -327,8 +322,7 @@
 
 			if(do_mob(usr, src, POCKET_STRIP_DELAY/delay_denominator)) //placing an item into the pocket is 4 times faster
 				if(pocket_item)
-					if(pocket_item == (pocket_id == slot_r_store ? r_store : l_store)) //item still in the pocket we search
-						unEquip(pocket_item)
+					unEquip(pocket_item)
 				else
 					if(place_item)
 						usr.unEquip(place_item)

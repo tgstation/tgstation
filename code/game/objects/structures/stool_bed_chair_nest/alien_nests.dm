@@ -9,11 +9,6 @@
 	smooth = 1
 	can_be_unanchored = 0
 	canSmoothWith = null
-	var/image/nest_overlay
-
-/obj/structure/stool/bed/nest/New()
-	nest_overlay = image('icons/mob/alien.dmi', "nestoverlay", layer=MOB_LAYER - 0.2)
-	return ..()
 
 /obj/structure/stool/bed/nest/user_unbuckle_mob(mob/user as mob)
 	if(buckled_mob && buckled_mob.buckled == src)
@@ -64,12 +59,12 @@
 		M.pixel_y = 0
 		M.pixel_x = initial(M.pixel_x) + 2
 		M.layer = MOB_LAYER - 0.3
-		overlays += nest_overlay
+		overlays += image('icons/mob/alien.dmi', "nestoverlay", layer=MOB_LAYER - 0.2)
 	else
 		M.pixel_x = M.get_standard_pixel_x_offset(M.lying)
 		M.pixel_y = M.get_standard_pixel_y_offset(M.lying)
 		M.layer = initial(M.layer)
-		overlays -= nest_overlay
+		overlays.Cut()
 
 /obj/structure/stool/bed/nest/attackby(obj/item/weapon/W as obj, mob/user as mob, params)
 	var/aforce = W.force

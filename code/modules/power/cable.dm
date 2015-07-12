@@ -514,9 +514,7 @@ var/global/list/datum/stack_recipe/cable_coil_recipes = list ( \
 
 	var/obj/item/organ/limb/affecting = H.get_organ(check_zone(user.zone_sel.selecting))
 	if(affecting.status == ORGAN_ROBOTIC)
-		user.visible_message("<span class='notice'>[user] starts to fix some of the wires in [H]'s [affecting.getDisplayName()].</span>", "<span class='notice'>You start fixing some of the wires in [H]'s [affecting.getDisplayName()].</span>")
-		if(!do_mob(user, H, 50))	return
-		item_heal_robotic(H, user, 0, 5)
+		item_heal_robotic(H, user, 0, 30)
 		src.use(1)
 		return
 	else
