@@ -60,11 +60,11 @@
 	RefreshParts()
 
 /obj/machinery/gibber/RefreshParts()
-	var/gib_time = 40
+	var/gib_time = 32
 	for(var/obj/item/weapon/stock_parts/matter_bin/B in component_parts)
 		meat_produced += 3 * B.rating
 	for(var/obj/item/weapon/stock_parts/manipulator/M in component_parts)
-		gib_time -= 5 * M.rating
+		gib_time -= 2 * M.rating
 		gibtime = gib_time
 		if(M.rating >= 2)
 			ignore_clothing = 1
