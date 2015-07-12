@@ -36,12 +36,12 @@
 					new mat.oretype(get_turf(output))
 					BOX.materials.storage[ore_id]--
 					p++
-					if (p>=10)
+					if (p>=100)
 						return
 		if (locate(/obj/item, input.loc))
 			var/obj/item/O
 			var/i
-			for (i = 0; i<10; i++)
+			for (i = 0; i<100; i++)
 				O = locate(/obj/item, input.loc)
 				if (O)
 					O.loc = src.output.loc

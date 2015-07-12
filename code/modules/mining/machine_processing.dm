@@ -277,7 +277,7 @@
 	var/in_dir = NORTH
 	var/out_dir = SOUTH
 
-	var/sheets_per_tick = 50	//Conveyors go 2x as fast and move 25 things to 2 x 25 = 50.
+	var/sheets_per_tick = 100
 
 	var/credits = 0 //Amount of money, set to -1 to disable the $ amount showing in the menu (recycling, for example)
 
