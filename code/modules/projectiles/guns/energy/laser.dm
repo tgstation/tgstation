@@ -301,7 +301,7 @@ obj/item/weapon/gun/energy/laser/retro
 	icon_state = "megabuster"
 	item_state = null
 	w_class = 2.0
-	projectile_type = /obj/item/projectile/energy/megabuster
+	projectile_type = "/obj/item/projectile/energy/megabuster"
 	charge_states = 0
 	charge_cost = 5
 	fire_sound = 'sound/weapons/megabuster.ogg'
@@ -318,7 +318,7 @@ obj/item/weapon/gun/energy/laser/retro
 	item_state = null
 	w_class = 2.0
 	charge_states = 0
-	projectile_type = /obj/item/projectile/energy/buster
+	projectile_type = "/obj/item/projectile/energy/buster"
 	charge_cost = 25
 	fire_sound = 'sound/weapons/mmlbuster.ogg'
 	inhand_states = list("left_hand" = 'icons/mob/in-hand/left/megabusters.dmi', "right_hand" = 'icons/mob/in-hand/right/megabusters.dmi')
