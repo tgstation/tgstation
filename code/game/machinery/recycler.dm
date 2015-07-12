@@ -111,6 +111,8 @@ var/const/SAFETY_COOLDOWN = 100
 		else if(istype(AM, /obj/item))
 			recycle(AM)
 		else // Can't recycle
+			if(AM.anchored) //Edge cases involving windows/grilles
+				return
 			playsound(src.loc, 'sound/machines/buzz-sigh.ogg', 50, 0)
 			AM.loc = src.loc
 
