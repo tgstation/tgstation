@@ -127,7 +127,8 @@
 	C.visible_message("<span class='warning'>[C] throws up!</span>", \
 					  "<span class='boldannounce'>You throw up!</span>")
 	playsound(get_turf(C), 'sound/effects/splat.ogg', 50, 1)
-	get_turf(C).add_vomit_floor(C)
+	var/turf/simulated/T = get_turf(C)
+	T.add_vomit_floor(C)
 	C.nutrition -= 95
 	C.adjustToxLoss(rand(-3,-5))
 
