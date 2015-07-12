@@ -240,7 +240,7 @@
 	density = !( src.lying )
 
 	if(disabilities & BLIND)
-		eye_blind = max(eye_blind, 1)
+		eye_covered = max(eye_covered, 1)
 
 	if(eye_blurry > 0)
 		eye_blurry = 0

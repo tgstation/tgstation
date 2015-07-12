@@ -13,7 +13,6 @@
 	var/timer = 240 //eventually the person will be freed
 
 /obj/structure/closet/statue/New(loc, var/mob/living/L)
-
 	if(ishuman(L) || ismonkey(L) || iscorgi(L))
 		if(L.buckled)
 			L.buckled.unbuckle_mob()
@@ -21,7 +20,9 @@
 			L.client.perspective = EYE_PERSPECTIVE
 			L.client.eye = src
 		L.loc = src
-		L.disabilities += MUTE
+		L.disabilities |= MUTE
+		L.stunned = 5 //FORCE a stun, even on hulks etc.
+		L.update_canmove()
 		L.faction += "mimic" //Stops mimics from instaqdeling people in statues
 
 		health = L.health + 100 //stoning damaged mobs will result in easier to shatter statues
@@ -46,6 +47,8 @@
 		return
 
 	SSobj.processing |= src
+	spawn(5)
+		verbs -= /obj/structure/closet/verb/verb_toggleopen  //Statues shouldn't leak the fact that they're closets
 	..()
 
 /obj/structure/closet/statue/process()
@@ -55,6 +58,8 @@
 		M.adjustFireLoss(intialFire - M.getFireLoss())
 		M.adjustBruteLoss(intialBrute - M.getBruteLoss())
 		M.setOxyLoss(intialOxy)
+		M.stunned = 5 //FORCE a stun, even on hulks etc.
+		M.update_canmove()
 	if (timer <= 0)
 		dump_contents()
 		SSobj.processing.Remove(src)
@@ -78,9 +83,11 @@
 
 	for(var/mob/living/M in src)
 		M.loc = src.loc
-		M.disabilities -= MUTE
+		M.disabilities &= ~MUTE
 		M.take_overall_damage((M.health - health - 100),0) //any new damage the statue incurred is transfered to the mob
 		M.faction -= "mimic"
+		M.stunned = 0
+		M.update_canmove()
 		if(M.client)
 			M.client.eye = M.client.mob
 			M.client.perspective = MOB_PERSPECTIVE

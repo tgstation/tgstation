@@ -163,7 +163,7 @@ var/next_mob_id = 0
 	var/msg = message
 
 	for(var/mob/M in get_hearers_in_view(range, src))
-		if(M.client)
+		if(M.client && M.blind)
 			var/image/I = image('icons/effects/sound.dmi', get_turf(src))
 			I.layer = (M.blind.layer  > 0) ? (M.blind.layer + 1) : 1
 			I.mouse_opacity = 0

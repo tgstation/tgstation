@@ -455,7 +455,7 @@
 		else if(eye_blurry)			//blurry eyes heal slowly
 			eye_blurry = max(eye_blurry-1, 0)
 	else
-		eye_blind = max(eye_blind,1) //Force blindness if user is actually blind
+		eye_covered = max(eye_covered,1) //Force blindness if user is actually blind
 	//Ears
 	if(disabilities & DEAF)		//disabled-deaf, doesn't get better on its own
 		setEarDamage(-1, max(ear_deaf, 1))

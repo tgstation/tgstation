@@ -235,7 +235,7 @@
 
 
 /obj/effect/proc_holder/spell/targeted/inflict_handler/blind
-	amt_eye_blind = 10
+	amt_eye_covered = 10
 	amt_eye_blurry = 20
 	sound="sound/magic/Blind.ogg"
 
