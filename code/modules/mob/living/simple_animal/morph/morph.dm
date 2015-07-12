@@ -110,12 +110,12 @@
 		visible_message("<span class='danger'>The [src] dissolves!</span>")
 		restore()
 
-		//Dump eaten stuff
-		for(var/obj/O in src)
-			O.loc = loc
+	//Dump eaten stuff
+	for(var/obj/O in src)
+		O.loc = loc
 
-		for(var/mob/M in src)
-			M.loc = loc
+	for(var/mob/M in src)
+		M.loc = loc
 
 	..(0)
 	return
@@ -146,7 +146,7 @@
 	if(isliving(target)) // Eat Corpses to regen health
 		var/mob/living/L = target
 		if(L.stat == DEAD)
-			if(do_after(src, 30, target = src))
+			if(do_after(src, 30, target = L))
 				visible_message("<span class='warning'>[src] swallows the [target] whole!</span>")
 				L.loc = src
 				adjustBruteLoss(-50)
@@ -154,7 +154,7 @@
 	if(istype(target,/obj/item)) // Eat items just to be annoying
 		var/obj/item/I = target
 		if(!I.anchored)
-			if(do_after(src,20, target = src))
+			if(do_after(src,20, target = I))
 				visible_message("<span class='warning'>[src] swallows the [target] whole!</span>")
 				I.loc = src
 			return

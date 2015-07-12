@@ -187,7 +187,7 @@
 
 /mob/living/simple_animal/hostile/adjustBruteLoss(var/damage)
 	..(damage)
-	if(!stat && search_objects < 3)//Not unconscious, and we don't ignore mobs
+	if(!client && !stat && search_objects < 3)//Not unconscious, and we don't ignore mobs
 		if(search_objects)//Turn off item searching and ignore whatever item we were looking at, we're more concerned with fight or flight
 			search_objects = 0
 			target = null
