@@ -82,12 +82,18 @@
 
 	for(var/obj/O in src)
 		O.loc = loc
+		if(throwing) //you keep some momentum when getting out of a thrown closet
+			spawn(2) //some time to avoid a collision between the obj and the closet/crate
+				step(O, dir)
 
 	for(var/mob/M in src)
 		M.loc = loc
 		if(M.client)
 			M.client.eye = M.client.mob
 			M.client.perspective = MOB_PERSPECTIVE
+		if(throwing)
+			spawn(2)
+				step(M, dir)
 
 /obj/structure/closet/proc/take_contents()
 

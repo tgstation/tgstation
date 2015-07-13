@@ -92,7 +92,7 @@
 		return 50 //if the projectile doesn't do damage, play its hitsound at 50% volume
 
 /obj/item/projectile/Bump(atom/A, yes)
-	if(!yes) //prevents multi bumps.
+	if(!yes) //prevents double bumps.
 		return
 	if(A == firer || A == src)
 		loc = A.loc

@@ -455,4 +455,18 @@ emp_act
 	else
 		..()
 
-	return
+/mob/living/carbon/human/hitby(atom/movable/AM, mob/thrower)
+	if(throw_speed >= EMBED_THROWSPEED_THRESHOLD)
+		if(istype(AM, /obj/item))
+			var/obj/item/I = AM
+			if(can_embed(I))
+				if(prob(I.embed_chance) && !(dna && (PIERCEIMMUNE in dna.species.specflags)))
+					throw_alert("embeddedobject")
+					var/obj/item/organ/limb/L = pick(organs)
+					L.embedded_objects |= I
+					I.add_blood(src)//it embedded itself in you, of course it's bloody!
+					I.loc = src
+					L.take_damage(I.w_class*I.embedded_impact_pain_multiplier)
+					visible_message("<span class='danger'>\the [I.name] embeds itself in [src]'s [L.getDisplayName()]!</span>","<span class='userdanger'>\the [I.name] embeds itself in your [L.getDisplayName()]!</span>")
+					return
+	return ..()

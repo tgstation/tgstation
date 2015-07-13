@@ -397,14 +397,6 @@ Auto Patrol[]"},
 		return 1
 	return 0
 
-/* terrible
-/obj/machinery/bot/ed209/Bumped(atom/movable/M as mob|obj)
-	spawn(0)
-		if (M)
-			var/turf/T = get_turf(src)
-			M:loc = T
-*/
-
 /obj/machinery/bot/ed209/explode()
 	walk_to(src,0)
 	visible_message("<span class='boldannounce'>[src] blows apart!</span>")

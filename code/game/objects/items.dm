@@ -431,7 +431,7 @@ var/global/image/fire_overlay = image("icon" = 'icons/effects/fire.dmi', "icon_s
 /obj/item/singularity_pull(S, current_size)
 	spawn(0) //this is needed or multiple items will be thrown sequentially and not simultaneously
 		if(current_size >= STAGE_FOUR)
-			throw_at(S,14,3)
+			throw_at(S,14,3, spin=0)
 		else ..()
 
 /obj/item/acid_act(var/acidpwr, var/acid_volume)
@@ -465,26 +465,16 @@ var/global/image/fire_overlay = image("icon" = 'icons/effects/fire.dmi', "icon_s
 		if(!findtext(desc, "it looks slightly melted...")) //it looks slightly melted... it looks slightly melted... it looks slightly melted... etc.
 			desc += " it looks slightly melted..." //needs a space at the start, formatting
 
+/obj/item/throw_impact(atom/A, mob/thrower)
+	var/itempush = 1
+	if(w_class < 4)
+		itempush = 0 //too light to push anything
+	return A.hitby(src,thrower, 0, itempush)
 
-
-/obj/item/throw_impact(A)
-	if(throw_speed >= EMBED_THROWSPEED_THRESHOLD)
-		if(istype(A, /mob/living/carbon/human))
-			var/mob/living/carbon/human/H = A
-			if(can_embed(src))
-				if(prob(embed_chance) && !(PIERCEIMMUNE in H.dna.species.specflags))
-					H.throw_alert("embeddedobject")
-					var/obj/item/organ/limb/L = pick(H.organs)
-					L.embedded_objects |= src
-					add_blood(H)//it embedded itself in you, of course it's bloody!
-					loc = H
-					L.take_damage(w_class*embedded_impact_pain_multiplier)
-					H.visible_message("<span class='danger'>\the [name] embeds itself in [H]'s [L.getDisplayName()]!</span>","<span class='userdanger'>\the [name] embeds itself in your [L.getDisplayName()]!</span>")
-					return
-
-	//Reset regardless of if we hit a human.
+/obj/item/throw_at(atom/target, range, speed, mob/thrower, spin=1)
+	. = ..()
 	throw_speed = initial(throw_speed) //explosions change this.
-	..()
+
 
 /obj/item/proc/remove_item_from_storage(atom/newLoc) //please use this if you're going to snowflake an item out of a obj/item/weapon/storage
 	if(!newLoc)

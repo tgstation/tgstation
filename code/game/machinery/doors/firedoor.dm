@@ -16,8 +16,10 @@
 	closingLayer = 3.11
 
 /obj/machinery/door/firedoor/Bumped(atom/AM)
-	if(p_open || operating)	return
-	if(!density)	return ..()
+	if(p_open || operating)
+		return
+	if(!density)
+		return ..()
 	return 0
 
 
