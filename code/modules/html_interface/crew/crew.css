@@ -194,3 +194,12 @@ a { display: inline; }
 {
 	color: #e74c3c;
 }
+
+
+.toxin_light {
+    color: #3ADF00;
+}
+
+.oxygen_light {
+    color: #6698FF;
+}

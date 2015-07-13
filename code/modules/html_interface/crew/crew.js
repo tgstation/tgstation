@@ -516,7 +516,7 @@ function add(name, assignment, ijob, life_status, dam1, dam2, dam3, dam4, area, 
 		var tx					= (translate(x - 1, scale_x) - 1).toFixed(0);
 		var ty					= (translate(y - 1, scale_y) + 7).toFixed(0);
 
-		var dotElem				= $("<div class=\"mapIcon mapIcon16 rank-" +  ijobNames[ijob.toString()] + " " + (avg_dam <= 25 ? 'good' : (avg_dam > 25 && avg_dam <= 90 ? 'average' : 'bad')) + "\" style =\"top:" + ty +"px; left: " + tx + "px;\" z-index: 2; unselectable=\"on\"><div class=\"tooltip hidden\">" + name + " " + (life_status ? "<span class='good'>Living</span>" : "<span class='bad'>Deceased</span>") + " (<span class=\"oxyloss_light\">" + dam1 + "</span>/<span class=\"toxin_light\">" + dam2 + "</span>/<span class=\"burn\">" + dam3 + "</span>/<span class=\"brute\">" + dam4 + "</span>) "+area+": "+pos_x+", "+pos_y+")</div></div>");
+		var dotElem				= $("<div class=\"mapIcon mapIcon16 rank-" +  ijobNames[ijob.toString()] + " " + (avg_dam <= 25 ? 'good' : (avg_dam > 25 && avg_dam <= 90 ? 'average' : 'bad')) + "\" style =\"top:" + ty +"px; left: " + tx + "px;\" z-index: 2; unselectable=\"on\"><div class=\"tooltip hidden\">" + name + " " + (life_status ? "<span class='good'>Living</span>" : "<span class='bad'>Deceased</span>") + " (<span class=\"oxyloss_light\">" + dam1 + "</span>/<span class=\"toxin_light\">" + dam2 + "</span>/<span class=\"fire\">" + dam3 + "</span>/<span class=\"brute\">" + dam4 + "</span>) "+area+": "+pos_x+", "+pos_y+")</div></div>");
 		//$("#uiMap").append("<div class=\"dot\" style=\"top: " + ty + "px; left: " + tx + "px; background-color: " + color + "; z-index: " + 999 + ";\"></div>");
 
 		$("#uiMap").append(dotElem);
