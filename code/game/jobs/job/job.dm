@@ -173,11 +173,8 @@
 /datum/job/proc/config_check()
 	return 1
 
-/datum/job/proc/announce_head(var/datum/mind/o_mind, var/channel) //tells the given channel that the given mind is the new department head. Channel must be given like so: ":n" for science, etc.
-	var/ailist[] = list()
-	for (var/mob/living/silicon/ai/A in living_mob_list)
-		ailist += A
-	if (ailist.len)
-		for(var/a_channel in channel)
-			var/mob/living/silicon/ai/announcer = pick(ailist)
-			announcer.say("[a_channel] [o_mind.name], [o_mind.assigned_role], is the new department head.")
+/datum/job/proc/announce_head(var/datum/mind/o_mind, var/channels) //tells the given channel that the given mind is the new department head. See communications.dm for valid channels.
+	sleep(2) //to allow some initialization
+	if(announcement_systems.len)
+		var/obj/structure/announcement_system/announcer = pick(announcement_systems)
+		announcer.announce("[o_mind.name], [o_mind.assigned_role], is the new department head.", channels)
