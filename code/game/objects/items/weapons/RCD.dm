@@ -281,6 +281,9 @@ RCD
 			mode = 7
 			user << "<span class='notice'>You change RCD's mode to 'Sorting Machines'.</span>"
 		if(7)
+			mode = 8
+			user << "<span class='notice'>You change RCD's mode to 'Crafting Machines'.</span>"
+		if(8)
 			mode = 1
 			user << "<span class='notice'>You change RCD's mode to 'Floor & Walls'.</span>"
 
@@ -504,11 +507,25 @@ RCD
 					if(do_after(user, 10, target = A))
 						if(!useResource(5, user)) return 0
 						activate()
-						new/obj/machinery/mineral/sorting_machine(A, user.dir) // face north, get a north facing belt, etc.
+						new/obj/machinery/mineral/sorting_machine(A)
 						return 1
 					return 0
 				return 0
-
+		if (8)
+			if(istype(A, /turf/simulated/floor))
+				if(checkResource(5, user))
+					for(var/obj/machinery/mineral/crafting_machine/C in A)
+						user << "<span class='warning'>There is already a crafter there!</span>"
+						return 0
+					user << "<span class='notice'>You start building a crafting machine...</span>"
+					playsound(src.loc, 'sound/machines/click.ogg', 50, 1)
+					if(do_after(user, 10, target = A))
+						if(!useResource(5, user)) return 0
+						activate()
+						new/obj/machinery/mineral/crafting_machine(A)
+						return 1
+					return 0
+				return 0
 		else
 			user << "ERROR: RCD in MODE: [mode] attempted use by [user]. Send this text #coderbus or an admin."
 			return 0
