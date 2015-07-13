@@ -3,4 +3,4 @@ author: Chiefwaffles
 delete-after: True
 
 changes: 
-  - rscadd: "Department Heads, on arrival, (latejoin or start) now have their name announced to their underlings."
+  - rscadd: "After realizing how often AIs tend to 'disappear', Centcomm has authorized the shipment of the Automated Announcement System to take over the AI's responsibility of announcing new arrivals."
