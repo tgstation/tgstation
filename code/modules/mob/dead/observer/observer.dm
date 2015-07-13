@@ -45,7 +45,7 @@ var/list/image/ghost_darkness_images = list() //this is a list of images for thi
 			if(body.real_name)
 				name = body.real_name
 			else
-				name = random_name(gender)
+				name = random_unique_name(gender)
 
 		mind = body.mind	//we don't transfer the mind but we keep a reference to it.
 
@@ -53,7 +53,7 @@ var/list/image/ghost_darkness_images = list() //this is a list of images for thi
 	loc = T
 
 	if(!name)							//To prevent nameless ghosts
-		name = random_name(gender)
+		name = random_unique_name(gender)
 	real_name = name
 
 	if(!fun_verbs)
@@ -141,12 +141,9 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 					if(malf.malf_mode_declared && (malf.apcs > 0))
 						stat(null, "Time left: [max(malf.AI_win_timeleft/malf.apcs, 0)]")
 
-				if(istype(ticker.mode, /datum/game_mode/gang))
-					var/datum/game_mode/gang/mode = ticker.mode
-					if(isnum(mode.A_timer))
-						stat(null, "[gang_name("A")] Gang Takeover: [max(mode.A_timer, 0)]")
-					if(isnum(mode.B_timer))
-						stat(null, "[gang_name("B")] Gang Takeover: [max(mode.B_timer, 0)]")
+				for(var/datum/gang/G in ticker.mode.gangs)
+					if(isnum(G.dom_timer))
+						stat(null, "[G.name] Gang Takeover: [max(G.dom_timer, 0)]")
 
 /mob/dead/observer/verb/reenter_corpse()
 	set category = "Ghost"

@@ -8,6 +8,7 @@
 	throwforce = 0
 	throw_speed = 3
 	throw_range = 5
+	layer = 4.1
 	origin_tech = "biotech=3"
 	attack_verb = list("attacked", "slapped", "whacked")
 	var/mob/living/carbon/brain/brainmob = null

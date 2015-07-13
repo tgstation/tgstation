@@ -307,3 +307,20 @@
 	else
 		if(dx > 0)	dir = EAST
 		else		dir = WEST
+
+/obj/screen/click_catcher
+	icon = 'icons/mob/screen_full.dmi'
+	icon_state = "passage0"
+	layer = 0
+	mouse_opacity = 2
+	screen_loc = "CENTER-7,CENTER-7"
+
+/obj/screen/click_catcher/Click(location, control, params)
+	var/list/modifiers = params2list(params)
+	if(modifiers["middle"] && istype(usr, /mob/living/carbon))
+		var/mob/living/carbon/C = usr
+		C.swap_hand()
+	else
+		var/turf/T = screen_loc2turf(modifiers["screen-loc"], get_turf(usr))
+		T.Click(location, control, params)
+	return 1

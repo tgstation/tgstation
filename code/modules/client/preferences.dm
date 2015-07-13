@@ -111,7 +111,7 @@ var/global/list/special_roles = list( //keep synced with the defines BE_* in set
 			return
 	//we couldn't load character data so just randomize the character appearance + name
 	random_character()		//let's create a random character then - rather than a fat, bald and naked man.
-	real_name = random_name(gender)
+	real_name = pref_species.random_name(gender,1)
 	if(!loaded_preferences_successfully)
 		save_preferences()
 	save_character()		//let's save this new random character so it doesn't keep generating new ones.
@@ -674,7 +674,7 @@ var/global/list/special_roles = list( //keep synced with the defines BE_* in set
 			if("random")
 				switch(href_list["preference"])
 					if("name")
-						real_name = random_name(gender)
+						real_name = pref_species.random_name(gender,1)
 					if("age")
 						age = rand(AGE_MIN, AGE_MAX)
 					if("hair")
@@ -826,7 +826,7 @@ var/global/list/special_roles = list( //keep synced with the defines BE_* in set
 							var/temp_hsv = RGBtoHSV(new_mutantcolor)
 							if(new_mutantcolor == "#000000")
 								features["mcolor"] = pref_species.default_color
-							else if(MUTCOLORS_PARTSONLY in pref_species.specflags || ReadHSV(temp_hsv)[3] >= ReadHSV("#7F7F7F")[3]) // mutantcolors must be bright, but only if they affect the skin
+							else if((MUTCOLORS_PARTSONLY in pref_species.specflags) || ReadHSV(temp_hsv)[3] >= ReadHSV("#7F7F7F")[3]) // mutantcolors must be bright, but only if they affect the skin
 								features["mcolor"] = sanitize_hexcolor(new_mutantcolor)
 							else
 								user << "<span class='danger'>Invalid color. Your color is not bright enough.</span>"
@@ -1017,7 +1017,7 @@ var/global/list/special_roles = list( //keep synced with the defines BE_* in set
 					if("changeslot")
 						if(!load_character(text2num(href_list["num"])))
 							random_character()
-							real_name = random_name(gender)
+							real_name = random_unique_name(gender)
 							save_character()
 
 					if("tab")
@@ -1029,7 +1029,7 @@ var/global/list/special_roles = list( //keep synced with the defines BE_* in set
 
 	proc/copy_to(mob/living/carbon/human/character)
 		if(be_random_name)
-			real_name = random_name(gender)
+			real_name = pref_species.random_name(gender)
 
 		if(be_random_body)
 			random_character(gender)

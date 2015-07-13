@@ -133,7 +133,7 @@
 	src.life -= 10
 	if(ismob(A))
 		var/mob/M = A
-		add_logs(firer, M, "shot", object="[src]")
+		add_logs(firer, M, "shot", "[src]")
 	if(life <= 0)
 		qdel(src)
 	return

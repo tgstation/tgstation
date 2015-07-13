@@ -247,10 +247,10 @@
 "eM" = (/turf/simulated/floor{dir = 8; icon_state = "wood"},/area/centcom/ferry)
 "eN" = (/obj/structure/stool,/turf/simulated/floor{dir = 8; icon_state = "wood"},/area/centcom/ferry)
 "eO" = (/turf/indestructible/fakeglass{icon_state = "fakewindows"; dir = 1},/area/centcom/control)
-"eP" = (/turf/simulated/floor/fancy/grass,/area/space)
+"eP" = (/turf/simulated/floor/grass,/area/space)
 "eQ" = (/turf/simulated/floor/plasteel{icon_state = "bot"},/area/centcom/control)
-"eR" = (/turf/simulated/floor/fancy/grass,/area/centcom/control)
-"eS" = (/turf/simulated/floor/fancy/grass,/area/centcom/evac)
+"eR" = (/turf/simulated/floor/grass,/area/centcom/control)
+"eS" = (/turf/simulated/floor/grass,/area/centcom/evac)
 "eT" = (/obj/structure/stool/bed/chair{dir = 4},/turf/simulated/floor/plasteel/shuttle{icon_state = "shuttlefloor3"},/area/space)
 "eU" = (/obj/structure/stool/bed/chair{dir = 8},/turf/simulated/floor/plasteel/shuttle{icon_state = "shuttlefloor3"},/area/space)
 "eV" = (/turf/simulated/floor/plasteel,/area/centcom/evac)
@@ -565,6 +565,7 @@
 "kS" = (/turf/indestructible/fakedoor{name = "Thunderdome"},/area/tdome/tdomeobserve)
 "kT" = (/obj/machinery/computer/security/telescreen,/turf/simulated/floor/plasteel{icon_state = "redbluefull"; dir = 2},/area/tdome/tdomeobserve)
 "kU" = (/obj/machinery/door/window{base_state = "right"; dir = 4; icon_state = "right"; name = "EVA Storage"; req_access_txt = "150"},/turf/simulated/floor/plasteel/shuttle/red,/area/shuttle/syndicate)
+"kV" = (/obj/structure/table/wood,/obj/effect/landmark{name = "Teleport-Scroll"},/obj/item/weapon/dice/d20,/obj/item/weapon/dice,/turf/simulated/floor/carpet{dir = 9; icon_state = "carpetside"},/area/wizard_station)
 "kW" = (/obj/structure/rack,/obj/item/clothing/suit/space/syndicate/black/red,/obj/item/clothing/head/helmet/space/syndicate/black/red,/turf/simulated/floor/plasteel/shuttle/red,/area/shuttle/syndicate)
 "kX" = (/turf/simulated/floor/plating/snow,/turf/simulated/floor{icon = 'icons/turf/snow.dmi'; icon_state = "gravsnow_corner"; dir = 10},/area/syndicate_mothership)
 "kY" = (/turf/simulated/floor/plasteel/black,/area/syndicate_mothership)
@@ -577,9 +578,9 @@
 "lf" = (/turf/simulated/floor/plating/snow,/turf/simulated/floor/plasteel/cult{tag = "icon-gravsnow_corner (NORTH)"; icon = 'icons/turf/snow.dmi'; icon_state = "gravsnow_corner"; dir = 1},/area/syndicate_mothership)
 "lg" = (/turf/simulated/floor/plating/snow,/obj/structure/flora/bush,/turf/simulated/floor/plasteel/cult{tag = "icon-gravsnow_corner (NORTH)"; icon = 'icons/turf/snow.dmi'; icon_state = "gravsnow_corner"; dir = 1},/area/syndicate_mothership)
 "lh" = (/turf/indestructible/fakeglass{icon_state = "fakewindows2"; dir = 8},/area/tdome/tdomeobserve)
-"li" = (/obj/structure/table/wood,/obj/effect/landmark{name = "Teleport-Scroll"},/obj/item/weapon/dice/d20,/obj/item/weapon/dice,/turf/simulated/floor/fancy/carpet{dir = 9; icon_state = "carpetside"},/area/wizard_station)
-"lj" = (/turf/simulated/floor/fancy/carpet{dir = 5; icon_state = "carpetside"},/area/wizard_station)
-"lk" = (/turf/simulated/floor/fancy/carpet{dir = 1; icon_state = "carpetside"},/area/wizard_station)
+"li" = (/turf/simulated/floor/carpet{dir = 5; icon_state = "carpetside"},/area/wizard_station)
+"lj" = (/turf/simulated/floor/carpet{dir = 1; icon_state = "carpetside"},/area/wizard_station)
+"lk" = (/obj/structure/dresser,/obj/item/weapon/storage/backpack/satchel,/turf/simulated/floor/carpet{dir = 10; icon_state = "carpetside"},/area/wizard_station)
 "ll" = (/obj/effect/forcefield,/turf/space,/area/wizard_station)
 "lm" = (/turf/simulated/floor/plasteel/cult{tag = "icon-cultdamage6"; icon_state = "cultdamage6"},/area/wizard_station)
 "ln" = (/turf/simulated/floor/plasteel/cult,/turf/simulated/wall/shuttle{dir = 2; icon_state = "swall_f10"; layer = 2},/area/wizard_station)
@@ -613,8 +614,7 @@
 "lP" = (/obj/machinery/door/poddoor{id = "thunderdome"; name = "Thunderdome Blast Door"},/turf/simulated/floor/plating,/area/tdome/arena)
 "lQ" = (/obj/effect/landmark{name = "tdome1"},/turf/simulated/floor/plating,/area/tdome/tdome1)
 "lR" = (/obj/structure/rack,/obj/item/clothing/under/color/green,/obj/item/clothing/shoes/sneakers/brown,/obj/item/clothing/suit/armor/tdome/green,/obj/item/clothing/head/helmet/thunderdome,/obj/item/weapon/melee/baton/loaded,/obj/item/weapon/melee/energy/sword/saber/green,/turf/simulated/floor/plasteel/black,/area/tdome/arena)
-"lS" = (/obj/structure/dresser,/obj/item/weapon/storage/backpack/satchel,/turf/simulated/floor/fancy/carpet{dir = 10; icon_state = "carpetside"},/area/wizard_station)
-"lT" = (/obj/structure/table/wood,/obj/item/weapon/storage/bag/tray,/obj/item/weapon/reagent_containers/food/snacks/burger/spell,/turf/simulated/floor/fancy/carpet{dir = 6; icon_state = "carpetside"},/area/wizard_station)
+"lS" = (/obj/structure/table/wood,/obj/item/weapon/storage/bag/tray,/obj/item/weapon/reagent_containers/food/snacks/burger/spell,/turf/simulated/floor/carpet{dir = 6; icon_state = "carpetside"},/area/wizard_station)
 "lU" = (/turf/simulated/floor{dir = 2; icon_state = "carpetside"},/area/wizard_station)
 "lV" = (/turf/indestructible/fakedoor{name = "Squad 2 Pod"},/area/wizard_station)
 "lW" = (/obj/machinery/sleeper{icon_state = "sleeper-open"; dir = 4},/turf/simulated/floor/plasteel/shuttle/red,/area/shuttle/syndicate)
@@ -889,9 +889,9 @@ aMaMaMaMaMaMaMaaaaaaaaaaaaaaaaaahFgkaaeBaaeBkzgMhFaaaaeBaaaaaaaaeBaaaaaaaaaMaMaM
 aMaMaMaMaMaMaMaaaaaaaaaaaaaaaaaaeBeBaakKgkaallkLhFeBaahnaaaaaaaaaaaaaaaaaaaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMfvfIfIhdjZhshshskMhshshskNhshshshdhQfvfvjmkOkQkPfvkRfvfvfvfvfvfvaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMkSkIkIkIkTkIkIkIkIkIkIkIkTkIkIkIkSaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaM
 aMaMaMaMaMaMaMaaaaaaaaaaaaaaaaaaaaaaaaeBeBaalrgklsaaaaaaeBaaaaaaaaaaaaaaaaaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMfvfIfIhdjZhshshskUhshshshjhshskWhdkXkXkofvfvfvfvfvkYkYkZlblalcfvaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMhBkIkJkJkJkJkJkIkIkIkJkJkJkJkJkIhBaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaM
 aMaMaMaMaMaMaMaaaaaaaaaaaaaaaaaaaaaaaaaaeBgwigldiifGeBaaeBeBaaaaaaaaaaaaaaaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMfvfIhehdhdhdhdhdhdlehshshdhdhdhdhdhdhglflflflgkofvkYkYkYkYkYkYfvaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMhBhElhlhlhlhlhlhlhlhlhlhlhlhlhhChBaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaM
-aMaMaMaMaMaMaMaaaaaaaaaaaaaaaaaaaaaaaaaaaagDlilkljgDkKjdhalnlmeBaaaaaaaaaaaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMfvfIhdlololpltlqhdhshshshdlulwlvlylxhdfIfJfIfIfKiskYkYkYkYkYlzfvaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMlAlAlAlAlAlAlAlAlAmgmhmhmhmhmhmhmhmhmhmhmhmhmhmglAlAlAlAlAlAlAlAlAaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaM
+aMaMaMaMaMaMaMaaaaaaaaaaaaaaaaaaaaaaaaaaaagDkVljligDkKjdhalnlmeBaaaaaaaaaaaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMfvfIhdlololpltlqhdhshshshdlulwlvlylxhdfIfJfIfIfKiskYkYkYkYkYlzfvaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMlAlAlAlAlAlAlAlAlAmgmhmhmhmhmhmhmhmhmhmhmhmhmhmglAlAlAlAlAlAlAlAlAaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaM
 aMaMaMaMaMaMaMaaaaaaaaaaaaaaaaaaaaaaaaaaaagtlBlDlCgtlElFgYlGfEgaaaaaaaaaaaaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMfvfIhdhshshsklhslHhshshslIhsklhskllJhdfIgofLfJgofvlKlKlKlKlKlLfvaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMlAlMlOlNlNlNlNlNlPnemhmhmhmhmhmhmhmhmhmhmhmhmhnglPlQlQlQlQlQlOlRlAaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaM
-aMaMaMaMaMaMaMaaaaaaaaaaaaaaaaaaaaaaaagMeBfulSlUlTfufZlVgYlGaaeBaaaaaaaaaaaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMfvfIhdlWhshshshslXhshshslYhshshshshshdfIfIfIfLhQfvfvfvfvfvfvfvfvaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMlAlMlOlNlZlNlZlNlPnemhmhmhmhmhmhmhmhmhmhmhmhmhnglPlQmalQmalQlOlRlAaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaM
+aMaMaMaMaMaMaMaaaaaaaaaaaaaaaaaaaaaaaagMeBfulklUlSfufZlVgYlGaaeBaaaaaaaaaaaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMfvfIhdlWhshshshslXhshshslYhshshshshshdfIfIfIfLhQfvfvfvfvfvfvfvfvaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMlAlMlOlNlZlNlZlNlPnemhmhmhmhmhmhmhmhmhmhmhmhmhnglPlQmalQmalQlOlRlAaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaM
 aMaMaMaMaMaMaMaaaaaaaaaaaaaaaaaaaaaaaaeBgwkiiggtiikifGmcmblGaaeBaaaaaaaaaaaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMfvfIhdlWhshsmemdhdmfmimfhdmjmkhshshshdfIfLfIgohQfvaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMlAlMlOlNlNmllNlNlPnemhmhmhmhmhnxnynxmhmhmhmhmhnglPlQlQmmlQlQlOlRlAaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaM
 aMaMaMaMaMaMaMaaaaaaaaaaaaaaaaaaaaaaaaeBgDfEmnmomnfEgDaanqaaaaeBaaaaaaaaaaaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMfvfIhdhshsmphdhdhdmqmrhshdhdhdhshshshdfIfIfJfIhQfvaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMlAlMlOlNlNlNlNlNlPnemhmhmhmhmhnxnDnxmhmhmhmhmhnglPlQlQlQlQlQlOlRlAaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaM
 aMaMaMaMaMaMaMaaaaaaaaaaaaaaaaaaaaaaeBgknzfEfEfEfEfEnzaaaaaaaagkaaaaaaaaaaaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMfvfIhdmsmumthdfIhdmvmvmvhdfIhdmwmymxhdfIfIfIfIhQfvaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMlAlMlOlNlZlNlZlNlPnemhmhmhmhmhmhmhmhmhmhmhmhmhnglPlQmalQmalQlOlRlAaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaM

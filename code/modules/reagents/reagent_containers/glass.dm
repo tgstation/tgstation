@@ -4,6 +4,7 @@
 	possible_transfer_amounts = list(5, 10, 15, 25, 30, 50)
 	volume = 50
 	flags = OPENCONTAINER
+	spillable = 1
 
 	can_be_placed_into = list(
 		/obj/machinery/chem_master/,
@@ -33,22 +34,55 @@
 
 
 
-/obj/item/weapon/reagent_containers/glass/afterattack(obj/target, mob/user, proximity)
-	if((!proximity) || !check_allowed_items(target,1)) return
-
-	if(ismob(target) && target.reagents && reagents.total_volume)
-		var/mob/M = target
-		var/R
-		target.visible_message("<span class='danger'>[user] has splashed [target] with something!</span>", \
-						"<span class='userdanger'>[user] has splashed [target] with something!</span>")
-		if(reagents)
-			for(var/datum/reagent/A in reagents.reagent_list)
-				R += A.id + " ("
-				R += num2text(A.volume) + "),"
-		add_logs(user, M, "splashed", object="[R]")
-		reagents.reaction(target, TOUCH)
-		reagents.clear_reagents()
+/obj/item/weapon/reagent_containers/glass/attack(mob/M as mob, mob/user as mob, obj/target)
+	if(!canconsume(M, user))
 		return
+
+	if(!reagents || !reagents.total_volume)
+		user << "<span class='warning'>[src] is empty!</span>"
+		return
+
+	if(reagents && reagents.total_volume)
+		if(user.a_intent == "harm")
+			if(ismob(M))
+				var/R
+				M.visible_message("<span class='danger'>[user] splashes the contents of [src] onto [M]!</span>", \
+								"<span class='userdanger'>[user] splashes the contents of [src] onto [M]!</span>")
+				if(reagents)
+					for(var/datum/reagent/A in reagents.reagent_list)
+						R += A.id + " ("
+						R += num2text(A.volume) + "),"
+
+				reagents.reaction(M, TOUCH)
+				add_logs(user, M, "splashed", R)
+				reagents.clear_reagents()
+				return
+
+		else if(M == user)
+			user << "<span class='notice'>You swallow a gulp of [src].</span>"
+			if(reagents.total_volume)
+				reagents.reaction(user, INGEST)
+				spawn(5)
+					reagents.trans_to(user, 5)
+			playsound(M.loc,'sound/items/drink.ogg', rand(10,50), 1)
+			return
+
+		else if(ismob(M))
+			M.visible_message("<span class='danger'>[user] attempts to feed something to [M].</span>", \
+							"<span class='userdanger'>[user] attempts to feed something to you.</span>")
+			if(!do_mob(user, M)) return
+			if(!reagents.total_volume) return // The drink might be empty after the delay, such as by spam-feeding
+			M.visible_message("<span class='danger'>[user] feeds something to [M].</span>", "<span class='userdanger'>[user] feeds something to you.</span>")
+			add_logs(user, M, "fed", reagentlist(src))
+			if(reagents.total_volume)
+				reagents.reaction(M, INGEST)
+				spawn(5)
+					reagents.trans_to(M, 5)
+			playsound(M.loc,'sound/items/drink.ogg', rand(10,50), 1)
+			return
+
+/obj/item/weapon/reagent_containers/glass/afterattack(obj/target, mob/user, proximity)
+	if((!proximity) || !check_allowed_items(target,target_self=1)) return
 
 	else if(istype(target, /obj/structure/reagent_dispensers)) //A dispenser. Transfer FROM it TO us.
 
@@ -85,9 +119,11 @@
 		return
 
 	else if(reagents.total_volume)
-		user << "<span class='notice'>You splash the solution onto [target].</span>"
-		reagents.reaction(target, TOUCH)
-		reagents.clear_reagents()
+		if(user.a_intent == "harm")
+			user.visible_message("<span class='danger'>[user] splashes the contents of [src] onto [target]!</span>", \
+								"<span class='notice'>You splash the contents of [src] onto [target].</span>")
+			reagents.reaction(target, TOUCH)
+			reagents.clear_reagents()
 
 /obj/item/weapon/reagent_containers/glass/attackby(var/obj/item/I, mob/user as mob, params)
 	if(istype(I, /obj/item/clothing/mask/cigarette)) //ciggies are weird

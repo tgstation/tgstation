@@ -123,6 +123,10 @@
 		imp_in.gib()
 		explosion(src,heavy,medium,weak,weak, flame_range = weak)
 		qdel(src)
+		return
+	timed_explosion()
+
+/obj/item/weapon/implant/explosive/proc/timed_explosion()
 	imp_in.visible_message("<span class = 'warning'>[imp_in] starts beeping ominously!</span>")
 	playsound(loc, 'sound/items/timer.ogg', 30, 0)
 	sleep(delay/4)
@@ -156,21 +160,7 @@
 		if(E != src)
 			qdel(E)
 	imp_in << "<span class='notice'>You activate your macrobomb implant.</span>"
-	imp_in.visible_message("<span class = 'warning'>[imp_in] starts beeping ominously!</span>")
-	playsound(loc, 'sound/items/timer.ogg', 30, 0)
-	sleep(delay/4)
-	if(imp_in.stat)
-		imp_in.visible_message("<span class = 'warning'>[imp_in] doubles over in pain!</span>")
-		imp_in.Weaken(7)
-	playsound(loc, 'sound/items/timer.ogg', 30, 0)
-	sleep(delay/4)
-	playsound(loc, 'sound/items/timer.ogg', 30, 0)
-	sleep(delay/4)
-	playsound(loc, 'sound/items/timer.ogg', 30, 0)
-	sleep(delay/4)
-	imp_in.gib()
-	explosion(src,heavy,medium,weak,weak, flame_range = weak)
-	qdel(src)
+	timed_explosion()
 
 /obj/item/weapon/implant/chem
 	name = "chem implant"
@@ -238,11 +228,11 @@
 
 /obj/item/weapon/implant/loyalty/implanted(mob/target)
 	..()
-	if((target.mind in (ticker.mode.head_revolutionaries | ticker.mode.A_bosses | ticker.mode.B_bosses)) || is_shadow_or_thrall(target))
+	if((target.mind in (ticker.mode.head_revolutionaries | ticker.mode.get_gang_bosses())) || is_shadow_or_thrall(target))
 		target.visible_message("<span class='warning'>[target] seems to resist the implant!</span>", "<span class='warning'>You feel the corporate tendrils of Nanotrasen try to invade your mind!</span>")
 		return 0
-	if(target.mind in (ticker.mode.A_gang | ticker.mode.B_gang))
-		ticker.mode.remove_gangster(target.mind,exclude_bosses=1)
+	if(target.mind in ticker.mode.get_gangsters())
+		ticker.mode.remove_gangster(target.mind)
 		target.visible_message("<span class='warning'>[src] was destroyed in the process!</span>", "<span class='notice'>You feel a surge of loyalty towards Nanotrasen.</span>")
 		return 0
 	if(target.mind in ticker.mode.revolutionaries)
@@ -254,7 +244,8 @@
 	return 1
 
 /obj/item/weapon/implant/loyalty/Destroy()
-	loc << "<span class='notice'><b>You feel a sense of liberation as Nanotrasen's grip on your mind fades away.</b></span>"
+	if(imp_in.stat != DEAD)
+		imp_in << "<span class='boldnotice'>You feel a sense of liberation as Nanotrasen's grip on your mind fades away.</span>"
 	..()
 
 /obj/item/weapon/implant/adrenalin

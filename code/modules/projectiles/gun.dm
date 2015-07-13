@@ -54,6 +54,14 @@
 	if(pin)
 		pin = new pin(src)
 
+/obj/item/weapon/gun/CheckParts()
+	var/obj/item/weapon/gun/G = locate(/obj/item/weapon/gun) in contents
+	if(G)
+		G.loc = loc
+		qdel(G.pin)
+		G.pin = null
+		visible_message("[G] can now fit a new pin, but old one was destroyed in the process.")
+		qdel(src)
 
 /obj/item/weapon/gun/examine(mob/user)
 	..()

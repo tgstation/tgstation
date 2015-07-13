@@ -1,6 +1,7 @@
 /turf/simulated/wall/r_wall
 	name = "reinforced wall"
 	desc = "A huge chunk of reinforced metal used to seperate rooms."
+	icon = 'icons/turf/walls/reinforced_wall.dmi'
 	icon_state = "r_wall"
 	opacity = 1
 	density = 1
@@ -53,7 +54,7 @@
 			MS.use(1)
 			src.d_state = 0
 			src.icon_state = "r_wall"
-			relativewall_neighbours()	//call smoothwall stuff
+			smooth_icon_neighbors(src)
 			user << "<span class='notice'>You repair the last of the damage.</span>"
 			return 1
 	return 0
@@ -65,7 +66,7 @@
 			if (istype(W, /obj/item/weapon/wirecutters))
 				playsound(src, 'sound/items/Wirecutter.ogg', 100, 1)
 				src.d_state = 1
-				src.icon_state = "r_wall-1"
+				update_icon()
 				user << "<span class='notice'>You cut the outer grille.</span>"
 				return 1
 
@@ -80,7 +81,7 @@
 
 					if( d_state == 1 && user.loc == T && user.get_active_hand() == W )
 						src.d_state = 2
-						src.icon_state = "r_wall-2"
+						update_icon()
 						user << "<span class='notice'>You remove the support lines.</span>"
 				return 1
 
@@ -89,8 +90,8 @@
 				var/obj/item/stack/sheet/metal/O = W
 				if (O.use(1))
 					src.d_state = 0
+					update_icon()
 					src.icon_state = "r_wall"
-					relativewall_neighbours()	//call smoothwall stuff
 					user << "<span class='notice'>You replace the outer grille.</span>"
 				else
 					user << "<span class='warning'>Report this to a coder: metal stack had less than one sheet in it when trying to repair wall</span>"
@@ -111,7 +112,7 @@
 
 						if( d_state == 2 && user.loc == T && user.get_active_hand() == WT )
 							src.d_state = 3
-							src.icon_state = "r_wall-3"
+							update_icon()
 							user << "<span class='notice'>You press firmly on the cover, dislodging it.</span>"
 				return 1
 
@@ -126,7 +127,7 @@
 
 					if( d_state == 2 && user.loc == T && user.get_active_hand() == W )
 						src.d_state = 3
-						src.icon_state = "r_wall-3"
+						update_icon()
 						user << "<span class='notice'>You press firmly on the cover, dislodging it.</span>"
 				return 1
 
@@ -142,7 +143,7 @@
 
 					if( d_state == 3 && user.loc == T && user.get_active_hand() == W )
 						src.d_state = 4
-						src.icon_state = "r_wall-4"
+						update_icon()
 						user << "<span class='notice'>You pry off the cover.</span>"
 				return 1
 
@@ -158,7 +159,7 @@
 
 					if( d_state == 4 && user.loc == T && user.get_active_hand() == W )
 						src.d_state = 5
-						src.icon_state = "r_wall-5"
+						update_icon()
 						user << "<span class='notice'>You remove the bolts anchoring the support rods.</span>"
 				return 1
 
@@ -176,7 +177,7 @@
 
 						if( d_state == 5 && user.loc == T && user.get_active_hand() == WT )
 							src.d_state = 6
-							src.icon_state = "r_wall-6"
+							update_icon()
 							user << "<span class='notice'>You slice through the support rods.</span>"
 				return 1
 
@@ -191,7 +192,7 @@
 
 					if( d_state == 5 && user.loc == T && user.get_active_hand() == W )
 						src.d_state = 6
-						src.icon_state = "r_wall-6"
+						update_icon()
 						user << "<span class='notice'>You slice through the support rods.</span>"
 				return 1
 
@@ -210,6 +211,15 @@
 						dismantle_wall()
 				return 1
 	return 0
+
+/turf/simulated/wall/r_wall/proc/update_icon()
+	if(d_state)
+		icon_state = "r_wall-[d_state]"
+		smooth = 0
+		clear_overlays(src)
+	else
+		smooth = 1
+		icon_state = ""
 
 /turf/simulated/wall/r_wall/singularity_pull(S, current_size)
 	if(current_size >= STAGE_FIVE)

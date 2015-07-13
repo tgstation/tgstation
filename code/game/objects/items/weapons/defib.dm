@@ -325,7 +325,6 @@
 
 /obj/item/weapon/twohanded/shockpaddles/attack(mob/M, mob/user)
 	var/halfwaycritdeath = (config.health_threshold_crit + config.health_threshold_dead) / 2
-	var/mob/living/carbon/human/H = M
 
 	if(busy)
 		return
@@ -343,6 +342,7 @@
 		user << "<span class='warning'>The instructions on [defib] don't mention how to revive that...</span>"
 		return
 	else
+		var/mob/living/carbon/human/H = M
 		if(user.a_intent == "disarm" && !defib.safety)
 			busy = 1
 			H.visible_message("<span class='danger'>[user] has touched [H.name] with [src]!</span>", \
@@ -352,7 +352,7 @@
 			H.updatehealth() //forces health update before next life tick
 			playsound(get_turf(src), 'sound/machines/defib_zap.ogg', 50, 1, -1)
 			H.emote("gasp")
-			add_logs(user, M, "stunned", object="defibrillator")
+			add_logs(user, M, "stunned", defib)
 			defib.deductcharge(revivecost)
 			cooldown = 1
 			busy = 0
@@ -386,7 +386,7 @@
 							if(!HU.stat)
 								HU.visible_message("<span class='warning'>[M] thrashes wildly, clutching at their chest!</span>", "<span class='userdanger'>You feel a horrible agony in your chest!</span>")
 						HU.apply_damage(50, BURN, "chest")
-						add_logs(user, M, "overloaded the heart of", object="defibrillator")
+						add_logs(user, M, "overloaded the heart of", defib)
 						M.Weaken(5)
 						M.Jitter(100)
 						defib.deductcharge(revivecost)
@@ -422,11 +422,7 @@
 								busy = 0
 								update_icon()
 								return
-					if(H.heart_attack)
-						H.heart_attack = 0
-						user.visible_message("<span class='notice'>[defib] pings: Patient's heart is now beating again.</span>")
-						playsound(get_turf(src), 'sound/machines/defib_zap.ogg', 50, 1, -1)
-					if(H.stat == 2)
+					if(H.stat == DEAD)
 						M.visible_message("<span class='warning'>[M]'s body convulses a bit.")
 						playsound(get_turf(src), "bodyfall", 50, 1)
 						playsound(get_turf(src), 'sound/machines/defib_zap.ogg', 50, 1, -1)
@@ -447,14 +443,14 @@
 								H.adjustBruteLoss((mobhealth - halfwaycritdeath) * (total_brute / overall_damage))
 							user.visible_message("<span class='notice'>[defib] pings: Resuscitation successful.</span>")
 							playsound(get_turf(src), 'sound/machines/defib_success.ogg', 50, 0)
-							H.stat = 1
+							H.stat = UNCONSCIOUS
 							dead_mob_list -= H
 							living_mob_list |= list(H)
 							H.emote("gasp")
 							if(tplus > tloss)
 								H.setBrainLoss( max(0, min(99, ((tlimit - tplus) / tlimit * 100))))
 							defib.deductcharge(revivecost)
-							add_logs(user, M, "revived", object="defibrillator")
+							add_logs(user, M, "revived", defib)
 						else
 							if (H.suiciding || (NOCLONE in H.mutations))
 								user.visible_message("<span class='warning'>[defib] buzzes: Resuscitation failed - Recovery of patient impossible. Further attempts futile.</span>")
@@ -469,6 +465,10 @@
 						update_icon()
 						cooldown = 1
 						defib.cooldowncheck(user)
+					else if(H.heart_attack)
+						H.heart_attack = 0
+						user.visible_message("<span class='notice'>[defib] pings: Patient's heart is now beating again.</span>")
+						playsound(get_turf(src), 'sound/machines/defib_zap.ogg', 50, 1, -1)
 					else
 						user.visible_message("<span class='warning'>[defib] buzzes: Patient is not in a valid state. Operation aborted.</span>")
 						playsound(get_turf(src), 'sound/machines/defib_failed.ogg', 50, 0)
