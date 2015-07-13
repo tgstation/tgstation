@@ -27,7 +27,7 @@
 /obj/item/weapon/reagent_containers/food/drinks/attack(mob/M as mob, mob/user as mob, def_zone)
 
 	if(!reagents || !reagents.total_volume)
-		user << "<span class='alert'>None of [src] left, oh no!</span>"
+		user << "<span class='warning'>[src] is empty!</span>"
 		return 0
 
 	if(!canconsume(M, user))
@@ -35,22 +35,20 @@
 
 	if(M == user)
 		M << "<span class='notice'>You swallow a gulp of [src].</span>"
-	else
 
-		user.visible_message("<span class='warning'>[user] attempts to feed [src] to [M].</span>", "<span class='notice'>You attempt to feed [src] to [M].</span>")
+	else
+		M.visible_message("<span class='danger'>[user] attempts to feed the contents of [src] to [M].</span>", "<span class='userdanger'>[user] attempts to feed the contents of [src] to [M].</span>")
 		if(!do_mob(user, M))
 			return
 		if(!reagents || !reagents.total_volume)
 			return // The drink might be empty after the delay, such as by spam-feeding
-		user.visible_message("<span class='warning'>[user] feeds [src] to [M].</span>", "<span class='notice'>You feed [src] to [M].</span>")
-		add_logs(user, M, "fed", object="[reagentlist(src)]")
-
+		M.visible_message("<span class='danger'>[user] feeds the contents of [src] to [M].</span>", "<span class='userdanger'>[user] feeds the contents of [src] to [M].</span>")
+		add_logs(user, M, "fed", reagentlist(src))
 	var/fraction = min(gulp_size/reagents.total_volume, 1)
 	reagents.reaction(M, INGEST, fraction)
 	reagents.trans_to(M, gulp_size)
 	playsound(M.loc,'sound/items/drink.ogg', rand(10,50), 1)
 	return 1
-
 
 /obj/item/weapon/reagent_containers/food/drinks/afterattack(obj/target, mob/user , proximity)
 	if(!proximity) return

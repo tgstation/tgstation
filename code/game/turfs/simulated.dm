@@ -12,6 +12,8 @@
 /turf/simulated/New()
 	..()
 	levelupdate()
+	if(smooth)
+		smooth_icon(src)
 
 /turf/simulated/proc/burn_tile()
 
@@ -50,3 +52,7 @@
 				return
 			if(2) //lube
 				M.slip(0, 7, null, (STEP|SLIDE|GALOSHES_DONT_HELP))
+
+/turf/simulated/ChangeTurf(var/path)
+	. = ..()
+	smooth_icon_neighbors(src)
