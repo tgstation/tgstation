@@ -697,6 +697,7 @@
 #include "code\game\objects\items\weapons\tanks\tanks.dm"
 #include "code\game\objects\items\weapons\tanks\watertank.dm"
 #include "code\game\objects\structures\ai_core.dm"
+#include "code\game\objects\structures\announcement_system.dm"
 #include "code\game\objects\structures\artstuff.dm"
 #include "code\game\objects\structures\barsigns.dm"
 #include "code\game\objects\structures\bedsheet_bin.dm"
