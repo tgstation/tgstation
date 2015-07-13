@@ -5,6 +5,8 @@
 	item_state = "bl_suit"
 	item_color = "syndicate"
 	has_sensor = 0
+	sensor_start_override = 1
+	sensor_mode = 0
 	armor = list(melee = 10, bullet = 0, laser = 0,energy = 0, bomb = 0, bio = 0, rad = 0)
 
 /obj/item/clothing/under/syndicate/tacticool

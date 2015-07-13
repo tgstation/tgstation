@@ -207,6 +207,7 @@ BLIND     // can't see anything
 	armor = list(melee = 0, bullet = 0, laser = 0,energy = 0, bomb = 0, bio = 0, rad = 0)
 	var/fitted = FEMALE_UNIFORM_FULL // For use in alternate clothing styles for women
 	var/has_sensor = 1//For the crew computer 2 = unable to change mode
+	var/sensor_start_override = 0
 	var/sensor_mode = 0
 	var/can_adjust = 1
 	var/adjusted = 0
@@ -378,7 +379,8 @@ atom/proc/generate_female_clothing(index,t_color,icon,type)
 			H.update_inv_w_uniform(0)
 
 /obj/item/clothing/under/New()
-	sensor_mode = pick(0,1,2,3)
+	if(!sensor_start_override)
+		sensor_mode = pick(0,1,2,3)
 	adjusted = 0
 	suit_color = item_color
 	..()

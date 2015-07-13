@@ -53,6 +53,7 @@
 	item_state = "o_suit"
 	item_color = "prisoner"
 	has_sensor = 2
+	sensor_start_override = 1
 	sensor_mode = 3
 
 /obj/item/clothing/under/rank/mailman
