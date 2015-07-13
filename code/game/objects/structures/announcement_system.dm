@@ -13,6 +13,10 @@ var/list/announcement_systems = list()
 	announcement_systems += src
 	radio = new /obj/item/device/radio/headset/ai(src)
 
-/obj/structure/announcement_system/proc/announce(message, channels)
-	for(var/channel in channels)
-		radio.talk_into(src, message, channel, list(SPAN_ROBOT))
+/obj/structure/announcement_system/proc/announce(var/message, list/channels)
+	spawn(1) //to wait for people joining, roundstart init, etc.
+	if(channels.len == 0)
+		radio.talk_into(src, message, null, list(SPAN_ROBOT))
+	else
+		for(var/channel in channels)
+			radio.talk_into(src, message, channel, list(SPAN_ROBOT))

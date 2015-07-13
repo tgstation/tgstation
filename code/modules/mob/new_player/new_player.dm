@@ -275,14 +275,11 @@
 
 /mob/new_player/proc/AnnounceArrival(var/mob/living/carbon/human/character, var/rank)
 	if (ticker.current_state == GAME_STATE_PLAYING)
-		var/ailist[] = list()
-		for (var/mob/living/silicon/ai/A in living_mob_list)
-			ailist += A
-		if (ailist.len)
-			var/mob/living/silicon/ai/announcer = pick(ailist)
+		if(announcement_systems.len)
 			if(character.mind)
 				if((character.mind.assigned_role != "Cyborg") && (character.mind.assigned_role != character.mind.special_role))
-					announcer.say("[announcer.radiomod] [character.real_name] has signed up as [rank].")
+					var/obj/structure/announcement_system/announcer = pick(announcement_systems)
+					announcer.announce("[character.real_name] has signed up as [rank].", list()) //make the list empty to make it announce it in common
 
 /mob/new_player/proc/LateChoices()
 	var/mills = world.time // 1/10 of a second, not real milliseconds but whatever
