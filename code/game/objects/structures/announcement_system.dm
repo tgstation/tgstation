@@ -1,9 +1,10 @@
 var/list/announcement_systems = list()
 
 /obj/structure/announcement_system
-	density = 1
+	density = 0
 	anchored = 1
 	name = "\improper Automated Announcement System"
+	desc = "An automated announcement system that handles minor announcements over the radio."
 	icon = 'icons/obj/radio.dmi'
 	icon_state = "beacon"
 	var/obj/item/device/radio/headset/radio
@@ -14,5 +15,4 @@ var/list/announcement_systems = list()
 
 /obj/structure/announcement_system/proc/announce(message, channels)
 	for(var/channel in channels)
-		world << "Talking into radio. Message: [message]. Channel: [channel]."
 		radio.talk_into(src, message, channel, list(SPAN_ROBOT))
