@@ -5416,7 +5416,7 @@
 "cah" = (/obj/machinery/telecomms/broadcaster/preset_left,/turf/simulated/floor/bluegrid{icon_state = "dark"; name = "Mainframe Floor"; nitrogen = 100; oxygen = 0; temperature = 80},/area/tcommsat/server)
 "cai" = (/obj/machinery/telecomms/receiver/preset_left,/turf/simulated/floor/bluegrid{icon_state = "dark"; name = "Mainframe Floor"; nitrogen = 100; oxygen = 0; temperature = 80},/area/tcommsat/server)
 "caj" = (/obj/structure/table,/obj/item/device/multitool,/turf/simulated/floor/plasteel{dir = 9; icon_state = "yellow"},/area/tcommsat/computer)
-"cak" = (/obj/machinery/light_switch{pixel_x = 27},/turf/simulated/floor/plasteel,/area/tcommsat/computer)
+"cak" = (/obj/machinery/light_switch{pixel_x = 27},/obj/structure/announcement_system,/turf/simulated/floor/plasteel,/area/tcommsat/computer)
 "cal" = (/turf/simulated/floor/plasteel{dir = 9; icon_state = "yellow"},/area/hallway/primary/aft)
 "cam" = (/obj/structure/disposalpipe/segment{dir = 4; icon_state = "pipe-c"},/turf/simulated/floor/plasteel{dir = 1; icon_state = "yellow"},/area/hallway/primary/aft)
 "can" = (/obj/structure/disposalpipe/segment{dir = 8; icon_state = "pipe-c"},/turf/simulated/floor/plasteel{dir = 1; icon_state = "yellowcorner"},/area/hallway/primary/aft)
