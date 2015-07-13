@@ -18,6 +18,14 @@
 	attached_spell = spell
 	..()
 
+/obj/item/weapon/melee/touch_attack/attack(mob/target, mob/living/carbon/user)
+	if(!iscarbon(user)) //Look ma, no hands
+		return
+	if(user.lying || user.handcuffed)
+		user << "<span class='warning'>You can't reach out!</span>"
+		return
+	..()
+
 /obj/item/weapon/melee/touch_attack/afterattack(atom/target, mob/user, proximity)
 	user.say(catchphrase)
 	playsound(get_turf(user), on_use_sound,50,1)
@@ -29,14 +37,11 @@
 	desc = "This hand of mine glows with an awesome power!"
 	catchphrase = "EI NATH!!"
 	on_use_sound = "sound/magic/Disintegrate.ogg"
-	icon_state = "syndballoon"
-	item_state = "syndballoon"
+	icon_state = "disintegrate"
+	item_state = "disintegrate"
 
 /obj/item/weapon/melee/touch_attack/disintegrate/afterattack(atom/target, mob/living/carbon/user, proximity)
-	if(!proximity || target == user || !ismob(target) || !iscarbon(user)) //exploding after touching yourself would be bad
-		return
-	if(user.lying || user.handcuffed)
-		user << "<span class='warning'>You can't reach out!</span>"
+	if(!proximity || target == user || !ismob(target) || !iscarbon(user) || user.lying || user.handcuffed) //exploding after touching yourself would be bad
 		return
 	var/mob/M = target
 	if(ishuman(M) || ismonkey(M))
@@ -57,11 +62,11 @@
 	desc = "That's the bottom line, because flesh to stone said so!"
 	catchphrase = "STAUN EI!!"
 	on_use_sound = "sound/magic/FleshToStone.ogg"
-	icon_state = "syndballoon"
-	item_state = "syndballoon"
+	icon_state = "fleshtostone"
+	item_state = "fleshtostone"
 
 /obj/item/weapon/melee/touch_attack/fleshtostone/afterattack(atom/target, mob/living/carbon/user, proximity)
-	if(!proximity || target == user || !ismob(target) || !iscarbon(user)) //getting hard after touching yourself would also be bad
+	if(!proximity || target == user || !ismob(target) || !iscarbon(user) || user.lying || user.handcuffed) //getting hard after touching yourself would also be bad
 		return
 	if(user.lying || user.handcuffed)
 		user << "<span class='warning'>You can't reach out!</span>"
