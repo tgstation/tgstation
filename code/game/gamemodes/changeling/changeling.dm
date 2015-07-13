@@ -1,3 +1,8 @@
+
+#define LING_FAKEDEATH_TIME					400 //40 seconds
+#define LING_DEAD_GENETICDAMAGE_HEAL_CAP	50	//The lowest value of geneticdamage handle_changeling() can take it to while dead.
+
+
 var/list/possible_changeling_IDs = list("Alpha","Beta","Gamma","Delta","Epsilon","Zeta","Eta","Theta","Iota","Kappa","Lambda","Mu","Nu","Xi","Omicron","Pi","Rho","Sigma","Tau","Upsilon","Phi","Chi","Psi","Omega")
 
 /datum/game_mode
@@ -261,9 +266,14 @@ var/list/possible_changeling_IDs = list("Alpha","Beta","Gamma","Delta","Epsilon"
 	absorbed_dna.len = dna_max
 
 
-/datum/changeling/proc/regenerate()
-	chem_charges = min(max(0, chem_charges + chem_recharge_rate - chem_recharge_slowdown), chem_storage)
-	geneticdamage = max(0, geneticdamage-1)
+/datum/changeling/proc/regenerate(var/mob/living/carbon/the_ling)
+	if(istype(the_ling))
+		if(the_ling.stat == DEAD)
+			chem_charges = min(max(0, chem_charges + chem_recharge_rate - chem_recharge_slowdown), (chem_storage*0.5))
+			geneticdamage = max(LING_DEAD_GENETICDAMAGE_HEAL_CAP,geneticdamage-1)
+		else //not dead? no chem/geneticdamage caps.
+			chem_charges = min(max(0, chem_charges + chem_recharge_rate - chem_recharge_slowdown), chem_storage)
+			geneticdamage = max(0, geneticdamage-1)
 
 
 /datum/changeling/proc/get_dna(var/dna_owner)

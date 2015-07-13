@@ -16,7 +16,7 @@
 	if(user.stat != DEAD)
 		user.emote("deathgasp")
 		user.tod = worldtime2text()
-	spawn(800)
+	spawn(LING_FAKEDEATH_TIME)
 		if(user && user.mind && user.mind.changeling && user.mind.changeling.purchasedpowers)
 			user << "<span class='notice'>We are ready to regenerate.</span>"
 			user.mind.changeling.purchasedpowers += new /obj/effect/proc_holder/changeling/revive(null)

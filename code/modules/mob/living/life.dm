@@ -54,8 +54,6 @@
 	if(client)
 		handle_regular_hud_updates()
 
-	return .
-
 
 
 /mob/living/proc/handle_breathing()
