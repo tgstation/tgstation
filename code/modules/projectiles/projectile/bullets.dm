@@ -44,6 +44,9 @@
 /obj/item/projectile/bullet/heavybullet
 	damage = 35
 
+/obj/item/projectile/bullet/rpellet
+	damage = 3
+	stamina = 25
 
 /obj/item/projectile/bullet/stunshot //taser slugs for shotguns, nothing special
 	name = "stunshot"

@@ -97,7 +97,7 @@
 				"<span class='userdanger'>[target] hits \himself with a bottle of [src.name][head_attack_message]!</span>")
 
 	//Attack logs
-	add_logs(user, target, "attacked", object="bottle")
+	add_logs(user, target, "attacked", src)
 
 	//The reagents in the bottle splash all over the target, thanks for the idea Nodrak
 	if(src.reagents)

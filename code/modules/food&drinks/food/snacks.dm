@@ -92,7 +92,7 @@
 
 				if(!do_mob(user, M))
 					return
-				add_logs(user, M, "fed", object="[reagentlist(src)]")
+				add_logs(user, M, "fed", reagentlist(src))
 				M.visible_message("<span class='danger'>[user] forces [M] to eat [src].</span>", \
 									"<span class='userdanger'>[user] feeds [M] to eat [src].</span>")
 

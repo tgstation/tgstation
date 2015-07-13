@@ -3,9 +3,17 @@
 /obj/structure/stool/bed/nest
 	name = "alien nest"
 	desc = "It's a gruesome pile of thick, sticky resin shaped like a nest."
-	icon = 'icons/mob/alien.dmi'
+	icon = 'icons/obj/smooth_structures/alien/nest.dmi'
 	icon_state = "nest"
 	var/health = 100
+	smooth = 1
+	can_be_unanchored = 0
+	canSmoothWith = null
+	var/image/nest_overlay
+
+/obj/structure/stool/bed/nest/New()
+	nest_overlay = image('icons/mob/alien.dmi', "nestoverlay", layer=MOB_LAYER - 0.2)
+	return ..()
 
 /obj/structure/stool/bed/nest/user_unbuckle_mob(mob/user as mob)
 	if(buckled_mob && buckled_mob.buckled == src)
@@ -56,12 +64,12 @@
 		M.pixel_y = 0
 		M.pixel_x = initial(M.pixel_x) + 2
 		M.layer = MOB_LAYER - 0.3
-		overlays += image('icons/mob/alien.dmi', "nestoverlay", layer=MOB_LAYER - 0.2)
+		overlays += nest_overlay
 	else
 		M.pixel_x = M.get_standard_pixel_x_offset(M.lying)
 		M.pixel_y = M.get_standard_pixel_y_offset(M.lying)
 		M.layer = initial(M.layer)
-		overlays.Cut()
+		overlays -= nest_overlay
 
 /obj/structure/stool/bed/nest/attackby(obj/item/weapon/W as obj, mob/user as mob, params)
 	var/aforce = W.force

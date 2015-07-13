@@ -60,7 +60,7 @@
 						visible_message("<span class='danger'>[M] has weakened [src]!</span>", \
 								"<span class='userdanger'>[M] has weakened [src]!</span>")
 					adjustBruteLoss(damage)
-					add_logs(M, src, "attacked", admin=0)
+					add_logs(M, src, "attacked")
 					updatehealth()
 				else
 					playsound(loc, 'sound/weapons/punchmiss.ogg', 25, 1, -1)
@@ -71,7 +71,7 @@
 					if (prob(5))
 						Paralyse(2)
 						playsound(loc, 'sound/weapons/thudswoosh.ogg', 50, 1, -1)
-						add_logs(M, src, "pushed", admin=0)
+						add_logs(M, src, "pushed")
 						visible_message("<span class='danger'>[M] has pushed down [src]!</span>", \
 							"<span class='userdanger'>[M] has pushed down [src]!</span>")
 					else

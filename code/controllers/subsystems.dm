@@ -5,10 +5,17 @@
 	var/name				//name of the subsystem
 	var/priority = 0		//priority affects order of initialization. Higher priorities are initialized first, lower priorities later. Can be decimal and negative values.
 	var/wait = 20			//time to wait (in deciseconds) between each call to fire(). Must be a positive integer.
+
+	//Dynamic Wait - A system for scaling a subsystem's fire rate based on lag
+	//The algorithm is: (cost-dwait_buffer+AvgCostOfAllOtherSSPerSecond)*dwait_delta
+	//defaults are pretty sane for most use cases.
+	//you can change how quickly it starts scaling back with dwait_buffer,
+	//and you can change how much it scales back with dwait_delta
 	var/dynamic_wait = 0	//changes the wait based on the amount of time it took to process
 	var/dwait_upper = 20	//longest wait can be under dynamic_wait
 	var/dwait_lower = 5		//shortest wait can be under dynamic_wait
-	var/dwait_delta = 3		//How much should processing time effect dwait. or basically: wait = cost*dwait_delta
+	var/dwait_delta = 7		//How much should processing time effect dwait. or basically: wait = cost*dwait_delta
+	var/dwait_buffer = 1.5	//This number is subtracted from the processing time before calculating its new wait
 
 	//things you will probably want to leave alone
 	var/can_fire = 0		//prevent fire() calls

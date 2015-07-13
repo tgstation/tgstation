@@ -826,7 +826,7 @@ var/global/list/special_roles = list( //keep synced with the defines BE_* in set
 							var/temp_hsv = RGBtoHSV(new_mutantcolor)
 							if(new_mutantcolor == "#000000")
 								features["mcolor"] = pref_species.default_color
-							else if(MUTCOLORS_PARTSONLY in pref_species.specflags || ReadHSV(temp_hsv)[3] >= ReadHSV("#7F7F7F")[3]) // mutantcolors must be bright, but only if they affect the skin
+							else if((MUTCOLORS_PARTSONLY in pref_species.specflags) || ReadHSV(temp_hsv)[3] >= ReadHSV("#7F7F7F")[3]) // mutantcolors must be bright, but only if they affect the skin
 								features["mcolor"] = sanitize_hexcolor(new_mutantcolor)
 							else
 								user << "<span class='danger'>Invalid color. Your color is not bright enough.</span>"

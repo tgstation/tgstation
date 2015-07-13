@@ -43,7 +43,7 @@
 		if(!reagents || !reagents.total_volume)
 			return // The drink might be empty after the delay, such as by spam-feeding
 		M.visible_message("<span class='danger'>[user] feeds the contents of [src] to [M].</span>", "<span class='userdanger'>[user] feeds the contents of [src] to [M].</span>")
-		add_logs(user, M, "fed", object="[reagentlist(src)]")
+		add_logs(user, M, "fed", reagentlist(src))
 	var/fraction = min(gulp_size/reagents.total_volume, 1)
 	reagents.reaction(M, INGEST, fraction)
 	reagents.trans_to(M, gulp_size)

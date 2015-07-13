@@ -57,7 +57,7 @@
 		var/damage = rand(1, 9)
 		if (prob(90))
 			playsound(loc, "punch", 25, 1, -1)
-			add_logs(M, src, "attacked", admin=0)
+			add_logs(M, src, "attacked")
 			visible_message("<span class='danger'>[M] has kicked [src]!</span>", \
 					"<span class='userdanger'>[M] has kicked [src]!</span>")
 			if ((stat != DEAD) && (damage > 4.9))

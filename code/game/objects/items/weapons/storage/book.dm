@@ -130,7 +130,7 @@ var/global/list/bibleitemstates =	list("bible", "koran", "scrapbook", "bible", "
 	if(user.mind && (user.mind.assigned_role == "Chaplain"))
 		chaplain = 1
 
-	add_logs(user, M, "attacked", object="[src.name]")
+
 
 	if (!user.IsAdvancedToolUser())
 		user << "<span class='warning'>You don't have the dexterity to do this!</span>"
@@ -183,6 +183,7 @@ var/global/list/bibleitemstates =	list("bible", "koran", "scrapbook", "bible", "
 			M.visible_message("<span class='danger'>[user] beats [M] over the head with [src]!</span>", \
 					"<span class='userdanger'>[user] beats [M] over the head with [src]!</span>")
 			playsound(src.loc, "punch", 25, 1, -1)
+			add_logs(user, M, "attacked", src)
 
 	else if(M.stat == 2)
 		M.visible_message("<span class='danger'>[user] smacks [M]'s lifeless corpse with [src].</span>")

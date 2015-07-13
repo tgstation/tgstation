@@ -65,7 +65,7 @@
 		var/turf/target_turf = get_turf(target)
 		if(target_turf)
 			var/turflist = getline(user, target_turf)
-			add_logs(user, target, "flamethrowered", admin=0, addition="at [target.x],[target.y],[target.z]")
+			add_logs(user, target, "flamethrowered", src, "at [target.x],[target.y],[target.z]")
 			flame_turf(turflist)
 
 /obj/item/weapon/flamethrower/attackby(obj/item/W as obj, mob/user as mob, params)

@@ -382,7 +382,7 @@ var/list/all_supply_groups = list(supply_emergency,supply_security,supply_engine
 	name = "Standard Justice Enforcer Crate"
 	contains = list(/obj/item/clothing/head/helmet/justice,
 					/obj/item/clothing/mask/gas/sechailer)
-	cost = 30 //justice comes at a price. An expensive, noisy price.
+	cost = 80 //justice comes at a price. An expensive, noisy price.
 	containername = "justice enforcer crate"
 
 

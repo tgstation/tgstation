@@ -4,6 +4,8 @@
 	icon_state = ""
 	var/last_event = 0
 	var/active = null
+	smooth = 1
+	canSmoothWith = null
 
 /turf/simulated/wall/mineral/New()
 	sheet_type = text2path("/obj/item/stack/sheet/mineral/[mineral]")
@@ -12,30 +14,36 @@
 /turf/simulated/wall/mineral/gold
 	name = "gold wall"
 	desc = "A wall with gold plating. Swag!"
-	icon_state = "gold0"
+	icon = 'icons/turf/walls/gold_wall.dmi'
+	icon_state = "gold"
 	walltype = "gold"
 	mineral = "gold"
 	//var/electro = 1
 	//var/shocked = null
 	explosion_block = 0 //gold is a soft metal you dingus.
+	canSmoothWith = list(/turf/simulated/wall/mineral/gold, /obj/structure/falsewall/gold)
 
 /turf/simulated/wall/mineral/silver
 	name = "silver wall"
 	desc = "A wall with silver plating. Shiny!"
-	icon_state = "silver0"
+	icon = 'icons/turf/walls/silver_wall.dmi'
+	icon_state = "silver"
 	walltype = "silver"
 	mineral = "silver"
 	//var/electro = 0.75
 	//var/shocked = null
+	canSmoothWith = list(/turf/simulated/wall/mineral/silver, /obj/structure/falsewall/silver)
 
 /turf/simulated/wall/mineral/diamond
 	name = "diamond wall"
 	desc = "A wall with diamond plating. You monster."
-	icon_state = "diamond0"
+	icon = 'icons/turf/walls/diamond_wall.dmi'
+	icon_state = "diamond"
 	walltype = "diamond"
 	mineral = "diamond"
 	slicing_duration = 200   //diamond wall takes twice as much time to slice
 	explosion_block = 3
+	canSmoothWith = list(/turf/simulated/wall/mineral/diamond, /obj/structure/falsewall/diamond)
 
 /turf/simulated/wall/mineral/diamond/thermitemelt(mob/user as mob)
 	return
@@ -43,24 +51,30 @@
 /turf/simulated/wall/mineral/clown
 	name = "bananium wall"
 	desc = "A wall with bananium plating. Honk!"
-	icon_state = "bananium0"
+	icon = 'icons/turf/walls/bananium_wall.dmi'
+	icon_state = "bananium"
 	walltype = "bananium"
 	mineral = "bananium"
+	canSmoothWith = list(/turf/simulated/wall/mineral/clown, /obj/structure/falsewall/clown)
 
 /turf/simulated/wall/mineral/sandstone
 	name = "sandstone wall"
 	desc = "A wall with sandstone plating."
-	icon_state = "sandstone0"
+	icon = 'icons/turf/walls/sandstone_wall.dmi'
+	icon_state = "sandstone"
 	walltype = "sandstone"
 	mineral = "sandstone"
 	explosion_block = 0
+	canSmoothWith = list(/turf/simulated/wall/mineral/sandstone, /obj/structure/falsewall/sandstone)
 
 /turf/simulated/wall/mineral/uranium
 	name = "uranium wall"
 	desc = "A wall with uranium plating. This is probably a bad idea."
-	icon_state = "uranium0"
+	icon = 'icons/turf/walls/uranium_wall.dmi'
+	icon_state = "uranium"
 	walltype = "uranium"
 	mineral = "uranium"
+	canSmoothWith = list(/turf/simulated/wall/mineral/uranium, /obj/structure/falsewall/uranium)
 
 /turf/simulated/wall/mineral/uranium/proc/radiate()
 	if(!active)
@@ -90,10 +104,12 @@
 /turf/simulated/wall/mineral/plasma
 	name = "plasma wall"
 	desc = "A wall with plasma plating. This is definately a bad idea."
-	icon_state = "plasma0"
+	icon = 'icons/turf/walls/plasma_wall.dmi'
+	icon_state = "plasma"
 	walltype = "plasma"
 	mineral = "plasma"
 	thermal_conductivity = 0.04
+	canSmoothWith = list(/turf/simulated/wall/mineral/plasma, /obj/structure/falsewall/plasma)
 
 /turf/simulated/wall/mineral/plasma/attackby(obj/item/weapon/W as obj, mob/user as mob, params)
 	if(is_hot(W) > 300)//If the temperature of the object is over 300, then ignite
@@ -141,9 +157,11 @@
 
 /turf/simulated/wall/mineral/wood
 	name = "wooden wall"
-	desc = "A wall with wooden plating."
-	icon_state = "wood0"
+	desc = "A wall with wooden plating. Stiff."
+	icon = 'icons/turf/walls/wood_wall.dmi'
+	icon_state = "wood"
 	walltype = "wood"
 	mineral = "wood"
 	hardness = 70
 	explosion_block = 0
+	canSmoothWith = list(/turf/simulated/wall/mineral/wood, /obj/structure/falsewall/wood)

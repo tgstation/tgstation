@@ -490,13 +490,13 @@ var/engwords = list("travel", "blood", "join", "hell", "destroy", "technology", 
 //		usr << browse(null, "window=tank")
 
 /obj/item/weapon/tome/attack(mob/living/M as mob, mob/living/user as mob)
-	add_logs(user, M, "smacked", object=src)
 	if(istype(M,/mob/dead))
 		M.invisibility = 0
 		user.visible_message( \
 			"<span class='danger'>[user] drags the ghost to our plane of reality!</span>", \
 			"<span class='danger'>You drag the ghost to our plane of reality!</span>" \
 		)
+		add_logs(user, M, "smacked", src)
 		return
 	if(!istype(M))
 		return
@@ -508,10 +508,12 @@ var/engwords = list("travel", "blood", "join", "hell", "destroy", "technology", 
 			var/holy2unholy = M.reagents.get_reagent_amount("holywater")
 			M.reagents.del_reagent("holywater")
 			M.reagents.add_reagent("unholywater",holy2unholy)
+			add_logs(user, M, "smacked", src, " removing the holy water from them")
 		return
 	M.take_organ_damage(0,rand(5,20)) //really lucky - 5 hits for a crit
 	M.visible_message("<span class='danger'>[user] beats [M] with the arcane tome!</span>", \
 					"<span class='userdanger'>[user] beats you with the tome, and you feel a searing heat inside you!</span>")
+	add_logs(user, M, "smacked", src)
 
 
 /obj/item/weapon/tome/attack_self(mob/living/user as mob)
