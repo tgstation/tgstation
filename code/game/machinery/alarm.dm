@@ -32,10 +32,13 @@
 
 #define AALARM_MODE_SCRUBBING 1
 #define AALARM_MODE_VENTING 2 //makes draught
-#define AALARM_MODE_PANIC 3 //constantly sucks all air
+#define AALARM_MODE_PANIC 3 //like siphon, but stronger (enables widenet)
 #define AALARM_MODE_REPLACEMENT 4 //sucks off all air, then refill and swithes to scrubbing
 #define AALARM_MODE_OFF 5
 #define AALARM_MODE_FLOOD 6 //Emagged mode; turns off scrubbers and pressure checks on vents
+#define AALARM_MODE_SIPHON 7 //Scrubbers suck air
+#define AALARM_MODE_CONTAMINATED 8 //Turns on all filtering and widenet scrubbing.
+#define AALARM_MODE_REFILL 9 //just like normal, but with triple the air output
 
 #define AALARM_SCREEN_MAIN    1
 #define AALARM_SCREEN_VENT    2
@@ -337,7 +340,7 @@
 						"long_name" 	= sanitize(long_name),
 						"power"			= info["power"],
 						"scrubbing"		= info["scrubbing"],
-						"panic"			= info["panic"],
+						"widenet"		= info["widenet"],
 						"filter_co2"	= info["filter_co2"],
 						"filter_toxins"	= info["filter_toxins"],
 						"filter_n2o"	= info["filter_n2o"]
@@ -346,12 +349,15 @@
 			data["mode"] = mode
 			data["modes"] = list()
 			data["modes"] += list(list("name" = "Filtering - Scrubs out contaminants", 				"mode" = AALARM_MODE_SCRUBBING,		"selected" = mode == AALARM_MODE_SCRUBBING, 	"danger" = 0))
+			data["modes"] += list(list("name" = "Contaminated - Scrubs out ALL contaminants quickly","mode" = AALARM_MODE_CONTAMINATED,	"selected" = mode == AALARM_MODE_CONTAMINATED,	"danger" = 0))
 			data["modes"] += list(list("name" = "Draught - Siphons out air while replacing",		"mode" = AALARM_MODE_VENTING,		"selected" = mode == AALARM_MODE_VENTING,		"danger" = 0))
+			data["modes"] += list(list("name" = "Refill - Triple vent output",						"mode" = AALARM_MODE_REFILL,		"selected" = mode == AALARM_MODE_REFILL,		"danger" = 0))
 			data["modes"] += list(list("name" = "Cycle - Siphons air before replacing", 			"mode" = AALARM_MODE_REPLACEMENT,	"selected" = mode == AALARM_MODE_REPLACEMENT, 	"danger" = 1))
-			data["modes"] += list(list("name" = "Panic - Siphons air out of the room", 				"mode" = AALARM_MODE_PANIC,			"selected" = mode == AALARM_MODE_PANIC, 		"danger" = 1))
+			data["modes"] += list(list("name" = "Siphon - Siphons air out of the room", 			"mode" = AALARM_MODE_SIPHON,		"selected" = mode == AALARM_MODE_SIPHON, 		"danger" = 1))
+			data["modes"] += list(list("name" = "Panic Siphon - Siphons air out of the room quickly","mode" = AALARM_MODE_PANIC,		"selected" = mode == AALARM_MODE_PANIC, 		"danger" = 1))
 			data["modes"] += list(list("name" = "Off - Shuts off vents and scrubbers", 				"mode" = AALARM_MODE_OFF,			"selected" = mode == AALARM_MODE_OFF, 			"danger" = 0))
 			if (src.emagged)
-				data["modes"] += list(list("name" = "Flood - Shuts off scrubbers and opens vents",	"mode" = AALARM_MODE_FLOOD,		"selected" = mode == AALARM_MODE_FLOOD, 			"danger" = 1))
+				data["modes"] += list(list("name" = "Flood - Shuts off scrubbers and opens vents",	"mode" = AALARM_MODE_FLOOD,			"selected" = mode == AALARM_MODE_FLOOD, 		"danger" = 1))
 		if(AALARM_SCREEN_SENSORS)
 			var/datum/tlv/selected
 			var/list/thresholds = list()
@@ -426,7 +432,7 @@
 				"co2_scrub",
 				"tox_scrub",
 				"n2o_scrub",
-				"panic_siphon",
+				"widenet",
 				"scrubbing"
 			)
 				send_signal(device_id, list (href_list["command"] = text2num(href_list["val"])))
@@ -496,8 +502,10 @@
 				send_signal(device_id, list(
 					"power"= 1,
 					"co2_scrub"= 1,
+					"tox_scrub"= 0,
+					"n2o_scrub"= 0,
 					"scrubbing"= 1,
-					"panic_siphon"= 0,
+					"widenet"= 0,
 				))
 			for(var/device_id in alarm_area.air_vent_names)
 				send_signal(device_id, list(
@@ -505,19 +513,50 @@
 					"checks"= 1,
 					"set_external_pressure"= ONE_ATMOSPHERE
 				))
-
+		if(AALARM_MODE_CONTAMINATED)
+			for(var/device_id in alarm_area.air_scrub_names)
+				send_signal(device_id, list(
+					"power"= 1,
+					"co2_scrub"= 1,
+					"tox_scrub"= 1,
+					"n2o_scrub"= 1,
+					"scrubbing"= 1,
+					"widenet"= 1,
+				))
+			for(var/device_id in alarm_area.air_vent_names)
+				send_signal(device_id, list(
+					"power"= 1,
+					"checks"= 1,
+					"set_external_pressure"= ONE_ATMOSPHERE
+				))
 		if(AALARM_MODE_VENTING)
 			for(var/device_id in alarm_area.air_scrub_names)
 				send_signal(device_id, list(
 					"power"= 1,
-					"panic_siphon"= 0,
+					"widenet"= 0,
 					"scrubbing"= 0
 				))
 			for(var/device_id in alarm_area.air_vent_names)
 				send_signal(device_id, list(
 					"power"= 1,
 					"checks"= 1,
-					"set_external_pressure"= ONE_ATMOSPHERE
+					"set_external_pressure" = ONE_ATMOSPHERE*2
+				))
+		if(AALARM_MODE_REFILL)
+			for(var/device_id in alarm_area.air_scrub_names)
+				send_signal(device_id, list(
+					"power"= 1,
+					"co2_scrub"= 1,
+					"tox_scrub"= 0,
+					"n2o_scrub"= 0,
+					"scrubbing"= 1,
+					"widenet"= 0,
+				))
+			for(var/device_id in alarm_area.air_vent_names)
+				send_signal(device_id, list(
+					"power"= 1,
+					"checks"= 1,
+					"set_external_pressure" = ONE_ATMOSPHERE*3
 				))
 		if(
 			AALARM_MODE_PANIC,
@@ -526,16 +565,30 @@
 			for(var/device_id in alarm_area.air_scrub_names)
 				send_signal(device_id, list(
 					"power"= 1,
-					"panic_siphon"= 1
+					"widenet"= 1,
+					"scrubbing"= 0
 				))
 			for(var/device_id in alarm_area.air_vent_names)
 				send_signal(device_id, list(
 					"power"= 0
 				))
+		if(
+			AALARM_MODE_SIPHON
+		)
+			for(var/device_id in alarm_area.air_scrub_names)
+				send_signal(device_id, list(
+					"power"= 1,
+					"widenet"= 0,
+					"scrubbing"= 0
+				))
+			for(var/device_id in alarm_area.air_vent_names)
+				send_signal(device_id, list(
+					"power"= 0
+				))
+
 		if(AALARM_MODE_OFF)
 			for(var/device_id in alarm_area.air_scrub_names)
 				send_signal(device_id, list(
-					"panic_siphon"= 0,
 					"power"= 0
 				))
 			for(var/device_id in alarm_area.air_vent_names)
@@ -545,7 +598,6 @@
 		if(AALARM_MODE_FLOOD)
 			for(var/device_id in alarm_area.air_scrub_names)
 				send_signal(device_id, list(
-					"panic_siphon"= 0,
 					"power"=0
 				))
 			for(var/device_id in alarm_area.air_vent_names)
