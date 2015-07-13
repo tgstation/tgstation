@@ -258,6 +258,13 @@ var/global/datum/crewmonitor/crewmonitor = new
 						spawn(min(30, get_dist(get_turf(C), AI.eyeobj) / 4))
 							if (AI && AI.eyeobj && current_loc == AI.eyeobj.loc)
 								AI.switchCamera(C)
+				if ("crewclick")
+					var/x = text2num(href_list["x"])
+					var/y = text2num(href_list["y"])
+					var/turf/tile = locate(x, y, AI.z)
+					if(tile)
+						AI.eyeobj.setLoc(tile)
+
 		else if(hclient && hclient.client && hclient.client.mob)
 			var/mob/living/L = hclient.client.mob
 			if(!istype(L)) return
