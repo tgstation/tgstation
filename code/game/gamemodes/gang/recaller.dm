@@ -174,7 +174,7 @@
 				dat += "<a href='?src=\ref[src];purchase=dominator'><b>Station Dominator</b></a><br>"
 			else
 				dat += "<b>Station Dominator</b><br>"
-			dat += "<i>(Estimated Takeover Time: [round(max(300,900 - ((round((gang.territory.len/start_state.num_territories)*200, 10) - 60) * 15))/60,1)] minutes)</i><br>"
+			dat += "<i>(Estimated Takeover Time: [round(get_domination_time(gang)/60,0.1)] minutes)</i><br>"
 
 	dat += "<br>"
 	dat += "<a href='?src=\ref[src];choice=refresh'>Refresh</a><br>"

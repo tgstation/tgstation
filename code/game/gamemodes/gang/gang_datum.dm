@@ -56,7 +56,7 @@
 	ticker.mode.set_antag_hud(defector_mind.current, null)
 
 /datum/gang/proc/domination(var/modifier=1)
-	dom_timer = max(300,900 - ((round((territory.len/start_state.num_territories)*200, 1) - 60) * 15)) * modifier
+	dom_timer = get_domination_time(src) * modifier
 	set_security_level("delta")
 	SSshuttle.emergencyNoEscape = 1
 
