@@ -36,7 +36,7 @@ var/datum/subsystem/vote/SSvote
 				client_popup.open(0)
 
 
-/datum/subsystem/vote/proc/reset()
+/datum/subsystem/vote/proc/reset(var/user)
 	initiator = null
 	time_remaining = 0
 	mode = null
@@ -44,6 +44,10 @@ var/datum/subsystem/vote/SSvote
 	choices.Cut()
 	voted.Cut()
 	voting.Cut()
+	if(user)		//This is done so regular usage of this proc doesn't cause the message to appear
+					//Maybe this additional logging should be put in another proc?
+		log_game("[key_name(usr)] has reset voting")
+		world << "\n<font color='purple'>Voting has been reset</font>"
 
 /datum/subsystem/vote/proc/get_result()
 	//get the highest number of votes
@@ -137,6 +141,7 @@ var/datum/subsystem/vote/SSvote
 		if(started_time != null)
 			var/next_allowed_time = (started_time + config.vote_delay)
 			if(next_allowed_time > world.time)
+				usr << "<span class='notice'>Voting is on cooldown. [(next_allowed_time - world.time) / 10] seconds left until the cooldown expires.</span>"
 				return 0
 
 		reset()
@@ -150,7 +155,9 @@ var/datum/subsystem/vote/SSvote
 					var/option = capitalize(stripped_input(usr,"Please enter an option or hit cancel to finish"))
 					if(!option || mode || !usr.client)	break
 					choices.Add(option)
-			else			return 0
+			else
+				usr << "<span class='notice'>Invalid voting mode selected.</span>"
+				return 0
 		mode = vote_type
 		initiator = initiator_key
 		started_time = world.time
@@ -161,6 +168,7 @@ var/datum/subsystem/vote/SSvote
 		world << "\n<font color='purple'><b>[text]</b>\nType <b>vote</b> or click <a href='?src=\ref[src]'>here</a> to place your votes.\nYou have [config.vote_period/10] seconds to vote.</font>"
 		time_remaining = round(config.vote_period/10)
 		return 1
+	usr << "<span class='notice'>There is already an active vote happening.</span>"
 	return 0
 
 /datum/subsystem/vote/proc/interface(var/client/C)
@@ -170,7 +178,7 @@ var/datum/subsystem/vote/SSvote
 	if(C.holder)
 		admin = 1
 		if(check_rights_for(C, R_ADMIN))
-			trialmin = 1
+			trialmin = 1				//nice variable names nerds
 	voting |= C
 
 	if(mode)
@@ -220,7 +228,7 @@ var/datum/subsystem/vote/SSvote
 			return
 		if("cancel")
 			if(usr.client.holder)
-				reset()
+				reset(usr)
 		if("toggle_restart")
 			if(usr.client.holder)
 				config.allow_vote_restart = !config.allow_vote_restart
