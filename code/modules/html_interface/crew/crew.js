@@ -250,6 +250,7 @@ var isAI = null;
 var scale_x;
 var scale_y;
 var defaultzoom = 4;
+var html5compat = false;
 function disableSelection(){ return false; };
 
 $(window).on("onUpdateContent", function()
@@ -260,8 +261,18 @@ $(window).on("onUpdateContent", function()
 
 	$("#uiMap").append("<img src=\"minimap_" + z + ".png\" id=\"uiMapImage\" width=\"256\" height=\"256\" unselectable=\"on\"/><div id=\"uiMapContent\" unselectable=\"on\"></div>");
 	$("#uiMapContainer").append("<div id=\"uiMapTooltip\"></div>");
-
+	if(!html5compat){
+		var i = document.createElement("input");
+		i.setAttribute("type", "range");
+		html5compat = i.type !== "text";
+	}
+	if(html5compat){
 	$("#switches").append("<div id='zoomcontainer' style='position: static; z-index: 9999; margin-bottom: -75px;'>Zoom: <div id='zoomslider' style='width: 75px; position: relative; top: -31px; right: -50px; z-index: 9999;'><input type=\"range\" onchange=\"setzoom(value);\" value=\"4\" step=\"0.5\" max=\"16\" min=\"0.5\" id=\"zoom\"></div><div id=\"zoomval\" style='position:relative; z-index: 9999; right: -135px; top: -80px; color: white;'>100%</div></div>");
+	}
+	else{
+			$("#switches").append(" Zoom: <a href='javascript:changeZoom(-2);'>--</a> <a href='javascript:changeZoom(2);'>++</a> <span id=\"zoomval\" style='color: white;'>100%</span>");
+
+	}
 	//$("body")[0].onselectstart = disableSelection;
 
 	var width = $("#uiMap").width();
