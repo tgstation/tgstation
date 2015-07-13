@@ -48,6 +48,8 @@
 		if (icon == src) user << "<span class='notice'>If you want any more information you'll need to get closer.</span>"
 		return
 
+	user << "<span class='notice'>The pressure gauge reads [src.air_contents.return_pressure()].</span>"
+
 	var/celsius_temperature = src.air_contents.temperature-T0C
 	var/descriptive
 
