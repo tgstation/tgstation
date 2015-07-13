@@ -6,6 +6,7 @@
 	var/atmos_adjacent_turfs = 0
 	var/atmos_adjacent_turfs_amount = 0
 	var/atmos_supeconductivity = 0
+	var/atoms_overlay_type = ""
 
 /turf/assume_air(datum/gas_mixture/giver) //use this for machines to adjust air
 	del(giver)
@@ -76,8 +77,7 @@
 
 		air.merge(giver)
 
-		if(air.check_tile_graphic())
-			update_visuals(air)
+		update_visuals(air)
 
 		return 1
 
@@ -207,8 +207,7 @@
 
 	air.react()
 
-	if(air.check_tile_graphic())
-		update_visuals(air)
+	update_visuals(air)
 
 	if(air.temperature > FIRE_MINIMUM_TEMPERATURE_TO_EXIST)
 		hotspot_expose(air.temperature, CELL_VOLUME)
@@ -232,6 +231,9 @@
 	archived_cycle = SSair.times_fired
 
 /turf/simulated/proc/update_visuals(datum/gas_mixture/model)
+	model.check_tile_graphic()
+	if (atoms_overlay_type == model.graphic)
+		return
 	overlays.Cut()
 	var/siding_icon_state = return_siding_icon_state()
 	if(siding_icon_state)
@@ -241,6 +243,7 @@
 			overlays.Add(SSair.plasma_overlay)
 		if("sleeping_agent")
 			overlays.Add(SSair.sleeptoxin_overlay)
+	atoms_overlay_type = model.graphic
 
 /turf/simulated/proc/share_air(var/turf/simulated/T)
 	if(T.current_cycle < current_cycle)
@@ -338,8 +341,7 @@
 				G.moles = S.moles/turf_list.len
 				T.air.trace_gases += G
 
-		if(T.air.check_tile_graphic())
-			T.update_visuals(T.air)
+		T.update_visuals(T.air)
 
 
 /datum/excited_group/proc/dismantle()
