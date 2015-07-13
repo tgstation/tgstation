@@ -22,13 +22,15 @@
 
 /obj/effect/proc_holder/changeling/weapon/try_to_sting(var/mob/user, var/mob/target)
 	if(istype(user.l_hand, weapon_type)) //Not the nicest way to do it, but eh
+		playsound(user, 'sound/effects/blobattack.ogg', 30, 1)
 		qdel(user.l_hand)
-		user.visible_message("<span class='warning'>With a sickening crunch, [user] reforms his [weapon_name_simple] into an arm!</span>", "<span class='notice'>We assimilate the [weapon_name_simple] back into our body.</span>", "<span class='italics>You hear organic matter ripping and tearing!</span>")
+		user.visible_message("<span class='warning'>With a sickening crunch, [user] reforms their [weapon_name_simple] into an arm!</span>", "<span class='notice'>We assimilate the [weapon_name_simple] back into our body.</span>", "<span class='italics>You hear organic matter ripping and tearing!</span>")
 		user.update_inv_l_hand()
 		return
 	if(istype(user.r_hand, weapon_type))
+		playsound(user, 'sound/effects/blobattack.ogg', 30, 1)
 		qdel(user.r_hand)
-		user.visible_message("<span class='warning'>With a sickening crunch, [user] reforms his [weapon_name_simple] into an arm!</span>", "<span class='notice'>We assimilate the [weapon_name_simple] back into our body.</span>", "<span class='italics>You hear organic matter ripping and tearing!</span>")
+		user.visible_message("<span class='warning'>With a sickening crunch, [user] reforms their [weapon_name_simple] into an arm!</span>", "<span class='notice'>We assimilate the [weapon_name_simple] back into our body.</span>", "<span class='italics>You hear organic matter ripping and tearing!</span>")
 		user.update_inv_r_hand()
 		return
 	..(user, target)
@@ -39,6 +41,7 @@
 		return
 	var/obj/item/W = new weapon_type(user)
 	user.put_in_hands(W)
+	playsound(user, 'sound/effects/blobattack.ogg', 30, 1)
 	return W
 
 //Parent to space suits and armor.
@@ -130,13 +133,12 @@
 	throw_range = 0
 	throw_speed = 0
 
-/obj/item/weapon/melee/arm_blade/New()
+/obj/item/weapon/melee/arm_blade/New(location,silent)
 	..()
-	if(ismob(loc))
+	if(ismob(loc) && !silent)
 		loc.visible_message("<span class='warning'>A grotesque blade forms around [loc.name]\'s arm!</span>", "<span class='warning'>Our arm twists and mutates, transforming it into a deadly blade.</span>", "<span class='italics'>You hear organic matter ripping and tearing!</span>")
 
 /obj/item/weapon/melee/arm_blade/dropped(mob/user)
-	user.visible_message("<span class='warning'>With a sickening crunch, [user] reforms his blade into an arm!</span>", "<span class='notice'>We assimilate the blade back into our body.</span>", "<span class='italics>You hear organic matter ripping and tearing!</span>")
 	qdel(src)
 
 /obj/item/weapon/melee/arm_blade/afterattack(atom/target, mob/user, proximity)

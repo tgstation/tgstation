@@ -1,7 +1,7 @@
 //gang.dm
 //Gang War Game Mode
 
-var/list/gang_name_pool = list("Clandestine", "Prima", "Zero-G", "Max", "Blasto", "Waffle", "North", "Omni", "Newton", "Cyber", "Donk", "Gene", "Gib", "Tunnel", "Diablo", "Psyke", "Osiron", "Sleeping Carp")
+var/list/gang_name_pool = list("Clandestine", "Prima", "Zero-G", "Max", "Blasto", "Waffle", "North", "Omni", "Newton", "Cyber", "Donk", "Gene", "Gib", "Tunnel", "Diablo", "Psyke", "Osiron", "Sirius", "Sleeping Carp")
 var/list/gang_colors_pool = list("red","orange","yellow","green","blue","purple")
 
 /datum/game_mode
@@ -39,7 +39,7 @@ var/list/gang_colors_pool = list("red","orange","yellow","green","blue","purple"
 
 	//Spawn more bosses depending on server population
 	var/gangs_to_create = 2
-	if(prob(num_players()))
+	if(prob(num_players() * 2))
 		gangs_to_create ++
 
 	for(var/i=1 to gangs_to_create)
@@ -72,7 +72,7 @@ var/list/gang_colors_pool = list("red","orange","yellow","green","blue","purple"
 				G.add_gang_hud(boss_mind)
 				forge_gang_objectives(boss_mind)
 				greet_gang(boss_mind)
-				equip_gang(boss_mind.current)
+				equip_gang(boss_mind.current,G)
 				modePlayer += boss_mind
 	..()
 
@@ -94,7 +94,7 @@ var/list/gang_colors_pool = list("red","orange","yellow","green","blue","purple"
 ///////////////////////////////////////////////////////////////////////////
 //This equips the bosses with their gear, and makes the clown not clumsy//
 ///////////////////////////////////////////////////////////////////////////
-/datum/game_mode/proc/equip_gang(mob/living/carbon/human/mob)
+/datum/game_mode/proc/equip_gang(mob/living/carbon/human/mob, gang)
 	if(!istype(mob))
 		return
 
@@ -105,9 +105,7 @@ var/list/gang_colors_pool = list("red","orange","yellow","green","blue","purple"
 
 	var/obj/item/device/gangtool/gangtool = new(mob)
 	var/obj/item/weapon/pen/gang/T = new(mob)
-	var/obj/item/toy/crayon/spraycan/gang/SC = new(mob)
-	SC.colour = mob.mind.gang_datum.color_hex
-	SC.update_icon()
+	var/obj/item/toy/crayon/spraycan/gang/SC = new(mob,gang)
 
 	var/list/slots = list (
 		"backpack" = slot_in_backpack,
@@ -237,15 +235,13 @@ var/list/gang_colors_pool = list("red","orange","yellow","green","blue","purple"
 //////////////////////////////////////////////////////////////////////
 //Announces the end of the game with all relavent information stated//
 //////////////////////////////////////////////////////////////////////
-/datum/game_mode/gang/declare_completion(datum/gang/winner)
-	if(!winner)
-		world << "<FONT size=3 color=red><B>The station was [station_was_nuked ? "destroyed!" : "evacuated before a gang could claim it! The station wins!"]</B></FONT>"
-	else
-		world << "<FONT size=3 color=red><B>The [winner.name] Gang successfully performed a hostile takeover of the station!</B></FONT>"
-	..()
-	return 1
 
 /datum/game_mode/proc/auto_declare_completion_gang(datum/gang/winner)
+	if(!winner)
+		world << "<FONT size=3 color=red><B>The station was [station_was_nuked ? "destroyed!" : "evacuated before a gang could claim it! The station wins!"]</B></FONT><br>"
+	else
+		world << "<FONT size=3 color=red><B>The [winner.name] Gang successfully performed a hostile takeover of the station!</B></FONT><br>"
+	..()
 	for(var/datum/gang/G in gangs)
 		world << "<br><b>The [G.name] Gang was [winner==G ? "<font color=green>victorious</font>" : "<font color=red>defeated</font>"] with [round((G.territory.len/start_state.num_territories)*100, 1)]% control of the station!</b>"
 		world << "<br>The [G.name] Gang Bosses were:"
@@ -309,4 +305,4 @@ var/list/gang_colors_pool = list("red","orange","yellow","green","blue","purple"
 				G.domination(0.5)
 			priority_announce("Multiple station takeover attempts have made simultaneously. Conflicting takeover attempts appears to have restarted.","Network Alert")
 		else
-			ticker.force_ending = winners[1]
+			ticker.force_ending = pick(winners)

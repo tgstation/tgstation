@@ -96,9 +96,10 @@
 				R += A.id + " ("
 				R += num2text(A.volume) + "),"
 
-		if(thrower)
-			add_logs(thrower, M, "splashed", object="[R]")
+
 		reagents.reaction(target, TOUCH)
+		if(thrower)
+			add_logs(thrower, M, "splashed", R)
 
 	else if((!target.density || target.throwpass) && thrower && thrower.mind && thrower.mind.assigned_role == "Bartender")
 		visible_message("<span class='notice'>[src] lands onto the [target.name] without spilling a single drop.</span>")

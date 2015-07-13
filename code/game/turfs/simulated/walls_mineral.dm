@@ -21,6 +21,7 @@
 	//var/electro = 1
 	//var/shocked = null
 	explosion_block = 0 //gold is a soft metal you dingus.
+	canSmoothWith = list(/turf/simulated/wall/mineral/gold, /obj/structure/falsewall/gold)
 
 /turf/simulated/wall/mineral/silver
 	name = "silver wall"
@@ -31,6 +32,7 @@
 	mineral = "silver"
 	//var/electro = 0.75
 	//var/shocked = null
+	canSmoothWith = list(/turf/simulated/wall/mineral/silver, /obj/structure/falsewall/silver)
 
 /turf/simulated/wall/mineral/diamond
 	name = "diamond wall"
@@ -41,6 +43,7 @@
 	mineral = "diamond"
 	slicing_duration = 200   //diamond wall takes twice as much time to slice
 	explosion_block = 3
+	canSmoothWith = list(/turf/simulated/wall/mineral/diamond, /obj/structure/falsewall/diamond)
 
 /turf/simulated/wall/mineral/diamond/thermitemelt(mob/user as mob)
 	return
@@ -52,6 +55,7 @@
 	icon_state = "bananium"
 	walltype = "bananium"
 	mineral = "bananium"
+	canSmoothWith = list(/turf/simulated/wall/mineral/clown, /obj/structure/falsewall/clown)
 
 /turf/simulated/wall/mineral/sandstone
 	name = "sandstone wall"
@@ -61,6 +65,7 @@
 	walltype = "sandstone"
 	mineral = "sandstone"
 	explosion_block = 0
+	canSmoothWith = list(/turf/simulated/wall/mineral/sandstone, /obj/structure/falsewall/sandstone)
 
 /turf/simulated/wall/mineral/uranium
 	name = "uranium wall"
@@ -69,6 +74,7 @@
 	icon_state = "uranium"
 	walltype = "uranium"
 	mineral = "uranium"
+	canSmoothWith = list(/turf/simulated/wall/mineral/uranium, /obj/structure/falsewall/uranium)
 
 /turf/simulated/wall/mineral/uranium/proc/radiate()
 	if(!active)
@@ -103,6 +109,7 @@
 	walltype = "plasma"
 	mineral = "plasma"
 	thermal_conductivity = 0.04
+	canSmoothWith = list(/turf/simulated/wall/mineral/plasma, /obj/structure/falsewall/plasma)
 
 /turf/simulated/wall/mineral/plasma/attackby(obj/item/weapon/W as obj, mob/user as mob, params)
 	if(is_hot(W) > 300)//If the temperature of the object is over 300, then ignite
@@ -157,3 +164,4 @@
 	mineral = "wood"
 	hardness = 70
 	explosion_block = 0
+	canSmoothWith = list(/turf/simulated/wall/mineral/wood, /obj/structure/falsewall/wood)

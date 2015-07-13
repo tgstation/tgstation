@@ -315,7 +315,7 @@
 		return
 	if(!(stat & BROKEN))
 		visible_message("<span class='danger'>[M] [M.attacktext] [src]!</span>")
-		add_logs(M, src, "attacked", admin=0)
+		add_logs(M, src, "attacked")
 		take_damage(M.melee_damage_upper)
 	else
 		M << "<span class='danger'>That object is useless to you.</span>"
@@ -327,7 +327,7 @@
 	if(!(stat & BROKEN))
 		playsound(src.loc, 'sound/weapons/slash.ogg', 25, 1, -1)
 		visible_message("<span class='danger'>[M] has slashed at [src]!</span>")
-		add_logs(M, src, "attacked", admin=0)
+		add_logs(M, src, "attacked")
 		take_damage(15)
 	else
 		M << "\green That object is useless to you."
