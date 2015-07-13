@@ -42,20 +42,19 @@
 	return adjacencies
 
 /proc/smooth_icon(atom/A)
-	spawn(2)
-		if(A && A.smooth)
-			clear_overlays(A)
-			var/adjacencies = calculate_adjacencies(A)
+	if(A && A.smooth)
+		clear_overlays(A)
+		var/adjacencies = calculate_adjacencies(A)
 
-			A.top_left_corner = make_nw_corner(adjacencies)
-			A.top_right_corner = make_ne_corner(adjacencies)
-			A.bottom_left_corner = make_sw_corner(adjacencies)
-			A.bottom_right_corner = make_se_corner(adjacencies)
+		A.top_left_corner = make_nw_corner(adjacencies)
+		A.top_right_corner = make_ne_corner(adjacencies)
+		A.bottom_left_corner = make_sw_corner(adjacencies)
+		A.bottom_right_corner = make_se_corner(adjacencies)
 
-			A.overlays += A.top_left_corner
-			A.overlays += A.top_right_corner
-			A.overlays += A.bottom_right_corner
-			A.overlays += A.bottom_left_corner
+		A.overlays += A.top_left_corner
+		A.overlays += A.top_right_corner
+		A.overlays += A.bottom_right_corner
+		A.overlays += A.bottom_left_corner
 
 
 /proc/make_nw_corner(adjacencies)
