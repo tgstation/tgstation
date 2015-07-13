@@ -88,7 +88,9 @@ var/list/mechtoys = list(
 		var/mob/living/M = mover
 		if(!M.lying && !istype(M, /mob/living/carbon/monkey) && !istype(M, /mob/living/carbon/slime) && !istype(M, /mob/living/simple_animal/mouse))  //If your not laying down, or a small creature, no pass.
 			return 0
-	return !(airtight && air_group)
+	if(!istype(mover)) // Aircheck!
+		return !airtight
+	return 1
 
 /obj/structure/plasticflaps/ex_act(severity)
 	switch(severity)
