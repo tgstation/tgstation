@@ -42,6 +42,9 @@ Chief Engineer
 	if(H.backbag == 2 || H.backbag == 3)
 		H.equip_to_slot_or_del(new /obj/item/weapon/melee/classic_baton/telescopic(H), slot_in_backpack)
 
+	spawn(2) //to wait for initialization stuff
+		announce_head(H.mind, list(":e")) //tell underlings (engineering radio) they have a head
+
 /*
 Station Engineer
 */

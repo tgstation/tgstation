@@ -1,0 +1,6 @@
+author: Chiefwaffles
+
+delete-after: True
+
+changes: 
+  - rscadd: "Department Heads, on arrival, (latejoin or start) will now have their name broadcasted on their department's channel(s)."

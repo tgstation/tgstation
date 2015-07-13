@@ -55,6 +55,9 @@ Head of Security
 	L.implanted = 1
 	H.sec_hud_set_implants()
 
+	spawn(2) //to wait for initialization stuff
+		announce_head(H.mind, list(":s")) //tell underlings (security radio) they have a head
+
 /*
 Warden
 */

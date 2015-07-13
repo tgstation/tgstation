@@ -95,3 +95,6 @@ Head of Personnel
 	else
 		H.equip_to_slot_or_del(new /obj/item/weapon/storage/box/ids(H.back), slot_in_backpack)
 		H.equip_to_slot_or_del(new /obj/item/weapon/melee/classic_baton/telescopic(H), slot_in_backpack)
+
+	spawn(2) //to wait for initialization stuff
+		announce_head(H.mind, list(":u", ":v")) //tell underlings (cargo and service radio) they have a head
