@@ -14,7 +14,6 @@ var/list/announcement_systems = list()
 	radio = new /obj/item/device/radio/headset/ai(src)
 
 /obj/structure/announcement_system/proc/announce(var/message, list/channels)
-	spawn(1) //to wait for people joining, roundstart init, etc.
 	if(channels.len == 0)
 		radio.talk_into(src, message, null, list(SPAN_ROBOT))
 	else
