@@ -143,7 +143,7 @@
 	user.do_jitter_animation(500)
 
 	if(!do_mob(user,target,20))
-		user << "<span class='warning'The body swap has been interrupted!</span>"
+		user << "<span class='warning'>The body swap has been interrupted!</span>"
 		return
 
 	target << "<span class='userdanger'>[user] tightens their grip as a painful sensation invades your body.</span>"
