@@ -1,3 +1,4 @@
+
 /client/verb/who()
 	set name = "Who"
 	set category = "OOC"
@@ -12,19 +13,6 @@
 			if(C.holder && C.holder.fakekey)
 				entry += " <i>(as [C.holder.fakekey])</i>"
 			Lines += entry
-	else
-		for(var/client/C in clients)
-			if(C.holder && C.holder.fakekey)
-				Lines += C.holder.fakekey
-			else
-				Lines += C.key
-
-	for(var/line in sortList(Lines))
-		msg += "[line]\n"
-
-	msg += "<b>Total Players: [length(Lines)]</b>"
-	src << msg
-
 	else
 		for(var/client/C in clients)
 			if(C.holder && C.holder.fakekey)
