@@ -1,3 +1,17 @@
+/obj/item/weapon/tank/internals/jetpack
+	name = "Jet pack Internals connector"
+	desc = "a connector port to hook jetpacks to internals masks"
+	icon_state = "emergency"
+	action_button_name = "Toggle Jetpack Internals"
+	action_button_internal = 1
+	volume = 0 //we use the jetpack's tank, so this has no need
+
+/obj/item/weapon/tank/internals/jetpack/ui_action_click()
+	var/obj/item/weapon/tank/jetpack/JP = loc
+	if (istype(JP))
+		JP.toggle_internals()
+
+
 /obj/item/weapon/tank/jetpack
 	name = "jetpack (empty)"
 	desc = "A tank of compressed gas for use as propulsion in zero-gravity areas. Use with caution."
@@ -10,11 +24,13 @@
 	var/on = 0.0
 	var/stabilization_on = 0
 	var/volume_rate = 500              //Needed for borg jetpack transfer
+	var/obj/item/weapon/tank/internals/jetpack/Internals
 
 /obj/item/weapon/tank/jetpack/New()
 	..()
 	ion_trail = new /datum/effect/effect/system/ion_trail_follow()
 	ion_trail.set_up(src)
+	Internals = new /obj/item/weapon/tank/internals/jetpack(src)
 
 
 /obj/item/weapon/tank/jetpack/verb/toggle_rockets()

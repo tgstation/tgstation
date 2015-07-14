@@ -10,6 +10,34 @@
 /*
  * Oxygen
  */
+/obj/item/weapon/tank/internals
+	action_button_name = "Toggle Internals"
+
+/obj/item/weapon/tank/internals/ui_action_click()
+	toggle_internals()
+
+/obj/item/weapon/tank/proc/toggle_internals()
+	var/mob/living/carbon/C = usr
+	if(iscarbon(usr))
+		if(!istype(C.wear_mask, /obj/item/clothing/mask))
+			C << "<span class='warning'>You are not wearing an internals mask!</span>"
+			return
+		else
+			var/obj/item/clothing/mask/M = C.wear_mask
+			if(M.mask_adjusted) // if mask on face but pushed down
+				M.adjustmask(C) // adjust it back
+		var/mob/living/carbon/location = loc
+		if(location.internal == src)
+			location.internal = null
+			usr << "<span class='notice'>You close \the [src]'s internals valve.</span>"
+		else
+			if(location.wear_mask && (location.wear_mask.flags & MASKINTERNALS))
+				location.internal = src
+				usr << "<span class='notice'>You open \the [src]'s internals valve.</span>"
+			else
+				usr << "<span class='warning'>You need to be wearing an internals mask!</span>"
+
+
 /obj/item/weapon/tank/internals/oxygen
 	name = "oxygen tank"
 	desc = "A tank of oxygen."
