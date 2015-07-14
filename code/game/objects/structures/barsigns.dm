@@ -220,7 +220,7 @@
 /datum/barsign/thecoderbus
 	name = "The Coderbus"
 	icon = "thecoderbus"
-	desc = "The seperation between the codebase and server is absolute, we will not listen your platitudes any longer!"
+	desc = "The separation between the codebase and server is absolute, we will not listen to your platitudes any longer!"
 
 
 /datum/barsign/theadminbus
