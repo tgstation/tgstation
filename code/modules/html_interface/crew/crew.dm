@@ -207,8 +207,8 @@ var/global/datum/crewmonitor/crewmonitor = new
 							area = format_text(player_area.name)
 							pos_x = pos.x
 							pos_y = pos.y
-							see_pos_x = pos.x + WORLD_X_OFFSET[z]
-							see_pos_y = pos.y + WORLD_Y_OFFSET[z]
+							see_pos_x = pos.x - WORLD_X_OFFSET[z]
+							see_pos_y = pos.y - WORLD_Y_OFFSET[z]
 						else
 							area = null
 							pos_x = null
