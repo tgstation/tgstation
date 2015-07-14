@@ -158,6 +158,8 @@ var/global/datum/crewmonitor/crewmonitor = new
 			var/area
 			var/pos_x
 			var/pos_y
+			var/see_pos_x
+			var/see_pos_y
 			var/life_status
 
 			for(var/mob/living/carbon/human/H in mob_list)
@@ -203,14 +205,18 @@ var/global/datum/crewmonitor/crewmonitor = new
 							var/area/player_area = get_area(H)
 
 							area = format_text(player_area.name)
-							pos_x = pos.x + WORLD_X_OFFSET[z]
-							pos_y = pos.y + WORLD_Y_OFFSET[z]
+							pos_x = pos.x
+							pos_y = pos.y
+							see_pos_x = pos.x + WORLD_X_OFFSET[z]
+							see_pos_y = pos.y + WORLD_Y_OFFSET[z]
 						else
 							area = null
 							pos_x = null
 							pos_y = null
+							see_pos_x = null
+							see_pos_y = null
 
-						results[++results.len] = list(name, assignment, ijob, life_status, dam1, dam2, dam3, dam4, area, pos_x, pos_y, H.monitor_check())
+						results[++results.len] = list(name, assignment, ijob, life_status, dam1, dam2, dam3, dam4, area, pos_x, pos_y, H.monitor_check(), see_pos_x, see_pos_y)
 
 			src.data = results
 			src.updateFor(null, hi, z) // updates for everyone
