@@ -232,7 +232,7 @@ var/list/gang_colors_pool = list("red","orange","yellow","green","blue","purple"
 	return gang_bosses
 
 /proc/get_domination_time(var/datum/gang/G)
-	return max(300,900 - (round((G.territory.len/start_state.num_territories)*100, 1) * 12))
+	return max(180,900 - (round((G.territory.len/start_state.num_territories)*100, 1) * 12))
 
 //////////////////////////////////////////////////////////////////////
 //Announces the end of the game with all relavent information stated//

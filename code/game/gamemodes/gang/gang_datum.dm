@@ -166,7 +166,7 @@
 	//Calculate and report influence growth
 	var/message = "<b>[src] Gang Status Report:</b><BR>*---------*<br>"
 	if(isnum(dom_timer))
-		var/new_time = max(300,dom_timer - ((territory.len + uniformed) * 2))
+		var/new_time = max(180,dom_timer - (uniformed * 4) - (territory.len * 2))
 		if(new_time < dom_timer)
 			message += "Takeover shortened by [dom_timer - new_time] seconds for defending [territory.len] territories and [uniformed] uniformed gangsters.<BR>"
 			dom_timer = new_time
