@@ -220,7 +220,7 @@
 /datum/barsign/thecoderbus
 	name = "The Coderbus"
 	icon = "thecoderbus"
-	desc = "A very controversial bar known for its wide variety of constantly-changing drinks."
+	desc = "The seperation between the codebase and server is absolute, we will not listen your platitudes any longer!"
 
 
 /datum/barsign/theadminbus
