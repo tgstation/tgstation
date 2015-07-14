@@ -109,3 +109,15 @@
 			scramble(null, H, 5) // Scramble SEs, 5% chance for each block
 
 			H.apply_effect((rand(50, 250)),IRRADIATE)
+
+/obj/item/projectile/energy/buster
+	name = "buster shot"
+	icon_state = "buster"
+	nodamage = 0
+	damage = 20
+	damage_type = BURN
+
+/obj/item/projectile/energy/megabuster
+	name = "buster pellet"
+	icon_state = "megabuster"
+	nodamage = 1

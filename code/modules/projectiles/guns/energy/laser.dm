@@ -293,3 +293,32 @@ obj/item/weapon/gun/energy/laser/retro
 		power_supply.give(100)
 		update_icon()
 		return 1
+
+
+/obj/item/weapon/gun/energy/megabuster
+	name = "Mega-buster"
+	desc = "An arm-mounted buster toy!"
+	icon_state = "megabuster"
+	item_state = null
+	w_class = 2.0
+	projectile_type = "/obj/item/projectile/energy/megabuster"
+	charge_states = 0
+	charge_cost = 5
+	fire_sound = 'sound/weapons/megabuster.ogg'
+	inhand_states = list("left_hand" = 'icons/mob/in-hand/left/megabusters.dmi', "right_hand" = 'icons/mob/in-hand/right/megabusters.dmi')
+
+/obj/item/weapon/gun/energy/megabuster/proto
+	name = "Proto-buster"
+	icon_state = "protobuster"
+
+/obj/item/weapon/gun/energy/mmlbuster
+	name = "Buster Cannon"
+	desc = "An antique arm-mounted buster cannon."
+	icon_state = "mmlbuster"
+	item_state = null
+	w_class = 2.0
+	charge_states = 0
+	projectile_type = "/obj/item/projectile/energy/buster"
+	charge_cost = 25
+	fire_sound = 'sound/weapons/mmlbuster.ogg'
+	inhand_states = list("left_hand" = 'icons/mob/in-hand/left/megabusters.dmi', "right_hand" = 'icons/mob/in-hand/right/megabusters.dmi')
