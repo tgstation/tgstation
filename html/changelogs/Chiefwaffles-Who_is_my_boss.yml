@@ -4,3 +4,4 @@ delete-after: True
 
 changes: 
   - rscadd: "After realizing how often AIs tend to 'disappear', Centcomm has authorized the shipment of the Automated Announcement System to take over the AI's responsibility of announcing new arrivals."
+  - rscadd: "In addition, you can now configure the radio announcements by using a multitool on the AAS. AIs can manipulate the messages as well."
