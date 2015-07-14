@@ -1,0 +1,4 @@
+author: Clusterfack
+delete-after: true
+changes:
+- bugfix: Mostly fix blood from being improperly cleaned and showing up where it isn't there
