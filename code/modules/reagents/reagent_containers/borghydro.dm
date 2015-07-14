@@ -100,11 +100,11 @@ Borg Hypospray
 	return
 
 /obj/item/weapon/reagent_containers/borghypo/attack_self(mob/user)
-	mode++
-	if(mode > reagent_list.len)
-		mode = 1
+	var/chosen_reagent = modes[input(user, "What reagent do you want to dispense?") as null|anything in reagent_ids]
+	if(!chosen_reagent)
+		return
+	mode = chosen_reagent
 	playsound(loc, 'sound/effects/pop.ogg', 50, 0)
-
 	var/datum/reagent/R = chemical_reagents_list[reagent_ids[mode]]
 	user << "<span class='notice'>[src] is now dispensing '[R.name]'.</span>"
 	return
@@ -152,15 +152,6 @@ Borg Shaker
 				if(RG.total_volume < RG.maximum_volume)
 					R.cell.use(charge_cost)
 					RG.add_reagent(reagent_ids[valueofi], 5)
-
-/obj/item/weapon/reagent_containers/borghypo/borgshaker/attack_self(mob/user)
-	mode = modes[input(user, "What reagent do you want to dispense?") as anything in reagent_ids]
-
-	playsound(loc, 'sound/effects/pop.ogg', 50, 0)
-
-	var/datum/reagent/R = chemical_reagents_list[reagent_ids[mode]]
-	user << "<span class='notice'>[src] is now dispensing '[R.name]'.</span>"
-	return
 
 /obj/item/weapon/reagent_containers/borghypo/borgshaker/afterattack(obj/target, mob/user, proximity)
 	if(!proximity) return
