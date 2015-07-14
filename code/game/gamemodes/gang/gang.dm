@@ -239,11 +239,12 @@ var/list/gang_colors_pool = list("red","orange","yellow","green","blue","purple"
 //////////////////////////////////////////////////////////////////////
 
 /datum/game_mode/proc/auto_declare_completion_gang(datum/gang/winner)
-	if(!winner)
-		world << "<FONT size=3 color=red><B>The station was [station_was_nuked ? "destroyed!" : "evacuated before a gang could claim it! The station wins!"]</B></FONT><br>"
-	else
-		world << "<FONT size=3 color=red><B>The [winner.name] Gang successfully performed a hostile takeover of the station!</B></FONT><br>"
-	..()
+	if(gangs.len)
+		if(!winner)
+			world << "<FONT size=3 color=red><B>The station was [station_was_nuked ? "destroyed!" : "evacuated before a gang could claim it! The station wins!"]</B></FONT><br>"
+		else
+			world << "<FONT size=3 color=red><B>The [winner.name] Gang successfully performed a hostile takeover of the station!</B></FONT><br>"
+
 	for(var/datum/gang/G in gangs)
 		world << "<br><b>The [G.name] Gang was [winner==G ? "<font color=green>victorious</font>" : "<font color=red>defeated</font>"] with [round((G.territory.len/start_state.num_territories)*100, 1)]% control of the station!</b>"
 		world << "<br>The [G.name] Gang Bosses were:"
