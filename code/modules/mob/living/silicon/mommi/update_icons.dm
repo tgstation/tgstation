@@ -75,7 +75,7 @@
 		overhats = image("icon" = ((head.icon_override) ? head.icon_override : 'icons/mob/head.dmi'), "icon_state" = "[head.icon_state]")
 
 		// If the hat has blood on it
-		if(head.blood_DNA)
+		if(head.blood_DNA && head.blood_DNA.len)
 			// Add a blood image to the hat
 			var/image/bloodsies = image("icon" = 'icons/effects/blood.dmi', "icon_state" = "helmetblood")
 			bloodsies.color = head.blood_color

@@ -68,7 +68,7 @@
 		var/image/lying		= image("icon" = 'icons/mob/mob.dmi', "icon_state" = "[t_state]2")
 		var/image/standing	= image("icon" = 'icons/mob/mob.dmi', "icon_state" = "[t_state]")
 
-		if(wear_suit.blood_DNA)
+		if(wear_suit.blood_DNA && wear_suit.blood_DNA.len)
 			var/t_suit = "suit"
 			if( istype(wear_suit, /obj/item/clothing/suit/armor) )
 				t_suit = "armor"
@@ -95,7 +95,7 @@
 		if(!t_state)	t_state = head.icon_state
 		var/image/lying		= image("icon" = 'icons/mob/mob.dmi', "icon_state" = "[t_state]2")
 		var/image/standing	= image("icon" = 'icons/mob/mob.dmi', "icon_state" = "[t_state]")
-		if(head.blood_DNA)
+		if(head.blood_DNA && head.blood_DNA.len)
 			lying.overlays		+= image("icon" = 'icons/effects/blood.dmi', "icon_state" = "helmetblood2")
 			standing.overlays	+= image("icon" = 'icons/effects/blood.dmi', "icon_state" = "helmetblood")
 		head.screen_loc = ui_alien_head
