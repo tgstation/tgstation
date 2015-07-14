@@ -177,4 +177,4 @@
 	sleep(2) //to allow some initialization
 	if(announcement_systems.len)
 		var/obj/structure/announcement_system/announcer = pick(announcement_systems)
-		announcer.announce("[o_mind.name], [o_mind.assigned_role], is the department head.", channels)
+		announcer.announce("NEWHEAD", o_mind.name, o_mind.assigned_role, channels)
