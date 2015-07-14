@@ -1,6 +1,0 @@
-author: duncathan
-
-delete-after: True
-
-changes: 
-  - tweak: "Greatly shortened the time it takes to lay pipes with the RPD and to unwrench pipes in general."
