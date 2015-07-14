@@ -206,3 +206,118 @@ proc/handle_render(var/mob,var/message,var/speaker)
 		mob << message
 	else
 		mob << message
+
+var/global/resethearers = 0
+
+/proc/sethearing()
+	var/atom/A
+	for(var/mob/virtualhearer/VH in virtualhearers)
+		for(A=VH.attached.loc, A && !isturf(A), A=A.loc);
+		VH.loc = A
+	resethearers = world.time + 5
+
+// Returns a list of hearers in range of R from source. Used in saycode.
+/proc/get_hearers_in_view(var/R, var/atom/source)
+	if(world.time>resethearers) sethearing()
+
+	var/turf/T = get_turf(source)
+	. = new/list()
+
+	if(!T)
+		return
+
+	for(var/mob/virtualhearer/VH in hearers(R, T))
+		. += VH.attached
+
+/**
+ * Returns a list of mobs who can hear any of the radios given in @radios.
+ */
+/proc/get_mobs_in_radio_ranges(list/obj/item/device/radio/radios)
+	if(world.time>resethearers) sethearing()
+
+	. = new/list()
+
+	for(var/obj/item/device/radio/radio in radios)
+		if(radio)
+			var/turf/turf = get_turf(radio)
+
+			if(turf)
+				for(var/mob/virtualhearer/VH in hearers(radio.canhear_range, turf))
+					. |= VH.attached
+
+/* Unused
+/proc/get_movables_in_radio_ranges(var/list/obj/item/device/radio/radios)
+	. = new/list()
+	// Returns a list of mobs who can hear any of the radios given in @radios
+	for(var/i = 1; i <= radios.len; i++)
+		var/obj/item/device/radio/R = radios[i]
+		if(R)
+			. |= get_hearers_in_view(R)
+	. |= get_mobs_in_radio_ranges(radios)
+
+//But I don't want to check EVERYTHING to find a hearer you say? I agree
+//This is the new version of recursive_mob_check, used for say().
+//The other proc was left intact because morgue trays use it.
+/proc/recursive_hear_check(atom/O)
+	var/list/processing_list = list(O)
+	var/list/processed_list = list()
+	var/found_atoms = list()
+
+	while (processing_list.len)
+		var/atom/A = processing_list[1]
+
+		if (A.flags & HEAR)
+			found_atoms |= A
+
+		for (var/atom/B in A)
+			if (!processed_list[B])
+				processing_list |= B
+
+		processing_list.Cut(1, 2)
+		processed_list[A] = A
+
+	return found_atoms
+
+Even further legacy saycode
+// Will recursively loop through an atom's contents and check for mobs, then it will loop through every atom in that atom's contents.
+// It will keep doing this until it checks every content possible. This will fix any problems with mobs, that are inside objects,
+// being unable to hear people due to being in a box within a bag.
+
+/proc/recursive_mob_check(var/atom/O,var/client_check=1,var/sight_check=1,var/include_radio=1)
+
+	var/list/processing_list = list(O)
+	var/list/processed_list = list()
+	var/list/found_mobs = list()
+
+	while(processing_list.len)
+
+		var/atom/A = processing_list[1]
+		var/passed = 0
+
+		if(ismob(A))
+			var/mob/A_tmp = A
+			passed=1
+
+			if(client_check && !A_tmp.client)
+				passed=0
+
+			if(sight_check && !isInSight(A_tmp, O))
+				passed=0
+
+		else if(include_radio && istype(A, /obj/item/device/radio))
+			passed=1
+
+			if(sight_check && !isInSight(A, O))
+				passed=0
+
+		if(passed)
+			found_mobs |= A
+
+		for(var/atom/B in A)
+			if(!processed_list[B])
+				processing_list |= B
+
+		processing_list.Cut(1, 2)
+		processed_list[A] = A
+
+	return found_mobs*/

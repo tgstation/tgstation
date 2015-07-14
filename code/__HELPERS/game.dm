@@ -127,29 +127,6 @@
 			turfs += T
 	return turfs
 
-
-//This is the new version of recursive_mob_check, used for say().
-//The other proc was left intact because morgue trays use it.
-/proc/recursive_hear_check(atom/O)
-	var/list/processing_list = list(O)
-	var/list/processed_list = list()
-	var/found_atoms = list()
-
-	while (processing_list.len)
-		var/atom/A = processing_list[1]
-
-		if (A.flags & HEAR)
-			found_atoms |= A
-
-		for (var/atom/B in A)
-			if (!processed_list[B])
-				processing_list |= B
-
-		processing_list.Cut(1, 2)
-		processed_list[A] = A
-
-	return found_atoms
-
 /proc/recursive_type_check(atom/O, type = /atom)
 	var/list/processing_list = list(O)
 	var/list/processed_list = new/list()
@@ -172,96 +149,11 @@
 
 //var/debug_mob = 0
 
-// Will recursively loop through an atom's contents and check for mobs, then it will loop through every atom in that atom's contents.
-// It will keep doing this until it checks every content possible. This will fix any problems with mobs, that are inside objects,
-// being unable to hear people due to being in a box within a bag.
-
-/proc/recursive_mob_check(var/atom/O,var/client_check=1,var/sight_check=1,var/include_radio=1)
-
-	var/list/processing_list = list(O)
-	var/list/processed_list = list()
-	var/list/found_mobs = list()
-
-	while(processing_list.len)
-
-		var/atom/A = processing_list[1]
-		var/passed = 0
-
-		if(ismob(A))
-			var/mob/A_tmp = A
-			passed=1
-
-			if(client_check && !A_tmp.client)
-				passed=0
-
-			if(sight_check && !isInSight(A_tmp, O))
-				passed=0
-
-		else if(include_radio && istype(A, /obj/item/device/radio))
-			passed=1
-
-			if(sight_check && !isInSight(A, O))
-				passed=0
-
-		if(passed)
-			found_mobs |= A
-
-		for(var/atom/B in A)
-			if(!processed_list[B])
-				processing_list |= B
-
-		processing_list.Cut(1, 2)
-		processed_list[A] = A
-
-	return found_mobs
-
-// The old system would loop through lists for a total of 5000 per function call, in an empty server.
-// This new system will loop at around 1000 in an empty server.
-
-/proc/get_hearers_in_view(var/R, var/atom/source)
-	// Returns a list of hearers in range of R from source. Used in saycode.
-	var/turf/T = get_turf(source)
-	var/list/hear = list()
-
-	if(!T)
-		return hear
-
-	var/list/range = get_hear(R, T)
-	for(var/atom/movable/A in range)
-		hear |= recursive_hear_check(A)
-
-	return hear
-
 /proc/get_contents_in_object(atom/O, type_path = /atom/movable)
 	if (O)
 		return recursive_type_check(O, type_path) - O
 	else
 		return new/list()
-
-/proc/get_movables_in_radio_ranges(var/list/obj/item/device/radio/radios)
-
-	//set background = 1
-
-	. = list()
-	// Returns a list of mobs who can hear any of the radios given in @radios
-	for(var/i = 1; i <= radios.len; i++)
-		var/obj/item/device/radio/R = radios[i]
-		if(R)
-			. |= get_hearers_in_view(R)
-	. |= get_mobs_in_radio_ranges(radios)
-	return .
-
-/**
- * Returns a list of mobs who can hear any of the radios given in @radios.
- */
-/proc/get_mobs_in_radio_ranges(list/obj/item/device/radio/radios)
-	set background = BACKGROUND_ENABLED
-
-	. = new/list()
-
-	for (var/obj/item/device/radio/R in radios)
-		if (R)
-			. |= get_hearers_in_view(R.canhear_range, R)
 
 #define SIGN(X) ((X<0)?-1:1)
 
