@@ -417,14 +417,14 @@
 			druggy = max(druggy-1, 0)
 
 		if(stunned)
-			AdjustStunned(-1)
+			stunned = max(stunned-1,0)
 			if(!stunned)
-				update_icons()
+				update_canmove()
 
 		if(weakened)
 			weakened = max(weakened-1,0)
 			if(!weakened)
-				update_icons()
+				update_canmove()
 
 		if(hallucination)
 			spawn handle_hallucinations()
