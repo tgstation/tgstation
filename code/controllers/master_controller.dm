@@ -160,7 +160,7 @@ datum/controller/game_controller/proc/setup_objects()
 
 	world << "<span class='danger'>Generating ingame minimaps.</span>"
 	sleep(-1)
-	crewmonitor.generateMiniMaps() // start generating minimaps (this is a background process)
+	generateMiniMaps() // start generating minimaps (this is a background process)
 
 	world << "<span class='danger'>Initializations complete.</span>"
 	sleep(-1)

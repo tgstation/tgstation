@@ -1,9 +1,3 @@
-/*!
- * jQuery scrollintoview() plugin and :scrollable selector filter
- *
- * Version 1.8 (14 Jul 2011)
- * Requires jQuery 1.4 or newer
- */
  (function($) {
     $.fn.drags = function(opt) {
         opt = $.extend({handle:"",cursor:"move"}, opt);
@@ -43,8 +37,7 @@
         });
 
     }
-})(jQuery);
-(function ($) {
+
     var converter = {
         vertical: { x: false, y: true },
         horizontal: { x: true, y: false },
@@ -242,21 +235,13 @@
     });
 })(jQuery);
 
-/*!
- * Crew manifest script
- */
-
-var isAI = null;
 var scale_x;
 var scale_y;
 var defaultzoom = 4;
 var html5compat = false;
 function disableSelection(){ return false; };
 
-$(window).on("onUpdateContent", function()
-{
-	
-	
+$(window).on("onUpdateContent", function(){
 	$("#textbased").html("<table><colgroup><col id=\"name\" style=\"width: 24px;\" /><col id=\"pos\" style=\"width: 180px;\" /></colgroup><thead><tr><td><h3>Name</h3></td><td><h3>&nbsp;</h3></td><td><h3>Position</h3></td></tr></thead><tbody id=\"textbased-tbody\"></tbody></table>");
 
 	$("#uiMap").append("<img src=\"minimap_" + z + ".png\" id=\"uiMapImage\" width=\"256\" height=\"256\" unselectable=\"on\"/><div id=\"uiMapContent\" unselectable=\"on\"></div>");
@@ -316,54 +301,14 @@ $(window).on("onUpdateContent", function()
 		//alert(tileX + ' ' + tileY);
 		window.location.href = "byond://?src=" + hSrc + "&action=crewclick&x=" + tileX + "&y=" + tileY + "&z=" + z;
 	});
-});
-
-var updateMap = true;
-var ijobNames = {
-    00: "captain",
-        50: "headofpersonnel",
-        10: "headofsecurity",
-        11: "warden",
-        12: "securityofficer",
-        13: "detective",
-        20: "chiefmedicalofficer",
-        21: "chemist",
-        22: "geneticist",
-        23: "virologist",
-        24: "medicaldoctor",
-        30: "researchdirector",
-        31: "scientist",
-        32: "roboticist",
-        40: "chiefengineer",
-        41: "stationengineer",
-        42: "atmospherictechnician",
-        51: "quartermaster",
-        52: "shaftminer",
-        53: "cargotechnician",
-        61: "bartender",
-        62: "cook",
-        63: "botanist",
-        64: "librarian",
-        65: "chaplain",
-        66: "clown",
-        67: "mime",
-        68: "janitor",
-        69: "lawyer",
-        200: "admiral",
-        210: "centcom commander",
-        220: "emergencyresponseteamcommander",
-        221: "securityresponseofficer",
-        222: "engineerresponseofficer",
-        223: "medicalresponseofficer",
-        999: "assistant"
-};
+}
+)
 function switchTo(i)
 {
 	if (i == 1)
 	{
 		$("#uiMapContainer").hide();
 		$("#zoomcontainer").hide();
-		$("body").css({"padding-left": "0px" , "cursor": "default"});
 		$("#textbased").show();
 
 	}
@@ -372,12 +317,6 @@ function switchTo(i)
 		$("#textbased").hide();
 		$("#uiMapContainer").show();
 		$("#zoomcontainer").show();
-		$("body").css({"padding-left": "0" , "cursor": "default"});
-		//$("#uiMap").css({"width": "auto" , "height": "600" , "margin-top": "20px"});
-		//$("#map").width("800px");
-		//$("#map").height("800px");
-		//$("window").height("800px");
-		//$("document").height("800px");
 	}
 }
 
@@ -406,183 +345,24 @@ function setzoom(val){
 function changezlevels()
 {
 	var newZ = parseInt(Math.min(Math.max(prompt("View which Z-Level?", z), 1), 6));
-	//$("#uiMapImage").attr('src', 'minimap_' + newZ + '.png');
-	//z = newZ
 	window.location.href = "byond://?src=" + hSrc + "&action=changez&value=" + newZ;
 }
 
 function clearAll(ai)
 {
-	if (isAI === null)					{ isAI = (ai == "true"); }
 	$("#textbased-tbody").empty();
 	$("#uiMap .mapIcon").remove();
 	$("#uiMap .dot").remove();
 }
 
-function isHead(ijob)
-{
-	return (ijob % 10 == 0); // head roles always end in 0
+function tileToMapCoords(pos_x, pos_y){
+	var x = parseInt(pos_x);
+	var y = maxy - parseInt(pos_y);
+
+	var tx = (translate(x - 1, scale_x)).toFixed(0);
+	var ty = (translate(y - 1, scale_y) + 7).toFixed(0);
+	return {xx:tx,yy:ty}
 }
-
-function getColor(ijob)
-{
-	if		(ijob == 0)					{ return "#C06616"; } // captain
-	else if	(ijob >= 10 && ijob < 20)	{ return "#E74C3C"; } // security
-	else if (ijob >= 20 && ijob < 30)	{ return "#3498DB"; } // medical
-	else if (ijob >= 30 && ijob < 40)	{ return "#9B59B6"; } // science
-	else if (ijob >= 40 && ijob < 50)	{ return "#F1C40F"; } // engineering
-	else if (ijob >= 50 && ijob < 60)	{ return "#F39C12"; } // cargo
-	else if (ijob >= 200 && ijob < 230)	{ return "#00C100"; } // Centcom
-	else								{ return "#C38312"; } // other / unknown
-}
-
-function add(name, assignment, ijob, life_status, dam1, dam2, dam3, dam4, area, pos_x, pos_y, in_range, see_pos_x, see_pos_y)
-{
-	try							{ ijob = parseInt(ijob); }
-	catch (ex)					{ ijob = 0; }
-
-	var ls						= "";
-
-	if (life_status === null)	{ ls = (life_status ? "<span class=\"bad\">Deceased</span>" : "<span class=\"good\">Living</span>"); }
-
-	var healthHTML				= "";
-
-	if (dam1 != "" || dam2 != "" || dam3 != "" || dam4 != "")
-	{
-		var avg_dam				= parseInt(dam1) + parseInt(dam2) + parseInt(dam3) + parseInt(dam4);
-		var i;
-
-		if (isAI)				{ i = -1; }
-		else
-		{
-			if		(avg_dam <= 0)	{ i = 5; }
-			else if (avg_dam <= 25)	{ i = 4; }
-			else if (avg_dam <= 50)	{ i = 3; }
-			else if (avg_dam <= 75)	{ i = 2; }
-			else					{ i = 0; }
-		}
-
-		healthHTML = "<div class=\"health health-" + i + " tt\"><div><span>(<span class=\"oxygen\">" + dam1 + "</span>/<span class=\"toxin\">" + dam2 + "</span>/<span class=\"fire\">" + dam3 + "</span>/<span class=\"brute\">" + dam4 + "</span>)</span></div></div>";
-	}
-	else
-	{
-		healthHTML = "<div class=\"health health-" + (life_status == "" ? -1 : (life_status == "true" ? 4 : 0)) + " tt\"><div><span>Not Available</span></div></div>";
-	}
-
-	var trElem					= $("<tr></tr>").attr("data-ijob", ijob);
-	var tdElem;
-	var spanElem;
-
-	tdElem						= $("<td></td>");
-
-	var italics = false;
-
-	if (name.length >= 7 && name.substring(0, 3) == "<i>")
-	{
-		name = name.substring(3, name.length - 4);
-		italics = true;
-	}
-
-	spanElem					= $("<span></span>").text(name);
-	
-	if (italics)
-	{
-		spanElem.css("font-style", "italic");
-	}
-
-	if (isHead(ijob))			{ spanElem.css("font-weight", "bold"); }
-	
-	var color					= getColor(ijob);
-	
-	if (color)					{ spanElem.css("color", color); }
-
-	tdElem.append(spanElem);
-
-	if (assignment)				{ tdElem.append($("<span></span>").text(" (" + assignment + ")")); }
-
-	trElem.append(tdElem);
-
-	tdElem						= $("<td style=\"text-align: center; vertical-align: top; cursor: default;\"></td>");
-	tdElem.html(healthHTML);
-
-	trElem.append(tdElem);
-
-	tdElem						= $("<td style=\"cursor: default;\"></td>");
-
-	if (area && pos_x && pos_y)	{ tdElem.append($("<div></div>").text(area).addClass("tt").append($("<div></div>").append($("<span></span>").text("(" + see_pos_x + ", " + see_pos_y + ")")))); }
-	else						{ tdElem.text("Not Available"); }
-
-	trElem.append(tdElem);
-
-	var item = $("#textbased-tbody > tr").filter(function(){ return parseInt($(this).attr("data-ijob")) >= ijob; }).eq(0);
-
-	if (item.length > 0)		{ trElem.insertBefore(item); }
-	else						{ $("#textbased-tbody").append(trElem); }
-
-	if (updateMap && pos_x && pos_y && (in_range == "1"))
-	{
-		var x					= parseInt(pos_x);
-		var y					= maxy - parseInt(pos_y);
-
-		var tx					= (translate(x - 1, scale_x) - 1).toFixed(0);
-		var ty					= (translate(y - 1, scale_y) + 7).toFixed(0);
-
-		var dotElem				= $("<div class=\"mapIcon mapIcon16 rank-" +  ijobNames[ijob.toString()] + " " + (avg_dam <= 25 ? 'good' : (avg_dam > 25 && avg_dam <= 90 ? 'average' : 'bad')) + "\" style =\"top:" + ty +"px; left: " + tx + "px;\" z-index: 2; unselectable=\"on\"><div class=\"tooltip hidden\">" + name + " " + (life_status ? "<span class='good'>Living</span>" : "<span class='bad'>Deceased</span>") + " (<span class=\"oxyloss_light\">" + dam1 + "</span>/<span class=\"toxin_light\">" + dam2 + "</span>/<span class=\"fire\">" + dam3 + "</span>/<span class=\"brute\">" + dam4 + "</span>) "+area+": "+see_pos_x+", "+see_pos_y+")</div></div>");
-		//$("#uiMap").append("<div class=\"dot\" style=\"top: " + ty + "px; left: " + tx + "px; background-color: " + color + "; z-index: " + 999 + ";\"></div>");
-
-		$("#uiMap").append(dotElem);
-		//$("#uiMapContainer").append(dotElem);
-		//$("minimapImage").append(dotElem);
-		//alert($("#uiMap").html());
-		//$("#textbased").html(dotElem);
-
-		
-		function enable()
-		{
-			dotElem.addClass("active").css({ "border-color": color });
-		}
-
-		function disable()
-		{
-			dotElem.removeClass("active").css({ "border-color": "transparent" });
-		}
-
-		function click(e)
-		{
-			e.preventDefault();
-			e.stopPropagation();
-
-			window.location.href = "byond://?src=" + hSrc + "&action=select_person&name=" + encodeURIComponent(name);
-		}
-
-		$('.mapIcon')
-			.off('mouseenter mouseleave')
-			.on('mouseenter',
-				function (event) {
-					var self = this;
-					$('#uiMapTooltip')
-						.html($(this).children('.tooltip').html())
-						.show()
-						.stopTime()
-						.oneTime(5000, 'hideTooltip', function () {
-							$(this).fadeOut(500);
-						});
-				}
-			);
-		trElem.on("mouseover", enable).on("mouseout", disable).on("click", click);
-		dotElem.on("mouseover", function()
-		{
-			trElem.addClass("hover");
-			enable();
-			trElem.scrollintoview();
-		}).on("mouseout", function()
-		{
-			trElem.removeClass("hover");
-			disable();
-		}).on("click", click);
-	}
-}
-
 function translate(n, scale)
 {
 	return (n * tile_size) * scale;

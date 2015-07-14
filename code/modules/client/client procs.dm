@@ -319,8 +319,7 @@
 	// Preload the crew monitor. This needs to be done due to BYOND bug http://www.byond.com/forum/?post=1487244
 	//The above bug report thing doesn't exist anymore so uh, whatever.
 	spawn
-		if (crewmonitor && crewmonitor.initialized)
-			crewmonitor.sendResources(src)
+		send_html_resources()
 
 	// Send NanoUI resources to this client
 	spawn nanomanager.send_resources(src)
@@ -543,6 +542,9 @@
 		'icons/xenoarch_icons/chart4.jpg'
 		)
 
+/client/proc/send_html_resources()
+	if(crewmonitor && minimapinit)
+		crewmonitor.sendResources(src)
 
 /proc/get_role_desire_str(var/rolepref)
 	switch(rolepref & ROLEPREF_VALMASK)
