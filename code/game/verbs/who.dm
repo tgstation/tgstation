@@ -1,12 +1,3 @@
-
-/client/verb/who()
-	set name = "Who"
-	set category = "OOC"
-
-	var/msg = "<b>Current Players:</b>\n"
-
-	var/list/Lines = list()
-
 /client/verb/who()
 	set name = "Who"
 	set category = "OOC"
