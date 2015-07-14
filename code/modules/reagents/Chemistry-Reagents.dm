@@ -4546,6 +4546,17 @@
 	..()
 	return
 
+/datum/reagent/hamserum
+	name = "Ham Serum"
+	id = "hamserum"
+	description = "Concentrated legal discussions"
+	reagent_state = LIQUID
+	color = "#00FF21" // rgb: 0, 255, 33
+
+/datum/reagent/hamserum/reaction_mob(var/mob/M, var/method=INGEST, var/volume)
+	empulse(M.loc,1,2,0)
+	return
+
 //Cafe drinks
 
 

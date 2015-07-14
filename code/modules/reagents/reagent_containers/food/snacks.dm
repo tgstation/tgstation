@@ -3122,7 +3122,7 @@
 
 /obj/item/weapon/reagent_containers/food/snacks/gigapuddi
 	name = "Giga Puddi"
-	desc = "A large crème caramel"
+	desc = "A large crÃ¨me caramel"
 	icon_state = "gigapuddi"
 	trash = /obj/item/trash/plate
 	New()
@@ -3131,16 +3131,16 @@
 		bitesize = 2
 
 /obj/item/weapon/reagent_containers/food/snacks/gigapuddi/happy
-	desc = "A large crème caramel made with extra love"
+	desc = "A large crÃ¨me caramel made with extra love"
 	icon_state = "happypuddi"
 
 /obj/item/weapon/reagent_containers/food/snacks/gigapuddi/anger
-	desc = "A large crème caramel made with extra hate"
+	desc = "A large crÃ¨me caramel made with extra hate"
 	icon_state = "angerpuddi"
 
 /obj/item/weapon/reagent_containers/food/snacks/flan
 	name = "Flan"
-	desc = "A small crème caramel"
+	desc = "A small crÃ¨me caramel"
 	icon_state = "flan"
 	trash = /obj/item/trash/plate
 	New()
@@ -3475,3 +3475,13 @@
 
 			jump()
 	return 1
+
+/obj/item/weapon/reagent_containers/food/snacks/potentham
+	name = "potent ham"
+	desc = "I'm sorry Dave, but I am afraid I can't let you eat that."
+	icon_state = "potentham"
+	volume = 1
+	New()
+		..()
+		reagents.add_reagent("hamserum", 1)
+		bitesize = 2

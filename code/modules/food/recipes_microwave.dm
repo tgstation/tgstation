@@ -1556,6 +1556,16 @@
 		)
 	result = /obj/item/weapon/reagent_containers/food/snacks/potatosalad
 
+/datum/recipe/potentham
+	reagents = list("plasma" = 10)
+	items = list(
+		/obj/item/weapon/aiModule/core/asimov,
+		/obj/item/robot_parts/head,
+		/obj/item/weapon/handcuffs
+
+		)
+	result = /obj/item/weapon/reagent_containers/food/snacks/potentham
+
 // Currently Disabled //////////////////////////////////////////
 
 /*
