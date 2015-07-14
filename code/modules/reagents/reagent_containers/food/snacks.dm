@@ -3480,6 +3480,7 @@
 	name = "potent ham"
 	desc = "I'm sorry Dave, but I am afraid I can't let you eat that."
 	icon_state = "potentham"
+	volume = 1
 	New()
 		..()
 		reagents.add_reagent("hamserum", 1)
