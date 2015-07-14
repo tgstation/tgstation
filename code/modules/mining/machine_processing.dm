@@ -138,6 +138,10 @@
 		else
 			dat += text("No ID inserted.  <A href='?src=\ref[src];insert=1'>Insert ID.</A><br>")
 
+	else if(id)	//I don't care but the ID got in there in some way, allow them to eject it atleast.
+		dat += "<br><A href='?src=\ref[src];eject=1'>Eject ID.</A>"
+
+
 	var/datum/browser/popup = new(user, "console_processing_unit", name, 400, 500, src)
 	popup.set_content(dat)
 	popup.open()
@@ -178,6 +182,9 @@
 		return 1
 
 	if(href_list["insert"])
+		if(smelter_data && smelter_data["credits"] == -1)	//No credit mode.
+			return 1
+
 		if(id)
 			usr << "<span class='notify'>There is already an ID in the console!</span>"
 			return 1
@@ -203,6 +210,9 @@
 
 /obj/machinery/computer/smelting/attackby(var/obj/item/W, var/mob/user)
 	if(istype(W, /obj/item/weapon/card/id))
+		if(smelter_data && smelter_data["credits"] == -1)	//No credit mode.
+			return 1
+
 		if(id)
 			usr << "<span class='notify'>There is already an ID in the console!</span>"
 			return 1
@@ -453,6 +463,9 @@
 		update_icon()
 
 	if(signal.data["claimcredits"])
+		if(credits < 1)	//Is there actual money to collect?
+			return 1
+
 		var/datum/money_account/acct = signal.data["claimcredits"]
 		if(istype(acct) && acct.charge(-credits, null, "Claimed mining credits.", dest_name = "Processing Machine"))
 			credits = 0
