@@ -24,6 +24,8 @@
 	var/frequency = 1367
 	var/datum/radio_frequency/radio_connection
 
+	var/max_moved = 25
+
 	machine_flags = SCREWTOGGLE | CROWDESTROY | MULTITOOL_MENU
 
 /obj/machinery/conveyor/centcom_auto
@@ -87,6 +89,10 @@
  */
 /obj/machinery/conveyor/New(loc, newdir = null, building = 0)
 	. = ..(loc)
+
+	//Gotta go fast!
+	machines -= src
+	fast_machines += src
 
 	if(newdir)
 		dir = newdir
@@ -168,7 +174,7 @@
 				if(A.loc == src.loc) // prevents the object from being affected if it's not currently here.
 					step(A,movedir)
 					items_moved++
-			if(items_moved >= 10)
+			if(items_moved >= max_moved)
 				break
 
 /obj/machinery/conveyor/togglePanelOpen(var/obj/item/toggle_item, mob/user)

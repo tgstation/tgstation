@@ -277,7 +277,7 @@
 	var/in_dir = NORTH
 	var/out_dir = SOUTH
 
-	var/sheets_per_tick = 10
+	var/sheets_per_tick = 100
 
 	var/credits = 0 //Amount of money, set to -1 to disable the $ amount showing in the menu (recycling, for example)
 

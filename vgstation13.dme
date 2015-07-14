@@ -121,6 +121,7 @@
 #include "code\controllers\Processes\disease.dm"
 #include "code\controllers\Processes\emergencyShuttle.dm"
 #include "code\controllers\Processes\event.dm"
+#include "code\controllers\Processes\fast_machinery.dm"
 #include "code\controllers\Processes\garbage.dm"
 #include "code\controllers\Processes\htmlui.dm"
 #include "code\controllers\Processes\inactivity.dm"
