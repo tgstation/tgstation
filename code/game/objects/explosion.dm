@@ -102,6 +102,10 @@
 						if(D.density && D.explosion_block)
 							dist += D.explosion_block
 
+					for(var/obj/structure/window/W in Trajectory)
+						if(W.reinf && W.fulltile)
+							dist += W.explosion_block
+
 			var/flame_dist = 0
 			var/throw_dist = dist
 
@@ -204,6 +208,10 @@
 				for(var/obj/machinery/door/D in TT)
 					if(D.density && D.explosion_block)
 						dist += D.explosion_block
+
+				for(var/obj/structure/window/W in TT)
+					if(W.explosion_block && W.fulltile)
+						dist += W.explosion_block
 
 		if(dist < dev)
 			T.color = "red"
