@@ -60,8 +60,8 @@
 	var/tonermax = 40
 	var/jetpackoverlay = 0
 	var/braintype = "Cyborg"
-	var/lamp_on = 0 //If a borg's headlamp is on or not.
-	var/lamp_intensity = 4 //Some borgies require more light than others, such as miners.
+	var/lamp_max = 10 //Maximum brightness of a borg lamp. Set as a var for easy adjusting.
+	var/lamp_intensity = 0 //Luminosity of the headlamp. 0 is off. Higher settings than the minimum require power.
 
 /mob/living/silicon/robot/New(loc)
 	spark_system = new /datum/effect/effect/system/spark_spread()
@@ -184,7 +184,6 @@
 			animation_length = 30
 			modtype = "Miner"
 			feedback_inc("cyborg_miner",1)
-			lamp_intensity = 6 //mining lantern
 
 		if("Medical")
 			module = new /obj/item/weapon/robot_module/medical(src)
@@ -204,7 +203,6 @@
 			//speed = -1 Secborgs have nerfed tasers now, so the speed boost is not necessary
 			status_flags &= ~CANPUSH
 			feedback_inc("cyborg_security",1)
-			lamp_intensity = 5 //seclite
 
 		if("Engineering")
 			module = new /obj/item/weapon/robot_module/engineering(src)
@@ -726,11 +724,16 @@
 
 	overlays.Cut()
 	if(stat == CONSCIOUS)
+		var/state_name = icon_state //For easy conversion and/or different names
 		switch(icon_state)
 			if("robot")
 				overlays += "eyes-standard"
+				state_name = "standard"
+			if("mediborg")
+				overlays += "eyes-mediborg"
 			if("toiletbot")
-				overlays += "eyes-toiletbot"
+				overlays += "eyes-mediborg"
+				state_name = "mediborg"
 			if("secborg")
 				overlays += "eyes-secborg"
 			if("engiborg")
@@ -743,6 +746,9 @@
 				overlays += "eyes-syndie_bloodhound"
 			else
 				overlays += "eyes"
+				state_name = "serviceborg"
+		if(lamp_intensity > 2)
+			overlays += "eyes-[state_name]-lights"
 
 	if(opened)
 		if(wiresexposed)
@@ -981,18 +987,30 @@
 	set category = "Robot Commands"
 	set_autosay()
 
-/mob/living/silicon/robot/proc/toggle_headlamp()
-	lamp_on = !lamp_on
-	src << "Headlamp power [lamp_on ? "enabled" : "disabled"]."
+/mob/living/silicon/robot/proc/control_headlamp()
+	if(stat)
+		src << "<span class='danger'>This function is currently offline.</span>"
+		return
+
+	if(lamp_intensity < lamp_max) //Lamp is set lower than the max.
+		lamp_intensity += 2
+		src << "Headlamp power set to Level [lamp_intensity/2]."
+	else //Greater than or equal to the max, so turn it off instead.
+		lamp_intensity = 0
+		src << "Headlamp disabled."
+
 	update_headlamp()
 
 /mob/living/silicon/robot/proc/update_headlamp()
 	SetLuminosity(0)
 
-	if(!lamp_on || stat)
-		return
+	if(stat && lamp_intensity)
+		src << "<span class='danger'>Your headlamp has been deactivated.</span>"
+		lamp_intensity = 0
 	else
 		AddLuminosity(lamp_intensity)
+	update_icons()
+
 
 
 /mob/living/silicon/robot/proc/deconstruct()

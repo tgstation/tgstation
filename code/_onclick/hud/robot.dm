@@ -55,11 +55,12 @@
 
 /obj/screen/robot/lamp
 	name = "headlamp"
-	icon_state = "lamp"
+	icon_state = "lamp0"
 
 /obj/screen/robot/lamp/Click()
 	var/mob/living/silicon/robot/R = usr
-	R.toggle_headlamp()
+	R.control_headlamp()
+	icon_state = "lamp[R.lamp_intensity]"
 
 
 /datum/hud/proc/robot_hud()
