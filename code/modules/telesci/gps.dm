@@ -15,9 +15,13 @@ var/list/SPS_list = list()
 
 /obj/item/device/gps/New()
 	..()
+	overlays += "working"
+	handle_list()
+
+
+/obj/item/device/gps/proc/handle_list()
 	GPS_list.Add(src)
 	name = "global positioning system ([gpstag])"
-	overlays += "working"
 
 /obj/item/device/gps/Destroy()
 	if(istype(src,/obj/item/device/gps/secure))
@@ -112,30 +116,30 @@ var/list/SPS_list = list()
 	icon_state = "gps-m"
 	gpstag = "MIN0"
 
+var/global/secure_GPS_count = 0
+
 /obj/item/device/gps/secure
 	name = "secure positioning system"
-	desc = "A secure channel SPS with several features designed to keep its wearer safe."
+	desc = "A secure channel SPS. It announces the position of the wearer if killed or stripped off."
 	icon_state = "sps"
 	gpstag = "SEC0"
 
-/obj/item/device/gps/secure/New()
+/obj/item/device/gps/secure/handle_list()
 	SPS_list.Add(src)
-	gpstag = "SEC0"
+	gpstag = "SEC[secure_GPS_count]"
+	secure_GPS_count++
 	name = "secure positioning system ([gpstag])"
-	overlays += "working"
+
 
 /obj/item/device/gps/secure/OnMobDeath(mob/wearer as mob)
-	..()
-	for(var/obj/item/device/gps/secure/S in SPS_list)
+	for(var/E in SPS_list)
+		var/obj/item/device/gps/secure/S  = E //No idea why casting it like this makes it work better instead of just defining it in the for each
 		S.announce(wearer, src, "died")
 
-/obj/item/device/gps/secure/dropped(mob/wearer as mob)
-	..()
-	if(!istype(src.loc, /turf))
-		return
-	for(var/obj/item/device/gps/secure/S in SPS_list)
-		S.announce(wearer, src, "lost [wearer.gender == FEMALE ? "her" : "his"] SPS")
+/obj/item/device/gps/secure/stripped(mob/wearer as mob)
+	for(var/E in SPS_list)
+		var/obj/item/device/gps/secure/S  = E
+		S.announce(wearer, src, "been stripped of [wearer.gender == FEMALE ? "her" : "his"] SPS")
 
-/obj/item/device/gps/secure/proc/announce(var/mob/living/carbon/human/wearer, var/obj/item/device/gps/secure/SPS, var/reason)
-	src.visible_message("Your SPS beeps: <span class='warning'>Warning! [wearer] has [reason] at [get_area(SPS)].</span>")
-
+/obj/item/device/gps/secure/proc/announce(var/mob/wearer, var/obj/item/device/gps/secure/SPS, var/reason)
+	visible_message("[gpstag] beeps: <span class='warning'>Warning! [wearer] has [reason] at [get_area(SPS)].</span>")

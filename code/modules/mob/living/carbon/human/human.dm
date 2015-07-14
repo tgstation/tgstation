@@ -744,6 +744,7 @@
 		if(do_mob(usr, src, HUMAN_STRIP_DELAY))
 			if(pocket_item)
 				u_equip(pocket_item,1)
+				pocket_item.stripped(src,usr)
 				if(pickpocket) usr.put_in_hands(pocket_item)
 			else
 				if(place_item)
