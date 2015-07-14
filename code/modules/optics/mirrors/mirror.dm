@@ -83,7 +83,7 @@ var/global/list/obj/machinery/mirror/mirror_list = list()
 
 /obj/machinery/mirror/beam_connect(var/obj/effect/beam/emitter/B)
 	if(istype(B))
-		if(B.HasSource(src))
+		if(B.HasSource(src) || src == B.source)
 			return // Prevent infinite loops.
 		..()
 		powerchange_hooks[B]=B.power_change.Add(src,"on_power_change")
@@ -140,7 +140,7 @@ var/global/list/obj/machinery/mirror/mirror_list = list()
 				continue // Prevent infinite loops.
 
 			// For recursion protection
-			spawners += B.sources
+			spawners |= B.sources
 
 			var/beamdir=get_dir(src,B)
 

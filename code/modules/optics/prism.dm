@@ -118,7 +118,7 @@ var/list/obj/machinery/prism/prism_list = list()
 				continue // Prevent infinite loops.
 			// Don't process beams firing into our emission side.
 
-			spawners += B.sources
+			spawners |= B.sources
 			beam.power += B.power
 			var/beamdir=get_dir(B.loc,src)
 			overlays += image(icon=icon,icon_state="beam_arrow",dir=beamdir)

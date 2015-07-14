@@ -213,7 +213,7 @@
 	if(istype(spawn_by,/list))
 		sources=spawn_by
 	else
-		sources.Add(spawn_by)
+		sources |= (spawn_by)
 
 	if(_range==-1)
 #ifdef BEAM_DEBUG
