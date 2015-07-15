@@ -9,7 +9,10 @@ var/list/announcement_systems = list()
 	icon_state = "AAS_on_closed"
 	var/obj/item/device/radio/headset/radio
 
+	var/broken = 0
+
 	idle_power_usage = 20
+	active_power_usage = 50
 
 	var/arrival = "%PERSON has signed up as %RANK"
 	var/newhead = "%PERSON, %RANK, is the department head."
@@ -18,6 +21,12 @@ var/list/announcement_systems = list()
 	..()
 	announcement_systems += src
 	radio = new /obj/item/device/radio/headset/ai(src)
+
+	component_parts = list()
+	component_parts += new /obj/item/weapon/circuitboard/announcement_system(null)
+	component_parts += new /obj/item/stack/cable_coil(null, 2)
+	component_parts += new /obj/item/weapon/stock_parts/console_screen(null)
+	RefreshParts()
 
 /obj/machinery/announcement_system/update_icon()
 	if(is_operational())
@@ -30,8 +39,8 @@ var/list/announcement_systems = list()
 	update_icon()
 
 /obj/machinery/announcement_system/attackby(obj/item/P, mob/user, params)
-	if(istype(P, obj/item/weapon/screwdriver))
-		if(state_open)
+	if(istype(P, /obj/item/weapon/screwdriver))
+		if(!panel_open)
 			playsound(src.loc, 'sound/items/Screwdriver.ogg', 50, 1)
 			user << "You open the control panel of [src]."
 			panel_open = 1
@@ -42,7 +51,16 @@ var/list/announcement_systems = list()
 		update_icon()
 		return
 
-	default_deconstruction_crowbar(P)
+	if(panel_open)
+		default_deconstruction_crowbar(P)
+		if(istype(P, /obj/item/device/multitool) && broken)
+			user << "You reset [src]'s firmware."
+			broken = 0
+			overlays.Remove("error_light")
+
+/obj/machinery/announcement_system/attack_hand(mob/user)
+	if((panel_open || isAI(user)) && can_be_used_by(user))
+		Interact(user)
 
 /obj/machinery/announcement_system/proc/CompileText(str, user, rank) //replaces user-given variables with actual thingies.
 	str = replacetext(str, "%PERSON", "[user]")
@@ -57,8 +75,19 @@ var/list/announcement_systems = list()
 
 	if(message_type == "ARRIVAL")
 		message = CompileText(arrival, user, rank)
+
+		spawn(0)
+			overlays += "green_light" //this is += instead of |= because if we get lots of arrivals at once, we want to keep the light up for the proper duration.
+			sleep(3)
+			overlays.Remove("green_light")
+
 	else if(message_type == "NEWHEAD")
 		message = CompileText(newhead, user, rank)
+
+		spawn(0)
+			overlays += "pink_light" //see above for why "+=" instead of "|="
+			sleep(3)
+			overlays.Remove("pink_light")
 
 	if(channels.len == 0)
 		radio.talk_into(src, message, null, list(SPAN_ROBOT))
@@ -69,24 +98,28 @@ var/list/announcement_systems = list()
 //config stuff
 
 /obj/machinery/announcement_system/proc/Interact(mob/user)
-	if(!is_operational())
+	if(!(panel_open || isAI(user)) || !can_be_used_by(user))
 		return
+
+	if(broken)
+		visible_message("[src] buzzes", "You hear a faint buzz.")
+		playsound(src.loc, 'sound/machines/buzz-two.ogg', 50, 1)
+		return
+
 
 	var/contents = "Arrival Announcement:<br>\n<A href='?src=\ref[src];ArrivalTopic=1'>[arrival]</a><br>\n"
 	contents += "Departmental Head Announcement:<br>\n<A href='?src=\ref[src];NewheadTopic=1'>[newhead]</a><br>\n"
 
-	var/datum/browser/popup = new(user, "announcement_config", "Automated Announcement Configuration", 350, 240)
+	var/datum/browser/popup = new(user, "announcement_config", "Automated Announcement Configuration", 370, 220)
 	popup.set_content(contents)
 	popup.open()
 
 /obj/machinery/announcement_system/Topic(href, href_list)
-	if(!is_operational() || usr.lying || usr.stat || usr.stunned || (!Adjacent(usr)) && !isAI(usr))
+	if(!(panel_open || isAI(usr)) || !can_be_used_by(usr) || usr.lying || usr.stat || usr.stunned)
 		return
-
-	var/mob/living/living_user = usr
-	var/obj/item/item_in_hand = living_user.get_active_hand()
-	if(!istype(item_in_hand, /obj/item/device/multitool) && !isAI(usr))
-		living_user << "<span class='warning'>You need a multitool!</span>"
+	if(broken)
+		visible_message("[src] buzzes", "You hear a faint buzz.")
+		playsound(src.loc, 'sound/machines/buzz-two.ogg', 50, 1)
 		return
 
 	if(href_list["ArrivalTopic"])
@@ -106,12 +139,29 @@ var/list/announcement_systems = list()
 	Interact(usr)
 	return
 
-/obj/machinery/announcement_system/attackby(obj/item/W, mob/user, params)
-	..()
-	if (istype(W, /obj/item/device/multitool))
-		Interact(user)
-
 /obj/machinery/announcement_system/attack_ai(var/mob/living/silicon/ai/user)
 	if(!isAI(user))
 		return
+	if(broken)
+		user << "[src]'s firmware appears to be malfunctioning!"
+		return
 	Interact(user)
+
+/obj/machinery/announcement_system/proc/act_up() //does funny breakage stuff
+	broken = 1
+
+	overlays |= "error_light" //as if it wasn't already obvious
+	arrival = "#!@%ERR-34%2 CANNOT LOCAT@# JO# F*LE!"
+	newhead = "OV#RL()D: \[UNKNOWN??\] DET*#CT)D!"
+
+/obj/machinery/announcement_system/emp_act(severity)
+	if(stat & (NOPOWER|BROKEN))
+		..(severity)
+		return
+	act_up()
+	..(severity)
+
+/obj/machinery/announcement_system/emag_act()
+	..()
+	emagged = 1
+	act_up()
