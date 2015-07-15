@@ -28,6 +28,8 @@
 	item_state = "pulse"
 	cell_type = "/obj/item/weapon/stock_parts/cell/pulse/carbine"
 	can_flashlight = 1
+	flight_x_offset = 18
+	flight_y_offset = 12
 
 /obj/item/weapon/gun/energy/pulse/carbine/loyalpin
 	pin = /obj/item/device/firing_pin/implant/loyalty

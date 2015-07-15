@@ -10,6 +10,7 @@
 	var/list/ammo_type = list(/obj/item/ammo_casing/energy)
 	var/select = 1 //The state of the select fire switch. Determines from the ammo_type list what kind of shot is fired next.
 	var/can_charge = 1 //Can it be charged in a recharger?
+	ammo_x_offset = 2
 
 /obj/item/weapon/gun/energy/emp_act(severity)
 	power_supply.use(round(power_supply.charge / severity))
@@ -72,25 +73,25 @@
 	return
 
 /obj/item/weapon/gun/energy/update_icon()
-	var/ratio = power_supply.charge / power_supply.maxcharge
-	ratio = min(Ceiling(ratio*4) * 25, 100)
-	var/obj/item/ammo_casing/energy/shot = ammo_type[select]
-	if(power_supply.charge < shot.e_cost)
-		ratio = 0 //so the icon changes to empty if the charge isn't zero but not enough for a shot.
-	switch(modifystate)
-		if (0)
-			icon_state = "[initial(icon_state)][ratio]"
-		if (1)
-			icon_state = "[initial(icon_state)][shot.mod_name][ratio]"
-		if (2)
-			icon_state = "[initial(icon_state)][shot.select_name][ratio]"
 	overlays.Cut()
+	var/ratio = Ceiling((power_supply.charge / power_supply.maxcharge) * 4)
+	var/obj/item/ammo_casing/energy/shot = ammo_type[select]
+	var/iconState = "[icon_state]_charge"
+	item_state = icon_state
+	if (modifystate)
+		overlays += "[icon_state]_[shot.select_name]"
+		iconState += "_[shot.select_name]"
+		item_state += "[shot.select_name]"
+	if(power_supply.charge < shot.e_cost)
+		overlays += "[icon_state]_empty"
+		ratio = 0
+	for(var/i = ratio, i >= 1, i--)
+		overlays += image(icon = icon, icon_state = iconState, pixel_x = ammo_x_offset * (i -1))
 	if(F)
+		var/iconF = "flight"
 		if(F.on)
-			overlays += "flight-[initial(icon_state)]-on"
-		else
-			overlays += "flight-[initial(icon_state)]"
-	return
+			iconF = "flight_on"
+		overlays += image(icon = icon, icon_state = iconF, pixel_x = flight_x_offset, pixel_y = flight_y_offset)
 
 /obj/item/weapon/gun/energy/ui_action_click()
 	toggle_gunlight()
