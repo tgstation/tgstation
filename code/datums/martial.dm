@@ -565,6 +565,30 @@
 	flags = THICKMATERIAL|STOPSPRESSUREDMAGE
 	cold_protection = CHEST|GROIN //Made of carp hide, so it's somewhat spaceworthy although it doesn't protect limbs
 	min_cold_protection_temperature = SPACE_SUIT_MIN_TEMP_PROTECT
+	siemens_coefficient = 1
+	var/boost_cooldown = 900 //1.5 minutes
+	var/on_cooldown = FALSE
+	action_button_name = "Adrenaline Surge"
+	action_button_is_hands_free = 1
+
+/obj/item/clothing/suit/sleeping_carp/New()
+	..()
+	SSobj.processing |= src
+
+/obj/item/clothing/suit/sleeping_carp/Destroy()
+	SSobj.processing &= src
+	..()
+
+/obj/item/clothing/suit/sleeping_carp/process()
+	if(!ishuman(src.loc)) return
+	var/mob/living/carbon/human/H = src.loc
+	if(src.loc == H && H.get_item_by_slot(slot_wear_suit) == src)
+		if(H.mind in ticker.mode.get_all_gangsters())
+			for(var/datum/gang/G in ticker.mode.gangs)
+				if(G.name == "Sleeping Carp" && ((H.mind in G.bosses) || (H.mind in G.gangsters)))
+					return
+	H << 'sound/weapons/bite.ogg'
+	H.apply_damage(10,BRUTE,"head")
 
 /obj/item/clothing/suit/sleeping_carp/equipped(mob/user, slot)
 	add_fingerprint(user)
@@ -576,10 +600,29 @@
 			for(var/datum/gang/G in ticker.mode.gangs)
 				if(G.name == "Sleeping Carp" && ((user.mind in G.bosses) || (user.mind in G.gangsters)))
 					return ..()
-		user << "<span class='warning'><b>You try to put on [src], but the teeth in the collar sink into your neck and the vest slides off!</b></span>"
-		var/mob/living/carbon/human/H = user
-		H.emote("scream")
-		H.apply_damage(15,BRUTE,"head")
-		H.unEquip(src)
-		H << 'sound/weapons/bite.ogg'
-		return
+		user << "<span class='warning'><b>As you put on [src], the teeth in the collar begin to rip and tear at your neck. You need to get this thing off!</b></span>"
+		return ..()
+
+/obj/item/clothing/suit/sleeping_carp/attack_self(mob/user) //Adrenaline Surge; removes all stuns and injects with stun-reducing chems
+	add_fingerprint(user)
+	if(!ishuman(user)) return
+	var/mob/living/carbon/human/H = user
+	if(src.loc == H && H.get_item_by_slot(slot_wear_suit) == src)
+		if(on_cooldown)
+			user << "<span class='warning'>You need to wait before using an adrenaline boost again.</span>"
+			return
+		user << "<span class='boldannounce'>You feel a massive surge of energy flow through your body!</span>"
+		if(user.reagents)
+			user.reagents.add_reagent("changelingAdrenaline", 15)
+			user.reagents.add_reagent("changelingAdrenaline2", 3)
+		user.SetStunned(0)
+		user.SetWeakened(0)
+		on_cooldown = TRUE
+		spawn(boost_cooldown)
+			if(src) on_cooldown = FALSE
+			if(H)
+				if(src.loc == H && H.get_item_by_slot(slot_wear_suit) == src)
+					H << "<span class='notice'>[src]'s adrenaline surge has been recharged!</span>"
+
+/obj/item/clothing/suit/sleeping_carp/proc/get_wearer()
+
