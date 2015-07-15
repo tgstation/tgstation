@@ -1,27 +1,58 @@
 var/list/announcement_systems = list()
 
-/obj/structure/announcement_system
-	density = 0
+/obj/machinery/announcement_system
+	density = 1
 	anchored = 1
 	name = "\improper Automated Announcement System"
 	desc = "An automated announcement system that handles minor announcements over the radio."
-	icon = 'icons/obj/radio.dmi'
-	icon_state = "beacon"
+	icon = 'icons/obj/machines/announcement_system.dmi'
+	icon_state = "AAS_on_closed"
 	var/obj/item/device/radio/headset/radio
+
+	idle_power_usage = 20
 
 	var/arrival = "%PERSON has signed up as %RANK"
 	var/newhead = "%PERSON, %RANK, is the department head."
 
-/obj/structure/announcement_system/New()
+/obj/machinery/announcement_system/New()
+	..()
 	announcement_systems += src
 	radio = new /obj/item/device/radio/headset/ai(src)
 
-/obj/structure/announcement_system/proc/CompileText(str, user, rank) //replaces user-given variables with actual thingies.
+/obj/machinery/announcement_system/update_icon()
+	if(is_operational())
+		icon_state = (panel_open ? "AAS_on_open" : "AAS_on_closed")
+	else
+		icon_state = (panel_open ? "AAS_off_open" : "AAS_off_closed")
+
+/obj/machinery/announcement_system/power_change()
+	..()
+	update_icon()
+
+/obj/machinery/announcement_system/attackby(obj/item/P, mob/user, params)
+	if(istype(P, obj/item/weapon/screwdriver))
+		if(state_open)
+			playsound(src.loc, 'sound/items/Screwdriver.ogg', 50, 1)
+			user << "You open the control panel of [src]."
+			panel_open = 1
+		else
+			playsound(src.loc, 'sound/items/Screwdriver.ogg', 50, 1)
+			user << "You close the control panel of [src]."
+			panel_open = 0
+		update_icon()
+		return
+
+	default_deconstruction_crowbar(P)
+
+/obj/machinery/announcement_system/proc/CompileText(str, user, rank) //replaces user-given variables with actual thingies.
 	str = replacetext(str, "%PERSON", "[user]")
 	str = replacetext(str, "%RANK", "[rank]")
 	return str
 
-/obj/structure/announcement_system/proc/announce(message_type, user, rank, list/channels)
+/obj/machinery/announcement_system/proc/announce(message_type, user, rank, list/channels)
+	if(!is_operational())
+		return
+
 	var/message
 
 	if(message_type == "ARRIVAL")
@@ -37,16 +68,19 @@ var/list/announcement_systems = list()
 
 //config stuff
 
-/obj/structure/announcement_system/proc/Interact(mob/user)
+/obj/machinery/announcement_system/proc/Interact(mob/user)
+	if(!is_operational())
+		return
+
 	var/contents = "Arrival Announcement:<br>\n<A href='?src=\ref[src];ArrivalTopic=1'>[arrival]</a><br>\n"
 	contents += "Departmental Head Announcement:<br>\n<A href='?src=\ref[src];NewheadTopic=1'>[newhead]</a><br>\n"
 
-	var/datum/browser/popup = new(user, "announcement_config", "Automated Announcement Configuration", 340, 220)
+	var/datum/browser/popup = new(user, "announcement_config", "Automated Announcement Configuration", 350, 240)
 	popup.set_content(contents)
 	popup.open()
 
-/obj/structure/announcement_system/Topic(href, href_list)
-	if(usr.lying || usr.stat || usr.stunned || (!Adjacent(usr)) && !isAI(usr))
+/obj/machinery/announcement_system/Topic(href, href_list)
+	if(!is_operational() || usr.lying || usr.stat || usr.stunned || (!Adjacent(usr)) && !isAI(usr))
 		return
 
 	var/mob/living/living_user = usr
@@ -62,7 +96,7 @@ var/list/announcement_systems = list()
 		if(NewMessage)
 			arrival = NewMessage
 	else if(href_list["NewheadTopic"])
-		var/NewMessage = stripped_input(usr, "Enter in the departmental head announcement configuration.", "Arrivals Announcement Config", newhead)
+		var/NewMessage = stripped_input(usr, "Enter in the departmental head announcement configuration.", "Head Departmental Announcement Config", newhead)
 		if(!in_range(src, usr) && src.loc != usr && !isAI(usr))
 			return
 		if(NewMessage)
@@ -72,12 +106,12 @@ var/list/announcement_systems = list()
 	Interact(usr)
 	return
 
-/obj/structure/announcement_system/attackby(obj/item/W, mob/user, params)
+/obj/machinery/announcement_system/attackby(obj/item/W, mob/user, params)
 	..()
 	if (istype(W, /obj/item/device/multitool))
 		Interact(user)
 
-/obj/structure/announcement_system/attack_ai(var/mob/living/silicon/ai/user)
+/obj/machinery/announcement_system/attack_ai(var/mob/living/silicon/ai/user)
 	if(!isAI(user))
 		return
 	Interact(user)

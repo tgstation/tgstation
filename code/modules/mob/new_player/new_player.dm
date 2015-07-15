@@ -278,7 +278,7 @@
 		if(announcement_systems.len)
 			if(character.mind)
 				if((character.mind.assigned_role != "Cyborg") && (character.mind.assigned_role != character.mind.special_role))
-					var/obj/structure/announcement_system/announcer = pick(announcement_systems)
+					var/obj/machinery/announcement_system/announcer = pick(announcement_systems)
 					announcer.announce("ARRIVAL", character.real_name, rank, list()) //make the list empty to make it announce it in common
 
 /mob/new_player/proc/LateChoices()
