@@ -452,7 +452,7 @@
 			shredded = -1 //Heat protection = Fireproof
 
 	else if(shock > 0)
-		if(prob(Clamp(shock,0,90)))
+		if(prob(max(shock-armor["bomb"],0)))
 			shredded = armor["bomb"] + 10 //It gets shredded, but it also absorbs the shock the clothes underneath would recieve by this amount
 		else
 			shredded = -1 //It survives explosion

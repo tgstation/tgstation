@@ -1045,6 +1045,8 @@ About the new airlock wires panel:
 		newCharge.loc = src
 		charge = newCharge
 		return
+	else if(istype(C, /obj/item/weapon/rcd)&& istype(loc, /turf/simulated)) //Do not attack the airlock if the user is holding an RCD
+		return
 	else
 		..()
 	return

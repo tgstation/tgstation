@@ -82,6 +82,28 @@
 	message_admins("<span class='adminnotice'><b> DirectNarrate: [key_name(usr)] to ([M.name]/[M.key]):</b> [msg]<BR></span>")
 	feedback_add_details("admin_verb","DIRN") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
+/client/proc/cmd_admin_local_narrate(var/atom/A)
+	set category = "Special Verbs"
+	set name = "Local Narrate"
+
+	if (!holder)
+		src << "Only administrators may use this command."
+		return
+	if(!A)
+		return
+	var/range = input("Range:", "Narrate to mobs within how many tiles:", 7) as num
+	if(!range)
+		return
+	var/msg = input("Message:", text("Enter the text you wish to appear to everyone within view:")) as text
+	if (!msg)
+		return
+	for(var/mob/living/M in view(range,A))
+		M << msg
+
+	log_admin("LocalNarrate: [key_name(usr)] at ([get_area(A)]): [msg]")
+	message_admins("<span class='adminnotice'><b> LocalNarrate: [key_name_admin(usr)] at (<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[A.x];Y=[A.y];Z=[A.z]'>[get_area(A)]</a>):</b> [msg]<BR></span>")
+	feedback_add_details("admin_verb","LN") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
+
 /client/proc/cmd_admin_godmode(mob/M as mob in mob_list)
 	set category = "Special Verbs"
 	set name = "Godmode"
