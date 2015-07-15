@@ -5,7 +5,6 @@ var/datum/subsystem/air/SSair
 	priority = 20
 	wait = 5
 	dynamic_wait = 1
-	dwait_lower = 5
 	dwait_upper = 50
 
 	var/cost_turfs = 0
@@ -179,8 +178,7 @@ var/datum/subsystem/air/SSair
 	for(var/turf/simulated/T in turfs_to_init)
 		T.CalculateAdjacentTurfs()
 		if(!T.blocks_air)
-			if(T.air.check_tile_graphic())
-				T.update_visuals(T.air)
+			T.update_visuals()
 			for(var/direction in cardinal)
 				if(!(T.atmos_adjacent_turfs & direction))
 					continue

@@ -41,8 +41,6 @@ What are the archived variables for?
 
 	var/last_share
 
-	var/graphic
-
 	var/list/datum/gas/trace_gases = list()
 
 
@@ -53,7 +51,6 @@ What are the archived variables for?
 
 	var/tmp/temperature_archived
 
-	var/tmp/graphic_archived
 	var/tmp/fuel_burnt = 0
 
 	//PV=nRT - related procedures
@@ -103,19 +100,7 @@ What are the archived variables for?
 
 
 //Procedures used for very specific events
-/datum/gas_mixture/proc/check_tile_graphic()
-	//returns 1 if graphic changed
-	graphic = null
-	if(toxins > MOLES_PLASMA_VISIBLE)
-		graphic = "plasma"
-	else
-		var/datum/gas/sleeping_agent = locate(/datum/gas/sleeping_agent) in trace_gases
-		if(sleeping_agent && (sleeping_agent.moles > 1))
-			graphic = "sleeping_agent"
-		else
-			graphic = null
 
-	return graphic != graphic_archived
 
 /datum/gas_mixture/proc/react(atom/dump_location)
 	var/reacting = 0 //set to 1 if a notable reaction occured (used by pipe_network)
@@ -290,8 +275,6 @@ What are the archived variables for?
 			trace_gas.moles_archived = trace_gas.moles
 
 	temperature_archived = temperature
-
-	graphic_archived = graphic
 
 	return 1
 
