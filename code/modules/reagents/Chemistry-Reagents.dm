@@ -1256,6 +1256,19 @@
 	..()
 	return
 
+/datum/reagent/paismoke
+	name = "Smoke"
+	id = "paismoke"
+	description = "A chemical smoke synthesized by personal AIs."
+	reagent_state = GAS
+	color = "#FFFFFF" //white
+
+/datum/reagent/paismoke/on_mob_life(var/mob/living/M as mob) //When inside a person, instantly decomposes into the ingredients for smoke
+	M.reagents.del_reagent(src.id)
+	M.reagents.add_reagent("potassium",5)
+	M.reagents.add_reagent("sugar",5)
+	M.reagents.add_reagent("phosphorus",5)
+
 /datum/reagent/thermite
 	name = "Thermite"
 	id = "thermite"

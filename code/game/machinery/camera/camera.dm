@@ -20,7 +20,7 @@ var/list/camera_names=list()
 	var/obj/item/weapon/camera_assembly/assembly = null
 	var/light_on = 0
 
-	machine_flags = SCREWTOGGLE | WIREJACK
+	machine_flags = SCREWTOGGLE //| WIREJACK Needs work
 
 	//OTHER
 
@@ -246,6 +246,10 @@ var/list/camera_names=list()
 		..()
 	return
 
+/obj/machinery/camera/attack_ai(mob/user as mob)
+	if(istype(user,/mob/living/silicon/pai))
+		wirejack(user)
+
 /obj/machinery/camera/proc/deactivate(user as mob, var/choice = 1)
 	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/camera/proc/deactivate() called tick#: [world.time]")
 	if(choice==1)
@@ -373,9 +377,9 @@ var/list/camera_names=list()
 	return 0
 
 /obj/machinery/camera/wirejack(var/mob/living/silicon/pai/P)
-	..()
-	P.set_machine(src)
-	if(alert("Cancel camera view", "Cameras", "Cancel") == "Cancel")
-		P.unset_machine()
-		P.reset_view(null)
-	return
+	if(..())
+		P.set_machine(P)
+		P.current = src
+		P.reset_view(src)
+		return 1
+	return 0

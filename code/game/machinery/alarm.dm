@@ -822,7 +822,7 @@
 						user << "<span class='notice'>You [ locked ? "lock" : "unlock"] the Air Alarm interface.</span>"
 					else
 						user << "<span class='warning'>Access denied.</span>"
-			return
+			return ..(W,user) //Sanity
 
 		if(1)
 			if(iscoil(W))
@@ -886,10 +886,11 @@
 	name = replacetext(name,oldarea,newarea)
 
 /obj/machinery/alarm/wirejack(var/mob/living/silicon/pai/P)
-	..()
-	locked = !locked
-	update_icon()
-	return
+	if(..())
+		locked = !locked
+		update_icon()
+		return 1
+	return 0
 
 /*
 FIRE ALARM

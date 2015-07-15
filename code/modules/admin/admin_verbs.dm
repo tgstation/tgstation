@@ -112,7 +112,8 @@ var/list/admin_verbs_fun = list(
 	/client/proc/gib_money, // /vg/
 	/client/proc/smissmas,
 	/client/proc/achievement,
-	/client/proc/mommi_static
+	/client/proc/mommi_static,
+	/client/proc/makepAI
 	)
 var/list/admin_verbs_spawn = list(
 	/datum/admins/proc/spawn_atom,		/*allows us to spawn instances*/

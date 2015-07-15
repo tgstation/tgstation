@@ -664,11 +664,11 @@ About the new airlock wires panel:
 /obj/machinery/door/airlock/Topic(href, href_list, var/nowindow = 0)
 	// If you add an if(..()) check you must first remove the var/nowindow parameter.
 	// Otherwise it will runtime with this kind of error: null.Topic()
-	if(!isAI(usr) && usr.z != z) return 1
+	if(!isAI(usr) && !istype(usr,/mob/living/silicon/pai) && usr.z != z) return 1
 	if(!nowindow)
 		..()
 	if(!isAdminGhost(usr))
-		if(usr.stat || usr.restrained()|| usr.small)
+		if(usr.stat || usr.restrained() || usr.small)
 			//testing("Returning: Not adminghost, stat=[usr.stat], restrained=[usr.restrained()], small=[usr.small]")
 			return
 	add_fingerprint(usr)
@@ -1060,12 +1060,6 @@ About the new airlock wires panel:
 			wires.Interact(user)
 			update_multitool_menu(user)
 		attack_hand(user)
-	// TODO: review this if
-	else if (istype(I, /obj/item/weapon/pai_cable))
-		if (!operating)
-			var/obj/item/weapon/pai_cable/PC = I
-			PC.plugin(src, user)
-			PC = null
 	else if(istype(I, /obj/item/weapon/crowbar) || istype(I, /obj/item/weapon/fireaxe) )
 		if(src.busy) return
 		src.busy = 1
@@ -1259,6 +1253,7 @@ About the new airlock wires panel:
 	return
 
 /obj/machinery/door/airlock/wirejack(var/mob/living/silicon/pai/P)
-	..()
-	attack_ai(P)
-	return
+	if(..())
+		attack_ai(P)
+		return 1
+	return 0

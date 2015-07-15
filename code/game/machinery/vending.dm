@@ -820,10 +820,11 @@
 		overlays += overlays_vending[2]
 
 /obj/machinery/vending/wirejack(var/mob/living/silicon/pai/P)
-	..()
-	extended_inventory = !extended_inventory
-	scan_id = !scan_id
-	return
+	if(..())
+		extended_inventory = !extended_inventory
+		scan_id = !scan_id
+		return 1
+	return 0
 
 
 /*

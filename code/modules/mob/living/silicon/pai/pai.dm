@@ -49,16 +49,13 @@
 
 	var/obj/item/radio/integrated/signal/sradio // AI's signaller
 
-
 /mob/living/silicon/pai/New(var/obj/item/device/paicard)
 	canmove = 0
 	src.loc = paicard
 	card = paicard
 	sradio = new(src)
-	if(card)
-		if(!card.radio)
-			card.radio = new /obj/item/device/radio(src.card)
-		radio = card.radio
+	if(!radio)
+		radio = new(src)
 
 	//PDA
 	pda = new(src)
@@ -248,41 +245,6 @@
 	src.unset_machine()
 	src:cameraFollow = null
 
-//Addition by Mord_Sith to define AI's network change ability
-/*
-/mob/living/silicon/pai/proc/pai_network_change()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/living/silicon/pai/proc/pai_network_change() called tick#: [world.time]")
-	set category = "pAI Commands"
-	set name = "Change Camera Network"
-	src.reset_view(null)
-	src.unset_machine()
-	src:cameraFollow = null
-	var/cameralist[0]
-
-	if(usr.stat == 2 || (usr.status_flags & FAKEDEATH))
-		usr << "You can't change your camera network because you are dead!"
-		return
-
-	for (var/obj/machinery/camera/C in Cameras)
-		if(!C.status)
-			continue
-		else
-			if(C.network != "CREED" && C.network != "thunder" && C.network != "RD" && C.network != "toxins" && C.network != "Prison") COMPILE ERROR! This will have to be updated as camera.network is no longer a string, but a list instead
-				cameralist[C.network] = C.network
-
-	src.network = input(usr, "Which network would you like to view?") as null|anything in cameralist
-	src << "<span class='notice'>Switched to [src.network] camera network.</span>"
-//End of code by Mord_Sith
-*/
-
-
-/*
-// Debug command - Maybe should be added to admin verbs later
-/mob/verb/makePAI(var/turf/t in view())
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""]) \\/mob/verb/makePAI()  called tick#: [world.time]")
-	var/obj/item/device/paicard/card = new(t)
-	var/mob/living/silicon/pai/pai = new(card)
-	pai.key = src.key
-	card.setPersonality(pai)
-
-*/
+/mob/living/silicon/pai/ClickOn(var/atom/A, var/params)
+	if(istype(A,/obj/machinery/camera))
+		A.attack_ai(src)

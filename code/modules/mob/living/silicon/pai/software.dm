@@ -1,7 +1,4 @@
 // TODO:
-//  - Free newscaster program someday
-//  - Fix interface
-//  - SOFTLY PING
 
 
 /mob/living/silicon/pai/var/list/available_software = list(
@@ -154,7 +151,7 @@
 
 		// Configuring onboard radio
 		if("radio")
-			src.card.radio.attack_self(src)
+			radio.attack_self(src)
 
 		if("image")
 			var/newImage = input("Select your new display image.", "Display Image", "Happy") in list("Happy", "Cat", "Extremely Happy",
@@ -290,22 +287,37 @@
 			if(href_list["cancel"])
 				src.hacktarget = null
 		if("chemsynth")
-			if(href_list["chem"] && chargeloop())
-				var/mob/living/M = src.loc
-				M.reagents.add_reagent(href_list["chem"], 15)
+			if(href_list["chem"])
+				if(!istype(src.loc.loc,/mob/living/carbon))
+					src << "<span class='warning'>You must have a carrier to inject with chemicals!</span>"
+				else if(chargeloop("chemsynth"))
+					if(istype(src.loc.loc,/mob/living/carbon)) //Sanity
+						var/mob/living/M = src.loc.loc
+						M.reagents.add_reagent(href_list["chem"], 15)
+						playsound(get_turf(src.loc), 'sound/effects/bubbles.ogg', 50, 1)
+				else
+					src << "<span class='warning'>Charge interrupted.</span>"
 		if("foodsynth")
-			if(href_list["food"] && chargeloop())
+			if(href_list["food"] && chargeloop("foodsynth"))
+				var/obj/item/weapon/reagent_containers/food/F
 				switch (href_list["food"])
 					if("donut")
-						new /obj/item/weapon/reagent_containers/food/snacks/donut/normal(get_turf(src.loc))
+						F = new /obj/item/weapon/reagent_containers/food/snacks/donut/normal(get_turf(src))
 					if("banana")
-						new /obj/item/weapon/reagent_containers/food/snacks/grown/banana(get_turf(src.loc))
+						F = new /obj/item/weapon/reagent_containers/food/snacks/grown/banana(get_turf(src))
 					else
-						new /obj/item/weapon/reagent_containers/food/snacks/badrecipe(get_turf(src.loc))
+						F = new /obj/item/weapon/reagent_containers/food/snacks/badrecipe(get_turf(src))
+				if(istype(src.loc.loc,/mob))
+					var/mob/M = src.loc.loc
+					M.put_in_hands(F)
 				playsound(get_turf(src.loc), 'sound/machines/foodsynth.ogg', 50, 1)
 		if("flashlight")
 			if(href_list["toggle"])
 				lighted = !lighted
+				if(lighted)
+					set_light(4) //Equal to flashlight
+				else
+					set_light(0)
 	src.paiInterface()		 // So we'll just call the update directly rather than doing some default checks
 	return
 
@@ -330,6 +342,10 @@
 	// Basic
 	dat += "<b>Basic</b> <br>"
 	for(var/s in src.software)
+		if(s == "crew manifest")
+			dat += "<a href='byond://?src=\ref[src];software=manifest;sub=0'>Crew Manifest</a> <br>"
+		if(s == "digital messenger")
+			dat += "<a href='byond://?src=\ref[src];software=pdamessage;sub=0'>Digital Messenger</a> <br>"
 		if(s == "remote signaller")
 			dat += "<a href='byond://?src=\ref[src];software=signaller;sub=0'>Remote Signaller</a> <br>"
 		if(s == "atmosphere sensor")
@@ -616,7 +632,7 @@
 /mob/living/silicon/pai/proc/softwareDoor()
 
 	var/dat = {"<h3>Wirejack</h3>
-Target Machine:"}
+Target Machine: "}
 	if(!hacktarget)
 		dat += "<font color=#FFFF55>None</font> <br>"
 		return dat
@@ -626,9 +642,9 @@ Target Machine:"}
 		dat += "<a href='byond://?src=\ref[src];software=wirejack;cancel=1;sub=0'>Cancel</a> <br>"
 	return dat
 
-// Wirejack proc, called from machinery.dm
-/mob/living/silicon/pai/proc/hackloop()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/living/silicon/pai/proc/hackloop() called tick#: [world.time]")
+/mob/living/silicon/pai/proc/hackloop(var/obj/machinery/M)
+	if(M)
+		hacktarget = M
 	var/turf/T = get_turf(src.loc)
 	if(prob(10))
 		for(var/mob/living/silicon/ai/AI in player_list)
@@ -644,46 +660,54 @@ Target Machine:"}
 			hackprogress = 0
 			src.hacktarget = null
 			return 0
-		if(hackprogress >= 100)		// This is clunky, but works. We need to make sure we don't ever display a progress greater than 100,
-			hackprogress = 100		// but we also need to reset the progress AFTER it's been displayed
-		if(src.screen == "wirejack" && src.subscreen == 0) // Update our view, if appropriate
+		hackprogress = min(100,hackprogress) //Never go above 100
+		if(src.screen == "wirejack") // Update our view, if appropriate
 			src.paiInterface()
+		else
+			hackprogress = 0
+			src.hacktarget = null
+			return 0
 		if(hackprogress >= 100)
+			hackprogress = 0
+			hacktarget = null
+			playsound(get_turf(src.loc), 'sound/machines/ding.ogg', 50, 1)
 			return 1
-		sleep(10)			// Update every 5 seconds
+		sleep(10)			// Update every 1 second
 
 /mob/living/silicon/pai/proc/softwareChem()
 	var/dat = "<h3>Chemical Synthesizer</h3>"
 	if(!charge)
-		dat += "Available Chemicals:"
-		dat +=  "<a href='byond://?src=\ref[src];software=chemsynth;sub=1;chem=tricordrazine'>Tricordrazine</a> <br>"
-		dat +=  "<a href='byond://?src=\ref[src];software=chemsynth;sub=1;chem=coffee'>Coffee</a> <br>"
-		dat +=  "<a href='byond://?src=\ref[src];software=chemsynth;sub=1;chem=chemsmoke'>Smoke</a> <br>"
+		dat += {"Available Chemicals:<br>
+		<a href='byond://?src=\ref[src];software=chemsynth;sub=0;chem=tricordrazine'>Tricordrazine</a> <br>
+		<a href='byond://?src=\ref[src];software=chemsynth;sub=0;chem=coffee'>Coffee</a> <br>
+		<a href='byond://?src=\ref[src];software=chemsynth;sub=0;chem=paismoke'>Smoke</a> <br>"}
 	else
-		dat += "Charging... [charge]u ready."
+		dat += "Charging... [charge]u ready.<br><br>"
 		dat += "Deploying at 15u."
 	return dat
 
 /mob/living/silicon/pai/proc/softwareFood()
 	var/dat = "<h3>Nutrition Synthesizer</h3>"
 	if(!charge)
-		dat += "Available Culinary Deployments:"
-		dat +=  "<a href='byond://?src=\ref[src];software=chemsynth;sub=1;food=donut'>Donut</a> <br>"
-		dat +=  "<a href='byond://?src=\ref[src];software=chemsynth;sub=1;food=banana'>Banana</a> <br>"
-		dat +=  "<a href='byond://?src=\ref[src];software=chemsynth;sub=1;food=mess'>Burn it!</a> <br>"
+		dat += {"Available Culinary Deployments:<br>
+		<a href='byond://?src=\ref[src];software=foodsynth;sub=0;food=donut'>Donut</a> <br>
+		<a href='byond://?src=\ref[src];software=foodsynth;sub=0;food=banana'>Banana</a> <br>
+		<a href='byond://?src=\ref[src];software=foodsynth;sub=0;food=mess'>Burn it!</a> <br>"}
 	else
-		dat += "Charging... [charge]u ready."
-		dat += "Deploying at 15u."
+		dat += "Charging... "+round(charge/15)+"% ready.<br><br>"
+		dat += "Deploying at 100%."
 	return dat
 
 //Used for chem synth and food synth. Charge 15 seconds, then output.
-/mob/living/silicon/pai/proc/chargeloop()
+/mob/living/silicon/pai/proc/chargeloop(var/mode)
+	if(!mode)
+		return
 	while(charge < 15)
 		charge++
 		if(charge >= 15)
 			charge = 0
 			return 1
-		if((src.screen == "food synth"||src.screen == "chem synth")) // Update our view or cancel charge
+		if(src.screen == mode) // Update our view or cancel charge
 			src.paiInterface()
 		else
 			charge = 0
@@ -692,17 +716,18 @@ Target Machine:"}
 
 // EMP Shielding, just a description
 /mob/living/silicon/pai/proc/softwareShield()
-	var/dat = "<h3>Redundant Threading</h3>"
-	dat += "Redundant threads... <font color='green'>active</font>."
-	dat += "Redundant threading prevents critical failure of all systems due to exposure to electromagnetics."
-	dat += "Additionally, it provides a higher level of protection for core directives and backs up comms systems in a local cache."
+	var/dat = {"<h3>Redundant Threading</h3><br><br>
+	Redundant threads... <font color='green'>active</font>.
+	Redundant threading prevents critical failure of all systems due to exposure to electromagnetics.
+	Additionally, it provides a higher level of protection for core directives and backs up comms systems in a local cache."}
 	return dat
 
 //Flashlight
 /mob/living/silicon/pai/proc/softwareLight()
 	var/dat = "<h3>Brightness Enhancer</h3>"
-	dat += "Backlight enhancement by increased local thermal generation."
+	dat += "Backlight enhancement by increased local thermal generation.<br><br>"
 	dat += "Lighting [ (lighted) ? "<font color=#55FF55>en" : "<font color=#FF5555>dis" ]abled.</font><br> <a href='byond://?src=\ref[src];software=flashlight;sub=0;toggle=1'>Toggle Light</a><br>"
+	return dat
 
 // Digital Messenger
 /mob/living/silicon/pai/proc/pdamessage()

@@ -7,7 +7,6 @@
 	flags = FPRINT
 	slot_flags = SLOT_BELT
 	origin_tech = "programming=2"
-	var/obj/item/device/radio/radio
 	var/looking_for_personality = 0
 	var/mob/living/silicon/pai/pai
 
@@ -42,10 +41,10 @@
 			<a href='byond://?src=\ref[src];setlaws=1'>Configure Directives</a><br>
 			<br>
 			<h3>Device Settings</h3><br>"}
-		if(radio)
+		if(pai.radio)
 			dat += "<b>Radio Uplink</b><br>"
-			dat += "Transmit: <A href='byond://?src=\ref[src];wires=[WIRE_TRANSMIT]'>[(radio.wires.IsIndexCut(WIRE_TRANSMIT)) ? "Disabled" : "Enabled"]</A><br>"
-			dat += "Receive: <A href='byond://?src=\ref[src];wires=[WIRE_RECEIVE]'>[(radio.wires.IsIndexCut(WIRE_RECEIVE)) ? "Disabled" : "Enabled"]</A><br>"
+			dat += "Transmit: <A href='byond://?src=\ref[src];wires=[WIRE_TRANSMIT]'>[(pai.radio.wires.IsIndexCut(WIRE_TRANSMIT)) ? "Disabled" : "Enabled"]</A><br>"
+			dat += "Receive: <A href='byond://?src=\ref[src];wires=[WIRE_RECEIVE]'>[(pai.radio.wires.IsIndexCut(WIRE_RECEIVE)) ? "Disabled" : "Enabled"]</A><br>"
 		else
 
 			dat += {"<b>Radio Uplink</b><br>
@@ -64,6 +63,14 @@
 	user << browse(dat, "window=paicard")
 	onclose(user, "paicard")
 	return
+
+/obj/item/device/paicard/attack_ghost(var/mob/dead/observer/O)
+	if(looking_for_personality&&paiController.check_recruit(O))
+		paiController.recruitWindow(O)
+	else
+		var/turf/T = get_turf(src.loc)
+		for (var/mob/M in viewers(T))
+			M.show_message("<span class='notice'>\The [src] pings softly.</span>")
 
 /obj/item/device/paicard/Topic(href, href_list)
 
@@ -96,8 +103,8 @@
 			removePersonality()
 	if(href_list["wires"])
 		var/t1 = text2num(href_list["wires"])
-		if(radio)
-			radio.wires.CutWireIndex(t1)
+		if(pai.radio)
+			pai.radio.wires.CutWireIndex(t1)
 	if(href_list["setlaws"])
 		var/newlaws = copytext(sanitize(input("Enter any additional directives you would like your pAI personality to follow. Note that these directives will not override the personality's allegiance to its imprinted master. Conflicting directives will be ignored.", "pAI Directive Configuration", pai.pai_laws) as message),1,MAX_MESSAGE_LEN)
 		if(newlaws)
