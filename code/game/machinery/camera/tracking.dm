@@ -27,7 +27,7 @@
 		return 0
 
 	var/obj/machinery/camera/C = track.cameras[camera]
-	src.eyeobj.setLoc(C)
+	src.eyeobj.forceMove(C)
 
 	return
 
@@ -184,7 +184,7 @@
 				continue
 
 			if(U.eyeobj)
-				U.eyeobj.setLoc(get_turf(target))
+				U.eyeobj.forceMove(get_turf(target))
 			else
 				view_core()
 				return
@@ -206,7 +206,7 @@
 		return
 	if (!src.can_use())
 		return
-	user.eyeobj.setLoc(get_turf(src))
+	user.eyeobj.forceMove(get_turf(src))
 
 
 /mob/living/silicon/ai/attack_ai(var/mob/user as mob)

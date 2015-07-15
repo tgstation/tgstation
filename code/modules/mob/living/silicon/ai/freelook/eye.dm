@@ -13,16 +13,17 @@
 // Use this when setting the aiEye's location.
 // It will also stream the chunk that the new loc is in.
 
-/mob/camera/aiEye/setLoc(var/T)
-
+/mob/camera/aiEye/forceMove(var/atom/destination)
 	if(ai)
 		if(!isturf(ai.loc))
 			return
-		T = get_turf(T)
-		loc = T
+
+		forceEnter(destination)
+
 		cameranet.visibility(src)
 		if(ai.client)
 			ai.client.eye = src
+
 		//Holopad
 		if(istype(ai.current, /obj/machinery/hologram/holopad))
 			var/obj/machinery/hologram/holopad/H = ai.current
@@ -61,9 +62,9 @@
 		var/mob/living/silicon/ai/AI = usr
 		if(AI.eyeobj && AI.client.eye == AI.eyeobj)
 			AI.cameraFollow = null
-			//AI.eyeobj.setLoc(src)
+			//AI.eyeobj.forceMove(src)
 			if (isturf(src.loc) || isturf(src))
-				AI.eyeobj.setLoc(src)
+				AI.eyeobj.forceMove(src)
 
 /mob/living/Click()
 	if(isAI(usr))
@@ -91,7 +92,7 @@
 	for(var/i = 0; i < max(user.sprint, initial); i += 20)
 		var/turf/step = get_turf(get_step(user.eyeobj, direct))
 		if(step)
-			user.eyeobj.setLoc(step)
+			user.eyeobj.forceMove(step)
 
 	user.cooldown = world.timeofday + 5
 	if(user.acceleration)

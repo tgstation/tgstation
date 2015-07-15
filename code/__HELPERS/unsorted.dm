@@ -947,15 +947,11 @@ var/list/ignored_keys = list("loc", "locs", "parent_type", "vars", "verbs", "typ
 							del(O) // prevents multiple shuttle corners from stacking
 							continue
 						if(!istype(O,/obj)) continue
-						O.loc.Exited(O)
-						O.setLoc(X,teleported=1)
-						O.loc.Entered(O)
+						O.forceMove(X)
 					for(var/mob/M in T)
 						if(!M.move_on_shuttle)
 							continue
-						M.loc.Exited(M)
-						M.loc = X
-						M.loc.Entered(M)
+						M.forceMove(X)
 
 //					var/area/AR = X.loc
 

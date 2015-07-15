@@ -6,7 +6,7 @@
 	else icon_state = "ai-crash"
 	update_canmove()
 	if(src.eyeobj)
-		src.eyeobj.setLoc(get_turf(src))
+		src.eyeobj.forceMove(get_turf(src))
 	if(blind)	blind.layer = 0
 	sight |= SEE_TURFS|SEE_MOBS|SEE_OBJS
 	see_in_dark = 8

@@ -72,7 +72,7 @@
 		else
 			if(isAI(user))
 				var/mob/living/silicon/ai/A = user
-				A.eyeobj.setLoc(get_turf(C))
+				A.eyeobj.forceMove(get_turf(C))
 				A.client.eye = A.eyeobj
 			else
 				src.current = C

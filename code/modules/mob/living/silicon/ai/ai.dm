@@ -530,7 +530,7 @@ var/list/ai_list = list()
 		view_core()
 		return
 	// ok, we're alive, camera is good and in our network...
-	eyeobj.setLoc(get_turf(C))
+	eyeobj.forceMove(get_turf(C))
 	//machine = src
 
 	return 1
@@ -631,7 +631,7 @@ var/list/ai_list = list()
 			if(!C.can_use())
 				continue
 			if(network in C.network)
-				U.eyeobj.setLoc(get_turf(C))
+				U.eyeobj.forceMove(get_turf(C))
 				break
 	src << "<span class='notice'>Switched to [network] camera network.</span>"
 //End of code by Mord_Sith
