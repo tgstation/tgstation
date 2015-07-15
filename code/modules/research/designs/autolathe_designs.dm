@@ -107,7 +107,7 @@
 	category = list("initial", "Electronics")
 
 /datum/design/apc_board
-	name = "APC m odule"
+	name = "APC module"
 	id = "power control"
 	build_type = AUTOLATHE
 	materials = list(MAT_METAL = 100, MAT_GLASS = 100)
