@@ -15,7 +15,13 @@ var/list/announcement_systems = list()
 	active_power_usage = 50
 
 	var/arrival = "%PERSON has signed up as %RANK"
+	var/arrivalToggle = 1
 	var/newhead = "%PERSON, %RANK, is the department head."
+	var/newheadToggle = 1
+
+	var/greenlight = "green_light"
+	var/pinklight = "pink_light"
+	var/errorlight = "error_light"
 
 /obj/machinery/announcement_system/New()
 	..()
@@ -28,11 +34,30 @@ var/list/announcement_systems = list()
 	component_parts += new /obj/item/weapon/stock_parts/console_screen(null)
 	RefreshParts()
 
+	update_icon()
+
 /obj/machinery/announcement_system/update_icon()
 	if(is_operational())
 		icon_state = (panel_open ? "AAS_on_open" : "AAS_on_closed")
 	else
 		icon_state = (panel_open ? "AAS_off_open" : "AAS_off_closed")
+
+
+	overlays.Cut()
+	if(arrivalToggle)
+		overlays |= greenlight
+	else
+		overlays -= greenlight
+
+	if(newheadToggle)
+		overlays |= pinklight
+	else
+		overlays -= pinklight
+
+	if(broken)
+		overlays |= errorlight
+	else
+		overlays -= errorlight
 
 /obj/machinery/announcement_system/power_change()
 	..()
@@ -56,7 +81,7 @@ var/list/announcement_systems = list()
 		if(istype(P, /obj/item/device/multitool) && broken)
 			user << "You reset [src]'s firmware."
 			broken = 0
-			overlays.Remove("error_light")
+			update_icon()
 
 /obj/machinery/announcement_system/attack_hand(mob/user)
 	if((panel_open || isAI(user)) && can_be_used_by(user))
@@ -73,21 +98,11 @@ var/list/announcement_systems = list()
 
 	var/message
 
-	if(message_type == "ARRIVAL")
+	if(message_type == "ARRIVAL" && arrivalToggle)
 		message = CompileText(arrival, user, rank)
 
-		spawn(0)
-			overlays += "green_light" //this is += instead of |= because if we get lots of arrivals at once, we want to keep the light up for the proper duration.
-			sleep(3)
-			overlays.Remove("green_light")
-
-	else if(message_type == "NEWHEAD")
+	else if(message_type == "NEWHEAD" && newheadToggle)
 		message = CompileText(newhead, user, rank)
-
-		spawn(0)
-			overlays += "pink_light" //see above for why "+=" instead of "|="
-			sleep(3)
-			overlays.Remove("pink_light")
 
 	if(channels.len == 0)
 		radio.talk_into(src, message, null, list(SPAN_ROBOT))
@@ -107,8 +122,8 @@ var/list/announcement_systems = list()
 		return
 
 
-	var/contents = "Arrival Announcement:<br>\n<A href='?src=\ref[src];ArrivalTopic=1'>[arrival]</a><br>\n"
-	contents += "Departmental Head Announcement:<br>\n<A href='?src=\ref[src];NewheadTopic=1'>[newhead]</a><br>\n"
+	var/contents = "Arrival Announcement:  <A href='?src=\ref[src];ArrivalT-Topic=1'>([(arrivalToggle ? "On" : "Off")])</a><br>\n<A href='?src=\ref[src];ArrivalTopic=1'>[arrival]</a><br><br>\n"
+	contents += "Departmental Head Announcement:  <A href='?src=\ref[src];NewheadT-Topic=1'>([(newheadToggle ? "On" : "Off")])</a><br>\n<A href='?src=\ref[src];NewheadTopic=1'>[newhead]</a><br><br>\n"
 
 	var/datum/browser/popup = new(user, "announcement_config", "Automated Announcement Configuration", 370, 220)
 	popup.set_content(contents)
@@ -135,6 +150,13 @@ var/list/announcement_systems = list()
 		if(NewMessage)
 			newhead = NewMessage
 
+	else if(href_list["NewheadT-Topic"])
+		newheadToggle = !newheadToggle
+		update_icon()
+	else if(href_list["ArrivalT-Topic"])
+		arrivalToggle = !arrivalToggle
+		update_icon()
+
 	add_fingerprint(usr)
 	Interact(usr)
 	return
@@ -149,8 +171,8 @@ var/list/announcement_systems = list()
 
 /obj/machinery/announcement_system/proc/act_up() //does funny breakage stuff
 	broken = 1
+	update_icon()
 
-	overlays |= "error_light" //as if it wasn't already obvious
 	arrival = "#!@%ERR-34%2 CANNOT LOCAT@# JO# F*LE!"
 	newhead = "OV#RL()D: \[UNKNOWN??\] DET*#CT)D!"
 
