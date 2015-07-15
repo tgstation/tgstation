@@ -33,5 +33,5 @@ delete-after: True
 # Also, this gets changed to [] after reading.  Just remove the brackets when you add new shit.
 # Please surround your changes in  double quotes ("). It works without them, but if you use certain characters it screws up compiling. The quotes will not show up in the changelog.
 changes: 
-  - rscadd: "Added a Lizardmov board."
-  - rscadd: "Clicking on AI modules while they are in your hand will show you what laws it will upload."
+  - rscadd: "Asimov's subject of \"human beings\" can now be modified by uploaders."
+  - rscadd: "Eaxmining AI modules while adjacent to them will show you what laws it will upload."

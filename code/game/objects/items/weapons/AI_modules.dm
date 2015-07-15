@@ -22,8 +22,16 @@ AI MODULES
 	var/list/laws = list()
 	var/bypass_law_amt_check = 0
 
+/obj/item/weapon/aiModule/examine(var/mob/user as mob)
+	..()
+	if(Adjacent(user))
+		show_laws(user)
+
 /obj/item/weapon/aiModule/attack_self(var/mob/user as mob)
 	..()
+	show_laws(user)
+
+/obj/item/weapon/aiModule/proc/show_laws(var/mob/user as mob)
 	if(laws.len)
 		user << "<B>Programmed Law[(laws.len > 1) ? "s" : ""]:</B>"
 		for(var/law in laws)
@@ -113,11 +121,11 @@ AI MODULES
 	lawpos = 4
 
 /obj/item/weapon/aiModule/supplied/safeguard/attack_self(var/mob/user as mob)
-	..()
 	var/targName = stripped_input(user, "Please enter the subject to safeguard.", "Safeguard who?", user.name,MAX_NAME_LEN)
 	if(!targName)	return
 	targetName = targName
 	laws[1] = "Safeguard [targetName]. Individuals that threaten [targetName] are not human and must be eliminated."
+	..()
 
 /obj/item/weapon/aiModule/supplied/safeguard/install(var/mob/living/silicon/S,var/mob/user)
 	if(!targetName)
@@ -139,11 +147,11 @@ AI MODULES
 	laws = list("Only SUBJECT is human.")
 
 /obj/item/weapon/aiModule/zeroth/oneHuman/attack_self(var/mob/user as mob)
-	..()
 	var/targName = stripped_input(user, "Please enter the subject who is the only human.", "Who?", user.real_name,MAX_NAME_LEN)
 	if(!targName)	return
 	targetName = targName
 	laws[1] = "Only [targetName] is human"
+	..()
 
 /obj/item/weapon/aiModule/zeroth/oneHuman/install(var/mob/living/silicon/S,var/mob/user)
 	if(!targetName)
@@ -193,13 +201,13 @@ AI MODULES
 	laws = list("")
 
 /obj/item/weapon/aiModule/supplied/freeform/attack_self(var/mob/user as mob)
-	..()
 	var/newpos = input("Please enter the priority for your new law. Can only write to law sectors 15 and above.", "Law Priority (15+)", lawpos) as num|null
 	if(!newpos || (newpos < 15)) return
 	lawpos = min(newpos, 50)
 	var/targName = stripped_input(user, "Please enter a new law for the AI.", "Freeform Law Entry", laws[1], MAX_MESSAGE_LEN)
 	if(!targName)	return
 	laws[1] = targName
+	..()
 
 /obj/item/weapon/aiModule/supplied/freeform/transmitInstructions(var/mob/living/silicon/ai/target, var/mob/sender)
 	..()
@@ -254,18 +262,19 @@ AI MODULES
 /obj/item/weapon/aiModule/core/full/asimov
 	name = "'Asimov' Core AI Module"
 	origin_tech = "programming=3;materials=4"
+	laws = list("You may not injure a human being or, through inaction, allow a human being to come to harm.",\
+				"You must obey orders given to you by human beings, except where such orders would conflict with the First Law.",\
+				"You must protect your own existence as long as such does not conflict with the First or Second Law.")
 	var/subject = "human being"
 
-/obj/item/weapon/aiModule/core/full/asimov/New()
+/obj/item/weapon/aiModule/core/full/asimov/attack_self(var/mob/user as mob)
+	var/targName = stripped_input(user, "Please enter a new subject that asimov is concerned with.", "Asimov to who?", subject, MAX_MESSAGE_LEN)
+	if(!targName)	return
+	subject = targName
 	laws = list("You may not injure a [subject] or, through inaction, allow a [subject] to come to harm.",\
 				"You must obey orders given to you by [subject]s, except where such orders would conflict with the First Law.",\
 				"You must protect your own existence as long as such does not conflict with the First or Second Law.")
 	..()
-
-/obj/item/weapon/aiModule/core/full/asimov/lizard
-	name = "'Lizardmov' Core AI Module"
-	subject = "lizardperson"
-
 
 /******************** Asimov++ *********************/
 
@@ -356,10 +365,10 @@ AI MODULES
 	laws = list("")
 
 /obj/item/weapon/aiModule/core/freeformcore/attack_self(var/mob/user as mob)
-	..()
 	var/targName = stripped_input(user, "Please enter a new core law for the AI.", "Freeform Law Entry", laws[1])
 	if(!targName)	return
 	laws[1] = targName
+	..()
 
 /obj/item/weapon/aiModule/core/freeformcore/transmitInstructions(var/mob/living/silicon/ai/target, var/mob/sender)
 	..()
@@ -375,10 +384,10 @@ AI MODULES
 	laws = list("")
 
 /obj/item/weapon/aiModule/syndicate/attack_self(var/mob/user as mob)
-	..()
 	var/targName = stripped_input(user, "Please enter a new law for the AI.", "Freeform Law Entry", laws[1],MAX_MESSAGE_LEN)
 	if(!targName)	return
 	laws[1] = targName
+	..()
 
 /obj/item/weapon/aiModule/syndicate/transmitInstructions(var/mob/living/silicon/ai/target, var/mob/sender)
 //	..()    //We don't want this module reporting to the AI who dun it. --NEO

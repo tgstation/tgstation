@@ -104,16 +104,6 @@
 	build_path = /obj/item/weapon/aiModule/core/full/asimov
 	category = list("AI Modules")
 
-/datum/design/lizardmov
-	name = "Core Module Design (Lizardmov)"
-	desc = "Allows for the construction of a Lizardmov AI Core Module."
-	id = "lizardmov_module"
-	req_tech = list("programming" = 3, "materials" = 6)
-	build_type = IMPRINTER
-	materials = list(MAT_GLASS = 1000, "sacid" = 20, MAT_DIAMOND = 100)
-	build_path = /obj/item/weapon/aiModule/core/full/asimov/lizard
-	category = list("AI Modules")
-
 /datum/design/paladin_module
 	name = "Core Module Design (P.A.L.A.D.I.N.)"
 	desc = "Allows for the construction of a P.A.L.A.D.I.N. AI Core Module."
