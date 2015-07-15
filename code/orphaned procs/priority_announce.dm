@@ -1,4 +1,4 @@
-/proc/priority_announce(var/text, var/title = "", var/sound = 'sound/AI/attention.ogg', var/type)
+/proc/priority_announce(text, title = "", sound = 'sound/AI/attention.ogg', type)
 	if(!text)
 		return
 
@@ -29,7 +29,7 @@
 			M << announcement
 			M << sound(sound)
 
-/proc/print_command_report(var/text = "", var/title = "Central Command Update")
+/proc/print_command_report(text = "", title = "Central Command Update")
 	for (var/obj/machinery/computer/communications/C in machines)
 		if(!(C.stat & (BROKEN|NOPOWER)) && C.z == ZLEVEL_STATION)
 			var/obj/item/weapon/paper/P = new /obj/item/weapon/paper( C.loc )
@@ -38,7 +38,7 @@
 			C.messagetitle.Add("[title]")
 			C.messagetext.Add(text)
 
-/proc/minor_announce(var/message, var/title = "Attention:", var/alert)
+/proc/minor_announce(message, title = "Attention:", alert)
 	if(!message)
 		return
 

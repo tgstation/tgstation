@@ -58,7 +58,7 @@
 			else
 				C << "<font color='[normal_ooc_colour]'><span class='ooc'><span class='prefix'>OOC:</span> <EM>[keyname]:</EM> <span class='message'>[msg]</span></span></font>"
 
-/proc/toggle_ooc(var/toggle = null)
+/proc/toggle_ooc(toggle = null)
 	if(toggle != null) //if we're specifically en/disabling ooc
 		if(toggle != ooc_allowed)
 			ooc_allowed = toggle

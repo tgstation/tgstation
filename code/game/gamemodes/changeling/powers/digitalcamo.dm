@@ -5,7 +5,7 @@
 	dna_cost = 1
 
 //Prevents AIs tracking you but makes you easily detectable to the human-eye.
-/obj/effect/proc_holder/changeling/digitalcamo/sting_action(var/mob/user)
+/obj/effect/proc_holder/changeling/digitalcamo/sting_action(mob/user)
 
 	if(user.digitalcamo)
 		user << "<span class='notice'>We return to normal.</span>"

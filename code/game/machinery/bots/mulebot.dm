@@ -83,7 +83,7 @@ obj/machinery/bot/mulebot/bot_reset()
 // screwdriver: open/close hatch
 // cell: insert it
 // other: chance to knock rider off bot
-/obj/machinery/bot/mulebot/attackby(var/obj/item/I, var/mob/user, params)
+/obj/machinery/bot/mulebot/attackby(obj/item/I, mob/user, params)
 	if(istype(I, /obj/item/weapon/card/id) || istype(I, /obj/item/device/pda))
 		if(toggle_lock(user))
 			user << "<span class='notice'>Controls [(locked ? "locked" : "unlocked")].</span>"
@@ -132,13 +132,13 @@ obj/machinery/bot/mulebot/bot_reset()
 		..()
 	return
 
-/obj/machinery/bot/mulebot/emag_act(mob/user as mob)
+/obj/machinery/bot/mulebot/emag_act(mob/user)
 	locked = !locked
 	user << "<span class='notice'>You [locked ? "lock" : "unlock"] the mulebot's controls!</span>"
 	flick("mulebot-emagged", src)
 	playsound(loc, 'sound/effects/sparks1.ogg', 100, 0)
 
-/obj/machinery/bot/mulebot/ex_act(var/severity)
+/obj/machinery/bot/mulebot/ex_act(severity)
 	unload(0)
 	switch(severity)
 		if(1)
@@ -150,7 +150,7 @@ obj/machinery/bot/mulebot/bot_reset()
 			wires.RandomCut()
 	return
 
-/obj/machinery/bot/mulebot/bullet_act(var/obj/item/projectile/Proj)
+/obj/machinery/bot/mulebot/bullet_act(obj/item/projectile/Proj)
 	if(..())
 		if(prob(50) && !isnull(load))
 			unload(0)
@@ -159,18 +159,18 @@ obj/machinery/bot/mulebot/bot_reset()
 			wires.RandomCut()
 
 
-/obj/machinery/bot/mulebot/attack_ai(var/mob/user)
+/obj/machinery/bot/mulebot/attack_ai(mob/user)
 	user.set_machine(src)
 	interact(user, 1)
 
-/obj/machinery/bot/mulebot/attack_hand(var/mob/user)
+/obj/machinery/bot/mulebot/attack_hand(mob/user)
 	. = ..()
 	if (.)
 		return
 	user.set_machine(src)
 	interact(user, 0)
 
-/obj/machinery/bot/mulebot/interact(var/mob/user, var/ai=0)
+/obj/machinery/bot/mulebot/interact(mob/user, ai=0)
 	var/dat
 	dat += "<h3>Multiple Utility Load Effector Mk. V</h3>"
 	dat += "<b>ID:</b> [suffix]<BR>"
@@ -308,7 +308,7 @@ obj/machinery/bot/mulebot/bot_reset()
 		usr.unset_machine()
 	return
 
-/obj/machinery/bot/mulebot/bot_control(var/command, mob/user, pda= 0)
+/obj/machinery/bot/mulebot/bot_control(command, mob/user, pda= 0)
 	if(pda && !wires.RemoteRX()) //MULE wireless is controlled by wires.
 		return
 
@@ -385,7 +385,7 @@ obj/machinery/bot/mulebot/bot_reset()
 /obj/machinery/bot/mulebot/proc/has_power()
 	return !open && cell && cell.charge > 0 && wires.HasPower()
 
-/obj/machinery/bot/mulebot/proc/toggle_lock(var/mob/user)
+/obj/machinery/bot/mulebot/proc/toggle_lock(mob/user)
 	if(allowed(user))
 		locked = !locked
 		updateDialog()
@@ -397,7 +397,7 @@ obj/machinery/bot/mulebot/bot_reset()
 // mousedrop a crate to load the bot
 // can load anything if emagged
 
-/obj/machinery/bot/mulebot/MouseDrop_T(var/atom/movable/C, mob/user)
+/obj/machinery/bot/mulebot/MouseDrop_T(atom/movable/C, mob/user)
 
 	if(user.stat)
 		return
@@ -412,7 +412,7 @@ obj/machinery/bot/mulebot/bot_reset()
 
 
 // called to load a crate
-/obj/machinery/bot/mulebot/proc/load(var/atom/movable/C)
+/obj/machinery/bot/mulebot/proc/load(atom/movable/C)
 	if(wires.LoadCheck() && !istype(C,/obj/structure/closet/crate))
 		visible_message("[src] makes a sighing buzz.", "<span class='italics'>You hear an electronic buzzing sound.</span>")
 		playsound(loc, 'sound/machines/buzz-sigh.ogg', 50, 0)
@@ -457,7 +457,7 @@ obj/machinery/bot/mulebot/bot_reset()
 // called to unload the bot
 // argument is optional direction to unload
 // if zero, unload at bot's location
-/obj/machinery/bot/mulebot/proc/unload(var/dirn)
+/obj/machinery/bot/mulebot/proc/unload(dirn)
 	if(!load)
 		return
 
@@ -660,14 +660,14 @@ obj/machinery/bot/mulebot/bot_reset()
 
 // calculates a path to the current destination
 // given an optional turf to avoid
-/obj/machinery/bot/mulebot/calc_path(var/turf/avoid = null)
+/obj/machinery/bot/mulebot/calc_path(turf/avoid = null)
 	path = get_path_to(loc, target, src, /turf/proc/Distance_cardinal, 0, 250, id=botcard, exclude=avoid)
 
 
 // sets the current destination
 // signals all beacons matching the delivery code
 // beacons will return a signal giving their locations
-/obj/machinery/bot/mulebot/proc/set_destination(var/new_dest)
+/obj/machinery/bot/mulebot/proc/set_destination(new_dest)
 	new_destination = new_dest
 	get_nav()
 	updateDialog()
@@ -736,7 +736,7 @@ obj/machinery/bot/mulebot/bot_reset()
 	return
 
 // called when bot bumps into anything
-/obj/machinery/bot/mulebot/Bump(var/atom/obs)
+/obj/machinery/bot/mulebot/Bump(atom/obs)
 	if(!wires.MobAvoid())		//usually just bumps, but if avoidance disabled knock over mobs
 		var/mob/M = obs
 		if(ismob(M))
@@ -755,7 +755,7 @@ obj/machinery/bot/mulebot/bot_reset()
 
 // called from mob/living/carbon/human/Crossed()
 // when mulebot is in the same loc
-/obj/machinery/bot/mulebot/proc/RunOver(var/mob/living/carbon/human/H)
+/obj/machinery/bot/mulebot/proc/RunOver(mob/living/carbon/human/H)
 	H.visible_message("<span class='danger'>[src] drives over [H]!</span>", \
 					"<span class='userdanger'>[src] drives over you!<span>")
 	playsound(loc, 'sound/effects/splat.ogg', 50, 1)
@@ -774,7 +774,7 @@ obj/machinery/bot/mulebot/bot_reset()
 	bloodiness += 4
 
 // player on mulebot attempted to move
-/obj/machinery/bot/mulebot/relaymove(var/mob/user)
+/obj/machinery/bot/mulebot/relaymove(mob/user)
 	if(user.stat)
 		return
 	if(load == user)

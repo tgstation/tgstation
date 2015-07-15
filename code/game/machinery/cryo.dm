@@ -80,7 +80,7 @@
 		return
 	close_machine(target)
 
-/obj/machinery/atmospherics/unary/cryo_cell/relaymove(var/mob/user)
+/obj/machinery/atmospherics/unary/cryo_cell/relaymove(mob/user)
 	open_machine()
 
 /obj/machinery/atmospherics/unary/cryo_cell/container_resist()
@@ -135,7 +135,7 @@
   *
   * @return nothing
   */
-/obj/machinery/atmospherics/unary/cryo_cell/ui_interact(mob/user, ui_key = "main", var/datum/nanoui/ui = null)
+/obj/machinery/atmospherics/unary/cryo_cell/ui_interact(mob/user, ui_key = "main", datum/nanoui/ui = null)
 	if(user == occupant || user.stat || panel_open)
 		return
 

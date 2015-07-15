@@ -23,7 +23,7 @@
 	..()
 	icon_state = icon_living
 
-/mob/living/simple_animal/hostile/asteroid/bullet_act(var/obj/item/projectile/P)//Reduces damage from most projectiles to curb off-screen kills
+/mob/living/simple_animal/hostile/asteroid/bullet_act(obj/item/projectile/P)//Reduces damage from most projectiles to curb off-screen kills
 	if(!stat)
 		Aggro()
 	if(P.damage < 30 && P.damage_type != BRUTE)
@@ -86,7 +86,7 @@
 	flag = "energy"
 	temperature = 50
 
-/mob/living/simple_animal/hostile/asteroid/basilisk/GiveTarget(var/new_target)
+/mob/living/simple_animal/hostile/asteroid/basilisk/GiveTarget(new_target)
 	target = new_target
 	if(target != null)
 		Aggro()
@@ -149,7 +149,7 @@
 	var/ore_eaten = 1
 	var/chase_time = 100
 
-/mob/living/simple_animal/hostile/asteroid/goldgrub/GiveTarget(var/new_target)
+/mob/living/simple_animal/hostile/asteroid/goldgrub/GiveTarget(new_target)
 	target = new_target
 	if(target != null)
 		if(istype(target, /obj/item/weapon/ore))
@@ -172,7 +172,7 @@
 		return
 	..()
 
-/mob/living/simple_animal/hostile/asteroid/goldgrub/proc/EatOre(var/atom/targeted_ore)
+/mob/living/simple_animal/hostile/asteroid/goldgrub/proc/EatOre(atom/targeted_ore)
 	for(var/obj/item/weapon/ore/O in targeted_ore.loc)
 		ore_eaten++
 		if(!(O.type in ore_types_eaten))
@@ -202,7 +202,7 @@
 	ore_eaten = 0
 
 
-/mob/living/simple_animal/hostile/asteroid/goldgrub/bullet_act(var/obj/item/projectile/P)
+/mob/living/simple_animal/hostile/asteroid/goldgrub/bullet_act(obj/item/projectile/P)
 	visible_message("<span class='danger'>The [P.name] was repelled by [src.name]'s girth!</span>")
 	return
 
@@ -211,7 +211,7 @@
 	Reward()
 	..(gibbed)
 
-/mob/living/simple_animal/hostile/asteroid/goldgrub/adjustBruteLoss(var/damage)
+/mob/living/simple_animal/hostile/asteroid/goldgrub/adjustBruteLoss(damage)
 	idle_vision_range = 9
 	..()
 
@@ -247,7 +247,7 @@
 	minimum_distance = 3
 	pass_flags = PASSTABLE
 
-/mob/living/simple_animal/hostile/asteroid/hivelord/OpenFire(var/the_target)
+/mob/living/simple_animal/hostile/asteroid/hivelord/OpenFire(the_target)
 	var/mob/living/simple_animal/hostile/asteroid/hivelordbrood/A = new /mob/living/simple_animal/hostile/asteroid/hivelordbrood(src.loc)
 	A.GiveTarget(target)
 	A.friends = friends
@@ -274,7 +274,7 @@
 		inert = 1
 		desc = "The remains of a hivelord that have become useless, having been left alone too long after being harvested."
 
-/obj/item/asteroid/hivelord_core/attack(mob/living/M as mob, mob/living/user as mob)
+/obj/item/asteroid/hivelord_core/attack(mob/living/M, mob/living/user)
 	if(ishuman(M))
 		var/mob/living/carbon/human/H = M
 		if(inert)
@@ -388,7 +388,7 @@
 		pre_attack = 0
 	return
 
-/mob/living/simple_animal/hostile/asteroid/goliath/adjustBruteLoss(var/damage)
+/mob/living/simple_animal/hostile/asteroid/goliath/adjustBruteLoss(damage)
 	ranged_cooldown--
 	handle_preattack()
 	..()

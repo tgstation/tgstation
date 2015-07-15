@@ -217,7 +217,7 @@
 	density = 1
 	var/hatch_time = 0
 
-/obj/effect/cocoon/abductor/proc/Copy(var/mob/living/carbon/human/H)
+/obj/effect/cocoon/abductor/proc/Copy(mob/living/carbon/human/H)
 	var/mob/living/carbon/human/interactive/greytide/clone = new(src)
 	hardset_dna(clone,H.dna.uni_identity,H.dna.struc_enzymes,H.real_name, H.dna.blood_type, H.dna.species.type, H.dna.features)
 

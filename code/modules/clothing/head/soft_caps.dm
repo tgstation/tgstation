@@ -18,7 +18,7 @@
 		flip(usr)
 
 
-/obj/item/clothing/head/soft/AltClick(var/mob/user)
+/obj/item/clothing/head/soft/AltClick(mob/user)
 	..()
 	if(!user.canUseTopic(user))
 		user << "<span class='warning'>You can't do that right now!</span>"
@@ -29,7 +29,7 @@
 		flip(user)
 
 
-/obj/item/clothing/head/soft/proc/flip(var/mob/user)
+/obj/item/clothing/head/soft/proc/flip(mob/user)
 	if(user.canmove && !user.stat && !user.restrained())
 		src.flipped = !src.flipped
 		if(src.flipped)

@@ -16,7 +16,7 @@
 	..()
 	user << "[grenades.len] / [max_grenades] grenades loaded."
 
-/obj/item/weapon/gun/grenadelauncher/attackby(obj/item/I as obj, mob/user as mob, params)
+/obj/item/weapon/gun/grenadelauncher/attackby(obj/item/I, mob/user, params)
 
 	if((istype(I, /obj/item/weapon/grenade)))
 		if(grenades.len < max_grenades)

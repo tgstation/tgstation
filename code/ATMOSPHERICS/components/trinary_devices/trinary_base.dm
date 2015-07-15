@@ -45,13 +45,13 @@ Iconnery
 /obj/machinery/atmospherics/trinary/proc/update_icon_nopipes()
 	return
 
-/obj/machinery/atmospherics/trinary/icon_addintact(var/obj/machinery/atmospherics/node, var/connected)
+/obj/machinery/atmospherics/trinary/icon_addintact(obj/machinery/atmospherics/node, connected)
 	var/image/img = getpipeimage('icons/obj/atmospherics/trinary_devices.dmi', "intact", get_dir(src,node), node.pipe_color)
 	overlays += img
 
 	return connected | img.dir
 
-/obj/machinery/atmospherics/trinary/icon_addbroken(var/connected)
+/obj/machinery/atmospherics/trinary/icon_addbroken(connected)
 	var/unconnected = (~connected) & initialize_directions
 	for(var/direction in cardinal)
 		if(unconnected & direction)
@@ -222,7 +222,7 @@ Housekeeping and pipe network stuff below
 		parent3 = New
 
 
-/obj/machinery/atmospherics/trinary/unsafe_pressure_release(var/mob/user,var/pressures)
+/obj/machinery/atmospherics/trinary/unsafe_pressure_release(mob/user,pressures)
 	..()
 
 	var/turf/T = get_turf(src)

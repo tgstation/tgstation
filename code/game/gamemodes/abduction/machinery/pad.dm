@@ -6,7 +6,7 @@
 	anchored = 1
 	var/area/teleport_target
 
-/obj/machinery/abductor/proc/TeleportToArea(var/mob/living/target,var/area/thearea)
+/obj/machinery/abductor/proc/TeleportToArea(mob/living/target,area/thearea)
 	var/list/L = list()
 	for(var/turf/T in get_area_turfs(thearea.type))
 		if(!T.density)
@@ -37,7 +37,7 @@
 	if(!success)
 		target.loc = pick(L)
 
-/obj/machinery/abductor/pad/proc/Warp(var/mob/living/target)
+/obj/machinery/abductor/pad/proc/Warp(mob/living/target)
 	target.Move(src.loc)
 
 /obj/machinery/abductor/pad/proc/Send()
@@ -49,13 +49,13 @@
 		spawn(0)
 			anim(target.loc,target,'icons/mob/mob.dmi',,"uncloak",,target.dir)
 
-/obj/machinery/abductor/pad/proc/Retrieve(var/mob/living/target)
+/obj/machinery/abductor/pad/proc/Retrieve(mob/living/target)
 	flick("alien-pad", src)
 	spawn(0)
 		anim(target.loc,target,'icons/mob/mob.dmi',,"uncloak",,target.dir)
 	Warp(target)
 
-/obj/machinery/abductor/pad/proc/MobToLoc(var/place,var/mob/living/target)
+/obj/machinery/abductor/pad/proc/MobToLoc(place,mob/living/target)
 	var/obj/effect/teleport_abductor/F = new(place)
 	var/datum/effect/effect/system/spark_spread/S = new
 	S.set_up(10,0,place)
@@ -66,7 +66,7 @@
 	target.forceMove(place)
 	anim(target.loc,target,'icons/mob/mob.dmi',,"uncloak",,target.dir)
 
-/obj/machinery/abductor/pad/proc/PadToLoc(var/place)
+/obj/machinery/abductor/pad/proc/PadToLoc(place)
 	var/obj/effect/teleport_abductor/F = new(place)
 	var/datum/effect/effect/system/spark_spread/S = new
 	S.set_up(10,0,place)

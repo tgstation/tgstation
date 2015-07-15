@@ -30,7 +30,7 @@
 					return
 			SetLuminosity(0)
 
-/turf/space/attack_paw(mob/user as mob)
+/turf/space/attack_paw(mob/user)
 	return src.attack_hand(user)
 
 /turf/space/attackby(obj/item/C, mob/user, params)

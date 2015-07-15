@@ -18,7 +18,7 @@
 /obj/item/weapon/grenade/burn()
 	prime()
 
-/obj/item/weapon/grenade/proc/clown_check(var/mob/living/carbon/human/user)
+/obj/item/weapon/grenade/proc/clown_check(mob/living/carbon/human/user)
 	if(user.disabilities & CLUMSY && prob(50))
 		user << "<span class='warning'>Huh? How does this thing work?</span>"
 		active = 1
@@ -59,7 +59,7 @@
 			user << "\The [src] is set for instant detonation."
 
 
-/obj/item/weapon/grenade/attack_self(mob/user as mob)
+/obj/item/weapon/grenade/attack_self(mob/user)
 	if(!active)
 		if(clown_check(user))
 			user << "<span class='warning'>You prime the [name]! [det_time/10] seconds!</span>"
@@ -86,7 +86,7 @@
 		M.unEquip(src)
 
 
-/obj/item/weapon/grenade/attackby(obj/item/weapon/W as obj, mob/user as mob, params)
+/obj/item/weapon/grenade/attackby(obj/item/weapon/W, mob/user, params)
 	if(istype(W, /obj/item/weapon/screwdriver))
 		switch(det_time)
 			if ("1")
@@ -108,5 +108,5 @@
 	walk(src, null, null)
 	..()
 
-/obj/item/weapon/grenade/attack_paw(mob/user as mob)
+/obj/item/weapon/grenade/attack_paw(mob/user)
 	return attack_hand(user)

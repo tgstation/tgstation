@@ -40,10 +40,10 @@
 	colourName = "mime"
 	uses = -1
 
-/obj/item/toy/crayon/mime/attack_self(mob/living/user as mob)
+/obj/item/toy/crayon/mime/attack_self(mob/living/user)
 	update_window(user)
 
-/obj/item/toy/crayon/mime/update_window(mob/living/user as mob)
+/obj/item/toy/crayon/mime/update_window(mob/living/user)
 	dat += "<center><span style='border:1px solid #161616; background-color: [colour];'>&nbsp;&nbsp;&nbsp;</span><a href='?src=\ref[src];color=1'>Change color</a></center>"
 	..()
 
@@ -65,10 +65,10 @@
 	colourName = "rainbow"
 	uses = -1
 
-/obj/item/toy/crayon/rainbow/attack_self(mob/living/user as mob)
+/obj/item/toy/crayon/rainbow/attack_self(mob/living/user)
 	update_window(user)
 
-/obj/item/toy/crayon/rainbow/update_window(mob/living/user as mob)
+/obj/item/toy/crayon/rainbow/update_window(mob/living/user)
 	dat += "<center><span style='border:1px solid #161616; background-color: [colour];'>&nbsp;&nbsp;&nbsp;</span><a href='?src=\ref[src];color=1'>Change color</a></center>"
 	..()
 
@@ -112,7 +112,7 @@
 	for(var/obj/item/toy/crayon/crayon in contents)
 		overlays += image('icons/obj/crayons.dmi',crayon.colourName)
 
-/obj/item/weapon/storage/crayons/attackby(obj/item/W as obj, mob/user as mob, params)
+/obj/item/weapon/storage/crayons/attackby(obj/item/W, mob/user, params)
 	if(istype(W,/obj/item/toy/crayon))
 		switch(W:colourName)
 			if("mime")
@@ -147,7 +147,7 @@
 	else
 		user << "It is empty."
 
-/obj/item/toy/crayon/spraycan/attack_self(mob/living/user as mob)
+/obj/item/toy/crayon/spraycan/attack_self(mob/living/user)
 	var/choice = input(user,"Spraycan options") as null|anything in list("Toggle Cap","Change Drawing","Change Color")
 	switch(choice)
 		if("Toggle Cap")
@@ -161,7 +161,7 @@
 			colour = input(user,"Choose Color") as color
 			update_icon()
 
-/obj/item/toy/crayon/spraycan/afterattack(atom/target, mob/user as mob, proximity)
+/obj/item/toy/crayon/spraycan/afterattack(atom/target, mob/user, proximity)
 	if(!proximity)
 		return
 	if(capped)

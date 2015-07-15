@@ -38,7 +38,7 @@
 		can.layer = muh_layer
 
 
-/obj/item/weapon/grenade/iedcasing/attack_self(mob/user as mob) //
+/obj/item/weapon/grenade/iedcasing/attack_self(mob/user) //
 	if(!active)
 		if(clown_check(user))
 			user << "<span class='warning'>You light the [name]!</span>"
