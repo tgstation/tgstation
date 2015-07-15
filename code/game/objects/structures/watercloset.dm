@@ -247,7 +247,6 @@
 /obj/machinery/shower/proc/wash_mob(mob/living/L)
 	L.ExtinguishMob()
 	L.adjust_fire_stacks(-20) //Douse ourselves with water to avoid fire more easily
-	L << "<span class='warning'>You're drenched in water!</span>"
 	if(iscarbon(L))
 		var/mob/living/carbon/M = L
 		. = 1
