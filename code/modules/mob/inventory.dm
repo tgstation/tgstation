@@ -146,12 +146,10 @@
 	return 1
 
 
-//Attemps to remove an object on a mob.  Will not move it to another area or such, just removes from the mob.
+//Attempts to remove an object on a mob.  Will not move it to another area or such, just removes from the mob.
 /mob/proc/remove_from_mob(var/obj/O)
-	unEquip(O)
-	O.screen_loc = null
-	return 1
-
+	. =unEquip(O)
+	if (.) O.screen_loc = null
 
 //Outdated but still in use apparently. This should at least be a human proc.
 /mob/proc/get_equipped_items()
