@@ -18,22 +18,21 @@
 
 /obj/item/weapon/tank/proc/toggle_internals()
 	var/mob/living/carbon/C = usr
-	if(iscarbon(usr))
+	if(iscarbon(C))
 		if(!istype(C.wear_mask, /obj/item/clothing/mask))
-			C << "<span class='warning'>You are not wearing an internals mask!</span>"
+			usr << "<span class='warning'>You need to be wearing an internals mask!</span>"
 			return
 		else
 			var/obj/item/clothing/mask/M = C.wear_mask
 			if(M.mask_adjusted) // if mask on face but pushed down
 				M.adjustmask(C) // adjust it back
-		var/mob/living/carbon/location = loc
-		if(location.internal == src)
-			location.internal = null
-			usr << "<span class='notice'>You close \the [src]'s internals valve.</span>"
+		if(C.internal == src)
+			C.internal = null
+			usr << "<span class='notice'>You stop running on internals.</span>"
 		else
-			if(location.wear_mask && (location.wear_mask.flags & MASKINTERNALS))
-				location.internal = src
-				usr << "<span class='notice'>You open \the [src]'s internals valve.</span>"
+			if(C.wear_mask && (C.wear_mask.flags & MASKINTERNALS))
+				C.internal = src
+				usr << "<span class='notice'>You start running on internals from \the [src].</span>"
 			else
 				usr << "<span class='warning'>You need to be wearing an internals mask!</span>"
 

@@ -283,8 +283,6 @@
 		if(I.flags & BLOCKHAIR)
 			update_hair(0)	//rebuild hair
 		if(internal)
-			if(internals)
-				internals.icon_state = "internal0"
 			internal = null
 		sec_hud_set_ID()
 		update_inv_wear_mask(0)

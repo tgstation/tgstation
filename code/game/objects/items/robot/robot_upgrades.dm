@@ -148,7 +148,6 @@
 	else
 		R.module.modules += new/obj/item/weapon/tank/jetpack/carbondioxide(R.module)
 		for(var/obj/item/weapon/tank/jetpack/carbondioxide in R.module.modules)
-			R.internals = src
 		R.jetpackoverlay = 1
 		R.module.rebuild()
 		return 1

@@ -95,9 +95,6 @@
 	mymob.throw_icon.icon = ui_style
 	mymob.throw_icon.screen_loc = ui_drop_throw
 
-	mymob.internals = new /obj/screen/internals()
-	mymob.internals.screen_loc = ui_internal
-
 	mymob.healths = new /obj/screen()
 	mymob.healths.icon_state = "health0"
 	mymob.healths.name = "health"
@@ -149,6 +146,6 @@
 	using.screen_loc = ui_pull_resist
 	adding += using
 
-	mymob.client.screen += list( mymob.throw_icon, mymob.zone_sel, mymob.internals, mymob.healths, mymob.pullin, mymob.blind, mymob.flash, lingchemdisplay, lingstingdisplay) //, mymob.hands, mymob.rest, mymob.sleep, mymob.mach )
+	mymob.client.screen += list( mymob.throw_icon, mymob.zone_sel, mymob.healths, mymob.pullin, mymob.blind, mymob.flash, lingchemdisplay, lingstingdisplay) //, mymob.hands, mymob.rest, mymob.sleep, mymob.mach )
 	mymob.client.screen += adding + other
 	mymob.client.screen += mymob.client.void

@@ -153,18 +153,13 @@
 				var/mob/living/carbon/location = loc
 				if(location.internal == src)
 					location.internal = null
-					location.internals.icon_state = "internal0"
-					usr << "<span class='notice'>You close the tank release valve.</span>"
-					if (location.internals)
-						location.internals.icon_state = "internal0"
+					usr << "<span class='notice'>You stop running on internals.</span>"
 				else
 					if(location.wear_mask && (location.wear_mask.flags & MASKINTERNALS))
 						location.internal = src
-						usr << "<span class='notice'>You open \the [src] valve.</span>"
-						if (location.internals)
-							location.internals.icon_state = "internal1"
+						usr << "<span class='notice'>You start running on internals from \the [src].</span>"
 					else
-						usr << "<span class='warning'>You need something to connect to \the [src]!</span>"
+						usr << "<span class='warning'>You need to be wearing an internals mask!</span>"
 
 		src.add_fingerprint(usr)
 /*

@@ -13,7 +13,6 @@
 	var/obj/screen/blind = null
 	var/obj/screen/hands = null
 	var/obj/screen/pullin = null
-	var/obj/screen/internals = null
 	var/obj/screen/i_select = null
 	var/obj/screen/m_select = null
 	var/obj/screen/healths = null
