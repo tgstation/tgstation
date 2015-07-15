@@ -483,7 +483,7 @@
 	name = "bo staff"
 	desc = "A long, tall staff made of polished wood. Traditionally used in ancient old-Earth martial arts. Can be wielded to both kill and incapacitate."
 	force = 10
-	w_class = 4
+	w_class = 3 //Was bulky, changed for balance
 	slot_flags = SLOT_BACK
 	force_unwielded = 10
 	force_wielded = 24
@@ -554,3 +554,32 @@
 		return 1
 	else
 		return 0
+
+/obj/item/clothing/suit/sleeping_carp
+	name = "carphide vest"
+	desc = "A strange armor vest formed of toughened space carp hide. Excellent at deflecting energy blasts. <span class='warning'>The collar is lined with a circlet of razor-sharp teeth.</span>"
+	icon_state = "carpvest"
+	item_state = "armor"
+	armor = list(melee = 60, bullet = 20, laser = 100, energy = 100, bomb = 5, bio = 0, rad = 0) //Complete protection from energy blasts
+	body_parts_covered = CHEST|GROIN
+	flags = THICKMATERIAL|STOPSPRESSUREDMAGE
+	cold_protection = CHEST|GROIN //Made of carp hide, so it's somewhat spaceworthy although it doesn't protect limbs
+	min_cold_protection_temperature = SPACE_SUIT_MIN_TEMP_PROTECT
+
+/obj/item/clothing/suit/sleeping_carp/equipped(mob/user, slot)
+	add_fingerprint(user)
+	if(!ishuman(user))
+		user << "<span class='warning'>You can't get [src] to fit!</span>"
+		return
+	if(slot && slot == slot_wear_suit)
+		if(user.mind in ticker.mode.get_all_gangsters())
+			for(var/datum/gang/G in ticker.mode.gangs)
+				if(G.name == "Sleeping Carp" && ((user.mind in G.bosses) || (user.mind in G.gangsters)))
+					return ..()
+		user << "<span class='warning'><b>You try to put on [src], but the teeth in the collar sink into your neck and the vest slides off!</b></span>"
+		var/mob/living/carbon/human/H = user
+		H.emote("scream")
+		H.apply_damage(15,BRUTE,"head")
+		H.unEquip(src)
+		H << 'sound/weapons/bite.ogg'
+		return
