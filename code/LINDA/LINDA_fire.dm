@@ -142,6 +142,7 @@
 // Garbage collect itself by nulling reference to it
 
 /obj/effect/hotspot/proc/Kill()
+	SetLuminosity(0)
 	PlaceInPool(src)
 
 /obj/effect/hotspot/Destroy()

@@ -105,8 +105,8 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	var/icon_off = "cigoff"
 	var/type_butt = /obj/item/weapon/cigbutt
 	var/lastHolder = null
-	var/smoketime = 300
-	var/chem_volume = 30
+	var/cig_size = 60 //The maximum amount of reagents that can be loaded into an unlit cigarette
+	var/smoke_speed = 2 * REAGENTS_METABOLISM //The rate at which the capacity of the cigarette is consumed by smoking
 
 /obj/item/clothing/mask/cigarette/suicide_act(mob/user)
 	user.visible_message("<span class='suicide'>[user] is huffing the [src.name] as quickly as they can! It looks like \he's trying to give \himself cancer.</span>")
@@ -114,13 +114,12 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 
 /obj/item/clothing/mask/cigarette/New()
 	..()
-	flags |= NOREACT // so it doesn't react until you light it
-	create_reagents(chem_volume) // making the cigarette a chemical holder with a maximum volume of 15
-	reagents.add_reagent("nicotine", 15)
+	create_reagents(cig_size)
+	reagents.add_reagent("nicotine", 30)
 
 /obj/item/clothing/mask/cigarette/attackby(obj/item/weapon/W as obj, mob/user as mob, params)
 	..()
-	if(!lit && smoketime > 0)
+	if(!lit && (reagents.maximum_volume > 0))
 		var/lighting_text = is_lighter(W,user)
 		if(lighting_text)
 			light(lighting_text)
@@ -130,7 +129,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 /obj/item/clothing/mask/cigarette/afterattack(obj/item/weapon/reagent_containers/glass/glass, mob/user as mob, proximity)
 	if(!proximity) return
 	if(istype(glass))	//you can dip cigarettes into beakers
-		var/transfered = glass.reagents.trans_to(src, chem_volume)
+		var/transfered = glass.reagents.trans_to(src, reagents.maximum_volume)
 		if(transfered)	//if reagents were transfered, show the message
 			user << "<span class='notice'>You dip \the [src] into \the [glass].</span>"
 		else			//if not, either the beaker was empty, or the cigarette was full
@@ -165,25 +164,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 		hitsound = 'sound/items/welder.ogg'
 		damtype = "fire"
 		force = 4
-		if(reagents.get_reagent_amount("plasma")) // the plasma explodes when exposed to fire
-			var/datum/effect/effect/system/reagents_explosion/e = new()
-			e.set_up(round(reagents.get_reagent_amount("plasma") / 2.5, 1), get_turf(src), 0, 0)
-			e.start()
-			if(ismob(loc))
-				var/mob/M = loc
-				M.unEquip(src, 1)
-			qdel(src)
-			return
-		if(reagents.get_reagent_amount("welding_fuel")) // the fuel explodes, too, but much less violently
-			var/datum/effect/effect/system/reagents_explosion/e = new()
-			e.set_up(round(reagents.get_reagent_amount("welding_fuel") / 5, 1), get_turf(src), 0, 0)
-			e.start()
-			if(ismob(loc))
-				var/mob/M = loc
-				M.unEquip(src, 1)
-			qdel(src)
-			return
-		flags &= ~NOREACT // allowing reagents to react after being lit
+		reagents.chem_temp = 580
 		reagents.handle_reactions()
 		icon_state = icon_on
 		item_state = icon_on
@@ -201,6 +182,8 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 
 
 /obj/item/clothing/mask/cigarette/proc/handle_reagents()
+	var/amnt_smoked = smoke_speed * reagents.total_volume / reagents.maximum_volume
+	reagents.maximum_volume = max(reagents.maximum_volume - smoke_speed, 0)
 	if(reagents.total_volume)
 		if(iscarbon(loc))
 			var/mob/living/carbon/C = loc
@@ -208,9 +191,10 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 				if(prob(15)) // so it's not an instarape in case of acid
 					var/fraction = min(REAGENTS_METABOLISM/reagents.total_volume, 1)
 					reagents.reaction(C, INGEST, fraction)
-				reagents.trans_to(C, REAGENTS_METABOLISM)
+				reagents.trans_to(C, amnt_smoked)
 				return
-		reagents.remove_any(REAGENTS_METABOLISM)
+		reagents.remove_any(amnt_smoked)
+
 
 
 /obj/item/clothing/mask/cigarette/process()
@@ -218,8 +202,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	var/mob/living/M = loc
 	if(isliving(loc))
 		M.IgniteMob()
-	smoketime--
-	if(smoketime < 1)
+	if(reagents.maximum_volume <= 0)
 		new type_butt(location)
 		SSobj.processing.Remove(src)
 		if(ismob(loc))
@@ -267,8 +250,6 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	type_butt = /obj/item/weapon/cigbutt/roach
 	throw_speed = 0.5
 	item_state = "spliffoff"
-	smoketime = 180
-	chem_volume = 50
 
 /obj/item/clothing/mask/cigarette/rollie/New()
 	..()
@@ -305,8 +286,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	type_butt = /obj/item/weapon/cigbutt/cigarbutt
 	throw_speed = 0.5
 	item_state = "cigaroff"
-	smoketime = 1500
-	chem_volume = 40
+	cig_size = 90 //Can effectively distribute 3 reagents
 
 /obj/item/clothing/mask/cigarette/cigar/cohiba
 	name = "\improper Cohiba Robusto cigar"
@@ -314,8 +294,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	icon_state = "cigar2off"
 	icon_on = "cigar2on"
 	icon_off = "cigar2off"
-	smoketime = 2000
-	chem_volume = 80
+	cig_size = 160 //Can distribute 4 reagents
 
 
 /obj/item/clothing/mask/cigarette/cigar/havana
@@ -324,8 +303,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	icon_state = "cigar2off"
 	icon_on = "cigar2on"
 	icon_off = "cigar2off"
-	smoketime = 7200
-	chem_volume = 50
+	cig_size = 200
 
 /obj/item/weapon/cigbutt
 	name = "cigarette butt"
@@ -350,14 +328,14 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	item_state = "pipeoff"
 	icon_on = "pipeon"  //Note - these are in masks.dmi
 	icon_off = "pipeoff"
-	smoketime = 0
-	chem_volume = 100
+	cig_size = 60
 	var/packeditem = 0
+
+
 
 /obj/item/clothing/mask/cigarette/pipe/process()
 	var/turf/location = get_turf(src)
-	smoketime--
-	if(smoketime < 1)
+	if(reagents.maximum_volume <= 0)
 		new /obj/effect/decal/cleanable/ash(location)
 		if(ismob(loc))
 			var/mob/living/M = loc
@@ -383,7 +361,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 		if(!packeditem)
 			if(G.dry == 1)
 				user << "<span class='notice'>You stuff [O] into [src].</span>"
-				smoketime = 400
+				reagents.maximum_volume = cig_size
 				packeditem = 1
 				name = "[O.name]-packed [initial(name)]"
 				if(O.reagents)
@@ -396,7 +374,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	else
 		var/lighting_text = is_lighter(O,user)
 		if(lighting_text)
-			if(smoketime > 0)
+			if(packeditem)
 				light(lighting_text)
 			else
 				user << "<span class='warning'>There is nothing to smoke!</span>"
@@ -414,12 +392,12 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 		item_state = icon_off
 		SSobj.processing.Remove(src)
 		return
-	if(!lit && smoketime > 0)
+	if(!lit && packeditem)
 		user << "<span class='notice'>You empty [src] onto [location].</span>"
 		new /obj/effect/decal/cleanable/ash(location)
 		packeditem = 0
-		smoketime = 0
 		reagents.clear_reagents()
+		reagents.maximum_volume = 0
 		name = "empty [initial(name)]"
 	return
 
@@ -430,7 +408,6 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	item_state = "cobpipeoff"
 	icon_on = "cobpipeon"  //Note - these are in masks.dmi
 	icon_off = "cobpipeoff"
-	smoketime = 0
 
 /obj/item/clothing/mask/cigarette/pipe/cobpipe/New()
 	..()
@@ -558,8 +535,8 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 			user.unEquip(target, 1)
 			user.unEquip(src, 1)
 			var/obj/item/clothing/mask/cigarette/rollie/R = new /obj/item/clothing/mask/cigarette/rollie(user.loc)
-			R.chem_volume = target.reagents.total_volume
-			target.reagents.trans_to(R, R.chem_volume)
+			R.cig_size = target.reagents.total_volume
+			target.reagents.trans_to(R, R.cig_size)
 			user.put_in_active_hand(R)
 			user << "<span class='notice'>You roll the [target.name] into a rolling paper.</span>"
 			R.desc = "Dried [target.name] rolled up in a thin piece of paper."
