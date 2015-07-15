@@ -234,11 +234,14 @@
 	var/new_overlay_type = tile_graphic()
 	if (new_overlay_type == atmos_overlay_type)
 		return
-	overlays -= SSair.plasma_overlay
-	overlays -= SSair.sleeptoxin_overlay
-	var/atmos_overlay = get_atmos_overlay_by_name(new_overlay_type)
+	var/atmos_overlay = get_atmos_overlay_by_name(atmos_overlay_type)
+	if (atmos_overlay)
+		overlays -= atmos_overlay
+
+	atmos_overlay = get_atmos_overlay_by_name(new_overlay_type)
 	if (atmos_overlay)
 		overlays += atmos_overlay
+	atmos_overlay_type = new_overlay_type
 
 /turf/simulated/proc/get_atmos_overlay_by_name(var/name)
 	switch(name)
