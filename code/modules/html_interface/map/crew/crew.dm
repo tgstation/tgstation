@@ -249,7 +249,7 @@ var/global/datum/interactive_map/crewmonitor/crewmonitor = new
 					var/y = text2num(href_list["y"])
 					var/turf/tile = locate(x, y, AI.z)
 					if(tile)
-						AI.eyeobj.setLoc(tile)
+						AI.eyeobj.forceMove(tile)
 
 /datum/interactive_map/crewmonitor/queueUpdate(z)
 	var/datum/controller/process/html/html = processScheduler.getProcess("html")
