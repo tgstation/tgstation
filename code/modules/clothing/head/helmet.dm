@@ -66,9 +66,6 @@
 				icon_state = "[initial(icon_state)]up"
 				usr << "[alt_toggle_message] \the [src]"
 				usr.update_inv_head(0)
-				while(up)
-					playsound(src.loc, "[activation_sound]", 100, 0, 4)
-					sleep(15)
 
 /obj/item/clothing/head/helmet/justice
 	name = "helmet of justice"
@@ -80,6 +77,12 @@
 	can_toggle = 1
 	toggle_cooldown = 20
 	activation_sound = 'sound/items/WEEOO1.ogg'
+	
+/obj/item/clothing/head/helmet/justice/attack_self()
+	..()
+	while(up)
+		playsound(src.loc, "[activation_sound]", 100, 0, 4)
+		sleep(15)
 
 /obj/item/clothing/head/helmet/justice/escape
 	name = "alarm helmet"
