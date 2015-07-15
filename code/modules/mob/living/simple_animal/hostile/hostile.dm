@@ -142,8 +142,11 @@
 					return 0
 			return 1
 	if(isobj(the_target))
-		if(the_target.type in wanted_objects)
+		if(is_type_in_list(the_target, wanted_objects))
 			return 1
+
+		//if(the_target.type in wanted_objects)
+		//	return 1
 	return 0
 
 /mob/living/simple_animal/hostile/proc/GiveTarget(var/new_target)//Step 4, give us our selected target
