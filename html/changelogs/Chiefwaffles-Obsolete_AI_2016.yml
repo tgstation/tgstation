@@ -1,0 +1,8 @@
+author: Chiefwaffles
+
+delete-after: True
+
+changes: 
+  - rscadd: "After realizing how often AIs tend to 'disappear', Centcomm has authorized the shipment of the Automated Announcement System to take over the AI's responsibility of announcing new arrivals."
+  - rscadd: "In addition, by opening the panel with a screwdriver, users are able to configure the messages to their liking. Early testing has shown that this feature may be vulnerable to malicious external elements!"
+  - rscadd: "Furthermore, the R&D software has been updated so it can now succesfully create its own prototype AAS board once the prerequisite levels have been met."
