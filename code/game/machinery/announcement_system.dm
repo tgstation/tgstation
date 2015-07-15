@@ -59,6 +59,9 @@ var/list/announcement_systems = list()
 	else
 		overlays -= errorlight
 
+/obj/machinery/announcement_system/Destroy()
+	announcement_systems -= src //"OH GOD WHY ARE THERE 100,000 LISTED ANNOUNCEMENT SYSTEMS?!!"
+
 /obj/machinery/announcement_system/power_change()
 	..()
 	update_icon()
