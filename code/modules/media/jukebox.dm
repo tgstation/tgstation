@@ -438,6 +438,7 @@ var/global/list/loopModeNames=list(
 	if(!emagged)
 		user.visible_message("<span class='warning'>[user.name] slides something into the [src.name]'s card-reader.</span>","<span class='warning'>You short out the [src.name].</span>")
 		wires.CutWireIndex(JUKE_CONFIG)
+		short()
 	return
 
 /obj/machinery/media/jukebox/proc/short()

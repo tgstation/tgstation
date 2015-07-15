@@ -233,7 +233,7 @@
 	item_state = "earmuffs"
 
 	New()
-		keyslot2 = new /obj/item/device/encryptionkey/headset_serveng
+		//keyslot2 = new /obj/item/device/encryptionkey/headset_serveng
 		..()
 
 /obj/item/device/radio/headset/deathsquad

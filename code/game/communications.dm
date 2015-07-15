@@ -135,10 +135,12 @@ var/list/radiochannels = list(
 	"Service" = 1349,
 	"Supply" = 1347,
 	"Response Team" = 1345,
-	"Syndicate" = 1213
+	"Syndicate" = 1213,
+	"DJ" = 1201
 )
 
 var/list/radiochannelsreverse = list(
+	"1201" = "DJ",
 	"1213" = "Syndicate",
 	"1345" = "Response Team",
 	"1347" = "Supply",
@@ -160,7 +162,7 @@ var/const/SERV_FREQ = 1349 //service, coloured green in chat window
 var/const/DSQUAD_FREQ = 1441 //death squad frequency, coloured grey in chat window
 var/const/RESTEAM_FREQ = 1345 //response team frequency, uses the deathsquad color at the moment.
 var/const/AIPRIV_FREQ = 1447 //AI private, colored magenta in chat window
-
+var/const/DJ_FREQ = 1201 //Media
 
 // central command channels, i.e deathsquid & response teams
 var/list/CENT_FREQS = list(1345, 1441)
