@@ -306,7 +306,9 @@
 
 /obj/item/weapon/paper/abductor
 	name = "Dissection Guide"
+	icon_state = "alienpaper_words"
 	info = {"<b>Dissection for Dummies</b><br>
+
 <br>
  1.Acquire fresh specimen.<br>
  2.Put the specimen on operating table<br>
@@ -321,6 +323,9 @@
  11.Choose one of the machine options and follow displayed instructions<br>
 <br>
 Congratulations! You are now trained for xenobiology research!"}
+
+/obj/item/weapon/paper/abductor/update_icon()
+	return
 
 #define BATON_STUN 0
 #define BATON_SLEEP 1

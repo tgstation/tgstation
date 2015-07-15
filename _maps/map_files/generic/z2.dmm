@@ -882,7 +882,7 @@
 "qX" = (/obj/effect/landmark/abductor/scientist{team = 2},/turf/simulated/floor/plating/abductor,/area/abductor_ship)
 "qY" = (/obj/item/weapon/retractor/alien,/obj/item/weapon/hemostat/alien,/obj/structure/table/abductor,/turf/simulated/floor/plating/abductor,/area/abductor_ship)
 "qZ" = (/turf/indestructible/abductor{icon_state = "alien11"},/area/abductor_ship)
-"ra" = (/obj/item/weapon/storage/box/handcuffs,/obj/structure/table/abductor,/turf/simulated/floor/plating/abductor,/area/abductor_ship)
+"ra" = (/obj/structure/table/abductor,/obj/item/weapon/storage/box/handcuffs/alienhandcuffs,/turf/simulated/floor/plating/abductor,/area/abductor_ship)
 "rb" = (/turf/indestructible/abductor{icon_state = "alien10"},/area/abductor_ship)
 "rc" = (/obj/effect/landmark/abductor/agent{team = 3},/turf/simulated/floor/plating/abductor,/area/abductor_ship)
 "rd" = (/obj/effect/landmark/abductor/scientist{team = 3},/turf/simulated/floor/plating/abductor,/area/abductor_ship)
