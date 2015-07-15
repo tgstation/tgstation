@@ -75,16 +75,10 @@ Shaft Miner
 	H.equip_to_slot_or_del(new /obj/item/clothing/under/rank/miner(H), slot_w_uniform)
 	H.equip_to_slot_or_del(new /obj/item/clothing/shoes/sneakers/black(H), slot_shoes)
 
-	if(H.backbag == 1)
-		H.equip_to_slot_or_del(new /obj/item/weapon/crowbar(H), slot_belt)
-		H.equip_to_slot_or_del(new /obj/item/weapon/storage/bag/ore(H), slot_l_store)
-		H.equip_to_slot_or_del(new /obj/item/weapon/mining_voucher(H), slot_l_hand)
-		H.equip_to_slot_or_del(new /obj/item/weapon/reagent_containers/pill/patch/styptic(H), slot_r_store)
-	else
-		H.equip_to_slot_or_del(new /obj/item/weapon/crowbar(H), slot_in_backpack)
-		H.equip_to_slot_or_del(new /obj/item/weapon/storage/bag/ore(H), slot_in_backpack)
-		H.equip_to_slot_or_del(new /obj/item/weapon/mining_voucher(H), slot_in_backpack)
-		H.equip_to_slot_or_del(new /obj/item/weapon/reagent_containers/pill/patch/styptic(H), slot_l_store)
+	H.equip_to_slot_or_del(new /obj/item/weapon/crowbar(H), slot_in_backpack)
+	H.equip_to_slot_or_del(new /obj/item/weapon/storage/bag/ore(H), slot_in_backpack)
+	H.equip_to_slot_or_del(new /obj/item/weapon/mining_voucher(H), slot_in_backpack)
+	H.equip_to_slot_or_del(new /obj/item/weapon/reagent_containers/pill/patch/styptic(H), slot_l_store)
 
 /*
 Bartender
@@ -106,36 +100,15 @@ Bartender
 	access = list(access_hydroponics, access_bar, access_kitchen, access_morgue, access_weapons)
 	minimal_access = list(access_bar)
 
-/datum/job/bartender/equip_backpack(var/mob/living/carbon/human/H)
-	switch(H.backbag)
-		if(1) //No backpack or satchel
-
-			var/obj/item/weapon/storage/box/box = new default_storagebox(H)
-			new /obj/item/ammo_casing/shotgun/beanbag(box)
-			new /obj/item/ammo_casing/shotgun/beanbag(box)
-			new /obj/item/ammo_casing/shotgun/beanbag(box)
-			new /obj/item/ammo_casing/shotgun/beanbag(box)
-			H.equip_to_slot_or_del(box, slot_r_hand)
-
-		if(2) // Backpack
-			var/obj/item/weapon/storage/backpack/BPK = new default_backpack(H)
-			new default_storagebox(BPK)
-			H.equip_to_slot_or_del(BPK, slot_back,1)
-		if(3) //Satchel
-			var/obj/item/weapon/storage/backpack/BPK = new default_satchel(H)
-			new default_storagebox(BPK)
-			H.equip_to_slot_or_del(BPK, slot_back,1)
-
 /datum/job/bartender/equip_items(var/mob/living/carbon/human/H)
 	H.equip_to_slot_or_del(new /obj/item/clothing/shoes/sneakers/black(H), slot_shoes)
 	H.equip_to_slot_or_del(new /obj/item/clothing/suit/armor/vest(H), slot_wear_suit)
 	H.equip_to_slot_or_del(new /obj/item/clothing/under/rank/bartender(H), slot_w_uniform)
 
-	if(H.backbag != 1)
-		H.equip_to_slot_or_del(new /obj/item/ammo_casing/shotgun/beanbag(H), slot_in_backpack)
-		H.equip_to_slot_or_del(new /obj/item/ammo_casing/shotgun/beanbag(H), slot_in_backpack)
-		H.equip_to_slot_or_del(new /obj/item/ammo_casing/shotgun/beanbag(H), slot_in_backpack)
-		H.equip_to_slot_or_del(new /obj/item/ammo_casing/shotgun/beanbag(H), slot_in_backpack)
+	H.equip_to_slot_or_del(new /obj/item/ammo_casing/shotgun/beanbag(H), slot_in_backpack)
+	H.equip_to_slot_or_del(new /obj/item/ammo_casing/shotgun/beanbag(H), slot_in_backpack)
+	H.equip_to_slot_or_del(new /obj/item/ammo_casing/shotgun/beanbag(H), slot_in_backpack)
+	H.equip_to_slot_or_del(new /obj/item/ammo_casing/shotgun/beanbag(H), slot_in_backpack)
 
 /*
 Cook
