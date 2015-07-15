@@ -66,8 +66,8 @@
 				icon_state = "[initial(icon_state)]up"
 				usr << "[alt_toggle_message] \the [src]"
 				usr.update_inv_head(0)
-				while(up)
-					if(active_sound)
+				if(active_sound)
+					while(up)
 						playsound(src.loc, "[active_sound]", 100, 0, 4)
 						sleep(15)
 
