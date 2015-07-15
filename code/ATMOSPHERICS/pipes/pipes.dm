@@ -25,6 +25,7 @@
 		air_update_turf()
 
 /obj/machinery/atmospherics/pipe/return_air()
+	build_network()
 	return parent.air
 
 /obj/machinery/atmospherics/pipe/build_network()
