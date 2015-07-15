@@ -109,12 +109,13 @@ AI MODULES
 	name = "'Safeguard' AI Module"
 	var/targetName = ""
 	origin_tech = "programming=3;materials=4"
-	laws = list("Safeguard <name>. Individuals that threaten <name> are not human and must be eliminated.")
+	laws = list("Safeguard SUBJECT. Individuals that threaten SUBJECT are not human and must be eliminated.")
 	lawpos = 4
 
 /obj/item/weapon/aiModule/supplied/safeguard/attack_self(var/mob/user as mob)
 	..()
-	var/targName = stripped_input(user, "Please enter the name of the person to safeguard.", "Safeguard who?", user.name,MAX_NAME_LEN)
+	var/targName = stripped_input(user, "Please enter the subject to safeguard.", "Safeguard who?", user.name,MAX_NAME_LEN)
+	if(!targName)	return
 	targetName = targName
 	laws[1] = "Safeguard [targetName]. Individuals that threaten [targetName] are not human and must be eliminated."
 
@@ -135,11 +136,12 @@ AI MODULES
 	name = "'OneHuman' AI Module"
 	var/targetName = ""
 	origin_tech = "programming=3;materials=6" //made with diamonds!
-	laws = list("Only <name> is human.")
+	laws = list("Only SUBJECT is human.")
 
 /obj/item/weapon/aiModule/zeroth/oneHuman/attack_self(var/mob/user as mob)
 	..()
-	var/targName = stripped_input(user, "Please enter the name of the person who is the only human.", "Who?", user.real_name,MAX_NAME_LEN)
+	var/targName = stripped_input(user, "Please enter the subject who is the only human.", "Who?", user.real_name,MAX_NAME_LEN)
+	if(!targName)	return
 	targetName = targName
 	laws[1] = "Only [targetName] is human"
 
@@ -192,11 +194,11 @@ AI MODULES
 
 /obj/item/weapon/aiModule/supplied/freeform/attack_self(var/mob/user as mob)
 	..()
-	lawpos = input("Please enter the priority for your new law. Can only write to law sectors 15 and above.", "Law Priority (15+)", lawpos) as num
-	if(lawpos < 15) return
-	lawpos = min(lawpos, 50)
-	var/newlaw = ""
-	var/targName = stripped_input(user, "Please enter a new law for the AI.", "Freeform Law Entry", newlaw, MAX_MESSAGE_LEN)
+	var/newpos = input("Please enter the priority for your new law. Can only write to law sectors 15 and above.", "Law Priority (15+)", lawpos) as num|null
+	if(!newpos || (newpos < 15)) return
+	lawpos = min(newpos, 50)
+	var/targName = stripped_input(user, "Please enter a new law for the AI.", "Freeform Law Entry", laws[1], MAX_MESSAGE_LEN)
+	if(!targName)	return
 	laws[1] = targName
 
 /obj/item/weapon/aiModule/supplied/freeform/transmitInstructions(var/mob/living/silicon/ai/target, var/mob/sender)
@@ -355,8 +357,8 @@ AI MODULES
 
 /obj/item/weapon/aiModule/core/freeformcore/attack_self(var/mob/user as mob)
 	..()
-	var/newlaw = ""
-	var/targName = stripped_input(user, "Please enter a new core law for the AI.", "Freeform Law Entry", newlaw)
+	var/targName = stripped_input(user, "Please enter a new core law for the AI.", "Freeform Law Entry", laws[1])
+	if(!targName)	return
 	laws[1] = targName
 
 /obj/item/weapon/aiModule/core/freeformcore/transmitInstructions(var/mob/living/silicon/ai/target, var/mob/sender)
@@ -374,8 +376,8 @@ AI MODULES
 
 /obj/item/weapon/aiModule/syndicate/attack_self(var/mob/user as mob)
 	..()
-	var/newlaw = ""
-	var/targName = stripped_input(user, "Please enter a new law for the AI.", "Freeform Law Entry", newlaw,MAX_MESSAGE_LEN)
+	var/targName = stripped_input(user, "Please enter a new law for the AI.", "Freeform Law Entry", laws[1],MAX_MESSAGE_LEN)
+	if(!targName)	return
 	laws[1] = targName
 
 /obj/item/weapon/aiModule/syndicate/transmitInstructions(var/mob/living/silicon/ai/target, var/mob/sender)
