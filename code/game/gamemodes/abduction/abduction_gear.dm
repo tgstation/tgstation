@@ -333,7 +333,7 @@ Congratulations! You are now trained for xenobiology research!"}
 	desc = "A quad-mode baton used for incapacitation and restraining of specimens."
 	var/mode = BATON_STUN
 	icon = 'icons/obj/abductor.dmi'
-	icon_state = "wonderprod"
+	icon_state = "wonderprodStun"
 	item_state = "wonderprod"
 	slot_flags = SLOT_BELT
 	origin_tech = "materials=6;combat=5;biotech=7"
@@ -360,13 +360,17 @@ Congratulations! You are now trained for xenobiology research!"}
 /obj/item/weapon/abductor_baton/update_icon()
 	switch(mode)
 		if(BATON_STUN)
-			icon_state = "wonderprod"
+			icon_state = "wonderprodStun"
+			item_state = "wonderprodStun"
 		if(BATON_SLEEP)
-			icon_state = "wonderprod"
+			icon_state = "wonderprodSleep"
+			item_state = "wonderprodSleep"
 		if(BATON_CUFF)
-			icon_state = "wonderprod"
+			icon_state = "wonderprodCuff"
+			item_state = "wonderprodCuff"
 		if(BATON_PROBE)
-			icon_state = "wonderprod"
+			icon_state = "wonderprodProbe"
+			item_state = "wonderprodProbe"
 
 /obj/item/weapon/abductor_baton/proc/IsAbductor(var/mob/living/user)
 	if(!ishuman(user))
