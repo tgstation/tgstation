@@ -29,6 +29,11 @@
 	var/stat_exclusive = 0 //Mobs with this set to 1 will exclusively attack things defined by stat_attack, stat_attack 2 means they will only attack corpses
 	var/attack_faction = null //Put a faction string here to have a mob only ever attack a specific faction
 
+/mob/living/simple_animal/hostile/resetVariables()
+	..("wanted_objects", "friends")
+	wanted_objects = list()
+	friends = list()
+
 /mob/living/simple_animal/hostile/Life()
 	. = ..()
 	if(istype(loc, /obj/item/device/mobcapsule))

@@ -271,14 +271,14 @@
 				if(artifact_find)
 					if( excavation_level > 0 || prob(15) )
 
-						B = new(src)
+						B = getFromPool(/obj/structure/boulder, src)
 						if(artifact_find)
 							B.artifact_find = artifact_find
 					else
 						artifact_debris(1)
 
 				else if(prob(15))
-					B = new(src)
+					B = getFromPool(/obj/structure/boulder, src)
 
 				if(B)
 					GetDrilled(0)

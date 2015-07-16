@@ -29,6 +29,12 @@
 	var/update_muts = 1                        // Monkey gene must be set at start.
 	var/alien = 0								//Used for reagent metabolism.
 
+/mob/living/carbon/monkey/Destroy()
+	..()
+	uniform = null
+	hat = null
+	glasses = null
+
 /mob/living/carbon/monkey/tajara
 	name = "farwa"
 	voice_name = "farwa"

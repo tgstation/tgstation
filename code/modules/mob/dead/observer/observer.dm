@@ -102,6 +102,12 @@
 	real_name = name
 	..()
 
+/mob/dead/observer/Destroy()
+	..()
+	following = null
+	ghostMulti = null
+	canclone = null
+
 /mob/dead/observer/hasFullAccess()
 	return isAdminGhost(src)
 

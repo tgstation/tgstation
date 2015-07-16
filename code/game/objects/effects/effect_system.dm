@@ -883,76 +883,76 @@ steam.start() -- spawns the effect
 	desc = "A lightweight foamed metal wall."
 	var/metal = 1		// 1=aluminum, 2=iron
 
-	proc/updateicon()
-		if(metal == 1)
-			icon_state = "metalfoam"
-		else
-			icon_state = "ironfoam"
+/obj/structure/foamedmetal/proc/updateicon()
+	if(metal == 1)
+		icon_state = "metalfoam"
+	else
+		icon_state = "ironfoam"
 
 
-	ex_act(severity)
+/obj/structure/foamedmetal/ex_act(severity)
+	qdel(src)
+
+/obj/structure/foamedmetal/blob_act()
+	qdel(src)
+
+/obj/structure/foamedmetal/bullet_act()
+	if(metal==1 || prob(50))
 		qdel(src)
 
-	blob_act()
-		del(src)
+/obj/structure/foamedmetal/attack_paw(var/mob/user)
+	attack_hand(user)
+	return
 
-	bullet_act()
-		if(metal==1 || prob(50))
-			del(src)
+/obj/structure/foamedmetal/attack_hand(var/mob/user)
+	user.delayNextAttack(10)
+	if ((M_HULK in user.mutations) || (prob(75 - metal*25)))
+		user << "<span class='notice'>You smash through the metal foam wall.</span>"
+		for(var/mob/O in oviewers(user))
+			if ((O.client && !( O.blinded )))
+				O << "<span class='warning'>[user] smashes through the foamed metal.</span>"
+		qdel(src)
+	else
+		user << "<span class='notice'>You hit the metal foam but bounce off it.</span>"
+	return
 
-	attack_paw(var/mob/user)
-		attack_hand(user)
+
+/obj/structure/foamedmetal/attackby(var/obj/item/I, var/mob/user)
+	user.delayNextAttack(10)
+	if (istype(I, /obj/item/weapon/grab))
+		var/obj/item/weapon/grab/G = I
+		G.affecting.loc = src.loc
+		for(var/mob/O in viewers(src))
+			if (O.client)
+				O << "<span class='warning'>[G.assailant] smashes [G.affecting] through the foamed metal wall.</span>"
+		returnToPool(I)
+		qdel(src)
 		return
 
-	attack_hand(var/mob/user)
-		user.delayNextAttack(10)
-		if ((M_HULK in user.mutations) || (prob(75 - metal*25)))
-			user << "<span class='notice'>You smash through the metal foam wall.</span>"
-			for(var/mob/O in oviewers(user))
-				if ((O.client && !( O.blinded )))
-					O << "<span class='warning'>[user] smashes through the foamed metal.</span>"
-			del(src)
-		else
-			user << "<span class='notice'>You hit the metal foam but bounce off it.</span>"
-		return
+	if(prob(I.force*20 - metal*25))
+		user << "<span class='notice'>You smash through the foamed metal with \the [I].</span>"
+		for(var/mob/O in oviewers(user))
+			if ((O.client && !( O.blinded )))
+				O << "<span class='warning'>[user] smashes through the foamed metal.</span>"
+		qdel(src)
+	else
+		user << "<span class='notice'>You hit the metal foam to no effect.</span>"
+
+/obj/structure/foamedmetal/CanPass(atom/movable/mover, turf/target, height=1.5, air_group = 0)
+	if(air_group) return 0
+	return !density
 
 
-	attackby(var/obj/item/I, var/mob/user)
-		user.delayNextAttack(10)
-		if (istype(I, /obj/item/weapon/grab))
-			var/obj/item/weapon/grab/G = I
-			G.affecting.loc = src.loc
-			for(var/mob/O in viewers(src))
-				if (O.client)
-					O << "<span class='warning'>[G.assailant] smashes [G.affecting] through the foamed metal wall.</span>"
-			returnToPool(I)
-			qdel(src)
-			return
+/obj/structure/foamedmetal/proc/update_nearby_tiles()
+	if (isnull(air_master))
+		return 0
 
-		if(prob(I.force*20 - metal*25))
-			user << "<span class='notice'>You smash through the foamed metal with \the [I].</span>"
-			for(var/mob/O in oviewers(user))
-				if ((O.client && !( O.blinded )))
-					O << "<span class='warning'>[user] smashes through the foamed metal.</span>"
-			qdel(src)
-		else
-			user << "<span class='notice'>You hit the metal foam to no effect.</span>"
+	var/T = loc
 
-	CanPass(atom/movable/mover, turf/target, height=1.5, air_group = 0)
-		if(air_group) return 0
-		return !density
+	if (isturf(T))
+		air_master.mark_for_update(T)
 
-
-	proc/update_nearby_tiles()
-		if (isnull(air_master))
-			return 0
-
-		var/T = loc
-
-		if (isturf(T))
-			air_master.mark_for_update(T)
-
-		return 1
+	return 1
 
 /obj/structure/foamedmetal/New()
 	. = ..()
