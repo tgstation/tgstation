@@ -135,7 +135,7 @@ var/datum/subsystem/air/SSair
 		T.process_cell()
 
 
-/datum/subsystem/air/proc/remove_from_active(var/turf/simulated/T)
+/datum/subsystem/air/proc/remove_from_active(turf/simulated/T)
 	if(istype(T))
 		T.excited = 0
 		active_turfs -= T
@@ -143,7 +143,7 @@ var/datum/subsystem/air/SSair
 			T.excited_group.garbage_collect()
 
 
-/datum/subsystem/air/proc/add_to_active(var/turf/simulated/T, var/blockchanges = 1)
+/datum/subsystem/air/proc/add_to_active(turf/simulated/T, blockchanges = 1)
 	if(istype(T) && T.air)
 		T.excited = 1
 		active_turfs |= T

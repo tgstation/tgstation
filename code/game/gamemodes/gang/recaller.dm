@@ -174,7 +174,7 @@
 				dat += "<a href='?src=\ref[src];purchase=dominator'><b>Station Dominator</b></a><br>"
 			else
 				dat += "<b>Station Dominator</b><br>"
-			dat += "<i>(Estimated Takeover Time: [round(max(300,900 - ((round((gang.territory.len/start_state.num_territories)*200, 10) - 60) * 15))/60,1)] minutes)</i><br>"
+			dat += "<i>(Estimated Takeover Time: [round(get_domination_time(gang)/60,0.1)] minutes)</i><br>"
 
 	dat += "<br>"
 	dat += "<a href='?src=\ref[src];choice=refresh'>Refresh</a><br>"
@@ -313,7 +313,7 @@
 	attack_self(usr)
 
 
-/obj/item/device/gangtool/proc/ping_gang(var/mob/user)
+/obj/item/device/gangtool/proc/ping_gang(mob/user)
 	if(!user)
 		return
 	var/message = stripped_input(user,"Discreetly send a gang-wide message.","Send Message") as null|text
@@ -335,7 +335,7 @@
 		log_game("[key_name(user)] Messaged [gang.name] Gang: [message].")
 
 
-/obj/item/device/gangtool/proc/register_device(var/mob/user)
+/obj/item/device/gangtool/proc/register_device(mob/user)
 	if(gang)	//It's already been registered!
 		return
 	if((promotable && (user.mind in ticker.mode.get_gangsters())) || (user.mind in ticker.mode.get_gang_bosses()))

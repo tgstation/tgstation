@@ -60,7 +60,7 @@
 	var/list/functions = list("nearbyscan","combat","doorscan","shitcurity","chatter")
 
 //botPool funcs
-/mob/living/carbon/human/interactive/proc/takeDelegate(var/mob/living/carbon/human/interactive/from,var/doReset=TRUE)
+/mob/living/carbon/human/interactive/proc/takeDelegate(mob/living/carbon/human/interactive/from,doReset=TRUE)
 	eye_color = "red"
 	if(from == src)
 		return FALSE
@@ -106,7 +106,7 @@
 		myjob.equip(src)
 	myjob.apply_fingerprints(src)
 
-/mob/living/carbon/human/interactive/attacked_by(var/obj/item/I, var/mob/living/user, var/def_zone)
+/mob/living/carbon/human/interactive/attacked_by(obj/item/I, mob/living/user, def_zone)
 	..()
 	retal = 1
 	retal_target = user
@@ -200,7 +200,7 @@
 	SSbp.insertBot(src)
 
 
-/mob/living/carbon/human/interactive/attack_hand(mob/living/carbon/human/M as mob)
+/mob/living/carbon/human/interactive/attack_hand(mob/living/carbon/human/M)
 	..()
 	if (health > 0)
 		if(M.a_intent == "help")
@@ -210,7 +210,7 @@
 			retal_target = M
 
 //THESE EXIST FOR DEBUGGING OF THE DOING/INTEREST SYSTEM EASILY
-/mob/living/carbon/human/interactive/proc/doing2string(var/doin)
+/mob/living/carbon/human/interactive/proc/doing2string(doin)
 	var/toReturn = ""
 	if(!doin)
 		toReturn = "not doing anything"
@@ -222,7 +222,7 @@
 		toReturn += "and going somewhere"
 	return toReturn
 
-/mob/living/carbon/human/interactive/proc/interest2string(var/inter)
+/mob/living/carbon/human/interactive/proc/interest2string(inter)
 	var/toReturn = "Flatlined"
 	if(inter >= 0 && inter <= 25)
 		toReturn = "Very Bored"
@@ -234,7 +234,7 @@
 		toReturn = "Excited"
 	return toReturn
 //END DEBUG
-/mob/living/carbon/human/interactive/proc/isnotfunc(var/checkDead = TRUE)
+/mob/living/carbon/human/interactive/proc/isnotfunc(checkDead = TRUE)
 	if(!canmove)
 		return 1
 	if(health <= 0 && checkDead)
@@ -269,7 +269,7 @@
 	main_hand = other_hand
 	other_hand = T
 
-/mob/living/carbon/human/interactive/proc/take_to_slot(var/obj/item/G)
+/mob/living/carbon/human/interactive/proc/take_to_slot(obj/item/G)
 	var/list/slots = list ("left pocket" = slot_l_store,"right pocket" = slot_r_store,"left hand" = slot_l_hand,"right hand" = slot_r_hand)
 	G.loc = src
 	if(G.force && G.force > best_force)
@@ -288,7 +288,7 @@
 		unEquip(I,TRUE)
 	update_hands = 1
 
-/mob/living/carbon/human/interactive/proc/targetRange(var/towhere)
+/mob/living/carbon/human/interactive/proc/targetRange(towhere)
 	return get_dist(get_turf(towhere), get_turf(src))
 
 /mob/living/carbon/human/interactive/Life()
@@ -427,7 +427,7 @@
 		tryWalk(TARGET)
 	LAST_TARGET = TARGET
 
-/mob/living/carbon/human/interactive/proc/tryWalk(var/turf/TARGET)
+/mob/living/carbon/human/interactive/proc/tryWalk(turf/TARGET)
 	if(!isnotfunc())
 		if(!walk2derpless(TARGET))
 			timeout++
@@ -435,7 +435,7 @@
 		timeout++
 
 
-/mob/living/carbon/human/interactive/proc/walk2derpless(var/target)
+/mob/living/carbon/human/interactive/proc/walk2derpless(target)
 	set background = 1
 	var/turf/T = get_turf(target)
 	var/turf/D = get_step(src,dir)
@@ -452,7 +452,7 @@
 		doing = doing & ~TRAVEL
 		return 0
 
-/mob/living/carbon/human/interactive/proc/job2area(var/target)
+/mob/living/carbon/human/interactive/proc/job2area(target)
 	var/datum/job/T = target
 	if(T.title == "Assistant")
 		return /area/hallway/primary
@@ -471,14 +471,14 @@
 	else
 		return pick(/area/hallway,/area/crew_quarters)
 
-/mob/living/carbon/human/interactive/proc/target_filter(var/target)
+/mob/living/carbon/human/interactive/proc/target_filter(target)
 	var/list/L = target
 	for(var/atom/A in target)
 		if(istype(A,/area) || istype(A,/turf/space))
 			L -= A
 	return L
 
-/mob/living/carbon/human/interactive/proc/denied_filter(var/target)
+/mob/living/carbon/human/interactive/proc/denied_filter(target)
 	var/list/denied = list(/obj/structure/window,/obj/structure/table) //expand me
 	for(var/a in denied)
 		if(istype(target,a))

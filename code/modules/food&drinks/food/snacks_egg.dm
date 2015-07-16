@@ -23,7 +23,7 @@
 	reagents.reaction(hit_atom, TOUCH)
 	del(src) // Not qdel, because it'll hit other mobs then the floor for runtimes.
 
-/obj/item/weapon/reagent_containers/food/snacks/egg/attackby(obj/item/weapon/W as obj, mob/user as mob, params)
+/obj/item/weapon/reagent_containers/food/snacks/egg/attackby(obj/item/weapon/W, mob/user, params)
 	if(istype( W, /obj/item/toy/crayon ))
 		var/obj/item/toy/crayon/C = W
 		var/clr = C.colourName

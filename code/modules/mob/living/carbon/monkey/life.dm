@@ -89,7 +89,7 @@
 					adjustFireLoss(3)
 
 	else if(bodytemperature < BODYTEMP_COLD_DAMAGE_LIMIT)
-		if(!istype(loc, /obj/machinery/atmospherics/unary/cryo_cell))
+		if(!istype(loc, /obj/machinery/atmospherics/components/unary/cryo_cell))
 			switch(bodytemperature)
 				if(200 to 260)
 					throw_alert("temp","cold",1)

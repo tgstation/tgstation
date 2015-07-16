@@ -12,7 +12,7 @@
 	var/key_of_slaughter
 
 
-/datum/round_event/slaughter/proc/get_slaughter(var/end_if_fail = 0)
+/datum/round_event/slaughter/proc/get_slaughter(end_if_fail = 0)
 	key_of_slaughter = null
 	if(!key_of_slaughter)
 		var/list/candidates = get_candidates(BE_ALIEN)

@@ -26,7 +26,7 @@
 	var/author
 	var/SQLquery
 
-/obj/machinery/computer/libraryconsole/attack_hand(var/mob/user as mob)
+/obj/machinery/computer/libraryconsole/attack_hand(mob/user)
 	if(..())
 		return
 	interact(user)
@@ -290,7 +290,7 @@ var/global/list/datum/cachedbook/cachedbooks // List of our cached book datums
 	popup.set_title_image(user.browse_rsc_icon(src.icon, src.icon_state))
 	popup.open()
 
-/obj/machinery/computer/libraryconsole/bookmanagement/attackby(obj/item/weapon/W as obj, mob/user as mob, params)
+/obj/machinery/computer/libraryconsole/bookmanagement/attackby(obj/item/weapon/W, mob/user, params)
 	if(istype(W, /obj/item/weapon/barcodescanner))
 		var/obj/item/weapon/barcodescanner/scanner = W
 		scanner.computer = src
@@ -299,7 +299,7 @@ var/global/list/datum/cachedbook/cachedbooks // List of our cached book datums
 	else
 		..()
 
-/obj/machinery/computer/libraryconsole/bookmanagement/emag_act(mob/user as mob)
+/obj/machinery/computer/libraryconsole/bookmanagement/emag_act(mob/user)
 	if(density && !emagged)
 		emagged = 1
 
@@ -445,13 +445,13 @@ var/global/list/datum/cachedbook/cachedbooks // List of our cached book datums
 	density = 1
 	var/obj/item/weapon/book/cache		// Last scanned book
 
-/obj/machinery/libraryscanner/attackby(var/obj/O as obj, var/mob/user as mob, params)
+/obj/machinery/libraryscanner/attackby(obj/O, mob/user, params)
 	if(istype(O, /obj/item/weapon/book))
 		if(!user.drop_item())
 			return
 		O.loc = src
 
-/obj/machinery/libraryscanner/attack_hand(var/mob/user as mob)
+/obj/machinery/libraryscanner/attack_hand(mob/user)
 	usr.set_machine(src)
 	var/dat = "" // <META HTTP-EQUIV='Refresh' CONTENT='10'>
 	if(cache)
@@ -501,7 +501,7 @@ var/global/list/datum/cachedbook/cachedbooks // List of our cached book datums
 	density = 1
 	var/busy = 0
 
-/obj/machinery/bookbinder/attackby(var/obj/O as obj, var/mob/user as mob, params)
+/obj/machinery/bookbinder/attackby(obj/O, mob/user, params)
 	if(istype(O, /obj/item/weapon/paper))
 		if(busy)
 			user << "<span class='warning'>The book binder is busy. Please wait for completion of previous operation.</span>"

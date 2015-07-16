@@ -297,7 +297,7 @@
 	action_icon_state = "fireball"
 	sound = "sound/magic/Fireball.ogg"
 
-/obj/effect/proc_holder/spell/turf/fireball/cast(var/turf/T)
+/obj/effect/proc_holder/spell/turf/fireball/cast(turf/T)
 	explosion(T, -1, 0, 2, 3, 0, flame_range = 2)
 
 

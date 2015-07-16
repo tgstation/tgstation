@@ -47,7 +47,7 @@
 	return
 
 
-/datum/game_mode/proc/forge_wizard_objectives(var/datum/mind/wizard)
+/datum/game_mode/proc/forge_wizard_objectives(datum/mind/wizard)
 	switch(rand(1,100))
 		if(1 to 30)
 
@@ -113,7 +113,7 @@
 	return
 
 
-/datum/game_mode/proc/greet_wizard(var/datum/mind/wizard, var/you_are=1)
+/datum/game_mode/proc/greet_wizard(datum/mind/wizard, you_are=1)
 	if (you_are)
 		wizard.current << "<span class='boldannounce'>You are the Space Wizard!</span>"
 	wizard.current << "<B>The Space Wizards Federation has given you the following tasks:</B>"
@@ -241,7 +241,7 @@
 //OTHER PROCS
 
 //To batch-remove wizard spells. Linked to mind.dm.
-/mob/proc/spellremove(var/mob/M as mob)
+/mob/proc/spellremove(mob/M)
 	if(!mind)
 		return
 	for(var/obj/effect/proc_holder/spell/spell_to_remove in src.mind.spell_list)
@@ -265,7 +265,7 @@ Made a proc so this is not repeated 14 (or more) times.*/
 		return 1
 
 
-/proc/iswizard(mob/living/M as mob)
+/proc/iswizard(mob/living/M)
 	return istype(M) && M.mind && ticker && ticker.mode && (M.mind in ticker.mode.wizards)
 
 

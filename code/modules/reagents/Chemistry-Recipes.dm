@@ -17,12 +17,12 @@
 	var/required_temp = 0
 	var/mix_message = "The solution begins to bubble."
 
-/datum/chemical_reaction/proc/on_reaction(var/datum/reagents/holder, var/created_volume)
+/datum/chemical_reaction/proc/on_reaction(datum/reagents/holder, created_volume)
 	return
 	//I recommend you set the result amount to the total volume of all components.
 
 
-/datum/chemical_reaction/proc/chemical_mob_spawn(var/datum/reagents/holder, var/amount_to_spawn, var/reaction_name, var/mob_faction = "chemicalsummon")
+/datum/chemical_reaction/proc/chemical_mob_spawn(datum/reagents/holder, amount_to_spawn, reaction_name, mob_faction = "chemicalsummon")
 	if(holder && holder.my_atom)
 		var/blocked = list(/mob/living/simple_animal/hostile,
 			/mob/living/simple_animal/hostile/pirate,
@@ -78,7 +78,7 @@
 				for(var/j = 1, j <= rand(1, 3), j++)
 					step(C, pick(NORTH,SOUTH,EAST,WEST))
 
-/datum/chemical_reaction/proc/goonchem_vortex(var/turf/simulated/T, var/setting_type, var/range, var/pull_times)
+/datum/chemical_reaction/proc/goonchem_vortex(turf/simulated/T, setting_type, range, pull_times)
 	for(var/atom/movable/X in orange(range, T))
 		if(istype(X, /obj/effect))
 			continue  //stop pulling smoke and hotspots please

@@ -86,7 +86,7 @@
 		return 0
 	return 1
 
-/datum/mutation/human/proc/say_mod(var/message)
+/datum/mutation/human/proc/say_mod(message)
 	if(message)
 		return message
 
@@ -130,7 +130,7 @@
 		return
 	owner.status_flags |= CANSTUN | CANWEAKEN | CANPARALYSE | CANPUSH
 
-/datum/mutation/human/hulk/say_mod(var/message)
+/datum/mutation/human/hulk/say_mod(message)
 	if(message)
 		message = "[uppertext(replacetext(message, ".", "!"))]!!"
 	return message
@@ -225,7 +225,7 @@
 	quality = NEGATIVE
 	text_gain_indication = "<span class='danger'>You feel strange.</span>"
 
-/datum/mutation/human/bad_dna/on_acquiring(var/mob/living/carbon/human/owner)
+/datum/mutation/human/bad_dna/on_acquiring(mob/living/carbon/human/owner)
 	owner << text_gain_indication
 	var/mob/new_mob
 	if(prob(95))
@@ -426,7 +426,7 @@
 	text_gain_indication = "<span class='notice'>You feel so happy. Nothing can be wrong with anything. :)</span>"
 	text_lose_indication = "<span class='notice'>Everything is terrible again. :(</span>"
 
-/datum/mutation/human/smile/say_mod(var/message)
+/datum/mutation/human/smile/say_mod(message)
 	if(message)
 		message = " [message] "
 		//Time for a friendly game of SS13
@@ -481,7 +481,7 @@
 	text_gain_indication = "<span class='danger'>You can't seem to form any coherent thoughts!</span>"
 	text_lose_indication = "<span class='danger'>Your mind feels more clear.</span>"
 
-/datum/mutation/human/unintelligable/say_mod(var/message)
+/datum/mutation/human/unintelligable/say_mod(message)
 	if(message)
 		var/prefix=copytext(message,1,2)
 		if(prefix == ";")
@@ -512,7 +512,7 @@
 	text_gain_indication = "<span class='notice'>You feel Swedish, however that works.</span>"
 	text_lose_indication = "<span class='notice'>The feeling of Swedishness passes.</span>"
 
-/datum/mutation/human/swedish/say_mod(var/message)
+/datum/mutation/human/swedish/say_mod(message)
 	if(message)
 		message = replacetext(message,"w","v")
 		if(prob(30))
@@ -525,7 +525,7 @@
 	text_gain_indication = "<span class='notice'>Ye feel like a reet prat like, innit?</span>"
 	text_lose_indication = "<span class='notice'>You no longer feel like being rude and sassy.</span>"
 
-/datum/mutation/human/chav/say_mod(var/message)
+/datum/mutation/human/chav/say_mod(message)
 	if(message)
 		message = " [message] "
 		message = replacetext(message," looking at  ","  gawpin' at ")
@@ -568,7 +568,7 @@
 			if(prob(15))
 				owner.visible_message("<b>[owner]</b> [pick("jiggles their hips", "rotates their hips", "gyrates their hips", "taps their foot", "dances to an imaginary song", "jiggles their legs", "snaps their fingers")]!")
 
-/datum/mutation/human/elvis/say_mod(var/message)
+/datum/mutation/human/elvis/say_mod(message)
 	if(message)
 		message = " [message] "
 		message = replacetext(message," i'm not "," I aint ")

@@ -462,7 +462,7 @@ var/list/admin_verbs_hideable = list(
 	message_admins("<span class='adminnotice'>[ckey] creating an admin explosion at [epicenter.loc].</span>")
 	feedback_add_details("admin_verb","DB") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
-/client/proc/give_spell(mob/T as mob in mob_list)
+/client/proc/give_spell(mob/T in mob_list)
 	set category = "Fun"
 	set name = "Give Spell"
 	set desc = "Gives a spell to a mob."
@@ -485,7 +485,7 @@ var/list/admin_verbs_hideable = list(
 		message_admins("<span class='danger'>Spells given to mindless mobs will not be transferred in mindswap or cloning!</span>")
 
 
-/client/proc/give_disease(mob/T as mob in mob_list)
+/client/proc/give_disease(mob/T in mob_list)
 	set category = "Fun"
 	set name = "Give Disease"
 	set desc = "Gives a Disease to a mob."
@@ -496,7 +496,7 @@ var/list/admin_verbs_hideable = list(
 	log_admin("[key_name(usr)] gave [key_name(T)] the disease [D].")
 	message_admins("<span class='adminnotice'>[key_name_admin(usr)] gave [key_name(T)] the disease [D].</span>")
 
-/client/proc/object_say(var/obj/O in world)
+/client/proc/object_say(obj/O in world)
 	set category = "Special Verbs"
 	set name = "OSay"
 	set desc = "Makes an object say something."
@@ -599,7 +599,7 @@ var/list/admin_verbs_hideable = list(
 		deadmins -= ckey
 		return
 
-/client/proc/populate_world(var/amount = 50 as num)
+/client/proc/populate_world(amount = 50 as num)
 	set name = "Populate World"
 	set category = "Debug"
 	set desc = "(\"Amount of mobs to create\") Populate the world with test mobs."

@@ -53,7 +53,7 @@
 	else
 		desc += "."
 
-/obj/machinery/constructable_frame/machine_frame/attackby(obj/item/P as obj, mob/user as mob, params)
+/obj/machinery/constructable_frame/machine_frame/attackby(obj/item/P, mob/user, params)
 	if(P.crit_fail)
 		user << "<span class='warning'>This part is faulty, you cannot add this to the machine!</span>"
 		return
@@ -343,7 +343,7 @@ to destroy them and players will be able to make replacements.
 
 /obj/item/weapon/circuitboard/cryo_tube
 	name = "circuit board (Cryotube)"
-	build_path = /obj/machinery/atmospherics/unary/cryo_cell
+	build_path = /obj/machinery/atmospherics/components/unary/cryo_cell
 	board_type = "machine"
 	origin_tech = "programming=4;biotech=3;engineering=4"
 	req_components = list(
@@ -354,7 +354,7 @@ to destroy them and players will be able to make replacements.
 /obj/item/weapon/circuitboard/thermomachine
 	name = "circuit board (Freezer)"
 	desc = "Use screwdriver to switch between heating and cooling modes."
-	build_path = /obj/machinery/atmospherics/unary/cold_sink/freezer
+	build_path = /obj/machinery/atmospherics/components/unary/cold_sink/freezer
 	board_type = "machine"
 	origin_tech = "programming=3;plasmatech=3"
 	req_components = list(
@@ -365,12 +365,12 @@ to destroy them and players will be able to make replacements.
 
 /obj/item/weapon/circuitboard/thermomachine/attackby(obj/item/I, mob/user, params)
 	if(istype(I, /obj/item/weapon/screwdriver))
-		if(build_path == /obj/machinery/atmospherics/unary/cold_sink/freezer)
-			build_path = /obj/machinery/atmospherics/unary/heat_reservoir/heater
+		if(build_path == /obj/machinery/atmospherics/components/unary/cold_sink/freezer)
+			build_path = /obj/machinery/atmospherics/components/unary/heat_reservoir/heater
 			name = "circuit board (Heater)"
 			user << "<span class='notice'>You set the board to heating.</span>"
 		else
-			build_path = /obj/machinery/atmospherics/unary/cold_sink/freezer
+			build_path = /obj/machinery/atmospherics/components/unary/cold_sink/freezer
 			name = "circuit board (Freezer)"
 			user << "<span class='notice'>You set the board to cooling.</span>"
 

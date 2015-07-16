@@ -177,7 +177,7 @@
 		else
 			Evolve()
 
-/mob/living/simple_animal/slime/proc/add_nutrition(var/nutrition_to_add = 0, var/lastnut = 0)
+/mob/living/simple_animal/slime/proc/add_nutrition(nutrition_to_add = 0, lastnut = 0)
 	nutrition = min((nutrition + nutrition_to_add), get_max_nutrition())
 	if(nutrition >= (lastnut + 50))
 		if(prob(80))
@@ -492,7 +492,7 @@
 	if(is_adult) return 300
 	else return 200
 
-/mob/living/simple_animal/slime/proc/will_hunt(var/hunger = -1) // Check for being stopped from feeding and chasing
+/mob/living/simple_animal/slime/proc/will_hunt(hunger = -1) // Check for being stopped from feeding and chasing
 	if (docile)	return 0
 	if (hunger == 2 || rabid || attacked) return 1
 	if (Leader) return 0

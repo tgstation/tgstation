@@ -103,7 +103,7 @@
 /mob/proc/unset_machine()
 	src.machine = null
 
-/mob/proc/set_machine(var/obj/O)
+/mob/proc/set_machine(obj/O)
 	if(src.machine)
 		unset_machine()
 	src.machine = O
@@ -161,7 +161,7 @@
 	var/turf/T = get_turf(src)
 	return T.storage_contents_dump_act(src_object, user)
 
-/obj/fire_act(var/global_overlay=1)
+/obj/fire_act(global_overlay=1)
 	if(!burn_state)
 		burn_state = 1
 		SSobj.burning += src

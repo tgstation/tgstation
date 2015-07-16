@@ -22,14 +22,14 @@ Gunshots/explosions/opening doors/less rare audio (done)
 /mob/living/carbon/proc/handle_hallucinations()
 	if(handling_hal)
 		return
-	
+
 	//Least obvious
 	var/list/minor = list("sounds"=20,"bolts_minor"=10,"whispers"=15,"message"=5)
 	//Something's wrong here
 	var/list/medium = list("hudscrew"=15,"items"=15,"dangerflash"=15,"bolts"=10,"flood"=10,"husks"=10,"battle"=10)
 	//AAAAH
 	var/list/major = list("fake"=10,"death"=5,"xeno"=10,"singulo"=10,"delusion"=10)
-	
+
 	var/grade = 0
 	var/current = list()
 	var/trip_length = 0
@@ -83,14 +83,14 @@ Gunshots/explosions/opening doors/less rare audio (done)
 		I.color = col_mod
 	return I
 
-/obj/effect/hallucination/simple/proc/Show(var/update=1)
+/obj/effect/hallucination/simple/proc/Show(update=1)
 	if(active)
 		if(target.client) target.client.images.Remove(current_image)
 		if(update)
 			current_image = GetImage()
 		if(target.client) target.client.images |= current_image
 
-/obj/effect/hallucination/simple/update_icon(var/new_state,var/new_icon,var/new_px=0,var/new_py=0)
+/obj/effect/hallucination/simple/update_icon(new_state,new_icon,new_px=0,new_py=0)
 	image_state = new_state
 	if(new_icon)
 		image_icon = new_icon
@@ -123,7 +123,7 @@ Gunshots/explosions/opening doors/less rare audio (done)
 /obj/effect/hallucination/fake_flood/New(loc,var/mob/living/carbon/T)
 	..()
 	target = T
-	for(var/obj/machinery/atmospherics/unary/vent_pump/U in orange(7,target))
+	for(var/obj/machinery/atmospherics/components/unary/vent_pump/U in orange(7,target))
 		if(!U.welded)
 			src.loc = U.loc
 			break
@@ -209,7 +209,7 @@ Gunshots/explosions/opening doors/less rare audio (done)
 
 	src.throwing = 0
 	src.throw_impact(get_turf(src))
-	
+
 	return 1
 
 /obj/effect/hallucination/simple/xeno/throw_impact(A)
@@ -220,12 +220,12 @@ Gunshots/explosions/opening doors/less rare audio (done)
 
 /obj/effect/hallucination/xeno_attack
 	//Xeno crawls from nearby vent,jumps at you, and goes back in
-	var/obj/machinery/atmospherics/unary/vent_pump/pump = null
+	var/obj/machinery/atmospherics/components/unary/vent_pump/pump = null
 	var/obj/effect/hallucination/simple/xeno/xeno = null
 
 /obj/effect/hallucination/xeno_attack/New(loc,var/mob/living/carbon/T)
 	target = T
-	for(var/obj/machinery/atmospherics/unary/vent_pump/U in orange(7,target))
+	for(var/obj/machinery/atmospherics/components/unary/vent_pump/U in orange(7,target))
 		if(!U.welded)
 			pump = U
 			break
@@ -407,7 +407,7 @@ Gunshots/explosions/opening doors/less rare audio (done)
 
 	var/health = 100
 
-/obj/effect/fake_attacker/attackby(var/obj/item/weapon/P as obj, mob/living/user as mob, params)
+/obj/effect/fake_attacker/attackby(obj/item/weapon/P, mob/living/user, params)
 	step_away(src,my_target,2)
 	user.changeNext_move(CLICK_CD_MELEE)
 	user.do_attack_animation(src)
@@ -418,7 +418,7 @@ Gunshots/explosions/opening doors/less rare audio (done)
 	src.health -= P.force
 	return
 
-/obj/effect/fake_attacker/Crossed(var/mob/M, somenumber)
+/obj/effect/fake_attacker/Crossed(mob/M, somenumber)
 	if(M == my_target)
 		step_away(src,my_target,2)
 		if(prob(30))
@@ -489,7 +489,7 @@ Gunshots/explosions/opening doors/less rare audio (done)
 	collapse = 1
 	updateimage()
 
-/obj/effect/fake_attacker/proc/fake_blood(var/mob/target)
+/obj/effect/fake_attacker/proc/fake_blood(mob/target)
 	var/obj/effect/overlay/O = new/obj/effect/overlay(target.loc)
 	O.name = "blood"
 	var/image/I = image('icons/effects/blood.dmi',O,"floor[rand(1,7)]",O.dir,1)
@@ -581,7 +581,7 @@ var/list/non_fakeattack_weapons = list(/obj/item/weapon/gun/projectile, /obj/ite
 	target << chosen
 	qdel(src)
 
-/mob/living/carbon/proc/hallucinate(var/hal_type) // Todo -> proc / defines
+/mob/living/carbon/proc/hallucinate(hal_type) // Todo -> proc / defines
 	switch(hal_type)
 		if("xeno")
 			new /obj/effect/hallucination/xeno_attack(src.loc,src)
