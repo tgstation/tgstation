@@ -435,53 +435,13 @@
 	set category = "Vampire"
 	set name = "Mist Form"
 	set desc = "You take on the form of mist for a short period of time."
-	var/jaunt_duration = 50 //in deciseconds
+	var/duration = 5 SECONDS
 	var/datum/mind/M = usr.mind
 	if(!M) return
 
 	if(M.current.vampire_power(0, 0))
-		if(M.current.buckled) M.current.buckled.unbuckle()
-		spawn(0)
-			var/mobloc = get_turf(M.current.loc)
-			var/obj/effect/dummy/spell_jaunt/holder = new /obj/effect/dummy/spell_jaunt( mobloc )
-			var/atom/movable/overlay/animation = new /atom/movable/overlay( mobloc )
-			animation.name = "water"
-			animation.density = 0
-			animation.anchored = 1
-			animation.icon = 'icons/mob/mob.dmi'
-			animation.icon_state = "liquify"
-			animation.layer = 5
-			animation.master = holder
-			M.current.ExtinguishMob()
-			if(M.current.buckled)
-				M.current.buckled.unbuckle()
-			flick("liquify",animation)
-			M.current.loc = holder
-			M.current.client.eye = holder
-			var/datum/effect/effect/system/steam_spread/steam = new /datum/effect/effect/system/steam_spread()
-			steam.set_up(10, 0, mobloc)
-			steam.start()
-			sleep(jaunt_duration)
-			mobloc = get_turf(M.current.loc)
-			animation.loc = mobloc
-			steam.location = mobloc
-			steam.start()
-			M.current.canmove = 0
-			sleep(20)
-			flick("reappear",animation)
-			sleep(5)
-			if(!M.current.Move(mobloc))
-				for(var/direction in alldirs)
-					var/turf/T = get_step(mobloc, direction)
-					if(T)
-						if(M.current.Move(T))
-							break
-			M.current.canmove = 1
-			M.current.client.eye = M.current
-			animation.master = null
-			qdel(animation)
-			qdel(holder)
 		M.current.verbs -= /client/proc/vampire_jaunt
+		ethereal_jaunt(M.current, duration, "liquify", "reappear", 1)
 		sleep(600)
 		M.current.verbs += /client/proc/vampire_jaunt
 
