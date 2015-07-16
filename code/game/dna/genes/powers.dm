@@ -36,6 +36,7 @@
 
 	override_base = "genetic"
 	hud_state = "gen_rmind"
+	mind_affecting = 1
 
 /spell/targeted/remoteobserve/cast(var/list/targets, mob/living/carbon/human/user)
 	if(!targets || !targets.len || !user || !istype(user))
@@ -115,17 +116,7 @@
 	hud_state = "gen_project"
 
 	compatible_mobs = list(/mob/living/carbon/human)
-
-/spell/targeted/remotesay/choose_targets(var/mob/living/carbon/human/user)
-	if(!istype(user))
-		return list()
-
-	var/list/targets = ..()
-	for(var/mob/living/carbon/human/M in targets)
-		if(!user.can_mind_interact(M))
-			targets -= M
-
-	return targets
+	mind_affecting = 1
 
 /spell/targeted/remotesay/cast(var/list/targets, mob/living/carbon/human/user)
 	if(!targets || !targets.len || !user || !istype(user))

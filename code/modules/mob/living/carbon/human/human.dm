@@ -1209,11 +1209,15 @@
 		return 0
 	if((temp_turf.z != our_turf.z) || M.stat!=CONSCIOUS) //Not on the same zlevel as us or they're dead.
 		//world << "[(temp_turf.z != our_turf.z) ? "not on the same zlevel as [M]" : "[M] is not concious"]"
-		src << "Cannot establish a telepathic link with [M]."
+		src << "The mind of [M] is too faint..."
 		return 0
 	if(M_PSY_RESIST in M.mutations)
 		//world << "[M] has psy resist"
-		src << "Cannot maintain a telepathic link with [M]."
+		src << "The mind of [M] is resisting!"
+		return 0
+	var/mob/living/carbon/human/H = M
+	if(H.head && istype(H.head,/obj/item/clothing/head/tinfoil))
+		src << "Interference is disrupting the connection with the mind of [M]."
 		return 0
 	return 1
 

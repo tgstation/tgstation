@@ -25,6 +25,7 @@ Targeted spells have two useful flags: INCLUDEUSER and SELECTABLE. These are exp
 
 	var/amt_eye_blind = 0
 	var/amt_eye_blurry = 0
+	var/mind_affecting = 0 //Determines if it can be blocked by PSY_RESIST or tinfoil hat
 
 	var/list/compatible_mobs = list()
 
@@ -57,6 +58,10 @@ Targeted spells have two useful flags: INCLUDEUSER and SELECTABLE. These are exp
 					if(!is_type_in_list(M, compatible_mobs)) continue
 				if(compatible_mobs && compatible_mobs.len && !is_type_in_list(M, compatible_mobs))
 					continue
+				if(mind_affecting)
+					var/mob/living/carbon/human/H = user
+					if(!H.can_mind_interact(M))
+						continue
 				possible_targets += M
 
 			if(possible_targets.len)

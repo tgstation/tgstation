@@ -537,6 +537,7 @@
 
 	hud_state = "gen_rmind"
 	override_base = "genetic"
+	mind_affecting = 1
 
 /spell/targeted/empath/cast(var/list/targets, mob/user)
 	if(!targets || !targets.len)

@@ -84,6 +84,9 @@ proc/process_sec_hud(var/mob/M, var/advanced_mode,var/mob/eye)
 		if(!holder)
 			continue
 		holder.icon_state = "hudno_id"
+		if(perp.head && istype(perp.head,/obj/item/clothing/head/tinfoil)) //Tinfoil hat? Move along.
+			C.images += holder
+			continue
 		var/obj/item/weapon/card/id/card = perp.get_id_card()
 		if(card)
 			holder.icon_state = "hud[ckey(card.GetJobName())]"
