@@ -14,7 +14,7 @@
 	var/stop_bleeding = 0
 	var/self_delay = 50
 
-/obj/item/stack/medical/attack(mob/living/carbon/M as mob, mob/user as mob)
+/obj/item/stack/medical/attack(mob/living/carbon/M, mob/user)
 
 	if(M.stat == 2)
 		var/t_him = "it"

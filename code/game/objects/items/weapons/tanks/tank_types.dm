@@ -86,7 +86,7 @@
 	src.air_contents.toxins = (3*ONE_ATMOSPHERE)*volume/(R_IDEAL_GAS_EQUATION*T20C)
 	return
 
-/obj/item/weapon/tank/internals/plasma/attackby(obj/item/weapon/W as obj, mob/user as mob, params)
+/obj/item/weapon/tank/internals/plasma/attackby(obj/item/weapon/W, mob/user, params)
 	..()
 
 	if (istype(W, /obj/item/weapon/flamethrower))

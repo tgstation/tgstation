@@ -18,7 +18,7 @@
 	var/pshoom_or_beepboopblorpzingshadashwoosh = 'sound/items/rped.ogg'
 	var/alt_sound = null
 
-/obj/item/weapon/storage/part_replacer/afterattack(obj/machinery/T as obj, mob/living/carbon/human/user as mob, flag, params)
+/obj/item/weapon/storage/part_replacer/afterattack(obj/machinery/T, mob/living/carbon/human/user, flag, params)
 	if(flag)
 		return
 	else
@@ -62,7 +62,7 @@
 
 //Sorts stock parts inside an RPED by their rating.
 //Only use /obj/item/weapon/stock_parts/ with this sort proc!
-/proc/cmp_rped_sort(var/obj/item/weapon/stock_parts/A, var/obj/item/weapon/stock_parts/B)
+/proc/cmp_rped_sort(obj/item/weapon/stock_parts/A, obj/item/weapon/stock_parts/B)
 	return B.rating - A.rating
 
 /obj/item/weapon/stock_parts

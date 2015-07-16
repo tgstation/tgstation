@@ -548,7 +548,7 @@ What are the archived variables for?
 
 	return 1
 
-/datum/gas_mixture/share(datum/gas_mixture/sharer, var/atmos_adjacent_turfs = 4)
+/datum/gas_mixture/share(datum/gas_mixture/sharer, atmos_adjacent_turfs = 4)
 	if(!sharer)	return 0
 	var/delta_oxygen = QUANTIZE(oxygen_archived - sharer.oxygen_archived)/(atmos_adjacent_turfs+1)
 	var/delta_carbon_dioxide = QUANTIZE(carbon_dioxide_archived - sharer.carbon_dioxide_archived)/(atmos_adjacent_turfs+1)
@@ -677,7 +677,7 @@ What are the archived variables for?
 		var/delta_pressure = temperature_archived*(total_moles() + moved_moles) - sharer.temperature_archived*(sharer.total_moles() - moved_moles)
 		return delta_pressure*R_IDEAL_GAS_EQUATION/volume
 
-/datum/gas_mixture/mimic(turf/model, border_multiplier, var/atmos_adjacent_turfs = 4)
+/datum/gas_mixture/mimic(turf/model, border_multiplier, atmos_adjacent_turfs = 4)
 	var/delta_oxygen = QUANTIZE(oxygen_archived - model.oxygen)/(atmos_adjacent_turfs+1)
 	var/delta_carbon_dioxide = QUANTIZE(carbon_dioxide_archived - model.carbon_dioxide)/(atmos_adjacent_turfs+1)
 	var/delta_nitrogen = QUANTIZE(nitrogen_archived - model.nitrogen)/(atmos_adjacent_turfs+1)
@@ -961,13 +961,13 @@ What are the archived variables for?
 
 //Does handle trace gases!
 
-/datum/gas_mixture/proc/get_breath_partial_pressure(var/gas_pressure)
+/datum/gas_mixture/proc/get_breath_partial_pressure(gas_pressure)
 	var/breath_pressure = (total_moles()*R_IDEAL_GAS_EQUATION*temperature)/BREATH_VOLUME
 	return (gas_pressure/total_moles())*breath_pressure
 
 
 //Reverse of the above
-/datum/gas_mixture/proc/get_true_breath_pressure(var/breath_pp)
+/datum/gas_mixture/proc/get_true_breath_pressure(breath_pp)
 	var/breath_pressure = (total_moles()/R_IDEAL_GAS_EQUATION/temperature)*BREATH_VOLUME
 	return (breath_pp/breath_pressure*total_moles())
 

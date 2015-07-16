@@ -115,7 +115,7 @@
 				break
 
 // attack with item, place item on conveyor
-/obj/machinery/conveyor/attackby(var/obj/item/I, mob/user, params)
+/obj/machinery/conveyor/attackby(obj/item/I, mob/user, params)
 	if(istype(I, /obj/item/weapon/crowbar))
 		if(!(stat & BROKEN))
 			var/obj/item/conveyor_construct/C = new/obj/item/conveyor_construct(src.loc)
@@ -132,7 +132,7 @@
 	return
 
 // attack with hand, move pulled object onto conveyor
-/obj/machinery/conveyor/attack_hand(mob/user as mob)
+/obj/machinery/conveyor/attack_hand(mob/user)
 	user.Move_Pulled(src)
 
 
@@ -257,7 +257,7 @@
 			S.position = position
 			S.update()
 
-/obj/machinery/conveyor_switch/attackby(var/obj/item/I, mob/user, params)
+/obj/machinery/conveyor_switch/attackby(obj/item/I, mob/user, params)
 	if(istype(I, /obj/item/weapon/crowbar))
 		var/obj/item/conveyor_switch_construct/C = new/obj/item/conveyor_switch_construct(src.loc)
 		C.id = id

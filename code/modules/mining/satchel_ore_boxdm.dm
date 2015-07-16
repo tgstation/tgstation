@@ -22,7 +22,7 @@
 		user << "<span class='notice'>You empty the satchel into the box.</span>"
 	return
 
-/obj/structure/ore_box/attack_hand(mob/user as mob)
+/obj/structure/ore_box/attack_hand(mob/user)
 	var/amt_gold = 0
 	var/amt_silver = 0
 	var/amt_diamond = 0

@@ -30,7 +30,7 @@
 	return
 
 
-/obj/machinery/door/firedoor/attackby(obj/item/weapon/C as obj, mob/user as mob, params)
+/obj/machinery/door/firedoor/attackby(obj/item/weapon/C, mob/user, params)
 	add_fingerprint(user)
 	if(operating)	return//Already doing something.
 	if(istype(C, /obj/item/weapon/weldingtool))
@@ -51,7 +51,7 @@
 			return
 	return
 
-/obj/machinery/door/firedoor/attack_ai(mob/user as mob)
+/obj/machinery/door/firedoor/attack_ai(mob/user)
 	add_fingerprint(user)
 	if(blocked || operating || stat & NOPOWER)
 		return
@@ -120,7 +120,7 @@
 	else
 		return 1
 
-/obj/machinery/door/firedoor/border_only/CheckExit(atom/movable/mover as mob|obj, turf/target as turf)
+/obj/machinery/door/firedoor/border_only/CheckExit(atom/movable/mover as mob|obj, turf/target)
 	if(istype(mover) && mover.checkpass(PASSGLASS))
 		return 1
 	if(get_dir(loc, target) == dir)
@@ -128,7 +128,7 @@
 	else
 		return 1
 
-/obj/machinery/door/firedoor/border_only/CanAtmosPass(var/turf/T)
+/obj/machinery/door/firedoor/border_only/CanAtmosPass(turf/T)
 	if(get_dir(loc, T) == dir)
 		return !density
 	else

@@ -18,7 +18,7 @@ var/list/sting_paths
 	usr << browse(dat, "window=powers;size=600x700")//900x480
 
 
-/obj/effect/proc_holder/changeling/evolution_menu/proc/create_menu(var/datum/changeling/changeling)
+/obj/effect/proc_holder/changeling/evolution_menu/proc/create_menu(datum/changeling/changeling)
 	var/dat
 	dat +="<html><head><title>Changling Evolution Menu</title></head>"
 
@@ -297,7 +297,7 @@ var/list/sting_paths
 	usr << browse(dat, "window=powers;size=600x700")
 /////
 
-/datum/changeling/proc/purchasePower(var/mob/living/carbon/user, var/sting_name)
+/datum/changeling/proc/purchasePower(mob/living/carbon/user, sting_name)
 
 	var/obj/effect/proc_holder/changeling/thepower = null
 
@@ -337,7 +337,7 @@ var/list/sting_paths
 	thepower.on_purchase(user)
 
 //Reselect powers
-/datum/changeling/proc/lingRespec(var/mob/user)
+/datum/changeling/proc/lingRespec(mob/user)
 	if(!ishuman(user))
 		user << "<span class='danger'>We can't remove our evolutions in this form!</span>"
 		return
@@ -384,7 +384,7 @@ var/list/sting_paths
 	chem_recharge_slowdown = initial(chem_recharge_slowdown)
 	mimicing = ""
 
-/mob/proc/remove_changeling_powers(var/keep_free_powers=0)
+/mob/proc/remove_changeling_powers(keep_free_powers=0)
 	if(ishuman(src) || ismonkey(src))
 		if(mind && mind.changeling)
 			digitalcamo = 0

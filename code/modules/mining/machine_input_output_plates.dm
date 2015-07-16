@@ -22,7 +22,7 @@
 	var/input_dir = NORTH
 	var/output_dir = SOUTH
 
-/obj/machinery/mineral/proc/unload_mineral(var/atom/movable/S)
+/obj/machinery/mineral/proc/unload_mineral(atom/movable/S)
 	S.loc = loc
 	var/turf/T = get_step(src,output_dir)
 	if(T)

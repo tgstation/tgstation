@@ -141,7 +141,7 @@
 						spawn(45)
 							Atkcool = 0
 
-/mob/living/simple_animal/slime/Process_Spacemove(var/movement_dir = 0)
+/mob/living/simple_animal/slime/Process_Spacemove(movement_dir = 0)
 	return 2
 
 /mob/living/simple_animal/slime/Stat()
@@ -161,7 +161,7 @@
 	..(-abs(amount)) // Heals them
 	return
 
-/mob/living/simple_animal/slime/bullet_act(var/obj/item/projectile/Proj)
+/mob/living/simple_animal/slime/bullet_act(obj/item/projectile/Proj)
 	if(!Proj)
 		return
 	attacked += 10
@@ -176,23 +176,23 @@
 	powerlevel = 0 // oh no, the power!
 	..()
 
-/mob/living/simple_animal/slime/MouseDrop(var/atom/movable/A as mob|obj)
+/mob/living/simple_animal/slime/MouseDrop(atom/movable/A as mob|obj)
 	if(isliving(A) && A != src)
 		var/mob/living/Food = A
 		if(CanFeedon(Food))
 			Feedon(Food)
 	..()
 
-/mob/living/simple_animal/slime/unEquip(obj/item/W as obj)
+/mob/living/simple_animal/slime/unEquip(obj/item/W)
 	return
 
-/mob/living/simple_animal/slime/start_pulling(var/atom/movable/AM)
+/mob/living/simple_animal/slime/start_pulling(atom/movable/AM)
 	return
 
 /mob/living/simple_animal/slime/attack_ui(slot)
 	return
 
-/mob/living/simple_animal/slime/attack_slime(mob/living/simple_animal/slime/M as mob)
+/mob/living/simple_animal/slime/attack_slime(mob/living/simple_animal/slime/M)
 	if(..()) //successful slime attack
 		if(M == src)
 			return
@@ -208,16 +208,16 @@
 			M.adjustBruteLoss(-10 + (-10 * M.is_adult))
 			M.updatehealth()
 
-/mob/living/simple_animal/slime/attack_animal(mob/living/simple_animal/M as mob)
+/mob/living/simple_animal/slime/attack_animal(mob/living/simple_animal/M)
 	if(..())
 		attacked += 10
 
 
-/mob/living/simple_animal/slime/attack_paw(mob/living/carbon/monkey/M as mob)
+/mob/living/simple_animal/slime/attack_paw(mob/living/carbon/monkey/M)
 	if(..()) //successful monkey bite.
 		attacked += 10
 
-/mob/living/simple_animal/slime/attack_larva(mob/living/carbon/alien/larva/L as mob)
+/mob/living/simple_animal/slime/attack_larva(mob/living/carbon/alien/larva/L)
 	if(..()) //successful larva bite.
 		attacked += 10
 
@@ -227,7 +227,7 @@
 		discipline_slime(user)
 
 
-/mob/living/simple_animal/slime/attack_hand(mob/living/carbon/human/M as mob)
+/mob/living/simple_animal/slime/attack_hand(mob/living/carbon/human/M)
 	if(Victim)
 		if(Victim == M)
 			if(prob(60))
@@ -260,7 +260,7 @@
 		if(..()) //successful attack
 			attacked += 10
 
-/mob/living/simple_animal/slime/attack_alien(mob/living/carbon/alien/humanoid/M as mob)
+/mob/living/simple_animal/slime/attack_alien(mob/living/carbon/alien/humanoid/M)
 	if(..()) //if harm or disarm intent.
 		attacked += 10
 		discipline_slime(M)

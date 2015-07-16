@@ -54,7 +54,7 @@
 		dna.species.spec_life(src) // for mutantraces
 
 
-/mob/living/carbon/human/calculate_affecting_pressure(var/pressure)
+/mob/living/carbon/human/calculate_affecting_pressure(pressure)
 	if((wear_suit && (wear_suit.flags & STOPSPRESSUREDMAGE)) && (head && (head.flags & STOPSPRESSUREDMAGE)))
 		return ONE_ATMOSPHERE
 	else

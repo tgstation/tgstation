@@ -39,14 +39,14 @@
 	create_reagents(max_water)
 	reagents.add_reagent("water", max_water)
 
-/obj/item/weapon/extinguisher/attack_self(mob/user as mob)
+/obj/item/weapon/extinguisher/attack_self(mob/user)
 	safety = !safety
 	src.icon_state = "[sprite_name][!safety]"
 	src.desc = "The safety is [safety ? "on" : "off"]."
 	user << "The safety is [safety ? "on" : "off"]."
 	return
 
-/obj/item/weapon/extinguisher/examine(mob/user as mob)
+/obj/item/weapon/extinguisher/examine(mob/user)
 	..()
 	if(reagents.total_volume)
 		user << "It contains [round(reagents.total_volume)] units."

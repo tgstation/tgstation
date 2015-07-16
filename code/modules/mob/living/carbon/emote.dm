@@ -2,7 +2,7 @@
 //Things like airguitar can be done without arms, and the flap thing makes so little sense it's a keeper.
 //Intended to be called by a higher up emote proc if the requested emote isn't in the custom emotes.
 
-/mob/living/carbon/emote(var/act,var/m_type=1,var/message = null)
+/mob/living/carbon/emote(act,m_type=1,message = null)
 	var/param = null
 
 	if (findtext(act, "-", 1, null))

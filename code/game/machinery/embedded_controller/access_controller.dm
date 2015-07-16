@@ -48,6 +48,9 @@
 		return
 	if(busy)
 		return
+	if(!allowed(user))
+		user << "<span class='warning'>Access denied.</span>"
+		return
 	if(controller && !controller.busy && door)
 		if(controller.stat & NOPOWER)
 			return
@@ -113,6 +116,9 @@
 	if(..())
 		return
 	if(busy)
+		return
+	if(!allowed(usr))
+		usr << "<span class='warning'>Access denied.</span>"
 		return
 	switch(href_list["command"])
 		if("close_exterior")
@@ -197,7 +203,7 @@
 				A.bolt()
 		goIdle(1)
 
-/obj/machinery/doorButtons/airlock_controller/proc/goIdle(var/update)
+/obj/machinery/doorButtons/airlock_controller/proc/goIdle(update)
 	lostPower = 0
 	busy = 0
 	if(update)

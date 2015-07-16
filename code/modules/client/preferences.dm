@@ -516,7 +516,7 @@ var/global/list/special_roles = list( //keep synced with the defines BE_* in set
 		popup.open(0)
 		return
 
-	proc/SetJobPreferenceLevel(var/datum/job/job, var/level)
+	proc/SetJobPreferenceLevel(datum/job/job, level)
 		if (!job)
 			return 0
 
@@ -618,7 +618,7 @@ var/global/list/special_roles = list( //keep synced with the defines BE_* in set
 		job_engsec_low = 0
 
 
-	proc/GetJobDepartment(var/datum/job/job, var/level)
+	proc/GetJobDepartment(datum/job/job, level)
 		if(!job || !level)	return 0
 		switch(job.department_flag)
 			if(CIVILIAN)

@@ -75,7 +75,7 @@
 		..()
 	return
 
-/obj/machinery/space_heater/attack_hand(mob/user as mob)
+/obj/machinery/space_heater/attack_hand(mob/user)
 	src.add_fingerprint(user)
 	if(open)
 

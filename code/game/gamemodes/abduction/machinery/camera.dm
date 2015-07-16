@@ -19,7 +19,7 @@
 	eyeobj.icon = 'icons/obj/abductor.dmi'
 	eyeobj.icon_state = "camera_target"
 
-/obj/machinery/computer/camera_advanced/abductor/GrantActions(var/mob/living/carbon/user)
+/obj/machinery/computer/camera_advanced/abductor/GrantActions(mob/living/carbon/user)
 	off_action.target = user
 	off_action.Grant(user)
 
@@ -41,14 +41,14 @@
 	vest_disguise_action.target = console
 	vest_disguise_action.Grant(user)
 
-/obj/machinery/computer/camera_advanced/abductor/proc/IsAbductor(var/mob/living/carbon/human/H)
+/obj/machinery/computer/camera_advanced/abductor/proc/IsAbductor(mob/living/carbon/human/H)
 	return H.dna.species.id == "abductor"
 
-/obj/machinery/computer/camera_advanced/abductor/proc/IsScientist(var/mob/living/carbon/human/H)
+/obj/machinery/computer/camera_advanced/abductor/proc/IsScientist(mob/living/carbon/human/H)
 	var/datum/species/abductor/S = H.dna.species
 	return S.scientist
 
-/obj/machinery/computer/camera_advanced/abductor/attack_hand(var/mob/user as mob)
+/obj/machinery/computer/camera_advanced/abductor/attack_hand(mob/user)
 	if(!iscarbon(user) || !IsAbductor(user))
 		return
 	return ..()
