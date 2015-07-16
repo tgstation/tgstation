@@ -130,13 +130,19 @@ var/list/obj/machinery/newscaster/allCasters = list() //Global list that will co
 	name = "Security Newscaster"
 	securityCaster = 1
 
-/obj/machinery/newscaster/New()         //Constructor, ho~
+/obj/machinery/newscaster/New(turf/loc, var/ndir=0)
+	if(ndir)
+		dir=ndir
+	else
+		dir = reverse_direction(dir) //Unfucks all maps
+	pixel_x = (dir & 3)? 0 : (dir == 4 ? 28 : -28)
+	pixel_y = (dir & 3)? (dir ==1 ? 33 : -28) : 0
 	allCasters += src
 	src.paper_remaining = 15            // Will probably change this to something better
 	for(var/obj/machinery/newscaster/NEWSCASTER in allCasters) // Let's give it an appropriate unit number
 		src.unit_no++
 	src.update_icon() //for any custom ones on the map...
-	..()                                //I just realised the newscasters weren't in the global machines list. The superconstructor call will tend to that
+	..()
 
 /obj/machinery/newscaster/Destroy()
 	allCasters -= src

@@ -1507,7 +1507,6 @@
 		/obj/item/weapon/circuitboard/air_alarm = 10,
 		/obj/item/weapon/intercom_electronics = 10,
 		/obj/item/weapon/cell/high = 10,
-		/obj/item/mounted/frame/newscaster = 10,
 		/obj/item/weapon/reagent_containers/glass/fuelcan = 5,
 		)
 	contraband = list(
