@@ -604,7 +604,7 @@
 
 /datum/reagent/toxin/curare/on_mob_life(mob/living/M)
 	if(current_cycle >= 11)
-		M.Weaken(1)
+		M.Weaken(3)
 	M.adjustOxyLoss(1*REM)
 	..()
 
