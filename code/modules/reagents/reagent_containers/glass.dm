@@ -38,6 +38,9 @@
 	if(!canconsume(M, user))
 		return
 
+	if(!spillable)
+		return
+
 	if(!reagents || !reagents.total_volume)
 		user << "<span class='warning'>[src] is empty!</span>"
 		return
