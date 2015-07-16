@@ -404,9 +404,15 @@
 			continue
 
 		var/obj/item/weapon/ore/O = A
+		if(!O.material)
+			continue
+
 		ore.addAmount(O.material, 1)//1 per ore
 
 		var/datum/material/mat = ore.getMaterial(O.material)
+		if(!mat)
+			continue
+
 		credits += mat.value //Dosh.
 
 		qdel(O)
