@@ -30,7 +30,7 @@
 	if(prob(50))
 		qdel(src)
 
-/obj/structure/reagent_dispensers/attackby(obj/item/weapon/W as obj, mob/user as mob, params)
+/obj/structure/reagent_dispensers/attackby(obj/item/weapon/W, mob/user, params)
 	return
 
 /obj/structure/reagent_dispensers/New()
@@ -100,7 +100,7 @@
 	reagents.add_reagent("welding_fuel",1000)
 
 
-/obj/structure/reagent_dispensers/fueltank/bullet_act(var/obj/item/projectile/Proj)
+/obj/structure/reagent_dispensers/fueltank/bullet_act(obj/item/projectile/Proj)
 	..()
 	if(istype(Proj ,/obj/item/projectile/beam)||istype(Proj,/obj/item/projectile/bullet))
 		if((Proj.damage_type == BURN) || (Proj.damage_type == BRUTE))
@@ -153,7 +153,7 @@
 	..()
 	reagents.add_reagent("water",500)
 
-/obj/structure/reagent_dispensers/water_cooler/attack_hand(var/mob/living/carbon/human/user)
+/obj/structure/reagent_dispensers/water_cooler/attack_hand(mob/living/carbon/human/user)
 	if((!istype(user)) || (user.stat))
 		return
 	if(cups <= 0)
@@ -163,7 +163,7 @@
 	user.put_in_hands(new /obj/item/weapon/reagent_containers/food/drinks/sillycup)
 	user.visible_message("[user] gets a cup from [src].","<span class='notice'>You get a cup from [src].</span>")
 
-/obj/structure/reagent_dispensers/water_cooler/attackby(var/obj/item/I, var/mob/user, params)
+/obj/structure/reagent_dispensers/water_cooler/attackby(obj/item/I, mob/user, params)
 	if(istype(I, /obj/item/weapon/paper))
 		if(!user.drop_item())
 			return

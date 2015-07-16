@@ -111,12 +111,12 @@
 				relay_information(signal, "/obj/machinery/telecomms/broadcaster")
 
 
-/obj/machinery/telecomms/server/proc/setcode(var/t)
+/obj/machinery/telecomms/server/proc/setcode(t)
 	if(t)
 		if(istext(t))
 			rawcode = t
 
-/obj/machinery/telecomms/server/proc/admin_log(var/mob/mob)
+/obj/machinery/telecomms/server/proc/admin_log(mob/mob)
 
 	var/msg="[key_name(mob)] has compiled a script to server [src]:"
 	diary << msg
@@ -125,7 +125,7 @@
 	if(length(rawcode)) // Let's not bother the admins for empty code.
 		message_admins("[key_name_admin(mob)] (<A HREF='?_src_=holder;adminplayerobservefollow=\ref[usr]'>FLW</A>) has compiled and uploaded a NTSL script to [src.id]",0,1)
 
-/obj/machinery/telecomms/server/proc/compile(var/mob/user)
+/obj/machinery/telecomms/server/proc/compile(mob/user)
 
 	if(Compiler)
 		admin_log(user)
@@ -141,7 +141,7 @@
 				logs--
 				break
 
-/obj/machinery/telecomms/server/proc/add_entry(var/content, var/input)
+/obj/machinery/telecomms/server/proc/add_entry(content, input)
 	var/datum/comm_log_entry/log = new
 	var/identifier = num2text( rand(-1000,1000) + world.time )
 	log.name = "[input] ([md5(identifier)])"

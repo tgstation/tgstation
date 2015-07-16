@@ -173,7 +173,7 @@ var/sc_safecode5 = "[rand(0,9)]"
 	if(prob(25))
 		mezzer()
 
-/obj/singularity/narsie/sc_Narsie/consume(var/atom/A)
+/obj/singularity/narsie/sc_Narsie/consume(atom/A)
 	if(is_type_in_list(A, uneatable))
 		return 0
 	if (istype(A,/mob/living))

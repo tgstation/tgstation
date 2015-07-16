@@ -18,7 +18,7 @@
 	var/direction
 
 
-/obj/effect/effect/smoke/proc/fade_out(var/frames = 16)
+/obj/effect/effect/smoke/proc/fade_out(frames = 16)
 	if(alpha == 0) //Handle already transparent case
 		return
 	if(frames == 0)
@@ -55,12 +55,12 @@
 		steps--
 	return 1
 
-/obj/effect/effect/smoke/Crossed(mob/living/M as mob)
+/obj/effect/effect/smoke/Crossed(mob/living/M)
 	if(!istype(M))
 		return
 	smoke_mob(M)
 
-/obj/effect/effect/smoke/proc/smoke_mob(mob/living/carbon/M as mob)
+/obj/effect/effect/smoke/proc/smoke_mob(mob/living/carbon/M)
 	if(!istype(M))
 		return 0
 	if(lifetime<1)
@@ -122,7 +122,7 @@
 		for(var/mob/living/carbon/M in range(1,src))
 			smoke_mob(M)
 
-/obj/effect/effect/smoke/bad/smoke_mob(mob/living/carbon/M as mob)
+/obj/effect/effect/smoke/bad/smoke_mob(mob/living/carbon/M)
 	if(..())
 		M.drop_item()
 		M.adjustOxyLoss(1)
@@ -167,7 +167,7 @@
 		if(hit)
 			lifetime++ //this is so the decrease from mobs hit and the natural decrease don't cumulate.
 
-/obj/effect/effect/smoke/chem/smoke_mob(mob/living/carbon/M as mob)
+/obj/effect/effect/smoke/chem/smoke_mob(mob/living/carbon/M)
 	if(lifetime<1)
 		return 0
 	if(!istype(M))
@@ -195,7 +195,7 @@
 	..()
 	return QDEL_HINT_PUTINPOOL
 
-/datum/effect/effect/system/smoke_spread/chem/set_up(var/datum/reagents/carry = null, n = 5, c = 0, loca, direct, silent = 0)
+/datum/effect/effect/system/smoke_spread/chem/set_up(datum/reagents/carry = null, n = 5, c = 0, loca, direct, silent = 0)
 	if(n > 20)
 		n = 20
 	number = n
@@ -279,7 +279,7 @@
 	for(var/mob/living/carbon/M in range(1,src))
 		smoke_mob(M)
 
-/obj/effect/effect/smoke/sleeping/smoke_mob(mob/living/carbon/M as mob)
+/obj/effect/effect/smoke/sleeping/smoke_mob(mob/living/carbon/M)
 	if(..())
 		if(M.internal != null || (M.wear_mask && (M.wear_mask.flags & BLOCK_GAS_SMOKE_EFFECT)))
 			return

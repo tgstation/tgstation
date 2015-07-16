@@ -180,7 +180,7 @@
 	toggle_helmlight()
 	..()
 
-/obj/item/clothing/head/helmet/attackby(var/obj/item/A as obj, mob/user as mob, params)
+/obj/item/clothing/head/helmet/attackby(obj/item/A, mob/user, params)
 	if(istype(A, /obj/item/device/flashlight/seclite))
 		var/obj/item/device/flashlight/seclite/S = A
 		if(can_flashlight)
@@ -231,7 +231,7 @@
 	update_helmlight(user)
 	return
 
-/obj/item/clothing/head/helmet/proc/update_helmlight(var/mob/user = null)
+/obj/item/clothing/head/helmet/proc/update_helmlight(mob/user = null)
 	if(F)
 		action_button_name = "Toggle Helmetlight"
 		if(F.on)

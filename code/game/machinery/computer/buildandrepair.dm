@@ -248,7 +248,7 @@
 	build_path = /obj/machinery/computer/libraryconsole
 	origin_tech = "programming=1"
 
-/obj/item/weapon/circuitboard/card/minor/attackby(obj/item/I as obj, mob/user as mob, params)
+/obj/item/weapon/circuitboard/card/minor/attackby(obj/item/I, mob/user, params)
 	if(istype(I,/obj/item/device/multitool))
 		var/list/dept_list = list("general","security","medical","science","engineering")
 		var/choice = input("Currently set to [dept_list[target_dept]] personnel database. Changing to:","Multitool-Circuitboard interface") as null|anything in dept_list
@@ -256,7 +256,7 @@
 			target_dept = dept_list.Find(choice)
 	return
 
-/obj/item/weapon/circuitboard/supplycomp/attackby(obj/item/I as obj, mob/user as mob, params)
+/obj/item/weapon/circuitboard/supplycomp/attackby(obj/item/I, mob/user, params)
 	if(istype(I,/obj/item/device/multitool))
 		var/catastasis = src.contraband_enabled
 		var/opposite_catastasis
@@ -278,7 +278,7 @@
 				user << "DERP! BUG! Report this (And what you were doing to cause it) to Agouri"
 	return
 
-/obj/item/weapon/circuitboard/rdconsole/attackby(obj/item/I as obj, mob/user as mob, params)
+/obj/item/weapon/circuitboard/rdconsole/attackby(obj/item/I, mob/user, params)
 	if(istype(I,/obj/item/weapon/screwdriver))
 		if(build_path == /obj/machinery/computer/rdconsole/core)
 			name = "circuit board (RD Console - Robotics)"
@@ -290,7 +290,7 @@
 			user << "<span class='notice'>Defaulting access protocols.</span>"
 	return
 
-/obj/item/weapon/circuitboard/libraryconsole/attackby(obj/item/I as obj, mob/user as mob, params)
+/obj/item/weapon/circuitboard/libraryconsole/attackby(obj/item/I, mob/user, params)
 	if(istype(I,/obj/item/weapon/screwdriver))
 		if(build_path == /obj/machinery/computer/libraryconsole/bookmanagement)
 			name = "circuit board (Library Visitor Console)"
@@ -302,7 +302,7 @@
 			user << "<span class='notice'>Access protocols successfully updated.</span>"
 	return
 
-/obj/item/weapon/circuitboard/shuttle/attackby(obj/item/I as obj, mob/user as mob, params)
+/obj/item/weapon/circuitboard/shuttle/attackby(obj/item/I, mob/user, params)
 	if(istype(I, /obj/item/device/multitool))
 		var/chosen_id = round(input(usr, "Choose an ID number (-1 for reset):", "Input an Integer", null) as num|null)
 		if(chosen_id >= 0)
@@ -311,7 +311,7 @@
 			shuttleId = initial(shuttleId)
 	return
 
-/obj/structure/computerframe/attackby(obj/item/P as obj, mob/user as mob, params)
+/obj/structure/computerframe/attackby(obj/item/P, mob/user, params)
 	add_fingerprint(user)
 	switch(state)
 		if(0)

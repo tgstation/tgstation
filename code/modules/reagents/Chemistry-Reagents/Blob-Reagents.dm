@@ -11,7 +11,7 @@
 	color = "#B68D00"
 	message = "The blob splashes you with burning oil"
 
-/datum/reagent/blob/boiling_oil/reaction_mob(var/mob/living/M as mob, var/method=TOUCH, var/volume)
+/datum/reagent/blob/boiling_oil/reaction_mob(mob/living/M, method=TOUCH, volume)
 	if(method == TOUCH)
 		var/ratio = volume/25
 		M.apply_damage(15*ratio, BURN)
@@ -27,7 +27,7 @@
 	color = "#008000"
 	message_living = ", and you feel sick and nauseated"
 
-/datum/reagent/blob/toxic_goop/reaction_mob(var/mob/living/M as mob, var/method=TOUCH, var/volume)
+/datum/reagent/blob/toxic_goop/reaction_mob(mob/living/M, method=TOUCH, volume)
 	if(method == TOUCH)
 		var/ratio = volume/25
 		M.apply_damage(20*ratio, TOX)
@@ -39,7 +39,7 @@
 	color = "#FF4C4C"
 	message_living = ", and you feel your skin ripping and tearing off"
 
-/datum/reagent/blob/skin_ripper/reaction_mob(var/mob/living/M as mob, var/method=TOUCH, var/volume)
+/datum/reagent/blob/skin_ripper/reaction_mob(mob/living/M, method=TOUCH, volume)
 	if(method == TOUCH)
 		var/ratio = volume/25
 		M.apply_damage(20*ratio, BRUTE)
@@ -55,7 +55,7 @@
 	color = "#7F0000"
 	message_living = ", and you feel your skin char and melt"
 
-/datum/reagent/blob/skin_melter/reaction_mob(var/mob/living/M as mob, var/method=TOUCH, var/volume)
+/datum/reagent/blob/skin_melter/reaction_mob(mob/living/M, method=TOUCH, volume)
 	if(method == TOUCH)
 		var/ratio = volume/25
 		M.apply_damage(10*ratio, BRUTE)
@@ -72,7 +72,7 @@
 	color = "#00FFC5"
 	message_living = ", and your lungs feel heavy and weak"
 
-/datum/reagent/blob/lung_destroying_toxin/reaction_mob(var/mob/living/M as mob, var/method=TOUCH, var/volume)
+/datum/reagent/blob/lung_destroying_toxin/reaction_mob(mob/living/M, method=TOUCH, volume)
 	if(method == TOUCH)
 		var/ratio = volume/25
 		M.apply_damage(20* ratio, OXY)
@@ -88,7 +88,7 @@
 	color = "#00EE00"
 	message_living = ", and your skin feels papery and everything hurts"
 
-/datum/reagent/blob/radioactive_liquid/reaction_mob(var/mob/living/M as mob, var/method=TOUCH, var/volume)
+/datum/reagent/blob/radioactive_liquid/reaction_mob(mob/living/M, method=TOUCH, volume)
 	if(method == TOUCH)
 		var/ratio = volume/25
 		M.apply_damage(10*ratio, BRUTE)
@@ -108,7 +108,7 @@
 	color = "#61407E"
 	message = "You feel a thrum as the blob strikes you, and everything flies at you"
 
-/datum/reagent/blob/dark_matter/reaction_mob(var/mob/living/M as mob, var/method=TOUCH, var/volume)
+/datum/reagent/blob/dark_matter/reaction_mob(mob/living/M, method=TOUCH, volume)
 	if(method == TOUCH)
 		var/ratio = volume/25
 		M.apply_damage(15*ratio, BRUTE)
@@ -122,7 +122,7 @@
 	color = "#808000"
 	message = "The blob slams into you, and sends you flying"
 
-/datum/reagent/blob/b_sorium/reaction_mob(var/mob/living/M as mob, var/method=TOUCH, var/volume)
+/datum/reagent/blob/b_sorium/reaction_mob(mob/living/M, method=TOUCH, volume)
 	if(method == TOUCH)
 		var/ratio = volume/25
 		M.apply_damage(15*ratio, BRUTE)
@@ -136,7 +136,7 @@
 	color = "#FFA500"
 	message = "The blob strikes you, and its tendrils explode"
 
-/datum/reagent/blob/explosive/reaction_mob(var/mob/living/M as mob, var/method=TOUCH, var/volume)
+/datum/reagent/blob/explosive/reaction_mob(mob/living/M, method=TOUCH, volume)
 	if(method == TOUCH)
 		var/ratio = volume/25
 		if(prob(75*ratio))
@@ -150,7 +150,7 @@
 	message = "The blob squirts something at you"
 	message_living = ", and you feel great"
 
-/datum/reagent/blob/omnizine/reaction_mob(var/mob/living/M as mob, var/method=TOUCH, var/volume)
+/datum/reagent/blob/omnizine/reaction_mob(mob/living/M, method=TOUCH, volume)
 	if(method == TOUCH)
 		var/ratio = volume/25
 		M.reagents.add_reagent("omnizine", 11*ratio)
@@ -163,7 +163,7 @@
 	message = "The blob squirts something at you"
 	message_living = ", and you feel funny"
 
-/datum/reagent/blob/spacedrugs/reaction_mob(var/mob/living/M as mob, var/method=TOUCH, var/volume)
+/datum/reagent/blob/spacedrugs/reaction_mob(mob/living/M, method=TOUCH, volume)
 	if(method == TOUCH)
 		var/ratio = volume/25
 		M.hallucination += 20*ratio
@@ -171,7 +171,7 @@
 		M.apply_damage(10*ratio, TOX)
 
 
-/datum/reagent/blob/proc/reagent_vortex(var/mob/living/M as mob, var/setting_type)
+/datum/reagent/blob/proc/reagent_vortex(mob/living/M, setting_type)
 	var/turf/pull = get_turf(M)
 	var/range_power = Clamp(round(volume/5, 1), 1, 5)
 	for(var/atom/movable/X in range(range_power,pull))
@@ -201,7 +201,7 @@
 								break
 
 
-/datum/reagent/blob/proc/send_message(var/mob/living/M as mob)
+/datum/reagent/blob/proc/send_message(mob/living/M)
 	var/totalmessage = message
 	if(message_living && !issilicon(M))
 		totalmessage += message_living

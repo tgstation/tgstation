@@ -48,13 +48,13 @@ Doesn't work on other aliens/AI.*/
 			user.adjustToxLoss(-plasma_cost)
 	return 1
 
-/obj/effect/proc_holder/alien/proc/on_gain(var/mob/living/carbon/alien/user)
+/obj/effect/proc_holder/alien/proc/on_gain(mob/living/carbon/alien/user)
 	return
 
-/obj/effect/proc_holder/alien/proc/fire(var/mob/living/carbon/alien/user)
+/obj/effect/proc_holder/alien/proc/fire(mob/living/carbon/alien/user)
 	return 1
 
-/obj/effect/proc_holder/alien/proc/cost_check(check_turf=0,var/mob/living/carbon/alien/user,var/silent = 0)
+/obj/effect/proc_holder/alien/proc/cost_check(check_turf=0,mob/living/carbon/alien/user,silent = 0)
 	if(user.stat)
 		if(!silent)
 			user << "<span class='noticealien'>You must be conscious to do this.</span>"
@@ -77,7 +77,7 @@ Doesn't work on other aliens/AI.*/
 
 	action_icon_state = "alien_plant"
 
-/obj/effect/proc_holder/alien/plant/fire(var/mob/living/carbon/alien/user)
+/obj/effect/proc_holder/alien/plant/fire(mob/living/carbon/alien/user)
 	if(locate(/obj/structure/alien/weeds/node) in get_turf(user))
 		src << "There's already a weed node here."
 		return 0
@@ -93,7 +93,7 @@ Doesn't work on other aliens/AI.*/
 
 	action_icon_state = "alien_whisper"
 
-/obj/effect/proc_holder/alien/whisper/fire(var/mob/living/carbon/alien/user)
+/obj/effect/proc_holder/alien/whisper/fire(mob/living/carbon/alien/user)
 	var/mob/M = input("Select who to whisper to:","Whisper to?",null) as mob in oview(user)
 	if(!M)
 		return 0
@@ -113,7 +113,7 @@ Doesn't work on other aliens/AI.*/
 
 	action_icon_state = "alien_transfer"
 
-/obj/effect/proc_holder/alien/transfer/fire(var/mob/living/carbon/alien/user)
+/obj/effect/proc_holder/alien/transfer/fire(mob/living/carbon/alien/user)
 	var/list/mob/living/carbon/alien/aliens_around = list()
 	for(var/mob/living/carbon/alien/A  in oview(user))
 		aliens_around.Add(A)
@@ -141,10 +141,10 @@ Doesn't work on other aliens/AI.*/
 
 	action_icon_state = "alien_acid"
 
-/obj/effect/proc_holder/alien/acid/on_gain(var/mob/living/carbon/alien/user)
+/obj/effect/proc_holder/alien/acid/on_gain(mob/living/carbon/alien/user)
 	user.verbs.Add(/mob/living/carbon/alien/humanoid/proc/corrosive_acid)
 
-/obj/effect/proc_holder/alien/acid/proc/corrode(var/target,var/mob/living/carbon/alien/user = usr)
+/obj/effect/proc_holder/alien/acid/proc/corrode(target,mob/living/carbon/alien/user = usr)
 	if(target in oview(1,user))
 		// OBJ CHECK
 		if(isobj(target))
@@ -173,7 +173,7 @@ Doesn't work on other aliens/AI.*/
 		return 0
 
 
-/obj/effect/proc_holder/alien/acid/fire(var/mob/living/carbon/alien/user)
+/obj/effect/proc_holder/alien/acid/fire(mob/living/carbon/alien/user)
 	var/O = input("Select what to dissolve:","Dissolve",null) as obj|turf in oview(1,user)
 	if(!O)
 		return 0
@@ -199,7 +199,7 @@ Doesn't work on other aliens/AI.*/
 
 	action_icon_state = "alien_neurotoxin"
 
-/obj/effect/proc_holder/alien/neurotoxin/fire(var/mob/living/carbon/alien/user)
+/obj/effect/proc_holder/alien/neurotoxin/fire(mob/living/carbon/alien/user)
 	user.visible_message("<span class='danger'>[user] spits neurotoxin!", "<span class='alertalien'>You spit neurotoxin.</span>")
 
 	var/turf/T = user.loc
@@ -224,7 +224,7 @@ Doesn't work on other aliens/AI.*/
 
 	action_icon_state = "alien_resin"
 
-/obj/effect/proc_holder/alien/resin/fire(var/mob/living/carbon/alien/user)
+/obj/effect/proc_holder/alien/resin/fire(mob/living/carbon/alien/user)
 	if(locate(/obj/structure/alien/resin) in user.loc.contents)
 		user << "<span class='danger'>There is already a resin structure there.</span>"
 		return 0
@@ -252,7 +252,7 @@ Doesn't work on other aliens/AI.*/
 
 	action_icon_state = "alien_barf"
 
-/obj/effect/proc_holder/alien/regurgitate/fire(var/mob/living/carbon/alien/user)
+/obj/effect/proc_holder/alien/regurgitate/fire(mob/living/carbon/alien/user)
 	if(user.stomach_contents.len)
 		for(var/atom/movable/A in user.stomach_contents)
 			user.stomach_contents.Remove(A)
@@ -268,7 +268,7 @@ Doesn't work on other aliens/AI.*/
 
 	has_action = 0 // Has dedicated GUI button already
 
-/obj/effect/proc_holder/alien/nightvisiontoggle/fire(var/mob/living/carbon/alien/user)
+/obj/effect/proc_holder/alien/nightvisiontoggle/fire(mob/living/carbon/alien/user)
 
 	if(!user.nightvision)
 		user.see_in_dark = 8

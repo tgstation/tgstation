@@ -49,7 +49,7 @@
 	result_amount = 1
 	mob_react = 1
 
-/datum/chemical_reaction/plasmasolidification/on_reaction(var/datum/reagents/holder, var/created_volume)
+/datum/chemical_reaction/plasmasolidification/on_reaction(datum/reagents/holder, created_volume)
 	var/location = get_turf(holder.my_atom)
 	new /obj/item/stack/sheet/mineral/plasma(location)
 	return
@@ -80,7 +80,7 @@
 	var/level_min = 0
 	var/level_max = 2
 
-/datum/chemical_reaction/mix_virus/on_reaction(var/datum/reagents/holder, var/created_volume)
+/datum/chemical_reaction/mix_virus/on_reaction(datum/reagents/holder, created_volume)
 
 	var/datum/reagent/blood/B = locate(/datum/reagent/blood) in holder.reagent_list
 	if(B && B.data)
@@ -112,7 +112,7 @@
 	required_reagents = list("synaptizine" = 1)
 	required_catalysts = list("blood" = 1)
 
-/datum/chemical_reaction/mix_virus/rem_virus/on_reaction(var/datum/reagents/holder, var/created_volume)
+/datum/chemical_reaction/mix_virus/rem_virus/on_reaction(datum/reagents/holder, created_volume)
 
 	var/datum/reagent/blood/B = locate(/datum/reagent/blood) in holder.reagent_list
 	if(B && B.data)
@@ -141,7 +141,7 @@
 	result_amount = 2
 	mob_react = 1
 
-/datum/chemical_reaction/foam/on_reaction(var/datum/reagents/holder, var/created_volume)
+/datum/chemical_reaction/foam/on_reaction(datum/reagents/holder, created_volume)
 	var/location = get_turf(holder.my_atom)
 	for(var/mob/M in viewers(5, location))
 		M << "<span class='danger'>The solution spews out foam!</span>"
@@ -160,7 +160,7 @@
 	result_amount = 5
 	mob_react = 1
 
-/datum/chemical_reaction/metalfoam/on_reaction(var/datum/reagents/holder, var/created_volume)
+/datum/chemical_reaction/metalfoam/on_reaction(datum/reagents/holder, created_volume)
 	var/location = get_turf(holder.my_atom)
 
 	for(var/mob/M in viewers(5, location))
@@ -179,7 +179,7 @@
 	result_amount = 5
 	mob_react = 1
 
-/datum/chemical_reaction/ironfoam/on_reaction(var/datum/reagents/holder, var/created_volume)
+/datum/chemical_reaction/ironfoam/on_reaction(datum/reagents/holder, created_volume)
 	var/location = get_turf(holder.my_atom)
 	for(var/mob/M in viewers(5, location))
 		M << "<span class='danger'>The solution spews out a metallic foam!</span>"
@@ -295,7 +295,7 @@
 	result_amount = 1
 	required_temp = 374
 
-/datum/chemical_reaction/life/on_reaction(var/datum/reagents/holder, var/created_volume)
+/datum/chemical_reaction/life/on_reaction(datum/reagents/holder, created_volume)
 	chemical_mob_spawn(holder, 1, "Life")
 
 /datum/chemical_reaction/corgium
@@ -306,7 +306,7 @@
 	result_amount = 1
 	required_temp = 374
 
-/datum/chemical_reaction/corgium/on_reaction(var/datum/reagents/holder, var/created_volume)
+/datum/chemical_reaction/corgium/on_reaction(datum/reagents/holder, created_volume)
 	var/location = get_turf(holder.my_atom)
 	new /mob/living/simple_animal/pet/corgi(location)
 	..()
