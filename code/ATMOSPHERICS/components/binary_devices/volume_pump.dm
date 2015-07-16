@@ -12,7 +12,7 @@ Thus, the two variables affect pump operation are set in New():
 			but overall network volume is also increased as this increases...
 */
 
-/obj/machinery/atmospherics/binary/volume_pump
+/obj/machinery/atmospherics/components/binary/volume_pump
 	icon_state = "volpump_map"
 	name = "volumetric gas pump"
 	desc = "A volumetric pump"
@@ -26,27 +26,30 @@ Thus, the two variables affect pump operation are set in New():
 	var/id = null
 	var/datum/radio_frequency/radio_connection
 
-/obj/machinery/atmospherics/binary/volume_pump/Destroy()
+/obj/machinery/atmospherics/components/binary/volume_pump/Destroy()
 	if(radio_controller)
 		radio_controller.remove_object(src,frequency)
 	..()
 
-/obj/machinery/atmospherics/binary/volume_pump/on
+/obj/machinery/atmospherics/components/binary/volume_pump/on
 	on = 1
 
-/obj/machinery/atmospherics/binary/volume_pump/update_icon_nopipes()
+/obj/machinery/atmospherics/components/binary/volume_pump/update_icon_nopipes()
 	if(stat & NOPOWER)
 		icon_state = "volpump_off"
 		return
 
 	icon_state = "volpump_[on?"on":"off"]"
 
-/obj/machinery/atmospherics/binary/volume_pump/process_atmos()
+/obj/machinery/atmospherics/components/binary/volume_pump/process_atmos()
 //	..()
 	if(stat & (NOPOWER|BROKEN))
 		return
 	if(!on)
 		return 0
+
+	var/datum/gas_mixture/air1 = airs[AIR1]
+	var/datum/gas_mixture/air2 = airs[AIR2]
 
 // Pump mechanism just won't do anything if the pressure is too high/too low
 
@@ -62,19 +65,17 @@ Thus, the two variables affect pump operation are set in New():
 
 	air2.merge(removed)
 
-	parent1.update = 1
-
-	parent2.update = 1
+	update_parents()
 
 	return 1
 
-/obj/machinery/atmospherics/binary/volume_pump/proc/set_frequency(new_frequency)
+/obj/machinery/atmospherics/components/binary/volume_pump/proc/set_frequency(new_frequency)
 	radio_controller.remove_object(src, frequency)
 	frequency = new_frequency
 	if(frequency)
 		radio_connection = radio_controller.add_object(src, frequency)
 
-/obj/machinery/atmospherics/binary/volume_pump/proc/broadcast_status()
+/obj/machinery/atmospherics/components/binary/volume_pump/proc/broadcast_status()
 	if(!radio_connection)
 		return 0
 
@@ -93,25 +94,25 @@ Thus, the two variables affect pump operation are set in New():
 
 	return 1
 
-/obj/machinery/atmospherics/binary/volume_pump/ui_interact(mob/user, ui_key = "main", var/datum/nanoui/ui = null)
+/obj/machinery/atmospherics/components/binary/volume_pump/ui_interact(mob/user, ui_key = "main", datum/nanoui/ui = null)
 	if(stat & (BROKEN|NOPOWER))
 		return
 
 	ui = SSnano.push_open_or_new_ui(user, src, ui_key, ui, "atmos_gas_pump.tmpl", name, 400, 120, 0)
 
-/obj/machinery/atmospherics/binary/volume_pump/get_ui_data()
+/obj/machinery/atmospherics/components/binary/volume_pump/get_ui_data()
 	var/data = list()
 	data["on"] = on
 	data["transfer_rate"] = round(transfer_rate*100) //Nano UI can't handle rounded non-integers, apparently.
 	data["max_rate"] = MAX_TRANSFER_RATE
 	return data
 
-/obj/machinery/atmospherics/binary/volume_pump/atmosinit()
+/obj/machinery/atmospherics/components/binary/volume_pump/atmosinit()
 	..()
 
 	set_frequency(frequency)
 
-/obj/machinery/atmospherics/binary/volume_pump/receive_signal(datum/signal/signal)
+/obj/machinery/atmospherics/components/binary/volume_pump/receive_signal(datum/signal/signal)
 	if(!signal.data["tag"] || (signal.data["tag"] != id) || (signal.data["sigtype"]!="command"))
 		return 0
 
@@ -124,6 +125,7 @@ Thus, the two variables affect pump operation are set in New():
 		on = !on
 
 	if("set_transfer_rate" in signal.data)
+		var/datum/gas_mixture/air1 = airs[AIR1]
 		transfer_rate = Clamp(
 			text2num(signal.data["set_transfer_rate"]),
 			0,
@@ -143,7 +145,7 @@ Thus, the two variables affect pump operation are set in New():
 	update_icon()
 
 
-/obj/machinery/atmospherics/binary/volume_pump/attack_hand(user as mob)
+/obj/machinery/atmospherics/components/binary/volume_pump/attack_hand(mob/user)
 	if(..())
 		return
 	src.add_fingerprint(usr)
@@ -154,7 +156,7 @@ Thus, the two variables affect pump operation are set in New():
 	ui_interact(user)
 	return
 
-/obj/machinery/atmospherics/binary/volume_pump/Topic(href,href_list)
+/obj/machinery/atmospherics/components/binary/volume_pump/Topic(href,href_list)
 	if(..()) return
 	if(href_list["power"])
 		on = !on
@@ -171,13 +173,13 @@ Thus, the two variables affect pump operation are set in New():
 	src.updateUsrDialog()
 	return
 
-/obj/machinery/atmospherics/binary/volume_pump/power_change()
+/obj/machinery/atmospherics/components/binary/volume_pump/power_change()
 	..()
 	update_icon()
 
 
 
-/obj/machinery/atmospherics/binary/volume_pump/attackby(var/obj/item/weapon/W as obj, var/mob/user as mob, params)
+/obj/machinery/atmospherics/components/binary/volume_pump/attackby(obj/item/weapon/W, mob/user, params)
 	if (!istype(W, /obj/item/weapon/wrench))
 		return ..()
 	if (!(stat & NOPOWER) && on)

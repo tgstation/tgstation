@@ -71,14 +71,14 @@
 	text_dehack = "[name]'s software has been reset!"
 	text_dehack_fail = "[name] does not seem to respond to your repair code!"
 
-/obj/machinery/bot/cleanbot/attack_hand(mob/user as mob)
+/obj/machinery/bot/cleanbot/attack_hand(mob/user)
 	. = ..()
 	if (.)
 		return
 	usr.set_machine(src)
 	interact(user)
 
-/obj/machinery/bot/cleanbot/interact(mob/user as mob)
+/obj/machinery/bot/cleanbot/interact(mob/user)
 	var/dat
 	dat += hack(user)
 	dat += text({"
@@ -106,7 +106,7 @@ text("<A href='?src=\ref[src];power=1'>[on ? "On" : "Off"]</A>"))
 			updateUsrDialog()
 			updateUsrDialog()
 
-/obj/machinery/bot/cleanbot/attackby(obj/item/weapon/W, mob/user as mob, params)
+/obj/machinery/bot/cleanbot/attackby(obj/item/weapon/W, mob/user, params)
 	if (istype(W, /obj/item/weapon/card/id)||istype(W, /obj/item/device/pda))
 		if(allowed(user) && !open && !emagged)
 			locked = !locked
@@ -121,13 +121,13 @@ text("<A href='?src=\ref[src];power=1'>[on ? "On" : "Off"]</A>"))
 	else
 		return ..()
 
-/obj/machinery/bot/cleanbot/Emag(mob/user as mob)
+/obj/machinery/bot/cleanbot/Emag(mob/user)
 	..()
 	if(emagged == 2)
 		if(user)
 			user << "<span class='danger'>[src] buzzes and beeps.</span>"
 
-/obj/machinery/bot/cleanbot/process_scan(var/obj/effect/decal/cleanable/D)
+/obj/machinery/bot/cleanbot/process_scan(obj/effect/decal/cleanable/D)
 	for(var/T in target_types)
 		if(istype(D, T))
 			return D
@@ -209,7 +209,7 @@ text("<A href='?src=\ref[src];power=1'>[on ? "On" : "Off"]</A>"))
 		target_types += /obj/effect/decal/cleanable/blood/drip/
 		target_types += /obj/effect/decal/cleanable/trail_holder
 
-/obj/machinery/bot/cleanbot/proc/clean(var/obj/effect/decal/cleanable/target)
+/obj/machinery/bot/cleanbot/proc/clean(obj/effect/decal/cleanable/target)
 	anchored = 1
 	icon_state = "cleanbot-c"
 	visible_message("<span class='notice'>[src] begins to clean up [target]</span>")
@@ -240,7 +240,7 @@ text("<A href='?src=\ref[src];power=1'>[on ? "On" : "Off"]</A>"))
 	qdel(src)
 	return
 
-/obj/item/weapon/bucket_sensor/attackby(var/obj/item/W, mob/user as mob, params)
+/obj/item/weapon/bucket_sensor/attackby(obj/item/W, mob/user as mob, params)
 	..()
 	if(istype(W, /obj/item/robot_parts/l_arm) || istype(W, /obj/item/robot_parts/r_arm))
 		if(!user.unEquip(W))

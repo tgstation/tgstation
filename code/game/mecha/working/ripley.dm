@@ -37,11 +37,11 @@
 	..()
 	update_icon()
 
-/obj/mecha/working/ripley/moved_inside(var/mob/living/carbon/human/H as mob)
+/obj/mecha/working/ripley/moved_inside(mob/living/carbon/human/H)
 	..()
 	update_icon()
 
-/obj/mecha/working/ripley/mmi_moved_inside(var/obj/item/device/mmi/mmi_as_oc as obj,mob/user as mob)
+/obj/mecha/working/ripley/mmi_moved_inside(obj/item/device/mmi/mmi_as_oc,mob/user)
 	..()
 	update_icon()
 

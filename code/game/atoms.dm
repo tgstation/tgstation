@@ -93,7 +93,7 @@
 	else
 		return null
 
-/atom/proc/check_eye(user as mob)
+/atom/proc/check_eye(mob/user)
 	if (istype(user, /mob/living/silicon/ai)) // WHYYYY
 		return 1
 	return
@@ -129,7 +129,7 @@
 /atom/proc/HasProximity(atom/movable/AM as mob|obj)
 	return
 
-/atom/proc/emp_act(var/severity)
+/atom/proc/emp_act(severity)
 	return
 
 /atom/proc/bullet_act(obj/item/projectile/P, def_zone)
@@ -366,7 +366,7 @@ var/list/blood_splatter_icons = list()
 /atom/proc/rejects_blood()
 	return 0
 
-/atom/proc/add_vomit_floor(mob/living/carbon/M as mob, var/toxvomit = 0)
+/atom/proc/add_vomit_floor(mob/living/carbon/M, toxvomit = 0)
 	if( istype(src, /turf/simulated) )
 		var/obj/effect/decal/cleanable/vomit/this = new /obj/effect/decal/cleanable/vomit(src)
 		if(M.reagents)
@@ -381,7 +381,7 @@ var/list/blood_splatter_icons = list()
 			newDisease.holder = this*/
 
 // Only adds blood on the floor -- Skie
-/atom/proc/add_blood_floor(mob/living/carbon/M as mob)
+/atom/proc/add_blood_floor(mob/living/carbon/M)
 	if(istype(src, /turf/simulated))
 		if(check_dna_integrity(M))	//mobs with dna = (monkeys + humans at time of writing)
 			var/obj/effect/decal/cleanable/blood/B = locate() in contents
@@ -436,7 +436,7 @@ var/list/blood_splatter_icons = list()
 /atom/proc/singularity_pull()
 	return
 
-/atom/proc/acid_act(var/acidpwr, var/toxpwr, var/acid_volume)
+/atom/proc/acid_act(acidpwr, toxpwr, acid_volume)
 	return
 
 /atom/proc/emag_act()

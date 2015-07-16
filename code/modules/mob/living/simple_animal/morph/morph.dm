@@ -35,20 +35,20 @@
 /mob/living/simple_animal/hostile/morph/examine(mob/user)
 	if(morphed)
 		form.examine(user) // Refactor examine to return desc so it's static? Not sure if worth it
-		if(get_dist(user,src)<=3) 
+		if(get_dist(user,src)<=3)
 			user << "<span class='notice'>Looks odd!</span>"
 	else
 		..()
 	return
 
-/mob/living/simple_animal/hostile/morph/proc/allowed(var/atom/movable/A) // make it into property/proc ? not sure if worth it
+/mob/living/simple_animal/hostile/morph/proc/allowed(atom/movable/A) // make it into property/proc ? not sure if worth it
 	if(istype(A,/obj/screen))
 		return 0
 	if(istype(A,/obj/singularity))
 		return 0
 	return 1
 
-/mob/living/simple_animal/hostile/morph/ShiftClickOn(var/atom/movable/A)
+/mob/living/simple_animal/hostile/morph/ShiftClickOn(atom/movable/A)
 	if(morph_time <= world.time)
 		if(A == src)
 			restore()
@@ -58,10 +58,10 @@
 	else
 		..()
 
-/mob/living/simple_animal/hostile/morph/proc/assume(var/atom/movable/target)
+/mob/living/simple_animal/hostile/morph/proc/assume(atom/movable/target)
 	morphed = 1
 	form = target
-	
+
 	//anim(loc,src,'icons/mob/mob.dmi',,"morph",,src.dir) No effect better than shit effect
 
 	//Todo : update to .appearance once 508 hits
@@ -89,9 +89,9 @@
 		return
 	morphed = 0
 	form = null
-	
-	//anim(loc,src,'icons/mob/mob.dmi',,"morph",,src.dir) 
-	
+
+	//anim(loc,src,'icons/mob/mob.dmi',,"morph",,src.dir)
+
 	name = initial(name)
 	icon = initial(icon)
 	icon_state = initial(icon_state)
@@ -171,7 +171,7 @@
 /datum/round_event/morph
 	var/key_of_morph
 
-/datum/round_event/morph/proc/get_morph(var/end_if_fail = 0)
+/datum/round_event/morph/proc/get_morph(end_if_fail = 0)
 	key_of_morph = null
 	if(!key_of_morph)
 		var/list/candidates = get_candidates(BE_ALIEN)

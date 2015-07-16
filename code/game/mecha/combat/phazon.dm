@@ -20,7 +20,7 @@
 	var/datum/action/mecha/mech_switch_damtype/switch_damtype_action = new
 	var/datum/action/mecha/mech_toggle_phasing/phasing_action = new
 
-/obj/mecha/combat/phazon/Bump(var/atom/obstacle)
+/obj/mecha/combat/phazon/Bump(atom/obstacle)
 	if(phasing && get_charge()>=phasing_energy_drain)
 		spawn()
 			if(can_move)

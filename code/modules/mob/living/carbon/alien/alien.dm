@@ -59,7 +59,7 @@
 /mob/living/carbon/alien/getToxLoss()
 	return 0
 
-/mob/living/carbon/alien/handle_environment(var/datum/gas_mixture/environment)
+/mob/living/carbon/alien/handle_environment(datum/gas_mixture/environment)
 
 	//If there are alien weeds on the ground then heal if needed or give some toxins
 	if(locate(/obj/structure/alien/weeds) in loc)
@@ -132,7 +132,7 @@
 	bodytemperature += BODYTEMP_HEATING_MAX //If you're on fire, you heat up!
 	return
 
-/mob/living/carbon/alien/reagent_check(var/datum/reagent/R) //can metabolize all reagents
+/mob/living/carbon/alien/reagent_check(datum/reagent/R) //can metabolize all reagents
 	return 0
 
 /mob/living/carbon/alien/IsAdvancedToolUser()
@@ -148,7 +148,7 @@
 
 	add_abilities_to_panel()
 
-/mob/living/carbon/alien/proc/AddAbility(var/obj/effect/proc_holder/alien/A)
+/mob/living/carbon/alien/proc/AddAbility(obj/effect/proc_holder/alien/A)
 	abilities.Add(A)
 	A.on_gain(src)
 	if(A.has_action)

@@ -46,7 +46,7 @@
 	var/internal_tank_valve = ONE_ATMOSPHERE
 	var/obj/machinery/portable_atmospherics/canister/internal_tank
 	var/datum/gas_mixture/cabin_air
-	var/obj/machinery/atmospherics/unary/portables_connector/connected_port = null
+	var/obj/machinery/atmospherics/components/unary/portables_connector/connected_port = null
 
 	var/obj/item/device/radio/radio = null
 
@@ -462,7 +462,7 @@
 ////////  Internal damage  ////////
 ///////////////////////////////////
 
-/obj/mecha/proc/check_for_internal_damage(var/list/possible_int_damage,var/ignore_threshold=null)
+/obj/mecha/proc/check_for_internal_damage(list/possible_int_damage,ignore_threshold=null)
 	if(!islist(possible_int_damage) || isemptylist(possible_int_damage)) return
 	if(prob(20))
 		if(ignore_threshold || health*100/initial(health) < internal_damage_threshold)
@@ -501,7 +501,7 @@
 //////////// AI piloting ////////////
 /////////////////////////////////////
 
-/obj/mecha/attack_ai(var/mob/living/silicon/ai/user as mob)
+/obj/mecha/attack_ai(mob/living/silicon/ai/user)
 	if(!isAI(user))
 		return
 	//Allows the Malf to scan a mech's status and loadout, helping it to decide if it is a worthy chariot.
@@ -514,7 +514,7 @@
 		//Nothing like a big, red link to make the player feel powerful!
 		user << "<a href='?src=\ref[user];ai_take_control=\ref[src]'><span class='userdanger'>ASSUME DIRECT CONTROL?</span></a><br>"
 
-/obj/mecha/transfer_ai(var/interaction, mob/user, var/mob/living/silicon/ai/AI, var/obj/item/device/aicard/card)
+/obj/mecha/transfer_ai(interaction, mob/user, mob/living/silicon/ai/AI, obj/item/device/aicard/card)
 	if(!..())
 		return
 
@@ -567,7 +567,7 @@
 			ai_enter_mech(AI, interaction)
 
 //Hack and From Card interactions share some code, so leave that here for both to use.
-/obj/mecha/proc/ai_enter_mech(var/mob/living/silicon/ai/AI, var/interaction)
+/obj/mecha/proc/ai_enter_mech(mob/living/silicon/ai/AI, interaction)
 	AI.aiRestorePowerRoutine = 0
 	AI.loc = src
 	occupant = AI
@@ -612,7 +612,7 @@
 		. = t_air.return_temperature()
 	return
 
-/obj/mecha/proc/connect(obj/machinery/atmospherics/unary/portables_connector/new_port)
+/obj/mecha/proc/connect(obj/machinery/atmospherics/components/unary/portables_connector/new_port)
 	//Make sure not already connected to something else
 	if(connected_port || !new_port || new_port.connected_device)
 		return 0
@@ -624,7 +624,8 @@
 	//Perform the connection
 	connected_port = new_port
 	connected_port.connected_device = src
-	connected_port.parent.reconcile_air()
+	var/datum/pipeline/connected_port_parent = connected_port.parents["p1"]
+	connected_port_parent.reconcile_air()
 
 	log_message("Connected to gas port.")
 	return 1
@@ -642,7 +643,7 @@
 	return internal_tank.return_air()
 
 
-/obj/mecha/MouseDrop_T(mob/M as mob, mob/user as mob)
+/obj/mecha/MouseDrop_T(mob/M, mob/user)
 	if (!user.canUseTopic(src) || (user != M))
 		return
 	if(!ishuman(user)) // no silicons or drones in mechas.
@@ -682,7 +683,7 @@
 		user << "<span class='warning'>You stop entering the exosuit!</span>"
 	return
 
-/obj/mecha/proc/moved_inside(var/mob/living/carbon/human/H as mob)
+/obj/mecha/proc/moved_inside(mob/living/carbon/human/H)
 	if(H && H.client && H in range(1))
 		H.reset_view(src)
 		H.stop_pulling()
@@ -701,7 +702,7 @@
 	else
 		return 0
 
-/obj/mecha/proc/mmi_move_inside(var/obj/item/device/mmi/mmi_as_oc as obj,mob/user as mob)
+/obj/mecha/proc/mmi_move_inside(obj/item/device/mmi/mmi_as_oc,mob/user)
 	if(!mmi_as_oc.brainmob || !mmi_as_oc.brainmob.client)
 		user << "<span class='warning'>Consciousness matrix not detected!</span>"
 		return 0
@@ -726,7 +727,7 @@
 		user << "<span class='notice'>You stop inserting the MMI.</span>"
 	return 0
 
-/obj/mecha/proc/mmi_moved_inside(var/obj/item/device/mmi/mmi_as_oc as obj,mob/user as mob)
+/obj/mecha/proc/mmi_moved_inside(obj/item/device/mmi/mmi_as_oc,mob/user)
 	if(mmi_as_oc && user in range(1))
 		if(!mmi_as_oc.brainmob || !mmi_as_oc.brainmob.client)
 			user << "<span class='notice'>Consciousness matrix not detected!</span>"
@@ -758,12 +759,13 @@
 	go_out()
 
 
-/obj/mecha/Exited(var/atom/movable/M, var/atom/newloc)
+/obj/mecha/Exited(atom/movable/M, atom/newloc)
 	if(occupant && occupant == M) // The occupant exited the mech without calling go_out()
 		go_out(1, newloc)
 
 /obj/mecha/proc/go_out(var/forced, var/atom/newloc = loc)
-	if(!occupant) return
+	if(!occupant)
+		return
 	var/atom/movable/mob_container
 	occupant.clear_alert("charge")
 	occupant.clear_alert("mech damage")

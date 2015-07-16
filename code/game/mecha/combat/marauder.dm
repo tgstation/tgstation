@@ -43,7 +43,7 @@
 	return ..()
 
 
-/obj/mecha/combat/marauder/Process_Spacemove(var/movement_dir = 0)
+/obj/mecha/combat/marauder/Process_Spacemove(movement_dir = 0)
 	if(..())
 		return 1
 	if(thrusters && movement_dir && use_power(step_energy_drain))

@@ -278,7 +278,7 @@
 		..()
 
 
-/obj/machinery/vending/default_deconstruction_crowbar(var/obj/item/O)
+/obj/machinery/vending/default_deconstruction_crowbar(obj/item/O)
 	var/list/all_products = product_records + hidden_records + coin_records
 	for(var/datum/data/vending_product/machine_content in all_products)
 		while(machine_content.amount !=0)
@@ -296,7 +296,7 @@
 				break
 	..()
 
-/obj/machinery/vending/emag_act(user as mob)
+/obj/machinery/vending/emag_act(mob/user)
 	if(!emagged)
 		emagged  = 1
 		user << "<span class='notice'>You short out the product lock on [src].</span>"

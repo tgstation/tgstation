@@ -55,7 +55,7 @@
 	)
 
 
-/datum/intercept_text/proc/build(var/mode_type, datum/mind/correct_person)
+/datum/intercept_text/proc/build(mode_type, datum/mind/correct_person)
 	switch(mode_type)
 		if("revolution")
 			src.text = ""

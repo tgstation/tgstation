@@ -18,7 +18,7 @@
 	possible_transfer_amounts = list(5)
 	volume = 5
 
-/obj/item/weapon/reagent_containers/glass/rag/afterattack(atom/A as obj|turf|area, mob/user as mob,proximity)
+/obj/item/weapon/reagent_containers/glass/rag/afterattack(atom/A as obj|turf|area, mob/user,proximity)
 	if(!proximity)
 		return
 	if(ismob(A) && A.reagents && reagents.total_volume)

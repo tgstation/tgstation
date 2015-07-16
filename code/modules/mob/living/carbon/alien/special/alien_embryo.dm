@@ -50,7 +50,7 @@ var/const/ALIEN_AFK_BRACKET = 450 // 45 seconds
 
 
 
-/obj/item/body_egg/alien_embryo/proc/AttemptGrow(var/gib_on_success = 1)
+/obj/item/body_egg/alien_embryo/proc/AttemptGrow(gib_on_success = 1)
 	var/list/candidates = get_candidates(BE_ALIEN, ALIEN_AFK_BRACKET)
 	var/client/C = null
 

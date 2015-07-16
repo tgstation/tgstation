@@ -69,7 +69,7 @@
 	..()
 	return
 
-/obj/item/weapon/watertank/attack_hand(mob/user as mob)
+/obj/item/weapon/watertank/attack_hand(mob/user)
 	if(src.loc == user)
 		ui_action_click()
 		return
@@ -125,7 +125,7 @@
 		loc = tank
 	return
 
-/obj/item/weapon/reagent_containers/spray/mister/dropped(mob/user as mob)
+/obj/item/weapon/reagent_containers/spray/mister/dropped(mob/user)
 	user << "<span class='notice'>The mister snaps back onto the watertank.</span>"
 	tank.on = 0
 	loc = tank
@@ -133,7 +133,7 @@
 /obj/item/weapon/reagent_containers/spray/mister/attack_self()
 	return
 
-/proc/check_tank_exists(parent_tank, var/mob/living/carbon/human/M, var/obj/O)
+/proc/check_tank_exists(parent_tank, mob/living/carbon/human/M, obj/O)
 	if (!parent_tank || !istype(parent_tank, /obj/item/weapon/watertank))	//To avoid weird issues from admin spawns
 		M.unEquip(O)
 		qdel(0)
@@ -194,7 +194,7 @@
 /obj/item/weapon/watertank/atmos/make_noz()
 	return new /obj/item/weapon/extinguisher/mini/nozzle(src)
 
-/obj/item/weapon/watertank/atmos/dropped(mob/user as mob)
+/obj/item/weapon/watertank/atmos/dropped(mob/user)
 	icon_state = "waterbackpackatmos"
 	if(istype(noz, /obj/item/weapon/extinguisher/mini/nozzle))
 		var/obj/item/weapon/extinguisher/mini/nozzle/N = noz
@@ -232,7 +232,7 @@
 		loc = tank
 	return
 
-/obj/item/weapon/extinguisher/mini/nozzle/attack_self(mob/user as mob)
+/obj/item/weapon/extinguisher/mini/nozzle/attack_self(mob/user)
 	switch(nozzle_mode)
 		if(EXTINGUISHER)
 			nozzle_mode = NANOFROST
@@ -251,7 +251,7 @@
 			return
 	return
 
-/obj/item/weapon/extinguisher/mini/nozzle/dropped(mob/user as mob)
+/obj/item/weapon/extinguisher/mini/nozzle/dropped(mob/user)
 	user << "<span class='notice'>The nozzle snaps back onto the tank!</span>"
 	tank.on = 0
 	loc = tank
@@ -341,7 +341,7 @@
 				if(G.toxins)
 					G.nitrogen += (G.toxins)
 					G.toxins = 0
-		for(var/obj/machinery/atmospherics/unary/vent_pump/V in T)
+		for(var/obj/machinery/atmospherics/components/unary/vent_pump/V in T)
 			V.welded = 1
 			V.update_icon()
 			V.visible_message("<span class='danger'>[V] was frozen shut!</span>")

@@ -20,7 +20,7 @@
 	spores = null
 	..()
 
-/obj/effect/blob/factory/PulseAnimation(var/activate = 0)
+/obj/effect/blob/factory/PulseAnimation(activate = 0)
 	if(activate)
 		..()
 	return

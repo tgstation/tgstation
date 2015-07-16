@@ -37,7 +37,7 @@
 /obj/item/mecha_parts/mecha_equipment/sleeper/Exit(atom/movable/O)
 	return 0
 
-/obj/item/mecha_parts/mecha_equipment/sleeper/action(var/mob/living/carbon/target)
+/obj/item/mecha_parts/mecha_equipment/sleeper/action(mob/living/carbon/target)
 	if(!action_checks(target))
 		return
 	if(!istype(target))
@@ -174,7 +174,7 @@
 	return output
 
 
-/obj/item/mecha_parts/mecha_equipment/sleeper/proc/inject_reagent(var/datum/reagent/R,var/obj/item/mecha_parts/mecha_equipment/syringe_gun/SG)
+/obj/item/mecha_parts/mecha_equipment/sleeper/proc/inject_reagent(datum/reagent/R,obj/item/mecha_parts/mecha_equipment/syringe_gun/SG)
 	if(!R || !patient || !SG || !(SG in chassis.equipment))
 		return 0
 	var/to_inject = min(R.volume, inject_amount)

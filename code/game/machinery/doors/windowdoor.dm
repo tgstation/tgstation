@@ -59,7 +59,7 @@
 		bumpopen(M)
 	return
 
-/obj/machinery/door/window/bumpopen(mob/user as mob)
+/obj/machinery/door/window/bumpopen(mob/user)
 	if( operating || !src.density )
 		return
 	src.add_fingerprint(user)
@@ -80,17 +80,17 @@
 	else
 		return 1
 
-/obj/machinery/door/window/CanAtmosPass(var/turf/T)
+/obj/machinery/door/window/CanAtmosPass(turf/T)
 	if(get_dir(loc, T) == dir)
 		return !density
 	else
 		return 1
 
 //used in the AStar algorithm to determinate if the turf the door is on is passable
-/obj/machinery/door/window/CanAStarPass(var/obj/item/weapon/card/id/ID, var/to_dir)
+/obj/machinery/door/window/CanAStarPass(obj/item/weapon/card/id/ID, to_dir)
 	return !density || (dir != to_dir) || check_access(ID)
 
-/obj/machinery/door/window/CheckExit(atom/movable/mover as mob|obj, turf/target as turf)
+/obj/machinery/door/window/CheckExit(atom/movable/mover as mob|obj, turf/target)
 	if(istype(mover) && mover.checkpass(PASSGLASS))
 		return 1
 	if(get_dir(loc, target) == dir)
@@ -98,7 +98,7 @@
 	else
 		return 1
 
-/obj/machinery/door/window/open(var/forced=0)
+/obj/machinery/door/window/open(forced=0)
 	if (src.operating == 1) //doors can still open when emag-disabled
 		return 0
 	if (!ticker)
@@ -125,7 +125,7 @@
 		src.operating = 0
 	return 1
 
-/obj/machinery/door/window/close(var/forced=0)
+/obj/machinery/door/window/close(forced=0)
 	if (src.operating)
 		return 0
 	if(!forced)
@@ -149,7 +149,7 @@
 	src.operating = 0
 	return 1
 
-/obj/machinery/door/window/proc/take_damage(var/damage)
+/obj/machinery/door/window/proc/take_damage(damage)
 	src.health = max(0, src.health - damage)
 	if (src.health <= 0)
 		var/debris = list(
@@ -177,7 +177,7 @@
 			take_damage(60)
 
 
-/obj/machinery/door/window/bullet_act(var/obj/item/projectile/Proj)
+/obj/machinery/door/window/bullet_act(obj/item/projectile/Proj)
 	if(Proj.damage)
 		if((Proj.damage_type == BRUTE || Proj.damage_type == BURN))
 			take_damage(round(Proj.damage / 2))
@@ -211,10 +211,10 @@
 	return
 
 
-/obj/machinery/door/window/attack_ai(mob/user as mob)
+/obj/machinery/door/window/attack_ai(mob/user)
 	return src.attack_hand(user)
 
-/obj/machinery/door/window/proc/attack_generic(mob/user as mob, damage = 0)
+/obj/machinery/door/window/proc/attack_generic(mob/user, damage = 0)
 	if(src.operating)
 		return
 	user.changeNext_move(CLICK_CD_MELEE)
@@ -223,13 +223,13 @@
 				"<span class='userdanger'>You smash against the [src.name]!</span>")
 	take_damage(damage)
 
-/obj/machinery/door/window/attack_alien(mob/living/user as mob)
+/obj/machinery/door/window/attack_alien(mob/living/user)
 	user.do_attack_animation(src)
 	if(islarva(user))
 		return
 	attack_generic(user, 25)
 
-/obj/machinery/door/window/attack_animal(mob/living/user as mob)
+/obj/machinery/door/window/attack_animal(mob/living/user)
 	if(!isanimal(user))
 		return
 	var/mob/living/simple_animal/M = user
@@ -239,19 +239,19 @@
 	attack_generic(M, M.melee_damage_upper)
 
 
-/obj/machinery/door/window/attack_slime(mob/living/simple_animal/slime/user as mob)
+/obj/machinery/door/window/attack_slime(mob/living/simple_animal/slime/user)
 	user.do_attack_animation(src)
 	if(!user.is_adult)
 		return
 	attack_generic(user, 25)
 
-/obj/machinery/door/window/attack_paw(mob/user as mob)
+/obj/machinery/door/window/attack_paw(mob/user)
 		return src.attack_hand(user)
 
-/obj/machinery/door/window/attack_hand(mob/user as mob)
+/obj/machinery/door/window/attack_hand(mob/user)
 	return src.attackby(user, user)
 
-/obj/machinery/door/window/emag_act(mob/user as mob)
+/obj/machinery/door/window/emag_act(mob/user)
 	if(density && !emagged)
 		operating = 0
 		flick("[src.base_state]spark", src)
@@ -260,7 +260,7 @@
 		open()
 		emagged = 1
 
-/obj/machinery/door/window/attackby(obj/item/weapon/I as obj, mob/living/user as mob, params)
+/obj/machinery/door/window/attackby(obj/item/weapon/I, mob/living/user, params)
 
 	//If it's in the process of opening/closing, ignore the click
 	if (src.operating)

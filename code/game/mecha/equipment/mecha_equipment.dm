@@ -79,13 +79,15 @@
 /obj/item/mecha_parts/mecha_equipment/proc/action(atom/target)
 	return
 
+	return 0
+
 /obj/item/mecha_parts/mecha_equipment/proc/start_cooldown()
 	set_ready_state(0)
 	chassis.use_power(energy_drain)
 	sleep(equip_cooldown)
 	set_ready_state(1)
 
-/obj/item/mecha_parts/mecha_equipment/proc/do_after_cooldown(var/atom/target)
+/obj/item/mecha_parts/mecha_equipment/proc/do_after_cooldown(atom/target)
 	if(!chassis)
 		return
 	var/C = chassis.loc
