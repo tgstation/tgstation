@@ -929,4 +929,5 @@
 		var/obj/item/device/analyzer/A = W
 		var/datum/gas_mixture/environment = src.return_air()
 		user.show_message(A.output_gas_scan(environment,src,1))
+		return 1
 	return ..()

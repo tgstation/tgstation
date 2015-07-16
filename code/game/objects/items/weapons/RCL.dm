@@ -16,6 +16,7 @@
 	w_type = RECYK_ELECTRONIC
 	melt_temperature = MELTPOINT_PLASTIC
 	origin_tech = "engineering=2;materials=4"
+	var/max_amount = 90
 	var/active = 0
 	var/obj/structure/cable/last = null
 	var/obj/item/stack/cable_coil/loaded = null
@@ -24,7 +25,7 @@
 	if(istype(W,/obj/item/stack/cable_coil))
 		if(!loaded)
 			loaded = W
-			loaded.max_amount = 90 //We store a lot.
+			loaded.max_amount = max_amount //We store a lot.
 			user.drop_item(W,src)
 		else
 			loaded.preattack(W,user,1)
@@ -33,18 +34,15 @@
 	else if(isscrewdriver(W))
 		if(!loaded) return
 		user << "<span class='notice'>You loosen the securing screws on the side, allowing you to lower the guiding edge and retrieve the wires.</span>"
-		if(loaded.amount>60) //Dump the first coil.
-			loaded.use(30)
-			getFromPool(/obj/item/stack/cable_coil,user.loc,30)
-		if(loaded.amount>30) //Dump the second coil
-			if(loaded.amount == 60) //This is the one case that won't be caught by the mod below
-				loaded.use(30)
-				getFromPool(/obj/item/stack/cable_coil,user.loc,30)
-			else
-				var/diff = loaded.amount % 30
+		while(loaded.amount>30) //There are only two kinds of situations: "nodiff" (60,90), or "diff" (31-59, 61-89)
+			var/diff = loaded.amount % 30
+			if(diff)
 				loaded.use(diff)
 				getFromPool(/obj/item/stack/cable_coil,user.loc,diff)
-		loaded.max_amount = 30
+			else
+				loaded.use(30)
+				getFromPool(/obj/item/stack/cable_coil,user.loc,30)
+		loaded.max_amount = initial(max_amount)
 		loaded.loc = user.loc
 		user.put_in_hands(loaded)
 		loaded = null
