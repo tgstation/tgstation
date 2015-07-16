@@ -85,7 +85,7 @@
 				return 1
 	return 0
 
-/obj/item/robot_parts/robot_suit/attackby(obj/item/W as obj, mob/user as mob, params)
+/obj/item/robot_parts/robot_suit/attackby(obj/item/W, mob/user, params)
 	..()
 	if(istype(W, /obj/item/stack/sheet/metal) && !l_arm && !r_arm && !l_leg && !r_leg && !chest && !head)
 		var/obj/item/stack/sheet/metal/M = W
@@ -303,7 +303,7 @@
 	Interact(usr)
 	return
 
-/obj/item/robot_parts/chest/attackby(obj/item/W as obj, mob/user as mob, params)
+/obj/item/robot_parts/chest/attackby(obj/item/W, mob/user, params)
 	..()
 	if(istype(W, /obj/item/weapon/stock_parts/cell))
 		if(src.cell)
@@ -327,7 +327,7 @@
 			user << "<span class='warning'>You need one length of coil to wire it!</span>"
 	return
 
-/obj/item/robot_parts/head/attackby(obj/item/W as obj, mob/user as mob, params)
+/obj/item/robot_parts/head/attackby(obj/item/W, mob/user, params)
 	..()
 	if(istype(W, /obj/item/device/flash/handheld))
 		var/obj/item/device/flash/handheld/F = W

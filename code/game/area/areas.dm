@@ -48,7 +48,7 @@
 
 
 
-/area/proc/poweralert(var/state, var/obj/source as obj)
+/area/proc/poweralert(state, obj/source)
 	if (state != poweralm)
 		poweralm = state
 		if(istype(source))	//Only report power alarms on the z-level where the source is located.
@@ -74,7 +74,7 @@
 					D.triggerAlarm("Power", src, cameras, source)
 	return
 
-/area/proc/atmosalert(var/danger_level, var/obj/source as obj)
+/area/proc/atmosalert(danger_level, obj/source)
 	if(danger_level != atmosalm)
 		if (danger_level==2)
 			var/list/cameras = list()
@@ -101,7 +101,7 @@
 		return 1
 	return 0
 
-/area/proc/firealert(var/obj/source as obj)
+/area/proc/firealert(obj/source)
 	if(always_unpowered == 1) //no fire alarms in space/asteroid
 		return
 
@@ -130,7 +130,7 @@
 		D.triggerAlarm("Fire", src, cameras, source)
 	return
 
-/area/proc/firereset(var/obj/source as obj)
+/area/proc/firereset(obj/source)
 	for(var/area/RA in related)
 		if (RA.fire)
 			RA.fire = 0
@@ -154,7 +154,7 @@
 		D.cancelAlarm("Fire", src, source)
 	return
 
-/area/proc/burglaralert(var/obj/trigger)
+/area/proc/burglaralert(obj/trigger)
 	if(always_unpowered == 1) //no burglar alarms in space/asteroid
 		return
 
@@ -246,7 +246,7 @@
 #define ENVIRON 3
 */
 
-/area/proc/powered(var/chan)		// return true if the area has power to given channel
+/area/proc/powered(chan)		// return true if the area has power to given channel
 
 	if(!master.requires_power)
 		return 1
@@ -274,7 +274,7 @@
 		if (fire || eject || party)
 			RA.updateicon()
 
-/area/proc/usage(var/chan)
+/area/proc/usage(chan)
 	var/used = 0
 	switch(chan)
 		if(LIGHT)
@@ -308,7 +308,7 @@
 	master.used_light = 0
 	master.used_environ = 0
 
-/area/proc/use_power(var/amount, var/chan)
+/area/proc/use_power(amount, chan)
 
 	switch(chan)
 		if(EQUIP)

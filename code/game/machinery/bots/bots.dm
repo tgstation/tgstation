@@ -125,7 +125,7 @@
 	if (health <= 0)
 		explode()
 
-/obj/machinery/bot/proc/Emag(mob/user as mob) //Master Emag proc. Ensure this is called in your bot before setting unique functions.
+/obj/machinery/bot/proc/Emag(mob/user) //Master Emag proc. Ensure this is called in your bot before setting unique functions.
 	if(locked) //First emag application unlocks the bot's interface. Apply a screwdriver to use the emag again.
 		locked = 0
 		emagged = 1
@@ -149,7 +149,7 @@
 	else
 		user << "[src] is in pristine condition."
 
-/obj/machinery/bot/attack_alien(var/mob/living/carbon/alien/user as mob)
+/obj/machinery/bot/attack_alien(mob/living/carbon/alien/user)
 	user.changeNext_move(CLICK_CD_MELEE)
 	user.do_attack_animation(src)
 	health -= rand(15,30)*brute_dam_coeff
@@ -160,7 +160,7 @@
 	healthcheck()
 
 
-/obj/machinery/bot/attack_animal(var/mob/living/simple_animal/M as mob)
+/obj/machinery/bot/attack_animal(mob/living/simple_animal/M)
 	M.do_attack_animation(src)
 	if(M.melee_damage_upper == 0)
 		return
@@ -238,7 +238,7 @@
 	return 1 //Successful completion. Used to prevent child process() continuing if this one is ended early.
 
 
-/obj/machinery/bot/attackby(obj/item/weapon/W as obj, mob/user as mob, params)
+/obj/machinery/bot/attackby(obj/item/weapon/W, mob/user, params)
 	if(istype(W, /obj/item/weapon/screwdriver))
 		if(!locked)
 			open = !open
@@ -274,11 +274,11 @@
 				..()
 				healthcheck()
 
-/obj/machinery/bot/emag_act(mob/user as mob)
+/obj/machinery/bot/emag_act(mob/user)
 	if(emagged < 2)
 		Emag(user)
 
-/obj/machinery/bot/bullet_act(var/obj/item/projectile/Proj)
+/obj/machinery/bot/bullet_act(obj/item/projectile/Proj)
 	if((Proj.damage_type == BRUTE || Proj.damage_type == BURN))
 		health -= Proj.damage
 		if(prob(75) && Proj.damage > 0)
@@ -349,7 +349,7 @@
 /obj/machinery/bot/attack_ai(mob/user as mob)
 	attack_hand(user)
 
-/obj/machinery/bot/proc/speak(var/message, freq) //Pass a message to have the bot say() it. Pass a frequency to say it on the radio.
+/obj/machinery/bot/proc/speak(message, freq) //Pass a message to have the bot say() it. Pass a frequency to say it on the radio.
 	if((!on) || (!message))
 		return
 	if(freq)
@@ -371,7 +371,7 @@ Example usage: patient = scan(/mob/living/carbon/human, oldpatient, 1)
 The proc would return a human next to the bot to be set to the patient var.
 Pass the desired type path itself, declaring a temporary var beforehand is not required.
 */
-/obj/machinery/bot/proc/scan(var/scan_type, var/old_target, var/scan_range = DEFAULT_SCAN_RANGE)
+/obj/machinery/bot/proc/scan(scan_type, old_target, scan_range = DEFAULT_SCAN_RANGE)
 	var/final_result
 	for (var/scan in view (scan_range, src) ) //Search for something in range!
 		if(!istype(scan, scan_type)) //Check that the thing we found is the type we want!
@@ -386,11 +386,11 @@ Pass the desired type path itself, declaring a temporary var beforehand is not r
 		return final_result
 
 //When the scan finds a target, run bot specific processing to select it for the next step. Empty by default.
-/obj/machinery/bot/proc/process_scan(var/scan_target)
+/obj/machinery/bot/proc/process_scan(scan_target)
 	return scan_target
 
 
-/obj/machinery/bot/proc/add_to_ignore(var/subject)
+/obj/machinery/bot/proc/add_to_ignore(subject)
 	if(ignore_list.len < 50) //This will help keep track of them, so the bot is always trying to reach a blocked spot.
 		ignore_list |= subject
 	else if (ignore_list.len >= subject) //If the list is full, insert newest, delete oldest.
@@ -401,7 +401,7 @@ Pass the desired type path itself, declaring a temporary var beforehand is not r
 Movement proc for stepping a bot through a path generated through A-star.
 Pass a positive integer as an argument to override a bot's default speed.
 */
-/obj/machinery/bot/proc/bot_move(var/dest, var/move_speed)
+/obj/machinery/bot/proc/bot_move(dest, move_speed)
 
 	if(!dest || !path || path.len == 0) //A-star failed or a path/destination was not set.
 		path = list()
@@ -429,7 +429,7 @@ Pass a positive integer as an argument to override a bot's default speed.
 	return 1
 
 
-/obj/machinery/bot/proc/bot_step(var/dest)
+/obj/machinery/bot/proc/bot_step(dest)
 	if(path && path.len > 1)
 		step_towards(src, path[1])
 		if(get_turf(src) == path[1]) //Successful move
@@ -446,7 +446,7 @@ Pass a positive integer as an argument to override a bot's default speed.
 	if(mode != BOT_SUMMON && mode != BOT_RESPONDING)
 		botcard.access = prev_access
 
-/obj/machinery/bot/proc/call_bot(var/caller, var/turf/waypoint, var/message=TRUE)
+/obj/machinery/bot/proc/call_bot(caller, turf/waypoint, message=TRUE)
 	bot_reset() //Reset a bot before setting it to call mode.
 	var/area/end_area = get_area(waypoint)
 
@@ -620,7 +620,7 @@ obj/machinery/bot/proc/bot_reset()
 	destination = nearest_beacon
 
 //PDA control. Some bots, especially MULEs, may have more parameters.
-/obj/machinery/bot/proc/bot_control(var/command, mob/user, var/turf/user_turf, var/list/user_access = list())
+/obj/machinery/bot/proc/bot_control(command, mob/user, turf/user_turf, list/user_access = list())
 	if(!on || emagged == 2 || remote_disabled) //Emagged bots do not respect anyone's authority! Bots with their remote controls off cannot get commands.
 		return 1 //ACCESS DENIED
 	// process control input
@@ -655,11 +655,11 @@ obj/machinery/bot/proc/bot_reset()
 
 // calculates a path to the current destination
 // given an optional turf to avoid
-/obj/machinery/bot/proc/calc_path(var/turf/avoid)
+/obj/machinery/bot/proc/calc_path(turf/avoid)
 	check_bot_access()
 	path = get_path_to(loc, patrol_target, src, /turf/proc/Distance_cardinal, 0, 120, id=botcard, exclude=avoid)
 
-/obj/machinery/bot/proc/calc_summon_path(var/turf/avoid)
+/obj/machinery/bot/proc/calc_summon_path(turf/avoid)
 	check_bot_access()
 	spawn()
 		path = get_path_to(loc, summon_target, src, /turf/proc/Distance_cardinal, 0, 150, id=botcard, exclude=avoid)

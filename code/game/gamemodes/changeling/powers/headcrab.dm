@@ -5,7 +5,7 @@
 	dna_cost = 1
 	req_human = 1
 
-/obj/effect/proc_holder/changeling/headcrab/sting_action(var/mob/user)
+/obj/effect/proc_holder/changeling/headcrab/sting_action(mob/user)
 	explosion(get_turf(user),0,0,2,0,silent=1)
 	var/turf = get_turf(user)
 	spawn(5) // So it's not killed in explosion

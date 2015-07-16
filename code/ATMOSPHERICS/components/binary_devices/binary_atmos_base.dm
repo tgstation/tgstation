@@ -18,7 +18,7 @@
 /*
 Iconnery
 */
-/obj/machinery/atmospherics/components/binary/hide(var/intact)
+/obj/machinery/atmospherics/components/binary/hide(intact)
 	showpipe = !intact
 	update_icon()
 
@@ -32,6 +32,7 @@ Housekeeping and pipe network stuff
 	var/node2_connect = dir
 	var/node1_connect = turn(dir, 180)
 
+/obj/machinery/atmospherics/binary/unsafe_pressure_release(mob/user,pressures)
 	var/list/node_connects = new/list()
 	node_connects.Add(node1_connect, node2_connect)
 	..(node_connects)

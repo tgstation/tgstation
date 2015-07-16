@@ -7,7 +7,6 @@
 # NOTE: if the rank-name cannot be found in admin_ranks.txt, they will not be adminned! ~Carn #
 # NOTE: syntax was changed to allow hyphenation of ranknames, since spaces are stripped.      #
 ###############################################################################################
-Dunc = Game Master
 Optimumtact = Host
 MrStonedOne = Game Master
 microscopics = Game Master
@@ -89,3 +88,4 @@ ACCount12 = Game Master
 fayrik = Game Master
 shadowlight213 = Game Master
 drovidicorv = Game Master
+Dunc = Game Master

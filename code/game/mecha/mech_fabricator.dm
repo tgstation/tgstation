@@ -446,7 +446,7 @@
 	updateUsrDialog()
 	return
 
-/obj/machinery/mecha_part_fabricator/proc/remove_material(var/mat_string, var/amount)
+/obj/machinery/mecha_part_fabricator/proc/remove_material(mat_string, amount)
 	if(resources[mat_string] < MINERAL_MATERIAL_AMOUNT) //not enough mineral for a sheet
 		return -1
 	var/type
@@ -486,7 +486,7 @@
 	return result
 
 
-/obj/machinery/mecha_part_fabricator/attackby(obj/W as obj, mob/user as mob, params)
+/obj/machinery/mecha_part_fabricator/attackby(obj/W, mob/user, params)
 	if(default_deconstruction_screwdriver(user, "fab-o", "fab-idle", W))
 		return
 
@@ -547,7 +547,7 @@
 			user << "<span class='warning'>\The [src] cannot hold any more [sname] sheet\s!</span>"
 		return
 
-/obj/machinery/mecha_part_fabricator/proc/material2name(var/ID)
+/obj/machinery/mecha_part_fabricator/proc/material2name(ID)
 	return copytext(ID,2)
 
 /obj/machinery/mecha_part_fabricator/emag_act()

@@ -3,7 +3,7 @@ var/list/ventcrawl_machinery = list(/obj/machinery/atmospherics/components/unary
 
 //VENTCRAWLING
 
-/mob/living/proc/handle_ventcrawl(var/atom/A)
+/mob/living/proc/handle_ventcrawl(atom/A)
 	if(!ventcrawler || !Adjacent(A))
 		return
 	if(stat)
@@ -91,10 +91,10 @@ var/list/ventcrawl_machinery = list(/obj/machinery/atmospherics/components/unary
 
 
 //OOP
-/atom/proc/update_pipe_vision(var/atom/new_loc = null)
+/atom/proc/update_pipe_vision(atom/new_loc = null)
 	return
 
-/mob/living/update_pipe_vision(var/atom/new_loc = null)
+/mob/living/update_pipe_vision(atom/new_loc = null)
 	. = loc
 	if(new_loc)
 		. = new_loc

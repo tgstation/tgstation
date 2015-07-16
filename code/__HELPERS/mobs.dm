@@ -128,7 +128,7 @@ Proc for attack log creation, because really why not
 6 is additional information, anything that needs to be added
 */
 
-/proc/add_logs(mob/user, mob/target, what_done, var/object=null, var/addition=null)
+/proc/add_logs(mob/user, mob/target, what_done, object=null, addition=null)
 	var/newhealthtxt = ""
 	if (target && isliving(target))
 		var/mob/living/L = target

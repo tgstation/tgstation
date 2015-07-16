@@ -128,7 +128,7 @@
 		return
 	interact(user)
 
-/obj/machinery/power/generator/proc/get_menu(var/include_link = 1)
+/obj/machinery/power/generator/proc/get_menu(include_link = 1)
 	var/t = ""
 	if(!powernet)
 		t += "<span class='bad'>Unable to connect to the power network!</span>"

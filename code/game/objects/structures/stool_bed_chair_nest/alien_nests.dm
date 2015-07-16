@@ -9,8 +9,13 @@
 	smooth = 1
 	can_be_unanchored = 0
 	canSmoothWith = null
+	var/image/nest_overlay
 
-/obj/structure/stool/bed/nest/user_unbuckle_mob(mob/user as mob)
+/obj/structure/stool/bed/nest/New()
+	nest_overlay = image('icons/mob/alien.dmi', "nestoverlay", layer=MOB_LAYER - 0.2)
+	return ..()
+
+/obj/structure/stool/bed/nest/user_unbuckle_mob(mob/user)
 	if(buckled_mob && buckled_mob.buckled == src)
 		var/mob/living/M = buckled_mob
 		if(M != user)
@@ -37,7 +42,7 @@
 		unbuckle_mob()
 		add_fingerprint(user)
 
-/obj/structure/stool/bed/nest/user_buckle_mob(mob/M as mob, mob/user as mob)
+/obj/structure/stool/bed/nest/user_buckle_mob(mob/M, mob/user)
 	if ( !ismob(M) || (get_dist(src, user) > 1) || (M.loc != src.loc) || user.restrained() || user.stat || M.buckled || istype(user, /mob/living/silicon/pai) )
 		return
 
@@ -59,14 +64,14 @@
 		M.pixel_y = 0
 		M.pixel_x = initial(M.pixel_x) + 2
 		M.layer = MOB_LAYER - 0.3
-		overlays += image('icons/mob/alien.dmi', "nestoverlay", layer=MOB_LAYER - 0.2)
+		overlays += nest_overlay
 	else
 		M.pixel_x = M.get_standard_pixel_x_offset(M.lying)
 		M.pixel_y = M.get_standard_pixel_y_offset(M.lying)
 		M.layer = initial(M.layer)
-		overlays.Cut()
+		overlays -= nest_overlay
 
-/obj/structure/stool/bed/nest/attackby(obj/item/weapon/W as obj, mob/user as mob, params)
+/obj/structure/stool/bed/nest/attackby(obj/item/weapon/W, mob/user, params)
 	var/aforce = W.force
 	health = max(0, health - aforce)
 	playsound(loc, 'sound/effects/attackblob.ogg', 100, 1)

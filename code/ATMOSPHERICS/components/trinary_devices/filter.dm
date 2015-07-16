@@ -156,8 +156,7 @@ Filter types:
 	set_frequency(frequency)
 	return ..()
 
-/obj/machinery/atmospherics/components/trinary/filter/attack_hand(user as mob)
-	if(..())
+/obj/machinery/atmospherics/components/trinary/filter/attack_hand(mob/user)	if(..())
 		return
 
 	if(!src.allowed(user))
@@ -166,8 +165,7 @@ Filter types:
 
 	ui_interact(user)
 
-/obj/machinery/atmospherics/components/trinary/filter/ui_interact(mob/user, ui_key = "main", var/datum/nanoui/ui = null)
-	if(stat & (BROKEN|NOPOWER))
+/obj/machinery/atmospherics/components/trinary/filter/ui_interact(mob/user, ui_key = "main", datum/nanoui/ui = null)	if(stat & (BROKEN|NOPOWER))
 		return
 
 	ui = SSnano.push_open_or_new_ui(user, src, ui_key, ui, "atmos_filter.tmpl", name, 400, 320, 0)

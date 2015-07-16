@@ -37,7 +37,7 @@
 /mob/living/silicon/proc/triggerAlarm()
 	return
 
-/mob/living/silicon/proc/queueAlarm(var/message, var/type, var/incoming = 1)
+/mob/living/silicon/proc/queueAlarm(message, type, incoming = 1)
 	var/in_cooldown = (alarms_to_show.len > 0 || alarms_to_clear.len > 0)
 	if(incoming)
 		alarms_to_show += message
@@ -126,7 +126,7 @@
 	src << "<span class='danger'>Warning: Electromagnetic pulse detected.</span>"
 	..()
 
-/mob/living/silicon/apply_damage(var/damage = 0,var/damagetype = BRUTE, var/def_zone = null, var/blocked = 0)
+/mob/living/silicon/apply_damage(damage = 0,damagetype = BRUTE, def_zone = null, blocked = 0)
 	blocked = (100-blocked)/100
 	if(!damage || (blocked <= 0))	return 0
 	switch(damagetype)
@@ -139,10 +139,10 @@
 	updatehealth()
 	return 1
 
-/mob/living/silicon/proc/damage_mob(var/brute = 0, var/fire = 0, var/tox = 0)
+/mob/living/silicon/proc/damage_mob(brute = 0, fire = 0, tox = 0)
 	return
 
-/mob/living/silicon/can_inject(var/mob/user, var/error_msg)
+/mob/living/silicon/can_inject(mob/user, error_msg)
 	if(error_msg)
 		user << "<span class='alert'>Their outer shell is too tough.</span>"
 	return 0
@@ -150,13 +150,13 @@
 /mob/living/silicon/IsAdvancedToolUser()
 	return 1
 
-/mob/living/silicon/bullet_act(var/obj/item/projectile/Proj)
+/mob/living/silicon/bullet_act(obj/item/projectile/Proj)
 	if((Proj.damage_type == BRUTE || Proj.damage_type == BURN))
 		adjustBruteLoss(Proj.damage)
 	Proj.on_hit(src,2)
 	return 2
 
-/mob/living/silicon/apply_effect(var/effect = 0,var/effecttype = STUN, var/blocked = 0)
+/mob/living/silicon/apply_effect(effect = 0,effecttype = STUN, blocked = 0)
 	return 0//The only effect that can hit them atm is flashes and they still directly edit so this works for now
 /*
 	if(!effect || (blocked >= 2))	return 0
@@ -178,7 +178,7 @@
 	updatehealth()
 	return 1*/
 
-/proc/islinked(var/mob/living/silicon/robot/bot, var/mob/living/silicon/ai/ai)
+/proc/islinked(mob/living/silicon/robot/bot, mob/living/silicon/ai/ai)
 	if(!istype(bot) || !istype(ai))
 		return 0
 	if (bot.connected_ai == ai)
@@ -359,7 +359,7 @@
 			src << "Sensor augmentations disabled."
 
 
-/mob/living/silicon/attack_alien(mob/living/carbon/alien/humanoid/M as mob)
+/mob/living/silicon/attack_alien(mob/living/carbon/alien/humanoid/M)
 	if(..()) //if harm or disarm intent
 		var/damage = rand(10, 20)
 		if (prob(90))
@@ -378,7 +378,7 @@
 							"<span class='userdanger'>[M] took a swipe at [src]!</span>")
 	return
 
-/mob/living/silicon/attack_animal(mob/living/simple_animal/M as mob)
+/mob/living/silicon/attack_animal(mob/living/simple_animal/M)
 	if(..())
 		var/damage = rand(M.melee_damage_lower, M.melee_damage_upper)
 		adjustBruteLoss(damage)

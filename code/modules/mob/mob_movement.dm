@@ -318,7 +318,7 @@
 ///Called by /client/Move()
 ///For moving in space
 ///Return 1 for movement 0 for none
-/mob/Process_Spacemove(var/movement_dir = 0)
+/mob/Process_Spacemove(movement_dir = 0)
 
 	if(..())
 		return 1
@@ -363,7 +363,7 @@
 /mob/proc/mob_negates_gravity()
 	return 0
 
-/mob/proc/Move_Pulled(var/atom/A)
+/mob/proc/Move_Pulled(atom/A)
 	if (!canmove || restrained() || !pulling)
 		return
 	if (pulling.anchored)
@@ -385,7 +385,7 @@
 		step(pulling, get_dir(pulling.loc, A))
 	return
 
-/mob/proc/slip(var/s_amount, var/w_amount, var/obj/O, var/lube)
+/mob/proc/slip(s_amount, w_amount, obj/O, lube)
 	return
 
 /mob/proc/update_gravity()

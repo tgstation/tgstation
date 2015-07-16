@@ -35,7 +35,7 @@
 		if(5)
 			do_disease_transformation(affected_mob)
 
-/datum/disease/transformation/proc/do_disease_transformation(var/mob/living/affected_mob)
+/datum/disease/transformation/proc/do_disease_transformation(mob/living/affected_mob)
 	if(istype(affected_mob, /mob/living/carbon) && affected_mob.stat != DEAD)
 		if(stage5)
 			affected_mob << pick(stage5)
@@ -91,7 +91,7 @@
 					"<span class='warning'>You have a craving for bananas.</span>", "<span class='warning'>Your mind feels clouded.</span>")
 	stage5	= list("<span class='warning'>You feel like monkeying around.</span>")
 
-/datum/disease/transformation/jungle_fever/do_disease_transformation(var/mob/living/carbon/affected_mob)
+/datum/disease/transformation/jungle_fever/do_disease_transformation(mob/living/carbon/affected_mob)
 	if(!ismonkey(affected_mob))
 		ticker.mode.add_monkey(affected_mob.mind)
 		affected_mob.monkeyize(TR_KEEPITEMS | TR_KEEPIMPLANTS | TR_KEEPDAMAGE | TR_KEEPVIRUS | TR_KEEPSE)

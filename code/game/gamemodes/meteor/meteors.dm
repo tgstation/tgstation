@@ -20,11 +20,11 @@
 //Meteor spawning global procs
 ///////////////////////////////
 
-/proc/spawn_meteors(var/number = 10, var/list/meteortypes)
+/proc/spawn_meteors(number = 10, list/meteortypes)
 	for(var/i = 0; i < number; i++)
 		spawn_meteor(meteortypes)
 
-/proc/spawn_meteor(var/list/meteortypes)
+/proc/spawn_meteor(list/meteortypes)
 	var/turf/pickedstart
 	var/turf/pickedgoal
 	var/max_i = 10//number of tries to spawn meteor.
@@ -133,7 +133,7 @@
 		playsound(src.loc, meteorsound, 40, 1)
 		get_hit()
 
-/obj/effect/meteor/proc/ram_turf(var/turf/T)
+/obj/effect/meteor/proc/ram_turf(turf/T)
 	//first bust whatever is in the turf
 	for(var/atom/A in T)
 		if(A != src)
@@ -157,7 +157,7 @@
 /obj/effect/meteor/ex_act()
 	return
 
-/obj/effect/meteor/attackby(obj/item/weapon/W as obj, mob/user as mob, params)
+/obj/effect/meteor/attackby(obj/item/weapon/W, mob/user, params)
 	if(istype(W, /obj/item/weapon/pickaxe))
 		qdel(src)
 		return
@@ -168,7 +168,7 @@
 		var/obj/item/O = new meteordrop(get_turf(src))
 		O.throw_at(dest, 5, 10)
 
-/obj/effect/meteor/proc/meteor_effect(var/sound=1)
+/obj/effect/meteor/proc/meteor_effect(sound=1)
 	if(sound)
 		for(var/mob/M in player_list)
 			var/turf/T = get_turf(M)
@@ -257,7 +257,7 @@
 	new meteorgibs(get_turf(src))
 
 
-/obj/effect/meteor/meaty/ram_turf(var/turf/T)
+/obj/effect/meteor/meaty/ram_turf(turf/T)
 	if(!istype(T, /turf/space))
 		new /obj/effect/decal/cleanable/blood (T)
 
@@ -271,7 +271,7 @@
 	meteordrop = /obj/item/weapon/reagent_containers/food/snacks/meat/slab/xeno
 	meteorgibs = /obj/effect/gibspawner/xeno
 
-/obj/effect/meteor/meaty/xeno/ram_turf(var/turf/T)
+/obj/effect/meteor/meaty/xeno/ram_turf(turf/T)
 	if(!istype(T, /turf/space))
 		new /obj/effect/decal/cleanable/xenoblood (T)
 

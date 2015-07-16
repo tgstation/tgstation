@@ -76,7 +76,7 @@
 		usr << "<span class='warning'>Put the defibrillator on your back first!</span>"
 	return
 
-/obj/item/weapon/defibrillator/attack_hand(mob/user as mob)
+/obj/item/weapon/defibrillator/attack_hand(mob/user)
 	if(src.loc == user)
 		ui_action_click()
 		return
@@ -128,7 +128,7 @@
 	update_icon()
 	return
 
-/obj/item/weapon/defibrillator/emag_act(mob/user as mob)
+/obj/item/weapon/defibrillator/emag_act(mob/user)
 	if(safety)
 		safety = 0
 		user << "<span class='warning'>You silently disable [src]'s safety protocols with the cryptographic sequencer."
@@ -197,7 +197,7 @@
 	update_icon()
 	return
 
-/obj/item/weapon/defibrillator/proc/deductcharge(var/chrgdeductamt)
+/obj/item/weapon/defibrillator/proc/deductcharge(chrgdeductamt)
 	if(bcell)
 		if(bcell.charge < (paddles.revivecost+chrgdeductamt))
 			powered = 0
@@ -209,7 +209,7 @@
 			update_icon()
 			return 0
 
-/obj/item/weapon/defibrillator/proc/cooldowncheck(var/mob/user)
+/obj/item/weapon/defibrillator/proc/cooldowncheck(mob/user)
 	spawn(50)
 		if(bcell)
 			if(bcell.charge >= paddles.revivecost)
@@ -304,7 +304,7 @@
 	playsound(get_turf(src), 'sound/machines/defib_zap.ogg', 50, 1, -1)
 	return (OXYLOSS)
 
-/obj/item/weapon/twohanded/shockpaddles/dropped(mob/user as mob)
+/obj/item/weapon/twohanded/shockpaddles/dropped(mob/user)
 	if(user)
 		var/obj/item/weapon/twohanded/O = user.get_inactive_hand()
 		if(istype(O))
@@ -315,7 +315,7 @@
 		defib.update_icon()
 	return unwield(user)
 
-/obj/item/weapon/twohanded/shockpaddles/proc/check_defib_exists(mainunit, var/mob/living/carbon/human/M, var/obj/O)
+/obj/item/weapon/twohanded/shockpaddles/proc/check_defib_exists(mainunit, mob/living/carbon/human/M, obj/O)
 	if (!mainunit || !istype(mainunit, /obj/item/weapon/defibrillator))	//To avoid weird issues from admin spawns
 		M.unEquip(O)
 		qdel(O)
@@ -325,7 +325,6 @@
 
 /obj/item/weapon/twohanded/shockpaddles/attack(mob/M, mob/user)
 	var/halfwaycritdeath = (config.health_threshold_crit + config.health_threshold_dead) / 2
-	var/mob/living/carbon/human/H = M
 
 	if(busy)
 		return
@@ -343,6 +342,7 @@
 		user << "<span class='warning'>The instructions on [defib] don't mention how to revive that...</span>"
 		return
 	else
+		var/mob/living/carbon/human/H = M
 		if(user.a_intent == "disarm" && !defib.safety)
 			busy = 1
 			H.visible_message("<span class='danger'>[user] has touched [H.name] with [src]!</span>", \
@@ -422,11 +422,7 @@
 								busy = 0
 								update_icon()
 								return
-					if(H.heart_attack)
-						H.heart_attack = 0
-						user.visible_message("<span class='notice'>[defib] pings: Patient's heart is now beating again.</span>")
-						playsound(get_turf(src), 'sound/machines/defib_zap.ogg', 50, 1, -1)
-					if(H.stat == 2)
+					if(H.stat == DEAD)
 						M.visible_message("<span class='warning'>[M]'s body convulses a bit.")
 						playsound(get_turf(src), "bodyfall", 50, 1)
 						playsound(get_turf(src), 'sound/machines/defib_zap.ogg', 50, 1, -1)
@@ -447,7 +443,7 @@
 								H.adjustBruteLoss((mobhealth - halfwaycritdeath) * (total_brute / overall_damage))
 							user.visible_message("<span class='notice'>[defib] pings: Resuscitation successful.</span>")
 							playsound(get_turf(src), 'sound/machines/defib_success.ogg', 50, 0)
-							H.stat = 1
+							H.stat = UNCONSCIOUS
 							dead_mob_list -= H
 							living_mob_list |= list(H)
 							H.emote("gasp")
@@ -469,6 +465,10 @@
 						update_icon()
 						cooldown = 1
 						defib.cooldowncheck(user)
+					else if(H.heart_attack)
+						H.heart_attack = 0
+						user.visible_message("<span class='notice'>[defib] pings: Patient's heart is now beating again.</span>")
+						playsound(get_turf(src), 'sound/machines/defib_zap.ogg', 50, 1, -1)
 					else
 						user.visible_message("<span class='warning'>[defib] buzzes: Patient is not in a valid state. Operation aborted.</span>")
 						playsound(get_turf(src), 'sound/machines/defib_failed.ogg', 50, 0)
