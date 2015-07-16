@@ -1,4 +1,4 @@
-/obj/machinery/atmospherics/unary/outlet_injector
+/obj/machinery/atmospherics/components/unary/outlet_injector
 	icon_state = "inje_map"
 	use_power = 1
 
@@ -16,34 +16,36 @@
 
 	level = 1
 
-/obj/machinery/atmospherics/unary/outlet_injector/Destroy()
+/obj/machinery/atmospherics/components/unary/outlet_injector/Destroy()
 	if(radio_controller)
 		radio_controller.remove_object(src,frequency)
 	..()
 
-/obj/machinery/atmospherics/unary/outlet_injector/on
+/obj/machinery/atmospherics/components/unary/outlet_injector/on
 	on = 1
 
-/obj/machinery/atmospherics/unary/outlet_injector/update_icon_nopipes()
-	if(!node || !on || stat & (NOPOWER|BROKEN))
+/obj/machinery/atmospherics/components/unary/outlet_injector/update_icon_nopipes()
+	if(!nodes[NODE1] || !on || stat & (NOPOWER|BROKEN))
 		icon_state = "inje_off"
 		return
 
 	icon_state = "inje_on"
 
-/obj/machinery/atmospherics/unary/outlet_injector/power_change()
+/obj/machinery/atmospherics/components/unary/outlet_injector/power_change()
 	var/old_stat = stat
 	..()
 	if(old_stat != stat)
 		update_icon()
 
 
-/obj/machinery/atmospherics/unary/outlet_injector/process_atmos()
+/obj/machinery/atmospherics/components/unary/outlet_injector/process_atmos()
 	..()
 	injecting = 0
 
 	if(!on || stat & NOPOWER)
 		return 0
+
+	var/datum/gas_mixture/air_contents = airs[AIR1]
 
 	if(air_contents.temperature > 0)
 		var/transfer_moles = (air_contents.return_pressure())*volume_rate/(air_contents.temperature * R_IDEAL_GAS_EQUATION)
@@ -53,13 +55,15 @@
 		loc.assume_air(removed)
 		air_update_turf()
 
-		parent.update = 1
+		update_parents()
 
 	return 1
 
-/obj/machinery/atmospherics/unary/outlet_injector/proc/inject()
+/obj/machinery/atmospherics/components/unary/outlet_injector/proc/inject()
 	if(on || injecting)
 		return 0
+
+	var/datum/gas_mixture/air_contents = airs[AIR1]
 
 	injecting = 1
 
@@ -70,17 +74,17 @@
 
 		loc.assume_air(removed)
 
-		parent.update = 1
+		update_parents()
 
 	flick("inje_inject", src)
 
-/obj/machinery/atmospherics/unary/outlet_injector/proc/set_frequency(new_frequency)
+/obj/machinery/atmospherics/components/unary/outlet_injector/proc/set_frequency(new_frequency)
 	radio_controller.remove_object(src, frequency)
 	frequency = new_frequency
 	if(frequency)
 		radio_connection = radio_controller.add_object(src, frequency)
 
-/obj/machinery/atmospherics/unary/outlet_injector/proc/broadcast_status()
+/obj/machinery/atmospherics/components/unary/outlet_injector/proc/broadcast_status()
 	if(!radio_connection)
 		return 0
 
@@ -101,16 +105,16 @@
 
 	return 1
 
-/obj/machinery/atmospherics/unary/outlet_injector/atmosinit()
+/obj/machinery/atmospherics/components/unary/outlet_injector/atmosinit()
 	set_frequency(frequency)
 	..()
 
-/obj/machinery/atmospherics/unary/outlet_injector/initialize()
+/obj/machinery/atmospherics/components/unary/outlet_injector/initialize()
 	..()
 	broadcast_status()
 
 
-/obj/machinery/atmospherics/unary/outlet_injector/receive_signal(datum/signal/signal)
+/obj/machinery/atmospherics/components/unary/outlet_injector/receive_signal(datum/signal/signal)
 	if(!signal.data["tag"] || (signal.data["tag"] != id) || (signal.data["sigtype"]!="command"))
 		return 0
 
@@ -126,6 +130,7 @@
 
 	if("set_volume_rate" in signal.data)
 		var/number = text2num(signal.data["set_volume_rate"])
+		var/datum/gas_mixture/air_contents = airs[AIR1]
 		volume_rate = Clamp(number, 0, air_contents.volume)
 
 	if("status" in signal.data)

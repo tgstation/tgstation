@@ -20,13 +20,10 @@ Pipelines + Other Objects -> Pipe network
 	var/initialize_directions = 0
 	var/pipe_color
 	var/obj/item/pipe/stored
-	var/welded = 0 //Used on pumps and scrubbers
 	var/global/list/iconsetids = list()
 	var/global/list/pipeimages = list()
-	var/datum/pipeline/parent = null
 
 	var/image/pipe_vision_img = null
-
 
 /obj/machinery/atmospherics/New()
 	..()
@@ -61,14 +58,8 @@ Pipelines + Other Objects -> Pipe network
 /obj/machinery/atmospherics/proc/SetInitDirections()
 	return
 
-/obj/machinery/atmospherics/proc/safe_input(title, text, default_set)
-	var/new_value = input(usr,text,title,default_set) as num
-	if(usr.canUseTopic(src))
-		return new_value
-	return default_set
-
 /obj/machinery/atmospherics/proc/returnPipenet()
-	return parent
+	return
 
 /obj/machinery/atmospherics/proc/returnPipenetAir()
 	return
@@ -86,20 +77,8 @@ Pipelines + Other Objects -> Pipe network
 /obj/machinery/atmospherics/proc/disconnect(obj/machinery/atmospherics/reference)
 	return
 
-/obj/machinery/atmospherics/proc/icon_addintact(obj/machinery/atmospherics/node, connected)
-	var/image/img = getpipeimage('icons/obj/atmospherics/binary_devices.dmi', "pipe_intact", get_dir(src,node), node.pipe_color)
-	underlays += img
-
-	return connected | img.dir
-
-/obj/machinery/atmospherics/proc/icon_addbroken(connected)
-	var/unconnected = (~connected) & initialize_directions
-	for(var/direction in cardinal)
-		if(unconnected & direction)
-			underlays += getpipeimage('icons/obj/atmospherics/binary_devices.dmi', "pipe_exposed", direction)
-
 /obj/machinery/atmospherics/update_icon()
-	return null
+	return
 
 /obj/machinery/atmospherics/attackby(obj/item/weapon/W, mob/user, params)
 	if(can_unwrench && istype(W, /obj/item/weapon/wrench))
@@ -257,5 +236,3 @@ Pipelines + Other Objects -> Pipe network
 
 /obj/machinery/atmospherics/proc/can_crawl_through()
 	return 1
-
-

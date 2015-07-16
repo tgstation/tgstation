@@ -341,7 +341,7 @@
 				if(G.toxins)
 					G.nitrogen += (G.toxins)
 					G.toxins = 0
-		for(var/obj/machinery/atmospherics/unary/vent_pump/V in T)
+		for(var/obj/machinery/atmospherics/components/unary/vent_pump/V in T)
 			V.welded = 1
 			V.update_icon()
 			V.visible_message("<span class='danger'>[V] was frozen shut!</span>")
