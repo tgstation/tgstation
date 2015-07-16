@@ -91,15 +91,21 @@
 
 /obj/item/clothing/head/helmet/swat
 	name = "\improper SWAT helmet"
-	desc = "An extremely robust, space-worthy helmet."
-	icon_state = "swat"
-	item_state = "swat"
+	desc = "An extremely robust, space-worthy helmet in a nefarious red and black stripe pattern."
+	icon_state = "swatsyndie"
+	item_state = "swatsyndie"
 	armor = list(melee = 40, bullet = 30, laser = 25,energy = 25, bomb = 50, bio = 10, rad = 0)
 	cold_protection = HEAD
 	min_cold_protection_temperature = SPACE_HELM_MIN_TEMP_PROTECT
 	heat_protection = HEAD
 	max_heat_protection_temperature = SPACE_HELM_MAX_TEMP_PROTECT
 	strip_delay = 80
+
+/obj/item/clothing/head/helmet/swat/nanotrasen
+	name = "\improper SWAT helmet"
+	desc = "An extremely robust, space-worthy helmet with the Nanotrasen logo emblazoned on the top."
+	icon_state = "swat"
+	item_state = "swat"
 
 /obj/item/clothing/head/helmet/thunderdome
 	name = "\improper Thunderdome helmet"
