@@ -53,6 +53,14 @@
 	I.SetLuminosity(0)
 	return I.luminosity
 
+/obj/effect/proc_holder/spell/aoe_turf/veil/proc/extinguishTurf(var/turf/T)
+	if(istype(T, /turf/space))
+		return
+	if(istype(T, /turf/simulated/floor/light))
+		var/turf/simulated/floor/light/L = T
+		L.on = 0
+	T.SetLuminosity(0)
+
 /obj/effect/proc_holder/spell/aoe_turf/veil/proc/extinguishMob(var/mob/living/H)
 	var/blacklistLuminosity = 0
 	for(var/obj/item/F in H)
@@ -62,6 +70,7 @@
 /obj/effect/proc_holder/spell/aoe_turf/veil/cast(list/targets)
 	usr << "<span class='shadowling'>You silently disable all nearby lights.</span>"
 	for(var/turf/T in targets)
+		extinguishTurf(T)
 		for(var/obj/item/F in T.contents)
 			extinguishItem(F)
 		for(var/obj/machinery/light/L in T.contents)
