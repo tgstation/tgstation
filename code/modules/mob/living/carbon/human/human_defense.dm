@@ -170,10 +170,10 @@ emp_act
 						if(get_dist(H, src) <= 1)	//people with TK won't get smeared with blood
 							if(H.wear_suit)
 								H.wear_suit.add_blood(src)
-								H.update_inv_wear_suit(0)	//updates mob overlays to show the new blood (no refresh)
+								H.update_inv_wear_suit()	//updates mob overlays to show the new blood (no refresh)
 							else if(H.w_uniform)
 								H.w_uniform.add_blood(src)
-								H.update_inv_w_uniform(0)	//updates mob overlays to show the new blood (no refresh)
+								H.update_inv_w_uniform()	//updates mob overlays to show the new blood (no refresh)
 							if (H.gloves)
 								var/obj/item/clothing/gloves/G = H.gloves
 								G.add_blood(H)
@@ -194,13 +194,13 @@ emp_act
 					if(bloody)	//Apply blood
 						if(wear_mask)
 							wear_mask.add_blood(src)
-							update_inv_wear_mask(0)
+							update_inv_wear_mask()
 						if(head)
 							head.add_blood(src)
-							update_inv_head(0)
+							update_inv_head()
 						if(glasses && prob(33))
 							glasses.add_blood(src)
-							update_inv_glasses(0)
+							update_inv_glasses()
 
 				if("chest")	//Easier to score a stun but lasts less time
 					if(stat == CONSCIOUS && I.force && prob(I.force + 10))
@@ -211,10 +211,10 @@ emp_act
 					if(bloody)
 						if(wear_suit)
 							wear_suit.add_blood(src)
-							update_inv_wear_suit(0)
+							update_inv_wear_suit()
 						if(w_uniform)
 							w_uniform.add_blood(src)
-							update_inv_w_uniform(0)
+							update_inv_w_uniform()
 
 			if(Iforce > 10 || Iforce >= 5 && prob(33))
 				forcesay(hit_appends)	//forcesay checks stat already

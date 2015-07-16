@@ -47,8 +47,7 @@ If you have any questions/constructive-comments/bugs-to-report
 Please contact me on #coderbus IRC. ~Carnie x
 //Carn can sometimes be hard to reach now. However IRC is still your best bet for getting help.
 */
-
-//Human Overlays Indexes/////////
+// Human Overlays Indexes /////////////////
 #define SPECIES_LAYER			26		// mutantrace colors... these are on a seperate layer in order to prvent
 #define BODY_BEHIND_LAYER		25
 #define BODY_LAYER				24		//underwear, undershirts, socks, eyes, lips(makeup)
@@ -65,21 +64,11 @@ Please contact me on #coderbus IRC. ~Carnie x
 #define GLASSES_LAYER			13
 #define BELT_LAYER				12		//Possible make this an overlay of somethign required to wear a belt?
 #define SUIT_STORE_LAYER		11
-#define BACK_LAYER				10
-#define HAIR_LAYER				9		//TODO: make part of head layer?
-#define FACEMASK_LAYER			8
-#define HEAD_LAYER				7
-#define HANDCUFF_LAYER			6
-#define LEGCUFF_LAYER			5
-#define L_HAND_LAYER			4
-#define R_HAND_LAYER			3		//Having the two hands seperate seems rather silly, merge them together? It'll allow for code to be reused on mobs with arbitarily many hands
-#define BODY_FRONT_LAYER		2
-#define FIRE_LAYER				1		//If you're on fire
-#define TOTAL_LAYERS			26		//KEEP THIS UP-TO-DATE OR SHIT WILL BREAK ;_;
-//////////////////////////////////
+#define HAIR_LAYER				10		//TODO: make part of head layer?
+#define BODY_FRONT_LAYER		9
 
-/mob/living/carbon/human
-	var/list/overlays_standing[TOTAL_LAYERS]
+//KEEP THE TOTAL_LAYER DEFINE UPDATED !
+//////////////////////////////////////////
 
 /mob/living/carbon/human/proc/update_base_icon_state()
 	//var/race = dna ? dna.mutantrace : null
@@ -93,17 +82,6 @@ Please contact me on #coderbus IRC. ~Carnie x
 
 	icon_state = "[base_icon_state]_s"
 
-
-/mob/living/carbon/human/proc/apply_overlay(cache_index)
-	var/image/I = overlays_standing[cache_index]
-
-	if(I)
-		overlays += I
-
-/mob/living/carbon/human/proc/remove_overlay(cache_index)
-	if(overlays_standing[cache_index])
-		overlays -= overlays_standing[cache_index]
-		overlays_standing[cache_index] = null
 
 //UPDATES OVERLAYS FROM OVERLAYS_STANDING
 //TODO: Remove all instances where this proc is called. It used to be the fastest way to swap between standing/lying.
@@ -174,12 +152,7 @@ Please contact me on #coderbus IRC. ~Carnie x
 		dna.species.handle_body(src)
 
 /mob/living/carbon/human/update_fire()
-
-	remove_overlay(FIRE_LAYER)
-	if(on_fire)
-		overlays_standing[FIRE_LAYER] = image("icon"='icons/mob/OnFire.dmi', "icon_state"="Standing", "layer"=-FIRE_LAYER)
-
-	apply_overlay(FIRE_LAYER)
+	..("Standing")
 
 
 /mob/living/carbon/human/proc/update_augments()
@@ -212,33 +185,28 @@ Please contact me on #coderbus IRC. ~Carnie x
 /* --------------------------------------- */
 //For legacy support.
 /mob/living/carbon/human/regenerate_icons()
-	..()
-	if(notransform)		return
-	update_body()
-	update_hair()
-	update_inv_w_uniform()
-	update_inv_wear_id()
-	update_inv_gloves()
-	update_inv_glasses()
-	update_inv_ears()
-	update_inv_shoes()
-	update_inv_s_store()
-	update_inv_wear_mask()
-	update_inv_head()
-	update_inv_belt()
-	update_inv_back()
-	update_inv_wear_suit()
-	update_inv_r_hand()
-	update_inv_l_hand()
-	update_inv_handcuffed()
-	update_inv_legcuffed()
-	update_inv_pockets()
-	update_fire()
-	update_transform()
-	//Hud Stuff
-	update_hud()
-	// Mutantrace colors
-	update_mutcolor()
+
+	if(!..())
+		update_body()
+		update_hair()
+		update_inv_w_uniform()
+		update_inv_wear_id()
+		update_inv_gloves()
+		update_inv_glasses()
+		update_inv_ears()
+		update_inv_shoes()
+		update_inv_s_store()
+		update_inv_wear_mask()
+		update_inv_head()
+		update_inv_belt()
+		update_inv_back()
+		update_inv_wear_suit()
+		update_inv_pockets()
+		update_transform()
+		//Hud Stuff
+		update_hud()
+		// Mutantrace colors
+		update_mutcolor()
 
 /* --------------------------------------- */
 //vvvvvv UPDATE_INV PROCS vvvvvv
@@ -414,27 +382,12 @@ Please contact me on #coderbus IRC. ~Carnie x
 
 
 /mob/living/carbon/human/update_inv_head()
-	remove_overlay(HEAD_LAYER)
-
-	if(head)
+	var/obj/item/H = ..()
+	if(H)
 		if(client && hud_used && hud_used.hud_shown)
 			if(hud_used.inventory_shown)				//if the inventory is open ...
-				head.screen_loc = ui_head		//TODO	//...draw the item in the inventory screen
-			client.screen += head						//Either way, add the item to the HUD
-
-		var/image/standing
-		if(head.alternate_worn_icon)
-			standing = image("icon"=head.alternate_worn_icon, "icon_state"="[head.icon_state]", "layer"=-HEAD_LAYER)
-		if(!standing)
-			standing = image("icon"='icons/mob/head.dmi', "icon_state"="[head.icon_state]", "layer"=-HEAD_LAYER)
-		standing.color = head.color // For now, this is here solely for kitty ears, but everything should do this eventually
-		standing.alpha = head.alpha
-
-		overlays_standing[HEAD_LAYER]	= standing
-
-		if(head.blood_DNA)
-			standing.overlays	+= image("icon"='icons/effects/blood.dmi', "icon_state"="helmetblood")
-
+				H.screen_loc = ui_head		//TODO	//...draw the item in the inventory screen
+			client.screen += H						//Either way, add the item to the HUD
 	apply_overlay(HEAD_LAYER)
 
 
@@ -491,6 +444,7 @@ Please contact me on #coderbus IRC. ~Carnie x
 
 	apply_overlay(SUIT_LAYER)
 
+
 /mob/living/carbon/human/update_inv_pockets()
 	if(l_store)
 		l_store.screen_loc = ui_storage1	//TODO
@@ -503,125 +457,41 @@ Please contact me on #coderbus IRC. ~Carnie x
 
 
 /mob/living/carbon/human/update_inv_wear_mask()
-	remove_overlay(FACEMASK_LAYER)
-
-	if(istype(wear_mask, /obj/item/clothing/mask))
+	var/obj/item/clothing/mask/M = ..()
+	if(M)
 		if(client && hud_used && hud_used.hud_shown)
 			if(hud_used.inventory_shown)				//if the inventory is open ...
-				wear_mask.screen_loc = ui_mask	//TODO	//...draw the item in the inventory screen
-			client.screen += wear_mask					//Either way, add the item to the HUD
-
-		var/image/standing
-		if(wear_mask.alternate_worn_icon)
-			standing = image("icon"=wear_mask.alternate_worn_icon, "icon_state"="[wear_mask.icon_state]", "layer"=-FACEMASK_LAYER)
-		if(!standing)
-			standing = image("icon"='icons/mob/mask.dmi', "icon_state"="[wear_mask.icon_state]", "layer"=-FACEMASK_LAYER)
-
-		overlays_standing[FACEMASK_LAYER]	= standing
-
-		if(wear_mask.blood_DNA && !istype(wear_mask, /obj/item/clothing/mask/cigarette))
-			standing.overlays	+= image("icon"='icons/effects/blood.dmi', "icon_state"="maskblood")
-
+				M.screen_loc = ui_mask	//TODO	//...draw the item in the inventory screen
+			client.screen += M					//Either way, add the item to the HUD
 	update_mutant_bodyparts()
-
 	apply_overlay(FACEMASK_LAYER)
 
+
 /mob/living/carbon/human/update_inv_back()
-	remove_overlay(BACK_LAYER)
-
-	if(back)
-		back.screen_loc = ui_back
+	var/obj/item/B = ..()
+	if(B)
+		B.screen_loc = ui_back
 		if(client && hud_used && hud_used.hud_shown)
-			client.screen += back
-
-		var/image/standing
-		if(back.alternate_worn_icon)
-			standing = image("icon"=back.alternate_worn_icon, "icon_state"="[back.icon_state]", "layer"=-BACK_LAYER)
-		if(!standing)
-			standing = image("icon"='icons/mob/back.dmi', "icon_state"="[back.icon_state]", "layer"=-BACK_LAYER)
-
-		overlays_standing[BACK_LAYER] = standing
-
+			client.screen += B
 	apply_overlay(BACK_LAYER)
 
-
-
-/mob/living/carbon/human/update_hud()	//TODO: do away with this if possible
-	if(client)
-		client.screen |= contents
-		if(hud_used)
-			hud_used.hidden_inventory_update() 	//Updates the screenloc of the items on the 'other' inventory bar
-
-
 /mob/living/carbon/human/update_inv_handcuffed()
-	remove_overlay(HANDCUFF_LAYER)
-
-	if(handcuffed)
-		drop_r_hand()
-		drop_l_hand()
-		stop_pulling()	//TODO: should be handled elsewhere
-		if(hud_used)	//hud handcuff icons
-			var/obj/screen/inventory/R = hud_used.adding[3]
-			var/obj/screen/inventory/L = hud_used.adding[4]
-			R.overlays += image("icon"='icons/mob/screen_gen.dmi', "icon_state"="markus")
-			L.overlays += image("icon"='icons/mob/screen_gen.dmi', "icon_state"="gabrielle")
-
-		overlays_standing[HANDCUFF_LAYER]	= image("icon"='icons/mob/mob.dmi', "icon_state"="handcuff1", "layer"=-HANDCUFF_LAYER)
-	else
-		if(hud_used)
-			var/obj/screen/inventory/R = hud_used.adding[3]
-			var/obj/screen/inventory/L = hud_used.adding[4]
-			R.overlays = null
-			L.overlays = null
-
-	apply_overlay(HANDCUFF_LAYER)
-
+	if(..())
+		overlays_standing[HANDCUFF_LAYER] = image("icon"='icons/mob/mob.dmi', "icon_state"="handcuff1", "layer"=-HANDCUFF_LAYER)
+		apply_overlay(HANDCUFF_LAYER)
 
 /mob/living/carbon/human/update_inv_legcuffed()
 	remove_overlay(LEGCUFF_LAYER)
-
 	if(legcuffed)
-		overlays_standing[LEGCUFF_LAYER]	= image("icon"='icons/mob/mob.dmi', "icon_state"="legcuff1", "layer"=-LEGCUFF_LAYER)
-
+		overlays_standing[LEGCUFF_LAYER] = image("icon"='icons/mob/mob.dmi', "icon_state"="legcuff1", "layer"=-LEGCUFF_LAYER)
 	apply_overlay(LEGCUFF_LAYER)
 
 
+/mob/living/carbon/human/update_hud()	//TODO: do away with this if possible
+	if(..())
+		if(hud_used)
+			hud_used.hidden_inventory_update() 	//Updates the screenloc of the items on the 'other' inventory bar
 
-/mob/living/carbon/human/update_inv_r_hand()
-	remove_overlay(R_HAND_LAYER)
-	if (handcuffed)
-		drop_r_hand()
-		return
-	if(r_hand)
-		r_hand.screen_loc = ui_rhand	//TODO
-		if(client)
-			client.screen += r_hand
-
-		var/t_state = r_hand.item_state
-		if(!t_state)	t_state = r_hand.icon_state
-
-		overlays_standing[R_HAND_LAYER] = image("icon" = r_hand.righthand_file, "icon_state"="[t_state]", "layer"=-R_HAND_LAYER)
-
-	apply_overlay(R_HAND_LAYER)
-
-
-
-/mob/living/carbon/human/update_inv_l_hand()
-	remove_overlay(L_HAND_LAYER)
-	if (handcuffed)
-		drop_l_hand()
-		return
-	if(l_hand)
-		l_hand.screen_loc = ui_lhand	//TODO
-		if(client)
-			client.screen += l_hand
-
-		var/t_state = l_hand.item_state
-		if(!t_state)	t_state = l_hand.icon_state
-
-		overlays_standing[L_HAND_LAYER] = image("icon" = l_hand.lefthand_file, "icon_state"="[t_state]", "layer"=-L_HAND_LAYER)
-
-	apply_overlay(L_HAND_LAYER)
 
 /mob/living/carbon/human/proc/wear_female_version(t_color, icon, layer, type)
 	var/index = "[t_color]_s"
@@ -652,15 +522,7 @@ Please contact me on #coderbus IRC. ~Carnie x
 #undef EARS_LAYER
 #undef SUIT_LAYER
 #undef GLASSES_LAYER
-#undef FACEMASK_LAYER
 #undef BELT_LAYER
 #undef SUIT_STORE_LAYER
-#undef BACK_LAYER
 #undef HAIR_LAYER
-#undef HEAD_LAYER
-#undef HANDCUFF_LAYER
-#undef LEGCUFF_LAYER
-#undef L_HAND_LAYER
-#undef R_HAND_LAYER
-#undef FIRE_LAYER
 #undef TOTAL_LAYERS

@@ -205,13 +205,13 @@
 		var/mob/living/carbon/human/H = src
 		if(H.gloves)
 			if(H.gloves.clean_blood())
-				H.update_inv_gloves(0)
+				H.update_inv_gloves()
 		else
 			..() // Clear the Blood_DNA list
 			if(H.bloody_hands)
 				H.bloody_hands = 0
 				H.bloody_hands_mob = null
-				H.update_inv_gloves(0)
+				H.update_inv_gloves()
 	update_icons()	//apply the now updated overlays to the mob
 
 
@@ -455,13 +455,13 @@ var/const/GALOSHES_DONT_HELP = 8
 				handcuffed = null
 				if(buckled && buckled.buckle_requires_restraints)
 					buckled.unbuckle_mob()
-				update_inv_handcuffed(0)
+				update_inv_handcuffed()
 				return
 			if(legcuffed)
 				legcuffed.loc = loc
 				legcuffed.dropped()
 				legcuffed = null
-				update_inv_legcuffed(0)
+				update_inv_legcuffed()
 		else
 			src << "<span class='warning'>You fail to remove [I]!</span>"
 
@@ -478,11 +478,11 @@ var/const/GALOSHES_DONT_HELP = 8
 
 			if(handcuffed)
 				handcuffed = null
-				update_inv_handcuffed(0)
+				update_inv_handcuffed()
 				return
 			else
 				legcuffed = null
-				update_inv_legcuffed(0)
+				update_inv_legcuffed()
 		else
 			src << "<span class='warning'>You fail to break [I]!</span>"
 
@@ -492,7 +492,7 @@ var/const/GALOSHES_DONT_HELP = 8
 		handcuffed = null
 		if (buckled && buckled.buckle_requires_restraints)
 			buckled.unbuckle_mob()
-		update_inv_handcuffed(0)
+		update_inv_handcuffed()
 		if (client)
 			client.screen -= W
 		if (W)
@@ -503,7 +503,7 @@ var/const/GALOSHES_DONT_HELP = 8
 	if (legcuffed)
 		var/obj/item/weapon/W = legcuffed
 		legcuffed = null
-		update_inv_legcuffed(0)
+		update_inv_legcuffed()
 		if (client)
 			client.screen -= W
 		if (W)

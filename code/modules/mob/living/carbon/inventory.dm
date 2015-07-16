@@ -25,22 +25,22 @@
 	if(I == head)
 		head = null
 		if(I.flags & BLOCKHAIR)
-			update_hair(0)
-		update_inv_head(0)
+			update_hair()
+		update_inv_head()
 	else if(I == back)
 		back = null
-		update_inv_back(0)
+		update_inv_back()
 	else if(I == wear_mask)
 		if(istype(src, /mob/living/carbon/human)) //If we don't do this hair won't be properly rebuilt.
 			return
 		wear_mask = null
-		update_inv_wear_mask(0)
+		update_inv_wear_mask()
 	else if(I == handcuffed)
 		handcuffed = null
 		if(buckled && buckled.buckle_requires_restraints)
 			buckled.unbuckle_mob()
-		update_inv_handcuffed(0)
+		update_inv_handcuffed()
 	else if(I == legcuffed)
 		legcuffed = null
-		update_inv_legcuffed(0)
+		update_inv_legcuffed()
 

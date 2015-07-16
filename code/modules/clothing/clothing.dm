@@ -259,7 +259,7 @@ BLIND     // can't see anything
 
 			if(istype(loc, /mob/living/carbon/human))
 				var/mob/living/carbon/human/H = loc
-				H.update_inv_w_uniform(0)
+				H.update_inv_w_uniform()
 
 			return 1
 
@@ -390,7 +390,7 @@ atom/proc/generate_female_clothing(index,t_color,icon,type)
 
 		if(istype(loc, /mob/living/carbon/human))
 			var/mob/living/carbon/human/H = loc
-			H.update_inv_w_uniform(0)
+			H.update_inv_w_uniform()
 
 /obj/item/clothing/proc/weldingvisortoggle()			//Malk: proc to toggle welding visors on helmets, masks, goggles, etc.
 	if(can_use(usr))
@@ -414,11 +414,11 @@ atom/proc/generate_female_clothing(index,t_color,icon,type)
 			tint = 0
 
 	if(istype(src, /obj/item/clothing/head))			//makes the mob-overlays update
-		usr.update_inv_head(0)
+		usr.update_inv_head()
 	if(istype(src, /obj/item/clothing/glasses))
-		usr.update_inv_glasses(0)
+		usr.update_inv_glasses()
 	if(istype(src, /obj/item/clothing/mask))
-		usr.update_inv_wear_mask(0)
+		usr.update_inv_wear_mask()
 
 /obj/item/clothing/proc/can_use(mob/user)
 	if(user && ismob(user))
