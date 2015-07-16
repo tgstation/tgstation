@@ -78,7 +78,8 @@
 				for(var/j = 1, j <= rand(1, 3), j++)
 					step(C, pick(NORTH,SOUTH,EAST,WEST))
 
-/datum/chemical_reaction/proc/goonchem_vortex(turf/simulated/T, setting_type, range)	for(var/atom/movable/X in orange(range, T))
+/datum/chemical_reaction/proc/goonchem_vortex(turf/simulated/T, setting_type, range)
+	for(var/atom/movable/X in orange(range, T))
 		if(istype(X, /obj/effect))
 			continue
 		if(!X.anchored)
