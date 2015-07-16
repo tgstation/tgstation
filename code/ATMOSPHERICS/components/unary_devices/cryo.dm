@@ -136,7 +136,8 @@
   *
   * @return nothing
   */
-/obj/machinery/atmospherics/components/unary/cry_cell/ui_interact(mob/user, ui_key = "main", datum/nanoui/ui = null)	if(user == occupant || user.stat || panel_open)
+/obj/machinery/atmospherics/components/unary/cry_cell/ui_interact(mob/user, ui_key = "main", datum/nanoui/ui = null)
+	if(user == occupant || user.stat || panel_open)
 		return
 
 	ui = SSnano.push_open_or_new_ui(user, src, ui_key, ui, "cryo.tmpl", "Cryo Cell Control System", 520, 410, 1)

@@ -1138,7 +1138,9 @@
 //BREATHING//
 /////////////
 
-	if(istype(H.loc, /obj/machinery/atmospherics/unary/cryo_cell)) return
+/datum/species/proc/breathe(mob/living/carbon/human/H)
+	return
+
 /datum/species/proc/check_breath(datum/gas_mixture/breath, var/mob/living/carbon/human/H)
 	if((H.status_flags & GODMODE))
 		return

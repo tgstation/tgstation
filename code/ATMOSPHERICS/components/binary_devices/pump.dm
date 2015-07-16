@@ -97,7 +97,8 @@ Thus, the two variables affect pump operation are set in New():
 
 	return 1
 
-/obj/machinery/atmospherics/components/binary/pump/ui_interact(mob/user, ui_key = "main", datum/nanoui/ui = null)	if(stat & (BROKEN|NOPOWER))
+/obj/machinery/atmospherics/components/binary/pump/ui_interact(mob/user, ui_key = "main", datum/nanoui/ui = null)
+	if(stat & (BROKEN|NOPOWER))
 		return
 
 	ui = SSnano.push_open_or_new_ui(user, src, ui_key, ui, "atmos_gas_pump.tmpl", name, 400, 120, 0)
@@ -147,7 +148,8 @@ Thus, the two variables affect pump operation are set in New():
 	return
 
 
-/obj/machinery/atmospherics/components/binary/pump/attack_hand(mod/user)	if(..())
+/obj/machinery/atmospherics/components/binary/pump/attack_hand(mob/user)
+	if(..())
 		return
 	src.add_fingerprint(usr)
 	if(!src.allowed(user))
@@ -178,7 +180,8 @@ Thus, the two variables affect pump operation are set in New():
 	..()
 	update_icon()
 
-/obj/machinery/atmospherics/binary/pump/attackby(obj/item/weapon/W, mob/user, params)	if (!istype(W, /obj/item/weapon/wrench))
+/obj/machinery/atmospherics/components/binary/pump/attackby(obj/item/weapon/W, mob/user, params)
+	if (!istype(W, /obj/item/weapon/wrench))
 		return ..()
 	if (!(stat & NOPOWER) && on)
 		user << "<span class='warning'>You cannot unwrench this [src], turn it off first!</span>"
