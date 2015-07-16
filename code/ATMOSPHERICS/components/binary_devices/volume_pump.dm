@@ -48,8 +48,8 @@ Thus, the two variables affect pump operation are set in New():
 	if(!on)
 		return 0
 
-	var/datum/gas_mixture/air1 = airs["a1"]
-	var/datum/gas_mixture/air2 = airs["a2"]
+	var/datum/gas_mixture/air1 = airs[AIR1]
+	var/datum/gas_mixture/air2 = airs[AIR2]
 
 // Pump mechanism just won't do anything if the pressure is too high/too low
 
@@ -125,7 +125,7 @@ Thus, the two variables affect pump operation are set in New():
 		on = !on
 
 	if("set_transfer_rate" in signal.data)
-		var/datum/gas_mixture/air1 = airs["a1"]
+		var/datum/gas_mixture/air1 = airs[AIR1]
 		transfer_rate = Clamp(
 			text2num(signal.data["set_transfer_rate"]),
 			0,

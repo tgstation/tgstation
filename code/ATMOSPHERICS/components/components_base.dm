@@ -7,18 +7,30 @@ On top of that, now people can add component-speciic procs/vars if they want!
 #define BINARY 	2
 #define TRINARY	3
 
+#define AIR1	"a1"
+#define AIR2	"a2"
+#define AIR3	"a3"
+
+#define PARENT1	"p1"
+#define PARENT2	"p2"
+#define PARENT3	"p3"
+
+#define NODE1	"n1"
+#define	NODE2	"n2"
+#define NODE3	"n3"
+
 /obj/machinery/atmospherics/components/
 	var/welded = 0 //Used on pumps and scrubbers
 	var/showpipe = 0
 
-	var/list/obj/machinery/atmospherics/nodes = list()
-	var/list/datum/pipeline/parents = list()
-	var/list/datum/gas_mixture/airs = list()
-
-	var/device_type //used for initialization stuff
+	var/device_type = 0//used for initialization stuff
 		//UNARY = 1
 		//BINARY = 2
 		//TRINARY = 3
+
+	var/list/obj/machinery/atmospherics/nodes = list()
+	var/list/datum/pipeline/parents = list()
+	var/list/datum/gas_mixture/airs = list()
 
 /obj/machinery/atmospherics/components/New()
 	..()
@@ -156,15 +168,15 @@ Pipenet stuff; housekeeping
 		var/datum/gas_mixture/environment = T.return_air()
 		var/lost = null
 		var/times_lost = 0
-		for(var/A = 1; A <= device_type; A++)
-			var/datum/gas_mixture/air = airs["a[A]"]
+		for(var/I = 1; I <= device_type; I++)
+			var/datum/gas_mixture/air = airs["a[I]"]
 			lost += pressures*environment.volume/(air.temperature * R_IDEAL_GAS_EQUATION)
 			times_lost++
 		var/shared_loss = lost/times_lost
 
 		var/datum/gas_mixture/to_release
-		for(var/A = 1; A <= device_type; A++)
-			var/datum/gas_mixture/air = airs["a[A]"]
+		for(var/I = 1; I <= device_type; I++)
+			var/datum/gas_mixture/air = airs["a[I]"]
 			if(!to_release)
 				to_release = air.remove(shared_loss)
 				continue

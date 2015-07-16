@@ -28,7 +28,8 @@ It's like a regular ol' straight pipe, but you can turn it on and off.
 	open = 1
 	update_icon_nopipes()
 	update_parents()
-	var/datum/pipeline/parent1 = parents["p1"] ; parent1.reconcile_air()
+	var/datum/pipeline/parent1 = parents[PARENT1]
+	parent1.reconcile_air()
 	investigate_log("was opened by [usr ? key_name(usr) : "a remote signal"]", "atmos")
 
 /obj/machinery/atmospherics/components/binary/valve/proc/close()

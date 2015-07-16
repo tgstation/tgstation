@@ -11,7 +11,7 @@
 
 /obj/machinery/atmospherics/components/unary/tank/carbon_dioxide/New()
 	..()
-	var/datum/gas_mixture/air_contents = airs["a1"]
+	var/datum/gas_mixture/air_contents = airs[AIR1]
 	air_contents.volume = volume
 	air_contents.temperature = T20C
 	air_contents.carbon_dioxide = (25*ONE_ATMOSPHERE)*(air_contents.volume)/(R_IDEAL_GAS_EQUATION*air_contents.temperature)
@@ -22,7 +22,7 @@
 
 /obj/machinery/atmospherics/components/unary/tank/toxins/New()
 	..()
-	var/datum/gas_mixture/air_contents = airs["a1"]
+	var/datum/gas_mixture/air_contents = airs[AIR1]
 	air_contents.volume = volume
 	air_contents.temperature = T20C
 	air_contents.toxins = (25*ONE_ATMOSPHERE)*(air_contents.volume)/(R_IDEAL_GAS_EQUATION*air_contents.temperature)
@@ -33,7 +33,7 @@
 
 /obj/machinery/atmospherics/components/unary/tank/oxygen_agent_b/New()
 	..()
-	var/datum/gas_mixture/air_contents = airs["a1"]
+	var/datum/gas_mixture/air_contents = airs[AIR1]
 	air_contents.volume = volume
 	air_contents.temperature = T0C
 	var/datum/gas/oxygen_agent_b/trace_gas = new
@@ -46,7 +46,7 @@
 
 /obj/machinery/atmospherics/components/unary/tank/oxygen/New()
 	..()
-	var/datum/gas_mixture/air_contents = airs["a1"]
+	var/datum/gas_mixture/air_contents = airs[AIR1]
 	air_contents.volume = volume
 	air_contents.temperature = T20C
 	air_contents.oxygen = (25*ONE_ATMOSPHERE)*(air_contents.volume)/(R_IDEAL_GAS_EQUATION*air_contents.temperature)
@@ -57,7 +57,7 @@
 
 /obj/machinery/atmospherics/components/unary/tank/nitrogen/New()
 	..()
-	var/datum/gas_mixture/air_contents = airs["a1"]
+	var/datum/gas_mixture/air_contents = airs[AIR1]
 	air_contents.volume = volume
 	air_contents.temperature = T20C
 	air_contents.nitrogen = (25*ONE_ATMOSPHERE)*(air_contents.volume)/(R_IDEAL_GAS_EQUATION*air_contents.temperature)
@@ -68,7 +68,7 @@
 
 /obj/machinery/atmospherics/components/unary/tank/air/New()
 	..()
-	var/datum/gas_mixture/air_contents = airs["a1"]
+	var/datum/gas_mixture/air_contents = airs[AIR1]
 	air_contents.volume = volume
 	air_contents.temperature = T20C
 	air_contents.oxygen = (25*ONE_ATMOSPHERE*O2STANDARD)*(air_contents.volume)/(R_IDEAL_GAS_EQUATION*air_contents.temperature)

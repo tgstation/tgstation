@@ -48,8 +48,8 @@ Thus, the two variables affect pump operation are set in New():
 	if(!on)
 		return 0
 
-	var/datum/gas_mixture/air1 = airs["a1"]
-	var/datum/gas_mixture/air2 = airs["a2"]
+	var/datum/gas_mixture/air1 = airs[AIR1]
+	var/datum/gas_mixture/air2 = airs[AIR2]
 
 	var/output_starting_pressure = air2.return_pressure()
 

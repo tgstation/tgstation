@@ -28,7 +28,7 @@ Filter types:
  1: Oxygen: Oxygen ONLY
  2: Nitrogen: Nitrogen ONLY
  3: Carbon Dioxide: Carbon Dioxide ONLY
- 4: Sleeping Agent (N2O)
+ 4: Sleeping Agent (NODE2O)
 */
 
 	var/frequency = 0
@@ -62,7 +62,7 @@ Filter types:
 
 /obj/machinery/atmospherics/components/trinary/filter/update_icon_nopipes()
 
-	if(!(stat & NOPOWER) && on && nodes["n1"] && nodes["n2"] && nodes["n3"])
+	if(!(stat & NOPOWER) && on && nodes[NODE1] && nodes[NODE2] && nodes[NODE3])
 		icon_state = "filter_on[flipped?"_f":""]"
 		return
 
@@ -80,12 +80,12 @@ Filter types:
 	..()
 	if(!on)
 		return 0
-	if(!(nodes["n1"] && nodes["n2"] && nodes["n3"]))
+	if(!(nodes[NODE1] && nodes[NODE2] && nodes[NODE3]))
 		return 0
 
-	var/datum/gas_mixture/air1 = airs["a1"]
-	var/datum/gas_mixture/air2 = airs["a2"]
-	var/datum/gas_mixture/air3 = airs["a3"]
+	var/datum/gas_mixture/air1 = airs[AIR1]
+	var/datum/gas_mixture/air2 = airs[AIR2]
+	var/datum/gas_mixture/air3 = airs[AIR3]
 
 	var/output_starting_pressure = air3.return_pressure()
 

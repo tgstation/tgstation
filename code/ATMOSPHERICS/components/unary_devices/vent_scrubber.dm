@@ -56,7 +56,7 @@
 		icon_state = "scrub_welded"
 		return
 
-	if(!nodes["n1"] || !on || stat & (NOPOWER|BROKEN))
+	if(!nodes[NODE1] || !on || stat & (NOPOWER|BROKEN))
 		icon_state = "scrub_off"
 		return
 
@@ -87,7 +87,7 @@
 		"panic" = panic,
 		"filter_co2" = scrub_CO2,
 		"filter_toxins" = scrub_Toxins,
-		"filter_n2o" = scrub_N2O,
+		"filter_NODE2o" = scrub_N2O,
 		"sigtype" = "status"
 	)
 	if(!initial_loc.air_scrub_names[id_tag])
@@ -114,13 +114,13 @@
 	..()
 	if(stat & (NOPOWER|BROKEN))
 		return
-	if (!nodes["n1"])
+	if (!nodes[NODE1])
 		on = 0
 	//broadcast_status()
 	if(!on || welded)
 		return 0
 
-	var/datum/gas_mixture/air_contents = airs["a1"]
+	var/datum/gas_mixture/air_contents = airs[AIR1]
 	var/datum/gas_mixture/environment = loc.return_air()
 
 	if(scrubbing)
@@ -218,9 +218,9 @@
 	if("toggle_tox_scrub" in signal.data)
 		scrub_Toxins = !scrub_Toxins
 
-	if("n2o_scrub" in signal.data)
+	if("NODE2o_scrub" in signal.data)
 		scrub_N2O = text2num(signal.data["n2o_scrub"])
-	if("toggle_n2o_scrub" in signal.data)
+	if("toggle_NODE2o_scrub" in signal.data)
 		scrub_N2O = !scrub_N2O
 
 	if("init" in signal.data)

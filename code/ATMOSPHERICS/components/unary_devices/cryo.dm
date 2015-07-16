@@ -47,7 +47,7 @@
 	..()
 /obj/machinery/atmospherics/components/unary/cryo_cell/process_atmos()
 	..()
-	var/datum/gas_mixture/air_contents = airs["a1"]
+	var/datum/gas_mixture/air_contents = airs[AIR1]
 
 	if(air_contents)
 		temperature_archived = air_contents.temperature
@@ -62,14 +62,14 @@
 			on = 0
 			open_machine()
 			playsound(src.loc, 'sound/machines/ding.ogg', 50, 1)
-	if(!nodes["n1"] || !is_operational())
+	if(!nodes[NODE1] || !is_operational())
 		return
 
 	if(!on)
 		updateDialog()
 		return
 
-	if(airs["a1"])
+	if(airs[AIR1])
 		if (occupant)
 			process_occupant()
 		expel_gas()
@@ -146,7 +146,7 @@
 
 /obj/machinery/atmospherics/components/unary/cryo_cell/get_ui_data()
 	// this is the data which will be sent to the ui
-	var/datum/gas_mixture/air_contents = airs["a1"]
+	var/datum/gas_mixture/air_contents = airs[AIR1]
 
 	var/data = list()
 	data["isOperating"] = on
@@ -290,7 +290,7 @@
 	update_icon()
 
 /obj/machinery/atmospherics/components/unary/cryo_cell/proc/process_occupant()
-	var/datum/gas_mixture/air_contents = airs["a1"]
+	var/datum/gas_mixture/air_contents = airs[AIR1]
 	if(air_contents.total_moles() < 10)
 		return
 	if(occupant)
@@ -322,7 +322,7 @@
 
 
 /obj/machinery/atmospherics/components/unary/cryo_cell/proc/heat_gas_contents()
-	var/datum/gas_mixture/air_contents = airs["a1"]
+	var/datum/gas_mixture/air_contents = airs[AIR1]
 
 	if(air_contents.total_moles() < 1)
 		return
@@ -333,7 +333,7 @@
 		air_contents.temperature = combined_energy/combined_heat_capacity
 
 /obj/machinery/atmospherics/components/unary/cryo_cell/proc/expel_gas()
-	var/datum/gas_mixture/air_contents = airs["a1"]
+	var/datum/gas_mixture/air_contents = airs[AIR1]
 
 	if(air_contents.total_moles() < 1)
 		return

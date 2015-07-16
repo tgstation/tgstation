@@ -11,9 +11,9 @@
 	var/update_cycle
 
 /obj/machinery/atmospherics/components/unary/heat_exchanger/update_icon()
-	if(nodes["n1"])
+	if(nodes[NODE1])
 		icon_state = "he_intact"
-		var/obj/machinery/atmospherics/node = nodes["n1"]
+		var/obj/machinery/atmospherics/node = nodes[NODE1]
 		color = node.color
 	else
 		icon_state = "he_exposed"
@@ -43,8 +43,8 @@
 	update_cycle = SSair.times_fired
 	partner.update_cycle = SSair.times_fired
 
-	var/datum/gas_mixture/air_contents = airs["a1"]
-	var/datum/gas_mixture/partner_air_contents = partner.airs["a1"]
+	var/datum/gas_mixture/air_contents = airs[AIR1]
+	var/datum/gas_mixture/partner_air_contents = partner.airs[AIR1]
 
 	var/air_heat_capacity = air_contents.heat_capacity()
 	var/other_air_heat_capacity = partner_air_contents.heat_capacity()

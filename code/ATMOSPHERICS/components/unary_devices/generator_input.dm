@@ -9,7 +9,7 @@
 	var/update_cycle
 
 /obj/machinery/atmospherics/components/unary/generator_input/update_icon()
-	if(nodes["n1"])
+	if(nodes[NODE1])
 		icon_state = "intact"
 	else
 		icon_state = "exposed"
@@ -17,4 +17,4 @@
 	return
 
 /obj/machinery/atmospherics/components/unary/generator_input/proc/return_exchange_air()
-	return airs["a1"]
+	return airs[AIR1]

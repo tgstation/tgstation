@@ -69,7 +69,7 @@
 /obj/machinery/atmospherics/components/unary/cold_sink/freezer/interact(mob/user)
 	if(stat & (NOPOWER|BROKEN))
 		return
-	var/datum/gas_mixture/air_contents = airs["a1"]
+	var/datum/gas_mixture/air_contents = airs[AIR1]
 	user.set_machine(src)
 	var/temp_text = ""
 	if(air_contents.temperature > (T0C - 20))
@@ -194,7 +194,7 @@
 	return interact(user)
 
 /obj/machinery/atmospherics/components/unary/heat_reservoir/heater/interact(mob/user)
-	var/datum/gas_mixture/air_contents = airs["a1"]
+	var/datum/gas_mixture/air_contents = airs[AIR1]
 
 	if(stat & (NOPOWER|BROKEN))
 		return

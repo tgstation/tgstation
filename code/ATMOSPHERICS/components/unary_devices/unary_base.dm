@@ -31,11 +31,11 @@ Housekeeping and pipe network stuff below
 	if(..())
 		return 0
 	initialize_directions = dir
-	var/obj/machinery/atmospherics/node = nodes["n1"]
+	var/obj/machinery/atmospherics/node = nodes[NODE1]
 	if(node)
 		node.disconnect(src)
 	node = null
-	nullifyPipenet(parents["p1"])
+	nullifyPipenet(parents[PARENT1])
 	atmosinit()
 	initialize()
 	if(node)
@@ -44,4 +44,4 @@ Housekeeping and pipe network stuff below
 		node.addMember(src)
 	build_network()
 	. = 1
-	nodes["n1"] = node
+	nodes[NODE1] = node
