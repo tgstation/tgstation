@@ -301,9 +301,6 @@
 	icon_state = "alienpistol"
 	item_state = "alienpistol"
 
-//obj/item/weapon/gun/energy/decloner/alien/update_icon() // No charge levels
-//	return
-
 /obj/item/weapon/paper/abductor
 	name = "Dissection Guide"
 	icon_state = "alienpaper_words"
