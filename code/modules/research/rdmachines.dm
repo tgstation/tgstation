@@ -198,7 +198,7 @@ var/global/list/rnd_machines = list()
 			amount = 0
 		if(amount == 0)
 			busy = 0
-			return
+			return 1	//1 So the autolathe doesn't recycle the stack.
 		if(amount > stack.amount)
 			amount = stack.amount
 		if(max_material_storage - TotalMaterials() < (amount*stack.perunit))//Can't overfill
