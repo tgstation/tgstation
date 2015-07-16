@@ -372,9 +372,9 @@ var/global/image/fire_overlay = image("icon" = 'icons/effects/fire.dmi', "icon_s
 		user << "<span class='danger'>You cannot locate any organic eyes on this brain!</span>"
 		return
 
-	src.add_fingerprint(user)
+	add_logs(user, M, "attacked", object="[src.name]", addition="(INTENT: [uppertext(user.a_intent)])")
 
-	playsound(loc, src.hitsound, 30, 1, -1)
+	src.add_fingerprint(user)
 
 	if(M != user)
 		M.visible_message("<span class='danger'>[user] has stabbed [M] in the eye with [src]!</span>", \
@@ -393,17 +393,13 @@ var/global/image/fire_overlay = image("icon" = 'icons/effects/fire.dmi', "icon_s
 	else
 		M.take_organ_damage(7)
 
-	add_logs(user, M, "attacked", "[src.name]", "(INTENT: [uppertext(user.a_intent)])")
-
 	M.eye_blurry += rand(3,4)
 	M.eye_stat += rand(2,4)
 	if (M.eye_stat >= 10)
 		M.eye_blurry += 15+(0.1*M.eye_blurry)
+		M.disabilities |= NEARSIGHT
 		if(M.stat != 2)
 			M << "<span class='danger'>Your eyes start to bleed profusely!</span>"
-		if (!(M.disabilities & (NEARSIGHT | BLIND)))
-			M.disabilities |= NEARSIGHT
-			M << "<span class='danger'>You become nearsighted!</span>"
 		if(prob(50))
 			if(M.stat != 2)
 				if(M.drop_item())
@@ -411,7 +407,7 @@ var/global/image/fire_overlay = image("icon" = 'icons/effects/fire.dmi', "icon_s
 			M.eye_blurry += 10
 			M.Paralyse(1)
 			M.Weaken(2)
-		if (prob(M.eye_stat - 10 + 1) && !(M.disabilities & BLIND))
+		if (prob(M.eye_stat - 10 + 1))
 			if(M.stat != 2)
 				M << "<span class='danger'>You go blind!</span>"
 			M.disabilities |= BLIND

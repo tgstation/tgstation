@@ -197,9 +197,3 @@
 	gang = 1
 	uses = 20
 	instant = -1
-
-/obj/item/toy/crayon/spraycan/gang/New(loc, datum/gang/G)
-	..()
-	if(G)
-		colour = G.color_hex
-		update_icon()

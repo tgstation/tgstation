@@ -73,7 +73,7 @@
 		apply_damage(I.throwforce, dtype, zone, armor, I)
 
 		if(thrower)
-			add_logs(thrower, src, "hit", I)
+			add_logs(thrower, src, "hit", object="[I]")
 
 /mob/living/mech_melee_attack(obj/mecha/M)
 	if(M.occupant.a_intent == "harm")
@@ -94,10 +94,10 @@
 		updatehealth()
 		visible_message("<span class='danger'>[M.name] has hit [src]!</span>", \
 						"<span class='userdanger'>[M.name] has hit [src]!</span>")
-		add_logs(M.occupant, src, "attacked", M, "(INTENT: [uppertext(M.occupant.a_intent)]) (DAMTYPE: [uppertext(M.damtype)])")
+		add_logs(M.occupant, src, "attacked", object=M, addition="(INTENT: [uppertext(M.occupant.a_intent)]) (DAMTYPE: [uppertext(M.damtype)])")
 	else
 		step_away(src,M)
-		add_logs(M.occupant, src, "pushed", M)
+		add_logs(M.occupant, src, "pushed", object=M, admin=0)
 		visible_message("<span class='warning'>[M] pushes [src] out of the way.</span>")
 
 		return
@@ -121,20 +121,14 @@
 	return
 
 /mob/living/proc/adjust_fire_stacks(add_fire_stacks) //Adjusting the amount of fire_stacks we have on person
-	fire_stacks = Clamp(fire_stacks + add_fire_stacks, min = -20, max = 20)
-	if(on_fire && fire_stacks <= 0)
-		ExtinguishMob()
+    fire_stacks = Clamp(fire_stacks + add_fire_stacks, min = -20, max = 20)
 
 /mob/living/proc/handle_fire()
-	if(fire_stacks < 0) //If we've doused ourselves in water to avoid fire, dry off slowly
-		fire_stacks = min(0, fire_stacks + 1)//So we dry ourselves back to default, nonflammable.
+	if(fire_stacks < 0)
+		fire_stacks++ //If we've doused ourselves in water to avoid fire, dry off slowly
+		fire_stacks = min(0, fire_stacks)//So we dry ourselves back to default, nonflammable.
 	if(!on_fire)
 		return 1
-	if(fire_stacks > 0)
-		adjust_fire_stacks(-0.2) //the fire is slowly consumed
-	else
-		ExtinguishMob()
-		return
 	var/datum/gas_mixture/G = loc.return_air() // Check if we're standing in an oxygenless environment
 	if(G.oxygen < 1)
 		ExtinguishMob() //If there's no oxygen in the tile we're on, put out the fire
@@ -201,7 +195,7 @@
 		return // can't attack while eating!
 
 	if (stat != DEAD)
-		add_logs(M, src, "attacked")
+		add_logs(M, src, "attacked", admin=0)
 		M.do_attack_animation(src)
 		visible_message("<span class='danger'>The [M.name] glomps [src]!</span>", \
 				"<span class='userdanger'>The [M.name] glomps [src]!</span>")
@@ -217,7 +211,7 @@
 		M.do_attack_animation(src)
 		visible_message("<span class='danger'>\The [M] [M.attacktext] [src]!</span>", \
 						"<span class='userdanger'>\The [M] [M.attacktext] [src]!</span>")
-		add_logs(M, src, "attacked")
+		add_logs(M, src, "attacked", admin=0)
 		return 1
 
 
@@ -236,7 +230,7 @@
 			return 0
 		M.do_attack_animation(src)
 		if (prob(75))
-			add_logs(M, src, "attacked")
+			add_logs(M, src, "attacked", admin=0)
 			playsound(loc, 'sound/weapons/bite.ogg', 50, 1, -1)
 			visible_message("<span class='danger'>[M.name] bites [src]!</span>", \
 					"<span class='userdanger'>[M.name] bites [src]!</span>")
@@ -256,7 +250,7 @@
 		else
 			L.do_attack_animation(src)
 			if(prob(90))
-				add_logs(L, src, "attacked")
+				add_logs(L, src, "attacked", admin=0)
 				visible_message("<span class='danger'>[L.name] bites [src]!</span>", \
 						"<span class='userdanger'>[L.name] bites [src]!</span>")
 				playsound(loc, 'sound/weapons/bite.ogg', 50, 1, -1)

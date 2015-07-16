@@ -401,12 +401,18 @@
 
 		if(smooth)
 			smooth_icon(src)
-
-		overlays -= crack_overlay
-		if(ratio > 75)
-			return
-		crack_overlay = image('icons/obj/structures.dmi',"damage[ratio]",-(layer+0.1))
-		overlays += crack_overlay
+			if(ratio > 75)
+				overlays -= crack_overlay
+				return
+			crack_overlay = image('icons/obj/structures.dmi',"damage[ratio]")
+			overlays += crack_overlay
+		else
+			if(ratio > 75)
+				overlays -= crack_overlay
+				return
+			overlays -= crack_overlay
+			crack_overlay = image('icons/obj/structures.dmi',"damage[ratio]")
+			overlays += crack_overlay
 
 /obj/structure/window/temperature_expose(datum/gas_mixture/air, exposed_temperature, exposed_volume)
 	if(exposed_temperature > T0C + 800)

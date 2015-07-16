@@ -6,9 +6,7 @@ var/datum/subsystem/garbage_collector/SSgarbage
 	wait = 5
 	priority = -1
 	dynamic_wait = 1
-	dwait_upper = 50
-	dwait_delta = 10
-	dwait_buffer = 0
+	dwait_delta = 5
 
 	var/collection_timeout = 300// deciseconds to wait to let running procs finish before we just say fuck it and force del() the object
 	var/max_run_time = 1		// how long, in deciseconds, can we run before waiting for the next tick

@@ -232,13 +232,15 @@
 	archived_cycle = SSair.times_fired
 
 /turf/simulated/proc/update_visuals(datum/gas_mixture/model)
-	overlays -= SSair.plasma_overlay
-	overlays -= SSair.sleeptoxin_overlay
+	overlays.Cut()
+	var/siding_icon_state = return_siding_icon_state()
+	if(siding_icon_state)
+		overlays += image('icons/turf/floors.dmi',siding_icon_state)
 	switch(model.graphic)
 		if("plasma")
-			overlays += SSair.plasma_overlay
+			overlays.Add(SSair.plasma_overlay)
 		if("sleeping_agent")
-			overlays += SSair.sleeptoxin_overlay
+			overlays.Add(SSair.sleeptoxin_overlay)
 
 /turf/simulated/proc/share_air(var/turf/simulated/T)
 	if(T.current_cycle < current_cycle)

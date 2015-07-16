@@ -139,6 +139,7 @@
 	agent_landmarks.len = max_teams
 	scientist_landmarks.len = max_teams
 	for(var/obj/effect/landmark/abductor/A in landmarks_list)
+		world << "Found this [A]"
 		if(istype(A,/obj/effect/landmark/abductor/agent))
 			agent_landmarks[text2num(A.team)] = A
 		else if(istype(A,/obj/effect/landmark/abductor/scientist))

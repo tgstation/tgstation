@@ -78,7 +78,7 @@
 	alt_toggle_message = "You turn on the lights on"
 	action_button_name = "Toggle Justice Lights"
 	can_toggle = 1
-	toggle_cooldown = 20
+	toggle_cooldown = 14
 	activation_sound = 'sound/items/WEEOO1.ogg'
 
 /obj/item/clothing/head/helmet/justice/escape

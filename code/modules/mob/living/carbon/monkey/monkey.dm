@@ -90,7 +90,7 @@
 									"<span class='userdanger'>[M] has knocked out [name]!</span>")
 							return
 				adjustBruteLoss(damage)
-				add_logs(M, src, "attacked")
+				add_logs(M, src, "attacked", admin=0)
 				updatehealth()
 			else
 				playsound(loc, 'sound/weapons/punchmiss.ogg', 25, 1, -1)
@@ -128,11 +128,10 @@
 				else
 					visible_message("<span class='danger'>[M] has slashed [name]!</span>", \
 							"<span class='userdanger'>[M] has slashed [name]!</span>")
-
+				add_logs(M, src, "attacked", admin=0)
 				if (stat != DEAD)
 					adjustBruteLoss(damage)
 					updatehealth()
-				add_logs(M, src, "attacked")
 			else
 				playsound(loc, 'sound/weapons/slashmiss.ogg', 25, 1, -1)
 				visible_message("<span class='danger'>[M] has attempted to lunge at [name]!</span>", \
@@ -148,7 +147,7 @@
 				if(drop_item())
 					visible_message("<span class='danger'>[M] has disarmed [name]!</span>", \
 							"<span class='userdanger'>[M] has disarmed [name]!</span>")
-			add_logs(M, src, "disarmed")
+			add_logs(M, src, "disarmed", admin=0)
 			updatehealth()
 	return
 

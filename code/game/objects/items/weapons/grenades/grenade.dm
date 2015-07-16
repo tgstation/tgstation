@@ -17,7 +17,6 @@
 
 /obj/item/weapon/grenade/burn()
 	prime()
-	..()
 
 /obj/item/weapon/grenade/proc/clown_check(var/mob/living/carbon/human/user)
 	if(user.disabilities & CLUMSY && prob(50))

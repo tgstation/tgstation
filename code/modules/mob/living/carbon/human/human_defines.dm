@@ -52,5 +52,3 @@
 	var/datum/martial_art/martial_art = null
 
 	var/name_override //For temporary visible name changes
-
-	var/heart_attack = 0

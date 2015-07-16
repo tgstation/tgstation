@@ -5,6 +5,7 @@ var/datum/subsystem/air/SSair
 	priority = 20
 	wait = 5
 	dynamic_wait = 1
+	dwait_lower = 5
 	dwait_upper = 50
 
 	var/cost_turfs = 0

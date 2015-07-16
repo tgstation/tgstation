@@ -471,7 +471,7 @@
 // if hands aren't protected and the light is on, burn the player
 
 /obj/machinery/light/attack_hand(mob/living/carbon/human/user)
-	user.changeNext_move(CLICK_CD_MELEE)
+
 	add_fingerprint(user)
 
 	if(status == LIGHT_EMPTY)

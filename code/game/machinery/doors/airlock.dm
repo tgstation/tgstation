@@ -831,7 +831,7 @@ About the new airlock wires panel:
 						usr << text("The door is already electrified. You can't re-electrify it while it's already electrified.<br>\n")
 					else
 						shockedby += text("\[[time_stamp()]\][usr](ckey:[usr.ckey])")
-						add_logs(usr, src, "electrified", addition="at [x],[y],[z]")
+						add_logs(usr, src, "electrified", admin=0, addition="at [x],[y],[z]")
 						src.secondsElectrified = 30
 						spawn(10)
 							while (src.secondsElectrified>0)
@@ -850,7 +850,7 @@ About the new airlock wires panel:
 						usr << text("The door is already electrified. You can't re-electrify it while it's already electrified.<br>\n")
 					else
 						shockedby += text("\[[time_stamp()]\][usr](ckey:[usr.ckey])")
-						add_logs(usr, src, "electrified", addition="at [x],[y],[z]")
+						add_logs(usr, src, "electrified", admin=0, addition="at [x],[y],[z]")
 						src.secondsElectrified = -1
 
 				if (8) // Not in order >.>
@@ -1044,8 +1044,6 @@ About the new airlock wires panel:
 		var/obj/item/device/doorCharge/newCharge = C //This is necessary, for some reason
 		newCharge.loc = src
 		charge = newCharge
-		return
-	else if(istype(C, /obj/item/weapon/rcd)&& istype(loc, /turf/simulated)) //Do not attack the airlock if the user is holding an RCD
 		return
 	else
 		..()

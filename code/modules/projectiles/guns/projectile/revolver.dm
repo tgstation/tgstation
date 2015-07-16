@@ -80,6 +80,7 @@
 			user << "<span class='userdanger'>[src] blows up in your face!</span>"
 			user.take_organ_damage(0,20)
 			user.unEquip(src)
+			qdel(src)
 			return 0
 	..()
 

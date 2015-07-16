@@ -1,0 +1,6 @@
+author: duncathan
+
+delete-after: True
+
+changes: 
+  - tweak: "Restored RPD placement delay for disposals pipes."
