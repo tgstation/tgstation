@@ -10,7 +10,7 @@
 	description = "Both delicious AND rich in Vitamin C, what more do you need?"
 	color = "#E78108" // rgb: 231, 129, 8
 
-/datum/reagent/consumable/orangejuice/on_mob_life(var/mob/living/M as mob)
+/datum/reagent/consumable/orangejuice/on_mob_life(mob/living/M)
 	if(M.getOxyLoss() && prob(30))
 		M.adjustOxyLoss(-1)
 	..()
@@ -22,7 +22,7 @@
 	description = "Tomatoes made into juice. What a waste of big, juicy tomatoes, huh?"
 	color = "#731008" // rgb: 115, 16, 8
 
-/datum/reagent/consumable/tomatojuice/on_mob_life(var/mob/living/M as mob)
+/datum/reagent/consumable/tomatojuice/on_mob_life(mob/living/M)
 	if(M.getFireLoss() && prob(20))
 		M.heal_organ_damage(0,1)
 	..()
@@ -34,7 +34,7 @@
 	description = "The sweet-sour juice of limes."
 	color = "#365E30" // rgb: 54, 94, 48
 
-/datum/reagent/consumable/limejuice/on_mob_life(var/mob/living/M as mob)
+/datum/reagent/consumable/limejuice/on_mob_life(mob/living/M)
 	if(M.getToxLoss() && prob(20))
 		M.adjustToxLoss(-1*REM)
 	..()
@@ -46,7 +46,7 @@
 	description = "It is just like a carrot but without crunching."
 	color = "#973800" // rgb: 151, 56, 0
 
-/datum/reagent/consumable/carrotjuice/on_mob_life(var/mob/living/M as mob)
+/datum/reagent/consumable/carrotjuice/on_mob_life(mob/living/M)
 	M.eye_blurry = max(M.eye_blurry-1 , 0)
 	M.eye_blind = max(M.eye_blind-1 , 0)
 	switch(current_cycle)
@@ -70,7 +70,7 @@
 	description = "A tasty juice blended from various kinds of very deadly and toxic berries."
 	color = "#863353" // rgb: 134, 51, 83
 
-/datum/reagent/consumable/poisonberryjuice/on_mob_life(var/mob/living/M as mob)
+/datum/reagent/consumable/poisonberryjuice/on_mob_life(mob/living/M)
 	M.adjustToxLoss(1)
 	..()
 	return
@@ -93,7 +93,7 @@
 	description = "The raw essence of a banana. HONK"
 	color = "#863333" // rgb: 175, 175, 0
 
-/datum/reagent/consumable/banana/on_mob_life(var/mob/living/M as mob)
+/datum/reagent/consumable/banana/on_mob_life(mob/living/M)
 	if( ( istype(M, /mob/living/carbon/human) && M.job in list("Clown") ) || istype(M, /mob/living/carbon/monkey) )
 		M.heal_organ_damage(1,1)
 	..()
@@ -103,7 +103,7 @@
 	id = "nothing"
 	description = "Absolutely nothing."
 
-/datum/reagent/consumable/nothing/on_mob_life(var/mob/living/M as mob)
+/datum/reagent/consumable/nothing/on_mob_life(mob/living/M)
 	if(istype(M, /mob/living/carbon/human) && M.job in list("Mime"))
 		M.heal_organ_damage(1,1)
 	..()
@@ -121,7 +121,7 @@
 	description = "An opaque white liquid produced by the mammary glands of mammals."
 	color = "#DFDFDF" // rgb: 223, 223, 223
 
-/datum/reagent/consumable/milk/on_mob_life(var/mob/living/M as mob)
+/datum/reagent/consumable/milk/on_mob_life(mob/living/M)
 	if(M.getBruteLoss() && prob(20))
 		M.heal_organ_damage(1,0)
 	if(holder.has_reagent("capsaicin"))
@@ -135,7 +135,7 @@
 	description = "An opaque white liquid made from soybeans."
 	color = "#DFDFC7" // rgb: 223, 223, 199
 
-/datum/reagent/consumable/soymilk/on_mob_life(var/mob/living/M as mob)
+/datum/reagent/consumable/soymilk/on_mob_life(mob/living/M)
 	if(M.getBruteLoss() && prob(20))
 		M.heal_organ_damage(1,0)
 	..()
@@ -147,7 +147,7 @@
 	description = "The fatty, still liquid part of milk. Why don't you mix this with sum scotch, eh?"
 	color = "#DFD7AF" // rgb: 223, 215, 175
 
-/datum/reagent/consumable/cream/on_mob_life(var/mob/living/M as mob)
+/datum/reagent/consumable/cream/on_mob_life(mob/living/M)
 	if(M.getBruteLoss() && prob(20))
 		M.heal_organ_damage(1,0)
 	..()
@@ -161,11 +161,11 @@
 	nutriment_factor = 0
 	overdose_threshold = 80
 
-/datum/reagent/consumable/coffee/overdose_process(var/mob/living/M as mob)
+/datum/reagent/consumable/coffee/overdose_process(mob/living/M)
 	M.Jitter(5)
 	..()
 
-/datum/reagent/consumable/coffee/on_mob_life(var/mob/living/M as mob)
+/datum/reagent/consumable/coffee/on_mob_life(mob/living/M)
 	M.dizziness = max(0,M.dizziness-5)
 	M.drowsyness = max(0,M.drowsyness-3)
 	M.sleeping = max(0,M.sleeping - 2)
@@ -182,7 +182,7 @@
 	color = "#101000" // rgb: 16, 16, 0
 	nutriment_factor = 0
 
-/datum/reagent/consumable/tea/on_mob_life(var/mob/living/M as mob)
+/datum/reagent/consumable/tea/on_mob_life(mob/living/M)
 	M.dizziness = max(0,M.dizziness-2)
 	M.drowsyness = max(0,M.drowsyness-1)
 	M.jitteriness = max(0,M.jitteriness-3)
@@ -201,7 +201,7 @@
 	color = "#102838" // rgb: 16, 40, 56
 	nutriment_factor = 0
 
-/datum/reagent/consumable/icecoffee/on_mob_life(var/mob/living/M as mob)
+/datum/reagent/consumable/icecoffee/on_mob_life(mob/living/M)
 	M.dizziness = max(0,M.dizziness-5)
 	M.drowsyness = max(0,M.drowsyness-3)
 	M.sleeping = max(0,M.sleeping-2)
@@ -218,7 +218,7 @@
 	color = "#104038" // rgb: 16, 64, 56
 	nutriment_factor = 0
 
-/datum/reagent/consumable/icetea/on_mob_life(var/mob/living/M as mob)
+/datum/reagent/consumable/icetea/on_mob_life(mob/living/M)
 	M.dizziness = max(0,M.dizziness-2)
 	M.drowsyness = max(0,M.drowsyness-1)
 	M.sleeping = max(0,M.sleeping-2)
@@ -235,7 +235,7 @@
 	description = "A refreshing beverage."
 	color = "#100800" // rgb: 16, 8, 0
 
-/datum/reagent/consumable/space_cola/on_mob_life(var/mob/living/M as mob)
+/datum/reagent/consumable/space_cola/on_mob_life(mob/living/M)
 	M.drowsyness = max(0,M.drowsyness-5)
 	if (M.bodytemperature > 310)//310 is the normal bodytemp. 310.055
 		M.bodytemperature = max(310, M.bodytemperature - (5 * TEMPERATURE_DAMAGE_COEFFICIENT))
@@ -248,7 +248,7 @@
 	description = "Cola, cola never changes."
 	color = "#100800" // rgb: 16, 8, 0
 
-/datum/reagent/consumable/nuka_cola/on_mob_life(var/mob/living/M as mob)
+/datum/reagent/consumable/nuka_cola/on_mob_life(mob/living/M)
 	M.Jitter(20)
 	M.druggy = max(M.druggy, 30)
 	M.dizziness +=5
@@ -266,7 +266,7 @@
 	description = "Blows right through you like a space wind."
 	color = "#102000" // rgb: 16, 32, 0
 
-/datum/reagent/consumable/spacemountainwind/on_mob_life(var/mob/living/M as mob)
+/datum/reagent/consumable/spacemountainwind/on_mob_life(mob/living/M)
 	M.drowsyness = max(0,M.drowsyness-7)
 	M.sleeping = max(0,M.sleeping-1)
 	if (M.bodytemperature > 310)
@@ -281,7 +281,7 @@
 	description = "A delicious blend of 42 different flavours"
 	color = "#102000" // rgb: 16, 32, 0
 
-/datum/reagent/consumable/dr_gibb/on_mob_life(var/mob/living/M as mob)
+/datum/reagent/consumable/dr_gibb/on_mob_life(mob/living/M)
 	M.drowsyness = max(0,M.drowsyness-6)
 	if (M.bodytemperature > 310)
 		M.bodytemperature = max(310, M.bodytemperature - (5 * TEMPERATURE_DAMAGE_COEFFICIENT)) //310 is the normal bodytemp. 310.055
@@ -294,7 +294,7 @@
 	description = "Tastes like a hull breach in your mouth."
 	color = "#00FF00" // rgb: 0, 255, 0
 
-/datum/reagent/consumable/space_up/on_mob_life(var/mob/living/M as mob)
+/datum/reagent/consumable/space_up/on_mob_life(mob/living/M)
 	if (M.bodytemperature > 310)
 		M.bodytemperature = max(310, M.bodytemperature - (8 * TEMPERATURE_DAMAGE_COEFFICIENT)) //310 is the normal bodytemp. 310.055
 	..()
@@ -306,7 +306,7 @@
 	id = "lemon_lime"
 	color = "#8CFF00" // rgb: 135, 255, 0
 
-/datum/reagent/consumable/lemon_lime/on_mob_life(var/mob/living/M as mob)
+/datum/reagent/consumable/lemon_lime/on_mob_life(mob/living/M)
 	if (M.bodytemperature > 310)
 		M.bodytemperature = max(310, M.bodytemperature - (8 * TEMPERATURE_DAMAGE_COEFFICIENT)) //310 is the normal bodytemp. 310.055
 	..()
@@ -318,7 +318,7 @@
 	description = "A can of club soda. Why not make a scotch and soda?"
 	color = "#619494" // rgb: 97, 148, 148
 
-/datum/reagent/consumable/sodawater/on_mob_life(var/mob/living/M as mob)
+/datum/reagent/consumable/sodawater/on_mob_life(mob/living/M)
 	M.dizziness = max(0,M.dizziness-5)
 	M.drowsyness = max(0,M.drowsyness-3)
 	if (M.bodytemperature > 310)
@@ -332,7 +332,7 @@
 	description = "It tastes strange but at least the quinine keeps the Space Malaria at bay."
 	color = "#0064C8" // rgb: 0, 100, 200
 
-/datum/reagent/consumable/tonic/on_mob_life(var/mob/living/M as mob)
+/datum/reagent/consumable/tonic/on_mob_life(mob/living/M)
 	M.dizziness = max(0,M.dizziness-5)
 	M.drowsyness = max(0,M.drowsyness-3)
 	M.sleeping = max(0,M.sleeping-2)
@@ -348,7 +348,7 @@
 	reagent_state = SOLID
 	color = "#619494" // rgb: 97, 148, 148
 
-/datum/reagent/consumable/ice/on_mob_life(var/mob/living/M as mob)
+/datum/reagent/consumable/ice/on_mob_life(mob/living/M)
 	M.bodytemperature -= 5 * TEMPERATURE_DAMAGE_COEFFICIENT
 	..()
 	return
@@ -359,7 +359,7 @@
 	description = "A nice and tasty beverage while you are reading your hippie books."
 	color = "#664300" // rgb: 102, 67, 0
 
-/datum/reagent/consumable/soy_latte/on_mob_life(var/mob/living/M as mob)
+/datum/reagent/consumable/soy_latte/on_mob_life(mob/living/M)
 	M.dizziness = max(0,M.dizziness-5)
 	M.drowsyness = max(0,M.drowsyness-3)
 	M.sleeping = 0
@@ -377,7 +377,7 @@
 	description = "A nice, strong and tasty beverage while you are reading."
 	color = "#664300" // rgb: 102, 67, 0
 
-/datum/reagent/consumable/cafe_latte/on_mob_life(var/mob/living/M as mob)
+/datum/reagent/consumable/cafe_latte/on_mob_life(mob/living/M)
 	M.dizziness = max(0,M.dizziness-5)
 	M.drowsyness = max(0,M.drowsyness-3)
 	M.sleeping = 0
@@ -464,7 +464,7 @@
 	description = "Nuclear proliferation never tasted so good."
 	color = "#666300" // rgb: 102, 99, 0
 
-/datum/reagent/consumable/atomicbomb/on_mob_life(var/mob/living/M as mob)
+/datum/reagent/consumable/atomicbomb/on_mob_life(mob/living/M)
 	M.druggy = max(M.druggy, 50)
 	M.confused = max(M.confused+2,0)
 	M.Dizzy(10)
@@ -486,7 +486,7 @@
 	description = "Whoah, this stuff looks volatile!"
 	color = "#664300" // rgb: 102, 67, 0
 
-/datum/reagent/consumable/gargle_blaster/on_mob_life(var/mob/living/M as mob)
+/datum/reagent/consumable/gargle_blaster/on_mob_life(mob/living/M)
 	M.dizziness +=6
 	switch(current_cycle)
 		if(15 to 45)
@@ -509,7 +509,7 @@
 	description = "A strong neurotoxin that puts the subject into a death-like state."
 	color = "#2E2E61" // rgb: 46, 46, 97
 
-/datum/reagent/consumable/neurotoxin/on_mob_life(var/mob/living/carbon/M as mob)
+/datum/reagent/consumable/neurotoxin/on_mob_life(mob/living/carbon/M)
 	M.weakened = max(M.weakened, 3)
 	M.dizziness +=6
 	switch(current_cycle)
@@ -535,7 +535,7 @@
 	nutriment_factor = 0
 	metabolization_rate = 0.2 * REAGENTS_METABOLISM
 
-/datum/reagent/consumable/hippies_delight/on_mob_life(var/mob/living/M as mob)
+/datum/reagent/consumable/hippies_delight/on_mob_life(mob/living/M)
 	M.druggy = max(M.druggy, 50)
 	switch(current_cycle)
 		if(1 to 5)

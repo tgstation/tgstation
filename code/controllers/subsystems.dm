@@ -57,7 +57,7 @@
 
 //could be used to postpone a costly subsystem for (default one) var/cycles, cycles
 //for instance, during cpu intensive operations like explosions
-/datum/subsystem/proc/postpone(var/cycles = 1)
+/datum/subsystem/proc/postpone(cycles = 1)
 	if(next_fire - world.time < wait)
 		next_fire += (wait*cycles)
 

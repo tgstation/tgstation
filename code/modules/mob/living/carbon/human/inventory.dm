@@ -391,7 +391,7 @@
 			return
 
 //Cycles through all clothing slots and tests them for destruction
-/mob/living/carbon/human/proc/shred_clothing(var/bomb,var/shock)
+/mob/living/carbon/human/proc/shred_clothing(bomb,shock)
 	var/covered_parts = 0	//The body parts that are protected by exterior clothing/armor
 	var/head_absorbed = 0	//How much of the shock the headgear absorbs when it is shredded. -1=it survives
 	var/suit_absorbed = 0	//How much of the shock the exosuit absorbs when it is shredded. -1=it survives
@@ -439,7 +439,7 @@
 		if(absorbed >= 0)
 			w_uniform.shred(bomb,shock-20-absorbed,src)	//Uniforms are also annoying to get shredded
 
-/obj/item/proc/shred(var/bomb,var/shock,var/mob/living/carbon/human/Human)
+/obj/item/proc/shred(bomb,shock,mob/living/carbon/human/Human)
 	if(flags & ABSTRACT)
 		return -1
 
@@ -452,7 +452,7 @@
 			shredded = -1 //Heat protection = Fireproof
 
 	else if(shock > 0)
-		if(prob(Clamp(shock,0,90)))
+		if(prob(max(shock-armor["bomb"],0)))
 			shredded = armor["bomb"] + 10 //It gets shredded, but it also absorbs the shock the clothes underneath would recieve by this amount
 		else
 			shredded = -1 //It survives explosion

@@ -21,7 +21,7 @@
 	is_cyborg = 1
 	cost = 500
 
-/obj/item/stack/sheet/glass/attack_self(mob/user as mob)
+/obj/item/stack/sheet/glass/attack_self(mob/user)
 	construct_window(user)
 
 /obj/item/stack/sheet/glass/attackby(obj/item/W, mob/user, params)
@@ -56,7 +56,7 @@
 	else
 		return ..()
 
-/obj/item/stack/sheet/glass/proc/construct_window(mob/user as mob)
+/obj/item/stack/sheet/glass/proc/construct_window(mob/user)
 	if(!user || !src)	return 0
 	if(!istype(user.loc,/turf)) return 0
 	if(!user.IsAdvancedToolUser())
@@ -140,20 +140,20 @@
 /obj/item/stack/sheet/rglass/cyborg/get_amount()
 	return min(round(metsource.energy / metcost), round(glasource.energy / glacost))
 
-/obj/item/stack/sheet/rglass/cyborg/use(var/amount) // Requires special checks, because it uses two storages
+/obj/item/stack/sheet/rglass/cyborg/use(amount) // Requires special checks, because it uses two storages
 	metsource.use_charge(amount * metcost)
 	glasource.use_charge(amount * glacost)
 	return
 
-/obj/item/stack/sheet/rglass/cyborg/add(var/amount)
+/obj/item/stack/sheet/rglass/cyborg/add(amount)
 	metsource.add_charge(amount * metcost)
 	glasource.add_charge(amount * glacost)
 	return
 
-/obj/item/stack/sheet/rglass/attack_self(mob/user as mob)
+/obj/item/stack/sheet/rglass/attack_self(mob/user)
 	construct_window(user)
 
-/obj/item/stack/sheet/rglass/proc/construct_window(mob/user as mob)
+/obj/item/stack/sheet/rglass/proc/construct_window(mob/user)
 	if(!user || !src)	return 0
 	if(!istype(user.loc,/turf)) return 0
 	if(!user.IsAdvancedToolUser())
@@ -325,7 +325,7 @@
 			qdel(src)
 	..()
 
-/obj/item/weapon/shard/Crossed(var/mob/AM)
+/obj/item/weapon/shard/Crossed(mob/AM)
 	if(istype(AM))
 		playsound(loc, 'sound/effects/glass_step.ogg', 50, 1)
 		if(ishuman(AM))

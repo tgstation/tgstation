@@ -21,7 +21,7 @@
 		icon_state = initial(icon_state)
 		SetLuminosity(0)
 
-/obj/item/device/flashlight/proc/update_brightness(var/mob/user = null)
+/obj/item/device/flashlight/proc/update_brightness(mob/user = null)
 	if(on)
 		icon_state = "[initial(icon_state)]-on"
 		if(loc == user)
@@ -44,7 +44,7 @@
 	return 1
 
 
-/obj/item/device/flashlight/attack(mob/living/carbon/human/M as mob, mob/living/carbon/human/user as mob)
+/obj/item/device/flashlight/attack(mob/living/carbon/human/M, mob/living/carbon/human/user)
 	add_fingerprint(user)
 	if(on && user.zone_sel.selecting == "eyes")
 
@@ -119,7 +119,7 @@
 			return
 	..()
 
-/obj/item/device/flashlight/pen/proc/CreateHolo(var/tturf,var/creator)
+/obj/item/device/flashlight/pen/proc/CreateHolo(tturf,creator)
 	var/obj/effect/medical_holosign/M = new /obj/effect/medical_holosign(tturf)
 	M.visible_message("<span class='danger'>[creator] created a medical hologram!</span>")
 	holo_cooldown = 1
@@ -225,7 +225,7 @@ obj/item/device/flashlight/lamp/bananalamp
 	else
 		update_brightness(null)
 
-/obj/item/device/flashlight/flare/update_brightness(var/mob/user = null)
+/obj/item/device/flashlight/flare/update_brightness(mob/user = null)
 	..()
 	if(on)
 		item_state = "[initial(item_state)]-on"
@@ -300,7 +300,7 @@ obj/item/device/flashlight/lamp/bananalamp
 		emp_cur_charges = min(emp_cur_charges+1, emp_max_charges)
 		return 1
 
-/obj/item/device/flashlight/emp/attack(mob/living/M as mob, mob/living/user as mob)
+/obj/item/device/flashlight/emp/attack(mob/living/M, mob/living/user)
 	if(on && user.zone_sel.selecting == "eyes") // call original attack proc only if aiming at the eyes
 		..()
 	return

@@ -36,7 +36,7 @@
 	return
 
 
-/mob/living/simple_animal/shade/attackby(var/obj/item/O as obj, var/mob/user as mob, params)  //Marker -Agouri
+/mob/living/simple_animal/shade/attackby(obj/item/O, mob/user, params)  //Marker -Agouri
 	if(istype(O, /obj/item/device/soulstone))
 		var/obj/item/device/soulstone/SS = O
 		SS.transfer_soul("SHADE", src, user)

@@ -81,7 +81,7 @@
 				winshow(M, "Telecomms IDE", 0) // hide the windows
 
 
-/obj/machinery/computer/telecomms/traffic/attack_hand(mob/user as mob)
+/obj/machinery/computer/telecomms/traffic/attack_hand(mob/user)
 	if(..())
 		return
 	user.set_machine(src)
@@ -135,7 +135,7 @@
 	temp = ""
 	return
 
-/obj/machinery/computer/telecomms/traffic/proc/create_log(var/entry, var/mob/user)
+/obj/machinery/computer/telecomms/traffic/proc/create_log(entry, mob/user)
 	var/id = null
 	if(issilicon(user))
 		id = "System Administrator"
@@ -274,13 +274,13 @@
 	src.updateUsrDialog()
 	return
 
-/obj/machinery/computer/telecomms/traffic/emag_act(mob/user as mob)
+/obj/machinery/computer/telecomms/traffic/emag_act(mob/user)
 	if(!emagged)
 		playsound(src.loc, 'sound/effects/sparks4.ogg', 75, 1)
 		emagged = 1
 		user << "<span class='notice'>You you disable the security protocols.</span>"
 
-/obj/machinery/computer/telecomms/traffic/proc/canAccess(var/mob/user)
+/obj/machinery/computer/telecomms/traffic/proc/canAccess(mob/user)
 	if(issilicon(user) || in_range(user, src))
 		return 1
 	return 0

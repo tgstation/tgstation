@@ -85,7 +85,7 @@
 	var/assignment = null
 	var/dorm = 0		// determines if this ID has claimed a dorm already
 
-/obj/item/weapon/card/id/attack_self(mob/user as mob)
+/obj/item/weapon/card/id/attack_self(mob/user)
 	user.visible_message("<span class='notice'>[user] shows you: \icon[src] [src.name].</span>", \
 					"<span class='notice'>You show \the [src.name].</span>")
 	src.add_fingerprint(user)
@@ -110,7 +110,7 @@ update_label()
 update_label("John Doe", "Clowny")
 	Properly formats the name and occupation and sets the id name to the arguments
 */
-/obj/item/weapon/card/id/proc/update_label(var/newname, var/newjob)
+/obj/item/weapon/card/id/proc/update_label(newname, newjob)
 	if(newname || newjob)
 		name = "[(!newname)	? "identification card"	: "[newname]'s ID Card"][(!newjob) ? "" : " ([newjob])"]"
 		return
@@ -132,7 +132,7 @@ update_label("John Doe", "Clowny")
 	access = list(access_maint_tunnels, access_syndicate)
 	origin_tech = "syndicate=3"
 
-/obj/item/weapon/card/id/syndicate/afterattack(var/obj/item/weapon/O as obj, mob/user as mob, proximity)
+/obj/item/weapon/card/id/syndicate/afterattack(obj/item/weapon/O, mob/user, proximity)
 	if(!proximity) return
 	if(istype(O, /obj/item/weapon/card/id))
 		var/obj/item/weapon/card/id/I = O
@@ -142,7 +142,7 @@ update_label("John Doe", "Clowny")
 				usr << "<span class='notice'>The card's microscanners activate as you pass it over the ID, copying its access.</span>"
 
 
-/obj/item/weapon/card/id/syndicate/attack_self(mob/user as mob)
+/obj/item/weapon/card/id/syndicate/attack_self(mob/user)
 	if(!src.registered_name)
 		//Stop giving the players unsanitized unputs! You are giving ways for players to intentionally crash clients! -Nodrak
 		var t = copytext(sanitize(input(user, "What name would you like to put on this card?", "Agent card name", ishuman(user) ? user.real_name : user.name)as text | null),1,26)
@@ -223,7 +223,7 @@ update_label("John Doe", "Clowny")
 	var/goal = 0 //How far from freedom?
 	var/points = 0
 
-/obj/item/weapon/card/id/prisoner/attack_self(mob/user as mob)
+/obj/item/weapon/card/id/prisoner/attack_self(mob/user)
 	usr << "<span class='notice'>You have accumulated [points] out of the [goal] points you need for freedom.</span>"
 
 /obj/item/weapon/card/id/prisoner/one

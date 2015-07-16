@@ -55,7 +55,7 @@
 		start = null
 		return
 
-/obj/item/tapeproj/attack_self(var/mob/user)
+/obj/item/tapeproj/attack_self(mob/user)
 	if(charging)
 		usr << "<span class='warning'>[src] is recharging!</span>"
 		return
@@ -152,7 +152,7 @@
 		spawn(40)
 			charging = 0
 
-/obj/item/holotape/Bumped(var/mob/M)
+/obj/item/holotape/Bumped(mob/M)
 	if(!ismob(M))
 		return
 	if(iscarbon(M))
@@ -197,7 +197,7 @@
 /obj/item/holotape/attack_paw(mob/living/user)
 	attack_hand(user)
 
-/obj/item/holotape/bullet_act(var/obj/item/projectile/Proj)
+/obj/item/holotape/bullet_act(obj/item/projectile/Proj)
 	if((Proj.damage_type == BRUTE || Proj.damage_type == BURN))
 		health -= Proj.damage
 	..()
@@ -205,7 +205,7 @@
 		breaktape()
 	return
 
-/obj/item/holotape/attackby(obj/item/weapon/W as obj, mob/user as mob, params)
+/obj/item/holotape/attackby(obj/item/weapon/W, mob/user, params)
 	user.changeNext_move(CLICK_CD_MELEE)
 	add_fingerprint(user)
 	health -= W.force * 0.3

@@ -6,7 +6,7 @@
 	density = 1
 	anchored = 1
 
-/obj/structure/dresser/attack_hand(mob/user as mob)
+/obj/structure/dresser/attack_hand(mob/user)
 	if(!Adjacent(user))//no tele-grooming
 		return
 	if(ishuman(user))

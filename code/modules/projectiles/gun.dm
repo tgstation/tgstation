@@ -87,7 +87,7 @@
 	return
 
 
-/obj/item/weapon/gun/proc/shoot_live_shot(mob/living/user as mob|obj, var/pointblank = 0, var/mob/pbtarget = null, var/message = 1)
+/obj/item/weapon/gun/proc/shoot_live_shot(mob/living/user as mob|obj, pointblank = 0, mob/pbtarget = null, message = 1)
 	if(recoil)
 		spawn()
 			shake_camera(user, recoil + 1, recoil)
@@ -172,7 +172,7 @@
 	return 0
 
 
-/obj/item/weapon/gun/proc/process_fire(atom/target as mob|obj|turf, mob/living/user as mob|obj, var/message = 1, params)
+/obj/item/weapon/gun/proc/process_fire(atom/target as mob|obj|turf, mob/living/user as mob|obj, message = 1, params)
 	add_fingerprint(user)
 
 	if(semicd)
@@ -235,7 +235,7 @@
 	else
 		return
 
-/obj/item/weapon/gun/attackby(var/obj/item/A as obj, mob/user as mob, params)
+/obj/item/weapon/gun/attackby(obj/item/A, mob/user, params)
 	if(istype(A, /obj/item/device/flashlight/seclite))
 		var/obj/item/device/flashlight/seclite/S = A
 		if(can_flashlight)
@@ -293,7 +293,7 @@
 	update_gunlight(user)
 	return
 
-/obj/item/weapon/gun/proc/update_gunlight(var/mob/user = null)
+/obj/item/weapon/gun/proc/update_gunlight(mob/user = null)
 	if(F)
 		action_button_name = "Toggle Gunlight"
 		if(F.on)
@@ -328,13 +328,13 @@
 			SetLuminosity(F.brightness_on)
 
 
-/obj/item/weapon/gun/attack_hand(mob/user as mob)
+/obj/item/weapon/gun/attack_hand(mob/user)
 	if(unique_reskin && !reskinned && loc == user)
 		reskin_gun(user)
 		return
 	..()
 
-/obj/item/weapon/gun/proc/reskin_gun(var/mob/M)
+/obj/item/weapon/gun/proc/reskin_gun(mob/M)
 	var/choice = input(M,"Warning, you can only reskin your weapon once!","Reskin Gun") in options
 
 	if(src && choice && !M.stat && in_range(M,src) && !M.restrained() && M.canmove)
@@ -348,7 +348,7 @@
 		reskinned = 1
 		return
 
-/obj/item/weapon/gun/proc/rename_gun(var/mob/M)
+/obj/item/weapon/gun/proc/rename_gun(mob/M)
 	var/input = stripped_input(M,"What do you want to name the gun?", ,"", MAX_NAME_LEN)
 
 	if(src && input && !M.stat && in_range(M,src) && !M.restrained() && M.canmove)

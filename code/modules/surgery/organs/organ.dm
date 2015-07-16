@@ -137,7 +137,7 @@
 //Heals brute and burn damage for the organ. Returns 1 if the damage-icon states changed at all.
 //Damage cannot go below zero.
 //Cannot remove negative damage (i.e. apply damage)
-/obj/item/organ/limb/proc/heal_damage(brute, burn, var/robotic)
+/obj/item/organ/limb/proc/heal_damage(brute, burn, robotic)
 
 	if(robotic && status != ORGAN_ROBOTIC) // This makes organic limbs not heal when the proc is in Robotic mode.
 		brute = max(0, brute - 3)

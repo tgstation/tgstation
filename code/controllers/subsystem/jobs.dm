@@ -463,7 +463,7 @@ var/datum/subsystem/job/SSjob
 			return 1
 	return 0
 
-/datum/subsystem/job/proc/RejectPlayer(var/mob/new_player/player)
+/datum/subsystem/job/proc/RejectPlayer(mob/new_player/player)
 	if(player.mind && player.mind.special_role)
 		return
 	Debug("Popcap overflow Check observer located, Player: [player]")
