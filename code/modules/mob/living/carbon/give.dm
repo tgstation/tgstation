@@ -2,7 +2,7 @@
 	set category = "IC"
 	set name = "Give"
 	set src in view(1)
-	if(src.stat == 2 || usr.stat == 2 || src.client == null)
+	if(src.stat == CONSCIOUS || usr.stat == CONSCIOUS || src.client == null)
 		return
 	if(src == usr)
 		usr << "<span class='warning'>I feel stupider, suddenly.</span>"
