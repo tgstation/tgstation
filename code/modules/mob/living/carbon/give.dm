@@ -16,7 +16,7 @@
 		return
 	if(usr.hand)
 		I = usr.l_hand
-	else if(!usr.hand)
+	else
 		I = usr.r_hand
 	if(!I)
 		return
