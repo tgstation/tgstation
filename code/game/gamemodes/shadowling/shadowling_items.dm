@@ -94,7 +94,7 @@
 	sleep(100)
 	qdel(src)
 
-/obj/structure/shadow_vortex/Crossed(var/td)
+/obj/structure/shadow_vortex/Crossed(td)
 	..()
 	if(ismob(td))
 		td << "<span class='userdanger'><font size=3>You enter the rift. Sickening chimes begin to jangle in your ears. \

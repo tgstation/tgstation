@@ -18,7 +18,7 @@
 	var/phasing_energy_drain = 200
 	max_equip = 3
 
-/obj/mecha/combat/phazon/Bump(var/atom/obstacle)
+/obj/mecha/combat/phazon/Bump(atom/obstacle)
 	if(phasing && get_charge()>=phasing_energy_drain)
 		spawn()
 			if(can_move)

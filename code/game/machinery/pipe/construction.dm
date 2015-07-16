@@ -270,7 +270,7 @@ var/global/list/pipeID2State = list(
 		else
 			return 0
 
-/obj/item/pipe/proc/unflip(var/direction)
+/obj/item/pipe/proc/unflip(direction)
 	if(!(direction in cardinal))
 		return turn(direction, 45)
 
@@ -284,10 +284,10 @@ var/global/list/pipeID2State = list(
 		else if(dir==8)
 			dir = 4
 
-/obj/item/pipe/attack_self(mob/user as mob)
+/obj/item/pipe/attack_self(mob/user)
 	return rotate()
 
-/obj/item/pipe/attackby(var/obj/item/weapon/W as obj, var/mob/user as mob, params)
+/obj/item/pipe/attackby(obj/item/weapon/W, mob/user, params)
 
 	//*
 	if (!istype(W, /obj/item/weapon/wrench))
@@ -412,7 +412,7 @@ var/global/list/pipeID2State = list(
 	item_state = "buildpipe"
 	w_class = 4
 
-/obj/item/pipe_meter/attackby(var/obj/item/weapon/W as obj, var/mob/user as mob, params)
+/obj/item/pipe_meter/attackby(obj/item/weapon/W, mob/user, params)
 	..()
 
 	if (!istype(W, /obj/item/weapon/wrench))

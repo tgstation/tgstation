@@ -13,7 +13,7 @@
 	var/obj/item/weapon/gun/energy/chrono_gun/PA = null
 	var/list/erased_minds = list() //a collection of minds from the dead
 
-/obj/item/weapon/chrono_eraser/proc/pass_mind(var/datum/mind/M)
+/obj/item/weapon/chrono_eraser/proc/pass_mind(datum/mind/M)
 	erased_minds += M
 
 /obj/item/weapon/chrono_eraser/dropped()
@@ -76,7 +76,7 @@
 		field_disconnect(field)
 	..()
 
-/obj/item/weapon/gun/energy/chrono_gun/proc/field_connect(var/obj/effect/chrono_field/F)
+/obj/item/weapon/gun/energy/chrono_gun/proc/field_connect(obj/effect/chrono_field/F)
 	var/mob/living/user = src.loc
 	if(F.gun)
 		if(isliving(user) && F.captured)
@@ -90,7 +90,7 @@
 			user << "<span class='notice'>Connection established with target: <b>[F.captured]</b></span>"
 
 
-/obj/item/weapon/gun/energy/chrono_gun/proc/field_disconnect(var/obj/effect/chrono_field/F)
+/obj/item/weapon/gun/energy/chrono_gun/proc/field_disconnect(obj/effect/chrono_field/F)
 	if(F && field == F)
 		var/mob/living/user = src.loc
 		if(F.gun == src)
@@ -100,7 +100,7 @@
 	field = null
 	startpos = null
 
-/obj/item/weapon/gun/energy/chrono_gun/proc/field_check(var/obj/effect/chrono_field/F)
+/obj/item/weapon/gun/energy/chrono_gun/proc/field_check(obj/effect/chrono_field/F)
 	if(F)
 		if(field == F)
 			var/turf/currentpos = get_turf(src)
@@ -110,7 +110,7 @@
 		field_disconnect(F)
 		return 0
 
-/obj/item/weapon/gun/energy/chrono_gun/proc/pass_mind(var/datum/mind/M)
+/obj/item/weapon/gun/energy/chrono_gun/proc/pass_mind(datum/mind/M)
 	if(TED)
 		TED.pass_mind(M)
 
@@ -130,7 +130,7 @@
 	else
 		return 0
 
-/obj/item/projectile/energy/chrono_beam/on_hit(var/atom/target)
+/obj/item/projectile/energy/chrono_beam/on_hit(atom/target)
 	if(target && gun && isliving(target))
 		var/obj/effect/chrono_field/F = new(target.loc, target, gun)
 		gun.field_connect(F)
@@ -224,7 +224,7 @@
 	else
 		qdel(src)
 
-/obj/effect/chrono_field/bullet_act(var/obj/item/projectile/P)
+/obj/effect/chrono_field/bullet_act(obj/item/projectile/P)
 	if(istype(P, /obj/item/projectile/energy/chrono_beam))
 		var/obj/item/projectile/energy/chrono_beam/beam = P
 		var/obj/item/weapon/gun/energy/chrono_gun/Pgun = beam.gun

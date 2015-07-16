@@ -53,7 +53,7 @@
 	else
 		desc += "."
 
-/obj/machinery/constructable_frame/machine_frame/attackby(obj/item/P as obj, mob/user as mob, params)
+/obj/machinery/constructable_frame/machine_frame/attackby(obj/item/P, mob/user, params)
 	if(P.crit_fail)
 		user << "<span class='warning'>This part is faulty, you cannot add this to the machine!</span>"
 		return

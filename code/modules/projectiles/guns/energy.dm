@@ -60,7 +60,7 @@
 	chambered = null //either way, released the prepared shot
 	return
 
-/obj/item/weapon/gun/energy/proc/select_fire(mob/living/user as mob)
+/obj/item/weapon/gun/energy/proc/select_fire(mob/living/user)
 	select++
 	if (select > ammo_type.len)
 		select = 1
@@ -77,11 +77,14 @@
 	var/ratio = Ceiling((power_supply.charge / power_supply.maxcharge) * 4)
 	var/obj/item/ammo_casing/energy/shot = ammo_type[select]
 	var/iconState = "[icon_state]_charge"
-	item_state = icon_state
+	var/itemState = null
+	if(!initial(item_state))
+		itemState = icon_state
 	if (modifystate)
 		overlays += "[icon_state]_[shot.select_name]"
 		iconState += "_[shot.select_name]"
-		item_state += "[shot.select_name]"
+		if(itemState)
+			itemState += "[shot.select_name]"
 	if(power_supply.charge < shot.e_cost)
 		overlays += "[icon_state]_empty"
 		ratio = 0
@@ -92,6 +95,9 @@
 		if(F.on)
 			iconF = "flight_on"
 		overlays += image(icon = icon, icon_state = iconF, pixel_x = flight_x_offset, pixel_y = flight_y_offset)
+	if(itemState)
+		itemState += "[ratio]"
+		item_state = itemState
 
 /obj/item/weapon/gun/energy/ui_action_click()
 	toggle_gunlight()

@@ -42,6 +42,9 @@
 			for(var/datum/mutation/human/HM in dna.mutations)
 				HM.on_life(src)
 
+		//heart attack stuff
+		handle_heart()
+
 		//Stuff jammed in your limbs hurts
 		handle_embedded_objects()
 	//Update our name based on whether our face is obscured/disfigured
@@ -51,7 +54,7 @@
 		dna.species.spec_life(src) // for mutantraces
 
 
-/mob/living/carbon/human/calculate_affecting_pressure(var/pressure)
+/mob/living/carbon/human/calculate_affecting_pressure(pressure)
 	if((wear_suit && (wear_suit.flags & STOPSPRESSUREDMAGE)) && (head && (head.flags & STOPSPRESSUREDMAGE)))
 		return ONE_ATMOSPHERE
 	else
@@ -85,55 +88,48 @@
 
 
 /mob/living/carbon/human/handle_mutations_and_radiation()
-	if(dna)
-		if(dna.species.handle_mutations_and_radiation(src))
-			..()
+	if(!dna || !dna.species.handle_mutations_and_radiation(src))
+		..()
 
 /mob/living/carbon/human/breathe()
-	if(dna)
-		dna.species.breathe(src)
+	if(!dna || !dna.species.breathe(src))
+		..()
 
-	return
+/mob/living/carbon/human/check_breath(datum/gas_mixture/breath)
+	if(!dna || !dna.species.check_breath(breath, src))
+		..()
 
 /mob/living/carbon/human/handle_environment(datum/gas_mixture/environment)
 	if(dna)
 		dna.species.handle_environment(environment, src)
 
-	return
-
 ///FIRE CODE
 /mob/living/carbon/human/handle_fire()
-	if(dna)
-		dna.species.handle_fire(src)
-	if(..())
-		return
-	var/thermal_protection = 0 //Simple check to estimate how protected we are against multiple temperatures
-	if(wear_suit)
-		if(wear_suit.max_heat_protection_temperature >= FIRE_SUIT_MAX_TEMP_PROTECT)
-			thermal_protection += (wear_suit.max_heat_protection_temperature*0.7)
-	if(head)
-		if(head.max_heat_protection_temperature >= FIRE_HELM_MAX_TEMP_PROTECT)
-			thermal_protection += (head.max_heat_protection_temperature*THERMAL_PROTECTION_HEAD)
-	thermal_protection = round(thermal_protection)
-	if(thermal_protection >= FIRE_IMMUNITY_SUIT_MAX_TEMP_PROTECT)
-		return
-	if(thermal_protection >= FIRE_SUIT_MAX_TEMP_PROTECT)
-		bodytemperature += 11
-		return
-	else
-		bodytemperature += BODYTEMP_HEATING_MAX
-	return
+	if(!dna || !dna.species.handle_fire(src))
+		..()
+	if(on_fire)
+		var/thermal_protection = 0 //Simple check to estimate how protected we are against multiple temperatures
+		if(wear_suit)
+			if(wear_suit.max_heat_protection_temperature >= FIRE_SUIT_MAX_TEMP_PROTECT)
+				thermal_protection += (wear_suit.max_heat_protection_temperature*0.7)
+		if(head)
+			if(head.max_heat_protection_temperature >= FIRE_HELM_MAX_TEMP_PROTECT)
+				thermal_protection += (head.max_heat_protection_temperature*THERMAL_PROTECTION_HEAD)
+		thermal_protection = round(thermal_protection)
+		if(thermal_protection >= FIRE_IMMUNITY_SUIT_MAX_TEMP_PROTECT)
+			return
+		if(thermal_protection >= FIRE_SUIT_MAX_TEMP_PROTECT)
+			bodytemperature += 11
+		else
+			bodytemperature += BODYTEMP_HEATING_MAX
+
 
 /mob/living/carbon/human/IgniteMob()
-	if(dna)
-		dna.species.IgniteMob(src)
-	else
+	if(!dna || !dna.species.IgniteMob(src))
 		..()
 
 /mob/living/carbon/human/ExtinguishMob()
-	if(dna)
-		dna.species.ExtinguishMob(src)
-	else
+	if(!dna || !dna.species.ExtinguishMob(src))
 		..()
 //END FIRE CODE
 
@@ -338,13 +334,12 @@
 				if(!has_embedded_objects())
 					clear_alert("embeddedobject")
 
-/mob/living/carbon/human/handle_heart()
+/mob/living/carbon/human/proc/handle_heart()
 	if(!heart_attack)
 		return
 	else
 		losebreath += 5
 		adjustOxyLoss(5)
 		adjustBruteLoss(1)
-	return
 
 #undef HUMAN_MAX_OXYLOSS

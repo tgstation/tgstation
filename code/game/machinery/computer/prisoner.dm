@@ -14,7 +14,7 @@
 	var/obj/item/weapon/card/id/prisoner/inserted_id
 	circuit = /obj/item/weapon/circuitboard/prisoner
 
-/obj/machinery/computer/prisoner/attack_hand(var/mob/user as mob)
+/obj/machinery/computer/prisoner/attack_hand(mob/user)
 	if(..())
 		return
 	user.set_machine(src)
@@ -71,7 +71,7 @@
 	popup.open()
 	return
 
-/obj/machinery/computer/prisoner/attackby(obj/item/I as obj, mob/user as mob, params)
+/obj/machinery/computer/prisoner/attackby(obj/item/I, mob/user, params)
 	if(istype(I, /obj/item/weapon/card/id))
 		return attack_hand(user)
 	..()

@@ -352,7 +352,7 @@ var/global/list/possible_items = list()
 			approved_targets += possible_item
 	return set_target(safepick(approved_targets))
 
-/datum/objective/steal/proc/set_target(var/datum/objective_item/item)
+/datum/objective/steal/proc/set_target(datum/objective_item/item)
 	if(item)
 		targetinfo = item
 
@@ -428,7 +428,7 @@ var/global/list/possible_items_special = list()
 /datum/objective/steal/exchange
 	dangerrating = 10
 
-/datum/objective/steal/exchange/proc/set_faction(var/faction,var/otheragent)
+/datum/objective/steal/exchange/proc/set_faction(faction,otheragent)
 	target = otheragent
 	if(faction == "red")
 		targetinfo = new/datum/objective_item/unique/docs_blue
@@ -449,7 +449,7 @@ var/global/list/possible_items_special = list()
 /datum/objective/steal/exchange/backstab
 	dangerrating = 3
 
-/datum/objective/steal/exchange/backstab/set_faction(var/faction)
+/datum/objective/steal/exchange/backstab/set_faction(faction)
 	if(faction == "red")
 		targetinfo = new/datum/objective_item/unique/docs_red
 	else if(faction == "blue")
@@ -537,7 +537,7 @@ var/global/list/possible_items_special = list()
 /datum/objective/absorb
 	dangerrating = 10
 
-/datum/objective/absorb/proc/gen_amount_goal(var/lowbound = 4, var/highbound = 6)
+/datum/objective/absorb/proc/gen_amount_goal(lowbound = 4, highbound = 6)
 	target_amount = rand (lowbound,highbound)
 	if (ticker)
 		var/n_p = 1 //autowin

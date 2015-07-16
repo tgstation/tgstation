@@ -593,7 +593,7 @@
 /obj/item/weapon/reagent_containers/food/drinks/drinkingglass/filled/cola
 	list_reagents = list("cola" = 50)
 
-/obj/item/weapon/reagent_containers/food/drinks/drinkingglass/attackby(var/obj/item/I, mob/user as mob, params)
+/obj/item/weapon/reagent_containers/food/drinks/drinkingglass/attackby(obj/item/I, mob/user, params)
 	if(istype(I,/obj/item/weapon/reagent_containers/food/snacks/egg)) //breaking eggs
 		var/obj/item/weapon/reagent_containers/food/snacks/egg/E = I
 		if(reagents)
@@ -612,7 +612,7 @@
 	if(user.a_intent == "harm" && ismob(target) && target.reagents && reagents.total_volume)
 		target.visible_message("<span class='danger'>[user] splashes the contents of [src] onto [target]!</span>", \
 						"<span class='userdanger'>[user] splashes the contents of [src] onto [target]!</span>")
-		add_logs(user, target, "splashed", object="[src]")
+		add_logs(user, target, "splashed", src)
 		reagents.reaction(target, TOUCH)
 		reagents.clear_reagents()
 		return

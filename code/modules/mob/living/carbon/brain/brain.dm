@@ -33,12 +33,12 @@
 /mob/living/carbon/brain/blob_act()
 	return
 
-/mob/living/carbon/brain/on_forcemove(var/atom/newloc)
+/mob/living/carbon/brain/on_forcemove(atom/newloc)
 	if(container)
 		container.loc = newloc
 	else //something went very wrong.
 		CRASH("Brainmob without container.")
 	loc = container
 
-/mob/living/carbon/brain/UnarmedAttack(var/atom/A)//Stops runtimes due to attack_animal being the default
+/mob/living/carbon/brain/UnarmedAttack(atom/A)//Stops runtimes due to attack_animal being the default
 	return

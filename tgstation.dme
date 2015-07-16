@@ -1253,6 +1253,7 @@
 #include "code\modules\mob\living\simple_animal\hostile\retaliate\bat.dm"
 #include "code\modules\mob\living\simple_animal\hostile\retaliate\clown.dm"
 #include "code\modules\mob\living\simple_animal\hostile\retaliate\retaliate.dm"
+#include "code\modules\mob\living\simple_animal\morph\morph.dm"
 #include "code\modules\mob\living\simple_animal\revenant\revenant.dm"
 #include "code\modules\mob\living\simple_animal\revenant\revenant_abilities.dm"
 #include "code\modules\mob\living\simple_animal\revenant\revenant_spawn_event.dm"

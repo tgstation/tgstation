@@ -42,7 +42,7 @@
 
 
 //pod insertion
-/obj/structure/transit_tube/station/MouseDrop_T(obj/structure/c_transit_tube_pod/R as obj, mob/user as mob)
+/obj/structure/transit_tube/station/MouseDrop_T(obj/structure/c_transit_tube_pod/R, mob/user)
 	if(!user.canmove || user.stat || user.restrained())
 		return
 	if (!istype(R) || get_dist(user, src) > 1 || get_dist(src,R) > 1)
@@ -58,7 +58,7 @@
 	qdel(R)
 
 
-/obj/structure/transit_tube/station/attack_hand(mob/user as mob)
+/obj/structure/transit_tube/station/attack_hand(mob/user)
 	if(!pod_moving)
 		for(var/obj/structure/transit_tube_pod/pod in loc)
 			if(!pod.moving && pod.dir in directions())

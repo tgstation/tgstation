@@ -9,7 +9,7 @@
 	throwforce = 5.0
 	throw_speed = 2
 	throw_range = 5
-	w_class = 3.0
+	w_class = 2
 	var/charge = 0	// note %age conveted to actual charge in New
 	var/maxcharge = 1000
 	materials = list(MAT_METAL=700, MAT_GLASS=50)
@@ -36,7 +36,7 @@
 	return 100.0*charge/maxcharge
 
 // use power from a cell
-/obj/item/weapon/stock_parts/cell/proc/use(var/amount)
+/obj/item/weapon/stock_parts/cell/proc/use(amount)
 	if(rigged && amount > 0)
 		explode()
 		return 0
@@ -47,7 +47,7 @@
 	return 1
 
 // recharge the cell
-/obj/item/weapon/stock_parts/cell/proc/give(var/amount)
+/obj/item/weapon/stock_parts/cell/proc/give(amount)
 	if(rigged && amount > 0)
 		explode()
 		return 0

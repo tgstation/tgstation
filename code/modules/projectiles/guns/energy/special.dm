@@ -20,7 +20,6 @@
 	name = "ion carbine"
 	desc = "The MK.II Prototype Ion Projector is a lightweight carbine version of the larger ion rifle, built to be ergonomic and efficient."
 	icon_state = "ioncarbine"
-	item_state = "ioncarbine"
 	origin_tech = "combat=4;magnets=4;materials=4"
 	w_class = 3
 	slot_flags = SLOT_BELT
@@ -73,7 +72,7 @@
 	update_icon()
 	return 1
 
-/obj/item/weapon/gun/energy/floragun/attack_self(mob/living/user as mob)
+/obj/item/weapon/gun/energy/floragun/attack_self(mob/living/user)
 	select_fire(user)
 	update_icon()
 	return
@@ -211,7 +210,7 @@
 	if(power_supply)
 		user <<"<span class='notice'>[src] is [round(power_supply.percent())]% charged.</span>"
 
-/obj/item/weapon/gun/energy/plasmacutter/attackby(var/obj/item/A, var/mob/user)
+/obj/item/weapon/gun/energy/plasmacutter/attackby(obj/item/A, mob/user)
 	if(istype(A, /obj/item/stack/sheet/mineral/plasma))
 		var/obj/item/stack/sheet/S = A
 		S.use(1)
@@ -244,16 +243,17 @@
 
 /obj/item/weapon/gun/energy/wormhole_projector/update_icon()
 	icon_state = "[initial(icon_state)][select]"
+	item_state = icon_state
 	return
 
-/obj/item/weapon/gun/energy/wormhole_projector/attack_self(mob/living/user as mob)
+/obj/item/weapon/gun/energy/wormhole_projector/attack_self(mob/living/user)
 	select_fire(user)
 
 /obj/item/weapon/gun/energy/wormhole_projector/process_chamber()
 	..()
 	select_fire()
 
-/obj/item/weapon/gun/energy/wormhole_projector/proc/portal_destroyed(var/obj/effect/portal/P)
+/obj/item/weapon/gun/energy/wormhole_projector/proc/portal_destroyed(obj/effect/portal/P)
 	if(P.icon_state == "portal")
 		blue = null
 		if(orange)
@@ -263,7 +263,7 @@
 		if(blue)
 			blue.target = null
 
-/obj/item/weapon/gun/energy/wormhole_projector/proc/create_portal(var/obj/item/projectile/beam/wormhole/W)
+/obj/item/weapon/gun/energy/wormhole_projector/proc/create_portal(obj/item/projectile/beam/wormhole/W)
 	var/obj/effect/portal/P = new /obj/effect/portal(get_turf(W), null, src)
 	P.precision = 0
 	if(W.name == "bluespace beam")
@@ -326,7 +326,7 @@
 	cell_type = "/obj/item/weapon/stock_parts/cell/high"
 	pin = null
 
-/obj/item/weapon/gun/energy/temperature/attack_self(mob/living/user as mob)
+/obj/item/weapon/gun/energy/temperature/attack_self(mob/living/user)
 	select_fire(user)
 	update_icon()
 	return

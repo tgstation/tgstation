@@ -36,7 +36,7 @@
 /obj/item/mecha_parts/mecha_equipment/tool/sleeper/Exit(atom/movable/O)
 	return 0
 
-/obj/item/mecha_parts/mecha_equipment/tool/sleeper/action(var/mob/living/carbon/target)
+/obj/item/mecha_parts/mecha_equipment/tool/sleeper/action(mob/living/carbon/target)
 	if(!action_checks(target))
 		return
 	if(!istype(target))
@@ -189,14 +189,14 @@
 	return output
 
 
-/obj/item/mecha_parts/mecha_equipment/tool/sleeper/proc/inject_reagent(var/datum/reagent/R,var/obj/item/mecha_parts/mecha_equipment/tool/syringe_gun/SG)
+/obj/item/mecha_parts/mecha_equipment/tool/sleeper/proc/inject_reagent(datum/reagent/R,obj/item/mecha_parts/mecha_equipment/tool/syringe_gun/SG)
 	if(!R || !occupant || !SG || !(SG in chassis.equipment))
 		return 0
 	var/to_inject = min(R.volume, inject_amount)
 	if(to_inject && occupant.reagents.get_reagent_amount(R.id) + to_inject <= inject_amount*2)
 		occupant_message("Injecting [occupant] with [to_inject] units of [R.name].")
 		log_message("Injecting [occupant] with [to_inject] units of [R.name].")
-		add_logs(chassis.occupant, occupant, "injected", object="[name] ([R] - [to_inject] units)")
+		add_logs(chassis.occupant, occupant, "injected", "[name] ([R] - [to_inject] units)")
 		SG.reagents.trans_id_to(occupant,R.id,to_inject)
 		update_equip_info()
 	return
@@ -214,7 +214,7 @@
 
 /datum/global_iterator/mech_sleeper
 
-/datum/global_iterator/mech_sleeper/process(var/obj/item/mecha_parts/mecha_equipment/tool/sleeper/S)
+/datum/global_iterator/mech_sleeper/process(obj/item/mecha_parts/mecha_equipment/tool/sleeper/S)
 	if(!S.chassis)
 		S.set_ready_state(1)
 		return stop()
@@ -328,7 +328,6 @@
 				if(M)
 					var/R
 					mechsyringe.visible_message("<span class=\"attack\"> [M] was hit by the syringe!</span>")
-					add_logs(originaloccupant, M, "shot", object="syringegun")
 					if(M.can_inject(null, 1))
 						if(mechsyringe.reagents)
 							for(var/datum/reagent/A in mechsyringe.reagents.reagent_list)
@@ -338,6 +337,7 @@
 						mechsyringe.icon = initial(mechsyringe.icon)
 						mechsyringe.reagents.trans_to(M, mechsyringe.reagents.total_volume)
 						M.take_organ_damage(2)
+						add_logs(originaloccupant, M, "shot", "syringegun")
 					break
 				else if(mechsyringe.loc == trg)
 					mechsyringe.icon_state = initial(mechsyringe.icon_state)

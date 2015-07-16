@@ -128,7 +128,7 @@ Proc for attack log creation, because really why not
 6 is additional information, anything that needs to be added
 */
 
-/proc/add_logs(mob/user, mob/target, what_done, var/admin=1, var/object=null, var/addition=null)
+/proc/add_logs(mob/user, mob/target, what_done, object=null, addition=null)
 	var/newhealthtxt = ""
 	if (target && isliving(target))
 		var/mob/living/L = target
@@ -137,5 +137,4 @@ Proc for attack log creation, because really why not
 		user.attack_log += text("\[[time_stamp()]\] <font color='red'>Has [what_done] [target ? "[target.name][(ismob(target) && target.ckey) ? "([target.ckey])" : ""]" : "NON-EXISTANT SUBJECT"][object ? " with [object]" : " "][addition][newhealthtxt]</font>")
 	if(target && ismob(target))
 		target.attack_log += text("\[[time_stamp()]\] <font color='orange'>Has been [what_done] by [user ? "[user.name][(ismob(user) && user.ckey) ? "([user.ckey])" : ""]" : "NON-EXISTANT SUBJECT"][object ? " with [object]" : " "][addition][newhealthtxt]</font>")
-	if(admin)
-		log_attack("[user ? "[user.name][(ismob(user) && user.ckey) ? "([user.ckey])" : ""]" : "NON-EXISTANT SUBJECT"] [what_done] [target ? "[target.name][(ismob(target) && target.ckey)? "([target.ckey])" : ""]" : "NON-EXISTANT SUBJECT"][object ? " with [object]" : " "][addition][newhealthtxt]")
+	log_attack("[user ? "[user.name][(ismob(user) && user.ckey) ? "([user.ckey])" : ""]" : "NON-EXISTANT SUBJECT"] [what_done] [target ? "[target.name][(ismob(target) && target.ckey)? "([target.ckey])" : ""]" : "NON-EXISTANT SUBJECT"][object ? " with [object]" : " "][addition][newhealthtxt]")

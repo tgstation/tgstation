@@ -25,7 +25,7 @@
 	icon_state = "[initial(icon_state)][magazine ? "-[magazine.max_ammo]" : ""][chambered ? "" : "-e"][suppressed ? "-suppressed" : ""]"
 	return
 
-/obj/item/weapon/gun/projectile/automatic/attackby(var/obj/item/A as obj, mob/user as mob, params)
+/obj/item/weapon/gun/projectile/automatic/attackby(obj/item/A, mob/user, params)
 	. = ..()
 	if(.)
 		return
@@ -130,7 +130,7 @@
 	fire_delay = 3
 	pin = /obj/item/device/firing_pin/implant/pindicate
 
-/obj/item/weapon/gun/projectile/automatic/l6_saw/attack_self(mob/user as mob)
+/obj/item/weapon/gun/projectile/automatic/l6_saw/attack_self(mob/user)
 	cover_open = !cover_open
 	user << "<span class='notice'>You [cover_open ? "open" : "close"] [src]'s cover.</span>"
 	update_icon()
@@ -148,7 +148,7 @@
 		update_icon()
 
 
-/obj/item/weapon/gun/projectile/automatic/l6_saw/attack_hand(mob/user as mob)
+/obj/item/weapon/gun/projectile/automatic/l6_saw/attack_hand(mob/user)
 	if(loc != user)
 		..()
 		return	//let them pick it up
@@ -164,7 +164,7 @@
 		user << "<span class='notice'>You remove the magazine from [src].</span>"
 
 
-/obj/item/weapon/gun/projectile/automatic/l6_saw/attackby(var/obj/item/A as obj, mob/user as mob, params)
+/obj/item/weapon/gun/projectile/automatic/l6_saw/attackby(obj/item/A, mob/user, params)
 	if(!cover_open)
 		user << "<span class='warning'>[src]'s cover is closed! You can't insert a new mag.</span>"
 		return
@@ -190,13 +190,13 @@
 	underbarrel = new /obj/item/weapon/gun/projectile/revolver/grenadelauncher(src)
 	update_icon()
 	return
-/obj/item/weapon/gun/projectile/automatic/m90/afterattack(var/atom/target, var/mob/living/user, flag, params)
+/obj/item/weapon/gun/projectile/automatic/m90/afterattack(atom/target, mob/living/user, flag, params)
 	if(select == 2)
 		underbarrel.afterattack(target, user, flag, params)
 	else
 		..()
 		return
-/obj/item/weapon/gun/projectile/automatic/m90/attackby(var/obj/item/A, mob/user, params)
+/obj/item/weapon/gun/projectile/automatic/m90/attackby(obj/item/A, mob/user, params)
 	if(istype(A, /obj/item/ammo_casing))
 		if(istype(A, underbarrel.magazine.ammo_type))
 			underbarrel.attack_self()

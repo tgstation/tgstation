@@ -61,7 +61,7 @@ Pipelines + Other Objects -> Pipe network
 /obj/machinery/atmospherics/proc/SetInitDirections()
 	return
 
-/obj/machinery/atmospherics/proc/safe_input(var/title, var/text, var/default_set)
+/obj/machinery/atmospherics/proc/safe_input(title, text, default_set)
 	var/new_value = input(usr,text,title,default_set) as num
 	if(usr.canUseTopic(src))
 		return new_value
@@ -86,13 +86,13 @@ Pipelines + Other Objects -> Pipe network
 /obj/machinery/atmospherics/proc/disconnect(obj/machinery/atmospherics/reference)
 	return
 
-/obj/machinery/atmospherics/proc/icon_addintact(var/obj/machinery/atmospherics/node, var/connected)
+/obj/machinery/atmospherics/proc/icon_addintact(obj/machinery/atmospherics/node, connected)
 	var/image/img = getpipeimage('icons/obj/atmospherics/binary_devices.dmi', "pipe_intact", get_dir(src,node), node.pipe_color)
 	underlays += img
 
 	return connected | img.dir
 
-/obj/machinery/atmospherics/proc/icon_addbroken(var/connected)
+/obj/machinery/atmospherics/proc/icon_addbroken(connected)
 	var/unconnected = (~connected) & initialize_directions
 	for(var/direction in cardinal)
 		if(unconnected & direction)
@@ -101,7 +101,7 @@ Pipelines + Other Objects -> Pipe network
 /obj/machinery/atmospherics/update_icon()
 	return null
 
-/obj/machinery/atmospherics/attackby(var/obj/item/weapon/W as obj, var/mob/user as mob, params)
+/obj/machinery/atmospherics/attackby(obj/item/weapon/W, mob/user, params)
 	if(can_unwrench && istype(W, /obj/item/weapon/wrench))
 		var/turf/T = get_turf(src)
 		if (level==1 && isturf(T) && T.intact)
@@ -120,7 +120,7 @@ Pipelines + Other Objects -> Pipe network
 			user << "<span class='warning'>As you begin unwrenching \the [src] a gush of air blows in your face... maybe you should reconsider?</span>"
 			unsafe_wrenching = TRUE //Oh dear oh dear
 
-		if (do_after(user, 40, target = src) && !gc_destroyed)
+		if (do_after(user, 20, target = src) && !gc_destroyed)
 			user.visible_message( \
 				"[user] unfastens \the [src].", \
 				"<span class='notice'>You unfasten \the [src].</span>", \
@@ -138,7 +138,7 @@ Pipelines + Other Objects -> Pipe network
 
 //Called when an atmospherics object is unwrenched while having a large pressure difference
 //with it's locs air contents.
-/obj/machinery/atmospherics/proc/unsafe_pressure_release(var/mob/user,var/pressures)
+/obj/machinery/atmospherics/proc/unsafe_pressure_release(mob/user,pressures)
 	if(!user)
 		return
 
@@ -165,7 +165,7 @@ Pipelines + Other Objects -> Pipe network
 /obj/machinery/atmospherics/proc/nullifyPipenet(datum/pipeline/P)
 	P.other_atmosmch -= src
 
-/obj/machinery/atmospherics/proc/getpipeimage(var/iconset, var/iconstate, var/direction, var/col=rgb(255,255,255))
+/obj/machinery/atmospherics/proc/getpipeimage(iconset, iconstate, direction, col=rgb(255,255,255))
 
 	//Add identifiers for the iconset
 	if(iconsetids[iconset] == null)
@@ -186,7 +186,7 @@ Pipelines + Other Objects -> Pipe network
 
 	return img
 
-/obj/machinery/atmospherics/construction(D, P, var/pipe_type, var/obj_color)
+/obj/machinery/atmospherics/construction(D, P, pipe_type, obj_color)
 	dir = D
 	initialize_directions = P
 	if(can_unwrench)
@@ -212,7 +212,7 @@ Pipelines + Other Objects -> Pipe network
 
 
 //Find a connecting /obj/machinery/atmospherics in specified direction
-/obj/machinery/atmospherics/proc/findConnecting(var/direction)
+/obj/machinery/atmospherics/proc/findConnecting(direction)
 	for(var/obj/machinery/atmospherics/target in get_step(src, direction))
 		if(target.initialize_directions & get_dir(target,src))
 			return target
@@ -220,7 +220,7 @@ Pipelines + Other Objects -> Pipe network
 
 #define VENT_SOUND_DELAY 30
 
-/obj/machinery/atmospherics/relaymove(var/mob/living/user, var/direction)
+/obj/machinery/atmospherics/relaymove(mob/living/user, direction)
 	if(!(direction & initialize_directions)) //cant go this way.
 		return
 
@@ -248,7 +248,7 @@ Pipelines + Other Objects -> Pipe network
 		user.canmove = 1
 
 
-/obj/machinery/atmospherics/AltClick(var/mob/living/L)
+/obj/machinery/atmospherics/AltClick(mob/living/L)
 	if(is_type_in_list(src, ventcrawl_machinery))
 		L.handle_ventcrawl(src)
 		return

@@ -35,7 +35,7 @@ It is possible to destroy the net by the occupant or someone else.
 
 
 
-/obj/effect/energy_net/process(var/mob/living/carbon/M as mob)
+/obj/effect/energy_net/process(mob/living/carbon/M)
 	var/check = 30//30 seconds before teleportation. Could be extended I guess.
 	var/mob_name = affecting.name//Since they will report as null if terminated before teleport.
 	//The person can still try and attack the net when inside.
@@ -95,7 +95,7 @@ It is possible to destroy the net by the occupant or someone else.
 
 
 
-/obj/effect/energy_net/bullet_act(var/obj/item/projectile/Proj)
+/obj/effect/energy_net/bullet_act(obj/item/projectile/Proj)
 	health -= Proj.damage
 	healthcheck()
 	..()
@@ -151,7 +151,7 @@ It is possible to destroy the net by the occupant or someone else.
 
 
 
-/obj/effect/energy_net/attack_alien(mob/living/user as mob)
+/obj/effect/energy_net/attack_alien(mob/living/user)
 	user.do_attack_animation(src)
 	if (islarva(user))
 		return
@@ -168,7 +168,7 @@ It is possible to destroy the net by the occupant or someone else.
 
 
 
-/obj/effect/energy_net/attackby(obj/item/weapon/W as obj, mob/user as mob, params)
+/obj/effect/energy_net/attackby(obj/item/weapon/W, mob/user, params)
 	var/aforce = W.force
 	health = max(0, health - aforce)
 	healthcheck()

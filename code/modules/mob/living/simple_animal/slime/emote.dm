@@ -1,4 +1,4 @@
-/mob/living/simple_animal/slime/emote(var/act)
+/mob/living/simple_animal/slime/emote(act)
 
 
 	if (findtext(act, "-", 1, null))

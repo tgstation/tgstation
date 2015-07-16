@@ -10,6 +10,7 @@
 	name = "stun revolver"
 	desc = "A high-tech revolver that fires internal, reusable taser cartridges in a revolving cylinder. The cartridges can be recharged using conventional rechargers."
 	icon_state = "stunrevolver"
+	item_state = "gun"
 	ammo_type = list(/obj/item/ammo_casing/energy/electrode/gun)
 	can_flashlight = 0
 	pin = null

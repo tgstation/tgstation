@@ -43,7 +43,7 @@
 				SSair.add_to_active(T)
 	..()
 
-/turf/attack_hand(mob/user as mob)
+/turf/attack_hand(mob/user)
 	user.Move_Pulled(src)
 
 /turf/attackby(obj/item/C, mob/user, params)
@@ -107,8 +107,6 @@
 
 /turf/proc/is_plasteel_floor()
 	return 0
-/turf/proc/return_siding_icon_state()		//used for grass floors, which have siding.
-	return 0
 
 /turf/proc/levelupdate()
 	for(var/obj/O in src)
@@ -128,7 +126,7 @@
 		qdel(L)
 
 //Creates a new turf
-/turf/proc/ChangeTurf(var/path)
+/turf/proc/ChangeTurf(path)
 	if(!path)			return
 	if(path == type)	return src
 

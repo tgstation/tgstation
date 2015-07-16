@@ -8,7 +8,7 @@
 	var/deviation = 0
 	var/shot_delay = 0
 
-/obj/item/mecha_parts/mecha_equipment/weapon/can_attach(var/obj/mecha/combat/M as obj)
+/obj/item/mecha_parts/mecha_equipment/weapon/can_attach(obj/mecha/combat/M)
 	if(..())
 		if(istype(M))
 			return 1
@@ -112,7 +112,7 @@
 	projectile = /obj/item/projectile/plasma/adv/mech
 	fire_sound = 'sound/weapons/Laser.ogg'
 
-/obj/item/mecha_parts/mecha_equipment/weapon/energy/plasma/can_attach(obj/mecha/M as obj)
+/obj/item/mecha_parts/mecha_equipment/weapon/energy/plasma/can_attach(obj/mecha/M)
 	if(istype(M, /obj/mecha/working))
 		if(M.equipment.len < M.max_equip)
 			return 1
@@ -128,7 +128,7 @@
 	src.life -= 10
 	if(ismob(A))
 		var/mob/M = A
-		add_logs(firer, M, "shot", object="[src]")
+		add_logs(firer, M, "shot", "[src]")
 	if(life <= 0)
 		qdel(src)
 	return
@@ -151,7 +151,7 @@
 	equip_cooldown = 150
 	range = MELEE|RANGED
 
-/obj/item/mecha_parts/mecha_equipment/weapon/honker/can_attach(obj/mecha/combat/honker/M as obj)
+/obj/item/mecha_parts/mecha_equipment/weapon/honker/can_attach(obj/mecha/combat/honker/M)
 	if(..())
 		if(istype(M))
 			return 1
@@ -374,7 +374,7 @@
 	projectile_energy_cost = 100
 	equip_cooldown = 20
 
-/obj/item/mecha_parts/mecha_equipment/weapon/ballistic/missile_rack/banana_mortar/can_attach(obj/mecha/combat/honker/M as obj)
+/obj/item/mecha_parts/mecha_equipment/weapon/ballistic/missile_rack/banana_mortar/can_attach(obj/mecha/combat/honker/M)
 	if(..())
 		if(istype(M))
 			return 1
@@ -403,7 +403,7 @@
 	projectile_energy_cost = 100
 	equip_cooldown = 10
 
-/obj/item/mecha_parts/mecha_equipment/weapon/ballistic/missile_rack/mousetrap_mortar/can_attach(obj/mecha/combat/honker/M as obj)
+/obj/item/mecha_parts/mecha_equipment/weapon/ballistic/missile_rack/mousetrap_mortar/can_attach(obj/mecha/combat/honker/M)
 	if(..())
 		if(istype(M))
 			return 1

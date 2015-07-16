@@ -11,14 +11,13 @@
 	flight_x_offset = 15
 	flight_y_offset = 10
 
-/obj/item/weapon/gun/energy/gun/attack_self(mob/living/user as mob)
+/obj/item/weapon/gun/energy/gun/attack_self(mob/living/user)
 	select_fire(user)
 	update_icon()
 
 /obj/item/weapon/gun/energy/gun/hos
 	desc = "This is a expensive, modern recreation of a antique laser gun. This gun has several unique firemodes, but lacks the ability to recharge over time."
 	icon_state = "hoslaser"
-	item_state = null
 	force = 10
 	ammo_type = list(/obj/item/ammo_casing/energy/electrode/hos, /obj/item/ammo_casing/energy/laser/hos, /obj/item/ammo_casing/energy/disabler)
 
@@ -26,7 +25,6 @@
 	name = "DRAGnet"
 	desc = "The \"Dynamic Rapid-Apprehension of the Guilty\" net is a revolution in law enforcement technology."
 	icon_state = "dragnet"
-	item_state = null
 	origin_tech = "combat=3;magnets=3;materials=4; bluespace=4"
 	ammo_type = list(/obj/item/ammo_casing/energy/net, /obj/item/ammo_casing/energy/trap)
 	can_flashlight = 0
@@ -36,6 +34,7 @@
 	name = "hybrid turret gun"
 	desc = "A heavy hybrid energy cannon with two settings: Stun and kill."
 	icon_state = "turretlaser"
+	item_state = "turretlaser"
 	slot_flags = null
 	w_class = 5
 	ammo_type = list(/obj/item/ammo_casing/energy/electrode, /obj/item/ammo_casing/energy/laser)
@@ -48,6 +47,7 @@
 	name = "advanced energy gun"
 	desc = "An energy gun with an experimental miniaturized nuclear reactor that automatically charges the internal power cell."
 	icon_state = "nucgun"
+	item_state = "nucgun"
 	origin_tech = "combat=3;materials=5;powerstorage=3"
 	var/fail_state = 0
 	var/charge_tick = 0
