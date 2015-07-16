@@ -33,7 +33,7 @@
 			. = 0
 		buckled_mob.buckled = src
 
-/obj/structure/stool/bed/Process_Spacemove(var/movement_dir = 0)
+/obj/structure/stool/bed/Process_Spacemove(movement_dir = 0)
 	if(buckled_mob)
 		return buckled_mob.Process_Spacemove(movement_dir)
 	return ..()
@@ -43,10 +43,10 @@
 		return 1
 	return ..()
 
-/obj/structure/stool/bed/attack_paw(mob/user as mob)
+/obj/structure/stool/bed/attack_paw(mob/user)
 	return src.attack_hand(user)
 
-/obj/structure/stool/bed/attack_animal(var/mob/living/simple_animal/M)//No more buckling hostile mobs to chairs to render them immobile forever
+/obj/structure/stool/bed/attack_animal(mob/living/simple_animal/M)//No more buckling hostile mobs to chairs to render them immobile forever
 	if(M.environment_smash)
 		new /obj/item/stack/sheet/metal(src.loc)
 		qdel(src)

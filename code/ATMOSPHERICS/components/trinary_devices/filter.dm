@@ -142,7 +142,7 @@ Filter types:
 	set_frequency(frequency)
 	return ..()
 
-/obj/machinery/atmospherics/trinary/filter/attack_hand(user as mob)
+/obj/machinery/atmospherics/trinary/filter/attack_hand(mob/user)
 	if(..())
 		return
 
@@ -152,7 +152,7 @@ Filter types:
 
 	ui_interact(user)
 
-/obj/machinery/atmospherics/trinary/filter/ui_interact(mob/user, ui_key = "main", var/datum/nanoui/ui = null)
+/obj/machinery/atmospherics/trinary/filter/ui_interact(mob/user, ui_key = "main", datum/nanoui/ui = null)
 	if(stat & (BROKEN|NOPOWER))
 		return
 

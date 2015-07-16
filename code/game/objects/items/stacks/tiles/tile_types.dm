@@ -16,7 +16,7 @@
 	var/turf_type = null
 	var/mineralType = null
 
-/obj/item/stack/tile/attackby(obj/item/W as obj, mob/user as mob, params)
+/obj/item/stack/tile/attackby(obj/item/W, mob/user, params)
 
 	if (istype(W, /obj/item/weapon/weldingtool))
 		var/obj/item/weapon/weldingtool/WT = W

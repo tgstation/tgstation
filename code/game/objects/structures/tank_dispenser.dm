@@ -31,10 +31,10 @@
 		if(1 to 4)	overlays += "plasma-[plasmatanks]"
 		if(5 to INFINITY) overlays += "plasma-5"
 
-/obj/structure/dispenser/attack_paw(mob/user as mob)
+/obj/structure/dispenser/attack_paw(mob/user)
 	return src.attack_hand(user)
 
-/obj/structure/dispenser/attack_hand(mob/user as mob)
+/obj/structure/dispenser/attack_hand(mob/user)
 	if(!user.IsAdvancedToolUser())
 		user << "<span class='warning'>You don't have the dexterity to do this!</span>"
 		return 1
@@ -47,7 +47,7 @@
 	return
 
 
-/obj/structure/dispenser/attackby(obj/item/I as obj, mob/user as mob, params)
+/obj/structure/dispenser/attackby(obj/item/I, mob/user, params)
 	if(istype(I, /obj/item/weapon/tank/internals/oxygen) || istype(I, /obj/item/weapon/tank/internals/air) || istype(I, /obj/item/weapon/tank/internals/anesthetic))
 		if(oxygentanks < 10)
 			if(!user.drop_item())

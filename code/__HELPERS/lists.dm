@@ -10,7 +10,7 @@
  */
 
 //Returns a list in plain english as a string
-/proc/english_list(var/list/input, nothing_text = "nothing", and_text = " and ", comma_text = ", ", final_comma_text = "" )
+/proc/english_list(list/input, nothing_text = "nothing", and_text = " and ", comma_text = ", ", final_comma_text = "" )
 	var/total = input.len
 	if (!total)
 		return "[nothing_text]"
@@ -57,7 +57,7 @@
 	return 0
 
 //Checks for specific types in a list
-/proc/is_type_in_list(var/atom/A, var/list/L)
+/proc/is_type_in_list(atom/A, list/L)
 	for(var/type in L)
 		if(istype(A, type))
 			return 1
@@ -84,7 +84,7 @@
  * If skiprep = 1, repeated elements are treated as one.
  * If either of arguments is not a list, returns null
  */
-/proc/difflist(var/list/first, var/list/second, var/skiprep=0)
+/proc/difflist(list/first, list/second, skiprep=0)
 	if(!islist(first) || !islist(second))
 		return
 	var/list/result = new
@@ -101,7 +101,7 @@
  * If skipref = 1, repeated elements are treated as one.
  * If either of arguments is not a list, returns null
  */
-/proc/uniquemergelist(var/list/first, var/list/second, var/skiprep=0)
+/proc/uniquemergelist(list/first, list/second, skiprep=0)
 	if(!islist(first) || !islist(second))
 		return
 	var/list/result = new
@@ -148,7 +148,7 @@
 	L.Insert(pos+1, thing)
 
 // Returns the next item in a list
-/proc/next_list_item(var/item, var/list/L)
+/proc/next_list_item(item, list/L)
 	var/i
 	i = L.Find(item)
 	if(i == L.len)
@@ -158,7 +158,7 @@
 	return L[i]
 
 // Returns the previous item in a list
-/proc/previous_list_item(var/item, var/list/L)
+/proc/previous_list_item(item, list/L)
 	var/i
 	i = L.Find(item)
 	if(i == 1)
@@ -172,7 +172,7 @@
  */
 /*
 //Reverses the order of items in the list
-/proc/reverselist(var/list/input)
+/proc/reverselist(list/input)
 	var/list/output = list()
 	for(var/i = input.len; i >= 1; i--)
 		output += input[i]
@@ -180,7 +180,7 @@
 */
 
 //Randomize: Return the list in a random order
-/proc/shuffle(var/list/L)
+/proc/shuffle(list/L)
 	if(!L)
 		return
 	L = L.Copy()
@@ -191,7 +191,7 @@
 	return L
 
 //Return a list with no duplicate entries
-/proc/uniqueList(var/list/L)
+/proc/uniqueList(list/L)
 	. = list()
 	for(var/i in L)
 		. |= i
@@ -206,11 +206,11 @@
 	return sortTim(L, order >= 0 ? /proc/cmp_records_asc : /proc/cmp_records_dsc)
 
 //any value in a list
-/proc/sortList(var/list/L, cmp=/proc/cmp_text_asc)
+/proc/sortList(list/L, cmp=/proc/cmp_text_asc)
 	return sortTim(L.Copy(), cmp)
 
 //uses sortList() but uses the var's name specifically. This should probably be using mergeAtom() instead
-/proc/sortNames(var/list/L, order=1)
+/proc/sortNames(list/L, order=1)
 	return sortTim(L, order >= 0 ? /proc/cmp_name_asc : /proc/cmp_name_dsc)
 
 
@@ -232,7 +232,7 @@
 	return r
 
 // Returns the key based on the index
-/proc/get_key_by_index(var/list/L, var/index)
+/proc/get_key_by_index(list/L, index)
 	var/i = 1
 	for(var/key in L)
 		if(index == i)
@@ -240,7 +240,7 @@
 		i++
 	return null
 
-/proc/count_by_type(var/list/L, type)
+/proc/count_by_type(list/L, type)
 	var/i = 0
 	for(var/T in L)
 		if(istype(T, type))

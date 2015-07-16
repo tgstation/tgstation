@@ -72,7 +72,7 @@
 
 ///post_setup()
 ///Everyone should now be on the station and have their normal gear.  This is the place to give the special roles extra things
-/datum/game_mode/proc/post_setup(var/report=1)
+/datum/game_mode/proc/post_setup(report=1)
 	spawn (ROUNDSTART_LOGOUT_REPORT_TIME)
 		display_roundstart_logout_report()
 
@@ -91,7 +91,7 @@
 
 ///make_antag_chance()
 ///Handles late-join antag assignments
-/datum/game_mode/proc/make_antag_chance(var/mob/living/carbon/human/character)
+/datum/game_mode/proc/make_antag_chance(mob/living/carbon/human/character)
 	if(replacementmode && round_converted == 2)
 		replacementmode.make_antag_chance(character)
 	return
@@ -287,7 +287,7 @@
 		set_security_level(SEC_LEVEL_BLUE)
 
 
-/datum/game_mode/proc/get_players_for_role(var/role)
+/datum/game_mode/proc/get_players_for_role(role)
 	var/list/players = list()
 	var/list/candidates = list()
 	var/list/drafted = list()
@@ -471,7 +471,7 @@
 		if(M.client && M.client.holder)
 			M << msg
 
-/datum/game_mode/proc/printplayer(var/datum/mind/ply)
+/datum/game_mode/proc/printplayer(datum/mind/ply)
 	var/role = "\improper[ply.assigned_role]"
 	var/text = "<br><b>[ply.name]</b>(<b>[ply.key]</b>) as \a <b>[role]</b> ("
 	if(ply.current)
@@ -487,7 +487,7 @@
 
 	return text
 
-/datum/game_mode/proc/printobjectives(var/datum/mind/ply)
+/datum/game_mode/proc/printobjectives(datum/mind/ply)
 	var/text = ""
 	var/count = 1
 	for(var/datum/objective/objective in ply.objectives)

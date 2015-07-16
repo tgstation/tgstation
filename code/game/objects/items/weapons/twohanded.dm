@@ -66,14 +66,14 @@
 	user.put_in_inactive_hand(O)
 	return
 
-/obj/item/weapon/twohanded/mob_can_equip(M as mob, slot)
+/obj/item/weapon/twohanded/mob_can_equip(mob/M, slot)
 	//Cannot equip wielded items.
 	if(wielded)
 		M << "<span class='warning'>Unwield the [name] first!</span>"
 		return 0
 	return ..()
 
-/obj/item/weapon/twohanded/dropped(mob/user as mob)
+/obj/item/weapon/twohanded/dropped(mob/user)
 	//handles unwielding a twohanded weapon when dropped as well as clearing up the offhand
 	if(user)
 		var/obj/item/weapon/twohanded/O = user.get_inactive_hand()
@@ -84,7 +84,7 @@
 /obj/item/weapon/twohanded/update_icon()
 	return
 
-/obj/item/weapon/twohanded/attack_self(mob/user as mob)
+/obj/item/weapon/twohanded/attack_self(mob/user)
 	..()
 	if(wielded) //Trying to unwield it
 		unwield(user)
@@ -120,7 +120,7 @@
 /obj/item/weapon/twohanded/required/attack_self()
 	return
 
-/obj/item/weapon/twohanded/required/mob_can_equip(M as mob, slot)
+/obj/item/weapon/twohanded/required/mob_can_equip(mob/M, slot)
 	if(wielded)
 		M << "<span class='warning'>[src.name] is too cumbersome to carry with anything but your hands!</span>"
 		return 0
@@ -161,7 +161,7 @@
 	icon_state = "fireaxe[wielded]"
 	return
 
-/obj/item/weapon/twohanded/fireaxe/afterattack(atom/A as mob|obj|turf|area, mob/user as mob, proximity)
+/obj/item/weapon/twohanded/fireaxe/afterattack(atom/A as mob|obj|turf|area, mob/user, proximity)
 	if(!proximity) return
 	if(A && wielded && (istype(A,/obj/structure/window) || istype(A,/obj/structure/grille))) //destroys windows and grilles in one hit
 		if(istype(A,/obj/structure/window)) //should just make a window.Break() proc but couldn't bother with it
@@ -210,7 +210,7 @@
 	clean_blood()//blood overlays get weird otherwise, because the sprite changes.
 	return
 
-/obj/item/weapon/twohanded/dualsaber/attack(target as mob, mob/living/carbon/human/user as mob)
+/obj/item/weapon/twohanded/dualsaber/attack(mob/target, mob/living/carbon/human/user)
 	..()
 	if(user.disabilities & CLUMSY && (wielded) && prob(40))
 		impale(user)
@@ -221,7 +221,7 @@
 				user.dir = i
 				sleep(1)
 
-/obj/item/weapon/twohanded/dualsaber/proc/impale(mob/living/user as mob)
+/obj/item/weapon/twohanded/dualsaber/proc/impale(mob/living/user)
 	user << "<span class='warning'>You twirl around a bit before losing your balance and impaling yourself on \the [src].</span>"
 	if (force_wielded)
 		user.take_organ_damage(20,25)
@@ -263,7 +263,7 @@
 	New()
 		item_color = "red"
 
-/obj/item/weapon/twohanded/dualsaber/attackby(obj/item/weapon/W as obj, mob/user as mob, params)
+/obj/item/weapon/twohanded/dualsaber/attackby(obj/item/weapon/W, mob/user, params)
 	..()
 	if(istype(W, /obj/item/device/multitool))
 		if(hacked == 0)

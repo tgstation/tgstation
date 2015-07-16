@@ -43,7 +43,7 @@
 	return 0
 
 
-/mob/living/carbon/attack_paw(mob/living/carbon/monkey/M as mob)
+/mob/living/carbon/attack_paw(mob/living/carbon/monkey/M)
 	if(!istype(M, /mob/living/carbon))
 		return 0
 

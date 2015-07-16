@@ -27,7 +27,7 @@ Bonus
 	var/list/possible_mutations
 	var/archived_dna = null
 
-/datum/symptom/genetic_mutation/Activate(var/datum/disease/advance/A)
+/datum/symptom/genetic_mutation/Activate(datum/disease/advance/A)
 	..()
 	if(prob(SYMPTOM_ACTIVATION_PROB * 5)) // 15% chance
 		var/mob/living/carbon/M = A.affected_mob
@@ -40,7 +40,7 @@ Bonus
 	return
 
 // Archive their DNA before they were infected.
-/datum/symptom/genetic_mutation/Start(var/datum/disease/advance/A)
+/datum/symptom/genetic_mutation/Start(datum/disease/advance/A)
 	possible_mutations = (bad_mutations | not_good_mutations) - mutations_list[RACEMUT]
 	var/mob/living/carbon/M = A.affected_mob
 	if(M)
@@ -49,7 +49,7 @@ Bonus
 		archived_dna = M.dna.struc_enzymes
 
 // Give them back their old DNA when cured.
-/datum/symptom/genetic_mutation/End(var/datum/disease/advance/A)
+/datum/symptom/genetic_mutation/End(datum/disease/advance/A)
 	var/mob/living/carbon/M = A.affected_mob
 	if(M && archived_dna)
 		if(!check_dna_integrity(M))
@@ -83,6 +83,6 @@ Bonus
 	level = 6
 	severity = 0
 
-/datum/symptom/genetic_mutation/powers/Start(var/datum/disease/advance/A)
+/datum/symptom/genetic_mutation/powers/Start(datum/disease/advance/A)
 	..()
 	possible_mutations = good_mutations

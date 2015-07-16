@@ -107,7 +107,7 @@
 	materials = list(MAT_METAL=1875)
 	attack_verb = list("hit", "bludgeoned", "whacked", "bonked")
 
-/obj/item/weapon/wirerod/attackby(var/obj/item/I, mob/user as mob, params)
+/obj/item/weapon/wirerod/attackby(obj/item/I, mob/user, params)
 	..()
 	if(istype(I, /obj/item/weapon/shard))
 		var/obj/item/weapon/twohanded/spear/S = new /obj/item/weapon/twohanded/spear

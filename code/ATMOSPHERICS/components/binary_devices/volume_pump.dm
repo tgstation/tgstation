@@ -93,7 +93,7 @@ Thus, the two variables affect pump operation are set in New():
 
 	return 1
 
-/obj/machinery/atmospherics/binary/volume_pump/ui_interact(mob/user, ui_key = "main", var/datum/nanoui/ui = null)
+/obj/machinery/atmospherics/binary/volume_pump/ui_interact(mob/user, ui_key = "main", datum/nanoui/ui = null)
 	if(stat & (BROKEN|NOPOWER))
 		return
 
@@ -143,7 +143,7 @@ Thus, the two variables affect pump operation are set in New():
 	update_icon()
 
 
-/obj/machinery/atmospherics/binary/volume_pump/attack_hand(user as mob)
+/obj/machinery/atmospherics/binary/volume_pump/attack_hand(mob/user)
 	if(..())
 		return
 	src.add_fingerprint(usr)
@@ -177,7 +177,7 @@ Thus, the two variables affect pump operation are set in New():
 
 
 
-/obj/machinery/atmospherics/binary/volume_pump/attackby(var/obj/item/weapon/W as obj, var/mob/user as mob, params)
+/obj/machinery/atmospherics/binary/volume_pump/attackby(obj/item/weapon/W, mob/user, params)
 	if (!istype(W, /obj/item/weapon/wrench))
 		return ..()
 	if (!(stat & NOPOWER) && on)

@@ -10,7 +10,7 @@
 		if(damtype == "brute")
 			hitsound = "swing_hit"
 
-/obj/item/weapon/Bump(mob/M as mob)
+/obj/item/weapon/Bump(mob/M)
 	spawn(0)
 		..()
 	return

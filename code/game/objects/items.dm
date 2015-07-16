@@ -158,7 +158,7 @@ var/global/image/fire_overlay = image("icon" = 'icons/effects/fire.dmi', "icon_s
 
 	user << "[pronoun] a [size] item." //e.g. They are a small item. or It is a bulky item.
 
-/obj/item/attack_hand(mob/user as mob)
+/obj/item/attack_hand(mob/user)
 	if (!user) return
 
 	if(burn_state == 1)
@@ -195,7 +195,7 @@ var/global/image/fire_overlay = image("icon" = 'icons/effects/fire.dmi', "icon_s
 	return
 
 
-/obj/item/attack_paw(mob/user as mob)
+/obj/item/attack_paw(mob/user)
 
 	if (istype(src.loc, /obj/item/weapon/storage))
 		for(var/mob/M in range(1, src.loc))
@@ -215,7 +215,7 @@ var/global/image/fire_overlay = image("icon" = 'icons/effects/fire.dmi', "icon_s
 	return
 
 
-/obj/item/attack_alien(mob/user as mob)
+/obj/item/attack_alien(mob/user)
 	var/mob/living/carbon/alien/A = user
 
 	if(!A.has_fine_manipulation)
@@ -225,7 +225,7 @@ var/global/image/fire_overlay = image("icon" = 'icons/effects/fire.dmi', "icon_s
 		return
 	attack_paw(A)
 
-/obj/item/attack_ai(mob/user as mob)
+/obj/item/attack_ai(mob/user)
 	if (istype(src.loc, /obj/item/weapon/robot_module))
 		//If the item is part of a cyborg module, equip it
 		if(!isrobot(user)) return
@@ -235,7 +235,7 @@ var/global/image/fire_overlay = image("icon" = 'icons/effects/fire.dmi', "icon_s
 
 // Due to storage type consolidation this should get used more now.
 // I have cleaned it up a little, but it could probably use more.  -Sayu
-/obj/item/attackby(obj/item/weapon/W as obj, mob/user as mob, params)
+/obj/item/attackby(obj/item/weapon/W, mob/user, params)
 	if(istype(W,/obj/item/weapon/storage))
 		var/obj/item/weapon/storage/S = W
 		if(S.use_to_pickup)
@@ -275,7 +275,7 @@ var/global/image/fire_overlay = image("icon" = 'icons/effects/fire.dmi', "icon_s
 /obj/item/proc/talk_into(mob/M, input, channel, spans)
 	return
 
-/obj/item/proc/dropped(mob/user as mob)
+/obj/item/proc/dropped(mob/user)
 	..()
 
 // called just as an item is picked up (loc is not yet changed)
@@ -283,15 +283,15 @@ var/global/image/fire_overlay = image("icon" = 'icons/effects/fire.dmi', "icon_s
 	return
 
 // called when this item is removed from a storage item, which is passed on as S. The loc variable is already set to the new destination before this is called.
-/obj/item/proc/on_exit_storage(obj/item/weapon/storage/S as obj)
+/obj/item/proc/on_exit_storage(obj/item/weapon/storage/S)
 	return
 
 // called when this item is added into a storage item, which is passed on as S. The loc variable is already set to the storage item.
-/obj/item/proc/on_enter_storage(obj/item/weapon/storage/S as obj)
+/obj/item/proc/on_enter_storage(obj/item/weapon/storage/S)
 	return
 
 // called when "found" in pockets and storage items. Returns 1 if the search should end.
-/obj/item/proc/on_found(mob/finder as mob)
+/obj/item/proc/on_found(mob/finder)
 	return
 
 // called after an item is placed in an equipment slot
@@ -344,7 +344,7 @@ var/global/image/fire_overlay = image("icon" = 'icons/effects/fire.dmi', "icon_s
 /obj/item/proc/IsReflect(var/def_zone) //This proc determines if and at what% an object will reflect energy projectiles if it's in l_hand,r_hand or wear_suit
 	return 0
 
-/obj/item/proc/eyestab(mob/living/carbon/M as mob, mob/living/carbon/user as mob)
+/obj/item/proc/eyestab(mob/living/carbon/M, mob/living/carbon/user)
 
 	var/is_human_victim = 0
 	if(ishuman(M))
@@ -438,7 +438,7 @@ var/global/image/fire_overlay = image("icon" = 'icons/effects/fire.dmi', "icon_s
 			throw_at(S,14,3)
 		else ..()
 
-/obj/item/acid_act(var/acidpwr, var/acid_volume)
+/obj/item/acid_act(acidpwr, acid_volume)
 	. = 1
 	if(unacidable)
 		return

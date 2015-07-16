@@ -203,7 +203,7 @@
 				A.bolt()
 		goIdle(1)
 
-/obj/machinery/doorButtons/airlock_controller/proc/goIdle(var/update)
+/obj/machinery/doorButtons/airlock_controller/proc/goIdle(update)
 	lostPower = 0
 	busy = 0
 	if(update)

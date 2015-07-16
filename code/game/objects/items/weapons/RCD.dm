@@ -118,7 +118,7 @@ RCD
 
 	change_airlock_access()
 
-/obj/item/weapon/rcd/proc/toggle_access(var/acc)
+/obj/item/weapon/rcd/proc/toggle_access(acc)
 	if (acc == "all")
 		conf_access = null
 	else if(acc == "one")
@@ -236,7 +236,7 @@ RCD
 		desc = "A RCD. It currently holds [matter]/[max_matter] matter-units."
 	return
 
-/obj/item/weapon/rcd/proc/loadwithsheets(obj/item/stack/sheet/S, var/value, mob/user)
+/obj/item/weapon/rcd/proc/loadwithsheets(obj/item/stack/sheet/S, value, mob/user)
     var/maxsheets = round((max_matter-matter)/value)    //calculate the max number of sheets that will fit in RCD
     if(maxsheets > 0)
         if(S.amount > maxsheets)
@@ -453,21 +453,21 @@ RCD
 			user << "ERROR: RCD in MODE: [mode] attempted use by [user]. Send this text #coderbus or an admin."
 			return 0
 
-/obj/item/weapon/rcd/proc/useResource(var/amount, var/mob/user)
+/obj/item/weapon/rcd/proc/useResource(amount, mob/user)
 	if(matter < amount)
 		return 0
 	matter -= amount
 	desc = "A RCD. It currently holds [matter]/[max_matter] matter-units."
 	return 1
 
-/obj/item/weapon/rcd/proc/checkResource(var/amount, var/mob/user)
+/obj/item/weapon/rcd/proc/checkResource(amount, mob/user)
 	return matter >= amount
-/obj/item/weapon/rcd/borg/useResource(var/amount, var/mob/user)
+/obj/item/weapon/rcd/borg/useResource(amount, mob/user)
 	if(!isrobot(user))
 		return 0
 	return user:cell:use(amount * 160)
 
-/obj/item/weapon/rcd/borg/checkResource(var/amount, var/mob/user)
+/obj/item/weapon/rcd/borg/checkResource(amount, mob/user)
 	if(!isrobot(user))
 		return 0
 	return user:cell:charge >= (amount * 160)

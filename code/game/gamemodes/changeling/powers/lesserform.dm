@@ -7,7 +7,7 @@
 	req_human = 1
 
 //Transform into a monkey.
-/obj/effect/proc_holder/changeling/lesserform/sting_action(var/mob/living/carbon/human/user)
+/obj/effect/proc_holder/changeling/lesserform/sting_action(mob/living/carbon/human/user)
 	if(!user || user.notransform)
 		return 0
 	user << "<span class='warning'>Our genes cry out!</span>"

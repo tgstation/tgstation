@@ -16,7 +16,7 @@
 	if(manifest)
 		overlays += "manifest"
 
-/obj/structure/largecrate/attack_hand(mob/user as mob)
+/obj/structure/largecrate/attack_hand(mob/user)
 	if(manifest)
 		user << "<span class='notice'>You tear the manifest off of the crate.</span>"
 		playsound(src.loc, 'sound/items/poster_ripped.ogg', 75, 1)
@@ -30,7 +30,7 @@
 		user << "<span class='warning'>You need a crowbar to pry this open!</span>"
 		return
 
-/obj/structure/largecrate/attackby(obj/item/weapon/W as obj, mob/user as mob, params)
+/obj/structure/largecrate/attackby(obj/item/weapon/W, mob/user, params)
 	if(istype(W, /obj/item/weapon/crowbar))
 		if(manifest)
 			manifest.loc = loc

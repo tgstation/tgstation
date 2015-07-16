@@ -24,7 +24,7 @@ LINEN BINS
 	if(!attempt_initiate_surgery(src, M, user))
 		..()
 
-/obj/item/weapon/bedsheet/attack_self(mob/user as mob)
+/obj/item/weapon/bedsheet/attack_self(mob/user)
 	user.drop_item()
 	if(layer == initial(layer))
 		layer = 5
@@ -205,7 +205,7 @@ LINEN BINS
 	update_icon()
 	return
 
-/obj/structure/bedsheetbin/attackby(obj/item/I as obj, mob/user as mob, params)
+/obj/structure/bedsheetbin/attackby(obj/item/I, mob/user, params)
 	if(istype(I, /obj/item/weapon/bedsheet))
 		if(!user.drop_item())
 			return
@@ -224,11 +224,11 @@ LINEN BINS
 
 
 
-/obj/structure/bedsheetbin/attack_paw(mob/user as mob)
+/obj/structure/bedsheetbin/attack_paw(mob/user)
 	return attack_hand(user)
 
 
-/obj/structure/bedsheetbin/attack_hand(mob/user as mob)
+/obj/structure/bedsheetbin/attack_hand(mob/user)
 	if(user.lying)
 		return
 	if(amount >= 1)
@@ -254,7 +254,7 @@ LINEN BINS
 
 
 	add_fingerprint(user)
-/obj/structure/bedsheetbin/attack_tk(mob/user as mob)
+/obj/structure/bedsheetbin/attack_tk(mob/user)
 	if(amount >= 1)
 		amount--
 

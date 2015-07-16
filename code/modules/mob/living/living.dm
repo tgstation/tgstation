@@ -166,7 +166,7 @@ Sorry Giacom. Please don't be mad :(
 	visible_message("<b>[src]</b> points to [A]")
 	return 1
 
-/mob/living/verb/succumb(var/whispered as null)
+/mob/living/verb/succumb(whispered as null)
 	set hidden = 1
 	if (InCritical())
 		src.attack_log += "[src] has [whispered ? "whispered his final words" : "succumbed to death"] with [round(health, 0.1)] points of health!"
@@ -194,7 +194,7 @@ Sorry Giacom. Please don't be mad :(
 
 //This proc is used for mobs which are affected by pressure to calculate the amount of pressure that actually
 //affects them once clothing is factored in. ~Errorage
-/mob/living/proc/calculate_affecting_pressure(var/pressure)
+/mob/living/proc/calculate_affecting_pressure(pressure)
 	return pressure
 
 
@@ -244,7 +244,7 @@ Sorry Giacom. Please don't be mad :(
 /mob/living/proc/getBruteLoss()
 	return bruteloss
 
-/mob/living/proc/adjustBruteLoss(var/amount)
+/mob/living/proc/adjustBruteLoss(amount)
 	if(status_flags & GODMODE)	return 0
 	bruteloss = min(max(bruteloss + amount, 0),(maxHealth*2))
 	handle_regular_status_updates() //we update our health right away.
@@ -252,12 +252,12 @@ Sorry Giacom. Please don't be mad :(
 /mob/living/proc/getOxyLoss()
 	return oxyloss
 
-/mob/living/proc/adjustOxyLoss(var/amount)
+/mob/living/proc/adjustOxyLoss(amount)
 	if(status_flags & GODMODE)	return 0
 	oxyloss = min(max(oxyloss + amount, 0),(maxHealth*2))
 	handle_regular_status_updates()
 
-/mob/living/proc/setOxyLoss(var/amount)
+/mob/living/proc/setOxyLoss(amount)
 	if(status_flags & GODMODE)	return 0
 	oxyloss = amount
 	handle_regular_status_updates()
@@ -265,12 +265,12 @@ Sorry Giacom. Please don't be mad :(
 /mob/living/proc/getToxLoss()
 	return toxloss
 
-/mob/living/proc/adjustToxLoss(var/amount)
+/mob/living/proc/adjustToxLoss(amount)
 	if(status_flags & GODMODE)	return 0
 	toxloss = min(max(toxloss + amount, 0),(maxHealth*2))
 	handle_regular_status_updates()
 
-/mob/living/proc/setToxLoss(var/amount)
+/mob/living/proc/setToxLoss(amount)
 	if(status_flags & GODMODE)	return 0
 	toxloss = amount
 	handle_regular_status_updates()
@@ -278,7 +278,7 @@ Sorry Giacom. Please don't be mad :(
 /mob/living/proc/getFireLoss()
 	return fireloss
 
-/mob/living/proc/adjustFireLoss(var/amount)
+/mob/living/proc/adjustFireLoss(amount)
 	if(status_flags & GODMODE)	return 0
 	fireloss = min(max(fireloss + amount, 0),(maxHealth*2))
 	handle_regular_status_updates() //we update our health right away.
@@ -286,12 +286,12 @@ Sorry Giacom. Please don't be mad :(
 /mob/living/proc/getCloneLoss()
 	return cloneloss
 
-/mob/living/proc/adjustCloneLoss(var/amount)
+/mob/living/proc/adjustCloneLoss(amount)
 	if(status_flags & GODMODE)	return 0
 	cloneloss = min(max(cloneloss + amount, 0),(maxHealth*2))
 	handle_regular_status_updates()
 
-/mob/living/proc/setCloneLoss(var/amount)
+/mob/living/proc/setCloneLoss(amount)
 	if(status_flags & GODMODE)	return 0
 	cloneloss = amount
 	handle_regular_status_updates()
@@ -299,12 +299,12 @@ Sorry Giacom. Please don't be mad :(
 /mob/living/proc/getBrainLoss()
 	return brainloss
 
-/mob/living/proc/adjustBrainLoss(var/amount)
+/mob/living/proc/adjustBrainLoss(amount)
 	if(status_flags & GODMODE)	return 0
 	brainloss = min(max(brainloss + amount, 0),(maxHealth*2))
 	handle_regular_status_updates()
 
-/mob/living/proc/setBrainLoss(var/amount)
+/mob/living/proc/setBrainLoss(amount)
 	if(status_flags & GODMODE)	return 0
 	brainloss = amount
 	handle_regular_status_updates() //we update our health right away.
@@ -312,18 +312,18 @@ Sorry Giacom. Please don't be mad :(
 /mob/living/proc/getStaminaLoss()
 	return staminaloss
 
-/mob/living/proc/adjustStaminaLoss(var/amount)
+/mob/living/proc/adjustStaminaLoss(amount)
 	if(status_flags & GODMODE)	return 0
 	staminaloss = min(max(staminaloss + amount, 0),(maxHealth*2))
 
-/mob/living/proc/setStaminaLoss(var/amount)
+/mob/living/proc/setStaminaLoss(amount)
 	if(status_flags & GODMODE)	return 0
 	staminaloss = amount
 
 /mob/living/proc/getMaxHealth()
 	return maxHealth
 
-/mob/living/proc/setMaxHealth(var/newMaxHealth)
+/mob/living/proc/setMaxHealth(newMaxHealth)
 	maxHealth = newMaxHealth
 
 // MOB PROCS //END
@@ -351,7 +351,7 @@ Sorry Giacom. Please don't be mad :(
 	update_canmove()
 
 //Recursive function to find everything a mob is holding.
-/mob/living/get_contents(var/obj/item/weapon/storage/Storage = null)
+/mob/living/get_contents(obj/item/weapon/storage/Storage = null)
 	var/list/L = list()
 
 	if(Storage) //If it called itself
@@ -376,7 +376,7 @@ Sorry Giacom. Please don't be mad :(
 	return 0
 
 
-/mob/living/proc/electrocute_act(var/shock_damage, var/obj/source, var/siemens_coeff = 1.0)
+/mob/living/proc/electrocute_act(shock_damage, obj/source, siemens_coeff = 1.0)
 	  return 0 //only carbon liveforms have this proc
 
 /mob/living/emp_act(severity)
@@ -397,37 +397,37 @@ Sorry Giacom. Please don't be mad :(
 	return def_zone
 
 //damage/heal the mob ears and adjust the deaf amount
-/mob/living/adjustEarDamage(var/damage, var/deaf)
+/mob/living/adjustEarDamage(damage, deaf)
 	ear_damage = max(0, ear_damage + damage)
 	ear_deaf = max(0, ear_deaf + deaf)
 
 //pass a negative argument to skip one of the variable
-/mob/living/setEarDamage(var/damage, var/deaf)
+/mob/living/setEarDamage(damage, deaf)
 	if(damage >= 0)
 		ear_damage = damage
 	if(deaf >= 0)
 		ear_deaf = deaf
 
 // heal ONE external organ, organ gets randomly selected from damaged ones.
-/mob/living/proc/heal_organ_damage(var/brute, var/burn)
+/mob/living/proc/heal_organ_damage(brute, burn)
 	adjustBruteLoss(-brute)
 	adjustFireLoss(-burn)
 	src.updatehealth()
 
 // damage ONE external organ, organ gets randomly selected from damaged ones.
-/mob/living/proc/take_organ_damage(var/brute, var/burn)
+/mob/living/proc/take_organ_damage(brute, burn)
 	adjustBruteLoss(brute)
 	adjustFireLoss(burn)
 	src.updatehealth()
 
 // heal MANY external organs, in random order
-/mob/living/proc/heal_overall_damage(var/brute, var/burn)
+/mob/living/proc/heal_overall_damage(brute, burn)
 	adjustBruteLoss(-brute)
 	adjustFireLoss(-burn)
 	src.updatehealth()
 
 // damage MANY external organs, in random order
-/mob/living/proc/take_overall_damage(var/brute, var/burn)
+/mob/living/proc/take_overall_damage(brute, burn)
 	adjustBruteLoss(brute)
 	adjustFireLoss(burn)
 	src.updatehealth()
@@ -570,7 +570,7 @@ Sorry Giacom. Please don't be mad :(
 	for(var/mob/living/simple_animal/slime/M in oview(1,src))
 		M.UpdateFeed(src)
 
-/mob/living/proc/makeTrail(var/turf/T, var/mob/living/M)
+/mob/living/proc/makeTrail(turf/T, mob/living/M)
 	if(ishuman(M))
 		var/mob/living/carbon/human/H = M
 		if((NOBLOOD in H.dna.species.specflags) || (!H.blood_max) || (H.bleedsuppress))
@@ -814,7 +814,7 @@ Sorry Giacom. Please don't be mad :(
 	animate(pixel_x = final_pixel_x , pixel_y = final_pixel_y , time = 2)
 	floating = 0 // If we were without gravity, the bouncing animation got stopped, so we make sure to restart it in next life().
 
-/mob/living/proc/get_temperature(var/datum/gas_mixture/environment)
+/mob/living/proc/get_temperature(datum/gas_mixture/environment)
 	var/loc_temp = T0C
 	if(istype(loc, /obj/mecha))
 		var/obj/mecha/M = loc

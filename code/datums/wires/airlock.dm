@@ -118,7 +118,7 @@ var/const/AIRLOCK_WIRE_LIGHT = 2048
 			A.update_icon()
 
 
-/datum/wires/airlock/UpdatePulsed(var/index)
+/datum/wires/airlock/UpdatePulsed(index)
 
 	var/obj/machinery/door/airlock/A = holder
 	switch(index)

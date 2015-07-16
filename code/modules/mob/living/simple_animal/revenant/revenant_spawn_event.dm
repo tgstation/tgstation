@@ -12,7 +12,7 @@
 	var/key_of_revenant
 
 
-/datum/round_event/revenant/proc/get_revenant(var/end_if_fail = 0)
+/datum/round_event/revenant/proc/get_revenant(end_if_fail = 0)
 	var/deadMobs = 0
 	for(var/mob/M in dead_mob_list)
 		deadMobs++

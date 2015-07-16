@@ -6,7 +6,7 @@
 //Drone hearing
 
 
-/mob/living/simple_animal/drone/say(var/message)
+/mob/living/simple_animal/drone/say(message)
 	return ..(message, "R")
 
 

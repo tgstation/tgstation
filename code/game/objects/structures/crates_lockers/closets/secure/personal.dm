@@ -34,7 +34,7 @@
 	new /obj/item/weapon/storage/backpack/satchel/withwallet( src )
 	new /obj/item/device/radio/headset( src )
 
-/obj/structure/closet/secure_closet/personal/attackby(obj/item/W as obj, mob/user as mob, params)
+/obj/structure/closet/secure_closet/personal/attackby(obj/item/W, mob/user, params)
 
 	if(istype(W))
 		var/obj/item/weapon/card/id/I = W.GetID()
