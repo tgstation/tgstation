@@ -52,7 +52,7 @@
 // Updates the chunk, makes sure that it doesn't update too much. If the chunk isn't being watched it will
 // instead be flagged to update the next time an AI Eye moves near it.
 
-/datum/camerachunk/proc/hasChanged(var/update_now = 0)
+/datum/camerachunk/proc/hasChanged(update_now = 0)
 	if(visible || update_now)
 		if(!updating)
 			updating = 1

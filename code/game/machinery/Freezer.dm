@@ -57,13 +57,13 @@
 		icon_state = "freezer"
 	return
 
-/obj/machinery/atmospherics/unary/cold_sink/freezer/attack_ai(mob/user as mob)
+/obj/machinery/atmospherics/unary/cold_sink/freezer/attack_ai(mob/user)
 	return interact(user)
 
-/obj/machinery/atmospherics/unary/cold_sink/freezer/attack_paw(mob/user as mob)
+/obj/machinery/atmospherics/unary/cold_sink/freezer/attack_paw(mob/user)
 	return interact(user)
 
-/obj/machinery/atmospherics/unary/cold_sink/freezer/attack_hand(mob/user as mob)
+/obj/machinery/atmospherics/unary/cold_sink/freezer/attack_hand(mob/user)
 	return interact(user)
 
 /obj/machinery/atmospherics/unary/cold_sink/freezer/interact(mob/user)
@@ -183,13 +183,13 @@
 		icon_state = "heater"
 	return
 
-/obj/machinery/atmospherics/unary/heat_reservoir/heater/attack_ai(mob/user as mob)
+/obj/machinery/atmospherics/unary/heat_reservoir/heater/attack_ai(mob/user)
 	return src.attack_hand(user)
 
-/obj/machinery/atmospherics/unary/heat_reservoir/heater/attack_paw(mob/user as mob)
+/obj/machinery/atmospherics/unary/heat_reservoir/heater/attack_paw(mob/user)
 	return src.attack_hand(user)
 
-/obj/machinery/atmospherics/unary/heat_reservoir/heater/attack_hand(mob/user as mob)
+/obj/machinery/atmospherics/unary/heat_reservoir/heater/attack_hand(mob/user)
 	return interact(user)
 
 /obj/machinery/atmospherics/unary/heat_reservoir/heater/interact(mob/user)

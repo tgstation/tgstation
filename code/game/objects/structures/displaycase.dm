@@ -28,7 +28,7 @@
 				src.healthcheck()
 
 
-/obj/structure/displaycase/bullet_act(var/obj/item/projectile/Proj)
+/obj/structure/displaycase/bullet_act(obj/item/projectile/Proj)
 	if((Proj.damage_type == BRUTE || Proj.damage_type == BURN))
 		health -= Proj.damage
 	..()
@@ -71,17 +71,17 @@
 	return
 
 
-/obj/structure/displaycase/attackby(obj/item/weapon/W as obj, mob/user as mob, params)
+/obj/structure/displaycase/attackby(obj/item/weapon/W, mob/user, params)
 	user.changeNext_move(CLICK_CD_MELEE)
 	src.health -= W.force
 	src.healthcheck()
 	..()
 	return
 
-/obj/structure/displaycase/attack_paw(mob/user as mob)
+/obj/structure/displaycase/attack_paw(mob/user)
 	return src.attack_hand(user)
 
-/obj/structure/displaycase/attack_hand(mob/user as mob)
+/obj/structure/displaycase/attack_hand(mob/user)
 	user.changeNext_move(CLICK_CD_MELEE)
 	if (src.destroyed && src.occupied)
 		new /obj/item/weapon/gun/energy/laser/captain( src.loc )

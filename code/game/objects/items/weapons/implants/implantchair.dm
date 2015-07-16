@@ -20,7 +20,7 @@
 
 /obj/machinery/implantchair/proc
 	go_out()
-	put_mob(mob/living/carbon/M as mob)
+	put_mob(mob/living/carbon/M)
 	implant(var/mob/M)
 	add_implants()
 
@@ -30,7 +30,7 @@
 	add_implants()
 
 
-/obj/machinery/implantchair/attack_hand(mob/user as mob)
+/obj/machinery/implantchair/attack_hand(mob/user)
 	user.set_machine(src)
 	var/health_text = ""
 	if(src.occupant)
@@ -73,7 +73,7 @@
 	return
 
 
-/obj/machinery/implantchair/attackby(var/obj/item/weapon/G as obj, var/mob/user as mob, params)
+/obj/machinery/implantchair/attackby(obj/item/weapon/G, mob/user, params)
 	if(istype(G, /obj/item/weapon/grab))
 		if(!ismob(G:affecting))
 			return
@@ -88,7 +88,7 @@
 	return
 
 
-/obj/machinery/implantchair/go_out(var/mob/M)
+/obj/machinery/implantchair/go_out(mob/M)
 	if(!( src.occupant ))
 		return
 	if(M == occupant) // so that the guy inside can't eject himself -Agouri
@@ -105,7 +105,7 @@
 	return
 
 
-/obj/machinery/implantchair/put_mob(mob/living/carbon/M as mob)
+/obj/machinery/implantchair/put_mob(mob/living/carbon/M)
 	if(!iscarbon(M))
 		usr << "<span class='warning'>The [src.name] cannot hold this!</span>"
 		return
@@ -123,7 +123,7 @@
 	return 1
 
 
-/obj/machinery/implantchair/implant(var/mob/M)
+/obj/machinery/implantchair/implant(mob/M)
 	if (!istype(M, /mob/living/carbon))
 		return
 	if(!implant_list.len)	return

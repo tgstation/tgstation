@@ -144,7 +144,7 @@ Passive gate is similar to the regular pump except:
 
 
 
-/obj/machinery/atmospherics/binary/passive_gate/attack_hand(user as mob)
+/obj/machinery/atmospherics/binary/passive_gate/attack_hand(mob/user)
 	if(..())
 		return
 	src.add_fingerprint(usr)
@@ -178,7 +178,7 @@ Passive gate is similar to the regular pump except:
 
 
 
-/obj/machinery/atmospherics/binary/passive_gate/attackby(var/obj/item/weapon/W as obj, var/mob/user as mob, params)
+/obj/machinery/atmospherics/binary/passive_gate/attackby(obj/item/weapon/W, mob/user, params)
 	if (!istype(W, /obj/item/weapon/wrench))
 		return ..()
 	if (on)

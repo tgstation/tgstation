@@ -33,7 +33,7 @@
 	update_icon()
 	return
 
-/obj/item/weapon/melee/baton/proc/deductcharge(var/chrgdeductamt)
+/obj/item/weapon/melee/baton/proc/deductcharge(chrgdeductamt)
 	if(bcell)
 		if(bcell.charge < (hitcost+chrgdeductamt)) // If after the deduction the baton doesn't have enough charge for a stun hit it turns off.
 			status = 0

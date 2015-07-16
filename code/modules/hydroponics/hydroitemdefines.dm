@@ -7,7 +7,7 @@
 	item_state = "analyzer"
 	origin_tech = "magnets=1;biotech=1"
 
-/obj/item/device/analyzer/plant_analyzer/attack_self(mob/user as mob)
+/obj/item/device/analyzer/plant_analyzer/attack_self(mob/user)
 	return 0
 
 // *************************************

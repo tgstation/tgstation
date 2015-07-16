@@ -11,7 +11,7 @@
 	if(health <= 0)
 		qdel(src)
 
-/obj/effect/blob/resource/PulseAnimation(var/activate = 0)
+/obj/effect/blob/resource/PulseAnimation(activate = 0)
 	if(activate)
 		..()
 	return

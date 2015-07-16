@@ -43,7 +43,7 @@
 				SSair.add_to_active(T)
 	..()
 
-/turf/attack_hand(mob/user as mob)
+/turf/attack_hand(mob/user)
 	user.Move_Pulled(src)
 
 /turf/attackby(obj/item/C, mob/user, params)
@@ -126,7 +126,7 @@
 		qdel(L)
 
 //Creates a new turf
-/turf/proc/ChangeTurf(var/path)
+/turf/proc/ChangeTurf(path)
 	if(!path)			return
 	if(path == type)	return src
 

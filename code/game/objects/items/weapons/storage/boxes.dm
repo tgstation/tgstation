@@ -647,7 +647,7 @@
 	user.visible_message("<span class='notice'>[user] hugs the [src].</span>","<span class='notice'>You hug the [src].</span>")
 	return
 
-/obj/item/weapon/storage/box/hug/New()
+/obj/item/weapon/storage/box/hug/medical/New()
 	..()
 	new /obj/item/stack/medical/bruise_pack(src)
 	new /obj/item/stack/medical/ointment(src)

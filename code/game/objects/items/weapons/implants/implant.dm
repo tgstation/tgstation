@@ -24,7 +24,7 @@
 //What does the implant do upon injection?
 //return 0 if the implant fails (ex. Revhead and loyalty implant.)
 //return 1 if the implant succeeds (ex. Nonrevhead and loyalty implant.)
-/obj/item/weapon/implant/proc/implanted(var/mob/source)
+/obj/item/weapon/implant/proc/implanted(mob/source)
 	if(activated)
 		action_button_name = "Activate [src.name]"
 	if(istype(source, /mob/living/carbon/human))
@@ -36,7 +36,7 @@
 /obj/item/weapon/implant/proc/get_data()
 	return "No information available"
 
-/obj/item/weapon/implant/dropped(mob/user as mob)
+/obj/item/weapon/implant/dropped(mob/user)
 	. = 1
 	qdel(src)
 	return .
@@ -103,7 +103,7 @@
 	if(emote == "deathgasp")
 		activate("death")
 
-/obj/item/weapon/implant/explosive/activate(var/cause)
+/obj/item/weapon/implant/explosive/activate(cause)
 	if(!cause || !imp_in)	return 0
 	if(cause == "action_button" && alert(imp_in, "Are you sure you want to activate your microbomb implant? This will cause you to explode!", "Microbomb Implant Confirmation", "Yes", "No") != "Yes")
 		return 0
@@ -152,7 +152,7 @@
 	heavy = 4
 	delay = 70
 
-/obj/item/weapon/implant/explosive/macro/activate(var/cause)
+/obj/item/weapon/implant/explosive/macro/activate(cause)
 	if(!cause || !imp_in)	return 0
 	if(cause == "action_button" && alert(imp_in, "Are you sure you want to activate your macrobomb implant? This will cause you to explode and gib!", "Macrobomb Implant Confirmation", "Yes", "No") != "Yes")
 		return 0
@@ -193,7 +193,7 @@
 	if(emote == "deathgasp")
 		activate(reagents.total_volume)
 
-/obj/item/weapon/implant/chem/activate(var/cause)
+/obj/item/weapon/implant/chem/activate(cause)
 	if(!cause || !imp_in)	return 0
 	var/mob/living/carbon/R = imp_in
 	var/injectamount = null

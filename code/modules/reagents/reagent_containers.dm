@@ -36,16 +36,16 @@
 	if(list_reagents)
 		reagents.add_reagent_list(list_reagents)
 
-/obj/item/weapon/reagent_containers/attack_self(mob/user as mob)
+/obj/item/weapon/reagent_containers/attack_self(mob/user)
 	return
 
-/obj/item/weapon/reagent_containers/attack(mob/M as mob, mob/user as mob, def_zone)
+/obj/item/weapon/reagent_containers/attack(mob/M, mob/user, def_zone)
 	return
 
 /obj/item/weapon/reagent_containers/afterattack(obj/target, mob/user , flag)
 	return
 
-/obj/item/weapon/reagent_containers/proc/reagentlist(var/obj/item/weapon/reagent_containers/snack) //Attack logs for regents in pills
+/obj/item/weapon/reagent_containers/proc/reagentlist(obj/item/weapon/reagent_containers/snack) //Attack logs for regents in pills
 	var/data
 	if(snack.reagents.reagent_list && snack.reagents.reagent_list.len) //find a reagent list if there is and check if it has entries
 		for (var/datum/reagent/R in snack.reagents.reagent_list) //no reagents will be left behind

@@ -29,16 +29,16 @@
 	idle_power_usage = 2
 	active_power_usage = 4
 
-/obj/machinery/door_control/attack_ai(mob/user as mob)
+/obj/machinery/door_control/attack_ai(mob/user)
 	if(wires & 2)
 		return src.attack_hand(user)
 	else
 		user << "Error, no route to host."
 
-/obj/machinery/door_control/attack_paw(mob/user as mob)
+/obj/machinery/door_control/attack_paw(mob/user)
 	return src.attack_hand(user)
 
-/obj/machinery/door_control/attackby(obj/item/weapon/W, mob/user as mob, params)
+/obj/machinery/door_control/attackby(obj/item/weapon/W, mob/user, params)
 	/* For later implementation
 	if (istype(W, /obj/item/weapon/screwdriver))
 	{
@@ -57,12 +57,12 @@
 		return
 	return src.attack_hand(user)
 
-/obj/machinery/door_control/emag_act(user as mob)
+/obj/machinery/door_control/emag_act(mob/user)
 	req_access = list()
 	req_one_access = list()
 	playsound(src.loc, "sparks", 100, 1)
 
-/obj/machinery/door_control/attack_hand(mob/user as mob)
+/obj/machinery/door_control/attack_hand(mob/user)
 	src.add_fingerprint(usr)
 	if(stat & (NOPOWER|BROKEN))
 		return
@@ -118,19 +118,19 @@
 	else
 		icon_state = "doorctrl0"
 
-/obj/machinery/driver_button/attack_ai(mob/user as mob)
+/obj/machinery/driver_button/attack_ai(mob/user)
 	return src.attack_hand(user)
 
-/obj/machinery/driver_button/attack_paw(mob/user as mob)
+/obj/machinery/driver_button/attack_paw(mob/user)
 	return src.attack_hand(user)
 
-/obj/machinery/driver_button/attackby(obj/item/weapon/W, mob/user as mob, params)
+/obj/machinery/driver_button/attackby(obj/item/weapon/W, mob/user, params)
 
 	if(istype(W, /obj/item/device/detective_scanner))
 		return
 	return src.attack_hand(user)
 
-/obj/machinery/driver_button/attack_hand(mob/user as mob)
+/obj/machinery/driver_button/attack_hand(mob/user)
 
 	src.add_fingerprint(usr)
 	if(stat & (NOPOWER|BROKEN))

@@ -16,7 +16,7 @@
 	pixel_y = rand(-5, 5)
 
 
-/obj/item/bluespace_crystal/attack_self(var/mob/user)
+/obj/item/bluespace_crystal/attack_self(mob/user)
 	user.visible_message("<span class='warning'>[user] crushes [src]!</span>", "<span class='danger'>You crush [src]!</span>")
 	PoolOrNew(/obj/effect/effect/sparks, loc)
 	playsound(src.loc, "sparks", 50, 1)
@@ -24,7 +24,7 @@
 	user.unEquip(src)
 	qdel(src)
 
-/obj/item/bluespace_crystal/proc/blink_mob(var/mob/living/L)
+/obj/item/bluespace_crystal/proc/blink_mob(mob/living/L)
 	do_teleport(L, get_turf(L), blink_range, asoundin = 'sound/effects/phasein.ogg')
 
 /obj/item/bluespace_crystal/throw_impact(atom/hit_atom)

@@ -13,7 +13,7 @@
 	maxbodytemp = 360
 	var/mob/camera/blob/overmind = null
 
-/mob/living/simple_animal/hostile/blob/proc/adjustcolors(var/a_color)
+/mob/living/simple_animal/hostile/blob/proc/adjustcolors(a_color)
 	if(a_color)
 		color = a_color
 
@@ -65,7 +65,7 @@
 				break
 	..()
 
-/mob/living/simple_animal/hostile/blob/blobspore/proc/Zombify(var/mob/living/carbon/human/H)
+/mob/living/simple_animal/hostile/blob/blobspore/proc/Zombify(mob/living/carbon/human/H)
 	is_zombie = 1
 	if(H.wear_suit)
 		var/obj/item/clothing/suit/armor/A = H.wear_suit
@@ -128,7 +128,7 @@
 		adjustcolors(color) //to ensure zombie/other overlays update
 
 
-/mob/living/simple_animal/hostile/blob/blobspore/adjustcolors(var/a_color)
+/mob/living/simple_animal/hostile/blob/blobspore/adjustcolors(a_color)
 	color = a_color
 
 	if(is_zombie)

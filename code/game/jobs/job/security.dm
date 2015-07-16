@@ -35,7 +35,7 @@ Head of Security
 			            access_research, access_engine, access_mining, access_medical, access_construction, access_mailsorting,
 			            access_heads, access_hos, access_RC_announce, access_keycard_auth, access_gateway)
 
-/datum/job/hos/equip_items(var/mob/living/carbon/human/H)
+/datum/job/hos/equip_items(mob/living/carbon/human/H)
 	H.equip_to_slot_or_del(new /obj/item/clothing/under/rank/head_of_security(H), slot_w_uniform)
 	H.equip_to_slot_or_del(new /obj/item/clothing/shoes/jackboots(H), slot_shoes)
 	H.equip_to_slot_or_del(new /obj/item/clothing/suit/armor/hos/trenchcoat(H), slot_wear_suit)
@@ -78,7 +78,7 @@ Warden
 	access = list(access_security, access_sec_doors, access_brig, access_armory, access_court, access_maint_tunnels, access_morgue, access_weapons, access_forensics_lockers)
 	minimal_access = list(access_security, access_sec_doors, access_brig, access_armory, access_court, access_weapons) //See /datum/job/warden/get_access()
 
-/datum/job/warden/equip_items(var/mob/living/carbon/human/H)
+/datum/job/warden/equip_items(mob/living/carbon/human/H)
 	H.equip_to_slot_or_del(new /obj/item/clothing/under/rank/warden(H), slot_w_uniform)
 	H.equip_to_slot_or_del(new /obj/item/clothing/shoes/jackboots(H), slot_shoes)
 	H.equip_to_slot_or_del(new /obj/item/clothing/suit/armor/vest/warden(H), slot_wear_suit)
@@ -124,7 +124,7 @@ Detective
 	access = list(access_sec_doors, access_forensics_lockers, access_morgue, access_maint_tunnels, access_court, access_weapons, access_brig, access_security)
 	minimal_access = list(access_sec_doors, access_forensics_lockers, access_morgue, access_maint_tunnels, access_court, access_weapons)
 
-/datum/job/detective/equip_items(var/mob/living/carbon/human/H)
+/datum/job/detective/equip_items(mob/living/carbon/human/H)
 	H.equip_to_slot_or_del(new /obj/item/clothing/under/rank/det(H), slot_w_uniform)
 	H.equip_to_slot_or_del(new /obj/item/clothing/shoes/sneakers/brown(H), slot_shoes)
 	H.equip_to_slot_or_del(new /obj/item/clothing/head/det_hat(H), slot_head)
@@ -174,7 +174,7 @@ Security Officer
 	access = list(access_security, access_sec_doors, access_brig, access_court, access_maint_tunnels, access_morgue, access_weapons, access_forensics_lockers)
 	minimal_access = list(access_security, access_sec_doors, access_brig, access_court, access_weapons) //But see /datum/job/warden/get_access()
 
-/datum/job/officer/equip_items(var/mob/living/carbon/human/H)
+/datum/job/officer/equip_items(mob/living/carbon/human/H)
 	assign_sec_to_department(H)
 
 	H.equip_to_slot_or_del(new /obj/item/clothing/shoes/jackboots(H), slot_shoes)
@@ -206,7 +206,7 @@ Security Officer
 
 var/list/sec_departments = list("engineering", "supply", "medical", "science")
 
-/datum/job/officer/proc/assign_sec_to_department(var/mob/living/carbon/human/H)
+/datum/job/officer/proc/assign_sec_to_department(mob/living/carbon/human/H)
 	if(!sec_departments.len)
 		H.equip_to_slot_or_del(new /obj/item/clothing/under/rank/security(H), slot_w_uniform)
 	else

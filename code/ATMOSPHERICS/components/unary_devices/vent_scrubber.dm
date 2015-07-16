@@ -247,7 +247,7 @@
 		stat |= NOPOWER
 	update_icon_nopipes()
 
-/obj/machinery/atmospherics/unary/vent_scrubber/attackby(var/obj/item/weapon/W as obj, var/mob/user as mob, params)
+/obj/machinery/atmospherics/unary/vent_scrubber/attackby(obj/item/weapon/W, mob/user, params)
 	if(istype(W, /obj/item/weapon/weldingtool))
 		var/obj/item/weapon/weldingtool/WT = W
 		if(WT.remove_fuel(0,user))

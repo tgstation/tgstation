@@ -184,7 +184,7 @@
 			var/spawn_type = pick_n_take(shuttle_spawns)
 			new spawn_type(T)
 
-/datum/round_event/shuttle_loan/proc/add_crates(var/list/crate_types, var/list/turfs)
+/datum/round_event/shuttle_loan/proc/add_crates(list/crate_types, list/turfs)
 	for(var/crate_type in crate_types)
 		var/turf/T = pick_n_take(turfs)
 		var/datum/supply_packs/sp_obj = new crate_type()

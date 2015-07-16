@@ -63,13 +63,13 @@ var/const/GRAV_NEEDS_WRENCH = 3
 /obj/machinery/gravity_generator/part
 	var/obj/machinery/gravity_generator/main/main_part = null
 
-/obj/machinery/gravity_generator/part/attackby(obj/item/I as obj, mob/user as mob, params)
+/obj/machinery/gravity_generator/part/attackby(obj/item/I, mob/user, params)
 	return main_part.attackby(I, user)
 
 /obj/machinery/gravity_generator/part/get_status()
 	return main_part.get_status()
 
-/obj/machinery/gravity_generator/part/attack_hand(mob/user as mob)
+/obj/machinery/gravity_generator/part/attack_hand(mob/user)
 	return main_part.attack_hand(user)
 
 /obj/machinery/gravity_generator/part/set_broken()
@@ -171,7 +171,7 @@ var/const/GRAV_NEEDS_WRENCH = 3
 // Interaction
 
 // Fixing the gravity generator.
-/obj/machinery/gravity_generator/main/attackby(obj/item/I as obj, mob/user as mob, params)
+/obj/machinery/gravity_generator/main/attackby(obj/item/I, mob/user, params)
 	var/old_broken_state = broken_state
 	switch(broken_state)
 		if(GRAV_NEEDS_SCREWDRIVER)
@@ -208,11 +208,11 @@ var/const/GRAV_NEEDS_WRENCH = 3
 	if(old_broken_state != broken_state)
 		update_icon()
 
-/obj/machinery/gravity_generator/main/attack_hand(mob/user as mob)
+/obj/machinery/gravity_generator/main/attack_hand(mob/user)
 	if(!..())
 		return interact(user)
 
-/obj/machinery/gravity_generator/main/interact(mob/user as mob)
+/obj/machinery/gravity_generator/main/interact(mob/user)
 	if(stat & BROKEN)
 		return
 	var/dat = "Gravity Generator Breaker: "
@@ -277,7 +277,7 @@ var/const/GRAV_NEEDS_WRENCH = 3
 	update_icon()
 
 // Set the state of the gravity.
-/obj/machinery/gravity_generator/main/proc/set_state(var/new_state)
+/obj/machinery/gravity_generator/main/proc/set_state(new_state)
 	charging_state = POWER_IDLE
 	on = new_state
 	use_power = on ? 2 : 1

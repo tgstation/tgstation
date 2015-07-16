@@ -81,7 +81,7 @@
 
 
 
-/datum/admins/proc/Secrets_topic(var/item,var/href_list)
+/datum/admins/proc/Secrets_topic(item,href_list)
 	var/datum/round_event/E
 	var/ok = 0
 	switch(item)

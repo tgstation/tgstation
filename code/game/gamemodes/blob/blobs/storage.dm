@@ -11,11 +11,11 @@
 		overmind.max_blob_points -= 50
 		qdel(src)
 
-/obj/effect/blob/storage/PulseAnimation(var/activate = 0)
+/obj/effect/blob/storage/PulseAnimation(activate = 0)
 	if(activate)
 		..()
 	return
 
-/obj/effect/blob/storage/proc/update_max_blob_points(var/new_point_increase)
+/obj/effect/blob/storage/proc/update_max_blob_points(new_point_increase)
 	if(overmind)
 		overmind.max_blob_points += new_point_increase

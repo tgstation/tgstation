@@ -1,4 +1,4 @@
-/turf/proc/CanAtmosPass(var/turf/T)
+/turf/proc/CanAtmosPass(turf/T)
 	if(!istype(T))	return 0
 	var/R
 	if(blocks_air || T.blocks_air)
@@ -79,23 +79,23 @@
 				T.atmos_adjacent_turfs_amount -= 1
 			T.atmos_adjacent_turfs &= ~counterdir
 
-/atom/movable/proc/air_update_turf(var/command = 0)
+/atom/movable/proc/air_update_turf(command = 0)
 	if(!istype(loc,/turf) && command)
 		return
 	var/turf/T = get_turf(loc)
 	T.air_update_turf(command)
 
-/turf/proc/air_update_turf(var/command = 0)
+/turf/proc/air_update_turf(command = 0)
 	if(command)
 		CalculateAdjacentTurfs()
 	SSair.add_to_active(src,command)
 
-/atom/movable/proc/move_update_air(var/turf/T)
+/atom/movable/proc/move_update_air(turf/T)
     if(istype(T,/turf))
         T.air_update_turf(1)
     air_update_turf(1)
 
-/atom/movable/proc/atmos_spawn_air(var/text, var/amount) //because a lot of people loves to copy paste awful code lets just make a easy proc to spawn your plasma fires
+/atom/movable/proc/atmos_spawn_air(text, amount) //because a lot of people loves to copy paste awful code lets just make a easy proc to spawn your plasma fires
 	var/turf/simulated/T = get_turf(src)
 	if(!istype(T))
 		return
@@ -112,7 +112,7 @@ var/const/SPAWN_N2O = 64
 
 var/const/SPAWN_AIR = 256
 
-/turf/simulated/proc/atmos_spawn_air(var/flag, var/amount)
+/turf/simulated/proc/atmos_spawn_air(flag, amount)
 	if(!text || !amount || !air)
 		return
 
