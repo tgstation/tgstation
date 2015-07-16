@@ -32,6 +32,3 @@ info.json
 
 # Player preferences
 players2.sqlite
-
-# New CMC Minimap images.
-/data/minimaps/*
