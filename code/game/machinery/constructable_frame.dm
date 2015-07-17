@@ -217,7 +217,6 @@ to destroy them and players will be able to make replacements.
 	icon_state = "blank_mod"
 	//var/datum/circuits/local_fuses = null
 	var/list/allowed_boards = list("autolathe"=/obj/item/weapon/circuitboard/autolathe,"intercom"=/obj/item/weapon/intercom_electronics,"conveyor"=/obj/item/weapon/circuitboard/conveyor,"air alarm"=/obj/item/weapon/circuitboard/air_alarm,"fire alarm"=/obj/item/weapon/circuitboard/fire_alarm,"airlock"=/obj/item/weapon/circuitboard/airlock,"APC"=/obj/item/weapon/circuitboard/power_control,"vendomat"=/obj/item/weapon/circuitboard/vendomat,"microwave"=/obj/item/weapon/circuitboard/microwave)
-	var/list/board_names = list("autolathe","intercom","conveyor","air alarm","fire alarm","airlock","APC","vendomat","microwave")
 
 /obj/item/weapon/circuitboard/blank/New()
 	..()
@@ -238,7 +237,7 @@ to destroy them and players will be able to make replacements.
 			user << "<span class='warning'>The multitool flashes red briefly.</span>"
 	else */if(issolder(O))
 		//local_fuses.Interact(user)
-		var/t = input(user, "Which board should be designed?") as null|anything in board_names
+		var/t = input(user, "Which board should be designed?") as null|anything in allowed_boards
 		if(!t) return
 		var/obj/item/weapon/solder/S = O
 		if(!S.remove_fuel(4,user)) return
