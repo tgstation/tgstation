@@ -8,7 +8,7 @@
 
 
 
-/mob/living/simple_animal/drone/activate_hand(var/selhand)
+/mob/living/simple_animal/drone/activate_hand(selhand)
 
 	if(istext(selhand))
 		selhand = lowertext(selhand)

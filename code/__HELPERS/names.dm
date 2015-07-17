@@ -32,7 +32,7 @@ var/command_name = null
 	command_name = name
 	return name
 
-/proc/change_command_name(var/name)
+/proc/change_command_name(name)
 
 	command_name = name
 

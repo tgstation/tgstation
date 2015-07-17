@@ -54,10 +54,10 @@
 	else
 		return (amount)
 
-/obj/item/stack/attack_self(mob/user as mob)
+/obj/item/stack/attack_self(mob/user)
 	interact(user)
 
-/obj/item/stack/interact(mob/user as mob)
+/obj/item/stack/interact(mob/user)
 	if (!recipes)
 		return
 	if (!src || get_amount() <= 0)
@@ -192,14 +192,14 @@
 		return 1
 	return 0
 
-/obj/item/stack/proc/add(var/amount)
+/obj/item/stack/proc/add(amount)
 	if (is_cyborg)
 		source.add_charge(amount * cost)
 	else
 		src.amount += amount
 	update_icon()
 
-/obj/item/stack/proc/add_to_stacks(mob/usr as mob)
+/obj/item/stack/proc/add_to_stacks(mob/usr)
 	var/obj/item/stack/oldsrc = src
 	src = null
 	for (var/obj/item/stack/item in usr.loc)
@@ -215,7 +215,7 @@
 			break
 	oldsrc.update_icon()
 
-/obj/item/stack/attack_hand(mob/user as mob)
+/obj/item/stack/attack_hand(mob/user)
 	if (user.get_inactive_hand() == src)
 		if(zero_amount())	return
 		var/obj/item/stack/F = new src.type( user, 1)
@@ -230,7 +230,7 @@
 		..()
 	return
 
-/obj/item/stack/attackby(obj/item/W as obj, mob/user as mob, params)
+/obj/item/stack/attackby(obj/item/W, mob/user, params)
 
 	if (istype(W, src.type))
 		if(zero_amount())	return

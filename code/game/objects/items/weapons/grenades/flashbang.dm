@@ -18,7 +18,7 @@
 		B.update_icon()
 	qdel(src)
 
-/obj/item/weapon/grenade/flashbang/proc/bang(var/turf/T , var/mob/living/M)
+/obj/item/weapon/grenade/flashbang/proc/bang(turf/T , mob/living/M)
 	M.show_message("<span class='warning'>BANG</span>", 2)
 	playsound(loc, 'sound/effects/bang.ogg', 25, 1)
 

@@ -10,7 +10,7 @@
 	var/sortTag = 0
 
 
-/obj/structure/bigDelivery/attack_hand(mob/user as mob)
+/obj/structure/bigDelivery/attack_hand(mob/user)
 	playsound(src.loc, 'sound/items/poster_ripped.ogg', 50, 1)
 	qdel(src)
 
@@ -25,7 +25,7 @@
 		AM.loc = T
 	..()
 
-/obj/structure/bigDelivery/attackby(obj/item/W as obj, mob/user as mob, params)
+/obj/structure/bigDelivery/attackby(obj/item/W, mob/user, params)
 	if(istype(W, /obj/item/device/destTagger))
 		var/obj/item/device/destTagger/O = W
 
@@ -68,7 +68,7 @@
 	var/sortTag = 0
 
 
-/obj/item/smallDelivery/attack_self(mob/user as mob)
+/obj/item/smallDelivery/attack_self(mob/user)
 	if(wrapped && wrapped.loc) //sometimes items can disappear. For example, bombs. --rastaf0
 		wrapped.loc = user.loc
 		if(ishuman(user))
@@ -79,7 +79,7 @@
 	qdel(src)
 
 
-/obj/item/smallDelivery/attackby(obj/item/W as obj, mob/user as mob, params)
+/obj/item/smallDelivery/attackby(obj/item/W, mob/user, params)
 	if(istype(W, /obj/item/device/destTagger))
 		var/obj/item/device/destTagger/O = W
 
@@ -120,7 +120,7 @@
 	burn_state = 0 //burnable
 
 
-/obj/item/stack/packageWrap/afterattack(var/obj/target as obj, mob/user as mob, proximity)
+/obj/item/stack/packageWrap/afterattack(obj/target, mob/user, proximity)
 	if(!proximity) return
 	if(!istype(target))	//this really shouldn't be necessary (but it is).	-Pete
 		return
@@ -204,7 +204,7 @@
 	flags = CONDUCT
 	slot_flags = SLOT_BELT
 
-/obj/item/device/destTagger/proc/openwindow(mob/user as mob)
+/obj/item/device/destTagger/proc/openwindow(mob/user)
 	var/dat = "<tt><center><h1><b>TagMaster 2.2</b></h1></center>"
 
 	dat += "<table style='width:100%; padding:4px;'><tr>"
@@ -219,7 +219,7 @@
 	user << browse(dat, "window=destTagScreen;size=450x350")
 	onclose(user, "destTagScreen")
 
-/obj/item/device/destTagger/attack_self(mob/user as mob)
+/obj/item/device/destTagger/attack_self(mob/user)
 	openwindow(user)
 	return
 
@@ -256,7 +256,7 @@
 /obj/machinery/disposal/deliveryChute/update()
 	return
 
-/obj/machinery/disposal/deliveryChute/Bumped(var/atom/movable/AM) //Go straight into the chute
+/obj/machinery/disposal/deliveryChute/Bumped(atom/movable/AM) //Go straight into the chute
 	if(!AM.disposalEnterTry())
 		return
 	switch(dir)
@@ -292,7 +292,7 @@
 /obj/machinery/disposal/deliveryChute/newHolderDestination(obj/structure/disposalholder/H)
 	H.destinationTag = 1
 
-/obj/machinery/disposal/deliveryChute/attackby(var/obj/item/I, var/mob/user, params)
+/obj/machinery/disposal/deliveryChute/attackby(obj/item/I, mob/user, params)
 	if(!I || !user)
 		return
 

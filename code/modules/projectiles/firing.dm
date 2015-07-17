@@ -1,4 +1,4 @@
-/obj/item/ammo_casing/proc/fire(atom/target as mob|obj|turf, mob/living/user as mob|obj, params, var/distro, var/quiet)
+/obj/item/ammo_casing/proc/fire(atom/target as mob|obj|turf, mob/living/user as mob|obj, params, distro, quiet)
 	distro += variance
 	for (var/i = max(1, pellets), i > 0, i--)
 		var/curloc = user.loc
@@ -15,7 +15,7 @@
 	update_icon()
 	return 1
 
-/obj/item/ammo_casing/proc/ready_proj(atom/target as mob|obj|turf, mob/living/user, var/quiet)
+/obj/item/ammo_casing/proc/ready_proj(atom/target as mob|obj|turf, mob/living/user, quiet)
 	if (!BB)
 		return
 	BB.original = target
@@ -53,7 +53,7 @@
 	BB = null
 	return 1
 
-/obj/item/ammo_casing/proc/spread(var/turf/target, var/turf/current, var/distro)
+/obj/item/ammo_casing/proc/spread(turf/target, turf/current, distro)
 	var/dx = abs(target.x - current.x)
 	var/dy = abs(target.y - current.y)
 	return locate(target.x + round(gaussian(0, distro) * (dy+2)/8, 1), target.y + round(gaussian(0, distro) * (dx+2)/8, 1), target.z)

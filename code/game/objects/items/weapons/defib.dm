@@ -76,7 +76,7 @@
 		usr << "<span class='warning'>Put the defibrillator on your back first!</span>"
 	return
 
-/obj/item/weapon/defibrillator/attack_hand(mob/user as mob)
+/obj/item/weapon/defibrillator/attack_hand(mob/user)
 	if(src.loc == user)
 		ui_action_click()
 		return
@@ -128,7 +128,7 @@
 	update_icon()
 	return
 
-/obj/item/weapon/defibrillator/emag_act(mob/user as mob)
+/obj/item/weapon/defibrillator/emag_act(mob/user)
 	if(safety)
 		safety = 0
 		user << "<span class='warning'>You silently disable [src]'s safety protocols with the cryptographic sequencer."
@@ -197,7 +197,7 @@
 	update_icon()
 	return
 
-/obj/item/weapon/defibrillator/proc/deductcharge(var/chrgdeductamt)
+/obj/item/weapon/defibrillator/proc/deductcharge(chrgdeductamt)
 	if(bcell)
 		if(bcell.charge < (paddles.revivecost+chrgdeductamt))
 			powered = 0
@@ -209,7 +209,7 @@
 			update_icon()
 			return 0
 
-/obj/item/weapon/defibrillator/proc/cooldowncheck(var/mob/user)
+/obj/item/weapon/defibrillator/proc/cooldowncheck(mob/user)
 	spawn(50)
 		if(bcell)
 			if(bcell.charge >= paddles.revivecost)
@@ -304,7 +304,7 @@
 	playsound(get_turf(src), 'sound/machines/defib_zap.ogg', 50, 1, -1)
 	return (OXYLOSS)
 
-/obj/item/weapon/twohanded/shockpaddles/dropped(mob/user as mob)
+/obj/item/weapon/twohanded/shockpaddles/dropped(mob/user)
 	if(user)
 		var/obj/item/weapon/twohanded/O = user.get_inactive_hand()
 		if(istype(O))
@@ -315,7 +315,7 @@
 		defib.update_icon()
 	return unwield(user)
 
-/obj/item/weapon/twohanded/shockpaddles/proc/check_defib_exists(mainunit, var/mob/living/carbon/human/M, var/obj/O)
+/obj/item/weapon/twohanded/shockpaddles/proc/check_defib_exists(mainunit, mob/living/carbon/human/M, obj/O)
 	if (!mainunit || !istype(mainunit, /obj/item/weapon/defibrillator))	//To avoid weird issues from admin spawns
 		M.unEquip(O)
 		qdel(O)

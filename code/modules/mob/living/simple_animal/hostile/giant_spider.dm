@@ -92,7 +92,7 @@
 					stop_automated_movement = 0
 					walk(src,0)
 
-/mob/living/simple_animal/hostile/poison/giant_spider/nurse/proc/GiveUp(var/C)
+/mob/living/simple_animal/hostile/poison/giant_spider/nurse/proc/GiveUp(C)
 	spawn(100)
 		if(busy == MOVING_TO_TARGET)
 			if(cocoon_target == C && get_dist(src,cocoon_target) > 1)

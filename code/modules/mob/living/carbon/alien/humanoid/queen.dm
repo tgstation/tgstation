@@ -65,7 +65,7 @@
 
 	action_icon_state = "alien_egg"
 
-/obj/effect/proc_holder/alien/lay_egg/fire(var/mob/living/carbon/alien/user)
+/obj/effect/proc_holder/alien/lay_egg/fire(mob/living/carbon/alien/user)
 	if(locate(/obj/structure/alien/egg) in get_turf(user))
 		user << "There's already an egg here."
 		return 0

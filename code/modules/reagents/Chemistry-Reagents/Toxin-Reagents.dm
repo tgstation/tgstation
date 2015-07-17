@@ -8,7 +8,7 @@
 	color = "#CF3600" // rgb: 207, 54, 0
 	var/toxpwr = 1.5
 
-/datum/reagent/toxin/on_mob_life(var/mob/living/M as mob)
+/datum/reagent/toxin/on_mob_life(mob/living/M)
 	if(toxpwr)
 		M.adjustToxLoss(toxpwr*REM)
 	..()
@@ -28,7 +28,7 @@
 	color = "#13BC5E" // rgb: 19, 188, 94
 	toxpwr = 0
 
-/datum/reagent/toxin/mutagen/reaction_mob(var/mob/living/carbon/M, var/method=TOUCH, var/volume)
+/datum/reagent/toxin/mutagen/reaction_mob(mob/living/carbon/M, method=TOUCH, volume)
 	if(!..())
 		return
 	if(!istype(M) || !M.dna)
@@ -44,7 +44,7 @@
 		updateappearance(M)
 	return
 
-/datum/reagent/toxin/mutagen/on_mob_life(var/mob/living/carbon/M)
+/datum/reagent/toxin/mutagen/on_mob_life(mob/living/carbon/M)
 	if(istype(M))
 		M.apply_effect(5,IRRADIATE,0)
 	..()
@@ -57,13 +57,13 @@
 	color = "#500064" // rgb: 80, 0, 100
 	toxpwr = 3
 
-/datum/reagent/toxin/plasma/on_mob_life(var/mob/living/M as mob)
+/datum/reagent/toxin/plasma/on_mob_life(mob/living/M)
 	if(holder.has_reagent("epinephrine"))
 		holder.remove_reagent("epinephrine", 2*REM)
 	..()
 	return
 
-/datum/reagent/toxin/plasma/reaction_obj(var/obj/O, var/volume)
+/datum/reagent/toxin/plasma/reaction_obj(obj/O, volume)
 	src = null
 	/*if(istype(O,/obj/item/weapon/reagent_containers/food/snacks/egg/slime))
 		var/obj/item/weapon/reagent_containers/food/snacks/egg/slime/egg = O
@@ -72,13 +72,13 @@
 	if((!O) || (!volume))	return 0
 	O.atmos_spawn_air(SPAWN_TOXINS|SPAWN_20C, volume)
 
-/datum/reagent/toxin/plasma/reaction_turf(var/turf/simulated/T, var/volume)
+/datum/reagent/toxin/plasma/reaction_turf(turf/simulated/T, volume)
 	src = null
 	if(istype(T))
 		T.atmos_spawn_air(SPAWN_TOXINS|SPAWN_20C, volume)
 	return
 
-/datum/reagent/toxin/plasma/reaction_mob(var/mob/living/M, var/method=TOUCH, var/volume)//Splashing people with plasma is stronger than fuel!
+/datum/reagent/toxin/plasma/reaction_mob(mob/living/M, method=TOUCH, volume)//Splashing people with plasma is stronger than fuel!
 	if(!istype(M, /mob/living))
 		return
 	if(method == TOUCH)
@@ -92,7 +92,7 @@
 	color = "#C8A5DC" // rgb: 200, 165, 220
 	toxpwr = 0
 
-/datum/reagent/toxin/lexorin/on_mob_life(var/mob/living/M as mob)
+/datum/reagent/toxin/lexorin/on_mob_life(mob/living/M)
 	if(M.stat != DEAD)
 		if(prob(33))
 			M.take_organ_damage(1*REM, 0)
@@ -109,7 +109,7 @@
 	color = "#801E28" // rgb: 128, 30, 40
 	toxpwr = 0
 
-/datum/reagent/toxin/slimejelly/on_mob_life(var/mob/living/M as mob)
+/datum/reagent/toxin/slimejelly/on_mob_life(mob/living/M)
 	if(prob(10))
 		M << "<span class='danger'>Your insides are burning!</span>"
 		M.adjustToxLoss(rand(20,60)*REM)
@@ -125,7 +125,7 @@
 	color = "#CF3600" // rgb: 207, 54, 0
 	toxpwr = 0
 
-/datum/reagent/toxin/minttoxin/on_mob_life(var/mob/living/M as mob)
+/datum/reagent/toxin/minttoxin/on_mob_life(mob/living/M)
 	if (FAT in M.mutations)
 		M.gib()
 	..()
@@ -146,7 +146,7 @@
 	color = "#669900" // rgb: 102, 153, 0
 	toxpwr = 0.5
 
-/datum/reagent/toxin/zombiepowder/on_mob_life(var/mob/living/carbon/M as mob)
+/datum/reagent/toxin/zombiepowder/on_mob_life(mob/living/carbon/M)
 	M.status_flags |= FAKEDEATH
 	M.adjustOxyLoss(0.5*REM)
 	M.Weaken(5)
@@ -166,7 +166,7 @@
 	color = "#B31008" // rgb: 139, 166, 233
 	toxpwr = 0
 
-/datum/reagent/toxin/mindbreaker/on_mob_life(var/mob/living/M)
+/datum/reagent/toxin/mindbreaker/on_mob_life(mob/living/M)
 	M.hallucination += 10
 	..()
 	return
@@ -178,7 +178,7 @@
 	color = "#49002E" // rgb: 73, 0, 46
 	toxpwr = 1
 
-/datum/reagent/toxin/plantbgone/reaction_obj(var/obj/O, var/volume)
+/datum/reagent/toxin/plantbgone/reaction_obj(obj/O, volume)
 	if(istype(O,/obj/structure/alien/weeds/))
 		var/obj/structure/alien/weeds/alien_weeds = O
 		alien_weeds.health -= rand(15,35) // Kills alien weeds pretty fast
@@ -189,7 +189,7 @@
 		var/obj/effect/spacevine/SV = O
 		SV.on_chem_effect(src)
 
-/datum/reagent/toxin/plantbgone/reaction_mob(var/mob/living/M, var/method=TOUCH, var/volume)
+/datum/reagent/toxin/plantbgone/reaction_mob(mob/living/M, method=TOUCH, volume)
 	src = null
 	if(iscarbon(M))
 		var/mob/living/carbon/C = M
@@ -210,7 +210,7 @@
 	color = "#4B004B" // rgb: 75, 0, 75
 	toxpwr = 1
 
-/datum/reagent/toxin/pestkiller/reaction_mob(var/mob/living/M, var/method=TOUCH, var/volume)
+/datum/reagent/toxin/pestkiller/reaction_mob(mob/living/M, method=TOUCH, volume)
 	src = null
 	if(iscarbon(M))
 		var/mob/living/carbon/C = M
@@ -225,7 +225,7 @@
 	color = "#9ACD32"
 	toxpwr = 0.5
 
-/datum/reagent/toxin/spore/on_mob_life(var/mob/living/M as mob)
+/datum/reagent/toxin/spore/on_mob_life(mob/living/M)
 	M.damageoverlaytemp = 60
 	M.eye_blurry = max(M.eye_blurry, 3)
 	..()
@@ -239,7 +239,7 @@
 	color = "#9ACD32"
 	toxpwr = 0.5
 
-/datum/reagent/toxin/spore_burning/on_mob_life(var/mob/living/M as mob)
+/datum/reagent/toxin/spore_burning/on_mob_life(mob/living/M)
 	..()
 	M.adjust_fire_stacks(2)
 	M.IgniteMob()
@@ -253,7 +253,7 @@
 	toxpwr = 0
 	metabolization_rate = 1.5 * REAGENTS_METABOLISM
 
-/datum/reagent/toxin/chloralhydrate/on_mob_life(var/mob/living/M as mob)
+/datum/reagent/toxin/chloralhydrate/on_mob_life(mob/living/M)
 	switch(current_cycle)
 		if(1 to 10)
 			M.confused += 2
@@ -273,7 +273,7 @@
 	color = "#664300" // rgb: 102, 67, 0
 	metabolization_rate = 1.5 * REAGENTS_METABOLISM
 
-/datum/reagent/toxin/beer2/on_mob_life(var/mob/living/M as mob)
+/datum/reagent/toxin/beer2/on_mob_life(mob/living/M)
 	switch(current_cycle)
 		if(1 to 50)
 			M.sleeping += 1
@@ -332,7 +332,7 @@
 	metabolization_rate = 0.125 * REAGENTS_METABOLISM
 	toxpwr = 0
 
-/datum/reagent/toxin/polonium/on_mob_life(var/mob/living/M as mob)
+/datum/reagent/toxin/polonium/on_mob_life(mob/living/M)
 	M.radiation += 4
 	..()
 
@@ -346,7 +346,7 @@
 	overdose_threshold = 30
 	toxpwr = 0
 
-/datum/reagent/toxin/histamine/on_mob_life(var/mob/living/M as mob)
+/datum/reagent/toxin/histamine/on_mob_life(mob/living/M)
 	if(prob(50))
 		switch(pick(1, 2, 3, 4))
 			if(1)
@@ -362,7 +362,7 @@
 					M.adjustBruteLoss(2*REM)
 	..()
 
-/datum/reagent/toxin/histamine/overdose_process(var/mob/living/M as mob)
+/datum/reagent/toxin/histamine/overdose_process(mob/living/M)
 	M.adjustOxyLoss(2*REM)
 	M.adjustBruteLoss(2*REM)
 	M.adjustToxLoss(2*REM)
@@ -377,7 +377,7 @@
 	metabolization_rate = 0.5 * REAGENTS_METABOLISM
 	toxpwr = 1
 
-/datum/reagent/toxin/formaldehyde/on_mob_life(var/mob/living/M as mob)
+/datum/reagent/toxin/formaldehyde/on_mob_life(mob/living/M)
 	if(prob(5))
 		M.reagents.add_reagent("histamine",pick(5,15))
 		M.reagents.remove_reagent("formaldehyde",1)
@@ -392,7 +392,7 @@
 	metabolization_rate = 0.25 * REAGENTS_METABOLISM
 	toxpwr = 0
 
-/datum/reagent/toxin/venom/on_mob_life(var/mob/living/M as mob)
+/datum/reagent/toxin/venom/on_mob_life(mob/living/M)
 	toxpwr = 0.2*volume
 	M.adjustBruteLoss((0.3*volume)*REM)
 	if(prob(15))
@@ -409,7 +409,7 @@
 	metabolization_rate = 0.5 * REAGENTS_METABOLISM
 	toxpwr = 0
 
-/datum/reagent/toxin/neurotoxin2/on_mob_life(var/mob/living/M as mob)
+/datum/reagent/toxin/neurotoxin2/on_mob_life(mob/living/M)
 	if(M.brainloss + M.toxloss <= 60)
 		M.adjustBrainLoss(1*REM)
 		M.adjustToxLoss(1*REM)
@@ -426,7 +426,7 @@
 	metabolization_rate = 0.125 * REAGENTS_METABOLISM
 	toxpwr = 1.25
 
-/datum/reagent/toxin/cyanide/on_mob_life(var/mob/living/M as mob)
+/datum/reagent/toxin/cyanide/on_mob_life(mob/living/M)
 	if(prob(5))
 		M.losebreath += 1
 	if(prob(8))
@@ -453,12 +453,12 @@
 	metabolization_rate = 0.4 * REAGENTS_METABOLISM
 	toxpwr = 0
 
-/datum/reagent/toxin/itching_powder/reaction_mob(var/mob/living/M, var/method=TOUCH, var/volume)
+/datum/reagent/toxin/itching_powder/reaction_mob(mob/living/M, method=TOUCH, volume)
 	if(method == TOUCH)
 		M.reagents.add_reagent("itching_powder", volume)
 		return
 
-/datum/reagent/toxin/itching_powder/on_mob_life(var/mob/living/M as mob)
+/datum/reagent/toxin/itching_powder/on_mob_life(mob/living/M)
 	if(prob(15))
 		M << "You scratch at your head."
 		M.adjustBruteLoss(0.2*REM)
@@ -482,7 +482,7 @@
 	metabolization_rate = 0.5 * REAGENTS_METABOLISM
 	toxpwr = 2.5
 
-/datum/reagent/toxin/initropidril/on_mob_life(var/mob/living/M as mob)
+/datum/reagent/toxin/initropidril/on_mob_life(mob/living/M)
 	if(prob(25))
 		var/picked_option = rand(1,3)
 		switch(picked_option)
@@ -513,7 +513,7 @@
 	metabolization_rate = 0.25 * REAGENTS_METABOLISM
 	toxpwr = 0
 
-/datum/reagent/toxin/pancuronium/on_mob_life(var/mob/living/M as mob)
+/datum/reagent/toxin/pancuronium/on_mob_life(mob/living/M)
 	if(current_cycle >= 10)
 		M.SetParalysis(1)
 	if(prob(20))
@@ -529,7 +529,7 @@
 	metabolization_rate = 0.75 * REAGENTS_METABOLISM
 	toxpwr = 0
 
-/datum/reagent/toxin/sodium_thiopental/on_mob_life(var/mob/living/M as mob)
+/datum/reagent/toxin/sodium_thiopental/on_mob_life(mob/living/M)
 	if(current_cycle >= 10)
 		M.sleeping += 1
 	M.adjustStaminaLoss(10*REM)
@@ -544,7 +544,7 @@
 	metabolization_rate = 0.125 * REAGENTS_METABOLISM
 	toxpwr = 0.5
 
-/datum/reagent/toxin/sulfonal/on_mob_life(var/mob/living/M as mob)
+/datum/reagent/toxin/sulfonal/on_mob_life(mob/living/M)
 	if(current_cycle >= 22)
 		M.sleeping += 1
 	..()
@@ -558,7 +558,7 @@
 	toxpwr = 0
 	metabolization_rate = 0.5 * REAGENTS_METABOLISM
 
-/datum/reagent/toxin/amanitin/on_mob_delete(var/mob/living/M as mob)
+/datum/reagent/toxin/amanitin/on_mob_delete(mob/living/M)
 	M.adjustToxLoss(current_cycle*3*REM)
 	..()
 
@@ -571,7 +571,7 @@
 	metabolization_rate = 0.5 * REAGENTS_METABOLISM
 	toxpwr = 0.5
 
-/datum/reagent/toxin/lipolicide/on_mob_life(var/mob/living/M as mob)
+/datum/reagent/toxin/lipolicide/on_mob_life(mob/living/M)
 	if(!holder.has_reagent("nutriment"))
 		M.adjustToxLoss(0.5*REM)
 	M.nutrition -= 5 * REAGENTS_METABOLISM
@@ -589,7 +589,7 @@
 	metabolization_rate = 0.06 * REAGENTS_METABOLISM
 	toxpwr = 1.75
 
-/datum/reagent/toxin/coniine/on_mob_life(var/mob/living/M as mob)
+/datum/reagent/toxin/coniine/on_mob_life(mob/living/M)
 	M.losebreath += 5
 	..()
 
@@ -602,7 +602,7 @@
 	metabolization_rate = 0.125 * REAGENTS_METABOLISM
 	toxpwr = 1
 
-/datum/reagent/toxin/curare/on_mob_life(var/mob/living/M as mob)
+/datum/reagent/toxin/curare/on_mob_life(mob/living/M)
 	if(current_cycle >= 11)
 		M.Weaken(1)
 	M.adjustOxyLoss(1*REM)
@@ -620,7 +620,7 @@
 	toxpwr = 1
 	var/acidpwr = 10 //the amount of protection removed from the armour
 
-/datum/reagent/toxin/acid/reaction_mob(var/mob/living/carbon/C, var/method=TOUCH, var/volume)
+/datum/reagent/toxin/acid/reaction_mob(mob/living/carbon/C, method=TOUCH, volume)
 	if(!istype(C))
 		return
 	volume = round(volume,0.1)
@@ -630,7 +630,7 @@
 
 	C.acid_act(acidpwr, toxpwr, volume)
 
-/datum/reagent/toxin/acid/reaction_obj(var/obj/O, var/volume)
+/datum/reagent/toxin/acid/reaction_obj(obj/O, volume)
 	if(istype(O.loc, /mob)) //handled in human acid_act()
 		return
 	volume = round(volume,0.1)

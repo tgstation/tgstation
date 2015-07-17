@@ -55,7 +55,7 @@
 	ganghud.leave_hud(defector_mind.current)
 	ticker.mode.set_antag_hud(defector_mind.current, null)
 
-/datum/gang/proc/domination(var/modifier=1)
+/datum/gang/proc/domination(modifier=1)
 	dom_timer = get_domination_time(src) * modifier
 	set_security_level("delta")
 	SSshuttle.emergencyNoEscape = 1
@@ -64,7 +64,7 @@
 
 
 //Used by recallers when purchasing a gang outfit. First time a gang outfit is purchased the buyer decides a gang style which is stored so gang outfits are uniform
-/datum/gang/proc/gang_outfit(mob/living/carbon/user,var/obj/item/device/gangtool/gangtool)
+/datum/gang/proc/gang_outfit(mob/living/carbon/user,obj/item/device/gangtool/gangtool)
 	if(!user || !gangtool)
 		return 0
 	if(!gangtool.can_use(user))
@@ -110,7 +110,7 @@
 //////////////////////////////////////////// MESSAGING
 
 
-/datum/gang/proc/message_gangtools(var/message,var/beep=1,var/warning)
+/datum/gang/proc/message_gangtools(message,beep=1,warning)
 	if(!gangtools.len || !message)
 		return
 	for(var/obj/item/device/gangtool/tool in gangtools)

@@ -9,7 +9,7 @@
 	dna_cost = 2 //Would be 1 without thermal vision
 	var/active = 0 //Whether or not vision is enhanced
 
-/obj/effect/proc_holder/changeling/augmented_eyesight/sting_action(var/mob/user)
+/obj/effect/proc_holder/changeling/augmented_eyesight/sting_action(mob/user)
 	active = !active
 	if(active)
 		user << "<span class='notice'>We feel a minute twitch in our eyes, and darkness creeps away.</span>"

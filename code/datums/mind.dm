@@ -1261,7 +1261,7 @@
 		ticker.mode.finalize_traitor(src)
 		ticker.mode.greet_traitor(src)
 
-/datum/mind/proc/make_Nuke(var/turf/spawnloc,var/nuke_code,var/leader=0)
+/datum/mind/proc/make_Nuke(turf/spawnloc,nuke_code,leader=0)
 	if(!(src in ticker.mode.syndicates))
 		ticker.mode.syndicates += src
 		ticker.mode.update_synd_icons_added(src)
@@ -1385,7 +1385,7 @@
 	fail |= !ticker.mode.equip_revolutionary(current)
 
 
-/datum/mind/proc/make_Gang(var/datum/gang/G)
+/datum/mind/proc/make_Gang(datum/gang/G)
 	special_role = "[G.name] Gang Boss"
 	G.bosses += src
 	gang_datum = G
@@ -1447,7 +1447,7 @@
 
 
 
-/datum/mind/proc/AddSpell(var/obj/effect/proc_holder/spell/spell)
+/datum/mind/proc/AddSpell(obj/effect/proc_holder/spell/spell)
 	spell_list += spell
 	if(!spell.action)
 		spell.action = new/datum/action/spell_action
@@ -1458,7 +1458,7 @@
 		spell.action.background_icon_state = spell.action_background_icon_state
 	spell.action.Grant(current)
 	return
-/datum/mind/proc/transfer_actions(var/mob/living/new_character)
+/datum/mind/proc/transfer_actions(mob/living/new_character)
 	if(current && current.actions)
 		for(var/datum/action/A in current.actions)
 			A.Grant(new_character)

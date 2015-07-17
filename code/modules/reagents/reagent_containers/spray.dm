@@ -17,7 +17,7 @@
 	possible_transfer_amounts = null
 
 
-/obj/item/weapon/reagent_containers/spray/afterattack(atom/A as mob|obj, mob/user as mob)
+/obj/item/weapon/reagent_containers/spray/afterattack(atom/A as mob|obj, mob/user)
 	if(istype(A, /obj/item/weapon/storage) || istype(A, /obj/structure/table) || istype(A, /obj/structure/rack) || istype(A, /obj/structure/closet) \
 	|| istype(A, /obj/item/weapon/reagent_containers) || istype(A, /obj/structure/sink) || istype(A, /obj/structure/janitorialcart) || istype(A, /obj/machinery/hydroponics))
 		return
@@ -60,7 +60,7 @@
 	return
 
 
-/obj/item/weapon/reagent_containers/spray/proc/spray(var/atom/A)
+/obj/item/weapon/reagent_containers/spray/proc/spray(atom/A)
 	var/range = max(min(spray_currentrange, get_dist(src, A)), 1)
 	var/obj/effect/decal/chempuff/D = new /obj/effect/decal/chempuff(get_turf(src))
 	D.create_reagents(amount_per_transfer_from_this)
@@ -92,7 +92,7 @@
 				return
 		qdel(D)
 
-/obj/item/weapon/reagent_containers/spray/attack_self(var/mob/user)
+/obj/item/weapon/reagent_containers/spray/attack_self(mob/user)
 
 	amount_per_transfer_from_this = (amount_per_transfer_from_this == 10 ? 5 : 10)
 	spray_currentrange = (spray_currentrange == 1 ? spray_maxrange : 1)
@@ -141,7 +141,7 @@
 	volume = 10
 	list_reagents = list("water" = 10)
 
-/obj/item/weapon/reagent_containers/spray/waterflower/attack_self(var/mob/user) //Don't allow changing how much the flower sprays
+/obj/item/weapon/reagent_containers/spray/waterflower/attack_self(mob/user) //Don't allow changing how much the flower sprays
 	return
 
 //chemsprayer
@@ -160,7 +160,7 @@
 	origin_tech = "combat=3;materials=3;engineering=3"
 
 
-/obj/item/weapon/reagent_containers/spray/chemsprayer/spray(var/atom/A)
+/obj/item/weapon/reagent_containers/spray/chemsprayer/spray(atom/A)
 	var/direction = get_dir(src, A)
 	var/turf/T = get_turf(A)
 	var/turf/T1 = get_step(T,turn(direction, 90))
@@ -172,7 +172,7 @@
 			return
 		..(the_targets[i])
 
-/obj/item/weapon/reagent_containers/spray/chemsprayer/attack_self(var/mob/user)
+/obj/item/weapon/reagent_containers/spray/chemsprayer/attack_self(mob/user)
 
 	amount_per_transfer_from_this = (amount_per_transfer_from_this == 10 ? 5 : 10)
 	user << "<span class='notice'>You adjust the output switch. You'll now use [amount_per_transfer_from_this] units per spray.</span>"

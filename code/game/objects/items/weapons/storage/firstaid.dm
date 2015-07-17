@@ -139,7 +139,7 @@
 	allow_quick_gather = 1
 	use_to_pickup = 1
 
-/obj/item/weapon/storage/pill_bottle/MouseDrop(obj/over_object as obj) //Quick pillbottle fix. -Agouri
+/obj/item/weapon/storage/pill_bottle/MouseDrop(obj/over_object) //Quick pillbottle fix. -Agouri
 
 	if(ishuman(usr) || ismonkey(usr)) //Can monkeys even place items in the pocket slots? Leaving this in just in case~
 		var/mob/M = usr

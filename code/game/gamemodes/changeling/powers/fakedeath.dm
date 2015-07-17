@@ -9,7 +9,7 @@
 
 
 //Fake our own death and fully heal. You will appear to be dead but regenerate fully after a short delay.
-/obj/effect/proc_holder/changeling/fakedeath/sting_action(var/mob/living/user)
+/obj/effect/proc_holder/changeling/fakedeath/sting_action(mob/living/user)
 	user << "<span class='notice'>We begin our stasis, preparing energy to arise once more.</span>"
 	user.status_flags |= FAKEDEATH		//play dead
 	user.update_canmove()
@@ -23,7 +23,7 @@
 	feedback_add_details("changeling_powers","FD")
 	return 1
 
-/obj/effect/proc_holder/changeling/fakedeath/can_sting(var/mob/user)
+/obj/effect/proc_holder/changeling/fakedeath/can_sting(mob/user)
 	if(user.status_flags & FAKEDEATH)
 		user << "<span class='warning'>We are already regenerating.</span>"
 		return

@@ -10,7 +10,7 @@
 	Note that in all cases the neighbor is handled simply; this is usually the user's mob, in which case it is up to you
 	to check that the mob is not inside of something
 */
-/atom/proc/Adjacent(var/atom/neighbor) // basic inheritance, unused
+/atom/proc/Adjacent(atom/neighbor) // basic inheritance, unused
 	return 0
 
 // Not a sane use of the function and (for now) indicative of an error elsewhere
@@ -83,7 +83,7 @@
 	This is defined as any dense ON_BORDER object, or any dense object without throwpass.
 	The border_only flag allows you to not objects (for source and destination squares)
 */
-/turf/proc/ClickCross(var/target_dir, var/border_only, var/target_atom = null)
+/turf/proc/ClickCross(target_dir, border_only, target_atom = null)
 	for(var/obj/O in src)
 		if( !O.density || O == target_atom || O.throwpass) //check if there's a dense object present on the turf
 			continue // throwpass is used for anything you can click through (or the firedoor special case, see above)

@@ -18,35 +18,35 @@ var/datum/atom_hud/huds = list( \
 	var/list/mob/hudusers = list() //list with all mobs who can see the hud
 	var/list/hud_icons = list() //these will be the indexes for the atom's hud_list
 
-/datum/atom_hud/proc/remove_hud_from(var/mob/M)
+/datum/atom_hud/proc/remove_hud_from(mob/M)
 	if(src in M.permanent_huds)
 		return
 	for(var/atom/A in hudatoms)
 		remove_from_single_hud(M, A)
 	hudusers -= M
 
-/datum/atom_hud/proc/remove_from_hud(var/atom/A)
+/datum/atom_hud/proc/remove_from_hud(atom/A)
 	for(var/mob/M in hudusers)
 		remove_from_single_hud(M, A)
 	hudatoms -= A
 
-/datum/atom_hud/proc/remove_from_single_hud(var/mob/M, var/atom/A) //unsafe, no sanity apart from client
+/datum/atom_hud/proc/remove_from_single_hud(mob/M, atom/A) //unsafe, no sanity apart from client
 	if(!M.client)
 		return
 	for(var/i in hud_icons)
 		M.client.images -= A.hud_list[i]
 
-/datum/atom_hud/proc/add_hud_to(var/mob/M)
+/datum/atom_hud/proc/add_hud_to(mob/M)
 	hudusers |= M
 	for(var/atom/A in hudatoms)
 		add_to_single_hud(M, A)
 
-/datum/atom_hud/proc/add_to_hud(var/atom/A)
+/datum/atom_hud/proc/add_to_hud(atom/A)
 	hudatoms |= A
 	for(var/mob/M in hudusers)
 		add_to_single_hud(M, A)
 
-/datum/atom_hud/proc/add_to_single_hud(var/mob/M, var/atom/A) //unsafe, no sanity apart from client
+/datum/atom_hud/proc/add_to_single_hud(mob/M, atom/A) //unsafe, no sanity apart from client
 	if(!M.client)
 		return
 	for(var/i in hud_icons)

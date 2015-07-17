@@ -44,7 +44,7 @@ other types of metals and chemistry for reagents).
 
 //A proc to calculate the reliability of a design based on tech levels and innate modifiers.
 //Input: A list of /datum/tech; Output: The new reliabilty.
-/datum/design/proc/CalcReliability(var/list/temp_techs)
+/datum/design/proc/CalcReliability(list/temp_techs)
 	var/new_reliability
 	for(var/datum/tech/T in temp_techs)
 		if(T.id in req_tech)

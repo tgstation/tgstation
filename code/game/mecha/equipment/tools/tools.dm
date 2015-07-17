@@ -7,13 +7,13 @@
 	var/dam_force = 20
 	var/obj/mecha/working/ripley/cargo_holder
 
-/obj/item/mecha_parts/mecha_equipment/tool/hydraulic_clamp/can_attach(obj/mecha/working/ripley/M as obj)
+/obj/item/mecha_parts/mecha_equipment/tool/hydraulic_clamp/can_attach(obj/mecha/working/ripley/M)
 	if(..())
 		if(istype(M))
 			return 1
 	return 0
 
-/obj/item/mecha_parts/mecha_equipment/tool/hydraulic_clamp/attach(obj/mecha/M as obj)
+/obj/item/mecha_parts/mecha_equipment/tool/hydraulic_clamp/attach(obj/mecha/M)
 	..()
 	cargo_holder = M
 	return
@@ -142,13 +142,13 @@
 					target.ex_act(2)
 	return 1
 
-/obj/item/mecha_parts/mecha_equipment/tool/drill/can_attach(obj/mecha/M as obj)
+/obj/item/mecha_parts/mecha_equipment/tool/drill/can_attach(obj/mecha/M)
 	if(..())
 		if(istype(M, /obj/mecha/working) || istype(M, /obj/mecha/combat))
 			return 1
 	return 0
 
-/obj/item/mecha_parts/mecha_equipment/tool/drill/proc/drill_mob(mob/living/target, mob/user, var/drill_damage=80)
+/obj/item/mecha_parts/mecha_equipment/tool/drill/proc/drill_mob(mob/living/target, mob/user, drill_damage=80)
 	target.visible_message("<span class='danger'>[chassis] drills [target] with [src].</span>", \
 						"<span class='userdanger'>[chassis] drills [target] with [src].</span>")
 	if(ishuman(target))
@@ -172,7 +172,7 @@
 	force = 15
 
 
-/obj/item/mecha_parts/mecha_equipment/tool/drill/diamonddrill/can_attach(obj/mecha/M as obj)
+/obj/item/mecha_parts/mecha_equipment/tool/drill/diamonddrill/can_attach(obj/mecha/M)
 	if(..())
 		if(istype(M, /obj/mecha/working) || istype(M, /obj/mecha/combat))
 			return 1
@@ -270,7 +270,7 @@
 /obj/item/mecha_parts/mecha_equipment/tool/extinguisher/on_reagent_change()
 	return
 
-/obj/item/mecha_parts/mecha_equipment/tool/extinguisher/can_attach(obj/mecha/working/M as obj)
+/obj/item/mecha_parts/mecha_equipment/tool/extinguisher/can_attach(obj/mecha/working/M)
 	if(..())
 		if(istype(M))
 			return 1
@@ -416,7 +416,7 @@
 	chassis.events.clearEvent("onMove",event)
 	return ..()
 
-/obj/item/mecha_parts/mecha_equipment/tool/cable_layer/action(var/obj/item/stack/cable_coil/target)
+/obj/item/mecha_parts/mecha_equipment/tool/cable_layer/action(obj/item/stack/cable_coil/target)
 	if(!action_checks(target))
 		return
 	var/result = load_cable(target)
@@ -456,7 +456,7 @@
 		return "[output] \[Cable: [cable ? cable.amount : 0] m\][(cable && cable.amount) ? "- <a href='?src=\ref[src];toggle=1'>[!equip_ready?"Dea":"A"]ctivate</a>|<a href='?src=\ref[src];cut=1'>Cut</a>" : null]"
 	return
 
-/obj/item/mecha_parts/mecha_equipment/tool/cable_layer/proc/load_cable(var/obj/item/stack/cable_coil/CC)
+/obj/item/mecha_parts/mecha_equipment/tool/cable_layer/proc/load_cable(obj/item/stack/cable_coil/CC)
 	if(istype(CC) && CC.amount)
 		var/cur_amount = cable? cable.amount : 0
 		var/to_load = max(max_cable - cur_amount,0)
@@ -488,7 +488,7 @@
 /obj/item/mecha_parts/mecha_equipment/tool/cable_layer/proc/reset()
 	last_piece = null
 
-/obj/item/mecha_parts/mecha_equipment/tool/cable_layer/proc/dismantleFloor(var/turf/new_turf)
+/obj/item/mecha_parts/mecha_equipment/tool/cable_layer/proc/dismantleFloor(turf/new_turf)
 	if(istype(new_turf, /turf/simulated/floor))
 		var/turf/simulated/floor/T = new_turf
 		if(!istype(T, /turf/simulated/floor/plating))
@@ -497,7 +497,7 @@
 			T.make_plating()
 	return !new_turf.intact
 
-/obj/item/mecha_parts/mecha_equipment/tool/cable_layer/proc/layCable(var/turf/new_turf)
+/obj/item/mecha_parts/mecha_equipment/tool/cable_layer/proc/layCable(turf/new_turf)
 	if(equip_ready || !istype(new_turf) || !dismantleFloor(new_turf))
 		return reset()
 	var/fdirn = turn(chassis.dir,180)
@@ -682,14 +682,14 @@
 	var/deflect_coeff = 1.15
 	var/damage_coeff = 0.8
 
-/obj/item/mecha_parts/mecha_equipment/anticcw_armor_booster/can_attach(obj/mecha/M as obj)
+/obj/item/mecha_parts/mecha_equipment/anticcw_armor_booster/can_attach(obj/mecha/M)
 	if(..())
 		if(!istype(M, /obj/mecha/combat/honker))
 			if(!M.proc_res["dynattackby"])
 				return 1
 	return 0
 
-/obj/item/mecha_parts/mecha_equipment/anticcw_armor_booster/attach(obj/mecha/M as obj)
+/obj/item/mecha_parts/mecha_equipment/anticcw_armor_booster/attach(obj/mecha/M)
 	..()
 	chassis.proc_res["dynattackby"] = src
 	return
@@ -703,7 +703,7 @@
 	if(!chassis) return
 	return "<span style=\"color:[equip_ready?"#0f0":"#f00"];\">*</span>&nbsp;[src.name]"
 
-/obj/item/mecha_parts/mecha_equipment/anticcw_armor_booster/proc/dynattackby(obj/item/weapon/W as obj, mob/user as mob)
+/obj/item/mecha_parts/mecha_equipment/anticcw_armor_booster/proc/dynattackby(obj/item/weapon/W, mob/user)
 	if(!action_checks(user))
 		return chassis.dynattackby(W,user)
 	chassis.log_message("Attacked by [W]. Attacker - [user]")
@@ -732,14 +732,14 @@
 	var/deflect_coeff = 1.15
 	var/damage_coeff = 0.8
 
-/obj/item/mecha_parts/mecha_equipment/antiproj_armor_booster/can_attach(obj/mecha/M as obj)
+/obj/item/mecha_parts/mecha_equipment/antiproj_armor_booster/can_attach(obj/mecha/M)
 	if(..())
 		if(!istype(M, /obj/mecha/combat/honker))
 			if(!M.proc_res["dynbulletdamage"] && !M.proc_res["dynhitby"])
 				return 1
 	return 0
 
-/obj/item/mecha_parts/mecha_equipment/antiproj_armor_booster/attach(obj/mecha/M as obj)
+/obj/item/mecha_parts/mecha_equipment/antiproj_armor_booster/attach(obj/mecha/M)
 	..()
 	chassis.proc_res["dynbulletdamage"] = src
 	chassis.proc_res["dynhitby"] = src
@@ -755,7 +755,7 @@
 	if(!chassis) return
 	return "<span style=\"color:[equip_ready?"#0f0":"#f00"];\">*</span>&nbsp;[src.name]"
 
-/obj/item/mecha_parts/mecha_equipment/antiproj_armor_booster/proc/dynbulletdamage(var/obj/item/projectile/Proj)
+/obj/item/mecha_parts/mecha_equipment/antiproj_armor_booster/proc/dynbulletdamage(obj/item/projectile/Proj)
 	if(!action_checks(src))
 		return chassis.dynbulletdamage(Proj)
 	if(prob(chassis.deflect_chance*deflect_coeff))
@@ -854,7 +854,7 @@
 
 /datum/global_iterator/mecha_repair_droid
 
-/datum/global_iterator/mecha_repair_droid/process(var/obj/item/mecha_parts/mecha_equipment/repair_droid/RD as obj)
+/datum/global_iterator/mecha_repair_droid/process(obj/item/mecha_parts/mecha_equipment/repair_droid/RD)
 	if(!RD.chassis)
 		stop()
 		RD.set_ready_state(1)
@@ -938,7 +938,7 @@
 		return chassis.dyngetcharge()
 	return charge
 
-/obj/item/mecha_parts/mecha_equipment/tesla_energy_relay/proc/get_power_channel(var/area/A)
+/obj/item/mecha_parts/mecha_equipment/tesla_energy_relay/proc/get_power_channel(area/A)
 	var/pow_chan
 	if(A)
 		for(var/c in use_channels)
@@ -1071,7 +1071,7 @@
 		occupant_message(message)
 	return
 
-/obj/item/mecha_parts/mecha_equipment/generator/proc/load_fuel(var/obj/item/stack/sheet/P)
+/obj/item/mecha_parts/mecha_equipment/generator/proc/load_fuel(obj/item/stack/sheet/P)
 	if(P.type == fuel.type && P.amount)
 		var/to_load = max(max_fuel - fuel.amount*fuel.perunit,0)
 		if(to_load)
@@ -1168,7 +1168,7 @@
 
 /datum/global_iterator/mecha_generator/nuclear
 
-/datum/global_iterator/mecha_generator/nuclear/process(var/obj/item/mecha_parts/mecha_equipment/generator/nuclear/EG)
+/datum/global_iterator/mecha_generator/nuclear/process(obj/item/mecha_parts/mecha_equipment/generator/nuclear/EG)
 	if(..())
 		for(var/mob/living/carbon/M in view(EG.chassis))
 			if(istype(M,/mob/living/carbon/human))
@@ -1189,13 +1189,13 @@
 	var/dam_force = 0
 	var/obj/mecha/working/ripley/cargo_holder
 
-/obj/item/mecha_parts/mecha_equipment/tool/safety_clamp/can_attach(obj/mecha/working/ripley/M as obj)
+/obj/item/mecha_parts/mecha_equipment/tool/safety_clamp/can_attach(obj/mecha/working/ripley/M)
 	if(..())
 		if(istype(M))
 			return 1
 	return 0
 
-/obj/item/mecha_parts/mecha_equipment/tool/safety_clamp/attach(obj/mecha/M as obj)
+/obj/item/mecha_parts/mecha_equipment/tool/safety_clamp/attach(obj/mecha/M)
 	..()
 	cargo_holder = M
 	return

@@ -122,7 +122,7 @@
 		user << "<span class='notice'>You remove the activation mechanism from the [initial(name)] assembly.</span>"
 
 
-/obj/item/weapon/grenade/chem_grenade/proc/stage_change(var/N)
+/obj/item/weapon/grenade/chem_grenade/proc/stage_change(N)
 	if(N)
 		stage = N
 	if(stage == EMPTY)

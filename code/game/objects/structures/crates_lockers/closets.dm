@@ -111,7 +111,7 @@
 	update_icon()
 	return 1
 
-/obj/structure/closet/proc/insert(var/atom/movable/AM)
+/obj/structure/closet/proc/insert(atom/movable/AM)
 
 	if(contents.len >= storage_capacity)
 		return -1
@@ -165,7 +165,7 @@
 	qdel(src)
 	..()
 
-/obj/structure/closet/bullet_act(var/obj/item/projectile/Proj)
+/obj/structure/closet/bullet_act(obj/item/projectile/Proj)
 	..()
 	if((Proj.damage_type == BRUTE || Proj.damage_type == BURN))
 		health -= Proj.damage
@@ -174,7 +174,7 @@
 			qdel(src)
 	return
 
-/obj/structure/closet/attack_animal(mob/living/simple_animal/user as mob)
+/obj/structure/closet/attack_animal(mob/living/simple_animal/user)
 	if(user.environment_smash)
 		user.do_attack_animation(src)
 		visible_message("<span class='danger'>[user] destroys \the [src].</span>")
@@ -187,7 +187,7 @@
 		qdel(src)
 
 
-/obj/structure/closet/attackby(obj/item/weapon/W as obj, mob/user as mob, params)
+/obj/structure/closet/attackby(obj/item/weapon/W, mob/user, params)
 	if(user.loc == src)
 		return
 	if(opened)
@@ -241,13 +241,13 @@
 		if(!place(user, W) && !isnull(W))
 			attack_hand(user)
 
-/obj/structure/closet/proc/place(var/mob/user, var/obj/item/I)
+/obj/structure/closet/proc/place(mob/user, obj/item/I)
 	if(!opened && secure)
 		togglelock(user)
 		return 1
 	return 0
 
-/obj/structure/closet/MouseDrop_T(atom/movable/O as mob|obj, mob/user as mob, var/needs_opened = 1, var/show_message = 1, var/move_them = 1)
+/obj/structure/closet/MouseDrop_T(atom/movable/O as mob|obj, mob/user, needs_opened = 1, show_message = 1, move_them = 1)
 	if(istype(O, /obj/screen))	//fix for HUD elements making their way into the world	-Pete
 		return 0
 	if(!isturf(O.loc))
@@ -269,7 +269,7 @@
 	add_fingerprint(user)
 	return 1
 
-/obj/structure/closet/relaymove(mob/user as mob)
+/obj/structure/closet/relaymove(mob/user)
 	if(user.stat || !isturf(loc))
 		return
 	if(!open())
@@ -280,10 +280,10 @@
 				M.show_message("<FONT size=[max(0, 5 - get_dist(src, M))]>BANG, bang!</FONT>", 2)
 
 
-/obj/structure/closet/attack_paw(mob/user as mob)
+/obj/structure/closet/attack_paw(mob/user)
 	return attack_hand(user)
 
-/obj/structure/closet/attack_hand(mob/user as mob)
+/obj/structure/closet/attack_hand(mob/user)
 	add_fingerprint(user)
 	if(user.lying && get_dist(src, user) > 0)
 		return
@@ -293,7 +293,7 @@
 		return
 
 // tk grab then use on self
-/obj/structure/closet/attack_self_tk(mob/user as mob)
+/obj/structure/closet/attack_self_tk(mob/user)
 	return attack_hand(user)
 
 /obj/structure/closet/verb/verb_toggleopen()
@@ -350,7 +350,7 @@
 	else
 		user << "<span class='warning'>You fail to break out of [src]!</span>"
 
-/obj/structure/closet/AltClick(var/mob/user)
+/obj/structure/closet/AltClick(mob/user)
 	..()
 	if(!user.canUseTopic(user) || broken)
 		user << "<span class='warning'>You can't do that right now!</span>"
@@ -375,7 +375,7 @@
 				req_access += pick(get_all_accesses())
 	..()
 
-/obj/structure/closet/proc/togglelock(mob/user as mob)
+/obj/structure/closet/proc/togglelock(mob/user)
 	if(secure)
 		if(allowed(user))
 			locked = !locked
@@ -389,7 +389,7 @@
 	else
 		return
 
-/obj/structure/closet/emag_act(mob/user as mob)
+/obj/structure/closet/emag_act(mob/user)
 	if(secure && !broken)
 		broken = 1
 		locked = 0

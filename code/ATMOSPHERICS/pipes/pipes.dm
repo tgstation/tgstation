@@ -4,6 +4,7 @@
 	layer = 2.4 //under wires with their 2.44
 	use_power = 0
 	can_unwrench = 1
+	var/datum/pipeline/parent = null
 
 	//Buckling
 	can_buckle = 1
@@ -41,6 +42,9 @@
 		return
 
 	return ..()
+
+/obj/machinery/atmospherics/pipe/returnPipenet()
+	return parent
 
 /obj/machinery/atmospherics/pipe/setPipenet(datum/pipeline/P)
 	parent = P

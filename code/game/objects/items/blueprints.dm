@@ -21,7 +21,7 @@
 	var/const/ROOM_ERR_TOOLARGE = -2
 
 
-/obj/item/areaeditor/attack_self(mob/user as mob)
+/obj/item/areaeditor/attack_self(mob/user)
 	add_fingerprint(user)
 	var/text = "<BODY><HTML><head><title>[src]</title></head> \
 				<h2>[station_name()] [src.name]</h2> \
@@ -54,7 +54,7 @@
 	w_class = 1
 
 
-/obj/item/areaeditor/permit/attack_self(mob/user as mob)
+/obj/item/areaeditor/permit/attack_self(mob/user)
 	. = ..()
 	var/area/A = get_area()
 	if(get_area_type() == AREA_STATION)
@@ -80,7 +80,7 @@
 	fluffnotice = "Property of Nanotrasen. For heads of staff only. Store in high-secure storage."
 
 
-/obj/item/areaeditor/blueprints/attack_self(mob/user as mob)
+/obj/item/areaeditor/blueprints/attack_self(mob/user)
 	. = ..()
 	var/area/A = get_area()
 	if(get_area_type() == AREA_STATION)
@@ -108,7 +108,7 @@
 	return A
 
 
-/obj/item/areaeditor/proc/get_area_type(var/area/A = get_area())
+/obj/item/areaeditor/proc/get_area_type(area/A = get_area())
 	if (istype(A,/area/space))
 		return AREA_SPACE
 	var/list/SPECIALS = list(
@@ -166,7 +166,7 @@
 	return 1
 
 
-/obj/item/areaeditor/proc/move_turfs_to_area(var/list/turf/turfs, var/area/A)
+/obj/item/areaeditor/proc/move_turfs_to_area(list/turf/turfs, area/A)
 	A.contents.Add(turfs)
 
 
@@ -187,7 +187,7 @@
 	return
 
 
-/obj/item/areaeditor/proc/set_area_machinery_title(var/area/A,var/title,var/oldtitle)
+/obj/item/areaeditor/proc/set_area_machinery_title(area/A,title,oldtitle)
 	if (!oldtitle) // or replacetext goes to infinite loop
 		return
 	for(var/area/RA in A.related)
@@ -195,16 +195,16 @@
 			M.name = replacetext(M.name,oldtitle,title)
 		for(var/obj/machinery/power/apc/M in RA)
 			M.name = replacetext(M.name,oldtitle,title)
-		for(var/obj/machinery/atmospherics/unary/vent_scrubber/M in RA)
+		for(var/obj/machinery/atmospherics/components/unary/vent_scrubber/M in RA)
 			M.name = replacetext(M.name,oldtitle,title)
-		for(var/obj/machinery/atmospherics/unary/vent_pump/M in RA)
+		for(var/obj/machinery/atmospherics/components/unary/vent_pump/M in RA)
 			M.name = replacetext(M.name,oldtitle,title)
 		for(var/obj/machinery/door/M in RA)
 			M.name = replacetext(M.name,oldtitle,title)
 	//TODO: much much more. Unnamed airlocks, cameras, etc.
 
 
-/obj/item/areaeditor/proc/check_tile_is_border(var/turf/T2,var/dir)
+/obj/item/areaeditor/proc/check_tile_is_border(turf/T2,dir)
 	if (istype(T2, /turf/space))
 		return BORDER_SPACE //omg hull breach we all going to die here
 	if (get_area_type(T2.loc)!=AREA_SPACE)
@@ -230,7 +230,7 @@
 	return BORDER_NONE
 
 
-/obj/item/areaeditor/proc/detect_room(var/turf/first)
+/obj/item/areaeditor/proc/detect_room(turf/first)
 	var/list/turf/found = new
 	var/list/turf/pending = list(first)
 	while(pending.len)

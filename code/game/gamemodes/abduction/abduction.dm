@@ -40,7 +40,7 @@
 
 	return 1
 
-/datum/game_mode/abduction/proc/make_abductor_team(var/team_number,var/preset_agent=null,var/preset_scientist=null)
+/datum/game_mode/abduction/proc/make_abductor_team(team_number,preset_agent=null,preset_scientist=null)
 	//Team Name
 	team_names[team_number] = "Mothership [pick(possible_changeling_IDs)]" //TODO Ensure unique and actual alieny names
 	//Team Objective
@@ -133,7 +133,7 @@
 	return ..()
 
 //Used for create antag buttons
-/datum/game_mode/abduction/proc/post_setup_team(var/team_number)
+/datum/game_mode/abduction/proc/post_setup_team(team_number)
 	var/list/obj/effect/landmark/abductor/agent_landmarks = new
 	var/list/obj/effect/landmark/abductor/scientist_landmarks = new
 	agent_landmarks.len = max_teams
@@ -181,7 +181,7 @@
 	H.regenerate_icons()
 
 
-/datum/game_mode/abduction/proc/greet_agent(var/datum/mind/abductor,var/team_number)
+/datum/game_mode/abduction/proc/greet_agent(datum/mind/abductor,team_number)
 	abductor.objectives += team_objectives[team_number]
 	var/team_name = team_names[team_number]
 
@@ -195,7 +195,7 @@
 		obj_count++
 	return
 
-/datum/game_mode/abduction/proc/greet_scientist(var/datum/mind/abductor,var/team_number)
+/datum/game_mode/abduction/proc/greet_scientist(datum/mind/abductor,team_number)
 	abductor.objectives += team_objectives[team_number]
 	var/team_name = team_names[team_number]
 
@@ -209,7 +209,7 @@
 		obj_count++
 	return
 
-/datum/game_mode/abduction/proc/equip_common(var/mob/living/carbon/human/agent,var/team_number)
+/datum/game_mode/abduction/proc/equip_common(mob/living/carbon/human/agent,team_number)
 	var/radio_freq = SYND_FREQ
 
 	var/obj/item/device/radio/R = new /obj/item/device/radio/headset/syndicate/alt(agent)
@@ -219,7 +219,7 @@
 	agent.equip_to_slot_or_del(new /obj/item/clothing/under/color/grey(agent), slot_w_uniform) //they're greys gettit
 	agent.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack(agent), slot_back)
 
-/datum/game_mode/abduction/proc/get_team_console(var/team)
+/datum/game_mode/abduction/proc/get_team_console(team)
 	var/obj/machinery/abductor/console/console
 	for(var/obj/machinery/abductor/console/c in machines)
 		if(c.team == team)
@@ -227,7 +227,7 @@
 			break
 	return console
 
-/datum/game_mode/abduction/proc/equip_agent(var/mob/living/carbon/human/agent,var/team_number)
+/datum/game_mode/abduction/proc/equip_agent(mob/living/carbon/human/agent,team_number)
 	if(!team_number)
 		var/datum/species/abductor/S = agent.dna.species
 		team_number = S.team

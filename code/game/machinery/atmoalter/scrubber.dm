@@ -48,7 +48,7 @@
 		else
 			icon_state = "scrubber:0"
 
-	attackby(var/obj/item/weapon/W as obj, var/mob/user as mob)
+	attackby(obj/item/weapon/W, mob/user)
 		if(istype(W, /obj/item/weapon/wrench))
 			if(on)
 				user << "<span class='warning'>Turn it off first!</span>"
@@ -65,7 +65,7 @@
 /obj/machinery/portable_atmospherics/scrubber/huge/stationary
 	name = "stationary air scrubber"
 
-	attackby(var/obj/item/weapon/W as obj, var/mob/user as mob)
+	attackby(obj/item/weapon/W, mob/user)
 		if(istype(W, /obj/item/weapon/wrench))
 			user << "<span class='warning'>The bolts are too tight for you to unscrew!</span>"
 			return
@@ -151,13 +151,13 @@
 /obj/machinery/portable_atmospherics/scrubber/return_air()
 	return air_contents
 
-/obj/machinery/portable_atmospherics/scrubber/attack_ai(var/mob/user as mob)
+/obj/machinery/portable_atmospherics/scrubber/attack_ai(mob/user)
 	return src.attack_hand(user)
 
-/obj/machinery/portable_atmospherics/scrubber/attack_paw(var/mob/user as mob)
+/obj/machinery/portable_atmospherics/scrubber/attack_paw(mob/user)
 	return src.attack_hand(user)
 
-/obj/machinery/portable_atmospherics/scrubber/attack_hand(var/mob/user as mob)
+/obj/machinery/portable_atmospherics/scrubber/attack_hand(mob/user)
 
 	user.set_machine(src)
 	var/holding_text

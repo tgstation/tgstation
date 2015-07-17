@@ -6,7 +6,7 @@
 	req_human = 1
 	max_genetic_damage = 100
 
-/obj/effect/proc_holder/changeling/absorbDNA/can_sting(var/mob/living/carbon/user)
+/obj/effect/proc_holder/changeling/absorbDNA/can_sting(mob/living/carbon/user)
 	if(!..())
 		return
 
@@ -28,7 +28,7 @@
 
 
 
-/obj/effect/proc_holder/changeling/absorbDNA/sting_action(var/mob/user)
+/obj/effect/proc_holder/changeling/absorbDNA/sting_action(mob/user)
 	var/datum/changeling/changeling = user.mind.changeling
 	var/obj/item/weapon/grab/G = user.get_active_hand()
 	var/mob/living/carbon/human/target = G.affecting
@@ -83,7 +83,7 @@
 
 
 //Absorbs the target DNA.
-/datum/changeling/proc/absorb_dna(mob/living/carbon/T, var/mob/user)
+/datum/changeling/proc/absorb_dna(mob/living/carbon/T, mob/user)
 	if(absorbed_dna.len)
 		absorbed_dna.Cut(1,2)
 	T.dna.real_name = T.real_name //Set this again, just to be sure that it's properly set.
@@ -97,7 +97,7 @@
 	absorbedcount++
 	store_dna(new_dna, user)
 
-/datum/changeling/proc/store_dna(var/datum/dna/new_dna, var/mob/user)
+/datum/changeling/proc/store_dna(datum/dna/new_dna, mob/user)
 	for(var/datum/objective/escape/escape_with_identity/E in user.mind.objectives)
 		if(E.target_real_name == new_dna.real_name)
 			protected_dna |= new_dna
@@ -116,7 +116,7 @@
 	req_human = 1 //Monkeys can't grab
 	genetic_damage = 50
 
-/obj/effect/proc_holder/changeling/swap_form/can_sting(var/mob/living/carbon/user)
+/obj/effect/proc_holder/changeling/swap_form/can_sting(mob/living/carbon/user)
 	if(!..())
 		return
 	var/obj/item/weapon/grab/G = user.get_active_hand()
@@ -133,7 +133,7 @@
 	return 1
 
 
-/obj/effect/proc_holder/changeling/swap_form/sting_action(var/mob/living/carbon/user)
+/obj/effect/proc_holder/changeling/swap_form/sting_action(mob/living/carbon/user)
 	var/obj/item/weapon/grab/G = user.get_active_hand()
 	var/mob/living/carbon/target = G.affecting
 	var/datum/changeling/changeling = user.mind.changeling

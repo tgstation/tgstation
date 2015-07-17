@@ -95,7 +95,7 @@
 	return 0
 
 
-/datum/game_mode/proc/forge_revolutionary_objectives(var/datum/mind/rev_mind)
+/datum/game_mode/proc/forge_revolutionary_objectives(datum/mind/rev_mind)
 	var/list/heads = get_living_heads()
 	for(var/datum/mind/head_mind in heads)
 		var/datum/objective/mutiny/rev_obj = new
@@ -104,7 +104,7 @@
 		rev_obj.explanation_text = "Assassinate or exile [head_mind.name], the [head_mind.assigned_role]."
 		rev_mind.objectives += rev_obj
 
-/datum/game_mode/proc/greet_revolutionary(var/datum/mind/rev_mind, var/you_are=1)
+/datum/game_mode/proc/greet_revolutionary(datum/mind/rev_mind, you_are=1)
 	var/obj_count = 1
 	if (you_are)
 		rev_mind.current << "<span class='userdanger'>You are a member of the revolutionaries' leadership!</span>"
@@ -150,7 +150,7 @@
 /////////////////////////////////
 //Gives head revs their targets//
 /////////////////////////////////
-/datum/game_mode/revolution/proc/mark_for_death(var/datum/mind/rev_mind, var/datum/mind/head_mind)
+/datum/game_mode/revolution/proc/mark_for_death(datum/mind/rev_mind, datum/mind/head_mind)
 	var/datum/objective/mutiny/rev_obj = new
 	rev_obj.owner = rev_mind
 	rev_obj.target = head_mind

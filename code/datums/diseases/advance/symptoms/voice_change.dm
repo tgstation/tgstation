@@ -25,7 +25,7 @@ Bonus
 	level = 6
 	severity = 2
 
-/datum/symptom/voice_change/Activate(var/datum/disease/advance/A)
+/datum/symptom/voice_change/Activate(datum/disease/advance/A)
 	..()
 	if(prob(SYMPTOM_ACTIVATION_PROB))
 
@@ -40,7 +40,7 @@ Bonus
 
 	return
 
-/datum/symptom/voice_change/End(var/datum/disease/advance/A)
+/datum/symptom/voice_change/End(datum/disease/advance/A)
 	..()
 	if(ishuman(A.affected_mob))
 		var/mob/living/carbon/human/H = A.affected_mob

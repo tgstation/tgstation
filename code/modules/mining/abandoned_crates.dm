@@ -154,7 +154,7 @@
 		if(100)
 			new /obj/item/clothing/head/bearpelt(src)
 
-/obj/structure/closet/crate/secure/loot/attack_hand(mob/user as mob)
+/obj/structure/closet/crate/secure/loot/attack_hand(mob/user)
 	if(locked)
 		user << "<span class='notice'>The crate is locked with a Deca-code lock.</span>"
 		var/input = input(usr, "Enter [codelen] digits.", "Deca-Code Lock", "") as text
@@ -179,7 +179,7 @@
 	else
 		return ..()
 
-/obj/structure/closet/crate/secure/loot/attackby(obj/item/weapon/W as obj, mob/user as mob)
+/obj/structure/closet/crate/secure/loot/attackby(obj/item/weapon/W, mob/user)
 	if(locked)
 		if (istype(W, /obj/item/weapon/card/emag))
 			user << "<span class='danger'>The crate's anti-tamper system activates!</span>"
