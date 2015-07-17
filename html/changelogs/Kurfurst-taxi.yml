@@ -1,0 +1,38 @@
+author: Kurfurst
+delete-after: True
+changes:
+ - bugfix: RD boards in tech storage fixes #5257
+ - bugfix: Juke is now Bar Juke fixes #5245 fixes #5109
+ - bugfix: Kitchen now has Kitchen Cabinet (flour/sugar) fixes #5310 fixes #5009
+ - bugfix: Changed the front AI Upload/Telecommunications door to needing only ONE to access instead of BOTH fixes #5005
+ - bugfix: Added a filing cabinet to Cargo Office fixes #4861
+ - bugfix: Telescience shield gens given proper access fixes #5110
+ - bugfix: Medbay now has roundstart Cryoxadone fixes #5010
+ - bugfix: Floating light fixture moved to wall fixes #4773
+ - bugfix: Botany maint requires only botany, not maint access fixes #4764
+ - bugfix: Armory contains all four shotgun shell box types fixes #4748
+ - bugfix: The door to the AME room is no longer considered to be in space fixes #4735
+ - bugfix: Added a missing air distro pipe in Botany backroom fixes #4730
+ - bugfix: Added lattice around the Taxi docks fixes #4726
+ - bugfix: Botany contains the proper amount of spades, plant clippers, and has a flora disk box fixes #4725
+ - bugfix: Added 34 fire extinguisher cabinets fixes #4716
+ - bugfix: Telecommunications properly hooked to its own SMES fixes #4714
+ - bugfix: Added Gashapon Machine (Niggly's request)
+ - bugfix: Added more than 50 station intercoms fixes #5092
+ - bugfix: Mining entrances now are unsimulated fixes #4723
+ - bugfix: Replaced plastic flaps with air tight models #5323
+ - bugfix: Vox Post: Fixed windows, removed extra air alarm, added light to atmos, added main hall APC, fixed waste loop, added YouTool, improved N2->O2 Airlock fixes #4772 fixes #4817
+ - bugfix: Emitters are no longer wrenched/welded in secure storage fixes #4713
+ - bugfix: Robotics starts a shift with 100 sheets of metal fixes #4695
+ - bugfix: Machines in virology rearranged fixes #4696
+ - bugfix: Atmosia now has an AAC and Central Atmos Comp fixes #4689
+ - bugfix: Warden's office rearranged fixes #4690
+ - bugfix: Cells and armory now have some breathing room fixes #4661
+ - bugfix: Added ATMs to every taxi dock and also cargo fixes #4685
+ - bugfix: Fixes #4629 with ...
+ - bugfix: Fixed camera and lightswitch in surgery
+ - bugfix: Fixed igniter button in telescience
+ - bugfix: Adjusted a maintenance window near Custodial Closet
+ - bugfix: Fixed tile coloring in toxins lab
+ - bugfix: Custodial closet made bigger, added cleaner grenade, given soap, removed extra trash bag fixes #4697
+ - bugfix: 16 maintenance doors renamed to be more specific fixes #4646
