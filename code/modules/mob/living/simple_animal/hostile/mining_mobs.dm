@@ -17,7 +17,8 @@
 
 /mob/living/simple_animal/hostile/asteroid/Aggro()
 	..()
-	icon_state = icon_aggro
+	if(vision_range != aggro_vision_range)
+		icon_state = icon_aggro
 
 /mob/living/simple_animal/hostile/asteroid/LoseAggro()
 	..()
@@ -497,3 +498,118 @@
 		adjustBruteLoss(2)
 	else if(bodytemperature > maxbodytemp)
 		adjustBruteLoss(20)
+
+
+/mob/living/simple_animal/hostile/asteroid/fugu
+	name = "wumborian fugu"
+	desc = "The wumborian fugu rapidly increases its body mass in order to pulverize its prey. Great care should be taken to avoid it while it's in this state as it is nearly invincible, but it cannot maintain it forever."
+	icon = 'icons/mob/animal.dmi'
+	icon_state = "Fugu"
+	icon_living = "Fugu"
+	icon_aggro = "Fugu"
+	icon_dead = "Fugu_dead"
+	icon_gib = "syndicate_gib"
+	attack_sound = 'sound/weapons/punch4.ogg'
+	mouse_opacity = 2
+	move_to_delay = 5
+	friendly = "floats near"
+	speak_emote = list("puffs")
+	vision_range = 5
+	speed = 3
+	maxHealth = 50
+	health = 50
+	harm_intent_damage = 5
+	melee_damage_lower = 0
+	melee_damage_upper = 0
+	attacktext = "chomps"
+	attack_sound = 'sound/weapons/punch1.ogg'
+	throw_message = "is avoided by the"
+	aggro_vision_range = 9
+	idle_vision_range = 5
+	mob_size = MOB_SIZE_SMALL
+	var/wumbo = 0
+	var/inflate_cooldown = 0
+
+/mob/living/simple_animal/hostile/asteroid/fugu/Life()
+	if(!wumbo)
+		inflate_cooldown = max((inflate_cooldown - 1), 0)
+	if(target)
+		Inflate()
+	..()
+
+/mob/living/simple_animal/hostile/asteroid/fugu/adjustBruteLoss(var/damage)
+	if(wumbo)
+		return
+	..()
+
+/mob/living/simple_animal/hostile/asteroid/fugu/Aggro()
+	..()
+	Inflate()
+
+/mob/living/simple_animal/hostile/asteroid/fugu/proc/Inflate()
+	if(wumbo || inflate_cooldown || buffed)
+		return
+	wumbo = 1
+	icon_state = "Fugu_big"
+	melee_damage_lower = 15
+	melee_damage_upper = 20
+	harm_intent_damage = 0
+	throw_message = "is absorbed by the girth of the"
+	retreat_distance = null
+	minimum_distance = 1
+	move_to_delay = 6
+	transform *= 2
+	environment_smash = 2
+	mob_size = MOB_SIZE_LARGE
+	spawn(100)
+		Deflate()
+
+/mob/living/simple_animal/hostile/asteroid/fugu/proc/Deflate()
+	if(wumbo)
+		walk(src, 0)
+		wumbo = 0
+		icon_state = "Fugu"
+		melee_damage_lower = 0
+		melee_damage_upper = 0
+		harm_intent_damage = 5
+		throw_message = "is avoided by the"
+		retreat_distance = 9
+		minimum_distance = 9
+		move_to_delay = 2
+		transform /= 2
+		inflate_cooldown = 4
+		environment_smash = 0
+		mob_size = MOB_SIZE_SMALL
+
+/mob/living/simple_animal/hostile/asteroid/fugu/death(gibbed)
+	Deflate()
+	var/obj/item/asteroid/fugu_gland/F = new /obj/item/asteroid/fugu_gland(src.loc)
+	F.layer = 4.1
+	..(gibbed)
+
+/obj/item/asteroid/fugu_gland
+	name = "wumborian fugu gland"
+	desc = "The key to the wumborian fugu's ability to increase its mass arbitrarily, this disgusting remnant can apply the same effect to other creatures, giving them great strength."
+	icon = 'icons/obj/mining.dmi'
+	icon_state = "goliath_hide"
+	flags = NOBLUDGEON
+	w_class = 3
+	layer = 4
+	origin_tech = "biotech=6"
+	var/list/banned_mobs()
+
+/obj/item/asteroid/fugu_gland/afterattack(atom/target, mob/user, proximity_flag)
+	if(proximity_flag && istype(target, /mob/living/simple_animal))
+		var/mob/living/simple_animal/A = target
+		if(A.buffed || A.type in banned_mobs || A.stat)
+			user << "<span class='warning'>Something's interfering with the [src]'s effects. It's no use.</span>"
+			return
+		A.buffed++
+		A.maxHealth *= 2
+		A.health = min(A.maxHealth,A.health*1.5)
+		A.melee_damage_lower *= 2
+		A.melee_damage_upper *= 2
+		A.transform *= 2
+		A.environment_smash += 2
+		user << "<span class='info'>You increase the size of [A], giving it a surge of strength!</span>"
+		qdel(src)

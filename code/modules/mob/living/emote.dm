@@ -56,6 +56,7 @@
 
 		if ("collapse")
 			Paralyse(2)
+			adjustStaminaLoss(100) // Hampers abuse against simple mobs, but still leaves it a viable option.
 			message = "<B>[src]</B> collapses!"
 			m_type = 2
 

@@ -149,8 +149,9 @@
 /mob/living/simple_animal/hostile/proc/GiveTarget(var/new_target)//Step 4, give us our selected target
 	target = new_target
 	if(target != null)
-		Aggro()
-		stance = HOSTILE_STANCE_ATTACK
+		if(stance != HOSTILE_STANCE_ATTACK)
+			Aggro()
+			stance = HOSTILE_STANCE_ATTACK
 	return
 
 /mob/living/simple_animal/hostile/proc/MoveToTarget()//Step 5, handle movement between us and our target
@@ -237,6 +238,7 @@
 //////////////END HOSTILE MOB TARGETTING AND AGGRESSION////////////
 
 /mob/living/simple_animal/hostile/death(gibbed)
+	target = null
 	LoseAggro()
 	..(gibbed)
 	walk(src, 0)
