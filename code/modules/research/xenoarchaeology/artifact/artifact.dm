@@ -40,6 +40,11 @@
 	var/datum/geosample/geological_data
 	var/datum/artifact_find/artifact_find
 
+/obj/structure/boulder/Destroy()
+	..()
+	geological_data = null
+	artifact_find = null
+
 /obj/structure/boulder/New()
 	..()
 	icon_state = "boulder[rand(1,4)]"
@@ -84,7 +89,7 @@
 			//failure
 			src.visible_message("<span class='danger'>\The [src] suddenly crumbles away.</span>")
 			user << "<span class='rose'>\The [src] has disintegrated under your onslaught, any secrets it was holding are long gone.</span>"
-			del(src)
+			returnToPool(src)
 			return
 
 		if(prob(excavation_level))
@@ -99,7 +104,7 @@
 						X.my_effect.artifact_id = artifact_find.artifact_id
 			else
 				user << "<span class='notice'>[src] has been whittled away under your careful excavation, but there was nothing of interest inside.</span>"
-			del(src)
+			returnToPool(src)
 
 /obj/structure/boulder/Bumped(AM)
 	. = ..()

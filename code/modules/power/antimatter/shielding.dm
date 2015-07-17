@@ -33,20 +33,18 @@ proc/cardinalrange(var/center)
 	..(loc)
 	machines -= src
 	power_machines += src
-	spawn(10)
-		controllerscan()
-	return
+	sleep(10)
+	controllerscan()
 
 
 /obj/machinery/am_shielding/proc/controllerscan(var/priorscan = 0)
 	//Make sure we are the only one here
 	if(!istype(src.loc, /turf))
-		del(src)
+		qdel(src)
 		return
 	for(var/obj/machinery/am_shielding/AMS in loc.contents)
 		if(AMS == src) continue
-		spawn(0)
-			del(src)
+		qdel(src)
 		return
 
 	//Search for shielding first
@@ -55,19 +53,14 @@ proc/cardinalrange(var/center)
 			break
 
 	if(!control_unit)//No other guys nearby, look for a control unit
-		for(var/direction in cardinal)
 		for(var/obj/machinery/power/am_control_unit/AMC in cardinalrange(src))
 			if(AMC.add_shielding(src))
 				break
-
-	if(!control_unit)
 		if(!priorscan)
-			spawn(20)
-				controllerscan(1)//Last chance
+			sleep(20)
+			controllerscan(1)//Last chance
 			return
-		spawn(0)
-			del(src)
-	return
+		qdel(src)
 
 
 /obj/machinery/am_shielding/Destroy()
@@ -103,8 +96,7 @@ proc/cardinalrange(var/center)
 			new /obj/effect/blob/node(src.loc,150)
 		else
 			new /obj/effect/blob(src.loc,60)
-		spawn(0)
-			del(src)
+		qdel(src)
 		return
 	check_stability()
 	return
@@ -200,7 +192,6 @@ proc/cardinalrange(var/center)
 	if(!control_unit)	return
 	control_unit.linked_cores.Add(src)
 	control_unit.reported_core_efficiency += efficiency
-	return
 
 
 /obj/machinery/am_shielding/proc/shutdown_core()
@@ -208,17 +199,13 @@ proc/cardinalrange(var/center)
 	if(!control_unit)	return
 	control_unit.linked_cores.Remove(src)
 	control_unit.reported_core_efficiency -= efficiency
-	return
 
 
 /obj/machinery/am_shielding/proc/check_stability(var/injecting_fuel = 0)
 	if(stability > 0) return
 	if(injecting_fuel && control_unit)
 		control_unit.exploding = 1
-	if(src)
-		del(src)
-	return
-
+	qdel(src)
 
 /obj/machinery/am_shielding/proc/recalc_efficiency(var/new_efficiency)//tbh still not 100% sure how I want to deal with efficiency so this is likely temp
 	if(!control_unit || !processing) return
@@ -226,7 +213,6 @@ proc/cardinalrange(var/center)
 		new_efficiency /= 2
 	control_unit.reported_core_efficiency += (new_efficiency - efficiency)
 	efficiency = new_efficiency
-	return
 
 
 
@@ -248,7 +234,6 @@ proc/cardinalrange(var/center)
 /obj/item/device/am_shielding_container/attackby(var/obj/item/I, var/mob/user)
 	if(istype(I, /obj/item/device/multitool) && istype(src.loc,/turf))
 		new/obj/machinery/am_shielding(src.loc)
-		del(src)
+		qdel(src)
 		return
 	..()
-	return

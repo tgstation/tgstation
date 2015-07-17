@@ -19,18 +19,19 @@
 		//SN src = null
 		qdel(src)
 	if (istype(W, /obj/item/stack/rods))
-		if (W:amount >= 4)
+		var/obj/item/stack/rods/rods = W
+		if (rods.amount >= 4)
 			new /obj/item/weapon/table_parts/reinforced( user.loc )
 			user << "<span class='notice'>You reinforce the [name].</span>"
-			W:use(4)
-			del(src)
-		else if (W:amount < 4)
+			rods.use(4)
+			qdel(src)
+		else if (rods.amount < 4)
 			user << "<span class='warning'>You need at least four rods to do this.</span>"
 
 /obj/item/weapon/table_parts/attack_self(mob/user as mob)
 	new /obj/structure/table( user.loc )
 	user.drop_item(src)
-	del(src)
+	qdel(src)
 	return
 
 

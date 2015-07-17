@@ -242,7 +242,7 @@
 	pass_flags = PASSTABLE
 
 /mob/living/simple_animal/hostile/asteroid/hivelord/OpenFire(var/the_target)
-	var/mob/living/simple_animal/hostile/asteroid/hivelordbrood/A = new /mob/living/simple_animal/hostile/asteroid/hivelordbrood(src.loc)
+	var/mob/living/simple_animal/hostile/asteroid/hivelordbrood/A = getFromPool(/mob/living/simple_animal/hostile/asteroid/hivelordbrood,src.loc)
 	A.GiveTarget(target)
 	A.friends = friends
 	A.faction = faction
@@ -263,9 +263,9 @@
 	var/inert = 0
 
 /obj/item/asteroid/hivelord_core/New()
-	spawn(1200)
-		inert = 1
-		desc = "The remains of a hivelord that have become useless, having been left alone too long after being harvested."
+	sleep(1200)
+	inert = 1
+	desc = "The remains of a hivelord that have become useless, having been left alone too long after being harvested."
 
 /obj/item/asteroid/hivelord_core/attack(mob/living/M as mob, mob/living/user as mob)
 	if(ishuman(M))
@@ -283,7 +283,7 @@
 				user << "<span class='notice'>You chomp into [src], barely managing to hold it down, but feel amazingly refreshed in mere moments.</span>"
 			playsound(src.loc,'sound/items/eatfood.ogg', rand(10,50), 1)
 			H.revive()
-			del(src)
+			qdel(src)
 	..()
 
 /mob/living/simple_animal/hostile/asteroid/hivelordbrood
@@ -312,11 +312,11 @@
 
 /mob/living/simple_animal/hostile/asteroid/hivelordbrood/New()
 	..()
-	spawn(100)
-		del(src)
+	sleep(100)
+	returnToPool(src)
 
 /mob/living/simple_animal/hostile/asteroid/hivelordbrood/Die()
-	del(src)
+	returnToPool(src)
 
 /mob/living/simple_animal/hostile/asteroid/goliath
 	name = "goliath"
@@ -417,7 +417,7 @@
 			if(current_armor.["melee"] < 90)
 				current_armor.["melee"] = min(current_armor.["melee"] + 10, 90)
 				user << "<span class='info'>You strengthen [target], improving its resistance against melee attacks.</span>"
-				del(src)
+				qdel(src)
 			else
 				user << "<span class='info'>You can't improve [C] any further.</span>"
 	return
