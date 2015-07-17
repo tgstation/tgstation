@@ -157,7 +157,7 @@
 	icon_state = "major_accident"
 	var/value
 	var/record
-	var/record_desc = " The gold trim signifies that we've reached the current record for safety, no pressure!"
+	var/record_desc = " The gold trim signifies that we've reached the current record for safety; no pressure!"
 
 /obj/structure/sign/safetyboard/New()
 	while(ticker.current_state < GAME_STATE_PLAYING)
@@ -175,7 +175,7 @@
 		I = icon('icons/obj/safetyboards.dmi',"X[value]")
 		overlays += I
 	else
-		var/ones = value - round(value/10)*10 //round() is floor() (WHY?)
+		var/ones = value - round(value*0.1)*10 //round(X) is floor(), round(X,1) is round [but not round()]
 		I = icon('icons/obj/safetyboards.dmi',"X[ones]")
 		overlays += I
 	if(value > 9)
