@@ -14,85 +14,66 @@
 
 	hud_state = "wiz_jaunt"
 
+	var/enteranim = "liquify"
+	var/exitanim = "reappear"
+	var/mist = 1
+
 /spell/targeted/ethereal_jaunt/cast(list/targets) //magnets, so mostly hardcoded
-	for(var/mob/living/target in targets)
-		target.monkeyizing = 1 //protects the mob from being transformed (replaced) midjaunt and getting stuck in bluespace
-		if(target.buckled) target.buckled.unbuckle()
-		spawn(0)
-			var/mobloc = get_turf(target.loc)
-			var/obj/effect/dummy/spell_jaunt/holder = new /obj/effect/dummy/spell_jaunt( mobloc )
-			var/atom/movable/overlay/animation = new /atom/movable/overlay( mobloc )
-			animation.name = "water"
-			animation.density = 0
-			animation.anchored = 1
-			animation.icon = 'icons/mob/mob.dmi'
-			animation.layer = 5
-			animation.master = holder
-			target.ExtinguishMob()
-			if(target.buckled)
-				target.buckled.unbuckle()
-			jaunt_disappear(animation, target)
-			target.loc = holder
-			target.monkeyizing=0 //mob is safely inside holder now, no need for protection.
-			jaunt_steam(mobloc)
-			sleep(duration)
-			mobloc = get_turf(target.loc)
-			animation.loc = mobloc
-			jaunt_steam(mobloc)
-			target.canmove = 0
-			holder.reappearing = 1
-			sleep(20)
-			jaunt_reappear(animation, target)
-			sleep(5)
-			if(!target.forceMove(mobloc))
-				for(var/direction in list(1,2,4,8,5,6,9,10))
-					var/turf/T = get_step(mobloc, direction)
-					if(T)
-						if(target.forceMove(T))
-							break
-			target.canmove = 1
-			target.client.eye = target
-			del(animation)
-			del(holder)
-
-/spell/targeted/ethereal_jaunt/proc/jaunt_disappear(var/atom/movable/overlay/animation, var/mob/living/target)
-	animation.icon_state = "liquify"
-	flick("liquify",animation)
-
-/spell/targeted/ethereal_jaunt/proc/jaunt_reappear(var/atom/movable/overlay/animation, var/mob/living/target)
-	flick("reappear",animation)
-
-/spell/targeted/ethereal_jaunt/proc/jaunt_steam(var/mobloc)
-	var/datum/effect/effect/system/steam_spread/steam = new /datum/effect/effect/system/steam_spread()
-	steam.set_up(10, 0, mobloc)
-	steam.start()
-
-/obj/effect/dummy/spell_jaunt
-	name = "water"
-	icon = 'icons/effects/effects.dmi'
-	icon_state = "nothing"
-	var/canmove = 1
-	var/reappearing = 0
-	density = 0
-	anchored = 1
-
-/obj/effect/dummy/spell_jaunt/Destroy()
-	// Eject contents if deleted somehow
-	for(var/atom/movable/AM in src)
-		AM.loc = get_turf(src)
-	..()
-
-/obj/effect/dummy/spell_jaunt/relaymove(var/mob/user, direction)
-	if (!src.canmove || reappearing) return
-	var/turf/newLoc = get_step(src,direction)
-	if(!(newLoc.flags & NOJAUNT))
-		loc = newLoc
+	if(targets.len > 1)
+		for(var/mob/living/target in targets)
+			spawn(0)
+				ethereal_jaunt(target, duration, enteranim, exitanim, mist)
 	else
-		user << "<span class='warning'>Some strange aura is blocking the way!</span>"
-	src.canmove = 0
-	spawn(2) src.canmove = 1
+		ethereal_jaunt(targets[1], duration, enteranim, exitanim, mist)
 
-/obj/effect/dummy/spell_jaunt/ex_act(blah)
-	return
-/obj/effect/dummy/spell_jaunt/bullet_act(blah)
-	return
+/proc/ethereal_jaunt(var/mob/living/target, duration, enteranim = "liquify", exitanim = "reappear", mist = 1)
+	var/mobloc = get_turf(target)
+	var/previncorp = target.incorporeal_move //This shouldn't ever matter under usual circumstances
+	var/prevalpha = target.alpha
+	if(target.buckled)
+		target.buckled.unbuckle()
+	//Begin jaunting with an animation
+	anim(location = mobloc, target = target, a_icon = 'icons/mob/mob.dmi', flick_anim = enteranim, direction = target.dir, name = "water")
+	if(mist)
+		target.ExtinguishMob()
+		var/datum/effect/effect/system/steam_spread/steam = new /datum/effect/effect/system/steam_spread()
+		steam.set_up(10, 0, mobloc)
+		steam.start()
+	//Turn on jaunt incorporeal movement, make him invincible and invisible
+	target.incorporeal_move = 3
+	target.invisibility = INVISIBILITY_MAXIMUM
+	target.flags |= INVULNERABLE
+	target.alpha = 125 //Spoopy mode to know you are jaunting
+	sleep(duration)
+	//Begin unjaunting
+	mobloc = get_turf(target)
+	if(mist)
+		var/datum/effect/effect/system/steam_spread/steam = new /datum/effect/effect/system/steam_spread()
+		steam.set_up(10, 0, mobloc)
+		steam.start()
+	target.delayNextMove(25)
+	sleep(20)
+	anim(location = mobloc, target = target, a_icon = 'icons/mob/mob.dmi', flick_anim = exitanim, direction = target.dir, name = "water")
+	sleep(5)
+	//Forcemove him onto the tile and make him visible and vulnerable
+	target.forceMove(mobloc)
+	target.invisibility = 0
+	target.flags &= ~INVULNERABLE
+	target.incorporeal_move = previncorp
+	target.alpha = prevalpha
+
+/spell/targeted/ethereal_jaunt/shift
+	name = "Phase Shift"
+	desc = "This spell allows you to pass through walls"
+
+	charge_max = 200
+	spell_flags = Z2NOCAST | INCLUDEUSER | CONSTRUCT_CHECK
+	invocation_type = SpI_NONE
+	range = -1
+	duration = 50 //in deciseconds
+
+	hud_state = "const_shift"
+
+	enteranim = "phase_shift"
+	exitanim = "phase_shift2"
+	mist = 0

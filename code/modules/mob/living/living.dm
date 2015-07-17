@@ -331,7 +331,6 @@
 
 /mob/living/emp_act(severity)
 	if(flags & INVULNERABLE)
-		src << "The bus' robustness protects you from the EMP."
 		return
 
 	var/list/L = src.get_contents()
