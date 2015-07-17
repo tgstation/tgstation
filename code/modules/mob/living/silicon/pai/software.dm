@@ -307,9 +307,8 @@
 						F = new /obj/item/weapon/reagent_containers/food/snacks/grown/banana(get_turf(src))
 					else
 						F = new /obj/item/weapon/reagent_containers/food/snacks/badrecipe(get_turf(src))
-				if(istype(src.loc.loc,/mob))
-					var/mob/M = src.loc.loc
-					M.put_in_hands(F)
+				var/mob/M = find_holder_of_type(src, /mob)
+				if(M) M.put_in_hands(F)
 				playsound(get_turf(src.loc), 'sound/machines/foodsynth.ogg', 50, 1)
 		if("flashlight")
 			if(href_list["toggle"])
@@ -682,8 +681,7 @@ Target Machine: "}
 		<a href='byond://?src=\ref[src];software=chemsynth;sub=0;chem=coffee'>Coffee</a> <br>
 		<a href='byond://?src=\ref[src];software=chemsynth;sub=0;chem=paismoke'>Smoke</a> <br>"}
 	else
-		dat += "Charging... [charge]u ready.<br><br>"
-		dat += "Deploying at 15u."
+		dat += "Charging... [charge]u ready.<br><br>Deploying at 15u."
 	return dat
 
 /mob/living/silicon/pai/proc/softwareFood()
@@ -694,8 +692,7 @@ Target Machine: "}
 		<a href='byond://?src=\ref[src];software=foodsynth;sub=0;food=banana'>Banana</a> <br>
 		<a href='byond://?src=\ref[src];software=foodsynth;sub=0;food=mess'>Burn it!</a> <br>"}
 	else
-		dat += "Charging... "+round(charge/15)+"% ready.<br><br>"
-		dat += "Deploying at 100%."
+		dat += "Charging... [round(charge*100/15)]% ready.<br><br>Deploying at 100%."
 	return dat
 
 //Used for chem synth and food synth. Charge 15 seconds, then output.

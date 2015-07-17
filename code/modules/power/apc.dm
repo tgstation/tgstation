@@ -583,7 +583,7 @@
 			/*user.visible_message("<span class='warning'>The [src.name] has been hit with the [W.name] by [user.name]!</span>", \
 				"<span class='warning'>You hit the [src.name] with your [W.name]!</span>", \
 				"You hear bang")*/
-			..(W,user) //Sanity
+			..() //Sanity
 
 // attack with hand - remove cell (if cover open) or interact with the APC
 

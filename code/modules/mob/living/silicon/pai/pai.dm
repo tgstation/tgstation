@@ -1,7 +1,7 @@
 /mob/living/silicon/pai
 	name = "pAI"
-	icon = null
-	icon_state = null
+	icon = 'icons/obj/pda.dmi'
+	icon_state = "pai"
 
 	emote_type = 2		// pAIs emotes are heard, not seen, so they can be seen through a container (eg. person)
 
@@ -246,5 +246,7 @@
 	src:cameraFollow = null
 
 /mob/living/silicon/pai/ClickOn(var/atom/A, var/params)
-	if(istype(A,/obj/machinery/camera))
-		A.attack_ai(src)
+	A.attack_pai(src)
+
+/atom/proc/attack_pai(mob/user as mob)
+	return

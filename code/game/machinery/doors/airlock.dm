@@ -56,7 +56,7 @@
 	explosion_block = 1
 
 	emag_cost = 1 // in MJ
-	machine_flags = WIREJACK
+	machine_flags = SCREWTOGGLE | WIREJACK
 
 /obj/machinery/door/airlock/Destroy()
 	if(wires)

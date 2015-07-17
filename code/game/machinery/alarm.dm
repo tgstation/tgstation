@@ -822,7 +822,7 @@
 						user << "<span class='notice'>You [ locked ? "lock" : "unlock"] the Air Alarm interface.</span>"
 					else
 						user << "<span class='warning'>Access denied.</span>"
-			return ..(W,user) //Sanity
+			return ..() //Sanity
 
 		if(1)
 			if(iscoil(W))
