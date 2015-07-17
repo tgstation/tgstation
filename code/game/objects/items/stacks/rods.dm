@@ -33,7 +33,7 @@ var/global/list/datum/stack_recipe/rod_recipes = list ( \
 	else
 		icon_state = "rods"
 
-/obj/item/stack/rods/attackby(obj/item/W as obj, mob/user as mob, params)
+/obj/item/stack/rods/attackby(obj/item/W, mob/user, params)
 	if (istype(W, /obj/item/weapon/weldingtool))
 		var/obj/item/weapon/weldingtool/WT = W
 

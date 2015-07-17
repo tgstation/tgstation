@@ -100,7 +100,7 @@ var/datum/subsystem/ticker/ticker
 
 			if(!mode.explosion_in_progress && mode.check_finished() || force_ending)
 				current_state = GAME_STATE_FINISHED
-				auto_toggle_ooc(1) // Turn it on
+				toggle_ooc(1) // Turn it on
 				declare_completion(force_ending)
 				spawn(50)
 					if(mode.station_was_nuked)
@@ -162,7 +162,8 @@ var/datum/subsystem/ticker/ticker
 		mode.announce()
 
 	current_state = GAME_STATE_PLAYING
-	auto_toggle_ooc(0) // Turn it off
+	if(!config.ooc_during_round)
+		toggle_ooc(0) // Turn it off
 	round_start_time = world.time
 
 	start_landmarks_list = shuffle(start_landmarks_list) //Shuffle the order of spawn points so they dont always predictably spawn bottom-up and right-to-left
@@ -199,13 +200,11 @@ var/datum/subsystem/ticker/ticker
 
 
 	//Plus it provides an easy way to make cinematics for other events. Just use this as a template
-/datum/subsystem/ticker/proc/station_explosion_cinematic(var/station_missed=0, var/override = null)
+/datum/subsystem/ticker/proc/station_explosion_cinematic(station_missed=0, override = null)
 	if( cinematic )	return	//already a cinematic in progress!
 
 	for (var/datum/html_interface/hi in html_interfaces)
 		hi.closeAll()
-
-	auto_toggle_ooc(1) // Turn it on
 	//initialise our cinematic screen object
 	cinematic = new /obj/screen{icon='icons/effects/station_explosion.dmi';icon_state="station_intact";layer=20;mouse_opacity=0;screen_loc="1,0";}(src)
 
@@ -293,10 +292,9 @@ var/datum/subsystem/ticker/ticker
 					cinematic.icon_state = "summary_selfdes"
 	//If its actually the end of the round, wait for it to end.
 	//Otherwise if its a verb it will continue on afterwards.
-	sleep(300)
-
-	if(cinematic)	qdel(cinematic)		//end the cinematic
-	if(temp_buckle)	qdel(temp_buckle)	//release everybody
+	spawn(300)
+		if(cinematic)	qdel(cinematic)		//end the cinematic
+		if(temp_buckle)	qdel(temp_buckle)	//release everybody
 	return
 
 

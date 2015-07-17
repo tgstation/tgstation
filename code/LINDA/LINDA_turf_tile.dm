@@ -260,7 +260,7 @@
 		return "sleeping_agent"
 	return null
 
-/turf/simulated/proc/share_air(var/turf/simulated/T)
+/turf/simulated/proc/share_air(turf/simulated/T)
 	if(T.current_cycle < current_cycle)
 		var/difference
 		difference = air.share(T.air, atmos_adjacent_turfs_amount)
@@ -271,7 +271,7 @@
 				T.consider_pressure_difference(src, difference)
 		last_share_check()
 
-/turf/proc/consider_pressure_difference(var/turf/simulated/T, var/difference)
+/turf/proc/consider_pressure_difference(turf/simulated/T, difference)
 	SSair.high_pressure_delta |= src
 	if(difference > pressure_difference)
 		pressure_direction = get_dir(src, T)
@@ -304,13 +304,13 @@
 /datum/excited_group/New()
 	SSair.excited_groups += src
 
-/datum/excited_group/proc/add_turf(var/turf/simulated/T)
+/datum/excited_group/proc/add_turf(turf/simulated/T)
 	turf_list += T
 	T.excited_group = src
 	T.recently_active = 1
 	reset_cooldowns()
 
-/datum/excited_group/proc/merge_groups(var/datum/excited_group/E)
+/datum/excited_group/proc/merge_groups(datum/excited_group/E)
 	if(turf_list.len > E.turf_list.len)
 		SSair.excited_groups -= E
 		for(var/turf/simulated/T in E.turf_list)

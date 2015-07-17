@@ -20,7 +20,7 @@
 	var/framestack = /obj/item/stack/rods
 	var/framestackamount = 2
 
-/obj/structure/table_frame/attackby(var/obj/item/I, mob/user, params)
+/obj/structure/table_frame/attackby(obj/item/I, mob/user, params)
 	if(istype(I, /obj/item/weapon/wrench))
 		user << "<span class='notice'>You start disassembling [src]...</span>"
 		playsound(src.loc, 'sound/items/Ratchet.ogg', 50, 1)
@@ -77,7 +77,7 @@
 	framestackamount = 2
 	burn_state = 0 //Burnable
 
-/obj/structure/table_frame/wood/attackby(var/obj/item/I, mob/user, params)
+/obj/structure/table_frame/wood/attackby(obj/item/I, mob/user, params)
 	if(istype(I, /obj/item/weapon/wrench))
 		..()
 	if(istype(I, /obj/item/stack/sheet/mineral/wood))

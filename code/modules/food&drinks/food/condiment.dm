@@ -26,10 +26,10 @@
 	 "sugar" = list("emptycondiment", "sugar bottle", "Tasty spacey sugar!"))
 
 
-/obj/item/weapon/reagent_containers/food/condiment/attack_self(mob/user as mob)
+/obj/item/weapon/reagent_containers/food/condiment/attack_self(mob/user)
 	return
 
-/obj/item/weapon/reagent_containers/food/condiment/attack(mob/M as mob, mob/user as mob, def_zone)
+/obj/item/weapon/reagent_containers/food/condiment/attack(mob/M, mob/user, def_zone)
 
 	if(!reagents || !reagents.total_volume)
 		user << "<span class='warning'>None of [src] left, oh no!</span>"

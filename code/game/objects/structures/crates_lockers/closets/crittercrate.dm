@@ -30,7 +30,7 @@
 	locked = 1
 	return 1
 
-/obj/structure/closet/critter/attack_hand(mob/user as mob)
+/obj/structure/closet/critter/attack_hand(mob/user)
 	src.add_fingerprint(user)
 
 	if(src.loc == user.loc)

@@ -31,7 +31,7 @@ Chief Engineer
 			            access_heads, access_construction, access_sec_doors, access_minisat,
 			            access_ce, access_RC_announce, access_keycard_auth, access_tcomsat, access_mineral_storeroom)
 
-/datum/job/chief_engineer/equip_items(var/mob/living/carbon/human/H)
+/datum/job/chief_engineer/equip_items(mob/living/carbon/human/H)
 	H.equip_to_slot_or_del(new /obj/item/clothing/under/rank/chief_engineer(H), slot_w_uniform)
 	H.equip_to_slot_or_del(new /obj/item/clothing/shoes/sneakers/brown(H), slot_shoes)
 	H.equip_to_slot_or_del(new /obj/item/clothing/head/hardhat/white(H), slot_head)
@@ -68,7 +68,7 @@ Station Engineer
 	minimal_access = list(access_engine, access_engine_equip, access_tech_storage, access_maint_tunnels,
 									access_external_airlocks, access_construction, access_tcomsat)
 
-/datum/job/engineer/equip_items(var/mob/living/carbon/human/H)
+/datum/job/engineer/equip_items(mob/living/carbon/human/H)
 	H.equip_to_slot_or_del(new /obj/item/clothing/under/rank/engineer(H), slot_w_uniform)
 	H.equip_to_slot_or_del(new /obj/item/clothing/shoes/workboots(H), slot_shoes)
 	H.equip_to_slot_or_del(new /obj/item/weapon/storage/belt/utility/full(H), slot_belt)
@@ -98,7 +98,7 @@ Atmospheric Technician
 									access_external_airlocks, access_construction, access_atmospherics)
 	minimal_access = list(access_atmospherics, access_maint_tunnels, access_emergency_storage, access_construction)
 
-/datum/job/atmos/equip_items(var/mob/living/carbon/human/H)
+/datum/job/atmos/equip_items(mob/living/carbon/human/H)
 	H.equip_to_slot_or_del(new /obj/item/clothing/under/rank/atmospheric_technician(H), slot_w_uniform)
 	H.equip_to_slot_or_del(new /obj/item/clothing/shoes/sneakers/black(H), slot_shoes)
 	H.equip_to_slot_or_del(new /obj/item/device/analyzer(H), slot_r_store)

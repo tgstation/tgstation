@@ -59,7 +59,7 @@ var/datum/cameranet/cameranet = new()
 
 // Updates the chunks that the turf is located in. Use this when obstacles are destroyed or	when doors open.
 
-/datum/cameranet/proc/updateVisibility(atom/A, var/opacity_check = 1)
+/datum/cameranet/proc/updateVisibility(atom/A, opacity_check = 1)
 
 	if(!ticker || (opacity_check && !A.opacity))
 		return
@@ -98,7 +98,7 @@ var/datum/cameranet/cameranet = new()
 // Setting the choice to 0 will remove the camera from the chunks.
 // If you want to update the chunks around an object, without adding/removing a camera, use choice 2.
 
-/datum/cameranet/proc/majorChunkChange(atom/c, var/choice)
+/datum/cameranet/proc/majorChunkChange(atom/c, choice)
 	// 0xf = 15
 	if(!c)
 		return
@@ -126,14 +126,14 @@ var/datum/cameranet/cameranet = new()
 
 // Will check if a mob is on a viewable turf. Returns 1 if it is, otherwise returns 0.
 
-/datum/cameranet/proc/checkCameraVis(mob/living/target as mob)
+/datum/cameranet/proc/checkCameraVis(mob/living/target)
 
 	// 0xf = 15
 	var/turf/position = get_turf(target)
 	return checkTurfVis(position)
 
 
-/datum/cameranet/proc/checkTurfVis(var/turf/position)
+/datum/cameranet/proc/checkTurfVis(turf/position)
 	var/datum/camerachunk/chunk = getCameraChunk(position.x, position.y, position.z)
 	if(chunk)
 		if(chunk.changed)

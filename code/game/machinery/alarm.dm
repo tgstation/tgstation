@@ -199,7 +199,7 @@
 
 	return
 
-/obj/machinery/alarm/ui_interact(mob/user, ui_key = "main", var/datum/nanoui/ui = null)
+/obj/machinery/alarm/ui_interact(mob/user, ui_key = "main", datum/nanoui/ui = null)
 	if(stat & (BROKEN|NOPOWER))
 		return
 
@@ -246,7 +246,7 @@
 	frequency = new_frequency
 	radio_connection = radio_controller.add_object(src, frequency, RADIO_TO_AIRALARM)
 
-/obj/machinery/alarm/proc/send_signal(var/target, var/list/command)//sends signal 'command' to 'target'. Returns 0 if no radio connection, 1 otherwise
+/obj/machinery/alarm/proc/send_signal(target, list/command)//sends signal 'command' to 'target'. Returns 0 if no radio connection, 1 otherwise
 	if(!radio_connection)
 		return 0
 
@@ -263,7 +263,7 @@
 
 	return 1
 
-/obj/machinery/alarm/proc/populate_status(var/list/data)
+/obj/machinery/alarm/proc/populate_status(list/data)
 	var/turf/location = get_turf(src)
 	if(!location)
 		return
@@ -307,7 +307,7 @@
 		environment_data += list(list("name" = "Temperature", "value" = environment.temperature, "unit" = "K ([round(environment.temperature - T0C, 0.1)]C)", "danger_level" = temperature_danger))
 		data["environment_data"] = environment_data
 
-/obj/machinery/alarm/proc/populate_controls(var/list/data)
+/obj/machinery/alarm/proc/populate_controls(list/data)
 	switch(screen)
 		if(AALARM_SCREEN_MAIN)
 			data["mode"] = mode
@@ -713,7 +713,7 @@
 		post_alert(new_area_danger_level)
 	update_icon()
 
-/obj/machinery/alarm/attackby(obj/item/W as obj, mob/user as mob, params)
+/obj/machinery/alarm/attackby(obj/item/W, mob/user, params)
 	switch(buildstage)
 		if(2)
 			if(istype(W, /obj/item/weapon/wirecutters) && panel_open && (wires.wires_status == 27 || wires.wires_status == 31))   //this checks for all wires to be cut, except the syphon wire which is optional.
@@ -807,7 +807,7 @@
 			update_icon()
 
 
-/obj/machinery/alarm/emag_act(mob/user as mob)
+/obj/machinery/alarm/emag_act(mob/user)
 	if(!emagged)
 		src.emagged = 1
 		user.visible_message("<span class='warning'>Sparks fly out of the [src]!</span>", "<span class='notice'>You emag the [src], disabling its safeties.</span>")
@@ -840,7 +840,7 @@ Code shamelessly copied from apc_frame
 	icon_state = "alarm_bitem"
 	flags = CONDUCT
 
-/obj/item/alarm_frame/attackby(obj/item/weapon/W as obj, mob/user as mob, params)
+/obj/item/alarm_frame/attackby(obj/item/weapon/W, mob/user, params)
 	if (istype(W, /obj/item/weapon/wrench))
 		new /obj/item/stack/sheet/metal( get_turf(src.loc), 2 )
 		qdel(src)
@@ -935,7 +935,7 @@ FIRE ALARM
 
 
 
-/obj/machinery/firealarm/emag_act(mob/user as mob)
+/obj/machinery/firealarm/emag_act(mob/user)
 	if(!emagged)
 		src.emagged = 1
 		user.visible_message("<span class='warning'>Sparks fly out of the [src]!</span>", "<span class='notice'>You emag the [src], disabling its thermal sensors.</span>")
@@ -956,14 +956,14 @@ FIRE ALARM
 /obj/machinery/firealarm/bullet_act(BLAH)
 	return src.alarm()
 
-/obj/machinery/firealarm/attack_paw(mob/user as mob)
+/obj/machinery/firealarm/attack_paw(mob/user)
 	return src.attack_hand(user)
 
 /obj/machinery/firealarm/emp_act(severity)
 	if(prob(50/severity)) alarm()
 	..()
 
-/obj/machinery/firealarm/attackby(obj/item/W as obj, mob/user as mob, params)
+/obj/machinery/firealarm/attackby(obj/item/W, mob/user, params)
 	src.add_fingerprint(user)
 
 	if (istype(W, /obj/item/weapon/screwdriver) && buildstage == 2)
@@ -1060,7 +1060,7 @@ FIRE ALARM
 		if(loc)
 			update_icon()
 
-/obj/machinery/firealarm/attack_hand(mob/user as mob)
+/obj/machinery/firealarm/attack_hand(mob/user)
 	if(user.stat || stat & (NOPOWER|BROKEN))
 		return
 
@@ -1200,7 +1200,7 @@ Code shamelessly copied from apc_frame
 	flags = CONDUCT
 
 
-/obj/item/firealarm_frame/attackby(obj/item/weapon/W as obj, mob/user as mob, params)
+/obj/item/firealarm_frame/attackby(obj/item/weapon/W, mob/user, params)
 	if (istype(W, /obj/item/weapon/wrench))
 		new /obj/item/stack/sheet/metal( get_turf(src.loc), 2 )
 		qdel(src)
@@ -1240,7 +1240,7 @@ Code shamelessly copied from apc_frame
 	name = "\improper PARTY BUTTON"
 	desc = "Cuban Pete is in the house!"
 
-/obj/machinery/firealarm/partyalarm/attack_hand(mob/user as mob)
+/obj/machinery/firealarm/partyalarm/attack_hand(mob/user)
 	if(user.stat || stat & (NOPOWER|BROKEN))
 		return
 

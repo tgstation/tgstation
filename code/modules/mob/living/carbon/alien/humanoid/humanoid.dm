@@ -46,7 +46,7 @@
 		step_away(src,user,15)
 		return 1
 
-/mob/living/carbon/alien/humanoid/attack_hand(mob/living/carbon/human/M as mob)
+/mob/living/carbon/alien/humanoid/attack_hand(mob/living/carbon/human/M)
 	if(..())
 		switch(M.a_intent)
 			if ("harm")

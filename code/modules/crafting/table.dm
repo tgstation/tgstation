@@ -252,7 +252,7 @@
 	if(. <= 0)
 		. = categories.len
 
-/obj/structure/table/proc/build_recipe_text(var/datum/table_recipe/R)
+/obj/structure/table/proc/build_recipe_text(datum/table_recipe/R)
 	. = ""
 	var/name_text = ""
 	var/req_text = ""
