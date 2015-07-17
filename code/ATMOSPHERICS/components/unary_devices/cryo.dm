@@ -136,7 +136,7 @@
   *
   * @return nothing
   */
-/obj/machinery/atmospherics/components/unary/cry_cell/ui_interact(mob/user, ui_key = "main", datum/nanoui/ui = null)
+/obj/machinery/atmospherics/components/unary/cryo_cell/ui_interact(mob/user, ui_key = "main", datum/nanoui/ui = null)
 	if(user == occupant || user.stat || panel_open)
 		return
 
