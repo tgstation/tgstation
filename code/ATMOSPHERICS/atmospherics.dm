@@ -51,9 +51,10 @@ Pipelines + Other Objects -> Pipe network
 	return
 
 //object initializion. done well after air is setup (build_network needs all pipes to be init'ed with atmosinit before hand)
-/obj/machinery/atmospherics/initialize()
+/obj/machinery/atmospherics/initialize(buildpipenets = 1)
 	..()
-	build_network() //make sure to build our pipe nets
+	if (buildpipenets)
+		build_network() //make sure to build our pipe nets
 
 /obj/machinery/atmospherics/proc/SetInitDirections()
 	return
@@ -177,12 +178,13 @@ Pipelines + Other Objects -> Pipe network
 	var/turf/T = loc
 	level = T.intact ? 2 : 1
 	atmosinit()
-	initialize()
+	initialize(buildpipenets = 0)
 	var/list/nodes = pipeline_expansion()
 	for(var/obj/machinery/atmospherics/A in nodes)
 		A.atmosinit()
-		A.initialize()
+		A.initialize(buildpipenets = 0)
 		A.addMember(src)
+	build_network()
 
 /obj/machinery/atmospherics/singularity_pull(S, current_size)
 	if(current_size >= STAGE_FIVE)
