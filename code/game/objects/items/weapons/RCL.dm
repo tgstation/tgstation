@@ -42,7 +42,7 @@
 			else
 				loaded.use(30)
 				getFromPool(/obj/item/stack/cable_coil,user.loc,30)
-		loaded.max_amount = initial(max_amount)
+		loaded.max_amount = initial(loaded.max_amount)
 		loaded.loc = user.loc
 		user.put_in_hands(loaded)
 		loaded = null
@@ -54,6 +54,12 @@
 	..()
 	if(loaded)
 		user << "<span class='info'>It contains [loaded.amount]/90 cables.</span>"
+
+/obj/item/weapon/rcl/Destroy()
+	qdel(loaded)
+	loaded = null
+	last = null
+	..()
 
 /obj/item/weapon/rcl/update_icon()
 	if(!loaded)

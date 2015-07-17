@@ -239,6 +239,7 @@ to destroy them and players will be able to make replacements.
 	else */if(issolder(O))
 		//local_fuses.Interact(user)
 		var/t = input(user, "Which board should be designed?") as null|anything in board_names
+		if(!t) return
 		var/obj/item/weapon/solder/S = O
 		if(!S.remove_fuel(4,user)) return
 		playsound(loc, 'sound/items/Welder.ogg', 100, 1)
