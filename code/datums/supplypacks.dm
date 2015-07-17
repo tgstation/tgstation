@@ -132,6 +132,16 @@ var/list/all_supply_groups = list("Supplies","Clothing","Security","Hospitality"
 	containername = "High efficiency lights"
 	group = "Supplies"
 
+/datum/supply_packs/newscaster
+	name = "Newscaster crate"
+	contains = list(/obj/item/mounted/frame/newscaster,
+					/obj/item/mounted/frame/newscaster,
+					/obj/item/mounted/frame/newscaster)
+	cost = 10
+	containertype = /obj/structure/closet/crate
+	containername = "Newscaster crate"
+	group = "Supplies"
+
 /datum/supply_packs/mule
 	name = "MULEbot Crate"
 	contains = list(/obj/machinery/bot/mulebot)
