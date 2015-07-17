@@ -23,7 +23,7 @@ var/list/ventcrawl_machinery = list(/obj/machinery/atmospherics/unary/vent_pump,
 
 /mob/living/silicon/robot/mommi/AltClickOn(var/atom/A)
 	if(is_type_in_list(A,ventcrawl_machinery))
-		src.handle_ventcrawl(A)
+		src.handle_ventcrawl(A,1)
 		return
 	..(A)
 
@@ -114,7 +114,7 @@ var/list/ventcrawl_machinery = list(/obj/machinery/atmospherics/unary/vent_pump,
 					if(!client)
 						return
 
-					if((contents.len && !isrobot(src))&&!allowed_carry)
+					if((contents.len && !allowed_carry)
 						for(var/obj/item/carried_item in contents)//If the ventcrawler got on objects.
 							if(!(isInTypes(carried_item, canEnterVentWith)))
 								src << "<SPAN CLASS='warning'>You can't be carrying items or have items equipped when vent crawling!</SPAN>"
