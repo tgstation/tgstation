@@ -99,6 +99,7 @@
 	min_cold_protection_temperature = SPACE_HELM_MIN_TEMP_PROTECT
 	heat_protection = HEAD
 	max_heat_protection_temperature = SPACE_HELM_MAX_TEMP_PROTECT
+	flags = STOPSPRESSUREDMAGE
 	strip_delay = 80
 
 /obj/item/clothing/head/helmet/swat/nanotrasen
