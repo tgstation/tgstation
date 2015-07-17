@@ -1,0 +1,6 @@
+author: xxalpha
+
+delete-after: True
+
+changes: 
+  - bugfix: "Changeling augmented eyesight night vision is now working."
