@@ -13,6 +13,7 @@ var/datum/subsystem/ticker/ticker
 
 	var/hide_mode = 0
 	var/datum/game_mode/mode = null
+	var/datum/persistence/persist = null
 	var/event_time = null
 	var/event = 0
 
@@ -67,6 +68,7 @@ var/datum/subsystem/ticker/ticker
 			world << "<B><FONT color='blue'>Welcome to the pre-game lobby!</FONT></B>"
 			world << "Please, setup your character and select ready. Game will start in [config.lobby_countdown] seconds"
 			crewmonitor.generateMiniMaps() // start generating minimaps (this is a background process)
+			persist = new
 			current_state = GAME_STATE_PREGAME
 
 		if(GAME_STATE_PREGAME)
