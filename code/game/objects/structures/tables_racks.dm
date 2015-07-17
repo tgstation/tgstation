@@ -175,7 +175,9 @@
 
 	if(!(I.flags & ABSTRACT)) //rip more parems rip in peace ;_;
 		if(user.drop_item())
+			var/i_dir = I.dir
 			I.Move(loc)
+			I.dir = i_dir
 			var/list/click_params = params2list(params)
 			//Center the icon where the user clicked.
 			if(!click_params || !click_params["icon-x"] || !click_params["icon-y"])
