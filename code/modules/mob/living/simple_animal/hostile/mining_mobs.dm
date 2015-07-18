@@ -266,9 +266,9 @@
 	var/inert = 0
 
 /obj/item/asteroid/hivelord_core/New()
-	sleep(1200)
-	inert = 1
-	desc = "The remains of a hivelord that have become useless, having been left alone too long after being harvested."
+	spawn(1200)
+		inert = 1
+		desc = "The remains of a hivelord that have become useless, having been left alone too long after being harvested."
 
 /obj/item/asteroid/hivelord_core/attack(mob/living/M as mob, mob/living/user as mob)
 	if(ishuman(M))
@@ -315,8 +315,8 @@
 
 /mob/living/simple_animal/hostile/asteroid/hivelordbrood/New()
 	..()
-	sleep(100)
-	returnToPool(src)
+	spawn(100)
+		returnToPool(src)
 
 /mob/living/simple_animal/hostile/asteroid/hivelordbrood/Die()
 	returnToPool(src)

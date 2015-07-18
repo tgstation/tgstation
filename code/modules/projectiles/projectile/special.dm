@@ -247,5 +247,5 @@ obj/item/projectile/kinetic/New()
 
 /obj/item/effect/kinetic_blast/New()
 	..()
-	sleep(4)
-	returnToPool(src)
+	spawn(4)
+		returnToPool(src)
