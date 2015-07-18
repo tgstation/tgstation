@@ -38,7 +38,7 @@
 		holder.update_icon()
 	return
 
-/obj/item/device/assembly/signaler/interact(mob/user as mob, flag1)
+/obj/item/device/assembly/signaler/interact(mob/user, flag1)
 	if(is_secured(user))
 		var/t1 = "-------"
 	//	if ((src.b_stat && !( flag1 )))

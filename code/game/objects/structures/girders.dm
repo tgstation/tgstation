@@ -13,7 +13,7 @@
 	var/state = GIRDER_NORMAL
 	var/girderpasschance = 20 // percentage chance that a projectile passes through the girder.
 
-/obj/structure/girder/attackby(obj/item/W as obj, mob/user as mob, params)
+/obj/structure/girder/attackby(obj/item/W, mob/user, params)
 	add_fingerprint(user)
 	if(istype(W, /obj/item/weapon/screwdriver) && state == GIRDER_DISPLACED)
 		playsound(src.loc, 'sound/items/Screwdriver.ogg', 100, 1)
@@ -284,7 +284,7 @@
 	density = 1
 	layer = 2
 
-/obj/structure/cultgirder/attackby(obj/item/W as obj, mob/user as mob, params)
+/obj/structure/cultgirder/attackby(obj/item/W, mob/user, params)
 	add_fingerprint(user)
 	if(istype(W, /obj/item/weapon/weldingtool))
 		var/obj/item/weapon/weldingtool/WT = W

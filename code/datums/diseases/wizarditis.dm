@@ -54,7 +54,7 @@ STI KALY - blind
 
 
 
-/datum/disease/wizarditis/proc/spawn_wizard_clothes(var/chance = 0)
+/datum/disease/wizarditis/proc/spawn_wizard_clothes(chance = 0)
 	if(istype(affected_mob, /mob/living/carbon/human))
 		var/mob/living/carbon/human/H = affected_mob
 		if(prob(chance))

@@ -54,8 +54,6 @@
 	if(client)
 		handle_regular_hud_updates()
 
-	return .
-
 
 
 /mob/living/proc/handle_breathing()
@@ -74,7 +72,7 @@
 /mob/living/proc/handle_random_events()
 	return
 
-/mob/living/proc/handle_environment(var/datum/gas_mixture/environment)
+/mob/living/proc/handle_environment(datum/gas_mixture/environment)
 	return
 
 /mob/living/proc/handle_stomach()

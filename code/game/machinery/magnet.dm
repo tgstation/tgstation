@@ -49,7 +49,7 @@
 	center = null
 
 // update the invisibility and icon
-/obj/machinery/magnetic_module/hide(var/intact)
+/obj/machinery/magnetic_module/hide(intact)
 	invisibility = intact ? 101 : 0
 	updateicon()
 
@@ -77,7 +77,7 @@
 
 
 
-/obj/machinery/magnetic_module/proc/Cmd(var/command, var/modifier)
+/obj/machinery/magnetic_module/proc/Cmd(command, modifier)
 
 	if(command)
 		switch(command)
@@ -255,10 +255,10 @@
 				magnets.Add(M)
 
 
-/obj/machinery/magnetic_controller/attack_ai(mob/user as mob)
+/obj/machinery/magnetic_controller/attack_ai(mob/user)
 	return src.attack_hand(user)
 
-/obj/machinery/magnetic_controller/attack_hand(mob/user as mob)
+/obj/machinery/magnetic_controller/attack_hand(mob/user)
 	if(stat & (BROKEN|NOPOWER))
 		return
 	user.set_machine(src)

@@ -1,4 +1,8 @@
-/obj/machinery/atmospherics/unary/vent_pump
+#define EXT_BOUND	1
+#define INT_BOUND	2
+#define NO_BOUND	3
+
+/obj/machinery/atmospherics/components/unary/vent_pump
 	icon_state = "vent_map"
 
 	name = "air vent"
@@ -6,6 +10,8 @@
 	use_power = 1
 
 	can_unwrench = 1
+
+	welded = 0
 
 	var/area/initial_loc
 	level = 1
@@ -19,9 +25,9 @@
 	var/internal_pressure_bound = 0
 
 	var/pressure_checks = 1
-	//1: Do not pass external_pressure_bound
-	//2: Do not pass internal_pressure_bound
-	//3: Do not pass either
+	//EXT_BOUND: Do not pass external_pressure_bound
+	//INT_BOUND: Do not pass internal_pressure_bound
+	//NO_BOUND: Do not pass either
 
 	var/frequency = 1439
 	var/datum/radio_frequency/radio_connection
@@ -29,18 +35,18 @@
 	var/radio_filter_out
 	var/radio_filter_in
 
-/obj/machinery/atmospherics/unary/vent_pump/on
+/obj/machinery/atmospherics/components/unary/vent_pump/on
 	on = 1
 	icon_state = "vent_out"
 
-/obj/machinery/atmospherics/unary/vent_pump/siphon
+/obj/machinery/atmospherics/components/unary/vent_pump/siphon
 	pump_direction = 0
 
-/obj/machinery/atmospherics/unary/vent_pump/siphon/on
+/obj/machinery/atmospherics/components/unary/vent_pump/siphon/on
 	on = 1
 	icon_state = "vent_in"
 
-/obj/machinery/atmospherics/unary/vent_pump/New()
+/obj/machinery/atmospherics/components/unary/vent_pump/New()
 	..()
 	initial_loc = get_area(loc)
 	if (initial_loc.master)
@@ -54,29 +60,30 @@
 		src.initialize()
 		src.broadcast_status()
 
-/obj/machinery/atmospherics/unary/vent_pump/Destroy()
+/obj/machinery/atmospherics/components/unary/vent_pump/Destroy()
 	if(radio_controller)
 		radio_controller.remove_object(src,frequency)
 	..()
 
-/obj/machinery/atmospherics/unary/vent_pump/high_volume
+/obj/machinery/atmospherics/components/unary/vent_pump/high_volume
 	name = "large air vent"
 	power_channel = EQUIP
 
-/obj/machinery/atmospherics/unary/vent_pump/high_volume/New()
+/obj/machinery/atmospherics/components/unary/vent_pump/high_volume/New()
 	..()
+	var/datum/gas_mixture/air_contents = airs[AIR1]
 	air_contents.volume = 1000
 
-/obj/machinery/atmospherics/unary/vent_pump/update_icon_nopipes()
+/obj/machinery/atmospherics/components/unary/vent_pump/update_icon_nopipes()
 	overlays.Cut()
 	if(showpipe)
-		overlays += getpipeimage('icons/obj/atmospherics/unary_devices.dmi', "vent_cap", initialize_directions)
+		overlays += getpipeimage('icons/obj/atmospherics/components/unary_devices.dmi', "vent_cap", initialize_directions)
 
 	if(welded)
 		icon_state = "vent_welded"
 		return
 
-	if(!node || !on || stat & (NOPOWER|BROKEN))
+	if(!nodes[NODE1] || !on || stat & (NOPOWER|BROKEN))
 		icon_state = "vent_off"
 		return
 
@@ -85,11 +92,11 @@
 	else
 		icon_state = "vent_in"
 
-/obj/machinery/atmospherics/unary/vent_pump/process_atmos()
+/obj/machinery/atmospherics/components/unary/vent_pump/process_atmos()
 	..()
 	if(stat & (NOPOWER|BROKEN))
 		return
-	if (!node)
+	if (!nodes[NODE1])
 		on = 0
 	//broadcast_status() // from now air alarm/control computer should request update purposely --rastaf0
 	if(!on)
@@ -98,15 +105,16 @@
 	if(welded)
 		return 0
 
+	var/datum/gas_mixture/air_contents = airs[AIR1]
 	var/datum/gas_mixture/environment = loc.return_air()
 	var/environment_pressure = environment.return_pressure()
 
 	if(pump_direction) //internal -> external
 		var/pressure_delta = 10000
 
-		if(pressure_checks&1)
+		if(pressure_checks&EXT_BOUND)
 			pressure_delta = min(pressure_delta, (external_pressure_bound - environment_pressure))
-		if(pressure_checks&2)
+		if(pressure_checks&INT_BOUND)
 			pressure_delta = min(pressure_delta, (air_contents.return_pressure() - internal_pressure_bound))
 
 		if(pressure_delta > 0)
@@ -118,13 +126,11 @@
 				loc.assume_air(removed)
 				air_update_turf()
 
-				parent.update = 1
-
 	else //external -> internal
 		var/pressure_delta = 10000
-		if(pressure_checks&1)
+		if(pressure_checks&EXT_BOUND)
 			pressure_delta = min(pressure_delta, (environment_pressure - external_pressure_bound))
-		if(pressure_checks&2)
+		if(pressure_checks&INT_BOUND)
 			pressure_delta = min(pressure_delta, (internal_pressure_bound - air_contents.return_pressure()))
 
 		if(pressure_delta > 0)
@@ -137,20 +143,19 @@
 
 				air_contents.merge(removed)
 				air_update_turf()
-
-				parent.update = 1
+	update_parents()
 
 	return 1
 
 //Radio remote control
 
-/obj/machinery/atmospherics/unary/vent_pump/proc/set_frequency(new_frequency)
+/obj/machinery/atmospherics/components/unary/vent_pump/proc/set_frequency(new_frequency)
 	radio_controller.remove_object(src, frequency)
 	frequency = new_frequency
 	if(frequency)
 		radio_connection = radio_controller.add_object(src, frequency,radio_filter_in)
 
-/obj/machinery/atmospherics/unary/vent_pump/proc/broadcast_status()
+/obj/machinery/atmospherics/components/unary/vent_pump/proc/broadcast_status()
 	if(!radio_connection)
 		return 0
 
@@ -182,30 +187,30 @@
 	return 1
 
 
-/obj/machinery/atmospherics/unary/vent_pump/atmosinit()
+/obj/machinery/atmospherics/components/unary/vent_pump/atmosinit()
 	//some vents work his own spesial way
 	radio_filter_in = frequency==1439?(RADIO_FROM_AIRALARM):null
 	radio_filter_out = frequency==1439?(RADIO_TO_AIRALARM):null
 	if(frequency)
 		set_frequency(frequency)
 	..()
-/obj/machinery/atmospherics/unary/vent_pump/initialize()
+/obj/machinery/atmospherics/components/unary/vent_pump/initialize()
 	..()
 	broadcast_status()
 
-/obj/machinery/atmospherics/unary/vent_pump/receive_signal(datum/signal/signal)
+/obj/machinery/atmospherics/components/unary/vent_pump/receive_signal(datum/signal/signal)
 	if(stat & (NOPOWER|BROKEN))
 		return
-	//log_admin("DEBUG \[[world.timeofday]\]: /obj/machinery/atmospherics/unary/vent_pump/receive_signal([signal.debug_print()])")
+	//log_admin("DEBUG \[[world.timeofday]\]: /obj/machinery/atmospherics/components/unary/vent_pump/receive_signal([signal.debug_print()])")
 	if(!signal.data["tag"] || (signal.data["tag"] != id_tag) || (signal.data["sigtype"]!="command"))
 		return 0
 
 	if("purge" in signal.data)
-		pressure_checks &= ~1
+		pressure_checks &= ~EXT_BOUND
 		pump_direction = 0
 
 	if("stabalize" in signal.data)
-		pressure_checks |= 1
+		pressure_checks |= EXT_BOUND
 		pump_direction = 1
 
 	if("power" in signal.data)
@@ -218,7 +223,7 @@
 		pressure_checks = text2num(signal.data["checks"])
 
 	if("checks_toggle" in signal.data)
-		pressure_checks = (pressure_checks?0:3)
+		pressure_checks = (pressure_checks?0:NO_BOUND)
 
 	if("direction" in signal.data)
 		pump_direction = text2num(signal.data["direction"])
@@ -266,7 +271,7 @@
 	update_icon()
 	return
 
-/obj/machinery/atmospherics/unary/vent_pump/attackby(obj/item/W, mob/user, params)
+/obj/machinery/atmospherics/components/unary/vent_pump/attackby(obj/item/W, mob/user, params)
 	if (istype(W, /obj/item/weapon/wrench)&& !(stat & NOPOWER) && on)
 		user << "<span class='warning'>You cannot unwrench this [src], turn it off first!</span>"
 		return 1
@@ -290,24 +295,24 @@
 	else
 		return ..()
 
-/obj/machinery/atmospherics/unary/vent_pump/examine(mob/user)
+/obj/machinery/atmospherics/components/unary/vent_pump/examine(mob/user)
 	..()
 	if(welded)
 		user << "It seems welded shut."
 
-/obj/machinery/atmospherics/unary/vent_pump/power_change()
+/obj/machinery/atmospherics/components/unary/vent_pump/power_change()
 	if(powered(power_channel))
 		stat &= ~NOPOWER
 	else
 		stat |= NOPOWER
 	update_icon_nopipes()
 
-/obj/machinery/atmospherics/unary/vent_pump/Destroy()
+/obj/machinery/atmospherics/components/unary/vent_pump/Destroy()
 	if(initial_loc)
 		initial_loc.air_vent_info -= id_tag
 		initial_loc.air_vent_names -= id_tag
 	..()
 
 
-/obj/machinery/atmospherics/unary/vent_pump/can_crawl_through()
+/obj/machinery/atmospherics/components/unary/vent_pump/can_crawl_through()
 	return !welded

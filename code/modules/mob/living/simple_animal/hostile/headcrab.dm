@@ -21,7 +21,7 @@
 	var/datum/mind/origin
 	var/egg_lain = 0
 
-/mob/living/simple_animal/hostile/headcrab/proc/Infect(var/mob/living/carbon/human/victim)
+/mob/living/simple_animal/hostile/headcrab/proc/Infect(mob/living/carbon/human/victim)
 	var/obj/item/body_egg/changeling_egg/egg = new(victim)
 	if(origin)
 		egg.owner = origin

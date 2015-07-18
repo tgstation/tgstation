@@ -334,7 +334,7 @@
 	mineral = "glass"
 	icon_state = "door_as_gviro1"
 
-/obj/structure/door_assembly/attackby(obj/item/W as obj, mob/user as mob, params)
+/obj/structure/door_assembly/attackby(obj/item/W, mob/user, params)
 	if(istype(W, /obj/item/weapon/pen))
 		var/t = stripped_input(user, "Enter the name for the door.", src.name, src.created_name,MAX_NAME_LEN)
 		if(!t)

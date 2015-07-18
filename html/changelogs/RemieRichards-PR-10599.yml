@@ -1,0 +1,11 @@
+
+author: RemieRichards
+
+delete-after: True
+
+changes: 
+  - tweak: "Changelings now regenerate chemicals and geneticdamage while dead, but only up to specific caps (50% of their max chem storage, and 50 geneticdamage)"
+  - tweak: "Fakedeath's length has been reduced from 80s dead (1 minute 20) to 40s dead"
+  - rscadd: "Changelings now get to see the last 8 messages the person they absorbed said, to allow them to better impersonate their victim's speech patterns"
+  
+  

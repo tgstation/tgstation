@@ -16,7 +16,7 @@
 	density = 0
 	..()
 
-/obj/structure/statue/attackby(obj/item/weapon/W, mob/living/user as mob, params)
+/obj/structure/statue/attackby(obj/item/weapon/W, mob/living/user, params)
 	add_fingerprint(user)
 	user.changeNext_move(CLICK_CD_MELEE)
 	if(istype(W, /obj/item/weapon/wrench))
@@ -80,7 +80,7 @@
 		..()
 		CheckHardness()
 
-/obj/structure/statue/attack_hand(mob/living/user as mob)
+/obj/structure/statue/attack_hand(mob/living/user)
 	user.changeNext_move(CLICK_CD_MELEE)
 	add_fingerprint(user)
 	user.visible_message("[user] rubs some dust off from the [name]'s surface.", \
@@ -198,14 +198,14 @@
 		PlasmaBurn(exposed_temperature)
 
 
-/obj/structure/statue/plasma/bullet_act(var/obj/item/projectile/Proj)
+/obj/structure/statue/plasma/bullet_act(obj/item/projectile/Proj)
 	if(istype(Proj,/obj/item/projectile/beam))
 		PlasmaBurn(2500)
 	else if(istype(Proj,/obj/item/projectile/ion))
 		PlasmaBurn(500)
 	..()
 
-/obj/structure/statue/plasma/attackby(obj/item/weapon/W as obj, mob/user as mob, params)
+/obj/structure/statue/plasma/attackby(obj/item/weapon/W, mob/user, params)
 	if(is_hot(W) > 300)//If the temperature of the object is over 300, then ignite
 		message_admins("Plasma statue ignited by [key_name_admin(user)](<A HREF='?_src_=holder;adminmoreinfo=\ref[user]'>?</A>) (<A HREF='?_src_=holder;adminplayerobservefollow=\ref[user]'>FLW</A>) in ([x],[y],[z] - <A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[x];Y=[y];Z=[z]'>JMP</a>)",0,1)
 		log_game("Plasma statue ignited by [key_name(user)] in ([x],[y],[z])")

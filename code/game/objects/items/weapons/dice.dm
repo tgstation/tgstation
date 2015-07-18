@@ -53,15 +53,15 @@
 	icon_state = "d20"
 	sides = 20
 
-/obj/item/weapon/dice/attack_self(mob/user as mob)
+/obj/item/weapon/dice/attack_self(mob/user)
 	diceroll(user)
 
-/obj/item/weapon/dice/throw_at(atom/target, range, speed, mob/user as mob)
+/obj/item/weapon/dice/throw_at(atom/target, range, speed, mob/user)
 	if(!..())
 		return
 	diceroll(user)
 
-/obj/item/weapon/dice/proc/diceroll(mob/user as mob)
+/obj/item/weapon/dice/proc/diceroll(mob/user)
 	result = rand(1, sides)
 	var/comment = ""
 	if(sides == 20 && result == 20)
@@ -78,7 +78,7 @@
 	else if(src.throwing == 0) //Dice was thrown and is coming to rest
 		visible_message("<span class='notice'>[src] rolls to a stop, landing on [result]. [comment]</span>")
 
-/obj/item/weapon/dice/d4/Crossed(var/mob/living/carbon/human/H)
+/obj/item/weapon/dice/d4/Crossed(mob/living/carbon/human/H)
 	if(istype(H) && !H.shoes)
 		if(PIERCEIMMUNE in H.dna.species.specflags)
 			return 0

@@ -1,4 +1,4 @@
-/obj/machinery/atmospherics/unary/heat_exchanger
+/obj/machinery/atmospherics/components/unary/heat_exchanger
 
 	icon_state = "he_intact"
 
@@ -7,23 +7,24 @@
 
 	can_unwrench = 1
 
-	var/obj/machinery/atmospherics/unary/heat_exchanger/partner = null
+	var/obj/machinery/atmospherics/components/unary/heat_exchanger/partner = null
 	var/update_cycle
 
-/obj/machinery/atmospherics/unary/heat_exchanger/update_icon()
-	if(node)
+/obj/machinery/atmospherics/components/unary/heat_exchanger/update_icon()
+	if(nodes[NODE1])
 		icon_state = "he_intact"
+		var/obj/machinery/atmospherics/node = nodes[NODE1]
 		color = node.color
 	else
 		icon_state = "he_exposed"
 
 	return
 
-/obj/machinery/atmospherics/unary/heat_exchanger/atmosinit()
+/obj/machinery/atmospherics/components/unary/heat_exchanger/atmosinit()
 	if(!partner)
 		var/partner_connect = turn(dir,180)
 
-		for(var/obj/machinery/atmospherics/unary/heat_exchanger/target in get_step(src,partner_connect))
+		for(var/obj/machinery/atmospherics/components/unary/heat_exchanger/target in get_step(src,partner_connect))
 			if(target.dir & get_dir(src,target))
 				partner = target
 				partner.partner = src
@@ -31,7 +32,7 @@
 
 	..()
 
-/obj/machinery/atmospherics/unary/heat_exchanger/process_atmos()
+/obj/machinery/atmospherics/components/unary/heat_exchanger/process_atmos()
 	..()
 	if(!partner)
 		return 0
@@ -42,24 +43,27 @@
 	update_cycle = SSair.times_fired
 	partner.update_cycle = SSair.times_fired
 
+	var/datum/gas_mixture/air_contents = airs[AIR1]
+	var/datum/gas_mixture/partner_air_contents = partner.airs[AIR1]
+
 	var/air_heat_capacity = air_contents.heat_capacity()
-	var/other_air_heat_capacity = partner.air_contents.heat_capacity()
+	var/other_air_heat_capacity = partner_air_contents.heat_capacity()
 	var/combined_heat_capacity = other_air_heat_capacity + air_heat_capacity
 
 	var/old_temperature = air_contents.temperature
-	var/other_old_temperature = partner.air_contents.temperature
+	var/other_old_temperature = partner_air_contents.temperature
 
 	if(combined_heat_capacity > 0)
-		var/combined_energy = partner.air_contents.temperature*other_air_heat_capacity + air_heat_capacity*air_contents.temperature
+		var/combined_energy = partner_air_contents.temperature*other_air_heat_capacity + air_heat_capacity*air_contents.temperature
 
 		var/new_temperature = combined_energy/combined_heat_capacity
 		air_contents.temperature = new_temperature
-		partner.air_contents.temperature = new_temperature
+		partner_air_contents.temperature = new_temperature
 
 	if(abs(old_temperature-air_contents.temperature) > 1)
-		parent.update = 1
+		update_parents()
 
-	if(abs(other_old_temperature-partner.air_contents.temperature) > 1)
-		partner.parent.update = 1
+	if(abs(other_old_temperature-partner_air_contents.temperature) > 1)
+		partner.update_parents()
 
 	return 1

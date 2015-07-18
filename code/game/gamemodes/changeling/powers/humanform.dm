@@ -8,7 +8,7 @@
 
 
 //Transform into a human.
-/obj/effect/proc_holder/changeling/humanform/sting_action(var/mob/living/carbon/user)
+/obj/effect/proc_holder/changeling/humanform/sting_action(mob/living/carbon/user)
 	var/datum/changeling/changeling = user.mind.changeling
 	var/list/names = list()
 	for(var/datum/dna/DNA in (changeling.absorbed_dna+changeling.protected_dna))

@@ -130,7 +130,7 @@
 
 	default_deconstruction_crowbar(I)
 
-/obj/machinery/power/compressor/CanAtmosPass(var/turf/T)
+/obj/machinery/power/compressor/CanAtmosPass(turf/T)
 	return !density
 
 /obj/machinery/power/compressor/process()
@@ -230,7 +230,7 @@
 	if(compressor)
 		compressor.locate_machinery()
 
-/obj/machinery/power/turbine/CanAtmosPass(var/turf/T)
+/obj/machinery/power/turbine/CanAtmosPass(turf/T)
 	return !density
 
 /obj/machinery/power/turbine/process()

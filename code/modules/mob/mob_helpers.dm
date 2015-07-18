@@ -448,14 +448,14 @@ It's fairly easy to fix if dealing with single letters but not so much with comp
 		return 1
 	return 0
 
-/mob/proc/has_mutation(var/mutation)
+/mob/proc/has_mutation(mutation)
 	return mutation in src.mutations ? 1 : 0
 
 /proc/get_both_hands(mob/living/carbon/M)
 	var/list/hands = list(M.l_hand, M.r_hand)
 	return hands
 
-/mob/proc/reagent_check(var/datum/reagent/R) // utilized in the species code
+/mob/proc/reagent_check(datum/reagent/R) // utilized in the species code
 	return 1
 
 /proc/notify_ghosts(var/message, var/ghost_sound = null) //Easy notification of ghosts.
@@ -465,7 +465,7 @@ It's fairly easy to fix if dealing with single letters but not so much with comp
 			if(ghost_sound)
 				O << sound(ghost_sound)
 
-/proc/item_heal_robotic(var/mob/living/carbon/human/H, var/mob/user, var/brute, var/burn)
+/proc/item_heal_robotic(mob/living/carbon/human/H, mob/user, brute, burn)
 	var/obj/item/organ/limb/affecting = H.get_organ(check_zone(user.zone_sel.selecting))
 
 	var/dam //changes repair text based on how much brute/burn was supplied

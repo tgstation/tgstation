@@ -1,4 +1,4 @@
-/mob/living/carbon/alien/humanoid/emote(var/act)
+/mob/living/carbon/alien/humanoid/emote(act)
 
 	var/param = null
 	if (findtext(act, "-", 1, null))

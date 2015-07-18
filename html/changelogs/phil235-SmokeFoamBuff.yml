@@ -1,0 +1,14 @@
+
+author: phil
+
+delete-after: True
+
+# Any changes you've made.  See valid prefix list above.
+# INDENT WITH TWO SPACES.  NOT TABS.  SPACES.
+# SCREW THIS UP AND IT WON'T WORK.
+# Also, this gets changed to [] after reading.  Just remove the brackets when you add new shit.
+# Please surround your changes in  double quotes ("). It works without them, but if you use certain characters it screws up compiling. The quotes will not show up in the changelog.
+changes: 
+  - tweak: "Smoke and foam touch reactions gets buffed."
+  - rscadd: "Reagent dispensers (watertank, fueltank) tells you how much reagents they have left when examined."
+  - tweak: "Liquid dark matter blob spore smoke now cannot throw you. The effects of sorium, blob sorium, liquid dark matter and blob liquid dark matter are now scaled by their volume. Sorium/LDM blob's touch now throws the mobs who are close but simply moves the mobs that are further away."

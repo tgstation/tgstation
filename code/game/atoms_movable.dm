@@ -94,16 +94,13 @@
 	return
 
 /atom/movable/Bump(var/atom/A as mob|obj|turf|area, yes)
-	if(src.throwing)
-		src.throw_impact(A)
-		src.throwing = 0
-
+	if(throwing)
+		throw_impact(A)
+		throwing = 0
 	if ((A && yes))
 		A.last_bumped = world.time
 		A.Bumped(src)
-	return
-	..()
-	return
+
 
 /atom/movable/proc/forceMove(atom/destination)
 	if(destination)
@@ -124,7 +121,7 @@
 //Return 0 to have src start/keep drifting in a no-grav area and 1 to stop/not start drifting
 //Mobs should return 1 if they should be able to move of their own volition, see client/Move() in mob_movement.dm
 //movement_dir == 0 when stopping or any dir when trying to move
-/atom/movable/proc/Process_Spacemove(var/movement_dir = 0)
+/atom/movable/proc/Process_Spacemove(movement_dir = 0)
 	if(has_gravity(src))
 		return 1
 

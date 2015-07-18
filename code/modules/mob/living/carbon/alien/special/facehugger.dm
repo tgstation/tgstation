@@ -28,17 +28,17 @@ var/const/MAX_ACTIVE_TIME = 400
 
 	var/attached = 0
 
-/obj/item/clothing/mask/facehugger/attack_alien(user as mob) //can be picked up by aliens
+/obj/item/clothing/mask/facehugger/attack_alien(mob/user) //can be picked up by aliens
 	attack_hand(user)
 	return
 
-/obj/item/clothing/mask/facehugger/attack_hand(user as mob)
+/obj/item/clothing/mask/facehugger/attack_hand(mob/user)
 	if((stat == CONSCIOUS && !sterile) && !isalien(user))
 		if(Attach(user))
 			return
 	..()
 
-/obj/item/clothing/mask/facehugger/attack(mob/living/M as mob, mob/user as mob)
+/obj/item/clothing/mask/facehugger/attack(mob/living/M, mob/user)
 	..()
 	user.unEquip(src)
 	Attach(M)
@@ -55,12 +55,12 @@ var/const/MAX_ACTIVE_TIME = 400
 	if (sterile)
 		user << "<span class='boldannounce'>It looks like the proboscis has been removed.</span>"
 
-/obj/item/clothing/mask/facehugger/attackby(var/obj/item/O,var/mob/m, params)
+/obj/item/clothing/mask/facehugger/attackby(obj/item/O,mob/m, params)
 	if(O.force)
 		Die()
 	return
 
-/obj/item/clothing/mask/facehugger/bullet_act(var/obj/item/projectile/P)
+/obj/item/clothing/mask/facehugger/bullet_act(obj/item/projectile/P)
 	if(P.damage)
 		Die()
 	return
@@ -77,7 +77,7 @@ var/const/MAX_ACTIVE_TIME = 400
 	HasProximity(target)
 	return
 
-/obj/item/clothing/mask/facehugger/on_found(mob/finder as mob)
+/obj/item/clothing/mask/facehugger/on_found(mob/finder)
 	if(stat == CONSCIOUS)
 		return HasProximity(finder)
 	return 0
@@ -102,7 +102,7 @@ var/const/MAX_ACTIVE_TIME = 400
 		icon_state = "[initial(icon_state)]"
 		Attach(hit_atom)
 
-/obj/item/clothing/mask/facehugger/proc/Attach(M as mob)
+/obj/item/clothing/mask/facehugger/proc/Attach(mob/M)
 	if( (!iscorgi(M) && !iscarbon(M)) || isalien(M))
 		return 0
 	if(attached)
@@ -158,7 +158,7 @@ var/const/MAX_ACTIVE_TIME = 400
 
 	return 1
 
-/obj/item/clothing/mask/facehugger/proc/Impregnate(mob/living/target as mob)
+/obj/item/clothing/mask/facehugger/proc/Impregnate(mob/living/target)
 	if(!target || target.stat == DEAD) //was taken off or something
 		return
 
@@ -229,7 +229,7 @@ var/const/MAX_ACTIVE_TIME = 400
 
 	return
 
-/proc/CanHug(var/mob/M)
+/proc/CanHug(mob/M)
 	if(!istype(M))
 		return 0
 	if(M.stat == DEAD)

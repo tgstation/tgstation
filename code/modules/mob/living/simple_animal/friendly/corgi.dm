@@ -38,13 +38,13 @@
 	..()
 	regenerate_icons()
 
-/mob/living/simple_animal/pet/corgi/sac_act(var/obj/effect/rune/R, victim) //Still the best thing in this game
+/mob/living/simple_animal/pet/corgi/sac_act(obj/effect/rune/R, victim) //Still the best thing in this game
 	usr << "<span class='warning'>Even dark gods from another plane have standards, sicko.</span>"
 	usr.reagents.add_reagent("hell_water", 2)
 	R.stone_or_gib(victim)
 
 
-/mob/living/simple_animal/pet/corgi/show_inv(mob/user as mob)
+/mob/living/simple_animal/pet/corgi/show_inv(mob/user)
 	user.set_machine(src)
 	if(user.stat) return
 
@@ -62,7 +62,7 @@
 	onclose(user, "mob[real_name]")
 	return
 
-/mob/living/simple_animal/pet/corgi/attackby(var/obj/item/O as obj, var/mob/user as mob, params)
+/mob/living/simple_animal/pet/corgi/attackby(obj/item/O, mob/user, params)
 	if(inventory_head && inventory_back)
 		//helmet and armor = 100% protection
 		if( istype(inventory_head,/obj/item/clothing/head/helmet) && istype(inventory_back,/obj/item/clothing/suit/armor) )
@@ -193,7 +193,7 @@
 //Corgis are supposed to be simpler, so only a select few objects can actually be put
 //to be compatible with them. The objects are below.
 //Many  hats added, Some will probably be removed, just want to see which ones are popular.
-/mob/living/simple_animal/pet/corgi/proc/place_on_head(obj/item/item_to_add, var/mob/user as mob)
+/mob/living/simple_animal/pet/corgi/proc/place_on_head(obj/item/item_to_add, mob/user)
 
 	if(istype(item_to_add,/obj/item/weapon/c4)) // last thing he ever wears, I guess
 		item_to_add.afterattack(src,user,1)

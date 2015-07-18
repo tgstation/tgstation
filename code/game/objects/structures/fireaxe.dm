@@ -14,7 +14,7 @@
 	..()
 	update_icon()
 
-/obj/structure/fireaxecabinet/attackby(obj/item/I as obj, mob/user as mob, params)
+/obj/structure/fireaxecabinet/attackby(obj/item/I, mob/user, params)
 	if(isrobot(user) || istype(I,/obj/item/device/multitool))
 		toggle_lock(user)
 		return
@@ -60,7 +60,7 @@
 		if(3.0)
 			return
 
-/obj/structure/fireaxecabinet/bullet_act(var/obj/item/projectile/Proj)
+/obj/structure/fireaxecabinet/bullet_act(obj/item/projectile/Proj)
 	if((Proj.damage_type == BRUTE || Proj.damage_type == BURN))
 		if(Proj.damage)
 			glass_hp -= Proj.damage
@@ -73,7 +73,7 @@
 		fireaxe.loc = src.loc
 		qdel(src)
 
-/obj/structure/fireaxecabinet/attack_hand(mob/user as mob)
+/obj/structure/fireaxecabinet/attack_hand(mob/user)
 	if(open || glass_hp <= 0)
 		if(fireaxe)
 			user.put_in_hands(fireaxe)
@@ -90,12 +90,12 @@
 		update_icon()
 		return
 
-/obj/structure/fireaxecabinet/attack_paw(mob/user as mob)
+/obj/structure/fireaxecabinet/attack_paw(mob/user)
 	if(ismonkey(user)) //no fire-axe wielding aliens allowed
 		attack_hand(user)
 	return
 
-/obj/structure/fireaxecabinet/attack_ai(mob/user as mob)
+/obj/structure/fireaxecabinet/attack_ai(mob/user)
 	toggle_lock(user)
 	return
 
