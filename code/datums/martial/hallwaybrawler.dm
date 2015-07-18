@@ -51,7 +51,6 @@
 
 /datum/martial_art/hallway_brawler/proc/whirlwind_kick(var/mob/living/carbon/human/A, var/mob/living/carbon/human/D)
 	if(!D.stat && !D.weakened)
-		A.say("TATSUMAKI SENPUKYAKU!")
 		for(var/i = 0; i < 4; i++)
 			D.visible_message("<span class='warning'>[A] kicks [D] in the chest!</span>", \
 						  	"<span class='userdanger'>[A] kicks you in the chest!</span>")
@@ -67,7 +66,6 @@
 
 /datum/martial_art/hallway_brawler/proc/shoryuken(var/mob/living/carbon/human/A, var/mob/living/carbon/human/D)
 	if(!D.stat && !D.weakened)
-		A.say("SHORYUKEN!")
 		D.visible_message("<span class='warning'>[A] uppercuts [D]!</span>", \
 						  "<span class='userdanger'>[A] uppercuts you!</span>")
 		D.apply_damage(15, BRUTE, "head")
@@ -78,7 +76,6 @@
 
 /datum/martial_art/hallway_brawler/proc/hadouken(var/mob/living/carbon/human/A, var/mob/living/carbon/human/D)
 	if(!D.stat && !D.weakened)
-		A.say("HADOUKEN!")
 		D.visible_message("<span class='warning'>[A] punches [D] with a burning force!</span>", \
 						  "<span class'userdanger'>[A] punches you with a burning force!</span>")
 		D.apply_damage(15, BURN, "chest")
@@ -91,7 +88,6 @@
 
 /datum/martial_art/hallway_brawler/proc/shakunetsu_hadouken(var/mob/living/carbon/human/A, var/mob/living/carbon/human/D)
 	if(!D.stat && !D.weakened)
-		A.say("SHAKUNETSU HADOUKEN!")
 		for(var/i = 0; i < 3; i++)
 			D.visible_message("<span class='warning'>[A] punches [D] with a burning force!</span>", \
 							  "<span class'userdanger'>[A] punches you with a burning force!</span>")
@@ -151,10 +147,10 @@
 	set category = "Hallway Brawler"
 
 	usr << "<b><i>You retreat inward and recall the teachings of the Hallway Brawler...</i></b>"
-	usr << "<span class='notice'>Tatsumaki Senpukyaku</span>: Disarm Disarm Harm Harm. Hits 4 times in a row, knocking them down and moving you 4 tiles forward."
-	usr << "<span class='notice'>Shoryuken</span>: Grab Disarm Disarm Grab. Deliver a powerful uppercut, stunning the opponent."
-	usr << "<span class='notice'>Hadouken</span>: Disarm Disarm Grab Grab. Hits the opponent with a firey blast and stuns."
-	usr << "<span class='notice'>Shakunetsu Hadouken</span>: Harm Disarm Harm Disarm Disarm Grab. Like the Hadouken, but hits multiple times for more."
+	usr << "<span class='notice'>Spinning Kick</span>: Disarm Disarm Harm Harm. Hits 4 times in a row, knocking them down and moving you 4 tiles forward."
+	usr << "<span class='notice'>Uppercut</span>: Grab Disarm Disarm Grab. Deliver a powerful uppercut, stunning the opponent."
+	usr << "<span class='notice'>Fire Punch</span>: Disarm Disarm Grab Grab. Hits the opponent with a firey blast and stuns."
+	usr << "<span class='notice'>Rapid Fire Punch</span>: Harm Disarm Harm Disarm Disarm Grab. Like the Fire Punch, but hits multiple times for more."
 
 /obj/item/clothing/gloves/hallway_brawler
 	desc = "These gloves will teach you the ways of the hallway brawler."
