@@ -164,7 +164,7 @@ var/list/announcement_systems = list()
 	Interact(usr)
 	return
 
-/obj/machinery/announcement_system/attack_ai(var/mob/living/silicon/ai/user)
+/obj/machinery/announcement_system/attack_ai(mob/living/silicon/ai/user)
 	if(!isAI(user))
 		return
 	if(broken)

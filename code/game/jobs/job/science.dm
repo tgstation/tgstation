@@ -35,10 +35,7 @@ Research Director
 	H.equip_to_slot_or_del(new /obj/item/clothing/suit/toggle/labcoat(H), slot_wear_suit)
 	H.equip_to_slot_or_del(new /obj/item/weapon/clipboard(H), slot_l_hand)
 	H.equip_to_slot_or_del(new /obj/item/device/laser_pointer(H), slot_l_store)
-
-	//Equip telebaton
-	if(H.backbag == 2 || H.backbag == 3)
-		H.equip_to_slot_or_del(new /obj/item/weapon/melee/classic_baton/telescopic(H), slot_in_backpack)
+	H.equip_to_slot_or_del(new /obj/item/weapon/melee/classic_baton/telescopic(H), slot_in_backpack)
 
 	announce_head(H.mind, list("Science")) //tell underlings (science radio) they have a head
 

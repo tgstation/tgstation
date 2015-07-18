@@ -3853,7 +3853,7 @@
 "bwe" = (/turf/simulated/floor/plasteel{icon_state = "white"},/area/toxins/explab)
 "bwf" = (/obj/structure/extinguisher_cabinet{pixel_x = 5; pixel_y = -32},/obj/machinery/atmospherics/components/unary/vent_scrubber{dir = 1; on = 1; scrub_N2O = 0; scrub_Toxins = 0},/turf/simulated/floor/plasteel{icon_state = "white"},/area/toxins/explab)
 "bwg" = (/obj/machinery/atmospherics/pipe/manifold/general/visible{dir = 8},/turf/simulated/floor/plating,/area/maintenance/asmaint2)
-"bwh" = (/obj/machinery/atmospherics/components/unary/cold_sink/freezer,/turf/simulated/floor/plating,/area/maintenance/asmaint2)
+"bwh" = (/obj/machinery/atmospherics/components/unary/cold_sink/freezer{dir = 8},/turf/simulated/floor/plating,/area/maintenance/asmaint2)
 "bwi" = (/turf/simulated/wall,/area/quartermaster/qm)
 "bwj" = (/obj/machinery/door/airlock/glass_mining{name = "Quartermaster"; req_access_txt = "41"},/turf/simulated/floor/plasteel,/area/quartermaster/qm)
 "bwk" = (/obj/structure/grille,/obj/structure/window/reinforced/fulltile,/turf/simulated/floor/plating,/area/quartermaster/qm)

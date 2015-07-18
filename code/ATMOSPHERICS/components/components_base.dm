@@ -199,6 +199,7 @@ Helpers
 */
 
 /obj/machinery/atmospherics/components/proc/update_parents()
-	for(var/I = 1; I <= device_type; I++)
-		var/datum/pipeline/parent = parents["p[I]"]
-		parent.update = 1
+	for(var/P in parents)
+		var/datum/pipeline/parent = parents["[P]"]
+		if (parent && istype(parent))
+			parent.update = 1

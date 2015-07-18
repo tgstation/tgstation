@@ -197,31 +197,28 @@
 				return
 
 			if(istype(P, /obj/item) && get_req_components_amt())
-				var/success
 				for(var/I in req_components)
 					if(istype(P, I) && (req_components[I] > 0))
-						if(!user.drop_item())
-							return
-						success=1
 						if(istype(P, /obj/item/stack/cable_coil))
 							var/obj/item/stack/cable_coil/CP = P
-							if (CP.get_amount() < 1)
-								user << "<span class='warning'>You need more cable!</span>"
-								return
-							var/obj/item/stack/cable_coil/CC = new /obj/item/stack/cable_coil(src, 1, CP.item_color)
+							var/cable_color = CP.item_color
 							if(CP.use(1))
+								var/obj/item/stack/cable_coil/CC = new /obj/item/stack/cable_coil(src, 1, cable_color)
 								components += CC
 								req_components[I]--
 								update_req_desc()
+							else
+								user << "<span class='warning'>You need more cable!</span>"
+							return
+						if(!user.drop_item())
 							break
 						P.loc = src
 						components += P
 						req_components[I]--
 						update_req_desc()
 						return 1
-				if(!success)
-					user << "<span class='warning'>You cannot add that to the machine!</span>"
-					return 0
+				user << "<span class='warning'>You cannot add that to the machine!</span>"
+				return 0
 
 
 //Machine Frame Circuit Boards

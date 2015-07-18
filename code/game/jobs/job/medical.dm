@@ -33,10 +33,7 @@ Chief Medical Officer
 	H.equip_to_slot_or_del(new /obj/item/clothing/suit/toggle/labcoat/cmo(H), slot_wear_suit)
 	H.equip_to_slot_or_del(new /obj/item/weapon/storage/firstaid/regular(H), slot_l_hand)
 	H.equip_to_slot_or_del(new /obj/item/device/flashlight/pen(H), slot_s_store)
-
-	//Equip telebaton
-	if(H.backbag == 2 || H.backbag == 3)
-		H.equip_to_slot_or_del(new /obj/item/weapon/melee/classic_baton/telescopic(H), slot_in_backpack)
+	H.equip_to_slot_or_del(new /obj/item/weapon/melee/classic_baton/telescopic(H), slot_in_backpack)
 
 	announce_head(H.mind, list("Medical")) //tell underlings (medical radio) they have a head
 
