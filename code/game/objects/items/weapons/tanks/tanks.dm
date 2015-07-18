@@ -118,9 +118,9 @@
 	// this is the data which will be sent to the ui
 	var/data[0]
 	data["tankPressure"] = round(air_contents.return_pressure() ? air_contents.return_pressure() : 0)
-	data["releasepressure"] = round(distribute_pressure ? distribute_pressure : 0)
-	data["defaultReleasepressure"] = round(TANK_DEFAULT_RELEASE_PRESSURE)
-	data["maxReleasepressure"] = round(TANK_MAX_RELEASE_PRESSURE)
+	data["releasePressure"] = round(distribute_pressure ? distribute_pressure : 0)
+	data["defaultReleasePressure"] = round(TANK_DEFAULT_RELEASE_PRESSURE)
+	data["maxReleasePressure"] = round(TANK_MAX_RELEASE_PRESSURE)
 	data["valveOpen"] = using_internal ? 1 : 0
 
 	data["maskConnected"] = 0

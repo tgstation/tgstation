@@ -75,7 +75,7 @@
 			T.purpose = pick("Ne$ ---ount fu%ds init*&lisat@*n","PAY BACK YOUR MUM","Funds withdrawal","pWnAgE","l33t hax","liberationez")
 			T.amount = pick("","([rand(0,99999)])","alla money","9001$","HOLLA HOLLA GET DOLLA","([lost])")
 			var/date1 = "31 December, 1999"
-			var/date2 = "[num2text(rand(1,31))] [pick("January","February","March","April","May","June","July","August","september","October","November","December")], [rand(1000,3000)]"
+			var/date2 = "[num2text(rand(1,31))] [pick("January","February","March","April","May","June","July","August","September","October","November","December")], [rand(1000,3000)]"
 			T.date = pick("", current_date_string, date1, date2)
 			var/time1 = rand(0, 99999999)
 			var/time2 = "[round(time1 / 36000)+12]:[(time1 / 600 % 60) < 10 ? add_zero(time1 / 600 % 60, 1) : time1 / 600 % 60]"

@@ -15,7 +15,7 @@
 	for(var/datum/power/changeling/P in powerinstances)
 		if(!P.genomecost) // Is it free?
 			if(!(P in mind.changeling.purchasedpowers)) // Do we not have it already?
-				mind.changeling.purchasepower(mind, P.name, 0)// Purchase it. Don't remake our verbs, we're doing it after this.
+				mind.changeling.purchasePower(mind, P.name, 0)// Purchase it. Don't remake our verbs, we're doing it after this.
 
 	for(var/datum/power/changeling/P in mind.changeling.purchasedpowers)
 		if(P.isVerb)

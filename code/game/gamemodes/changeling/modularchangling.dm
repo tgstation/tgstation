@@ -467,15 +467,15 @@ var/list/datum/power/changeling/powerinstances = list()
 		var/datum/mind/M = usr.mind
 		if(!istype(M))
 			return
-		purchasepower(M, href_list["P"])
+		purchasePower(M, href_list["P"])
 		call(/datum/changeling/proc/EvolutionMenu)()
 
 
 
 
 
-/datum/changeling/proc/purchasepower(var/datum/mind/M, var/Pname, var/remake_verbs = 1)
-	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\datum/changeling/proc/purchasepower() called tick#: [world.time]")
+/datum/changeling/proc/purchasePower(var/datum/mind/M, var/Pname, var/remake_verbs = 1)
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\datum/changeling/proc/purchasePower() called tick#: [world.time]")
 	if(!M || !M.changeling)
 		return
 

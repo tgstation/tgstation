@@ -561,7 +561,7 @@
 			if (INFECTION_LEVEL_TWO + 300 to INFECTION_LEVEL_TWO + 400)
 				infected = "Acute Infection++:"
 			if (INFECTION_LEVEL_THREE to INFINITY)
-				infected = "septic:"
+				infected = "Septic:"
 
 		if(e.implants.len)
 			var/unknown_body = 0

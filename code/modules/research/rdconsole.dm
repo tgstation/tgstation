@@ -429,7 +429,7 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 			return
 		linked_imprinter.reagents.clear_reagents()
 
-	else if(href_list["disposep"] && linked_lathe)  //Causes the protolathe to dispose of a single reagent (all of it)
+	else if(href_list["disposeP"] && linked_lathe)  //Causes the protolathe to dispose of a single reagent (all of it)
 		if(!src.allowed(usr))
 			usr << "Unauthorized Access."
 			return

@@ -185,6 +185,6 @@
 					curBlock.statements+=stmt
 					NextToken() //Skip close parenthesis
 					return
-				var/node/expression/P=ParseparamExpression(check_functions = 1)
+				var/node/expression/P=ParseParamExpression(check_functions = 1)
 				stmt.parameters+=P
 				if(istype(curToken, /token/symbol) && curToken.value==",") NextToken()

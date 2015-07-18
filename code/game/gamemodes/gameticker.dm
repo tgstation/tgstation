@@ -403,11 +403,11 @@ var/global/datum/controller/gameticker/ticker
 
 		spawn(50)
 			if (mode.station_was_nuked)
-				feedback_set_details("end_/proper","nuke")
+				feedback_set_details("end_proper","nuke")
 				if(!delay_end && !watchdog.waiting)
 					world << "<span class='notice'><B>Rebooting due to destruction of station in [restart_timeout/10] seconds</B></span>"
 			else
-				feedback_set_details("end_/proper","\proper completion")
+				feedback_set_details("end_proper","\proper completion")
 				if(!delay_end && !watchdog.waiting)
 					world << "<span class='notice'><B>Restarting in [restart_timeout/10] seconds</B></span>"
 
