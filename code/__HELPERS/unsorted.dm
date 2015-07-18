@@ -514,7 +514,6 @@ Turf and target are seperate in case you want to teleport some distance from a t
 // returns the turf located at the map edge in the specified direction relative to A
 // used for mass driver
 /proc/get_edge_target_turf(atom/A, direction)
-
 	var/turf/target = locate(A.x, A.y, A.z)
 	if(!A || !target)
 		return 0
@@ -530,7 +529,6 @@ Turf and target are seperate in case you want to teleport some distance from a t
 		target = locate(world.maxx, target.y, target.z)
 	if(direction & WEST)
 		target = locate(1, target.y, target.z)
-
 	return target
 
 // returns turf relative to A in given direction at set range

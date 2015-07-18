@@ -11,6 +11,8 @@
 
 	can_unwrench = 1
 
+	welded = 0
+
 	var/area/initial_loc
 	level = 1
 	var/area_uid

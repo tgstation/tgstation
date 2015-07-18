@@ -20,7 +20,7 @@ On top of that, now people can add component-speciic procs/vars if they want!
 #define NODE3	"n3"
 
 /obj/machinery/atmospherics/components/
-	var/welded = 0 //Used on pumps and scrubbers
+	var/welded //Used on pumps and scrubbers
 	var/showpipe = 0
 
 	var/device_type = 0//used for initialization stuff
