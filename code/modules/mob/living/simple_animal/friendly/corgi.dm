@@ -370,7 +370,7 @@
 
 /mob/living/simple_animal/corgi/proc/spinaroo(var/list/emotes = list("dances around","chases its tail"))
     //writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/living/simple_animal/corgi/proc/spinaroo() called tick#: [world.time]")
-    if(!stat && !resting && !buckled)
+    if(!stat && !resting && !locked_to)
         if(prob(1))
             if (ckey == null)
                 emote(pick(emotes))
@@ -398,7 +398,7 @@
 	spinaroo(list("dances around","chases its tail"))
 
 	//Feeding, chasing food, FOOOOODDDD
-	if(!stat && !resting && !buckled && (ckey == null))
+	if(!stat && !resting && !locked_to && (ckey == null))
 		turns_since_scan++
 		if(turns_since_scan > 5)
 			turns_since_scan = 0

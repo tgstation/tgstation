@@ -544,7 +544,7 @@ var/static/list/scarySounds = list('sound/weapons/thudswoosh.ogg','sound/weapons
 #define SEC_LEVEL_DELTA	3
 
 #define TRANSITIONEDGE	7 //Distance from edge to move to another z-level
-
+/*
 var/list/liftable_structures = list(\
 
 	/obj/machinery/r_n_d/fabricator/mechanic_fab/autolathe, \
@@ -566,7 +566,7 @@ var/list/liftable_structures = list(\
 	/obj/structure/filingcabinet, \
 	/obj/structure/reagent_dispensers, \
 	/obj/machinery/portable_atmospherics/canister)
-
+*/
 //A set of constants used to determine which type of mute an admin wishes to apply:
 //Please read and understand the muting/automuting stuff before changing these. MUTE_IC_AUTO etc = (MUTE_IC << 1)
 //Therefore there needs to be a gap between the flags for the automute flags

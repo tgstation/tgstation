@@ -57,9 +57,9 @@
 			var/list/contents_brought = list()
 			contents_brought += recursive_type_check(A)
 
-			if(istype(A, /obj/structure/stool/bed/chair/vehicle))
-				var/obj/structure/stool/bed/chair/vehicle/B = A
-				if(B.buckled_mob)
+			if(istype(A, /obj/structure/bed/chair/vehicle))
+				var/obj/structure/bed/chair/vehicle/B = A
+				if(B.locked_atoms.len)
 					contents_brought += recursive_type_check(B)
 
 			var/locked_to_current_z = 0//To prevent the moveable atom from leaving this Z, examples are DAT DISK and derelict MoMMIs.

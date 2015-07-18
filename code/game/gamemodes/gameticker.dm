@@ -243,16 +243,16 @@ var/global/datum/controller/gameticker/ticker
 	cinematic.mouse_opacity = 0
 	cinematic.screen_loc = "1,0"
 
-	var/obj/structure/stool/bed/temp_buckle = new(src)
+	var/obj/structure/bed/temp_buckle = new(src)
 	//Incredibly hackish. It creates a bed within the gameticker (lol) to stop mobs running around
 	if(station_missed)
 		for(var/mob/living/M in living_mob_list)
-			M.buckled = temp_buckle				//buckles the mob so it can't do anything
+			M.locked_to = temp_buckle				//buckles the mob so it can't do anything
 			if(M.client)
 				M.client.screen += cinematic	//show every client the cinematic
 	else	//nuke kills everyone on z-level 1 to prevent "hurr-durr I survived"
 		for(var/mob/living/M in living_mob_list)
-			M.buckled = temp_buckle
+			M.locked_to = temp_buckle
 			if(M.client)
 				M.client.screen += cinematic
 

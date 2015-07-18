@@ -175,7 +175,7 @@
 		explode()
 
 /obj/structure/reagent_dispensers/fueltank/Bumped(atom/AM)
-	if (istype(AM, /obj/structure/stool/bed/chair/vehicle/wizmobile))
+	if (istype(AM, /obj/structure/bed/chair/vehicle/wizmobile))
 		visible_message("<span class='danger'>\the [AM] crashes into \the [src]!!</span>")
 		explode()
 	return ..()

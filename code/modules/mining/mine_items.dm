@@ -102,12 +102,12 @@ proc/move_mining_shuttle()
 		for(var/mob/M in toArea)
 			if(M.client)
 				spawn(0)
-					if(M.buckled)
-						shake_camera(M, 3, 1) // buckled, not a lot of shaking
+					if(M.locked_to)
+						shake_camera(M, 3, 1) // locked_to, not a lot of shaking
 					else
-						shake_camera(M, 10, 1) // unbuckled, HOLY SHIT SHAKE THE ROOM
+						shake_camera(M, 10, 1) // unlocked_to, HOLY SHIT SHAKE THE ROOM
 			if(istype(M, /mob/living/carbon))
-				if(!M.buckled)
+				if(!M.locked_to)
 					M.Weaken(3)
 
 		mining_shuttle_moving = 0

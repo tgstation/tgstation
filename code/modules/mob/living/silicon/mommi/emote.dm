@@ -13,7 +13,7 @@
 			src << "Available emotes: aflap, bow, clap, custom, flap, twitch, twitch_s, salute, nod, deathgasp, me, glare, stare, shrug, beep, ping, buzz, look"
 			return
 		if ("salute")
-			//if (!src.buckled)
+			//if (!src.locked_to)
 			var/M = null
 			if (param)
 				for (var/mob/A in view(null, null))
@@ -29,7 +29,7 @@
 				message = "<B>[src]</b> salutes."
 			m_type = VISIBLE
 		if ("bow")
-			if (!src.buckled)
+			if (!src.locked_to)
 				var/M = null
 				if (param)
 					for (var/mob/A in view(null, null))

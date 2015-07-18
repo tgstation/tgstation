@@ -1146,7 +1146,7 @@ var/global/list/common_tools = list(
 	//writepanic("[__FILE__].[__LINE__] (no type)([usr ? usr.ckey : ""])  \\/proc/can_operate() called tick#: [world.time]")
 	return (ishuman(M) && M.lying && \
 	locate(/obj/machinery/optable, M.loc) || \
-	(locate(/obj/structure/stool/bed/roller, M.loc) && prob(75)) || \
+	(locate(/obj/structure/bed/roller, M.loc) && prob(75)) || \
 	(locate(/obj/structure/table/, M.loc) && prob(66)))
 
 /proc/reverse_direction(var/dir)

@@ -2680,7 +2680,7 @@
 			if("spawnadminbus")
 				feedback_inc("admin_secrets_fun_used",1)
 				feedback_add_details("admin_secrets_fun_used","AB")
-				var/obj/structure/stool/bed/chair/vehicle/adminbus/A = new /obj/structure/stool/bed/chair/vehicle/adminbus(get_turf(usr))
+				var/obj/structure/bed/chair/vehicle/adminbus/A = new /obj/structure/bed/chair/vehicle/adminbus(get_turf(usr))
 				A.dir = EAST
 				A.update_lightsource()
 				A.busjuke.dir = EAST

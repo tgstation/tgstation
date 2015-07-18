@@ -229,8 +229,8 @@
 				if(SP.inertia_dir)
 					SP.Move(get_step(SP, SP.inertia_dir), SP.inertia_dir)
 					return
-	if(istype(A, /obj/structure/stool/bed/chair/vehicle/) && src.x > 2 && src.x < (world.maxx - 1) && src.y > 2 && src.y < (world.maxy-1))
-		var/obj/structure/stool/bed/chair/vehicle/JC = A //A bomb!
+	if(istype(A, /obj/structure/bed/chair/vehicle/) && src.x > 2 && src.x < (world.maxx - 1) && src.y > 2 && src.y < (world.maxy-1))
+		var/obj/structure/bed/chair/vehicle/JC = A //A bomb!
 		if(JC.Process_Spacemove(1))
 			JC.inertia_dir = 0
 			return

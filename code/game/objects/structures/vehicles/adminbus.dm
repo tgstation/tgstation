@@ -4,7 +4,7 @@
 
 #define MAX_CAPACITY 16
 
-/obj/structure/stool/bed/chair/vehicle/adminbus//Fucking release the passengers and unbuckle yourself from the bus before you delete it.
+/obj/structure/bed/chair/vehicle/adminbus//Fucking release the passengers and unbuckle yourself from the bus before you delete it.
 	name = "\improper Adminbus"
 	desc = "Shit just got fucking real."
 	icon = 'icons/obj/bus.dmi'
@@ -31,7 +31,7 @@
 	var/obj/structure/teleportwarp/warp = null
 	var/obj/machinery/media/jukebox/superjuke/adminbus/busjuke = null
 
-/obj/structure/stool/bed/chair/vehicle/adminbus/New()
+/obj/structure/bed/chair/vehicle/adminbus/New()
 	..()
 	var/turf/T = get_turf(src)
 	T.turf_animation('icons/effects/160x160.dmi',"busteleport",-64,-32,MOB_LAYER+1,'sound/effects/busteleport.ogg')
@@ -48,37 +48,40 @@
 	spawn(10)
 		layer = FLY_LAYER+1
 
-/obj/structure/stool/bed/chair/vehicle/adminbus/update_mob()
-	if(buckled_mob)
-		buckled_mob.dir = dir
-		if(iscorgi(buckled_mob))//Hail Ian
+//Don't want the layer to change.
+/obj/structure/bed/chair/vehicle/adminbus/handle_layer()
+	return
+
+/obj/structure/bed/chair/vehicle/adminbus/update_mob()
+	if(occupant)
+		if(iscorgi(occupant))//Hail Ian
 			switch(dir)
 				if(SOUTH)
-					buckled_mob.pixel_x = 6
-					buckled_mob.pixel_y = -4
+					occupant.pixel_x = 6
+					occupant.pixel_y = -4
 				if(WEST)
-					buckled_mob.pixel_x = -16
-					buckled_mob.pixel_y = 9
+					occupant.pixel_x = -16
+					occupant.pixel_y = 9
 				if(NORTH)
-					buckled_mob.pixel_x = 0
-					buckled_mob.pixel_y = 0
+					occupant.pixel_x = 0
+					occupant.pixel_y = 0
 				if(EAST)
-					buckled_mob.pixel_x = 16
-					buckled_mob.pixel_y = 9
+					occupant.pixel_x = 16
+					occupant.pixel_y = 9
 		else
 			switch(dir)
 				if(SOUTH)
-					buckled_mob.pixel_x = 7
-					buckled_mob.pixel_y = -12
+					occupant.pixel_x = 7
+					occupant.pixel_y = -12
 				if(WEST)
-					buckled_mob.pixel_x = -25
-					buckled_mob.pixel_y = 1
+					occupant.pixel_x = -25
+					occupant.pixel_y = 1
 				if(NORTH)
-					buckled_mob.pixel_x = 0
-					buckled_mob.pixel_y = 0
+					occupant.pixel_x = 0
+					occupant.pixel_y = 0
 				if(EAST)
-					buckled_mob.pixel_x = 25
-					buckled_mob.pixel_y = 1
+					occupant.pixel_x = 25
+					occupant.pixel_y = 1
 
 	for(var/i=1;i<=passengers.len;i++)
 		var/atom/A = passengers[i]
@@ -143,7 +146,7 @@
 							L.pixel_y = 4
 			L.dir = dir
 
-/obj/structure/stool/bed/chair/vehicle/adminbus/Move()
+/obj/structure/bed/chair/vehicle/adminbus/Move()
 	var/turf/T = get_turf(src)
 	..()
 	update_lightsource()
@@ -152,7 +155,7 @@
 		warp.forceMove(loc)
 	if(busjuke)
 		busjuke.forceMove(loc)
-		busjuke.dir = dir
+		busjuke.change_dir(dir)
 		if(busjuke.icon_state)
 			busjuke.repack()
 	if(chain_base)
@@ -168,7 +171,7 @@
 	for(var/obj/structure/hookshot/H in hookshot)
 		H.forceMove(get_step(H,src.dir))
 
-/obj/structure/stool/bed/chair/vehicle/adminbus/proc/update_lightsource()
+/obj/structure/bed/chair/vehicle/adminbus/proc/update_lightsource()
 	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/structure/stool/bed/chair/vehicle/adminbus/proc/update_lightsource() called tick#: [world.time]")
 	var/turf/T = get_step(src,src.dir)
 	if(T.opacity)
@@ -208,7 +211,7 @@
 						lightsource.set_light(3)
 
 
-/obj/structure/stool/bed/chair/vehicle/adminbus/proc/handle_mob_bumping()
+/obj/structure/bed/chair/vehicle/adminbus/proc/handle_mob_bumping()
 	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/structure/stool/bed/chair/vehicle/adminbus/proc/handle_mob_bumping() called tick#: [world.time]")
 	var/turf/S = get_turf(src)
 	switch(bumpers)
@@ -219,7 +222,8 @@
 				if(passengers.len < MAX_CAPACITY)
 					capture_mob(L)
 				else
-					buckled_mob << "<span class='warning'>There is no place in the bus for any additional passenger.</span>"
+					if(occupant)
+						occupant << "<span class='warning'>There is no place in the bus for any additional passenger.</span>"
 			for(var/obj/machinery/bot/B in S)
 				if(B.flags & INVULNERABLE)
 					continue
@@ -231,8 +235,8 @@
 				if(L.flags & INVULNERABLE)
 					continue
 				L.take_overall_damage(5,0)
-				if(L.buckled)
-					L.buckled = 0
+				if(L.locked_to)
+					L.locked_to = 0
 				L.Stun(5)
 				L.Weaken(5)
 				L.apply_effect(STUTTER, 5)
@@ -248,20 +252,10 @@
 					continue
 				B.explode()
 
-/obj/structure/stool/bed/chair/vehicle/adminbus/handle_rotation()
-	layer = FLY_LAYER+1
-
-	if(buckled_mob)
-		if(buckled_mob.loc != loc)
-			buckled_mob.buckled = null
-			buckled_mob.buckled = src
-
-	update_mob()
-
-/obj/structure/stool/bed/chair/vehicle/adminbus/HealthCheck()
+/obj/structure/bed/chair/vehicle/adminbus/HealthCheck()
 	health = 9001//THE ADMINBUS HAS NO BRAKES
 
-/obj/structure/stool/bed/chair/vehicle/adminbus/Bump(var/atom/obstacle)
+/obj/structure/bed/chair/vehicle/adminbus/Bump(var/atom/obstacle)
 	if(istype(obstacle,/obj/machinery/teleport/hub))
 		var/obj/machinery/teleport/hub/H = obstacle
 		spawn()
@@ -269,19 +263,16 @@
 				H.teleport(src)
 				H.use_power(5000)
 				src.Move()
+
 	if(can_move)
 		can_move = 0
 		forceMove(get_step(src,src.dir))
-		if(buckled_mob)
-			if(buckled_mob.loc != loc)
-				buckled_mob.buckled = null //Temporary, so Move() succeeds.
-				buckled_mob.buckled = src //Restoring
 		sleep(1)
 		can_move = 1
 	else
 		return ..()
 
-/obj/structure/stool/bed/chair/vehicle/adminbus/proc/capture_mob(atom/A, var/selfclimb=0)
+/obj/structure/bed/chair/vehicle/adminbus/proc/capture_mob(atom/A, var/selfclimb=0)
 	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/structure/stool/bed/chair/vehicle/adminbus/proc/capture_mob() called tick#: [world.time]")
 	if(passengers.len >= MAX_CAPACITY)
 		A << "<span class='warning'>\the [src] is full!</span>"
@@ -296,14 +287,14 @@
 			return
 		M.captured = 1
 		M.flags |= INVULNERABLE
-		M.loc = src.loc
-		M.dir = src.dir
+		M.forceMove(loc)
+		M.change_dir(dir)
 		M.update_canmove()
 		passengers += M
 		if(!selfclimb)
 			M << "<span class='warning'>\the [src] picks you up!</span>"
-			if(buckled_mob)
-				buckled_mob << "[M.name] captured!"
+			if(occupant)
+				occupant << "[M.name] captured!"
 		M << "<span class='notice'>Welcome aboard \the [src]. Please keep your hands and arms inside the bus at all times.</span>"
 		src.add_fingerprint(M)
 	else if(isbot(A))
@@ -313,18 +304,18 @@
 		B.turn_off()
 		B.flags |= INVULNERABLE
 		B.anchored = 1
-		B.loc = src.loc
-		B.dir = src.dir
+		B.forceMove(loc)
+		B.change_dir(dir)
 		passengers += B
 	update_mob()
 	update_rearview()
 
-/obj/structure/stool/bed/chair/vehicle/adminbus/buckle_mob(mob/M, mob/user)
-	if(M != user|| !ismob(M)|| get_dist(src, user) > 1|| user.restrained()|| user.lying|| user.stat|| M.buckled|| istype(user, /mob/living/silicon)|| destroyed)
+/obj/structure/bed/chair/vehicle/adminbus/buckle_mob(mob/M, mob/user)
+	if(M != user|| !ismob(M)|| get_dist(src, user) > 1|| user.restrained()|| user.lying|| user.stat|| M.locked_to|| istype(user, /mob/living/silicon)|| destroyed)
 		return
 
 	if(!(istype(user,/mob/living/carbon/human/dummy) || istype(user,/mob/living/simple_animal/corgi/Ian)))
-		if(!buckled_mob)
+		if(!occupant)
 			user << "<span class='warning'>Only the gods have the power to drive this monstrosity.</span>"//Yes, Ian is a god. He doesn't have his own religion for nothing.
 			return
 		else
@@ -333,9 +324,9 @@
 				return
 			else
 				user << "<span class='notice'>You may not climb into \the [src] while its door is closed.</span>"
-				return
+
 	else
-		if(buckled_mob)//if you are a Test Dummy and there is already a driver, you'll climb in as a passenger.
+		if(occupant)//if you are a Test Dummy and there is already a driver, you'll climb in as a passenger.
 			capture_mob(M,1)
 			return
 		else
@@ -345,27 +336,27 @@
 			user.visible_message(
 				"<span class='notice'>[user] climbs onto \the [src]!</span>",
 				"<span class='notice'>You climb onto \the [src]!</span>")
-			user.buckled = src
-			user.loc = loc
-			user.dir = dir
-			user.update_canmove()
-			user.flags |= INVULNERABLE
-			buckled_mob = user
-			update_mob()
+			lock_atom(user)
 			add_fingerprint(user)
 			playsound(src, 'sound/machines/hiss.ogg', 50, 0, 0)
-			add_HUD(user)
-			return
 
-
-/obj/structure/stool/bed/chair/vehicle/adminbus/manual_unbuckle(mob/user as mob)
-	if((buckled_mob) && (buckled_mob == user))	//Are you the driver?
-		buckled_mob.visible_message(
-			"<span class='notice'>[buckled_mob.name] unbuckled \himself!</span>",
-			"You unbuckle yourself from \the [src].")
-		unbuckle()
-		src.add_fingerprint(user)
+/obj/structure/bed/chair/vehicle/adminbus/lock_atom(var/atom/movable/AM)
+	. = ..()
+	if(!.)
 		return
+
+	var/mob/living/M = AM
+	M.flags |= INVULNERABLE
+	add_HUD(M)
+
+/obj/structure/bed/chair/vehicle/adminbus/manual_unbuckle(mob/user as mob)
+	if(occupant && occupant == user)	//Are you the driver?
+		var/mob/living/M = occupant
+		M.visible_message(
+			"<span class='notice'>[M.name] unbuckles \himself!</span>",
+			"You unbuckle yourself from \the [src].")
+		unlock_atom(M)
+		src.add_fingerprint(user)
 	else
 		if(door_mode)
 			if(locate(user) in passengers)
@@ -390,37 +381,36 @@
 					user << "<span class='notice'>You may not climb into \the [src] while its door is closed.</span>"
 					return
 
-/obj/structure/stool/bed/chair/vehicle/adminbus/unbuckle()
-	if(buckled_mob)
-		remove_HUD(buckled_mob)
-		buckled_mob.buckled = null
-		buckled_mob.anchored = initial(buckled_mob.anchored)
-		buckled_mob.update_canmove()
-		buckled_mob.flags &= ~INVULNERABLE
-		buckled_mob.pixel_x = 0
-		buckled_mob.pixel_y = 0
-		buckled_mob = null
-	return
+/obj/structure/bed/chair/vehicle/adminbus/unlock_atom(var/atom/movable/AM)
+	. = ..()
+	if(!.)
+		return
 
-/obj/structure/stool/bed/chair/vehicle/adminbus/proc/add_HUD(var/mob/M)
+	var/mob/living/M = AM
+
+	remove_HUD(M)
+	M.flags &= ~INVULNERABLE
+
+/obj/structure/bed/chair/vehicle/adminbus/proc/add_HUD(var/mob/M)
 	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/structure/stool/bed/chair/vehicle/adminbus/proc/add_HUD() called tick#: [world.time]")
 	if(!M || !(M.hud_used))	return
 
 	M.hud_used.adminbus_hud()
 	update_rearview()
 
-/obj/structure/stool/bed/chair/vehicle/adminbus/proc/remove_HUD(var/mob/M)
+/obj/structure/bed/chair/vehicle/adminbus/proc/remove_HUD(var/mob/M)
 	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/structure/stool/bed/chair/vehicle/adminbus/proc/remove_HUD() called tick#: [world.time]")
 	if(!M || !(M.hud_used))	return
 
 	M.hud_used.remove_adminbus_hud()
 
-/obj/structure/stool/bed/chair/vehicle/adminbus/proc/update_rearview()
+/obj/structure/bed/chair/vehicle/adminbus/proc/update_rearview()
 	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/structure/stool/bed/chair/vehicle/adminbus/proc/update_rearview() called tick#: [world.time]")
-	if(buckled_mob)
+	if(occupant)
 		for(var/i=1;i<=MAX_CAPACITY;i++)
-			buckled_mob.client.screen -= buckled_mob.gui_icons.rearviews[i]
-			var/obj/screen/S = buckled_mob.gui_icons.rearviews[i]
+			var/mob/living/M = occupant
+			M.client.screen -= M.gui_icons.rearviews[i]
+			var/obj/screen/S = M.gui_icons.rearviews[i]
 			var/icon/passenger_img = null
 			var/atom/A = null
 			if(i<=passengers.len)
@@ -431,30 +421,30 @@
 			else
 				passenger_img = getFlatIcon(A,SOUTH,0)
 				S.icon = passenger_img
-				buckled_mob.gui_icons.rearviews[i] = S
-				buckled_mob.client.screen += buckled_mob.gui_icons.rearviews[i]
+				M.gui_icons.rearviews[i] = S
+				M.client.screen += M.gui_icons.rearviews[i]
 
-/obj/structure/stool/bed/chair/vehicle/adminbus/emp_act(severity)
+/obj/structure/bed/chair/vehicle/adminbus/emp_act(severity)
 	return
 
-/obj/structure/stool/bed/chair/vehicle/adminbus/bullet_act(var/obj/item/projectile/Proj)
+/obj/structure/bed/chair/vehicle/adminbus/bullet_act(var/obj/item/projectile/Proj)
 	visible_message("<span class='warning'>The projectile harmlessly bounces off the bus.</span>")
 	return
 
-/obj/structure/stool/bed/chair/vehicle/adminbus/ex_act(severity)
+/obj/structure/bed/chair/vehicle/adminbus/ex_act(severity)
 	visible_message("<span class='warning'>The bus withstands the explosion with no damage.</span>")
 	return
 
-/obj/structure/stool/bed/chair/vehicle/adminbus/cultify()
+/obj/structure/bed/chair/vehicle/adminbus/cultify()
 	return
 
-/obj/structure/stool/bed/chair/vehicle/adminbus/singuloCanEat()
+/obj/structure/bed/chair/vehicle/adminbus/singuloCanEat()
 	return 0
 
-/obj/structure/stool/bed/chair/vehicle/adminbus/singularity_act()
+/obj/structure/bed/chair/vehicle/adminbus/singularity_act()
 	return 0
 
-/obj/structure/stool/bed/chair/vehicle/adminbus/singularity_pull()
+/obj/structure/bed/chair/vehicle/adminbus/singularity_pull()
 	return 0
 
 /////HOOKSHOT/////////
@@ -469,7 +459,7 @@
 	density = 0
 	layer = 6.9
 	var/max_distance = 7
-	var/obj/structure/stool/bed/chair/vehicle/adminbus/abus = null
+	var/obj/structure/bed/chair/vehicle/adminbus/abus = null
 	var/dropped = 0
 
 /obj/structure/hookshot/claw
@@ -517,15 +507,17 @@
 	if(!dropped)
 		var/obj/machinery/singularity/S = locate(/obj/machinery/singularity) in src.loc
 		if(S)
-			if(abus.buckled_mob)
-				abus.buckled_mob.gui_icons.adminbus_hook.icon_state = "icon_singulo"
+			if(abus.occupant)
+				var/mob/living/M = abus.occupant
+				M.gui_icons.adminbus_hook.icon_state = "icon_singulo"
 			abus.capture_singulo(S)
 			return
 	forceMove(get_step_towards(src,abus))
 	max_distance++
 	if(max_distance >= 7)
-		if(abus.buckled_mob)
-			abus.buckled_mob.gui_icons.adminbus_hook.icon_state = "icon_hook"
+		if(abus.occupant)
+			var/mob/living/M = abus.occupant
+			M.gui_icons.adminbus_hook.icon_state = "icon_hook"
 		abus.hook = 1
 		qdel(src)
 		return

@@ -287,7 +287,7 @@
 		src.head_state:screen_loc = ui_monkey_mask
 
 /mob/living/silicon/robot/mommi/update_canmove()
-	canmove = !(paralysis || stunned || weakened || buckled || lockcharge || anchored)
+	canmove = !(paralysis || stunned || weakened || locked_to || lockcharge || anchored)
 	return canmove
 
 #undef MOMMI_LOW_POWER

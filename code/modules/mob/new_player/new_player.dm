@@ -346,7 +346,7 @@
 	var/datum/organ/external/right_leg = character.get_organ("r_foot")
 
 	if( (!left_leg || left_leg.status & ORGAN_DESTROYED) && (!right_leg || right_leg.status & ORGAN_DESTROYED) ) //If the character is missing both of his feet
-		var/obj/structure/stool/bed/chair/vehicle/wheelchair/W = new(character.loc)
+		var/obj/structure/bed/chair/vehicle/wheelchair/W = new(character.loc)
 		W.buckle_mob(character,character)
 	character.store_position()
 

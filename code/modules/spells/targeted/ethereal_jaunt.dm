@@ -32,8 +32,7 @@
 	var/prevalpha = target.alpha
 	if(target.incorporeal_move == 3) //they're already jaunting, we have another fix for this but this is sane)
 		return
-	if(target.buckled)
-		target.buckled.unbuckle()
+	target.unlock_from()
 	//Begin jaunting with an animation
 	anim(location = mobloc, target = target, a_icon = 'icons/mob/mob.dmi', flick_anim = enteranim, direction = target.dir, name = "water")
 	if(mist)

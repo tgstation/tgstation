@@ -21,16 +21,16 @@ var/global/list/datum/stack_recipe/metal_recipes = list ( \
 	new/datum/stack_recipe("turret frame",   /obj/machinery/porta_turret_construct,            5, time = 25, one_per_turf = 1, on_floor = 1), \
 	null, \
 	new/datum/stack_recipe_list("chairs and beds",list( \
-		new/datum/stack_recipe("dark office chair",  /obj/structure/stool/bed/chair/office/dark,  5, one_per_turf = 1, on_floor = 1), \
-		new/datum/stack_recipe("light office chair", /obj/structure/stool/bed/chair/office/light, 5, one_per_turf = 1, on_floor = 1), \
-		new/datum/stack_recipe("beige comfy chair",  /obj/structure/stool/bed/chair/comfy/beige,  2, one_per_turf = 1, on_floor = 1), \
-		new/datum/stack_recipe("black comfy chair",  /obj/structure/stool/bed/chair/comfy/black,  2, one_per_turf = 1, on_floor = 1), \
-		new/datum/stack_recipe("brown comfy chair",  /obj/structure/stool/bed/chair/comfy/brown,  2, one_per_turf = 1, on_floor = 1), \
-		new/datum/stack_recipe("lime comfy chair",   /obj/structure/stool/bed/chair/comfy/lime,   2, one_per_turf = 1, on_floor = 1), \
-		new/datum/stack_recipe("teal comfy chair",   /obj/structure/stool/bed/chair/comfy/teal,   2, one_per_turf = 1, on_floor = 1), \
-		new/datum/stack_recipe("stool",              /obj/structure/stool,                           one_per_turf = 1, on_floor = 1), \
-		new/datum/stack_recipe("chair",              /obj/structure/stool/bed/chair,                 one_per_turf = 1, on_floor = 1), \
-		new/datum/stack_recipe("bed",                /obj/structure/stool/bed,                    2, one_per_turf = 1, on_floor = 1), \
+		new/datum/stack_recipe("dark office chair",  /obj/structure/bed/chair/office/dark,  5, one_per_turf = 1, on_floor = 1), \
+		new/datum/stack_recipe("light office chair", /obj/structure/bed/chair/office/light, 5, one_per_turf = 1, on_floor = 1), \
+		new/datum/stack_recipe("beige comfy chair",  /obj/structure/bed/chair/comfy/beige,  2, one_per_turf = 1, on_floor = 1), \
+		new/datum/stack_recipe("black comfy chair",  /obj/structure/bed/chair/comfy/black,  2, one_per_turf = 1, on_floor = 1), \
+		new/datum/stack_recipe("brown comfy chair",  /obj/structure/bed/chair/comfy/brown,  2, one_per_turf = 1, on_floor = 1), \
+		new/datum/stack_recipe("lime comfy chair",   /obj/structure/bed/chair/comfy/lime,   2, one_per_turf = 1, on_floor = 1), \
+		new/datum/stack_recipe("teal comfy chair",   /obj/structure/bed/chair/comfy/teal,   2, one_per_turf = 1, on_floor = 1), \
+		new/datum/stack_recipe("stool",              /obj/item/weapon/stool,                           one_per_turf = 1, on_floor = 1), \
+		new/datum/stack_recipe("chair",              /obj/structure/bed/chair,                 one_per_turf = 1, on_floor = 1), \
+		new/datum/stack_recipe("bed",                /obj/structure/bed,                    2, one_per_turf = 1, on_floor = 1), \
 		)), \
 	new/datum/stack_recipe("table parts", /obj/item/weapon/table_parts, 2                                           ), \
 	new/datum/stack_recipe("rack parts",  /obj/item/weapon/rack_parts                                               ), \
@@ -180,7 +180,7 @@ var/global/list/datum/stack_recipe/wood_recipes = list ( \
 	new/datum/stack_recipe("wooden sandals", /obj/item/clothing/shoes/sandal, 1), \
 	new/datum/stack_recipe("wood floor tile", /obj/item/stack/tile/wood, 1, 4, 20), \
 	new/datum/stack_recipe("table parts", /obj/item/weapon/table_parts/wood, 2), \
-	new/datum/stack_recipe("wooden chair", /obj/structure/stool/bed/chair/wood/normal, 3, time = 10, one_per_turf = 1, on_floor = 1), \
+	new/datum/stack_recipe("wooden chair", /obj/structure/bed/chair/wood/normal, 3, time = 10, one_per_turf = 1, on_floor = 1), \
 	new/datum/stack_recipe("barricade kit", /obj/item/weapon/barricade_kit, 5), \
 	new/datum/stack_recipe("bookcase", /obj/structure/bookcase, 5, time = 50, one_per_turf = 1, on_floor = 1), \
 	new/datum/stack_recipe("wooden door", /obj/machinery/door/mineral/wood, 10, time = 20, one_per_turf = 1, on_floor = 1), \

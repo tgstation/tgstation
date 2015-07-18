@@ -147,9 +147,9 @@
 
 		var/direction = get_dir(src,target)
 
-		if(usr.buckled && isobj(usr.buckled) && !usr.buckled.anchored )
+		if(usr.locked_to && isobj(usr.locked_to) && !usr.locked_to.anchored )
 			spawn(0)
-				var/obj/B = usr.buckled
+				var/obj/B = usr.locked_to
 				var/movementdirection = turn(direction,180)
 				B.Move(get_step(usr,movementdirection), movementdirection)
 				sleep(1)
@@ -246,9 +246,9 @@
 
 		var/direction = get_dir(src,target)
 
-		if(usr.buckled && isobj(usr.buckled) && !usr.buckled.anchored )
+		if(usr.locked_to && isobj(usr.locked_to) && !usr.locked_to.anchored )
 			spawn(0)
-				var/obj/B = usr.buckled
+				var/obj/B = usr.locked_to
 				var/movementdirection = turn(direction,180)
 				B.Move(get_step(usr,movementdirection), movementdirection)
 				sleep(1)

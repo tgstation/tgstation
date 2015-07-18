@@ -395,7 +395,7 @@
 
 	if(include_mobs && isliving(AM))
 		var/mob/living/L = AM
-		if(L.buckled)
+		if(L.locked_to)
 			return 0
 	else if(isobj(AM))
 		if(AM.density || AM.anchored || istype(AM,/obj/structure/closet))
@@ -403,12 +403,12 @@
 	else
 		return 0
 
-	if(istype(AM, /obj/structure/stool/bed)) //This is only necessary because of rollerbeds and swivel chairs.
-		var/obj/structure/stool/bed/B = AM
-		if(B.buckled_mob)
+	if(istype(AM, /obj/structure/bed)) //This is only necessary because of rollerbeds and swivel chairs.
+		var/obj/structure/bed/B = AM
+		if(B.locked_atoms.len)
 			return 0
 
-	AM.loc = src
+	AM.forceMove(src)
 	return 1
 
 /obj/structure/closet/crate/attack_hand(mob/user as mob)

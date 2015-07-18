@@ -37,7 +37,7 @@
 /obj/item/weapon/grab/proc/toss()
 	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/item/weapon/grab/proc/toss() called tick#: [world.time]")
 	if(affecting)
-		if(affecting.buckled || !loc.Adjacent(affecting))
+		if(affecting.locked_to || !loc.Adjacent(affecting))
 			return null
 		if(state >= GRAB_AGGRESSIVE)
 			return affecting
@@ -91,7 +91,7 @@
 		else
 			hud.icon_state = "!reinforce"
 	else
-		if(!affecting.buckled)
+		if(!affecting.locked_to)
 			affecting.loc = assailant.loc
 
 	if(state >= GRAB_NECK)
@@ -136,7 +136,7 @@
 			assailant.visible_message("<span class='warning'>[assailant] has reinforced \his grip on [affecting] (now neck)!</span>")
 			state = GRAB_NECK
 			icon_state = "grabbed+1"
-			if(!affecting.buckled)
+			if(!affecting.locked_to)
 				affecting.loc = assailant.loc
 			affecting.attack_log += "\[[time_stamp()]\] <font color='orange'>Has had their neck grabbed by [assailant.name] ([assailant.ckey])</font>"
 			assailant.attack_log += "\[[time_stamp()]\] <font color='red'>Grabbed the neck of [affecting.name] ([affecting.ckey])</font>"

@@ -100,7 +100,7 @@
 		if(user.loc==null) // just in case someone manages to get a closet into the blue light dimension, as unlikely as that seems
 			return
 		var/mob/living/L = O
-		if(!istype(L) || L.buckled || L == user)
+		if(!istype(L) || L.locked_to || L == user)
 			return
 		if (L.client)
 			L.client.perspective = EYE_PERSPECTIVE
@@ -131,8 +131,7 @@
 
 /obj/machinery/optable/proc/take_victim(mob/living/carbon/C, mob/living/carbon/user as mob)
 	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/optable/proc/take_victim() called tick#: [world.time]")
-	if(C.buckled)
-		C.buckled.unbuckle()
+	C.unlock_from()
 	if (C == user)
 		user.visible_message("[user] climbs on the operating table.","You climb on the operating table.")
 	else
@@ -158,7 +157,7 @@
 	set src in oview(1)
 	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""]) \\/obj/machinery/optable/verb/climb_on()  called tick#: [world.time]")
 
-	if(usr.stat || !ishuman(usr) || usr.buckled || usr.restrained() || (usr.status_flags & FAKEDEATH))
+	if(usr.stat || !ishuman(usr) || usr.locked_to || usr.restrained() || (usr.status_flags & FAKEDEATH))
 		return
 
 	if(src.victim)

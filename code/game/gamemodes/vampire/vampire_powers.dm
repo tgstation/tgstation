@@ -486,7 +486,7 @@
 	var/max_lum = 1
 
 	if(M.current.vampire_power(10, 0))
-		if(M.current.buckled) M.current.buckled.unbuckle()
+		if(M.current.locked_to) M.current.locked_to.unlock_atom(M.current)
 		spawn(0)
 			var/list/turfs = new/list()
 			for(var/turf/T in range(usr,outer_tele_radius))
@@ -507,8 +507,8 @@
 			if(!picked || !isturf(picked))
 				return
 			M.current.ExtinguishMob()
-			if(M.current.buckled)
-				M.current.buckled.unbuckle()
+			if(M.current.locked_to)
+				M.current.locked_to.unlock_atom(M.current)
 			var/atom/movable/overlay/animation = new /atom/movable/overlay( get_turf(usr) )
 			animation.name = usr.name
 			animation.density = 0

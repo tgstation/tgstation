@@ -43,7 +43,7 @@
 			m_type = VISIBLE
 
 		if ("bow")
-			if (!src.buckled)
+			if (!src.locked_to)
 				var/M = null
 				if (param)
 					for (var/mob/A in view(null, null))
@@ -91,7 +91,7 @@
 			return custom_emote(m_type, message)
 
 		if ("salute")
-			if (!src.buckled)
+			if (!src.locked_to)
 				var/M = null
 				if (param)
 					for (var/mob/A in view(null, null))

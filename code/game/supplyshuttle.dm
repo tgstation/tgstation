@@ -81,8 +81,8 @@ var/list/mechtoys = list(
 	if(istype(mover) && mover.checkpass(PASSGLASS))
 		return prob(60)
 
-	var/obj/structure/stool/bed/B = mover
-	if (istype(mover, /obj/structure/stool/bed) && B.buckled_mob)//if it's a bed/chair and someone is buckled, it will not pass
+	var/obj/structure/bed/B = mover
+	if (istype(mover, /obj/structure/bed) && B.locked_atoms.len)//if it's a bed/chair and someone is locked_to, it will not pass
 		return 0
 
 	else if(isliving(mover)) // You Shall Not Pass!

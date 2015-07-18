@@ -1057,7 +1057,7 @@
 			return fizzle()
 		if (cultist == user) //just to be sure.
 			return
-		if(!(cultist.buckled || \
+		if(!(cultist.locked_to || \
 			cultist.handcuffed || \
 			istype(cultist.wear_mask, /obj/item/clothing/mask/muzzle) || \
 			(istype(cultist.loc, /obj/structure/closet)&&cultist.loc:welded) || \
@@ -1066,7 +1066,7 @@
 		))
 			user << "<span class='warning'>The [cultist] is already free.</span>"
 			return
-		cultist.buckled = null
+		cultist.unlock_from()
 		if (cultist.handcuffed)
 			cultist.handcuffed.loc = cultist.loc
 			cultist.handcuffed = null
@@ -1123,7 +1123,7 @@
 			return fizzle()
 		if (cultist == user) //just to be sure.
 			return
-		if(cultist.buckled || cultist.handcuffed || (!isturf(cultist.loc) && !istype(cultist.loc, /obj/structure/closet)))
+		if(cultist.locked_to || cultist.handcuffed || (!isturf(cultist.loc) && !istype(cultist.loc, /obj/structure/closet)))
 			user << "<span class='warning'>You cannot summon the [cultist], for his shackles of blood are strong</span>"
 			return fizzle()
 		var/turf/T = get_turf(cultist)

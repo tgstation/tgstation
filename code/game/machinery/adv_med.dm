@@ -111,7 +111,7 @@
 			user << "<span class='warning'>You do not have the means to do this!</span>"
 			return
 	var/mob/living/L = O
-	if(!istype(L) || L.buckled)
+	if(!istype(L) || L.locked_to)
 		return
 	if(L.abiotic())
 		user << "<span class='notice'>Subject cannot have abiotic items on.</span>"
@@ -197,7 +197,7 @@
 	if(usr.abiotic())
 		usr << "<span class='notice'>Subject cannot have abiotic items on.</span>"
 		return
-	if(usr.buckled)
+	if(usr.locked_to)
 		return
 	usr.pulling = null
 	usr.loc = src
@@ -259,8 +259,9 @@
 	if(src.occupant)
 		user << "<span class='notice'>\The [src] is already occupied!</span>"
 		return
-	if(G.affecting.buckled)
-		G.affecting.buckled.unbuckle()
+
+	G.affecting.unlock_from()
+
 	if(G.affecting.abiotic())
 		user << "<span class='notice'>Subject cannot have abiotic items on.</span>"
 		return
@@ -270,7 +271,7 @@
 	src.occupant = M
 	update_icon()
 	for(var/obj/O in src)
-		O.loc = src.loc
+		O.forceMove(loc)
 	src.add_fingerprint(user)
 	qdel(G)
 	if(!(stat & (BROKEN|NOPOWER)))

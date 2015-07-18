@@ -414,7 +414,7 @@
 
 /spell/targeted/leap/cast(list/targets, mob/user)
 	for(var/mob/living/target in targets)
-		if (istype(target.loc,/mob/) || target.lying || target.stunned || target.buckled)
+		if (istype(target.loc,/mob/) || target.lying || target.stunned || target.locked_to)
 			target << "<span class='warning'>You can't jump right now!</span>"
 			continue
 

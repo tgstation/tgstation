@@ -19,8 +19,8 @@
 	var/turf/T = pick(targets)
 	var/turf/starting = get_turf(user)
 	if(T)
-		if(user.buckled)
-			user.buckled.unbuckle()
+		if(user.locked_to)
+			user.locked_to.unlock_atom(user)
 		user.forceMove(T)
 
 		var/datum/effect/effect/system/smoke_spread/smoke = new /datum/effect/effect/system/smoke_spread()
