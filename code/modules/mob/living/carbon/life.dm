@@ -8,9 +8,10 @@
 		return
 
 	if(..())
-		//Updates the number of stored chemicals for powers
-		handle_changeling()
-		return 1
+		. = 1
+
+	//Updates the number of stored chemicals for powers
+	handle_changeling()
 
 ///////////////
 // BREATHING //
