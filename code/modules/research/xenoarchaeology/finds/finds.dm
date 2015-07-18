@@ -58,6 +58,7 @@
 			if(w.get_fuel() >= 4 && !src.method)
 				if(inside)
 					inside.loc = get_turf(src)
+					inside = null
 					for(var/mob/M in viewers(world.view, user))
 						M.show_message("<span class='info'>[src] burns away revealing [inside].</span>",1)
 				else
