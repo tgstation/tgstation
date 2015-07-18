@@ -19,7 +19,7 @@
 	var/datum/geosample/geologic_data
 	var/excavation_level = 0
 	var/list/finds = list()//no longer null to prevent those pesky runtime errors
-	var/next_rock = 0
+//	var/next_rock = 0
 	var/archaeo_overlay = ""
 	var/excav_overlay = ""
 	var/obj/item/weapon/last_find
@@ -308,6 +308,7 @@
 				excav_overlay = "overlay_excv[excav_quadrant]_[rand(1,3)]"
 				overlays += excav_overlay
 
+/*
 			//drop some rocks
 			next_rock += P.excavation_amount * 10
 			while(next_rock > 100)
@@ -317,6 +318,7 @@
 					geologic_data = new/datum/geosample(src)
 				geologic_data.UpdateNearbyArtifactInfo(src)
 				O.geologic_data = geologic_data
+*/
 
 	else
 		return attack_hand(user)
