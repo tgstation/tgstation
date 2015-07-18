@@ -43,6 +43,9 @@ var/list/icons_to_ignore_at_floor_init = list("damaged1","damaged2","damaged3","
 		icon_regular_floor = icon_state
 	if(floor_tile)
 		builtin_tile = new floor_tile
+		builtin_tile.turf_type = type
+		builtin_tile.turf_icon_state = icon_state
+		builtin_tile.turf_dir = dir
 
 /turf/simulated/floor/ex_act(severity, target)
 	..()
@@ -115,11 +118,7 @@ var/list/icons_to_ignore_at_floor_init = list("damaged1","damaged2","damaged3","
 /turf/simulated/floor/ChangeTurf(turf/simulated/floor/T)
 	if(!istype(src,/turf/simulated/floor)) return ..() //fucking turfs switch the fucking src of the fucking running procs
 	if(!ispath(T,/turf/simulated/floor)) return ..()
-	var/old_icon = icon_regular_floor
-	var/old_dir = dir
 	var/turf/simulated/floor/W = ..()
-	W.icon_regular_floor = old_icon
-	W.dir = old_dir
 	W.update_icon()
 	return W
 

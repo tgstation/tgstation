@@ -50,7 +50,14 @@
 			var/obj/item/stack/tile/W = C
 			if(!W.use(1))
 				return
+			var/t_icon_state = W.turf_icon_state
+			var/t_dir = W.turf_dir
 			var/turf/simulated/floor/T = ChangeTurf(W.turf_type)
+			T.icon_state = t_icon_state
+			T.icon_regular_floor = t_icon_state
+			T.dir = t_dir
+			T.builtin_tile.turf_icon_state = t_icon_state
+			T.builtin_tile.turf_dir = t_dir
 			if(istype(W,/obj/item/stack/tile/light)) //TODO: get rid of this ugly check somehow
 				var/obj/item/stack/tile/light/L = W
 				var/turf/simulated/floor/light/F = T

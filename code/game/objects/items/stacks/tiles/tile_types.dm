@@ -15,6 +15,8 @@
 	desc = "A broken tile. This should not exist."
 	var/turf_type = null
 	var/mineralType = null
+	var/turf_icon_state = null
+	var/turf_dir = null
 
 /obj/item/stack/tile/attackby(obj/item/W, mob/user, params)
 
