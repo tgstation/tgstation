@@ -308,9 +308,9 @@
 	data["canLabel"] = can_label ? 1 : 0
 	data["portConnected"] = connected_port ? 1 : 0
 	data["tankPressure"] = round(air_contents.return_pressure() > 0 ? air_contents.return_pressure() : 0)//This used to be redundant, made it into a fix for -1 kPA showing up in the UI
-	data["releasepressure"] = round(release_pressure)
-	data["minReleasepressure"] = round(ONE_ATMOSPHERE/10)
-	data["maxReleasepressure"] = round(10*ONE_ATMOSPHERE)
+	data["releasePressure"] = round(release_pressure)
+	data["minReleasePressure"] = round(ONE_ATMOSPHERE/10)
+	data["maxReleasePressure"] = round(10*ONE_ATMOSPHERE)
 	data["valveOpen"] = valve_open ? 1 : 0
 
 	data["hasHoldingTank"] = holding ? 1 : 0
