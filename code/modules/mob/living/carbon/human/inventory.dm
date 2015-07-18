@@ -125,6 +125,12 @@
 		return r_hand
 	return 0
 
+/mob/living/carbon/human/put_in_hand_check(obj/item/I, this_hand)
+	if(!src.can_use_hand(this_hand))
+		return 0
+
+	return ..()
+
 // Return the item currently in the slot ID
 /mob/living/carbon/human/get_item_by_slot(slot_id)
 	switch(slot_id)

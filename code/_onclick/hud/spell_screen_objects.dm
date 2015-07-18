@@ -153,6 +153,8 @@
 
 /obj/screen/spell/Destroy()
 	..()
+	spell = null
+	last_charged_icon = null
 	if(spellmaster)
 		spellmaster.spell_objects -= src
 	if(spellmaster && !spellmaster.spell_objects.len)

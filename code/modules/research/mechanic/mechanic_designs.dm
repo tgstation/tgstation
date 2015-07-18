@@ -50,6 +50,8 @@
 			for(var/matID in I.materials.storage)
 				if(I.materials.storage[matID] > 0)
 					materials += list("[matID]" = I.materials.storage[matID])
+		else
+			Gen_Tech_Mats()
 
 	if(!category)
 		category = "Misc"
@@ -71,7 +73,7 @@
 
 		materials[matID] += D.materials[matID]
 
-/* Saved for use maybe some other time - used to generate random additional costs
+//Saved for use maybe some other time - used to generate random additional costs
 /datum/design/mechanic_design/proc/Gen_Tech_Mats(var/modifier = 1)
 	if(modifier < 0) //fuck off
 		return
@@ -87,10 +89,7 @@
 			materials[/*pick(*/MAT_DIAMOND/*, MAT_CLOWN, MAT_PHAZON)*/] += techtotal * round(rand(10, 150), 10) * modifier
 
 	for(var/matID in materials)
-		materials[matID] -= (materials[matID] % 10) //clean up the numbers
-
-	materials[MAT_PLASTIC] += 0.1 * src.MatTotal() * modifier //100% materials, extra 10% plastic cost
-*/
+		materials[matID] -= (materials[matID] % 20) //clean up the numbers
 
 proc/ConvertReqString2List(var/list/source_list) //shamelessly ripped from the code for research machines. Shoot me - Comic
 	var/list/temp_list = params2list(source_list)

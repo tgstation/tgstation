@@ -66,9 +66,9 @@
 /mob/living/carbon/human/var/list/organs_by_name = list() // map organ names to organs
 /mob/living/carbon/human/var/list/internal_organs_by_name = list() // so internal organs have less ickiness too
 
-/mob/living/carbon/human/proc/can_use_active_hand()
+/mob/living/carbon/human/proc/can_use_hand(var/this_hand = hand)
 	if (hasorgans(src))
-		var/datum/organ/external/temp = src.organs_by_name[(hand ? "l_hand" : "r_hand")]
+		var/datum/organ/external/temp = src.organs_by_name[(this_hand ? "l_hand" : "r_hand")]
 		if(temp && !temp.is_usable())
 			return
 		else if (!temp)

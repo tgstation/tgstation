@@ -51,8 +51,8 @@
 	usr.set_machine(src)
 	src.add_fingerprint(usr)
 	if(href_list["remove"])
-		var/typepath = text2path("/obj/item/weapon/coin/[href_list["remove"]]")
-		var/obj/item/weapon/coin/COIN=locate(typepath, src.contents)
+		var/datum/material/material = coin_value.getMaterial(href_list["remove"])
+		var/obj/item/weapon/coin/COIN=locate(material.cointype, src.contents)
 		if(!COIN)
 			return
 		COIN.loc = get_turf(src)

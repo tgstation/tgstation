@@ -28,17 +28,19 @@
 
 /obj/machinery/computer/telescience/New()
 	..()
-	cell=new/obj/item/weapon/cell()
-	cell.charge = 0
 	teles_left = rand(12,14)
 	x_off = rand(-10,10)
 	y_off = rand(-10,10)
 	x_player_off = 0
 	y_player_off = 0
-	initialize()
+	if(ticker)
+		initialize()
 
 /obj/machinery/computer/telescience/initialize()
 	..()
+	if(!ticker)
+		cell=new/obj/item/weapon/cell(src)
+		cell.charge = 0
 	telepad = locate() in range(src, 7)
 
 /obj/machinery/computer/telescience/process()

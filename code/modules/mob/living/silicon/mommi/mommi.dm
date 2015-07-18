@@ -216,9 +216,26 @@ They can only use one tool at a time, they can't choose modules, and they have 1
 				del(src)
 			return
 		if(opened)
-			user << "You close the cover."
-			opened = 0
-			updateicon()
+			if(mmi && wiresexposed && wires.IsAllCut())
+				//Cell is out, wires are exposed, remove MMI, produce damaged chassis, baleet original mob.
+				user << "You jam the crowbar into \the [src] and begin levering [mmi]."
+				if (do_after(user, src,3))
+					user << "You damage some parts of the casing, but eventually manage to rip out [mmi]!"
+					var/limbs = list(/obj/item/robot_parts/l_leg, /obj/item/robot_parts/r_leg, /obj/item/robot_parts/l_arm, /obj/item/robot_parts/r_arm)
+					for(var/newlimb = 1 to rand(2, 4))
+						var/limb_to_spawn = pick(limbs)
+						limbs -= limb_to_spawn
+
+						new limb_to_spawn(src.loc)
+					// This doesn't work.  Don't use it.
+					//src.Destroy()
+					// del() because it's infrequent and mobs act weird in qdel.
+					del(src)
+					return
+			else
+				user << "You close the cover."
+				opened = 0
+				updateicon()
 		else
 			if(locked)
 				user << "The cover is locked and cannot be opened."
@@ -241,7 +258,7 @@ They can only use one tool at a time, they can't choose modules, and they have 1
 
 	else if (istype(W, /obj/item/weapon/wirecutters) || istype(W, /obj/item/device/multitool))
 		if (wiresexposed)
-			wires.Interact()
+			wires.Interact(user)
 		else
 			user << "You can't reach the wiring."
 

@@ -43,12 +43,12 @@ var/global/list/initial_materials	//Stores all the matids = 0 in helping New
 	else
 		newargs = "storage"
 
+	..(arglist(newargs))
+
 	if(!initial_materials)
 		initialize_materials()
 
 	storage = initial_materials.Copy()
-
-	..(arglist(newargs))
 
 /datum/materials/proc/addAmount(var/mat_id,var/amount)
 	if(!(mat_id in storage))

@@ -612,7 +612,7 @@
 			user.put_in_hands(src)
 	if(istype(user, /mob/living/carbon/human))
 		var/mob/living/carbon/human/h_user = user
-		if(h_user.can_use_active_hand())
+		if(h_user.can_use_hand())
 			src.attack_hand(h_user)
 		else
 			src.attack_stump(h_user)

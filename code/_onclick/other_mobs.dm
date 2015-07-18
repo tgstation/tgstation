@@ -15,7 +15,7 @@
 	if(proximity && istype(G) && G.Touch(A, src, 1))
 		return
 
-	if(src.can_use_active_hand())
+	if(src.can_use_hand())
 		A.attack_hand(src, params)
 	else
 		A.attack_stump(src, params)

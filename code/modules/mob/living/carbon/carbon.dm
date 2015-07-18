@@ -315,6 +315,12 @@
 
 	if(!item) return
 
+	if (istype(item, /obj/item/offhand))
+		var/obj/item/offhand/offhand = item
+		if(offhand.wielding)
+			src.throw_item(target, offhand.wielding)
+			return
+
 	if (istype(item, /obj/item/weapon/grab))
 		var/obj/item/weapon/grab/G = item
 		item = G.toss() //throw the person instead of the grab
@@ -337,22 +343,11 @@
 				returnToPool(G)
 	if(!item) return //Grab processing has a chance of returning null
 
-	//item.layer = initial(item.layer)
-	u_equip(item,1)
-	update_icons()
-
-//	if (istype(usr, /mob/living/carbon/monkey)) //Check if a monkey is throwing. Modify/remove this line as required.
-	var/turf/T=get_turf(loc)
-	if(istype(item, /obj/item))
-		item.loc = T
-		if(src.client)
-			src.client.screen -= item
-		//if(istype(item, /obj/item))
-			//item:dropped(src) // let it know it's been dropped
+	remove_from_mob(item)
 
 	//actually throw it!
 	if (item)
-		item.layer = initial(item.layer)
+		item.forceMove(get_turf(src))
 		src.visible_message("<span class='warning'>[src] has thrown [item].</span>")
 
 		if((istype(src.loc, /turf/space)) || (src.areaMaster.has_gravity == 0))

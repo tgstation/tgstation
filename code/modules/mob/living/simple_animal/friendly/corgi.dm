@@ -427,7 +427,7 @@
 						else
 							dir = SOUTH
 
-						if(isturf(movement_target.loc) )
+						if(isturf(movement_target.loc) && src.Adjacent(movement_target))
 							movement_target.attack_animal(src)
 						else if(ishuman(movement_target.loc) )
 							if(prob(20))

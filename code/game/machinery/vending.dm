@@ -680,16 +680,16 @@
 			user << "<SPAN CLASS='notice'>You need to insert a coin to get this item.</SPAN>"
 			return
 
-		if (coin.string_attached)
-			if (prob(50))
-				user.put_in_hands(coin)
-				user << "<SPAN CLASS='notice'>You successfully pulled the coin out before the [src] could swallow it.</SPAN>"
-			else
+		if (coin.string_attached && prob(50))
+			user.put_in_hands(coin)
+			user << "<SPAN CLASS='notice'>You successfully pulled the coin out before the [src] could swallow it.</SPAN>"
+		else
+			if(coin.string_attached)
 				user << "<SPAN CLASS='notice'>You weren't able to pull the coin out fast enough, the machine ate it, string and all.</SPAN>"
 
-		if (!isnull(coinbox))
-			if (coinbox.can_be_inserted(coin, TRUE))
-				coinbox.handle_item_insertion(coin, TRUE)
+			if (!isnull(coinbox))
+				if (coinbox.can_be_inserted(coin, TRUE))
+					coinbox.handle_item_insertion(coin, TRUE)
 
 		coin = null
 
