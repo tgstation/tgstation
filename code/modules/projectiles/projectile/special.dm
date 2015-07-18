@@ -4,6 +4,7 @@
 	damage = 0
 	damage_type = BURN
 	nodamage = 1
+	layer = 13
 	flag = "energy"
 
 
@@ -29,6 +30,7 @@
 	damage = 0
 	damage_type = BURN
 	nodamage = 1
+	layer = 13
 	flag = "energy"
 	var/temperature = 300
 	var/obj/item/weapon/gun/energy/temperature/T = null

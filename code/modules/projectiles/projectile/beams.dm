@@ -52,8 +52,12 @@ var/list/beam_master = list()
 		var/broken
 		var/atom/curr = current
 		var/Angle=round(Get_Angle(firer,curr))
-		var/icon/I=new('icons/obj/zap.dmi',"lightning")
-		I.Turn(Angle)
+		var/icon/I=new('icons/obj/lightning.dmi',icon_state)
+		var/icon/Istart=new('icons/obj/lightning.dmi',"[icon_state]start")
+		var/icon/Iend=new('icons/obj/lightning.dmi',"[icon_state]end")
+		I.Turn(Angle+45)
+		Istart.Turn(Angle+45)
+		Iend.Turn(Angle+45)
 		var/DX=(32*curr.x+curr.pixel_x)-(32*firer.x+firer.pixel_x)
 		var/DY=(32*curr.y+curr.pixel_y)-(32*firer.y+firer.pixel_y)
 		var/N=0
