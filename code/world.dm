@@ -147,6 +147,8 @@
 	sleep(delay)
 	if(blackbox)
 		blackbox.save_all_data_to_sql()
+	if(ticker.persist)
+		ticker.persist.save_persistence()
 	if(ticker.delay_end)
 		world << "<span class='boldannounce'>Reboot was cancelled by an admin.</span>"
 		return
