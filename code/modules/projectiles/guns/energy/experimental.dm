@@ -10,7 +10,7 @@
 	inhand_states = list("left_hand" = 'icons/mob/in-hand/left/experimentals.dmi', "right_hand" = 'icons/mob/in-hand/right/experimentals.dmi')
 
 /obj/item/weapon/gun/energy/bison
-	name = "righteous bison"
+	name = "\improper Righteous Bison"
 	desc = "A replica of Lord Cockswain's very own personnal heat ray."
 	icon = 'icons/obj/gun_experimental.dmi'
 	icon_state = "bison"
