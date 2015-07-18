@@ -18,7 +18,7 @@
 	var/direction
 
 
-/obj/effect/effect/smoke/proc/fade_out(var/frames = 16)
+/obj/effect/effect/smoke/proc/fade_out(frames = 16)
 	if(alpha == 0) //Handle already transparent case
 		return
 	if(frames == 0)
@@ -55,12 +55,12 @@
 		steps--
 	return 1
 
-/obj/effect/effect/smoke/Crossed(mob/living/M as mob)
+/obj/effect/effect/smoke/Crossed(mob/living/M)
 	if(!istype(M))
 		return
 	smoke_mob(M)
 
-/obj/effect/effect/smoke/proc/smoke_mob(mob/living/carbon/M as mob)
+/obj/effect/effect/smoke/proc/smoke_mob(mob/living/carbon/M)
 	if(!istype(M))
 		return 0
 	if(lifetime<1)
@@ -122,7 +122,7 @@
 		for(var/mob/living/carbon/M in range(1,src))
 			smoke_mob(M)
 
-/obj/effect/effect/smoke/bad/smoke_mob(mob/living/carbon/M as mob)
+/obj/effect/effect/smoke/bad/smoke_mob(mob/living/carbon/M)
 	if(..())
 		M.drop_item()
 		M.adjustOxyLoss(1)
@@ -149,11 +149,10 @@
 	icon = 'icons/effects/chemsmoke.dmi'
 	icon_state = ""
 	lifetime = 10
-	var/max_lifetime = 10
 
 /obj/effect/effect/smoke/chem/process()
 	if(..())
-		var/fraction = 1/max_lifetime
+		var/fraction = 1/initial(lifetime)
 		for(var/obj/O in range(1,src))
 			if(O.type == src.type)
 				continue
@@ -168,12 +167,12 @@
 		if(hit)
 			lifetime++ //this is so the decrease from mobs hit and the natural decrease don't cumulate.
 
-/obj/effect/effect/smoke/chem/smoke_mob(mob/living/carbon/M as mob)
+/obj/effect/effect/smoke/chem/smoke_mob(mob/living/carbon/M)
 	if(lifetime<1)
 		return 0
 	if(!istype(M))
 		return 0
-	var/fraction = 1/max_lifetime
+	var/fraction = 1/initial(lifetime)
 	reagents.reaction(M, TOUCH, fraction)
 	lifetime--
 	return 1
@@ -196,7 +195,7 @@
 	..()
 	return QDEL_HINT_PUTINPOOL
 
-/datum/effect/effect/system/smoke_spread/chem/set_up(var/datum/reagents/carry = null, n = 5, c = 0, loca, direct, silent = 0)
+/datum/effect/effect/system/smoke_spread/chem/set_up(datum/reagents/carry = null, n = 5, c = 0, loca, direct, silent = 0)
 	if(n > 20)
 		n = 20
 	number = n
@@ -207,7 +206,7 @@
 		location = get_turf(loca)
 	if(direct)
 		direction = direct
-	carry.copy_to(chemholder, carry.total_volume)
+	carry.copy_to(chemholder, 4*carry.total_volume) //The smoke holds 4 times the total reagents volume for balance purposes.
 
 	if(!silent)
 		var/contained = ""
@@ -256,8 +255,6 @@
 		else
 			S.steps = pick(0,1,1,1,2,2,2,3)
 
-		S.max_lifetime = S.lifetime
-
 		if(chemholder.reagents.total_volume > 1) // can't split 1 very well
 			chemholder.reagents.copy_to(S, chemholder.reagents.total_volume/number) // copy reagents to each smoke, divide evenly
 
@@ -282,7 +279,7 @@
 	for(var/mob/living/carbon/M in range(1,src))
 		smoke_mob(M)
 
-/obj/effect/effect/smoke/sleeping/smoke_mob(mob/living/carbon/M as mob)
+/obj/effect/effect/smoke/sleeping/smoke_mob(mob/living/carbon/M)
 	if(..())
 		if(M.internal != null || (M.wear_mask && (M.wear_mask.flags & BLOCK_GAS_SMOKE_EFFECT)))
 			return

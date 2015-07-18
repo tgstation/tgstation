@@ -29,13 +29,13 @@ RPD
 	var/icon_state=""
 	var/selected=0
 
-/datum/pipe_info/New(var/pid,var/direction,var/dt)
+/datum/pipe_info/New(pid,direction,dt)
 	src.id=pid
 	src.icon_state=pipeID2State[pid+1]
 	src.dir=direction
 	src.dirtype=dt
 
-/datum/pipe_info/proc/Render(var/dispenser,var/label)
+/datum/pipe_info/proc/Render(dispenser,label)
 	return "<li><a href='?src=\ref[dispenser];makepipe=[id];dir=[dir];type=[dirtype]'>[label]</a></li>"
 
 /datum/pipe_info/meter
@@ -45,7 +45,7 @@ RPD
 /datum/pipe_info/meter/New()
 	return
 
-/datum/pipe_info/meter/Render(var/dispenser,var/label)
+/datum/pipe_info/meter/Render(dispenser,label)
 	return "<li><a href='?src=\ref[dispenser];makemeter=1;type=[dirtype]'>[label]</a></li>" //hardcoding is no
 
 var/global/list/disposalpipeID2State=list(
@@ -75,7 +75,7 @@ var/global/list/disposalpipeID2State=list(
 	if(pid<DISP_END_BIN || pid>DISP_END_CHUTE)
 		icon_state = "con[icon_state]"
 
-/datum/pipe_info/disposal/Render(var/dispenser,var/label)
+/datum/pipe_info/disposal/Render(dispenser,label)
 	return "<li><a href='?src=\ref[dispenser];dmake=[id];type=[dirtype]'>[label]</a></li>" //avoid hardcoding.
 
 //find these defines in code\game\machinery\pipe\consruction.dm
@@ -132,8 +132,7 @@ var/global/list/RPD_recipes=list(
 	throw_speed = 1
 	throw_range = 5
 	w_class = 3.0
-	m_amt = 75000
-	g_amt = 37500
+	materials = list(MAT_METAL=75000, MAT_GLASS=37500)
 	origin_tech = "engineering=4;materials=2"
 	var/datum/effect/effect/system/spark_spread/spark_system
 	var/working = 0
@@ -161,16 +160,16 @@ var/global/list/RPD_recipes=list(
 	spark_system.set_up(5, 0, src)
 	spark_system.attach(src)
 
-/obj/item/weapon/pipe_dispenser/attack_self(mob/user as mob)
+/obj/item/weapon/pipe_dispenser/attack_self(mob/user)
 	show_menu(user)
 
-/obj/item/weapon/pipe_dispenser/proc/render_dir_img(var/_dir,var/pic,var/title,var/flipped=0)
+/obj/item/weapon/pipe_dispenser/proc/render_dir_img(_dir,pic,title,flipped=0)
 	var/selected=" class=\"imglink\""
 	if(_dir == p_dir)
 		selected=" class=\"imglink selected\""
 	return "<a href=\"?src=\ref[src];setdir=[_dir];flipped=[flipped]\" title=\"[title]\"[selected]\"><img src=\"[pic]\" /></a>"
 
-/obj/item/weapon/pipe_dispenser/proc/show_menu(mob/user as mob)
+/obj/item/weapon/pipe_dispenser/proc/show_menu(mob/user)
 	if(!user || !src)	return 0
 	var/dat = {"<h2>Type</h2>
 <b>Utilities:</b>
@@ -534,7 +533,7 @@ var/global/list/RPD_recipes=list(
 			if(istype(A,/obj/item/pipe) || istype(A,/obj/item/pipe_meter) || istype(A,/obj/structure/disposalconstruct))
 				user << "<span class='notice'>You start destroying pipe...</span>"
 				playsound(get_turf(src), 'sound/machines/click.ogg', 50, 1)
-				if(do_after(user, 5, target = A))
+				if(do_after(user, 2, target = A))
 					activate()
 					qdel(A)
 					return 1
@@ -549,7 +548,7 @@ var/global/list/RPD_recipes=list(
 				return 0
 			user << "<span class='notice'>You start building pipes...</span>"
 			playsound(get_turf(src), 'sound/machines/click.ogg', 50, 1)
-			if(do_after(user, 20, target = A))
+			if(do_after(user, 2, target = A))
 				activate()
 				var/obj/item/pipe/P = new (A, pipe_type=queued_p_type, dir=queued_p_dir)
 				P.flipped = queued_p_flipped
@@ -564,7 +563,7 @@ var/global/list/RPD_recipes=list(
 				return 0
 			user << "<span class='notice'>You start building meter...</span>"
 			playsound(get_turf(src), 'sound/machines/click.ogg', 50, 1)
-			if(do_after(user, 20, target = A))
+			if(do_after(user, 2, target = A))
 				activate()
 				new /obj/item/pipe_meter(A)
 				return 1
@@ -576,7 +575,7 @@ var/global/list/RPD_recipes=list(
 				return 0
 			user << "<span class='notice'>You start building pipes...</span>"
 			playsound(get_turf(src), 'sound/machines/click.ogg', 50, 1)
-			if(do_after(user, 20, target = A))
+			if(do_after(user, 2, target = A))
 				var/obj/structure/disposalconstruct/C = new (A, queued_p_type ,queued_p_dir)
 
 				if(!C.can_place())

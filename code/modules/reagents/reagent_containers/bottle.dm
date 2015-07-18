@@ -291,3 +291,9 @@
 	desc = "A small bottle. Contains a sample of invasive Apidae."
 	icon_state = "bottle3"
 	spawned_disease = /datum/disease/beesease
+
+/obj/item/weapon/reagent_containers/glass/bottle/fluspanish
+	name = "Spanish flu culture bottle"
+	desc = "A small bottle. Contains a sample of Inquisitius."
+	icon_state = "bottle3"
+	spawned_disease = /datum/disease/fluspanish

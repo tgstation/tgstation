@@ -13,7 +13,7 @@
 // Use this when setting the aiEye's location.
 // It will also stream the chunk that the new loc is in.
 
-/mob/camera/aiEye/proc/setLoc(var/T)
+/mob/camera/aiEye/proc/setLoc(T)
 
 	if(ai)
 		if(!isturf(ai.loc))
@@ -51,7 +51,7 @@
 // This will move the AIEye. It will also cause lights near the eye to light up, if toggled.
 // This is handled in the proc below this one.
 
-/client/proc/AIMove(n, direct, var/mob/living/silicon/ai/user)
+/client/proc/AIMove(n, direct, mob/living/silicon/ai/user)
 
 	var/initial = initial(user.sprint)
 	var/max_sprint = 50

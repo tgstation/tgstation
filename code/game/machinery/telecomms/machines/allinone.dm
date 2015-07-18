@@ -41,7 +41,7 @@
 							  signal.data["realname"],, signal.data["compression"], list(0, z), signal.frequency, signal.data["spans"],
 							  signal.data["verb_say"], signal.data["verb_ask"], signal.data["verb_exclaim"], signal.data["verb_yell"])
 
-/obj/machinery/telecomms/allinone/attackby(obj/item/P as obj, mob/user as mob, params)
+/obj/machinery/telecomms/allinone/attackby(obj/item/P, mob/user, params)
 
 	if(istype(P, /obj/item/device/multitool))
 		attack_hand(user)

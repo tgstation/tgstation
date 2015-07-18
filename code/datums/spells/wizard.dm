@@ -132,6 +132,13 @@
 	sound1="sound/magic/blink.ogg"
 	sound2="sound/magic/blink.ogg"
 
+/obj/effect/proc_holder/spell/targeted/turf_teleport/blink/cult
+	name = "quickstep"
+
+	charge_max = 100
+	clothes_req = 0
+	cult_req = 1
+
 /obj/effect/proc_holder/spell/targeted/area_teleport/teleport
 	name = "Teleport"
 	desc = "This spell teleports you to a type of area of your selection."
@@ -232,6 +239,12 @@
 
 	action_icon_state = "blind"
 
+/obj/effect/proc_holder/spell/aoe_turf/conjure/creature/cult
+	name = "Summon Creatures (DANGEROUS)"
+	cult_req = 1
+	charge_max = 5000
+	summon_amt = 2
+
 
 
 /obj/effect/proc_holder/spell/targeted/inflict_handler/blind
@@ -284,7 +297,7 @@
 	action_icon_state = "fireball"
 	sound = "sound/magic/Fireball.ogg"
 
-/obj/effect/proc_holder/spell/turf/fireball/cast(var/turf/T)
+/obj/effect/proc_holder/spell/turf/fireball/cast(turf/T)
 	explosion(T, -1, 0, 2, 3, 0, flame_range = 2)
 
 
@@ -343,4 +356,4 @@
 				var/mob/living/M = AM
 				M.Weaken(2)
 				M << "<span class='userdanger'>You're thrown back by a mystical force!</span>"
-			spawn(0) AM.throw_at(throwtarget, ((Clamp((maxthrow - (Clamp(distfromcaster - 2, 0, distfromcaster))), 3, maxthrow))), 1)//So stuff gets tossed around at the same time.
+			spawn(0) AM.throw_at(throwtarget, ((Clamp((maxthrow - (Clamp(distfromcaster - 2, 0, distfromcaster))), 3, maxthrow))), 1,user)//So stuff gets tossed around at the same time.

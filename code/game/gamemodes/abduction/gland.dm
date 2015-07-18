@@ -1,6 +1,6 @@
 /obj/item/gland/
-	name = "Fleshy mass"
-	desc = "Eww"
+	name = "fleshy mass"
+	desc = "A nausea-inducing hunk of twisting flesh and metal."
 	icon = 'icons/obj/abductor.dmi'
 	icon_state = "gland"
 	var/cooldown_low = 300
@@ -51,7 +51,7 @@
 	icon_state = "health"
 
 /obj/item/gland/heals/activate()
-	host << "<span class='notice'>You feel weird.</span>"
+	host << "<span class='notice'>You feel curiously revitalized.</span>"
 	host.adjustBruteLoss(-20)
 	host.adjustOxyLoss(-20)
 	host.adjustFireLoss(-20)
@@ -63,7 +63,9 @@
 	icon_state = "slime"
 
 /obj/item/gland/slime/activate()
-	host << "<span class='notice'>You feel weird.</span>"
+	host << "<span class='warning'>You feel nauseous!</span>"
+	if(host.is_muzzled())
+		host << "<span class='warning'>The muzzle prevents you from vomiting!</span>"
 
 	host.visible_message("<span class='danger'>[host] vomits on the floor!</span>", \
 					"<span class='userdanger'>You throw up on the floor!</span>")
@@ -86,7 +88,7 @@
 	icon_state = "mindshock"
 
 /obj/item/gland/mindshock/activate()
-	host << "<span class='notice'>You feel weird.</span>"
+	host << "<span class='notice'>You get a headache.</span>"
 
 	var/turf/T = get_turf(host)
 	for(var/mob/living/carbon/human/H in orange(4,T))
@@ -102,7 +104,7 @@
 	icon_state = "species"
 
 /obj/item/gland/pop/activate()
-	host << "<span class='notice'>You feel weird.</span>"
+	host << "<span class='notice'>You feel unlike yourself.</span>"
 	var/species = pick(list(/datum/species/lizard,/datum/species/slime,/datum/species/plant/pod,/datum/species/fly))
 	hardset_dna(host, null, null, null, null, species)
 	host.regenerate_icons()
@@ -115,7 +117,6 @@
 	icon_state = "vent"
 
 /obj/item/gland/ventcrawling/activate()
-	host << "<span class='notice'>You feel weird.</span>"
 	host << "<span class='notice'>You feel very stretchy.</span>"
 	host.ventcrawler = 2
 	return
@@ -128,6 +129,7 @@
 	icon_state = "viral"
 
 /obj/item/gland/viral/activate()
+	host << "<span class='warning'>You feel sick.</span>"
 	var/virus_type = pick(/datum/disease/beesease, /datum/disease/brainrot, /datum/disease/magnitis)
 	var/datum/disease/D = new virus_type()
 	D.carrier = 1
@@ -144,6 +146,7 @@
 	icon_state = "emp"
 
 /obj/item/gland/emp/activate()
+	host << "<span class='warning'>You feel a spike of pain in your head.</span>"
 	empulse(get_turf(host), 2, 5, 1)
 
 /obj/item/gland/spiderman
@@ -153,17 +156,19 @@
 	icon_state = "spider"
 
 /obj/item/gland/spiderman/activate()
+	host << "<span class='warning'>You feel something crawling in your skin.</span>"
 	if(uses == initial(uses))
 		host.faction += "spiders"
 	new /obj/effect/spider/spiderling(host.loc)
 
 /obj/item/gland/egg
 	cooldown_low = 300
-	cooldown_high = 600
+	cooldown_high = 400
 	uses = -1
 	icon_state = "egg"
 
 /obj/item/gland/egg/activate()
+	host << "<span class='boldannounce'>You lay an egg!</span>"
 	var/obj/item/weapon/reagent_containers/food/snacks/egg/egg = new(host.loc)
 	egg.reagents.add_reagent("sacid",20)
 	egg.desc += " It smells bad."
@@ -176,8 +181,8 @@
 /obj/item/gland/bloody/activate()
 	host.adjustBruteLoss(15)
 
-	host.visible_message("<span class='danger'>[host] skin erupts with blood!</span>",\
-	"<span class='userdanger'>Your skin erupts with blood! It hurts!</span>")
+	host.visible_message("<span class='danger'>[host]'s skin erupts with blood!</span>",\
+	"<span class='userdanger'>Blood pours from your skin!</span>")
 
 	for(var/turf/T in oview(3,host)) //Make this respect walls and such
 		T.add_blood_floor(host)
@@ -195,6 +200,7 @@
 	uses = 1
 
 /obj/item/gland/bodysnatch/activate()
+	host << "<span class='warning'>You feel something moving around inside you...</span>"
 	//spawn cocoon with clone greytide snpc inside
 	var/obj/effect/cocoon/abductor/C = new (get_turf(host))
 	C.Copy(host)
@@ -203,15 +209,15 @@
 	return
 
 /obj/effect/cocoon/abductor
-	name = "Slimy cocoon"
-	desc = "You can see something moving inside"
+	name = "slimy cocoon"
+	desc = "Something is moving inside."
 	icon = 'icons/effects/effects.dmi'
 	icon_state = "cocoon_large3"
 	color = rgb(10,120,10)
 	density = 1
 	var/hatch_time = 0
 
-/obj/effect/cocoon/abductor/proc/Copy(var/mob/living/carbon/human/H)
+/obj/effect/cocoon/abductor/proc/Copy(mob/living/carbon/human/H)
 	var/mob/living/carbon/human/interactive/greytide/clone = new(src)
 	hardset_dna(clone,H.dna.uni_identity,H.dna.struc_enzymes,H.real_name, H.dna.blood_type, H.dna.species.type, H.dna.features)
 
@@ -238,14 +244,14 @@
 		qdel(src)
 
 /obj/item/gland/plasma
-	cooldown_low = 1200
-	cooldown_high = 2400
+	cooldown_low = 2400
+	cooldown_high = 3000
 	uses = 1
 
 /obj/item/gland/plasma/activate()
 	host << "<span class='warning'>You feel bloated.</span>"
 	sleep(150)
-	host << "<span class='userdanger'>Your stomach feels about to explode!</span>"
+	host << "<span class='userdanger'>A massive stomachache overcomes you.</span>"
 	sleep(50)
 	host.visible_message("<span class='danger'>[host] explodes in a cloud of plasma!</span>")
 	var/turf/simulated/T = get_turf(host)

@@ -16,7 +16,7 @@ MASS SPECTROMETER
 	slot_flags = SLOT_BELT
 	w_class = 2
 	item_state = "electronic"
-	m_amt = 150
+	materials = list(MAT_METAL=150)
 	origin_tech = "magnets=1;engineering=1"
 
 /obj/item/device/t_scanner/attack_self(mob/user)
@@ -49,7 +49,7 @@ MASS SPECTROMETER
 			if(O.invisibility == 101)
 				O.invisibility = 0
 				spawn(10)
-					if(O)
+					if(O && O.loc)
 						var/turf/U = O.loc
 						if(U.intact)
 							O.invisibility = 101
@@ -73,7 +73,7 @@ MASS SPECTROMETER
 	w_class = 1.0
 	throw_speed = 3
 	throw_range = 7
-	m_amt = 200
+	materials = list(MAT_METAL=200)
 	origin_tech = "magnets=1;biotech=1"
 	var/mode = 1
 	var/scanchems = 0
@@ -86,7 +86,7 @@ MASS SPECTROMETER
 		user << "<span class='notice'>You switch the health analyzer to check physical health.</span>"
 		scanchems = 0
 	return
-/obj/item/device/healthanalyzer/attack(mob/living/M as mob, mob/living/carbon/human/user as mob)
+/obj/item/device/healthanalyzer/attack(mob/living/M, mob/living/carbon/human/user)
 
 	// Clumsiness/brain damage check
 	if ((user.disabilities & CLUMSY || user.getBrainLoss() >= 60) && prob(50))
@@ -109,7 +109,7 @@ MASS SPECTROMETER
 	return
 
 // Used by the PDA medical scanner too
-/proc/healthscan(var/mob/living/user, var/mob/living/M, var/mode = 1)
+/proc/healthscan(mob/living/user, mob/living/M, mode = 1)
 
 	//Damage specifics
 	var/oxy_loss = M.getOxyLoss()
@@ -198,7 +198,7 @@ MASS SPECTROMETER
 			user.show_message("<span class='notice'>Detected cybernetic modifications:</span>")
 			user.show_message("<span class='notice'>[implant_detect]</span>")
 
-/proc/chemscan(var/mob/living/user, var/mob/living/M)
+/proc/chemscan(mob/living/user, mob/living/M)
 	if(ishuman(M))
 		var/mob/living/carbon/human/H = M
 		if(H.reagents)
@@ -241,11 +241,10 @@ MASS SPECTROMETER
 	throwforce = 0
 	throw_speed = 3
 	throw_range = 7
-	m_amt = 30
-	g_amt = 20
+	materials = list(MAT_METAL=30, MAT_GLASS=20)
 	origin_tech = "magnets=1;engineering=1"
 
-/obj/item/device/analyzer/attack_self(mob/user as mob)
+/obj/item/device/analyzer/attack_self(mob/user)
 
 	if (user.stat)
 		return
@@ -308,8 +307,7 @@ MASS SPECTROMETER
 	throwforce = 0
 	throw_speed = 3
 	throw_range = 7
-	m_amt = 30
-	g_amt = 20
+	materials = list(MAT_METAL=30, MAT_GLASS=20)
 	origin_tech = "magnets=2;biotech=2"
 	var/details = 0
 	var/recent_fail = 0
@@ -324,7 +322,7 @@ MASS SPECTROMETER
 	else
 		icon_state = initial(icon_state)
 
-/obj/item/device/mass_spectrometer/attack_self(mob/user as mob)
+/obj/item/device/mass_spectrometer/attack_self(mob/user)
 	if (user.stat)
 		return
 	if (crit_fail)
@@ -383,10 +381,9 @@ MASS SPECTROMETER
 	throwforce = 0
 	throw_speed = 3
 	throw_range = 7
-	m_amt = 30
-	g_amt = 20
+	materials = list(MAT_METAL=30, MAT_GLASS=20)
 
-/obj/item/device/slime_scanner/attack(mob/living/M as mob, mob/living/user as mob)
+/obj/item/device/slime_scanner/attack(mob/living/M, mob/living/user)
 	if (!isslime(M))
 		user.show_message("<span class='warning'>This device can only scan slimes!</span>", 1)
 		return

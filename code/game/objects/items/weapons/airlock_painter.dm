@@ -7,8 +7,7 @@
 
 	w_class = 2.0
 
-	m_amt = 50
-	g_amt = 50
+	materials = list(MAT_METAL=50, MAT_GLASS=50)
 	origin_tech = "engineering=1"
 
 	flags = CONDUCT
@@ -21,7 +20,7 @@
 
 //This proc doesn't just check if the painter can be used, but also uses it.
 //Only call this if you are certain that the painter will be used right after this check!
-/obj/item/weapon/airlock_painter/proc/use(mob/user as mob)
+/obj/item/weapon/airlock_painter/proc/use(mob/user)
 	if(can_use(user))
 		ink.charges--
 		playsound(src.loc, 'sound/effects/spray2.ogg', 50, 1)
@@ -32,7 +31,7 @@
 //This proc only checks if the painter can be used.
 //Call this if you don't want the painter to be used right after this check, for example
 //because you're expecting user input.
-/obj/item/weapon/airlock_painter/proc/can_use(mob/user as mob)
+/obj/item/weapon/airlock_painter/proc/can_use(mob/user)
 	if(!ink)
 		user << "<span class='notice'>There is no toner cardridge installed installed in \the [name]!</span>"
 		return 0

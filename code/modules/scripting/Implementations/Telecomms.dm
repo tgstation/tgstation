@@ -58,7 +58,7 @@ var/list/allowed_custom_spans = list(SPAN_ROBOT,SPAN_YELL,SPAN_ITALICS,SPAN_SANS
 
 	/* -- Execute the compiled code -- */
 
-	proc/Run(var/datum/signal/signal)
+	proc/Run(datum/signal/signal)
 
 		if(!ready)
 			return
@@ -243,7 +243,8 @@ var/list/allowed_custom_spans = list(SPAN_ROBOT,SPAN_YELL,SPAN_ITALICS,SPAN_SANS
 		signal.data["verb_exclaim"]	= interpreter.GetCleanVar("$exclaim")
 		var/list/setspans 			= interpreter.GetCleanVar("$filters") //Save the span vector/list to a holder list
 		setspans &= allowed_custom_spans //Prune out any illegal ones. Go ahead, comment this line out. See the horror you can unleash!
-		signal.data["spans"]		= setspans //Apply it to the signal
+		if(islist(setspans)) //Previous comment block was right. Players cannot be trusted with ANYTHING. At all. Ever.
+			signal.data["spans"]	= setspans //Apply new span to the signal only if it is a valid list, made using vector() in the script.
 
 		// If the message is invalid, just don't broadcast it!
 		if(signal.data["message"] == "" || !signal.data["message"])
@@ -255,7 +256,7 @@ var/const/SIGNAL_COOLDOWN = 20 // 2 seconds
 
 /datum/signal
 
-	proc/mem(var/address, var/value)
+	proc/mem(address, value)
 
 		if(istext(address))
 			var/obj/machinery/telecomms/server/S = data["server"]
@@ -267,7 +268,7 @@ var/const/SIGNAL_COOLDOWN = 20 // 2 seconds
 				S.memory[address] = value
 
 
-	proc/signaler(var/freq = 1459, var/code = 30)
+	proc/signaler(freq = 1459, code = 30)
 
 		if(isnum(freq) && isnum(code))
 
@@ -298,7 +299,7 @@ var/const/SIGNAL_COOLDOWN = 20 // 2 seconds
 			lastsignalers.Add("[time] <B>:</B> [S.id] sent a signal command, which was triggered by NTSL.<B>:</B> [format_frequency(freq)]/[code]")
 
 
-	proc/tcombroadcast(var/message, var/freq, var/source, var/job, var/spans, var/say = "says", var/ask = "asks", var/yell = "yells", var/exclaim = "exclaims")
+	proc/tcombroadcast(message, freq, source, job, spans, say = "says", ask = "asks", yell = "yells", exclaim = "exclaims")
 
 		var/datum/signal/newsign = new
 		var/obj/machinery/telecomms/server/S = data["server"]

@@ -53,7 +53,7 @@
 	else
 		desc += "."
 
-/obj/machinery/constructable_frame/machine_frame/attackby(obj/item/P as obj, mob/user as mob, params)
+/obj/machinery/constructable_frame/machine_frame/attackby(obj/item/P, mob/user, params)
 	if(P.crit_fail)
 		user << "<span class='warning'>This part is faulty, you cannot add this to the machine!</span>"
 		return
@@ -156,7 +156,7 @@
 						break
 				if(component_check)
 					playsound(src.loc, 'sound/items/Screwdriver.ogg', 50, 1)
-					var/obj/machinery/new_machine = new src.circuit.build_path(src.loc)
+					var/obj/machinery/new_machine = new src.circuit.build_path(src.loc, 1)
 					new_machine.construction()
 					for(var/obj/O in new_machine.component_parts)
 						qdel(O)
@@ -197,31 +197,28 @@
 				return
 
 			if(istype(P, /obj/item) && get_req_components_amt())
-				var/success
 				for(var/I in req_components)
 					if(istype(P, I) && (req_components[I] > 0))
-						if(!user.drop_item())
-							return
-						success=1
 						if(istype(P, /obj/item/stack/cable_coil))
 							var/obj/item/stack/cable_coil/CP = P
-							if (CP.get_amount() < 1)
-								user << "<span class='warning'>You need more cable!</span>"
-								return
-							var/obj/item/stack/cable_coil/CC = new /obj/item/stack/cable_coil(src, 1, CP.item_color)
+							var/cable_color = CP.item_color
 							if(CP.use(1))
+								var/obj/item/stack/cable_coil/CC = new /obj/item/stack/cable_coil(src, 1, cable_color)
 								components += CC
 								req_components[I]--
 								update_req_desc()
+							else
+								user << "<span class='warning'>You need more cable!</span>"
+							return
+						if(!user.drop_item())
 							break
 						P.loc = src
 						components += P
 						req_components[I]--
 						update_req_desc()
 						return 1
-				if(!success)
-					user << "<span class='warning'>You cannot add that to the machine!</span>"
-					return 0
+				user << "<span class='warning'>You cannot add that to the machine!</span>"
+				return 0
 
 
 //Machine Frame Circuit Boards
@@ -346,7 +343,7 @@ to destroy them and players will be able to make replacements.
 
 /obj/item/weapon/circuitboard/cryo_tube
 	name = "circuit board (Cryotube)"
-	build_path = /obj/machinery/atmospherics/unary/cryo_cell
+	build_path = /obj/machinery/atmospherics/components/unary/cryo_cell
 	board_type = "machine"
 	origin_tech = "programming=4;biotech=3;engineering=4"
 	req_components = list(
@@ -357,7 +354,7 @@ to destroy them and players will be able to make replacements.
 /obj/item/weapon/circuitboard/thermomachine
 	name = "circuit board (Freezer)"
 	desc = "Use screwdriver to switch between heating and cooling modes."
-	build_path = /obj/machinery/atmospherics/unary/cold_sink/freezer
+	build_path = /obj/machinery/atmospherics/components/unary/cold_sink/freezer
 	board_type = "machine"
 	origin_tech = "programming=3;plasmatech=3"
 	req_components = list(
@@ -368,12 +365,12 @@ to destroy them and players will be able to make replacements.
 
 /obj/item/weapon/circuitboard/thermomachine/attackby(obj/item/I, mob/user, params)
 	if(istype(I, /obj/item/weapon/screwdriver))
-		if(build_path == /obj/machinery/atmospherics/unary/cold_sink/freezer)
-			build_path = /obj/machinery/atmospherics/unary/heat_reservoir/heater
+		if(build_path == /obj/machinery/atmospherics/components/unary/cold_sink/freezer)
+			build_path = /obj/machinery/atmospherics/components/unary/heat_reservoir/heater
 			name = "circuit board (Heater)"
 			user << "<span class='notice'>You set the board to heating.</span>"
 		else
-			build_path = /obj/machinery/atmospherics/unary/cold_sink/freezer
+			build_path = /obj/machinery/atmospherics/components/unary/cold_sink/freezer
 			name = "circuit board (Freezer)"
 			user << "<span class='notice'>You set the board to cooling.</span>"
 
@@ -452,6 +449,23 @@ to destroy them and players will be able to make replacements.
 	origin_tech = "programming=1"
 	req_components = list(
 							/obj/item/weapon/stock_parts/matter_bin = 1)
+
+/obj/item/weapon/circuitboard/smartfridge/New(loc, new_type)
+	if(new_type)
+		build_path = new_type
+
+/obj/item/weapon/circuitboard/smartfridge/attackby(obj/item/I, mob/user, params)
+	if(istype(I, /obj/item/weapon/screwdriver))
+		var/list/fridges = list(/obj/machinery/smartfridge = "default",
+									 /obj/machinery/smartfridge/drinks = "drinks",
+									 /obj/machinery/smartfridge/extract = "slimes",
+									 /obj/machinery/smartfridge/chemistry = "chems",
+									 /obj/machinery/smartfridge/chemistry/virology = "viruses")
+
+		var/position = fridges.Find(build_path, fridges)
+		position = (position == fridges.len) ? 1 : (position + 1)
+		build_path = fridges[position]
+		user << "<span class='notice'>You set the board to [fridges[build_path]].</span>"
 
 /obj/item/weapon/circuitboard/monkey_recycler
 	name = "circuit board (Monkey Recycler)"

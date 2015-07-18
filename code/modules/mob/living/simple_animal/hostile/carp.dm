@@ -11,6 +11,8 @@
 	response_help = "pets"
 	response_disarm = "gently pushes aside"
 	response_harm = "hits"
+	emote_taunt = list("gnashes")
+	taunt_chance = 30
 	speed = 0
 	maxHealth = 25
 	health = 25
@@ -30,13 +32,8 @@
 	faction = list("carp")
 	flying = 1
 
-/mob/living/simple_animal/hostile/carp/Process_Spacemove(var/movement_dir = 0)
+/mob/living/simple_animal/hostile/carp/Process_Spacemove(movement_dir = 0)
 	return 1	//No drifting in space for space carp!	//original comments do not steal
-
-/mob/living/simple_animal/hostile/carp/FindTarget()
-	. = ..()
-	if(.)
-		emote("me", 1, "gnashes at [.]!")
 
 /mob/living/simple_animal/hostile/carp/AttackingTarget()
 	..()

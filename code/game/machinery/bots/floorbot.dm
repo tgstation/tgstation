@@ -90,14 +90,14 @@
 	text_dehack = "You detect errors in [name] and reset his programming."
 	text_dehack_fail = "[name] is not responding to reset commands!"
 
-/obj/machinery/bot/floorbot/attack_hand(mob/user as mob)
+/obj/machinery/bot/floorbot/attack_hand(mob/user)
 	. = ..()
 	if (.)
 		return
 	usr.set_machine(src)
 	interact(user)
 
-/obj/machinery/bot/floorbot/interact(mob/user as mob)
+/obj/machinery/bot/floorbot/interact(mob/user)
 	var/dat
 	dat += hack(user)
 	dat += "<TT><B>Floor Repairer Controls v1.1</B></TT><BR><BR>"
@@ -127,7 +127,7 @@
 	return
 
 
-/obj/machinery/bot/floorbot/attackby(var/obj/item/W , mob/user as mob, params)
+/obj/machinery/bot/floorbot/attackby(obj/item/W , mob/user, params)
 	if(istype(W, /obj/item/stack/tile/plasteel))
 		var/obj/item/stack/tile/plasteel/T = W
 		if(amount >= 50)
@@ -156,7 +156,7 @@
 	else
 		..()
 
-/obj/machinery/bot/floorbot/Emag(mob/user as mob)
+/obj/machinery/bot/floorbot/Emag(mob/user)
 	..()
 	if(emagged == 2)
 		if(user)
@@ -305,7 +305,7 @@
 		speak("Requesting refill at <b>[get_area(src)]</b>!", radio_frequency)
 		nagged = 1
 
-/obj/machinery/bot/floorbot/proc/is_hull_breach(var/turf/t) //Ignore space tiles not considered part of a structure, also ignores shuttle docking areas.
+/obj/machinery/bot/floorbot/proc/is_hull_breach(turf/t) //Ignore space tiles not considered part of a structure, also ignores shuttle docking areas.
 	var/area/t_area = get_area(t)
 	if (t_area && (t_area.name == "Space" || findtext(t_area.name, "huttle")))
 		return 0
@@ -313,7 +313,7 @@
 		return 1
 
 //Floorbots, having several functions, need sort out special conditions here.
-obj/machinery/bot/floorbot/process_scan(var/scan_target)
+obj/machinery/bot/floorbot/process_scan(scan_target)
 	var/result
 	var/turf/simulated/floor/F
 	switch(process_type)
@@ -341,7 +341,7 @@ obj/machinery/bot/floorbot/process_scan(var/scan_target)
 			result = scan_target
 	return result
 
-/obj/machinery/bot/floorbot/proc/repair(var/turf/target_turf)
+/obj/machinery/bot/floorbot/proc/repair(turf/target_turf)
 
 	if(istype(target_turf, /turf/space/))
 		 //Must be a hull breach or in bridge mode to continue.
@@ -385,7 +385,7 @@ obj/machinery/bot/floorbot/process_scan(var/scan_target)
 				anchored = 0
 				target = null
 
-/obj/machinery/bot/floorbot/proc/eattile(var/obj/item/stack/tile/plasteel/T)
+/obj/machinery/bot/floorbot/proc/eattile(obj/item/stack/tile/plasteel/T)
 	if(!istype(T, /obj/item/stack/tile/plasteel))
 		return
 	visible_message("<span class='notice'>[src] begins to collect tiles.</span>")
@@ -406,7 +406,7 @@ obj/machinery/bot/floorbot/process_scan(var/scan_target)
 		target = null
 		mode = BOT_IDLE
 
-/obj/machinery/bot/floorbot/proc/maketile(var/obj/item/stack/sheet/metal/M)
+/obj/machinery/bot/floorbot/proc/maketile(obj/item/stack/sheet/metal/M)
 	if(!istype(M, /obj/item/stack/sheet/metal))
 		return
 	visible_message("<span class='notice'>[src] begins to create tiles.</span>")
@@ -462,7 +462,7 @@ obj/machinery/bot/floorbot/process_scan(var/scan_target)
 	return
 
 
-/obj/item/weapon/storage/toolbox/mechanical/attackby(var/obj/item/stack/tile/plasteel/T, mob/user as mob, params)
+/obj/item/weapon/storage/toolbox/mechanical/attackby(obj/item/stack/tile/plasteel/T, mob/user, params)
 	if(!istype(T, /obj/item/stack/tile/plasteel))
 		..()
 		return
@@ -481,7 +481,7 @@ obj/machinery/bot/floorbot/process_scan(var/scan_target)
 		user << "<span class='warning'>You need 10 floor tiles to start building a floorbot!</span>"
 		return
 
-/obj/item/weapon/toolbox_tiles/attackby(var/obj/item/W, mob/user as mob, params)
+/obj/item/weapon/toolbox_tiles/attackby(obj/item/W, mob/user, params)
 	..()
 	if(isprox(W))
 		qdel(W)
@@ -501,7 +501,7 @@ obj/machinery/bot/floorbot/process_scan(var/scan_target)
 
 		created_name = t
 
-/obj/item/weapon/toolbox_tiles_sensor/attackby(var/obj/item/W, mob/user as mob, params)
+/obj/item/weapon/toolbox_tiles_sensor/attackby(obj/item/W, mob/user, params)
 	..()
 	if(istype(W, /obj/item/robot_parts/l_arm) || istype(W, /obj/item/robot_parts/r_arm))
 		qdel(W)

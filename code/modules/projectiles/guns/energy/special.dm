@@ -62,7 +62,7 @@
 	update_icon()
 	return 1
 
-/obj/item/weapon/gun/energy/floragun/attack_self(mob/living/user as mob)
+/obj/item/weapon/gun/energy/floragun/attack_self(mob/living/user)
 	select_fire(user)
 	update_icon()
 	return
@@ -157,7 +157,7 @@
 	icon_state = "crossbow"
 	item_state = "crossbow"
 	w_class = 2
-	m_amt = 2000
+	materials = list(MAT_METAL=2000)
 	origin_tech = "combat=2;magnets=2;syndicate=5"
 	suppressed = 1
 	ammo_type = list(/obj/item/ammo_casing/energy/bolt)
@@ -169,7 +169,7 @@
 	desc = "A reverse engineered weapon using syndicate technology."
 	icon_state = "crossbowlarge"
 	w_class = 3
-	m_amt = 4000
+	materials = list(MAT_METAL=4000)
 	origin_tech = "combat=2;magnets=2;syndicate=3" //can be further researched for more syndie tech
 	suppressed = 0
 	ammo_type = list(/obj/item/ammo_casing/energy/bolt/large)
@@ -192,7 +192,7 @@
 	if(power_supply)
 		user <<"<span class='notice'>[src] is [round(power_supply.percent())]% charged.</span>"
 
-/obj/item/weapon/gun/energy/plasmacutter/attackby(var/obj/item/A, var/mob/user)
+/obj/item/weapon/gun/energy/plasmacutter/attackby(obj/item/A, mob/user)
 	if(istype(A, /obj/item/stack/sheet/mineral/plasma))
 		var/obj/item/stack/sheet/S = A
 		S.use(1)
@@ -263,14 +263,14 @@
 	icon_state = "[initial(icon_state)][select]"
 	return
 
-/obj/item/weapon/gun/energy/wormhole_projector/attack_self(mob/living/user as mob)
+/obj/item/weapon/gun/energy/wormhole_projector/attack_self(mob/living/user)
 	select_fire(user)
 
 /obj/item/weapon/gun/energy/wormhole_projector/process_chamber()
 	..()
 	select_fire()
 
-/obj/item/weapon/gun/energy/wormhole_projector/proc/portal_destroyed(var/obj/effect/portal/P)
+/obj/item/weapon/gun/energy/wormhole_projector/proc/portal_destroyed(obj/effect/portal/P)
 	if(P.icon_state == "portal")
 		blue = null
 		if(orange)
@@ -280,7 +280,7 @@
 		if(blue)
 			blue.target = null
 
-/obj/item/weapon/gun/energy/wormhole_projector/proc/create_portal(var/obj/item/projectile/beam/wormhole/W)
+/obj/item/weapon/gun/energy/wormhole_projector/proc/create_portal(obj/item/projectile/beam/wormhole/W)
 	var/obj/effect/portal/P = new /obj/effect/portal(get_turf(W), null, src)
 	P.precision = 0
 	if(W.name == "bluespace beam")

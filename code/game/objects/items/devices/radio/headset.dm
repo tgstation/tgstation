@@ -3,8 +3,7 @@
 	desc = "An updated, modular intercom that fits over the head. Takes encryption keys. \nTo speak on the general radio frequency, use ; before speaking."
 	icon_state = "headset"
 	item_state = "headset"
-	g_amt = 0
-	m_amt = 75
+	materials = list(MAT_METAL=75)
 	subspace_transmission = 1
 	canhear_range = 0 // can't hear headsets from very far away
 
@@ -28,7 +27,7 @@
 		return
 	..()
 
-/obj/item/device/radio/headset/receive_range(freq, level, var/AIuser)
+/obj/item/device/radio/headset/receive_range(freq, level, AIuser)
 	if(ishuman(src.loc))
 		var/mob/living/carbon/human/H = src.loc
 		if(H.ears == src)
@@ -212,7 +211,7 @@
 /obj/item/device/radio/headset/ai/receive_range(freq, level)
 	return ..(freq, level, 1)
 
-/obj/item/device/radio/headset/attackby(obj/item/weapon/W as obj, mob/user as mob, params)
+/obj/item/device/radio/headset/attackby(obj/item/weapon/W, mob/user, params)
 //	..()
 	user.set_machine(src)
 	if (!( istype(W, /obj/item/weapon/screwdriver) || (istype(W, /obj/item/device/encryptionkey/ ))))

@@ -107,7 +107,7 @@ CONTINUOUS DOUBLE_AGENTS
 #CONTINUOUS NUCLEAR
 #CONTINUOUS REVOLUTION
 #CONTINUOUS SHADOWLING
-#CONTINUOUS GANG
+CONTINUOUS GANG
 CONTINUOUS CULT
 CONTINUOUS CHANGELING
 CONTINUOUS WIZARD
@@ -249,8 +249,11 @@ DEFAULT_LAWS 1
 ## Attempting to upload laws past this point will fail unless the AI is reset
 SILICON_MAX_LAW_AMOUNT 12
 
-## Uncoment to give players the choice of their species before they join the game
+## Uncomment to give players the choice of their species before they join the game
 #JOIN_WITH_MUTANT_RACE
+
+## Uncomment to give players the choice of joining as a human with mutant bodyparts before they join the game
+#JOIN_WITH_MUTANT_HUMANS
 
 ## Assistant slot cap. Set to -1 for unlimited.
 ASSISTANT_CAP -1

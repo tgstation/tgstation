@@ -2,8 +2,7 @@
 	name = "timer"
 	desc = "Used to time things. Works well with contraptions which has to count down. Tick tock."
 	icon_state = "timer"
-	m_amt = 500
-	g_amt = 50
+	materials = list(MAT_METAL=500, MAT_GLASS=50)
 	origin_tech = "magnets=1"
 	attachable = 1
 
@@ -67,7 +66,7 @@
 	return
 
 
-/obj/item/device/assembly/timer/interact(mob/user as mob)//TODO: Have this use the wires
+/obj/item/device/assembly/timer/interact(mob/user)//TODO: Have this use the wires
 	if(is_secured(user))
 		var/second = time % 60
 		var/minute = (time - second) / 60

@@ -7,8 +7,7 @@
 	flags = CONDUCT
 	slot_flags = SLOT_BACK
 	w_class = 5.0
-	g_amt = 2500
-	m_amt = 10000
+	materials = list(MAT_METAL=10000, MAT_GLASS=2500)
 	var/on = 1
 	var/code = 2
 	var/frequency = 1449
@@ -31,7 +30,7 @@
 			return
 	..()
 
-/obj/item/device/electropack/attackby(obj/item/weapon/W as obj, mob/user as mob, params)
+/obj/item/device/electropack/attackby(obj/item/weapon/W, mob/user, params)
 	..()
 	if(istype(W, /obj/item/clothing/head/helmet))
 		var/obj/item/assembly/shock_kit/A = new /obj/item/assembly/shock_kit( user )

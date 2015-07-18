@@ -1,5 +1,5 @@
 @echo off
 
-java -jar ../../tools/mapmerge/MapMerge.jar
+java -jar MapMerge.jar ../../_maps/
 
 pause

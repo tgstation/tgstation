@@ -31,7 +31,7 @@
 	else
 		icon_state = "mmi_empty"
 
-/obj/item/device/mmi/attackby(var/obj/item/O as obj, var/mob/user as mob, params)
+/obj/item/device/mmi/attackby(obj/item/O, mob/user, params)
 	user.changeNext_move(CLICK_CD_MELEE)
 	if(istype(O,/obj/item/organ/brain)) //Time to stick a brain in it --NEO
 		var/obj/item/organ/brain/newbrain = O
@@ -85,7 +85,7 @@
 		return
 	..()
 
-/obj/item/device/mmi/attack_self(mob/user as mob)
+/obj/item/device/mmi/attack_self(mob/user)
 	if(!brain)
 		user << "<span class='warning'>You upend the MMI, but there's nothing in it!</span>"
 	else if(locked)
@@ -105,7 +105,7 @@
 		update_icon()
 		name = "Man-Machine Interface"
 
-/obj/item/device/mmi/proc/transfer_identity(var/mob/living/carbon/human/H) //Same deal as the regular brain proc. Used for human-->robot people.
+/obj/item/device/mmi/proc/transfer_identity(mob/living/carbon/human/H) //Same deal as the regular brain proc. Used for human-->robot people.
 	brainmob = new(src)
 	brainmob.name = H.real_name
 	brainmob.real_name = H.real_name

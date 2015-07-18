@@ -16,7 +16,7 @@
 	var/turf_type = null
 	var/mineralType = null
 
-/obj/item/stack/tile/attackby(obj/item/W as obj, mob/user as mob, params)
+/obj/item/stack/tile/attackby(obj/item/W, mob/user, params)
 
 	if (istype(W, /obj/item/weapon/weldingtool))
 		var/obj/item/weapon/weldingtool/WT = W
@@ -83,7 +83,7 @@
 	throw_range = 7
 	max_amount = 60
 	origin_tech = "biotech=1"
-	turf_type = /turf/simulated/floor/fancy/grass
+	turf_type = /turf/simulated/floor/grass
 	burn_state = 0 //Burnable
 
 /*
@@ -118,7 +118,7 @@
 	throw_speed = 3
 	throw_range = 7
 	max_amount = 60
-	turf_type = /turf/simulated/floor/fancy/carpet
+	turf_type = /turf/simulated/floor/carpet
 	burn_state = 0 //Burnable
 
 /*

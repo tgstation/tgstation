@@ -50,7 +50,7 @@
 			if(holder)
 				if(!holder.fakekey || C.holder)
 					if(check_rights_for(src, R_ADMIN))
-						C << "<font color=[config.allow_admin_ooccolor && prefs.ooccolor ? prefs.ooccolor :"#b82e00" ]><b><span class='prefix'>OOC:</span> <EM>[keyname][holder.fakekey ? "/([holder.fakekey])" : ""]:</EM> <span class='message'>[msg]</span></b></font>"
+						C << "<span class='adminooc'>[config.allow_admin_ooccolor && prefs.ooccolor ? "<font color=[prefs.ooccolor]>" :"" ]<span class='prefix'>OOC:</span> <EM>[keyname][holder.fakekey ? "/([holder.fakekey])" : ""]:</EM> <span class='message'>[msg]</span></span></font>"
 					else
 						C << "<span class='adminobserverooc'><span class='prefix'>OOC:</span> <EM>[keyname][holder.fakekey ? "/([holder.fakekey])" : ""]:</EM> <span class='message'>[msg]</span></span>"
 				else
@@ -58,16 +58,15 @@
 			else
 				C << "<font color='[normal_ooc_colour]'><span class='ooc'><span class='prefix'>OOC:</span> <EM>[keyname]:</EM> <span class='message'>[msg]</span></span></font>"
 
-/proc/toggle_ooc()
-	ooc_allowed = !( ooc_allowed )
-	if (ooc_allowed)
-		world << "<B>The OOC channel has been globally enabled!</B>"
-	else
-		world << "<B>The OOC channel has been globally disabled!</B>"
-
-/proc/auto_toggle_ooc(var/on)
-	if(!config.ooc_during_round && ooc_allowed != on)
-		toggle_ooc()
+/proc/toggle_ooc(toggle = null)
+	if(toggle != null) //if we're specifically en/disabling ooc
+		if(toggle != ooc_allowed)
+			ooc_allowed = toggle
+		else
+			return
+	else //otherwise just toggle it
+		ooc_allowed = !ooc_allowed
+	world << "<B>The OOC channel has been globally [ooc_allowed ? "enabled" : "disabled"].</B>"
 
 var/global/normal_ooc_colour = "#002eb8"
 

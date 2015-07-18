@@ -14,14 +14,14 @@
 	var/time_coeff_tech = 1
 	var/resource_coeff_tech = 1
 	var/list/resources = list(
-								"$metal"=0,
-								"$glass"=0,
-								"$bananium"=0,
-								"$diamond"=0,
-								"$gold"=0,
-								"$plasma"=0,
-								"$silver"=0,
-								"$uranium"=0
+								MAT_METAL=0,
+								MAT_GLASS=0,
+								MAT_BANANIUM=0,
+								MAT_DIAMOND=0,
+								MAT_GOLD=0,
+								MAT_PLASMA=0,
+								MAT_SILVER=0,
+								MAT_URANIUM=0
 								)
 	var/res_max_amount = 200000
 	var/datum/research/files
@@ -171,8 +171,8 @@
 
 	var/location = get_step(src,(dir))
 	var/obj/item/I = new D.build_path(location)
-	I.m_amt = get_resource_cost_w_coeff(D,"$metal")
-	I.g_amt = get_resource_cost_w_coeff(D,"$glass")
+	I.materials[MAT_METAL] = get_resource_cost_w_coeff(D,MAT_METAL)
+	I.materials[MAT_GLASS] = get_resource_cost_w_coeff(D,MAT_GLASS)
 	visible_message("\icon[src] <b>\The [src]</b> beeps, \"\The [I] is complete.\"")
 	being_built = null
 
@@ -446,26 +446,26 @@
 	updateUsrDialog()
 	return
 
-/obj/machinery/mecha_part_fabricator/proc/remove_material(var/mat_string, var/amount)
+/obj/machinery/mecha_part_fabricator/proc/remove_material(mat_string, amount)
 	if(resources[mat_string] < MINERAL_MATERIAL_AMOUNT) //not enough mineral for a sheet
 		return -1
 	var/type
 	switch(mat_string)
-		if("$metal")
+		if(MAT_METAL)
 			type = /obj/item/stack/sheet/metal
-		if("$glass")
+		if(MAT_GLASS)
 			type = /obj/item/stack/sheet/glass
-		if("$gold")
+		if(MAT_GOLD)
 			type = /obj/item/stack/sheet/mineral/gold
-		if("$silver")
+		if(MAT_SILVER)
 			type = /obj/item/stack/sheet/mineral/silver
-		if("$diamond")
+		if(MAT_DIAMOND)
 			type = /obj/item/stack/sheet/mineral/diamond
-		if("$plasma")
+		if(MAT_PLASMA)
 			type = /obj/item/stack/sheet/mineral/plasma
-		if("$uranium")
+		if(MAT_URANIUM)
 			type = /obj/item/stack/sheet/mineral/uranium
-		if("$bananium")
+		if(MAT_BANANIUM)
 			type = /obj/item/stack/sheet/mineral/bananium
 		else
 			return 0
@@ -486,7 +486,7 @@
 	return result
 
 
-/obj/machinery/mecha_part_fabricator/attackby(obj/W as obj, mob/user as mob, params)
+/obj/machinery/mecha_part_fabricator/attackby(obj/W, mob/user, params)
 	if(default_deconstruction_screwdriver(user, "fab-o", "fab-idle", W))
 		return
 
@@ -507,21 +507,21 @@
 		var/material
 		switch(W.type)
 			if(/obj/item/stack/sheet/mineral/gold)
-				material = "$gold"
+				material = MAT_GOLD
 			if(/obj/item/stack/sheet/mineral/silver)
-				material = "$silver"
+				material = MAT_SILVER
 			if(/obj/item/stack/sheet/mineral/diamond)
-				material = "$diamond"
+				material = MAT_DIAMOND
 			if(/obj/item/stack/sheet/mineral/plasma)
-				material = "$plasma"
+				material = MAT_PLASMA
 			if(/obj/item/stack/sheet/metal)
-				material = "$metal"
+				material = MAT_METAL
 			if(/obj/item/stack/sheet/glass)
-				material = "$glass"
+				material = MAT_GLASS
 			if(/obj/item/stack/sheet/mineral/bananium)
-				material = "$bananium"
+				material = MAT_BANANIUM
 			if(/obj/item/stack/sheet/mineral/uranium)
-				material = "$uranium"
+				material = MAT_URANIUM
 			else
 				return ..()
 
@@ -547,7 +547,7 @@
 			user << "<span class='warning'>\The [src] cannot hold any more [sname] sheet\s!</span>"
 		return
 
-/obj/machinery/mecha_part_fabricator/proc/material2name(var/ID)
+/obj/machinery/mecha_part_fabricator/proc/material2name(ID)
 	return copytext(ID,2)
 
 /obj/machinery/mecha_part_fabricator/emag_act()

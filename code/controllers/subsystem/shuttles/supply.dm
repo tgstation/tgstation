@@ -201,7 +201,7 @@
 	return 0
 
 
-/obj/machinery/computer/ordercomp/attack_hand(var/mob/user as mob)
+/obj/machinery/computer/ordercomp/attack_hand(mob/user)
 	if(..())
 		return
 	user.set_machine(src)
@@ -303,7 +303,7 @@
 	updateUsrDialog()
 	return
 
-/obj/machinery/computer/supplycomp/attack_hand(var/mob/user as mob)
+/obj/machinery/computer/supplycomp/attack_hand(mob/user)
 	if(!allowed(user))
 		user << "<span class='warning'>Access Denied.</span>"
 		return
@@ -514,7 +514,7 @@
 	updateUsrDialog()
 	return
 
-/obj/machinery/computer/supplycomp/proc/post_signal(var/command)
+/obj/machinery/computer/supplycomp/proc/post_signal(command)
 
 	var/datum/radio_frequency/frequency = radio_controller.return_frequency(1435)
 

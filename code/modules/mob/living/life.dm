@@ -54,8 +54,6 @@
 	if(client)
 		handle_regular_hud_updates()
 
-	return .
-
 
 
 /mob/living/proc/handle_breathing()
@@ -74,7 +72,7 @@
 /mob/living/proc/handle_random_events()
 	return
 
-/mob/living/proc/handle_environment(var/datum/gas_mixture/environment)
+/mob/living/proc/handle_environment(datum/gas_mixture/environment)
 	return
 
 /mob/living/proc/handle_stomach()
@@ -149,6 +147,16 @@
 				I.action.name = I.action_button_name
 				I.action.target = I
 			I.action.Grant(src)
+		for(var/obj/item/T in I)
+			if(T.action_button_name && T.action_button_internal)
+				if(!T.action)
+					if(T.action_button_is_hands_free)
+						T.action = new/datum/action/item_action/hands_free
+					else
+						T.action = new/datum/action/item_action
+					T.action.name = T.action_button_name
+					T.action.target = T
+				T.action.Grant(src)
 	return
 
 //this handles hud updates. Calls update_vision() and handle_hud_icons()

@@ -119,23 +119,23 @@
 
 /* General ai_law functions */
 
-/datum/ai_laws/proc/set_zeroth_law(var/law, var/law_borg = null)
+/datum/ai_laws/proc/set_zeroth_law(law, law_borg = null)
 	src.zeroth = law
 	if(law_borg) //Making it possible for slaved borgs to see a different law 0 than their AI. --NEO
 		src.zeroth_borg = law_borg
 
-/datum/ai_laws/proc/add_inherent_law(var/law)
+/datum/ai_laws/proc/add_inherent_law(law)
 	if (!(law in src.inherent))
 		src.inherent += law
 
-/datum/ai_laws/proc/add_ion_law(var/law)
+/datum/ai_laws/proc/add_ion_law(law)
 	src.ion += law
 
 /datum/ai_laws/proc/clear_inherent_laws()
 	del(src.inherent)
 	src.inherent = list()
 
-/datum/ai_laws/proc/add_supplied_law(var/number, var/law)
+/datum/ai_laws/proc/add_supplied_law(number, law)
 	while (src.supplied.len < number + 1)
 		src.supplied += ""
 
@@ -147,7 +147,7 @@
 /datum/ai_laws/proc/clear_ion_laws()
 	src.ion = list()
 
-/datum/ai_laws/proc/show_laws(var/who)
+/datum/ai_laws/proc/show_laws(who)
 
 	if (src.zeroth)
 		who << "0. [src.zeroth]"
@@ -171,7 +171,7 @@
 			who << "[number]. [law]"
 			number++
 
-/datum/ai_laws/proc/clear_zeroth_law(var/force) //only removes zeroth from antag ai if force is 1
+/datum/ai_laws/proc/clear_zeroth_law(force) //only removes zeroth from antag ai if force is 1
 	if(force)
 		src.zeroth = null
 		src.zeroth_borg = null
@@ -184,6 +184,6 @@
 			src.zeroth_borg = null
 			return
 
-/datum/ai_laws/proc/associate(var/mob/living/silicon/M)
+/datum/ai_laws/proc/associate(mob/living/silicon/M)
 	if(!owner)
 		owner = M

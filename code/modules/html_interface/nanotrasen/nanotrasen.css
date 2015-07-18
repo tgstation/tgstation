@@ -11,6 +11,12 @@ body
 	line-height: 170%; /* NullQuery: 170% of what? */
 }
 
+/* Fix for IE8 */
+body
+{
+	background-color: #1F1F1F\9 !important;
+}
+
 #ntbgcenter
 {
 	position: absolute;

@@ -43,7 +43,7 @@
 /datum/objective/proc/update_explanation_text()
 	//Default does nothing, override where needed
 
-
+/datum/objective/proc/give_special_equipment()
 
 /datum/objective/assassinate
 	var/target_role_type=0
@@ -348,17 +348,18 @@ var/global/list/possible_items = list()
 /datum/objective/steal/find_target()
 	var/approved_targets = list()
 	for(var/datum/objective_item/possible_item in possible_items)
-		if(is_unique_objective(possible_item.targetitem))
+		if(is_unique_objective(possible_item.targetitem) && !(owner.current.mind.assigned_role in possible_item.excludefromjob))
 			approved_targets += possible_item
-	return set_target(safepick(possible_items))
+	return set_target(safepick(approved_targets))
 
-/datum/objective/steal/proc/set_target(var/datum/objective_item/item)
+/datum/objective/steal/proc/set_target(datum/objective_item/item)
 	if(item)
 		targetinfo = item
 
 		steal_target = targetinfo.targetitem
 		explanation_text = "Steal [targetinfo.name]."
 		dangerrating = targetinfo.difficulty
+		give_special_equipment()
 		return steal_target
 	else
 		explanation_text = "Free objective"
@@ -401,6 +402,15 @@ var/global/list/possible_items = list()
 				return 1
 	return 0
 
+/datum/objective/steal/give_special_equipment()
+	if(owner && owner.current && targetinfo)
+		if(istype(owner.current, /mob/living/carbon/human))
+			var/mob/living/carbon/human/H = owner.current
+			var/list/slots = list ("backpack" = slot_in_backpack)
+			for(var/obj/item/I in targetinfo.special_equipment)
+				H.equip_in_one_of_slots(I, slots)
+				H.update_icons()
+
 var/global/list/possible_items_special = list()
 /datum/objective/steal/special //ninjas are so special they get their own subtype good for them
 
@@ -418,7 +428,7 @@ var/global/list/possible_items_special = list()
 /datum/objective/steal/exchange
 	dangerrating = 10
 
-/datum/objective/steal/exchange/proc/set_faction(var/faction,var/otheragent)
+/datum/objective/steal/exchange/proc/set_faction(faction,otheragent)
 	target = otheragent
 	if(faction == "red")
 		targetinfo = new/datum/objective_item/unique/docs_blue
@@ -439,7 +449,7 @@ var/global/list/possible_items_special = list()
 /datum/objective/steal/exchange/backstab
 	dangerrating = 3
 
-/datum/objective/steal/exchange/backstab/set_faction(var/faction)
+/datum/objective/steal/exchange/backstab/set_faction(faction)
 	if(faction == "red")
 		targetinfo = new/datum/objective_item/unique/docs_red
 	else if(faction == "blue")
@@ -489,7 +499,7 @@ var/global/list/possible_items_special = list()
 
 /datum/objective/capture/proc/gen_amount_goal()
 		target_amount = rand(5,10)
-		explanation_text = "Accumulate [target_amount] capture point\s. It is better if they remain relatively unharmed."
+		explanation_text = "Capture [target_amount] lifeform\s with an energy net. Live, rare specimens are worth more."
 		return target_amount
 
 /datum/objective/capture/check_completion()//Basically runs through all the mobs in the area to determine how much they are worth.
@@ -527,7 +537,7 @@ var/global/list/possible_items_special = list()
 /datum/objective/absorb
 	dangerrating = 10
 
-/datum/objective/absorb/proc/gen_amount_goal(var/lowbound = 4, var/highbound = 6)
+/datum/objective/absorb/proc/gen_amount_goal(lowbound = 4, highbound = 6)
 	target_amount = rand (lowbound,highbound)
 	if (ticker)
 		var/n_p = 1 //autowin

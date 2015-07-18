@@ -121,7 +121,7 @@
 				env.merge(removed)
 				air_update_turf()
 
-/obj/machinery/r_n_d/server/attackby(var/obj/item/O as obj, var/mob/user as mob, params)
+/obj/machinery/r_n_d/server/attackby(obj/item/O, mob/user, params)
 	if (disabled)
 		return
 	if (shocked)
@@ -256,7 +256,7 @@
 	updateUsrDialog()
 	return
 
-/obj/machinery/computer/rdservercontrol/attack_hand(mob/user as mob)
+/obj/machinery/computer/rdservercontrol/attack_hand(mob/user)
 	if(..())
 		return
 	user.set_machine(src)
@@ -317,12 +317,12 @@
 	onclose(user, "server_control")
 	return
 
-/obj/machinery/computer/rdservercontrol/attackby(var/obj/item/weapon/D as obj, var/mob/user as mob, params)
+/obj/machinery/computer/rdservercontrol/attackby(obj/item/weapon/D, mob/user, params)
 	..()
 	src.updateUsrDialog()
 	return
 
-/obj/machinery/computer/rdservercontrol/emag_act(mob/user as mob)
+/obj/machinery/computer/rdservercontrol/emag_act(mob/user)
 	if(!emagged)
 		playsound(src.loc, 'sound/effects/sparks4.ogg', 75, 1)
 		emagged = 1

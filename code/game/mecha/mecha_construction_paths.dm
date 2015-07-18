@@ -34,7 +34,7 @@
 			S.use(5)
 	return 1
 
-/datum/construction/reversible/mecha/custom_action(index as num, diff as num, atom/used_atom, mob/user as mob)
+/datum/construction/reversible/mecha/custom_action(index as num, diff as num, atom/used_atom, mob/user)
 	if(istype(used_atom, /obj/item/weapon/weldingtool))
 		var/obj/item/weapon/weldingtool/W = used_atom
 		if (W.remove_fuel(0, user))
@@ -81,7 +81,7 @@
 	qdel(used_atom)
 	return 1
 
-/datum/construction/mecha/ripley_chassis/action(atom/used_atom,mob/user as mob)
+/datum/construction/mecha/ripley_chassis/action(atom/used_atom,mob/user)
 	return check_all_steps(used_atom,user)
 
 /datum/construction/mecha/ripley_chassis/spawn_result()
@@ -155,7 +155,7 @@
 					 		"desc"="The hydraulic systems are disconnected.")
 					)
 
-/datum/construction/reversible/mecha/ripley/action(atom/used_atom,mob/user as mob)
+/datum/construction/reversible/mecha/ripley/action(atom/used_atom,mob/user)
 	return check_step(used_atom,user)
 
 /datum/construction/reversible/mecha/ripley/custom_action(index, diff, atom/used_atom, mob/user)
@@ -291,7 +291,7 @@
 	qdel(used_atom)
 	return 1
 
-/datum/construction/mecha/gygax_chassis/action(atom/used_atom,mob/user as mob)
+/datum/construction/mecha/gygax_chassis/action(atom/used_atom,mob/user)
 	return check_all_steps(used_atom,user)
 
 /datum/construction/mecha/gygax_chassis/spawn_result()
@@ -388,7 +388,7 @@
 					 		"desc"="The hydraulic systems are disconnected.")
 					)
 
-/datum/construction/reversible/mecha/gygax/action(atom/used_atom,mob/user as mob)
+/datum/construction/reversible/mecha/gygax/action(atom/used_atom,mob/user)
 	return check_step(used_atom,user)
 
 /datum/construction/reversible/mecha/gygax/custom_action(index, diff, atom/used_atom, mob/user)
@@ -570,7 +570,7 @@
 	qdel(used_atom)
 	return 1
 
-/datum/construction/mecha/firefighter_chassis/action(atom/used_atom,mob/user as mob)
+/datum/construction/mecha/firefighter_chassis/action(atom/used_atom,mob/user)
 	return check_all_steps(used_atom,user)
 
 /datum/construction/mecha/firefighter_chassis/spawn_result()
@@ -648,7 +648,7 @@
 					 		"desc"="The hydraulic systems are disconnected.")
 					)
 
-/datum/construction/reversible/mecha/firefighter/action(atom/used_atom,mob/user as mob)
+/datum/construction/reversible/mecha/firefighter/action(atom/used_atom,mob/user)
 	return check_step(used_atom,user)
 
 /datum/construction/reversible/mecha/firefighter/custom_action(index, diff, atom/used_atom, mob/user)
@@ -788,7 +788,7 @@
 					 list("key"=/obj/item/mecha_parts/part/honker_head)
 					)
 
-/datum/construction/mecha/honker_chassis/action(atom/used_atom,mob/user as mob)
+/datum/construction/mecha/honker_chassis/action(atom/used_atom,mob/user)
 	return check_all_steps(used_atom,user)
 
 /datum/construction/mecha/honker_chassis/custom_action(step, atom/used_atom, mob/user)
@@ -820,7 +820,7 @@
 					 list("key"=/obj/item/weapon/bikehorn),//11
 					 )
 
-/datum/construction/mecha/honker/action(atom/used_atom,mob/user as mob)
+/datum/construction/mecha/honker/action(atom/used_atom,mob/user)
 	return check_step(used_atom,user)
 
 /datum/construction/mecha/honker/custom_action(step, atom/used_atom, mob/user)
@@ -870,7 +870,7 @@
 	qdel(used_atom)
 	return 1
 
-/datum/construction/mecha/durand_chassis/action(atom/used_atom,mob/user as mob)
+/datum/construction/mecha/durand_chassis/action(atom/used_atom,mob/user)
 	return check_all_steps(used_atom,user)
 
 /datum/construction/mecha/durand_chassis/spawn_result()
@@ -967,7 +967,7 @@
 					)
 
 
-/datum/construction/reversible/mecha/durand/action(atom/used_atom,mob/user as mob)
+/datum/construction/reversible/mecha/durand/action(atom/used_atom,mob/user)
 	return check_step(used_atom,user)
 
 /datum/construction/reversible/mecha/durand/custom_action(index, diff, atom/used_atom, mob/user)
@@ -1152,7 +1152,7 @@
 	qdel(used_atom)
 	return 1
 
-/datum/construction/mecha/phazon_chassis/action(atom/used_atom,mob/user as mob)
+/datum/construction/mecha/phazon_chassis/action(atom/used_atom,mob/user)
 	return check_all_steps(used_atom,user)
 
 /datum/construction/mecha/phazon_chassis/spawn_result()
@@ -1266,7 +1266,7 @@
 					)
 
 
-/datum/construction/reversible/mecha/phazon/action(atom/used_atom,mob/user as mob)
+/datum/construction/reversible/mecha/phazon/action(atom/used_atom,mob/user)
 	return check_step(used_atom,user)
 
 /datum/construction/reversible/mecha/phazon/custom_action(index, diff, atom/used_atom, mob/user)
@@ -1477,7 +1477,7 @@
 	qdel(used_atom)
 	return 1
 
-/datum/construction/mecha/odysseus_chassis/action(atom/used_atom,mob/user as mob)
+/datum/construction/mecha/odysseus_chassis/action(atom/used_atom,mob/user)
 	return check_all_steps(used_atom,user)
 
 /datum/construction/mecha/odysseus_chassis/spawn_result()
@@ -1550,7 +1550,7 @@
 					 		"desc"="The hydraulic systems are disconnected.")
 					)
 
-/datum/construction/reversible/mecha/odysseus/action(atom/used_atom,mob/user as mob)
+/datum/construction/reversible/mecha/odysseus/action(atom/used_atom,mob/user)
 	return check_step(used_atom,user)
 
 /datum/construction/reversible/mecha/odysseus/custom_action(index, diff, atom/used_atom, mob/user)

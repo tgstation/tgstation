@@ -1,7 +1,6 @@
 	////////////
 	//SECURITY//
 	////////////
-#define TOPIC_SPAM_DELAY	2		//2 ticks is about 2/10ths of a second; it was 4 ticks, but that caused too many clicks to be lost due to lag
 #define UPLOAD_LIMIT		1048576	//Restricts client uploads to the server to 1MB //Could probably do with being lower.
 #define MIN_CLIENT_VERSION	0		//Just an ambiguously low version for now, I don't want to suddenly stop people playing.
 									//I would just like the code ready should it ever need to be used.
@@ -23,11 +22,6 @@
 /client/Topic(href, href_list, hsrc)
 	if(!usr || usr != mob)	//stops us calling Topic for somebody else's client. Also helps prevent usr=null
 		return
-
-	//Reduces spamming of links by dropping calls that happen during the delay period
-	if(next_allowed_topic_time > world.time)
-		return
-	next_allowed_topic_time = world.time + TOPIC_SPAM_DELAY
 
 	//Admin PM
 	if(href_list["priv_msg"])
@@ -55,7 +49,7 @@
 		return 0
 	return 1
 
-/client/proc/handle_spam_prevention(var/message, var/mute_type)
+/client/proc/handle_spam_prevention(message, mute_type)
 	if(config.automute_on && !holder && src.last_message == message)
 		src.last_message_count++
 		if(src.last_message_count >= SPAM_TRIGGER_AUTOMUTE)
@@ -169,6 +163,11 @@ var/next_external_rsc = 0
 
 	send_resources()
 
+	if(!void)
+		void = new()
+
+	screen += void
+
 	if(prefs.lastchangelog != changelog_hash) //bolds the changelog button on the interface so we know there are updates.
 		src << "<span class='info'>You have unread updates in the changelog.</span>"
 		if(config.aggressive_changelog)
@@ -279,6 +278,11 @@ var/next_external_rsc = 0
 		for (var/type in typesof(/datum/html_interface))
 			hi = new type(null)
 			hi.sendResources(src)
+
+	// Preload the crew monitor. This needs to be done due to BYOND bug http://www.byond.com/forum/?post=1487244
+	spawn
+		if (crewmonitor && crewmonitor.initialized)
+			crewmonitor.sendResources(src)
 
 	//Send nanoui files to client
 	SSnano.send_resources(src)

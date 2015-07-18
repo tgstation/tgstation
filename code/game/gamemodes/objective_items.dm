@@ -6,10 +6,10 @@
 	var/difficulty = 9001							//vaguely how hard it is to do this objective
 	var/list/excludefromjob = list()				//If you don't want a job to get a certain objective (no captain stealing his own medal, etcetc)
 	var/list/altitems = list()				//Items which can serve as an alternative to the objective (darn you blueprints)
+	var/list/special_equipment = list()
 
 /datum/proc/check_special_completion() //for objectives with special checks (is that slime extract unused? does that intellicard have an ai in it? etcetc)
 	return 1
-
 
 /datum/objective_item/steal/caplaser
 	name = "the captain's antique laser gun"
@@ -28,12 +28,6 @@
 	targetitem = /obj/item/weapon/hand_tele
 	difficulty = 5
 	excludefromjob = list("Captain")
-
-/datum/objective_item/steal/rcd
-	name = "a rapid-construction-device"
-	targetitem = /obj/item/weapon/rcd
-	difficulty = 3
-	excludefromjob = list("Chief Engineer", "Quartermaster", "Cargo Technician")
 
 /datum/objective_item/steal/jetpack
 	name = "a jetpack"
@@ -82,6 +76,14 @@
 	targetitem = /obj/item/documents //Any set of secret documents. Doesn't have to be NT's
 	difficulty = 5
 
+/datum/objective_item/steal/nuke_core
+	name = "the plutonium core from the onboard self-destruct"
+	targetitem = /obj/item/nuke_core
+	difficulty = 15
+
+/datum/objective_item/steal/nuke_core/New()
+	special_equipment += new /obj/item/weapon/storage/box/syndie_kit/nuke()
+
 //Items with special checks!
 /datum/objective_item/steal/plasma
 	name = "28 moles of plasma (full tank)"
@@ -89,7 +91,7 @@
 	difficulty = 3
 	excludefromjob = list("Chief Engineer","Research Director","Station Engineer","Scientist","Atmospheric Technician")
 
-/datum/objective_item/plasma/check_special_completion(var/obj/item/weapon/tank/T)
+/datum/objective_item/plasma/check_special_completion(obj/item/weapon/tank/T)
 	var/target_amount = text2num(name)
 	var/found_amount = 0
 	found_amount += T.air_contents.toxins
@@ -101,7 +103,7 @@
 	targetitem = /obj/item/device/aicard
 	difficulty = 20 //beyond the impossible
 
-/datum/objective_item/functionalai/check_special_completion(var/obj/item/device/aicard/C)
+/datum/objective_item/functionalai/check_special_completion(obj/item/device/aicard/C)
 	for(var/mob/living/silicon/ai/A in C)
 		if(istype(A, /mob/living/silicon/ai) && A.stat != 2) //See if any AI's are alive inside that card.
 			return 1
@@ -114,7 +116,7 @@
 	excludefromjob = list("Chief Engineer")
 	altitems = list(/obj/item/weapon/photo)
 
-/datum/objective_item/blueprints/check_special_completion(var/obj/item/I)
+/datum/objective_item/blueprints/check_special_completion(obj/item/I)
 	if(istype(I, /obj/item/areaeditor/blueprints))
 		return 1
 	if(istype(I, /obj/item/weapon/photo))
@@ -129,7 +131,7 @@
 	difficulty = 3
 	excludefromjob = list("Research Director","Scientist")
 
-/datum/objective_item/slime/check_special_completion(var/obj/item/slime_extract/E)
+/datum/objective_item/slime/check_special_completion(obj/item/slime_extract/E)
 	if(E.Uses > 0)
 		return 1
 	return 0
@@ -187,7 +189,7 @@
 	targetitem = /obj/item/stack/sheet/cardboard
 	difficulty = 9001
 
-/datum/objective_item/stack/check_special_completion(var/obj/item/stack/S)
+/datum/objective_item/stack/check_special_completion(obj/item/stack/S)
 	var/target_amount = text2num(name)
 	var/found_amount = 0
 

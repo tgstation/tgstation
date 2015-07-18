@@ -1,12 +1,11 @@
 /obj/structure/window
 	name = "window"
 	desc = "A window."
-	icon = 'icons/obj/structures.dmi'
 	icon_state = "window"
 	density = 1
 	layer = 3.2//Just above doors
 	pressure_resistance = 4*ONE_ATMOSPHERE
-	anchored = 1.0
+	anchored = 1 //initially is 0 for tile smoothing
 	flags = ON_BORDER
 	var/maxhealth = 25
 	var/health = 0
@@ -19,6 +18,8 @@
 	var/list/storeditems = list()
 //	var/silicate = 0 // number of units of silicate
 //	var/icon/silicateIcon = null // the silicated icon
+	var/image/crack_overlay
+	can_be_unanchored = 1
 
 /obj/structure/window/New(Loc,re=0)
 	..()
@@ -37,11 +38,10 @@
 			R.add(1)
 
 	air_update_turf(1)
-	update_nearby_icons()
 
 	return
 
-/obj/structure/window/bullet_act(var/obj/item/projectile/Proj)
+/obj/structure/window/bullet_act(obj/item/projectile/Proj)
 	if((Proj.damage_type == BRUTE || Proj.damage_type == BURN))
 		health -= Proj.damage
 		update_nearby_icons()
@@ -83,7 +83,7 @@
 		return 1
 
 
-/obj/structure/window/CheckExit(atom/movable/O as mob|obj, target as turf)
+/obj/structure/window/CheckExit(atom/movable/O as mob|obj, target)
 	if(istype(O) && O.checkpass(PASSGLASS))
 		return 1
 	if(get_dir(O.loc, target) == dir)
@@ -115,7 +115,7 @@
 		spawnfragments()
 	update_nearby_icons()
 
-/obj/structure/window/attack_tk(mob/user as mob)
+/obj/structure/window/attack_tk(mob/user)
 	user.changeNext_move(CLICK_CD_MELEE)
 	user.visible_message("<span class='notice'>Something knocks on [src].</span>")
 	add_fingerprint(user)
@@ -131,7 +131,7 @@
 	hit(50)
 	return 1
 
-/obj/structure/window/attack_hand(mob/user as mob)
+/obj/structure/window/attack_hand(mob/user)
 	if(!can_be_reached(user))
 		return
 	user.changeNext_move(CLICK_CD_MELEE)
@@ -139,11 +139,11 @@
 	add_fingerprint(user)
 	playsound(loc, 'sound/effects/Glassknock.ogg', 50, 1)
 
-/obj/structure/window/attack_paw(mob/user as mob)
+/obj/structure/window/attack_paw(mob/user)
 	return attack_hand(user)
 
 
-/obj/structure/window/proc/attack_generic(mob/user as mob, damage = 0)	//used by attack_alien, attack_animal, and attack_slime
+/obj/structure/window/proc/attack_generic(mob/user, damage = 0)	//used by attack_alien, attack_animal, and attack_slime
 	if(!can_be_reached(user))
 		return
 	user.changeNext_move(CLICK_CD_MELEE)
@@ -156,13 +156,13 @@
 		playsound(loc, 'sound/effects/Glasshit.ogg', 100, 1)
 
 
-/obj/structure/window/attack_alien(mob/living/user as mob)
+/obj/structure/window/attack_alien(mob/living/user)
 	user.do_attack_animation(src)
 	if(islarva(user)) return
 	attack_generic(user, 15)
 	update_nearby_icons()
 
-/obj/structure/window/attack_animal(mob/living/user as mob)
+/obj/structure/window/attack_animal(mob/living/user)
 	if(!isanimal(user))
 		return
 
@@ -174,7 +174,7 @@
 	attack_generic(M, M.melee_damage_upper)
 	update_nearby_icons()
 
-/obj/structure/window/attack_slime(mob/living/simple_animal/slime/user as mob)
+/obj/structure/window/attack_slime(mob/living/simple_animal/slime/user)
 	user.do_attack_animation(src)
 	if(!user.is_adult)
 		return
@@ -229,6 +229,7 @@
 					playsound(loc, 'sound/items/Welder2.ogg', 50, 1)
 		else
 			user << "<span class='warning'>[src] is already in good condition!</span>"
+			return
 		update_nearby_icons()
 
 	else if(istype(I, /obj/item/weapon/wrench) && !anchored)
@@ -256,6 +257,8 @@
 			disassembled = 1
 			user << "<span class='notice'>You successfully disassemble [src].</span>"
 			qdel(src)
+	else if(istype(I, /obj/item/weapon/rcd)) //Do not attack the window if the user is holding an RCD
+		return
 
 	else
 		if(I.damtype == BRUTE || I.damtype == BURN)
@@ -279,7 +282,7 @@
 					return 0
 	return 1
 
-/obj/structure/window/proc/hit(var/damage, var/sound_effect = 1)
+/obj/structure/window/proc/hit(damage, sound_effect = 1)
 	if(reinf)
 		damage *= 0.5
 	health = max(0, health - damage)
@@ -341,7 +344,7 @@
 
 
 /*
-/obj/structure/window/proc/updateSilicate()
+/obj/structure/window/proc/updateSilicate() what do you call a syndicate silicon?
 	if(silicateIcon && silicate)
 		icon = initial(icon)
 
@@ -380,9 +383,8 @@
 //This proc is used to update the icons of nearby windows.
 /obj/structure/window/proc/update_nearby_icons()
 	update_icon()
-	for(var/direction in cardinal)
-		for(var/obj/structure/window/W in get_step(src,direction) )
-			W.update_icon()
+	if(smooth)
+		smooth_icon_neighbors(src)
 
 //merges adjacent full-tile windows into one (blatant ripoff from game/smoothwall.dm)
 /obj/structure/window/update_icon()
@@ -393,23 +395,21 @@
 		if(!src) return
 		if(!fulltile)
 			return
-		var/junction = 0 //will be used to determine from which side the window is connected to other windows
-		if(anchored)
-			for(var/obj/structure/window/W in orange(src,1))
-				if(W.anchored && W.density	&& W.fulltile) //Only counts anchored, not-destroyed fill-tile windows.
-					if(src.wtype == W.wtype)
-						if(abs(x-W.x)-abs(y-W.y) ) 		//doesn't count windows, placed diagonally to src
-							junction |= get_dir(src,W)
-		icon_state = "[initial(icon_state)][junction]"
 
-		overlays.Cut()
 		var/ratio = health / maxhealth
 		ratio = Ceiling(ratio*4) * 25
-		overlays += "damage[ratio]"
-		return
+
+		if(smooth)
+			smooth_icon(src)
+
+		overlays -= crack_overlay
+		if(ratio > 75)
+			return
+		crack_overlay = image('icons/obj/structures.dmi',"damage[ratio]",-(layer+0.1))
+		overlays += crack_overlay
 
 /obj/structure/window/temperature_expose(datum/gas_mixture/air, exposed_temperature, exposed_volume)
-	if(exposed_temperature > T0C + 800)
+	if(exposed_temperature > T0C + (reinf ? 1600 : 800))
 		hit(round(exposed_volume / 100), 0)
 	..()
 
@@ -421,6 +421,7 @@
 	icon_state = "rwindow"
 	reinf = 1
 	maxhealth = 50
+	explosion_block = 1
 
 /obj/structure/window/reinforced/tinted
 	name = "tinted window"
@@ -435,25 +436,41 @@
 /* Full Tile Windows (more health) */
 
 /obj/structure/window/fulltile
+	icon = 'icons/obj/smooth_structures/window.dmi'
+	icon_state = "window"
 	dir = 5
 	maxhealth = 50
 	fulltile = 1
+	smooth = 1
+	canSmoothWith = list(/obj/structure/window/fulltile, /obj/structure/window/reinforced/fulltile, /obj/structure/window/reinforced/tinted/fulltile)
 
 /obj/structure/window/reinforced/fulltile
+	icon = 'icons/obj/smooth_structures/reinforced_window.dmi'
+	icon_state = "r_window"
 	dir = 5
 	maxhealth = 100
 	fulltile = 1
+	smooth = 1
+	canSmoothWith = list(/obj/structure/window/fulltile, /obj/structure/window/reinforced/fulltile, /obj/structure/window/reinforced/tinted/fulltile)
 
 /obj/structure/window/reinforced/tinted/fulltile
+	icon = 'icons/obj/smooth_structures/tinted_window.dmi'
+	icon_state = "tinted_window"
 	dir = 5
 	fulltile = 1
+	smooth = 1
+	canSmoothWith = list(/obj/structure/window/fulltile, /obj/structure/window/reinforced/fulltile, /obj/structure/window/reinforced/tinted/fulltile)
 
 /obj/structure/window/shuttle
 	name = "shuttle window"
 	desc = "A reinforced, air-locked pod window."
-	icon_state = "swindow"
+	icon = 'icons/obj/smooth_structures/shuttle_window.dmi'
+	icon_state = "shuttle_window"
 	dir = 5
 	maxhealth = 100
 	wtype = "shuttle"
 	fulltile = 1
 	reinf = 1
+	smooth = 1
+	canSmoothWith = null
+	explosion_block = 1

@@ -7,8 +7,7 @@
 	w_class = 2
 	flags = CONDUCT
 	slot_flags = SLOT_BELT
-	m_amt = 50
-	g_amt = 20
+	materials = list(MAT_METAL=50, MAT_GLASS=20)
 	action_button_name = "Toggle Light"
 	var/on = 0
 	var/brightness_on = 4 //luminosity when on
@@ -22,7 +21,7 @@
 		icon_state = initial(icon_state)
 		SetLuminosity(0)
 
-/obj/item/device/flashlight/proc/update_brightness(var/mob/user = null)
+/obj/item/device/flashlight/proc/update_brightness(mob/user = null)
 	if(on)
 		icon_state = "[initial(icon_state)]-on"
 		if(loc == user)
@@ -45,7 +44,7 @@
 	return 1
 
 
-/obj/item/device/flashlight/attack(mob/living/carbon/human/M as mob, mob/living/carbon/human/user as mob)
+/obj/item/device/flashlight/attack(mob/living/carbon/human/M, mob/living/carbon/human/user)
 	add_fingerprint(user)
 	if(on && user.zone_sel.selecting == "eyes")
 
@@ -120,7 +119,7 @@
 			return
 	..()
 
-/obj/item/device/flashlight/pen/proc/CreateHolo(var/tturf,var/creator)
+/obj/item/device/flashlight/pen/proc/CreateHolo(tturf,creator)
 	var/obj/effect/medical_holosign/M = new /obj/effect/medical_holosign(tturf)
 	M.visible_message("<span class='danger'>[creator] created a medical hologram!</span>")
 	holo_cooldown = 1
@@ -160,8 +159,7 @@
 	brightness_on = 5
 	w_class = 4
 	flags = CONDUCT
-	m_amt = 0
-	g_amt = 0
+	materials = list()
 	on = 1
 
 
@@ -227,7 +225,7 @@ obj/item/device/flashlight/lamp/bananalamp
 	else
 		update_brightness(null)
 
-/obj/item/device/flashlight/flare/update_brightness(var/mob/user = null)
+/obj/item/device/flashlight/flare/update_brightness(mob/user = null)
 	..()
 	if(on)
 		item_state = "[initial(item_state)]-on"
@@ -276,8 +274,7 @@ obj/item/device/flashlight/lamp/bananalamp
 	item_state = "slime"
 	w_class = 2
 	slot_flags = SLOT_BELT
-	m_amt = 0
-	g_amt = 0
+	materials = list()
 	brightness_on = 6 //luminosity when on
 
 /obj/item/device/flashlight/emp
@@ -303,7 +300,7 @@ obj/item/device/flashlight/lamp/bananalamp
 		emp_cur_charges = min(emp_cur_charges+1, emp_max_charges)
 		return 1
 
-/obj/item/device/flashlight/emp/attack(mob/living/M as mob, mob/living/user as mob)
+/obj/item/device/flashlight/emp/attack(mob/living/M, mob/living/user)
 	if(on && user.zone_sel.selecting == "eyes") // call original attack proc only if aiming at the eyes
 		..()
 	return
@@ -316,7 +313,7 @@ obj/item/device/flashlight/lamp/bananalamp
 											"<span class='userdanger'>[user] blinks \the [src] at \the [A].")
 		if(ismob(A))
 			var/mob/M = A
-			add_logs(user, M, "attacked", object="EMP-light")
+			add_logs(user, M, "attacked", "EMP-light")
 		user << "\The [src] now has [emp_cur_charges] charge\s."
 		A.emp_act(1)
 	else

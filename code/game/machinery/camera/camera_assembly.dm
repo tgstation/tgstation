@@ -6,8 +6,7 @@
 	w_class = 2
 	anchored = 0
 
-	m_amt = 400
-	g_amt = 250
+	materials = list(MAT_METAL=400, MAT_GLASS=250)
 
 	//	Motion, EMP-Proof, X-Ray
 	var/list/obj/item/possible_upgrades = list(/obj/item/device/assembly/prox_sensor, /obj/item/stack/sheet/mineral/plasma, /obj/item/device/analyzer)
@@ -22,7 +21,7 @@
 				4 = Screwdriver panel closed and is fully built (you cannot attach upgrades)
 	*/
 
-/obj/item/weapon/camera_assembly/attackby(obj/item/W as obj, mob/living/user as mob, params)
+/obj/item/weapon/camera_assembly/attackby(obj/item/W, mob/living/user, params)
 
 	switch(state)
 
@@ -146,11 +145,11 @@
 	else
 		icon_state = "cameracase"
 
-/obj/item/weapon/camera_assembly/attack_hand(mob/user as mob)
+/obj/item/weapon/camera_assembly/attack_hand(mob/user)
 	if(!anchored)
 		..()
 
-/obj/item/weapon/camera_assembly/proc/weld(var/obj/item/weapon/weldingtool/WT, var/mob/living/user)
+/obj/item/weapon/camera_assembly/proc/weld(obj/item/weapon/weldingtool/WT, mob/living/user)
 
 	if(busy)
 		return 0

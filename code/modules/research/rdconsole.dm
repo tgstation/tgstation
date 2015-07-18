@@ -52,7 +52,7 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 	var/list/datum/design/matching_designs = list() //for the search function
 
 
-/obj/machinery/computer/rdconsole/proc/CallTechName(var/ID) //A simple helper proc to find the name of a tech with a given ID.
+/obj/machinery/computer/rdconsole/proc/CallTechName(ID) //A simple helper proc to find the name of a tech with a given ID.
 	var/datum/tech/check_tech
 	var/return_name = null
 	for(var/T in typesof(/datum/tech) - /datum/tech)
@@ -66,7 +66,7 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 
 	return return_name
 
-/obj/machinery/computer/rdconsole/proc/CallMaterialName(var/ID)
+/obj/machinery/computer/rdconsole/proc/CallMaterialName(ID)
 	var/datum/reagent/temp_reagent
 	var/return_name = null
 	if (copytext(ID, 1, 2) == "$")
@@ -144,7 +144,7 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 	griefProtection()
 */
 
-/obj/machinery/computer/rdconsole/attackby(var/obj/item/weapon/D as obj, var/mob/user as mob, params)
+/obj/machinery/computer/rdconsole/attackby(obj/item/weapon/D, mob/user, params)
 
 	//Loading a disk into it.
 	if(istype(D, /obj/item/weapon/disk))
@@ -166,7 +166,7 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 	src.updateUsrDialog()
 	return
 
-/obj/machinery/computer/rdconsole/emag_act(mob/user as mob)
+/obj/machinery/computer/rdconsole/emag_act(mob/user)
 	if(!emagged)
 		playsound(src.loc, 'sound/effects/sparks4.ogg', 75, 1)
 		emagged = 1
@@ -276,8 +276,8 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 							else                                                                   //Same design always gain quality
 								screen = 2.3                                                       //Crit fail gives the same design a lot of reliability, like really a lot
 							if(linked_lathe) //Also sends salvaged materials to a linked protolathe, if any.
-								linked_lathe.m_amount += min((linked_lathe.max_material_storage - linked_lathe.TotalMaterials()), (linked_destroy.loaded_item.m_amt*(linked_destroy.decon_mod/10)))
-								linked_lathe.g_amount += min((linked_lathe.max_material_storage - linked_lathe.TotalMaterials()), (linked_destroy.loaded_item.g_amt*(linked_destroy.decon_mod/10)))
+								linked_lathe.m_amount += min((linked_lathe.max_material_storage - linked_lathe.TotalMaterials()), (linked_destroy.loaded_item.materials[MAT_METAL]*(linked_destroy.decon_mod/10)))
+								linked_lathe.g_amount += min((linked_lathe.max_material_storage - linked_lathe.TotalMaterials()), (linked_destroy.loaded_item.materials[MAT_GLASS]*(linked_destroy.decon_mod/10)))
 								feedback_add_details("item_deconstructed","[linked_destroy.loaded_item.name]")
 							linked_destroy.loaded_item = null
 						else
@@ -386,21 +386,21 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 					if(enough_materials)
 						for(var/M in being_built.materials)
 							switch(M)
-								if("$metal")
+								if(MAT_METAL)
 									linked_lathe.m_amount = max(0, (linked_lathe.m_amount-(being_built.materials[M]/coeff * amount)))
-								if("$glass")
+								if(MAT_GLASS)
 									linked_lathe.g_amount = max(0, (linked_lathe.g_amount-(being_built.materials[M]/coeff * amount)))
-								if("$gold")
+								if(MAT_GOLD)
 									linked_lathe.gold_amount = max(0, (linked_lathe.gold_amount-(being_built.materials[M]/coeff * amount)))
-								if("$silver")
+								if(MAT_SILVER)
 									linked_lathe.silver_amount = max(0, (linked_lathe.silver_amount-(being_built.materials[M]/coeff * amount)))
-								if("$plasma")
+								if(MAT_PLASMA)
 									linked_lathe.plasma_amount = max(0, (linked_lathe.plasma_amount-(being_built.materials[M]/coeff * amount)))
-								if("$uranium")
+								if(MAT_URANIUM)
 									linked_lathe.uranium_amount = max(0, (linked_lathe.uranium_amount-(being_built.materials[M]/coeff * amount)))
-								if("$diamond")
+								if(MAT_DIAMOND)
 									linked_lathe.diamond_amount = max(0, (linked_lathe.diamond_amount-(being_built.materials[M]/coeff * amount)))
-								if("$bananium")
+								if(MAT_BANANIUM)
 									linked_lathe.clown_amount = max(0, (linked_lathe.clown_amount-(being_built.materials[M]/coeff * amount)))
 								else
 									linked_lathe.reagents.remove_reagent(M, being_built.materials[M]/coeff * amount)
@@ -415,8 +415,8 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 								if( new_item.type == /obj/item/weapon/storage/backpack/holding )
 									new_item.investigate_log("built by [key]","singulo")
 								new_item.reliability = R
-								new_item.m_amt /= coeff
-								new_item.g_amt /= coeff
+								new_item.materials[MAT_METAL] /= coeff
+								new_item.materials[MAT_GLASS] /= coeff
 								if(linked_lathe.hacked)
 									R = max((new_item.reliability/2), 0)
 								new_item.loc = linked_lathe.loc
@@ -460,11 +460,11 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 							g2g = 0
 							break
 						switch(M)
-							if("$glass")
+							if(MAT_GLASS)
 								linked_imprinter.g_amount = max(0, (linked_imprinter.g_amount-being_built.materials[M]/coeff))
-							if("$gold")
+							if(MAT_GOLD)
 								linked_imprinter.gold_amount = max(0, (linked_imprinter.gold_amount-being_built.materials[M]/coeff))
-							if("$diamond")
+							if(MAT_DIAMOND)
 								linked_imprinter.diamond_amount = max(0, (linked_imprinter.diamond_amount-being_built.materials[M]/coeff))
 							else
 								linked_imprinter.reagents.remove_reagent(M, being_built.materials[M]/coeff)
@@ -603,7 +603,7 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 	return
 
 
-/obj/machinery/computer/rdconsole/attack_hand(mob/user as mob)
+/obj/machinery/computer/rdconsole/attack_hand(mob/user)
 	if(..())
 		return
 	interact(user)
@@ -1063,7 +1063,7 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 	return
 
 //helper proc, which return a table containing categories
-/obj/machinery/computer/rdconsole/proc/list_categories(var/list/categories, var/menu_num as num)
+/obj/machinery/computer/rdconsole/proc/list_categories(list/categories, menu_num as num)
 	if(!categories)
 		return
 

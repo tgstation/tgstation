@@ -287,7 +287,7 @@
 		return
 
 
-/obj/machinery/ai_status_display/proc/set_picture(var/state)
+/obj/machinery/ai_status_display/proc/set_picture(state)
 	picture_state = state
 	if(overlays.len)
 		overlays.Cut()

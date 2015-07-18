@@ -53,7 +53,7 @@
 		icon_state = "biogen-work"
 	return
 
-/obj/machinery/biogenerator/attackby(var/obj/item/O as obj, var/mob/user as mob, params)
+/obj/machinery/biogenerator/attackby(obj/item/O, mob/user, params)
 	if(istype(O, /obj/item/weapon/reagent_containers/glass) && !panel_open)
 		if(beaker)
 			user << "<span class='warning'>A container is already loaded into the machine.</span>"
@@ -113,7 +113,7 @@
 	update_icon()
 	return
 
-/obj/machinery/biogenerator/interact(mob/user as mob)
+/obj/machinery/biogenerator/interact(mob/user)
 	if(stat & BROKEN || panel_open)
 		return
 	user.set_machine(src)
@@ -179,7 +179,7 @@
 	popup.open()
 	return
 
-/obj/machinery/biogenerator/attack_hand(mob/user as mob)
+/obj/machinery/biogenerator/attack_hand(mob/user)
 	interact(user)
 
 /obj/machinery/biogenerator/proc/activate()
@@ -210,7 +210,7 @@
 		menustat = "void"
 	return
 
-/obj/machinery/biogenerator/proc/check_cost(var/cost)
+/obj/machinery/biogenerator/proc/check_cost(cost)
 	if (cost > points)
 		menustat = "nopoints"
 		return 1
@@ -221,12 +221,12 @@
 		updateUsrDialog()
 		return 0
 
-/obj/machinery/biogenerator/proc/check_container_volume(var/reagent_amount)
+/obj/machinery/biogenerator/proc/check_container_volume(reagent_amount)
 	if(beaker.reagents.total_volume + reagent_amount > beaker.reagents.maximum_volume)
 		menustat = "nobeakerspace"
 		return 1
 
-/obj/machinery/biogenerator/proc/create_product(var/create)
+/obj/machinery/biogenerator/proc/create_product(create)
 	switch(create)
 		if("milk")
 			if(check_container_volume(10)) return 0

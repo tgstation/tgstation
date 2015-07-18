@@ -278,7 +278,7 @@
 		..()
 
 
-/obj/machinery/vending/default_deconstruction_crowbar(var/obj/item/O)
+/obj/machinery/vending/default_deconstruction_crowbar(obj/item/O)
 	var/list/all_products = product_records + hidden_records + coin_records
 	for(var/datum/data/vending_product/machine_content in all_products)
 		while(machine_content.amount !=0)
@@ -296,7 +296,7 @@
 				break
 	..()
 
-/obj/machinery/vending/emag_act(user as mob)
+/obj/machinery/vending/emag_act(mob/user)
 	if(!emagged)
 		emagged  = 1
 		user << "<span class='notice'>You short out the product lock on [src].</span>"
@@ -904,7 +904,7 @@ IF YOU MODIFY THE PRODUCTS LIST OF A MACHINE, MAKE SURE TO UPDATE ITS RESUPPLY C
 	icon_state = "engivend"
 	icon_deny = "engivend-deny"
 	req_access_txt = "11" //Engineering Equipment access
-	products = list(/obj/item/clothing/glasses/meson/engine = 2,/obj/item/device/multitool = 4,/obj/item/weapon/airlock_electronics = 10,/obj/item/weapon/module/power_control = 10,/obj/item/weapon/airalarm_electronics = 10,/obj/item/weapon/stock_parts/cell/high = 10)
+	products = list(/obj/item/clothing/glasses/meson/engine = 2,/obj/item/device/multitool = 4,/obj/item/weapon/airlock_electronics = 10,/obj/item/weapon/module/power_control = 10,/obj/item/weapon/airalarm_electronics = 10,/obj/item/weapon/stock_parts/cell/high = 10, /obj/item/weapon/rcd/loaded = 3,)
 	contraband = list(/obj/item/weapon/stock_parts/cell/potato = 3)
 	premium = list(/obj/item/weapon/storage/belt/utility = 3)
 

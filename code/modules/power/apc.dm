@@ -112,6 +112,8 @@
 
 /obj/machinery/power/apc/New(turf/loc, var/ndir, var/building=0)
 	..()
+	apcs_list += src
+
 	wires = new(src)
 	// offset 24 pixels in direction of dir
 	// this allows the APC to be embedded in a wall, yet still inside an area
@@ -138,6 +140,8 @@
 			src.update()
 
 /obj/machinery/power/apc/Destroy()
+	apcs_list -= src
+
 	if(malfai && operating)
 		if (ticker.mode.config_tag == "malfunction")
 			if (src.z == ZLEVEL_STATION) //if (is_type_in_list(get_area(src), the_station_areas))
@@ -571,7 +575,7 @@
 				return src.attack_hand(user)
 			..()
 
-/obj/machinery/power/apc/emag_act(mob/user as mob)
+/obj/machinery/power/apc/emag_act(mob/user)
 	if(!emagged && !malfhack)
 		if(opened)
 			user << "<span class='warning'>You must close the cover to swipe an ID card!</span>"
@@ -660,7 +664,7 @@
 		return 0 // 0 = User is not a Malf AI
 
 
-/obj/machinery/power/apc/ui_interact(mob/user, ui_key = "main", var/datum/nanoui/ui = null)
+/obj/machinery/power/apc/ui_interact(mob/user, ui_key = "main", datum/nanoui/ui = null)
 	if(!user)
 		return
 
@@ -733,11 +737,11 @@
 //			world << "[area.power_equip]"
 	area.power_change()
 
-/obj/machinery/power/apc/proc/isWireCut(var/wireIndex)
+/obj/machinery/power/apc/proc/isWireCut(wireIndex)
 	return wires.IsIndexCut(wireIndex)
 
 
-/obj/machinery/power/apc/proc/can_use(mob/user as mob, var/loud = 0) //used by attack_hand() and Topic()
+/obj/machinery/power/apc/proc/can_use(mob/user, loud = 0) //used by attack_hand() and Topic()
 	if (user.stat)
 		user << "<span class='warning'>You must be conscious to use [src]!</span>"
 		return 0
@@ -870,7 +874,7 @@
 	src.update()
 	update_icon()
 
-/obj/machinery/power/apc/proc/malfoccupy(var/mob/living/silicon/ai/malf)
+/obj/machinery/power/apc/proc/malfoccupy(mob/living/silicon/ai/malf)
 	if(!istype(malf))
 		return
 	if(istype(malf.loc, /obj/machinery/power/apc)) // Already in an APC
@@ -901,7 +905,7 @@
 			point.the_disk = src //the pinpointer will detect the shunted AI
 
 
-/obj/machinery/power/apc/proc/malfvacate(var/forced)
+/obj/machinery/power/apc/proc/malfvacate(forced)
 	if(!src.occupier)
 		return
 	if(src.occupier.parent && src.occupier.parent.stat != 2)
@@ -954,7 +958,7 @@
 	else
 		return 0
 
-/obj/machinery/power/apc/add_load(var/amount)
+/obj/machinery/power/apc/add_load(amount)
 	if(terminal && terminal.powernet)
 		terminal.powernet.load += amount
 
@@ -1124,7 +1128,7 @@
 // val 0=off, 1=off(auto) 2=on 3=on(auto)
 // on 0=off, 1=on, 2=autooff
 
-/obj/machinery/power/apc/proc/autoset(var/val, var/on)
+/obj/machinery/power/apc/proc/autoset(val, on)
 	if(on==0)
 		if(val==2)			// if on, return off
 			return 0

@@ -1,7 +1,8 @@
 /turf/simulated/wall
 	name = "wall"
 	desc = "A huge chunk of metal used to separate rooms."
-	icon = 'icons/turf/walls.dmi'
+	icon = 'icons/turf/walls/wall.dmi'
+	icon_state = "wall"
 	var/mineral = "metal"
 	opacity = 1
 	density = 1
@@ -17,13 +18,14 @@
 	var/sheet_type = /obj/item/stack/sheet/metal
 	var/obj/item/stack/sheet/builtin_sheet = null
 
-
-	var/del_suppress_resmoothing = 0 // Do not resmooth neighbors on Destroy. (smoothwall.dm)
 	canSmoothWith = list(
 	/turf/simulated/wall,
+	/turf/simulated/wall/r_wall,
 	/obj/structure/falsewall,
-	/obj/structure/falsewall/reinforced  // WHY DO WE SMOOTH WITH FALSE R-WALLS WHEN WE DON'T SMOOTH WITH REAL R-WALLS.
-	)
+	/obj/structure/falsewall/reinforced,  // WHY DO WE SMOOTH WITH FALSE R-WALLS WHEN WE DON'T SMOOTH WITH REAL R-WALLS.
+	/turf/simulated/wall/rust,
+	/turf/simulated/wall/r_wall/rust)
+	smooth = 1
 
 /turf/simulated/wall/New()
 	..()
@@ -46,18 +48,17 @@
 			P.roll_and_drop(src)
 		else
 			O.loc = src
-
 	ChangeTurf(/turf/simulated/floor/plating)
 
 /turf/simulated/wall/proc/break_wall()
-		builtin_sheet.amount = 2
-		builtin_sheet.loc = src
-		return (new /obj/structure/girder(src))
+	builtin_sheet.amount = 2
+	builtin_sheet.loc = src
+	return (new /obj/structure/girder(src))
 
 /turf/simulated/wall/proc/devastate_wall()
-		builtin_sheet.amount = 2
-		builtin_sheet.loc = src
-		new /obj/item/stack/sheet/metal(src)
+	builtin_sheet.amount = 2
+	builtin_sheet.loc = src
+	new /obj/item/stack/sheet/metal(src)
 
 /turf/simulated/wall/ex_act(severity, target)
 	if(target == src)
@@ -94,12 +95,12 @@
 			visible_message("<span class='warning'>[src.name] smashes through the wall!</span>")
 			playsound(src, 'sound/effects/meteorimpact.ogg', 100, 1)
 
-/turf/simulated/wall/attack_paw(mob/living/user as mob)
+/turf/simulated/wall/attack_paw(mob/living/user)
 	user.changeNext_move(CLICK_CD_MELEE)
 	return src.attack_hand(user)
 
 
-/turf/simulated/wall/attack_animal(var/mob/living/simple_animal/M)
+/turf/simulated/wall/attack_animal(mob/living/simple_animal/M)
 	M.changeNext_move(CLICK_CD_MELEE)
 	M.do_attack_animation(src)
 	if(M.environment_smash >= 2)
@@ -121,7 +122,7 @@
 		user << text("<span class='notice'>You punch the wall.</span>")
 	return 1
 
-/turf/simulated/wall/attack_hand(mob/user as mob)
+/turf/simulated/wall/attack_hand(mob/user)
 	user.changeNext_move(CLICK_CD_MELEE)
 	user << "<span class='notice'>You push the wall but nothing happens!</span>"
 	playsound(src, 'sound/weapons/Genhit.ogg', 25, 1)
@@ -130,7 +131,7 @@
 	return
 
 
-/turf/simulated/wall/attackby(obj/item/weapon/W as obj, mob/user as mob, params)
+/turf/simulated/wall/attackby(obj/item/weapon/W, mob/user, params)
 	user.changeNext_move(CLICK_CD_MELEE)
 	if (!user.IsAdvancedToolUser())
 		user << "<span class='warning'>You don't have the dexterity to do this!</span>"
@@ -156,7 +157,7 @@
 	return
 
 
-/turf/simulated/wall/proc/try_wallmount(obj/item/weapon/W as obj, mob/user as mob, turf/T as turf)
+/turf/simulated/wall/proc/try_wallmount(obj/item/weapon/W, mob/user, turf/T)
 	//check for wall mounted frames
 	if(istype(W,/obj/item/apc_frame))
 		var/obj/item/apc_frame/AH = W
@@ -186,7 +187,7 @@
 	return 0
 
 
-/turf/simulated/wall/proc/try_decon(obj/item/weapon/W as obj, mob/user as mob, turf/T as turf)
+/turf/simulated/wall/proc/try_decon(obj/item/weapon/W, mob/user, turf/T)
 	if( istype(W, /obj/item/weapon/weldingtool) )
 		var/obj/item/weapon/weldingtool/WT = W
 		if( WT.remove_fuel(0,user) )
@@ -213,7 +214,7 @@
 	return 0
 
 
-/turf/simulated/wall/proc/try_destroy(obj/item/weapon/W as obj, mob/user as mob, turf/T as turf)
+/turf/simulated/wall/proc/try_destroy(obj/item/weapon/W, mob/user, turf/T)
 	if(istype(W, /obj/item/weapon/pickaxe/drill/jackhammer))
 		var/obj/item/weapon/pickaxe/drill/jackhammer/D = W
 		if( !istype(src, /turf/simulated/wall) || !user || !W || !T )
@@ -226,7 +227,7 @@
 	return 0
 
 
-/turf/simulated/wall/proc/thermitemelt(mob/user as mob)
+/turf/simulated/wall/proc/thermitemelt(mob/user)
 	overlays = list()
 	var/obj/effect/overlay/O = new/obj/effect/overlay( src )
 	O.name = "thermite"

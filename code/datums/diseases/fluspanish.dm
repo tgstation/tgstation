@@ -11,7 +11,7 @@
 	desc = "If left untreated the subject will burn to death for being a heretic."
 	severity = DANGEROUS
 
-/datum/disease/inquisition/stage_act()
+/datum/disease/fluspanish/stage_act()
 	..()
 	switch(stage)
 		if(2)

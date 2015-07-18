@@ -1,12 +1,12 @@
 //TODO: Flash range does nothing currently
 
 //A very crude linear approximatiaon of pythagoras theorem.
-/proc/cheap_pythag(var/dx, var/dy)
+/proc/cheap_pythag(dx, dy)
 	dx = abs(dx); dy = abs(dy);
 	if(dx>=dy)	return dx + (0.5*dy)	//The longest side add half the shortest side approximates the hypotenuse
 	else		return dy + (0.5*dx)
 
-/proc/trange(var/Dist=0,var/turf/Center=null)//alternative to range (ONLY processes turfs and thus less intensive)
+/proc/trange(Dist=0,turf/Center=null)//alternative to range (ONLY processes turfs and thus less intensive)
 	if(Center==null) return
 
 	//var/x1=((Center.x-Dist)<1 ? 1 : Center.x-Dist)
@@ -101,6 +101,10 @@
 					for(var/obj/machinery/door/D in Trajectory)
 						if(D.density && D.explosion_block)
 							dist += D.explosion_block
+
+					for(var/obj/structure/window/W in Trajectory)
+						if(W.reinf && W.fulltile)
+							dist += W.explosion_block
 
 			var/flame_dist = 0
 			var/throw_dist = dist
@@ -204,6 +208,10 @@
 				for(var/obj/machinery/door/D in TT)
 					if(D.density && D.explosion_block)
 						dist += D.explosion_block
+
+				for(var/obj/structure/window/W in TT)
+					if(W.explosion_block && W.fulltile)
+						dist += W.explosion_block
 
 		if(dist < dev)
 			T.color = "red"
