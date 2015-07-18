@@ -305,10 +305,11 @@ proc/check_panel(mob/M)
 /obj/effect/fake_attacker/New()
 	..()
 	step_away(src,my_target,2)
-	attack_loop()
-	if(my_target)
-		my_target.hallucinations -= src
-	returnToPool(src)
+	spawn
+		attack_loop()
+		if(my_target)
+			my_target.hallucinations -= src
+		returnToPool(src)
 
 
 /obj/effect/fake_attacker/proc/updateimage()
@@ -374,8 +375,8 @@ proc/check_panel(mob/M)
 	O.name = "blood"
 	var/image/I = image('icons/effects/blood.dmi',O,"floor[rand(1,7)]",O.dir,1)
 	target << I
-	sleep(300)
-	returnToPool(O)
+	spawn(300)
+		returnToPool(O)
 
 var/list/non_fakeattack_weapons = list(/obj/item/weapon/gun/projectile, /obj/item/ammo_storage/box/a357,\
 	/obj/item/weapon/gun/energy/crossbow, /obj/item/weapon/melee/energy/sword,\
