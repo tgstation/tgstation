@@ -25,7 +25,7 @@
 	var/silenced = 0	//Attack message
 	var/yo = null
 	var/xo = null
-	var/current = null
+	var/turf/current = null
 	var/obj/shot_from = null // the object which shot us
 	var/atom/original = null // the original target clicked
 	var/turf/starting = null // the projectile's starting turf
@@ -185,11 +185,11 @@
 				O.bullet_act(src)
 			for(var/mob/M in A)
 				M.bullet_act(src, def_zone)
+		loc = null
 		spawn()//if(!istype(src, /obj/item/projectile/beam/lightning))
 			density = 0
 			invisibility = 101
 			//del(src)
-			loc = null
 			returnToPool(src)
 			OnDeath()
 	return 1

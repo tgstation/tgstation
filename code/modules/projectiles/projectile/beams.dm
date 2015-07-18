@@ -27,7 +27,7 @@ var/list/beam_master = list()
 	stutter = 50
 	eyeblur = 50
 	var/tang = 0
-	layer = 3
+	layer = 13
 	var/turf/last = null
 	kill_count = 20
 
@@ -37,12 +37,12 @@ var/list/beam_master = list()
 		var/broken
 		var/atom/curr = current
 		var/Angle=round(Get_Angle(firer,curr))
-		var/icon/I=new('icons/obj/zap.dmi',"lightning")
-		I.Turn(Angle)
-		if(!curr)
-			current = locate(min(max(x + xo, 1), world.maxx), min(max(y + yo, 1), world.maxy), z)
-			curr = current
-
+		var/icon/I=new('icons/obj/lightning.dmi',icon_state)
+		var/icon/Istart=new('icons/obj/lightning.dmi',"[icon_state]start")
+		var/icon/Iend=new('icons/obj/lightning.dmi',"[icon_state]end")
+		I.Turn(Angle+45)
+		Istart.Turn(Angle+45)
+		Iend.Turn(Angle+45)
 		var/DX=(32*curr.x+curr.pixel_x)-(32*firer.x+firer.pixel_x)
 		var/DY=(32*curr.y+curr.pixel_y)-(32*firer.y+firer.pixel_y)
 		var/N=0
@@ -54,12 +54,15 @@ var/list/beam_master = list()
 			count++
 			var/obj/effect/overlay/beam/X=new(loc)
 			X.BeamSource=src
-			if(N+32>length)
-				var/icon/II=new(icon,icon_state)
-				II.DrawBox(null,1,(length-N),32,32)
-				II.Turn(Angle)
-				X.icon=II
-			else X.icon=I
+			if((N+64>length) && (N+32<=length))
+				X.icon=Iend
+			else if(N==0)
+				X.icon=Istart
+			else if(N+32>length)
+				X.icon=null
+			else
+				X.icon=I
+
 			var/Pixel_x=round(sin(Angle)+32*sin(Angle)*(N+16)/32)
 			var/Pixel_y=round(cos(Angle)+32*cos(Angle)*(N+16)/32)
 			if(DX==0) Pixel_x=0
@@ -186,18 +189,50 @@ var/list/beam_master = list()
 	eyeblur = 4
 	var/frequency = 1
 
-	process()
-		var/lastposition = loc
-		var/reference = "\ref[src]" //So we do not have to recalculate it a ton
-		var/first = 1 //So we don't make the overlay in the same tile as the firer
-		spawn while(loc) //Move until we hit something
-			if((!( current ) || loc == current)) //If we pass our target
-				current = locate(min(max(x + xo, 1), world.maxx), min(max(y + yo, 1), world.maxy), z)
-			if((x == 1 || x == world.maxx || y == 1 || y == world.maxy))
-				//del(src) //Delete if it passes the world edge
-				returnToPool(src)
-				return
-			step_towards(src, current) //Move~
+/obj/item/projectile/beam/OnFired()
+
+/obj/item/projectile/beam/process()
+	var/lastposition = loc
+	var/reference = "\ref[src]" //So we do not have to recalculate it a ton
+
+	var/turf/target = get_turf(original)
+	var/dist_x = abs(target.x - src.x)
+	var/dist_y = abs(target.y - src.y)
+
+	var/dx
+	if (target.x > src.x)
+		dx = EAST
+	else
+		dx = WEST
+
+	var/dy
+	if (target.y > src.y)
+		dy = NORTH
+	else
+		dy = SOUTH
+	var/target_dir = SOUTH
+
+	if(dist_x > dist_y)
+		var/error = dist_x/2 - dist_y
+
+		spawn while(src && src.loc)
+			// only stop when we've hit something, or hit the end of the map
+			if(error < 0)
+				var/atom/step = get_step(src, dy)
+				if(!step) // going off the edge of the map makes get_step return null, don't let things go off the edge
+					break
+				src.Move(step)
+				error += dist_x
+				target_dir = null
+			else
+				var/atom/step = get_step(src, dx)
+				if(!step)
+					break
+				src.Move(step)
+				error -= dist_y
+				target_dir = dx
+				if(error < 0)
+					target_dir = dx + dy
 
 			if(isnull(loc))
 				return
@@ -215,15 +250,13 @@ var/list/beam_master = list()
 					if(!(original in permutated))
 						Bump(original)
 
-			if(!first) //Add the overlay as we pass over tiles
-				var/target_dir = get_dir(src, current) //So we don't call this too much
+			//If the icon has not been added yet
+			if( !("[icon_state][target_dir]" in beam_master) )
+				var/image/I = image(icon,icon_state,10,target_dir) //Generate it.
+				beam_master["[icon_state][target_dir]"] = I //And cache it!
 
-				//If the icon has not been added yet
-				if( !("[icon_state][target_dir]" in beam_master) )
-					var/image/I = image(icon,icon_state,10,target_dir) //Generate it.
-					beam_master["[icon_state][target_dir]"] = I //And cache it!
-
-				//Finally add the overlay
+			//Finally add the overlay
+			if(src.loc && target_dir)
 				src.loc.overlays += beam_master["[icon_state][target_dir]"]
 
 				//Add the turf to a list in the beam master so they can be cleaned up easily.
@@ -238,10 +271,65 @@ var/list/beam_master = list()
 					var/list/turfs = list()
 					turfs["[icon_state][target_dir]"] = list(loc)
 					beam_master[reference] = turfs
+
+	else
+		var/error = dist_y/2 - dist_x
+		spawn while(src && src.loc)
+			// only stop when we've hit something, or hit the end of the map
+			if(error < 0)
+				var/atom/step = get_step(src, dx)
+				if(!step)
+					break
+				src.Move(step)
+				error += dist_y
+				target_dir = null
 			else
-				first = 0
-		cleanup(reference)
-		return
+				var/atom/step = get_step(src, dy)
+				if(!step)
+					break
+				src.Move(step)
+				error -= dist_x
+				target_dir = dy
+				if(error < 0)
+					target_dir = dy + dx
+
+			if(isnull(loc))
+				return
+			if(lastposition == loc)
+				kill_count = 0
+			lastposition = loc
+			if(kill_count < 1)
+				//del(src)
+				returnToPool(src)
+				return
+			kill_count--
+
+			if(!bumped && !isturf(original))
+				if(loc == get_turf(original))
+					if(!(original in permutated))
+						Bump(original)
+
+			if( !("[icon_state][target_dir]" in beam_master) )
+				var/image/I = image(icon,icon_state,10,target_dir)
+				beam_master["[icon_state][target_dir]"] = I
+
+			if(src.loc && target_dir)
+				src.loc.overlays += beam_master["[icon_state][target_dir]"]
+
+				if(reference in beam_master)
+					var/list/turf_master = beam_master[reference]
+					if("[icon_state][target_dir]" in turf_master)
+						var/list/turfs = turf_master["[icon_state][target_dir]"]
+						turfs += loc
+					else
+						turf_master["[icon_state][target_dir]"] = list(loc)
+				else
+					var/list/turfs = list()
+					turfs["[icon_state][target_dir]"] = list(loc)
+					beam_master[reference] = turfs
+
+	cleanup(reference)
+	return
 
 /obj/item/projectile/beam/dumbfire(var/dir)
 	var/reference = "\ref[src]" // So we do not have to recalculate it a ton.

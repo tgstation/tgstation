@@ -2,6 +2,7 @@
 	name = "energy"
 	icon_state = "spark"
 	damage = 0
+	layer = 13
 	damage_type = BURN
 	flag = "energy"
 
