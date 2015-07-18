@@ -55,6 +55,7 @@
 
 //For holopads only. Usable by AI.
 /mob/living/silicon/ai/proc/holopad_talk(var/message,var/datum/language/speaking)
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/living/silicon/ai/proc/holopad_talk() called tick#: [world.time]")
 	var/turf/turf = get_turf(src)
 	log_say("[key_name(src)] (@[turf.x],[turf.y],[turf.z]) Holopad: [message]")
 
@@ -97,10 +98,10 @@ var/const/VOX_CHANNEL = 200
 var/const/VOX_DELAY = 600
 
 /mob/living/silicon/ai/verb/announcement_help()
-
 	set name = "Announcement Help"
 	set desc = "Display a list of vocal words to announce to the crew."
 	set category = "AI Commands"
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""]) \\/mob/living/silicon/ai/verb/announcement_help()  called tick#: [world.time]")
 
 
 	var/dat = "Here is a list of words you can type into the 'Announcement' button to create sentences to vocally announce to everyone on the same level at you.<BR> \
@@ -125,6 +126,7 @@ var/const/VOX_DELAY = 600
 	set name = "Announcement"
 	set desc = "Send an announcement to the crew"
 	set category = "AI Commands"
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""]) \\/mob/living/silicon/ai/verb/announcement()  called tick#: [world.time]")
 	// If we're in an APC, and APC is ded, ABORT
 	if(parent && istype(parent) && parent.stat)
 		return
@@ -217,6 +219,7 @@ var/list/vox_tens=list(
 
 // Stolen from here: http://stackoverflow.com/questions/2729752/converting-numbers-in-to-words-c-sharp
 /proc/vox_num2list(var/number)
+	writepanic("[__FILE__].[__LINE__] (no type)([usr ? usr.ckey : ""])  \\/proc/vox_num2list() called tick#: [world.time]")
 	if(!isnum(number))
 		warning("vox_num2list fed a non-number: [number]")
 		return list()
@@ -261,6 +264,7 @@ var/list/vox_tens=list(
 	return words
 
 /proc/play_vox_word(var/word, var/z_level, var/mob/only_listener)
+	writepanic("[__FILE__].[__LINE__] (no type)([usr ? usr.ckey : ""])  \\/proc/play_vox_word() called tick#: [world.time]")
 	word = lowertext(word)
 	if(vox_sounds[word])
 		return play_vox_sound(vox_sounds[word],z_level,only_listener)
@@ -268,6 +272,7 @@ var/list/vox_tens=list(
 
 
 /proc/play_vox_sound(var/sound_file, var/z_level, var/mob/only_listener)
+	writepanic("[__FILE__].[__LINE__] (no type)([usr ? usr.ckey : ""])  \\/proc/play_vox_sound() called tick#: [world.time]")
 	var/sound/voice = sound(sound_file, wait = 1, channel = VOX_CHANNEL)
 	voice.status = SOUND_STREAM
 

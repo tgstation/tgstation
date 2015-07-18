@@ -103,7 +103,7 @@
 				if(6.0)
 
 					// AUTOFIXED BY fix_string_idiocy.py
-					// C:\Users\Rob\Documents\Projects\vgstation13\code\game\machinery\computer\medical.dm:96: dat += "<center><b>Medical Robot Monitor</b></center>"
+					// C:\Users\Rob\\documents\\\projects\vgstation13\code\game\\machinery\computer\\medical.dm:96: dat += "<center><b>Medical Robot Monitor</b></center>"
 					dat += {"<center><b>Medical Robot Monitor</b></center>
 						<a href='?src=\ref[src];screen=1'>Back</a>
 						<br><b>Medical Robots:</b>"}

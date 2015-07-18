@@ -49,6 +49,8 @@
 
 /obj/machinery/spaceship_builder/proc/buildShuttle(var/shuttle)
 
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/spaceship_builder/proc/buildShuttle() called tick#: [world.time]")
+
 	var/shuttleat = null
 	var/shuttleto = "/area/shipbuilder/station"
 
@@ -96,6 +98,8 @@
 	return
 
 /obj/machinery/spaceship_builder/proc/scrapShuttle()
+
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/spaceship_builder/proc/scrapShuttle() called tick#: [world.time]")
 
 	var/shuttleat = "/area/shipbuilder/station"
 	var/shuttleto = currentShuttleArea

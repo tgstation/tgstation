@@ -92,6 +92,7 @@
 	req_access = list()
 
 /obj/machinery/alarm/proc/apply_preset(var/no_cycle_after=0)
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/alarm/proc/apply_preset() called tick#: [world.time]")
 	// Propogate settings.
 	for (var/obj/machinery/alarm/AA in areaMaster)
 		if ( !(AA.stat & (NOPOWER|BROKEN)) && !AA.shorted && AA.preset != src.preset)
@@ -157,6 +158,7 @@
 	..()
 
 /obj/machinery/alarm/proc/first_run()
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/alarm/proc/first_run() called tick#: [world.time]")
 	area_uid = areaMaster.uid
 	name = "[areaMaster.name] Air Alarm"
 
@@ -259,6 +261,7 @@
 	return
 
 /obj/machinery/alarm/proc/calculate_local_danger_level(const/datum/gas_mixture/environment)
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/alarm/proc/calculate_local_danger_level() called tick#: [world.time]")
 	if (wires.IsIndexCut(AALARM_WIRE_AALARM))
 		return 2 // MAXIMUM ALARM (With gravelly voice) - N3X.
 
@@ -290,10 +293,12 @@
 		)
 
 /obj/machinery/alarm/proc/master_is_operating()
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/alarm/proc/master_is_operating() called tick#: [world.time]")
 	return areaMaster.master_air_alarm && !(areaMaster.master_air_alarm.stat & (NOPOWER|BROKEN))
 
 
 /obj/machinery/alarm/proc/elect_master()
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/alarm/proc/elect_master() called tick#: [world.time]")
 	for (var/obj/machinery/alarm/AA in areaMaster)
 		if (!(AA.stat & (NOPOWER|BROKEN)))
 			areaMaster.master_air_alarm = AA
@@ -301,6 +306,7 @@
 	return 0
 
 /obj/machinery/alarm/proc/get_danger_level(const/current_value, const/list/danger_levels)
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/alarm/proc/get_danger_level() called tick#: [world.time]")
 	if(!danger_levels || !danger_levels.len)
 		return 0
 	if ((current_value >= danger_levels[4] && danger_levels[4] > 0) || current_value <= danger_levels[1])
@@ -355,6 +361,7 @@
 		areaMaster.air_vent_info[id_tag] = signal.data
 
 /obj/machinery/alarm/proc/register_env_machine(var/m_id, var/device_type)
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/alarm/proc/register_env_machine() called tick#: [world.time]")
 	var/new_name
 	if (device_type=="AVP")
 		new_name = "[areaMaster.name] Vent Pump #[areaMaster.air_vent_names.len+1]"
@@ -368,6 +375,7 @@
 		send_signal(m_id, list("init" = new_name) )
 
 /obj/machinery/alarm/proc/refresh_all()
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/alarm/proc/refresh_all() called tick#: [world.time]")
 	for(var/id_tag in areaMaster.air_vent_names)
 		var/list/I = areaMaster.air_vent_info[id_tag]
 		if (I && I["timestamp"]+AALARM_REPORT_TIMEOUT/2 > world.time)
@@ -380,11 +388,13 @@
 		send_signal(id_tag, list("status") )
 
 /obj/machinery/alarm/proc/set_frequency(new_frequency)
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/alarm/proc/set_frequency() called tick#: [world.time]")
 	radio_controller.remove_object(src, frequency)
 	frequency = new_frequency
 	radio_connection = radio_controller.add_object(src, frequency, RADIO_TO_AIRALARM)
 
 /obj/machinery/alarm/proc/send_signal(var/target, var/list/command)//sends signal 'command' to 'target'. Returns 0 if no radio connection, 1 otherwise
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/alarm/proc/send_signal() called tick#: [world.time]")
 	if(!radio_connection)
 		return 0
 
@@ -402,6 +412,7 @@
 	return 1
 
 /obj/machinery/alarm/proc/apply_mode()
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/alarm/proc/apply_mode() called tick#: [world.time]")
 	var/list/current_pressures = TLV["pressure"]
 	var/target_pressure = (current_pressures[2] + current_pressures[3])/2
 	switch(mode)
@@ -437,6 +448,7 @@
 
 // This sets our danger level, and, if it's changed, forces a new election of danger levels.
 /obj/machinery/alarm/proc/setDangerLevel(var/new_danger_level)
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/alarm/proc/setDangerLevel() called tick#: [world.time]")
 	if(local_danger_level==new_danger_level)
 		return
 	local_danger_level=new_danger_level
@@ -444,6 +456,7 @@
 		post_alert(new_danger_level)
 
 /obj/machinery/alarm/proc/post_alert(alert_level)
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/alarm/proc/post_alert() called tick#: [world.time]")
 	var/datum/radio_frequency/frequency = radio_controller.return_frequency(alarm_frequency)
 	if(!frequency)
 		return
@@ -464,9 +477,11 @@
 	frequency.post_signal(src, alert_signal)
 
 /obj/machinery/alarm/proc/air_doors_close(manual)
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/alarm/proc/air_doors_close() called tick#: [world.time]")
 	areaMaster.CloseFirelocks()
 
 /obj/machinery/alarm/proc/air_doors_open(manual)
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/alarm/proc/air_doors_open() called tick#: [world.time]")
 	areaMaster.OpenFirelocks()
 
 ///////////////
@@ -482,6 +497,7 @@
 	interact(user)
 
 /obj/machinery/alarm/proc/ui_air_status()
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/alarm/proc/ui_air_status() called tick#: [world.time]")
 	var/turf/location = get_turf(src)
 	var/datum/gas_mixture/environment = location.return_air()
 	var/total = environment.oxygen + environment.carbon_dioxide + environment.toxins + environment.nitrogen
@@ -546,6 +562,8 @@
 	return data
 
 /obj/machinery/alarm/proc/get_nano_data(mob/user, fromAtmosConsole=0)
+
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/alarm/proc/get_nano_data() called tick#: [world.time]")
 
 	var/data[0]
 	data["air"]=ui_air_status()
@@ -1093,6 +1111,7 @@ FIRE ALARM
 	return
 
 /obj/machinery/firealarm/proc/reset()
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/firealarm/proc/reset() called tick#: [world.time]")
 	if (!( src.working ))
 		return
 	areaMaster.firereset()
@@ -1100,6 +1119,7 @@ FIRE ALARM
 	return
 
 /obj/machinery/firealarm/proc/alarm()
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/firealarm/proc/alarm() called tick#: [world.time]")
 	if (!( src.working ))
 		return
 	areaMaster.firealert()
@@ -1195,12 +1215,14 @@ FIRE ALARM
 	return
 
 /obj/machinery/partyalarm/proc/reset()
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/partyalarm/proc/reset() called tick#: [world.time]")
 	if (!( working ))
 		return
 	areaMaster.partyreset()
 	return
 
 /obj/machinery/partyalarm/proc/alarm()
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/partyalarm/proc/alarm() called tick#: [world.time]")
 	if (!( working ))
 		return
 	areaMaster.partyalert()

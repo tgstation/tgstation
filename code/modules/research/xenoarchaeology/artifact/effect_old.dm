@@ -15,12 +15,16 @@
 	created_field = new()
 
 /datum/artifact_effect/proc/GetOriginString(var/origin)
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/artifact_effect/proc/GetOriginString() called tick#: [world.time]")
 
 /datum/artifact_effect/proc/GetEffectString(var/effect)
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\datum/artifact_effect/proc/GetEffectString() called tick#: [world.time]")
 
 /datum/artifact_effect/proc/GetTriggerString(var/trigger)
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\datum/artifact_effect/proc/GetTriggerString() called tick#: [world.time]")
 
 /datum/artifact_effect/proc/GetRangeString(var/range)
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\datum/artifact_effect/proc/GetRangeString() called tick#: [world.time]")
 	switch(effectmode)
 		if("aura") return "Constant Short-Range Energy Field"
 		if("pulse")
@@ -31,11 +35,13 @@
 		else return "Unknown Range"
 
 /datum/artifact_effect/proc/HaltEffect()
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/artifact_effect/proc/HaltEffect() called tick#: [world.time]")
 	for(var/obj/effect/energy_field/F in created_field)
 		created_field.Remove(F)
 		del F
 
 /datum/artifact_effect/proc/UpdateEffect(var/atom/originator)
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/artifact_effect/proc/UpdateEffect() called tick#: [world.time]")
 	/*for(var/obj/effect/energy_field/F in created_field)
 		created_field.Remove(F)
 		del F*/
@@ -48,6 +54,7 @@
 			E.Strengthen(0.2)
 
 /datum/artifact_effect/proc/DoEffect(var/atom/originator)
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/artifact_effect/proc/DoEffect() called tick#: [world.time]")
 	archived_loc = originator.loc
 	if (src.effectmode == "contact")
 		var/mob/living/user = originator
@@ -497,6 +504,7 @@
 
 //initially for the force field artifact
 /datum/artifact_effect/proc/update_move(var/atom/originator)
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/artifact_effect/proc/update_move() called tick#: [world.time]")
 	switch(effecttype)
 		if("forcefield")
 			while(created_field.len < 16)

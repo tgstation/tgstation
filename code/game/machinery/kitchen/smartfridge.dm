@@ -57,6 +57,7 @@
 	RefreshParts()
 
 /obj/machinery/smartfridge/proc/accept_check(var/obj/item/O as obj, var/mob/user as mob)
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/smartfridge/proc/accept_check() called tick#: [world.time]")
 	for(var/ac_type in accepted_types)
 		if(istype(O, ac_type))
 			return 1
@@ -304,7 +305,7 @@
 				var/N = item_quants[O]
 
 				// AUTOFIXED BY fix_string_idiocy.py
-				// C:\Users\Rob\Documents\Projects\vgstation13\code\game\machinery\kitchen\smartfridge.dm:140: dat += "<FONT color = 'blue'><B>[capitalize(O)]</B>:"
+				// C:\Users\Rob\\documents\\\projects\vgstation13\code\game\\machinery\kitchen\smartfridge.dm:140: dat += "<FONT color = 'blue'><B>[capitalize(O)]</B>:"
 				dat += {"<FONT color = 'blue'><B>[capitalize(O)]</B>:
 					[N] </font>
 					<a href='byond://?src=\ref[src];vend=[O];amount=1'>Vend</A> "}

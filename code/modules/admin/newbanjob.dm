@@ -2,6 +2,7 @@ var/savefile/Banlistjob
 
 
 /proc/_jobban_isbanned(var/client/clientvar, var/rank)
+	writepanic("[__FILE__].[__LINE__] (no type)([usr ? usr.ckey : ""])  \\/proc/_jobban_isbanned() called tick#: [world.time]")
 	if(!clientvar) return 1
 	ClearTempbansjob()
 	var/id = clientvar.computer_id
@@ -22,6 +23,8 @@ var/savefile/Banlistjob
 
 /proc/LoadBansjob()
 
+	writepanic("[__FILE__].[__LINE__] (no type)([usr ? usr.ckey : ""])  \\/proc/LoadBansjob() called tick#: [world.time]")
+
 	Banlistjob = new("data/job_fullnew.bdb")
 	log_admin("Loading Banlistjob")
 
@@ -38,6 +41,7 @@ var/savefile/Banlistjob
 	return 1
 
 /proc/ClearTempbansjob()
+	writepanic("[__FILE__].[__LINE__] (no type)([usr ? usr.ckey : ""])  \\/proc/ClearTempbansjob() called tick#: [world.time]")
 	UpdateTime()
 
 	Banlistjob.cd = "/base"
@@ -56,6 +60,7 @@ var/savefile/Banlistjob
 
 
 /proc/AddBanjob(ckey, computerid, reason, bannedby, temp, minutes, rank)
+	writepanic("[__FILE__].[__LINE__] (no type)([usr ? usr.ckey : ""])  \\/proc/AddBanjob() called tick#: [world.time]")
 	UpdateTime()
 	var/bantimestamp
 	if (temp)
@@ -158,6 +163,7 @@ var/savefile/Banlistjob
 	return 1
 
 /proc/RemoveBanjob(foldername)
+	writepanic("[__FILE__].[__LINE__] (no type)([usr ? usr.ckey : ""])  \\/proc/RemoveBanjob() called tick#: [world.time]")
 	var/key
 	var/id
 	var/rank
@@ -189,6 +195,7 @@ var/savefile/Banlistjob
 	return 1
 
 /proc/GetBanExpjob(minutes as num)
+	writepanic("[__FILE__].[__LINE__] (no type)([usr ? usr.ckey : ""])  \\/proc/GetBanExpjob() called tick#: [world.time]")
 	UpdateTime()
 	var/exp = minutes - CMinutes
 	if (exp <= 0)
@@ -204,6 +211,7 @@ var/savefile/Banlistjob
 		return timeleftstring
 
 /datum/admins/proc/unjobbanpanel()
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/admins/proc/unjobbanpanel() called tick#: [world.time]")
 	var/count = 0
 	var/dat
 	//var/dat = "<HR><B>Unban Player:</B> <span class='warning'>(U) = Unban , (E) = Edit Ban<span class='good'>(Total<HR><table border=1 rules=all frame=void cellspacing=0 cellpadding=3 ></span></span>"
@@ -215,7 +223,7 @@ var/savefile/Banlistjob
 
 
 	// AUTOFIXED BY fix_string_idiocy.py
-	// C:\Users\Rob\Documents\Projects\vgstation13\code\modules\admin\newbanjob.dm:216: dat += "</table>"
+	// C:\Users\Rob\\documents\\\projects\vgstation13\code\\modules\admin\newbanjob.dm:216: dat += "</table>"
 	dat += {"</table>
 		<HR><B>Bans:</B> <FONT COLOR=blue>(U) = Unban , </FONT> - <FONT COLOR=green>([count] Bans)</FONT><HR><table border=1 rules=all frame=void cellspacing=0 cellpadding=3 >[dat]"}
 	// END AUTOFIX
@@ -232,6 +240,7 @@ var/savefile/Banlistjob
 		log_admin("[usr.client.ckey] has banned from [job] [ckey].\nReason: [reason]\nThis is a permanent ban.")
 		message_admins("<span class='warning'>[usr.client.ckey] has banned from [job] [ckey].\nReason: [reason]\nThis is a permanent ban.</span>")
 /datum/admins/proc/timejobban(ckey, computerid, reason, bannedby, temp, minutes, rank)
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/admins/proc/timejobban() called tick#: [world.time]")
 	if(AddBanjob(ckey, computerid, reason, usr.ckey, 1, mins, job))
 		M << "<span class='warning'><BIG><B>You have been jobbanned from [job] by [usr.client.ckey].\nReason: [reason].</B></BIG></span>"
 		M << "<span class='warning'>This is a temporary ban, it will be removed in [mins] minutes.</span>"
@@ -244,6 +253,8 @@ var/savefile/Banlistjob
 //////////////////////////////////// DEBUG ////////////////////////////////////
 
 /proc/CreateBansjob()
+
+	writepanic("[__FILE__].[__LINE__] (no type)([usr ? usr.ckey : ""])  \\/proc/CreateBansjob() called tick#: [world.time]")
 
 	UpdateTime()
 
@@ -273,6 +284,7 @@ var/savefile/Banlistjob
 	Banlistjob.cd = "/base"
 
 /proc/ClearAllBansjob()
+	writepanic("[__FILE__].[__LINE__] (no type)([usr ? usr.ckey : ""])  \\/proc/ClearAllBansjob() called tick#: [world.time]")
 	Banlistjob.cd = "/base"
 	for (var/A in Banlistjob.dir)
 		RemoveBanjob(A, "full")

@@ -15,6 +15,7 @@
 
 
 /mob/living/silicon/hivebot/proc/pick_module()
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/living/silicon/hivebot/proc/pick_module() called tick#: [world.time]")
 	if(src.module)
 		return
 	var/mod = input("Please, select a module!", "Robot", null, null) in list("Combat", "Engineering")
@@ -253,12 +254,14 @@
 
 
 /mob/living/silicon/hivebot/proc/allowed(mob/M)
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/living/silicon/hivebot/proc/allowed() called tick#: [world.time]")
 	//check if it doesn't require any access at all
 	if(src.check_access(null))
 		return 1
 	return 0
 
 /mob/living/silicon/hivebot/proc/check_access(obj/item/weapon/card/id/I)
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/living/silicon/hivebot/proc/check_access() called tick#: [world.time]")
 	if(!istype(src.req_access, /list)) //something's very wrong
 		return 1
 
@@ -274,6 +277,8 @@
 
 /mob/living/silicon/hivebot/proc/updateicon()
 
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/living/silicon/hivebot/proc/updateicon() called tick#: [world.time]")
+
 	src.overlays.len = 0
 
 	if(src.stat == 0)
@@ -283,6 +288,8 @@
 
 
 /mob/living/silicon/hivebot/proc/installed_modules()
+
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/living/silicon/hivebot/proc/installed_modules() called tick#: [world.time]")
 
 	if(!src.module)
 		src.pick_module()
@@ -366,6 +373,7 @@
 	return
 
 /mob/living/silicon/hivebot/proc/uneq_active()
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/living/silicon/hivebot/proc/uneq_active() called tick#: [world.time]")
 	if(isnull(src.module_active))
 		return
 	if(src.module_state_1 == src.module_active)
@@ -392,6 +400,7 @@
 
 
 /mob/living/silicon/hivebot/proc/activated(obj/item/O)
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/living/silicon/hivebot/proc/activated() called tick#: [world.time]")
 	if(src.module_state_1 == O)
 		return 1
 	else if(src.module_state_2 == O)
@@ -402,6 +411,7 @@
 		return 0
 
 /mob/living/silicon/hivebot/proc/radio_menu()
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/living/silicon/hivebot/proc/radio_menu() called tick#: [world.time]")
 	var/dat = {"
 <TT>
 Microphone: [src.radio.broadcasting ? "<A href='byond://?src=\ref[src.radio];talk=0'>Engaged</A>" : "<A href='byond://?src=\ref[src.radio];talk=1'>Disengaged</A>"]<BR>
@@ -487,11 +497,13 @@ Frequency:
 
 
 /mob/living/silicon/hivebot/verb/cmd_return_mainframe()
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""]) \\/mob/living/silicon/hivebot/verb/cmd_return_mainframe()  called tick#: [world.time]")
 	set category = "Robot Commands"
 	set name = "Recall to Mainframe."
 	return_mainframe()
 
 /mob/living/silicon/hivebot/proc/return_mainframe()
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/living/silicon/hivebot/proc/return_mainframe() called tick#: [world.time]")
 	if(mainframe)
 		mainframe.return_to(src)
 	else

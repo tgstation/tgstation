@@ -197,6 +197,8 @@
 //Many  hats added, Some will probably be removed, just want to see which ones are popular.
 /mob/living/simple_animal/corgi/proc/place_on_head(obj/item/item_to_add)
 
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/living/simple_animal/corgi/proc/place_on_head() called tick#: [world.time]")
+
 	if(istype(item_to_add,/obj/item/weapon/plastique)) // last thing he ever wears, I guess
 		item_to_add.afterattack(src,usr,1)
 		return
@@ -364,6 +366,7 @@
 	return valid
 
 /mob/living/simple_animal/corgi/proc/spinaroo(var/list/emotes = list("dances around","chases its tail"))
+    writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/living/simple_animal/corgi/proc/spinaroo() called tick#: [world.time]")
     if(!stat && !resting && !buckled)
         if(prob(1))
             if (ckey == null)
@@ -521,6 +524,7 @@
 		if(I_HURT)	wuv(-1,M)
 
 /mob/living/simple_animal/corgi/proc/wuv(change, mob/M)
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/living/simple_animal/corgi/proc/wuv() called tick#: [world.time]")
 	if(change)
 		if(change > 0)
 			if(M && stat != DEAD) // Added check to see if this mob (the corgi) is dead to fix issue 2454

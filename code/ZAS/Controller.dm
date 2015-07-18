@@ -21,7 +21,7 @@ Class Vars:
 Class Procs:
 
 	mark_for_update(turf/T)
-		Adds the turf to the update list. When updated, update_air_properties() will be called.
+		Adds the turf to the update list. When updated, update_air_/properties() will be called.
 		When stuff changes that might affect airflow, call this. It's basically the only thing you need.
 
 	add_zone(zone/Z) and remove_zone(zone/Z)
@@ -41,7 +41,7 @@ Class Procs:
 		Merges the zones to create a single zone.
 
 	connect(turf/simulated/A, turf/B)
-		Called by turf/update_air_properties(). The first argument must be simulated.
+		Called by turf/update_air_/properties(). The first argument must be simulated.
 		Creates a connection between A and B.
 
 	mark_zone_update(zone/Z)
@@ -95,6 +95,7 @@ Class Procs:
 	#ifndef ZASDBG
 	set background = 1
 	#endif
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/controller/air_system/proc/Setup() called tick#: [world.time]")
 
 	world << "<span class='danger'>Processing Geometry...</span>"
 	sleep(-1)
@@ -124,6 +125,7 @@ Total Unsimulated Turfs: [world.maxx*world.maxy*world.maxz - simulated_turf_coun
 	#ifndef ZASDBG
 	set background = 1
 	#endif
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/controller/air_system/proc/Start() called tick#: [world.time]")
 
 	while(1)
 		Tick()
@@ -131,6 +133,7 @@ Total Unsimulated Turfs: [world.maxx*world.maxy*world.maxz - simulated_turf_coun
 
 
 /datum/controller/air_system/proc/Tick()
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/controller/air_system/proc/Tick() called tick#: [world.time]")
 	. = 1 //Set the default return value, for runtime detection.
 
 	current_cycle++
@@ -199,14 +202,17 @@ Total Unsimulated Turfs: [world.maxx*world.maxy*world.maxz - simulated_turf_coun
 		tick_progress = "success"
 
 /datum/controller/air_system/proc/add_zone(zone/z)
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/controller/air_system/proc/add_zone() called tick#: [world.time]")
 	zones.Add(z)
 	z.name = "Zone [next_id++]"
 	mark_zone_update(z)
 
 /datum/controller/air_system/proc/remove_zone(zone/z)
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/controller/air_system/proc/remove_zone() called tick#: [world.time]")
 	zones.Remove(z)
 
 /datum/controller/air_system/proc/air_blocked(turf/A, turf/B)
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/controller/air_system/proc/air_blocked() called tick#: [world.time]")
 	#ifdef ZASDBG
 	ASSERT(isturf(A))
 	ASSERT(isturf(B))
@@ -216,12 +222,14 @@ Total Unsimulated Turfs: [world.maxx*world.maxy*world.maxz - simulated_turf_coun
 	return ablock | B.c_airblock(A)
 
 /datum/controller/air_system/proc/has_valid_zone(turf/simulated/T)
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/controller/air_system/proc/has_valid_zone() called tick#: [world.time]")
 	#ifdef ZASDBG
 	ASSERT(istype(T))
 	#endif
 	return istype(T) && T.zone && !T.zone.invalid
 
 /datum/controller/air_system/proc/merge(zone/A, zone/B)
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/controller/air_system/proc/merge() called tick#: [world.time]")
 	#ifdef ZASDBG
 	ASSERT(istype(A))
 	ASSERT(istype(B))
@@ -237,6 +245,7 @@ Total Unsimulated Turfs: [world.maxx*world.maxy*world.maxz - simulated_turf_coun
 		mark_zone_update(A)
 
 /datum/controller/air_system/proc/connect(turf/simulated/A, turf/simulated/B)
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/controller/air_system/proc/connect() called tick#: [world.time]")
 	#ifdef ZASDBG
 	ASSERT(istype(A))
 	ASSERT(isturf(B))
@@ -278,6 +287,7 @@ Total Unsimulated Turfs: [world.maxx*world.maxy*world.maxz - simulated_turf_coun
 	if(direct) c.mark_direct()
 
 /datum/controller/air_system/proc/mark_for_update(turf/T)
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/controller/air_system/proc/mark_for_update() called tick#: [world.time]")
 	#ifdef ZASDBG
 	ASSERT(isturf(T))
 	#endif
@@ -289,6 +299,7 @@ Total Unsimulated Turfs: [world.maxx*world.maxy*world.maxz - simulated_turf_coun
 	T.needs_air_update = 1
 
 /datum/controller/air_system/proc/mark_zone_update(zone/Z)
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/controller/air_system/proc/mark_zone_update() called tick#: [world.time]")
 	#ifdef ZASDBG
 	ASSERT(istype(Z))
 	#endif
@@ -297,9 +308,12 @@ Total Unsimulated Turfs: [world.maxx*world.maxy*world.maxz - simulated_turf_coun
 	Z.needs_update = 1
 
 /datum/controller/air_system/proc/equivalent_pressure(zone/A, zone/B)
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/controller/air_system/proc/equivalent_pressure() called tick#: [world.time]")
 	return A.air.compare(B.air)
 
 /datum/controller/air_system/proc/get_edge(zone/A, zone/B)
+
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/controller/air_system/proc/get_edge() called tick#: [world.time]")
 
 	if(istype(B))
 		for(var/connection_edge/zone/edge in A.edges)
@@ -315,6 +329,7 @@ Total Unsimulated Turfs: [world.maxx*world.maxy*world.maxz - simulated_turf_coun
 		return edge
 
 /datum/controller/air_system/proc/has_same_air(turf/A, turf/B)
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/controller/air_system/proc/has_same_air() called tick#: [world.time]")
 	if(A.oxygen != B.oxygen) return 0
 	if(A.nitrogen != B.nitrogen) return 0
 	if(A.toxins != B.toxins) return 0
@@ -323,4 +338,5 @@ Total Unsimulated Turfs: [world.maxx*world.maxy*world.maxz - simulated_turf_coun
 	return 1
 
 /datum/controller/air_system/proc/remove_edge(connection/c)
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/controller/air_system/proc/remove_edge() called tick#: [world.time]")
 	edges.Remove(c)

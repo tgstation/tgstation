@@ -96,6 +96,7 @@
 		scanned_item = I
 
 /obj/machinery/radiocarbon_spectrometer/proc/update_coolant()
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/radiocarbon_spectrometer/proc/update_coolant() called tick#: [world.time]")
 	var/total_purity = 0
 	fresh_coolant = 0
 	coolant_purity = 0
@@ -149,7 +150,7 @@
 	ui = nanomanager.try_update_ui(user, src, ui_key, ui, data)	
 	if (!ui)
 		// the ui does not exist, so we'll create a new() one
-        // for a list of parameters and their descriptions see the code docs in \code\modules\nano\nanoui.dm
+        // for a list of parameters and their descriptions see the code docs in \code\\modules\nano\nanoui.dm
 		ui = new(user, src, ui_key, "geoscanner.tmpl", "High Res Radiocarbon Spectrometer", 900, 825)
 		// when the ui is first opened this is the data it will use
 		ui.set_initial_data(data)		
@@ -244,6 +245,7 @@
 	last_process_worldtime = world.time
 
 /obj/machinery/radiocarbon_spectrometer/proc/stop_scanning()
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/radiocarbon_spectrometer/proc/stop_scanning() called tick#: [world.time]")
 	scanning = 0
 	scanner_rpm_dir = 1
 	scanner_rpm = 0
@@ -258,6 +260,7 @@
 		used_coolant = 0
 
 /obj/machinery/radiocarbon_spectrometer/proc/complete_scan()
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/radiocarbon_spectrometer/proc/complete_scan() called tick#: [world.time]")
 	src.visible_message("<span class='notice'>\icon[src] makes an insistent chime.</span>", 2)
 
 	if(scanned_item)

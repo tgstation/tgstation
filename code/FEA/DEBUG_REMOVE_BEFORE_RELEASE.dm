@@ -111,6 +111,7 @@ turf/simulated/floor
 
 obj/machinery/portable_atmospherics/canister
 	verb/test_release()
+		writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""]) \\verb/test_release()  called tick#: [world.time]")
 		set src in world
 		set category = "Minor"
 
@@ -425,6 +426,7 @@ turf/simulated
 			hotspot_expose(temp, volume)
 
 		fire_verbose()
+			writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""]) \\fire_verbose()  called tick#: [world.time]")
 			set src in world
 			set category = "Minor"
 
@@ -454,6 +456,7 @@ obj/indicator
 		icon_state = measurement()
 
 	proc/measurement()
+		writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\proc/measurement() called tick#: [world.time]")
 		var/turf/T = loc
 		if(!isturf(T)) return
 		var/datum/gas_mixture/GM = T.return_air()

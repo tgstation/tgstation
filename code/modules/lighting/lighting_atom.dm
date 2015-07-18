@@ -7,6 +7,7 @@
 	var/list/light_sources
 
 /atom/proc/set_light(l_range, l_power, l_color)
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/atom/proc/set_light() called tick#: [world.time]")
 	if(l_power != null) light_power = l_power
 	if(l_range != null) light_range = l_range
 	if(l_color != null) light_color = l_color
@@ -14,6 +15,7 @@
 	update_light()
 
 /atom/proc/update_light()
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/atom/proc/update_light() called tick#: [world.time]")
 	if(gcDestroyed) return
 	if(!light_power || !light_range)
 		if(light)
@@ -48,6 +50,7 @@
 	return ..()
 
 /atom/proc/set_opacity(new_opacity)
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/atom/proc/set_opacity() called tick#: [world.time]")
 	var/old_opacity = opacity
 	opacity = new_opacity
 	var/turf/T = loc

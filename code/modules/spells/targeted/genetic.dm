@@ -1,8 +1,8 @@
 /*
 Other mutation or disability spells can be found in
-code\game\dna\genes\vg_powers.dm //hulk is in this file
-code\game\dna\genes\goon_disabilities.dm
-code\game\dna\genes\goon_powers.dm
+code\game\\dna\genes\vg_powers.dm //hulk is in this file
+code\game\\dna\genes\goon_disabilities.dm
+code\game\\dna\genes\goon_powers.dm
 */
 /spell/targeted/genetic
 	name = "Genetic modifier"

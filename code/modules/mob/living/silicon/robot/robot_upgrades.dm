@@ -13,6 +13,7 @@
 	var/installed = 0
 
 /obj/item/borg/upgrade/proc/action()
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/item/borg/upgrade/proc/action() called tick#: [world.time]")
 	return
 
 

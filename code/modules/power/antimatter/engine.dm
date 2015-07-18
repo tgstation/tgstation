@@ -83,6 +83,8 @@
 
 /obj/machinery/power/am_engine/engine/proc/engine_go()
 
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/power/am_engine/engine/proc/engine_go() called tick#: [world.time]")
+
 	if( (!src.connected) || (stat & BROKEN) )
 		return
 
@@ -122,6 +124,8 @@
 
 
 /obj/machinery/power/am_engine/engine/proc/engine_process()
+
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/power/am_engine/engine/proc/engine_process() called tick#: [world.time]")
 
 	do
 		if( (!src.connected) || (stat & BROKEN) )

@@ -24,6 +24,7 @@
 	return
 
 /obj/item/projectile/missile/proc/explode()
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/item/projectile/missile/proc/explode() called tick#: [world.time]")
 	explosion(src.loc, 1, 1, 2, 7, 0)
 	playsound(src.loc, "explosion", 50, 1)
 	del(src)
@@ -74,6 +75,7 @@
 	return
 
 /obj/machinery/meteor_battery/proc/isPopping()
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/meteor_battery/proc/isPopping() called tick#: [world.time]")
 	return (popping!=0)
 
 /obj/machinery/meteor_battery/power_change()
@@ -92,10 +94,12 @@
 				stat |= NOPOWER
 
 /obj/machinery/meteor_battery/proc/setState(var/enabled)
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/meteor_battery/proc/setState() called tick#: [world.time]")
 	src.enabled = enabled
 	src.power_change()
 
 /obj/machinery/meteor_battery/proc/get_new_target()
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/meteor_battery/proc/get_new_target() called tick#: [world.time]")
 	var/list/new_targets = new
 	var/new_target
 	for(var/obj/effect/meteor/M in view(protect_range, get_turf(src)))
@@ -163,6 +167,7 @@
 	return
 
 /obj/machinery/meteor_battery/proc/target()
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/meteor_battery/proc/target() called tick#: [world.time]")
 	while(src && enabled && !stat)
 		src.dir = get_dir(src, cur_target)
 		shootAt(cur_target)
@@ -170,6 +175,7 @@
 	return
 
 /obj/machinery/meteor_battery/proc/shootAt(var/atom/movable/target)
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/meteor_battery/proc/shootAt() called tick#: [world.time]")
 	var/turf/T = get_turf(src)
 	var/turf/U = get_turf(target)
 	if (!T || !U)
@@ -184,9 +190,11 @@
 
 
 /obj/machinery/meteor_battery/proc/isDown()
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/meteor_battery/proc/isDown() called tick#: [world.time]")
 	return (invisibility!=0)
 
 /obj/machinery/meteor_battery/proc/popUp()
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/meteor_battery/proc/popUp() called tick#: [world.time]")
 	if ((!isPopping()) || src.popping==-1)
 		invisibility = 0
 		popping = 1
@@ -197,6 +205,7 @@
 			if (popping==1) popping = 0
 
 /obj/machinery/meteor_battery/proc/popDown()
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/meteor_battery/proc/popDown() called tick#: [world.time]")
 	if ((!isPopping()) || src.popping==1)
 		popping = -1
 		if (src.cover!=null)
@@ -236,6 +245,7 @@
 		src.die()
 
 /obj/machinery/meteor_battery/proc/die()
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/meteor_battery/proc/die() called tick#: [world.time]")
 	src.health = 0
 	src.density = 0
 	src.stat |= BROKEN

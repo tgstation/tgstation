@@ -38,6 +38,8 @@
 /*
 /obj/machinery/computer/lasercon/proc/interact(mob/user)
 
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/computer/lasercon/proc/interact() called tick#: [world.time]")
+
 	if ( (get_dist(src, user) > 1 ) || (stat & (BROKEN|NOPOWER)) )
 		if (!istype(user, /mob/living/silicon))
 			user.machine = null

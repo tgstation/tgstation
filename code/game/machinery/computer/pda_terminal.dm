@@ -15,6 +15,7 @@
 		initialize()
 
 /obj/machinery/computer/pda_terminal/proc/format_apps(var/obj/item/device/pda/pda_hardware)//makes a list of all the apps that aren't yet installed on the PDA
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/computer/pda_terminal/proc/format_apps() called tick#: [world.time]")
 	if(!istype(pda_hardware))
 		return list()
 
@@ -37,12 +38,15 @@
 	return formatted
 
 /obj/machinery/computer/pda_terminal/proc/get_app_name(var/datum/pda_app/app)
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/computer/pda_terminal/proc/get_app_name() called tick#: [world.time]")
 	return "[app.name]"
 
 /obj/machinery/computer/pda_terminal/proc/get_display_name(var/datum/pda_app/app)
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/computer/pda_terminal/proc/get_display_name() called tick#: [world.time]")
 	return "[app.name] ([!(app.price) ? "free" : "[app.price]$"])"
 
 /obj/machinery/computer/pda_terminal/proc/get_display_desc(var/datum/pda_app/app)
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/computer/pda_terminal/proc/get_display_desc() called tick#: [world.time]")
 	return "[app.desc]"
 
 /obj/machinery/computer/pda_terminal/attackby(obj/item/device/pda/user_pda, mob/user)

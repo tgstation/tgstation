@@ -42,6 +42,7 @@ minus the pound (#) symbol.
 //COLOUR2HTML PROC
 
 proc/colour2html(colour)
+	writepanic("[__FILE__].[__LINE__] \\/proc/colour2html() called tick#: [world.time]")
 	var/T
 	for(T in html_colours)
 		if(ckey(T) == ckey(colour)) break
@@ -56,6 +57,7 @@ proc/colour2html(colour)
 //HTMLASSOCIATE PROC
 
 proc/HTMLAssociate(colour, html)
+	writepanic("[__FILE__].[__LINE__] \\/proc/HTMLAssociate() called tick#: [world.time]")
 	if(html_colours.Find(colour))
 		world.log << "Changing [colour] from [html_colours[colour]] to [html]!"
 	html_colours[colour] = html
@@ -76,6 +78,7 @@ world
 var/html_colours[0]
 
 proc/LoadHTMLAssociations()
+	writepanic("[__FILE__].[__LINE__] \\/proc/LoadHTMLAssociations() called tick#: [world.time]")
 	var/savefile/F = new ("s_html.sav")
 	F["html_colours"] >> html_colours
 	if(!html_colours) html_colours = list()
@@ -231,5 +234,6 @@ proc/LoadHTMLAssociations()
 
 
 proc/SaveHTMLAssociations()
+	writepanic("[__FILE__].[__LINE__] \\/proc/SaveHTMLAssociations() called tick#: [world.time]")
 	var/savefile/F = new ("s_html.sav")
 	F["html_colours"] << html_colours

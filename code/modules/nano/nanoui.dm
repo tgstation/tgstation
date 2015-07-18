@@ -101,6 +101,7 @@ nanoui is used to open and update nano browser uis
   * @return nothing
   */
 /datum/nanoui/proc/add_common_assets()
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/nanoui/proc/add_common_assets() called tick#: [world.time]")
 	add_script("libraries.min.js") // A JS file comprising of jQuery, doT.js and jQuery Timer libraries (compressed together)
 	add_script("nano_utility.js") // The NanoUtility JS, this is used to store utility functions.
 	add_script("nano_template.js") // The NanoTemplate JS, this is used to render templates.
@@ -121,6 +122,7 @@ nanoui is used to open and update nano browser uis
   * @return nothing
   */
 /datum/nanoui/proc/set_status(state, push_update)
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/nanoui/proc/set_status() called tick#: [world.time]")
 	if (state != status) // Only update if it is different
 		if (status == STATUS_DISABLED)
 			status = state
@@ -140,6 +142,7 @@ nanoui is used to open and update nano browser uis
   */
 
 /datum/nanoui/proc/check_interactive()
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/nanoui/proc/check_interactive() called tick#: [world.time]")
 	if(user.mutations && user.mutations.len)
 		if(M_TK in user.mutations)
 			return 1
@@ -156,6 +159,7 @@ nanoui is used to open and update nano browser uis
   * @return nothing
   */
 /datum/nanoui/proc/update_status(var/push_update = 0)
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/nanoui/proc/update_status() called tick#: [world.time]")
 	if (check_interactive())
 		set_status(STATUS_INTERACTIVE, push_update) // interactive (green visibility)
 	else
@@ -202,6 +206,7 @@ nanoui is used to open and update nano browser uis
   * @return nothing
   */
 /datum/nanoui/proc/set_auto_update(nstate = 1)
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/nanoui/proc/set_auto_update() called tick#: [world.time]")
 	is_auto_updating = nstate
 
  /**
@@ -212,6 +217,7 @@ nanoui is used to open and update nano browser uis
   * @return nothing
   */
 /datum/nanoui/proc/set_initial_data(list/data)
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/nanoui/proc/set_initial_data() called tick#: [world.time]")
 	initial_data = data
 
  /**
@@ -220,6 +226,7 @@ nanoui is used to open and update nano browser uis
   * @return /list config data
   */
 /datum/nanoui/proc/get_config_data()
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/nanoui/proc/get_config_data() called tick#: [world.time]")
 	var/list/config_data = list(
 					"title" = title,
 					"srcObject" = list("name" = src_object),
@@ -242,6 +249,7 @@ nanoui is used to open and update nano browser uis
   * @return /list data to send to the ui
   */
 /datum/nanoui/proc/get_send_data(var/list/data)
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/nanoui/proc/get_send_data() called tick#: [world.time]")
 	var/list/config_data = get_config_data()
 
 	var/list/send_data = list("config" = config_data)
@@ -259,6 +267,7 @@ nanoui is used to open and update nano browser uis
   * @return nothing
   */
 /datum/nanoui/proc/set_window_options(nwindow_options)
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/nanoui/proc/set_window_options() called tick#: [world.time]")
 	window_options = nwindow_options
 
  /**
@@ -270,6 +279,7 @@ nanoui is used to open and update nano browser uis
   * @return nothing
   */
 /datum/nanoui/proc/add_stylesheet(file)
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/nanoui/proc/add_stylesheet() called tick#: [world.time]")
 	stylesheets.Add(file)
 
  /**
@@ -281,6 +291,7 @@ nanoui is used to open and update nano browser uis
   * @return nothing
   */
 /datum/nanoui/proc/add_script(file)
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/nanoui/proc/add_script() called tick#: [world.time]")
 	scripts.Add(file)
 
  /**
@@ -294,6 +305,7 @@ nanoui is used to open and update nano browser uis
   * @return nothing
   */
 /datum/nanoui/proc/add_template(key, filename)
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/nanoui/proc/add_template() called tick#: [world.time]")
 	templates[key] = filename
 
  /**
@@ -308,6 +320,7 @@ nanoui is used to open and update nano browser uis
   * @return nothing
   */
 /datum/nanoui/proc/set_layout_key(nlayout_key)
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/nanoui/proc/set_layout_key() called tick#: [world.time]")
 	layout_key = lowertext(nlayout_key)
 
  /**
@@ -318,6 +331,7 @@ nanoui is used to open and update nano browser uis
   * @return nothing
   */
 /datum/nanoui/proc/set_auto_update_layout(nstate)
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/nanoui/proc/set_auto_update_layout() called tick#: [world.time]")
 	auto_update_layout = nstate
 
  /**
@@ -328,6 +342,7 @@ nanoui is used to open and update nano browser uis
   * @return nothing
   */
 /datum/nanoui/proc/set_auto_update_content(nstate)
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/nanoui/proc/set_auto_update_content() called tick#: [world.time]")
 	auto_update_content = nstate
 
  /**
@@ -338,6 +353,7 @@ nanoui is used to open and update nano browser uis
   * @return nothing
   */
 /datum/nanoui/proc/set_state_key(nstate_key)
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/nanoui/proc/set_state_key() called tick#: [world.time]")
 	state_key = nstate_key
 
  /**
@@ -348,6 +364,7 @@ nanoui is used to open and update nano browser uis
   * @return nothing
   */
 /datum/nanoui/proc/set_show_map(nstate)
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/nanoui/proc/set_show_map() called tick#: [world.time]")
 	show_map = nstate
 
  /**
@@ -358,6 +375,7 @@ nanoui is used to open and update nano browser uis
   * @return nothing
   */
 /datum/nanoui/proc/set_map_z_level(nz)
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/nanoui/proc/set_map_z_level() called tick#: [world.time]")
 	map_z_level = nz
 
  /**
@@ -368,6 +386,7 @@ nanoui is used to open and update nano browser uis
   * @return nothing
   */
 /datum/nanoui/proc/use_on_close_logic(state)
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/nanoui/proc/use_on_close_logic() called tick#: [world.time]")
 	on_close_logic = state
 
  /**
@@ -376,6 +395,8 @@ nanoui is used to open and update nano browser uis
   * @return string HTML for the UI
   */
 /datum/nanoui/proc/get_html()
+
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/nanoui/proc/get_html() called tick#: [world.time]")
 
 	// before the UI opens, add the layout files based on the layout key
 	add_stylesheet("layout_[layout_key].css")
@@ -437,6 +458,8 @@ nanoui is used to open and update nano browser uis
   */
 /datum/nanoui/proc/open()
 
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/nanoui/proc/open() called tick#: [world.time]")
+
 	var/window_size = ""
 	if (width && height)
 		window_size = "size=[width]x[height];"
@@ -453,6 +476,7 @@ nanoui is used to open and update nano browser uis
   * @return nothing
   */
 /datum/nanoui/proc/close()
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/nanoui/proc/close() called tick#: [world.time]")
 	is_auto_updating = 0
 	nanomanager.ui_closed(src)
 	user << browse(null, "window=[window_id]")
@@ -464,6 +488,7 @@ nanoui is used to open and update nano browser uis
   * @return nothing
   */
 /datum/nanoui/proc/on_close_winset()
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/nanoui/proc/on_close_winset() called tick#: [world.time]")
 	if(!user)
 		return
 	var/params = "\ref[src]"
@@ -476,6 +501,7 @@ nanoui is used to open and update nano browser uis
   * @return nothing
   */
 /datum/nanoui/proc/push_data(data, force_push = 0)
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/nanoui/proc/push_data() called tick#: [world.time]")
 	update_status(0)
 	if (status == STATUS_DISABLED && !force_push)
 		return // Cannot update UI, no visibility
@@ -526,6 +552,7 @@ nanoui is used to open and update nano browser uis
   * @return nothing
   */
 /datum/nanoui/proc/process(update = 0)
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/nanoui/proc/process() called tick#: [world.time]")
 	if (!src_object || !user)
 		close()
 		return
@@ -541,5 +568,6 @@ nanoui is used to open and update nano browser uis
   * @return nothing
   */
 /datum/nanoui/proc/update(var/force_open = 0)
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/nanoui/proc/update() called tick#: [world.time]")
 	src_object.ui_interact(user, ui_key, src, force_open)
 

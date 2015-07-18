@@ -73,6 +73,7 @@ USE THIS CHEMISTRY DISPENSER FOR MAPS SO THEY START AT 100 ENERGY
 */
 
 /obj/machinery/chem_dispenser/proc/recharge()
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/chem_dispenser/proc/recharge() called tick#: [world.time]")
 	if(stat & (BROKEN|NOPOWER)) return
 	var/oldenergy = energy
 	energy = min(energy + rechargerate, max_energy)
@@ -157,7 +158,7 @@ USE THIS CHEMISTRY DISPENSER FOR MAPS SO THEY START AT 100 ENERGY
 	ui = nanomanager.try_update_ui(user, src, ui_key, ui, data)
 	if (!ui)
 		// the ui does not exist, so we'll create a new() one
-        // for a list of parameters and their descriptions see the code docs in \code\modules\nano\nanoui.dm
+        // for a list of parameters and their descriptions see the code docs in \code\\modules\nano\nanoui.dm
 		ui = new(user, src, ui_key, "chem_dispenser.tmpl", "[src.name] 5000", 390, 630)
 		// when the ui is first opened this is the data it will use
 		ui.set_initial_data(data)
@@ -209,6 +210,7 @@ USE THIS CHEMISTRY DISPENSER FOR MAPS SO THEY START AT 100 ENERGY
 	return 1 // update UIs attached to this object
 
 /obj/machinery/chem_dispenser/proc/detach()
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/chem_dispenser/proc/detach() called tick#: [world.time]")
 	if(beaker)
 		var/obj/item/weapon/reagent_containers/glass/B = beaker
 		B.loc = loc
@@ -613,6 +615,7 @@ USE THIS CHEMISTRY DISPENSER FOR MAPS SO THEY START AT 100 ENERGY
 	return
 
 /obj/machinery/chem_master/proc/detach()
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/chem_master/proc/detach() called tick#: [world.time]")
 	if(beaker)
 		beaker.loc = src.loc
 		if(istype(beaker, /obj/item/weapon/reagent_containers/glass/beaker/large/cyborg))
@@ -668,7 +671,7 @@ USE THIS CHEMISTRY DISPENSER FOR MAPS SO THEY START AT 100 ENERGY
 			for(var/datum/reagent/G in R.reagent_list)
 
 				// AUTOFIXED BY fix_string_idiocy.py
-				// C:\Users\Rob\Documents\Projects\vgstation13\code\modules\reagents\Chemistry-Machinery.dm:518: dat += "[G.name] , [G.volume] Units - "
+				// C:\Users\Rob\\documents\\\projects\vgstation13\code\\modules\reagents\Chemistry-Machinery.dm:518: dat += "[G.name] , [G.volume] Units - "
 				dat += {"[G.name] , [G.volume] Units -
 					<A href='?src=\ref[src];analyze=1;desc=[G.description];name=[G.name]'>(Analyze)</A>
 					<A href='?src=\ref[src];add=[G.id];amount=1'>(1)</A>
@@ -683,7 +686,7 @@ USE THIS CHEMISTRY DISPENSER FOR MAPS SO THEY START AT 100 ENERGY
 			for(var/datum/reagent/N in reagents.reagent_list)
 
 				// AUTOFIXED BY fix_string_idiocy.py
-				// C:\Users\Rob\Documents\Projects\vgstation13\code\modules\reagents\Chemistry-Machinery.dm:529: dat += "[N.name] , [N.volume] Units - "
+				// C:\Users\Rob\\documents\\\projects\vgstation13\code\\modules\reagents\Chemistry-Machinery.dm:529: dat += "[N.name] , [N.volume] Units - "
 				dat += {"[N.name] , [N.volume] Units -
 					<A href='?src=\ref[src];analyze=1;desc=[N.description];name=[N.name]'>(Analyze)</A>
 					<A href='?src=\ref[src];remove=[N.id];amount=1'>(1)</A>
@@ -697,7 +700,7 @@ USE THIS CHEMISTRY DISPENSER FOR MAPS SO THEY START AT 100 ENERGY
 		if(!condi)
 
 			// AUTOFIXED BY fix_string_idiocy.py
-			// C:\Users\Rob\Documents\Projects\vgstation13\code\modules\reagents\Chemistry-Machinery.dm:539: dat += "<HR><BR><A href='?src=\ref[src];createpill=1'>Create pill (50 units max)</A><a href=\"?src=\ref[src]&change_pill=1\"><img src=\"pill[pillsprite].png\" /></a><BR>"
+			// C:\Users\Rob\\documents\\\projects\vgstation13\code\\modules\reagents\Chemistry-Machinery.dm:539: dat += "<HR><BR><A href='?src=\ref[src];createpill=1'>Create pill (50 units max)</A><a href=\"?src=\ref[src]&change_pill=1\"><img src=\"pill[pillsprite].png\" /></a><BR>"
 			//dat += {"<a href=\"?src=\ref[src]&change_pill=1\"><img src=\"pill[pillsprite].png\" /></a><a href=\"?src=\ref[src]&change_bottle=1\"><img src=\"bottle[bottlesprite].png\" /></a><BR>"}
 			dat += {"<a href=\"?src=\ref[src]&change_pill=1\"><img src=\"pill[pillsprite].png\" /></a><BR>"}
 			dat += {"<HR><BR><A href='?src=\ref[src];createpill=1'>Create single pill (50 units max)</A><BR><A href='?src=\ref[src];createpill_multiple=1'>Create multiple pills (50 units max each; 20 max)</A><BR>
@@ -713,6 +716,7 @@ USE THIS CHEMISTRY DISPENSER FOR MAPS SO THEY START AT 100 ENERGY
 	return
 
 /obj/machinery/chem_master/proc/isgoodnumber(var/num)
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/chem_master/proc/isgoodnumber() called tick#: [world.time]")
 	if(isnum(num))
 		if(num > 200)
 			num = 200
@@ -895,6 +899,7 @@ USE THIS CHEMISTRY DISPENSER FOR MAPS SO THEY START AT 100 ENERGY
 	return
 
 /obj/machinery/computer/pandemic/proc/detach()
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/computer/pandemic/proc/detach() called tick#: [world.time]")
 	beaker.loc = src.loc
 	if(istype(beaker, /obj/item/weapon/reagent_containers/glass/beaker/large/cyborg))
 		var/mob/living/silicon/robot/R = beaker:holder:loc
@@ -922,7 +927,7 @@ USE THIS CHEMISTRY DISPENSER FOR MAPS SO THEY START AT 100 ENERGY
 	else if(!beaker)
 
 		// AUTOFIXED BY fix_string_idiocy.py
-		// C:\Users\Rob\Documents\Projects\vgstation13\code\modules\reagents\Chemistry-Machinery.dm:722: dat += "Please insert beaker.<BR>"
+		// C:\Users\Rob\\documents\\\projects\vgstation13\code\\modules\reagents\Chemistry-Machinery.dm:722: dat += "Please insert beaker.<BR>"
 		dat += {"Please insert beaker.<BR>
 			<A href='?src=\ref[user];mach_close=pandemic'>Close</A>"}
 		// END AUTOFIX
@@ -942,7 +947,7 @@ USE THIS CHEMISTRY DISPENSER FOR MAPS SO THEY START AT 100 ENERGY
 		else
 
 			// AUTOFIXED BY fix_string_idiocy.py
-			// C:\Users\Rob\Documents\Projects\vgstation13\code\modules\reagents\Chemistry-Machinery.dm:738: dat += "<h3>Blood sample data:</h3>"
+			// C:\Users\Rob\\documents\\\projects\vgstation13\code\\modules\reagents\Chemistry-Machinery.dm:738: dat += "<h3>Blood sample data:</h3>"
 			dat += {"<h3>Blood sample data:</h3>
 				<b>Blood DNA:</b> [(Blood.data["blood_DNA"]||"none")]<BR>
 				<b>Blood Type:</b> [(Blood.data["blood_type"]||"none")]<BR>"}
@@ -968,7 +973,7 @@ USE THIS CHEMISTRY DISPENSER FOR MAPS SO THEY START AT 100 ENERGY
 
 
 							// AUTOFIXED BY fix_string_idiocy.py
-							// C:\Users\Rob\Documents\Projects\vgstation13\code\modules\reagents\Chemistry-Machinery.dm:762: dat += "<b>Disease Agent:</b> [D?"[D.agent] - <A href='?src=\ref[src];create_virus_culture=[disease_creation]'>Create virus culture bottle</A>":"none"]<BR>"
+							// C:\Users\Rob\\documents\\\projects\vgstation13\code\\modules\reagents\Chemistry-Machinery.dm:762: dat += "<b>Disease Agent:</b> [D?"[D.agent] - <A href='?src=\ref[src];create_virus_culture=[disease_creation]'>Create virus culture bottle</A>":"none"]<BR>"
 							dat += {"<b>Disease Agent:</b> [D?"[D.agent] - <A href='?src=\ref[src];create_virus_culture=[disease_creation]'>Create virus culture bottle</A>":"none"]<BR>
 								<b>Common name:</b> [(D.name||"none")]<BR>
 								<b>Description: </b> [(D.desc||"none")]<BR>
@@ -1008,7 +1013,7 @@ USE THIS CHEMISTRY DISPENSER FOR MAPS SO THEY START AT 100 ENERGY
 				dat += "nothing<BR>"
 
 		// AUTOFIXED BY fix_string_idiocy.py
-		// C:\Users\Rob\Documents\Projects\vgstation13\code\modules\reagents\Chemistry-Machinery.dm:799: dat += "<BR><A href='?src=\ref[src];eject=1'>Eject beaker</A>[((R.total_volume&&R.reagent_list.len) ? "-- <A href='?src=\ref[src];empty_beaker=1'>Empty beaker</A>":"")]<BR>"
+		// C:\Users\Rob\\documents\\\projects\vgstation13\code\\modules\reagents\Chemistry-Machinery.dm:799: dat += "<BR><A href='?src=\ref[src];eject=1'>Eject beaker</A>[((R.total_volume&&R.reagent_list.len) ? "-- <A href='?src=\ref[src];empty_beaker=1'>Empty beaker</A>":"")]<BR>"
 		dat += {"<BR><A href='?src=\ref[src];eject=1'>Eject beaker</A>[((R.total_volume&&R.reagent_list.len) ? "-- <A href='?src=\ref[src];empty_beaker=1'>Empty beaker</A>":"")]<BR>
 			<A href='?src=\ref[user];mach_close=pandemic'>Close</A>"}
 		// END AUTOFIX
@@ -1257,7 +1262,7 @@ USE THIS CHEMISTRY DISPENSER FOR MAPS SO THEY START AT 100 ENERGY
 		if (is_beaker_ready && !is_chamber_empty && !(stat & (NOPOWER|BROKEN)))
 
 			// AUTOFIXED BY fix_string_idiocy.py
-			// C:\Users\Rob\Documents\Projects\vgstation13\code\modules\reagents\Chemistry-Machinery.dm:1016: dat += "<A href='?src=\ref[src];action=grind'>Grind the reagents</a><BR>"
+			// C:\Users\Rob\\documents\\\projects\vgstation13\code\\modules\reagents\Chemistry-Machinery.dm:1016: dat += "<A href='?src=\ref[src];action=grind'>Grind the reagents</a><BR>"
 			dat += {"<A href='?src=\ref[src];action=grind'>Grind the reagents</a><BR>
 				<A href='?src=\ref[src];action=juice'>Juice the reagents</a><BR><BR>"}
 			// END AUTOFIX
@@ -1290,6 +1295,8 @@ USE THIS CHEMISTRY DISPENSER FOR MAPS SO THEY START AT 100 ENERGY
 
 /obj/machinery/reagentgrinder/proc/detach()
 
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/reagentgrinder/proc/detach() called tick#: [world.time]")
+
 	if (usr.stat != 0)
 		return
 	if (!beaker)
@@ -1306,6 +1313,8 @@ USE THIS CHEMISTRY DISPENSER FOR MAPS SO THEY START AT 100 ENERGY
 
 /obj/machinery/reagentgrinder/proc/eject()
 
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/reagentgrinder/proc/eject() called tick#: [world.time]")
+
 	if (usr.stat != 0)
 		return
 	if (holdingitems && holdingitems.len == 0)
@@ -1317,27 +1326,32 @@ USE THIS CHEMISTRY DISPENSER FOR MAPS SO THEY START AT 100 ENERGY
 	holdingitems = list()
 
 /obj/machinery/reagentgrinder/proc/is_allowed(var/obj/item/weapon/reagent_containers/O)
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/reagentgrinder/proc/is_allowed() called tick#: [world.time]")
 	for (var/i in blend_items)
 		if(istype(O, i))
 			return 1
 	return 0
 
 /obj/machinery/reagentgrinder/proc/get_allowed_by_id(var/obj/item/weapon/grown/O)
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/reagentgrinder/proc/get_allowed_by_id() called tick#: [world.time]")
 	for (var/i in blend_items)
 		if (istype(O, i))
 			return blend_items[i]
 
 /obj/machinery/reagentgrinder/proc/get_allowed_snack_by_id(var/obj/item/weapon/reagent_containers/food/snacks/O)
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/reagentgrinder/proc/get_allowed_snack_by_id() called tick#: [world.time]")
 	for(var/i in blend_items)
 		if(istype(O, i))
 			return blend_items[i]
 
 /obj/machinery/reagentgrinder/proc/get_allowed_juice_by_id(var/obj/item/weapon/reagent_containers/food/snacks/O)
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/reagentgrinder/proc/get_allowed_juice_by_id() called tick#: [world.time]")
 	for(var/i in juice_items)
 		if(istype(O, i))
 			return juice_items[i]
 
 /obj/machinery/reagentgrinder/proc/get_grownweapon_amount(var/obj/item/weapon/grown/O)
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/reagentgrinder/proc/get_grownweapon_amount() called tick#: [world.time]")
 	if (!istype(O))
 		return 5
 	else if (O.potency == -1)
@@ -1346,6 +1360,7 @@ USE THIS CHEMISTRY DISPENSER FOR MAPS SO THEY START AT 100 ENERGY
 		return round(O.potency)
 
 /obj/machinery/reagentgrinder/proc/get_juice_amount(var/obj/item/weapon/reagent_containers/food/snacks/grown/O)
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/reagentgrinder/proc/get_juice_amount() called tick#: [world.time]")
 	if (!istype(O))
 		return 5
 	else if (O.potency == -1)
@@ -1354,10 +1369,12 @@ USE THIS CHEMISTRY DISPENSER FOR MAPS SO THEY START AT 100 ENERGY
 		return round(5*sqrt(O.potency))
 
 /obj/machinery/reagentgrinder/proc/remove_object(var/obj/item/O)
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/reagentgrinder/proc/remove_object() called tick#: [world.time]")
 	holdingitems -= O
 	del(O)
 
 /obj/machinery/reagentgrinder/proc/juice()
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/reagentgrinder/proc/juice() called tick#: [world.time]")
 	power_change()
 	if(stat & (NOPOWER|BROKEN))
 		return
@@ -1390,6 +1407,8 @@ USE THIS CHEMISTRY DISPENSER FOR MAPS SO THEY START AT 100 ENERGY
 		remove_object(O)
 
 /obj/machinery/reagentgrinder/proc/grind()
+
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/reagentgrinder/proc/grind() called tick#: [world.time]")
 
 	power_change()
 	if(stat & (NOPOWER|BROKEN))
@@ -1617,6 +1636,7 @@ USE THIS CHEMISTRY DISPENSER FOR MAPS SO THEY START AT 100 ENERGY
 		..()
 
 /obj/item/weapon/electrolyzer/proc/insert_beaker(obj/item/weapon/W as obj, mob/user as mob)
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/item/weapon/electrolyzer/proc/insert_beaker() called tick#: [world.time]")
 	W.loc = src
 	beakers += W
 	user.drop_item(W, src)
@@ -1682,6 +1702,7 @@ USE THIS CHEMISTRY DISPENSER FOR MAPS SO THEY START AT 100 ENERGY
 	set name = "Flush"
 	set category = "Object"
 	set src in view(1)
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""]) \\/obj/structure/centrifuge/verb/flush()  called tick#: [world.time]")
 	add_fingerprint(usr)
 	usr << "<span class='notice'>\The [src] groans as it spits out containers.</span>"
 	while(cans.len>0 && beaker.reagents.reagent_list.len>0)
@@ -1699,6 +1720,7 @@ USE THIS CHEMISTRY DISPENSER FOR MAPS SO THEY START AT 100 ENERGY
 		return
 
 /obj/structure/centrifuge/proc/detach()
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/structure/centrifuge/proc/detach() called tick#: [world.time]")
 	if(beaker)
 		beaker.loc = src.loc
 		if(istype(beaker, /obj/item/weapon/reagent_containers/glass/beaker/large/cyborg))

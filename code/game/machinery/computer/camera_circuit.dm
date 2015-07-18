@@ -19,6 +19,7 @@
 		possibleNets["Medbay"] = access_cmo
 
 	proc/updateBuildPath()
+		writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\proc/updateBuildPath() called tick#: [world.time]")
 		build_path = ""
 		if(authorised && secured)
 			switch(network)
@@ -61,6 +62,7 @@
 			interact(user, 0)
 
 	proc/interact(var/mob/user, var/ai=0)
+		writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\proc/interact() called tick#: [world.time]")
 		if(secured)
 			return
 		if (!ishuman(user))

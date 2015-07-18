@@ -49,7 +49,7 @@
 
 
 
-///////SEPARATE ANUS///////
+///////sepARATE ANUS///////
 /datum/surgery_step/butt/seperate_anus/tool_quality(obj/item/tool)
 	. = ..()
 	if(!tool.is_sharp())

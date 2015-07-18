@@ -1,6 +1,7 @@
 /client/proc/Debug2()
 	set category = "Debug"
 	set name = "Debug-Game"
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/client/proc/Debug2() called tick#: [world.time]")
 	if(!check_rights(R_DEBUG))	return
 
 	if(Debug2)
@@ -16,7 +17,7 @@
 
 
 
-/* 21st Sept 2010
+/* 21st sept 2010
 Updated by Skie -- Still not perfect but better!
 Stuff you can't do:
 Call proc /mob/proc/Dizzy() for some player
@@ -28,6 +29,7 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 /client/proc/callproc()
 	set category = "Debug"
 	set name = "Advanced ProcCall"
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/client/proc/callproc() called tick#: [world.time]")
 
 	if(!check_rights(R_DEBUG)) return
 
@@ -132,6 +134,7 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 /client/proc/callatomproc(var/atom/target as  anything)
 	set category = "Debug"
 	set name = "Atom ProcCall"
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/client/proc/callatomproc() called tick#: [world.time]")
 
 	if(!check_rights(R_DEBUG)) return
 
@@ -202,6 +205,7 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 /client/proc/Cell()
 	set category = "Debug"
 	set name = "Air Status in Location"
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/client/proc/Cell() called tick#: [world.time]")
 	if(!mob)
 		return
 	var/turf/T = mob.loc
@@ -214,7 +218,7 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 	var/t = ""
 
 	// AUTOFIXED BY fix_string_idiocy.py
-	// C:\Users\Rob\Documents\Projects\vgstation13\code\modules\admin\verbs\debug.dm:145: t+= "Nitrogen : [env.nitrogen]\n"
+	// C:\Users\Rob\\documents\\\projects\vgstation13\code\\modules\admin\verbs\\debug.dm:145: t+= "Nitrogen : [env.nitrogen]\n"
 	t += {"Nitrogen : [env.nitrogen]
 Oxygen : [env.oxygen]
 Plasma : [env.toxins]
@@ -227,6 +231,7 @@ Pressure: [env.return_pressure()]"}
 /client/proc/cmd_admin_robotize(var/mob/M in mob_list)
 	set category = "Fun"
 	set name = "Make Robot"
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/client/proc/cmd_admin_robotize() called tick#: [world.time]")
 
 	if(!ticker)
 		alert("Wait until the game starts")
@@ -241,6 +246,7 @@ Pressure: [env.return_pressure()]"}
 /client/proc/cmd_admin_mommify(var/mob/M in mob_list)
 	set category = "Fun"
 	set name = "Make MoMMI"
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/client/proc/cmd_admin_mommify() called tick#: [world.time]")
 
 	if(!ticker)
 		alert("Wait until the game starts")
@@ -255,6 +261,7 @@ Pressure: [env.return_pressure()]"}
 /client/proc/cmd_admin_animalize(var/mob/M in mob_list)
 	set category = "Fun"
 	set name = "Make Simple Animal"
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/client/proc/cmd_admin_animalize() called tick#: [world.time]")
 
 	if(!ticker)
 		alert("Wait until the game starts")
@@ -276,6 +283,7 @@ Pressure: [env.return_pressure()]"}
 	set category = "Fun"
 	set name = "Make pAI"
 	set desc = "Specify a location to spawn a pAI device, then specify a key to play that pAI"
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/client/proc/makepAI() called tick#: [world.time]")
 
 	var/list/available = list()
 	for(var/mob/C in mob_list)
@@ -302,6 +310,7 @@ Pressure: [env.return_pressure()]"}
 /client/proc/cmd_admin_alienize(var/mob/M in mob_list)
 	set category = "Fun"
 	set name = "Make Alien"
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/client/proc/cmd_admin_alienize() called tick#: [world.time]")
 
 	if(!ticker)
 		alert("Wait until the game starts")
@@ -320,6 +329,7 @@ Pressure: [env.return_pressure()]"}
 /client/proc/cmd_admin_slimeize(var/mob/M in mob_list)
 	set category = "Fun"
 	set name = "Make slime"
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/client/proc/cmd_admin_slimeize() called tick#: [world.time]")
 
 	if(!ticker)
 		alert("Wait until the game starts")
@@ -336,6 +346,7 @@ Pressure: [env.return_pressure()]"}
 
 /*
 /client/proc/cmd_admin_monkeyize(var/mob/M in world)
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/client/proc/cmd_admin_monkeyize() called tick#: [world.time]")
 	set category = "Fun"
 	set name = "Make Monkey"
 
@@ -351,6 +362,7 @@ Pressure: [env.return_pressure()]"}
 		alert("Invalid mob")
 
 /client/proc/cmd_admin_changelinginize(var/mob/M in world)
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/client/proc/cmd_admin_changelinginize() called tick#: [world.time]")
 	set category = "Fun"
 	set name = "Make Changeling"
 
@@ -369,6 +381,7 @@ Pressure: [env.return_pressure()]"}
 */
 /*
 /client/proc/cmd_admin_abominize(var/mob/M in world)
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/client/proc/cmd_admin_abominize() called tick#: [world.time]")
 	set category = null
 	set name = "Make Abomination"
 
@@ -386,6 +399,7 @@ Pressure: [env.return_pressure()]"}
 */
 /*
 /client/proc/make_cultist(var/mob/M in world) // -- TLE, modified by Urist
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/client/proc/make_cultist() called tick#: [world.time]")
 	set category = "Fun"
 	set name = "Make Cultist"
 	set desc = "Makes target a cultist"
@@ -431,6 +445,7 @@ Pressure: [env.return_pressure()]"}
 /client/proc/cmd_debug_del_all()
 	set category = "Debug"
 	set name = "Del-All"
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/client/proc/cmd_debug_del_all() called tick#: [world.time]")
 
 	// to prevent REALLY stupid deletions
 	var/blocked = list(/obj, /mob, /mob/living, /mob/living/carbon, /mob/living/carbon/human, /mob/dead, /mob/dead/observer, /mob/living/silicon, /mob/living/silicon/robot, /mob/living/silicon/ai)
@@ -446,6 +461,7 @@ Pressure: [env.return_pressure()]"}
 /client/proc/cmd_debug_make_powernets()
 	set category = "Debug"
 	set name = "Make Powernets"
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/client/proc/cmd_debug_make_powernets() called tick#: [world.time]")
 	makepowernets()
 	log_admin("[key_name(src)] has remade the powernet. makepowernets() called.")
 	message_admins("[key_name_admin(src)] has remade the powernets. makepowernets() called.", 0)
@@ -454,6 +470,7 @@ Pressure: [env.return_pressure()]"}
 /client/proc/cmd_debug_tog_aliens()
 	set category = "Server"
 	set name = "Toggle Aliens"
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/client/proc/cmd_debug_tog_aliens() called tick#: [world.time]")
 
 	aliens_allowed = !aliens_allowed
 	log_admin("[key_name(src)] has turned aliens [aliens_allowed ? "on" : "off"].")
@@ -463,6 +480,7 @@ Pressure: [env.return_pressure()]"}
 /client/proc/cmd_admin_grantfullaccess(var/mob/M in mob_list)
 	set category = "Admin"
 	set name = "Grant Full Access"
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/client/proc/cmd_admin_grantfullaccess() called tick#: [world.time]")
 
 	if (!ticker)
 		alert("Wait until the game starts")
@@ -495,6 +513,7 @@ Pressure: [env.return_pressure()]"}
 	set category = "Admin"
 	set name = "Assume direct control"
 	set desc = "Direct intervention"
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/client/proc/cmd_assume_direct_control() called tick#: [world.time]")
 
 	if(!check_rights(R_DEBUG|R_ADMIN))	return
 	if(M.ckey)
@@ -514,6 +533,7 @@ Pressure: [env.return_pressure()]"}
 /client/proc/cmd_admin_areatest()
 	set category = "Mapping"
 	set name = "Test areas"
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/client/proc/cmd_admin_areatest() called tick#: [world.time]")
 
 	var/list/areas_all = list()
 	var/list/areas_with_APC = list()
@@ -602,6 +622,8 @@ Pressure: [env.return_pressure()]"}
 /client/proc/cmd_admin_dress(var/mob/living/carbon/human/M in mob_list)
 	set category = "Fun"
 	set name = "Select equipment"
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/client/proc/cmd_admin_dress() called tick#: [world.time]")
+
 	if(!ishuman(M))
 		alert("Invalid mob")
 		return
@@ -1065,10 +1087,10 @@ Pressure: [env.return_pressure()]"}
 	return
 
 /client/proc/startSinglo()
-
 	set category = "Debug"
 	set name = "Start Singularity"
 	set desc = "Sets up the singularity and all machines to get power flowing through the station"
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/client/proc/startSinglo() called tick#: [world.time]")
 
 	if(alert("Are you sure? This will start up the engine. Should only be used during debug!",,"Yes","No") != "Yes")
 		return
@@ -1128,10 +1150,10 @@ Pressure: [env.return_pressure()]"}
 			SMES.online = 1
 
 /client/proc/cheat_power()
-
 	set category = "Debug"
 	set name = "Free Power"
 	set desc = "Replaces all SMES on the map with magical ones."
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/client/proc/cheat_power() called tick#: [world.time]")
 
 	if(alert("Are you sure? This will completely fuck over your round!",,"Yes","No") != "Yes")
 		return
@@ -1153,10 +1175,10 @@ Pressure: [env.return_pressure()]"}
 
 // Getting tired of doing this shit every fucking round when I'm testing something atmos-related
 /client/proc/setup_atmos()
-
 	set category = "Debug"
 	set name = "Start Atmos"
 	set desc = "WOW ATMOS DID THEIR JOBS!!!1"
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/client/proc/setup_atmos() called tick#: [world.time]")
 
 	if(alert("Are you sure? This will completely fuck over your round!",,"Yes","No") != "Yes")
 		return
@@ -1180,6 +1202,7 @@ Pressure: [env.return_pressure()]"}
 	set category = "Debug"
 	set name = "Debug Mob Lists"
 	set desc = "For when you just gotta know"
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/client/proc/cmd_debug_mob_lists() called tick#: [world.time]")
 
 	switch(input("Which list?") in list("Players","Admins","Mobs","Living Mobs","Dead Mobs", "Clients"))
 		if("Players")
@@ -1197,6 +1220,7 @@ Pressure: [env.return_pressure()]"}
 
 
 /client/proc/cmd_admin_toggle_block(var/mob/M,var/block)
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/client/proc/cmd_admin_toggle_block() called tick#: [world.time]")
 	if(!ticker)
 		alert("Wait until the game starts")
 		return
@@ -1216,6 +1240,7 @@ Pressure: [env.return_pressure()]"}
 	set category = "Debug"
 	set name = "Dump Instance Counts"
 	set desc = "MEMORY PROFILING IS TOO HIGH TECH"
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/client/proc/cmd_admin_dump_instances() called tick#: [world.time]")
 	var/date_string = time2text(world.realtime, "YYYY-MM-DD")
 	var/F=file("data/logs/profiling/[date_string]_instances.csv")
 	fdel(F)
@@ -1228,6 +1253,7 @@ Pressure: [env.return_pressure()]"}
 /client/proc/cmd_admin_find_bad_blood_tracks()
 	set category = "Debug"
 	set name = "Find broken blood tracks"
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/client/proc/cmd_admin_find_bad_blood_tracks() called tick#: [world.time]")
 	if(!holder) return
 	message_admins("[src] used find broken blood tracks")
 	var/date_string = time2text(world.realtime, "YYYY-MM-DD")
@@ -1254,6 +1280,7 @@ Pressure: [env.return_pressure()]"}
 /client/proc/cmd_admin_dump_macprofile()
 	set category = "Debug"
 	set name = "Dump Machine and Object Profiling"
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/client/proc/cmd_admin_dump_macprofile() called tick#: [world.time]")
 
 	var/date_string = time2text(world.realtime, "YYYY-MM-DD")
 	var/F =file("data/logs/profiling/[date_string]_machine_profiling.csv")
@@ -1277,6 +1304,7 @@ Pressure: [env.return_pressure()]"}
 /client/proc/cmd_admin_dump_machine_type_list()
 	set category = "Debug"
 	set name = "Dump Machine type list"
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/client/proc/cmd_admin_dump_machine_type_list() called tick#: [world.time]")
 
 	if(!machines.len && !power_machines.len)
 		usr << "Machines has no length!"
@@ -1313,6 +1341,7 @@ Pressure: [env.return_pressure()]"}
 /client/proc/cmd_admin_dump_delprofile()
 	set category = "Debug"
 	set name = "Dump Del Profiling"
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/client/proc/cmd_admin_dump_delprofile() called tick#: [world.time]")
 
 	var/date_string = time2text(world.realtime, "YYYY-MM-DD")
 	var/F =file("data/logs/profiling/[date_string]_del_profiling.csv")
@@ -1345,6 +1374,7 @@ Pressure: [env.return_pressure()]"}
 	set category = "Fun"
 	set name = "Dispense Money"
 	set desc = "Honk"
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/client/proc/gib_money() called tick#: [world.time]")
 
 	var/response = input(src,"How much moneys?") as num
 	if( response < 1) return
@@ -1354,6 +1384,7 @@ var/global/blood_virus_spreading_disabled = 0
 /client/proc/disable_bloodvirii()
 	set category = "Debug"
 	set name = "Disable Blood Virus Spreading"
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/client/proc/disable_bloodvirii() called tick#: [world.time]")
 
 	//usr << "<span class='warning'>Proc disabled.</span>"
 
@@ -1367,6 +1398,7 @@ var/global/blood_virus_spreading_disabled = 0
 	set category = "Server"
 	set name = "Reload Style Sheet"
 	set desc = "Reload the Style Sheet (be careful)."
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/client/proc/reload_style_sheet() called tick#: [world.time]")
 
 	for(var/client/C in clients)
 		winset(C, null, "outputwindow.output.style=[config.world_style_config];")
@@ -1376,6 +1408,7 @@ var/global/blood_virus_spreading_disabled = 0
 	set category = "Server"
 	set name = "Reset Style Sheet"
 	set desc = "Reset the Style Sheet (restore to default)."
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/client/proc/reset_style_sheet() called tick#: [world.time]")
 
 	for(var/client/C in clients)
 		winset(C, null, "outputwindow.output.style=[world_style];")
@@ -1385,6 +1418,7 @@ var/global/blood_virus_spreading_disabled = 0
 /client/proc/cmd_admin_cluwneize(var/mob/M in mob_list)
 	set category = "Fun"
 	set name = "Make Cluwne"
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/client/proc/cmd_admin_cluwneize() called tick#: [world.time]")
 	if(!ticker)
 		alert("Wait until the game starts")
 		return
@@ -1400,7 +1434,7 @@ client/proc/make_invulnerable(var/mob/M in mob_list)
 	set name = "Toggle Invulnerability"
 	set desc = "Make the target atom invulnerable to all form of damage."
 	set category = "Fun"
-
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\client/proc/make_invulnerable() called tick#: [world.time]")
 	var/isinvuln = 0
 	if(M.flags & INVULNERABLE)
 		isinvuln = 1
@@ -1423,6 +1457,7 @@ client/proc/delete_all_adminbus()
 	set name = "Delete every Adminbus"
 	set desc = "When the world cannot handle them anymore."
 	set category = "Fun"
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\client/proc/delete_all_adminbus() called tick#: [world.time]")
 
 	if(alert(usr, "Delete every single Adminbus in the game world?", "Delete Adminbus", "Yes", "No") != "Yes")
 		return
@@ -1434,6 +1469,7 @@ client/proc/delete_all_bomberman()
 	set name = "Remove all that Bomberman shit"
 	set desc = "4th wall ointment."
 	set category = "Fun"
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\client/proc/delete_all_bomberman() called tick#: [world.time]")
 
 	if(!check_rights(R_FUN)) return
 
@@ -1484,6 +1520,7 @@ client/proc/create_bomberman_arena()
 	set name = "Create a Bomberman Arena"
 	set desc = "Create a customizable Bomberman-type arena."
 	set category = "Fun"
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\client/proc/create_bomberman_arena() called tick#: [world.time]")
 
 	if(!check_rights(R_FUN)) return
 
@@ -1501,6 +1538,7 @@ client/proc/control_bomberman_arena()
 	set name = "Arena Control Panel"
 	set desc = "Control or Remove an existing Bomberman-type arena."
 	set category = "Fun"
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\client/proc/control_bomberman_arena() called tick#: [world.time]")
 
 	if(!check_rights(R_FUN)) return
 
@@ -1629,6 +1667,8 @@ client/proc/control_bomberman_arena()
 client/proc/mob_list()
 	set name = "show mob list"
 	set category = "Debug"
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\client/proc/mob_list() called tick#: [world.time]")
+
 	if(!holder) return
 	usr << "mob list length is [mob_list.len]"
 	var/foundnull = 0
@@ -1646,6 +1686,7 @@ client/proc/mob_list()
 client/proc/check_bomb()
 	set name = "Check Bomb Impact"
 	set category = "Debug"
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\client/proc/check_bomb() called tick#: [world.time]")
 
 	var/newmode = alert("Use the new method?","Check Bomb Impact", "Yes","No")
 
@@ -1714,6 +1755,7 @@ client/proc/cure_disease()
 	set name = "Cure Disease"
 	set category = "Debug"
 	if(!holder) return
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\client/proc/cure_disease() called tick#: [world.time]")
 
 	var/list/disease_by_name = list("-Cure All-" = null) + disease2_list + active_diseases
 

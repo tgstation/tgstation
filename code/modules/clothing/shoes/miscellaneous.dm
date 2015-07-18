@@ -1,4 +1,5 @@
 /obj/item/clothing/shoes/proc/step_action() //this was made to rewrite clown shoes squeaking
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/item/clothing/shoes/proc/step_action() called tick#: [world.time]")
 
 /obj/item/clothing/shoes/syndigaloshes
 	desc = "A pair of brown shoes. They seem to have extra grip."
@@ -36,6 +37,7 @@
 	set name = "Change Color"
 	set category = "Object"
 	set src in usr
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""]) \\/obj/item/clothing/shoes/syndigaloshes/verb/change()  called tick#: [world.time]")
 
 	var/obj/item/clothing/shoes/A
 	A = input("Select Colour to change it to", "BOOYEA", A) in clothing_choices

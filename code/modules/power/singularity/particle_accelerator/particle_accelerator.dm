@@ -92,6 +92,7 @@ So, hopefully this is helpful if any more icons are to be added/changed/wonderin
 	set name = "Rotate Clockwise"
 	set category = "Object"
 	set src in oview(1)
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""]) \\/obj/structure/particle_accelerator/verb/rotate()  called tick#: [world.time]")
 
 	if (src.anchored || usr:stat)
 		usr << "It is fastened to the floor!"
@@ -103,6 +104,7 @@ So, hopefully this is helpful if any more icons are to be added/changed/wonderin
 	set name = "Rotate Counter Clockwise"
 	set category = "Object"
 	set src in oview(1)
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""]) \\/obj/structure/particle_accelerator/verb/rotateccw()  called tick#: [world.time]")
 
 	if (src.anchored || usr:stat)
 		usr << "It is fastened to the floor!"
@@ -175,12 +177,14 @@ So, hopefully this is helpful if any more icons are to be added/changed/wonderin
 	return
 
 /obj/structure/particle_accelerator/proc/update_state()
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/structure/particle_accelerator/proc/update_state() called tick#: [world.time]")
 	if(master)
 		master.update_state()
 		return 0
 
 
 /obj/structure/particle_accelerator/proc/report_ready(var/obj/O)
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/structure/particle_accelerator/proc/report_ready() called tick#: [world.time]")
 	if(O && (O == master))
 		if(construction_state >= 3)
 			return 1
@@ -188,12 +192,14 @@ So, hopefully this is helpful if any more icons are to be added/changed/wonderin
 
 
 /obj/structure/particle_accelerator/proc/report_master()
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/structure/particle_accelerator/proc/report_master() called tick#: [world.time]")
 	if(master)
 		return master
 	return 0
 
 
 /obj/structure/particle_accelerator/proc/connect_master(var/obj/O)
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/structure/particle_accelerator/proc/connect_master() called tick#: [world.time]")
 	if(O && istype(O,/obj/machinery/particle_accelerator/control_box))
 		if(O.dir == src.dir)
 			master = O
@@ -202,6 +208,7 @@ So, hopefully this is helpful if any more icons are to be added/changed/wonderin
 
 
 /obj/structure/particle_accelerator/proc/process_tool_hit(var/obj/O, var/mob/user)
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/structure/particle_accelerator/proc/process_tool_hit() called tick#: [world.time]")
 	if(!(O) || !(user))
 		return 0
 	if(!ismob(user) || !isobj(O))
@@ -276,6 +283,7 @@ So, hopefully this is helpful if any more icons are to be added/changed/wonderin
 	set name = "Rotate Clockwise"
 	set category = "Object"
 	set src in oview(1)
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""]) \\/obj/machinery/particle_accelerator/verb/rotate()  called tick#: [world.time]")
 
 	if (src.anchored || usr:stat)
 		usr << "It is fastened to the floor!"
@@ -287,6 +295,7 @@ So, hopefully this is helpful if any more icons are to be added/changed/wonderin
 	set name = "Rotate Counter-Clockwise"
 	set category = "Object"
 	set src in oview(1)
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""]) \\/obj/machinery/particle_accelerator/verb/rotateccw()  called tick#: [world.time]")
 
 	if (src.anchored || usr:stat)
 		usr << "It is fastened to the floor!"
@@ -342,10 +351,12 @@ So, hopefully this is helpful if any more icons are to be added/changed/wonderin
 	return
 
 /obj/machinery/particle_accelerator/proc/update_state()
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/particle_accelerator/proc/update_state() called tick#: [world.time]")
 	return 0
 
 
 /obj/machinery/particle_accelerator/proc/process_tool_hit(var/obj/O, var/mob/user)
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/particle_accelerator/proc/process_tool_hit() called tick#: [world.time]")
 	if(!(O) || !(user))
 		return 0
 	if(!ismob(user) || !isobj(O))

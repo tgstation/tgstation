@@ -42,7 +42,7 @@
 		if(screen == 0)
 
 			// AUTOFIXED BY fix_string_idiocy.py
-			// C:\Users\Rob\Documents\Projects\vgstation13\code\game\machinery\computer\robot.dm:41: dat += "<h3>Cyborg Control Console</h3><BR>"
+			// C:\Users\Rob\\documents\\\projects\vgstation13\code\game\\machinery\computer\robot.dm:41: dat += "<h3>Cyborg Control Console</h3><BR>"
 			dat += {"<h3>Cyborg Control Console</h3><BR>
 				<A href='?src=\ref[src];screen=1'>1. Cyborg Status</A><BR>
 				<A href='?src=\ref[src];screen=2'>2. Emergency Full Destruct</A><BR>"}
@@ -83,7 +83,7 @@
 						dat += "<A href='?src=\ref[src];magbot=\ref[R]'>(<font color=blue><i>Hack</i></font>)</A> "
 
 				// AUTOFIXED BY fix_string_idiocy.py
-				// C:\Users\Rob\Documents\Projects\vgstation13\code\game\machinery\computer\robot.dm:78: dat += "<A href='?src=\ref[src];stopbot=\ref[R]'>(<font color=green><i>[R.canmove ? "Lockdown" : "Release"]</i></font>)</A> "
+				// C:\Users\Rob\\documents\\\projects\vgstation13\code\game\\machinery\computer\robot.dm:78: dat += "<A href='?src=\ref[src];stopbot=\ref[R]'>(<font color=green><i>[R.canmove ? "Lockdown" : "Release"]</i></font>)</A> "
 				dat += {"<A href='?src=\ref[src];stopbot=\ref[R]'>(<font color=green><i>[R.canmove ? "Lockdown" : "Release"]</i></font>)</A>
 					<A href='?src=\ref[src];killbot=\ref[R]'>(<font color=red><i>Destroy</i></font>)</A>
 					<BR>"}
@@ -223,6 +223,8 @@
 	return
 
 /obj/machinery/computer/robotics/proc/start_sequence()
+
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/computer/robotics/proc/start_sequence() called tick#: [world.time]")
 
 	do
 		if(src.stop)

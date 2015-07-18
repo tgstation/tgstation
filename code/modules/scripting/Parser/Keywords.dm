@@ -32,6 +32,7 @@ var/const/Represents a special statement in the code triggered by a keyword.
 	to its AST.
 */
 	proc/Parse(n_Parser/parser)
+		writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\proc/Parse() called tick#: [world.time]")
 
 /*
 	Class: nS_Keyword
@@ -64,7 +65,7 @@ var/const/Represents a special statement in the code triggered by a keyword.
 				.=KW_PASS
 				var/node/statement/IfStatement/stmt=new
 				parser.NextToken()  //skip 'if' token
-				stmt.cond=parser.ParseParenExpression()
+				stmt.cond=parser.ParseparenExpression()
 				if(!parser.CheckToken(")", /token/symbol))
 					return KW_FAIL
 				if(!parser.CheckToken("{", /token/symbol, skip=0)) //Token needs to be preserved for parse loop, so skip=0
@@ -87,7 +88,7 @@ var/const/Represents a special statement in the code triggered by a keyword.
 
 				var/node/statement/IfStatement/ElseIf/stmt = new
 				parser.NextToken()  //skip 'if' token
-				stmt.cond = parser.ParseParenExpression()
+				stmt.cond = parser.ParseparenExpression()
 				if(!parser.CheckToken(")", /token/symbol))
 					return KW_FAIL
 				if(!parser.CheckToken("{", /token/symbol, skip=0)) //Token needs to be preserved for parse loop, so skip=0
@@ -118,7 +119,7 @@ var/const/Represents a special statement in the code triggered by a keyword.
 				.=KW_PASS
 				var/node/statement/WhileLoop/stmt=new
 				parser.NextToken()  //skip 'while' token
-				stmt.cond=parser.ParseParenExpression()
+				stmt.cond=parser.ParseparenExpression()
 				if(!parser.CheckToken(")", /token/symbol))
 					return KW_FAIL
 				if(!parser.CheckToken("{", /token/symbol, skip=0))

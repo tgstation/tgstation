@@ -112,6 +112,7 @@ max volume of plasma storeable by the field = the total volume of a number of ti
 			owned_field.ChangeFieldFrequency(field_frequency)
 
 /obj/machinery/power/rust_core/proc/Startup()
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/power/rust_core/proc/Startup() called tick#: [world.time]")
 	if(owned_field)
 		return
 
@@ -124,6 +125,7 @@ max volume of plasma storeable by the field = the total volume of a number of ti
 	. = 1
 
 /obj/machinery/power/rust_core/proc/Shutdown()
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/power/rust_core/proc/Shutdown() called tick#: [world.time]")
 	//todo: safety checks for field status
 	if(owned_field)
 		icon_state = "core0"
@@ -132,6 +134,7 @@ max volume of plasma storeable by the field = the total volume of a number of ti
 		set_light(0)
 
 /obj/machinery/power/rust_core/proc/AddParticles(var/name, var/quantity = 1)
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/power/rust_core/proc/AddParticles() called tick#: [world.time]")
 	if(owned_field)
 		owned_field.AddParticles(name, quantity)
 		. = 1
@@ -148,6 +151,7 @@ max volume of plasma storeable by the field = the total volume of a number of ti
 	"}
 
 /obj/machinery/power/rust_core/proc/set_strength(var/value)
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/power/rust_core/proc/set_strength() called tick#: [world.time]")
 	value = Clamp(value, MIN_FIELD_STR, MAX_FIELD_STR)
 	field_strength = value
 	active_power_usage = RUST_CORE_STR_COST * value
@@ -155,6 +159,7 @@ max volume of plasma storeable by the field = the total volume of a number of ti
 		owned_field.ChangeFieldStrength(value)
 
 /obj/machinery/power/rust_core/proc/set_frequency(var/value)
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/power/rust_core/proc/set_frequency() called tick#: [world.time]")
 	value = Clamp(value, MIN_FIELD_FREQ, MAX_FIELD_FREQ)
 	field_frequency = value
 	if(owned_field)

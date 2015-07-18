@@ -33,6 +33,7 @@
 //Defines the region the map represents, sets map
 //Returns the map
 /datum/mapGenerator/proc/defineRegion(var/turf/Start, var/turf/End, var/replace = 0)
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/mapGenerator/proc/defineRegion() called tick#: [world.time]")
 	if(!checkRegion(Start, End))
 		return 0
 
@@ -46,6 +47,7 @@
 //Defines the region the map represents, as a CIRCLE!, sets map
 //Returns the map
 /datum/mapGenerator/proc/defineCircularRegion(var/turf/Start, var/turf/End, var/replace = 0)
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/mapGenerator/proc/defineCircularRegion() called tick#: [world.time]")
 	if(!checkRegion(Start, End))
 		return 0
 
@@ -81,12 +83,14 @@
 
 //Empties the map list, he's dead jim.
 /datum/mapGenerator/proc/undefineRegion()
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/mapGenerator/proc/undefineRegion() called tick#: [world.time]")
 	map = list() //bai bai
 
 
 //Checks for and Rejects bad region coordinates
 //Returns 1/0
 /datum/mapGenerator/proc/checkRegion(var/turf/Start, var/turf/End)
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/mapGenerator/proc/checkRegion() called tick#: [world.time]")
 	. = 1
 
 	if(!Start || !End)
@@ -103,6 +107,7 @@
 //Requests the mapGeneratorModule(s) to (re)generate
 /datum/mapGenerator/proc/generate()
 	set background = 1 //this can get beefy
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/mapGenerator/proc/generate() called tick#: [world.time]")
 
 	syncModules()
 	if(!modules || !modules.len)
@@ -114,6 +119,7 @@
 
 //Requests the mapGeneratorModule(s) to (re)generate this one turf
 /datum/mapGenerator/proc/generateOneTurf(var/turf/T)
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/mapGenerator/proc/generateOneTurf() called tick#: [world.time]")
 	if(!T)
 		return
 	syncModules()
@@ -126,6 +132,7 @@
 
 //Replaces all paths in the module list with actual module datums
 /datum/mapGenerator/proc/initialiseModules()
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/mapGenerator/proc/initialiseModules() called tick#: [world.time]")
 	for(var/path in modules)
 		if(ispath(path))
 			modules.Remove(path)
@@ -135,6 +142,7 @@
 
 //Sync mapGeneratorModule(s) to mapGenerator
 /datum/mapGenerator/proc/syncModules()
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/mapGenerator/proc/syncModules() called tick#: [world.time]")
 	for(var/datum/mapGeneratorModule/mod in modules)
 		mod.sync(src)
 
@@ -147,6 +155,7 @@
 /client/proc/debugNatureMapGenerator()
 	set name = "Test Nature Map Generator"
 	set category = "Debug"
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/client/proc/debugNatureMapGenerator() called tick#: [world.time]")
 
 	var/datum/mapGenerator/nature/N = new()
 	var/startInput = input(usr,"Start turf of Map, (X;Y;Z)", "Map Gen Settings", "1;1;1") as text
@@ -178,7 +187,7 @@
 
 	var/moduleClusters = input("Cluster Flags (Cancel to leave unchanged from defaults)","Map Gen Settings") as null|anything in clusters
 	//null for default
-	
+
 	var/theCluster = 0
 	if(moduleClusters != "None")
 		if(!clusters[moduleClusters])
@@ -187,7 +196,7 @@
 		theCluster = clusters[moduleClusters]
 	else
 		theCluster =  CLUSTER_CHECK_NONE
-	
+
 	if(theCluster)
 		for(var/datum/mapGeneratorModule/M in N.modules)
 			M.clusterCheckFlags = theCluster

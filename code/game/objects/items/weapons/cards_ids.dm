@@ -33,6 +33,7 @@
 	set name = "Label Disk"
 	set category = "Object"
 	set src in usr
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""]) \\/obj/item/weapon/card/data/verb/label()  called tick#: [world.time]")
 
 	if (t)
 		src.name = text("Data Disk- '[]'", t)
@@ -121,6 +122,7 @@
 		processing_objects.Remove(src)
 
 /obj/item/weapon/card/emag/proc/canUse(var/mob/user, var/obj/machinery/M)
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/item/weapon/card/emag/proc/canUse() called tick#: [world.time]")
 	// We've already checked for emaggability.  All we do here is check cost.
 
 	// Infinite uses?  Just return true.
@@ -204,6 +206,7 @@
 	return src
 
 /obj/item/weapon/card/id/proc/GetBalance(var/format=0)
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/item/weapon/card/id/proc/GetBalance() called tick#: [world.time]")
 	var/amt = 0
 	var/datum/money_account/acct = get_card_account(src)
 	if(acct)
@@ -213,6 +216,7 @@
 	return amt
 
 /obj/item/weapon/card/id/proc/GetJobName()
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/item/weapon/card/id/proc/GetJobName() called tick#: [world.time]")
 	var/jobName = src.assignment //what the card's job is called
 	var/alt_jobName = src.rank   //what the card's job ACTUALLY IS: determines access, etc.
 
@@ -225,6 +229,7 @@
 	return "Unknown" //Return unknown if none of the above apply
 
 /obj/item/weapon/card/id/proc/GetJobRealName()
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/item/weapon/card/id/proc/GetJobRealName() called tick#: [world.time]")
 	if( rank in get_all_jobs() )
 		return rank
 
@@ -250,6 +255,7 @@
 	set name = "Read ID Card"
 	set category = "Object"
 	set src in usr
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""]) \\/obj/item/weapon/card/id/verb/read()  called tick#: [world.time]")
 
 	usr << text("\icon[] []: The current assignment on the card is [].", src, src.name, src.assignment)
 	usr << "The blood type on the card is [blood_type]."

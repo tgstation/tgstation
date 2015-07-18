@@ -55,6 +55,7 @@
 	var/inaccurate = 0
 
 /obj/item/projectile/proc/on_hit(var/atom/target, var/blocked = 0)
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/item/projectile/proc/on_hit() called tick#: [world.time]")
 	if(blocked >= 2)		return 0//Full block
 	if(!isliving(target))	return 0
 	// FUCK mice. - N3X
@@ -70,6 +71,7 @@
 	return 1
 
 /obj/item/projectile/proc/check_fire(var/mob/living/target as mob, var/mob/living/user as mob)  //Checks if you can hit them or not.
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/item/projectile/proc/check_fire() called tick#: [world.time]")
 	if(!istype(target) || !istype(user))
 		return 0
 	var/obj/item/projectile/test/in_chamber = getFromPool(/obj/item/projectile/test, get_step_to(user, target)) //Making the test....
@@ -202,12 +204,15 @@
 		return 1
 
 /obj/item/projectile/proc/OnDeath()	//if assigned, allows for code when the projectile disappears
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/item/projectile/proc/OnDeath() called tick#: [world.time]")
 	return 1
 
 /obj/item/projectile/proc/OnFired()	//if assigned, allows for code when the projectile gets fired
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/item/projectile/proc/OnFired() called tick#: [world.time]")
 	return 1
 
 /obj/item/projectile/proc/process_step()
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/item/projectile/proc/process_step() called tick#: [world.time]")
 	if(src.loc)
 		if(step_delay)
 			sleep(step_delay)
@@ -239,6 +244,7 @@
 	return
 
 /obj/item/projectile/proc/dumbfire(var/dir) // for spacepods, go snowflake go
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/item/projectile/proc/dumbfire() called tick#: [world.time]")
 	if(!dir)
 		//del(src)
 		OnDeath()

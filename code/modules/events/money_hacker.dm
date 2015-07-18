@@ -38,6 +38,7 @@
 	for(var/obj/machinery/message_server/MS in message_servers)
 		if(!MS.active) continue
 		// /obj/machinery/message_server/proc/send_rc_message(var/recipient = "",var/sender = "",var/message = "",var/stamp = "", var/id_auth = "", var/priority = 1)
+		writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/message_server/proc/send_rc_message() called tick#: [world.time]")
 		MS.send_rc_message("Engineering/Security/Bridge", my_department, message, "", "", 2)
 		pass = 1
 
@@ -74,7 +75,7 @@
 			T.purpose = pick("Ne$ ---ount fu%ds init*&lisat@*n","PAY BACK YOUR MUM","Funds withdrawal","pWnAgE","l33t hax","liberationez")
 			T.amount = pick("","([rand(0,99999)])","alla money","9001$","HOLLA HOLLA GET DOLLA","([lost])")
 			var/date1 = "31 December, 1999"
-			var/date2 = "[num2text(rand(1,31))] [pick("January","February","March","April","May","June","July","August","September","October","November","December")], [rand(1000,3000)]"
+			var/date2 = "[num2text(rand(1,31))] [pick("January","February","March","April","May","June","July","August","september","October","November","December")], [rand(1000,3000)]"
 			T.date = pick("", current_date_string, date1, date2)
 			var/time1 = rand(0, 99999999)
 			var/time2 = "[round(time1 / 36000)+12]:[(time1 / 600 % 60) < 10 ? add_zero(time1 / 600 % 60, 1) : time1 / 600 % 60]"
@@ -94,6 +95,7 @@
 		for(var/obj/machinery/message_server/MS in message_servers)
 			if(!MS.active) continue
 			// /obj/machinery/message_server/proc/send_rc_message(var/recipient = "",var/sender = "",var/message = "",var/stamp = "", var/id_auth = "", var/priority = 1)
+			writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/message_server/proc/send_rc_message() called tick#: [world.time]")
 			MS.send_rc_message("Engineering/Security/Bridge", my_department, message, "", "", 2)
 			pass = 1
 

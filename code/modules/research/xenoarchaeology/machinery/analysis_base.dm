@@ -113,7 +113,7 @@
 	var/dat = "<B>[src.name]</B><BR>"
 
 	// AUTOFIXED BY fix_string_idiocy.py
-	// C:\Users\Rob\Documents\Projects\vgstation13\code\modules\research\xenoarchaeology\machinery\analysis_base.dm:111: dat += "Module heat level: [temperature] kelvin<br>"
+	// C:\Users\Rob\\documents\\\projects\vgstation13\code\\modules\research\xenoarchaeology\\machinery\analysis_base.dm:111: dat += "Module heat level: [temperature] kelvin<br>"
 	dat += {"Module heat level: [temperature] kelvin<br>
 		Safeties set at 350k, shielding failure at 400k. Failure to maintain safe heat levels may result in equipment damage.<br>
 		<hr>"}
@@ -126,7 +126,7 @@
 		dat += "[held_container ? "<A href='?src=\ref[src];begin=1'>Begin scanning</a>" : ""]"
 
 	// AUTOFIXED BY fix_string_idiocy.py
-	// C:\Users\Rob\Documents\Projects\vgstation13\code\modules\research\xenoarchaeology\machinery\analysis_base.dm:120: dat += "<hr>"
+	// C:\Users\Rob\\documents\\\projects\vgstation13\code\\modules\research\xenoarchaeology\\machinery\analysis_base.dm:120: dat += "<hr>"
 	dat += {"<hr>
 		<A href='?src=\ref[src];refresh=1'>Refresh</a><BR>
 		<A href='?src=\ref[src];close=1'>Close</a><BR>"}
@@ -161,10 +161,12 @@ obj/machinery/anomaly/attackby(obj/item/weapon/W as obj, mob/living/user as mob)
 		return ..()
 
 obj/machinery/anomaly/proc/ScanResults()
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/anomaly/proc/ScanResults() called tick#: [world.time]")
 	//instantiate in children to produce unique scan behaviour
 	return "<span class='warning'>Error initialising scanning components.</span>"
 
 obj/machinery/anomaly/proc/FinishScan()
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/anomaly/proc/FinishScan() called tick#: [world.time]")
 	scan_process = 0
 	updateDialog()
 
@@ -204,6 +206,7 @@ obj/machinery/anomaly/Topic(href, href_list)
 //whether the carrier sample matches the possible finds
 //results greater than a threshold of 0.6 means a positive result
 obj/machinery/anomaly/proc/GetResultSpecifity(var/datum/geosample/scanned_sample, var/carrier_name)
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/anomaly/proc/GetResultSpecifity() called tick#: [world.time]")
 	var/specifity = 0
 	if(scanned_sample && carrier_name)
 

@@ -58,26 +58,31 @@
 
 // common helper procs for all power machines
 /obj/machinery/power/proc/add_avail(var/amount)
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/power/proc/add_avail() called tick#: [world.time]")
 	if(get_powernet())
 		powernet.newavail += amount
 
 /obj/machinery/power/proc/add_load(var/amount)
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/power/proc/add_load() called tick#: [world.time]")
 	if(get_powernet())
 		powernet.load += amount
 
 /obj/machinery/power/proc/surplus()
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/power/proc/surplus() called tick#: [world.time]")
 	if(get_powernet())
 		return powernet.avail-powernet.load
 	else
 		return 0
 
 /obj/machinery/power/proc/avail()
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/power/proc/avail() called tick#: [world.time]")
 	if(get_powernet())
 		return powernet.avail
 	else
 		return 0
 
 /obj/machinery/power/proc/get_powernet()
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/power/proc/get_powernet() called tick#: [world.time]")
 	check_rebuild()
 	return powernet
 
@@ -89,16 +94,19 @@
 			return 1
 
 /obj/machinery/power/proc/getPowernetNodes()
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/power/proc/getPowernetNodes() called tick#: [world.time]")
 	if(!get_powernet())
 		return list()
 	return powernet.nodes
 
 /obj/machinery/power/proc/disconnect_terminal() // machines without a terminal will just return, no harm no fowl.
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/power/proc/disconnect_terminal() called tick#: [world.time]")
 	return
 
 // returns true if the area has power on given channel (or doesn't require power)
 // defaults to power_channel
 /obj/machinery/proc/powered(chan = power_channel)
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/proc/powered() called tick#: [world.time]")
 	if(!src.loc)
 		return 0
 
@@ -116,6 +124,7 @@
 // increment the power usage stats for an area
 // defaults to power_channel
 /obj/machinery/proc/use_power(amount, chan = power_channel)
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/proc/use_power() called tick#: [world.time]")
 	if(isnull(src.areaMaster) || !src.areaMaster)
 		return 0						// if not, then not powered.
 
@@ -128,6 +137,7 @@
 // by default, check equipment channel & set flag
 // can override if needed
 /obj/machinery/proc/power_change()
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/proc/power_change() called tick#: [world.time]")
 	if(powered(power_channel))
 		stat &= ~NOPOWER
 
@@ -145,6 +155,7 @@
 
 // connect the machine to a powernet if a node cable is present on the turf
 /obj/machinery/power/proc/connect_to_network()
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/power/proc/connect_to_network() called tick#: [world.time]")
 	var/turf/T = get_turf(src)
 
 	var/obj/structure/cable/C = T.get_cable_node() // check if we have a node cable on the machine turf, the first found is picked
@@ -157,6 +168,7 @@
 
 // remove and disconnect the machine from its current powernet
 /obj/machinery/power/proc/disconnect_from_network()
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/power/proc/disconnect_from_network() called tick#: [world.time]")
 	if(!get_powernet())
 		build_status = 0
 		return 0
@@ -171,6 +183,7 @@
 // returns all the cables WITHOUT a powernet in neighbors turfs,
 // pointing towards the turf the machine is located at
 /obj/machinery/power/proc/get_connections()
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/power/proc/get_connections() called tick#: [world.time]")
 	. = list()
 
 	var/cdir
@@ -190,6 +203,7 @@
 // returns all the cables in neighbors turfs,
 // pointing towards the turf the machine is located at
 /obj/machinery/power/proc/get_marked_connections()
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/power/proc/get_marked_connections() called tick#: [world.time]")
 	. = list()
 
 	var/cdir
@@ -205,6 +219,7 @@
 
 // returns all the NODES (O-X) cables WITHOUT a powernet in the turf the machine is located at
 /obj/machinery/power/proc/get_indirect_connections()
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/power/proc/get_indirect_connections() called tick#: [world.time]")
 	. = list()
 
 	for(var/obj/structure/cable/C in loc)
@@ -221,13 +236,16 @@
 // return a knot cable (O-X) if one is present in the turf
 // null if there's none
 /turf/proc/get_cable_node()
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/turf/proc/get_cable_node() called tick#: [world.time]")
 	for(var/obj/structure/cable/C in src)
 		if(C.d1 == 0)
 			return C
 
 /obj/machinery/proc/addStaticPower(value, powerchannel)
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/proc/addStaticPower() called tick#: [world.time]")
 	if(!areaMaster)
 		return
 	areaMaster.addStaticPower(value, powerchannel)
 /obj/machinery/proc/removeStaticPower(value, powerchannel)
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/proc/removeStaticPower() called tick#: [world.time]")
 	addStaticPower(-value, powerchannel)

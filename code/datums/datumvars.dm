@@ -4,6 +4,7 @@ client
 	proc/debug_reagents(datum/D in world)
 		set category = "Debug"
 		set name = "Add Reagent"
+		writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\proc/debug_reagents() called tick#: [world.time]")
 
 		if(!usr.client || !usr.client.holder)
 			usr << "<span class='warning'>You need to be an administrator to access this.</span>"
@@ -25,6 +26,7 @@ client
 		set category = "Debug"
 		set name = "View Variables"
 		//set src in world
+		writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\proc/debug_variables() called tick#: [world.time]")
 
 
 		if(!usr.client || !usr.client.holder)
@@ -180,7 +182,7 @@ client
 
 
 		// AUTOFIXED BY fix_string_idiocy.py
-		// C:\Users\Rob\Documents\Projects\vgstation13\code\datums\datumvars.dm:162: body += "<body onload='selectTextField(); updateSearch()' onkeyup='updateSearch()'>"
+		// C:\Users\Rob\\documents\\\projects\vgstation13\code\\datums\\datumvars.dm:162: body += "<body onload='selectTextField(); updateSearch()' onkeyup='updateSearch()'>"
 		body += {"<body onload='selectTextField(); updateSearch()' onkeyup='updateSearch()'>
 			<div align='center'><table width='100%'><tr><td width='50%'>"}
 		// END AUTOFIX
@@ -220,7 +222,7 @@ client
 
 
 		// AUTOFIXED BY fix_string_idiocy.py
-		// C:\Users\Rob\Documents\Projects\vgstation13\code\datums\datumvars.dm:200: body += "</div>"
+		// C:\Users\Rob\\documents\\\projects\vgstation13\code\\datums\\datumvars.dm:200: body += "</div>"
 		body += {"</div>
 			</tr></td></table>"}
 		// END AUTOFIX
@@ -240,7 +242,7 @@ client
 
 
 		// AUTOFIXED BY fix_string_idiocy.py
-		// C:\Users\Rob\Documents\Projects\vgstation13\code\datums\datumvars.dm:218: body += "</div>"
+		// C:\Users\Rob\\documents\\\projects\vgstation13\code\\datums\\datumvars.dm:218: body += "</div>"
 		body += {"</div>
 			</div></td>
 			<td width='50%'><div align='center'><a href='?_src_=vars;datumrefresh=\ref[D]'>Refresh</a>"}
@@ -270,7 +272,7 @@ client
 		if(ismob(D))
 
 			// AUTOFIXED BY fix_string_idiocy.py
-			// C:\Users\Rob\Documents\Projects\vgstation13\code\datums\datumvars.dm:247: body += "<option value='?_src_=vars;give_spell=\ref[D]'>Give Spell</option>"
+			// C:\Users\Rob\\documents\\\projects\vgstation13\code\\datums\\datumvars.dm:247: body += "<option value='?_src_=vars;give_spell=\ref[D]'>Give Spell</option>"
 			body += {"<option value='?_src_=vars;give_spell=\ref[D]'>Give Spell</option>
 				<option value='?_src_=vars;give_disease=\ref[D]'>Give Disease</option>
 				<option value='?_src_=vars;godmode=\ref[D]'>Toggle Godmode</option>
@@ -285,7 +287,7 @@ client
 			if(ishuman(D))
 
 				// AUTOFIXED BY fix_string_idiocy.py
-				// C:\Users\Rob\Documents\Projects\vgstation13\code\datums\datumvars.dm:262: body += "<option value>---</option>"
+				// C:\Users\Rob\\documents\\\projects\vgstation13\code\\datums\\datumvars.dm:262: body += "<option value>---</option>"
 				body += {"<option value>---</option>
 					<option value='?_src_=vars;setmutantrace=\ref[D]'>Set Mutantrace</option>
 					<option value='?_src_=vars;setspecies=\ref[D]'>Set Species</option>
@@ -298,7 +300,7 @@ client
 			// END AUTOFIX
 
 			// AUTOFIXED BY fix_string_idiocy.py
-			// C:\Users\Rob\Documents\Projects\vgstation13\code\datums\datumvars.dm:270: body += "<option value>---</option>"
+			// C:\Users\Rob\\documents\\\projects\vgstation13\code\\datums\\datumvars.dm:270: body += "<option value>---</option>"
 			body += {"<option value>---</option>
 				<option value='?_src_=vars;gib=\ref[D]'>Gib</option>"}
 			// END AUTOFIX
@@ -307,13 +309,13 @@ client
 		if(isobj(D) || ismob(D) || isturf(D))
 
 			// AUTOFIXED BY fix_string_idiocy.py
-			// C:\Users\Rob\Documents\Projects\vgstation13\code\datums\datumvars.dm:275: body += "<option value='?_src_=vars;explode=\ref[D]'>Trigger explosion</option>"
+			// C:\Users\Rob\\documents\\\projects\vgstation13\code\\datums\\datumvars.dm:275: body += "<option value='?_src_=vars;explode=\ref[D]'>Trigger explosion</option>"
 			body += {"<option value='?_src_=vars;explode=\ref[D]'>Trigger explosion</option>
 				<option value='?_src_=vars;emp=\ref[D]'>Trigger EM pulse</option>"}
 			// END AUTOFIX
 
 		// AUTOFIXED BY fix_string_idiocy.py
-		// C:\Users\Rob\Documents\Projects\vgstation13\code\datums\datumvars.dm:278: body += "</select></form>"
+		// C:\Users\Rob\\documents\\\projects\vgstation13\code\\datums\\datumvars.dm:278: body += "</select></form>"
 		body += {"</select></form>
 			</div></td></tr></table></div><hr>
 			<font size='1'><b>E</b> - Edit, tries to determine the variable type by itself.<br>
@@ -365,6 +367,7 @@ client
 		return
 
 	proc/debug_variable(name, value, level, var/datum/DA = null)
+		writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\proc/debug_variable() called tick#: [world.time]")
 		var/html = ""
 
 		if(DA)
@@ -420,7 +423,7 @@ client
 				if(0)   //(L.vars.len > 0)
 
 					// AUTOFIXED BY fix_string_idiocy.py
-					// C:\Users\Rob\Documents\Projects\vgstation13\code\datums\datumvars.dm:386: html += "<ol>"
+					// C:\Users\Rob\\documents\\\projects\vgstation13\code\\datums\\datumvars.dm:386: html += "<ol>"
 					html += {"<ol>
 						</ol>"}
 					// END AUTOFIX
@@ -460,6 +463,7 @@ client
 		return html
 
 /client/proc/view_var_Topic(href, href_list, hsrc)
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/client/proc/view_var_Topic() called tick#: [world.time]")
 	//This should all be moved over to datum/admins/Topic() or something ~Carn
 	if( (usr.client != src) || !src.holder )
 		return

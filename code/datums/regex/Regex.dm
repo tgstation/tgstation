@@ -16,7 +16,7 @@
 	- Beginning of line ^ or \A
 	- End of line $ or \Z
 	- Grouping with ()
-	- Special classes like \d, \w, \s and their opposites (uppercase)
+	- Special classes like \\d, \w, \s and their opposites (uppercase)
 	- Word break or non-break assertions \b or \B
 	- Back-references like \1, \2, etc. (multiple digits allowed)
 
@@ -245,7 +245,7 @@ regex
 					Literal characters that must be escaped
 					Special escapes including \t and \n
 					Literal ASCII characters as \0nnn (octal) or \xnn (hex)
-					Special character classes like \s or \d (treated as literal until compiled)
+					Special character classes like \s or \\d (treated as literal until compiled)
 					\b or \B (treated as literal until compiled)
 					\A or \Z
 					Backreferences

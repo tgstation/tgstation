@@ -10,6 +10,7 @@
  */
 
 /datum/objective/heist/proc/choose_target()
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/objective/heist/proc/choose_target() called tick#: [world.time]")
 	return
 
 /*

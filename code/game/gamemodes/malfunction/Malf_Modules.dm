@@ -45,6 +45,8 @@ rcd light flash thingy on matter drain
 /mob/living/silicon/ai/proc/fireproof_core()
 	set category = "Malfunction"
 	set name = "Fireproof Core"
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/living/silicon/ai/proc/fireproof_core() called tick#: [world.time]")
+
 	for(var/mob/living/silicon/ai/ai in player_list)
 		ai.fire_res_on_core = 1
 	src.verbs -= /mob/living/silicon/ai/proc/fireproof_core
@@ -62,6 +64,8 @@ rcd light flash thingy on matter drain
 /mob/living/silicon/ai/proc/upgrade_turrets()
 	set category = "Malfunction"
 	set name = "Upgrade Turrets"
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/living/silicon/ai/proc/upgrade_turrets() called tick#: [world.time]")
+
 	src.verbs -= /mob/living/silicon/ai/proc/upgrade_turrets
 	for(var/obj/machinery/turret/turret in machines)
 		turret.health += 30
@@ -78,6 +82,8 @@ rcd light flash thingy on matter drain
 /mob/living/silicon/ai/proc/disable_rcd()
 	set category = "Malfunction"
 	set name = "Disable RCDs"
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/living/silicon/ai/proc/disable_rcd() called tick#: [world.time]")
+
 	for(var/datum/AI_Module/large/disable_rcd/rcdmod in current_modules)
 		if(rcdmod.uses > 0)
 			rcdmod.uses --
@@ -100,6 +106,8 @@ rcd light flash thingy on matter drain
 /mob/living/silicon/ai/proc/overload_machine(obj/machinery/M as obj in machines)
 	set name = "Overload Machine"
 	set category = "Malfunction"
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/living/silicon/ai/proc/overload_machine() called tick#: [world.time]")
+
 	if (istype(M, /obj/machinery))
 		for(var/datum/AI_Module/small/overload_machine/overload in current_modules)
 			if(overload.uses > 0)
@@ -124,6 +132,7 @@ rcd light flash thingy on matter drain
 /mob/living/silicon/ai/proc/place_transformer()
 	set name = "Place Robotic Factory"
 	set category = "Malfunction"
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/living/silicon/ai/proc/place_transformer() called tick#: [world.time]")
 
 	if(!eyeobj)
 		return
@@ -187,6 +196,8 @@ rcd light flash thingy on matter drain
 /mob/living/silicon/ai/proc/blackout()
 	set category = "Malfunction"
 	set name = "Blackout"
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/living/silicon/ai/proc/blackout() called tick#: [world.time]")
+
 	for(var/datum/AI_Module/small/blackout/blackout in current_modules)
 		if(blackout.uses > 0)
 			blackout.uses --
@@ -208,6 +219,8 @@ rcd light flash thingy on matter drain
 /mob/living/silicon/ai/proc/interhack()
 	set category = "Malfunction"
 	set name = "Hack intercept"
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/living/silicon/ai/proc/interhack() called tick#: [world.time]")
+
 	src.verbs -= /mob/living/silicon/ai/proc/interhack
 	ticker.mode:hack_intercept()
 
@@ -223,6 +236,8 @@ rcd light flash thingy on matter drain
 /mob/living/silicon/ai/proc/reactivate_camera(obj/machinery/camera/C as obj in cameranet.cameras)
 	set name = "Reactivate Camera"
 	set category = "Malfunction"
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/living/silicon/ai/proc/reactivate_camera() called tick#: [world.time]")
+
 	if (istype (C, /obj/machinery/camera))
 		for(var/datum/AI_Module/small/reactivate_camera/camera in current_modules)
 			if(camera.uses > 0)
@@ -246,6 +261,8 @@ rcd light flash thingy on matter drain
 /mob/living/silicon/ai/proc/upgrade_camera(obj/machinery/camera/C as obj in cameranet.cameras)
 	set name = "Upgrade Camera"
 	set category = "Malfunction"
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/living/silicon/ai/proc/upgrade_camera() called tick#: [world.time]")
+
 	if(istype(C))
 		var/datum/AI_Module/small/upgrade_camera/UC = locate(/datum/AI_Module/small/upgrade_camera) in current_modules
 		if(UC)
@@ -292,11 +309,18 @@ rcd light flash thingy on matter drain
 
 /datum/module_picker/proc/remove_verbs(var/mob/living/silicon/ai/A)
 
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""]) \\/datum/module_picker/proc/remove_verbs()  called tick#: [world.time]")
+
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/module_picker/proc/remove_verbs() called tick#: [world.time]")
+
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""]) \\\\/datum/module_picker/proc/remove_verbs()  called tick#: [world.time]")
+
 	for(var/datum/AI_Module/AM in possible_modules)
 		A.verbs.Remove(AM.power_type)
 
 
 /datum/module_picker/proc/use(user as mob)
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/module_picker/proc/use() called tick#: [world.time]")
 	var/dat
 	dat += {"<B>Select use of processing time: (currently #[src.processing_time] left.)</B><BR>
 			<HR>

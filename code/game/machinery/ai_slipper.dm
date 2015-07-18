@@ -24,6 +24,7 @@
 			stat |= NOPOWER
 
 /obj/machinery/ai_slipper/proc/setState(var/enabled, var/uses)
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/ai_slipper/proc/setState() called tick#: [world.time]")
 	src.disabled = disabled
 	src.uses = uses
 	src.power_change()
@@ -92,6 +93,7 @@
 	return
 
 /obj/machinery/ai_slipper/proc/slip_process()
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/ai_slipper/proc/slip_process() called tick#: [world.time]")
 	while(cooldown_time - world.timeofday > 0)
 		var/ticksleft = cooldown_time - world.timeofday
 

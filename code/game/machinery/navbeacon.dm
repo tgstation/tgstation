@@ -35,6 +35,7 @@
 
 	// set the transponder codes assoc list from codes_txt
 	proc/set_codes()
+		writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\proc/set_codes() called tick#: [world.time]")
 		if(!codes_txt)
 			return
 
@@ -60,6 +61,7 @@
 
 	// update the icon_state
 	proc/updateicon()
+		writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\proc/updateicon() called tick#: [world.time]")
 		var/state="navbeacon[panel_open]"
 
 		if(invisibility)
@@ -84,6 +86,8 @@
 	// return a signal giving location and transponder codes
 
 	proc/post_signal()
+
+		writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\proc/post_signal() called tick#: [world.time]")
 
 		var/datum/radio_frequency/frequency = radio_controller.return_frequency(freq)
 
@@ -170,7 +174,7 @@ Transponder Codes:<UL>"}
 			for(var/key in codes)
 
 				// AUTOFIXED BY fix_string_idiocy.py
-				// C:\Users\Rob\Documents\Projects\vgstation13\code\game\machinery\navbeacon.dm:174: t += "<LI>[key] ... [codes[key]]"
+				// C:\Users\Rob\\documents\\\projects\vgstation13\code\game\\machinery\navbeacon.dm:174: t += "<LI>[key] ... [codes[key]]"
 				t += {"<LI>[key] ... [codes[key]]
 					<small><A href='byond://?src=\ref[src];edit=1;code=[key]'>(edit)</A>
 					<A href='byond://?src=\ref[src];delete=1;code=[key]'>(delete)</A></small><BR>"}
@@ -178,7 +182,7 @@ Transponder Codes:<UL>"}
 				t += "<LI>[key] ... [codes[key]]"
 
 			// AUTOFIXED BY fix_string_idiocy.py
-			// C:\Users\Rob\Documents\Projects\vgstation13\code\game\machinery\navbeacon.dm:177: t += "<small><A href='byond://?src=\ref[src];add=1;'>(add new)</A></small><BR>"
+			// C:\Users\Rob\\documents\\\projects\vgstation13\code\game\\machinery\navbeacon.dm:177: t += "<small><A href='byond://?src=\ref[src];add=1;'>(add new)</A></small><BR>"
 			t += {"<small><A href='byond://?src=\ref[src];add=1;'>(add new)</A></small><BR>
 				<UL></TT>"}
 			// END AUTOFIX

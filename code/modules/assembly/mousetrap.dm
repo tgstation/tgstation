@@ -22,6 +22,7 @@
 		holder.update_icon()
 
 /obj/item/device/assembly/mousetrap/proc/triggered(mob/target as mob, var/type = "feet")
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/item/device/assembly/mousetrap/proc/triggered() called tick#: [world.time]")
 	if(!armed)
 		return
 	var/datum/organ/external/affecting = null
@@ -119,6 +120,7 @@
 	set src in oview(1)
 	set name = "Hide"
 	set category = "Object"
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""]) \\/obj/item/device/assembly/mousetrap/verb/hide_under()  called tick#: [world.time]")
 
 	if(usr.stat || (usr.status_flags & FAKEDEATH))
 		return

@@ -96,6 +96,7 @@ REAGENT SCANNER
 	src.add_fingerprint(user)
 
 proc/healthanalyze(mob/living/M as mob, mob/living/user as mob, var/mode = 0)
+	writepanic("[__FILE__].[__LINE__] \\/proc/healthanalyze() called tick#: [world.time]")
 	if (( (M_CLUMSY in user.mutations) || user.getBrainLoss() >= 60) && prob(50))
 		user << text("<span class='warning'>You try to analyze the floor's vitals!</span>")
 		for(var/mob/O in viewers(M, null))
@@ -220,6 +221,7 @@ proc/healthanalyze(mob/living/M as mob, mob/living/user as mob, var/mode = 0)
 /obj/item/device/healthanalyzer/verb/toggle_mode()
 	set name = "Switch Verbosity"
 	set category = "Object"
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""]) \\/obj/item/device/healthanalyzer/verb/toggle_mode()  called tick#: [world.time]")
 
 	mode = !mode
 	switch (mode)
@@ -266,6 +268,7 @@ proc/healthanalyze(mob/living/M as mob, mob/living/user as mob, var/mode = 0)
 
 //if human_standard is enabled, the message will be formatted to show which values are dangerous
 /obj/item/device/analyzer/proc/output_gas_scan(var/datum/gas_mixture/scanned, var/atom/container, human_standard = 0)
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/item/device/analyzer/proc/output_gas_scan() called tick#: [world.time]")
 	if(!scanned)
 		return "<span class='warning'>No gas mixture found.</span>"
 	scanned.update_values()

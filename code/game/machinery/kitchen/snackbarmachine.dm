@@ -204,6 +204,7 @@
 	return
 
 /obj/machinery/snackbar_machine/proc/isgoodnumber(var/num)
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/snackbar_machine/proc/isgoodnumber() called tick#: [world.time]")
 	if(isnum(num))
 		if(num > 100)
 			num = 100

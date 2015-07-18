@@ -5,6 +5,7 @@ var/numbersAndLetters = list("a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "
 var/list/bioEffectList = null
 
 /proc/biodbg()
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/proc/biodbg() called tick#: [world.time]")
 	usr:bioHolder:AddEffect("cryokinesis")
 	usr:bioHolder:AddEffect("mattereater")
 	usr:bioHolder:AddEffect("glowy")
@@ -15,6 +16,7 @@ var/list/bioEffectList = null
 	return
 
 /proc/addBio()
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/proc/addBio() called tick#: [world.time]")
 	var/mob/M = input(usr, "Select Mob:") as mob in world
 	if(!M) return
 	//if(hasvar(M, "bioHolder"))
@@ -50,6 +52,7 @@ var/list/bioEffectList = null
 	var/gender = NEUTER
 
 	proc/CopyOther(var/datum/appearanceHolder/toCopy) //Copies settings of another given holder. Used for the bioholder copy proc and such things.
+		writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\proc/CopyOther() called tick#: [world.time]")
 		r_hair = toCopy.r_hair
 		g_hair = toCopy.g_hair
 		b_hair = toCopy.b_hair
@@ -74,6 +77,7 @@ var/list/bioEffectList = null
 		return
 
 	proc/StaggeredCopyOther(var/datum/appearanceHolder/toCopy, var/progress = 1)
+		writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\proc/StaggeredCopyOther() called tick#: [world.time]")
 		var/adjust_denominator = 11 - progress
 		r_hair += (toCopy.r_hair - r_hair) / adjust_denominator
 		g_hair += (toCopy.g_hair - g_hair) / adjust_denominator
@@ -102,6 +106,7 @@ var/list/bioEffectList = null
 		return
 
 	proc/UpdateMob() //Rebuild the appearance of the mob from the settings in this holder.
+		writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\proc/UpdateMob() called tick#: [world.time]")
 		if(!owner)
 			return
 		if(hasvar(owner, "hair_icon_state"))
@@ -152,6 +157,7 @@ var/list/bioEffectList = null
 		return ..()
 
 	proc/ActivatePoolEffect(var/datum/bioEffect/E)
+		writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\proc/ActivatePoolEffect() called tick#: [world.time]")
 		if(!effectPool.Find(E) || !E.dnaBlocks.sequenceCorrect() || HasEffect(E.id))
 			return 0
 
@@ -163,6 +169,7 @@ var/list/bioEffectList = null
 		return 1
 
 	proc/AddNewPoolEffect(var/idToAdd)
+		writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\proc/AddNewPoolEffect() called tick#: [world.time]")
 		for(var/datum/bioEffect/D in effectPool)
 			if(lowertext(D.id) == lowertext(idToAdd))
 				return 0
@@ -180,6 +187,7 @@ var/list/bioEffectList = null
 		return 0
 
 	proc/AddRandomNewPoolEffect()
+		writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\proc/AddRandomNewPoolEffect() called tick#: [world.time]")
 		var/list/filteredList = list()
 
 		if (!bioEffectList || !bioEffectList.len)
@@ -204,12 +212,14 @@ var/list/bioEffectList = null
 		return 1
 
 	proc/RemovePoolEffect(var/datum/bioEffect/E)
+		writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\proc/RemovePoolEffect() called tick#: [world.time]")
 		if(!effectPool.Find(E))
 			return 0
 		effectPool.Remove(E)
 		return 1
 
 	proc/BuildEffectPool()
+		writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\proc/BuildEffectPool() called tick#: [world.time]")
 		var/list/filteredGood = new/list()
 		var/list/filteredBad = new/list()
 
@@ -254,6 +264,7 @@ var/list/bioEffectList = null
 		effectPool = shuffle(effectPool)
 
 	proc/OnLife()
+		writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\proc/OnLife() called tick#: [world.time]")
 		for(var/datum/bioEffect/curr in effects)
 			curr.OnLife()
 			if(curr.timeLeft != -1) curr.timeLeft--
@@ -262,11 +273,13 @@ var/list/bioEffectList = null
 		return
 
 	proc/OnMobDraw()
+		writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\proc/OnMobDraw() called tick#: [world.time]")
 		for(var/datum/bioEffect/curr in effects)
 			curr.OnMobDraw()
 		return
 
 	proc/CreateUid() //Creates a new uid and returns it.
+		writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\proc/CreateUid() called tick#: [world.time]")
 		var/newUid = ""
 
 		do
@@ -277,6 +290,7 @@ var/list/bioEffectList = null
 		return newUid
 
 	proc/CopyOther(var/datum/bioHolder/toCopy, var/copyAppearance = 1, var/copyPool = 1, var/copyEffectBlocks = 0, var/copyActiveEffects = 1) //Copies the settings of another given holder. Used for syringes, the dna spread virus and such things.
+		writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\proc/CopyOther() called tick#: [world.time]")
 		if(copyAppearance)
 			mobAppearance.CopyOther(toCopy.mobAppearance)
 			mobAppearance.UpdateMob()
@@ -308,6 +322,7 @@ var/list/bioEffectList = null
 		return
 
 	proc/StaggeredCopyOther(var/datum/bioHolder/toCopy, progress = 1)
+		writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\proc/StaggeredCopyOther() called tick#: [world.time]")
 		if (progress >= 10)
 			return CopyOther(toCopy)
 
@@ -321,6 +336,7 @@ var/list/bioEffectList = null
 		age += (toCopy.age - age) / (11 - progress)
 
 	proc/AddEffect(var/idToAdd, var/variant = 0, var/timeleft = 0) //Adds an effect to this holder. Returns the newly created effect if succesful else 0.
+		writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\proc/AddEffect() called tick#: [world.time]")
 		if(!owner) return
 
 		for(var/datum/bioEffect/D in effects)
@@ -349,6 +365,7 @@ var/list/bioEffectList = null
 		return 0
 
 	proc/RemoveEffect(var/id) //Removes an effect from this holder. Returns 1 on success else 0.
+		writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\proc/RemoveEffect() called tick#: [world.time]")
 		for(var/datum/bioEffect/D in effects)
 			if(lowertext(D.id) == lowertext(id))
 				D.OnRemove()
@@ -357,6 +374,7 @@ var/list/bioEffectList = null
 		return 0
 
 	proc/RemoveAllEffects(var/type = null)
+		writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\proc/RemoveAllEffects() called tick#: [world.time]")
 		for(var/datum/bioEffect/D in effects)
 			if(D.isHidden) continue
 			if(type != null)
@@ -367,6 +385,7 @@ var/list/bioEffectList = null
 		return 1
 
 	proc/HasAnyEffect(var/type = null)
+		writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\proc/HasAnyEffect() called tick#: [world.time]")
 		if(type)
 			for(var/datum/bioEffect/D in effects)
 				if(D.effectType == type)
@@ -376,6 +395,7 @@ var/list/bioEffectList = null
 		return 0
 
 	proc/HasEffect(var/id) //Returns variant if this holder has an effect with the given ID else 0. Returns 1 if it has the effect with variant 0, special case for limb tone.
+		writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\proc/HasEffect() called tick#: [world.time]")
 		for(var/datum/bioEffect/D in effects)
 			if(lowertext(D.id) == lowertext(id))
 				if(D.variant == 0) return 1
@@ -383,12 +403,14 @@ var/list/bioEffectList = null
 		return 0
 
 	proc/HasEffectInPool(var/id)
+		writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\proc/HasEffectInPool() called tick#: [world.time]")
 		for(var/datum/bioEffect/D in effectPool)
 			if(lowertext(D.id) == lowertext(id))
 				return 1
 		return 0
 
 	proc/HasOneOfTheseEffects() //HasAnyEffect() was already taken :I
+		writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\proc/HasOneOfTheseEffects() called tick#: [world.time]")
 		for (var/datum/bioEffect/D in effects)
 			if (lowertext(D.id) in args)
 				return (D.variant == 0 ? 1 : D.variant)
@@ -396,6 +418,7 @@ var/list/bioEffectList = null
 		return 0
 
 	proc/HasAllOfTheseEffects()
+		writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\proc/HasAllOfTheseEffects() called tick#: [world.time]")
 		var/tally = 0 //We cannot edit the args list directly, so just keep a count.
 		for (var/datum/bioEffect/D in effects)
 			if (lowertext(D.id) in args)
@@ -404,12 +427,14 @@ var/list/bioEffectList = null
 		return tally >= args.len
 
 	proc/GetEffect(var/id) //Returns the effect with the given ID if it exists else returns null.
+		writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\proc/GetEffect() called tick#: [world.time]")
 		for(var/datum/bioEffect/D in effects)
 			if(lowertext(D.id) == lowertext(id))
 				return D
 		return null
 
 	proc/GetCooldownForEffect(var/id)
+		writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\proc/GetCooldownForEffect() called tick#: [world.time]")
 		var/divider = 1
 		for(var/datum/bioEffect/cooldown_reducer/D in effects)
 			divider = D.divider
@@ -418,7 +443,8 @@ var/list/bioEffectList = null
 				return D.cooldown * divider
 		return 0
 
-	proc/RandomEffect(var/type = "either", var/useProbability = 1) //Adds a random effect to this holder. Argument controls which type. bad , good, either.
+	proc/RandomEffect(var/type = "either", var/useprobability = 1) //Adds a random effect to this holder. Argument controls which type. bad , good, either.
+		writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\proc/RandomEffect() called tick#: [world.time]")
 		var/list/filtered = new/list()
 
 		for(var/T in bioEffectList)
@@ -438,7 +464,7 @@ var/list/bioEffectList = null
 
 		var/datum/bioEffect/E = null
 
-		if(useProbability)
+		if(useprobability)
 			E = pickweight(filtered)
 		else
 			E = pick(filtered)

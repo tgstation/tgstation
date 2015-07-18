@@ -203,6 +203,7 @@
 
 
 /mob/living/carbon/monkey/proc/wearhat(var/obj/item/clothing/head/H as obj)
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/living/carbon/monkey/proc/wearhat() called tick#: [world.time]")
 	if(H)
 		if(istype(H))
 			var/obj/item/clothing/head/oldhat = null
@@ -221,6 +222,7 @@
 			regenerate_icons()
 
 /mob/living/carbon/monkey/proc/wearclothes(var/obj/item/clothing/monkeyclothes/C as obj)
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/living/carbon/monkey/proc/wearclothes() called tick#: [world.time]")
 	if(C)
 		if(istype(C))
 			var/obj/item/clothing/monkeyclothes/olduniform = null
@@ -239,6 +241,7 @@
 			regenerate_icons()
 
 /mob/living/carbon/monkey/proc/wearglasses(var/obj/item/clothing/glasses/G as obj)
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/living/carbon/monkey/proc/wearglasses() called tick#: [world.time]")
 	if(G)
 		if(istype(G))
 			var/obj/item/clothing/glasses/oldglasses = null
@@ -372,6 +375,7 @@
 
 
 /mob/living/carbon/monkey/proc/defense(var/power, var/def_zone)
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/living/carbon/monkey/proc/defense() called tick#: [world.time]")
 	var/armor = run_armor_check(def_zone, "melee", "Your armor has protected your [def_zone].", "Your armor has softened hit to your [def_zone].")
 	if(armor >= 2)	return 0
 	if(!power)	return 0
@@ -635,6 +639,7 @@
 /mob/living/carbon/monkey/verb/removeinternal()
 	set name = "Remove Internals"
 	set category = "IC"
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""]) \\/mob/living/carbon/monkey/verb/removeinternal()  called tick#: [world.time]")
 	internal = null
 	return
 

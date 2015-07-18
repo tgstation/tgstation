@@ -100,6 +100,7 @@
 
 
 /obj/item/device/assembly/infra/proc/trigger_beam()
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/item/device/assembly/infra/proc/trigger_beam() called tick#: [world.time]")
 	if((!secured)||(!on)||(cooldown > 0))	return 0
 	pulse(0)
 	if(!holder)
@@ -116,7 +117,7 @@
 	var/dat = text("<TT><B>Infrared Laser</B>\n<B>Status</B>: []<BR>\n<B>Visibility</B>: []<BR>\n</TT>", (on ? text("<A href='?src=\ref[];state=0'>On</A>", src) : text("<A href='?src=\ref[];state=1'>Off</A>", src)), (src.visible ? text("<A href='?src=\ref[];visible=0'>Visible</A>", src) : text("<A href='?src=\ref[];visible=1'>Invisible</A>", src)))
 
 	// AUTOFIXED BY fix_string_idiocy.py
-	// C:\Users\Rob\Documents\Projects\vgstation13\code\modules\assembly\infrared.dm:117: dat += "<BR><BR><A href='?src=\ref[src];refresh=1'>Refresh</A>"
+	// C:\Users\Rob\\documents\\\projects\vgstation13\code\\modules\assembly\infrared.dm:117: dat += "<BR><BR><A href='?src=\ref[src];refresh=1'>Refresh</A>"
 	dat += {"<BR><BR><A href='?src=\ref[src];refresh=1'>Refresh</A>
 		<BR><BR><A href='?src=\ref[src];close=1'>Close</A>"}
 	// END AUTOFIX
@@ -156,6 +157,7 @@
 	set name = "Rotate Infrared Laser"
 	set category = "Object"
 	set src in usr
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""]) \\/obj/item/device/assembly/infra/verb/rotate()  called tick#: [world.time]")
 
 	dir = turn(dir, 90)
 	return
@@ -178,6 +180,7 @@
 	var/obj/item/device/assembly/infra/assembly
 
 /obj/effect/beam/infrared/proc/hit()
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/effect/beam/infrared/proc/hit() called tick#: [world.time]")
 	if(assembly)
 		assembly.trigger_beam()
 
@@ -187,6 +190,7 @@
 		hit()
 
 /obj/effect/beam/infrared/proc/set_visible(v)
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/effect/beam/infrared/proc/set_visible() called tick#: [world.time]")
 	visible = v
 	if(next)
 		var/obj/effect/beam/infrared/B=next

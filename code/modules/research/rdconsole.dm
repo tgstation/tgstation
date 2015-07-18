@@ -72,12 +72,14 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 	light_color = LIGHT_COLOR_PINK
 
 /obj/machinery/computer/rdconsole/proc/Maximize()
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/computer/rdconsole/proc/Maximize() called tick#: [world.time]")
 	files.known_tech = tech_list.Copy()
 	for(var/datum/tech/KT in files.known_tech)
 		if(KT.level < KT.max_level)
 			KT.level=KT.max_level
 
 /obj/machinery/computer/rdconsole/proc/CallTechName(var/ID) //A simple helper proc to find the name of a tech with a given ID.
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/computer/rdconsole/proc/CallTechName() called tick#: [world.time]")
 	var/datum/tech/check_tech
 	var/return_name = null
 	for(var/T in typesof(/datum/tech) - /datum/tech)
@@ -92,6 +94,7 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 	return return_name
 
 /obj/machinery/computer/rdconsole/proc/CallMaterialName(var/ID)
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/computer/rdconsole/proc/CallMaterialName() called tick#: [world.time]")
 	var/return_name = null
 	if (copytext(ID, 1, 2) == "$")
 		var/datum/material/mat = materials.getMaterial(ID)
@@ -105,6 +108,7 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 	return return_name
 
 /obj/machinery/computer/rdconsole/proc/SyncRDevices() //Makes sure it is properly sync'ed up with the devices attached to it (if any).
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/computer/rdconsole/proc/SyncRDevices() called tick#: [world.time]")
 	if(!isarea(areaMaster) || areaMaster.type == /area)
 		say("Unable to process synchronization")
 		return
@@ -133,6 +137,7 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 
 //Have it automatically push research to the centcomm server so wild griffins can't fuck up R&D's work --NEO
 /obj/machinery/computer/rdconsole/proc/griefProtection()
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/computer/rdconsole/proc/griefProtection() called tick#: [world.time]")
 	for(var/obj/machinery/r_n_d/server/centcom/C in machines)
 		for(var/datum/tech/T in files.known_tech)
 			C.files.AddTech2Known(T)
@@ -424,7 +429,7 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 			return
 		linked_imprinter.reagents.clear_reagents()
 
-	else if(href_list["disposeP"] && linked_lathe)  //Causes the protolathe to dispose of a single reagent (all of it)
+	else if(href_list["disposep"] && linked_lathe)  //Causes the protolathe to dispose of a single reagent (all of it)
 		if(!src.allowed(usr))
 			usr << "Unauthorized Access."
 			return
@@ -561,6 +566,7 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 	return
 
 /obj/machinery/computer/rdconsole/proc/protolathe_header()
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/computer/rdconsole/proc/protolathe_header() called tick#: [world.time]")
 	var/list/options=list()
 	if(screen!=3.1)
 		options += "<A href='?src=\ref[src];menu=3.1'>Design Selection</A>"
@@ -574,6 +580,7 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 	<div class="header">[list2text(options," || ")]</div><hr />"}
 
 /obj/machinery/computer/rdconsole/proc/CircuitImprinterHeader()
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/computer/rdconsole/proc/CircuitImprinterHeader() called tick#: [world.time]")
 	var/list/options=list()
 	if(screen!=4.1)
 		options += "<A href='?src=\ref[src];menu=4.1'>Design Selection</A>"
@@ -618,7 +625,7 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 		if(0.2)
 
 			// AUTOFIXED BY fix_string_idiocy.py
-			// C:\Users\Rob\Documents\Projects\vgstation13\code\modules\research\rdconsole.dm:584: dat += "SYSTEM LOCKED<BR><BR>"
+			// C:\Users\Rob\\documents\\\projects\vgstation13\code\\modules\research\rdconsole.dm:584: dat += "SYSTEM LOCKED<BR><BR>"
 			dat += {"SYSTEM LOCKED<BR><BR>
 				<A href='?src=\ref[src];lock=1.6'>Unlock</A>"}
 			// END AUTOFIX
@@ -631,7 +638,7 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 		if(1.0) //Main Menu
 
 			// AUTOFIXED BY fix_string_idiocy.py
-			// C:\Users\Rob\Documents\Projects\vgstation13\code\modules\research\rdconsole.dm:594: dat += "Main Menu:<BR><BR>"
+			// C:\Users\Rob\\documents\\\projects\vgstation13\code\\modules\research\rdconsole.dm:594: dat += "Main Menu:<BR><BR>"
 			dat += {"Main Menu:<BR><BR>
 				<A href='?src=\ref[src];menu=1.1'>Current Research Levels</A><BR>"}
 			// END AUTOFIX
@@ -649,7 +656,7 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 			for(var/datum/tech/T in files.known_tech)
 
 				// AUTOFIXED BY fix_string_idiocy.py
-				// C:\Users\Rob\Documents\Projects\vgstation13\code\modules\research\rdconsole.dm:607: dat += "[T.name]<BR>"
+				// C:\Users\Rob\\documents\\\projects\vgstation13\code\\modules\research\rdconsole.dm:607: dat += "[T.name]<BR>"
 				dat += {"[T.name]<BR>
 					* Level: [T.level]<BR>
 					* Summary: [T.desc]<HR>"}
@@ -660,14 +667,14 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 
 
 			// AUTOFIXED BY fix_string_idiocy.py
-			// C:\Users\Rob\Documents\Projects\vgstation13\code\modules\research\rdconsole.dm:614: dat += "<A href='?src=\ref[src];menu=1.0'>Main Menu</A><HR>"
+			// C:\Users\Rob\\documents\\\projects\vgstation13\code\\modules\research\rdconsole.dm:614: dat += "<A href='?src=\ref[src];menu=1.0'>Main Menu</A><HR>"
 			dat += {"<A href='?src=\ref[src];menu=1.0'>Main Menu</A><HR>
 				Disk Contents: (Technology Data Disk)<BR><BR>"}
 			// END AUTOFIX
 			if(t_disk.stored == null)
 
 				// AUTOFIXED BY fix_string_idiocy.py
-				// C:\Users\Rob\Documents\Projects\vgstation13\code\modules\research\rdconsole.dm:617: dat += "The disk has no data stored on it.<HR>"
+				// C:\Users\Rob\\documents\\\projects\vgstation13\code\\modules\research\rdconsole.dm:617: dat += "The disk has no data stored on it.<HR>"
 				dat += {"The disk has no data stored on it.<HR>
 					Operations:
 					<A href='?src=\ref[src];menu=1.3'>Load Tech to Disk</A> || "}
@@ -675,7 +682,7 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 			else
 
 				// AUTOFIXED BY fix_string_idiocy.py
-				// C:\Users\Rob\Documents\Projects\vgstation13\code\modules\research\rdconsole.dm:621: dat += "Name: [t_disk.stored.name]<BR>"
+				// C:\Users\Rob\\documents\\\projects\vgstation13\code\\modules\research\rdconsole.dm:621: dat += "Name: [t_disk.stored.name]<BR>"
 				dat += {"Name: [t_disk.stored.name]<BR>
 					Level: [t_disk.stored.level]<BR>
 					Description: [t_disk.stored.desc]<HR>
@@ -688,7 +695,7 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 		if(1.3) //Technology Disk submenu
 
 			// AUTOFIXED BY fix_string_idiocy.py
-			// C:\Users\Rob\Documents\Projects\vgstation13\code\modules\research\rdconsole.dm:630: dat += "<BR><A href='?src=\ref[src];menu=1.0'>Main Menu</A> || "
+			// C:\Users\Rob\\documents\\\projects\vgstation13\code\\modules\research\rdconsole.dm:630: dat += "<BR><A href='?src=\ref[src];menu=1.0'>Main Menu</A> || "
 			dat += {"<BR><A href='?src=\ref[src];menu=1.0'>Main Menu</A> ||
 				<A href='?src=\ref[src];menu=1.2'>Return to Disk Operations</A><HR>
 				Load Technology to Disk:<BR><BR>"}
@@ -696,7 +703,7 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 			for(var/datum/tech/T in files.known_tech)
 
 				// AUTOFIXED BY fix_string_idiocy.py
-				// C:\Users\Rob\Documents\Projects\vgstation13\code\modules\research\rdconsole.dm:634: dat += "[T.name] "
+				// C:\Users\Rob\\documents\\\projects\vgstation13\code\\modules\research\rdconsole.dm:634: dat += "[T.name] "
 				dat += {"[T.name]
 					<A href='?src=\ref[src];copy_tech=1;copy_tech_ID=[T.id]'>(Copy to Disk)</A><BR>"}
 				// END AUTOFIX
@@ -705,7 +712,7 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 			if(d_disk.blueprint == null)
 
 				// AUTOFIXED BY fix_string_idiocy.py
-				// C:\Users\Rob\Documents\Projects\vgstation13\code\modules\research\rdconsole.dm:640: dat += "The disk has no data stored on it.<HR>"
+				// C:\Users\Rob\\documents\\\projects\vgstation13\code\\modules\research\rdconsole.dm:640: dat += "The disk has no data stored on it.<HR>"
 				dat += {"The disk has no data stored on it.<HR>
 					Operations:
 					<A href='?src=\ref[src];menu=1.5'>Load Design to Disk</A> || "}
@@ -713,7 +720,7 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 			else
 
 				// AUTOFIXED BY fix_string_idiocy.py
-				// C:\Users\Rob\Documents\Projects\vgstation13\code\modules\research\rdconsole.dm:644: dat += "Name: [d_disk.blueprint.name]<BR>"
+				// C:\Users\Rob\\documents\\\projects\vgstation13\code\\modules\research\rdconsole.dm:644: dat += "Name: [d_disk.blueprint.name]<BR>"
 				dat += {"Name: [d_disk.blueprint.name]<BR>
 					Level: [Clamp(d_disk.blueprint.reliability + rand(-15,15), 0, 100)]<BR>"}
 				// END AUTOFIX
@@ -727,7 +734,7 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 					else dat += "* [M] x [d_disk.blueprint.materials[M]]<BR>"
 
 				// AUTOFIXED BY fix_string_idiocy.py
-				// C:\Users\Rob\Documents\Projects\vgstation13\code\modules\research\rdconsole.dm:654: dat += "<HR>Operations: "
+				// C:\Users\Rob\\documents\\\projects\vgstation13\code\\modules\research\rdconsole.dm:654: dat += "<HR>Operations: "
 				dat += {"<HR>Operations:
 					<A href='?src=\ref[src];updt_design=1'>Upload to Database</A> ||
 					<A href='?src=\ref[src];clear_design=1'>Clear Disk</A> || "}
@@ -737,7 +744,7 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 		if(1.5) //Technology disk submenu
 
 			// AUTOFIXED BY fix_string_idiocy.py
-			// C:\Users\Rob\Documents\Projects\vgstation13\code\modules\research\rdconsole.dm:660: dat += "<A href='?src=\ref[src];menu=1.0'>Main Menu</A> || "
+			// C:\Users\Rob\\documents\\\projects\vgstation13\code\\modules\research\rdconsole.dm:660: dat += "<A href='?src=\ref[src];menu=1.0'>Main Menu</A> || "
 			dat += {"<A href='?src=\ref[src];menu=1.0'>Main Menu</A> ||
 				<A href='?src=\ref[src];menu=1.4'>Return to Disk Operations</A><HR>
 				Load Design to Disk:<BR><BR>"}
@@ -745,21 +752,21 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 			for(var/datum/design/D in files.known_designs)
 
 				// AUTOFIXED BY fix_string_idiocy.py
-				// C:\Users\Rob\Documents\Projects\vgstation13\code\modules\research\rdconsole.dm:664: dat += "[D.name] "
+				// C:\Users\Rob\\documents\\\projects\vgstation13\code\\modules\research\rdconsole.dm:664: dat += "[D.name] "
 				dat += {"[D.name]
 					<A href='?src=\ref[src];copy_design=1;copy_design_ID=[D.id]'>(Copy to Disk)</A><BR>"}
 				// END AUTOFIX
 		if(1.6) //R&D console settings
 
 			// AUTOFIXED BY fix_string_idiocy.py
-			// C:\Users\Rob\Documents\Projects\vgstation13\code\modules\research\rdconsole.dm:668: dat += "<A href='?src=\ref[src];menu=1.0'>Main Menu</A><HR>"
+			// C:\Users\Rob\\documents\\\projects\vgstation13\code\\modules\research\rdconsole.dm:668: dat += "<A href='?src=\ref[src];menu=1.0'>Main Menu</A><HR>"
 			dat += {"<A href='?src=\ref[src];menu=1.0'>Main Menu</A><HR>
 				R&D Console Setting:<BR><BR>"}
 			// END AUTOFIX
 			if(sync)
 
 				// AUTOFIXED BY fix_string_idiocy.py
-				// C:\Users\Rob\Documents\Projects\vgstation13\code\modules\research\rdconsole.dm:671: dat += "<A href='?src=\ref[src];sync=1'>Sync Database with Network</A><BR>"
+				// C:\Users\Rob\\documents\\\projects\vgstation13\code\\modules\research\rdconsole.dm:671: dat += "<A href='?src=\ref[src];sync=1'>Sync Database with Network</A><BR>"
 				dat += {"<A href='?src=\ref[src];sync=1'>Sync Database with Network</A><BR>
 					<A href='?src=\ref[src];togglesync=1'>Disconnect from Research Network</A><BR>"}
 				// END AUTOFIX
@@ -767,7 +774,7 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 				dat += "<A href='?src=\ref[src];togglesync=1'>Connect to Research Network</A><BR>"
 
 			// AUTOFIXED BY fix_string_idiocy.py
-			// C:\Users\Rob\Documents\Projects\vgstation13\code\modules\research\rdconsole.dm:675: dat += "<A href='?src=\ref[src];menu=1.7'>Device Linkage Menu</A><BR>"
+			// C:\Users\Rob\\documents\\\projects\vgstation13\code\\modules\research\rdconsole.dm:675: dat += "<A href='?src=\ref[src];menu=1.7'>Device Linkage Menu</A><BR>"
 			dat += {"<A href='?src=\ref[src];menu=1.7'>Device Linkage Menu</A><BR>
 				<A href='?src=\ref[src];lock=0.2'>Lock Console</A><BR>
 				<A href='?src=\ref[src];reset=1'>Reset R&D Database.</A><BR>"}
@@ -775,7 +782,7 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 		if(1.7) //R&D device linkage
 
 			// AUTOFIXED BY fix_string_idiocy.py
-			// C:\Users\Rob\Documents\Projects\vgstation13\code\modules\research\rdconsole.dm:680: dat += "<A href='?src=\ref[src];menu=1.0'>Main Menu</A> || "
+			// C:\Users\Rob\\documents\\\projects\vgstation13\code\\modules\research\rdconsole.dm:680: dat += "<A href='?src=\ref[src];menu=1.0'>Main Menu</A> || "
 			dat += {"<A href='?src=\ref[src];menu=1.0'>Main Menu</A> ||
 				<A href='?src=\ref[src];menu=1.6'>Settings Menu</A><HR>
 				R&D Console Device Linkage Menu:<BR><BR>
@@ -806,21 +813,21 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 		if(2.0)
 
 			// AUTOFIXED BY fix_string_idiocy.py
-			// C:\Users\Rob\Documents\Projects\vgstation13\code\modules\research\rdconsole.dm:700: dat += "NO DESTRUCTIVE ANALYZER LINKED TO CONSOLE<BR><BR>"
+			// C:\Users\Rob\\documents\\\projects\vgstation13\code\\modules\research\rdconsole.dm:700: dat += "NO DESTRUCTIVE ANALYZER LINKED TO CONSOLE<BR><BR>"
 			dat += {"NO DESTRUCTIVE ANALYZER LINKED TO CONSOLE<BR><BR>
 				<A href='?src=\ref[src];menu=1.0'>Main Menu</A>"}
 			// END AUTOFIX
 		if(2.1)
 
 			// AUTOFIXED BY fix_string_idiocy.py
-			// C:\Users\Rob\Documents\Projects\vgstation13\code\modules\research\rdconsole.dm:704: dat += "No Item Loaded. Standing-by...<BR><HR>"
+			// C:\Users\Rob\\documents\\\projects\vgstation13\code\\modules\research\rdconsole.dm:704: dat += "No Item Loaded. Standing-by...<BR><HR>"
 			dat += {"No Item Loaded. Standing-by...<BR><HR>
 				<A href='?src=\ref[src];menu=1.0'>Main Menu</A>"}
 			// END AUTOFIX
 		if(2.2)
 
 			// AUTOFIXED BY fix_string_idiocy.py
-			// C:\Users\Rob\Documents\Projects\vgstation13\code\modules\research\rdconsole.dm:708: dat += "<A href='?src=\ref[src];menu=1.0'>Main Menu</A><HR>"
+			// C:\Users\Rob\\documents\\\projects\vgstation13\code\\modules\research\rdconsole.dm:708: dat += "<A href='?src=\ref[src];menu=1.0'>Main Menu</A><HR>"
 			dat += {"<A href='?src=\ref[src];menu=1.0'>Main Menu</A><HR>
 				Deconstruction Menu<HR>
 				Name: [linked_destroy.loaded_item.name]<BR>
@@ -831,7 +838,7 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 				dat += "* [CallTechName(T)] [temp_tech[T]]<BR>"
 
 			// AUTOFIXED BY fix_string_idiocy.py
-			// C:\Users\Rob\Documents\Projects\vgstation13\code\modules\research\rdconsole.dm:715: dat += "<HR><A href='?src=\ref[src];deconstruct=1'>Deconstruct Item</A> || "
+			// C:\Users\Rob\\documents\\\projects\vgstation13\code\\modules\research\rdconsole.dm:715: dat += "<HR><A href='?src=\ref[src];deconstruct=1'>Deconstruct Item</A> || "
 			dat += {"<HR><A href='?src=\ref[src];deconstruct=1'>Deconstruct Item</A> ||
 				<A href='?src=\ref[src];eject_item=1'>Eject Item</A> || "}
 			// END AUTOFIX
@@ -839,14 +846,14 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 		if(3.0)
 
 			// AUTOFIXED BY fix_string_idiocy.py
-			// C:\Users\Rob\Documents\Projects\vgstation13\code\modules\research\rdconsole.dm:720: dat += "<A href='?src=\ref[src];menu=1.0'>Main Menu</A><HR>"
+			// C:\Users\Rob\\documents\\\projects\vgstation13\code\\modules\research\rdconsole.dm:720: dat += "<A href='?src=\ref[src];menu=1.0'>Main Menu</A><HR>"
 			dat += {"<A href='?src=\ref[src];menu=1.0'>Main Menu</A><HR>
 				NO PROTOLATHE LINKED TO CONSOLE<BR><BR>"}
 			// END AUTOFIX
 		if(3.1)
 
 			// AUTOFIXED BY fix_string_idiocy.py
-			// C:\Users\Rob\Documents\Projects\vgstation13\code\modules\research\rdconsole.dm:724: dat += "<A href='?src=\ref[src];menu=1.0'>Main Menu</A> || "
+			// C:\Users\Rob\\documents\\\projects\vgstation13\code\\modules\research\rdconsole.dm:724: dat += "<A href='?src=\ref[src];menu=1.0'>Main Menu</A> || "
 			dat += protolathe_header()+{"Protolathe Construction Menu \[<A href='?src=\ref[src];toggleAutoRefresh=1'>Auto-Refresh: [autorefresh ? "ON" : "OFF"]</A>\]<HR>"}
 			// END AUTOFIX
 			dat += "Filter: "
@@ -888,7 +895,7 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 		if(3.2) //Protolathe Material Storage Sub-menu
 
 			// AUTOFIXED BY fix_string_idiocy.py
-			// C:\Users\Rob\Documents\Projects\vgstation13\code\modules\research\rdconsole.dm:763: dat += "<A href='?src=\ref[src];menu=1.0'>Main Menu</A> || "
+			// C:\Users\Rob\\documents\\\projects\vgstation13\code\\modules\research\rdconsole.dm:763: dat += "<A href='?src=\ref[src];menu=1.0'>Main Menu</A> || "
 			dat += protolathe_header()+{"Material Storage<ul>"}
 			// END AUTOFIX
 
@@ -909,15 +916,15 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 		if(3.3) //Protolathe Chemical Storage Submenu
 
 			// AUTOFIXED BY fix_string_idiocy.py
-			// C:\Users\Rob\Documents\Projects\vgstation13\code\modules\research\rdconsole.dm:823: dat += "<A href='?src=\ref[src];menu=1.0'>Main Menu</A> || "
+			// C:\Users\Rob\\documents\\\projects\vgstation13\code\\modules\research\rdconsole.dm:823: dat += "<A href='?src=\ref[src];menu=1.0'>Main Menu</A> || "
 			dat += protolathe_header()+{"Chemical Storage<BR><HR>"}
 			// END AUTOFIX
 			for(var/datum/reagent/R in linked_lathe.reagents.reagent_list)
 
 				// AUTOFIXED BY fix_string_idiocy.py
-				// C:\Users\Rob\Documents\Projects\vgstation13\code\modules\research\rdconsole.dm:827: dat += "Name: [R.name] | Units: [R.volume] "
+				// C:\Users\Rob\\documents\\\projects\vgstation13\code\\modules\research\rdconsole.dm:827: dat += "Name: [R.name] | Units: [R.volume] "
 				dat += {"Name: [R.name] | Units: [R.volume]
-					<A href='?src=\ref[src];disposeP=[R.id]'>(Purge)</A><BR>
+					<A href='?src=\ref[src];disposep=[R.id]'>(Purge)</A><BR>
 					<A href='?src=\ref[src];disposeallP=1'><U>Disposal All Chemicals in Storage</U></A><BR>"}
 				// END AUTOFIX
 
@@ -938,14 +945,14 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 		if(4.0)
 
 			// AUTOFIXED BY fix_string_idiocy.py
-			// C:\Users\Rob\Documents\Projects\vgstation13\code\modules\research\rdconsole.dm:833: dat += "<A href='?src=\ref[src];menu=1.0'>Main Menu</A><HR>"
+			// C:\Users\Rob\\documents\\\projects\vgstation13\code\\modules\research\rdconsole.dm:833: dat += "<A href='?src=\ref[src];menu=1.0'>Main Menu</A><HR>"
 			dat += {"<A href='?src=\ref[src];menu=1.0'>Main Menu</A><HR>
 				NO CIRCUIT IMPRINTER LINKED TO CONSOLE<BR><BR>"}
 			// END AUTOFIX
 		if(4.1)
 
 			// AUTOFIXED BY fix_string_idiocy.py
-			// C:\Users\Rob\Documents\Projects\vgstation13\code\modules\research\rdconsole.dm:837: dat += "<A href='?src=\ref[src];menu=1.0'>Main Menu</A> || "
+			// C:\Users\Rob\\documents\\\projects\vgstation13\code\\modules\research\rdconsole.dm:837: dat += "<A href='?src=\ref[src];menu=1.0'>Main Menu</A> || "
 			dat += {"[CircuitImprinterHeader()]
 				Circuit Imprinter Menu \[<A href='?src=\ref[src];toggleAutoRefresh=1'>Auto-Refresh: [autorefresh ? "ON" : "OFF"]</A>\]<BR>
 				<b>Material Amount:</b> [linked_imprinter.TotalMaterials()] cm<sup>3</sup><BR>
@@ -991,14 +998,14 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 		if(4.2)
 
 			// AUTOFIXED BY fix_string_idiocy.py
-			// C:\Users\Rob\Documents\Projects\vgstation13\code\modules\research\rdconsole.dm:869: dat += "<A href='?src=\ref[src];menu=1.0'>Main Menu</A> || "
+			// C:\Users\Rob\\documents\\\projects\vgstation13\code\\modules\research\rdconsole.dm:869: dat += "<A href='?src=\ref[src];menu=1.0'>Main Menu</A> || "
 			dat += {"[CircuitImprinterHeader()]
 				Chemical Storage<HR>"}
 			// END AUTOFIX
 			for(var/datum/reagent/R in linked_imprinter.reagents.reagent_list)
 
 				// AUTOFIXED BY fix_string_idiocy.py
-				// C:\Users\Rob\Documents\Projects\vgstation13\code\modules\research\rdconsole.dm:873: dat += "Name: [R.name] | Units: [R.volume] "
+				// C:\Users\Rob\\documents\\\projects\vgstation13\code\\modules\research\rdconsole.dm:873: dat += "Name: [R.name] | Units: [R.volume] "
 				dat += {"Name: [R.name] | Units: [R.volume]
 					<A href='?src=\ref[src];disposeI=[R.id]'>(Purge)</A><BR>
 					<A href='?src=\ref[src];disposeallI=1'><U>Disposal All Chemicals in Storage</U></A><BR>"}
@@ -1006,7 +1013,7 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 		if(4.3)
 
 			// AUTOFIXED BY fix_string_idiocy.py
-			// C:\Users\Rob\Documents\Projects\vgstation13\code\modules\research\rdconsole.dm:878: dat += "<A href='?src=\ref[src];menu=1.0'>Main Menu</A> || "
+			// C:\Users\Rob\\documents\\\projects\vgstation13\code\\modules\research\rdconsole.dm:878: dat += "<A href='?src=\ref[src];menu=1.0'>Main Menu</A> || "
 			dat += {"[CircuitImprinterHeader()]
 				Material Storage<HR><ul>"}
 

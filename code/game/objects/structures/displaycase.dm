@@ -101,6 +101,7 @@
 	user << msg
 
 /obj/structure/displaycase/proc/dump()
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/structure/displaycase/proc/dump() called tick#: [world.time]")
 	if(occupant)
 		occupant.loc=get_turf(src)
 		occupant=null
@@ -137,6 +138,7 @@
 		del(src)
 
 /obj/structure/displaycase/proc/healthcheck()
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/structure/displaycase/proc/healthcheck() called tick#: [world.time]")
 	if (src.health <= 0)
 		if (!( src.destroyed ))
 			src.density = 0
@@ -223,6 +225,7 @@
 	return src.attack_hand(user)
 
 /obj/structure/displaycase/proc/getPrint(mob/user as mob)
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/structure/displaycase/proc/getPrint() called tick#: [world.time]")
 	return md5(user:dna:uni_identity)
 
 /obj/structure/displaycase/attack_hand(mob/user as mob)

@@ -33,7 +33,7 @@
 	else
 
 		// AUTOFIXED BY fix_string_idiocy.py
-		// C:\Users\Rob\Documents\Projects\vgstation13\code\game\gamemodes\wizard\spellbook.dm:22: dat = "<B>The Book of Spells:</B><BR>"
+		// C:\Users\Rob\\documents\\\projects\vgstation13\code\game\gamemodes\wizard\spellbook.dm:22: dat = "<B>The Book of Spells:</B><BR>"
 		dat = {"<B>The Book of Spells:</B><BR>
 			Spells left to memorize: [uses]<BR>
 			<HR>
@@ -340,6 +340,7 @@
 
 //Single Use Spellbooks//
 /obj/item/weapon/spellbook/proc/add_spell(var/spell/spell_to_add,var/mob/user)
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/item/weapon/spellbook/proc/add_spell() called tick#: [world.time]")
 	if(user.mind)
 		if(!user.mind.wizard_spells)
 			user.mind.wizard_spells = list()
@@ -378,9 +379,11 @@
 		onlearned(user)
 
 /obj/item/weapon/spellbook/oneuse/proc/recoil(mob/user as mob)
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/item/weapon/spellbook/oneuse/proc/recoil() called tick#: [world.time]")
 	user.visible_message("<span class='warning'>[src] glows in a black light!</span>")
 
 /obj/item/weapon/spellbook/oneuse/proc/onlearned(mob/user as mob)
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/item/weapon/spellbook/oneuse/proc/onlearned() called tick#: [world.time]")
 	used = 1
 	user.visible_message("<span class='caution'>[src] glows dark for a second!</span>")
 

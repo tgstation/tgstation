@@ -33,4 +33,5 @@ var/global/datum/controller/process/ticker/tickerProcess
 	ticker.process()
 
 /datum/controller/process/ticker/proc/getLastTickerTimeDuration()
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/controller/process/ticker/proc/getLastTickerTimeDuration() called tick#: [world.time]")
 	return lastTickerTimeDuration

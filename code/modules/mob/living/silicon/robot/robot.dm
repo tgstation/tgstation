@@ -159,6 +159,7 @@
 
 // setup the PDA and its name
 /mob/living/silicon/robot/proc/setup_PDA()
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/living/silicon/robot/proc/setup_PDA() called tick#: [world.time]")
 	if (!rbPDA)
 		rbPDA = new/obj/item/device/pda/ai(src)
 	rbPDA.set_name_and_job(custom_name,braintype)
@@ -194,6 +195,7 @@
 	inv3 = null
 
 /proc/getAvailableRobotModules()
+	writepanic("[__FILE__].[__LINE__] (no type)([usr ? usr.ckey : ""])  \\/proc/getAvailableRobotModules() called tick#: [world.time]")
 	var/list/modules = list("Standard", "Engineering", "Medical", "Miner", "Janitor", "Service", "Security")
 	if(security_level == SEC_LEVEL_RED) //Add crisis to this check if you want to make it available at an admin's whim
 		modules+="Combat"
@@ -201,6 +203,7 @@
 
 // /vg/: Enable forcing module type
 /mob/living/silicon/robot/proc/pick_module(var/forced_module=null)
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/living/silicon/robot/proc/pick_module() called tick#: [world.time]")
 	if(module)
 		return
 	var/list/modules = getAvailableRobotModules()
@@ -342,6 +345,7 @@
 	SetEmagged(emagged) // Update emag status and give/take emag modules away
 
 /mob/living/silicon/robot/proc/updatename(var/prefix as text)
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/living/silicon/robot/proc/updatename() called tick#: [world.time]")
 	if(prefix)
 		modtype = prefix
 	if(istype(mmi, /obj/item/device/mmi/posibrain))
@@ -385,6 +389,7 @@
 
 /mob/living/silicon/robot/verb/Namepick()
 	set category = "Robot Commands"
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""]) \\/mob/living/silicon/robot/verb/Namepick()  called tick#: [world.time]")
 	if(custom_name)
 		return 0
 
@@ -405,6 +410,7 @@
 /mob/living/silicon/robot/verb/cmd_robot_alerts()
 	set category = "Robot Commands"
 	set name = "Show Alerts"
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""]) \\/mob/living/silicon/robot/verb/cmd_robot_alerts()  called tick#: [world.time]")
 	robot_alerts()
 
 // this verb lets cyborgs see the stations manifest
@@ -412,12 +418,14 @@
 	set category = "Robot Commands"
 	set name = "Show Station Manifest"
 	show_station_manifest()
-
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""]) \\/mob/living/silicon/robot/verb/cmd_station_manifest()  called tick#: [world.time]")
 
 /mob/living/silicon/robot/proc/robot_alerts()
 
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/living/silicon/robot/proc/robot_alerts() called tick#: [world.time]")
+
 	// AUTOFIXED BY fix_string_idiocy.py
-	// C:\Users\Rob\Documents\Projects\vgstation13\code\modules\mob\living\silicon\robot\robot.dm:322: var/dat = "<HEAD><TITLE>Current Station Alerts</TITLE><META HTTP-EQUIV='Refresh' CONTENT='10'></HEAD><BODY>\n"
+	// C:\Users\Rob\\documents\\\projects\vgstation13\code\\modules\\mob\living\silicon\robot\robot.dm:322: var/dat = "<HEAD><TITLE>Current Station Alerts</TITLE><META HTTP-EQUIV='Refresh' CONTENT='10'></HEAD><BODY>\n"
 	var/dat = {"<HEAD><TITLE>Current Station Alerts</TITLE><META HTTP-EQUIV='Refresh' CONTENT='10'></HEAD><BODY>\n
 <A HREF='?src=\ref[src];mach_close=robotalerts'>Close</A><BR><BR>"}
 	// END AUTOFIX
@@ -442,6 +450,7 @@
 	src << browse(dat, "window=robotalerts&can_close=0")
 
 /mob/living/silicon/robot/proc/self_diagnosis()
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/living/silicon/robot/proc/self_diagnosis() called tick#: [world.time]")
 	if(!is_component_functioning("diagnosis unit"))
 		return null
 
@@ -456,6 +465,7 @@
 /mob/living/silicon/robot/verb/self_diagnosis_verb()
 	set category = "Robot Commands"
 	set name = "Self Diagnosis"
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""]) \\/mob/living/silicon/robot/verb/self_diagnosis_verb()  called tick#: [world.time]")
 
 	if(!is_component_functioning("diagnosis unit"))
 		src << "<span class='warning'>Your self-diagnosis component isn't functioning.</span>"
@@ -468,6 +478,7 @@
 	set category = "Robot Commands"
 	set name = "Toggle Component"
 	set desc = "Toggle a component, conserving power."
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""]) \\/mob/living/silicon/robot/verb/toggle_component()  called tick#: [world.time]")
 
 	var/list/installed_components = list()
 	for(var/V in components)
@@ -517,6 +528,7 @@
 
 // this function displays jetpack pressure in the stat panel
 /mob/living/silicon/robot/proc/show_jetpack_pressure()
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/living/silicon/robot/proc/show_jetpack_pressure() called tick#: [world.time]")
 	// if you have a jetpack, show the internal tank pressure
 	var/obj/item/weapon/tank/jetpack/current_jetpack = installed_jetpack()
 	if (current_jetpack)
@@ -526,10 +538,12 @@
 
 // this function returns the robots jetpack, if one is installed
 /mob/living/silicon/robot/proc/installed_jetpack()
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/living/silicon/robot/proc/installed_jetpack() called tick#: [world.time]")
 	if(module)
 		return (locate(/obj/item/weapon/tank/jetpack) in module.modules)
 	return 0
 /mob/living/silicon/robot/proc/installed_module(var/typepath)
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/living/silicon/robot/proc/installed_module() called tick#: [world.time]")
 	if(module)
 		return (locate(typepath) in module.modules)
 	return 0
@@ -537,6 +551,7 @@
 
 // this function displays the cyborgs current cell charge in the stat panel
 /mob/living/silicon/robot/proc/show_cell_power()
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/living/silicon/robot/proc/show_cell_power() called tick#: [world.time]")
 	if(cell)
 		stat(null, text("Charge Left: [cell.charge]/[cell.maxcharge]"))
 	else
@@ -544,31 +559,37 @@
 
 /*
 /mob/living/silicon/robot/proc/show_cable_lengths()
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/living/silicon/robot/proc/show_cable_lengths() called tick#: [world.time]")
 	var/obj/item/stack/cable_coil/coil = installed_module(/obj/item/stack/cable_coil)
 	if(coil)
 		stat(null, text("Cable Lengths: [coil.amount]/[coil.max_amount]"))
 
 /mob/living/silicon/robot/proc/show_metal_sheets()
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/living/silicon/robot/proc/show_metal_sheets() called tick#: [world.time]")
 	var/obj/item/stack/sheet/metal/cyborg/M = installed_module(/obj/item/stack/sheet/metal/cyborg)
 	if(M)
 		stat(null, text("Metal Sheets: [M.amount]/50"))
 
 /mob/living/silicon/robot/proc/show_glass_sheets()
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/living/silicon/robot/proc/show_glass_sheets() called tick#: [world.time]")
 	var/obj/item/stack/sheet/glass/glass/G = installed_module(/obj/item/stack/sheet/glass/glass)
 	if(G)
 		stat(null, text("Glass Sheets: [G.amount]/50"))
 
 /mob/living/silicon/robot/proc/show_rglass_sheets()
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/living/silicon/robot/proc/show_rglass_sheets() called tick#: [world.time]")
 	var/obj/item/stack/sheet/glass/rglass/G = installed_module(/obj/item/stack/sheet/glass/rglass)
 	if(G)
 		stat(null, text("Reinforced Glass Sheets: [G.amount]/50"))
 */
 /mob/living/silicon/robot/proc/show_welder_fuel()
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/living/silicon/robot/proc/show_welder_fuel() called tick#: [world.time]")
 	var/obj/item/weapon/weldingtool/WT = installed_module(/obj/item/weapon/weldingtool)
 	if(WT)
 		stat(null, text("Welder Fuel: [WT.get_fuel()]/[WT.max_fuel]"))
 
 /mob/living/silicon/robot/proc/show_stacks()
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/living/silicon/robot/proc/show_stacks() called tick#: [world.time]")
 	if(!module) return
 	for(var/obj/item/stack/S in module.modules)
 		stat(null, text("[S.name]: [S.amount]/[S.max_amount]"))
@@ -898,6 +919,7 @@
 	set category = "Robot Commands"
 	set name = "Unlock Cover"
 	set desc = "Unlocks your own cover if it is locked. You can not lock it again. A human will have to lock it for you."
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""]) \\/mob/living/silicon/robot/verb/unlock_own_cover()  called tick#: [world.time]")
 	if(locked)
 		switch(alert("You can not lock your cover again, are you sure?\n      (You can still ask for a human to lock it)", "Unlock Own Cover", "Yes", "No"))
 			if("Yes")
@@ -1077,6 +1099,7 @@
 		return
 
 /mob/living/silicon/robot/proc/allowed(mob/M)
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/living/silicon/robot/proc/allowed() called tick#: [world.time]")
 	//check if it doesn't require any access at all
 	if(check_access(null))
 		return 1
@@ -1093,6 +1116,7 @@
 	return 0
 
 /mob/living/silicon/robot/proc/check_access(obj/item/weapon/card/id/I)
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/living/silicon/robot/proc/check_access() called tick#: [world.time]")
 	if(!istype(req_access, /list)) //something's very wrong
 		return 1
 
@@ -1109,6 +1133,8 @@
 	return 1
 
 /mob/living/silicon/robot/proc/updateicon()
+
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/living/silicon/robot/proc/updateicon() called tick#: [world.time]")
 
 	overlays.len = 0
 	if(stat == 0 && cell != null)
@@ -1151,6 +1177,7 @@
 		overlays += target_locked
 
 /mob/living/silicon/robot/proc/installed_modules()
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/living/silicon/robot/proc/installed_modules() called tick#: [world.time]")
 	if(weapon_lock)
 		src << "<span class='attack'>Weapon lock active, unable to use modules! Count:[weaponlock_time]</span>"
 		return
@@ -1258,6 +1285,7 @@
 /mob/living/silicon/robot/verb/sensor_mode()
 	set name = "Set Sensor Augmentation"
 	set category = "Robot Commands"
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""]) \\/mob/living/silicon/robot/verb/sensor_mode()  called tick#: [world.time]")
 	if(!istype(module) || !istype(module.sensor_augs) || !module.sensor_augs.len)
 		src << "<span class='warning'>No Sensor Augmentations located or no module has been equipped.</span>"
 		return
@@ -1292,6 +1320,7 @@
 		handle_sensor_modes()
 
 /mob/living/silicon/robot/proc/radio_menu()
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/living/silicon/robot/proc/radio_menu() called tick#: [world.time]")
 	radio.interact(src)//Just use the radio's Topic() instead of bullshit special-snowflake code
 
 
@@ -1331,10 +1360,12 @@
 		return
 
 /mob/living/silicon/robot/proc/self_destruct()
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/living/silicon/robot/proc/self_destruct() called tick#: [world.time]")
 	gib()
 	return
 
 /mob/living/silicon/robot/proc/UnlinkSelf()
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/living/silicon/robot/proc/UnlinkSelf() called tick#: [world.time]")
 	if (src.connected_ai)
 		src.connected_ai = null
 	lawupdate = 0
@@ -1359,6 +1390,7 @@
 	set category = "Robot Commands"
 	set name = "Reset Identity Codes"
 	set desc = "Scrambles your security and identification codes and resets your current buffers.  Unlocks you and but permenantly severs you from your AI and the robotics console and will deactivate your camera system."
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/living/silicon/robot/proc/ResetSecurityCodes() called tick#: [world.time]")
 
 	var/mob/living/silicon/robot/R = src
 
@@ -1380,6 +1412,7 @@
 	return
 
 /mob/living/silicon/robot/proc/SetEmagged(var/new_state)
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/living/silicon/robot/proc/SetEmagged() called tick#: [world.time]")
 	emagged = new_state
 	if(new_state)
 		if(module)
@@ -1393,6 +1426,7 @@
 
 
 /mob/living/silicon/robot/proc/SetLockdown(var/state = 1)
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/living/silicon/robot/proc/SetLockdown() called tick#: [world.time]")
 	// They stay locked down if their wire is cut.
 	if(wires.LockedCut())
 		state = 1
@@ -1403,6 +1437,7 @@
 	set name = "Set Pose"
 	set desc = "Sets a description which will be shown when someone examines you."
 	set category = "IC"
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""]) \\/mob/living/silicon/robot/verb/pose()  called tick#: [world.time]")
 
 	pose =  copytext(sanitize(input(usr, "This is [src]. It is...", "Pose", null)  as text), 1, MAX_MESSAGE_LEN)
 
@@ -1410,10 +1445,12 @@
 	set name = "Set Flavour Text"
 	set desc = "Sets an extended description of your character's features."
 	set category = "IC"
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""]) \\/mob/living/silicon/robot/verb/set_flavor()  called tick#: [world.time]")
 
 	flavor_text =  copytext(sanitize(input(usr, "Please enter your new flavour text.", "Flavour text", null)  as text), 1)
 
 /mob/living/silicon/robot/proc/choose_icon(var/triesleft, var/list/module_sprites)
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/living/silicon/robot/proc/choose_icon() called tick#: [world.time]")
 	if(triesleft == 0 || !module_sprites.len)
 		return
 	else
@@ -1473,4 +1510,5 @@
 	return 0
 
 /mob/living/silicon/robot/proc/help_shake_act(mob/user)
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/living/silicon/robot/proc/help_shake_act() called tick#: [world.time]")
 	user.visible_message("<span class='notice'>[user.name] pats [src.name] on the head.</span>")

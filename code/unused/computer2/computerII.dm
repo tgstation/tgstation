@@ -332,12 +332,14 @@
 	return
 
 /obj/machinery/computer2/proc/send_command(command, datum/signal/signal)
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/computer2/proc/send_command() called tick#: [world.time]")
 	for(var/obj/item/weapon/peripheral/P in src.peripherals)
 		P.receive_command(src, command, signal)
 
 	del(signal)
 
 /obj/machinery/computer2/proc/receive_command(obj/source, command, datum/signal/signal)
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/computer2/proc/receive_command() called tick#: [world.time]")
 	if(source in src.contents)
 
 		for(var/datum/computer/file/computer_program/P in src.processing_programs)
@@ -349,6 +351,7 @@
 
 
 /obj/machinery/computer2/proc/run_program(datum/computer/file/computer_program/program,datum/computer/file/computer_program/host)
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/computer2/proc/run_program() called tick#: [world.time]")
 	if(!program)
 		return 0
 
@@ -366,6 +369,7 @@
 	return 0
 
 /obj/machinery/computer2/proc/load_program(datum/computer/file/computer_program/program)
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/computer2/proc/load_program() called tick#: [world.time]")
 	if((!program) || (!program.holder))
 		return 0
 
@@ -386,6 +390,7 @@
 	return 0
 
 /obj/machinery/computer2/proc/unload_program(datum/computer/file/computer_program/program)
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/computer2/proc/unload_program() called tick#: [world.time]")
 	if((!program) || (!src.hd))
 		return 0
 
@@ -396,6 +401,7 @@
 	return 0
 
 /obj/machinery/computer2/proc/delete_file(datum/computer/file/file)
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/computer2/proc/delete_file() called tick#: [world.time]")
 	//world << "Deleting [file]..."
 	if((!file) || (!file.holder) || (file.holder.read_only))
 		//world << "Cannot delete :("

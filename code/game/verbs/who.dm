@@ -2,6 +2,7 @@
 	set name = "Who"
 	set category = "OOC"
 
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""]) \\/client/verb/who()  called tick#: [world.time]")
 	var/msg = "\n<b>Current Players:</b>\n"
 
 	var/list/Lines = list()
@@ -54,6 +55,7 @@
 	set category = "Admin"
 	set name = "Adminwho"
 
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""]) \\/client/verb/adminwho()  called tick#: [world.time]")
 	var/aNames = ""
 	var/mNames = ""
 	var/numAdminsOnline = 0

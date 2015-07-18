@@ -9,6 +9,8 @@
 
 /obj/item/clothing/suit/storage/proc/return_inv()
 
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/item/clothing/suit/storage/proc/return_inv() called tick#: [world.time]")
+
 	var/list/L = list(  )
 
 	L += src.contents
@@ -22,6 +24,7 @@
 	return L
 
 /obj/item/clothing/suit/storage/proc/show_to(mob/user as mob)
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/item/clothing/suit/storage/proc/show_to() called tick#: [world.time]")
 	user.client.screen -= src.boxes
 	user.client.screen -= src.closer
 	user.client.screen -= src.contents
@@ -33,6 +36,8 @@
 
 /obj/item/clothing/suit/storage/proc/hide_from(mob/user as mob)
 
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/item/clothing/suit/storage/proc/hide_from() called tick#: [world.time]")
+
 	if(!user.client)
 		return
 	user.client.screen -= src.boxes
@@ -42,6 +47,8 @@
 
 /obj/item/clothing/suit/storage/proc/close(mob/user as mob)
 
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/item/clothing/suit/storage/proc/close() called tick#: [world.time]")
+
 	src.hide_from(user)
 	user.s_active = null
 	return
@@ -49,6 +56,7 @@
 //This proc draws out the inventory and places the items on it. tx and ty are the upper left tile and mx, my are the bottm right.
 //The numbers are calculated from the bottom-left The bottom-left slot being 1,1.
 /obj/item/clothing/suit/storage/proc/orient_objs(tx, ty, mx, my)
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/item/clothing/suit/storage/proc/orient_objs() called tick#: [world.time]")
 	var/cx = tx
 	var/cy = ty
 	src.boxes.screen_loc = text("[tx]:,[ty] to [mx],[my]")
@@ -64,6 +72,7 @@
 
 //This proc draws out the inventory and places the items on it. It uses the standard position.
 /obj/item/clothing/suit/storage/proc/standard_orient_objs(var/rows,var/cols)
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/item/clothing/suit/storage/proc/standard_orient_objs() called tick#: [world.time]")
 	var/cx = 4
 	var/cy = 2+rows
 	src.boxes.screen_loc = text("4:16,2:16 to [4+cols]:16,[2+rows]:16")
@@ -79,6 +88,7 @@
 
 //This proc determins the size of the inventory to be displayed. Please touch it only if you know what you're doing.
 /obj/item/clothing/suit/storage/proc/orient2hud(mob/user as mob)
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/item/clothing/suit/storage/proc/orient2hud() called tick#: [world.time]")
 	//var/mob/living/carbon/human/H = user
 	var/row_num = 0
 	var/col_count = min(7,storage_slots) -1

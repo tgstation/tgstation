@@ -196,6 +196,7 @@ var/list/datum/power/changeling/powerinstances = list()
 /datum/changeling/proc/EvolutionMenu()//The new one
 	set category = "Changeling"
 	set desc = "Level up!"
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/changeling/proc/EvolutionMenu() called tick#: [world.time]")
 
 	if(!usr || !usr.mind || !usr.mind.changeling)	return
 	src = usr.mind.changeling
@@ -466,12 +467,15 @@ var/list/datum/power/changeling/powerinstances = list()
 		var/datum/mind/M = usr.mind
 		if(!istype(M))
 			return
-		purchasePower(M, href_list["P"])
+		purchasepower(M, href_list["P"])
 		call(/datum/changeling/proc/EvolutionMenu)()
 
 
 
-/datum/changeling/proc/purchasePower(var/datum/mind/M, var/Pname, var/remake_verbs = 1)
+
+
+/datum/changeling/proc/purchasepower(var/datum/mind/M, var/Pname, var/remake_verbs = 1)
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\datum/changeling/proc/purchasepower() called tick#: [world.time]")
 	if(!M || !M.changeling)
 		return
 

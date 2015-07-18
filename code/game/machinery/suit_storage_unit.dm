@@ -144,7 +144,7 @@
 	if(src.panel_open) //The maintenance panel is open. Time for some shady stuff
 
 		// AUTOFIXED BY fix_string_idiocy.py
-		// C:\Users\Rob\Documents\Projects\vgstation13\code\game\machinery\suit_storage_unit.dm:100: dat+= "<HEAD><TITLE>Suit storage unit: Maintenance panel</TITLE></HEAD>"
+		// C:\Users\Rob\\documents\\\projects\vgstation13\code\game\\machinery\suit_storage_unit.dm:100: dat+= "<HEAD><TITLE>Suit storage unit: Maintenance panel</TITLE></HEAD>"
 		dat += {"<HEAD><TITLE>Suit storage unit: Maintenance panel</TITLE></HEAD>
 			<Font color ='black'><B>Maintenance panel controls</B></font><HR>
 			<font color ='grey'>The panel is ridden with controls, button and meters, labeled in strange signs and symbols that <BR>you cannot understand. Probably the manufactoring world's language.<BR> Among other things, a few controls catch your eye.<BR><BR>"}
@@ -157,7 +157,7 @@
 	else if(src.isUV) //The thing is running its cauterisation cycle. You have to wait.
 
 		// AUTOFIXED BY fix_string_idiocy.py
-		// C:\Users\Rob\Documents\Projects\vgstation13\code\game\machinery\suit_storage_unit.dm:109: dat += "<HEAD><TITLE>Suit storage unit</TITLE></HEAD>"
+		// C:\Users\Rob\\documents\\\projects\vgstation13\code\game\\machinery\suit_storage_unit.dm:109: dat += "<HEAD><TITLE>Suit storage unit</TITLE></HEAD>"
 		dat += {"<HEAD><TITLE>Suit storage unit</TITLE></HEAD>
 			<font color ='red'><B>Unit is cauterising contents with selected UV ray intensity. Please wait.</font></B><BR>"}
 		// END AUTOFIX
@@ -169,7 +169,7 @@
 		if(!(stat & BROKEN))
 
 			// AUTOFIXED BY fix_string_idiocy.py
-			// C:\Users\Rob\Documents\Projects\vgstation13\code\game\machinery\suit_storage_unit.dm:117: dat+= "<HEAD><TITLE>Suit storage unit</TITLE></HEAD>"
+			// C:\Users\Rob\\documents\\\projects\vgstation13\code\game\\machinery\suit_storage_unit.dm:117: dat+= "<HEAD><TITLE>Suit storage unit</TITLE></HEAD>"
 			dat += {"<HEAD><TITLE>Suit storage unit</TITLE></HEAD>
 				<font color='blue'><font size = 4><B>U-Stor-It Suit Storage Unit, model DS1900</B></FONT><BR>
 				<B>Welcome to the Unit control panel.</B><HR>"}
@@ -189,7 +189,7 @@
 			if(src.OCCUPANT)
 
 				// AUTOFIXED BY fix_string_idiocy.py
-				// C:\Users\Rob\Documents\Projects\vgstation13\code\game\machinery\suit_storage_unit.dm:130: dat+= "<HR><B><font color ='red'>WARNING: Biological entity detected inside the Unit's storage. Please remove.</B></font><BR>"
+				// C:\Users\Rob\\documents\\\projects\vgstation13\code\game\\machinery\suit_storage_unit.dm:130: dat+= "<HR><B><font color ='red'>WARNING: Biological entity detected inside the Unit's storage. Please remove.</B></font><BR>"
 				dat += {"<HR><B><font color ='red'>WARNING: Biological entity detected inside the Unit's storage. Please remove.</B></font><BR>
 					<A href='?src=\ref[src];eject_guy=1'>Eject extra load</A>"}
 				// END AUTOFIX
@@ -206,7 +206,7 @@
 		else //Ohhhh shit it's dirty or broken! Let's inform the guy.
 
 			// AUTOFIXED BY fix_string_idiocy.py
-			// C:\Users\Rob\Documents\Projects\vgstation13\code\game\machinery\suit_storage_unit.dm:143: dat+= "<HEAD><TITLE>Suit storage unit</TITLE></HEAD>"
+			// C:\Users\Rob\\documents\\\projects\vgstation13\code\game\\machinery\suit_storage_unit.dm:143: dat+= "<HEAD><TITLE>Suit storage unit</TITLE></HEAD>"
 			dat += {"<HEAD><TITLE>Suit storage unit</TITLE></HEAD>
 				<font color='maroon'><B>Unit chamber is too contaminated to continue usage. Please call for a qualified individual to perform maintenance.</font></B><BR><BR>"}
 			// END AUTOFIX
@@ -271,6 +271,7 @@
 
 
 /obj/machinery/suit_storage_unit/proc/toggleUV(mob/user as mob)
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/suit_storage_unit/proc/toggleUV() called tick#: [world.time]")
 //	var/protected = 0
 //	var/mob/living/carbon/human/H = user
 	if(!src.panel_open)
@@ -297,6 +298,7 @@
 
 
 /obj/machinery/suit_storage_unit/proc/togglesafeties(mob/user as mob)
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/suit_storage_unit/proc/togglesafeties() called tick#: [world.time]")
 //	var/protected = 0
 //	var/mob/living/carbon/human/H = user
 	if(!src.panel_open) //Needed check due to bugs
@@ -318,6 +320,7 @@
 
 
 /obj/machinery/suit_storage_unit/proc/dispense_helmet(mob/user as mob)
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/suit_storage_unit/proc/dispense_helmet() called tick#: [world.time]")
 	if(!src.HELMET)
 		return //Do I even need this sanity check? Nyoro~n
 	else
@@ -327,6 +330,7 @@
 
 
 /obj/machinery/suit_storage_unit/proc/dispense_suit(mob/user as mob)
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/suit_storage_unit/proc/dispense_suit() called tick#: [world.time]")
 	if(!src.SUIT)
 		return
 	else
@@ -336,6 +340,7 @@
 
 
 /obj/machinery/suit_storage_unit/proc/dispense_mask(mob/user as mob)
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/suit_storage_unit/proc/dispense_mask() called tick#: [world.time]")
 	if(!src.MASK)
 		return
 	else
@@ -345,6 +350,7 @@
 
 
 /obj/machinery/suit_storage_unit/proc/dispense_boots(mob/user as mob)
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/suit_storage_unit/proc/dispense_boots() called tick#: [world.time]")
 	if(!src.BOOTS)
 		return
 	else
@@ -354,6 +360,7 @@
 
 
 /obj/machinery/suit_storage_unit/proc/dump_everything()
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/suit_storage_unit/proc/dump_everything() called tick#: [world.time]")
 	src.islocked = 0 //locks go free
 	if(src.SUIT)
 		src.SUIT.loc = src.loc
@@ -373,6 +380,7 @@
 
 
 /obj/machinery/suit_storage_unit/proc/toggle_open(mob/user as mob)
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/suit_storage_unit/proc/toggle_open() called tick#: [world.time]")
 	if(src.islocked || src.isUV)
 		user << "<font color='red'>Unable to open unit.</font>"
 		return
@@ -384,6 +392,7 @@
 
 
 /obj/machinery/suit_storage_unit/proc/toggle_lock(mob/user as mob)
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/suit_storage_unit/proc/toggle_lock() called tick#: [world.time]")
 	if(src.OCCUPANT && src.safetieson)
 		user << "<font color='red'>The Unit's safety protocols disallow locking when a biological form is detected inside its compartments.</font>"
 		return
@@ -394,6 +403,7 @@
 
 
 /obj/machinery/suit_storage_unit/proc/start_UV(mob/user as mob)
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/suit_storage_unit/proc/start_UV() called tick#: [world.time]")
 	if(src.isUV || src.isopen) //I'm bored of all these sanity checks
 		return
 	if(src.OCCUPANT && src.safetieson)
@@ -455,6 +465,7 @@
 	src.updateUsrDialog()
 
 /obj/machinery/suit_storage_unit/proc/eject_occupant(mob/user as mob)
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/suit_storage_unit/proc/eject_occupant() called tick#: [world.time]")
 	if (src.islocked)
 		return
 
@@ -483,6 +494,7 @@
 	set name = "Eject Suit Storage Unit"
 	set category = "Object"
 	set src in oview(1)
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""]) \\/obj/machinery/suit_storage_unit/verb/get_out()  called tick#: [world.time]")
 
 	if (usr.stat != 0 || (usr.status_flags & FAKEDEATH))
 		return
@@ -497,6 +509,7 @@
 	set name = "Hide in Suit Storage Unit"
 	set category = "Object"
 	set src in oview(1)
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""]) \\/obj/machinery/suit_storage_unit/verb/move_inside()  called tick#: [world.time]")
 
 	if (usr.stat != 0 || (usr.status_flags & FAKEDEATH))
 		return

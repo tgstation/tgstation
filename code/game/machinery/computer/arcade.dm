@@ -75,7 +75,7 @@
 	var/dat = "<a href='byond://?src=\ref[src];close=1'>Close</a>"
 
 	// AUTOFIXED BY fix_string_idiocy.py
-	// C:\Users\Rob\Documents\Projects\vgstation13\code\game\machinery\computer\arcade.dm:67: dat += "<center><h4>[src.enemy_name]</h4></center>"
+	// C:\Users\Rob\\documents\\\projects\vgstation13\code\game\\machinery\computer\arcade.dm:67: dat += "<center><h4>[src.enemy_name]</h4></center>"
 	dat += {"<center><h4>[src.enemy_name]</h4></center>
 		<br><center><h3>[src.temp]</h3></center>
 		<br><center>Health: [src.player_hp] | Magic: [src.player_mp] | Enemy Health: [src.enemy_hp]</center>"}
@@ -85,7 +85,7 @@
 	else
 
 		// AUTOFIXED BY fix_string_idiocy.py
-		// C:\Users\Rob\Documents\Projects\vgstation13\code\game\machinery\computer\arcade.dm:75: dat += "<center><b><a href='byond://?src=\ref[src];attack=1'>Attack</a> | "
+		// C:\Users\Rob\\documents\\\projects\vgstation13\code\game\\machinery\computer\arcade.dm:75: dat += "<center><b><a href='byond://?src=\ref[src];attack=1'>Attack</a> | "
 		dat += {"<center><b><a href='byond://?src=\ref[src];attack=1'>Attack</a> |
 			<a href='byond://?src=\ref[src];heal=1'>Heal</a> |
 			<a href='byond://?src=\ref[src];charge=1'>Recharge Power</a>"}
@@ -163,6 +163,7 @@
 	return
 
 /obj/machinery/computer/arcade/proc/arcade_action()
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/computer/arcade/proc/arcade_action() called tick#: [world.time]")
 	if ((src.enemy_mp <= 0) || (src.enemy_hp <= 0))
 		if(!gameover)
 			src.gameover = 1

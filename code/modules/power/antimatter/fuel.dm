@@ -43,6 +43,8 @@
 
 /obj/item/weapon/fuel/antiH/proc/annihilation(var/mass)
 
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/item/weapon/fuel/antiH/proc/annihilation() called tick#: [world.time]")
+
 	var/strength = convert2energy(mass)
 
 	if (strength < 773.0)
@@ -72,6 +74,7 @@
 	user << "<span class='info'>A magnetic storage ring, it contains [fuel]kg of [content ? content : "nothing"].</span>"
 
 /obj/item/weapon/fuel/proc/injest(mob/M as mob)
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/item/weapon/fuel/proc/injest() called tick#: [world.time]")
 	switch(content)
 		if("Anti-Hydrogen")
 			M.gib()

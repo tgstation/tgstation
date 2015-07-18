@@ -33,6 +33,7 @@ var/datum/sortInstance/sortInstance = new()
 
 
 	proc/timSort(start, end)
+		writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\proc/timSort() called tick#: [world.time]")
 		runBases.Cut()
 		runLens.Cut()
 
@@ -98,6 +99,7 @@ var/datum/sortInstance/sortInstance = new()
 	start	the index of the first element in the range that is	not already known to be sorted
 	*/
 	proc/binarySort(lo, hi, start)
+		writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\proc/binarySort() called tick#: [world.time]")
 		//ASSERT(lo <= start && start <= hi)
 		if(start <= lo)
 			start = lo + 1
@@ -135,6 +137,7 @@ var/datum/sortInstance/sortInstance = new()
 	reverse a descending sequence without violating stability.
 	*/
 	proc/countRunAndMakeAscending(lo, hi)
+		writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\proc/countRunAndMakeAscending() called tick#: [world.time]")
 		//ASSERT(lo < hi)
 
 		var/runHi = lo + 1
@@ -165,6 +168,7 @@ var/datum/sortInstance/sortInstance = new()
 	//Returns the minimum acceptable run length for an array of the specified length.
 	//Natural runs shorter than this will be extended with binarySort
 	proc/minRunLength(n)
+		writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\proc/minRunLength() called tick#: [world.time]")
 		//ASSERT(n >= 0)
 		var/r = 0	//becomes 1 if any bits are shifted off
 		while(n >= MIN_MERGE)
@@ -178,6 +182,7 @@ var/datum/sortInstance/sortInstance = new()
 	//This method is called each time a new run is pushed onto the stack.
 	//So the invariants are guaranteed to hold for i<stackSize upon entry to the method
 	proc/mergeCollapse()
+		writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\proc/mergeCollapse() called tick#: [world.time]")
 		while(runBases.len >= 2)
 			var/n = runBases.len - 1
 			if(n > 1 && runLens[n-1] <= runLens[n] + runLens[n+1])
@@ -193,6 +198,7 @@ var/datum/sortInstance/sortInstance = new()
 	//Merges all runs on the stack until only one remains.
 	//Called only once, to finalise the sort
 	proc/mergeForceCollapse()
+		writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\proc/mergeForceCollapse() called tick#: [world.time]")
 		while(runBases.len >= 2)
 			var/n = runBases.len - 1
 			if(n > 1 && runLens[n-1] < runLens[n+1])
@@ -204,6 +210,7 @@ var/datum/sortInstance/sortInstance = new()
 	//Run i must be the penultimate or antepenultimate run on the stack
 	//In other words, i must be equal to stackSize-2 or stackSize-3
 	proc/mergeAt(i)
+		writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\proc/mergeAt() called tick#: [world.time]")
 		//ASSERT(runBases.len >= 2)
 		//ASSERT(i >= 1)
 		//ASSERT(i == runBases.len - 1 || i == runBases.len - 2)
@@ -258,6 +265,7 @@ var/datum/sortInstance/sortInstance = new()
 		Returns the index at which to insert element 'key'
 	*/
 	proc/gallopLeft(key, base, len, hint)
+		writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\proc/gallopLeft() called tick#: [world.time]")
 		//ASSERT(len > 0 && hint >= 0 && hint < len)
 
 		var/lastOffset = 0
@@ -317,6 +325,7 @@ var/datum/sortInstance/sortInstance = new()
 	 * @return the int k,  0 <= k <= n such that a[b + k - 1] <= key < a[b + k]
 	 */
 	proc/gallopRight(key, base, len, hint)
+		writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\proc/gallopRight() called tick#: [world.time]")
 		//ASSERT(len > 0 && hint >= 0 && hint < len)
 
 		var/offset = 1
@@ -369,6 +378,7 @@ var/datum/sortInstance/sortInstance = new()
 	//Merges two adjacent runs in-place in a stable fashion.
 	//For performance this method should only be called when len1 <= len2!
 	proc/mergeLo(base1, len1, base2, len2)
+		writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\proc/mergeLo() called tick#: [world.time]")
 		//ASSERT(len1 > 0 && len2 > 0 && base1 + len1 == base2)
 
 		var/cursor1 = base1
@@ -471,6 +481,7 @@ var/datum/sortInstance/sortInstance = new()
 
 
 	proc/mergeHi(base1, len1, base2, len2)
+		writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\proc/mergeHi() called tick#: [world.time]")
 		//ASSERT(len1 > 0 && len2 > 0 && base1 + len1 == base2)
 
 		var/cursor1 = base1 + len1 - 1	//start at end of sublists
@@ -571,6 +582,7 @@ var/datum/sortInstance/sortInstance = new()
 
 
 	proc/mergeSort(start, end)
+		writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\proc/mergeSort() called tick#: [world.time]")
 		var/remaining = end - start
 
 		//If array is small, do an insertion sort
@@ -616,6 +628,7 @@ var/datum/sortInstance/sortInstance = new()
 		return L
 
 	proc/mergeAt2(i)
+		writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\proc/mergeAt2() called tick#: [world.time]")
 		var/cursor1 = runBases[i]
 		var/cursor2 = runBases[i+1]
 

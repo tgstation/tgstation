@@ -118,9 +118,9 @@
 	// this is the data which will be sent to the ui
 	var/data[0]
 	data["tankPressure"] = round(air_contents.return_pressure() ? air_contents.return_pressure() : 0)
-	data["releasePressure"] = round(distribute_pressure ? distribute_pressure : 0)
-	data["defaultReleasePressure"] = round(TANK_DEFAULT_RELEASE_PRESSURE)
-	data["maxReleasePressure"] = round(TANK_MAX_RELEASE_PRESSURE)
+	data["releasepressure"] = round(distribute_pressure ? distribute_pressure : 0)
+	data["defaultReleasepressure"] = round(TANK_DEFAULT_RELEASE_PRESSURE)
+	data["maxReleasepressure"] = round(TANK_MAX_RELEASE_PRESSURE)
 	data["valveOpen"] = using_internal ? 1 : 0
 
 	data["maskConnected"] = 0
@@ -133,7 +133,7 @@
 	ui = nanomanager.try_update_ui(user, src, ui_key, ui, data)
 	if (!ui)
 		// the ui does not exist, so we'll create a new() one
-        // for a list of parameters and their descriptions see the code docs in \code\modules\nano\nanoui.dm
+        // for a list of parameters and their descriptions see the code docs in \code\\modules\nano\nanoui.dm
 		ui = new(user, src, ui_key, "tanks.tmpl", "Tank", 500, 300)
 		// when the ui is first opened this is the data it will use
 		ui.set_initial_data(data)
@@ -196,6 +196,7 @@
 	return 1
 
 /obj/item/weapon/tank/proc/remove_air_volume(volume_to_return)
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/item/weapon/tank/proc/remove_air_volume() called tick#: [world.time]")
 	if(!air_contents)
 		return null
 
@@ -215,6 +216,7 @@
 
 
 /obj/item/weapon/tank/proc/check_status()
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/item/weapon/tank/proc/check_status() called tick#: [world.time]")
 	//Handle exploding, leaking, and rupturing of the tank
 	var/cap = 0
 	var/uncapped = 0

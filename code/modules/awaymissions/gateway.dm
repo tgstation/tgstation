@@ -58,6 +58,7 @@ obj/machinery/gateway/centerstation/process()
 
 
 /obj/machinery/gateway/centerstation/proc/detect()
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/gateway/centerstation/proc/detect() called tick#: [world.time]")
 	linked = list()	//clear the list
 	var/turf/T = loc
 
@@ -78,6 +79,7 @@ obj/machinery/gateway/centerstation/process()
 
 
 /obj/machinery/gateway/centerstation/proc/toggleon(mob/user as mob)
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/gateway/centerstation/proc/toggleon() called tick#: [world.time]")
 	if(!ready)			return
 	if(linked.len != 8)	return
 	if(!powered())		return
@@ -96,6 +98,7 @@ obj/machinery/gateway/centerstation/process()
 
 
 /obj/machinery/gateway/centerstation/proc/toggleoff()
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/gateway/centerstation/proc/toggleoff() called tick#: [world.time]")
 	for(var/obj/machinery/gateway/G in linked)
 		G.active = 0
 		G.update_icon()
@@ -162,6 +165,7 @@ obj/machinery/gateway/centerstation/process()
 
 
 /obj/machinery/gateway/centeraway/proc/detect()
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/gateway/centeraway/proc/detect() called tick#: [world.time]")
 	linked = list()	//clear the list
 	var/turf/T = loc
 
@@ -182,6 +186,7 @@ obj/machinery/gateway/centerstation/process()
 
 
 /obj/machinery/gateway/centeraway/proc/toggleon(mob/user as mob)
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/gateway/centeraway/proc/toggleon() called tick#: [world.time]")
 	if(!ready)			return
 	if(linked.len != 8)	return
 	if(!stationgate)
@@ -196,6 +201,7 @@ obj/machinery/gateway/centerstation/process()
 
 
 /obj/machinery/gateway/centeraway/proc/toggleoff()
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/gateway/centeraway/proc/toggleoff() called tick#: [world.time]")
 	for(var/obj/machinery/gateway/G in linked)
 		G.active = 0
 		G.update_icon()

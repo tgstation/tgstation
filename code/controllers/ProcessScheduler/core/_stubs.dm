@@ -11,6 +11,7 @@
  * sends a message to admins
  */
 /proc/message_admins(msg)
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/proc/message_admins() called tick#: [world.time]")
 	world << msg
 */
 /**
@@ -21,6 +22,7 @@
  * Blame Keelin.
  */
 /proc/logTheThing(type, source, target, text, diaryType)
+	writepanic("[__FILE__].[__LINE__] (no type)([usr ? usr.ckey : ""])  \\/proc/logTheThing() called tick#: [world.time]")
 	if(diaryType)
 		world << "Diary: \[[diaryType]:[type]] [text]"
 	else

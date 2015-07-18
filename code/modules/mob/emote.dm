@@ -1,6 +1,8 @@
 // All mobs should have custom emote, really..
 /mob/proc/custom_emote(var/m_type=1,var/message = null)
 
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/proc/custom_emote() called tick#: [world.time]")
+
 	if(stat || !use_me && usr == src)
 		usr << "You are unable to emote."
 		return
@@ -47,6 +49,8 @@
 				M.show_message(message, m_type)
 
 /mob/proc/emote_dead(var/message)
+
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/proc/emote_dead() called tick#: [world.time]")
 
 	if(client.prefs.muted & MUTE_DEADCHAT)
 		src << "<span class='warning'>You cannot send deadchat emotes (muted).</span>"

@@ -85,6 +85,7 @@
 	return ..(gibbed)
 
 /mob/living/carbon/human/proc/makeSkeleton()
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/living/carbon/human/proc/makeSkeleton() called tick#: [world.time]")
 	if(SKELETON in src.mutations)	return
 
 	if(f_style)
@@ -100,6 +101,7 @@
 	return
 
 /mob/living/carbon/human/proc/ChangeToHusk()
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/living/carbon/human/proc/ChangeToHusk() called tick#: [world.time]")
 	if(M_HUSK in mutations)	return
 
 	if(f_style)
@@ -115,6 +117,7 @@
 	return
 
 /mob/living/carbon/human/proc/Drain()
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/living/carbon/human/proc/Drain() called tick#: [world.time]")
 	ChangeToHusk()
 	mutations |= M_NOCLONE
 	return

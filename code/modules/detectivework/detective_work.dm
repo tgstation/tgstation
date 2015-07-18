@@ -3,6 +3,7 @@
 atom/var/list/suit_fibers
 
 atom/proc/add_fibers(mob/living/carbon/human/M)
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\datom/proc/add_fibers() called tick#: [world.time]")
 	if(M.gloves && istype(M.gloves,/obj/item/clothing/))
 		var/obj/item/clothing/gloves/G = M.gloves
 		if(G.transfer_blood) //bloodied gloves transfer blood to touched objects
@@ -112,7 +113,7 @@ obj/machinery/computer/forensic_scanning
 					if(scan_process)
 
 						// AUTOFIXED BY fix_string_idiocy.py
-						// C:\Users\Rob\Documents\Projects\vgstation13\code\modules\DetectiveWork\detective_work.dm:111: dat += "Scan Object: {[scanning.name]}<br>"
+						// C:\Users\Rob\\documents\\\projects\vgstation13\code\\modules\\detectiveWork\\detective_work.dm:111: dat += "Scan Object: {[scanning.name]}<br>"
 						dat += {"Scan Object: {[scanning.name]}<br>
 							<a href='?src=\ref[src];operation=cancel'>{Cancel Scan}</a> {Print}<br>"}
 						// END AUTOFIX
@@ -126,7 +127,7 @@ obj/machinery/computer/forensic_scanning
 					dat += "{Scan} <a href='?src=\ref[src];operation=print'>{Print}</a><br>"
 
 				// AUTOFIXED BY fix_string_idiocy.py
-				// C:\Users\Rob\Documents\Projects\vgstation13\code\modules\DetectiveWork\detective_work.dm:121: dat += "<a href='?src=\ref[src];operation=database'>{Access Database}</a><br><br>"
+				// C:\Users\Rob\\documents\\\projects\vgstation13\code\\modules\\detectiveWork\\detective_work.dm:121: dat += "<a href='?src=\ref[src];operation=database'>{Access Database}</a><br><br>"
 				dat += {"<a href='?src=\ref[src];operation=database'>{Access Database}</a><br><br>
 					<tt>[scan_data]</tt>"}
 				// END AUTOFIX
@@ -202,7 +203,7 @@ obj/machinery/computer/forensic_scanning
 					if(files && files.len)
 
 						// AUTOFIXED BY fix_string_idiocy.py
-						// C:\Users\Rob\Documents\Projects\vgstation13\code\modules\DetectiveWork\detective_work.dm:195: temp = "<b>Criminal Evidence Database</b><br><br>"
+						// C:\Users\Rob\\documents\\\projects\vgstation13\code\\modules\\detectiveWork\\detective_work.dm:195: temp = "<b>Criminal Evidence Database</b><br><br>"
 						temp = {"<b>Criminal Evidence Database</b><br><br>
 							Consolidated data points:<br>"}
 						// END AUTOFIX
@@ -215,7 +216,7 @@ obj/machinery/computer/forensic_scanning
 					if(misc && misc.len)
 
 						// AUTOFIXED BY fix_string_idiocy.py
-						// C:\Users\Rob\Documents\Projects\vgstation13\code\modules\DetectiveWork\detective_work.dm:204: temp += "<b>Auxiliary Evidence Database</b><br><br>"
+						// C:\Users\Rob\\documents\\\projects\vgstation13\code\\modules\\detectiveWork\\detective_work.dm:204: temp += "<b>Auxiliary Evidence Database</b><br><br>"
 						temp += {"<b>Auxiliary Evidence Database</b><br><br>
 							This is where anything without fingerprints goes.<br><br>"}
 						// END AUTOFIX
@@ -234,7 +235,7 @@ obj/machinery/computer/forensic_scanning
 							usr << "Illegal or blank name."
 
 					// AUTOFIXED BY fix_string_idiocy.py
-					// C:\Users\Rob\Documents\Projects\vgstation13\code\modules\DetectiveWork\detective_work.dm:219: temp = "<b>Criminal Evidence Database</b><br><br>"
+					// C:\Users\Rob\\documents\\\projects\vgstation13\code\\modules\\detectiveWork\\detective_work.dm:219: temp = "<b>Criminal Evidence Database</b><br><br>"
 					temp = {"<b>Criminal Evidence Database</b><br><br>
 						Consolidated data points: [dossier[2]]<br>"}
 					// END AUTOFIX
@@ -250,7 +251,7 @@ obj/machinery/computer/forensic_scanning
 						var/list/prints = outputs[1]
 
 						// AUTOFIXED BY fix_string_idiocy.py
-						// C:\Users\Rob\Documents\Projects\vgstation13\code\modules\DetectiveWork\detective_work.dm:231: temp += "<big><b>Object:</b> [outputs[4]]</big><br>"
+						// C:\Users\Rob\\documents\\\projects\vgstation13\code\\modules\\detectiveWork\\detective_work.dm:231: temp += "<big><b>Object:</b> [outputs[4]]</big><br>"
 						temp += {"<big><b>Object:</b> [outputs[4]]</big><br>
 							&nbsp<b>Fingerprints:</b><br>
 							&nbsp;&nbsp;&nbsp;&nbsp;[prints.len] Unique fingerprints found.<br>"}
@@ -276,7 +277,7 @@ obj/machinery/computer/forensic_scanning
 								temp += "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Type: [blood[named]], DNA: [named]<br>"
 
 					// AUTOFIXED BY fix_string_idiocy.py
-					// C:\Users\Rob\Documents\Projects\vgstation13\code\modules\DetectiveWork\detective_work.dm:253: temp += "<br><a href='?src=\ref[src];operation=record;identifier=[href_list["identifier"]];ren=true'>{Rename this Dossier}</a>"
+					// C:\Users\Rob\\documents\\\projects\vgstation13\code\\modules\\detectiveWork\\detective_work.dm:253: temp += "<br><a href='?src=\ref[src];operation=record;identifier=[href_list["identifier"]];ren=true'>{Rename this Dossier}</a>"
 					temp += {"<br><a href='?src=\ref[src];operation=record;identifier=[href_list["identifier"]];ren=true'>{Rename this Dossier}</a>
 						<br><a href='?src=\ref[src];operation=database;delete_record=[href_list["identifier"]]'>{Delete this Dossier}</a>
 						<br><a href='?src=\ref[src];operation=databaseprint;identifier=[href_list["identifier"]]'>{Print}</a>"}
@@ -292,7 +293,7 @@ obj/machinery/computer/forensic_scanning
 					P.overlays += "paper_words"
 
 					// AUTOFIXED BY fix_string_idiocy.py
-					// C:\Users\Rob\Documents\Projects\vgstation13\code\modules\DetectiveWork\detective_work.dm:265: P.info = "<b>Criminal Evidence Database</b><br><br>"
+					// C:\Users\Rob\\documents\\\projects\vgstation13\code\\modules\\detectiveWork\\detective_work.dm:265: P.info = "<b>Criminal Evidence Database</b><br><br>"
 					P.info = {"<b>Criminal Evidence Database</b><br><br>
 						Consolidated data points: [dossier[2]]<br>"}
 					// END AUTOFIX
@@ -308,7 +309,7 @@ obj/machinery/computer/forensic_scanning
 						var/list/prints = outputs[1]
 
 						// AUTOFIXED BY fix_string_idiocy.py
-						// C:\Users\Rob\Documents\Projects\vgstation13\code\modules\DetectiveWork\detective_work.dm:277: P.info += "<big><b>Object:</b> [outputs[4]]</big><br>"
+						// C:\Users\Rob\\documents\\\projects\vgstation13\code\\modules\\detectiveWork\\detective_work.dm:277: P.info += "<big><b>Object:</b> [outputs[4]]</big><br>"
 						P.info += {"<big><b>Object:</b> [outputs[4]]</big><br>
 							&nbsp<b>Fingerprints:</b><br>
 							&nbsp;&nbsp;&nbsp;&nbsp;[prints.len] Unique fingerprints found.<br>"}
@@ -344,7 +345,7 @@ obj/machinery/computer/forensic_scanning
 					if(prints)
 
 						// AUTOFIXED BY fix_string_idiocy.py
-						// C:\Users\Rob\Documents\Projects\vgstation13\code\modules\DetectiveWork\detective_work.dm:309: temp += "&nbsp<b>Fingerprints:</b><br>"
+						// C:\Users\Rob\\documents\\\projects\vgstation13\code\\modules\\detectiveWork\\detective_work.dm:309: temp += "&nbsp<b>Fingerprints:</b><br>"
 						temp += {"&nbsp<b>Fingerprints:</b><br>
 							&nbsp;&nbsp;&nbsp;&nbsp;[prints.len] Unique fingerprints found.<br>"}
 						// END AUTOFIX
@@ -369,7 +370,7 @@ obj/machinery/computer/forensic_scanning
 							temp += "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Type: [blood[named]], DNA: [named]<br>"
 
 					// AUTOFIXED BY fix_string_idiocy.py
-					// C:\Users\Rob\Documents\Projects\vgstation13\code\modules\DetectiveWork\detective_work.dm:330: temp += "<br><a href='?src=\ref[src];operation=database;delete_aux=[href_list["identifier"]]'>{Delete This Record}</a>"
+					// C:\Users\Rob\\documents\\\projects\vgstation13\code\\modules\\detectiveWork\\detective_work.dm:330: temp += "<br><a href='?src=\ref[src];operation=database;delete_aux=[href_list["identifier"]]'>{Delete This Record}</a>"
 					temp += {"<br><a href='?src=\ref[src];operation=database;delete_aux=[href_list["identifier"]]'>{Delete This Record}</a>
 						<br><a href='?src=\ref[src];operation=auxiliaryprint;identifier=[href_list["identifier"]]'>{Print}</a>"}
 					// END AUTOFIX
@@ -384,7 +385,7 @@ obj/machinery/computer/forensic_scanning
 					P.overlays += "paper_words"
 
 					// AUTOFIXED BY fix_string_idiocy.py
-					// C:\Users\Rob\Documents\Projects\vgstation13\code\modules\DetectiveWork\detective_work.dm:341: P.info = "<b>Auxiliary Evidence Database</b><br><br>"
+					// C:\Users\Rob\\documents\\\projects\vgstation13\code\\modules\\detectiveWork\\detective_work.dm:341: P.info = "<b>Auxiliary Evidence Database</b><br><br>"
 					P.info = {"<b>Auxiliary Evidence Database</b><br><br>
 						<big><b>Consolidated data points:</b> [outputs[3]]</big><br>"}
 					// END AUTOFIX
@@ -392,7 +393,7 @@ obj/machinery/computer/forensic_scanning
 					if(prints)
 
 						// AUTOFIXED BY fix_string_idiocy.py
-						// C:\Users\Rob\Documents\Projects\vgstation13\code\modules\DetectiveWork\detective_work.dm:345: P.info += "&nbsp<b>Fingerprints:</b><br>"
+						// C:\Users\Rob\\documents\\\projects\vgstation13\code\\modules\\detectiveWork\\detective_work.dm:345: P.info += "&nbsp<b>Fingerprints:</b><br>"
 						P.info += {"&nbsp<b>Fingerprints:</b><br>
 							&nbsp;&nbsp;&nbsp;&nbsp;[prints.len] Unique fingerprints found.<br>"}
 						// END AUTOFIX
@@ -511,6 +512,7 @@ obj/machinery/computer/forensic_scanning
 
 
 	proc/add_data_scanner(var/obj/item/device/W)
+		writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\proc/add_data_scanner() called tick#: [world.time]")
 		if(istype(W, /obj/item/device/detective_scanner))
 			var/obj/item/device/detective_scanner/D = W
 			if(D.stored)
@@ -527,6 +529,7 @@ obj/machinery/computer/forensic_scanning
 		return
 
 	proc/add_data(var/atom/scanned_atom)
+		writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\proc/add_data() called tick#: [world.time]")
 		return add_data_master("\ref [scanned_atom]", scanned_atom.fingerprints,\
 		scanned_atom.suit_fibers, scanned_atom.blood_DNA, "[scanned_atom.name] (Direct Scan)")
 
@@ -536,6 +539,7 @@ obj/machinery/computer/forensic_scanning
 *****DO NOT DIRECTLY CALL ME*****
 ********************************/
 	proc/add_data_master(var/atom_reference, var/list/atom_fingerprints, var/list/atom_suit_fibers, var/list/atom_blood_DNA, var/atom_name)
+		writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\proc/add_data_master() called tick#: [world.time]")
 //What follows is massive.  It cross references all stored data in the scanner with the other stored data,
 //and what is already in the computer.  Not sure how bad the lag may/may not be.
 
@@ -636,6 +640,7 @@ obj/machinery/computer/forensic_scanning
 ********************************/
 
 	proc/update_fingerprints(var/ref_print, var/new_print)
+		writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\proc/update_fingerprints() called tick#: [world.time]")
 		var/list/master = files[ref_print]
 		if(master)
 			master[1] = stringmerge(master[1],new_print)
@@ -644,6 +649,7 @@ obj/machinery/computer/forensic_scanning
 		return
 
 	proc/process_card()	//Same as above, but for fingerprint cards
+		writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\proc/process_card() called tick#: [world.time]")
 		if(card.fingerprints && !(card.amount > 1) && islist(card.fingerprints) && files && files.len)
 			usr << "You insert the card, and it is destroyed by the machinery in the process of comparing prints."
 			var/found = 0
@@ -666,11 +672,13 @@ obj/machinery/computer/forensic_scanning
 		return
 
 	proc/delete_record(var/atom_ref)	//Deletes an entry in the misc database at the given location
+		writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\proc/delete_record() called tick#: [world.time]")
 		if(misc && misc.len)
 			misc.Remove(atom_ref)
 		return
 
 	proc/delete_dossier(var/print)	//Deletes a Dossier at a given location.
+		writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\proc/delete_dossier() called tick#: [world.time]")
 		if(files && files.len)
 			files.Remove(print)
 		return

@@ -192,6 +192,7 @@
 /obj/structure/closet/fireaxecabinet/verb/toggle_openness() //nice name, huh? HUH?! -Erro //YEAH -Agouri
 	set name = "Open/Close"
 	set category = "Object"
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""]) \\/obj/structure/closet/fireaxecabinet/verb/toggle_openness()  called tick#: [world.time]")
 
 	if(isrobot(usr) || locked || smashed)
 		if(locked)
@@ -206,6 +207,7 @@
 /obj/structure/closet/fireaxecabinet/verb/remove_fire_axe()
 	set name = "Remove Fire Axe"
 	set category = "Object"
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""]) \\/obj/structure/closet/fireaxecabinet/verb/remove_fire_axe()  called tick#: [world.time]")
 
 	if(isrobot(usr))
 		return

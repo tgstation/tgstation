@@ -122,6 +122,7 @@
 		return 1
 
 /datum/game_mode/proc/auto_declare_completion_borer()
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/game_mode/proc/auto_declare_completion_borer() called tick#: [world.time]")
 	for(var/datum/mind/borer in borers)
 		var/borerwin = 1
 		if((borer.current) && istype(borer.current,/mob/living/simple_animal/borer))

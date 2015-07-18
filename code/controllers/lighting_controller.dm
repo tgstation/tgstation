@@ -33,6 +33,7 @@ datum/controller/lighting
 //than deleting them). Processing interval should be roughly half a second for best results.
 //By using queues we are ensuring we don't perform more updates than are necessary
 datum/controller/lighting/proc/process()
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\datum/controller/lighting/proc/process() called tick#: [world.time]")
 	processing = 1
 	spawn(0)
 		set background = BACKGROUND_ENABLED
@@ -68,6 +69,7 @@ datum/controller/lighting/proc/process()
 //Note: if we get additional z-levels at runtime (e.g. if the gateway thin ever gets finished) we can initialize specific
 //z-levels with the z_level argument
 datum/controller/lighting/proc/Initialize(var/z_level)
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\datum/controller/lighting/proc/Initialize() called tick#: [world.time]")
 	processing = 0
 	spawn(-1)
 		set background = BACKGROUND_ENABLED

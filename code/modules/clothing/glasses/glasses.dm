@@ -108,6 +108,7 @@
 	species_fit = list("Vox")
 
 /obj/item/clothing/glasses/welding/proc/getMask()
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/item/clothing/glasses/welding/proc/getMask() called tick#: [world.time]")
 	return global_hud.darkMask
 
 /obj/item/clothing/glasses/welding/attack_self()
@@ -119,6 +120,7 @@
 	set name = "Adjust welding goggles"
 	set src in usr
 	var/mob/C = usr
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""]) \\/obj/item/clothing/glasses/welding/verb/toggle()  called tick#: [world.time]")
 	if(!usr)
 		if(!ismob(loc))
 			return

@@ -34,6 +34,7 @@ var/global/list/reagents_to_log = list("fuel"  =  "welder fuel", "plasma"=  "pla
 	..()
 
 /obj/item/proc/is_used_on(obj/O, mob/user)
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/item/proc/is_used_on() called tick#: [world.time]")
 
 /obj/recycle(var/datum/materials/rec)
 	if(..())
@@ -49,17 +50,21 @@ var/global/list/reagents_to_log = list("fuel"  =  "welder fuel", "plasma"=  "pla
 */
 
 /obj/proc/is_conductor(var/siemens_min = 0.5)
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/proc/is_conductor() called tick#: [world.time]")
 	if(src.siemens_coefficient >= siemens_min)
 		return 1
 	return
 
 /obj/proc/is_sharp()
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/proc/is_sharp() called tick#: [world.time]")
 	return sharpness
 
 /obj/proc/is_hot()
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/proc/is_hot() called tick#: [world.time]")
 	return heat_production
 
 /obj/proc/process()
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/proc/process() called tick#: [world.time]")
 	processing_objects.Remove(src)
 
 /obj/assume_air(datum/gas_mixture/giver)
@@ -81,6 +86,7 @@ var/global/list/reagents_to_log = list("fuel"  =  "welder fuel", "plasma"=  "pla
 		return null
 
 /obj/proc/handle_internal_lifeform(mob/lifeform_inside_me, breath_request)
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/proc/handle_internal_lifeform() called tick#: [world.time]")
 	//Return: (NONSTANDARD)
 	//		null if object handles breathing logic for lifeform
 	//		datum/air_group to tell lifeform to process using that breath return
@@ -91,9 +97,11 @@ var/global/list/reagents_to_log = list("fuel"  =  "welder fuel", "plasma"=  "pla
 		return null
 
 /atom/movable/proc/initialize()
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/atom/movable/proc/initialize() called tick#: [world.time]")
 	return
 
 /obj/proc/updateUsrDialog()
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/proc/updateUsrDialog() called tick#: [world.time]")
 	if(in_use)
 		var/is_in_use = 0
 		if(_using && _using.len)
@@ -124,6 +132,7 @@ var/global/list/reagents_to_log = list("fuel"  =  "welder fuel", "plasma"=  "pla
 		in_use = is_in_use
 
 /obj/proc/updateDialog()
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/proc/updateDialog() called tick#: [world.time]")
 	// Check that people are actually using the machine. If not, don't update anymore.
 	if(in_use)
 		var/list/nearby = viewers(1, src)
@@ -142,6 +151,7 @@ var/global/list/reagents_to_log = list("fuel"  =  "welder fuel", "plasma"=  "pla
 		in_use = is_in_use
 
 /obj/proc/interact(mob/user)
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/proc/interact() called tick#: [world.time]")
 	return
 
 /obj/singularity_act()
@@ -158,30 +168,38 @@ var/global/list/reagents_to_log = list("fuel"  =  "welder fuel", "plasma"=  "pla
 	else step_towards(src, S)
 
 /obj/proc/multitool_menu(var/mob/user,var/obj/item/device/multitool/P)
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/proc/multitool_menu() called tick#: [world.time]")
 	return "<b>NO MULTITOOL_MENU!</b>"
 
 /obj/proc/linkWith(var/mob/user, var/obj/buffer, var/link/context)
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/proc/linkWith() called tick#: [world.time]")
 	return 0
 
 /obj/proc/unlinkFrom(var/mob/user, var/obj/buffer)
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/proc/unlinkFrom() called tick#: [world.time]")
 	return 0
 
 /obj/proc/canLink(var/obj/O, var/link/context)
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/proc/canLink() called tick#: [world.time]")
 	return 0
 
 /obj/proc/isLinkedWith(var/obj/O)
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/proc/isLinkedWith() called tick#: [world.time]")
 	return 0
 
 /obj/proc/getLink(var/idx)
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/proc/getLink() called tick#: [world.time]")
 	return null
 
 /obj/proc/linkMenu(var/obj/O)
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/proc/linkMenu() called tick#: [world.time]")
 	var/dat=""
 	if(canLink(O, list()))
 		dat += " <a href='?src=\ref[src];link=1'>\[Link\]</a> "
 	return dat
 
 /obj/proc/format_tag(var/label,var/varname, var/act="set_tag")
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/proc/format_tag() called tick#: [world.time]")
 	var/value = vars[varname]
 	if(!value || value=="")
 		value="-----"
@@ -189,6 +207,7 @@ var/global/list/reagents_to_log = list("fuel"  =  "welder fuel", "plasma"=  "pla
 
 
 /obj/proc/update_multitool_menu(mob/user as mob)
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/proc/update_multitool_menu() called tick#: [world.time]")
 	var/obj/item/device/multitool/P = get_multitool(user)
 
 	if(!istype(P))
@@ -239,9 +258,11 @@ a {
 	onclose(user, "mtcomputer")
 
 /obj/proc/update_icon()
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/proc/update_icon() called tick#: [world.time]")
 	return
 
 /mob/proc/unset_machine()
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/proc/unset_machine() called tick#: [world.time]")
 	if(machine)
 		if(machine._using)
 			machine._using -= src
@@ -252,6 +273,7 @@ a {
 		machine = null
 
 /mob/proc/set_machine(const/obj/O)
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/proc/set_machine() called tick#: [world.time]")
 	unset_machine()
 
 	if(istype(O))
@@ -264,30 +286,39 @@ a {
 		machine.in_use = 1
 
 /obj/item/proc/updateSelfDialog()
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/item/proc/updateSelfDialog() called tick#: [world.time]")
 	var/mob/M = src.loc
 	if(istype(M) && M.client && M.machine == src)
 		src.attack_self(M)
 
 
 /obj/proc/alter_health()
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/proc/alter_health() called tick#: [world.time]")
 	return 1
 
 /obj/proc/hide(h)
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/proc/hide() called tick#: [world.time]")
 	return
 
 /obj/proc/container_resist()
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/proc/container_resist() called tick#: [world.time]")
 	return
 
 /obj/proc/can_pickup(mob/living/user)
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/proc/can_pickup() called tick#: [world.time]")
 	return 0
 
 /obj/proc/verb_pickup(mob/living/user)
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""]) \\/obj/proc/verb_pickup()  called tick#: [world.time]")
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/proc/verb_pickup() called tick#: [world.time]")
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""]) \\\\/obj/proc/verb_pickup()  called tick#: [world.time]")
 	return 0
 
 /**
  * If a mob logouts/logins in side of an object you can use this proc.
  */
 /obj/proc/on_log()
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/proc/on_log() called tick#: [world.time]")
 	if (isobj(loc))
 		var/obj/location = loc
 		location.on_log()

@@ -7,6 +7,7 @@
 #define RECOMMENDED_VERSION 501
 
 
+var/savefile/panicfile
 /world/New()
 	// Honk honk, fuck you science
 	populate_seed_list()
@@ -33,6 +34,7 @@
 	investigations["atmos"] = new /datum/log_controller("atmos", filename="data/logs/[date_string] atmos.htm", persist=TRUE)
 
 	diary = file("data/logs/[date_string].log")
+	panicfile = new/savefile("data/logs/profiling/proclogs/[date_string].sav")
 	diaryofmeanpeople = file("data/logs/[date_string] Attack.log")
 	admin_diary = file("data/logs/[date_string] admin only.log")
 
@@ -41,6 +43,9 @@
 	diary << log_start
 	diaryofmeanpeople << log_start
 	admin_diary << log_start
+	var/ourround = time_stamp()
+	panicfile.cd = ourround
+
 
 	changelog_hash = md5('html/changelog.html')					//used for telling if the changelog has changed recently
 /*
@@ -258,6 +263,7 @@
 
 #define INACTIVITY_KICK	6000	//10 minutes in ticks (approx.)
 /world/proc/KickInactiveClients()
+	writepanic("[__FILE__].[__LINE__] (world)([usr ? usr.ckey : ""])  \\/world/proc/KickInactiveClients() called tick#: [world.time]")
 	spawn(-1)
 		//set background = 1
 		while(1)
@@ -272,6 +278,7 @@
 
 
 /world/proc/load_mode()
+	writepanic("[__FILE__].[__LINE__] (world)([usr ? usr.ckey : ""])  \\/world/proc/load_mode() called tick#: [world.time]")
 	var/list/Lines = file2list("data/mode.txt")
 	if(Lines.len)
 		if(Lines[1])
@@ -279,14 +286,17 @@
 			diary << "Saved mode is '[master_mode]'"
 
 /world/proc/save_mode(var/the_mode)
+	writepanic("[__FILE__].[__LINE__] (world)([usr ? usr.ckey : ""])  \\/world/proc/save_mode() called tick#: [world.time]")
 	var/F = file("data/mode.txt")
 	fdel(F)
 	F << the_mode
 
 /world/proc/load_motd()
+	writepanic("[__FILE__].[__LINE__] (world)([usr ? usr.ckey : ""])  \\/world/proc/load_motd() called tick#: [world.time]")
 	join_motd = file2text("config/motd.txt")
 
 /world/proc/load_configuration()
+	writepanic("[__FILE__].[__LINE__] (world)([usr ? usr.ckey : ""])  \\/world/proc/load_configuration() called tick#: [world.time]")
 	config = new /datum/configuration()
 	config.load("config/config.txt")
 	config.load("config/game_options.txt","game_options")
@@ -296,6 +306,7 @@
 	abandon_allowed = config.respawn
 
 /world/proc/load_mods()
+	writepanic("[__FILE__].[__LINE__] (world)([usr ? usr.ckey : ""])  \\/world/proc/load_mods() called tick#: [world.time]")
 	if(config.admin_legacy_system)
 		var/text = file2text("config/moderators.txt")
 		if (!text)
@@ -315,6 +326,7 @@
 				D.associate(directory[ckey])
 
 /world/proc/update_status()
+	writepanic("[__FILE__].[__LINE__] (world)([usr ? usr.ckey : ""])  \\/world/proc/update_status() called tick#: [world.time]")
 	var/s = ""
 
 	if (config && config.server_name)
@@ -322,7 +334,7 @@
 
 
 	// AUTOFIXED BY fix_string_idiocy.py
-	// C:\Users\Rob\Documents\Projects\vgstation13\code\world.dm:235: s += "<b>[station_name()]</b>";
+	// C:\Users\Rob\\documents\\\projects\vgstation13\code\world.dm:235: s += "<b>[station_name()]</b>";
 	s += {"<b>[station_name()]</b>"
 		(
 		<a href=\"http://\">" //Change this to wherever you want the hub to link to
@@ -381,6 +393,8 @@ var/failed_old_db_connections = 0
 
 proc/setup_database_connection()
 
+	writepanic("[__FILE__].[__LINE__] \\/proc/setup_database_connection() called tick#: [world.time]")
+
 	if(failed_db_connections > FAILED_DB_CONNECTION_CUTOFF)	//If it failed to establish a connection more than 5 times in a row, don't bother attempting to conenct anymore.
 		return 0
 
@@ -405,6 +419,7 @@ proc/setup_database_connection()
 
 //This proc ensures that the connection to the feedback database (global variable dbcon) is established
 proc/establish_db_connection()
+	writepanic("[__FILE__].[__LINE__] \\/proc/establish_db_connection() called tick#: [world.time]")
 	if(failed_db_connections > FAILED_DB_CONNECTION_CUTOFF)
 		return 0
 
@@ -424,6 +439,8 @@ proc/establish_db_connection()
 
 //These two procs are for the old database, while it's being phased out. See the tgstation.sql file in the SQL folder for more information.
 proc/setup_old_database_connection()
+
+	writepanic("[__FILE__].[__LINE__] \\/proc/setup_old_database_connection() called tick#: [world.time]")
 
 	if(failed_old_db_connections > FAILED_DB_CONNECTION_CUTOFF)	//If it failed to establish a connection more than 5 times in a row, don't bother attempting to conenct anymore.
 		return 0
@@ -449,6 +466,7 @@ proc/setup_old_database_connection()
 
 //This proc ensures that the connection to the feedback database (global variable dbcon) is established
 proc/establish_old_db_connection()
+	writepanic("[__FILE__].[__LINE__] \\/proc/establish_old_db_connection() called tick#: [world.time]")
 	if(failed_old_db_connections > FAILED_DB_CONNECTION_CUTOFF)
 		return 0
 

@@ -85,6 +85,7 @@ var/global/list/organ_damage_overlays = list(
 
 // Doing this during species init breaks shit.
 /mob/living/carbon/human/proc/DeferredSpeciesSetup()
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/living/carbon/human/proc/DeferredSpeciesSetup() called tick#: [world.time]")
 	var/mut_update=0
 	if(species.default_mutations.len>0)
 		for(var/mutation in species.default_mutations)
@@ -349,6 +350,7 @@ var/global/list/organ_damage_overlays = list(
 		return ONE_ATMOSPHERE - pressure_difference
 
 /mob/living/carbon/human/proc/handle_disabilities()
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/living/carbon/human/proc/handle_disabilities() called tick#: [world.time]")
 	if(disabilities & EPILEPSY)
 		if((prob(1)) && (paralysis < 1))
 			visible_message( \
@@ -433,6 +435,7 @@ var/global/list/organ_damage_overlays = list(
 				resting = 1
 
 /mob/living/carbon/human/proc/handle_stasis_bag()
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/living/carbon/human/proc/handle_stasis_bag() called tick#: [world.time]")
 	// Handle side effects from stasis bag
 	if(in_stasis)
 		// First off, there's no oxygen supply, so the mob will slowly take brain damage
@@ -443,6 +446,7 @@ var/global/list/organ_damage_overlays = list(
 		adjustCloneLoss(0.1)
 
 /mob/living/carbon/human/proc/handle_mutations_and_radiation()
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/living/carbon/human/proc/handle_mutations_and_radiation() called tick#: [world.time]")
 	if(flags & INVULNERABLE)
 		return
 	if(getFireLoss())
@@ -515,6 +519,7 @@ var/global/list/organ_damage_overlays = list(
 				if(istype(O)) O.add_autopsy_data("Radiation Poisoning", damage)
 
 /mob/living/carbon/human/proc/breathe()
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/living/carbon/human/proc/breathe() called tick#: [world.time]")
 	if(flags & INVULNERABLE)
 		return
 	if(reagents.has_reagent("lexorin")) return
@@ -624,6 +629,7 @@ var/global/list/organ_damage_overlays = list(
 
 
 /mob/living/carbon/human/proc/get_breath_from_internal(volume_needed)
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/living/carbon/human/proc/get_breath_from_internal() called tick#: [world.time]")
 	if(internal)
 		if (!contents.Find(internal))
 			internal = null
@@ -637,6 +643,7 @@ var/global/list/organ_damage_overlays = list(
 
 
 /mob/living/carbon/human/proc/handle_breath(var/datum/gas_mixture/breath)
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/living/carbon/human/proc/handle_breath() called tick#: [world.time]")
 	if((status_flags & GODMODE) || (flags & INVULNERABLE))
 		return 0
 
@@ -662,6 +669,7 @@ var/global/list/organ_damage_overlays = list(
 	return species.handle_breath(breath, src)
 
 /mob/living/carbon/human/proc/handle_environment(datum/gas_mixture/environment)
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/living/carbon/human/proc/handle_environment() called tick#: [world.time]")
 	if(!environment || (flags & INVULNERABLE))
 		return
 	var/loc_temp = T0C
@@ -775,6 +783,7 @@ var/global/list/organ_damage_overlays = list(
 
 /*
 /mob/living/carbon/human/proc/adjust_body_temperature(current, loc_temp, boost)
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/living/carbon/human/proc/adjust_body_temperature() called tick#: [world.time]")
 	var/temperature = current
 	var/difference = abs(current-loc_temp)	//get difference
 	var/increments// = difference/10			//find how many increments apart they are
@@ -793,6 +802,7 @@ var/global/list/organ_damage_overlays = list(
 */
 
 /mob/living/carbon/human/proc/stabilize_temperature_from_calories()
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/living/carbon/human/proc/stabilize_temperature_from_calories() called tick#: [world.time]")
 	var/body_temperature_difference = 310.15 - bodytemperature
 	if (abs(body_temperature_difference) < 0.5)
 		return //fuck this precision
@@ -815,6 +825,7 @@ var/global/list/organ_damage_overlays = list(
 
 	//This proc returns a number made up of the flags for body parts which you are protected on. (such as HEAD, UPPER_TORSO, LOWER_TORSO, etc. See setup.dm for the full list)
 /mob/living/carbon/human/proc/get_heat_protection_flags(temperature) //Temperature is the temperature you're being exposed to.
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/living/carbon/human/proc/get_heat_protection_flags() called tick#: [world.time]")
 	var/thermal_protection_flags = 0
 	//Handle normal clothing
 	if(head)
@@ -839,6 +850,7 @@ var/global/list/organ_damage_overlays = list(
 	return thermal_protection_flags
 
 /mob/living/carbon/human/proc/get_heat_protection(temperature) //Temperature is the temperature you're being exposed to.
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/living/carbon/human/proc/get_heat_protection() called tick#: [world.time]")
 	var/thermal_protection_flags = get_heat_protection_flags(temperature)
 
 	var/thermal_protection = 0.0
@@ -873,6 +885,7 @@ var/global/list/organ_damage_overlays = list(
 
 //See proc/get_heat_protection_flags(temperature) for the description of this proc.
 /mob/living/carbon/human/proc/get_cold_protection_flags(temperature)
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/living/carbon/human/proc/get_cold_protection_flags() called tick#: [world.time]")
 	var/thermal_protection_flags = 0
 	//Handle normal clothing
 
@@ -898,6 +911,8 @@ var/global/list/organ_damage_overlays = list(
 	return thermal_protection_flags
 
 /mob/living/carbon/human/proc/get_cold_protection(temperature)
+
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/living/carbon/human/proc/get_cold_protection() called tick#: [world.time]")
 
 	if(M_RESIST_COLD in mutations)
 		return 1 //Fully protected from the cold.
@@ -934,6 +949,7 @@ var/global/list/organ_damage_overlays = list(
 
 /*
 /mob/living/carbon/human/proc/add_fire_protection(var/temp)
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/living/carbon/human/proc/add_fire_protection() called tick#: [world.time]")
 	var/fire_prot = 0
 	if(head)
 		if(head.protective_temperature > temp)
@@ -963,6 +979,7 @@ var/global/list/organ_damage_overlays = list(
 	return fire_prot
 
 /mob/living/carbon/human/proc/handle_temperature_damage(body_part, exposed_temperature, exposed_intensity)
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/living/carbon/human/proc/handle_temperature_damage() called tick#: [world.time]")
 	if(nodamage)
 		return
 	//world <<"body_part = [body_part], exposed_temperature = [exposed_temperature], exposed_intensity = [exposed_intensity]"
@@ -991,6 +1008,7 @@ var/global/list/organ_damage_overlays = list(
 */
 
 /mob/living/carbon/human/proc/get_covered_bodyparts()
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/living/carbon/human/proc/get_covered_bodyparts() called tick#: [world.time]")
 	var/covered = 0
 
 	if(head)
@@ -1009,6 +1027,7 @@ var/global/list/organ_damage_overlays = list(
 	return covered
 
 /mob/living/carbon/human/proc/handle_chemicals_in_body()
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/living/carbon/human/proc/handle_chemicals_in_body() called tick#: [world.time]")
 	if(reagents)
 
 		var/alien = 0 //Not the best way to handle it, but neater than checking this for every single reagent proc.
@@ -1129,6 +1148,7 @@ var/global/list/organ_damage_overlays = list(
 
 
 /mob/living/carbon/human/proc/handle_regular_status_updates()
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/living/carbon/human/proc/handle_regular_status_updates() called tick#: [world.time]")
 	if(stat == DEAD)	//DEAD. BROWN BREAD. SWIMMING WITH THE SPESS CARP
 		blinded = 1
 		silent = 0
@@ -1336,6 +1356,7 @@ var/global/list/organ_damage_overlays = list(
 	return 1
 
 /mob/living/carbon/human/proc/handle_regular_hud_updates()
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/living/carbon/human/proc/handle_regular_hud_updates() called tick#: [world.time]")
 	if(!client)	return 0
 
 	sight &= ~BLIND
@@ -1629,6 +1650,7 @@ var/global/list/organ_damage_overlays = list(
 	return 1
 
 /mob/living/carbon/human/proc/handle_random_events()
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/living/carbon/human/proc/handle_random_events() called tick#: [world.time]")
 	// Puke if toxloss is too high
 	if(!stat)
 		if (getToxLoss() >= 45 && nutrition > 20)
@@ -1646,8 +1668,9 @@ var/global/list/organ_damage_overlays = list(
 		if(!T.get_lumcount())
 			playsound_local(src,pick(scarySounds),50, 1, -1)
 
-// Separate proc so we can jump out of it when we've succeeded in spreading disease.
+// separate proc so we can jump out of it when we've succeeded in spreading disease.
 /mob/living/carbon/human/proc/findAirborneVirii()
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/living/carbon/human/proc/findAirborneVirii() called tick#: [world.time]")
 	if(blood_virus_spreading_disabled)
 		return 0
 	for(var/obj/effect/decal/cleanable/blood/B in get_turf(src))
@@ -1666,6 +1689,7 @@ var/global/list/organ_damage_overlays = list(
 	return 0
 
 /mob/living/carbon/human/proc/handle_virus_updates()
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/living/carbon/human/proc/handle_virus_updates() called tick#: [world.time]")
 	if(status_flags & GODMODE)	return 0	//godmode
 	if(bodytemperature > 406)
 		for(var/datum/disease/D in viruses)
@@ -1692,6 +1716,7 @@ var/global/list/organ_damage_overlays = list(
 	return
 
 /mob/living/carbon/human/proc/handle_stomach()
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/living/carbon/human/proc/handle_stomach() called tick#: [world.time]")
 	spawn(0)
 		for(var/mob/living/M in stomach_contents)
 			if(M.loc != src)
@@ -1709,6 +1734,7 @@ var/global/list/organ_damage_overlays = list(
 					nutrition += 10
 
 /mob/living/carbon/human/proc/handle_changeling()
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/living/carbon/human/proc/handle_changeling() called tick#: [world.time]")
 	if(mind && mind.changeling)
 		mind.changeling.regenerate()
 
@@ -1765,6 +1791,8 @@ var/global/list/organ_damage_overlays = list(
 
 /mob/living/carbon/human/proc/handle_pulse()
 
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/living/carbon/human/proc/handle_pulse() called tick#: [world.time]")
+
 	if(life_tick % 5) return pulse	//update pulse every 5 life ticks (~1 tick/sec, depending on server load)
 
 	if(species && species.flags & NO_BLOOD) return PULSE_NONE //No blood, no pulse.
@@ -1800,6 +1828,7 @@ var/global/list/organ_damage_overlays = list(
 	return temp
 
 /mob/living/carbon/human/proc/randorgan()
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/living/carbon/human/proc/randorgan() called tick#: [world.time]")
 	var/randorgan = pick("head","chest","l_arm","r_arm","l_hand","r_hand","groin","l_leg","r_leg","l_foot","r_foot")
 	//var/randorgan = pick("head","chest","groin")
 	return randorgan
@@ -1820,6 +1849,8 @@ var/global/list/organ_damage_overlays = list(
 
 
 /mob/living/carbon/human/proc/handle_hud_list()
+
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/living/carbon/human/proc/handle_hud_list() called tick#: [world.time]")
 
 	if(hud_updateflag & 1 << HEALTH_HUD)
 		var/image/holder = hud_list[HEALTH_HUD]
@@ -1956,6 +1987,7 @@ var/global/list/organ_damage_overlays = list(
 	hud_updateflag = 0
 
 /mob/living/carbon/human/proc/handle_equipment()
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/living/carbon/human/proc/handle_equipment() called tick#: [world.time]")
 	if(head)
 		if(istype(head, /obj/item/weapon/reagent_containers/glass/bucket))
 			var/obj/item/weapon/reagent_containers/glass/bucket/B = head

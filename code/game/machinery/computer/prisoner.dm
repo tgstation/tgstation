@@ -41,7 +41,7 @@
 				if(!C.implanted) continue
 
 				// AUTOFIXED BY fix_string_idiocy.py
-				// C:\Users\Rob\Documents\Projects\vgstation13\code\game\machinery\computer\prisoner.dm:41: dat += "[C.imp_in.name] | Remaining Units: [C.reagents.total_volume] | Inject: "
+				// C:\Users\Rob\\documents\\\projects\vgstation13\code\game\\machinery\computer\\\prisoner.dm:41: dat += "[C.imp_in.name] | Remaining Units: [C.reagents.total_volume] | Inject: "
 				dat += {"[C.imp_in.name] | Remaining Units: [C.reagents.total_volume] | Inject:
 					<A href='?src=\ref[src];inject1=\ref[C]'>(<font color=red>(1)</font>)</A>
 					<A href='?src=\ref[src];inject5=\ref[C]'>(<font color=red>(5)</font>)</A>
@@ -62,7 +62,7 @@
 					loc_display = pick(teleportlocs)
 
 				// AUTOFIXED BY fix_string_idiocy.py
-				// C:\Users\Rob\Documents\Projects\vgstation13\code\game\machinery\computer\prisoner.dm:58: dat += "ID: [T.id] | Location: [loc_display]<BR>"
+				// C:\Users\Rob\\documents\\\projects\vgstation13\code\game\\machinery\computer\\\prisoner.dm:58: dat += "ID: [T.id] | Location: [loc_display]<BR>"
 				dat += {"ID: [T.id] | Location: [loc_display]<BR>
 					<A href='?src=\ref[src];warn=\ref[T]'>(<font color=red><i>Message Holder</i></font>)</A> |<BR>
 					********************************<BR>"}

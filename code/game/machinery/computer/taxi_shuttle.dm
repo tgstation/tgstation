@@ -37,6 +37,7 @@ var/global/list/taxi_computers = list()
 	icon_state = "syndishuttle"
 
 /obj/machinery/computer/taxi_shuttle/proc/taxi_move_to(area/destination as area, area/transit as area, var/wait_time)
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/computer/taxi_shuttle/proc/taxi_move_to() called tick#: [world.time]")
 	if(moving)
 		return
 	if(lastMove + TAXI_SHUTTLE_COOLDOWN > world.time)
@@ -62,6 +63,7 @@ var/global/list/taxi_computers = list()
 	return 1
 
 /obj/machinery/computer/taxi_shuttle/proc/broadcast(var/message = "")
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/computer/taxi_shuttle/proc/broadcast() called tick#: [world.time]")
 	if(message)
 		src.visible_message("\icon [src]" + message)
 	else
@@ -133,6 +135,7 @@ var/global/list/taxi_computers = list()
 	return
 
 /obj/machinery/computer/taxi_shuttle/proc/callTo(var/place = "")
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/computer/taxi_shuttle/proc/callTo() called tick#: [world.time]")
 	return
 
 /obj/machinery/computer/taxi_shuttle/bullet_act(var/obj/item/projectile/Proj)

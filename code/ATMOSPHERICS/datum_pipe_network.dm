@@ -32,6 +32,7 @@
 	line_members = list()
 
 /datum/pipe_network/proc/process()
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/pipe_network/proc/process() called tick#: [world.time]")
 	//Equalize gases amongst pipe if called for
 	if(update)
 		update = 0
@@ -45,6 +46,7 @@
 #endif
 
 /datum/pipe_network/proc/build_network(obj/machinery/atmospherics/start_normal, obj/machinery/atmospherics/reference)
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/pipe_network/proc/build_network() called tick#: [world.time]")
 	//Purpose: Generate membership roster
 	//Notes: Assuming that members will add themselves to appropriate roster in network_expandz()
 
@@ -64,6 +66,7 @@
 	return 1
 
 /datum/pipe_network/proc/merge(datum/pipe_network/giver)
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/pipe_network/proc/merge() called tick#: [world.time]")
 	if(giver==src) return 0
 
 	normal_members |= giver.normal_members
@@ -81,6 +84,7 @@
 	return 1
 
 /datum/pipe_network/proc/update_network_gases()
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/pipe_network/proc/update_network_gases() called tick#: [world.time]")
 	//Go through membership roster and make sure gases is up to date
 
 	gases = list()
@@ -93,6 +97,7 @@
 		gases += line_member.air
 
 /datum/pipe_network/proc/reconcile_air()
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/pipe_network/proc/reconcile_air() called tick#: [world.time]")
 	//Perfectly equalize all gases members instantly
 
 	//Calculate totals from individual components
@@ -171,6 +176,7 @@
 	return 1
 
 proc/equalize_gases(datum/gas_mixture/list/gases)
+	writepanic("[__FILE__].[__LINE__] \\/proc/equalize_gases() called tick#: [world.time]")
 	//Perfectly equalize all gases members instantly
 
 	//Calculate totals from individual components

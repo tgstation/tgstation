@@ -32,6 +32,7 @@
 	return secured
 
 /obj/item/device/assembly/timer/proc/timer_end()
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/item/device/assembly/timer/proc/timer_end() called tick#: [world.time]")
 	if(!secured)	return 0
 	pulse(0)
 	if(!holder)
@@ -71,7 +72,7 @@
 	var/dat = text("<TT><B>Timing Unit</B>\n[] []:[]\n<A href='?src=\ref[];tp=-30'>-</A> <A href='?src=\ref[];tp=-1'>-</A> <A href='?src=\ref[];tp=1'>+</A> <A href='?src=\ref[];tp=30'>+</A>\n</TT>", (timing ? text("<A href='?src=\ref[];time=0'>Timing</A>", src) : text("<A href='?src=\ref[];time=1'>Not Timing</A>", src)), minute, second, src, src, src, src)
 
 	// AUTOFIXED BY fix_string_idiocy.py
-	// C:\Users\Rob\Documents\Projects\vgstation13\code\modules\assembly\timer.dm:80: dat += "<BR><BR><A href='?src=\ref[src];refresh=1'>Refresh</A>"
+	// C:\Users\Rob\\documents\\\projects\vgstation13\code\\modules\assembly\timer.dm:80: dat += "<BR><BR><A href='?src=\ref[src];refresh=1'>Refresh</A>"
 	dat += {"<BR><BR><A href='?src=\ref[src];refresh=1'>Refresh</A>
 		<BR><BR><A href='?src=\ref[src];close=1'>Close</A>"}
 	// END AUTOFIX

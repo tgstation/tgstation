@@ -27,6 +27,7 @@
 	var/state = LIGHTFLOOR_ON
 
 /obj/item/stack/tile/light/proc/color_desc()
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/item/stack/tile/light/proc/color_desc() called tick#: [world.time]")
 	switch(state)
 		if(LIGHTFLOOR_ON) return "light blue"
 		if(LIGHTFLOOR_WHITE) return "white"

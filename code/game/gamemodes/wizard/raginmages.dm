@@ -64,6 +64,8 @@
 
 /datum/game_mode/wizard/raginmages/proc/make_more_mages()
 
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/game_mode/wizard/raginmages/proc/make_more_mages() called tick#: [world.time]")
+
 	if(making_mage || emergency_shuttle.departed)
 		return 0
 	if(mages_made >= max_mages)

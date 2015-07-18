@@ -63,6 +63,7 @@
 
 // Add air here.  DO NOT CALL UPDATE_VALUES OR UPDATE_ICON.
 /obj/machinery/atmospherics/miner/proc/AddAir()
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/atmospherics/miner/proc/AddAir() called tick#: [world.time]")
 	return
 
 /obj/machinery/atmospherics/miner/update_icon()

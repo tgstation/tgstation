@@ -1,4 +1,5 @@
 /turf/simulated/proc/find_group()
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/turf/simulated/proc/find_group() called tick#: [world.time]")
 	//Basically, join any nearby valid groups
 	//	If more than one, pick one with most members at my borders
 	// If can not find any but there was an ungrouped at border with me, call for group assembly

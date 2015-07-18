@@ -340,12 +340,14 @@
 	return
 
 /obj/item/mecha_parts/mecha_equipment/jetpack/proc/toggle()
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/item/mecha_parts/mecha_equipment/jetpack/proc/toggle() called tick#: [world.time]")
 	if(!chassis)
 		return
 	!equip_ready? turn_off() : turn_on()
 	return equip_ready
 
 /obj/item/mecha_parts/mecha_equipment/jetpack/proc/turn_on()
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/item/mecha_parts/mecha_equipment/jetpack/proc/turn_on() called tick#: [world.time]")
 	set_ready_state(0)
 	chassis.proc_res["dyndomove"] = src
 	ion_trail.start()
@@ -353,6 +355,7 @@
 	log_message("Jetpack Activated.")
 
 /obj/item/mecha_parts/mecha_equipment/jetpack/proc/turn_off()
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/item/mecha_parts/mecha_equipment/jetpack/proc/turn_off() called tick#: [world.time]")
 	set_ready_state(1)
 	chassis.proc_res["dyndomove"] = null
 	ion_trail.stop()
@@ -360,6 +363,7 @@
 	log_message("Jetpack Deactivated.")
 
 /obj/item/mecha_parts/mecha_equipment/jetpack/proc/dyndomove(direction)
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/item/mecha_parts/mecha_equipment/jetpack/proc/dyndomove() called tick#: [world.time]")
 	if(!action_checks())
 		return chassis.dyndomove(direction)
 	var/move_result = 0
@@ -691,6 +695,7 @@
 	return "<span style=\"color:[equip_ready?"#0f0":"#f00"];\">*</span>&nbsp;[src.name]"
 
 /obj/item/mecha_parts/mecha_equipment/anticcw_armor_booster/proc/dynattackby(obj/item/weapon/W as obj, mob/user as mob)
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/item/mecha_parts/mecha_equipment/anticcw_armor_booster/proc/dynattackby() called tick#: [world.time]")
 	if(!action_checks(user))
 		return chassis.dynattackby(W,user)
 	chassis.log_message("Attacked by [W]. Attacker - [user]")
@@ -743,6 +748,7 @@
 	return "<span style=\"color:[equip_ready?"#0f0":"#f00"];\">*</span>&nbsp;[src.name]"
 
 /obj/item/mecha_parts/mecha_equipment/antiproj_armor_booster/proc/dynbulletdamage(var/obj/item/projectile/Proj)
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/item/mecha_parts/mecha_equipment/antiproj_armor_booster/proc/dynbulletdamage() called tick#: [world.time]")
 	if(!action_checks(src))
 		return chassis.dynbulletdamage(Proj)
 	if(prob(chassis.deflect_chance*deflect_coeff))
@@ -759,6 +765,7 @@
 	return
 
 /obj/item/mecha_parts/mecha_equipment/antiproj_armor_booster/proc/dynhitby(atom/movable/A)
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/item/mecha_parts/mecha_equipment/antiproj_armor_booster/proc/dynhitby() called tick#: [world.time]")
 	if(!action_checks(A))
 		return chassis.dynhitby(A)
 	if(prob(chassis.deflect_chance*deflect_coeff) || istype(A, /mob/living) || istype(A, /obj/item/mecha_parts/mecha_tracking))
@@ -902,6 +909,7 @@
 	return 0
 
 /obj/item/mecha_parts/mecha_equipment/tesla_energy_relay/proc/dyngetcharge()
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/item/mecha_parts/mecha_equipment/tesla_energy_relay/proc/dyngetcharge() called tick#: [world.time]")
 	if(equip_ready) //disabled
 		return chassis.dyngetcharge()
 	var/area/A = get_area(chassis)
@@ -914,6 +922,7 @@
 	return charge
 
 /obj/item/mecha_parts/mecha_equipment/tesla_energy_relay/proc/get_power_channel(var/area/A)
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/item/mecha_parts/mecha_equipment/tesla_energy_relay/proc/get_power_channel() called tick#: [world.time]")
 	var/pow_chan
 	if(A)
 		for(var/c in use_channels)
@@ -995,6 +1004,7 @@
 	return
 
 /obj/item/mecha_parts/mecha_equipment/generator/proc/init()
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/item/mecha_parts/mecha_equipment/generator/proc/init() called tick#: [world.time]")
 	fuel = new /obj/item/stack/sheet/mineral/plasma(src)
 	fuel.amount = 0
 	pr_mech_generator = new /datum/global_iterator/mecha_generator(list(src),0)
@@ -1039,6 +1049,7 @@
 	return
 
 /obj/item/mecha_parts/mecha_equipment/generator/proc/load_fuel(var/obj/item/stack/sheet/P)
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/item/mecha_parts/mecha_equipment/generator/proc/load_fuel() called tick#: [world.time]")
 	if(P.type == fuel.type && P.amount)
 		var/to_load = max(max_fuel - fuel.amount*fuel.perunit,0)
 		if(to_load)

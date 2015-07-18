@@ -18,6 +18,7 @@
 	origin_tech = "combat=1"
 	attack_verb = list("robusted", "battered", "staved in")
 
+
 	suicide_act(mob/user)
 		viewers(user) << "<span class='danger'>[user] is [pick("staving","robusting")] \his head in with the [src.name]! It looks like \he's  trying to commit suicide!</span>"
 		return (BRUTELOSS)

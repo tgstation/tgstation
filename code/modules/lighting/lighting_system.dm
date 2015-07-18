@@ -6,6 +6,7 @@
 
 // duplicates lots of code, but this proc needs to be as fast as possible.
 /proc/create_lighting_overlays(zlevel = 0)
+	writepanic("[__FILE__].[__LINE__] (no type)([usr ? usr.ckey : ""])  \\/proc/create_lighting_overlays() called tick#: [world.time]")
 	var/area/A
 	if(zlevel == 0) // populate all zlevels
 		for(var/turf/T in turfs)

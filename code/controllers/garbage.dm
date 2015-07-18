@@ -11,6 +11,7 @@ var/soft_dels = 0
 	set desc = "List types that are hard del()'d by the GC."
 	set category = "Debug"
 
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""]) \\/client/verb/gc_dump_hdl()  called tick#: [world.time]")
 	for(var/A in gc_hard_del_types)
 		usr << "[A] = [gc_hard_del_types[A]]"
 
@@ -23,6 +24,7 @@ var/soft_dels = 0
 	var/hard_dels = 0
 
 /datum/garbage_collector/proc/addTrash(const/atom/movable/AM)
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/garbage_collector/proc/addTrash() called tick#: [world.time]")
 	if(!istype(AM))
 		return
 
@@ -35,6 +37,7 @@ var/soft_dels = 0
 	queue["\ref[AM]"] = world.timeofday
 
 /datum/garbage_collector/proc/process()
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/garbage_collector/proc/process() called tick#: [world.time]")
 	var/remainingCollectionPerTick = GC_COLLECTIONS_PER_TICK
 	var/remainingForceDelPerTick = GC_FORCE_DEL_PER_TICK
 	var/collectionTimeScope = world.timeofday - GC_COLLECTION_TIMEOUT
@@ -78,6 +81,7 @@ var/soft_dels = 0
 #undef GC_COLLECTIONS_PER_TICK
 
 /datum/garbage_collector/proc/dequeue(id)
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/garbage_collector/proc/dequeue() called tick#: [world.time]")
 	if (queue)
 		queue -= id
 
@@ -88,6 +92,7 @@ var/soft_dels = 0
  * OTHER TYPES CANNOT BE QDEL'D BECAUSE THEIR LOC IS LOCKED OR THEY DON'T HAVE ONE.
  */
 /proc/qdel(const/atom/movable/AM, ignore_pooling = 0)
+	writepanic("[__FILE__].[__LINE__] (no type)([usr ? usr.ckey : ""])  \\/proc/qdel() called tick#: [world.time]")
 	if(isnull(AM))
 		return
 
@@ -119,18 +124,21 @@ var/soft_dels = 0
 	var/processing_interval = 0
 
 /datum/controller/proc/recover() // If we are replacing an existing controller (due to a crash) we attempt to preserve as much as we can.
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/controller/proc/recover() called tick#: [world.time]")
 
 /*
  * Like Del(), but for qdel.
  * Called BEFORE qdel moves shit.
  */
 /datum/proc/Destroy()
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/proc/Destroy() called tick#: [world.time]")
 	del(src)
 
 /client/proc/qdel_toggle()
 	set name = "Toggle qdel Behavior"
 	set desc = "Toggle qdel usage between normal and force del()."
 	set category = "Debug"
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/client/proc/qdel_toggle() called tick#: [world.time]")
 
 	garbageCollector.del_everything = !garbageCollector.del_everything
 	world << "<b>GC: qdel turned [garbageCollector.del_everything ? "off" : "on"].</b>"
@@ -140,6 +148,7 @@ var/soft_dels = 0
 /*/client/var/running_find_references
 
 /atom/verb/find_references()
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""]) \\/atom/verb/find_references()  called tick#: [world.time]")
 	set category = "Debug"
 	set name = "Find References"
 	set background = 1

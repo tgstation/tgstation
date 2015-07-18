@@ -64,6 +64,7 @@
 		return
 
 	proc/extract_fingerprints(var/atom/A)
+		writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\proc/extract_fingerprints() called tick#: [world.time]")
 		var/list/extracted_prints=list()
 		if(!A.fingerprints || !A.fingerprints.len)
 			if(A.fingerprints)
@@ -74,6 +75,7 @@
 		return extracted_prints
 
 	proc/extract_blood(var/atom/A)
+		writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\proc/extract_blood() called tick#: [world.time]")
 		var/list/extracted_blood=list()
 		if(A.blood_DNA)
 			for(var/blood in A.blood_DNA)
@@ -81,6 +83,7 @@
 		return extracted_blood
 
 	proc/extract_fibers(var/atom/A)
+		writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\proc/extract_fibers() called tick#: [world.time]")
 		var/list/extracted_fibers=list()
 		if(A.suit_fibers)
 			for(var/fiber in A.suit_fibers)
@@ -167,6 +170,7 @@
 		return
 
 	proc/add_data(var/atom/A, var/list/blood_DNA_found,var/list/fingerprints_found,var/list/fibers_found)
+		writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\proc/add_data() called tick#: [world.time]")
 		//I love associative lists.
 		var/list/data_entry = stored["\ref [A]"]
 		if(islist(data_entry)) //Yay, it was already stored!
@@ -204,6 +208,7 @@
 		return 0
 
 /proc/get_timestamp()
+	writepanic("[__FILE__].[__LINE__] (no type)([usr ? usr.ckey : ""])  \\/proc/get_timestamp() called tick#: [world.time]")
 	return time2text(world.time + 432000, "hh:mm:ss")
 
 /obj/item/device/detective_scanner/forger
@@ -427,6 +432,7 @@
 		return 0
 
 	proc/clear_forgery()
+		writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\proc/clear_forgery() called tick#: [world.time]")
 		if(custom_forgery.len)
 			custom_forgery[1] = list()
 			custom_forgery[2] = list()

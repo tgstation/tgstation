@@ -168,7 +168,7 @@
 	Uses the Shunting-yard algorithm to parse expressions.
 
 	Notes:
-	- When an opening parenthesis is found, then <ParseParenExpression()> is called to handle it.
+	- When an opening parenthesis is found, then <ParseparenExpression()> is called to handle it.
 	- The <expecting>  variable helps distinguish unary operators from binary operators (for cases like the - operator, which can be either).
 
 	Articles:
@@ -177,8 +177,8 @@
 
 	See Also:
 	- <ParseFunctionExpression()>
-	- <ParseParenExpression()>
-	- <ParseParamExpression()>
+	- <ParseparenExpression()>
+	- <ParseparamExpression()>
 */
 		ParseExpression(list/end=list(/token/end), list/ErrChars=list("{", "}"), check_functions = 0)
 			var/stack
@@ -211,7 +211,7 @@
 						errors+=new/scriptError/ExpectedToken("operator", curToken)
 						NextToken()
 						continue
-					val.Push(ParseParenExpression())
+					val.Push(ParseparenExpression())
 
 				else if(istype(curToken, /token/symbol))												//Operator found.
 					var/node/expression/operator/curOperator											//Figure out whether it is unary or binary and get a new instance.
@@ -304,7 +304,7 @@
 
 				if(istype(curToken, /token/symbol) && curToken.value==")")
 					return exp
-				exp.parameters+=ParseParamExpression()
+				exp.parameters+=ParseparamExpression()
 				if(errors.len)
 					return exp
 				if(curToken.value==","&&istype(curToken, /token/symbol))NextToken()	//skip comma
@@ -313,24 +313,24 @@
 					return exp
 
 /*
-	Proc: ParseParenExpression
+	Proc: ParseparenExpression
 	Parses an expression that ends with a close parenthesis. This is used for parsing expressions inside of parentheses.
 
 	See Also:
 	- <ParseExpression()>
 */
-		ParseParenExpression()
+		ParseparenExpression()
 			if(!CheckToken("(", /token/symbol))
 				return
 			return new/node/expression/operator/unary/group(ParseExpression(list(")")))
 
 /*
-	Proc: ParseParamExpression
+	Proc: ParseparamExpression
 	Parses an expression that ends with either a comma or close parenthesis. This is used for parsing the parameters passed to a function call.
 
 	See Also:
 	- <ParseExpression()>
 */
-		ParseParamExpression(var/check_functions = 0)
+		ParseparamExpression(var/check_functions = 0)
 			var/cf = check_functions
 			return ParseExpression(list(",", ")"), check_functions = cf)

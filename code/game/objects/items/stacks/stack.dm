@@ -37,6 +37,7 @@
 	list_recipes(user)
 
 /obj/item/stack/proc/list_recipes(mob/user as mob, recipes_sublist)
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/item/stack/proc/list_recipes() called tick#: [world.time]")
 	ASSERT(isnum(amount))
 	if (!recipes)
 		return
@@ -170,6 +171,7 @@
 	return
 
 /obj/item/stack/proc/use(var/amount)
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/item/stack/proc/use() called tick#: [world.time]")
 	ASSERT(isnum(src.amount))
 
 	if(src.amount>=amount)
@@ -200,6 +202,7 @@
 		spawn returnToPool(src)
 
 /obj/item/stack/proc/add_to_stacks(mob/usr as mob)
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/item/stack/proc/add_to_stacks() called tick#: [world.time]")
 	for (var/obj/item/stack/item in usr.loc)
 		if (src == item)
 			continue
@@ -211,6 +214,7 @@
 		break
 
 /obj/item/stack/proc/can_stack_with(obj/item/other_stack)
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/item/stack/proc/can_stack_with() called tick#: [world.time]")
 	return src.type == other_stack.type
 
 /obj/item/stack/attack_hand(mob/user as mob)
@@ -254,6 +258,7 @@
 	return ..()
 
 /obj/item/stack/proc/copy_evidences(obj/item/stack/from as obj)
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/item/stack/proc/copy_evidences() called tick#: [world.time]")
 	src.blood_DNA = from.blood_DNA
 	src.fingerprints  = from.fingerprints
 	src.fingerprintshidden  = from.fingerprintshidden
@@ -297,6 +302,7 @@
 		src.req_amount = req_amount
 
 /obj/item/stack/verb_pickup(mob/living/user)
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""]) \\/obj/item/stack/verb_pickup()  called tick#: [world.time]")
 	var/obj/item/I = user.get_active_hand()
 	if(I && can_stack_with(I))
 		I.preattack(src, user, 1)

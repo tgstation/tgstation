@@ -48,6 +48,8 @@
 
 /obj/item/weapon/teleportation_scroll/proc/teleportscroll(var/mob/user)
 
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/item/weapon/teleportation_scroll/proc/teleportscroll() called tick#: [world.time]")
+
 	var/A
 
 	A = input(user, "Area to jump to", "BOOYEA", A) in teleportlocs

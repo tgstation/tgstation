@@ -32,6 +32,7 @@
 	update_icon()
 
 /obj/machinery/media/transmitter/broadcast/proc/hook_media_sources()
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/media/transmitter/broadcast/proc/hook_media_sources() called tick#: [world.time]")
 	if(!sources.len)
 		return
 
@@ -41,6 +42,7 @@
 		source.update_music() // Request music update
 
 /obj/machinery/media/transmitter/broadcast/proc/unhook_media_sources()
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/media/transmitter/broadcast/proc/unhook_media_sources() called tick#: [world.time]")
 	if(!sources.len)
 		return
 
@@ -122,6 +124,7 @@
 		overlays+="broadcaster linked"
 
 /obj/machinery/media/transmitter/broadcast/proc/update_on()
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/media/transmitter/broadcast/proc/update_on() called tick#: [world.time]")
 	if(on)
 		visible_message("\The [src] hums as it begins pumping energy into the air!")
 		connect_frequency()

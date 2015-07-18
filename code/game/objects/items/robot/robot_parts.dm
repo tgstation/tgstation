@@ -79,6 +79,7 @@
 	src.updateicon()
 
 /obj/item/robot_parts/robot_suit/proc/updateicon()
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/item/robot_parts/robot_suit/proc/updateicon() called tick#: [world.time]")
 	src.overlays.len = 0
 	if(src.l_arm)
 		src.overlays += "l_arm+o"
@@ -94,6 +95,7 @@
 		src.overlays += "head+o"
 
 /obj/item/robot_parts/robot_suit/proc/check_completion()
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/item/robot_parts/robot_suit/proc/check_completion() called tick#: [world.time]")
 	if(src.l_arm && src.r_arm)
 		if(src.l_leg && src.r_leg)
 			if(src.chest && src.head)

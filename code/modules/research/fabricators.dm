@@ -111,6 +111,7 @@
 //takes all the items in a list, and gets the ones which aren't designs and turns them into designs
 //basically, we call this whenever we add something that isn't a design to part_sets
 /obj/machinery/r_n_d/fabricator/proc/convert_part_set(set_name as text)
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/r_n_d/fabricator/proc/convert_part_set() called tick#: [world.time]")
 	var/list/parts = part_sets[set_name]
 	var/i = 0
 	if(istype(parts, /list))
@@ -134,6 +135,7 @@
 
 //creates a set with the name and the list of things you give it
 /obj/machinery/r_n_d/fabricator/proc/setup_part_sets()
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/r_n_d/fabricator/proc/setup_part_sets() called tick#: [world.time]")
 	if(!part_sets || !part_sets.len)
 		return
 
@@ -174,12 +176,14 @@
 		busy=0
 
 /obj/machinery/r_n_d/fabricator/proc/queue_pop()
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/r_n_d/fabricator/proc/queue_pop() called tick#: [world.time]")
 	var/datum/design/D = queue[1]
 	queue.Cut(1, 2)
 	return D
 
 //adds a design to a part list
 /obj/machinery/r_n_d/fabricator/proc/add_part_to_set(set_name as text, var/datum/design/part)
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/r_n_d/fabricator/proc/add_part_to_set() called tick#: [world.time]")
 	if(!part || !istype(part))
 		return 0
 
@@ -197,6 +201,7 @@
 
 //deletes an entire part set from part_sets
 /obj/machinery/r_n_d/fabricator/proc/remove_part_set(set_name as text)
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/r_n_d/fabricator/proc/remove_part_set() called tick#: [world.time]")
 	for(var/i=1,i<=part_sets.len,i++)
 		if(part_sets[i]==set_name)
 			part_sets.Remove(part_sets[i])
@@ -204,12 +209,14 @@
 	return
 
 /obj/machinery/r_n_d/fabricator/proc/remove_part_from_set(set_name as text, var/datum/design/part)
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/r_n_d/fabricator/proc/remove_part_from_set() called tick#: [world.time]")
 	var/part_set = part_sets[set_name]
 	part_set -= part
 	return 1
 
 //gets all the mats for a design, and returns a formatted string
 /obj/machinery/r_n_d/fabricator/proc/output_part_cost(var/datum/design/part)
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/r_n_d/fabricator/proc/output_part_cost() called tick#: [world.time]")
 	var/output = ""
 	for(var/M in part.materials)
 		if(copytext(M,1,2) == "$")
@@ -218,6 +225,7 @@
 	return output
 
 /obj/machinery/r_n_d/fabricator/proc/remove_materials(var/datum/design/part)
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/r_n_d/fabricator/proc/remove_materials() called tick#: [world.time]")
 	for(var/M in part.materials)
 		if(!check_mat(part, M))
 			return 0
@@ -230,6 +238,7 @@
 	return 1
 
 /obj/machinery/r_n_d/fabricator/proc/check_mat(var/datum/design/being_built, var/M, var/num_requested=1)
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/r_n_d/fabricator/proc/check_mat() called tick#: [world.time]")
 	if(copytext(M,1,2) == "$")
 		if(src.research_flags & IGNORE_MATS)
 			return num_requested
@@ -246,6 +255,7 @@
 
 
 /obj/machinery/r_n_d/fabricator/proc/build_part(var/datum/design/part)
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/r_n_d/fabricator/proc/build_part() called tick#: [world.time]")
 	if(!part || being_built) //we're in the middle of something here!
 		return
 
@@ -301,6 +311,7 @@
 
 //max_length is, from the top of the list, the parts you want to queue down to
 /obj/machinery/r_n_d/fabricator/proc/add_part_set_to_queue(set_name, max_length)
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/r_n_d/fabricator/proc/add_part_set_to_queue() called tick#: [world.time]")
 	var/list/set_parts = part_sets[set_name]
 	if(set_name in part_sets)
 		for(var/i = 1; i <= set_parts.len; i++)
@@ -312,6 +323,7 @@
 	return
 
 /obj/machinery/r_n_d/fabricator/proc/add_to_queue(var/datum/design/part)
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/r_n_d/fabricator/proc/add_to_queue() called tick#: [world.time]")
 	if(!istype(queue))
 		queue = list()
 	if(!part)
@@ -326,16 +338,20 @@
 	return queue.len
 
 /obj/machinery/r_n_d/fabricator/proc/remove_from_queue(index)
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/r_n_d/fabricator/proc/remove_from_queue() called tick#: [world.time]")
 	if(!isnum(index) || !istype(queue) || (index<1 || index>queue.len))
 		return 0
 	queue.Cut(index,++index)
 	return 1
 
 /obj/machinery/r_n_d/fabricator/proc/is_contraband(var/datum/design/part)
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/r_n_d/fabricator/proc/is_contraband() called tick#: [world.time]")
 	return
 
 /* This is what process() is for you nerd - N3X
 /obj/machinery/r_n_d/fabricator/proc/process_queue()
+
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/r_n_d/fabricator/proc/process_queue() called tick#: [world.time]")
 
 	if(!queue.len)
 		return
@@ -364,6 +380,7 @@
 
 
 /obj/machinery/r_n_d/fabricator/proc/convert_designs()
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/r_n_d/fabricator/proc/convert_designs() called tick#: [world.time]")
 	if(!files) return
 	var/i = 0
 	for(var/datum/design/D in files.known_designs)
@@ -377,6 +394,7 @@
 	return i
 
 /obj/machinery/r_n_d/fabricator/proc/update_tech()
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/r_n_d/fabricator/proc/update_tech() called tick#: [world.time]")
 	if(!files) return
 	var/output
 	for(var/datum/tech/T in files.known_tech)
@@ -407,6 +425,7 @@
 
 
 /obj/machinery/r_n_d/fabricator/proc/sync(silent=null)
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/r_n_d/fabricator/proc/sync() called tick#: [world.time]")
 	var/new_data=0
 	var/found = 0
 	var/obj/machinery/computer/rdconsole/console
@@ -442,13 +461,16 @@
 
 // Tell the machine to start processing the queue on the next process().
 /obj/machinery/r_n_d/fabricator/proc/start_processing_queue()
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/r_n_d/fabricator/proc/start_processing_queue() called tick#: [world.time]")
 	stopped=0
 
 // Stop processing queue (currently-executing ticks will finish first).
 /obj/machinery/r_n_d/fabricator/proc/stop_processing_queue()
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/r_n_d/fabricator/proc/stop_processing_queue() called tick#: [world.time]")
 	stopped=1
 
 /obj/machinery/r_n_d/fabricator/proc/get_resource_cost_w_coeff(var/datum/design/part as obj,var/resource as text, var/roundto=1)
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/r_n_d/fabricator/proc/get_resource_cost_w_coeff() called tick#: [world.time]")
 	return round(part.materials[resource]*resource_coeff, roundto)
 
 //produces the adjusted time taken to build a component
@@ -458,6 +480,7 @@
 //build_time is a var unique to each fabricator. It's mostly one, but bigger machines get higher build_time
 //time_coeff is set by the machine components
 /obj/machinery/r_n_d/fabricator/proc/get_construction_time_w_coeff(var/datum/design/part as obj, var/roundto=1)
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/r_n_d/fabricator/proc/get_construction_time_w_coeff() called tick#: [world.time]")
 	return round(/*TechTotal(part)*/(part.MatTotal()/FAB_MAT_BASEMOD)*build_time*time_coeff, roundto)
 
 /obj/machinery/r_n_d/fabricator/ui_interact(mob/user, ui_key = "main", var/datum/nanoui/ui = null)
@@ -504,6 +527,7 @@
 		ui.open()
 
 /obj/machinery/r_n_d/fabricator/proc/getTopicDesign(var/stringinput = "")
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/r_n_d/fabricator/proc/getTopicDesign() called tick#: [world.time]")
 	var/final_digit = 0
 	for(var/i = 1, i <= length(stringinput), i++)
 		if(!isnum(text2num(copytext(stringinput, i))))
@@ -658,6 +682,8 @@
 	return
 */
 /obj/machinery/r_n_d/fabricator/proc/remove_material(var/matID, var/amount)
+
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/r_n_d/fabricator/proc/remove_material() called tick#: [world.time]")
 
 	var/datum/material/material = materials.getMaterial(matID)
 	if(material)

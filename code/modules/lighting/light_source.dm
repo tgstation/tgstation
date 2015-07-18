@@ -48,12 +48,14 @@
 	return ..()
 
 /datum/light_source/proc/destroy()
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/light_source/proc/destroy() called tick#: [world.time]")
 	destroyed = 1
 	force_update()
 	if(source_atom) source_atom.light_sources -= src
 	if(top_atom) top_atom.light_sources -= src
 
 /datum/light_source/proc/update(atom/new_top_atom)
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/light_source/proc/update() called tick#: [world.time]")
 	if(new_top_atom && new_top_atom != top_atom)
 		if(top_atom != source_atom) top_atom.light_sources -= src
 		top_atom = new_top_atom
@@ -65,12 +67,14 @@
 		needs_update = 1
 
 /datum/light_source/proc/force_update()
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/light_source/proc/force_update() called tick#: [world.time]")
 	force_update = 1
 	if(!needs_update)
 		needs_update = 1
 		lighting_update_lights += src
 
 /datum/light_source/proc/check()
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/light_source/proc/check() called tick#: [world.time]")
 	if(!source_atom || !light_range || !light_power)
 		destroy()
 		return 1
@@ -104,6 +108,7 @@
 		. = 1
 
 /datum/light_source/proc/parse_light_color()
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/light_source/proc/parse_light_color() called tick#: [world.time]")
 	if(light_color)
 		lum_r = GetRedPart(light_color) / 255
 		lum_g = GetGreenPart(light_color) / 255
@@ -115,6 +120,7 @@
 
 /*
 /datum/light_source/proc/falloff(atom/movable/lighting_overlay/O)
+  writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/light_source/proc/falloff() called tick#: [world.time]")
   #if LIGHTING_FALLOFF == 1 // circular
 	. = (O.x - source_turf.x)**2 + (O.y - source_turf.y)**2 + LIGHTING_HEIGHT
    #if LIGHTING_LAMBERTIAN == 1
@@ -134,6 +140,7 @@
 */
 
 /datum/light_source/proc/apply_lum()
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/light_source/proc/apply_lum() called tick#: [world.time]")
 	applied = 1
 	if(istype(source_turf))
 		for(var/turf/T in dview(light_range, source_turf, INVISIBILITY_LIGHTING))
@@ -182,6 +189,7 @@
 			effect_turf += T
 
 /datum/light_source/proc/remove_lum()
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/light_source/proc/remove_lum() called tick#: [world.time]")
 	applied = 0
 
 	var/i = 1

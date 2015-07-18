@@ -101,7 +101,7 @@
 
 
 		// AUTOFIXED BY fix_string_idiocy.py
-		// C:\Users\Rob\Documents\Projects\vgstation13\code\game\machinery\spaceheater.dm:99: dat += "Power Level: [cell ? round(cell.percent(),1) : 0]%<BR><BR>"
+		// C:\Users\Rob\\documents\\\projects\vgstation13\code\game\\machinery\spaceheater.dm:99: dat += "Power Level: [cell ? round(cell.percent(),1) : 0]%<BR><BR>"
 		dat += {"Power Level: [cell ? round(cell.percent(),1) : 0]%<BR><BR>
 			Set Temperature:
 			<A href='?src=\ref[src];op=temp;val=-5'>-</A>

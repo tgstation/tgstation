@@ -44,6 +44,7 @@
 	return
 
 /mob/living/carbon/alien/proc/getPlasma()
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/living/carbon/alien/proc/getPlasma() called tick#: [world.time]")
 	return storedPlasma
 
 /mob/living/carbon/alien/eyecheck()
@@ -76,6 +77,8 @@
 		health = maxHealth - getOxyLoss() - getFireLoss() - getBruteLoss() - getCloneLoss()
 
 /mob/living/carbon/alien/proc/handle_environment(var/datum/gas_mixture/environment)
+
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/living/carbon/alien/proc/handle_environment() called tick#: [world.time]")
 
 	//If there are alien weeds on the ground then heal if needed or give some toxins
 	if(locate(/obj/effect/alien/weeds) in loc)
@@ -135,6 +138,8 @@
 	return
 
 /mob/living/carbon/alien/proc/handle_mutations_and_radiation()
+
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/living/carbon/alien/proc/handle_mutations_and_radiation() called tick#: [world.time]")
 
 	if(getFireLoss())
 		if((M_RESIST_HEAT in mutations) || prob(5))
@@ -245,9 +250,11 @@
 
 /*----------------------------------------
 Proc: AddInfectionImages()
+	writepanic("[__FILE__].[__LINE__] \\/proc: AddInfectionImages() called tick#: [world.time]")
 Des: Gives the client of the alien an image on each infected mob.
 ----------------------------------------*/
 /mob/living/carbon/alien/proc/AddInfectionImages()
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/living/carbon/alien/proc/AddInfectionImages() called tick#: [world.time]")
 	if (client)
 		for (var/mob/living/C in mob_list)
 			if(C.status_flags & XENO_HOST)
@@ -259,9 +266,11 @@ Des: Gives the client of the alien an image on each infected mob.
 
 /*----------------------------------------
 Proc: RemoveInfectionImages()
+	writepanic("[__FILE__].[__LINE__] \\/proc: RemoveInfectionImages() called tick#: [world.time]")
 Des: Removes all infected images from the alien.
 ----------------------------------------*/
 /mob/living/carbon/alien/proc/RemoveInfectionImages()
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/living/carbon/alien/proc/RemoveInfectionImages() called tick#: [world.time]")
 	if (client)
 		for(var/image/I in client.images)
 			if(dd_hasprefix_case(I.icon_state, "infected"))

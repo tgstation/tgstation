@@ -43,6 +43,7 @@ var/global/datum/controller/gameticker/ticker
 #define LOBBY_TICKING 1
 #define LOBBY_TICKING_RESTARTED 2
 /datum/controller/gameticker/proc/pregame()
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/controller/gameticker/proc/pregame() called tick#: [world.time]")
 	var/oursong = file(pick(
 		"sound/music/space.ogg",
 		"sound/music/traitor.ogg",
@@ -89,6 +90,7 @@ var/global/datum/controller/gameticker/ticker
 #undef LOBBY_TICKING
 #undef LOBBY_TICKING_RESTARTED
 /datum/controller/gameticker/proc/StartThematic(var/playlist)
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/controller/gameticker/proc/StartThematic() called tick#: [world.time]")
 	if(!theme)
 		theme = new(locate(1,1,CENTCOMM_Z))
 	theme.playlist_id=playlist
@@ -97,12 +99,14 @@ var/global/datum/controller/gameticker/ticker
 	theme.update_icon()
 
 /datum/controller/gameticker/proc/StopThematic()
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/controller/gameticker/proc/StopThematic() called tick#: [world.time]")
 	theme.playing=0
 	theme.update_music()
 	theme.update_icon()
 
 
 /datum/controller/gameticker/proc/setup()
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/controller/gameticker/proc/setup() called tick#: [world.time]")
 	//Create and announce mode
 	if(master_mode=="secret")
 		src.hide_mode = 1
@@ -225,6 +229,7 @@ var/global/datum/controller/gameticker/ticker
 
 	//Plus it provides an easy way to make cinematics for other events. Just use this as a template :)
 /datum/controller/gameticker/proc/station_explosion_cinematic(var/station_missed=0, var/override = null)
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/controller/gameticker/proc/station_explosion_cinematic() called tick#: [world.time]")
 	if( cinematic )	return	//already a cinematic in progress!
 
 	for (var/datum/html_interface/hi in html_interfaces)
@@ -326,6 +331,7 @@ var/global/datum/controller/gameticker/ticker
 
 
 /datum/controller/gameticker/proc/create_characters()
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/controller/gameticker/proc/create_characters() called tick#: [world.time]")
 	for(var/mob/new_player/player in player_list)
 		if(player.ready && player.mind)
 			if(player.mind.assigned_role=="AI")
@@ -339,11 +345,13 @@ var/global/datum/controller/gameticker/ticker
 
 
 /datum/controller/gameticker/proc/collect_minds()
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/controller/gameticker/proc/collect_minds() called tick#: [world.time]")
 	for(var/mob/living/player in player_list)
 		if(player.mind)
 			ticker.minds += player.mind
 
 /datum/controller/gameticker/proc/equip_characters()
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/controller/gameticker/proc/equip_characters() called tick#: [world.time]")
 	var/captainless=1
 	for(var/mob/living/carbon/human/player in player_list)
 		if(player && player.mind && player.mind.assigned_role)
@@ -362,6 +370,7 @@ var/global/datum/controller/gameticker/ticker
 			M.store_position()//updates the players' origin_ vars so they retain their location when the round starts.
 
 /datum/controller/gameticker/proc/process()
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/controller/gameticker/proc/process() called tick#: [world.time]")
 	if(current_state != GAME_STATE_PLAYING)
 		return 0
 
@@ -394,11 +403,11 @@ var/global/datum/controller/gameticker/ticker
 
 		spawn(50)
 			if (mode.station_was_nuked)
-				feedback_set_details("end_proper","nuke")
+				feedback_set_details("end_/proper","nuke")
 				if(!delay_end && !watchdog.waiting)
 					world << "<span class='notice'><B>Rebooting due to destruction of station in [restart_timeout/10] seconds</B></span>"
 			else
-				feedback_set_details("end_proper","proper completion")
+				feedback_set_details("end_/proper","\proper completion")
 				if(!delay_end && !watchdog.waiting)
 					world << "<span class='notice'><B>Restarting in [restart_timeout/10] seconds</B></span>"
 
@@ -433,16 +442,19 @@ var/global/datum/controller/gameticker/ticker
 	return 1
 
 /datum/controller/gameticker/proc/getfactionbyname(var/name)
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/controller/gameticker/proc/getfactionbyname() called tick#: [world.time]")
 	for(var/datum/faction/F in factions)
 		if(F.name == name)
 			return F
 
 
 /datum/controller/gameticker/proc/init_PDAgames_leaderboard()
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/controller/gameticker/proc/init_PDAgames_leaderboard() called tick#: [world.time]")
 	init_snake_leaderboard()
 	init_minesweeper_leaderboard()
 
 /datum/controller/gameticker/proc/init_snake_leaderboard()
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/controller/gameticker/proc/init_snake_leaderboard() called tick#: [world.time]")
 	for(var/x=1;x<=PDA_APP_SNAKEII_MAXSPEED;x++)
 		snake_station_highscores += x
 		snake_station_highscores[x] = list()
@@ -457,6 +469,7 @@ var/global/datum/controller/gameticker/ticker
 			templist2[y] = "none"
 
 /datum/controller/gameticker/proc/init_minesweeper_leaderboard()
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/controller/gameticker/proc/init_minesweeper_leaderboard() called tick#: [world.time]")
 	minesweeper_station_highscores["beginner"] = 999
 	minesweeper_station_highscores["intermediate"] = 999
 	minesweeper_station_highscores["expert"] = 999
@@ -465,6 +478,7 @@ var/global/datum/controller/gameticker/ticker
 	minesweeper_best_players["expert"] = "none"
 
 /datum/controller/gameticker/proc/declare_completion()
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/controller/gameticker/proc/declare_completion() called tick#: [world.time]")
 	var/ai_completions = "<h1>Round End Information</h1><HR>"
 
 	ai_completions += "<h3>Silicons Laws</h3>"
@@ -511,6 +525,7 @@ var/global/datum/controller/gameticker/ticker
 	return 1
 
 /datum/controller/gameticker/proc/ert_declare_completion()
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/controller/gameticker/proc/ert_declare_completion() called tick#: [world.time]")
 	var/text = ""
 	if( ticker.mode.ert.len )
 		var/icon/logo = icon('icons/mob/mob.dmi', "ert-logo")
@@ -543,6 +558,7 @@ var/global/datum/controller/gameticker/ticker
 	return text
 
 /datum/controller/gameticker/proc/deathsquad_declare_completion()
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/controller/gameticker/proc/deathsquad_declare_completion() called tick#: [world.time]")
 	var/text = ""
 	if( ticker.mode.deathsquad.len )
 		var/icon/logo = icon('icons/mob/mob.dmi', "death-logo")
@@ -575,6 +591,7 @@ var/global/datum/controller/gameticker/ticker
 	return text
 
 /datum/controller/gameticker/proc/bomberman_declare_completion()
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/controller/gameticker/proc/bomberman_declare_completion() called tick#: [world.time]")
 	var/icon/bomberhead = icon('icons/obj/clothing/hats.dmi', "bomberman")
 	end_icons += bomberhead
 	var/tempstatebomberhead = end_icons.len
@@ -662,6 +679,7 @@ var/global/datum/controller/gameticker/ticker
 	return text
 
 /datum/controller/gameticker/proc/achievement_declare_completion()
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/controller/gameticker/proc/achievement_declare_completion() called tick#: [world.time]")
 	var/text = "<br><FONT size = 5><b>Additionally, the following players earned achievements:</b></FONT>"
 	var/icon/cup = icon('icons/obj/drinks.dmi', "golden_cup")
 	end_icons += cup

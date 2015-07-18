@@ -22,6 +22,7 @@
 #define SAY_MINIMUM_PRESSURE 10
 
 /proc/message_mode_to_name(mode)
+	writepanic("[__FILE__].[__LINE__] (no type)([usr ? usr.ckey : ""])  \\/proc/message_mode_to_name() called tick#: [world.time]")
 	switch(mode)
 		if(MODE_WHISPER)
 			return "whisper"
@@ -105,6 +106,7 @@ var/list/department_radio_keys = list(
 )
 
 /mob/living/proc/get_default_language()
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/living/proc/get_default_language() called tick#: [world.time]")
 	if(!default_language)
 		if(languages && languages.len)
 			default_language = languages[1]
@@ -241,6 +243,7 @@ var/list/department_radio_keys = list(
 	send_speech_bubble(message, bubble_type, listeners)
 
 /mob/living/proc/say_test(var/text)
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/living/proc/say_test() called tick#: [world.time]")
 	var/ending = copytext(text, length(text))
 	if (ending == "?")
 		return "1"
@@ -253,6 +256,7 @@ var/list/department_radio_keys = list(
 		return 1
 
 /mob/living/proc/can_speak_basic(message) //Check BEFORE handling of xeno and ling channels
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/living/proc/can_speak_basic() called tick#: [world.time]")
 	if(!message || message == "")
 		return
 
@@ -267,6 +271,7 @@ var/list/department_radio_keys = list(
 
 
 /mob/living/proc/can_speak_vocal(message) //Check AFTER handling of xeno and ling channels
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/living/proc/can_speak_vocal() called tick#: [world.time]")
 	if(!message)
 		return
 
@@ -282,18 +287,21 @@ var/list/department_radio_keys = list(
 	return 1
 
 /mob/living/proc/check_emote(message)
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/living/proc/check_emote() called tick#: [world.time]")
 	if(copytext(message, 1, 2) == "*")
 		emote(copytext(message, 2))
 		return 1
 
 
 /mob/living/proc/get_message_mode(message)
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/living/proc/get_message_mode() called tick#: [world.time]")
 	if(copytext(message, 1, 2) == ";")
 		return MODE_HEADSET
 	else if(length(message) > 2)
 		return department_radio_keys[copytext(message, 1, 3)]
 
 /mob/living/proc/handle_inherent_channels(message, message_mode, var/datum/language/speaking)
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/living/proc/handle_inherent_channels() called tick#: [world.time]")
 	switch(message_mode)
 		if(MODE_CHANGELING)
 			if(lingcheck())
@@ -333,6 +341,7 @@ var/list/department_radio_keys = list(
 	return 0
 
 /mob/living/proc/treat_message(message, genesay = 0)
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/living/proc/treat_message() called tick#: [world.time]")
 	if(getBrainLoss() >= 60)
 		message = derpspeech(message, stuttering)
 
@@ -342,6 +351,7 @@ var/list/department_radio_keys = list(
 	return message
 
 /mob/living/proc/radio(message, message_mode, raw_message, var/datum/language/speaking)
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/living/proc/radio() called tick#: [world.time]")
 	switch(message_mode)
 		if(MODE_R_HAND)
 			if (r_hand)
@@ -388,6 +398,7 @@ var/list/department_radio_keys = list(
 	return ..()
 
 /mob/living/proc/send_speech_bubble(var/message,var/bubble_type, var/list/hearers)
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/living/proc/send_speech_bubble() called tick#: [world.time]")
 	//speech bubble
 	var/list/speech_bubble_recipients = list()
 	for(var/mob/M in hearers)
@@ -397,6 +408,7 @@ var/list/department_radio_keys = list(
 		flick_overlay(image('icons/mob/talk.dmi', src, "h[bubble_type][say_test(message)]",MOB_LAYER+1), speech_bubble_recipients, 30)
 
 /mob/proc/addSpeechBubble(image/speech_bubble)
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/proc/addSpeechBubble() called tick#: [world.time]")
 	if(client)
 		client.images += speech_bubble
 		spawn(30)

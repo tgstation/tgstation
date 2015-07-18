@@ -58,6 +58,7 @@
 
 
 /obj/item/weapon/photo/proc/show(mob/user)
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/item/weapon/photo/proc/show() called tick#: [world.time]")
 	user << browse_rsc(img, "tmp_photo.png")
 	user << browse("<html><head><title>[name]</title></head>" \
 		+ "<body style='overflow:hidden;margin:0;text-align:center'>" \
@@ -73,6 +74,7 @@
 	set name = "Rename photo"
 	set category = "Object"
 	set src in usr
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""]) \\/obj/item/weapon/photo/verb/rename()  called tick#: [world.time]")
 
 	var/n_name = copytext(sanitize(input(usr, "What would you like to label the photo?", "Photo Labelling", null)  as text), 1, MAX_NAME_LEN)
 	//loc.loc check is for making possible renaming photos in clipboards
@@ -135,6 +137,7 @@
 	var/in_camera_mode = 0
 /*
 	verb/picture()
+		writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""]) \\verb/picture()  called tick#: [world.time]")
 		set category ="AI Commands"
 		set name = "Take Image"
 		set src in usr
@@ -142,6 +145,7 @@
 		toggle_camera_mode()
 
 	verb/viewpicture()
+		writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""]) \\verb/viewpicture()  called tick#: [world.time]")
 		set category ="AI Commands"
 		set name = "View Images"
 		set src in usr
@@ -170,6 +174,7 @@
 
 
 /obj/item/device/camera/proc/camera_get_icon(list/turfs, turf/center)
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/item/device/camera/proc/camera_get_icon() called tick#: [world.time]")
 	var/atoms[] = list()
 	for(var/turf/T in turfs)
 		atoms.Add(T)
@@ -264,6 +269,7 @@
 
 
 /obj/item/device/camera/proc/camera_get_mobs(turf/the_turf)
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/item/device/camera/proc/camera_get_mobs() called tick#: [world.time]")
 	var/mob_detail
 	for(var/mob/living/carbon/A in the_turf)
 		if(A.invisibility) continue
@@ -326,6 +332,7 @@
 
 
 /obj/item/device/camera/proc/captureimage(atom/target, mob/user, flag)  //Proc for both regular and AI-based camera to take the image
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/item/device/camera/proc/captureimage() called tick#: [world.time]")
 	if(min_harm_label && harm_labeled >= min_harm_label)
 		printpicture(user, icon('icons/effects/96x96.dmi',"blocked"), "You can't see a thing.", flag)
 		return
@@ -358,6 +365,7 @@
 		aipicture(user, temp, mobs, blueprints)
 
 /obj/item/device/camera/proc/printpicture(mob/user, icon/temp, mobs, flag) //Normal camera proc for creating photos
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/item/device/camera/proc/printpicture() called tick#: [world.time]")
 	var/obj/item/weapon/photo/P = new/obj/item/weapon/photo()
 	user.put_in_hands(P)
 	var/icon/small_img = icon(temp)
@@ -394,13 +402,15 @@
 	var/icon/I1 = icon(P.icon, P.icon_state)
 	var/icon/I2 = icon(P.img)
 
-	I1.MapColors(rgb(77,77,77), rgb(150,150,150), rgb(28,28,28), rgb(112,66,20))//Sepia magic formula
+	I1.MapColors(rgb(77,77,77), rgb(150,150,150), rgb(28,28,28), rgb(112,66,20))//sepia magic formula
 	I2.MapColors(rgb(77,77,77), rgb(150,150,150), rgb(28,28,28), rgb(112,66,20))
 
 	P.icon = I1
 	P.img = I2
 
 /obj/item/device/camera/proc/aipicture(mob/user, icon/temp, mobs) //instead of printing a picture like a regular camera would, we do this instead for the AI
+
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/item/device/camera/proc/aipicture() called tick#: [world.time]")
 
 	var/icon/small_img = icon(temp)
 	var/icon/ic = icon('icons/obj/items.dmi',"photo")
@@ -426,6 +436,7 @@
 
 
 /obj/item/device/camera/proc/injectaialbum(var/icon, var/img, var/info, var/pixel_x, var/pixel_y, var/blueprintsinject) //stores image information to a list similar to that of the datacore
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/item/device/camera/proc/injectaialbum() called tick#: [world.time]")
 	var/numberer = 1
 	for(var/datum/picture in src.aipictures)
 		numberer++
@@ -443,6 +454,7 @@
 
 
 /obj/item/device/camera/ai_camera/proc/viewpictures() //AI proc for viewing pictures they have taken
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/item/device/camera/ai_camera/proc/viewpictures() called tick#: [world.time]")
 	var/list/nametemp = list()
 	var/find
 	var/datum/picture/selection
@@ -483,15 +495,18 @@
 			on = 1
 
 /obj/item/device/camera/ai_camera/proc/toggle_camera_mode()
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/item/device/camera/ai_camera/proc/toggle_camera_mode() called tick#: [world.time]")
 	if(in_camera_mode)
 		camera_mode_off()
 	else
 		camera_mode_on()
 
 /obj/item/device/camera/ai_camera/proc/camera_mode_off()
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/item/device/camera/ai_camera/proc/camera_mode_off() called tick#: [world.time]")
 	src.in_camera_mode = 0
 	usr << "<B>Camera Mode deactivated</B>"
 
 /obj/item/device/camera/ai_camera/proc/camera_mode_on()
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/item/device/camera/ai_camera/proc/camera_mode_on() called tick#: [world.time]")
 	src.in_camera_mode = 1
 	usr << "<B>Camera Mode activated</B>"

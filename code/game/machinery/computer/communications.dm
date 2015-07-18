@@ -386,7 +386,7 @@ var/shuttle_call/shuttle_calls[0]
 	ui = nanomanager.try_update_ui(user, src, ui_key, ui, data)
 	if (!ui)
 		// the ui does not exist, so we'll create a new() one
-        // for a list of parameters and their descriptions see the code docs in \code\modules\nano\nanoui.dm
+        // for a list of parameters and their descriptions see the code docs in \code\\modules\nano\nanoui.dm
 		ui = new(user, src, ui_key, "comm_console.tmpl", "Communications Console", 400, 500)
 		// when the ui is first opened this is the data it will use
 		ui.set_initial_data(data)
@@ -419,34 +419,40 @@ var/shuttle_call/shuttle_calls[0]
 
 
 /obj/machinery/computer/communications/proc/setCurrentMessage(var/mob/user,var/value)
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/computer/communications/proc/setCurrentMessage() called tick#: [world.time]")
 	if(issilicon(user))
 		aicurrmsg=value
 	else
 		currmsg=value
 
 /obj/machinery/computer/communications/proc/getCurrentMessage(var/mob/user)
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/computer/communications/proc/getCurrentMessage() called tick#: [world.time]")
 	if(issilicon(user))
 		return aicurrmsg
 	else
 		return currmsg
 
 /obj/machinery/computer/communications/proc/setMenuState(var/mob/user,var/value)
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/computer/communications/proc/setMenuState() called tick#: [world.time]")
 	if(issilicon(user))
 		ai_menu_state=value
 	else
 		menu_state=value
 
 /obj/machinery/computer/communications/proc/getMenuState(var/mob/user)
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/computer/communications/proc/getMenuState() called tick#: [world.time]")
 	if(issilicon(user))
 		return ai_menu_state
 	else
 		return menu_state
 
 /proc/enable_prison_shuttle(var/mob/user)
+	writepanic("[__FILE__].[__LINE__] (no type)([usr ? usr.ckey : ""])  \\/proc/enable_prison_shuttle() called tick#: [world.time]")
 	for(var/obj/machinery/computer/prison_shuttle/PS in machines)
 		PS.allowedtocall = !(PS.allowedtocall)
 
 /proc/call_shuttle_proc(var/mob/user, var/justification)
+	writepanic("[__FILE__].[__LINE__] (no type)([usr ? usr.ckey : ""])  \\/proc/call_shuttle_proc() called tick#: [world.time]")
 	if ((!(ticker) || emergency_shuttle.location))
 		return
 
@@ -484,6 +490,7 @@ var/shuttle_call/shuttle_calls[0]
 	return
 
 /proc/init_shift_change(var/mob/user, var/force = 0)
+	writepanic("[__FILE__].[__LINE__] (no type)([usr ? usr.ckey : ""])  \\/proc/init_shift_change() called tick#: [world.time]")
 	if ((!( ticker ) || emergency_shuttle.location))
 		return
 
@@ -529,6 +536,7 @@ var/shuttle_call/shuttle_calls[0]
 	return
 
 /proc/recall_shuttle(var/mob/user)
+	writepanic("[__FILE__].[__LINE__] (no type)([usr ? usr.ckey : ""])  \\/proc/recall_shuttle() called tick#: [world.time]")
 	if ((!( ticker ) || emergency_shuttle.location || emergency_shuttle.direction == 0 || emergency_shuttle.timeleft() < 300))
 		return
 	if( ticker.mode.name == "blob" || ticker.mode.name == "meteor")
@@ -541,6 +549,8 @@ var/shuttle_call/shuttle_calls[0]
 	return
 
 /obj/machinery/computer/communications/proc/post_status(var/command, var/data1, var/data2)
+
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/computer/communications/proc/post_status() called tick#: [world.time]")
 
 	var/datum/radio_frequency/frequency = radio_controller.return_frequency(1435)
 

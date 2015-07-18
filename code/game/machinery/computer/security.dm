@@ -105,7 +105,7 @@
 				if(2.0)
 
 					// AUTOFIXED BY fix_string_idiocy.py
-					// C:\Users\Rob\Documents\Projects\vgstation13\code\game\machinery\computer\security.dm:106: dat += "<B>Records Maintenance</B><HR>"
+					// C:\Users\Rob\\documents\\\projects\vgstation13\code\game\\machinery\computer\security.dm:106: dat += "<B>Records Maintenance</B><HR>"
 					dat += {"<B>Records Maintenance</B><HR>
 						<BR><A href='?src=\ref[src];choice=Delete All Records'>Delete All Records</A><BR><BR><A href='?src=\ref[src];choice=Return'>Back</A>"}
 					// END AUTOFIX
@@ -348,7 +348,7 @@ What a mess.*/
 			if ("Delete All Records")
 
 				// AUTOFIXED BY fix_string_idiocy.py
-				// C:\Users\Rob\Documents\Projects\vgstation13\code\game\machinery\computer\security.dm:346: temp = ""
+				// C:\Users\Rob\\documents\\\projects\vgstation13\code\game\\machinery\computer\security.dm:346: temp = ""
 				temp = {"
 					Are you sure you wish to delete all Security records?<br>
 					<a href='?src=\ref[src];choice=Purge All Records'>Yes</a><br>
@@ -375,7 +375,7 @@ What a mess.*/
 				if (active1)
 
 					// AUTOFIXED BY fix_string_idiocy.py
-					// C:\Users\Rob\Documents\Projects\vgstation13\code\game\machinery\computer\security.dm:370: temp = "<h5>Are you sure you wish to delete the record (ALL)?</h5>"
+					// C:\Users\Rob\\documents\\\projects\vgstation13\code\game\\machinery\computer\security.dm:370: temp = "<h5>Are you sure you wish to delete the record (ALL)?</h5>"
 					temp = {"<h5>Are you sure you wish to delete the record (ALL)?</h5>
 						<a href='?src=\ref[src];choice=Delete Record (ALL) Execute'>Yes</a><br>
 						<a href='?src=\ref[src];choice=Clear Screen'>No</a>"}
@@ -384,7 +384,7 @@ What a mess.*/
 				if (active2)
 
 					// AUTOFIXED BY fix_string_idiocy.py
-					// C:\Users\Rob\Documents\Projects\vgstation13\code\game\machinery\computer\security.dm:376: temp = "<h5>Are you sure you wish to delete the record (Security Portion Only)?</h5>"
+					// C:\Users\Rob\\documents\\\projects\vgstation13\code\game\\machinery\computer\security.dm:376: temp = "<h5>Are you sure you wish to delete the record (Security Portion Only)?</h5>"
 					temp = {"<h5>Are you sure you wish to delete the record (Security Portion Only)?</h5>
 						<a href='?src=\ref[src];choice=Delete Record (Security) Execute'>Yes</a><br>
 						<a href='?src=\ref[src];choice=Clear Screen'>No</a>"}
@@ -494,7 +494,7 @@ What a mess.*/
 						if (istype(active2, /datum/data/record))
 
 							// AUTOFIXED BY fix_string_idiocy.py
-							// C:\Users\Rob\Documents\Projects\vgstation13\code\game\machinery\computer\security.dm:483: temp = "<h5>Criminal Status:</h5>"
+							// C:\Users\Rob\\documents\\\projects\vgstation13\code\game\\machinery\computer\security.dm:483: temp = "<h5>Criminal Status:</h5>"
 							temp = {"<h5>Criminal Status:</h5>
 								<ul>
 								<li><a href='?src=\ref[src];choice=Change Criminal Status;criminal2=none'>None</a></li>
@@ -510,7 +510,7 @@ What a mess.*/
 						if ((istype(active1, /datum/data/record) && L.Find(rank)))
 
 							// AUTOFIXED BY fix_string_idiocy.py
-							// C:\Users\Rob\Documents\Projects\vgstation13\code\game\machinery\computer\security.dm:495: temp = "<h5>Rank:</h5>"
+							// C:\Users\Rob\\documents\\\projects\vgstation13\code\game\\machinery\computer\security.dm:495: temp = "<h5>Rank:</h5>"
 							temp = {"<h5>Rank:</h5>
 								<ul>"}
 							// END AUTOFIX

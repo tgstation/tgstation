@@ -32,6 +32,7 @@
 	origin_tech = "combat=3"
 	attack_verb = list("attacked", "chopped", "cleaved", "torn", "cut")
 
+
 	suicide_act(mob/user)
 		viewers(user) << "<span class='danger'>[user] swings the [src.name] towards /his head! It looks like \he's trying to commit suicide.</span>"
 		return (BRUTELOSS|FIRELOSS)
@@ -75,6 +76,7 @@
 	return
 
 /obj/item/weapon/melee/energy/sword/proc/toggleActive(mob/user, var/togglestate = "") //you can use togglestate to manually set the sword on or off
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/item/weapon/melee/energy/sword/proc/toggleActive() called tick#: [world.time]")
 	switch(togglestate)
 		if("on")
 			active = 1

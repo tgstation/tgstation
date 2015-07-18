@@ -16,6 +16,9 @@
 	var/list/space_chance = 55       // Likelihood of getting a space in the random scramble string.
 
 /datum/language/proc/get_spoken_verb(var/msg, var/silicon)
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""]) \\/datum/language/proc/get_spoken_verb()  called tick#: [world.time]")
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/language/proc/get_spoken_verb() called tick#: [world.time]")
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""]) \\\\/datum/language/proc/get_spoken_verb()  called tick#: [world.time]")
 	var/msg_end = copytext(msg,length(msg))
 	switch(msg_end)
 		if("!")
@@ -25,15 +28,19 @@
 	return (silicon ? "states" : speech_verb)
 
 /datum/language/proc/say_misunderstood(mob/M, message)
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/language/proc/say_misunderstood() called tick#: [world.time]")
 	return stars(message)
 
 /datum/language/proc/format_message(mob/M, message)
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/language/proc/format_message() called tick#: [world.time]")
 	return "[get_spoken_verb(message,issilicon(M))], <span class='message'><span class='[colour]'>\"[capitalize(message)]\"</span></span>"
 
 /datum/language/proc/format_message_plain(mob/M, message)
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/language/proc/format_message_plain() called tick#: [world.time]")
 	return "[get_spoken_verb(message,issilicon(M))], \"[capitalize(message)]\""
 
 /datum/language/proc/format_message_radio(mob/M, message)
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/language/proc/format_message_radio() called tick#: [world.time]")
 	return "[get_spoken_verb(message,issilicon(M))], <span class='[colour]'>\"[capitalize(message)]\"</span>"
 
 /datum/language/unathi
@@ -220,6 +227,8 @@
 // Language handling.
 /mob/proc/add_language(var/language)
 
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/proc/add_language() called tick#: [world.time]")
+
 	var/datum/language/new_language = all_languages[language]
 
 	if(!istype(new_language) || new_language in languages)
@@ -229,6 +238,7 @@
 	return 1
 
 /mob/proc/remove_language(var/rem_language)
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/proc/remove_language() called tick#: [world.time]")
 	var/datum/language/L = all_languages[rem_language]
 	. = (L in languages)
 	languages.Remove(L)
@@ -242,6 +252,8 @@
 // Can we speak this language, as opposed to just understanding it?
 /mob/proc/can_speak_lang(datum/language/speaking)
 
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/proc/can_speak_lang() called tick#: [world.time]")
+
 	return (universal_speak || speaking in src.languages)
 
 //TBD
@@ -249,6 +261,7 @@
 	set name = "Check Known Languages"
 	set category = "IC"
 	set src = usr
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""]) \\/mob/verb/check_languages()  called tick#: [world.time]")
 
 	var/dat = "<b><font size = 5>Known Languages</font></b><br/><br/>"
 
@@ -341,6 +354,8 @@
 	var/list/scramble_cache = list()
 #define SCRAMBLE_CACHE_LEN 20
 /datum/language/proc/scramble(var/input)
+
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/language/proc/scramble() called tick#: [world.time]")
 
 	if(!syllables || !syllables.len)
 		return stars(input)

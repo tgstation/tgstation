@@ -1290,6 +1290,7 @@
 	create_reagents(50)
 
 /obj/item/weapon/grown/proc/changePotency(newValue) //-QualityVan
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/item/weapon/grown/proc/changePotency() called tick#: [world.time]")
 	potency = newValue
 
 /obj/item/weapon/grown/log
@@ -1307,6 +1308,8 @@
 	origin_tech = "materials=1"
 	seed = "/obj/item/seeds/towermycelium"
 	attack_verb = list("bashed", "battered", "bludgeoned", "whacked")
+
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""]) \\attack_verb = list()  called tick#: [world.time]")
 
 	attackby(obj/item/weapon/W as obj, mob/user as mob)
 		if(istype(W, /obj/item/weapon/circular_saw) || istype(W, /obj/item/weapon/hatchet) || (istype(W, /obj/item/weapon/twohanded/fireaxe) && W:wielded) || istype(W, /obj/item/weapon/melee/energy))
@@ -1428,6 +1431,8 @@
 	seed = "/obj/item/seeds/deathnettleseed"
 	origin_tech = "combat=3"
 	attack_verb = list("stung")
+
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""]) \\attack_verb = list()  called tick#: [world.time]")
 
 	suicide_act(mob/user)
 		viewers(user) << "<span class='danger'>[user] is eating some of the [src.name]! It looks like \he's trying to commit suicide.</span>"

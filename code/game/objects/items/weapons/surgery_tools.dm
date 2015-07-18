@@ -159,6 +159,7 @@ LOOK FOR SURGERY.DM*/
 	origin_tech = "materials=1;biotech=1"
 	attack_verb = list("attacked", "pinched")
 
+
 	suicide_act(mob/user)
 		viewers(user) << "<span class='danger'>[user] is pulling \his eyes out with the [src.name]! It looks like \he's  trying to commit suicide!</span>"
 		return (BRUTELOSS)
@@ -301,6 +302,7 @@ LOOK FOR SURGERY.DM*/
 	origin_tech = "materials=1;biotech=1"
 	attack_verb = list("burnt")
 
+
 	suicide_act(mob/user)
 		viewers(user) << "<span class='danger'>[user] is burning \his eyes out with the [src.name]! It looks like \he's  trying to commit suicide!</span>"
 		return (BRUTELOSS)
@@ -401,6 +403,8 @@ LOOK FOR SURGERY.DM*/
 	origin_tech = "materials=1;biotech=1"
 	attack_verb = list("drilled")
 
+
+
 	suicide_act(mob/user)
 		viewers(user) << pick("<span class='danger'>[user] is pressing the [src.name] to \his temple and activating it! It looks like \he's trying to commit suicide.</span>", \
 							"<span class='danger'>[user] is pressing [src.name] to \his chest and activating it! It looks like \he's trying to commit suicide.</span>")
@@ -427,6 +431,8 @@ LOOK FOR SURGERY.DM*/
 	w_type = RECYK_METAL
 	origin_tech = "materials=1;biotech=1"
 	attack_verb = list("attacked", "slashed", "stabbed", "sliced", "torn", "ripped", "diced", "cut")
+
+
 
 	suicide_act(mob/user)
 		viewers(user) << pick("<span class='danger'>[user] is slitting \his wrists with the [src.name]! It looks like \he's trying to commit suicide.</span>", \
@@ -725,6 +731,7 @@ LOOK FOR SURGERY.DM*/
 	w_type = RECYK_ELECTRONIC
 	origin_tech = "materials=1;biotech=1"
 	attack_verb = list("attacked", "slashed", "sawed", "cut")
+
 
 	suicide_act(mob/user)
 		viewers(user) << "<span class='danger'>[user] is sawing \his head in two with the [src.name]! It looks like \he's  trying to commit suicide!</span>"

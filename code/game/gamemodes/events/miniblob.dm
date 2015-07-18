@@ -1,5 +1,7 @@
 /proc/mini_blob_event()
 
+	writepanic("[__FILE__].[__LINE__] (no type)([usr ? usr.ckey : ""])  \\/proc/mini_blob_event() called tick#: [world.time]")
+
 	var/turf/T = pick(blobstart)
 	var/obj/effect/blob/core/bl = new /obj/effect/blob/core(T, 200)
 	spawn(0)
@@ -18,6 +20,7 @@
 				M << sound('sound/AI/outbreak5.ogg')
 
 /proc/dotheblobbaby()
+	writepanic("[__FILE__].[__LINE__] (no type)([usr ? usr.ckey : ""])  \\/proc/dotheblobbaby() called tick#: [world.time]")
 	if (blobevent)
 		if(blob_cores.len)
 			for(var/i = 1 to 5)

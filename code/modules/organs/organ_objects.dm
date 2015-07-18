@@ -54,6 +54,7 @@
 		die()
 
 /obj/item/organ/proc/die()
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/item/organ/proc/die() called tick#: [world.time]")
 	name = "dead [initial(name)]"
 	if(dead_icon) icon_state = dead_icon
 	health = 0
@@ -62,6 +63,8 @@
 	//TODO: Inject an organ with peridaxon to make it alive again.
 
 /obj/item/organ/proc/roboticize()
+
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/item/organ/proc/roboticize() called tick#: [world.time]")
 
 	robotic = (organ_data && organ_data.robotic) ? organ_data.robotic : 1
 
@@ -74,6 +77,8 @@
 		//TODO: convert to greyscale.
 
 /obj/item/organ/proc/update()
+
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/item/organ/proc/update() called tick#: [world.time]")
 
 	if(!organ_tag || !organ_type)
 		return
@@ -158,6 +163,8 @@
 
 /obj/item/organ/proc/removed(var/mob/living/target,var/mob/living/user)
 
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/item/organ/proc/removed() called tick#: [world.time]")
+
 	if(!target || !user)
 		return
 
@@ -202,6 +209,7 @@
 		H.update_body()
 
 /obj/item/organ/proc/replaced(var/mob/living/target)
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/item/organ/proc/replaced() called tick#: [world.time]")
 	return
 
 /obj/item/organ/eyes/replaced(var/mob/living/target)
@@ -215,6 +223,8 @@
 		H.update_body()
 
 /obj/item/organ/proc/bitten(mob/user)
+
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/item/organ/proc/bitten() called tick#: [world.time]")
 
 	if(robotic)
 		return

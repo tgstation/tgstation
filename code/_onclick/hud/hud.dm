@@ -59,6 +59,7 @@
 
 
 /datum/hud/proc/hidden_inventory_update()
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/hud/proc/hidden_inventory_update() called tick#: [world.time]")
 	if(!mymob)
 		return
 
@@ -85,6 +86,7 @@
 
 
 /datum/hud/proc/persistant_inventory_update()
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/hud/proc/persistant_inventory_update() called tick#: [world.time]")
 	if(!mymob)
 		return
 
@@ -107,6 +109,7 @@
 
 
 /datum/hud/proc/instantiate()
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/hud/proc/instantiate() called tick#: [world.time]")
 	if(!ismob(mymob))
 		return 0
 	if(!mymob.client)
@@ -159,6 +162,7 @@
 /mob/verb/button_pressed_F12()
 	set name = "F12"
 	set hidden = 1
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""]) \\/mob/verb/button_pressed_F12()  called tick#: [world.time]")
 
 	if(hud_used && client)
 		if(ishuman(src))

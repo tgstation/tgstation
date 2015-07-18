@@ -13,6 +13,7 @@
 		updateicon()
 
 /obj/item/weapon/cell/proc/updateicon()
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/item/weapon/cell/proc/updateicon() called tick#: [world.time]")
 	overlays.len = 0
 
 	if(charge < 0.01)
@@ -23,10 +24,12 @@
 		overlays += image('icons/obj/power.dmi', "cell-o1")
 
 /obj/item/weapon/cell/proc/percent()		// return % charge of cell
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/item/weapon/cell/proc/percent() called tick#: [world.time]")
 	return 100.0*charge/maxcharge
 
 // use power from a cell
 /obj/item/weapon/cell/proc/use(var/amount)
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/item/weapon/cell/proc/use() called tick#: [world.time]")
 	if(rigged && amount > 0)
 		explode()
 		return 0
@@ -38,6 +41,7 @@
 
 // recharge the cell
 /obj/item/weapon/cell/proc/give(var/amount)
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/item/weapon/cell/proc/give() called tick#: [world.time]")
 	if(rigged && amount > 0)
 		explode()
 		return 0
@@ -82,6 +86,7 @@
 
 
 /obj/item/weapon/cell/proc/explode()
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/item/weapon/cell/proc/explode() called tick#: [world.time]")
 	var/turf/T = get_turf(src.loc)
 /*
  * 1000-cell	explosion(T, -1, 0, 1, 1)
@@ -110,6 +115,7 @@
 		del(src)
 
 /obj/item/weapon/cell/proc/corrupt()
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/item/weapon/cell/proc/corrupt() called tick#: [world.time]")
 	charge /= 2
 	maxcharge /= 2
 	if (prob(10))
@@ -148,6 +154,7 @@
 		explode()
 
 /obj/item/weapon/cell/proc/get_electrocute_damage()
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/item/weapon/cell/proc/get_electrocute_damage() called tick#: [world.time]")
 	return round(charge**(1/3)*(rand(100,125)/100)) //Cube root of power times 1,5 to 2 in increments of 10^-1
 	//For instance, gives an average of 81 damage for 100k W and 175 for 1M W
 	//Best you're getting with BYOND's mathematical funcs. Not even a fucking exponential or neperian logarithm

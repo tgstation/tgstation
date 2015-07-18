@@ -65,6 +65,7 @@
 	examination(A)
 
 /atom/proc/attack_ghost(mob/user as mob)
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/atom/proc/attack_ghost() called tick#: [world.time]")
 	var/ghost_flags = 0
 	if(ghost_read)
 		ghost_flags |= PERMIT_ALL
@@ -76,6 +77,7 @@
 /* Bay edition
 // Oh by the way this didn't work with old click code which is why clicking shit didn't spam you
 /atom/proc/attack_ghost(mob/dead/observer/user as mob)
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/atom/proc/attack_ghost() called tick#: [world.time]")
 	if(user.client && user.client.inquisitive_ghost)
 		examine()
 	return
@@ -114,6 +116,7 @@
 // commented out, of course.
 /*
 /atom/proc/attack_admin(mob/user as mob)
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/atom/proc/attack_admin() called tick#: [world.time]")
 	if(!user || !user.client || !user.client.holder)
 		return
 	attack_hand(user)

@@ -39,11 +39,11 @@ var/list/genetics_computers = list()
 	'eqEmitter.png',
 	'eqReclaimer.png',
 	'eqInjector.png',
-	'bpSep.png',
-	'bpSep-green.png',
-	'bpSep-red.png',
-	'bpSep-blue.png',
-	'bpSep-locked.png',
+	'bpsep.png',
+	'bpsep-green.png',
+	'bpsep-red.png',
+	'bpsep-blue.png',
+	'bpsep-locked.png',
 	'bpSpacer.png',
 	'gprint.png'
 	)
@@ -185,6 +185,7 @@ var/list/genetics_computers = list()
 	return
 
 /obj/machinery/computer/genetics/proc/checkOccupant()
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/computer/genetics/proc/checkOccupant() called tick#: [world.time]")
 	if(!scanner)
 		info_html = "<p>No linked scanner detected. Cannot complete operation.</p>"
 		src.updateUsrDialog()
@@ -200,6 +201,7 @@ var/list/genetics_computers = list()
 	return 0
 
 /obj/machinery/computer/genetics/proc/bioEffect_sanity_check(var/datum/bioEffect/E)
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/computer/genetics/proc/bioEffect_sanity_check() called tick#: [world.time]")
 	if(!istype(E,/datum/bioEffect/))
 		info_html = "<p>Unable to scan gene. The gene may be corrupt.</p>"
 		src.updateUsrDialog()
@@ -207,6 +209,7 @@ var/list/genetics_computers = list()
 	return 0
 
 /obj/machinery/computer/genetics/proc/sample_sanity_check(var/datum/computer/file/genetics_scan/S)
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/computer/genetics/proc/sample_sanity_check() called tick#: [world.time]")
 	if (!istype(S,/datum/computer/file/genetics_scan/))
 		info_html = "<p>Unable to scan DNA Sample. The sample may be corrupt.</p>"
 		src.updateUsrDialog()
@@ -214,6 +217,7 @@ var/list/genetics_computers = list()
 	return 0
 
 /obj/machinery/computer/genetics/proc/research_sanity_check(var/datum/geneticsResearchEntry/R)
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/computer/genetics/proc/research_sanity_check() called tick#: [world.time]")
 	if (!istype(R,/datum/geneticsResearchEntry/))
 		info_html = "<p>Invalid research article.</p>"
 		src.updateUsrDialog()
@@ -324,8 +328,8 @@ var/list/genetics_computers = list()
 		var/right_count = 0
 		for(var/i=0, i < E.dnaBlocks.blockListCurr.len, i++)
 			block_count++
-			var/datum/basePair/bp = E.dnaBlocks.blockListCurr[i+1]
-			var/datum/basePair/bpc = E.dnaBlocks.blockList[i+1]
+			var/datum/basepair/bp = E.dnaBlocks.blockListCurr[i+1]
+			var/datum/basepair/bpc = E.dnaBlocks.blockList[i+1]
 			if (bp.marker == "locked")
 				continue
 			if (bp.bpp1 == bpc.bpp1 && bp.bpp2 == bpc.bpp2)
@@ -430,12 +434,12 @@ var/list/genetics_computers = list()
 
 		if(scanner.occupant.bioHolder.effectPool.Find(E))
 			if(href_list["setseq1"])
-				var/datum/basePair/bp = E.dnaBlocks.blockListCurr[text2num(href_list["setseq1"])]
+				var/datum/basepair/bp = E.dnaBlocks.blockListCurr[text2num(href_list["setseq1"])]
 				if (bp.marker == "locked")
 					usr << "<span class='warning'><b>SCANNER ERROR:</b> Cannot alter encrypted base pairs. Click lock to attempt decryption.</span>"
 					return
 			else if(href_list["setseq2"])
-				var/datum/basePair/bp = E.dnaBlocks.blockListCurr[text2num(href_list["setseq2"])]
+				var/datum/basepair/bp = E.dnaBlocks.blockListCurr[text2num(href_list["setseq2"])]
 				if (bp.marker == "locked")
 					usr << "<span class='warning'><b>SCANNER ERROR:</b> Cannot alter encrypted base pairs. Click lock to attempt decryption.</span>"
 					return
@@ -450,7 +454,7 @@ var/list/genetics_computers = list()
 
 		if(scanner.occupant.bioHolder.effectPool.Find(E)) //Change this to occupant and check if empty aswell.
 			if(href_list["setseq1"])
-				var/datum/basePair/bp = E.dnaBlocks.blockListCurr[text2num(href_list["setseq1"])]
+				var/datum/basepair/bp = E.dnaBlocks.blockListCurr[text2num(href_list["setseq1"])]
 				if (input == "Swap Pair")
 					temp_holder = bp.bpp1
 					bp.bpp1 = bp.bpp2
@@ -458,7 +462,7 @@ var/list/genetics_computers = list()
 				else
 					bp.bpp1 = input
 			else if(href_list["setseq2"])
-				var/datum/basePair/bp = E.dnaBlocks.blockListCurr[text2num(href_list["setseq2"])]
+				var/datum/basepair/bp = E.dnaBlocks.blockListCurr[text2num(href_list["setseq2"])]
 				if (input == "Swap Pair")
 					temp_holder = bp.bpp1
 					bp.bpp1 = bp.bpp2
@@ -473,7 +477,7 @@ var/list/genetics_computers = list()
 
 		var/datum/bioEffect/E = locate(href_list["marker"])
 		if (bioEffect_sanity_check(E)) return
-		var/datum/basePair/bp = E.dnaBlocks.blockListCurr[text2num(href_list["themark"])]
+		var/datum/basepair/bp = E.dnaBlocks.blockListCurr[text2num(href_list["themark"])]
 
 		if(bp.marker == "locked")
 			usr << "<span class='notice'><b>SCANNER ALERT:</b> Encryption is a [E.lockedDiff]-character code.</span>"
@@ -488,7 +492,7 @@ var/list/genetics_computers = list()
 				usr << "<span class='warning'><b>SCANNER ALERT:</b> Invalid code length.</span>"
 				return
 			if (code == bp.lockcode)
-				var/datum/basePair/bpc = E.dnaBlocks.blockList[text2num(href_list["themark"])]
+				var/datum/basepair/bpc = E.dnaBlocks.blockList[text2num(href_list["themark"])]
 				bp.bpp1 = bpc.bpp1
 				bp.bpp2 = bpc.bpp2
 				bp.marker = "green"
@@ -781,6 +785,7 @@ var/list/genetics_computers = list()
 	return
 
 /obj/machinery/computer/genetics/proc/equipment_available(var/equipment = "analyser",var/datum/bioEffect/E)
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/computer/genetics/proc/equipment_available() called tick#: [world.time]")
 	switch(equipment)
 		if("analyser")
 			if(genResearch.isResearched(/datum/geneticsResearchEntry/checker) && world.time >= src.equipment[2])
@@ -809,6 +814,7 @@ var/list/genetics_computers = list()
 	return 0
 
 /obj/machinery/computer/genetics/proc/equipment_cooldown(var/equipment = "analyser")
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/computer/genetics/proc/equipment_cooldown() called tick#: [world.time]")
 	var/base_cooldown = 1
 	var/equipment_num = 1
 	switch(equipment)
@@ -838,6 +844,7 @@ var/list/genetics_computers = list()
 	src.equipment[equipment_num] = world.time + base_cooldown
 
 /obj/machinery/computer/genetics/proc/ui_build_mutation_research(var/datum/bioEffect/E,var/datum/computer/file/genetics_scan/sample = null)
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/computer/genetics/proc/ui_build_mutation_research() called tick#: [world.time]")
 	if(!E)
 		return null
 
@@ -871,6 +878,7 @@ var/list/genetics_computers = list()
 	return build
 
 /obj/machinery/computer/genetics/proc/ui_build_sequence(var/datum/bioEffect/E, var/screen = "pool")
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/computer/genetics/proc/ui_build_sequence() called tick#: [world.time]")
 	if (!E)
 		return list("ERROR","ERROR","ERROR")
 
@@ -884,24 +892,24 @@ var/list/genetics_computers = list()
 		if("pool")
 			for(var/i=0, i < E.dnaBlocks.blockListCurr.len, i++)
 				var/blockEnd = (((i+1) % 4) == 0 ? 1 : 0)
-				var/datum/basePair/bp = E.dnaBlocks.blockListCurr[i+1]
+				var/datum/basepair/bp = E.dnaBlocks.blockListCurr[i+1]
 				top += {"<a href='?src=\ref[src];setseq=\ref[E];setseq1=[i+1]'><img alt="" src="bp[bp.bpp1].png" style="border-style: none"></a>  [blockEnd ? {"<img alt="" src="bpSpacer.png">"} : ""]"}
-				mid += {"<a href='?src=\ref[src];marker=\ref[E];themark=[i+1]'><img alt="" src="bpSep-[bp.marker].png" border=0></a>  [blockEnd ? {"<img alt="" src="bpSpacer.png" style="border-style: none">"} : ""]"}
+				mid += {"<a href='?src=\ref[src];marker=\ref[E];themark=[i+1]'><img alt="" src="bpsep-[bp.marker].png" border=0></a>  [blockEnd ? {"<img alt="" src="bpSpacer.png" style="border-style: none">"} : ""]"}
 				bot += {"<a href='?src=\ref[src];setseq=\ref[E];setseq2=[i+1]'><img alt="" src="bp[bp.bpp2].png" style="border-style: none"></a>  [blockEnd ? {"<img alt="" src="bpSpacer.png">"} : ""]"}
 		if("sample_pool")
 			for(var/i=0, i < E.dnaBlocks.blockListCurr.len, i++)
 				var/blockEnd = (((i+1) % 4) == 0 ? 1 : 0)
-				var/datum/basePair/bp = E.dnaBlocks.blockListCurr[i+1]
+				var/datum/basepair/bp = E.dnaBlocks.blockListCurr[i+1]
 				top += {"<img alt="" src="bp[bp.bpp1].png" style="border-style: none">  [blockEnd ? {"<img alt="" src="bpSpacer.png">"} : ""]"}
-				mid += {"<img alt="" src="bpSep-[bp.marker].png">  [blockEnd ? {"<img alt="" src="bpSpacer.png" style="border-style: none">"} : ""]"}
+				mid += {"<img alt="" src="bpsep-[bp.marker].png">  [blockEnd ? {"<img alt="" src="bpSpacer.png" style="border-style: none">"} : ""]"}
 				bot += {"<img alt="" src="bp[bp.bpp2].png" style="border-style: none">  [blockEnd ? {"<img alt="" src="bpSpacer.png">"} : ""]"}
 		if("active")
 			var/datum/bioEffect/globalInstance = bioEffectList[E.type]
 			for(var/i=0, i < globalInstance.dnaBlocks.blockList.len, i++)
 				var/blockEnd = (((i+1) % 4) == 0 ? 1 : 0)
-				var/datum/basePair/bp = globalInstance.dnaBlocks.blockList[i+1]
+				var/datum/basepair/bp = globalInstance.dnaBlocks.blockList[i+1]
 				top += {"<img alt="" src="bp[bp.bpp1].png" style="border-style: none">  [blockEnd ? {"<img alt="" src="bpSpacer.png">"} : ""]"}
-				mid += {"<img alt="" src="bpSep-[bp.marker].png">  [blockEnd ? {"<img alt="" src="bpSpacer.png" style="border-style: none">"} : ""]"}
+				mid += {"<img alt="" src="bpsep-[bp.marker].png">  [blockEnd ? {"<img alt="" src="bpSpacer.png" style="border-style: none">"} : ""]"}
 				bot += {"<img alt="" src="bp[bp.bpp2].png" style="border-style: none">  [blockEnd ? {"<img alt="" src="bpSpacer.png">"} : ""]"}
 
 	build += top
@@ -911,6 +919,7 @@ var/list/genetics_computers = list()
 	return build
 
 /obj/machinery/computer/genetics/proc/ui_build_clickable_genes(var/screen = "pool",var/datum/computer/file/genetics_scan/sample)
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/computer/genetics/proc/ui_build_clickable_genes() called tick#: [world.time]")
 	if(screen == "sample_pool")
 		if(!sample)
 			return

@@ -82,6 +82,7 @@
 
 // this function shows the information about being silenced as a pAI in the Status panel
 /mob/living/silicon/pai/proc/show_silenced()
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/living/silicon/pai/proc/show_silenced() called tick#: [world.time]")
 	if(src.silence_time)
 		var/timeleft = round((silence_time - world.timeofday)/10 ,1)
 		stat(null, "Communications system reboot in -[(timeleft / 60) % 60]:[add_zero(num2text(timeleft % 60), 2)]")
@@ -212,6 +213,7 @@
 ///mob/living/silicon/pai/attack_hand(mob/living/carbon/M as mob)
 
 /mob/living/silicon/pai/proc/switchCamera(var/obj/machinery/camera/C)
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/living/silicon/pai/proc/switchCamera() called tick#: [world.time]")
 	usr:cameraFollow = null
 	if (!C)
 		src.unset_machine()
@@ -237,6 +239,7 @@
 //Addition by Mord_Sith to define AI's network change ability
 /*
 /mob/living/silicon/pai/proc/pai_network_change()
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/living/silicon/pai/proc/pai_network_change() called tick#: [world.time]")
 	set category = "pAI Commands"
 	set name = "Change Camera Network"
 	src.reset_view(null)
@@ -264,6 +267,7 @@
 /*
 // Debug command - Maybe should be added to admin verbs later
 /mob/verb/makePAI(var/turf/t in view())
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""]) \\/mob/verb/makePAI()  called tick#: [world.time]")
 	var/obj/item/device/paicard/card = new(t)
 	var/mob/living/silicon/pai/pai = new(card)
 	pai.key = src.key

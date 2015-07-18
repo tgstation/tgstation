@@ -37,7 +37,7 @@
 	if(pai)
 
 		// AUTOFIXED BY fix_string_idiocy.py
-		// C:\Users\Rob\Documents\Projects\vgstation13\code\game\objects\items\devices\paicard.dm:32: dat += "Installed Personality: [pai.name]<br>"
+		// C:\Users\Rob\\documents\\\projects\vgstation13\code\game\objects\items\\devices\\\paicard.dm:32: dat += "Installed Personality: [pai.name]<br>"
 		dat += {"Installed Personality: [pai.name]<br>
 			Prime directive: <br>[pai.pai_law0]<br>
 			Additional directives: <br>[pai.pai_laws]<br>
@@ -52,7 +52,7 @@
 		else
 
 			// AUTOFIXED BY fix_string_idiocy.py
-			// C:\Users\Rob\Documents\Projects\vgstation13\code\game\objects\items\devices\paicard.dm:44: dat += "<b>Radio Uplink</b><br>"
+			// C:\Users\Rob\\documents\\\projects\vgstation13\code\game\objects\items\\devices\\\paicard.dm:44: dat += "<b>Radio Uplink</b><br>"
 			dat += {"<b>Radio Uplink</b><br>
 				<font color=red><i>Radio firmware not loaded. Please install a pAI personality to load firmware.</i></font><br>"}
 		// END AUTOFIX
@@ -61,14 +61,14 @@
 		if(looking_for_personality)
 
 			// AUTOFIXED BY fix_string_idiocy.py
-			// C:\Users\Rob\Documents\Projects\vgstation13\code\game\objects\items\devices\paicard.dm:49: dat += "Searching for a personality..."
+			// C:\Users\Rob\\documents\\\projects\vgstation13\code\game\objects\items\\devices\\\paicard.dm:49: dat += "Searching for a personality..."
 			dat += {"Searching for a personality...
 				<A href='byond://?src=\ref[src];request=1'>\[View available personalities\]</a><br>"}
 			// END AUTOFIX
 		else
 
 			// AUTOFIXED BY fix_string_idiocy.py
-			// C:\Users\Rob\Documents\Projects\vgstation13\code\game\objects\items\devices\paicard.dm:52: dat += "No personality is installed.<br>"
+			// C:\Users\Rob\\documents\\\projects\vgstation13\code\game\objects\items\\devices\\\paicard.dm:52: dat += "No personality is installed.<br>"
 			dat += {"No personality is installed.<br>
 				<A href='byond://?src=\ref[src];request=1'>\[Request personal AI personality\]</a><br>
 				Each time this button is pressed, a request will be sent out to any available personalities. Check back often and alot time for personalities to respond. This process could take anywhere from 15 seconds to several minutes, depending on the available personalities' timeliness."}
@@ -124,15 +124,18 @@
 //		WIRE_TRANSMIT = 4
 
 /obj/item/device/paicard/proc/setPersonality(mob/living/silicon/pai/personality)
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/item/device/paicard/proc/setPersonality() called tick#: [world.time]")
 	src.pai = personality
 	src.overlays += "pai-happy"
 
 /obj/item/device/paicard/proc/removePersonality()
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/item/device/paicard/proc/removePersonality() called tick#: [world.time]")
 	src.pai = null
 	src.overlays.len = 0
 	src.overlays += "pai-off"
 
 /obj/item/device/paicard/proc/setEmotion(var/emotion)
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/item/device/paicard/proc/setEmotion() called tick#: [world.time]")
 	if(pai)
 		src.overlays.len = 0
 		switch(emotion)
@@ -156,6 +159,7 @@
 			if(18) src.overlays += "pai-cry"
 
 /obj/item/device/paicard/proc/alertUpdate()
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/item/device/paicard/proc/alertUpdate() called tick#: [world.time]")
 	var/turf/T = get_turf(src.loc)
 	for (var/mob/M in viewers(T))
 		M.show_message("<span class='notice'>[src] flashes a message across its screen, \"Additional personalities available for download.\"</span>", 3, "<span class='notice'>[src] bleeps electronically.</span>", 2)

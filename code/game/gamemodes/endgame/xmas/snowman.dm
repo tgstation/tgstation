@@ -81,6 +81,7 @@
 		if(prob(30))
 			call(/obj/item/weapon/winter_gift/proc/pick_a_gift)(src.loc)
 
+
 	else if(istype(W,/obj/item/clothing/head/))
 		if(hat)
 			hat.loc = get_turf(src)

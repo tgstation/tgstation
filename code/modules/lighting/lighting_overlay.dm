@@ -21,6 +21,7 @@
 	verbs.Cut()
 
 /atom/movable/lighting_overlay/proc/update_lumcount(delta_r, delta_g, delta_b)
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/atom/movable/lighting_overlay/proc/update_lumcount() called tick#: [world.time]")
 	if(!delta_r && !delta_g && !delta_b) //Nothing is being changed all together.
 		return
 
@@ -49,6 +50,7 @@
 		lighting_update_overlays |= src
 
 /atom/movable/lighting_overlay/proc/update_overlay()
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/atom/movable/lighting_overlay/proc/update_overlay() called tick#: [world.time]")
 	var/mx = max(lum_r, lum_g, lum_b)
 	. = 1 // factor
 	if(mx > 1)

@@ -35,6 +35,7 @@
 
 //Used by throw code to hand over the mob, instead of throwing the grab. The grab is then deleted by the throw code.
 /obj/item/weapon/grab/proc/toss()
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/item/weapon/grab/proc/toss() called tick#: [world.time]")
 	if(affecting)
 		if(affecting.buckled || !loc.Adjacent(affecting))
 			return null
@@ -45,6 +46,7 @@
 
 //This makes sure that the grab screen object is displayed in the correct hand.
 /obj/item/weapon/grab/proc/synch()
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/item/weapon/grab/proc/synch() called tick#: [world.time]")
 	if(affecting)
 		if(assailant.r_hand == src)
 			hud.screen_loc = ui_rhand
@@ -104,6 +106,7 @@
 
 
 /obj/item/weapon/grab/proc/s_click(obj/screen/S)
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/item/weapon/grab/proc/s_click() called tick#: [world.time]")
 	if(!affecting || !assailant || timeDestroyed)
 		return
 	if(state == GRAB_UPGRADING)
@@ -175,6 +178,7 @@
 
 //This is used to make sure the victim hasn't managed to yackety sax away before using the grab.
 /obj/item/weapon/grab/proc/confirm()
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/item/weapon/grab/proc/confirm() called tick#: [world.time]")
 	if(!assailant || !affecting)
 		returnToPool(src)
 		return 0

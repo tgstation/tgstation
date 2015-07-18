@@ -26,6 +26,7 @@ var/global/list/mob/virtualhearer/virtualhearers = list()
 	attached = null
 /*
 /mob/virtualhearer/proc/process()
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/virtualhearer/proc/process() called tick#: [world.time]")
 	var/atom/A
 	while(attached)
 		for(A=attached.loc, A && !isturf(A), A=A.loc);

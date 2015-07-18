@@ -486,6 +486,7 @@
 		stat(null, "Health: [round((health / maxHealth) * 100)]%")
 
 /mob/living/simple_animal/proc/Die()
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/living/simple_animal/proc/Die() called tick#: [world.time]")
 	health = 0 // so /mob/living/simple_animal/Life() doesn't magically revive them
 	living_mob_list -= src
 	dead_mob_list += src
@@ -527,9 +528,11 @@
 		Die()
 
 /mob/living/simple_animal/proc/SA_attackable(target)
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/living/simple_animal/proc/SA_attackable() called tick#: [world.time]")
 	return CanAttack(target)
 
 /mob/living/simple_animal/proc/CanAttack(var/atom/target)
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/living/simple_animal/proc/CanAttack() called tick#: [world.time]")
 	if(see_invisible < target.invisibility)
 		return 0
 	if (isliving(target))
@@ -568,6 +571,7 @@
 	..()
 
 /mob/living/simple_animal/proc/make_babies() // <3 <3 <3
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/living/simple_animal/proc/make_babies() called tick#: [world.time]")
 	if(gender != FEMALE || stat || !scan_ready || !childtype || !species)
 		return
 	scan_ready = 0
@@ -594,6 +598,7 @@
 
 // Harvest an animal's delicious byproducts
 /mob/living/simple_animal/proc/harvest()
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/living/simple_animal/proc/harvest() called tick#: [world.time]")
 	new meat_type (get_turf(src))
 	if(prob(95))
 		del(src)

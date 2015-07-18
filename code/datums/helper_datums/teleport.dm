@@ -1,5 +1,6 @@
 //wrapper
 /proc/do_teleport(ateleatom, adestination, aprecision=0, afteleport=1, aeffectin=null, aeffectout=null, asoundin=null, asoundout=null)
+	writepanic("[__FILE__].[__LINE__] (no type)([usr ? usr.ckey : ""])  \\/proc/do_teleport() called tick#: [world.time]")
 	new /datum/teleport/instant/science(arglist(args))
 	return
 
@@ -21,6 +22,7 @@
 	return 1
 
 /datum/teleport/proc/Init(ateleatom,adestination,aprecision,afteleport,aeffectin,aeffectout,asoundin,asoundout)
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/teleport/proc/Init() called tick#: [world.time]")
 	if(!setTeleatom(ateleatom))
 		return 0
 	if(!setDestination(adestination))
@@ -34,6 +36,7 @@
 
 	//must succeed
 /datum/teleport/proc/setPrecision(aprecision)
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/teleport/proc/setPrecision() called tick#: [world.time]")
 	if(isnum(aprecision))
 		precision = aprecision
 		return 1
@@ -41,6 +44,7 @@
 
 	//must succeed
 /datum/teleport/proc/setDestination(atom/adestination)
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/teleport/proc/setDestination() called tick#: [world.time]")
 	if(istype(adestination))
 		destination = adestination
 		return 1
@@ -48,6 +52,7 @@
 
 	//must succeed in most cases
 /datum/teleport/proc/setTeleatom(atom/movable/ateleatom)
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/teleport/proc/setTeleatom() called tick#: [world.time]")
 	if(istype(ateleatom, /obj/effect) && !istype(ateleatom, /obj/effect/dummy/chameleon))
 		qdel(ateleatom)
 		return 0
@@ -59,26 +64,31 @@
 	//custom effects must be properly set up first for instant-type teleports
 	//optional
 /datum/teleport/proc/setEffects(datum/effect/effect/system/aeffectin=null,datum/effect/effect/system/aeffectout=null)
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/teleport/proc/setEffects() called tick#: [world.time]")
 	effectin = istype(aeffectin) ? aeffectin : null
 	effectout = istype(aeffectout) ? aeffectout : null
 	return 1
 
 	//optional
 /datum/teleport/proc/setForceTeleport(afteleport)
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/teleport/proc/setForceTeleport() called tick#: [world.time]")
 	force_teleport = afteleport
 	return 1
 
 	//optional
 /datum/teleport/proc/setSounds(asoundin=null,asoundout=null)
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/teleport/proc/setSounds() called tick#: [world.time]")
 	soundin = isfile(asoundin) ? asoundin : null
 	soundout = isfile(asoundout) ? asoundout : null
 	return 1
 
 	//placeholder
 /datum/teleport/proc/teleportChecks()
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/teleport/proc/teleportChecks() called tick#: [world.time]")
 	return 1
 
 /datum/teleport/proc/playSpecials(atom/location,datum/effect/effect/system/effect,sound)
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/teleport/proc/playSpecials() called tick#: [world.time]")
 	if(location)
 		if(effect)
 			spawn(-1)
@@ -93,6 +103,8 @@
 
 	//do the monkey dance
 /datum/teleport/proc/doTeleport()
+
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/teleport/proc/doTeleport() called tick#: [world.time]")
 
 	var/turf/destturf
 	var/turf/curturf = get_turf(teleatom)
@@ -120,6 +132,7 @@
 	return 1
 
 /datum/teleport/proc/teleport()
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/teleport/proc/teleport() called tick#: [world.time]")
 	if(teleportChecks())
 		return doTeleport()
 	return 0

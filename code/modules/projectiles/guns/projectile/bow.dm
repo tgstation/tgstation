@@ -11,6 +11,7 @@
 	sharpness = 1
 
 /obj/item/weapon/arrow/proc/removed() //Helper for metal rods falling apart.
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/item/weapon/arrow/proc/removed() called tick#: [world.time]")
 	return
 
 /obj/item/weapon/arrow/quill
@@ -123,6 +124,8 @@
 
 /obj/item/weapon/crossbow/proc/draw(var/mob/user as mob)
 
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/item/weapon/crossbow/proc/draw() called tick#: [world.time]")
+
 	if(!arrow)
 		user << "You don't have anything nocked to [src]."
 		return
@@ -137,6 +140,8 @@
 	spawn(25) increase_tension(user)
 
 /obj/item/weapon/crossbow/proc/increase_tension(var/mob/user as mob)
+
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/item/weapon/crossbow/proc/increase_tension() called tick#: [world.time]")
 
 	if(!arrow || !tension || current_user != user) //Arrow has been fired, bow has been relaxed or user has changed.
 		return
@@ -177,6 +182,8 @@
 		spawn(0) Fire(target,user,params)
 
 /obj/item/weapon/crossbow/proc/Fire(atom/target as mob|obj|turf|area, mob/living/user as mob|obj, params, reflex = 0)
+
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/item/weapon/crossbow/proc/Fire() called tick#: [world.time]")
 
 	add_fingerprint(user)
 

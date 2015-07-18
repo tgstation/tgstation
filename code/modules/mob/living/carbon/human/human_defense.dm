@@ -58,6 +58,7 @@ emp_act
 	return (armorval/max(organnum, 1))
 
 /mob/living/carbon/human/proc/get_siemens_coefficient_organ(var/datum/organ/external/def_zone)
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/living/carbon/human/proc/get_siemens_coefficient_organ() called tick#: [world.time]")
 	if(!def_zone)
 		return 1.0
 
@@ -71,6 +72,7 @@ emp_act
 	return siemens_coefficient
 
 /mob/living/carbon/human/proc/checkarmor(var/datum/organ/external/def_zone, var/type)
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/living/carbon/human/proc/checkarmor() called tick#: [world.time]")
 	if(!type)	return 0
 	var/protection = 0
 	var/list/body_parts = list(head, wear_mask, wear_suit, w_uniform)
@@ -83,6 +85,7 @@ emp_act
 	return protection
 
 /mob/living/carbon/human/proc/check_body_part_coverage(var/body_part_flags=0)
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/living/carbon/human/proc/check_body_part_coverage() called tick#: [world.time]")
 	if(!body_part_flags)
 		return 0
 	for(var/obj/item/clothing/C in get_clothing_items())
@@ -92,6 +95,7 @@ emp_act
 	return 0
 
 /mob/living/carbon/human/proc/get_body_part_coverage(var/body_part_flags=0)
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/living/carbon/human/proc/get_body_part_coverage() called tick#: [world.time]")
 	if(!body_part_flags)
 		return null
 	for(var/obj/item/clothing/C in get_clothing_items())
@@ -101,6 +105,7 @@ emp_act
 	return null
 
 /mob/living/carbon/human/proc/check_shields(var/damage = 0, var/attack_text = "the attack")
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/living/carbon/human/proc/check_shields() called tick#: [world.time]")
 	if(l_hand && istype(l_hand, /obj/item/weapon))//Current base is the prob(50-d/3)
 		var/obj/item/weapon/I = l_hand
 		if(I.IsShield() && (prob(50 - round(damage / 3))))
@@ -146,6 +151,7 @@ emp_act
 
 
 /mob/living/carbon/human/proc/attacked_by(var/obj/item/I, var/mob/living/user, var/def_zone)
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/living/carbon/human/proc/attacked_by() called tick#: [world.time]")
 	if(!I || !user)	return 0
 
 	var/target_zone = get_zone_with_miss_chance(user.zone_sel.selecting, src)
@@ -250,6 +256,7 @@ emp_act
 					bloody_body(src)
 
 /mob/living/carbon/human/proc/bloody_hands(var/mob/living/source, var/amount = 2)
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/living/carbon/human/proc/bloody_hands() called tick#: [world.time]")
 	if (gloves)
 		gloves.add_blood(source)
 		gloves:transfer_blood = amount
@@ -261,6 +268,7 @@ emp_act
 	update_inv_gloves()		//updates on-mob overlays for bloody hands and/or bloody gloves
 
 /mob/living/carbon/human/proc/bloody_body(var/mob/living/source,var/update = 0)
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/living/carbon/human/proc/bloody_body() called tick#: [world.time]")
 	if(wear_suit)
 		wear_suit.add_blood(source)
 		update_inv_wear_suit(update)

@@ -9,6 +9,7 @@
 	var/result=null
 
 /datum/biogen_recipe/proc/Render(var/context)
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/biogen_recipe/proc/Render() called tick#: [world.time]")
 	var/html = "<li><a href='?src=\ref[context];action=create;item=[id];num=1'>[amount_per_unit==1?"":"[amount_per_unit] "][name]</a> <FONT COLOR=blue>([cost])</FONT>"
 	if(other_amounts.len)
 		var/first=1
@@ -347,7 +348,7 @@
 				if (beaker)
 
 					// AUTOFIXED BY fix_string_idiocy.py
-					// C:\Users\Rob\Documents\Projects\vgstation13\code\game\machinery\biogenerator.dm:89: dat += "<A href='?src=\ref[src];action=activate'>Activate Biogenerator!</A><BR>"
+					// C:\Users\Rob\\documents\\\projects\vgstation13\code\game\\machinery\biogenerator.dm:89: dat += "<A href='?src=\ref[src];action=activate'>Activate Biogenerator!</A><BR>"
 					dat += {"<A href='?src=\ref[src];action=activate'>Activate Biogenerator!</A><BR>
 						<A href='?src=\ref[src];action=detach'>Detach Container</A><BR><BR>"}
 
@@ -363,21 +364,21 @@
 			if("nopoints")
 
 				// AUTOFIXED BY fix_string_idiocy.py
-				// C:\Users\Rob\Documents\Projects\vgstation13\code\game\machinery\biogenerator.dm:108: dat += "You do not have biomass to create products.<BR>Please, put growns into reactor and activate it.<BR>"
+				// C:\Users\Rob\\documents\\\projects\vgstation13\code\game\\machinery\biogenerator.dm:108: dat += "You do not have biomass to create products.<BR>Please, put growns into reactor and activate it.<BR>"
 				dat += {"You do not have biomass to create products.<BR>Please, put growns into reactor and activate it.<BR>
 					<A href='?src=\ref[src];action=menu'>Return to menu</A>"}
 				// END AUTOFIX
 			if("complete")
 
 				// AUTOFIXED BY fix_string_idiocy.py
-				// C:\Users\Rob\Documents\Projects\vgstation13\code\game\machinery\biogenerator.dm:111: dat += "Operation complete.<BR>"
+				// C:\Users\Rob\\documents\\\projects\vgstation13\code\game\\machinery\biogenerator.dm:111: dat += "Operation complete.<BR>"
 				dat += {"Operation complete.<BR>
 					<A href='?src=\ref[src];action=menu'>Return to menu</A>"}
 				// END AUTOFIX
 			if("void")
 
 				// AUTOFIXED BY fix_string_idiocy.py
-				// C:\Users\Rob\Documents\Projects\vgstation13\code\game\machinery\biogenerator.dm:114: dat += "<FONT COLOR=red>Error: No growns inside.</FONT><BR>Please, put growns into reactor.<BR>"
+				// C:\Users\Rob\\documents\\\projects\vgstation13\code\game\\machinery\biogenerator.dm:114: dat += "<FONT COLOR=red>Error: No growns inside.</FONT><BR>Please, put growns into reactor.<BR>"
 				dat += {"<FONT COLOR=red>Error: No growns inside.</FONT><BR>Please, put growns into reactor.<BR>
 					<A href='?src=\ref[src];action=menu'>Return to menu</A>"}
 				// END AUTOFIX
@@ -389,6 +390,7 @@
 	interact(user)
 
 /obj/machinery/biogenerator/proc/activate()
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/biogenerator/proc/activate() called tick#: [world.time]")
 	if (usr.stat != 0)
 		return
 	if (src.stat != 0) //NOPOWER etc
@@ -417,6 +419,7 @@
 	return
 
 /obj/machinery/biogenerator/proc/check_cost(var/cost)
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/biogenerator/proc/check_cost() called tick#: [world.time]")
 	if (cost > points)
 		menustat = "nopoints"
 		return 1
@@ -429,6 +432,7 @@
 		return 0
 
 /obj/machinery/biogenerator/proc/create_product(var/item, var/num)
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/biogenerator/proc/create_product() called tick#: [world.time]")
 	var/datum/biogen_recipe/recipe=recipes[item]
 	num=Clamp(num,1,10)
 	if(check_cost(recipe.cost*num))

@@ -40,6 +40,7 @@ RCD
 	set name = "Change Airlock Setting"
 	set category = "Object"
 	set src in usr
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""]) \\/obj/item/weapon/rcd/verb/change_airlock_setting()  called tick#: [world.time]")
 
 	var airlockcat = input(usr, "Select the type of the airlock.") in list("Solid", "Glass")
 	switch(airlockcat)
@@ -152,6 +153,7 @@ RCD
 			return
 
 /obj/item/weapon/rcd/proc/activate()
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/item/weapon/rcd/proc/activate() called tick#: [world.time]")
 	playsound(get_turf(src), 'sound/items/Deconstruct.ogg', 50, 1)
 
 
@@ -241,12 +243,14 @@ RCD
 			return 0
 
 /obj/item/weapon/rcd/proc/useResource(var/amount, var/mob/user)
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/item/weapon/rcd/proc/useResource() called tick#: [world.time]")
 	if(matter < amount)
 		return 0
 	matter -= amount
 	return 1
 
 /obj/item/weapon/rcd/proc/checkResource(var/amount, var/mob/user)
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/item/weapon/rcd/proc/checkResource() called tick#: [world.time]")
 	return matter >= amount
 /obj/item/weapon/rcd/borg/useResource(var/amount, var/mob/user)
 	if(!isrobot(user))

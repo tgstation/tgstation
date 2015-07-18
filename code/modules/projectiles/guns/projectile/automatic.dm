@@ -22,6 +22,7 @@
 /obj/item/weapon/gun/projectile/automatic/verb/ToggleFire()
 	set name = "Toggle Burstfire"
 	set category = "Object"
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""]) \\/obj/item/weapon/gun/projectile/automatic/verb/ToggleFire()  called tick#: [world.time]")
 	burstfire = !burstfire
 	usr << "You toggle \the [src]'s firing setting to [burstfire ? "burst fire" : "single fire"]."
 

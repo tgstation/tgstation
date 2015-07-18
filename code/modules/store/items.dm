@@ -8,6 +8,7 @@
 	var/cost=0
 
 /datum/storeitem/proc/deliver(var/mob/usr)
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/storeitem/proc/deliver() called tick#: [world.time]")
 	if(!istype(typepath,/obj/item/weapon/storage))
 		var/obj/item/weapon/storage/box/box=new(usr.loc)
 		new typepath(box)

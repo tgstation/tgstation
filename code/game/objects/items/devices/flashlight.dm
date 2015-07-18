@@ -25,6 +25,7 @@
 		set_light(0)
 
 /obj/item/device/flashlight/proc/update_brightness(var/mob/user = null)
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/item/device/flashlight/proc/update_brightness() called tick#: [world.time]")
 	if(on)
 		icon_state = "[initial(icon_state)]-on"
 		set_light(brightness_on)
@@ -125,6 +126,7 @@
 	set category = "Object"
 	set src in oview(1)
 
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""]) \\/obj/item/device/flashlight/lamp/verb/toggle_light()  called tick#: [world.time]")
 	if(!usr.stat)
 		attack_self(usr)
 
@@ -162,6 +164,7 @@
 		processing_objects -= src
 
 /obj/item/device/flashlight/flare/proc/turn_off()
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/item/device/flashlight/flare/proc/turn_off() called tick#: [world.time]")
 	on = 0
 	src.force = initial(src.force)
 	src.damtype = initial(src.damtype)
@@ -184,6 +187,7 @@
 	Light(user)
 
 /obj/item/device/flashlight/flare/proc/Light(var/mob/user as mob)
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/item/device/flashlight/flare/proc/Light() called tick#: [world.time]")
 	if(user)
 		if(!isturf(user.loc))
 			user << "You cannot turn the light on while in this [user.loc]." //To prevent some lighting anomalities.
@@ -219,6 +223,7 @@
 		set_light(brightness_min)
 
 /obj/item/device/flashlight/lamp/slime/proc/slime_brightness(var/mob/user = null)
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/item/device/flashlight/lamp/slime/proc/slime_brightness() called tick#: [world.time]")
 	if(on)
 		icon_state = "[initial(icon_state)]-on"
 		set_light(brightness_max)

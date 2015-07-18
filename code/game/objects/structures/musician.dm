@@ -29,6 +29,7 @@
 		icon_state = "piano"
 
 /obj/structure/device/piano/proc/playnote(var/note as text)
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/structure/device/piano/proc/playnote() called tick#: [world.time]")
 	//world << "Note: [note]"
 	var/soundfile
 	/*BYOND loads resource files at compile time if they are ''. This means you can't really manipulate them dynamically.
@@ -212,6 +213,7 @@
 
 
 /obj/structure/device/piano/proc/playsong()
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/structure/device/piano/proc/playsong() called tick#: [world.time]")
 	do
 		var/cur_oct[7]
 		var/cur_acc[7]
@@ -272,14 +274,14 @@
 		if(song.lines.len > 0 && !(playing))
 
 			// AUTOFIXED BY fix_string_idiocy.py
-			// C:\Users\Rob\Documents\Projects\vgstation13\code\game\objects\structures\musician.dm:262: dat += "<A href='?src=\ref[src];play=1'>Play Song</A><BR><BR>"
+			// C:\Users\Rob\\documents\\\projects\vgstation13\code\game\objects\structures\\musician.dm:262: dat += "<A href='?src=\ref[src];play=1'>Play Song</A><BR><BR>"
 			dat += {"<A href='?src=\ref[src];play=1'>Play Song</A><BR><BR>
 				<A href='?src=\ref[src];repeat=1'>Repeat Song: [repeat] times.</A><BR><BR>"}
 			// END AUTOFIX
 		if(playing)
 
 			// AUTOFIXED BY fix_string_idiocy.py
-			// C:\Users\Rob\Documents\Projects\vgstation13\code\game\objects\structures\musician.dm:265: dat += "<A href='?src=\ref[src];stop=1'>Stop Playing</A><BR>"
+			// C:\Users\Rob\\documents\\\projects\vgstation13\code\game\objects\structures\\musician.dm:265: dat += "<A href='?src=\ref[src];stop=1'>Stop Playing</A><BR>"
 			dat += {"<A href='?src=\ref[src];stop=1'>Stop Playing</A><BR>
 				Repeats left: [repeat].<BR><BR>"}
 			// END AUTOFIX
@@ -288,7 +290,7 @@
 	else
 
 		// AUTOFIXED BY fix_string_idiocy.py
-		// C:\Users\Rob\Documents\Projects\vgstation13\code\game\objects\structures\musician.dm:270: dat += "<A href='?src=\ref[src];edit=1'>Hide Editor</A><BR>"
+		// C:\Users\Rob\\documents\\\projects\vgstation13\code\game\objects\structures\\musician.dm:270: dat += "<A href='?src=\ref[src];edit=1'>Hide Editor</A><BR>"
 		dat += {"<A href='?src=\ref[src];edit=1'>Hide Editor</A><BR>
 			<A href='?src=\ref[src];newsong=1'>Start a New Song</A><BR>
 			<A href='?src=\ref[src];import=1'>Import a Song</A><BR><BR>"}

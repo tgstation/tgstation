@@ -1,5 +1,7 @@
 /obj/item/device/spacepod_equipment/weaponry/proc/fire_weapons()
 
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/item/device/spacepod_equipment/weaponry/proc/fire_weapons() called tick#: [world.time]")
+
 	if(my_atom.next_firetime > world.time)
 		usr << "<span class='warning'>Your weapons are recharging.</span>"
 		return
@@ -116,4 +118,6 @@
 	//set name = SPE.verb_name
 	//set desc = SPE.verb_desc
 	set src = usr.loc
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/item/device/spacepod_equipment/weaponry/proc/fire_weapon_system() called tick#: [world.time]")
+
 	SPE.fire_weapons()

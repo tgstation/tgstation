@@ -26,7 +26,7 @@
 	var/dat
 
 	// AUTOFIXED BY fix_string_idiocy.py
-	// C:\Users\Rob\Documents\Projects\vgstation13\code\game\machinery\computer\HolodeckControl.dm:28: dat += "<B>Holodeck Control System</B><BR>"
+	// C:\Users\Rob\\documents\\\projects\vgstation13\code\game\\machinery\computer\HolodeckControl.dm:28: dat += "<B>Holodeck Control System</B><BR>"
 	dat += {"<B>Holodeck Control System</B><BR>
 		<HR>Current Loaded Programs:<BR>
 		<A href='?src=\ref[src];emptycourt=1'>((Empty Court)</font>)</A><BR>
@@ -46,7 +46,7 @@
 
 	if(emagged)
 		// AUTOFIXED BY fix_string_idiocy.py
-		// C:\Users\Rob\Documents\Projects\vgstation13\code\game\machinery\computer\HolodeckControl.dm:47: dat += "<A href='?src=\ref[src];burntest=1'>(<font color=red>Begin Atmospheric Burn Simulation</font>)</A><BR>"
+		// C:\Users\Rob\\documents\\\projects\vgstation13\code\game\\machinery\computer\HolodeckControl.dm:47: dat += "<A href='?src=\ref[src];burntest=1'>(<font color=red>Begin Atmospheric Burn Simulation</font>)</A><BR>"
 		dat += {"<A href='?src=\ref[src];burntest=1'>(<font color=red>Begin Atmospheric Burn Simulation</font>)</A><BR>
 			Ensure the holodeck is empty before testing.<BR>
 			<BR>
@@ -62,7 +62,7 @@
 			dat += "<A href='?src=\ref[src];AIoverride=1'>(<font color=red>Override Safety Protocols?</font>)</A><BR>"
 
 		// AUTOFIXED BY fix_string_idiocy.py
-		// C:\Users\Rob\Documents\Projects\vgstation13\code\game\machinery\computer\HolodeckControl.dm:59: dat += "<BR>"
+		// C:\Users\Rob\\documents\\\projects\vgstation13\code\game\\machinery\computer\HolodeckControl.dm:59: dat += "<BR>"
 		dat += {"<BR>
 			Safety Protocols are <font color=green> ENABLED </font><BR>"}
 		// END AUTOFIX
@@ -230,6 +230,8 @@
 
 /obj/machinery/computer/HolodeckControl/proc/derez(var/obj/obj , var/silent = 1)
 
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/computer/HolodeckControl/proc/derez() called tick#: [world.time]")
+
 	holographic_items.Remove(obj)
 
 	if(obj == null)
@@ -248,12 +250,16 @@
 
 /obj/machinery/computer/HolodeckControl/proc/checkInteg(var/area/A)
 
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/computer/HolodeckControl/proc/checkInteg() called tick#: [world.time]")
+
 	for(var/turf/T in A)
 		if(istype(T, /turf/space))
 			return 0
 	return 1
 
 /obj/machinery/computer/HolodeckControl/proc/togglePower(var/toggleOn = 0)
+
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/computer/HolodeckControl/proc/togglePower() called tick#: [world.time]")
 
 	if(toggleOn)
 		var/area/targetsource = locate(/area/holodeck/source_emptycourt)
@@ -280,6 +286,8 @@
 		active = 0
 
 /obj/machinery/computer/HolodeckControl/proc/loadProgram(var/area/A)
+
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/computer/HolodeckControl/proc/loadProgram() called tick#: [world.time]")
 
 	if(world.time < (last_change + 25))
 		if(world.time < (last_change + 15))//To prevent super-spam clicking, reduced process size and annoyance -Sieve
@@ -322,6 +330,7 @@
 				new /mob/living/simple_animal/hostile/carp/holocarp(L.loc)
 
 /obj/machinery/computer/HolodeckControl/proc/emergencyShutdown()
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/computer/HolodeckControl/proc/emergencyShutdown() called tick#: [world.time]")
 	//Get rid of any items
 	for(var/item in holographic_items)
 		derez(item)
@@ -593,6 +602,8 @@
 		icon_state = "auth_off"
 
 /obj/machinery/readybutton/proc/begin_event()
+
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/readybutton/proc/begin_event() called tick#: [world.time]")
 
 	eventstarted = 1
 

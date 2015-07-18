@@ -26,7 +26,7 @@
 	var/message = "<span class='notice'>System bootup complete. Please select an option.</span>"	// The message that shows on the main menu.
 	var/auth = 0 // Are they authenticated?
 	var/optioncount = 7
-	// Custom Message Properties
+	// Custom Message properties
 	var/customsender = "System Administrator"
 	var/obj/item/device/pda/customrecepient = null
 	var/customjob		= "Admin"
@@ -91,21 +91,21 @@
 	var/dat = "<head><title>Message Monitor Console</title></head><body>"
 
 	// AUTOFIXED BY fix_string_idiocy.py
-	// C:\Users\Rob\Documents\Projects\vgstation13\code\game\machinery\computer\message.dm:93: dat += "<center><h2>Message Monitor Console</h2></center><hr>"
+	// C:\Users\Rob\\documents\\\projects\vgstation13\code\game\\machinery\computer\\message.dm:93: dat += "<center><h2>Message Monitor Console</h2></center><hr>"
 	dat += {"<center><h2>Message Monitor Console</h2></center><hr>
 		<center><h4><font color='blue'[message]</h5></center>"}
 	// END AUTOFIX
 	if(auth)
 
 		// AUTOFIXED BY fix_string_idiocy.py
-		// C:\Users\Rob\Documents\Projects\vgstation13\code\game\machinery\computer\message.dm:97: dat += "<h4><dd><A href='?src=\ref[src];auth=1'>&#09;<font color='green'>\[Authenticated\]</font></a>&#09;/"
+		// C:\Users\Rob\\documents\\\projects\vgstation13\code\game\\machinery\computer\\message.dm:97: dat += "<h4><dd><A href='?src=\ref[src];auth=1'>&#09;<font color='green'>\[Authenticated\]</font></a>&#09;/"
 		dat += {"<h4><dd><A href='?src=\ref[src];auth=1'>&#09;<font color='green'>\[Authenticated\]</font></a>&#09;/
 			Server Power: <A href='?src=\ref[src];active=1'>[src.linkedServer && src.linkedServer.active ? "<font color='green'>\[On\]</font>":"<font color='red'>\[Off\]</font>"]</a></h4>"}
 		// END AUTOFIX
 	else
 
 		// AUTOFIXED BY fix_string_idiocy.py
-		// C:\Users\Rob\Documents\Projects\vgstation13\code\game\machinery\computer\message.dm:100: dat += "<h4><dd><A href='?src=\ref[src];auth=1'>&#09;<font color='red'>\[Unauthenticated\]</font></a>&#09;/"
+		// C:\Users\Rob\\documents\\\projects\vgstation13\code\game\\machinery\computer\\message.dm:100: dat += "<h4><dd><A href='?src=\ref[src];auth=1'>&#09;<font color='red'>\[Unauthenticated\]</font></a>&#09;/"
 		dat += {"<h4><dd><A href='?src=\ref[src];auth=1'>&#09;<font color='red'>\[Unauthenticated\]</font></a>&#09;/
 			Server Power: <u>[src.linkedServer && src.linkedServer.active ? "<font color='green'>\[On\]</font>":"<font color='red'>\[Off\]</font>"]</u></h4>"}
 		// END AUTOFIX
@@ -127,7 +127,7 @@
 				else
 
 					// AUTOFIXED BY fix_string_idiocy.py
-					// C:\Users\Rob\Documents\Projects\vgstation13\code\game\machinery\computer\message.dm:119: dat += "<dd><A href='?src=\ref[src];view=1'>&#09;[++i]. View Message Logs </a><br></dd>"
+					// C:\Users\Rob\\documents\\\projects\vgstation13\code\game\\machinery\computer\\message.dm:119: dat += "<dd><A href='?src=\ref[src];view=1'>&#09;[++i]. View Message Logs </a><br></dd>"
 					dat += {"<dd><A href='?src=\ref[src];view=1'>&#09;[++i]. View Message Logs </a><br></dd>
 						<dd><A href='?src=\ref[src];viewr=1'>&#09;[++i]. View Request Console Logs </a></br></dd>
 						<dd><A href='?src=\ref[src];clear=1'>&#09;[++i]. Clear Message Logs</a><br></dd>
@@ -148,7 +148,7 @@
 			if(!auth)
 				dat += "<br><hr><dd><span class='notice'>Please authenticate with the server in order to show additional options.</span>"
 			else
-				dat += "<br><hr><dd><span class='warning'>Reg, #514 forbids sending messages to a Head of Staff containing Erotic Rendering Properties.</span>"
+				dat += "<br><hr><dd><span class='warning'>Reg, #514 forbids sending messages to a Head of Staff containing Erotic Rendering properties.</span>"
 
 		//Message Logs
 		if(1)
@@ -158,7 +158,7 @@
 			//var/message = "Blank" //transferred message
 
 			// AUTOFIXED BY fix_string_idiocy.py
-			// C:\Users\Rob\Documents\Projects\vgstation13\code\game\machinery\computer\message.dm:146: dat += "<center><A href='?src=\ref[src];back=1'>Back</a> - <A href='?src=\ref[src];refresh=1'>Refresh</center><hr>"
+			// C:\Users\Rob\\documents\\\projects\vgstation13\code\game\\machinery\computer\\message.dm:146: dat += "<center><A href='?src=\ref[src];back=1'>Back</a> - <A href='?src=\ref[src];refresh=1'>Refresh</center><hr>"
 			dat += {"<center><A href='?src=\ref[src];back=1'>Back</a> - <A href='?src=\ref[src];refresh=1'>Refresh</center><hr>
 				<table border='1' width='100%'><tr><th width = '5%'>X</th><th width='15%'>Sender</th><th width='15%'>Recipient</th><th width='300px' word-wrap: break-word>Message</th></tr>"}
 			// END AUTOFIX
@@ -175,7 +175,7 @@
 			if(istype(user, /mob/living/silicon/ai) || istype(user, /mob/living/silicon/robot))
 
 				// AUTOFIXED BY fix_string_idiocy.py
-				// C:\Users\Rob\Documents\Projects\vgstation13\code\game\machinery\computer\message.dm:159: dat += "Brute-forcing for server key.<br> It will take 20 seconds for every character that the password has."
+				// C:\Users\Rob\\documents\\\projects\vgstation13\code\game\\machinery\computer\\message.dm:159: dat += "Brute-forcing for server key.<br> It will take 20 seconds for every character that the password has."
 				dat += {"Brute-forcing for server key.<br> It will take 20 seconds for every character that the password has.
 					In the meantime, this console can reveal your true intentions if you let someone access it. Make sure no humans enter the room during that time."}
 				// END AUTOFIX
@@ -273,6 +273,7 @@
 	return src.attack_hand(user)
 
 /obj/machinery/computer/message_monitor/proc/BruteForce(mob/user as mob)
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/computer/message_monitor/proc/BruteForce() called tick#: [world.time]")
 	if(isnull(linkedServer))
 		user << "<span class='warning'>Could not complete brute-force: Linked Server Disconnected!</span>"
 	else
@@ -283,10 +284,12 @@
 	src.screen = 0 // Return the screen back to normal
 
 /obj/machinery/computer/message_monitor/proc/UnmagConsole()
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/computer/message_monitor/proc/UnmagConsole() called tick#: [world.time]")
 	src.icon_state = normal_icon
 	src.emagged = 0
 
 /obj/machinery/computer/message_monitor/proc/ResetMessage()
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/computer/message_monitor/proc/ResetMessage() called tick#: [world.time]")
 	customsender 	= "System Administrator"
 	customrecepient = null
 	custommessage 	= "This is a test, please ignore."

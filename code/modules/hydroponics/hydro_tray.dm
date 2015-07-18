@@ -361,6 +361,8 @@
 //Process reagents being input into the tray.
 /obj/machinery/portable_atmospherics/hydroponics/proc/process_reagents()
 
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/portable_atmospherics/hydroponics/proc/process_reagents() called tick#: [world.time]")
+
 	if(!reagents) return
 
 	if(reagents.total_volume <= 0)
@@ -413,6 +415,8 @@
 //Harvests the product of a plant.
 /obj/machinery/portable_atmospherics/hydroponics/proc/harvest(var/mob/user)
 
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/portable_atmospherics/hydroponics/proc/harvest() called tick#: [world.time]")
+
 	//Harvest the product of the plant,
 	if(!seed || !harvest || !user)
 		return
@@ -441,6 +445,7 @@
 
 //Clears out a dead plant.
 /obj/machinery/portable_atmospherics/hydroponics/proc/remove_dead(var/mob/user)
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/portable_atmospherics/hydroponics/proc/remove_dead() called tick#: [world.time]")
 	if(!user || !dead) return
 
 	if(closed_system)
@@ -518,6 +523,8 @@
  // If a weed growth is sufficient, this proc is called.
 /obj/machinery/portable_atmospherics/hydroponics/proc/weed_invasion()
 
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/portable_atmospherics/hydroponics/proc/weed_invasion() called tick#: [world.time]")
+
 	//Remove the seed if something is already planted.
 	if(seed) seed = null
 	seed = seed_types[pick(list("reishi","nettles","amanita","mushrooms","plumphelmet","towercap","harebells","weeds"))]
@@ -538,6 +545,8 @@
 
 /obj/machinery/portable_atmospherics/hydroponics/proc/mutate(var/severity)
 
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/portable_atmospherics/hydroponics/proc/mutate() called tick#: [world.time]")
+
 	// No seed, no mutations.
 	if(!seed)
 		return
@@ -557,6 +566,7 @@
 	return
 
 /obj/machinery/portable_atmospherics/hydroponics/proc/check_level_sanity()
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/portable_atmospherics/hydroponics/proc/check_level_sanity() called tick#: [world.time]")
 	//Make sure various values are sane.
 	if(seed)
 		health =     max(0,min(seed.endurance,health))
@@ -572,6 +582,8 @@
 	toxins =         max(0,min(toxins,10))
 
 /obj/machinery/portable_atmospherics/hydroponics/proc/mutate_species()
+
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/portable_atmospherics/hydroponics/proc/mutate_species() called tick#: [world.time]")
 
 	var/previous_plant = seed.display_name
 	var/newseed = seed.get_mutant_variant()
@@ -786,6 +798,7 @@
 	view_contents(user)
 
 /obj/machinery/portable_atmospherics/hydroponics/proc/view_contents(mob/user)
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/portable_atmospherics/hydroponics/proc/view_contents() called tick#: [world.time]")
 	if(src.seed && !src.dead)
 		user << "[src] has <span class='info'>[src.seed.display_name]</span> planted."
 		if(src.health <= (src.seed.endurance / 2))
@@ -830,6 +843,7 @@
 	set name = "Toggle Tray Lid"
 	set category = "Object"
 	set src in view(1)
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""]) \\/obj/machinery/portable_atmospherics/hydroponics/verb/close_lid()  called tick#: [world.time]")
 
 	if(!usr || usr.stat || usr.restrained() || (usr.status_flags & FAKEDEATH))
 		return

@@ -36,7 +36,7 @@
 			// Main Menu
 
 			// AUTOFIXED BY fix_string_idiocy.py
-			// C:\Users\Rob\Documents\Projects\vgstation13\code\modules\library\lib_machines.dm:141: dat += "<A href='?src=\ref[src];switchscreen=1'>1. View General Inventory</A><BR>"
+			// C:\Users\Rob\\documents\\\projects\vgstation13\code\\modules\library\lib_machines.dm:141: dat += "<A href='?src=\ref[src];switchscreen=1'>1. View General Inventory</A><BR>"
 			dat += {"<ol>
 				<li><A href='?src=\ref[src];switchscreen=1'>View General Inventory</A></li>
 				<li><A href='?src=\ref[src];switchscreen=2'>View Checked Out Inventory</A></li>
@@ -78,7 +78,7 @@
 					timedue = round(timedue)
 
 				// AUTOFIXED BY fix_string_idiocy.py
-				// C:\Users\Rob\Documents\Projects\vgstation13\code\modules\library\lib_machines.dm:175: dat += "\"[b.bookname]\", Checked out to: [b.mobname]<BR>--- Taken: [timetaken] minutes ago, Due: in [timedue] minutes<BR>"
+				// C:\Users\Rob\\documents\\\projects\vgstation13\code\\modules\library\lib_machines.dm:175: dat += "\"[b.bookname]\", Checked out to: [b.mobname]<BR>--- Taken: [timetaken] minutes ago, Due: in [timedue] minutes<BR>"
 				dat += {"\"[b.bookname]\", Checked out to: [b.mobname]<BR>--- Taken: [timetaken] minutes ago, Due: in [timedue] minutes<BR>
 					<A href='?src=\ref[src];checkin=\ref[b]'>(Check In)</A><BR><BR>"}
 				// END AUTOFIX
@@ -87,7 +87,7 @@
 			// Check Out a Book
 
 			// AUTOFIXED BY fix_string_idiocy.py
-			// C:\Users\Rob\Documents\Projects\vgstation13\code\modules\library\lib_machines.dm:180: dat += "<h3>Check Out a Book</h3><BR>"
+			// C:\Users\Rob\\documents\\\projects\vgstation13\code\\modules\library\lib_machines.dm:180: dat += "<h3>Check Out a Book</h3><BR>"
 			dat += {"<h3>Check Out a Book</h3><BR>
 				Book: [src.buffer_book]
 				<A href='?src=\ref[src];editbook=1'>\[Edit\]</A><BR>
@@ -107,7 +107,7 @@
 				num_results = src.get_num_results()
 				num_pages = Ceiling(num_results/LIBRARY_BOOKS_PER_PAGE)
 				// AUTOFIXED BY fix_string_idiocy.py
-				// C:\Users\Rob\Documents\Projects\vgstation13\code\modules\library\lib_machines.dm:196: dat += "<A href='?src=\ref[src];orderbyid=1'>(Order book by SS<sup>13</sup>BN)</A><BR><BR>"
+				// C:\Users\Rob\\documents\\\projects\vgstation13\code\\modules\library\lib_machines.dm:196: dat += "<A href='?src=\ref[src];orderbyid=1'>(Order book by SS<sup>13</sup>BN)</A><BR><BR>"
 				dat += {"<ul>
 					<li><A href='?src=\ref[src];id=-1'>(Order book by SS<sup>13</sup>BN)</A></li>
 				</ul>"}
@@ -165,7 +165,7 @@
 			else
 
 				// AUTOFIXED BY fix_string_idiocy.py
-				// C:\Users\Rob\Documents\Projects\vgstation13\code\modules\library\lib_machines.dm:222: dat += "<TT>Data marked for upload...</TT><BR>"
+				// C:\Users\Rob\\documents\\\projects\vgstation13\code\\modules\library\lib_machines.dm:222: dat += "<TT>Data marked for upload...</TT><BR>"
 				dat += {"<TT>Data marked for upload...</TT><BR>
 					<TT>Title: </TT>[scanner.cache.name]<BR>"}
 				// END AUTOFIX
@@ -173,7 +173,7 @@
 					scanner.cache.author = "Anonymous"
 
 				// AUTOFIXED BY fix_string_idiocy.py
-				// C:\Users\Rob\Documents\Projects\vgstation13\code\modules\library\lib_machines.dm:226: dat += "<TT>Author: </TT><A href='?src=\ref[src];setauthor=1'>[scanner.cache.author]</A><BR>"
+				// C:\Users\Rob\\documents\\\projects\vgstation13\code\\modules\library\lib_machines.dm:226: dat += "<TT>Author: </TT><A href='?src=\ref[src];setauthor=1'>[scanner.cache.author]</A><BR>"
 				dat += {"<TT>Author: </TT><A href='?src=\ref[src];setauthor=1'>[scanner.cache.author]</A><BR>
 					<TT>Category: </TT><A href='?src=\ref[src];setcategory=1'>[upload_category]</A><BR>
 					<A href='?src=\ref[src];upload=1'>\[Upload\]</A><BR>"}
@@ -204,7 +204,7 @@
 		if(8)
 
 			// AUTOFIXED BY fix_string_idiocy.py
-			// C:\Users\Rob\Documents\Projects\vgstation13\code\modules\library\lib_machines.dm:231: dat += "<h3>Accessing Forbidden Lore Vault v 1.3</h3>"
+			// C:\Users\Rob\\documents\\\projects\vgstation13\code\\modules\library\lib_machines.dm:231: dat += "<h3>Accessing Forbidden Lore Vault v 1.3</h3>"
 			dat += {"<h3>Accessing Forbidden Lore Vault v 1.3</h3>
 				Are you absolutely sure you want to proceed? EldritchTomes Inc. takes no responsibilities for loss of sanity resulting from this action.<p>
 				<A href='?src=\ref[src];arccheckout=1'>Yes.</A><BR>
@@ -465,6 +465,7 @@
  */
 
 /obj/machinery/computer/library/checkout/proc/make_external_book(var/datum/cachedbook/newbook)
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/computer/library/checkout/proc/make_external_book() called tick#: [world.time]")
 	if(!newbook || !newbook.id)
 		return
 	var/obj/item/weapon/book/B = new newbook.path(src.loc)

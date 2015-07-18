@@ -86,6 +86,7 @@
 	update_icon()
 
 /obj/machinery/computer/proc/set_broken()
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/computer/proc/set_broken() called tick#: [world.time]")
 	stat |= BROKEN
 	update_icon()
 

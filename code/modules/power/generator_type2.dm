@@ -87,6 +87,7 @@
 	interact(user)
 
 /obj/machinery/power/generator/type2/proc/get_loop_state(var/loop_name,var/loop_dir,var/obj/machinery/atmospherics/unary/generator_input/loop)
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/power/generator/type2/proc/get_loop_state() called tick#: [world.time]")
 	if(!loop)
 		return "<b>[loop_name] Loop</b> ([dir2text(loop_dir)], <span style=\"color:red;font-weight:bold;\">UNCONNECTED</span>)<br />"
 	else
@@ -108,7 +109,7 @@
 
 
 	// AUTOFIXED BY fix_string_idiocy.py
-	// C:\Users\Rob\Documents\Projects\vgstation13\code\modules\power\generator_type2.dm:113: t += "Output : [round(lastgen)] W<BR><BR>"
+	// C:\Users\Rob\\documents\\\projects\vgstation13\code\\modules\\\power\generator_type2.dm:113: t += "Output : [round(lastgen)] W<BR><BR>"
 	t += {"Output : [round(lastgen)] W<BR><BR>
 [get_loop_state("Cold",input1_dir,input1)]
 [get_loop_state("Hot",input2_dir,input2)]

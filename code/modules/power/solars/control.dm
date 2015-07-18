@@ -108,6 +108,7 @@
 
 // called by solar tracker when sun position changes (somehow, that's not supposed to be in process)
 /obj/machinery/power/solar/control/proc/tracker_update(angle)
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/power/solar/control/proc/tracker_update() called tick#: [world.time]")
 	if(track != 2 || stat & (NOPOWER | BROKEN))
 		return
 
@@ -130,7 +131,7 @@
 
 
 	// AUTOFIXED BY fix_string_idiocy.py
-	// C:\Users\Rob\Documents\Projects\vgstation13\code\modules\power\solar.dm:407: var/t = "<TT><B>Solar Generator Control</B><HR><PRE>"
+	// C:\Users\Rob\\documents\\\projects\vgstation13\code\\modules\\\power\solar.dm:407: var/t = "<TT><B>Solar Generator Control</B><HR><PRE>"
 	var/t = {"<TT><B>Solar Generator Control</B><HR><PRE>
 <B>Generated power</B> : [round(lastgen)] W<BR>
 Station Orbital Period : [60/abs(sun.rotationRate)] minutes<BR>
@@ -150,7 +151,7 @@ Tracking :"}
 
 
 	// AUTOFIXED BY fix_string_idiocy.py
-	// C:\Users\Rob\Documents\Projects\vgstation13\code\modules\power\solar.dm:423: t += "Manual Tracking Rate: [rate_control(src,"tdir","[trackrate/10]&deg/min ([trackdir<0 ? "CCW" : "CW"])",1,10)]<BR>"
+	// C:\Users\Rob\\documents\\\projects\vgstation13\code\\modules\\\power\solar.dm:423: t += "Manual Tracking Rate: [rate_control(src,"tdir","[trackrate/10]&deg/min ([trackdir<0 ? "CCW" : "CW"])",1,10)]<BR>"
 	t += {"Manual Tracking Rate: [rate_control(src,"tdir","[trackrate/10]&deg/min ([trackdir<0 ? "CCW" : "CW"])",1,10)]<BR>
 Manual Tracking Direction:"}
 	// END AUTOFIX
@@ -210,6 +211,7 @@ Manual Tracking Direction:"}
 	updateUsrDialog()
 
 /obj/machinery/power/solar/control/proc/set_panels(var/cdir)
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/power/solar/control/proc/set_panels() called tick#: [world.time]")
 	for(var/obj/machinery/power/solar/panel/P in getPowernetNodes())
 		if(get_dist(P, src) < SOLAR_MAX_DIST)
 			if(!P.control)
@@ -222,6 +224,7 @@ Manual Tracking Direction:"}
 	update_icon()
 
 /obj/machinery/power/solar/control/proc/broken()
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/power/solar/control/proc/broken() called tick#: [world.time]")
 	stat |= BROKEN
 	update_icon()
 

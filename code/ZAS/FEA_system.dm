@@ -57,6 +57,7 @@ var/kill_air = 0
 var/tick_multiplier = 2
 
 atom/proc/CanPass(atom/movable/mover, turf/target, height=1.5, air_group = 0)
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\datom/proc/CanPass() called tick#: [world.time]")
 	//Purpose: Determines if the object (or airflow) can pass this atom.
 	//Called by: Movement, airflow.
 	//Inputs: The moving atom (optional), target turf, "height" and air group
@@ -120,6 +121,7 @@ var/datum/controller/air_system/air_master
 
 
 /datum/controller/air_system/proc/setup()
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/controller/air_system/proc/setup() called tick#: [world.time]")
 	//Purpose: Call this at the start to setup air groups geometry
 	//    (Warning: Very processor intensive but only must be done once per round)
 	//Called by: Gameticker/Master controller
@@ -153,6 +155,7 @@ Total Unsimulated Turfs: [world.maxx*world.maxy*world.maxz - simulated_turf_coun
 	spawn start()
 
 /datum/controller/air_system/proc/start()
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/controller/air_system/proc/start() called tick#: [world.time]")
 	//Purpose: This is kicked off by the master controller, and controls the processing of all atmosphere.
 	//Called by: Master controller
 	//Inputs: None.
@@ -174,6 +177,7 @@ Total Unsimulated Turfs: [world.maxx*world.maxy*world.maxz - simulated_turf_coun
 	*/
 
 /datum/controller/air_system/proc/tick()
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/controller/air_system/proc/tick() called tick#: [world.time]")
 	. = 1 //Set the default return value, for runtime detection.
 
 	tick_progress = "update_air_properties"

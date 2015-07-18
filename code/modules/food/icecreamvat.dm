@@ -23,6 +23,7 @@
 // Utilities ///////////////////////////////////////////////////
 
 /obj/machinery/cooking/icemachine/proc/generateName(reagentName)
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/cooking/icemachine/proc/generateName() called tick#: [world.time]")
 	. = pick("Mr. ","Mrs. ","Super ","Happy ","Whippy ")
 	. += pick("Whippy","Slappy","Creamy","Dippy","Swirly","Swirl")
 	if (reagentName) . += " [reagentName]"
@@ -130,6 +131,7 @@
 	return
 
 /obj/machinery/cooking/icemachine/proc/showToppings()
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/cooking/icemachine/proc/showToppings() called tick#: [world.time]")
 	var/dat = ""
 	if(src.reagents.total_volume <= 500)
 		dat += "<HR>"
@@ -146,6 +148,7 @@
 	return dat
 
 /obj/machinery/cooking/icemachine/proc/showReagents(container)
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/cooking/icemachine/proc/showReagents() called tick#: [world.time]")
 	//1 = beaker / 2 = internal
 	var/dat = ""
 	if(container == 1)

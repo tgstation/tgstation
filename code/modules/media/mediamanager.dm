@@ -71,6 +71,7 @@ function SetMusic(url, time, volume) {
 /hook_handler/soundmanager
 	// Set up player on login
 	proc/OnLogin(var/list/args)
+		writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\proc/OnLogin() called tick#: [world.time]")
 		//testing("Received OnLogin.")
 		var/client/C = args["client"]
 		C.media = new /datum/media_manager(args["mob"])
@@ -78,6 +79,7 @@ function SetMusic(url, time, volume) {
 		C.media.update_music()
 
 	proc/OnReboot(var/list/args)
+		writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\proc/OnReboot() called tick#: [world.time]")
 		//testing("Received OnReboot.")
 		// Stop all music.
 		for(var/mob/M in mob_list)
@@ -86,6 +88,7 @@ function SetMusic(url, time, volume) {
 
 	// Update when moving between areas.
 	proc/OnMobAreaChange(var/list/args)
+		writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\proc/OnMobAreaChange() called tick#: [world.time]")
 		var/mob/M = args["mob"]
 		//if(istype(M, /mob/living/carbon/human)||istype(M, /mob/dead/observer))
 		//	testing("Received OnMobAreaChange for [M.type] [M] (M.client=[M.client==null?"null":"/client"]).")
@@ -95,20 +98,24 @@ function SetMusic(url, time, volume) {
 
 /hook_handler/shuttlejukes
 	proc/OnEmergencyShuttleDeparture(var/list/args)
+		writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\proc/OnEmergencyShuttleDeparture() called tick#: [world.time]")
 		for(var/obj/machinery/media/jukebox/superjuke/shuttle/SJ in machines)
 			SJ.playing=1
 			SJ.update_music()
 			SJ.update_icon()
 
 /mob/proc/update_music()
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/proc/update_music() called tick#: [world.time]")
 	if (client && client.media && !client.media.forced)
 		client.media.update_music()
 
 /mob/proc/stop_all_music()
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/proc/stop_all_music() called tick#: [world.time]")
 	if (client && client.media)
 		client.media.push_music("",0,1)
 
 /mob/proc/force_music(var/url,var/start,var/volume=1)
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/proc/force_music() called tick#: [world.time]")
 	if (client && client.media)
 		client.media.forced=(url!="")
 		if(client.media.forced)
@@ -155,12 +162,14 @@ function SetMusic(url, time, volume) {
 
 	// Actually pop open the player in the background.
 	proc/open()
+		writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\proc/open() called tick#: [world.time]")
 		owner << browse(null, "window=[window]")
 		owner << browse(playerstyle, "window=[window]")
 		send_update()
 
 	// Tell the player to play something via JS.
 	proc/send_update()
+		writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\proc/send_update() called tick#: [world.time]")
 		if(!(owner.prefs))
 			return
 		if(!(owner.prefs.toggles & SOUND_STREAMING) && url != "")
@@ -169,6 +178,7 @@ function SetMusic(url, time, volume) {
 		owner << output(list2params(list(url, (world.time - start_time) / 10, volume*source_volume)), "[window]:SetMusic")
 
 	proc/push_music(var/targetURL,var/targetStartTime,var/targetVolume)
+		writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\proc/push_music() called tick#: [world.time]")
 		if (url != targetURL || abs(targetStartTime - start_time) > 1 || abs(targetVolume - source_volume) > 0.1 /* 10% */)
 			url = targetURL
 			start_time = targetStartTime
@@ -176,10 +186,12 @@ function SetMusic(url, time, volume) {
 			send_update()
 
 	proc/stop_music()
+		writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\proc/stop_music() called tick#: [world.time]")
 		push_music("",0,1)
 
 	// Scan for media sources and use them.
 	proc/update_music()
+		writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\proc/update_music() called tick#: [world.time]")
 		var/targetURL = ""
 		var/targetStartTime = 0
 		var/targetVolume = 0
@@ -203,6 +215,7 @@ function SetMusic(url, time, volume) {
 		push_music(targetURL,targetStartTime,targetVolume)
 
 	proc/update_volume(var/value)
+		writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\proc/update_volume() called tick#: [world.time]")
 		volume = value
 		send_update()
 
@@ -210,6 +223,7 @@ function SetMusic(url, time, volume) {
 	set name = "Set Volume"
 	set category = "Preferences"
 	set desc = "Set jukebox volume"
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""]) \\/client/verb/change_volume()  called tick#: [world.time]")
 	if(!media || !istype(media))
 		usr << "You have no media datum to change, if you're not in the lobby tell an admin."
 		return

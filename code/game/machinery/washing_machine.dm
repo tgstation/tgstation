@@ -27,6 +27,7 @@
 	set name = "Start Washing"
 	set category = "Object"
 	set src in oview(1)
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""]) \\/obj/machinery/washing_machine/verb/start()  called tick#: [world.time]")
 
 	if( wash_state != 4 )
 		usr << "The washing machine cannot run in this state."
@@ -200,6 +201,7 @@
 	set name = "Climb out"
 	set category = "Object"
 	set src in usr.loc
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""]) \\/obj/machinery/washing_machine/verb/climb_out()  called tick#: [world.time]")
 
 	sleep(20)
 	if(wash_state in list(1,3,6) )

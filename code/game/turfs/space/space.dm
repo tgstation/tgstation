@@ -7,7 +7,7 @@
 	temperature = TCMB
 	thermal_conductivity = OPEN_HEAT_TRANSFER_COEFFICIENT
 	heat_capacity = 700000
-	intact = 0 //No seriously, that's not a joke. Allows cable to be laid PROPERLY on catwalks
+	intact = 0 //No seriously, that's not a joke. Allows cable to be laid properLY on catwalks
 	dynamic_lighting = 0
 
 /turf/space/New()
@@ -128,6 +128,7 @@
 					A.loc.Entered(A)
 
 /turf/space/proc/Sandbox_Spacemove(atom/movable/A as mob|obj)
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/turf/space/proc/Sandbox_Spacemove() called tick#: [world.time]")
 	var/cur_x
 	var/cur_y
 	var/next_x

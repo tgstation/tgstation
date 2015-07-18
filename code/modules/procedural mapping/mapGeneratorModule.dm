@@ -11,6 +11,7 @@
 
 //Syncs the module up with it's mother
 /datum/mapGeneratorModule/proc/sync(var/datum/mapGenerator/mum)
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/mapGeneratorModule/proc/sync() called tick#: [world.time]")
 	mother = null
 	if(mum)
 		mother = mum
@@ -18,6 +19,7 @@
 
 //Generates it's spawnable atoms and turfs
 /datum/mapGeneratorModule/proc/generate()
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/mapGeneratorModule/proc/generate() called tick#: [world.time]")
 	if(!mother)
 		return
 	var/list/map = mother.map
@@ -27,6 +29,7 @@
 
 //Place a spawnable atom or turf on this turf
 /datum/mapGeneratorModule/proc/place(var/turf/T)
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/mapGeneratorModule/proc/place() called tick#: [world.time]")
 	if(!T)
 		return 0
 
@@ -105,6 +108,7 @@
 
 //Checks and Rejects dense turfs
 /datum/mapGeneratorModule/proc/checkPlaceAtom(var/turf/T)
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/mapGeneratorModule/proc/checkPlaceAtom() called tick#: [world.time]")
 	. = 1
 	if(!T)
 		return 0

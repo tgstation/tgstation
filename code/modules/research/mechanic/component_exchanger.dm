@@ -91,6 +91,8 @@
 
 /obj/item/weapon/storage/component_exchanger/proc/component_interaction(obj/machinery/M, mob/user)
 
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/item/weapon/storage/component_exchanger/proc/component_interaction() called tick#: [world.time]")
+
 	if(!M.Adjacent(user)) //We aren't hugging the machine, so don't bother. This'll prop up often
 		user << "<span class='warning'>A blue screen suddenly flashes on \the [src]'s HUD. It appears the critical failure was caused by suddenly yanking it out of \the [M]'s maintenance hatch.</span>"
 		working = 0
@@ -178,6 +180,8 @@
 
 //So we don't copy the same thing a thousand fucking times
 /obj/item/weapon/storage/component_exchanger/proc/perform_indiv_replace(var/obj/item/weapon/stock_parts/P, var/obj/item/weapon/stock_parts/R, var/obj/machinery/M)
+
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/item/weapon/storage/component_exchanger/proc/perform_indiv_replace() called tick#: [world.time]")
 
 	//Move the old part into our component exchanger
 	M.component_parts -= P

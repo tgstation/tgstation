@@ -17,6 +17,7 @@
 
 var/global/global_playlists = list()
 /proc/load_juke_playlists()
+	writepanic("[__FILE__].[__LINE__] (no type)([usr ? usr.ckey : ""])  \\/proc/load_juke_playlists() called tick#: [world.time]")
 	for(var/playlist_id in list("bar", "jazz", "rock", "muzak", "emagged", "endgame", "clockwork", "vidyaone", "vidyatwo", "vidyathree", "vidyafour"))
 		var/url="[config.media_base_url]/index.php?playlist=[playlist_id]"
 		testing("Updating playlist from [url]...")
@@ -46,6 +47,7 @@ var/global/global_playlists = list()
 			global_playlists["[playlist_id]"] = playlist.Copy()
 
 /obj/machinery/media/jukebox/proc/retrieve_playlist(var/playlistid = playlist_id)
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/media/jukebox/proc/retrieve_playlist() called tick#: [world.time]")
 	playlist_id = playlistid
 	if(global_playlists["[playlistid]"])
 		var/list/temp = global_playlists["[playlistid]"]
@@ -115,6 +117,7 @@ var/global/global_playlists = list()
 		length = text2num(json["length"])
 
 	proc/display()
+		writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\proc/display() called tick#: [world.time]")
 		var/str="\"[title]\""
 		if(artist!="")
 			str += ", by [artist]"
@@ -123,6 +126,7 @@ var/global/global_playlists = list()
 		return str
 
 	proc/displaytitle()
+		writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\proc/displaytitle() called tick#: [world.time]")
 		if(artist==""&&title=="")
 			return "\[NO TAGS\]"
 		var/str=""
@@ -228,6 +232,7 @@ var/global/loopModeNames=list(
 			overlays += "[state_base]-running"
 
 /obj/machinery/media/jukebox/proc/check_reload()
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/media/jukebox/proc/check_reload() called tick#: [world.time]")
 	return world.time > last_reload + JUKEBOX_RELOAD_COOLDOWN
 
 /obj/machinery/media/jukebox/attack_hand(var/mob/user)
@@ -259,6 +264,7 @@ var/global/loopModeNames=list(
 	popup.open()
 
 /obj/machinery/media/jukebox/proc/ScreenMain(var/mob/user)
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/media/jukebox/proc/ScreenMain() called tick#: [world.time]")
 	var/t = "<h1>Jukebox Interface</h1>"
 	t += "<b>Power:</b> <a href='?src=\ref[src];power=1'>[playing?"On":"Off"]</a><br />"
 	t += "<b>Play Mode:</b> <a href='?src=\ref[src];mode=1'>[loopModeNames[loop_mode]]</a><br />"
@@ -304,6 +310,7 @@ var/global/loopModeNames=list(
 	return t
 
 /obj/machinery/media/jukebox/proc/ScreenPayment(var/mob/user)
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/media/jukebox/proc/ScreenPayment() called tick#: [world.time]")
 	var/t = "<h1>Pay for Song</h1>"
 	var/datum/song_info/song=playlist[selected_song]
 	t += {"
@@ -315,6 +322,7 @@ var/global/loopModeNames=list(
 	return t
 
 /obj/machinery/media/jukebox/proc/ScreenSettings(var/mob/user)
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/media/jukebox/proc/ScreenSettings() called tick#: [world.time]")
 	if(!linked_account)
 		linked_account = station_account
 	var/dat={"<h1>Settings</h1>
@@ -426,6 +434,7 @@ var/global/loopModeNames=list(
 		update_icon()
 
 /obj/machinery/media/jukebox/proc/successful_purchase()
+		writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/media/jukebox/proc/successful_purchase() called tick#: [world.time]")
 		next_song = selected_song
 		selected_song = 0
 		screen = JUKEBOX_SCREEN_MAIN
@@ -564,6 +573,7 @@ var/global/loopModeNames=list(
 	..()
 
 /obj/machinery/media/jukebox/proc/stop_playing()
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/media/jukebox/proc/stop_playing() called tick#: [world.time]")
 	//current_song=0
 	playing=0
 	update_music()
@@ -703,12 +713,14 @@ var/global/loopModeNames=list(
 		deploy()
 
 /obj/machinery/media/jukebox/superjuke/adminbus/proc/deploy()
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/media/jukebox/superjuke/adminbus/proc/deploy() called tick#: [world.time]")
 	update_media_source()
 	icon_state = "jukebox"
 	set_light(4)
 	flick("deploying",src)
 
 /obj/machinery/media/jukebox/superjuke/adminbus/proc/repack()
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/media/jukebox/superjuke/adminbus/proc/repack() called tick#: [world.time]")
 	if(playing)
 		for(var/mob/M in range (src,1))
 			M << "<span class='notice'>The jukebox turns itself off to protect itself from any cahot induced damage.</span>"

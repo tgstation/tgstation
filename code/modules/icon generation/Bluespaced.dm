@@ -1,5 +1,7 @@
 /proc/bsi_cast_ray(icon/I, list/start, list/end)
 
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/proc/bsi_cast_ray() called tick#: [world.time]")
+
 	if(abs(start[1] - end[1]) > abs(start[2] - end[2]))
 		var/dist = abs(start[1] - end[1]) * 2
 
@@ -23,6 +25,7 @@
 	return null
 
 /proc/bsi_split_colors(color)
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/proc/bsi_split_colors() called tick#: [world.time]")
 	if(color == null)
 		return list(0, 0, 0, 0)
 
@@ -35,6 +38,7 @@
 	return colors
 
 /proc/bsi_spread(icon/I, list/start_point)
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/proc/bsi_spread() called tick#: [world.time]")
 	var/list/queue = list()
 	queue[++queue.len] = start_point
 
@@ -88,6 +92,7 @@
 
 
 /proc/bsi_generate_mask(icon/source, state)
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/proc/bsi_generate_mask() called tick#: [world.time]")
 	var/icon/mask = icon(source, state)
 
 	mask.MapColors(
@@ -140,6 +145,8 @@
 		return mask
 
 /proc/generate_bluespace_icon(icon/source, state)
+
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/proc/generate_bluespace_icon() called tick#: [world.time]")
 
 	var/icon/mask = bsi_generate_mask(source, state)
 
@@ -233,10 +240,12 @@
 
 
 /atom/verb/test()
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""]) \\/atom/verb/test()  called tick#: [world.time]")
 	set src in view()
 	src.icon = generate_bluespace_icon(src.icon, src.icon_state)
 
 /mob/verb/bluespam()
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""]) \\/mob/verb/bluespam()  called tick#: [world.time]")
 	for(var/turf/t in view(5))
 		var/obj/s = new /obj/square(t)
 		s.icon = generate_bluespace_icon(s.icon, s.icon_state)

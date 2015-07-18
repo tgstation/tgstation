@@ -55,6 +55,7 @@
 
 
 /obj/effect/alien/resin/proc/healthcheck()
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/effect/alien/resin/proc/healthcheck() called tick#: [world.time]")
 	if(health <=0)
 		density = 0
 		qdel(src)
@@ -227,6 +228,7 @@
 	return
 
 /obj/effect/alien/weeds/proc/Life()
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/effect/alien/weeds/proc/Life() called tick#: [world.time]")
 	//set background = 1
 	var/turf/U = get_turf(src)
 /*
@@ -299,6 +301,7 @@ Alien plants should do something if theres a lot of poison
 	healthcheck()
 
 /obj/effect/alien/weeds/proc/healthcheck()
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/effect/alien/weeds/proc/healthcheck() called tick#: [world.time]")
 	if(health <= 0)
 		qdel(src)
 
@@ -347,6 +350,7 @@ Alien plants should do something if theres a lot of poison
 	tick()
 
 /obj/effect/alien/acid/proc/tick()
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/effect/alien/acid/proc/tick() called tick#: [world.time]")
 	if(!target)
 		qdel(src)
 
@@ -430,15 +434,18 @@ Alien plants should do something if theres a lot of poison
 		return
 
 	proc/GetFacehugger()
+		writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\proc/GetFacehugger() called tick#: [world.time]")
 		return locate(/obj/item/clothing/mask/facehugger) in contents
 
 	proc/Grow()
+		writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\proc/Grow() called tick#: [world.time]")
 		icon_state = "egg"
 		status = GROWN
 		new /obj/item/clothing/mask/facehugger(src)
 		return
 
 	proc/Burst(var/kill = 1) //drops and kills the hugger if any is remaining
+		writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\proc/Burst() called tick#: [world.time]")
 		if(status == GROWN || status == GROWING)
 			var/obj/item/clothing/mask/facehugger/child = GetFacehugger()
 			icon_state = "egg_hatched"
@@ -491,6 +498,7 @@ Alien plants should do something if theres a lot of poison
 
 
 /obj/effect/alien/egg/proc/healthcheck()
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/effect/alien/egg/proc/healthcheck() called tick#: [world.time]")
 	if(health <= 0)
 		Burst()
 

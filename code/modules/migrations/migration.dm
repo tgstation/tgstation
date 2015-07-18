@@ -12,15 +12,18 @@
 	var/DBConnection/db = null // Database connection
 
 /datum/migration/proc/up()
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/migration/proc/up() called tick#: [world.time]")
 	// Make your changes here.
 	return TRUE
 
 /datum/migration/proc/down()
+    writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/migration/proc/down() called tick#: [world.time]")
     // Undo your changes here (for rollbacks)
     return TRUE
 
 // Helpers
 /datum/migration/proc/query(var/sql)
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/migration/proc/query() called tick#: [world.time]")
 	var/DBQuery/query = db.NewQuery(sql)
 	if(!query.Execute())
 		world.log << "Error in [package]#[id]: [query.ErrorMsg()]"
@@ -32,6 +35,7 @@
 	return rows
 
 /datum/migration/proc/hasResult(var/sql)
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/migration/proc/hasResult() called tick#: [world.time]")
 	var/DBQuery/query = db.NewQuery(sql)
 	if(!query.Execute())
 		world.log << "Error in [package]#[id]: [query.ErrorMsg()]"
@@ -42,6 +46,7 @@
 	return FALSE
 
 /datum/migration/proc/execute(var/sql)
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/migration/proc/execute() called tick#: [world.time]")
 	var/DBQuery/query = db.NewQuery(sql)
 	if(!query.Execute())
 		world.log << "Error in [package]#[id]: [query.ErrorMsg()]"
@@ -49,7 +54,9 @@
 	return TRUE
 
 /datum/migration/proc/hasTable(var/tableName)
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/migration/proc/hasTable() called tick#: [world.time]")
 	return hasResult("SHOW TABLES LIKE '[tableName]'")
 
 /datum/migration/proc/hasColumn(var/tableName, var/columnName)
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/migration/proc/hasColumn() called tick#: [world.time]")
 	return hasResult("SHOW COLUMNS FROM [tableName] LIKE '[columnName]'")

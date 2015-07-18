@@ -4,6 +4,7 @@ the HUD updates properly! */
 
 //Deletes the current HUD images so they can be refreshed with new ones.
 mob/proc/regular_hud_updates() //Used in the life.dm of mobs that can use HUDs.
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\mob/proc/regular_hud_updates() called tick#: [world.time]")
 	if(client)
 		for(var/image/hud in client.images)
 			if(findtext(hud.icon_state, "hud", 1, 4))
@@ -16,6 +17,7 @@ mob/proc/regular_hud_updates() //Used in the life.dm of mobs that can use HUDs.
 
 //Medical HUD outputs. Called by the Life() proc of the mob using it, usually.
 proc/process_med_hud(var/mob/M, var/mob/eye)
+	writepanic("[__FILE__].[__LINE__] \\/proc/process_med_hud() called tick#: [world.time]")
 	if(!M)
 		return
 	if(!M.client)
@@ -59,6 +61,7 @@ proc/process_med_hud(var/mob/M, var/mob/eye)
 
 //Security HUDs. Pass a value for the second argument to enable implant viewing or other special features.
 proc/process_sec_hud(var/mob/M, var/advanced_mode,var/mob/eye)
+	writepanic("[__FILE__].[__LINE__] \\/proc/process_sec_hud() called tick#: [world.time]")
 	if(!M)
 		return
 	if(!M.client)

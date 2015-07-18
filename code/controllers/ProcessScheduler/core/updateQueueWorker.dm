@@ -14,6 +14,7 @@ datum/updateQueueWorker/New(var/list/objects, var/procName, var/list/arguments, 
 	init(objects, procName, arguments, cpuThreshold)
 
 datum/updateQueueWorker/proc/init(var/list/objects, var/procName, var/list/arguments, var/cpuThreshold = 90)
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\datum/updateQueueWorker/proc/init() called tick#: [world.time]")
 	src.objects = objects
 	src.procName = procName
 	src.arguments = arguments
@@ -23,6 +24,7 @@ datum/updateQueueWorker/proc/init(var/list/objects, var/procName, var/list/argum
 	finished = 0
 
 datum/updateQueueWorker/proc/doWork()
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\datum/updateQueueWorker/proc/doWork() called tick#: [world.time]")
 	// If there's nothing left to execute or we were killed, mark finished and return.
 	if (!objects || !objects.len) return finished()
 
@@ -53,6 +55,7 @@ datum/updateQueueWorker/proc/doWork()
 			doWork()
 
 datum/updateQueueWorker/proc/finished()
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\datum/updateQueueWorker/proc/finished() called tick#: [world.time]")
 	uq_dbg("updateQueueWorker finished.")
 	/**
 	 * If the worker was killed while it was working on something, it
@@ -67,6 +70,7 @@ datum/updateQueueWorker/proc/finished()
 	finished = 1
 
 datum/updateQueueWorker/proc/kill()
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\datum/updateQueueWorker/proc/kill() called tick#: [world.time]")
 	uq_dbg("updateQueueWorker killed.")
 	killed = 1
 	objects = null
@@ -80,6 +84,7 @@ datum/updateQueueWorker/proc/kill()
 		del(src)
 
 datum/updateQueueWorker/proc/start()
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\datum/updateQueueWorker/proc/start() called tick#: [world.time]")
 	uq_dbg("updateQueueWorker started.")
 	spawn(0)
 		doWork()

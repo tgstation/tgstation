@@ -1,6 +1,7 @@
 /mob/living/carbon/slime/verb/Feed()
 	set category = "Slime"
 	set desc = "This will let you feed on any valid creature in the surrounding area. This should also be used to halt the feeding process."
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""]) \\/mob/living/carbon/slime/verb/Feed()  called tick#: [world.time]")
 	if(Victim)
 		Feedstop()
 		return
@@ -43,6 +44,7 @@
 
 
 /mob/living/carbon/slime/proc/Feedon(var/mob/living/carbon/M)
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/living/carbon/slime/proc/Feedon() called tick#: [world.time]")
 	Victim = M
 	src.loc = M.loc
 	canmove = 0
@@ -156,11 +158,13 @@
 	Victim = null
 
 /mob/living/carbon/slime/proc/Feedstop()
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/living/carbon/slime/proc/Feedstop() called tick#: [world.time]")
 	if(Victim)
 		if(Victim.client) Victim << "[src] has let go of your head!"
 		Victim = null
 
 /mob/living/carbon/slime/proc/UpdateFeed(var/mob/M)
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/living/carbon/slime/proc/UpdateFeed() called tick#: [world.time]")
 	if(Victim)
 		if(Victim == M)
 			loc = M.loc // simple "attach to head" effect!
@@ -169,6 +173,7 @@
 /mob/living/carbon/slime/verb/Evolve()
 	set category = "Slime"
 	set desc = "This will let you evolve from baby to adult slime."
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""]) \\/mob/living/carbon/slime/verb/Evolve()  called tick#: [world.time]")
 
 	if(stat)
 		src << "<i>I must be conscious to do this...</i>"
@@ -194,6 +199,7 @@
 /mob/living/carbon/slime/verb/Reproduce()
 	set category = "Slime"
 	set desc = "This will make you split into four Slimes. NOTE: this will KILL you, but you will be transferred into one of the babies."
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""]) \\/mob/living/carbon/slime/verb/Reproduce()  called tick#: [world.time]")
 
 	if(stat)
 		src << "<i>I must be conscious to do this...</i>"
@@ -244,6 +250,7 @@
 	set name = "Crawl through Vent"
 	set desc = "Enter an air vent and crawl through the pipe system."
 	set category = "Object"
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""]) \\/mob/living/carbon/slime/verb/ventcrawl()  called tick#: [world.time]")
 	if(Victim)	return
 	var/atom/pipe
 	var/list/pipes = list()

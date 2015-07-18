@@ -41,6 +41,7 @@
 	toggle_open()
 
 /obj/screen/movable/spell_master/proc/toggle_open(var/forced_state = 0)
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/screen/movable/spell_master/proc/toggle_open() called tick#: [world.time]")
 	if(showing && (forced_state != 2))
 		for(var/obj/screen/spell/O in spell_objects)
 			if(spell_holder && spell_holder.client)
@@ -70,6 +71,7 @@
 		overlays.Add(open_state)
 
 /obj/screen/movable/spell_master/proc/add_spell(var/spell/spell)
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/screen/movable/spell_master/proc/add_spell() called tick#: [world.time]")
 	if(!spell) return
 
 	if(spell.connected_button) //we have one already, for some reason
@@ -102,6 +104,7 @@
 	toggle_open(2) //forces the icons to refresh on screen
 
 /obj/screen/movable/spell_master/proc/remove_spell(var/spell/spell)
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/screen/movable/spell_master/proc/remove_spell() called tick#: [world.time]")
 	returnToPool(spell.connected_button)
 
 	spell.connected_button = null
@@ -112,11 +115,13 @@
 		returnToPool(src)
 
 /obj/screen/movable/spell_master/proc/silence_spells(var/amount)
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/screen/movable/spell_master/proc/silence_spells() called tick#: [world.time]")
 	for(var/obj/screen/spell/spell in spell_objects)
 		spell.spell.silenced = amount
 		spell.update_charge(1)
 
 /obj/screen/movable/spell_master/proc/update_spells(forced = 0, mob/user)
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/screen/movable/spell_master/proc/update_spells() called tick#: [world.time]")
 	if(user && user.client)
 		if(!(src in user.client.screen))
 			user.client.screen += src
@@ -162,6 +167,7 @@
 	spellmaster = null
 
 /obj/screen/spell/proc/update_charge(var/forced_update = 0)
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/screen/spell/proc/update_charge() called tick#: [world.time]")
 	if(!spell)
 		returnToPool(src)
 		return

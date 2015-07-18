@@ -46,6 +46,7 @@
 
 
 /obj/item/device/fuse_bomb/proc/lit(mob/user as mob, var/obj/O=null)
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/item/device/fuse_bomb/proc/lit() called tick#: [world.time]")
 	fuse_lit = 1
 	user << "<span class='warning'>You lit the fuse[O ? " with [O]":""]! [seconds_left] seconds till detonation!</span>"
 	admin_warn(user)
@@ -58,6 +59,8 @@
 
 /obj/item/device/fuse_bomb/proc/fuse_burn()
 	set waitfor = 0
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/item/device/fuse_bomb/proc/fuse_burn() called tick#: [world.time]")
+
 	if(src && src.fuse_lit)
 		if(src.seconds_left)
 			sleep(10)
@@ -74,6 +77,7 @@
 	update_icon()
 
 /obj/item/device/fuse_bomb/proc/detonation()
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/item/device/fuse_bomb/proc/detonation() called tick#: [world.time]")
 	explosion(get_turf(src), -1, 1, 3)
 	qdel(src)
 
@@ -81,6 +85,7 @@
 	icon_state = "fuse_bomb_[seconds_left][fuse_lit ? "-lit":""]"
 
 /obj/item/device/fuse_bomb/proc/admin_warn(mob/user as mob)
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/item/device/fuse_bomb/proc/admin_warn() called tick#: [world.time]")
 	var/turf/bombturf = get_turf(src)
 	var/area/A = get_area(bombturf)
 

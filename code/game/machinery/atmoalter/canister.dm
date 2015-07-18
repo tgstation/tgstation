@@ -137,6 +137,7 @@
 	return
 
 /obj/machinery/portable_atmospherics/canister/proc/check_updates(tank_pressure = 0)
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/portable_atmospherics/canister/proc/check_updates() called tick#: [world.time]")
 	if((overlay_status & OVERLAY_HOLDING) != holding)
 		return 1
 	if((overlay_status & OVERLAY_CONNECTED) != connected_port)
@@ -158,6 +159,7 @@
 		healthcheck()
 
 /obj/machinery/portable_atmospherics/canister/proc/healthcheck()
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/portable_atmospherics/canister/proc/healthcheck() called tick#: [world.time]")
 	if(destroyed)
 		return 1
 
@@ -224,12 +226,14 @@
 	return air_contents
 
 /obj/machinery/portable_atmospherics/canister/proc/return_temperature()
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/portable_atmospherics/canister/proc/return_temperature() called tick#: [world.time]")
 	var/datum/gas_mixture/GM = src.return_air()
 	if(GM && GM.volume>0)
 		return GM.temperature
 	return 0
 
 /obj/machinery/portable_atmospherics/canister/proc/return_pressure()
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/portable_atmospherics/canister/proc/return_pressure() called tick#: [world.time]")
 	var/datum/gas_mixture/GM = src.return_air()
 	if(GM && GM.volume>0)
 		return GM.return_pressure()
@@ -304,9 +308,9 @@
 	data["canLabel"] = can_label ? 1 : 0
 	data["portConnected"] = connected_port ? 1 : 0
 	data["tankPressure"] = round(air_contents.return_pressure() > 0 ? air_contents.return_pressure() : 0)//This used to be redundant, made it into a fix for -1 kPA showing up in the UI
-	data["releasePressure"] = round(release_pressure)
-	data["minReleasePressure"] = round(ONE_ATMOSPHERE/10)
-	data["maxReleasePressure"] = round(10*ONE_ATMOSPHERE)
+	data["releasepressure"] = round(release_pressure)
+	data["minReleasepressure"] = round(ONE_ATMOSPHERE/10)
+	data["maxReleasepressure"] = round(10*ONE_ATMOSPHERE)
 	data["valveOpen"] = valve_open ? 1 : 0
 
 	data["hasHoldingTank"] = holding ? 1 : 0
@@ -317,7 +321,7 @@
 	ui = nanomanager.try_update_ui(user, src, ui_key, ui, data)
 	if (!ui)
 		// the ui does not exist, so we'll create a new() one
-        // for a list of parameters and their descriptions see the code docs in \code\modules\nano\nanoui.dm
+        // for a list of parameters and their descriptions see the code docs in \code\\modules\nano\nanoui.dm
 		ui = new(user, src, ui_key, "canister.tmpl", "Canister", 480, 400)
 		// when the ui is first opened this is the data it will use
 		ui.set_initial_data(data)
@@ -455,6 +459,8 @@
 	update_icon()
 
 /obj/machinery/portable_atmospherics/canister/proc/weld(var/obj/item/weapon/weldingtool/WT, var/mob/user)
+
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/portable_atmospherics/canister/proc/weld() called tick#: [world.time]")
 
 	if(busy)
 		return 0

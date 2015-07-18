@@ -5,7 +5,7 @@
 //  Description: This is a controls the timer for the brig doors, displays the timer on itself and
 //               has a popup window when used, allowing to set the timer.
 //  Code Notes: Combination of old brigdoor.dm code from rev4407 and the status_display.dm code
-//  Date: 01/September/2010
+//  Date: 01/september/2010
 //  Programmer: Veryinky
 /////////////////////////////////////////////////////////////////////////////////////////////////
 /obj/machinery/door_timer
@@ -75,6 +75,7 @@
 // open/closedoor checks if door_timer has power, if so it checks if the
 // linked door is open/closed (by density) then opens it/closes it.
 	proc/timer_start()
+		writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\proc/timer_start() called tick#: [world.time]")
 		if(stat & (NOPOWER|BROKEN))	return 0
 
 		for(var/obj/machinery/door/window/brigdoor/door in targets)
@@ -91,6 +92,7 @@
 
 
 	proc/timer_end()
+		writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\proc/timer_end() called tick#: [world.time]")
 		if(stat & (NOPOWER|BROKEN))	return 0
 
 		for(var/obj/machinery/door/window/brigdoor/door in targets)
@@ -108,12 +110,14 @@
 
 
 	proc/timeleft()
+		writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\proc/timeleft() called tick#: [world.time]")
 		. = (releasetime-world.time)/10
 		if(. < 0)
 			. = 0
 
 
 	proc/timeset(var/seconds)
+		writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\proc/timeset() called tick#: [world.time]")
 		releasetime=world.time+seconds*10
 		return
 
@@ -137,7 +141,7 @@
 		var/dat = "<HTML><BODY><TT>"
 
 		// AUTOFIXED BY fix_string_idiocy.py
-		// C:\Users\Rob\Documents\Projects\vgstation13\code\game\machinery\doors\brigdoors.dm:138: dat += "<HR>Timer System:</hr>"
+		// C:\Users\Rob\\documents\\\projects\vgstation13\code\game\\machinery\\doors\brigdoors.dm:138: dat += "<HR>Timer System:</hr>"
 		dat += {"<HR>Timer System:</hr>
 			<b>Door [src.id_tag] controls</b><br/>"}
 		// END AUTOFIX
@@ -148,7 +152,7 @@
 
 
 		// AUTOFIXED BY fix_string_idiocy.py
-		// C:\Users\Rob\Documents\Projects\vgstation13\code\game\machinery\doors\brigdoors.dm:145: dat += "Time Left: [(minute ? text("[minute]:") : null)][second] <br/>"
+		// C:\Users\Rob\\documents\\\projects\vgstation13\code\game\\machinery\\doors\brigdoors.dm:145: dat += "Time Left: [(minute ? text("[minute]:") : null)][second] <br/>"
 		dat += {"Time Left: [(minute ? text("[minute]:") : null)][second] <br/>
 			<a href='?src=\ref[src];tp=-60'>-</a> <a href='?src=\ref[src];tp=-1'>-</a> <a href='?src=\ref[src];tp=1'>+</a> <A href='?src=\ref[src];tp=60'>+</a><br/>"}
 		// END AUTOFIX
@@ -160,7 +164,7 @@
 
 
 		// AUTOFIXED BY fix_string_idiocy.py
-		// C:\Users\Rob\Documents\Projects\vgstation13\code\game\machinery\doors\brigdoors.dm:154: dat += "<br/><br/><a href='?src=\ref[user];mach_close=computer'>Close</a>"
+		// C:\Users\Rob\\documents\\\projects\vgstation13\code\game\\machinery\\doors\brigdoors.dm:154: dat += "<br/><br/><a href='?src=\ref[user];mach_close=computer'>Close</a>"
 		dat += {"<br/><br/><a href='?src=\ref[user];mach_close=computer'>Close</a>
 			</TT></BODY></HTML>"}
 		// END AUTOFIX
@@ -230,6 +234,7 @@
 
 // Adds an icon in case the screen is broken/off, stolen from status_display.dm
 	proc/set_picture(var/state)
+		writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\proc/set_picture() called tick#: [world.time]")
 		picture_state = state
 		overlays.len = 0
 		overlays += image('icons/obj/status_display.dmi', icon_state=picture_state)
@@ -238,6 +243,7 @@
 //Checks to see if there's 1 line or 2, adds text-icons-numbers/letters over display
 // Stolen from status_display
 	proc/update_display(var/line1, var/line2)
+		writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\proc/update_display() called tick#: [world.time]")
 		if(line2 == null)		// single line display
 			overlays.len = 0
 			overlays += texticon(line1, 23, -13)
@@ -253,6 +259,7 @@
 //Actual string input to icon display for loop, with 5 pixel x offsets for each letter.
 //Stolen from status_display
 	proc/texticon(var/tn, var/px = 0, var/py = 0)
+		writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\proc/texticon() called tick#: [world.time]")
 		var/image/I = image('icons/obj/status_display.dmi', "blank")
 		var/len = length(tn)
 

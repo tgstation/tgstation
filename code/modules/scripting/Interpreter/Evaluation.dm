@@ -1,4 +1,5 @@
 /proc/isobject(x)
+	writepanic("[__FILE__].[__LINE__] (no type)([usr ? usr.ckey : ""])  \\/proc/isobject() called tick#: [world.time]")
 	return (istype(x, /datum) || istype(x, /list) || istype(x, /savefile) || istype(x, /client) || (x==world))
 
 /n_Interpreter

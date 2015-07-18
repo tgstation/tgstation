@@ -32,12 +32,15 @@
 	return I
 
 /datum/organ/internal/proc/rejuvenate()
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/organ/internal/proc/rejuvenate() called tick#: [world.time]")
 	damage=0
 
 /datum/organ/internal/proc/is_bruised()
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/organ/internal/proc/is_bruised() called tick#: [world.time]")
 	return damage >= min_bruised_damage
 
 /datum/organ/internal/proc/is_broken()
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/organ/internal/proc/is_broken() called tick#: [world.time]")
 	return damage >= min_broken_damage
 
 /datum/organ/internal/New(mob/living/carbon/human/H)
@@ -105,6 +108,7 @@
 							owner.reagents.add_reagent("toxin", rand(3,5))
 
 /datum/organ/internal/proc/take_damage(amount, var/silent=0)
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/organ/internal/proc/take_damage() called tick#: [world.time]")
 	if(!owner) return
 	if(src.robotic == 2)
 		src.damage += (amount * 0.8)
@@ -117,6 +121,7 @@
 
 
 /datum/organ/internal/proc/emp_act(severity)
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/organ/internal/proc/emp_act() called tick#: [world.time]")
 	switch(robotic)
 		if(0)
 			return
@@ -144,9 +149,11 @@
 					return
 
 /datum/organ/internal/proc/mechanize() //Being used to make robutt hearts, etc
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/organ/internal/proc/mechanize() called tick#: [world.time]")
 	robotic = 2
 
 /datum/organ/internal/proc/mechassist() //Used to add things like pacemakers, etc
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/organ/internal/proc/mechassist() called tick#: [world.time]")
 	robotic = 1
 	min_bruised_damage = 15
 	min_broken_damage = 35
@@ -258,6 +265,8 @@
 	removed_type = /obj/item/organ/appendix
 
 /datum/organ/internal/proc/remove(var/mob/user)
+
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/organ/internal/proc/remove() called tick#: [world.time]")
 
 	if(!removed_type) return 0
 

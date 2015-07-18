@@ -68,6 +68,8 @@
 
 /obj/machinery/atmospherics/trinary/tvalve/proc/go_to_side()
 
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/atmospherics/trinary/tvalve/proc/go_to_side() called tick#: [world.time]")
+
 	if(state) return 0
 
 	state = 1
@@ -91,6 +93,8 @@
 	return 1
 
 /obj/machinery/atmospherics/trinary/tvalve/proc/go_straight()
+
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/atmospherics/trinary/tvalve/proc/go_straight() called tick#: [world.time]")
 
 	if(!state)
 		return 0
@@ -197,6 +201,7 @@
 		//Radio remote control
 
 /obj/machinery/atmospherics/trinary/tvalve/digital/proc/set_frequency(new_frequency)
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/atmospherics/trinary/tvalve/digital/proc/set_frequency() called tick#: [world.time]")
 	radio_controller.remove_object(src, frequency)
 	frequency = new_frequency
 	if(frequency)

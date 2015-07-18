@@ -5,6 +5,7 @@
 /client/proc/admin_memo(task in list("write","show","delete"))
 	set name = "Memo"
 	set category = "Server"
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/client/proc/admin_memo() called tick#: [world.time]")
 	if(!ENABLE_MEMOS)		return
 	if(!check_rights(0))	return
 	switch(task)
@@ -14,6 +15,7 @@
 
 //write a message
 /client/proc/admin_memo_write()
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/client/proc/admin_memo_write() called tick#: [world.time]")
 	var/savefile/F = new(MEMOFILE)
 	if(F)
 		var/memo = input(src,"Type your memo\n(Leaving it blank will delete your current memo):","Write Memo",null) as null|message
@@ -31,6 +33,7 @@
 
 //show all memos
 /client/proc/admin_memo_show()
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/client/proc/admin_memo_show() called tick#: [world.time]")
 	if(ENABLE_MEMOS)
 		var/savefile/F = new(MEMOFILE)
 		if(F)
@@ -39,6 +42,7 @@
 
 //delete your own or somebody else's memo
 /client/proc/admin_memo_delete()
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/client/proc/admin_memo_delete() called tick#: [world.time]")
 	var/savefile/F = new(MEMOFILE)
 	if(F)
 		var/ckey

@@ -22,6 +22,7 @@
 // Add an AI eye to the chunk, then update if changed.
 
 /datum/camerachunk/proc/add(mob/camera/aiEye/ai)
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/camerachunk/proc/add() called tick#: [world.time]")
 	if(!ai.ai)
 		return
 	ai.visibleCameraChunks += src
@@ -35,6 +36,7 @@
 // Remove an AI eye from the chunk, then update if changed.
 
 /datum/camerachunk/proc/remove(mob/camera/aiEye/ai)
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/camerachunk/proc/remove() called tick#: [world.time]")
 	if(!ai.ai)
 		return
 	ai.visibleCameraChunks -= src
@@ -47,6 +49,7 @@
 // Called when a chunk has changed. I.E: A wall was deleted.
 
 /datum/camerachunk/proc/visibilityChanged(turf/loc)
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/camerachunk/proc/visibilityChanged() called tick#: [world.time]")
 	if(!visibleTurfs[loc])
 		return
 	hasChanged()
@@ -55,6 +58,7 @@
 // instead be flagged to update the next time an AI Eye moves near it.
 
 /datum/camerachunk/proc/hasChanged(var/update_now = 0)
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/camerachunk/proc/hasChanged() called tick#: [world.time]")
 	if(visible || update_now)
 		if(!updating)
 			updating = 1
@@ -67,6 +71,8 @@
 // The actual updating. It gathers the visible turfs from cameras and puts them into the appropiate lists.
 
 /datum/camerachunk/proc/update()
+
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/camerachunk/proc/update() called tick#: [world.time]")
 
 	var/list/newVisibleTurfs = list()
 

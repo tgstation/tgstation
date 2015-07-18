@@ -30,6 +30,7 @@
 	interact(user)
 
 /obj/item/weapon/seedbag/verb/toggle_mode()
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""]) \\/obj/item/weapon/seedbag/verb/toggle_mode()  called tick#: [world.time]")
 	set name = "Switch Bagging Method"
 	set category = "Object"
 
@@ -81,7 +82,7 @@
 				var/N = item_quants[O]
 
 				// AUTOFIXED BY fix_string_idiocy.py
-				// C:\Users\Rob\Documents\Projects\vgstation13\code\game\objects\items\weapons\hydroponics.dm:82: dat += "<FONT color = 'blue'><B>[capitalize(O)]</B>:"
+				// C:\Users\Rob\\documents\\\projects\vgstation13\code\game\objects\items\weapons\hydroponics.dm:82: dat += "<FONT color = 'blue'><B>[capitalize(O)]</B>:"
 				dat += {"<FONT color = 'blue'><B>[capitalize(O)]</B>:
 					[N] </font>
 					<a href='byond://?src=\ref[src];vend=[O]'>Vend</A>
@@ -89,7 +90,7 @@
 				// END AUTOFIX
 
 		// AUTOFIXED BY fix_string_idiocy.py
-		// C:\Users\Rob\Documents\Projects\vgstation13\code\game\objects\items\weapons\hydroponics.dm:87: dat += "<br><a href='byond://?src=\ref[src];unload=1'>Unload All</A>"
+		// C:\Users\Rob\\documents\\\projects\vgstation13\code\game\objects\items\weapons\hydroponics.dm:87: dat += "<br><a href='byond://?src=\ref[src];unload=1'>Unload All</A>"
 		dat += {"<br><a href='byond://?src=\ref[src];unload=1'>Unload All</A>
 			</TT>"}
 		// END AUTOFIX

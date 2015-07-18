@@ -309,6 +309,8 @@ var/message_delay = 0 // To make sure restarting the recentmessages list is kept
 
 /proc/Broadcast_SimpleMessage(var/source, var/frequency, var/text, var/data, var/mob/M, var/compression, var/level)
 
+	writepanic("[__FILE__].[__LINE__] (no type)([usr ? usr.ckey : ""])  \\/proc/Broadcast_SimpleMessage() called tick#: [world.time]")
+
   /* ###### Prepare the radio connection ###### */
 
 	if(!M)
@@ -538,11 +540,14 @@ var/message_delay = 0 // To make sure restarting the recentmessages list is kept
 //Use this to test if an obj can communicate with a Telecommunications Network
 
 /atom/proc/test_telecomms()
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/atom/proc/test_telecomms() called tick#: [world.time]")
 	var/datum/signal/signal = src.telecomms_process()
 	var/turf/position = get_turf(src)
 	return (position.z in signal.data["level"] && signal.data["done"])
 
 /atom/proc/telecomms_process()
+
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/atom/proc/telecomms_process() called tick#: [world.time]")
 
 	// First, we want to generate a new radio signal
 	var/datum/signal/signal = new

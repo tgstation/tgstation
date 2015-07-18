@@ -50,6 +50,7 @@
 			ConnectDoors()
 
 	proc/ConnectDoors()
+		writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\proc/ConnectDoors() called tick#: [world.time]")
 		for(var/list/L in connected_doors)
 			for(var/item in L)
 				L.Remove(item)

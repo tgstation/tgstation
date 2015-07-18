@@ -7,6 +7,7 @@
 				client.images -= hud
 
 /mob/living/silicon/pai/proc/securityHUD()
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/living/silicon/pai/proc/securityHUD() called tick#: [world.time]")
 	if(client)
 		var/image/holder
 		var/turf/T = get_turf(src.loc)
@@ -51,6 +52,7 @@
 							break
 
 /mob/living/silicon/pai/proc/medicalHUD()
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/living/silicon/pai/proc/medicalHUD() called tick#: [world.time]")
 	if(client)
 		var/image/holder
 		var/turf/T = get_turf(src.loc)
@@ -93,6 +95,7 @@
 			client.images += holder
 
 /mob/living/silicon/pai/proc/RoundHealth(health)
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/living/silicon/pai/proc/RoundHealth() called tick#: [world.time]")
 	switch(health)
 		if(100 to INFINITY)
 			return "health100"

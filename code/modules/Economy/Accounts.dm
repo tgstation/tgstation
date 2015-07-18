@@ -8,6 +8,7 @@ var/global/datum/money_account/vendor_account
 var/global/list/all_money_accounts = list()
 
 /proc/create_station_account()
+	writepanic("[__FILE__].[__LINE__] (no type)([usr ? usr.ckey : ""])  \\/proc/create_station_account() called tick#: [world.time]")
 	if(!station_account)
 		next_account_number = rand(11111, 99999)
 		station_account = new()
@@ -30,6 +31,7 @@ var/global/list/all_money_accounts = list()
 		all_money_accounts.Add(station_account)
 
 /proc/create_department_account(department)
+	writepanic("[__FILE__].[__LINE__] (no type)([usr ? usr.ckey : ""])  \\/proc/create_department_account() called tick#: [world.time]")
 	next_account_number = rand(111111, 999999)
 
 	var/datum/money_account/department_account = new()
@@ -57,6 +59,8 @@ var/global/list/all_money_accounts = list()
 //worldtime2text()
 
 /proc/create_account(var/new_owner_name = "Default user", var/starting_funds = 0, var/obj/machinery/account_database/source_db)
+
+	writepanic("[__FILE__].[__LINE__] (no type)([usr ? usr.ckey : ""])  \\/proc/create_account() called tick#: [world.time]")
 
 	//create a new account
 	var/datum/money_account/M = new()
@@ -93,7 +97,7 @@ var/global/list/all_money_accounts = list()
 		R.name = "Account information: [M.owner_name]"
 
 		// AUTOFIXED BY fix_string_idiocy.py
-		// C:\Users\Rob\Documents\Projects\vgstation13\code\WorkInProgress\Cael_Aislinn\Economy\Accounts.dm:94: R.info = "<b>Account details (confidential)</b><br><hr><br>"
+		// C:\Users\Rob\\documents\\\projects\vgstation13\code\WorkInProgress\Cael_Aislinn\Economy\Accounts.dm:94: R.info = "<b>Account details (confidential)</b><br><hr><br>"
 		R.info = {"<b>Account details (confidential)</b><br><hr><br>
 			<i>Account holder:</i> [M.owner_name]<br>
 			<i>Account number:</i> [M.account_number]<br>
@@ -198,21 +202,21 @@ var/global/list/all_money_accounts = list()
 		var/dat = "<b>Accounts Database</b><br>"
 
 		// AUTOFIXED BY fix_string_idiocy.py
-		// C:\Users\Rob\Documents\Projects\vgstation13\code\WorkInProgress\Cael_Aislinn\Economy\Accounts.dm:171: dat += "<i>[machine_id]</i><br>"
+		// C:\Users\Rob\\documents\\\projects\vgstation13\code\WorkInProgress\Cael_Aislinn\Economy\Accounts.dm:171: dat += "<i>[machine_id]</i><br>"
 		dat += {"<i>[machine_id]</i><br>
 			Confirm identity: <a href='?src=\ref[src];choice=insert_card'>[held_card ? held_card : "-----"]</a><br>"}
 		// END AUTOFIX
 		if(access_level > 0)
 
 			// AUTOFIXED BY fix_string_idiocy.py
-			// C:\Users\Rob\Documents\Projects\vgstation13\code\WorkInProgress\Cael_Aislinn\Economy\Accounts.dm:175: dat += "<a href='?src=\ref[src];toggle_activated=1'>[activated ? "Disable" : "Enable"] remote access</a><br>"
+			// C:\Users\Rob\\documents\\\projects\vgstation13\code\WorkInProgress\Cael_Aislinn\Economy\Accounts.dm:175: dat += "<a href='?src=\ref[src];toggle_activated=1'>[activated ? "Disable" : "Enable"] remote access</a><br>"
 			dat += {"<a href='?src=\ref[src];toggle_activated=1'>[activated ? "Disable" : "Enable"] remote access</a><br>
 				You may not edit accounts at this terminal, only create and view them.<br>"}
 			// END AUTOFIX
 			if(creating_new_account)
 
 				// AUTOFIXED BY fix_string_idiocy.py
-				// C:\Users\Rob\Documents\Projects\vgstation13\code\WorkInProgress\Cael_Aislinn\Economy\Accounts.dm:178: dat += "<br>"
+				// C:\Users\Rob\\documents\\\projects\vgstation13\code\WorkInProgress\Cael_Aislinn\Economy\Accounts.dm:178: dat += "<br>"
 				dat += {"<br>
 					<a href='?src=\ref[src];choice=view_accounts_list;'>Return to accounts list</a>
 					<form name='create_account' action='?src=\ref[src]' method='get'>
@@ -229,7 +233,7 @@ var/global/list/all_money_accounts = list()
 				if(detailed_account_view)
 
 					// AUTOFIXED BY fix_string_idiocy.py
-					// C:\Users\Rob\Documents\Projects\vgstation13\code\WorkInProgress\Cael_Aislinn\Economy\Accounts.dm:190: dat += "<br>"
+					// C:\Users\Rob\\documents\\\projects\vgstation13\code\WorkInProgress\Cael_Aislinn\Economy\Accounts.dm:190: dat += "<br>"
 					dat += {"<br>
 						<a href='?src=\ref[src];choice=view_accounts_list;'>Return to accounts list</a><hr>
 						<b>Account number:</b> #[detailed_account_view.account_number]<br>
@@ -248,7 +252,7 @@ var/global/list/all_money_accounts = list()
 					for(var/datum/transaction/T in detailed_account_view.transaction_log)
 
 						// AUTOFIXED BY fix_string_idiocy.py
-						// C:\Users\Rob\Documents\Projects\vgstation13\code\WorkInProgress\Cael_Aislinn\Economy\Accounts.dm:205: dat += "<tr>"
+						// C:\Users\Rob\\documents\\\projects\vgstation13\code\WorkInProgress\Cael_Aislinn\Economy\Accounts.dm:205: dat += "<tr>"
 						dat += {"<tr>
 							<td>[T.date]</td>
 							<td>[T.time]</td>
@@ -262,7 +266,7 @@ var/global/list/all_money_accounts = list()
 				else
 
 					// AUTOFIXED BY fix_string_idiocy.py
-					// C:\Users\Rob\Documents\Projects\vgstation13\code\WorkInProgress\Cael_Aislinn\Economy\Accounts.dm:215: dat += "<a href='?src=\ref[src];choice=create_account;'>Create new account</a><br><br>"
+					// C:\Users\Rob\\documents\\\projects\vgstation13\code\WorkInProgress\Cael_Aislinn\Economy\Accounts.dm:215: dat += "<a href='?src=\ref[src];choice=create_account;'>Create new account</a><br><br>"
 					dat += {"<a href='?src=\ref[src];choice=create_account;'>Create new account</a><br><br>
 						<table border=1 style='width:100%'>"}
 					// END AUTOFIX
@@ -270,7 +274,7 @@ var/global/list/all_money_accounts = list()
 						var/datum/money_account/D = all_money_accounts[i]
 
 						// AUTOFIXED BY fix_string_idiocy.py
-						// C:\Users\Rob\Documents\Projects\vgstation13\code\WorkInProgress\Cael_Aislinn\Economy\Accounts.dm:219: dat += "<tr>"
+						// C:\Users\Rob\\documents\\\projects\vgstation13\code\WorkInProgress\Cael_Aislinn\Economy\Accounts.dm:219: dat += "<tr>"
 						dat += {"<tr>
 							<td>#[D.account_number]</td>
 							<td>[D.owner_name]</td>
@@ -378,6 +382,7 @@ var/global/list/all_money_accounts = list()
 	src.attack_hand(usr)
 
 /obj/machinery/account_database/proc/charge_to_account(var/attempt_account_number, var/source_name, var/purpose, var/terminal_id, var/amount)
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/account_database/proc/charge_to_account() called tick#: [world.time]")
 	if(!activated)
 		return 0
 	for(var/datum/money_account/D in all_money_accounts)
@@ -403,6 +408,7 @@ var/global/list/all_money_accounts = list()
 
 //this returns the first account datum that matches the supplied accnum/pin combination, it returns null if the combination did not match any account
 /obj/machinery/account_database/proc/attempt_account_access(var/attempt_account_number, var/attempt_pin_number, var/security_level_passed = 0,var/pin_needed=1)
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/account_database/proc/attempt_account_access() called tick#: [world.time]")
 	if(!activated)
 		return 0
 	for(var/datum/money_account/D in all_money_accounts)
@@ -411,6 +417,7 @@ var/global/list/all_money_accounts = list()
 				return D
 
 /obj/machinery/account_database/proc/get_account(var/account_number)
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/account_database/proc/get_account() called tick#: [world.time]")
 	for(var/datum/money_account/D in all_money_accounts)
 		if(D.account_number == account_number)
 			return D

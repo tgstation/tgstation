@@ -247,6 +247,7 @@ var/global/ZAS_Settings/zas_settings = new
 	Load()
 
 /ZAS_Settings/proc/Save()
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/ZAS_Settings/proc/Save() called tick#: [world.time]")
 	var/F = file("config/ZAS.txt")
 	fdel(F)
 	for(var/id in src.settings)
@@ -257,6 +258,7 @@ var/global/ZAS_Settings/zas_settings = new
 		F << ""
 
 /ZAS_Settings/proc/Load()
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/ZAS_Settings/proc/Load() called tick#: [world.time]")
 	for(var/t in file2list("config/ZAS.txt"))
 		if(!t)	continue
 
@@ -283,10 +285,12 @@ var/global/ZAS_Settings/zas_settings = new
 
 // INTERNAL USE ONLY
 /ZAS_Settings/proc/idfrompath(const/path)
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/ZAS_Settings/proc/idfrompath() called tick#: [world.time]")
 	return copytext(path, rfindtext(path, "/") + 1)
 
 // INTERNAL USE ONLY
 /ZAS_Settings/proc/ChangeSetting(var/user,var/id)
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/ZAS_Settings/proc/ChangeSetting() called tick#: [world.time]")
 	var/datum/ZAS_Setting/setting = src.settings["[id]"]
 	var/displayedValue=""
 	switch(setting.valtype)
@@ -326,11 +330,13 @@ var/global/ZAS_Settings/zas_settings = new
 * @param value The value that the setting should be set to.
 */
 /ZAS_Settings/proc/Set(var/id, var/value)
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/ZAS_Settings/proc/Set() called tick#: [world.time]")
 	var/datum/ZAS_Setting/setting = src.settings["[id]"]
 	setting.value=value
 
 // INTERNAL USE ONLY
 /ZAS_Settings/proc/SetFromConfig(var/id, var/value)
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/ZAS_Settings/proc/SetFromConfig() called tick#: [world.time]")
 	var/datum/ZAS_Setting/setting = src.settings["[id]"]
 	switch(setting.valtype)
 		if(ZAS_TYPE_NUMERIC)
@@ -361,6 +367,7 @@ var/global/ZAS_Settings/zas_settings = new
 * @returns Value of the desired setting
 */
 /ZAS_Settings/proc/Get(var/id)
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/ZAS_Settings/proc/Get() called tick#: [world.time]")
 	if(ispath(id))
 		id="[id]"
 	var/datum/ZAS_Setting/setting = src.settings[id]
@@ -369,6 +376,7 @@ var/global/ZAS_Settings/zas_settings = new
 	return setting.value
 
 /ZAS_Settings/proc/ChangeSettingsDialog(mob/user)
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/ZAS_Settings/proc/ChangeSettingsDialog() called tick#: [world.time]")
 	var/dat = {"
 <html>
 	<head>
@@ -392,7 +400,7 @@ a { color: white; }
 		var/datum/ZAS_Setting/s = src.settings[id]
 
 		// AUTOFIXED BY fix_string_idiocy.py
-		// C:\Users\Rob\Documents\Projects\vgstation13\code\ZAS\NewSettings.dm:393: dat += "<dt><b>[s.name]</b> = <i>[s.value]</i> <A href='?src=\ref[src];changevar=[id]'>\[Change\]</A></dt>"
+		// C:\Users\Rob\\documents\\\projects\vgstation13\code\ZAS\NewSettings.dm:393: dat += "<dt><b>[s.name]</b> = <i>[s.value]</i> <A href='?src=\ref[src];changevar=[id]'>\[Change\]</A></dt>"
 		dat += {"<dt><b>[s.name]</b> = <i>[s.value]</i> <A href='?src=\ref[src];changevar=[id]'>\[Change\]</A></dt>
 			<dd>[s.desc]</i></dd>"}
 		// END AUTOFIX
@@ -414,6 +422,7 @@ a { color: white; }
 			message_admins("[key_name(usr)] reloaded ZAS settings from disk.")
 
 /ZAS_Settings/proc/SetDefault(var/mob/user)
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/ZAS_Settings/proc/SetDefault() called tick#: [world.time]")
 	var/list/setting_choices = list("Plasma - Standard", "Plasma - Low Hazard", "Plasma - High Hazard", "Plasma - Oh Shit!", "ZAS - Normal", "ZAS - Forgiving", "ZAS - Dangerous", "ZAS - Hellish")
 	var/def = input(user, "Which of these presets should be used?") as null|anything in setting_choices
 	if(!def)

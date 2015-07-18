@@ -51,11 +51,13 @@
 */
 
 /obj/machinery/computer/cloning/proc/updatemodules()
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/computer/cloning/proc/updatemodules() called tick#: [world.time]")
 	src.scanner = findscanner()
 	if (!isnull(src.pod1))
 		src.pod1.connected = src // Some variable the pod needs
 
 /obj/machinery/computer/cloning/proc/findscanner()
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/computer/cloning/proc/findscanner() called tick#: [world.time]")
 	var/obj/machinery/dna_scannernew/scannerf = null
 
 	// Loop through every direction
@@ -72,6 +74,7 @@
 	return scannerf
 
 /obj/machinery/computer/cloning/proc/findcloner()
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/computer/cloning/proc/findcloner() called tick#: [world.time]")
 	var/obj/machinery/cloning/clonepod/pod_found = null
 	for (pod_found in orange(src, CLONEPODRANGE))
 		if(pod_found.connected)
@@ -113,7 +116,7 @@
 	var/dat = "<h3>Cloning System Control</h3>"
 
 	// AUTOFIXED BY fix_string_idiocy.py
-	// C:\Users\Rob\Documents\Projects\vgstation13\code\game\machinery\computer\cloning.dm:168: dat += "<font size=-1><a href='byond://?src=\ref[src];refresh=1'>Refresh</a></font>"
+	// C:\Users\Rob\\documents\\\projects\vgstation13\code\game\\machinery\computer\cloning.dm:168: dat += "<font size=-1><a href='byond://?src=\ref[src];refresh=1'>Refresh</a></font>"
 	dat += {"<font size=-1><a href='byond://?src=\ref[src];refresh=1'>Refresh</a></font>
 		<br><tt>[temp]</tt><br>"}
 	// END AUTOFIX
@@ -157,7 +160,7 @@
 			// Database
 
 			// AUTOFIXED BY fix_string_idiocy.py
-			// C:\Users\Rob\Documents\Projects\vgstation13\code\game\machinery\computer\cloning.dm:210: dat += "<h4>Database Functions</h4>"
+			// C:\Users\Rob\\documents\\\projects\vgstation13\code\game\\machinery\computer\cloning.dm:210: dat += "<h4>Database Functions</h4>"
 			dat += {"<h4>Database Functions</h4>
 				<a href='byond://?src=\ref[src];menu=2'>View Records</a><br>"}
 			// END AUTOFIX
@@ -168,7 +171,7 @@
 		if(2)
 
 			// AUTOFIXED BY fix_string_idiocy.py
-			// C:\Users\Rob\Documents\Projects\vgstation13\code\game\machinery\computer\cloning.dm:217: dat += "<h4>Current records</h4>"
+			// C:\Users\Rob\\documents\\\projects\vgstation13\code\game\\machinery\computer\cloning.dm:217: dat += "<h4>Current records</h4>"
 			dat += {"<h4>Current records</h4>
 				<a href='byond://?src=\ref[src];menu=1'>Back</a><br><ul>"}
 			// END AUTOFIX
@@ -178,7 +181,7 @@
 		if(3)
 
 			// AUTOFIXED BY fix_string_idiocy.py
-			// C:\Users\Rob\Documents\Projects\vgstation13\code\game\machinery\computer\cloning.dm:223: dat += "<h4>Selected Record</h4>"
+			// C:\Users\Rob\\documents\\\projects\vgstation13\code\game\\machinery\computer\cloning.dm:223: dat += "<h4>Selected Record</h4>"
 			dat += {"<h4>Selected Record</h4>
 				<a href='byond://?src=\ref[src];menu=2'>Back</a><br>"}
 			// END AUTOFIX
@@ -186,7 +189,7 @@
 				dat += "<font color=red>ERROR: Record not found.</font>"
 			else
 				// AUTOFIXED BY fix_string_idiocy.py
-				// C:\Users\Rob\Documents\Projects\vgstation13\code\game\machinery\computer\cloning.dm:229: dat += "<br><font size=1><a href='byond://?src=\ref[src];del_rec=1'>Delete Record</a></font><br>"
+				// C:\Users\Rob\\documents\\\projects\vgstation13\code\game\\machinery\computer\cloning.dm:229: dat += "<br><font size=1><a href='byond://?src=\ref[src];del_rec=1'>Delete Record</a></font><br>"
 				dat += {"<br><font size=1><a href='byond://?src=\ref[src];del_rec=1'>Delete Record</a></font><br>
 					<b>Name:</b> [src.active_record.dna.real_name && src.active_record.dna.real_name != "" ? src.active_record.dna.real_name : "Unknown"]<br>"}
 				// END AUTOFIX
@@ -202,7 +205,7 @@
 				if (!isnull(src.diskette))
 
 					// AUTOFIXED BY fix_string_idiocy.py
-					// C:\Users\Rob\Documents\Projects\vgstation13\code\game\machinery\computer\cloning.dm:240: dat += "<a href='byond://?src=\ref[src];disk=load'>Load from disk.</a>"
+					// C:\Users\Rob\\documents\\\projects\vgstation13\code\game\\machinery\computer\cloning.dm:240: dat += "<a href='byond://?src=\ref[src];disk=load'>Load from disk.</a>"
 					dat += {"<a href='byond://?src=\ref[src];disk=load'>Load from disk.</a>
 						| Save: <a href='byond://?src=\ref[src];save_disk=ue'>UI + UE</a>
 						| Save: <a href='byond://?src=\ref[src];save_disk=ui'>UI</a>
@@ -225,7 +228,7 @@
 				src.menu = 2
 
 			// AUTOFIXED BY fix_string_idiocy.py
-			// C:\Users\Rob\Documents\Projects\vgstation13\code\game\machinery\computer\cloning.dm:258: dat = "[src.temp]<br>"
+			// C:\Users\Rob\\documents\\\projects\vgstation13\code\game\\machinery\computer\cloning.dm:258: dat = "[src.temp]<br>"
 			dat = {"[src.temp]<br>
 				<h4>Confirm Record Deletion</h4>
 				<b><a href='byond://?src=\ref[src];del_rec=1'>Scan card to confirm.</a></b><br>
@@ -384,6 +387,7 @@
 	return
 
 /obj/machinery/computer/cloning/proc/scan_mob(mob/living/carbon/human/subject as mob)
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/computer/cloning/proc/scan_mob() called tick#: [world.time]")
 	if ((isnull(subject)) || (!(ishuman(subject))) || (!subject.dna) || (istype(subject, /mob/living/carbon/human/manifested)))
 		scantemp = "Error: Unable to locate valid genetic data."
 		return
@@ -451,6 +455,7 @@
 
 //Find a specific record by key.
 /obj/machinery/computer/cloning/proc/find_record(var/find_key)
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/computer/cloning/proc/find_record() called tick#: [world.time]")
 	var/selected_record = null
 	for(var/datum/dna2/record/R in src.records)
 		if (R.ckey == find_key)

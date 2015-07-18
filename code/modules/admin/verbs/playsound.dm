@@ -1,6 +1,7 @@
 /client/proc/play_sound(var/sound/S as sound)
 	set category = "Fun"
 	set name = "Play Global Sound"
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/client/proc/play_sound() called tick#: [world.time]")
 	if(!check_rights(R_SOUNDS))	return
 
 	var/sound/uploaded_sound = sound(S, repeat = 0, wait = 1, channel = 777)
@@ -20,6 +21,7 @@
 /client/proc/play_local_sound(var/sound/S as sound)
 	set category = "Fun"
 	set name = "Play Local Sound"
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/client/proc/play_local_sound() called tick#: [world.time]")
 	if(!check_rights(R_SOUNDS))	return
 	if(!istype(S)) S = sound(S)
 	log_admin("[key_name(src)] played a local sound [S]")
@@ -31,6 +33,7 @@
 
 /*
 /client/proc/cuban_pete()
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/client/proc/cuban_pete() called tick#: [world.time]")
 	set category = "Fun"
 	set name = "Cuban Pete Time"
 
@@ -47,6 +50,7 @@
 
 
 /client/proc/bananaphone()
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/client/proc/bananaphone() called tick#: [world.time]")
 	set category = "Fun"
 	set name = "Banana Phone"
 
@@ -58,6 +62,7 @@
 
 
 client/proc/space_asshole()
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\client/proc/space_asshole() called tick#: [world.time]")
 	set category = "Fun"
 	set name = "Space Asshole"
 
@@ -69,6 +74,7 @@ client/proc/space_asshole()
 
 
 client/proc/honk_theme()
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\client/proc/honk_theme() called tick#: [world.time]")
 	set category = "Fun"
 	set name = "Honk"
 

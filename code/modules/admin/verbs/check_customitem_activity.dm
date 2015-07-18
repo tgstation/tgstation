@@ -4,11 +4,12 @@ var/inactive_keys = "None<br>"
 /client/proc/check_customitem_activity()
 	set category = "Admin"
 	set name = "Check activity of players with custom items"
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/client/proc/check_customitem_activity() called tick#: [world.time]")
 
 	var/dat = "<b>Inactive players with custom items</b><br>"
 
 	// AUTOFIXED BY fix_string_idiocy.py
-	// C:\Users\Rob\Documents\Projects\vgstation13\code\modules\admin\verbs\check_customitem_activity.dm:9: dat += "<br>"
+	// C:\Users\Rob\\documents\\\projects\vgstation13\code\\modules\admin\verbs\check_customitem_activity.dm:9: dat += "<br>"
 	dat += {"<br>
 		The list below contains players with custom items that have not logged
 		in for the past two months, or have not logged in since this system was implemented.
@@ -16,7 +17,7 @@ var/inactive_keys = "None<br>"
 	// END AUTOFIX
 
 	// AUTOFIXED BY fix_string_idiocy.py
-	// C:\Users\Rob\Documents\Projects\vgstation13\code\modules\admin\verbs\check_customitem_activity.dm:13: dat += "<br>"
+	// C:\Users\Rob\\documents\\\projects\vgstation13\code\\modules\admin\verbs\check_customitem_activity.dm:13: dat += "<br>"
 	dat += {"<br>
 		Populating this list is done automatically, but must be manually triggered on a per
 	 round basis. Populating the list may cause a lag spike, so use it sparingly.<br>"}
@@ -26,7 +27,7 @@ var/inactive_keys = "None<br>"
 		dat += inactive_keys
 
 		// AUTOFIXED BY fix_string_idiocy.py
-		// C:\Users\Rob\Documents\Projects\vgstation13\code\modules\admin\verbs\check_customitem_activity.dm:19: dat += "<hr>"
+		// C:\Users\Rob\\documents\\\projects\vgstation13\code\\modules\admin\verbs\check_customitem_activity.dm:19: dat += "<hr>"
 		dat += {"<hr>
 			This system was implemented on March 1 2013, and the database a few days before that. Root server access is required to add or disable access to specific custom items.<br>"}
 		// END AUTOFIX
@@ -36,6 +37,7 @@ var/inactive_keys = "None<br>"
 	usr << browse(dat, "window=inactive_customitems;size=600x480")
 
 /proc/populate_inactive_customitems_list(var/client/C)
+	writepanic("[__FILE__].[__LINE__] (no type)([usr ? usr.ckey : ""])  \\/proc/populate_inactive_customitems_list() called tick#: [world.time]")
 	//set background = 1
 
 	if(checked_for_inactives)

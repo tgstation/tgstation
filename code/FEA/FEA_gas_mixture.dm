@@ -60,6 +60,7 @@ What are the archived variables for?
 
 	//PV=nRT - related procedures
 	proc/heat_capacity()
+		writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\proc/heat_capacity() called tick#: [world.time]")
 		var/heat_capacity = HEAT_CAPACITY_CALCULATION(oxygen,carbon_dioxide,nitrogen,toxins)
 
 		if(trace_gases.len)
@@ -69,6 +70,7 @@ What are the archived variables for?
 
 
 	proc/heat_capacity_archived()
+		writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\proc/heat_capacity_archived() called tick#: [world.time]")
 		var/heat_capacity_archived = HEAT_CAPACITY_CALCULATION(oxygen_archived,carbon_dioxide_archived,nitrogen_archived,toxins_archived)
 
 		if(trace_gases.len)
@@ -78,6 +80,7 @@ What are the archived variables for?
 
 
 	proc/total_moles()
+		writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\proc/total_moles() called tick#: [world.time]")
 		var/moles = oxygen + carbon_dioxide + nitrogen + toxins
 
 		if(trace_gases.len)
@@ -87,25 +90,30 @@ What are the archived variables for?
 
 
 	proc/return_pressure()
+		writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\proc/return_pressure() called tick#: [world.time]")
 		if(volume>0)
 			return total_moles()*R_IDEAL_GAS_EQUATION*temperature/volume
 		return 0
 
 
 	proc/return_temperature()
+		writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\proc/return_temperature() called tick#: [world.time]")
 		return temperature
 
 
 	proc/return_volume()
+		writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\proc/return_volume() called tick#: [world.time]")
 		return max(0, volume)
 
 
 	proc/thermal_energy()
+		writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\proc/thermal_energy() called tick#: [world.time]")
 		return temperature*heat_capacity()
 
 
 	//Procedures used for very specific events
 	proc/check_tile_graphic()
+		writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\proc/check_tile_graphic() called tick#: [world.time]")
 		//returns 1 if graphic changed
 		graphic = null
 		if(toxins > MOLES_PLASMA_VISIBLE)
@@ -120,6 +128,7 @@ What are the archived variables for?
 		return graphic != graphic_archived
 
 	proc/react(atom/dump_location)
+		writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\proc/react() called tick#: [world.time]")
 		var/reacting = 0 //set to 1 if a notable reaction occured (used by pipe_network)
 
 		if(trace_gases.len > 0)
@@ -148,6 +157,7 @@ What are the archived variables for?
 		return reacting
 
 	proc/fire()
+		writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\proc/fire() called tick#: [world.time]")
 		var/energy_released = 0
 		var/old_heat_capacity = heat_capacity()
 
@@ -202,49 +212,61 @@ What are the archived variables for?
 		return fuel_burnt
 
 	proc/archive()
+		writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\proc/archive() called tick#: [world.time]")
 		//Update archived versions of variables
 		//Returns: 1 in all cases
 
 	proc/merge(datum/gas_mixture/giver)
+			writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\proc/merge() called tick#: [world.time]")
 			//Merges all air from giver into self. Deletes giver.
 			//Returns: 1 on success (no failure cases yet)
 
 	proc/check_then_merge(datum/gas_mixture/giver)
+			writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\proc/check_then_merge() called tick#: [world.time]")
 			//Similar to merge(...) but first checks to see if the amount of air assumed is small enough
 			//	that group processing is still accurate for source (aborts if not)
 			//Returns: 1 on successful merge, 0 if the check failed
 
 	proc/remove(amount)
+			writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\proc/remove() called tick#: [world.time]")
 			//Proportionally removes amount of gas from the gas_mixture
 			//Returns: gas_mixture with the gases removed
 
 	proc/remove_ratio(ratio)
+			writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\proc/remove_ratio() called tick#: [world.time]")
 			//Proportionally removes amount of gas from the gas_mixture
 			//Returns: gas_mixture with the gases removed
 
 	proc/subtract(datum/gas_mixture/right_side)
+			writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\proc/subtract() called tick#: [world.time]")
 			//Subtracts right_side from air_mixture. Used to help turfs mingle
 
 	proc/check_then_remove(amount)
+			writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\proc/check_then_remove() called tick#: [world.time]")
 			//Similar to remove(...) but first checks to see if the amount of air removed is small enough
 			//	that group processing is still accurate for source (aborts if not)
 			//Returns: gas_mixture with the gases removed or null
 
 	proc/copy_from(datum/gas_mixture/sample)
+			writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\proc/copy_from() called tick#: [world.time]")
 			//Copies variables from sample
 
 	proc/share(datum/gas_mixture/sharer)
+			writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\proc/share() called tick#: [world.time]")
 			//Performs air sharing calculations between two gas_mixtures assuming only 1 boundary length
 			//Return: amount of gas exchanged (+ if sharer received)
 
 	proc/mimic(turf/model)
+			writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\proc/mimic() called tick#: [world.time]")
 			//Similar to share(...), except the model is not modified
 			//Return: amount of gas exchanged
 
 	proc/check_gas_mixture(datum/gas_mixture/sharer)
+			writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\proc/check_gas_mixture() called tick#: [world.time]")
 			//Returns: 0 if the self-check failed then -1 if sharer-check failed then 1 if both checks pass
 
 	proc/check_turf(turf/model)
+			writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\proc/check_turf() called tick#: [world.time]")
 			//Returns: 0 if self-check failed or 1 if check passes
 
 	//	check_me_then_share(datum/gas_mixture/sharer)
@@ -265,18 +287,27 @@ What are the archived variables for?
 
 	proc/temperature_mimic(turf/model, conduction_coefficient)
 
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\proc/temperature_mimic() called tick#: [world.time]")
+
 	proc/temperature_share(datum/gas_mixture/sharer, conduction_coefficient)
 
 	proc/temperature_turf_share(turf/simulated/sharer, conduction_coefficient)
+
+
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\proc/temperature_turf_share() called tick#: [world.time]")
 
 
 	proc/check_me_then_temperature_mimic(turf/model, conduction_coefficient)
 
 	proc/check_me_then_temperature_share(datum/gas_mixture/sharer, conduction_coefficient)
 
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\proc/check_me_then_temperature_share() called tick#: [world.time]")
+
 	proc/check_both_then_temperature_share(datum/gas_mixture/sharer, conduction_coefficient)
 
 	proc/check_me_then_temperature_turf_share(turf/simulated/sharer, conduction_coefficient)
+
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\proc/check_me_then_temperature_turf_share() called tick#: [world.time]")
 
 	proc/compare(datum/gas_mixture/sample)
 			//Compares sample to self to see if within acceptable ranges that group processing may be enabled

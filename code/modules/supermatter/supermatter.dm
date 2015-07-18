@@ -98,6 +98,7 @@
 	. = ..()
 
 /obj/machinery/power/supermatter/proc/explode()
+		writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/power/supermatter/proc/explode() called tick#: [world.time]")
 		explosion(get_turf(src), explosion_power, explosion_power * 2, explosion_power * 3, explosion_power * 4, 1)
 		new /turf/unsimulated/wall/supermatter(get_turf(src))
 		SetUniversalState(/datum/universal_state/supermatter_cascade)
@@ -343,6 +344,7 @@
 	Consume(user)
 
 /obj/machinery/power/supermatter/proc/transfer_energy()
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/power/supermatter/proc/transfer_energy() called tick#: [world.time]")
 	for(var/obj/machinery/power/rad_collector/R in rad_collectors)
 		if(get_dist(R, src) <= 15) // Better than using orange() every process
 			R.receive_pulse(power)
@@ -382,6 +384,7 @@
 
 
 /obj/machinery/power/supermatter/proc/Consume(var/mob/living/user)
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/power/supermatter/proc/Consume() called tick#: [world.time]")
 	if(istype(user))
 		user.dust()
 		if(istype(user,/mob/living/simple_animal/mouse)) //>implying mice are going to follow the rules

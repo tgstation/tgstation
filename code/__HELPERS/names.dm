@@ -1,5 +1,6 @@
 var/church_name = null
 /proc/church_name()
+	writepanic("[__FILE__].[__LINE__] (no type)([usr ? usr.ckey : ""])  \\/proc/church_name() called tick#: [world.time]")
 	if (church_name)
 		return church_name
 
@@ -15,6 +16,7 @@ var/church_name = null
 
 var/command_name = null
 /proc/command_name()
+	writepanic("[__FILE__].[__LINE__] (no type)([usr ? usr.ckey : ""])  \\/proc/command_name() called tick#: [world.time]")
 	if (command_name)
 		return command_name
 
@@ -41,12 +43,15 @@ var/command_name = null
 
 /proc/change_command_name(var/name)
 
+	writepanic("[__FILE__].[__LINE__] (no type)([usr ? usr.ckey : ""])  \\/proc/change_command_name() called tick#: [world.time]")
+
 	command_name = name
 
 	return name
 
 var/religion_name = null
 /proc/religion_name()
+	writepanic("[__FILE__].[__LINE__] (no type)([usr ? usr.ckey : ""])  \\/proc/religion_name() called tick#: [world.time]")
 	if (religion_name)
 		return religion_name
 
@@ -58,6 +63,7 @@ var/religion_name = null
 	return capitalize(name)
 
 /proc/station_name()
+	writepanic("[__FILE__].[__LINE__] (no type)([usr ? usr.ckey : ""])  \\/proc/station_name() called tick#: [world.time]")
 	if(station_name)
 		return station_name
 	var/random = rand(1,5)
@@ -116,6 +122,8 @@ var/religion_name = null
 
 /proc/world_name(var/name)
 
+	writepanic("[__FILE__].[__LINE__] (no type)([usr ? usr.ckey : ""])  \\/proc/world_name() called tick#: [world.time]")
+
 	station_name = name
 
 	if (config && config.server_name)
@@ -127,6 +135,7 @@ var/religion_name = null
 
 var/syndicate_name = null
 /proc/syndicate_name()
+	writepanic("[__FILE__].[__LINE__] (no type)([usr ? usr.ckey : ""])  \\/proc/syndicate_name() called tick#: [world.time]")
 	if (syndicate_name)
 		return syndicate_name
 
@@ -175,6 +184,8 @@ var/syndicate_code_response//Code response for traitors.
 	*/
 
 /proc/generate_code_phrase()//Proc is used for phrase and response in master_controller.dm
+
+	writepanic("[__FILE__].[__LINE__] (no type)([usr ? usr.ckey : ""])  \\/proc/generate_code_phrase() called tick#: [world.time]")
 
 	var/code_phrase = ""//What is returned when the proc finishes.
 	var/words = pick(//How many words there will be. Minimum of two. 2, 4 and 5 have a lesser chance of being selected. 3 is the most likely.
@@ -240,6 +251,7 @@ var/syndicate_code_response//Code response for traitors.
 /*
 //This proc tests the gen above.
 /client/verb/test_code_phrase()
+	writepanic("[__FILE__].[__LINE__] (no type)([usr ? usr.ckey : ""]) \\/client/verb/test_code_phrase()  called tick#: [world.time]")
 	set name = "Generate Code Phrase"
 	set category = "Debug"
 

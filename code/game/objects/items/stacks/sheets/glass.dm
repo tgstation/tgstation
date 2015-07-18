@@ -48,6 +48,7 @@
 		return ..()
 
 /obj/item/stack/sheet/glass/proc/construct_window(mob/user as mob)
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/item/stack/sheet/glass/proc/construct_window() called tick#: [world.time]")
 	if(!user || !src)	return 0
 	if(!istype(user.loc,/turf)) return 0
 	if(!user.IsAdvancedToolUser())

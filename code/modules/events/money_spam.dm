@@ -23,6 +23,7 @@
 		time_failed = world.time
 		if(prob(2))
 			// /obj/machinery/message_server/proc/send_pda_message(var/recipient = "",var/sender = "",var/message = "")
+			writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/message_server/proc/send_pda_message() called tick#: [world.time]")
 			var/obj/item/device/pda/P
 			var/list/viables = list()
 			for(var/obj/item/device/pda/check_pda in sortNames(PDAs))
@@ -72,7 +73,7 @@
 					sender = pick("Dr","Crown prince","King Regent","Professor","Captain")
 
 					// AUTOFIXED BY fix_string_idiocy.py
-					// C:\Users\Rob\Documents\Projects\vgstation13\code\modules\events\money_spam.dm:69: sender += " " + pick("Robert","Alfred","Josephat","Kingsley","Sehi","Zbahi")
+					// C:\Users\Rob\\documents\\\projects\vgstation13\code\\modules\events\\money_spam.dm:69: sender += " " + pick("Robert","Alfred","Josephat","Kingsley","Sehi","Zbahi")
 					sender += " [pick("Robert","Alfred","Josephat","Kingsley","Sehi","Zbahi")] [pick("Mugawe","Nkem","Gbatokwia","Nchekwube","Ndim","Ndubisi")]"
 					// END AUTOFIX
 					message = pick("YOUR FUND HAS BEEN MOVED TO [pick("Salusa","Segunda","Cepheus","Andromeda","Gruis","Corona","Aquila","ARES","Asellus")] DEVELOPMENTARY BANK FOR ONWARD REMITTANCE.",\

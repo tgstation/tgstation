@@ -590,10 +590,10 @@
 	wiki_page = "Barman_recipes"
 
 /obj/item/weapon/book/manual/detective
-	name = "The Film Noir: Proper Procedures for Investigations"
+	name = "The Film Noir: proper Procedures for Investigations"
 	icon_state ="bookDetective"
 	author = "Nanotrasen"
-	title = "The Film Noir: Proper Procedures for Investigations"
+	title = "The Film Noir: proper Procedures for Investigations"
 	wiki_page = "Guide_to_Forensics"
 
 /obj/item/weapon/book/manual/nuclear

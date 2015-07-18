@@ -97,6 +97,7 @@ var/datum/paiController/paiController			// Global handler for pAI candidates
 			recruitWindow(usr)
 
 	proc/recruitWindow(var/mob/M as mob)
+		writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\proc/recruitWindow() called tick#: [world.time]")
 		var/datum/paiCandidate/candidate
 		for(var/datum/paiCandidate/c in pai_candidates)
 			if(!istype(c) || !istype(M))
@@ -128,7 +129,7 @@ var/datum/paiController/paiController			// Global handler for pAI candidates
 
 
 		// AUTOFIXED BY fix_string_idiocy.py
-		// C:\Users\Rob\Documents\Projects\vgstation13\code\modules\mob\living\silicon\pai\recruit.dm:123: dat += "<p class=\"top\">Please configure your pAI personality's options. Remember, what you enter here could determine whether or not the user requesting a personality chooses you!</p>"
+		// C:\Users\Rob\\documents\\\projects\vgstation13\code\\modules\\mob\living\silicon\\\pai\recruit.dm:123: dat += "<p class=\"top\">Please configure your pAI personality's options. Remember, what you enter here could determine whether or not the user requesting a personality chooses you!</p>"
 		dat += {"<p class=\"top\">Please configure your pAI personality's options. Remember, what you enter here could determine whether or not the user requesting a personality chooses you!</p>
 			<table>
 			<tr class=\"d0\"><td>Name:</td><td>[candidate.name]</td></tr>
@@ -148,6 +149,7 @@ var/datum/paiController/paiController			// Global handler for pAI candidates
 		M << browse(dat, "window=paiRecruit")
 
 	proc/findPAI(var/obj/item/device/paicard/p, var/mob/user)
+		writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\proc/findPAI() called tick#: [world.time]")
 		requestRecruits()
 		var/list/available = list()
 		for(var/datum/paiCandidate/c in paiController.pai_candidates)
@@ -180,14 +182,14 @@ var/datum/paiController/paiController			// Global handler for pAI candidates
 				"}
 
 		// AUTOFIXED BY fix_string_idiocy.py
-		// C:\Users\Rob\Documents\Projects\vgstation13\code\modules\mob\living\silicon\pai\recruit.dm:177: dat += "<p class=\"top\">Requesting AI personalities from central database... If there are no entries, or if a suitable entry is not listed, check again later as more personalities may be added.</p>"
+		// C:\Users\Rob\\documents\\\projects\vgstation13\code\\modules\\mob\living\silicon\\\pai\recruit.dm:177: dat += "<p class=\"top\">Requesting AI personalities from central database... If there are no entries, or if a suitable entry is not listed, check again later as more personalities may be added.</p>"
 		dat += {"<p class=\"top\">Requesting AI personalities from central database... If there are no entries, or if a suitable entry is not listed, check again later as more personalities may be added.</p>
 			<table>"}
 		// END AUTOFIX
 		for(var/datum/paiCandidate/c in available)
 
 			// AUTOFIXED BY fix_string_idiocy.py
-			// C:\Users\Rob\Documents\Projects\vgstation13\code\modules\mob\living\silicon\pai\recruit.dm:182: dat += "<tr class=\"d0\"><td>Name:</td><td>[c.name]</td></tr>"
+			// C:\Users\Rob\\documents\\\projects\vgstation13\code\\modules\\mob\living\silicon\\\pai\recruit.dm:182: dat += "<tr class=\"d0\"><td>Name:</td><td>[c.name]</td></tr>"
 			dat += {"<tr class=\"d0\"><td>Name:</td><td>[c.name]</td></tr>
 				<tr class=\"d1\"><td>Description:</td><td>[c.description]</td></tr>
 				<tr class=\"d0\"><td>Preferred Role:</td><td>[c.role]</td></tr>
@@ -200,6 +202,7 @@ var/datum/paiController/paiController			// Global handler for pAI candidates
 		user << browse(dat, "window=findPai")
 
 	proc/requestRecruits()
+		writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\proc/requestRecruits() called tick#: [world.time]")
 		for(var/mob/dead/observer/O in get_active_candidates(ROLE_PAI)) // We handle polling ourselves.
 			if(O.client)
 				if(check_recruit(O))
@@ -207,6 +210,7 @@ var/datum/paiController/paiController			// Global handler for pAI candidates
 					//question(O.client)
 
 	proc/check_recruit(var/mob/dead/observer/O)
+		writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\proc/check_recruit() called tick#: [world.time]")
 		if(jobban_isbanned(O, "pAI"))
 			return 0
 		if(O.has_enabled_antagHUD == 1 && config.antag_hud_restricted)
@@ -216,6 +220,7 @@ var/datum/paiController/paiController			// Global handler for pAI candidates
 		return 0
 
 	proc/question(var/client/C)
+		writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\proc/question() called tick#: [world.time]")
 		spawn(0)
 			if(!C)	return
 			asked.Add(C.key)

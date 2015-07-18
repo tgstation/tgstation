@@ -94,6 +94,7 @@
 
 //Backup files to centcomm to help admins recover data after greifer attacks
 /obj/machinery/r_n_d/server/proc/griefProtection()
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/r_n_d/server/proc/griefProtection() called tick#: [world.time]")
 	for(var/obj/machinery/r_n_d/server/centcom/C in machines)
 		for(var/datum/tech/T in files.known_tech)
 			C.files.AddTech2Known(T)
@@ -102,6 +103,7 @@
 		C.files.RefreshResearch()
 
 /obj/machinery/r_n_d/server/proc/produce_heat(heat_amt)
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/r_n_d/server/proc/produce_heat() called tick#: [world.time]")
 	if(!(stat & (NOPOWER|BROKEN))) //Blatently stolen from space heater.
 		var/turf/simulated/L = loc
 		if(istype(L))
@@ -255,7 +257,7 @@
 					continue
 
 				// AUTOFIXED BY fix_string_idiocy.py
-				// C:\Users\Rob\Documents\Projects\vgstation13\code\modules\research\server.dm:289: dat += "[S.name] || "
+				// C:\Users\Rob\\documents\\\projects\vgstation13\code\\modules\research\server.dm:289: dat += "[S.name] || "
 				dat += {"[S.name] ||
 					<A href='?src=\ref[src];access=[S.server_id]'> Access Rights</A> |
 					<A href='?src=\ref[src];data=[S.server_id]'>Data Management</A>"}
@@ -266,7 +268,7 @@
 		if(1) //Access rights menu
 
 			// AUTOFIXED BY fix_string_idiocy.py
-			// C:\Users\Rob\Documents\Projects\vgstation13\code\modules\research\server.dm:296: dat += "[temp_server.name] Access Rights<BR><BR>"
+			// C:\Users\Rob\\documents\\\projects\vgstation13\code\\modules\research\server.dm:296: dat += "[temp_server.name] Access Rights<BR><BR>"
 			dat += {"[temp_server.name] Access Rights<BR><BR>
 				Consoles with Upload Access<BR>"}
 			// END AUTOFIX
@@ -290,14 +292,14 @@
 		if(2) //Data Management menu
 
 			// AUTOFIXED BY fix_string_idiocy.py
-			// C:\Users\Rob\Documents\Projects\vgstation13\code\modules\research\server.dm:316: dat += "[temp_server.name] Data ManagementP<BR><BR>"
+			// C:\Users\Rob\\documents\\\projects\vgstation13\code\\modules\research\server.dm:316: dat += "[temp_server.name] Data ManagementP<BR><BR>"
 			dat += {"[temp_server.name] Data Management<BR><BR>
 				Known Technologies<BR>"}
 			// END AUTOFIX
 			for(var/datum/tech/T in temp_server.files.known_tech)
 
 				// AUTOFIXED BY fix_string_idiocy.py
-				// C:\Users\Rob\Documents\Projects\vgstation13\code\modules\research\server.dm:319: dat += "* [T.name] "
+				// C:\Users\Rob\\documents\\\projects\vgstation13\code\\modules\research\server.dm:319: dat += "* [T.name] "
 				dat += {"* [T.name]
 					<A href='?src=\ref[src];reset_tech=[T.id]'>(Reset)</A><BR>"} //FYI, these are all strings
 				// END AUTOFIX
@@ -305,7 +307,7 @@
 			for(var/datum/design/D in temp_server.files.known_designs)
 
 				// AUTOFIXED BY fix_string_idiocy.py
-				// C:\Users\Rob\Documents\Projects\vgstation13\code\modules\research\server.dm:323: dat += "* [D.name] "
+				// C:\Users\Rob\\documents\\\projects\vgstation13\code\\modules\research\server.dm:323: dat += "* [D.name] "
 				dat += {"* [D.name]
 					<A href='?src=\ref[src];reset_design=[D.id]'>(Delete)</A><BR>"}
 				// END AUTOFIX
@@ -314,7 +316,7 @@
 		if(3) //Server Data Transfer
 
 			// AUTOFIXED BY fix_string_idiocy.py
-			// C:\Users\Rob\Documents\Projects\vgstation13\code\modules\research\server.dm:328: dat += "[temp_server.name] Server to Server Transfer<BR><BR>"
+			// C:\Users\Rob\\documents\\\projects\vgstation13\code\\modules\research\server.dm:328: dat += "[temp_server.name] Server to Server Transfer<BR><BR>"
 			dat += {"[temp_server.name] Server to Server Transfer<BR><BR>
 				Send Data to what server?<BR>"}
 			// END AUTOFIX

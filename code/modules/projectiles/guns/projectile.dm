@@ -35,6 +35,7 @@
 
 //loads the argument magazine into the gun
 /obj/item/weapon/gun/projectile/proc/LoadMag(var/obj/item/ammo_storage/magazine/AM, var/mob/user)
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/item/weapon/gun/projectile/proc/LoadMag() called tick#: [world.time]")
 	if(istype(AM, text2path(mag_type)) && !stored_magazine)
 		if(user)
 			user.drop_item(AM, src)
@@ -47,6 +48,7 @@
 	return 0
 
 /obj/item/weapon/gun/projectile/proc/RemoveMag(var/mob/user)
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/item/weapon/gun/projectile/proc/RemoveMag() called tick#: [world.time]")
 	if(stored_magazine)
 		stored_magazine.loc = get_turf(src.loc)
 		if(user)
@@ -62,6 +64,7 @@
 	set name = "Remove Magazine"
 	set category = "Object"
 	set src in range(0)
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""]) \\/obj/item/weapon/gun/projectile/verb/force_removeMag()  called tick#: [world.time]")
 	if(stored_magazine)
 		RemoveMag()
 	else
@@ -69,6 +72,7 @@
 
 
 /obj/item/weapon/gun/projectile/proc/chamber_round() //Only used by guns with magazine
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/item/weapon/gun/projectile/proc/chamber_round() called tick#: [world.time]")
 	if(chambered || !stored_magazine)
 		return 0
 	else
@@ -80,6 +84,7 @@
 	return 0
 
 /obj/item/weapon/gun/projectile/proc/getAC()
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/item/weapon/gun/projectile/proc/getAC() called tick#: [world.time]")
 	var/obj/item/ammo_casing/AC = null
 	if(mag_type && load_method == 2)
 		AC = chambered
@@ -206,6 +211,7 @@
 		user << "<span class='warning'>It has a supressor attached to the barrel.</span>"
 
 /obj/item/weapon/gun/projectile/proc/getAmmo()
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/item/weapon/gun/projectile/proc/getAmmo() called tick#: [world.time]")
 	var/bullets = 0
 	if(mag_type && load_method == 2)
 		if(stored_magazine)

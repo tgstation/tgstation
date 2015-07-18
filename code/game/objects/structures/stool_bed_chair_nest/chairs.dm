@@ -40,6 +40,7 @@
 	handle_layer()
 
 /obj/structure/stool/bed/chair/proc/handle_rotation(atom/newloc, direction)
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/structure/stool/bed/chair/proc/handle_rotation() called tick#: [world.time]")
 	if(buckled_mob)
 		buckled_mob.buckled = null //Temporary, so Move() succeeds.
 		if(isturf(buckled_mob.loc))
@@ -71,6 +72,7 @@
 	return 1
 
 /obj/structure/stool/bed/chair/proc/handle_layer()
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/structure/stool/bed/chair/proc/handle_layer() called tick#: [world.time]")
 	if(dir == NORTH)
 		src.layer = FLY_LAYER
 	else
@@ -78,6 +80,7 @@
 
 
 /obj/structure/stool/bed/chair/proc/spin()
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/structure/stool/bed/chair/proc/spin() called tick#: [world.time]")
 	src.dir = turn(src.dir, 90)
 	handle_layer()
 	if(buckled_mob)
@@ -87,6 +90,7 @@
 	set name = "Rotate Chair"
 	set category = "Object"
 	set src in oview(1)
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""]) \\/obj/structure/stool/bed/chair/verb/rotate()  called tick#: [world.time]")
 
 	if(!usr || !isturf(usr.loc))
 		return

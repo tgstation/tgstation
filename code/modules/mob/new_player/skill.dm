@@ -156,6 +156,7 @@ datum/attribute/var
 
 
 proc/setup_skills()
+	writepanic("[__FILE__].[__LINE__] \\/proc/setup_skills() called tick#: [world.time]")
 	if(SKILLS == null)
 		SKILLS = list()
 		for(var/T in (typesof(/datum/skill)-/datum/skill))
@@ -168,6 +169,7 @@ proc/setup_skills()
 
 
 mob/living/carbon/human/proc/GetSkillClass(points)
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\mob/living/carbon/human/proc/GetSkillClass() called tick#: [world.time]")
 	// skill classes describe how your character compares in total points
 	var/original_points = points
 	points -= min(round((age - 20) / 2.5), 4) // every 2.5 years after 20, one extra skillpoint
@@ -194,6 +196,7 @@ mob/living/carbon/human/proc/GetSkillClass(points)
 
 
 proc/show_skill_window(var/mob/user, var/mob/living/carbon/human/M)
+	writepanic("[__FILE__].[__LINE__] \\/proc/show_skill_window() called tick#: [world.time]")
 	if(!istype(M)) return
 	if(SKILLS == null)
 		setup_skills()
@@ -205,7 +208,7 @@ proc/show_skill_window(var/mob/user, var/mob/living/carbon/human/M)
 	var/HTML = "<body>"
 
 	// AUTOFIXED BY fix_string_idiocy.py
-	// C:\Users\Rob\Documents\Projects\vgstation13\code\modules\mob\new_player\skill.dm:206: HTML += "<b>Select your Skills</b><br>"
+	// C:\Users\Rob\\documents\\\projects\vgstation13\code\\modules\\mob\new_player\skill.dm:206: HTML += "<b>Select your Skills</b><br>"
 	HTML += {"<b>Select your Skills</b><br>
 		Current skill level: <b>[M.GetSkillClass(M.used_skillpoints)]</b> ([M.used_skillpoints])<br>
 		<table>"}
@@ -213,7 +216,7 @@ proc/show_skill_window(var/mob/user, var/mob/living/carbon/human/M)
 	for(var/V in SKILLS)
 
 		// AUTOFIXED BY fix_string_idiocy.py
-		// C:\Users\Rob\Documents\Projects\vgstation13\code\modules\mob\new_player\skill.dm:210: HTML += "<tr><th colspan = 5><b>[V]</b>"
+		// C:\Users\Rob\\documents\\\projects\vgstation13\code\\modules\\mob\new_player\skill.dm:210: HTML += "<tr><th colspan = 5><b>[V]</b>"
 		HTML += {"<tr><th colspan = 5><b>[V]</b>
 			</th></tr>"}
 		// END AUTOFIX
@@ -221,7 +224,7 @@ proc/show_skill_window(var/mob/user, var/mob/living/carbon/human/M)
 			var/level = M.skills[S.ID]
 
 			// AUTOFIXED BY fix_string_idiocy.py
-			// C:\Users\Rob\Documents\Projects\vgstation13\code\modules\mob\new_player\skill.dm:214: HTML += "<tr style='text-align:left;'>"
+			// C:\Users\Rob\\documents\\\projects\vgstation13\code\\modules\\mob\new_player\skill.dm:214: HTML += "<tr style='text-align:left;'>"
 			HTML += {"<tr style='text-align:left;'>
 				<th>[S.name]</th>
 				<th><font color=[(level == SKILL_NONE) ? "red" : "black"]>\[Untrained\]</font></th>"}
@@ -233,7 +236,7 @@ proc/show_skill_window(var/mob/user, var/mob/living/carbon/human/M)
 				HTML += "<th><font color=[(level == SKILL_BASIC) ? "red" : "black"]>\[Amateur\]</font></th>"
 
 			// AUTOFIXED BY fix_string_idiocy.py
-			// C:\Users\Rob\Documents\Projects\vgstation13\code\modules\mob\new_player\skill.dm:222: HTML += "<th><font color=[(level == SKILL_ADEPT) ? "red" : "black"]>\[Trained\]</font></th>"
+			// C:\Users\Rob\\documents\\\projects\vgstation13\code\\modules\\mob\new_player\skill.dm:222: HTML += "<th><font color=[(level == SKILL_ADEPT) ? "red" : "black"]>\[Trained\]</font></th>"
 			HTML += {"<th><font color=[(level == SKILL_ADEPT) ? "red" : "black"]>\[Trained\]</font></th>
 				<th><font color=[(level == SKILL_EXPERT) ? "red" : "black"]>\[Professional\]</font></th>
 				</tr>"}
@@ -247,5 +250,6 @@ proc/show_skill_window(var/mob/user, var/mob/living/carbon/human/M)
 mob/living/carbon/human/verb/show_skills()
 	set category = "IC"
 	set name = "Show Own Skills"
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""]) \\mob/living/carbon/human/verb/show_skills()  called tick#: [world.time]")
 
 	show_skill_window(src, src)

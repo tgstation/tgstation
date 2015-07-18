@@ -61,7 +61,7 @@
 	usr.set_machine(src)
 
 	// AUTOFIXED BY fix_string_idiocy.py
-	// C:\Users\Rob\Documents\Projects\vgstation13\code\game\machinery\computer\station_alert.dm:29: var/dat = "<HEAD><TITLE>Current Station Alerts</TITLE><META HTTP-EQUIV='Refresh' CONTENT='10'></HEAD><BODY>\n"
+	// C:\Users\Rob\\documents\\\projects\vgstation13\code\game\\machinery\computer\station_alert.dm:29: var/dat = "<HEAD><TITLE>Current Station Alerts</TITLE><META HTTP-EQUIV='Refresh' CONTENT='10'></HEAD><BODY>\n"
 	var/dat = {"<HEAD><TITLE>Current [general_area_name] Alerts</TITLE><META HTTP-EQUIV='Refresh' CONTENT='10'></HEAD><BODY>\n
 	<A HREF='?src=\ref[user];mach_close=alerts'>Close</A><br><br>"}
 	// END AUTOFIX
@@ -75,7 +75,7 @@
 				var/list/sources = alm[3]
 
 				// AUTOFIXED BY fix_string_idiocy.py
-				// C:\Users\Rob\Documents\Projects\vgstation13\code\game\machinery\computer\station_alert.dm:39: dat += "<NOBR>"
+				// C:\Users\Rob\\documents\\\projects\vgstation13\code\game\\machinery\computer\station_alert.dm:39: dat += "<NOBR>"
 				dat += {"<NOBR>
 					&bull;
 					[A.name]"}
@@ -97,6 +97,7 @@
 
 
 /obj/machinery/computer/station_alert/proc/triggerAlarm(var/class, area/A, var/O, var/alarmsource)
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/computer/station_alert/proc/triggerAlarm() called tick#: [world.time]")
 	if(stat & (BROKEN))
 		return
 	var/list/L = src.alarms[class]
@@ -120,6 +121,7 @@
 
 
 /obj/machinery/computer/station_alert/proc/cancelAlarm(var/class, area/A as area, obj/origin)
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/computer/station_alert/proc/cancelAlarm() called tick#: [world.time]")
 	if(stat & (BROKEN))
 		return
 	var/list/L = src.alarms[class]

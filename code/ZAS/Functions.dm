@@ -4,6 +4,8 @@
 //Floods outward from an initial turf to fill everywhere it's zone would reach.
 proc/FloodFill(turf/simulated/start)
 
+	writepanic("[__FILE__].[__LINE__] \\/proc/FloodFill() called tick#: [world.time]")
+
 	if(!istype(start))
 		return list()
 
@@ -77,6 +79,8 @@ proc/FloodFill(turf/simulated/start)
 //Procedure to merge two zones together.
 proc/ZMerge(zone/A,zone/B)
 
+	writepanic("[__FILE__].[__LINE__] \\/proc/ZMerge() called tick#: [world.time]")
+
 	//Sanity~
 	if(!istype(A) || !istype(B))
 		return
@@ -139,6 +143,8 @@ proc/ZMerge(zone/A,zone/B)
 
 //Connects two zones by forming a connection object representing turfs A and B.
 proc/ZConnect(turf/simulated/A,turf/simulated/B)
+
+	writepanic("[__FILE__].[__LINE__] \\/proc/ZConnect() called tick#: [world.time]")
 
 	//Make sure that if it's space, it gets added to unsimulated_tiles instead.
 	if(!istype(B) || iscatwalk(B))

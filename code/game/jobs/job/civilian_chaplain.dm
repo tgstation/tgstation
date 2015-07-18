@@ -140,9 +140,9 @@
 				if("faith of the seven")
 					B.name = "The Seven-Pointed Star"
 					if (H.gender == FEMALE)
-						J = "Septa"
+						J = "septa"
 					else
-						J = "Septon"
+						J = "septon"
 				if("goa'uld")
 					B.name = "The Abydos Cartouche"
 					J = "First Prime"

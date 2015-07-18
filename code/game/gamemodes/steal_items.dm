@@ -1,6 +1,6 @@
 // Theft objectives.
 //
-// Separated into datums so we can prevent roles from getting certain objectives.
+// separated into datums so we can prevent roles from getting certain objectives.
 
 #define THEFT_SPECIAL         1
 
@@ -15,6 +15,7 @@
 	var/flags=0
 
 /datum/theft_objective/proc/get_contents(var/obj/O)
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/theft_objective/proc/get_contents() called tick#: [world.time]")
 	var/list/L = list()
 
 	if(istype(O,/obj/item/weapon/storage))
@@ -35,6 +36,7 @@
 	return L
 
 /datum/theft_objective/proc/check_completion(datum/mind/owner)
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/theft_objective/proc/check_completion() called tick#: [world.time]")
 	if (owner && owner.current)
 		var/all_items = new/list()
 
@@ -210,6 +212,7 @@
 	return FALSE
 
 /datum/theft_objective/number/proc/getAmountStolen(var/obj/item/I)
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/theft_objective/number/proc/getAmountStolen() called tick#: [world.time]")
 	return I:amount
 
 /datum/theft_objective/number/traitor/plasma_gas

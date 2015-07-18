@@ -1,6 +1,8 @@
 
 /datum/admins/proc/DB_ban_record(var/bantype, var/mob/banned_mob, var/duration = -1, var/reason, var/job = "", var/rounds = 0, var/banckey = null)
 
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/admins/proc/DB_ban_record() called tick#: [world.time]")
+
 	if(!check_rights(R_BAN))	return
 
 	establish_db_connection()
@@ -100,6 +102,8 @@
 
 datum/admins/proc/DB_ban_unban(var/ckey, var/bantype, var/job = "")
 
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\datum/admins/proc/DB_ban_unban() called tick#: [world.time]")
+
 	if(!check_rights(R_BAN))	return
 
 	var/bantype_str
@@ -167,6 +171,8 @@ datum/admins/proc/DB_ban_unban(var/ckey, var/bantype, var/job = "")
 
 datum/admins/proc/DB_ban_edit(var/banid = null, var/param = null)
 
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\datum/admins/proc/DB_ban_edit() called tick#: [world.time]")
+
 	if(!check_rights(R_BAN))	return
 
 	if(!isnum(banid) || !istext(param))
@@ -227,6 +233,8 @@ datum/admins/proc/DB_ban_edit(var/banid = null, var/param = null)
 
 datum/admins/proc/DB_ban_unban_by_id(var/id)
 
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\datum/admins/proc/DB_ban_unban_by_id() called tick#: [world.time]")
+
 	if(!check_rights(R_BAN))	return
 
 	var/sql = "SELECT ckey FROM erro_ban WHERE id = [id]"
@@ -276,6 +284,7 @@ datum/admins/proc/DB_ban_unban_by_id(var/id)
 	set category = "Admin"
 	set name = "Banning Panel"
 	set desc = "Edit admin permissions"
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/client/proc/DB_ban_panel() called tick#: [world.time]")
 
 	if(!holder)
 		return
@@ -283,6 +292,7 @@ datum/admins/proc/DB_ban_unban_by_id(var/id)
 	holder.DB_ban_panel()
 
 /datum/admins/proc/DB_ban_panel(var/playerckey = null, var/adminckey = null)
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/admins/proc/DB_ban_panel() called tick#: [world.time]")
 	if(!usr.client)
 		return
 
@@ -297,7 +307,7 @@ datum/admins/proc/DB_ban_unban_by_id(var/id)
 
 
 	// AUTOFIXED BY fix_string_idiocy.py
-	// C:\Users\Rob\Documents\Projects\vgstation13\code\modules\admin\DB ban\functions.dm:282: output += "<td width='35%' align='center'>"
+	// C:\Users\Rob\\documents\\\projects\vgstation13\code\\modules\admin\\dB ban\functions.dm:282: output += "<td width='35%' align='center'>"
 	output += {"<td width='35%' align='center'>
 		<h1>Banning panel</h1>
 		</td>
@@ -326,7 +336,7 @@ datum/admins/proc/DB_ban_unban_by_id(var/id)
 		output += "<option value='[j]'>[j]</option>"
 
 	// AUTOFIXED BY fix_string_idiocy.py
-	// C:\Users\Rob\Documents\Projects\vgstation13\code\modules\admin\DB ban\functions.dm:309: output += "</select></td></tr></table>"
+	// C:\Users\Rob\\documents\\\projects\vgstation13\code\\modules\admin\\dB ban\functions.dm:309: output += "</select></td></tr></table>"
 	output += {"</select></td></tr></table>
 		<b>Reason:<br></b><textarea name='dbbanreason' cols='50'></textarea><br>
 		<input type='submit' value='Add ban'>
@@ -351,7 +361,7 @@ datum/admins/proc/DB_ban_unban_by_id(var/id)
 
 
 		// AUTOFIXED BY fix_string_idiocy.py
-		// C:\Users\Rob\Documents\Projects\vgstation13\code\modules\admin\DB ban\functions.dm:333: output += "<table width='90%' bgcolor='#e3e3e3' cellpadding='5' cellspacing='0' align='center'>"
+		// C:\Users\Rob\\documents\\\projects\vgstation13\code\\modules\admin\\dB ban\functions.dm:333: output += "<table width='90%' bgcolor='#e3e3e3' cellpadding='5' cellspacing='0' align='center'>"
 		output += {"<table width='90%' bgcolor='#e3e3e3' cellpadding='5' cellspacing='0' align='center'>
 			<tr>
 			<th width='25%'><b>TYPE</b></th>
@@ -409,7 +419,7 @@ datum/admins/proc/DB_ban_unban_by_id(var/id)
 
 
 			// AUTOFIXED BY fix_string_idiocy.py
-			// C:\Users\Rob\Documents\Projects\vgstation13\code\modules\admin\DB ban\functions.dm:388: output += "<tr bgcolor='[dcolor]'>"
+			// C:\Users\Rob\\documents\\\projects\vgstation13\code\\modules\admin\\dB ban\functions.dm:388: output += "<tr bgcolor='[dcolor]'>"
 			output += {"<tr bgcolor='[dcolor]'>
 				<td align='center'>[typedesc]</td>
 				<td align='center'><b>[ckey]</b></td>
@@ -424,7 +434,7 @@ datum/admins/proc/DB_ban_unban_by_id(var/id)
 			if(edits)
 
 				// AUTOFIXED BY fix_string_idiocy.py
-				// C:\Users\Rob\Documents\Projects\vgstation13\code\modules\admin\DB ban\functions.dm:399: output += "<tr bgcolor='[dcolor]'>"
+				// C:\Users\Rob\\documents\\\projects\vgstation13\code\\modules\admin\\dB ban\functions.dm:399: output += "<tr bgcolor='[dcolor]'>"
 				output += {"<tr bgcolor='[dcolor]'>
 					<td align='center' colspan='5'><b>EDITS</b></td>
 					</tr>
@@ -435,13 +445,13 @@ datum/admins/proc/DB_ban_unban_by_id(var/id)
 			if(unbanned)
 
 				// AUTOFIXED BY fix_string_idiocy.py
-				// C:\Users\Rob\Documents\Projects\vgstation13\code\modules\admin\DB ban\functions.dm:406: output += "<tr bgcolor='[dcolor]'>"
+				// C:\Users\Rob\\documents\\\projects\vgstation13\code\\modules\admin\\dB ban\functions.dm:406: output += "<tr bgcolor='[dcolor]'>"
 				output += {"<tr bgcolor='[dcolor]'>
 					<td align='center' colspan='5' bgcolor=''><b>UNBANNED by admin [unbanckey] on [unbantime]</b></td>
 					</tr>"}
 				// END AUTOFIX
 			// AUTOFIXED BY fix_string_idiocy.py
-			// C:\Users\Rob\Documents\Projects\vgstation13\code\modules\admin\DB ban\functions.dm:409: output += "<tr>"
+			// C:\Users\Rob\\documents\\\projects\vgstation13\code\\modules\admin\\dB ban\functions.dm:409: output += "<tr>"
 			output += {"<tr>
 				<td colspan='5' bgcolor='white'>&nbsp</td>
 				</tr>"}

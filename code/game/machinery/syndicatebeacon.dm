@@ -99,6 +99,7 @@
 
 
 	proc/selfdestruct()
+		writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\proc/selfdestruct() called tick#: [world.time]")
 		selfdestructing = 1
 		spawn() explosion(src.loc, 1, rand(1,3), rand(3,8), 10)
 
@@ -123,6 +124,7 @@
 
 
 	proc/Activate(mob/user = null)
+		writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\proc/Activate() called tick#: [world.time]")
 		if(!checkWirePower())
 			if(user) user << "<span class='notice'>The connected wire doesn't have enough current.</span>"
 			return
@@ -135,6 +137,7 @@
 
 
 	proc/Deactivate(mob/user = null)
+		writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\proc/Deactivate() called tick#: [world.time]")
 		for(var/obj/machinery/singularity/singulo in power_machines)
 			if(singulo.target == src)
 				singulo.target = null
@@ -195,6 +198,7 @@
 	* - QualityVan, Aug 11 2012
 	*/
 	proc/checkWirePower()
+		writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\proc/checkWirePower() called tick#: [world.time]")
 		if(!attached)
 			return 0
 		var/datum/powernet/PN = attached.get_powernet()

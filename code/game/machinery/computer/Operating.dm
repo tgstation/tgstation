@@ -19,9 +19,11 @@
 	return
 
 /obj/machinery/computer/operating/proc/updatemodules()
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/computer/operating/proc/updatemodules() called tick#: [world.time]")
 	src.optable = findoptable()
 
 /obj/machinery/computer/operating/proc/findoptable()
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/computer/operating/proc/findoptable() called tick#: [world.time]")
 	var/obj/machinery/optable/optablef = null
 
 	// Loop through every direction
@@ -55,7 +57,7 @@
 	updatemodules()
 
 	// AUTOFIXED BY fix_string_idiocy.py
-	// C:\Users\Rob\Documents\Projects\vgstation13\code\game\machinery\computer\Operating.dm:41: var/dat = "<HEAD><TITLE>Operating Computer</TITLE><META HTTP-EQUIV='Refresh' CONTENT='10'></HEAD><BODY>\n"
+	// C:\Users\Rob\\documents\\\projects\vgstation13\code\game\\machinery\computer\Operating.dm:41: var/dat = "<HEAD><TITLE>Operating Computer</TITLE><META HTTP-EQUIV='Refresh' CONTENT='10'></HEAD><BODY>\n"
 	var/dat = {"<HEAD><TITLE>Operating Computer</TITLE><META HTTP-EQUIV='Refresh' CONTENT='10'></HEAD><BODY>"}
 	// END AUTOFIX
 	if(!isnull(src.optable) && (src.optable.check_victim()))

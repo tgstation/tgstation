@@ -430,6 +430,7 @@ var/global/list/obj/item/device/pda/PDAs = list()
 
 
 /obj/item/device/pda/ai/proc/set_name_and_job(newname as text, newjob as text)
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/item/device/pda/ai/proc/set_name_and_job() called tick#: [world.time]")
 	owner = newname
 	ownjob = newjob
 	name = newname + " (" + ownjob + ")"
@@ -441,6 +442,7 @@ var/global/list/obj/item/device/pda/PDAs = list()
 	var/list/plist = list()
 	var/list/namecounts = list()
 
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/living/silicon/ai/proc/cmd_send_pdamesg() called tick#: [world.time]")
 	if(usr.stat == 2)
 		usr << "You can't send PDA messages because you are dead!"
 		return
@@ -478,6 +480,7 @@ var/global/list/obj/item/device/pda/PDAs = list()
 	set category = "AI Commands"
 	set name = "Send Message"
 	set src in usr
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""]) \\/obj/item/device/pda/ai/verb/cmd_send_pdamesg()  called tick#: [world.time]")
 	if(usr.stat == 2 || (usr.status_flags & FAKEDEATH))
 		usr << "You can't send PDA messages because you are dead!"
 		return
@@ -494,6 +497,7 @@ var/global/list/obj/item/device/pda/PDAs = list()
 	set category = "AI Commands"
 	set name = "Toggle Sender/Receiver"
 	set src in usr
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""]) \\/obj/item/device/pda/ai/verb/cmd_toggle_pda_receiver()  called tick#: [world.time]")
 	if(usr.stat == 2 || (usr.status_flags & FAKEDEATH))
 		usr << "You can't do that because you are dead!"
 		return
@@ -505,6 +509,7 @@ var/global/list/obj/item/device/pda/PDAs = list()
 	set category = "AI Commands"
 	set name = "Toggle Ringer"
 	set src in usr
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""]) \\/obj/item/device/pda/ai/verb/cmd_toggle_pda_silent()  called tick#: [world.time]")
 	if(usr.stat == 2 || (usr.status_flags & FAKEDEATH))
 		usr << "You can't do that because you are dead!"
 		return
@@ -516,6 +521,7 @@ var/global/list/obj/item/device/pda/PDAs = list()
 	set category = "AI Commands"
 	set name = "Show Message Log"
 	set src in usr
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""]) \\/obj/item/device/pda/ai/verb/cmd_show_message_log()  called tick#: [world.time]")
 	if(usr.stat == 2 || (usr.status_flags & FAKEDEATH))
 		usr << "You can't do that because you are dead!"
 		return
@@ -523,6 +529,7 @@ var/global/list/obj/item/device/pda/PDAs = list()
 	usr << browse(HTML, "window=log;size=400x444;border=1;can_resize=1;can_close=1;can_minimize=0")
 
 /mob/living/silicon/ai/proc/cmd_show_message_log()
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/living/silicon/ai/proc/cmd_show_message_log() called tick#: [world.time]")
 	if(usr.stat == 2)
 		usr << "You can't do that because you are dead!"
 		return
@@ -562,6 +569,7 @@ var/global/list/obj/item/device/pda/PDAs = list()
 	didyouknow = pick(facts)
 
 /obj/item/device/pda/proc/can_use(mob/user)
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/item/device/pda/proc/can_use() called tick#: [world.time]")
 	if(user && ismob(user))
 		if(user.stat || user.restrained() || user.paralysis || user.stunned || user.weakened)
 			return 0
@@ -594,7 +602,7 @@ var/global/list/obj/item/device/pda/PDAs = list()
 
 
 	// AUTOFIXED BY fix_string_idiocy.py
-	// C:\Users\Rob\Documents\Projects\vgstation13\code\game\objects\items\devices\PDA\PDA.dm:313: var/dat = "<html><head><title>Personal Data Assistant</title></head><body bgcolor=\"#808000\"><style>a, a:link, a:visited, a:active, a:hover { color: #000000; }img {border-style:none;}</style>"
+	// C:\Users\Rob\\documents\\\projects\vgstation13\code\game\objects\items\\devices\\\pDA\\\pDA.dm:313: var/dat = "<html><head><title>Personal Data Assistant</title></head><body bgcolor=\"#808000\"><style>a, a:link, a:visited, a:active, a:hover { color: #000000; }img {border-style:none;}</style>"
 	var/dat = {"<html><head><title>Personal Data Assistant</title></head><body bgcolor=\"#808000\"><style>a, a:link, a:visited, a:active, a:hover { color: #000000; }img {border-style:none;}</style>
 <a href='byond://?src=\ref[src];choice=Close'><img src=pda_exit.png> Close</a>"}
 	// END AUTOFIX
@@ -604,14 +612,14 @@ var/global/list/obj/item/device/pda/PDAs = list()
 		dat += " | <a href='byond://?src=\ref[src];choice=Return'><img src=pda_menu.png> Return</a>"
 
 	// AUTOFIXED BY fix_string_idiocy.py
-	// C:\Users\Rob\Documents\Projects\vgstation13\code\game\objects\items\devices\PDA\PDA.dm:321: dat += " | <a href='byond://?src=\ref[src];choice=Refresh'><img src=pda_refresh.png> Refresh</a>"
+	// C:\Users\Rob\\documents\\\projects\vgstation13\code\game\objects\items\\devices\\\pDA\\\pDA.dm:321: dat += " | <a href='byond://?src=\ref[src];choice=Refresh'><img src=pda_refresh.png> Refresh</a>"
 	dat += {"| <a href='byond://?src=\ref[src];choice=Refresh'><img src=pda_refresh.png> Refresh</a>
 		<br>"}
 	// END AUTOFIX
 	if (!owner)
 
 		// AUTOFIXED BY fix_string_idiocy.py
-		// C:\Users\Rob\Documents\Projects\vgstation13\code\game\objects\items\devices\PDA\PDA.dm:326: dat += "Warning: No owner information entered.  Please swipe card.<br><br>"
+		// C:\Users\Rob\\documents\\\projects\vgstation13\code\game\objects\items\\devices\\\pDA\\\pDA.dm:326: dat += "Warning: No owner information entered.  Please swipe card.<br><br>"
 		dat += {"Warning: No owner information entered.  Please swipe card.<br><br>
 			<a href='byond://?src=\ref[src];choice=Refresh'><img src=pda_refresh.png> Retry</a>"}
 		// END AUTOFIX
@@ -620,7 +628,7 @@ var/global/list/obj/item/device/pda/PDAs = list()
 			if (0)
 
 				// AUTOFIXED BY fix_string_idiocy.py
-				// C:\Users\Rob\Documents\Projects\vgstation13\code\game\objects\items\devices\PDA\PDA.dm:331: dat += "<h2>PERSONAL DATA ASSISTANT v.1.3</h2>"
+				// C:\Users\Rob\\documents\\\projects\vgstation13\code\game\objects\items\\devices\\\pDA\\\pDA.dm:331: dat += "<h2>PERSONAL DATA ASSISTANT v.1.3</h2>"
 				dat += {"<h2>PERSONAL DATA ASSISTANT v.1.3</h2>
 					Owner: [owner], [ownjob]<br>"}
 				// END AUTOFIX
@@ -629,7 +637,7 @@ var/global/list/obj/item/device/pda/PDAs = list()
 
 
 				// AUTOFIXED BY fix_string_idiocy.py
-				// C:\Users\Rob\Documents\Projects\vgstation13\code\game\objects\items\devices\PDA\PDA.dm:336: dat += "Station Time: [worldtime2text()]"//:[world.time / 100 % 6][world.time / 100 % 10]"
+				// C:\Users\Rob\\documents\\\projects\vgstation13\code\game\objects\items\\devices\\\pDA\\\pDA.dm:336: dat += "Station Time: [worldtime2text()]"//:[world.time / 100 % 6][world.time / 100 % 10]"
 				dat += {"Station Time: [worldtime2text()]
 					<br><br>
 					<h4>General Functions</h4>
@@ -679,7 +687,7 @@ var/global/list/obj/item/device/pda/PDAs = list()
 					if (cartridge.access_medical)
 
 						// AUTOFIXED BY fix_string_idiocy.py
-						// C:\Users\Rob\Documents\Projects\vgstation13\code\game\objects\items\devices\PDA\PDA.dm:360: dat += "<h4>Medical Functions</h4>"
+						// C:\Users\Rob\\documents\\\projects\vgstation13\code\game\objects\items\\devices\\\pDA\\\pDA.dm:360: dat += "<h4>Medical Functions</h4>"
 						dat += {"<h4>Medical Functions</h4>
 							<ul>
 							<li><a href='byond://?src=\ref[src];choice=44'><img src=pda_medical.png> Medical Records</a></li>
@@ -689,7 +697,7 @@ var/global/list/obj/item/device/pda/PDAs = list()
 					if (cartridge.access_security)
 
 						// AUTOFIXED BY fix_string_idiocy.py
-						// C:\Users\Rob\Documents\Projects\vgstation13\code\game\objects\items\devices\PDA\PDA.dm:366: dat += "<h4>Security Functions</h4>"
+						// C:\Users\Rob\\documents\\\projects\vgstation13\code\game\objects\items\\devices\\\pDA\\\pDA.dm:366: dat += "<h4>Security Functions</h4>"
 						dat += {"<h4>Security Functions</h4>
 							<ul>
 							<li><a href='byond://?src=\ref[src];choice=45'><img src=pda_cuffs.png> Security Records</A></li>"}
@@ -697,7 +705,7 @@ var/global/list/obj/item/device/pda/PDAs = list()
 					if(istype(cartridge.radio, /obj/item/radio/integrated/beepsky))
 
 						// AUTOFIXED BY fix_string_idiocy.py
-						// C:\Users\Rob\Documents\Projects\vgstation13\code\game\objects\items\devices\PDA\PDA.dm:370: dat += "<li><a href='byond://?src=\ref[src];choice=46'><img src=pda_cuffs.png> Security Bot Access</a></li>"
+						// C:\Users\Rob\\documents\\\projects\vgstation13\code\game\objects\items\\devices\\\pDA\\\pDA.dm:370: dat += "<li><a href='byond://?src=\ref[src];choice=46'><img src=pda_cuffs.png> Security Bot Access</a></li>"
 						dat += {"<li><a href='byond://?src=\ref[src];choice=46'><img src=pda_cuffs.png> Security Bot Access</a></li>
 							</ul>"}
 						// END AUTOFIX
@@ -705,7 +713,7 @@ var/global/list/obj/item/device/pda/PDAs = list()
 					if(cartridge.access_quartermaster)
 
 						// AUTOFIXED BY fix_string_idiocy.py
-						// C:\Users\Rob\Documents\Projects\vgstation13\code\game\objects\items\devices\PDA\PDA.dm:374: dat += "<h4>Quartermaster Functions:</h4>"
+						// C:\Users\Rob\\documents\\\projects\vgstation13\code\game\objects\items\\devices\\\pDA\\\pDA.dm:374: dat += "<h4>Quartermaster Functions:</h4>"
 						dat += {"<h4>Quartermaster Functions:</h4>
 							<ul>
 							<li><a href='byond://?src=\ref[src];choice=47'><img src=pda_crate.png> Supply Records</A></li>
@@ -714,7 +722,7 @@ var/global/list/obj/item/device/pda/PDAs = list()
 				// END AUTOFIX
 
 				// AUTOFIXED BY fix_string_idiocy.py
-				// C:\Users\Rob\Documents\Projects\vgstation13\code\game\objects\items\devices\PDA\PDA.dm:379: dat += "</ul>"
+				// C:\Users\Rob\\documents\\\projects\vgstation13\code\game\objects\items\\devices\\\pDA\\\pDA.dm:379: dat += "</ul>"
 				dat += {"</ul>
 					<h4>Utilities</h4>
 					<ul>"}
@@ -734,7 +742,7 @@ var/global/list/obj/item/device/pda/PDAs = list()
 						dat += "<li><a href='byond://?src=\ref[src];choice=Toggle Door'><img src=pda_rdoor.png> Toggle Remote Door</a></li>"
 
 				// AUTOFIXED BY fix_string_idiocy.py
-				// C:\Users\Rob\Documents\Projects\vgstation13\code\game\objects\items\devices\PDA\PDA.dm:396: dat += "<li><a href='byond://?src=\ref[src];choice=3'><img src=pda_atmos.png> Atmospheric Scan</a></li>"
+				// C:\Users\Rob\\documents\\\projects\vgstation13\code\game\objects\items\\devices\\\pDA\\\pDA.dm:396: dat += "<li><a href='byond://?src=\ref[src];choice=3'><img src=pda_atmos.png> Atmospheric Scan</a></li>"
 				dat += {"<li><a href='byond://?src=\ref[src];choice=3'><img src=pda_atmos.png> Atmospheric Scan</a></li>
 					<li><a href='byond://?src=\ref[src];choice=Light'><img src=pda_flashlight.png> [fon ? "Disable" : "Enable"] Flashlight</a></li>"}
 				// END AUTOFIX
@@ -744,7 +752,7 @@ var/global/list/obj/item/device/pda/PDAs = list()
 					else
 
 						// AUTOFIXED BY fix_string_idiocy.py
-						// C:\Users\Rob\Documents\Projects\vgstation13\code\game\objects\items\devices\PDA\PDA.dm:402: dat += "<li><a href='byond://?src=\ref[src];choice=pai;option=1'>pAI Device Configuration</a></li>"
+						// C:\Users\Rob\\documents\\\projects\vgstation13\code\game\objects\items\\devices\\\pDA\\\pDA.dm:402: dat += "<li><a href='byond://?src=\ref[src];choice=pai;option=1'>pAI Device Configuration</a></li>"
 						dat += {"<li><a href='byond://?src=\ref[src];choice=pai;option=1'>pAI Device Configuration</a></li>
 							<li><a href='byond://?src=\ref[src];choice=pai;option=2'>Eject pAI Device</a></li>"}
 						// END AUTOFIX
@@ -753,7 +761,7 @@ var/global/list/obj/item/device/pda/PDAs = list()
 			if (1)
 
 				// AUTOFIXED BY fix_string_idiocy.py
-				// C:\Users\Rob\Documents\Projects\vgstation13\code\game\objects\items\devices\PDA\PDA.dm:407: dat += "<h4><img src=pda_notes.png> Notekeeper V2.1</h4>"
+				// C:\Users\Rob\\documents\\\projects\vgstation13\code\game\objects\items\\devices\\\pDA\\\pDA.dm:407: dat += "<h4><img src=pda_notes.png> Notekeeper V2.1</h4>"
 				dat += {"<h4><img src=pda_notes.png> Notekeeper V2.1</h4>
 					<a href='byond://?src=\ref[src];choice=Edit'> Edit</a><br>"}
 				// END AUTOFIX
@@ -762,7 +770,7 @@ var/global/list/obj/item/device/pda/PDAs = list()
 			if (2)
 
 				// AUTOFIXED BY fix_string_idiocy.py
-				// C:\Users\Rob\Documents\Projects\vgstation13\code\game\objects\items\devices\PDA\PDA.dm:412: dat += "<h4><img src=pda_mail.png> SpaceMessenger V3.9.4</h4>"
+				// C:\Users\Rob\\documents\\\projects\vgstation13\code\game\objects\items\\devices\\\pDA\\\pDA.dm:412: dat += "<h4><img src=pda_mail.png> SpaceMessenger V3.9.4</h4>"
 				dat += {"<h4><img src=pda_mail.png> SpaceMessenger V3.9.4</h4>
 					<a href='byond://?src=\ref[src];choice=Toggle Ringer'><img src=pda_bell.png> Ringer: [silent == 1 ? "Off" : "On"]</a> |
 					<a href='byond://?src=\ref[src];choice=Toggle Messenger'><img src=pda_mail.png> Send / Receive: [toff == 1 ? "Off" : "On"]</a> |
@@ -778,7 +786,7 @@ var/global/list/obj/item/device/pda/PDAs = list()
 
 
 				// AUTOFIXED BY fix_string_idiocy.py
-				// C:\Users\Rob\Documents\Projects\vgstation13\code\game\objects\items\devices\PDA\PDA.dm:425: dat += "<h4><img src=pda_menu.png> Detected PDAs</h4>"
+				// C:\Users\Rob\\documents\\\projects\vgstation13\code\game\objects\items\\devices\\\pDA\\\pDA.dm:425: dat += "<h4><img src=pda_menu.png> Detected PDAs</h4>"
 				dat += {"<h4><img src=pda_menu.png> Detected PDAs</h4>
 					<ul>"}
 				// END AUTOFIX
@@ -804,7 +812,7 @@ var/global/list/obj/item/device/pda/PDAs = list()
 			if(21)
 
 				// AUTOFIXED BY fix_string_idiocy.py
-				// C:\Users\Rob\Documents\Projects\vgstation13\code\game\objects\items\devices\PDA\PDA.dm:448: dat += "<h4><img src=pda_mail.png> SpaceMessenger V3.9.4</h4>"
+				// C:\Users\Rob\\documents\\\projects\vgstation13\code\game\objects\items\\devices\\\pDA\\\pDA.dm:448: dat += "<h4><img src=pda_mail.png> SpaceMessenger V3.9.4</h4>"
 				dat += {"<h4><img src=pda_mail.png> SpaceMessenger V3.9.4</h4>
 					<a href='byond://?src=\ref[src];choice=Clear'><img src=pda_blank.png> Clear Messages</a>
 					<h4><img src=pda_mail.png> Messages</h4>"}
@@ -834,7 +842,7 @@ var/global/list/obj/item/device/pda/PDAs = list()
 						var/unknown_level =  1-(o2_level+n2_level+co2_level+plasma_level)
 
 						// AUTOFIXED BY fix_string_idiocy.py
-						// C:\Users\Rob\Documents\Projects\vgstation13\code\game\objects\items\devices\PDA\PDA.dm:476: dat += "Nitrogen: [round(n2_level*100)]%<br>"
+						// C:\Users\Rob\\documents\\\projects\vgstation13\code\game\objects\items\\devices\\\pDA\\\pDA.dm:476: dat += "Nitrogen: [round(n2_level*100)]%<br>"
 						dat += {"Nitrogen: [round(n2_level*100)]%<br>
 							Oxygen: [round(o2_level*100)]%<br>
 							Carbon Dioxide: [round(co2_level*100)]%<br>
@@ -848,7 +856,7 @@ var/global/list/obj/item/device/pda/PDAs = list()
 			if (5)
 
 				// AUTOFIXED BY fix_string_idiocy.py
-				// C:\Users\Rob\Documents\Projects\vgstation13\code\game\objects\items\devices\PDA\PDA.dm:486: dat += "<h4><img src=pda_chatroom.png> Nanotrasen Relay Chat</h4>"
+				// C:\Users\Rob\\documents\\\projects\vgstation13\code\game\objects\items\\devices\\\pDA\\\pDA.dm:486: dat += "<h4><img src=pda_chatroom.png> Nanotrasen Relay Chat</h4>"
 				dat += {"<h4><img src=pda_chatroom.png> Nanotrasen Relay Chat</h4>
 					<h4><img src=pda_menu.png> Detected Channels</h4>: <li>"}
 				// END AUTOFIX
@@ -861,7 +869,7 @@ var/global/list/obj/item/device/pda/PDAs = list()
 			if (41) //Allows everyone to access crew
 
 				// AUTOFIXED BY fix_string_idiocy.py
-				// C:\Users\Rob\Documents\Projects\vgstation13\code\game\objects\items\devices\PDA\cart.dm:281: menu = "<h4><img src=pda_notes.png> Crew Manifest</h4>"
+				// C:\Users\Rob\\documents\\\projects\vgstation13\code\game\objects\items\\devices\\\pDA\cart.dm:281: menu = "<h4><img src=pda_notes.png> Crew Manifest</h4>"
 				dat += {"<h4><img src=pda_notes.png> Crew Manifest</h4>
 					Entries cannot be modified from this terminal.<br><br>"}
 				// END AUTOFIX
@@ -1800,6 +1808,7 @@ var/global/list/obj/item/device/pda/PDAs = list()
 	return
 
 /obj/item/device/pda/proc/remove_id()
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/item/device/pda/proc/remove_id() called tick#: [world.time]")
 	if (id)
 		if (ismob(loc))
 			var/mob/M = loc
@@ -1810,6 +1819,8 @@ var/global/list/obj/item/device/pda/PDAs = list()
 		id = null
 
 /obj/item/device/pda/proc/create_message(var/mob/living/U = usr, var/obj/item/device/pda/P)
+
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/item/device/pda/proc/create_message() called tick#: [world.time]")
 
 	var/t = input(U, "Please enter message", name, null) as text
 	t = copytext(sanitize(t), 1, MAX_MESSAGE_LEN)
@@ -1899,6 +1910,7 @@ var/global/list/obj/item/device/pda/PDAs = list()
 	set category = "Object"
 	set name = "Remove id"
 	set src in usr
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""]) \\/obj/item/device/pda/verb/verb_remove_id()  called tick#: [world.time]")
 
 	if(issilicon(usr))
 		return
@@ -1916,6 +1928,7 @@ var/global/list/obj/item/device/pda/PDAs = list()
 	set category = "Object"
 	set name = "Remove pen"
 	set src in usr
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""]) \\/obj/item/device/pda/verb/verb_remove_pen()  called tick#: [world.time]")
 
 	if(issilicon(usr))
 		return
@@ -1936,6 +1949,7 @@ var/global/list/obj/item/device/pda/PDAs = list()
 		usr << "<span class='notice'>You cannot do this while restrained.</span>"
 
 /obj/item/device/pda/proc/id_check(mob/user as mob, choice as num)//To check for IDs; 1 for in-pda use, 2 for out of pda use.
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/item/device/pda/proc/id_check() called tick#: [world.time]")
 	if(choice == 1)
 		if (id)
 			remove_id()
@@ -2063,6 +2077,7 @@ var/global/list/obj/item/device/pda/PDAs = list()
 				return dev_analys.preattack(A, user, 1)
 
 /obj/item/device/pda/proc/explode() //This needs tuning.
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/item/device/pda/proc/explode() called tick#: [world.time]")
 	if(!src.detonate) return
 	var/turf/T = get_turf(src.loc)
 
@@ -2112,6 +2127,7 @@ var/global/list/obj/item/device/pda/PDAs = list()
 		M.Weaken(5)
 
 /obj/item/device/pda/proc/available_pdas()
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/item/device/pda/proc/available_pdas() called tick#: [world.time]")
 	var/list/names = list()
 	var/list/plist = list()
 	var/list/namecounts = list()
@@ -2170,6 +2186,7 @@ var/global/list/obj/item/device/pda/PDAs = list()
 		A.emp_act(severity)
 
 /proc/get_viewable_pdas()
+	writepanic("[__FILE__].[__LINE__] (no type)([usr ? usr.ckey : ""])  \\/proc/get_viewable_pdas() called tick#: [world.time]")
 	. = list()
 	// Returns a list of PDAs which can be viewed from another PDA/message monitor.
 	for(var/obj/item/device/pda/P in PDAs)

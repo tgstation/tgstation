@@ -1,4 +1,5 @@
 /mob/proc/add_spell(var/spell/spell_to_add, var/spell_base = "wiz_spell_ready", var/master_type = /obj/screen/movable/spell_master)
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/proc/add_spell() called tick#: [world.time]")
 	if(!spell_masters)
 		spell_masters = list()
 
@@ -21,6 +22,7 @@
 	return 1
 
 /mob/proc/remove_spell(var/spell/spell_to_remove)
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/proc/remove_spell() called tick#: [world.time]")
 	if(!spell_to_remove || !istype(spell_to_remove))
 		return
 
@@ -38,6 +40,7 @@
 	return 1
 
 /mob/proc/silence_spells(var/amount = 0)
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/proc/silence_spells() called tick#: [world.time]")
 	if(!(amount >= 0))
 		return
 

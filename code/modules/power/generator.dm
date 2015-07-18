@@ -32,6 +32,7 @@
 //and a circulator to the WEST of the generator connects first to the NORTH, then to the SOUTH
 //note that the circulator's outlet dir is it's always facing dir, and it's inlet is always the reverse
 /obj/machinery/power/generator/proc/reconnect()
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/power/generator/proc/reconnect() called tick#: [world.time]")
 	circ1 = null
 	circ2 = null
 	if(src.loc && anchored)
@@ -53,9 +54,11 @@
 				circ2 = null
 
 /obj/machinery/power/generator/proc/operable()
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/power/generator/proc/operable() called tick#: [world.time]")
 	return circ1 && circ2 && anchored && !(stat & (BROKEN|NOPOWER))
 
 /obj/machinery/power/generator/proc/updateicon()
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/power/generator/proc/updateicon() called tick#: [world.time]")
 	overlays = 0
 
 	if(!operable())
@@ -149,7 +152,7 @@
 	if(circ1 && circ2)
 
 		// AUTOFIXED BY fix_string_idiocy.py
-		// C:\Users\Rob\Documents\Projects\vgstation13\code\modules\power\generator.dm:142: t += "Output : [round(lastgen)] W<BR><BR>"
+		// C:\Users\Rob\\documents\\\projects\vgstation13\code\\modules\\\power\generator.dm:142: t += "Output : [round(lastgen)] W<BR><BR>"
 		t += {"Output : [round(lastgen)] W<BR>
 <B>Primary Circulator (top or right)</B>
 Inlet Pressure: [round(circ1.air1.return_pressure(), 0.1)] kPa
@@ -165,13 +168,13 @@ Outlet Temperature: [round(circ2.air2.temperature, 0.1)] K<BR>"}
 	else
 
 		// AUTOFIXED BY fix_string_idiocy.py
-		// C:\Users\Rob\Documents\Projects\vgstation13\code\modules\power\generator.dm:157: t += "Unable to connect to circulators.<br>"
+		// C:\Users\Rob\\documents\\\projects\vgstation13\code\\modules\\\power\generator.dm:157: t += "Unable to connect to circulators.<br>"
 		t += {"Unable to connect to circulators.<br>Ensure both are in position and wrenched into place."}
 		// END AUTOFIX
 
 
 	// AUTOFIXED BY fix_string_idiocy.py
-	// C:\Users\Rob\Documents\Projects\vgstation13\code\modules\power\generator.dm:160: t += "<BR>"
+	// C:\Users\Rob\\documents\\\projects\vgstation13\code\\modules\\\power\generator.dm:160: t += "<BR>"
 	t += {"<BR>
 <HR>
 <A href='?src=\ref[src]'>Refresh</A> <A href='?src=\ref[src];close=1'>Close</A>"}
@@ -202,6 +205,7 @@ Outlet Temperature: [round(circ2.air2.temperature, 0.1)] K<BR>"}
 	set category = "Object"
 	set name = "Rotate Generator (Clockwise)"
 	set src in view(1)
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""]) \\/obj/machinery/power/generator/verb/rotate_clock()  called tick#: [world.time]")
 
 	if (usr.stat || usr.restrained()  || anchored || (usr.status_flags & FAKEDEATH))
 		return
@@ -212,6 +216,7 @@ Outlet Temperature: [round(circ2.air2.temperature, 0.1)] K<BR>"}
 	set category = "Object"
 	set name = "Rotate Generator (Counterclockwise)"
 	set src in view(1)
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""]) \\/obj/machinery/power/generator/verb/rotate_anticlock()  called tick#: [world.time]")
 
 	if (usr.stat || usr.restrained()  || anchored || (usr.status_flags & FAKEDEATH))
 		return

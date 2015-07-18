@@ -29,6 +29,7 @@
 
 //Looks like copy/pasted code... I doubt 'need_rebuild' is even used here - Nodrak
 /obj/machinery/shield/proc/update_nearby_tiles()
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/shield/proc/update_nearby_tiles() called tick#: [world.time]")
 	if (isnull(air_master))
 		return 0
 
@@ -162,6 +163,7 @@
 
 
 /obj/machinery/shieldgen/proc/shields_up()
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/shieldgen/proc/shields_up() called tick#: [world.time]")
 	if(active) return 0 //If it's already turned on, how did this get called?
 
 	src.active = 1
@@ -173,6 +175,7 @@
 				deployed_shields += new /obj/machinery/shield(target_tile)
 
 /obj/machinery/shieldgen/proc/shields_down()
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/shieldgen/proc/shields_down() called tick#: [world.time]")
 	if(!active) return 0 //If it's already off, how did this get called?
 
 	src.active = 0
@@ -189,6 +192,7 @@
 	return
 
 /obj/machinery/shieldgen/proc/checkhp()
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/shieldgen/proc/checkhp() called tick#: [world.time]")
 	if(health <= 30)
 		src.malfunction = 1
 	if(health <= 0)
@@ -329,6 +333,7 @@
 		machine_flags = WRENCHMOVE | FIXED2WORK
 
 /obj/machinery/shieldwallgen/proc/power()
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/shieldwallgen/proc/power() called tick#: [world.time]")
 	if(!anchored)
 		power = 0
 		return 0
@@ -423,6 +428,7 @@
 				src.cleanup(8)
 
 /obj/machinery/shieldwallgen/proc/setup_field(var/NSEW = 0)
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/shieldwallgen/proc/setup_field() called tick#: [world.time]")
 	var/turf/T = src.loc
 	var/turf/T2 = src.loc
 	var/obj/machinery/shieldwallgen/G
@@ -491,6 +497,7 @@
 		visible_message("<span class='warning'>The [src.name] has been hit with the [W.name] by [user.name]!</span>")
 
 /obj/machinery/shieldwallgen/proc/cleanup(var/NSEW)
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/shieldwallgen/proc/cleanup() called tick#: [world.time]")
 	var/obj/machinery/shieldwall/F
 	var/obj/machinery/shieldwallgen/G
 	var/turf/T = src.loc

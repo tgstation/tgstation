@@ -280,7 +280,7 @@
 					// ------- YOU ARE HUMAN -------
 					src.attack_hand(usr, usr.hand)
 				else
-					// ------- YOU ARE NOT HUMAN. WHAT ARE YOU - DETERMINED HERE AND PROPER ATTACK_MOBTYPE CALLED -------
+					// ------- YOU ARE NOT HUMAN. WHAT ARE YOU - DETERMINED HERE AND proper ATTACK_MOBTYPE CALLED -------
 					if (istype(usr, /mob/living/carbon/monkey))
 						src.attack_paw(usr, usr.hand)
 					else if (istype(usr, /mob/living/carbon/alien/humanoid))
@@ -298,7 +298,7 @@
 					else if(istype(usr, /mob/living/simple_animal))
 						src.attack_animal(usr)
 		else
-			// ------- YOU ARE RESTRAINED. DETERMINE WHAT YOU ARE AND ATTACK WITH THE PROPER HAND_X PROC -------
+			// ------- YOU ARE RESTRAINED. DETERMINE WHAT YOU ARE AND ATTACK WITH THE proper HAND_X PROC -------
 			if (istype(usr, /mob/living/carbon/human))
 				src.hand_h(usr, usr.hand)
 			else if (istype(usr, /mob/living/carbon/monkey))

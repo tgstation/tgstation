@@ -32,6 +32,7 @@ var/list/beam_master = list()
 	kill_count = 6
 
 	proc/adjustAngle(angle)
+		writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\proc/adjustAngle() called tick#: [world.time]")
 		angle = round(angle) + 45
 		if(angle > 180)
 			angle -= 180
@@ -292,6 +293,7 @@ var/list/beam_master = list()
 	cleanup(reference)
 
 /obj/item/projectile/beam/proc/cleanup(const/reference)
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/item/projectile/beam/proc/cleanup() called tick#: [world.time]")
 	src = null // Redundant.
 				// No, if it's not set to null this proc will be silently killed.
 

@@ -1,4 +1,5 @@
 /mob/living/carbon/human/proc/monkeyize()
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/living/carbon/human/proc/monkeyize() called tick#: [world.time]")
 	if (monkeyizing)
 		return
 	for(var/obj/item/W in src)
@@ -47,6 +48,7 @@
 	return O
 
 /mob/living/carbon/human/proc/Cluwneize()
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/living/carbon/human/proc/Cluwneize() called tick#: [world.time]")
 	if (monkeyizing)
 		return
 	for(var/obj/item/W in src)
@@ -100,6 +102,7 @@
 	return ..()
 
 /mob/proc/AIize()
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/proc/AIize() called tick#: [world.time]")
 	if(client)
 		src << sound(null, repeat = 0, wait = 0, volume = 85, channel = 1) // stop the jams for AIs
 	var/mob/living/silicon/ai/O = new (get_turf(src), base_law_type,,1)//No MMI but safety is in effect.
@@ -161,6 +164,7 @@
 
 //human -> robot
 /mob/living/carbon/human/proc/Robotize(var/delete_items = 0)
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/living/carbon/human/proc/Robotize() called tick#: [world.time]")
 	if (monkeyizing)
 		return
 	for(var/obj/item/W in src)
@@ -209,6 +213,7 @@
 
 //human -> mommi
 /mob/living/carbon/human/proc/MoMMIfy(round_start = 0)
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/living/carbon/human/proc/MoMMIfy() called tick#: [world.time]")
 	if (monkeyizing)
 		return
 	for(var/obj/item/W in src)
@@ -256,6 +261,7 @@
 
 //human -> alien
 /mob/living/carbon/human/proc/Alienize()
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/living/carbon/human/proc/Alienize() called tick#: [world.time]")
 	if (monkeyizing)
 		return
 	for(var/obj/item/W in src)
@@ -287,6 +293,7 @@
 	return new_xeno
 
 /mob/living/carbon/human/proc/slimeize(adult as num, reproduce as num)
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/living/carbon/human/proc/slimeize() called tick#: [world.time]")
 	if (monkeyizing)
 		return
 	for(var/obj/item/W in src)
@@ -323,6 +330,7 @@
 	return new_slime
 
 /mob/living/carbon/human/proc/corgize()
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/living/carbon/human/proc/corgize() called tick#: [world.time]")
 	if (monkeyizing)
 		return
 	for(var/obj/item/W in src)
@@ -380,6 +388,8 @@
 
 /mob/proc/Animalize()
 
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/proc/Animalize() called tick#: [world.time]")
+
 	var/list/mobtypes = typesof(/mob/living/simple_animal)
 	var/mobpath = input("Which type of mob should [src] turn into?", "Choose a type") in mobtypes
 
@@ -403,6 +413,7 @@
  * This also gives a place to explain -why- players shouldnt be turn into certain mobs and hopefully someone can fix them.
  */
 /mob/proc/safe_animal(var/MP)
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/proc/safe_animal() called tick#: [world.time]")
 
 //Bad mobs! - Remember to add a comment explaining what's wrong with the mob
 	if(!MP)

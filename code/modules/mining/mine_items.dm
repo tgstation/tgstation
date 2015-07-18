@@ -47,6 +47,7 @@ var/mining_shuttle_moving = 0
 var/mining_shuttle_location = 0 // 0 = station 13, 1 = mining station
 
 proc/move_mining_shuttle()
+	writepanic("[__FILE__].[__LINE__] \\/proc/move_mining_shuttle() called tick#: [world.time]")
 	if(mining_shuttle_moving)	return
 	mining_shuttle_moving = 1
 	spawn(mining_shuttle_tickstomove*10)
@@ -287,6 +288,7 @@ proc/move_mining_shuttle()
 	w_type = RECYK_MISC
 	origin_tech = "materials=1;engineering=1"
 	attack_verb = list("bashed", "bludgeoned", "thrashed", "whacked")
+
 
 	digspeed = 40
 	diggables = DIG_SOIL //soil only

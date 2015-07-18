@@ -177,7 +177,7 @@ Deuterium-tritium fusion: 4.5 x 10^7 K
 
 	//if there is too much plasma in the field, lose some
 	/*if( held_plasma.toxins > (MOLES_CELLSTANDARD * 7) * (50 / field_strength) )
-		LosePlasma()*/
+		Loseplasma()*/
 	if(held_plasma.toxins > 1)
 		//lose a random amount of plasma back into the air, increased by the field strength (want to switch this over to frequency eventually)
 		var/loss_ratio = rand() * (0.05 + (0.05 * 50 / field_strength))
@@ -211,6 +211,7 @@ Deuterium-tritium fusion: 4.5 x 10^7 K
 	return 1
 
 /obj/effect/rust_em_field/proc/ChangeFieldStrength(var/new_strength)
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/effect/rust_em_field/proc/ChangeFieldStrength() called tick#: [world.time]")
 	var/calc_size = 1
 	emp_overload = 0
 	if(new_strength <= 50)
@@ -228,9 +229,11 @@ Deuterium-tritium fusion: 4.5 x 10^7 K
 	change_size(calc_size)
 
 /obj/effect/rust_em_field/proc/ChangeFieldFrequency(var/new_frequency)
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/effect/rust_em_field/proc/ChangeFieldFrequency() called tick#: [world.time]")
 	frequency = new_frequency
 
 /obj/effect/rust_em_field/proc/AddEnergy(var/a_energy, var/a_mega_energy, var/a_frequency)
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/effect/rust_em_field/proc/AddEnergy() called tick#: [world.time]")
 	var/energy_loss_ratio = 0
 	if(a_frequency != src.frequency)
 		energy_loss_ratio = 1 / abs(a_frequency - src.frequency)
@@ -242,6 +245,7 @@ Deuterium-tritium fusion: 4.5 x 10^7 K
 		mega_energy += 0.1
 
 /obj/effect/rust_em_field/proc/AddParticles(var/name, var/quantity = 1)
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/effect/rust_em_field/proc/AddParticles() called tick#: [world.time]")
 	if(name in dormant_reactant_quantities)
 		dormant_reactant_quantities[name] += quantity
 	else if(name != "proton" && name != "electron" && name != "neutron")
@@ -249,6 +253,7 @@ Deuterium-tritium fusion: 4.5 x 10^7 K
 		dormant_reactant_quantities[name] = quantity
 
 /obj/effect/rust_em_field/proc/RadiateAll(var/ratio_lost = 1)
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/effect/rust_em_field/proc/RadiateAll() called tick#: [world.time]")
 	for(var/particle in dormant_reactant_quantities)
 		radiation += dormant_reactant_quantities[particle]
 		dormant_reactant_quantities.Remove(particle)
@@ -260,6 +265,7 @@ Deuterium-tritium fusion: 4.5 x 10^7 K
 	environment.merge(held_plasma)
 
 /obj/effect/rust_em_field/proc/change_size(var/newsize = 1)
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/effect/rust_em_field/proc/change_size() called tick#: [world.time]")
 	//
 	var/changed = 0
 	switch(newsize)
@@ -302,6 +308,7 @@ Deuterium-tritium fusion: 4.5 x 10^7 K
 
 //the !!fun!! part
 /obj/effect/rust_em_field/proc/React()
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/effect/rust_em_field/proc/React() called tick#: [world.time]")
 	//loop through the reactants in random order
 	var/list/reactants_reacting_pool = dormant_reactant_quantities.Copy()
 	/*

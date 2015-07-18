@@ -65,6 +65,7 @@ var/list/spells = typesof(/spell) //needed for the badmin verb for now
 	charge_counter = charge_max
 
 /spell/proc/process()
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/spell/proc/process() called tick#: [world.time]")
 	spawn while(charge_counter < charge_max)
 		charge_counter++
 		sleep(1)
@@ -75,9 +76,11 @@ var/list/spells = typesof(/spell) //needed for the badmin verb for now
 /////////////////
 
 /spell/proc/choose_targets(mob/user = usr) //depends on subtype - see targeted.dm, aoe_turf.dm, dumbfire.dm, or code in general folder
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/spell/proc/choose_targets() called tick#: [world.time]")
 	return
 
 /spell/proc/perform(mob/user = usr, skipcharge = 0) //if recharge is started is important for the trigger spells
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/spell/proc/perform() called tick#: [world.time]")
 	if(!holder)
 		holder = user //just in case
 	if(!cast_check(skipcharge, user))
@@ -99,12 +102,15 @@ var/list/spells = typesof(/spell) //needed for the badmin verb for now
 
 
 /spell/proc/cast(list/targets, mob/user) //the actual meat of the spell
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/spell/proc/cast() called tick#: [world.time]")
 	return
 
 /spell/proc/critfail(list/targets, mob/user) //the wizman has fucked up somehow
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/spell/proc/critfail() called tick#: [world.time]")
 	return
 
 /spell/proc/adjust_var(mob/living/target = usr, type, amount) //handles the adjustment of the var when the spell is used. has some hardcoded types
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/spell/proc/adjust_var() called tick#: [world.time]")
 	switch(type)
 		if("bruteloss")
 			target.adjustBruteLoss(amount)
@@ -129,6 +135,7 @@ var/list/spells = typesof(/spell) //needed for the badmin verb for now
 ///////////////////////////
 
 /spell/proc/before_cast(list/targets)
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/spell/proc/before_cast() called tick#: [world.time]")
 	var/valid_targets[0]
 	for(var/atom/target in targets)
 		// Check range again (fixes long-range EI NATH)
@@ -153,6 +160,7 @@ var/list/spells = typesof(/spell) //needed for the badmin verb for now
 	return valid_targets
 
 /spell/proc/after_cast(list/targets)
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/spell/proc/after_cast() called tick#: [world.time]")
 	for(var/atom/target in targets)
 		var/location = get_turf(target)
 		if(istype(target,/mob/living) && message)
@@ -177,6 +185,8 @@ var/list/spells = typesof(/spell) //needed for the badmin verb for now
 /*Checkers, cost takers, message makers, etc*/
 
 /spell/proc/cast_check(skipcharge = 0,mob/user = usr) //checks if the spell can be cast based on its settings; skipcharge is used when an additional cast_check is called inside the spell
+
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/spell/proc/cast_check() called tick#: [world.time]")
 
 	if(!(src in user.spell_list) && holder == user)
 		user << "<span class='warning'>You shouldn't have this spell! Something's wrong.</span>"
@@ -228,6 +238,7 @@ var/list/spells = typesof(/spell) //needed for the badmin verb for now
 	return 1
 
 /spell/proc/check_charge(var/skipcharge, mob/user)
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/spell/proc/check_charge() called tick#: [world.time]")
 	if(!skipcharge)
 		switch(charge_type)
 			if(Sp_RECHARGE)
@@ -241,6 +252,7 @@ var/list/spells = typesof(/spell) //needed for the badmin verb for now
 	return 1
 
 /spell/proc/take_charge(mob/user = user, var/skipcharge)
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/spell/proc/take_charge() called tick#: [world.time]")
 	if(!skipcharge)
 		switch(charge_type)
 			if(Sp_RECHARGE)
@@ -257,6 +269,8 @@ var/list/spells = typesof(/spell) //needed for the badmin verb for now
 	return 1
 
 /spell/proc/invocation(mob/user = usr, var/list/targets) //spelling the spell out and setting it on recharge/reducing charges amount
+
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/spell/proc/invocation() called tick#: [world.time]")
 
 	switch(invocation_type)
 		if(SpI_SHOUT)
@@ -277,6 +291,7 @@ var/list/spells = typesof(/spell) //needed for the badmin verb for now
 /////////////////////
 
 /spell/proc/can_improve(var/upgrade_type)
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/spell/proc/can_improve() called tick#: [world.time]")
 	if(level_max[Sp_TOTAL] <= ( spell_levels[Sp_SPEED] + spell_levels[Sp_POWER] )) //too many levels, can't do it
 		return 0
 
@@ -287,9 +302,11 @@ var/list/spells = typesof(/spell) //needed for the badmin verb for now
 	return 1
 
 /spell/proc/empower_spell()
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/spell/proc/empower_spell() called tick#: [world.time]")
 	return
 
 /spell/proc/quicken_spell()
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/spell/proc/quicken_spell() called tick#: [world.time]")
 	if(!can_improve(Sp_SPEED))
 		return 0
 
@@ -327,6 +344,7 @@ var/list/spells = typesof(/spell) //needed for the badmin verb for now
 	return temp
 
 /spell/proc/spell_do_after(var/mob/user as mob, delay as num, var/numticks = 5)
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/spell/proc/spell_do_after() called tick#: [world.time]")
 	if(!user || isnull(user))
 		return 0
 	if(numticks == 0)

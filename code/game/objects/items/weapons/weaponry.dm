@@ -11,6 +11,7 @@
 	throw_range = 15
 	attack_verb = list("banned")
 
+
 	suicide_act(mob/user)
 		viewers(user) << "<span class='danger'>[user] is hitting \himself with the [src.name]! It looks like \he's trying to ban \himself from life.</span>"
 		return (BRUTELOSS|FIRELOSS|TOXLOSS|OXYLOSS)
@@ -88,6 +89,7 @@
 	w_class = 3
 	attack_verb = list("attacked", "slashed", "stabbed", "sliced", "torn", "ripped", "diced", "cut")
 
+
 	suicide_act(mob/user)
 		viewers(user) << "<span class='danger'>[user] is impaling \himself with the [src.name]! It looks like \he's trying to commit suicide.</span>"
 		return(BRUTELOSS)
@@ -110,6 +112,7 @@
 	throwforce = 10
 	w_class = 3
 	attack_verb = list("attacked", "slashed", "stabbed", "sliced", "torn", "ripped", "diced", "cut")
+
 
 	IsShield()
 		return 1
@@ -163,7 +166,6 @@
 	w_class = 3
 	attack_verb = list("jabbed","stabbed","ripped")
 
-
 obj/item/weapon/wirerod
 	name = "Wired rod"
 	desc = "A rod with some wire wrapped around the top. It'd be easy to attach something to the top bit."
@@ -177,6 +179,7 @@ obj/item/weapon/wirerod
 	starting_materials = list(MAT_IRON = 1875)
 	w_type = RECYK_METAL
 	attack_verb = list("hit", "bludgeoned", "whacked", "bonked")
+
 
 obj/item/weapon/wirerod/attackby(var/obj/item/I, mob/user as mob)
 	..()

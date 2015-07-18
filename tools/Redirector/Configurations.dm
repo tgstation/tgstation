@@ -11,6 +11,8 @@ var/list/adminkeys = list()
 
 proc/gen_configs()
 
+	writepanic("[__FILE__].[__LINE__] \\/proc/gen_configs() called tick#: [world.time]")
+
 	config_stream = dd_file2list("config.txt")
 
 	var/server_gen = 0	// if the stream is looking for servers

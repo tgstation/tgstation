@@ -9,6 +9,7 @@ datum/fusion_reaction
 /datum/controller/game_controller/var/list/fusion_reactions
 
 proc/get_fusion_reaction(var/primary_reactant, var/secondary_reactant)
+	writepanic("[__FILE__].[__LINE__] \\/proc/get_fusion_reaction() called tick#: [world.time]")
 	if(!master_controller.fusion_reactions)
 		populate_fusion_reactions()
 	if(master_controller.fusion_reactions.Find(primary_reactant))
@@ -17,6 +18,7 @@ proc/get_fusion_reaction(var/primary_reactant, var/secondary_reactant)
 			return master_controller.fusion_reactions[primary_reactant][secondary_reactant]
 
 proc/populate_fusion_reactions()
+	writepanic("[__FILE__].[__LINE__] \\/proc/populate_fusion_reactions() called tick#: [world.time]")
 	if(!master_controller.fusion_reactions)
 		master_controller.fusion_reactions = list()
 		for(var/cur_reaction_type in typesof(/datum/fusion_reaction) - /datum/fusion_reaction)

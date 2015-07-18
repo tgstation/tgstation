@@ -37,6 +37,8 @@
 //Minimizes snowflake coding and allows dynamically disabling the helmet's light if needed
 /obj/item/clothing/head/helmet/space/rig/proc/check_light()
 
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/item/clothing/head/helmet/space/rig/proc/check_light() called tick#: [world.time]")
+
 	if(no_light) //There's no light on the helmet
 		if(on) //The helmet light is currently on
 			on = 0 //Force it off
@@ -46,6 +48,8 @@
 		action_button_name = initial(action_button_name) //Make sure we restore the action button
 
 /obj/item/clothing/head/helmet/space/rig/proc/update_brightness()
+
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/item/clothing/head/helmet/space/rig/proc/update_brightness() called tick#: [world.time]")
 
 	if(on)
 		set_light(brightness_on)
@@ -127,7 +131,7 @@
 //Syndicate rig
 /obj/item/clothing/head/helmet/space/rig/syndi
 	name = "blood-red hardsuit helmet"
-	desc = "An advanced helmet designed for work in special operations. Property of Gorlex Marauders."
+	desc = "An advanced helmet designed for work in special operations. property of Gorlex Marauders."
 	icon_state = "rig0-syndi"
 	item_state = "syndie_helm"
 	species_fit = list("Vox")
@@ -158,7 +162,7 @@
 /obj/item/clothing/suit/space/rig/syndi
 	icon_state = "rig-syndi"
 	name = "blood-red hardsuit"
-	desc = "An advanced suit that protects against injuries during special operations. Property of Gorlex Marauders."
+	desc = "An advanced suit that protects against injuries during special operations. property of Gorlex Marauders."
 	item_state = "syndie_hardsuit"
 	species_fit = list("Vox")
 	slowdown = 1

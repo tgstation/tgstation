@@ -1,5 +1,7 @@
 /datum/hud/proc/alien_hud()
 
+	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/hud/proc/alien_hud() called tick#: [world.time]")
+
 	src.adding = list(  )
 	src.other = list(  )
 
