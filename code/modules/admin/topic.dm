@@ -2056,3 +2056,10 @@
 		var/datum/newscaster/feed_message/FM = locate(href_list["ac_lock_comment"])
 		FM.locked ^= 1
 		src.access_news_network()
+
+	else if(href_list["memoeditlist"])
+		var/DBQuery/query_memoedits = dbcon.NewQuery("SELECT edits FROM [format_table_name("memo")] WHERE (id = '[href_list["id"]]")
+		query_memoedits.Execute()
+		if(query_memoedits.NextRow())
+			var/edit_log = query_memoedits.item[6]
+			usr << browse(edit_log,"window=memoeditlist")
