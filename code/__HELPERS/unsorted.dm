@@ -923,7 +923,7 @@ var/list/ignored_keys = list("loc", "locs", "parent_type", "vars", "verbs", "typ
 					var/old_icon_state1 = T.icon_state
 					var/old_icon1 = T.icon
 					var/image/undlay = image("icon"=B.icon,"icon_state"=B.icon_state,"dir"=B.dir)
-					undlay.overlays = B.overlays.Copy()
+					undlay.overlays = B.overlays
 					var/prevtype = B.type
 
 					var/turf/X = B.ChangeTurf(T.type)
@@ -938,8 +938,7 @@ var/list/ignored_keys = list("loc", "locs", "parent_type", "vars", "verbs", "typ
 						if(ispath(AA.type, /area/syndicate_station/start) || ispath(AA.type, /area/syndicate_station/transit))//that's the snowflake to pay when people map their ships over the snow.
 							X.underlays += undlay
 						else if(T.underlays.len)
-							for(var/Over in T.underlays)
-								X.underlays += T.underlays
+							X.underlays += T.underlays
 						else
 							X.underlays += undlay
 					else
