@@ -60,7 +60,6 @@
 /obj/screen/robot/lamp/Click()
 	var/mob/living/silicon/robot/R = usr
 	R.control_headlamp()
-	icon_state = "lamp[R.lamp_intensity]"
 
 
 /datum/hud/proc/robot_hud()
@@ -115,6 +114,7 @@
 	using = new /obj/screen/robot/lamp()
 	using.screen_loc = ui_borg_lamp
 	adding += using
+	mymobR.lamp_button = using
 
 //Intent
 	using = new /obj/screen/act_intent()

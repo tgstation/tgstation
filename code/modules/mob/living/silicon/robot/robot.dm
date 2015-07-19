@@ -15,6 +15,7 @@
 	var/obj/screen/inv1 = null
 	var/obj/screen/inv2 = null
 	var/obj/screen/inv3 = null
+	var/obj/screen/lamp_button = null
 
 	var/shown_robot_modules = 0	//Used to determine whether they have the module menu shown or not
 	var/obj/screen/robot_modules_background
@@ -992,13 +993,9 @@
 		src << "<span class='danger'>This function is currently offline.</span>"
 		return
 
-	if(lamp_intensity < lamp_max) //Lamp is set lower than the max.
-		lamp_intensity += 2
-		src << "Headlamp power set to Level [lamp_intensity/2]."
-	else //Greater than or equal to the max, so turn it off instead.
-		lamp_intensity = 0
-		src << "Headlamp disabled."
-
+//Some sort of magical "modulo" thing which somehow increments lamp power by 2, until it hits the max and resets to 0.
+	lamp_intensity = (lamp_intensity+2) % (lamp_max+2)
+	src << "[lamp_intensity ? "Headlamp power set to Level [lamp_intensity/2]" : "Headlamp disabled."]"
 	update_headlamp()
 
 /mob/living/silicon/robot/proc/update_headlamp(var/turn_off = 0)
@@ -1007,12 +1004,12 @@
 	if(lamp_intensity && (turn_off || stat))
 		src << "<span class='danger'>Your headlamp has been deactivated.</span>"
 		lamp_intensity = 0
-		if(client)
-			var/obj/screen/robot/lamp/button = locate(/obj/screen/robot/lamp) in client.screen
-			if(button)
-				button.icon_state = "lamp0"
 	else
 		AddLuminosity(lamp_intensity)
+
+	if(lamp_button)
+		lamp_button.icon_state = "lamp[lamp_intensity]"
+
 	update_icons()
 
 
