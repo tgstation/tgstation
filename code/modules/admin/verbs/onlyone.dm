@@ -66,12 +66,19 @@
 		hijack_objective.owner = H.mind
 		H.mind.objectives += hijack_objective
 
-		H << "<B>You are the multiverse summoner. Activate your blade to summon copies of yourself from another universe to fight by your side</B>"
+		H << "<B>You are the multiverse summoner. Activate your blade to summon copies of yourself from another universe to fight by your side.</B>"
 		var/obj_count = 1
 		for(var/datum/objective/OBJ in H.mind.objectives)
 			H << "<B>Objective #[obj_count]</B>: [OBJ.explanation_text]"
 			obj_count++
 
+		var/obj/item/slot_item_ID = H.get_item_by_slot(slot_wear_id)
+		qdel(slot_item_ID)
+		var/obj/item/slot_item_hand = H.get_item_by_slot(slot_r_hand)
+		H.unEquip(slot_item_hand)
+
+		var /obj/item/weapon/multisword/multi = new(H)
+		H.equip_to_slot_or_del(multi, slot_r_hand)
 
 		var/obj/item/weapon/card/id/W = new(H)
 		W.icon_state = "centcom"

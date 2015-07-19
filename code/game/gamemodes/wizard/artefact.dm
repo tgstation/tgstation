@@ -174,11 +174,17 @@
 	H.equip_to_slot_or_del(new /obj/item/weapon/claymore(H), slot_r_hand)
 	H.equip_to_slot_or_del(new /obj/item/weapon/twohanded/spear(H), slot_back)
 
+
+
+/////////////////////Multiverse Blade////////////////////
+var/global/list/multiverse = list()
+
 /obj/item/weapon/multisword
 	name = "multiverse sword"
-	desc = "A weapon capable of summoning copies of yourself from across space and time to fight by your side."
-	icon_state = "claymore"
-	item_state = "claymore"
+	desc = "A weapon capable of conquering the universe and beyond. Activate it to summon copies of yourself from others dimensions to fight by your side."
+	icon = 'icons/obj/weapons.dmi'
+	icon_state = "energy_katana"
+	item_state = "energy_katana"
 	hitsound = 'sound/weapons/bladeslice.ogg'
 	flags = CONDUCT
 	slot_flags = SLOT_BELT
@@ -194,10 +200,12 @@
 /obj/item/weapon/multisword/New()
 	..()
 	SSobj.processing |= src
+	multiverse |= src
 
 
 /obj/item/weapon/multisword/Destroy()
 	SSobj.processing.Remove(src)
+	multiverse.Remove(src)
 	..()
 
 
@@ -218,24 +226,26 @@
 				break
 		if(faction_check == 0)
 			faction = list("[user.real_name]")
-			assigned = "user.realname"
+			assigned = "[user.real_name]"
 			user.faction = list("[user.real_name]")
-			user << "<span class='warning'>You bind the sword to yourself. You can now use it to summon help.</span>"
+			user << "You bind the sword to yourself. You can now use it to summon help."
 			if(!usr.mind.special_role)
 				if(prob(30))
-					user << "<span class='warning'>With your new found power you could easily conquer the station!</span>"
+					user << "<span class='warning'><B>With your new found power you could easily conquer the station!</B></span>"
 					var/datum/objective/hijackclone/hijack_objective = new /datum/objective/hijackclone
 					hijack_objective.owner = usr.mind
 					usr.mind.objectives += hijack_objective
 					hijack_objective.explanation_text = "Ensure only [usr.real_name] and their copies are on the shuttle!"
+					usr << "<B>Objective #[1]</B>: [hijack_objective.explanation_text]"
 					ticker.mode.traitors += usr.mind
 					usr.mind.special_role = "[usr.real_name] Prime"
 					evil = TRUE
 				else
-					user << "<span class='warning'>With your new found power you could easily defend the station!</span>"
+					user << "<span class='warning'><B>With your new found power you could easily defend the station!</B></span>"
 					var/datum/objective/survive/new_objective = new /datum/objective/survive
 					new_objective.owner = usr.mind
 					new_objective.explanation_text = "Survive, and help defend the innocent from the mobs of multiverse clones."
+					usr << "<B>Objective #[1]</B>: [new_objective.explanation_text]"
 					usr.mind.objectives += new_objective
 					ticker.mode.traitors += usr.mind
 					usr.mind.special_role = "[usr.real_name] Prime"
@@ -245,44 +255,46 @@
 			if(candidates.len)
 				var/client/C = pick(candidates)
 				spawn_copy(C, get_turf(user.loc), user)
-				user << "<span class='warning'>The sword flashes, and you find yourself face to face with...you!</span>"
+				user << "<span class='warning'><B>The sword flashes, and you find yourself face to face with...you!</B></span>"
 				charged = 0
-				spawn_copy(C, get_turf(user.loc), user)
-				for(var/obj/item/weapon/multisword/M in world)
+				for(var/obj/item/weapon/multisword/M in multiverse)
 					if(M.assigned == assigned)
 						M.charged = 0
 
 			else
-				user << "Unable to reach your apprentice! You can either attack the spellbook with the contract to refund your points, or wait and try again later."
+				user << "You fail to summon any copies of yourself. Perhaps you should try again in a bit."
 	else
-		user << "<span class='warning'>[src] is recharging! Keep in mind it shares a cooldown with the swords wielded by your copies.</span>"
+		user << "<span class='warning'><B>[src] is recharging! Keep in mind it shares a cooldown with the swords wielded by your copies.</span>"
 
 
 /obj/item/weapon/multisword/proc/spawn_copy(var/client/C, var/turf/T)
 	var/mob/living/carbon/human/M = new/mob/living/carbon/human(T)
 	C.prefs.copy_to(M)
 	M.key = C.key
-	equip_copy(M)
-	M << "<B>You are an alternate version of [usr.real_name] from another universe! Help them accomplish their goals at all costs."
 	M.mind.name = usr.real_name
+	M << "<B>You are an alternate version of [usr.real_name] from another universe! Help them accomplish their goals at all costs.</B>"
 	M.real_name = usr.real_name
 	M.name = usr.real_name
 	M.faction = list("[usr.real_name]")
+	equip_copy(M)
+
 	if(evil)
 		var/datum/objective/hijackclone/hijack_objective = new /datum/objective/hijackclone
 		hijack_objective.owner = M.mind
 		M.mind.objectives += hijack_objective
 		hijack_objective.explanation_text = "Ensure only [usr.real_name] and their copies are on the shuttle!"
-		ticker.mode.traitors += M.mind
+		M << "<B>Objective #[1]</B>: [hijack_objective.explanation_text]"
 		M.mind.special_role = "multiverse traveller"
+		log_game("[M.key] was made a multiverse traveller with the objective to help [usr.real_name] hijack.")
 	else
 		var/datum/objective/protect/new_objective = new /datum/objective/protect
 		new_objective.owner = M:mind
 		new_objective:target = usr:mind
 		new_objective.explanation_text = "Protect [usr.real_name], your copy, and help them defend the innocent from the mobs of multiverse clones."
 		M.mind.objectives += new_objective
-		ticker.mode.traitors += M.mind
+		M << "<B>Objective #[1]</B>: [new_objective.explanation_text]"
 		M.mind.special_role = "multiverse traveller"
+		log_game("[M.key] was made a multiverse traveller with the objective to help [usr.real_name] protect the station.")
 
 /obj/item/weapon/multisword/proc/equip_copy(var/mob/living/carbon/human/M)
 
@@ -417,10 +429,10 @@
 		hardset_dna(M, null, null, null, null, pick(all_species))
 	M.update_icons()
 
-/*	var/obj/item/weapon/card/id/W = new obj/item/weapon/card/id
+	var/obj/item/weapon/card/id/W = new /obj/item/weapon/card/id
 	W.icon_state = "centcom"
-	W.access = assistant.get_access()
+	W.access += access_maint_tunnels
 	W.assignment = "Multiverse Traveller"
 	W.registered_name = M.real_name
 	W.update_label(M.real_name)
-	M.equip_to_slot_or_del(W, slot_wear_id)*/
+	M.equip_to_slot_or_del(W, slot_wear_id)
