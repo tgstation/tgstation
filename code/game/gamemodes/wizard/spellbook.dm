@@ -273,6 +273,12 @@
 	item_path = /obj/item/device/necromantic_stone
 	log_name = "NS"
 
+/datum/spellbook_entry/item/multiverse
+	name = "Multiverse Blade"
+	desc = "A weapon capable of conquering the universe and beyond. Activate it to summon copies of yourself from others dimensions to fight by your side."
+	item_path = /obj/item/weapon/multisword
+	log_name = "MV"
+
 /datum/spellbook_entry/item/wands
 	name = "Wand Assortment"
 	desc = "A collection of wands that allow for a wide variety of utility. Wands do not recharge, so be conservative in use. Comes in a handy belt."
