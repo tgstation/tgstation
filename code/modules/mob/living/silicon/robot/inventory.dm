@@ -15,11 +15,6 @@
 	if(istype(O,/obj/item/borg/sight))
 		var/obj/item/borg/sight/S = O
 		sight_mode &= ~S.sight_mode
-	else if(istype(O, /obj/item/device/flashlight))
-		var/obj/item/device/flashlight/F = O
-		if(F.on)
-			F.on = 0
-			F.update_brightness(src)
 	else if(istype(O, /obj/item/weapon/storage/bag/tray/))
 		var/obj/item/weapon/storage/bag/tray/T = O
 		T.do_quick_empty()

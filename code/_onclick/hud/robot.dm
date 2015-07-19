@@ -53,6 +53,14 @@
 	var/mob/living/silicon/robot/R = usr
 	R.uneq_active()
 
+/obj/screen/robot/lamp
+	name = "headlamp"
+	icon_state = "lamp0"
+
+/obj/screen/robot/lamp/Click()
+	var/mob/living/silicon/robot/R = usr
+	R.control_headlamp()
+
 
 /datum/hud/proc/robot_hud()
 	adding = list()
@@ -101,6 +109,12 @@
 	using = new /obj/screen/ai/sensors()
 	using.screen_loc = ui_borg_sensor
 	adding += using
+
+//Headlamp control
+	using = new /obj/screen/robot/lamp()
+	using.screen_loc = ui_borg_lamp
+	adding += using
+	mymobR.lamp_button = using
 
 //Intent
 	using = new /obj/screen/act_intent()
