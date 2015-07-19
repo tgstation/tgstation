@@ -50,7 +50,7 @@
 			L.icon_state = "[L.tang]"
 			L.firer = user
 			L.def_zone = user.get_organ_target()
-			L.original = user
+			L.original = A
 			L.current = U
 			L.starting = U
 			L.yo = U.y - T.y

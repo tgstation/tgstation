@@ -47,6 +47,7 @@ var/list/beam_master = list()
 		return angle
 
 	process()
+		icon_state = "lightning"
 		var/first = 1 //So we don't make the overlay in the same tile as the firer
 		var/broke = 0
 		var/broken
@@ -63,11 +64,12 @@ var/list/beam_master = list()
 		var/N=0
 		var/length=round(sqrt((DX)**2+(DY)**2))
 		var/count = 0
+		var/turf/T = get_turf(src)
 		for(N,N<length,N+=32)
 			if(count >= kill_count)
 				break
 			count++
-			var/obj/effect/overlay/beam/X=new(loc)
+			var/obj/effect/overlay/beam/X=new(T)
 			X.BeamSource=src
 			if((N+64>length) && (N+32<=length))
 				X.icon=Iend
@@ -98,6 +100,30 @@ var/list/beam_master = list()
 				for(var/a=0, a>=Pixel_y,a-=32)
 					X.y--
 					Pixel_y+=32
+
+			//Now that we've calculated the total offset in pixels, we move each beam parts to their closest corresponding turfs
+			var/x_increm = 0
+			var/y_increm = 0
+
+			while(Pixel_x >= 32 || Pixel_x <= -32)
+				if(Pixel_x > 0)
+					Pixel_x -= 32
+					x_increm++
+				else
+					Pixel_x += 32
+					x_increm--
+
+			while(Pixel_y >= 32 || Pixel_y <= -32)
+				if(Pixel_y > 0)
+					Pixel_y -= 32
+					y_increm++
+				else
+					Pixel_y += 32
+					y_increm--
+
+			X.x += x_increm
+			X.y += y_increm
+
 			X.pixel_x=Pixel_x
 			X.pixel_y=Pixel_y
 			var/turf/TT = get_turf(X.loc)

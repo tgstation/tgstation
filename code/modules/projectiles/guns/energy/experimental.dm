@@ -11,7 +11,7 @@
 
 /obj/item/weapon/gun/energy/bison
 	name = "\improper Righteous Bison"
-	desc = "A replica of Lord Cockswain's very own personnal heat ray."
+	desc = "A replica of Lord Cockswain's very own personnal ray gun."
 	icon = 'icons/obj/gun_experimental.dmi'
 	icon_state = "bison"
 	item_state = null

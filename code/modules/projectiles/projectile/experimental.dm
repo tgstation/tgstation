@@ -395,7 +395,7 @@
 	kill_count = 100
 	layer = 13
 	damage = 15
-	icon = 'icons/obj/projectiles_experimental.dmi'
+	icon = 'icons/obj/lightning.dmi'
 	icon_state = "heatray"
 	animate_movement = 0
 	pass_flags = PASSTABLE
@@ -528,26 +528,26 @@
 	var/length=round(sqrt((DX)**2+(DY)**2))
 	var/count = 0
 	var/turf/T = get_turf(firer)
-
 	var/timer_total = 16
 	var/increment = timer_total/round(length/32)
 	var/current_timer = 5
 
-	for(N,N<length,N+=32)
+	for(N,N<(length+16),N+=32)
 		if(count >= kill_count)
 			break
 		count++
 		var/obj/effect/overlay/beam/X=new(T,current_timer)
 		X.BeamSource=src
 		current_timer += increment
-		if((N+64>length) && (N+32<=length))
+		if((N+64>(length+16)) && (N+32<=(length+16)))
 			X.icon=Iend
 		else if(N==0)
 			X.icon=Istart
-		else if(N+32>length)
+		else if(N+32>(length+16))
 			X.icon=null
 		else
 			X.icon=I
+
 
 		var/Pixel_x=round(sin(Angle)+32*sin(Angle)*(N+16)/32)
 		var/Pixel_y=round(cos(Angle)+32*cos(Angle)*(N+16)/32)
@@ -569,6 +569,29 @@
 			for(var/a=0, a>=Pixel_y,a-=32)
 				X.y--
 				Pixel_y+=32
+
+		//Now that we've calculated the total offset in pixels, we move each beam parts to their closest corresponding turfs
+		var/x_increm = 0
+		var/y_increm = 0
+
+		while(Pixel_x >= 32 || Pixel_x <= -32)
+			if(Pixel_x > 0)
+				Pixel_x -= 32
+				x_increm++
+			else
+				Pixel_x += 32
+				x_increm--
+
+		while(Pixel_y >= 32 || Pixel_y <= -32)
+			if(Pixel_y > 0)
+				Pixel_y -= 32
+				y_increm++
+			else
+				Pixel_y += 32
+				y_increm--
+
+		X.x += x_increm
+		X.y += y_increm
 		X.pixel_x=Pixel_x
 		X.pixel_y=Pixel_y
 		var/turf/TT = get_turf(X.loc)

@@ -27,10 +27,15 @@
 
 /obj/effect/overlay/beam/New(turf/loc, var/lifetime = 10)
 	..()
-	spawn(lifetime/4)	alpha = 192
-	spawn(lifetime/2)	alpha = 128
-	spawn(3*lifetime/4)	alpha = 64
-	spawn(lifetime)	qdel(src)
+	spawn()
+		sleep(lifetime/4)
+		alpha = 192
+		sleep(lifetime/4)
+		alpha = 128
+		sleep(lifetime/4)
+		alpha = 64
+		sleep(lifetime/4)
+		qdel(src)
 
 
 /obj/effect/overlay/palmtree_r
