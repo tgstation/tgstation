@@ -2,8 +2,7 @@
 	name = "infrared emitter"
 	desc = "Emits a visible or invisible beam and is triggered when the beam is interrupted."
 	icon_state = "infrared"
-	m_amt = 1000
-	g_amt = 500
+	materials = list(MAT_METAL=1000, MAT_GLASS=500)
 	origin_tech = "magnets=2"
 
 	var/on = 0
@@ -94,7 +93,7 @@
 		process_cooldown()
 	return
 
-/obj/item/device/assembly/infra/interact(mob/user as mob)//TODO: change this this to the wire control panel
+/obj/item/device/assembly/infra/interact(mob/user)//TODO: change this this to the wire control panel
 	if(is_secured(user))
 		user.set_machine(src)
 		var/dat = text("<TT><B>Infrared Laser</B>\n<B>Status</B>: []<BR>\n<B>Visibility</B>: []<BR>\n</TT>", (on ? text("<A href='?src=\ref[];state=0'>On</A>", src) : text("<A href='?src=\ref[];state=1'>Off</A>", src)), (src.visible ? text("<A href='?src=\ref[];visible=0'>Visible</A>", src) : text("<A href='?src=\ref[];visible=1'>Invisible</A>", src)))

@@ -79,7 +79,7 @@
 		name = "photo[(n_name ? text("- '[n_name]'") : null)]"
 	add_fingerprint(usr)
 
-/obj/item/weapon/photo/proc/photocreate(var/inicon, var/inimg, var/indesc, var/inblueprints)
+/obj/item/weapon/photo/proc/photocreate(inicon, inimg, indesc, inblueprints)
 	icon = inicon
 	img = inimg
 	desc = indesc
@@ -108,7 +108,7 @@
 	w_class = 2.0
 	flags = CONDUCT
 	slot_flags = SLOT_BELT
-	m_amt = 2000
+	materials = list(MAT_METAL=2000)
 	var/pictures_max = 10
 	var/pictures_left = 10
 	var/on = 1
@@ -299,7 +299,7 @@
 	var/list/fields = list()
 
 
-/obj/item/device/camera/proc/injectaialbum(var/icon, var/img, var/desc, var/pixel_x, var/pixel_y, var/blueprintsinject) //stores image information to a list similar to that of the datacore
+/obj/item/device/camera/proc/injectaialbum(icon, img, desc, pixel_x, pixel_y, blueprintsinject) //stores image information to a list similar to that of the datacore
 	var/numberer = 1
 	for(var/datum/picture in src.aipictures)
 		numberer++
@@ -315,7 +315,7 @@
 	aipictures += P
 	usr << "<span class='unconscious'>Image recorded</span>"	//feedback to the AI player that the picture was taken
 
-/obj/item/device/camera/proc/injectmasteralbum(var/icon, var/img, var/desc, var/pixel_x, var/pixel_y, var/blueprintsinject) //stores image information to a list similar to that of the datacore
+/obj/item/device/camera/proc/injectmasteralbum(icon, img, desc, pixel_x, pixel_y, blueprintsinject) //stores image information to a list similar to that of the datacore
 	var/numberer = 1
 	var/mob/living/silicon/robot/C = src.loc
 	if(C.connected_ai)
@@ -335,7 +335,7 @@
 	else
 		injectaialbum(icon, img, desc, pixel_x, pixel_y, blueprintsinject)
 
-/obj/item/device/camera/siliconcam/proc/selectpicture(var/obj/item/device/camera/siliconcam/targetloc)
+/obj/item/device/camera/siliconcam/proc/selectpicture(obj/item/device/camera/siliconcam/targetloc)
 	var/list/nametemp = list()
 	var/find
 	if(targetloc.aipictures.len == 0)
@@ -348,7 +348,7 @@
 		if(q.fields["name"] == find)
 			return q
 
-/obj/item/device/camera/siliconcam/proc/viewpichelper(var/obj/item/device/camera/siliconcam/targetloc)
+/obj/item/device/camera/siliconcam/proc/viewpichelper(obj/item/device/camera/siliconcam/targetloc)
 	var/obj/item/weapon/photo/P = new/obj/item/weapon/photo()
 	var/datum/picture/selection = selectpicture(targetloc)
 	if(selection)

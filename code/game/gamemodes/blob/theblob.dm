@@ -63,7 +63,7 @@
 		health_timestamp = world.time + 10 // 1 seconds
 
 
-/obj/effect/blob/proc/Pulse(var/pulse = 0, var/origin_dir = 0, var/a_color)//Todo: Fix spaceblob expand
+/obj/effect/blob/proc/Pulse(pulse = 0, origin_dir = 0, a_color)//Todo: Fix spaceblob expand
 
 	set background = BACKGROUND_ENABLED
 
@@ -100,7 +100,7 @@
 	return 0
 
 
-/obj/effect/blob/proc/expand(var/turf/T = null, var/prob = 1, var/a_color)
+/obj/effect/blob/proc/expand(turf/T = null, prob = 1, a_color)
 	if(prob && !prob(health))	return
 	if(istype(T, /turf/space) && prob(75)) 	return
 	if(!T)
@@ -138,12 +138,12 @@
 	take_damage(Proj.damage, Proj.damage_type)
 	return 0
 
-/obj/effect/blob/Crossed(var/mob/living/L)
+/obj/effect/blob/Crossed(mob/living/L)
 	..()
 	L.blob_act()
 
 
-/obj/effect/blob/attackby(var/obj/item/weapon/W, var/mob/living/user, params)
+/obj/effect/blob/attackby(obj/item/weapon/W, mob/living/user, params)
 	user.changeNext_move(CLICK_CD_MELEE)
 	user.do_attack_animation(src)
 	playsound(src.loc, 'sound/effects/attackblob.ogg', 50, 1)
@@ -152,7 +152,7 @@
 		playsound(src.loc, 'sound/items/Welder.ogg', 100, 1)
 	take_damage(W.force, W.damtype)
 
-/obj/effect/blob/attack_animal(mob/living/simple_animal/M as mob)
+/obj/effect/blob/attack_animal(mob/living/simple_animal/M)
 	M.changeNext_move(CLICK_CD_MELEE)
 	M.do_attack_animation(src)
 	playsound(src.loc, 'sound/effects/attackblob.ogg', 50, 1)
@@ -161,7 +161,7 @@
 	take_damage(damage, BRUTE)
 	return
 
-/obj/effect/blob/attack_alien(mob/living/carbon/alien/humanoid/M as mob)
+/obj/effect/blob/attack_alien(mob/living/carbon/alien/humanoid/M)
 	M.changeNext_move(CLICK_CD_MELEE)
 	M.do_attack_animation(src)
 	playsound(src.loc, 'sound/effects/attackblob.ogg', 50, 1)
@@ -181,7 +181,7 @@
 	health -= damage
 	update_icon()
 
-/obj/effect/blob/proc/change_to(var/type)
+/obj/effect/blob/proc/change_to(type)
 	if(!ispath(type))
 		ERROR("[type] is an invalid type for the blob.")
 	var/obj/effect/blob/B = new type(src.loc)
@@ -191,10 +191,21 @@
 		B.adjustcolors(color)
 	qdel(src)
 
-/obj/effect/blob/proc/adjustcolors(var/a_color)
+/obj/effect/blob/proc/adjustcolors(a_color)
 	if(a_color)
 		color = a_color
 	return
+
+/obj/effect/blob/examine(mob/user)
+	..()
+	user << "It looks like it's of a [get_chem_name()] kind."
+	return
+
+/obj/effect/blob/proc/get_chem_name()
+	for(var/mob/camera/blob/B in mob_list)
+		if(lowertext(B.blob_reagent_datum.color) == lowertext(src.color)) // Goddamit why we use strings for these
+			return B.blob_reagent_datum.name
+	return "unknown"
 
 /obj/effect/blob/normal
 	icon_state = "blob"

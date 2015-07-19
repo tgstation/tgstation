@@ -94,16 +94,13 @@
 	return
 
 /atom/movable/Bump(var/atom/A as mob|obj|turf|area, yes)
-	if(src.throwing)
-		src.throw_impact(A)
-		src.throwing = 0
-
+	if(throwing)
+		throw_impact(A)
+		throwing = 0
 	if ((A && yes))
 		A.last_bumped = world.time
 		A.Bumped(src)
-	return
-	..()
-	return
+
 
 /atom/movable/proc/forceMove(atom/destination)
 	if(destination)
@@ -124,7 +121,7 @@
 //Return 0 to have src start/keep drifting in a no-grav area and 1 to stop/not start drifting
 //Mobs should return 1 if they should be able to move of their own volition, see client/Move() in mob_movement.dm
 //movement_dir == 0 when stopping or any dir when trying to move
-/atom/movable/proc/Process_Spacemove(var/movement_dir = 0)
+/atom/movable/proc/Process_Spacemove(movement_dir = 0)
 	if(has_gravity(src))
 		return 1
 
@@ -154,21 +151,21 @@
 /atom/movable/proc/checkpass(passflag)
 	return pass_flags&passflag
 
-/atom/movable/proc/hit_check() // todo: this is partly obsolete due to passflags already, add throwing stuff to mob CanPass and finish it
+/atom/movable/proc/hit_check(mob/thrower) // todo: this is partly obsolete due to passflags already, add throwing stuff to mob CanPass and finish it
 	if(src.throwing)
 		for(var/atom/A in get_turf(src))
 			if(A == src) continue
 			if(istype(A,/mob/living))
 				if(A:lying) continue
-				src.throw_impact(A)
+				src.throw_impact(A,thrower)
 				if(src.throwing == 1)
 					src.throwing = 0
 			if(isobj(A))
 				if(A.density && !A.throwpass)	// **TODO: Better behaviour for windows which are dense, but shouldn't always stop movement
-					src.throw_impact(A)
+					src.throw_impact(A,thrower)
 					src.throwing = 0
 
-/atom/movable/proc/throw_at(atom/target, range, speed)
+/atom/movable/proc/throw_at(atom/target, range, speed, mob/thrower)
 	if(!target || !src || (flags & NODROP))	return 0
 	//use a modified version of Bresenham's algorithm to get from the atom's current position to that of the target
 
@@ -203,7 +200,7 @@
 		if(!step) // going off the edge of the map makes get_step return null, don't let things go off the edge
 			break
 		src.Move(step, get_dir(loc, step))
-		hit_check()
+		hit_check(thrower)
 		error += (error < 0) ? tdist_x : -tdist_y;
 		dist_travelled++
 		dist_since_sleep++
@@ -214,7 +211,7 @@
 	//done throwing, either because it hit something or it finished moving
 	src.throwing = 0
 	if(isobj(src))
-		src.throw_impact(get_turf(src))
+		src.throw_impact(get_turf(src),thrower)
 
 	return 1
 

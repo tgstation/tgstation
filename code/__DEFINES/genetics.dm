@@ -25,6 +25,8 @@
 #define CHAV		"Chav"
 #define ELVIS		"Elvis"
 
+#define CHAMELEON_MUTATION_DEFAULT_TRANSPARENCY 204
+
 // String identifiers for associative list lookup
 
 //Types of usual mutations

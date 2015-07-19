@@ -7,7 +7,7 @@
 	create_reagents(300)
 	..()
 
-/obj/effect/decal/cleanable/attackby(obj/item/weapon/W as obj, mob/user as mob,)
+/obj/effect/decal/cleanable/attackby(obj/item/weapon/W, mob/user,)
 	if(istype(W, /obj/item/weapon/reagent_containers/glass) || istype(W, /obj/item/weapon/reagent_containers/food/drinks))
 		if(src.reagents && W.reagents)
 			if(!src.reagents.total_volume)
@@ -37,6 +37,7 @@
 	..()
 
 /obj/effect/decal/cleanable/fire_act()
-	reagents.chem_temp += 30
-	reagents.handle_reactions()
+	if(reagents)
+		reagents.chem_temp += 30
+		reagents.handle_reactions()
 	..()

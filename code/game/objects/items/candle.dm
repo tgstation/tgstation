@@ -22,7 +22,7 @@
 	icon_state = "candle[i][lit ? "_lit" : ""]"
 
 
-/obj/item/candle/attackby(obj/item/weapon/W as obj, mob/user as mob, params)
+/obj/item/candle/attackby(obj/item/weapon/W, mob/user, params)
 	..()
 	if(istype(W, /obj/item/weapon/weldingtool))
 		var/obj/item/weapon/weldingtool/WT = W
@@ -76,7 +76,7 @@
 		T.hotspot_expose(700, 5)
 
 
-/obj/item/candle/attack_self(mob/user as mob)
+/obj/item/candle/attack_self(mob/user)
 	if(lit)
 		lit = 0
 		update_icon()

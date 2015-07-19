@@ -63,7 +63,7 @@ for reference:
 	var/health = 100.0
 	var/maxhealth = 100.0
 
-/obj/structure/barricade/wooden/attackby(obj/item/W as obj, mob/user as mob, params)
+/obj/structure/barricade/wooden/attackby(obj/item/W, mob/user, params)
 	user.changeNext_move(CLICK_CD_MELEE)
 	if (istype(W, /obj/item/stack/sheet/mineral/wood))
 		if (src.health < src.maxhealth)
@@ -148,7 +148,7 @@ for reference:
 
 	src.icon_state = "barrier[src.locked]"
 
-/obj/machinery/deployable/barrier/attackby(obj/item/weapon/W as obj, mob/user as mob, params)
+/obj/machinery/deployable/barrier/attackby(obj/item/weapon/W, mob/user, params)
 	if (W.GetID())
 		if (src.allowed(user))
 			if	(src.emagged < 2.0)
@@ -192,7 +192,7 @@ for reference:
 			src.explode()
 		..()
 
-/obj/machinery/deployable/emag_act(user as mob)
+/obj/machinery/deployable/emag_act(mob/user)
 	if (src.emagged == 0)
 		src.emagged = 1
 		src.req_access = null

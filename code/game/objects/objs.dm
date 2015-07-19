@@ -103,7 +103,7 @@
 /mob/proc/unset_machine()
 	src.machine = null
 
-/mob/proc/set_machine(var/obj/O)
+/mob/proc/set_machine(obj/O)
 	if(src.machine)
 		unset_machine()
 	src.machine = O
@@ -161,11 +161,11 @@
 	var/turf/T = get_turf(src)
 	return T.storage_contents_dump_act(src_object, user)
 
-/obj/fire_act(var/global_overlay=1)
+/obj/fire_act(global_overlay=1)
 	if(!burn_state)
 		burn_state = 1
 		SSobj.burning += src
-		burn_world_time = world.time + burntime*10
+		burn_world_time = world.time + burntime*rand(10,20)
 		if(global_overlay)
 			overlays += fire_overlay
 		return 1
@@ -174,7 +174,8 @@
 	for(var/obj/item/Item in contents) //Empty out the contents
 		Item.loc = src.loc
 		Item.fire_act() //Set them on fire, too
-	new /obj/effect/decal/cleanable/ash(src.loc)
+	var/obj/effect/decal/cleanable/ash/A = new(src.loc)
+	A.desc = "Looks like this used to be a [name] some time ago."
 	qdel(src)
 
 /obj/proc/extinguish()

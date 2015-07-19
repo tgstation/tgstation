@@ -10,6 +10,7 @@
 	var/list/list_reagents = null
 	var/spawned_disease = null
 	var/disease_amount = 20
+	var/spillable = 0
 
 /obj/item/weapon/reagent_containers/verb/set_APTFT() //set amount_per_transfer_from_this
 	set name = "Set transfer amount"
@@ -35,16 +36,16 @@
 	if(list_reagents)
 		reagents.add_reagent_list(list_reagents)
 
-/obj/item/weapon/reagent_containers/attack_self(mob/user as mob)
+/obj/item/weapon/reagent_containers/attack_self(mob/user)
 	return
 
-/obj/item/weapon/reagent_containers/attack(mob/M as mob, mob/user as mob, def_zone)
+/obj/item/weapon/reagent_containers/attack(mob/M, mob/user, def_zone)
 	return
 
 /obj/item/weapon/reagent_containers/afterattack(obj/target, mob/user , flag)
 	return
 
-/obj/item/weapon/reagent_containers/proc/reagentlist(var/obj/item/weapon/reagent_containers/snack) //Attack logs for regents in pills
+/obj/item/weapon/reagent_containers/proc/reagentlist(obj/item/weapon/reagent_containers/snack) //Attack logs for regents in pills
 	var/data
 	if(snack.reagents.reagent_list && snack.reagents.reagent_list.len) //find a reagent list if there is and check if it has entries
 		for (var/datum/reagent/R in snack.reagents.reagent_list) //no reagents will be left behind
@@ -77,3 +78,35 @@
 	reagents.chem_temp += 30
 	reagents.handle_reactions()
 	..()
+
+/obj/item/weapon/reagent_containers/throw_impact(atom/target,mob/thrower)
+	..()
+
+	if(!reagents.total_volume || !spillable)
+		return
+
+	if(ismob(target) && target.reagents)
+		reagents.total_volume *= rand(5,10) * 0.1 //Not all of it makes contact with the target
+		var/mob/M = target
+		var/R
+		target.visible_message("<span class='danger'>[M] has been splashed with something!</span>", \
+						"<span class='userdanger'>[M] has been splashed with something!</span>")
+		if(reagents)
+			for(var/datum/reagent/A in reagents.reagent_list)
+				R += A.id + " ("
+				R += num2text(A.volume) + "),"
+
+
+		reagents.reaction(target, TOUCH)
+		if(thrower)
+			add_logs(thrower, M, "splashed", R)
+
+	else if((!target.density || target.throwpass) && thrower && thrower.mind && thrower.mind.assigned_role == "Bartender")
+		visible_message("<span class='notice'>[src] lands onto the [target.name] without spilling a single drop.</span>")
+		return
+
+	else
+		visible_message("<span class='notice'>[src] spills its contents all over [target].</span>")
+		reagents.reaction(target, TOUCH)
+
+	reagents.clear_reagents()

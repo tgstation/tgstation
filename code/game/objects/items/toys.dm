@@ -39,10 +39,10 @@
 /obj/item/toy/balloon/New()
 	create_reagents(10)
 
-/obj/item/toy/balloon/attack(mob/living/carbon/human/M as mob, mob/user as mob)
+/obj/item/toy/balloon/attack(mob/living/carbon/human/M, mob/user)
 	return
 
-/obj/item/toy/balloon/afterattack(atom/A as mob|obj, mob/user as mob, proximity)
+/obj/item/toy/balloon/afterattack(atom/A as mob|obj, mob/user, proximity)
 	if(!proximity) return
 	if (istype(A, /obj/structure/reagent_dispensers/watertank) && get_dist(src,A) <= 1)
 		A.reagents.trans_to(src, 10)
@@ -51,7 +51,7 @@
 		src.update_icon()
 	return
 
-/obj/item/toy/balloon/attackby(obj/O as obj, mob/user as mob, params)
+/obj/item/toy/balloon/attackby(obj/O, mob/user, params)
 	if(istype(O, /obj/item/weapon/reagent_containers/glass))
 		if(O.reagents)
 			if(O.reagents.total_volume < 1)
@@ -123,8 +123,7 @@
 	flags =  CONDUCT
 	slot_flags = SLOT_BELT
 	w_class = 3.0
-	g_amt = 10
-	m_amt = 10
+	materials = list(MAT_METAL=10, MAT_GLASS=10)
 	attack_verb = list("struck", "pistol whipped", "hit", "bashed")
 	var/bullets = 7.0
 
@@ -132,7 +131,7 @@
 	..()
 	user << "There [bullets == 1 ? "is" : "are"] [bullets] cap\s left."
 
-/obj/item/toy/gun/attackby(obj/item/toy/ammo/gun/A as obj, mob/user as mob, params)
+/obj/item/toy/gun/attackby(obj/item/toy/ammo/gun/A, mob/user, params)
 
 	if (istype(A, /obj/item/toy/ammo/gun))
 		if (src.bullets >= 7)
@@ -153,7 +152,7 @@
 		return 1
 	return
 
-/obj/item/toy/gun/afterattack(atom/target as mob|obj|turf|area, mob/user as mob, flag)
+/obj/item/toy/gun/afterattack(atom/target as mob|obj|turf|area, mob/user, flag)
 	if (flag)
 		return
 	if (!(istype(usr, /mob/living/carbon/human) || ticker) && ticker.mode.name != "monkey")
@@ -176,8 +175,7 @@
 	icon = 'icons/obj/ammo.dmi'
 	icon_state = "357OLD-7"
 	w_class = 1.0
-	g_amt = 10
-	m_amt = 10
+	materials = list(MAT_METAL=10, MAT_GLASS=10)
 	var/amount_left = 7.0
 
 /obj/item/toy/ammo/gun/update_icon()
@@ -202,7 +200,7 @@
 	attack_verb = list("attacked", "struck", "hit")
 	var/hacked = 0
 
-/obj/item/toy/sword/attack_self(mob/user as mob)
+/obj/item/toy/sword/attack_self(mob/user)
 	active = !( active )
 	if (active)
 		user << "<span class='notice'>You extend the plastic blade with a quick flick of your wrist.</span>"
@@ -351,10 +349,10 @@
 		graffiti |= "antilizard"
 		graffiti |= "prolizard"
 
-/obj/item/toy/crayon/attack_self(mob/living/user as mob)
+/obj/item/toy/crayon/attack_self(mob/living/user)
 	update_window(user)
 
-/obj/item/toy/crayon/proc/update_window(mob/living/user as mob)
+/obj/item/toy/crayon/proc/update_window(mob/living/user)
 	dat += "<center><h2>Currently selected: [drawtype]</h2><br>"
 	dat += "<a href='?src=\ref[src];type=random_letter'>Random letter</a><a href='?src=\ref[src];type=letter'>Pick letter</a>"
 	dat += "<hr>"
@@ -399,7 +397,7 @@
 	drawtype = temp
 	update_window(usr)
 
-/obj/item/toy/crayon/afterattack(atom/target, mob/user as mob, proximity)
+/obj/item/toy/crayon/afterattack(atom/target, mob/user, proximity)
 	if(!proximity || !check_allowed_items(target)) return
 	if(!uses)
 		user << "<span class='warning'>There is no more of [src.name] left!</span>"
@@ -420,28 +418,16 @@
 		var/gangID
 		if(gang)
 			//Determine gang affiliation
-			if(user.mind in (ticker.mode.A_bosses | ticker.mode.A_gang))
-				temp = "[gang_name("A")] gang tag"
-				gangID = "A"
-			else if(user.mind in (ticker.mode.B_bosses | ticker.mode.B_gang))
-				temp = "[gang_name("B")] gang tag"
-				gangID = "B"
+			gangID = user.mind.gang_datum
 
 			//Check area validity. Reject space, player-created areas, and non-station z-levels.
-			if (gangID)
+			if(gangID)
 				territory = get_area(target)
 				if(territory && (territory.z == ZLEVEL_STATION) && territory.valid_territory)
 					//Check if this area is already tagged by a gang
 					if(!(locate(/obj/effect/decal/cleanable/crayon/gang) in target)) //Ignore the check if the tile being sprayed has a gang tag
 						if(territory_claimed(territory, user))
 							return
-					/*
-					//Prevent people spraying from outside of the territory (ie. Maint walls)
-					var/area/user_area = get_area(user.loc)
-					if(istype(user_area) && (user_area.type != territory.type))
-						user << "<span class='warning'>You cannot tag [territory] from the outside.</span>"
-						return
-					*/
 					if(locate(/obj/machinery/power/apc) in (user.loc.contents | target.contents))
 						user << "<span class='warning'>You cannot tag here.</span>"
 						return
@@ -493,7 +479,7 @@
 					qdel(src)
 	return
 
-/obj/item/toy/crayon/attack(mob/M as mob, mob/user as mob)
+/obj/item/toy/crayon/attack(mob/M, mob/user)
 	if(edible && (M == user))
 		user << "You take a bite of the [src.name]. Delicious!"
 		user.nutrition += 5
@@ -506,12 +492,12 @@
 	else
 		..()
 
-/obj/item/toy/crayon/proc/territory_claimed(var/area/territory,mob/user)
+/obj/item/toy/crayon/proc/territory_claimed(area/territory,mob/user)
 	var/occupying_gang
-	if(territory.type in (ticker.mode.A_territory | ticker.mode.A_territory_new))
-		occupying_gang = gang_name("A")
-	if(territory.type in (ticker.mode.B_territory | ticker.mode.B_territory_new))
-		occupying_gang = gang_name("B")
+	for(var/datum/gang/G in ticker.mode.gangs)
+		if(territory.type in (G.territory|G.territory_new))
+			occupying_gang = G.name
+			break
 	if(occupying_gang)
 		user << "<span class='danger'>[territory] has already been tagged by the [occupying_gang] gang! You must get rid of or spray over the old tag first!</span>"
 		return 1
@@ -566,7 +552,7 @@
 	var/quiet = 0
 
 //all credit to skasi for toy mech fun ideas
-/obj/item/toy/prize/attack_self(mob/user as mob)
+/obj/item/toy/prize/attack_self(mob/user)
 	if(!cooldown)
 		user << "<span class='notice'>You play with [src].</span>"
 		cooldown = 1
@@ -576,7 +562,7 @@
 		return
 	..()
 
-/obj/item/toy/prize/attack_hand(mob/user as mob)
+/obj/item/toy/prize/attack_hand(mob/user)
 	if(loc == user)
 		if(!cooldown)
 			user << "<span class='notice'>You play with [src].</span>"
@@ -769,7 +755,7 @@
 	cards += "Ace of Diamonds"
 
 
-/obj/item/toy/cards/deck/attack_hand(mob/user as mob)
+/obj/item/toy/cards/deck/attack_hand(mob/user)
 	if(user.lying)
 		return
 	var/choice = null
@@ -794,7 +780,7 @@
 	else if(cards.len > 1)
 		src.icon_state = "deck_[deckstyle]_low"
 
-/obj/item/toy/cards/deck/attack_self(mob/user as mob)
+/obj/item/toy/cards/deck/attack_self(mob/user)
 	if(cooldown < world.time - 50)
 		cards = shuffle(cards)
 		playsound(user, 'sound/items/cardshuffle.ogg', 50, 1)
@@ -875,7 +861,7 @@
 	var/choice = null
 
 
-/obj/item/toy/cards/cardhand/attack_self(mob/user as mob)
+/obj/item/toy/cards/cardhand/attack_self(mob/user)
 	user.set_machine(src)
 	interact(user)
 
@@ -1136,12 +1122,12 @@
 	var/bitesound = 'sound/weapons/bite.ogg'
 
 // Attack mob
-/obj/item/toy/carpplushie/attack(mob/M as mob, mob/user as mob)
+/obj/item/toy/carpplushie/attack(mob/M, mob/user)
 	playsound(loc, bitesound, 20, 1)	// Play bite sound in local area
 	return ..()
 
 // Attack self
-/obj/item/toy/carpplushie/attack_self(mob/user as mob)
+/obj/item/toy/carpplushie/attack_self(mob/user)
 	playsound(src.loc, bitesound, 20, 1)
 	return ..()
 
@@ -1179,6 +1165,6 @@
 	item_state = "beachball"
 	w_class = 4 //Stops people from hiding it in their bags/pockets
 
-/obj/item/toy/beach_ball/afterattack(atom/target as mob|obj|turf|area, mob/user as mob)
+/obj/item/toy/beach_ball/afterattack(atom/target as mob|obj|turf|area, mob/user)
 	user.drop_item()
 	src.throw_at(target, throw_range, throw_speed)

@@ -14,6 +14,7 @@
 	//Revised. Brainmob is now contained directly within object of transfer. MMI in this case.
 
 	var/locked = 0
+	var/syndiemmi = 0 //Whether or not this is a Syndicate MMI
 	var/mob/living/carbon/brain/brainmob = null //The current occupant.
 	var/mob/living/silicon/robot = null //Appears unused.
 	var/obj/mecha = null //This does not appear to be used outside of reference in mecha.dm.
@@ -30,7 +31,7 @@
 	else
 		icon_state = "mmi_empty"
 
-/obj/item/device/mmi/attackby(var/obj/item/O as obj, var/mob/user as mob, params)
+/obj/item/device/mmi/attackby(obj/item/O, mob/user, params)
 	user.changeNext_move(CLICK_CD_MELEE)
 	if(istype(O,/obj/item/organ/brain)) //Time to stick a brain in it --NEO
 		var/obj/item/organ/brain/newbrain = O
@@ -84,7 +85,7 @@
 		return
 	..()
 
-/obj/item/device/mmi/attack_self(mob/user as mob)
+/obj/item/device/mmi/attack_self(mob/user)
 	if(!brain)
 		user << "<span class='warning'>You upend the MMI, but there's nothing in it!</span>"
 	else if(locked)
@@ -104,7 +105,7 @@
 		update_icon()
 		name = "Man-Machine Interface"
 
-/obj/item/device/mmi/proc/transfer_identity(var/mob/living/carbon/human/H) //Same deal as the regular brain proc. Used for human-->robot people.
+/obj/item/device/mmi/proc/transfer_identity(mob/living/carbon/human/H) //Same deal as the regular brain proc. Used for human-->robot people.
 	brainmob = new(src)
 	brainmob.name = H.real_name
 	brainmob.real_name = H.real_name
@@ -182,3 +183,8 @@
 		else
 			user << "<span class='notice'>The MMI indicates the brain is active.</span>"
 
+
+/obj/item/device/mmi/syndie
+	name = "Syndicate Man-Machine Interface"
+	desc = "Syndicate's own brand of MMI. It enforces laws designed to help Syndicate agents achieve their goals upon cyborgs created with it, but doesn't fit in Nanotrasen AI cores."
+	syndiemmi = 1

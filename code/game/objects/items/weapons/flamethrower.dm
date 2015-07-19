@@ -10,7 +10,7 @@
 	throw_speed = 1
 	throw_range = 5
 	w_class = 3.0
-	m_amt = 500
+	materials = list(MAT_METAL=500)
 	origin_tech = "combat=1;plasmatech=1"
 	var/status = 0
 	var/throw_amount = 100
@@ -65,10 +65,10 @@
 		var/turf/target_turf = get_turf(target)
 		if(target_turf)
 			var/turflist = getline(user, target_turf)
-			add_logs(user, target, "flamethrowered", admin=0, addition="at [target.x],[target.y],[target.z]")
+			add_logs(user, target, "flamethrowered", src, "at [target.x],[target.y],[target.z]")
 			flame_turf(turflist)
 
-/obj/item/weapon/flamethrower/attackby(obj/item/W as obj, mob/user as mob, params)
+/obj/item/weapon/flamethrower/attackby(obj/item/W, mob/user, params)
 	if(user.stat || user.restrained() || user.lying)	return
 	if(istype(W, /obj/item/weapon/wrench) && !status)//Taking this apart
 		var/turf/T = get_turf(src)
@@ -119,7 +119,7 @@
 	return
 
 
-/obj/item/weapon/flamethrower/attack_self(mob/user as mob)
+/obj/item/weapon/flamethrower/attack_self(mob/user)
 	if(user.stat || user.restrained() || user.lying)	return
 	user.set_machine(src)
 	if(!ptank)

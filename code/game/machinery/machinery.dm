@@ -121,7 +121,7 @@ Class Procs:
 	..()
 	machines += src
 	SSmachine.processing += src
-	auto_use_power()
+	power_change()
 
 /obj/machinery/Destroy()
 	machines.Remove(src)
@@ -268,7 +268,7 @@ Class Procs:
 		return
 	return 1
 
-/obj/machinery/attack_ai(mob/user as mob)
+/obj/machinery/attack_ai(mob/user)
 	if(isrobot(user))
 		// For some reason attack_robot doesn't work
 		// This is to stop robots from using cameras to remotely control machines.
@@ -277,11 +277,11 @@ Class Procs:
 	else
 		return src.attack_hand(user)
 
-/obj/machinery/attack_paw(mob/user as mob)
+/obj/machinery/attack_paw(mob/user)
 	return src.attack_hand(user)
 
 //set_machine must be 0 if clicking the machinery doesn't bring up a dialog
-/obj/machinery/attack_hand(mob/user as mob, var/check_power = 1, var/set_machine = 1)
+/obj/machinery/attack_hand(mob/user, check_power = 1, set_machine = 1)
 	if(user.lying || user.stat)
 		return 1
 	if(!user.IsAdvancedToolUser())
@@ -320,7 +320,7 @@ Class Procs:
 	uid = gl_uid
 	gl_uid++
 
-/obj/machinery/proc/default_pry_open(var/obj/item/weapon/crowbar/C)
+/obj/machinery/proc/default_pry_open(obj/item/weapon/crowbar/C)
 	. = !(state_open || panel_open || is_operational()) && istype(C)
 	if(.)
 		playsound(src.loc, 'sound/items/Crowbar.ogg', 50, 1)
@@ -328,9 +328,10 @@ Class Procs:
 		open_machine()
 		return 1
 
-/obj/machinery/proc/default_deconstruction_crowbar(var/obj/item/weapon/crowbar/C, var/ignore_panel = 0)
+/obj/machinery/proc/default_deconstruction_crowbar(obj/item/weapon/crowbar/C, ignore_panel = 0)
 	. = istype(C) && (panel_open || ignore_panel)
 	if(.)
+		deconstruction()
 		playsound(src.loc, 'sound/items/Crowbar.ogg', 50, 1)
 		var/obj/machinery/constructable_frame/machine_frame/M = new /obj/machinery/constructable_frame/machine_frame(src.loc)
 		M.state = 2
@@ -341,7 +342,7 @@ Class Procs:
 			I.loc = src.loc
 		qdel(src)
 
-/obj/machinery/proc/default_deconstruction_screwdriver(var/mob/user, var/icon_state_open, var/icon_state_closed, var/obj/item/weapon/screwdriver/S)
+/obj/machinery/proc/default_deconstruction_screwdriver(mob/user, icon_state_open, icon_state_closed, obj/item/weapon/screwdriver/S)
 	if(istype(S))
 		playsound(src.loc, 'sound/items/Screwdriver.ogg', 50, 1)
 		if(!panel_open)
@@ -355,7 +356,7 @@ Class Procs:
 		return 1
 	return 0
 
-/obj/machinery/proc/default_change_direction_wrench(var/mob/user, var/obj/item/weapon/wrench/W)
+/obj/machinery/proc/default_change_direction_wrench(mob/user, obj/item/weapon/wrench/W)
 	if(panel_open && istype(W))
 		playsound(src.loc, 'sound/items/Ratchet.ogg', 50, 1)
 		dir = turn(dir,-90)
@@ -414,11 +415,15 @@ Class Procs:
 /obj/machinery/proc/construction()
 	return
 
+//called on deconstruction before the final deletion
+/obj/machinery/proc/deconstruction()
+	return
+
 /obj/machinery/allow_drop()
 	return 0
 
 // Hook for html_interface module to prevent updates to clients who don't have this as their active machine.
-/obj/machinery/proc/hiIsValidClient(datum/html_interface_client/hclient)
+/obj/machinery/proc/hiIsValidClient(datum/html_interface_client/hclient, datum/html_interface/hi)
 	if (hclient.client.mob && hclient.client.mob.stat == 0)
 		if (isAI(hclient.client.mob)) return TRUE
 		else                          return hclient.client.mob.machine == src && src.Adjacent(hclient.client.mob)

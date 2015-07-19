@@ -48,7 +48,7 @@
 		tally += (283.222 - bodytemperature) / 10 * 1.75
 	return tally+config.monkey_delay
 
-/mob/living/carbon/monkey/attack_paw(mob/living/M as mob)
+/mob/living/carbon/monkey/attack_paw(mob/living/M)
 	if(..()) //successful monkey bite.
 		var/damage = rand(1, 5)
 		if (stat != DEAD)
@@ -56,7 +56,7 @@
 			updatehealth()
 	return
 
-/mob/living/carbon/monkey/attack_larva(mob/living/carbon/alien/larva/L as mob)
+/mob/living/carbon/monkey/attack_larva(mob/living/carbon/alien/larva/L)
 	if(..()) //successful larva bite.
 		var/damage = rand(1, 3)
 		if(stat != DEAD)
@@ -64,7 +64,7 @@
 			adjustBruteLoss(damage)
 			updatehealth()
 
-/mob/living/carbon/monkey/attack_hand(mob/living/carbon/human/M as mob)
+/mob/living/carbon/monkey/attack_hand(mob/living/carbon/human/M)
 	if(..())	//To allow surgery to return properly.
 		return
 
@@ -90,7 +90,7 @@
 									"<span class='userdanger'>[M] has knocked out [name]!</span>")
 							return
 				adjustBruteLoss(damage)
-				add_logs(M, src, "attacked", admin=0)
+				add_logs(M, src, "attacked")
 				updatehealth()
 			else
 				playsound(loc, 'sound/weapons/punchmiss.ogg', 25, 1, -1)
@@ -113,7 +113,7 @@
 								"<span class='userdanger'>[M] has disarmed [src]!</span>")
 	return
 
-/mob/living/carbon/monkey/attack_alien(mob/living/carbon/alien/humanoid/M as mob)
+/mob/living/carbon/monkey/attack_alien(mob/living/carbon/alien/humanoid/M)
 	if(..()) //if harm or disarm intent.
 		if (M.a_intent == "harm")
 			if ((prob(95) && health > 0))
@@ -128,10 +128,11 @@
 				else
 					visible_message("<span class='danger'>[M] has slashed [name]!</span>", \
 							"<span class='userdanger'>[M] has slashed [name]!</span>")
-				add_logs(M, src, "attacked", admin=0)
+
 				if (stat != DEAD)
 					adjustBruteLoss(damage)
 					updatehealth()
+				add_logs(M, src, "attacked")
 			else
 				playsound(loc, 'sound/weapons/slashmiss.ogg', 25, 1, -1)
 				visible_message("<span class='danger'>[M] has attempted to lunge at [name]!</span>", \
@@ -147,18 +148,18 @@
 				if(drop_item())
 					visible_message("<span class='danger'>[M] has disarmed [name]!</span>", \
 							"<span class='userdanger'>[M] has disarmed [name]!</span>")
-			add_logs(M, src, "disarmed", admin=0)
+			add_logs(M, src, "disarmed")
 			updatehealth()
 	return
 
-/mob/living/carbon/monkey/attack_animal(mob/living/simple_animal/M as mob)
+/mob/living/carbon/monkey/attack_animal(mob/living/simple_animal/M)
 	if(..())
 		var/damage = rand(M.melee_damage_lower, M.melee_damage_upper)
 		adjustBruteLoss(damage)
 		updatehealth()
 
 
-/mob/living/carbon/monkey/attack_slime(mob/living/simple_animal/slime/M as mob)
+/mob/living/carbon/monkey/attack_slime(mob/living/simple_animal/slime/M)
 	if(..()) //successful slime attack
 		var/damage = rand(5, 35)
 		if(M.is_adult)
@@ -206,13 +207,13 @@
 /mob/living/carbon/monkey/IsAdvancedToolUser()//Unless its monkey mode monkeys cant use advanced tools
 	return 0
 
-/mob/living/carbon/monkey/reagent_check(var/datum/reagent/R) //can metabolize all reagents
+/mob/living/carbon/monkey/reagent_check(datum/reagent/R) //can metabolize all reagents
 	return 0
 
 /mob/living/carbon/monkey/canBeHandcuffed()
 	return 1
 
-/mob/living/carbon/monkey/assess_threat(var/obj/machinery/bot/secbot/judgebot, var/lasercolor)
+/mob/living/carbon/monkey/assess_threat(obj/machinery/bot/secbot/judgebot, lasercolor)
 	if(judgebot.emagged == 2)
 		return 10 //Everyone is a criminal!
 	var/threatcount = 0
@@ -246,7 +247,7 @@
 
 	return threatcount
 
-/mob/living/carbon/monkey/acid_act(var/acidpwr, var/toxpwr, var/acid_volume)
+/mob/living/carbon/monkey/acid_act(acidpwr, toxpwr, acid_volume)
 	if(wear_mask)
 		if(!wear_mask.unacidable)
 			wear_mask.acid_act(acidpwr)

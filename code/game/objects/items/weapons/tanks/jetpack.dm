@@ -45,7 +45,7 @@
 	return
 
 
-/obj/item/weapon/tank/jetpack/proc/allow_thrust(num, mob/living/user as mob)
+/obj/item/weapon/tank/jetpack/proc/allow_thrust(num, mob/living/user)
 	if(!(src.on))
 		return 0
 	if((num < 0.005 || src.air_contents.total_moles() < num))
@@ -115,6 +115,8 @@
 	icon_state = "jetpack-void"
 	item_state =  "jetpack-void"
 	var/obj/item/weapon/tank/internals/tank = null
+	action_button_name = "Toggle Jetpack"
+	action_button_internal = 1
 
 /obj/item/weapon/tank/jetpack/suit/New()
 	..()

@@ -40,7 +40,7 @@
 		destination.dna.real_name = real_name
 		destination.dna.mutations = mutations
 
-/datum/dna/proc/copy_dna(var/datum/dna/new_dna)
+/datum/dna/proc/copy_dna(datum/dna/new_dna)
 	new_dna.unique_enzymes = unique_enzymes
 	new_dna.struc_enzymes = struc_enzymes
 	new_dna.uni_identity = uni_identity
@@ -119,7 +119,7 @@
 		. += repeat_string(DNA_UNIQUE_ENZYMES_LEN, "0")
 	return .
 
-/datum/dna/proc/mutations_say_mods(var/message)
+/datum/dna/proc/mutations_say_mods(message)
 	if(message)
 		for(var/datum/mutation/human/M in mutations)
 			message = M.say_mod(message)
@@ -384,7 +384,7 @@
 	..()
 	update_icon()
 
-/obj/machinery/dna_scannernew/proc/toggle_open(var/mob/user)
+/obj/machinery/dna_scannernew/proc/toggle_open(mob/user)
 	if(panel_open)
 		user << "<span class='notice'>Close the maintenance panel first.</span>"
 		return
@@ -454,7 +454,7 @@
 	open_machine()
 	return
 
-/obj/machinery/dna_scannernew/attackby(var/obj/item/I, mob/user, params)
+/obj/machinery/dna_scannernew/attackby(obj/item/I, mob/user, params)
 
 	if(!occupant && default_deconstruction_screwdriver(user, icon_state, icon_state, I))//sent icon_state is irrelevant...
 		update_icon()//..since we're updating the icon here, since the scanner can be unpowered when opened/closed
@@ -516,7 +516,7 @@
 	idle_power_usage = 10
 	active_power_usage = 400
 
-/obj/machinery/computer/scan_consolenew/attackby(obj/item/I as obj, mob/user as mob, params)
+/obj/machinery/computer/scan_consolenew/attackby(obj/item/I, mob/user, params)
 	if (istype(I, /obj/item/weapon/disk/data)) //INSERT SOME DISKETTES
 		if (!src.diskette)
 			if(!user.drop_item())
@@ -972,7 +972,7 @@
 	return value
 
 
-/datum/dna/proc/is_same_as(var/datum/dna/D)
+/datum/dna/proc/is_same_as(datum/dna/D)
 	if(uni_identity == D.uni_identity && struc_enzymes == D.struc_enzymes && real_name == D.real_name)
 		if(species == D.species && features == D.features && blood_type == D.blood_type)
 			return 1

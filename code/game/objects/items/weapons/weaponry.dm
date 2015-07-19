@@ -59,7 +59,7 @@
 	item_state = "claymore"
 	hitsound = 'sound/weapons/bladeslice.ogg'
 	flags = CONDUCT
-	slot_flags = SLOT_BELT
+	slot_flags = SLOT_BELT | SLOT_BACK
 	force = 40
 	throwforce = 10
 	w_class = 3
@@ -104,10 +104,10 @@
 	force = 9
 	throwforce = 10
 	w_class = 3
-	m_amt = 1875
+	materials = list(MAT_METAL=1875)
 	attack_verb = list("hit", "bludgeoned", "whacked", "bonked")
 
-/obj/item/weapon/wirerod/attackby(var/obj/item/I, mob/user as mob, params)
+/obj/item/weapon/wirerod/attackby(obj/item/I, mob/user, params)
 	..()
 	if(istype(I, /obj/item/weapon/shard))
 		var/obj/item/weapon/twohanded/spear/S = new /obj/item/weapon/twohanded/spear
@@ -170,7 +170,7 @@
 	throwforce = 15
 	throw_speed = 3
 	throw_range = 6
-	m_amt = 12000
+	materials = list(MAT_METAL=12000)
 	origin_tech = "materials=1"
 	hitsound = 'sound/weapons/Genhit.ogg'
 	attack_verb = list("stubbed", "poked")
@@ -227,7 +227,7 @@
 	force = 5
 	throwforce = 5
 	w_class = 2
-	m_amt = 50
+	materials = list(MAT_METAL=50)
 	attack_verb = list("bludgeoned", "whacked", "disciplined", "thrashed")
 
 /obj/item/weapon/staff

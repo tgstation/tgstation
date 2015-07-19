@@ -52,7 +52,7 @@
 
 		src.cards.Add(card)
 
-/obj/item/weapon/deck/attackby(obj/O as obj, mob/user as mob)
+/obj/item/weapon/deck/attackby(obj/O, mob/user)
 	if (istype(O,/obj/item/weapon/hand))
 		var/obj/item/weapon/hand/H = O
 
@@ -63,7 +63,7 @@
 		user.show_message("You place your cards on the bottom of the deck.")
 	else return ..()
 
-/obj/item/weapon/deck/attack_self(var/mob/user as mob)
+/obj/item/weapon/deck/attack_self(mob/user)
 	var/list/newcards           = list()
 	var/datum/playingcard/card
 
@@ -82,7 +82,7 @@
 	if (istype(A, /mob/living)) src.dealTo(A, user)
 	else return ..()
 
-/obj/item/weapon/deck/attack(mob/living/M as mob, mob/living/user as mob, def_zone)
+/obj/item/weapon/deck/attack(mob/living/M, mob/living/user, def_zone)
 	if (istype(M)) src.dealTo(M, user)
 	else return ..()
 
@@ -104,7 +104,7 @@
 	H.update_icon()
 
 	source.visible_message("\The [source] deals a card to \the [target].")
-	H.throw_at(get_step(target, target.dir), 10, 1, H)
+	H.throw_at(get_step(target, target.dir), 10, 1, source)
 
 /* Hand */
 
@@ -130,7 +130,7 @@
 
 	return ..()
 
-/obj/item/weapon/hand/attackby(obj/O as obj, mob/user as mob)
+/obj/item/weapon/hand/attackby(obj/O, mob/user)
 	if(istype(O,/obj/item/weapon/hand))
 		var/obj/item/weapon/hand/H = O
 
@@ -178,7 +178,7 @@
 
 	src.update_icon()
 
-/obj/item/weapon/hand/attack_self(var/mob/user as mob)
+/obj/item/weapon/hand/attack_self(mob/user)
 	src.hi.show(user)
 
 /obj/item/weapon/hand/examine()
@@ -248,5 +248,5 @@
 				src.toggle_conceal()
 
 // Hook for html_interface module to prevent updates to clients who don't have this in their inventory.
-/obj/item/weapon/hand/proc/hiIsValidClient(datum/html_interface_client/hclient)
+/obj/item/weapon/hand/proc/hiIsValidClient(datum/html_interface_client/hclient, datum/html_interface/hi)
 	return (hclient.client.mob && hclient.client.mob.stat == 0 && (src in hclient.client.mob.contents))

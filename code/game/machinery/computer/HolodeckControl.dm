@@ -10,7 +10,7 @@
 	var/damaged = 0
 	var/last_change = 0
 
-/obj/machinery/computer/HolodeckControl/attack_hand(var/mob/user as mob)
+/obj/machinery/computer/HolodeckControl/attack_hand(mob/user)
 
 	if(..())
 		return
@@ -115,7 +115,7 @@
 
 
 
-/obj/machinery/computer/HolodeckControl/emag_act(mob/user as mob)
+/obj/machinery/computer/HolodeckControl/emag_act(mob/user)
 	if(!emagged)
 		playsound(src.loc, 'sound/effects/sparks4.ogg', 75, 1)
 		emagged = 1
@@ -184,7 +184,7 @@
 
 
 
-/obj/machinery/computer/HolodeckControl/proc/derez(var/obj/obj , var/silent = 1)
+/obj/machinery/computer/HolodeckControl/proc/derez(obj/obj , silent = 1)
 	holographic_items.Remove(obj)
 
 	if(obj == null)
@@ -200,7 +200,7 @@
 		visible_message("The [oldobj.name] fades away!")
 	qdel(obj)
 
-/obj/machinery/computer/HolodeckControl/proc/checkInteg(var/area/A)
+/obj/machinery/computer/HolodeckControl/proc/checkInteg(area/A)
 	for(var/turf/T in A)
 		if(istype(T, /turf/space))
 			return 0
@@ -212,7 +212,7 @@
 	if(stat & NOPOWER)
 		emergencyShutdown()
 
-/obj/machinery/computer/HolodeckControl/proc/loadProgram(var/area/A)
+/obj/machinery/computer/HolodeckControl/proc/loadProgram(area/A)
 
 	if(world.time < (last_change + 25))
 		if(world.time < (last_change + 15))//To prevent super-spam clicking, reduced process size and annoyance -Sieve
@@ -276,36 +276,36 @@
 	icon_state = "floor"
 	thermal_conductivity = 0
 
-/turf/simulated/floor/holofloor/attackby(obj/item/weapon/W as obj, mob/user as mob, params)
+/turf/simulated/floor/holofloor/attackby(obj/item/weapon/W, mob/user, params)
 	return
 	// HOLOFLOOR DOES NOT GIVE A FUCK
 
-/turf/simulated/floor/fancy/grass/holo
+/turf/simulated/floor/grass/holo
 	thermal_conductivity = 0
 	gender = PLURAL
 	name = "lush grass"
 
-/turf/simulated/floor/fancy/grass/holo/attackby(obj/item/weapon/W as obj, mob/user as mob, params)
+/turf/simulated/floor/grass/holo/attackby(obj/item/weapon/W, mob/user, params)
 	return
 	// HOLOGRASS DOES NOT GIVE A FUCK
 
 /obj/structure/table/holotable
 	name = "table"
 
-/obj/structure/table/holotable/attack_paw(mob/user as mob)
+/obj/structure/table/holotable/attack_paw(mob/user)
 	return attack_hand(user)
 
-/obj/structure/table/holotable/attack_alien(mob/user as mob) //Removed code for larva since it doesn't work. Previous code is now a larva ability. /N
+/obj/structure/table/holotable/attack_alien(mob/user) //Removed code for larva since it doesn't work. Previous code is now a larva ability. /N
 	return attack_hand(user)
 
-/obj/structure/table/holotable/attack_animal(mob/living/simple_animal/user as mob) //Removed code for larva since it doesn't work. Previous code is now a larva ability. /N
+/obj/structure/table/holotable/attack_animal(mob/living/simple_animal/user) //Removed code for larva since it doesn't work. Previous code is now a larva ability. /N
 	return attack_hand(user)
 
-/obj/structure/table/holotable/attack_hand(mob/user as mob)
+/obj/structure/table/holotable/attack_hand(mob/user)
 	return // HOLOTABLE DOES NOT GIVE A FUCK
 
 
-/obj/structure/table/holotable/attackby(obj/item/weapon/W as obj, mob/user as mob, params)
+/obj/structure/table/holotable/attackby(obj/item/weapon/W, mob/user, params)
 	if (istype(W, /obj/item/weapon/grab) && get_dist(src,user)<2)
 		var/obj/item/weapon/grab/G = W
 		if(G.state < GRAB_AGGRESSIVE)
@@ -365,13 +365,13 @@
 		return 1
 	return 0
 
-/obj/item/weapon/holo/esword/attack(target as mob, mob/user as mob)
+/obj/item/weapon/holo/esword/attack(mob/target, mob/user)
 	..()
 
 /obj/item/weapon/holo/esword/New()
 	item_color = pick("red","blue","green","purple")
 
-/obj/item/weapon/holo/esword/attack_self(mob/living/user as mob)
+/obj/item/weapon/holo/esword/attack_self(mob/living/user)
 	active = !active
 	if (active)
 		force = 30
@@ -423,7 +423,7 @@
 	density = 1
 	throwpass = 1
 
-/obj/structure/holohoop/attackby(obj/item/weapon/W as obj, mob/user as mob, params)
+/obj/structure/holohoop/attackby(obj/item/weapon/W, mob/user, params)
 	if (istype(W, /obj/item/weapon/grab) && get_dist(src,user)<2)
 		var/obj/item/weapon/grab/G = W
 		if(G.state < GRAB_AGGRESSIVE)
@@ -469,11 +469,11 @@
 	active_power_usage = 6
 	power_channel = ENVIRON
 
-/obj/machinery/readybutton/attack_ai(mob/user as mob)
+/obj/machinery/readybutton/attack_ai(mob/user)
 	user << "The station AI is not to interact with these devices"
 	return
 
-/obj/machinery/readybutton/attack_paw(mob/user as mob)
+/obj/machinery/readybutton/attack_paw(mob/user)
 	user << "<span class='warning'>You are too primitive to use this device!</span>"
 	return
 
@@ -481,10 +481,10 @@
 	..()
 
 
-/obj/machinery/readybutton/attackby(obj/item/weapon/W as obj, mob/user as mob, params)
+/obj/machinery/readybutton/attackby(obj/item/weapon/W, mob/user, params)
 	user << "The device is a solid button, there's nothing you can do with it!"
 
-/obj/machinery/readybutton/attack_hand(mob/user as mob)
+/obj/machinery/readybutton/attack_hand(mob/user)
 	if(user.stat || stat & (NOPOWER|BROKEN))
 		user << "<span class='warning'>This device is not powered!</span>"
 		return

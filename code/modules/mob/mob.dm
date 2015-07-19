@@ -10,7 +10,7 @@
 	ghostize()
 	..()
 
-/mob/proc/sac_act(var/obj/effect/rune/R, var/mob/victim as mob)
+/mob/proc/sac_act(obj/effect/rune/R, mob/victim)
 	return
 
 var/next_mob_id = 0
@@ -81,7 +81,7 @@ var/next_mob_id = 0
 // self_message (optional) is what the src mob sees e.g. "You do something!"
 // blind_message (optional) is what blind people will hear e.g. "You hear something!"
 
-/mob/visible_message(var/message, var/self_message, var/blind_message)
+/mob/visible_message(message, self_message, blind_message)
 	var/list/mob_viewers = list()
 	var/list/possible_viewers = list()
 	mob_viewers |= src
@@ -120,7 +120,7 @@ var/next_mob_id = 0
 // message is output to anyone who can see, e.g. "The [src] does something!"
 // blind_message (optional) is what blind people will hear e.g. "You hear something!"
 
-/atom/proc/visible_message(var/message, var/blind_message)
+/atom/proc/visible_message(message, blind_message)
 	var/list/mob_viewers = list()
 	var/list/possible_viewers = list()
 	mob_viewers |= viewers(src)
@@ -155,7 +155,7 @@ var/next_mob_id = 0
 // deaf_message (optional) is what deaf people will see.
 // hearing_distance (optional) is the range, how many tiles away the message can be heard.
 
-/mob/audible_message(var/message, var/deaf_message, var/hearing_distance, var/self_message)
+/mob/audible_message(message, deaf_message, hearing_distance, self_message)
 	var/range = 7
 	if(hearing_distance)
 		range = hearing_distance
@@ -171,7 +171,7 @@ var/next_mob_id = 0
 // deaf_message (optional) is what deaf people will see.
 // hearing_distance (optional) is the range, how many tiles away the message can be heard.
 
-/atom/proc/audible_message(var/message, var/deaf_message, var/hearing_distance)
+/atom/proc/audible_message(message, deaf_message, hearing_distance)
 	var/range = 7
 	if(hearing_distance)
 		range = hearing_distance
@@ -192,7 +192,7 @@ var/next_mob_id = 0
 			return r_hand
 	return null
 
-/mob/proc/ret_grab(obj/effect/list_container/mobl/L as obj, flag)
+/mob/proc/ret_grab(obj/effect/list_container/mobl/L, flag)
 	if ((!( istype(l_hand, /obj/item/weapon/grab) ) && !( istype(r_hand, /obj/item/weapon/grab) )))
 		if (!( L ))
 			return null
@@ -248,7 +248,7 @@ var/next_mob_id = 0
 
 	return 0
 
-/mob/proc/put_in_any_hand_if_possible(obj/item/W as obj, qdel_on_fail = 0, disable_warning = 1, redraw_mob = 1)
+/mob/proc/put_in_any_hand_if_possible(obj/item/W, qdel_on_fail = 0, disable_warning = 1, redraw_mob = 1)
 	if(equip_to_slot_if_possible(W, slot_l_hand, qdel_on_fail, disable_warning, redraw_mob))
 		return 1
 	else if(equip_to_slot_if_possible(W, slot_r_hand, qdel_on_fail, disable_warning, redraw_mob))
@@ -259,7 +259,7 @@ var/next_mob_id = 0
 //set qdel_on_fail to have it delete W if it fails to equip
 //set disable_warning to disable the 'you are unable to equip that' warning.
 //unset redraw_mob to prevent the mob from being redrawn at the end.
-/mob/proc/equip_to_slot_if_possible(obj/item/W as obj, slot, qdel_on_fail = 0, disable_warning = 0, redraw_mob = 1)
+/mob/proc/equip_to_slot_if_possible(obj/item/W, slot, qdel_on_fail = 0, disable_warning = 0, redraw_mob = 1)
 	if(!istype(W)) return 0
 	if(!W.mob_can_equip(src, slot, disable_warning))
 		if(qdel_on_fail)
@@ -273,11 +273,11 @@ var/next_mob_id = 0
 
 //This is an UNSAFE proc. It merely handles the actual job of equipping. All the checks on whether you can or can't eqip need to be done before! Use mob_can_equip() for that task.
 //In most cases you will want to use equip_to_slot_if_possible()
-/mob/proc/equip_to_slot(obj/item/W as obj, slot)
+/mob/proc/equip_to_slot(obj/item/W, slot)
 	return
 
 //This is just a commonly used configuration for the equip_to_slot_if_possible() proc, used to equip people when the rounds tarts and when events happen and such.
-/mob/proc/equip_to_slot_or_del(obj/item/W as obj, slot)
+/mob/proc/equip_to_slot_or_del(obj/item/W, slot)
 	equip_to_slot_if_possible(W, slot, 1, 1, 0)
 
 //The list of slots by priority. equip_to_appropriate_slot() uses this list. Doesn't matter if a mob type doesn't have a slot.
@@ -375,7 +375,7 @@ var/list/slot_equipment_priority = list( \
 	return 1
 
 //this and stop_pulling really ought to be /mob/living procs
-/mob/proc/start_pulling(var/atom/movable/AM)
+/mob/proc/start_pulling(atom/movable/AM)
 	if ( !AM || !src || src==AM || !isturf(src.loc) )	//if there's no person pulling OR the person is pulling themself OR the object being pulled is inside something: abort!
 		return
 	if (!( AM.anchored ))
@@ -492,6 +492,7 @@ var/list/slot_equipment_priority = list( \
 		log_game("[usr.key] AM failed due to disconnect.")
 		return
 	client.screen.Cut()
+	client.screen += client.void
 	if(!client)
 		log_game("[usr.key] AM failed due to disconnect.")
 		return
@@ -742,7 +743,7 @@ var/list/slot_equipment_priority = list( \
 			add_stings_to_statpanel(mind.changeling.purchasedpowers)
 	add_spells_to_statpanel(mob_spell_list)
 
-/mob/proc/add_spells_to_statpanel(var/list/spells)
+/mob/proc/add_spells_to_statpanel(list/spells)
 	for(var/obj/effect/proc_holder/spell/S in spells)
 		if(S.can_be_cast_by(src))
 			switch(S.charge_type)
@@ -753,7 +754,7 @@ var/list/slot_equipment_priority = list( \
 				if("holdervar")
 					statpanel("[S.panel]","[S.holder_var_type] [S.holder_var_amount]",S)
 
-/mob/proc/add_stings_to_statpanel(var/list/stings)
+/mob/proc/add_stings_to_statpanel(list/stings)
 	for(var/obj/effect/proc_holder/changeling/S in stings)
 		if(S.chemical_cost >=0 && S.can_be_used_by(src))
 			statpanel("[S.panel]",((S.chemical_cost > 0) ? "[S.chemical_cost]" : ""),S)
@@ -799,7 +800,7 @@ var/list/slot_equipment_priority = list( \
 	return canmove
 
 
-/mob/proc/fall(var/forced)
+/mob/proc/fall(forced)
 	drop_l_hand()
 	drop_r_hand()
 
@@ -841,7 +842,7 @@ var/list/slot_equipment_priority = list( \
 /mob/proc/swap_hand()
 	return
 
-/mob/proc/activate_hand(var/selhand)
+/mob/proc/activate_hand(selhand)
 	return
 
 /mob/proc/Jitter(amount)
@@ -868,7 +869,7 @@ var/list/slot_equipment_priority = list( \
 		update_canmove()
 	return
 
-/mob/proc/Weaken(amount, var/ignore_canweaken = 0)
+/mob/proc/Weaken(amount, ignore_canweaken = 0)
 	if(status_flags & CANWEAKEN || ignore_canweaken)
 		weakened = max(max(weakened,amount),0)
 		update_canmove()	//updates lying, canmove and icons
@@ -951,7 +952,7 @@ var/list/slot_equipment_priority = list( \
 /mob/proc/setEarDamage()
 	return
 
-/mob/proc/AddSpell(var/obj/effect/proc_holder/spell/spell)
+/mob/proc/AddSpell(obj/effect/proc_holder/spell/spell)
 	mob_spell_list += spell
 	if(!spell.action)
 		spell.action = new/datum/action/spell_action

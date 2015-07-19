@@ -3,6 +3,10 @@
 /obj/effect/proc_holder/spell/aoe_turf/conjure/construct/lesser
 	charge_max = 1800
 
+/obj/effect/proc_holder/spell/aoe_turf/conjure/construct/lesser/cult
+	cult_req = 1
+	charge_max = 2500
+
 /obj/effect/proc_holder/spell/aoe_turf/conjure/floor
 	name = "Floor Construction"
 	desc = "This spell constructs a cult floor"
@@ -54,7 +58,12 @@
 	invocation_type = "none"
 	range = 0
 
+
 	summon_type = list(/obj/item/device/soulstone)
+
+/obj/effect/proc_holder/spell/aoe_turf/conjure/soulstone/cult
+	cult_req = 1
+	charge_max = 4000
 
 
 /obj/effect/proc_holder/spell/aoe_turf/conjure/lesserforcewall
@@ -85,17 +94,17 @@
 	jaunt_duration = 50 //in deciseconds
 	centcom_cancast = 0 //Stop people from getting to centcom
 
-/obj/effect/proc_holder/spell/targeted/ethereal_jaunt/shift/jaunt_disappear(var/atom/movable/overlay/animation, var/mob/living/target)
+/obj/effect/proc_holder/spell/targeted/ethereal_jaunt/shift/jaunt_disappear(atom/movable/overlay/animation, mob/living/target)
 	animation.icon_state = "phase_shift"
 	animation.dir = target.dir
 	flick("phase_shift",animation)
 
-/obj/effect/proc_holder/spell/targeted/ethereal_jaunt/shift/jaunt_reappear(var/atom/movable/overlay/animation, var/mob/living/target)
+/obj/effect/proc_holder/spell/targeted/ethereal_jaunt/shift/jaunt_reappear(atom/movable/overlay/animation, mob/living/target)
 	animation.icon_state = "phase_shift2"
 	animation.dir = target.dir
 	flick("phase_shift2",animation)
 
-/obj/effect/proc_holder/spell/targeted/ethereal_jaunt/shift/jaunt_steam(var/mobloc)
+/obj/effect/proc_holder/spell/targeted/ethereal_jaunt/shift/jaunt_steam(mobloc)
 	return
 
 /obj/effect/proc_holder/spell/targeted/projectile/magic_missile/lesser

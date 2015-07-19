@@ -5,7 +5,7 @@
 	. += ..()
 	. += config.human_delay
 
-/mob/living/carbon/human/Process_Spacemove(var/movement_dir = 0)
+/mob/living/carbon/human/Process_Spacemove(movement_dir = 0)
 
 	if(..())
 		return 1
@@ -24,7 +24,7 @@
 	return 0
 
 
-/mob/living/carbon/human/slip(var/s_amount, var/w_amount, var/obj/O, var/lube)
+/mob/living/carbon/human/slip(s_amount, w_amount, obj/O, lube)
 	if(isobj(shoes) && (shoes.flags&NOSLIP) && !(lube&GALOSHES_DONT_HELP))
 		return 0
 	.=..()
@@ -46,6 +46,9 @@
 
 /mob/living/carbon/human/Move(NewLoc, direct)
 	..()
+	if(dna)
+		for(var/datum/mutation/human/HM in dna.mutations)
+			HM.on_move(src, NewLoc)
 	if(shoes)
 		if(!lying)
 			if(loc == NewLoc)

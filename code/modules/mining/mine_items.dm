@@ -49,7 +49,6 @@
 /obj/machinery/computer/shuttle/mining
 	name = "Mining Shuttle Console"
 	desc = "Used to call and send the mining shuttle."
-	req_access = list(access_mining)
 	circuit = /obj/item/weapon/circuitboard/mining_shuttle
 	shuttleId = "mining"
 	possible_destinations = "mining_home;mining_away"
@@ -66,7 +65,7 @@
 	throwforce = 10.0
 	item_state = "pickaxe"
 	w_class = 4.0
-	m_amt = 3750 //one sheet, but where can you make them?
+	materials = list(MAT_METAL=3750) //one sheet, but where can you make them?
 	var/digspeed = 40
 	var/list/digsound = list('sound/effects/picaxe1.ogg','sound/effects/picaxe2.ogg','sound/effects/picaxe3.ogg')
 	origin_tech = "materials=1;engineering=1"
@@ -133,7 +132,7 @@
 	throwforce = 4.0
 	item_state = "shovel"
 	w_class = 3.0
-	m_amt = 50
+	materials = list(MAT_METAL=50)
 	origin_tech = "materials=1;engineering=1"
 	attack_verb = list("bashed", "bludgeoned", "thrashed", "whacked")
 

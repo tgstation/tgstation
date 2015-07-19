@@ -6,7 +6,7 @@ emp_act
 */
 
 
-/mob/living/carbon/human/getarmor(var/def_zone, var/type)
+/mob/living/carbon/human/getarmor(def_zone, type)
 	var/armorval = 0
 	var/organnum = 0
 
@@ -24,7 +24,7 @@ emp_act
 	return (armorval/max(organnum, 1))
 
 
-/mob/living/carbon/human/proc/checkarmor(var/obj/item/organ/limb/def_zone, var/type)
+/mob/living/carbon/human/proc/checkarmor(obj/item/organ/limb/def_zone, type)
 	if(!type)	return 0
 	var/protection = 0
 	var/list/body_parts = list(head, wear_mask, wear_suit, w_uniform)
@@ -41,7 +41,7 @@ emp_act
 		dna.species.on_hit(proj_type, src)
 	return
 
-/mob/living/carbon/human/bullet_act(var/obj/item/projectile/P, var/def_zone)
+/mob/living/carbon/human/bullet_act(obj/item/projectile/P, def_zone)
 	if(istype(P, /obj/item/projectile/energy) || istype(P, /obj/item/projectile/beam))
 		if(check_reflect(def_zone)) // Checks if you've passed a reflection% check
 			visible_message("<span class='danger'>The [P.name] gets reflected by [src]!</span>", \
@@ -67,7 +67,7 @@ emp_act
 		return 2
 	return (..(P , def_zone))
 
-/mob/living/carbon/human/proc/check_reflect(var/def_zone) //Reflection checks for anything in your l_hand, r_hand, or wear_suit based on the reflection chance of the object
+/mob/living/carbon/human/proc/check_reflect(def_zone) //Reflection checks for anything in your l_hand, r_hand, or wear_suit based on the reflection chance of the object
 	if(wear_suit && istype(wear_suit, /obj/item/))
 		var/obj/item/I = wear_suit
 		if(I.IsReflect(def_zone) == 1)
@@ -85,7 +85,7 @@ emp_act
 
 //End Here
 
-/mob/living/carbon/human/proc/check_shields(var/damage = 0, var/attack_text = "the attack", var/obj/item/O)
+/mob/living/carbon/human/proc/check_shields(damage = 0, attack_text = "the attack", obj/item/O)
 	if(O)
 		if(O.flags & NOSHIELD) //weapon ignores shields altogether
 			return 0
@@ -108,7 +108,6 @@ emp_act
 							"<span class='userdanger'>The reactive teleport system flings [src] clear of [attack_text]!</span>")
 			var/list/turfs = new/list()
 			for(var/turf/T in orange(6, src))
-				if(istype(T,/turf/space)) continue
 				if(T.density) continue
 				if(T.x>world.maxx-6 || T.x<6)	continue
 				if(T.y>world.maxy-6 || T.y<6)	continue
@@ -118,12 +117,12 @@ emp_act
 			if(!isturf(picked)) return
 			if(buckled)
 				buckled.unbuckle_mob()
-			src.loc = picked
+			forceMove(picked)
 			return 1
 	return 0
 
 
-/mob/living/carbon/human/attacked_by(var/obj/item/I, var/mob/living/user, var/def_zone)
+/mob/living/carbon/human/attacked_by(obj/item/I, mob/living/user, def_zone)
 	if(!I || !user)	return 0
 
 	var/obj/item/organ/limb/target_limb = get_organ(check_zone(user.zone_sel.selecting))
@@ -191,7 +190,7 @@ emp_act
 							apply_effect(20, PARALYZE, armor)
 						if(prob(I.force + min(100,100 - src.health)) && src != user && I.damtype == BRUTE)
 							ticker.mode.remove_revolutionary(mind)
-							ticker.mode.remove_gangster(mind, exclude_bosses=1)
+							ticker.mode.remove_gangster(mind)
 					if(bloody)	//Apply blood
 						if(wear_mask)
 							wear_mask.add_blood(src)
@@ -236,7 +235,7 @@ emp_act
 					src.Stun(5)
 	..()
 
-/mob/living/carbon/human/acid_act(var/acidpwr, var/toxpwr, var/acid_volume)
+/mob/living/carbon/human/acid_act(acidpwr, toxpwr, acid_volume)
 	var/list/damaged = list()
 	var/list/inventory_items_to_kill = list()
 	var/acidity = min(acidpwr*acid_volume/200, toxpwr)
@@ -383,7 +382,7 @@ emp_act
 	..()
 
 
-/mob/living/carbon/human/attack_animal(mob/living/simple_animal/M as mob)
+/mob/living/carbon/human/attack_animal(mob/living/simple_animal/M)
 	if(..())
 		var/damage = rand(M.melee_damage_lower, M.melee_damage_upper)
 		if(check_shields(damage, "the [M.name]"))
@@ -395,7 +394,7 @@ emp_act
 		updatehealth()
 
 
-/mob/living/carbon/human/attack_larva(mob/living/carbon/alien/larva/L as mob)
+/mob/living/carbon/human/attack_larva(mob/living/carbon/alien/larva/L)
 
 	if(..()) //successful larva bite.
 		var/damage = rand(1, 3)
@@ -409,7 +408,7 @@ emp_act
 			updatehealth()
 
 
-/mob/living/carbon/human/attack_slime(mob/living/simple_animal/slime/M as mob)
+/mob/living/carbon/human/attack_slime(mob/living/simple_animal/slime/M)
 	if(..()) //successful slime attack
 		var/damage = rand(5, 25)
 		if(M.is_adult)
@@ -451,7 +450,7 @@ emp_act
 
 		visible_message("<span class='danger'>[M.name] has hit [src]!</span>", \
 								"<span class='userdanger'>[M.name] has hit [src]!</span>")
-		add_logs(M.occupant, src, "attacked", object=M, addition="(INTENT: [uppertext(M.occupant.a_intent)]) (DAMTYPE: [uppertext(M.damtype)])")
+		add_logs(M.occupant, src, "attacked", M, "(INTENT: [uppertext(M.occupant.a_intent)]) (DAMTYPE: [uppertext(M.damtype)])")
 
 	else
 		..()

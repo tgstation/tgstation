@@ -13,14 +13,14 @@
 /obj/item/device/soulstone/anybody
 	usability = 1
 
-/obj/item/device/soulstone/pickup(mob/living/user as mob)
+/obj/item/device/soulstone/pickup(mob/living/user)
 	if(!iscultist(user) && !iswizard(user) && !usability)
 		user << "<span class='danger'>An overwhelming feeling of dread comes over you as you pick up the soulstone. It would be wise to be rid of this quickly.</span>"
 		user.Dizzy(120)
 
 //////////////////////////////Capturing////////////////////////////////////////////////////////
 
-/obj/item/device/soulstone/attack(mob/living/carbon/human/M as mob, mob/user as mob)
+/obj/item/device/soulstone/attack(mob/living/carbon/human/M, mob/user)
 	if(!iscultist(user) && !iswizard(user) && !usability)
 		user.Paralyse(5)
 		user << "<span class='userdanger'>Your body is wracked with debilitating pain!</span>"
@@ -29,7 +29,7 @@
 		return ..()
 	if(istype(M, /mob/living/carbon/human/dummy))
 		return..()
-	add_logs(user, M, "captured [M.name]'s soul", object=src)
+	add_logs(user, M, "captured [M.name]'s soul", src)
 
 	transfer_soul("VICTIM", M, user)
 	return
@@ -92,7 +92,7 @@
 	icon_state = "construct"
 	desc = "A wicked machine used by those skilled in magical arts. It is inactive"
 
-/obj/structure/constructshell/attackby(obj/item/O as obj, mob/user as mob, params)
+/obj/structure/constructshell/attackby(obj/item/O, mob/user, params)
 	if(istype(O, /obj/item/device/soulstone))
 		var/obj/item/device/soulstone/SS = O
 		SS.transfer_soul("CONSTRUCT",src,user)
@@ -101,7 +101,7 @@
 ////////////////////////////Proc for moving soul in and out off stone//////////////////////////////////////
 
 
-/obj/item/device/soulstone/proc/transfer_soul(var/choice as text, var/target, var/mob/U as mob).
+/obj/item/device/soulstone/proc/transfer_soul(choice as text, target, mob/U).
 	switch(choice)
 		if("FORCE")
 			if(!iscarbon(target))		//TO-DO: Add sacrifice stoning for non-organics, just because you have no body doesnt mean you dont have a soul
@@ -188,7 +188,7 @@
 	return
 
 
-/proc/makeNewConstruct(var/mob/living/simple_animal/construct/ctype, var/mob/target, var/mob/stoner = null, cultoverride = 0)
+/proc/makeNewConstruct(mob/living/simple_animal/construct/ctype, mob/target, mob/stoner = null, cultoverride = 0)
 	var/mob/living/simple_animal/construct/newstruct = new ctype(get_turf(target))
 	newstruct.faction |= "\ref[stoner]"
 	newstruct.key = target.key
@@ -207,7 +207,7 @@
 	newstruct.cancel_camera()
 
 
-/obj/item/device/soulstone/proc/init_shade(var/obj/item/device/soulstone/C, var/mob/living/carbon/human/T, var/mob/U as mob, var/vic = 0)
+/obj/item/device/soulstone/proc/init_shade(obj/item/device/soulstone/C, mob/living/carbon/human/T, mob/U, vic = 0)
 	new /obj/effect/decal/remains/human(T.loc) //Spawns a skeleton
 	T.invisibility = 101
 	var/atom/movable/overlay/animation = new /atom/movable/overlay( T.loc )

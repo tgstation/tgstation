@@ -22,7 +22,7 @@
 		gland_colors[i] = random_color()
 		amounts[i] = rand(1,5)
 
-/obj/machinery/abductor/gland_dispenser/attack_hand(var/mob/user as mob)
+/obj/machinery/abductor/gland_dispenser/attack_hand(mob/user)
 	if(..())
 		return
 	if(!IsAbductor(user))
@@ -76,7 +76,7 @@
 		Dispense(text2num(href_list["dispense"]))
 	src.updateUsrDialog()
 
-/obj/machinery/abductor/gland_dispenser/proc/Dispense(var/count)
+/obj/machinery/abductor/gland_dispenser/proc/Dispense(count)
 	if(amounts[count]>0)
 		amounts[count]--
 		var/T = gland_types[count]

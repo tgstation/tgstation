@@ -23,7 +23,7 @@ Captain
 	access = list() 			//See get_access()
 	minimal_access = list() 	//See get_access()
 
-/datum/job/captain/equip_items(var/mob/living/carbon/human/H)
+/datum/job/captain/equip_items(mob/living/carbon/human/H)
 	var/obj/item/clothing/under/U = new /obj/item/clothing/under/rank/captain(H)
 	U.attachTie(new /obj/item/clothing/tie/medal/gold/captain())
 	H.equip_to_slot_or_del(U, slot_w_uniform)
@@ -33,11 +33,8 @@ Captain
 	H.equip_to_slot_or_del(new /obj/item/clothing/glasses/sunglasses(H), slot_glasses)
 
 	//Equip ID box & telebaton
-	if(H.backbag == 1)
-		H.equip_to_slot_or_del(new /obj/item/weapon/storage/box/silver_ids(H), slot_l_hand)
-	else
-		H.equip_to_slot_or_del(new /obj/item/weapon/storage/box/silver_ids(H.back), slot_in_backpack)
-		H.equip_to_slot_or_del(new /obj/item/weapon/melee/classic_baton/telescopic(H), slot_in_backpack)
+	H.equip_to_slot_or_del(new /obj/item/weapon/storage/box/silver_ids(H.back), slot_in_backpack)
+	H.equip_to_slot_or_del(new /obj/item/weapon/melee/classic_baton/telescopic(H), slot_in_backpack)
 
 	//Implant him
 	var/obj/item/weapon/implant/loyalty/L = new/obj/item/weapon/implant/loyalty(H)
@@ -84,14 +81,11 @@ Head of Personnel
 			            access_hop, access_RC_announce, access_keycard_auth, access_gateway, access_mineral_storeroom)
 
 
-/datum/job/hop/equip_items(var/mob/living/carbon/human/H)
+/datum/job/hop/equip_items(mob/living/carbon/human/H)
 	H.equip_to_slot_or_del(new /obj/item/clothing/under/rank/head_of_personnel(H), slot_w_uniform)
 	H.equip_to_slot_or_del(new /obj/item/clothing/shoes/sneakers/brown(H), slot_shoes)
 	H.equip_to_slot_or_del(new /obj/item/clothing/head/hopcap(H), slot_head)
 
 	//Equip ID box & telebaton
-	if(H.backbag == 1)
-		H.equip_to_slot_or_del(new /obj/item/weapon/storage/box/ids(H), slot_l_hand)
-	else
-		H.equip_to_slot_or_del(new /obj/item/weapon/storage/box/ids(H.back), slot_in_backpack)
-		H.equip_to_slot_or_del(new /obj/item/weapon/melee/classic_baton/telescopic(H), slot_in_backpack)
+	H.equip_to_slot_or_del(new /obj/item/weapon/storage/box/ids(H.back), slot_in_backpack)
+	H.equip_to_slot_or_del(new /obj/item/weapon/melee/classic_baton/telescopic(H), slot_in_backpack)

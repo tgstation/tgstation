@@ -59,13 +59,13 @@ using metal and glass, it uses glass and reagents (usually sulfuric acis).
 		qdel(src)
 
 
-/obj/machinery/r_n_d/circuit_imprinter/proc/check_mat(datum/design/being_built, var/M)
+/obj/machinery/r_n_d/circuit_imprinter/proc/check_mat(datum/design/being_built, M)
 	switch(M)
-		if("$glass")
+		if(MAT_GLASS)
 			return (g_amount - (being_built.materials[M]/efficiency_coeff) >= 0)
-		if("$gold")
+		if(MAT_GOLD)
 			return (gold_amount - (being_built.materials[M]/efficiency_coeff) >= 0)
-		if("$diamond")
+		if(MAT_DIAMOND)
 			return (diamond_amount - (being_built.materials[M]/efficiency_coeff) >= 0)
 		else
 			return (reagents.has_reagent(M, (being_built.materials[M]/efficiency_coeff)) != 0)
@@ -74,7 +74,7 @@ using metal and glass, it uses glass and reagents (usually sulfuric acis).
 /obj/machinery/r_n_d/circuit_imprinter/proc/TotalMaterials()
 	return g_amount + gold_amount + diamond_amount
 
-/obj/machinery/r_n_d/circuit_imprinter/attackby(var/obj/item/O as obj, var/mob/user as mob, params)
+/obj/machinery/r_n_d/circuit_imprinter/attackby(obj/item/O, mob/user, params)
 	if (shocked)
 		shock(user,50)
 	if (default_deconstruction_screwdriver(user, "circuit_imprinter_t", "circuit_imprinter", O))

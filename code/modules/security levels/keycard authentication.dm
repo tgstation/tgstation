@@ -20,15 +20,15 @@
 	active_power_usage = 6
 	power_channel = ENVIRON
 
-/obj/machinery/keycard_auth/attack_ai(mob/user as mob)
+/obj/machinery/keycard_auth/attack_ai(mob/user)
 	user << "The station AI is not to interact with these devices."
 	return
 
-/obj/machinery/keycard_auth/attack_paw(mob/user as mob)
+/obj/machinery/keycard_auth/attack_paw(mob/user)
 	user << "<span class='warning'>You are too primitive to use this device!</span>"
 	return
 
-/obj/machinery/keycard_auth/attackby(obj/item/weapon/W as obj, mob/user as mob, params)
+/obj/machinery/keycard_auth/attackby(obj/item/weapon/W, mob/user, params)
 	if(stat & (NOPOWER|BROKEN))
 		user << "This device is not powered."
 		return
@@ -51,7 +51,7 @@
 	else
 		stat |= NOPOWER
 
-/obj/machinery/keycard_auth/attack_hand(mob/user as mob)
+/obj/machinery/keycard_auth/attack_hand(mob/user)
 	if(user.stat || stat & (NOPOWER|BROKEN))
 		user << "<span class='warning'>This device is not powered!</span>"
 		return
@@ -120,7 +120,7 @@
 		message_admins("[key_name(event_triggered_by)] triggered and [key_name(event_confirmed_by)] confirmed event [event]")
 	reset()
 
-/obj/machinery/keycard_auth/proc/receive_request(var/obj/machinery/keycard_auth/source)
+/obj/machinery/keycard_auth/proc/receive_request(obj/machinery/keycard_auth/source)
 	if(stat & (BROKEN|NOPOWER))
 		return
 	event_source = source

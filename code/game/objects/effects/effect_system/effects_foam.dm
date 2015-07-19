@@ -7,7 +7,7 @@
 	opacity = 0
 	anchored = 1
 	density = 0
-	layer = TURF_LAYER + 0.1
+	layer = OBJ_LAYER + 0.05 //above table, below windoor/airlock/foamed metal.
 	mouse_opacity = 0
 	var/amount = 3
 	animate_movement = 0
@@ -15,7 +15,7 @@
 	var/lifetime = 6
 
 
-/obj/effect/effect/foam/metal/aluminium
+/obj/effect/effect/foam/metal
 	name = "aluminium foam"
 	metal = 1
 	icon_state = "mfoam"
@@ -71,7 +71,7 @@
 		return
 	spread_foam()
 
-/obj/effect/effect/foam/proc/foam_mob(var/mob/living/L as mob)
+/obj/effect/effect/foam/proc/foam_mob(mob/living/L)
 	if(lifetime<1)
 		return 0
 	if(!istype(L))
@@ -81,12 +81,12 @@
 	lifetime--
 	return 1
 
-/obj/effect/effect/foam/Crossed(var/atom/movable/AM)
+/obj/effect/effect/foam/Crossed(atom/movable/AM)
 	if(istype(AM, /mob/living/carbon))
 		var/mob/living/carbon/M = AM
 		M.slip(5, 2, src)
 
-/obj/effect/effect/foam/metal/Crossed(var/atom/movable/AM)
+/obj/effect/effect/foam/metal/Crossed(atom/movable/AM)
 	return
 
 
@@ -146,16 +146,16 @@
 	chemholder = null
 	return ..()
 
-/datum/effect/effect/system/foam_spread/set_up(amt=5, loca, var/datum/reagents/carry = null)
+/datum/effect/effect/system/foam_spread/set_up(amt=5, loca, datum/reagents/carry = null)
 	if(istype(loca, /turf/))
 		location = loca
 	else
 		location = get_turf(loca)
 
 	amount = round(sqrt(amt / 2), 1)
-	carry.copy_to(chemholder, carry.total_volume)
+	carry.copy_to(chemholder, 4*carry.total_volume) //The foam holds 4 times the total reagents volume for balance purposes.
 
-/datum/effect/effect/system/foam_spread/metal/set_up(amt=5, loca, var/datum/reagents/carry = null, var/metaltype)
+/datum/effect/effect/system/foam_spread/metal/set_up(amt=5, loca, datum/reagents/carry = null, metaltype)
 	..()
 	metal = metaltype
 
@@ -166,7 +166,7 @@
 	else
 		var/obj/effect/effect/foam/F = PoolOrNew(foamtype, location)
 		var/foamcolor = mix_color_from_reagents(chemholder.reagents.reagent_list)
-		chemholder.reagents.copy_to(F, chemholder.reagents.total_volume/amount) //how much reagents each foam cell holds
+		chemholder.reagents.copy_to(F, chemholder.reagents.total_volume/amount)
 		F.color = foamcolor
 		F.amount = amount
 		F.metal = metal
@@ -224,12 +224,12 @@
 		qdel(src)
 
 
-/obj/structure/foamedmetal/attack_paw(var/mob/user)
+/obj/structure/foamedmetal/attack_paw(mob/user)
 	attack_hand(user)
 	return
 
 
-/obj/structure/foamedmetal/attack_animal(var/mob/living/simple_animal/user)
+/obj/structure/foamedmetal/attack_animal(mob/living/simple_animal/user)
 	user.changeNext_move(CLICK_CD_MELEE)
 	user.do_attack_animation(src)
 	if(user.environment_smash >= 1)
@@ -249,7 +249,7 @@
 		qdel(src)
 	return 1
 
-/obj/structure/foamedmetal/attack_alien(var/mob/living/carbon/alien/humanoid/user)
+/obj/structure/foamedmetal/attack_alien(mob/living/carbon/alien/humanoid/user)
 	user.changeNext_move(CLICK_CD_MELEE)
 	user.do_attack_animation(src)
 	if(prob(75 - metal*25))
@@ -257,7 +257,7 @@
 						"<span class='danger'>You smash through the metal foam wall!</span>")
 		qdel(src)
 
-/obj/structure/foamedmetal/attack_slime(var/mob/living/simple_animal/slime/user)
+/obj/structure/foamedmetal/attack_slime(mob/living/simple_animal/slime/user)
 	user.changeNext_move(CLICK_CD_MELEE)
 	user.do_attack_animation(src)
 	if(!user.is_adult)
@@ -268,13 +268,13 @@
 						"<span class='danger'>You smash through the metal foam wall!</span>")
 		qdel(src)
 
-/obj/structure/foamedmetal/attack_hand(var/mob/user)
+/obj/structure/foamedmetal/attack_hand(mob/user)
 	user.changeNext_move(CLICK_CD_MELEE)
 	user.do_attack_animation(src)
 	user << "<span class='warning'>You hit the metal foam but bounce off it!</span>"
 
 
-/obj/structure/foamedmetal/attackby(var/obj/item/I, var/mob/user, params)
+/obj/structure/foamedmetal/attackby(obj/item/I, mob/user, params)
 	user.changeNext_move(CLICK_CD_MELEE)
 	user.do_attack_animation(src)
 	if (istype(I, /obj/item/weapon/grab))

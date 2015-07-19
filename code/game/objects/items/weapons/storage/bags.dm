@@ -145,7 +145,7 @@
 	//verbs -= /obj/item/weapon/storage/verb/quick_empty
 	//verbs += /obj/item/weapon/storage/bag/sheetsnatcher/quick_empty
 
-/obj/item/weapon/storage/bag/sheetsnatcher/can_be_inserted(obj/item/W as obj, stop_messages = 0)
+/obj/item/weapon/storage/bag/sheetsnatcher/can_be_inserted(obj/item/W, stop_messages = 0)
 	if(!istype(W,/obj/item/stack/sheet) || istype(W,/obj/item/stack/sheet/mineral/sandstone) || istype(W,/obj/item/stack/sheet/mineral/wood))
 		if(!stop_messages)
 			usr << "The snatcher does not accept [W]."
@@ -161,7 +161,7 @@
 
 
 // Modified handle_item_insertion.  Would prefer not to, but...
-/obj/item/weapon/storage/bag/sheetsnatcher/handle_item_insertion(obj/item/W as obj, prevent_warning = 0)
+/obj/item/weapon/storage/bag/sheetsnatcher/handle_item_insertion(obj/item/W, prevent_warning = 0)
 	var/obj/item/stack/sheet/S = W
 	if(!istype(S)) return 0
 
@@ -201,7 +201,7 @@
 
 // Sets up numbered display to show the stack size of each stored mineral
 // NOTE: numbered display is turned off currently because it's broken
-/obj/item/weapon/storage/bag/sheetsnatcher/orient2hud(mob/user as mob)
+/obj/item/weapon/storage/bag/sheetsnatcher/orient2hud(mob/user)
 	var/adjusted_contents = contents.len
 
 	//Numbered contents display
@@ -240,7 +240,7 @@
 	update_icon()
 
 // Instead of removing
-/obj/item/weapon/storage/bag/sheetsnatcher/remove_from_storage(obj/item/W as obj, atom/new_location)
+/obj/item/weapon/storage/bag/sheetsnatcher/remove_from_storage(obj/item/W, atom/new_location)
 	var/obj/item/stack/sheet/S = W
 	if(!istype(S)) return 0
 
@@ -297,10 +297,10 @@
 	throw_range = 5
 	w_class = 4.0
 	flags = CONDUCT
-	m_amt = 3000
+	materials = list(MAT_METAL=3000)
 	preposition = "on"
 
-/obj/item/weapon/storage/bag/tray/attack(mob/living/M as mob, mob/living/user as mob)
+/obj/item/weapon/storage/bag/tray/attack(mob/living/M, mob/living/user)
 	..()
 	// Drop all the things. All of them.
 	var/list/obj/item/oldContents = contents.Copy()

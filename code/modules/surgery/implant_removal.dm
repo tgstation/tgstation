@@ -26,8 +26,6 @@
 /datum/surgery_step/extract_implant/success(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)
 	if(I)
 		user.visible_message("[user] successfully removes [I] from [target]'s [target_zone]!", "<span class='notice'>You successfully remove [I] from [target]'s [target_zone].</span>")
-		if(istype(I, /obj/item/weapon/implant/loyalty))
-			target << "<span class='notice'><b>You feel a sense of liberation as Nanotrasen's grip on your mind fades away.</b></span>"
 		qdel(I)
 		if(istype(target, /mob/living/carbon/human))
 			var/mob/living/carbon/human/H = target

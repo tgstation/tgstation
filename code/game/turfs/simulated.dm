@@ -12,10 +12,12 @@
 /turf/simulated/New()
 	..()
 	levelupdate()
+	if(smooth)
+		smooth_icon(src)
 
 /turf/simulated/proc/burn_tile()
 
-/turf/simulated/proc/MakeSlippery(var/wet_setting = 1) // 1 = Water, 2 = Lube
+/turf/simulated/proc/MakeSlippery(wet_setting = 1) // 1 = Water, 2 = Lube
 	if(wet >= wet_setting)
 		return
 	wet = wet_setting
@@ -50,3 +52,7 @@
 				return
 			if(2) //lube
 				M.slip(0, 7, null, (STEP|SLIDE|GALOSHES_DONT_HELP))
+
+/turf/simulated/ChangeTurf(var/path)
+	. = ..()
+	smooth_icon_neighbors(src)

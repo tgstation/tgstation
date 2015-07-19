@@ -21,6 +21,12 @@
 	icon_state = "tophat"
 	item_state = "that"
 
+/obj/item/clothing/head/canada
+	name = "striped red tophat"
+	desc = " It feels sticky, like maple syrup - <i>il se sent collante, comme le sirop d'érable</i>"
+	icon_state = "canada"
+	item_state = "canada"
+
 /obj/item/clothing/head/redcoat
 	name = "redcoat's hat"
 	icon_state = "redcoat"

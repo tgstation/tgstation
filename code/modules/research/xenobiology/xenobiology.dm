@@ -15,7 +15,7 @@
 	var/Uses = 1 // uses before it goes inert
 	var/enhanced = 0 //has it been enhanced before?
 
-/obj/item/slime_extract/attackby(obj/item/O as obj, mob/user as mob)
+/obj/item/slime_extract/attackby(obj/item/O, mob/user)
 	if(istype(O, /obj/item/weapon/slimesteroid2))
 		if(enhanced == 1)
 			user << "<span class='warning'>This extract has already been enhanced!</span>"
@@ -128,7 +128,7 @@
 	icon = 'icons/obj/chemical.dmi'
 	icon_state = "bottle19"
 
-/obj/item/slimepotion/attack(mob/living/simple_animal/slime/M as mob, mob/user as mob)
+/obj/item/slimepotion/attack(mob/living/simple_animal/slime/M, mob/user)
 	if(!isslime(M))
 		user << "<span class='warning'>The potion only works on slimes!</span>"
 		return ..()
@@ -156,10 +156,10 @@
 	var/list/not_interested = list()
 	var/being_used = 0
 
-/obj/item/slimepotion2/afterattack(mob/living/M as mob, mob/user as mob)
+/obj/item/slimepotion2/afterattack(mob/living/M, mob/user)
 	if(being_used || !ismob(M))
 		return
-	if( !(isanimal(M) || ismonkey(M)) || M.ckey) //only works on monkeys and animals that aren't player controlled
+	if(!isanimal(M) || M.ckey) //only works on animals that aren't player controlled
 		user << "<span class='warning'>[M] is already too intelligent for this to work!</span>"
 		return ..()
 	if(M.stat)
@@ -218,7 +218,7 @@
 	icon = 'icons/obj/chemical.dmi'
 	icon_state = "bottle16"
 
-/obj/item/weapon/slimesteroid/attack(mob/living/simple_animal/slime/M as mob, mob/user as mob)
+/obj/item/weapon/slimesteroid/attack(mob/living/simple_animal/slime/M, mob/user)
 	if(!isslime(M))//If target is not a slime.
 		user << "<span class='warning'>The steroid only works on baby slimes!</span>"
 		return ..()
@@ -269,7 +269,7 @@
 	icon = 'icons/obj/chemical.dmi'
 	icon_state = "bottle15"
 
-/obj/item/weapon/slimestabilizer/attack(mob/living/simple_animal/slime/M as mob, mob/user as mob)
+/obj/item/weapon/slimestabilizer/attack(mob/living/simple_animal/slime/M, mob/user)
 	if(!isslime(M))
 		user << "<span class='warning'>The stabilizer only works on slimes!</span>"
 		return ..()
@@ -290,7 +290,7 @@
 	icon = 'icons/obj/chemical.dmi'
 	icon_state = "bottle3"
 
-/obj/item/weapon/slimemutator/attack(mob/living/simple_animal/slime/M as mob, mob/user as mob)
+/obj/item/weapon/slimemutator/attack(mob/living/simple_animal/slime/M, mob/user)
 	if(!isslime(M))
 		user << "<span class='warning'>The mutator only works on slimes!</span>"
 		return ..()
@@ -397,7 +397,7 @@
 	else
 		icon_state = "golem"
 
-/obj/effect/golemrune/attack_hand(mob/living/user as mob)
+/obj/effect/golemrune/attack_hand(mob/living/user)
 	var/mob/dead/observer/ghost
 	for(var/mob/dead/observer/O in src.loc)
 		if(!O.client)	continue
@@ -482,7 +482,7 @@
 	icon_state = "tile-bluespace"
 	w_class = 3.0
 	force = 6.0
-	m_amt = 937.5
+	materials = list(MAT_METAL=937.5)
 	throwforce = 10.0
 	throw_speed = 3
 	throw_range = 7
@@ -505,7 +505,7 @@
 	icon_state = "tile-sepia"
 	w_class = 3.0
 	force = 6.0
-	m_amt = 937.5
+	materials = list(MAT_METAL=937.5)
 	throwforce = 10.0
 	throw_speed = 3
 	throw_range = 7

@@ -26,7 +26,7 @@
 	for(var/i = 1 to storage_slots)
 		new spawn_type(src)
 
-/obj/item/weapon/storage/fancy/update_icon(var/itemremoved = 0)
+/obj/item/weapon/storage/fancy/update_icon(itemremoved = 0)
 	var/total_contents = src.contents.len - itemremoved
 	src.icon_state = "[src.icon_type]box[total_contents]"
 	return
@@ -93,7 +93,7 @@
 	throwforce = 0
 	slot_flags = SLOT_BELT
 	storage_slots = 6
-	can_hold = list(/obj/item/clothing/mask/cigarette)
+	can_hold = list(/obj/item/clothing/mask/cigarette, /obj/item/weapon/lighter)
 	icon_type = "cigarette"
 	spawn_type = /obj/item/clothing/mask/cigarette
 

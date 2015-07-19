@@ -7,5 +7,5 @@
 	slot_flags = SLOT_BELT
 	origin_tech = "programming=3;materials=3;magnets=3"
 
-/obj/item/device/sensor_device/attack_self(mob/user as mob)
-	crewmonitor(user,src) //Proc already exists, just had to call it
+/obj/item/device/sensor_device/attack_self(mob/user)
+	crewmonitor.show(user) //Proc already exists, just had to call it

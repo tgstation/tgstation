@@ -11,7 +11,7 @@
 	idle_power_usage = 20
 	active_power_usage = 5000
 
-/obj/machinery/robotic_fabricator/attackby(var/obj/item/O as obj, var/mob/user as mob, params)
+/obj/machinery/robotic_fabricator/attackby(obj/item/O, mob/user, params)
 	if (istype(O, /obj/item/stack/sheet/metal))
 		if (src.metal_amount < 150000.0)
 			var/count = 0
@@ -21,7 +21,7 @@
 					if(!O:amount)
 						return
 					while(metal_amount < 150000 && O:amount)
-						src.metal_amount += O:m_amt /*O:height * O:width * O:length * 100000.0*/
+						src.metal_amount += O:materials[MAT_METAL] /*O:height * O:width * O:length * 100000.0*/
 						O:amount--
 						count++
 
@@ -40,10 +40,10 @@
 	else
 		stat |= NOPOWER
 
-/obj/machinery/robotic_fabricator/attack_paw(user as mob)
+/obj/machinery/robotic_fabricator/attack_paw(mob/user)
 	return src.attack_hand(user)
 
-/obj/machinery/robotic_fabricator/attack_hand(user as mob)
+/obj/machinery/robotic_fabricator/attack_hand(mob/user)
 	var/dat
 	if (..())
 		return

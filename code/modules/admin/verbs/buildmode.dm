@@ -5,7 +5,7 @@
 #define AREA_BUILDMODE 5
 #define NUM_BUILDMODES 5
 
-/proc/togglebuildmode(mob/M as mob in player_list)
+/proc/togglebuildmode(mob/M in player_list)
 	set name = "Toggle Build Mode"
 	set category = "Special Verbs"
 	if(M.client)
@@ -189,15 +189,15 @@
 
 				var/type = input(usr,"Select Generator Type","Type") as null|anything in gen_paths
 				if(!type) return
-				
+
 				master.generator_path = type
 				master.cornerA = null
-				master.cornerB = null 
+				master.cornerB = null
 
 	return 1
 
 
-/proc/build_click(var/mob/user, buildmode, params, var/obj/object)
+/proc/build_click(mob/user, buildmode, params, obj/object)
 	var/obj/effect/bmode/buildholder/holder = null
 	for(var/obj/effect/bmode/buildholder/H)
 		if(H.cl == user.client)
@@ -292,7 +292,7 @@
 				holder.throw_atom = object
 			if(pa.Find("right"))
 				if(holder.throw_atom)
-					holder.throw_atom.throw_at(object, 10, 1)
+					holder.throw_atom.throw_at(object, 10, 1,user)
 					log_admin("Build Mode: [key_name(usr)] threw [holder.throw_atom] at [object] ([object.x],[object.y],[object.z])")
 		if(AREA_BUILDMODE)
 			if(!holder.cornerA)
@@ -300,7 +300,7 @@
 				return
 			if(holder.cornerA && !holder.cornerB)
 				holder.cornerB = get_turf(object)
-			
+
 			if(pa.Find("left")) //rectangular
 				if(holder.cornerA && holder.cornerB)
 					if(!holder.generator_path)

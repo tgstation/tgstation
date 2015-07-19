@@ -145,7 +145,7 @@ var/engwords = list("travel", "blood", "join", "hell", "destroy", "technology", 
 
 
 
-/obj/effect/rune/attackby(I as obj, user as mob, params)
+/obj/effect/rune/attackby(obj/I, mob/user, params)
 	if(istype(I, /obj/item/weapon/tome) && iscultist(user))
 		user << "<span class='notice'>You retrace your steps, carefully undoing the lines of the rune.</span>"
 		qdel(src)
@@ -157,7 +157,7 @@ var/engwords = list("travel", "blood", "join", "hell", "destroy", "technology", 
 	return
 
 
-/obj/effect/rune/attack_hand(mob/living/user as mob)		// OH GOD this is horrible
+/obj/effect/rune/attack_hand(mob/living/user)		// OH GOD this is horrible
 	if(!iscultist(user))
 		user << "<span class='warning'>You can't mouth the arcane scratchings without fumbling over them!</span>"
 		return
@@ -221,7 +221,7 @@ var/engwords = list("travel", "blood", "join", "hell", "destroy", "technology", 
 		return fizzle(user)
 
 
-/obj/effect/rune/proc/fizzle(var/mob/living/cultist = null)
+/obj/effect/rune/proc/fizzle(mob/living/cultist = null)
 	var/gibberish = pick("B'ADMINES SP'WNIN SH'T","IC'IN O'OC","RO'SHA'M I'SA GRI'FF'N ME'AI","TOX'IN'S O'NM FI'RAH","IA BL'AME TOX'IN'S","FIR'A NON'AN RE'SONA","A'OI I'RS ROUA'GE","LE'OAN JU'STA SP'A'C Z'EE SH'EF","IA PT'WOBEA'RD, IA A'DMI'NEH'LP")
 
 	if(cultist)
@@ -489,14 +489,14 @@ var/engwords = list("travel", "blood", "join", "hell", "destroy", "technology", 
 //		usr << "whatev"
 //		usr << browse(null, "window=tank")
 
-/obj/item/weapon/tome/attack(mob/living/M as mob, mob/living/user as mob)
-	add_logs(user, M, "smacked", object=src)
+/obj/item/weapon/tome/attack(mob/living/M, mob/living/user)
 	if(istype(M,/mob/dead))
 		M.invisibility = 0
 		user.visible_message( \
 			"<span class='danger'>[user] drags the ghost to our plane of reality!</span>", \
 			"<span class='danger'>You drag the ghost to our plane of reality!</span>" \
 		)
+		add_logs(user, M, "smacked", src)
 		return
 	if(!istype(M))
 		return
@@ -508,13 +508,15 @@ var/engwords = list("travel", "blood", "join", "hell", "destroy", "technology", 
 			var/holy2unholy = M.reagents.get_reagent_amount("holywater")
 			M.reagents.del_reagent("holywater")
 			M.reagents.add_reagent("unholywater",holy2unholy)
+			add_logs(user, M, "smacked", src, " removing the holy water from them")
 		return
 	M.take_organ_damage(0,rand(5,20)) //really lucky - 5 hits for a crit
 	M.visible_message("<span class='danger'>[user] beats [M] with the arcane tome!</span>", \
 					"<span class='userdanger'>[user] beats you with the tome, and you feel a searing heat inside you!</span>")
+	add_logs(user, M, "smacked", src)
 
 
-/obj/item/weapon/tome/attack_self(mob/living/user as mob)
+/obj/item/weapon/tome/attack_self(mob/living/user)
 	usr = user
 	if(!usr.canmove || usr.stat || usr.restrained())
 		return
@@ -647,7 +649,7 @@ var/engwords = list("travel", "blood", "join", "hell", "destroy", "technology", 
 		user << "The book seems full of illegible scribbles. Is this a joke?"
 		return
 
-/obj/item/weapon/tome/attackby(obj/item/weapon/tome/T as obj, mob/living/user as mob, params)
+/obj/item/weapon/tome/attackby(obj/item/weapon/tome/T, mob/living/user, params)
 	if(istype(T, /obj/item/weapon/tome)) // sanity check to prevent a runtime error
 		switch(alert("Copy the runes from your tome?",,"Copy", "Cancel"))
 			if("cancel")

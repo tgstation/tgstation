@@ -8,6 +8,10 @@
 	MakeHood()
 	..()
 
+/obj/item/clothing/suit/hooded/Destroy()
+	qdel(hood)
+	..()
+
 /obj/item/clothing/suit/hooded/proc/MakeHood()
 	if(!hood)
 		var/obj/item/clothing/head/winterhood/W = new hoodtype(src)
@@ -53,7 +57,7 @@
 
 //Toggle exosuits for different aesthetic styles (hoodies, suit jacket buttons, etc)
 
-/obj/item/clothing/suit/toggle/AltClick(var/mob/user)
+/obj/item/clothing/suit/toggle/AltClick(mob/user)
 	..()
 	if(!user.canUseTopic(user))
 		user << "<span class='warning'>You can't do that right now!</span>"
@@ -92,6 +96,9 @@
 	if(!jetpack)
 		verbs -= /obj/item/clothing/suit/space/hardsuit/verb/Jetpack
 		verbs -= /obj/item/clothing/suit/space/hardsuit/verb/Jetpack_Rockets
+	..()
+/obj/item/clothing/suit/space/hardsuit/Destroy()
+	qdel(helmet)
 	..()
 
 /obj/item/clothing/suit/space/hardsuit/proc/MakeHelmet()

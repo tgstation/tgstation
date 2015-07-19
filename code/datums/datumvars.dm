@@ -237,6 +237,7 @@
 
 
 	body += "<option value='?_src_=vars;mark_object=\ref[D]'>Mark Object</option>"
+	body += "<option value='?_src_=vars;proc_call=\ref[D]'>Call Proc</option>"
 	if(ismob(D))
 		body += "<option value='?_src_=vars;mob_player_panel=\ref[D]'>Show player panel</option>"
 
@@ -254,6 +255,7 @@
 		if(ishuman(D))
 			body += "<option value>---</option>"
 			body += "<option value='?_src_=vars;setspecies=\ref[D]'>Set Species</option>"
+			body += "<option value='?_src_=vars;purrbation=\ref[D]'>Toggle Purrbation</option>"
 			body += "<option value='?_src_=vars;makeai=\ref[D]'>Make AI</option>"
 			body += "<option value='?_src_=vars;makerobot=\ref[D]'>Make cyborg</option>"
 			body += "<option value='?_src_=vars;makemonkey=\ref[D]'>Make monkey</option>"
@@ -322,7 +324,7 @@ body
 
 	return
 
-/client/proc/debug_variable(name, value, level, var/datum/DA = null)
+/client/proc/debug_variable(name, value, level, datum/DA = null)
 	var/html = ""
 
 	if(DA)
@@ -442,6 +444,14 @@ body
 
 		src.holder.marked_datum = D
 		href_list["datumrefresh"] = href_list["mark_object"]
+
+	else if(href_list["proc_call"])
+		if(!check_rights(0))	return
+
+		var/T = locate(href_list["proc_call"])
+
+		if(T)
+			callproc_datum(T)
 
 	else if(href_list["regenerateicons"])
 		if(!check_rights(0))	return
@@ -792,6 +802,38 @@ body
 				var/newtype = species_list[result]
 				hardset_dna(H, null, null, null, null, newtype)
 				H.regenerate_icons()
+
+		else if(href_list["purrbation"])
+			if(!check_rights(R_SPAWN))	return
+
+			var/mob/living/carbon/human/H = locate(href_list["purrbation"])
+			if(!istype(H))
+				usr << "This can only be done to instances of type /mob/living/carbon/human"
+				return
+
+			if(!H)
+				usr << "Mob doesn't exist anymore"
+				return
+
+			if(H.dna && H.dna.species.id == "human")
+				if(H.dna.features["tail_human"] == "None" || H.dna.features["ears"] == "None")
+					usr << "Put [H] on purrbation."
+					H << "You suddenly feel valid."
+					log_admin("[key_name(usr)] has put [key_name(H)] on purrbation.")
+					message_admins("<span class='notice'>[key_name(usr)] has put [key_name(H)] on purrbation.</span>")
+					H.dna.features["tail_human"] = "Cat"
+					H.dna.features["ears"] = "Cat"
+				else
+					usr << "Removed [H] from purrbation."
+					H << "You suddenly don't feel valid anymore."
+					log_admin("[key_name(usr)] has removed [key_name(H)] from purrbation.")
+					message_admins("<span class='notice'>[key_name(usr)] has removed [key_name(H)] from purrbation.</span>")
+					H.dna.features["tail_human"] = "None"
+					H.dna.features["ears"] = "None"
+				H.regenerate_icons()
+				return
+
+			usr << "You can only put humans on purrbation."
 
 		else if(href_list["adjustDamage"] && href_list["mobToDamage"])
 			if(!check_rights(0))	return

@@ -11,7 +11,7 @@
 	throw_speed = 2
 	throw_range = 7
 	force = 10
-	m_amt = 90
+	materials = list(MAT_METAL=90)
 	attack_verb = list("slammed", "whacked", "bashed", "thunked", "battered", "bludgeoned", "thrashed")
 	var/max_water = 50
 	var/last_use = 1.0
@@ -31,7 +31,7 @@
 	throwforce = 2
 	w_class = 2.0
 	force = 3.0
-	m_amt = 0
+	materials = list()
 	max_water = 30
 	sprite_name = "miniFE"
 
@@ -39,14 +39,14 @@
 	create_reagents(max_water)
 	reagents.add_reagent("water", max_water)
 
-/obj/item/weapon/extinguisher/attack_self(mob/user as mob)
+/obj/item/weapon/extinguisher/attack_self(mob/user)
 	safety = !safety
 	src.icon_state = "[sprite_name][!safety]"
 	src.desc = "The safety is [safety ? "on" : "off"]."
 	user << "The safety is [safety ? "on" : "off"]."
 	return
 
-/obj/item/weapon/extinguisher/examine(mob/user as mob)
+/obj/item/weapon/extinguisher/examine(mob/user)
 	..()
 	if(reagents.total_volume)
 		user << "It contains [round(reagents.total_volume)] units."

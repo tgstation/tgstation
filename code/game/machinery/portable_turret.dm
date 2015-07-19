@@ -308,33 +308,33 @@
 					attacked = 0
 		..()
 
-/obj/machinery/porta_turret/attack_animal(mob/living/simple_animal/M as mob)
+/obj/machinery/porta_turret/attack_animal(mob/living/simple_animal/M)
 	M.changeNext_move(CLICK_CD_MELEE)
 	M.do_attack_animation(src)
 	if(M.melee_damage_upper == 0)
 		return
 	if(!(stat & BROKEN))
 		visible_message("<span class='danger'>[M] [M.attacktext] [src]!</span>")
-		add_logs(M, src, "attacked", admin=0)
+		add_logs(M, src, "attacked")
 		take_damage(M.melee_damage_upper)
 	else
 		M << "<span class='danger'>That object is useless to you.</span>"
 	return
 
-/obj/machinery/porta_turret/attack_alien(mob/living/carbon/alien/humanoid/M as mob)
+/obj/machinery/porta_turret/attack_alien(mob/living/carbon/alien/humanoid/M)
 	M.changeNext_move(CLICK_CD_MELEE)
 	M.do_attack_animation(src)
 	if(!(stat & BROKEN))
 		playsound(src.loc, 'sound/weapons/slash.ogg', 25, 1, -1)
 		visible_message("<span class='danger'>[M] has slashed at [src]!</span>")
-		add_logs(M, src, "attacked", admin=0)
+		add_logs(M, src, "attacked")
 		take_damage(15)
 	else
 		M << "\green That object is useless to you."
 	return
 
 
-/obj/machinery/porta_turret/emag_act(user as mob)
+/obj/machinery/porta_turret/emag_act(mob/user)
 	if(!emagged)
 		user << "<span class='warning'>You short out [src]'s threat assessment circuits.</span>"
 		visible_message("[src] hums oddly...")
@@ -484,7 +484,7 @@
 			popDown() // no valid targets, close the cover
 
 
-/obj/machinery/porta_turret/proc/tryToShootAt(var/list/atom/movable/targets)
+/obj/machinery/porta_turret/proc/tryToShootAt(list/atom/movable/targets)
 	while(targets.len > 0)
 		var/atom/movable/M = pick(targets)
 		targets -= M
@@ -579,7 +579,7 @@
 	return threatcount
 
 
-/obj/machinery/porta_turret/proc/target(var/atom/movable/target)
+/obj/machinery/porta_turret/proc/target(atom/movable/target)
 	if(disabled)
 		return
 	if(target)
@@ -591,7 +591,7 @@
 		return 1
 	return
 
-/obj/machinery/porta_turret/proc/shootAt(var/atom/movable/target)
+/obj/machinery/porta_turret/proc/shootAt(atom/movable/target)
 	if(!emagged)	//if it hasn't been emagged, it has to obey a cooldown rate
 		if(last_fired || !raised)	//prevents rapid-fire shooting, unless it's been emagged
 			return
@@ -631,7 +631,7 @@
 	A.xo = U.x - T.x
 	A.fire()
 
-/obj/machinery/porta_turret/proc/setState(var/on, var/emagged)
+/obj/machinery/porta_turret/proc/setState(on, emagged)
 	if(controllock)
 		return
 	src.on = on
@@ -1013,7 +1013,7 @@ Status: []<BR>"},
 					Parent_Turret.attacked = 0
 		..()
 
-/obj/machinery/porta_turret_cover/emag_act(user as mob)
+/obj/machinery/porta_turret_cover/emag_act(mob/user)
 	if(!emagged)
 		user << "<span class='notice'>You short out [Parent_Turret]'s threat assessment circuits.</span>"
 		visible_message("[Parent_Turret] hums oddly...")
@@ -1087,7 +1087,7 @@ Status: []<BR>"},
 		else
 			user << "<span class='warning'>Access denied.</span>"
 
-/obj/machinery/turretid/emag_act(mob/user as mob)
+/obj/machinery/turretid/emag_act(mob/user)
 	if(!emagged)
 		user << "<span class='danger'>You short out the turret controls' access analysis module.</span>"
 		emagged = 1
@@ -1095,7 +1095,7 @@ Status: []<BR>"},
 		if(user.machine==src)
 			src.attack_hand(user)
 
-/obj/machinery/turretid/attack_ai(mob/user as mob)
+/obj/machinery/turretid/attack_ai(mob/user)
 	if(!ailock)
 		return attack_hand(user)
 	else

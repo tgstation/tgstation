@@ -83,14 +83,11 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 		usr << "<font color='blue'>[procname] returned: [returnval ? returnval : "null"]</font>"
 		feedback_add_details("admin_verb","APC") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
-/client/proc/callproc_datum(var/atom/A as null|area|mob|obj|turf)
+/client/proc/callproc_datum(A as null|area|mob|obj|turf)
 	set category = "Debug"
 	set name = "Atom ProcCall"
 
 	if(!check_rights(R_DEBUG))
-		return
-
-	if(!istype(A))
 		return
 
 	var/procname = input("Proc name, eg: fake_blood","Proc:", null) as text|null
@@ -101,7 +98,7 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 	if(!lst)
 		return
 
-	if(!A || A.gc_destroyed)
+	if(!A || !IsValidSrc(A))
 		usr << "<span class='warning'>Error: callproc_datum(): owner of proc no longer exists.</span>"
 		return
 	if(!hascall(A,procname))
@@ -185,7 +182,7 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 	usr.show_message(t, 1)
 	feedback_add_details("admin_verb","ASL") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
-/client/proc/cmd_admin_robotize(var/mob/M in mob_list)
+/client/proc/cmd_admin_robotize(mob/M in mob_list)
 	set category = "Fun"
 	set name = "Make Robot"
 
@@ -201,7 +198,7 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 	else
 		alert("Invalid mob")
 
-/client/proc/cmd_admin_blobize(var/mob/M in mob_list)
+/client/proc/cmd_admin_blobize(mob/M in mob_list)
 	set category = "Fun"
 	set name = "Make Blob"
 
@@ -218,7 +215,7 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 		alert("Invalid mob")
 
 
-/client/proc/cmd_admin_animalize(var/mob/M in mob_list)
+/client/proc/cmd_admin_animalize(mob/M in mob_list)
 	set category = "Fun"
 	set name = "Make Simple Animal"
 
@@ -239,7 +236,7 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 		M.Animalize()
 
 
-/client/proc/makepAI(var/turf/T in mob_list)
+/client/proc/makepAI(turf/T in mob_list)
 	set category = "Fun"
 	set name = "Make pAI"
 	set desc = "Specify a location to spawn a pAI device, then specify a key to play that pAI"
@@ -266,7 +263,7 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 			SSpai.candidates.Remove(candidate)
 	feedback_add_details("admin_verb","MPAI") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
-/client/proc/cmd_admin_alienize(var/mob/M in mob_list)
+/client/proc/cmd_admin_alienize(mob/M in mob_list)
 	set category = "Fun"
 	set name = "Make Alien"
 
@@ -283,7 +280,7 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 	else
 		alert("Invalid mob")
 
-/client/proc/cmd_admin_slimeize(var/mob/M in mob_list)
+/client/proc/cmd_admin_slimeize(mob/M in mob_list)
 	set category = "Fun"
 	set name = "Make slime"
 
@@ -428,7 +425,7 @@ var/global/list/g_fancy_list_of_types = null
 	return matches
 
 //TODO: merge the vievars version into this or something maybe mayhaps
-/client/proc/cmd_debug_del_all(var/object as text)
+/client/proc/cmd_debug_del_all(object as text)
 	set category = "Debug"
 	set name = "Del-All"
 
@@ -459,7 +456,7 @@ var/global/list/g_fancy_list_of_types = null
 	message_admins("[key_name_admin(src)] has remade the powernets. makepowernets() called.", 0)
 	feedback_add_details("admin_verb","MPWN") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
-/client/proc/cmd_admin_grantfullaccess(var/mob/M in mob_list)
+/client/proc/cmd_admin_grantfullaccess(mob/M in mob_list)
 	set category = "Admin"
 	set name = "Grant Full Access"
 
@@ -499,7 +496,7 @@ var/global/list/g_fancy_list_of_types = null
 	log_admin("[key_name(src)] has granted [M.key] full access.")
 	message_admins("<span class='adminnotice'>[key_name_admin(usr)] has granted [M.key] full access.</span>")
 
-/client/proc/cmd_assume_direct_control(var/mob/M in mob_list)
+/client/proc/cmd_assume_direct_control(mob/M in mob_list)
 	set category = "Admin"
 	set name = "Assume direct control"
 	set desc = "Direct intervention"
@@ -606,7 +603,7 @@ var/global/list/g_fancy_list_of_types = null
 	for(var/areatype in areas_without_camera)
 		world << "* [areatype]"
 
-/client/proc/cmd_admin_dress(var/mob/living/carbon/human/M in mob_list)
+/client/proc/cmd_admin_dress(mob/living/carbon/human/M in mob_list)
 	set category = "Fun"
 	set name = "Select equipment"
 	if(!ishuman(M))
@@ -1094,7 +1091,7 @@ var/global/list/g_fancy_list_of_types = null
 
 
 //Deathsquad
-/proc/equip_deathsquad(var/mob/living/carbon/human/M, var/officer)
+/proc/equip_deathsquad(mob/living/carbon/human/M, officer)
 	var/obj/item/device/radio/R = new /obj/item/device/radio/headset/headset_cent/alt(M)
 	R.set_frequency(CENTCOM_FREQ)
 	R.freqlock = 1
@@ -1145,7 +1142,7 @@ var/global/list/g_fancy_list_of_types = null
 	M.equip_to_slot_or_del(W, slot_wear_id)
 
 //Emergency Response Team
-/proc/equip_emergencyresponsesquad(var/mob/living/carbon/human/M, var/ertrole, var/alert)
+/proc/equip_emergencyresponsesquad(mob/living/carbon/human/M, ertrole, alert)
 	var/obj/item/weapon/card/id/W = null
 	var/obj/item/device/radio/R = new /obj/item/device/radio/headset/headset_cent/alt(M)
 	R.set_frequency(CENTCOM_FREQ)
@@ -1263,7 +1260,7 @@ var/global/list/g_fancy_list_of_types = null
 		W.update_label(W.registered_name, W.assignment)
 
 
-/proc/equip_centcomofficial(var/mob/living/carbon/human/M)
+/proc/equip_centcomofficial(mob/living/carbon/human/M)
 	M.equip_to_slot_or_del(new /obj/item/clothing/under/rank/centcom_officer(M), slot_w_uniform)
 	M.equip_to_slot_or_del(new /obj/item/clothing/shoes/sneakers/black(M), slot_shoes)
 	M.equip_to_slot_or_del(new /obj/item/clothing/gloves/color/black(M), slot_gloves)

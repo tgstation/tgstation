@@ -40,7 +40,7 @@
 	return
 
 
-/obj/item/weapon/robot_module/proc/respawn_consumable(var/mob/living/silicon/robot/R)
+/obj/item/weapon/robot_module/proc/respawn_consumable(mob/living/silicon/robot/R)
 	return
 
 /obj/item/weapon/robot_module/proc/rebuild()//Rebuilds the list so it's possible to add/remove items from the module
@@ -264,7 +264,7 @@
 	energy = max_energy
 	return
 
-/datum/robot_energy_storage/proc/use_charge(var/amount)
+/datum/robot_energy_storage/proc/use_charge(amount)
 	if (energy >= amount)
 		energy -= amount
 		if (energy == 0)
@@ -273,7 +273,7 @@
 	else
 		return 0
 
-/datum/robot_energy_storage/proc/add_charge(var/amount)
+/datum/robot_energy_storage/proc/add_charge(amount)
 	energy = min(energy + amount, max_energy)
 
 /datum/robot_energy_storage/metal

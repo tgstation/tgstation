@@ -25,7 +25,7 @@ Bonus
 	level = 6
 	severity = 2
 
-/datum/symptom/voice_change/Activate(var/datum/disease/advance/A)
+/datum/symptom/voice_change/Activate(datum/disease/advance/A)
 	..()
 	if(prob(SYMPTOM_ACTIVATION_PROB))
 
@@ -36,18 +36,11 @@ Bonus
 			else
 				if(ishuman(M))
 					var/mob/living/carbon/human/H = M
-					var/random_name = ""
-					switch(H.gender)
-						if(MALE)
-							random_name = pick(first_names_male)
-						else
-							random_name = pick(first_names_female)
-					random_name += " [pick(last_names)]"
-					H.SetSpecialVoice(random_name)
+					H.SetSpecialVoice(H.dna.species.random_name(H.gender))
 
 	return
 
-/datum/symptom/voice_change/End(var/datum/disease/advance/A)
+/datum/symptom/voice_change/End(datum/disease/advance/A)
 	..()
 	if(ishuman(A.affected_mob))
 		var/mob/living/carbon/human/H = A.affected_mob

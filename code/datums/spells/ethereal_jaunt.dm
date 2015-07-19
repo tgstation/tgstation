@@ -60,16 +60,16 @@
 			qdel(animation)
 			qdel(holder)
 
-/obj/effect/proc_holder/spell/targeted/ethereal_jaunt/proc/jaunt_disappear(var/atom/movable/overlay/animation, var/mob/living/target)
+/obj/effect/proc_holder/spell/targeted/ethereal_jaunt/proc/jaunt_disappear(atom/movable/overlay/animation, mob/living/target)
 	animation.icon_state = "liquify"
 	flick("liquify",animation)
 
 
-/obj/effect/proc_holder/spell/targeted/ethereal_jaunt/proc/jaunt_reappear(var/atom/movable/overlay/animation, var/mob/living/target)
+/obj/effect/proc_holder/spell/targeted/ethereal_jaunt/proc/jaunt_reappear(atom/movable/overlay/animation, mob/living/target)
 	flick("reappear",animation)
 
 
-/obj/effect/proc_holder/spell/targeted/ethereal_jaunt/proc/jaunt_steam(var/mobloc)
+/obj/effect/proc_holder/spell/targeted/ethereal_jaunt/proc/jaunt_steam(mobloc)
 	var/datum/effect/effect/system/steam_spread/steam = new /datum/effect/effect/system/steam_spread()
 	steam.set_up(10, 0, mobloc)
 	steam.start()
@@ -82,6 +82,7 @@
 	var/reappearing = 0
 	density = 0
 	anchored = 1
+	invisibility = 60
 
 /obj/effect/dummy/spell_jaunt/Destroy()
 	// Eject contents if deleted somehow

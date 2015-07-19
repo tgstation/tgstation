@@ -4,14 +4,14 @@ var/global/floorIsLava = 0
 
 
 ////////////////////////////////
-/proc/message_admins(var/msg)
+/proc/message_admins(msg)
 	msg = "<span class=\"admin\"><span class=\"prefix\">ADMIN LOG:</span> <span class=\"message\">[msg]</span></span>"
 	admins << msg
 
 
 ///////////////////////////////////////////////////////////////////////////////////////////////Panels
 
-/datum/admins/proc/show_player_panel(var/mob/M in mob_list)
+/datum/admins/proc/show_player_panel(mob/M in mob_list)
 	set category = "Admin"
 	set name = "Show Player Panel"
 	set desc="Edit player (respawn, ban, heal, etc)"
@@ -558,7 +558,7 @@ var/global/floorIsLava = 0
 			log_admin("[key_name(usr)] set the pre-game delay to [newtime] seconds.")
 		feedback_add_details("admin_verb","DELAY") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
-/datum/admins/proc/unprison(var/mob/M in mob_list)
+/datum/admins/proc/unprison(mob/M in mob_list)
 	set category = "Admin"
 	set name = "Unprison"
 	if (M.z == ZLEVEL_CENTCOM)
@@ -589,7 +589,7 @@ var/global/floorIsLava = 0
 		else
 			return "Error: Invalid sabotage target: [target]"
 */
-/datum/admins/proc/spawn_atom(var/object as text)
+/datum/admins/proc/spawn_atom(object as text)
 	set category = "Debug"
 	set desc = "(atom path) Spawn an atom"
 	set name = "Spawn"
@@ -622,7 +622,7 @@ var/global/floorIsLava = 0
 	feedback_add_details("admin_verb","SA") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
 
-/datum/admins/proc/show_traitor_panel(var/mob/M in mob_list)
+/datum/admins/proc/show_traitor_panel(mob/M in mob_list)
 	set category = "Admin"
 	set desc = "Edit mobs's memory and role"
 	set name = "Show Traitor Panel"
@@ -746,7 +746,7 @@ var/global/floorIsLava = 0
 //Kicks all the clients currently in the lobby. The second parameter (kick_only_afk) determins if an is_afk() check is ran, or if all clients are kicked
 //defaults to kicking everyone (afk + non afk clients in the lobby)
 //returns a list of ckeys of the kicked clients
-/proc/kick_clients_in_lobby(var/message, var/kick_only_afk = 0)
+/proc/kick_clients_in_lobby(message, kick_only_afk = 0)
 	var/list/kicked_client_names = list()
 	for(var/client/C in clients)
 		if(istype(C.mob, /mob/new_player))
@@ -760,7 +760,7 @@ var/global/floorIsLava = 0
 
 //returns 1 to let the dragdrop code know we are trapping this event
 //returns 0 if we don't plan to trap the event
-/datum/admins/proc/cmd_ghost_drag(var/mob/dead/observer/frommob, var/mob/living/tomob)
+/datum/admins/proc/cmd_ghost_drag(mob/dead/observer/frommob, mob/living/tomob)
 
 	//this is the exact two check rights checks required to edit a ckey with vv.
 	if (!check_rights(R_VAREDIT,0) || !check_rights(R_SPAWN|R_DEBUG,0))

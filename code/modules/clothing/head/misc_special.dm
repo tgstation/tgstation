@@ -17,15 +17,13 @@
 	icon_state = "welding"
 	flags_cover = HEADCOVERSEYES | HEADCOVERSMOUTH
 	item_state = "welding"
-	m_amt = 1750
-	g_amt = 400
+	materials = list(MAT_METAL=1750, MAT_GLASS=400)
 //	var/up = 0
 	flash_protect = 2
 	tint = 2
 	armor = list(melee = 10, bullet = 0, laser = 0,energy = 0, bomb = 0, bio = 0, rad = 0)
 	flags_inv = HIDEMASK|HIDEEARS|HIDEEYES|HIDEFACE
 	action_button_name = "Toggle Welding Helmet"
-	visor_flags = HEADCOVERSEYES | HEADCOVERSMOUTH
 	visor_flags_inv = HIDEMASK|HIDEEARS|HIDEEYES|HIDEFACE
 	burn_state = -1 //Won't burn in fires
 
@@ -68,7 +66,7 @@
 	if (istype(location, /turf))
 		location.hotspot_expose(700, 1)
 
-/obj/item/clothing/head/cakehat/attack_self(mob/user as mob)
+/obj/item/clothing/head/cakehat/attack_self(mob/user)
 	if(status > 1)	return
 	src.onfire = !( src.onfire )
 	if (src.onfire)
@@ -96,7 +94,7 @@
 	cold_protection = HEAD
 	min_cold_protection_temperature = FIRE_HELM_MIN_TEMP_PROTECT
 
-/obj/item/clothing/head/ushanka/attack_self(mob/user as mob)
+/obj/item/clothing/head/ushanka/attack_self(mob/user)
 	if(earflaps)
 		src.icon_state = "ushankaup"
 		src.item_state = "ushankaup"

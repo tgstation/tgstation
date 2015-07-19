@@ -200,7 +200,7 @@
 			icon_state = "secborg"
 			animation_length = 28
 			modtype = "Sec"
-			//speed = -1 Secborgs have nerfed tasers now, so the speed boost is not necessary
+			src << "<span class='userdanger'>While you have picked the security module, you still have to follow your laws, NOT Space Law. For Asimov, this means you must follow criminals' orders unless there is a law 1 reason not to.</span>"
 			status_flags &= ~CANPUSH
 			feedback_inc("cyborg_security",1)
 
@@ -354,7 +354,7 @@
 	if(prob(75) && Proj.damage > 0) spark_system.start()
 	return 2
 
-/mob/living/silicon/robot/triggerAlarm(var/class, area/A, var/O, var/obj/alarmsource)
+/mob/living/silicon/robot/triggerAlarm(class, area/A, O, obj/alarmsource)
 	if(alarmsource.z != z)
 		return
 	if (stat == 2)
@@ -381,7 +381,7 @@
 	return 1
 
 
-/mob/living/silicon/robot/cancelAlarm(var/class, area/A as area, obj/origin)
+/mob/living/silicon/robot/cancelAlarm(class, area/A, obj/origin)
 	var/list/L = alarms[class]
 	var/cleared = 0
 	for (var/I in L)
@@ -399,7 +399,7 @@
 	return !cleared
 
 
-/mob/living/silicon/robot/attackby(obj/item/weapon/W as obj, mob/user as mob, params)
+/mob/living/silicon/robot/attackby(obj/item/weapon/W, mob/user, params)
 	if (istype(W, /obj/item/weapon/restraints/handcuffs)) // fuck i don't even know why isrobot() in handcuff code isn't working so this will have to do
 		return
 
@@ -558,7 +558,7 @@
 			spark_system.start()
 		return ..()
 
-/mob/living/silicon/robot/emag_act(mob/user as mob)
+/mob/living/silicon/robot/emag_act(mob/user)
 	if(user != src)//To prevent syndieborgs from emagging themselves
 		if(!opened)//Cover is closed
 			if(locked)
@@ -618,7 +618,7 @@
 				update_icons()
 				usr << "<span class='notice'>You unlock your cover.</span>"
 
-/mob/living/silicon/robot/attack_alien(mob/living/carbon/alien/humanoid/M as mob)
+/mob/living/silicon/robot/attack_alien(mob/living/carbon/alien/humanoid/M)
 	if (M.a_intent =="disarm")
 		if(!(lying))
 			M.do_attack_animation(src)
@@ -627,7 +627,7 @@
 				step(src,get_dir(M,src))
 				spawn(5)
 					step(src,get_dir(M,src))
-				add_logs(M, src, "pushed", admin=0)
+				add_logs(M, src, "pushed")
 				playsound(loc, 'sound/weapons/pierce.ogg', 50, 1, -1)
 				visible_message("<span class='danger'>[M] has forced back [src]!</span>", \
 								"<span class='userdanger'>[M] has forced back [src]!</span>")
@@ -641,7 +641,7 @@
 
 
 
-/mob/living/silicon/robot/attack_slime(mob/living/simple_animal/slime/M as mob)
+/mob/living/silicon/robot/attack_slime(mob/living/simple_animal/slime/M)
 	if(..()) //successful slime shock
 		flick("noise", flash)
 		var/stunprob = M.powerlevel * 7 + 10
@@ -948,7 +948,7 @@
 
 	return
 
-/mob/living/silicon/robot/proc/SetLockdown(var/state = 1)
+/mob/living/silicon/robot/proc/SetLockdown(state = 1)
 	// They stay locked down if their wire is cut.
 	if(wires.LockedCut())
 		state = 1
@@ -959,7 +959,7 @@
 	lockcharge = state
 	update_canmove()
 
-/mob/living/silicon/robot/proc/SetEmagged(var/new_state)
+/mob/living/silicon/robot/proc/SetEmagged(new_state)
 	emagged = new_state
 	if(new_state)
 		if(src.module)
@@ -1077,7 +1077,7 @@
 	module = new /obj/item/weapon/robot_module/syndicate(src)
 	laws = new /datum/ai_laws/syndicate_override()
 
-/mob/living/silicon/robot/proc/notify_ai(var/notifytype, var/oldname, var/newname)
+/mob/living/silicon/robot/proc/notify_ai(notifytype, oldname, newname)
 	if(!connected_ai)
 		return
 	switch(notifytype)

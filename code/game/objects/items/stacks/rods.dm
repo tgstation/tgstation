@@ -15,7 +15,7 @@ var/global/list/datum/stack_recipe/rod_recipes = list ( \
 	throwforce = 10.0
 	throw_speed = 3
 	throw_range = 7
-	m_amt = 1000
+	materials = list(MAT_METAL=1000)
 	max_amount = 50
 	attack_verb = list("hit", "bludgeoned", "whacked")
 	hitsound = 'sound/weapons/grenadelaunch.ogg'
@@ -33,7 +33,7 @@ var/global/list/datum/stack_recipe/rod_recipes = list ( \
 	else
 		icon_state = "rods"
 
-/obj/item/stack/rods/attackby(obj/item/W as obj, mob/user as mob, params)
+/obj/item/stack/rods/attackby(obj/item/W, mob/user, params)
 	if (istype(W, /obj/item/weapon/weldingtool))
 		var/obj/item/weapon/weldingtool/WT = W
 
@@ -68,7 +68,7 @@ var/global/list/datum/stack_recipe/rod_recipes = list ( \
 	..()
 
 /obj/item/stack/rods/cyborg/
-	m_amt = 0
+	materials = list()
 	is_cyborg = 1
 	cost = 250
 

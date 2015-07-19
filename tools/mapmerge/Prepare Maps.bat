@@ -1,7 +1,7 @@
 @echo off
 cd ../../_maps/map_files/
 
-for /R %%f in (*.dmm) do copy %%f "%%f.backup"
+for /R %%f in (*.dmm) do copy "%%f" "%%f.backup"
 
 cls
 echo All dmm files in map_files directories have been backed up

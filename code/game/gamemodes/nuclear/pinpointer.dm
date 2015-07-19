@@ -8,7 +8,7 @@
 	item_state = "electronic"
 	throw_speed = 3
 	throw_range = 7
-	m_amt = 500
+	materials = list(MAT_METAL=500)
 	var/obj/item/weapon/disk/nuclear/the_disk = null
 	var/active = 0
 
@@ -167,7 +167,7 @@
 	var/obj/docking_port/mobile/home
 
 
-/obj/item/weapon/pinpointer/nukeop/attack_self(mob/user as mob)
+/obj/item/weapon/pinpointer/nukeop/attack_self(mob/user)
 	if(!active)
 		active = 1
 		var/mode_text = "Authentication Disk Locator mode"

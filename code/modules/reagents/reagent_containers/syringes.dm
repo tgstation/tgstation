@@ -12,8 +12,7 @@
 	volume = 15
 	var/mode = SYRINGE_DRAW
 	var/busy = 0		// needed for delayed drawing of blood
-	g_amt = 20
-	m_amt = 10
+	materials = list(MAT_METAL=10, MAT_GLASS=20)
 
 /obj/item/weapon/reagent_containers/syringe/New()
 	..()
@@ -141,7 +140,14 @@
 			if(ismob(target) && target != user)
 				target.visible_message("<span class='danger'>[user] is trying to inject [target]!</span>", \
 										"<span class='userdanger'>[user] is trying to inject [target]!</span>")
-				if(!do_mob(user, target)) return
+				if(!do_mob(user, target))
+					return
+				//Sanity checks after sleep
+				if(!reagents.total_volume)
+					return
+				if(target.reagents.total_volume >= target.reagents.maximum_volume)
+					return
+
 				target.visible_message("<span class='danger'>[user] injects [target] with the syringe!", \
 								"<span class='userdanger'>[user] injects [target] with the syringe!")
 				//Attack log entries are produced here due to failure to produce elsewhere. Remove them here if you have doubles from normal syringes.
@@ -150,7 +156,7 @@
 					rinject += R.name
 				var/contained = english_list(rinject)
 				var/mob/M = target
-				add_logs(user, M, "injected", object="[src.name]", addition="which had [contained]")
+				add_logs(user, M, "injected", src, addition="which had [contained]")
 				var/fraction = min(amount_per_transfer_from_this/reagents.total_volume, 1)
 				reagents.reaction(target, INGEST, fraction)
 			if(ismob(target) && target == user)

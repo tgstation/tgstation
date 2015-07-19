@@ -3,8 +3,7 @@
 	desc = "Used to remotely activate devices."
 	icon_state = "signaller"
 	item_state = "signaler"
-	m_amt = 400
-	g_amt = 120
+	materials = list(MAT_METAL=400, MAT_GLASS=120)
 	origin_tech = "magnets=1"
 	wires = WIRE_RECEIVE | WIRE_PULSE | WIRE_RADIO_PULSE | WIRE_RADIO_RECEIVE
 	attachable = 1
@@ -39,7 +38,7 @@
 		holder.update_icon()
 	return
 
-/obj/item/device/assembly/signaler/interact(mob/user as mob, flag1)
+/obj/item/device/assembly/signaler/interact(mob/user, flag1)
 	if(is_secured(user))
 		var/t1 = "-------"
 	//	if ((src.b_stat && !( flag1 )))

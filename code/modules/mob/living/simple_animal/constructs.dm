@@ -3,10 +3,11 @@
 	real_name = "Construct"
 	desc = ""
 	speak_emote = list("hisses")
-	emote_hear = list("wails","screeches")
+	emote_hear = list("wails.","screeches.")
 	response_help  = "thinks better of touching"
 	response_disarm = "flails at"
 	response_harm   = "punches"
+	speak_chance = 1
 	icon = 'icons/mob/mob.dmi'
 	speed = 0
 	a_intent = "harm"
@@ -48,14 +49,14 @@
 
 	user << msg
 
-/mob/living/simple_animal/construct/attack_animal(mob/living/simple_animal/M as mob)
+/mob/living/simple_animal/construct/attack_animal(mob/living/simple_animal/M)
 	if(istype(M, /mob/living/simple_animal/construct/builder))
 		adjustBruteLoss(-5)
 		M.emote("me", 1, "mends some of \the <EM>[src]'s</EM> wounds.")
 	else if(src != M)
 		..()
 
-/mob/living/simple_animal/construct/bullet_act(var/obj/item/projectile/Proj)
+/mob/living/simple_animal/construct/bullet_act(obj/item/projectile/Proj)
 	if(!Proj)
 		return
 	if(Proj.damage_type == BURN || Proj.damage_type == BRUTE)
@@ -93,7 +94,7 @@
 	playstyle_string = "<B>You are a Juggernaut. Though slow, your shell can withstand extreme punishment, \
 						create shield walls and even deflect energy weapons, and rip apart enemies and walls alike.</B>"
 
-/mob/living/simple_animal/construct/armored/bullet_act(var/obj/item/projectile/P)
+/mob/living/simple_animal/construct/armored/bullet_act(obj/item/projectile/P)
 	if(istype(P, /obj/item/projectile/energy) || istype(P, /obj/item/projectile/beam))
 		var/reflectchance = 80 - round(P.damage/3)
 		if(prob(reflectchance))
@@ -194,5 +195,5 @@
 	playstyle_string = "<B>You are a Harvester. You are not strong, but your powers of domination will assist you in your role: \
 						Bring those who still cling to this world of illusion back to the Geometer so they may know Truth.</B>"
 
-/mob/living/simple_animal/construct/harvester/Process_Spacemove(var/movement_dir = 0)
+/mob/living/simple_animal/construct/harvester/Process_Spacemove(movement_dir = 0)
 	return 1

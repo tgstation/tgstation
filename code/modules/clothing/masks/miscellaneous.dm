@@ -24,7 +24,6 @@
 	w_class = 1
 	flags_cover = MASKCOVERSMOUTH
 	flags_inv = HIDEFACE
-	visor_flags = MASKCOVERSMOUTH
 	visor_flags_inv = HIDEFACE
 	gas_transfer_coefficient = 0.90
 	permeability_coefficient = 0.01
@@ -32,7 +31,7 @@
 	action_button_name = "Adjust Sterile Mask"
 	ignore_maskadjust = 0
 
-/obj/item/clothing/mask/surgical/attack_self(var/mob/user)
+/obj/item/clothing/mask/surgical/attack_self(mob/user)
 	adjustmask(user)
 
 /obj/item/clothing/mask/fakemoustache
@@ -113,14 +112,13 @@
 	w_class = 1
 	flags_cover = MASKCOVERSMOUTH
 	flags_inv = HIDEFACE
-	visor_flags = MASKCOVERSMOUTH
 	visor_flags_inv = HIDEFACE
 	slot_flags = SLOT_MASK
 	ignore_maskadjust = 0
 	adjusted_flags = SLOT_HEAD
 	icon_state = "bandbotany"
 
-/obj/item/clothing/mask/bandana/attack_self(var/mob/user)
+/obj/item/clothing/mask/bandana/attack_self(mob/user)
 	adjustmask(user)
 
 /obj/item/clothing/mask/bandana/red

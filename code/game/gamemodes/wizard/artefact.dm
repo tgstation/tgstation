@@ -20,7 +20,7 @@
 	var/rend_desc = "You should run now."
 	var/spawn_fast = 0 //if 1, ignores checking for mobs on loc before spawning
 
-/obj/item/weapon/veilrender/attack_self(mob/user as mob)
+/obj/item/weapon/veilrender/attack_self(mob/user)
 	if(charges > 0)
 		new /obj/effect/rend(get_turf(usr), spawn_type, spawn_amt, rend_desc, spawn_fast)
 		charges--
@@ -57,7 +57,7 @@
 	if(spawn_amt_left <= 0)
 		qdel(src)
 
-/obj/effect/rend/attackby(obj/item/I as obj, mob/user as mob, params)
+/obj/effect/rend/attackby(obj/item/I, mob/user, params)
 	if(istype(I, /obj/item/weapon/nullrod))
 		user.visible_message("<span class='danger'>[usr] seals \the [src] with \the [I].</span>")
 		qdel(src)
@@ -95,7 +95,7 @@
 	force = 15
 	hitsound = 'sound/items/welder2.ogg'
 
-/obj/item/weapon/scrying/attack_self(mob/user as mob)
+/obj/item/weapon/scrying/attack_self(mob/user)
 	user << "<span class='notice'>You can see...everything!</span>"
 	visible_message("<span class='danger'>[usr] stares into [src], their eyes glazing over.</span>")
 	user.ghostize(1)
@@ -162,7 +162,7 @@
 	listclearnulls(spooky_scaries)
 
 //Funny gimmick, skeletons always seem to wear roman/ancient armour
-/obj/item/device/necromantic_stone/proc/equip_roman_skeleton(var/mob/living/carbon/human/H)
+/obj/item/device/necromantic_stone/proc/equip_roman_skeleton(mob/living/carbon/human/H)
 	for(var/obj/item/I in H)
 		H.unEquip(I)
 

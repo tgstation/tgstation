@@ -40,10 +40,10 @@
 	colourName = "mime"
 	uses = -1
 
-/obj/item/toy/crayon/mime/attack_self(mob/living/user as mob)
+/obj/item/toy/crayon/mime/attack_self(mob/living/user)
 	update_window(user)
 
-/obj/item/toy/crayon/mime/update_window(mob/living/user as mob)
+/obj/item/toy/crayon/mime/update_window(mob/living/user)
 	dat += "<center><span style='border:1px solid #161616; background-color: [colour];'>&nbsp;&nbsp;&nbsp;</span><a href='?src=\ref[src];color=1'>Change color</a></center>"
 	..()
 
@@ -65,10 +65,10 @@
 	colourName = "rainbow"
 	uses = -1
 
-/obj/item/toy/crayon/rainbow/attack_self(mob/living/user as mob)
+/obj/item/toy/crayon/rainbow/attack_self(mob/living/user)
 	update_window(user)
 
-/obj/item/toy/crayon/rainbow/update_window(mob/living/user as mob)
+/obj/item/toy/crayon/rainbow/update_window(mob/living/user)
 	dat += "<center><span style='border:1px solid #161616; background-color: [colour];'>&nbsp;&nbsp;&nbsp;</span><a href='?src=\ref[src];color=1'>Change color</a></center>"
 	..()
 
@@ -112,7 +112,7 @@
 	for(var/obj/item/toy/crayon/crayon in contents)
 		overlays += image('icons/obj/crayons.dmi',crayon.colourName)
 
-/obj/item/weapon/storage/crayons/attackby(obj/item/W as obj, mob/user as mob, params)
+/obj/item/weapon/storage/crayons/attackby(obj/item/W, mob/user, params)
 	if(istype(W,/obj/item/toy/crayon))
 		switch(W:colourName)
 			if("mime")
@@ -137,6 +137,7 @@
 /obj/item/toy/crayon/spraycan/New()
 	..()
 	name = "spray can"
+	colour = pick("#DA0000","#FF9300","#FFF200","#A8E61D","#00B7EF","#DA00FF")
 	update_icon()
 
 /obj/item/toy/crayon/spraycan/examine(mob/user)
@@ -146,7 +147,7 @@
 	else
 		user << "It is empty."
 
-/obj/item/toy/crayon/spraycan/attack_self(mob/living/user as mob)
+/obj/item/toy/crayon/spraycan/attack_self(mob/living/user)
 	var/choice = input(user,"Spraycan options") as null|anything in list("Toggle Cap","Change Drawing","Change Color")
 	switch(choice)
 		if("Toggle Cap")
@@ -160,10 +161,11 @@
 			colour = input(user,"Choose Color") as color
 			update_icon()
 
-/obj/item/toy/crayon/spraycan/afterattack(atom/target, mob/user as mob, proximity)
+/obj/item/toy/crayon/spraycan/afterattack(atom/target, mob/user, proximity)
 	if(!proximity)
 		return
 	if(capped)
+		user << "<span class='warning'>Take the cap off first!</span>"
 		return
 	else
 		if(iscarbon(target))
@@ -195,3 +197,9 @@
 	gang = 1
 	uses = 20
 	instant = -1
+
+/obj/item/toy/crayon/spraycan/gang/New(loc, datum/gang/G)
+	..()
+	if(G)
+		colour = G.color_hex
+		update_icon()

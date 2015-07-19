@@ -10,7 +10,7 @@
 	var/obj/item/device/mmi/brain = null
 
 
-/obj/structure/AIcore/attackby(obj/item/P as obj, mob/user as mob, params)
+/obj/structure/AIcore/attackby(obj/item/P, mob/user, params)
 	switch(state)
 		if(0)
 			if(istype(P, /obj/item/weapon/wrench))
@@ -149,6 +149,10 @@
 					user << "<span class='warning'>This MMI does not seem to fit!</span>"
 					return
 
+				if(M.syndiemmi)
+					user << "<span class='warning'>This MMI does not seem to fit!</span>"
+					return
+
 				if(!M.brainmob.mind)
 					user << "<span class='warning'>This MMI is mindless!</span>"
 					return
@@ -158,7 +162,7 @@
 
 				ticker.mode.remove_cultist(M.brainmob.mind, 1)
 				ticker.mode.remove_revolutionary(M.brainmob.mind, 1)
-				ticker.mode.remove_gangster(M.brainmob.mind, 1)
+				ticker.mode.remove_gangster(M.brainmob.mind, 1, remove_bosses=1)
 
 				M.loc = src
 				brain = M
@@ -200,7 +204,7 @@
 	anchored = 1
 	state = 20//So it doesn't interact based on the above. Not really necessary.
 
-/obj/structure/AIcore/deactivated/attackby(var/obj/item/A as obj, var/mob/user as mob, params)
+/obj/structure/AIcore/deactivated/attackby(obj/item/A, mob/user, params)
 	if(istype(A, /obj/item/device/aicard))//Is it?
 		A.transfer_ai("INACTIVE","AICARD",src,user)
 	if(istype(A, /obj/item/weapon/wrench))
@@ -226,7 +230,7 @@ That prevents a few funky behaviors.
 //The type of interaction, the player performing the operation, the AI itself, and the card object, if any.
 
 
-atom/proc/transfer_ai(var/interaction, var/mob/user, var/mob/living/silicon/ai/AI, var/obj/item/device/aicard/card)
+atom/proc/transfer_ai(interaction, mob/user, mob/living/silicon/ai/AI, obj/item/device/aicard/card)
 	if(istype(card))
 		if(card.flush)
 			user << "<span class='boldannounce'>ERROR</span>: AI flush is in progress, cannot execute transfer protocol."
@@ -234,7 +238,7 @@ atom/proc/transfer_ai(var/interaction, var/mob/user, var/mob/living/silicon/ai/A
 	return 1
 
 
-/obj/structure/AIcore/deactivated/transfer_ai(var/interaction, var/mob/user, var/mob/living/silicon/ai/AI, var/obj/item/device/aicard/card)
+/obj/structure/AIcore/deactivated/transfer_ai(interaction, mob/user, mob/living/silicon/ai/AI, obj/item/device/aicard/card)
 	if(!..())
 		return
  //Transferring a carded AI to a core.

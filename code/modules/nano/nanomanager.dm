@@ -9,7 +9,7 @@
   *
   * @return /nanoui Returns the new or found ui
   */
-/datum/subsystem/nano/proc/push_open_or_new_ui(var/mob/user, var/atom/movable/src_object, ui_key, var/datum/nanoui/ui, template, title, width, height, auto_update)
+/datum/subsystem/nano/proc/push_open_or_new_ui(mob/user, atom/movable/src_object, ui_key, datum/nanoui/ui, template, title, width, height, auto_update)
 	var/list/data = src_object.get_ui_data(user)
 	if (!data)
 		data = list()
@@ -33,7 +33,7 @@
   *
   * @return /nanoui Returns the found ui, for null if none exists
   */
-/datum/subsystem/nano/proc/try_update_ui(var/mob/user, src_object, ui_key, var/datum/nanoui/ui, data)
+/datum/subsystem/nano/proc/try_update_ui(mob/user, src_object, ui_key, datum/nanoui/ui, data)
 	if (isnull(ui)) // no ui has been passed, so we'll search for one
 		ui = get_open_ui(user, src_object, ui_key)
 
@@ -53,7 +53,7 @@
   *
   * @return /nanoui Returns the found ui, or null if none exists
   */
-/datum/subsystem/nano/proc/get_open_ui(var/mob/user, src_object, ui_key)
+/datum/subsystem/nano/proc/get_open_ui(mob/user, src_object, ui_key)
 	var/src_object_key = "\ref[src_object]"
 	if (isnull(open_uis[src_object_key]) || !istype(open_uis[src_object_key], /list))
 		return null
@@ -95,7 +95,7 @@
   *
   * @return int The number of uis updated
   */
-/datum/subsystem/nano/proc/update_user_uis(var/mob/user, src_object = null, ui_key = null)
+/datum/subsystem/nano/proc/update_user_uis(mob/user, src_object = null, ui_key = null)
 	if (isnull(user.open_uis) || !istype(user.open_uis, /list) || open_uis.len == 0)
 		return 0 // has no open uis
 
@@ -116,7 +116,7 @@
   *
   * @return int The number of uis closed
   */
-/datum/subsystem/nano/proc/close_user_uis(var/mob/user, src_object = null, ui_key = null)
+/datum/subsystem/nano/proc/close_user_uis(mob/user, src_object = null, ui_key = null)
 	if (isnull(user.open_uis) || !istype(user.open_uis, /list) || open_uis.len == 0)
 		return 0 // has no open uis
 
@@ -136,7 +136,7 @@
   *
   * @return nothing
   */
-/datum/subsystem/nano/proc/ui_opened(var/datum/nanoui/ui)
+/datum/subsystem/nano/proc/ui_opened(datum/nanoui/ui)
 	var/src_object_key = "\ref[ui.src_object]"
 	if (isnull(open_uis[src_object_key]) || !istype(open_uis[src_object_key], /list))
 		open_uis[src_object_key] = list(ui.ui_key = list())
@@ -156,7 +156,7 @@
   *
   * @return int 0 if no ui was removed, 1 if removed successfully
   */
-/datum/subsystem/nano/proc/ui_closed(var/datum/nanoui/ui)
+/datum/subsystem/nano/proc/ui_closed(datum/nanoui/ui)
 	var/src_object_key = "\ref[ui.src_object]"
 	if (isnull(open_uis[src_object_key]) || !istype(open_uis[src_object_key], /list))
 		return 0 // wasn't open
@@ -179,7 +179,7 @@
   */
 
 //
-/datum/subsystem/nano/proc/user_logout(var/mob/user)
+/datum/subsystem/nano/proc/user_logout(mob/user)
 	return close_user_uis(user)
 
  /**
@@ -191,7 +191,7 @@
   *
   * @return nothing
   */
-/datum/subsystem/nano/proc/user_transferred(var/mob/oldMob, var/mob/newMob)
+/datum/subsystem/nano/proc/user_transferred(mob/oldMob, mob/newMob)
 	if (isnull(oldMob.open_uis) || !istype(oldMob.open_uis, /list) || open_uis.len == 0)
 		return 0 // has no open uis
 

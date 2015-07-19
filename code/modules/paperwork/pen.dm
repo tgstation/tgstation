@@ -20,7 +20,7 @@
 	w_class = 1.0
 	throw_speed = 3
 	throw_range = 7
-	m_amt = 10
+	materials = list(MAT_METAL=10)
 	pressure_resistance = 2
 	var/colour = "black"	//what colour the ink is!
 
@@ -44,7 +44,7 @@
 	colour = "white"
 
 
-/obj/item/weapon/pen/attack(mob/living/M, mob/user,var/stealth)
+/obj/item/weapon/pen/attack(mob/living/M, mob/user,stealth)
 	if(!istype(M))
 		return
 
@@ -54,7 +54,7 @@
 			M << "<span class='danger'>You feel a tiny prick!</span>"
 		. = 1
 
-	add_logs(user, M, "stabbed", object="[name]")
+	add_logs(user, M, "stabbed", src)
 
 /*
  * Sleepypens

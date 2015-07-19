@@ -5,7 +5,7 @@
 	item_state = "m_mask"
 	body_parts_covered = 0
 	flags = MASKINTERNALS
-	visor_flags = MASKCOVERSMOUTH | MASKINTERNALS
+	visor_flags = MASKINTERNALS
 	w_class = 2
 	gas_transfer_coefficient = 0.10
 	permeability_coefficient = 0.50
@@ -14,10 +14,10 @@
 	flags_cover = MASKCOVERSMOUTH
 	burn_state = -1 //Won't burn in fires
 
-/obj/item/clothing/mask/breath/attack_self(var/mob/user)
+/obj/item/clothing/mask/breath/attack_self(mob/user)
 	adjustmask(user)
 
-/obj/item/clothing/mask/breath/AltClick(var/mob/user)
+/obj/item/clothing/mask/breath/AltClick(mob/user)
 	..()
 	if(!user.canUseTopic(user))
 		user << "<span class='warning'>You can't do that right now!</span>"
