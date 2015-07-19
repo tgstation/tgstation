@@ -67,7 +67,7 @@
 				output += "<span class='memo'>Memo by <span class='prefix'>[ckey]</span> on [timestamp]:"
 				if(last_editor)
 					output += "<br><span class='memoedit'>Last edit by [last_editor] <A href='?_src_=holder;memoeditlist=[id]'>(Click here to see edit log)</A></span>"
-				output += "<br>[memotext]</span><br>
+				output += "<br>[memotext]</span><br>"
 			src << output
 		if("Remove")
 			var/DBQuery/query_memolist = dbcon.NewQuery("SELECT ckey FROM [format_table_name("memo")])") //should select all memos there are
