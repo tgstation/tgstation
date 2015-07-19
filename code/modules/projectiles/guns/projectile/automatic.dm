@@ -15,6 +15,9 @@
 	mag_type = /obj/item/ammo_box/magazine/smgm9mm
 	pin = null
 
+/obj/item/weapon/gun/projectile/automatic/proto/unrestricted
+	pin = /obj/item/device/firing_pin
+
 /obj/item/weapon/gun/projectile/automatic/update_icon()
 	..()
 	overlays.Cut()
@@ -129,6 +132,10 @@
 	burst_size = 5
 	fire_delay = 3
 	pin = /obj/item/device/firing_pin/implant/pindicate
+
+/obj/item/weapon/gun/projectile/automatic/l6_saw/unrestricted
+	pin = /obj/item/device/firing_pin
+
 
 /obj/item/weapon/gun/projectile/automatic/l6_saw/attack_self(mob/user)
 	cover_open = !cover_open
