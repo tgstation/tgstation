@@ -193,32 +193,24 @@ var/global/list/multiverse = list()
 	w_class = 2
 	attack_verb = list("attacked", "slashed", "stabbed", "sliced", "torn", "ripped", "diced", "cut")
 	var/faction = list("unassigned")
-	var/charged = 40
+	var/cooldown = 0
 	var/assigned = "unassigned"
 	var/evil = TRUE
 
 /obj/item/weapon/multisword/New()
 	..()
-	SSobj.processing |= src
 	multiverse |= src
 
 
 /obj/item/weapon/multisword/Destroy()
-	SSobj.processing.Remove(src)
 	multiverse.Remove(src)
 	..()
-
-
-/obj/item/weapon/multisword/process()
-	if(charged < 40)
-		charged++
-	return
 
 /obj/item/weapon/multisword/attack_self(mob/user)
 	if(user.mind.special_role == "apprentice")
 		user << "<span class='warning'>You know better than to touch your teacher's stuff.</span>"
 		return
-	if(charged == 40)
+	if(cooldown < world.time)
 		var/faction_check = 0
 		for(var/F in faction)
 			if(F in user.faction)
@@ -256,10 +248,10 @@ var/global/list/multiverse = list()
 				var/client/C = pick(candidates)
 				spawn_copy(C, get_turf(user.loc), user)
 				user << "<span class='warning'><B>The sword flashes, and you find yourself face to face with...you!</B></span>"
-				charged = 0
+				cooldown = world.time + 400
 				for(var/obj/item/weapon/multisword/M in multiverse)
 					if(M.assigned == assigned)
-						M.charged = 0
+						M.cooldown = cooldown
 
 			else
 				user << "You fail to summon any copies of yourself. Perhaps you should try again in a bit."
