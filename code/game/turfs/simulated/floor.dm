@@ -109,30 +109,30 @@ turf/simulated/floor/proc/update_icon()
 			switch(T.state)
 				if(LIGHTFLOOR_ON)
 					icon_state = "light_on"
-					set_light(5)
+					SetLuminosity(5)
 				if(LIGHTFLOOR_WHITE)
 					icon_state = "light_on-w"
-					set_light(5)
+					SetLuminosity(5)
 				if(LIGHTFLOOR_RED)
 					icon_state = "light_on-r"
-					set_light(5)
+					SetLuminosity(5)
 				if(LIGHTFLOOR_GREEN)
 					icon_state = "light_on-g"
-					set_light(5)
+					SetLuminosity(5)
 				if(LIGHTFLOOR_YELLOW)
 					icon_state = "light_on-y"
-					set_light(5)
+					SetLuminosity(5)
 				if(LIGHTFLOOR_BLUE)
 					icon_state = "light_on-b"
-					set_light(5)
+					SetLuminosity(5)
 				if(LIGHTFLOOR_PURPLE)
 					icon_state = "light_on-p"
-					set_light(5)
+					SetLuminosity(5)
 				else
 					icon_state = "light_off"
-					set_light(0)
+					SetLuminosity(0)
 		else
-			set_light(0)
+			SetLuminosity(0)
 			icon_state = "light_off"
 	else if(is_grass_floor())
 		if(!broken && !burnt)
@@ -355,7 +355,7 @@ turf/simulated/floor/proc/update_icon()
 		//qdel(floor_tile)
 		returnToPool(floor_tile)
 	icon_plating = "plating"
-	set_light(0)
+	SetLuminosity(0)
 	floor_tile = null
 	intact = 0
 	broken = 0
@@ -373,7 +373,7 @@ turf/simulated/floor/proc/update_icon()
 	broken = 0
 	burnt = 0
 	intact = 1
-	set_light(0)
+	SetLuminosity(0)
 	if(floor_tile) returnToPool(floor_tile)
 	floor_tile = null
 	if(T)
@@ -597,13 +597,13 @@ turf/simulated/floor/proc/update_icon()
 			if("uranium")
 				if(!spam_flag)
 					spam_flag = 1
-					set_light(3)
+					SetLuminosity(2)
 					icon_state = "uranium_inactive"
 					for(var/mob/living/L in range(2,src)) //Weak radiation
 						L.apply_effect(3,IRRADIATE,0)
 					flick("uranium_active",src)
 					spawn(20)
-						set_light(0)
+						SetLuminosity(0)
 					spawn(200)
 						spam_flag = 0
 						update_icon()

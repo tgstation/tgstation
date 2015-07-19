@@ -22,10 +22,14 @@ var/global/list/cryo_health_indicator = list(	"full" = image("icon" = 'icons/obj
 
 	machine_flags = SCREWTOGGLE | CROWDESTROY
 
-	light_color = LIGHT_COLOR_GREEN
-	light_range_on = 1
-	light_power_on = 2
-	use_auto_lights = 1
+	l_color = "#00FF00"
+
+/obj/machinery/atmospherics/unary/cryo_cell/power_change()
+	..()
+	if(!(stat & (BROKEN|NOPOWER)) && on)
+		SetLuminosity(2)
+	else
+		SetLuminosity(0)
 
 /obj/machinery/atmospherics/unary/cryo_cell/New()
 	. = ..()

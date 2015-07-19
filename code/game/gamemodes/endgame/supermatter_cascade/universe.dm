@@ -3,7 +3,7 @@
  	name = "Supermatter Cascade"
  	desc = "Unknown harmonance affecting universal substructure, converting nearby matter to supermatter."
 
- 	decay_rate = 5 // 5% chance of a turf decaying on lighting update (there's no actual tick for turfs). Code that triggers this is lighting_overlays.dm, line #62.
+ 	decay_rate = 5 // 5% chance of a turf decaying on lighting update/airflow (there's no actual tick for turfs)
 
 /datum/universal_state/supermatter_cascade/OnShuttleCall(var/mob/user)
 	if(user)
@@ -16,6 +16,8 @@
 		T.underlays -= "end01"
 	else
 		T.overlays -= "end01"
+		if(!T.color_lighting_lumcount)
+			T.update_lumcount(1, 160, 255, 0, 0)
 
 /datum/universal_state/supermatter_cascade/DecayTurf(var/turf/T)
 	if(istype(T,/turf/simulated/wall))
@@ -149,13 +151,8 @@ The access requirements on the Asteroid Shuttles' consoles have now been revoked
 		else
 			if(T.z != map.zCentcomm)
 				T.underlays += "end01"
+				T.update_lumcount(1, 160, 255, 0, 0)
 		tcheck(80,1)
-
-	for(var/atom/movable/lighting_overlay/L in all_lighting_overlays)
-		if(L.z != map.zCentcomm)
-			L.update_lumcount(0.15, 0.5, 0)
-		tcheck(80,1)
-
 /datum/universal_state/supermatter_cascade/proc/MiscSet()
 	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/universal_state/supermatter_cascade/proc/MiscSet() called tick#: [world.time]")
 	for (var/obj/machinery/firealarm/alm in machines)

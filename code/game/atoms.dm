@@ -20,6 +20,7 @@ var/global/list/ghdel_profiling = list()
 	var/throwpass = 0
 	var/germ_level = 0 // The higher the germ level, the more germ on the atom.
 	var/pressure_resistance = ONE_ATMOSPHERE
+	var/simulated = 1 //filter for actions - used by lighting overlays
 
 	///Chemistry.
 	var/datum/reagents/reagents = null
@@ -117,6 +118,8 @@ var/global/list/ghdel_profiling = list()
 	..()
 
 /atom/Destroy()
+	SetOpacity(0)
+
 	if(reagents)
 		reagents.Destroy()
 		reagents = null

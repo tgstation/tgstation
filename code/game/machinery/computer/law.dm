@@ -8,7 +8,7 @@
 	var/mob/living/silicon/ai/current = null
 	var/opened = 0
 
-	light_color = "#555555"
+	l_color = "#FFFFFF"
 
 
 	verb/AccessInternals()
@@ -140,7 +140,7 @@
 	circuit = "/obj/item/weapon/circuitboard/borgupload"
 	var/mob/living/silicon/robot/current = null
 
-	light_color = "#555555"
+	l_color = "#FFFFFF"
 
 	proc/announce_law_changes()
 		writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\proc/announce_law_changes() called tick#: [world.time]")

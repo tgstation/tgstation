@@ -95,7 +95,7 @@ By design, d1 is the smallest direction and d2 is the highest
 	cable_list -= src
 
 	if(istype(attached))
-		attached.set_light(0)
+		attached.SetLuminosity(0)
 		attached.icon_state = "powersink0"
 		attached.mode = 0
 		processing_objects.Remove(attached)
@@ -149,9 +149,9 @@ By design, d1 is the smallest direction and d2 is the highest
 			return
 
 		if(src.d1)	// 0-X cables are 1 unit, X-X cables are 2 units long
-			getFromPool(/obj/item/stack/cable_coil, T, 2, light_color)
+			getFromPool(/obj/item/stack/cable_coil, T, 2, l_color)
 		else
-			getFromPool(/obj/item/stack/cable_coil, T, 1, light_color)
+			getFromPool(/obj/item/stack/cable_coil, T, 1, l_color)
 
 		for(var/mob/O in viewers(src, null))
 			O.show_message("<span class='warning'>[user] cuts the cable.</span>", 1)
@@ -223,18 +223,18 @@ By design, d1 is the smallest direction and d2 is the highest
 			returnToPool(src)
 		if(2.0)
 			if(prob(50))
-				getFromPool(/obj/item/stack/cable_coil,  src.loc, src.d1 ? 2 : 1, light_color)
+				getFromPool(/obj/item/stack/cable_coil,  src.loc, src.d1 ? 2 : 1, l_color)
 				returnToPool(src)
 
 		if(3.0)
 			if(prob(25))
-				getFromPool(/obj/item/stack/cable_coil, src.loc, src.d1 ? 2 : 1, light_color)
+				getFromPool(/obj/item/stack/cable_coil, src.loc, src.d1 ? 2 : 1, l_color)
 				returnToPool(src)
 	return
 
 /obj/structure/cable/proc/cableColor(var/colorC = "red")
 	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/structure/cable/proc/cableColor() called tick#: [world.time]")
-	light_color = colorC
+	l_color = colorC
 	switch(colorC)
 		if("pink")
 			color = CABLE_PINK

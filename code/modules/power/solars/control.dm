@@ -15,10 +15,7 @@
 	var/trackdir = 1		//-1 = CCW, 1 = CW
 	var/nexttime = 0		//Next clock time that manual tracking will move the array
 
-	light_color = LIGHT_COLOR_YELLOW
-	use_auto_lights = 1
-	light_range_on = 3
-	light_power_on = 2
+	l_color = "#FF9933"
 
 /obj/machinery/power/solar/control/initialize()
 	..()
@@ -131,7 +128,7 @@
 
 
 	// AUTOFIXED BY fix_string_idiocy.py
-	// C:\Users\Rob\\documents\\\projects\vgstation13\code\\modules\\\power\solar.dm:407: var/t = "<TT><B>Solar Generator Control</B><HR><PRE>"
+	// C:\Users\Rob\Documents\Projects\vgstation13\code\modules\power\solar.dm:407: var/t = "<TT><B>Solar Generator Control</B><HR><PRE>"
 	var/t = {"<TT><B>Solar Generator Control</B><HR><PRE>
 <B>Generated power</B> : [round(lastgen)] W<BR>
 Station Orbital Period : [60/abs(sun.rotationRate)] minutes<BR>

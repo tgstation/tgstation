@@ -47,9 +47,7 @@
 	icon_state = "hanginglantern"
 	anchored = 1
 	layer = 5
-	light_range = 6 //Luminosity of hanging lanterns
-	light_power = 2
-	light_color = LIGHT_COLOR_TUNGSTEN
+	l_color = LIGHT_COLOR_TUNGSTEN
 	ghost_write = 0 //Can't be too safe
 	ghost_read = 0
 	var/flickering = 0 //SPOOK
@@ -82,8 +80,8 @@
 	flickering = 1
 	spawn(0)
 		for(var/i = 0; i < amount; i++)
-			set_light(0)
+			SetLuminosity(0)
 			spawn(rand(5, 15))
-				set_light(6, 2, LIGHT_COLOR_TUNGSTEN)
-		set_light(6, 2, LIGHT_COLOR_TUNGSTEN)
+				SetLuminosity(5)
+		SetLuminosity(5)
 	flickering = 0

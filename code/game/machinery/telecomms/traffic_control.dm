@@ -18,7 +18,7 @@
 	var/list/access_log = list()
 	var/process = 0
 
-	light_color = LIGHT_COLOR_GREEN
+	l_color = "#50AB00"
 
 	req_access = list(access_tcomsat)
 

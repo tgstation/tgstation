@@ -22,7 +22,7 @@
 
 	var/max_luminosity = 8 // Now varies based on power.
 
-	light_color = LIGHT_COLOR_YELLOW
+	l_color = "#ffcc00"
 
 	// What it's referred to in the alerts
 	var/short_name = "Crystal"
@@ -285,10 +285,8 @@
 
 	power -= (power/500)**3
 
-	var/light_value = Clamp(round(Clamp(power / max_power, 0, 1) * max_luminosity), 0, max_luminosity)
-
 	// Lighting based on power output.
-	set_light(light_value, light_value / 2)
+	SetLuminosity(Clamp(round(Clamp(power/max_power,0,1)*max_luminosity),0,max_luminosity))
 
 	return 1
 

@@ -4,7 +4,7 @@
 
 	icon = 'icons/obj/machines/broadcast.dmi'
 	icon_state = "broadcaster"
-	light_color = LIGHT_COLOR_BLUE
+	l_color="#4285F4"
 	use_power = 1
 	idle_power_usage = 50
 	active_power_usage = 1000
@@ -115,10 +115,10 @@
 		return
 	if(on)
 		overlays+="broadcaster on"
-		set_light(3) // OH FUUUUCK
+		SetLuminosity(3) // OH FUUUUCK
 		use_power = 2
 	else
-		set_light(1) // Only the tile we're on.
+		SetLuminosity(1) // Only the tile we're on.
 		use_power = 1
 	if(sources.len)
 		overlays+="broadcaster linked"

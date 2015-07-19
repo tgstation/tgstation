@@ -362,10 +362,7 @@ USE THIS CHEMISTRY DISPENSER FOR MAPS SO THEY START AT 100 ENERGY
 	var/pillsprite = "1"
 	var/client/has_sprites = list()
 
-	light_color = LIGHT_COLOR_BLUE
-	light_range_on = 3
-	light_power_on = 2
-	use_auto_lights = 1
+	l_color = "#0000FF"
 
 	machine_flags = SCREWTOGGLE | CROWDESTROY | WRENCHMOVE | FIXED2WORK
 
@@ -762,7 +759,7 @@ USE THIS CHEMISTRY DISPENSER FOR MAPS SO THEY START AT 100 ENERGY
 	var/wait = null
 	var/obj/item/weapon/reagent_containers/glass/beaker = null
 
-	light_color = LIGHT_COLOR_BLUE
+	l_color = "#0000FF"
 
 /********************************************************************
 **   Adding Stock Parts to VV so preconstructed shit has its candy **

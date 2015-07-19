@@ -130,13 +130,13 @@ Attach to transfer valve and open. BOOM.
 	anchored = 1
 	mouse_opacity = 0
 
-	blend_mode = BLEND_ADD
+	//luminosity = 3
 
 	icon = 'icons/effects/fire.dmi'
 	icon_state = "1"
 	layer = TURF_LAYER
 
-	light_color = LIGHT_COLOR_FIRE
+	l_color = "#ED9200"
 
 /obj/fire/proc/Extinguish()
 	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/fire/proc/Extinguish() called tick#: [world.time]")
@@ -191,13 +191,13 @@ Attach to transfer valve and open. BOOM.
 
 	if(firelevel > 6)
 		icon_state = "3"
-		set_light(7, 3)
+		SetLuminosity(7)
 	else if(firelevel > 2.5)
 		icon_state = "2"
-		set_light(5, 2)
+		SetLuminosity(5)
 	else
 		icon_state = "1"
-		set_light(3, 1)
+		SetLuminosity(3)
 
 	//im not sure how to implement a version that works for every creature so for now monkeys are firesafe
 	for(var/mob/living/carbon/human/M in loc)
@@ -253,13 +253,13 @@ Attach to transfer valve and open. BOOM.
 /obj/fire/New()
 	. = ..()
 	dir = pick(cardinal)
-	set_light(3)
+	SetLuminosity(3)
 	air_master.active_hotspots.Add(src)
 
 /obj/fire/Destroy()
 	air_master.active_hotspots.Remove(src)
 
-	set_light(0)
+	SetLuminosity(0)
 	..()
 
 turf/simulated/var/fire_protection = 0 //Protects newly extinguished tiles from being overrun again.

@@ -71,7 +71,8 @@ In short:
 
 /datum/universal_state/hell/proc/AreaSet()
 	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/universal_state/hell/proc/AreaSet() called tick#: [world.time]")
-	for(var/area/A in areas)
+	for(var/area/ca in areas)
+		var/area/A=get_area_master(ca)
 		if(!istype(A,/area) || A.name=="Space")
 			continue
 
@@ -109,12 +110,8 @@ In short:
 			T.overlays += "hell01"
 		else
 			T.underlays += "hell01"
+			T.update_lumcount(1, 255, 0, 0, 0)
 		tcheck(85,1)
-
-	for(var/atom/movable/lighting_overlay/L in all_lighting_overlays)
-		L.update_lumcount(0.5, 0, 0)
-		tcheck(80,1)
-
 /datum/universal_state/hell/proc/MiscSet()
 	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/universal_state/hell/proc/MiscSet() called tick#: [world.time]")
 	for(var/turf/simulated/floor/T in turfs)

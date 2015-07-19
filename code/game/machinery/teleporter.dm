@@ -9,7 +9,7 @@
 						 //Setting this to 1 will set src.locked to null after a player enters the portal and will not allow hand-teles to open portals to that location.
 	ghost_write=0
 
-	light_color = LIGHT_COLOR_BLUE
+	l_color = "#0000FF"
 
 /obj/machinery/computer/teleporter/New()
 	. = ..()

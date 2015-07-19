@@ -32,8 +32,8 @@ var/global/list/narsie_list = list()
 	// Pixel stuff centers Narsie.
 	pixel_x = -236
 	pixel_y = -256
-	light_range = 1
-	light_color = LIGHT_COLOR_RED
+	luminosity = 1
+	l_color = "#3e0000"
 
 	current_size = 12
 	consume_range = 12 // How many tiles out do we eat.

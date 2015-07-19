@@ -25,7 +25,7 @@ var/global/list/atmos_controllers = list()
 	var/overridden = 0 //not set yet, can't think of a good way to do it
 	req_one_access = list(access_ce)
 
-	light_color = LIGHT_COLOR_CYAN
+	l_color = "#7BF9FF"
 
 /obj/machinery/computer/atmoscontrol/New()
 	..()

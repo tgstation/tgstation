@@ -5,13 +5,11 @@
 var/const/E		= 2.71828183
 var/const/Sqrt2	= 1.41421356
 
-/* //All point fingers and laugh at this joke of a list, I even heard using sqrt() is faster than this list lookup, honk.
 // List of square roots for the numbers 1-100.
 var/list/sqrtTable = list(1, 1, 1, 2, 2, 2, 2, 2, 3, 3, 3, 3, 3, 3, 3, 4, 4, 4, 4, 4, 4, 4, 4, 4, 5,
                           5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 7, 7,
                           7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8,
                           8, 8, 8, 8, 8, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 10)
-*/
 
 /proc/Atan2(x, y)
 	writepanic("[__FILE__].[__LINE__] (no type)([usr ? usr.ckey : ""])  \\/proc/Atan2() called tick#: [world.time]")

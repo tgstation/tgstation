@@ -53,7 +53,7 @@
 			client.screen -= tool_state
 	tool_state = W
 	W.layer = 20
-	W.forceMove(src)
+	contents += W
 
 	// Make crap we pick up active so there's less clicking and carpal. - N3X
 	module_active=tool_state
@@ -168,7 +168,7 @@
 		tool_state = null
 		inv_tool.icon_state = "inv1"
 	if(is_in_modules(TS))
-		TS.forceMove(src.module)
+		TS.loc = src.module
 	hud_used.update_robot_modules_display()
 
 /mob/living/silicon/robot/mommi/uneq_all()
@@ -229,7 +229,7 @@
 		tool_state = null
 		inv_tool.icon_state = "inv1"
 		if(is_in_modules(TS))
-			TS.forceMove(src.module)
+			TS.loc = src.module
 		hud_used.update_robot_modules_display()
 
 

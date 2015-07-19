@@ -12,10 +12,14 @@
 	use_power = 1
 	idle_power_usage = 50
 
-	light_color = LIGHT_COLOR_CYAN
-	light_range_on = 3
-	light_power_on = 2
-	use_auto_lights = 1
+	l_color = "#7BF9FF"
+
+	power_change()
+		..()
+		if(!(stat & (BROKEN|NOPOWER)))
+			SetLuminosity(2)
+		else
+			SetLuminosity(0)
 
 	var/prints_prosthetics
 	var/stored_matter = 200

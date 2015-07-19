@@ -1138,7 +1138,7 @@
 
 	overlays.len = 0
 	if(stat == 0 && cell != null)
-		overlays += image(icon,"eyes-[icon_state]", LIGHTING_LAYER + 1)
+		overlays += image(icon,"eyes-[icon_state]",LIGHTING_LAYER+1)
 
 	if(opened)
 		if(custom_sprite)//Custom borgs also have custom panels, heh

@@ -52,9 +52,7 @@ max volume of plasma storeable by the field = the total volume of a number of ti
 	icon = 'code/WorkInProgress/Cael_Aislinn/Rust/rust.dmi'
 	icon_state = "core0"
 	density = 1
-	light_power_on = 2
-	light_range_on = 3
-	light_color = LIGHT_COLOR_BLUE
+	l_color = LIGHT_COLOR_BLUE
 
 	var/obj/effect/rust_em_field/owned_field
 	var/field_strength = 1//0.01
@@ -119,7 +117,7 @@ max volume of plasma storeable by the field = the total volume of a number of ti
 	owned_field = new(loc, src)
 	owned_field.ChangeFieldStrength(field_strength)
 	owned_field.ChangeFieldFrequency(field_frequency)
-	set_light(light_range_on, light_power_on)
+	SetLuminosity(2)
 	icon_state = "core1"
 	use_power = 2
 	. = 1
@@ -131,7 +129,7 @@ max volume of plasma storeable by the field = the total volume of a number of ti
 		icon_state = "core0"
 		qdel(owned_field)
 		use_power = 1
-		set_light(0)
+		SetLuminosity(0)
 
 /obj/machinery/power/rust_core/proc/AddParticles(var/name, var/quantity = 1)
 	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/power/rust_core/proc/AddParticles() called tick#: [world.time]")

@@ -149,9 +149,9 @@
 	update_lightsource()
 	handle_mob_bumping()
 	if(warp)
-		warp.forceMove(loc)
+		warp.loc = src.loc
 	if(busjuke)
-		busjuke.forceMove(loc)
+		busjuke.loc = src.loc
 		busjuke.dir = dir
 		if(busjuke.icon_state)
 			busjuke.repack()
@@ -161,10 +161,10 @@
 		var/atom/A = passengers[i]
 		if(isliving(A))
 			var/mob/living/M = A
-			M.forceMove(loc)
+			M.loc = src.loc
 		else if(isbot(A))
 			var/obj/machinery/bot/B = A
-			B.forceMove(loc)
+			B.loc = src.loc
 	for(var/obj/structure/hookshot/H in hookshot)
 		H.forceMove(get_step(H,src.dir))
 
@@ -172,40 +172,40 @@
 	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/structure/stool/bed/chair/vehicle/adminbus/proc/update_lightsource() called tick#: [world.time]")
 	var/turf/T = get_step(src,src.dir)
 	if(T.opacity)
-		lightsource.forceMove(T)
+		lightsource.loc = T
 		switch(roadlights)							//if the bus is right against a wall, only the wall's tile is lit
 			if(0)
-				if(lightsource.light_range != 0)
-					lightsource.set_light(0)
+				if(lightsource.luminosity != 0)
+					lightsource.SetLuminosity(0)
 			if(1,2)
-				if(lightsource.light_range != 1)
-					lightsource.set_light(1)
+				if(lightsource.luminosity != 1)
+					lightsource.SetLuminosity(1)
 	else
 		T = get_step(T,src.dir)						//if there is a wall two tiles in front of the bus, the lightsource is right in front of the bus, though weaker
 		if(T.opacity)
-			lightsource.forceMove(get_step(src,src.dir))
+			lightsource.loc = get_step(src,src.dir)
 			switch(roadlights)
 				if(0)
-					if(lightsource.light_range != 0)
-						lightsource.set_light(0)
+					if(lightsource.luminosity != 0)
+						lightsource.SetLuminosity(0)
 				if(1)
-					if(lightsource.light_range != 1)
-						lightsource.set_light(1)
+					if(lightsource.luminosity != 1)
+						lightsource.SetLuminosity(1)
 				if(2)
-					if(lightsource.light_range != 2)
-						lightsource.set_light(2)
+					if(lightsource.luminosity != 2)
+						lightsource.SetLuminosity(2)
 		else
-			lightsource.forceMove(T)
-			switch(roadlights)						//otherwise, the lightsource position itself two tiles in front of the bus and with regular light_range
+			lightsource.loc = T
+			switch(roadlights)						//otherwise, the lightsource position itself two tiles in front of the bus and with regular luminosity
 				if(0)
-					if(lightsource.light_range != 0)
-						lightsource.set_light(0)
+					if(lightsource.luminosity != 0)
+						lightsource.SetLuminosity(0)
 				if(1)
-					if(lightsource.light_range != 2)
-						lightsource.set_light(2)
+					if(lightsource.luminosity != 2)
+						lightsource.SetLuminosity(2)
 				if(2)
-					if(lightsource.light_range != 3)
-						lightsource.set_light(3)
+					if(lightsource.luminosity != 3)
+						lightsource.SetLuminosity(3)
 
 
 /obj/structure/stool/bed/chair/vehicle/adminbus/proc/handle_mob_bumping()
@@ -508,7 +508,7 @@
 	forceMove(get_step_towards(src,abus))
 	max_distance++
 	if(max_distance >= 7)
-		qdel(src)
+		del(src)
 		return
 	sleep(2)
 	.()
@@ -527,7 +527,7 @@
 		if(abus.buckled_mob)
 			abus.buckled_mob.gui_icons.adminbus_hook.icon_state = "icon_hook"
 		abus.hook = 1
-		qdel(src)
+		del(src)
 		return
 	sleep(2)
 	.()

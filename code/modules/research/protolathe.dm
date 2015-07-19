@@ -16,7 +16,7 @@ it creates. All the menus and other manipulation commands are in the R&D console
 	build_time = PROTOLATHE_BUILD_TIME
 	build_number = 2
 
-	light_color = LIGHT_COLOR_CYAN
+	l_color = "#7BF9FF"
 
 	research_flags = CONSOLECONTROL | HASOUTPUT | TAKESMATIN | HASMAT_OVER | LOCKBOXES
 
@@ -36,9 +36,9 @@ it creates. All the menus and other manipulation commands are in the R&D console
 /obj/machinery/r_n_d/fabricator/protolathe/power_change()
 	..()
 	if(!(stat & (BROKEN|NOPOWER)))
-		set_light(2)
+		SetLuminosity(2)
 	else
-		set_light(0)
+		SetLuminosity(0)
 
 /obj/machinery/r_n_d/fabricator/protolathe/New()
 	. = ..()

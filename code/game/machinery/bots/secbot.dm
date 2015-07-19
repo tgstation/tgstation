@@ -58,13 +58,13 @@
 		/obj/item/weapon/gun/energy/laser/bluetag,\
 		/obj/item/weapon/gun/energy/laser/redtag,\
 		/obj/item/weapon/gun/energy/laser/practice)
-	light_color = LIGHT_COLOR_RED
+	l_color = "#B40000"
 	power_change()
 		..()
 		if(src.on)
-			set_light(2)
+			SetLuminosity(2)
 		else
-			set_light(0)
+			SetLuminosity(0)
 
 
 /obj/machinery/bot/secbot/beepsky

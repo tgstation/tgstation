@@ -94,10 +94,11 @@
 /obj/machinery/alarm/proc/apply_preset(var/no_cycle_after=0)
 	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/alarm/proc/apply_preset() called tick#: [world.time]")
 	// Propogate settings.
-	for (var/obj/machinery/alarm/AA in areaMaster)
-		if ( !(AA.stat & (NOPOWER|BROKEN)) && !AA.shorted && AA.preset != src.preset)
-			AA.preset=preset
-			apply_preset(1) // Only this air alarm should send a cycle.
+	for (var/area/A in areaMaster.related)
+		for (var/obj/machinery/alarm/AA in A)
+			if ( !(AA.stat & (NOPOWER|BROKEN)) && !AA.shorted && AA.preset != src.preset)
+				AA.preset=preset
+				apply_preset(1) // Only this air alarm should send a cycle.
 
 	TLV["oxygen"] =			list(16, 19, 135, 140) // Partial pressure, kpa
 	TLV["nitrogen"] =		list(-1, -1,  -1,  -1) // Partial pressure, kpa
@@ -299,10 +300,11 @@
 
 /obj/machinery/alarm/proc/elect_master()
 	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/alarm/proc/elect_master() called tick#: [world.time]")
-	for (var/obj/machinery/alarm/AA in areaMaster)
-		if (!(AA.stat & (NOPOWER|BROKEN)))
-			areaMaster.master_air_alarm = AA
-			return 1
+	for (var/area/A in areaMaster.related)
+		for (var/obj/machinery/alarm/AA in A)
+			if (!(AA.stat & (NOPOWER|BROKEN)))
+				areaMaster.master_air_alarm = AA
+				return 1
 	return 0
 
 /obj/machinery/alarm/proc/get_danger_level(const/current_value, const/list/danger_levels)

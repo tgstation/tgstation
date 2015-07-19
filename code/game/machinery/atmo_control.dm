@@ -122,7 +122,7 @@
 	var/list/sensor_information = list()
 	var/datum/radio_frequency/radio_connection
 
-	light_color = LIGHT_COLOR_CYAN
+	l_color = "#7BF9FF"
 
 /obj/machinery/computer/general_air_control/attack_hand(mob/user)
 	if(..(user))

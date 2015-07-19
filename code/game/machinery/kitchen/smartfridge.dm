@@ -26,13 +26,13 @@
 
 	machine_flags = SCREWTOGGLE | CROWDESTROY | EJECTNOTDEL
 
-	light_color = LIGHT_COLOR_CYAN
+	l_color = "#7BF9FF"
 	power_change()
 		..()
 		if(!(stat & (BROKEN|NOPOWER)))
-			set_light(2)
+			SetLuminosity(2)
 		else
-			set_light(0)
+			SetLuminosity(0)
 
 
 /********************************************************************
@@ -72,7 +72,7 @@
 
 	accepted_types = list(/obj/item/seeds)
 
-	light_color = null
+	l_color = "#000000"
 
 /obj/machinery/smartfridge/seeds/New()
 	. = ..()

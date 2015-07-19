@@ -20,7 +20,7 @@
 
 	var/temp = ""				// temporary feedback messages
 
-	light_color = LIGHT_COLOR_GREEN
+	l_color = "#50AB00"
 
 /obj/machinery/computer/telecomms/monitor/attack_hand(mob/user as mob)
 	if(stat & (BROKEN|NOPOWER))

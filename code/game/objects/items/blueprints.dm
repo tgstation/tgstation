@@ -28,10 +28,11 @@
 	return
 
 /obj/item/blueprints/Topic(href, href_list)
-	. = ..()
-	if(.)
+	..()
+	if ((usr.restrained() || usr.stat || usr.get_active_hand() != src))
 		return
-
+	if (!href_list["action"])
+		return
 	switch(href_list["action"])
 		if ("create_area")
 			if (get_area_type()!=AREA_SPACE)
@@ -126,6 +127,8 @@ move an amendment</a> to the drawing.</p>
 	var/area/oldarea = get_area(usr)
 	newarea.name = str
 	newarea.tag = "[newarea.type]/[md5(str)]"
+	newarea.tagbase = "[newarea.type]_[md5(str)]" // without this dynamic light system ruin everithing
+	newarea.master = newarea
 	newarea.power_equip = 0
 	newarea.power_light = 0
 	newarea.power_environ = 0

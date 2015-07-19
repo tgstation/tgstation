@@ -117,7 +117,7 @@
 					emote_hear = list("barks", "woofs", "yaps","pants")
 					emote_see = list("shakes its head", "shivers")
 					desc = "It's a corgi."
-					set_light(0)
+					SetLuminosity(0)
 					inventory_head.loc = src.loc
 					inventory_head = null
 					regenerate_icons()

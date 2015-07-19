@@ -6,7 +6,7 @@
 	item_state = "candle1"
 	w_class = 1
 	heat_production = 1000
-	light_color = LIGHT_COLOR_FIRE
+	l_color = LIGHT_COLOR_FIRE
 
 	var/wax = 200
 	var/lit = 0
@@ -31,7 +31,7 @@
 	if(!src.lit)
 		src.lit = 1
 		visible_message(flavor_text)
-		set_light(CANDLE_LUM)
+		SetLuminosity(CANDLE_LUM)
 		processing_objects.Add(src)
 
 /obj/item/candle/process()
@@ -52,7 +52,18 @@
 	if(lit)
 		lit = 0
 		update_icon()
-		set_light(0)
+		SetLuminosity(0)
+		user.SetLuminosity(user.luminosity - CANDLE_LUM)
+
+/obj/item/candle/pickup(mob/user)
+	if(lit)
+		SetLuminosity(0)
+		user.SetLuminosity(user.luminosity + CANDLE_LUM)
+
+/obj/item/candle/dropped(mob/user)
+	if(lit && !luminosity)
+		user.SetLuminosity(user.luminosity - CANDLE_LUM)
+		SetLuminosity(CANDLE_LUM)
 
 /obj/item/candle/is_hot()
 	if(lit)

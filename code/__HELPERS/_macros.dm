@@ -93,8 +93,6 @@
 
 #define iscamera(A) istype(A, /obj/machinery/camera)
 
-#define islightingoverlay(A) (istype(A, /atom/movable/lighting_overlay))
-
 //Macros for antags
 
 #define isvampire(H) ((H.mind in ticker.mode.vampires) || H.mind.vampire)

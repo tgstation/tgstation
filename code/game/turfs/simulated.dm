@@ -11,7 +11,6 @@
 	var/drying = 0 // tracking if something is currently drying
 /turf/simulated/New()
 	..()
-
 	if(istype(loc, /area/chapel))
 		holy = 1
 	levelupdate()

@@ -32,6 +32,11 @@
 		getFromPool(/mob/virtualhearer, src)
 
 /atom/movable/Destroy()
+	if(opacity)
+		if(isturf(loc))
+			if(loc:lighting_lumcount > 1)
+				UpdateAffectingLights()
+
 	if(flags & HEAR && !ismob(src))
 		for(var/mob/virtualhearer/VH in virtualhearers)
 			if(VH.attached == src)

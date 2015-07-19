@@ -13,7 +13,7 @@
 	var/stop = 0.0
 	var/screen = 0 // 0 - No Access Denied, 1 - Access allowed
 
-	light_color = LIGHT_COLOR_RED
+	l_color = "#B40000"
 
 	attack_ai(var/mob/user as mob)
 		src.add_hiddenprint(user)

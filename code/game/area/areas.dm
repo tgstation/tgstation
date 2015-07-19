@@ -10,7 +10,9 @@
 /area/New()
 	icon_state = ""
 	layer = 10
+	master = src //moved outside the spawn(1) to avoid runtimes in lighting.dm when it references loc.loc.master ~Carn
 	uid = ++global_uid
+	related = list(src)
 	areas |= src
 
 	if(type == /area)	// override defaults for space. TODO: make space areas of type /area/space rather than /area
@@ -23,18 +25,25 @@
 //		lighting_state = 4
 		//has_gravity = 0    // Space has gravity.  Because.. because.
 
-	if(!requires_power)
+	if(requires_power)
+		luminosity = 0
+	else
 		power_light = 0			//rastaf0
 		power_equip = 0			//rastaf0
 		power_environ = 0		//rastaf0
+		luminosity = 1
+		lighting_use_dynamic = 0
 
 	..()
 
 //	spawn(15)
 	power_change()		// all machines set to current power level, also updates lighting icon
+	InitializeLighting()
 
 /area/Destroy()
 	..()
+	for(var/area/A in src.related)
+		A.related -= src
 	areaapc = null
 
 /*
@@ -45,14 +54,18 @@
  * If you want to find machines, mobs, etc, in the same logical area,
  * you will need to check all the related areas.
  * This returns a master contents list to assist in that.
- * NOTE: Due to a new lighting engine this is now deprecated, but we're keeping this because I can't be bothered to relace everything that references this.
  */
 /proc/area_contents(const/area/A)
 	writepanic("[__FILE__].[__LINE__] (no type)([usr ? usr.ckey : ""])  \\/proc/area_contents() called tick#: [world.time]")
 	if (!isarea(A))
 		return
 
-	return A.contents
+	var/list/contents = list()
+
+	for(var/area/LSA in A.related)
+		contents |= LSA.contents
+
+	return contents
 
 /area/proc/poweralert(var/state, var/obj/source as obj)
 	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/area/proc/poweralert() called tick#: [world.time]")
@@ -61,12 +74,13 @@
 		poweralm = state
 		if(istype(source))	//Only report power alarms on the z-level where the source is located.
 			var/list/cameras = list()
-			for(var/obj/machinery/camera/C in src)
-				cameras += C
-				if(state == 1)
-					C.network.Remove("Power Alarms")
-				else
-					C.network.Add("Power Alarms")
+			for (var/area/RA in related)
+				for (var/obj/machinery/camera/C in RA)
+					cameras += C
+					if(state == 1)
+						C.network.Remove("Power Alarms")
+					else
+						C.network.Add("Power Alarms")
 			for (var/mob/living/silicon/aiPlayer in player_list)
 				if(aiPlayer.z == source.z)
 					if (state == 1)
@@ -74,7 +88,7 @@
 					else
 						aiPlayer.triggerAlarm("Power", src, cameras, source)
 			for(var/obj/machinery/computer/station_alert/a in machines)
-				if(src in (a.covered_areas))
+				if(master in (a.covered_areas))
 					if(state == 1)
 						a.cancelAlarm("Power", src, source)
 					else
@@ -95,15 +109,16 @@
 	var/danger_level = 0
 
 	// Determine what the highest DL reported by air alarms is
-	for(var/obj/machinery/alarm/AA in src)
-		if((AA.stat & (NOPOWER|BROKEN)) || AA.shorted || AA.buildstage != 2)
-			continue
-		var/reported_danger_level=AA.local_danger_level
-		if(AA.alarmActivated)
-			reported_danger_level=2
-		if(reported_danger_level>danger_level)
-			danger_level=reported_danger_level
-		//testing("Danger level at [AA.name]: [AA.local_danger_level] (reported [reported_danger_level])")
+	for (var/area/RA in related)
+		for(var/obj/machinery/alarm/AA in RA)
+			if((AA.stat & (NOPOWER|BROKEN)) || AA.shorted || AA.buildstage != 2)
+				continue
+			var/reported_danger_level=AA.local_danger_level
+			if(AA.alarmActivated)
+				reported_danger_level=2
+			if(reported_danger_level>danger_level)
+				danger_level=reported_danger_level
+			//testing("Danger level at [AA.name]: [AA.local_danger_level] (reported [reported_danger_level])")
 
 	//testing("Danger level decided upon in [name]: [danger_level] (from [atmosalm])")
 
@@ -112,25 +127,27 @@
 		// Going to danger level 2 from something else
 		if (danger_level == 2)
 			var/list/cameras = list()
-			//updateicon()
-			for(var/obj/machinery/camera/C in src)
-				cameras += C
-				C.network.Add("Atmosphere Alarms")
+			for(var/area/RA in related)
+				//updateicon()
+				for(var/obj/machinery/camera/C in RA)
+					cameras += C
+					C.network.Add("Atmosphere Alarms")
 			for(var/mob/living/silicon/aiPlayer in player_list)
 				aiPlayer.triggerAlarm("Atmosphere", src, cameras, src)
 			for(var/obj/machinery/computer/station_alert/a in machines)
-				if(src in (a.covered_areas))
+				if(master in (a.covered_areas))
 					a.triggerAlarm("Atmosphere", src, cameras, src)
 			door_alerts |= DOORALERT_ATMOS
 			UpdateFirelocks()
 		// Dropping from danger level 2.
 		else if (atmosalm == 2)
-			for(var/obj/machinery/camera/C in src)
-				C.network.Remove("Atmosphere Alarms")
+			for(var/area/RA in related)
+				for(var/obj/machinery/camera/C in RA)
+					C.network.Remove("Atmosphere Alarms")
 			for(var/mob/living/silicon/aiPlayer in player_list)
 				aiPlayer.cancelAlarm("Atmosphere", src, src)
 			for(var/obj/machinery/computer/station_alert/a in machines)
-				if(src in (a.covered_areas))
+				if(master in (a.covered_areas))
 					a.cancelAlarm("Atmosphere", src, src)
 			door_alerts &= ~DOORALERT_ATMOS
 			UpdateFirelocks()
@@ -146,14 +163,15 @@
 	var/danger_level = 0
 
 	// Determine what the highest DL reported by air alarms is
-	for(var/obj/machinery/alarm/AA in src)
-		if((AA.stat & (NOPOWER|BROKEN)) || AA.shorted || AA.buildstage != 2)
-			continue
-		var/reported_danger_level=AA.local_danger_level
-		if(AA.alarmActivated)
-			reported_danger_level=2
-		if(reported_danger_level>danger_level)
-			danger_level=reported_danger_level
+	for (var/area/RA in related)
+		for(var/obj/machinery/alarm/AA in RA)
+			if((AA.stat & (NOPOWER|BROKEN)) || AA.shorted || AA.buildstage != 2)
+				continue
+			var/reported_danger_level=AA.local_danger_level
+			if(AA.alarmActivated)
+				reported_danger_level=2
+			if(reported_danger_level>danger_level)
+				danger_level=reported_danger_level
 
 	if (danger_level == 2)
 		a.triggerAlarm("Atmosphere", src, null, src)
@@ -205,13 +223,14 @@
 		door_alerts |= DOORALERT_FIRE
 		UpdateFirelocks()
 		var/list/cameras = list()
-		for (var/obj/machinery/camera/C in src)
-			cameras.Add(C)
-			C.network.Add("Fire Alarms")
+		for(var/area/RA in related)
+			for (var/obj/machinery/camera/C in RA)
+				cameras.Add(C)
+				C.network.Add("Fire Alarms")
 		for (var/mob/living/silicon/ai/aiPlayer in player_list)
 			aiPlayer.triggerAlarm("Fire", src, cameras, src)
 		for (var/obj/machinery/computer/station_alert/a in machines)
-			if(src in (a.covered_areas))
+			if(master in (a.covered_areas))
 				a.triggerAlarm("Fire", src, cameras, src)
 
 /area/proc/send_firealert(var/obj/machinery/computer/station_alert/a)//sending alerts to newly built Station Alert Computers.
@@ -225,12 +244,13 @@
 		fire = 0
 		mouse_opacity = 0
 		updateicon()
-		for (var/obj/machinery/camera/C in src)
-			C.network.Remove("Fire Alarms")
+		for(var/area/RA in related)
+			for (var/obj/machinery/camera/C in RA)
+				C.network.Remove("Fire Alarms")
 		for (var/mob/living/silicon/ai/aiPlayer in player_list)
 			aiPlayer.cancelAlarm("Fire", src, src)
 		for (var/obj/machinery/computer/station_alert/a in machines)
-			if(src in (a.covered_areas))
+			if(master in (a.covered_areas))
 				a.cancelAlarm("Fire", src, src)
 		door_alerts &= ~DOORALERT_FIRE
 		UpdateFirelocks()
@@ -307,6 +327,12 @@
 	//	new lighting behaviour with obj lights
 		icon_state = null
 
+	// We're master, Update children.
+	for(var/area/A in related)
+		if(A && A!=src)
+			// Propogate
+			A.icon_state=icon_state
+
 
 /*
 #define EQUIP 1
@@ -318,17 +344,17 @@
 
 	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/area/proc/powered() called tick#: [world.time]")
 
-	if(!requires_power)
+	if(!master.requires_power)
 		return 1
-	if(always_unpowered)
+	if(master.always_unpowered)
 		return 0
 	switch(chan)
 		if(EQUIP)
-			return power_equip
+			return master.power_equip
 		if(LIGHT)
-			return power_light
+			return master.power_light
 		if(ENVIRON)
-			return power_environ
+			return master.power_environ
 
 	return 0
 
@@ -337,28 +363,29 @@
  */
 /area/proc/power_change()
 	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/area/proc/power_change() called tick#: [world.time]")
-	for(var/obj/machinery/M in src)	// for each machine in the area
-		M.power_change()				// reverify power status (to update icons etc.)
-	if (fire || eject || party)
-		updateicon()
+	for(var/area/RA in related)
+		for(var/obj/machinery/M in RA)	// for each machine in the area
+			M.power_change()				// reverify power status (to update icons etc.)
+		if (fire || eject || party)
+			RA.updateicon()
 
 /area/proc/usage(const/chan)
 	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/area/proc/usage() called tick#: [world.time]")
 	switch (chan)
 		if (LIGHT)
-			return used_light
+			return master.used_light
 		if (EQUIP)
-			return used_equip
+			return master.used_equip
 		if (ENVIRON)
-			return used_environ
+			return master.used_environ
 		if (TOTAL)
-			return used_light + used_equip + used_environ
+			return master.used_light + master.used_equip + master.used_environ
 		if(STATIC_EQUIP)
-			return static_equip
+			return master.static_equip
 		if(STATIC_LIGHT)
-			return static_light
+			return master.static_light
 		if(STATIC_ENVIRON)
-			return static_environ
+			return master.static_environ
 	return 0
 
 /area/proc/addStaticPower(value, powerchannel)
@@ -372,36 +399,36 @@
 			static_environ += value
 
 /area/proc/clear_usage()
-	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/area/proc/clear_usage() called tick#: [world.time]")
-	used_equip = 0
-	used_light = 0
-	used_environ = 0
+	master.used_equip = 0
+	master.used_light = 0
+	master.used_environ = 0
 
 /area/proc/use_power(const/amount, const/chan)
 	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/area/proc/use_power() called tick#: [world.time]")
 	switch (chan)
 		if(EQUIP)
-			used_equip += amount
+			master.used_equip += amount
 		if(LIGHT)
-			used_light += amount
+			master.used_light += amount
 		if(ENVIRON)
-			used_environ += amount
+			master.used_environ += amount
 
 /area/Entered(atom/movable/Obj, atom/OldLoc)
-	var/area/oldArea = Obj.areaMaster
-	Obj.areaMaster = src
+	var/area/oldAreaMaster = Obj.areaMaster
+	Obj.areaMaster = master
+
 	if (!ismob(Obj))
 		return
 
 	var/mob/M = Obj
 
 	// /vg/ - EVENTS!
-	CallHook("MobAreaChange", list("mob" = M, "new" = Obj.areaMaster, "old" = oldArea))
+	CallHook("MobAreaChange", list("mob" = M, "new" = Obj.areaMaster, "old" = oldAreaMaster))
 
 	// Being ready when you change areas gives you a chance to avoid falling all together.
-	if(!oldArea || !M.areaMaster)
+	if(!oldAreaMaster || !M.areaMaster)
 		thunk(M)
-	else if (!oldArea.has_gravity && M.areaMaster.has_gravity && M.m_intent == "run")
+	else if (!oldAreaMaster.has_gravity && M.areaMaster.has_gravity && M.m_intent == "run")
 		thunk(M)
 
 	if (isnull(M.client))
@@ -451,11 +478,12 @@
 
 	A.has_gravity = gravitystate
 
-	A.has_gravity = gravitystate
+	for(var/area/SubA in A.related)
+		SubA.has_gravity = gravitystate
 
-	if(gravitystate)
-		for(var/mob/living/carbon/human/M in A)
-			thunk(M)
+		if(gravitystate)
+			for(var/mob/living/carbon/human/M in SubA)
+				thunk(M)
 
 /area/proc/thunk(mob)
 	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/area/proc/thunk() called tick#: [world.time]")
@@ -478,9 +506,11 @@
 
 /area/proc/set_apc(var/obj/machinery/power/apc/apctoset)
 	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/area/proc/set_apc() called tick#: [world.time]")
-	areaapc = apctoset
+	for(var/area/A in src.related)
+		A.areaapc = apctoset
 
 /area/proc/remove_apc(var/obj/machinery/power/apc/apctoremove)
 	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/area/proc/remove_apc() called tick#: [world.time]")
-	if(areaapc == apctoremove)
-		areaapc = null
+	for(var/area/A in src.related)
+		if(A.areaapc == apctoremove)
+			A.areaapc = null

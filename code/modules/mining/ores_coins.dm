@@ -193,7 +193,7 @@
 /obj/item/weapon/ore/cytine/attack_hand(mob/user as mob)
 	var/obj/item/weapon/glowstick/G = new /obj/item/weapon/glowstick(user.loc)
 	G.color = color
-	G.light_color = color
+	G.l_color = color
 	del(src)
 
 /obj/item/weapon/ore/uqill

@@ -21,7 +21,7 @@ var/specops_shuttle_timeleft = 0
 	var/allowedtocall = 0
 	var/specops_shuttle_timereset = 0
 
-	light_color = LIGHT_COLOR_CYAN
+	l_color = "#7BF9FF"
 
 /proc/specops_return()
 	writepanic("[__FILE__].[__LINE__] (no type)([usr ? usr.ckey : ""])  \\/proc/specops_return() called tick#: [world.time]")
@@ -320,6 +320,8 @@ var/specops_shuttle_timeleft = 0
 
 		var/area/centcom/specops/special_ops = locate()
 		if(special_ops)
+			if(special_ops.master)
+				special_ops=special_ops.master
 			special_ops.readyalert()//Trigger alarm for the spec ops area.
 		specops_shuttle_moving_to_station = 1
 

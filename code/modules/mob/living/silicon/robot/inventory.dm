@@ -28,7 +28,7 @@
 
 	contents -= module
 	if(module)
-		module.forceMove(src.module)
+		module.loc = src.module
 	hud_used.update_robot_modules_display()
 	return 1
 
@@ -80,21 +80,21 @@
 		module_state_1 = O
 		O.layer = 20
 		O.screen_loc = inv1.screen_loc
-		O.forceMove(src)
+		contents += O
 		if(istype(module_state_1,/obj/item/borg/sight))
 			sight_mode |= module_state_1:sight_mode
 	else if(!module_state_2)
 		module_state_2 = O
 		O.layer = 20
 		O.screen_loc = inv2.screen_loc
-		O.forceMove(src)
+		contents += O
 		if(istype(module_state_2,/obj/item/borg/sight))
 			sight_mode |= module_state_2:sight_mode
 	else if(!module_state_3)
 		module_state_3 = O
 		O.layer = 20
 		O.screen_loc = inv3.screen_loc
-		O.forceMove(src)
+		contents += O
 		if(istype(module_state_3,/obj/item/borg/sight))
 			sight_mode |= module_state_3:sight_mode
 	else

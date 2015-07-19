@@ -3,7 +3,7 @@
 	desc = "It can be used to download Apps on your PDA."
 	icon_state = "pdaterm"
 	circuit = "/obj/item/weapon/circuitboard/pda_terminal"
-	light_color = LIGHT_COLOR_ORANGE
+	l_color = "#993300"
 
 	var/obj/item/device/pda/pda_device = null
 

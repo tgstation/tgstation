@@ -16,7 +16,7 @@
 	machine_flags = EMAGGABLE | SCREWTOGGLE | CROWDESTROY | WRENCHMOVE | FIXED2WORK
 	emag_cost = 0 // because fun
 
-	light_color = LIGHT_COLOR_GREEN
+	l_color = "#00FF00"
 
 	var/list/prizes = list(	/obj/item/weapon/storage/box/snappops			= 2,
 							/obj/item/toy/cards								= 2,

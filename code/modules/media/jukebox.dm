@@ -687,7 +687,7 @@ var/global/loopModeNames=list(
 	desc = "It really doesn't get any better."
 	icon = 'icons/obj/bus.dmi'
 	icon_state = ""
-	light_color = LIGHT_COLOR_BLUE
+	l_color = "#000066"
 	luminosity = 0
 	layer = FLY_LAYER+1
 	pixel_x = -32
@@ -716,7 +716,7 @@ var/global/loopModeNames=list(
 	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/media/jukebox/superjuke/adminbus/proc/deploy() called tick#: [world.time]")
 	update_media_source()
 	icon_state = "jukebox"
-	set_light(4)
+	SetLuminosity(4)
 	flick("deploying",src)
 
 /obj/machinery/media/jukebox/superjuke/adminbus/proc/repack()
@@ -727,7 +727,7 @@ var/global/loopModeNames=list(
 	if(popup)
 		popup.close()
 	playing = 0
-	set_light(0)
+	SetLuminosity(0)
 	icon_state = ""
 	flick("repacking",src)
 	update_music()

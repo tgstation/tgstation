@@ -22,9 +22,7 @@
 	var/mob/living/carbon/occupant
 	var/locked
 
-	light_color = LIGHT_COLOR_GREEN
-	light_range_on = 3
-	light_power_on = 2
+	l_color = "#00FF00"
 
 /obj/machinery/bodyscanner/New()
 	..()
@@ -83,9 +81,9 @@
 /obj/machinery/bodyscanner/power_change()
 	..()
 	if(!(stat & (BROKEN|NOPOWER)) && src.occupant)
-		set_light(light_range_on, light_power_on)
+		SetLuminosity(2)
 	else
-		set_light(0)
+		SetLuminosity(0)
 
 /obj/machinery/bodyscanner/MouseDrop_T(atom/movable/O as mob|obj, mob/user as mob)
 	if(!ismob(O)) //humans only
@@ -133,8 +131,6 @@
 		OO.loc = src.loc
 		//Foreach goto(154)
 	src.add_fingerprint(user)
-	if(!(stat & (BROKEN|NOPOWER)))
-		set_light(light_range_on, light_power_on)
 	return
 
 /obj/machinery/bodyscanner/MouseDrop(over_object, src_location, var/turf/over_location, src_control, over_control, params)
@@ -207,8 +203,6 @@
 	for(var/obj/O in src)
 		qdel(O)
 	src.add_fingerprint(usr)
-	if(!(stat & (BROKEN|NOPOWER)))
-		set_light(light_range_on, light_power_on)
 	return
 
 /obj/machinery/bodyscanner/proc/go_out(var/exit = loc)
@@ -222,7 +216,6 @@
 	src.occupant.reset_view()
 	src.occupant = null
 	update_icon()
-	set_light(0)
 	return
 
 /obj/machinery/bodyscanner/crowbarDestroy(mob/user)
@@ -273,8 +266,6 @@
 		O.loc = src.loc
 	src.add_fingerprint(user)
 	qdel(G)
-	if(!(stat & (BROKEN|NOPOWER)))
-		set_light(light_range_on, light_power_on)
 	return
 
 /obj/machinery/bodyscanner/ex_act(severity)

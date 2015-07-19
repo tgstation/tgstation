@@ -32,7 +32,7 @@
 	var/customjob		= "Admin"
 	var/custommessage 	= "This is a test, please ignore."
 
-	light_color = LIGHT_COLOR_GREEN
+	l_color = "#50AB00"
 
 
 /obj/machinery/computer/message_monitor/attackby(obj/item/weapon/O as obj, mob/living/user as mob)

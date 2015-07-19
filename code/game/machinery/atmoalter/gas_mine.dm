@@ -16,7 +16,7 @@
 	var/max_external_pressure=10000 // 10,000kPa ought to do it.
 	var/internal_pressure=4500 // Bottleneck
 
-	var/overlay_color = "#FFFFFF"
+	var/light_color = "#FFFFFF"
 
 	machine_flags = WRENCHMOVE | FIXED2WORK
 
@@ -72,7 +72,7 @@
 		return
 	if(on)
 		var/new_icon_state="on"
-		var/new_color = overlay_color
+		var/new_color = light_color
 		if(stat & BROKEN)
 			new_icon_state="broken"
 			new_color="#FF0000"
@@ -118,7 +118,7 @@
 
 /obj/machinery/atmospherics/miner/sleeping_agent
 	name = "\improper N2O Gas Miner"
-	overlay_color = "#FFCCCC"
+	light_color = "#FFCCCC"
 
 	AddAir()
 		var/datum/gas/sleeping_agent/trace_gas = new
@@ -127,28 +127,28 @@
 
 /obj/machinery/atmospherics/miner/nitrogen
 	name = "\improper N2 Gas Miner"
-	overlay_color = "#CCFFCC"
+	light_color = "#CCFFCC"
 
 	AddAir()
 		air_contents.nitrogen = internal_pressure*air_contents.volume/(R_IDEAL_GAS_EQUATION*air_contents.temperature)
 
 /obj/machinery/atmospherics/miner/oxygen
 	name = "\improper O2 Gas Miner"
-	overlay_color = "#007FFF"
+	light_color = "#007FFF"
 
 	AddAir()
 		air_contents.oxygen = internal_pressure*air_contents.volume/(R_IDEAL_GAS_EQUATION*air_contents.temperature)
 
 /obj/machinery/atmospherics/miner/toxins
 	name = "\improper Plasma Gas Miner"
-	overlay_color = "#FF0000"
+	light_color = "#FF0000"
 
 	AddAir()
 		air_contents.toxins = internal_pressure*air_contents.volume/(R_IDEAL_GAS_EQUATION*air_contents.temperature)
 
 /obj/machinery/atmospherics/miner/carbon_dioxide
 	name = "\improper CO2 Gas Miner"
-	overlay_color = "#CDCDCD"
+	light_color = "#CDCDCD"
 
 	AddAir()
 		air_contents.carbon_dioxide = internal_pressure*air_contents.volume/(R_IDEAL_GAS_EQUATION*air_contents.temperature)
@@ -157,7 +157,7 @@
 /obj/machinery/atmospherics/miner/air
 	name = "\improper Air Miner"
 	desc = "You fucking <em>cheater</em>."
-	overlay_color = "#70DBDB"
+	light_color = "#70DBDB"
 
 	on = 0
 

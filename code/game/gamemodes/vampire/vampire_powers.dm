@@ -36,8 +36,8 @@
 			src << "<span class='warning'>Your powers are useless on this holy ground.</span>"
 			return 0
 	if(check_holy(src) && !fullpower)
-		var/turf/T = get_turf(src)
-		if((T.get_lumcount() * 10) > 2)
+		var/turf/simulated/T = get_turf(src)
+		if(T.lighting_lumcount > 2)
 			src << "<span class='warning'>This ground has been blessed and illuminated, suppressing your abilities.</span>"
 			return 0
 	return 1
@@ -349,15 +349,16 @@
 		alpha = 255
 		color = "#FFFFFF"
 		return
+	var/turf/simulated/T = get_turf(src)
 
-	var/turf/T = get_turf(src)
+	if(!istype(T))
+		return 0
 
 	if(!mind.vampire.iscloaking)
 		alpha = 255
 		color = "#FFFFFF"
 		return 0
-
-	if((T.get_lumcount() * 10) <= 2)
+	if(T.lighting_lumcount <= 2)
 		alpha = round((255 * 0.15))
 		if(VAMP_SHADOW in mind.vampire.powers)
 			color = "#000000"
@@ -493,7 +494,9 @@
 				if(T.density) continue
 				if(T.x>world.maxx-outer_tele_radius || T.x<outer_tele_radius)	continue	//putting them at the edge is dumb
 				if(T.y>world.maxy-outer_tele_radius || T.y<outer_tele_radius)	continue
-				if((T.get_lumcount() * 10) > max_lum) continue
+
+				// LIGHTING CHECK
+				if(T.lighting_lumcount > max_lum) continue
 				turfs += T
 
 			if(!turfs.len)
@@ -540,14 +543,15 @@
 	if(!mind || !mind.vampire || !ishuman(src))
 		mind.vampire.ismenacing = 0
 		return
+	var/turf/simulated/T = get_turf(src)
+
+	if(!istype(T))
+		return 0
 
 	if(!mind.vampire.ismenacing)
 		mind.vampire.ismenacing = 0
 		return 0
-
-	var/turf/T = get_turf(src)
-
-	if(T.get_lumcount() > 2)
+	if(T.lighting_lumcount > 2)
 		mind.vampire.ismenacing = 0
 		return 0
 

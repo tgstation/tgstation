@@ -201,9 +201,10 @@
 	for(var/type in typesof(/area/hallway))
 		var/area/Hallway = locate(type)
 
-		for(var/turf/simulated/floor/Floor in Hallway.contents)
-			if(Floor.contents.len <= 0)
-				Floors += Floor
+		for(var/area/Related in Hallway.related)
+			for(var/turf/simulated/floor/Floor in Related.contents)
+				if(Floor.contents.len <= 0)
+					Floors += Floor
 
 	if(Floors.len) // pick a floor to spawn at
 		var/turf/simulated/floor/Floor = pick(Floors)

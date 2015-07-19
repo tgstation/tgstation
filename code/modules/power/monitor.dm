@@ -6,11 +6,6 @@
 	icon = 'icons/obj/computer.dmi'
 	icon_state = "power"
 
-	use_auto_lights = 1
-	light_range_on = 3
-	light_power_on = 2
-	light_color = LIGHT_COLOR_YELLOW
-
 	//computer stuff
 	density = 1
 	anchored = 1.0

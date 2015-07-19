@@ -45,7 +45,7 @@ var/global/list/pda_app_menus = list(
 	..()
 	pda_device.f_lum = 3
 	if(pda_device.fon)
-		pda_device.set_light(pda_device.f_lum)
+		pda_device.SetLuminosity(pda_device.f_lum)
 
 /datum/pda_app/spam_filter
 	name = "Spam Filter"

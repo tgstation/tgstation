@@ -20,7 +20,7 @@ var/global/list/taxi_computers = list()
 	var/letter = ""
 	var/list/connected_buttons = list()
 
-	light_color = LIGHT_COLOR_RED
+	l_color = "#B40000"
 
 /obj/machinery/computer/taxi_shuttle/New()
 	..()

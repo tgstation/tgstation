@@ -16,7 +16,7 @@
 	var/temp = null
 	var/printing = null
 
-	light_color = LIGHT_COLOR_BLUE
+	l_color = "#0000FF"
 
 /obj/machinery/computer/med_data/attack_ai(user as mob)
 	src.add_hiddenprint(user)
@@ -524,6 +524,6 @@
 	anchored = 0
 	density = 0
 
-	light_color = LIGHT_COLOR_GREEN
+	l_color = "#00FF00"
 
 

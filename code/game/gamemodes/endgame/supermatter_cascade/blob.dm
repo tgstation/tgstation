@@ -7,22 +7,21 @@
 	icon_state = "bluespace"
 
 	//luminosity = 5
-	//light_color="#0066FF"
-	layer = LIGHTING_LAYER + 1
+	//l_color="#0066FF"
+	layer = LIGHTING_LAYER+1
 
 	var/spawned=0 // DIR mask
 	var/next_check=0
 	var/list/avail_dirs = list(NORTH,SOUTH,EAST,WEST)
 
-	dynamic_lighting = 0
-
 /turf/unsimulated/wall/supermatter/New()
-	processing_objects |= src
-	return ..()
+	..()
+	processing_objects.Add(src)
+	next_check = world.time+5 SECONDS
 
 /turf/unsimulated/wall/supermatter/Destroy()
-	processing_objects -= src
-	return ..()
+	processing_objects.Remove(src)
+	..()
 
 /turf/unsimulated/wall/supermatter/process()
 	// Only check infrequently.
@@ -117,4 +116,4 @@
 	if(istype(user,/mob/dead/observer))
 		return
 
-	qdel(user)
+	del(user)

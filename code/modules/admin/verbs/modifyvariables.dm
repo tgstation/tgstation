@@ -503,26 +503,15 @@ var/list/forbidden_varedit_object_types = list(
 			return .(O.vars[variable])
 
 		if("text")
-			if(variable == "light_color")
-				var/var_new = input("Enter new text:","Text",O.vars[variable]) as null|message
-				if(var_new==null) return
-				O.set_light(l_color = var_new)
-			else
-				var/var_new = input("Enter new text:","Text",O.vars[variable]) as null|message
-				if(var_new==null) return
-				O.vars[variable] = var_new
+			var/var_new = input("Enter new text:","Text",O.vars[variable]) as null|message
+			if(var_new==null) return
+			O.vars[variable] = var_new
 
 		if("num")
-			if(variable=="light_range")
+			if(variable=="luminosity")
 				var/var_new = input("Enter new number:","Num",O.vars[variable]) as null|num
 				if(var_new == null) return
-				O.set_light(var_new)
-
-			else if(variable=="light_power")
-				var/var_new = input("Enter new number:","Num",O.vars[variable]) as null|num
-				if(var_new == null) return
-				O.set_light(l_power = var_new)
-
+				O.SetLuminosity(var_new)
 			else if(variable=="stat")
 				var/var_new = input("Enter new number:","Num",O.vars[variable]) as null|num
 				if(var_new == null) return

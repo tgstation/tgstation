@@ -70,7 +70,6 @@
 				if(A.anchored && istype(A, /obj/machinery)) continue
 				if(istype(A, /obj/structure/disposalpipe )) continue
 				if(istype(A, /obj/structure/cable )) continue
-				if(istype(A, /atom/movable/lighting_overlay)) continue
 
 				var/turf/newloc = locate(A.x + x_distance, A.y + y_distance, TO.z) // calculate the new place
 				A.forceMove(newloc)

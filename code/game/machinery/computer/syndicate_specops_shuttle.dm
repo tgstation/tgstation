@@ -19,7 +19,7 @@ var/syndicate_elite_shuttle_timeleft = 0
 	var/hacked = 0
 	var/allowedtocall = 0
 
-	light_color = LIGHT_COLOR_RED
+	l_color = "#B40000"
 
 /proc/syndicate_elite_process()
 	writepanic("[__FILE__].[__LINE__] (no type)([usr ? usr.ckey : ""])  \\/proc/syndicate_elite_process() called tick#: [world.time]")
@@ -240,6 +240,8 @@ var/syndicate_elite_shuttle_timeleft = 0
 
 		var/area/syndicate_mothership/elite_squad/elite_squad = locate()
 		if(elite_squad)
+			if(elite_squad.master)
+				elite_squad=elite_squad.master
 			elite_squad.readyalert()//Trigger alarm for the spec ops area.
 		syndicate_elite_shuttle_moving_to_station = 1
 

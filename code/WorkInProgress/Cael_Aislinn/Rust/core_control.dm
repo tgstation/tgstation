@@ -3,7 +3,7 @@
 	name = "R-UST Mk. 7 Core Control"
 	icon = 'code/WorkInProgress/Cael_Aislinn/Rust/rust.dmi'
 	icon_state = "core_control"
-	light_color = LIGHT_COLOR_ORANGE
+	l_color = LIGHT_COLOR_ORANGE
 	var/list/connected_devices = list()
 	var/scan_range = 25
 

@@ -9,7 +9,7 @@
 	var/damaged = 0
 	var/last_change = 0
 
-	light_color = LIGHT_COLOR_CYAN
+	l_color = "#7BF9FF"
 
 /obj/machinery/computer/HolodeckControl/attack_ai(var/mob/user as mob)
 	add_hiddenprint(user)

@@ -130,7 +130,7 @@
 	name = "Juggerwall"
 	icon = 'icons/effects/effects.dmi'
 	icon_state = "m_shield_cult"
-	light_color = LIGHT_COLOR_RED
+	l_color = "#B40000"
 	luminosity = 2
 
 /obj/effect/forcefield/cult/cultify()

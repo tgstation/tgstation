@@ -28,8 +28,8 @@
 	writepanic("[__FILE__].[__LINE__] (no type)([usr ? usr.ckey : ""])  \\/proc/get_area_master() called tick#: [world.time]")
 	var/area/A = get_area(O)
 
-	if(isarea(A))
-		return A
+	if (isarea(A))
+		return A.master
 
 /proc/get_area_name(N) //get area by its name
 	writepanic("[__FILE__].[__LINE__] (no type)([usr ? usr.ckey : ""])  \\/proc/get_area_name() called tick#: [world.time]")

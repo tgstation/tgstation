@@ -18,6 +18,10 @@
 		if("Failsafe")
 			new /datum/controller/failsafe()
 			feedback_add_details("admin_verb","RFailsafe")
+		if("Lighting")
+			new /datum/controller/lighting()
+			lighting_controller.process()
+			feedback_add_details("admin_verb","RLighting")
 		if("Supply Shuttle")
 			supply_shuttle.process()
 			feedback_add_details("admin_verb","RSupply")
@@ -31,7 +35,7 @@
 	return
 
 
-/client/proc/debug_controller(controller in list("Air", "Cameras", "Configuration", "Emergency Shuttle", "failsafe", "Garbage", "Jobs", "master", "pAI", "Radio", "Scheduler", "Sun", "Supply Shuttle", "Ticker"))
+/client/proc/debug_controller(controller in list("Air", "Cameras", "Configuration", "Emergency Shuttle", "failsafe", "Garbage", "Jobs", "lighting", "master", "pAI", "Radio", "Scheduler", "Sun", "Supply Shuttle", "Ticker"))
 	set category = "Debug"
 	set name = "debug controller"
 	set desc = "debug the various periodic loop controllers for the game (be careful!)."
@@ -50,6 +54,9 @@
 		if("Ticker")
 			debug_variables(ticker)
 			feedback_add_details("admin_verb","DTicker")
+		if ("lighting")
+			debug_variables(lighting_controller)
+			feedback_add_details("admin_verb", "dlighting")
 		if("Air")
 			debug_variables(air_master)
 			feedback_add_details("admin_verb","DAir")
