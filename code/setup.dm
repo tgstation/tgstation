@@ -1150,14 +1150,14 @@ var/list/RESTRICTED_CAMERA_NETWORKS = list( //Those networks can only be accesse
 
 #define JUSTFUCKMYSHITUP 1
 #ifdef JUSTFUCKMYSHITUP
-#define writepanic(a) if(ticker && ticker.current_state >= 3 && world.cpu >= 90) write_panic(a)
+#define writepanic(a) if(ticker && ticker.current_state >= 3 && world.cpu > 100) write_panic(a)
 #warning IMA FUCK YOUR SHIT UP
 var/proccalls = 1
 //keep a list of last 10 proccalls maybe?
 /proc/write_panic(a)
 	set background = 1
 	panicfile["[proccalls]"] << a
-	if(++proccalls > 25) proccalls = 1
+	if(++proccalls > 50) proccalls = 1
 
 #else
 	#define writepanic(a) null << a
