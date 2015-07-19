@@ -69,8 +69,8 @@
 				qdel(internal)
 			else
 				stat("Internal Atmosphere Source: [internal.name]")
-				stat("Tank Pressure: [internal.air_contents.return_pressure()]")
-				stat("Distribution Pressure: [internal.distribute_pressure]")
+				stat("Tank Pressure: [round(internal.air_contents.return_pressure(),0.1)]")
+				stat("Distribution Pressure: [round(internal.distribute_pressure,0.1)]")
 		if(mind)
 			if(mind.changeling)
 				stat("Chemical Storage", "[mind.changeling.chem_charges]/[mind.changeling.chem_storage]")
