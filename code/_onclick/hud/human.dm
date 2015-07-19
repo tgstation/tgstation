@@ -253,9 +253,6 @@
 	hotkeybuttons += mymob.throw_icon
 
 
-	mymob.internals = new /obj/screen/internals()
-	mymob.internals.screen_loc = ui_internal
-
 	mymob.healths = new /obj/screen()
 	mymob.healths.icon_state = "health0"
 	mymob.healths.name = "health"
@@ -307,7 +304,7 @@
 
 	mymob.client.screen = list()
 
-	mymob.client.screen += list( mymob.throw_icon, mymob.zone_sel, mymob.internals, mymob.healths, mymob.healthdoll, mymob.pullin, mymob.blind, mymob.flash, mymob.damageoverlay, lingchemdisplay, lingstingdisplay) //, mymob.hands, mymob.rest, mymob.sleep) //, mymob.mach )
+	mymob.client.screen += list( mymob.throw_icon, mymob.zone_sel, mymob.healths, mymob.healthdoll, mymob.pullin, mymob.blind, mymob.flash, mymob.damageoverlay, lingchemdisplay, lingstingdisplay) //, mymob.hands, mymob.rest, mymob.sleep) //, mymob.mach )
 	mymob.client.screen += adding + hotkeybuttons
 	mymob.client.screen += mymob.client.void
 	inventory_shown = 0;

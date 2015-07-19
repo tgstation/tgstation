@@ -151,8 +151,6 @@ Contents:
 		N.randomize_param()
 
 	Ninja.internal = Ninja.s_store
-	if(Ninja.internals)
-		Ninja.internals.icon_state = "internal1"
 
 	if(Ninja.mind != Mind)			//something has gone wrong!
 		ERROR("The ninja wasn't assigned the right mind. ;ç;")
