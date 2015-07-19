@@ -28,11 +28,8 @@
 	return
 
 /obj/item/blueprints/Topic(href, href_list)
-	..()
-	if ((usr.restrained() || usr.stat || usr.get_active_hand() != src))
-		return
-	if (!href_list["action"])
-		return
+	. = ..()
+	if(.) return 1
 	switch(href_list["action"])
 		if ("create_area")
 			if (get_area_type()!=AREA_SPACE)
@@ -82,7 +79,7 @@ move an amendment</a> to the drawing.</p>
 
 /obj/item/blueprints/proc/get_area_type(var/area/A = get_area())
 	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/item/blueprints/proc/get_area_type() called tick#: [world.time]")
-	if (A.name == "Space")
+	if (A.name == "Space" && A.tag)
 		return AREA_SPACE
 	var/list/SPECIALS = list(
 		/area/shuttle,
@@ -140,6 +137,7 @@ move an amendment</a> to the drawing.</p>
 		for(var/atom/allthings in T.contents)
 			allthings.change_area(oldarea,newarea)
 	newarea.addSorted()
+	newarea.SetDynamicLighting()
 
 	sleep(5)
 	interact()
