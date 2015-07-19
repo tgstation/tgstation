@@ -138,6 +138,10 @@
 		W.RemoveLattice()
 	W.levelupdate()
 	W.CalculateAdjacentTurfs()
+
+	if(!can_have_cabling())
+		for(var/obj/structure/cable/C in contents)
+			C.Deconstruct()
 	return W
 
 //////Assimilate Air//////
