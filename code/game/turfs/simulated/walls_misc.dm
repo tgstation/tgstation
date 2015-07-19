@@ -63,3 +63,9 @@
 	if(T.dir != dir)
 		T.dir = dir
 	return T
+
+//why don't shuttle walls habe smoothwall? now i gotta do rotation the dirty way
+/turf/simulated/wall/shuttle/shuttleRotate(rotation)
+	var/matrix/M = matrix(transform)
+	M.Turn(rotation)
+	transform = M
