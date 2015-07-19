@@ -93,7 +93,7 @@
 /atom/movable/Crossed(atom/movable/AM)
 	return
 
-/atom/movable/Bump(var/atom/A as mob|obj|turf|area, yes) //the "yes" arg is to differentiate our Bump proc from byond's, without it every Bump() call would become a double Bump().
+/atom/movable/Bump(atom/A, yes) //the "yes" arg is to differentiate our Bump proc from byond's, without it every Bump() call would become a double Bump().
 	if((A && yes))
 		if(throwing)
 			throwing = 0
@@ -149,20 +149,20 @@
 /atom/movable/proc/checkpass(passflag)
 	return pass_flags&passflag
 
-/atom/movable/proc/throw_impact(atom/hit_atom, mob/thrower)
-	return hit_atom.hitby(src,thrower)
+/atom/movable/proc/throw_impact(atom/hit_atom)
+	return hit_atom.hitby(src)
 
-/atom/movable/hitby(atom/movable/AM, mob/thrower, skip, var/hitpush = 1)
+/atom/movable/hitby(atom/movable/AM, skip, var/hitpush = 1)
 	if(!anchored && hitpush)
 		step(src, AM.dir)
 	return ..()
 
-/atom/movable/proc/throw_at(atom/target, range, speed, mob/thrower, spin=1)
+/atom/movable/proc/throw_at(atom/target, range, speed, mob/thrower, spin=1, diagonals_first = 0)
 	if(!target || !src || (flags & NODROP))	return 0
 	//use a modified version of Bresenham's algorithm to get from the atom's current position to that of the target
 
 	throwing = 1
-	if(spin) // turns out 1000+ spinning objects being thrown at the singularity creates lag - Iamgoofball
+	if(spin) //if we don't want the /atom/movable to spin.
 		SpinAnimation(5, 1)
 
 	var/dist_travelled = 0
@@ -173,6 +173,10 @@
 	var/dx = (target.x > src.x) ? EAST : WEST
 	var/dy = (target.y > src.y) ? NORTH : SOUTH
 
+	var/pure_diagonal = 0
+	if(dist_x == dist_y)
+		pure_diagonal = 1
+
 	if(dist_x <= dist_y)
 		var/olddist_x = dist_x
 		var/olddx = dx
@@ -182,25 +186,24 @@
 		dy = olddx
 
 	var/error = dist_x/2 - dist_y
-
-	var/throw_range = min(range, dist_x + dist_y)
-
+	var/atom/finalturf = get_turf(target)
 	var/hit = 0
-	while(target && (dist_travelled < throw_range || !has_gravity(src)))
-		// only stop when we've gone the whole distance (or max throw range) and aren't floating, or hit something, or hit the end of the map, or someone picks it up
-		if(!throwing)
-			hit = 1
-			break
+
+	while(target && ((dist_travelled < range && loc != finalturf)  || !has_gravity(src))) //stop if we reached our destination (or max range) and aren't floating
+
 		if(!istype(loc, /turf))
 			hit = 1
 			break
 
-		var/atom/step = get_step(src, (error < 0) ? dy : dx)
-		error += (error < 0) ? dist_x : -dist_y
+		var/atom/step = get_step(src, get_dir(src, target))
+		if(!pure_diagonal && !diagonals_first) // not a purely diagonal trajectory and we don't want all diagonal moves to be done first
+			if(error >= 0 && get_dist(src, finalturf) > 1)
+				step = get_step(src, dx)
+			error += (error < 0) ? dist_x/2 : -dist_y
 		if(!step) // going off the edge of the map makes get_step return null, don't let things go off the edge
 			break
 		Move(step, get_dir(loc, step))
-		if(!throwing)
+		if(!throwing) // we hit something during our move
 			hit = 1
 			break
 		dist_travelled++
@@ -209,18 +212,29 @@
 			dist_since_sleep = 0
 			sleep(1)
 
+		if(!dist_since_sleep && hitcheck()) //to catch sneaky things moving on our tile during our sleep(1)
+			hit = 1
+			break
+
 	//done throwing, either because it hit something or it finished moving
 	throwing = 0
-	for(var/atom/A in get_turf(src)) //looking for our target on the turf we land on.
-		if(A == target)
-			hit = 1
-			throw_impact(A, thrower)
+	if(!hit)
+		for(var/atom/A in get_turf(src)) //looking for our target on the turf we land on.
+			if(A == target)
+				hit = 1
+				throw_impact(A)
+				return 1
 
-	if(!hit) // we haven't hit something yet and we still must, let's hit the ground.
-		throw_impact(get_turf(src),thrower)
-
+		throw_impact(get_turf(src))  // we haven't hit something yet and we still must, let's hit the ground.
 	return 1
 
+/atom/movable/proc/hitcheck()
+	for(var/atom/movable/AM in get_turf(src))
+		if(AM == src)
+			continue
+		if(AM.density && !(AM.pass_flags & LETPASSTHROW) && !(AM.flags & ON_BORDER))
+			throw_impact(AM)
+			return 1
 
 //Overlays
 /atom/movable/overlay

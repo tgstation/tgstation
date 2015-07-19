@@ -6,7 +6,6 @@
 	var/list/fingerprintshidden
 	var/fingerprintslast = null
 	var/list/blood_DNA
-	var/throwpass = 0
 
 	///Chemistry.
 	var/datum/reagents/reagents = null
@@ -260,7 +259,7 @@ its easier to just keep the beam vertical.
 /atom/proc/fire_act()
 	return
 
-/atom/proc/hitby(atom/movable/AM, mob/thrower, skip, var/hitpush)
+/atom/proc/hitby(atom/movable/AM, skip, var/hitpush)
 	if(density && !has_gravity(AM)) //thrown stuff bounces off dense stuff in no grav.
 		spawn(2)
 			step(AM,  turn(AM.dir, 180))

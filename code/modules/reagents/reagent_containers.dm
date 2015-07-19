@@ -79,7 +79,7 @@
 	reagents.handle_reactions()
 	..()
 
-/obj/item/weapon/reagent_containers/throw_impact(atom/target,mob/thrower)
+/obj/item/weapon/reagent_containers/throw_impact(atom/target)
 	. = ..()
 
 	if(!reagents.total_volume || !spillable)
@@ -96,11 +96,11 @@
 				R += A.id + " ("
 				R += num2text(A.volume) + "),"
 
-		if(thrower)
-			add_logs(thrower, M, "splashed", object="[R]")
+		if(thrownby)
+			add_logs(thrownby, M, "splashed", object="[R]")
 		reagents.reaction(target, TOUCH)
 
-	else if((target.CanPass(src, get_turf(src))) && thrower && thrower.mind && thrower.mind.assigned_role == "Bartender")
+	else if((target.CanPass(src, get_turf(src))) && thrownby && thrownby.mind && thrownby.mind.assigned_role == "Bartender")
 		visible_message("<span class='notice'>[src] lands onto the [target.name] without spilling a single drop.</span>")
 		return
 

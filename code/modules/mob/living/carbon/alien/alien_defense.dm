@@ -1,5 +1,5 @@
-/mob/living/carbon/alien/hitby(atom/movable/AM, mob/thrower)
-	..(AM, thrower, skip = 1)
+/mob/living/carbon/alien/hitby(atom/movable/AM)
+	..(AM, skip = 1)
 
 
 /*Code for aliens attacking aliens. Because aliens act on a hivemind, I don't see them as very aggressive with each other.

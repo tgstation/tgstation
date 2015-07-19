@@ -44,13 +44,13 @@
 		else
 				return 0
 
-/mob/living/throw_impact(atom/hit_atom, mob/thrower)
+/mob/living/throw_impact(atom/hit_atom)
 	. = ..()
 	if(hit_atom.density)
 		Weaken(1)
 		take_organ_damage(10)
 
-/mob/living/hitby(atom/movable/AM, mob/thrower)
+/mob/living/hitby(atom/movable/AM)
 	if(istype(AM, /obj/item))
 		var/obj/item/I = AM
 		var/zone = ran_zone("chest", 65)//Hits a random part of the body, geared towards the chest
@@ -77,10 +77,10 @@
 						"<span class='userdanger'>[src] has been hit by [I].</span>")
 		var/armor = run_armor_check(zone, "melee", "Your armor has protected your [parse_zone(zone)].", "Your armor has softened hit to your [parse_zone(zone)].",I.armour_penetration)
 		apply_damage(I.throwforce, dtype, zone, armor, I)
+		if(I.thrownby)
+			add_logs(I.thrownby, src, "hit", object="[AM]")
 	else
 		playsound(loc, 'sound/weapons/genhit.ogg', 50, 1, -1)
-	if(thrower)
-		add_logs(thrower, src, "hit", object="[AM]")
 	return ..()
 
 /mob/living/mech_melee_attack(obj/mecha/M)

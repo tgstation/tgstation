@@ -52,7 +52,7 @@ Sorry Giacom. Please don't be mad :(
 
 //Generic Bump(). Override MobBump() and ObjBump() instead of this.
 /mob/living/Bump(atom/A, yes)
-	if(..()) //bumped by a thrown /atom/movable
+	if(..()) //we are thrown onto something
 		return
 	if (buckled || !yes || now_pushing)
 		return

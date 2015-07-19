@@ -55,6 +55,8 @@ var/global/image/fire_overlay = image("icon" = 'icons/effects/fire.dmi', "icon_s
 	var/suittoggled = 0
 	var/hooded = 0
 
+	var/mob/thrownby = null
+
 	/obj/item/mouse_drag_pointer = MOUSE_ACTIVE_POINTER //the icon to indicate this object is being dragged
 
 	//So items can have custom embedd values
@@ -465,13 +467,14 @@ var/global/image/fire_overlay = image("icon" = 'icons/effects/fire.dmi', "icon_s
 		if(!findtext(desc, "it looks slightly melted...")) //it looks slightly melted... it looks slightly melted... it looks slightly melted... etc.
 			desc += " it looks slightly melted..." //needs a space at the start, formatting
 
-/obj/item/throw_impact(atom/A, mob/thrower)
+/obj/item/throw_impact(atom/A)
 	var/itempush = 1
 	if(w_class < 4)
 		itempush = 0 //too light to push anything
-	return A.hitby(src,thrower, 0, itempush)
+	return A.hitby(src,thrownby, 0, itempush)
 
 /obj/item/throw_at(atom/target, range, speed, mob/thrower, spin=1)
+	thrownby = thrower
 	. = ..()
 	throw_speed = initial(throw_speed) //explosions change this.
 
