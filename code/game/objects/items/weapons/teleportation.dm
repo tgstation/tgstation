@@ -24,7 +24,7 @@
 	materials = list(MAT_METAL=400)
 	origin_tech = "magnets=1"
 
-/obj/item/weapon/locator/attack_self(mob/user as mob)
+/obj/item/weapon/locator/attack_self(mob/user)
 	user.set_machine(src)
 	var/dat
 	if (src.temp)
@@ -136,7 +136,7 @@ Frequency:
 	origin_tech = "magnets=1;bluespace=3"
 	var/active_portals = 0
 
-/obj/item/weapon/hand_tele/attack_self(mob/user as mob)
+/obj/item/weapon/hand_tele/attack_self(mob/user)
 	var/turf/current_location = get_turf(user)//What turf is the user on?
 	if(!current_location||current_location.z==2||current_location.z>=7 || !istype(user.loc, /turf))//If turf was not found or they're on z level 2 or >7 which does not currently exist. or if user is not located on a turf
 		user << "<span class='notice'>\The [src] is malfunctioning.</span>"

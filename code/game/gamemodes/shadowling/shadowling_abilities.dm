@@ -38,7 +38,7 @@
 	range = 5
 	var/blacklisted_lights = list(/obj/item/device/flashlight/flare, /obj/item/device/flashlight/slime)
 
-/obj/effect/proc_holder/spell/aoe_turf/veil/proc/extinguishItem(var/obj/item/I) //WARNING NOT SUFFICIENT TO EXTINGUISH AN ITEM HELD BY A MOB
+/obj/effect/proc_holder/spell/aoe_turf/veil/proc/extinguishItem(obj/item/I) //WARNING NOT SUFFICIENT TO EXTINGUISH AN ITEM HELD BY A MOB
 	if(istype(I, /obj/item/device/flashlight))
 		var/obj/item/device/flashlight/F = I
 		if(F.on)
@@ -53,7 +53,7 @@
 	I.SetLuminosity(0)
 	return I.luminosity
 
-/obj/effect/proc_holder/spell/aoe_turf/veil/proc/extinguishMob(var/mob/living/H)
+/obj/effect/proc_holder/spell/aoe_turf/veil/proc/extinguishMob(mob/living/H)
 	var/blacklistLuminosity = 0
 	for(var/obj/item/F in H)
 		blacklistLuminosity += extinguishItem(F)
@@ -76,6 +76,8 @@
 			qdel(G)
 		for(var/mob/living/H in T.contents)
 			extinguishMob(H)
+		for(var/mob/living/silicon/robot/borgie in T.contents)
+			borgie.update_headlamp(1)
 
 
 
@@ -375,7 +377,7 @@ datum/reagent/shadowling_blindness_smoke //Blinds non-shadowlings, heals shadowl
 	color = "#000000" //Complete black (RGB: 0, 0, 0)
 	metabolization_rate = 100 //lel
 
-/datum/reagent/shadowling_blindness_smoke/on_mob_life(var/mob/living/M as mob)
+/datum/reagent/shadowling_blindness_smoke/on_mob_life(mob/living/M)
 	if(!M) M = holder.my_atom
 	if(!is_shadow_or_thrall(M))
 		M << "<span class='warning'><b>You breathe in the black smoke, and your eyes burn horribly!</b></span>"
@@ -441,7 +443,7 @@ datum/reagent/shadowling_blindness_smoke //Blinds non-shadowlings, heals shadowl
 	var/targetsDrained
 	var/list/nearbyTargets
 
-/obj/effect/proc_holder/spell/aoe_turf/drainLife/cast(list/targets, var/mob/living/carbon/human/U = usr)
+/obj/effect/proc_holder/spell/aoe_turf/drainLife/cast(list/targets, mob/living/carbon/human/U = usr)
 	targetsDrained = 0
 	nearbyTargets = list()
 	for(var/turf/T in targets)

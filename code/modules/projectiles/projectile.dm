@@ -142,7 +142,7 @@
 			sleep(1)
 
 
-/obj/item/projectile/Crossed(atom/movable/AM as mob) //A mob moving on a tile with a projectile is hit by it.
+/obj/item/projectile/Crossed(atom/movable/AM) //A mob moving on a tile with a projectile is hit by it.
 	..()
 	if(isliving(AM) && AM.density && !checkpass(PASSMOB))
 		Bump(AM, 1)

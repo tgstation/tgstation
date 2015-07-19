@@ -313,7 +313,7 @@
 	attack_self(usr)
 
 
-/obj/item/device/gangtool/proc/ping_gang(var/mob/user)
+/obj/item/device/gangtool/proc/ping_gang(mob/user)
 	if(!user)
 		return
 	var/message = stripped_input(user,"Discreetly send a gang-wide message.","Send Message") as null|text
@@ -335,7 +335,7 @@
 		log_game("[key_name(user)] Messaged [gang.name] Gang: [message].")
 
 
-/obj/item/device/gangtool/proc/register_device(var/mob/user)
+/obj/item/device/gangtool/proc/register_device(mob/user)
 	if(gang)	//It's already been registered!
 		return
 	if((promotable && (user.mind in ticker.mode.get_gangsters())) || (user.mind in ticker.mode.get_gang_bosses()))

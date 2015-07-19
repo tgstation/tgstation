@@ -1,10 +1,10 @@
-/mob/living/carbon/human/gib_animation(var/animate)
+/mob/living/carbon/human/gib_animation(animate)
 	..(animate, "gibbed-h")
 
-/mob/living/carbon/human/dust_animation(var/animate)
+/mob/living/carbon/human/dust_animation(animate)
 	..(animate, "dust-h")
 
-/mob/living/carbon/human/dust(var/animation = 1)
+/mob/living/carbon/human/dust(animation = 1)
 	..()
 
 /mob/living/carbon/human/spawn_gibs()

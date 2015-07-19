@@ -32,7 +32,7 @@
 	cube_production = cubes_made
 	required_grind = req_grind
 
-/obj/machinery/monkey_recycler/attackby(var/obj/item/O as obj, var/mob/user as mob, params)
+/obj/machinery/monkey_recycler/attackby(obj/item/O, mob/user, params)
 	if(default_deconstruction_screwdriver(user, "grinder_open", "grinder", O))
 		return
 
@@ -77,7 +77,7 @@
 			user << "<span class='danger'>The machine only accepts monkeys!</span>"
 	return
 
-/obj/machinery/monkey_recycler/attack_hand(var/mob/user as mob)
+/obj/machinery/monkey_recycler/attack_hand(mob/user)
 	if (src.stat != 0) //NOPOWER etc
 		return
 	if(grinded >= required_grind)

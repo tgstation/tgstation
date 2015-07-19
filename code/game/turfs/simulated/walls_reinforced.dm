@@ -21,7 +21,7 @@
 	builtin_sheet.loc = src
 	new /obj/item/stack/sheet/metal(src, 2)
 
-/turf/simulated/wall/r_wall/attack_animal(var/mob/living/simple_animal/M)
+/turf/simulated/wall/r_wall/attack_animal(mob/living/simple_animal/M)
 	M.changeNext_move(CLICK_CD_MELEE)
 	if(M.environment_smash == 3)
 		dismantle_wall(1)
@@ -30,7 +30,7 @@
 	else
 		M << "<span class='warning'>This wall is far too strong for you to destroy.</span>"
 
-/turf/simulated/wall/r_wall/try_destroy(obj/item/weapon/W as obj, mob/user as mob, turf/T as turf)
+/turf/simulated/wall/r_wall/try_destroy(obj/item/weapon/W, mob/user, turf/T)
 	if(istype(W, /obj/item/weapon/pickaxe/drill/jackhammer))
 		var/obj/item/weapon/pickaxe/drill/jackhammer/D = W
 		user << "<span class='notice'>You begin to smash though the [name]...</span>"
@@ -59,7 +59,7 @@
 			return 1
 	return 0
 
-/turf/simulated/wall/r_wall/try_decon(obj/item/weapon/W as obj, mob/user as mob, turf/T as turf)
+/turf/simulated/wall/r_wall/try_decon(obj/item/weapon/W, mob/user, turf/T)
 	//DECONSTRUCTION
 	switch(d_state)
 		if(0)

@@ -331,6 +331,6 @@
 	See Also:
 	- <ParseExpression()>
 */
-		ParseParamExpression(var/check_functions = 0)
+		ParseParamExpression(check_functions = 0)
 			var/cf = check_functions
 			return ParseExpression(list(",", ")"), check_functions = cf)

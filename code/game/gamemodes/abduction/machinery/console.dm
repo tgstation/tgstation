@@ -3,18 +3,18 @@
 /obj/machinery/abductor
 	var/team = 0
 
-/obj/machinery/abductor/proc/IsAbductor(var/mob/living/carbon/human/H)
+/obj/machinery/abductor/proc/IsAbductor(mob/living/carbon/human/H)
 	if(!H.dna)
 		return 0
 	return H.dna.species.id == "abductor"
 
-/obj/machinery/abductor/proc/IsAgent(var/mob/living/carbon/human/H)
+/obj/machinery/abductor/proc/IsAgent(mob/living/carbon/human/H)
 	if(H.dna.species.id == "abductor")
 		var/datum/species/abductor/S = H.dna.species
 		return S.agent
 	return 0
 
-/obj/machinery/abductor/proc/IsScientist(var/mob/living/carbon/human/H)
+/obj/machinery/abductor/proc/IsScientist(mob/living/carbon/human/H)
 	if(H.dna.species.id == "abductor")
 		var/datum/species/abductor/S = H.dna.species
 		return S.scientist
@@ -36,7 +36,7 @@
 	var/obj/machinery/computer/camera_advanced/abductor/camera
 	var/list/datum/icon_snapshot/disguises = list()
 
-/obj/machinery/abductor/console/attack_hand(var/mob/user as mob)
+/obj/machinery/abductor/console/attack_hand(mob/user)
 	if(..())
 		return
 	if(!IsAbductor(user))
@@ -140,7 +140,7 @@
 		vest.flip_mode()
 	return
 
-/obj/machinery/abductor/console/proc/SelectDisguise(var/remote=0)
+/obj/machinery/abductor/console/proc/SelectDisguise(remote=0)
 	var/list/entries = list()
 	var/tempname
 	var/datum/icon_snapshot/temp
@@ -171,7 +171,7 @@
 			camera = c
 			c.console = src
 
-/obj/machinery/abductor/console/proc/AddSnapshot(var/mob/living/carbon/human/target)
+/obj/machinery/abductor/console/proc/AddSnapshot(mob/living/carbon/human/target)
 	var/datum/icon_snapshot/entry = new
 	entry.name = target.name
 	entry.icon = target.icon
@@ -185,7 +185,7 @@
 	disguises.Add(entry)
 	return
 
-/obj/machinery/abductor/console/attackby(O as obj, user as mob, params)
+/obj/machinery/abductor/console/attackby(obj/O, mob/user, params)
 	if(istype(O, /obj/item/device/abductor/gizmo))
 		var/obj/item/device/abductor/gizmo/G = O
 		user << "<span class='notice'>You link the tool to the console.</span>"
@@ -198,7 +198,7 @@
 	else
 		..()
 
-/obj/machinery/abductor/console/proc/Dispense(var/item,var/cost=1)
+/obj/machinery/abductor/console/proc/Dispense(item,cost=1)
 	if(experiment && experiment.points >= cost)
 		experiment.points-=cost
 		say("Incoming supply!")

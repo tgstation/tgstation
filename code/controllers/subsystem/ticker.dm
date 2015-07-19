@@ -200,7 +200,7 @@ var/datum/subsystem/ticker/ticker
 
 
 	//Plus it provides an easy way to make cinematics for other events. Just use this as a template
-/datum/subsystem/ticker/proc/station_explosion_cinematic(var/station_missed=0, var/override = null)
+/datum/subsystem/ticker/proc/station_explosion_cinematic(station_missed=0, override = null)
 	if( cinematic )	return	//already a cinematic in progress!
 
 	for (var/datum/html_interface/hi in html_interfaces)

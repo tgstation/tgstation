@@ -90,13 +90,13 @@
 /obj/item/mecha_parts/mecha_equipment/proc/action(atom/target)
 	return
 
-/obj/item/mecha_parts/mecha_equipment/proc/can_attach(obj/mecha/M as obj)
+/obj/item/mecha_parts/mecha_equipment/proc/can_attach(obj/mecha/M)
 	if(istype(M))
 		if(M.equipment.len<M.max_equip)
 			return 1
 	return 0
 
-/obj/item/mecha_parts/mecha_equipment/proc/attach(obj/mecha/M as obj)
+/obj/item/mecha_parts/mecha_equipment/proc/attach(obj/mecha/M)
 	M.equipment += src
 	chassis = M
 	src.loc = M
