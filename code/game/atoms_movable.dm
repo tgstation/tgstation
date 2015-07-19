@@ -212,9 +212,9 @@
 			sleep(1)
 
 	//done throwing, either because it hit something or it finished moving
-	src.throwing = 0
-	if(isobj(src))
+	if(isobj(src) && throwing)
 		src.throw_impact(get_turf(src),thrower)
+	src.throwing = 0
 
 	return 1
 

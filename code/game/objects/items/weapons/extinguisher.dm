@@ -159,3 +159,12 @@
 
 	else
 		return ..()
+
+/obj/item/weapon/extinguisher/AltClick(mob/user)
+	EmptyExtinguisher(user)
+
+/obj/item/weapon/extinguisher/proc/EmptyExtinguisher(var/mob/user)
+	if(loc == user)
+		reagents.clear_reagents()
+		user << "<span class='info'>You quietly empty out the [src].</span>"
+	return
