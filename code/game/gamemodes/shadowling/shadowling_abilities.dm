@@ -73,7 +73,8 @@
 			if(H != usr)
 				H << "<span class='boldannounce'>You feel a chill and are plunged into darkness.</span>"
 			H.SetLuminosity(0) //This is required with the object-based lighting
-
+		for(var/mob/living/silicon/robot/R in T.contents)
+			R.update_headlamp(1)
 
 
 /obj/effect/proc_holder/spell/targeted/shadow_walk

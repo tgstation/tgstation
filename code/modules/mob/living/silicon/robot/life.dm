@@ -30,7 +30,7 @@
 	else
 		uneq_all()
 		stat = UNCONSCIOUS
-		update_headlamp()
+		update_headlamp(1)
 
 
 /mob/living/silicon/robot/handle_regular_status_updates()

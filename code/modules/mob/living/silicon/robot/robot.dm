@@ -723,7 +723,7 @@
 /mob/living/silicon/robot/update_icons()
 
 	overlays.Cut()
-	if(stat == CONSCIOUS)
+	if(stat != DEAD && !(paralysis || stunned || weakened)) //Not dead, not stunned.
 		var/state_name = icon_state //For easy conversion and/or different names
 		switch(icon_state)
 			if("robot")
@@ -1001,12 +1001,16 @@
 
 	update_headlamp()
 
-/mob/living/silicon/robot/proc/update_headlamp()
+/mob/living/silicon/robot/proc/update_headlamp(var/turn_off = 0)
 	SetLuminosity(0)
 
-	if(stat && lamp_intensity)
+	if(lamp_intensity && (turn_off || stat))
 		src << "<span class='danger'>Your headlamp has been deactivated.</span>"
 		lamp_intensity = 0
+		if(client)
+			var/obj/screen/robot/lamp/button = locate(/obj/screen/robot/lamp) in client.screen
+			if(button)
+				button.icon_state = "lamp0"
 	else
 		AddLuminosity(lamp_intensity)
 	update_icons()
