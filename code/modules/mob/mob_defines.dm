@@ -149,8 +149,8 @@
 	var/datum/hud/hud_used = null
 	var/datum/ui_icons/gui_icons = null
 
-	var/list/grabbed_by = list(  )
-	var/list/requests = list(  )
+	var/list/grabbed_by = list()
+	var/list/requests = list()
 
 	var/list/mapobjs = list()
 

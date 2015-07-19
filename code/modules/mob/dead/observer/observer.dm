@@ -53,7 +53,7 @@
 	if(ismob(body))
 		T = get_turf(body)				//Where is the body located?
 		attack_log = body.attack_log	//preserve our attack logs by copying them to our ghost
-
+		if(!istype(attack_log, /list)) attack_log = list()
 		// NEW SPOOKY BAY GHOST ICONS
 		//////////////
 
