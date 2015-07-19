@@ -98,7 +98,7 @@
 	text_dehack = "You restore [name]'s combat inhibitor."
 	text_dehack_fail = "[name] ignores your attempts to restrict him!"
 
-/obj/machinery/bot/ed209/attack_hand(mob/user as mob)
+/obj/machinery/bot/ed209/attack_hand(mob/user)
 	. = ..()
 	if (.)
 		return
@@ -159,7 +159,7 @@ Auto Patrol[]"},
 			declare_arrests = !declare_arrests
 			updateUsrDialog()
 
-/obj/machinery/bot/ed209/attackby(obj/item/weapon/W as obj, mob/user as mob, params)
+/obj/machinery/bot/ed209/attackby(obj/item/weapon/W, mob/user, params)
 	if (istype(W, /obj/item/weapon/card/id)||istype(W, /obj/item/device/pda))
 		if (allowed(user) && !open && !emagged)
 			locked = !locked
@@ -185,7 +185,7 @@ Auto Patrol[]"},
 						shootAt(user)
 					mode = BOT_HUNT
 
-/obj/machinery/bot/ed209/Emag(mob/user as mob)
+/obj/machinery/bot/ed209/Emag(mob/user)
 	..()
 	if(emagged == 2)
 		if(user)
@@ -196,7 +196,7 @@ Auto Patrol[]"},
 		icon_state = "[lasercolor]ed209[on]"
 		set_weapon()
 
-/obj/machinery/bot/ed209/bullet_act(var/obj/item/projectile/Proj)
+/obj/machinery/bot/ed209/bullet_act(obj/item/projectile/Proj)
 	if(istype(Proj ,/obj/item/projectile/beam)||istype(Proj,/obj/item/projectile/bullet))
 		if((Proj.damage_type == BURN) || (Proj.damage_type == BRUTE))
 			if (!Proj.nodamage && Proj.damage < src.health)
@@ -459,7 +459,7 @@ Auto Patrol[]"},
 		else if(lasercolor == "r")
 			projectile = /obj/item/projectile/lasertag/redtag
 
-/obj/machinery/bot/ed209/proc/shootAt(var/mob/target)
+/obj/machinery/bot/ed209/proc/shootAt(mob/target)
 	if(lastfired && world.time - lastfired < shot_delay)
 		return
 	lastfired = world.time
@@ -486,7 +486,7 @@ Auto Patrol[]"},
 	A.xo = U.x - T.x
 	A.fire()
 
-/obj/machinery/bot/ed209/attack_alien(var/mob/living/carbon/alien/user as mob)
+/obj/machinery/bot/ed209/attack_alien(mob/living/carbon/alien/user)
 	..()
 	if (!isalien(target))
 		target = user
@@ -533,7 +533,7 @@ Auto Patrol[]"},
 
 
 
-/obj/item/weapon/ed209_assembly/attackby(obj/item/weapon/W as obj, mob/user as mob, params)
+/obj/item/weapon/ed209_assembly/attackby(obj/item/weapon/W, mob/user, params)
 	..()
 
 	if(istype(W, /obj/item/weapon/pen))
@@ -681,7 +681,7 @@ Auto Patrol[]"},
 				qdel(src)
 
 
-/obj/machinery/bot/ed209/bullet_act(var/obj/item/projectile/Proj)
+/obj/machinery/bot/ed209/bullet_act(obj/item/projectile/Proj)
 	if(!disabled)
 		var/lasertag_check = 0
 		if((lasercolor == "b"))

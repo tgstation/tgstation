@@ -103,10 +103,10 @@
 
 
 //Please override this locally if you want to define when what species qualifies for what rank if human authority is enforced.
-/datum/species/proc/qualifies_for_rank(var/rank, var/list/features)
+/datum/species/proc/qualifies_for_rank(rank, list/features)
 	return 1
 
-/datum/species/proc/update_base_icon_state(var/mob/living/carbon/human/H)
+/datum/species/proc/update_base_icon_state(mob/living/carbon/human/H)
 	if(H.disabilities & HUSK)
 		H.remove_overlay(SPECIES_LAYER) // races lose their color
 		return "husk"
@@ -118,7 +118,7 @@
 	else
 		return "[id]"
 
-/datum/species/proc/update_color(var/mob/living/carbon/human/H)
+/datum/species/proc/update_color(mob/living/carbon/human/H)
 	H.remove_overlay(SPECIES_LAYER)
 
 	var/image/standing
@@ -143,7 +143,7 @@
 
 	H.apply_overlay(SPECIES_LAYER)
 
-/datum/species/proc/handle_hair(var/mob/living/carbon/human/H)
+/datum/species/proc/handle_hair(mob/living/carbon/human/H)
 	H.remove_overlay(HAIR_LAYER)
 
 	var/datum/sprite_accessory/S
@@ -201,7 +201,7 @@
 	H.apply_overlay(HAIR_LAYER)
 	return
 
-/datum/species/proc/handle_body(var/mob/living/carbon/human/H)
+/datum/species/proc/handle_body(mob/living/carbon/human/H)
 	H.remove_overlay(BODY_LAYER)
 
 	var/list/standing	= list()
@@ -246,7 +246,7 @@
 
 	return
 
-/datum/species/proc/handle_mutant_bodyparts(var/mob/living/carbon/human/H)
+/datum/species/proc/handle_mutant_bodyparts(mob/living/carbon/human/H)
 	var/list/bodyparts_to_add = mutant_bodyparts.Copy()
 	var/list/relevent_layers = list(BODY_BEHIND_LAYER, BODY_ADJ_LAYER, BODY_FRONT_LAYER)
 	var/list/standing	= list()
@@ -390,17 +390,17 @@
 	H.apply_overlay(BODY_ADJ_LAYER)
 	H.apply_overlay(BODY_FRONT_LAYER)
 
-/datum/species/proc/spec_life(var/mob/living/carbon/human/H)
+/datum/species/proc/spec_life(mob/living/carbon/human/H)
 	return
 
-/datum/species/proc/spec_death(var/gibbed, var/mob/living/carbon/human/H)
+/datum/species/proc/spec_death(gibbed, mob/living/carbon/human/H)
 	return
 
-/datum/species/proc/auto_equip(var/mob/living/carbon/human/H)
+/datum/species/proc/auto_equip(mob/living/carbon/human/H)
 	// handles the equipping of species-specific gear
 	return
 
-/datum/species/proc/can_equip(var/obj/item/I, var/slot, var/disable_warning, var/mob/living/carbon/human/H)
+/datum/species/proc/can_equip(obj/item/I, slot, disable_warning, mob/living/carbon/human/H)
 	if(slot in no_equip)
 		if(!(type in I.species_exception))
 			return 0
@@ -555,23 +555,23 @@
 			return 0
 	return 0 //Unsupported slot
 
-/datum/species/proc/before_equip_job(var/datum/job/J, var/mob/living/carbon/human/H)
+/datum/species/proc/before_equip_job(datum/job/J, mob/living/carbon/human/H)
 	return
 
-/datum/species/proc/after_equip_job(var/datum/job/J, var/mob/living/carbon/human/H)
+/datum/species/proc/after_equip_job(datum/job/J, mob/living/carbon/human/H)
 	return
 
-/datum/species/proc/handle_chemicals(var/datum/reagent/chem, var/mob/living/carbon/human/H)
+/datum/species/proc/handle_chemicals(datum/reagent/chem, mob/living/carbon/human/H)
 	return 0
 
-/datum/species/proc/handle_speech(var/message, var/mob/living/carbon/human/H)
+/datum/species/proc/handle_speech(message, mob/living/carbon/human/H)
 	return message
 
 ////////
 	//LIFE//
 	////////
 
-/datum/species/proc/handle_chemicals_in_body(var/mob/living/carbon/human/H)
+/datum/species/proc/handle_chemicals_in_body(mob/living/carbon/human/H)
 
 	//The fucking FAT mutation is the dumbest shit ever. It makes the code so difficult to work with
 	if(H.disabilities & FAT)
@@ -627,7 +627,7 @@
 
 	return
 
-/datum/species/proc/handle_vision(var/mob/living/carbon/human/H)
+/datum/species/proc/handle_vision(mob/living/carbon/human/H)
 	if( H.stat == DEAD )
 		H.sight |= (SEE_TURFS|SEE_MOBS|SEE_OBJS)
 		H.see_in_dark = 8
@@ -699,7 +699,7 @@
 
 	return 1
 
-/datum/species/proc/handle_hud_icons(var/mob/living/carbon/human/H)
+/datum/species/proc/handle_hud_icons(mob/living/carbon/human/H)
 	if(H.healths)
 		if(H.stat == DEAD)
 			H.healths.icon_state = "health7"
@@ -752,7 +752,7 @@
 
 	return 1
 
-/datum/species/proc/handle_mutations_and_radiation(var/mob/living/carbon/human/H)
+/datum/species/proc/handle_mutations_and_radiation(mob/living/carbon/human/H)
 
 	if(!(RADIMMUNE in specflags))
 		if(H.radiation)
@@ -782,13 +782,14 @@
 						randmutb(H)
 						domutcheck(H,null)
 						H.emote("gasp")
-		return 1
+		return 0
+	return 1
 
 ////////////////
 // MOVE SPEED //
 ////////////////
 
-/datum/species/proc/movement_delay(var/mob/living/carbon/human/H)
+/datum/species/proc/movement_delay(mob/living/carbon/human/H)
 	var/mspeed = 0
 
 	if(!(H.status_flags & IGNORESLOWDOWN))
@@ -849,7 +850,7 @@
 // ATTACK PROCS //
 //////////////////
 
-/datum/species/proc/spec_attack_hand(var/mob/living/carbon/human/M, var/mob/living/carbon/human/H)
+/datum/species/proc/spec_attack_hand(mob/living/carbon/human/M, mob/living/carbon/human/H)
 	if(!istype(M)) //sanity check for drones.
 		return
 	if((M != H) && H.check_shields(0, M.name))
@@ -880,7 +881,6 @@
 			if(attacker_style && attacker_style.harm_act(M,H))
 				return 1
 			else
-				add_logs(M, H, "punched")
 				M.do_attack_animation(H)
 
 				var/atk_verb = "punch"
@@ -916,6 +916,7 @@
 								"<span class='userdanger'>[M] has [atk_verb]ed [H]!</span>")
 
 				H.apply_damage(damage, BRUTE, affecting, armor_block)
+				add_logs(M, H, "punched")
 				if((H.stat != DEAD) && damage >= 9)
 					H.visible_message("<span class='danger'>[M] has weakened [H]!</span>", \
 									"<span class='userdanger'>[M] has weakened [H]!</span>")
@@ -981,7 +982,7 @@
 								"<span class='userdanger'>[M] attemped to disarm [H]!</span>")
 	return
 
-/datum/species/proc/spec_attacked_by(var/obj/item/I, var/mob/living/user, var/def_zone, var/obj/item/organ/limb/affecting, var/hit_area, var/intent, var/obj/item/organ/limb/target_limb, target_area, var/mob/living/carbon/human/H)
+/datum/species/proc/spec_attacked_by(obj/item/I, mob/living/user, def_zone, obj/item/organ/limb/affecting, hit_area, intent, obj/item/organ/limb/target_limb, target_area, mob/living/carbon/human/H)
 	// Allows you to put in item-specific reactions based on species
 	if(user != src)
 		user.do_attack_animation(H)
@@ -1067,7 +1068,7 @@
 			H.forcesay(hit_appends)	//forcesay checks stat already.
 		return
 
-/datum/species/proc/attacked_by(var/obj/item/I, var/mob/living/user, var/def_zone, var/mob/living/carbon/human/H)
+/datum/species/proc/attacked_by(obj/item/I, mob/living/user, def_zone, mob/living/carbon/human/H)
 	H.apply_damage(I.force, I.damtype)
 	if(I.damtype == "brute")
 		if(prob(33) && I.force && !(NOBLOOD in specflags))
@@ -1092,7 +1093,7 @@
 
 	return
 
-/datum/species/proc/apply_damage(var/damage, var/damagetype = BRUTE, var/def_zone = null, var/blocked, var/mob/living/carbon/human/H)
+/datum/species/proc/apply_damage(damage, damagetype = BRUTE, def_zone = null, blocked, mob/living/carbon/human/H)
 	blocked = (100-(blocked+armor))/100
 	if(blocked <= 0)	return 0
 
@@ -1124,7 +1125,7 @@
 		if(STAMINA)
 			H.adjustStaminaLoss(damage * blocked)
 
-/datum/species/proc/on_hit(var/obj/item/projectile/proj_type, var/mob/living/carbon/human/H)
+/datum/species/proc/on_hit(obj/item/projectile/proj_type, mob/living/carbon/human/H)
 	// called when hit by a projectile
 	switch(proj_type)
 		if(/obj/item/projectile/energy/floramut) // overwritten by plants/pods
@@ -1137,61 +1138,8 @@
 //BREATHING//
 /////////////
 
-/datum/species/proc/breathe(var/mob/living/carbon/human/H)
-	if(H.reagents.has_reagent("lexorin")) return
-	if(istype(H.loc, /obj/machinery/atmospherics/unary/cryo_cell)) return
-
-	var/datum/gas_mixture/environment = H.loc.return_air()
-	var/datum/gas_mixture/breath
-	if(H.health <= config.health_threshold_crit)
-		H.losebreath++
-	if(H.losebreath>0) //Suffocating so do not take a breath
-		H.losebreath--
-		if (prob(10)) //Gasp per 10 ticks? Sounds about right.
-			spawn H.emote("gasp")
-		if(istype(H.loc, /obj/))
-			var/obj/location_as_object = H.loc
-			location_as_object.handle_internal_lifeform(H, 0)
-	else
-		//First, check for air from internal atmosphere (using an air tank and mask generally)
-		breath = H.get_breath_from_internal(BREATH_VOLUME) // Super hacky -- TLE
-		//breath = get_breath_from_internal(0.5) // Manually setting to old BREATH_VOLUME amount -- TLE
-
-		//No breath from internal atmosphere so get breath from location
-		if(!breath)
-			if(isobj(H.loc))
-				var/obj/location_as_object = H.loc
-				breath = location_as_object.handle_internal_lifeform(H, BREATH_VOLUME)
-			else if(isturf(H.loc))
-				var/breath_moles = 0
-				/*if(environment.return_pressure() > ONE_ATMOSPHERE)
-					// Loads of air around (pressure effect will be handled elsewhere), so lets just take a enough to fill our lungs at normal atmos pressure (using n = Pv/RT)
-					breath_moles = (ONE_ATMOSPHERE*BREATH_VOLUME/R_IDEAL_GAS_EQUATION*environment.temperature)
-				else*/
-					// Not enough air around, take a percentage of what's there to model this properly
-				breath_moles = environment.total_moles()*BREATH_PERCENTAGE
-
-				breath = H.loc.remove_air(breath_moles)
-
-				// Handle chem smoke effect  -- Doohl
-				if(!H.has_smoke_protection())
-					for(var/obj/effect/effect/smoke/chem/S in range(1, H))
-						if(S.reagents.total_volume && S.lifetime)
-							var/fraction = 1/S.max_lifetime
-							S.reagents.reaction(H,INGEST, fraction)
-							var/amount = round(S.reagents.total_volume*fraction,0.1)
-							S.reagents.copy_to(H, amount)
-							S.lifetime--
-
-		else //Still give containing object the chance to interact
-			if(istype(H.loc, /obj/))
-				var/obj/location_as_object = H.loc
-				location_as_object.handle_internal_lifeform(H, 0)
-
-	check_breath(breath, H)
-
-	if(breath)
-		H.loc.assume_air(breath)
+/datum/species/proc/breathe(mob/living/carbon/human/H)
+	return
 
 /datum/species/proc/check_breath(datum/gas_mixture/breath, var/mob/living/carbon/human/H)
 	if((H.status_flags & GODMODE))
@@ -1328,7 +1276,7 @@
 
 
 //Returns the amount of true_pp we breathed
-/datum/species/proc/handle_too_little_breath(var/mob/living/carbon/human/H = null,var/breath_pp = 0, var/safe_breath_min = 0, var/true_pp = 0)
+/datum/species/proc/handle_too_little_breath(mob/living/carbon/human/H = null,breath_pp = 0, safe_breath_min = 0, true_pp = 0)
 	. = 0
 	if(!H || !safe_breath_min) //the other args are either: Ok being 0 or Specifically handled.
 		return 0
@@ -1347,7 +1295,7 @@
 			H.failed_last_breath = 1
 
 
-/datum/species/proc/handle_breath_temperature(datum/gas_mixture/breath, var/mob/living/carbon/human/H) // called by human/life, handles temperatures
+/datum/species/proc/handle_breath_temperature(datum/gas_mixture/breath, mob/living/carbon/human/H) // called by human/life, handles temperatures
 	if(abs(310.15 - breath.temperature) > 50)
 
 		if(!(mutations_list[COLDRES] in H.dna.mutations)) // COLD DAMAGE
@@ -1368,7 +1316,7 @@
 				if(1000 to INFINITY)
 					H.apply_damage(HEAT_GAS_DAMAGE_LEVEL_3, BURN, "head")
 
-/datum/species/proc/handle_environment(datum/gas_mixture/environment, var/mob/living/carbon/human/H)
+/datum/species/proc/handle_environment(datum/gas_mixture/environment, mob/living/carbon/human/H)
 	if(!environment)
 		return
 
@@ -1409,7 +1357,7 @@
 					H.apply_damage(HEAT_DAMAGE_LEVEL_2*heatmod, BURN)
 
 	else if(H.bodytemperature < BODYTEMP_COLD_DAMAGE_LIMIT && !(mutations_list[COLDRES] in H.dna.mutations))
-		if(!istype(H.loc, /obj/machinery/atmospherics/unary/cryo_cell))
+		if(!istype(H.loc, /obj/machinery/atmospherics/components/unary/cryo_cell))
 			switch(H.bodytemperature)
 				if(200 to 260)
 					H.throw_alert("temp","cold",1)
@@ -1455,33 +1403,16 @@
 // FIRE //
 //////////
 
-/datum/species/proc/handle_fire(var/mob/living/carbon/human/H)
+/datum/species/proc/handle_fire(mob/living/carbon/human/H)
 	if((HEATRES in specflags) || (NOFIRE in specflags))
-		return
-	if(H.fire_stacks < 0)
-		H.fire_stacks++ //If we've doused ourselves in water to avoid fire, dry off slowly
-		H.fire_stacks = min(0, H.fire_stacks)//So we dry ourselves back to default, nonflammable.
-	if(!H.on_fire)
-		return
-	var/datum/gas_mixture/G = H.loc.return_air() // Check if we're standing in an oxygenless environment
-	if(G.oxygen < 1)
-		ExtinguishMob(H) //If there's no oxygen in the tile we're on, put out the fire
-		return
-	var/turf/location = get_turf(H)
-	location.hotspot_expose(700, 50, 1)
+		return 1
 
-/datum/species/proc/IgniteMob(var/mob/living/carbon/human/H)
-	if(H.fire_stacks > 0 && !H.on_fire && !(HEATRES in specflags) && !(NOFIRE in specflags))
-		H.on_fire = 1
-		H.AddLuminosity(3)
-		H.update_fire()
+/datum/species/proc/IgniteMob(mob/living/carbon/human/H)
+	if((HEATRES in specflags) || (NOFIRE in specflags))
+		return 1
 
-/datum/species/proc/ExtinguishMob(var/mob/living/carbon/human/H)
-	if(H.on_fire)
-		H.on_fire = 0
-		H.fire_stacks = 0
-		H.AddLuminosity(-3)
-		H.update_fire()
+/datum/species/proc/ExtinguishMob(mob/living/carbon/human/H)
+	return
 
 #undef HUMAN_MAX_OXYLOSS
 #undef HUMAN_CRIT_MAX_OXYLOSS

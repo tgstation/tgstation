@@ -8,12 +8,10 @@
 		return
 
 	if(..())
-		//Updates the number of stored chemicals for powers
-		handle_changeling()
-		//Heart Attacks, etc.
-		handle_heart()
-
 		. = 1
+
+	//Updates the number of stored chemicals for powers
+	handle_changeling()
 
 ///////////////
 // BREATHING //
@@ -32,7 +30,7 @@
 /mob/living/carbon/proc/breathe()
 	if(reagents.has_reagent("lexorin"))
 		return
-	if(istype(loc, /obj/machinery/atmospherics/unary/cryo_cell))
+	if(istype(loc, /obj/machinery/atmospherics/components/unary/cryo_cell))
 		return
 
 	var/datum/gas_mixture/environment
@@ -73,7 +71,7 @@
 				if(!has_smoke_protection())
 					for(var/obj/effect/effect/smoke/chem/S in range(1, src))
 						if(S.reagents.total_volume && S.lifetime)
-							var/fraction = 1/S.max_lifetime
+							var/fraction = 1/initial(S.lifetime)
 							S.reagents.reaction(src,INGEST, fraction)
 							var/amount = round(S.reagents.total_volume*fraction,0.1)
 							S.reagents.copy_to(src, amount)
@@ -238,8 +236,6 @@
 	if(reagents)
 		reagents.metabolize(src)
 
-/mob/living/carbon/proc/handle_heart()
-	return
 
 /mob/living/carbon/handle_stomach()
 	spawn(0)

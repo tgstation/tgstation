@@ -21,7 +21,7 @@
 		FG2.cleanup()
 	..()
 
-/obj/machinery/field/containment/attack_hand(mob/user as mob)
+/obj/machinery/field/containment/attack_hand(mob/user)
 	if(get_dist(src, user) > 1)
 		return 0
 	else
@@ -37,22 +37,22 @@
 	return 0
 
 
-/obj/machinery/field/containment/Crossed(mob/mover as mob)
+/obj/machinery/field/containment/Crossed(mob/mover)
 	if(isliving(mover))
 		shock(mover)
 
-/obj/machinery/field/containment/Crossed(obj/mover as obj)
+/obj/machinery/field/containment/Crossed(obj/mover)
 	if(istype(mover, /obj/machinery) || istype(mover, /obj/structure) || istype(mover, /obj/mecha))
 		bump_field(mover)
 
-/obj/machinery/field/containment/proc/set_master(var/master1,var/master2)
+/obj/machinery/field/containment/proc/set_master(master1,master2)
 	if(!master1 || !master2)
 		return 0
 	FG1 = master1
 	FG2 = master2
 	return 1
 
-/obj/machinery/field/containment/shock(mob/living/user as mob)
+/obj/machinery/field/containment/shock(mob/living/user)
 	if(!FG1 || !FG2)
 		qdel(src)
 		return 0
@@ -67,13 +67,13 @@
 /obj/machinery/field
 	var/hasShocked = 0 //Used to add a delay between shocks. In some cases this used to crash servers by spawning hundreds of sparks every second.
 
-/obj/machinery/field/CanPass(mob/mover as mob, turf/target, height=0)
+/obj/machinery/field/CanPass(mob/mover, turf/target, height=0)
 	if(isliving(mover)) // Don't let mobs through
 		shock(mover)
 		return 0
 	return ..()
 
-/obj/machinery/field/CanPass(obj/mover as obj, turf/target, height=0)
+/obj/machinery/field/CanPass(obj/mover, turf/target, height=0)
 	if((istype(mover, /obj/machinery) && !istype(mover, /obj/singularity)) || \
 		istype(mover, /obj/structure) || \
 		istype(mover, /obj/mecha))
@@ -81,7 +81,7 @@
 		return 0
 	return ..()
 
-/obj/machinery/field/proc/shock(mob/living/user as mob)
+/obj/machinery/field/proc/shock(mob/living/user)
 	if(hasShocked)
 		return 0
 	if(isliving(user))

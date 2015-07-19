@@ -10,7 +10,7 @@
 	circuit = /obj/item/weapon/circuitboard/robotics
 	var/temp = null
 
-/obj/machinery/computer/robotics/proc/can_control(var/mob/user, var/mob/living/silicon/robot/R)
+/obj/machinery/computer/robotics/proc/can_control(mob/user, mob/living/silicon/robot/R)
 	if(!istype(R))
 		return 0
 	if(istype(user, /mob/living/silicon/ai))
@@ -23,12 +23,12 @@
 		return 0
 	return 1
 
-/obj/machinery/computer/robotics/attack_hand(var/mob/user as mob)
+/obj/machinery/computer/robotics/attack_hand(mob/user)
 	if(..())
 		return
 	interact(user)
 
-/obj/machinery/computer/robotics/interact(var/mob/user as mob)
+/obj/machinery/computer/robotics/interact(mob/user)
 	if (src.z > 6)
 		user << "<span class='boldannounce'>Unable to establish a connection</span>: \black You're too far away from the station!"
 		return

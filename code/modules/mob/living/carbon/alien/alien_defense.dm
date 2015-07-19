@@ -6,7 +6,7 @@
 As such, they can either help or harm other aliens. Help works like the human help command while harm is a simple nibble.
 In all, this is a lot like the monkey code. /N
 */
-/mob/living/carbon/alien/attack_alien(mob/living/carbon/alien/M as mob)
+/mob/living/carbon/alien/attack_alien(mob/living/carbon/alien/M)
 	if (!ticker)
 		M << "You cannot attack people before the game has started."
 		return
@@ -36,18 +36,18 @@ In all, this is a lot like the monkey code. /N
 				visible_message("<span class='danger'>[M.name] bites [src]!</span>", \
 						"<span class='userdanger'>[M.name] bites [src]!</span>")
 				adjustBruteLoss(damage)
-				add_logs(M, src, "attacked", admin=0)
+				add_logs(M, src, "attacked")
 				updatehealth()
 			else
 				M << "<span class='warning'>[name] is too injured for that.</span>"
 	return
 
 
-/mob/living/carbon/alien/attack_larva(mob/living/carbon/alien/larva/L as mob)
+/mob/living/carbon/alien/attack_larva(mob/living/carbon/alien/larva/L)
 	return attack_alien(L)
 
 
-/mob/living/carbon/alien/attack_hand(mob/living/carbon/human/M as mob)
+/mob/living/carbon/alien/attack_hand(mob/living/carbon/human/M)
 	if(..())	//to allow surgery to return properly.
 		return 0
 
@@ -62,7 +62,7 @@ In all, this is a lot like the monkey code. /N
 	return 0
 
 
-/mob/living/carbon/alien/attack_paw(mob/living/carbon/monkey/M as mob)
+/mob/living/carbon/alien/attack_paw(mob/living/carbon/monkey/M)
 	if(..())
 		if (stat != DEAD)
 			adjustBruteLoss(rand(1, 3))
@@ -70,17 +70,17 @@ In all, this is a lot like the monkey code. /N
 	return
 
 
-/mob/living/carbon/alien/attack_animal(mob/living/simple_animal/M as mob)
+/mob/living/carbon/alien/attack_animal(mob/living/simple_animal/M)
 	if(..())
 		var/damage = rand(M.melee_damage_lower, M.melee_damage_upper)
 		adjustBruteLoss(damage)
 		updatehealth()
 
-/mob/living/carbon/alien/attack_slime(mob/living/simple_animal/slime/M as mob)
+/mob/living/carbon/alien/attack_slime(mob/living/simple_animal/slime/M)
 	if(..()) //successful slime attack
 		var/damage = rand(5, 35)
 		if(M.is_adult)
 			damage = rand(10, 40)
 		adjustBruteLoss(damage)
-		add_logs(M, src, "attacked", admin=0)
+		add_logs(M, src, "attacked")
 		updatehealth()

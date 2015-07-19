@@ -12,7 +12,7 @@
 	id = "consumable"
 	var/nutriment_factor = 1 * REAGENTS_METABOLISM
 
-/datum/reagent/consumable/on_mob_life(var/mob/living/M as mob)
+/datum/reagent/consumable/on_mob_life(mob/living/M)
 	current_cycle++
 	M.nutrition += nutriment_factor
 	holder.remove_reagent(src.id, metabolization_rate)
@@ -25,7 +25,7 @@
 	nutriment_factor = 15 * REAGENTS_METABOLISM
 	color = "#664330" // rgb: 102, 67, 48
 
-/datum/reagent/consumable/nutriment/on_mob_life(var/mob/living/M as mob)
+/datum/reagent/consumable/nutriment/on_mob_life(mob/living/M)
 	if(prob(50))
 		M.heal_organ_damage(1,0)
 	..()
@@ -38,7 +38,7 @@
 	reagent_state = SOLID
 	color = "#664330" // rgb: 102, 67, 48
 
-/datum/reagent/consumable/vitamin/on_mob_life(var/mob/living/M as mob)
+/datum/reagent/consumable/vitamin/on_mob_life(mob/living/M)
 	if(prob(50))
 		M.heal_organ_damage(1,1)
 	if(M.satiety < 600)
@@ -56,12 +56,12 @@
 	metabolization_rate = 2 * REAGENTS_METABOLISM
 	overdose_threshold = 200 // Hyperglycaemic shock
 
-/datum/reagent/consumable/sugar/overdose_start(var/mob/living/M as mob)
+/datum/reagent/consumable/sugar/overdose_start(mob/living/M)
 	M << "<span class='userdanger'>You go into hyperglycaemic shock! Lay off the twinkies!</span>"
 	M.sleeping += 30
 	return
 
-/datum/reagent/consumable/sugar/overdose_process(var/mob/living/M as mob)
+/datum/reagent/consumable/sugar/overdose_process(mob/living/M)
 	M.sleeping += 3
 	..()
 	return
@@ -94,7 +94,7 @@
 	description = "This is what makes chilis hot."
 	color = "#B31008" // rgb: 179, 16, 8
 
-/datum/reagent/consumable/capsaicin/on_mob_life(var/mob/living/M as mob)
+/datum/reagent/consumable/capsaicin/on_mob_life(mob/living/M)
 	switch(current_cycle)
 		if(1 to 15)
 			M.bodytemperature += 5 * TEMPERATURE_DAMAGE_COEFFICIENT
@@ -123,7 +123,7 @@
 	description = "A special oil that noticably chills the body. Extraced from Icepeppers."
 	color = "#B31008" // rgb: 139, 166, 233
 
-/datum/reagent/consumable/frostoil/on_mob_life(var/mob/living/M as mob)
+/datum/reagent/consumable/frostoil/on_mob_life(mob/living/M)
 	switch(current_cycle)
 		if(1 to 15)
 			M.bodytemperature -= 10 * TEMPERATURE_DAMAGE_COEFFICIENT
@@ -150,7 +150,7 @@
 	..()
 	return
 
-/datum/reagent/consumable/frostoil/reaction_turf(var/turf/simulated/T, var/volume)
+/datum/reagent/consumable/frostoil/reaction_turf(turf/simulated/T, volume)
 	if(volume >= 5)
 		for(var/mob/living/simple_animal/slime/M in T)
 			M.adjustToxLoss(rand(15,30))
@@ -163,7 +163,7 @@
 	description = "A chemical agent used for self-defense and in police work."
 	color = "#B31008" // rgb: 179, 16, 8
 
-/datum/reagent/consumable/condensedcapsaicin/reaction_mob(var/mob/living/M, var/method=TOUCH, var/volume)
+/datum/reagent/consumable/condensedcapsaicin/reaction_mob(mob/living/M, method=TOUCH, volume)
 	if(!istype(M, /mob/living/carbon/human) && !istype(M, /mob/living/carbon/monkey))
 		return
 
@@ -225,7 +225,7 @@
 			victim.Weaken(5)
 			victim.drop_item()
 
-/datum/reagent/consumable/condensedcapsaicin/on_mob_life(var/mob/living/M as mob)
+/datum/reagent/consumable/condensedcapsaicin/on_mob_life(mob/living/M)
 	if(prob(5))
 		M.visible_message("<span class='warning'>[M] [pick("dry heaves!","coughs!","splutters!")]</span>")
 	..()
@@ -260,7 +260,7 @@
 	nutriment_factor = 3 * REAGENTS_METABOLISM
 	color = "#403010" // rgb: 64, 48, 16
 
-/datum/reagent/consumable/hot_coco/on_mob_life(var/mob/living/M as mob)
+/datum/reagent/consumable/hot_coco/on_mob_life(mob/living/M)
 	if (M.bodytemperature < 310)//310 is the normal bodytemp. 310.055
 		M.bodytemperature = min(310, M.bodytemperature + (5 * TEMPERATURE_DAMAGE_COEFFICIENT))
 	..()
@@ -273,7 +273,7 @@
 	color = "#E700E7" // rgb: 231, 0, 231
 	metabolization_rate = 0.2 * REAGENTS_METABOLISM
 
-/datum/reagent/mushroomhallucinogen/on_mob_life(var/mob/living/M as mob)
+/datum/reagent/mushroomhallucinogen/on_mob_life(mob/living/M)
 	M.druggy = max(M.druggy, 30)
 	switch(current_cycle)
 		if(1 to 5)
@@ -307,7 +307,7 @@
 	description = "Multi-colored little bits of sugar, commonly found on donuts. Loved by cops."
 	color = "#FF00FF" // rgb: 255, 0, 255
 
-/datum/reagent/consumable/sprinkles/on_mob_life(var/mob/living/M as mob)
+/datum/reagent/consumable/sprinkles/on_mob_life(mob/living/M)
 	if(istype(M, /mob/living/carbon/human) && M.job in list("Security Officer", "Head of Security", "Detective", "Warden"))
 		M.heal_organ_damage(1,1)
 		..()
@@ -321,7 +321,7 @@
 	nutriment_factor = 20 * REAGENTS_METABOLISM
 	color = "#302000" // rgb: 48, 32, 0
 
-/datum/reagent/consumable/cornoil/reaction_turf(var/turf/simulated/T, var/volume)
+/datum/reagent/consumable/cornoil/reaction_turf(turf/simulated/T, volume)
 	if (!istype(T))
 		return
 	src = null
@@ -355,7 +355,7 @@
 	nutriment_factor = 5 * REAGENTS_METABOLISM
 	color = "#302000" // rgb: 48, 32, 0
 
-/datum/reagent/consumable/hot_ramen/on_mob_life(var/mob/living/M as mob)
+/datum/reagent/consumable/hot_ramen/on_mob_life(mob/living/M)
 	if (M.bodytemperature < 310)//310 is the normal bodytemp. 310.055
 		M.bodytemperature = min(310, M.bodytemperature + (10 * TEMPERATURE_DAMAGE_COEFFICIENT))
 	..()
@@ -368,7 +368,7 @@
 	nutriment_factor = 5 * REAGENTS_METABOLISM
 	color = "#302000" // rgb: 48, 32, 0
 
-/datum/reagent/consumable/hell_ramen/on_mob_life(var/mob/living/M as mob)
+/datum/reagent/consumable/hell_ramen/on_mob_life(mob/living/M)
 	M.bodytemperature += 10 * TEMPERATURE_DAMAGE_COEFFICIENT
 	..()
 	return
@@ -380,7 +380,7 @@
 	reagent_state = SOLID
 	color = "#FFFFFF" // rgb: 0, 0, 0
 
-/datum/reagent/consumable/flour/reaction_turf(var/turf/T, var/volume)
+/datum/reagent/consumable/flour/reaction_turf(turf/T, volume)
 	src = null
 	if(!istype(T, /turf/space))
 		var/obj/effect/decal/cleanable/reagentdecal = new/obj/effect/decal/cleanable/flour(T)
@@ -432,7 +432,7 @@
 	description = "Decays into sugar."
 	color = "#C8A5DC"
 
-/datum/reagent/consumable/corn_syrup/on_mob_life(var/mob/living/M as mob)
+/datum/reagent/consumable/corn_syrup/on_mob_life(mob/living/M)
 	M.reagents.add_reagent("sugar", 3)
 	M.reagents.remove_reagent("corn_syrup", 1)
 	..()

@@ -33,7 +33,7 @@
 	c.dataId = ++securityCrimeCounter
 	return c
 
-/datum/datacore/proc/addMinorCrime(id = "", var/datum/data/crime/crime)
+/datum/datacore/proc/addMinorCrime(id = "", datum/data/crime/crime)
 	for(var/datum/data/record/R in security)
 		if(R.fields["id"] == id)
 			var/list/crimes = R.fields["mi_crim"]
@@ -58,14 +58,14 @@
 					crimes -= crime
 					return
 
-/datum/datacore/proc/addMajorCrime(id = "", var/datum/data/crime/crime)
+/datum/datacore/proc/addMajorCrime(id = "", datum/data/crime/crime)
 	for(var/datum/data/record/R in security)
 		if(R.fields["id"] == id)
 			var/list/crimes = R.fields["ma_crim"]
 			crimes |= crime
 			return
 
-/datum/datacore/proc/manifest(var/nosleep = 0)
+/datum/datacore/proc/manifest(nosleep = 0)
 	spawn()
 		if(!nosleep)
 			sleep(40)
@@ -73,7 +73,7 @@
 			manifest_inject(H)
 		return
 
-/datum/datacore/proc/manifest_modify(var/name, var/assignment)
+/datum/datacore/proc/manifest_modify(name, assignment)
 	var/datum/data/record/foundrecord = find_record("name", name, data_core.general)
 	if(foundrecord)
 		foundrecord.fields["rank"] = assignment
@@ -187,7 +187,7 @@
 
 
 var/record_id_num = 1001
-/datum/datacore/proc/manifest_inject(var/mob/living/carbon/human/H)
+/datum/datacore/proc/manifest_inject(mob/living/carbon/human/H)
 	if(H.mind && (H.mind.assigned_role != H.mind.special_role))
 		var/assignment
 		if(H.mind.assigned_role)
@@ -265,7 +265,7 @@ var/record_id_num = 1001
 		locked += L
 	return
 
-/datum/datacore/proc/get_id_photo(var/mob/living/carbon/human/H)
+/datum/datacore/proc/get_id_photo(mob/living/carbon/human/H)
 	var/icon/photo = null
 	var/g = (H.gender == FEMALE) ? "f" : "m"
 	if(!config.mutant_races || H.dna.species.use_skintones)

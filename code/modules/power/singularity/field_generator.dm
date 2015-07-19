@@ -75,7 +75,7 @@ field_generator power level display
 	return
 
 
-/obj/machinery/field/generator/attack_hand(mob/user as mob)
+/obj/machinery/field/generator/attack_hand(mob/user)
 	if(state == 2)
 		if(get_dist(src, user) <= 1)//Need to actually touch the thing to turn it on
 			if(src.active >= 1)
@@ -162,7 +162,7 @@ field_generator power level display
 	else
 		..()
 
-/obj/machinery/field/generator/bullet_act(var/obj/item/projectile/Proj)
+/obj/machinery/field/generator/bullet_act(obj/item/projectile/Proj)
 	if(Proj.flag != "bullet")
 		power += Proj.damage
 		update_icon()
@@ -218,7 +218,7 @@ field_generator power level display
 		return 0
 
 //This could likely be better, it tends to start loopin if you have a complex generator loop setup.  Still works well enough to run the engine fields will likely recode the field gens and fields sometime -Mport
-/obj/machinery/field/generator/proc/draw_power(var/draw = 0, var/failsafe = 0, var/obj/machinery/field/generator/G = null, var/obj/machinery/field/generator/last = null)
+/obj/machinery/field/generator/proc/draw_power(draw = 0, failsafe = 0, obj/machinery/field/generator/G = null, obj/machinery/field/generator/last = null)
 	if(Varpower)
 		return 1
 	if((G && G == src) || (failsafe >= 8))//Loopin, set fail
@@ -263,7 +263,7 @@ field_generator power level display
 	src.active = 2
 
 
-/obj/machinery/field/generator/proc/setup_field(var/NSEW)
+/obj/machinery/field/generator/proc/setup_field(NSEW)
 	var/turf/T = src.loc
 	var/obj/machinery/field/generator/G
 	var/steps = 0
@@ -352,7 +352,7 @@ field_generator power level display
 					investigate_log("has <font color='red'>failed</font> whilst a singulo exists.","singulo")
 			O.last_warning = world.time
 
-/obj/machinery/field/generator/shock(mob/living/user as mob)
+/obj/machinery/field/generator/shock(mob/living/user)
 	if(fields.len)
 		..()
 

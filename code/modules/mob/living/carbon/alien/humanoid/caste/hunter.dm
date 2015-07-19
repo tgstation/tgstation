@@ -44,7 +44,7 @@
 //Hunter verbs
 
 
-/mob/living/carbon/alien/humanoid/hunter/proc/toggle_leap(var/message = 1)
+/mob/living/carbon/alien/humanoid/hunter/proc/toggle_leap(message = 1)
 	leap_on_click = !leap_on_click
 	leap_icon.icon_state = "leap_[leap_on_click ? "on":"off"]"
 	update_icons()
@@ -54,7 +54,7 @@
 		return
 
 
-/mob/living/carbon/alien/humanoid/hunter/ClickOn(var/atom/A, var/params)
+/mob/living/carbon/alien/humanoid/hunter/ClickOn(atom/A, params)
 	face_atom(A)
 	if(leap_on_click)
 		leap_at(A)
@@ -64,7 +64,7 @@
 
 #define MAX_ALIEN_LEAP_DIST 7
 
-/mob/living/carbon/alien/humanoid/hunter/proc/leap_at(var/atom/A)
+/mob/living/carbon/alien/humanoid/hunter/proc/leap_at(atom/A)
 	if(pounce_cooldown)
 		src << "<span class='alertalien'>You are too fatigued to pounce right now!</span>"
 		return

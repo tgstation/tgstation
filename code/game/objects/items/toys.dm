@@ -39,10 +39,10 @@
 /obj/item/toy/balloon/New()
 	create_reagents(10)
 
-/obj/item/toy/balloon/attack(mob/living/carbon/human/M as mob, mob/user as mob)
+/obj/item/toy/balloon/attack(mob/living/carbon/human/M, mob/user)
 	return
 
-/obj/item/toy/balloon/afterattack(atom/A as mob|obj, mob/user as mob, proximity)
+/obj/item/toy/balloon/afterattack(atom/A as mob|obj, mob/user, proximity)
 	if(!proximity) return
 	if (istype(A, /obj/structure/reagent_dispensers))
 		var/obj/structure/reagent_dispensers/RD = A
@@ -56,7 +56,7 @@
 			desc = "A translucent balloon with some form of liquid sloshing around in it."
 			update_icon()
 
-/obj/item/toy/balloon/attackby(obj/O as obj, mob/user as mob, params)
+/obj/item/toy/balloon/attackby(obj/O, mob/user, params)
 	if(istype(O, /obj/item/weapon/reagent_containers/glass))
 		if(O.reagents)
 			if(O.reagents.total_volume <= 0)
@@ -130,7 +130,7 @@
 	..()
 	user << "There [bullets == 1 ? "is" : "are"] [bullets] cap\s left."
 
-/obj/item/toy/gun/attackby(obj/item/toy/ammo/gun/A as obj, mob/user as mob, params)
+/obj/item/toy/gun/attackby(obj/item/toy/ammo/gun/A, mob/user, params)
 
 	if (istype(A, /obj/item/toy/ammo/gun))
 		if (src.bullets >= 7)
@@ -151,7 +151,7 @@
 		return 1
 	return
 
-/obj/item/toy/gun/afterattack(atom/target as mob|obj|turf|area, mob/user as mob, flag)
+/obj/item/toy/gun/afterattack(atom/target as mob|obj|turf|area, mob/user, flag)
 	if (flag)
 		return
 	if (!(istype(usr, /mob/living/carbon/human) || ticker) && ticker.mode.name != "monkey")
@@ -199,7 +199,7 @@
 	attack_verb = list("attacked", "struck", "hit")
 	var/hacked = 0
 
-/obj/item/toy/sword/attack_self(mob/user as mob)
+/obj/item/toy/sword/attack_self(mob/user)
 	active = !( active )
 	if (active)
 		user << "<span class='notice'>You extend the plastic blade with a quick flick of your wrist.</span>"
@@ -348,10 +348,10 @@
 		graffiti |= "antilizard"
 		graffiti |= "prolizard"
 
-/obj/item/toy/crayon/attack_self(mob/living/user as mob)
+/obj/item/toy/crayon/attack_self(mob/living/user)
 	update_window(user)
 
-/obj/item/toy/crayon/proc/update_window(mob/living/user as mob)
+/obj/item/toy/crayon/proc/update_window(mob/living/user)
 	dat += "<center><h2>Currently selected: [drawtype]</h2><br>"
 	dat += "<a href='?src=\ref[src];type=random_letter'>Random letter</a><a href='?src=\ref[src];type=letter'>Pick letter</a>"
 	dat += "<hr>"
@@ -396,7 +396,7 @@
 	drawtype = temp
 	update_window(usr)
 
-/obj/item/toy/crayon/afterattack(atom/target, mob/user as mob, proximity)
+/obj/item/toy/crayon/afterattack(atom/target, mob/user, proximity)
 	if(!proximity || !check_allowed_items(target)) return
 	if(!uses)
 		user << "<span class='warning'>There is no more of [src.name] left!</span>"
@@ -478,7 +478,7 @@
 					qdel(src)
 	return
 
-/obj/item/toy/crayon/attack(mob/M as mob, mob/user as mob)
+/obj/item/toy/crayon/attack(mob/M, mob/user)
 	if(edible && (M == user))
 		user << "You take a bite of the [src.name]. Delicious!"
 		user.nutrition += 5
@@ -491,7 +491,7 @@
 	else
 		..()
 
-/obj/item/toy/crayon/proc/territory_claimed(var/area/territory,mob/user)
+/obj/item/toy/crayon/proc/territory_claimed(area/territory,mob/user)
 	var/occupying_gang
 	for(var/datum/gang/G in ticker.mode.gangs)
 		if(territory.type in (G.territory|G.territory_new))
@@ -555,7 +555,7 @@
 	var/quiet = 0
 
 //all credit to skasi for toy mech fun ideas
-/obj/item/toy/prize/attack_self(mob/user as mob)
+/obj/item/toy/prize/attack_self(mob/user)
 	if(!cooldown)
 		user << "<span class='notice'>You play with [src].</span>"
 		cooldown = 1
@@ -565,7 +565,7 @@
 		return
 	..()
 
-/obj/item/toy/prize/attack_hand(mob/user as mob)
+/obj/item/toy/prize/attack_hand(mob/user)
 	if(loc == user)
 		if(!cooldown)
 			user << "<span class='notice'>You play with [src].</span>"
@@ -758,7 +758,7 @@
 	cards += "Ace of Diamonds"
 
 
-/obj/item/toy/cards/deck/attack_hand(mob/user as mob)
+/obj/item/toy/cards/deck/attack_hand(mob/user)
 	if(user.lying)
 		return
 	var/choice = null
@@ -783,7 +783,7 @@
 	else if(cards.len > 1)
 		src.icon_state = "deck_[deckstyle]_low"
 
-/obj/item/toy/cards/deck/attack_self(mob/user as mob)
+/obj/item/toy/cards/deck/attack_self(mob/user)
 	if(cooldown < world.time - 50)
 		cards = shuffle(cards)
 		playsound(user, 'sound/items/cardshuffle.ogg', 50, 1)
@@ -864,7 +864,7 @@
 	var/choice = null
 
 
-/obj/item/toy/cards/cardhand/attack_self(mob/user as mob)
+/obj/item/toy/cards/cardhand/attack_self(mob/user)
 	user.set_machine(src)
 	interact(user)
 
@@ -1125,12 +1125,12 @@
 	var/bitesound = 'sound/weapons/bite.ogg'
 
 // Attack mob
-/obj/item/toy/carpplushie/attack(mob/M as mob, mob/user as mob)
+/obj/item/toy/carpplushie/attack(mob/M, mob/user)
 	playsound(loc, bitesound, 20, 1)	// Play bite sound in local area
 	return ..()
 
 // Attack self
-/obj/item/toy/carpplushie/attack_self(mob/user as mob)
+/obj/item/toy/carpplushie/attack_self(mob/user)
 	playsound(src.loc, bitesound, 20, 1)
 	return ..()
 
@@ -1168,6 +1168,6 @@
 	item_state = "beachball"
 	w_class = 4 //Stops people from hiding it in their bags/pockets
 
-/obj/item/toy/beach_ball/afterattack(atom/target as mob|obj|turf|area, mob/user as mob)
+/obj/item/toy/beach_ball/afterattack(atom/target as mob|obj|turf|area, mob/user)
 	user.drop_item()
 	src.throw_at(target, throw_range, throw_speed)

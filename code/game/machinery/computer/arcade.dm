@@ -109,7 +109,7 @@
 	src.enemy_name = replacetext((name_part1 + name_part2), "the ", "")
 	src.name = (name_action + name_part1 + name_part2)
 
-/obj/machinery/computer/arcade/battle/attack_hand(mob/user as mob)
+/obj/machinery/computer/arcade/battle/attack_hand(mob/user)
 	if(..())
 		return
 	user.set_machine(src)
@@ -273,7 +273,7 @@
 	return
 
 
-/obj/machinery/computer/arcade/battle/emag_act(mob/user as mob)
+/obj/machinery/computer/arcade/battle/emag_act(mob/user)
 	if(!emagged)
 		temp = "If you die in the game, you die for real!"
 		player_hp = 30
@@ -361,7 +361,7 @@
 	playing = 1
 	gameover = 0
 
-/obj/machinery/computer/arcade/orion_trail/attack_hand(mob/user as mob)
+/obj/machinery/computer/arcade/orion_trail/attack_hand(mob/user)
 	if(..())
 		return
 	if(fuel <= 0 || food <=0 || settlers.len == 0)
@@ -676,7 +676,7 @@
 	name = "The Orion Trail"
 	desc = "Learn how our ancestors got to Orion, and have fun in the process!"
 
-/obj/machinery/computer/arcade/orion_trail/emag_act(mob/user as mob)
+/obj/machinery/computer/arcade/orion_trail/emag_act(mob/user)
 	if(!emagged)
 		user << "<span class='notice'>You override the cheat code menu and skip to Cheat #[rand(1, 50)]: Realism Mode.</span>"
 		name = "The Orion Trail: Realism Edition"

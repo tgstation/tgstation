@@ -49,24 +49,20 @@
 	var/default_storagebox= /obj/item/weapon/storage/box/survival
 
 //Only override this proc
-/datum/job/proc/equip_items(var/mob/living/carbon/human/H)
+/datum/job/proc/equip_items(mob/living/carbon/human/H)
 
 //Or this proc
-/datum/job/proc/equip_backpack(var/mob/living/carbon/human/H)
-	switch(H.backbag)
-		if(1) //No backpack or satchel
-			H.equip_to_slot_or_del(new default_storagebox(H), slot_r_hand)
-		if(2) // Backpack
-			var/obj/item/weapon/storage/backpack/BPK = new default_backpack(H)
-			new default_storagebox(BPK)
-			H.equip_to_slot_or_del(BPK, slot_back,1)
-		if(3) //Satchel
-			var/obj/item/weapon/storage/backpack/BPK = new default_satchel(H)
-			new default_storagebox(BPK)
-			H.equip_to_slot_or_del(BPK, slot_back,1)
+/datum/job/proc/equip_backpack(mob/living/carbon/human/H)
+	var/obj/item/weapon/storage/backpack/BPK
+	if(H.backbag == 1) //Backpack
+		BPK = new default_backpack(H)
+	else //Satchel
+		BPK = new default_satchel(H)
+	new default_storagebox(BPK)
+	H.equip_to_slot_or_del(BPK, slot_back,1)
 
 //But don't override this
-/datum/job/proc/equip(var/mob/living/carbon/human/H)
+/datum/job/proc/equip(mob/living/carbon/human/H)
 	if(!H)
 		return 0
 
@@ -100,7 +96,7 @@
 	//Equip headset
 	H.equip_to_slot_or_del(new src.default_headset(H), slot_ears)
 
-/datum/job/proc/apply_fingerprints(var/mob/living/carbon/human/H)
+/datum/job/proc/apply_fingerprints(mob/living/carbon/human/H)
 	if(!istype(H))
 		return
 	if(H.back)

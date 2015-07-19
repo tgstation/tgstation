@@ -35,7 +35,7 @@
 		overlays += I
 
 ////////
-/mob/living/carbon/monkey/update_inv_wear_mask(var/update_icons=1)
+/mob/living/carbon/monkey/update_inv_wear_mask(update_icons=1)
 	if(wear_mask && istype(wear_mask, /obj/item/clothing/mask) )
 		wear_mask.screen_loc = ui_monkey_mask
 		if(client && hud_used)
@@ -52,7 +52,7 @@
 	if(update_icons)		update_icons()
 
 
-/mob/living/carbon/monkey/update_inv_head(var/update_icons=1)
+/mob/living/carbon/monkey/update_inv_head(update_icons=1)
 	if(head)
 		head.screen_loc = ui_monkey_head
 		if(client && hud_used)
@@ -67,7 +67,7 @@
 	if(update_icons)		update_icons()
 
 
-/mob/living/carbon/monkey/update_inv_r_hand(var/update_icons=1)
+/mob/living/carbon/monkey/update_inv_r_hand(update_icons=1)
 	if (handcuffed)
 		drop_r_hand()
 		return
@@ -88,7 +88,7 @@
 	if(update_icons)		update_icons()
 
 
-/mob/living/carbon/monkey/update_inv_l_hand(var/update_icons=1)
+/mob/living/carbon/monkey/update_inv_l_hand(update_icons=1)
 	if (handcuffed)
 		drop_l_hand()
 		return
@@ -109,7 +109,7 @@
 	if(update_icons)		update_icons()
 
 
-/mob/living/carbon/monkey/update_inv_back(var/update_icons=1)
+/mob/living/carbon/monkey/update_inv_back(update_icons=1)
 	if(back)
 		back.screen_loc = ui_monkey_back
 		if(client && hud_used)
@@ -123,7 +123,7 @@
 	if(update_icons)		update_icons()
 
 
-/mob/living/carbon/monkey/update_inv_handcuffed(var/update_icons=1)
+/mob/living/carbon/monkey/update_inv_handcuffed(update_icons=1)
 	if(handcuffed)
 		drop_r_hand()
 		drop_l_hand()

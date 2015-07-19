@@ -20,6 +20,7 @@ RCD
 	w_class = 3.0
 	materials = list(MAT_METAL=100000)
 	origin_tech = "engineering=4;materials=2"
+	req_access_txt = "11"
 	var/datum/effect/effect/system/spark_spread/spark_system
 	var/matter = 0
 	var/max_matter = 160
@@ -41,7 +42,7 @@ RCD
 	set category = "Object"
 	set src in usr
 
-	if (!ishuman(usr))
+	if (!ishuman(usr) && !isrobot(usr))
 		return ..(usr)
 
 	var/mob/living/carbon/human/H = usr
@@ -95,20 +96,16 @@ RCD
 
 /obj/item/weapon/rcd/Topic(href, href_list)
 	..()
-	if (usr.stat || usr.restrained() || !ishuman(usr))
+	if (usr.stat || usr.restrained() || (!ishuman(usr) && !isrobot(usr)))
 		return
 	if (href_list["close"])
 		usr << browse(null, "window=airlock")
 		return
 
 	if (href_list["login"])
-		var/obj/item/I = usr.get_active_hand()
-		if (istype(I, /obj/item/device/pda))
-			var/obj/item/device/pda/pda = I
-			I = pda.id
-		if (I && src.check_access(I))
+		if(allowed(usr))
 			src.locked = 0
-			src.last_configurator = I:registered_name
+			src.last_configurator = usr.name
 
 	if (locked)
 		return
@@ -121,7 +118,7 @@ RCD
 
 	change_airlock_access()
 
-/obj/item/weapon/rcd/proc/toggle_access(var/acc)
+/obj/item/weapon/rcd/proc/toggle_access(acc)
 	if (acc == "all")
 		conf_access = null
 	else if(acc == "one")
@@ -239,7 +236,7 @@ RCD
 		desc = "A RCD. It currently holds [matter]/[max_matter] matter-units."
 	return
 
-/obj/item/weapon/rcd/proc/loadwithsheets(obj/item/stack/sheet/S, var/value, mob/user)
+/obj/item/weapon/rcd/proc/loadwithsheets(obj/item/stack/sheet/S, value, mob/user)
     var/maxsheets = round((max_matter-matter)/value)    //calculate the max number of sheets that will fit in RCD
     if(maxsheets > 0)
         if(S.amount > maxsheets)
@@ -250,10 +247,11 @@ RCD
             user << "<span class='notice'>You insert [maxsheets] [S.name] sheets into the RCD. </span>"
         else
             matter += value*(S.amount)
+            user.unEquip()
+            S.use(S.amount)
             playsound(src.loc, 'sound/machines/click.ogg', 50, 1)
             user << "<span class='notice'>You insert [S.amount] [S.name] sheets into the RCD. </span>"
-            user.unEquip()
-            qdel(S)
+
         return 1
     user << "<span class='warning'>You can't insert any more [S.name] sheets into the RCD!"
     return 0
@@ -325,9 +323,6 @@ RCD
 							break
 
 					if(door_check)
-						if (!conf_access)
-							user << "<span class='warning'>Configure access first!</span>"
-							return 0
 						user << "<span class='notice'>You start building airlock...</span>"
 						playsound(src.loc, 'sound/machines/click.ogg', 50, 1)
 						if(do_after(user, 50, target = A))
@@ -337,7 +332,8 @@ RCD
 
 							T.electronics = new/obj/item/weapon/airlock_electronics( src.loc )
 
-							T.electronics.conf_access = conf_access.Copy()
+							if(conf_access)
+								T.electronics.conf_access = conf_access.Copy()
 							T.electronics.use_one_access = use_one_access
 							T.electronics.last_configurator = last_configurator
 							T.electronics.locked = locked
@@ -404,7 +400,7 @@ RCD
 				if(checkResource(5, user))
 					user << "<span class='notice'>You start deconstructing the window...</span>"
 					playsound(src.loc, 'sound/machines/click.ogg', 50, 1)
-					if(do_after(user, 50))
+					if(do_after(user, 50, target = A))
 						if(!useResource(5, user)) return 0
 						activate()
 						qdel(A)
@@ -415,7 +411,7 @@ RCD
 				if(checkResource(5, user))
 					user << "<span class='notice'>You start deconstructing the grille...</span>"
 					playsound(src.loc, 'sound/machines/click.ogg', 50, 1)
-					if(do_after(user, 50))
+					if(do_after(user, 50, target = A))
 						if(!useResource(5, user)) return 0
 						activate()
 						qdel(A)
@@ -431,7 +427,7 @@ RCD
 						return 0
 					user << "<span class='notice'>You start building a grille...</span>"
 					playsound(src.loc, 'sound/machines/click.ogg', 50, 1)
-					if(do_after(user, 40))
+					if(do_after(user, 40, target = A))
 						if(!useResource(5, user)) return 0
 						activate()
 						var/obj/structure/grille/G = new/obj/structure/grille(A)
@@ -443,7 +439,8 @@ RCD
 				if(checkResource(5, user))
 					user << "<span class='notice'>You start building a window...</span>"
 					playsound(src.loc, 'sound/machines/click.ogg', 50, 1)
-					if(do_after(user, 40))
+					if(do_after(user, 40, target = A))
+						if(locate(/obj/structure/window) in A.loc) return 0
 						if(!useResource(5, user)) return 0
 						activate()
 						var/obj/structure/window/WD = new/obj/structure/window/fulltile(A.loc)
@@ -456,28 +453,27 @@ RCD
 			user << "ERROR: RCD in MODE: [mode] attempted use by [user]. Send this text #coderbus or an admin."
 			return 0
 
-/obj/item/weapon/rcd/proc/useResource(var/amount, var/mob/user)
+/obj/item/weapon/rcd/proc/useResource(amount, mob/user)
 	if(matter < amount)
 		return 0
 	matter -= amount
 	desc = "A RCD. It currently holds [matter]/[max_matter] matter-units."
 	return 1
 
-/obj/item/weapon/rcd/proc/checkResource(var/amount, var/mob/user)
+/obj/item/weapon/rcd/proc/checkResource(amount, mob/user)
 	return matter >= amount
-/obj/item/weapon/rcd/borg/useResource(var/amount, var/mob/user)
+/obj/item/weapon/rcd/borg/useResource(amount, mob/user)
 	if(!isrobot(user))
 		return 0
 	return user:cell:use(amount * 160)
 
-/obj/item/weapon/rcd/borg/checkResource(var/amount, var/mob/user)
+/obj/item/weapon/rcd/borg/checkResource(amount, mob/user)
 	if(!isrobot(user))
 		return 0
 	return user:cell:charge >= (amount * 160)
 
 /obj/item/weapon/rcd/borg/New()
 	..()
-	advanced_airlock_setting = 0 //Borgs can't set the access levels, so they only get the defaults!
 	desc = "A device used to rapidly build walls/floor."
 	canRwall = 1
 
