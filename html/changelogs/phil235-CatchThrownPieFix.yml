@@ -5,4 +5,4 @@ author: phil235
 delete-after: True
 
 changes: 
-  - tweak: "Thrown things no longer bounces off walls, unless they're in no gravity. Heavy items and mobs thrown can push the mobs and non anchored objects they land on. Throwing a mob onto a mob in no gravity will push each one in opposite direction. Thrown mobs landing on wall, or dense object or mob gets stunned and a bit injured. The damage when mob hit a wall is nerfed.  
+  - tweak: "Thrown things no longer bounces off walls, unless they're in no gravity. Heavy items and mobs thrown can push the mobs and non anchored objects they land on. Throwing a mob onto a mob in no gravity will push each one in opposite direction. Thrown mobs landing on wall, or dense object or mob gets stunned and a bit injured. The damage when mob hit a wall is nerfed."  

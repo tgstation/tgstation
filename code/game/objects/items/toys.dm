@@ -77,7 +77,7 @@
 			for(var/atom/A in get_turf(hit_atom))
 				reagents.reaction(A)
 			icon_state = "burst"
-			del(src)  // Not qdel, because it would burst multiple times
+			qdel(src)
 
 /obj/item/toy/balloon/update_icon()
 	if(src.reagents.total_volume >= 1)
