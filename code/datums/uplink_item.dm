@@ -608,7 +608,7 @@ var/list/uplink_items = list()
 	desc = "The Syndicate Bomb has an adjustable timer with a minimum setting of 60 seconds. Ordering the bomb sends you a small beacon, which will teleport the explosive to your location when you activate it. \
 	You can wrench the bomb down to prevent removal. The crew may attempt to defuse the bomb."
 	item = /obj/item/device/sbeacondrop/bomb
-	cost = 11
+	cost = 16
 	excludefrom = list(/datum/game_mode/traitor/double_agents)
 
 /datum/uplink_item/device_tools/rad_laser
@@ -737,7 +737,7 @@ var/list/uplink_items = list()
 	name = "Syndicate Bundle"
 	desc = "Syndicate Bundles are specialised groups of items that arrive in a plain box. These items are collectively worth more than 20 telecrystals, but you do not know which specialisation you will receive."
 	item = /obj/item/weapon/storage/box/syndicate
-	cost = 20
+	cost = 30
 	excludefrom = list(/datum/game_mode/nuclear,/datum/game_mode/gang)
 
 /datum/uplink_item/badass/syndiecards
@@ -760,13 +760,13 @@ var/list/uplink_items = list()
 	name = "For showing that you are The Boss"
 	desc = "A useless red balloon with the syndicate logo on it, which can blow the deepest of covers."
 	item = /obj/item/toy/syndicateballoon
-	cost = 20
+	cost = 30
 
 /datum/uplink_item/implants/macrobomb
 	name = "Macrobomb Implant"
 	desc = "An implant injected into the body, and later activated either manually or automatically upon death. Maximum explosion power."
 	item = /obj/item/weapon/storage/box/syndie_kit/imp_macrobomb
-	cost = 20
+	cost = 30
 	gamemodes = list(/datum/game_mode/nuclear)
 
 /datum/uplink_item/badass/random
@@ -796,8 +796,8 @@ var/list/uplink_items = list()
 
 /datum/uplink_item/badass/surplus_crate
 	name = "Syndicate Surplus Crate"
-	desc = "A crate containing 50 telecrystals worth of random syndicate leftovers."
-	cost = 20
+	desc = "A crate containing 60 telecrystals worth of random syndicate leftovers."
+	cost = 30
 	item = /obj/item/weapon/storage/box/syndicate
 	excludefrom = list(/datum/game_mode/nuclear)
 
@@ -809,8 +809,8 @@ var/list/uplink_items = list()
 		buyable_items += temp_uplink_list[category]
 	var/list/bought_items = list()
 	U.uses -= cost
-	U.used_TC = 20
-	var/remaining_TC = 50
+	U.used_TC = 30
+	var/remaining_TC = 60
 
 	var/datum/uplink_item/I
 	while(remaining_TC)
