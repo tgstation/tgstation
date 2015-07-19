@@ -410,7 +410,7 @@
 	var/mob/living/carbon/human/G = new /mob/living/carbon/human
 	if(prob(50))	G.gender = "female"
 	hardset_dna(G, null, null, null, null, /datum/species/golem/adamantine)
-
+	
 	G.set_cloned_appearance()
 	G.real_name = text("Adamantine Golem ([rand(1, 1000)])")
 	G.dna.species.auto_equip(G)
@@ -418,6 +418,14 @@
 	G.key = ghost.key
 	G << "You are an adamantine golem. You move slowly, but are highly resistant to heat and cold as well as blunt trauma. You are unable to wear clothes, but can still use most tools. Serve [user], and assist them in completing their goals at any cost."
 	qdel(src)
+	var/datum/objective/protect/new_objective = new /datum/objective/protect
+	new_objective.owner = G:mind
+	new_objective:target = usr:mind
+	G.mind.objectives += new_objective
+	new_objective.explanation_text = "Protect [usr.real_name], your master."
+	if(usr.mind.special_role)
+		message_admins("[G.real_name] has been summoned by [usr.real_name], an antagonist.")
+	log_game("[G.real_name] ([G.key]) was made a golem by [usr.real_name]([usr.key]).")
 
 
 
