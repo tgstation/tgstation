@@ -57,8 +57,8 @@
 					message_admins("[key_name_admin(src)] has edited [target_sql_ckey]'s memo from<br>[old_memo]<br>to<br>[new_memo]")
 		if("Show")
 			var/DBQuery/query_memoshow = dbcon.NewQuery("SELECT id, ckey, memotext, timestamp, last_editor FROM [format_table_name("memo")])")
+			var/output
 			while(query_memoshow.NextRow())
-				var/output
 				var/id = query_memoshow.item[1]
 				var/ckey = query_memoshow.item[2]
 				var/memotext = query_memoshow.item[3]
