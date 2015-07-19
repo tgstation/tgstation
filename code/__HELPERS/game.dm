@@ -380,38 +380,3 @@
 
 	return new /datum/projectile_data(src_x, src_y, time, distance, power_x, power_y, dest_x, dest_y)
 
-/proc/getRotationFromDirs(dir1, dir2)
-	return getDegreesFromDir(dir2)-getDegreesFromDir(dir1)
-
-/proc/getDirFromRotation(rotation, olddir)
-	return getDirFromDegrees(rotation+getDegreesFromDir(olddir))
-
-/proc/getDirFromDegrees(degrees)
-	if (degrees < 0)
-		degrees += 360
-	if (degrees >= 360)
-		degrees %= 360
-	if (degrees == 360)
-		degrees = 0
-	switch(degrees)
-		if (0)
-			return NORTH
-		if (90)
-			return EAST
-		if (180)
-			return SOUTH
-		if (270)
-			return WEST
-
-
-/proc/getDegreesFromDir(dir)
-	switch(dir)
-		if (NORTH)
-			return 0
-		if (EAST)
-			return 90
-		if (SOUTH)
-			return 180
-		if (WEST)
-			return 270
-	return 0

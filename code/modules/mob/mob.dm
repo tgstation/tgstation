@@ -967,4 +967,4 @@ var/list/slot_equipment_priority = list( \
 
 //override to avoid rotating pixel_xy on mobs
 /mob/shuttleRotate(rotation)
-	dir = getDirFromRotation(rotation, dir)
+	dir = angle2dir(rotation+dir2angle(dir))

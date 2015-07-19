@@ -270,7 +270,7 @@
 
 //default shuttleRotate
 /atom/proc/shuttleRotate(rotation)
-	dir = getDirFromRotation(rotation, dir)
+	dir = angle2dir(rotation+dir2angle(dir))
 
 	//we need to rotate the pixel offsets too.
 	if (pixel_x || pixel_y)
@@ -312,6 +312,13 @@
 
 	var/list/L0 = return_ordered_turfs(x, y, z, dir, areaInstance)
 	var/list/L1 = return_ordered_turfs(S1.x, S1.y, S1.z, S1.dir)
+
+	var/rotation = dir2angle(S1.dir)-dir2angle(dir)
+	if ((rotation % 90) != 0)
+		rotation += (rotation % 90) //diagonal rotations not allowed, round up
+	rotation = SimplifyDegrees(rotation)
+
+
 
 	//remove area surrounding docking port
 	if(areaInstance.contents.len)
@@ -357,8 +364,8 @@
 
 
 		for(var/atom/movable/AM in T0)
-			if (dir != S1.dir)
-				AM.shuttleRotate(getRotationFromDirs(dir,S1.dir))
+			if (rotation)
+				AM.shuttleRotate(rotation)
 
 			if (istype(AM,/obj))
 				var/obj/O = AM
@@ -392,8 +399,8 @@
 						M.Weaken(3)
 
 		T0.ChangeTurf(turf_type)
-		if (dir != S1.dir)
-			T1.shuttleRotate(getRotationFromDirs(dir,S1.dir))
+		if (rotation)
+			T1.shuttleRotate(rotation)
 	loc = S1.loc
 	dir = S1.dir
 
