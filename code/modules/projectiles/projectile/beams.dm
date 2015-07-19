@@ -29,153 +29,188 @@ var/list/beam_master = list()
 	var/tang = 0
 	layer = 13
 	var/turf/last = null
-	kill_count = 20
+	kill_count = 6
 
-	process()
-		var/first = 1 //So we don't make the overlay in the same tile as the firer
-		var/broke = 0
-		var/broken
-		var/atom/curr = current
-		var/Angle=round(Get_Angle(firer,curr))
-		var/icon/I=new('icons/obj/lightning.dmi',icon_state)
-		var/icon/Istart=new('icons/obj/lightning.dmi',"[icon_state]start")
-		var/icon/Iend=new('icons/obj/lightning.dmi',"[icon_state]end")
-		I.Turn(Angle+45)
-		Istart.Turn(Angle+45)
-		Iend.Turn(Angle+45)
-		var/DX=(32*curr.x+curr.pixel_x)-(32*firer.x+firer.pixel_x)
-		var/DY=(32*curr.y+curr.pixel_y)-(32*firer.y+firer.pixel_y)
-		var/N=0
-		var/length=round(sqrt((DX)**2+(DY)**2))
-		var/count = 0
-		for(N,N<length,N+=32)
-			if(count >= kill_count)
-				break
-			count++
-			var/obj/effect/overlay/beam/X=new(loc)
-			X.BeamSource=src
-			if((N+64>length) && (N+32<=length))
-				X.icon=Iend
-			else if(N==0)
-				X.icon=Istart
-			else if(N+32>length)
-				X.icon=null
+/obj/item/projectile/beam/lightning/proc/adjustAngle(angle)
+	angle = round(angle) + 45
+	if(angle > 180)
+		angle -= 180
+	else
+		angle += 180
+	if(!angle)
+		angle = 1
+	/*if(angle < 0)
+		//angle = (round(abs(get_angle(A, user))) + 45) - 90
+		angle = round(angle) + 45 + 180
+	else
+		angle = round(angle) + 45*/
+	return angle
+
+/obj/item/projectile/beam/lightning/process()
+	icon_state = "lightning"
+	var/first = 1 //So we don't make the overlay in the same tile as the firer
+	var/broke = 0
+	var/broken
+	var/atom/curr = current
+	var/Angle=round(Get_Angle(firer,curr))
+	var/icon/I=new('icons/obj/lightning.dmi',icon_state)
+	var/icon/Istart=new('icons/obj/lightning.dmi',"[icon_state]start")
+	var/icon/Iend=new('icons/obj/lightning.dmi',"[icon_state]end")
+	I.Turn(Angle+45)
+	Istart.Turn(Angle+45)
+	Iend.Turn(Angle+45)
+	var/DX=(32*curr.x+curr.pixel_x)-(32*firer.x+firer.pixel_x)
+	var/DY=(32*curr.y+curr.pixel_y)-(32*firer.y+firer.pixel_y)
+	var/N=0
+	var/length=round(sqrt((DX)**2+(DY)**2))
+	var/count = 0
+	var/turf/T = get_turf(src)
+	for(N,N<length,N+=32)
+		if(count >= kill_count)
+			break
+		count++
+		var/obj/effect/overlay/beam/X=new(T)
+		X.BeamSource=src
+		if((N+64>length) && (N+32<=length))
+			X.icon=Iend
+		else if(N==0)
+			X.icon=Istart
+		else if(N+32>length)
+			X.icon=null
+		else
+			X.icon=I
+
+		var/Pixel_x=round(sin(Angle)+32*sin(Angle)*(N+16)/32)
+		var/Pixel_y=round(cos(Angle)+32*cos(Angle)*(N+16)/32)
+		if(DX==0) Pixel_x=0
+		if(DY==0) Pixel_y=0
+		if(Pixel_x>32)
+			for(var/a=0, a<=Pixel_x,a+=32)
+				X.x++
+				Pixel_x-=32
+		if(Pixel_x<-32)
+			for(var/a=0, a>=Pixel_x,a-=32)
+				X.x--
+				Pixel_x+=32
+		if(Pixel_y>32)
+			for(var/a=0, a<=Pixel_y,a+=32)
+				X.y++
+				Pixel_y-=32
+		if(Pixel_y<-32)
+			for(var/a=0, a>=Pixel_y,a-=32)
+				X.y--
+				Pixel_y+=32
+
+		//Now that we've calculated the total offset in pixels, we move each beam parts to their closest corresponding turfs
+		var/x_increm = 0
+		var/y_increm = 0
+
+		while(Pixel_x >= 32 || Pixel_x <= -32)
+			if(Pixel_x > 0)
+				Pixel_x -= 32
+				x_increm++
 			else
-				X.icon=I
+				Pixel_x += 32
+				x_increm--
 
-			var/Pixel_x=round(sin(Angle)+32*sin(Angle)*(N+16)/32)
-			var/Pixel_y=round(cos(Angle)+32*cos(Angle)*(N+16)/32)
-			if(DX==0) Pixel_x=0
-			if(DY==0) Pixel_y=0
-			if(Pixel_x>32)
-				for(var/a=0, a<=Pixel_x,a+=32)
-					X.x++
-					Pixel_x-=32
-			if(Pixel_x<-32)
-				for(var/a=0, a>=Pixel_x,a-=32)
-					X.x--
-					Pixel_x+=32
-			if(Pixel_y>32)
-				for(var/a=0, a<=Pixel_y,a+=32)
-					X.y++
-					Pixel_y-=32
-			if(Pixel_y<-32)
-				for(var/a=0, a>=Pixel_y,a-=32)
-					X.y--
-					Pixel_y+=32
-			X.pixel_x=Pixel_x
-			X.pixel_y=Pixel_y
-			var/turf/TT = get_turf(X.loc)
-			if(TT == firer.loc)
-				continue
-			if(TT.density)
+		while(Pixel_y >= 32 || Pixel_y <= -32)
+			if(Pixel_y > 0)
+				Pixel_y -= 32
+				y_increm++
+			else
+				Pixel_y += 32
+				y_increm--
+
+		X.x += x_increm
+		X.y += y_increm
+
+		X.pixel_x=Pixel_x
+		X.pixel_y=Pixel_y
+		var/turf/TT = get_turf(X.loc)
+		if(TT == firer.loc)
+			continue
+		if(TT.density)
+			del(X)
+			break
+		for(var/atom/O in TT)
+			if(!O.CanPass(src))
 				del(X)
+				broke = 1
 				break
-			for(var/atom/O in TT)
-				if(!O.CanPass(src))
+		for(var/mob/living/O in TT.contents)
+			if(istype(O, /mob/living))
+				if(O.density)
 					del(X)
 					broke = 1
 					break
-			for(var/mob/living/O in TT.contents)
-				if(istype(O, /mob/living))
-					if(O.density)
-						del(X)
-						broke = 1
-						break
-			if(broke)
-				if(X)
-					del(X)
-				break
-		spawn
-			while(loc) //Move until we hit something
-				if(first)
-					icon = midicon
-				if((!( current ) || loc == current)) //If we pass our target
-					broken = 1
-					icon = endicon
-					tang = adjustAngle(get_angle(original,current))
-					if(tang > 180)
-						tang -= 180
-					else
-						tang += 180
-					icon_state = "[tang]"
-					var/turf/simulated/floor/f = current
-					if(f && istype(f))
-						f.break_tile()
-						f.hotspot_expose(1000,CELL_VOLUME,surfaces=1)
-				if((x == 1 || x == world.maxx || y == 1 || y == world.maxy))
-					//world << "deleting"
-					//del(src) //Delete if it passes the world edge
-					broken = 1
-					return
-				if(kill_count < 1)
-					//world << "deleting"
-					//del(src)
-					broken = 1
-				kill_count--
-				//world << "[x] [y]"
-				if(!bumped && !isturf(original))
-					if(loc == get_turf(original))
-						if(!(original in permutated))
-							icon = endicon
-						if(!broken)
-							tang = adjustAngle(get_angle(original,current))
-							if(tang > 180)
-								tang -= 180
-							else
-								tang += 180
-							icon_state = "[tang]"
-						Bump(original)
-				first = 0
-				if(broken)
-					//world << "breaking"
-					break
+		if(broke)
+			if(X)
+				del(X)
+			break
+	spawn
+		while(loc) //Move until we hit something
+			if(first)
+				icon = midicon
+			if((!( current ) || loc == current)) //If we pass our target
+				broken = 1
+				icon = endicon
+				tang = adjustAngle(get_angle(original,current))
+				if(tang > 180)
+					tang -= 180
 				else
-					last = get_turf(src.loc)
-					step_towards(src, current) //Move~
-					if(src.loc != current)
-						tang = adjustAngle(get_angle(src.loc,current))
-					icon_state = "[tang]"
-			//del(src)
-			returnToPool(src)
-		return
-	/*cleanup(reference) //Waits .3 seconds then removes the overlay.
-		//world << "setting invisibility"
-		sleep(50)
-		src.invisibility = 101
-		return*/
-	on_hit(atom/target, blocked = 0)
-		if(istype(target, /mob/living))
-			var/mob/living/M = target
-			M.playsound_local(src, "explosion", 50, 1)
-		..()
-	spell
-		var/spell/lightning/our_spell
-		Bump(atom/A as mob|obj|turf|area)
-			. = ..()
-			if(.)
-				our_spell.lastbumped = A
-			return .
+					tang += 180
+				icon_state = "[tang]"
+				var/turf/simulated/floor/f = current
+				if(f && istype(f))
+					f.break_tile()
+					f.hotspot_expose(1000,CELL_VOLUME,surfaces=1)
+			if((x == 1 || x == world.maxx || y == 1 || y == world.maxy))
+				//world << "deleting"
+				//del(src) //Delete if it passes the world edge
+				broken = 1
+				return
+			if(kill_count < 1)
+				//world << "deleting"
+				//del(src)
+				broken = 1
+			kill_count--
+			//world << "[x] [y]"
+			if(!bumped && !isturf(original))
+				if(loc == get_turf(original))
+					if(!(original in permutated))
+						icon = endicon
+					if(!broken)
+						tang = adjustAngle(get_angle(original,current))
+						if(tang > 180)
+							tang -= 180
+						else
+							tang += 180
+						icon_state = "[tang]"
+					Bump(original)
+			first = 0
+			if(broken)
+				//world << "breaking"
+				break
+			else
+				last = get_turf(src.loc)
+				step_towards(src, current) //Move~
+				if(src.loc != current)
+					tang = adjustAngle(get_angle(src.loc,current))
+				icon_state = "[tang]"
+		//del(src)
+		returnToPool(src)
+	return
+/*cleanup(reference) //Waits .3 seconds then removes the overlay.
+	//world << "setting invisibility"
+	sleep(50)
+	src.invisibility = 101
+	return*/
+
+/obj/item/projectile/beam/lightning/on_hit(atom/target, blocked = 0)
+	if(istype(target, /mob/living))
+		var/mob/living/M = target
+		M.playsound_local(src, "explosion", 50, 1)
+	..()
 
 /obj/item/projectile/beam
 	name = "laser"
